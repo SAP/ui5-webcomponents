@@ -78,7 +78,15 @@ sap.ui.define([
 		},
 
 		onUI5LogoPressed: function () {
-			window.location.href = '/index.html';
+			window.location.href = this._getHomeURL();
+		},
+
+		_getHomeURL() {
+			if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
+				return 	"/index.html";
+			}
+
+			return "/ui5-webcomponents/index.html";
 		},
 
 		// Workaround for selecting menu item upon page reload.
