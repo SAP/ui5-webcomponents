@@ -1,0 +1,35 @@
+/* ============================= */
+/* Base theme                    */
+/* ============================= */
+@import "../base/Select.less";
+
+/* ============================= */
+/* Global HCB parameters      */
+/* ============================= */
+@import "./base.less";
+@import "./global.less";
+
+.sapWCSelect {
+	&:not(.sapWCSelectOpened):not(.sapWCSelectDisabled):focus {
+
+		&:before {
+			content: "";
+			position: absolute;
+			width: calc(~"100% - 0.375rem");
+			height: calc(~"100% - 0.375rem");
+			border: 0.125rem dotted @sapUiContentFocusColor;
+			top: 1px;
+			right: 1px;
+			bottom: 1px;
+			left: 1px;
+			pointer-events: none;
+		}
+	}
+
+	&.sapWCSelectDisabled {
+		background: @sapUiHcReducedBackground;
+		border-color: @sapUiHcReducedForeground;
+		color: @sapUiContentDisabledTextColor;
+	}
+}
+

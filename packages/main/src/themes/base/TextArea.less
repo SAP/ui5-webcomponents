@@ -1,0 +1,174 @@
+/* ============================= */
+/* Global Base parameters        */
+/* ============================= */
+
+@import "./base.less";
+@import "./global.less";
+
+:host(ui5-textarea) {
+	display: inline-block;
+}
+
+ui5-textarea {
+	display: inline-block;
+}
+
+.sapWCTextArea {
+	height: 3rem;
+	background: transparent;
+	position: relative;
+	display: inline-flex;
+	vertical-align: top;
+	outline: none;
+	position: relative;
+	overflow: hidden;
+	box-sizing: border-box;
+
+	&:not(.sapWCTextAreaDisabled):not(.sapWCTextAreaWarning):hover .sapWCTextAreaInner {
+		border: 1px solid @sapUiFieldHoverBorderColor;
+	}
+
+	&.sapWCTextAreaReadonly .sapWCTextAreaInner {
+		background: @sapUiFieldReadOnlyBackground;
+	}
+}
+
+.sapWCTextAreaMirror~.sapWCTextAreaInner {
+	height: 100%;
+	width: 100%;
+	top: 0;
+	position: absolute;
+}
+
+.sapWCTextAreaGrowing.sapWCTextAreaNoMaxLines .sapWCTextAreaInner,
+.sapWCTextAreaGrowing.sapWCTextAreaNoMaxLines .sapWCTextAreaMirror {
+	overflow: hidden;
+}
+
+.sapWCTextAreaMirror {
+	line-height: 1.4;
+	visibility: hidden;
+	width: 100%;
+	word-break: break-all;
+	padding: 0.5625rem 0.6875rem;
+	font-size: @sapMFontMediumSize;
+	font-family: @sapUiFontFamily;
+	white-space: pre-wrap;
+	box-sizing: border-box;
+}
+
+.sapWCTextAreaInner {
+	width: 100%;
+	margin: 0;
+	padding: 0.5625rem 0.6875rem;
+	line-height: 1.4;
+	box-sizing: border-box;
+	color: @sapUiFieldTextColor;
+	background: @sapUiFieldBackground;
+	border: 1px solid @sapUiFieldBorderColor;
+	outline: none;
+	font-size: @sapMFontMediumSize;
+	font-family: @sapUiFontFamily;
+	-webkit-appearance: none;
+	-moz-appearance: textfield;
+	overflow: auto;
+	resize: none;
+}
+
+.sapWCTextAreaFocussed {
+	position: relative;
+	display: flex;
+
+	&::after {
+		content: "";
+		width: ~"calc(100% - 6px)";
+		height: ~"calc(100% - 6px)";
+		border: 1px dotted @sapUiContentFocusColor;
+		position: absolute;
+		top: 2px;
+		left: 2px;
+		pointer-events: none;
+	}
+
+	&.sapWCTextAreaWithCounter {
+		&::after {
+			height: ~"calc(100% - 32px)";
+		}
+	}
+
+	&.sapWCTextAreaWarning {
+		& textarea {
+			height: ~"calc(100% - 26px)";
+		}
+
+		&::after {
+			width: ~"calc(100% - 8px)";
+			height: ~"calc(100% - 34px)";
+			top: 3px;
+			left: 3px;
+		}
+	}
+}
+
+.sapWCTextAreaGrowing.sapWCTextAreaNoCols .sapWCTextAreaInner {
+	overflow: hidden;
+	width: 100%;
+}
+
+.sapWCTextAreaInner::-webkit-input-placeholder {
+	font-size: @sapMFontMediumSize;
+	font-style: italic;
+}
+
+.sapWCTextAreaInner::-moz-placeholder {
+	font-size: @sapMFontMediumSize;
+	font-style: italic;
+}
+
+.sapWCTextAreaInner:-ms-input-placeholder {
+	font-size: @sapMFontMediumSize;
+	font-style: italic;
+}
+
+.sapWCTextAreaWithCounter .sapWCTextAreaInner {
+	height: ~"calc(100% - 16px)";
+}
+
+.sapWCTextAreaWithCounter {
+	flex-direction: column;
+	display: flex;
+
+	& .sapWCTextAreaExceededText {
+		overflow: hidden;
+		align-self: flex-end;
+		padding: 0.125rem 0.125rem 0.5rem;
+		font-family: @sapUiFontFamily;
+		font-size: @sapMFontSmallSize;
+	}
+}
+
+.sapWCTextAreaCounter {
+	text-align: right;
+	font-size: @sapMFontMediumSize;
+	font-family: @sapUiFontFamily;
+}
+
+.sapWCTextAreaWarningInner {
+	border: 2px solid;
+	background: @sapUiFieldWarningBackground;
+	border-color: @sapUiFieldWarningColor;
+}
+
+.sapWCTextAreaContent {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+.sapWCTextAreaDisabled {
+	opacity: 0.5;
+	user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-webkit-user-select: none;
+}

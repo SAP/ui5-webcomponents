@@ -1,0 +1,24 @@
+<div {{> controlData}} class="sapFCard">
+	<header class="sapFCardHeader">
+		{{#if ctr.icon}}
+		<span role="img" aria-label="Avatar" class="sapFCardAvatar">
+			<ui5-icon class="sapFCardHeaderIcon" src="{{ctr.icon}}"></ui5-icon>
+		</span>
+		{{/if}}
+		<div class="sapFCardHeaderText">
+			{{#if ctr.heading}}
+				<div class="sapFCardTitle">{{ctr.heading}}</div>
+			{{/if}}
+
+			{{#if ctr.subtitle}}
+				<div class="sapFCardSubtitle ">{{ctr.subtitle}}</div>
+			{{/if}}
+		</div>
+		<span class="sapFCardStatus">{{ctr.status}}</span>
+	</header>
+	<section class="sapFCardContent">
+		{{#each ctr.content}}
+			<slot name="{{this._slot}}"></slot>
+		{{/each}}
+	</section>
+</div>

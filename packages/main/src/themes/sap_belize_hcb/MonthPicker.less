@@ -1,0 +1,30 @@
+/* ============================= */
+/* Base theme                    */
+/* ============================= */
+@import "../base/MonthPicker.less";
+@import "../sap_belize/MonthPicker.less";
+
+/* ============================= */
+/* Global Belize parameters      */
+/* ============================= */
+@import "./base.less";
+@import "./global.less";
+
+.sapWCMonthPickerItem {
+	border: 1px solid @sapUiListBorderColor;
+	margin: 0;
+
+	&:hover {
+		background-color: @sapUiHighlight;
+	}
+
+	&:focus {
+		&::after {
+			width: calc(~"100% - 0.25rem");
+			height: calc(~"100% - 0.25rem");
+			border: 0.125rem dotted @sapUiContentFocusColor;
+			top: 0px;
+			left: 0px;
+		}
+	}
+}

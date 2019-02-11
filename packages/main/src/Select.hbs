@@ -1,0 +1,24 @@
+<div {{> controlData}}
+	class="{{classes.main}}"
+	style="{{styles.main}}"
+	tabindex="{{tabIndex}}">
+	<div class="sapWCSelectLabel">
+		<ui5-label>{{ctr._text}}</ui5-label>
+	</div>
+
+	{{#if ctr.items}}
+		<ui5-popover
+			placement-type="Bottom"
+			hide-header="true"
+			hide-arrow="true"
+			horizontal-align="Stretch">
+				<ui5-list>
+					{{#each ctr.items}}
+						<slot name="{{this._slot}}"></slot>
+					{{/each}}
+				</ui5-list>
+		</ui5-popover>
+	{{/if}}
+
+	<ui5-icon src="sap-icon://navigation-down-arrow" class="sapWCSelectDropDownIcon"></ui5-icon>
+</div>

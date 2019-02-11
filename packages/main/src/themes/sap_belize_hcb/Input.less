@@ -1,0 +1,60 @@
+/* ============================= */
+/* Base theme                    */
+/* ============================= */
+@import "../base/Input.less";
+@import "../sap_belize/Input.less";
+
+/* ============================= */
+/* Global Belize parameters      */
+/* ============================= */
+@import "./base.less";
+@import "./global.less";
+
+.sapWCInputBase {
+	&.sapWCFocus .sapWCInputBaseContentWrapper::after {
+		width: calc(~"100% - 0.375rem");
+		height: calc(~"100% - 0.375rem");
+		border: 0.125rem dotted @sapUiContentFocusColor;
+	}
+}
+
+.sapWCInputBaseContentWrapper {
+
+	& .sapWCInputBaseInner {
+		color: @sapUiFieldTextColor;
+	}
+
+	&.sapWCInputBaseContentWrapperError:not(.sapWCInputBaseReadonlyWrapper):not(.sapWCInputBaseDisabledWrapper),
+	&.sapWCInputBaseContentWrapperWarning:not(.sapWCInputBaseReadonlyWrapper):not(.sapWCInputBaseDisabledWrapper) {
+		border-style: dashed;
+		border-width: 1px;
+	}
+
+	&.sapWCInputBaseContentWrapperSuccess,
+	&.sapWCInputBaseContentWrapperError,
+	&.sapWCInputBaseContentWrapperWarning {
+		border-width: 1px;
+	}
+
+	&.sapWCInputBaseContentWrapperError .sapWCInputBaseInner {	
+		font-weight: bold;	
+	}	
+
+	&.sapWCInputBaseContentWrapperError,	
+	&.sapWCInputBaseContentWrapperWarning {	
+		& .sapWCInputBaseInner {	
+			font-style: italic;	
+		}	
+	}
+
+	&.sapWCInputBaseDisabledWrapper {
+		background: @sapUiFieldReadOnlyBackground;
+		border-color: @sapUiFieldReadOnlyBorderColor;
+		font-weight: normal;
+		-webkit-text-fill-color: @sapUiContentDisabledTextColor;
+		
+		& .sapWCInputBaseInner {
+			color: @sapUiContentDisabledTextColor;
+		}
+	}
+}

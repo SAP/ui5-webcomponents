@@ -1,0 +1,159 @@
+/* ============================= */
+/* Global Base parameters        */
+/* ============================= */
+
+@import "./base.less";
+@import "./global.less";
+
+/* =================================== */
+/* CSS for control sap.m/ListItemBase  */
+/* Base theme                          */
+/* =================================== */
+:host(ui5-li),
+:host(ui5-li-custom) {
+	display: block;
+}
+
+.sapMLIB {
+	height: 3rem;
+	padding: 0 1rem 0 1rem;
+	position: relative;
+	display: flex;
+	background: @sapUiListBackground;
+	box-sizing: border-box;
+
+	&.sapMCustomLI {
+		padding: 0;
+	}
+}
+
+.sapMLIBHoverable:hover {
+	background : @sapUiListHoverBackground;
+}
+
+.sapMLIB.sapMLIBSelected {
+	background: @sapUiListSelectionBackgroundColor;
+}
+
+.sapMLIB.sapMLIBActive {
+	color: @sapUiListActiveTextColor;
+	background: @sapUiListActiveBackground;
+}
+
+.sapMLIB.sapMLIBHoverable.sapMLIBSelected:hover {
+	background : @sapUiListSelectionHoverBackground;
+}
+
+.sapMLIB.sapMLIBHoverable.sapMLIBSelected.sapMLIBActive:hover {
+	background: @sapUiListActiveBackground;
+}
+
+.sapMLIB.sapMLIBFocusable:focus {
+	outline: none;
+}
+
+.sapMLIB.sapMLIBFocusable:focus:after,
+.sapMLIB.sapMLIBFocusable .sapMLIBContent:focus:after {
+	content: "";
+	border: 1px dotted @sapUiContentFocusColor;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	pointer-events: none;
+}
+
+.sapMLIB.sapMLIBActive.sapMLIBFocusable:focus,
+.sapMLIB.sapMLIBActive.sapMLIBFocusable .sapMLIBContent:focus {
+	outline-color: @sapUiContentContrastFocusColor;
+}
+
+.sapMLIB.sapMLIBTransparent {
+	background: fade(@sapUiListBackground, 0);
+}
+
+.sapMLIB.sapMLIBBorder {
+	border-bottom: 1px solid @sapUiListBorderColor;
+}
+
+.sapMLIB.sapMLIBActive .sapMLIBIcon {
+	color: @sapUiListActiveTextColor;
+}
+
+
+.sapMLIBIcon {
+	color: @sapUiContentNonInteractiveIconColor;
+	padding-right: 1rem;
+}
+
+.sapMLIBContent {
+	max-width: 100%;
+	min-height: 100%;
+	font-family: @sapUiFontFamily;
+}
+
+/* IE ignores outline-offset. Use an overlay: */
+.sapMLIBLegacyOutline:focus {
+	outline: none;
+	position: relative;
+}
+
+//Overide for Checkbox in List in IE
+ui5-li > span {
+	.sapMCb {
+		height: 3rem;
+	}
+}
+
+.sapMLIBLegacyOutline:focus::before {
+	content: "";
+	border: 0;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	pointer-events: none;
+	border: 1px dotted @sapUiContentFocusColor;
+}
+
+.sapMLIBActionable,
+.sapMLIBActionable > .sapMLIBIcon {
+	cursor: pointer;
+}
+
+.sapMLIBFocusable.sapMLIBLegacyOutline:focus {
+	outline: none;
+}
+
+// Remove focus outline on Mobile
+:host(ui5-li),
+:host(ui5-li-custom) {
+	.sap-phone {
+		.sapMLIB {
+			outline: none;
+		}
+	}
+}
+
+// RTL
+:host(ui5-li) span[dir="rtl"] {
+	.sapMLIBIcon {
+		padding-left: 1rem;
+		padding-right: 0;
+	}
+	.sapMSLIImg {
+		margin: .5rem 0 .5rem 0.75rem;
+	}
+}
+
+ui5-li span[dir="rtl"] {
+	.sapMLIBIcon {
+		padding-left: 1rem;
+		padding-right: 0;
+	}
+	.sapMSLIImg {
+		margin: .5rem 0 .5rem 0.75rem;
+	}
+}

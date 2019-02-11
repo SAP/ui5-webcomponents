@@ -1,0 +1,18 @@
+<div {{> controlData}}
+	class="{{classes.main}}"
+	style="{{styles.main}}"
+	role="checkbox"
+	aria-checked="{{ctr.checked}}"
+	aria-readonly="{{ariaReadonly}}"
+	tabindex="{{tabIndex}}">
+		<div id="{{ctr._id}}-CbBg" class="{{classes.inner}}">
+			<input id="{{ctr._id}}-CB" type='checkbox' ?checked="{{ctr.checked}}" ?readonly="{{ctr.readOnly}}" data-sap-no-tab-ref/>
+		</div>
+
+		{{#if ctr._label.text}}
+		<ui5-label
+				class="sapWCLabelInCheckBox"
+				?wrap="{{ctr._label.wrap}}"
+		>{{ctr._label.text}}</ui5-label>
+		{{/if}}
+</div>

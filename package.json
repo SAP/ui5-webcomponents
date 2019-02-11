@@ -1,0 +1,56 @@
+{
+  "name": "@ui5/webcomponents-root",
+  "version": "0.7.0",
+  "description": "UI5 Web Components",
+  "author": "SAP SE (https://www.sap.com)",
+  "license": "Apache-2.0",
+  "private": true,
+  "keywords": [
+    "openui5",
+    "sapui5",
+    "ui5"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SAP/ui5-webcomponents.git"
+  },
+  "scripts": {
+    "build": "npm-run-all --sequential build:core build:main build:playground",
+    "build:core": "cd packages/core && yarn build",
+    "build:main": "cd packages/main && yarn build",
+    "build:docs": "cd packages/main && yarn build:docs",
+    "build:api": "cd packages/main && yarn build:api",
+    "build:playground": "cd packages/playground && yarn build",
+    "clean": "npm-run-all --sequential clean:core clean:main clean:playground",
+    "clean:core": "cd packages/core && yarn clean",
+    "clean:main": "cd packages/main && yarn clean",
+    "clean:playground": "cd packages/playground && yarn clean",
+    "serve": "cross-env DEV=true yarn build:core && cross-env DEV=true yarn build:main && npm-run-all --parallel serve:webcomponents serve:playground",
+    "serve:es5": "cross-env DEV=true yarn build:core && cross-env DEV=true yarn build:main && npm-run-all --parallel serve:webcomponents:es5 serve:playground",
+    "serve:webcomponents": "cd packages/main && yarn dev",
+    "serve:webcomponents:es5": "cd packages/main && yarn dev:es5",
+    "serve:playground": "cd packages/playground && yarn serve",
+    "test": "cd packages/main && yarn test",
+    "link-all": "wsrun link",
+    "unlink-all": "wsrun unlink"
+  },
+  "devDependencies": {
+    "cross-env": "^5.2.0",
+    "npm-run-all": "^4.1.3",
+    "rimraf": "^2.6.2"
+  },
+  "resolutions": {
+    "@ui5/webcomponents-core": "0.7.0",
+    "@ui5/webcomponents-base": "0.7.0",
+    "@ui5/webcomponents": "0.7.0",
+    "@ui5/webcomponents-playground": "0.7.0",
+    "abstract-syntax-tree": "1.0.3",
+    "dir-glob": "2.0.0"
+  },
+  "workspaces": [
+    "packages/core",
+    "packages/base",
+    "packages/main",
+    "packages/playground"
+  ]
+}

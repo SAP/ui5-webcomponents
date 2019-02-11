@@ -1,0 +1,7 @@
+{{>include "./ListItem.hbs"}}
+
+{{#*inline "listItemContent"}}
+    {{#each ctr.content}}
+        <slot name="{{this._slot}}" />
+    {{/each}}
+{{/inline}}

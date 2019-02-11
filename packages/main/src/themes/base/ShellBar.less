@@ -1,0 +1,351 @@
+/* ============================= */
+
+/* Global Base parameters        */
+
+/* ============================= */
+
+@import "./base.less";
+@import "./global.less";
+/* ============================= */
+
+/* Base theme                    */
+
+/* ============================= */
+
+:host(ui5-shellbar) {
+	display: inline-block;
+	width: 100%;
+}
+
+ui5-shellbar {
+	display: inline-block;
+	width: 100%;
+}
+
+.sapWCShellBarWrapper {
+	position: relative;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background: @sapUiShellColor;
+	height: 3rem;
+	font-family: @sapUiFontFamily;
+	font-size: @sapMFontMediumSize;
+	font-weight: normal;
+	box-sizing: border-box;
+}
+
+.sapWCShellBarMenuButton,
+.sapWCShellBarIconButton,
+.sapWCShellBarImageButton {
+	height: 2.25rem;
+	margin-left: 0.5rem;
+	border: none;
+	outline: none;
+	background: transparent;
+	color: @sapUiShellTextColor;
+	box-sizing: border-box;
+	cursor: pointer;
+	border-radius: 0.25rem;
+	position: relative;
+	font-size: 0.75rem;
+	font-weight: bold;
+	&:hover {
+		background: @sapUiShellHoverBackground;
+	}
+	&:active {
+		background: @sapUiHighlight;
+		color: @sapUiShellActiveTextColor;
+	}
+	&:focus {
+		&::after {
+			content: "";
+			position: absolute;
+			width: ~"calc(100% - 0.375rem)";
+			height: ~"calc(100% - 0.375rem)";
+			border: 1px dotted @sapUiContentContrastFocusColor;
+			pointer-events: none;
+			left: 2px;
+			top: 2px;
+			z-index: 1;
+		}
+	}
+}
+
+.sapWCShellBarMenuButtonTitle {
+	display: inline-block;
+	margin: 0;
+	font-size: 0.75rem;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	flex: 1;
+}
+
+.sapWCShellBarSecondaryTitle {
+	display: inline-block;
+	margin: 0 0.5rem;
+	font-size: @sapMFontSmallSize;
+	color: @sapUiShellTextColor;
+	line-height: 1rem;
+	font-weight: normal;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.sapWCShellBarMenuButtonArrow {
+	display: inline-block;
+	margin-left: 0.5rem;
+	width: 10px;
+	height: 10px;
+	width: 0px;
+	height: 0px;
+	color: @sapUiShellInteractiveTextColor;
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-top: 5px solid @sapUiShellTextColor;
+}
+
+.sapWCShellBarOverflowContainer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+	overflow: hidden;
+}
+
+.sapWCShellBarCoPilot {
+	width: 50px;
+	height: 30px;
+}
+
+.sapWCShellBarCoPilotBehindLayer {
+	animation: Behind_layer 9000ms linear;
+	animation-iteration-count: infinite;
+	transform-origin: center;
+}
+
+.sapWCShellBarOverflowContainerMiddle {
+	align-self: center;
+	height: 2.5rem;
+	width: 3rem;
+	flex-shrink: 0;
+}
+
+@keyframes Behind_layer {
+	0% {
+		transform: rotate(360deg);
+	}
+}
+
+.sapWCShellBarCoPilotTopLayer {
+	animation: Top_layer 9000ms linear;
+	animation-iteration-count: infinite;
+	transform-origin: center;
+}
+
+@keyframes Top_layer {
+	0% {
+		transform: rotate(-360deg);
+	}
+}
+
+.sapWCShellBarSizeS {
+	padding: 0.25rem 1rem;
+}
+
+.sapWCShellBarSizeM {
+	padding: 0.25rem 2rem;
+}
+
+.sapWCShellBarSizeL {
+	padding: 0.25rem 2rem;
+}
+
+.sapWCShellBarSizeXL {
+	padding: 0.25rem 3rem;
+}
+
+.sapWCShellBarSizeXXL {
+	padding: 0.25rem 3rem;
+}
+
+.sapWCShellBarLogo {
+	height: 1.675rem;
+}
+
+.sapWCShellBarIconButton {
+	min-width: 2.25rem;
+	font-size: 1rem;
+}
+
+.sapWCShellBarImageButtonImage {
+	background-image: url('https://openui5nightly.hana.ondemand.com/test-resources/sap/f/images/Woman_avatar_01.png');
+	border-radius: 50%;
+	width: 70%;
+	display: flex;
+	height: 70%;
+	background-size: cover;
+}
+
+.sapWCShellBarImageButton {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-width: 2.5rem;
+}
+
+.sapWCShellBarOverflowContainerLeft {
+	flex-basis: 50%;
+	max-width: ~"calc(50% - 1.5rem)";
+	justify-content: flex-start;
+	margin-right: 0.5rem;
+}
+
+.sapWCShellBarMenuButton {
+	white-space: nowrap;
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+}
+
+.sapWCShellBarOverflowContainerRight {
+	flex: 1;
+	margin-left: 8rem;
+	justify-content: flex-end;
+}
+
+.sapWCShellBarOverflowIcon {
+	display: none;
+}
+
+.sapWCShellBarSizeM,
+.sapWCShellBarSizeS {
+	& .sapWCShellBarSecondaryTitle {
+		display: none;
+	}
+}
+
+.sapWCShellBarSizeS {
+	& .sapWCShellBarMenuButtonTitle {
+		display: none;
+	}
+
+	& .sapWCShellBarOverflowContainerRight {
+		margin-left: 0;
+	}
+}
+
+.sapWCOverflowButtonShown {
+	display: inline-block;
+}
+
+.sapWCShellBarHiddenIcon {
+	visibility: hidden;
+}
+
+.sapWCShellBarPopover {
+	padding: .5rem 1rem;
+	box-shadow: @sapUiShadowLevel2;
+	border-radius: 0.25rem;
+	position: absolute;
+	top: 43px;
+	background: white;
+}
+
+.sapWCShellBarPopoverHidden {
+	visibility: hidden;
+	top: -10000px;
+	left: -10000px;
+}
+
+.sapWCShellBarOverflowButtonNotDisplayed {
+	display: none;
+}
+
+.svg-box-content {
+	width: 40px;
+	height: 30px;
+}
+
+.sapWCShellBarDisplayNone {
+	display: none;
+}
+
+.sapWCShellBarHasSearchField {
+	&.sapWCShellBarSizeL,
+	&.sapWCShellBarSizeXL {
+
+		.sapWCShellBarOverflowContainerRight {
+			margin-left: 1rem;
+		}
+	}
+}
+
+.sapWCShellBarBellIcon {
+	position: relative;
+
+	&::before {
+		content: attr(data-ui5-notification-count);
+		position: absolute;
+		width: auto;
+		padding: 0.125rem;
+		height: 0.75rem;
+		background: @sapUiContentBadgeBackground;
+		color: @sapUiShellTextColor;
+		top: 0.125rem;
+		right: -0.25rem;
+		padding: .125rem;
+		border-radius: 1rem;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: @sapMFontSmallSize;
+		font-family: @sapUiFontFamily;
+		z-index: 2;
+	}
+}
+
+.sapWCShellBarMenuButton {
+	margin-left: 0;
+}
+
+.sapWCShellBarBlockLayer {
+	background-color: fade(@sapUiBlockLayerBackground, 40);
+	opacity: 0.6;
+	filter: alpha(opacity=60);
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	position: fixed;
+	outline: 0 none;
+	z-index: 100;
+}
+
+.sapWCShellBarBlockLayerHidden {
+	display: none;
+}
+
+.sapWCShellBarSearchField {
+	z-index: 101;
+	position: fixed;
+	width: 320px;
+}
+
+.sapWCShellBarBlockLayerShown .sapWCShellBarSearchIcon {
+	background: @sapUiHighlight;
+	color: @sapUiShellActiveTextColor;
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
+}
+
+.sapWCShellBarOverflowContainerLeftWithoutMaxWidth {
+	max-width: none;
+	flex-basis: auto;
+
+	& ~ .sapWCShellBarOverflowContainerRight {
+		min-width: 30%;
+	}
+}

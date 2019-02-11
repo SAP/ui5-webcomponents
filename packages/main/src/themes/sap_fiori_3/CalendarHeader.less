@@ -1,0 +1,23 @@
+/* ============================= */
+/* Base theme                    */
+/* ============================= */
+@import "../base/CalendarHeader.less";
+
+/* ============================= */
+/* Global Belize parameters      */
+/* ============================= */
+@import "./base.less";
+@import "./global.less";
+
+.sapWCCalHeadMiddleButton {
+
+	&:focus {
+		&::after {
+			content: "";
+			width: calc(~"100% - 0.375rem");
+			height: calc(~"100% - 0.375rem");
+			top: 0.125rem;
+			left: 0.125rem;
+		}
+	}
+}

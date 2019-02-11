@@ -1,0 +1,17 @@
+/* ============================= */
+/* Base theme                    */
+/* ============================= */
+@import "../base/Link.less";
+@import "../sap_belize/Link.less";
+
+/* ============================= */
+/* Global HCB parameters      */
+/* ============================= */
+@import "./base.less";
+@import "./global.less";
+
+.sapMLnk:focus::after {
+	width: calc(~"100% - 0.1875rem");
+	height: calc(~"100% - 0.1875rem");
+	border-width: 0.125rem;
+}

@@ -1,0 +1,26 @@
+{
+  "name": "@ui5/webcomponents-base",
+  "version": "0.7.0",
+  "description": "UI5 Web Components: webcomponents.base",
+  "author": "SAP SE (https://www.sap.com)",
+  "license": "Apache-2.0",
+  "keywords": [
+    "openui5",
+    "sapui5",
+    "ui5"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SAP/ui5-webcomponents.git"
+  },
+  "scripts": {
+    "clean": "rimraf dist"
+  },
+  "dependencies": {
+    "@polymer/polymer": "^3.1.0",
+    "@ui5/webcomponents-core": "0.7.0"
+  },
+  "resolutions": {
+    "dir-glob": "2.0.0"
+  }
+}

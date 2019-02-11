@@ -1,0 +1,30 @@
+/* ============================= */
+/* Global Base parameters        */
+/* ============================= */
+
+@import "./base.less";
+@import "./global.less";
+
+ui5-calendar {
+	display: inline-block;
+}
+
+:host(ui5-calendar) {
+	display: inline-block;
+}
+
+.sapWCYearPickerHidden,
+.sapWCMonthPickerHidden,
+.sapWCDayPickerHidden {
+	display: none;
+}
+
+.sapUiCal {
+	background: @sapUiListBackground;
+
+	& ui5-daypicker,
+	& ui5-month-picker,
+	& ui5-yearpicker {
+		vertical-align: top;
+	}
+}

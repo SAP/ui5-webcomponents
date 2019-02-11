@@ -1,0 +1,64 @@
+/* ============================= */
+/* Global Base parameters        */
+/* ============================= */
+
+@import "./base.less";
+@import "./global.less";
+
+/* ======================================= */
+/* CSS for ListItem                        */
+/* Base theme                              */
+/* ======================================= */
+
+.sapMSLI {
+	&.sapMLIBActive .sapMSLITitle {
+		color: @sapUiListActiveTextColor;
+	}
+
+	.sapMSLITitle {
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		font-size: 1rem;
+		height: 3rem;
+		line-height: 3rem;
+		color: @sapUiListTextColor;
+	}
+
+	.sapMSLIImg {
+		margin: 0.5rem 0.75rem 0.5rem 0rem;
+		height: 2rem;
+		width: 2rem;
+	}
+
+	.sapMLIBContent {
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		-webkit-box-flex: 1;
+		flex: auto;
+		display: -webkit-box;
+		display: flex;
+		-webkit-box-align: center;
+		align-items: center;
+	}
+}
+
+/* Compact size */
+.sapUiSizeCompact {
+	.sapMSLI {
+		height: 2rem;
+
+		.sapMSLITitle {
+			height: 2rem;
+			line-height: 2rem;
+			font-size: @sapMFontMediumSize;
+		}
+
+		.sapMSLIImg {
+			margin-top: 0.55rem;
+			height: 1.75rem;
+			width: 1.75rem;
+		}
+	}
+}

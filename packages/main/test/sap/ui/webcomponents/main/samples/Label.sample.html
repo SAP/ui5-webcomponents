@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>&lt;ui5-label&gt;</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<link rel="stylesheet" href="../../../../../../www/home/core.css">
+
+	<script src="../../../../../../test-resources/playground/libs/google-code-prettify/prettify.js"></script>
+	<link href="../../../../../../test-resources/playground/libs/google-code-prettify/sunburst.css" type="text/css" rel="stylesheet">
+
+	<link href="../../../../../../test-resources/playground/css/api.css" type="text/css" rel="stylesheet">
+
+	<script data-id="sap-ui-config" type="application/json">
+		{
+			"theme": "sap_fiori_3",
+			"language": "EN"
+		}
+	</script>
+
+	<script src="../../../../../../resources/sap/ui/webcomponents/main/bundle.esm.js"
+	        type="module"
+	>
+	</script>
+
+	<script nomodule src="../../../../../../resources/sap/ui/webcomponents/main/bundle.es5.js">
+	</script>
+</head>
+<body class="sapUiBody example-wrapper">
+
+	<header>
+		<h2 class="control-header">Label</h2>
+		<div style="margin-bottom: 2rem; font-weight: 300; font-size: 1.1rem; color: #666666;">&lt;ui5-label&gt;</div>
+	</header>
+
+	<section>
+		<h3>Basic Label</h3>
+		<div class="snippet">
+			<ui5-label>The quick brown fox jumps over the lazy dog.</ui5-label>
+		</div>
+		<pre class="prettyprint lang-html"><xmp>
+<ui5-label>Simple Label</ui5-label>
+		</xmp></pre>
+	</section>
+
+	<section>
+		<h3>Required Label</h3>
+		<div class="snippet">
+			<ui5-label required>Required Label</ui5-label>
+		</div>
+		<pre class="prettyprint lang-html"><xmp>
+<ui5-label required>Required Label</ui5-label>
+		</xmp></pre>
+	</section>
+
+	<section>
+		<h3>Truncated Label</h3>
+		<div class="snippet">
+			<ui5-label style="width:200px">Long labels are truncated by default.</ui5-label>
+		</div>
+		<pre class="prettyprint lang-html"><xmp>
+<ui5-label style="width:200px">Long labels are truncated by default.</ui5-label>
+		</xmp></pre>
+	</section>
+
+	<section>
+		<h3>Wrapped Label</h3>
+		<div class="snippet">
+			<ui5-label style="width:200px" wrap>Long labels can wrap if the 'wrap' property is set.</ui5-label>
+		</div>
+		<pre class="prettyprint lang-html"><xmp>
+<ui5-label style="width:200px" wrap>Long labels can wrap if the 'wrap' property is set.</ui5-label>
+		</xmp></pre>
+	</section>
+
+	<script>
+		window.prettyPrint();
+	</script>
+
+	<script defer src="../../../../../../www/samples/settings.js"></script>	
+</body>
+
+</html>

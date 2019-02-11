@@ -1,0 +1,19 @@
+/* ============================= */
+/* Base theme                    */
+/* ============================= */
+@import "../base/YearPicker.less";
+
+/* ============================= */
+/* Global Belize parameters      */
+/* ============================= */
+@import "./base.less";
+@import "./global.less";
+
+.sapWCYearPickerItem {
+	border-radius: 0.25rem;
+	background: darken(@sapUiListBackground, 3);
+
+	&:focus {
+		background: darken(@sapUiListBackground, 3);
+	}
+}

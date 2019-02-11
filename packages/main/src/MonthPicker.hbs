@@ -1,0 +1,26 @@
+<div {{> controlData}}
+	class="sapWCMonthPicker"
+	role="grid"
+	aria-readonly="false"
+	aria-multiselectable="false"
+	style="{{styles.main}}"
+>
+	{{#each ctr._quarters}}
+		<div class="{{../../classes.quarter}}">
+
+			{{#each this}}
+				<div
+					id="{{this.id}}"
+					data-sap-timestamp={{this.timestamp}}
+					tabindex={{this._tabIndex}}
+					class="{{this.classes}}"
+					role="gridcell"
+					aria-selected="false"
+				>
+					{{this.name}}
+				</div>
+			{{/each}}
+
+		</div>
+	{{/each}}
+</div>

@@ -1,0 +1,26 @@
+<button {{> controlData}}
+		class="{{classes.main}}"
+		style="{{styles.main}}"
+		disabled="{{ctr.disabled}}"
+		aria-disabled="{{ariaDisabled}}"
+		title="{{ctr.tooltip}}"
+		tabindex="{{tabindex}}"
+		{{> ariaPressed}}
+	>
+		{{#if ctr._iconSettings}}
+			<ui5-icon
+				class="{{classes.icon}}"
+				src="{{ctr._iconSettings.src}}"
+			></ui5-icon>
+		{{/if}}
+
+		{{#if ctr._nodeText}}
+			<span id="{{ctr._id}}-content" class="{{classes.text}}">
+				<bdi>{{ctr._nodeText}}</bdi>
+			</span>
+		{{/if}}
+</button>
+
+{{#*inline "ariaPressed"}}
+	aria-pressed="{{pressed}}"
+{{/inline}}

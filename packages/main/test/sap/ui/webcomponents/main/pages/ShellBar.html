@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Shell Bar</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<script id="sap-ui-config" type="application/json">
+		{
+			"rtl": false,
+			"compactSize": false
+		}
+	</script>
+
+	<script src="../../../../../../resources/sap/ui/webcomponents/main/bundle.esm.js"
+		type="module"
+		id="sap-ui-bootstrap"
+	>
+	</script>
+
+	<script nomodule src="../../../../../../resources/sap/ui/webcomponents/main/bundle.es5.js">
+	</script>
+
+	<style>
+		body, html {
+			width: 100%;
+			height: 100%;
+			padding: 0;
+			margin: 0;
+		}
+	</style>
+</head>
+
+<body>
+	<!-- <ui5-shellbar 
+		product-title="Product Title"
+		logo="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg"
+		second-title="Second Title"
+	></ui5-shellbar> -->
+
+
+	<ui5-shellbar
+		id="shellbar"
+		primary-title="Aliquip proident pariatur cupidatat laboris occaecat adipisicing do esse velit est."
+		logo="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg"
+		second-title="Second Title"
+		notification-count="42"
+		show-profile
+		show-notification
+		show-product-switch
+		show-search
+		show-co-pilot
+	>
+		<ui5-shellbar-item id="disc" src="sap-icon://disconnected" text="Disconnect"></ui5-shellbar-item>
+		<ui5-shellbar-item id="call" src="sap-icon://incoming-call" text="Incoming Calls"></ui5-shellbar-item>
+
+		<ui5-input data-ui5-slot="input"></ui5-input>
+	</ui5-shellbar>
+
+	<script>
+		document.getElementById("disc").addEventListener("press", event => {
+			console.log(event.target);
+		});
+
+		document.getElementById("call").addEventListener("press", event => {
+			console.log(event.target);
+		});
+
+		document.getElementById("shellbar").addEventListener("notificationPress", event => {
+			console.log("notifications");
+		});
+
+		document.getElementById("shellbar").addEventListener("profilePress", event => {
+			console.log("profile");
+		});
+
+		document.getElementById("shellbar").addEventListener("productSwitchPress", event => {
+			console.log("product switch");
+		});
+
+		document.getElementById("shellbar").addEventListener("titlePress", event => {
+			console.log("title pressed");
+		});
+	</script>
+</body>
+</html>

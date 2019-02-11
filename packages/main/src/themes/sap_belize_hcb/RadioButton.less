@@ -1,0 +1,43 @@
+/* ============================= */
+/* Base theme                    */
+/* ============================= */
+@import "../base/RadioButton.less";
+@import "../sap_belize/RadioButton.less";
+
+/* ============================= */
+/* Global HCB parameters      */
+/* ============================= */
+@import "./base.less";
+@import "./global.less";
+
+.sapMRb:focus:before {
+	border-width: 0.125rem;
+	border-style: dotted;
+}
+
+.sapMRb {
+
+	&.sapMRbErr,
+	&.sapMRbWarn {
+		stroke-dasharray: 5;
+
+		&.sapMRbSel .sapMRbSvgInner {
+			fill: @sapUiContentIconColor;
+		}
+	}
+
+	&.sapMRbSel {
+		& .sapMRbSvgInner {
+			fill: @sapUiContentIconColor;
+		}
+	}
+
+	&:not(.sapMRbDis):not(.sapMRbRo) {
+		&:hover {
+			& .sapMRbSvgOuter {
+				fill: @sapUiSelected;
+			}
+		}
+	}
+}
+

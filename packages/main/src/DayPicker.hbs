@@ -1,0 +1,47 @@
+<div {{> controlData}} class="{{classes.wrapper}}" style="{{styles.wrapper}}">
+
+	<div class="{{classes.weekNumberContainer}}">
+		{{#each ctr._weekNumbers}}
+			<div class="sapWCDayPickerWeekNameContainer">
+				<span class="sapWCDayPickerWeekName">{{this}}</span>
+			</div>
+		{{/each}}
+	</div>
+
+	<div id="{{ctr._id}}-content" class="{{classes.content}}">
+		<div role="row" class="{{classes.weekDaysContainer}}">
+			{{#each ctr._dayNames}}
+				<div
+					id={{this._id}}
+					role="columnheader"
+					aria-label="{{this.name}}"
+					class="{{this.classes}} sapWCDayPickerDayName">
+					{{this.ultraShortName}}
+				</div>
+			{{/each}}
+		</div>
+		<div id="{{ctr._id}}-days" class="sapWCDayPickerItemsContainer" tabindex="-1">
+			{{#each ctr._weeks}}
+				<div style="display: flex;">
+					{{#each this}}
+						<div
+							id="{{this.id}}"
+							tabindex="{{this._tabIndex}}"
+							data-sap-timestamp="{{this.timestamp}}"
+							data-sap-index="{{this._index}}"
+							role="gridcell"
+							aria-selected="{{this.selected}}"
+							class="{{this.classes}} sapWCDayPickerDay">
+								<span 
+									class="sapWCDayPickerDayText"
+									data-sap-timestamp="{{this.timestamp}}"
+									data-sap-index="{{this._index}}">
+										{{this.iDay}}
+								</span>
+						</div>
+					{{/each}}
+				</div>
+			{{/each}}
+		</div>
+	</div>
+</div>

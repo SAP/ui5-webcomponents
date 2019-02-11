@@ -1,0 +1,43 @@
+<div {{> controlData}}
+		data-sap-ui-fastnavgroup="true"
+		class="{{classes.main}}"
+		style="{{styles.main}}"
+		role="{{accRole}}"
+>
+	<!-- header: either header or h1 with header text -->
+	{{#if ctr.fixed}}
+		{{> header}}
+	{{else}}
+		<header class="{{classes.header}}">
+			<ui5-icon
+				class="{{classes.icon}}"
+				src="{{ctr._icon.src}}"
+				title="{{ctr._icon.title}}"
+				tabindex="0"
+				aria-expanded="{{expanded}}"
+				aria-labelledby="{{ariaLabelledBy}}"
+			></ui5-icon>
+			{{> header}}
+		</header>
+	{{/if}}
+
+	<!-- content area -->
+	<div class="{{classes.content}}" tabindex="-1" style="{{styles.content}}">
+		{{#each ctr.content}}
+			<slot name="{{this._slot}}"></slot>
+		{{/each}}
+	</div>
+</div>
+
+{{#*inline "header"}}
+	{{#if ctr.header}}
+		<div class="sapMPanelHdrToolbar">
+			<slot name="{{ctr.header._slot}}"></slot>
+		</div>
+	{{/if}}
+	{{#if shouldRenderH1}}
+		<h1 id="{{ctr._id}}-header" class="sapMPanelHdr">
+			{{ctr.headerText}}
+		</h1>
+	{{/if}}
+{{/inline}}

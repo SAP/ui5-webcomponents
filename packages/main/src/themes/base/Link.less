@@ -1,0 +1,85 @@
+/* ============================= */
+/* Global Base parameters        */
+/* ============================= */
+
+@import "./base.less";
+@import "./global.less";
+
+/* =========================== */
+/* CSS for ui5-link            */
+/* Base theme                  */
+/* =========================== */
+:host(ui5-link),
+ui5-link {
+	display: inline-block;
+	max-width: 100%;
+
+	& span[data-sap-ui-wc-placeholder] {
+		display: flex;
+	}
+}
+
+.sapMLnk {
+	color: @sapUiLink;
+	text-decoration: none;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	word-wrap: normal;
+	font-family: @sapUiFontFamily;
+	font-size: @sapMFontMediumSize;
+	cursor: pointer;
+	display: inline-block;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	outline: none;
+	
+	&:not(.sapMLnkDsbl):hover {
+		text-decoration: underline;
+		color: @sapUiLinkHover;
+	}
+
+	&.sapMLnkDsbl {
+		text-shadow: none;
+		outline: none;
+		cursor: default;
+		pointer-events: none;
+	}
+
+	&.sapMLnkSubtle {
+		color: darken(@sapUiLink, 15);
+	}
+
+	&.sapMLnkEmphasized {
+		font-weight: bold;
+	}
+	
+	&.sapMLnkSubtle:focus {
+		color: @sapUiLink;
+	}
+
+	&:visited {
+		color: @sapUiLinkVisited;
+	}
+
+	&:focus {
+		text-decoration: underline;
+
+		&::after {
+			content: "";
+			width: calc(~"100% - 0.125rem");
+			height: calc(~"100% - 0.125rem");
+			position: absolute;
+			left: 0px;
+			border: 1px dotted @sapUiContentFocusColor;
+			top: 0;
+			outline: none;
+		}
+	}
+}
+
+.sapMLnk.sapMLnkWrapping {
+	white-space: normal;
+	word-wrap: break-word;
+}

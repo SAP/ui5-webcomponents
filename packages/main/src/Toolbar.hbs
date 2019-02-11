@@ -1,0 +1,10 @@
+<div {{> controlData}}
+	class="{{classes.main}}"
+	tabindex="{{_tabIndex}}"
+>
+	{{#each content}}
+		<span class="{{this.classes}}">
+			<slot name="{{this.child._slot}}"></slot>
+		</span>
+	{{/each}}
+</div>

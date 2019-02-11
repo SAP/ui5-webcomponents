@@ -1,0 +1,46 @@
+<div {{> controlData}} class="{{classes.main}}" style="{{styles.main}}">
+
+	<ui5-calendar-header
+		id="{{ctr._id}}-head"
+		month-text="{{ctr._header.monthText}}"
+		year-text="{{ctr._header.yearText}}"
+		.primaryCalendarType="{{ctr._oMonth.primaryCalendarType}}"
+		@pressPrevious="{{ctr._header.onPressPrevious}}"
+		@pressNext="{{ctr._header.onPressNext}}"
+		@btn1Press="{{ctr._header.onBtn1Press}}"
+		@btn2Press="{{ctr._header.onBtn2Press}}"
+	></ui5-calendar-header>
+
+	<div id="{{ctr._id}}-content" class="sapUiCalContent">
+		<ui5-daypicker
+			id="{{ctr._id}}-daypicker"
+			class="{{classes.dayPicker}}"
+			format-pattern="{{ctr._oMonth.formatPattern}}"
+			.selectedDates="{{ctr._oMonth.selectedDates}}"
+			._hidden="{{ctr._oMonth._hidden}}"
+			.primaryCalendarType="{{ctr._oMonth.primaryCalendarType}}"
+			timestamp="{{ctr._oMonth.timestamp}}"
+			@selectionChange="{{ctr._oMonth.onSelectedDatesChange}}"
+			@navigate="{{ctr._oMonth.onNavigate}}"
+		></ui5-daypicker>
+
+		<ui5-month-picker
+			id="{{ctr._id}}-MP"
+			class="{{classes.monthPicker}}"
+			._hidden="{{ctr._monthPicker._hidden}}"
+			.primaryCalendarType="{{ctr._oMonth.primaryCalendarType}}"
+			timestamp="{{ctr._monthPicker.timestamp}}"
+			@selectedMonthChange="{{ctr._monthPicker.onSelectedMonthChange}}"
+		></ui5-month-picker>
+
+		<ui5-yearpicker
+				id="{{ctr._id}}-YP"
+				class="{{classes.yearPicker}}"
+				._hidden="{{ctr._yearPicker._hidden}}"
+				.primaryCalendarType="{{ctr._oMonth.primaryCalendarType}}"
+				timestamp="{{ctr._yearPicker.timestamp}}"
+				._selectedYear="{{ctr._yearPicker._selectedYear}}"
+				@selectedYearChange="{{ctr._yearPicker.onSelectedYearChange}}"
+		></ui5-yearpicker>
+	</div>
+</div>

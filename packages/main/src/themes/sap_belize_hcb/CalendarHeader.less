@@ -1,0 +1,32 @@
+/* ============================= */
+/* Base theme                    */
+/* ============================= */
+@import "../base/CalendarHeader.less";
+@import "../sap_belize/CalendarHeader.less";
+
+/* ============================= */
+/* Global Belize parameters      */
+/* ============================= */
+@import "./base.less";
+@import "./global.less";
+
+.sapWCCalHeadArrowButton,
+.sapWCCalHeadMiddleButton {
+	border: 1px solid @sapUiButtonBorderColor;
+	border-radius: 0.375rem;
+}
+
+.sapWCCalHeadMiddleButton {
+	width: 5.75rem;
+	flex: auto;
+}
+
+.sapWCCalHeadMiddleButton:focus {
+	border-color: transparent;
+	border-radius: 0px;
+	border: 0.125rem dotted @sapUiContentFocusColor;
+
+	&::after {
+		display: none;
+	}
+}

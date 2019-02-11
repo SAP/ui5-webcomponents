@@ -1,0 +1,126 @@
+/* ============================= */
+/* Global Base parameters        */
+/* ============================= */
+
+@import "./base.less";
+@import "./global.less";
+
+/* ============================ */
+/* CSS for ui5-title            */
+/* Base theme                   */
+/* ============================ */
+
+:host(ui5-title) {
+	display: inline-block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	color: @sapUiGroupTitleTextColor;
+	max-width: 100%;
+	vertical-align: bottom;
+}
+
+ui5-title {
+	display: inline-block;
+	overflow: hidden;
+	color: @sapUiGroupTitleTextColor;
+	max-width: 100%;
+	vertical-align: bottom;
+}
+
+.sapMTitle {
+	display: inline-block;
+	position: relative;
+	font-weight: @sapUiFontHeaderWeight;
+	font-family: @sapUiFontHeaderFamily;
+	text-shadow: @sapUiShadowText;
+	box-sizing: border-box;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	max-width: 100%;
+	vertical-align: bottom;
+	-webkit-margin-before: 0;
+	-webkit-margin-after: 0;
+	-webkit-margin-start: 0;
+	-webkit-margin-end: 0;
+	margin: 0;
+	cursor: text;
+}
+
+.sapMTitle.sapMTitleWrap {
+	white-space: pre-line;
+}
+
+
+/* Alignments */
+
+.sapMTitleAlignBegin {
+	text-align: left;
+	text-align: start;
+}
+
+[data-sap-ui-wc-root][dir=rtl][data-sap-ui-browser^="ie"] .sapMTitleAlignBegin,// TODO remove after 1.62 version
+[data-sap-ui-wc-root][dir=rtl][data-sap-ui-browser^="ed"] .sapMTitleAlignBegin {
+	text-align: right;
+}
+
+.sapMTitleAlignLeft {
+	text-align: left;
+}
+
+.sapMTitleAlignEnd {
+	text-align: right;
+	text-align: end;
+}
+
+[data-sap-ui-wc-root][dir=rtl][data-sap-ui-browser^="ie"] .sapMTitleAlignEnd, // TODO remove after 1.62 version
+[data-sap-ui-wc-root][dir=rtl][data-sap-ui-browser^="ed"] .sapMTitleAlignEnd {
+	text-align: left;
+}
+
+.sapMTitleAlignRight {
+	text-align: right;
+}
+
+.sapMTitleAlignCenter {
+	text-align: center;
+}
+
+/* Title levels */
+
+/* Level H1 */
+
+.sapMTitleStyleH1 {
+	font-size: @sapMFontHeader1Size;
+}
+
+/* Level H2 */
+
+.sapMTitleStyleH2 {
+	font-size: @sapMFontHeader2Size;
+}
+
+/* Level H3 */
+
+.sapMTitleStyleH3 {
+	font-size: @sapMFontHeader3Size;
+}
+
+/* Level H4 */
+
+.sapMTitleStyleH4 {
+	font-size: @sapMFontHeader4Size;
+}
+
+/* Level H5 */
+
+.sapMTitleStyleH5 {
+	font-size: @sapMFontHeader5Size;
+}
+
+/* Level H6 */
+
+.sapMTitleStyleH6 {
+	font-size: @sapMFontHeader6Size;
+}

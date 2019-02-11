@@ -1,0 +1,10 @@
+# Note: Changes to this file also must be applied to the top level .eslintignore file.
+target
+dist
+src/build
+lib
+test
+bundle.esm.js
+bundle.es5.js
+rollup.config.js
+wdio.conf.js

@@ -1,0 +1,155 @@
+<div {{> controlData}} class="{{classes.main}}">
+	<div role='tablist' class="{{classes.tablist}}">
+		<ui5-icon
+			src="sap-icon://slim-arrow-left"
+			class="{{ctr._leftArrow.classes}}"
+			tabindex="-1"></ui5-icon>
+		<div id="{{ctr._id}}-scrollContainer" class="sapMITBScrollContainer">
+			<div id="{{ctr._id}}-head" tabindex="-1" class="{{classes.head}}">
+				{{#each ctr._headerItems}}
+					{{#if isSeparator}}
+						{{> renderTabSeparator}}
+					{{else}}
+						{{> renderTab}}
+					{{/if}}
+				{{/each}}
+			</div>
+		</div>
+		<ui5-icon
+			src="sap-icon://slim-arrow-right"
+			class="{{ctr._rightArrow.classes}}"
+			tabindex="-1"></ui5-icon>
+		{{#if ctr.showOverflow}}
+			<ui5-button ._customAttributes="{{ctr._overflowButton._customAttributes}}"
+						id="{{ctr._id}}-overflow-button"
+						class="{{ctr._overflowButton.classes}}"
+						@press="{{ctr._overflowButton.onPress}}"
+						icon="sap-icon://slim-arrow-down" type="Transparent"></ui5-button>
+		{{/if}}
+	</div>
+	<div id="{{ctr._id}}-containerContent" class="{{classes.content}}">
+		<div id="{{ctr._id}}-content" class="sapMITBContent" role="tabpanel">
+			{{#each ctr._selectedContent}}
+				<slot name="{{this._slot}}"></slot>
+			{{/each}}
+		</div>
+	</div>
+	{{#if ctr.showOverflow}}
+		<ui5-popover id="{{ctr._id}}-popover"
+					 hide-arrow
+					 hide-header
+					 placement-type="Bottom"
+					 horizontal-align="Right">
+			<ui5-list @itemPress="{{ctr._overflowList.onItemPress}}">
+				{{#each ctr._overflowList.items}}
+					<ui5-li-custom id="{{this.key}}"
+								   type="{{this.type}}"
+								   selected="{{this.selected}}"
+								   class="{{this.classes}}">
+						<div class="{{this.innerClasses}}">
+							{{#if this.content.icon}}
+								<ui5-icon src="{{this.content.icon}}" class="sapMITBSelectItemIcon"></ui5-icon>
+							{{/if}}
+							{{#unless this.content._isNoText}}
+								<span class="sapMITBText sapMText sapMTextNoWrap">{{this.content.displayText}}</span>
+							{{/unless}}
+							{{#if this.content.isIconColorRead}}
+								<div id="{{this.content._id}}-iconColor" style="display: none;">{{this.content.iconColor}}</div>
+							{{/if}}
+						</div>
+					</ui5-li-custom>
+				{{/each}}
+			</ui5-list>
+		</ui5-popover>
+	{{/if}}
+</div>
+
+{{#*inline "renderTab"}}
+	<div id="{{id}}"
+			tabindex="{{_tabIndex}}"
+			class="{{classes.main}}"
+			role="tab"
+			aria-selected="{{isSelected}}"
+			aria-disabled="{{isDisabled}}"
+			aria-posinset="{{posinset}}"
+			aria-setsize="{{setsize}}"
+			aria-controls="{{contentId}}"
+			aria-labelledby="{{labelledbyControls}}">
+		{{#if showAll}}
+			<div id="{{id}}-tab" class="sapMITBTab">
+		<span id="{{id}}-count" class="sapMITBCount">
+			{{count}}
+		</span>
+			</div>
+			{{#if displayText}}
+				<div id="{{id}}-text" class="sapMITBText">
+					{{displayText}}
+				</div>
+			{{/if}}
+		{{else if isHorizontalDesign}}
+			<div id="{{id}}-tab" class="sapMITBTab">
+				{{#if isIconColorRead}}
+					<div id="{{id}}-iconColor" style="display: none;">{{iconColor}}</div>
+				{{/if}}
+				{{#if icon}}
+					<ui5-icon src="{{icon}}" class="sapMITBFilterIcon  sapMITBFilter{{iconColor}}"></ui5-icon>
+				{{/if}}
+			</div>
+			<div class="sapMITBHorizontalWrapper">
+			<span id="{{id}}-count" class="sapMITBCount">
+				{{count}}
+			</span>
+				<div id="{{id}}-text" class="sapMITBText">
+					{{displayText}}
+				</div>
+			</div>
+		{{else if isInline}}
+			<div id="{{id}}-text" class="sapMITBText">
+				{{displayText}}
+			</div>
+		{{else if isNoIcon}}
+			<div id="{{id}}-tab" class="sapMITBTab">
+			<span id="{{id}}-count" class="sapMITBCount">
+				{{count}}
+			</span>
+			</div>
+			{{#if displayText}}
+				<div id="{{id}}-text" class="sapMITBText">
+					{{displayText}}
+				</div>
+			{{/if}}
+		{{else if isNoText}}
+			<div id="{{id}}-tab" class="sapMITBTab">
+				{{#if isIconColorRead}}
+					<div id="{{id}}-iconColor" style="display: none;">{{iconColor}}</div>
+				{{/if}}
+				{{#if icon}}
+					<ui5-icon src="{{icon}}" class="sapMITBFilterIcon sapMITBFilter{{iconColor}}"></ui5-icon>
+				{{/if}}
+				<span id="{{id}}-count" class="sapMITBCount">
+					{{count}}
+				</span>
+			</div>
+		{{else}}
+			<div id="{{id}}-tab" class="sapMITBTab">
+				{{#if isIconColorRead}}
+					<div id="{{id}}-iconColor" style="display: none;">{{iconColor}}</div>
+				{{/if}}
+				{{#if icon}}
+					<ui5-icon src="{{icon}}" class="sapMITBFilterIcon sapMITBFilter{{iconColor}}"></ui5-icon>
+				{{/if}}
+				<span id="{{id}}-count" class="sapMITBCount">
+					{{count}}
+				</span>
+			</div>
+			<div id="{{id}}-text" class="sapMITBText">
+				{{displayText}}
+			</div>
+		{{/if}}
+		<div class="sapMITBContentArrow"></div>
+	</div>
+{{/inline}}
+
+{{#*inline "renderTabSeparator"}}
+	<div role="separator" class="sapMITBItem sapMITBSep sapMITBSepLine"></div>
+{{/inline}}

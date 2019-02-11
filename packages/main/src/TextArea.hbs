@@ -1,0 +1,36 @@
+<div {{> controlData}}
+	class="{{classes.main}}"
+	style="{{styles.main}}"
+	aria-invalid="{{ariaInvalid}}"
+	aria-labelledBy="{{ariaLabelledBy}}"
+>
+
+	{{#if ctr.growing}}
+		<div id="{{ctr._id}}-mirror" style="{{styles.mirror}}" class="{{classes.mirror}}" aria-hidden="true">
+			{{#each textTokens}}
+				{{this.text}}
+
+				{{#unless this.last}}
+					<br/>
+				{{/unless}}
+			{{/each}}
+		</div>
+	{{/if}}
+
+	<textarea
+		id="{{ctr._id}}-inner"
+		class="{{classes.inner}}"
+		style="{{styles.inner}}"
+		placeholder="{{ ctr.placeholder }}"
+		?disabled="{{ctr.disabled}}"
+		?readonly="{{ctr.readonly}}"
+		maxlength="{{maxLength}}"
+		.value="{{ctr.value}}"
+		@change="{{ctr._listeners.change}}"
+		data-sap-focus-ref>
+	</textarea>
+
+	{{#if ctr.showExceededText}}
+		<span class="{{classes.exceededText}}">{{exceededText}}</span>
+	{{/if}}
+</div>

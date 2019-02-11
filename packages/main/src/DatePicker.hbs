@@ -1,0 +1,51 @@
+<div {{> controlData}}
+		class="{{classes.main}}"
+		style="{{styles.main}}"
+>
+	<!-- INPUT -->
+	<ui5-input
+			id="{{ctr._id}}-inner"
+			placeholder="{{ctr._input.placeholder}}"
+			type="{{ctr._input.type}}"
+			value="{{ctr.value}}"
+			?disabled="{{ctr.disabled}}"
+			?readonly="{{ctr.readonly}}"
+			value-state="{{ctr.valueState}}"
+			@change="{{ctr._input.onChange}}"
+			@liveChange="{{ctr._input.onLiveChange}}"
+			data-sap-focus-ref
+	>
+		{{#if showIcon}}
+			<ui5-icon
+				data-ui5-slot="icon"
+				src="{{ctr._input.icon.src}}"
+				class="{{classes.icon}}"
+				tabindex="-1"
+			></ui5-icon>
+		{{/if}}
+	</ui5-input>
+
+	<!-- POPOVER -->
+	<ui5-popover
+			id="{{ctr._id}}-popover"
+			allow-target-overlap="{{ctr._popover.allowTargetOverlap}}"
+			placement-type="{{ctr._popover.placementType}}"
+			hide-header="{{ctr._popover.hideHeader}}"
+			hide-arrow="{{ctr._popover.hideArrow}}"
+			horizontal-align="{{ctr._popover.horizontalAlign}}"
+			stay-open-on-scroll="{{ctr._popover.stayOpenOnScroll}}"
+			.customClasses="{{ctr._popover._customClasses}}"
+			@afterClose="{{ctr._popover.afterClose}}"
+			@afterOpen="{{ctr._popover.afterOpen}}"
+	>
+		<ui5-calendar
+				id="{{ctr._id}}-calendar"
+				data-ui5-slot="content"
+				primary-calendar-type="{{ctr._calendar.primaryCalendarType}}"
+				format-pattern="{{ctr._calendar.formatPattern}}"
+				timestamp="{{ctr._calendar.timestamp}}"
+				.selectedDates="{{ctr._calendar.selectedDates}}"
+				@selectedDatesChange="{{ctr._calendar.onSelectedDatesChange}}"
+		></ui5-calendar>
+	</ui5-popover>
+</div>

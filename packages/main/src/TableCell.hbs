@@ -1,0 +1,8 @@
+<div {{> controlData}}
+	class="{{classes.main}}"
+	style="{{styles.main}}">
+
+	{{#each ctr.content}}
+		<slot name="{{this._slot}}"></slot>
+	{{/each}}
+</div>

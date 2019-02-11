@@ -1,0 +1,37 @@
+# Ignore .gitignore, target, dist and tmp folders
+.gitignore
+tmp
+temp
+target
+dist
+build
+
+# Ignore default target directory for the npm package 'ui5-codecompletion'
+.ui5
+
+# Ignore npm files/folders
+node_modules
+npm-debug.log
+package-lock.json
+
+# Ignore Mac files
+.DS_Store
+
+# Ignore Visual Studio project and settings files
+*.sln
+*.suo
+web.config
+/.user.project.json
+/sap-ui-cachebuster-info.json
+
+# Ignore Visual Studio Code project and settings files
+.vscode/
+.idea/
+
+# Ignore yarn files
+yarn-error.log*
+yarn-debug.log*
+.yarn-integrity
+
+# Ignore default target directory for the npm package 'ui5-schemas'
+.tmp

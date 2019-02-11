@@ -1,0 +1,52 @@
+<li {{> controlData}}
+	tabindex="{{ctr._tabIndex}}"
+	style="{{styles.main}}"
+	class="{{classes.main}}">
+		{{#if placeSelectionControlBefore}}
+			{{> modeControl}}
+		{{/if}}
+
+		<div id="{{ctr._id}}-content" class="{{classes.inner}}">
+			{{> imageBegin}}
+			{{> iconBegin}}
+			{{> listItemContent}}
+		</div>
+
+		{{> iconEnd}}
+
+		{{#if placeSelectionControlAfter}}
+			{{> modeControl}}
+		{{/if}}
+</li>
+
+
+{{#*inline "listItemContent"}}{{/inline}}
+{{#*inline "imageBegin"}}{{/inline}}
+{{#*inline "iconBegin"}}{{/inline}}
+{{#*inline "iconEnd"}}{{/inline}}
+
+{{#*inline "modeControl"}}
+	{{#if modeSingleSelect}}
+		<ui5-radiobutton
+				id="{{ctr._id}}-singleSelectionControl"
+				class="radioButtonInListItem"
+				selected="{{ctr.selected}}">
+		</ui5-radiobutton>
+	{{/if}}
+
+	{{#if modeMultiSelect}}
+		<ui5-checkbox
+				id="{{ctr._id}}-multiSelectionControl"
+				checked="{{ctr.selected}}">
+		</ui5-checkbox>
+	{{/if}}
+
+	{{#if modeDelete}}
+		<ui5-button
+				id="{{ctr._id}}-deleteSelectionControl"
+				type="Transparent"
+				icon="sap-icon://decline"
+				@press="{{ctr._fnOnDelete}}"
+		></ui5-button>
+	{{/if}}
+{{/inline}}

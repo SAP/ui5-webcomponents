@@ -1,0 +1,54 @@
+/* ============================= */
+/* Global Base parameters        */
+/* ============================= */
+
+@import "./base.less";
+@import "./global.less";
+
+/* ============================= */
+/* Base theme                    */
+/* ============================= */
+
+@sap_wc_dp_icon_width: 2.375rem;
+
+:host(ui5-datepicker) {
+	display: inline-block;
+	width: 100%;
+
+	& ui5-input ui5-icon {
+		color: @sapUiContentIconColor;
+		outline: none;
+
+		&:active {
+			background-color: @sapUiButtonLiteActiveBackground;
+			color: @sapUiButtonActiveTextColor;
+		}
+	}
+}
+
+// required for browsers without native shadow dom
+ui5-datepicker {
+	display: inline-block;
+	width: 100%;
+}
+
+.sapWCDPIcon {
+	width: @sap_wc_dp_icon_width;
+	cursor: pointer;
+	color: @sapUiContentIconColor;
+
+	&.sapWCDPIconPressed,
+	&.sapWCDPIconPressed:active {
+		background: @sapUiToggleButtonPressedBackground;
+		color: @sapUiButtonActiveTextColor;
+	}
+
+	&:not(.sapWCDPIconPressed):not(:active):hover {
+		background: @sapUiButtonLiteHoverBackground;
+	}
+
+	&:active {
+		background-color: @sapUiButtonLiteActiveBackground;
+		color: @sapUiButtonActiveTextColor;
+	}
+}

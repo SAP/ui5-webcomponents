@@ -1,0 +1,65 @@
+/* ============================= */
+/* Global Base parameters        */
+/* ============================= */
+
+@import "./base.less";
+@import "./global.less";
+
+@_sap_ui_webcomponents_main_button_base_min_width: 2.5rem;
+@_sap_ui_webcomponents_main_button_base_min_compact_width: 2rem;
+@_sap_ui_webcomponents_main_button_base_height: 2.5rem;
+@_sap_ui_webcomponents_main_button_compact_height: 1.625rem;
+
+:host(ui5-togglebutton) {
+	display: inline-block;
+}
+
+// required for browsers without native shadow dom
+ui5-togglebutton {
+	display: inline-block;
+}
+
+.sapMBtn.sapMToggleBtnPressed.sapMBtnNegative {
+	background-color: @sapUiButtonRejectActiveBackground;
+	border-color: @sapUiButtonRejectActiveBorderColor;
+	color: @sapUiToggleButtonPressedTextColor;
+
+	&:active,
+	&:hover {
+		background-color: darken( @sapUiButtonRejectActiveBackground, 5);
+		border-color: @sapUiButtonRejectActiveBorderColor;
+	}
+}
+
+.sapMBtn.sapMToggleBtnPressed.sapMBtnPositive {
+	background-color: @sapUiButtonAcceptActiveBackground;
+	border-color: @sapUiButtonAcceptActiveBorderColor;
+	color: @sapUiToggleButtonPressedTextColor;
+
+	&:active,
+	&:hover {
+		background-color: darken( @sapUiButtonAcceptActiveBackground, 5);
+		border-color: @sapUiButtonAcceptActiveBorderColor;
+	}
+}
+
+.sapMBtn.sapMToggleBtnPressed,
+.sapMBtn.sapMToggleBtnPressed.sapMBtnEmphasized,
+.sapMBtn.sapMToggleBtnPressed.sapMBtnTransparent {
+	text-shadow: none;
+	background-color: @sapUiToggleButtonPressedBackground;
+	border-color: @sapUiToggleButtonPressedBorderColor;
+	color: @sapUiToggleButtonPressedTextColor;
+
+	&:focus {
+		&::after {
+			border-color: @sapUiContentContrastFocusColor;
+		}
+	}
+
+	&:active,
+	&:hover {
+		background-color: @sapUiToggleButtonPressedHoverBackground;
+		border-color: @sapUiToggleButtonPressedHoverBorderColor;
+	}
+}

@@ -1,0 +1,43 @@
+import IconPool from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/IconPoolProxy";
+import configuration from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Configuration";
+
+const dir = configuration.getRTL() ? "rtl" : "ltr";
+
+class IconTemplateContext {
+	static calculate(state) {
+		const iconInfo = IconPool.getIconInfo(state.src) || {};
+		const role = "presentation";
+
+		const context = {
+			ctr: state,
+			iconContent: iconInfo.content,
+			role: state._customAttributes.role || role,
+			ariaExpanded: state._customAttributes["aria-expanded"],
+			ariaLabelledBy: state._customAttributes["aria-labelledby"],
+			classes: {
+				main: IconTemplateContext.getMainClasses(state, iconInfo),
+			},
+			styles: {
+				main: {
+					"font-family": `'${iconInfo.fontFamily}'`,
+				},
+			},
+			dir,
+		};
+
+		return context;
+	}
+
+	static getMainClasses(state, iconInfo) {
+		return {
+			sapWCIcon: true,
+			sapWCIconMirrorInRTL: !iconInfo.suppressMirroring,
+		};
+	}
+
+	static getARIALabel(iconInfo) {
+		return iconInfo.text || iconInfo.name;
+	}
+}
+
+export default IconTemplateContext;

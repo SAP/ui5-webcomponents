@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>&lt;ui5-list&gt;</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<link rel="stylesheet" href="../../../../../../www/home/core.css">
+
+	<script src="../../../../../../test-resources/playground/libs/google-code-prettify/prettify.js"></script>
+	<link href="../../../../../../test-resources/playground/libs/google-code-prettify/sunburst.css" type="text/css" rel="stylesheet">
+
+	<link href="../../../../../../test-resources/playground/css/api.css" type="text/css" rel="stylesheet">
+
+	<script data-id="sap-ui-config" type="application/json">
+		{
+			"theme": "sap_fiori_3",
+			"language": "EN"
+		}
+	</script>
+
+	<script src="../../../../../../resources/sap/ui/webcomponents/main/bundle.esm.js"
+	        type="module"
+	>
+	</script>
+
+	<script nomodule src="../../../../../../resources/sap/ui/webcomponents/main/bundle.es5.js">
+	</script>
+</head>
+<body class="sapUiBody example-wrapper">
+
+	<header>
+		<h2 class="control-header">List</h2>
+		<div style="margin-bottom: 2rem; font-weight: 300; font-size: 1.1rem; color: #666666;">&lt;ui5-list&gt;</div>
+	</header>
+
+	<section>
+		<h3>Basic List</h3>
+		<div class="snippet">
+			<ui5-list id="myList" class="full-width">
+				<ui5-li icon="sap-icon://meal">Pineapple</ui5-li>
+				<ui5-li icon="sap-icon://meal">Orange</ui5-li>
+				<ui5-li icon="sap-icon://meal">Banana</ui5-li>
+				<ui5-li icon="sap-icon://meal">Mango</ui5-li>
+			</ui5-list>
+		</div>
+		<pre class="prettyprint lang-html"><xmp>
+<ui5-list id="myList" mode='SingleSelectBegin'>
+	<ui5-li>Pineapple</ui5-li>
+	<ui5-li>Orange</ui5-li>
+	<ui5-li>Banana</ui5-li>
+	<ui5-li>Mango</ui5-li>
+</ui5-list>
+		</xmp></pre>
+	</section>
+
+	<section>
+		<h3>List in Single-selection Mode</h3>
+		<div class="snippet">
+			<ui5-list id="country-selector" class="full-width" mode="SingleSelect" header-text="Select a country:">
+				<ui5-li key="Argentina" type="Active" selected icon="sap-icon://map" icon-end>Argentina</ui5-li>
+				<ui5-li key="Bulgaria" type="Active" icon="sap-icon://map" icon-end>Bulgaria</ui5-li>
+				<ui5-li key="China" type="Active" icon="sap-icon://map" icon-end>China</ui5-li>
+				<ui5-li key="Europe" type="Inactive"  icon="sap-icon://map" icon-end>Europe (ui5-li type='Inactive')</ui5-li>
+			</ui5-list>
+
+			<script>
+				document.getElementById('country-selector').addEventListener("selectionChange", function (event) {
+					var selectedItemsKeys = event.detail.items;
+
+					alert("Key of the selected item:  " + selectedItemsKeys[0].getAttribute("key"));
+				});
+			</script>
+		</div>
+		<pre class="prettyprint lang-html"><xmp>
+<ui5-list id="country-selector" mode="SingleSelect" header-text="Select a country:">
+	<ui5-li key="argentina" type="Active" selected icon="sap-icon://map" icon-end>Argentina</ui5-li>
+	<ui5-li key="bulgaria" type="Active" icon="sap-icon://map" icon-end>Bulgaria</ui5-li>
+	<ui5-li key="china" type="Active" icon="sap-icon://map" icon-end>China</ui5-li>
+	<ui5-li key="europe" type="Inactive" icon="sap-icon://map" icon-end>Europe (ui5-li type='Inactive')</ui5-li>
+</ui5-list>
+
+<script>
+	document.getElementById('country-selector').addEventListener("selectionChange", function (event) {
+		var selectedItemsKeys = event.detail.items;
+
+		alert("Key of the selected item:  " + selectedItemsKeys.join(", "));
+	});
+</script>
+		</xmp></pre>
+	</section>
+
+	<!-- MultiSelection List Example -->
+	<section>
+		<h3>List in Multi-selection Mode</h3>
+		<div class="snippet">
+			<ui5-list id="myList1" class="samples-margin-bottom full-width" mode='MultiSelect' header-text="Multiple selection is possible">
+					<ui5-li type="Active" >Pineapple</ui5-li>
+					<ui5-li type="Active" selected>Orange</ui5-li>
+					<ui5-li type="Active">Banana</ui5-li>
+					<ui5-li type="Active">Mango</ui5-li>
+			</ui5-list>
+
+		<pre class="prettyprint lang-html">
+			<xmp>
+<ui5-list id="myList1" mode='MultiSelect' header-text="Multiple selection is possible">
+	<ui5-li type="Active">Pineapple</ui5-li>
+	<ui5-li type="Active" selected>Orange</ui5-li>
+	<ui5-li type="Active">Banana</ui5-li>
+	<ui5-li type="Active">Mango</ui5-li>
+</ui5-list>
+			</xmp>
+		</pre>
+	</section>
+
+	<!-- Delete List Example -->
+	<section>
+		<h3>List in Delete Mode</h3>
+		<div class="snippet">
+			<ui5-list id="myList5" class="full-width" mode="Delete" header-text="Note: The list items removal is up to application developers">
+				<ui5-li key="arg">Argentina</ui5-li>
+				<ui5-li key="bg">Bulgaria</ui5-li>
+				<ui5-li key="ch">China</ui5-li>
+			</ui5-list>
+		</div>
+		<pre class="prettyprint lang-html"><xmp>
+<ui5-list id="myList5" mode="Delete" header-text="Note: The list items removal is up to application developers">
+	<ui5-li key="arg">Argentina</ui5-li>
+	<ui5-li key="bg">Bulgaria</ui5-li>
+	<ui5-li key="ch">China</ui5-li>
+</ui5-list>
+		</xmp></pre>
+	</section>
+
+	<section>
+		<h3>List with No Data</h3>
+		<div class="snippet">
+			<ui5-list class="full-width" header-text="Products" no-data-text="No Data Available"></ui5-list>
+		</div>
+		<pre class="prettyprint lang-html"><xmp>
+<ui5-list header-text="API: noDataText" no-data-text="No Data Available"></ui5-list>
+		</xmp></pre>
+	</section>
+
+	<script>
+		window.prettyPrint();
+	</script>
+
+	<script defer src="../../../../../../www/samples/settings.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,23 @@
+<div {{> controlData}}
+	class="{{classes.main}}"
+	style="{{styles.main}}"
+	tabindex="{{ctr._tabIndex}}"
+>
+	{{#each visibleCells}}
+		<div class="{{../classes.cellWrapper}}">
+			<slot name="{{this._slot}}"></slot>
+		</div>
+	{{/each}}
+
+	{{#each popinCells}}
+		<div class="{{../classes.popin}}"
+			style="grid-column-end: {{../visibleColumnLength}}" >
+
+			<span class="{{../classes.popinTitle}}">{{this.popinText}}</span>
+			<div>
+				<slot name="{{this.cell._slot}}"></slot>
+			</div>
+		</div>
+	{{/each}}
+
+</div>

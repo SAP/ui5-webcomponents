@@ -1,0 +1,22 @@
+<div {{> controlData}}
+	class="sapWCYearPicker"
+	role="grid"
+	aria-readonly="false"
+	aria-multiselectable="false"
+	style="{{styles.main}}"
+>
+	{{#each ctr._yearIntervals}}
+		<div class="{{../../classes.yearInterval}}">
+			{{#each this}}
+				<div id="{{this.id}}"
+					tabindex="{{this._tabIndex}}"
+					data-sap-timestamp="{{this.timestamp}}"
+					class="{{this.classes}}"
+					role="gridcell"
+					aria-selected="false">
+						{{this.year}}
+				</div>
+			{{/each}}
+		</div>
+	{{/each}}
+</div>

@@ -1,0 +1,38 @@
+<div {{> controlData}}
+	class="{{classes.main}}"
+	style="{{styles.main}}"
+>
+	<!-- header -->
+	{{#if ctr.header}}
+		<slot name="{{ctr.header._slot}}" />
+	{{/if}}
+	{{#if shouldRenderH1}}
+		<header id="{{ctr._id}}-header" class="sapMListHdr sapMListHdrText">
+			{{ctr.headerText}}
+		</header>
+	{{/if}}
+
+	<div id="{{ctr._id}}-before" tabindex="0" class="sapMListDummyArea"></div>
+
+	<ul id="{{ctr._id}}-listUl" class="{{classes.ul}}">
+		{{#each ctr.items}}
+			<slot name="{{this._slot}}" />
+		{{/each}}
+
+		{{#if showNoDataText}}
+			<li id="{{ctr._id}}-nodata" class="{{classes.noData}}" tabindex="{{noDataTabIndex}}">
+				<div id="{{ctr._id}}-nodata-text" class="sapMListNoDataText">
+					{{ctr.noDataText}}
+				</div>
+			</li>
+		{{/if}}
+	</ul>
+
+	{{#if ctr.footerText}}
+		<footer id="{{ctr._id}}-footer" class="sapMListFtr">
+			{{ctr.footerText}}
+		</footer>
+	{{/if}}
+
+	<div id="{{ctr._id}}-after" tabindex="0" class="sapMListDummyArea"></div>
+</div>

@@ -1,0 +1,154 @@
+/* ============================= */
+/* Global Base parameters        */
+/* ============================= */
+
+@import "./base.less";
+@import "./global.less";
+
+/* ============================ */
+/* CSS for control ui5-panel    */
+/* Base theme                   */
+/* ============================ */
+
+:host(ui5-panel) {
+	display: block;
+}
+
+// required for browsers without native shadow dom
+ui5-panel {
+	display: block;
+}
+
+.sapMPanel {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	box-sizing: border-box;
+	// The following needed for calculation of height for content child
+	position: relative;
+}
+
+.sapMPanel > header {
+	display: flex;
+
+	& ui5-icon.sapMPanelIcon {
+		width: 1.5rem;
+		height: 1.5rem;
+		margin-left: 0.75rem;
+		margin-right: 0.75rem;
+		align-self: center;
+		color: @sapUiContentIconColor;
+		transition: transform 0.4s ease-out;
+		cursor: pointer;
+		position: relative;
+
+		&.sapMPanelIconExpanded {
+			transform: rotate(90deg);
+		}
+
+		&:focus::after {
+			content: "";
+			position: absolute;
+			border: 1px dashed @sapUiContentFocusColor;
+			width: 100%;
+			height: 100%;
+			left: -1px;
+			top: -1px;
+			pointer-events: none;
+		}
+	}
+}
+
+.sapMPanelHdr {
+	box-sizing: border-box;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	text-transform: none;
+	height: 3rem;
+	line-height: 3rem;
+	padding: 0 1rem;
+	margin: 0;
+
+	/*
+	* To improve readability Mobile Safari automatically increases
+	* the size of small text so let's disable this
+	*/
+	-webkit-text-size-adjust: none;
+
+	font-weight: @sapUiFontHeaderWeight;
+	font-size: @sapMFontHeader4Size;
+	font-family: @sapUiFontHeaderFamily;
+	color: @sapUiGroupTitleTextColor;
+	background-color: @sapUiGroupTitleBackground;
+}
+
+.sapMPanelContent {
+	padding: 0.625rem 1rem 1.375rem 1rem;
+	box-sizing: border-box;
+	overflow: auto;
+	white-space: normal;
+
+	/* This is needed in order to remove the additional outline added by tabindex=-1*/
+	&:focus {
+		outline: none;
+	}
+}
+
+.sapMPanelExpandablePart {
+	clear: both;
+}
+
+.sapMPanelWrappingDiv,
+.sapMPanelWrappingDivTb {
+	position: relative;
+}
+
+/* if Panel is expandable, we do not wish toolbar to come with own border */
+.sapMPanelWrappingDivTb > .sapMTB {
+	border-width: 0;
+}
+
+.sapMPanelWrappingDiv.sapMPanelWrappingDivExpanded {
+	border-bottom-width: 0;
+}
+
+[data-sap-ui-wc-root].sap-tablet .sapUiFioriObjectPage > section > .sapMPanel,
+[data-sap-ui-wc-root].sap-desktop .sapUiFioriObjectPage > section > .sapMPanel {
+	margin: 1rem 0;
+	padding: 0 1rem;
+	box-sizing: border-box;
+}
+
+.sapMPanel .sapMPanelWrappingDiv .sapMPanelHdr,
+.sapMPanel .sapMPanelWrappingDivTb .sapMIBar.sapMTB {
+	padding-left: 0;
+
+  	>:first-child {
+	  margin-left: 0;
+	}
+}
+
+/* mixin call for creating container content padding classes (arguments: rootContainer, contentSelector) */
+.sapUiContainerContentPadding(~".sapMPanel", ~"> .sapMPanelContent");
+
+.sapMPanelBGSolid {
+	background-color: @sapUiGroupContentBackground;
+}
+
+.sapMPanelBGTransparent {
+	background-color: transparent;
+}
+
+/* if Panel is not expandable, we do wish header to come with own border */
+.sapMPanel > .sapMPanelHdr,
+/* notice: sapMPanelWrappingDiv is available if Panel is expandable */
+.sapMPanelWrappingDiv,
+/* do not want border if expanded and if only header text */
+.sapMPanelWrappingDivTb {
+	border-bottom: 1px solid @sapUiGroupTitleBorderColor;
+}
+
+.sapMPanelContent:not(.sapMPanelBGTransparent) {
+	border-bottom: 1px solid @sapUiGroupTitleBorderColor;
+}

@@ -1,0 +1,20 @@
+/* ============================= */
+/* Base theme                    */
+/* ============================= */
+@import "../base/MonthPicker.less";
+
+/* ============================= */
+/* Global Belize parameters      */
+/* ============================= */
+@import "./base.less";
+@import "./global.less";
+
+
+.sapWCMonthPickerItem {
+	border-radius: 0.25rem;
+	background: darken(@sapUiListBackground, 3);
+
+	&:focus {
+		background: darken(@sapUiListBackground, 3);
+	}
+}

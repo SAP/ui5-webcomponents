@@ -1,0 +1,60 @@
+/* ============================= */
+/* Global Base parameters        */
+/* ============================= */
+
+@import "./base.less";
+@import "./global.less";
+
+/* ============================ */
+/* CSS for control ui5-label    */
+/* Base theme                   */
+/* ============================ */
+
+:host(ui5-label) {
+	display: inline-block;
+	cursor: text;
+	max-width: 100%;
+
+	& span[data-sap-ui-wc-placeholder] {
+		display: flex;
+	}
+}
+
+ui5-label {
+	display: inline-block;
+	cursor: text;
+	max-width: 100%;
+
+	& span[data-sap-ui-wc-placeholder] {
+		display: flex;
+	}
+}
+
+.sapMLabel {
+	display: inline-block;
+	text-overflow: ellipsis;
+	color: @sapUiContentLabelColor;
+	font-family: @sapUiFontFamily;
+	font-size: @sapMFontMediumSize;
+	font-weight: normal;
+	overflow: hidden;
+	width: 100%;
+	white-space: nowrap;
+	cursor: inherit;
+
+	&.sapMLabelWrapped {
+		white-space: normal;
+		line-height: 1.4rem;
+	}
+
+	&.sapMLabelRequired:before {
+		content:"*";
+		color: @sapUiFieldRequiredColor;
+		font-size: 1.25rem;
+		font-weight: bold;
+		position: relative;
+		height: 100%;
+		display: inline-flex;
+		align-items: flex-start;
+	}
+}
