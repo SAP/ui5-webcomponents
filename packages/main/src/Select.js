@@ -34,6 +34,8 @@ const metadata = {
 		 * <br/><br/>
 		 * <b>Note:</b> Only one selected item is allowed.
 		 * If more than one item is defined as selected, the last one would be considered as the selected one.
+		 * <br/><br/>
+		 * <b>Note:</b> Use the <code>ui5-li</code> component to define the desired options.
 		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
@@ -85,7 +87,7 @@ const metadata = {
 			defaultValue: false,
 		},
 	},
-	events: /** @lends  sap.ui.webcomponents.main.Select.prototype */ {
+	events: /** @lends sap.ui.webcomponents.main.Select.prototype */ {
 		/**
 		 * Fired, when the selected item changes.
 		 *
@@ -103,6 +105,22 @@ const metadata = {
 
 /**
  * @class
+ * <h3 class="comment-api-title"> Overview </h3>
+ *
+ * The <code>ui5-select</code> component is used to create a drop-down list
+ * and the items inside the <code>ui5-select</code> define the available options,
+ * using the <code>ui5-li</code> component.
+ * <h3>Keyboard handling</h3>
+ * The <code>ui5-select</code> provides advanced keyboard handling.
+ * If the <code>ui5-select</code> is focused,
+ * you can open or close the drop-down by pressing <code>F4</code>, <code>ALT+UP</code> or <code>ALT+DOWN</code> keys.
+ * Once the drop-down is opened, you can use the <code>UP</code> and <code>DOWN</code> arrow keys
+ * to navigate through the available options and select one by pressing the <code>Space</code> or <code>Enter</code> keys.
+ * <br>
+ * <h3>ES6 Module Import</h3>
+ * <code>import "@ui5/webcomponents/dist/Select";</code>
+ * <br>
+ * <code>import "@ui5/webcomponents/dist/StandardListItem";</code> (<code>ui5-li</code>)
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Select
@@ -250,19 +268,26 @@ class Select extends WebComponent {
 		return previewedItem && selectedItem !== previewedItem;
 	}
 
-	_select(item, position = 0) {
-		if (this._getSelectedItem()) {
-			this._getSelectedItem().selected = false;
+	_select(item, position) {
+		const selectedItem = this._getSelectedItem();
+
+		if (selectedItem) {
+			selectedItem.selected = false;
 		}
 
-		item.selected = true;
 		this._setSelectedItem(item);
 		this._setPreviewedItem(null);
 		this._setText(item.textContent);
-		this._updateSelectedItemPos(position);
+
+		if (position !== undefined) {
+			this._updateSelectedItemPos(position);
+		}
 	}
 
 	_setSelectedItem(item) {
+		if (item) {
+			item.selected = true;
+		}
 		this._selectedItem = item;
 	}
 

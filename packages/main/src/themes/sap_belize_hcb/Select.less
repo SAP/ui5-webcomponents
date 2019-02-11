@@ -31,5 +31,40 @@
 		border-color: @sapUiHcReducedForeground;
 		color: @sapUiContentDisabledTextColor;
 	}
+
+	&.sapWCSelectError:not(.sapWCSelectDisabled),
+	&.sapWCSelectWarning:not(.sapWCSelectDisabled) {
+		border-style: dashed;
+		border-width: 1px;
+	}
+
+	&.sapWCInputBaseContentWrapperWarning:not(.sapWCInputBaseReadonlyWrapper):not(.sapWCInputBaseDisabledWrapper) {
+		border-style: dashed;
+		border-width: 1px;
+	}
+
+	&:hover:not(.sapWCSelectDisabled) {
+		.sapWCSelectDropDownIcon {
+			border-left: 0.0625rem solid @sapUiFieldHoverBorderColor;
+		}
+	}
 }
 
+// RTL
+:host(ui5-select) span[dir="rtl"] {
+	.sapWCSelect:hover:not(.sapWCSelectDisabled) {
+		.sapWCSelectDropDownIcon {
+			border-left: none;
+			border-right: 0.0625rem solid @sapUiFieldHoverBorderColor;
+		}
+	}
+}
+
+ui5-select span[dir="rtl"] {
+	.sapWCSelect:hover:not(.sapWCSelectDisabled) {
+		.sapWCSelectDropDownIcon {
+			border-left: none;
+			border-right: 0.0625rem solid @sapUiFieldHoverBorderColor;
+		}
+	}
+}

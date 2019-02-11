@@ -101,6 +101,8 @@ class Suggestions {
 	onItemSelected(selectedItem, keyboardUsed) {
 		const item = selectedItem || this._getItems()[this.selectedItemIndex];
 
+		this.selectedItemIndex = this._getItems().indexOf(item);
+
 		this._getComponent().onItemSelected(item, keyboardUsed);
 		this.close();
 	}

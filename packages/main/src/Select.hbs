@@ -12,7 +12,7 @@
 			hide-header="true"
 			hide-arrow="true"
 			horizontal-align="Stretch">
-				<ui5-list>
+				<ui5-list separators="None">
 					{{#each ctr.items}}
 						<slot name="{{this._slot}}"></slot>
 					{{/each}}
@@ -20,5 +20,5 @@
 		</ui5-popover>
 	{{/if}}
 
-	<ui5-icon src="sap-icon://navigation-down-arrow" class="sapWCSelectDropDownIcon"></ui5-icon>
+	<ui5-icon src="sap-icon://slim-arrow-down" class="sapWCSelectDropDownIcon"></ui5-icon>
 </div>
