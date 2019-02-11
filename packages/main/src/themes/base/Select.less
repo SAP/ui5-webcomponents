@@ -24,13 +24,14 @@ ui5-select {
 	outline: none;
 
 	// Hovered
-	&:hover:not(.sapWCSelectState):not(.sapWCSelectOpened) {
+	&:hover:not(.sapWCSelectDisabled):not(.sapWCSelectState):not(.sapWCSelectOpened) {
 		background-color: @sapUiFieldHoverBackground;
 		border: 1px solid @sapUiFieldHoverBorderColor; 
+	}
 
-		.sapWCSelectDropDownIcon {
-			background: @sapUiButtonLiteHoverBackground;
-		}
+	// Hovered Icon
+	&:hover:not(.sapWCSelectDisabled):not(.sapWCSelectOpened) .sapWCSelectDropDownIcon {
+		background: @sapUiButtonLiteHoverBackground;
 	}
 
 	// Focused
@@ -49,11 +50,6 @@ ui5-select {
 			left: 1px;
 			pointer-events: none;
 		}
-	}
-
-	// Focused with state
-	&.sapWCSelectState:not(.sapWCSelectOpened):not(.sapWCSelectDisabled):focus {
-		outline-offset: -4px;
 	}
 
 	// Opened
@@ -113,7 +109,7 @@ ui5-select {
 }
 
 // RTL
-:host(ui5-select) span[dir="rtl"]{
+:host(ui5-select) span[dir="rtl"] {
 	.sapWCSelect {
 		padding-left: 0;
 		padding-right: 0.5rem;
