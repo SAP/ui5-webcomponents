@@ -14,9 +14,9 @@ script:
 - yarn build
 - yarn test
 
-deploy:
-  provider: script
-  skip-cleanup: true
-  script: bash deploy/deploy.sh
-  on:
-    branch: master
+# deploy:
+  # provider: script
+  # skip-cleanup: true
+  # script: bash deploy/deploy.sh
+  # on:
+  #   branch: master
