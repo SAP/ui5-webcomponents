@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+
+    <title>Button</title>
+
+    <script data-id="sap-ui-config" type="application/json">
+        {
+            "language": "EN",
+            "xx-wc-no-conflict": {
+                "events": "press"
+            },
+            "compactSize": true,
+            "calendarType": "Islamic"
+        }
+    </script>
+
+    <script src="../../../../../../resources/sap/ui/webcomponents/main/bundle.esm.js"
+            type="module"
+    >
+    </script>
+
+    <script nomodule src="../../../../../../resources/sap/ui/webcomponents/main/bundle.es5.js">
+    </script>
+</head>
+
+<body>
+
+    <ui5-link href="http://www.google.com" target="_blank">Normal link</ui5-link>
+    <br>
+    <ui5-link id="l" href="http://www.google.com" target="_blank">Default prevented</ui5-link>
+    <br>
+    <ui5-button id="b" type="Emphasized">Action Bar Button</ui5-button>
+
+    <ui5-datepicker primary-calendar-type="Gregorian"></ui5-datepicker>
+
+    <ui5-input show-suggestions id="ii">
+        <ui5-li type="Active">Anna</ui5-li>
+        <ui5-li type="Active">Anelia</ui5-li>
+        <ui5-li type="Active">Bobi</ui5-li>
+    </ui5-input>
+
+
+    <script>
+        var l = document.getElementById("l");
+        l.addEventListener("press", function(e) {
+            e.preventDefault();
+        });
+    </script>
+
+</body>
+</html>

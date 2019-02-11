@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>&lt;ui5-radiobutton&gt;</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<link rel="stylesheet" href="../../../../../../www/home/core.css">
+
+	<script src="../../../../../../test-resources/playground/libs/google-code-prettify/prettify.js"></script>
+	<link href="../../../../../../test-resources/playground/libs/google-code-prettify/sunburst.css" type="text/css" rel="stylesheet">
+
+	<link href="../../../../../../test-resources/playground/css/api.css" type="text/css" rel="stylesheet">
+
+	<script data-id="sap-ui-config" type="application/json">
+		{
+			"theme": "sap_fiori_3",
+			"language": "EN"
+		}
+	</script>
+
+	<script src="../../../../../../resources/sap/ui/webcomponents/main/bundle.esm.js"
+	        type="module"
+	>
+	</script>
+
+	<script nomodule src="../../../../../../resources/sap/ui/webcomponents/main/bundle.es5.js">
+	</script>
+</head>
+<body class="sapUiBody example-wrapper">
+
+	<header>
+		<h2 class="control-header">RadioButton</h2>
+		<div style="margin-bottom: 2rem; font-weight: 300; font-size: 1.1rem; color: #666666;">&lt;ui5-radiobutton&gt;</div>
+	</header>
+
+	<section>
+		<h3>Basic RadioButton Types</h3>
+		<div class="snippet">
+			<ui5-radiobutton text="Option A" selected group="GroupA"></ui5-radiobutton>
+			<ui5-radiobutton text="Option B" value-state="None" group="GroupA"></ui5-radiobutton>
+			<ui5-radiobutton text="Option C" value-state="Warning" group="GroupA"></ui5-radiobutton>
+			<ui5-radiobutton text="Option D" value-state="Error" group="GroupA"></ui5-radiobutton>
+			<ui5-radiobutton text="Option E" disabled group="GroupA"></ui5-radiobutton>
+		</div>
+		<pre class="prettyprint lang-html"><xmp>
+<ui5-radiobutton text="Option A" selected group="GroupA"></ui5-radiobutton>
+<ui5-radiobutton text="Option B" value-state="None" group="GroupA"></ui5-radiobutton>
+<ui5-radiobutton text="Option C" value-state="Warning" group="GroupA"></ui5-radiobutton>
+<ui5-radiobutton text="Option D" value-state="Error" group="GroupA"></ui5-radiobutton>
+<ui5-radiobutton text="Option E" disabled group="GroupA"></ui5-radiobutton>
+		</xmp></pre>
+	</section>
+
+	<h3>Grouped RadioButton (navigate with UP and DOWN arrow keys)</h3>
+		<div class="snippet" style="display: flex; flex-wrap: wrap; justify-content: space-around;">
+			<div class="radio-button-group">
+				<ui5-title>First Group</ui5-title>
+				<ui5-radiobutton text="None" value-state="None" selected group="GroupB"></ui5-radiobutton>
+				<ui5-radiobutton text="Warning" value-state="Warning" group="GroupB"></ui5-radiobutton>
+				<ui5-radiobutton text="Error" value-state="Error" group="GroupB"></ui5-radiobutton>
+			</div>
+			<div class="radio-button-group">
+				<ui5-title>Second Group</ui5-title>
+				<ui5-radiobutton text="Option A" selected group="GroupC"></ui5-radiobutton>
+				<ui5-radiobutton text="Option B" value-state="None" group="GroupC"></ui5-radiobutton>
+				<ui5-radiobutton text="Option C" value-state="None" group="GroupC"></ui5-radiobutton>
+			</div>
+		</div>
+		<pre class="prettyprint lang-html"><xmp>
+<div class="radio-button-group">
+	<ui5-title>First Group</ui5-title>
+	<ui5-radiobutton text="None" value-state="None" selected group="GroupB"></ui5-radiobutton>
+	<ui5-radiobutton text="Warning" value-state="Warning" group="GroupB"></ui5-radiobutton>
+	<ui5-radiobutton text="Error" value-state="Error" group="GroupB"></ui5-radiobutton>
+</div>
+<div class="radio-button-group">
+	<ui5-title>Second Group</ui5-title>
+	<ui5-radiobutton text="Option A" selected group="GroupC"></ui5-radiobutton>
+	<ui5-radiobutton text="Option B" value-state="None" group="GroupC"></ui5-radiobutton>
+	<ui5-radiobutton text="Option C" value-state="None" group="GroupC"></ui5-radiobutton>
+</div>
+		</xmp></pre>
+	</section>
+
+	<script>
+		window.prettyPrint();
+	</script>
+
+	<script defer src="../../../../../../www/samples/settings.js"></script>
+
+    <div class="page-container">
+      <div class="api-container">
+        <section class="component-description">
+          <h3 class="comment-api-title">Overview</h3>
+
+The <code>ui5-radibutton</code> component enables users to select a single option from a set of options. When a <code>ui5-radiobutton</code> is selected by the user, the <code>select</code> event is fired. When a <code>ui5-radiobutton</code> that is within a group is selected, the one that was previously selected gets automatically deselected.
+
+<h3>ES6 Module Import</h3>
+
+<code>import "@ui5/webcomponents/dist/RadioButton";</code>
+          <section class="component-api space-top">
+            
+                  <h3 class="comment-api-title" >Properties/Attributes</h3>
+                  <p class="small-space-top" >You can use both properties and attributes with the same effect. The name of each attribute is listed below the name of the property, if different.</p>
+            
+                  <div class="small-space-top api-table">
+                    <div class="head api-table-header-roll">
+                      <div class="cell api-table-header-cell">Name</div>
+                      <div class="cell api-table-header-cell">Type</div>
+                      <div class="cell api-table-header-cell">Default Value</div>
+                      <div class="cell api-table-header-cell">Description</div>
+                    </div>
+            
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">disabled <br> <code></code></div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">Determines whether the <code>ui5-radiobutton</code> is disabled. <br><br> <b>Note:</b> A disabled <code>ui5-radiobutton</code> is completely uninteractive.</div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">group <br> <code></code></div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">Defines the group to which the <code>ui5-radiobutton</code> belongs.</div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">readOnly <br> <code>read-only</code></div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">Determines whether the <code>ui5-radiobutton</code> is read-only. <br><br> <b>Note:</b> A read-only <code>ui5-radiobutton</code> is not editable, but still provides visual feedback upon user interaction.</div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">selected <br> <code></code></div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">Determines whether the <code>ui5-radiobutton</code> is selected or not. <br><br> <b>Note:</b> The property value can be changed with user interaction, either by cliking/tapping on the <code>ui5-radiobutton</code>, or by using the Space or Enter key.</div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">text <br> <code></code></div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">Defines the text of the <code>ui5-radiobutton</code>.</div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">valueState <br> <code>value-state</code></div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">Defines the value state of the <code>ui5-radiobutton</code>. Available options are <code>Warning</code>, <code>Error</code>, and <code>None</code> (by default). <br><br> <b>Note:</b> Using the value states affects the visual appearance of the <code>ui5-radiobutton</code>.</div>
+                      </div>
+            
+                  </div>
+            
+            
+                  <h3 class="comment-api-title space-top">Events</h3>
+                  <p class="small-space-top" >This Web Component fires semantic events upon user interaction. You can bind to these events with the standard DOM APIs, such as <code>addEventListener</code>. </p>
+            
+                  <div class="small-space-top api-table">
+                    <div class="head api-table-header-roll">
+                      <div class="cell api-table-header-cell">Name</div>
+                      <div class="cell api-table-header-cell">Description</div>
+                    </div>
+            
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">select</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">Fired when the <code>ui5-radiobutton</code> selected state changes.</div>
+                      </div>
+            
+                  </div>
+            
+          </section>
+        </section>
+      </div>
+    </div>
+
+		<script>
+			function redirect(event, component) {
+					event.preventDefault();
+					var location = window.parent.location.href;
+					window.parent.location.href = location.replace(/components\/.+/gi, "components/" + component);
+			};
+		</script>
+		</body>
+
+</html>

@@ -1,0 +1,1 @@
+(function(){var e="sap_belize_hcb";var o=window["sap-ui-webcomponents-main-bundle"].Core.getConfiguration().theme;var a=document.body;if(o===e){a.classList.add("hcb-background")}else{a.classList.remove("hcb-background")}window.onload=function(){parent.postMessage("Iframe Loaded Successfully","*")}})();

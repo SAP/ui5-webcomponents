@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+	<title>ui5-list / ui5-li</title>
+
+	<script src="../../../../../../resources/sap/ui/webcomponents/main/bundle.esm.js"
+			type="module"
+	>
+	</script>
+
+	<script nomodule src="../../../../../../resources/sap/ui/webcomponents/main/bundle.es5.js">
+	</script>
+</head>
+
+<body>
+	<ui5-list id="listEvents" mode="SingleSelectEnd">
+		<ui5-li id="country1" type="Active">Argentina</ui5-li>
+		<ui5-li id="country2" selected type="Active">Bulgaria</ui5-li>
+		<ui5-li id="country3" type="Active">China</ui5-li>
+	</ui5-list>
+	<ui5-input id="itemPressResultField" placeholder="itemPress result"></ui5-input>
+	<ui5-input id="selectionChangeResultField" placeholder="selectionChange result"></ui5-input>
+
+	<ui5-list id="list1" header-text="API: GroupHeaderListItem">
+		<ui5-li-groupheader>New Items</ui5-li-groupheader>
+		<ui5-li image="./img/HT-1000.jpg" type="Active">Laptop HP</ui5-li>
+		<ui5-li image="./img/HT-1010.jpg" type="Active">Laptop Lenovo</ui5-li>
+		<ui5-li image="./img/HT-1022.jpg" type="Active">IPhone 3</ui5-li>
+
+		<ui5-li-groupheader>Discounted Items</ui5-li-groupheader>
+		<ui5-li image="./img/HT-1030.jpg" type="Active" icon="sap-icon://navigation-right-arrow">HP Monitor 24</ui5-li>
+		<ui5-li image="./img/HT-2026.jpg" type="Active" icon="sap-icon://navigation-right-arrow">Audio cabel</ui5-li>
+		<ui5-li image="./img/HT-2002.jpg" type="Active" icon="sap-icon://navigation-right-arrow">DVD set</ui5-li>
+	</ui5-list>
+
+	<label id="lblResult">0</label>
+
+	<script>
+		'use strict';
+
+		var itemDeleteCounter = 0;
+		var itemPressCounter = 0;
+		var selectionChangeCounter = 0;
+
+		function deleteItemHandler(e) {
+			document.querySelector("#lblResult").innerHTML = e.detail.item.innerHTML + ": " + ++itemDeleteCounter;
+		}
+
+		list1.addEventListener("itemDelete", deleteItemHandler);
+
+		listEvents.addEventListener("itemPress", function (event) {
+			itemPressCounter += 1;
+			itemPressResultField.value = itemPressCounter;
+		});
+
+		listEvents.addEventListener("selectionChange", function (event) {
+			selectionChangeCounter += 1;
+			selectionChangeResultField.value = selectionChangeCounter;
+		});
+	</script>
+</body>
+</html>

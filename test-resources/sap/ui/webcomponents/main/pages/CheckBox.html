@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<title>ui5-checkbox</title>
+
+	<script
+		src="../../../../../../resources/sap/ui/webcomponents/main/bundle.esm.js"
+		type="module"
+	></script>
+
+	<script nomodule src="../../../../../../resources/sap/ui/webcomponents/main/bundle.es5.js"></script>
+
+	<style>
+		ui5-checkbox {
+			border: 1px solid red;
+		}
+	</style>
+
+	<script data-id="sap-ui-config" type="application/json">
+		{
+		}
+	</script>
+</head>
+
+<body>
+	<ui5-checkbox id="cb1"></ui5-checkbox>
+	<ui5-checkbox id="cb2" disabled></ui5-checkbox>
+	<ui5-checkbox id="truncatingCb" text="Long long long text that should truncate at some point" style="width: 300px"></ui5-checkbox>
+	<ui5-checkbox id="wrappingCb" text="Longest ever text written in English that have to truncate immediately because it is so long of course!" style="width: 300px"></ui5-checkbox>
+
+	<ui5-input id="field"></ui5-input>
+
+	<ui5-checkbox></ui5-checkbox>
+	<ui5-checkbox text="Long long long text that should truncate at some point"></ui5-checkbox>
+	<ui5-checkbox wrap text="Longest ever text written in English that have to truncate immediately because it is so long of course!"></ui5-checkbox>
+</body>
+
+<script>
+		var input = document.querySelector("#field");
+		var checkBox1 = document.querySelector("#cb1");
+		var checkBox2 = document.querySelector("#cb2");
+		var counter = 0;
+
+		[checkBox1, checkBox2].forEach(function(el) {
+			el.addEventListener("change", function(event) {
+				counter += 1;
+				input.value = counter;
+			});
+		});
+</script>
+</html>

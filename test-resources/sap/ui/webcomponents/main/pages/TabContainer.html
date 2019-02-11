@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Tab Container</title>
+
+	<script data-id="sap-ui-config" type="application/json">
+		{
+			"theme": "sap_fiori_3",
+			"language": "EN"
+		}
+	</script>
+
+	<script src="../../../../../../resources/sap/ui/webcomponents/main/bundle.esm.js"
+			type="module"
+	>
+	</script>
+
+	<script nomodule src="../../../../../../resources/sap/ui/webcomponents/main/bundle.es5.js">
+	</script>
+
+
+	<style>
+		html, body {margin: 0;}
+		.header {
+			display: flex;
+			justify-content: center;
+			height: 3rem;
+			background: #3f5161;
+		}
+		.header-title {
+			color: #fafafa;
+			margin: 0;
+			padding: 0;
+			line-height: 3rem;
+			font-size: 1.375rem;
+			font-weight: normal;
+			text-shadow: 0 0 0.125rem #ffffff;
+			font-family: "72",Arial,Helvetica,sans-serif;
+		}
+		.group {
+			padding: 1rem;
+			background: #fafafa;
+		}
+		.group-title {
+			color: #333;
+		}
+		.small-margin {
+			margin: 2px;
+		}
+		.group_colored{
+			background: #eff4f9;
+		}
+	</style>
+</head>
+<body class="sapUiBody">
+<span data-sap-ui-wc-root="" class="sap-tablet sap-desktop sap-combi sapUiTheme-sap_belize sapUiMedia-Std-Tablet sapUiMedia-StdExt-Tablet" dir="ltr" data-sap-ui-browser="cr67" data-sap-ui-os="win10" lang="en" data-sap-ui-animation="on" data-sap-ui-animation-mode="full">
+
+	<header class="header">
+		<h2 class="header-title">Tab Container</h2>
+	</header>
+
+	<!-- Tab Container -->
+	<section class="group_colored">
+		<h3 class="group-title">Web Components</h3>
+		<h5>Filter</h5>
+		<ui5-tabcontainer id="tabContainer1" fixed show-overflow="true" selected-key="4">
+			<ui5-tab key="item1" text="Products" count="123">
+				<ui5-button>Button 11</ui5-button>
+				<ui5-button>Button 12</ui5-button>
+			</ui5-tab>
+			<ui5-tab-separator></ui5-tab-separator>
+			<ui5-tab icon="sap-icon://menu2" text="Tab 2" icon-color="Positive" count="12343455">
+				<ui5-button>Button 3</ui5-button>
+			</ui5-tab>
+			<ui5-tab icon="sap-icon://menu" text="Tab 3"  icon-color="Critical" count="12343455">
+			</ui5-tab>
+			<ui5-tab key="4" icon="sap-icon://menu2" text="Tab 4"  icon-color="Negative" count="12343455">
+			</ui5-tab>
+			<ui5-tab icon="sap-icon://menu2" disabled="true" text="Disabled"  icon-color="Negative" count="12343455">
+			</ui5-tab>
+			<ui5-button data-ui5-slot="content">Default Content</ui5-button>
+		</ui5-tabcontainer>
+		<div>
+			<span>Selected key:</span>
+			<span id="selectedKey"></span>
+		</div>
+		<script>
+			var tabContainer = document.getElementById('tabContainer1');
+			tabContainer.addEventListener('itemSelect', function (event) {
+				document.getElementById('selectedKey').innerText = event.detail.key;
+			});
+		</script>
+
+		<h5>Horizontal design</h5>
+		<ui5-tabcontainer show-overflow="true" selected-key="item1">
+			<ui5-tab design="Horizontal" key="item1" icon="sap-icon://card" text="Tab 1" count="12343455">
+				<ui5-button>Button 11</ui5-button>
+				<ui5-button>Button 12</ui5-button>
+			</ui5-tab>
+			<ui5-tab design="Horizontal" key="item2" icon="sap-icon://menu2" text="Tab 2" count="12343455">
+			</ui5-tab>
+			<ui5-tab design="Horizontal" icon="sap-icon://employee" text="Tab 3" count="12343455">
+				<ui5-button>Button 3</ui5-button>
+			</ui5-tab>
+		</ui5-tabcontainer>
+
+		<h5>Icons only</h5>
+		<ui5-tabcontainer show-overflow="true" selected-key="item1">
+			<ui5-tab key="item1" icon="sap-icon://employee" count="12343455">
+				<ui5-button>Button 11</ui5-button>
+				<ui5-button>Button 12</ui5-button>
+			</ui5-tab>
+			<ui5-tab key="item2" icon="sap-icon://card">
+			</ui5-tab>
+			<ui5-tab icon="sap-icon://employee">
+				<ui5-button>Button 3</ui5-button>
+			</ui5-tab>
+		</ui5-tabcontainer>
+
+
+		<h5>Text Only</h5>
+		<ui5-tabcontainer show-overflow="true" selected-key="item1">
+			<ui5-tab key="item1" text="Tab 1">
+				<ui5-button>Button 11</ui5-button>
+				<ui5-button>Button 12</ui5-button>
+			</ui5-tab>
+			<ui5-tab key="item2" text="Tab 2">
+			</ui5-tab>
+			<ui5-tab key="item3" text="Tab 2">
+				<ui5-button>Button 3</ui5-button>
+			</ui5-tab>
+		</ui5-tabcontainer>
+
+		<h5>Text and Count</h5>
+		<ui5-tabcontainer show-overflow="true" selected-key="item1">
+			<ui5-tab key="item1" text="Tab 1" count="12346">
+				<ui5-button>Button 11</ui5-button>
+				<ui5-button>Button 12</ui5-button>
+			</ui5-tab>
+			<ui5-tab-separator></ui5-tab-separator>
+			<ui5-tab key="item2" text="Tab 2" count="22346">
+			</ui5-tab>
+			<ui5-tab key="item3" text="Tab 2" count="32346">
+				<ui5-button>Button 3</ui5-button>
+			</ui5-tab>
+		</ui5-tabcontainer>
+
+		<h5>Text and Count Inline Mode</h5>
+		<ui5-tabcontainer show-overflow="true" header-mode="Inline" selected-key="item1">
+			<ui5-tab key="item1" text="Tab 1" count="12346">
+				<ui5-button>Button 11</ui5-button>
+				<ui5-button>Button 12</ui5-button>
+			</ui5-tab>
+			<ui5-tab key="item2" text="Tab 2" count="22346">
+			</ui5-tab>
+			<ui5-tab text="Tab 2" count="32346">
+				<ui5-button>Button 3</ui5-button>
+			</ui5-tab>
+		</ui5-tabcontainer>
+
+
+
+	</section>
+
+
+
+
+	</span>
+</body>
+</html>

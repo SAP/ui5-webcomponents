@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<title>Playground</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<script data-id="sap-ui-config" type="application/json">
+		{
+			"language": "EN"
+		}
+	</script>
+
+	<script src="../../../../../../resources/sap/ui/webcomponents/main/bundle.esm.js" type="module">
+	</script>
+
+	<script nomodule src="../../../../../../resources/sap/ui/webcomponents/main/bundle.es5.js">
+	</script>
+
+	<style>
+		html,
+		body {
+			margin: 0;
+		}
+
+		.group {
+			padding: 1rem;
+			background: #fafafa;
+		}
+	</style>
+</head>
+
+<body>
+	<section class="group">
+		<h2>link</h2>
+		<ui5-link href="#" id="link">link</ui5-link><span>native span</span>
+	</section>
+
+	<section class="group">
+		<h2>Disabled link</h2>
+		<ui5-link id="disabled-link" disabled>Disabled link</ui5-link>
+	</section>
+
+	<section class="group">
+		<h2>Wrapping link</h2>
+		<ui5-link style="width: 100px" id="wrapping-link" wrap>Eu enim consectetur do amet elit.</ui5-link>
+		<ui5-link style="width: 100px" id="non-wrapping-link">Eu enim consectetur do amet elit.</ui5-link>
+	</section>
+
+	<section class="group">
+		<h2>Link types</h2>
+		<ui5-link type="Default">Eu enim consectetur do amet elit.</ui5-link><br>
+		<ui5-link type="Subtle">Eu enim consectetur do amet elit.</ui5-link><br>
+		<ui5-link type="Emphasized">Eu enim consectetur do amet elit.</ui5-link>
+	</section>
+
+	<section class="group">
+		<ui5-input id="helper-input" value="0"></ui5-input>
+	</section>
+
+	<script>
+		var disLink = document.querySelector("#disabled-link");
+		var link = document.querySelector("#link");
+		var input = document.querySelector("#helper-input");
+
+		[link, disLink].forEach(function(element) {
+			element.addEventListener("press", function(event) {
+				input.value = parseInt(input.value) + 1;
+			});
+		});
+	</script>
+</body>
+
+</html>

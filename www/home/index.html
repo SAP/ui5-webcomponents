@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>UI5 Web Components</title>
+
+	<script src="../../test-resources/playground/libs/google-code-prettify/prettify.js"></script>
+	<link href="../../test-resources/playground/libs/google-code-prettify/sunburst.css" type="text/css" rel="stylesheet">
+	<link rel="stylesheet" href="core.css">
+
+	<style>
+		@font-face {
+			font-family: "72-Bold";
+			src: url(../../resources/sap/ui/core/themes/sap_belize/fonts/72-Bold.woff2) format("woff2"),
+				 url(../../resources/sap/ui/core/themes/sap_belize/fonts/72-Bold.woff) format("woff");
+		}
+
+		@font-face {
+			font-family: "72-Regular";
+			src: url(../../resources/sap/ui/core/themes/sap_belize/fonts/72-Regular.woff2) format("woff2"),
+				 url(../../resources/sap/ui/core/themes/sap_belize/fonts/72-Regular.woff) format("woff");
+		}
+
+		body {
+			font-family: '72-Regular';
+		}
+
+		.wrapper {
+			padding-right: 5rem;
+			padding-left: 5rem;
+			width: 100%;
+			max-width: calc(1000px + 5rem);
+			box-sizing: border-box;
+		}
+
+		.wrapper > h1 {
+			margin: 3rem 0;
+			font-size: 1.7rem;
+			font-family: "72-Bold";
+		}
+
+		.setup-wrapper {
+			margin-top: 4rem;
+		}
+
+		.setup-wrapper > h2 {
+			font-family: "72-Bold";
+		}
+
+		.step {
+			margin-bottom: 2rem;
+		}
+
+		.code {
+			padding: 1rem;
+			border-radius: 6px;
+			background: #2F424E;
+			color: #fff;
+			font-size: 14px;
+			word-break: break-all;
+		}
+
+		@media screen and (max-width: 600px) {
+			.wrapper {
+				padding: 0 1.5rem;
+			}
+		}
+	</style>
+
+</head>
+
+<body>
+	<section class="wrapper">
+		<h1>Getting Started</h1>
+		<p>The UI5 Web Components share fundamental UI5 qualities with others to provide enterprise-grade features, Fiori UX and themeability. The goal is to achieve an easy consumption of UI5 controls to lower the entry barrier to use UI5 controls for own applications and to avoid complexity of UI5 rendering-stack by making the consumption of the full-stack UI5 optional. In general, the UI5 Web Components are targeting for Web Developers who want to have more flexibility to use just HTML tags or arbitrary JS frameworks.</p>
+
+		<div class="setup-wrapper">
+			<h2>Installation</h2>
+			<div class="step">
+				<p>Install @ui5/webcomponents</p>
+				<pre class="prettyprint lang-sh"><xmp>npm install @ui5/webcomponents</xmp></pre>
+			</div>
+		</div>
+
+		<div class="setup-wrapper">
+			<h2>Usage</h2>
+			<div class="step">
+				<p>1.Import the needed Web Component</p>
+				<pre class="prettyprint lang-js"><xmp>import "@ui5/webcomponents/dist/Button";</xmp></pre>
+			</div>
+			<div class="step">
+				<p>2.Instantiate Web Component</p>
+				<pre class="prettyprint lang-html"><xmp><ui5-button>Hello world!</ui5-button></xmp></pre>
+			</div>
+			<div class="step">
+				<p>3.Enjoy UI5 Web Components</p>
+			</div>
+		</div>
+	</section>
+
+	<script>
+		window.prettyPrint();
+	</script>
+</body>
+
+</html>

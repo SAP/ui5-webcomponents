@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>&lt;ui5-togglebutton&gt;</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<link rel="stylesheet" href="../../../../../../www/home/core.css">
+
+	<script src="../../../../../../test-resources/playground/libs/google-code-prettify/prettify.js"></script>
+	<link href="../../../../../../test-resources/playground/libs/google-code-prettify/sunburst.css" type="text/css" rel="stylesheet">
+
+	<link href="../../../../../../test-resources/playground/css/api.css" type="text/css" rel="stylesheet">
+
+	<script data-id="sap-ui-config" type="application/json">
+		{
+			"theme": "sap_fiori_3",
+			"language": "EN"
+		}
+	</script>
+
+	<script src="../../../../../../resources/sap/ui/webcomponents/main/bundle.esm.js"
+	        type="module"
+	>
+	</script>
+
+	<script nomodule src="../../../../../../resources/sap/ui/webcomponents/main/bundle.es5.js">
+	</script>
+</head>
+<body class="sapUiBody example-wrapper">
+
+	<header>
+		<h2 class="control-header">ToggleButton</h2>
+		<div style="margin-bottom: 2rem; font-weight: 300; font-size: 1.1rem; color: #666666;">&lt;ui5-togglebutton&gt;</div>
+	</header>
+
+	<section>
+		<h3>ToggleButton States</h3>
+		<div class="snippet">
+			<ui5-togglebutton class="samples-margin">ToggleButton</ui5-togglebutton>
+			<ui5-togglebutton class="samples-margin" pressed>Pressed ToggleButton</ui5-togglebutton>
+			<ui5-togglebutton class="samples-margin" disabled>Disabled ToggleButton</ui5-togglebutton>
+			<ui5-togglebutton class="samples-margin" disabled pressed>Disabled ToggleButton</ui5-togglebutton>
+			<ui5-togglebutton class="samples-margin" type="Positive">Accept ToggleButton</ui5-togglebutton>
+			<ui5-togglebutton class="samples-margin" type="Positive" pressed>Accept ToggleButton</ui5-togglebutton>
+			<ui5-togglebutton class="samples-margin" type="Negative">Reject ToggleButton</ui5-togglebutton>
+			<ui5-togglebutton class="samples-margin" type="Negative" pressed>Reject ToggleButton</ui5-togglebutton>
+			<ui5-togglebutton class="samples-margin" type="Transparent">Transparent ToggleButton</ui5-togglebutton>
+			<ui5-togglebutton class="samples-margin" type="Transparent" pressed>Transparent ToggleButton</ui5-togglebutton>
+		</div>
+		<pre class="prettyprint lang-html"><xmp>
+<ui5-togglebutton>ToggleButton</ui5-togglebutton>
+<ui5-togglebutton pressed>Pressed ToggleButton</ui5-togglebutton>
+<ui5-togglebutton disabled>Disabled ToggleButton</ui5-togglebutton>
+<ui5-togglebutton disabled pressed>Disabled ToggleButton</ui5-togglebutton>
+<ui5-togglebutton type="Positive">Accept ToggleButton</ui5-togglebutton>
+<ui5-togglebutton type="Positive" pressed>Accept ToggleButton</ui5-togglebutton>
+<ui5-togglebutton type="Negative">Reject ToggleButton</ui5-togglebutton>
+<ui5-togglebutton type="Negative" pressed>Reject ToggleButton</ui5-togglebutton>
+<ui5-togglebutton type="Transparent">Transparent ToggleButton</ui5-togglebutton>
+<ui5-togglebutton type="Transparent" pressed>Transparent ToggleButton</ui5-togglebutton>
+		</xmp></pre>
+	</section>
+
+	<section>
+		<h3>ToggleButton with Icon</h3>
+		<div class="snippet">
+			<ui5-togglebutton class="samples-margin" icon="sap-icon://menu">Menu</ui5-togglebutton>
+			<ui5-togglebutton class="samples-margin" type="Emphasized" icon="sap-icon://add">Add</ui5-togglebutton>
+			<ui5-togglebutton class="samples-margin" type="Default" icon="sap-icon://nav-back">Back</ui5-togglebutton>
+			<ui5-togglebutton class="samples-margin" type="Positive" icon="sap-icon://accept">Accept</ui5-togglebutton>
+			<ui5-togglebutton class="samples-margin" type="Negative" icon="sap-icon://sys-cancel">Deny</ui5-togglebutton>
+		</div>
+		<pre class="prettyprint lang-html"><xmp>
+<ui5-togglebutton icon="sap-icon://menu">Menu</ui5-togglebutton>
+<ui5-togglebutton type="Emphasized" icon="sap-icon://add">Add</ui5-togglebutton>
+<ui5-togglebutton type="Default" icon="sap-icon://nav-back">Back</ui5-togglebutton>
+<ui5-togglebutton type="Positive" icon="sap-icon://accept">Accept</ui5-togglebutton>
+<ui5-togglebutton type="Negative" icon="sap-icon://sys-cancel">Deny</ui5-togglebutton>
+		</xmp></pre>
+	</section>
+
+	<section>
+		<h3>ToggleButton with Active Icon (press and hold to try)</h3>
+		<div class="snippet">
+			<ui5-togglebutton class="samples-margin" icon="sap-icon://menu" active-icon="sap-icon://action-settings">Menu</ui5-togglebutton>
+			<ui5-togglebutton class="samples-margin" type="Emphasized" icon="sap-icon://accept" active-icon="sap-icon://message-success">Add</ui5-togglebutton>
+			<ui5-togglebutton class="samples-margin" type="Default" icon="sap-icon://nav-back" active-icon="sap-icon://accept">Back</ui5-togglebutton>
+			<ui5-togglebutton class="samples-margin" type="Positive" icon="sap-icon://accept" active-icon="sap-icon://activate">Accept</ui5-togglebutton>
+			<ui5-togglebutton class="samples-margin" type="Negative" icon="sap-icon://sys-cancel" active-icon="sap-icon://incident">Deny</ui5-togglebutton>
+		</div>
+		<pre class="prettyprint lang-html"><xmp>
+<ui5-togglebutton icon="sap-icon://menu" active-icon="sap-icon://action-settings">Menu</ui5-togglebutton>
+<ui5-togglebutton type="Emphasized" icon="sap-icon://accept" active-icon="sap-icon://message-success">Add</ui5-togglebutton>
+<ui5-togglebutton type="Default" icon="sap-icon://nav-back" active-icon="sap-icon://accept">Back</ui5-togglebutton>
+<ui5-togglebutton type="Positive" icon="sap-icon://accept" active-icon="sap-icon://activate">Accept</ui5-togglebutton>
+<ui5-togglebutton type="Negative" icon="sap-icon://sys-cancel" active-icon="sap-icon://incident">Deny</ui5-togglebutton>
+		</xmp></pre>
+	</section>
+
+	<section>
+		<h3>ToggleButton with Icon Only</h3>
+		<div class="snippet">
+				<ui5-togglebutton class="samples-margin" icon="sap-icon://away"></ui5-togglebutton>
+				<ui5-togglebutton class="samples-margin" icon="sap-icon://action-settings" pressed></ui5-togglebutton>
+				<ui5-togglebutton class="samples-margin" icon="sap-icon://add"></ui5-togglebutton>
+				<ui5-togglebutton class="samples-margin" icon="sap-icon://alert" pressed></ui5-togglebutton>
+				<ui5-togglebutton class="samples-margin" icon="sap-icon://accept" type="Positive"></ui5-togglebutton>
+				<ui5-togglebutton class="samples-margin" icon="sap-icon://bookmark" type="Positive" pressed></ui5-togglebutton>
+				<ui5-togglebutton class="samples-margin" icon="sap-icon://cancel" type="Negative"></ui5-togglebutton>
+				<ui5-togglebutton class="samples-margin" icon="sap-icon://call" type="Negative" pressed></ui5-togglebutton>
+				<ui5-togglebutton class="samples-margin" icon="sap-icon://camera" type="Transparent"></ui5-togglebutton>
+				<ui5-togglebutton class="samples-margin" icon="sap-icon://cart" type="Transparent" pressed></ui5-togglebutton>
+		</div>
+		<pre class="prettyprint lang-html"><xmp>
+<ui5-togglebutton icon="sap-icon://accept"></ui5-togglebutton>
+<ui5-togglebutton icon="sap-icon://action-settings" pressed></ui5-togglebutton>
+<ui5-togglebutton icon="sap-icon://add"></ui5-togglebutton>
+<ui5-togglebutton icon="sap-icon://alert" pressed></ui5-togglebutton>
+<ui5-togglebutton icon="sap-icon://away" type="Positive"></ui5-togglebutton>
+<ui5-togglebutton icon="sap-icon://bookmark" type="Positive" pressed></ui5-togglebutton>
+<ui5-togglebutton icon="sap-icon://cancel" type="Negative"></ui5-togglebutton>
+<ui5-togglebutton icon="sap-icon://call" type="Negative" pressed></ui5-togglebutton>
+<ui5-togglebutton icon="sap-icon://camera" type="Transparent"></ui5-togglebutton>
+<ui5-togglebutton icon="sap-icon://cart" type="Transparent" pressed></ui5-togglebutton>
+		</xmp></pre>
+	</section>
+
+	<section>
+		<h3>ToggleButton</h3>
+		<div class="snippet">
+				<ui5-togglebutton class="samples-margin">Yes/No</ui5-togglebutton>
+				<ui5-togglebutton class="samples-margin" pressed>Yes/No</ui5-togglebutton>
+				<ui5-togglebutton class="samples-margin">Toggle Button</ui5-togglebutton>
+				<ui5-togglebutton class="samples-margin" pressed>Toggle Button pressed</ui5-togglebutton>
+				<ui5-togglebutton class="samples-margin" type="Positive">On/Off</ui5-togglebutton>
+				<ui5-togglebutton class="samples-margin" type="Positive" pressed>On/Off</ui5-togglebutton>
+				<ui5-togglebutton class="samples-margin" type="Negative">Menu</ui5-togglebutton>
+				<ui5-togglebutton class="samples-margin" type="Negative" pressed>Menu</ui5-togglebutton>
+				<ui5-togglebutton class="samples-margin" type="Negative">Transparent</ui5-togglebutton>
+				<ui5-togglebutton class="samples-margin" type="Negative" pressed>Transparent</ui5-togglebutton>
+		</div>
+		<pre class="prettyprint lang-html"><xmp>
+<ui5-togglebutton>Yes/No</ui5-togglebutton>
+<ui5-togglebutton pressed>Yes/No</ui5-togglebutton>
+<ui5-togglebutton>Toggle Button</ui5-togglebutton>
+<ui5-togglebutton pressed>Toggle Button pressed</ui5-togglebutton>
+<ui5-togglebutton type="Positive">On/Off</ui5-togglebutton>
+<ui5-togglebutton type="Positive" pressed>On/Off</ui5-togglebutton>
+<ui5-togglebutton type="Negative">Menu</ui5-togglebutton>
+<ui5-togglebutton type="Negative" pressed>Menu</ui5-togglebutton>
+<ui5-togglebutton type="Transparent">Transparent</ui5-togglebutton>
+<ui5-togglebutton type="Transparent" pressed>Transparent</ui5-togglebutton>
+		</xmp></pre>
+	</section>
+
+	<script>
+		window.prettyPrint();
+	</script>
+
+	<script defer src="../../../../../../www/samples/settings.js"></script>
+</body>
+
+</html>

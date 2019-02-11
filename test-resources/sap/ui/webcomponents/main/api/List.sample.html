@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>&lt;ui5-list&gt;</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<link rel="stylesheet" href="../../../../../../www/home/core.css">
+
+	<script src="../../../../../../test-resources/playground/libs/google-code-prettify/prettify.js"></script>
+	<link href="../../../../../../test-resources/playground/libs/google-code-prettify/sunburst.css" type="text/css" rel="stylesheet">
+
+	<link href="../../../../../../test-resources/playground/css/api.css" type="text/css" rel="stylesheet">
+
+	<script data-id="sap-ui-config" type="application/json">
+		{
+			"theme": "sap_fiori_3",
+			"language": "EN"
+		}
+	</script>
+
+	<script src="../../../../../../resources/sap/ui/webcomponents/main/bundle.esm.js"
+	        type="module"
+	>
+	</script>
+
+	<script nomodule src="../../../../../../resources/sap/ui/webcomponents/main/bundle.es5.js">
+	</script>
+</head>
+<body class="sapUiBody example-wrapper">
+
+	<header>
+		<h2 class="control-header">List</h2>
+		<div style="margin-bottom: 2rem; font-weight: 300; font-size: 1.1rem; color: #666666;">&lt;ui5-list&gt;</div>
+	</header>
+
+	<section>
+		<h3>Basic List</h3>
+		<div class="snippet">
+			<ui5-list id="myList" class="full-width">
+				<ui5-li icon="sap-icon://meal">Pineapple</ui5-li>
+				<ui5-li icon="sap-icon://meal">Orange</ui5-li>
+				<ui5-li icon="sap-icon://meal">Banana</ui5-li>
+				<ui5-li icon="sap-icon://meal">Mango</ui5-li>
+			</ui5-list>
+		</div>
+		<pre class="prettyprint lang-html"><xmp>
+<ui5-list id="myList" mode='SingleSelectBegin'>
+	<ui5-li>Pineapple</ui5-li>
+	<ui5-li>Orange</ui5-li>
+	<ui5-li>Banana</ui5-li>
+	<ui5-li>Mango</ui5-li>
+</ui5-list>
+		</xmp></pre>
+	</section>
+
+	<section>
+		<h3>List in Single-selection Mode</h3>
+		<div class="snippet">
+			<ui5-list id="country-selector" class="full-width" mode="SingleSelect" header-text="Select a country:">
+				<ui5-li key="Argentina" type="Active" selected icon="sap-icon://map" icon-end>Argentina</ui5-li>
+				<ui5-li key="Bulgaria" type="Active" icon="sap-icon://map" icon-end>Bulgaria</ui5-li>
+				<ui5-li key="China" type="Active" icon="sap-icon://map" icon-end>China</ui5-li>
+				<ui5-li key="Europe" type="Inactive"  icon="sap-icon://map" icon-end>Europe (ui5-li type='Inactive')</ui5-li>
+			</ui5-list>
+
+			<script>
+				document.getElementById('country-selector').addEventListener("selectionChange", function (event) {
+					var selectedItemsKeys = event.detail.items;
+
+					alert("Key of the selected item:  " + selectedItemsKeys[0].getAttribute("key"));
+				});
+			</script>
+		</div>
+		<pre class="prettyprint lang-html"><xmp>
+<ui5-list id="country-selector" mode="SingleSelect" header-text="Select a country:">
+	<ui5-li key="argentina" type="Active" selected icon="sap-icon://map" icon-end>Argentina</ui5-li>
+	<ui5-li key="bulgaria" type="Active" icon="sap-icon://map" icon-end>Bulgaria</ui5-li>
+	<ui5-li key="china" type="Active" icon="sap-icon://map" icon-end>China</ui5-li>
+	<ui5-li key="europe" type="Inactive" icon="sap-icon://map" icon-end>Europe (ui5-li type='Inactive')</ui5-li>
+</ui5-list>
+
+<script>
+	document.getElementById('country-selector').addEventListener("selectionChange", function (event) {
+		var selectedItemsKeys = event.detail.items;
+
+		alert("Key of the selected item:  " + selectedItemsKeys.join(", "));
+	});
+</script>
+		</xmp></pre>
+	</section>
+
+	<!-- MultiSelection List Example -->
+	<section>
+		<h3>List in Multi-selection Mode</h3>
+		<div class="snippet">
+			<ui5-list id="myList1" class="samples-margin-bottom full-width" mode='MultiSelect' header-text="Multiple selection is possible">
+					<ui5-li type="Active" >Pineapple</ui5-li>
+					<ui5-li type="Active" selected>Orange</ui5-li>
+					<ui5-li type="Active">Banana</ui5-li>
+					<ui5-li type="Active">Mango</ui5-li>
+			</ui5-list>
+
+		<pre class="prettyprint lang-html">
+			<xmp>
+<ui5-list id="myList1" mode='MultiSelect' header-text="Multiple selection is possible">
+	<ui5-li type="Active">Pineapple</ui5-li>
+	<ui5-li type="Active" selected>Orange</ui5-li>
+	<ui5-li type="Active">Banana</ui5-li>
+	<ui5-li type="Active">Mango</ui5-li>
+</ui5-list>
+			</xmp>
+		</pre>
+	</section>
+
+	<!-- Delete List Example -->
+	<section>
+		<h3>List in Delete Mode</h3>
+		<div class="snippet">
+			<ui5-list id="myList5" class="full-width" mode="Delete" header-text="Note: The list items removal is up to application developers">
+				<ui5-li key="arg">Argentina</ui5-li>
+				<ui5-li key="bg">Bulgaria</ui5-li>
+				<ui5-li key="ch">China</ui5-li>
+			</ui5-list>
+		</div>
+		<pre class="prettyprint lang-html"><xmp>
+<ui5-list id="myList5" mode="Delete" header-text="Note: The list items removal is up to application developers">
+	<ui5-li key="arg">Argentina</ui5-li>
+	<ui5-li key="bg">Bulgaria</ui5-li>
+	<ui5-li key="ch">China</ui5-li>
+</ui5-list>
+		</xmp></pre>
+	</section>
+
+	<section>
+		<h3>List with No Data</h3>
+		<div class="snippet">
+			<ui5-list class="full-width" header-text="Products" no-data-text="No Data Available"></ui5-list>
+		</div>
+		<pre class="prettyprint lang-html"><xmp>
+<ui5-list header-text="API: noDataText" no-data-text="No Data Available"></ui5-list>
+		</xmp></pre>
+	</section>
+
+	<script>
+		window.prettyPrint();
+	</script>
+
+	<script defer src="../../../../../../www/samples/settings.js"></script>
+
+    <div class="page-container">
+      <div class="api-container">
+        <section class="component-description">
+          <h3 class="comment-api-title"> Overview </h3>
+
+The <code>ui5-list</code> component allows displaying a list of items, advanced keyboard handling support for navigating between items, and predefined modes to improve the development efficiency. <br><br> The <code>ui5-list</code> is а container for the available list items: <ul> <li><code>ui5-li</code></li> <li><code>ui5-li-custom</code></li> <li><code>ui5-li-group-header</code></li> </ul> <br><br> To benefit from the built-in selection mechanism, you can use the available selection modes, such as <code>SingleSelect</code>, <code>MultiSelect<code> and <code>Delete<code>. <br><br> Additionally, the <code>ui5-list</code> provides header, footer, and customization for the list item separators.
+
+<h3>ES6 Module Import</h3>
+
+<code>import "@ui5/webcomponents/dist/List";</code> <br> <code>import "@ui5/webcomponents/dist/StandardListItem";</code> (for <code>ui5-li</code>) <br> <code>import "@ui5/webcomponents/dist/CustomListItem";</code> (for <code>ui5-li-custom</code>) <br> <code>import "@ui5/webcomponents/dist/GroupHeaderListItem";</code> (for <code>ui5-li-group-header</code>)
+          <section class="component-api space-top">
+            
+                  <h3 class="comment-api-title" >Properties/Attributes</h3>
+                  <p class="small-space-top" >You can use both properties and attributes with the same effect. The name of each attribute is listed below the name of the property, if different.</p>
+            
+                  <div class="small-space-top api-table">
+                    <div class="head api-table-header-roll">
+                      <div class="cell api-table-header-cell">Name</div>
+                      <div class="cell api-table-header-cell">Type</div>
+                      <div class="cell api-table-header-cell">Default Value</div>
+                      <div class="cell api-table-header-cell">Description</div>
+                    </div>
+            
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">backgroundDesign <br> <code>background-design</code></div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">Defines the background design of the <code>ui5-list</code>. <br><br> <b>Note:</b> Available options are <code>Solid</code> and <code>Transparent</code>.</div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">footerText <br> <code>footer-text</code></div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">Defines the footer text.</div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">headerText <br> <code>header-text</code></div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">Defines the <code>ui5-list</code> header text. <br><br> <b>Note:</b> If <code>header</code> is set this property is ignored.</div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">inset <br> <code></code></div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">Determines whether the list items are indented.</div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">mode <br> <code></code></div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">Defines the mode of the <code>ui5-list</code>. <br><br> <b>Note:</b> Avalaible options are <code>None</code>, <code>SingleSelect</code>, <code>MultiSelect</code>, and <code>Delete</code>.</div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">noDataText <br> <code>no-data-text</code></div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">Defines the text that is displayed when the <code>ui5-list</code> contains no items.</div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">separators <br> <code></code></div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">Defines the item separator style that is used. <br><br> <b>Notes:</b> <ul> <li>Avalaible options are <code>All</code>, <code>Inner</code>, and <code>None</code>.</li> <li>When set to <code>None</code>, none of the items is separated by horizontal lines.</li> <li>When set to <code>Inner</code>, the first item doesn't have a top separator and the last item doesn't have a bottom separator.</li> </ul></div>
+                      </div>
+            
+                  </div>
+            
+                <h3 class="comment-api-title space-top" >Children</h3>
+            	<p class="small-space-top" >
+            	  This Web Component accepts other HTML Elements as children. 
+            	  Use the <code>data-ui5-slot</code> attribute to define the category of each child, if more than one category is accepted.
+            	  You can provide multiple children for the categories marked with <code>[0..n]</code> or just one otherwise.
+            	</p>
+            
+                <div class="small-space-top api-table">
+                  <div class="head api-table-header-roll">
+                    <div class="cell api-table-header-cell">Category</div>
+                    <div class="cell api-table-header-cell">Type</div>
+                    <div class="cell api-table-header-cell">Description</div>
+                  </div>
+            
+                    <div class="row api-table-roll-even">
+                      <div class="cell api-table-content-cell api-table-content-cell-bold">header</div>
+                      <div class="cell api-table-content-cell">HTMLElement</div>
+                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the header area. For example, you can use <code>ui5-toolbar</code> or any other HTML element. <br><br> <b>Note:</b> When <code>header</code> is set, the <code>headerText</code> property is ignored.</div>
+                    </div>
+                    <div class="row api-table-roll-odd">
+                      <div class="cell api-table-content-cell api-table-content-cell-bold">items</div>
+                      <div class="cell api-table-content-cell">ListItemBase [0..n]</div>
+                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the items of the <code>ui5-list</code>. <br><b>Note:</b> Only <code>ui5-li</code>, <code>ui5-li-custom</code> and <code>ui5-li-groupheader</code> are allowed.</div>
+                    </div>
+            
+                </div>
+            
+                  <h3 class="comment-api-title space-top">Events</h3>
+                  <p class="small-space-top" >This Web Component fires semantic events upon user interaction. You can bind to these events with the standard DOM APIs, such as <code>addEventListener</code>. </p>
+            
+                  <div class="small-space-top api-table">
+                    <div class="head api-table-header-roll">
+                      <div class="cell api-table-header-cell">Name</div>
+                      <div class="cell api-table-header-cell">Description</div>
+                    </div>
+            
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">itemDelete</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">Fired when the Delete button of any item is pressed. <br><br> <b>Note:</b> A Delete button is displayed on each item, when the <code>ui5-list</code> <code>mode</code> property is set to <code>Delete</code>.</div>
+                      </div>
+            
+                        <tr class="api-table-event-param" >
+                        <div class="cell api-table-param-name api-table-content-cell api-table-content-cell-bold">item</div>
+                        <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> HTMLElement </br> <strong class="api-table-event-description bold">description:</strong> the deleted item.</div>
+                        </tr>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">itemPress</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">Fired when an item is pressed, unless the item's <code>type</code> property is set to <code>Inactive</code>.</div>
+                      </div>
+            
+                        <tr class="api-table-event-param" >
+                        <div class="cell api-table-param-name api-table-content-cell api-table-content-cell-bold">item</div>
+                        <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> HTMLElement </br> <strong class="api-table-event-description bold">description:</strong> the pressed item.</div>
+                        </tr>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">selectionChange</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">Fired when selection is changed by user interaction in <code>SingleSelect</code> and <code>MultiSelect</code> modes.</div>
+                      </div>
+            
+                        <tr class="api-table-event-param" >
+                        <div class="cell api-table-param-name api-table-content-cell api-table-content-cell-bold">items</div>
+                        <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> Array </br> <strong class="api-table-event-description bold">description:</strong> an array of the selected items.</div>
+                        </tr>
+                  </div>
+            
+          </section>
+        </section>
+      </div>
+    </div>
+      <div class="api-container appended-doc">
+        <h1>StandardListItem</h1>
+        <section class="component-description">
+          The <code>ui5-li</code> represents the simplest type of item for a <code>ui5-list</code>.
+
+This is a list item, providing the most common use cases such as <code>text</code>, <code>image</code> and <code>icon</code>.
+          <section class="component-api space-top">
+            
+                  <h3 class="comment-api-title" >Properties/Attributes</h3>
+                  <p class="small-space-top" >You can use both properties and attributes with the same effect. The name of each attribute is listed below the name of the property, if different.</p>
+            
+                  <div class="small-space-top api-table">
+                    <div class="head api-table-header-roll">
+                      <div class="cell api-table-header-cell">Name</div>
+                      <div class="cell api-table-header-cell">Type</div>
+                      <div class="cell api-table-header-cell">Default Value</div>
+                      <div class="cell api-table-header-cell">Description</div>
+                    </div>
+            
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">icon <br> <code></code></div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">Defines the <code>icon</code> source URI. </br></br> <b>Note:</b> SAP-icons font provides numerous buil-in icons. To find all the available icons, see the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.</div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">iconEnd <br> <code>icon-end</code></div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">Defines whether the <code>icon</code> should be displayed in the beginning of the list item or in the end. </br></br> <b>Note:</b> If <code>image</code> is set, the <code>icon</code> would be displayed after the <code>image</code>.</div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">image <br> <code></code></div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">Defines the <code>image</code> source URI. </br></br> <b>Note:</b> The <code>image</code> would be displayed in the beginning of the list item.</div>
+                      </div>
+            
+                  </div>
+            
+                <h3 class="comment-api-title space-top" >Children</h3>
+                <p class="small-space-top" >The content of this Web Component is interpreted as text and shown to the user. All HTML Elements inside the Web Component are ignored - only their text is used.</p>
+            
+          </section>
+        </section>
+      </div>
+      <div class="api-container appended-doc">
+        <h1>CustomListItem</h1>
+        <section class="component-description">
+          A component to be used as custom list item within the <code>ui5-list</code> the same way as the standard <code>ui5-li</code>.
+
+The <code>ui5-li-custom</code> accepts arbitrary HTML content to allow full customization.
+          <section class="component-api space-top">
+            
+                  <h3 class="comment-api-title" >Properties/Attributes</h3>
+                  <p class="small-space-top" >You can use both properties and attributes with the same effect. The name of each attribute is listed below the name of the property, if different.</p>
+            
+                  <div class="small-space-top api-table">
+                    <div class="head api-table-header-roll">
+                      <div class="cell api-table-header-cell">Name</div>
+                      <div class="cell api-table-header-cell">Type</div>
+                      <div class="cell api-table-header-cell">Default Value</div>
+                      <div class="cell api-table-header-cell">Description</div>
+                    </div>
+            
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">selected <br> <code></code></div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">Defines the selected state of the <code>ListItem</code>.</div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">type <br> <code></code></div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">Defines the visual indication and behavior of the list items. Available options are <code>Active</code> and <code>Inactive</code>.</div>
+                      </div>
+            
+                  </div>
+            
+                <h3 class="comment-api-title space-top" >Children</h3>
+            	<p class="small-space-top" >
+            	  This Web Component accepts other HTML Elements as children. 
+            	  Use the <code>data-ui5-slot</code> attribute to define the category of each child, if more than one category is accepted.
+            	  You can provide multiple children for the categories marked with <code>[0..n]</code> or just one otherwise.
+            	</p>
+            
+                <div class="small-space-top api-table">
+                  <div class="head api-table-header-roll">
+                    <div class="cell api-table-header-cell">Category</div>
+                    <div class="cell api-table-header-cell">Type</div>
+                    <div class="cell api-table-header-cell">Description</div>
+                  </div>
+            
+                    <div class="row api-table-roll-even">
+                      <div class="cell api-table-content-cell api-table-content-cell-bold">content</div>
+                      <div class="cell api-table-content-cell">HTMLElement [0..n]</div>
+                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the content of the <code>ui5-li-custom</code>.</div>
+                    </div>
+            
+                </div>
+            
+          </section>
+        </section>
+      </div>
+      <div class="api-container appended-doc">
+        <h1>GroupHeaderListItem</h1>
+        <section class="component-description">
+          The <code>ui5-li-group-header</code> is a special list item, used only to separate other list items into logical groups.
+          <section class="component-api space-top">
+            
+            
+                <h3 class="comment-api-title space-top" >Children</h3>
+                <p class="small-space-top" >The content of this Web Component is interpreted as text and shown to the user. All HTML Elements inside the Web Component are ignored - only their text is used.</p>
+            
+          </section>
+        </section>
+      </div>
+
+		<script>
+			function redirect(event, component) {
+					event.preventDefault();
+					var location = window.parent.location.href;
+					window.parent.location.href = location.replace(/components\/.+/gi, "components/" + component);
+			};
+		</script>
+		</body>
+
+</html>
