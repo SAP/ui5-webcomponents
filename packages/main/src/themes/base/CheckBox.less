@@ -24,10 +24,6 @@ ui5-checkbox {
 	max-width: 100%;
 }
 
-ui5-checkbox[wrap] {
-	height: auto;
-}
-
 .sapMCb {
 	display: flex;
 	align-items: center;
@@ -42,6 +38,10 @@ ui5-checkbox[wrap] {
 
 	&:not(.sapMCbBgDis).sapMCbHasLabel:focus:before {
 		pointer-events: none;
+	}
+
+	&:focus {
+		outline: none;
 	}
 
 	/* 
@@ -65,6 +65,7 @@ ui5-checkbox[wrap] {
 	min-height: 1.125rem;
 	min-width: 1.125rem;
 	text-align: center;
+	pointer-events: none;
 
 	&.sapMCbMarkChecked:before {
 		content: "\e05b";
@@ -77,6 +78,7 @@ ui5-checkbox[wrap] {
 	& > input {
 		-webkit-appearance: none;
 		visibility: hidden;
+		width: 0;
 	}
 
 	&.sapMCbMark,
@@ -89,9 +91,11 @@ ui5-checkbox[wrap] {
 .sapMCb.sapMCbHasLabel {
 	padding-right: 0;
 
-	ui5-label {
+	& .sapWCLabelInCheckBox {
 		padding-left: 0.875rem;
 		vertical-align: bottom;
+		cursor: default;
+		pointer-events: none;
 	}
 }
 
@@ -103,8 +107,11 @@ ui5-checkbox[wrap] {
 		top: 0.875rem;
 	}
 
-	ui5-label {
+	.sapWCLabelInCheckBox {
 		line-height: 3rem;
+		overflow: hidden;
+		align-self: center;
+		margin: 0.675rem 0;
 	}
 }
 
@@ -149,10 +156,6 @@ ui5-checkbox[wrap] {
 }
 
 /* CheckBox focus */
-.sapMCb:focus {
-	outline: none;
-}
-
 .sapMCbBg:focus,
 .sapMCbBg:active,
 .sap-desktop .sapMCbBg.sapMCbBgDis:focus {
@@ -201,15 +204,14 @@ ui5-checkbox[wrap] {
 	}
 }
 
-/* ========================== Compact ========================== */
+/* Compact */
 .sapUiSizeCompact {
 
 	.sapMCb {
-		height: 2rem;
+		min-height: 2rem;
 		min-height: 2rem;
 		padding: 0 .5rem;
 	}
-
 
 	.sapMCbBg {
 		left: 0.025rem;
@@ -224,7 +226,7 @@ ui5-checkbox[wrap] {
 	}
 
 	/* ChekBox With Label */
-	.sapMCb.sapMCbHasLabel ui5-label {
+	.sapMCb.sapMCbHasLabel .sapWCLabelInCheckBox {
 		padding-left: 0.5rem;
 		vertical-align: bottom;
 	}
@@ -234,103 +236,33 @@ ui5-checkbox[wrap] {
 		.sapMCbBg {
 			top: 0.5rem;
 		}
-		ui5-label {
+
+		.sapWCLabelInCheckBox {
 			line-height: 2rem;
+			margin: .25rem 0;
 		}
 	}
 
 	.sapMCb:not(.sapMCbBgDis).sapMCbHasLabel:focus:before {
-		top: 0.375rem;
-		bottom: 0.375rem;
+		top: 0.35rem;
+		bottom: 0.325rem;
 		left: .375rem;
 	}
 }
 
-[data-sap-ui-wc-root].sap-desktop.sapUiSizeCompact {
-	.sapMCb:not(.sapMCbBgDis).sapMCbHasLabel:focus:before {
-		top:0.365rem;
-		bottom: 0.365rem;
-		left: 0.365rem;
-	}
-}
-
-/* ========================== RTL ========================== */
-:host(ui5-checkbox[dir=RTL]) {
-	.sapMCb.sapMCbHasLabel {
-		padding-left: 0;
-		padding-right: 0.875rem;
-
-		ui5-label {
-			padding-right: 0.875rem;		
-			padding-left: 0;
-		}
-	}
-
-
-	.sapUiSizeCompact {
-		.sapMCbBg {
-			right: 0.025rem;
-		}
-		/* ChekBox With Label */
-		.sapMCb.sapMCbHasLabel ui5-label {
-			padding-left: 0.5rem;
-		}
-	}
-}
-
-ui5-checkbox[dir=RTL] {
-	.sapMCb.sapMCbHasLabel {
-		padding-left: 0;
-		padding-right: 0.875rem;
-
-		ui5-label {
-			padding-right: 0.875rem;		
-			padding-left: 0;
-		}
-	}
-
-	.sapUiSizeCompact {
-		.sapMCbBg {
-			right: 0.025rem;
-		}
-		/* ChekBox With Label */
-		.sapMCb.sapMCbHasLabel ui5-label {
-			padding-left: 0.5rem;
-		}
-	}
-}
-
-span[dir="rtl"] {
-
+/* RTL */
+[dir="rtl"] {
 	& .sapMCb:not(.sapMCbBgDis).sapMCbHasLabel:focus:before {
 		left: 0;
 		right: 0.675rem;
 	}
 
-	&.sapUiSizeCompact {
-		& .sapMCb:not(.sapMCbBgDis).sapMCbHasLabel:focus:before {
-			top: .25rem;
-			bottom: .25rem;
-		}
-	}
-
-
 	& .sapMCb.sapMCbHasLabel {
 		padding: 0 .875rem;
 		padding-left: 0;
 
-		& ui5-label {
+		& .sapWCLabelInCheckBox {
 			padding: 0 .875rem 0 0;
 		}
 	}
-}
-
-.sapWCLabelInCheckBox {
-	overflow: hidden;
-	align-self: center;
-	cursor: default;
-}
-
-.sapMCbWrapped .sapWCLabelInCheckBox {
-	margin: 0.675rem 0;
 }
