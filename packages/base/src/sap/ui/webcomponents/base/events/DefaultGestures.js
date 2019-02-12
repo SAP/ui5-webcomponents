@@ -9,20 +9,25 @@ const gesturesMap = {
 };
 
 let Gestures = {
-	addListener:  (node, gesture, handler) => {
-		const standardEvent = gesturesMap[gesture];
-		node.addEventListener(standardEvent, (event) => {
-			if (event.defaultPrevented) {
-				return false;
+	addListener:  (node, gestureName, handler) => {
+		const stdEventName = gesturesMap[gestureName];
+		node.addEventListener(stdEventName, (stdEvent) => {
+			const eventTarget = stdEvent.ui5target;
+
+			const gestureEvent = new Event(gestureName, { bubbles: true, cancelable: true, composed: true });
+			gestureEvent.detail = stdEvent.detail;
+			const defaultPrevented = !eventTarget.dispatchEvent(gestureEvent);
+
+			if (defaultPrevented) {
+				stdEvent.preventDefault();
 			}
-			let gestureEvent = new Event(gesture, { bubbles: true, cancelable: true, composed: true });
-			gestureEvent.detail = event.detail;
-			event.target.dispatchEvent(gestureEvent);
 		});
-		return node.addEventListener(gesture, handler);
+		return node.addEventListener(gestureName, handler);
 	},
-	removeListener:  (node, gesture, handler) => {
-		return node.removeEventListener(gesturesMap[gesture], handler);
+	removeListener:  (node, gestureName, handler) => {
+		const stdEventName = gesturesMap[gestureName];
+		node.removeEventListener(stdEventName, handler);
+		node.removeEventListener(gestureName, handler);
 	},
 };
 
