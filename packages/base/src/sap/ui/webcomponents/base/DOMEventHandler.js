@@ -32,24 +32,16 @@ const getDomTarget = function(event) {
 };
 
 const processDOMNode = function(node, event) {
-	const id = node.getAttribute("data-sap-ui");
-	const tag = node.tagName;
-	let control;
-
-	if (tag.match(/^ui5-/i)) {
-		control = node;
-	}
-
-	if (control && control._handleEvent) {
-		return dispatchEvent(control, event);
+	if (node && typeof node.isUI5WebComponent === "function" && node.isUI5WebComponent()) {
+		return dispatchEvent(node, event);
 	}
 	return true;
 };
 
-const dispatchEvent = function(control, event) {
+const dispatchEvent = function(ui5WebComponent, event) {
 
 	// Handle the original event (such as "keydown")
-	control._handleEvent(event);
+	ui5WebComponent._handleEvent(event);
 	if (event.isImmediatePropagationStopped()) {
 		return false;
 	}
@@ -57,7 +49,7 @@ const dispatchEvent = function(control, event) {
 	// Handle pseudo events that derive from the original event (such as "sapselect")
 	const pseudoTypes = getPseudoTypesFor(event);
 	for (let i = 0, len = pseudoTypes.length; i < len; i++) {
-		control._handleEvent(event, pseudoTypes[i]);
+		ui5WebComponent._handleEvent(event, pseudoTypes[i]);
 		if (event.isImmediatePropagationStopped()) {
 			return false;
 		}
@@ -104,8 +96,6 @@ const getPseudoTypesFor = function(event) {
 const getParentDOMNode = function(node) {
 	const parentNode = node.parentNode;
 
-	// Skip the custom element tag (host) only if crossing a shadow DOM boundary
-	// The reason is that the event was already dispatched to the light control while traversing the shadow DOM
 	if (parentNode && parentNode.host) {
 		return parentNode.host;
 	}
