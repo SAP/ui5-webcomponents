@@ -1,5 +1,5 @@
-commit 8f2ec9464d5818c3313a353db8669e210c601a6e
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Feb 12 16:09:35 2019 +0200
+commit 3e39a70a9523a99f10ce13a542069aadf02521bc
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Tue Feb 12 16:30:31 2019 +0200
 
-    docs(playground): list sample improved (#19)
+    fix(eventing): remove unnecessary tag name check (#16)
