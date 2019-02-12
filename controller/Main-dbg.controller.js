@@ -1,6 +1,7 @@
 sap.ui.define([
-	"sap/ui/core/mvc/Controller"
-], function (Controller) {
+	"sap/ui/core/mvc/Controller",
+	"sap/ui/Device",
+], function (Controller, Device) {
 	"use strict";
 
 	return Controller.extend("playground.controller.Main", {
@@ -9,8 +10,10 @@ sap.ui.define([
 			this.oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 			this.oRouter.getRoute("components").attachPatternMatched("patternMatched", 	this.updateSelectedItem, this);
 			this.navList = this.getView().byId("nl");
+			this.isSystemPhone = Device.system.phone;
 			this.selectedItemDOMRef = null;
 			this.CLASS_ITEM_SELECTED = "sapTntNavLIItemSelected";
+
 			var debounce = this.debounce;
 			var scrollHandler = this.scrollHandler;
 
@@ -62,6 +65,7 @@ sap.ui.define([
 		itemSelect: function (oEvent) {
 			var oContext = oEvent.getParameter("item").getBindingContext();
 			var sUrl = oContext.getProperty("url");
+			var toolPage = this.byId("app");
 
 			if (sUrl) {
 				this.oRouter.navTo("components", {
@@ -69,6 +73,10 @@ sap.ui.define([
 				});
 			} else {
 				this.oRouter.navTo("home");
+			}
+
+			if (this.isSystemPhone) {
+				toolPage.setSideExpanded(false);
 			}
 		},
 

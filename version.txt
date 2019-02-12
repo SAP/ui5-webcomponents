@@ -1,5 +1,5 @@
-commit 36ab8074a80ccd643c664de485c005ac8cef1a56
-Author: Adrian Bobev <adrian.bobev@gmail.com>
-Date:   Tue Feb 12 16:42:50 2019 +0200
+commit 99b722a3ff1e251faf6d35ff00a159fb059467d3
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Feb 12 19:12:17 2019 +0200
 
-    chore(build): add start scripts in the package.json (#20)
+    docs(playground): enable side menu auto close upon selection on phone (#25)
