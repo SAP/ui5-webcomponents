@@ -1,5 +1,6 @@
 import PseudoEvents from '@ui5/webcomponents-core/dist/sap/ui/events/PseudoEvents';
 import ControlEvents from './events/ControlEvents';
+import WebComponent from './WebComponent';
 
 const handleEvent = function (event) {
 
@@ -32,7 +33,7 @@ const getDomTarget = function(event) {
 };
 
 const processDOMNode = function(node, event) {
-	if (node && typeof node.isUI5WebComponent === "function" && node.isUI5WebComponent()) {
+	if (node && node instanceof WebComponent) {
 		return dispatchEvent(node, event);
 	}
 	return true;

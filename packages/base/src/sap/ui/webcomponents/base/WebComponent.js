@@ -65,11 +65,6 @@ class WebComponent extends HTMLElement {
 		ShadowDOM.updateStyle(tag, this.shadowRoot, styleURLs);
 	}
 
-	// For duck typing when instanceof WebComponent cannot be used
-	isUI5WebComponent() {
-		return true;
-	}
-
 	_whenShadowRootReady() {
 		return this._shadowRootReadyPromise;
 	}
