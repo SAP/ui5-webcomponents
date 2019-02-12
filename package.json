@@ -27,6 +27,8 @@
     "clean:playground": "cd packages/playground && yarn clean",
     "serve": "cross-env DEV=true yarn build:core && cross-env DEV=true yarn build:main && npm-run-all --parallel serve:webcomponents serve:playground",
     "serve:es5": "cross-env DEV=true yarn build:core && cross-env DEV=true yarn build:main && npm-run-all --parallel serve:webcomponents:es5 serve:playground",
+    "start": "npm run serve",
+    "start:es5": "npm run serve:es5",
     "serve:webcomponents": "cd packages/main && yarn dev",
     "serve:webcomponents:es5": "cd packages/main && yarn dev:es5",
     "serve:playground": "cd packages/playground && yarn serve",
