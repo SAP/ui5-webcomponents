@@ -24,6 +24,7 @@ import Popover from "./src/Popover";
 import Panel from "./src/Panel";
 import RadioButton from "./src/RadioButton";
 import Select from "./src/Select";
+import Switch from "./src/Switch";
 import ShellBar from "./src/ShellBar";
 import ShellBarItem from "./src/ShellBarItem";
 import TabContainer from "./src/TabContainer";

@@ -1,0 +1,13 @@
+<div {{> controlData}}
+	class="{{classes.main}}"
+	style="{{styles.main}}"
+	role="checkbox"
+	aria-checked="{{ctr.checked}}"
+	tabindex="{{tabIndex}}">
+		<span class="sapWCSwitchTrack">
+			<span class="sapWCSwitchTextOn">{{ctr.textOn}}</span>
+			<span class="sapWCSwitchTextOff">{{ctr.textOff}}</span>
+			<input id="{{ctr._id}}-CB" type='checkbox' ?checked="{{ctr.checked}}" class="sapWCSwitchHiddenInput" data-sap-no-tab-ref/>
+		</span>
+		<span class="sapWCSwitchHandle"></span>
+</div>
