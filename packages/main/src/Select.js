@@ -171,6 +171,7 @@ class Select extends WebComponent {
 		const key = event.which;
 
 		if (key === KeyCodes.F4 || (event.altKey && Select.ARROWS.includes(key))) {
+			event.preventDefault();
 			this.Suggestions.toggle();
 		}
 	}
