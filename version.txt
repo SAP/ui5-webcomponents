@@ -1,5 +1,5 @@
-commit e7b8e4ed196d107d5e65238c6884736d42582d8c
-Author: Adrian Bobev <adrian.bobev@gmail.com>
-Date:   Tue Feb 12 12:07:10 2019 +0200
+commit e06dcb3bc6b11325600c5aed7f190055867f3fc7
+Author: Filip Siderov <fifoosid@gmail.com>
+Date:   Tue Feb 12 13:28:21 2019 +0200
 
-    chore(build): enable auto deploy to gh-pages (#11)
+    docs(playground): Implement footer for sample pages (#13)

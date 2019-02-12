@@ -373,6 +373,41 @@ pre.prettyprint>xmp {
 	box-shadow: none;
 }
 
+.footer-wrapper {
+	padding-top: 2rem;
+    padding-bottom: 4rem;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	border-top: 1px solid #D8D8D8;
+	font-family: "72-Regular";
+}
+
+.footer-links {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: flex-start;
+}
+
+.footer-links > a {
+	color: #333333;
+	text-decoration: none;
+}
+
+.footer-links > a:hover {
+	text-decoration: underline;
+}
+
+.separator::after {
+	content: "|";
+    padding: 0 1rem;
+    color: #D8D8D8;
+    text-decoration: none;
+}
+
 @media(max-width: 600px) {
 	.login-form {
 		margin: 3rem 1rem;
