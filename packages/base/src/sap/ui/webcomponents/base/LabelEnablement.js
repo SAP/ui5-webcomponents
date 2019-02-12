@@ -1,5 +1,3 @@
-import ControlRenderer from "./ControlRenderer";
-
 const getElementToLabel = (id) => /*ControlRenderer.byId(id) ||*/ document.getElementById(id);
 
 class LabelEnablement {
