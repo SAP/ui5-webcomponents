@@ -1,5 +1,5 @@
-commit e06dcb3bc6b11325600c5aed7f190055867f3fc7
+commit 2ce860b6feafe90f60f163900f1ebf25d65a83a9
 Author: Filip Siderov <fifoosid@gmail.com>
-Date:   Tue Feb 12 13:28:21 2019 +0200
+Date:   Tue Feb 12 13:40:00 2019 +0200
 
-    docs(playground): Implement footer for sample pages (#13)
+    docs(playground): Fix function declaration (#14)
