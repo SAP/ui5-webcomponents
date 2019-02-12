@@ -1,5 +1,6 @@
 import Device from "@ui5/webcomponents-core/dist/sap/ui/Device";
-import * as Gestures from "@polymer/polymer/lib/utils/gestures";
+import Gestures from "./DefaultGestures";
+// import Gestures from "./PolymerGestures";
 
 /**
  * @namespace

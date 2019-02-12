@@ -44,6 +44,11 @@
 
 
     <script>
+        var b = document.getElementById("b");
+        b.addEventListener("press", function(e) {
+            console.log("B Pressed")
+        });
+
         var l = document.getElementById("l");
         l.addEventListener("press", function(e) {
             e.preventDefault();
