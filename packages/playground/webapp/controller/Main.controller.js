@@ -81,7 +81,7 @@ sap.ui.define([
 			window.location.href = this._getHomeURL();
 		},
 
-		_getHomeURL() {
+		_getHomeURL: function() {
 			if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
 				return 	"/index.html";
 			}
