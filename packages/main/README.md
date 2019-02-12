@@ -1,4 +1,4 @@
-![UI5 icon](https://github.com/SAP/ui5-webcomponents/blob/master/docs/images/UI5_logo_wide.png)
+![UI5 icon](https://raw.githubusercontent.com/SAP/ui5-webcomponents/master/docs/images/UI5_logo_wide.png)
 
 # UI5 Web Components
 
