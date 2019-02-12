@@ -13,47 +13,62 @@
 </head>
 
 <body>
-
 	<ui5-togglebutton id="myBtn">turn lights</ui5-togglebutton>
+	<ui5-button id="myBtn2">click</ui5-button>
+
 	<h2>Content size</h2>
-	<ui5-label id="result2"></ui5-label>
-	<ui5-select id="mySelect2">
+	<ui5-label id="lblResult"></ui5-label>
+	<ui5-select id="mySelect">
 		<ui5-li type="Active" selected>Cozy</ui5-li>
 		<ui5-li type="Active" selected>Compact</ui5-li>
 		<ui5-li type="Active" selected>Condensed</ui5-li>
 	</ui5-select>
 
 	<h2>Error Select</h2>
-	<ui5-select value-state="Error">
+	<ui5-select id="mySelect2" value-state="Error">
 		<ui5-li type="Active" selected>Cozy</ui5-li>
 		<ui5-li type="Active" selected>Compact</ui5-li>
 		<ui5-li type="Active" selected>Condensed</ui5-li>
 	</ui5-select>
 
 	<h2>Warning Select</h2>
-	<ui5-label id="result"></ui5-label>
-	<ui5-select id="mySelect" value-state="Warning"></ui5-select>
+	<ui5-select id="mySelect3" value-state="Warning"></ui5-select>
 
 	<h2>Disabled Select</h2>
-	<ui5-select id="mySelect" disabled value-state="Success"></ui5-select>
+	<ui5-select id="mySelect4" disabled value-state="Success"></ui5-select>
 
 	<h2> Input with suggestions</h2>
 	<ui5-input id="myInput" show-suggestions placeholder="Search for a country ..."></ui5-input>
+
+	<h2> Change event counter holder</h2>
+	<ui5-input id="inputResult"></ui5-input>
 </body>
 <script>
 	var countries =  [{ key: "Aus", text: "Australia" }, { key: "Aruba", text: "Aruba" }, { key: "Antigua", text: "Antigua and Barbuda" }, { key: "Bel", text: "Belgium" }, { key: "Bg", text: "Bulgaria" }, { key: "Bra", text: "Brazil" }];
 	var new_countries =  [{ key: "Aus", text: "Australia1" }, { key: "Aruba", text: "Aruba1" }, { key: "Antigua", text: "Antigua and Barbuda1" }, { key: "Bel", text: "Belgium1" }, { key: "Bg", text: "Bulgaria1" }, { key: "Bra", text: "Brazil1" }];
-
 	var sap_database_entries = [{ key: "Afg", text: "Afghanistan" }, { key: "Arg", text: "Argentina" }, { key: "Alb", text: "Albania" }, { key: "Arm", text: "Armenia" }, { key: "Alg", text: "Algeria" }, { key: "And", text: "Andorra" }, { key: "Ang", text: "Angola" }, { key: "Ast", text: "Austria" }, { key: "Aus", text: "Australia" }, { key: "Aze", text: "Azerbaijan" }, { key: "Aruba", text: "Aruba" }, { key: "Antigua", text: "Antigua and Barbuda" }, { key: "Bel", text: "Belarus" }, { key: "Bel", text: "Belgium" }, { key: "Bg", text: "Bulgaria" }, { key: "Bra", text: "Brazil" }, { key: "Ch", text: "China" }, { key: "Cub", text: "Cuba" }, { key: "Chil", text: "Chili" }, { key: "Lat", text: "Latvia" }, { key: "Lit", text: "Litva" }, { key: "Prt", text: "Portugal" }, { key: "Sen", text: "Senegal" }, { key: "Ser", text: "Serbia" }, { key: "Afg", text: "Seychelles" }, { key: "Sierra", text: "Sierra Leone" }, { key: "Sgp", text: "Singapore" }, { key: "Sint", text: "Sint Maarten" }, { key: "Slv", text: "Slovakia" }, { key: "Slo", text: "Slovenia" }];
+
+	var btn = document.getElementById('myBtn');
 	var input = document.getElementById('myInput');
+	var inputResult = document.getElementById('inputResult');
 	var select = document.getElementById('mySelect');
 	var select2 = document.getElementById('mySelect2');
-	var lbl = document.getElementById('result');
-	var lbl2 = document.getElementById('result2');
+	var select3 = document.getElementById('mySelect3');
+	var lbl = document.getElementById('lblResult');
 	var counter = 0;
-	var counter2 = 0;
-	var btn = document.getElementById('myBtn');
 
+	// Select
+	select.addEventListener("change", function(e) {
+		lbl.innerHTML = "selected item :: " + e.detail.selectedItem.textContent + " :: " + (++counter);
+		inputResult.value = counter;
+	});
+
+	select2.addEventListener("change", function(e) {
+		++counter;
+		inputResult.value = counter;
+	});
+
+	// Input with Suggestions
 	input.addEventListener("liveChange", function (event) {
 		var value = event.target.value;
 		var suggestionItems = [];
@@ -77,26 +92,8 @@
 		});
 	});
 
-	select.addEventListener("change", function(e) {
-		lbl.innerHTML = "selected item :: " + e.detail.selectedItem.textContent + " :: " + (++counter);
 
-		// while (select.firstChild) {
-		// 	select.removeChild(select.firstChild);
-		// }
-		
-		// new_countries.forEach(function(item, idx) {
-		// 	var li = document.createElement("ui5-li");
-		// 	li.type = "Active";
-		// 	li.id = item.key;
-		// 	li.textContent = item.text;
-		// 	select.appendChild(li);
-		// });
-	});
-
-	select2.addEventListener("change", function(e) {
-		lbl2.innerHTML = "selected item :: " + e.detail.selectedItem.textContent + " :: " + (++counter2);
-	});
-
+	// HCB button
 	btn.addEventListener("press", function(event) {
 		const hcb = event.target.pressed;
 		const styles = hcb ? "background:#333;color:palegoldenrod;" : "background:#fff;color:#333;";
@@ -105,6 +102,7 @@
 		document.body.setAttribute("style", styles);
 		sap.ui.getWCCore().setTheme(theme);
 	});
+
 	countries.forEach(function(item, idx) {
 		var li = document.createElement("ui5-li");
 		li.type = "Active";
@@ -115,7 +113,7 @@
 		}
 
 		li.textContent = item.text;
-		select.appendChild(li);
+		select3.appendChild(li);
 	});
 </script>
 </body>
