@@ -1,5 +1,5 @@
-commit 9afa81b8cefadab6648f66991f0e0a8a1f6677f0
+commit 8f2ec9464d5818c3313a353db8669e210c601a6e
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Feb 12 14:50:59 2019 +0200
+Date:   Tue Feb 12 16:09:35 2019 +0200
 
-    fix(ui5-radiobutton): focus outline in Compact & RTL (#18)
+    docs(playground): list sample improved (#19)
