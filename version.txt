@@ -1,5 +1,5 @@
-commit 3e39a70a9523a99f10ce13a542069aadf02521bc
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Tue Feb 12 16:30:31 2019 +0200
+commit 36ab8074a80ccd643c664de485c005ac8cef1a56
+Author: Adrian Bobev <adrian.bobev@gmail.com>
+Date:   Tue Feb 12 16:42:50 2019 +0200
 
-    fix(eventing): remove unnecessary tag name check (#16)
+    chore(build): add start scripts in the package.json (#20)
