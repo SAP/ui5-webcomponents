@@ -1,5 +1,5 @@
-commit 2ce860b6feafe90f60f163900f1ebf25d65a83a9
-Author: Filip Siderov <fifoosid@gmail.com>
-Date:   Tue Feb 12 13:40:00 2019 +0200
+commit 8b1cf98b7d317a08accd0219d25ef454acea3930
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Feb 12 13:55:51 2019 +0200
 
-    docs(playground): Fix function declaration (#14)
+    docs(playground): improve ui5-select documentation (#15)
