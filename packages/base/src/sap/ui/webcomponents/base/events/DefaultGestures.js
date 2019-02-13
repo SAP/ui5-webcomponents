@@ -1,5 +1,10 @@
+import {getDomTarget} from "../DOMEventHandler";
+import configuration from '../Configuration';
+
 /**
- * Default gestures implementation using DOM APIs
+ * Default Gestures implementation using DOM APIs
+ * Only addListener and removeListener are implemented
+ * The gesture event object only supports the "sourceEvent" parameter, ("x" and "y" are not needed for anything yet)
  */
 
 const gesturesMap = {
@@ -12,10 +17,17 @@ let Gestures = {
 	addListener:  (node, gestureName, handler) => {
 		const stdEventName = gesturesMap[gestureName];
 		node.addEventListener(stdEventName, (stdEvent) => {
-			const eventTarget = stdEvent.ui5target;
+			const eventTarget = getDomTarget(stdEvent);
 
-			const gestureEvent = new Event(gestureName, { bubbles: true, cancelable: true, composed: true });
-			gestureEvent.detail = stdEvent.detail;
+			const gestureEventOptions = {
+				bubbles: true,
+				cancelable: true,
+				composed: true
+			};
+			const gestureEvent = new Event(gestureName, gestureEventOptions);
+			gestureEvent.detail = {
+				sourceEvent: stdEvent
+			};
 			const defaultPrevented = !eventTarget.dispatchEvent(gestureEvent);
 
 			if (defaultPrevented) {
@@ -31,7 +43,8 @@ let Gestures = {
 	},
 };
 
-export default Gestures;
+export { Gestures as default };
 export const injectGesturesProvider = (newGestures) => {
+	//force default
 	Gestures = newGestures;
 };

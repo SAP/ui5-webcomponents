@@ -128,5 +128,5 @@ class DOMEventHandler {
 	}
 }
 
-
+export { getDomTarget };
 export default DOMEventHandler;

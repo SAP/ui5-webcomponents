@@ -1,3 +1,4 @@
-import * as Gestures from "@polymer/polymer/lib/utils/gestures";
+import * as PolymerGestures from "@polymer/polymer/lib/utils/gestures";
+import {injectGesturesProvider} from "./DefaultGestures";
 
-export default Gestures;
+injectGesturesProvider(PolymerGestures);
