@@ -30,6 +30,8 @@ ui5-panel {
 
 .sapMPanel > header {
 	display: flex;
+	align-items: center;
+	height: 2.75rem;
 
 	& ui5-icon.sapMPanelIcon {
 		width: 1.5rem;
@@ -65,8 +67,6 @@ ui5-panel {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	text-transform: none;
-	height: 3rem;
-	line-height: 3rem;
 	padding: 0 1rem;
 	margin: 0;
 
@@ -151,4 +151,10 @@ ui5-panel {
 
 .sapMPanelContent:not(.sapMPanelBGTransparent) {
 	border-bottom: 1px solid @sapUiGroupTitleBorderColor;
+}
+
+.sapUiSizeCompact {
+	.sapMPanel > header {
+		height: 2rem;
+	}
 }
