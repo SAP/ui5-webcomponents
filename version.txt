@@ -1,5 +1,7 @@
-commit 3efc369743e16dcfd7d5cd24473d14422cb2435d
-Author: Filip Siderov <fifoosid@gmail.com>
-Date:   Wed Feb 13 15:52:16 2019 +0200
+commit 393fdd574fcf1a273853be5b77cbef113cb04d75
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Wed Feb 13 16:09:55 2019 +0200
 
-    refactor(ui5-checkbox): adapt to fiori 3 spec (#40)
+    feat(eventing): implement standard gestures (#22)
+    
+    The polymer gestures are no longer used by default. Instead a simple compatible implementation is used. Users may still get the polymer implementation by manually importing it.
