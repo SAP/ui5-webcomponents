@@ -108,8 +108,4 @@ class DOMEventHandler {
 	}
 }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
 export default DOMEventHandler;
