@@ -1,4 +1,4 @@
-import {getDomTarget} from "../DOMEventHandler";
+import getOriginalEventTarget from './getOriginalEventTarget';
 import configuration from '../Configuration';
 
 /**
@@ -17,7 +17,7 @@ let Gestures = {
 	addListener:  (node, gestureName, handler) => {
 		const stdEventName = gesturesMap[gestureName];
 		node.addEventListener(stdEventName, (stdEvent) => {
-			const eventTarget = getDomTarget(stdEvent);
+			const eventTarget = getOriginalEventTarget(stdEvent);
 
 			const gestureEventOptions = {
 				bubbles: true,
@@ -45,6 +45,10 @@ let Gestures = {
 
 export { Gestures as default };
 export const injectGesturesProvider = (newGestures) => {
-	//force default
+	// Used for test purposes
+	if (configuration.getWCForceDefaultGestures()) {
+		return;
+	}
+
 	Gestures = newGestures;
 };
