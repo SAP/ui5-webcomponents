@@ -1,5 +1,5 @@
-commit 255ee128f6bd6cb0a1025db246172f52c1c99020
+commit 3efc369743e16dcfd7d5cd24473d14422cb2435d
 Author: Filip Siderov <fifoosid@gmail.com>
-Date:   Wed Feb 13 15:50:13 2019 +0200
+Date:   Wed Feb 13 15:52:16 2019 +0200
 
-    refactor(ui5-panel): adapt panel to fiori 3 spec (#41)
+    refactor(ui5-checkbox): adapt to fiori 3 spec (#40)
