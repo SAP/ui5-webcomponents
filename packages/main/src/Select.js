@@ -50,7 +50,7 @@ const metadata = {
 		/**
 		 * Defines whether <code>ui5-select</code> is in disabled state.
 		 * </br></br>
-		 * <b>Note:</b> A disabled <code>ui5-select</code> is completely uninteractive.
+		 * <b>Note:</b> A disabled <code>ui5-select</code> is noninteractive.
 		 *
 		 * @type {boolean}
 		 * @public
@@ -61,7 +61,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the value state of the <code>ui5-select</code>.
+		 * Defines the value state of <code>ui5-select</code>.
 		 * Available options are: <code>None</code>, <code>Success</code>, <code>Warning</code> and <code>Error</code>.
 		 *
 		 * @type {string}
@@ -89,7 +89,7 @@ const metadata = {
 	},
 	events: /** @lends sap.ui.webcomponents.main.Select.prototype */ {
 		/**
-		 * Fired, when the selected item changes.
+		 * Fired when the selected item changes.
 		 *
 		 * @event
 		 * @param {HTMLElement} item the selected item.
@@ -107,10 +107,10 @@ const metadata = {
  * @class
  * <h3 class="comment-api-title"> Overview </h3>
  *
- * The <code>ui5-select</code> component is used to create a drop-down list
- * and the items inside the <code>ui5-select</code> define the available options,
- * using the <code>ui5-li</code> component.
- * <h3>Keyboard handling</h3>
+ * The <code>ui5-select</code> component is used to create a drop-down list.
+ * The items inside the <code>ui5-select</code> define the available options by using the <code>ui5-li</code> component.
+ *
+ * <h3>Keyboard Handling</h3>
  * The <code>ui5-select</code> provides advanced keyboard handling.
  * If the <code>ui5-select</code> is focused,
  * you can open or close the drop-down by pressing <code>F4</code>, <code>ALT+UP</code> or <code>ALT+DOWN</code> keys.

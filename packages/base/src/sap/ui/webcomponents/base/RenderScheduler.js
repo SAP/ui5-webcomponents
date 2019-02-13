@@ -64,7 +64,6 @@ class RenderScheduler {
 
 	static renderControls() {
 		// console.log("------------- NEW RENDER TASK ---------------");
-		ControlRenderer.storeFocus();
 
 		let controlInfo, control, promise;
 		const renderStats = new Map();
@@ -91,7 +90,6 @@ class RenderScheduler {
 
 		renderTaskId = undefined;
 
-		ControlRenderer.restoreFocus();
 	}
 
 	/**

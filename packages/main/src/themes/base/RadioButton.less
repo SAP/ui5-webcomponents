@@ -116,8 +116,8 @@ ui5-radiobutton {
 
 		input {
 			margin: 0; /* FF puts margin */
-			-webkit-appearance: none;
 			visibility: hidden;
+			width: 0;
 		}
 	}
 
@@ -132,6 +132,7 @@ ui5-radiobutton {
 		max-width: 100%;
 		text-overflow: ellipsis;
 		overflow: hidden;
+		pointer-events: none;
 	}
 }
 
@@ -188,35 +189,22 @@ ui5-radiobutton {
 	}
 }
 
-/* RTL */
-:host([dir=RTL]) {
-	.sapMRb.sapMRbHasLabel:focus:before {
-		left: 0;
- 		right: 0.625rem;
-	}
-}
-/* RTL in Compact */
-:host([dir=RTL]) {
-	.sapUiSizeCompact .sapMRb.sapMRbHasLabel:focus:before {
-		left: 0;
- 		right: 0.375rem;
-	}
-}
-
 /* ListItem Context */
 :host(ui5-radiobutton.radioButtonInListItem) .sapMRb .sapMRbInner .sapMRbSvgOuter {
 	fill: @sapUiListBackground;
 }
 
-[dir=RTL] {
+/* RTL */
+span[dir="rtl"] {
 	.sapMRb.sapMRbHasLabel:focus:before {
 		left: 0;
  		right: 0.625rem;
 	}
 }
+
 /* RTL in Compact */
-[dir=RTL] {
-	.sapUiSizeCompact .sapMRb.sapMRbHasLabel:focus:before {
+span[dir="rtl"] {
+	&.sapUiSizeCompact .sapMRb.sapMRbHasLabel:focus:before {
 		left: 0;
  		right: 0.375rem;
 	}

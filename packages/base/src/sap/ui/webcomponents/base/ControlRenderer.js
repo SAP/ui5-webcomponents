@@ -18,31 +18,6 @@ class ControlRenderer {
 		RendererImpl.render(renderResult, placeholder);
 	}
 
-	static storeFocus() {
-		// let activeElement = document.activeElement;
-
-		// try {
-		// 	while (activeElement && activeElement.shadowRoot) {
-		// 		// drill down the DOM to find the actual focused DOM element
-		// 		activeElement = activeElement.shadowRoot.activeElement;
-		// 	}
-		// 	if (!activeElement.matches(":focus")) {
-		// 		ControlRenderer._focusedControl = undefined;
-		// 		return;
-		// 	}
-		// }
-		// catch (e) {
-		// 	activeElement = undefined;
-		// }
-
-		// ControlRenderer._focusedControl = activeElement;
-	}
-
-	static restoreFocus() {
-		// if (ControlRenderer._focusedControl) {
-		// 	ControlRenderer._focusedControl.focus();
-		// }
-	}
 }
 
 export default ControlRenderer;

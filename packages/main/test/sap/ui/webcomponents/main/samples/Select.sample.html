@@ -32,7 +32,15 @@
 	<style>
 		.select {
 			width:300px;
+			max-width: 100%;
 			margin: 0.5rem;
+		}
+
+		@media (max-width:599px) {
+			.select {
+				margin-left: 0;
+				margin-right: 0;
+			}
 		}
 	</style>
 </head>
@@ -44,7 +52,7 @@
 	</header>
 
 	<section>
-		<h3>Basic Input</h3>
+		<h3>Basic Select</h3>
 		<div class="snippet">
 			<ui5-select class="select">
 				<ui5-li icon="sap-icon://iphone" type="Active">Phone</ui5-li>
