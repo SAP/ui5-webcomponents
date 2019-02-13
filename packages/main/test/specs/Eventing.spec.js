@@ -11,7 +11,7 @@ describe("Eventing", () => {
 		const hrefIsSame = browser.execute(() => {
 			return location.href.endsWith("Eventing.html");
 		});
-		assert.ok(hrefIsSame);
+		assert.ok(hrefIsSame, "When default was prevented, URL did not change");
 	});
 
 	it("Default not prevented", () => {
@@ -23,6 +23,6 @@ describe("Eventing", () => {
 		const hrefChanged = browser.execute(() => {
 			return location.href.endsWith("Eventing.html#new");
 		});
-		assert.ok(hrefChanged);
+		assert.ok(hrefChanged, "When default was not prevented, the URL did change");
 	});
 });
