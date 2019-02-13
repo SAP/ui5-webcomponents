@@ -57,7 +57,9 @@ ui5-checkbox {
 
 .sapMCbBg {
 	background-color: @sapUiFieldBackground;
-	border: solid 0.125rem @sapUiFieldBorderColor;
+	border-width: 0.125rem;
+	border-style: solid;
+	border-color: @sapUiFieldBorderColor;
 	display: inline-block;
 	position: relative;
 	height: 1.125rem;
@@ -222,7 +224,6 @@ ui5-checkbox {
 		min-height: 0.75rem;
 		line-height: 0.75rem;
 		font-size: 0.625rem;
-		border-radius: 0;
 	}
 
 	/* ChekBox With Label */
