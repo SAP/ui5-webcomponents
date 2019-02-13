@@ -1,5 +1,5 @@
-commit 46d45b786b662abfe1e402420fc9596563298970
-Author: Filip Siderov <fifoosid@gmail.com>
-Date:   Wed Feb 13 12:38:35 2019 +0200
+commit e9f0462bd094101df8f75d951161d4db9e5cac8a
+Author: Adrian Bobev <adrian.bobev@gmail.com>
+Date:   Wed Feb 13 13:54:08 2019 +0200
 
-    docs(playground): add link to video in youtube (#37)
+    chore: remove labels and assignees from Github templates (#39)
