@@ -1,5 +1,5 @@
-commit 7102850a2e099d6d2aa0cf8e310e59d00426ee58
-Author: Adrian Bobev <adrian.bobev@gmail.com>
-Date:   Wed Feb 13 17:30:30 2019 +0200
+commit ca97de6eeca786939fa7d828b07aba77400b4699
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Feb 13 17:34:46 2019 +0200
 
-    docs(playground): add timeline sample in card samples (#38)
+    refactor(ui5-input): suggestions separators to inner ones (#42)
