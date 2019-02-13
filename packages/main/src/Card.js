@@ -69,11 +69,23 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the icon displayed in the <code>ui5-card</code> header.
-		 * @type {String}
+		 * Defines the <code>icon</code> displayed in the <code>ui5-card</code> header.
+		 * </br></br>
+		 * <b>Note:</b> The <code>icon</code> would not be displayed if <code>image</code> is set.
+		 * @type {URI}
 		 * @public
 		 */
 		icon: {
+			type: URI,
+			defaultValue: null,
+		},
+
+		/**
+		 * Defines the <code>image</code> source URI displayed in the <code>ui5-card</code> header.
+		 * @type {URI}
+		 * @public
+		 */
+		image: {
 			type: URI,
 			defaultValue: null,
 		},
@@ -117,6 +129,7 @@ class Card extends WebComponent {
 	static calculateTemplateContext(state) {
 		return {
 			ctr: state,
+			renderIcon: state.icon && !state.image,
 		};
 	}
 

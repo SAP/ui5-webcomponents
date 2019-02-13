@@ -1,10 +1,15 @@
 <div {{> controlData}} class="sapFCard">
 	<header class="sapFCardHeader">
-		{{#if ctr.icon}}
-		<span role="img" aria-label="Avatar" class="sapFCardAvatar">
-			<ui5-icon class="sapFCardHeaderIcon" src="{{ctr.icon}}"></ui5-icon>
-		</span>
+		{{#if ctr.image}}
+			<img src="{{ctr.image}}" aria-label="Avatar" class="sapFCardAvatar sapFCardHeaderImg">
 		{{/if}}
+		
+		{{#if renderIcon}}
+			<span role="img" aria-label="Avatar" class="sapFCardAvatar">
+				<ui5-icon class="sapFCardHeaderIcon" src="{{ctr.icon}}"></ui5-icon>
+			</span>
+		{{/if}}
+
 		<div class="sapFCardHeaderText">
 			{{#if ctr.heading}}
 				<div class="sapFCardTitle">{{ctr.heading}}</div>
