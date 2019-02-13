@@ -1,7 +1,9 @@
-commit 0900483e878061c93985b10aa471765b8404222e
+commit a1639aa098a869b2a3a2944caa1054b8dce76201
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Feb 13 09:19:50 2019 +0200
+Date:   Wed Feb 13 10:20:12 2019 +0200
 
-    fix(ui5-textarea): focus outline with character counter (#32)
+    docs(playground): improve the ACC of the popover sample (#33)
     
-    Fixes: https://github.com/SAP/ui5-webcomponents/issues/29
+    Improve the accessibility inside the ui5-popover by
+    referencing the 'email' ui5-input with the 'Email' label
+    with the use of the 'for' attribute.
