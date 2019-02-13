@@ -1,14 +1,7 @@
-commit d24139c6c96e392cf45cd9a3cccc8777b6b4562e
+commit 0900483e878061c93985b10aa471765b8404222e
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Feb 13 08:43:14 2019 +0200
+Date:   Wed Feb 13 09:19:50 2019 +0200
 
-    fix(ui5-input): playground sample with labels (#31)
+    fix(ui5-textarea): focus outline with character counter (#32)
     
-    Issue
-    One of the ui5-label components within the Input with Labels section
-    used to reference a wrong ui5-input through its 'for' attribute.
-    
-    Solution
-    Changing the ui5-label 'for' attribute to point the expected ui5-input field.
-    
-    Fixes https://github.com/SAP/ui5-webcomponents/issues/29
+    Fixes: https://github.com/SAP/ui5-webcomponents/issues/29
