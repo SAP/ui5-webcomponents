@@ -1,5 +1,5 @@
-commit 84dfa8378c7c737d7628c14f7dcbf240202899e3
+commit df83148b4c26823b02bf726075e864e6005c5fc5
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Feb 13 10:38:28 2019 +0200
+Date:   Wed Feb 13 11:24:56 2019 +0200
 
-    docs(playground): update DatePicker code snippet in home page (#35)
+    docs(playground): center the Select examples on phone size (#36)
