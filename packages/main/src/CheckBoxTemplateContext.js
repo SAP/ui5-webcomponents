@@ -4,11 +4,16 @@ class CheckBoxTemplateContext {
 	static calculate(state) {
 		const mainClasses = CheckBoxTemplateContext.getMainClasses(state);
 		const innerClasses = CheckBoxTemplateContext.getInnerClasses(state);
+		let tabIndex;
+
+		if (!state.disabled) {
+			tabIndex = state._control.tabIndex ? state._control.tabIndex.toString() : "0";
+		}
 
 		const context = {
 			ctr: state,
 			readOnly: !state.disabled,
-			tabIndex: state.disabled ? undefined : "0",
+			tabIndex,
 			classes: { main: mainClasses, inner: innerClasses },
 			styles: {
 				main: {},

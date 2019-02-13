@@ -30,6 +30,7 @@
 		<ui5-radiobutton
 				id="{{ctr._id}}-singleSelectionControl"
 				class="radioButtonInListItem"
+				tabindex="-1"
 				selected="{{ctr.selected}}">
 		</ui5-radiobutton>
 	{{/if}}
@@ -37,7 +38,8 @@
 	{{#if modeMultiSelect}}
 		<ui5-checkbox
 				id="{{ctr._id}}-multiSelectionControl"
-				checked="{{ctr.selected}}">
+				checked="{{ctr.selected}}"
+				tabindex="-1">
 		</ui5-checkbox>
 	{{/if}}
 

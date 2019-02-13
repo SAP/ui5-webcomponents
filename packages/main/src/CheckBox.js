@@ -169,6 +169,7 @@ class CheckBox extends WebComponent {
 
 	onBeforeRendering() {
 		this.syncLabel();
+		this.tabIndex = this.getAttribute("tabindex");
 	}
 
 	syncLabel() {
