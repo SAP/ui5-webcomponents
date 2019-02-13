@@ -1,4 +1,5 @@
 import "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/jquery-shim";
+import "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/events/PolymerGestures";
 import "./src/ThemeProvider";
 
 import Gregorian from "@ui5/webcomponents-core/dist/sap/ui/core/date/Gregorian";

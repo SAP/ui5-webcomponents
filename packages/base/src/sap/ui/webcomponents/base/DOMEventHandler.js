@@ -1,11 +1,12 @@
 import PseudoEvents from '@ui5/webcomponents-core/dist/sap/ui/events/PseudoEvents';
 import ControlEvents from './events/ControlEvents';
+import getOriginalEventTarget from './events/getOriginalEventTarget';
 import WebComponent from './WebComponent';
 
 const handleEvent = function (event) {
 
 	// Get the DOM node where the original event occurred
-	let target = getDomTarget(event);
+	let target = getOriginalEventTarget(event);
 	event.ui5target = target;
 
 	// Traverse the DOM
@@ -18,19 +19,7 @@ const handleEvent = function (event) {
 	}
 };
 
-const getDomTarget = function(event) {
 
-	// Default - composedPath should be used (also covered by polyfill)
-	if (typeof event.composedPath === "function") {
-		const composedPath = event.composedPath();
-		if (Array.isArray(composedPath) && composedPath.length) {
-			return composedPath[0];
-		}
-	}
-
-	// Fallback
-	return event.target;
-};
 
 const processDOMNode = function(node, event) {
 	if (node && node instanceof WebComponent) {
@@ -118,6 +107,5 @@ class DOMEventHandler {
 		ControlEvents.unbindAnyEvent(handleEvent);
 	}
 }
-
 
 export default DOMEventHandler;
