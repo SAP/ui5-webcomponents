@@ -38,16 +38,27 @@
 		height: fit-content;
 		padding: 0 1rem 1rem;
 	}
+
+	html[data-sap-ui-browser=ie11] .table-example,
+	html[data-sap-ui-browser=ed15] .table-example,
+	html:not([data-sap-ui-browser^=ie]):not([data-sap-ui-browser^=ed]) .table-unsupported {
+		display: none;
+	}
+
 	</style>
 </head>
 <body class="sapUiBody example-wrapper">
-
 	<header>
 		<h2 class="control-header">Table</h2>
 		<div style="margin-bottom: 2rem; font-weight: 300; font-size: 1.1rem; color: #666666;">&lt;ui5-table&gt;</div>
 	</header>
 
-	<section>
+	<div class="table-unsupported">
+		<div>The table is currently not supported in IE11 and Edge. If you need this feature, do not hesitate to open an issue in</div>
+		<a href=\"https://github.com/SAP/ui5-webcomponents/issues/new/choose\" target=\"_blank\">Github</a>
+	</div>
+
+	<section class="table-example">
 		<h3>Basic Table</h3>
 		<div class="snippet flex-column">
 
@@ -378,46 +389,41 @@
 		}
 
 		let html = '';
-		products.ProductCollection.forEach((product, index) => {
-			html += `<ui5-table-row data-ui5-slot="rows">
-							<ui5-table-cell data-ui5-slot="cells">
-								<div class="double-line-content">
-									<span>
-										<b>${product.Name}</b>
-									</span>
-									<span style="margin-top: 0.5rem">${product.ProductId}</span>
-								</div>
-							</ui5-table-cell>
+		products.ProductCollection.forEach(function(product, index) {
+			html += '<ui5-table-row data-ui5-slot="rows">'
+							+ '<ui5-table-cell data-ui5-slot="cells">'
+								+ '<div class="double-line-content">'
+									+ '<span>'
+										+ '<b>' + product.Name + '</b>'
+									+ '</span>'
+									+ '<span style="margin-top: 0.5rem">' + product.ProductId + '</span>'
+								+ '</div>'
+							+ '</ui5-table-cell>'
 
-							<ui5-table-cell data-ui5-slot="cells">
-								<span class="middle" >${product.SupplierName}</span>
-							</ui5-table-cell>
+							+ '<ui5-table-cell data-ui5-slot="cells">'
+								+ '<span class="middle" >' + product.SupplierName + '</span>'
+							+ '</ui5-table-cell>'
 
-							<ui5-table-cell data-ui5-slot="cells">
-								<span class="middle" >${product.Width} x ${product.Depth} x ${product.Height} ${product.DimUnit}</span>
-							</ui5-table-cell>
+							+ '<ui5-table-cell data-ui5-slot="cells">'
+								+ '<span class="middle" >' + product.Width + ' x ' + product.Depth + ' x ' + product.Height + product.DimUnit + '</span>'
+							+ '</ui5-table-cell>'
 
-							<ui5-table-cell data-ui5-slot="cells">
-								<span style="color: #2b7c2b" class="middle">
-									<b>${product.WeightMeasure}</b> ${product.WeightUnit}</span>
-							</ui5-table-cell>
+							+ '<ui5-table-cell data-ui5-slot="cells">'
+								+ '<span style="color: #2b7c2b" class="middle">'
+									+ '<b>' + product.WeightMeasure + '</b>' + product.WeightUnit + '</span>'
+							+ '</ui5-table-cell>'
 
-							<ui5-table-cell data-ui5-slot="cells">
-								<span class="middle" >
-									<b>${product.Price}</b> ${product.CurrencyCode}</span>
-							</ui5-table-cell>
+							+ '<ui5-table-cell data-ui5-slot="cells">'
+								+ '<span class="middle" >'
+									+ '<b>' + product.Price + '</b>' + product.CurrencyCode + '</span>'
+							+ '</ui5-table-cell>'
 
-						</ui5-table-row>`;
-			// if (index > 1) {
-			//     return;
-			// }
-
-			// html += test;
+						+ '</ui5-table-row>';
 		});
 		document.getElementById("tbl").insertAdjacentHTML('beforeend', html);
 
 
-		document.getElementById("toggleSticky").addEventListener("click", event => {
+		document.getElementById("toggleSticky").addEventListener("click", function(event) {
 			document.getElementById("tbl").stickyColumnHeader = !document.getElementById("tbl").stickyColumnHeader
 		});
 
