@@ -1,11 +1,9 @@
 import Device from "@ui5/webcomponents-core/dist/sap/ui/Device";
 
-const setupOS = () => {
-	var html = document.documentElement;
+const setupOS = (node) => {
+	node.dataset.sapUiOs = Device.os.name + Device.os.versionStr;
 
-	html.dataset.sapUiOs = Device.os.name + Device.os.versionStr;
-
-	var osCSS = null;
+	let osCSS = null;
 	switch (Device.os.name) {
 		case Device.os.OS.IOS:
 			osCSS = "sap-ios";
@@ -21,7 +19,7 @@ const setupOS = () => {
 			break;
 	}
 	if (osCSS) {
-		html.classList.add(osCSS);
+		node.classList.add(osCSS);
 	}
 };
 

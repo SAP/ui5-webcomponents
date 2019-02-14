@@ -50,6 +50,9 @@ import GroupHeaderListItem from "./src/GroupHeaderListItem";
 // used in test pages
 import RenderScheduler from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/RenderScheduler";
 window.RenderScheduler = RenderScheduler;
+import Device from "@ui5/webcomponents-core/dist/sap/ui/Device";
+window.sapUiDevice = Device;
+
 
 // Note: keep in sync with rollup.config value for IIFE
 import Core from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Core";
