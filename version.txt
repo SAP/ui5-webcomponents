@@ -1,5 +1,5 @@
-commit 979d0a7085661efcec3d72d5796a8edba4bf1d93
-Author: Adrian Bobev <adrian.bobev@gmail.com>
-Date:   Thu Feb 14 15:42:25 2019 +0200
+commit a2f10ea82b1b17fccd695b99ca92cabf1ac22c77
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu Feb 14 22:26:16 2019 +0200
 
-    docs(playground): compress images (#52)
+    docs(playground): fix configuration button appearance (#55)
