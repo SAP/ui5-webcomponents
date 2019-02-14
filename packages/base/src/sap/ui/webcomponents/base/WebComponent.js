@@ -6,8 +6,8 @@ import Integer from './types/Integer';
 import ControlRenderer from "./ControlRenderer";
 import RenderScheduler from "./RenderScheduler";
 import TemplateContext from "./TemplateContext";
+import { attachThemeChange } from "./ThemeManager";
 import State from "./State";
-import Core from "./Core";
 
 const metadata = {
 	properties: {
@@ -53,7 +53,7 @@ class WebComponent extends HTMLElement {
 
 		// Only for native Shadow DOM, and only when present
 		if (!window.ShadyDOM && !this.constructor.getMetadata().getNoShadowDOM()) {
-			Core.attachThemeChange(this._onThemeChange.bind(this));
+			attachThemeChange(this._onThemeChange.bind(this));
 		}
 	}
 
