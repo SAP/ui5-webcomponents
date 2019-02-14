@@ -8,6 +8,7 @@ import TabContainerTemplateContext from "./TabContainerTemplateContext";
 import TabBase from "./TabBase";
 import Tab from "./Tab";
 import TabSeparator from "./TabSeparator";
+import Popover from "./Popover";
 import TabDesignMode from "./types/TabDesignMode";
 import IconColor from "./types/IconColor";
 
