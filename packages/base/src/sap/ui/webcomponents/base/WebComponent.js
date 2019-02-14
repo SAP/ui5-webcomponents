@@ -245,12 +245,6 @@ class WebComponent extends HTMLElement {
 		}
 		return this;
 	}
-	static getMetadata() {
-		if (!this._metadata) {
-			this._metadata = new WebComponentMetadata(this.metadata);
-		}
-		return this._metadata;
-	}
 
 	static get metadata() {
 		return metadata;
