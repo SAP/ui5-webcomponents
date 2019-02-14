@@ -411,14 +411,14 @@ class WebComponent extends HTMLElement {
 			return;
 		}
 
-		return this._getPlaceholder().children[0];
+		return this._getRoot().children[0];
 	}
 
 	_waitForDomRef() {
 		return this._domRefReadyPromise;
 	}
 
-	_getPlaceholder() {
+	_getRoot() {
 		return this.shadowRoot.querySelector("[data-sap-ui-wc-root]");
 	}
 
