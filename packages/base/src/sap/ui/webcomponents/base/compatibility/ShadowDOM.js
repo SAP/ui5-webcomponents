@@ -1,6 +1,9 @@
 import WCPolyfill from '../thirdparty/webcomponents-polyfill';
 import configuration from "../Configuration";
 import { fetchThemeBundle } from "../ThemeBundle";
+import setupBrowser from '../util/setupBrowser';
+import setupOS from '../util/setupOS';
+import setupSystem from '../util/setupSystem';
 
 // Shorthands
 const d = document;
@@ -88,8 +91,9 @@ class ShadowDOM {
 				shadowDOM = template.content.cloneNode(true);
 
 				rootSpan = shadowDOM.querySelector("span[data-sap-ui-wc-placeholder]");
-				rootSpan.setAttribute("data-sap-ui-browser", document.documentElement.getAttribute("data-sap-ui-browser"));
-				rootSpan.setAttribute("data-sap-ui-os", document.documentElement.getAttribute("data-sap-ui-os"));
+				setupBrowser(rootSpan);
+				setupOS(rootSpan);
+				setupSystem(rootSpan);
 			}
 
 			if (isCompact) {

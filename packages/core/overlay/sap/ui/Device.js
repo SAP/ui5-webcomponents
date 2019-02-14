@@ -985,12 +985,15 @@ function isTablet(customUA) {
                 // So the detected device type depends on the orientation :-(
                 // actually this is a Chrome bug, as "width"/"height" should return the entire screen's dimensions and
                 // "availWidth"/"availHeight" should return the size available after subtracting the browser UI
+
+				/*
                 if (isLandscape() &&
                     (window.screen.height === 552 || window.screen.height === 553) // old/new Nexus 7
                     &&
                     (/Nexus 7/i.test(sUserAgent))) {
                     bTablet = true;
                 }
+                */
 
                 return bTablet;
             }
@@ -1015,8 +1018,5 @@ function setSystem(simMobileOnDesktop, customUA) {
 setSystem();
 // expose the function for unit test
 Device._getSystem = getSystem;
-
-
-
 
 export default Device;

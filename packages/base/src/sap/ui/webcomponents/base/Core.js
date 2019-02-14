@@ -2,6 +2,7 @@ import ShadowDOM from './compatibility/ShadowDOM';
 import whenDOMReady from './util/whenDOMReady';
 import setupBrowser from './util/setupBrowser';
 import setupOS from './util/setupOS';
+import setupSystem from './util/setupSystem';
 import configuration from "./Configuration";
 import { inject as injectCore } from "@ui5/webcomponents-core/dist/sap/ui/core/Core";
 import "./jquery-shim";
@@ -66,8 +67,9 @@ const Core = {
 				ShadowDOM.setWebComponentRootOnHTML();
 				attachThemeChange(ShadowDOM._applyTheme);
 
-				setupBrowser();
-				setupOS();
+				setupBrowser(document.documentElement);
+				setupOS(document.documentElement);
+				setupSystem(document.documentElement);
 
 				IconFonts.load();
 				DOMEventHandler.start();
