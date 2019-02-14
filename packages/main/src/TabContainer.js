@@ -12,6 +12,7 @@ import Popover from "./Popover";
 import List from "./List";
 import CustomListItem from "./CustomListItem";
 import Icon from "./Icon";
+import Button from "./Button";
 
 import TabDesignMode from "./types/TabDesignMode";
 import IconColor from "./types/IconColor";
@@ -754,6 +755,7 @@ class TabContainer extends WebComponent {
 	static async define(...params) {
 		await Promise.all([
 			Icon.define(),
+			Button.define(),
 			CustomListItem.define(),
 			List.define(),
 			Popover.define(),
