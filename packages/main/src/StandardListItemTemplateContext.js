@@ -6,8 +6,8 @@ class StandardListItemTemplateContext {
 		const hasIcon = !!state.icon;
 		const iconEnd = state.iconEnd;
 		const hasImage = !!state.image;
-		const hasDesc = state.description && !!state.description.length
-		const hasTitle = state._nodeText && !!state._nodeText.length
+		const hasDesc = state.description && !!state.description.length;
+		const hasTitle = state._nodeText && !!state._nodeText.length;
 
 		context.displayImage = hasImage;
 		context.displayIconBegin = (hasIcon && !iconEnd);
