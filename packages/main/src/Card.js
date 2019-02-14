@@ -72,6 +72,7 @@ const metadata = {
 		/**
 		 * Defines image source URI or built-in icon source URI.
 		 * </br></br>
+		 * <b>Note:</b>
 		 * SAP-icons font provides numerous options. To find all the available icons, see the
 		 * <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
 		 * @type {URI}
