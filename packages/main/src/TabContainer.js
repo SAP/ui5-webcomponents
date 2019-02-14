@@ -752,10 +752,12 @@ class TabContainer extends WebComponent {
 	}
 
 	static async define(...params) {
-		await Icon.define();
-		await CustomListItem.define();
-		await List.define();
-		await Popover.define();
+		await Promise.all([
+			Icon.define(),
+			CustomListItem.define(),
+			List.define(),
+			Popover.define(),
+		]);
 
 		super.define(...params);
 	}
