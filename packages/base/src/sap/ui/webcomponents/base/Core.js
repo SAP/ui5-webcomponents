@@ -1,8 +1,5 @@
 import ShadowDOM from './compatibility/ShadowDOM';
 import whenDOMReady from './util/whenDOMReady';
-import setupBrowser from './util/setupBrowser';
-import setupOS from './util/setupOS';
-import setupSystem from './util/setupSystem';
 import configuration from "./Configuration";
 import { inject as injectCore } from "@ui5/webcomponents-core/dist/sap/ui/core/Core";
 import "./jquery-shim";
@@ -64,12 +61,7 @@ const Core = {
 			whenDOMReady().then(function() {
 
 				// This will only have effect if the polyfill is loaded
-				ShadowDOM.setWebComponentRootOnHTML();
 				attachThemeChange(ShadowDOM._applyTheme);
-
-				setupBrowser(document.documentElement);
-				setupOS(document.documentElement);
-				setupSystem(document.documentElement);
 
 				IconFonts.load();
 				DOMEventHandler.start();

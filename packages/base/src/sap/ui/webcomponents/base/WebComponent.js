@@ -419,7 +419,7 @@ class WebComponent extends HTMLElement {
 	}
 
 	_getPlaceholder() {
-		return this.shadowRoot.querySelector("[data-sap-ui-wc-placeholder]");
+		return this.shadowRoot.querySelector("[data-sap-ui-wc-root]");
 	}
 
 	getFocusDomRef() {
