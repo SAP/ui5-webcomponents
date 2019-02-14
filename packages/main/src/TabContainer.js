@@ -747,6 +747,12 @@ class TabContainer extends WebComponent {
 	static get calculateTemplateContext() {
 		return TabContainerTemplateContext.calculate;
 	}
+
+	static async define(...params) {
+		await Popover.define();
+
+		super.define(...params);
+	}
 }
 
 Core.boot().then(_ => {
