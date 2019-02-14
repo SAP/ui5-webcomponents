@@ -11,18 +11,48 @@
 /* ======================================= */
 
 .sapMSLI {
-	&.sapMLIBActive .sapMSLITitle {
+	&.sapMLIBActive .sapMSLITitle,
+	&.sapMLIBActive .sapMSLIDescription {
 		color: @sapUiListActiveTextColor;
 	}
 
+	&.sapMSLIWithTitleAndDescription {
+		height: 4rem;
+		padding: 1rem;
+
+		.sapMSLITitle {
+			padding-bottom: 0.375rem;
+		}
+	}
+
+	&:not(.sapMSLIWithTitleAndDescription) {
+		.sapMSLITitle {
+			height: 3rem;
+			line-height: 3rem;
+		}
+	}
+
+	.sapMSLITextWrapper {
+		display: flex;
+		flex-direction: column;
+		min-width: 1px;
+	}
+
 	.sapMSLITitle {
+		font-size: 1rem;
+		color: @sapUiListTextColor;
+	}
+
+	.sapMSLITitle,
+	.sapMSLIDescription {
 		white-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;
-		font-size: 1rem;
-		height: 3rem;
-		line-height: 3rem;
-		color: @sapUiListTextColor;
+	}
+
+	.sapMSLIDescription {
+		font-size: 0.875rem;
+		color: @sapUiContentLabelColor;
 	}
 
 	.sapMSLIImg {

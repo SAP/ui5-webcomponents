@@ -18,6 +18,16 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.StandardListItem.prototype */ {
 
 		/**
+		 * Defines the description displayed right under the item text, if such is present.
+		 * @type {String}
+		 * @public
+		 */
+		description: {
+			type: String,
+			defaultValue: "",
+		},
+
+		/**
 		 * Defines the <code>icon</code> source URI.
 		 * </br></br>
 		 * <b>Note:</b>

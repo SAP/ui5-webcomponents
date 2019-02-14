@@ -40,18 +40,18 @@
 		<h3>Basic List</h3>
 		<div class="snippet">
 			<ui5-list id="myList" class="full-width">
-				<ui5-li icon="sap-icon://meal" type="Active">Pineapple</ui5-li>
-				<ui5-li icon="sap-icon://meal" type="Active">Orange</ui5-li>
-				<ui5-li icon="sap-icon://meal" type="Active">Banana</ui5-li>
-				<ui5-li icon="sap-icon://meal" type="Active">Mango</ui5-li>
+				<ui5-li icon="sap-icon://nutrition-activity" type="Active" description="Tropical plant with an edible fruit">Pineapple</ui5-li>
+				<ui5-li icon="sap-icon://nutrition-activity" type="Active" description="Occurs between red and yellow">Orange</ui5-li>
+				<ui5-li icon="sap-icon://nutrition-activity" type="Active" description="The yellow lengthy fruit">Banana</ui5-li>
+				<ui5-li icon="sap-icon://nutrition-activity" type="Active" description="The tropical stone fruit">Mango</ui5-li>
 			</ui5-list>
 		</div>
 		<pre class="prettyprint lang-html"><xmp>
 <ui5-list id="myList" class="full-width">
-	<ui5-li icon="sap-icon://meal" type="Active">Pineapple</ui5-li>
-	<ui5-li icon="sap-icon://meal" type="Active">Orange</ui5-li>
-	<ui5-li icon="sap-icon://meal" type="Active">Banana</ui5-li>
-	<ui5-li icon="sap-icon://meal" type="Active">Mango</ui5-li>
+	<ui5-li icon="sap-icon://nutrition-activity" type="Active" description="Tropical plant with an edible fruit">Pineapple</ui5-li>
+	<ui5-li icon="sap-icon://nutrition-activity" type="Active" description="Occurs between red and yellow">Orange</ui5-li>
+	<ui5-li icon="sap-icon://nutrition-activity" type="Active" description="The yellow lengthy fruit">Banana</ui5-li>
+	<ui5-li icon="sap-icon://nutrition-activity" type="Active" description="The tropical stone fruit">Mango</ui5-li>
 </ui5-list>
 		</xmp></pre>
 	</section>
@@ -63,7 +63,7 @@
 				<ui5-li key="Argentina" type="Active" selected icon="sap-icon://map" icon-end>Argentina</ui5-li>
 				<ui5-li key="Bulgaria" type="Active" icon="sap-icon://map" icon-end>Bulgaria</ui5-li>
 				<ui5-li key="China" type="Active" icon="sap-icon://map" icon-end>China</ui5-li>
-				<ui5-li key="Europe" type="Inactive"  icon="sap-icon://map" icon-end>Europe (ui5-li type='Inactive')</ui5-li>
+				<ui5-li key="Denmark" type="Inactive"  icon="sap-icon://map" icon-end>Denmark (ui5-li type='Inactive')</ui5-li>
 			</ui5-list>
 
 			<script>
@@ -76,10 +76,10 @@
 		</div>
 		<pre class="prettyprint lang-html"><xmp>
 <ui5-list id="country-selector" mode="SingleSelect" header-text="Select a country:">
-	<ui5-li key="argentina" type="Active" selected icon="sap-icon://map" icon-end>Argentina</ui5-li>
-	<ui5-li key="bulgaria" type="Active" icon="sap-icon://map" icon-end>Bulgaria</ui5-li>
-	<ui5-li key="china" type="Active" icon="sap-icon://map" icon-end>China</ui5-li>
-	<ui5-li key="europe" type="Inactive" icon="sap-icon://map" icon-end>Europe (ui5-li type='Inactive')</ui5-li>
+	<ui5-li key="Argentina" type="Active" selected icon="sap-icon://map" icon-end>Argentina</ui5-li>
+	<ui5-li key="Bulgaria" type="Active" icon="sap-icon://map" icon-end>Bulgaria</ui5-li>
+	<ui5-li key="China" type="Active" icon="sap-icon://map" icon-end>China</ui5-li>
+	<ui5-li key="Denmark" type="Inactive"  icon="sap-icon://map" icon-end>Denmark (ui5-li type='Inactive')</ui5-li>
 </ui5-list>
 
 <script>
@@ -152,7 +152,7 @@
 				<ui5-li icon="sap-icon://product" type="Active">Item #2</ui5-li>
 				<ui5-li icon="sap-icon://product" type="Active">Item #3</ui5-li>
 			</ui5-list>
-			<ui5-list  header-text="Inner separators" separators="Inner" class="full-width">
+			<ui5-list header-text="Inner separators" separators="Inner" class="full-width">
 				<ui5-li icon="sap-icon://shipping-status" type="Active">Devilered</ui5-li>
 				<ui5-li icon="sap-icon://shipping-status" type="Active">Pending</ui5-li>
 				<ui5-li icon="sap-icon://shipping-status" type="Active">Declined</ui5-li>
@@ -164,7 +164,7 @@
 	<ui5-li icon="sap-icon://product" type="Active">Item #2</ui5-li>
 	<ui5-li icon="sap-icon://product" type="Active">Item #3</ui5-li>
 </ui5-list>
-<ui5-list  header-text="Inner separators" separators="Inner" class="full-width">
+<ui5-list header-text="Inner separators" separators="Inner" class="full-width">
 	<ui5-li icon="sap-icon://shipping-status" type="Active">Devilered</ui5-li>
 	<ui5-li icon="sap-icon://shipping-status" type="Active">Pending</ui5-li>
 	<ui5-li icon="sap-icon://shipping-status" type="Active">Declined</ui5-li>
