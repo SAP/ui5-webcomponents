@@ -1,8 +1,8 @@
-commit a6f5c2b1f8e88c5c75433cecb54072b27d7b56d7
+commit a30577ee8ab3fe978a520c9d42380a1c668e0462
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Feb 14 10:07:50 2019 +0200
+Date:   Thu Feb 14 10:54:25 2019 +0200
 
-    fix(ui5-tabcontainer): import popover dependency (#46)
+    refactor(ui5-list): improve keyboard handling on TAB (#44)
     
-    As the ui5-tabcontainer uses the ui5-popover, ui5-button, ui5-icon, ui5-list and ui5-li-custom
-    internally for its overflow menu, the ui5-popover should be imported.
+    Skip inner ui5-radiobutton and ui5-checkbox components upon TAB,
+    added in single and multi selection modes.
