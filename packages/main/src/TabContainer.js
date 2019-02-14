@@ -8,9 +8,14 @@ import TabContainerTemplateContext from "./TabContainerTemplateContext";
 import TabBase from "./TabBase";
 import Tab from "./Tab";
 import TabSeparator from "./TabSeparator";
+import Popover from "./Popover";
+import List from "./List";
+import CustomListItem from "./CustomListItem";
+import Icon from "./Icon";
+import Button from "./Button";
+
 import TabDesignMode from "./types/TabDesignMode";
 import IconColor from "./types/IconColor";
-
 import BackgroundDesign from "./types/BackgroundDesign";
 import TabContainerHeaderMode from "./types/TabContainerHeaderMode";
 import ListItemType from "./types/ListItemType";
@@ -745,6 +750,18 @@ class TabContainer extends WebComponent {
 
 	static get calculateTemplateContext() {
 		return TabContainerTemplateContext.calculate;
+	}
+
+	static async define(...params) {
+		await Promise.all([
+			Icon.define(),
+			Button.define(),
+			CustomListItem.define(),
+			List.define(),
+			Popover.define(),
+		]);
+
+		super.define(...params);
 	}
 }
 
