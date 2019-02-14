@@ -2,6 +2,7 @@ import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/
 import URI from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/URI";
 import Core from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Core";
 import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
+import IconPoolProxy from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/IconPoolProxy";
 import CardRenderer from "./build/compiled/CardRenderer.lit";
 import Icon from "./Icon";
 
@@ -69,23 +70,14 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the <code>icon</code> displayed in the <code>ui5-card</code> header.
+		 * Defines image source URI or built-in icon source URI.
 		 * </br></br>
-		 * <b>Note:</b> The <code>icon</code> would not be displayed if <code>image</code> is set.
+		 * SAP-icons font provides numerous options. To find all the available icons, see the
+		 * <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
 		 * @type {URI}
 		 * @public
 		 */
-		icon: {
-			type: URI,
-			defaultValue: null,
-		},
-
-		/**
-		 * Defines the <code>image</code> source URI displayed in the <code>ui5-card</code> header.
-		 * @type {URI}
-		 * @public
-		 */
-		image: {
+		avatar: {
 			type: URI,
 			defaultValue: null,
 		},
@@ -95,12 +87,12 @@ const metadata = {
 /**
  * @class
  * <h3 class="comment-api-title">Overview</h3>
+ *
  * The <code>ui5-card</code> is a component that represents information in the form of a
  * tile with separate header and content areas.
  * The content area of a <code>ui5-card</code> can be arbitrary HTML content.
- * The header can be used through several properties, such as, <code>heading</code>,
- * <code>subtitle</code>,
- * <code>status</code> and <code>icon</code>.
+ * The header can be used through several properties, such as:
+ * <code>heading</code>, <code>subtitle</code>, <code>status</code> and <code>avatar</code>.
  *
  * <h3>ES6 Module Import</h3>
  *
@@ -127,7 +119,13 @@ class Card extends WebComponent {
 	}
 
 	static calculateTemplateContext(state) {
+		const hasAvatar = !!state.avatar;
+		const icon = hasAvatar && IconPoolProxy.isIconURI(state.avatar);
+		const image = hasAvatar && !icon;
+
 		return {
+			icon,
+			image,
 			ctr: state,
 			renderIcon: state.icon && !state.image,
 		};
