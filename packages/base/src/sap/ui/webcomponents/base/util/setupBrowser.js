@@ -1,17 +1,15 @@
 import Device from "@ui5/webcomponents-core/dist/sap/ui/Device";
 
-const setupBrowser = () => {
-	var html = document.documentElement;
-
-	var b = Device.browser;
-	var id = b.name;
+const setupBrowser = (node) => {
+	const b = Device.browser;
+	let id = b.name;
 
 	if (id) {
 		if (id === b.BROWSER.SAFARI && b.mobile) {
 			id = "m" + id;
 		}
 		id = id + (b.version === -1 ? "" : Math.floor(b.version));
-		html.dataset.sapUiBrowser = id;
+		node.dataset.sapUiBrowser = id;
 	}
 };
 
