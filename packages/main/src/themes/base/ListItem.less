@@ -17,7 +17,7 @@
 	}
 
 	&.sapMSLIWithTitleAndDescription {
-		height: 4rem;
+		height: 5rem;
 		padding: 1rem;
 
 		.sapMSLITitle {
@@ -25,21 +25,15 @@
 		}
 	}
 
-	&:not(.sapMSLIWithTitleAndDescription) {
-		.sapMSLITitle {
-			height: 3rem;
-			line-height: 3rem;
-		}
-	}
-
 	.sapMSLITextWrapper {
 		display: flex;
 		flex-direction: column;
 		min-width: 1px;
+		line-height: normal;
 	}
 
 	.sapMSLITitle {
-		font-size: 1rem;
+		font-size: @sapMFontLargeSize;
 		color: @sapUiListTextColor;
 	}
 
@@ -51,7 +45,7 @@
 	}
 
 	.sapMSLIDescription {
-		font-size: 0.875rem;
+		font-size: @sapMFontMediumSize;
 		color: @sapUiContentLabelColor;
 	}
 
