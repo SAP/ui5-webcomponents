@@ -1,8 +1,12 @@
-commit a30577ee8ab3fe978a520c9d42380a1c668e0462
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Feb 14 10:54:25 2019 +0200
+commit 0e7a9bb471650562f01d1c98551124e28970709a
+Author: pskelin <petar.skelin@sap.com>
+Date:   Thu Feb 14 13:14:36 2019 +0200
 
-    refactor(ui5-list): improve keyboard handling on TAB (#44)
+    refactor: reduce bundle size (#43)
     
-    Skip inner ui5-radiobutton and ui5-checkbox components upon TAB,
-    added in single and multi selection modes.
+    * refactor: reduce bundle size
+    
+    - strip down Device.js by leaving only browser, os, system and touch objects
+    - remove default locale fallback from LocaleData.js as we always fetch it separately
+    - add setupSystem, use it for both html and shadow root spans
+    - 8 KB minzip reduction
