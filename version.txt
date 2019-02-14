@@ -1,5 +1,5 @@
-commit 24a9d4c0c7d3603dfe83c3e3b7326f4c7316fc1b
-Author: Filip Siderov <fifoosid@gmail.com>
-Date:   Thu Feb 14 14:34:03 2019 +0200
+commit 17f30b712aa7dc2ee514c5f7c867f75aedca05ee
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Thu Feb 14 14:55:21 2019 +0200
 
-    docs(playground): add sample assets (#48)
+    fix: do not modify the HTML tag (#49)
