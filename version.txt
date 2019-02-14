@@ -1,5 +1,5 @@
-commit 17f30b712aa7dc2ee514c5f7c867f75aedca05ee
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu Feb 14 14:55:21 2019 +0200
+commit 979d0a7085661efcec3d72d5796a8edba4bf1d93
+Author: Adrian Bobev <adrian.bobev@gmail.com>
+Date:   Thu Feb 14 15:42:25 2019 +0200
 
-    fix: do not modify the HTML tag (#49)
+    docs(playground): compress images (#52)
