@@ -1,5 +1,8 @@
-commit ca97de6eeca786939fa7d828b07aba77400b4699
+commit a6f5c2b1f8e88c5c75433cecb54072b27d7b56d7
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Feb 13 17:34:46 2019 +0200
+Date:   Thu Feb 14 10:07:50 2019 +0200
 
-    refactor(ui5-input): suggestions separators to inner ones (#42)
+    fix(ui5-tabcontainer): import popover dependency (#46)
+    
+    As the ui5-tabcontainer uses the ui5-popover, ui5-button, ui5-icon, ui5-list and ui5-li-custom
+    internally for its overflow menu, the ui5-popover should be imported.
