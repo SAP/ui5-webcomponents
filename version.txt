@@ -1,12 +1,5 @@
-commit 0e7a9bb471650562f01d1c98551124e28970709a
-Author: pskelin <petar.skelin@sap.com>
-Date:   Thu Feb 14 13:14:36 2019 +0200
+commit 24a9d4c0c7d3603dfe83c3e3b7326f4c7316fc1b
+Author: Filip Siderov <fifoosid@gmail.com>
+Date:   Thu Feb 14 14:34:03 2019 +0200
 
-    refactor: reduce bundle size (#43)
-    
-    * refactor: reduce bundle size
-    
-    - strip down Device.js by leaving only browser, os, system and touch objects
-    - remove default locale fallback from LocaleData.js as we always fetch it separately
-    - add setupSystem, use it for both html and shadow root spans
-    - 8 KB minzip reduction
+    docs(playground): add sample assets (#48)
