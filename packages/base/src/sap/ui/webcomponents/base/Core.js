@@ -7,6 +7,7 @@ import EventEnrichment from "./events/EventEnrichment";
 import patchNodeValue from "./compatibility/patchNodeValue";
 import IconFonts from "./IconFonts";
 import DOMEventHandler from "./DOMEventHandler";
+import { attachThemeChange, setTheme } from "./ThemeManager";
 
 // This will only have effect if the polyfill is loaded
 patchNodeValue();
@@ -14,14 +15,6 @@ patchNodeValue();
 EventEnrichment.run();
 
 let bootPromise;
-
-const themeChangeCallbacks = [];
-
-const attachThemeChange = function (callback) {
-	if (themeChangeCallbacks.indexOf(callback) === -1) {
-		themeChangeCallbacks.push(callback);
-	}
-};
 
 const Core = {
 	/**
@@ -31,20 +24,13 @@ const Core = {
 		return configuration;
 	},
 
-	setTheme: function (theme) {
-		if (theme === configuration.getTheme()) {
-			return;
-		}
-
-		configuration._setTheme(theme);
-		themeChangeCallbacks.forEach(callback => callback(theme));
-	},
+	setTheme,
 
 	addCustomCSS: function (tag, theme, css) {
 		ShadowDOM._addCustomCSS(tag, theme, css);
 	},
 
-	attachThemeChange: attachThemeChange,
+	attachThemeChange,
 
 	/**
 	 * @deprecated - must be here for compatibility
