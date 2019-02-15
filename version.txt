@@ -1,9 +1,5 @@
-commit 33152b9f1acb45c4e07940b02f608b21ffb46520
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Feb 15 11:49:54 2019 +0200
+commit fe797105df5b0d673b67328bc05a1ffea692023d
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Fri Feb 15 11:52:31 2019 +0200
 
-    refactor: move addCustomCSS away from Core (#58)
-    
-    The addCustomCSS method that used to be on the Core moved to Theming.js
-    
-    BREAKING CHANGE: addCustomCSS is no longer on the Core object. Use Theming instead.
+    feat(ui5-li): add description property (#54)

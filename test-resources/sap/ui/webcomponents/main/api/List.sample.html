@@ -40,18 +40,18 @@
 		<h3>Basic List</h3>
 		<div class="snippet">
 			<ui5-list id="myList" class="full-width">
-				<ui5-li icon="sap-icon://meal" type="Active">Pineapple</ui5-li>
-				<ui5-li icon="sap-icon://meal" type="Active">Orange</ui5-li>
-				<ui5-li icon="sap-icon://meal" type="Active">Banana</ui5-li>
-				<ui5-li icon="sap-icon://meal" type="Active">Mango</ui5-li>
+				<ui5-li icon="sap-icon://nutrition-activity" type="Active" description="Tropical plant with an edible fruit">Pineapple</ui5-li>
+				<ui5-li icon="sap-icon://nutrition-activity" type="Active" description="Occurs between red and yellow">Orange</ui5-li>
+				<ui5-li icon="sap-icon://nutrition-activity" type="Active" description="The yellow lengthy fruit">Banana</ui5-li>
+				<ui5-li icon="sap-icon://nutrition-activity" type="Active" description="The tropical stone fruit">Mango</ui5-li>
 			</ui5-list>
 		</div>
 		<pre class="prettyprint lang-html"><xmp>
 <ui5-list id="myList" class="full-width">
-	<ui5-li icon="sap-icon://meal" type="Active">Pineapple</ui5-li>
-	<ui5-li icon="sap-icon://meal" type="Active">Orange</ui5-li>
-	<ui5-li icon="sap-icon://meal" type="Active">Banana</ui5-li>
-	<ui5-li icon="sap-icon://meal" type="Active">Mango</ui5-li>
+	<ui5-li icon="sap-icon://nutrition-activity" type="Active" description="Tropical plant with an edible fruit">Pineapple</ui5-li>
+	<ui5-li icon="sap-icon://nutrition-activity" type="Active" description="Occurs between red and yellow">Orange</ui5-li>
+	<ui5-li icon="sap-icon://nutrition-activity" type="Active" description="The yellow lengthy fruit">Banana</ui5-li>
+	<ui5-li icon="sap-icon://nutrition-activity" type="Active" description="The tropical stone fruit">Mango</ui5-li>
 </ui5-list>
 		</xmp></pre>
 	</section>
@@ -63,7 +63,7 @@
 				<ui5-li key="Argentina" type="Active" selected icon="sap-icon://map" icon-end>Argentina</ui5-li>
 				<ui5-li key="Bulgaria" type="Active" icon="sap-icon://map" icon-end>Bulgaria</ui5-li>
 				<ui5-li key="China" type="Active" icon="sap-icon://map" icon-end>China</ui5-li>
-				<ui5-li key="Europe" type="Inactive"  icon="sap-icon://map" icon-end>Europe (ui5-li type='Inactive')</ui5-li>
+				<ui5-li key="Denmark" type="Inactive"  icon="sap-icon://map" icon-end>Denmark (ui5-li type='Inactive')</ui5-li>
 			</ui5-list>
 
 			<script>
@@ -76,10 +76,10 @@
 		</div>
 		<pre class="prettyprint lang-html"><xmp>
 <ui5-list id="country-selector" mode="SingleSelect" header-text="Select a country:">
-	<ui5-li key="argentina" type="Active" selected icon="sap-icon://map" icon-end>Argentina</ui5-li>
-	<ui5-li key="bulgaria" type="Active" icon="sap-icon://map" icon-end>Bulgaria</ui5-li>
-	<ui5-li key="china" type="Active" icon="sap-icon://map" icon-end>China</ui5-li>
-	<ui5-li key="europe" type="Inactive" icon="sap-icon://map" icon-end>Europe (ui5-li type='Inactive')</ui5-li>
+	<ui5-li key="Argentina" type="Active" selected icon="sap-icon://map" icon-end>Argentina</ui5-li>
+	<ui5-li key="Bulgaria" type="Active" icon="sap-icon://map" icon-end>Bulgaria</ui5-li>
+	<ui5-li key="China" type="Active" icon="sap-icon://map" icon-end>China</ui5-li>
+	<ui5-li key="Denmark" type="Inactive"  icon="sap-icon://map" icon-end>Denmark (ui5-li type='Inactive')</ui5-li>
 </ui5-list>
 
 <script>
@@ -152,7 +152,7 @@
 				<ui5-li icon="sap-icon://product" type="Active">Item #2</ui5-li>
 				<ui5-li icon="sap-icon://product" type="Active">Item #3</ui5-li>
 			</ui5-list>
-			<ui5-list  header-text="Inner separators" separators="Inner" class="full-width">
+			<ui5-list header-text="Inner separators" separators="Inner" class="full-width">
 				<ui5-li icon="sap-icon://shipping-status" type="Active">Devilered</ui5-li>
 				<ui5-li icon="sap-icon://shipping-status" type="Active">Pending</ui5-li>
 				<ui5-li icon="sap-icon://shipping-status" type="Active">Declined</ui5-li>
@@ -164,7 +164,7 @@
 	<ui5-li icon="sap-icon://product" type="Active">Item #2</ui5-li>
 	<ui5-li icon="sap-icon://product" type="Active">Item #3</ui5-li>
 </ui5-list>
-<ui5-list  header-text="Inner separators" separators="Inner" class="full-width">
+<ui5-list header-text="Inner separators" separators="Inner" class="full-width">
 	<ui5-li icon="sap-icon://shipping-status" type="Active">Devilered</ui5-li>
 	<ui5-li icon="sap-icon://shipping-status" type="Active">Pending</ui5-li>
 	<ui5-li icon="sap-icon://shipping-status" type="Active">Declined</ui5-li>
@@ -335,18 +335,24 @@ This is a list item, providing the most common use cases such as <code>text</cod
                     </div>
             
                       <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">description <br> <code></code></div>
+                        <div class="cell api-table-content-cell">String</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">Defines the description displayed right under the item text, if such is present.</div>
+                      </div>
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">icon <br> <code></code></div>
                         <div class="cell api-table-content-cell">string</div>
                         <div class="cell api-table-content-cell"></div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">Defines the <code>icon</code> source URI. </br></br> <b>Note:</b> SAP-icons font provides numerous buil-in icons. To find all the available icons, see the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.</div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">iconEnd <br> <code>icon-end</code></div>
                         <div class="cell api-table-content-cell">boolean</div>
                         <div class="cell api-table-content-cell"></div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">Defines whether the <code>icon</code> should be displayed in the beginning of the list item or in the end. </br></br> <b>Note:</b> If <code>image</code> is set, the <code>icon</code> would be displayed after the <code>image</code>.</div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">image <br> <code></code></div>
                         <div class="cell api-table-content-cell">string</div>
                         <div class="cell api-table-content-cell"></div>
