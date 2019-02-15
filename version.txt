@@ -1,5 +1,5 @@
-commit a2f10ea82b1b17fccd695b99ca92cabf1ac22c77
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Feb 14 22:26:16 2019 +0200
+commit 904bd22bd7aba6ada7bc65ea18c5bde79456de70
+Author: Adrian Bobev <adrian.bobev@gmail.com>
+Date:   Fri Feb 15 10:00:41 2019 +0200
 
-    docs(playground): fix configuration button appearance (#55)
+    refactor: remove circular dependency between Core and WebCompnent (#51)
