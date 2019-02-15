@@ -1,3 +1,5 @@
+import configuration from "./Configuration";
+
 const themeChangeCallbacks = [];
 
 export const attachThemeChange = function attachThemeChange(callback) {
