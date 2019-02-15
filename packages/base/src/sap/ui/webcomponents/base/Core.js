@@ -24,10 +24,6 @@ const Core = {
 		return configuration;
 	},
 
-	addCustomCSS: function (tag, theme, css) {
-		ShadowDOM._addCustomCSS(tag, theme, css);
-	},
-
 	/**
 	 * @deprecated - must be here for compatibility
 	 */
