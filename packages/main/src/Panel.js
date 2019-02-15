@@ -1,5 +1,5 @@
 import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
-import Core from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Core";
+import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
 import IconPool from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/IconPoolProxy";
 import slideDown from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/animations/slideDown";
 import slideUp from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/animations/slideUp";
@@ -279,7 +279,7 @@ class Panel extends WebComponent {
 	}
 }
 
-Core.boot().then(_ => {
+Bootstrap.boot().then(_ => {
 	Panel.define();
 });
 

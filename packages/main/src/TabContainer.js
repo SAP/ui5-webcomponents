@@ -1,5 +1,5 @@
 import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
-import Core from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Core";
+import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
 import ScrollEnablement from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/delegate/ScrollEnablement";
 import ItemNavigation from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/delegate/ItemNavigation";
 import ResizeHandler from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/delegate/ResizeHandler";
@@ -765,7 +765,7 @@ class TabContainer extends WebComponent {
 	}
 }
 
-Core.boot().then(_ => {
+Bootstrap.boot().then(_ => {
 	TabContainer.define();
 });
 

@@ -1,5 +1,5 @@
 import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
-import Core from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Core";
+import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
 import configuration from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Configuration";
 import ItemNavigation from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/delegate/ItemNavigation";
 import Integer from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/Integer";
@@ -406,7 +406,7 @@ class DayPicker extends WebComponent {
 	}
 }
 
-Core.boot().then(_ => {
+Bootstrap.boot().then(_ => {
 	DayPicker.define();
 });
 

@@ -1,4 +1,4 @@
-import Core from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Core";
+import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
 import ListItem from "./ListItem";
 import CustomListItemTemplateContext from "./CustomListItemTemplateContext";
 import CustomListItemRenderer from "./build/compiled/CustomListItemRenderer.lit";
@@ -63,7 +63,7 @@ class CustomListItem extends ListItem {
 	}
 }
 
-Core.boot().then(_ => {
+Bootstrap.boot().then(_ => {
 	CustomListItem.define();
 });
 

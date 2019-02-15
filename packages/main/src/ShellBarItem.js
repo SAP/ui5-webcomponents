@@ -1,4 +1,4 @@
-import Core from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Core";
+import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
 import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
 import URI from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/URI";
 
@@ -73,7 +73,7 @@ class ShellBarItem extends WebComponent {
 	}
 }
 
-Core.boot().then(_ => {
+Bootstrap.boot().then(_ => {
 	ShellBarItem.define();
 });
 

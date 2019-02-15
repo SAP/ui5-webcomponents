@@ -1,4 +1,4 @@
-import "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/jquery-shim";
+import "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/shims/jquery-shim";
 import "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/events/PolymerGestures";
 import "./src/ThemeProvider";
 
@@ -55,9 +55,9 @@ window.sapUiDevice = Device;
 
 
 // Note: keep in sync with rollup.config value for IIFE
-import Core from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Core";
+import configuration from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Configuration";
 import * as Theming from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Theming";
 window["sap-ui-webcomponents-main-bundle"] = {
-	Core,
+	configuration,
 	Theming,
 };

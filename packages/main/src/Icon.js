@@ -1,6 +1,6 @@
 import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
 import URI from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/URI";
-import Core from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Core";
+import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
 import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
 import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes";
 import IconTemplateContext from "./IconTemplateContext";
@@ -116,7 +116,7 @@ class Icon extends WebComponent {
 	}
 }
 
-Core.boot().then(_ => {
+Bootstrap.boot().then(_ => {
 	Icon.define();
 });
 

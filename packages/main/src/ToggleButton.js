@@ -1,4 +1,4 @@
-import Core from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Core";
+import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
 import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
 import Button from "./Button";
 import ToggleButtonTemplateContext from "./ToggleButtonTemplateContext";
@@ -97,7 +97,7 @@ class ToggleButton extends Button {
 	}
 }
 
-Core.boot().then(_ => {
+Bootstrap.boot().then(_ => {
 	ToggleButton.define();
 });
 

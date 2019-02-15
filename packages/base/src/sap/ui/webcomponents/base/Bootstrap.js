@@ -1,8 +1,8 @@
+import './shims/Core-shim';
+import "./shims/jquery-shim";
+
 import ShadowDOM from './compatibility/ShadowDOM';
 import whenDOMReady from './util/whenDOMReady';
-import configuration from "./Configuration";
-import { inject as injectCore } from "@ui5/webcomponents-core/dist/sap/ui/core/Core";
-import "./jquery-shim";
 import EventEnrichment from "./events/EventEnrichment";
 import patchNodeValue from "./compatibility/patchNodeValue";
 import IconFonts from "./IconFonts";
@@ -16,19 +16,7 @@ EventEnrichment.run();
 
 let bootPromise;
 
-const Core = {
-	/**
-	 * @deprecated - must be here for compatibility
-	 */
-	getConfiguration: function () {
-		return configuration;
-	},
-
-	/**
-	 * @deprecated - must be here for compatibility
-	 */
-	getLibraryResourceBundle: function () {
-	},
+const Bootstrap = {
 
 	boot: function() {
 		if (bootPromise) {
@@ -49,13 +37,7 @@ const Core = {
 		});
 
 		return bootPromise;
-	}
-
+	},
 };
 
-window.sap.ui.getWCCore = function() {
-	return Core;
-};
-
-injectCore(Core);
-export default Core;
+export default Bootstrap;
