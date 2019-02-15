@@ -2,20 +2,18 @@ import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/
 import URI from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/URI";
 import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
 import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes";
-import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
+import { addCustomCSS } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/theming/CustomStyle";
+
 import ButtonTemplateContext from "./ButtonTemplateContext";
 import ButtonType from "./types/ButtonType";
 import ButtonRenderer from "./build/compiled/ButtonRenderer.lit";
 import Icon from "./Icon";
 
 // Styles
-import belize from "./themes/sap_belize/Button.less";
-import belizeHcb from "./themes/sap_belize_hcb/Button.less";
-import fiori3 from "./themes/sap_fiori_3/Button.less";
+import buttonCss from "./themes-next/Button.css";
 
-ShadowDOM.registerStyle("sap_belize", "Button.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "Button.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "Button.css", fiori3);
+addCustomCSS("ui5-button", "sap_fiori_3", buttonCss);
+addCustomCSS("ui5-button", "sap_belize_hcb", buttonCss);
 
 /**
  * @public

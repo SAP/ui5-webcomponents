@@ -44,4 +44,19 @@ class StyleInjection {
 	}
 }
 
+const injectThemeProperties = styles => {
+	const styleElement = document.head.querySelector(`style[ui5-webcomponents-theme-properties]`);
+
+	if (styleElement) {
+		styleElement.innerHTML = styles || "";	// in case of undefined
+	} else {
+		const style = document.createElement("style");
+		style.type = "text/css";
+		style.setAttribute("ui5-webcomponents-theme-properties", "");
+		style.innerHTML = styles;
+		document.head.appendChild(style);
+	}
+};
+
+export { injectThemeProperties };
 export default new StyleInjection();

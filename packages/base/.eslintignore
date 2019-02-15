@@ -1,3 +1,4 @@
 # Note: Changes to this file also must be applied to the top level .eslintignore file.
 test
 src/sap/ui/webcomponents/base/thirdparty
+css-vars-polyfill.js

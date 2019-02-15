@@ -10,6 +10,11 @@ import { terser } from "rollup-plugin-terser";
 import notify from 'rollup-plugin-notify';
 import CleanCSS from 'clean-css';
 import filesize from 'rollup-plugin-filesize';
+import postcss from 'rollup-plugin-postcss';
+import postcssImport from 'postcss-import';
+import postcssNesting from 'postcss-nesting';
+import csso from 'postcss-csso';
+import postCssCustomProperties from 'postcss-custom-properties';
 
 const StyleFioriMap = {};
 const StyleBelizeMap = {};
@@ -96,6 +101,22 @@ const getPlugins = ({ transpile }) => {
 			return gzipSize;
 		}
 	}));
+	plugins.push(
+		postcss({
+			plugins: [postcssNesting(), postCssCustomProperties({ importFrom: ['src/themes-next/sap_fiori_3/global-parameters.css', 'src/themes-next/sap_fiori_3/Button-parameters.css']})],
+			inject: false,
+			exclude: ["**/*.less", "**/parameters-bundle.css"],
+		})
+	);
+	plugins.push(
+		postcss({
+			plugins: [postcssImport(), csso({comments: true})],
+			inject: false,
+			include: ["**/parameters-bundle.css"],
+			exclude: ["**/*.less"],
+		})
+	);
+
 	plugins.push(ui5DevImportCheckerPlugin());
 
 	plugins.push(url({
@@ -163,7 +184,8 @@ const getPlugins = ({ transpile }) => {
 			fs.writeFileSync(filePath.replace(".less", ".css"), css);
 
 			return "";
-		}
+		},
+		exclude: "**/*.css",
 	}));
 
 	plugins.push(ui5LessPlugin());

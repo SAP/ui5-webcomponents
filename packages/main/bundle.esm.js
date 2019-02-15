@@ -3,7 +3,8 @@ import "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/browsersupport/Edg
 
 import "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/shims/jquery-shim";
 import "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/events/PolymerGestures";
-import "./src/ThemeProvider";
+import "./src/ThemeBundleProvider";
+import "./src/ThemePropertiesProvider";
 
 import Gregorian from "@ui5/webcomponents-core/dist/sap/ui/core/date/Gregorian";
 import Buddhist from "@ui5/webcomponents-core/dist/sap/ui/core/date/Buddhist";
