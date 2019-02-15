@@ -1,5 +1,9 @@
-commit 73117c794a9bef54459dda6ee4e5dcab37a25738
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Feb 15 17:02:45 2019 +0200
+commit b9fd48b993edac587778dadf210102df1b50ad4b
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Fri Feb 15 17:25:21 2019 +0200
 
-    fix: broken bundle on Edge #64
+    docs(playground): improve configuration opening on small sizes (#65)
+    
+    There is no overflow menu any more.
+    The configuration button is always present and opens the configuration panel.
+    On small sizes the version label goes inside the configuration panel.
