@@ -41,7 +41,7 @@
 				<FlexBox width="100%" justifyContent="SpaceBetween" wrap="Wrap">
 					<FlexBox direction="Column">
 						<Label text="Theme" labelFor="theme-cb"/>
-						<Select class="combobox-width" id="theme-cb" selectedKey="sap_fiori_3">
+						<Select class="select-width" id="theme-cb" selectedKey="sap_fiori_3">
 							<core:Item key="sap_fiori_3" text="Fiori 3" />
 							<core:Item key="sap_belize_hcb" text="High Contrast Black" />
 							<core:Item key="sap_belize" text="Belize" />
@@ -50,7 +50,7 @@
 
 					<FlexBox direction="Column">
 						<Label text="Content Density" labelFor="content-density-cb"/>				
-						<Select class="combobox-width" id="content-densit-cb" selectedKey="false">
+						<Select class="select-width" id="content-densit-cb" selectedKey="false">
 							<core:Item key="false" text="Cozy" />
 							<core:Item key="true" text="Compact" />
 						</Select>
@@ -58,7 +58,7 @@
 
 					<FlexBox direction="Column">
 						<Label text="Text Direction" labelFor="direction-cb"/>				
-						<Select class="combobox-width" id="direction-cb" selectedKey="false">
+						<Select class="select-width" id="direction-cb" selectedKey="false">
 							<core:Item key="false" text="LTR" />
 							<core:Item key="true" text="RTL" />
 						</Select>
