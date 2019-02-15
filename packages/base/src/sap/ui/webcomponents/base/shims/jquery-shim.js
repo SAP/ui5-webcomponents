@@ -1,5 +1,5 @@
 import { inject as injectJQuery } from "@ui5/webcomponents-core/dist/sap/ui/thirdparty/jquery";
-import fnIsPlainObject from "@ui5/webcomponents-core/dist/sap/base/util/isPlainObject";
+import isPlainObject from "@ui5/webcomponents-core/dist/sap/base/util/isPlainObject";
 
 var jQuery = {
 	extend: function() {
@@ -45,7 +45,7 @@ var jQuery = {
 					}
 
 					// Recurse if we're merging plain objects or arrays
-					if ( deep && copy && ( fnIsPlainObject( copy ) ||
+					if ( deep && copy && ( isPlainObject( copy ) ||
 							( copyIsArray = Array.isArray( copy ) ) ) ) {
 
 						if ( copyIsArray ) {
@@ -53,7 +53,7 @@ var jQuery = {
 							clone = src && Array.isArray( src ) ? src : [];
 
 						} else {
-							clone = src && fnIsPlainObject( src ) ? src : {};
+							clone = src && isPlainObject( src ) ? src : {};
 						}
 
 						// Never move original objects, clone them
