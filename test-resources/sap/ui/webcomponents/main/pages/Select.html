@@ -100,7 +100,8 @@
 		const theme = hcb ? "sap_belize_hcb" : "sap_fiori_3";
 
 		document.body.setAttribute("style", styles);
-		sap.ui.getWCCore().setTheme(theme);
+		var Theming = window["sap-ui-webcomponents-main-bundle"].Theming;
+		Theming.setTheme(theme);
 	});
 
 	countries.forEach(function(item, idx) {
