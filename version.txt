@@ -1,5 +1,5 @@
-commit fe797105df5b0d673b67328bc05a1ffea692023d
+commit a62c198d5640e6fb5150210ffe49fff0e27e7227
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Feb 15 11:52:31 2019 +0200
+Date:   Fri Feb 15 15:03:17 2019 +0200
 
-    feat(ui5-li): add description property (#54)
+    fix(ui5-popover): appearance on ios within iframe (#60)
