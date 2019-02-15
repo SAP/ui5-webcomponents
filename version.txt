@@ -1,5 +1,8 @@
-commit 904bd22bd7aba6ada7bc65ea18c5bde79456de70
+commit dd41e7f49ccd45be27bceab03997ae4b557a621a
 Author: Adrian Bobev <adrian.bobev@gmail.com>
-Date:   Fri Feb 15 10:00:41 2019 +0200
+Date:   Fri Feb 15 10:58:25 2019 +0200
 
-    refactor: remove circular dependency between Core and WebCompnent (#51)
+    refactor: add missing dep to configuration (#57)
+    
+    remove attachThemeChange from core
+    rename ThemeManager to Theming
