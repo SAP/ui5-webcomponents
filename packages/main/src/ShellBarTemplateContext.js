@@ -1,32 +1,47 @@
+import Configuration from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Configuration";
+
 class ShellBarTemplateContext {
 	static calculate(state) {
+		const hiddenIcons = state._itemsInfo.filter(info => {
+			const isHidden = (info.classes.indexOf("sapWCShellBarHiddenIcon") !== -1);
+			const isSet = info.classes.indexOf("sapWCShellBarUnsetIcon") === -1;
+			const isOverflowIcon = info.classes.indexOf("sapWCShellBarOverflowIcon") !== -1;
+
+			return isHidden && isSet && !isOverflowIcon;
+		});
+
+		const isRTL = Configuration.getRTL();
+
 		return {
 			ctr: state,
-			_hiddenIcons: state._itemsInfo.filter(info => {
-				return (info.classes.indexOf("sapWCShellBarHiddenIcon") !== -1);
-			}),
+			_hiddenIcons: hiddenIcons,
+			popoverHorizontalAlign: isRTL ? "Left" : "Right",
 			interactiveLogo: state._breakpointSize === "S",
 			styles: {
 				searchField: {
-					"left": `${parseInt(state._searchIconLeft) - 320}px`,
+					[isRTL ? "left" : "right"]: state._searchField.right,
+					"top": `${parseInt(state._searchField.top)}px`,
 				},
 			},
 			classes: {
 				wrapper: {
 					"sapWCShellBarWrapper": true,
 					[`sapWCShellBarSize${state._breakpointSize}`]: true,
-					"sapWCShellBarHasSearchField": state._showSearchField,
+					"sapWCShellBarHasSearchField": state.searchField,
 					"sapWCShellBarBlockLayerShown": state._showBlockLayer,
+					"sapWCShellBarHasNotifications": !!state.notificationCount,
 				},
 				leftContainer: {
 					"sapWCShellBarOverflowContainer": true,
 					"sapWCShellBarOverflowContainerLeft": true,
-					"sapWCShellBarOverflowContainerLeftWithoutMaxWidth": !state.showCoPilot,
 				},
 				logo: {
 					"sapWCShellBarLogo": true,
 				},
 				button: {
+					"sapWCShellBarMenuButtonNoTitle": !state.primaryTitle,
+					"sapWCShellBarMenuButtonNoLogo": !state.logo,
+					"sapWCShellBarMenuButtonMerged": state._breakpointSize === "S",
 					"sapWCShellBarMenuButton": true,
 				},
 				buttonTitle: {
@@ -38,18 +53,10 @@ class ShellBarTemplateContext {
 				arrow: {
 					"sapWCShellBarMenuButtonArrow": true,
 				},
-				overflowButton: {
-					"sapWCOverflowButtonShown": state._showOverflowButton,
-					"sapWCShellBarItemIconMode": true,
-					"sapWCShellBarIconButton": true,
-					"sapWCShellBarOverflowIcon": true,
-				},
-
 				searchField: {
 					"sapWCShellBarSearchField": true,
-					"sapWCShellBarDisplayNone": !state._showBlockLayer,
+					"sapWCShellBarSearchFieldHidden": !state._showBlockLayer,
 				},
-
 				blockLayer: {
 					"sapWCShellBarBlockLayer": true,
 					"sapWCShellBarBlockLayerHidden": !state._showBlockLayer,

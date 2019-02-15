@@ -13,9 +13,19 @@ import belize from "./themes/sap_belize/Input.less";
 import belizeHcb from "./themes/sap_belize_hcb/Input.less";
 import fiori3 from "./themes/sap_fiori_3/Input.less";
 
+// Styles for searchField
+import shellBarInput from "./themes/sap_fiori_3/ShellBarInput.less";
+import shellBarInputBelize from "./themes/sap_belize/ShellBarInput.less";
+import shellBarInputBelizeHcb from "./themes/sap_belize_hcb/ShellBarInput.less";
+
 ShadowDOM.registerStyle("sap_belize", "Input.css", belize);
 ShadowDOM.registerStyle("sap_belize_hcb", "Input.css", belizeHcb);
 ShadowDOM.registerStyle("sap_fiori_3", "Input.css", fiori3);
+
+
+ShadowDOM.registerStyle("sap_fiori_3", "ShellBarInput.css", shellBarInput);
+ShadowDOM.registerStyle("sap_belize", "ShellBarInput.css", shellBarInputBelize);
+ShadowDOM.registerStyle("sap_belize_hcb", "ShellBarInput.css", shellBarInputBelizeHcb);
 
 /**
  * @public
@@ -24,6 +34,7 @@ const metadata = {
 	tag: "ui5-input",
 	styleUrl: [
 		"Input.css",
+		"ShellBarInput.css",
 	],
 	defaultSlot: "suggestionItems",
 	slots: /** @lends sap.ui.webcomponents.main.Input.prototype */ {
