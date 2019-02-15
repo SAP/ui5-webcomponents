@@ -1,16 +1,15 @@
 import UniversalDate from "@ui5/webcomponents-core/dist/sap/ui/core/date/UniversalDate";
-import CalendarDate from "./CalendarDate";
 import Locale from "@ui5/webcomponents-core/dist/sap/ui/core/Locale";
 import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData";
 import jQuery from "@ui5/webcomponents-core/dist/sap/ui/thirdparty/jquery";
+import CalendarDate from "./CalendarDate";
 
 class CalendarUtils {
 	static _createLocalDate(oDate, bTime) {
-
-		var oLocaleDate;
+		let oLocaleDate;
 
 		if (oDate) {
-			var oMyDate;
+			let oMyDate;
 
 			if (oDate instanceof UniversalDate) {
 				oMyDate = oDate.getJSDate();
@@ -32,15 +31,13 @@ class CalendarUtils {
 		}
 
 		return oLocaleDate;
-
 	}
 
 	static _createUTCDate(oDate, bTime) {
-
-		var oUTCDate;
+		let oUTCDate;
 
 		if (oDate) {
-			var oMyDate;
+			let oMyDate;
 
 			if (oDate instanceof UniversalDate) {
 				oMyDate = oDate.getJSDate();
@@ -62,12 +59,10 @@ class CalendarUtils {
 		}
 
 		return oUTCDate;
-
 	}
 
 	static _createUniversalUTCDate(oDate, sCalendarType, bTime) {
-
-		var oUTCDate;
+		let oUTCDate;
 
 		if (sCalendarType) {
 			oUTCDate = UniversalDate.getInstance(this._createUTCDate(oDate, bTime), sCalendarType);
@@ -76,77 +71,69 @@ class CalendarUtils {
 		}
 
 		return oUTCDate;
-
 	}
 
 	static calculateWeekNumber(oDate, iYear, oLocale, oLocaleData) {
-
-		var iWeekNum = 0;
-		var iWeekDay = 0;
-		var iFirstDayOfWeek = oLocaleData.getFirstDayOfWeek();
+		let iWeekNum = 0;
+		let iWeekDay = 0;
+		const iFirstDayOfWeek = oLocaleData.getFirstDayOfWeek();
 
 		// search Locale for containing "en-US", since sometimes
 		// when any user settings have been defined, subtag "sapufmt" is added to the locale name
 		// this is described inside sap.ui.core.Configuration file
-		if (oLocale && (oLocale.getLanguage() == 'en' && oLocale.getRegion() == 'US')) {
+		if (oLocale && (oLocale.getLanguage() === "en" && oLocale.getRegion() === "US")) {
 			/*
 			 * in US the week starts with Sunday
 			 * The first week of the year starts with January 1st. But Dec. 31 is still in the last year
 			 * So the week beginning in December and ending in January has 2 week numbers
 			 */
-			var oJanFirst = new UniversalDate(oDate.getTime());
+			const oJanFirst = new UniversalDate(oDate.getTime());
 			oJanFirst.setUTCFullYear(iYear, 0, 1);
 			iWeekDay = oJanFirst.getUTCDay();
 
-			//get the date for the same weekday like jan 1.
-			var oCheckDate = new UniversalDate(oDate.getTime());
+			// get the date for the same weekday like jan 1.
+			const oCheckDate = new UniversalDate(oDate.getTime());
 			oCheckDate.setUTCDate(oCheckDate.getUTCDate() - oCheckDate.getUTCDay() + iWeekDay);
 
 			iWeekNum = Math.round((oCheckDate.getTime() - oJanFirst.getTime()) / 86400000 / 7) + 1;
-
 		} else {
 			// normally the first week of the year is the one where the first Thursday of the year is
 			// find Thursday of this week
 			// if the checked day is before the 1. day of the week use a day of the previous week to check
-			var oThursday = new UniversalDate(oDate.getTime());
+			const oThursday = new UniversalDate(oDate.getTime());
 			oThursday.setUTCDate(oThursday.getUTCDate() - iFirstDayOfWeek);
 			iWeekDay = oThursday.getUTCDay();
 			oThursday.setUTCDate(oThursday.getUTCDate() - iWeekDay + 4);
 
-			var oFirstDayOfYear = new UniversalDate(oThursday.getTime());
+			const oFirstDayOfYear = new UniversalDate(oThursday.getTime());
 			oFirstDayOfYear.setUTCMonth(0, 1);
 			iWeekDay = oFirstDayOfYear.getUTCDay();
-			var iAddDays = 0;
+			let iAddDays = 0;
 			if (iWeekDay > 4) {
 				iAddDays = 7; // first day of year is after Thursday, so first Thursday is in the next week
 			}
-			var oFirstThursday = new UniversalDate(oFirstDayOfYear.getTime());
+			const oFirstThursday = new UniversalDate(oFirstDayOfYear.getTime());
 			oFirstThursday.setUTCDate(1 - iWeekDay + 4 + iAddDays);
 
 			iWeekNum = Math.round((oThursday.getTime() - oFirstThursday.getTime()) / 86400000 / 7) + 1;
-
 		}
 
 		return iWeekNum;
-
 	}
 
 	static getFirstDateOfWeek(oDate) {
-		var oUniversalDate = new UniversalDate(oDate.getTime()),
-			oFirstDateOfWeek,
-			oFirstUniversalDateOfWeek,
-			//MODIFIED
-			oLocaleData = LocaleData.getInstance(new Locale('en')),
-			iCLDRFirstWeekDay = oLocaleData.getFirstDayOfWeek(),
-			oWeek;
+		const oUniversalDate = new UniversalDate(oDate.getTime()),
+			oLocaleData = LocaleData.getInstance(new Locale("en")),
+			iCLDRFirstWeekDay = oLocaleData.getFirstDayOfWeek();
 
-		oWeek = UniversalDate.getWeekByDate(oUniversalDate.getCalendarType(), oUniversalDate.getUTCFullYear(),
+
+		const oWeek = UniversalDate.getWeekByDate(oUniversalDate.getCalendarType(), oUniversalDate.getUTCFullYear(),
 			oUniversalDate.getUTCMonth(), oUniversalDate.getUTCDate());
 
-		oFirstDateOfWeek = UniversalDate.getFirstDateOfWeek(oUniversalDate.getCalendarType(), oWeek.year, oWeek.week);
-		oFirstUniversalDateOfWeek = new UniversalDate(Date.UTC(oFirstDateOfWeek.year, oFirstDateOfWeek.month, oFirstDateOfWeek.day));
+		const oFirstDateOfWeek = UniversalDate.getFirstDateOfWeek(oUniversalDate.getCalendarType(), oWeek.year, oWeek.week);
+		const oFirstUniversalDateOfWeek = new UniversalDate(Date.UTC(oFirstDateOfWeek.year, oFirstDateOfWeek.month, oFirstDateOfWeek.day));
 
-		//In case the day of the computed weekFirstDate is not as in CLDR(e.g. en_US locales), make sure we align it
+		// In case the day of the computed weekFirstDate is not as in CLDR(e.g. en_US locales), make sure we align it
 		while (oFirstUniversalDateOfWeek.getUTCDay() !== iCLDRFirstWeekDay) {
 			oFirstUniversalDateOfWeek.setUTCDate(oFirstUniversalDateOfWeek.getUTCDate() - 1);
 		}
@@ -156,30 +143,28 @@ class CalendarUtils {
 	}
 
 	static getFirstDateOfMonth(oDate) {
-		var oNewDate = new UniversalDate(oDate.getTime());
+		const oNewDate = new UniversalDate(oDate.getTime());
 		oNewDate.setUTCDate(1);
 
 		return oNewDate;
 	}
 
 	static _getNumberOfWeeksForYear(iYear) {
-		//MODIFIED
+		// MODIFIED
 		// var sLocale = sap.ui.getCore().getConfiguration().getFormatLocale(),
 		// 	oLocaleData = LocaleData.getInstance(new Locale(sLocale)),
-		var oLocaleData = LocaleData.getInstance(new Locale('en')),
+		const oLocaleData = LocaleData.getInstance(new Locale("en")),
 			o1stJan = new Date(Date.UTC(iYear, 0, 1)),
-			i1stDay = o1stJan.getUTCDay(),
-			iNumberOfWeeksInYear = 52;
+			i1stDay = o1stJan.getUTCDay();
+		let iNumberOfWeeksInYear = 52;
 
-		//This is valid for all the regions where Sunday is the first day of the week
+		// This is valid for all the regions where Sunday is the first day of the week
 		if (oLocaleData.getFirstDayOfWeek() === 0) {
 			if (i1stDay === 5 || i1stDay === 6) {
 				iNumberOfWeeksInYear = 53;
 			}
-		} else {
-			if (i1stDay === 3 || i1stDay === 4) {
-				iNumberOfWeeksInYear = 53;
-			}
+		} else if (i1stDay === 3 || i1stDay === 4) {
+			iNumberOfWeeksInYear = 53;
 		}
 
 		return iNumberOfWeeksInYear;
@@ -190,7 +175,7 @@ class CalendarUtils {
 	}
 
 	static isDateLastInMonth(oDate) {
-		var oNextDay = new Date(oDate.getTime() + 24 * 60 * 60 * 1000);
+		const oNextDay = new Date(oDate.getTime() + 24 * 60 * 60 * 1000);
 		return oNextDay.getUTCDate() < oDate.getUTCDate();
 	}
 
@@ -224,7 +209,7 @@ class CalendarUtils {
 		// We can use jQuery.type or this method:
 		// function isValidDate (date) {
 		//	return date && Object.prototype.toString.call(date) === "[object Date]" && !isNaN(date);
-		//}
+		// }
 		if (jQuery.type(oDate) !== "date") {
 			throw new Error("Date must be a JavaScript date object.");
 		}
@@ -258,7 +243,7 @@ class CalendarUtils {
 	static _getFirstDateOfMonth(oCalendarDate) {
 		this._checkCalendarDate(oCalendarDate);
 
-		var oJSDate = CalendarUtils.getFirstDateOfMonth(oCalendarDate.toUTCJSDate()).getJSDate();
+		const oJSDate = CalendarUtils.getFirstDateOfMonth(oCalendarDate.toUTCJSDate()).getJSDate();
 		oJSDate.setFullYear(oJSDate.getUTCFullYear(), oJSDate.getUTCMonth(), oJSDate.getUTCDate());
 
 		return CalendarDate.fromLocalJSDate(oJSDate, oCalendarDate.getCalendarType());
@@ -269,7 +254,7 @@ class CalendarUtils {
 	}
 
 	static _maxDate(sCalendarType) {
-		var oCalDate = new CalendarDate(9999, 11, 1, sCalendarType);
+		const oCalDate = new CalendarDate(9999, 11, 1, sCalendarType);
 		oCalDate.setDate(this._daysInMonth(oCalDate));// 31st for Gregorian Calendar
 		return new CalendarDate(oCalDate);
 	}
@@ -281,9 +266,8 @@ class CalendarUtils {
 
 		if (inclusive) {
 			return oDate.isSameOrAfter(oStartDate) && oDate.isSameOrBefore(oEndDate);
-		} else {
-			return oDate.isAfter(oStartDate) && oDate.isBefore(oEndDate);
 		}
+		return oDate.isAfter(oStartDate) && oDate.isBefore(oEndDate);
 	}
 
 	static _daysBetween(oFirstDate, oSecondDate) {
@@ -307,7 +291,7 @@ class CalendarUtils {
 
 	static _checkCalendarDate(oCalendarDate) {
 		if (!oCalendarDate || !(oCalendarDate instanceof CalendarDate)) {
-			throw "Invalid calendar date: [" + oCalendarDate + "]. Expected: sap.ui.unified.calendar.CalendarDate";
+			throw new Error(`Invalid calendar date: [${oCalendarDate}]. Expected: sap.ui.unified.calendar.CalendarDate`);
 		}
 	}
 

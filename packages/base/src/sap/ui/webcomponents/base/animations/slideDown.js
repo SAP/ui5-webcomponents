@@ -4,13 +4,23 @@ import animate from "./animate";
 export default ({
 	element = animationConfig.element,
 	duration = animationConfig.defaultDuration,
-	progress: progressCallback = animationConfig.identity
+	progress: progressCallback = animationConfig.identity,
 }) => {
-	let computedStyles, paddingTop, paddingBottom, marginTop, marginBottom, height;
-	let storedOverflow, storedPaddingTop, storedPaddingBottom, storedMarginTop, storedMarginBottom, storedHeight;
+	let computedStyles,
+		paddingTop,
+		paddingBottom,
+		marginTop,
+		marginBottom,
+		height;
+	let storedOverflow,
+		storedPaddingTop,
+		storedPaddingBottom,
+		storedMarginTop,
+		storedMarginBottom,
+		storedHeight;
 
 	const animation = animate({
-		beforeStart: _ => {
+		beforeStart: () => {
 			// Show the element to measure its properties
 			element.style.display = "block";
 
@@ -37,24 +47,24 @@ export default ({
 			element.style.marginBottom = 0;
 			element.style.height = 0;
 		},
-		duration: duration,
-		element: element,
-		progress: function (progress) {
+		duration,
+		element,
+		progress(progress) {
 			progressCallback(progress);
 
 			// WORKAROUND
 			element.style.display = "block";
 			// END OF WORKAROUND
 
-			element.style.paddingTop = 0 + (paddingTop * progress) + "px";
-			element.style.paddingBottom = 0 + (paddingBottom * progress) + "px";
-			element.style.marginTop = 0 + (marginTop * progress) + "px";
-			element.style.marginBottom = 0 + (marginBottom * progress) + "px";
-			element.style.height = 0 + (height * progress) + "px";
-		}
+			element.style.paddingTop = `${0 + (paddingTop * progress)}px`;
+			element.style.paddingBottom = `${0 + (paddingBottom * progress)}px`;
+			element.style.marginTop = `${0 + (marginTop * progress)}px`;
+			element.style.marginBottom = `${0 + (marginBottom * progress)}px`;
+			element.style.height = `${0 + (height * progress)}px`;
+		},
 	});
 
-	animation.promise().then(_ => {
+	animation.promise().then(() => {
 		element.style.overflow = storedOverflow;
 		element.style.paddingTop = storedPaddingTop;
 		element.style.paddingBottom = storedPaddingBottom;

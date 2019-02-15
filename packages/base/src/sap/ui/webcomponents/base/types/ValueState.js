@@ -7,7 +7,7 @@ const ValueStates = {
 	None: "None",
 	Success: "Success",
 	Warning: "Warning",
-	Error: "Error"
+	Error: "Error",
 };
 
 class ValueState extends DataType {

@@ -5,7 +5,6 @@ const RendererImpl = LitRenderer;
 // window.renderStats = new Map();
 
 class ControlRenderer {
-
 	static render(control) {
 		// const oldCounter = window.renderStats.get(control.tagName) || 0;
 		// window.renderStats.set(control.tagName, oldCounter + 1);
@@ -17,7 +16,6 @@ class ControlRenderer {
 
 		RendererImpl.render(renderResult, root);
 	}
-
 }
 
 export default ControlRenderer;

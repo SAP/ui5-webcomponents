@@ -1,5 +1,4 @@
-const getOriginalEventTarget = function(event) {
-
+const getOriginalEventTarget = function getOriginalEventTarget(event) {
 	// Default - composedPath should be used (also covered by polyfill)
 	if (typeof event.composedPath === "function") {
 		const composedPath = event.composedPath();

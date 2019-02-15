@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import ar from "@ui5/webcomponents-core/dist/sap/ui/core/cldr/ar.json";
 import ar_EG from "@ui5/webcomponents-core/dist/sap/ui/core/cldr/ar_EG.json";
 import ar_SA from "@ui5/webcomponents-core/dist/sap/ui/core/cldr/ar_SA.json";
@@ -149,40 +150,43 @@ const cldrData = {
 	zh_HK,
 	zh_SG,
 	zh_TW,
-}
+};
 
 const allEntriesInlined = Object.entries(cldrData).every(([_key, value]) => typeof (value) === "object");
+/* eslint-disable */
 if (allEntriesInlined) {
-	console.warn(`Inefficient bundling detected: consider bundling CLDR imports as URLs instead of inlining them.
+	console.warn(`Inefficient bundling detected: consider bundling CLDR imports as URLs instead of inlining them. 
 See rollup-plugin-url or webpack file-loader for more information.
-Suggested pattern: "cldr\\\/.*\\\.json"`);
+Suggested pattern: "cldr\\\/.*\\\.json"`); // eslint-disable-line
 }
+/* eslint-enable */
+
 
 const M_ISO639_OLD_TO_NEW = {
-	"iw" : "he",
-	"ji" : "yi",
-	"in" : "id",
-	"sh" : "sr"
+	"iw": "he",
+	"ji": "yi",
+	"in": "id",
+	"sh": "sr",
 };
 
 const calcLocale = (language, region, script) => {
 	// normalize language and handle special cases
 	language = (language && M_ISO639_OLD_TO_NEW[language]) || language;
 	// Special case 1: in an SAP context, the inclusive language code "no" always means Norwegian Bokmal ("nb")
-	if ( language === "no" ) {
+	if (language === "no") {
 		language = "nb";
 	}
 	// Special case 2: for Chinese, derive a default region from the script (this behavior is inherited from Java)
-	if ( language === "zh" && !region ) {
-		if ( script === "Hans" ) {
+	if (language === "zh" && !region) {
+		if (script === "Hans") {
 			region = "CN";
-		} else if ( script === "Hant" ) {
+		} else if (script === "Hant") {
 			region = "TW";
 		}
 	}
 
 	// try language + region
-	let localeId = language + "_" + region;
+	let localeId = `${language}_${region}`;
 	if (!cldrData[localeId]) {
 		// fallback to language only
 		localeId = language;
@@ -193,14 +197,14 @@ const calcLocale = (language, region, script) => {
 	}
 
 	return localeId;
-}
+};
 
-const fetchCldrData = async (language, region, script) =>  {
+const fetchCldrData = async (language, region, script) => {
 	const localeId = calcLocale(language, region, script);
 
-	if (typeof(cldrData[localeId]) === "object") {
+	if (typeof (cldrData[localeId]) === "object") {
 		// inlined from build
-		registerModuleContent(`sap/ui/core/cldr/${localeId}.json`, JSON.stringify(cldrData[localeId]))
+		registerModuleContent(`sap/ui/core/cldr/${localeId}.json`, JSON.stringify(cldrData[localeId]));
 		return cldrData[localeId];
 	}
 
@@ -215,3 +219,4 @@ const registerCldrUrl = (locale, url) => {
 };
 
 export { fetchCldrData, registerCldrUrl };
+/* eslint-enable camelcase */

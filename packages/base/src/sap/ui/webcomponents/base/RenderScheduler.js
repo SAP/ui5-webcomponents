@@ -1,6 +1,4 @@
-/* globals performance */
 import RenderQueue from "./RenderQueue";
-import ControlRenderer from "./ControlRenderer";
 
 const MAX_RERENDER_COUNT = 10;
 
@@ -8,16 +6,17 @@ const MAX_RERENDER_COUNT = 10;
 let renderTaskId;
 
 // Queue for invalidated controls
-let invalidatedControls = new RenderQueue();
+const invalidatedControls = new RenderQueue();
 
-let renderTaskPromise, renderTaskPromiseResolve, taskResult;
+let renderTaskPromise,
+	renderTaskPromiseResolve,
+	taskResult;
 
 /**
  * Class that manages the rendering/re-rendering of controls
  * This is always asynchronous
  */
 class RenderScheduler {
-
 	constructor() {
 		throw new Error("Static class");
 	}
@@ -50,7 +49,7 @@ class RenderScheduler {
 	static scheduleRenderTask() {
 		if (!renderTaskId) {
 			// renderTaskId = window.setTimeout(RenderScheduler.renderControls, 3000); // Task
-			//renderTaskId = Promise.resolve().then(RenderScheduler.renderControls); // Micro task
+			// renderTaskId = Promise.resolve().then(RenderScheduler.renderControls); // Micro task
 			renderTaskId = window.requestAnimationFrame(RenderScheduler.renderControls); // AF
 		}
 	}
@@ -65,16 +64,18 @@ class RenderScheduler {
 	static renderControls() {
 		// console.log("------------- NEW RENDER TASK ---------------");
 
-		let controlInfo, control, promise;
+		let controlInfo,
+			control,
+			promise;
 		const renderStats = new Map();
-		while (controlInfo = invalidatedControls.shift()) {
+		while (controlInfo = invalidatedControls.shift()) { // eslint-disable-line
 			control = controlInfo.control;
 			promise = controlInfo.promise;
 
 			const timesRerendered = renderStats.get(control) || 0;
 			if (timesRerendered > MAX_RERENDER_COUNT) {
 				// console.warn("WARNING RERENDER", control);
-				throw new Error("Control re-rendered too many times this task, max allowed is: " + MAX_RERENDER_COUNT);
+				throw new Error(`Control re-rendered too many times this task, max allowed is: ${MAX_RERENDER_COUNT}`);
 			}
 			control._render();
 			promise._deferredResolve();
@@ -82,14 +83,13 @@ class RenderScheduler {
 		}
 
 		// wait for Mutation observer just in case
-		setTimeout(_ => {
+		setTimeout(() => {
 			if (invalidatedControls.getList().length === 0) {
 				RenderScheduler._resolveTaskPromise();
 			}
 		}, 200);
 
 		renderTaskId = undefined;
-
 	}
 
 	/**
@@ -102,7 +102,7 @@ class RenderScheduler {
 
 		renderTaskPromise = new Promise(resolve => {
 			renderTaskPromiseResolve = resolve;
-			window.requestAnimationFrame(_ => {
+			window.requestAnimationFrame(() => {
 				if (invalidatedControls.getList().length === 0) {
 					renderTaskPromise = undefined;
 					resolve();
@@ -118,9 +118,9 @@ class RenderScheduler {
 	 */
 	static whenShadowDOMReady() {
 		// TODO: track promises internally, the dom traversal is a POC only
-		const ui5Components = Array.from(document.querySelectorAll('*')).filter(_ => _._shadowRootReadyPromise);
+		const ui5Components = Array.from(document.querySelectorAll("*")).filter(_ => _._shadowRootReadyPromise);
 		return Promise.all(ui5Components.map(comp => comp._whenShadowRootReady()))
-			.then(_ => Promise.resolve());	// qunit has a boolean cheack for the promise value and the array from the Promise all is considered truthy
+			.then(() => Promise.resolve());	// qunit has a boolean cheack for the promise value and the array from the Promise all is considered truthy
 	}
 
 	static async whenFinished() {

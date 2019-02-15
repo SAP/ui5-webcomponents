@@ -1,37 +1,34 @@
 import WebComponent from "./WebComponent";
 
-var rFocusable = /^(?:input|select|textarea|button)$/i,
+const rFocusable = /^(?:input|select|textarea|button)$/i,
 	rClickable = /^(?:a|area)$/i;
 
 class FocusHelper {
-
 	static hasTabIndex(domElement) {
-
 		if (domElement.disabled) {
 			return false;
 		}
 
-		let tabIndex = domElement.getAttribute("tabindex");
+		const tabIndex = domElement.getAttribute("tabindex");
 		if (tabIndex !== null && tabIndex !== undefined) {
-			return parseInt(tabIndex, 10) >= 0;
+			return parseInt(tabIndex) >= 0;
 		}
 
-		return rFocusable.test(domElement.nodeName) ||
-			rClickable.test(domElement.nodeName) &&
-			domElement.href;
+		return rFocusable.test(domElement.nodeName)
+			|| (rClickable.test(domElement.nodeName)
+			&& domElement.href);
 	}
 
 	static isHidden(domElement) {
-
-		if (domElement.nodeName === 'SLOT') {
+		if (domElement.nodeName === "SLOT") {
 			return false;
 		}
 
-		let rect = domElement.getBoundingClientRect();
+		const rect = domElement.getBoundingClientRect();
 
 		return (domElement.offsetWidth <= 0 && domElement.offsetHeight <= 0)
 			|| domElement.style.visibility === "hidden"
-			||  (rect.width === 0 &&  0 && rect.height === 0);
+			|| (rect.width === 0 && 0 && rect.height === 0);
 	}
 
 	static isVisible(domElement) {
@@ -50,7 +47,7 @@ class FocusHelper {
 	static findFocusableElement(container, forward) {
 		let child;
 		if (container.assignedNodes && container.assignedNodes()) {
-			let assignedElements = container.assignedNodes();
+			const assignedElements = container.assignedNodes();
 			child = forward ? assignedElements[0] : assignedElements[assignedElements.length - 1];
 		} else {
 			child = forward ? container.firstChild : container.lastChild;
@@ -67,7 +64,6 @@ class FocusHelper {
 			}
 
 			if (child.nodeType === 1 && !FocusHelper.isHidden(child)) {
-
 				if (FocusHelper.hasTabIndex(child)) {
 					return child;
 				}
@@ -85,7 +81,6 @@ class FocusHelper {
 	}
 
 	static findFirstFocusableElement(container) {
-
 		if (!container || FocusHelper.isHidden(container)) {
 			return null;
 		}
@@ -94,7 +89,6 @@ class FocusHelper {
 	}
 
 	static findLastFocusableElement(container) {
-
 		if (!container || FocusHelper.isHidden(container)) {
 			return null;
 		}
@@ -104,7 +98,7 @@ class FocusHelper {
 
 	static hasTabbableContent(node) {
 		let hasTabableContent = false,
-			content = node.children;
+			content = node.children; // eslint-disable-line
 
 		if (content) {
 			hasTabableContent = FocusHelper._hasTabbableContent(content);
@@ -113,8 +107,8 @@ class FocusHelper {
 		// If the node is inside Custom Element,
 		// check the content in the 'light' DOM.
 		if (!hasTabableContent && FocusHelper._isInsideShadowRoot(node)) {
-			let customElement = FocusHelper._getCustomElement(node);
-			let content = customElement.children;
+			const customElement = FocusHelper._getCustomElement(node);
+			const content = customElement.children; // eslint-disable-line
 
 			if (content) {
 				hasTabableContent = FocusHelper._hasTabbableContent(content);
@@ -125,21 +119,21 @@ class FocusHelper {
 	}
 
 	static getLastTabbableElement(node) {
-		let tabbableContent = FocusHelper.getTabbableContent(node);
-		return tabbableContent.length ?  tabbableContent[tabbableContent.length - 1] : null;
+		const tabbableContent = FocusHelper.getTabbableContent(node);
+		return tabbableContent.length ? tabbableContent[tabbableContent.length - 1] : null;
 	}
 
 	static getTabbableContent(node) {
 		let aTabbableContent = [],
-			content = node.children;
+			content = node.children; // eslint-disable-line
 
 		if (content) {
 			aTabbableContent = FocusHelper._getTabbableContent(content);
 		}
 
 		if (FocusHelper._isInsideShadowRoot(node)) {
-			let customElement = FocusHelper._getCustomElement(node);
-			let content = customElement.children;
+			const customElement = FocusHelper._getCustomElement(node);
+			const content = customElement.children; // eslint-disable-line
 
 			if (content) {
 				aTabbableContent = [...aTabbableContent, ...FocusHelper._getTabbableContent(content)];
@@ -150,7 +144,7 @@ class FocusHelper {
 	}
 
 	static _getTabbableContent(nodes) {
-		let aTabbableContent = [];
+		const aTabbableContent = [];
 
 		Array.from(nodes).forEach(node => {
 			let currentNode = node;
@@ -158,7 +152,7 @@ class FocusHelper {
 			while (currentNode) {
 				if (FocusHelper._hasShadowRoot(currentNode)) {
 					// as the content is in the <span> template and it is always 2nd child
-					let children = currentNode.shadowRoot.children;
+					const children = currentNode.shadowRoot.children;
 					currentNode = children.length === 1 ? children[0] : children[1];
 				}
 
@@ -181,7 +175,7 @@ class FocusHelper {
 			while (currentNode && !hasTabableContent) {
 				if (FocusHelper._hasShadowRoot(currentNode)) {
 					// as the content is in the <span> template and it is always 2nd child
-					let children = currentNode.shadowRoot.children;
+					const children = currentNode.shadowRoot.children;
 					currentNode = children.length === 1 ? children[0] : children[1];
 				}
 
@@ -198,14 +192,14 @@ class FocusHelper {
 			return false;
 		}
 
-		let nodeName = node.nodeName.toLowerCase();
+		const nodeName = node.nodeName.toLowerCase();
 
 		if (node.hasAttribute("data-sap-no-tab-ref")) {
 			return false;
 		}
 
 		// special tags
-		if (nodeName === 'a') {
+		if (nodeName === "a") {
 			return !!node.href;
 		}
 

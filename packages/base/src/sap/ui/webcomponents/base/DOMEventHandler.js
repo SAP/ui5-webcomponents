@@ -1,10 +1,9 @@
-import PseudoEvents from '@ui5/webcomponents-core/dist/sap/ui/events/PseudoEvents';
-import ControlEvents from './events/ControlEvents';
-import getOriginalEventTarget from './events/getOriginalEventTarget';
-import WebComponent from './WebComponent';
+import PseudoEvents from "@ui5/webcomponents-core/dist/sap/ui/events/PseudoEvents";
+import ControlEvents from "./events/ControlEvents";
+import getOriginalEventTarget from "./events/getOriginalEventTarget";
+import WebComponent from "./WebComponent";
 
-const handleEvent = function (event) {
-
+const handleEvent = function handleEvent(event) {
 	// Get the DOM node where the original event occurred
 	let target = getOriginalEventTarget(event);
 	event.ui5target = target;
@@ -20,16 +19,14 @@ const handleEvent = function (event) {
 };
 
 
-
-const processDOMNode = function(node, event) {
+const processDOMNode = function processDOMNode(node, event) {
 	if (node && node instanceof WebComponent) {
 		return dispatchEvent(node, event);
 	}
 	return true;
 };
 
-const dispatchEvent = function(ui5WebComponent, event) {
-
+const dispatchEvent = function dispatchEvent(ui5WebComponent, event) {
 	// Handle the original event (such as "keydown")
 	ui5WebComponent._handleEvent(event);
 	if (event.isImmediatePropagationStopped()) {
@@ -45,9 +42,9 @@ const dispatchEvent = function(ui5WebComponent, event) {
 		}
 	}
 
-	if (event.isPropagationStopped()) {
-		return false;
-	}
+	if (event.isPropagationStopped()) { // eslint-disable-line
+		return false; // eslint-disable-line
+	} // eslint-disable-line
 
 	return true;
 };
@@ -55,8 +52,7 @@ const dispatchEvent = function(ui5WebComponent, event) {
 // Stores the calculated list of pseudo events per event
 const pseudoMap = new WeakMap();
 
-const getPseudoTypesFor = function(event) {
-
+const getPseudoTypesFor = function getPseudoTypesFor(event) {
 	if (pseudoMap.has(event)) {
 		return pseudoMap.get(event);
 	}
@@ -83,7 +79,7 @@ const getPseudoTypesFor = function(event) {
 	return aPseudoTypes;
 };
 
-const getParentDOMNode = function(node) {
+const getParentDOMNode = function getParentDOMNode(node) {
 	const parentNode = node.parentNode;
 
 	if (parentNode && parentNode.host) {

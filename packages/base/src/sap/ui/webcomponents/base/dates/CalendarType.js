@@ -8,7 +8,7 @@ const CalendarTypes = {
 	Islamic: "Islamic",
 	Japanese: "Japanese",
 	Buddhist: "Buddhist",
-	Persian: "Persian"
+	Persian: "Persian",
 };
 
 class CalendarType extends DataType {
