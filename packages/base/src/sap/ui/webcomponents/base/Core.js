@@ -7,7 +7,7 @@ import EventEnrichment from "./events/EventEnrichment";
 import patchNodeValue from "./compatibility/patchNodeValue";
 import IconFonts from "./IconFonts";
 import DOMEventHandler from "./DOMEventHandler";
-import { attachThemeChange, setTheme } from "./ThemeManager";
+import { attachThemeChange } from "./Theming";
 
 // This will only have effect if the polyfill is loaded
 patchNodeValue();
@@ -24,13 +24,9 @@ const Core = {
 		return configuration;
 	},
 
-	setTheme,
-
 	addCustomCSS: function (tag, theme, css) {
 		ShadowDOM._addCustomCSS(tag, theme, css);
 	},
-
-	attachThemeChange,
 
 	/**
 	 * @deprecated - must be here for compatibility
