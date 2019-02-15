@@ -99,7 +99,7 @@ describe("List Tests", () => {
 		assert.ok(browser.$('#btnAfter').isFocused(), "focus is outside the list");
 	});
 
-	it("inner single selection sradio button checkbox is skipped on tab", () => {
+	it("inner single selection radio button checkbox is skipped on tab", () => {
 		browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/List_test_page.html");
 		list.root.setProperty("mode", "SingleSelect");
 
@@ -109,5 +109,17 @@ describe("List Tests", () => {
 		browser.keys("Tab");
 
 		assert.ok(browser.$('#btnAfter').isFocused(), "focus is outside the list");
+	});
+
+	it("item size and classed, when an item has both text and description", () => {
+		const ITEM_WITH_DESCRIPTION_AND_TITLE_HEIGHT = 80;
+		const firstItem =  $("#listWithDesc ui5-li[slot=items-1]");
+		const firstItemHeight = firstItem.getSize("height");
+		const rootElement =  browser.findElementDeep("#listWithDesc ui5-li[slot=items-1] >>> .sapMSLI");
+		const descriptionElement =  browser.findElementDeep("#listWithDesc ui5-li[slot=items-1] >>> .sapMSLIDescription");
+
+		assert.strictEqual(firstItemHeight, ITEM_WITH_DESCRIPTION_AND_TITLE_HEIGHT, "The size of the item is : " + firstItemHeight);
+		assert.ok(descriptionElement, "The description span is rendered.");
+		assert.ok(rootElement.hasClass("sapMSLIWithTitleAndDescription"), "The sapMSLIWithTitleAndDescription class is added to the root element.");
 	});
 });
