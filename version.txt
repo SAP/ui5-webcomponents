@@ -1,8 +1,5 @@
-commit a03a51a4d6cdc03955e06f68b010966c53698ac8
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Feb 15 16:25:24 2019 +0200
+commit 73117c794a9bef54459dda6ee4e5dcab37a25738
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Fri Feb 15 17:02:45 2019 +0200
 
-    fix(ui5-datepicker): icon color in pressed state (#63)
-    
-    The correct selector, defining the icon`s color,
-    was not used to be applied.
+    fix: broken bundle on Edge #64
