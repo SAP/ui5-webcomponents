@@ -1,8 +1,9 @@
-commit dd41e7f49ccd45be27bceab03997ae4b557a621a
-Author: Adrian Bobev <adrian.bobev@gmail.com>
-Date:   Fri Feb 15 10:58:25 2019 +0200
+commit 33152b9f1acb45c4e07940b02f608b21ffb46520
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Fri Feb 15 11:49:54 2019 +0200
 
-    refactor: add missing dep to configuration (#57)
+    refactor: move addCustomCSS away from Core (#58)
     
-    remove attachThemeChange from core
-    rename ThemeManager to Theming
+    The addCustomCSS method that used to be on the Core moved to Theming.js
+    
+    BREAKING CHANGE: addCustomCSS is no longer on the Core object. Use Theming instead.
