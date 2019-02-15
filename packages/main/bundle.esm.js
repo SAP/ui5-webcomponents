@@ -56,6 +56,8 @@ window.sapUiDevice = Device;
 
 // Note: keep in sync with rollup.config value for IIFE
 import Core from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Core";
+import * as Theming from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Theming";
 window["sap-ui-webcomponents-main-bundle"] = {
-	Core: Core
-}
+	Core,
+	Theming,
+};
