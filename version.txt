@@ -1,11 +1,5 @@
-commit 1b4715f29af5ac15e403be2e31540ea482f50475
+commit 5212a87b3fdb06337089cec0c7f0092ae7cb7712
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Feb 15 15:05:46 2019 +0200
+Date:   Fri Feb 15 15:44:45 2019 +0200
 
-    refactor(core): split Core into Bootstrap and Core-shim (#59)
-    
-    * split Core into Bootstrap and Core-shim
-    
-    * fix leftover file
-    
-    * fix missing dependency in jquery-shim
+    fix: fix playground theme switch (#62)
