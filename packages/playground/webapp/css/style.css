@@ -16,8 +16,7 @@
     padding: 0 .2rem;
     box-sizing: border-box;
     height: 100%;
-    display: flex;
-    align-items: center;
+	line-height: 3rem;
 }
 
 /* Override tnt tool header hamburger */
@@ -378,12 +377,18 @@ html[data-sap-ui-os^="iOS"] .customToolPage .sapTntToolPageMainContentWrapper {
 	-webkit-overflow-scrolling: touch;
 }
 
+.version-label-in-settings {
+	display: none !important;
+}
+
 @media screen and (max-width: 600px) {
 	.side-links {
 		display: none !important; 
 	}
-
-	.sapMPopoverScroll > .version-label {
+	.version-label {
 		display: none !important;
+	}
+	.version-label-in-settings {
+		display: inline-block !important;
 	}
 }
