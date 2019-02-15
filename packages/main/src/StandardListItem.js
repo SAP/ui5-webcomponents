@@ -1,4 +1,4 @@
-import Core from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Core";
+import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
 import URI from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/URI";
 import ListItem from "./ListItem";
 import Icon from "./Icon";
@@ -109,7 +109,7 @@ class StandardListItem extends ListItem {
 	}
 }
 
-Core.boot().then(_ => {
+Bootstrap.boot().then(_ => {
 	StandardListItem.define();
 });
 

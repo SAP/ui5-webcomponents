@@ -1,4 +1,4 @@
-import Core from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Core";
+import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
 import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
 import DialogTemplateContext from "./DialogTemplateContext";
 import Popup from "./Popup";
@@ -130,7 +130,7 @@ class Dialog extends Popup {
 	}
 }
 
-Core.boot().then(_ => {
+Bootstrap.boot().then(_ => {
 	Dialog.define();
 });
 

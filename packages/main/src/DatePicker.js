@@ -1,6 +1,6 @@
 import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
 import { fetchCldrData } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/CLDR";
-import Core from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Core";
+import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
 import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes";
 import configuration from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Configuration";
 import IconPool from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/IconPoolProxy";
@@ -527,7 +527,7 @@ const getDomTarget = event => {
 	return target;
 };
 
-Core.boot().then(_ => {
+Bootstrap.boot().then(_ => {
 	DatePicker.define();
 });
 
