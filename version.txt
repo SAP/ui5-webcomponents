@@ -1,9 +1,5 @@
-commit b9fd48b993edac587778dadf210102df1b50ad4b
+commit 2449909abc1a85abcbdc5abbb4425843d21d9f63
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Feb 15 17:25:21 2019 +0200
+Date:   Sat Feb 16 08:57:26 2019 +0200
 
-    docs(playground): improve configuration opening on small sizes (#65)
-    
-    There is no overflow menu any more.
-    The configuration button is always present and opens the configuration panel.
-    On small sizes the version label goes inside the configuration panel.
+    chore: update ui5/cli dependency (#66)
