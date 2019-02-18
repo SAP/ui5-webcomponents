@@ -1,5 +1,5 @@
-commit 95d36c6e1f2b8f70a97aad3564e16e93b9e79f99
-Author: Filip Siderov <fifoosid@gmail.com>
-Date:   Mon Feb 18 11:28:23 2019 +0200
+commit fe7ae71a5f3e6764e81c821148482e0aa2ed42be
+Author: Gregor Wolf <gregor.wolf@gmail.com>
+Date:   Mon Feb 18 10:46:40 2019 +0100
 
-    docs(playground): substitute combobox with select in filters (#53)
+    docs: update link to Slack invite (#69)
