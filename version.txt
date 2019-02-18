@@ -1,5 +1,5 @@
-commit fe7ae71a5f3e6764e81c821148482e0aa2ed42be
-Author: Gregor Wolf <gregor.wolf@gmail.com>
-Date:   Mon Feb 18 10:46:40 2019 +0100
+commit a2dc43606bfc8f2f2e12b3f75e897f3793e6e794
+Author: Adrian Bobev <adrian.bobev@gmail.com>
+Date:   Mon Feb 18 14:43:39 2019 +0200
 
-    docs: update link to Slack invite (#69)
+    chore: add linting to the base (#61)
