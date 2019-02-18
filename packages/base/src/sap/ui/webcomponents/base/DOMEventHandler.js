@@ -42,9 +42,11 @@ const dispatchEvent = function dispatchEvent(ui5WebComponent, event) {
 		}
 	}
 
-	if (event.isPropagationStopped()) { // eslint-disable-line
-		return false; // eslint-disable-line
-	} // eslint-disable-line
+	/* eslint-disable */
+	if (event.isPropagationStopped()) {
+		return false;
+	}
+	/* eslint-enable */
 
 	return true;
 };

@@ -27,7 +27,7 @@ class EventProvider {
 
 		for (let i = 0; i < eventListeners.length; i++) {
 			const event = eventListeners[i];
-			if (event.function === fnFunction) {
+			if (event["function"] === fnFunction) { // eslint-disable-line
 				eventListeners.splice(i, 1);
 			}
 		}
@@ -46,7 +46,7 @@ class EventProvider {
 		}
 
 		eventListeners.forEach(event => {
-			event.function.call(this, data);
+			event["function"].call(this, data); // eslint-disable-line
 		});
 	}
 
@@ -60,7 +60,7 @@ class EventProvider {
 
 		for (let i = 0; i < eventListeners.length; i++) {
 			const event = eventListeners[i];
-			if (event.function === fnFunction) {
+			if (event["function"] === fnFunction) { // eslint-disable-line
 				return true;
 			}
 		}

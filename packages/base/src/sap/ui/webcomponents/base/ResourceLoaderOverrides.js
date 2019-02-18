@@ -14,7 +14,8 @@ sap.ui.loader._.getModuleContent = (moduleName, url) => {
 
 	if (customContent) {
 		return customContent;
-	} if (getModulecontentOrig) {
+	}
+	if (getModulecontentOrig) {
 		return getModulecontentOrig(moduleName, url);
 	}
 

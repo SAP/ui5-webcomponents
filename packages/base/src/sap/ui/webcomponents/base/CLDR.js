@@ -157,7 +157,7 @@ const allEntriesInlined = Object.entries(cldrData).every(([_key, value]) => type
 if (allEntriesInlined) {
 	console.warn(`Inefficient bundling detected: consider bundling CLDR imports as URLs instead of inlining them. 
 See rollup-plugin-url or webpack file-loader for more information.
-Suggested pattern: "cldr\\\/.*\\\.json"`); // eslint-disable-line
+Suggested pattern: "cldr\\\/.*\\\.json"`);
 }
 /* eslint-enable */
 

@@ -56,11 +56,13 @@ export default ({
 			element.style.display = "block";
 			// END OF WORKAROUND
 
-			element.style.paddingTop = `${0 + (paddingTop * progress)}px`;
-			element.style.paddingBottom = `${0 + (paddingBottom * progress)}px`;
-			element.style.marginTop = `${0 + (marginTop * progress)}px`;
-			element.style.marginBottom = `${0 + (marginBottom * progress)}px`;
-			element.style.height = `${0 + (height * progress)}px`;
+			/* eslint-disable */
+			element.style.paddingTop = 0 + (paddingTop * progress) + "px";
+			element.style.paddingBottom = 0 + (paddingBottom * progress) + "px";
+			element.style.marginTop = 0 + (marginTop * progress) + "px";
+			element.style.marginBottom = 0 + (marginBottom * progress) + "px";
+			element.style.height = 0 + (height * progress) + "px";
+			/* eslint-enable */
 		},
 	});
 

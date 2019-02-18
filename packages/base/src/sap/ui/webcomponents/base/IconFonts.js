@@ -18,16 +18,18 @@ class IconFonts {
 		const woffLocation = iconFontWoff;
 		const ttfLocation = iconFontTTF;
 
+		/* eslint-disable */
 		// load the font asynchronously via CSS
-		const fontFaceCSS = `${"@font-face {"
-				+ "font-family: '"}${fontFace}';`
-				+ `src: url('${woff2Location}') format('woff2'),` /* Chrome 36+, Firefox 39+, Safari 10+, Edge 14+, Chrome 51+ for Android, PhantomJS 2.1.1+ */
-				+ `url('${woffLocation}') format('woff'),` /* IE9+, Safari 5.1+, iOS 5.1+, Android Browser 4.4+, IE Mobile 11+ */
-				+ `url('${ttfLocation}') format('truetype'),` /* Fallback for any older browser (except IE8 and below which are not supported anyway) */
-				+ `local('${fontFace}');` /* fallback to local installed font in case it can't be loaded (e.g. font download is disabled due to browser security settings) */
-				+ `font-weight: normal;`
-				+ `font-style: normal;`
-			+ `}`;
+		const fontFaceCSS = "@font-face {" +
+				"font-family: '" + fontFace + "';" +
+				"src: url('" + woff2Location + "') format('woff2')," + /* Chrome 36+, Firefox 39+, Safari 10+, Edge 14+, Chrome 51+ for Android, PhantomJS 2.1.1+ */
+				"url('" + woffLocation + "') format('woff')," + /* IE9+, Safari 5.1+, iOS 5.1+, Android Browser 4.4+, IE Mobile 11+ */
+				"url('" + ttfLocation  + "') format('truetype')," + /* Fallback for any older browser (except IE8 and below which are not supported anyway) */
+				"local('" + fontFace + "');" + /* fallback to local installed font in case it can't be loaded (e.g. font download is disabled due to browser security settings) */
+				"font-weight: normal;" +
+				"font-style: normal;" +
+				"}";
+		/* eslint-enable */
 
 		const style = document.createElement("style");
 		style.type = "text/css";
