@@ -1,5 +1,5 @@
-commit 2449909abc1a85abcbdc5abbb4425843d21d9f63
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Sat Feb 16 08:57:26 2019 +0200
+commit 95d36c6e1f2b8f70a97aad3564e16e93b9e79f99
+Author: Filip Siderov <fifoosid@gmail.com>
+Date:   Mon Feb 18 11:28:23 2019 +0200
 
-    chore: update ui5/cli dependency (#66)
+    docs(playground): substitute combobox with select in filters (#53)

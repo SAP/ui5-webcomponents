@@ -55,6 +55,11 @@
 	background-color: #fff !important;
 }
 
+/* Fix flickering behaviour of Action list items */
+.side-links .sapMLIB {
+	padding: 0;
+}
+
 .hcb .side-links {
 	background-color: #000 !important;
 	color: #fff !important;
@@ -86,7 +91,7 @@ html.sap-desktop .hcb .side-links .links-list .sapMList .sapMLIB.sapMALI:not(.sa
 
 .side-links .links-list .sapMALIText {
 	text-align: left;
-    padding-left: 2rem;
+    padding-left: 2rem !important;
 }
 
 .side-links .links-list .sapMALIText:not(.sapMLIBActive){
@@ -255,7 +260,7 @@ html.sap-desktop .sapContrast .sapMLnk:focus:not(.sapMLnkDsbl) {
 }
 
 .switch-container {
-	background-color: #222222 !important;
+	background-color: #222 !important;
 	height: 14.19rem !important;
 	padding: 0 3rem;
 }
@@ -268,35 +273,32 @@ html.sap-desktop .sapContrast .sapMLnk:focus:not(.sapMLnkDsbl) {
 	color: white !important;
 }
 
-.switch-container .sapMInputBaseContentWrapper.sapMInputBaseHasEndIcons, .sapMInputBaseContentWrapper.sapMInputBaseHasEndIcons {
-	background-color: #222;
-	border-radius: 2px;
+
+/* Change Select default styles */
+.switch-container .select-width.sapMSlt.sapMSltDefault.sapMSltHoverable.sapMSltMinWidth.sapMSltWithArrow {
+	background-color: #000;
+}
+
+.switch-container .select-width.sapMSlt.sapMSltDefault.sapMSltHoverable.sapMSltMinWidth.sapMSltWithArrow:hover,
+.switch-container .sapMSltPressed:not(.sapMSltDisabled):not(.sapMSltState) {
 	border-color: #fff;
-    border: 1px solid #fff;
 }
 
-.switch-container .sapMInputBaseContentWrapper.sapMInputBaseHasEndIcons:hover,
-.switch-container .sapMInputBaseIconPressed.sapMInputBaseIcon,
-.switch-container .sapMInputBaseIconPressed .sapMInputBaseContentWrapper:not(.sapMInputBaseReadonlyWrapper):not(.sapMInputBaseContentWrapperState):not(.sapMInputBaseDisabledWrapper) {
-	background-color: #000 !important;
-	border-color: #fff !important;
+.switch-container .sapMSltArrow {
+	color: #fff;
+	background-color: #000;
 }
 
-.switch-container .sapMComboBoxInner.sapMInputBaseInner {
-	color: #fff !important;
+.switch-container .sapMSelectListItemText {
+	color: #fff;
 }
 
-.switch-container .sapMComboBox .sapMInputBaseIcon.sapUiIcon.sapUiIconMirrorInRTL.sapUiIconPointer {
-	color: #fff !important;
+.switch-container .sapMSltPressed > .sapMSltArrow {
+	background-color: #222;
 }
+/* End of Select restyling */
 
-.switch-container .sapMInputBaseIcon:active,
-.switch-container .sapMInputBaseIconPressed .sapMInputBaseIcon,
-html.sap-desktop .switch-container .sapMInputBaseIconPressed .sapMInputBaseIcon:hover{
-	background-color: transparent;
-}
-
-/* Override ComboBox Suggestions color */
+/* Override Select Suggestions color */
 /* NB! Will affect all checkboxes! */
 .sapMSelectListItem {
 	background-color: #000 !important;
@@ -313,7 +315,7 @@ html.sap-desktop .switch-container .sapMInputBaseIconPressed .sapMInputBaseIcon:
     display: flex !important;
     align-items: center;
     justify-content: center;
-	background-color: #222222 !important;
+	background-color: #222 !important;
 }
 
 .settings-button > span {
@@ -331,17 +333,12 @@ html.sap-desktop .switch-container .sapMInputBaseIconPressed .sapMInputBaseIcon:
 	color: #fff !important;
 }
 
-.settings-button .sapMBtnActive {
-	/* background-color: #fff !important;
-	color: #000 !important; */
-}
-
 .settings-buttons-wrapper .sapMBtnContent {
 	color: #fff !important;
 }
 
-.combobox-width {
-	width: 20rem;
+.select-width {
+	width: 20rem !important;
 }
 
 .ui5-logo {
