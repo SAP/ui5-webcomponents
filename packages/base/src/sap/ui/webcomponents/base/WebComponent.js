@@ -6,8 +6,8 @@ import Integer from './types/Integer';
 import ControlRenderer from "./ControlRenderer";
 import RenderScheduler from "./RenderScheduler";
 import TemplateContext from "./TemplateContext";
+import { attachThemeChange } from "./Theming";
 import State from "./State";
-import Core from "./Core";
 
 const metadata = {
 	properties: {
@@ -53,7 +53,7 @@ class WebComponent extends HTMLElement {
 
 		// Only for native Shadow DOM, and only when present
 		if (!window.ShadyDOM && !this.constructor.getMetadata().getNoShadowDOM()) {
-			Core.attachThemeChange(this._onThemeChange.bind(this));
+			attachThemeChange(this._onThemeChange.bind(this));
 		}
 	}
 
@@ -245,12 +245,6 @@ class WebComponent extends HTMLElement {
 		}
 		return this;
 	}
-	static getMetadata() {
-		if (!this._metadata) {
-			this._metadata = new WebComponentMetadata(this.metadata);
-		}
-		return this._metadata;
-	}
 
 	static get metadata() {
 		return metadata;
@@ -411,15 +405,15 @@ class WebComponent extends HTMLElement {
 			return;
 		}
 
-		return this._getPlaceholder().children[0];
+		return this._getRoot().children[0];
 	}
 
 	_waitForDomRef() {
 		return this._domRefReadyPromise;
 	}
 
-	_getPlaceholder() {
-		return this.shadowRoot.querySelector("[data-sap-ui-wc-placeholder]");
+	_getRoot() {
+		return this.shadowRoot.querySelector("[data-sap-ui-wc-root]");
 	}
 
 	getFocusDomRef() {

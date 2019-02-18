@@ -139,6 +139,7 @@ sap.ui.define([
 					"support"               : { type : "string[]",  defaultValue : null },
 
 					"xx-wc-no-conflict"     : { type : "object",  defaultValue : undefined, noUrl: true },
+					"xx-wc-force-default-gestures"     : { type : "boolean",  defaultValue : false },
 					"compactSize"           : { type : "boolean",  defaultValue : false },
 
 					"xx-rootComponentNode"  : { type : "string",   defaultValue : "",        noUrl:true },
@@ -1082,6 +1083,10 @@ sap.ui.define([
 
 		getWCNoConflict: function() {
 			return this["xx-wc-no-conflict"];
+		},
+
+		getWCForceDefaultGestures: function() {
+			return this["xx-wc-force-default-gestures"];
 		},
 
 		getCompactSize: function() {

@@ -18,8 +18,17 @@
 
 				<ToolbarSpacer></ToolbarSpacer>
 
-				<Label class="version-label" text="v0.7.0" />
-				<Button class="settings-button" type="Transparent" icon="sap-icon://action-settings" press="toggleSettingsMenu"></Button>
+				<Label class="version-label" text="v0.7.0">
+					<layoutData>
+						<OverflowToolbarLayoutData priority="NeverOverflow" />
+					</layoutData>
+				</Label>
+
+				<Button class="settings-button" type="Transparent" icon="sap-icon://action-settings" press="toggleSettingsMenu">
+					<layoutData>
+						<OverflowToolbarLayoutData priority="NeverOverflow" />
+					</layoutData>
+				</Button>
 			</tnt:ToolHeader>
 		</tnt:header>
 		<tnt:sideContent>
@@ -64,10 +73,14 @@
 						</ComboBox>
 					</FlexBox>
 				</FlexBox>
-				<FlexBox class="settings-buttons-wrapper" width="100%" justifyContent="End">
-					<Button type="Transparent" text="Close" press="closeSettingsMenu" class="margin-end custom-button-height"></Button>
-					<Button text="Apply" press="applyChangeSettings" class="custom-button-height"></Button>
-				</FlexBox>
+
+				<HBox width="100%" justifyContent="SpaceBetween" alignItems="Center">
+					<Label class="version-label-in-settings" text="v0.7.0" />
+					<HBox class="settings-buttons-wrapper" width="100%" justifyContent="End">
+						<Button type="Transparent" text="Close" press="closeSettingsMenu" class="margin-end custom-button-height" />
+						<Button text="Apply" press="applyChangeSettings" class="custom-button-height" />
+					</HBox>
+				</HBox>
 			</FlexBox>
 
 			<FlexBox direction="Row" width="100%" height="100%" id="main-content-wrapper">

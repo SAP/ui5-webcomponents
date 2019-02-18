@@ -32,7 +32,15 @@
 	<style>
 		.select {
 			width:300px;
+			max-width: 100%;
 			margin: 0.5rem;
+		}
+
+		@media (max-width:599px) {
+			.select {
+				margin-left: 0;
+				margin-right: 0;
+			}
 		}
 	</style>
 </head>

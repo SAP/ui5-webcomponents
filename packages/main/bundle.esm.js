@@ -1,4 +1,5 @@
-import "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/jquery-shim";
+import "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/shims/jquery-shim";
+import "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/events/PolymerGestures";
 import "./src/ThemeProvider";
 
 import Gregorian from "@ui5/webcomponents-core/dist/sap/ui/core/date/Gregorian";
@@ -50,9 +51,14 @@ import GroupHeaderListItem from "./src/GroupHeaderListItem";
 // used in test pages
 import RenderScheduler from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/RenderScheduler";
 window.RenderScheduler = RenderScheduler;
+import Device from "@ui5/webcomponents-core/dist/sap/ui/Device";
+window.sapUiDevice = Device;
+
 
 // Note: keep in sync with rollup.config value for IIFE
-import Core from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Core";
+import configuration from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Configuration";
+import * as Theming from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Theming";
 window["sap-ui-webcomponents-main-bundle"] = {
-	Core: Core
-}
+	configuration,
+	Theming,
+};

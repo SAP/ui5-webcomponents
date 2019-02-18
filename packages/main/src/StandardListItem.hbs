@@ -1,7 +1,14 @@
 {{>include "./ListItem.hbs"}}
 
 {{#*inline "listItemContent"}}
-	<span class="sapMSLITitle">{{ctr._nodeText}}</span>
+	<div class="sapMSLITextWrapper">
+		{{#if ctr._nodeText}}
+			<span class="sapMSLITitle">{{ctr._nodeText}}</span>
+		{{/if}}
+		{{#if ctr.description}}
+			<span class="sapMSLIDescription">{{ctr.description}}</span>
+		{{/if}}
+	</div>
 {{/inline}}
 
 {{#*inline "imageBegin"}}

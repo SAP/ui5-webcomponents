@@ -144,9 +144,9 @@
 			}
 
 			// theme change sample
-			var wcCore = window["sap-ui-webcomponents-main-bundle"].Core;
-			wcCore.addCustomCSS('ui5-input', 'sap_belize_hcb', inputCSS);
-			wcCore.addCustomCSS('ui5-icon', 'sap_belize_hcb', iconCSS);
+			var Theming = window["sap-ui-webcomponents-main-bundle"].Theming;
+            Theming.addCustomCSS('ui5-input', 'sap_belize_hcb', inputCSS);
+            Theming.addCustomCSS('ui5-icon', 'sap_belize_hcb', iconCSS);
 
 			$('ui5-radiobutton[group="theme"]').on("select", function (event) {
 				if (event.detail.selected) {
@@ -157,7 +157,7 @@
 					} else {
 						document.body.style.backgroundColor = "white";
 					}
-					wcCore.setTheme(theme);
+                    Theming.setTheme(theme);
 				}
 			});
 		});

@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	var mutated = false;
 	var sideNav = document.getElementById("side-nav");
 	var mainContent = document.getElementById("main-content");
-	var Configuration = sap.ui.getWCCore().getConfiguration();
+	var Configuration = window["sap-ui-webcomponents-main-bundle"].configuration;
 	var COMPACT = Configuration.getCompactSize();
 	var RTL = Configuration.getRTL();
 	var THEME = Configuration.getTheme();

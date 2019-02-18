@@ -1,4 +1,4 @@
-import Core from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Core";
+import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
 import URI from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/URI";
 import ListItem from "./ListItem";
 import Icon from "./Icon";
@@ -16,6 +16,16 @@ const metadata = {
 	],
 	usesNodeText: true,
 	properties: /** @lends sap.ui.webcomponents.main.StandardListItem.prototype */ {
+
+		/**
+		 * Defines the description displayed right under the item text, if such is present.
+		 * @type {String}
+		 * @public
+		 */
+		description: {
+			type: String,
+			defaultValue: "",
+		},
 
 		/**
 		 * Defines the <code>icon</code> source URI.
@@ -99,7 +109,7 @@ class StandardListItem extends ListItem {
 	}
 }
 
-Core.boot().then(_ => {
+Bootstrap.boot().then(_ => {
 	StandardListItem.define();
 });
 

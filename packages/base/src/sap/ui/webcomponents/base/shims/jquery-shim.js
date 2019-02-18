@@ -1,4 +1,5 @@
-import { inject as injectJQuery } from "@ui5/webcomponents-core/dist/sap/ui/thirdparty/jquery"
+import { inject as injectJQuery } from "@ui5/webcomponents-core/dist/sap/ui/thirdparty/jquery";
+import isPlainObject from "@ui5/webcomponents-core/dist/sap/base/util/isPlainObject";
 
 var jQuery = {
 	extend: function() {

@@ -1,6 +1,9 @@
 import WCPolyfill from '../thirdparty/webcomponents-polyfill';
 import configuration from "../Configuration";
 import { fetchThemeBundle } from "../ThemeBundle";
+import setupBrowser from '../util/setupBrowser';
+import setupOS from '../util/setupOS';
+import setupSystem from '../util/setupSystem';
 
 // Shorthands
 const d = document;
@@ -22,13 +25,7 @@ class ShadowDOM {
 	constructor() {
 		throw new Error("Static class");
 	}
-
-	static setWebComponentRootOnHTML() {
-		if (window.ShadyDOM) {
-			document.documentElement.setAttribute("data-sap-ui-wc-root", "");
-		}
-	}
-
+	
 	static registerStyle(theme, styleName, styleObj) {
 		if (typeof(styleObj) === "object" && styleObj._) {
 			if (!styles.has(theme)) {
@@ -75,7 +72,7 @@ class ShadowDOM {
 
 				// Create the shadow DOM root span
 				rootSpan = d.createElement("span");
-				rootSpan.setAttribute("data-sap-ui-wc-placeholder", "");
+				rootSpan.setAttribute("data-sap-ui-wc-root", "");
 				shadowDOM = rootSpan;
 			} else {
 				let template = this._getTemplateFor(theme, tag);
@@ -87,10 +84,12 @@ class ShadowDOM {
 				}
 				shadowDOM = template.content.cloneNode(true);
 
-				rootSpan = shadowDOM.querySelector("span[data-sap-ui-wc-placeholder]");
-				rootSpan.setAttribute("data-sap-ui-browser", document.documentElement.getAttribute("data-sap-ui-browser"));
-				rootSpan.setAttribute("data-sap-ui-os", document.documentElement.getAttribute("data-sap-ui-os"));
+				rootSpan = shadowDOM.querySelector("span[data-sap-ui-wc-root]");
 			}
+
+			setupBrowser(rootSpan);
+			setupOS(rootSpan);
+			setupSystem(rootSpan);
 
 			if (isCompact) {
 				rootSpan.classList.add("sapUiSizeCompact");
@@ -208,7 +207,6 @@ class ShadowDOM {
 
 		// Create a root span
 		let root = d.createElement("span");
-		root.setAttribute("data-sap-ui-wc-placeholder", "");
 		root.setAttribute("data-sap-ui-wc-root", "");
 
 		template.content.appendChild(root);

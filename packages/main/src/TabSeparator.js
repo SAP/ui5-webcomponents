@@ -1,4 +1,4 @@
-import Core from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Core";
+import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
 import TabSeparatorTemplateContext from "./TabSeparatorTemplateContext";
 import TabBase from "./TabBase";
 import TabSeparatorRenderer from "./build/compiled/TabSeparatorRenderer.lit";
@@ -44,7 +44,7 @@ class TabSeparator extends TabBase {
 	}
 }
 
-Core.boot().then(_ => {
+Bootstrap.boot().then(_ => {
 	TabSeparator.define();
 });
 

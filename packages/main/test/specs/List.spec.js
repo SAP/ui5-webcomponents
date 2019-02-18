@@ -1,7 +1,7 @@
 const list = require("../pageobjects/ListTestPage");
 const assert = require("assert");
 
-describe("Date Picker Tests", () => {
+describe("List Tests", () => {
 	before(() => {
 		browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/List_test_page.html");
 	});
@@ -85,5 +85,41 @@ describe("Date Picker Tests", () => {
 
 		itemDeleteButton.click();
 		assert.equal(browser.$('#lblResult').getHTML(false), "Laptop HP: 1", "itemDelete event was fired for the right item");
+	});
+
+	it("inner multi-selection checkbox is skipped on tab", () => {
+		browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/List_test_page.html");
+		list.root.setProperty("mode", "MultiSelect");
+
+		const firstItem = list.getItem(0);
+		firstItem.click();
+
+		browser.keys("Tab");
+
+		assert.ok(browser.$('#btnAfter').isFocused(), "focus is outside the list");
+	});
+
+	it("inner single selection radio button checkbox is skipped on tab", () => {
+		browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/List_test_page.html");
+		list.root.setProperty("mode", "SingleSelect");
+
+		const firstItem = list.getItem(0);
+		firstItem.click();
+
+		browser.keys("Tab");
+
+		assert.ok(browser.$('#btnAfter').isFocused(), "focus is outside the list");
+	});
+
+	it("item size and classed, when an item has both text and description", () => {
+		const ITEM_WITH_DESCRIPTION_AND_TITLE_HEIGHT = 80;
+		const firstItem =  $("#listWithDesc ui5-li[slot=items-1]");
+		const firstItemHeight = firstItem.getSize("height");
+		const rootElement =  browser.findElementDeep("#listWithDesc ui5-li[slot=items-1] >>> .sapMSLI");
+		const descriptionElement =  browser.findElementDeep("#listWithDesc ui5-li[slot=items-1] >>> .sapMSLIDescription");
+
+		assert.strictEqual(firstItemHeight, ITEM_WITH_DESCRIPTION_AND_TITLE_HEIGHT, "The size of the item is : " + firstItemHeight);
+		assert.ok(descriptionElement, "The description span is rendered.");
+		assert.ok(rootElement.hasClass("sapMSLIWithTitleAndDescription"), "The sapMSLIWithTitleAndDescription class is added to the root element.");
 	});
 });
