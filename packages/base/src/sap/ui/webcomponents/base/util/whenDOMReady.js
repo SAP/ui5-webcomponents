@@ -1,9 +1,9 @@
-const whenDOMReady = _ => {
-	return new Promise(function (resolve, reject) {
+const whenDOMReady = () => {
+	return new Promise(resolve => {
 		if (document.body) {
 			resolve();
 		} else {
-			document.addEventListener("DOMContentLoaded", function () {
+			document.addEventListener("DOMContentLoaded", () => {
 				resolve();
 			});
 		}

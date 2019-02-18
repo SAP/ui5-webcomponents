@@ -1,7 +1,6 @@
-import { render } from 'lit-html'
+import { render } from "lit-html";
 
 class LitRenderer {
-
 	static render(renderResult, domNode) {
 		render(renderResult, domNode);
 	}

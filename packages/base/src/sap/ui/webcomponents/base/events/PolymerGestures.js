@@ -1,5 +1,5 @@
-import WCPolyfill from '../thirdparty/webcomponents-polyfill';
 import * as PolymerGestures from "@polymer/polymer/lib/utils/gestures";
-import {injectGesturesProvider} from "./DefaultGestures";
+import "../thirdparty/webcomponents-polyfill";
+import { injectGesturesProvider } from "./DefaultGestures";
 
 injectGesturesProvider(PolymerGestures);

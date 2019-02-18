@@ -4,16 +4,26 @@ import animate from "./animate";
 export default ({
 	element = animationConfig.element,
 	duration = animationConfig.defaultDuration,
-	progress: progressCallback = animationConfig.identity
+	progress: progressCallback = animationConfig.identity,
 }) => {
 	// Get Computed styles
-	let computedStyles, paddingTop, paddingBottom, marginTop, marginBottom, height;
+	let computedStyles,
+		paddingTop,
+		paddingBottom,
+		marginTop,
+		marginBottom,
+		height;
 
 	// Store inline styles
-	let storedOverflow, storedPaddingTop, storedPaddingBottom, storedMarginTop, storedMarginBottom, storedHeight;
+	let storedOverflow,
+		storedPaddingTop,
+		storedPaddingBottom,
+		storedMarginTop,
+		storedMarginBottom,
+		storedHeight;
 
 	const animation = animate({
-		beforeStart: _ => {
+		beforeStart: () => {
 			// Get Computed styles
 			computedStyles = getComputedStyle(element);
 			paddingTop = parseFloat(computedStyles.paddingTop);
@@ -32,17 +42,17 @@ export default ({
 
 			element.style.overflow = "hidden";
 		},
-		duration: duration,
-		element: element,
-		progress: function (progress) {
+		duration,
+		element,
+		progress(progress) {
 			progressCallback(progress);
 
-			element.style.paddingTop = paddingTop - (paddingTop * progress) + "px";
-			element.style.paddingBottom = paddingBottom - (paddingBottom * progress) + "px";
-			element.style.marginTop = marginTop - (marginTop * progress) + "px";
-			element.style.marginBottom = marginBottom - (marginBottom * progress) + "px";
-			element.style.height = height - (height * progress) + "px";
-		}
+			element.style.paddingTop = `${paddingTop - (paddingTop * progress)}px`;
+			element.style.paddingBottom = `${paddingBottom - (paddingBottom * progress)}px`;
+			element.style.marginTop = `${marginTop - (marginTop * progress)}px`;
+			element.style.marginBottom = `${marginBottom - (marginBottom * progress)}px`;
+			element.style.height = `${height - (height * progress)}px`;
+		},
 	});
 
 	animation.promise().then(oReason => {

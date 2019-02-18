@@ -5,7 +5,7 @@ class AnimationQueue {
 		return tasks;
 	}
 
-	static enqueue (element, task) {
+	static enqueue(element, task) {
 		if (!tasks.has(element)) {
 			tasks.set(element, []);
 		}
@@ -13,23 +13,22 @@ class AnimationQueue {
 		tasks.get(element).push(task);
 	}
 
-	static run (element, task) {
+	static run(element, task) {
 		if (!tasks.has(element)) {
 			tasks.set(element, []);
 		}
 
-		return task().then(_ => {
+		return task().then(() => {
 			const elementTasks = tasks.get(element);
 
 			if (elementTasks.length > 0) {
 				return AnimationQueue.run(element, elementTasks.shift());
-			} else {
-				tasks.delete(element);
 			}
+			tasks.delete(element);
 		});
 	}
 
-	static push (element, task) {
+	static push(element, task) {
 		const elementTasks = tasks.get(element);
 
 		if (elementTasks) {

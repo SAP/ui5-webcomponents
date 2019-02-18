@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { inject as injectJQuery } from "@ui5/webcomponents-core/dist/sap/ui/thirdparty/jquery";
 import isPlainObject from "@ui5/webcomponents-core/dist/sap/base/util/isPlainObject";
 
@@ -87,3 +88,5 @@ window.jQuery = window.jQuery || jQuery;
 injectJQuery(jQuery);
 
 export default jQuery;
+
+/* eslint-enable */

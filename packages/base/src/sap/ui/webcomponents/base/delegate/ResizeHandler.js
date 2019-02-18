@@ -1,9 +1,8 @@
-import WebComponent from '../WebComponent';
-import NativeResize from './NativeResize';
-import CustomResize from './CustomResize';
+import WebComponent from "../WebComponent";
+import NativeResize from "./NativeResize";
+import CustomResize from "./CustomResize";
 
 class ResizeHandler {
-
 	static initialize() {
 		ResizeHandler.Implementation = window.ResizeObserver ? NativeResize : CustomResize;
 		ResizeHandler.Implementation.initialize();
@@ -39,7 +38,6 @@ class ResizeHandler {
 	 * @memberof ResizeHandler
 	 */
 	static register(ref, callback) {
-
 		if (ref instanceof WebComponent) {
 			ref = ref.getDomRef();
 		}
@@ -55,7 +53,6 @@ class ResizeHandler {
 	 * @memberof ResizeHandler
 	 */
 	static deregister(ref, callback) {
-
 		if (ref instanceof WebComponent) {
 			ref = ref.getDomRef();
 		}

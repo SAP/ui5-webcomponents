@@ -1,9 +1,9 @@
-import WCPolyfill from '../thirdparty/webcomponents-polyfill';
+import "../thirdparty/webcomponents-polyfill";
 import configuration from "../Configuration";
 import { fetchThemeBundle } from "../ThemeBundle";
-import setupBrowser from '../util/setupBrowser';
-import setupOS from '../util/setupOS';
-import setupSystem from '../util/setupSystem';
+import setupBrowser from "../util/setupBrowser";
+import setupOS from "../util/setupOS";
+import setupSystem from "../util/setupSystem";
 
 // Shorthands
 const d = document;
@@ -25,9 +25,9 @@ class ShadowDOM {
 	constructor() {
 		throw new Error("Static class");
 	}
-	
+
 	static registerStyle(theme, styleName, styleObj) {
-		if (typeof(styleObj) === "object" && styleObj._) {
+		if (typeof (styleObj) === "object" && styleObj._) {
 			if (!styles.has(theme)) {
 				styles.set(theme, {});
 			}
@@ -39,9 +39,8 @@ class ShadowDOM {
 		const theme = configuration.getTheme();
 		const cssResults = await this._fetchStyleUrls(theme, stylesUrls);
 		const customCSS = ShadowDOM._getCustomCSS(theme, tag);
-		const newStyle = cssResults.join(" ").concat(customCSS);
 
-		shadowRoot.querySelector("style").textContent = newStyle;
+		shadowRoot.querySelector("style").textContent = cssResults.join(" ").concat(customCSS);
 	}
 
 	static prepareShadowDOM(ElementClass) {
@@ -54,7 +53,8 @@ class ShadowDOM {
 
 
 		return cssFetchedPromise.then(cssResults => {
-			let shadowDOM, rootSpan;
+			let shadowDOM,
+				rootSpan;
 			if (window.ShadyDOM) {
 				// Create styles in the <head> for each css file
 				cssResults.forEach((css, i) => {
@@ -65,7 +65,7 @@ class ShadowDOM {
 				if (ShadowDOM._hasCustomCSSForTheme(theme)) {
 					const customStyleTagInfo = this._getCustomStyleTagInfo(theme);
 
-					customStyleTagInfo.forEach((styleTagInfo) => {
+					customStyleTagInfo.forEach(styleTagInfo => {
 						ShadowDOM._createStyleTag(customStyleTagsInHead, styleTagInfo.id, styleTagInfo.css);
 					});
 				}
@@ -133,7 +133,7 @@ class ShadowDOM {
 
 		// Update style tags
 		cssResults.forEach((css, i) => {
-			const style = document.head.querySelector('style[data-sap-source="' + styleTagsInHead[i] + '"]');
+			const style = document.head.querySelector(`style[data-sap-source="${styleTagsInHead[i]}"]`);
 			style.innerHTML = css;
 		});
 
@@ -159,21 +159,20 @@ class ShadowDOM {
 		});
 	}
 
-	static _cleanCustomStyleTags () {
-
+	static _cleanCustomStyleTags() {
 		customStyleTagsInHead.forEach(styleTagId => {
 			const style = this._getStyleTag(styleTagId);
 
 			if (style) {
 				style.innerHTML = "";
 			}
-		})
+		});
 	}
 
 	static _getCustomStyleTagInfo(theme) {
 		return Object.keys(customCSSMap.get(theme)).map(tag => {
 			const customCSSInfo = {};
-			customCSSInfo.id = tag + "--custom--css";
+			customCSSInfo.id = `${tag}--custom--css`;
 			customCSSInfo.css = ShadowDOM._getCustomCSS(theme, tag);
 			return customCSSInfo;
 		});
@@ -184,7 +183,7 @@ class ShadowDOM {
 	}
 
 	static _getStyleTag(tagId) {
-		return document.head.querySelector('style[data-sap-source="' + tagId + '"]');
+		return document.head.querySelector(`style[data-sap-source="${tagId}"]`);
 	}
 
 	static _getTemplateFor(theme, tag) {
@@ -201,12 +200,12 @@ class ShadowDOM {
 		const template = d.createElement("template");
 
 		// Create a local <style> tag for the real shadow DOM
-		let style = d.createElement("style");
+		const style = d.createElement("style");
 		style.innerHTML = css;
 		template.content.appendChild(style);
 
 		// Create a root span
-		let root = d.createElement("span");
+		const root = d.createElement("span");
 		root.setAttribute("data-sap-ui-wc-root", "");
 
 		template.content.appendChild(root);

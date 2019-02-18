@@ -1,7 +1,6 @@
 const INTERVAL = 300;
 
 class CustomResize {
-
 	static initialize() {
 		CustomResize.initialized = false;
 		CustomResize.resizeInterval = undefined;
@@ -15,7 +14,7 @@ class CustomResize {
 		CustomResize.resizeListeners.set(ref, {
 			width: ref ? ref.offsetWidth : 0,
 			height: ref ? ref.offsetHeight : 0,
-			callbacks: existingCallbacks.concat(callback)
+			callbacks: existingCallbacks.concat(callback),
 		});
 
 		CustomResize.initListener();
@@ -55,7 +54,7 @@ class CustomResize {
 	static detachListener(ref, callback) {
 		const listenerObject = CustomResize.resizeListeners.get(ref);
 		const callbacks = listenerObject ? listenerObject.callbacks : [];
-		const filteredCallbacks = callbacks.filter((fn) => fn !== callback);
+		const filteredCallbacks = callbacks.filter(fn => fn !== callback);
 
 		if (!listenerObject || (callbacks.length === filteredCallbacks.length && callbacks.length !== 0)) {
 			return;
@@ -75,4 +74,4 @@ class CustomResize {
 	}
 }
 
-export default CustomResize
+export default CustomResize;
