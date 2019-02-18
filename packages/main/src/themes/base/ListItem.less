@@ -16,15 +16,6 @@
 		color: @sapUiListActiveTextColor;
 	}
 
-	&.sapMSLIWithTitleAndDescription {
-		height: 5rem;
-		padding: 1rem;
-
-		.sapMSLITitle {
-			padding-bottom: 0.375rem;
-		}
-	}
-
 	.sapMSLITextWrapper {
 		display: flex;
 		flex-direction: column;
@@ -65,6 +56,17 @@
 		display: flex;
 		-webkit-box-align: center;
 		align-items: center;
+	}
+}
+
+/* ListItem with title and description (should be 5rem in height in both compact and cozy) */
+.sapUiSizeCompact .sapMSLI.sapMSLIWithTitleAndDescription,
+.sapMSLI.sapMSLIWithTitleAndDescription {
+	height: 5rem;
+	padding: 1rem;
+
+	.sapMSLITitle {
+		padding-bottom: 0.375rem;
 	}
 }
 
