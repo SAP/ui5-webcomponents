@@ -1,5 +1,7 @@
-commit a2dc43606bfc8f2f2e12b3f75e897f3793e6e794
-Author: Adrian Bobev <adrian.bobev@gmail.com>
-Date:   Mon Feb 18 14:43:39 2019 +0200
+commit db17c71955728b10b4782b3d67cfea0a56e4ef89
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Feb 18 20:05:28 2019 +0200
 
-    chore: add linting to the base (#61)
+    fix(ui5-li): height with title and description in Compact (#70)
+    
+    Height of list item with both title and description should be 5rem in both Cozy and Compact.
