@@ -1,7 +1,5 @@
-commit db17c71955728b10b4782b3d67cfea0a56e4ef89
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Feb 18 20:05:28 2019 +0200
+commit e40840aeb26d494e18511dfbd6c4bc8bdf3be894
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Tue Feb 19 14:18:14 2019 +0200
 
-    fix(ui5-li): height with title and description in Compact (#70)
-    
-    Height of list item with both title and description should be 5rem in both Cozy and Compact.
+    chore: update lit-html to 1.0 (#74)
