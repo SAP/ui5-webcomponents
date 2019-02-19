@@ -2895,7 +2895,7 @@
 		let html = '';
 		products.ProductCollection.forEach((product, index) => {
 			test = `<ui5-table-row data-ui5-slot="rows" id=roll-${index}>
-							<ui5-table-cell data-ui5-slot="cells">
+							<ui5-table-cell>
 								<div class="double-line-content">
 									<ui5-label>
 										<b>${product.Name}</b>
@@ -2904,20 +2904,20 @@
 								</div>
 							</ui5-table-cell>
 
-							<ui5-table-cell data-ui5-slot="cells">
+							<ui5-table-cell>
 								<ui5-label class="middle" >${product.SupplierName}</ui5-label>
 							</ui5-table-cell>
 
-							<ui5-table-cell data-ui5-slot="cells">
+							<ui5-table-cell>
 								<ui5-label class="middle" >${product.Width} x ${product.Depth} x ${product.Height} ${product.DimUnit}</ui5-label>
 							</ui5-table-cell>
 
-							<ui5-table-cell data-ui5-slot="cells">
+							<ui5-table-cell>
 								<ui5-label style="color: #2b7c2b" class="middle">
 									<b>${product.WeightMeasure}</b> ${product.WeightUnit}</ui5-label>
 							</ui5-table-cell>
 
-							<ui5-table-cell data-ui5-slot="cells">
+							<ui5-table-cell>
 								<ui5-label class="middle" >
 									<b>${product.Price}</b> ${product.CurrencyCode}</ui5-label>
 							</ui5-table-cell>
