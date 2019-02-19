@@ -1,5 +1,5 @@
-commit e40840aeb26d494e18511dfbd6c4bc8bdf3be894
+commit a5fae962f680539363405f3bfc30f2ce65756ebc
 Author: Martin <martin.r.hristov@gmail.com>
-Date:   Tue Feb 19 14:18:14 2019 +0200
+Date:   Tue Feb 19 20:32:08 2019 +0200
 
-    chore: update lit-html to 1.0 (#74)
+    refactor(ui5-table-row): Make cells default slot (#73)
