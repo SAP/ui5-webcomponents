@@ -1,6 +1,6 @@
 import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
-import Core from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Core";
 import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes";
+import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
 
 // Template
 import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
@@ -52,7 +52,9 @@ const metadata = {
 
 		/**
 		 * Defines the text of the <code>ui5-switch</code> when switched on.
-		 *
+		 * 
+		 * <br><br>
+		 * <b>Note:</b> Up to 3 letters will be displayed properly. Larger texts will be cut off.
 		 * @type {string}
 		 * @public
 		 */
@@ -63,7 +65,8 @@ const metadata = {
 
 		/**
 		 * Defines the text of the <code>ui5-switch</code> when switched off.
-		 *
+		 * <br><br>
+		 * <b>Note:</b> Up to 3 letters will be displayed properly. Larger texts will be cut off.
 		 * @type {string}
 		 * @public
 		 */
@@ -149,7 +152,7 @@ class Switch extends WebComponent {
 	}
 }
 
-Core.boot().then(_ => {
+Bootstrap.boot().then(_ => {
 	Switch.define();
 });
 

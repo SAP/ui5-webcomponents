@@ -9,6 +9,35 @@
 /* CSS for ui5-switch          */
 /* Base theme                  */
 /* =========================== */
+
+// switch
+@_ui5_webcomponents_switch_height: 2.75rem;
+@_ui5_webcomponents_switch_width: 3.875rem;
+@_ui5_webcomponents_switch_padding: 0.75rem 0;
+@_ui5_webcomponents_switch_compact_height: 2rem;
+@_ui5_webcomponents_switch_compact_width: 3.5rem;
+@_ui5_webcomponents_switch_compact_padding: 0.1875rem 0; 
+
+// switch track
+@_ui5_webcomponents_switch_track_height: 1.375rem;
+@_ui5_webcomponents_switch_track_border_width: 1px;
+@_ui5_webcomponents_switch_track_border_radius: 0.75rem;
+@_ui5_webcomponents_switch_track_compact_height: 1.375rem;
+
+// switch handle
+@_ui5_webcomponents_switch_handle_width: 2rem;
+@_ui5_webcomponents_switch_handle_height: 2rem;
+@_ui5_webcomponents_switch_handle_border_width: 1px;
+@_ui5_webcomponents_switch_handle_border_radius: 1rem;
+@_ui5_webcomponents_switch_handle_offset_switched_on: calc(~"100% - 2rem");
+@_ui5_webcomponents_switch_handle_compact_height: 1.625rem;
+@_ui5_webcomponents_switch_handle_comapct_width: 1.625rem; 
+@_ui5_webcomponents_switch_handle_compact_offset_switched_on: calc(~"100% - 1.625rem");
+
+// switch text
+@_ui5_webcomponents_switch_text_width: 1.625rem;
+@_ui5_webcomponents_switch_text_padding: 0 0.125rem;
+
 :host(ui5-switch) {
 	display: inline-block;
 }
@@ -16,48 +45,57 @@ ui5-switch {
 	display: inline-block;
 }
 
-.sapWCSwitch {
+.ui5-switch {
 	position: relative;
-	height: 2rem;
-	padding-top: 0.375rem; 
-	padding-bottom: 0.375rem;
+	display: flex;
+	align-items: center;
+	height: 100%;
+	width: 100%;
+	min-height: @_ui5_webcomponents_switch_height;
+	min-width: @_ui5_webcomponents_switch_width;
+	padding: @_ui5_webcomponents_switch_padding;
 	box-sizing: border-box;
 	cursor: pointer;
-	outline: none;
 
-	&.sapWCSwitchDisabled {
-		opacity: 0.4;
-		cursor: default;
-	}
-
-	& .sapWCSwitchHiddenInput { 
-		opacity: 0;
-		width: 0;
-		height: 0;
-	}
-
-	& .sapWCSwitchTrack {
+	// switch track
+	& .ui5-switch-track {
 		position: relative;
-		display: inline-block;
-		min-width: 3.875rem;
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
 		width: 100%;
-		height: 1.375rem; 
-		border: 1px solid;
-		border-top-left-radius: 0.75rem; 
-		border-top-right-radius: 0.75rem; 
-		border-bottom-right-radius: 0.75rem; 
-		border-bottom-left-radius: 0.75rem;
+		height: @_ui5_webcomponents_switch_track_height;
+		border: @_ui5_webcomponents_switch_track_border_width solid;
+		border-radius: @_ui5_webcomponents_switch_track_border_radius; 
 		box-sizing: border-box;
-		border: 1px solid;
-		background: darken(@sapUiButtonBackground,7);
+		background: darken(@sapUiButtonBackground, 7);
 		border-color: @sapUiContentForegroundBorderColor;
+		overflow: hidden;
 	}
 
-	& .sapWCSwitchTextOn,
-	& .sapWCSwitchTextOff {
-		min-width: 1.625rem; 
-		width: 100%;
-		padding: 0 0.25rem; 
+	// switch handle
+	& .ui5-switch-handle {
+		width: @_ui5_webcomponents_switch_handle_width; 
+		height: @_ui5_webcomponents_switch_handle_height;
+		border: @_ui5_webcomponents_switch_handle_border_width solid @sapUiContentForegroundBorderColor;
+		background: darken(@sapUiButtonBackground, 2);
+		border-radius: @_ui5_webcomponents_switch_handle_border_radius; 
+		background-clip: padding-box;
+		box-sizing: border-box;
+		
+		position: absolute;
+		margin: auto 0;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		transition: all .4s;
+	}
+
+	// switch text
+	& .ui5-switch-texton,
+	& .ui5-switch-textoff {
+		min-width: @_ui5_webcomponents_switch_text_width;
+		padding: @_ui5_webcomponents_switch_text_padding;
 		font-size: @sapMFontSmallSize; 
 		text-transform: uppercase; 
 		text-align: center;
@@ -65,84 +103,110 @@ ui5-switch {
 		color: @sapUiBaseText;
 		box-sizing: border-box;
 	}
-
-	& .sapWCSwitchTextOff {
+	& .ui5-switch-textoff {
 		display: inline-block;
-		text-align: right;
 	}
-
-	& .sapWCSwitchTextOn {
+	& .ui5-switch-texton {
 		display: none;
-		text-align: left;
 	}
 
-	& .sapWCSwitchHandle {
-		width: 2rem; 
-		height: 2rem;
-		border: 1px solid @sapUiContentForegroundBorderColor;
-		background: darken(@sapUiButtonBackground,2);
-		border-top-left-radius: 1rem; 
-		border-top-right-radius: 1rem; 
-		border-bottom-right-radius: 1rem; 
-		border-bottom-left-radius: 1rem;
-		background-clip: padding-box;
-		box-sizing: border-box;
-		
-		position: absolute;
-		top: 0rem;
-		left: 0rem;
-		bottom: 0;
-		-webkit-transition: all .4s;
-		transition: all .4s;
-	}
-
-	&.sapWCSwitchChecked {
-		& .sapWCSwitchHandle {
-			left: calc(~"100% - 2rem");
+	// switched on
+	&.ui5-switch-checked {
+		& .ui5-switch-handle {
+			left: @_ui5_webcomponents_switch_handle_offset_switched_on;
 			background: @sapUiToggleButtonPressedBackground;
 			border-color: @sapUiToggleButtonPressedBorderColor;
 		}
-
-		& .sapWCSwitchTrack {
-			background: lighten(desaturate(@sapUiToggleButtonPressedBackground,47),50);
-			border-color: lighten(desaturate(@sapUiToggleButtonPressedBorderColor,46),19);
+		& .ui5-switch-track {
+			justify-content: flex-start;
+			background: lighten(desaturate(@sapUiToggleButtonPressedBackground, 47), 50);
+			border-color: lighten(desaturate(@sapUiToggleButtonPressedBorderColor,  46), 19);
 		}
-
-		& .sapWCSwitchTextOff {
+		& .ui5-switch-textoff {
 			display: none;
 		}
-
-		& .sapWCSwitchTextOn {
+		& .ui5-switch-texton {
 			display: inline-block;
 		}
 	}
 
-	&:not(.sapWCSwitchDisabled) {
-		.sapWCSwitchHandle:hover:not(.sapWCSwitchDisabled) {
+	// switch disabled
+	&.ui5-switch-disabled {
+		opacity: 0.4;
+		cursor: default;
+	}
+
+	// hover when sitched off
+	&:not(.ui5-switch-disabled) {
+		.ui5-switch-handle:hover:not(.ui5-switch-disabled) {
 			background: darken(@sapUiButtonHoverBackground,2);
 			border-color: @sapUiContentForegroundBorderColor;
 		}
 	}
 
-	&:not(.sapWCSwitchDisabled).sapWCSwitchChecked {
-		& .sapWCSwitchHandle:hover:not(.sapWCSwitchDisabled) {
+	// hover when switched off
+	&:not(.ui5-switch-disabled).ui5-switch-Checked {
+		& .ui5-switch-handle:hover:not(.ui5-switch-disabled) {
 			background: @sapUiToggleButtonPressedHoverBackground;
 			border-color: @sapUiToggleButtonPressedHoverBorderColor;
 		}
 	}
+
+	& .ui5-switch-input { 
+		opacity: 0;
+		width: 0;
+		height: 0;
+		margin: 0;
+	}
 }
 
+/* Compact size */
+.sapUiSizeCompact {
+	.ui5-switch {
+		min-height: @_ui5_webcomponents_switch_compact_height;
+		min-width: @_ui5_webcomponents_switch_compact_width;
+		padding: @_ui5_webcomponents_switch_compact_padding;
+
+		& .ui5-switch-track {
+			height: @_ui5_webcomponents_switch_track_compact_height;
+			width: 100%;
+		}
+
+		& .ui5-switch-handle {
+			height: @_ui5_webcomponents_switch_handle_compact_height;
+			width: @_ui5_webcomponents_switch_handle_comapct_width; 
+		}
+
+		&.ui5-switch-checked {
+			& .ui5-switch-handle {
+				left: @_ui5_webcomponents_switch_handle_compact_offset_switched_on;
+			}
+		}
+	}
+}
+
+/* RTL */
 [dir="rtl"] {
-	.sapWCSwitchChecked  .sapWCSwitchHandle {
-		left: 0;
-		right: 1.875rem;
+	& .ui5-switch {
+		.ui5-switch-handle {
+			left: @_ui5_webcomponents_switch_handle_offset_switched_on;
+			right: 0;
+		}
+		&.ui5-switch-checked .ui5-switch-handle {
+			right: @_ui5_webcomponents_switch_handle_offset_switched_on;
+			left: 0;
+		}
 	}
+}
 
-	.sapWCSwitchTextOff {
-		text-align: left;
-	}
-
-	.sapWCSwitchTextOn {
-		text-align: right;
+/* RTL + Compact */
+.sapUiSizeCompact[dir="rtl"] {
+	& .ui5-switch {
+		.ui5-switch-handle {
+			left: @_ui5_webcomponents_switch_handle_compact_offset_switched_on;
+		}
+		&.ui5-switch-checked .ui5-switch-handle {
+			right: @_ui5_webcomponents_switch_handle_compact_offset_switched_on;
+		}
 	}
 }

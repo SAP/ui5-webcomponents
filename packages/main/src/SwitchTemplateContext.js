@@ -17,9 +17,9 @@ class SwitchTemplateContext {
 
 	static getMainClasses(state) {
 		return {
-			sapWCSwitch: true,
-			sapWCSwitchDisabled: state.disabled,
-			sapWCSwitchChecked: state.checked,
+			"ui5-switch": true,
+			"ui5-switch-disabled": state.disabled,
+			"ui5-switch-checked": state.checked,
 		};
 	}
 }

@@ -4,7 +4,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta charset="utf-8">
 
-	<title>ui5-checkbox</title>
+	<title>ui5-switch</title>
 
 	<script
 		src="../../../../../../resources/sap/ui/webcomponents/main/bundle.esm.js"
@@ -17,30 +17,35 @@
 <style>
 	ui5-switch {
 		margin: 8px;
+		border: solid 1px red;
 	}
 </style>
 <body>
-	<h3>Basic Switch</h3>
-
-	<h3>Basic Switch</h3>
+	<h3>Default Switch</h3>
+	<div style="display: flex">
+		<ui5-switch id="sw" text-on="On" text-off="Off"></ui5-switch>
+		<ui5-switch checked text-on="Yes" text-off="No"></ui5-switch>
+	</div>
 	<div style="display: flex">
 		<ui5-switch id="sw" text-on="On" text-off="Off"></ui5-switch>
 		<ui5-switch checked text-on="Yes" text-off="No"></ui5-switch>
 	</div>
 	<ui5-label id="lbl"></ui5-label>
 
-	<h3>Custom Switch</h3>
-	<div style="display: flex">
-		<ui5-switch id="sw2"  text-on="Accept" text-off="Reject" style="width: 100px"></ui5-switch>
-		<ui5-switch checked  text-on="accept" text-off="Reject" style="width: 200px"></ui5-switch>
-	</div>
-	<ui5-label id="lbl2"></ui5-label>
-
 	<h3>Disabled Switch</h3>
 	<div style="display: flex">
 		<ui5-switch disabled text-on="On" text-off="Off"></ui5-switch>
 		<ui5-switch checked disabled text-on="Yes" text-off="No"></ui5-switch>
 	</div>
+
+	<h3>Custom Switch</h3>
+	<div style="display: flex">
+		<ui5-switch id="sw2"  text-on="Accept" text-off="Reject" style="width: 120px; height: 80px;"></ui5-switch>
+		<ui5-switch checked  text-on="Turned On" text-off="Turned Off" style="width: 150px; height: 100px;"></ui5-switch>
+		<ui5-switch id="sw2"  text-on="Enabled" text-off="disabled" style="width: 200px; height: 100px;"></ui5-switch>
+		<ui5-switch checked  text-on="Allowed" text-off="Prohibitted" style="width: 200px; height: 200px;"></ui5-switch>
+	</div>
+	<ui5-label id="lbl2"></ui5-label>
 </body>
 
 <script>
