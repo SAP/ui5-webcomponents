@@ -165,6 +165,13 @@ ui5-daypicker {
 
 .sapWCDayPickerItemsContainer {
 	outline: none;
+	& > :first-child {
+		justify-content: flex-end;
+	}
+}
+
+.sapWCEmptyWeek {
+	height: 3rem;
 }
 
 .sapUiSizeCompact {
@@ -181,5 +188,9 @@ ui5-daypicker {
 		height: 2rem;
 		margin-top: 2px;
 		margin-right: 2px;
+	}
+
+	& .sapWCEmptyWeek {
+		height: 2.125rem;
 	}
 }

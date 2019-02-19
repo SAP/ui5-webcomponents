@@ -126,7 +126,17 @@ class YearPicker extends WebComponent {
 		}
 
 		for (let i = 0; i < ITEMS_COUNT; i++) {
+			const intervalIndex = parseInt(i / 4);
+			if (!intervals[intervalIndex]) {
+				intervals[intervalIndex] = [];
+			};
+
 			oCalDate.setYear(oCalDate.getYear() + 1);
+
+			if (oCalDate.getYear() < 1 || oCalDate.getYear() > 9999) {
+				continue;
+			}
+
 			timestamp = oCalDate.valueOf() / 1000;
 
 			const year = {
@@ -140,12 +150,8 @@ class YearPicker extends WebComponent {
 				year.classes += " sapWCYearPickerItemSel";
 			}
 
-			const intervalIndex = parseInt(i / 4);
-
 			if (intervals[intervalIndex]) {
 				intervals[intervalIndex].push(year);
-			} else {
-				intervals[intervalIndex] = [year];
 			}
 		}
 
@@ -229,7 +235,14 @@ class YearPicker extends WebComponent {
 		if (event.end) {
 			oCalDate.setYear(oCalDate.getYear() + ITEMS_COUNT);
 		} else if (event.start) {
+			if (oCalDate.getYear() - MIDDLE_ITEM_INDEX < 1) {
+				return;
+			}
 			oCalDate.setYear(oCalDate.getYear() - ITEMS_COUNT);
+		}
+
+		if (oCalDate.getYear() - MIDDLE_ITEM_INDEX > 9999) {
+			return;
 		}
 
 		this.timestamp = oCalDate.valueOf() / 1000;

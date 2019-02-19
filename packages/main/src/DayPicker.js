@@ -164,7 +164,7 @@ class DayPicker extends WebComponent {
 					return d === timestamp;
 				}),
 				iDay: oCalDate.getDate(),
-				_index: i,
+				_index: i.toString(),
 				classes: `sapWCDayPickerItem sapWCDayPickerWDay${weekday}`,
 			};
 
@@ -206,10 +206,15 @@ class DayPicker extends WebComponent {
 				day.classes += " sapWCDayPickerItemWeekEnd";
 			}
 
-			if (day.classes.indexOf("sapWCDayPickerWDay6") !== -1) {
+			if (day.classes.indexOf("sapWCDayPickerWDay6") !== -1
+				|| _aVisibleDays.length - 1 === i) {
 				this._weeks.push(week);
 				week = [];
 			}
+		}
+
+		while (this._weeks.length < 6) {
+			this._weeks.push([]);
 		}
 		/* eslint-enable no-loop-func */
 
@@ -338,6 +343,10 @@ class DayPicker extends WebComponent {
 		const oNewDate = this._calendarDate;
 		oNewDate.setYear(iNewYear);
 		oNewDate.setMonth(iNewMonth);
+
+		if (oNewDate.getYear() < 1 || oNewDate.getYear() > 9999) {
+			return;
+		}
 
 		this.fireEvent("navigate", { timestamp: (oNewDate.valueOf() / 1000) });
 	}

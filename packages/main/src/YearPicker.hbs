@@ -6,17 +6,21 @@
 	style="{{styles.main}}"
 >
 	{{#each ctr._yearIntervals}}
-		<div class="{{../../classes.yearInterval}}">
-			{{#each this}}
-				<div id="{{this.id}}"
-					tabindex="{{this._tabIndex}}"
-					data-sap-timestamp="{{this.timestamp}}"
-					class="{{this.classes}}"
-					role="gridcell"
-					aria-selected="false">
-						{{this.year}}
-				</div>
-			{{/each}}
-		</div>
+		{{#if this.length}}
+			<div class="{{../../classes.yearInterval}}">
+				{{#each this}}
+					<div id="{{this.id}}"
+						tabindex="{{this._tabIndex}}"
+						data-sap-timestamp="{{this.timestamp}}"
+						class="{{this.classes}}"
+						role="gridcell"
+						aria-selected="false">
+							{{this.year}}
+					</div>
+				{{/each}}
+			</div>
+		{{else}}
+			<span class="sapWCEmptyYearRow"></span>
+		{{/if}}
 	{{/each}}
 </div>

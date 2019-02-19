@@ -35,6 +35,18 @@ ui5-yearpicker {
 	width: 100%;
 }
 
+.sapWCYearPickerIntervalContainer:last-of-type {
+	justify-content: flex-start;
+}
+
+.sapWCYearPickerIntervalContainer:first-of-type {
+	justify-content: flex-end;
+}
+
+.sapWCEmptyYearRow {
+	height: 3rem;
+}
+
 .sapWCYearPickerItem {
 	display: flex;
 	margin: 1px;
@@ -88,5 +100,8 @@ ui5-yearpicker {
 .sapUiSizeCompact {
 	& .sapWCYearPickerItem {
 		height: 2rem;
+	}
+	& .sapWCEmptyYearRow {
+		height: 2.125rem;
 	}
 }
