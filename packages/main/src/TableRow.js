@@ -21,6 +21,7 @@ const metadata = {
 	styleUrl: [
 		"TableRow.css",
 	],
+	defaultSlot: "cells",
 	slots: /** @lends sap.ui.webcomponents.main.TableRow.prototype */ {
 		/**
 		 * Defines the cells of the <code>ui5-table-row</code>.
