@@ -75,6 +75,19 @@ const metadata = {
 			type: String,
 		},
 
+		/**
+		 * Defines if the <code>switch</code> will display positive icon when switched on 
+		 * and negative icon when switched off, instead of any text.
+		 * 
+		 * <br><br>
+		 * <b>Note:</b> If set, the <code>textOn</code> and <code>textOff</code> will nit be displayed.
+		 * @type {string}
+		 * @public
+		 */
+		typed: {
+			type: Boolean,
+		},
+		
 		_label: {
 			type: Object,
 		},

@@ -82,18 +82,21 @@ ui5-switch {
 		border-radius: @_ui5_webcomponents_switch_handle_border_radius; 
 		background-clip: padding-box;
 		box-sizing: border-box;
-		
+
 		position: absolute;
 		margin: auto 0;
 		top: 0;
 		left: 0;
 		bottom: 0;
-		transition: all .4s;
+		transition: all .2s;
 	}
 
 	// switch text
 	& .ui5-switch-texton,
 	& .ui5-switch-textoff {
+		display: flex;
+		align-items: center;
+		justify-content: center;
 		min-width: @_ui5_webcomponents_switch_text_width;
 		padding: @_ui5_webcomponents_switch_text_padding;
 		font-size: @sapMFontSmallSize; 
@@ -104,14 +107,14 @@ ui5-switch {
 		box-sizing: border-box;
 	}
 	& .ui5-switch-textoff {
-		display: inline-block;
+		display: flex;
 	}
 	& .ui5-switch-texton {
 		display: none;
 	}
 
 	// switched on
-	&.ui5-switch-checked {
+	&.ui5-switch--checked {
 		& .ui5-switch-handle {
 			left: @_ui5_webcomponents_switch_handle_offset_switched_on;
 			background: @sapUiToggleButtonPressedBackground;
@@ -126,27 +129,27 @@ ui5-switch {
 			display: none;
 		}
 		& .ui5-switch-texton {
-			display: inline-block;
+			display: flex;
 		}
 	}
 
 	// switch disabled
-	&.ui5-switch-disabled {
+	&.ui5-switch--disabled {
 		opacity: 0.4;
 		cursor: default;
 	}
 
 	// hover when sitched off
-	&:not(.ui5-switch-disabled) {
-		.ui5-switch-handle:hover:not(.ui5-switch-disabled) {
+	&:not(.ui5-switch--disabled):not(.ui5-switch--typed) {
+		.ui5-switch-handle:hover {
 			background: darken(@sapUiButtonHoverBackground,2);
 			border-color: @sapUiContentForegroundBorderColor;
 		}
 	}
 
-	// hover when switched off
-	&:not(.ui5-switch-disabled).ui5-switch-Checked {
-		& .ui5-switch-handle:hover:not(.ui5-switch-disabled) {
+	// hover when switched on
+	&:not(.ui5-switch--disabled):not(.ui5-switch--typed).ui5-switch--checked {
+		& .ui5-switch-handle:hover {
 			background: @sapUiToggleButtonPressedHoverBackground;
 			border-color: @sapUiToggleButtonPressedHoverBorderColor;
 		}
@@ -157,6 +160,68 @@ ui5-switch {
 		width: 0;
 		height: 0;
 		margin: 0;
+	}
+}
+
+/* Switch positive-negative */
+.ui5-switch.ui5-switch--typed {
+
+	&.ui5-switch--checked {
+		// Track and Handle switched onn
+		.ui5-switch-track,
+		.ui5-switch-handle {
+			border-color: @sapUiSuccessBorder;
+		}
+		.ui5-switch-track {
+			background: @sapUiSuccessBG;
+		}
+		.ui5-switch-handle {
+			background: lighten(@sapUiSuccessBG, 5);
+		}
+	}
+
+	// Track and Handle switched off
+	.ui5-switch-track,
+	.ui5-switch-handle {
+		border-color: @sapUiErrorBorder;
+	}
+	.ui5-switch-track {
+		background: @sapUiErrorBG;
+	}
+	.ui5-switch-handle {
+		background: lighten(@sapUiErrorBG, 4);
+	}
+
+	// hover when sitched off
+	&:not(.ui5-switch--disabled) {
+		.ui5-switch-handle:hover {
+			background: @sapUiErrorBG;
+		}
+	}
+
+	&:not(.ui5-switch--disabled).ui5-switch--checked {
+		.ui5-switch-handle:hover {
+			background: @sapUiSuccessBG;
+		}
+	}
+
+	// Icon
+	.ui5-switch-texton,
+	.ui5-switch-textoff {
+		font-size: @sapMFontLargeSize;
+	}
+	.ui5-switch-texton::before,
+	.ui5-switch-textoff::before {
+		font-family: 'SAP-icons';
+		speak: none;
+	}
+	.ui5-switch-texton::before {
+		content: "\e05b";
+		color: @sapUiPositiveElement;
+	}
+	.ui5-switch-textoff::before {
+		content: "\e03e";
+		color: @sapUiNegativeElement;
 	}
 }
 
@@ -177,7 +242,7 @@ ui5-switch {
 			width: @_ui5_webcomponents_switch_handle_comapct_width; 
 		}
 
-		&.ui5-switch-checked {
+		&.ui5-switch--checked {
 			& .ui5-switch-handle {
 				left: @_ui5_webcomponents_switch_handle_compact_offset_switched_on;
 			}
@@ -192,7 +257,7 @@ ui5-switch {
 			left: @_ui5_webcomponents_switch_handle_offset_switched_on;
 			right: 0;
 		}
-		&.ui5-switch-checked .ui5-switch-handle {
+		&.ui5-switch--checked .ui5-switch-handle {
 			right: @_ui5_webcomponents_switch_handle_offset_switched_on;
 			left: 0;
 		}
@@ -205,7 +270,7 @@ ui5-switch {
 		.ui5-switch-handle {
 			left: @_ui5_webcomponents_switch_handle_compact_offset_switched_on;
 		}
-		&.ui5-switch-checked .ui5-switch-handle {
+		&.ui5-switch--checked .ui5-switch-handle {
 			right: @_ui5_webcomponents_switch_handle_compact_offset_switched_on;
 		}
 	}
