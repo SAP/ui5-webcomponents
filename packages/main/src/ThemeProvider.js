@@ -1,4 +1,4 @@
-import { registerThemeBundle } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/ThemeBundle";
+import { registerThemeBundle } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/theming/ThemeBundle";
 
 import belizeThemeBundle from "./themes/sap_belize/theme-bundle.json";
 import belizeHcbThemeBundle from "./themes/sap_belize_hcb/theme-bundle.json";
