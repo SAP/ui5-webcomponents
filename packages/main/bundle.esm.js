@@ -21,6 +21,7 @@ import InputSuggestions from "./src/InputSuggestions";
 import Label from "./src/Label";
 import Link from "./src/Link";
 import DayPicker from "./src/DayPicker";
+import MessageStrip from "./src/MessageStrip";
 import Popover from "./src/Popover";
 import Panel from "./src/Panel";
 import RadioButton from "./src/RadioButton";

@@ -1,0 +1,117 @@
+/* ============================= */
+/* Global Base parameters        */
+/* ============================= */
+
+@import "./base.less";
+@import "./global.less";
+
+/* ============================= */
+/* Base theme                    */
+/* ============================= */
+
+
+@_ui5_webcomponents_messagestrip_icon_width: 2.5rem;
+@_ui5_webcomponents_messagestrip_border_radius: 0.25rem;
+@_ui5_webcomponents_messagestrip_button_border_width: 0;
+@_ui5_webcomponents_messagestrip_button_border_style: none;
+@_ui5_webcomponents_messagestrip_button_border_color: transparent;
+@_ui5_webcomponents_messagestrip_button_border_radius: 0;
+@_ui5_webcomponents_messagestrip_padding: 0.125rem 0;
+@_ui5_webcomponents_messagestrip_button_height: 1.625rem;
+
+:host(ui5-messagestrip) {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+}
+
+//required for IE11
+ui5-messagestrip {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+}
+
+span[data-sap-ui-wc-root] {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+
+    .sapMMessageStrip {
+        border-radius: @_ui5_webcomponents_messagestrip_border_radius;
+        height: 100%;
+        padding: @_ui5_webcomponents_messagestrip_padding;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-width: 1px;
+        border-style: solid;
+        box-sizing: border-box;
+
+        .sapMMessageStripContent {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .sapMMessageStripIcon {
+            width: @_ui5_webcomponents_messagestrip_icon_width;
+            box-sizing: border-box;
+            height: 100%;
+        }
+
+        .sapMMesageStripLabel {
+            width: calc(100% - 2.5rem);
+            color: @sapTextColor;
+        }
+
+        .sapMMesageStripLabel.sapMMessageStripNoIcon {
+            padding-left: 1rem;
+        }
+
+        .sapMMesageStripLabel.sapMMessageStripNoCloseButton {
+            padding-right: 1rem;
+        }
+        
+
+        ui5-button {
+            height: @_ui5_webcomponents_messagestrip_button_height;
+            border-width: @_ui5_webcomponents_messagestrip_button_border_width;
+            border-style: @_ui5_webcomponents_messagestrip_button_border_style;
+            border-color: @_ui5_webcomponents_messagestrip_button_border_color;
+            border-radius: @_ui5_webcomponents_messagestrip_button_border_radius;
+        }
+    }
+
+    .sapMMessageStripInfo {
+        background-color: @sapInformationBackground;
+        border-color: @sapInformationBorderColor;
+        ui5-icon {
+            color: @sapInformationBorderColor;
+        }
+    }
+
+    .sapMMessageStripPositive {
+        background-color: @sapUiSuccessBG;
+        border-color: @sapUiSuccessBorder;
+        ui5-icon {
+            color: @sapUiSuccessBorder;
+        }
+    }
+
+    .sapMMessageStripNegative {
+        background-color: @sapUiErrorBG;
+        border-color: @sapUiErrorBorder;
+        ui5-icon {
+            color: @sapUiErrorBorder;
+        }
+    }
+
+    .sapMMessageStripWarning {
+        background-color: @sapUiWarningBG;
+        border-color: @sapUiWarningBorder;
+        ui5-icon {
+            color: @sapUiWarningBorder;
+        }
+    }
+
+}
