@@ -200,7 +200,7 @@ describe("Date Picker Tests", () => {
 
 		datepicker.innerInput.setValue("Jan 30, 2019");
 		datepicker.valueHelpIcon.click();
-		datepicker.btnNextMonth.click();
+		datepicker.btnNext.click();
 
 		const firstDisplayedDate = datepicker.getFirstDisplayedDate();
 
@@ -254,7 +254,6 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("does not open, if disabled", () => {
-		var canClick = true;
 		datepicker.id = "#dp10";
 
 		assert.ok(!datepicker.isPickerOpen(), "picker is closed initially.");
@@ -305,5 +304,191 @@ describe("Date Picker Tests", () => {
 
 		browser.pause(1000);
 		assert.ok(datepicker.isPickerOpen(), "picker is open");
+	});
+
+	it("daypicker extreme values max", () => {
+		datepicker.open();
+		datepicker.id = "#dp12";
+
+		datepicker.innerInput.setValue("Dec 31, 9999");
+		datepicker.valueHelpIcon.click();
+
+		assert.ok(datepicker.getFirstDisplayedDate().getProperty("id").indexOf("253399363200") > -1, "28 Nov, 9999 is the first displayed date");
+	});
+
+	it("daypicker extreme values min", () => {
+		datepicker.open();
+		datepicker.id = "#dp12";
+
+		datepicker.innerInput.setValue("Jan 1, 0001");
+		datepicker.valueHelpIcon.click();
+
+		assert.ok(datepicker.getFirstDisplayedDate().getProperty("id").indexOf("-62135596800") > -1, "Jan 1, 0001 is the first displayed date");
+	});
+
+	it("daypicker prev extreme values min", () => {
+		datepicker.open();
+		datepicker.id = "#dp12";
+
+		datepicker.innerInput.setValue("Feb 1, 0001");
+		datepicker.valueHelpIcon.click();
+
+		datepicker.btnPrev.click();
+
+		assert.ok(datepicker.getFirstDisplayedDate().getProperty("id").indexOf("-62135596800") > -1, "Jan 1, 0001 is the first displayed date");
+
+		datepicker.btnPrev.click();
+
+		assert.ok(datepicker.getFirstDisplayedDate().getProperty("id").indexOf("-62135596800") > -1, "Jan 1, 0001 is the first displayed date");
+	});
+
+	it("daypicker next extreme values max", () => {
+		datepicker.open();
+		datepicker.id = "#dp12";
+
+		datepicker.innerInput.setValue("Nov 31, 9999");
+		datepicker.valueHelpIcon.click();
+
+		datepicker.btnNext.click();
+
+		assert.ok(datepicker.getFirstDisplayedDate().getProperty("id").indexOf("253399363200") > -1, "28 Nov, 9999 is the first displayed date");
+
+		datepicker.btnNext.click();
+
+		assert.ok(datepicker.getFirstDisplayedDate().getProperty("id").indexOf("253399363200") > -1, "28 Nov, 9999 is the first displayed date");
+	});
+
+	it("monthpicker next extreme values max", () => {
+		datepicker.open();
+		datepicker.id = "#dp12";
+
+		datepicker.innerInput.setValue("Dec 31, 9998");
+		datepicker.valueHelpIcon.click();
+
+		datepicker.btnMonth.click();
+		datepicker.btnNext.click();
+
+		assert.ok(datepicker.btnYear.getProperty("innerHTML").indexOf("9999") > -1, "year button's text is correct");
+
+		datepicker.btnNext.click();
+
+		assert.ok(datepicker.btnYear.getProperty("innerHTML").indexOf("9999") > -1, "year button's text is correct");
+	});
+
+	it("monthpicker prev extreme values min", () => {
+		datepicker.open();
+		datepicker.id = "#dp12";
+
+		datepicker.innerInput.setValue("Jan 1, 0002");
+		datepicker.valueHelpIcon.click();
+
+		datepicker.btnMonth.click();
+		datepicker.btnPrev.click();
+
+		assert.ok(datepicker.btnYear.getProperty("innerHTML").indexOf("0001") > -1, "year button's text is correct");
+
+		datepicker.btnPrev.click();
+
+		assert.ok(datepicker.btnYear.getProperty("innerHTML").indexOf("0001") > -1, "year button's text is correct");
+	});
+
+	it("yearpicker extreme values max", () => {
+		datepicker.open();
+		datepicker.id = "#dp12";
+
+		datepicker.innerInput.setValue("Dec 31, 9995");
+		datepicker.valueHelpIcon.click();
+
+		datepicker.btnYear.click();
+
+		assert.ok(datepicker.getFirstDisplayedYear().getProperty("innerHTML").indexOf("9980") > -1, "First year in the year picker is correct");
+	});
+
+	it("yearpicker extreme values min", () => {
+		datepicker.open();
+		datepicker.id = "#dp12";
+
+		datepicker.innerInput.setValue("Jan 1, 0003");
+		datepicker.valueHelpIcon.click();
+
+		datepicker.btnYear.click();
+
+		assert.ok(datepicker.getFirstDisplayedYear().getProperty("innerHTML").indexOf("0001") > -1, "First year in the year picker is correct");
+	});
+
+	it("yearpicker prev page extreme values min", () => {
+		datepicker.open();
+		datepicker.id = "#dp12";
+
+		datepicker.innerInput.setValue("Jan 1, 0009");
+		datepicker.valueHelpIcon.click();
+
+		datepicker.btnYear.click();
+
+		assert.ok(datepicker.getFirstDisplayedYear().getProperty("innerHTML").indexOf("0002") > -1, "First year in the year picker is correct");
+
+		datepicker.btnPrev.click();
+
+		assert.ok(datepicker.getFirstDisplayedYear().getProperty("innerHTML").indexOf("0001") > -1, "First year in the year picker is correct");
+
+		datepicker.btnPrev.click();
+
+		assert.ok(datepicker.getFirstDisplayedYear().getProperty("innerHTML").indexOf("0001") > -1, "First year in the year picker is correct");
+	});
+
+	it("yearpicker next page extreme values max", () => {
+		datepicker.open();
+		datepicker.id = "#dp12";
+
+		datepicker.innerInput.setValue("Dec 31, 9986");
+		datepicker.valueHelpIcon.click();
+
+		datepicker.btnYear.click();
+
+		assert.ok(datepicker.getFirstDisplayedYear().getProperty("innerHTML").indexOf("9979") > -1, "First year in the year picker is correct");
+
+		datepicker.btnNext.click();
+
+		assert.ok(datepicker.getFirstDisplayedYear().getProperty("innerHTML").indexOf("9980") > -1, "First year in the year picker is correct");
+
+		datepicker.btnNext.click();
+
+		assert.ok(datepicker.getFirstDisplayedYear().getProperty("innerHTML").indexOf("9980") > -1, "First year in the year picker is correct");
+	});
+
+	it("yearpicker click extreme values max", () => {
+		datepicker.open();
+		datepicker.id = "#dp12";
+
+		datepicker.innerInput.setValue("Dec 31, 9986");
+		datepicker.valueHelpIcon.click();
+
+		datepicker.btnYear.click();
+
+		var tenthYear = datepicker.getDisplayedYear(9);
+		assert.ok(tenthYear.getProperty("innerHTML").indexOf("9988") > -1, "Tenth year in the year picker is correct");
+
+		tenthYear.click();
+		datepicker.btnYear.click();
+
+		assert.ok(datepicker.getFirstDisplayedYear().getProperty("innerHTML").indexOf("9980") > -1, "First year in the year picker is correct");
+	});
+
+	it("yearpicker click extreme values min", () => {
+		datepicker.open();
+		datepicker.id = "#dp12";
+
+		datepicker.innerInput.setValue("Jan 1, 0009");
+		datepicker.valueHelpIcon.click();
+
+		datepicker.btnYear.click();
+
+		var thirdYear = datepicker.getDisplayedYear(2);
+		assert.ok(thirdYear.getProperty("innerHTML").indexOf("0004") > -1, "Third year in the year picker is correct");
+
+		thirdYear.click();
+		datepicker.btnYear.click();
+
+		assert.ok(datepicker.getFirstDisplayedYear().getProperty("innerHTML").indexOf("0001") > -1, "First year in the year picker is correct");
 	});
 });
