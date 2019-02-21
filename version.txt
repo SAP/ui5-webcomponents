@@ -1,5 +1,5 @@
-commit a5fae962f680539363405f3bfc30f2ce65756ebc
+commit fdc743d4f5b83be766b2419c4e1be5d75988eb2a
 Author: Martin <martin.r.hristov@gmail.com>
-Date:   Tue Feb 19 20:32:08 2019 +0200
+Date:   Thu Feb 21 09:44:58 2019 +0200
 
-    refactor(ui5-table-row): Make cells default slot (#73)
+    feat(ui5-shellbar): Improve control behaviour (#72)
