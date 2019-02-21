@@ -1,3 +1,5 @@
+/* global sap */
+
 const resources = new Map();
 
 // date formatters from the core do not know about this new mechanism of fetching assets,
@@ -12,7 +14,8 @@ sap.ui.loader._.getModuleContent = (moduleName, url) => {
 
 	if (customContent) {
 		return customContent;
-	} else if (getModulecontentOrig) {
+	}
+	if (getModulecontentOrig) {
 		return getModulecontentOrig(moduleName, url);
 	}
 
@@ -23,4 +26,4 @@ const registerModuleContent = (moduleName, content) => {
 	resources.set(moduleName, content);
 };
 
-export { registerModuleContent }
+export { registerModuleContent }; // eslint-disable-line

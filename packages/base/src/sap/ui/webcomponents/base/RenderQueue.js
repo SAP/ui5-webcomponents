@@ -1,5 +1,4 @@
 class RenderQueue {
-
 	constructor() {
 		this.list = []; // Used to store the controls in order
 		this.promises = new Map(); // Used to store promises for control rendering
@@ -11,7 +10,7 @@ class RenderQueue {
 		}
 
 		let deferredResolve;
-		const promise =  new Promise(resolve => {
+		const promise = new Promise(resolve => {
 			deferredResolve = resolve;
 		});
 		promise._deferredResolve = deferredResolve;
@@ -27,7 +26,7 @@ class RenderQueue {
 		if (control) {
 			const promise = this.promises.get(control);
 			this.promises.delete(control);
-			return {control, promise};
+			return { control, promise };
 		}
 	}
 

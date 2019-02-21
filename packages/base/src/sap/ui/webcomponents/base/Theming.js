@@ -1,5 +1,5 @@
 import configuration from "./Configuration";
-import ShadowDOM from './compatibility/ShadowDOM';
+import ShadowDOM from "./compatibility/ShadowDOM";
 
 const themeChangeCallbacks = [];
 
@@ -18,6 +18,6 @@ export const setTheme = function setTheme(theme) {
 	themeChangeCallbacks.forEach(callback => callback(theme));
 };
 
-export const addCustomCSS = function (tag, theme, css) {
+export const addCustomCSS = function addCustomCSS(tag, theme, css) {
 	ShadowDOM._addCustomCSS(tag, theme, css);
 };

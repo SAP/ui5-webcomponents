@@ -2,10 +2,10 @@ import AnimationQueue from "./AnimationQueue";
 import animationConfig from "./config";
 
 export default ({
-		beforeStart = animationConfig.identity,
-		duration = animationConfig.defaultDuration,
-		element = animationConfig.element,
-		progress: progressCallback = animationConfig.identity
+	beforeStart = animationConfig.identity,
+	duration = animationConfig.defaultDuration,
+	element = animationConfig.element,
+	progress: progressCallback = animationConfig.identity,
 }) => {
 	let start = null;
 	let stopped = false;
@@ -37,17 +37,17 @@ export default ({
 		};
 	}).catch(oReason => oReason);
 
-	AnimationQueue.push(element, _ => {
+	AnimationQueue.push(element, () => {
 		beforeStart();
 		requestAnimationFrame(animate);
 
 		return new Promise(resolve => {
-			promise.then(_ => resolve());
+			promise.then(() => resolve());
 		});
 	});
 
 	return {
-		promise: _=> promise,
-		stop: _ => stop
+		promise: () => promise,
+		stop: () => stop,
 	};
 };

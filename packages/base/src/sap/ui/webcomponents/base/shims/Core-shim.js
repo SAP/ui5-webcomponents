@@ -1,5 +1,5 @@
-import configuration from "../Configuration";
 import { inject as injectCore } from "@ui5/webcomponents-core/dist/sap/ui/core/Core";
+import configuration from "../Configuration";
 
 /**
  * Shim for the OpenUI5 core
@@ -9,21 +9,21 @@ const Core = {
 	/**
 	 * @deprecated - must be here for compatibility
 	 */
-	getConfiguration: function () {
+	getConfiguration() {
 		return configuration;
 	},
 
 	/**
 	 * @deprecated - must be here for compatibility
 	 */
-	getLibraryResourceBundle: function () {
+	getLibraryResourceBundle() {
 	},
 };
 
 /**
  * @deprecated
  */
-window.sap.ui.getWCCore = function() {
+window.sap.ui.getWCCore = function getWCCore() {
 	return Core;
 };
 

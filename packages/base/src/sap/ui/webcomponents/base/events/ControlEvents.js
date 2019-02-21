@@ -5,7 +5,7 @@ import Gestures from "./DefaultGestures";
  * @namespace
  * @public
  */
-var oControlEvents = {};
+const oControlEvents = {};
 
 /**
  * List of DOM events that a UIArea automatically takes care of.
@@ -48,7 +48,7 @@ oControlEvents.events = [ // IMPORTANT: update the public documentation when ext
 	"cut",
 	/* input event is fired synchronously on IE9+ when the value of an <input> or <textarea> element is changed */
 	/* for more details please see : https://developer.mozilla.org/en-US/docs/Web/Reference/Events/input */
-	"input"
+	"input",
 ];
 
 // touch events natively supported
@@ -59,7 +59,7 @@ if (Device.support.touch) {
 oControlEvents.gestures = [
 	"down",
 	"up",
-	"tap"
+	"tap",
 ];
 
 /**
@@ -68,7 +68,7 @@ oControlEvents.gestures = [
  * @param {function} fnCallback Callback function
  * @public
  */
-oControlEvents.bindAnyEvent = function (fnCallback) {
+oControlEvents.bindAnyEvent = function bindAnyEvent(fnCallback) {
 	if (fnCallback) {
 		oControlEvents.events.forEach(event => {
 			document.addEventListener(event, fnCallback);

@@ -1,4 +1,4 @@
-import Function from './types/Function';
+import Function from "./types/Function";
 
 class State {
 	constructor(control) {
@@ -15,30 +15,30 @@ class State {
 		const controlProperties = MetadataClass.getProperties();
 
 		Object.defineProperty(proto, "_id", {
-			get: function () {
+			get() {
 				return this._data._id;
 			},
 
-			set: function () {
+			set() {
 				throw new Error("_id should not be set by the control developer");
-			}
+			},
 		});
 
-		for (const [prop, propData] of Object.entries(controlProperties)) {
+		for (const [prop, propData] of Object.entries(controlProperties)) { // eslint-disable-line
 			Object.defineProperty(proto, prop, {
-				get: function () {
-					if (typeof this._data[prop] !== 'undefined') {
+				get() {
+					if (typeof this._data[prop] !== "undefined") {
 						return this._data[prop];
 					}
-					if (propData.type === 'boolean') {
+					if (propData.type === "boolean") {
 						return false;
-					} else if (propData.multiple) {
+					} else if (propData.multiple) { // eslint-disable-line
 						return [];
 					} else {
 						return propData.defaultValue;
 					}
 				},
-				set: function (value) {
+				set(value) {
 					let isDifferent = false;
 					value = MetadataClass.constructor.validatePropertyValue(value, propData);
 
@@ -58,15 +58,15 @@ class State {
 						this._control._invalidate(prop, value);
 						this._control._propertyChange(prop, value);
 					}
-				}
+				},
 			});
 		}
 
 		const slots = MetadataClass.getSlots();
-		for (const [slot, slotData] of Object.entries(slots)) {
+		for (const [slot, slotData] of Object.entries(slots)) { // eslint-disable-line
 			Object.defineProperty(proto, slot, {
-				get: function () {
-					if (typeof this._data[slot] !== 'undefined') {
+				get() {
+					if (typeof this._data[slot] !== "undefined") {
 						return this._data[slot];
 					}
 					if (slotData.multiple) {
@@ -74,7 +74,7 @@ class State {
 					}
 					return null;
 				},
-				set: function (value) {
+				set(value) {
 					value = MetadataClass.constructor.validateSlotValue(value, slotData);
 					if (this._data[slot] === value) {
 						return;
@@ -87,7 +87,7 @@ class State {
 						// are ui5 web components than detach the child property updated listener
 						oldState.forEach(el => {
 							if (el && el._attachChildPropertyUpdated) {
-								this._control._detachChildPropertyUpdated(el)
+								this._control._detachChildPropertyUpdated(el);
 							}
 						});
 					} else if (oldState && oldState._attachChildPropertyUpdated) {
@@ -103,7 +103,7 @@ class State {
 							// are ui5 web components than attach the child property updated listener
 							value.forEach(el => {
 								if (el && el._attachChildPropertyUpdated) {
-									this._control._attachChildPropertyUpdated(el, slotData)
+									this._control._attachChildPropertyUpdated(el, slotData);
 								}
 							});
 						} else if (value && value._attachChildPropertyUpdated) {
@@ -113,28 +113,27 @@ class State {
 
 						this._control._invalidate(slot, value);
 					}
-				}
+				},
 			});
 		}
 
 		Object.defineProperty(proto, "_nodeText", {
-			get: function () {
-				return this._data["_nodeText"];
+			get() {
+				return this._data._nodeText;
 			},
-			set: function (value) {
-				this._data["_nodeText"] = value;
+			set(value) {
+				this._data._nodeText = value;
 				this._control._invalidate("_nodeText", value);
-			}
+			},
 		});
 	}
 
 	static generateDefaultState(MetadataClass) {
-
-		let defaultState = {};
+		const defaultState = {};
 
 		// Initialize properties
-		let props = MetadataClass.getProperties();
-		for (const propName in props) {
+		const props = MetadataClass.getProperties();
+		for (const propName in props) { // eslint-disable-line
 			if (props[propName].type === "boolean") {
 				defaultState[propName] = false;
 			} else if (props[propName].multiple) {
@@ -147,8 +146,8 @@ class State {
 		}
 
 		// Initialize slots
-		let slots = MetadataClass.getSlots();
-		for (const slotName in slots) {
+		const slots = MetadataClass.getSlots();
+		for (const slotName in slots) { // eslint-disable-line
 			if (slots[slotName].multiple) {
 				defaultState[slotName] = [];
 			} else {

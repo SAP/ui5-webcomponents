@@ -15,8 +15,9 @@
     "url": "https://github.com/SAP/ui5-webcomponents.git"
   },
   "scripts": {
-    "build": "npm-run-all --sequential build:core build:main build:playground",
+    "build": "npm-run-all --sequential build:core build:base build:main build:playground",
     "build:core": "cd packages/core && yarn build",
+    "build:base": "cd packages/base && yarn build",
     "build:main": "cd packages/main && yarn build",
     "build:docs": "cd packages/main && yarn build:docs",
     "build:api": "cd packages/main && yarn build:api",
@@ -25,8 +26,8 @@
     "clean:core": "cd packages/core && yarn clean",
     "clean:main": "cd packages/main && yarn clean",
     "clean:playground": "cd packages/playground && yarn clean",
-    "serve": "cross-env DEV=true yarn build:core && cross-env DEV=true yarn build:main && npm-run-all --parallel serve:webcomponents serve:playground",
-    "serve:es5": "cross-env DEV=true yarn build:core && cross-env DEV=true yarn build:main && npm-run-all --parallel serve:webcomponents:es5 serve:playground",
+    "serve": "cross-env DEV=true yarn build:core && cross-env DEV=true yarn build:base && cross-env DEV=true yarn build:main && npm-run-all --parallel serve:webcomponents serve:playground",
+    "serve:es5": "cross-env DEV=true yarn build:core && cross-env DEV=true yarn build:base && cross-env DEV=true yarn build:main && npm-run-all --parallel serve:webcomponents:es5 serve:playground",
     "start": "npm run serve",
     "start:es5": "npm run serve:es5",
     "serve:webcomponents": "cd packages/main && yarn dev",

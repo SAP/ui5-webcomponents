@@ -1,8 +1,6 @@
 class NativeResize {
-
 	static initialize() {
 		NativeResize.resizeObserver = new window.ResizeObserver(entries => {
-
 			// call attached callbacks
 			entries.forEach(entry => {
 				const callbacks = NativeResize.observedObjects.get(entry.target);
@@ -29,7 +27,7 @@ class NativeResize {
 
 	static detachListener(ref, callback) {
 		const callbacks = NativeResize.observedObjects.get(ref) || [];
-		const filteredCallbacks = callbacks.filter((fn) => fn !== callback);
+		const filteredCallbacks = callbacks.filter(fn => fn !== callback);
 
 		// TODO: think for a validation mechanism
 		if (!callbacks.length || (callbacks.length === filteredCallbacks.length && callbacks.length !== 0)) {

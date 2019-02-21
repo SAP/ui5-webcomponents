@@ -1,3 +1,4 @@
+/* eslint-disable */
 	/**
 	 @license @nocompile
 	 Copyright (c) 2018 The Polymer Project Authors. All rights reserved.
@@ -132,3 +133,4 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 //# sourceMappingURL=webcomponents-sd-ce.js.map
 
 export default {};
+/* eslint-enable */

@@ -73,6 +73,7 @@
 		.item-content-begin-title {
 			padding-bottom: 0.25rem;
 		}
+
 		.status-error {color: #b00;}
 		.status-warning {color: #e9730c;}
 		.status-success {color: #107e3e;}
@@ -176,47 +177,47 @@
 					</ui5-table-column>
 
 					<ui5-table-row data-ui5-slot="rows">
-						<ui5-table-cell data-ui5-slot="cells">
+						<ui5-table-cell>
 							<ui5-label>5000010050</ui5-label>
 						</ui5-table-cell>
-						<ui5-table-cell data-ui5-slot="cells">
+						<ui5-table-cell>
 							<ui5-label>Entertainment Argentinia</ui5-label>
 						</ui5-table-cell>
-						<ui5-table-cell data-ui5-slot="cells">
+						<ui5-table-cell>
 								<ui5-label>6k USD</ui5-label>
 						</ui5-table-cell>
-						<ui5-table-cell data-ui5-slot="cells">
-							<ui5-label class="status-success">Aproved</ui5-label>
+						<ui5-table-cell>
+							<span class="status-success">Aproved</span>
 						</ui5-table-cell>
 					</ui5-table-row>
 
 					<ui5-table-row data-ui5-slot="rows">
-						<ui5-table-cell data-ui5-slot="cells">
+						<ui5-table-cell>
 							<ui5-label>5000010051</ui5-label>
 						</ui5-table-cell>
-						<ui5-table-cell data-ui5-slot="cells">
+						<ui5-table-cell>
 							<ui5-label>Brazil Techologies</ui5-label>
 						</ui5-table-cell>
-						<ui5-table-cell data-ui5-slot="cells">
+						<ui5-table-cell>
 								<ui5-label>2k USD</ui5-label>
 						</ui5-table-cell>
-						<ui5-table-cell data-ui5-slot="cells">
-							<ui5-label class="status-error">Rejected</ui5-label>
+						<ui5-table-cell>
+							<span class="status-error">Rejected</span>
 						</ui5-table-cell>
 					</ui5-table-row>
 
 					<ui5-table-row data-ui5-slot="rows">
-						<ui5-table-cell data-ui5-slot="cells">
+						<ui5-table-cell>
 							<ui5-label>5000010052</ui5-label>
 						</ui5-table-cell>
-						<ui5-table-cell data-ui5-slot="cells">
+						<ui5-table-cell>
 							<ui5-label>Robert Brown Ent.</ui5-label>
 						</ui5-table-cell>
-						<ui5-table-cell data-ui5-slot="cells">
+						<ui5-table-cell>
 								<ui5-label>17k USD</ui5-label>
 						</ui5-table-cell>
-						<ui5-table-cell data-ui5-slot="cells">
-							<ui5-label class="status-warning">Pending</ui5-label>
+						<ui5-table-cell>
+							<span class="status-warning">Pending</<span >
 						</ui5-table-cell>
 					</ui5-table-row>
 				</ui5-table>
@@ -225,6 +226,11 @@
 
 		<pre class="prettyprint lang-html">
 <xmp>
+<style>
+.status-error {color: #b00;}
+.status-warning {color: #e9730c;}
+.status-success {color: #107e3e;}
+</style>
 <ui5-card heading="New Purchase Orders" subtitle="Today" status="3 of 15" class="medium">
 	<ui5-table class="demo-table content-padding">
 		<!-- Columns -->
@@ -254,17 +260,17 @@
 
 		<!-- Rows -->
 		<ui5-table-row data-ui5-slot="rows">
-			<ui5-table-cell data-ui5-slot="cells">
+			<ui5-table-cell>
 				<ui5-label>5000010051</ui5-label>
 			</ui5-table-cell>
-			<ui5-table-cell data-ui5-slot="cells">
+			<ui5-table-cell>
 				<ui5-label>Brazil Techologies</ui5-label>
 			</ui5-table-cell>
-			<ui5-table-cell data-ui5-slot="cells">
+			<ui5-table-cell>
 					<ui5-label>2k USD</ui5-label>
 			</ui5-table-cell>
-			<ui5-table-cell data-ui5-slot="cells">
-				<ui5-label class="status-error">Rejected</ui5-label>
+			<ui5-table-cell>
+				<span class="status-error">Rejected</span>
 			</ui5-table-cell>
 		</ui5-table-row>
 		...

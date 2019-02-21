@@ -1,9 +1,8 @@
-const getElementToLabel = (id) => /*ControlRenderer.byId(id) ||*/ document.getElementById(id);
+const getElementToLabel = id => /* ControlRenderer.byId(id) || */ document.getElementById(id);
 
 class LabelEnablement {
-
 	static labelElement(labelFor) {
-		let elementToLabel = getElementToLabel(labelFor);
+		const elementToLabel = getElementToLabel(labelFor);
 
 		if (elementToLabel) {
 			elementToLabel.focus();
@@ -11,7 +10,7 @@ class LabelEnablement {
 	}
 
 	static getLabelableElementId(labelFor) {
-		let elementToLabel = getElementToLabel(labelFor);
+		const elementToLabel = getElementToLabel(labelFor);
 
 		if (elementToLabel) {
 			return (elementToLabel.getLabelableElementId && elementToLabel.getLabelableElementId()) || labelFor;

@@ -1,5 +1,5 @@
-import getOriginalEventTarget from './getOriginalEventTarget';
-import configuration from '../Configuration';
+import getOriginalEventTarget from "./getOriginalEventTarget";
+import configuration from "../Configuration";
 
 /**
  * Default Gestures implementation using DOM APIs
@@ -13,20 +13,20 @@ const gesturesMap = {
 	"tap": "click",
 };
 
-let Gestures = {
-	addListener:  (node, gestureName, handler) => {
+let Gestures = { // eslint-disable-line
+	addListener: (node, gestureName, handler) => {
 		const stdEventName = gesturesMap[gestureName];
-		node.addEventListener(stdEventName, (stdEvent) => {
+		node.addEventListener(stdEventName, stdEvent => {
 			const eventTarget = getOriginalEventTarget(stdEvent);
 
 			const gestureEventOptions = {
 				bubbles: true,
 				cancelable: true,
-				composed: true
+				composed: true,
 			};
 			const gestureEvent = new Event(gestureName, gestureEventOptions);
 			gestureEvent.detail = {
-				sourceEvent: stdEvent
+				sourceEvent: stdEvent,
 			};
 			const defaultPrevented = !eventTarget.dispatchEvent(gestureEvent);
 
@@ -36,7 +36,7 @@ let Gestures = {
 		});
 		return node.addEventListener(gestureName, handler);
 	},
-	removeListener:  (node, gestureName, handler) => {
+	removeListener: (node, gestureName, handler) => {
 		const stdEventName = gesturesMap[gestureName];
 		node.removeEventListener(stdEventName, handler);
 		node.removeEventListener(gestureName, handler);
@@ -44,7 +44,7 @@ let Gestures = {
 };
 
 export { Gestures as default };
-export const injectGesturesProvider = (newGestures) => {
+export const injectGesturesProvider = newGestures => {
 	// Used for test purposes
 	if (configuration.getWCForceDefaultGestures()) {
 		return;
