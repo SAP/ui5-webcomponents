@@ -1,5 +1,7 @@
-commit fdc743d4f5b83be766b2419c4e1be5d75988eb2a
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Thu Feb 21 09:44:58 2019 +0200
+commit 4b44ad3125b0a4f3a9e5263dd9c0fda2edd8ff07
+Author: pskelin <petar.skelin@sap.com>
+Date:   Thu Feb 21 14:17:25 2019 +0200
 
-    feat(ui5-shellbar): Improve control behaviour (#72)
+    refactor: split different theming responsibilities out of ShadowDOM.js (#76)
+    
+    - this lays the way for the introduction of CSS Custom Properties
