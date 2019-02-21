@@ -1,4 +1,4 @@
-import WCPolyfill from '../thirdparty/webcomponents-polyfill';
+import "../thirdparty/webcomponents-polyfill";
 
 const patchNodeValue = () => {
 	if (!window.ShadyDOM) {
@@ -10,14 +10,14 @@ const patchNodeValue = () => {
 			return nativeNodeValue.get.apply(this);
 		},
 		set(text) {
-			nativeNodeValue.set.apply(this, arguments);
+			nativeNodeValue.set.apply(this, arguments); // eslint-disable-line
 
 			// Call manually the mutation observer callback
 			const parentElement = this.parentNode;
 			if (parentElement instanceof Element && typeof parentElement._processChildren === "function") {
 				parentElement._processChildren();
 			}
-		}
+		},
 	});
 };
 

@@ -1,10 +1,9 @@
-import EventProvider from '../EventProvider';
-import scroll from '../animations/scroll';
+import EventProvider from "../EventProvider";
+import scroll from "../animations/scroll";
 
-const scrollEventName = 'scroll';
+const scrollEventName = "scroll";
 
 class ScrollEnablement extends EventProvider {
-
 	constructor() {
 		super();
 	}
@@ -25,8 +24,8 @@ class ScrollEnablement extends EventProvider {
 	move(dx, dy) {
 		return scroll({
 			element: this._container,
-			dx: dx,
-			dy: dy
+			dx,
+			dy,
 		});
 	}
 
@@ -39,16 +38,16 @@ class ScrollEnablement extends EventProvider {
 	}
 
 	_isTouchInside(touch) {
-		let rect = this._container.getBoundingClientRect();
-		let x = touch.clientX;
-		let y = touch.clientY;
+		const rect = this._container.getBoundingClientRect();
+		const x = touch.clientX;
+		const y = touch.clientY;
 
-		return x >= rect.left && x <= rect.right &&
-			y >= rect.top && y <= rect.bottom;
+		return x >= rect.left && x <= rect.right
+			&& y >= rect.top && y <= rect.bottom;
 	}
 
 	ontouchstart(event) {
-		let touch = event.touches[0];
+		const touch = event.touches[0];
 		this._prevDragX = touch.pageX;
 		this._prevDragY = touch.pageY;
 
@@ -56,16 +55,15 @@ class ScrollEnablement extends EventProvider {
 	}
 
 	ontouchmove(event) {
-
 		if (!this._canScroll) {
 			return;
 		}
 
-		let container = this._container;
-		let touch = event.touches[0];
+		const container = this._container;
+		const touch = event.touches[0];
 
-		let dragX = touch.pageX;
-		let dragY = touch.pageY;
+		const dragX = touch.pageX;
+		const dragY = touch.pageY;
 
 		container.scrollLeft += this._prevDragX - dragX;
 		container.scrollTop += this._prevDragY - dragY;

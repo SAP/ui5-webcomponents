@@ -3,7 +3,6 @@ import WebComponent from "../WebComponent";
 
 // navigatable items must have id and tabindex
 class ItemNavigation extends EventProvider {
-
 	constructor(rootControl, options = {}) {
 		super();
 
@@ -40,7 +39,7 @@ class ItemNavigation extends EventProvider {
 		this.update();
 		this.focusCurrent();
 
-		//stops browser scrolling with up/down keys
+		// stops browser scrolling with up/down keys
 		event.stopPropagation();
 		event.stopImmediatePropagation();
 		event.preventDefault();
@@ -85,7 +84,7 @@ class ItemNavigation extends EventProvider {
 	onsapend(event) {
 		if (this._canNavigate()) {
 			const homeEndRange = this.rowSize > 1 ? this.rowSize : this._getItems().length;
-			this.currentIndex += (homeEndRange - 1 - this.currentIndex % homeEndRange);
+			this.currentIndex += (homeEndRange - 1 - this.currentIndex % homeEndRange); // eslint-disable-line
 			this._onKeyPress(event);
 		}
 	}
@@ -102,7 +101,7 @@ class ItemNavigation extends EventProvider {
 			return;
 		}
 
-		let items = origItems.slice(0);
+		const items = origItems.slice(0);
 
 		for (let i = 0; i < items.length; i++) {
 			items[i]._tabIndex = (i === this.currentIndex ? "0" : "-1");
@@ -114,14 +113,14 @@ class ItemNavigation extends EventProvider {
 	}
 
 	focusCurrent() {
-		let currentItem = this._getCurrentItem();
+		const currentItem = this._getCurrentItem();
 		if (currentItem) {
 			currentItem.focus();
 		}
 	}
 
 	_canNavigate() {
-		let currentItem = this._getCurrentItem();
+		const currentItem = this._getCurrentItem();
 
 		let activeElement = document.activeElement;
 
@@ -135,12 +134,12 @@ class ItemNavigation extends EventProvider {
 	_getCurrentItem() {
 		const items = this._getItems();
 
-		//normalize the index
+		// normalize the index
 		while (this.currentIndex >= items.length) {
 			this.currentIndex -= this.rowSize;
 		}
 
-		let currentItem = items[this.currentIndex];
+		const currentItem = items[this.currentIndex];
 
 		if (currentItem instanceof WebComponent) {
 			return currentItem.getFocusDomRef();
@@ -150,7 +149,7 @@ class ItemNavigation extends EventProvider {
 			return;
 		}
 
-		return this.rootControl.getDomRef().querySelector("#" + currentItem.id);
+		return this.rootControl.getDomRef().querySelector(`#${currentItem.id}`);
 	}
 
 	set setItemsCallback(fn) {

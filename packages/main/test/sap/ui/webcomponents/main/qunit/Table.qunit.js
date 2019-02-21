@@ -13,10 +13,10 @@ TestHelper.ready(function () {
 						'	<span data-ui5-slot="header" >Column 1</span>' +
 						'</ui5-table-column>' +
 						'<ui5-table-row data-ui5-slot="rows" id="roll1">' +
-						'	<ui5-table-cell data-ui5-slot="cells" id="cell1">' +
+						'	<ui5-table-cell id="cell1">' +
 						'		<span>World</span>' +
 						'	</ui5-table-cell>' +
-						'	<ui5-table-cell data-ui5-slot="cells" id="cell2">' +
+						'	<ui5-table-cell id="cell2">' +
 						'		<span>World</span>' +
 						'	</ui5-table-cell>' +
 						'</ui5-table-row>' +

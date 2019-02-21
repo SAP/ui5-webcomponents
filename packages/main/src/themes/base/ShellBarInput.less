@@ -1,0 +1,40 @@
+/* ============================= */
+/* Global Base parameters        */
+/* ============================= */
+
+@import "./base.less";
+@import "./global.less";
+
+
+.sapWCShellBarSearchFieldElement.sapWCInputBase {
+	.sapWCInputBaseContentWrapper {
+		background-color: @sapUiShellColor;
+		border: 1px solid lighten(@sapUiShellBorderColor, 30);
+	
+		&:hover:not(.sapWCInputBaseContentWrapperError):not(.sapWCInputBaseContentWrapperWarning):not(.sapWCInputBaseContentWrapperSuccess):not(.sapWCInputBaseDisabledWrapper):not(.sapWCInputBaseReadonlyWrapper) {
+			background: @sapUiShellHoverBackground;
+			border: 1px solid lighten(@sapUiShellBorderColor, 30);
+		}
+	}
+	
+	.sapWCInputBaseInner {
+		color: @sapUiShellTextColor;
+	}
+
+	&.sapWCFocus .sapWCInputBaseContentWrapper::after {
+		border: 1px dotted @sapUiContentContrastFocusColor;
+	}
+}
+
+.sapUiSizeCompact {
+	& .sapWCShellBarSearchFieldElement.sapWCInput {
+		height: 2.25rem;
+	}
+
+	& .sapWCFocus .sapWCInputBaseContentWrapper::after {
+		width: calc(~"100% - 0.25rem");
+		height: calc(~"100% - 0.25rem");
+		top: 1px;
+		left: 1px;
+	}
+}

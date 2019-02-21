@@ -1,6 +1,6 @@
 /**
  * Base class for all data types.
- * 
+ *
  * @class
  * @constructor
  * @author SAP SE
@@ -8,16 +8,15 @@
  * @public
  */
 class DataType {
-
 	static isValid(value) {
 	}
 
 	static generataTypeAcessors(types) {
 		Object.keys(types).forEach(type => {
 			Object.defineProperty(this, type, {
-				get: function () {
+				get() {
 					return types[type];
-				}
+				},
 			});
 		});
 	}

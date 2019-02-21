@@ -23,11 +23,10 @@ const PopupStates = {
 	 * Still open, but in the process of going to the CLOSED state.
 	 * @public
 	 */
-	CLOSING: "CLOSING"
+	CLOSING: "CLOSING",
 };
 
 class PopupState extends DataType {
-
 	static isValid(value) {
 		return !!PopupStates[value];
 	}

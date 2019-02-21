@@ -399,7 +399,13 @@ class Popup extends WebComponent {
 	}
 
 	storeCurrentFocus() {
-		this._lastFocusableElement = document.activeElement;
+		let element = document.activeElement;
+
+		while (element.shadowRoot && element.shadowRoot.activeElement) {
+			element = element.shadowRoot.activeElement;
+		}
+
+		this._lastFocusableElement = element;
 	}
 
 	resetFocus() {

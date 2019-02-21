@@ -1,10 +1,13 @@
 import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
+import Configuration from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Configuration";
 import URI from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/URI";
 import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
 import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
 import ResizeHandler from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/delegate/ResizeHandler";
-import Integer from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/Integer";
 import ItemNavigation from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/delegate/ItemNavigation";
+import StandardListItem from "./StandardListItem";
+import List from "./List";
+import Icon from "./Icon";
 
 // Template
 import ShellBarRenderer from "./build/compiled/ShellBarRenderer.lit";
@@ -12,8 +15,12 @@ import ShellBarTemplateContext from "./ShellBarTemplateContext";
 
 // Styles
 import fiori3 from "./themes/sap_fiori_3/ShellBar.less";
+import belize from "./themes/sap_belize/ShellBar.less";
+import belizeHcb from "./themes/sap_belize_hcb/ShellBar.less";
 
 ShadowDOM.registerStyle("sap_fiori_3", "ShellBar.css", fiori3);
+ShadowDOM.registerStyle("sap_belize", "ShellBar.css", belize);
+ShadowDOM.registerStyle("sap_belize_hcb", "ShellBar.css", belizeHcb);
 
 /**
  * @public
@@ -68,29 +75,22 @@ const metadata = {
 		},
 
 		/**
+		 * Defines URI of the profile action.
+		 * If no URI is set - profile will be excluded from actions.
+		 * @type {URI}
+		 * @public
+		 */
+		profile: {
+			type: URI,
+			defaultValue: "",
+		},
+
+		/**
 		 * Defines, if the notification icon would be displayed.
 		 * @type {boolean}
 		 * @public
 		 */
-		showNotification: {
-			type: Boolean,
-		},
-
-		/**
-		 * Defines, if the search field would be displayed.
-		 * @type {boolean}
-		 * @public
-		 */
-		showSearch: {
-			type: Boolean,
-		},
-
-		/**
-		 * Defines, if the profile icon would be displayed.
-		 * @type {boolean}
-		 * @public
-		 */
-		showProfile: {
+		showNotifications: {
 			type: Boolean,
 		},
 
@@ -119,10 +119,7 @@ const metadata = {
 
 		_itemsInfo: {
 			type: Object,
-		},
-
-		_popupSettings: {
-			type: Object,
+			deepEqual: true,
 		},
 
 		_actionList: {
@@ -132,11 +129,6 @@ const metadata = {
 		_showBlockLayer: {
 			type: Boolean,
 		},
-
-		_searchIconLeft: {
-			type: Integer,
-		},
-
 		_searchField: {
 			type: Object,
 		},
@@ -169,7 +161,18 @@ const metadata = {
 		 * @slot
 		 * @public
 		 */
-		input: {
+		searchField: {
+			type: HTMLElement,
+		},
+
+		/**
+		 * Defines a <code>ui5-icon</code> in the bar that will be placed in the beginning.
+		 *
+		 * @type {HTMLElement[]}
+		 * @slot
+		 * @public
+		 */
+		icon: {
 			type: HTMLElement,
 		},
 	},
@@ -179,9 +182,14 @@ const metadata = {
 		 * Fired, when the primaryTitle is pressed.
 		 *
 		 * @event
+		 * @param {HTMLElement} iconRef dom ref of the clicked icon
 		 * @public
 		 */
-		titlePress: {},
+		titlePress: {
+			detail: {
+				iconRef: { type: HTMLElement },
+			},
+		},
 
 		/**
 		 *
@@ -189,25 +197,40 @@ const metadata = {
 		 *
 		 *
 		 * @event
+		 * @param {HTMLElement} iconRef dom ref of the clicked icon
 		 * @public
 		 */
-		notificationPress: {},
+		notificationsPress: {
+			detail: {
+				iconRef: { type: HTMLElement },
+			},
+		},
 
 		/**
 		 * Fired, when the profile icon is pressed.
 		 *
 		 * @event
+		 * @param {HTMLElement} iconRef dom ref of the clicked icon
 		 * @public
 		 */
-		profilePress: {},
+		profilePress: {
+			detail: {
+				iconRef: { type: HTMLElement },
+			},
+		},
 
 		/**
 		 * Fired, when the product switch icon is pressed.
 		 *
 		 * @event
+		 * @param {HTMLElement} iconRef dom ref of the clicked icon
 		 * @public
 		 */
-		productSwitchPress: {},
+		productSwitchPress: {
+			detail: {
+				iconRef: { type: HTMLElement },
+			},
+		},
 	},
 };
 
@@ -243,181 +266,269 @@ class ShellBar extends WebComponent {
 	}
 
 	static get FIORI_3_BREAKPOINTS() {
+		return [
+			559,
+			1023,
+			1439,
+			1919,
+			10000,
+		];
+	}
+
+	static get FIORI_3_BREAKPOINTS_MAP() {
 		return {
-			S: 559,
-			M: 1023,
-			L: 1439,
-			XL: 1919,
-			XXL: 1920,
+			"559": "S",
+			"1023": "M",
+			"1439": "L",
+			"1919": "XL",
+			"10000": "XXL",
 		};
 	}
 
 	constructor(props) {
 		super(props);
 
-		const that = this;
-
-		this.__overflowItems = [];
 		this._itemsInfo = [];
+		this._isInitialRendering = true;
+		this._focussedItem = null;
 
-		this._popupSettings = {
-			classes: "sapWCShellBarPopover sapWCShellBarPopoverHidden",
-			focusout: event => {
-				const popover = this.shadowRoot.querySelector(".sapWCShellBarPopover");
-
-				if (!popover.contains(event.relatedTarget)) {
-					this._popupSettings = Object.assign({}, this._popupSettings, {
-						style: `left: ${-100000}px;`,
-						classes: `sapWCShellBarPopoverHidden sapWCShellBarPopover`,
-					});
-				}
-			},
-		};
+		const that = this;
 
 		this._actionList = {
 			itemPress: event => {
-				const overflowButton = this.shadowRoot.querySelector(".sapWCShellBarOverflowIcon");
+				const popover = this.shadowRoot.querySelector("ui5-popover");
 
-				this._actionPressed = true;
-				setTimeout(() => {
-					overflowButton.focus();
-				}, 0);
+				popover.close();
 			},
 		};
 
 		this._header = {
 			press: event => {
-				this.fireEvent("titlePress");
+				this.fireEvent("titlePress", {
+					iconRef: this.shadowRoot.querySelector(".sapWCShellBarMenuButton"),
+				});
 			},
 		};
-
-		this.__lastOverflowCount = -1;
 
 		this._itemNav = new ItemNavigation(this);
 
 		this._itemNav.getItemsCallback = () => {
-			const items = this._itemsInfo.filter(info => {
-				if (info.classes.indexOf("sapWCShellBarHiddenIcon") === -1) {
+			const items = that._itemsInfo.filter(info => {
+				const isVisible = info.classes.indexOf("sapWCShellBarHiddenIcon") === -1;
+				const isSet = info.classes.indexOf("sapWCShellBarUnsetIcon") === -1;
+
+				if (isVisible && isSet) {
 					return true;
 				}
 
 				return false;
 			}).sort((item1, item2) => {
-				return item1.order < item2.order ? -1 : 1;
+				if (item1.domOrder < item2.domOrder) {
+					return -1;
+				}
+
+				if (item1.domOrder > item2.domOrder) {
+					return 1;
+				}
+
+				return 0;
 			});
 
 			this._itemNav.rowSize = items.length;
 
-			return items;
+			return items.map(item => {
+				const clone = JSON.parse(JSON.stringify(item));
+				clone.press = item.press;
+
+				return clone;
+			});
 		};
 
 		this._itemNav.setItemsCallback = items => {
-			this._itemsInfo = this._itemsInfo.map(item => {
-				const pairItem = items.find(focusabledItem => {
-					return (focusabledItem.id === item.id);
-				});
+			const newItems = that._itemsInfo.map(stateItem => {
+				const mappingItem = items.filter(item => {
+					return item.id === stateItem.id;
+				})[0];
 
-				item.tabIndex = pairItem ? pairItem.tabIndex : "-1";
+				const clone = JSON.parse(JSON.stringify(stateItem));
+				clone._tabIndex = mappingItem ? mappingItem._tabIndex : "-1";
+				clone.press = stateItem.press;
 
-				return item;
+				return clone;
 			});
+
+			that._itemsInfo = newItems;
 		};
 
 		this._delegates.push(this._itemNav);
 
 		this._searchField = {
+			left: 0,
 			focusout: event => {
 				this._showBlockLayer = false;
 			},
 		};
 
-		this.__handleResize = event => {
-			const width = that.getBoundingClientRect().width;
-			const breakpoints = Object.keys(ShellBar.FIORI_3_BREAKPOINTS).sort((key1, key2) => ShellBar.FIORI_3_BREAKPOINTS[key1] < ShellBar.FIORI_3_BREAKPOINTS[key2]);
-			const size = breakpoints.find(bp1 => width < ShellBar.FIORI_3_BREAKPOINTS[bp1]) || ShellBar.FIORI_3_BREAKPOINTS.XXL;
-			const rightContainer = that.shadowRoot.querySelector(".sapWCShellBarOverflowContainerRight");
-			const icons = rightContainer.querySelectorAll(".sapWCShellBarItemIconMode");
-
-			if (that._breakpointSize !== size) {
-				that._breakpointSize = size;
-			}
-
-			const overflowCount = [].filter.call(icons, icon => {
-				return icon.offsetLeft < rightContainer.offsetLeft;
-			}).length;
-
-			if (this.__lastOverflowCount === overflowCount) {
-				return;
-			}
-
-			this.__lastOverflowCount = overflowCount;
-
-			const itemsByPriority = this.__getAllItems(!!overflowCount).sort((item1, item2) => {
-				return item1.priority > item2.priority ? 1 : -1;
-			});
-
-			for (let i = 0; i < overflowCount; i++) {
-				itemsByPriority[i].classes = `${itemsByPriority[i].classes} sapWCShellBarHiddenIcon`;
-				itemsByPriority[i].style = `order: -1`;
-			}
-
-			this._showOverflowButton = !!overflowCount;
-			this._itemsInfo = itemsByPriority;
-
-			const overflowButton = this.shadowRoot.querySelector(".sapWCShellBarOverflowIcon");
-			const popover = this.shadowRoot.querySelector(".sapWCShellBarPopover");
-
-			if (overflowButton) {
-				this._popupSettings = Object.assign({}, this._popupSettings, {
-					style: `left: ${overflowButton.offsetLeft - (popover.getBoundingClientRect().width) + 36}px;`,
-					classes: "sapWCShellBarPopover sapWCShellBarPopoverHidden",
-				});
-			}
-
-			if (size === "S") {
-				this._itemsInfo = this.__getAllItems(true).map(info => {
-					const shouldStayOnScreen = info.classes.indexOf("sapWCShellBarOverflowIcon") !== -1 || info.classes.indexOf("sapWCShellBarImageButton") !== -1;
-
-					return Object.assign({}, info, {
-						classes: `${info.classes} ${shouldStayOnScreen ? "" : "sapWCShellBarHiddenIcon"}`,
-						style: `order: ${shouldStayOnScreen ? 1 : -1}`,
-					});
-				});
-			}
+		this._handleResize = event => {
+			this.shadowRoot.querySelector("ui5-popover").close();
+			this._overflowActions();
 		};
 	}
 
 	onBeforeRendering() {
-		this._itemNav.init();
-	}
+		const size = this._handleBarBreakpoints();
+		const searchField = this.shadowRoot.querySelector(`#${this._id}-searchfield-wrapper`);
 
-	ontap(event) {}
+		if (size !== "S") {
+			this._itemNav.init();
+		}
 
-	_toggleActionPopover() {
-		const overflowButton = this.shadowRoot.querySelector(".sapWCShellBarOverflowIcon");
-		const popover = this.shadowRoot.querySelector(".sapWCShellBarPopover");
-		const showPopover = this._popupSettings.classes.indexOf("sapWCShellBarPopoverHidden") !== -1;
+		if (this.searchField && searchField) {
+			const inputSlot = searchField.children[0];
 
-		this._popupSettings = Object.assign({}, this._popupSettings, {
-			style: `left: ${showPopover ? overflowButton.offsetLeft - (popover.getBoundingClientRect().width) + 36 : -100000}px;`,
-			classes: `${showPopover ? "" : "sapWCShellBarPopoverHidden"} sapWCShellBarPopover`,
-		});
-
-		if (showPopover) {
-			setTimeout(() => {
-				popover.querySelector("ui5-li").shadowRoot.querySelector("li").focus();
-			}, 0);
+			if (inputSlot) {
+				inputSlot.assignedNodes()[0]._customClasses = ["sapWCShellBarSearchFieldElement"];
+			}
 		}
 	}
 
-	_isActionPopoverOpen() {
-		const popover = this.shadowRoot.querySelector(".sapWCShellBarPopover");
+	onAfterRendering() {
+		this._overflowActions();
 
-		return !popover.classList.contains("sapWCShellBarPopoverHidden");
+		if (this._focussedItem) {
+			this._focussedItem._tabIndex = "0";
+		}
+	}
+
+	_handleBarBreakpoints() {
+		const width = this.getBoundingClientRect().width;
+		const breakpoints = ShellBar.FIORI_3_BREAKPOINTS;
+
+		const size = breakpoints.filter(bp1 => width < bp1)[0] || ShellBar.FIORI_3_BREAKPOINTS[ShellBar.FIORI_3_BREAKPOINTS.length - 1];
+		const mappedSize = ShellBar.FIORI_3_BREAKPOINTS_MAP[size];
+
+		if (this._breakpointSize !== mappedSize) {
+			this._breakpointSize = mappedSize;
+		}
+
+		return mappedSize;
+	}
+
+	_handleSizeS() {
+		const hasIcons = this.showNotifications || this.showProductSwitch || this.searchField || this.items.length;
+
+		this._itemsInfo = this._getAllItems(hasIcons).map(info => {
+			const isOverflowIcon = info.classes.indexOf("sapWCShellBarOverflowIcon") !== -1;
+			const isImageIcon = info.classes.indexOf("sapWCShellBarImageButton") !== -1;
+			const shouldStayOnScreen = isOverflowIcon || (isImageIcon && this.profile);
+
+			return Object.assign({}, info, {
+				classes: `${info.classes} ${shouldStayOnScreen ? "" : "sapWCShellBarHiddenIcon"} sapWCShellBarIconButton`,
+				style: `order: ${shouldStayOnScreen ? 1 : -1}`,
+			});
+		});
+	}
+
+	_handleActionsOverflow() {
+		const rightContainerRect = this.shadowRoot.querySelector(".sapWCShellBarOverflowContainerRight").getBoundingClientRect();
+		const icons = this.shadowRoot.querySelectorAll(".sapWCShellBarIconButton:not(.sapWCShellBarOverflowIcon):not(.sapWCShellBarUnsetIcon)");
+		const isRTL = Configuration.getRTL();
+
+		let overflowCount = [].filter.call(icons, icon => {
+			const iconRect = icon.getBoundingClientRect();
+
+			if (isRTL) {
+				return (iconRect.left + iconRect.width) > (rightContainerRect.left + rightContainerRect.width);
+			}
+
+			return iconRect.left < rightContainerRect.left;
+		});
+
+		overflowCount = overflowCount.length;
+
+		const items = this._getAllItems(!!overflowCount);
+
+		items.map(item => {
+			this._itemsInfo.forEach(stateItem => {
+				if (stateItem.id === item.id) {
+					item._tabIndex = stateItem._tabIndex;
+				}
+			});
+
+			return item;
+		});
+
+		const itemsByPriority = items.sort((item1, item2) => {
+			if (item1.priority > item2.priority) {
+				return 1;
+			}
+
+			if (item1.priority < item2.priority) {
+				return -1;
+			}
+
+			return 0;
+		});
+
+		const focusableItems = [];
+
+		for (let i = 0; i < itemsByPriority.length; i++) {
+			if (i < overflowCount) {
+				itemsByPriority[i].classes = `${itemsByPriority[i].classes} sapWCShellBarHiddenIcon`;
+				itemsByPriority[i].style = `order: -1`;
+			} else {
+				focusableItems.push(itemsByPriority[i]);
+			}
+		}
+
+		this._focussedItem = this._findInitiallyFocussedItem(focusableItems);
+
+		return itemsByPriority;
+	}
+
+	_findInitiallyFocussedItem(items) {
+		items.sort((item1, item2) => {
+			const order1 = parseInt(item1.style.split("order: ")[1]);
+			const order2 = parseInt(item2.style.split("order: ")[1]);
+
+			if (order1 === order2) {
+				return 0;
+			}
+
+			if (order1 < order2) {
+				return -1;
+			}
+
+			return 1;
+		});
+
+		const focussedItem = items.filter(item => {
+			return (item.classes.indexOf("sapWCShellBarUnsetIcon") === -1)
+				&& (item.classes.indexOf("sapWCShellBarOverflowIcon") === -1)
+				&& (item.classes.indexOf("sapWCShellBarHiddenIcon") === -1);
+		})[0];
+
+		return focussedItem;
+	}
+
+	_overflowActions() {
+		const size = this._handleBarBreakpoints();
+
+		if (size === "S") {
+			return this._handleSizeS();
+		}
+
+		const items = this._handleActionsOverflow();
+		this._itemsInfo = items;
+	}
+
+	_toggleActionPopover() {
+		const popover = this.shadowRoot.querySelector("ui5-popover");
+		const overflowButton = this.shadowRoot.querySelector(".sapWCShellBarOverflowIcon");
+		popover.openBy(overflowButton);
 	}
 
 	onsapescape() {
-		const overflowButton = this.shadowRoot.querySelector(".sapWCShellBarOverflowIcon");
 		const searchButton = this.shadowRoot.querySelector(".sapWCShellBarSearchIcon");
 
 		if (this._showBlockLayer) {
@@ -427,33 +538,38 @@ class ShellBar extends WebComponent {
 				searchButton.focus();
 			}, 0);
 		}
-
-		if (this._isActionPopoverOpen()) {
-			this._toggleActionPopover();
-
-			setTimeout(() => {
-				overflowButton.focus();
-			}, 0);
-		}
-	}
-
-	onkeydown(event) {
 	}
 
 	onEnterDOM() {
-		ResizeHandler.register(this, this.__handleResize);
+		ResizeHandler.register(this, this._handleResize);
 	}
 
 	onExitDOM() {
-		ResizeHandler.deregister(this, this.__handleResize);
+		ResizeHandler.deregister(this, this._handleResize);
+	}
+
+	onsapspace(event) {
+		event.preventDefault();
 	}
 
 	_handleSearchIconPress(event) {
 		const searchField = this.shadowRoot.querySelector(`#${this._id}-searchfield-wrapper`);
 		const triggeredByOverflow = event.target.tagName.toLowerCase() === "ui5-li";
 		const overflowButton = this.shadowRoot.querySelector(".sapWCShellBarOverflowIcon");
+		const overflowButtonRect = overflowButton.getBoundingClientRect();
+		const isRTL = Configuration.getRTL();
+		let right = "";
 
-		this._searchIconLeft = triggeredByOverflow ? overflowButton.offsetLeft : event.target.offsetLeft;
+		if (isRTL) {
+			right = `${(triggeredByOverflow ? overflowButton.offsetLeft : event.target.offsetLeft) + overflowButtonRect.width}px`;
+		} else {
+			right = `calc(100% - ${triggeredByOverflow ? overflowButton.offsetLeft : event.target.offsetLeft}px)`;
+		}
+
+		this._searchField = Object.assign({}, this._searchField, {
+			"right": right,
+		});
+
 		this._showBlockLayer = true;
 
 		setTimeout(() => {
@@ -462,14 +578,22 @@ class ShellBar extends WebComponent {
 			if (inputSlot) {
 				inputSlot.assignedNodes()[0].focus();
 			}
-		}, 0);
+		}, 100);
 	}
 
 	_handleCustomActionPress(event) {
 		const refItemId = event.target.getAttribute("data-ui5-external-action-item-id");
+		const actions = this.shadowRoot.querySelectorAll(".sapWCShellBarItemCustomAction");
+		let elementIndex = [].indexOf.apply(actions, [event.target]);
+
+		if (this.searchField) {
+			elementIndex += 1;
+		}
+
+		this._itemNav.currentIndex = elementIndex;
 
 		if (refItemId) {
-			this.items.find(item => item.shadowRoot.querySelector(`#${refItemId}`)).fireEvent("press");
+			this.items.filter(item => item.shadowRoot.querySelector(`#${refItemId}`))[0].fireEvent("press");
 		}
 	}
 
@@ -477,30 +601,40 @@ class ShellBar extends WebComponent {
 		this._toggleActionPopover();
 	}
 
-	_handleNotificationPress(event) {
-		this.fireEvent("notificationPress");
+	_handleNotificationsPress(event) {
+		this.fireEvent("notificationsPress");
 	}
 
 	_handleProfilePress(event) {
-		this.fireEvent("profilePress");
+		this.fireEvent("profilePress", {
+			iconRef: this.shadowRoot.querySelector(".sapWCShellBarImageButton"),
+		});
 	}
 
 	_handleProductSwitchPress(event) {
-		this.fireEvent("productSwitchPress");
+		this.fireEvent("productSwitchPress", {
+			detail: this.shadowRoot.querySelector(".sapWCShellBarIconProductSwitch"),
+		});
 	}
 
-	__getAllItems(showOverflowButton) {
+	/**
+	 * Returns all items that will be placed in the right of the bar as icons / dom elements.
+	 * @param {Boolean} showOverflowButton Determines if overflow button should be visible (not overflowing)
+	 */
+	_getAllItems(showOverflowButton) {
+		let domOrder = -1;
+
 		const items = [
 			{
 				src: "sap-icon://search",
 				text: "Search",
-				classes: "sapWCShellBarItemIconMode sapWCShellBarIconButton sapWCShellBarSearchIcon",
-				priority: 2,
-				order: 1,
-				style: `order: ${1}`,
+				classes: `${this.searchField ? "" : "sapWCShellBarUnsetIcon"} sapWCShellBarSearchIcon sapWCShellBarIconButton`,
+				priority: 4,
+				domOrder: this.searchField ? (++domOrder) : -1,
+				style: `order: ${this.searchField ? 1 : -10}`,
 				id: `${this._id}-item-${1}`,
 				press: this._handleSearchIconPress.bind(this),
-				show: this.showSearch,
+				_tabIndex: "-1",
 			},
 			...this.items.map((item, index) => {
 				return {
@@ -508,63 +642,77 @@ class ShellBar extends WebComponent {
 					id: item._id,
 					refItemid: item._id,
 					text: item.text,
-					classes: "sapWCShellBarItemIconMode sapWCShellBarIconButton",
+					classes: "sapWCShellBarItemCustomAction sapWCShellBarIconButton",
 					priority: 1,
-					order: 2,
+					domOrder: (++domOrder),
 					style: `order: ${2}`,
 					show: true,
 					press: this._handleCustomActionPress.bind(this),
+					_tabIndex: "-1",
 				};
 			}),
 			{
 				src: "sap-icon://bell",
 				text: "Notifications",
-				classes: "sapWCShellBarItemIconMode sapWCShellBarIconButton sapWCShellBarBellIcon",
-				priority: 2,
-				order: 3,
-				style: `order: ${3}`,
+				classes: `${this.showNotifications ? "" : "sapWCShellBarUnsetIcon"} sapWCShellBarBellIcon sapWCShellBarIconButton`,
+				priority: 3,
+				style: `order: ${this.showNotifications ? 3 : -10}`,
 				id: `${this._id}-item-${2}`,
-				show: this.showNotification,
-				press: this._handleNotificationPress.bind(this),
+				show: this.showNotifications,
+				domOrder: this.showNotifications ? (++domOrder) : -1,
+				press: this._handleNotificationsPress.bind(this),
+				_tabIndex: "-1",
 			},
 			{
-				src: "",
+				src: "sap-icon://overflow",
+				text: "Overflow",
+				classes: `${showOverflowButton ? "" : "sapWCShellBarHiddenIcon"} sapWCOverflowButtonShown sapWCShellBarOverflowIcon sapWCShellBarIconButton`,
+				priority: 5,
+				order: 4,
+				style: `order: ${showOverflowButton ? 4 : -1}`,
+				domOrder: showOverflowButton ? (++domOrder) : -1,
+				id: `${this.id}-item-${5}`,
+				press: this._handleOverflowPress.bind(this),
+				_tabIndex: "-1",
+				show: true,
+			},
+			{
 				text: "Person",
-				classes: "sapWCShellBarItemIconMode sapWCShellBarImageButton",
-				priority: 3,
+				classes: `${this.profile ? "" : "sapWCShellBarUnsetIcon"} sapWCShellBarImageButton sapWCShellBarIconButton`,
+				priority: 4,
 				subclasses: "sapWCShellBarImageButtonImage",
-				order: 5,
-				style: `order: ${5}`,
+				style: `order: ${this.profile ? 5 : -10};`,
+				subStyles: `${this.profile ? `background-image: url(${this.profile})` : ""}`,
 				id: `${this._id}-item-${3}`,
-				show: this.showProfile,
+				domOrder: this.profile ? (++domOrder) : -1,
+				show: this.profile,
 				press: this._handleProfilePress.bind(this),
+				_tabIndex: "-1",
 			},
 			{
 				src: "sap-icon://grid",
 				text: "Product Switch",
-				classes: "sapWCShellBarItemIconMode sapWCShellBarIconButton",
+				classes: `${this.showProductSwitch ? "" : "sapWCShellBarUnsetIcon"} sapWCShellBarIconButton sapWCShellBarIconProductSwitch`,
 				priority: 2,
-				order: 6,
-				style: `order: ${6}`,
+				style: `order: ${this.showProductSwitch ? 6 : -10}`,
 				id: `${this._id}-item-${4}`,
 				show: this.showProductSwitch,
+				domOrder: this.showProductSwitch ? (++domOrder) : -1,
 				press: this._handleProductSwitchPress.bind(this),
+				_tabIndex: "-1",
 			},
 		];
+		return items;
+	}
 
-		items.splice(items.length - 3, 0, {
-			src: "sap-icon://overflow",
-			text: "Test",
-			classes: `${showOverflowButton ? "" : "sapWCShellBarHiddenIcon"} sapWCOverflowButtonShown sapWCShellBarItemIconMode sapWCShellBarIconButton sapWCShellBarOverflowIcon`,
-			priority: 3,
-			order: 4,
-			style: `order: ${showOverflowButton ? 4 : -1}`,
-			id: `${this.id}-item-${5}`,
-			press: this._handleOverflowPress.bind(this),
-			show: true,
-		});
+	static async define(...params) {
+		await Promise.all([
+			Icon.define(),
+			StandardListItem.define(),
+			List.define(),
+		]);
 
-		return items.filter(item => item.show);
+		super.define(...params);
 	}
 }
 

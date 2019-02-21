@@ -2,30 +2,30 @@ const fetchPromises = new Map();
 const jsonPromises = new Map();
 const textPromises = new Map();
 
-const fetchTextOnce = async (url) => {
-    if (!fetchPromises.get(url)) {
-        fetchPromises.set(url, fetch(url));
-    }
-    const response = await fetchPromises.get(url);
+const fetchTextOnce = async url => {
+	if (!fetchPromises.get(url)) {
+		fetchPromises.set(url, fetch(url));
+	}
+	const response = await fetchPromises.get(url);
 
-    if (!textPromises.get(url)) {
-        textPromises.set(url, response.text());
-    }
+	if (!textPromises.get(url)) {
+		textPromises.set(url, response.text());
+	}
 
-    return textPromises.get(url);
-}
+	return textPromises.get(url);
+};
 
-const fetchJsonOnce = async (url) => {
-    if (!fetchPromises.get(url)) {
-        fetchPromises.set(url, fetch(url));
-    }
-    const response = await fetchPromises.get(url);
+const fetchJsonOnce = async url => {
+	if (!fetchPromises.get(url)) {
+		fetchPromises.set(url, fetch(url));
+	}
+	const response = await fetchPromises.get(url);
 
-    if (!jsonPromises.get(url)) {
-        jsonPromises.set(url, response.json());
-    }
+	if (!jsonPromises.get(url)) {
+		jsonPromises.set(url, response.json());
+	}
 
-    return jsonPromises.get(url);
-}
+	return jsonPromises.get(url);
+};
 
-export { fetchTextOnce, fetchJsonOnce }
+export { fetchTextOnce, fetchJsonOnce };

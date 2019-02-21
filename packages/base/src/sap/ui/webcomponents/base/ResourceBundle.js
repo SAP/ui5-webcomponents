@@ -1,4 +1,4 @@
-import ResourceBundle from "@ui5/webcomponents-core/dist/sap/base/i18n/ResourceBundle"
+import ResourceBundle from "@ui5/webcomponents-core/dist/sap/base/i18n/ResourceBundle";
 import configuration from "./Configuration";
 import { registerModuleContent } from "./ResourceLoaderOverrides";
 import { fetchTextOnce } from "./util/FetchHelper";
@@ -13,14 +13,14 @@ const singletonPromises = new Map();
  * @param {key} key the unique key identifying the promise
  * @private
  */
-const _getSingletonPromise = (key) => {
+const _getSingletonPromise = key => {
 	const prevPromise = singletonPromises.get(key);
 	if (prevPromise) {
 		return prevPromise;
 	}
 
 	let resolveFn;
-	const newPromise = new Promise ((resolve) => {
+	const newPromise = new Promise(resolve => {
 		resolveFn = resolve;
 	});
 	// private usage for making a deferred-like API to avoid storing resolve functions in a second map
@@ -28,7 +28,7 @@ const _getSingletonPromise = (key) => {
 
 	singletonPromises.set(key, newPromise);
 	return newPromise;
-}
+};
 
 /**
  * This method preforms the asyncronous task of fething the actual text resources. It will fetch
@@ -39,7 +39,7 @@ const _getSingletonPromise = (key) => {
  * @param {packageId} packageId the node project package id
  * @public
  */
-const fetchResourceBundle = async (packageId) => {
+const fetchResourceBundle = async packageId => {
 	// depending on the module resolution order, the fetch might run before the bundle URLs are registered - sync them here
 	await _getSingletonPromise(packageId);
 	const bundlesForPackage = bundleURLs.get(packageId);
@@ -48,14 +48,14 @@ const fetchResourceBundle = async (packageId) => {
 
 	let localeId = ResourceBundle.__normalize(language);
 	while (!bundlesForPackage[localeId]) {
-		localeId = ResourceBundle.__nextFallbackLocale(localeId)
+		localeId = ResourceBundle.__nextFallbackLocale(localeId);
 	}
 
 	const bundleURL = bundlesForPackage[localeId];
 
 	const data = await fetchTextOnce(bundleURL);
 	registerModuleContent(`${packageId}_${localeId}.properties`, data);
-}
+};
 
 /**
  * Registers a map of locale/url information to be used by the <code>fetchResourceBundle</code> method.
@@ -65,15 +65,13 @@ const fetchResourceBundle = async (packageId) => {
  */
 const registerMessageBundles = (packageId, bundlesMap) => {
 	bundleURLs.set(packageId, bundlesMap);
-	_getSingletonPromise(packageId)._deferredResolve();;
-}
+	_getSingletonPromise(packageId)._deferredResolve();
+};
 
-const getResourceBundle = (library) => {
-	const locale = configuration.getLocale();
-
+const getResourceBundle = library => {
 	return ResourceBundle.create({
 		url: `${library}.properties`,
 	});
-}
+};
 
 export { fetchResourceBundle, registerMessageBundles, getResourceBundle };

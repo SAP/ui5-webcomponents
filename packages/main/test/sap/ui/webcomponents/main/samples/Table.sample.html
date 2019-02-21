@@ -391,7 +391,7 @@
 		let html = '';
 		products.ProductCollection.forEach(function(product, index) {
 			html += '<ui5-table-row data-ui5-slot="rows">'
-							+ '<ui5-table-cell data-ui5-slot="cells">'
+							+ '<ui5-table-cell>'
 								+ '<div class="double-line-content">'
 									+ '<span>'
 										+ '<b>' + product.Name + '</b>'
@@ -400,20 +400,20 @@
 								+ '</div>'
 							+ '</ui5-table-cell>'
 
-							+ '<ui5-table-cell data-ui5-slot="cells">'
+							+ '<ui5-table-cell>'
 								+ '<span class="middle" >' + product.SupplierName + '</span>'
 							+ '</ui5-table-cell>'
 
-							+ '<ui5-table-cell data-ui5-slot="cells">'
+							+ '<ui5-table-cell>'
 								+ '<span class="middle" >' + product.Width + ' x ' + product.Depth + ' x ' + product.Height + product.DimUnit + '</span>'
 							+ '</ui5-table-cell>'
 
-							+ '<ui5-table-cell data-ui5-slot="cells">'
+							+ '<ui5-table-cell>'
 								+ '<span style="color: #2b7c2b" class="middle">'
 									+ '<b>' + product.WeightMeasure + '</b>' + product.WeightUnit + '</span>'
 							+ '</ui5-table-cell>'
 
-							+ '<ui5-table-cell data-ui5-slot="cells">'
+							+ '<ui5-table-cell>'
 								+ '<span class="middle" >'
 									+ '<b>' + product.Price + '</b>' + product.CurrencyCode + '</span>'
 							+ '</ui5-table-cell>'

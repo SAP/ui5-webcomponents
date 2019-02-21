@@ -14,13 +14,21 @@
     "url": "https://github.com/SAP/ui5-webcomponents.git"
   },
   "scripts": {
-    "clean": "rimraf dist"
+    "build": "npm run lint --scripts-prepend-node-path ",
+    "clean": "rimraf dist",
+    "lint": "eslint ."
   },
   "dependencies": {
     "@polymer/polymer": "^3.1.0",
-    "@ui5/webcomponents-core": "0.7.0"
+    "@ui5/webcomponents-core": "0.7.0",
+    "lit-html": "^1.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.13.0",
+    "eslint-config-airbnb-base": "^13.1.0"
   },
   "resolutions": {
+    "abstract-syntax-tree": "1.0.3",
     "dir-glob": "2.0.0"
   }
 }

@@ -1,8 +1,8 @@
-import configuration from './Configuration';
-import DOMObserver from './compatibility/DOMObserver';
-import ShadowDOM from './compatibility/ShadowDOM';
-import WebComponentMetadata from './WebComponentMetadata';
-import Integer from './types/Integer';
+import configuration from "./Configuration";
+import DOMObserver from "./compatibility/DOMObserver";
+import ShadowDOM from "./compatibility/ShadowDOM";
+import WebComponentMetadata from "./WebComponentMetadata";
+import Integer from "./types/Integer";
 import ControlRenderer from "./ControlRenderer";
 import RenderScheduler from "./RenderScheduler";
 import TemplateContext from "./TemplateContext";
@@ -16,7 +16,7 @@ const metadata = {
 		 */
 		_customClasses: {
 			type: String,
-			multiple: true
+			multiple: true,
 		},
 
 		/**
@@ -24,12 +24,12 @@ const metadata = {
 		 * The control has the responsibility to render these attributes
 		 */
 		_customAttributes: {
-			type: Object
-		}
+			type: Object,
+		},
 	},
 	events: {
-		_propertyChange: {}
-	}
+		_propertyChange: {},
+	},
 };
 
 const DefinitionsSet = new Set();
@@ -78,8 +78,8 @@ class WebComponent extends HTMLElement {
 			return Promise.resolve();
 		}
 
-		this.attachShadow({ mode: 'open' });
-		return new Promise((resolve, reject) => {
+		this.attachShadow({ mode: "open" });
+		return new Promise(resolve => {
 			ShadowDOM.prepareShadowDOM(this.constructor).then(shadowDOM => {
 				this.shadowRoot.appendChild(shadowDOM);
 				resolve();
@@ -92,12 +92,12 @@ class WebComponent extends HTMLElement {
 			return;
 		}
 
-		this._whenShadowRootReady().then(_ => {
+		this._whenShadowRootReady().then(() => {
 			this._processChildren();
-			RenderScheduler.renderImmediately(this).then(_ => {
+			RenderScheduler.renderImmediately(this).then(() => {
 				this._domRefReadyPromise._deferredResolve();
 				this._startObservingDOMChildren();
-				if (typeof this.onEnterDOM === 'function') {
+				if (typeof this.onEnterDOM === "function") {
 					this.onEnterDOM();
 				}
 			});
@@ -110,28 +110,32 @@ class WebComponent extends HTMLElement {
 		}
 
 		this._stopObservingDOMChildren();
-		if (typeof this.onExitDOM === 'function') {
+		if (typeof this.onExitDOM === "function") {
 			this.onExitDOM();
 		}
 	}
+
 	_startObservingDOMChildren() {
 		const shouldObserveChildren = this.constructor.getMetadata().hasSlots();
 		const shouldObserveText = this.constructor.getMetadata().usesNodeText();
 		if (!shouldObserveChildren && !shouldObserveText) {
 			return;
 		}
-		let mutationObserverOptions = {
+		const mutationObserverOptions = {
 			childList: true,
 			subtree: shouldObserveText,
-			characterData: shouldObserveText
+			characterData: shouldObserveText,
 		};
 		DOMObserver.observeDOMNode(this, this._processChildren.bind(this), mutationObserverOptions);
 	}
+
 	_stopObservingDOMChildren() {
 		DOMObserver.unobserveDOMNode(this);
 	}
+
 	onChildrenChanged(mutations) {
 	}
+
 	_processChildren(mutations) {
 		const usesNodeText = this.constructor.getMetadata().usesNodeText();
 		const hasChildren = this.constructor.getMetadata().hasSlots();
@@ -142,14 +146,16 @@ class WebComponent extends HTMLElement {
 		}
 		this.onChildrenChanged(mutations);
 	}
+
 	_updateNodeText() {
 		this._state._nodeText = this.textContent;
 	}
+
 	_updateSlots() {
 		const domChildren = Array.from(this.children);
 
 		const slotsMap = this.constructor.getMetadata().getSlots();
-		for (let [prop, propData] of Object.entries(slotsMap)) {
+		for (const [prop, propData] of Object.entries(slotsMap)) { // eslint-disable-line
 			if (propData.multiple) {
 				this._state[prop] = [];
 			} else {
@@ -158,14 +164,14 @@ class WebComponent extends HTMLElement {
 		}
 		const autoIncrementMap = new Map();
 		domChildren.forEach(child => {
-			const slot = child.getAttribute('data-ui5-slot') || this.constructor.getMetadata().getDefaultSlot();
-			if (slotsMap[slot] === 'undefined') {
+			const slot = child.getAttribute("data-ui5-slot") || this.constructor.getMetadata().getDefaultSlot();
+			if (slotsMap[slot] === "undefined") {
 				return;
 			}
 			let slotName;
 			if (slotsMap[slot].multiple) {
 				const nextId = (autoIncrementMap.get(slot) || 0) + 1;
-				slotName = slot + '-' + nextId;
+				slotName = `${slot}-${nextId}`;
 				autoIncrementMap.set(slot, nextId);
 			} else {
 				slotName = slot;
@@ -176,60 +182,61 @@ class WebComponent extends HTMLElement {
 			} else {
 				this._state[slot] = child;
 			}
-			child.setAttribute('slot', slotName);
+			child.setAttribute("slot", slotName);
 		});
 	}
 
 	static get observedAttributes() {
 		const observedProps = this.getMetadata().getObservedProps();
-		const observedAttributes = observedProps.map(camelToKebabCase);
-		return observedAttributes;
+		return observedProps.map(camelToKebabCase);
 	}
+
 	attributeChangedCallback(name, oldValue, newValue) {
 		const properties = this.constructor.getMetadata().getProperties();
-		const realName = name.replace(/^ui5-/, '');
+		const realName = name.replace(/^ui5-/, "");
 		const nameInCamelCase = kebabToCamelCase(realName);
-		if (properties.hasOwnProperty(nameInCamelCase)) {
+		if (properties.hasOwnProperty(nameInCamelCase)) { // eslint-disable-line
 			const propertyTypeClass = properties[nameInCamelCase].type;
 			if (propertyTypeClass === Boolean) {
 				newValue = newValue !== null;
 			}
 			if (propertyTypeClass === Integer) {
-				newValue = parseInt(newValue, 10);
+				newValue = parseInt(newValue);
 			}
 			this[nameInCamelCase] = newValue;
 		}
 	}
+
 	_updateAttribute(name, newValue) {
 		if (!WebComponentMetadata.isPublicProperty(name)) {
 			return;
 		}
 
-		if (typeof newValue === 'object') {
+		if (typeof newValue === "object") {
 			return;
 		}
 
 		const attrName = camelToKebabCase(name);
 		const attrValue = this.getAttribute(attrName);
-		if (typeof newValue === 'boolean') {
+		if (typeof newValue === "boolean") {
 			if (newValue === true && attrValue === null) {
-				this.setAttribute(attrName, '');
+				this.setAttribute(attrName, "");
 			} else if (newValue === false && attrValue !== null) {
 				this.removeAttribute(attrName);
 			}
-		} else {
-			if (attrValue !== newValue) {
-				this.setAttribute(attrName, newValue);
-			}
+		} else if (attrValue !== newValue) {
+			this.setAttribute(attrName, newValue);
 		}
 	}
+
 	_upgradeProperty(prop) {
-		if (this.hasOwnProperty(prop)) {
+		if (this.hasOwnProperty(prop)) { // eslint-disable-line
 			const value = this[prop];
 			delete this[prop];
 			this[prop] = value;
 		}
 	}
+
 	_upgradeAllProperties() {
 		const observedProps = this.constructor.getMetadata().getObservedProps();
 		observedProps.forEach(this._upgradeProperty.bind(this));
@@ -259,7 +266,7 @@ class WebComponent extends HTMLElement {
 	}
 
 	static get StateClass() {
-		if (!this.hasOwnProperty("_StateClass")) {
+		if (!this.hasOwnProperty("_StateClass")) { // eslint-disable-line
 			this._StateClass = class extends State {};
 			this._StateClass.generateAccessors(this.getMetadata());
 		}
@@ -268,14 +275,13 @@ class WebComponent extends HTMLElement {
 	}
 
 	static getMetadata() {
+		let klass = this; // eslint-disable-line
 
-		let klass = this;
-
-		if (klass.hasOwnProperty("_metadata")) {
+		if (klass.hasOwnProperty("_metadata")) { // eslint-disable-line
 			return klass._metadata;
 		}
 
-		let metadatas = [Object.assign(klass.metadata, {})];
+		const metadatas = [Object.assign(klass.metadata, {})];
 		while (klass !== WebComponent) {
 			klass = Object.getPrototypeOf(klass);
 			metadatas.push(klass.metadata);
@@ -284,28 +290,22 @@ class WebComponent extends HTMLElement {
 		const result = metadatas[0];
 
 		// merge properties
-		const mergedProperties = metadatas.reverse().reduce((result, current) => {
+		result.properties = metadatas.reverse().reduce((result, current) => { // eslint-disable-line
 			Object.assign(result, current.properties);
 			return result;
 		}, {});
 
-		result.properties = mergedProperties;
-
 		// merge slots
-		const mergedSlots = metadatas.reverse().reduce((result, current) => {
+		result.slots = metadatas.reverse().reduce((result, current) => { // eslint-disable-line
 			Object.assign(result, current.slots);
 			return result;
 		}, {});
 
-		result.slots = mergedSlots;
-
 		// merge events
-		const mergedEvents = metadatas.reverse().reduce((result, current) => {
+		result.events = metadatas.reverse().reduce((result, current) => { // eslint-disable-line
 			Object.assign(result, current.events);
 			return result;
 		}, {});
-
-		result.events = mergedEvents;
 
 		this._metadata = new WebComponentMetadata(result);
 		return this._metadata;
@@ -313,7 +313,7 @@ class WebComponent extends HTMLElement {
 
 	static calculateTemplateContext(state) {
 		return {
-			ctr: state
+			ctr: state,
 		};
 	}
 
@@ -376,7 +376,7 @@ class WebComponent extends HTMLElement {
 		}
 	}
 
-	_render(debugMsg) {
+	_render() {
 		// onBeforeRendering
 		if (typeof this.onBeforeRendering === "function") {
 			this._suppressInvalidation = true;
@@ -393,7 +393,6 @@ class WebComponent extends HTMLElement {
 		if (typeof this.onAfterRendering === "function") {
 			this.onAfterRendering();
 		}
-
 	}
 
 	_getTemplateContext() {
@@ -417,15 +416,18 @@ class WebComponent extends HTMLElement {
 	}
 
 	getFocusDomRef() {
-		let domRef = this.getDomRef();
+		const domRef = this.getDomRef();
 		if (domRef) {
-			let focusRef = domRef.querySelector("[data-sap-focus-ref]");
+			const focusRef = domRef.querySelector("[data-sap-focus-ref]");
 			return focusRef || domRef;
 		}
 	}
 
-	focus() {
-		let focusDomRef = this.getFocusDomRef();
+	async focus() {
+		await this._waitForDomRef();
+
+		const focusDomRef = this.getFocusDomRef();
+
 		if (focusDomRef) {
 			focusDomRef.focus();
 		}
@@ -439,7 +441,7 @@ class WebComponent extends HTMLElement {
 	 * @private
 	 */
 	_handleEvent(event, pseudoEventType) {
-		const sHandlerName = "on" + (pseudoEventType || event.type);
+		const sHandlerName = `on${pseudoEventType || event.type}`;
 
 		this._delegates.forEach(delegate => {
 			if (delegate[sHandlerName]) {
@@ -455,10 +457,10 @@ class WebComponent extends HTMLElement {
 	_propertyChange(name, value) {
 		this._updateAttribute(name, value);
 
-		let customEvent = new CustomEvent("_propertyChange", {
-			detail: { name: name, newValue: value },
+		const customEvent = new CustomEvent("_propertyChange", {
+			detail: { name, newValue: value },
 			composed: false,
-			bubbles: true
+			bubbles: true,
 		});
 
 		this.dispatchEvent(customEvent);
@@ -478,18 +480,18 @@ class WebComponent extends HTMLElement {
 			detail: data,
 			composed: false,
 			bubbles: true,
-			cancelable: cancelable
+			cancelable,
 		});
 
 		// This will be false if the normal event is prevented
 		const normalEventResult = this.dispatchEvent(customEvent);
 
 		if (WebComponent.noConflictEvents.includes(name)) {
-			customEvent = new CustomEvent("ui5-" + name, {
+			customEvent = new CustomEvent(`ui5-${name}`, {
 				detail: data,
 				composed: false,
 				bubbles: true,
-				cancelable: cancelable
+				cancelable,
 			});
 
 			// This will be false if the compat event is prevented
@@ -506,7 +508,7 @@ class WebComponent extends HTMLElement {
 				return el;
 			}
 
-			let nodes = el.assignedNodes();
+			const nodes = el.assignedNodes();
 
 			if (nodes.length) {
 				return getSlottedElement(nodes[0]);
@@ -535,8 +537,7 @@ class WebComponent extends HTMLElement {
 
 		// Properties
 		const properties = this.getMetadata().getProperties();
-		for (const [prop, propData] of Object.entries(properties)) {
-
+		for (const [prop, propData] of Object.entries(properties)) { // eslint-disable-line
 			if (nameCollidesWithNative(prop)) {
 				throw new Error(`"${prop}" is not a valid property name. Use a name that does not collide with DOM APIs`);
 			}
@@ -546,41 +547,40 @@ class WebComponent extends HTMLElement {
 			}
 
 			Object.defineProperty(proto, prop, {
-				get: function () {
+				get() {
 					return this._state[prop];
 				},
-				set: function (value) {
+				set(value) {
 					this._state[prop] = value;
-				}
+				},
 			});
 		}
 
 		// Slots
 		const slots = this.getMetadata().getSlots();
-		for (const [slot, slotData] of Object.entries(slots)) {
-
+		for (const [slot] of Object.entries(slots)) { // eslint-disable-line
 			if (nameCollidesWithNative(slot)) {
-				throw new Error(`"${prop}" is not a valid property name. Use a name that does not collide with DOM APIs`);
+				throw new Error(`"${slot}" is not a valid property name. Use a name that does not collide with DOM APIs`);
 			}
 
 			Object.defineProperty(proto, slot, {
-				get: function () {
+				get() {
 					return this._state[slot];
 				},
-				set: function (value) {
+				set() {
 					throw new Error("Cannot set slots directly, use the DOM APIs");
-				}
+				},
 			});
 		}
 
 		// Node Text
 		Object.defineProperty(proto, "_nodeText", {
-			get: function () {
+			get() {
 				return this._state._nodeText;
 			},
-			set: function (value) {
+			set() {
 				throw new Error("Cannot set node text directly, use the DOM APIs");
-			}
+			},
 		});
 	}
 
@@ -596,23 +596,23 @@ class WebComponent extends HTMLElement {
 		return this._noConflictEvents;
 	}
 }
-const kebabToCamelCase = string => toCamelCase(string.split('-'));
-const camelToKebabCase = string => string.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+const kebabToCamelCase = string => toCamelCase(string.split("-"));
+const camelToKebabCase = string => string.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
 const toCamelCase = parts => {
 	return parts.map((string, index) => {
 		return index === 0 ? string.toLowerCase() : string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-	}).join('');
+	}).join("");
 };
 const nameCollidesWithNative = name => {
-	if (name === 'disabled') {
+	if (name === "disabled") {
 		return false;
 	}
 	const classes = [
 		HTMLElement,
 		Element,
-		Node
+		Node,
 	];
-	return classes.some(klass => klass.prototype.hasOwnProperty(name));
+	return classes.some(klass => klass.prototype.hasOwnProperty(name)); // eslint-disable-line
 };
 
 export default WebComponent;

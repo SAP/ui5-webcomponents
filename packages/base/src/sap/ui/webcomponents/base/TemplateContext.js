@@ -1,6 +1,6 @@
 const _convertClasses = (classes, customStyleClasses) => {
-	for (let i in classes) {
-		let customStyleClassesToAdd = i === "main" ? customStyleClasses : undefined;
+	for (const i in classes) { // eslint-disable-line
+		const customStyleClassesToAdd = i === "main" ? customStyleClasses : undefined;
 		classes[i] = _convertSingleClass(classes[i], customStyleClassesToAdd);
 	}
 
@@ -10,29 +10,28 @@ const _convertClasses = (classes, customStyleClasses) => {
 const _convertSingleClass = (oClass, customStyleClasses) => {
 	// Push all custom classes first, if any
 	if (Array.isArray(customStyleClasses)) {
-		customStyleClasses.forEach(function (sClassName) {
+		customStyleClasses.forEach(sClassName => {
 			oClass[sClassName] = true;
 		});
 	}
 
-	return Object.keys(oClass).filter(function (className) {
+	return Object.keys(oClass).filter(className => {
 		return oClass[className];
 	}).join(" ");
 };
 
-const _convertStyles = function (styles) {
-
+const _convertStyles = function _convertStyles(styles) {
 	if (!styles) {
 		return;
 	}
 
-	for (let i in styles) {
-		let stylesNs = styles[i];
+	for (const i in styles) { // eslint-disable-line
+		const stylesNs = styles[i];
 
-		let result = [];
-		Object.keys(stylesNs).forEach(function (key) {
+		const result = [];
+		Object.keys(stylesNs).forEach(key => {
 			if (stylesNs[key]) {
-				result.push(key + ": " + stylesNs[key]);
+				result.push(`${key}: ${stylesNs[key]}`);
 			}
 		});
 		styles[i] = result.length ? result.join("; ") : undefined;
@@ -42,12 +41,11 @@ const _convertStyles = function (styles) {
 };
 
 class TemplateContext {
-
 	// calculate control template context
-	static calculate (control) {
+	static calculate(control) {
 		const templateContextMethod = control.constructor.calculateTemplateContext;
 		const templateContext = templateContextMethod(control._state);
-		if (!templateContext.hasOwnProperty('ariaHidden')) {
+		if (!templateContext.hasOwnProperty("ariaHidden")) { // eslint-disable-line
 			templateContext.ariaHidden = control._state.hidden ? "true" : undefined;
 		}
 
@@ -56,7 +54,6 @@ class TemplateContext {
 
 		return templateContext;
 	}
-
 }
 
 export default TemplateContext;
