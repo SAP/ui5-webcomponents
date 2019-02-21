@@ -26,28 +26,26 @@
 		margin: 8px;
 	}
 
-	.hcb {background: #333}
+	.hcb {background: #000}
 </style>
 <body class="hcb">
 		<h3>Default Switch</h3>
 		<div style="display: flex">
 			<ui5-switch id="sw" text-on="On" text-off="Off"></ui5-switch>
-			<ui5-switch checked text-on="Yes" text-off="No"></ui5-switch>
-		</div>
-		<ui5-label id="lbl"></ui5-label>
-	
-		<h3>Typed Switch</h3>
-		<div style="display: flex">
-			<ui5-switch typed text-on="On" text-off="Off"></ui5-switch>
-			<ui5-switch typed checked text-on="Yes" text-off="No"></ui5-switch>
-		</div>
-		
-		<h3>Disabled Switch</h3>
-		<div style="display: flex">
+			<ui5-switch id="sw2" checked text-on="Yes" text-off="No"></ui5-switch>
 			<ui5-switch disabled text-on="On" text-off="Off"></ui5-switch>
 			<ui5-switch checked disabled text-on="Yes" text-off="No"></ui5-switch>
 		</div>
+		<ui5-label id="lbl"></ui5-label>
 	
+		<h3>Semantic Switch</h3>
+		<div style="display: flex">
+			<ui5-switch type="Semantic" text-on="On" text-off="Off"></ui5-switch>
+				<ui5-switch type="Semantic" checked text-on="Yes" text-off="No"></ui5-switch>
+				<ui5-switch type="Semantic" text-on="On" text-off="Off" disabled></ui5-switch>
+				<ui5-switch type="Semantic" checked text-on="Yes" text-off="No" disabled></ui5-switch>
+		</div>
+
 		<h3>Custom Switch</h3>
 		<div style="display: flex">
 			<ui5-switch id="sw2"  text-on="Accept" text-off="Reject" style="width: 120px; height: 80px;"></ui5-switch>
@@ -56,15 +54,4 @@
 			<ui5-switch checked  text-on="Allowed" text-off="Prohibitted" style="width: 200px; height: 200px;"></ui5-switch>
 		</div>
 	</body>
-	
-	<script>
-		var sw = document.getElementById("sw");
-		var lbl = document.getElementById("lbl");
-		var lbl2 = document.getElementById("lbl2");
-		var counter = 0;
-	
-		sw.addEventListener("change", function(e) {
-			lbl.innerHTML = e.target.checked + " : " + (++counter);
-		});
-	</script>
 </html>

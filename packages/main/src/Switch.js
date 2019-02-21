@@ -6,6 +6,7 @@ import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Boo
 import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
 import SwitchRenderer from "./build/compiled/SwitchRenderer.lit";
 import SwitchTemplateContext from "./SwitchTemplateContext";
+import SwitchType from "./types/SwitchType";
 
 // Styles
 import belize from "./themes/sap_belize/Switch.less";
@@ -30,6 +31,7 @@ const metadata = {
 		 * <b>Note:</b> A disabled <code>ui5-switch</code> is noninteractive.
 		 *
 		 * @type {boolean}
+		 * @default false
 		 * @public
 		 */
 		disabled: {
@@ -44,6 +46,7 @@ const metadata = {
 		 * pressing the Enter or Space key.
 		 *
 		 * @type {boolean}
+		 * @default false
 		 * @public
 		 */
 		checked: {
@@ -54,7 +57,7 @@ const metadata = {
 		 * Defines the text of the <code>ui5-switch</code> when switched on.
 		 *
 		 * <br><br>
-		 * <b>Note:</b> Up to 3 letters will be displayed properly. Larger texts will be cut off.
+		 * <b>Note:</b> Up to 3 letters will be displayed properly. Larger texts might be cut off.
 		 * @type {string}
 		 * @public
 		 */
@@ -67,7 +70,7 @@ const metadata = {
 		 * Defines the text of the <code>ui5-switch</code> when switched off.
 		 *
 		 * <br><br>
-		 * <b>Note:</b> Up to 3 letters will be displayed properly. Larger texts will be cut off.
+		 * <b>Note:</b> Up to 3 letters will be displayed properly. Larger texts might be cut off.
 		 * @type {string}
 		 * @public
 		 */
@@ -77,16 +80,20 @@ const metadata = {
 		},
 
 		/**
-		 * Defines if the <code>switch</code> will display positive icon when switched on
-		 * and negative icon when switched off, instead of any text.
+		 * Defines the <code>ui5-switch</code> type.
+		 * <br>
+		 * Available options are <code>Standard</code> and <code>Semantic</code>.
 		 *
 		 * <br><br>
-		 * <b>Note:</b> If set, the <code>textOn</code> and <code>textOff</code> will nit be displayed.
+		 * <b>Note:</b> If <code>Semantic</code> type is set,
+		 * positive and negative icons will replace the <code>textOn</code> and <code>textOff</code>.
 		 * @type {string}
+		 * @default Standard
 		 * @public
 		 */
-		typed: {
-			type: Boolean,
+		type: {
+			type: String,
+			defaultValue: SwitchType.Standard,
 		},
 
 		_label: {

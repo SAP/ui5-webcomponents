@@ -10,39 +10,47 @@
 /* Base theme                  */
 /* =========================== */
 
+/* Cozy parameters */
+
 // switch
-@_ui5_webcomponents_switch_height: 2.75rem;
-@_ui5_webcomponents_switch_width: 3.875rem;
-@_ui5_webcomponents_switch_padding: 0.75rem 0;
-@_ui5_webcomponents_switch_compact_height: 2rem;
-@_ui5_webcomponents_switch_compact_width: 3.5rem;
-@_ui5_webcomponents_switch_compact_padding: 0.1875rem 0; 
-
+@_ui5_switch_height: 2.75rem;
+@_ui5_switch_width: 3.875rem;
+@_ui5_switch_padding: 0.75rem 0; 
+@_ui5_switch_outline: 1px; // overriden in HCB
 // switch track
-@_ui5_webcomponents_switch_track_height: 1.375rem;
-@_ui5_webcomponents_switch_track_border_width: 1px;
-@_ui5_webcomponents_switch_track_border_radius: 0.75rem;
-@_ui5_webcomponents_switch_track_border_checked_color: lighten(desaturate(@sapUiToggleButtonPressedBorderColor, 46), 19);
-@_ui5_webcomponents_switch_track_compact_height: 1.375rem;
-@_ui5_webcomponents_switch_track_bg: darken(@sapUiButtonBackground, 7);
-@_ui5_webcomponents_switch_track_hover_bg: darken(@sapUiButtonBackground, 7);
-@_ui5_webcomponents_switch_track_checked_bg: lighten(desaturate(@sapUiToggleButtonPressedBackground, 47), 50);
-
+@_ui5_switch_track_height: 1.375rem;
+@_ui5_switch_track_bg: darken(@sapUiButtonBackground, 7); // overriden in HCB
+@_ui5_switch_track_checked_bg: lighten(desaturate(@sapUiToggleButtonPressedBackground, 47), 50);// overriden in HCB
+@_ui5_switch_track_hover_bg: darken(@sapUiButtonBackground, 7);// overriden in HCB
+@_ui5_switch_track_border_radius: 0.75rem;
+@_ui5_switch_track_hover_border_color: @_ui5_switch_track_border_checked_color;// overriden in HCB
+@_ui5_switch_track_border_checked_color: lighten(desaturate(@sapUiToggleButtonPressedBorderColor, 46), 19);// overriden in HCB
 // switch handle
-@_ui5_webcomponents_switch_handle_width: 2rem;
-@_ui5_webcomponents_switch_handle_height: 2rem;
-@_ui5_webcomponents_switch_handle_bg: darken(@sapUiButtonBackground, 2);
-@_ui5_webcomponents_switch_handle_hover_bg: darken(@sapUiButtonHoverBackground,2);
-@_ui5_webcomponents_switch_handle_border_width: 1px;
-@_ui5_webcomponents_switch_handle_border_radius: 1rem;
-@_ui5_webcomponents_switch_handle_offset_switched_on: calc(~"100% - 2rem");
-@_ui5_webcomponents_switch_handle_compact_height: 1.625rem;
-@_ui5_webcomponents_switch_handle_comapct_width: 1.625rem; 
-@_ui5_webcomponents_switch_handle_compact_offset_switched_on: calc(~"100% - 1.625rem");
+@_ui5_switch_handle_width: 2rem;
+@_ui5_switch_handle_height: 2rem;
+@_ui5_switch_handle_offset_switched_on: 1.875rem;
+@_ui5_switch_handle_border_width: 1px;
+@_ui5_switch_handle_border_radius: 1rem;
+@_ui5_switch_handle_bg: darken(@sapUiButtonBackground, 2);
+@_ui5_switch_handle_hover_bg: darken(@sapUiButtonHoverBackground, 2);
+@_ui5_switch_handle_checked_hover_bg: @sapUiToggleButtonPressedHoverBackground;
+@_ui5_switch_handle_semantic_hover_bg: @sapUiErrorBG;
+@_ui5_switch_handle_checked_semantic_hover_bg: @sapUiSuccessBG;
+@_ui5_switch_handle_semantic_positive_hover_border_color: @sapUiSuccessBorder;
+@_ui5_switch_handle_semantic_negative_hover_border_color: @sapUiErrorBorder;
 
-// switch text
-@_ui5_webcomponents_switch_text_width: 1.625rem;
-@_ui5_webcomponents_switch_text_padding: 0 0.125rem;
+/* Compact parameters */
+
+// switch
+@_ui5_switch_compact_height: 2rem;
+@_ui5_switch_compact_width: 3.5rem;
+@_ui5_switch_compact_padding: 0.1875rem 0;
+// switch track
+@_ui5_switch_track_compact_height: 1.375rem;
+// switch handle
+@_ui5_switch_handle_compact_width: 1.625rem;
+@_ui5_switch_handle_compact_height: 1.625rem;
+@_ui5_switch_handle_compact_offset_switched_on: 1.625rem;
 
 :host(ui5-switch) {
 	display: inline-block;
@@ -55,209 +63,225 @@ ui5-switch {
 	position: relative;
 	display: flex;
 	align-items: center;
-	height: 100%;
 	width: 100%;
-	min-height: @_ui5_webcomponents_switch_height;
-	min-width: @_ui5_webcomponents_switch_width;
-	padding: @_ui5_webcomponents_switch_padding;
+	height: @_ui5_switch_height;
+	min-width: @_ui5_switch_width;
+	padding: @_ui5_switch_padding;
 	box-sizing: border-box;
 	cursor: pointer;
 	outline: none;
+}
 
-	// switch track
-	& .ui5-switch-track {
-		position: relative;
-		display: flex;
-		justify-content: flex-end;
-		align-items: center;
-		width: 100%;
-		height: @_ui5_webcomponents_switch_track_height;
-		border: @_ui5_webcomponents_switch_track_border_width solid;
-		border-radius: @_ui5_webcomponents_switch_track_border_radius; 
-		box-sizing: border-box;
-		background: @_ui5_webcomponents_switch_track_bg;
-		border-color: @sapUiContentForegroundBorderColor;
-		overflow: hidden;
-	}
+.sap-desktop .ui5-switch:focus:before {
+	content: "";
+	position: absolute;
+	width: 100%;
+	height: 2rem;
+	border: @_ui5_switch_outline dotted @sapUiContentFocusColor;
+	pointer-events: none;
+	left: -1px;
+}
 
-	// switch handle
+// switch track
+.ui5-switch .ui5-switch-track {
+	position: relative;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	width: 100%;
+	height: @_ui5_switch_track_height;
+	border: 1px solid;
+	border-radius: @_ui5_switch_track_border_radius; 
+	box-sizing: border-box;
+	background: @_ui5_switch_track_bg;
+	border-color: @sapUiContentForegroundBorderColor;
+	overflow: hidden;
+}
+
+// switch handle
+.ui5-switch .ui5-switch-handle {
+	width: @_ui5_switch_handle_width; 
+	height: @_ui5_switch_handle_height;
+	border: @_ui5_switch_handle_border_width solid @sapUiContentForegroundBorderColor;
+	background: @_ui5_switch_handle_bg;
+	border-radius: @_ui5_switch_handle_border_radius; 
+	background-clip: padding-box;
+	box-sizing: border-box;
+
+	position: absolute;
+	margin: auto 0;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	transition: all .15s;
+}
+
+// switch text
+.ui5-switch  .ui5-switch-texton,
+.ui5-switch  .ui5-switch-textoff {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 1.625rem;
+	padding: 0 0.25rem;
+	font-size: @sapMFontSmallSize;
+	font-family: "72","72full",Arial,Helvetica,sans-serif;
+	text-transform: uppercase; 
+	text-align: center;
+	color: @sapUiBaseText;
+	box-sizing: border-box;
+}
+
+.ui5-switch .ui5-switch-textoff {
+	display: flex;
+}
+.ui5-switch .ui5-switch-texton {
+	display: none;
+}
+
+// switch hidden input
+.ui5-switch .ui5-switch-input { 
+	opacity: 0;
+	visibility: hidden;	
+	width: 0;
+	height: 0;
+	margin: 0;
+}
+
+// switch disabled
+.ui5-switch.ui5-switch--disabled {
+	opacity: 0.4;
+	cursor: default;
+}
+
+// switch checked
+.ui5-switch.ui5-switch--checked {
 	& .ui5-switch-handle {
-		width: @_ui5_webcomponents_switch_handle_width; 
-		height: @_ui5_webcomponents_switch_handle_height;
-		border: @_ui5_webcomponents_switch_handle_border_width solid @sapUiContentForegroundBorderColor;
-		background: @_ui5_webcomponents_switch_handle_bg;
-		border-radius: @_ui5_webcomponents_switch_handle_border_radius; 
-		background-clip: padding-box;
-		box-sizing: border-box;
-
-		position: absolute;
-		margin: auto 0;
-		top: 0;
-		left: 0;
-		bottom: 0;
-		transition: all .2s;
+		// left: @_ui5_switch_handle_offset_switched_on;
+		transform: translateX(@_ui5_switch_handle_offset_switched_on);
+		background: @sapUiToggleButtonPressedBackground;
+		border-color: @sapUiToggleButtonPressedBorderColor;
 	}
-
-	// switch text
-	& .ui5-switch-texton,
-	& .ui5-switch-textoff {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		min-width: @_ui5_webcomponents_switch_text_width;
-		padding: @_ui5_webcomponents_switch_text_padding;
-		font-size: @sapMFontSmallSize; 
-		text-transform: uppercase; 
-		text-align: center;
-		line-height: inherit;
-		color: @sapUiBaseText;
-		box-sizing: border-box;
+	& .ui5-switch-track {
+		justify-content: flex-start;
+		background: @_ui5_switch_track_checked_bg;
+		border-color: @_ui5_switch_track_border_checked_color;
 	}
 	& .ui5-switch-textoff {
-		display: flex;
-	}
-	& .ui5-switch-texton {
 		display: none;
 	}
-
-	// switched on
-	&.ui5-switch--checked {
-		& .ui5-switch-handle {
-			left: @_ui5_webcomponents_switch_handle_offset_switched_on;
-			background: @sapUiToggleButtonPressedBackground;
-			border-color: @sapUiToggleButtonPressedBorderColor;
-		}
-		& .ui5-switch-track {
-			justify-content: flex-start;
-			background: @_ui5_webcomponents_switch_track_checked_bg;
-			border-color: @_ui5_webcomponents_switch_track_border_checked_color;
-		}
-		& .ui5-switch-textoff {
-			display: none;
-		}
-		& .ui5-switch-texton {
-			display: flex;
-		}
-	}
-
-	// switch disabled
-	&.ui5-switch--disabled {
-		opacity: 0.4;
-		cursor: default;
-	}
-
-	// hover when sitched off
-	&:not(.ui5-switch--disabled):not(.ui5-switch--typed) {
-		.ui5-switch-handle:hover {
-			background: @_ui5_webcomponents_switch_handle_hover_bg;
-			border-color: @sapUiContentForegroundBorderColor;
-		}
-	}
-
-	// hover when switched on
-	&:not(.ui5-switch--disabled):not(.ui5-switch--typed).ui5-switch--checked {
-		& .ui5-switch-handle:hover {
-			background: @sapUiToggleButtonPressedHoverBackground;
-			border-color: @sapUiToggleButtonPressedHoverBorderColor;
-		}
-	}
-
-	&:not(.ui5-switch--disabled):hover {
-		.ui5-switch-track {
-			background: @_ui5_webcomponents_switch_track_hover_bg;
-		}
-	}
-	& .ui5-switch-input { 
-		opacity: 0;
-		visibility: hidden;	
-		width: 0;
-		height: 0;
-		margin: 0;
+	& .ui5-switch-texton {
+		display: flex;
 	}
 }
 
-/* Switch positive-negative */
-.ui5-switch.ui5-switch--typed {
 
-	&.ui5-switch--checked {
-		// Track and Handle switched onn
-		.ui5-switch-track,
-		.ui5-switch-handle {
-			border-color: @sapUiSuccessBorder;
-		}
-		.ui5-switch-track {
-			background: @sapUiSuccessBG;
-		}
-		.ui5-switch-handle {
-			background: lighten(@sapUiSuccessBG, 5);
-		}
-	}
-
-	// Track and Handle switched off
+// switch positive
+.ui5-switch.ui5-switch--semantic {
 	.ui5-switch-track,
 	.ui5-switch-handle {
-		border-color: @sapUiErrorBorder;
+		border-color: @sapUiSuccessBorder;
 	}
 	.ui5-switch-track {
-		background: @sapUiErrorBG;
+		background: @sapUiSuccessBG;
 	}
 	.ui5-switch-handle {
-		background: lighten(@sapUiErrorBG, 4);
+		background: lighten(@sapUiSuccessBG, 5);
 	}
 
-	// hover when sitched off
-	&:not(.ui5-switch--disabled) {
-		.ui5-switch-handle:hover {
-			background: @sapUiErrorBG;
-		}
-	}
-
-	&:not(.ui5-switch--disabled).ui5-switch--checked {
-		.ui5-switch-handle:hover {
-			background: @sapUiSuccessBG;
-		}
-	}
-
-	// Icon
-	.ui5-switch-texton,
-	.ui5-switch-textoff {
+	// icon
+	& .ui5-switch-texton,
+	& .ui5-switch-textoff {
 		font-size: @sapMFontLargeSize;
 	}
-	.ui5-switch-texton::before,
-	.ui5-switch-textoff::before {
+	& .ui5-switch-texton::before,
+	& .ui5-switch-textoff::before {
 		font-family: 'SAP-icons';
 		speak: none;
 	}
-	.ui5-switch-texton::before {
+	& .ui5-switch-texton::before {
 		content: "\e05b";
 		color: @sapUiPositiveElement;
 	}
-	.ui5-switch-textoff::before {
+	& .ui5-switch-textoff::before {
 		content: "\e03e";
 		color: @sapUiNegativeElement;
+	}
+}
+
+// switch negative
+.ui5-switch.ui5-switch--semantic:not(.ui5-switch--checked) {
+		.ui5-switch-track,
+		.ui5-switch-handle {
+			border-color: @sapUiErrorBorder;
+		}
+		.ui5-switch-track {
+			background: @sapUiErrorBG;
+		}
+		.ui5-switch-handle {
+			background: lighten(@sapUiErrorBG,4);
+		}
+}
+
+ // switch hover effects
+ .ui5-switch:not(.ui5-switch--disabled):hover {
+	// switch on hover, when switched off
+	.ui5-switch-track {
+		border-color: @sapUiContentForegroundBorderColor;
+	}
+	.ui5-switch-handle {
+		background: @_ui5_switch_handle_hover_bg;
+		border-color: @sapUiContentForegroundBorderColor;
+	}
+
+	// switch on hover, when switched on
+	&.ui5-switch--checked .ui5-switch-handle {
+			background: @sapUiToggleButtonPressedHoverBackground;
+			border-color: @sapUiToggleButtonPressedHoverBorderColor;
+	}
+	&.ui5-switch--checked .ui5-switch-track {
+		border-color: @_ui5_switch_track_hover_border_color;
+	}
+
+	// semantic switch on hover, when switched off
+	&.ui5-switch--semantic .ui5-switch-handle {
+		background: @_ui5_switch_handle_semantic_hover_bg;
+		border-color: @_ui5_switch_handle_semantic_negative_hover_border_color;
+	}
+	&.ui5-switch--semantic .ui5-switch-track {
+		border-color: @_ui5_switch_handle_semantic_negative_hover_border_color;
+	}
+	
+	// semantic switch on hover, when switched onn
+	&.ui5-switch--semantic.ui5-switch--checked .ui5-switch-handle {
+		background: @_ui5_switch_handle_checked_semantic_hover_bg;
+		border-color: @_ui5_switch_handle_semantic_positive_hover_border_color;
+	}
+	&.ui5-switch--semantic.ui5-switch--checked .ui5-switch-track {
+		border-color: @_ui5_switch_handle_semantic_positive_hover_border_color;
 	}
 }
 
 /* Compact size */
 .sapUiSizeCompact {
 	.ui5-switch {
-		min-height: @_ui5_webcomponents_switch_compact_height;
-		min-width: @_ui5_webcomponents_switch_compact_width;
-		padding: @_ui5_webcomponents_switch_compact_padding;
+		height: @_ui5_switch_compact_height;
+		min-width: @_ui5_switch_compact_width;
+		padding: @_ui5_switch_compact_padding;
 
 		& .ui5-switch-track {
-			height: @_ui5_webcomponents_switch_track_compact_height;
+			height: @_ui5_switch_track_compact_height;
 			width: 100%;
 		}
 
 		& .ui5-switch-handle {
-			height: @_ui5_webcomponents_switch_handle_compact_height;
-			width: @_ui5_webcomponents_switch_handle_comapct_width; 
+			height: @_ui5_switch_handle_compact_height;
+			width: @_ui5_switch_handle_compact_width; 
 		}
 
 		&.ui5-switch--checked {
 			& .ui5-switch-handle {
-				left: @_ui5_webcomponents_switch_handle_compact_offset_switched_on;
+				// left: @_ui5_switch_handle_compact_offset_switched_on;
 			}
 		}
 	}
@@ -267,12 +291,12 @@ ui5-switch {
 [dir="rtl"] {
 	& .ui5-switch {
 		.ui5-switch-handle {
-			left: @_ui5_webcomponents_switch_handle_offset_switched_on;
-			right: 0;
+			// left: @_ui5_switch_handle_offset_switched_on;
+			// right: 0;
 		}
 		&.ui5-switch--checked .ui5-switch-handle {
-			right: @_ui5_webcomponents_switch_handle_offset_switched_on;
-			left: 0;
+			// right: @_ui5_switch_handle_offset_switched_on;
+			// left: 0;
 		}
 	}
 }
@@ -281,10 +305,10 @@ ui5-switch {
 .sapUiSizeCompact[dir="rtl"] {
 	& .ui5-switch {
 		.ui5-switch-handle {
-			left: @_ui5_webcomponents_switch_handle_compact_offset_switched_on;
+			// left: @_ui5_switch_handle_compact_offset_switched_on;
 		}
 		&.ui5-switch--checked .ui5-switch-handle {
-			right: @_ui5_webcomponents_switch_handle_compact_offset_switched_on;
+			// right: @_ui5_switch_handle_compact_offset_switched_on;
 		}
 	}
 }

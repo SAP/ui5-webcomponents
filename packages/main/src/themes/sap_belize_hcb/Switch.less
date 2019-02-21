@@ -10,25 +10,59 @@
 @import "./base.less";
 @import "./global.less";
 
+// Switch
+@_ui5_switch_outline: 0.125rem;
+
 // Switch Track
-@_ui5_webcomponents_switch_track_bg: @sapUiButtonBackground;
-@_ui5_webcomponents_switch_track_checked_bg: @sapUiToggleButtonPressedBackground;
-@_ui5_webcomponents_switch_track_hover_bg: @sapUiButtonBackground;
-@_ui5_webcomponents_switch_track_border_color: @sapUiButtonBackground;
-@_ui5_webcomponents_switch_track_border_checked_color: @sapUiToggleButtonPressedBackground;
+@_ui5_switch_track_bg: @sapUiButtonBackground;
+@_ui5_switch_track_checked_bg: @sapUiToggleButtonPressedBackground;
+@_ui5_switch_track_hover_bg: @sapUiButtonBackground;
+@_ui5_switch_track_hover_border_color: @sapUiBaseText;
+@_ui5_switch_track_border_color: @sapUiButtonBackground;
+@_ui5_switch_track_border_checked_color: @sapUiContentForegroundBorderColor;
 
 // Switch Handle
-@_ui5_webcomponents_switch_handle_bg: @sapUiButtonBackground;
-@_ui5_webcomponents_switch_handle_hover_bg: @sapUiButtonHoverBackground;
-@_ui5_webcomponents_switch_handle_border_width: 0.125rem;
+@_ui5_switch_handle_bg: @sapUiButtonBackground;
+@_ui5_switch_handle_hover_bg: @sapUiButtonHoverBackground;
+@_ui5_switch_handle_semantic_hover_bg: @sapUiButtonHoverBackground;
+@_ui5_switch_handle_checked_semantic_hover_bg: @sapUiButtonHoverBackground;
+@_ui5_switch_handle_semantic_negative_hover_border_color: @sapUiContentForegroundBorderColor;
+@_ui5_switch_handle_semantic_positive_hover_border_color: @sapUiContentForegroundBorderColor;
+@_ui5_switch_handle_border_width: 0.125rem;
 
-.ui5-switch.ui5-switch--disabled {
-	background: @sapUiButtonBackground;
-	border-color: @sapUiHcReducedForeground;
-	color: @sapUiContentDisabledTextColor;
+
+.ui5-switch.ui5-switch--disabled,
+.ui5-switch.ui5-switch--semantic.ui5-switch--disabled {
+	.ui5-switch-track,
+	.ui5-switch-handle {
+		background: @sapUiButtonBackground;
+		border-color: @sapUiHcReducedForeground;
+	}
+
+	.ui5-switch-texton,
+	.ui5-switch-textoff {
+		color: @sapUiHcReducedAltForeground;
+	}
+
+	&.ui5-switch--checked {
+		.ui5-switch-track,
+		.ui5-switch-handle {
+			background: @sapUiHcReducedBackground;
+		}
+		.ui5-switch-texton,
+		.ui5-switch-textoff {
+			color: @sapUiHcReducedAltForeground;
+		}
+	}
 }
-.ui5-switch.ui5-switch--checked.ui5-switch--disabled {
-	background: @sapUiButtonBackground;
-	border-color: @sapUiHcReducedForeground;
-	color: @sapUiContentDisabledTextColor;
+
+// switch positive
+.ui5-switch.ui5-switch--disabled.ui5-switch--semantic,
+.ui5-switch.ui5-switch--semantic:hover {
+	& .ui5-switch-texton::before {
+		color: @sapUiBaseText;
+	}
+	& .ui5-switch-textoff::before {
+		color: @sapUiBaseText;
+	}
 }
