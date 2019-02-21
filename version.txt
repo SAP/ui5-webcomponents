@@ -1,7 +1,5 @@
-commit 6314bd42a8310520f62422fdd5b03e8d7e99b118
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Feb 21 16:17:03 2019 +0200
+commit 9038494b1183597743f7f3617be0806514292dd7
+Author: Filip Siderov <fifoosid@gmail.com>
+Date:   Thu Feb 21 18:14:13 2019 +0200
 
-    docs(playground): update ShellBar sample (#78)
-    
-    change logo and profile sources and samples order
+    docs(playground): add sample applications links (#82)
