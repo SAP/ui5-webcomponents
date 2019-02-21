@@ -19,23 +19,21 @@
 		margin: 8px;
 		border: solid 1px red;
 	}
-
-	.hcb {background: #333}
 </style>
-<body class="hcb">
+<body>
 	<h3>Default Switch</h3>
 	<div style="display: flex">
-		<ui5-switch text-on="On" text-off="Off"></ui5-switch>
+		<ui5-switch id="sw" text-on="On" text-off="Off"></ui5-switch>
 		<ui5-switch checked text-on="Yes" text-off="No"></ui5-switch>
 	</div>
+	<ui5-label id="lbl"></ui5-label>
 
 	<h3>Typed Switch</h3>
 	<div style="display: flex">
 		<ui5-switch typed text-on="On" text-off="Off"></ui5-switch>
 		<ui5-switch typed checked text-on="Yes" text-off="No"></ui5-switch>
 	</div>
-	<ui5-label id="lbl"></ui5-label>
-
+	
 	<h3>Disabled Switch</h3>
 	<div style="display: flex">
 		<ui5-switch disabled text-on="On" text-off="Off"></ui5-switch>
@@ -49,7 +47,6 @@
 		<ui5-switch id="sw3"  text-on="Enabled" text-off="disabled" style="width: 200px; height: 100px;"></ui5-switch>
 		<ui5-switch checked  text-on="Allowed" text-off="Prohibitted" style="width: 200px; height: 200px;"></ui5-switch>
 	</div>
-	<ui5-label id="lbl2"></ui5-label>
 </body>
 
 <script>
@@ -60,10 +57,6 @@
 
 	sw.addEventListener("change", function(e) {
 		lbl.innerHTML = e.target.checked + " : " + (++counter);
-	});
-	sw2.addEventListener("change", function(e) {
-		var checked = e.target.checked;
-		lbl2.innerHTML = (checked ? e.target.textOn : e.target.textOff) + " : " + checked;
 	});
 </script>
 </html>
