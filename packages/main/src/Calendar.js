@@ -303,7 +303,7 @@ class Calendar extends WebComponent {
 		nextMonth.setDate(1);
 		nextMonth.setMonth(nextMonth.getMonth() + 1);
 
-		if (nextMonth.getYear() > 9999) {
+		if (nextMonth.getYear() > YearPicker._MAX_YEAR) {
 			return;
 		}
 
@@ -363,14 +363,14 @@ class Calendar extends WebComponent {
 		oNewDate.setMonth(iNewMonth);
 
 
-		if (oNewDate.getYear() < 1) {
+		if (oNewDate.getYear() < YearPicker._MIN_YEAR) {
 			return;
 		}
 		this.timestamp = oNewDate.valueOf() / 1000;
 	}
 
 	_showNextYear() {
-		if (this._calendarDate.getYear() === 9999) {
+		if (this._calendarDate.getYear() === YearPicker._MAX_YEAR) {
 			return;
 		}
 
@@ -381,7 +381,7 @@ class Calendar extends WebComponent {
 	}
 
 	_showPrevYear() {
-		if (this._calendarDate.getYear() === 1) {
+		if (this._calendarDate.getYear() === YearPicker._MIN_YEAR) {
 			return;
 		}
 
@@ -393,18 +393,17 @@ class Calendar extends WebComponent {
 
 	_showNextPageYears() {
 		if (this._yearPicker.timestamp) {
-			const oCalDate = CalendarDate.fromTimestamp((this._yearPicker.timestamp + (31536000 * 20)) * 1000, this._primaryCalendarType);
+			const oCalDate = CalendarDate.fromTimestamp(this._yearPicker.timestamp * 1000, this._primaryCalendarType);
 			oCalDate.setMonth(0);
 			oCalDate.setDate(1);
-			oCalDate.setYear(oCalDate.getYear() - 8);
-			if (oCalDate.getYear() > 9998) {
+			oCalDate.setYear(oCalDate.getYear() + YearPicker._ITEMS_COUNT - YearPicker._MIDDLE_ITEM_INDEX);
+			if (oCalDate.getYear() > YearPicker._MAX_YEAR) {
 				return;
 			}
 		}
 
 		this._yearPicker = Object.assign({}, this._yearPicker, {
-			// add 20 years to the timestamp of the monthpicker
-			timestamp: this._yearPicker.timestamp + (31536000 * 20),
+			timestamp: this._yearPicker.timestamp + (31536000 * YearPicker._ITEMS_COUNT),
 		});
 
 		this._isShiftingYears = true;
@@ -415,15 +414,14 @@ class Calendar extends WebComponent {
 			const oCalDate = CalendarDate.fromTimestamp(this._yearPicker.timestamp * 1000, this._primaryCalendarType);
 			oCalDate.setMonth(0);
 			oCalDate.setDate(1);
-			oCalDate.setYear(oCalDate.getYear() - 8);
-			if (oCalDate.getYear() < 1) {
+			oCalDate.setYear(oCalDate.getYear() - YearPicker._MIDDLE_ITEM_INDEX - 1);
+			if (oCalDate.getYear() < YearPicker._MIN_YEAR) {
 				return;
 			}
 		}
 
 		this._yearPicker = Object.assign({}, this._yearPicker, {
-			// subtracts 20 years from the timestamp of the monthpicker
-			timestamp: this._yearPicker.timestamp - (31536000 * 20),
+			timestamp: this._yearPicker.timestamp - (31536000 * YearPicker._ITEMS_COUNT),
 		});
 
 		this._isShiftingYears = true;

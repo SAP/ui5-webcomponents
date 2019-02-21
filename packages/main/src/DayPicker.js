@@ -94,6 +94,9 @@ const metadata = {
 	},
 };
 
+const MAX_YEAR = 9999;
+const MIN_YEAR = 1;
+
 /**
  * @class
  *
@@ -344,7 +347,7 @@ class DayPicker extends WebComponent {
 		oNewDate.setYear(iNewYear);
 		oNewDate.setMonth(iNewMonth);
 
-		if (oNewDate.getYear() < 1 || oNewDate.getYear() > 9999) {
+		if (oNewDate.getYear() < MIN_YEAR || oNewDate.getYear() > MAX_YEAR) {
 			return;
 		}
 
@@ -391,12 +394,12 @@ class DayPicker extends WebComponent {
 		for (let i = 0; i < 42; i++) {
 			iYear = oDay.getYear();
 			oCalDate = new CalendarDate(oDay, this._primaryCalendarType);
-			if (bIncludeBCDates && iYear < 1) {
+			if (bIncludeBCDates && iYear < MIN_YEAR) {
 				// For dates before 0001-01-01 we should render only empty squares to keep
 				// the month square matrix correct.
 				oCalDate._bBeforeFirstYear = true;
 				_aVisibleDays.push(oCalDate);
-			} else if (iYear > 0 && iYear < 10000) {
+			} else if (iYear >= MIN_YEAR && iYear <= MAX_YEAR) {
 				// Days before 0001-01-01 or after 9999-12-31 should not be rendered.
 				_aVisibleDays.push(oCalDate);
 			}
