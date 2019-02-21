@@ -52,7 +52,7 @@ const metadata = {
 
 		/**
 		 * Defines the text of the <code>ui5-switch</code> when switched on.
-		 * 
+		 *
 		 * <br><br>
 		 * <b>Note:</b> Up to 3 letters will be displayed properly. Larger texts will be cut off.
 		 * @type {string}
@@ -65,6 +65,7 @@ const metadata = {
 
 		/**
 		 * Defines the text of the <code>ui5-switch</code> when switched off.
+		 *
 		 * <br><br>
 		 * <b>Note:</b> Up to 3 letters will be displayed properly. Larger texts will be cut off.
 		 * @type {string}
@@ -76,9 +77,9 @@ const metadata = {
 		},
 
 		/**
-		 * Defines if the <code>switch</code> will display positive icon when switched on 
+		 * Defines if the <code>switch</code> will display positive icon when switched on
 		 * and negative icon when switched off, instead of any text.
-		 * 
+		 *
 		 * <br><br>
 		 * <b>Note:</b> If set, the <code>textOn</code> and <code>textOff</code> will nit be displayed.
 		 * @type {string}
@@ -87,7 +88,7 @@ const metadata = {
 		typed: {
 			type: Boolean,
 		},
-		
+
 		_label: {
 			type: Object,
 		},

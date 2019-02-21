@@ -9,3 +9,26 @@
 /* ============================= */
 @import "./base.less";
 @import "./global.less";
+
+// Switch Track
+@_ui5_webcomponents_switch_track_bg: @sapUiButtonBackground;
+@_ui5_webcomponents_switch_track_checked_bg: @sapUiToggleButtonPressedBackground;
+@_ui5_webcomponents_switch_track_hover_bg: @sapUiButtonBackground;
+@_ui5_webcomponents_switch_track_border_color: @sapUiButtonBackground;
+@_ui5_webcomponents_switch_track_border_checked_color: @sapUiToggleButtonPressedBackground;
+
+// Switch Handle
+@_ui5_webcomponents_switch_handle_bg: @sapUiButtonBackground;
+@_ui5_webcomponents_switch_handle_hover_bg: @sapUiButtonHoverBackground;
+@_ui5_webcomponents_switch_handle_border_width: 0.125rem;
+
+.ui5-switch.ui5-switch--disabled {
+	background: @sapUiButtonBackground;
+	border-color: @sapUiHcReducedForeground;
+	color: @sapUiContentDisabledTextColor;
+}
+.ui5-switch.ui5-switch--checked.ui5-switch--disabled {
+	background: @sapUiButtonBackground;
+	border-color: @sapUiHcReducedForeground;
+	color: @sapUiContentDisabledTextColor;
+}
