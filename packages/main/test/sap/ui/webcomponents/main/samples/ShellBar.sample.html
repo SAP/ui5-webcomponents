@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>&lt;ui5-shellbar&gt;</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<link rel="stylesheet" href="../../../../../../www/home/core.css">
+
+	<script src="../../../../../../test-resources/playground/libs/google-code-prettify/prettify.js"></script>
+	<link href="../../../../../../test-resources/playground/libs/google-code-prettify/sunburst.css" type="text/css" rel="stylesheet">
+
+	<link href="../../../../../../test-resources/playground/css/api.css" type="text/css" rel="stylesheet">
+
+	<script data-id="sap-ui-config" type="application/json">
+		{
+			"theme": "sap_fiori_3",
+			"language": "EN"
+		}
+	</script>
+
+	<script
+		src="../../../../../../resources/sap/ui/webcomponents/main/bundle.esm.js"
+		type="module"
+	>
+	</script>
+
+	<script nomodule src="../../../../../../resources/sap/ui/webcomponents/main/bundle.es5.js">
+	</script>
+
+	<style>
+	</style>
+</head>
+<body class="sapUiBody example-wrapper">
+
+	<header>
+		<h2 class="control-header">ShellBar</h2>
+		<div style="margin-bottom: 2rem; font-weight: 300; font-size: 1.1rem; color: #666666;">&lt;ui5-shellbar&gt;</div>
+	</header>
+
+	<!-- Basic ShellBar -->
+	<section>
+		<h3>Basic ShellBar</h3>
+		<div class="snippet">
+			<ui5-shellbar
+				profile="https://openui5nightly.hana.ondemand.com/test-resources/sap/f/images/Woman_avatar_01.png"
+				primary-title="Corporate Portal"
+				secondary-title="secondary title"
+				logo="../pages/img/sap-logo-svg.svg"
+			>
+			</ui5-shellbarr>
+		</div>
+
+		<pre class="prettyprint lang-html">
+<xmp>
+<ui5-shellbar
+	profile="https://openui5nightly.hana.ondemand.com/test-resources/sap/f/images/Woman_avatar_01.png"
+	primary-title="Corporate Portal"
+	secondary-title="secondary title"
+	logo="../pages/img/sap-logo-svg.svg"
+>
+</ui5-shellbarr>
+</xmp>
+		</pre>
+	</section>
+
+	<!-- ShellBar with searhc and notifications -->
+	<section>
+			<h3>ShellBar with search and notifications</h3>
+			<div class="snippet">
+				<ui5-shellbar
+					profile="https://openui5nightly.hana.ondemand.com/test-resources/sap/f/images/Woman_avatar_01.png"
+					primary-title="Corporate Portal"
+					secondary-title="secondary title"
+					logo="../pages/img/sap-logo-svg.svg"
+					show-notifications
+					notification-count="22"
+				>
+
+					<ui5-input data-ui5-slot="searchField" placeholer="Enter service..."></ui5-input>
+				</ui5-shellbar>
+			</div>
+	
+			<pre class="prettyprint lang-html">
+	<xmp>
+<ui5-shellbar
+	profile="https://openui5nightly.hana.ondemand.com/test-resources/sap/f/images/Woman_avatar_01.png"
+	primary-title="Corporate Portal"
+	secondary-title="secondary title"
+	logo="../pages/img/sap-logo-svg.svg"
+	show-notifications
+	notification-count="22"
+	>
+
+	<ui5-input data-ui5-slot="searchField" placeholer="Enter service..."></ui5-input>
+</ui5-shellbar>
+	</xmp>
+			</pre>
+		</section>
+
+		<!-- ShellBar with product switch and CoPilot -->
+		<section>
+				<h3>ShellBar with product switch and CoPilot</h3>
+				<div class="snippet">
+					<ui5-shellbar
+						profile="https://openui5nightly.hana.ondemand.com/test-resources/sap/f/images/Woman_avatar_01.png"
+						primary-title="Corporate Portal"
+						secondary-title="secondary title"
+						logo="../pages/img/sap-logo-svg.svg"
+						show-co-pilot
+						show-product-switch
+						show-notifications
+						notification-count="22"
+					>
+	
+					</ui5-shellbar>
+				</div>
+		
+				<pre class="prettyprint lang-html">
+		<xmp>
+<ui5-shellbar
+	profile="https://openui5nightly.hana.ondemand.com/test-resources/sap/f/images/Woman_avatar_01.png"
+	primary-title="Corporate Portal"
+	secondary-title="secondary title"
+	logo="../pages/img/sap-logo-svg.svg"
+	show-co-pilot
+	show-product-switch
+	show-notifications
+	notification-count="22"
+	>
+
+</ui5-shellbar>
+		</xmp>
+				</pre>
+			</section>
+
+
+		<!-- ShellBar with additional actions -->
+		<section>
+				<h3>ShellBar with additional actions</h3>
+				<div class="snippet">
+<ui5-shellbar
+	id="shellbar"
+	primary-title="Title"
+	secondary-title="Second title"
+	logo="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg"
+	profile="https://openui5nightly.hana.ondemand.com/test-resources/sap/f/images/Woman_avatar_01.png"
+	notification-count="99+"
+	show-notifications
+	show-product-switch
+	show-co-pilot
+>
+
+	<ui5-icon src="nav-back" data-ui5-slot="icon"></ui5-icon>
+
+	<ui5-shellbar-item data-ui5-slot="items" id="disc" src="sap-icon://disconnected" text="Disconnect"></ui5-shellbar-item>
+	<ui5-shellbar-item data-ui5-slot="items" id="call" src="sap-icon://incoming-call" text="Incoming Calls"></ui5-shellbar-item>
+
+	<ui5-input data-ui5-slot="searchField"></ui5-input>
+</ui5-shellbar>
+
+<ui5-popover id="action-popover" hide-header placement-type="Bottom">
+	<div class="action-popover-header">
+		<ui5-title style="padding: 0.25rem 1rem 0rem 1rem">John Doe</ui5-title>
+	</div>
+
+	<div class="action-popover-content" style="margin-top: 1rem;">
+		<ui5-list separators="None" >
+			<ui5-li type="Active"icon="sap-icon://sys-find">App Finder</ui5-li>
+			<ui5-li type="Active"icon="sap-icon://settings">Settings</ui5-li>
+			<ui5-li type="Active"icon="sap-icon://edit">Edit Home Page</ui5-li>
+			<ui5-li type="Active"icon="sap-icon://sys-help">Help</ui5-li>
+			<ui5-li type="Active"icon="sap-icon://log">Sign out</ui5-li>
+		</ui5-list>
+	</div>
+</ui5-popover>
+
+<ui5-popover id="app-list-popover" hide-header placement-type="Bottom">
+	<ui5-list separators="None">
+		<ui5-li type="Active">Application 1</ui5-li>
+		<ui5-li type="Active">Application 2</ui5-li>
+		<ui5-li type="Active">Application 3</ui5-li>
+		<ui5-li type="Active">Application 4</ui5-li>
+		<ui5-li type="Active">Application 5</ui5-li>
+	</ui5-list>
+</ui5-popover>
+
+<script>
+	shellbar.addEventListener("profilePress", function(event) {
+		window["action-popover"].openBy(event.detail.iconRef);
+	});
+
+	shellbar.addEventListener("titlePress", function(event) {
+		window["app-list-popover"].openBy(event.detail.iconRef);
+	});
+</script>
+				</div>
+		
+				<pre class="prettyprint lang-html">
+		<xmp>
+<ui5-shellbar
+	id="shellbar"
+	primary-title="Title"
+	secondary-title="Second title"
+	logo="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg"
+	profile="https://openui5nightly.hana.ondemand.com/test-resources/sap/f/images/Woman_avatar_01.png"
+	notification-count="99+"
+	show-notifications
+	show-product-switch
+	show-co-pilot
+>
+
+	<ui5-icon src="nav-back" data-ui5-slot="icon"></ui5-icon>
+
+	<ui5-shellbar-item data-ui5-slot="items" id="disc" src="sap-icon://disconnected" text="Disconnect"></ui5-shellbar-item>
+	<ui5-shellbar-item data-ui5-slot="items" id="call" src="sap-icon://incoming-call" text="Incoming Calls"></ui5-shellbar-item>
+
+	<ui5-input data-ui5-slot="searchField"></ui5-input>
+</ui5-shellbar>
+
+<ui5-popover id="popover" hide-header placement-type="Bottom">
+	<div class="popover-header">
+		<ui5-title style="padding: 0.25rem 1rem 0rem 1rem">John Doe</ui5-title>
+	</div>
+
+	<div class="popover-content">
+		<ui5-list separators="None" >
+			<ui5-li type="Active"icon="sap-icon://sys-find">App Finder</ui5-li>
+			<ui5-li type="Active"icon="sap-icon://settings">Settings</ui5-li>
+			<ui5-li type="Active"icon="sap-icon://edit">Edit Home Page</ui5-li>
+			<ui5-li type="Active"icon="sap-icon://sys-help">Help</ui5-li>
+			<ui5-li type="Active"icon="sap-icon://log">Sign out</ui5-li>
+		</ui5-list>
+	</div>
+</ui5-popover>
+
+<ui5-popover id="app-list-popover" hide-header placement-type="Bottom">
+	<ui5-list separators="None">
+		<ui5-li type="Active">Application 1</ui5-li>
+		<ui5-li type="Active">Application 2</ui5-li>
+		<ui5-li type="Active">Application 3</ui5-li>
+		<ui5-li type="Active">Application 4</ui5-li>
+		<ui5-li type="Active">Application 5</ui5-li>
+	</ui5-list>
+</ui5-popover>
+
+<script>
+	shellbar.addEventListener("profilePress", function(event) {
+		popover.openBy(event.detail.iconRef);
+	});
+
+	shellbar.addEventListener("titlePress", function(event) {
+		window["app-list-popover"].openBy(event.detail.iconRef);
+	});
+</script>
+		</xmp>
+				</pre>
+			</section>
+
+	<script>
+		window.prettyPrint();
+	</script>
+
+	<script defer src="../../../../../../www/samples/settings.js"></script>
+</body>
+</html>

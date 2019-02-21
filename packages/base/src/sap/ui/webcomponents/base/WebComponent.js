@@ -423,8 +423,11 @@ class WebComponent extends HTMLElement {
 		}
 	}
 
-	focus() {
+	async focus() {
+		await this._waitForDomRef();
+
 		const focusDomRef = this.getFocusDomRef();
+
 		if (focusDomRef) {
 			focusDomRef.focus();
 		}

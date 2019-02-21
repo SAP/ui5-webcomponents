@@ -104,6 +104,7 @@ class Icon extends WebComponent {
 
 	onkeydown(event) {
 		if (event.which === KeyCodes.SPACE) {
+			event.preventDefault();
 			this.__spaceDown = true;
 		}
 	}
