@@ -1,7 +1,7 @@
-commit 4b44ad3125b0a4f3a9e5263dd9c0fda2edd8ff07
-Author: pskelin <petar.skelin@sap.com>
-Date:   Thu Feb 21 14:17:25 2019 +0200
+commit 6314bd42a8310520f62422fdd5b03e8d7e99b118
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu Feb 21 16:17:03 2019 +0200
 
-    refactor: split different theming responsibilities out of ShadowDOM.js (#76)
+    docs(playground): update ShellBar sample (#78)
     
-    - this lays the way for the introduction of CSS Custom Properties
+    change logo and profile sources and samples order
