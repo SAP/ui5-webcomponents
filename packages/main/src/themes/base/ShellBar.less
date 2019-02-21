@@ -28,7 +28,7 @@ ui5-shellbar {
 	justify-content: space-between;
 	align-items: center;
 	background: @sapUiShellColor;
-	height: 3rem;
+	height: 2.75rem;
 	font-family: @sapUiFontFamily;
 	font-size: @sapMFontMediumSize;
 	font-weight: normal;
@@ -37,8 +37,10 @@ ui5-shellbar {
 
 .sapWCShellBarMenuButton,
 .sapWCShellBarIconButton,
-.sapWCShellBarImageButton {
+.sapWCShellBarImageButton,
+.sapWCShellBarBeginIcon {
 	height: 2.25rem;
+	padding: 0;
 	margin-left: 0.5rem;
 	border: none;
 	outline: none;
@@ -72,6 +74,10 @@ ui5-shellbar {
 	}
 }
 
+.sapWCShellBarMenuButton::-moz-focus-inner {
+	border: none;
+}
+
 .sapWCShellBarMenuButtonTitle {
 	display: inline-block;
 	margin: 0;
@@ -79,7 +85,20 @@ ui5-shellbar {
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	flex: 1;
+	flex: auto;
+}
+
+.sapWCShellBarMenuButtonNoTitle {
+	min-width: 2.25rem;
+	justify-content: center;
+
+	& span {
+		margin-left: 0;
+	}
+}
+
+.sapWCShellBarMenuButtonMerged span {
+	margin-left: .5rem;
 }
 
 .sapWCShellBarSecondaryTitle {
@@ -153,6 +172,14 @@ ui5-shellbar {
 
 .sapWCShellBarSizeS {
 	padding: 0.25rem 1rem;
+
+	& .sapWCShellBarBeginIcon {
+		margin-right: 0;
+	}
+
+	& .sapWCShellBarSearchField {
+		width: 200px;
+	}
 }
 
 .sapWCShellBarSizeM {
@@ -181,11 +208,10 @@ ui5-shellbar {
 }
 
 .sapWCShellBarImageButtonImage {
-	background-image: url('https://openui5nightly.hana.ondemand.com/test-resources/sap/f/images/Woman_avatar_01.png');
 	border-radius: 50%;
-	width: 70%;
+	width: 1.75rem;
+	height: 1.75rem;
 	display: flex;
-	height: 70%;
 	background-size: cover;
 }
 
@@ -193,7 +219,9 @@ ui5-shellbar {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	min-width: 2.5rem;
+	min-width: 2.25rem;
+	height: 2.25rem;
+	display: inline-flex;
 }
 
 .sapWCShellBarOverflowContainerLeft {
@@ -208,12 +236,25 @@ ui5-shellbar {
 	overflow: hidden;
 	display: flex;
 	align-items: center;
+	padding: 0.25rem 0.5rem;
+
+	&.sapWCShellBarMenuButtonNoLogo {
+		margin-left: 0;
+	}
 }
 
 .sapWCShellBarOverflowContainerRight {
-	flex: 1;
+	display: block;
+	overflow: hidden;
+	box-sizing: border-box;
+	white-space: nowrap;
 	margin-left: 8rem;
-	justify-content: flex-end;
+	flex: 1;
+
+	& .sapWCShellBarOverflowContainerRightChild {
+		display: flex;
+		float: right;
+	}
 }
 
 .sapWCShellBarOverflowIcon {
@@ -241,27 +282,9 @@ ui5-shellbar {
 	display: inline-block;
 }
 
-.sapWCShellBarHiddenIcon {
+.sapWCShellBarHiddenIcon,
+.sapWCShellBarUnsetIcon {
 	visibility: hidden;
-}
-
-.sapWCShellBarPopover {
-	padding: .5rem 1rem;
-	box-shadow: @sapUiShadowLevel2;
-	border-radius: 0.25rem;
-	position: absolute;
-	top: 43px;
-	background: white;
-}
-
-.sapWCShellBarPopoverHidden {
-	visibility: hidden;
-	top: -10000px;
-	left: -10000px;
-}
-
-.sapWCShellBarOverflowButtonNotDisplayed {
-	display: none;
 }
 
 .svg-box-content {
@@ -269,7 +292,7 @@ ui5-shellbar {
 	height: 30px;
 }
 
-.sapWCShellBarDisplayNone {
+.sapWCShellBarSearchFieldHidden {
 	display: none;
 }
 
@@ -283,20 +306,20 @@ ui5-shellbar {
 	}
 }
 
-.sapWCShellBarBellIcon {
+.sapWCShellBarHasNotifications .sapWCShellBarBellIcon {
 	position: relative;
 
 	&::before {
 		content: attr(data-ui5-notification-count);
 		position: absolute;
 		width: auto;
-		padding: 0.125rem;
-		height: 0.75rem;
+		height: 1rem;
+		min-width: 1rem;
 		background: @sapUiContentBadgeBackground;
 		color: @sapUiShellTextColor;
 		top: 0.125rem;
-		right: -0.25rem;
-		padding: .125rem;
+		left: 1.5rem;
+		padding: .25rem;
 		border-radius: 1rem;
 		display: flex;
 		justify-content: center;
@@ -304,17 +327,15 @@ ui5-shellbar {
 		font-size: @sapMFontSmallSize;
 		font-family: @sapUiFontFamily;
 		z-index: 2;
+		box-sizing: border-box;
 	}
 }
 
 .sapWCShellBarMenuButton {
-	margin-left: 0;
+	margin-left: 0.5rem;
 }
 
 .sapWCShellBarBlockLayer {
-	background-color: fade(@sapUiBlockLayerBackground, 40);
-	opacity: 0.6;
-	filter: alpha(opacity=60);
 	top: 0;
 	left: 0;
 	right: 0;
@@ -330,8 +351,9 @@ ui5-shellbar {
 
 .sapWCShellBarSearchField {
 	z-index: 101;
-	position: fixed;
-	width: 320px;
+	position: absolute;
+	width: 240px;
+	top: 0.25rem;
 }
 
 .sapWCShellBarBlockLayerShown .sapWCShellBarSearchIcon {
@@ -341,11 +363,55 @@ ui5-shellbar {
 	border-bottom-left-radius: 0;
 }
 
-.sapWCShellBarOverflowContainerLeftWithoutMaxWidth {
-	max-width: none;
-	flex-basis: auto;
+.sapWCShellBarCoPilotPlaceholder {
+	width: 2.75rem;
+	height: 2.75rem;
+}
 
-	& ~ .sapWCShellBarOverflowContainerRight {
-		min-width: 30%;
+.sapWCShellBarCoPilotMiddle {
+	fill: @sapUiShellColor;
+}
+
+.sapWCShellBarCoPilotWrapper {
+	background: @sapUiShellColor;
+}
+
+.sapWCShellBarBeginIcon {
+	width: 2.25rem;
+	height: 2.25rem;
+	margin-right: 0.5rem;
+	margin-left: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+span[dir=rtl] {
+	& .sapWCShellBarBeginIcon {
+		margin-left: 0.5rem;
+		margin-right: 0;
+	}
+
+	& .sapWCShellBarMenuButton {
+		margin-right: 0.5rem;	
+		margin-left: 0;	
+	}
+
+	& .sapWCShellBarMenuButtonArrow {
+		margin-right: .5rem;
+		margin-left: 0;
+	}
+
+	& .sapWCShellBarOverflowContainerRight {
+		margin-right: 8rem;
+		margin-left: 0;
+
+		& .sapWCShellBarOverflowContainerRightChild {
+			float: left;
+		}
+	}
+
+	& .sapWCShellBarSizeS .sapWCShellBarOverflowContainerRight{
+		margin-right: 0;
 	}
 }
