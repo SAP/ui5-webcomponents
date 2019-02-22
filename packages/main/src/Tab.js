@@ -50,16 +50,6 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the item key.
-		 * @type {String}
-		 * @public
-		 */
-		key: {
-			type: String,
-			defaultValue: "",
-		},
-
-		/**
 		 * Represents the "count" text, which is displayed in the tab filter.
 		 * @type {String}
 		 * @public
