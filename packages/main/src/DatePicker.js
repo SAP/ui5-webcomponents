@@ -411,7 +411,7 @@ class DatePicker extends WebComponent {
 	 * @returns {Date} The parsed value
 	 * @public
 	 */
-	parse(value) {
+	parse(value, utc) {
 		return this.getFormat().parseValue(value, utc);
 	}
 
