@@ -1,11 +1,11 @@
-import configuration from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Configuration";
+import { getRTL } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Configuration";
 import TextDirection from "./types/TextDirection";
 import TextAlign from "./types/TextAlign";
 
 class TemplateHelper {
 	static getTextAlign(textAlign, textDirection) {
 		let resultTextAlign = "";
-		const bRTL = configuration.getRTL();
+		const bRTL = getRTL();
 
 		switch (textAlign) {
 		case TextAlign.End:
