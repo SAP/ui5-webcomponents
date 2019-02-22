@@ -101,15 +101,13 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the key of the selected tab item.
-		 * <br><br>
-		 * If the key has no corresponding aggregated item, no changes will apply.
-		 * If duplicate keys exists, the first item matching the key is used.
+		 * Defines the selected tab item by refering its index, following the zero based numbering.
+		 * For example, the first item is under <code>index="0"</code>.
 		 *
 		 * @type {String}
 		 * @public
 		 */
-		selectedKey: {
+		selectedIndex: {
 			type: String,
 			defaultValue: null,
 		},
@@ -353,18 +351,6 @@ class TabContainer extends WebComponent {
 		}.bind(this);
 	}
 
-	_initSelectedTab() {
-		const tabs = this.getTabs();
-
-		const selectedKey = this.selectedKey;
-		let selectedTab = this._selectedTab || tabs[0];
-
-		if (selectedKey) {
-			selectedTab = tabs.filter(item => item._getUniqueKey() === selectedKey)[0] || selectedTab;
-		}
-
-		this.setSelectedTab(selectedTab);
-	}
 
 	onBeforeRendering() {
 		const tabs = this.getTabs();
@@ -422,6 +408,26 @@ class TabContainer extends WebComponent {
 
 	onExitDOM() {
 		ResizeHandler.deregister(this._getScrollContainer(), this._updateScrollingHandler);
+	}
+
+	_initSelectedTab() {
+		const tabs = this.getTabs();
+		const selectedTab = tabs[this._normalizeSelectedIndex(this.selectedIndex)];
+		this.setSelectedTab(selectedTab);
+	}
+
+	_normalizeSelectedIndex(index) {
+		const tabs = this.getTabs();
+		const parsedIndex = Number.parseInt(index);
+
+		if (Number.isNaN(parsedIndex)) {
+			return 0;
+		}
+		if (parsedIndex < 0 || parsedIndex > tabs.length - 1) {
+			return 0;
+		}
+
+		return parsedIndex;
 	}
 
 	_prepareHeaderTabs() {
@@ -557,15 +563,13 @@ class TabContainer extends WebComponent {
 				icon: tab.icon,
 				iconColor: tab.iconColor,
 
-				key: tab._getUniqueKey(),
-
 				_isInline: this._isInline,
 				_isNoIcon: this._isNoIcon,
 				_isNoText: this._isNoText,
 			};
 
 			const listItem = {
-				key: tab._id,
+				id: tab._id,
 				type: tab.disabled ? ListItemType.Inactive : ListItemType.Active,
 				selected: tab._isSelected,
 				content: overflowTab,
@@ -702,15 +706,14 @@ class TabContainer extends WebComponent {
 			this.collapsed = false;
 		}
 
-		this._itemNavigation.currentIndex = tabs.indexOf(tab);
+		this.selectedIndex = tabs.indexOf(tab);
+		this._itemNavigation.currentIndex = tabs.indexOf(this.selectedIndex);
 
 		this._selectedTab = tab;
 
 		tabs.forEach(item => {
 			item._isSelected = item === tab;
 		});
-
-		this.selectedKey = tab._getUniqueKey() || "";
 
 		if (userInteraction) {
 			this.fireEvent("itemSelect", {

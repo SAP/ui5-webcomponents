@@ -67,7 +67,7 @@
 	<section class="group_colored">
 		<h3 class="group-title">Web Components</h3>
 		<h5>Filter</h5>
-		<ui5-tabcontainer id="tabContainer1" fixed show-overflow="true" selected-key="4">
+		<ui5-tabcontainer id="tabContainer1" fixed show-overflow="true" selected-index="3">
 			<ui5-tab data-key="item1" text="Products" count="123">
 				<ui5-button>Button 11</ui5-button>
 				<ui5-button>Button 12</ui5-button>
@@ -84,17 +84,13 @@
 			</ui5-tab>
 			<ui5-button data-ui5-slot="content">Default Content</ui5-button>
 		</ui5-tabcontainer>
-		<div>
-			<span>Selected key:</span>
-			<span id="selectedKey"></span>
-		</div>
 
 		<ui5-input id="field"></ui5-input>
 		<ui5-input id="field2"></ui5-input>
 		<ui5-input id="field3"></ui5-input>
 
 		<h5>Horizontal design</h5>
-		<ui5-tabcontainer show-overflow="true" selected-key="item1">
+		<ui5-tabcontainer show-overflow="true" selected-index="2">
 			<ui5-tab design="Horizontal" key="item1" icon="sap-icon://card" text="Tab 1" count="12343455">
 				<ui5-button>Button 11</ui5-button>
 				<ui5-button>Button 12</ui5-button>
@@ -107,7 +103,7 @@
 		</ui5-tabcontainer>
 
 		<h5>Icons only</h5>
-		<ui5-tabcontainer show-overflow="true" selected-key="item1">
+		<ui5-tabcontainer show-overflow="true" selected-index="1">
 			<ui5-tab key="item1" icon="sap-icon://employee" count="12343455">
 				<ui5-button>Button 11</ui5-button>
 				<ui5-button>Button 12</ui5-button>
@@ -121,7 +117,7 @@
 
 
 		<h5>Text Only</h5>
-		<ui5-tabcontainer show-overflow="true" selected-key="item1">
+		<ui5-tabcontainer show-overflow="true" selected-index="3">
 			<ui5-tab key="item1" text="Tab 1">
 				<ui5-button>Button 11</ui5-button>
 				<ui5-button>Button 12</ui5-button>
@@ -134,7 +130,7 @@
 		</ui5-tabcontainer>
 
 		<h5>Text and Count</h5>
-		<ui5-tabcontainer show-overflow="true" selected-key="item1">
+		<ui5-tabcontainer show-overflow="true" selected-index="3">
 			<ui5-tab key="item1" text="Tab 1" count="12346">
 				<ui5-button>Button 11</ui5-button>
 				<ui5-button>Button 12</ui5-button>
@@ -148,7 +144,7 @@
 		</ui5-tabcontainer>
 
 		<h5>Text and Count Inline Mode</h5>
-		<ui5-tabcontainer show-overflow="true" header-mode="Inline" selected-key="item1">
+		<ui5-tabcontainer show-overflow="true" header-mode="Inline" selected-index="2">
 			<ui5-tab key="item1" text="Tab 1" count="12346">
 				<ui5-button>Button 11</ui5-button>
 				<ui5-button>Button 12</ui5-button>
@@ -171,7 +167,6 @@
 			var selectedKey = item.getAttribute("data-key");
 			var selectedItemText = item.getAttribute("text");
 
-			document.getElementById('selectedKey').innerText = selectedKey;
 			field.value = ++counter;
 			field2.value = selectedKey;
 			field3.value = selectedItemText;
