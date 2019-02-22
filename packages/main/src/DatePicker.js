@@ -376,6 +376,12 @@ class DatePicker extends WebComponent {
 		return this._formatPattern !== "medium" && this._formatPattern !== "short" && this._formatPattern !== "long";
 	}
 
+	/**
+	 * Gets a parser/formatter instance used to parse the datepicker values
+	 * to JS Date objects. And format JS Date objects to values with the current format.
+	 * @returns {DateFormat} a parser/formatter instance
+	 * @public
+	 */
 	getFormat() {
 		if (this._isPattern) {
 			this._oDateFormat = DateFormat.getInstance({
