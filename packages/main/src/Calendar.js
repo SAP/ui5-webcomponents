@@ -392,14 +392,11 @@ class Calendar extends WebComponent {
 	}
 
 	_showNextPageYears() {
-		if (this._yearPicker.timestamp) {
-			const oCalDate = CalendarDate.fromTimestamp(this._yearPicker.timestamp * 1000, this._primaryCalendarType);
-			oCalDate.setMonth(0);
-			oCalDate.setDate(1);
-			oCalDate.setYear(oCalDate.getYear() + YearPicker._ITEMS_COUNT - YearPicker._MIDDLE_ITEM_INDEX);
-			if (oCalDate.getYear() > YearPicker._MAX_YEAR) {
-				return;
-			}
+		if (!this._isYearInRange(this._yearPicker.timestamp,
+			YearPicker._ITEMS_COUNT - YearPicker._MIDDLE_ITEM_INDEX,
+			YearPicker._MIN_YEAR,
+			YearPicker._MAX_YEAR)) {
+			return;
 		}
 
 		this._yearPicker = Object.assign({}, this._yearPicker, {
@@ -410,14 +407,11 @@ class Calendar extends WebComponent {
 	}
 
 	_showPrevPageYears() {
-		if (this._yearPicker.timestamp) {
-			const oCalDate = CalendarDate.fromTimestamp(this._yearPicker.timestamp * 1000, this._primaryCalendarType);
-			oCalDate.setMonth(0);
-			oCalDate.setDate(1);
-			oCalDate.setYear(oCalDate.getYear() - YearPicker._MIDDLE_ITEM_INDEX - 1);
-			if (oCalDate.getYear() < YearPicker._MIN_YEAR) {
-				return;
-			}
+		if (!this._isYearInRange(this._yearPicker.timestamp,
+			-YearPicker._MIDDLE_ITEM_INDEX - 1,
+			YearPicker._MIN_YEAR,
+			YearPicker._MAX_YEAR)) {
+			return;
 		}
 
 		this._yearPicker = Object.assign({}, this._yearPicker, {
@@ -470,6 +464,16 @@ class Calendar extends WebComponent {
 
 		this._yearPicker._hidden = true;
 		this._oMonth._hidden = false;
+	}
+
+	_isYearInRange(timestamp, yearsoffset, min, max) {
+		if (timestamp) {
+			const oCalDate = CalendarDate.fromTimestamp(timestamp * 1000, this._primaryCalendarType);
+			oCalDate.setMonth(0);
+			oCalDate.setDate(1);
+			oCalDate.setYear(oCalDate.getYear() + yearsoffset);
+			return oCalDate.getYear() >= min && oCalDate.getYear() <= max;
+		}
 	}
 
 	static get calculateTemplateContext() {

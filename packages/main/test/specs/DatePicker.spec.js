@@ -307,26 +307,32 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("daypicker extreme values max", () => {
+		var _28Nov9999 = "253399363200";
+
 		datepicker.open();
 		datepicker.id = "#dp12";
 
 		datepicker.innerInput.setValue("Dec 31, 9999");
 		datepicker.valueHelpIcon.click();
 
-		assert.ok(datepicker.getFirstDisplayedDate().getProperty("id").indexOf("253399363200") > -1, "28 Nov, 9999 is the first displayed date");
+		assert.ok(datepicker.getFirstDisplayedDate().getProperty("id").indexOf(_28Nov9999) > -1, "28 Nov, 9999 is the first displayed date");
 	});
 
 	it("daypicker extreme values min", () => {
+		var _1Jan0001 = "-62135596800";
+
 		datepicker.open();
 		datepicker.id = "#dp12";
 
 		datepicker.innerInput.setValue("Jan 1, 0001");
 		datepicker.valueHelpIcon.click();
 
-		assert.ok(datepicker.getFirstDisplayedDate().getProperty("id").indexOf("-62135596800") > -1, "Jan 1, 0001 is the first displayed date");
+		assert.ok(datepicker.getFirstDisplayedDate().getProperty("id").indexOf(_1Jan0001) > -1, "Jan 1, 0001 is the first displayed date");
 	});
 
 	it("daypicker prev extreme values min", () => {
+		var _1Jan0001 = "-62135596800";
+
 		datepicker.open();
 		datepicker.id = "#dp12";
 
@@ -335,14 +341,16 @@ describe("Date Picker Tests", () => {
 
 		datepicker.btnPrev.click();
 
-		assert.ok(datepicker.getFirstDisplayedDate().getProperty("id").indexOf("-62135596800") > -1, "Jan 1, 0001 is the first displayed date");
+		assert.ok(datepicker.getFirstDisplayedDate().getProperty("id").indexOf(_1Jan0001) > -1, "Jan 1, 0001 is the first displayed date");
 
 		datepicker.btnPrev.click();
 
-		assert.ok(datepicker.getFirstDisplayedDate().getProperty("id").indexOf("-62135596800") > -1, "Jan 1, 0001 is the first displayed date");
+		assert.ok(datepicker.getFirstDisplayedDate().getProperty("id").indexOf(_1Jan0001) > -1, "Jan 1, 0001 is the first displayed date");
 	});
 
 	it("daypicker next extreme values max", () => {
+		var _28Nov9999 = "253399363200";
+
 		datepicker.open();
 		datepicker.id = "#dp12";
 
@@ -351,11 +359,11 @@ describe("Date Picker Tests", () => {
 
 		datepicker.btnNext.click();
 
-		assert.ok(datepicker.getFirstDisplayedDate().getProperty("id").indexOf("253399363200") > -1, "28 Nov, 9999 is the first displayed date");
+		assert.ok(datepicker.getFirstDisplayedDate().getProperty("id").indexOf(_28Nov9999) > -1, "28 Nov, 9999 is the first displayed date");
 
 		datepicker.btnNext.click();
 
-		assert.ok(datepicker.getFirstDisplayedDate().getProperty("id").indexOf("253399363200") > -1, "28 Nov, 9999 is the first displayed date");
+		assert.ok(datepicker.getFirstDisplayedDate().getProperty("id").indexOf(_28Nov9999) > -1, "28 Nov, 9999 is the first displayed date");
 	});
 
 	it("monthpicker next extreme values max", () => {
