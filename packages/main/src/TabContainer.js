@@ -596,7 +596,7 @@ class TabContainer extends WebComponent {
 		const tabs = this.getTabs();
 		const selectedTab = tabs.filter(item => item._id === pressedItem.id)[0];
 
-		this.setSelectedTab(selectedTab, true /*user interaction */);
+		this.setSelectedTab(selectedTab, true /* user interaction */);
 
 		const popover = this.getDomRef().querySelector("ui5-popover");
 		popover.close();
