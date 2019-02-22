@@ -164,21 +164,17 @@
 	</span>
 
 	<script>
-		var inputEventCounter = document.querySelector("#field");
-		var inputItemKey = document.querySelector("#field2");
-		var inputItemText= document.querySelector("#field3");
 		var counter = 0;
 
-		var tabContainer = document.getElementById('tabContainer1');
-		tabContainer.addEventListener('itemSelect', function (event) {
+		tabContainer1.addEventListener('itemSelect', function (event) {
 			var item = event.detail.item;
 			var selectedKey = item.getAttribute("data-key");
 			var selectedItemText = item.getAttribute("text");
 
 			document.getElementById('selectedKey').innerText = selectedKey;
-			inputEventCounter.value = ++counter;
-			inputItemKey.value = selectedKey;
-			inputItemText.value = selectedItemText;
+			field.value = ++counter;
+			field2.value = selectedKey;
+			field3.value = selectedItemText;
 		});
 </script>
 </body>
