@@ -86,7 +86,9 @@ const metadata = {
 		 * @type {Boolean}
 		 * @public
 		 */
-		fixed: { type: Boolean, group: "Misc" },
+		fixed: {
+			type: Boolean,
+		},
 
 		/**
 		 * Determines whether the tab content is collapsed.
@@ -94,7 +96,9 @@ const metadata = {
 		 * @type {Boolean}
 		 * @public
 		 */
-		collapsed: { type: Boolean, group: "Misc" },
+		collapsed: {
+			type: Boolean,
+		},
 
 		/**
 		 * Defines the key of the selected tab item.
@@ -105,7 +109,10 @@ const metadata = {
 		 * @type {String}
 		 * @public
 		 */
-		selectedKey: { type: String, group: "Data", defaultValue: null },
+		selectedKey: {
+			type: String,
+			defaultValue: null,
+		},
 
 		/**
 		 * Specifies the background color of the IconTabBar.
@@ -119,21 +126,24 @@ const metadata = {
 		 */
 		backgroundDesign: {
 			type: BackgroundDesign,
-			group: "Appearance",
 			defaultValue: BackgroundDesign.Solid,
 		},
 
 		/**
-		 * Specifies the header mode.
+		 * Specifies the header mode. Available options are: <code>Standard</code> and <code>Inline</code>.
 		 * <br><br>
-		 * <b>Note:</b> The Inline mode works only if no icons are set.
+		 * In <code>Standard</code> mode the <code>count</code> and the <code>text</code>
+		 * are displayed in two separate lines.
+		 * In <code>Inline</code> mode the <code>count</code> and the <code>text</code>
+		 * are displayed in single line.
+		 * <br><br>
+		 * <b>Note:</b> The <code>Inline</code> mode works only when no icons are set.
 		 *
 		 * @type {TabContainerHeaderMode}
 		 * @public
 		 */
 		headerMode: {
 			type: TabContainerHeaderMode,
-			group: "Appearance",
 			defaultValue: TabContainerHeaderMode.Standard,
 		},
 
@@ -146,7 +156,9 @@ const metadata = {
 		 * @type {Boolean}
 		 * @public
 		 */
-		showOverflow: { type: Boolean, group: "Appearance" },
+		showOverflow: {
+			type: Boolean,
+		 },
 
 		/**
 		 * Specifies the background color of the header.
@@ -159,7 +171,6 @@ const metadata = {
 		 */
 		headerBackgroundDesign: {
 			type: BackgroundDesign,
-			group: "Appearance",
 			defaultValue: BackgroundDesign.Solid,
 		},
 
@@ -199,11 +210,11 @@ const metadata = {
 		 * Fired when an item is selected.
 		 *
 		 * @event
-		 * @param {string} key The <code>key</code> of the selected item.
+		 * @param {HTMLElement} item The selected <code>item</code>.
 		 * @public
 		 */
 		itemSelect: {
-			key: { type: String },
+			item: { type: HTMLElement },
 		},
 	},
 };
@@ -585,7 +596,7 @@ class TabContainer extends WebComponent {
 		const tabs = this.getTabs();
 		const selectedTab = tabs.filter(item => item._id === pressedItem.id)[0];
 
-		this.setSelectedTab(selectedTab);
+		this.setSelectedTab(selectedTab, true /*user interaction */);
 
 		const popover = this.getDomRef().querySelector("ui5-popover");
 		popover.close();
@@ -703,7 +714,7 @@ class TabContainer extends WebComponent {
 
 		if (userInteraction) {
 			this.fireEvent("itemSelect", {
-				key: this.selectedKey,
+				item: this._selectedTab,
 			});
 		}
 

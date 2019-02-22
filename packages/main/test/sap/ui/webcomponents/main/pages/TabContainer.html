@@ -68,19 +68,19 @@
 		<h3 class="group-title">Web Components</h3>
 		<h5>Filter</h5>
 		<ui5-tabcontainer id="tabContainer1" fixed show-overflow="true" selected-key="4">
-			<ui5-tab key="item1" text="Products" count="123">
+			<ui5-tab data-key="item1" text="Products" count="123">
 				<ui5-button>Button 11</ui5-button>
 				<ui5-button>Button 12</ui5-button>
 			</ui5-tab>
 			<ui5-tab-separator></ui5-tab-separator>
-			<ui5-tab icon="sap-icon://menu2" text="Tab 2" icon-color="Positive" count="12343455">
+			<ui5-tab data-key="item2" icon="sap-icon://menu2" text="Tab 2" icon-color="Positive" count="12343455">
 				<ui5-button>Button 3</ui5-button>
 			</ui5-tab>
-			<ui5-tab icon="sap-icon://menu" text="Tab 3"  icon-color="Critical" count="12343455">
+			<ui5-tab data-key="item3" icon="sap-icon://menu" text="Tab 3"  icon-color="Critical" count="12343455">
 			</ui5-tab>
-			<ui5-tab key="4" icon="sap-icon://menu2" text="Tab 4"  icon-color="Negative" count="12343455">
+			<ui5-tab data-key="item4" icon="sap-icon://menu2" text="Tab 4"  icon-color="Negative" count="12343455">
 			</ui5-tab>
-			<ui5-tab icon="sap-icon://menu2" disabled="true" text="Disabled"  icon-color="Negative" count="12343455">
+			<ui5-tab data-key="item5" icon="sap-icon://menu2" disabled="true" text="Disabled"  icon-color="Negative" count="12343455">
 			</ui5-tab>
 			<ui5-button data-ui5-slot="content">Default Content</ui5-button>
 		</ui5-tabcontainer>
@@ -88,12 +88,10 @@
 			<span>Selected key:</span>
 			<span id="selectedKey"></span>
 		</div>
-		<script>
-			var tabContainer = document.getElementById('tabContainer1');
-			tabContainer.addEventListener('itemSelect', function (event) {
-				document.getElementById('selectedKey').innerText = event.detail.key;
-			});
-		</script>
+
+		<ui5-input id="field"></ui5-input>
+		<ui5-input id="field2"></ui5-input>
+		<ui5-input id="field3"></ui5-input>
 
 		<h5>Horizontal design</h5>
 		<ui5-tabcontainer show-overflow="true" selected-key="item1">
@@ -162,13 +160,26 @@
 			</ui5-tab>
 		</ui5-tabcontainer>
 
-
-
 	</section>
-
-
-
-
 	</span>
+
+	<script>
+		var inputEventCounter = document.querySelector("#field");
+		var inputItemKey = document.querySelector("#field2");
+		var inputItemText= document.querySelector("#field3");
+		var counter = 0;
+
+		var tabContainer = document.getElementById('tabContainer1');
+		tabContainer.addEventListener('itemSelect', function (event) {
+			var item = event.detail.item;
+			var selectedKey = item.getAttribute("data-key");
+			var selectedItemText = item.getAttribute("text");
+
+			document.getElementById('selectedKey').innerText = selectedKey;
+			inputEventCounter.value = ++counter;
+			inputItemKey.value = selectedKey;
+			inputItemText.value = selectedItemText;
+		});
+</script>
 </body>
 </html>
