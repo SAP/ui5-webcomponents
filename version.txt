@@ -1,5 +1,17 @@
-commit 9038494b1183597743f7f3617be0806514292dd7
-Author: Filip Siderov <fifoosid@gmail.com>
-Date:   Thu Feb 21 18:14:13 2019 +0200
+commit d1c7259c765c89569d93644c773e47768d7d93cc
+Author: a-z-ivanov <yogaaaaa@yahoo.com>
+Date:   Fri Feb 22 05:24:10 2019 -0800
 
-    docs(playground): add sample applications links (#82)
+    fix(ui5-datepicker): display extreme values correctly (#75)
+    
+    * fix(ui5-datepicker): display extreme values correctly
+    
+    Fixes https://github.com/SAP/ui5-webcomponents/issues/26
+    
+    * fix(ui5-datepicker): display extreme values correctly
+    
+    * fix(ui5-datepicker): display extreme values correctly
+    
+    * add tests
+    
+    * some more constants and a method extract
