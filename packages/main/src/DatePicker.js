@@ -376,12 +376,6 @@ class DatePicker extends WebComponent {
 		return this._formatPattern !== "medium" && this._formatPattern !== "short" && this._formatPattern !== "long";
 	}
 
-	/**
-	 * Gets a parser/formatter instance used to parse the datepicker values
-	 * to JS Date objects. And format JS Date objects to values with the current format.
-	 * @returns {DateFormat} a parser/formatter instance
-	 * @public
-	 */
 	getFormat() {
 		if (this._isPattern) {
 			this._oDateFormat = DateFormat.getInstance({
@@ -395,6 +389,30 @@ class DatePicker extends WebComponent {
 			});
 		}
 		return this._oDateFormat;
+	}
+
+	/**
+	 * Formats a date according to the given format options.
+	 *
+	 * @param {Date} date The value to format
+	 * @param {boolean} utc Whether to use UTC
+	 * @returns {string} The formatted output value. If an invalid date is given, an empty string is returned
+	 * @public
+	 */
+	format(date, utc) {
+		return this.getFormat().format(date, utc);
+	}
+
+	/**
+	 * Parses a string which is formatted according to the given format options.
+	 *
+	 * @param {string} value The string containing a formatted date value
+	 * @param {boolean} utc Whether to use UTC
+	 * @returns {Date} The parsed value
+	 * @public
+	 */
+	parse(value) {
+		return this.getFormat().parseValue(value, utc);
 	}
 
 	_getPopover() {
