@@ -20,8 +20,8 @@ class ShadowDOM {
 		throw new Error("Static class");
 	}
 
-	static registerStyle(theme, styleName, styleObj) {
-		registerStyle(theme, styleName, styleObj);
+	static registerStyle(theme, styleName, styleContent) {
+		registerStyle(theme, styleName, styleContent);
 	}
 
 	static async updateStyle(tag, shadowRoot, styleUrls) {

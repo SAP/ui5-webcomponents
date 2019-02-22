@@ -20,7 +20,7 @@ const convertImports = (srcPath) => {
 	tree.body.forEach(node => {
 		if (node.type === "ImportDeclaration" && node.source.value.endsWith(".less")) {
 			let importee = node.source.value;
-			node.source.value = importee.replace(".less", ".json");
+			node.source.value = importee.replace(".less", "-css.js");
 			changed = true;
 			// console.log(importee, "from", importer);
 		}
@@ -34,4 +34,4 @@ const convertImports = (srcPath) => {
 const fileNames = glob.sync(basePath + "**/*.js");
 // console.log(fileNames);
 fileNames.forEach(convertImports);
-console.log("Success: Converted .less imports to .json for path: ", basePath);
+console.log("Success: Converted .less imports to -css.js for path: ", basePath);
