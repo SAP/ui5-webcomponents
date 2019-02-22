@@ -1,17 +1,12 @@
-commit d1c7259c765c89569d93644c773e47768d7d93cc
-Author: a-z-ivanov <yogaaaaa@yahoo.com>
-Date:   Fri Feb 22 05:24:10 2019 -0800
+commit 1a3fb2e28f6b093873703d18c8920a0c45b649b7
+Author: Petar Skelin <petar.skelin@sap.com>
+Date:   Fri Feb 22 17:04:52 2019 +0200
 
-    fix(ui5-datepicker): display extreme values correctly (#75)
+    improvement: inline theme imports (#88)
     
-    * fix(ui5-datepicker): display extreme values correctly
-    
-    Fixes https://github.com/SAP/ui5-webcomponents/issues/26
-    
-    * fix(ui5-datepicker): display extreme values correctly
-    
-    * fix(ui5-datepicker): display extreme values correctly
-    
-    * add tests
-    
-    * some more constants and a method extract
+    - generate a -css.js file for each imported .less file
+    - this file exports the generated CSS as a string value
+    - rewrite the imports from .less to -css.js
+    - more compatible for build tools as these files are supposed to be
+      inlined anyway and no longer force a json configuration at build time
+      which makes it easier for less capable build tools.
