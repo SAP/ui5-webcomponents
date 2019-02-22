@@ -392,27 +392,23 @@ class DatePicker extends WebComponent {
 	}
 
 	/**
-	 * Formats a date according to the given format options.
-	 *
-	 * @param {Date} date The value to format
-	 * @param {boolean} utc Whether to use UTC
-	 * @returns {string} The formatted output value. If an invalid date is given, an empty string is returned
-	 * @public
-	 */
-	format(date, utc) {
-		return this.getFormat().format(date, utc);
-	}
-
-	/**
-	 * Parses a string which is formatted according to the given format options.
-	 *
-	 * @param {string} value The string containing a formatted date value
-	 * @param {boolean} utc Whether to use UTC
+	 * Gets a Date value corresponding to the current value property.
 	 * @returns {Date} The parsed value
 	 * @public
 	 */
-	parse(value, utc) {
-		return this.getFormat().parseValue(value, utc);
+	getDateValue() {
+		return this.getFormat().parse(this.value);
+	}
+
+	/**
+	 * Sets the value property using a Date value,
+	 * formatted according to the given format options.
+	 * @param {Date} date The value to be set
+	 * @public
+	 */
+	setDateValue(date) {
+		this.value = this.getFormat().format(date);
+		return this;
 	}
 
 	_getPopover() {
