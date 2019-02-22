@@ -15,12 +15,13 @@ const fetchThemeBundle = async (packageName, themeName) => {
 	return bundle;
 };
 
-const registerStyle = (theme, styleName, styleObj) => {
-	if (typeof (styleObj) === "object" && styleObj._) {
+const registerStyle = (theme, styleName, styleContent) => {
+	if (typeof (styleContent) === "string" && styleContent.length) {
+		// is inlined string
 		if (!styles.has(theme)) {
 			styles.set(theme, {});
 		}
-		styles.get(theme)[styleName] = styleObj._;
+		styles.get(theme)[styleName] = styleContent;
 	}
 };
 
@@ -45,7 +46,7 @@ const getStyles = async (theme, styleNames) => {
 		const themeData = await fetchThemeBundle("@ui5/webcomponents", theme);
 
 		Object.entries(themeData).forEach(([key, value]) => {
-			registerStyle(theme, key, { _: value });
+			registerStyle(theme, key, value);
 		});
 	}
 
