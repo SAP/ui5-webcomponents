@@ -2,10 +2,10 @@ import SwitchType from "./types/SwitchType";
 
 class SwitchTemplateContext {
 	static calculate(state) {
-		const semantic = SwitchType.isValid(state.type) && state.type !== SwitchType.Standard;
+		const semantic = state.type === SwitchType.Semantic;
 		const textOn = semantic ? "" : state.textOn;
 		const textOff = semantic ? "" : state.textOff;
-		const mainClasses = SwitchTemplateContext.getMainClasses(state, { semantic });
+		const mainClasses = SwitchTemplateContext.getMainClasses(state);
 
 		const context = {
 			ctr: state,
@@ -18,12 +18,12 @@ class SwitchTemplateContext {
 		return context;
 	}
 
-	static getMainClasses(state, { semantic = false } = {}) {
+	static getMainClasses(state) {
 		return {
 			"ui5-switch": true,
 			"ui5-switch--disabled": state.disabled,
 			"ui5-switch--checked": state.checked,
-			"ui5-switch--semantic": semantic,
+			"ui5-switch--semantic": state.type === SwitchType.Semantic,
 		};
 	}
 }

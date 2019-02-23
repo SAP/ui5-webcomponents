@@ -42,34 +42,55 @@
 		<div style="margin-bottom: 2rem; font-weight: 300; font-size: 1.1rem; color: #666666;">&lt;ui5-switch&gt;</div>
 	</header>
 
+	<!-- Basic Switch -->
 	<section>
 		<h3>Basic Switch</h3>
 		<div class="snippet">
 			<ui5-switch text-on="On" text-off="Off"></ui5-switch>
-			<ui5-switch text-on="Yes" text-off="No" checked></ui5-switch>
-			<ui5-switch text-on="On" text-off="Off" disabled></ui5-switch>
+			<ui5-switch text-on="On" text-off="Off" checked></ui5-switch>
+			<ui5-switch></ui5-switch>
+			<ui5-switch checked></ui5-switch>
+			<ui5-switch text-on="Yes" text-off="No" disabled></ui5-switch>
 			<ui5-switch text-on="Yes" text-off="No" checked disabled ></ui5-switch>
 		</div>
 		<pre class="prettyprint lang-html"><xmp>
 <ui5-switch text-on="On" text-off="Off"></ui5-switch>
-<ui5-switch text-on="Yes" text-off="No" checked></ui5-switch>
-<ui5-switch text-on="On" text-off="Off" disabled></ui5-switch>
+<ui5-switch text-on="On" text-off="Off" checked></ui5-switch>
+<ui5-switch></ui5-switch>
+<ui5-switch checked></ui5-switch>
+<ui5-switch text-on="Yes" text-off="No" disabled></ui5-switch>
 <ui5-switch text-on="Yes" text-off="No" checked disabled ></ui5-switch>
 		</xmp></pre>
 	</section>
 
+	<!-- Semantic Switch -->
+	<section>
 	<h3>Semantic Switch</h3>
 		<div class="snippet">
-			<ui5-switch type="Semantic" text-on="On" text-off="Off"></ui5-switch>
-			<ui5-switch type="Semantic" text-on="Yes" text-off="No" checked></ui5-switch>
-			<ui5-switch type="Semantic" text-on="On" text-off="Off" disabled></ui5-switch>
-			<ui5-switch type="Semantic" text-on="Yes" text-off="No" checked disabled></ui5-switch>
+			<ui5-switch type="Semantic"></ui5-switch>
+			<ui5-switch type="Semantic" checked></ui5-switch>
+			<ui5-switch type="Semantic" disabled></ui5-switch>
+			<ui5-switch type="Semantic" checked disabled></ui5-switch>
 		</div>
 		<pre class="prettyprint lang-html"><xmp>
-<ui5-switch type="Semantic" text-on="On" text-off="Off"></ui5-switch>
-<ui5-switch type="Semantic" text-on="Yes" text-off="No" checked></ui5-switch>
-<ui5-switch type="Semantic" text-on="On" text-off="Off" disabled></ui5-switch>
-<ui5-switch type="Semantic" text-on="Yes" text-off="No" checked disabled></ui5-switch>
+<ui5-switch type="Semantic"></ui5-switch>
+<ui5-switch type="Semantic" checked></ui5-switch>
+<ui5-switch type="Semantic" disabled></ui5-switch>
+<ui5-switch type="Semantic" checked disabled></ui5-switch>
+		</xmp></pre>
+	</section>
+
+	<!-- Custom Switch -->
+	<section>
+		<h3>Custom Switch</h3>
+		<div class="snippet">
+			<ui5-switch style="width: 100px; min-width: 100px;" text-on="Enabled" text-off="Disabled" checked></ui5-switch>
+			<ui5-switch style="width: 100px; min-width: 100px;" text-on="Accept" text-off="Reject"></ui5-switch>
+		</div>
+		<pre class="prettyprint lang-html"><xmp>
+<ui5-switch style="width: 100px; min-width: 100px;" text-on="Enabled" text-off="Disabled"></ui5-switch>
+<ui5-switch style="width: 100px; min-width: 100px;" text-on="Accept" text-off="Reject"></ui5-switch>
+
 		</xmp></pre>
 	</section>
 

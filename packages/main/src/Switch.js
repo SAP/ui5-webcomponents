@@ -26,6 +26,21 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.Switch.prototype */ {
 
 		/**
+		 * Defines if the <code>ui5-switch</code> is checked.
+		 * <br><br>
+		 * <b>Note:</b> The property can be changed with user interaction,
+		 * either by cliking/tapping on the <code>ui5-switch</code>, or by
+		 * pressing the <code>Enter</code> or <code>Space</code> key.
+		 *
+		 * @type {boolean}
+		 * @default false
+		 * @public
+		 */
+		checked: {
+			type: Boolean,
+		},
+
+		/**
 		 * Defines whether the <code>ui5-switch</code> is disabled.
 		 * <br><br>
 		 * <b>Note:</b> A disabled <code>ui5-switch</code> is noninteractive.
@@ -39,44 +54,29 @@ const metadata = {
 		},
 
 		/**
-		 * Defines if the <code>ui5-switch</code> is checked.
-		 * <br><br>
-		 * <b>Note:</b> The property can be changed with user interaction,
-		 * either by cliking/tapping on the <code>ui5-switch</code>, or by
-		 * pressing the Enter or Space key.
-		 *
-		 * @type {boolean}
-		 * @default false
-		 * @public
-		 */
-		checked: {
-			type: Boolean,
-		},
-
-		/**
 		 * Defines the text of the <code>ui5-switch</code> when switched on.
 		 *
 		 * <br><br>
-		 * <b>Note:</b> Up to 3 letters will be displayed properly. Larger texts might be cut off.
+		 * <b>Note:</b> We recommend using short texts (up to 3 letters, because larger texts might be cut off.
 		 * @type {string}
 		 * @public
 		 */
 		textOn: {
-			defaultValue: "",
 			type: String,
+			defaultValue: "",
 		},
 
 		/**
 		 * Defines the text of the <code>ui5-switch</code> when switched off.
 		 *
 		 * <br><br>
-		 * <b>Note:</b> Up to 3 letters will be displayed properly. Larger texts might be cut off.
+		 * <b>Note:</b> We recommend using short texts (up to 3 letters, because larger texts might be cut off.
 		 * @type {string}
 		 * @public
 		 */
 		textOff: {
-			defaultValue: "",
 			type: String,
+			defaultValue: "",
 		},
 
 		/**
@@ -95,10 +95,6 @@ const metadata = {
 			type: String,
 			defaultValue: SwitchType.Standard,
 		},
-
-		_label: {
-			type: Object,
-		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Switch.prototype */ {
 
@@ -116,6 +112,8 @@ const metadata = {
  * @class
  *
  * <h3 class="comment-api-title">Overview</h3>
+ * The <code>ui5-switch</code> component is used for changing between binary states.
+ *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/Switch";</code>
@@ -140,8 +138,10 @@ class Switch extends WebComponent {
 		super(state);
 	}
 
-	ontap() {
-		this.toggle();
+	ontap(event) {
+		if (this._tapAllowed(event.ui5target)) {
+			this.toggle();
+		}
 	}
 
 	onkeydown(event) {
@@ -166,6 +166,10 @@ class Switch extends WebComponent {
 			this.fireEvent("change");
 		}
 		return this;
+	}
+
+	_tapAllowed(target) {
+		return target !== this;
 	}
 
 	static get calculateTemplateContext() {

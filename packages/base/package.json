@@ -14,7 +14,7 @@
     "url": "https://github.com/SAP/ui5-webcomponents.git"
   },
   "scripts": {
-    "build": "npm run lint",
+    "build": "npm run lint --scripts-prepend-node-path ",
     "clean": "rimraf dist",
     "lint": "eslint ."
   },

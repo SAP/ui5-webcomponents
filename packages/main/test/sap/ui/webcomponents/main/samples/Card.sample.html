@@ -46,6 +46,9 @@
 		ui5-card.small {
 			width: 20rem;
 		}
+		ui5-card.medium {
+			width: 30rem;
+		}
 		ui5-li-custom {
 			margin-bottom: 1rem;
 		}
@@ -99,7 +102,7 @@
 	<section>
 		<h3>Card with List</h3>
 		<div class="snippet card-container">
-			<ui5-card avatar="sap-icon://group" heading="Team 6" subtitle="Direct Reports" status="6 of 6">
+			<ui5-card avatar="sap-icon://group" heading="Team 6" subtitle="Direct Reports" status="6 of 6" class="medium">
 				<div class="card-content">
 					<ui5-list separators="None" class="card-content-child">
 						<ui5-li image="../../../../../../www/samples/images/man_avatar_1.png"" description="User Researcher">Alain Chevalier</ui5-li>
@@ -111,6 +114,7 @@
 						<ui5-li image="../../../../../../www/samples/images/woman_avatar_3.png"" description="Visual Designer">Elena Petrova</ui5-li>
 						<ui5-li image="../../../../../../www/samples/images/man_avatar_3.png"" description="Quality Specialist">John Miller</ui5-li>
 					</ui5-list>
+				</div>
 			</ui5-card>
 		</div>
 
@@ -124,18 +128,18 @@
 }
 </style>
 
-<ui5-card
-	avatar="sap-icon://group"
+<ui5-card avatar="sap-icon://group"
 	heading="Team 6"
 	subtitle="Direct Reports"
-	status="6 of 6">
+	tatus="6 of 6"
+	class="medium">
 	<div class="card-content">
-		<ui5-list separators="None">
+		<ui5-list separators="None" class="card-content-child">
 			<ui5-li image="../../../../../../www/samples/images/man_avatar_1.png"" description="User Researcher">Alain Chevalier</ui5-li>
 			<ui5-li image="../../../../../../www/samples/images/woman_avatar_1.png"" description="Artist">Monique Legrand</ui5-li>
 			<ui5-li image="../../../../../../www/samples/images/woman_avatar_2.png"" description="UX Specialist">Michael Adams</ui5-li>
 		</ui5-list>
-		<ui5-list separators="None">
+		<ui5-list separators="None" class="card-content-child">
 			<ui5-li image="../../../../../../www/samples/images/man_avatar_2.png"" description="Software Architect">Richard Wilson</ui5-li>
 			<ui5-li image="../../../../../../www/samples/images/woman_avatar_3.png"" description="Visual Designer">Elena Petrova</ui5-li>
 			<ui5-li image="../../../../../../www/samples/images/man_avatar_3.png"" description="Quality Specialist">John Miller</ui5-li>
@@ -283,7 +287,7 @@
 	<section>
 		<h3>Card with Timeline</h3>
 		<div class="snippet card-container">
-			<ui5-card heading="Upcoming Activities" subtitle="For Today">
+			<ui5-card heading="Upcoming Activities" subtitle="For Today" class="medium">
 				<ui5-timeline>
 					<ui5-timeline-item id="test-item" title-text="called" timestamp="1487583000000" icon="sap-icon://phone" item-name="John Smith" item-name-clickable></ui5-timeline-item>
 					<ui5-timeline-item title-text="Weekly Sync - CP Design" timestamp="1517349600000" icon="sap-icon://calendar">
@@ -300,7 +304,8 @@
 <xmp>
 <ui5-card
 	heading="Upcoming Activities"
-	subtitle="For Today">
+	subtitle="For Today"
+	class="meidum">
 	<ui5-timeline>
 		<ui5-timeline-item id="test-item" title-text="called" timestamp="1487583000000" icon="sap-icon://phone" item-name="John Smith" item-name-clickable></ui5-timeline-item>
 		<ui5-timeline-item title-text="Weekly Sync - CP Design" timestamp="1517349600000" icon="sap-icon://calendar">

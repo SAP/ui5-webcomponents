@@ -1,15 +1,16 @@
 import configuration from "./Configuration";
-import ShadowDOM from "./compatibility/ShadowDOM";
+import { getStyles } from "./theming/ThemeBundle";
+import { getCustomCSS } from "./theming/CustomStyle";
 
 const themeChangeCallbacks = [];
 
-export const attachThemeChange = function attachThemeChange(callback) {
+const attachThemeChange = function attachThemeChange(callback) {
 	if (themeChangeCallbacks.indexOf(callback) === -1) {
 		themeChangeCallbacks.push(callback);
 	}
 };
 
-export const setTheme = function setTheme(theme) {
+const setTheme = function setTheme(theme) {
 	if (theme === configuration.getTheme()) {
 		return;
 	}
@@ -18,6 +19,20 @@ export const setTheme = function setTheme(theme) {
 	themeChangeCallbacks.forEach(callback => callback(theme));
 };
 
-export const addCustomCSS = function addCustomCSS(tag, theme, css) {
-	ShadowDOM._addCustomCSS(tag, theme, css);
+const getEffectiveStyle = async (theme, styleUrls, tag) => {
+	const styles = await getStyles(theme, styleUrls);
+	const cssContent = [];
+	styles.forEach(css => {
+		cssContent.push(css);
+	});
+
+	const customStyle = getCustomCSS(theme, tag);
+	if (customStyle) {
+		cssContent.push(customStyle);
+	}
+
+	const cssText = cssContent.join(" ");
+	return cssText;
 };
+
+export { attachThemeChange, setTheme, getEffectiveStyle };

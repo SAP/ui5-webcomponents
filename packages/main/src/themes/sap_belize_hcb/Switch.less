@@ -19,15 +19,15 @@
 @_ui5_switch_track_hover_bg: @sapUiButtonBackground;
 @_ui5_switch_track_hover_border_color: @sapUiBaseText;
 @_ui5_switch_track_border_color: @sapUiButtonBackground;
-@_ui5_switch_track_border_checked_color: @sapUiContentForegroundBorderColor;
+@_ui5_switch_track_checked_border_color: @sapUiContentForegroundBorderColor;
 
 // Switch Handle
 @_ui5_switch_handle_bg: @sapUiButtonBackground;
 @_ui5_switch_handle_hover_bg: @sapUiButtonHoverBackground;
 @_ui5_switch_handle_semantic_hover_bg: @sapUiButtonHoverBackground;
-@_ui5_switch_handle_checked_semantic_hover_bg: @sapUiButtonHoverBackground;
-@_ui5_switch_handle_semantic_negative_hover_border_color: @sapUiContentForegroundBorderColor;
-@_ui5_switch_handle_semantic_positive_hover_border_color: @sapUiContentForegroundBorderColor;
+@_ui5_switch_handle_semantic_checked_hover_bg: @sapUiButtonHoverBackground;
+@_ui5_switch_handle_semantic_hover_border_color: @sapUiContentForegroundBorderColor;
+@_ui5_switch_handle_semantic_checked_hover_border_color: @sapUiContentForegroundBorderColor;
 @_ui5_switch_handle_border_width: 0.125rem;
 
 
@@ -39,8 +39,7 @@
 		border-color: @sapUiHcReducedForeground;
 	}
 
-	.ui5-switch-texton,
-	.ui5-switch-textoff {
+	.ui5-switch-text::before {
 		color: @sapUiHcReducedAltForeground;
 	}
 
@@ -49,20 +48,14 @@
 		.ui5-switch-handle {
 			background: @sapUiHcReducedBackground;
 		}
-		.ui5-switch-texton,
-		.ui5-switch-textoff {
+		.ui5-switch-text,
+		.ui5-switch-text {
 			color: @sapUiHcReducedAltForeground;
 		}
 	}
 }
 
-// switch positive
-.ui5-switch.ui5-switch--disabled.ui5-switch--semantic,
-.ui5-switch.ui5-switch--semantic:hover {
-	& .ui5-switch-texton::before {
-		color: @sapUiBaseText;
-	}
-	& .ui5-switch-textoff::before {
-		color: @sapUiBaseText;
-	}
+.ui5-switch.ui5-switch--disabled.ui5-switch--semantic .ui5-switch-text::before,
+.ui5-switch.ui5-switch--semantic:hover .ui5-switch-text::before {
+	color: @sapUiBaseText;
 }

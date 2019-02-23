@@ -464,6 +464,11 @@ class DatePicker extends WebComponent {
 	}
 
 	_changeCalendarSelection() {
+		if (this._calendarDate.getYear() < 1) {
+			// 0 is a valid year, but we cannot display it
+			return;
+		}
+
 		const oCalDate = this._calendarDate;
 		const timestamp = oCalDate.valueOf() / 1000;
 
