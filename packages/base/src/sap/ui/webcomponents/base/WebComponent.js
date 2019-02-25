@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import configuration from "./Configuration";
 import DOMObserver from "./compatibility/DOMObserver";
 import ShadowDOM from "./compatibility/ShadowDOM";
@@ -167,7 +166,8 @@ class WebComponent extends HTMLElement {
 		domChildren.forEach(child => {
 			const slot = child.getAttribute("data-ui5-slot") || this.constructor.getMetadata().getDefaultSlot();
 			if (slotsMap[slot] === undefined) {
-				console.warn(`Unknown data-ui5-slot value: ${slot}, ignoring`, child);
+				const validValues = Object.keys(slotsMap).join(", ");
+				console.warn(`Unknown data-ui5-slot value: ${slot}, ignoring`, child, `Valid data-ui5-slot values are: ${validValues}`); // eslint-disable-line
 				return;
 			}
 			let slotName;
