@@ -353,7 +353,12 @@ class WebComponent extends HTMLElement {
 			return;
 		}
 
-		const { observedProps, notObservedProps } = this.parentNode._monitoredChildProps.get(prop.target.getAttribute("data-ui5-slot"));
+		const propsMetadata = this.parentNode._monitoredChildProps.get(this.getAttribute("data-ui5-slot"));
+
+		if (!metadata) {
+			return;
+		}
+		const { observedProps, notObservedProps } = propsMetadata;
 
 		if (observedProps.includes(prop.detail.name) && !notObservedProps.includes(prop.detail.name)) {
 			this.parentNode._invalidate("_parent_", this);
