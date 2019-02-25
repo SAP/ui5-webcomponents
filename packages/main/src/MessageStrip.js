@@ -73,6 +73,8 @@ const metadata = {
 		 * @public
 		 */
 		hideCloseButton: { type: Boolean, defaultValue: false },
+
+		closeEventHandler: { type: Object },
 	},
 	events: /** @lends sap.ui.webcomponents.main.MessageStrip.prototype */ {
 
@@ -123,30 +125,13 @@ class MessageStrip extends WebComponent {
 
 	constructor() {
 		super();
-		this.close = this.close.bind(this);
+
+		this.closeEventHandler = {
+			_closeButtonClicked: this._closeButtonClicked.bind(this),
+		};
 	}
 
-	onBeforeRendering() {
-		if (!this.icon) {
-			switch (this.type) {
-			case MessageStripType.Positive:
-				this.icon = "sap-icon://message-success";
-				break;
-			case MessageStripType.Negative:
-				this.icon = "sap-icon://message-error";
-				break;
-			case MessageStripType.Warning:
-				this.icon = "sap-icon://message-warning";
-				break;
-			default:
-			case MessageStripType.Information:
-				this.icon = "sap-icon://hint";
-				break;
-			}
-		}
-	}
-
-	close(_event) {
+	_closeButtonClicked(_event) {
 		this.fireEvent("close", {});
 	}
 
