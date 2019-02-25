@@ -161,29 +161,20 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("Calendar selection works on different timezones", () => {
-		console.log("step 0");
 		datepicker.id = "#dp7";
-		console.log("step 1");
 
 		browser.findElementDeep("#inputTimezone").setValue(-6); //CST
-		console.log("step 2");
 		browser.findElementDeep("#btnApplyTimezone").click();
-		console.log("step 3");
 
 		datepicker.valueHelpIcon.click();
-		console.log("step 4");
 
 		let calendarDate_4_Jan_2019 = datepicker.getPickerDate(1546560000); //Jan 4, 2019
-		console.log("step 5");
 		calendarDate_4_Jan_2019.click();
-		console.log("step 6");
 
 		assert.equal(datepicker.innerInput.getProperty("value"), "Jan 4, 2019", "dp value is correct");
-		console.log("step 7");
 
 		//restore timezone
 		browser.findElementDeep('#btnRestoreTimezone').click();
-		console.log("step 8");
 	});
 
 	it("respect first day of the week - monday", () => {

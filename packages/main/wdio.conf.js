@@ -1,3 +1,6 @@
+var logger = require('@wdio/logger').default;
+const log = logger('testDebugger')
+
 exports.config = {
     //
     // ====================
@@ -150,19 +153,37 @@ exports.config = {
      * @param {Array.<String>} specs List of spec file paths that are to be run
      */
     before: function (capabilities, specs) {
+
         browser.addCommand("findElementDeep", function (selector) {
+            if (selector.includes("#dp7 ")) {
+                log.error(selector);
+            }
             const selectors = selector.split(">>>");
+            var verboseLogging = false;
 
             for (var i = 0; i < selectors.length; i++) {
                 if (i === 0) {
                     curElement = browser.$(selectors[i]);
+                    if (curElement.getProperty("id") === "dp7") {
+                        log.error("DP7 found");
+                        verboseLogging = true;
+                    }
                     continue;
                 }
 
                 // wait for the shadowDom to be filled before executing the selector
-                browser.executeAsync(function (elem, done) {
-                    elem._waitForDomRef().then(done);
-                }, curElement);
+                let result = browser.executeAsync(function (elem, verboseLogging, done) {
+                    var log = ""
+                    if (verboseLogging) {
+                        log = "" + elem.nodeName + ", " + elem.id;
+                    }
+                    elem._waitForDomRef().then(function () {
+                        done(log);
+                    });
+                }, curElement, verboseLogging);
+                if (result) {
+                    log.error(result);
+                }
 
                 // find the next element from the selector
                 curElement = curElement.$(new Function (`
