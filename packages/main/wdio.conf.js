@@ -1,5 +1,6 @@
 var logger = require('@wdio/logger').default;
 const log = logger('testDebugger')
+let verboseLogging = false;
 
 exports.config = {
     //
@@ -159,7 +160,6 @@ exports.config = {
                 log.error(selector);
             }
             const selectors = selector.split(">>>");
-            var verboseLogging = false;
 
             for (var i = 0; i < selectors.length; i++) {
                 if (i === 0) {
@@ -167,6 +167,9 @@ exports.config = {
                     if (curElement.getProperty("id") === "dp7") {
                         log.error("DP7 found");
                         verboseLogging = true;
+                    }
+                    if (curElement.getProperty("id") === "dp7_1") {
+                        verboseLogging = false;
                     }
                     continue;
                 }
@@ -296,9 +299,11 @@ exports.config = {
     afterCommand: function (commandName, args, result, error) {
         const waitFor = ["click", "elementClick", "keys", "findElement", "elementClear", "elementSendKeys"];
         if (waitFor.includes(commandName)) {
+            verboseLogging && log.error("befere whenFinished:", commandName, args);
             browser.executeAsync(function (done) {
                 RenderScheduler.whenFinished().then(done);
             });
+            verboseLogging && log.error("after whenFinished:", commandName, args);
         }
     },
     /**
