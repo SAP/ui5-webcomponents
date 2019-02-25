@@ -1,4 +1,3 @@
-import "../thirdparty/webcomponents-polyfill";
 import configuration from "../Configuration";
 
 import StyleInjection from "../theming/StyleInjection";
