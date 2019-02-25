@@ -1,18 +1,5 @@
-commit 25b55859d425575ec22cc3cff8306da9775c9678
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Feb 25 14:10:15 2019 +0200
+commit ff93da8ffae3644db69115ca1fb2de463ec10909
+Author: Adrian Bobev <adrian.bobev@gmail.com>
+Date:   Mon Feb 25 18:09:27 2019 +0200
 
-    refactor(ui5-tabcontainer): item selection and itemSelect event (#83)
-    
-    The following changes are applied:
-    
-    * remove the selectedKey property
-    * remove the key property
-    * introduce selectedIndex to substitute selectedKey and key pair for selection purposes
-    * change itemSelect event param to provide the selected item, instead of
-      the tab container internal key to make app development easier.
-      Furthermore, in React, the key is reserved for the purpose of VDOM optimisations.
-    * start firing itemSelect when item is selected from the overflow menu as well.
-    * add simple interaction test
-    
-    BREAKING CHANGE: The TabContainer "selected-key" and Tab "key" properties are removed. Use TabContainer "selectedIndex" property (selected-index attribute) to set and get the selected tab.
+    refactor(i18n): change .properties format to .json for i18n texts (#91)
