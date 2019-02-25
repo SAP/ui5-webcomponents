@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import configuration from "./Configuration";
 import DOMObserver from "./compatibility/DOMObserver";
 import ShadowDOM from "./compatibility/ShadowDOM";
