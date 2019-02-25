@@ -139,6 +139,10 @@ class ItemNavigation extends EventProvider {
 			this.currentIndex -= this.rowSize;
 		}
 
+		if (this.currentIndex < 0) {
+			this.currentIndex = 0;
+		}
+
 		const currentItem = items[this.currentIndex];
 
 		if (currentItem instanceof WebComponent) {

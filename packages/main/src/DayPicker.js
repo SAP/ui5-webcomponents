@@ -94,6 +94,9 @@ const metadata = {
 	},
 };
 
+const MAX_YEAR = 9999;
+const MIN_YEAR = 1;
+
 /**
  * @class
  *
@@ -164,7 +167,7 @@ class DayPicker extends WebComponent {
 					return d === timestamp;
 				}),
 				iDay: oCalDate.getDate(),
-				_index: i,
+				_index: i.toString(),
 				classes: `sapWCDayPickerItem sapWCDayPickerWDay${weekday}`,
 			};
 
@@ -206,10 +209,15 @@ class DayPicker extends WebComponent {
 				day.classes += " sapWCDayPickerItemWeekEnd";
 			}
 
-			if (day.classes.indexOf("sapWCDayPickerWDay6") !== -1) {
+			if (day.classes.indexOf("sapWCDayPickerWDay6") !== -1
+				|| _aVisibleDays.length - 1 === i) {
 				this._weeks.push(week);
 				week = [];
 			}
+		}
+
+		while (this._weeks.length < 6) {
+			this._weeks.push([]);
 		}
 		/* eslint-enable no-loop-func */
 
@@ -339,6 +347,10 @@ class DayPicker extends WebComponent {
 		oNewDate.setYear(iNewYear);
 		oNewDate.setMonth(iNewMonth);
 
+		if (oNewDate.getYear() < MIN_YEAR || oNewDate.getYear() > MAX_YEAR) {
+			return;
+		}
+
 		this.fireEvent("navigate", { timestamp: (oNewDate.valueOf() / 1000) });
 	}
 
@@ -382,12 +394,12 @@ class DayPicker extends WebComponent {
 		for (let i = 0; i < 42; i++) {
 			iYear = oDay.getYear();
 			oCalDate = new CalendarDate(oDay, this._primaryCalendarType);
-			if (bIncludeBCDates && iYear < 1) {
+			if (bIncludeBCDates && iYear < MIN_YEAR) {
 				// For dates before 0001-01-01 we should render only empty squares to keep
 				// the month square matrix correct.
 				oCalDate._bBeforeFirstYear = true;
 				_aVisibleDays.push(oCalDate);
-			} else if (iYear > 0 && iYear < 10000) {
+			} else if (iYear >= MIN_YEAR && iYear <= MAX_YEAR) {
 				// Days before 0001-01-01 or after 9999-12-31 should not be rendered.
 				_aVisibleDays.push(oCalDate);
 			}

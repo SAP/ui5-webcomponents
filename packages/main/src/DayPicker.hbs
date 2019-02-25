@@ -22,25 +22,29 @@
 		</div>
 		<div id="{{ctr._id}}-days" class="sapWCDayPickerItemsContainer" tabindex="-1">
 			{{#each ctr._weeks}}
-				<div style="display: flex;">
-					{{#each this}}
-						<div
-							id="{{this.id}}"
-							tabindex="{{this._tabIndex}}"
-							data-sap-timestamp="{{this.timestamp}}"
-							data-sap-index="{{this._index}}"
-							role="gridcell"
-							aria-selected="{{this.selected}}"
-							class="{{this.classes}} sapWCDayPickerDay">
-								<span 
-									class="sapWCDayPickerDayText"
-									data-sap-timestamp="{{this.timestamp}}"
-									data-sap-index="{{this._index}}">
-										{{this.iDay}}
-								</span>
-						</div>
-					{{/each}}
-				</div>
+				{{#if this.length}}
+					<div style="display: flex;">
+						{{#each this}}
+							<div
+								id="{{this.id}}"
+								tabindex="{{this._tabIndex}}"
+								data-sap-timestamp="{{this.timestamp}}"
+								data-sap-index="{{this._index}}"
+								role="gridcell"
+								aria-selected="{{this.selected}}"
+								class="{{this.classes}} sapWCDayPickerDay">
+									<span 
+										class="sapWCDayPickerDayText"
+										data-sap-timestamp="{{this.timestamp}}"
+										data-sap-index="{{this._index}}">
+											{{this.iDay}}
+									</span>
+							</div>
+						{{/each}}
+					</div>
+				{{else}}
+					<div class="sapWCEmptyWeek"></div>
+				{{/if}}
 			{{/each}}
 		</div>
 	</div>

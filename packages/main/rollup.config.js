@@ -146,17 +146,15 @@ const getPlugins = ({ transpile }) => {
 
 			// generate json in DIST for app consumption
 			filePath = filePath.replace(path.normalize("main/src"), path.normalize("main/dist"));
-			const filePathPlayGround = filePath.replace(path.normalize("/dist"), path.normalize("/dist/resources/sap/ui/webcomponents/main"));
-
 
 			mkdirp.sync(path.dirname(filePath));
-			mkdirp.sync(path.dirname(filePathPlayGround));
-			// json is for app consumption
-			fs.writeFileSync(filePath.replace(".less", ".json"), JSON.stringify({ _: css }));
-			fs.writeFileSync(filePathPlayGround.replace(".less", ".json"), JSON.stringify({ _: css }));
+			// use JSON.stringify to escape the string content
+			const data = JSON.stringify({ _: css }).replace('{"_":', '').replace(/}$/, "");
+			// inline the string in a .js file with ES6 export for app consumption
+			fs.writeFileSync(filePath.replace(".less", "-css.js"), `export default ${data};`);
+
 			// CSS is for dev comparison only
 			fs.writeFileSync(filePath.replace(".less", ".css"), css);
-			fs.writeFileSync(filePathPlayGround.replace(".less", ".css"), css);
 
 			return "";
 		}
