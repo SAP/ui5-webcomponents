@@ -165,7 +165,8 @@ class WebComponent extends HTMLElement {
 		const autoIncrementMap = new Map();
 		domChildren.forEach(child => {
 			const slot = child.getAttribute("data-ui5-slot") || this.constructor.getMetadata().getDefaultSlot();
-			if (slotsMap[slot] === "undefined") {
+			if (slotsMap[slot] === undefined) {
+				console.warn(`Unknown data-ui5-slot value: ${slot}, ignoring`, child);
 				return;
 			}
 			let slotName;
