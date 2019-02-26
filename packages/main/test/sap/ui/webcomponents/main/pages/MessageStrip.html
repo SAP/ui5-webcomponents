@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<title>MessageStrip</title>
+
+	<script data-id="sap-ui-config" type="application/json">
+		{
+			"rtl": false,
+			"compactSize": false
+		}
+	</script>
+
+	<script src="../../../../../../resources/sap/ui/webcomponents/main/bundle.esm.js"
+		type="module"
+	>
+	</script>
+
+	<script nomodule src="../../../../../../resources/sap/ui/webcomponents/main/bundle.es5.js">
+	</script>
+</head>
+
+<body>
+	<ui5-messagestrip id="messageStrip">Hello World!</ui5-messagestrip>
+	<ui5-input id="inputField"></ui5-input>
+
+	<script>
+		var counter = 0;
+		messageStrip.addEventListener("close", function() {
+			inputField.value = ++counter;
+		});
+	</script>
+</body>
+</html>

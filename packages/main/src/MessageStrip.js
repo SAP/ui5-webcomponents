@@ -30,7 +30,7 @@ const metadata = {
 		/**
 		 * Defines the <code>ui5-messagestrip</code> type.
 		 * </br></br>
-		 * <b>Note:</b> Available options are "Information", "Positive", "Negative",
+		 * <b>Note:</b> Available options are <code>Information"</code>, <code>"Positive"</code>, <code>"Negative"</code>,
 		 * and "Warning".
 		 *
 		 * @type {MessageStripType}
@@ -74,7 +74,7 @@ const metadata = {
 		 */
 		hideCloseButton: { type: Boolean, defaultValue: false },
 
-		closeEventHandler: { type: Object },
+		_closeEventHandler: { type: Object },
 	},
 	events: /** @lends sap.ui.webcomponents.main.MessageStrip.prototype */ {
 
@@ -126,9 +126,16 @@ class MessageStrip extends WebComponent {
 	constructor() {
 		super();
 
-		this.closeEventHandler = {
+		this._closeEventHandler = {
 			_closeButtonClicked: this._closeButtonClicked.bind(this),
 		};
+	}
+
+	onAfterRendering() {
+		// Hack for styling the button
+		if (!this.hideCloseButton) {
+			this.shadowRoot.querySelector("ui5-button")._customClasses = ["ButtonInMessageStrip"];
+		}
 	}
 
 	_closeButtonClicked(_event) {

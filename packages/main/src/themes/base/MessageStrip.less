@@ -32,6 +32,8 @@ ui5-messagestrip {
     display: inline-block;
     width: 100%;
     height: 100%;
+    // Hack for being able to set the color from outside if no type is set
+    background-color: @sapInformationBackground;
 }
 
 span[data-sap-ui-wc-root] {
@@ -74,6 +76,11 @@ span[data-sap-ui-wc-root] {
             padding-right: 1rem;
         }
         
+        ui5-label {
+            min-height: 26px;
+            display: flex;
+            align-items: center;
+        }
 
         ui5-button {
             height: @_ui5_webcomponents_messagestrip_button_height;
@@ -85,6 +92,7 @@ span[data-sap-ui-wc-root] {
     }
 
     .sapMMessageStripInfo {
+        background-color: @sapInformationBackground;        
         border-color: @sapInformationBorderColor;
         ui5-icon {
             color: @sapInformationBorderColor;
