@@ -35,35 +35,39 @@ const metadata = {
 		 * @type {String}
 		 * @public
 		 */
-		text: { type: String, group: "Misc", defaultValue: "" },
+		text: {
+			type: String,
+			defaultValue: "",
+		},
 
 		/**
 		 * Enabled items can be selected.
 		 * @type {Boolean}
 		 * @public
 		 */
-		disabled: { type: Boolean, group: "Misc" },
-
-		/**
-		 * Can be used as input for subsequent actions.
-		 * @type {String}
-		 * @public
-		 */
-		key: { type: String, group: "Data", defaultValue: "" },
+		disabled: {
+			type: Boolean,
+		},
 
 		/**
 		 * Represents the "count" text, which is displayed in the tab filter.
 		 * @type {String}
 		 * @public
 		 */
-		count: { type: String, group: "Data", defaultValue: "" },
+		count: {
+			type: String,
+			defaultValue: "",
+		},
 
 		/**
 		 * Specifies the icon to be displayed for the tab filter.
 		 * @type {URI}
 		 * @public
 		 */
-		icon: { type: URI, group: "Misc", defaultValue: "" },
+		icon: {
+			type: URI,
+			defaultValue: "",
+		},
 
 		/**
 		 * Specifies the icon color.
@@ -76,14 +80,20 @@ const metadata = {
 		 * @type {IconColor}
 		 * @public
 		 */
-		iconColor: { type: IconColor, group: "Appearance", defaultValue: IconColor.Default },
+		iconColor: {
+			type: IconColor,
+			defaultValue: IconColor.Default,
+		},
 
 		/**
 		 * Specifies whether the icon and the texts are placed vertically or horizontally.
 		 * @type {TabDesignMode}
 		 * @public
 		 */
-		design: { type: TabDesignMode, group: "Appearance", defaultValue: TabDesignMode.Vertical },
+		design: {
+			type: TabDesignMode,
+			defaultValue: TabDesignMode.Vertical,
+		},
 
 		_showAll: { type: Boolean },
 		_isSelected: { type: Boolean, defaultValue: false },
@@ -126,20 +136,6 @@ class Tab extends TabBase {
 
 	constructor(state) {
 		super(state);
-	}
-
-	/**
-	 * If the Tab doesn't have a key, the function returns the ID of the Tab,
-	 * so the TabContainer can remember the selected Tab.
-	 *
-	 * @private
-	 */
-	_getUniqueKey() {
-		if (this.key) {
-			return this.key;
-		}
-
-		return this._id;
 	}
 
 	static get calculateTemplateContext() {

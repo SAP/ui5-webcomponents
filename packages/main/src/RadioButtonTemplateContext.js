@@ -1,5 +1,5 @@
 import Device from "@ui5/webcomponents-core/dist/sap/ui/Device";
-import Configuration from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Configuration";
+import { getCompactSize } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Configuration";
 
 const SVGConfig = {
 	"compact": {
@@ -18,7 +18,7 @@ const SVGConfig = {
 
 class RadioButtonTemplateContext {
 	static calculate(state) {
-		const compact = Configuration.getCompactSize();
+		const compact = getCompactSize();
 		let tabIndex;
 
 		if (!state.disabled) {

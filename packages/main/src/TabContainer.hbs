@@ -42,7 +42,7 @@
 					 horizontal-align="Right">
 			<ui5-list @itemPress="{{ctr._overflowList.onItemPress}}">
 				{{#each ctr._overflowList.items}}
-					<ui5-li-custom id="{{this.key}}"
+					<ui5-li-custom id="{{this.id}}"
 								   type="{{this.type}}"
 								   selected="{{this.selected}}"
 								   class="{{this.classes}}">

@@ -1,4 +1,4 @@
-import configuration from "./Configuration";
+import { getWCNoConflict } from "./Configuration";
 import DOMObserver from "./compatibility/DOMObserver";
 import ShadowDOM from "./compatibility/ShadowDOM";
 import WebComponentMetadata from "./WebComponentMetadata";
@@ -165,7 +165,9 @@ class WebComponent extends HTMLElement {
 		const autoIncrementMap = new Map();
 		domChildren.forEach(child => {
 			const slot = child.getAttribute("data-ui5-slot") || this.constructor.getMetadata().getDefaultSlot();
-			if (slotsMap[slot] === "undefined") {
+			if (slotsMap[slot] === undefined) {
+				const validValues = Object.keys(slotsMap).join(", ");
+				console.warn(`Unknown data-ui5-slot value: ${slot}, ignoring`, child, `Valid data-ui5-slot values are: ${validValues}`); // eslint-disable-line
 				return;
 			}
 			let slotName;
@@ -586,7 +588,7 @@ class WebComponent extends HTMLElement {
 
 	static get noConflictEvents() {
 		if (!this._noConflictEvents) {
-			const noConflictConfig = configuration.getWCNoConflict();
+			const noConflictConfig = getWCNoConflict();
 			this._noConflictEvents = [];
 			if (typeof noConflictConfig === "object" && typeof noConflictConfig.events === "string") {
 				this._noConflictEvents = noConflictConfig.events.split(",").map(evtName => evtName.trim());

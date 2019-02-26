@@ -1,4 +1,4 @@
-import configuration from "../Configuration";
+import { getTheme } from "../Configuration";
 import { attachThemeChange, getEffectiveStyle } from "../Theming";
 
 class StyleInjection {
@@ -28,7 +28,7 @@ class StyleInjection {
 			return;
 		}
 
-		const theme = configuration.getTheme();
+		const theme = getTheme();
 		this.tagNamesInHead.forEach(async tagName => {
 			const styleUrls = this.tagsToStyleUrls.get(tagName);
 			const css = await getEffectiveStyle(theme, styleUrls, tagName);

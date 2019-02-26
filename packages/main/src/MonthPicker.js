@@ -1,6 +1,6 @@
 import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
 import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
-import configuration from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Configuration";
+import { getFormatSettings, getCalendarType } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Configuration";
 import ItemNavigation from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/delegate/ItemNavigation";
 import Integer from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/Integer";
 import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData";
@@ -88,7 +88,7 @@ class MonthPicker extends WebComponent {
 
 	constructor(state) {
 		super(state);
-		this._oLocale = configuration.getFormatSettings().getFormatLocale();
+		this._oLocale = getFormatSettings().getFormatLocale();
 		this._oLocaleData = new LocaleData(this._oLocale);
 
 		this._itemNav = new ItemNavigation(this, { rowSize: 3, cyclic: true });
@@ -157,7 +157,7 @@ class MonthPicker extends WebComponent {
 	}
 
 	get _primaryCalendarType() {
-		return this.primaryCalendarType || configuration.getCalendarType();
+		return this.primaryCalendarType || getCalendarType();
 	}
 
 	onclick(event) {

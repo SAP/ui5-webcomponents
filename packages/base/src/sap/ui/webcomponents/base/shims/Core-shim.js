@@ -1,5 +1,5 @@
 import { inject as injectCore } from "@ui5/webcomponents-core/dist/sap/ui/core/Core";
-import configuration from "../Configuration";
+import * as Configuration from "../Configuration";
 
 /**
  * Shim for the OpenUI5 core
@@ -10,7 +10,7 @@ const Core = {
 	 * @deprecated - must be here for compatibility
 	 */
 	getConfiguration() {
-		return configuration;
+		return Configuration;
 	},
 
 	/**

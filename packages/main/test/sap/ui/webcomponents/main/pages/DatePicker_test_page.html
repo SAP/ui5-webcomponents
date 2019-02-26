@@ -52,6 +52,7 @@
 
 		function restore() {
 			Date.prototype.getDate = originalGetDate;
+			document.querySelector("#inputTimezone").value = "";
 		};
 
 		let counter = 0;
