@@ -36,6 +36,24 @@ sap.ui.define([
 			}, false);
 		},
 
+		onAfterRendering: function() {
+			var newComponents = [
+				"Select",
+				"ShellBar",
+				"Timeline"
+			];
+
+			this.byId("nl").getItems()[1].getItems().forEach(function(item) {
+				if (newComponents.indexOf(item.getText()) !== -1) {
+					var newLabel = document.createElement("div");
+					newLabel.textContent = "NEW";
+					newLabel.classList.add("new-label");
+
+					item.getDomRef().appendChild(newLabel);
+				}
+			}.bind(this));
+		},
+
 		debounce: function(func, delay) {
 			var inDebounce;
 			return function() {
