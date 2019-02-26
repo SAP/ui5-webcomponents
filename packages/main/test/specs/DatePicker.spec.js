@@ -1,5 +1,5 @@
 const datepicker = require("../pageobjects/DatePickerTestPage");
-const assert = require("assert");
+const assert = require("chai").assert;
 
 describe("Date Picker Tests", () => {
 	before(() => {
@@ -299,13 +299,13 @@ describe("Date Picker Tests", () => {
 		datepicker.id = "#dp9";
 
 		datepicker.valueHelpIcon.click();
-		assert.ok(datepicker.isPickerOpen(), "picker is open");
+		assert.ok(datepicker.isPickerOpen(), "picker is open before scrolling");
 
 		// scroll down
 		browser.findElementDeep("#downThere").moveTo(0, 0);
 
 		browser.pause(1000);
-		assert.ok(datepicker.isPickerOpen(), "picker is open");
+		assert.ok(datepicker.isPickerOpen(), "picker is open after scrolling");
 	});
 
 	it("daypicker extreme values max", () => {
