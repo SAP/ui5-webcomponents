@@ -86,6 +86,16 @@ const bundleMap = {
 	zh_TW: zhTW,
 };
 
+const allEntriesInlined = Object.entries(bundleMap).every(([_key, value]) => typeof (value) === "object");
+
+/* eslint-disable */
+if (allEntriesInlined) {
+	console.warn(`Inefficient bundling detected: consider bundling i18n imports as URLs instead of inlining them. 
+See rollup-plugin-url or webpack file-loader for more information.
+Suggested pattern: "i18n\\\/.*\\\.json"`);
+}
+/* eslint-enable */
+
 registerMessageBundles("@ui5/webcomponents", bundleMap);
 
 export { fetchResourceBundle, getResourceBundle };
