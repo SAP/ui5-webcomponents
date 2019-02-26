@@ -1,7 +1,7 @@
 import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
 import { fetchCldrData } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/CLDR";
 import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
-import configuration from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Configuration";
+import { getLocale, getCalendarType, getFormatSettings } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Configuration";
 import DateFormat from "@ui5/webcomponents-core/dist/sap/ui/core/format/DateFormat";
 import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData";
 import CalendarDate from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/dates/CalendarDate";
@@ -121,7 +121,7 @@ class Calendar extends WebComponent {
 
 	constructor(state) {
 		super(state);
-		this._oLocale = configuration.getFormatSettings().getFormatLocale();
+		this._oLocale = getFormatSettings().getFormatLocale();
 		this._oLocaleData = new LocaleData(this._oLocale);
 		this._header = {};
 		this._header.onPressPrevious = this._handlePrevious.bind(this);
@@ -186,7 +186,7 @@ class Calendar extends WebComponent {
 	}
 
 	get _primaryCalendarType() {
-		return this.primaryCalendarType || configuration.getCalendarType();
+		return this.primaryCalendarType || getCalendarType();
 	}
 
 	get _formatPattern() {
@@ -482,7 +482,7 @@ class Calendar extends WebComponent {
 
 	static async define(...params) {
 		await Promise.all([
-			fetchCldrData(configuration.getLocale().getLanguage(), configuration.getLocale().getRegion(), configuration.getLocale().getScript()),
+			fetchCldrData(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
 			CalendarHeader.define(),
 			DayPicker.define(),
 			MonthPicker.define(),

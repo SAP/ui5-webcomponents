@@ -1,5 +1,5 @@
 import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
-import Configuration from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Configuration";
+import { getRTL } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Configuration";
 import URI from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/URI";
 import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
 import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
@@ -432,7 +432,7 @@ class ShellBar extends WebComponent {
 	_handleActionsOverflow() {
 		const rightContainerRect = this.shadowRoot.querySelector(".sapWCShellBarOverflowContainerRight").getBoundingClientRect();
 		const icons = this.shadowRoot.querySelectorAll(".sapWCShellBarIconButton:not(.sapWCShellBarOverflowIcon):not(.sapWCShellBarUnsetIcon)");
-		const isRTL = Configuration.getRTL();
+		const isRTL = getRTL();
 
 		let overflowCount = [].filter.call(icons, icon => {
 			const iconRect = icon.getBoundingClientRect();
@@ -557,7 +557,7 @@ class ShellBar extends WebComponent {
 		const triggeredByOverflow = event.target.tagName.toLowerCase() === "ui5-li";
 		const overflowButton = this.shadowRoot.querySelector(".sapWCShellBarOverflowIcon");
 		const overflowButtonRect = overflowButton.getBoundingClientRect();
-		const isRTL = Configuration.getRTL();
+		const isRTL = getRTL();
 		let right = "";
 
 		if (isRTL) {
