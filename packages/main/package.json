@@ -83,7 +83,8 @@
   "dependencies": {
     "@ui5/webcomponents-base": "0.7.0",
     "@ui5/webcomponents-core": "0.7.0",
-    "lit-html": "^1.0.0"
+    "lit-html": "^1.0.0",
+    "rollup-plugin-filesize": "^6.0.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.2",
