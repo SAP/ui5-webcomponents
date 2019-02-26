@@ -3,5 +3,5 @@ import "@ui5/webcomponents-core/dist/sap/ui/thirdparty/es6-promise";
 import "@ui5/webcomponents-core/dist/sap/ui/thirdparty/es6-other-polyfills";
 import "regenerator-runtime/runtime";
 
-// Plus all polyfills neede for edge are also needed for IE11
+// Plus all polyfills needed for Edge are also needed for IE11
 import "./Edge";

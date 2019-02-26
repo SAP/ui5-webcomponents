@@ -1,3 +1,4 @@
+// ESM bundle targets Edge + browsers with native support
 import "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/support/Edge";
 
 import "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/shims/jquery-shim";

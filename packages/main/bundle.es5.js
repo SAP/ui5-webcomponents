@@ -1,3 +1,4 @@
+// ES5 bundle targets IE11 only
 import "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/support/IE11";
 
 import configuration from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Configuration";
