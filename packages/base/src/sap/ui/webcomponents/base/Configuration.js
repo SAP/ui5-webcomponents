@@ -2,7 +2,7 @@ import Device from "@ui5/webcomponents-core/dist/sap/ui/Device";
 import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData";
 import Locale from "@ui5/webcomponents-core/dist/sap/ui/core/Locale";
 import CalendarType from "@ui5/webcomponents-core/dist/sap/ui/core/CalendarType";
-import FormatSettings from "./FormatSettings";
+import * as FormatSettings from "./FormatSettings";
 
 const getDesigntimePropertyAsArray = sValue => {
 	const m = /\$([-a-z0-9A-Z._]+)(?::([^$]*))?\$/.exec(sValue);
@@ -45,7 +45,7 @@ const CONFIGURATION = {
 	"xx-wc-no-conflict": false, // no URL
 };
 
-const formatSettings = new FormatSettings(CONFIGURATION);
+FormatSettings.setConfiguration(CONFIGURATION);
 
 /* General settings */
 const getTheme = () => {
@@ -97,46 +97,56 @@ const getLocale = () => {
 };
 
 const getFormatSettings = () => {
-	return formatSettings;
+	return FormatSettings;
 };
 
 const _setTheme = themeName => {
 	CONFIGURATION.theme = themeName;
 };
 
-const applyURLParameters = () => {
-	const fullURL = window.location.href;
-	const params = new URL(fullURL);
-	const searchParams = params.searchParams;
-	const langValue = searchParams.get("sap-ui-language");
-	const theme = searchParams.get("sap-ui-theme");
-	const rtl = searchParams.get("sap-ui-rtl");
-	const compactSize = searchParams.get("sap-ui-compactSize");
-	const calendarType = searchParams.get("sap-ui-calendarType");
-	const forceDefaultGestures = searchParams.get("xx-wc-force-default-gestures");
+const booleanMapping = {
+	"true": true,
+	"false": false,
+};
 
-	if (langValue) {
-		setLanguage(langValue);
-	}
+const runtimeConfig = {};
 
-	if (theme) {
-		CONFIGURATION.theme = theme;
-	}
+const parseURLParameters = () => {
+	const params = new URLSearchParams(window.location.search);
 
-	if (rtl !== null) {
-		CONFIGURATION.rtl = !(rtl === "false");
-	}
+	params.forEach((value, key) => {
+		if (key.indexOf("sap-ui") === -1) {
+			return;
+		}
 
-	if (compactSize !== null) {
-		CONFIGURATION.compactSize = !(compactSize === "false");
-	}
+		value = value.toLowerCase();
 
-	if (calendarType && calendarType !== CONFIGURATION.calendarType) {
-		CONFIGURATION.calendarType = calendarType;
-	}
+		const param = key.split("sap-ui-")[1];
 
-	if (forceDefaultGestures !== null) {
-		CONFIGURATION["xx-wc-force-default-gestures"] = !(forceDefaultGestures === "false");
+		if (Object.keys(booleanMapping).indexOf(value) !== -1) {
+			value = booleanMapping[value];
+		}
+
+		runtimeConfig[param] = value;
+	});
+};
+
+const parseConfigurationScript = () => {
+	const configScript = document.querySelector("[data-id='sap-ui-config']");
+	let configJSON;
+
+	if (configScript) {
+		try {
+			configJSON = JSON.parse(configScript.innerHTML);
+		} catch (е) {
+			console.warn("Incorrect data-sap-ui-config format. Please use JSON"); /* eslint-disable-line */
+		}
+
+		if (configJSON) {
+			Object.keys(configJSON).forEach(key => {
+				runtimeConfig[key] = configJSON[key];
+			});
+		}
 	}
 };
 
@@ -173,59 +183,19 @@ const setLanguage = newLanguage => {
 	return CONFIGURATION;
 };
 
-const applyConfigurationScript = () => {
-	const configScript = document.querySelector("[data-id='sap-ui-config']");
-	let configJSON;
-
-	if (configScript) {
-		try {
-			configJSON = JSON.parse(configScript.innerHTML);
-		} catch (е) {
-			console.warn("Incorrect data-sap-ui-config format. Please use JSON"); /* eslint-disable-line */
+const applyConfigurations = () => {
+	Object.keys(runtimeConfig).forEach(key => {
+		if (key === "language") {
+			setLanguage(runtimeConfig[key]);
+		} else {
+			CONFIGURATION[key] = runtimeConfig[key];
 		}
-
-		if (configJSON) {
-			const langParam = configJSON.language;
-			const theme = configJSON.theme;
-			const rtl = configJSON.rtl;
-			const compactSize = configJSON.compactSize;
-			const calendarType = configJSON.calendarType;
-			const noConflictAPIs = configJSON["xx-wc-no-conflict"];
-			const forceDefaultGestures = configJSON["xx-wc-force-default-gestures"];
-
-			if (langParam) {
-				setLanguage(langParam);
-			}
-
-			if (theme) {
-				CONFIGURATION.theme = theme;
-			}
-
-			if (rtl !== undefined) {
-				CONFIGURATION.rtl = !!rtl;
-			}
-
-			if (compactSize !== undefined) {
-				CONFIGURATION.compactSize = !!compactSize;
-			}
-
-			if (noConflictAPIs !== undefined) {
-				CONFIGURATION["xx-wc-no-conflict"] = !!noConflictAPIs;
-			}
-
-			if (forceDefaultGestures !== undefined) {
-				CONFIGURATION["xx-wc-force-default-gestures"] = !!forceDefaultGestures;
-			}
-
-			if (calendarType && calendarType !== CONFIGURATION.calendarType) {
-				CONFIGURATION.calendarType = calendarType;
-			}
-		}
-	}
+	});
 };
 
-applyConfigurationScript();
-applyURLParameters();
+parseConfigurationScript();
+parseURLParameters();
+applyConfigurations();
 
 export {
 	getTheme,

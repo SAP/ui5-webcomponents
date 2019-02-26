@@ -21,7 +21,8 @@
   "dependencies": {
     "@polymer/polymer": "^3.1.0",
     "@ui5/webcomponents-core": "0.7.0",
-    "lit-html": "^1.0.0"
+    "lit-html": "^1.0.0",
+    "url-search-params-polyfill": "^5.0.0"
   },
   "devDependencies": {
     "eslint": "^5.13.0",
