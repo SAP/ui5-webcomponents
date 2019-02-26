@@ -1,5 +1,5 @@
-commit ff93da8ffae3644db69115ca1fb2de463ec10909
-Author: Adrian Bobev <adrian.bobev@gmail.com>
-Date:   Mon Feb 25 18:09:27 2019 +0200
+commit a0333261da5749379ab2fef25d13531dde2bdf22
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Tue Feb 26 09:10:39 2019 +0200
 
-    refactor(i18n): change .properties format to .json for i18n texts (#91)
+    fix: unknown slots no longer cause an error (#90)
