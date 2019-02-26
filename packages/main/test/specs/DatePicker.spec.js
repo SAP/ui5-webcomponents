@@ -176,7 +176,7 @@ describe("Date Picker Tests", () => {
 		//restore timezone
 		browser.findElementDeep('#btnRestoreTimezone').click();
 		// test needs to end with an assert, otherwise the next test seems to start before the click is finished and it hangs from time to time
-		assert.equal($("#inputTimezone").getValue(), 0, "timezone is reset");
+		assert.equal($("#inputTimezone").getValue(), "", "timezone is reset");
 	});
 
 	it("respect first day of the week - monday", () => {
