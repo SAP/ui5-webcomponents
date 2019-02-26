@@ -194,6 +194,12 @@ const getES5Config = () => {
 			extend: "true",	// Whether or not to extend the global variable defined by the name option in umd or iife formats.
 			sourcemap: true
 		},
+		moduleContext: (id) => {
+			if (id.includes("url-search-params-polyfill")) {
+				// suppress the rollup error for this module as it uses this in the global scope correctly even without changing the context here
+				return "window";
+			}
+		},
 		watch: {
 			clearScreen: false
 		},
