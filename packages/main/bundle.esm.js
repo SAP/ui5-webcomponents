@@ -1,3 +1,5 @@
+import "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/support/Edge";
+
 import "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/shims/jquery-shim";
 import "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/events/PolymerGestures";
 import "./src/ThemeProvider";
