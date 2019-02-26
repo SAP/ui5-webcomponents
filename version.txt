@@ -1,7 +1,5 @@
-commit 87e8249653bf79b2e2f78c31792df8ea0ee9d358
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Tue Feb 26 17:09:52 2019 +0200
+commit 3efe10bbcdf46547165e01fb218e34e16f97de69
+Author: Benjamin Reim <benj.reim@gmail.com>
+Date:   Tue Feb 26 16:40:06 2019 +0100
 
-    build: suppress rollup error (#99)
-    
-    url-search-params-polyfill causes rollup to report an error although it still works.
+    docs(shellbar): fix typo in shellbar tag (#100)
