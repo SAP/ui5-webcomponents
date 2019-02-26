@@ -104,49 +104,12 @@ const _setTheme = themeName => {
 	CONFIGURATION.theme = themeName;
 };
 
-const booleanMapping = {
-	"true": true,
-	"false": false,
-};
+const booleanMapping = new Map([
+	["true", true],
+	["false", false],
+]);
 
 let runtimeConfig = {};
-
-const parseURLParameters = () => {
-	const params = new URLSearchParams(window.location.search);
-
-	params.forEach((value, key) => {
-		if (!key.startsWith("sap-ui")) {
-			return;
-		}
-
-		value = value.toLowerCase();
-
-		const param = key.split("sap-ui-")[1];
-
-		if (Object.prototype.hasOwnProperty.call(booleanMapping, value)) {
-			value = booleanMapping[value];
-		}
-
-		runtimeConfig[param] = value;
-	});
-};
-
-const parseConfigurationScript = () => {
-	const configScript = document.querySelector("[data-id='sap-ui-config']");
-	let configJSON;
-
-	if (configScript) {
-		try {
-			configJSON = JSON.parse(configScript.innerHTML);
-		} catch (е) {
-			console.warn("Incorrect data-sap-ui-config format. Please use JSON"); /* eslint-disable-line */
-		}
-
-		if (configJSON) {
-			runtimeConfig = Object.assign({}, configJSON);
-		}
-	}
-};
 
 const convertToLocaleOrNull = lang => {
 	try {
@@ -179,6 +142,43 @@ const setLanguage = newLanguage => {
 	}
 
 	return CONFIGURATION;
+};
+
+const parseConfigurationScript = () => {
+	const configScript = document.querySelector("[data-id='sap-ui-config']");
+	let configJSON;
+
+	if (configScript) {
+		try {
+			configJSON = JSON.parse(configScript.innerHTML);
+		} catch (е) {
+			console.warn("Incorrect data-sap-ui-config format. Please use JSON"); /* eslint-disable-line */
+		}
+
+		if (configJSON) {
+			runtimeConfig = Object.assign({}, configJSON);
+		}
+	}
+};
+
+const parseURLParameters = () => {
+	const params = new URLSearchParams(window.location.search);
+
+	params.forEach((value, key) => {
+		if (!key.startsWith("sap-ui")) {
+			return;
+		}
+
+		value = value.toLowerCase();
+
+		const param = key.split("sap-ui-")[1];
+
+		if (booleanMapping.has(value)) {
+			value = booleanMapping.get(value);
+		}
+
+		runtimeConfig[param] = value;
+	});
 };
 
 const applyConfigurations = () => {
