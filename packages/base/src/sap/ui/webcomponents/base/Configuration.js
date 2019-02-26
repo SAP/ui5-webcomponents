@@ -109,13 +109,13 @@ const booleanMapping = {
 	"false": false,
 };
 
-const runtimeConfig = {};
+let runtimeConfig = {};
 
 const parseURLParameters = () => {
 	const params = new URLSearchParams(window.location.search);
 
 	params.forEach((value, key) => {
-		if (key.indexOf("sap-ui") === -1) {
+		if (!key.startsWith("sap-ui")) {
 			return;
 		}
 
@@ -123,7 +123,7 @@ const parseURLParameters = () => {
 
 		const param = key.split("sap-ui-")[1];
 
-		if (Object.keys(booleanMapping).indexOf(value) !== -1) {
+		if (Object.prototype.hasOwnProperty.call(booleanMapping, value)) {
 			value = booleanMapping[value];
 		}
 
@@ -143,9 +143,7 @@ const parseConfigurationScript = () => {
 		}
 
 		if (configJSON) {
-			Object.keys(configJSON).forEach(key => {
-				runtimeConfig[key] = configJSON[key];
-			});
+			runtimeConfig = Object.assign({}, configJSON);
 		}
 	}
 };
