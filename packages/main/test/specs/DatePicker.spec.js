@@ -81,12 +81,12 @@ describe("Date Picker Tests", () => {
 		datepicker.root.setAttribute("format-pattern", "MMM d, y G");
 
 		assert.ok(datepicker.isValid("Rab. I 6, 1440 AH"), "Islamic value is valid");
- 
+
 		datepicker.root.setAttribute("value", "Rab. I 6, 1440 AH");
 
 		assert.equal(datepicker.innerInput.getAttribute("value"), "Rab. I 6, 1440 AH", "input has correct Islamic value");
 	});
- 
+
 	it("Can focus the input after open", () => {
 		datepicker.id = "#dp1";
 		datepicker.openPicker({ focusInput: true });
@@ -175,6 +175,9 @@ describe("Date Picker Tests", () => {
 
 		//restore timezone
 		browser.findElementDeep('#btnRestoreTimezone').click();
+
+		// test needs to end with an assert, otherwise the next test seems to start before the click is finished and it hangs from time to time
+		assert.equal($("#inputTimezone").getValue(), "", "timezone is reset");
 	});
 
 	it("respect first day of the week - monday", () => {
