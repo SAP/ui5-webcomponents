@@ -1,9 +1,7 @@
-commit 04c692a1d6d14e08d06fd260c133254658f9bde3
+commit 87e8249653bf79b2e2f78c31792df8ea0ee9d358
 Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Tue Feb 26 15:25:16 2019 +0200
+Date:   Tue Feb 26 17:09:52 2019 +0200
 
-    test: fix unstable test (#95)
+    build: suppress rollup error (#99)
     
-    It seems that WDIO is not waiting for a test to finish if the last
-    command is a click. In such cases, it was already starting the next test
-    causing the click async callback to hang and the test to timeout.
+    url-search-params-polyfill causes rollup to report an error although it still works.
