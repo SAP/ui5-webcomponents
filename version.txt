@@ -1,5 +1,9 @@
-commit f57c25b5787596803e92e14cb6597bf95f32801a
-Author: Adrian Bobev <adrian.bobev@gmail.com>
-Date:   Tue Feb 26 13:49:52 2019 +0200
+commit 04c692a1d6d14e08d06fd260c133254658f9bde3
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Tue Feb 26 15:25:16 2019 +0200
 
-    chore: add warning of inefficient bundling of i18n files (#93)
+    test: fix unstable test (#95)
+    
+    It seems that WDIO is not waiting for a test to finish if the last
+    command is a click. In such cases, it was already starting the next test
+    causing the click async callback to hang and the test to timeout.
