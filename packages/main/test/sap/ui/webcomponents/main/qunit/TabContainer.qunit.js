@@ -6,17 +6,17 @@ TestHelper.ready(function () {
 
 	QUnit.module("Web Components", {
 		beforeEach: function () {
-			var html = '<ui5-tabcontainer id="myTabContainer" fixed show-overflow="true" selected-key="4">'
-					+ '<ui5-tab key="item1" text="Products" count="123">'
+			var html = '<ui5-tabcontainer id="myTabContainer" fixed show-overflow="true" selected-index="3">'
+					+ '<ui5-tab text="Products" count="123">'
 						+ '<ui5-button>Button 11</ui5-button>'
 					+ '</ui5-tab>'
 					+ '<ui5-tab-separator></ui5-tab-separator>'
 					+ '<ui5-tab icon="sap-icon://employee" text="Tab 2" icon-color="Positive" count="12343455">'
 						+ '<ui5-button>Button 3</ui5-button>'
 					+ '</ui5-tab>'
-					+ '<ui5-tab icon="sap-icon://menu" text="Tab 3" key="item2"  icon-color="Critical" count="12343455">'
+					+ '<ui5-tab icon="sap-icon://menu" text="Tab 3" icon-color="Critical" count="12343455">'
 					+ '</ui5-tab>'
-					+ '<ui5-tab key="4" icon="sap-icon://menu2" text="Tab 4"  icon-color="Negative" count="12343455">'
+					+ '<ui5-tab icon="sap-icon://menu2" text="Tab 4"  icon-color="Negative" count="12343455">'
 					+ '</ui5-tab>'
 					+ '<ui5-tab icon="sap-icon://menu2" disabled="true" text="Disabled"  icon-color="Negative" count="12343455">'
 					+ '</ui5-tab>'
@@ -51,7 +51,7 @@ TestHelper.ready(function () {
 
 		var done = assert.async();
 
-		this.tabContainer.setAttribute('selected-key', 'item1');
+		this.tabContainer.setAttribute('selected-index', '0');
 
 		RenderScheduler.whenFinished().then(function () {
 
@@ -80,7 +80,7 @@ TestHelper.ready(function () {
 
 			RenderScheduler.whenFinished().then(function () {
 
-				assert.strictEqual(this.tabContainer.getAttribute('selected-key'), 'item2', 'selected tab is correct');
+				assert.strictEqual(this.tabContainer.getAttribute('selected-index'), '2', 'selected tab is correct');
 
 				var overflowBtn = this.tabContainer.shadowRoot.querySelector('.sapMITHBtn');
 				var header = this.tabContainer.shadowRoot.querySelector('.sapMITH');

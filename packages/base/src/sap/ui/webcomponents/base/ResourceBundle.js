@@ -1,7 +1,7 @@
 import ResourceBundle from "@ui5/webcomponents-core/dist/sap/base/i18n/ResourceBundle";
 import configuration from "./Configuration";
 import { registerModuleContent } from "./ResourceLoaderOverrides";
-import { fetchTextOnce } from "./util/FetchHelper";
+import { fetchJsonOnce } from "./util/FetchHelper";
 
 const bundleURLs = new Map();
 const singletonPromises = new Map();
@@ -53,8 +53,14 @@ const fetchResourceBundle = async packageId => {
 
 	const bundleURL = bundlesForPackage[localeId];
 
-	const data = await fetchTextOnce(bundleURL);
-	registerModuleContent(`${packageId}_${localeId}.properties`, data);
+	if (typeof bundleURL === "object") {
+		// inlined from build
+		registerModuleContent(`${packageId}_${localeId}.properties`, bundleURL._);
+		return bundleURL;
+	}
+
+	const data = await fetchJsonOnce(bundleURL);
+	registerModuleContent(`${packageId}_${localeId}.properties`, data._);
 };
 
 /**
