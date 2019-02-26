@@ -6,6 +6,7 @@ import MessageStripContext from "./MessageStripContext";
 import MessageStripType from "./types/MessageStripType";
 import MessageStripRenderer from "./build/compiled/MessageStripRenderer.lit";
 import Icon from "./Icon";
+import Label from "./Label";
 
 // Styles
 import belize from "./themes/sap_belize/MessageStrip.less";
@@ -144,6 +145,7 @@ class MessageStrip extends WebComponent {
 
 	static async define(...params) {
 		await Icon.define();
+		await Label.define()
 
 		super.define(...params);
 	}

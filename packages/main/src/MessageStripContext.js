@@ -12,15 +12,26 @@ class MessageStripTemplateContext {
 		};
 	}
 
-	static getIcon(state) {
-		const mappings = {
+	static mappings() {
+		return {
+			"Information": "sap-icon://hint",
 			"Positive": "sap-icon://message-success",
 			"Negative": "sap-icon://message-error",
 			"Warning": "sap-icon://message-warning",
-			"Information": "sap-icon://hint",
 		};
+	}
 
-		return state.icon || mappings[state.type];
+	static typeClasses() {
+		return {
+			"Information": "sapMMessageStripInfo",
+			"Positive": "sapMMessageStripPositive",
+			"Negative": "sapMMessageStripNegative",
+			"Warning": "sapMMessageStripWarning",
+		}
+	}
+
+	static getIcon(state) {
+		return state.icon || MessageStripTemplateContext.mappings()[state.type];
 	}
 
 	static getLabelClasses(state) {
@@ -32,13 +43,7 @@ class MessageStripTemplateContext {
 	}
 
 	static getTypeClasses(state) {
-		return {
-			sapMMessageStrip: true,
-			sapMMessageStripInfo: state.type === MessageStripType.Information,
-			sapMMessageStripPositive: state.type === MessageStripType.Positive,
-			sapMMessageStripNegative: state.type === MessageStripType.Negative,
-			sapMMessageStripWarning: state.type === MessageStripType.Warning,
-		};
+		return `sapMMessageStrip ${MessageStripTemplateContext.typeClasses()[state.type]}`;
 	}
 }
 

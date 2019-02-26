@@ -41,10 +41,10 @@
 	<section>
 		<h3>MessageStrip</h3>
 		<div class="snippet">
-			<ui5-messagestrip class="samples-margin-bottom" style="width: 200px;" type="Information">Information MessageStrip</ui5-messagestrip>
-			<ui5-messagestrip class="samples-margin-bottom" style="width: 200px;" type="Positive">Positive MessageStrip</ui5-messagestrip>
-			<ui5-messagestrip class="samples-margin-bottom" style="width: 200px;" type="Negative">Negative MessageStrip</ui5-messagestrip>
-			<ui5-messagestrip class="samples-margin-bottom" style="width: 200px;" type="Warning">Warning MessageStrip</ui5-messagestrip>
+			<ui5-messagestrip class="samples-margin-bottom" type="Information">Information MessageStrip</ui5-messagestrip>
+			<ui5-messagestrip class="samples-margin-bottom" type="Positive">Positive MessageStrip</ui5-messagestrip>
+			<ui5-messagestrip class="samples-margin-bottom" type="Negative">Negative MessageStrip</ui5-messagestrip>
+			<ui5-messagestrip class="samples-margin-bottom" type="Warning">Warning MessageStrip</ui5-messagestrip>
 		</div>
 		<pre class="prettyprint lang-html"><xmp>
 <ui5-messagestrip type="Information">Information MessageStrip</ui5-messagestrip>
@@ -52,8 +52,6 @@
 <ui5-messagestrip type="Negative">Negative MessageStrip</ui5-messagestrip>
 <ui5-messagestrip type="Warning">Warning MessageStrip</ui5-messagestrip>
 <script>
-	window.prettyPrint();
-
 	document.querySelectorAll("ui5-messagestrip").forEach(function(messageStrip) {
 		messageStrip.addEventListener("close", function() {
 			messageStrip.remove();
@@ -105,10 +103,10 @@
 	<section>
 		<h3>Custom MessageStrip</h3>
 		<div class="snippet">
-			<ui5-messagestrip class="samples-margin-bottom" style="width: 200px;" type="Information" hide-icon hide-close-button>You have new message.</ui5-messagestrip>
-			<ui5-messagestrip class="samples-margin-bottom" style="width: 200px;" type="Positive" hide-close-button>Successfull login!</ui5-messagestrip>
-			<ui5-messagestrip class="samples-margin-bottom" style="width: 200px;" type="Negative" hide-icon>Access denied!</ui5-messagestrip>
-			<ui5-messagestrip class="samples-margin-bottom" style="width: 200px;" type="Warning">Update is required.</ui5-messagestrip>
+			<ui5-messagestrip class="samples-margin-bottom samples-vertical-align" style="width: 200px;" type="Information" hide-icon hide-close-button>You have new message.</ui5-messagestrip>
+			<ui5-messagestrip class="samples-margin-bottom samples-vertical-align" style="width: 200px;" type="Positive" hide-close-button>Successfull login!</ui5-messagestrip>
+			<ui5-messagestrip class="samples-margin-bottom samples-vertical-align" style="width: 200px;" type="Negative" hide-icon>Access denied!</ui5-messagestrip>
+			<ui5-messagestrip class="samples-margin-bottom samples-vertical-align" style="width: 200px;" type="Warning">Update is required.</ui5-messagestrip>
 		</div>
 		<pre class="prettyprint lang-html"><xmp>
 <ui5-messagestrip type="Information" style="width: 200px;" hide-icon hide-close-button>You have new message.</ui5-messagestrip>
