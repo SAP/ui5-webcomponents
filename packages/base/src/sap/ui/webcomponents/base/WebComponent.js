@@ -1,4 +1,4 @@
-import configuration from "./Configuration";
+import { getWCNoConflict } from "./Configuration";
 import DOMObserver from "./compatibility/DOMObserver";
 import ShadowDOM from "./compatibility/ShadowDOM";
 import WebComponentMetadata from "./WebComponentMetadata";
@@ -588,7 +588,7 @@ class WebComponent extends HTMLElement {
 
 	static get noConflictEvents() {
 		if (!this._noConflictEvents) {
-			const noConflictConfig = configuration.getWCNoConflict();
+			const noConflictConfig = getWCNoConflict();
 			this._noConflictEvents = [];
 			if (typeof noConflictConfig === "object" && typeof noConflictConfig.events === "string") {
 				this._noConflictEvents = noConflictConfig.events.split(",").map(evtName => evtName.trim());
