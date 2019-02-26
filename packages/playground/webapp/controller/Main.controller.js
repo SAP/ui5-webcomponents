@@ -37,6 +37,10 @@ sap.ui.define([
 		},
 
 		onAfterRendering: function() {
+			this.renderNewBadges();
+		},
+
+		renderNewBadges: function() {
 			var newComponents = [
 				"Select",
 				"ShellBar",
@@ -45,13 +49,9 @@ sap.ui.define([
 
 			this.byId("nl").getItems()[1].getItems().forEach(function(item) {
 				if (newComponents.indexOf(item.getText()) !== -1) {
-					var newLabel = document.createElement("div");
-					newLabel.textContent = "NEW";
-					newLabel.classList.add("new-label");
-
-					item.getDomRef().appendChild(newLabel);
+					item.getDomRef().classList.add("new-label");
 				}
-			}.bind(this));
+			}, this);
 		},
 
 		debounce: function(func, delay) {
@@ -99,8 +99,14 @@ sap.ui.define([
 		},
 
 		onSideNavButtonPress: function () {
+			//Toggle section
 			var toolPage = this.byId("app");
 			toolPage.setSideExpanded(!toolPage.getSideExpanded());
+
+			//Render NEW badges
+			setTimeout(function() {
+				this.renderNewBadges();
+			}, 0);
 		},
 
 		onUI5LogoPressed: function () {
