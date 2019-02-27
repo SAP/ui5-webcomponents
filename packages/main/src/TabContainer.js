@@ -418,9 +418,9 @@ class TabContainer extends WebComponent {
 
 	_normalizeSelectedIndex(index) {
 		const tabs = this.getTabs();
-		const parsedIndex = parseInt(index);
+		const parsedIndex = Number.parseInt(index);
 
-		if (isNaN(parsedIndex)) {
+		if (Number.isNaN(parsedIndex)) {
 			return 0;
 		}
 		if (parsedIndex < 0 || parsedIndex > tabs.length - 1) {

@@ -12,6 +12,8 @@ import "../thirdparty/Array.prototype.includes";
 
 // Number
 import "../thirdparty/Number.isInteger";
+import "../thirdparty/Number.isNaN";
+import "../thirdparty/Number.parseInt";
 
 // Symbol
 import "../thirdparty/Symbol";
