@@ -199,10 +199,6 @@ const getES5Config = () => {
 				// suppress the rollup error for this module as it uses this in the global scope correctly even without changing the context here
 				return "window";
 			}
-			// if (id.includes("es6-promise")) {
-			// 	// suppress the rollup error for this module as it uses this in the global scope correctly even without changing the context here
-			// 	return "window";
-			// }
 		},
 		watch: {
 			clearScreen: false

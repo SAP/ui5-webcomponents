@@ -1,13 +1,13 @@
 // String
-import "../thirdparty/String.prototype.padStart";
+import "@ui5/webcomponents-core/dist/sap/ui/thirdparty/es6-string-methods";
 
 // Object
 import "../thirdparty/Object.assign";
 import "../thirdparty/Object.entries";
 
 // Array
-import "../thirdparty/Array.prototype.fill";
 import "../thirdparty/Array.from";
+import "../thirdparty/Array.prototype.fill";
 import "../thirdparty/Array.prototype.includes";
 
 // Number
@@ -37,9 +37,6 @@ import "../thirdparty/events-polyfills";
 
 // async - await
 import "regenerator-runtime/runtime";
-
-// URLSearchParams
-import "url-search-params-polyfill";
 
 // Plus all polyfills needed for Edge are also needed for IE11
 import "./Edge";
