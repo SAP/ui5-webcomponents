@@ -1,5 +1,5 @@
-commit 3efe10bbcdf46547165e01fb218e34e16f97de69
-Author: Benjamin Reim <benj.reim@gmail.com>
-Date:   Tue Feb 26 16:40:06 2019 +0100
+commit 4ffce642ed33de126a35a89093afe4ad28eb3657
+Author: Adrian Bobev <adrian.bobev@gmail.com>
+Date:   Wed Feb 27 11:29:11 2019 +0200
 
-    docs(shellbar): fix typo in shellbar tag (#100)
+    fix: prevent throwing exception if slotted child does not have listenFor (#92)
