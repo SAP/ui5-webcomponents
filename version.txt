@@ -1,5 +1,5 @@
-commit c326cf629a6407dcf28036cafc0bc3910bad61f4
-Author: Filip Siderov <fifoosid@gmail.com>
-Date:   Wed Feb 27 11:33:16 2019 +0200
+commit 284e88fe7e86036f1fb9b93220e99dd27394539b
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Wed Feb 27 14:10:11 2019 +0200
 
-    docs(playground): add badge to new components (#98)
+    build: simplify npm script commands (#104)
