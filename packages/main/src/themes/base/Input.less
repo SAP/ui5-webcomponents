@@ -11,6 +11,7 @@
 /* ================================ */
 
 @sap_wc_input_disabled_opacity: 1;
+@sap_wc_input_icon_min_width: 2.375rem;
 
 :host(ui5-input) {
 	display: inline-block;
@@ -139,4 +140,13 @@ ui5-input {
 	& .sapWCInputBaseInner {
 		padding: 0 0.5rem;
 	}
+}
+
+// Input Icon
+::slotted(ui5-icon) {
+	min-width: @sap_wc_input_icon_min_width;
+}
+
+ui5-input ui5-icon {
+	min-width: @sap_wc_input_icon_min_width;
 }
