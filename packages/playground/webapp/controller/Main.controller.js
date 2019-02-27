@@ -35,24 +35,23 @@ sap.ui.define([
 				});
 			}, false);
 		},
+		// onAfterRendering: function() {
+		// 	this.renderNewBadges();
+		// },
 
-		onAfterRendering: function() {
-			this.renderNewBadges();
-		},
+		// renderNewBadges: function() {
+		// 	var newComponents = [
+		// 		"Select",
+		// 		"ShellBar",
+		// 		"Timeline"
+		// 	];
 
-		renderNewBadges: function() {
-			var newComponents = [
-				"Select",
-				"ShellBar",
-				"Timeline"
-			];
-
-			this.byId("nl").getItems()[1].getItems().forEach(function(item) {
-				if (newComponents.indexOf(item.getText()) !== -1) {
-					item.getDomRef().classList.add("new-label");
-				}
-			}, this);
-		},
+		// 	this.byId("nl").getItems()[1].getItems().forEach(function(item) {
+		// 		if (newComponents.indexOf(item.getText()) !== -1) {
+		// 			item.getDomRef().classList.add("new-label");
+		// 		}
+		// 	}, this);
+		// },
 
 		debounce: function(func, delay) {
 			var inDebounce;
@@ -102,11 +101,10 @@ sap.ui.define([
 			//Toggle section
 			var toolPage = this.byId("app");
 			toolPage.setSideExpanded(!toolPage.getSideExpanded());
-
-			//Render NEW badges
-			setTimeout(function() {
-				this.renderNewBadges();
-			}, 0);
+			// //Render NEW badges
+			// setTimeout(function() {
+			// 	this.renderNewBadges();
+			// }, 0);
 		},
 
 		onUI5LogoPressed: function () {

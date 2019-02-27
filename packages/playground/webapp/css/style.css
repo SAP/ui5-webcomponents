@@ -308,7 +308,7 @@ html.sap-desktop .sapContrast .sapMLnk:focus:not(.sapMLnkDsbl) {
 	background-color: #222 !important;
 }
 
-.new-label::after {
+li[data-classes="new-label"]::after {
 	content: "NEW";
 	height: 1.125rem;
 	padding: 0 0.625rem;
@@ -326,7 +326,7 @@ html.sap-desktop .sapContrast .sapMLnk:focus:not(.sapMLnkDsbl) {
 	letter-spacing: 0.0125rem;
 }
 
-.hcb .new-label::after {
+.hcb li[data-classes="new-label"]::after {
 	border-color: #fff;
 	color: #fff;
 	background-color: #000;
