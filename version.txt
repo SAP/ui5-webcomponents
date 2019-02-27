@@ -1,5 +1,5 @@
-commit 284e88fe7e86036f1fb9b93220e99dd27394539b
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Wed Feb 27 14:10:11 2019 +0200
+commit 0cfe2546c5f08f9d8e305f933809ee0991ef03c5
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Feb 27 14:40:28 2019 +0200
 
-    build: simplify npm script commands (#104)
+    fix(ui5-input): slotted icon default size (#105)
