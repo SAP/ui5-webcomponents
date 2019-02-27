@@ -28,6 +28,7 @@ import RadioButton from "./src/RadioButton";
 import Select from "./src/Select";
 import ShellBar from "./src/ShellBar";
 import ShellBarItem from "./src/ShellBarItem";
+import Switch from "./src/Switch";
 import TabContainer from "./src/TabContainer";
 import Tab from "./src/Tab";
 import TabSeparator from "./src/TabSeparator";
