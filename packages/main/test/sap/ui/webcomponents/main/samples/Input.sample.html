@@ -29,8 +29,15 @@
 	<script nomodule src="../../../../../../resources/sap/ui/webcomponents/main/bundle.es5.js">
 	</script>
 	<style>
+		.hcb-background .inputIcon {
+			color: #fafafa;
+			background: transparent;
+		}
+		.hcb-background .inputIcon:hover{
+			background: #7a5100;
+		}
+
 		.inputIcon {
-			width: 2.375rem;
 			background: #fafafa;
 			color: #0a6ed1;
 			cursor: pointer;
@@ -163,7 +170,6 @@
 		<pre class="prettyprint lang-html"><xmp>
 <style>
 	.inputIcon {
-		width: 2.375rem;
 		background: #fafafa;
 		color: #0a6ed1;
 		cursor: pointer;
@@ -177,13 +183,15 @@
 	<ui5-icon id="searchIcon" data-ui5-slot="icon" src="sap-icon://search" class="inputIcon"></ui5-icon>
 </ui5-input>
 
-var searchCriteria = "PASTA";
-searchIcon.addEventListener("press", function(){
-	alert("Look for: " + searchCriteria);
-});
-searchInput.addEventListener("change", function(e){
-	searchCriteria = e.target.value;
-});
+<script>
+	var searchCriteria = "PASTA";
+	searchIcon.addEventListener("press", function(){
+		alert("Look for: " + searchCriteria);
+	});
+	searchInput.addEventListener("change", function(e){
+		searchCriteria = e.target.value;
+	});
+</script>
 		</xmp></pre>
 	</section>
 
