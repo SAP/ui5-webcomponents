@@ -1,4 +1,4 @@
-import configuration from "./Configuration";
+import { getTheme, _setTheme } from "./Configuration";
 import { getStyles } from "./theming/ThemeBundle";
 import { getCustomCSS } from "./theming/CustomStyle";
 
@@ -11,11 +11,11 @@ const attachThemeChange = function attachThemeChange(callback) {
 };
 
 const setTheme = function setTheme(theme) {
-	if (theme === configuration.getTheme()) {
+	if (theme === getTheme()) {
 		return;
 	}
 
-	configuration._setTheme(theme);
+	_setTheme(theme);
 	themeChangeCallbacks.forEach(callback => callback(theme));
 };
 

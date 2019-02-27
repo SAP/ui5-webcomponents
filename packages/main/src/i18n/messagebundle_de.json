@@ -1,0 +1,3 @@
+{
+    "_": "#XTXT: Text for characters left\nTEXTAREA_CHARACTERS_LEFT={0} Zeichen verbleibend\n#XTXT: Text for characters over\nTEXTAREA_CHARACTERS_EXCEEDED={0} Zeichen \\u00FCber Limit\n#XTOL: Tooltip for panel expand title\nPANEL_ICON=Expandieren/komprimieren\n"
+}

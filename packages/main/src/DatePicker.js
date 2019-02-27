@@ -2,7 +2,7 @@ import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/
 import { fetchCldrData } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/CLDR";
 import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
 import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes";
-import configuration from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Configuration";
+import { getCalendarType, getLocale } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Configuration";
 import IconPool from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/IconPoolProxy";
 import DateFormat from "@ui5/webcomponents-core/dist/sap/ui/core/format/DateFormat";
 import CalendarType from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/dates/CalendarType";
@@ -365,7 +365,7 @@ class DatePicker extends WebComponent {
 	}
 
 	get _primaryCalendarType() {
-		return this.primaryCalendarType || configuration.getCalendarType() || CalendarType.Gregorian;
+		return this.primaryCalendarType || getCalendarType() || CalendarType.Gregorian;
 	}
 
 	get _formatPattern() {
@@ -506,7 +506,7 @@ class DatePicker extends WebComponent {
 
 	static async define(...params) {
 		await Promise.all([
-			fetchCldrData(configuration.getLocale().getLanguage(), configuration.getLocale().getRegion(), configuration.getLocale().getScript()),
+			fetchCldrData(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
 			Icon.define(),
 			Popover.define(),
 			Calendar.define(),

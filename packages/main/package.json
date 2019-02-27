@@ -54,7 +54,7 @@
     "build:docs": "node ../../lib/documentation/index.js",
     "clean": "rimraf dist src/build",
     "copy:src": "cpx \"src/**/*.js\" dist/",
-    "copy:i18n": "cpx \"src/i18n/*.properties\" dist/i18n",
+    "copy:i18n": "cpx \"src/i18n/*.json\" dist/i18n",
     "copy:test": "cpx \"test/**/*.*\" dist/test-resources",
     "copy:pages": "cpx \"test/**/pages/*.*\" dist/test-resources",
     "copy:qunit": "cpx \"test/**/qunit/*.*\" dist/test-resources",

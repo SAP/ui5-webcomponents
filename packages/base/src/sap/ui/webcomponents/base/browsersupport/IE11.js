@@ -38,5 +38,8 @@ import "../thirdparty/events-polyfills";
 // async - await
 import "regenerator-runtime/runtime";
 
+// URLSearchParams
+import "url-search-params-polyfill";
+
 // Plus all polyfills needed for Edge are also needed for IE11
 import "./Edge";

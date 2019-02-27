@@ -1,4 +1,4 @@
-import configuration from "../Configuration";
+import { getTheme, getRTL, getCompactSize } from "../Configuration";
 
 import StyleInjection from "../theming/StyleInjection";
 import { registerStyle } from "../theming/ThemeBundle";
@@ -24,18 +24,18 @@ class ShadowDOM {
 	}
 
 	static async updateStyle(tag, shadowRoot, styleUrls) {
-		const theme = configuration.getTheme();
+		const theme = getTheme();
 		const newStyle = await getEffectiveStyle(theme, styleUrls, tag);
 
 		shadowRoot.querySelector("style").textContent = newStyle;
 	}
 
 	static async prepareShadowDOM(ElementClass) {
-		const theme = configuration.getTheme();
+		const theme = getTheme();
 		const styleUrls = ElementClass.getMetadata().getStyleUrl();
 		const tag = ElementClass.getMetadata().getTag();
-		const isRTL = configuration.getRTL();
-		const isCompact = configuration.getCompactSize();
+		const isRTL = getRTL();
+		const isCompact = getCompactSize();
 
 		let shadowDOM,
 			rootSpan;

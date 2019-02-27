@@ -67,6 +67,11 @@ sap.ui.define([
 		},
 
 		discoverSamples: function (oModel) {
+			var newComponents = [
+				"Select",
+				"ShellBar",
+				"Timeline"
+			];
 			return jQuery.ajax({
 				url: "resources/sap/ui/webcomponents/main/playground.json"
 			}).then(function (jsonData) {
@@ -74,7 +79,8 @@ sap.ui.define([
 					return {
 						key: /(.*)\.sample\.html$/.exec(value)[1],
 						title: /(.*)\.sample\.html$/.exec(value)[1],
-						url: "test-resources/sap/ui/webcomponents/main/api/" + value
+						url: "test-resources/sap/ui/webcomponents/main/api/" + value,
+						new: newComponents.indexOf(/(.*)\.sample\.html$/.exec(value)[1]) > -1
 					};
 				}).sort(function (a, b) {
 					return a.title.localeCompare(b.title);

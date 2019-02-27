@@ -1,5 +1,5 @@
 import getOriginalEventTarget from "./getOriginalEventTarget";
-import configuration from "../Configuration";
+import { getWCForceDefaultGestures } from "../Configuration";
 
 /**
  * Default Gestures implementation using DOM APIs
@@ -46,7 +46,7 @@ let Gestures = { // eslint-disable-line
 export { Gestures as default };
 export const injectGesturesProvider = newGestures => {
 	// Used for test purposes
-	if (configuration.getWCForceDefaultGestures()) {
+	if (getWCForceDefaultGestures()) {
 		return;
 	}
 
