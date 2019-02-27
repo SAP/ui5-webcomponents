@@ -71,6 +71,7 @@ sap.ui.define([
 				"MessageStrip",
 				"Select",
 				"ShellBar",
+				"Switch",
 				"Timeline"
 			];
 			return jQuery.ajax({

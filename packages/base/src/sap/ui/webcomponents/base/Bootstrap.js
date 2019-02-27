@@ -3,13 +3,8 @@ import "./shims/jquery-shim";
 
 import whenDOMReady from "./util/whenDOMReady";
 import EventEnrichment from "./events/EventEnrichment";
-import patchNodeValue from "./compatibility/patchNodeValue";
 import IconFonts from "./IconFonts";
 import DOMEventHandler from "./DOMEventHandler";
-
-
-// This will only have effect if the polyfill is loaded
-patchNodeValue();
 
 EventEnrichment.run();
 
