@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>&lt;ui5-switch&gt;</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<link rel="stylesheet" href="../../../../../../www/home/core.css">
+
+	<script src="../../../../../../test-resources/playground/libs/google-code-prettify/prettify.js"></script>
+	<link href="../../../../../../test-resources/playground/libs/google-code-prettify/sunburst.css" type="text/css" rel="stylesheet">
+
+	<link href="../../../../../../test-resources/playground/css/api.css" type="text/css" rel="stylesheet">
+
+	<script data-id="sap-ui-config" type="application/json">
+		{
+			"theme": "sap_fiori_3",
+			"language": "EN"
+		}
+	</script>
+
+	<script src="../../../../../../resources/sap/ui/webcomponents/main/bundle.esm.js"
+	        type="module"
+	>
+	</script>
+
+	<script nomodule src="../../../../../../resources/sap/ui/webcomponents/main/bundle.es5.js">
+	</script>
+
+	<style>
+		ui5-switch {
+			margin: 8px;
+		}
+	</style>
+</head>
+<body class="sapUiBody example-wrapper">
+
+	<header>
+		<h2 class="control-header">Switch</h2>
+		<div style="margin-bottom: 2rem; font-weight: 300; font-size: 1.1rem; color: #666666;">&lt;ui5-switch&gt;</div>
+	</header>
+
+	<!-- Basic Switch -->
+	<section>
+		<h3>Basic Switch</h3>
+		<div class="snippet">
+			<ui5-switch text-on="On" text-off="Off"></ui5-switch>
+			<ui5-switch text-on="On" text-off="Off" checked></ui5-switch>
+			<ui5-switch></ui5-switch>
+			<ui5-switch checked></ui5-switch>
+			<ui5-switch text-on="Yes" text-off="No" disabled></ui5-switch>
+			<ui5-switch text-on="Yes" text-off="No" checked disabled ></ui5-switch>
+		</div>
+		<pre class="prettyprint lang-html"><xmp>
+<ui5-switch text-on="On" text-off="Off"></ui5-switch>
+<ui5-switch text-on="On" text-off="Off" checked></ui5-switch>
+<ui5-switch></ui5-switch>
+<ui5-switch checked></ui5-switch>
+<ui5-switch text-on="Yes" text-off="No" disabled></ui5-switch>
+<ui5-switch text-on="Yes" text-off="No" checked disabled ></ui5-switch>
+		</xmp></pre>
+	</section>
+
+	<!-- Graphical Switch -->
+	<section>
+	<h3>Graphical Switch</h3>
+		<div class="snippet">
+			<ui5-switch type="Graphical"></ui5-switch>
+			<ui5-switch type="Graphical" checked></ui5-switch>
+			<ui5-switch type="Graphical" disabled></ui5-switch>
+			<ui5-switch type="Graphical" checked disabled></ui5-switch>
+		</div>
+		<pre class="prettyprint lang-html"><xmp>
+<ui5-switch type="Graphical"></ui5-switch>
+<ui5-switch type="Graphical" checked></ui5-switch>
+<ui5-switch type="Graphical" disabled></ui5-switch>
+<ui5-switch type="Graphical" checked disabled></ui5-switch>
+		</xmp></pre>
+	</section>
+
+	<!-- Custom Switch -->
+	<section>
+		<h3>Custom Switch</h3>
+		<div class="snippet">
+			<ui5-switch style="width: 100px; min-width: 100px;" text-on="Enabled" text-off="Disabled" checked></ui5-switch>
+			<ui5-switch style="width: 100px; min-width: 100px;" text-on="Accept" text-off="Reject"></ui5-switch>
+		</div>
+		<pre class="prettyprint lang-html"><xmp>
+<ui5-switch style="width: 100px; min-width: 100px;" text-on="Enabled" text-off="Disabled"></ui5-switch>
+<ui5-switch style="width: 100px; min-width: 100px;" text-on="Accept" text-off="Reject"></ui5-switch>
+
+		</xmp></pre>
+	</section>
+
+	<script>
+		window.prettyPrint();
+	</script>
+
+	<script defer src="../../../../../../www/samples/settings.js"></script>
+</body>
+
+</html>
