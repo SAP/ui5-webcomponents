@@ -56,8 +56,6 @@ span[data-sap-ui-wc-root] {
 	min-width: @_ui5_switch_width;
 	cursor: pointer;
 	outline: none;
-	-webkit-backface-visibility: hidden;
-	-webkit-transform: translateZ(0);
 	-webkit-tap-highlight-color: rgba(0,0,0,0); // to remove the gray highlight, when tapping active elements in Mobile Safari
 }
 
@@ -68,8 +66,6 @@ span[data-sap-ui-wc-root] {
 	height: 100%;
 	overflow: hidden;
 	pointer-events: none;
-	-webkit-transform: translateZ(0);
-	-webkit-backface-visibility: hidden;
 }
 
 .ui5-switch-track {
@@ -80,10 +76,8 @@ span[data-sap-ui-wc-root] {
 	background: @_ui5_switch_track_bg;
 	border: 1px solid;
 	border-color: @sapUiContentForegroundBorderColor;
-	border-radius:@_ui5_switch_track_border_radius;
+	border-radius: @_ui5_switch_track_border_radius;
 	box-sizing: border-box;
-	-webkit-transform: translateZ(0);
-	-webkit-backface-visibility: hidden;
 }
 
 .ui5-switch-slider {
@@ -123,12 +117,10 @@ span[data-sap-ui-wc-root] {
 }
 
 .ui5-switch-text--on {
-	// display: none;
 	left: calc(~"-100% + 1.9125rem");
 }
 
 .ui5-switch-text--off {
-	// display: flex;
 	right: 0;
 }
 	

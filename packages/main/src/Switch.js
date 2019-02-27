@@ -165,7 +165,6 @@ class Switch extends WebComponent {
 			this.checked = !this.checked;
 			this.fireEvent("change");
 		}
-		return this;
 	}
 
 	_tapAllowed(target) {
