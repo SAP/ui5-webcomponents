@@ -251,6 +251,7 @@ const metadata = {
  * @tagname ui5-shellbar
  * @appenddocs ShellBarItem
  * @public
+ * @since 0.8.0
  */
 class ShellBar extends WebComponent {
 	static get metadata() {

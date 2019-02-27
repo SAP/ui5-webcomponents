@@ -16,6 +16,12 @@ body {
 	padding: 0.625rem 1.25rem;
 }
 
+.component-heading {
+	display: flex;
+	align-items: baseline;
+	flex-wrap: wrap;
+}
+
 .flex-align-center {
 	align-items: center;
 }
@@ -29,6 +35,7 @@ body {
 	font-size: 3rem;
 	margin: 2rem 0 0 0;
 	color: #333333;
+	padding-right: 0.5rem;
 }
 
 .snippet {
@@ -261,6 +268,7 @@ pre.prettyprint>xmp {
 	font-family: "72-Regular";	
 }
 
+.component-heading-since,
 .api-table-content-cell-bold {
 	font-family: "72-Bold";
 }
@@ -273,6 +281,10 @@ pre.prettyprint>xmp {
 
 .api-table-content-cell-since {
 	padding-top: 1rem;
+}
+
+.component-heading-since,
+.api-table-content-cell-since {
 	color: #008EFF;
 }
 
@@ -453,6 +465,10 @@ pre.prettyprint>xmp {
 
 	.api-table .row .cell:nth-child(3) {
 		flex: 1 100%;
+	}
+
+	.component-heading-release-status {
+		display: none;
 	}
 }
 

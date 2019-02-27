@@ -61,6 +61,7 @@ const metadata = {
  * @tagname ui5-timeline
  * @appenddocs TimelineItem
  * @public
+ * @since 0.8.0
  */
 class Timeline extends WebComponent {
 	static get metadata() {

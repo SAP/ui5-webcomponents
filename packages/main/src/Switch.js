@@ -124,6 +124,7 @@ const metadata = {
  * @extends sap.ui.webcomponents.base.WebComponent
  * @tagname ui5-switch
  * @public
+ * @since 0.8.0
  */
 class Switch extends WebComponent {
 	static get metadata() {
