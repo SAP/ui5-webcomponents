@@ -1,5 +1,5 @@
-commit 0cfe2546c5f08f9d8e305f933809ee0991ef03c5
+commit cae188591217af1dce9aa8659eeb5115982e00d9
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Feb 27 14:40:28 2019 +0200
+Date:   Wed Feb 27 15:19:44 2019 +0200
 
-    fix(ui5-input): slotted icon default size (#105)
+    docs(playground): add input as a search field sample (#103)
