@@ -1,5 +1,7 @@
-commit cae188591217af1dce9aa8659eeb5115982e00d9
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Feb 27 15:19:44 2019 +0200
+commit 98b5174939b7b8392dc02e108dc2901297e4a9e1
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Wed Feb 27 15:53:05 2019 +0200
 
-    docs(playground): add input as a search field sample (#103)
+    feat: load Web Components polyfill on demand (#96)
+    
+    BREAKING CHANGE: any applications that want to support Edge and/or IE11 should now import the respective browser support module. For details, see the README.md
