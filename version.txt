@@ -1,7 +1,5 @@
-commit 98b5174939b7b8392dc02e108dc2901297e4a9e1
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Feb 27 15:53:05 2019 +0200
+commit a4e412823ddfe97b94f8bc1339efc2c1e2eebc27
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Feb 27 19:20:14 2019 +0200
 
-    feat: load Web Components polyfill on demand (#96)
-    
-    BREAKING CHANGE: any applications that want to support Edge and/or IE11 should now import the respective browser support module. For details, see the README.md
+    docs: display since for properties (#108)
