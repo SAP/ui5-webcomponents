@@ -75,7 +75,7 @@ const metadata = {
 		 */
 		hideCloseButton: { type: Boolean, defaultValue: false },
 
-		_closeEventHandler: { type: Object },
+		_closeButton: { type: Object },
 	},
 	events: /** @lends sap.ui.webcomponents.main.MessageStrip.prototype */ {
 
@@ -133,7 +133,7 @@ class MessageStrip extends WebComponent {
 	constructor() {
 		super();
 
-		this._closeEventHandler = {
+		this._closeButton = {
 			_closeButtonClicked: this._closeButtonClicked.bind(this),
 		};
 	}
@@ -141,7 +141,7 @@ class MessageStrip extends WebComponent {
 	onAfterRendering() {
 		// Hack for styling the button
 		if (!this.hideCloseButton) {
-			this.shadowRoot.querySelector("ui5-button")._customClasses = ["ButtonInMessageStrip"];
+			this.shadowRoot.querySelector("ui5-button")._customClasses = ["sapWCButtonInMessageStrip"];
 		}
 	}
 
@@ -150,8 +150,10 @@ class MessageStrip extends WebComponent {
 	}
 
 	static async define(...params) {
-		await Icon.define();
-		await Label.define();
+		await Promise.all([
+			Icon.define(),
+			Label.define()
+		]);
 
 		super.define(...params);
 	}
