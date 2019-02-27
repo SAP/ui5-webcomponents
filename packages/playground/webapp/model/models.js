@@ -68,6 +68,7 @@ sap.ui.define([
 
 		discoverSamples: function (oModel) {
 			var newComponents = [
+				"MessageStrip",
 				"Select",
 				"ShellBar",
 				"Timeline"
