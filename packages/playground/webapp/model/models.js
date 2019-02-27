@@ -70,6 +70,7 @@ sap.ui.define([
 			var newComponents = [
 				"Select",
 				"ShellBar",
+				"Switch",
 				"Timeline"
 			];
 			return jQuery.ajax({
