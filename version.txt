@@ -1,5 +1,5 @@
-commit 4ffce642ed33de126a35a89093afe4ad28eb3657
-Author: Adrian Bobev <adrian.bobev@gmail.com>
-Date:   Wed Feb 27 11:29:11 2019 +0200
+commit c326cf629a6407dcf28036cafc0bc3910bad61f4
+Author: Filip Siderov <fifoosid@gmail.com>
+Date:   Wed Feb 27 11:33:16 2019 +0200
 
-    fix: prevent throwing exception if slotted child does not have listenFor (#92)
+    docs(playground): add badge to new components (#98)
