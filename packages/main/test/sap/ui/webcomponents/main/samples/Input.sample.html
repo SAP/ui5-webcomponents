@@ -28,6 +28,17 @@
 
 	<script nomodule src="../../../../../../resources/sap/ui/webcomponents/main/bundle.es5.js">
 	</script>
+	<style>
+		.inputIcon {
+			width: 2.375rem;
+			background: #fafafa;
+			color: #0a6ed1;
+			cursor: pointer;
+		}
+		.inputIcon:hover{
+			background: rgba(224,224,224,0.5)
+		}
+	</style>
 </head>
 <body class="sapUiBody example-wrapper">
 
@@ -141,6 +152,38 @@
 	</section>
 
 	<section>
+		<h3>Input as Search Field</h3>
+		<div class="snippet">
+			<div class="flex-column samples-margin">
+				<ui5-input id="searchInput" placeholder="Enter search criteria ...">
+					<ui5-icon id="searchIcon" data-ui5-slot="icon" src="sap-icon://search" class="inputIcon"></ui5-icon>
+				</ui5-input>
+			</div>
+		</div>
+		<pre class="prettyprint lang-html"><xmp>
+<style>
+	.inputIcon {
+		width: 2.375rem;
+		background: #fafafa;
+		color: #0a6ed1;
+		cursor: pointer;
+	}
+	.inputIcon:hover{
+		background: rgba(224,224,224,0.5)
+	}
+</style>
+
+<ui5-input id="search" placeholder="Enter search criteria ...">
+	<ui5-icon id="search-icon" data-ui5-slot="icon" src="sap-icon://search" class="inputIcon"></ui5-icon>
+</ui5-input>
+
+searchIcon.addEventListener("press", function(){
+	alert("You can do you search here!");
+});
+		</xmp></pre>
+	</section>
+
+	<section>
 		<h3>Input with Label</h3>
 		<div class="snippet">
 			<div class="flex-column samples-margin">
@@ -159,6 +202,9 @@
 	</section>
 
 	<script>
+		searchIcon.addEventListener("press", function(){
+			alert("You can do you search here!");
+		});
 		window.prettyPrint();
 	</script>
 
