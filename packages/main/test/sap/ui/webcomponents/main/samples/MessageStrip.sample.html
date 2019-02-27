@@ -126,7 +126,7 @@
 	<script>
 		window.prettyPrint();
 
-		document.querySelectorAll("ui5-messagestrip").forEach(function(messageStrip) {
+		[].slice.call(document.querySelectorAll("ui5-messagestrip")).forEach(function(messageStrip) {
 			messageStrip.addEventListener("close", function() {
 				messageStrip.remove();
 			});

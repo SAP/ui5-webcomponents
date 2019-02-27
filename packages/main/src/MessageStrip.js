@@ -30,7 +30,7 @@ const metadata = {
 
 		/**
 		 * Defines the <code>ui5-messagestrip</code> type.
-		 * </br></br>
+		 * <br></br>
 		 * <b>Note:</b> Available options are <code>Information"</code>, <code>"Positive"</code>, <code>"Negative"</code>,
 		 * and "Warning".
 		 *
@@ -44,7 +44,7 @@ const metadata = {
 		 * Defines the icon to be displayed as graphical element within the <code>ui5-messagestrip</code>.
 		 * If no icon is given, the default icon for the MessageStrip type will be added.
 		 * The SAP-icons font provides numerous options.
-		 * <br><br>
+		 * <br></br>
 		 * Example:
 		 * <br>
 		 * <pre>ui5-messagestrip icon="sap-icon://palette"</pre>
@@ -95,9 +95,15 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
+ * The <code>ui5-messagestrip</code> component enables the embedding of app-related messages.
+ * It displays 4 types of messages, each with corresponding semantic color and icon: Information, Positive, Warning and Negative.
+ * Each message can have a close button, so that it can be removed from the UI if needed.
  *
  * <h3>Usage</h3>
  *
+ * For the <code>ui5-messagestrip</code> component, you can define whether it displays
+ * an icon in the beginning and a close button. Moreover, its size and background
+ * can be controlled with CSS.
  *
  * <h3>ES6 Module Import</h3>
  *
@@ -145,7 +151,7 @@ class MessageStrip extends WebComponent {
 
 	static async define(...params) {
 		await Icon.define();
-		await Label.define()
+		await Label.define();
 
 		super.define(...params);
 	}

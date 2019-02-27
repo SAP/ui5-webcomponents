@@ -1,18 +1,16 @@
-import MessageStripType from "./types/MessageStripType";
-
 class MessageStripTemplateContext {
 	static calculate(state) {
 		return {
 			ctr: state,
 			classes: {
-				type: MessageStripTemplateContext.getTypeClasses(state),
 				label: MessageStripTemplateContext.getLabelClasses(state),
 			},
+			type: MessageStripTemplateContext.getTypeClasse(state),
 			icon: MessageStripTemplateContext.getIcon(state),
 		};
 	}
 
-	static mappings() {
+	static iconMappings() {
 		return {
 			"Information": "sap-icon://hint",
 			"Positive": "sap-icon://message-success",
@@ -27,11 +25,11 @@ class MessageStripTemplateContext {
 			"Positive": "sapMMessageStripPositive",
 			"Negative": "sapMMessageStripNegative",
 			"Warning": "sapMMessageStripWarning",
-		}
+		};
 	}
 
 	static getIcon(state) {
-		return state.icon || MessageStripTemplateContext.mappings()[state.type];
+		return state.icon || MessageStripTemplateContext.iconMappings()[state.type];
 	}
 
 	static getLabelClasses(state) {
@@ -42,8 +40,8 @@ class MessageStripTemplateContext {
 		};
 	}
 
-	static getTypeClasses(state) {
-		return `sapMMessageStrip ${MessageStripTemplateContext.typeClasses()[state.type]}`;
+	static getTypeClasse(state) {
+		return MessageStripTemplateContext.typeClasses()[state.type];
 	}
 }
 
