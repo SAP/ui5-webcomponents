@@ -1,4 +1,3 @@
-import "../thirdparty/webcomponents-polyfill";
 import { getTheme, getRTL, getCompactSize } from "../Configuration";
 
 import StyleInjection from "../theming/StyleInjection";

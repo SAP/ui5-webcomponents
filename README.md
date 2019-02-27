@@ -57,6 +57,34 @@ Then, you can use the custom element in an HTML page:
 <ui5-button>Hello world!</ui5-button>
 ```
 
+## Browser support
+
+Currently only Chrome, Safari and Firefox support Web Components natively.
+
+If your application should run on browsers without native Web Components support (Edge and/or IE11), import one the following modules before your first Web Component import: 
+
+### Edge only
+
+```js
+import "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/browsersupport/Edge";
+```
+
+### Edge and IE11
+
+```js
+import "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/browsersupport/IE11";
+```
+
+*Note:* Importing the module for IE11 support automatically enables Edge support as well, so there is no need to import them both explicitly.
+
+Example:
+
+```js
+import "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/browsersupport/IE11"; // This will enable Edge and IE11 support for all Web Components below
+import "@ui5/webcomponents/dist/Button"; // loads ui5-button
+import "@ui5/webcomponents/dist/Label"; // loads ui5-label
+```
+
 ## Configure
 UI5 Web Components have built-in internalization and globalization support. Language, compact/cozy switch, date/time settings and theme can be changed with parameters.
 

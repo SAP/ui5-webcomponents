@@ -1,5 +1,3 @@
-import "../thirdparty/webcomponents-polyfill";
-
 const patchNodeValue = () => {
 	if (!window.ShadyDOM) {
 		return;
@@ -21,4 +19,6 @@ const patchNodeValue = () => {
 	});
 };
 
-export default patchNodeValue;
+patchNodeValue();
+
+export default {};

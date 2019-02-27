@@ -1,4 +1,3 @@
-import "../thirdparty/webcomponents-polyfill";
 import * as PolymerGestures from "@polymer/polymer/lib/utils/gestures";
 import { injectGesturesProvider } from "./DefaultGestures";
 
