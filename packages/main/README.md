@@ -115,7 +115,7 @@ You can clone the UI5 Web Components repository and start the Playground app wit
 
 ```sh
 yarn # to install all dependencies
-yarn serve # to serve the project
+yarn start # to serve the project
 ```
 This will open the Playground page in the browser!
 
