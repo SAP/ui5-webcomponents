@@ -5,14 +5,14 @@ import DataType from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/type
  */
 const SwitchTypes = {
 	/**
-	 * the default type and styling
+	 * The Textual type includes the default styling and user provided texts.
 	 */
-	Standard: "Standard",
+	Standard: "Textual",
 
 	/**
-	 * semantic type (positive and negative colors are applied)
+	 * The Graphic type - positive/negative icons and colors are displayed.
 	 */
-	Semantic: "Semantic",
+	Semantic: "Graphic",
 };
 
 class SwitchType extends DataType {

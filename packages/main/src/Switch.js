@@ -82,10 +82,10 @@ const metadata = {
 		/**
 		 * Defines the <code>ui5-switch</code> type.
 		 * <br>
-		 * Available options are <code>Standard</code> and <code>Semantic</code>.
+		 * Available options are <code>Textual</code> and <code>Graphic</code>.
 		 *
 		 * <br><br>
-		 * <b>Note:</b> If <code>Semantic</code> type is set,
+		 * <b>Note:</b> If <code>Graphic</code> type is set,
 		 * positive and negative icons will replace the <code>textOn</code> and <code>textOff</code>.
 		 * @type {string}
 		 * @default Standard
@@ -93,7 +93,7 @@ const metadata = {
 		 */
 		type: {
 			type: String,
-			defaultValue: SwitchType.Standard,
+			defaultValue: SwitchType.Textual,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Switch.prototype */ {
