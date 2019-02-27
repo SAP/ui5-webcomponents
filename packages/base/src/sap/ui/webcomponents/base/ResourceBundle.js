@@ -1,5 +1,5 @@
 import ResourceBundle from "@ui5/webcomponents-core/dist/sap/base/i18n/ResourceBundle";
-import configuration from "./Configuration";
+import { getLanguage } from "./Configuration";
 import { registerModuleContent } from "./ResourceLoaderOverrides";
 import { fetchJsonOnce } from "./util/FetchHelper";
 
@@ -44,7 +44,7 @@ const fetchResourceBundle = async packageId => {
 	await _getSingletonPromise(packageId);
 	const bundlesForPackage = bundleURLs.get(packageId);
 
-	const language = configuration.getLanguage();
+	const language = getLanguage();
 
 	let localeId = ResourceBundle.__normalize(language);
 	while (!bundlesForPackage[localeId]) {

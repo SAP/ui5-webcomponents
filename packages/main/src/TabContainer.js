@@ -755,7 +755,7 @@ class TabContainer extends WebComponent {
 	}
 
 	_navigationIconPress(icon) {
-		if (icon.classList.contains("sapMITBArrowScrollLeft")) {
+		if (icon.classList.contains("sapMITBArrowScrollLeft") || icon.classList.contains("sapMITBArrowScrollLeftTextOnly")) {
 			this._leftArrow.onPress();
 		} else {
 			this._rightArrow.onPress();

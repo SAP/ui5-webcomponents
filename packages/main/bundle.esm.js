@@ -3,7 +3,7 @@ import "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/events/PolymerGest
 import "./src/ThemeProvider";
 
 import Gregorian from "@ui5/webcomponents-core/dist/sap/ui/core/date/Gregorian";
-import Budhist from "@ui5/webcomponents-core/dist/sap/ui/core/date/Buddhist";
+import Buddhist from "@ui5/webcomponents-core/dist/sap/ui/core/date/Buddhist";
 import Islamic from "@ui5/webcomponents-core/dist/sap/ui/core/date/Islamic";
 import Japanese from "@ui5/webcomponents-core/dist/sap/ui/core/date/Japanese";
 import Persian from "@ui5/webcomponents-core/dist/sap/ui/core/date/Persian";
@@ -56,7 +56,7 @@ window.sapUiDevice = Device;
 
 
 // Note: keep in sync with rollup.config value for IIFE
-import configuration from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Configuration";
+import * as configuration from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Configuration";
 import * as Theming from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Theming";
 window["sap-ui-webcomponents-main-bundle"] = {
 	configuration,

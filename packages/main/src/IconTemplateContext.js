@@ -1,7 +1,7 @@
 import IconPool from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/IconPoolProxy";
-import configuration from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Configuration";
+import { getRTL } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Configuration";
 
-const dir = configuration.getRTL() ? "rtl" : "ltr";
+const dir = getRTL() ? "rtl" : "ltr";
 
 class IconTemplateContext {
 	static calculate(state) {

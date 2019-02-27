@@ -38,6 +38,9 @@
 						<tnt:NavigationListItem text="{title}" key="{key}" icon="{icon}" hasExpander="false" expanded="true" class="{class}" items="{path: 'items', templateShareable: true}">
 							<tnt:items>
 								<tnt:NavigationListItem text="{title}" key="{key}" icon="{icon}" expanded="{expanded}">
+									<tnt:customData>
+										<core:CustomData key="classes" value="new-label" writeToDom="{new}" />
+									</tnt:customData>
 								</tnt:NavigationListItem>
 							</tnt:items>
 						</tnt:NavigationListItem>

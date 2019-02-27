@@ -5,7 +5,7 @@ import URI from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/URI
 import Integer from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/Integer";
 import Function from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/Function";
 import { fetchCldrData } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/CLDR";
-import configuration from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Configuration";
+import { getLocale } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Configuration";
 import Icon from "./Icon";
 import Link from "./Link";
 import TimelineItemTemplateContext from "./TimelineItemTemplateContext";
@@ -171,7 +171,7 @@ class TimelineItem extends WebComponent {
 
 	static async define(...params) {
 		await Promise.all([
-			fetchCldrData(configuration.getLocale().getLanguage(), configuration.getLocale().getRegion(), configuration.getLocale().getScript()),
+			fetchCldrData(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
 			Icon.define(),
 			Link.define(),
 		]);

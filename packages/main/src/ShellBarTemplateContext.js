@@ -1,4 +1,4 @@
-import Configuration from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Configuration";
+import { getRTL } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Configuration";
 
 class ShellBarTemplateContext {
 	static calculate(state) {
@@ -10,7 +10,7 @@ class ShellBarTemplateContext {
 			return isHidden && isSet && !isOverflowIcon;
 		});
 
-		const isRTL = Configuration.getRTL();
+		const isRTL = getRTL();
 
 		return {
 			ctr: state,
