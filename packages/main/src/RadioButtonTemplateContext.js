@@ -19,18 +19,13 @@ const SVGConfig = {
 class RadioButtonTemplateContext {
 	static calculate(state) {
 		const compact = getCompactSize();
-		let tabIndex;
-
-		if (!state.disabled) {
-			tabIndex = state._control.tabIndex ? state._control.tabIndex.toString() : "0";
-		}
 
 		const mainClasses = RadioButtonTemplateContext.getMainClasses(state),
 			innerClasses = RadioButtonTemplateContext.getInnerClasses(state),
 			context = {
 				ctr: state,
 				readOnly: state.disabled || state.readOnly,
-				tabIndex,
+				tabIndex: state.disabled ? undefined : "0",
 				circle: compact ? SVGConfig.compact : SVGConfig.default,
 				classes: { main: mainClasses, inner: innerClasses },
 				styles: {
