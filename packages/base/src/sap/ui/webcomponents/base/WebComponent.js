@@ -441,14 +441,13 @@ class WebComponent extends HTMLElement {
 	}
 
 	/**
-	 * Calls the event handler on the control for a native event or a pseudo event
+	 * Calls the event handler on the control for a native event
 	 *
 	 * @param event The event object
-	 * @param pseudoEventType For pseudo events, use this type to construct the name of the handler
 	 * @private
 	 */
-	_handleEvent(event, pseudoEventType) {
-		const sHandlerName = `on${pseudoEventType || event.type}`;
+	_handleEvent(event) {
+		const sHandlerName = `on${event.type}`;
 
 		this._delegates.forEach(delegate => {
 			if (delegate[sHandlerName]) {

@@ -3,6 +3,7 @@ import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Boo
 import { getFormatSettings, getCalendarType } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Configuration";
 import ItemNavigation from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/delegate/ItemNavigation";
 import Integer from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/Integer";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/events/PseudoEvents";
 import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData";
 import CalendarType from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/dates/CalendarType";
 import CalendarDate from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/dates/CalendarDate";
@@ -169,12 +170,10 @@ class MonthPicker extends WebComponent {
 		}
 	}
 
-	onsapenter(event) {
-		this._activateMonth(event);
-	}
-
-	onsapspace(event) {
-		this._activateMonth(event);
+	onkeydown(event) {
+		if (isSpace(event) || isEnter(event)) {
+			this._activateMonth(event);
+		}
 	}
 
 	_activateMonth(event) {

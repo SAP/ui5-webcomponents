@@ -1,6 +1,7 @@
 import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
 import FocusHelper from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/FocusHelper";
 import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
+import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/events/PseudoEvents";
 import ListItemBaseTemplateContext from "./ListItemBaseTemplateContext";
 
 // Styles
@@ -66,7 +67,17 @@ class ListItemBase extends WebComponent {
 		this.fireEvent("_focused", event);
 	}
 
-	onsaptabnext(event) {
+	onkeydown(event) {
+		if (isTabNext(event)) {
+			return this._handleTabNext(event);
+		}
+
+		if (isTabPrevious(event)) {
+			return this._handleTabPrevious(event);
+		}
+	}
+
+	_handleTabNext(event) {
 		const target = event.target.shadowRoot.activeElement;
 
 		if (this.shouldForwardTabAfter(target)) {

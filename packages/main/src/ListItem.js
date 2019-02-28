@@ -94,6 +94,8 @@ class ListItem extends ListItemBase {
 	onBeforeRendering() {}
 
 	onkeydown(event) {
+		super.onkeydown(event);
+
 		const spaceUsed = event.which === KeyCodes.SPACE;
 		const enterUsed = event.which === KeyCodes.ENTER;
 		const itemActive = this.type === ListItemType.Active;

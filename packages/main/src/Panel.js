@@ -213,21 +213,13 @@ class Panel extends WebComponent {
 		this._icon.src = IconPool.getIconURI("navigation-right-arrow");
 		this._icon.title = this.resourceBundle.getText("PANEL_ICON");
 		this._icon.functional = true;
+		this._icon.press = event => { event.preventDefault(); this._toggleOpen(); };
 	}
 
 	onBeforeRendering() {
 		// If the animation is running, it will set the content expanded state at the end
 		if (!this._animationRunning) {
 			this._contentExpanded = !this.collapsed;
-		}
-	}
-
-	ontap(event) {
-		const icon = this.shadowRoot.querySelector("ui5-icon");
-		const isIconTab = (event.ui5target === icon);
-
-		if (icon && (isIconTab || event.ui5target.contains(icon.getDomRef()))) {
-			this._toggleOpen();
 		}
 	}
 
@@ -259,17 +251,6 @@ class Panel extends WebComponent {
 
 	_fireExpandEvent() {
 		this.fireEvent("expand", {});
-	}
-
-	onsapspace(event) {
-		if (event.ui5target.classList.contains("sapMPanelIcon")) {
-			event.preventDefault();
-			this._toggleOpen();
-		}
-	}
-
-	onsapenter(event) {
-		this.onsapspace.call(this, event);
 	}
 
 	static async define(...params) {

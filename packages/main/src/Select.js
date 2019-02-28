@@ -1,5 +1,13 @@
 import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
 import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
+import {
+	isSpace,
+	isUp,
+	isDown,
+	isRight,
+	isLeft,
+	isEnter,
+} from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/events/PseudoEvents";
 import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
 import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes";
 import ValueState from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/ValueState";
@@ -169,36 +177,28 @@ class Select extends WebComponent {
 			return;
 		}
 
+		if (isUp(event) || isLeft(event)) {
+			return this.Suggestions.onUp(event);
+		}
+
+		if (isDown(event) || isRight(event)) {
+			return this.Suggestions.onDown(event);
+		}
+
+		if (isSpace(event)) {
+			return this.Suggestions.onSpace(event);
+		}
+
+		if (isEnter(event)) {
+			this.Suggestions.onEnter(event);
+		}
+
 		const key = event.which;
 
 		if (key === KeyCodes.F4 || (event.altKey && Select.ARROWS.includes(key))) {
 			event.preventDefault();
 			this.Suggestions.toggle();
 		}
-	}
-
-	onsapup(event) {
-		this.Suggestions.onUp(event);
-	}
-
-	onsapdown(event) {
-		this.Suggestions.onDown(event);
-	}
-
-	onsapright(event) {
-		this.onsapdown(event);
-	}
-
-	onsapleft(event) {
-		this.onsapup(event);
-	}
-
-	onsapspace(event) {
-		this.Suggestions.onSpace(event);
-	}
-
-	onsapenter(event) {
-		this.Suggestions.onEnter(event);
 	}
 
 	onfocusin(event) {

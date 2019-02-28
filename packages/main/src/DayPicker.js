@@ -2,6 +2,7 @@ import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/
 import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
 import { getFormatSettings, getCalendarType } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Configuration";
 import ItemNavigation from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/delegate/ItemNavigation";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/events/PseudoEvents";
 import Integer from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/Integer";
 import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData";
 import CalendarDate from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/dates/CalendarDate";
@@ -271,7 +272,17 @@ class DayPicker extends WebComponent {
 		}
 	}
 
-	onsapenter(event) {
+	onkeydown(event) {
+		if (isEnter(event)) {
+			return this._handleEnter(event);
+		}
+
+		if (isSpace(event)) {
+			return this._handleSpace(event);
+		}
+	}
+
+	_handleEnter(event) {
 		event.preventDefault();
 		if (event.ui5target.className.indexOf("sapWCDayPickerItem") > -1) {
 			const targetDate = parseInt(event.ui5target.getAttribute("data-sap-timestamp"));
@@ -279,7 +290,7 @@ class DayPicker extends WebComponent {
 		}
 	}
 
-	onsapspace(event) {
+	_handleSpace(event) {
 		event.preventDefault();
 		if (event.ui5target.className.indexOf("sapWCDayPickerItem") > -1) {
 			const targetDate = parseInt(event.ui5target.getAttribute("data-sap-timestamp"));

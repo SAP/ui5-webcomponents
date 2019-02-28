@@ -74,7 +74,7 @@ TestHelper.ready(function () {
 					ui5target: getDaysDomRefs.call(this)[20]
 				};
 
-				this.month.onsapenter(e);
+				this.month._handleEnter(e);
 
 				RenderScheduler.whenFinished().then(function () {
 					assert.ok(getDays.call(this)[20].selected, "15/8/2018 is selected");
@@ -95,7 +95,7 @@ TestHelper.ready(function () {
 					ui5target: getDaysDomRefs.call(this)[20]
 				};
 
-				this.month.onsapspace(e);
+				this.month._handleSpace(e);
 
 				RenderScheduler.whenFinished().then(function () {
 					assert.ok(getDays.call(this)[20].selected, "15/8/2018 is selected");

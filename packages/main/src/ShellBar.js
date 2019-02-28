@@ -5,6 +5,7 @@ import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/
 import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
 import ResizeHandler from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/delegate/ResizeHandler";
 import ItemNavigation from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/delegate/ItemNavigation";
+import { isSpace, isEscape } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/events/PseudoEvents";
 import StandardListItem from "./StandardListItem";
 import List from "./List";
 import Icon from "./Icon";
@@ -529,7 +530,17 @@ class ShellBar extends WebComponent {
 		popover.openBy(overflowButton);
 	}
 
-	onsapescape() {
+	onkeydown(event) {
+		if (isEscape(event)) {
+			return this._handleEscape(event);
+		}
+
+		if (isSpace(event)) {
+			event.preventDefault();
+		}
+	}
+
+	_handleEscape() {
 		const searchButton = this.shadowRoot.querySelector(".sapWCShellBarSearchIcon");
 
 		if (this._showBlockLayer) {
@@ -547,10 +558,6 @@ class ShellBar extends WebComponent {
 
 	onExitDOM() {
 		ResizeHandler.deregister(this, this._handleResize);
-	}
-
-	onsapspace(event) {
-		event.preventDefault();
 	}
 
 	_handleSearchIconPress(event) {
