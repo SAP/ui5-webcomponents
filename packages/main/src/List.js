@@ -3,6 +3,7 @@ import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/
 import ItemNavigation from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/delegate/ItemNavigation";
 import FocusHelper from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/FocusHelper";
 import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
+import { isTabNext } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/events/PseudoEvents";
 import ListItemBase from "./ListItemBase";
 import ListMode from "./types/ListMode";
 import BackgroundDesign from "./types/BackgroundDesign";
@@ -362,10 +363,16 @@ class List extends WebComponent {
 		return firstSelectedItem;
 	}
 
+	onkeydown(event) {
+		if (isTabNext(event)) {
+			this._handleTabNext(event);
+		}
+	}
+
 	/*
 	* KEYBOARD SUPPORT
 	*/
-	onsaptabnext(event) {
+	_handleTabNext(event) {
 		// If forward navigation is performed, we check if the List has headerToolbar.
 		// If yes - we check if the target is at the last tabbable element of the headerToolbar
 		// to forward correctly the focus to the selected, previously focused or to the first list item.

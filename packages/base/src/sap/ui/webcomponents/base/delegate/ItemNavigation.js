@@ -1,3 +1,12 @@
+import {
+	isDown,
+	isUp,
+	isLeft,
+	isRight,
+	isHome,
+	isEnd,
+} from "../events/PseudoEvents";
+
 import EventProvider from "../EventProvider";
 import WebComponent from "../WebComponent";
 
@@ -45,35 +54,61 @@ class ItemNavigation extends EventProvider {
 		event.preventDefault();
 	}
 
-	onsapup(event) {
+	onkeydown(event) {
+		if (isUp(event)) {
+			return this._handleUp(event);
+		}
+
+		if (isDown(event)) {
+			return this._handleDown(event);
+		}
+
+		if (isLeft(event)) {
+			return this._handleLeft(event);
+		}
+
+		if (isRight(event)) {
+			return this._handleRight(event);
+		}
+
+		if (isHome(event)) {
+			return this._handleHome(event);
+		}
+
+		if (isEnd(event)) {
+			return this._handleEnd(event);
+		}
+	}
+
+	_handleUp(event) {
 		if (this._canNavigate()) {
 			this.currentIndex -= this.rowSize;
 			this._onKeyPress(event);
 		}
 	}
 
-	onsapdown(event) {
+	_handleDown(event) {
 		if (this._canNavigate()) {
 			this.currentIndex += this.rowSize;
 			this._onKeyPress(event);
 		}
 	}
 
-	onsapleft(event) {
+	_handleLeft(event) {
 		if (this._canNavigate()) {
 			this.currentIndex -= 1;
 			this._onKeyPress(event);
 		}
 	}
 
-	onsapright(event) {
+	_handleRight(event) {
 		if (this._canNavigate()) {
 			this.currentIndex += 1;
 			this._onKeyPress(event);
 		}
 	}
 
-	onsaphome(event) {
+	_handleHome(event) {
 		if (this._canNavigate()) {
 			const homeEndRange = this.rowSize > 1 ? this.rowSize : this._getItems().length;
 			this.currentIndex -= this.currentIndex % homeEndRange;
@@ -81,7 +116,7 @@ class ItemNavigation extends EventProvider {
 		}
 	}
 
-	onsapend(event) {
+	_handleEnd(event) {
 		if (this._canNavigate()) {
 			const homeEndRange = this.rowSize > 1 ? this.rowSize : this._getItems().length;
 			this.currentIndex += (homeEndRange - 1 - this.currentIndex % homeEndRange); // eslint-disable-line

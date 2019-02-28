@@ -2,6 +2,14 @@ import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/
 import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
 import ValueState from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/ValueState";
 import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
+import {
+	isUp,
+	isDown,
+	isLeft,
+	isSpace,
+	isEnter,
+	isRight,
+} from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/events/PseudoEvents";
 import Icon from "./Icon";
 import InputType from "./types/InputType";
 // Template
@@ -315,34 +323,60 @@ class Input extends WebComponent {
 		this.firstRendering = false;
 	}
 
+	onkeydown(event) {
+		if (isUp(event)) {
+			return this._handleUp(event);
+		}
+
+		if (isDown(event)) {
+			return this._handleDown(event);
+		}
+
+		if (isRight(event)) {
+			return this._handleRight(event);
+		}
+
+		if (isLeft(event)) {
+			return this._handleLeft(event);
+		}
+
+		if (isSpace(event)) {
+			return this._handleSpace(event);
+		}
+
+		if (isEnter(event)) {
+			return this._handleEnter(event);
+		}
+	}
+
 	/* Event handling */
-	onsapup(event) {
+	_handleUp(event) {
 		if (this.Suggestions) {
 			this.Suggestions.onUp(event);
 		}
 	}
 
-	onsapdown(event) {
+	_handleDown(event) {
 		if (this.Suggestions) {
 			this.Suggestions.onDown(event);
 		}
 	}
 
-	onsapright(event) {
-		this.onsapdown(event);
+	_handleRight(event) {
+		this._handleDown(event);
 	}
 
-	onsapleft(event) {
-		this.onsapup(event);
+	_handleLeft(event) {
+		this._handleUp(event);
 	}
 
-	onsapspace(event) {
+	_handleSpace(event) {
 		if (this.Suggestions) {
 			this.Suggestions.onSpace(event);
 		}
 	}
 
-	onsapenter(event) {
+	_handleEnter(event) {
 		const itemPressed = !!(this.Suggestions && this.Suggestions.onEnter(event));
 		if (!itemPressed) {
 			this.fireEventByAction(this.ACTION_ENTER);
