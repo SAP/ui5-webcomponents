@@ -1,5 +1,5 @@
-commit 10798a29dcdbcddf0b42a08d747a518f962a2402
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Feb 28 10:18:09 2019 +0200
+commit 8934f9dbe93d38d65b41a305bac45f295a1b8abb
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Thu Feb 28 11:59:45 2019 +0200
 
-    docs: enable component since info (#109)
+    build: report bundle size (#110)
