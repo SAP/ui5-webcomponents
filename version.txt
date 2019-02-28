@@ -1,8 +1,5 @@
-commit 89ff414ca666864a7b9972b2181695c53bbd359a
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Thu Feb 28 16:15:55 2019 +0200
+commit adc6f7867c37a159c82b3ba0c206ef01663f7581
+Author: Adrian Bobev <adrian.bobev@gmail.com>
+Date:   Thu Feb 28 16:41:05 2019 +0200
 
-    improvement: provide smaller alternative to URI.js (#116)
-    
-    - The usage by the IconPool is quite small and simple, provide an alternative implementation to the huge URI.js.
-    - This change reduces the zipped bundle size by 8KB
+    revert: ui5-list keyboard handling improvement (#117)
