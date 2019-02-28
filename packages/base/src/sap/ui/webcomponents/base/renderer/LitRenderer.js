@@ -6,4 +6,7 @@ class LitRenderer {
 	}
 }
 
+export { html, svg } from "lit-html";
+export { repeat } from "lit-html/directives/repeat";
+
 export default LitRenderer;
