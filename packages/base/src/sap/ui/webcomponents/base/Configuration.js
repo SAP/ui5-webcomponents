@@ -3,7 +3,7 @@ import Locale from "@ui5/webcomponents-core/dist/sap/ui/core/Locale";
 import CalendarType from "@ui5/webcomponents-core/dist/sap/ui/core/CalendarType";
 import * as FormatSettings from "./FormatSettings";
 
-let LocaleData = null;
+let LocaleData;
 
 const getDesigntimePropertyAsArray = sValue => {
 	const m = /\$([-a-z0-9A-Z._]+)(?::([^$]*))?\$/.exec(sValue);
@@ -89,13 +89,13 @@ const getCalendarType = () => {
 	}
 
 	/* In order to have a locale based calendar type - LocaleData should be injected to the configuration
-		- check #injectCalendarTypeProvider
+		- check #injectLocaleData
 	*/
 	if (LocaleData) {
 		return LocaleData.getInstance(getLocale()).getPreferredCalendarType();
 	}
 
-	return "Gregorian";
+	return CalendarType.Gregorian;
 };
 
 const getOriginInfo = () => {};
@@ -199,7 +199,7 @@ const applyConfigurations = () => {
 	});
 };
 
-const injectCalendarTypeProvider = localeData => {
+const injectLocaleData = localeData => {
 	LocaleData = localeData;
 };
 
@@ -220,5 +220,5 @@ export {
 	_setTheme,
 	getSupportedLanguages,
 	getOriginInfo,
-	injectCalendarTypeProvider,
+	injectLocaleData,
 };
