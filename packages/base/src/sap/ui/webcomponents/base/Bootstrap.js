@@ -3,7 +3,7 @@ import "./shims/jquery-shim";
 
 import whenDOMReady from "./util/whenDOMReady";
 import EventEnrichment from "./events/EventEnrichment";
-import IconFonts from "./IconFonts";
+import { insertIconFontFace } from "./IconFonts";
 import DOMEventHandler from "./DOMEventHandler";
 
 EventEnrichment.run();
@@ -19,7 +19,7 @@ const Bootstrap = {
 
 		bootPromise = new Promise(resolve => {
 			whenDOMReady().then(() => {
-				IconFonts.load();
+				insertIconFontFace();
 				DOMEventHandler.start();
 				resolve();
 			});
