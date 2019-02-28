@@ -6,7 +6,7 @@ import { isSpace, isEnter } from "@ui5/webcomponents-base/src/sap/ui/webcomponen
 import Integer from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/Integer";
 import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData";
 import CalendarDate from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/dates/CalendarDate";
-import CalendarUtils from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/dates/CalendarUtils";
+import { calculateWeekNumber } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/dates/CalendarUtils";
 import CalendarType from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/dates/CalendarType";
 import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
 import DayPickerTemplateContext from "./DayPickerTemplateContext";
@@ -172,7 +172,7 @@ class DayPicker extends WebComponent {
 				classes: `sapWCDayPickerItem sapWCDayPickerWDay${weekday}`,
 			};
 
-			const weekNumber = CalendarUtils.calculateWeekNumber(oCalDate.toUTCJSDate(), oCalDate.getYear(), this._oLocale, this._oLocaleData);
+			const weekNumber = calculateWeekNumber(oCalDate.toUTCJSDate(), oCalDate.getYear(), this._oLocale, this._oLocaleData);
 
 			if (lastWeekNumber !== weekNumber) {
 				this._weekNumbers.push(weekNumber);

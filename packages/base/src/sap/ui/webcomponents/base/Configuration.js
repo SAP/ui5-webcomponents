@@ -1,8 +1,9 @@
 import Device from "@ui5/webcomponents-core/dist/sap/ui/Device";
-import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData";
 import Locale from "@ui5/webcomponents-core/dist/sap/ui/core/Locale";
 import CalendarType from "@ui5/webcomponents-core/dist/sap/ui/core/CalendarType";
 import * as FormatSettings from "./FormatSettings";
+
+let LocaleData;
 
 const getDesigntimePropertyAsArray = sValue => {
 	const m = /\$([-a-z0-9A-Z._]+)(?::([^$]*))?\$/.exec(sValue);
@@ -87,7 +88,14 @@ const getCalendarType = () => {
 		}
 	}
 
-	return LocaleData.getInstance(getLocale()).getPreferredCalendarType();
+	/* In order to have a locale based calendar type - LocaleData should be injected to the configuration
+		- check #injectLocaleData
+	*/
+	if (LocaleData) {
+		return LocaleData.getInstance(getLocale()).getPreferredCalendarType();
+	}
+
+	return CalendarType.Gregorian;
 };
 
 const getOriginInfo = () => {};
@@ -169,12 +177,12 @@ const parseURLParameters = () => {
 			return;
 		}
 
-		value = value.toLowerCase();
+		const lowerCaseValue = value.toLowerCase();
 
 		const param = key.split("sap-ui-")[1];
 
 		if (booleanMapping.has(value)) {
-			value = booleanMapping.get(value);
+			value = booleanMapping.get(lowerCaseValue);
 		}
 
 		runtimeConfig[param] = value;
@@ -189,6 +197,10 @@ const applyConfigurations = () => {
 			CONFIGURATION[key] = runtimeConfig[key];
 		}
 	});
+};
+
+const injectLocaleData = localeData => {
+	LocaleData = localeData;
 };
 
 parseConfigurationScript();
@@ -208,4 +220,5 @@ export {
 	_setTheme,
 	getSupportedLanguages,
 	getOriginInfo,
+	injectLocaleData,
 };
