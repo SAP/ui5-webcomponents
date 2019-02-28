@@ -275,6 +275,11 @@ pre.prettyprint>xmp {
 	color: #333333;
 }
 
+.api-table-content-cell-since {
+	padding-top: 1rem;
+	color: #008EFF;
+}
+
 .api-table-event-description {
 	margin-top: 8px;
 	display: inline-block;
