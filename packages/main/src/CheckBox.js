@@ -7,6 +7,7 @@ import ValueState from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/ty
 import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
 import CheckBoxRenderer from "./build/compiled/CheckBoxRenderer.lit";
 import CheckBoxTemplateContext from "./CheckBoxTemplateContext";
+import Label from "./Label";
 
 // Styles
 import belize from "./themes/sap_belize/CheckBox.less";
@@ -213,6 +214,14 @@ class CheckBox extends WebComponent {
 
 	static get calculateTemplateContext() {
 		return CheckBoxTemplateContext.calculate;
+	}
+
+	static async define(...params) {
+		await Promise.all([
+			Label.define(),
+		]);
+
+		super.define(...params);
 	}
 }
 
