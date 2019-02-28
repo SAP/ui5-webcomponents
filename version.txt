@@ -1,15 +1,7 @@
-commit 687fa6a5b68544171d961293b1cce4d5e2230333
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Thu Feb 28 15:05:08 2019 +0200
+commit f529ebfdc8eaf346bbcb4542c065d4666eefad39
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Thu Feb 28 14:42:13 2019 +0100
 
-    improvement: switch default icon font usage to CDN (#114)
+    refactor: pseudo events modularisation (#111)
     
-    - loading the SAP-icons font files via ES6 imports forces the usage of
-    bild tools and plugins
-    - switch to CDN loading (from ui5.sap.com) so imports of most components
-    are plain JS imports
-    - add the icon fonts as data urls exported by ES6 modules for users
-    who want to opt out of CDN but still use JS-only imports
-    - font files can still be imported by developers as assets and they can
-    still use plugins to load them as URL by their builder
-    - add method to override default loading location for above two cases
+    - PsuedoEvents is now a module that exports several reusable methods for identifying keydown
