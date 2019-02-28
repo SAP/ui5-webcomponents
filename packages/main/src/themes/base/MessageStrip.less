@@ -18,6 +18,7 @@
 @_ui5_webcomponents_messagestrip_button_border_radius: 0;
 @_ui5_webcomponents_messagestrip_padding: 0.125rem 0;
 @_ui5_webcomponents_messagestrip_button_height: 1.625rem;
+@_ui5_webcomponents_messagestrip_border_width: 1px;
 
 :host(ui5-messagestrip) {
     display: inline-block;
@@ -48,7 +49,7 @@ span[data-sap-ui-wc-root] {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        border-width: 1px;
+        border-width: @_ui5_webcomponents_messagestrip_border_width;
         border-style: solid;
         box-sizing: border-box;
 
@@ -77,7 +78,7 @@ span[data-sap-ui-wc-root] {
         }
         
         ui5-label {
-            min-height: 26px;
+            min-height: 1.625rem;
             display: flex;
             align-items: center;
         }

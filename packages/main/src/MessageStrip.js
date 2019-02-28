@@ -5,6 +5,7 @@ import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/com
 import MessageStripContext from "./MessageStripContext";
 import MessageStripType from "./types/MessageStripType";
 import MessageStripRenderer from "./build/compiled/MessageStripRenderer.lit";
+import Button from "./Button";
 import Icon from "./Icon";
 import Label from "./Label";
 
@@ -151,6 +152,7 @@ class MessageStrip extends WebComponent {
 
 	static async define(...params) {
 		await Promise.all([
+			Button.define(),
 			Icon.define(),
 			Label.define(),
 		]);
