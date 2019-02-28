@@ -1,7 +1,7 @@
 const list = require("../pageobjects/ListTestPage");
 const assert = require("assert");
 
-describe("List Tests", () => {
+describe("Date Picker Tests", () => {
 	before(() => {
 		browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/List_test_page.html");
 	});

@@ -160,7 +160,6 @@ class RadioButton extends WebComponent {
 	onBeforeRendering() {
 		this.syncLabel();
 		this.syncGroup();
-		this.tabIndex = this.getAttribute("tabindex");
 	}
 
 	syncLabel() {
