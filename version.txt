@@ -1,7 +1,8 @@
-commit f529ebfdc8eaf346bbcb4542c065d4666eefad39
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Thu Feb 28 14:42:13 2019 +0100
+commit 89ff414ca666864a7b9972b2181695c53bbd359a
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Thu Feb 28 16:15:55 2019 +0200
 
-    refactor: pseudo events modularisation (#111)
+    improvement: provide smaller alternative to URI.js (#116)
     
-    - PsuedoEvents is now a module that exports several reusable methods for identifying keydown
+    - The usage by the IconPool is quite small and simple, provide an alternative implementation to the huge URI.js.
+    - This change reduces the zipped bundle size by 8KB
