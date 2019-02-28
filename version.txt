@@ -1,5 +1,5 @@
-commit 8934f9dbe93d38d65b41a305bac45f295a1b8abb
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Thu Feb 28 11:59:45 2019 +0200
+commit 85d2322924c64b8d0ceb2608f0aa446401cd64cb
+Author: Adrian Bobev <adrian.bobev@gmail.com>
+Date:   Thu Feb 28 13:49:19 2019 +0200
 
-    build: report bundle size (#110)
+    refactor: use one version of lit-html for base and main (#113)
