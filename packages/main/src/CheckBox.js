@@ -217,9 +217,7 @@ class CheckBox extends WebComponent {
 	}
 
 	static async define(...params) {
-		await Promise.all([
-			Label.define(),
-		]);
+		await Label.define();
 
 		super.define(...params);
 	}
