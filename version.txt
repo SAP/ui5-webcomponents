@@ -1,5 +1,5 @@
-commit a4e412823ddfe97b94f8bc1339efc2c1e2eebc27
+commit 10798a29dcdbcddf0b42a08d747a518f962a2402
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Feb 27 19:20:14 2019 +0200
+Date:   Thu Feb 28 10:18:09 2019 +0200
 
-    docs: display since for properties (#108)
+    docs: enable component since info (#109)
