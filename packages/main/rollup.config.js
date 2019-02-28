@@ -179,11 +179,6 @@ const getES6Config = () => {
 		},
 		moduleContext: (id) => {
 			if (id.includes("shadydom")) {
-				// suppress the rollup error for this module as it uses this in the global scope correctly even without changing the context here
-				return "window";
-			}
-			if (id.includes("custom-elements")) {
-				// suppress the rollup error for this module as it uses this in the global scope correctly even without changing the context here
 				return "window";
 			}
 		},
@@ -210,11 +205,6 @@ const getES5Config = () => {
 				return "window";
 			}
 			if (id.includes("shadydom")) {
-				// suppress the rollup error for this module as it uses this in the global scope correctly even without changing the context here
-				return "window";
-			}
-			if (id.includes("custom-elements")) {
-				// suppress the rollup error for this module as it uses this in the global scope correctly even without changing the context here
 				return "window";
 			}
 		},
