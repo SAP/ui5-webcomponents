@@ -177,6 +177,16 @@ const getES6Config = () => {
 			format: "esm",
 			sourcemap: true
 		},
+		moduleContext: (id) => {
+			if (id.includes("shadydom")) {
+				// suppress the rollup error for this module as it uses this in the global scope correctly even without changing the context here
+				return "window";
+			}
+			if (id.includes("custom-elements")) {
+				// suppress the rollup error for this module as it uses this in the global scope correctly even without changing the context here
+				return "window";
+			}
+		},
 		watch: {
 			clearScreen: false
 		},
@@ -196,6 +206,14 @@ const getES5Config = () => {
 		},
 		moduleContext: (id) => {
 			if (id.includes("url-search-params-polyfill")) {
+				// suppress the rollup error for this module as it uses this in the global scope correctly even without changing the context here
+				return "window";
+			}
+			if (id.includes("shadydom")) {
+				// suppress the rollup error for this module as it uses this in the global scope correctly even without changing the context here
+				return "window";
+			}
+			if (id.includes("custom-elements")) {
 				// suppress the rollup error for this module as it uses this in the global scope correctly even without changing the context here
 				return "window";
 			}
