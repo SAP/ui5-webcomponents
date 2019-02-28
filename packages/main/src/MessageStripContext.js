@@ -5,7 +5,7 @@ class MessageStripTemplateContext {
 			classes: {
 				label: MessageStripTemplateContext.getLabelClasses(state),
 			},
-			type: MessageStripTemplateContext.getTypeClasse(state),
+			type: MessageStripTemplateContext.getTypeClasses(state),
 			icon: MessageStripTemplateContext.getIcon(state),
 		};
 	}
@@ -40,7 +40,7 @@ class MessageStripTemplateContext {
 		};
 	}
 
-	static getTypeClasse(state) {
+	static getTypeClasses(state) {
 		return MessageStripTemplateContext.typeClasses()[state.type];
 	}
 }

@@ -152,7 +152,7 @@ class MessageStrip extends WebComponent {
 	static async define(...params) {
 		await Promise.all([
 			Icon.define(),
-			Label.define()
+			Label.define(),
 		]);
 
 		super.define(...params);
