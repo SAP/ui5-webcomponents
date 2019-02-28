@@ -9,6 +9,7 @@ import url from "rollup-plugin-url";
 import { terser } from "rollup-plugin-terser";
 import notify from 'rollup-plugin-notify';
 import CleanCSS from 'clean-css';
+import filesize from 'rollup-plugin-filesize';
 
 const StyleFioriMap = {};
 const StyleBelizeMap = {};
@@ -90,6 +91,11 @@ function ui5LessPlugin() {
 const getPlugins = ({ transpile }) => {
 	const plugins = [];
 
+	plugins.push(filesize({
+		render : function (options, bundle, { minSize, gzipSize, brotliSize, bundleSize }){
+			return gzipSize;
+		}
+	}));
 	plugins.push(ui5DevImportCheckerPlugin());
 
 	plugins.push(url({
