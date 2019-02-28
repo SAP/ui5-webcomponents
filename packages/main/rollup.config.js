@@ -178,7 +178,7 @@ const getES6Config = () => {
 			sourcemap: true
 		},
 		moduleContext: (id) => {
-			if (id.includes("url-search-params-polyfill") || id.includes("shadydom")) {
+			if (id.includes("url-search-params-polyfill")) {
 				return "window";
 			}
 		},
@@ -200,7 +200,7 @@ const getES5Config = () => {
 			sourcemap: true
 		},
 		moduleContext: (id) => {
-			if (id.includes("url-search-params-polyfill") || id.includes("shadydom")) {
+			if (id.includes("url-search-params-polyfill")) {
 				return "window";
 			}
 		},

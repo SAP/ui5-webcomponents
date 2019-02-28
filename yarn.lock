@@ -932,20 +932,10 @@
     "@wdio/logger" "^5.4.6"
     fibers "^3.1.1"
 
-"@webcomponents/custom-elements@^1.2.1":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@webcomponents/custom-elements/-/custom-elements-1.2.1.tgz#0b9c8d06c6d8f059752ff389a6e4418f393338e7"
-  integrity sha512-flmTp4rVbBkcUIF3eBO3LNoAaYvleTdhPZKzdzr6iztWLLrxCctcK+7MAQeC3/SPjc3JDdC3jYLMRF4R6C3f9g==
-
 "@webcomponents/shadycss@^1.5.2":
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/@webcomponents/shadycss/-/shadycss-1.8.0.tgz#10340b87626f876841033b21b5221c3701252e10"
   integrity sha512-bx0TzeZ11VqYDGLuXfznen8+4u0hADk2dD5RNMFxWL9MM4c5NXCDCgNXgssb4i2zQOos/GGe4tl5AuE0LzJkLA==
-
-"@webcomponents/shadydom@^1.5.0":
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/@webcomponents/shadydom/-/shadydom-1.5.0.tgz#7cf7517eb63871f47bf4b3ec734146b9af944b0c"
-  integrity sha512-d6NamYIoQdrB3U7Ii1R1tUi4XrJ4OevfshJfpbkgY6Z0mio/mcI+UYH7EOd8nRqFAVOhLCssNglLNl4Lw2s1MQ==
 
 "@zeit/schemas@2.6.0":
   version "2.6.0"

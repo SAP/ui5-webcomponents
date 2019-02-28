@@ -2,8 +2,8 @@
 import "url-search-params-polyfill";
 
 // Web Components polyfills
-import "@webcomponents/shadydom";
-import "@webcomponents/custom-elements";
+import "../thirdparty/shadydom.min";
+import "../thirdparty/custom-elements.min";
 
 // "pseudo mutation observer" fix for nodeValue
 import "../compatibility/patchNodeValue";
