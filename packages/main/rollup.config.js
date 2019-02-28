@@ -178,7 +178,7 @@ const getES6Config = () => {
 			sourcemap: true
 		},
 		moduleContext: (id) => {
-			if (id.includes("shadydom")) {
+			if (id.includes("url-search-params-polyfill") || id.includes("shadydom")) {
 				return "window";
 			}
 		},
@@ -200,11 +200,7 @@ const getES5Config = () => {
 			sourcemap: true
 		},
 		moduleContext: (id) => {
-			if (id.includes("url-search-params-polyfill")) {
-				// suppress the rollup error for this module as it uses this in the global scope correctly even without changing the context here
-				return "window";
-			}
-			if (id.includes("shadydom")) {
+			if (id.includes("url-search-params-polyfill") || id.includes("shadydom")) {
 				return "window";
 			}
 		},
