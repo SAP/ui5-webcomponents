@@ -1,23 +1,18 @@
-import Device from "@ui5/webcomponents-core/dist/sap/ui/Device";
+import { getOS } from "@ui5/webcomponents-core/dist/sap/ui/Device";
 
 const setupOS = node => {
-	node.dataset.sapUiOs = Device.os.name + Device.os.versionStr;
-
 	let osCSS = null;
-	switch (Device.os.name) {
-	case Device.os.OS.IOS:
+	const osInfo = getOS();
+	const osName = osInfo.name;
+
+	node.dataset.sapUiOs = osName + osInfo.versionStr;
+
+	if (osName === osInfo.OS.IOS) {
 		osCSS = "sap-ios";
-		break;
-	case Device.os.OS.ANDROID:
+	} else if (osName === osInfo.OS.ANDROID) {
 		osCSS = "sap-android";
-		break;
-	case Device.os.OS.BLACKBERRY:
-		osCSS = "sap-bb";
-		break;
-	case Device.os.OS.WINDOWS_PHONE:
-		osCSS = "sap-winphone";
-		break;
 	}
+
 	if (osCSS) {
 		node.classList.add(osCSS);
 	}

@@ -1,4 +1,4 @@
-import Device from "@ui5/webcomponents-core/dist/sap/ui/Device";
+import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device";
 
 class ListTemplateContext {
 	static calculate(state) {
@@ -43,7 +43,7 @@ class ListTemplateContext {
 			sapMLIB: true,
 			sapMListNoData: true,
 			sapMLIBTypeInactive: true,
-			sapMLIBFocusable: Device.system.desktop,
+			sapMLIBFocusable: isDesktop(),
 		};
 	}
 }
