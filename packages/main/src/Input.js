@@ -79,6 +79,16 @@ const metadata = {
 			type: HTMLElement,
 			multiple: true,
 		},
+
+		/**
+		 *
+		 * @type {HTMLElement[]}
+		 * @slot
+		 * @public
+		 */
+		input: {
+			type: HTMLElement,
+		},
 	},
 	properties: /** @lends  sap.ui.webcomponents.main.Input.prototype */  {
 
@@ -321,6 +331,10 @@ class Input extends WebComponent {
 		}
 		this.checkFocusOut();
 		this.firstRendering = false;
+
+		if (this.input) {
+			//TODO: Add attributes
+		}
 	}
 
 	onkeydown(event) {
@@ -494,7 +508,9 @@ class Input extends WebComponent {
 	}
 
 	getInputDOMRef() {
-		return this.getDomRef().querySelector(`#${this.getInputId()}`);
+		return this.input
+			? this.input // Input in slot
+			: this.getDomRef().querySelector(`#${this.getInputId()}`); // default case
 	}
 
 	getLabelableElementId() {

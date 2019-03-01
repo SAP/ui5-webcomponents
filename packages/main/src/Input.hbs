@@ -7,7 +7,12 @@
 <div id="{{ctr._id}}-wrapper"
 	class="{{classes.wrapper}}"
 >
-	<input id="{{ctr._id}}-inner"
+
+	{{#if ctr.input}}
+		<slot name="{{ctr.input._slot}}"
+		></slot>
+	{{else}}
+		<input id="{{ctr._id}}-inner"
 			class="sapWCInputBaseInner"
 			type="{{type}}"
 			?disabled="{{ctr.disabled}}"
@@ -16,11 +21,12 @@
 			placeholder="{{ctr.placeholder}}"
 			data-sap-no-tab-ref
 			data-sap-focus-ref
-	/>
+		/>
 		{{#if ctr.icon}}
 			<slot name="{{ctr.icon._slot}}"></slot>
 		{{/if}}
-	</div>
+	{{/if}}
+</div>
 
 	{{#if ctr.showSuggestions}}
 			<ui5-popover
