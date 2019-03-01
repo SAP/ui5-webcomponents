@@ -7,12 +7,12 @@ const SwitchTypes = {
 	/**
 	 * The Textual type includes the default styling and user provided texts.
 	 */
-	Standard: "Textual",
+	Textual: "Textual",
 
 	/**
 	 * The Graphical type - positive/negative icons and colors are displayed.
 	 */
-	Semantic: "Graphical",
+	Graphical: "Graphical",
 };
 
 class SwitchType extends DataType {
