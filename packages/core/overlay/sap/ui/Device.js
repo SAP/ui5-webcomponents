@@ -140,9 +140,9 @@ const _getMobileOS = () => {
 
 const _getDesktopOS = () => {
 	const sPlatform = navigator.platform;
-	if (sPlatform.indexOf("Win") != -1) {
+	if (sPlatform.indexOf("Win") !== -1) {
 		const rVersion = /Windows NT (\d+).(\d)/i; // userAgent since windows 10: Windows NT 10[...]
-		const uaResult = userAgent.match(rVersion);
+		const uaResult = navigator.userAgent.match(rVersion);
 		
 		return {
 			"name": OS.WINDOWS,
@@ -184,6 +184,14 @@ const getOS = () => {
 	}
 
 	return Device.os;
+}
+
+const isAndroid = () => {
+	if (!Device.os) {
+		_setOS();
+	}
+
+	return !!Device.os.android;
 }
 
 //******** Browser Detection ********
@@ -550,35 +558,35 @@ const isIE = () => {
 	if (!Device.browser) {
 		_setBrowser();
 	}
-	return Device.browser.msie;
+	return !!Device.browser.msie;
 };
 
 const isEdge = () => {
 	if (!Device.browser) {
 		_setBrowser();
 	}
-	return Device.browser.edge;
+	return !!Device.browser.edge;
 };
 
 const isChrome = () => {
 	if (!Device.browser) {
 		_setBrowser();
 	}
-	return Device.browser.chrome;
+	return !!Device.browser.chrome;
 };
 
 const isFF = () => {
 	if (!Device.browser) {
 		_setBrowser();
 	}
-	return Device.browser.firefox;
+	return !!Device.browser.firefox;
 }
 
 const isSafari = () => {
 	if (!Device.browser) {
 		_setBrowser();
 	}
-	return Device.browser.safari;
+	return !!Device.browser.safari;
 };
 
 //******** Support Detection ********
@@ -589,13 +597,15 @@ const _setSupport = () => {
 	}
 
 	Device.support = {};
-	Device.support.touch = !!(('ontouchstart' in window) || window.DocumentTouch && document instanceof window.DocumentTouch);
+	Device.support.touch = !!(('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (window.DocumentTouch && document instanceof window.DocumentTouch));
 }
 
 const supportTouch = () => {
 	if (!Device.support) {
 		_setSupport();
 	}
+
+	return !!Device.support.touch;
 }
 
 //******** System Detection ********
@@ -788,8 +798,6 @@ const isMobile = () => {
 	return Device.browser.mobile;
 }
 
-export default {browser: {}}; // sap.ui.base.Metadata uses Device.browser.phantomJS
-
 export {
 	isIE,
 	isEdge,
@@ -800,6 +808,7 @@ export {
 	isDesktop,
 	isTablet,
 	isPhone,
+	isAndroid,
 	getOS,
 	getSystem,
 	getBrowser,

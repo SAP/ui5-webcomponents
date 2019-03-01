@@ -1,4 +1,4 @@
-import Device from "@ui5/webcomponents-core/dist/sap/ui/Device";
+import { isAndroid } from "@ui5/webcomponents-core/dist/sap/ui/Device";
 import Locale from "@ui5/webcomponents-core/dist/sap/ui/core/Locale";
 import CalendarType from "@ui5/webcomponents-core/dist/sap/ui/core/CalendarType";
 import * as FormatSettings from "./FormatSettings";
@@ -16,7 +16,7 @@ const detectLanguage = () => {
 	const browserLanguages = navigator.languages;
 
 	const navigatorLanguage = () => {
-		if (Device.os.android) {
+		if (isAndroid()) {
 			// on Android, navigator.language is hardcoded to 'en', so check UserAgent string instead
 			const match = navigator.userAgent.match(/\s([a-z]{2}-[a-z]{2})[;)]/i);
 			if (match) {
