@@ -1,5 +1,5 @@
-commit f338ca11e3f0209dbff412197d388c08cfb0bf03
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Fri Mar 1 17:08:37 2019 +0200
+commit a242477e1abc475e96ebf2d264ea3bd7a490d96d
+Author: Christian Grail <cgrail@users.noreply.github.com>
+Date:   Fri Mar 1 16:34:11 2019 +0100
 
-    docs: add github star count button (#124)
+    docs: correct typo in Link sample (#126)
