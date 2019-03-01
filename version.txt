@@ -1,5 +1,5 @@
-commit 62bfcce740372fab20cc8dbba55b31d8ff2b4e63
-Author: Adrian Bobev <adrian.bobev@gmail.com>
-Date:   Fri Mar 1 14:36:23 2019 +0200
+commit e42062adc18ce1cd0672bb81eae4003cd6a751f8
+Author: Filip Siderov <fifoosid@gmail.com>
+Date:   Fri Mar 1 16:32:30 2019 +0200
 
-    chore: change .npmignore to not exclude core folder (#119)
+    docs(playground): improve list samples (#118)
