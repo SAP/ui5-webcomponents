@@ -1,5 +1,5 @@
-commit 6b289bc4cfb2bc2276fabea57f292f017a546b0c
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Mar 1 16:39:30 2019 +0200
+commit f338ca11e3f0209dbff412197d388c08cfb0bf03
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Fri Mar 1 17:08:37 2019 +0200
 
-    docs: update new tag styling (#123)
+    docs: add github star count button (#124)
