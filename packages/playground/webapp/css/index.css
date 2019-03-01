@@ -192,6 +192,9 @@ body {
 	margin-bottom: 1rem;
 }
 
+.logo-tiny:last-child {
+	margin-right: 0;
+}
 .icon {
 	width: 4rem;
 	height: 4rem;
@@ -344,7 +347,7 @@ body {
 
 .compatibility-wrapper {
 	width: 30%;
-	min-width: 400px;
+	min-width: 375px;
 	height: 12rem;
 	margin-bottom: 3rem;
 	display: flex;
