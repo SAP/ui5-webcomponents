@@ -1,5 +1,5 @@
-commit 90b3fc94c8e0bf6f7ccaec3498c8cd3211acd22b
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu Feb 28 16:45:31 2019 +0200
+commit 62bfcce740372fab20cc8dbba55b31d8ff2b4e63
+Author: Adrian Bobev <adrian.bobev@gmail.com>
+Date:   Fri Mar 1 14:36:23 2019 +0200
 
-    refactor: use the latest web component polyfills
+    chore: change .npmignore to not exclude core folder (#119)
