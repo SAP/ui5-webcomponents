@@ -1,6 +1,6 @@
 {
   "name": "@ui5/webcomponents-core",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "UI5 Web Components: webcomponents.core",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
@@ -32,7 +32,6 @@
     "clean": "rimraf temp && rimraf dist",
     "prepublishOnly": "npm run clean && npm run build"
   },
-  "dependencies": {},
   "devDependencies": {
     "@buxlabs/amd-to-es6": "^0.13.2",
     "@openui5/sap.ui.core": "1.60.2",
