@@ -1,5 +1,8 @@
-commit a8e5b4f591e3b5f3238ff7108f57aa1f4e909412
+commit 20da5432d32af72ff793a1dca9129540fc45c481
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Mar 1 17:37:30 2019 +0200
+Date:   Fri Mar 1 20:01:44 2019 +0200
 
-    docs: correct browser support section layout (#125)
+    refactor: make SwitchType enum keys compliant with the type values (#127)
+    
+    Change SwitchType enum keys and the displayed default value for the property "type"
+    from Standard to Textual.
