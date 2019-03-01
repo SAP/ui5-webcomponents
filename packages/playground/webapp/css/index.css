@@ -344,7 +344,7 @@ body {
 
 .compatibility-wrapper {
 	width: 30%;
-	min-width: 375px;
+	min-width: 400px;
 	height: 12rem;
 	margin-bottom: 3rem;
 	display: flex;
