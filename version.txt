@@ -1,5 +1,5 @@
-commit a242477e1abc475e96ebf2d264ea3bd7a490d96d
-Author: Christian Grail <cgrail@users.noreply.github.com>
-Date:   Fri Mar 1 16:34:11 2019 +0100
+commit a8e5b4f591e3b5f3238ff7108f57aa1f4e909412
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Fri Mar 1 17:37:30 2019 +0200
 
-    docs: correct typo in Link sample (#126)
+    docs: correct browser support section layout (#125)
