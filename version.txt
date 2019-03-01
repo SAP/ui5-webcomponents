@@ -1,5 +1,5 @@
-commit e42062adc18ce1cd0672bb81eae4003cd6a751f8
-Author: Filip Siderov <fifoosid@gmail.com>
-Date:   Fri Mar 1 16:32:30 2019 +0200
+commit 6b289bc4cfb2bc2276fabea57f292f017a546b0c
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Fri Mar 1 16:39:30 2019 +0200
 
-    docs(playground): improve list samples (#118)
+    docs: update new tag styling (#123)
