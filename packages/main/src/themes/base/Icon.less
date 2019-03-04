@@ -13,12 +13,14 @@
 :host(ui5-icon) {
 	display: inline-block;
 	outline: none;
+	color: @sapUiContentNonInteractiveIconColor;
 }
 
 // required for browsers without native shadow dom
 ui5-icon {
 	display: inline-block;
 	outline: none;
+	color: @sapUiContentNonInteractiveIconColor;
 
 	// workaround for IE
 	// pressing on the span does not propagate active state to the web component
