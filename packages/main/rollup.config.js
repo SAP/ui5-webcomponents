@@ -101,13 +101,16 @@ const getPlugins = ({ transpile }) => {
 			return gzipSize;
 		}
 	}));
+	// component styles
 	plugins.push(
 		postcss({
-			plugins: [postcssNesting(), postCssCustomProperties({ importFrom: ['src/themes-next/sap_fiori_3/global-parameters.css', 'src/themes-next/sap_fiori_3/Button-parameters.css']})],
+			// plugins: [postcssNesting(), postCssCustomProperties({ importFrom: ['src/themes-next/sap_fiori_3/global-parameters.css', 'src/themes-next/sap_fiori_3/Button-parameters.css']})],
+			plugins: [postcssNesting()],
 			inject: false,
 			exclude: ["**/*.less", "**/parameters-bundle.css"],
 		})
 	);
+	// parameters bundle
 	plugins.push(
 		postcss({
 			plugins: [postcssImport(), csso({comments: true})],
