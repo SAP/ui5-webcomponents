@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<script data-id="sap-ui-config" type="application/json">
+		{
+			"language": "EN"
+		}
+	</script>
+
+	<script src="../../../../../../resources/sap/ui/webcomponents/main/bundle.esm.js"
+		type="module"
+	>
+	</script>
+</head>
+<body>
+	<ui5-datepicker id="dp5"></ui5-datepicker>
+	<ui5-datepicker id="dp8" value="Jan 6, 2015"></ui5-datepicker>
+	<ui5-datepicker id="dp9" value="today"></ui5-datepicker>
+	<ui5-datepicker id="dp10" disabled></ui5-datepicker>
+	<ui5-datepicker id="dp11"></ui5-datepicker>
+	<ui5-datepicker id="dp12"></ui5-datepicker>
+	<ui5-datepicker id="dp13"></ui5-datepicker>
+	<ui5-datepicker id="dp14"></ui5-datepicker>
+	<ui5-datepicker id="dp15"></ui5-datepicker>
+	<ui5-datepicker id="dp16"></ui5-datepicker>
+	<ui5-datepicker id="dp17"></ui5-datepicker>
+	<ui5-datepicker id="dp18"></ui5-datepicker>
+	<ui5-datepicker id="dp19"></ui5-datepicker>
+	<ui5-datepicker id="dp20"></ui5-datepicker>
+	<ui5-datepicker id="dp21"></ui5-datepicker>
+	<ui5-datepicker id="dp22"></ui5-datepicker>
+	<ui5-datepicker id="dp23"></ui5-datepicker>
+	<label id='lbl'>0</label>
+	<button id="resetCounter"></button>
+	<button id="downThere" style="position:absolute; top:3000px;"></button>
+
+	<script>
+		let counter = 0;
+		function increaseCounter() {
+			document.querySelector('#lbl').innerHTML = ++counter;
+		}
+
+		function resetCounter() {
+			counter = 0;
+			document.querySelector('#lbl').innerHTML = 0;
+		}
+
+		document.querySelector("#resetCounter").addEventListener("click", resetCounter);
+		document.querySelector("#dp5").addEventListener("change", increaseCounter);
+		document.querySelector("#dp8").addEventListener("change", increaseCounter);
+	</script>
+</body>
+</html>

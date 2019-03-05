@@ -1,8 +1,4 @@
 class DatePickerTestPage {
-	constructor() {
-		this.page = 'http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/DatePicker_test_page.html';
-	}
-
 	set id(id) {
 		this._sut = id;
 	}
