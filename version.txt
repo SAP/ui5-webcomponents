@@ -1,8 +1,5 @@
-commit 20da5432d32af72ff793a1dca9129540fc45c481
+commit 9fb7dc5a568820d97ae57ef36a363033aafde397
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Mar 1 20:01:44 2019 +0200
+Date:   Tue Mar 5 17:18:46 2019 +0200
 
-    refactor: make SwitchType enum keys compliant with the type values (#127)
-    
-    Change SwitchType enum keys and the displayed default value for the property "type"
-    from Standard to Textual.
+    fix: fix HCB colours for Icon, TextArea and TableCell content (#128)
