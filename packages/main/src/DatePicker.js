@@ -3,7 +3,7 @@ import { fetchCldrData } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/
 import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
 import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes";
 import { getCalendarType, getLocale } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Configuration";
-import IconPool from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/IconPoolProxy";
+import { getIconURI } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/IconPool";
 import DateFormat from "@ui5/webcomponents-core/dist/sap/ui/core/format/DateFormat";
 import CalendarType from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/dates/CalendarType";
 import CalendarDate from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/dates/CalendarDate";
@@ -216,7 +216,7 @@ class DatePicker extends WebComponent {
 		this._input = {};
 		this._input.type = InputType.Text;
 		this._input.icon = {};
-		this._input.icon.src = IconPool.getIconURI("appointment-2");
+		this._input.icon.src = getIconURI("appointment-2");
 		this._input.onChange = this._handleInputChange.bind(this);
 		this._input.onLiveChange = this._handleInputLiveChange.bind(this);
 		this.aArrows = [KeyCodes.ARROW_DOWN, KeyCodes.ARROW_UP]; // keys we need for keyboard handling

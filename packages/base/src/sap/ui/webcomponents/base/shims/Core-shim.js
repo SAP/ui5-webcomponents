@@ -20,6 +20,12 @@ const Core = {
 	},
 };
 
+if (!window.sap) {
+	window.sap = {
+		ui: {},
+	};
+}
+
 /**
  * @deprecated
  */
