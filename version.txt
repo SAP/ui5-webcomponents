@@ -1,10 +1,11 @@
-commit 3928e939f0baee1912276d47a372f9c13382d3e2
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Wed Mar 6 14:59:20 2019 +0200
+commit 4cf864771e911c2f8f895bce6cf67edf1ef27e4a
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Mar 6 14:28:32 2019 +0200
 
-    improvement (playground): switch playground to real URL routes for SEO (#139)
+    refactor: modularise the Device module (#129)
     
-    - switch ui5 router to location.history API
-    - generate static index.html files for all component routes
-    - generate sitemap
-    - add title and meta tag keywords
+    Convert the code to ES6, split the functionality to standalone functions,
+    that are exported and then imported separately.
+    Remove code, related to for blackberry, linux, windows 8.
+    Remove obsolete jquery.sap.global file as not used any more.
+    Add Metadata overlay
