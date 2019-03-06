@@ -1,8 +1,11 @@
-commit e645a0aa465c0407b881bc6e1941deb9ba945edf
+commit 4cf864771e911c2f8f895bce6cf67edf1ef27e4a
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Mar 6 13:17:13 2019 +0200
+Date:   Wed Mar 6 14:28:32 2019 +0200
 
-    refactor(ui5-link): keep all CSS selectors in the Base Less file only (#134)
+    refactor: modularise the Device module (#129)
     
-    Remove style nesting and move all the selectors in the base file
-    an overwrite local variables, where needed.
+    Convert the code to ES6, split the functionality to standalone functions,
+    that are exported and then imported separately.
+    Remove code, related to for blackberry, linux, windows 8.
+    Remove obsolete jquery.sap.global file as not used any more.
+    Add Metadata overlay
