@@ -8,7 +8,6 @@ import setupOS from "../util/setupOS";
 import setupSystem from "../util/setupSystem";
 import { getEffectiveStyle } from "../Theming";
 
-
 // shadow DOM templates per tag
 const shadowDOMTemplates = new Map();
 

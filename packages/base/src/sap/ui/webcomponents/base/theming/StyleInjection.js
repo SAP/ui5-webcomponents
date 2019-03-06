@@ -19,6 +19,10 @@ class StyleInjection {
 		style.innerHTML = cssText;
 		document.head.appendChild(style);
 
+		if (window.CSSVarsPolyfill) {
+			window.CSSVarsPolyfill.resolveCSSVars([style]);
+		}
+
 		this.tagNamesInHead.push(tagName);
 		this.tagsToStyleUrls.set(tagName, styleUrls);
 	}
@@ -55,6 +59,10 @@ const injectThemeProperties = styles => {
 		style.setAttribute("ui5-webcomponents-theme-properties", "");
 		style.innerHTML = styles;
 		document.head.appendChild(style);
+
+		if (window.CSSVarsPolyfill) {
+			window.CSSVarsPolyfill.findCSSVars([style]);
+		}
 	}
 };
 
