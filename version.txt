@@ -1,5 +1,7 @@
-commit c4aff35dc60d006e6266659a01d1ff77a072e2f1
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Wed Mar 6 16:09:48 2019 +0200
+commit ef001708b94e61bc45c9aa07847cdc2a96ffb67a
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Mar 6 16:32:43 2019 +0200
 
-    infra: apply playground fixes from manual gh-pages deployment (#141)
+    fix(ui5-label): enable text truncation in IE (#136)
+    
+    Additionally, remove all the nesting, preparing transition from LESS to CSS.
