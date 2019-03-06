@@ -1,5 +1,5 @@
-commit 9fb7dc5a568820d97ae57ef36a363033aafde397
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Mar 5 17:18:46 2019 +0200
+commit d9fc045d21c3b31c9d6c66ec2d88405d46a0de57
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Wed Mar 6 08:49:06 2019 +0200
 
-    fix: fix HCB colours for Icon, TextArea and TableCell content (#128)
+    infra: complete google site verification (#135)
