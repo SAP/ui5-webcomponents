@@ -1,11 +1,1 @@
-commit 4cf864771e911c2f8f895bce6cf67edf1ef27e4a
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Mar 6 14:28:32 2019 +0200
-
-    refactor: modularise the Device module (#129)
-    
-    Convert the code to ES6, split the functionality to standalone functions,
-    that are exported and then imported separately.
-    Remove code, related to for blackberry, linux, windows 8.
-    Remove obsolete jquery.sap.global file as not used any more.
-    Add Metadata overlay
+manually changed
