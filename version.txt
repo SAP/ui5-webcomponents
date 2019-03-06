@@ -1,7 +1,9 @@
-commit ef001708b94e61bc45c9aa07847cdc2a96ffb67a
+commit 98be562e3d95f0dae7f99afd0f3f4839beee90d1
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Mar 6 16:32:43 2019 +0200
+Date:   Wed Mar 6 19:18:54 2019 +0200
 
-    fix(ui5-label): enable text truncation in IE (#136)
+    fix(ui5-icon): correct icon graphic vertical alignment in IE (#142)
     
-    Additionally, remove all the nesting, preparing transition from LESS to CSS.
+    In RTL the icon is not vertical aligned in IE, that might be seen in before this change in the Icon sample in RTL, opened in IE.
+    
+    * fix typo
