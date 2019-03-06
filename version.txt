@@ -1,5 +1,5 @@
-commit d9fc045d21c3b31c9d6c66ec2d88405d46a0de57
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Wed Mar 6 08:49:06 2019 +0200
+commit 980bff1074b9eb8a0bec4dcee370242d10d58a48
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Mar 6 13:15:04 2019 +0200
 
-    infra: complete google site verification (#135)
+    refactor(ui5-title): remove obsolete styles (#137)
