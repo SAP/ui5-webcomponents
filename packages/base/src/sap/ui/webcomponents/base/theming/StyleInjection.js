@@ -1,6 +1,11 @@
 import { getTheme } from "../Configuration";
 import { attachThemeChange, getEffectiveStyle } from "../Theming";
 
+let themePropertiesReadyResolver;
+const themePropertiesReadyPromise = new Promise(resolve => {
+	themePropertiesReadyResolver = resolve;
+});
+
 class StyleInjection {
 	constructor() {
 		this.tagNamesInHead = [];
@@ -8,7 +13,7 @@ class StyleInjection {
 		attachThemeChange(this.updateStylesInHead.bind(this));
 	}
 
-	createStyleTag(tagName, styleUrls, cssText) {
+	async createStyleTag(tagName, styleUrls, cssText) {
 		if (this.tagNamesInHead.indexOf(tagName) !== -1) {
 			return;
 		}
@@ -19,12 +24,13 @@ class StyleInjection {
 		style.innerHTML = cssText;
 		document.head.appendChild(style);
 
-		if (window.CSSVarsPolyfill) {
-			window.CSSVarsPolyfill.resolveCSSVars([style]);
-		}
-
 		this.tagNamesInHead.push(tagName);
 		this.tagsToStyleUrls.set(tagName, styleUrls);
+
+		if (window.CSSVarsPolyfill) {
+			await whenThemePropertiesInjected();
+			window.CSSVarsPolyfill.resolveCSSVars([style]);
+		}
 	}
 
 	async updateStylesInHead() {
@@ -62,8 +68,13 @@ const injectThemeProperties = styles => {
 
 		if (window.CSSVarsPolyfill) {
 			window.CSSVarsPolyfill.findCSSVars([style]);
+			themePropertiesReadyResolver();
 		}
 	}
+};
+
+const whenThemePropertiesInjected = () => {
+	return themePropertiesReadyPromise;
 };
 
 export { injectThemeProperties };
