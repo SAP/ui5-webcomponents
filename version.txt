@@ -1,9 +1,5 @@
-commit 98be562e3d95f0dae7f99afd0f3f4839beee90d1
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Mar 6 19:18:54 2019 +0200
+commit 02e79bf92fca419abe6be7a77f7c2f1777fd9b5b
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Wed Mar 6 19:59:32 2019 +0200
 
-    fix(ui5-icon): correct icon graphic vertical alignment in IE (#142)
-    
-    In RTL the icon is not vertical aligned in IE, that might be seen in before this change in the Icon sample in RTL, opened in IE.
-    
-    * fix typo
+    refactor(buttons): keep styles in base less only (#140)
