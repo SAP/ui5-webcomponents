@@ -1,4 +1,4 @@
-import Device from "@ui5/webcomponents-core/dist/sap/ui/Device";
+import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device";
 
 class CheckBoxTemplateContext {
 	static calculate(state) {
@@ -33,7 +33,7 @@ class CheckBoxTemplateContext {
 	}
 
 	static getInnerClasses(state) {
-		const hoverable = !state.disabled && !state.readOnly && Device.system.desktop;
+		const hoverable = !state.disabled && !state.readOnly && isDesktop();
 
 		return {
 			sapMCbBg: true,

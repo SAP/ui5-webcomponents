@@ -1,11 +1,12 @@
-import Device from "@ui5/webcomponents-core/dist/sap/ui/Device";
+import { getSystem } from "@ui5/webcomponents-core/dist/sap/ui/Device";
 
 const setupSystem = node => {
-	const sysTypes = Object.entries(Device.system.SYSTEMTYPE).map(([_key, value]) => value);
+	const system = getSystem();
+	const sysTypes = Object.entries(system.SYSTEMTYPE).map(([_key, value]) => value);
 
 	node.classList.remove(...sysTypes);
 	sysTypes.forEach(sysType => {
-		if (Device.system[sysType]) {
+		if (system[sysType]) {
 			node.classList.add(`sap-${sysType}`);
 		}
 	});
