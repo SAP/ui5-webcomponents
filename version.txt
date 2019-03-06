@@ -1,5 +1,8 @@
-commit 980bff1074b9eb8a0bec4dcee370242d10d58a48
+commit e645a0aa465c0407b881bc6e1941deb9ba945edf
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Mar 6 13:15:04 2019 +0200
+Date:   Wed Mar 6 13:17:13 2019 +0200
 
-    refactor(ui5-title): remove obsolete styles (#137)
+    refactor(ui5-link): keep all CSS selectors in the Base Less file only (#134)
+    
+    Remove style nesting and move all the selectors in the base file
+    an overwrite local variables, where needed.
