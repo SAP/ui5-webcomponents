@@ -10,7 +10,7 @@ sap.ui.define([
 		// var basePath = new URL(document.baseURI).pathname
 		// strip any url parameters
 		baseURI = baseURI.split("?")[0];
-		var isComponentPage = /components\/\w+\//.test(baseURI);
+		var isComponentPage = /\/components\/\w+\//.test(baseURI);
 		if (isComponentPage) {
 			return baseURI.split("playground/components")[0]
 		} else {

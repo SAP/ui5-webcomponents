@@ -1,1 +1,5 @@
-manually changed
+commit c4aff35dc60d006e6266659a01d1ff77a072e2f1
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Wed Mar 6 16:09:48 2019 +0200
+
+    infra: apply playground fixes from manual gh-pages deployment (#141)
