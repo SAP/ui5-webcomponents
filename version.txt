@@ -1,5 +1,5 @@
-commit 096432f3b43d3fd83d5a77670115963b5fe1b531
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Thu Mar 7 14:29:47 2019 +0200
+commit 8094a8a91528798386f8d11bdaa1f0e0d69304b5
+Author: a-z-ivanov <yogaaaaa@yahoo.com>
+Date:   Thu Mar 7 07:27:12 2019 -0800
 
-    improvement: provide smaller alternative to IconPool.js (#132)
+    refactor(ui5-datepicker): refactor the css (#149)
