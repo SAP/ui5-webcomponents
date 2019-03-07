@@ -17,18 +17,19 @@
 		</div>
 	{{/if}}
 
-	<textarea
-		id="{{ctr._id}}-inner"
-		class="{{classes.inner}}"
-		style="{{styles.inner}}"
-		placeholder="{{ ctr.placeholder }}"
-		?disabled="{{ctr.disabled}}"
-		?readonly="{{ctr.readonly}}"
-		maxlength="{{maxLength}}"
-		.value="{{ctr.value}}"
-		@change="{{ctr._listeners.change}}"
-		data-sap-focus-ref>
-	</textarea>
+	<div class="{{classes.focusDiv}}" style="{{styles.inner}}">
+		<textarea
+			id="{{ctr._id}}-inner"
+			class="{{classes.inner}}"
+			placeholder="{{ ctr.placeholder }}"
+			?disabled="{{ctr.disabled}}"
+			?readonly="{{ctr.readonly}}"
+			maxlength="{{maxLength}}"
+			.value="{{ctr.value}}"
+			@change="{{ctr._listeners.change}}"
+			data-sap-focus-ref>
+		</textarea>
+	</div>
 
 	{{#if ctr.showExceededText}}
 		<span class="{{classes.exceededText}}">{{exceededText}}</span>
