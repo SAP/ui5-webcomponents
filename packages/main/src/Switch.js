@@ -88,7 +88,7 @@ const metadata = {
 		 * <b>Note:</b> If <code>Graphical</code> type is set,
 		 * positive and negative icons will replace the <code>textOn</code> and <code>textOff</code>.
 		 * @type {string}
-		 * @default Standard
+		 * @default Textual
 		 * @public
 		 */
 		type: {

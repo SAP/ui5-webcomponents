@@ -54,8 +54,8 @@ import GroupHeaderListItem from "./src/GroupHeaderListItem";
 // used in test pages
 import RenderScheduler from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/RenderScheduler";
 window.RenderScheduler = RenderScheduler;
-import Device from "@ui5/webcomponents-core/dist/sap/ui/Device";
-window.sapUiDevice = Device;
+import { isIE } from "@ui5/webcomponents-core/dist/sap/ui/Device";
+window.isIE = isIE; // attached to the window object for testing purposes
 
 
 // Note: keep in sync with rollup.config value for IIFE

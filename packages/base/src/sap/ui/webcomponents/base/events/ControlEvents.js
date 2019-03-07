@@ -1,4 +1,3 @@
-import Device from "@ui5/webcomponents-core/dist/sap/ui/Device";
 import Gestures from "./DefaultGestures";
 
 /**
@@ -49,12 +48,11 @@ oControlEvents.events = [ // IMPORTANT: update the public documentation when ext
 	/* input event is fired synchronously on IE9+ when the value of an <input> or <textarea> element is changed */
 	/* for more details please see : https://developer.mozilla.org/en-US/docs/Web/Reference/Events/input */
 	"input",
+	"touchstart",
+	"touchend",
+	"touchmove",
+	"touchcancel",
 ];
-
-// touch events natively supported
-if (Device.support.touch) {
-	oControlEvents.events.push("touchstart", "touchend", "touchmove", "touchcancel");
-}
 
 oControlEvents.gestures = [
 	"down",

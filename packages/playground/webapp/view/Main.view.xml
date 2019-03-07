@@ -13,12 +13,12 @@
 						<OverflowToolbarLayoutData priority="NeverOverflow" />
 					</layoutData>
 				</Button>
-				<Image class="ui5-logo" src="images/ui5.png" tooltip="UI5" press="onUI5LogoPressed"></Image>
+				<Image class="ui5-logo" src="{/ui5Image}" tooltip="UI5" press="onUI5LogoPressed"></Image>
 				<Link text="{i18n>title}" class="topNavigationHeaderHeading custom-title" tooltip="UI5" press="onUI5LogoPressed"></Link>
 
 				<ToolbarSpacer></ToolbarSpacer>
 
-				<Label class="version-label" text="v0.7.0">
+				<Label class="version-label" text="v0.8.0">
 					<layoutData>
 						<OverflowToolbarLayoutData priority="NeverOverflow" />
 					</layoutData>
@@ -61,7 +61,7 @@
 					</FlexBox>
 
 					<FlexBox direction="Column">
-						<Label text="Content Density" labelFor="content-density-cb"/>				
+						<Label text="Content Density" labelFor="content-density-cb"/>
 						<Select class="select-width" id="content-densit-cb" selectedKey="false">
 							<core:Item key="false" text="Cozy" />
 							<core:Item key="true" text="Compact" />
@@ -69,7 +69,7 @@
 					</FlexBox>
 
 					<FlexBox direction="Column">
-						<Label text="Text Direction" labelFor="direction-cb"/>				
+						<Label text="Text Direction" labelFor="direction-cb"/>
 						<Select class="select-width" id="direction-cb" selectedKey="false">
 							<core:Item key="false" text="LTR" />
 							<core:Item key="true" text="RTL" />
@@ -78,7 +78,7 @@
 				</FlexBox>
 
 				<HBox width="100%" justifyContent="SpaceBetween" alignItems="Center">
-					<Label class="version-label-in-settings" text="v0.7.0" />
+					<Label class="version-label-in-settings" text="v0.8.0" />
 					<HBox class="settings-buttons-wrapper" width="100%" justifyContent="End">
 						<Button type="Transparent" text="Close" press="closeSettingsMenu" class="margin-end custom-button-height" />
 						<Button text="Apply" press="applyChangeSettings" class="custom-button-height" />

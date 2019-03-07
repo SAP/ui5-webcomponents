@@ -1,4 +1,4 @@
-import Device from "@ui5/webcomponents-core/dist/sap/ui/Device";
+import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device";
 import { getCompactSize } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Configuration";
 
 const SVGConfig = {
@@ -49,7 +49,7 @@ class RadioButtonTemplateContext {
 	}
 
 	static getInnerClasses(state) {
-		const hoverable = !state.disabled && !state.readOnly && Device.system.desktop;
+		const hoverable = !state.disabled && !state.readOnly && isDesktop();
 
 		return {
 			sapMRbInner: true,

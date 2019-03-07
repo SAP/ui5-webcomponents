@@ -1,67 +1,54 @@
 /* ============================= */
 /* Base theme                    */
 /* ============================= */
+
 @import "../base/DayPicker.less";
+
+/* ============================= */
+/* Belize theme                  */
+/* ============================= */
+
 @import "../sap_belize/DayPicker.less";
 
 /* ============================= */
-/* Global Belize parameters      */
+/* Global Belize HCB parameters  */
 /* ============================= */
+
 @import "./base.less";
 @import "./global.less";
+
+/* ============================= */
+/* Belize HCB theme              */
+/* ============================= */
+
+@_ui5_daypicker_item_hover_background_color: @sapUiHighlight;
+@_ui5_daypicker_item_margin: 0;
+@_ui5_daypicker_item_weekend_background_color: @sapUiHcReducedBackground;
+@_ui5_daypicker_item_weekend_hover_background_color: @sapUiHighlight;
+@_ui5_daypicker_item_othermonth_hover_background_color: @sapUiHighlight;
+@_ui5_daypicker_item_selected_background_color: @sapUiHighlight;
+@_ui5_daypicker_item_selected_hover_background_color: @sapUiHighlight;
 
 .sapWCDayPickerWeekName,
 .sapWCDayPickerDayName {
 	color: @sapUiHcReducedForeground;
-	margin: 0;
 }
 
-.sapWCDayPickerDay {
+.sapWCDayPickerItem {
 	border: 1px solid @sapUiListBorderColor;
-
-	&.sapWCDayPickerItem {
-		margin-top: 0;
-		margin-right: 0;
-
-		&:hover,
-		&.sapWCDayPickerItemWeekEnd:hover {
-			background-color: @sapUiHighlight;
-		}
-
-		&:focus {
-			&::after {
-				border-width: 0.125rem;
-				top: 0;
-				left: 0;
-			}
-		}
-
-		&.sapWCDayPickerItemSel.sapWCDayPickerItemNow:focus::after {
-			width: calc(~"100% - 0.25rem");
-			height: calc(~"100% - 0.25rem");
-		}
-	}
-
-	&.sapWCDayPickerItem.sapWCDayPickerItemWeekEnd:not(.sapWCDayPickerItemOtherMonth) {
-		background: @sapUiHcReducedBackground;
-
-		&:hover {
-			background-color: @sapUiHighlight;
-		}
-	}
-
-	&.sapWCDayPickerItemOtherMonth {
-		border-color: transparent;
-	}
 }
 
-.sapWCDayPickerWeekNameContainer .sapWCDayPickerWeekName {
-	margin-top: 0;
-	margin-right: 0;
+.sapWCDayPickerItem:focus::after {
+	border-width: 0.125rem;
+	top: 0;
+	left: 0;
 }
 
-.sapUiSizeCompact {
-	& .sapWCDayPickerDayName {
-		margin: 0;
-	}
+.sapWCDayPickerItem.sapWCDayPickerItemSel.sapWCDayPickerItemNow:focus::after {
+	width: calc(~"100% - 0.25rem");
+	height: calc(~"100% - 0.25rem");
+}
+
+.sapWCDayPickerItem.sapWCDayPickerItemOtherMonth {
+	border-color: transparent;
 }

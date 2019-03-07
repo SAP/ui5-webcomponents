@@ -99,6 +99,7 @@ body {
 	width: 11.44rem;
 	background: transparent;
 	color: #fff;
+	margin-right: 0.7rem;
 }
 
 .secondary-button:hover {
@@ -109,6 +110,8 @@ body {
 
 .buttons-wrapper {
 	display: flex;
+	align-items: center;
+	flex-wrap: nowrap;
 	margin-top:3.5rem;
 	font-weight: 400;
 	font-size: 1.3rem;
@@ -192,6 +195,9 @@ body {
 	margin-bottom: 1rem;
 }
 
+.logo-tiny:last-child {
+	margin-right: 0;
+}
 .icon {
 	width: 4rem;
 	height: 4rem;
@@ -537,7 +543,7 @@ body {
 	}
 }
 
-@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {  
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
 	.wrapper{
 		height: 350px;
 	}

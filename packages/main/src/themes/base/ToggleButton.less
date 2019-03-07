@@ -5,10 +5,12 @@
 @import "./base.less";
 @import "./global.less";
 
-@_sap_ui_webcomponents_main_button_base_min_width: 2.5rem;
-@_sap_ui_webcomponents_main_button_base_min_compact_width: 2rem;
-@_sap_ui_webcomponents_main_button_base_height: 2.5rem;
-@_sap_ui_webcomponents_main_button_compact_height: 1.625rem;
+@_ui5_button_base_min_width: 2.5rem;
+@_ui5_button_base_min_compact_width: 2rem;
+@_ui5_button_base_height: 2.5rem;
+@_ui5_button_compact_height: 1.625rem;
+@_ui5_toggle_button_pressed_focussed: @sapUiToggleButtonPressedBorderColor;
+@_ui5_toggle_button_pressed_focussed_hovered: @sapUiToggleButtonPressedBorderColor;
 
 :host(ui5-togglebutton) {
 	display: inline-block;
@@ -52,6 +54,8 @@ ui5-togglebutton {
 	color: @sapUiToggleButtonPressedTextColor;
 
 	&:focus {
+		border-color: @_ui5_toggle_button_pressed_focussed;
+
 		&::after {
 			border-color: @sapUiContentContrastFocusColor;
 		}
@@ -61,5 +65,9 @@ ui5-togglebutton {
 	&:hover {
 		background-color: @sapUiToggleButtonPressedHoverBackground;
 		border-color: @sapUiToggleButtonPressedHoverBorderColor;
+
+		&:focus {
+			border-color: @_ui5_toggle_button_pressed_focussed_hovered;
+		}
 	}
 }
