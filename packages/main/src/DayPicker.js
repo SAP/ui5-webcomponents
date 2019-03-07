@@ -253,7 +253,7 @@ class DayPicker extends WebComponent {
 	}
 
 	onclick(event) {
-		if (event.ui5target.className.indexOf("sapWCDayPickerDay") > -1) {
+		if (event.ui5target.className.indexOf("sapWCDayPickerItem") > -1) {
 			const targetDate = parseInt(event.ui5target.getAttribute("data-sap-timestamp"));
 
 			// findIndex, give it to item navigation
