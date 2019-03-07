@@ -5,146 +5,128 @@
 @import "./base.less";
 @import "./global.less";
 
-@sapUiTileHoverBackground: #f0f0f0;
-@sapUiContentPadding: 1rem;
+@_ui5_card_content_padding: 1rem;
+@_ui5_card_header_active_bg: #f0f0f0;
+@_ui5_card_header_hover_bg: lighten(@_ui5_card_header_active_bg, 4);
+@_ui5_card_header_border_color: darken(@sapUiTileBackground, 20);
 
 :host(ui5-card) {
 	display: inline-block;
 	width: 100%;
 }
 
-[dir="rtl"] {
-	.sapFCardHeader {
-		.sapFCardAvatar {
-			margin-left: 0.75rem;
-			margin-right: 0;
-		}
-		.sapFCardStatus {
-			padding-right: 1rem;
-			padding-left: 0rem;
-			margin-right: auto;
-		}
-		.sapFCardHeaderText {
-			.sapFCardTitle {
-				text-align: right;
-			}
-			.sapFCardSubtitle {
-				text-align: right;
-			} 
-		}
-	}
-}
-
-// required for browsers without native shadow dom
 ui5-card {
 	display: inline-block;
+	width: 100%;
 }
 
 .sapFCard {
-	background: @sapUiTileBackground;
-	box-shadow: @sapUiShadowLevel0;
-
-	border-radius: 0.25rem;
-	border: 1px solid darken(@sapUiTileBackground, 20);
-
 	width: 100%;
 	height: 100%;
+	color: @sapUiGroupTitleTextColor;
+	background: @sapUiTileBackground;
+	box-shadow: @sapUiShadowLevel0;
+	border-radius: 0.25rem;
+	border: 1px solid darken(@sapUiTileBackground, 20);
 	overflow: hidden;
-
 	font-family: @sapUiFontFamily;
 	font-size: @sapUiFontSize;
-
-	color: @sapUiGroupTitleTextColor;
 }
 
 .sapFCardHeader {
-	background: @sapUiTileBackground;
-	border-bottom: 1px solid darken(@sapUiTileBackground, 20);
-	padding: @sapUiContentPadding;
-
-	&:hover {
-		background: lighten(@sapUiTileHoverBackground, 4);
-	}
-
-	&:active {
-		background: @sapUiTileHoverBackground;
-	}
-
 	display: flex;
 	align-items: flex-start;
+	background: @sapUiTileBackground;
+	border-bottom: 1px solid @_ui5_card_header_border_color;
+	padding: @_ui5_card_content_padding;
+}
 
+.sapFCardHeader:hover {
+	background: @_ui5_card_header_hover_bg;
+}
+
+.sapFCardHeader:active {
+	background: @_ui5_card_header_active_bg;
+}
+
+.sapFCardHeader .sapFCardHeaderText {
+	flex: 1;
+}
+
+.sapFCardHeader .sapFCardAvatar {
+	height: 3rem;
+	width: 3rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-right: 0.75rem;
+}
+
+.sapFCardHeader .sapFCardAvatar.sapFCardHeaderImg {
+	border-radius: 50%;
+}
+
+.sapFCardHeader .sapFCardAvatar .sapFCardHeaderIcon {
+	font-size: 1.5rem;
+	color: @sapUiTileIconColor;
+}
+
+.sapFCardHeader .sapFCardStatus {
+	font-family: @sapUiFontFamily;
+	font-size: @sapMFontSmallSize;
+	color: @sapUiTileTextColor;
+	text-align: left;
+	line-height: 1.125rem;
+	padding-left: 1rem;
+	margin-left: auto;
+	text-wrap: avoid;
+	display: inline-block;
+}
+
+.sapFCardHeader .sapFCardHeaderText .sapFCardTitle {
+	font-family: @sapUiFontHeaderFamily;
+	font-size: @sapMFontHeader5Size;
+	font-weight: @sapUiFontHeaderWeight;
+	color: @sapUiTileTitleTextColor;
+	max-height: 3.5rem;
+}
+
+.sapFCardHeader .sapFCardHeaderText .sapFCardSubtitle {
+	font-family: @sapUiFontFamily;
+	font-size: @sapMFontMediumSize;
+	font-weight: normal;
+	color: @sapUiTileTextColor;
+	margin-top: 0.5rem;
+	max-height: 2.1rem;
+}
+
+.sapFCardHeader .sapFCardHeaderText .sapFCardTitle,
+.sapFCardHeader .sapFCardHeaderText .sapFCardSubtitle {
+	text-align: left;
+	text-overflow: ellipsis;
+	white-space: normal;
+	word-wrap: break-word;
+	overflow: hidden;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	display: -webkit-box;
+	max-width: 100%;
+}
+
+[dir="rtl"] .sapFCardHeader {
 	.sapFCardAvatar {
-		height: 3rem;
-		width: 3rem;
-		margin-right: 0.75rem;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-
-		&.sapFCardHeaderImg {
-			border-radius: 50%;
-		}
-
-		& .sapFCardHeaderIcon {
-			font-size: 1.5rem;
-			color: @sapUiTileIconColor;
-		}
+		margin-left: 0.75rem;
+		margin-right: 0;
 	}
-
-	.sapFCardHeaderText {
-
-		flex: 1;
-
-		.sapFCardTitle {
-			font-family: @sapUiFontHeaderFamily;
-			font-size: @sapMFontHeader5Size;
-			font-weight: @sapUiFontHeaderWeight;
-			color: @sapUiTileTitleTextColor;
-			white-space: normal;
-			word-wrap: break-word;
-			overflow: hidden;
-			text-align: left;
-			text-overflow: ellipsis;
-			-webkit-line-clamp: 3;
-			-webkit-box-orient: vertical;
-			display: -webkit-box;
-			max-width: 100%;
-			max-height: 3.5rem;
-		}
-
-		.sapFCardSubtitle {
-			font-family: @sapUiFontFamily;
-			font-size: @sapMFontMediumSize;
-			font-weight: normal;
-			color: @sapUiTileTextColor;
-			white-space: normal;
-			word-wrap: break-word;
-			overflow: hidden;
-			text-align: left;
-			text-overflow: ellipsis;
-			margin-top: 0.5rem;
-			-webkit-line-clamp: 2;
-			-webkit-box-orient: vertical;
-			display: -webkit-box;
-			max-width: 100%;
-			max-height: 2.1rem;
-		}
-	}
-
 	.sapFCardStatus {
-		font-family: @sapUiFontFamily;
-		font-size: @sapMFontSmallSize;
-		color: @sapUiTileTextColor;
-		text-align: left;
-		line-height: 1.125rem;
-		padding-left: 1rem;
-		margin-left: auto;
-		text-wrap: avoid;
-		display: inline-block;
+		padding-right: 1rem;
+		padding-left: 0rem;
+		margin-right: auto;
 	}
+	.sapFCardHeaderText .sapFCardTitle {
+		text-align: right;
+	}
+	.sapFCardHeaderText .sapFCardSubtitle {
+		text-align: right;
+	} 
 }
-
-.sapFCardContent {
-	//padding: 0.5rem 1rem 0 1rem;
-}
-

@@ -9,8 +9,8 @@
 /* CSS for ui5-link            */
 /* Base theme                  */
 /* =========================== */
-@ui5_link_opacity: 0.5;
-@ui5_link_outline_element_size: calc(~"100% - 0.125rem");
+@_ui5_link_opacity: 0.5;
+@_ui5_link_outline_element_size: calc(~"100% - 0.125rem");
 
 :host(ui5-link) {
 	display: inline-block;
@@ -62,7 +62,7 @@ ui5-link span[data-sap-ui-wc-root] {
 	outline: none;
 	cursor: default;
 	pointer-events: none;
-	opacity: @ui5_link_opacity;
+	opacity: @_ui5_link_opacity;
 }
 
 .sapMLnk.sapMLnkEmphasized {
@@ -89,8 +89,8 @@ ui5-link span[data-sap-ui-wc-root] {
 
 .sapMLnk:focus::after {
 	content: "";
-	width: @ui5_link_outline_element_size;
-	height: @ui5_link_outline_element_size;
+	width: @_ui5_link_outline_element_size;
+	height: @_ui5_link_outline_element_size;
 	position: absolute;
 	left: 0px;
 	border: 1px dotted @sapUiContentFocusColor;
