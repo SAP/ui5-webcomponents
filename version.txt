@@ -1,5 +1,5 @@
-commit 08a8bd7a2612d418900ba63a1428e3db07c672e6
+commit 9b725c185856367cee78fe5f8b02273f2710e011
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Mar 7 13:12:35 2019 +0200
+Date:   Thu Mar 7 13:19:31 2019 +0200
 
-    refactor(ui5-card): keep styles in base less only (#138)
+    refactor(ui5-panel): remove obsolete styles (#146)
