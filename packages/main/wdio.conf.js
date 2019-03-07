@@ -1,3 +1,7 @@
+var logger = require('@wdio/logger').default;
+const log = logger('testDebugger')
+let verboseLogging = false;
+
 exports.config = {
     //
     // ====================
@@ -150,19 +154,44 @@ exports.config = {
      * @param {Array.<String>} specs List of spec file paths that are to be run
      */
     before: function (capabilities, specs) {
-        browser.addCommand("findElementDeep", function (selector) {
+			browser.addCommand("findElementDeep", function(selector) {
+				if (selector.includes("#dp7 ")
+					|| selector.includes("#dp7_2 ")
+					|| selector.includes("#dp17")) {
+							log.error(selector);
+						}
+
             const selectors = selector.split(">>>");
 
             for (var i = 0; i < selectors.length; i++) {
                 if (i === 0) {
-                    curElement = browser.$(selectors[i]);
-                    continue;
+									curElement = browser.$(selectors[i]);
+									const elid = curElement.getProperty("id");
+									if (elid === "dp7"
+										|| elid === "dp7_2"
+										|| elid === "dp17") {
+											log.error(elid + " found");
+											verboseLogging = true;
+									} else {
+										verboseLogging = false;
+									}
+
+									continue;
                 }
 
                 // wait for the shadowDom to be filled before executing the selector
-                browser.executeAsync(function (elem, done) {
-                    elem._waitForDomRef().then(done);
-                }, curElement);
+								let result = browser.executeAsync(function (elem, verboseLogging, done) {
+									var log = ""
+									if (verboseLogging) {
+											log = "" + elem.nodeName + ", " + elem.id;
+									}
+									elem._waitForDomRef().then(function () {
+											done(log);
+									});
+								}, curElement, verboseLogging);
+								if (result) {
+										log.error(result);
+								}
 
                 // find the next element from the selector
                 curElement = curElement.$(new Function (`
@@ -274,10 +303,12 @@ exports.config = {
      */
     afterCommand: function (commandName, args, result, error) {
         const waitFor = ["click", "elementClick", "keys", "findElement", "elementClear", "elementSendKeys"];
-        if (waitFor.includes(commandName)) {
+				if (waitFor.includes(commandName)) {
+						verboseLogging && log.error("befere whenFinished:", commandName, args);
             browser.executeAsync(function (done) {
                 RenderScheduler.whenFinished().then(done);
-            });
+						});
+						verboseLogging && log.error("after whenFinished:", commandName, args);
         }
     },
     /**
