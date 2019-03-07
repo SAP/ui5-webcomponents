@@ -1,5 +1,5 @@
-commit 0458be15c76acf16a87d2360b8f5b622641dea45
-Author: a-z-ivanov <yogaaaaa@yahoo.com>
-Date:   Thu Mar 7 01:54:04 2019 -0800
+commit 08a8bd7a2612d418900ba63a1428e3db07c672e6
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu Mar 7 13:12:35 2019 +0200
 
-    refactor(ui5-datepicker): refactor the css (#145)
+    refactor(ui5-card): keep styles in base less only (#138)
