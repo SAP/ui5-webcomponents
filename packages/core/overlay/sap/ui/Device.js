@@ -165,6 +165,10 @@ const _getOS = () => {
 }
 
 const _setOS = () => {
+	if (Device.os) {
+		return;
+	}
+
 	Device.os = _getOS() || {};
 	Device.os.OS = OS;
 	Device.os.version = Device.os.versionStr ? parseFloat(Device.os.versionStr) : -1;
@@ -592,6 +596,10 @@ const isSafari = () => {
 //******** Support Detection ********
 
 const _setSupport = () => {
+	if (Device.support) {
+		return;
+	}
+
 	if (!Device.browser) {
 		setBrowser();
 	}
@@ -751,6 +759,9 @@ const _getSystem = () => {
 }
 
 const _setSystem = () => {
+	_setSupport();
+	_setOS();
+
 	Device.system = {};
 	Device.system = _getSystem();
 	if (Device.system.tablet || Device.system.phone) {
