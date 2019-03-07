@@ -1,7 +1,8 @@
-commit 9e44a66796e63e4e6bd658b2762e6b32175d6407
-Author: Marcus Notheis <MarcusNotheis@users.noreply.github.com>
-Date:   Thu Mar 7 09:10:45 2019 +0100
+commit 857754ec258d6b6395d2e4a255b101d47c546a43
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu Mar 7 11:01:39 2019 +0200
 
-    docs: fix playground URL in readme (#144)
+    fix: correct device detection error on mobile (#143)
     
-    Playground URL was pointing to a 404-page
+    System detection (phone) depends on platform and touch support,
+    both not calculated, causing a JS error.
