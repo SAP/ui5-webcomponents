@@ -1,5 +1,5 @@
-commit 9b725c185856367cee78fe5f8b02273f2710e011
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Mar 7 13:19:31 2019 +0200
+commit 6b728109218628a33fc76cd49e2eacd3a89b6f1a
+Author: a-z-ivanov <yogaaaaa@yahoo.com>
+Date:   Thu Mar 7 03:43:00 2019 -0800
 
-    refactor(ui5-panel): remove obsolete styles (#146)
+    refactor(ui5-calendar): refactor the css (#147)
