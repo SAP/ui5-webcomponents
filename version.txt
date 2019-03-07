@@ -1,5 +1,8 @@
-commit 8094a8a91528798386f8d11bdaa1f0e0d69304b5
-Author: a-z-ivanov <yogaaaaa@yahoo.com>
-Date:   Thu Mar 7 07:27:12 2019 -0800
+commit 5bdb9083187860868f473fe796eb28e6bee12c71
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Thu Mar 7 23:07:06 2019 +0200
 
-    refactor(ui5-datepicker): refactor the css (#149)
+    refactor(textarea): move styles to base (#148)
+    
+    - a fix with styling for focus outline of show-exceeded-text
+    textarea is also included
