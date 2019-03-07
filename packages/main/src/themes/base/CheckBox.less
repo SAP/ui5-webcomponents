@@ -9,7 +9,29 @@
 /* CSS for control sap.m/CheckBox  */
 /* Base theme                      */
 /* =============================== */
-@_sap_m_CheckBox_SelectedWarningColor: darken(@sapUiFieldWarningColor, 100);
+@_ui5_checkbox_height: 3rem;
+@_ui5_checkbox_compact_height: 2rem;
+@_ui5_checkbox_square_hover_bg: @sapUiFieldHoverBackground;
+@_ui5_checkbox_square_hover_border_color: @sapUiFieldHoverBorderColor;
+@_ui5_checkbox_square_outline_width: 1px;
+@_ui5_checkbox_square_border_width: 0.125rem;
+@_ui5_checkbox_square_error_border_width: 0.125rem;
+@_ui5_checkbox_square_warning_border_width: 0.125rem;
+@_ui5_checkbox_square_error_border_style: solid;
+@_ui5_checkbox_square_warning_border_style: solid;
+@_ui5_checkbox_square_disabled_border_color: @sapUiFieldBorderColor;
+@_ui5_checkbox_square_disabled_bg_color: @sapUiFieldBackground;
+@_ui5_checkbox_square_disabled_error_border_color: @sapUiFieldInvalidColor;
+@_ui5_checkbox_square_border_radius: 0;
+@_ui5_checkbox_checkmark_color: @sapUiSelected;
+@_ui5_checkbox_checkmark_warning_color: darken(@sapUiFieldWarningColor, 100);
+@_ui5_checkbox_checkmark_line_height: inherit;
+@_ui5_checkbox_checkmark_compact_line_height: inherit;
+@_ui5_checkbox_checkmark_compact_height: 0.75rem;
+@_ui5_checkbox_checkmark_compact_width: 0.75rem;
+@_ui5_checkbox_focus_border_width: 1px;
+@_ui5_checkbox_focus_outline_element_top: 0.6875rem;
+@_ui5_checkbox_focus_outline_element_bottom: 0.6875rem;
 
 :host(ui5-checkbox) {
 	display: inline-block;
@@ -30,35 +52,36 @@ ui5-checkbox {
 	position: relative;
 	box-sizing: border-box;
 	height: 100%;
-	min-height: 3rem;
+	min-height: @_ui5_checkbox_height;
 	padding: 0 .875rem;
 	max-width: 100%;
 	max-height: 100%;
 	cursor: default;
+}
 
-	&:not(.sapMCbBgDis).sapMCbHasLabel:focus:before {
-		pointer-events: none;
-	}
+.sapMCb:not(.sapMCbBgDis).sapMCbHasLabel:focus:before {
+	pointer-events: none;
+}
 
-	&:focus {
-		outline: none;
-	}
+.sapMCb:focus {
+	outline: none;
+}
 
+.sapMCb:after {
 	/* 
-	 * this is a hack for a bug in IE 
-	 * https://github.com/philipwalton/flexbugs/issues/231
+	* this is a hack for a bug in IE 
+	* https://github.com/philipwalton/flexbugs/issues/231
 	*/
-	&:after {
-		content: '';
-		min-height: inherit;
-		font-size: 0;
-	}
+	content: '';
+	min-height: inherit;
+	font-size: 0;
 }
 
 .sapMCbBg {
 	background-color: @sapUiFieldBackground;
-	border-width: 0.125rem;
+	border-width: @_ui5_checkbox_square_border_width;
 	border-style: solid;
+	border-radius: @_ui5_checkbox_square_border_radius;
 	border-color: @sapUiFieldBorderColor;
 	display: inline-block;
 	position: relative;
@@ -68,37 +91,31 @@ ui5-checkbox {
 	min-width: 1.125rem;
 	text-align: center;
 	pointer-events: none;
+}
 
-	&.sapMCbMarkChecked:before {
-		content: "\e05b";
-		font-family: "SAP-icons";
-		display: inline-block;
-		color: @sapUiSelected;
-		width: 100%;
-	}
+.sapMCbBg.sapMCbMarkChecked:before {
+	content: "\e05b";
+	font-family: "SAP-icons";
+	display: inline-block;
+	color: @_ui5_checkbox_checkmark_color;
+	width: 100%;
+	line-height: @_ui5_checkbox_checkmark_line_height;
+}
 
-	& > input {
-		-webkit-appearance: none;
-		visibility: hidden;
-		width: 0;
-	}
-
-	&.sapMCbMark,
-	&.sapMCbMark > input {
-		font-size: inherit;
-	}
+.sapMCbBg.sapMCbMark {
+	font-size: inherit;
 }
 
 /* ChekBox With Label */
 .sapMCb.sapMCbHasLabel {
 	padding-right: 0;
+}
 
-	& .sapWCLabelInCheckBox {
-		padding-left: 0.875rem;
-		vertical-align: bottom;
-		cursor: default;
-		pointer-events: none;
-	}
+.sapMCb.sapMCbHasLabel .sapWCLabelInCheckBox {
+	padding-left: 0.875rem;
+	vertical-align: bottom;
+	cursor: default;
+	pointer-events: none;
 }
 
 /* ChekBox With Wrapping */
@@ -118,14 +135,26 @@ ui5-checkbox {
 }
 
 /* Read only */
-.sapMCbRo .sapMCbBg {
+.sapMCb.sapMCbRo .sapMCbBg,
+.sapMCb.sapMCbRo.sapMCbWarn .sapMCbBg {
 	background-color: @sapUiFieldReadOnlyBackground;
+}
+
+.sapMCb.sapMCbRo .sapMCbBg {
 	border-color: @sapUiFieldReadOnlyBorderColor;
+}
+.sapMCb.sapMCbRo.sapMCbWarn .sapMCbBg {
+	border-color: @sapUiFieldWarningColor;
 }
 
 /* Disabled */
 .sapMCbBgDis {
 	opacity: @sapUiContentDisabledOpacity;
+}
+
+.sapMCbBgDis > .sapMCbBg {
+	border-color: @_ui5_checkbox_square_disabled_border_color;
+	background-color: @_ui5_checkbox_square_disabled_bg_color;
 }
 
 /* Disabled and Checked */
@@ -134,39 +163,49 @@ ui5-checkbox {
 }
 
 /* Hover */
-.sapMCbHoverable:hover{
-	border-color: @sapUiFieldHoverBorderColor;
-	background: @sapUiFieldHoverBackground;
+.sapMCb:not(.sapMCbWarn):not(.sapMCbErr):hover .sapMCbBg.sapMCbHoverable {
+	border-color: @_ui5_checkbox_square_hover_border_color;
+	background: @_ui5_checkbox_square_hover_bg;
 }
 
 /* Value State Warning */
 .sapMCb.sapMCbWarn .sapMCbBg {
 	background-color: @sapUiFieldWarningBackground;
 	border-color: @sapUiFieldWarningColor;
-	&.sapMCbMarkChecked:before {
-		color: @_sap_m_CheckBox_SelectedWarningColor;
-	}
+	border-width: @_ui5_checkbox_square_warning_border_width;
+	border-style: @_ui5_checkbox_square_warning_border_style;
+}
+
+.sapMCb.sapMCbWarn .sapMCbBg.sapMCbMarkChecked:before {
+	color: @_ui5_checkbox_checkmark_warning_color;
 }
 
 /* Value State Error */
 .sapMCb.sapMCbErr .sapMCbBg {
 	background-color: @sapUiFieldInvalidBackground;
 	border-color: @sapUiFieldInvalidColor;
-	&.sapMCbMarkChecked:before {
-		color: @sapUiFieldInvalidColor;
-	}
+	border-width: @_ui5_checkbox_square_error_border_width;
+	border-style: @_ui5_checkbox_square_error_border_style;
+}
+
+.sapMCb.sapMCbErr .sapMCbBg.sapMCbMarkChecked:before {
+	color: @sapUiFieldInvalidColor;
+}
+
+.sapMCb.sapMCbErr.sapMCbBgDis .sapMCbBg {
+	border-color: @_ui5_checkbox_square_disabled_error_border_color;
 }
 
 /* CheckBox focus */
 .sapMCbBg:focus,
 .sapMCbBg:active,
-.sap-desktop .sapMCbBg.sapMCbBgDis:focus {
+.sapMCbBg.sapMCbBgDis:focus {
 	-webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 	outline: none;
 }
 
 .sapMCb:not(.sapMCbBgDis):not(.sapMCbHasLabel):focus > .sapMCbBg {
-	outline-width: 1px;
+	outline-width: @_ui5_checkbox_square_outline_width;
 	outline-style: dotted;
 	outline-color: @sapUiContentFocusColor;
 }
@@ -175,11 +214,11 @@ ui5-checkbox {
 	content: "";
 	display: block;
 	position: absolute;
-	top: 0.6875rem;
-	bottom: 0.6875rem;
+	top: @_ui5_checkbox_focus_outline_element_top;
+	bottom: @_ui5_checkbox_focus_outline_element_bottom;
 	left: 0.75rem;
 	right: 0;
-	border: 1px dotted @sapUiContentFocusColor;
+	border: @_ui5_checkbox_focus_border_width dotted @sapUiContentFocusColor;
 }
 
 .sapMCb.sapMCbWrapped:not(.sapMCbBgDis).sapMCbHasLabel:focus:before {
@@ -189,10 +228,15 @@ ui5-checkbox {
 	right: 0;
 }
 
-[data-sap-ui-wc-root][data-sap-ui-browser^=ff] .sapMCbBg > input {
-	/* in FF the input needs to be positioned exactly behind the visible checkbox for the focus outline */
+.sapMCbBg > input {
+	-webkit-appearance: none;
+	visibility: hidden;
+	width: 0;
+	// In FF the input needs to be positioned exactly behind the visible checkbox
+	// for the focus outline without effect on the rest of the browsers
 	left: 0;
 	position: absolute;
+	font-size: inherit;
 }
 
 /* TODO remove after 1.62 version */
@@ -202,7 +246,7 @@ ui5-checkbox {
 		outline-style: dashed;
 	}
 	.sapMCb:not(.sapMCbBgDis).sapMCbHasLabel:focus:before {
-		border: 1px dashed @sapUiContentFocusColor;
+		border: @_ui5_checkbox_focus_border_width dashed @sapUiContentFocusColor;
 	}
 }
 
@@ -210,20 +254,23 @@ ui5-checkbox {
 .sapUiSizeCompact {
 
 	.sapMCb {
-		min-height: 2rem;
-		min-height: 2rem;
+		min-height: @_ui5_checkbox_compact_height;
 		padding: 0 .5rem;
 	}
 
 	.sapMCbBg {
 		left: 0.025rem;
 		top: 0.025rem;
-		height: 0.75rem;
-		width: 0.75rem;
-		min-width: 0.75rem;
-		min-height: 0.75rem;
+		height: @_ui5_checkbox_checkmark_compact_height;
+		width: @_ui5_checkbox_checkmark_compact_width;
+		min-width: @_ui5_checkbox_checkmark_compact_width;
+		min-height: @_ui5_checkbox_checkmark_compact_height;
 		line-height: 0.75rem;
 		font-size: 0.625rem;
+	}
+
+	.sapMCbBg.sapMCbMarkChecked:before {
+		line-height: @_ui5_checkbox_checkmark_compact_line_height;
 	}
 
 	/* ChekBox With Label */
