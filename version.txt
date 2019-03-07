@@ -1,8 +1,5 @@
-commit 857754ec258d6b6395d2e4a255b101d47c546a43
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Mar 7 11:01:39 2019 +0200
+commit 0458be15c76acf16a87d2360b8f5b622641dea45
+Author: a-z-ivanov <yogaaaaa@yahoo.com>
+Date:   Thu Mar 7 01:54:04 2019 -0800
 
-    fix: correct device detection error on mobile (#143)
-    
-    System detection (phone) depends on platform and touch support,
-    both not calculated, causing a JS error.
+    refactor(ui5-datepicker): refactor the css (#145)
