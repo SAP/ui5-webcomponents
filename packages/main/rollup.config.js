@@ -43,8 +43,8 @@ function ui5DevImportCheckerPlugin() {
 				throw new Error(`illegal import in ${file}`);
 			}
 
-			if (/import.*"@ui5\/webcomponents-core\/dist\/sap\/ui\/core\/IconPool/.test(code) && !/IconPoolProxy/.test(file)) {
-				throw new Error(`You need to import '@ui5/webcomponents-base/src/sap/ui/webcomponents/base/IconPoolProxy' instead of IconPool ${file}`);
+			if (/import.*"@ui5\/webcomponents-core\/dist\/sap\/ui\/core\/IconPool/.test(code)) {
+				throw new Error(`You need to import '@ui5/webcomponents-base/src/sap/ui/webcomponents/base/IconPool' instead of IconPool ${file}`);
 			}
 		}
 	};
