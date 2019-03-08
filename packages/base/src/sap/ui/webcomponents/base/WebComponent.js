@@ -51,14 +51,17 @@ class WebComponent extends HTMLElement {
 
 		this._monitoredChildProps = new Map();
 
-		// Only for native Shadow DOM, and only when present
-		if (!window.ShadyDOM && !this.constructor.getMetadata().getNoShadowDOM()) {
-			attachThemeChange(this._onThemeChange.bind(this));
-		}
+		attachThemeChange(this._onThemeChange.bind(this));
 	}
 
 	_onThemeChange() {
 		const klass = this.constructor;
+
+		// Only for native Shadow DOM, and only when present
+		if (!window.ShadyDOM && !klass.getMetadata().getNoShadowDOM()) {
+			return;
+		}
+
 		const tag = klass.getMetadata().getTag();
 		const styleURLs = klass.getMetadata().getStyleUrl();
 

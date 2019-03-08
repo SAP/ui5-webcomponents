@@ -35,4 +35,6 @@ const getEffectiveStyle = async (theme, styleUrls, tag) => {
 	return cssText;
 };
 
+window.setTheme = setTheme;
+
 export { attachThemeChange, setTheme, getEffectiveStyle };

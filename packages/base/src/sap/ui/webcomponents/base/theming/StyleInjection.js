@@ -1,5 +1,7 @@
 import { getTheme } from "../Configuration";
 import { attachThemeChange, getEffectiveStyle } from "../Theming";
+import { getThemeProperties } from "./ThemeProperties";
+import createStyleInHead from "../util/createStyleInHead";
 
 let themePropertiesReadyResolver;
 const themePropertiesReadyPromise = new Promise(resolve => {
@@ -18,11 +20,7 @@ class StyleInjection {
 			return;
 		}
 
-		const style = document.createElement("style");
-		style.type = "text/css";
-		style.setAttribute("data-sap-source", tagName);
-		style.innerHTML = cssText;
-		document.head.appendChild(style);
+		const style = createStyleInHead(cssText, {"data-sap-source": tagName});
 
 		this.tagNamesInHead.push(tagName);
 		this.tagsToStyleUrls.set(tagName, styleUrls);
@@ -34,21 +32,20 @@ class StyleInjection {
 	}
 
 	async updateStylesInHead() {
+
+		const theme = getTheme();
+
+		const styles = await getThemeProperties("@ui5/webcomponents", theme);
+		injectThemeProperties(styles);
+
 		if (!window.ShadyDOM) {
 			return;
 		}
 
-		const theme = getTheme();
 		this.tagNamesInHead.forEach(async tagName => {
-			const styleUrls = this.tagsToStyleUrls.get(tagName);
-			const css = await getEffectiveStyle(theme, styleUrls, tagName);
-
 			const styleElement = document.head.querySelector(`style[data-sap-source="${tagName}"]`);
-
-			if (styleElement) {
-				styleElement.innerHTML = css || "";	// in case of undefined
-			} else {
-				this.createStyleTag(tagName, styleUrls, css || "");
+			if (window.CSSVarsPolyfill) {
+				window.CSSVarsPolyfill.resolveCSSVars([styleElement]);
 			}
 		});
 	}
@@ -56,15 +53,13 @@ class StyleInjection {
 
 const injectThemeProperties = styles => {
 	const styleElement = document.head.querySelector(`style[ui5-webcomponents-theme-properties]`);
-
 	if (styleElement) {
 		styleElement.innerHTML = styles || "";	// in case of undefined
+		if (window.CSSVarsPolyfill) {
+			window.CSSVarsPolyfill.findCSSVars([styleElement]);
+		}
 	} else {
-		const style = document.createElement("style");
-		style.type = "text/css";
-		style.setAttribute("ui5-webcomponents-theme-properties", "");
-		style.innerHTML = styles;
-		document.head.appendChild(style);
+		const style = createStyleInHead(styles, {"ui5-webcomponents-theme-properties": ""});
 
 		if (window.CSSVarsPolyfill) {
 			window.CSSVarsPolyfill.findCSSVars([style]);
