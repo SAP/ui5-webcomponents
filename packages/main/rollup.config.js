@@ -131,6 +131,7 @@ const getPlugins = ({ transpile }) => {
 		plugins.push(babel({
 			presets: ["@babel/preset-env"],
 			exclude: "node_modules/**",
+			sourcemap: false,	// turn it on when we transition off from the less plugin
 		}));
 	}
 
