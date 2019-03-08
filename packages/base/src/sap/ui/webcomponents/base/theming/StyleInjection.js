@@ -1,76 +1,68 @@
-import { getTheme } from "../Configuration";
-import { attachThemeChange, getEffectiveStyle } from "../Theming";
-import { getThemeProperties } from "./ThemeProperties";
 import createStyleInHead from "../util/createStyleInHead";
 
-let themePropertiesReadyResolver;
-const themePropertiesReadyPromise = new Promise(resolve => {
-	themePropertiesReadyResolver = resolve;
-});
+const injectedFor = [];
 
-const tagNamesInHead = [];
+/**
+ * Creates/updates a style element holding all CSS Custom Properties
+ * @param cssText
+ */
+const injectThemeProperties = cssText => {
 
-
-
-
-
-const createStyleTag = async (tagName, styleUrls, cssText) => {
-	if (tagNamesInHead.indexOf(tagName) !== -1) {
-		return;
+	// Needed for all browsers
+	let styleElement = document.head.querySelector(`style[ui5-webcomponents-theme-properties]`);
+	if (styleElement) {
+		styleElement.textContent = cssText || "";	// in case of undefined
+	} else {
+		styleElement = createStyleInHead(cssText, {"ui5-webcomponents-theme-properties": ""});
 	}
 
-	const style = createStyleInHead(cssText, {"data-sap-source": tagName});
-
-	tagNamesInHead.push(tagName);
-
+	// IE only
 	if (window.CSSVarsPolyfill) {
-		await whenThemePropertiesInjected();
-		window.CSSVarsPolyfill.resolveCSSVars([style]);
+		window.CSSVarsPolyfill.findCSSVars([styleElement]);
 	}
 };
 
-const updateStylesInHead = async () => {
-
-	const theme = getTheme();
-
-	const styles = await getThemeProperties("@ui5/webcomponents", theme);
-	injectThemeProperties(styles);
-
+/**
+ * Creates a style element holding the CSS for a web component (and resolves CSS Custom Properties for IE)
+ * @param tagName
+ * @param cssText
+ */
+const injectWebComponentStyle = (tagName, cssText) => {
 	if (!window.ShadyDOM) {
 		return;
 	}
 
-	tagNamesInHead.forEach(async tagName => {
-		const styleElement = document.head.querySelector(`style[data-sap-source="${tagName}"]`);
-		if (window.CSSVarsPolyfill) {
-			window.CSSVarsPolyfill.resolveCSSVars([styleElement]);
-		}
-	});
-};
+	// Edge and IE
+	if (injectedFor.indexOf(tagName) !== -1) {
+		return;
+	}
+	const styleElement = createStyleInHead(cssText, {"data-sap-source": tagName});
+	injectedFor.push(tagName);
 
-const injectThemeProperties = cssText => {
-	const styleElement = document.head.querySelector(`style[ui5-webcomponents-theme-properties]`);
-	if (styleElement) {
-		styleElement.innerHTML = cssText || "";	// in case of undefined
-		if (window.CSSVarsPolyfill) {
-			window.CSSVarsPolyfill.findCSSVars([styleElement]);
-		}
-	} else {
-		const style = createStyleInHead(cssText, {"ui5-webcomponents-theme-properties": ""});
-
-		if (window.CSSVarsPolyfill) {
-			window.CSSVarsPolyfill.findCSSVars([style]);
-			themePropertiesReadyResolver();
-		}
+	// IE only
+	if (window.CSSVarsPolyfill) {
+		window.CSSVarsPolyfill.resolveCSSVars([styleElement]);
 	}
 };
 
-const whenThemePropertiesInjected = () => {
-	return themePropertiesReadyPromise;
+/**
+ * Updates the style elements holding the CSS for all web components by resolving the CSS Custom properties
+ */
+const updateWebComponentStyles = () => {
+	if (!window.CSSVarsPolyfill) {
+		return;
+	}
+
+	// IE only
+	injectedFor.forEach(tagName => {
+		const styleElement = document.head.querySelector(`style[data-sap-source="${tagName}"]`);
+		window.CSSVarsPolyfill.resolveCSSVars([styleElement]);
+	});
 };
 
+
 export {
-	createStyleTag,
-	updateStylesInHead,
-	injectThemeProperties
+	injectThemeProperties,
+	injectWebComponentStyle,
+	updateWebComponentStyles,
 };

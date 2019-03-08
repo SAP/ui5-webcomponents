@@ -6,7 +6,6 @@ import Integer from "./types/Integer";
 import ControlRenderer from "./ControlRenderer";
 import RenderScheduler from "./RenderScheduler";
 import TemplateContext from "./TemplateContext";
-import { attachThemeChange } from "./Theming";
 import State from "./State";
 
 const metadata = {

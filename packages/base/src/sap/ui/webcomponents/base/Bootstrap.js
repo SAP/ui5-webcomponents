@@ -5,10 +5,8 @@ import whenDOMReady from "./util/whenDOMReady";
 import EventEnrichment from "./events/EventEnrichment";
 import { insertIconFontFace } from "./IconFonts";
 import DOMEventHandler from "./DOMEventHandler";
-import { getThemeProperties } from "./theming/ThemeProperties";
-import { getTheme } from "./Configuration";
-import { injectThemeProperties, updateStylesInHead } from "./theming/StyleInjection";
-import {attachThemeChange} from "./Theming";
+import { initConfiguration } from "./Configuration";
+import { applyTheme } from "./Theming";
 
 EventEnrichment.run();
 
@@ -21,15 +19,10 @@ const Bootstrap = {
 			return bootPromise;
 		}
 
-		// insert theme parameters in head
-		getThemeProperties("@ui5/webcomponents", getTheme())
-			.then(styles => {
-				injectThemeProperties(styles);
-			});
-		attachThemeChange(updateStylesInHead);
-
 		bootPromise = new Promise(resolve => {
 			whenDOMReady().then(() => {
+				initConfiguration();
+				applyTheme();
 				insertIconFontFace();
 				DOMEventHandler.start();
 				resolve();

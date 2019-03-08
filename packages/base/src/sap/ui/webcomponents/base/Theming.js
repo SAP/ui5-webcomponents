@@ -1,6 +1,8 @@
 import { getTheme, _setTheme } from "./Configuration";
 import { getStyles } from "./theming/ThemeBundle";
 import { getCustomCSS } from "./theming/CustomStyle";
+import { getThemeProperties } from "./theming/ThemeProperties";
+import { injectThemeProperties, updateWebComponentStyles } from "./theming/StyleInjection";
 
 const themeChangeCallbacks = [];
 
@@ -10,12 +12,24 @@ const attachThemeChange = function attachThemeChange(callback) {
 	}
 };
 
-const setTheme = function setTheme(theme) {
+const applyTheme = async () => {
+	const theme = getTheme();
+	const cssText = await getThemeProperties("@ui5/webcomponents", theme);
+	injectThemeProperties(cssText);
+	updateWebComponentStyles();
+};
+
+const setTheme = async (theme) => {
 	if (theme === getTheme()) {
 		return;
 	}
 
+	// Update configuration
 	_setTheme(theme);
+
+	// Update CSS Custom Properties
+	await applyTheme();
+
 	themeChangeCallbacks.forEach(callback => callback(theme));
 };
 
@@ -35,6 +49,11 @@ const getEffectiveStyle = async (theme, styleUrls, tag) => {
 	return cssText;
 };
 
-window.setTheme = setTheme;
+window.setTheme = setTheme; // for testing easily
 
-export { attachThemeChange, setTheme, getEffectiveStyle };
+export {
+	attachThemeChange,
+	applyTheme,
+	setTheme,
+	getEffectiveStyle,
+};
