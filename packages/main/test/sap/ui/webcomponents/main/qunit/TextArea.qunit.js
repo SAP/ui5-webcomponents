@@ -135,7 +135,7 @@ TestHelper.ready(function () {
 			var controlDomRef = this.textArea.getDomRef();
 
 			assert.strictEqual(controlDomRef.childElementCount, 2, "Two children should be available");
-			assert.strictEqual(controlDomRef.children[0].classList.contains("sapWCTextAreaWarningInner"), true, "TextArea should contain sapWCTextAreaWarningInner");
+			assert.strictEqual(controlDomRef.children[0].children[0].classList.contains("sapWCTextAreaWarningInner"), true, "TextArea should contain sapWCTextAreaWarningInner");
 			assert.strictEqual(controlDomRef.children[1].textContent.split(" ")[0], "4", "span should contain information for exceeded text");
 			done();
 		}.bind(this));

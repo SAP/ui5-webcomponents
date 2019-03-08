@@ -1,3 +1,5 @@
+import Locale from "./Locale";
+
 const mSettings = {};
 
 const getFormatLocale = () => {
@@ -12,7 +14,7 @@ const getFormatLocale = () => {
 			} else if (l.indexOf("-sapufmt") <= l.indexOf("-x-")) {
 				l += "-sapufmt";
 			}
-			oLocale = new window.Locale(l);
+			oLocale = new Locale(l);
 		}
 		return oLocale;
 	};

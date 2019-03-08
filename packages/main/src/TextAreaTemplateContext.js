@@ -6,7 +6,6 @@ class TextAreaTemplateContext {
 		const mainClasses = {
 			sapWCTextArea: true,
 			sapWCTextAreaWarning: (state._exceededTextProps.leftCharactersCount < 0),
-			sapWCTextAreaFocussed: state._focussed,
 			sapWCTextAreaGrowing: state.growing,
 			sapWCTextAreaNoMaxLines: !state.growingMaxLines,
 			sapWCTextAreaWithCounter: state.showExceededText,
@@ -36,6 +35,10 @@ class TextAreaTemplateContext {
 				mirror: {
 					sapWCTextAreaMirror: true,
 				},
+				focusDiv: {
+					sapWCTextAreaFocusDiv: true,
+					sapWCTextAreaHasFocus: state._focussed,
+				},
 			},
 			styles: {
 				mirror: {
@@ -45,7 +48,7 @@ class TextAreaTemplateContext {
 					width: "100%",
 					height: (state.rows && !state.growing) ? `${state.rows * lineHeight}px` : "100%",
 				},
-				inner: {
+				focusDiv: {
 					"height": (state.showExceededText ? "calc(100% - 26px)" : "100%"),
 					"max-height": (state._maxHeight),
 				},

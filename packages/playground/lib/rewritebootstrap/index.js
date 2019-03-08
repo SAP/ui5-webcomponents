@@ -14,12 +14,13 @@ const log = require("@ui5/logger").getLogger("builder:customtask:RewriteBootstra
  * @returns {Promise<undefined>} Promise resolving with undefined once data has been written
  */
 module.exports = function({workspace, dependencies, options}) {
-	return workspace.byGlob("/resources/playground/playground.html").then((resources) => {
+	return workspace.byGlob("/resources/playground/playground/index.html").then((resources) => {
         resources.forEach((resource) => {
             log.info("Replacing bootstrap in file " + resource.getPath());
             const stream = resource.getStream()
-                .pipe(replacestream("resources/sap-ui-core.js", "resources/sap-ui-custom.js"))
-                .pipe(replacestream('"playground": "./"', '"playground": "./", "": "https://openui5.hana.ondemand.com/resources/"'));
+                .pipe(replacestream("resources/sap-ui-core.js", "../resources/sap-ui-custom.js"))
+                .pipe(replacestream("href=\"./css/style.css\"", "href=\"../css/style.css\""))
+                .pipe(replacestream('"playground": "./"', '"playground": "../", "": "https://openui5.hana.ondemand.com/resources/"'));
             resource.setStream(stream);
             workspace.write(resource);
         });

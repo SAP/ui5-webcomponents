@@ -1,6 +1,6 @@
 import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
 import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
-import IconPool from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/IconPoolProxy";
+import { getIconURI } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/IconPool";
 import slideDown from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/animations/slideDown";
 import slideUp from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/animations/slideUp";
 import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
@@ -210,7 +210,8 @@ class Panel extends WebComponent {
 
 		this._icon = {};
 		this._icon.id = `${this.id}-CollapsedImg`;
-		this._icon.src = IconPool.getIconURI("navigation-right-arrow");
+		this._icon.src = getIconURI("navigation-right-arrow");
+
 		this._icon.title = this.resourceBundle.getText("PANEL_ICON");
 		this._icon.functional = true;
 		this._icon.press = event => { event.preventDefault(); this._toggleOpen(); };

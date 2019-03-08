@@ -19,7 +19,7 @@ const applyTheme = async () => {
 	updateWebComponentStyles();
 };
 
-const setTheme = async (theme) => {
+const setTheme = async theme => {
 	if (theme === getTheme()) {
 		return;
 	}

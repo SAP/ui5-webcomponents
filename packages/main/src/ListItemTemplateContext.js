@@ -1,4 +1,4 @@
-import Device from "@ui5/webcomponents-core/dist/sap/ui/Device";
+import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device";
 import ListMode from "./types/ListMode";
 import ListItemType from "./types/ListItemType";
 import ListItemBaseTemplateContext from "./ListItemBaseTemplateContext";
@@ -37,14 +37,14 @@ class ListItemTemplateContext {
 	}
 
 	static getMainClasses(state) {
-		const isDesktop = Device.system.desktop;
+		const desktop = isDesktop();
 		const isActionable = (state.type === ListItemType.Active) && (state._mode !== ListMode.Delete);
 		const context = ListItemBaseTemplateContext.getMainClasses(state);
 
 		context[`sapMLIBType${state.type}`] = true;
 		context.sapMSLI = true;
-		context.sapMLIBActionable = isDesktop && isActionable;
-		context.sapMLIBHoverable = isDesktop && isActionable;
+		context.sapMLIBActionable = desktop && isActionable;
+		context.sapMLIBHoverable = desktop && isActionable;
 		context.sapMLIBSelected = state.selected;
 		context.sapMLIBActive = state._active;
 

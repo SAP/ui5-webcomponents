@@ -10,26 +10,6 @@
 @import "./base.less";
 @import "./global.less";
 
-.sapFCard .sapFCardHeader {
-    border-bottom: 1px solid @sapUiTileBorderColor;
-    &:hover{
-      background: @sapUiHighlight;
-    }
-  
-    &:active{
-      background: @sapUiHighlight;
-    }
-  
-    &:hover .sapFCardIcon.sapFAvatar:not(.sapFAvatarImage):not(.sapFAvatarInitials ){
-      background: @sapUiHighlight;
-    }
-  
-    &:active .sapFCardIcon.sapFAvatar:not(.sapFAvatarImage):not(.sapFAvatarInitials ){
-      background: @sapUiHighlight;
-    }
-    .sapFCardIcon.sapFAvatar{
-      .sapUiIcon {
-        color: @sapUiContentIconColor;
-      }
-    }
-  }
+@_ui5_card_header_hover_bg: @sapUiHighlight;
+@_ui5_card_header_active_bg: @sapUiHighlight;
+@_ui5_card_header_border_color: @sapUiTileBorderColor;

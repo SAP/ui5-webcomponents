@@ -144,7 +144,7 @@ TestHelper.ready(function() {
 
 			RenderScheduler.whenFinished().then(function () {
 				// assert
-				if (sapUiDevice.browser.msie) {
+				if (isIE()) {
 					assert.ok(!inputInner.hasAttribute("placeholder"), "input has 'placeholder' attr set");
 					assert.equal(inputInner.getAttribute("placeholder"), null, "input has 'placeholder' attr set to empty string");
 				} else {

@@ -1,7 +1,7 @@
-import Device from "@ui5/webcomponents-core/dist/sap/ui/Device";
+import { getBrowser } from "@ui5/webcomponents-core/dist/sap/ui/Device";
 
 const setupBrowser = node => {
-	const b = Device.browser;
+	const b = getBrowser();
 	let id = b.name;
 
 	if (id) {

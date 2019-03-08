@@ -1,4 +1,4 @@
-import Device from "@ui5/webcomponents-core/dist/sap/ui/Device";
+import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device";
 
 class ListItemBaseTemplateContext {
 	static calculate(state) {
@@ -17,14 +17,12 @@ class ListItemBaseTemplateContext {
 	}
 
 	static getMainClasses(state) {
-		const isDesktop = Device.system.desktop;
-
 		return {
 			sapMLIBBorder: !state._hideBorder,
 			sapMLIB: true,
 			"sapMLIB-CTX": true,
 			sapMLIBShowSeparator: true,
-			sapMLIBFocusable: isDesktop,
+			sapMLIBFocusable: isDesktop(),
 			[`sapMLIB${state._background}`]: !!state._background,
 		};
 	}

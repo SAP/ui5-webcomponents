@@ -9,12 +9,13 @@
 /* Base theme                    */
 /* ============================= */
 
+@_ui5_webcomponents_datepicker_icon_border: initial;
+
 :host(ui5-datepicker) {
 	display: inline-block;
 	width: 100%;
 }
 
-// required for browsers without native shadow dom
 ui5-datepicker {
 	display: inline-block;
 	width: 100%;
@@ -24,19 +25,25 @@ ui5-datepicker {
 	color: @sapUiContentIconColor;
 	cursor: pointer;
 	outline: none;
+	border: @_ui5_webcomponents_datepicker_icon_border;
+	box-sizing: border-box;
+}
 
-	&:active {
-		background-color: @sapUiButtonLiteActiveBackground;
-		color: @sapUiButtonActiveTextColor;
-	}
+.sapWCDPIcon:hover,
+.sapWCDPIcon.sapWCDPIconPressed {
+	border-left-color: white;
+}
 
-	&.sapWCDPIconPressed,
-	&.sapWCDPIconPressed:active {
-		background: @sapUiToggleButtonPressedBackground;
-		color: @sapUiButtonActiveTextColor;
-	}
+.sapWCDPIcon:active {
+	background-color: @sapUiButtonLiteActiveBackground;
+	color: @sapUiButtonActiveTextColor;
+}
 
-	&:not(.sapWCDPIconPressed):not(:active):hover {
-		background: @sapUiButtonLiteHoverBackground;
-	}
+.sapWCDPIcon.sapWCDPIconPressed {
+	background: @sapUiToggleButtonPressedBackground;
+	color: @sapUiButtonActiveTextColor;
+}
+
+.sapWCDPIcon:not(.sapWCDPIconPressed):not(:active):hover {
+	background: @sapUiButtonLiteHoverBackground;
 }

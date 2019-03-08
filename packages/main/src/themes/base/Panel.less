@@ -14,7 +14,6 @@
 	display: block;
 }
 
-// required for browsers without native shadow dom
 ui5-panel {
 	display: block;
 }
@@ -24,7 +23,6 @@ ui5-panel {
 	height: 100%;
 	overflow: hidden;
 	box-sizing: border-box;
-	// The following needed for calculation of height for content child
 	position: relative;
 }
 
@@ -88,15 +86,10 @@ ui5-panel {
 	box-sizing: border-box;
 	overflow: auto;
 	white-space: normal;
-
-	/* This is needed in order to remove the additional outline added by tabindex=-1*/
-	&:focus {
-		outline: none;
-	}
 }
 
-.sapMPanelExpandablePart {
-	clear: both;
+.sapMPanelContent:focus {
+	outline: none;
 }
 
 .sapMPanelWrappingDiv,
@@ -113,24 +106,14 @@ ui5-panel {
 	border-bottom-width: 0;
 }
 
-[data-sap-ui-wc-root].sap-tablet .sapUiFioriObjectPage > section > .sapMPanel,
-[data-sap-ui-wc-root].sap-desktop .sapUiFioriObjectPage > section > .sapMPanel {
-	margin: 1rem 0;
-	padding: 0 1rem;
-	box-sizing: border-box;
-}
-
 .sapMPanel .sapMPanelWrappingDiv .sapMPanelHdr,
 .sapMPanel .sapMPanelWrappingDivTb .sapMIBar.sapMTB {
 	padding-left: 0;
 
-  	>:first-child {
-	  margin-left: 0;
+	>:first-child {
+		margin-left: 0;
 	}
 }
-
-/* mixin call for creating container content padding classes (arguments: rootContainer, contentSelector) */
-.sapUiContainerContentPadding(~".sapMPanel", ~"> .sapMPanelContent");
 
 .sapMPanelBGSolid {
 	background-color: @sapUiGroupContentBackground;
@@ -153,8 +136,6 @@ ui5-panel {
 	border-bottom: 1px solid @sapUiGroupTitleBorderColor;
 }
 
-.sapUiSizeCompact {
-	.sapMPanel > header {
-		height: 2rem;
-	}
+.sapUiSizeCompact .sapMPanel > header {
+	height: 2rem;
 }

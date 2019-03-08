@@ -1,7 +1,13 @@
-import Device from "@ui5/webcomponents-core/dist/sap/ui/Device";
-import Locale from "@ui5/webcomponents-core/dist/sap/ui/core/Locale";
+import { isAndroid } from "@ui5/webcomponents-core/dist/sap/ui/Device";
 import CalendarType from "@ui5/webcomponents-core/dist/sap/ui/core/CalendarType";
-import * as FormatSettings from "./FormatSettings";
+import Locale from "./Locale";
+import {
+	setConfiguration,
+	getFormatLocale,
+	getLegacyDateFormat,
+	getLegacyDateCalendarCustomizing,
+	getCustomLocaleData,
+} from "./FormatSettings";
 
 let LocaleData;
 
@@ -16,7 +22,7 @@ const detectLanguage = () => {
 	const browserLanguages = navigator.languages;
 
 	const navigatorLanguage = () => {
-		if (Device.os.android) {
+		if (isAndroid()) {
 			// on Android, navigator.language is hardcoded to 'en', so check UserAgent string instead
 			const match = navigator.userAgent.match(/\s([a-z]{2}-[a-z]{2})[;)]/i);
 			if (match) {
@@ -46,7 +52,7 @@ const CONFIGURATION = {
 	"xx-wc-no-conflict": false, // no URL
 };
 
-FormatSettings.setConfiguration(CONFIGURATION);
+setConfiguration(CONFIGURATION);
 
 /* General settings */
 const getTheme = () => {
@@ -105,7 +111,12 @@ const getLocale = () => {
 };
 
 const getFormatSettings = () => {
-	return FormatSettings;
+	return {
+		getFormatLocale,
+		getLegacyDateFormat,
+		getLegacyDateCalendarCustomizing,
+		getCustomLocaleData,
+	};
 };
 
 const _setTheme = themeName => {

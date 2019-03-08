@@ -7,13 +7,12 @@ const injectedForTags = [];
  * @param cssText
  */
 const injectThemeProperties = cssText => {
-
 	// Needed for all browsers
 	let styleElement = document.head.querySelector(`style[ui5-webcomponents-theme-properties]`);
 	if (styleElement) {
 		styleElement.textContent = cssText || "";	// in case of undefined
 	} else {
-		styleElement = createStyleInHead(cssText, {"ui5-webcomponents-theme-properties": ""});
+		styleElement = createStyleInHead(cssText, { "ui5-webcomponents-theme-properties": "" });
 	}
 
 	// IE only
@@ -36,13 +35,13 @@ const injectWebComponentStyle = (tagName, cssText) => {
 	if (injectedForTags.indexOf(tagName) !== -1) {
 		return;
 	}
-	const styleElement = createStyleInHead(cssText, {"data-sap-source": tagName});
+	createStyleInHead(cssText, { "data-sap-source": tagName });
 	injectedForTags.push(tagName);
 
 	// IE only
 	if (window.CSSVarsPolyfill) {
 		const resolvedVarsCSS = window.CSSVarsPolyfill.applyCSSVars(cssText);
-		createStyleInHead(resolvedVarsCSS, {"data-sap-source-replaced-vars": tagName});
+		createStyleInHead(resolvedVarsCSS, { "data-sap-source-replaced-vars": tagName });
 	}
 };
 
