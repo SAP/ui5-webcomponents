@@ -214,11 +214,14 @@ const injectLocaleData = localeData => {
 	LocaleData = localeData;
 };
 
-parseConfigurationScript();
-parseURLParameters();
-applyConfigurations();
+const initConfiguration = () => {
+	parseConfigurationScript();
+	parseURLParameters();
+	applyConfigurations();
+};
 
 export {
+	initConfiguration,
 	getTheme,
 	getRTL,
 	getLanguage,

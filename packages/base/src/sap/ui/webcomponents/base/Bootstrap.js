@@ -5,6 +5,8 @@ import whenDOMReady from "./util/whenDOMReady";
 import EventEnrichment from "./events/EventEnrichment";
 import { insertIconFontFace } from "./IconFonts";
 import DOMEventHandler from "./DOMEventHandler";
+import { initConfiguration } from "./Configuration";
+import { applyTheme } from "./Theming";
 
 EventEnrichment.run();
 
@@ -19,6 +21,8 @@ const Bootstrap = {
 
 		bootPromise = new Promise(resolve => {
 			whenDOMReady().then(() => {
+				initConfiguration();
+				applyTheme();
 				insertIconFontFace();
 				DOMEventHandler.start();
 				resolve();

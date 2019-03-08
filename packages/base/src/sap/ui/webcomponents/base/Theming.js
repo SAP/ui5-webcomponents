@@ -10,12 +10,20 @@ const attachThemeChange = function attachThemeChange(callback) {
 	}
 };
 
+const applyTheme = () => {
+};
+
 const setTheme = function setTheme(theme) {
 	if (theme === getTheme()) {
 		return;
 	}
 
+	// Update configuration
 	_setTheme(theme);
+
+	// Currently changing the theme has no side effects
+	applyTheme();
+
 	themeChangeCallbacks.forEach(callback => callback(theme));
 };
 
@@ -34,5 +42,10 @@ const getEffectiveStyle = async (theme, styleUrls, tag) => {
 	const cssText = cssContent.join(" ");
 	return cssText;
 };
-
-export { attachThemeChange, setTheme, getEffectiveStyle };
+window.setTheme = setTheme;
+export {
+	attachThemeChange,
+	applyTheme,
+	setTheme,
+	getEffectiveStyle,
+};

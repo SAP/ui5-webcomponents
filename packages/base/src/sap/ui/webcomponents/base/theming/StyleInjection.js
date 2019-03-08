@@ -1,47 +1,50 @@
 import { getTheme } from "../Configuration";
+import createStyleInHead from "../util/createStyleInHead";
 import { attachThemeChange, getEffectiveStyle } from "../Theming";
 
-class StyleInjection {
-	constructor() {
-		this.tagNamesInHead = [];
-		this.tagsToStyleUrls = new Map();
-		attachThemeChange(this.updateStylesInHead.bind(this));
+const injectedForTags = [];
+const tagsToStyleUrls = new Map();
+
+/**
+ * Creates a style element holding the CSS for a web component (and resolves CSS Custom Properties for IE)
+ * @param tagName
+ * @param cssText
+ */
+const injectWebComponentStyle = (tagName, styleUrls, cssText) => {
+	if (!window.ShadyDOM) {
+		return;
 	}
 
-	createStyleTag(tagName, styleUrls, cssText) {
-		if (this.tagNamesInHead.indexOf(tagName) !== -1) {
-			return;
-		}
+	// Edge and IE
+	if (injectedForTags.indexOf(tagName) !== -1) {
+		return;
+	}
+	createStyleInHead(cssText, { "data-sap-source": tagName });
+	injectedForTags.push(tagName);
+	tagsToStyleUrls.set(tagName, styleUrls);
+};
 
-		const style = document.createElement("style");
-		style.type = "text/css";
-		style.setAttribute("data-sap-source", tagName);
-		style.innerHTML = cssText;
-		document.head.appendChild(style);
-
-		this.tagNamesInHead.push(tagName);
-		this.tagsToStyleUrls.set(tagName, styleUrls);
+/**
+ * Updates the style elements holding the CSS for all web components by resolving the CSS Custom properties
+ */
+const updateWebComponentStyles = async () => {
+	if (!window.ShadyDOM) {
+		return;
 	}
 
-	async updateStylesInHead() {
-		if (!window.ShadyDOM) {
-			return;
-		}
+	// IE and Edge
+	const theme = getTheme();
+	injectedForTags.forEach(async tagName => {
+		const styleUrls = tagsToStyleUrls.get(tagName);
+		const css = await getEffectiveStyle(theme, styleUrls, tagName);
+		const originalStyleElement = document.head.querySelector(`style[data-sap-source="${tagName}"]`);
+		originalStyleElement.textContent = css;
+	});
+};
 
-		const theme = getTheme();
-		this.tagNamesInHead.forEach(async tagName => {
-			const styleUrls = this.tagsToStyleUrls.get(tagName);
-			const css = await getEffectiveStyle(theme, styleUrls, tagName);
+attachThemeChange(updateWebComponentStyles);
 
-			const styleElement = document.head.querySelector(`style[data-sap-source="${tagName}"]`);
-
-			if (styleElement) {
-				styleElement.innerHTML = css || "";	// in case of undefined
-			} else {
-				this.createStyleTag(tagName, styleUrls, css || "");
-			}
-		});
-	}
-}
-
-export default new StyleInjection();
+export {
+	injectWebComponentStyle,
+	updateWebComponentStyles,
+};
