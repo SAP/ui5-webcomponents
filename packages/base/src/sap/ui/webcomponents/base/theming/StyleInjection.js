@@ -18,7 +18,7 @@ const injectThemeProperties = cssText => {
 
 	// IE only
 	if (window.CSSVarsPolyfill) {
-		window.CSSVarsPolyfill.findCSSVars([styleElement]);
+		window.CSSVarsPolyfill.findCSSVars(cssText);
 	}
 };
 
@@ -41,7 +41,7 @@ const injectWebComponentStyle = (tagName, cssText) => {
 
 	// IE only
 	if (window.CSSVarsPolyfill) {
-		const resolvedVarsCSS = window.CSSVarsPolyfill.replaceCSSVars(cssText);
+		const resolvedVarsCSS = window.CSSVarsPolyfill.applyCSSVars(cssText);
 		createStyleInHead(resolvedVarsCSS, {"data-sap-source-replaced-vars": tagName});
 	}
 };
@@ -58,7 +58,7 @@ const updateWebComponentStyles = () => {
 	injectedForTags.forEach(tagName => {
 		const originalStyleElement = document.head.querySelector(`style[data-sap-source="${tagName}"]`);
 		const replacedVarsStyleElement = document.head.querySelector(`style[data-sap-source-replaced-vars="${tagName}"]`);
-		const resolvedVarsCSS = window.CSSVarsPolyfill.replaceCSSVars(originalStyleElement.textContent);
+		const resolvedVarsCSS = window.CSSVarsPolyfill.applyCSSVars(originalStyleElement.textContent);
 		replacedVarsStyleElement.textContent = resolvedVarsCSS;
 	});
 };

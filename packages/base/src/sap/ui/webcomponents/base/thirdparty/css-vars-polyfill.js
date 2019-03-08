@@ -11,17 +11,14 @@
 const vars = new Map();
 
 /**
- * Scans the given style tags, extracts all CSS vars and stores them internally
- * @param styleTags - array of style tags or strings
+ * Scans the given string, extracts all CSS vars from it and stores them internally
+ * @param styleString - string containing CSS variables
  */
-const findCSSVars = (styleTags) => {
-	const styleStrings = [...styleTags].map(tag => typeof tag === "string" ? tag : tag.textContent);
-	styleStrings.forEach(styleString => {
-		let couples = styleString.match(/(--[^:)]+:[\s]*[^;}]+)/g) || [];
-		couples.forEach(couple => {
-			let [varName, varValue] = couple.split(/:\s*/);
-			vars.set(varName, varValue);
-		});
+const findCSSVars = (styleString) => {
+	const couples = styleString.match(/(--[^:)]+:[\s]*[^;}]+)/g) || [];
+	couples.forEach(couple => {
+		let [varName, varValue] = couple.split(/:\s*/);
+		vars.set(varName, varValue);
 	});
 };
 
@@ -30,7 +27,7 @@ const findCSSVars = (styleTags) => {
  * @param styleString - string containing CSS selectors
  * @returns {*}
  */
-const replaceCSSVars = styleString => {
+const applyCSSVars = styleString => {
 	vars.forEach((varValue, varName) => {
 		let getterRegex = new RegExp('var\\(\\s*' + varName + '\\s*\\)', 'g');
 		styleString = styleString.replace(getterRegex, varValue);
@@ -49,7 +46,7 @@ const replaceCSSVars = styleString => {
 
 const CSSVarsPolyfill = {
 	findCSSVars,
-	replaceCSSVars
+	applyCSSVars
 };
 
 window.CSSVarsPolyfill = CSSVarsPolyfill;
