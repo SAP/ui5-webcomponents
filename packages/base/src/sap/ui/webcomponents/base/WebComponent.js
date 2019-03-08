@@ -50,22 +50,6 @@ class WebComponent extends HTMLElement {
 		this._domRefReadyPromise._deferredResolve = deferredResolve;
 
 		this._monitoredChildProps = new Map();
-
-		attachThemeChange(this._onThemeChange.bind(this));
-	}
-
-	_onThemeChange() {
-		const klass = this.constructor;
-
-		// Only for native Shadow DOM, and only when present
-		if (!window.ShadyDOM && !klass.getMetadata().getNoShadowDOM()) {
-			return;
-		}
-
-		const tag = klass.getMetadata().getTag();
-		const styleURLs = klass.getMetadata().getStyleUrl();
-
-		ShadowDOM.updateStyle(tag, this.shadowRoot, styleURLs);
 	}
 
 	_whenShadowRootReady() {
