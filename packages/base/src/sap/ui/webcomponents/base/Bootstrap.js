@@ -7,7 +7,8 @@ import { insertIconFontFace } from "./IconFonts";
 import DOMEventHandler from "./DOMEventHandler";
 import { getThemeProperties } from "./theming/ThemeProperties";
 import { getTheme } from "./Configuration";
-import { injectThemeProperties } from "./theming/StyleInjection";
+import { injectThemeProperties, updateStylesInHead } from "./theming/StyleInjection";
+import {attachThemeChange} from "./Theming";
 
 EventEnrichment.run();
 
@@ -25,6 +26,8 @@ const Bootstrap = {
 			.then(styles => {
 				injectThemeProperties(styles);
 			});
+		attachThemeChange(updateStylesInHead);
+
 		bootPromise = new Promise(resolve => {
 			whenDOMReady().then(() => {
 				insertIconFontFace();
