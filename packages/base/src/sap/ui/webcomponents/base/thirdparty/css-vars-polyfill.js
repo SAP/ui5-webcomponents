@@ -9,7 +9,6 @@
 
 
 const vars = new Map();
-const stylesMap = new WeakMap();
 
 /**
  * Scans the given style tags, extracts all CSS vars and stores them internally
@@ -48,36 +47,9 @@ const replaceCSSVars = styleString => {
 	return styleString;
 };
 
-/**
- * For each style tag given, creates a new style tag with the CSS vars resolved
- * @param styleTags - the tags to be replaced
- */
-const resolveCSSVars = (styleTags) => {
-	styleTags.forEach(tag => {
-
-		let styleString = tag.textContent;
-
-		styleString = replaceCSSVars(styleString);
-
-		let newTag = stylesMap.get(tag);
-		if (!newTag) {
-			newTag = document.createElement('style');
-			newTag.type = 'text/css';
-			let source = tag.getAttribute("data-sap-source");
-			if (source) {
-				newTag.setAttribute("data-sap-source-replaced-vars", source);
-			}
-			document.head.appendChild(newTag);
-			stylesMap.set(tag, newTag);
-		}
-
-		newTag.textContent = styleString;
-	});
-};
-
 const CSSVarsPolyfill = {
 	findCSSVars,
-	resolveCSSVars
+	replaceCSSVars
 };
 
 window.CSSVarsPolyfill = CSSVarsPolyfill;

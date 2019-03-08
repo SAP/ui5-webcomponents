@@ -1,6 +1,6 @@
 import createStyleInHead from "../util/createStyleInHead";
 
-const injectedFor = [];
+const injectedForTags = [];
 
 /**
  * Creates/updates a style element holding all CSS Custom Properties
@@ -33,15 +33,16 @@ const injectWebComponentStyle = (tagName, cssText) => {
 	}
 
 	// Edge and IE
-	if (injectedFor.indexOf(tagName) !== -1) {
+	if (injectedForTags.indexOf(tagName) !== -1) {
 		return;
 	}
 	const styleElement = createStyleInHead(cssText, {"data-sap-source": tagName});
-	injectedFor.push(tagName);
+	injectedForTags.push(tagName);
 
 	// IE only
 	if (window.CSSVarsPolyfill) {
-		window.CSSVarsPolyfill.resolveCSSVars([styleElement]);
+		const resolvedVarsCSS = window.CSSVarsPolyfill.replaceCSSVars(cssText);
+		createStyleInHead(resolvedVarsCSS, {"data-sap-source-replaced-vars": tagName});
 	}
 };
 
@@ -54,12 +55,13 @@ const updateWebComponentStyles = () => {
 	}
 
 	// IE only
-	injectedFor.forEach(tagName => {
-		const styleElement = document.head.querySelector(`style[data-sap-source="${tagName}"]`);
-		window.CSSVarsPolyfill.resolveCSSVars([styleElement]);
+	injectedForTags.forEach(tagName => {
+		const originalStyleElement = document.head.querySelector(`style[data-sap-source="${tagName}"]`);
+		const replacedVarsStyleElement = document.head.querySelector(`style[data-sap-source-replaced-vars="${tagName}"]`);
+		const resolvedVarsCSS = window.CSSVarsPolyfill.replaceCSSVars(originalStyleElement.textContent);
+		replacedVarsStyleElement.textContent = resolvedVarsCSS;
 	});
 };
-
 
 export {
 	injectThemeProperties,
