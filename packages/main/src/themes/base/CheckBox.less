@@ -233,21 +233,21 @@ ui5-checkbox {
 	visibility: hidden;
 	width: 0;
 	// In FF the input needs to be positioned exactly behind the visible checkbox
-	// for the focus outline without effect on the rest of the browsers
+	// for the focus outline.
 	left: 0;
 	position: absolute;
 	font-size: inherit;
 }
 
 /* TODO remove after 1.62 version */
-[data-sap-ui-wc-root][data-sap-ui-browser^="ie"].sap-desktop,
-[data-sap-ui-wc-root][data-sap-ui-browser^="ed"].sap-desktop {
-	.sapMCb:not(.sapMCbBgDis):not(.sapMCbHasLabel):focus > .sapMCbBg {
-		outline-style: dashed;
-	}
-	.sapMCb:not(.sapMCbBgDis).sapMCbHasLabel:focus:before {
-		border: @_ui5_checkbox_focus_border_width dashed @sapUiContentFocusColor;
-	}
+[data-sap-ui-wc-root][data-sap-ui-browser^="ed"].sap-desktop .sapMCb:not(.sapMCbBgDis):not(.sapMCbHasLabel):focus > .sapMCbBg,
+[data-sap-ui-wc-root][data-sap-ui-browser^="ie"].sap-desktop .sapMCb:not(.sapMCbBgDis):not(.sapMCbHasLabel):focus > .sapMCbBg {
+	outline-style: dashed;
+}
+
+[data-sap-ui-wc-root][data-sap-ui-browser^="ie"].sap-desktop .sapMCb:not(.sapMCbBgDis).sapMCbHasLabel:focus:before,
+[data-sap-ui-wc-root][data-sap-ui-browser^="ed"].sap-desktop .sapMCb:not(.sapMCbBgDis).sapMCbHasLabel:focus:before {
+	border: @_ui5_checkbox_focus_border_width dashed @sapUiContentFocusColor;
 }
 
 /* Compact */
@@ -280,15 +280,13 @@ ui5-checkbox {
 	}
 
 	/* ChekBox With Wrapping */
-	.sapMCb.sapMCbWrapped.sapMCbHasLabel {
-		.sapMCbBg {
-			top: 0.5rem;
-		}
+	.sapMCb.sapMCbWrapped.sapMCbHasLabel .sapMCbBg {
+		top: 0.5rem;
+	}
 
-		.sapWCLabelInCheckBox {
-			line-height: 2rem;
-			margin: .25rem 0;
-		}
+	.sapMCb.sapMCbWrapped.sapMCbHasLabel .sapWCLabelInCheckBox {
+		line-height: 2rem;
+		margin: .25rem 0;
 	}
 
 	.sapMCb:not(.sapMCbBgDis).sapMCbHasLabel:focus:before {
@@ -299,18 +297,16 @@ ui5-checkbox {
 }
 
 /* RTL */
-[dir="rtl"] {
-	& .sapMCb:not(.sapMCbBgDis).sapMCbHasLabel:focus:before {
-		left: 0;
-		right: 0.675rem;
-	}
+[dir="rtl"] .sapMCb:not(.sapMCbBgDis).sapMCbHasLabel:focus:before {
+	left: 0;
+	right: 0.675rem;
+}
 
-	& .sapMCb.sapMCbHasLabel {
-		padding: 0 .875rem;
-		padding-left: 0;
+[dir="rtl"] .sapMCb.sapMCbHasLabel {
+	padding: 0 .875rem;
+	padding-left: 0;
+}
 
-		& .sapWCLabelInCheckBox {
-			padding: 0 .875rem 0 0;
-		}
-	}
+[dir="rtl"] .sapMCb.sapMCbHasLabel .sapWCLabelInCheckBox {
+	padding: 0 .875rem 0 0;
 }
