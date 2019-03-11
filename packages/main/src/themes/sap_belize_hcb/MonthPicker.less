@@ -1,30 +1,30 @@
 /* ============================= */
 /* Base theme                    */
 /* ============================= */
+
 @import "../base/MonthPicker.less";
+
+/* ============================= */
+/* Belize theme                  */
+/* ============================= */
+
 @import "../sap_belize/MonthPicker.less";
 
 /* ============================= */
-/* Global Belize parameters      */
+/* Global Belize HCB parameters  */
 /* ============================= */
+
 @import "./base.less";
 @import "./global.less";
 
-.sapWCMonthPickerItem {
-	border: 1px solid @sapUiListBorderColor;
-	margin: 0;
+/* ============================= */
+/* Belize HCB theme              */
+/* ============================= */
 
-	&:hover {
-		background-color: @sapUiHighlight;
-	}
-
-	&:focus {
-		&::after {
-			width: calc(~"100% - 0.25rem");
-			height: calc(~"100% - 0.25rem");
-			border: 0.125rem dotted @sapUiContentFocusColor;
-			top: 0px;
-			left: 0px;
-		}
-	}
-}
+@_ui5_monthpicker_item_border: 1px solid @sapUiListBorderColor;
+@_ui5_monthpicker_item_margin: 0;
+@_ui5_monthpicker_item_hover_background_color: @sapUiHighlight;
+@_ui5_monthpicker_item_focus_after_width: calc(~"100% - 0.25rem");
+@_ui5_monthpicker_item_focus_after_height: calc(~"100% - 0.25rem");
+@_ui5_monthpicker_item_focus_after_border: 2px dotted @sapUiContentFocusColor;
+@_ui5_monthpicker_item_focus_after_offset: 0;

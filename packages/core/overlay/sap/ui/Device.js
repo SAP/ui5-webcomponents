@@ -601,7 +601,7 @@ const _setSupport = () => {
 	}
 
 	if (!Device.browser) {
-		setBrowser();
+		_setBrowser();
 	}
 
 	Device.support = {};

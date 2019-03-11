@@ -4,64 +4,21 @@
 @import "../base/CheckBox.less";
 
 /* ============================= */
-/* Global Belize parameters      */
+/* Global Fiori 3 parameters     */
 /* ============================= */
 @import "./base.less";
 @import "./global.less";
 
 /* =============================== */
-/* CSS for control ui5-checkbox    */
-/* sap_fiori_3 theme               */
+/* CSS for ui5-checkbox            */
+/* Fiori 3 parameters              */
 /* =============================== */
-
-.sapMCb {
-	min-height: 2.75rem;
-}
-
-.sapMCb:not(.sapMCbBgDis).sapMCbHasLabel:focus:before {
-	top: 0.5875rem;
-    bottom: 0.5875rem;
-}
-
-.sapMCbBg {
-    border-width: 0.0625rem;
-    border-radius: 0.125rem;
-
-    &.sapMCbMarkChecked:before {
-        line-height: 1.125rem;
-    }
-}
-
-/* Value State Warning */
-.sapMCb.sapMCbWarn .sapMCbBg {
-    border-width: 0.125rem;
-}
-
-/* Value State Error */
-.sapMCb.sapMCbErr .sapMCbBg {
-	border-width: 0.125rem;
-}
-
-
-/*Compact*/
-
-.sapUiSizeCompact {
-
-	.sapMCb {
-		min-height: 2rem;
-		min-height: 2rem;
-		padding: 0 .5rem;
-	}
-
-	.sapMCbBg {
-		height: 0.875rem;
-        width: 0.875rem;
-        min-height: 0.875rem;
-        min-width: 0.875rem;
-        border-radius: 0.125rem;
-
-        &.sapMCbMarkChecked:before {
-			line-height: 0.875rem;
-		}
-    }
-}
+@_ui5_checkbox_height: 2.75rem;
+@_ui5_checkbox_square_border_width: 0.0625rem;
+@_ui5_checkbox_square_border_radius: 0.125rem;
+@_ui5_checkbox_focus_outline_element_top: 0.5875rem;
+@_ui5_checkbox_focus_outline_element_bottom: 0.5875rem;
+@_ui5_checkbox_checkmark_line_height: 1.125rem;
+@_ui5_checkbox_checkmark_compact_height: 0.875rem;
+@_ui5_checkbox_checkmark_compact_width: 0.875rem;
+@_ui5_checkbox_checkmark_compact_line_height: 0.875rem;
