@@ -42,7 +42,7 @@ const getEffectiveStyle = async (theme, styleUrls, tag) => {
 	const cssText = cssContent.join(" ");
 	return cssText;
 };
-window.setTheme = setTheme;
+
 export {
 	attachThemeChange,
 	applyTheme,
