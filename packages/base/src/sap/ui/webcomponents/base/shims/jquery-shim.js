@@ -71,9 +71,6 @@ var jQuery = {
 		// Return the modified object
 		return target;
 	},
-	isEmptyObject: function(obj) {
-		return Object.keys(obj).length === 0;
-	},
 	ajaxSettings: {
 		converters: {
 			"text json": (data) => JSON.parse( data + "" )

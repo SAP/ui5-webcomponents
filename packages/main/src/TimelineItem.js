@@ -5,7 +5,7 @@ import URI from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/URI
 import Integer from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/Integer";
 import Function from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/Function";
 import { fetchCldrData } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/CLDR";
-import { getLocale } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Configuration";
+import { getLocale } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/LocaleProvider";
 import Icon from "./Icon";
 import Link from "./Link";
 import TimelineItemTemplateContext from "./TimelineItemTemplateContext";

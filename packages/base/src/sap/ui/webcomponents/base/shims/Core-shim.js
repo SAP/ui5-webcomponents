@@ -1,10 +1,12 @@
 import { inject as injectCore } from "@ui5/webcomponents-core/dist/sap/ui/core/Core";
 import * as Configuration from "../Configuration";
+import * as FormatSettings from "../FormatSettings";
 
 /**
  * Shim for the OpenUI5 core
  * @deprecated - do not add new functionality
  */
+
 const Core = {
 	/**
 	 * @deprecated - must be here for compatibility
@@ -18,13 +20,14 @@ const Core = {
 	 */
 	getLibraryResourceBundle() {
 	},
+
+	getFormatSettings() {
+		return FormatSettings;
+	},
 };
 
-if (!window.sap) {
-	window.sap = {
-		ui: {},
-	};
-}
+window.sap = window.sap || {};
+window.sap.ui = window.sap.ui || {};
 
 /**
  * @deprecated
