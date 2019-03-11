@@ -1,13 +1,3 @@
-/*!
- * css-var-polyfill.js - v1.1.0
- *
- * Copyright (c) 2018 Aaron Barker <http://aaronbarker.net>
- * Released under the MIT license
- *
- * Date: 2018-04-30
- */
-
-
 let vars = new Map();
 
 /**
@@ -16,7 +6,7 @@ let vars = new Map();
  */
 const findCSSVars = (styleString) => {
 	vars = new Map();
-	const couples = styleString.match(/(--[^:)]+:[\s]*[^;}]+)/g) || [];
+	const couples = styleString.match(/--[^:)]+:\s*[^;}]+/g) || [];
 	couples.forEach(couple => {
 		let [varName, varValue] = couple.split(/:\s*/);
 		vars.set(varName, varValue);
@@ -31,21 +21,21 @@ const findCSSVars = (styleString) => {
 const applyCSSVars = styleString => {
 	// Replace all variables, with or without default value (default value removed too)
 	vars.forEach((varValue, varName) => {
-		let getterRegex = new RegExp('var\\(\\s*' + varName + '.*?\\)', 'g');
-		styleString = styleString.replace(getterRegex, varValue);
+		const re = new RegExp(`var\\(\\s*${varName}.*?\\)`, "g");
+		styleString = styleString.replace(re, varValue);
 	});
 
 	// Replace all unresolved variables with their default values
-	styleString = styleString.replace(/var\(.*?,(.*?)\)/g, "$1");
+	styleString = styleString.replace(/var\(.*?,\s*(.*?)\)/g, "$1");
 
 	return styleString;
 };
 
-const CSSVarsPolyfill = {
+const CSSVarsSimulation = {
 	findCSSVars,
 	applyCSSVars
 };
 
-window.CSSVarsPolyfill = CSSVarsPolyfill;
+window.CSSVarsSimulation = CSSVarsSimulation;
 
-export default CSSVarsPolyfill;
+export default CSSVarsSimulation;

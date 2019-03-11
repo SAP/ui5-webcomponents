@@ -16,8 +16,8 @@ const injectThemeProperties = cssText => {
 	}
 
 	// IE only
-	if (window.CSSVarsPolyfill) {
-		window.CSSVarsPolyfill.findCSSVars(cssText);
+	if (window.CSSVarsSimulation) {
+		window.CSSVarsSimulation.findCSSVars(cssText);
 	}
 };
 
@@ -39,8 +39,8 @@ const injectWebComponentStyle = (tagName, cssText) => {
 	injectedForTags.push(tagName);
 
 	// IE only
-	if (window.CSSVarsPolyfill) {
-		const resolvedVarsCSS = window.CSSVarsPolyfill.applyCSSVars(cssText);
+	if (window.CSSVarsSimulation) {
+		const resolvedVarsCSS = window.CSSVarsSimulation.applyCSSVars(cssText);
 		createStyleInHead(resolvedVarsCSS, { "data-sap-source-replaced-vars": tagName });
 	}
 };
@@ -49,7 +49,7 @@ const injectWebComponentStyle = (tagName, cssText) => {
  * Updates the style elements holding the CSS for all web components by resolving the CSS Custom properties
  */
 const updateWebComponentStyles = () => {
-	if (!window.CSSVarsPolyfill) {
+	if (!window.CSSVarsSimulation) {
 		return;
 	}
 
@@ -57,7 +57,7 @@ const updateWebComponentStyles = () => {
 	injectedForTags.forEach(tagName => {
 		const originalStyleElement = document.head.querySelector(`style[data-sap-source="${tagName}"]`);
 		const replacedVarsStyleElement = document.head.querySelector(`style[data-sap-source-replaced-vars="${tagName}"]`);
-		const resolvedVarsCSS = window.CSSVarsPolyfill.applyCSSVars(originalStyleElement.textContent);
+		const resolvedVarsCSS = window.CSSVarsSimulation.applyCSSVars(originalStyleElement.textContent);
 		replacedVarsStyleElement.textContent = resolvedVarsCSS;
 	});
 };
