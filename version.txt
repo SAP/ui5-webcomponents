@@ -1,5 +1,7 @@
-commit 70bbb9c3cda96a9c94681ccc5fd3d00ce432729c
-Author: a-z-ivanov <yogaaaaa@yahoo.com>
-Date:   Mon Mar 11 02:14:13 2019 -0700
+commit 0a8c8cd12dcb15a0ee4ceb8266efb7233bf62a63
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Mar 11 13:16:46 2019 +0200
 
-    refactor(ui5-yearpicker): refactor the css (#155)
+    fix: correct calling unexisting method (#157)
+    
+    Call the _setBrowser method, that exist, instead of previously available setBrowser.
