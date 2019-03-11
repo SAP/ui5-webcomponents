@@ -80,7 +80,7 @@
 
 				var oInput = document.getElementById("suggestions-input");
 
-				oInput.addEventListener("liveChange", function(event) {
+				oInput.addEventListener("input", function(event) {
 					var value = event.target.value;
 					var suggestionItems = [];
 
@@ -114,8 +114,8 @@
 	"England", "Finland", "France", "Germany", "Hungary", "Ireland", "Italy", "Kuwait", "Luxembourg", "Mexico", "Morocco", "Norway", "Paraguay", "Philippines", "Portugal", "Spain", "Sweden", "Sri Lanka", "Senegal", "United Kingdom", "USA" ];
 
 	var oInput = document.getElementById("suggestions-input");
-	// Listen for the liveChange event
-	oInput.addEventListener("liveChange", function() {
+	// Listen for the input event
+	oInput.addEventListener("input", function() {
 		var value = event.target.value;
 		var suggestionItems = Array();
 		// Find the new suggestions
@@ -218,7 +218,7 @@
 		searchIcon.addEventListener("press", function(){
 			alert("Look for: " + searchCriteria);
 		});
-		searchInput.addEventListener("liveChange", function(e){
+		searchInput.addEventListener("input", function(e){
 			searchCriteria = e.target.value;
 		});
 		window.prettyPrint();
@@ -350,7 +350,7 @@ The <code>ui5-input</code> component allows the user to enter and edit text or n
                       </div>
             
                       <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">liveChange</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">input</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">Fired when the value of the <code>ui5-input</code> changes at each keystroke, and when a suggestion item has been selected.</div>
                       </div>
             

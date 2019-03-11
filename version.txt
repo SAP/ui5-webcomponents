@@ -1,7 +1,9 @@
-commit 0a8c8cd12dcb15a0ee4ceb8266efb7233bf62a63
+commit b8d978ac359f551ea4fb88d424d69b78774f60b2
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Mar 11 13:16:46 2019 +0200
+Date:   Mon Mar 11 16:05:10 2019 +0200
 
-    fix: correct calling unexisting method (#157)
+    refactor(ui5-input): fire input, instead of liveChange (#159)
     
-    Call the _setBrowser method, that exist, instead of previously available setBrowser.
+    Fires 'input' event upon user typing, instead of the 'liveChange' event.
+    
+    BREAKING CHANGE: liveChange event is no longer fired, listen for the input event instead.
