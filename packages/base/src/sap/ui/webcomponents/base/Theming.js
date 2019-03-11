@@ -13,7 +13,7 @@ const attachThemeChange = function attachThemeChange(callback) {
 };
 
 const applyTheme = async () => {
-	let cssText = '';
+	let cssText = "";
 	const theme = getTheme();
 	const defaultTheme = getDefaultTheme();
 	if (theme !== defaultTheme) {
