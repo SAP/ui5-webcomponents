@@ -180,6 +180,10 @@ const metadata = {
 			type: Boolean,
 		},
 
+		_input: {
+			type: Object,
+		},
+
 		_popover: {
 			type: Object,
 		},
@@ -304,8 +308,13 @@ class Input extends WebComponent {
 		// all user interactions
 		this.ACTION_ENTER = "enter";
 		this.ACTION_FOCUSOUT = "focusOut";
+		this.ACTION_USER_INPUT = "input";
 
-		this._whenShadowRootReady().then(this.attachHandlers.bind(this));
+		this._input = {
+			onInput: this._onInput.bind(this),
+		};
+
+		this._whenShadowRootReady().then(this.attachFocusHandlers.bind(this));
 	}
 
 	onBeforeRendering() {
@@ -392,8 +401,13 @@ class Input extends WebComponent {
 		this._focused = false; // invalidating property
 	}
 
-	handleInput() {
-		this.value = this.getInputValue();
+	_onInput(event) {
+		if (event.target === this.getInputDOMRef()) {
+			// stop the native event, as the semantic "input" would be fired.
+			event.stopImmediatePropagation();
+		}
+
+		this.fireEventByAction(this.ACTION_USER_INPUT);
 		this.hasSuggestionItemSelected = false;
 
 		if (this.Suggestions) {
@@ -402,10 +416,9 @@ class Input extends WebComponent {
 	}
 
 	/* Private Methods */
-	attachHandlers() {
+	attachFocusHandlers() {
 		this.shadowRoot.addEventListener("focusout", this.onfocusout.bind(this));
 		this.shadowRoot.addEventListener("focusin", this.onfocusin.bind(this));
-		this.shadowRoot.addEventListener("input", this.handleInput.bind(this));
 	}
 
 	enableSuggestions() {
@@ -457,10 +470,16 @@ class Input extends WebComponent {
 		const inputValue = this.getInputValue();
 		const isSubmit = action === this.ACTION_ENTER;
 		const isFocusOut = action === this.ACTION_FOCUSOUT;
+		const isUserInput =  action === this.ACTION_USER_INPUT;
 
 		this.value = inputValue;
 
 		const valueChanged = (this.previousValue !== undefined) && (this.previousValue !== this.value);
+
+		if (isUserInput) { // input	
+			this.fireEvent(this.EVENT_INPUT);	
+			return;	
+		}
 
 		if ((isSubmit || isFocusOut) && valueChanged) { // change
 			this.previousValue = this.value;
