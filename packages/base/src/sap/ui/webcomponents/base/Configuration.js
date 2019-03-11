@@ -41,7 +41,8 @@ const detectLanguage = () => {
 const language = detectLanguage();
 
 const CONFIGURATION = {
-	theme: "sap_fiori_3",
+	defaultTheme: "sap_fiori_3", // read-only
+	theme: null, // can be set explicitly, otherwise the default theme will be used
 	rtl: null,
 	language: new Locale(language),
 	compactSize: false,
@@ -55,8 +56,12 @@ const CONFIGURATION = {
 setConfiguration(CONFIGURATION);
 
 /* General settings */
+const getDefaultTheme = () => {
+	return CONFIGURATION.defaultTheme;
+};
+
 const getTheme = () => {
-	return CONFIGURATION.theme;
+	return CONFIGURATION.theme || getDefaultTheme();
 };
 
 const getRTL = () => {
@@ -223,6 +228,7 @@ const initConfiguration = () => {
 export {
 	initConfiguration,
 	getTheme,
+	getDefaultTheme,
 	getRTL,
 	getLanguage,
 	getCompactSize,

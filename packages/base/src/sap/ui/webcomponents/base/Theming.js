@@ -1,4 +1,4 @@
-import { getTheme, _setTheme } from "./Configuration";
+import { getTheme, getDefaultTheme, _setTheme } from "./Configuration";
 import { getStyles } from "./theming/ThemeBundle";
 import { getCustomCSS } from "./theming/CustomStyle";
 import { getThemeProperties } from "./theming/ThemeProperties";
@@ -13,8 +13,12 @@ const attachThemeChange = function attachThemeChange(callback) {
 };
 
 const applyTheme = async () => {
+	let cssText = '';
 	const theme = getTheme();
-	const cssText = await getThemeProperties("@ui5/webcomponents", theme);
+	const defaultTheme = getDefaultTheme();
+	if (theme !== defaultTheme) {
+		cssText = await getThemeProperties("@ui5/webcomponents", theme);
+	}
 	injectThemeProperties(cssText);
 	updateWebComponentStyles();
 };

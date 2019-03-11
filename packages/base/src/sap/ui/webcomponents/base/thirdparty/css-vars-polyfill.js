@@ -8,13 +8,14 @@
  */
 
 
-const vars = new Map();
+let vars = new Map();
 
 /**
  * Scans the given string, extracts all CSS vars from it and stores them internally
  * @param styleString - string containing CSS variables
  */
 const findCSSVars = (styleString) => {
+	vars = new Map();
 	const couples = styleString.match(/(--[^:)]+:[\s]*[^;}]+)/g) || [];
 	couples.forEach(couple => {
 		let [varName, varValue] = couple.split(/:\s*/);
