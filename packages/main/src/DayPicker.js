@@ -257,7 +257,6 @@ class DayPicker extends WebComponent {
 		const dayPressed = this._isDayPressed(target);
 
 		if (dayPressed) {
-
 			const targetDate = parseInt(target.getAttribute("data-sap-timestamp"));
 
 			// findIndex, give it to item navigation
