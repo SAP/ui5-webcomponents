@@ -29,8 +29,9 @@ const findCSSVars = (styleString) => {
  * @returns {*}
  */
 const applyCSSVars = styleString => {
+	// Replace all variables, with or without default value (default value removed too)
 	vars.forEach((varValue, varName) => {
-		let getterRegex = new RegExp('var\\(\\s*' + varName + '\\s*\\)', 'g');
+		let getterRegex = new RegExp('var\\(\\s*' + varName + '.*?\\)', 'g');
 		styleString = styleString.replace(getterRegex, varValue);
 	});
 
