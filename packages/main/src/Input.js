@@ -470,15 +470,15 @@ class Input extends WebComponent {
 		const inputValue = this.getInputValue();
 		const isSubmit = action === this.ACTION_ENTER;
 		const isFocusOut = action === this.ACTION_FOCUSOUT;
-		const isUserInput =  action === this.ACTION_USER_INPUT;
+		const isUserInput = action === this.ACTION_USER_INPUT;
 
 		this.value = inputValue;
 
 		const valueChanged = (this.previousValue !== undefined) && (this.previousValue !== this.value);
 
-		if (isUserInput) { // input	
-			this.fireEvent(this.EVENT_INPUT);	
-			return;	
+		if (isUserInput) { // input
+			this.fireEvent(this.EVENT_INPUT);
+			return;
 		}
 
 		if ((isSubmit || isFocusOut) && valueChanged) { // change
