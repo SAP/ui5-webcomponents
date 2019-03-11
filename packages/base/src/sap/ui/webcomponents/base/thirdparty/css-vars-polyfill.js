@@ -32,16 +32,11 @@ const applyCSSVars = styleString => {
 	vars.forEach((varValue, varName) => {
 		let getterRegex = new RegExp('var\\(\\s*' + varName + '\\s*\\)', 'g');
 		styleString = styleString.replace(getterRegex, varValue);
-
-		// now check for any getters that are left that have fallbacks
-		let getterRegex2 = new RegExp('var\\(\\s*.+\\s*,\\s*(.+)\\)', 'g');
-		let matches = styleString.match(getterRegex2);
-		if (matches) {
-			matches.forEach(function(match) {
-				styleString = styleString.replace(match, match.match(/var\(.+,\s*(.+)\)/)[1]);
-			});
-		}
 	});
+
+	// Replace all unresolved variables with their default values
+	styleString = styleString.replace(/var\(.*?,(.*?)\)/g, "$1");
+
 	return styleString;
 };
 
