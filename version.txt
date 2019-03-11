@@ -1,5 +1,5 @@
-commit 78708a3b8387be6169fa51ea7bb518c381d2da82
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Mar 11 11:05:06 2019 +0200
+commit 70bbb9c3cda96a9c94681ccc5fd3d00ce432729c
+Author: a-z-ivanov <yogaaaaa@yahoo.com>
+Date:   Mon Mar 11 02:14:13 2019 -0700
 
-    refactor(ui5-checkbox): keep styles in base LESS only (#150)
+    refactor(ui5-yearpicker): refactor the css (#155)
