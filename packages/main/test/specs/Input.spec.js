@@ -18,14 +18,14 @@ describe("Input general interaction", () => {
 		assert.strictEqual(inputResult.getProperty("value"), "2", "change is called twice");
 	});
 
-	it("fires liveChange", () => {
+	it("fires input", () => {
 		const input2 = browser.findElementDeep("#input2 >>> input");
 		const inputResult = browser.findElementDeep("#inputResult >>> input");
 
 		input2.click();
 		input2.keys("abc");
 
-		assert.strictEqual(inputResult.getProperty("value"), "3", "liveChange is fired 3 times");
+		assert.strictEqual(inputResult.getProperty("value"), "3", "input is fired 3 times");
 	});
 
 	it("handles suggestions", () => {

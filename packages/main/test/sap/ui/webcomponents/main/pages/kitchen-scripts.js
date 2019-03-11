@@ -155,7 +155,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	var sap_database_entries = [{ key: "Afg", text: "Anna" }, { key: "Arg", text: "Anelia" }, { key: "Alex", text: "Ally" }, { key: "Arm", text: "Boris" }, { key: "Alg", text: "Borg" }, { key: "And", text: "Cindy" }, { key: "Ang", text: "Sara" }, { key: "Ast", text: "Sally" }, { key: "Aus", text: "Daniel" }, { key: "Aze", text: "Don" }, { key: "Aruba", text: "Ema" }, { key: "Antigua", text: "Fred" }, { key: "Bel", text: "John" }, { key: "Bel", text: "Jonathan" }, { key: "Bg", text: "Zack" }, { key: "Bra", text: "Zara" }, { key: "Bra", text: "Wolly"}, { key: "Bra", text: "Will"}, { key: "Bra", text: "Quentin"}];
 	var input = document.getElementById('user');
 
-	input.addEventListener("liveChange", function (event) {
+	input.addEventListener("input", function (event) {
 		var value = event.target.value;
 		var suggestionItems = [];
 
