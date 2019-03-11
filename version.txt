@@ -1,5 +1,5 @@
-commit 74cac0e3f5b2c52661c0c4a511ebbc31b087e7f5
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Fri Mar 8 10:36:26 2019 +0200
+commit 78708a3b8387be6169fa51ea7bb518c381d2da82
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Mar 11 11:05:06 2019 +0200
 
-    chore: turn off source maps for es5 bundle (#152)
+    refactor(ui5-checkbox): keep styles in base LESS only (#150)
