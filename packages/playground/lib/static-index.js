@@ -33,7 +33,7 @@ tagNameMap = {
 
 const generateSiteMap = (componentNames) => {
     const urls = componentNames.map(componentName => {
-        return { url: `/ui5-webcomponents/playground/component/${componentName}/`,  changefreq: 'daily' };
+        return { url: `/ui5-webcomponents/playground/components/${componentName}/`,  changefreq: 'daily' };
     });
 
     urls.unshift({ url: `/ui5-webcomponents/playground/`,  changefreq: 'daily' });
@@ -48,7 +48,6 @@ const generateSiteMap = (componentNames) => {
     // Creates a sitemap object given the input configuration with URLs
     var sitemap = sm.createSitemap( options );
     // Generates XML with a callback function
-    sitemap.toXML( function(err, xml){ if (!err){ console.log(xml) } });
     // Gives you a string containing the XML data
     var xml = sitemap.toString();
 
