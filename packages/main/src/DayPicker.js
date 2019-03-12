@@ -253,14 +253,17 @@ class DayPicker extends WebComponent {
 	}
 
 	onclick(event) {
-		if (event.ui5target.className.indexOf("sapWCDayPickerItem") > -1) {
-			const targetDate = parseInt(event.ui5target.getAttribute("data-sap-timestamp"));
+		const target = event.ui5target;
+		const dayPressed = this._isDayPressed(target);
+
+		if (dayPressed) {
+			const targetDate = parseInt(target.getAttribute("data-sap-timestamp"));
 
 			// findIndex, give it to item navigation
 			for (let i = 0; i < this._weeks.length; i++) {
 				for (let j = 0; j < this._weeks[i].length; j++) {
 					if (parseInt(this._weeks[i][j].timestamp) === targetDate) {
-						this._itemNav.current = parseInt(event.ui5target.getAttribute("data-sap-index"));
+						this._itemNav.current = parseInt(target.getAttribute("data-sap-index"));
 
 						this._itemNav.update();
 						break;
@@ -372,6 +375,11 @@ class DayPicker extends WebComponent {
 
 		return (iWeekDay >= iWeekendStart && iWeekDay <= iWeekendEnd)
 			|| (iWeekendEnd < iWeekendStart && (iWeekDay >= iWeekendStart || iWeekDay <= iWeekendEnd));
+	}
+
+	_isDayPressed(target) {
+		const targetParent = target.parentNode;
+		return (target.className.indexOf("sapWCDayPickerItem") > -1) || (targetParent && targetParent.className.indexOf("sapWCDayPickerItem") > -1);
 	}
 
 	_getVisibleDays(oStartDate, bIncludeBCDates) {
