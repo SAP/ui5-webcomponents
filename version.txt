@@ -1,9 +1,5 @@
-commit b8d978ac359f551ea4fb88d424d69b78774f60b2
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Mar 11 16:05:10 2019 +0200
+commit 5df76e4b72888e4370e86320e7c46a05c758f3e1
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Tue Mar 12 10:08:58 2019 +0200
 
-    refactor(ui5-input): fire input, instead of liveChange (#159)
-    
-    Fires 'input' event upon user typing, instead of the 'liveChange' event.
-    
-    BREAKING CHANGE: liveChange event is no longer fired, listen for the input event instead.
+    chore: fix sitemap urls (#164)
