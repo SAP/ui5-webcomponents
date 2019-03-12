@@ -14,7 +14,6 @@ import postcss from 'rollup-plugin-postcss';
 import postcssImport from 'postcss-import';
 import postcssNesting from 'postcss-nesting';
 import csso from 'postcss-csso';
-import postCssCustomProperties from 'postcss-custom-properties';
 
 const StyleFioriMap = {};
 const StyleBelizeMap = {};

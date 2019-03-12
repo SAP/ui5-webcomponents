@@ -1,7 +1,6 @@
-const postcssCustomProperties = require('postcss-custom-properties');
-const postcssImport = require('postcss-import');
+const postcssNesting = require('postcss-nesting');
 module.exports = {
   plugins: [
-    postcssCustomProperties({importFrom: "dist/themes-next/sap_fiori_3/parameters-bundle.css"}),
+	  postcssNesting(),
   ]
 }
