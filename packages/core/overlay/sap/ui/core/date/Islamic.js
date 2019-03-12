@@ -207,8 +207,8 @@ sap.ui.define(['./UniversalDate', '../CalendarType', './CalendarClassRegistry', 
 
 		oCustomizationMap = {};
 
-		sDateFormat = sap.ui.getCore().getConfiguration().getFormatSettings().getLegacyDateFormat();
-		oCustomizationJSON = sap.ui.getCore().getConfiguration().getFormatSettings().getLegacyDateCalendarCustomizing();
+		sDateFormat = sap.ui.getCore().getFormatSettings().getLegacyDateFormat();
+		oCustomizationJSON = sap.ui.getCore().getFormatSettings().getLegacyDateCalendarCustomizing();
 		oCustomizationJSON = oCustomizationJSON || [];
 
 		if (!sDateFormat && !oCustomizationJSON.length) {//working with no customization

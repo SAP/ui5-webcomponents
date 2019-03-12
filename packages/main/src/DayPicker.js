@@ -1,6 +1,8 @@
 import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
 import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
-import { getFormatSettings, getCalendarType } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Configuration";
+import { getLocale } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/LocaleProvider";
+import { getCalendarType } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Configuration";
+import { getFormatLocale } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/FormatSettings";
 import ItemNavigation from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/delegate/ItemNavigation";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/events/PseudoEvents";
 import Integer from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/Integer";
@@ -121,7 +123,7 @@ class DayPicker extends WebComponent {
 
 	constructor(state) {
 		super(state);
-		this._oLocale = getFormatSettings().getFormatLocale();
+		this._oLocale = getFormatLocale();
 		this._oLocaleData = new LocaleData(this._oLocale);
 
 		this._itemNav = new ItemNavigation(this, { rowSize: 7 });
@@ -330,7 +332,7 @@ class DayPicker extends WebComponent {
 	}
 
 	get _primaryCalendarType() {
-		return this.primaryCalendarType || getCalendarType();
+		return this.primaryCalendarType || getCalendarType() || LocaleData.getInstance(getLocale()).getPreferredCalendarType();
 	}
 
 	_modifySelectionAndNotifySubscribers(sNewDate, bAdd) {

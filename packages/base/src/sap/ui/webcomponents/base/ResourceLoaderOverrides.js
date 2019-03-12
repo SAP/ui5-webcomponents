@@ -5,6 +5,9 @@ const resources = new Map();
 // date formatters from the core do not know about this new mechanism of fetching assets,
 // but we can use the sap.ui.loader._.getModuleContent as a hook and provide the preloaded data,
 // so that a sync request via jQuery is never triggered.
+window.sap = window.sap || {};
+window.sap.ui = window.sap.ui || {};
+
 sap.ui.loader = sap.ui.loader || {};
 sap.ui.loader._ = sap.ui.loader._ || {};
 const getModulecontentOrig = sap.ui.loader._.getModuleContent;
