@@ -1,5 +1,5 @@
-commit 5df76e4b72888e4370e86320e7c46a05c758f3e1
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Tue Mar 12 10:08:58 2019 +0200
+commit 18a3c431c72cb106e65477124a62497193a10df7
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Mar 12 11:56:19 2019 +0200
 
-    chore: fix sitemap urls (#164)
+    fix(ui5-datepicker): enable day selection in IE (#162)
