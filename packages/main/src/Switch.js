@@ -140,9 +140,7 @@ class Switch extends WebComponent {
 	}
 
 	ontap(event) {
-		if (this._tapAllowed(event.ui5target)) {
-			this.toggle();
-		}
+		this.toggle();
 	}
 
 	onkeydown(event) {
@@ -166,10 +164,6 @@ class Switch extends WebComponent {
 			this.checked = !this.checked;
 			this.fireEvent("change");
 		}
-	}
-
-	_tapAllowed(target) {
-		return target !== this;
 	}
 
 	static get calculateTemplateContext() {
