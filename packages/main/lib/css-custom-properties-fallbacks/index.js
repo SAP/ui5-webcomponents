@@ -23,6 +23,7 @@ couples.forEach(couple => {
 });
 
 // Add the fallback values for all web components
+mkdirp.sync("src/themes-next/tmp");
 mkdirp.sync("dist/themes-next/tmp");
 glob("dist/themes-next/*.css", {}, function (er, files) {
 	files.forEach(file => {
