@@ -289,7 +289,10 @@ class Input extends WebComponent {
 		// Used to ignore the Input "focusedOut" and thus preventing firing "change" event.
 		this.hasSuggestionItemFocused = false;
 
+		// tracks the value between input focusin and focusout to determine if change event should be fired..
 		this.previousValue = undefined;
+		// tracks live value state and used to detect when the value is changed by the API.
+		this.previousLiveValue = undefined;
 
 		// Represents the value before user moves selection between the suggestion items.
 		// Used to register and fire "input" event upon [SPACE] or [ENTER].
@@ -328,6 +331,7 @@ class Input extends WebComponent {
 			this.Suggestions.toggle(this.shouldOpenSuggestions());
 		}
 		this.checkFocusOut();
+		this.checkValueChanges();
 		this.firstRendering = false;
 	}
 
@@ -454,6 +458,7 @@ class Input extends WebComponent {
 			this.value = itemText;
 			this.valueBeforeItemSelection = itemText;
 			this.fireEvent(this.EVENT_INPUT);
+			this.fireEvent(this.EVENT_CHANGE);
 		}
 	}
 
@@ -473,6 +478,7 @@ class Input extends WebComponent {
 		const isUserInput = action === this.ACTION_USER_INPUT;
 
 		this.value = inputValue;
+		this.previousLiveValue = inputValue;
 
 		const valueChanged = (this.previousValue !== undefined) && (this.previousValue !== this.value);
 
@@ -488,6 +494,13 @@ class Input extends WebComponent {
 
 		if (isSubmit) { // submit
 			this.fireEvent(this.EVENT_SUBMIT);
+		}
+	}
+
+	checkValueChanges() {
+		if (this.previousLiveValue !== this.value) { // value has been changed via API
+			this.previousLiveValue = this.value;
+			this.previousValue = this.value;
 		}
 	}
 
