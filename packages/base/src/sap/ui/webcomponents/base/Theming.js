@@ -1,10 +1,14 @@
-import { getTheme, getDefaultTheme, _setTheme } from "./Configuration";
+import { getTheme, _setTheme } from "./Configuration";
 import { getStyles } from "./theming/ThemeBundle";
 import { getCustomCSS } from "./theming/CustomStyle";
 import { getThemeProperties } from "./theming/ThemeProperties";
 import { injectThemeProperties, updateWebComponentStyles } from "./theming/StyleInjection";
 
 const themeChangeCallbacks = [];
+
+const getDefaultTheme = () => {
+	return "sap_fiori_3";
+};
 
 const attachThemeChange = function attachThemeChange(callback) {
 	if (themeChangeCallbacks.indexOf(callback) === -1) {
@@ -15,7 +19,8 @@ const attachThemeChange = function attachThemeChange(callback) {
 const applyTheme = async () => {
 	let cssText = "";
 	const theme = getTheme();
-	const defaultTheme = getDefaultTheme();
+
+	const defaultTheme = ''; //getDefaultTheme();
 	if (theme !== defaultTheme) {
 		cssText = await getThemeProperties("@ui5/webcomponents", theme);
 	}
@@ -56,6 +61,7 @@ const getEffectiveStyle = async (theme, styleUrls, tag) => {
 window.setTheme = setTheme; // for testing easily
 
 export {
+	getDefaultTheme,
 	attachThemeChange,
 	applyTheme,
 	setTheme,

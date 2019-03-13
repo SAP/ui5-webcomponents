@@ -10,7 +10,7 @@ import ButtonRenderer from "./build/compiled/ButtonRenderer.lit";
 import Icon from "./Icon";
 
 // Styles
-import buttonCss from "./themes-next/tmp/Button.css";
+import buttonCss from "./themes-next/Button.css";
 
 addCustomCSS("ui5-button", "sap_fiori_3", buttonCss);
 addCustomCSS("ui5-button", "sap_belize_hcb", buttonCss);

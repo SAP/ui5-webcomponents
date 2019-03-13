@@ -8,8 +8,7 @@ const getDesigntimePropertyAsArray = sValue => {
 const supportedLanguages = getDesigntimePropertyAsArray("$core-i18n-locales:,ar,bg,ca,cs,da,de,el,en,es,et,fi,fr,hi,hr,hu,it,iw,ja,ko,lt,lv,nl,no,pl,pt,ro,ru,sh,sk,sl,sv,th,tr,uk,vi,zh_CN,zh_TW$");
 
 const CONFIGURATION = {
-	defaultTheme: "sap_fiori_3", // read-only
-	theme: null, // can be set explicitly, otherwise the default theme will be used
+	theme: "sap_fiori_3",
 	rtl: null,
 	language: null,
 	compactSize: false,
@@ -21,12 +20,8 @@ const CONFIGURATION = {
 };
 
 /* General settings */
-const getDefaultTheme = () => {
-	return CONFIGURATION.defaultTheme;
-};
-
 const getTheme = () => {
-	return CONFIGURATION.theme || getDefaultTheme();
+	return CONFIGURATION.theme;
 };
 
 const getRTL = () => {
@@ -136,7 +131,6 @@ const initConfiguration = () => {
 export {
 	initConfiguration,
 	getTheme,
-	getDefaultTheme,
 	getRTL,
 	getLanguage,
 	getCompactSize,

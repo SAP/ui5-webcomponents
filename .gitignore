@@ -5,7 +5,6 @@ temp
 target
 dist
 build
-packages/main/src/themes-next/tmp/
 
 # Ignore default target directory for the npm package 'ui5-codecompletion'
 .ui5
