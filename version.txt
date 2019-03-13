@@ -1,13 +1,5 @@
-commit 2883d899c7ff992b083e610a78ff53b7098d244c
+commit db88b8c21f4978cf039529ac7fe1734cc58a053a
 Author: Martin <martin.r.hristov@gmail.com>
-Date:   Tue Mar 12 14:40:57 2019 +0200
+Date:   Wed Mar 13 14:51:46 2019 +0200
 
-    refactor(base): improve bundle size (#161)
-    
-    - configuration set from url or json script
-    - locale is required for all controls that need it,
-    not on central level as it used to be
-    - new module LocaleProvider is added - it returns the set
-    locale from the configuration or locale based on browser
-    - all compatibility core-shim and jquery levels are moved to
-    Calendar and DatePicker
+    improvement(shellbar): apply latest VD spec (#167)
