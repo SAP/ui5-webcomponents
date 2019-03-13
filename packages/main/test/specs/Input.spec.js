@@ -18,6 +18,27 @@ describe("Input general interaction", () => {
 		assert.strictEqual(inputResult.getProperty("value"), "2", "change is called twice");
 	});
 
+	it("fires change when same value typed, but value is mutated via API in between", () => {
+		const inputChange = browser.findElementDeep("#inputChange >>> input");
+		const inputChangeResult = browser.findElementDeep("#inputChangeResult >>> input");
+
+		inputChange.click();
+		inputChange.setValue("tomorrow");
+
+		// The submit event listener mutates the value via the API
+		// Note: along with the sumbit event - the first change event is fired.
+		inputChange.keys("Enter");
+		
+		// Type the same value once again.
+		inputChange.setValue("tomorrow");
+
+		// Clicking on another input to force focus out,
+		// which should trigger second change event, although same value is typed in.
+		inputChangeResult.click();
+
+		assert.strictEqual(inputChangeResult.getProperty("value"), "2", "change is called twice");
+	});
+
 	it("fires input", () => {
 		const input2 = browser.findElementDeep("#input2 >>> input");
 		const inputResult = browser.findElementDeep("#inputResult >>> input");
