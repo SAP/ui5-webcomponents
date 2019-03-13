@@ -20,7 +20,7 @@ const applyTheme = async () => {
 	let cssText = "";
 	const theme = getTheme();
 
-	const defaultTheme = ''; //getDefaultTheme();
+	const defaultTheme = ""; // getDefaultTheme();
 	if (theme !== defaultTheme) {
 		cssText = await getThemeProperties("@ui5/webcomponents", theme);
 	}
