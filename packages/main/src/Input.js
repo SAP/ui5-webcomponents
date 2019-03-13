@@ -285,8 +285,6 @@ class Input extends WebComponent {
 		// Indicates if there is selected suggestionItem.
 		this.hasSuggestionItemSelected = false;
 
-
-
 		// Represents the value before user moves selection between the suggestion items.
 		// Used to register and fire "input" event upon [SPACE] or [ENTER].
 		// Note: the property "value" is updated upon selection move and can`t be used.
