@@ -3,28 +3,28 @@
 	<div class="{{classes.leftContainer}}">
 
 		{{#if ctr.icon}}
-			<div class="sapWCShellBarBeginIcon" tabindex="0">
-				<slot name="{{ctr.icon._slot}}"></slot>
-			</div>
+			<slot name="{{ctr.icon._slot}}"></slot>
 		{{/if}}
 
 		{{#unless interactiveLogo}}
 			<img class="{{classes.logo}}" src="{{ctr.logo}}" />
 		{{/unless}}
 
-		<button tabindex="0" class="{{classes.button}}" @click="{{ctr._header.press}}">
-			{{#if interactiveLogo}}
-				<img class="{{classes.logo}}" src="{{ctr.logo}}" />
-			{{/if}}
+		{{#if showArrowDown}}
+			<button tabindex="0" class="{{classes.button}}" @click="{{ctr._header.press}}">
+				{{#if interactiveLogo}}
+					<img class="{{classes.logo}}" src="{{ctr.logo}}" />
+				{{/if}}
 
-			{{#if ctr.primaryTitle}}
-				<h1 class="{{classes.buttonTitle}}">
-					<bdi class="{{classes.title}}">{{ctr.primaryTitle}}</bdi>
-				</h1>
-			{{/if}}
+				{{#if ctr.primaryTitle}}
+					<h1 class="{{classes.buttonTitle}}">
+						<bdi class="{{classes.title}}">{{ctr.primaryTitle}}</bdi>
+					</h1>
+				{{/if}}
 
-			<span class="{{classes.arrow}}"></span>
-		</button>
+				<span class="{{classes.arrow}}"></span>
+			</button>
+		{{/if}}
 
 		<h2 class="{{classes.secondaryTitle}}">{{ctr.secondaryTitle}}</h2>
 	</div>
