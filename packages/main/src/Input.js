@@ -1,5 +1,6 @@
 import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
 import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
+import { isIE } from "@ui5/webcomponents-core/dist/sap/ui/Device";
 import ValueState from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/ValueState";
 import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
 import {
@@ -290,6 +291,9 @@ class Input extends WebComponent {
 		// Note: the property "value" is updated upon selection move and can`t be used.
 		this.valueBeforeItemSelection = "";
 
+		// tracks the value between focus in and focus out to detect that change event should be fired.
+		this.previousValue = undefined;
+
 		// Indicates, if the component is rendering for first time.
 		this.firstRendering = true;
 
@@ -388,10 +392,12 @@ class Input extends WebComponent {
 
 	onfocusin() {
 		this._focused = true; // invalidating property
+		this.previousValue = this.value;
 	}
 
 	onfocusout() {
 		this._focused = false; // invalidating property
+		this.previousValue = "";
 	}
 
 	_onInput(event) {
@@ -467,15 +473,19 @@ class Input extends WebComponent {
 
 		this.value = inputValue;
 
-
 		if (isUserInput) { // input
 			this.fireEvent(this.EVENT_INPUT);
 			return;
 		}
 
-
 		if (isSubmit) { // submit
 			this.fireEvent(this.EVENT_SUBMIT);
+		}
+
+		// In IE, pressing the ENTER does not fire change
+		const valueChanged = (this.previousValue !== undefined) && (this.previousValue !== this.value);
+		if (isIE() && isSubmit && valueChanged) {
+			this.fireEvent(this.EVENT_CHANGE);
 		}
 	}
 
