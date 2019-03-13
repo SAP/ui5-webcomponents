@@ -285,14 +285,7 @@ class Input extends WebComponent {
 		// Indicates if there is selected suggestionItem.
 		this.hasSuggestionItemSelected = false;
 
-		// Indicates if there is focused suggestionItem.
-		// Used to ignore the Input "focusedOut" and thus preventing firing "change" event.
-		this.hasSuggestionItemFocused = false;
 
-		// tracks the value between input focusin and focusout to determine if change event should be fired..
-		this.previousValue = undefined;
-		// tracks live value state and used to detect when the value is changed by the API.
-		this.previousLiveValue = undefined;
 
 		// Represents the value before user moves selection between the suggestion items.
 		// Used to register and fire "input" event upon [SPACE] or [ENTER].
@@ -310,11 +303,13 @@ class Input extends WebComponent {
 
 		// all user interactions
 		this.ACTION_ENTER = "enter";
-		this.ACTION_FOCUSOUT = "focusOut";
 		this.ACTION_USER_INPUT = "input";
 
 		this._input = {
 			onInput: this._onInput.bind(this),
+			change: event => {
+				this.fireEvent(this.EVENT_CHANGE);
+			},
 		};
 
 		this._whenShadowRootReady().then(this.attachFocusHandlers.bind(this));
@@ -330,8 +325,6 @@ class Input extends WebComponent {
 		if (!this.firstRendering && this.Suggestions) {
 			this.Suggestions.toggle(this.shouldOpenSuggestions());
 		}
-		this.checkFocusOut();
-		this.checkValueChanges();
 		this.firstRendering = false;
 	}
 
@@ -396,8 +389,6 @@ class Input extends WebComponent {
 	}
 
 	onfocusin() {
-		this.previousValue = this.value;
-		this.hasSuggestionItemFocused = false;
 		this._focused = true; // invalidating property
 	}
 
@@ -474,42 +465,22 @@ class Input extends WebComponent {
 
 		const inputValue = this.getInputValue();
 		const isSubmit = action === this.ACTION_ENTER;
-		const isFocusOut = action === this.ACTION_FOCUSOUT;
 		const isUserInput = action === this.ACTION_USER_INPUT;
 
 		this.value = inputValue;
-		this.previousLiveValue = inputValue;
 
-		const valueChanged = (this.previousValue !== undefined) && (this.previousValue !== this.value);
 
 		if (isUserInput) { // input
 			this.fireEvent(this.EVENT_INPUT);
 			return;
 		}
 
-		if ((isSubmit || isFocusOut) && valueChanged) { // change
-			this.previousValue = this.value;
-			this.fireEvent(this.EVENT_CHANGE);
-		}
 
 		if (isSubmit) { // submit
 			this.fireEvent(this.EVENT_SUBMIT);
 		}
 	}
 
-	checkValueChanges() {
-		if (this.previousLiveValue !== this.value) { // value has been changed via API
-			this.previousLiveValue = this.value;
-			this.previousValue = this.value;
-		}
-	}
-
-	checkFocusOut() {
-		if (!this._focused && !this.hasSuggestionItemFocused) {
-			this.fireEventByAction(this.ACTION_FOCUSOUT);
-			this.previousValue = "";
-		}
-	}
 
 	getInputValue() {
 		const inputDOM = this.getDomRef();
@@ -532,9 +503,7 @@ class Input extends WebComponent {
 	}
 
 	/* Suggestions interface  */
-	onItemFocused() {
-		this.hasSuggestionItemFocused = true;
-	}
+	onItemFocused() {}
 
 	onItemSelected(item, keyboardUsed) {
 		this.selectSuggestion(item, keyboardUsed);
