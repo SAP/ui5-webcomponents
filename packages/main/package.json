@@ -44,7 +44,7 @@
     }
   },
   "scripts": {
-    "build": "npm-run-all --sequential clean lint build:templates build:samples build:bundle build:styles copy:src copy:i18n import-rewrite",
+    "build": "npm-run-all --sequential clean lint build:templates build:samples build:styles build:bundle copy:src copy:i18n import-rewrite",
     "build:bundle": "rollup -c --environment ES5_BUILD",
     "build:templates": "mkdirp src/build/compiled && node ./lib/hbs2ui5/index.js -d src/ -o src/build/compiled",
     "build:samples": "npm run copy:test --scripts-prepend-node-path && npm run build:api --scripts-prepend-node-path && npm run build:docs --scripts-prepend-node-path && node lib/playground/index.js",
