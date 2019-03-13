@@ -1,6 +1,3 @@
-import "./shims/Core-shim";
-import "./shims/jquery-shim";
-
 import whenDOMReady from "./util/whenDOMReady";
 import EventEnrichment from "./events/EventEnrichment";
 import { insertIconFontFace } from "./IconFonts";

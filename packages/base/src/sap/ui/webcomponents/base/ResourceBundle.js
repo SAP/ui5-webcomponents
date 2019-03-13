@@ -1,5 +1,5 @@
 import ResourceBundle from "@ui5/webcomponents-core/dist/sap/base/i18n/ResourceBundle";
-import { getLanguage } from "./Configuration";
+import { getLanguage } from "./LocaleProvider";
 import { registerModuleContent } from "./ResourceLoaderOverrides";
 import { fetchJsonOnce } from "./util/FetchHelper";
 

@@ -1,15 +1,4 @@
-import { isAndroid } from "@ui5/webcomponents-core/dist/sap/ui/Device";
 import CalendarType from "@ui5/webcomponents-core/dist/sap/ui/core/CalendarType";
-import Locale from "./Locale";
-import {
-	setConfiguration,
-	getFormatLocale,
-	getLegacyDateFormat,
-	getLegacyDateCalendarCustomizing,
-	getCustomLocaleData,
-} from "./FormatSettings";
-
-let LocaleData;
 
 const getDesigntimePropertyAsArray = sValue => {
 	const m = /\$([-a-z0-9A-Z._]+)(?::([^$]*))?\$/.exec(sValue);
@@ -18,33 +7,11 @@ const getDesigntimePropertyAsArray = sValue => {
 
 const supportedLanguages = getDesigntimePropertyAsArray("$core-i18n-locales:,ar,bg,ca,cs,da,de,el,en,es,et,fi,fr,hi,hr,hu,it,iw,ja,ko,lt,lv,nl,no,pl,pt,ro,ru,sh,sk,sl,sv,th,tr,uk,vi,zh_CN,zh_TW$");
 
-const detectLanguage = () => {
-	const browserLanguages = navigator.languages;
-
-	const navigatorLanguage = () => {
-		if (isAndroid()) {
-			// on Android, navigator.language is hardcoded to 'en', so check UserAgent string instead
-			const match = navigator.userAgent.match(/\s([a-z]{2}-[a-z]{2})[;)]/i);
-			if (match) {
-				return match[1];
-			}
-			// okay, we couldn't find a language setting. It might be better to fallback to 'en' instead of having no language
-		}
-		return navigator.language;
-	};
-
-	const rawLocale = (browserLanguages && browserLanguages[0]) || navigatorLanguage() || navigator.userLanguage || navigator.browserLanguage;
-
-	return rawLocale || "en";
-};
-
-const language = detectLanguage();
-
 const CONFIGURATION = {
 	defaultTheme: "sap_fiori_3", // read-only
 	theme: null, // can be set explicitly, otherwise the default theme will be used
 	rtl: null,
-	language: new Locale(language),
+	language: null,
 	compactSize: false,
 	supportedLanguages,
 	calendarType: null,
@@ -52,8 +19,6 @@ const CONFIGURATION = {
 	"xx-wc-force-default-gestures": false,
 	"xx-wc-no-conflict": false, // no URL
 };
-
-setConfiguration(CONFIGURATION);
 
 /* General settings */
 const getDefaultTheme = () => {
@@ -69,7 +34,7 @@ const getRTL = () => {
 };
 
 const getLanguage = () => {
-	return CONFIGURATION.language.sLocaleId;
+	return CONFIGURATION.language;
 };
 
 const getCompactSize = () => {
@@ -99,13 +64,6 @@ const getCalendarType = () => {
 		}
 	}
 
-	/* In order to have a locale based calendar type - LocaleData should be injected to the configuration
-		- check #injectLocaleData
-	*/
-	if (LocaleData) {
-		return LocaleData.getInstance(getLocale()).getPreferredCalendarType();
-	}
-
 	return CalendarType.Gregorian;
 };
 
@@ -113,15 +71,6 @@ const getOriginInfo = () => {};
 
 const getLocale = () => {
 	return CONFIGURATION.language;
-};
-
-const getFormatSettings = () => {
-	return {
-		getFormatLocale,
-		getLegacyDateFormat,
-		getLegacyDateCalendarCustomizing,
-		getCustomLocaleData,
-	};
 };
 
 const _setTheme = themeName => {
@@ -134,39 +83,6 @@ const booleanMapping = new Map([
 ]);
 
 let runtimeConfig = {};
-
-const convertToLocaleOrNull = lang => {
-	try {
-		if (lang && typeof lang === "string") {
-			return new Locale(lang);
-		}
-	} catch (e) {
-		// ignore
-	}
-};
-
-const check = (condition, sMessage) => {
-	if (!condition) {
-		throw new Error(sMessage);
-	}
-};
-
-const getLanguageTag = () => {
-	return CONFIGURATION.language.toString();
-};
-
-const setLanguage = newLanguage => {
-	const locale = convertToLocaleOrNull(newLanguage);
-
-	check(locale, "Configuration.setLanguage: newLanguage must be a valid BCP47 language tag");
-
-	if (locale.toString() !== getLanguageTag()) {
-		CONFIGURATION.language = locale;
-		CONFIGURATION.derivedRTL = Locale._impliesRTL(locale);
-	}
-
-	return CONFIGURATION;
-};
 
 const parseConfigurationScript = () => {
 	const configScript = document.querySelector("[data-id='sap-ui-config']");
@@ -207,16 +123,8 @@ const parseURLParameters = () => {
 
 const applyConfigurations = () => {
 	Object.keys(runtimeConfig).forEach(key => {
-		if (key === "language") {
-			setLanguage(runtimeConfig[key]);
-		} else {
-			CONFIGURATION[key] = runtimeConfig[key];
-		}
+		CONFIGURATION[key] = runtimeConfig[key];
 	});
-};
-
-const injectLocaleData = localeData => {
-	LocaleData = localeData;
 };
 
 const initConfiguration = () => {
@@ -236,9 +144,7 @@ export {
 	getWCNoConflict,
 	getCalendarType,
 	getLocale,
-	getFormatSettings,
 	_setTheme,
 	getSupportedLanguages,
 	getOriginInfo,
-	injectLocaleData,
 };
