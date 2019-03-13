@@ -1,6 +1,7 @@
 const fs = require('fs');
 const getopts = require('getopts');
 const glob = require("glob");
+const mkdirp = require("mkdirp");
 
 // The default theme can be passed via a parameter
 const options = getopts(process.argv.slice(2), {
@@ -22,6 +23,7 @@ couples.forEach(couple => {
 });
 
 // Add the fallback values for all web components
+mkdirp.sync("dist/themes-next/tmp");
 glob("dist/themes-next/*.css", {}, function (er, files) {
 	files.forEach(file => {
 		let componentCSS = fs.readFileSync(file, 'utf8');
@@ -30,5 +32,10 @@ glob("dist/themes-next/*.css", {}, function (er, files) {
 			componentCSS = componentCSS.replace(re, `var(${varName}, ${varValue})`);
 		});
 		fs.writeFileSync(file, componentCSS);
+
+		// Temporary - create the dist tmp file
+		fs.writeFileSync(file.replace('themes-next', 'themes-next/tmp'), componentCSS);
+		// Temporary - create the src tmp file
+		fs.writeFileSync(file.replace('dist', 'src').replace('themes-next', 'themes-next/tmp'), componentCSS);
 	});
 });

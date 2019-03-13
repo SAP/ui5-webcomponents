@@ -80,7 +80,7 @@ span[data-sap-ui-wc-root] {
     align-items: center;
     background-color: var(--sapUiButtonBackground);
     border: 1px solid var(--sapUiButtonBorderColor);
-    color: var(--sapUiButtonTextColor, #0854a0);
+    color: var(--sapUiButtonTextColor);
     text-shadow: var(--sapUiShadowText);
     outline: none;
     position: relative;
