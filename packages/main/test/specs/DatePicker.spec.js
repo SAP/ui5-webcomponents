@@ -228,17 +228,42 @@ describe("Date Picker Tests", () => {
 
 		datepicker.innerInput.click();
 		browser.keys("\b\b\b\b\b\b\b\b\b\b\b");
-		datepicker.innerInput.setValue("Jan 8, 2015");
+		datepicker.innerInput.keys("Jan 8, 2015");
 		browser.findElementDeep("#dp1 >>> ui5-input >>> input").click(); //click elsewhere to focusout
 
 		assert.equal(browser.findElementDeep("#lbl").getHTML(false), "1", 'change has fired once');
 
 		datepicker.innerInput.click();
 		browser.keys("\b\b\b\b\b\b\b\b\b\b\b");
-		datepicker.innerInput.setValue("Jan 6, 2015");
+		datepicker.innerInput.keys("Jan 6, 2015");
 		browser.findElementDeep("#dp1 >>> ui5-input >>> input").click(); //click elsewhere to focusout
 
 		assert.equal(browser.findElementDeep("#lbl").getHTML(false), "2", 'change has fired once');
+	});
+
+	it("change fires every time tomorrow is typed and normalized", () => {
+		let tomorrowDate;
+		const lblChangeCounter = browser.$("#lblTomorrow");
+		const lblTomorrowDate = browser.$("#lblTomorrowDate");
+
+		datepicker.id = "#dp13";
+
+		// Type tomorrow.
+		datepicker.innerInput.click();
+		datepicker.innerInput.keys("tomorrow");
+
+		// Press Enter, store the date and delete it.
+		datepicker.innerInput.keys("Enter");
+		tomorrowDate = lblTomorrowDate.getHTML(false);
+		browser.keys("\b\b\b\b\b\b\b\b\b\b\b\b\b");
+
+		// Type tomorrow and press Enter for the second time.
+		datepicker.innerInput.keys("tomorrow");
+		datepicker.innerInput.keys("Enter");
+
+		// Two change events should be fired and the date should twice normalized
+		assert.equal(lblChangeCounter.getHTML(false), "2", 'change event is being fired twice');
+		assert.equal(lblTomorrowDate.getHTML(false), tomorrowDate, 'tomorrow is normalazid to date twice as well');
 	});
 
 	it("today value is normalized and correctly rounded to 00:00:00", () => {
