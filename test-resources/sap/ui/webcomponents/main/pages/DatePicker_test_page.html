@@ -32,20 +32,22 @@
 	<ui5-datepicker id="dp10" disabled></ui5-datepicker>
 	<ui5-datepicker id="dp11"></ui5-datepicker>
 	<ui5-datepicker id="dp12"></ui5-datepicker>
+	<ui5-datepicker id="dp13"></ui5-datepicker>
 	<label id='lbl'>0</label>
 	<label for="inputTimezone">Timezone:</label>
 	<input id="inputTimezone" type="number"/>
 	<button id="btnApplyTimezone" onclick="stubTimezone();">Apply</button>
 	<button id="btnRestoreTimezone" onclick="restore();">Restore</button>
 	<button id="downThere" style="position:absolute; top:3000px;"></button>
-
+	<label id='lblTomorrow'>0</label>
+	<label id='lblTomorrowDate'></label>
 	<script>
-		const originalGetDate = Date.prototype.getDate;
+		var originalGetDate = Date.prototype.getDate;
 
 		function stubTimezone() {
-			const timezone = parseInt(document.querySelector("#inputTimezone").value, 10);
+			var timezone = parseInt(document.querySelector("#inputTimezone").value, 10);
 			Date.prototype.getDate = function() {
-				const stubedDate = new Date(this.getTime() + timezone * 60 * 60 * 1000);
+				var stubedDate = new Date(this.getTime() + timezone * 60 * 60 * 1000);
 				return stubedDate.getUTCDate();
 			};
 		}
@@ -55,13 +57,18 @@
 			document.querySelector("#inputTimezone").value = "";
 		};
 
-		let counter = 0;
+		var counter = 0;
+		var counterTomorrow = 0;
 		function increaseCounter() {
 			document.querySelector('#lbl').innerHTML = ++counter;
 		}
 
 		document.querySelector("#dp5").addEventListener("change", increaseCounter);
 		document.querySelector("#dp8").addEventListener("change", increaseCounter);
+		document.querySelector("#dp13").addEventListener("change", function(e) {
+			document.querySelector('#lblTomorrow').innerHTML = ++counterTomorrow;
+			document.querySelector('#lblTomorrowDate').innerHTML = e.target.value;
+		});
 	</script>
 </body>
 </html>
