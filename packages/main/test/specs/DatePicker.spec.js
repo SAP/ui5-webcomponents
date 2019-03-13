@@ -228,14 +228,14 @@ describe("Date Picker Tests", () => {
 
 		datepicker.innerInput.click();
 		browser.keys("\b\b\b\b\b\b\b\b\b\b\b");
-		datepicker.innerInput.setValue("Jan 8, 2015");
+		datepicker.innerInput.keys("Jan 8, 2015");
 		browser.findElementDeep("#dp1 >>> ui5-input >>> input").click(); //click elsewhere to focusout
 
 		assert.equal(browser.findElementDeep("#lbl").getHTML(false), "1", 'change has fired once');
 
 		datepicker.innerInput.click();
 		browser.keys("\b\b\b\b\b\b\b\b\b\b\b");
-		datepicker.innerInput.setValue("Jan 6, 2015");
+		datepicker.innerInput.keys("Jan 6, 2015");
 		browser.findElementDeep("#dp1 >>> ui5-input >>> input").click(); //click elsewhere to focusout
 
 		assert.equal(browser.findElementDeep("#lbl").getHTML(false), "2", 'change has fired once');
