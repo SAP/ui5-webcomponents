@@ -1,7 +1,11 @@
+import "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/shims/jquery-shim";
+import "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/shims/Core-shim";
 import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
 import { fetchCldrData } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/CLDR";
 import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
-import { getLocale, getCalendarType, getFormatSettings } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Configuration";
+import { getLocale } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/LocaleProvider";
+import { getCalendarType } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Configuration";
+import { getFormatLocale } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/FormatSettings";
 import DateFormat from "@ui5/webcomponents-core/dist/sap/ui/core/format/DateFormat";
 import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData";
 import CalendarDate from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/dates/CalendarDate";
@@ -14,6 +18,9 @@ import DayPicker from "./DayPicker";
 import MonthPicker from "./MonthPicker";
 import YearPicker from "./YearPicker";
 import CalendarRenderer from "./build/compiled/CalendarRenderer.lit";
+
+// default calendar for bundling
+import "@ui5/webcomponents-core/dist/sap/ui/core/date/Gregorian";
 
 // Styles
 import belize from "./themes/sap_belize/Calendar.less";
@@ -121,7 +128,7 @@ class Calendar extends WebComponent {
 
 	constructor(state) {
 		super(state);
-		this._oLocale = getFormatSettings().getFormatLocale();
+		this._oLocale = getFormatLocale();
 		this._oLocaleData = new LocaleData(this._oLocale);
 		this._header = {};
 		this._header.onPressPrevious = this._handlePrevious.bind(this);
@@ -186,7 +193,7 @@ class Calendar extends WebComponent {
 	}
 
 	get _primaryCalendarType() {
-		return this.primaryCalendarType || getCalendarType();
+		return this.primaryCalendarType || getCalendarType() || LocaleData.getInstance(getLocale()).getPreferredCalendarType();
 	}
 
 	get _formatPattern() {

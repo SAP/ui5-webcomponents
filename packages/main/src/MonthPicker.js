@@ -1,9 +1,12 @@
 import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
 import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
-import { getFormatSettings, getCalendarType } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Configuration";
+import { getCalendarType } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Configuration";
+import { getFormatLocale } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/FormatSettings";
 import ItemNavigation from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/delegate/ItemNavigation";
 import Integer from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/Integer";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/events/PseudoEvents";
 import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData";
+import { getLocale } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/LocaleProvider";
 import CalendarType from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/dates/CalendarType";
 import CalendarDate from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/dates/CalendarDate";
 import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
@@ -88,7 +91,7 @@ class MonthPicker extends WebComponent {
 
 	constructor(state) {
 		super(state);
-		this._oLocale = getFormatSettings().getFormatLocale();
+		this._oLocale = getFormatLocale();
 		this._oLocaleData = new LocaleData(this._oLocale);
 
 		this._itemNav = new ItemNavigation(this, { rowSize: 3, cyclic: true });
@@ -157,7 +160,7 @@ class MonthPicker extends WebComponent {
 	}
 
 	get _primaryCalendarType() {
-		return this.primaryCalendarType || getCalendarType();
+		return this.primaryCalendarType || getCalendarType() || LocaleData.getInstance(getLocale()).getPreferredCalendarType();
 	}
 
 	onclick(event) {
@@ -169,12 +172,10 @@ class MonthPicker extends WebComponent {
 		}
 	}
 
-	onsapenter(event) {
-		this._activateMonth(event);
-	}
-
-	onsapspace(event) {
-		this._activateMonth(event);
+	onkeydown(event) {
+		if (isSpace(event) || isEnter(event)) {
+			this._activateMonth(event);
+		}
 	}
 
 	_activateMonth(event) {

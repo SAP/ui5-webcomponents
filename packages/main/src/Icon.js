@@ -2,7 +2,7 @@ import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/
 import URI from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/URI";
 import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
 import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
-import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/events/PseudoEvents";
 import IconTemplateContext from "./IconTemplateContext";
 import IconRenderer from "./build/compiled/IconRenderer.lit";
 
@@ -98,19 +98,17 @@ class Icon extends WebComponent {
 		this.fireEvent("press");
 	}
 
-	onsapenter() {
-		this.ontap();
-	}
-
 	onkeydown(event) {
-		if (event.which === KeyCodes.SPACE) {
+		if (isSpace(event)) {
 			event.preventDefault();
 			this.__spaceDown = true;
+		} else if (isEnter(event)) {
+			this.ontap(event);
 		}
 	}
 
 	onkeyup(event) {
-		if (event.which === KeyCodes.SPACE && this.__spaceDown) {
+		if (isSpace(event) && this.__spaceDown) {
 			this.fireEvent("press");
 			this.__spaceDown = false;
 		}

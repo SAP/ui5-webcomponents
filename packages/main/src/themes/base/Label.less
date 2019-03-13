@@ -12,49 +12,50 @@
 
 :host(ui5-label) {
 	display: inline-block;
-	cursor: text;
 	max-width: 100%;
+	cursor: text;
+}
 
-	& span[data-sap-ui-wc-root] {
-		display: flex;
-	}
+:host(ui5-label) span[data-sap-ui-wc-root] {
+	display: flex;
 }
 
 ui5-label {
 	display: inline-block;
-	cursor: text;
 	max-width: 100%;
+	overflow: hidden;
+	cursor: text;
+}
 
-	& span[data-sap-ui-wc-root] {
-		display: flex;
-	}
+ui5-label span[data-sap-ui-wc-root] {
+	display: flex;
 }
 
 .sapMLabel {
 	display: inline-block;
-	text-overflow: ellipsis;
+	width: 100%;
 	color: @sapUiContentLabelColor;
 	font-family: @sapUiFontFamily;
 	font-size: @sapMFontMediumSize;
 	font-weight: normal;
+	text-overflow: ellipsis;
 	overflow: hidden;
-	width: 100%;
 	white-space: nowrap;
 	cursor: inherit;
+}
 
-	&.sapMLabelWrapped {
-		white-space: normal;
-		line-height: 1.4rem;
-	}
+.sapMLabel.sapMLabelWrapped {
+	white-space: normal;
+	line-height: 1.4rem;
+}
 
-	&.sapMLabelRequired:before {
-		content:"*";
-		color: @sapUiFieldRequiredColor;
-		font-size: 1.25rem;
-		font-weight: bold;
-		position: relative;
-		height: 100%;
-		display: inline-flex;
-		align-items: flex-start;
-	}
+.sapMLabel.sapMLabelRequired:before {
+	position: relative;
+	height: 100%;
+	display: inline-flex;
+	align-items: flex-start;
+	content:"*";
+	color: @sapUiFieldRequiredColor;
+	font-size: 1.25rem;
+	font-weight: bold;
 }

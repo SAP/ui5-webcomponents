@@ -207,7 +207,7 @@ TestHelper.ready(function () {
 				mockEvent = this.mockEvent;
 
 				// act - simulate arrow-right
-				radiobutton1.onsapright(mockEvent);
+				radiobutton1._handleDown(mockEvent);
 
 				// assert - the second item should be selected
 				RenderScheduler.whenFinished().then(function () {

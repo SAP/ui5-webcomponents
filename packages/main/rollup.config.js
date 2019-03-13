@@ -43,8 +43,8 @@ function ui5DevImportCheckerPlugin() {
 				throw new Error(`illegal import in ${file}`);
 			}
 
-			if (/import.*"@ui5\/webcomponents-core\/dist\/sap\/ui\/core\/IconPool/.test(code) && !/IconPoolProxy/.test(file)) {
-				throw new Error(`You need to import '@ui5/webcomponents-base/src/sap/ui/webcomponents/base/IconPoolProxy' instead of IconPool ${file}`);
+			if (/import.*"@ui5\/webcomponents-core\/dist\/sap\/ui\/core\/IconPool/.test(code)) {
+				throw new Error(`You need to import '@ui5/webcomponents-base/src/sap/ui/webcomponents/base/IconPool' instead of IconPool ${file}`);
 			}
 		}
 	};
@@ -131,6 +131,7 @@ const getPlugins = ({ transpile }) => {
 		plugins.push(babel({
 			presets: ["@babel/preset-env"],
 			exclude: "node_modules/**",
+			sourcemap: false,	// turn it on when we transition off from the less plugin
 		}));
 	}
 
@@ -182,6 +183,12 @@ const getES6Config = () => {
 			dir: "dist/resources/sap/ui/webcomponents/main",
 			format: "esm",
 			sourcemap: true
+		},
+		moduleContext: (id) => {
+			if (id.includes("url-search-params-polyfill")) {
+				// suppress the rollup error for this module as it uses this in the global scope correctly even without changing the context here
+				return "window";
+			}
 		},
 		watch: {
 			clearScreen: false

@@ -17,7 +17,7 @@
 	<ui5-label id="myLabel">Event [suggestionItemSelect] :: N/A</ui5-label><br/>
 	<ui5-label id="myLabelChange">Event [change] :: N/A</ui5-label><br/>
 	<ui5-label id="myLabelSubmit">Event [submit] :: N/A</ui5-label><br/>
-	<ui5-label id="myLabelLiveChange">Event [liveChange] :: N/A</ui5-label><br/>
+	<ui5-label id="myLabelLiveChange">Event [input] :: N/A</ui5-label><br/>
 
 	<ui5-input id="myInput"
 		style="width:100%"
@@ -88,7 +88,7 @@
 		var labelLiveChange = document.getElementById('myLabelLiveChange');
 		var labelSubmit = document.getElementById('myLabelSubmit');
 
-		input.addEventListener("liveChange", function (event) {
+		input.addEventListener("input", function (event) {
 			var value = event.target.value;
 			var suggestionItems = [];
 
@@ -110,7 +110,7 @@
 				input.appendChild(li);
 			});
 
-			labelLiveChange.innerHTML = "Event [liveChange] :: " + value;
+			labelLiveChange.innerHTML = "Event [input] :: " + value;
 		});
 
 		input.addEventListener("suggestionItemSelect", function (event) {
@@ -129,7 +129,7 @@
 		});
 
 		var changeCounter = 0;
-		var liveChangeCounter = 0;
+		var inputCounter = 0;
 		var suggestionSelectedCounter = 0;
 
 		input1.addEventListener("change", function (event) {
@@ -137,9 +137,9 @@
 			inputResult.value = changeCounter;
 		});
 
-		input2.addEventListener("liveChange", function (event) {
-			liveChangeCounter += 1;
-			inputResult.value = liveChangeCounter;
+		input2.addEventListener("input", function (event) {
+			inputCounter += 1;
+			inputResult.value = inputCounter;
 		});
 
 		myInput2.addEventListener("suggestionItemSelect", function (event) {

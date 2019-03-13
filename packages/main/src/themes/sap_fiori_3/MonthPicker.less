@@ -1,20 +1,21 @@
 /* ============================= */
 /* Base theme                    */
 /* ============================= */
+
 @import "../base/MonthPicker.less";
 
 /* ============================= */
-/* Global Belize parameters      */
+/* Global Fiori 3 parameters     */
 /* ============================= */
+
 @import "./base.less";
 @import "./global.less";
 
+/* ============================= */
+/* Fiori 3 theme                 */
+/* ============================= */
 
-.sapWCMonthPickerItem {
-	border-radius: 0.25rem;
-	background: darken(@sapUiListBackground, 3);
-
-	&:focus {
-		background: darken(@sapUiListBackground, 3);
-	}
-}
+@_ui5_monthpicker_item_background_color: darken(@sapUiListBackground, 3);
+@_ui5_monthpicker_item_hover_background_color: darken(@sapUiListBackground, 3);
+@_ui5_monthpicker_item_focus_background_color: darken(@sapUiListBackground, 3);
+@_ui5_monthpicker_item_border_radius: 0.25rem;

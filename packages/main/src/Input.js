@@ -2,6 +2,14 @@ import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/
 import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
 import ValueState from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/ValueState";
 import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
+import {
+	isUp,
+	isDown,
+	isLeft,
+	isSpace,
+	isEnter,
+	isRight,
+} from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/events/PseudoEvents";
 import Icon from "./Icon";
 import InputType from "./types/InputType";
 // Template
@@ -172,6 +180,10 @@ const metadata = {
 			type: Boolean,
 		},
 
+		_input: {
+			type: Object,
+		},
+
 		_popover: {
 			type: Object,
 		},
@@ -192,7 +204,7 @@ const metadata = {
 		 * @event
 		 * @public
 		 */
-		liveChange: {},
+		input: {},
 
 		/**
 		 * Fired when user presses Enter key on the <code>ui5-input</code>.
@@ -280,7 +292,7 @@ class Input extends WebComponent {
 		this.previousValue = undefined;
 
 		// Represents the value before user moves selection between the suggestion items.
-		// Used to register and fire "liveChange" event upon [SPACE] or [ENTER].
+		// Used to register and fire "input" event upon [SPACE] or [ENTER].
 		// Note: the property "value" is updated upon selection move and can`t be used.
 		this.valueBeforeItemSelection = "";
 
@@ -290,15 +302,19 @@ class Input extends WebComponent {
 		// all sementic events
 		this.EVENT_SUBMIT = "submit";
 		this.EVENT_CHANGE = "change";
-		this.EVENT_LIVE_CHANGE = "liveChange";
+		this.EVENT_INPUT = "input";
 		this.EVENT_SUGGESTION_ITEM_SELECT = "suggestionItemSelect";
 
 		// all user interactions
-		this.ACTION_INPUT = "input";
 		this.ACTION_ENTER = "enter";
 		this.ACTION_FOCUSOUT = "focusOut";
+		this.ACTION_USER_INPUT = "input";
 
-		this._whenShadowRootReady().then(this.attachFocusHandler.bind(this));
+		this._input = {
+			onInput: this._onInput.bind(this),
+		};
+
+		this._whenShadowRootReady().then(this.attachFocusHandlers.bind(this));
 	}
 
 	onBeforeRendering() {
@@ -315,34 +331,60 @@ class Input extends WebComponent {
 		this.firstRendering = false;
 	}
 
+	onkeydown(event) {
+		if (isUp(event)) {
+			return this._handleUp(event);
+		}
+
+		if (isDown(event)) {
+			return this._handleDown(event);
+		}
+
+		if (isRight(event)) {
+			return this._handleRight(event);
+		}
+
+		if (isLeft(event)) {
+			return this._handleLeft(event);
+		}
+
+		if (isSpace(event)) {
+			return this._handleSpace(event);
+		}
+
+		if (isEnter(event)) {
+			return this._handleEnter(event);
+		}
+	}
+
 	/* Event handling */
-	onsapup(event) {
+	_handleUp(event) {
 		if (this.Suggestions) {
 			this.Suggestions.onUp(event);
 		}
 	}
 
-	onsapdown(event) {
+	_handleDown(event) {
 		if (this.Suggestions) {
 			this.Suggestions.onDown(event);
 		}
 	}
 
-	onsapright(event) {
-		this.onsapdown(event);
+	_handleRight(event) {
+		this._handleDown(event);
 	}
 
-	onsapleft(event) {
-		this.onsapup(event);
+	_handleLeft(event) {
+		this._handleUp(event);
 	}
 
-	onsapspace(event) {
+	_handleSpace(event) {
 		if (this.Suggestions) {
 			this.Suggestions.onSpace(event);
 		}
 	}
 
-	onsapenter(event) {
+	_handleEnter(event) {
 		const itemPressed = !!(this.Suggestions && this.Suggestions.onEnter(event));
 		if (!itemPressed) {
 			this.fireEventByAction(this.ACTION_ENTER);
@@ -359,8 +401,13 @@ class Input extends WebComponent {
 		this._focused = false; // invalidating property
 	}
 
-	oninput() {
-		this.fireEventByAction(this.ACTION_INPUT);
+	_onInput(event) {
+		if (event.target === this.getInputDOMRef()) {
+			// stop the native event, as the semantic "input" would be fired.
+			event.stopImmediatePropagation();
+		}
+
+		this.fireEventByAction(this.ACTION_USER_INPUT);
 		this.hasSuggestionItemSelected = false;
 
 		if (this.Suggestions) {
@@ -369,7 +416,7 @@ class Input extends WebComponent {
 	}
 
 	/* Private Methods */
-	attachFocusHandler() {
+	attachFocusHandlers() {
 		this.shadowRoot.addEventListener("focusout", this.onfocusout.bind(this));
 		this.shadowRoot.addEventListener("focusin", this.onfocusin.bind(this));
 	}
@@ -396,17 +443,17 @@ class Input extends WebComponent {
 
 	selectSuggestion(item, keyboardUsed) {
 		const itemText = item._nodeText;
-		const fireLiveChange = keyboardUsed
+		const fireInput = keyboardUsed
 			? this.valueBeforeItemSelection !== itemText : this.value !== itemText;
 
 		item.selected = false;
 		this.hasSuggestionItemSelected = true;
 		this.fireEvent(this.EVENT_SUGGESTION_ITEM_SELECT, { item });
 
-		if (fireLiveChange) {
+		if (fireInput) {
 			this.value = itemText;
 			this.valueBeforeItemSelection = itemText;
-			this.fireEvent(this.EVENT_LIVE_CHANGE);
+			this.fireEvent(this.EVENT_INPUT);
 		}
 	}
 
@@ -423,14 +470,14 @@ class Input extends WebComponent {
 		const inputValue = this.getInputValue();
 		const isSubmit = action === this.ACTION_ENTER;
 		const isFocusOut = action === this.ACTION_FOCUSOUT;
-		const isInput = action === this.ACTION_INPUT;
+		const isUserInput = action === this.ACTION_USER_INPUT;
 
 		this.value = inputValue;
 
 		const valueChanged = (this.previousValue !== undefined) && (this.previousValue !== this.value);
 
-		if (isInput) { // liveChange
-			this.fireEvent(this.EVENT_LIVE_CHANGE);
+		if (isUserInput) { // input
+			this.fireEvent(this.EVENT_INPUT);
 			return;
 		}
 

@@ -1,6 +1,6 @@
 import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
 import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
-import IconPool from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/IconPoolProxy";
+import { getIconURI } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/IconPool";
 import slideDown from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/animations/slideDown";
 import slideUp from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/animations/slideUp";
 import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
@@ -210,24 +210,17 @@ class Panel extends WebComponent {
 
 		this._icon = {};
 		this._icon.id = `${this.id}-CollapsedImg`;
-		this._icon.src = IconPool.getIconURI("navigation-right-arrow");
+		this._icon.src = getIconURI("navigation-right-arrow");
+
 		this._icon.title = this.resourceBundle.getText("PANEL_ICON");
 		this._icon.functional = true;
+		this._icon.press = event => { event.preventDefault(); this._toggleOpen(); };
 	}
 
 	onBeforeRendering() {
 		// If the animation is running, it will set the content expanded state at the end
 		if (!this._animationRunning) {
 			this._contentExpanded = !this.collapsed;
-		}
-	}
-
-	ontap(event) {
-		const icon = this.shadowRoot.querySelector("ui5-icon");
-		const isIconTab = (event.ui5target === icon);
-
-		if (icon && (isIconTab || event.ui5target.contains(icon.getDomRef()))) {
-			this._toggleOpen();
 		}
 	}
 
@@ -259,17 +252,6 @@ class Panel extends WebComponent {
 
 	_fireExpandEvent() {
 		this.fireEvent("expand", {});
-	}
-
-	onsapspace(event) {
-		if (event.ui5target.classList.contains("sapMPanelIcon")) {
-			event.preventDefault();
-			this._toggleOpen();
-		}
-	}
-
-	onsapenter(event) {
-		this.onsapspace.call(this, event);
 	}
 
 	static async define(...params) {

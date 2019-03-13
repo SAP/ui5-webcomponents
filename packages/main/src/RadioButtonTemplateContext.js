@@ -1,4 +1,4 @@
-import Device from "@ui5/webcomponents-core/dist/sap/ui/Device";
+import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device";
 import { getCompactSize } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Configuration";
 
 const SVGConfig = {
@@ -19,18 +19,13 @@ const SVGConfig = {
 class RadioButtonTemplateContext {
 	static calculate(state) {
 		const compact = getCompactSize();
-		let tabIndex;
-
-		if (!state.disabled) {
-			tabIndex = state._control.tabIndex ? state._control.tabIndex.toString() : "0";
-		}
 
 		const mainClasses = RadioButtonTemplateContext.getMainClasses(state),
 			innerClasses = RadioButtonTemplateContext.getInnerClasses(state),
 			context = {
 				ctr: state,
 				readOnly: state.disabled || state.readOnly,
-				tabIndex,
+				tabIndex: state.disabled ? undefined : "0",
 				circle: compact ? SVGConfig.compact : SVGConfig.default,
 				classes: { main: mainClasses, inner: innerClasses },
 				styles: {
@@ -54,7 +49,7 @@ class RadioButtonTemplateContext {
 	}
 
 	static getInnerClasses(state) {
-		const hoverable = !state.disabled && !state.readOnly && Device.system.desktop;
+		const hoverable = !state.disabled && !state.readOnly && isDesktop();
 
 		return {
 			sapMRbInner: true,

@@ -1,6 +1,6 @@
 {
   "name": "@ui5/webcomponents-core",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "UI5 Web Components: webcomponents.core",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
@@ -25,14 +25,13 @@
     "build:uri-js": "prepend dist/sap/ui/thirdparty/URI.js \"define([], function () {\" && node -e \"console.log('return window.URI;});')\" >> dist/sap/ui/thirdparty/URI.js",
     "build:amd-to-es6": "amdtoes6 --src=dist --replace --glob=**/*.js",
     "build:esm-abs-to-rel": "node ./lib/esm-abs-to-rel/index.js dist/",
-    "build:esm-stubs": "cpx esm/Core.js dist/sap/ui/core && cpx esm/jquery.js dist/sap/ui/thirdparty",
+    "build:esm-stubs": "cpx esm/Core.js dist/sap/ui/core && cpx esm/jquery.js dist/sap/ui/thirdparty && cpx esm/URI.js dist/sap/ui/thirdparty",
     "build:copy-icon-font-assets": "cpx \"temp/sap/ui/core/themes/base/fonts/*.{ttf,woff,woff2}\" dist/sap/ui/core/themes/base/fonts",
     "build:copy-belize-fonts": "cpx \"../../node_modules/@openui5/themelib_sap_belize/src/sap/ui/core/themes/sap_belize/fonts/*.{ttf,woff,woff2}\" dist/sap/ui/core/themes/sap_belize/fonts",
     "build": "npm-run-all --sequential clean build:copy-node-module build:copy-resources build:cleanup build:copy-overlay build:replace-amd build:replace-export-true build:replace-export-false build:replace-global-core-usage build:uri-js build:amd-to-es6 build:esm-abs-to-rel build:esm-stubs build:copy-icon-font-assets build:copy-belize-fonts",
     "clean": "rimraf temp && rimraf dist",
     "prepublishOnly": "npm run clean && npm run build"
   },
-  "dependencies": {},
   "devDependencies": {
     "@buxlabs/amd-to-es6": "^0.13.2",
     "@openui5/sap.ui.core": "1.60.2",

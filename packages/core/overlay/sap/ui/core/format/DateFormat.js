@@ -246,7 +246,7 @@ sap.ui.define([
 
 		// Get Locale and LocaleData to use
 		if (!oLocale) {
-			oLocale = sap.ui.getCore().getConfiguration().getFormatSettings().getFormatLocale();
+			oLocale = sap.ui.getCore().getFormatSettings().getFormatLocale();
 		}
 		oFormat.oLocale = oLocale;
 		oFormat.oLocaleData = LocaleData.getInstance(oLocale);
@@ -2180,7 +2180,7 @@ sap.ui.define([
 	DateFormat.prototype._adaptDayOfWeek = function(iDayOfWeek) {
 		// day of week depends on the format locale
 		// the DateFormat's locale is independent
-		var iFirstDayOfWeek = LocaleData.getInstance(sap.ui.getCore().getConfiguration().getFormatSettings().getFormatLocale()).getFirstDayOfWeek();
+		var iFirstDayOfWeek = LocaleData.getInstance(sap.ui.getCore().getFormatSettings().getFormatLocale()).getFirstDayOfWeek();
 		var iDayNumberOfWeek = iDayOfWeek - (iFirstDayOfWeek - 1);
 
 		if (iDayNumberOfWeek <= 0) {

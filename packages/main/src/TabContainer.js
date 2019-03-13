@@ -4,6 +4,7 @@ import ScrollEnablement from "@ui5/webcomponents-base/src/sap/ui/webcomponents/b
 import ItemNavigation from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/delegate/ItemNavigation";
 import ResizeHandler from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/delegate/ResizeHandler";
 import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/events/PseudoEvents";
 import TabContainerTemplateContext from "./TabContainerTemplateContext";
 import TabBase from "./TabBase";
 import Tab from "./Tab";
@@ -734,11 +735,12 @@ class TabContainer extends WebComponent {
 		return items.filter(item => item instanceof Tab);
 	}
 
-	onsapselect(event) {
-		const selectedTab = this._findSelectedTab(event);
-		this.setSelectedTab(selectedTab, true);
-
-		event.preventDefault();
+	onkeydown(event) {
+		if (isSpace(event) || isEnter(event)) {
+			const selectedTab = this._findSelectedTab(event);
+			this.setSelectedTab(selectedTab, true);
+			event.preventDefault();
+		}
 	}
 
 	ontap(event) {

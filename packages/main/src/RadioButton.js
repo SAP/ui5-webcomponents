@@ -3,6 +3,14 @@ import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Boo
 import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
 import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes";
 import ValueState from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/ValueState";
+import {
+	isSpace,
+	isEnter,
+	isDown,
+	isLeft,
+	isUp,
+	isRight,
+} from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/events/PseudoEvents";
 import RadioButtonGroup from "./RadioButtonGroup";
 // Template
 import RadioButtonRenderer from "./build/compiled/RadioButtonRenderer.lit";
@@ -160,7 +168,6 @@ class RadioButton extends WebComponent {
 	onBeforeRendering() {
 		this.syncLabel();
 		this.syncGroup();
-		this.tabIndex = this.getAttribute("tabindex");
 	}
 
 	syncLabel() {
@@ -193,7 +200,7 @@ class RadioButton extends WebComponent {
 		return this.toggle();
 	}
 
-	onsapdown(event) {
+	_handleDown(event) {
 		const currentGroup = this.group;
 
 		if (!currentGroup) {
@@ -204,7 +211,7 @@ class RadioButton extends WebComponent {
 		RadioButtonGroup.selectNextItem(this, currentGroup);
 	}
 
-	onsapup(event) {
+	_handleUp(event) {
 		const currentGroup = this.group;
 
 		if (!currentGroup) {
@@ -215,21 +222,21 @@ class RadioButton extends WebComponent {
 		RadioButtonGroup.selectPreviousItem(this, currentGroup);
 	}
 
-	onsapleft(event) {
-		this.onsapup(event);
-	}
-
-	onsapright(event) {
-		this.onsapdown(event);
-	}
-
 	onkeydown(event) {
-		if (event.keyCode === KeyCodes.SPACE) {
-			event.preventDefault();
+		if (isSpace(event)) {
+			return event.preventDefault();
 		}
 
-		if (event.keyCode === KeyCodes.ENTER) {
-			this.toggle();
+		if (isEnter(event)) {
+			return this.toggle();
+		}
+
+		if (isDown(event) || isRight(event)) {
+			this._handleDown(event);
+		}
+
+		if (isUp(event) || isLeft(event)) {
+			this._handleUp(event);
 		}
 	}
 

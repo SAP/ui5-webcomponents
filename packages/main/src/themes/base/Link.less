@@ -9,14 +9,25 @@
 /* CSS for ui5-link            */
 /* Base theme                  */
 /* =========================== */
-:host(ui5-link),
+@_ui5_link_opacity: 0.5;
+@_ui5_link_outline_element_size: calc(~"100% - 0.125rem");
+
+:host(ui5-link) {
+	display: inline-block;
+	max-width: 100%;
+}
+
+:host(ui5-link) span[data-sap-ui-wc-root] {
+	display: flex;
+}
+
 ui5-link {
 	display: inline-block;
 	max-width: 100%;
+}
 
-	& span[data-sap-ui-wc-root] {
-		display: flex;
-	}
+ui5-link span[data-sap-ui-wc-root] {
+	display: flex;
 }
 
 .sapMLnk {
@@ -34,52 +45,55 @@ ui5-link {
 	align-items: center;
 	position: relative;
 	outline: none;
-	
-	&:not(.sapMLnkDsbl):hover {
-		text-decoration: underline;
-		color: @sapUiLinkHover;
-	}
+}
 
-	&.sapMLnkDsbl {
-		text-shadow: none;
-		outline: none;
-		cursor: default;
-		pointer-events: none;
-	}
+.sapMLnk:not(.sapMLnkDsbl):hover,
+.sapMLnk.sapMLnkSubtle:not(.sapMLnkDsbl):hover {
+	text-decoration: underline;
+	color: @sapUiLinkHover;
+}
 
-	&.sapMLnkSubtle {
-		color: darken(@sapUiLink, 15);
-	}
+.sapMLnk:visited {
+	color: @sapUiLinkVisited;
+}
 
-	&.sapMLnkEmphasized {
-		font-weight: bold;
-	}
-	
-	&.sapMLnkSubtle:focus {
-		color: @sapUiLink;
-	}
+.sapMLnk.sapMLnkDsbl {
+	text-shadow: none;
+	outline: none;
+	cursor: default;
+	pointer-events: none;
+	opacity: @_ui5_link_opacity;
+}
 
-	&:visited {
-		color: @sapUiLinkVisited;
-	}
+.sapMLnk.sapMLnkEmphasized {
+	font-weight: bold;
+}
 
-	&:focus {
-		text-decoration: underline;
+.sapMLnk.sapMLnkSubtle,
+.sapMLnk.sapMLnkSubtle:visited {
+	color: darken(@sapUiLink, 15);
+}
 
-		&::after {
-			content: "";
-			width: calc(~"100% - 0.125rem");
-			height: calc(~"100% - 0.125rem");
-			position: absolute;
-			left: 0px;
-			border: 1px dotted @sapUiContentFocusColor;
-			top: 0;
-			outline: none;
-		}
-	}
+.sapMLnk.sapMLnkSubtle:focus {
+	color: @sapUiLink;
 }
 
 .sapMLnk.sapMLnkWrapping {
 	white-space: normal;
 	word-wrap: break-word;
+}
+
+.sapMLnk:focus {
+	text-decoration: underline;
+}
+
+.sapMLnk:focus::after {
+	content: "";
+	width: @_ui5_link_outline_element_size;
+	height: @_ui5_link_outline_element_size;
+	position: absolute;
+	left: 0px;
+	border: 1px dotted @sapUiContentFocusColor;
+	top: 0;
+	outline: none;
 }

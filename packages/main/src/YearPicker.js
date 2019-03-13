@@ -1,7 +1,11 @@
 import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
 import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
-import { getFormatSettings, getCalendarType } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Configuration";
+import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData";
+import { getCalendarType } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Configuration";
+import { getFormatLocale } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/FormatSettings";
+import { isEnter, isSpace } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/events/PseudoEvents";
 import ItemNavigation from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/delegate/ItemNavigation";
+import { getLocale } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/LocaleProvider";
 import Integer from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/Integer";
 import DateFormat from "@ui5/webcomponents-core/dist/sap/ui/core/format/DateFormat";
 import CalendarType from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/dates/CalendarType";
@@ -89,7 +93,7 @@ class YearPicker extends WebComponent {
 	constructor(state) {
 		super(state);
 
-		this._oLocale = getFormatSettings().getFormatLocale();
+		this._oLocale = getFormatLocale();
 
 		this._itemNav = new ItemNavigation(this, { rowSize: 4 });
 		this._itemNav.getItemsCallback = function getItemsCallback() {
@@ -181,7 +185,7 @@ class YearPicker extends WebComponent {
 	}
 
 	get _primaryCalendarType() {
-		return this.primaryCalendarType || getCalendarType();
+		return this.primaryCalendarType || getCalendarType() || LocaleData.getInstance(getLocale()).getPreferredCalendarType();
 	}
 
 	onclick(event) {
@@ -203,7 +207,17 @@ class YearPicker extends WebComponent {
 		return YearPickerTemplateContext.calculate;
 	}
 
-	onsapenter(event) {
+	onkeydown(event) {
+		if (isEnter(event)) {
+			return this._handleEnter(event);
+		}
+
+		if (isSpace(event)) {
+			return this._handleSpace(event);
+		}
+	}
+
+	_handleEnter(event) {
 		event.preventDefault();
 		if (event.ui5target.className.indexOf("sapWCYearPickerItem") > -1) {
 			const timestamp = this.getTimestampFromDom(event.ui5target);
@@ -215,7 +229,7 @@ class YearPicker extends WebComponent {
 		}
 	}
 
-	onsapspace(event) {
+	_handleSpace(event) {
 		event.preventDefault();
 		if (event.ui5target.className.indexOf("sapWCYearPickerItem") > -1) {
 			const timestamp = this.getTimestampFromDom(event.ui5target);

@@ -2,7 +2,7 @@ import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/
 import URI from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/URI";
 import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
 import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
-import IconPoolProxy from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/IconPoolProxy";
+import { isIconURI } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/IconPool";
 import CardRenderer from "./build/compiled/CardRenderer.lit";
 import Icon from "./Icon";
 
@@ -121,7 +121,7 @@ class Card extends WebComponent {
 
 	static calculateTemplateContext(state) {
 		const hasAvatar = !!state.avatar;
-		const icon = hasAvatar && IconPoolProxy.isIconURI(state.avatar);
+		const icon = hasAvatar && isIconURI(state.avatar);
 		const image = hasAvatar && !icon;
 
 		return {

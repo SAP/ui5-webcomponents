@@ -13,18 +13,29 @@
 :host(ui5-icon) {
 	display: inline-block;
 	outline: none;
+	color: @sapUiContentNonInteractiveIconColor;
+}
+
+:host(ui5-icon) span[data-sap-ui-wc-root] {
+	display: flex;
+	width: 100%;
+	height: 100%;
 }
 
 // required for browsers without native shadow dom
 ui5-icon {
 	display: inline-block;
 	outline: none;
+	color: @sapUiContentNonInteractiveIconColor;
+}
 
+ui5-icon span[data-sap-ui-wc-root] {
+	display: flex;
+	width: 100%;
+	height: 100%;
 	// workaround for IE
 	// pressing on the span does not propagate active state to the web component
-	& span[data-sap-ui-wc-root] {
-		pointer-events: none;
-	}
+	pointer-events: none;
 }
 
 .sapWCIcon {

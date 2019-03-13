@@ -1,7 +1,7 @@
 const list = require("../pageobjects/ListTestPage");
 const assert = require("assert");
 
-describe("List Tests", () => {
+describe("Date Picker Tests", () => {
 	before(() => {
 		browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/List_test_page.html");
 	});
@@ -85,30 +85,6 @@ describe("List Tests", () => {
 
 		itemDeleteButton.click();
 		assert.equal(browser.$('#lblResult').getHTML(false), "Laptop HP: 1", "itemDelete event was fired for the right item");
-	});
-
-	it("inner multi-selection checkbox is skipped on tab", () => {
-		browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/List_test_page.html");
-		list.root.setProperty("mode", "MultiSelect");
-
-		const firstItem = list.getItem(0);
-		firstItem.click();
-
-		browser.keys("Tab");
-
-		assert.ok(browser.$('#btnAfter').isFocused(), "focus is outside the list");
-	});
-
-	it("inner single selection radio button checkbox is skipped on tab", () => {
-		browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/List_test_page.html");
-		list.root.setProperty("mode", "SingleSelect");
-
-		const firstItem = list.getItem(0);
-		firstItem.click();
-
-		browser.keys("Tab");
-
-		assert.ok(browser.$('#btnAfter').isFocused(), "focus is outside the list");
 	});
 
 	it("item size and classed, when an item has both text and description", () => {
