@@ -1,5 +1,5 @@
-commit e41950374b2d157863afa98e8894443739a62214
+commit 1c601fd0e536bacfe8f692b9f99c88accc1ae8b0
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Mar 14 16:49:40 2019 +0200
+Date:   Thu Mar 14 22:52:54 2019 +0200
 
-    chore(build): watch the less files in Base theme (#183)
+    docs(playground): decrease side panel width and hide it under 1100px (#186)
