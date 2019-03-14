@@ -1,11 +1,5 @@
-commit 7084c966fb716caadef39685353a06de607e682a
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Thu Mar 14 14:38:59 2019 +0200
+commit c4a9a8d7b102a5322ecc24247397797ecc50c46a
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu Mar 14 15:29:14 2019 +0200
 
-    fix: fix source maps (#181)
-    
-    Template files with DOS line endings are breaking the source map.
-    Convert DOS line endings to Unix line endings when generating renderers.
-    This way, .hbs files with DOS line endings (no eslint) will not break the source
-    maps as the generated renderer will have the correct line ending.
-    The change is also correcting the line endings of existing .hbs templates.
+    refactor: replace the CSS initial property (#180)
