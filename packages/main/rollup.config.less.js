@@ -11,6 +11,24 @@ const StyleBelizeHcbMap = {};
 const SAP_BELIZE = "sap_belize";
 const SAP_BELIZE_HCB = "sap_belize_hcb";
 
+function ui5LessPlugin() {	
+	const isLess = fileName => path.extname(fileName) === ".less";	
+
+ 	return {	
+		name: "ui5-less-plugin",	
+ 		transform(code, file) {	
+			if (isLess(file)) {	
+				this.addWatchFile(path.join(process.cwd(), `src/themes/base/${path.basename(file)}`));	
+			}	
+
+ 			return {	
+				code,	
+				map: null,	
+			};	
+		}
+	};	
+}
+
 const getPlugins = () => {
 	const plugins = [];
 
@@ -39,6 +57,8 @@ const getPlugins = () => {
 			return "";
 		}
 	}));
+
+	plugins.push(ui5LessPlugin());
 
 	return plugins;
 };
