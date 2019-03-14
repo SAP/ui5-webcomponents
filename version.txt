@@ -1,5 +1,5 @@
-commit c4a9a8d7b102a5322ecc24247397797ecc50c46a
+commit 16c65da5e5a9232fff865ce4068893b23dddc857
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Mar 14 15:29:14 2019 +0200
+Date:   Thu Mar 14 15:34:50 2019 +0200
 
-    refactor: replace the CSS initial property (#180)
+    refactor(ui5-switch): keep styles to base only (#171)
