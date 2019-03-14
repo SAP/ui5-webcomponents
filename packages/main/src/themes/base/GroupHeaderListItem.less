@@ -1,31 +1,21 @@
 /* ========================================== */
-/* CSS for control sap.m/GroupHeaderListItem  */
+/* CSS for ui5-li-groupheader                 */
 /* Base theme                                 */
 /* ========================================== */
 
 .sapMLIB.sapMGHLI {
-	padding-top: 1rem;
 	height: 3rem;
-	line-height: 2rem;
-	font-size: @sapMFontHeader6Size;
-	font-weight: @sapUiFontHeaderWeight;
 	color: @sapUiListTableGroupHeaderTextColor;
 	background: @sapUiListGroupHeaderBackground;
+	padding-top: 1rem;
+	font-size: @sapMFontHeader6Size;
+	font-weight: @sapUiFontHeaderWeight;
+	line-height: 2rem;
 	border-bottom: 1px solid @sapUiListTableGroupHeaderBorderColor;
-	-webkit-align-items: flex-end;
-	align-items: flex-end;
 }
 
-.sapMLIB.sapMLIBTransparent.sapMGHLI {
+.sapMLIB.sapMGHLI.sapMLIBTransparent {
 	background: fade(@sapUiListBackground, 0);
-}
-
-.sapMGHLI .sapMLIBUnread {
-	display: none;
-}
-
-.sapMGHLIUpperCase {
-	text-transform: uppercase;
 }
 
 .sapMGHLI > .sapMLIBContent {
@@ -42,12 +32,7 @@
 	white-space: nowrap;
 } 
 
-.sapMGHLI.sapMLIBActive.sapMLIB {
-	color: @sapUiListActiveTextColor;
-	background: @sapUiListActiveBackground;
-}
-
 /* Compact size */
 .sapUiSizeCompact .sapMGHLI {
-		height: 2rem;
+	height: 2rem;
 }
