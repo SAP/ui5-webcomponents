@@ -9,62 +9,11 @@
 @import "./base.less";
 @import "./global.less";
 
-.sapWCSelect {
-	&:not(.sapWCSelectOpened):not(.sapWCSelectDisabled):focus {
-
-		&:before {
-			content: "";
-			position: absolute;
-			width: calc(~"100% - 0.375rem");
-			height: calc(~"100% - 0.375rem");
-			border: 0.125rem dotted @sapUiContentFocusColor;
-			top: 1px;
-			right: 1px;
-			bottom: 1px;
-			left: 1px;
-			pointer-events: none;
-		}
-	}
-
-	&.sapWCSelectDisabled {
-		background: @sapUiHcReducedBackground;
-		border-color: @sapUiHcReducedForeground;
-		color: @sapUiContentDisabledTextColor;
-	}
-
-	&.sapWCSelectError:not(.sapWCSelectDisabled),
-	&.sapWCSelectWarning:not(.sapWCSelectDisabled) {
-		border-style: dashed;
-		border-width: 1px;
-	}
-
-	&.sapWCInputBaseContentWrapperWarning:not(.sapWCInputBaseReadonlyWrapper):not(.sapWCInputBaseDisabledWrapper) {
-		border-style: dashed;
-		border-width: 1px;
-	}
-
-	&:hover:not(.sapWCSelectDisabled) {
-		.sapWCSelectDropDownIcon {
-			border-left: 0.0625rem solid @sapUiFieldHoverBorderColor;
-		}
-	}
-}
-
-// RTL
-:host(ui5-select) span[dir="rtl"] {
-	.sapWCSelect:hover:not(.sapWCSelectDisabled) {
-		.sapWCSelectDropDownIcon {
-			border-left: none;
-			border-right: 0.0625rem solid @sapUiFieldHoverBorderColor;
-		}
-	}
-}
-
-ui5-select span[dir="rtl"] {
-	.sapWCSelect:hover:not(.sapWCSelectDisabled) {
-		.sapWCSelectDropDownIcon {
-			border-left: none;
-			border-right: 0.0625rem solid @sapUiFieldHoverBorderColor;
-		}
-	}
-}
+@_ui5_select_disabled_background: @sapUiHcReducedBackground;
+@_ui5_select_disabled_border_color: @sapUiHcReducedForeground;
+@_ui5_select_state_error_warning_border_style: dashed;
+@_ui5_select_state_error_warning_border_width: 1px;
+@_ui5_select_hover_icon_left_border:  0.0625rem solid @sapUiFieldHoverBorderColor;
+@_ui5_select_rtl_hover_icon_left_border: none;
+@_ui5_select_rtl_hover_icon_right_border:  0.0625rem solid @sapUiFieldHoverBorderColor;;
+@_ui5_select_focus_width: 0.125rem;
