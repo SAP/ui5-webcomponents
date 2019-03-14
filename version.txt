@@ -1,11 +1,5 @@
-commit 55fa533b738396b67f1776c643573607339d3b23
+commit e7e1ab391b8f04a3a83445c5ebe356f099b46b5a
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Mar 13 17:21:41 2019 +0200
+Date:   Thu Mar 14 09:22:19 2019 +0200
 
-    fix(ui5-input): fire change in sync with the native input (#168)
-    
-    Bind for the native input change to fire the ui5-input semantic one.
-    Make sure change event is fired upon suggestion item selection.
-    Still, for IE, a manually work is needed to detect if  change should be fired
-    on Enter as the native input does not react.
-    Fixes: https://github.com/SAP/ui5-webcomponents/issues/154
+    chor: remove the chart empty less files (#172)
