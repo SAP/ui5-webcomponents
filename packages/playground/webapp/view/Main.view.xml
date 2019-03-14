@@ -88,8 +88,8 @@
 
 			<FlexBox direction="Row" width="100%" height="100%" id="main-content-wrapper">
 				<pc:Frame id="ContentFrame" class="content-iframe" width="100%" height="100%" src="{/selectedView}"></pc:Frame>
-				<FlexBox width="15rem" class="side-links" visible="{/showNavigationLinks}">
-					<List width="15rem" id="links-list" class="links-list sapUiMediumMarginTop" itemPress="onLinkPressed">
+				<FlexBox width="10rem" class="side-links" visible="{/showNavigationLinks}">
+					<List width="10rem" id="links-list" class="links-list sapUiMediumMarginTop" itemPress="onLinkPressed">
 						<ActionListItem text="Samples"/>
 						<ActionListItem text="API Reference"/>
 					</List>
