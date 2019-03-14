@@ -5,7 +5,7 @@ describe("MessageStrip general interaction", () => {
 
 	it("tests close event", () => {
 
-		const closeButton = browser.findElementDeep("#messageStrip >>> ui5-button");
+		const closeButton = browser.findElementDeep("#messageStrip >>> .ui5-messagestrip-close-icon");
 		const input = browser.$("#inputField");
 
 		closeButton.click();
