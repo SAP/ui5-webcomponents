@@ -1,5 +1,5 @@
-commit c77603953a32f4b8d63eb563e8136bb3e5e254a5
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Mar 14 12:40:31 2019 +0200
+commit 9984d95defc15aac0175850eefe244ad9a763edf
+Author: Adrian Bobev <adrian.bobev@gmail.com>
+Date:   Thu Mar 14 13:19:51 2019 +0200
 
-    refactor(ui5-li-groupheader): keep styles in Base theme only (#173)
+    refactor(ui5-toolbar): move styles to base theme (#175)
