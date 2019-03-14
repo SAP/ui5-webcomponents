@@ -2,7 +2,6 @@ import whenDOMReady from "./util/whenDOMReady";
 import EventEnrichment from "./events/EventEnrichment";
 import { insertIconFontFace } from "./IconFonts";
 import DOMEventHandler from "./DOMEventHandler";
-import RenderScheduler from "./RenderScheduler";
 
 EventEnrichment.run();
 
