@@ -1,5 +1,5 @@
-commit 9984d95defc15aac0175850eefe244ad9a763edf
-Author: Adrian Bobev <adrian.bobev@gmail.com>
-Date:   Thu Mar 14 13:19:51 2019 +0200
+commit f4028b35c08bf7838745ea7713e83337dfb3a487
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu Mar 14 13:30:44 2019 +0200
 
-    refactor(ui5-toolbar): move styles to base theme (#175)
+    refactor(ui5-timeline-item): keep styles in Base theme only (#178)
