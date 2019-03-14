@@ -2,12 +2,10 @@ import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/
 import URI from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/URI";
 import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
 import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
-import MessageStripContext from "./MessageStripContext";
+import MessageStripTemplateContext from "./MessageStripTemplateContext";
 import MessageStripType from "./types/MessageStripType";
 import MessageStripRenderer from "./build/compiled/MessageStripRenderer.lit";
-import Button from "./Button";
 import Icon from "./Icon";
-import Label from "./Label";
 
 // Styles
 import belize from "./themes/sap_belize/MessageStrip.less";
@@ -128,33 +126,24 @@ class MessageStrip extends WebComponent {
 	}
 
 	static get calculateTemplateContext() {
-		return MessageStripContext.calculate;
+		return MessageStripTemplateContext.calculate;
 	}
 
 	constructor() {
 		super();
 
 		this._closeButton = {
-			_closeButtonClicked: this._closeButtonClicked.bind(this),
+			press: this._handleCloseIconPress.bind(this),
 		};
 	}
 
-	onAfterRendering() {
-		// Hack for styling the button
-		if (!this.hideCloseButton) {
-			this.shadowRoot.querySelector("ui5-button")._customClasses = ["sapWCButtonInMessageStrip"];
-		}
-	}
-
-	_closeButtonClicked(_event) {
+	_handleCloseIconPress() {
 		this.fireEvent("close", {});
 	}
 
 	static async define(...params) {
 		await Promise.all([
-			Button.define(),
 			Icon.define(),
-			Label.define(),
 		]);
 
 		super.define(...params);

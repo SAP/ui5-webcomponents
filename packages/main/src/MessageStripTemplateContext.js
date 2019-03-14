@@ -4,15 +4,23 @@ class MessageStripTemplateContext {
 			ctr: state,
 			classes: {
 				label: MessageStripTemplateContext.getLabelClasses(state),
+				closeIcon: {
+					"ui5-messagestrip-close-icon": true,
+				},
+				main: {
+					"ui5-messagestrip": true,
+					"ui5-messagestrip-icon--hidden": state.hideIcon,
+					"ui5-messagestrip-close-icon--hidden": state.hideCloseButton,
+					[MessageStripTemplateContext.getTypeClasses(state)]: true,
+				},
 			},
-			type: MessageStripTemplateContext.getTypeClasses(state),
 			icon: MessageStripTemplateContext.getIcon(state),
 		};
 	}
 
 	static iconMappings() {
 		return {
-			"Information": "sap-icon://hint",
+			"Information": "sap-icon://message-information",
 			"Positive": "sap-icon://message-success",
 			"Negative": "sap-icon://message-error",
 			"Warning": "sap-icon://message-warning",
@@ -21,10 +29,10 @@ class MessageStripTemplateContext {
 
 	static typeClasses() {
 		return {
-			"Information": "sapMMessageStripInfo",
-			"Positive": "sapMMessageStripPositive",
-			"Negative": "sapMMessageStripNegative",
-			"Warning": "sapMMessageStripWarning",
+			"Information": "ui5-messagestrip--info",
+			"Positive": "ui5-messagestrip--positive",
+			"Negative": "ui5-messagestrip--negative",
+			"Warning": "ui5-messagestrip--warning",
 		};
 	}
 
@@ -34,9 +42,8 @@ class MessageStripTemplateContext {
 
 	static getLabelClasses(state) {
 		return {
-			sapMMesageStripLabel: true,
-			sapMMessageStripNoIcon: state.hideIcon,
-			sapMMessageStripNoCloseButton: state.hideCloseButton,
+			"ui5-messagestrip-text": true,
+			"ui5-messagestripNoCloseButton": state.hideCloseButton,
 		};
 	}
 

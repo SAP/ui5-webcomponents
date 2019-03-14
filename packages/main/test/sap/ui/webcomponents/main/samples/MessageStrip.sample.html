@@ -54,7 +54,7 @@
 <script>
 	document.querySelectorAll("ui5-messagestrip").forEach(function(messageStrip) {
 		messageStrip.addEventListener("close", function() {
-			messageStrip.remove();
+			messageStrip.parentNode.removeChild(messageStrip);
 		});
 	});
 </script>
@@ -93,7 +93,7 @@
 <script>
 	document.querySelectorAll("ui5-messagestrip").forEach(function(messageStrip) {
 		messageStrip.addEventListener("close", function() {
-			messageStrip.remove();
+			messageStrip.parentNode.removeChild(messageStrip);
 		});
 	});
 </script>
@@ -116,7 +116,7 @@
 <script>
 	document.querySelectorAll("ui5-messagestrip").forEach(function(messageStrip) {
 		messageStrip.addEventListener("close", function() {
-			messageStrip.remove();
+			messageStrip.parentNode.removeChild(messageStrip);
 		});
 	});
 </script>
@@ -128,7 +128,7 @@
 
 		[].slice.call(document.querySelectorAll("ui5-messagestrip")).forEach(function(messageStrip) {
 			messageStrip.addEventListener("close", function() {
-				messageStrip.remove();
+				messageStrip.parentNode.removeChild(messageStrip);
 			});
 		});
 	</script>
