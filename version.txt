@@ -1,5 +1,5 @@
-commit 24a9fd1a1099c2be3f322ae27647cbfb8aa23137
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Thu Mar 14 11:25:03 2019 +0200
+commit c77603953a32f4b8d63eb563e8136bb3e5e254a5
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu Mar 14 12:40:31 2019 +0200
 
-    refactor(ui5-input): move styles to base theme (#170)
+    refactor(ui5-li-groupheader): keep styles in Base theme only (#173)
