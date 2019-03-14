@@ -1,5 +1,5 @@
-commit 16c65da5e5a9232fff865ce4068893b23dddc857
+commit e41950374b2d157863afa98e8894443739a62214
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Mar 14 15:34:50 2019 +0200
+Date:   Thu Mar 14 16:49:40 2019 +0200
 
-    refactor(ui5-switch): keep styles to base only (#171)
+    chore(build): watch the less files in Base theme (#183)
