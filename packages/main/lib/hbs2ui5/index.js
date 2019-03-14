@@ -63,7 +63,10 @@ const writeRenderers = (outputDir, controlName, fileContent) => {
 	try {
 		const compiledFilePath = `${outputDir}${path.sep}${controlName}Renderer.lit.js`;
 
-		fs.writeFileSync(compiledFilePath, fileContent);
+		// strip DOS line endings because the break the source maps
+		let fileContentUnix = fileContent.replace(/\r\n/g, "\n");
+		fileContentUnix = fileContentUnix.replace(/\r/g, "\n");
+		fs.writeFileSync(compiledFilePath, fileContentUnix);
 
 	} catch (e) {
 		console.log(e);
