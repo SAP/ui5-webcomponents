@@ -1,10 +1,20 @@
 @import "./base.less";
 @import "./global.less";
 
-@sapWCTimelineItemArrowSize: 1.625rem;
+@_ui5_TimelineItem_arrow_size: 1.625rem;
+@_ui5_TimelineItem_bubble_outline_width: 0.0625rem;
+@_ui5_TimelineItem_bubble_outline_top: -0.125rem;
+@_ui5_TimelineItem_bubble_outline_right: -0.125rem;
+@_ui5_TimelineItem_bubble_outline_bottom: -0.125rem;
+@_ui5_TimelineItem_bubble_outline_left: -0.625rem;
+@_ui5_TimelineItem_bubble_rtl_left_offset: -0.125rem;
+@_ui5_TimelineItem_bubble_rtl_right_offset: -0.625rem;
 
-ui5-timeline-item,
 :host(ui5-timeline-item) {
+	display: block;
+}
+
+ui5-timeline-item {
 	display: block;
 }
 
@@ -74,23 +84,22 @@ ui5-timeline-item,
 
 .sapWCTimelineBubble:focus {
 	outline: none;
-
-	&::after {
-		content: "";
-		border: 0.0625rem dotted @sapUiContentFocusColor;
-		position: absolute;
-		top: -0.125rem;
-		right: -0.125rem;
-		bottom: -0.125rem;
-		left: -0.625rem;
-		pointer-events: none;
-	}
 }
 
+.sapWCTimelineBubble:focus::after {
+	content: "";
+	border: @_ui5_TimelineItem_bubble_outline_width dotted @sapUiContentFocusColor;
+	position: absolute;
+	top: @_ui5_TimelineItem_bubble_outline_top;
+	right: @_ui5_TimelineItem_bubble_outline_right;
+	bottom: @_ui5_TimelineItem_bubble_outline_bottom;
+	left: @_ui5_TimelineItem_bubble_outline_left;
+	pointer-events: none;
+}
 
 .sapWCTimelineBubbleArrow {
-	width: @sapWCTimelineItemArrowSize;
-	padding-bottom: @sapWCTimelineItemArrowSize;
+	width: @_ui5_TimelineItem_arrow_size;
+	padding-bottom: @_ui5_TimelineItem_arrow_size;
 	position: absolute;
 	pointer-events: none;
 	top: 0;
@@ -111,7 +120,7 @@ ui5-timeline-item,
 }
 
 .sapWCTimelineBubbleArrowLeft {
-	left: -@sapWCTimelineItemArrowSize;
+	left: -@_ui5_TimelineItem_arrow_size;
 }
 
 .sapWCTimelineBubbleArrowLeft::before {
@@ -121,7 +130,7 @@ ui5-timeline-item,
 }
 
 .sapWCTimelineBubbleArrowRight {
-	right: -@sapWCTimelineItemArrowSize;
+	right: -@_ui5_TimelineItem_arrow_size;
 	left: auto;
 }
 
@@ -170,13 +179,13 @@ ui5-timeline-item,
 
 [dir=rtl] {
 	.sapWCTimelineBubbleArrowLeft {
-		right: -@sapWCTimelineItemArrowSize;
+		right: -@_ui5_TimelineItem_arrow_size;
 		left: auto;
 		transform: scale(-1, 1);
 	}
 
 	.sapWCTimelineBubbleArrowRight {
-		right: -@sapWCTimelineItemArrowSize;
+		right: -@_ui5_TimelineItem_arrow_size;
 		left: auto;
 	}
 
@@ -186,8 +195,8 @@ ui5-timeline-item,
 	}
 
 	.sapWCTimelineBubble:focus::after {
-		left: -0.125rem;
-		right: -0.625rem;
+		left: @_ui5_TimelineItem_bubble_rtl_left_offset;
+		right: @_ui5_TimelineItem_bubble_rtl_right_offset;
 	}
 }
 
