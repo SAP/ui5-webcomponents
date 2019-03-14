@@ -6,25 +6,55 @@
 @import "./global.less";
 
 /* =================================== */
-/* CSS for control sap.m/ListItemBase  */
+/* CSS for ListItemBase                */
 /* Base theme                          */
 /* =================================== */
-:host(ui5-li),
+@_ui5_listitembase_focus_width: 1px;
+
+:host(ui5-li) {
+	display: block;
+}
+
+:host(ui5-li) .sap-phone .sapMLIB {
+	outline: none;
+}
+
+:host(ui5-li-custom) .sap-phone .sapMLIB {
+	outline: none;
+}
+
 :host(ui5-li-custom) {
 	display: block;
 }
 
+ui5-li {
+	display: block;
+}
+
+ui5-li-custom {
+	display: block;
+}
+
+ui5-li .sap-phone .sapMLIB {
+	outline: none;
+}
+
+ui5-li-custom .sap-phone .sapMLIB {
+	outline: none;
+}
+
 .sapMLIB {
-	height: 3rem;
-	padding: 0 1rem 0 1rem;
 	position: relative;
 	display: flex;
+	height: 3rem;
+	width: 100%;
+	padding: 0 1rem 0 1rem;
 	background: @sapUiListBackground;
 	box-sizing: border-box;
+}
 
-	&.sapMCustomLI {
-		padding: 0;
-	}
+.sapMLIB.sapMCustomLI {
+	padding: 0;
 }
 
 .sapMLIBHoverable:hover {
@@ -55,7 +85,7 @@
 .sapMLIB.sapMLIBFocusable:focus:after,
 .sapMLIB.sapMLIBFocusable .sapMLIBContent:focus:after {
 	content: "";
-	border: 1px dotted @sapUiContentFocusColor;
+	border: @_ui5_listitembase_focus_width dotted @sapUiContentFocusColor;
 	position: absolute;
 	top: 0;
 	right: 0;
@@ -81,7 +111,6 @@
 	color: @sapUiListActiveTextColor;
 }
 
-
 .sapMLIBIcon {
 	color: @sapUiContentNonInteractiveIconColor;
 	padding-right: 1rem;
@@ -93,31 +122,6 @@
 	font-family: @sapUiFontFamily;
 }
 
-/* IE ignores outline-offset. Use an overlay: */
-.sapMLIBLegacyOutline:focus {
-	outline: none;
-	position: relative;
-}
-
-//Overide for Checkbox in List in IE
-ui5-li > span {
-	.sapMCb {
-		height: 3rem;
-	}
-}
-
-.sapMLIBLegacyOutline:focus::before {
-	content: "";
-	border: 0;
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	pointer-events: none;
-	border: 1px dotted @sapUiContentFocusColor;
-}
-
 .sapMLIBActionable,
 .sapMLIBActionable > .sapMLIBIcon {
 	cursor: pointer;
@@ -127,33 +131,21 @@ ui5-li > span {
 	outline: none;
 }
 
-// Remove focus outline on Mobile
-:host(ui5-li),
-:host(ui5-li-custom) {
-	.sap-phone {
-		.sapMLIB {
-			outline: none;
-		}
-	}
-}
-
 // RTL
-:host(ui5-li) span[dir="rtl"] {
-	.sapMLIBIcon {
-		padding-left: 1rem;
-		padding-right: 0;
-	}
-	.sapMSLIImg {
-		margin: .5rem 0 .5rem 0.75rem;
-	}
+:host(ui5-li) span[dir="rtl"] .sapMLIBIcon {
+	padding-left: 1rem;
+	padding-right: 0;
 }
 
-ui5-li span[dir="rtl"] {
-	.sapMLIBIcon {
-		padding-left: 1rem;
-		padding-right: 0;
-	}
-	.sapMSLIImg {
-		margin: .5rem 0 .5rem 0.75rem;
-	}
+:host(ui5-li) span[dir="rtl"] .sapMSLIImg {
+	margin: .5rem 0 .5rem 0.75rem;
+}
+
+ui5-li span[dir="rtl"] .sapMLIBIcon {
+	padding-left: 1rem;
+	padding-right: 0;
+}
+
+ui5-li span[dir="rtl"] .sapMSLIImg {
+	margin: .5rem 0 .5rem 0.75rem;
 }
