@@ -1,5 +1,5 @@
-commit ca2cb63ecb789d82d71887adf5f2d6334b189dd8
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Mar 15 15:24:17 2019 +0200
+commit 2cbfefe2e5a85760541e7aea7303a57682b3c7aa
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Fri Mar 15 15:25:24 2019 +0200
 
-    refactor: simplify bootstrap (#190)
+    docs(ui5-messagestrip): add since to sample page (#189)
