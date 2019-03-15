@@ -23,32 +23,13 @@
 
 @_ui5_daypicker_item_hover_background_color: @sapUiHighlight;
 @_ui5_daypicker_item_margin: 0;
+@_ui5_daypicker_item_border: 1px solid @sapUiListBorderColor;
+@_ui5_daypicker_item_outline_width: 0.125rem;
+@_ui5_daypicker_item_outline_offset: 0;
 @_ui5_daypicker_item_weekend_background_color: @sapUiHcReducedBackground;
 @_ui5_daypicker_item_weekend_hover_background_color: @sapUiHighlight;
 @_ui5_daypicker_item_othermonth_hover_background_color: @sapUiHighlight;
-@_ui5_daypicker_item_selected_background_color: @sapUiHighlight;
-@_ui5_daypicker_item_selected_hover_background_color: @sapUiHighlight;
-
-.sapWCDayPickerWeekName,
-.sapWCDayPickerDayName {
-	color: @sapUiHcReducedForeground;
-}
-
-.sapWCDayPickerItem {
-	border: 1px solid @sapUiListBorderColor;
-}
-
-.sapWCDayPickerItem:focus::after {
-	border-width: 0.125rem;
-	top: 0;
-	left: 0;
-}
-
-.sapWCDayPickerItem.sapWCDayPickerItemSel.sapWCDayPickerItemNow:focus::after {
-	width: calc(~"100% - 0.25rem");
-	height: calc(~"100% - 0.25rem");
-}
-
-.sapWCDayPickerItem.sapWCDayPickerItemOtherMonth {
-	border-color: transparent;
-}
+@_ui5_daypicker_dayname_color: @sapUiHcReducedForeground;
+@_ui5_daypicker_weekname_color: @sapUiHcReducedForeground;
+@_ui5_daypicker_item_now_selected_focus_after_width: calc(~"100% - 0.25rem");
+@_ui5_daypicker_item_now_selected_focus_after_height: calc(~"100% - 0.25rem");

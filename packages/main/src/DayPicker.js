@@ -245,7 +245,7 @@ class DayPicker extends WebComponent {
 				id: `${this._id}-WH${i.toString()}`,
 				name: aDayNamesWide[weekday],
 				ultraShortName: aUltraShortNames[weekday],
-				classes: "sapWCDayPickerWH",
+				classes: "sapWCDayPickerDayName",
 			};
 
 			this._dayNames.push(dayName);
