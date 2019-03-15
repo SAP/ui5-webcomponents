@@ -19,13 +19,14 @@
     "build": "run-s clean build:self-contained build:fix-rewrite build:copy-webcomponents build:generate-static-index",
     "build:self-contained": "ui5 build self-contained",
     "build:fix-rewrite": "cpx \"webapp/index.html\" dist/",
-    "build:copy-webcomponents": "npm-run-all --sequential copy:main-resources copy:main-samples copy:main-playground-static copy:main-pages copy:core-fonts",
+    "build:copy-webcomponents": "npm-run-all --sequential copy:main-resources copy:main-samples copy:main-playground-static copy:main-pages copy:main-webcomponentsjs copy:core-fonts",
     "build:generate-static-index": "node ./lib/static-index ../main/dist/test-resources/**/samples/*.sample.html",
     "copy:core-fonts": "cpx \"../core/dist/**/*.{ttf,woff,woff2}\" dist/resources/",
     "copy:main-resources": "cpx \"../main/dist/resources/**/*.*\" dist/resources/",
     "copy:main-samples": "cpx \"../main/dist/test-resources/**/*.sample.html\" dist/test-resources/",
     "copy:main-playground-static": "cpx \"../main/test/playground/**/*.*\" dist/test-resources/playground/",
     "copy:main-pages": "cpx \"../main/test/**/pages/*.*\" dist/test-resources/",
+    "copy:main-webcomponentsjs": "cpx \"../main/dist/webcomponentsjs/**/*.*\" dist/webcomponentsjs/",
     "serve": "ui5 serve -o index.html --accept-remote-connections"
   },
   "dependencies": {
