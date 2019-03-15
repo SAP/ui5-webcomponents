@@ -115,6 +115,7 @@ const metadata = {
  * @tagname ui5-messagestrip
  * @usestextcontent
  * @public
+ * @since 0.9.0
  */
 class MessageStrip extends WebComponent {
 	static get metadata() {
