@@ -5,7 +5,7 @@ const whenPolyfillLoaded = () => {
 		return polyfillLoadedPromise;
 	}
 
-	polyfillLoadedPromise =  new Promise((resolve, reject) => {
+	polyfillLoadedPromise = new Promise(resolve => {
 		if (window.WebComponents && window.WebComponents.waitFor) {
 			// the polyfill loader is present
 			window.WebComponents.waitFor(() => {
@@ -17,7 +17,7 @@ const whenPolyfillLoaded = () => {
 			resolve();
 		}
 	});
-	
+
 	return polyfillLoadedPromise;
 };
 
