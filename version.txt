@@ -1,5 +1,5 @@
-commit cbc9c750ae2b26ad3066d7649590c72469c5b755
-Author: Filip Siderov <fifoosid@gmail.com>
-Date:   Fri Mar 15 13:15:56 2019 +0200
+commit ca2cb63ecb789d82d71887adf5f2d6334b189dd8
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Fri Mar 15 15:24:17 2019 +0200
 
-    feat(ui5-messagestrip): initial implementation (#80)
+    refactor: simplify bootstrap (#190)
