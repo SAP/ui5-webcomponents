@@ -29,7 +29,10 @@
     "serve:playground": "cd packages/playground && yarn serve",
     "test": "cd packages/main && yarn test",
     "link-all": "wsrun link",
-    "unlink-all": "wsrun unlink"
+    "unlink-all": "wsrun unlink",
+    "lint": "npm-run-all --sequential lint:base lint:main",
+    "lint:base": "cd packages/base && yarn lint",
+    "lint:main": "cd packages/main && yarn lint"
   },
   "devDependencies": {
     "cross-env": "^5.2.0",
