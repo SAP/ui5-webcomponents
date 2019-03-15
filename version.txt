@@ -1,5 +1,5 @@
-commit 2cbfefe2e5a85760541e7aea7303a57682b3c7aa
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Fri Mar 15 15:25:24 2019 +0200
+commit 177de47e3230f2b4f124202694a00a68d42a0b8d
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Fri Mar 15 16:47:44 2019 +0200
 
-    docs(ui5-messagestrip): add since to sample page (#189)
+    chore: add global lint task (#191)
