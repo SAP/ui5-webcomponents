@@ -1,4 +1,4 @@
-import Device from "@ui5/webcomponents-core/dist/sap/ui/Device";
+import { isIE } from "@ui5/webcomponents-core/dist/sap/ui/Device";
 
 class InputTemplateContext {
 	static calculate(state) {
@@ -7,7 +7,7 @@ class InputTemplateContext {
 
 		// We don`t support placeholder for IE,
 		// because IE fires input events, when placeholder exists, leading to functional degredations.
-		if (Device.browser.internet_explorer) {
+		if (isIE()) {
 			state.placeholder = "";
 		}
 

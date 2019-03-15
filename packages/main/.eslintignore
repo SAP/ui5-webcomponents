@@ -6,6 +6,6 @@ lib
 test
 bundle.esm.js
 bundle.es5.js
-rollup.config.js
+rollup.config*.js
 wdio.conf.js
 postcss.config.js

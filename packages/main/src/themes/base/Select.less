@@ -1,3 +1,15 @@
+@import "./base.less";
+@import "./global.less";
+
+@_ui5_select_disabled_background: @sapUiFieldBackground;
+@_ui5_select_disabled_border_color: @sapUiFieldBorderColor;
+@_ui5_select_state_error_warning_border_style: solid;
+@_ui5_select_state_error_warning_border_width: 0.125rem;
+@_ui5_select_hover_icon_left_border: none;
+@_ui5_select_rtl_hover_icon_left_border: none;
+@_ui5_select_rtl_hover_icon_right_border: none;
+@_ui5_select_focus_width: 1px;
+
 :host(ui5-select) {
 	display: inline-block;
 	width: 100%;
@@ -41,9 +53,7 @@ ui5-select {
 		&:before {
 			content: "";
 			position: absolute;
-			width: calc(~"100% - 0.25rem");
-			height: calc(~"100% - 0.25rem");
-			border: 1px dotted @sapUiContentFocusColor;
+			border: @_ui5_select_focus_width dotted @sapUiContentFocusColor;
 			top: 1px;
 			right: 1px;
 			bottom: 1px;
@@ -60,6 +70,8 @@ ui5-select {
 
 	// Disabled
 	&.sapWCSelectDisabled {
+		background: @_ui5_select_disabled_background;
+		border-color: @_ui5_select_disabled_border_color;
 		cursor: default;
 		opacity: 0.5;
 	}
@@ -83,20 +95,29 @@ ui5-select {
 	}
 }
 
+.sapWCSelect:hover:not(.sapWCSelectDisabled) .sapWCSelectDropDownIcon {
+	border-left: @_ui5_select_hover_icon_left_border;
+}
+
 // States
+.sapWCSelectState {
+	border-style: solid;
+	border-width: 0.125rem;
+}
+
 .sapWCSelectError {
+	border: @_ui5_select_state_error_warning_border_width @_ui5_select_state_error_warning_border_style @sapUiFieldInvalidColor;
 	background-color: @sapUiFieldInvalidBackground;
-	border: 0.125rem solid @sapUiFieldInvalidColor;
 }
 
 .sapWCSelectWarning {
+	border: @_ui5_select_state_error_warning_border_width @_ui5_select_state_error_warning_border_style @sapUiFieldInvalidColor;
 	background-color: @sapUiFieldWarningBackground;
-	border: 0.125rem solid @sapUiFieldWarningColor;
 }
 
 .sapWCSelectSuccess {
 	background-color: @sapUiFieldSuccessBackground;
-	border: 0.125rem solid @sapUiFieldSuccessColor;
+	border-color: @sapUiFieldSuccessColor;
 }
 
 // Compact
@@ -114,11 +135,25 @@ ui5-select {
 		padding-left: 0;
 		padding-right: 0.5rem;
 	}
+
+	.sapWCSelect:hover:not(.sapWCSelectDisabled) {
+		.sapWCSelectDropDownIcon {
+			border-left: @_ui5_select_rtl_hover_icon_left_border;
+			border-right: @_ui5_select_rtl_hover_icon_right_border;
+		}
+	}
 }
 
 ui5-select span[dir="rtl"] {
 	.sapWCSelect {
 		padding-left: 0;
 		padding-right: 0.5rem;
+	}
+
+	.sapWCSelect:hover:not(.sapWCSelectDisabled) {
+		.sapWCSelectDropDownIcon {
+			border-left: @_ui5_select_rtl_hover_icon_left_border;
+			border-right: @_ui5_select_rtl_hover_icon_right_border;
+		}
 	}
 }

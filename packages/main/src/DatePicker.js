@@ -1,9 +1,13 @@
+import "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/shims/jquery-shim";
+import "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/shims/Core-shim";
 import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
 import { fetchCldrData } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/CLDR";
 import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
 import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes";
-import { getCalendarType, getLocale } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Configuration";
-import IconPool from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/IconPoolProxy";
+import { getCalendarType } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Configuration";
+import { getLocale } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/LocaleProvider";
+import { getIconURI } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/IconPool";
+import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData";
 import DateFormat from "@ui5/webcomponents-core/dist/sap/ui/core/format/DateFormat";
 import CalendarType from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/dates/CalendarType";
 import CalendarDate from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/dates/CalendarDate";
@@ -216,7 +220,7 @@ class DatePicker extends WebComponent {
 		this._input = {};
 		this._input.type = InputType.Text;
 		this._input.icon = {};
-		this._input.icon.src = IconPool.getIconURI("appointment-2");
+		this._input.icon.src = getIconURI("appointment-2");
 		this._input.onChange = this._handleInputChange.bind(this);
 		this._input.onLiveChange = this._handleInputLiveChange.bind(this);
 		this.aArrows = [KeyCodes.ARROW_DOWN, KeyCodes.ARROW_UP]; // keys we need for keyboard handling
@@ -321,6 +325,7 @@ class DatePicker extends WebComponent {
 			nextValue = this.normalizeValue(nextValue);
 		}
 
+
 		this.value = nextValue;
 		this.fireEvent("change", { value: nextValue, valid: isValid });
 	}
@@ -365,7 +370,7 @@ class DatePicker extends WebComponent {
 	}
 
 	get _primaryCalendarType() {
-		return this.primaryCalendarType || getCalendarType() || CalendarType.Gregorian;
+		return this.primaryCalendarType || getCalendarType() || LocaleData.getInstance(getLocale()).getPreferredCalendarType();
 	}
 
 	get _formatPattern() {

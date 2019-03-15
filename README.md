@@ -31,7 +31,7 @@ UI5 remains what it is: the best choice for…
 
 ## Resources
 - [UI5 Web Components](https://sap.github.io/ui5-webcomponents)
-- [UI5 Web Components - Playground and API Reference](https://sap.github.io/ui5-webcomponents/playground.html)
+- [UI5 Web Components - Playground and API Reference](https://sap.github.io/ui5-webcomponents/playground/)
 
 ## Requirements
 - [Node.js](https://nodejs.org/) (**version 8.5 or higher** ⚠️)

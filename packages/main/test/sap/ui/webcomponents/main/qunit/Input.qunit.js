@@ -144,7 +144,7 @@ TestHelper.ready(function() {
 
 			RenderScheduler.whenFinished().then(function () {
 				// assert
-				if (sapUiDevice.browser.msie) {
+				if (isIE()) {
 					assert.ok(!inputInner.hasAttribute("placeholder"), "input has 'placeholder' attr set");
 					assert.equal(inputInner.getAttribute("placeholder"), null, "input has 'placeholder' attr set to empty string");
 				} else {
@@ -268,41 +268,6 @@ TestHelper.ready(function() {
 		hooks.afterEach(function () {
 			fixture.innerHTML = "";
 			this.input = null;
-		});
-
-		QUnit.test("type in input fires change onfocusout", function(assert) {
-			assert.expect(1);
-
-			var input = this.getInput();
-			var done = assert.async();
-
-			input.addEventListener("change", function(e){
-				assert.ok(true, "change fired, when onfocusout");
-				done();
-			});
-
-			input.value = "abc";
-			input.onfocusout();
-		});
-
-		QUnit.test("type in input does not fire change when the initial value remains the same", function(assert) {
-			assert.expect(1);
-
-			var input = this.getInput();
-			var done = assert.async();
-
-			input.addEventListener("change", function(e){
-				assert.ok(false, "change fired incorreclty, when onfocusout");
-			});
-
-			input.value = "abc";
-			input.value = "";
-			input.onfocusout();
-
-			setTimeout(function() {
-				assert.ok(true, "change event not fired on onfocusout, when the value did not changed");
-				done();
-			}, 200)
 		});
 	});
 });

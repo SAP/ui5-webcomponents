@@ -1,11 +1,11 @@
-import IconPool from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/IconPoolProxy";
+import { getIconInfo } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/IconPool";
 import { getRTL } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Configuration";
 
 const dir = getRTL() ? "rtl" : "ltr";
 
 class IconTemplateContext {
 	static calculate(state) {
-		const iconInfo = IconPool.getIconInfo(state.src) || {};
+		const iconInfo = getIconInfo(state.src) || {};
 		const role = "presentation";
 
 		const context = {

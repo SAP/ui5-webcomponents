@@ -1,56 +1,33 @@
 /* ============================= */
-/* Fiori 3 theme                    */
+/* Base theme                    */
 /* ============================= */
+
 @import "../base/DayPicker.less";
 
 /* ============================= */
-/* Global Belize parameters      */
+/* Global Fiori 3 parameters     */
 /* ============================= */
+
 @import "./base.less";
 @import "./global.less";
 
-& .sapWCDayPickerWeekName,
-& .sapWCDayPickerDay,
-& .sapWCDayPickerDayName,
-& .sapWCDayPickerItem {
+/* ============================= */
+/* Fiori 3 theme                 */
+/* ============================= */
+
+@_ui5_daypicker_item_background_color: darken(@sapUiListBackground, 3);
+@_ui5_daypicker_item_hover_background_color: darken(@sapUiListBackground, 15);
+@_ui5_daypicker_item_selected_background_color: @sapUiActive;
+@_ui5_daypicker_item_selected_hover_background_color: lighten(@sapUiActive, 3);
+@_ui5_daypicker_item_weekend_background_color: darken(@sapUiListBackground, 13);
+@_ui5_daypicker_item_weekend_hover_background_color: darken(@sapUiListBackground, 20);
+
+.sapWCDayPickerWeekName,
+.sapWCDayPickerDayName,
+.sapWCDayPickerItem {
 	border-radius: 0.25rem;
 }
 
-.sapWCDayPickerDay {
-	background: darken(@sapUiListBackground, 3);
-
-	&:hover {
-		background: darken(@sapUiListBackground, 15);
-	}
-	
-	&.sapWCDayPickerItemNow .sapWCDayPickerDayText {
-		border-radius: 0.125rem;
-	}
-
-	&.sapWCDayPickerItemSel .sapWCDayPickerDayText {
-		background: @sapUiActive;
-
-		&:hover {
-			background: lighten(@sapUiActive, 3);
-
-		}
-	}
-}
-
-.sapWCDayPickerItem.sapWCDayPickerItemWeekEnd {
-	background: darken(@sapUiListBackground, 13);
-
-	&:hover {
-		background: darken(@sapUiListBackground, 20);
-	}
-}
-
-.sapWCDayPickerDay.sapWCDayPickerItemOtherMonth {
-	color: @sapUiContentLabelColor;
-	background: @sapUiListBackground;
-	
-	&:hover {
-		color: @sapUiContentLabelColor;
-		background: darken(@sapUiListBackground, 10);
-	}
+.sapWCDayPickerItem.sapWCDayPickerItemNow .sapWCDayPickerDayText {
+	border-radius: 0.125rem;
 }

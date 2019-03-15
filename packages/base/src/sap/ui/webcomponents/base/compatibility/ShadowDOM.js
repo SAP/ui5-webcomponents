@@ -1,13 +1,12 @@
 import { getTheme, getRTL, getCompactSize } from "../Configuration";
 
-import StyleInjection from "../theming/StyleInjection";
+import { injectWebComponentStyle } from "../theming/StyleInjection";
 import { registerStyle } from "../theming/ThemeBundle";
 
 import setupBrowser from "../util/setupBrowser";
 import setupOS from "../util/setupOS";
 import setupSystem from "../util/setupSystem";
 import { getEffectiveStyle } from "../Theming";
-
 
 // shadow DOM templates per tag
 const shadowDOMTemplates = new Map();
@@ -44,7 +43,7 @@ class ShadowDOM {
 		if (window.ShadyDOM) {
 			// inject the styles in the <head>
 			const cssContent = await getEffectiveStyle(theme, styleUrls, tag);
-			StyleInjection.createStyleTag(tag, styleUrls, cssContent);
+			injectWebComponentStyle(tag, cssContent);
 
 			// Create the shadow DOM root span
 			rootSpan = document.createElement("span");

@@ -40,5 +40,8 @@ import "../thirdparty/events-polyfills";
 // async - await
 import "regenerator-runtime/runtime";
 
+// CSS Custom Properties
+import "../compatibility/CSSVarsSimulation";
+
 // Plus all polyfills needed for Edge are also needed for IE11
 import "./Edge";

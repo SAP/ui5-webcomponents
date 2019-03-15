@@ -12,11 +12,8 @@
 
 :host(ui5-title) {
 	display: inline-block;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-	color: @sapUiGroupTitleTextColor;
 	max-width: 100%;
+	color: @sapUiGroupTitleTextColor;
 	vertical-align: bottom;
 }
 
@@ -52,75 +49,32 @@ ui5-title {
 	white-space: pre-line;
 }
 
-
-/* Alignments */
-
-.sapMTitleAlignBegin {
-	text-align: left;
-	text-align: start;
-}
-
-[data-sap-ui-wc-root][dir=rtl][data-sap-ui-browser^="ie"] .sapMTitleAlignBegin,// TODO remove after 1.62 version
-[data-sap-ui-wc-root][dir=rtl][data-sap-ui-browser^="ed"] .sapMTitleAlignBegin {
-	text-align: right;
-}
-
-.sapMTitleAlignLeft {
-	text-align: left;
-}
-
-.sapMTitleAlignEnd {
-	text-align: right;
-	text-align: end;
-}
-
-[data-sap-ui-wc-root][dir=rtl][data-sap-ui-browser^="ie"] .sapMTitleAlignEnd, // TODO remove after 1.62 version
-[data-sap-ui-wc-root][dir=rtl][data-sap-ui-browser^="ed"] .sapMTitleAlignEnd {
-	text-align: left;
-}
-
-.sapMTitleAlignRight {
-	text-align: right;
-}
-
-.sapMTitleAlignCenter {
-	text-align: center;
-}
-
-/* Title levels */
-
 /* Level H1 */
-
 .sapMTitleStyleH1 {
 	font-size: @sapMFontHeader1Size;
 }
 
 /* Level H2 */
-
 .sapMTitleStyleH2 {
 	font-size: @sapMFontHeader2Size;
 }
 
 /* Level H3 */
-
 .sapMTitleStyleH3 {
 	font-size: @sapMFontHeader3Size;
 }
 
 /* Level H4 */
-
 .sapMTitleStyleH4 {
 	font-size: @sapMFontHeader4Size;
 }
 
 /* Level H5 */
-
 .sapMTitleStyleH5 {
 	font-size: @sapMFontHeader5Size;
 }
 
 /* Level H6 */
-
 .sapMTitleStyleH6 {
 	font-size: @sapMFontHeader6Size;
 }
