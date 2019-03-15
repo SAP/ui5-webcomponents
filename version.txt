@@ -1,5 +1,8 @@
-commit 86912f24c1f4568ea6851f016ceea1f9cfc79295
-Author: a-z-ivanov <yogaaaaa@yahoo.com>
-Date:   Fri Mar 15 01:11:05 2019 -0700
+commit 7996cdb53fe2176fb2d3a3e2c8ca5151e4df1723
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Fri Mar 15 11:15:43 2019 +0200
 
-    refactor(ui5-daypicker): move styles to Base theme (#151)
+    chore: remove unused code (#187)
+    
+    - the contructors with parameters are a leftover from the light weight controls
+    - three unused files for text align and text direction (handled on html now)
