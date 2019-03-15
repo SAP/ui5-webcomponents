@@ -163,8 +163,8 @@ class CheckBox extends WebComponent {
 		return CheckBoxRenderer;
 	}
 
-	constructor(state) {
-		super(state);
+	constructor() {
+		super();
 		this._label = {};
 	}
 

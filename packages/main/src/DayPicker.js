@@ -121,8 +121,8 @@ class DayPicker extends WebComponent {
 		return DayPickerRenderer;
 	}
 
-	constructor(state) {
-		super(state);
+	constructor() {
+		super();
 		this._oLocale = getFormatLocale();
 		this._oLocaleData = new LocaleData(this._oLocale);
 

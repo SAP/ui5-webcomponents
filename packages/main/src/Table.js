@@ -163,8 +163,8 @@ class Table extends WebComponent {
 		};
 	}
 
-	constructor(props) {
-		super(props);
+	constructor() {
+		super();
 
 		this._itemNavigation = new ItemNavigation(this);
 

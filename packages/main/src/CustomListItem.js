@@ -54,10 +54,6 @@ class CustomListItem extends ListItem {
 		return CustomListItemRenderer;
 	}
 
-	constructor(state) {
-		super(state);
-	}
-
 	static get calculateTemplateContext() {
 		return CustomListItemTemplateContext.calculate;
 	}

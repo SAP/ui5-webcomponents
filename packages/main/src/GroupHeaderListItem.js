@@ -43,10 +43,6 @@ const metadata = {
  * @public
  */
 class GroupHeaderListItem extends ListItemBase {
-	constructor(state) {
-		super(state);
-	}
-
 	static get renderer() {
 		return GroupHeaderListItemRenderer;
 	}

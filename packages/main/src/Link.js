@@ -158,11 +158,6 @@ class Link extends WebComponent {
 		return LinkRederer;
 	}
 
-	constructor(state) {
-		super(state);
-	}
-
-
 	ontap(event) {
 		if (this.disabled) {
 			return;

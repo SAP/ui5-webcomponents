@@ -280,9 +280,8 @@ class Input extends WebComponent {
 		return InputTemplateContext.calculate;
 	}
 
-	constructor(state) {
-		super(state);
-
+	constructor() {
+		super();
 		// Indicates if there is selected suggestionItem.
 		this.hasSuggestionItemSelected = false;
 

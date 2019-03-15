@@ -55,10 +55,6 @@ class ListItemBase extends WebComponent {
 		return metadata;
 	}
 
-	constructor(state) {
-		super(state);
-	}
-
 	static get calculateTemplateContext() {
 		return ListItemBaseTemplateContext.calculate;
 	}

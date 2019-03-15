@@ -287,8 +287,8 @@ class ShellBar extends WebComponent {
 		};
 	}
 
-	constructor(props) {
-		super(props);
+	constructor() {
+		super();
 
 		this._itemsInfo = [];
 		this._isInitialRendering = true;

@@ -134,10 +134,6 @@ class Tab extends TabBase {
 		return TabRenderer;
 	}
 
-	constructor(state) {
-		super(state);
-	}
-
 	static get calculateTemplateContext() {
 		return TabTemplateContext.calculate;
 	}

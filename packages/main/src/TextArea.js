@@ -224,8 +224,8 @@ class TextArea extends WebComponent {
 		return TextAreaTemplateContext.calculate;
 	}
 
-	constructor(props) {
-		super(props);
+	constructor() {
+		super();
 
 		this._listeners = {
 			change: this._handleChange.bind(this),

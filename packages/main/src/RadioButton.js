@@ -160,8 +160,8 @@ class RadioButton extends WebComponent {
 		return RadioButtonRenderer;
 	}
 
-	constructor(state) {
-		super(state);
+	constructor() {
+		super();
 		this._label = {};
 	}
 

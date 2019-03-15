@@ -58,9 +58,8 @@ class CalendarHeader extends WebComponent {
 		return CalendarHeaderRenderer;
 	}
 
-	constructor(state) {
-		super(state);
-
+	constructor() {
+		super();
 		this._btnPrev = {};
 		this._btnPrev.icon = "sap-icon://slim-arrow-left";
 
