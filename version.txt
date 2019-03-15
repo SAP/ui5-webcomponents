@@ -1,8 +1,5 @@
-commit d888d4353bdb3315ba293fd601eb4bbcb85f2cca
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Fri Mar 15 11:32:08 2019 +0200
+commit cbc9c750ae2b26ad3066d7649590c72469c5b755
+Author: Filip Siderov <fifoosid@gmail.com>
+Date:   Fri Mar 15 13:15:56 2019 +0200
 
-    improvement: copy webcomponentsjs files for deploy (#188)
-    
-    - webcomponentsjs package should be deployed in the playground as well
-    copy the necessary files from main/dist
+    feat(ui5-messagestrip): initial implementation (#80)
