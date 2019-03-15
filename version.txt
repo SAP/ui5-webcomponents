@@ -1,5 +1,9 @@
-commit 1c601fd0e536bacfe8f692b9f99c88accc1ae8b0
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Mar 14 22:52:54 2019 +0200
+commit 07b33e0cd417efec61e231191cc754ca7bebb839
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Fri Mar 15 09:50:08 2019 +0200
 
-    docs(playground): decrease side panel width and hide it under 1100px (#186)
+    improvement: externalise webcomponents polyfill (#185)
+    
+    The polyfill is now loaded via the official webcomponents-loader, instead of imports
+    This allows users of web components to provide their own version and copy of the polyfill
+    This also decreases the bundle size for the playground for modern browsers.
