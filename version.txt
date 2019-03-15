@@ -1,8 +1,8 @@
-commit 7996cdb53fe2176fb2d3a3e2c8ca5151e4df1723
+commit d888d4353bdb3315ba293fd601eb4bbcb85f2cca
 Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Fri Mar 15 11:15:43 2019 +0200
+Date:   Fri Mar 15 11:32:08 2019 +0200
 
-    chore: remove unused code (#187)
+    improvement: copy webcomponentsjs files for deploy (#188)
     
-    - the contructors with parameters are a leftover from the light weight controls
-    - three unused files for text align and text direction (handled on html now)
+    - webcomponentsjs package should be deployed in the playground as well
+    copy the necessary files from main/dist
