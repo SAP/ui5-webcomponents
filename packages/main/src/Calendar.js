@@ -126,8 +126,8 @@ class Calendar extends WebComponent {
 		return CalendarRenderer;
 	}
 
-	constructor(state) {
-		super(state);
+	constructor() {
+		super();
 		this._oLocale = getFormatLocale();
 		this._oLocaleData = new LocaleData(this._oLocale);
 		this._header = {};

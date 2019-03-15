@@ -71,10 +71,6 @@ class ToggleButton extends Button {
 		return ToggleButtonRenderer;
 	}
 
-	constructor(state) {
-		super(state);
-	}
-
 	ontap() {
 		if (!this.disabled) {
 			this.pressed = !this.pressed;

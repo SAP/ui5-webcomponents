@@ -150,8 +150,8 @@ class Select extends WebComponent {
 		return SelectTemplateContext.calculate;
 	}
 
-	constructor(state) {
-		super(state);
+	constructor() {
+		super();
 
 		this._setSelectedItem(null);
 		this._setPreviewedItem(null);

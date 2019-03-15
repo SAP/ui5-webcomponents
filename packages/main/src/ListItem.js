@@ -85,9 +85,8 @@ class ListItem extends ListItemBase {
 		return metadata;
 	}
 
-	constructor(state) {
-		super(state);
-
+	constructor() {
+		super();
 		this._fnOnDelete = this.onDelete.bind(this);
 	}
 

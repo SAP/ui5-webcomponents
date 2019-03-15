@@ -35,10 +35,6 @@ class TabSeparator extends TabBase {
 		return TabSeparatorRenderer;
 	}
 
-	constructor(state) {
-		super(state);
-	}
-
 	static get calculateTemplateContext() {
 		return TabSeparatorTemplateContext.calculate;
 	}

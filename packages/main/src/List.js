@@ -249,9 +249,8 @@ class List extends WebComponent {
 		return ListRenderer;
 	}
 
-	constructor(state) {
-		super(state);
-
+	constructor() {
+		super();
 		this.initItemNavigation();
 
 		// Stores the last focused item within the internal ul element.

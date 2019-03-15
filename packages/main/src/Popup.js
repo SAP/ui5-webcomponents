@@ -237,8 +237,8 @@ class Popup extends WebComponent {
 		return false;
 	}
 
-	constructor(state) {
-		super(state);
+	constructor() {
+		super();
 
 		this._documentKeyDownHandler = this.documentKeyDown.bind(this);
 	}

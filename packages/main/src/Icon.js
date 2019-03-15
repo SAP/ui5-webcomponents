@@ -86,10 +86,6 @@ class Icon extends WebComponent {
 		return IconTemplateContext.calculate;
 	}
 
-	constructor(state) {
-		super(state);
-	}
-
 	focus() {
 		HTMLElement.prototype.focus.call(this);
 	}

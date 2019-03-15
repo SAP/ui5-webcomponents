@@ -89,8 +89,8 @@ class MonthPicker extends WebComponent {
 		return MonthPickerRenderer;
 	}
 
-	constructor(state) {
-		super(state);
+	constructor() {
+		super();
 		this._oLocale = getFormatLocale();
 		this._oLocaleData = new LocaleData(this._oLocale);
 

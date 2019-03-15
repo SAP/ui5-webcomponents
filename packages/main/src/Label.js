@@ -105,10 +105,6 @@ class Label extends WebComponent {
 		return metadata;
 	}
 
-	constructor(state) {
-		super(state);
-	}
-
 	static get renderer() {
 		return LabelRenderer;
 	}

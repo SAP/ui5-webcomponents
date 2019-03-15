@@ -115,10 +115,6 @@ class Card extends WebComponent {
 		return CardRenderer;
 	}
 
-	constructor(state) {
-		super(state);
-	}
-
 	static calculateTemplateContext(state) {
 		const hasAvatar = !!state.avatar;
 		const icon = hasAvatar && isIconURI(state.avatar);

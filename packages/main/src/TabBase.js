@@ -24,10 +24,6 @@ class TabBase extends WebComponent {
 	static get metadata() {
 		return metadata;
 	}
-
-	constructor(state) {
-		super(state);
-	}
 }
 
 export default TabBase;
