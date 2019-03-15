@@ -1,10 +1,11 @@
 import Locale from "./Locale";
+import { getLocale } from "./LocaleProvider";
 
 const mSettings = {};
 
 const getFormatLocale = () => {
 	const fallback = () => {
-		let oLocale = SETTINGS.configuration.language;
+		let oLocale = getLocale();
 		// if any user settings have been defined, add the private use subtag "sapufmt"
 		if (!Object.keys(mSettings).length === 0) {
 			// TODO move to Locale/LocaleData
@@ -19,7 +20,8 @@ const getFormatLocale = () => {
 		return oLocale;
 	};
 
-	return SETTINGS.configuration.formatLocale || fallback();
+	// we do not support setting of locale, so we just leave the default behaviour
+	return fallback();
 };
 
 const SETTINGS = {

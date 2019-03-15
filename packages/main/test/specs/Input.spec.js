@@ -7,25 +7,52 @@ describe("Input general interaction", () => {
 		const input1 = browser.findElementDeep("#input1 >>> input");
 		const inputResult = browser.findElementDeep("#inputResult >>> input");
 
+		// Start typing.
 		input1.click();
-		input1.setValue("abc");
+		input1.keys("abc");
+
+		// Click somewhere else to focus out - should fire change event.
 		inputResult.click();
 
+		// Get back and continue typing.
 		input1.click();
-		input1.setValue("def");
+		input1.keys("def");
+
+		// Click somewhere else to force focus out - should fire change event.
 		inputResult.click();
 
 		assert.strictEqual(inputResult.getProperty("value"), "2", "change is called twice");
 	});
 
-	it("fires liveChange", () => {
+	it("fires input", () => {
 		const input2 = browser.findElementDeep("#input2 >>> input");
-		const inputResult = browser.findElementDeep("#inputResult >>> input");
+		const inputLiveChangeResult = browser.findElementDeep("#inputLiveChangeResult >>> input");
 
 		input2.click();
-		input2.keys("abc");
+		input2.setValue("abc");
 
-		assert.strictEqual(inputResult.getProperty("value"), "3", "liveChange is fired 3 times");
+		assert.strictEqual(inputLiveChangeResult.getProperty("value"), "3", "input is fired 3 times");
+	});
+
+	it("fires change when same value typed, but value is mutated via API in between", () => {
+		const inputChange = browser.findElementDeep("#inputChange >>> input");
+		const inputChangeResult = browser.findElementDeep("#inputChangeResult >>> input");
+
+		inputChange.click();
+		inputChange.keys("abc");
+
+		// The submit event listener mutates the value via the API
+		// Note: along with the sumbit event - the first change event is fired.
+		inputChange.keys("Enter");
+
+		// Type the same value once again.
+		inputChange.keys("abc");
+
+		// Clicking on another input to force focus out,
+		// which should trigger second change event, although same value is typed in.
+		inputChangeResult.click();
+
+		assert.strictEqual(inputChangeResult.getProperty("value"), "2", "change is called twice");
 	});
 
 	it("handles suggestions", () => {
@@ -72,6 +99,5 @@ describe("Input general interaction", () => {
 
 		assert.strictEqual(suggestionsInput.getProperty("value"), "Condensed", "First item has been selected");
 		assert.strictEqual(inputResult.getProperty("value"), "4", "suggestionItemSelected event called once");
-
-	});	
+	});
 });

@@ -10,34 +10,6 @@
 @import "./base.less";
 @import "./global.less";
 
-
-.sapWCTextAreaFocussed {
-	&.sapWCTextAreaWithCounter {
-		&::after {
-			height: ~"calc(100% - 2.125rem)";
-		}
-	}
-
-	&::after {
-		border-width: 0.125rem;
-		width: ~"calc(100% - 0.5rem)";
-		height: ~"calc(100% - 0.5rem)";
-	}
-
-	&.sapWCTextAreaWarning {
-		& textarea {
-			height: ~"calc(100% - 26px)";
-		}
-
-		&::after {
-			width: ~"calc(100% - 0.625rem)";
-			height: ~"calc(100% - 2.25rem)";
-			top: 3px;
-			left: 3px;
-		}
-	}
-}
-
-.sapWCTextAreaWarningInner {
-	border: 1px dashed @sapUiFieldWarningColor;
-}
+@_ui5_textarea_focus_after_width: 2px;
+@_ui5_textarea_warning_border_style: dashed;
+@_ui5_textarea_warning_border_width: 1px;

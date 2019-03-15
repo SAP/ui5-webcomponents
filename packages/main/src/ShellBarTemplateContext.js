@@ -11,12 +11,14 @@ class ShellBarTemplateContext {
 		});
 
 		const isRTL = getRTL();
+		const interactiveLogo = state._breakpointSize === "S";
 
 		return {
 			ctr: state,
 			_hiddenIcons: hiddenIcons,
 			popoverHorizontalAlign: isRTL ? "Left" : "Right",
-			interactiveLogo: state._breakpointSize === "S",
+			interactiveLogo,
+			showArrowDown: state.primaryTitle || (state.logo && interactiveLogo),
 			styles: {
 				searchField: {
 					[isRTL ? "left" : "right"]: state._searchField.right,

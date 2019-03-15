@@ -21,6 +21,14 @@
 @_ui5_switch_track_border_color: @sapUiButtonBackground;
 @_ui5_switch_track_checked_border_color: @sapUiContentForegroundBorderColor;
 
+@_ui5_switch_track_disabled_bg: @sapUiButtonBackground;
+@_ui5_switch_track_disabled_checked_bg: @sapUiHcReducedBackground;
+@_ui5_switch_track_disabled_border_color: @sapUiHcReducedForeground;
+@_ui5_switch_track_disabled_semantic_checked_bg: @sapUiHcReducedBackground;
+@_ui5_switch_track_disabled_semantic_checked_border_color: @sapUiHcReducedForeground;
+@_ui5_switch_track_disabled_semantic_bg: @sapUiButtonBackground;
+@_ui5_switch_track_disabled_semantic_border_color: @sapUiHcReducedForeground;
+
 // Switch Handle
 @_ui5_switch_handle_bg: @sapUiButtonBackground;
 @_ui5_switch_handle_hover_bg: @sapUiButtonHoverBackground;
@@ -30,32 +38,15 @@
 @_ui5_switch_handle_semantic_checked_hover_border_color: @sapUiContentForegroundBorderColor;
 @_ui5_switch_handle_border_width: 0.125rem;
 
+@_ui5_switch_handle_disabled_bg: @sapUiButtonBackground;
+@_ui5_switch_handle_disabled_checked_bg: @sapUiHcReducedForeground;
+@_ui5_switch_handle_disabled_border_color: @sapUiHcReducedForeground;
+@_ui5_switch_handle_disabled_semantic_checked_bg: @sapUiHcReducedBackground;
+@_ui5_switch_handle_disabled_semantic_checked_border_color: @sapUiHcReducedForeground;
+@_ui5_switch_handle_disabled_semantic_bg: @sapUiButtonBackground;
+@_ui5_switch_handle_disabled_semantic_border_color: @sapUiHcReducedForeground;
 
-.ui5-switch.ui5-switch--disabled,
-.ui5-switch.ui5-switch--semantic.ui5-switch--disabled {
-	.ui5-switch-track,
-	.ui5-switch-handle {
-		background: @sapUiButtonBackground;
-		border-color: @sapUiHcReducedForeground;
-	}
-
-	.ui5-switch-text::before {
-		color: @sapUiHcReducedAltForeground;
-	}
-
-	&.ui5-switch--checked {
-		.ui5-switch-track,
-		.ui5-switch-handle {
-			background: @sapUiHcReducedBackground;
-		}
-		.ui5-switch-text,
-		.ui5-switch-text {
-			color: @sapUiHcReducedAltForeground;
-		}
-	}
-}
-
-.ui5-switch.ui5-switch--disabled.ui5-switch--semantic .ui5-switch-text::before,
-.ui5-switch.ui5-switch--semantic:hover .ui5-switch-text::before {
-	color: @sapUiBaseText;
-}
+// Switch sementic text
+@_ui5_switch_text_on_semantic_color: @sapUiBaseText;
+@_ui5_switch_text_off_semantic_color: @sapUiBaseText;
+@_ui5_switch_text_disabled_color: @sapUiHcReducedAltForeground;

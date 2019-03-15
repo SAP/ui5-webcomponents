@@ -17,7 +17,7 @@
 	<ui5-label id="myLabel">Event [suggestionItemSelect] :: N/A</ui5-label><br/>
 	<ui5-label id="myLabelChange">Event [change] :: N/A</ui5-label><br/>
 	<ui5-label id="myLabelSubmit">Event [submit] :: N/A</ui5-label><br/>
-	<ui5-label id="myLabelLiveChange">Event [liveChange] :: N/A</ui5-label><br/>
+	<ui5-label id="myLabelLiveChange">Event [input] :: N/A</ui5-label><br/>
 
 	<ui5-input id="myInput"
 		style="width:100%"
@@ -37,24 +37,31 @@
 		<ui5-icon data-ui5-slot="icon" src="sap-icon://appointment-2"></ui5-icon>
 	</ui5-input>
 
-	<h3> Input valueState Warning</h3>
-	<ui5-input id="input1" style="width:100%" value-state="Warning" placeholder="Warning state ...">
-		<ui5-icon data-ui5-slot="icon" src="sap-icon://message-warning" functional></ui5-icon>
-	</ui5-input>
-
-	<h3> Input valueState Error</h3>
-	<ui5-input id="input2" style="width:100%" value-state="Error" placeholder="Error state ...">
-		<ui5-icon data-ui5-slot="icon" src="sap-icon://message-error"></ui5-icon>
-	</ui5-input>
-
 	<h3> Input valueState Success</h3>
 	<ui5-input id="input3" style="width:100%" value-state="Success" placeholder="Success state ...">
 		<ui5-icon data-ui5-slot="icon" src="sap-icon://message-success"></ui5-icon>
 	</ui5-input>
 
-	<h3> Input</h3>
-	<ui5-input id="inputResult" style="width:100%">
+	<h3> Test 'change' event</h3>
+	<ui5-input id="input1" style="width:100%" value-state="Warning" placeholder="Warning state ...">
+		<ui5-icon data-ui5-slot="icon" src="sap-icon://message-warning" functional></ui5-icon>
 	</ui5-input>
+	<h3> 'change' event result</h3>
+	<ui5-input id="inputResult" style="width:100%"></ui5-input>
+
+	<h3> Test 'input' event</h3>
+	<ui5-input id="input2" style="width:100%" value-state="Error" placeholder="Error state ...">
+		<ui5-icon data-ui5-slot="icon" src="sap-icon://message-error"></ui5-icon>
+	</ui5-input>
+	<h3> 'input' test result</h3>
+	<ui5-input id="inputLiveChangeResult" style="width:100%"></ui5-input>
+
+	
+
+	<h3> Input test change</h3>
+	<ui5-input id="inputChange" style="width:100%">	</ui5-input>
+	<h3> Input test change result</h3>
+	<ui5-input id="inputChangeResult" style="width:100%"></ui5-input>
 
 	<h3> Input readonly</h3>
 	<ui5-input style="width:100%" value="Value can`t be changed" readonly></ui5-input>
@@ -88,7 +95,7 @@
 		var labelLiveChange = document.getElementById('myLabelLiveChange');
 		var labelSubmit = document.getElementById('myLabelSubmit');
 
-		input.addEventListener("liveChange", function (event) {
+		input.addEventListener("input", function (event) {
 			var value = event.target.value;
 			var suggestionItems = [];
 
@@ -110,7 +117,7 @@
 				input.appendChild(li);
 			});
 
-			labelLiveChange.innerHTML = "Event [liveChange] :: " + value;
+			labelLiveChange.innerHTML = "Event [input] :: " + value;
 		});
 
 		input.addEventListener("suggestionItemSelect", function (event) {
@@ -129,7 +136,7 @@
 		});
 
 		var changeCounter = 0;
-		var liveChangeCounter = 0;
+		var inputCounter = 0;
 		var suggestionSelectedCounter = 0;
 
 		input1.addEventListener("change", function (event) {
@@ -137,15 +144,24 @@
 			inputResult.value = changeCounter;
 		});
 
-		input2.addEventListener("liveChange", function (event) {
-			liveChangeCounter += 1;
-			inputResult.value = liveChangeCounter;
+		input2.addEventListener("input", function (event) {
+			inputCounter += 1;
+			inputLiveChangeResult.value = inputCounter;
 		});
 
 		myInput2.addEventListener("suggestionItemSelect", function (event) {
 			var item = event.detail.item;
 			suggestionSelectedCounter += 1;
 			inputResult.value = suggestionSelectedCounter;
+		});
+
+		var inputChangeResultCounter = 0;
+
+		inputChange.addEventListener("submit", function (event) {
+			inputChange.value = "Changed via API";
+		});
+		inputChange.addEventListener("change", function (event) {
+			inputChangeResult.value = ++inputChangeResultCounter;
 		});
 	</script>
 </body>
