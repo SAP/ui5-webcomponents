@@ -1,5 +1,5 @@
-commit 82b99c26c100173b148792417972a1ee4403d877
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Mar 15 10:07:23 2019 +0200
+commit 86912f24c1f4568ea6851f016ceea1f9cfc79295
+Author: a-z-ivanov <yogaaaaa@yahoo.com>
+Date:   Fri Mar 15 01:11:05 2019 -0700
 
-    refactor(ui5-radiobutton): move styles to Base theme (#184)
+    refactor(ui5-daypicker): move styles to Base theme (#151)
