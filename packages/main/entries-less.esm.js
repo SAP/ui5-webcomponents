@@ -149,3 +149,7 @@ import "./src/themes/sap_fiori_3/ListItemBase.less";
 import "./src/themes/sap_belize/ListItem.less";
 import "./src/themes/sap_belize_hcb/ListItem.less";
 import "./src/themes/sap_fiori_3/ListItem.less";
+
+import "./src/themes/sap_belize/MessageStrip.less";
+import "./src/themes/sap_belize_hcb/MessageStrip.less";
+import "./src/themes/sap_fiori_3/MessageStrip.less";

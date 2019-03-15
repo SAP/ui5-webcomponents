@@ -1,0 +1,169 @@
+/* ============================= */
+/* Global Base parameters        */
+/* ============================= */
+
+@import "./base.less";
+@import "./global.less";
+
+/* ============================= */
+/* Base theme                    */
+/* ============================= */
+
+
+@_ui5_messagestrip_icon_width: 2.5rem;
+@_ui5_messagestrip_border_radius: 0.1875rem;
+@_ui5_messagestrip_button_border_width: 0;
+@_ui5_messagestrip_button_border_style: none;
+@_ui5_messagestrip_button_border_color: transparent;
+@_ui5_messagestrip_button_border_radius: 0;
+@_ui5_messagestrip_padding: 0.125rem .125rem;
+@_ui5_messagestrip_button_height: 1.625rem;
+@_ui5_messagestrip_border_width: 1px;
+@_ui5_messagestrip_close_button_border: none;
+@_ui5_messagestrip_close_button_size: 1.625rem;
+@_ui5_messagestrip_icon_top: 0.4375rem;
+@_ui5_messagestrip_focus_width: 1px;
+
+:host(ui5-messagestrip) {
+	display: inline-block;
+	width: 100%;
+	height: 100%;
+}
+
+//required for IE11
+ui5-messagestrip {
+	display: inline-block;
+	width: 100%;
+	height: 100%;
+}
+
+.ui5-messagestrip-close-icon {
+	width: @_ui5_messagestrip_close_button_size;
+	height: @_ui5_messagestrip_close_button_size;
+	border-radius: 0.2rem;
+	font-size: 0.75rem;
+	background: transparent;
+	color: @sapUiBaseText;
+	outline: 0;
+	cursor: pointer;
+	position: absolute;
+	right: 0.125rem;
+	top: 0.125rem;
+	border: @_ui5_messagestrip_close_button_border;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.ui5-messagestrip-close-icon:hover {
+	background-color: @sapUiButtonLiteHoverBackground;
+}
+
+.ui5-messagestrip-close-icon:active {
+	background-color: @sapUiButtonLiteActiveBackground;
+	color: @sapUiButtonActiveTextColor;
+}
+
+.ui5-messagestrip-close-icon:focus::after {
+	content: "";
+	position: absolute;
+	top: 1px;
+	bottom: 1px;
+	left: 1px;
+	right: 1px;
+	border: @_ui5_messagestrip_focus_width dotted @sapUiContentFocusColor;
+	pointer-events: none;
+}
+
+.ui5-messagestrip-close-icon:active:focus::after {
+	border: @_ui5_messagestrip_focus_width dotted @sapUiContentContrastFocusColor;
+}
+
+span[data-sap-ui-wc-root] {
+	display: flex;
+
+	.ui5-messagestrip {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		border-radius: @_ui5_messagestrip_border_radius;
+		padding: @_ui5_messagestrip_padding;
+		border-width: @_ui5_messagestrip_border_width;
+		border-style: solid;
+		box-sizing: border-box;
+		padding: 0.4375rem 2rem 0.4375rem 2.5rem;
+		position: relative;
+
+		.ui5-messagestrip-icon {
+			width: @_ui5_messagestrip_icon_width;
+			box-sizing: border-box;
+			position: absolute;
+			top: @_ui5_messagestrip_icon_top;
+			left: 0px;
+		}
+
+		.ui5-messagestrip-text {
+			width: 100%;
+			color: @sapTextColor;
+			line-height: 1.2;
+		}
+
+		ui5-button {
+			height: @_ui5_messagestrip_button_height;
+			border-width: @_ui5_messagestrip_button_border_width;
+			border-style: @_ui5_messagestrip_button_border_style;
+			border-color: @_ui5_messagestrip_button_border_color;
+			border-radius: @_ui5_messagestrip_button_border_radius;
+		}
+	}
+
+	.ui5-messagestrip-icon--hidden {
+		padding: 0.4375rem 2rem 0.4375rem 1rem;
+	}
+
+	.ui5-messagestrip-close-icon--hidden {
+		padding-right: 1rem;
+	}
+
+	.ui5-messagestrip-text {
+		font-family: @sapUiFontFamily; 
+		font-size: @sapMFontMediumSize; 
+	}
+
+	.ui5-messagestrip--info {
+		background-color: @sapUiNeutralBG;
+		border-color: @sapUiNeutralBorder;
+		color: @sapUiBaseText;
+
+		.ui5-messagestrip-icon {
+			color: @sapUiNeutralElement;
+		}
+	}
+
+	.ui5-messagestrip--positive {
+		background-color: @sapUiSuccessBG;
+		border-color: @sapUiSuccessBorder;
+
+		.ui5-messagestrip-icon {
+			color: @sapUiPositiveElement;
+		}
+	}
+
+	.ui5-messagestrip--negative {
+		background-color: @sapUiErrorBG;
+		border-color: @sapUiErrorBorder;
+
+		.ui5-messagestrip-icon {
+			color: @sapUiNegativeElement;
+		}
+	}
+
+	.ui5-messagestrip--warning {
+		background-color: @sapUiWarningBG;
+		border-color: @sapUiWarningBorder;
+
+		.ui5-messagestrip-icon {
+			color: @sapUiCriticalElement;
+		}
+	}
+}
