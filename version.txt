@@ -1,5 +1,9 @@
-commit 177de47e3230f2b4f124202694a00a68d42a0b8d
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Mar 15 16:47:44 2019 +0200
+commit 037409d1bd6f722732fdb2b5a7f5e57e9228ab5b
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Fri Mar 15 19:36:51 2019 +0200
 
-    chore: add global lint task (#191)
+    fix(ui5-list): correct backward navigation with SHIFT+TAB (#193)
+    
+    After the refactoring of the Pseudo events onsaptabprevious stopped working.
+    It`s now replaced by _handleTabPrevious.
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/192
