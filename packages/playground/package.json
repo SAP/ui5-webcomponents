@@ -38,7 +38,7 @@
     "@ui5/webcomponents": "^0.8.0"
   },
   "devDependencies": {
-    "@ui5/cli": "^1.2.0",
+    "@ui5/cli": "^1.2.1",
     "cpx": "^1.5.0",
     "ejs": "^2.6.1",
     "glob": "^7.1.3",

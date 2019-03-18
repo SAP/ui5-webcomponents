@@ -711,12 +711,35 @@
     xml2js "^0.4.17"
     yazl "^2.5.1"
 
-"@ui5/cli@^1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@ui5/cli/-/cli-1.2.0.tgz#e3c224e676838607501f23a07e481a43cc515471"
-  integrity sha512-XBHj8KYmmqh41i+H/YchHErIYyf257jAJjukXcihT9wwuZde+UJGPOZRDiSp3DNj4skntXRojNWjd2zPz0nFJQ==
+"@ui5/builder@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@ui5/builder/-/builder-1.0.2.tgz#37948c399ea33290c269176086b4dbb08c0d0d73"
+  integrity sha512-HUMZ4H5vFVXmXTuGMSPuYnpmzPzaUWGNkLbYC4MBChCeUZoO6jwcQ7KvP7qYraUFIEiEyBRn2AmUIrFGZuIkmg==
   dependencies:
-    "@ui5/builder" "^1.0.1"
+    "@ui5/fs" "^1.0.1"
+    "@ui5/logger" "^1.0.0"
+    cheerio "^0.22.0"
+    escodegen "^1.11.0"
+    escope "^3.6.0"
+    esprima "^4.0.1"
+    estraverse "^4.2.0"
+    globby "^7.1.1"
+    graceful-fs "^4.1.15"
+    less-openui5 "^0.6.0"
+    pretty-data "^0.40.0"
+    pretty-hrtime "^1.0.3"
+    replacestream "^4.0.3"
+    semver "^5.6.0"
+    uglify-es "^3.2.2"
+    xml2js "^0.4.17"
+    yazl "^2.5.1"
+
+"@ui5/cli@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@ui5/cli/-/cli-1.2.1.tgz#b78fbf77f47ac8670176076c6221f17de3c6a936"
+  integrity sha512-f12QifMYGxq3PSGMP9BuFZryqDg/GzgNH0lvCrPwDva/3GVkWlc+8Z7bLyEVhHQJzCKtvFu/PeojquSg2wrqfw==
+  dependencies:
+    "@ui5/builder" "^1.0.2"
     "@ui5/fs" "^1.0.1"
     "@ui5/logger" "^1.0.0"
     "@ui5/project" "^1.0.1"
@@ -728,7 +751,7 @@
     supports-color "^6.0.0"
     treeify "^1.0.1"
     update-notifier "^2.5.0"
-    yargs "^13.1.0"
+    yargs "^13.2.0"
 
 "@ui5/fs@^1.0.0", "@ui5/fs@^1.0.1":
   version "1.0.1"
@@ -8667,10 +8690,10 @@ yargs@^11.0.0, yargs@^11.1.0:
     y18n "^3.2.1"
     yargs-parser "^9.0.2"
 
-yargs@^13.1.0:
-  version "13.2.1"
-  resolved "https://registry.yarnpkg.com/yargs/-/yargs-13.2.1.tgz#c8888bcf24424bd4e5a834348366f6fcc37bb8d9"
-  integrity sha512-HgY0xHGmPPakg6kEDufqxZuXVtvPZcipORC8O7S44iEnwsUmP+qnhReHc6d1dyeIZkrPmYFblh45Z2oeDn++fQ==
+yargs@^13.2.0:
+  version "13.2.2"
+  resolved "https://registry.yarnpkg.com/yargs/-/yargs-13.2.2.tgz#0c101f580ae95cea7f39d927e7770e3fdc97f993"
+  integrity sha512-WyEoxgyTD3w5XRpAQNYUB9ycVH/PQrToaTXdYXRdOXvEy1l19br+VJsc0vcO8PTGg5ro/l/GY7F/JMEBmI0BxA==
   dependencies:
     cliui "^4.0.0"
     find-up "^3.0.0"
