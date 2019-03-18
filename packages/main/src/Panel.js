@@ -231,7 +231,7 @@ class Panel extends WebComponent {
 		this._icon.title = this.resourceBundle.getText("PANEL_ICON");
 		this._icon.functional = true;
 
-		this._toggle = (event) => { event.preventDefault(); this._toggleOpen(); };
+		this._toggle = event => { event.preventDefault(); this._toggleOpen(); };
 		this._noOp = () => {};
 	}
 
