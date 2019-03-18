@@ -1,5 +1,5 @@
-commit 15eb051ef85da8d1013d48efbe572db1210959b6
-Author: Adrian Bobev <adrian.bobev@gmail.com>
-Date:   Mon Mar 18 16:02:53 2019 +0200
+commit fb8c2e7d6f77022b5942fe81478150c1f501f763
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Mon Mar 18 17:08:24 2019 +0200
 
-    chore(release): publish v0.9.0 (#201)
+    chore: prepare playground for release (#203)

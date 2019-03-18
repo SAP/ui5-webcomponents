@@ -29,6 +29,15 @@
 
 	<script nomodule src="../../../../../../resources/sap/ui/webcomponents/main/bundle.es5.js">
 	</script>
+
+	<style>
+		.header {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			width: 100%;
+		}
+	</style>
 </head>
 <body class="sapUiBody example-wrapper">
 
@@ -102,8 +111,7 @@
 	<section>
 		<h3>Fixed Panel (Can't be Collapsed/Expanded)</h3>
 		<div class="snippet panel-snippet">
-			<ui5-panel class="full-width" fixed accessible-role="Complementary"
-				header-text="Country Of Birth" class="panel-width">
+			<ui5-panel class="full-width" fixed accessible-role="Complementary" header-text="Country Of Birth" class="panel-width">
 				<ui5-list id="myList2" mode="SingleSelectBegin" >
 					<ui5-li key="country1">Argentina</ui5-li>
 					<ui5-li key="country2">Bulgaria</ui5-li>
@@ -113,13 +121,72 @@
 			</ui5-panel>
 		</div>
 		<pre class="prettyprint lang-html"><xmp>
-<ui5-panel fixed accessible-role="Complementary"
-	header-text="Country Of Birth" class="panel-width">
+<ui5-panel
+	fixed accessible-role="Complementary"
+	header-text="Country Of Birth"
+	class="panel-width">
 	<ui5-list id="myList2" mode="SingleSelectBegin" >
 		<ui5-li key="country1">Argentina</ui5-li>
 		<ui5-li key="country2">Bulgaria</ui5-li>
 		<ui5-li key="country3">China</ui5-li>
 		<ui5-li key="country4">Germany</ui5-li>
+	</ui5-list>
+</ui5-panel>
+		</xmp></pre>
+	</section>
+
+	<section>
+		<h3>Panel with Custom Header</h3>
+		<div class="snippet">
+			<ui5-panel
+				accessible-role="Complementary"
+				class="full-width">
+
+				<!-- Panel header -->
+				<div data-ui5-slot="header" class="header">
+					<ui5-title>Countries</ui5-title>
+					<div>
+						<ui5-button>Edit</ui5-button>
+						<ui5-button type="Emphasized">Add</ui5-button>
+						<ui5-button type="Negative">Remove</ui5-button>
+					</div>
+				</div>
+
+				<ui5-list id="myList1" mode="MultiSelect">
+					<ui5-li key="country1">Argentina</ui5-li>
+					<ui5-li key="country2">Bulgaria</ui5-li>
+					<ui5-li key="country3">China</ui5-li>
+				</ui5-list>
+			</ui5-panel>
+		</div>
+		<pre class="prettyprint lang-html"><xmp>
+<style>
+	.header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		width: 100%;
+	}
+</style>
+
+<ui5-panel
+	accessible-role="Complementary"
+	class="full-width">
+
+	<!-- Panel header -->
+	<div data-ui5-slot="header" class="header">
+		<ui5-title>Countries</ui5-title>
+		<div>
+			<ui5-button>Edit</ui5-button>
+			<ui5-button type="Emphasized">Add</ui5-button>
+			<ui5-button type="Negative">Remove</ui5-button>
+		</div>
+	</div>
+
+	<ui5-list id="myList1" mode="MultiSelect">
+		<ui5-li key="country1">Argentina</ui5-li>
+		<ui5-li key="country2">Bulgaria</ui5-li>
+		<ui5-li key="country3">China</ui5-li>
 	</ui5-list>
 </ui5-panel>
 		</xmp></pre>
@@ -140,7 +207,7 @@ The <code>ui5-panel</code> component is a container which has a header and a con
 
 <h3>Guidelines:</h3> <ul> <li>Nesting two or more panels is not recommended.</li> <li>Do not stack too many panels on one page.</li> </ul>
 
-<h3>Structure</h3> A panel consists of a title bar with a header text or header toolbar and a content area. <br> The content area can contain an arbitrary set of controls. The header can contain a title with text and icons, buttons, and a collapse icon, which allows to show/hide the content area.
+<h3>Structure</h3> A panel consists of a title bar with a header text or custom header. <br> The content area can contain an arbitrary set of controls. The header can contain a title with text and icons, buttons, and a collapse icon, which allows to show/hide the content area.
 
 <h3>Responsive Behavior</h3> <ul> <li>If the width of the panel is set to 100% (default), the panel and its children are resized responsively, depending on its parent container.</li> <li>If the panel has a fixed height, it will take up the space even if the panel is collapsed.</li> <li>When the panel is expandable (the <code>fixed</code> property is set to <code>false</code>), an arrow icon (pointing to the right) appears in front of the header.</li> <li>When the animation is activated, expand/collapse uses a smooth animation to open or close the content area.</li> <li>When the panel expands/collapses, the arrow icon rotates 90 degrees clockwise/counter-clockwise.</li> </ul>
 
@@ -225,7 +292,7 @@ The <code>ui5-panel</code> component is a container which has a header and a con
                     <div class="row api-table-roll-odd">
                       <div class="cell api-table-content-cell api-table-content-cell-bold">header</div>
                       <div class="cell api-table-content-cell">HTMLElement</div>
-                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the <code>ui5-panel</code> header area. For example, you can use <code>ui5-toolbar</code> and add extra components for user interactions. <br><br> <b>Note:</b> When a header is provided, the <code>headerText</code> property is ignored.</div>
+                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the <code>ui5-panel</code> header area. <br><br> <b>Note:</b> When a header is provided, the <code>headerText</code> property is ignored.</div>
                     </div>
             
                 </div>
