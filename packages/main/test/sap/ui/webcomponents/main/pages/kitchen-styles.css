@@ -63,6 +63,13 @@ section {
 	color: orange;
 }
 
+.navbar,
+.panel-header {
+	display: flex;
+	align-items: center;
+	width: 100%;
+}
+
 .row > ui5-button,
 .row > ui5-togglebutton,
 .row > ui5-checkbox,
