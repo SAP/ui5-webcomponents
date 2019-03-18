@@ -93,10 +93,6 @@ const metadata = {
 		wrap: {
 			type: Boolean,
 		},
-
-		_rel: {
-			type: String
-		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Link.prototype */ {
 
@@ -154,6 +150,11 @@ const metadata = {
  * @public
  */
 class Link extends WebComponent {
+	constructor() {
+		super();
+		this._dummyAnchor = document.createElement('a');
+	}
+
 	static get metadata() {
 		return metadata;
 	}
@@ -163,13 +164,11 @@ class Link extends WebComponent {
 	}
 
 	onBeforeRendering() {
-		if (this.target === "_blank"
+		const needsNoReferrer = this.target === "_blank"
 			&& this.href
-			&& !isSameOrigin(this.href)) {
-			this._rel = "noreferrer";
-		} else {
-			this._rel = undefined;
-		}
+			&& this._isCrossOrigin();
+
+			this._state._rel = needsNoReferrer ? "noreferrer" : undefined;
 	}
 
 	ontap(event) {
@@ -213,20 +212,19 @@ class Link extends WebComponent {
 		}
 	}
 
+	_isCrossOrigin() {
+		const loc = window.location;
+
+		this._dummyAnchor.href = this.href;
+
+		return !(this._dummyAnchor.hostname === loc.hostname
+			&& this._dummyAnchor.port === loc.port
+			&& this._dummyAnchor.protocol === loc.protocol);
+	}
+
 	static get calculateTemplateContext() {
 		return LinkTemplateContext.calculate;
 	}
-}
-
-function isSameOrigin(url) {
-	var loc = window.location,
-			a = document.createElement('a');
-
-	a.href = url;
-
-	return a.hostname == loc.hostname &&
-				 a.port == loc.port &&
-				 a.protocol == loc.protocol;
 }
 
 Bootstrap.boot().then(_ => {
