@@ -1,5 +1,5 @@
-commit cb34e96667bd33ff039510ff0cb5f11c0fb41374
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Mar 18 13:33:39 2019 +0200
+commit 15eb051ef85da8d1013d48efbe572db1210959b6
+Author: Adrian Bobev <adrian.bobev@gmail.com>
+Date:   Mon Mar 18 16:02:53 2019 +0200
 
-    refactor(ui5-li-custom): provide min-width for multiple and single selection components (#197)
+    chore(release): publish v0.9.0 (#201)
