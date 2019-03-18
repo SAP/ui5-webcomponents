@@ -93,6 +93,10 @@ const metadata = {
 		wrap: {
 			type: Boolean,
 		},
+
+		_rel: {
+			type: String
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Link.prototype */ {
 
@@ -158,6 +162,16 @@ class Link extends WebComponent {
 		return LinkRederer;
 	}
 
+	onBeforeRendering() {
+		if (this.target === "_blank"
+			&& this.href
+			&& !isSameOrigin(this.href)) {
+			this._rel = "noreferrer";
+		} else {
+			this._rel = undefined;
+		}
+	}
+
 	ontap(event) {
 		if (this.disabled) {
 			return;
@@ -202,6 +216,17 @@ class Link extends WebComponent {
 	static get calculateTemplateContext() {
 		return LinkTemplateContext.calculate;
 	}
+}
+
+function isSameOrigin(url) {
+	var loc = window.location,
+			a = document.createElement('a');
+
+	a.href = url;
+
+	return a.hostname == loc.hostname &&
+				 a.port == loc.port &&
+				 a.protocol == loc.protocol;
 }
 
 Bootstrap.boot().then(_ => {
