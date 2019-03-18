@@ -18,6 +18,10 @@ import "./src/themes/sap_belize/CalendarHeader.less";
 import "./src/themes/sap_belize_hcb/CalendarHeader.less";
 import "./src/themes/sap_fiori_3/CalendarHeader.less";
 
+import "./src/themes/sap_belize/CustomListItem.less";
+import "./src/themes/sap_belize_hcb/CustomListItem.less";
+import "./src/themes/sap_fiori_3/CustomListItem.less";
+
 import "./src/themes/sap_belize/DatePicker.less";
 import "./src/themes/sap_belize_hcb/DatePicker.less";
 import "./src/themes/sap_fiori_3/DatePicker.less";

@@ -1,7 +1,16 @@
 import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
+import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
 import ListItem from "./ListItem";
 import CustomListItemTemplateContext from "./CustomListItemTemplateContext";
 import CustomListItemRenderer from "./build/compiled/CustomListItemRenderer.lit";
+
+import belize from "./themes/sap_belize/CustomListItem.less";
+import belizeHcb from "./themes/sap_belize_hcb/CustomListItem.less";
+import fiori3 from "./themes/sap_fiori_3/CustomListItem.less";
+
+ShadowDOM.registerStyle("sap_belize", "CustomListItem.css", belize);
+ShadowDOM.registerStyle("sap_belize_hcb", "CustomListItem.css", belizeHcb);
+ShadowDOM.registerStyle("sap_fiori_3", "CustomListItem.css", fiori3);
 
 /**
  * @public
@@ -11,6 +20,7 @@ const metadata = {
 	styleUrl: [
 		"ListItemBase.css",
 		"ListItem.css",
+		"CustomListItem.css",
 	],
 	defaultSlot: "content",
 	slots: /** @lends sap.ui.webcomponents.main.CustomListItem.prototype */ {
