@@ -1,10 +1,14 @@
 class PanelTemplateContext {
 	static calculate(state) {
+		const headerClickable = state.headerClickable && !state.fixed;
+
 		const context = {
 			ctr: state,
 			expanded: !state.collapsed,
 			ariaLabelledBy: state.header ? undefined : `${state._id}-header`,
 			accRole: state.accessibleRole.toLowerCase(),
+			headerTabIndex: headerClickable ? "0" : undefined,
+			iconTabIndex: headerClickable ? undefined : "0",
 			classes: {
 				main: {
 					sapMPanel: true,
@@ -13,6 +17,7 @@ class PanelTemplateContext {
 					sapMPanelWrappingDivTb: state.header,
 					sapMPanelWrappingDivTbExpanded: state.header && state.collapsed,
 					sapMPanelWrappingDiv: !state.header,
+					sapMPanelWrappingDivClickable: headerClickable,
 					sapMPanelWrappingDivExpanded: !state.header && !state.collapsed,
 				},
 				icon: {
