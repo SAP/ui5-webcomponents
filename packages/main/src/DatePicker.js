@@ -392,23 +392,23 @@ class DatePicker extends WebComponent {
 	}
 
 	/**
-	 * Gets a Date value corresponding to the current value property.
-	 * @returns {Date} The parsed value
+	 * Gets a Date corresponding to the given value.
+	 * @param {string} value A string value to be parsed
+	 * @returns {Date} A date corresponding to the given string value
 	 * @public
 	 */
-	getDateValue() {
-		return this.getFormat().parse(this.value);
+	parse(value) {
+		return this.getFormat().parse(value);
 	}
 
 	/**
-	 * Sets the value property using a Date value,
-	 * formatted according to the given format options.
-	 * @param {Date} date The value to be set
+	 * Formats a Date value according to the given format options.
+	 * @param {Date} date A date to be formated
+	 * @returns {string} A string value corresponding to the given date
 	 * @public
 	 */
-	setDateValue(date) {
-		this.value = this.getFormat().format(date);
-		return this;
+	format(date) {
+		return this.getFormat().format(date);
 	}
 
 	_getPopover() {
