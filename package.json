@@ -39,10 +39,6 @@
     "wsrun": "^3.6.4"
   },
   "resolutions": {
-    "@ui5/webcomponents-core": "0.8.0",
-    "@ui5/webcomponents-base": "0.8.0",
-    "@ui5/webcomponents": "0.8.0",
-    "@ui5/webcomponents-playground": "0.8.0",
     "abstract-syntax-tree": "1.0.3",
     "dir-glob": "2.0.0"
   },

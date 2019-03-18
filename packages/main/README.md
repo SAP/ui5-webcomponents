@@ -31,7 +31,7 @@ UI5 remains what it is: the best choice for…
 
 ## Resources
 - [UI5 Web Components](https://sap.github.io/ui5-webcomponents)
-- [UI5 Web Components - Playground and API Reference](https://sap.github.io/ui5-webcomponents/playground.html)
+- [UI5 Web Components - Playground and API Reference](https://sap.github.io/ui5-webcomponents/playground/)
 
 ## Requirements
 - [Node.js](https://nodejs.org/) (**version 8.5 or higher** ⚠️)
@@ -55,6 +55,34 @@ Then, you can use the custom element in an HTML page:
 
 ```html
 <ui5-button>Hello world!</ui5-button>
+```
+
+## Browser support
+
+Currently only Chrome, Safari and Firefox support Web Components natively.
+
+If your application should run on browsers without native Web Components support (Edge and/or IE11), import one the following modules before your first Web Component import: 
+
+### Edge only
+
+```js
+import "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/browsersupport/Edge";
+```
+
+### Edge and IE11
+
+```js
+import "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/browsersupport/IE11";
+```
+
+*Note:* Importing the module for IE11 support automatically enables Edge support as well, so there is no need to import them both explicitly.
+
+Example:
+
+```js
+import "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/browsersupport/IE11"; // This will enable Edge and IE11 support for all Web Components below
+import "@ui5/webcomponents/dist/Button"; // loads ui5-button
+import "@ui5/webcomponents/dist/Label"; // loads ui5-label
 ```
 
 ## Configure
@@ -136,6 +164,7 @@ In a couple of guides we refer to the [Yarn](https://yarnpkg.com/) node package 
 Keep in mind that linking the same module with npm and Yarn may cause issues. Also, Yarn can't work with links created by npm and vice versa.
 
 ### Where are the npm packages?
+- [UI5 Web Components](https://www.npmjs.com/package/@ui5/webcomponents)
 - [UI5 Web Components Base](https://www.npmjs.com/package/@ui5/webcomponents-base)
 - [UI5 Web Components Core](https://www.npmjs.com/package/@ui5/webcomponents-core)
 

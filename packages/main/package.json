@@ -1,6 +1,6 @@
 {
   "name": "@ui5/webcomponents",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "description": "UI5 Web Components: webcomponents.main",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
@@ -84,8 +84,8 @@
     "url": "https://github.com/SAP/ui5-webcomponents.git"
   },
   "dependencies": {
-    "@ui5/webcomponents-base": "^0.8.0",
-    "@ui5/webcomponents-core": "^0.8.0"
+    "@ui5/webcomponents-base": "0.9.0",
+    "@ui5/webcomponents-core": "0.9.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.2",
