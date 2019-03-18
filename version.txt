@@ -1,9 +1,5 @@
-commit 037409d1bd6f722732fdb2b5a7f5e57e9228ab5b
+commit cb34e96667bd33ff039510ff0cb5f11c0fb41374
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Mar 15 19:36:51 2019 +0200
+Date:   Mon Mar 18 13:33:39 2019 +0200
 
-    fix(ui5-list): correct backward navigation with SHIFT+TAB (#193)
-    
-    After the refactoring of the Pseudo events onsaptabprevious stopped working.
-    It`s now replaced by _handleTabPrevious.
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/192
+    refactor(ui5-li-custom): provide min-width for multiple and single selection components (#197)
