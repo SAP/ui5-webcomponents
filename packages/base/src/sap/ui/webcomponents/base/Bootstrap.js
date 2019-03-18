@@ -4,6 +4,7 @@ import { insertIconFontFace } from "./IconFonts";
 import DOMEventHandler from "./DOMEventHandler";
 import { initConfiguration } from "./Configuration";
 import { applyTheme } from "./Theming";
+import whenPolyfillLoaded from "./compatibility/whenPolyfillLoaded";
 
 EventEnrichment.run();
 
@@ -16,14 +17,14 @@ const Bootstrap = {
 			return bootPromise;
 		}
 
-		bootPromise = new Promise(resolve => {
-			whenDOMReady().then(() => {
-				initConfiguration();
-				applyTheme();
-				insertIconFontFace();
-				DOMEventHandler.start();
-				resolve();
-			});
+		bootPromise = new Promise(async resolve => {
+			await whenDOMReady();
+			initConfiguration();
+			applyTheme();
+			insertIconFontFace();
+			DOMEventHandler.start();
+			await whenPolyfillLoaded();
+			resolve();
 		});
 
 		return bootPromise;

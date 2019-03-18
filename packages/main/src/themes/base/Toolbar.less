@@ -9,6 +9,13 @@
 /* CSS for control sap.m/Toolbar  */
 /* Base theme                     */
 /* ============================== */
+@_ui5_toolbar_info_base_height: 2rem;
+@_ui5_toolbar_info_base_margin: 0;
+@_ui5_toolbar_info_base_padding: 0 0.5rem;
+@_ui5_toolbar_info_base_bottom_border: none;
+@_ui5_toolbar_standard_border_color: transparent;
+@_ui5_toolbar_info_standard_border: none;
+@_ui5_toolbar_info_standard_border_radius: 0;
 
 :host(ui5-toolbar) {
 	display: block;
@@ -43,7 +50,8 @@ ui5-toolbar {
   }
 
   .sapMTBStandard {
-	  border-bottom: 1px solid @sapUiGroupTitleBorderColor;
+	  border: 1px solid @_ui5_toolbar_standard_border_color;
+	  border-bottom-color: @sapUiGroupTitleBorderColor;
   }
 
   /* Transparent Toolbar Context */
@@ -92,9 +100,19 @@ ui5-toolbar {
   .sapMTB-Info-CTX.sapMTB {
 	  background: @sapUiInfobarBackground;
 	  color: contrast(@sapUiInfobarBackground, @sapUiListActiveTextColor, @sapUiListTextColor, @sapUiContentContrastTextThreshold);
+	  height: @_ui5_toolbar_info_base_height;
+	  margin: @_ui5_toolbar_info_base_margin;
+	  padding: @_ui5_toolbar_info_base_padding;
+	  border-bottom: @_ui5_toolbar_info_base_bottom_border;
   }
 
-  /********** COMPACT DESIGN ************/
+	.sapMTB-Info-CTX.sapMTB.sapMTBStandard {
+		border: @_ui5_toolbar_info_standard_border;
+		border-radius: @_ui5_toolbar_info_standard_border_radius;
+	}
+
+
+/********** COMPACT DESIGN ************/
 
   /* toolbar has 2rem height in compact mode */
   .sapUiSizeCompact .sapMTB {

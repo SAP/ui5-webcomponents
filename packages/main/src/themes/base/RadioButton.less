@@ -6,10 +6,15 @@
 @import "./global.less";
 
 /* ================================== */
-/* CSS for control sap.m/RadioButton  */
+/* CSS for ui5-radiobutton            */
 /* Base theme                         */
 /* ================================== */
-@_sap_m_RadioButton_SelectedWarningColor: darken(@sapUiFieldWarningColor, 100);
+@_ui5_radiobutton_hover_fill: @sapUiFieldHoverBackground;
+@_ui5_radiobutton_border_width: 1px;
+@_ui5_radiobutton_selected_fill: @sapUiSelected;
+@_ui5_radiobutton_selected_error_fill: @sapUiFieldInvalidColor;
+@_ui5_radiobutton_selected_warning_fill: darken(@sapUiFieldWarningColor, 100);
+@_ui5_radiobutton_warning_error_border_dash: 0;
 
 :host(ui5-radiobutton) {
 	max-width: 100%;
@@ -29,111 +34,113 @@ ui5-radiobutton {
 	flex-wrap: nowrap;
 	outline: none;
 	max-width: 100%;
+}
 
-	/* Selected */
-	&.sapMRbSel .sapMRbSvgInner {
-		fill: @sapUiSelected;
-	}
+/* Selected */
+.sapMRb.sapMRbSel .sapMRbSvgInner {
+	fill: @_ui5_radiobutton_selected_fill;
+}
 
-	/* Disabled */
-	&.sapMRbDis {
-		opacity: @sapUiContentDisabledOpacity;
-	}
+/* Disabled */
+.sapMRb.sapMRbDis {
+	opacity: @sapUiContentDisabledOpacity;
+}
 
-	/* Disabled on focus */
-	&.sapMRbDis:focus:before {
-		display: none;
-	}
+/* Disabled on focus */
+.sapMRb.sapMRbDis:focus:before {
+	display: none;
+}
 
-	/* Focused */
-	&:focus:before {
-		content: "";
-		display: block;
-		position: absolute;
-		top: .625rem;
-		bottom: .625rem;
-		left: .625rem;
-		right: .625rem;
-		pointer-events: none;
-		border: 1px dotted @sapUiContentFocusColor;
-	}
+/* Focused */
+.sapMRb:focus:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: .625rem;
+	bottom: .625rem;
+	left: .625rem;
+	right: .625rem;
+	pointer-events: none;
+	border: @_ui5_radiobutton_border_width dotted @sapUiContentFocusColor;
+}
 
-	&.sapMRbHasLabel:focus:before {
-		right: 0;
-	}
+.sapMRb.sapMRbHasLabel:focus:before {
+	right: 0;
+}
 
-	/* Read only */
-	&.sapMRbRo {
-		&.sapMRbSel .sapMRbSvgInner {
-			fill: @sapUiContentNonInteractiveIconColor;
-		}
+/* Read only */
+.sapMRb.sapMRbRo.sapMRbSel .sapMRbSvgInner {
+	fill: @sapUiContentNonInteractiveIconColor;
+}
 
-		.sapMRbSvgOuter {
-			fill: @sapUiFieldReadOnlyBackground;
-			stroke: @sapUiFieldReadOnlyBorderColor;
-		}
-	}
+.sapMRb.sapMRbRo .sapMRbSvgOuter {
+	fill: @sapUiFieldReadOnlyBackground;
+	stroke: @sapUiFieldReadOnlyBorderColor;
+}
 
-	/* Error state */
-	&.sapMRbErr.sapMRbSel .sapMRbSvgInner {
-		fill: @sapUiFieldInvalidColor;
-	}
-	&.sapMRbErr .sapMRbSvgOuter,
-	&.sapMRbErr:hover .sapMRbInner.sapMRbHoverable:hover .sapMRbSvgOuter {
-		stroke: @sapUiFieldInvalidColor;
-		fill: @sapUiFieldInvalidBackground;
-	}
+/* Error state */
+.sapMRb.sapMRbErr.sapMRbSel .sapMRbSvgInner {
+	fill: @_ui5_radiobutton_selected_error_fill;
+}
+.sapMRb.sapMRbErr .sapMRbSvgOuter,
+.sapMRb.sapMRbErr:hover .sapMRbInner.sapMRbHoverable:hover .sapMRbSvgOuter {
+	stroke: @sapUiFieldInvalidColor;
+	fill: @sapUiFieldInvalidBackground;
+}
 
-	/* Warning state */
-	&.sapMRbWarn.sapMRbSel .sapMRbSvgInner {
-		fill: @_sap_m_RadioButton_SelectedWarningColor;
-	}
-	&.sapMRbWarn .sapMRbSvgOuter,
-	&.sapMRbWarn:hover .sapMRbInner.sapMRbHoverable:hover .sapMRbSvgOuter {
-		stroke: @sapUiFieldWarningColor;
-		fill: @sapUiFieldWarningBackground;
-	}
+/* Warning state */
+.sapMRb.sapMRbWarn.sapMRbSel .sapMRbSvgInner {
+	fill: @_ui5_radiobutton_selected_warning_fill;
+}
+.sapMRb.sapMRbWarn .sapMRbSvgOuter,
+.sapMRb.sapMRbWarn:hover .sapMRbInner.sapMRbHoverable:hover .sapMRbSvgOuter {
+	stroke: @sapUiFieldWarningColor;
+	fill: @sapUiFieldWarningBackground;
+}
 
-	/* Inner */
-	.sapMRbInner {
-		width: 3rem;
-		height: 3rem;
-		font-size: 1rem; /* override font size of the message dialog */
-		pointer-events: none;
-		vertical-align: top;
-		display: inline-block;
+.sapMRb.sapMRbErr,
+.sapMRb.sapMRbWarn {
+	stroke-dasharray: @_ui5_radiobutton_warning_error_border_dash;
+}
 
-		/* Focused */
-		&:focus {
-			outline: none;
-		}
+/* Inner */
+.sapMRb .sapMRbInner {
+	width: 3rem;
+	height: 3rem;
+	font-size: 1rem; /* override font size of the message dialog */
+	pointer-events: none;
+	vertical-align: top;
+	display: inline-block;
+}
 
-		/* Hovered */
-		&.sapMRbHoverable:hover .sapMRbSvgOuter {
-			fill: @sapUiFieldHoverBackground;
-			stroke: @sapUiFieldHoverBorderColor;
-		}
+.sapMRb .sapMRbInner:focus {
+	outline: none;
+}
 
-		input {
-			margin: 0; /* FF puts margin */
-			visibility: hidden;
-			width: 0;
-		}
-	}
+/* Hovered */
+.sapMRb:not(.sapMRbWarn):not(.sapMRbErr):hover .sapMRbHoverable .sapMRbSvgOuter {
+	fill: @_ui5_radiobutton_hover_fill;
+	stroke: @sapUiFieldHoverBorderColor;
+}
 
-	/* Label */
-	ui5-label.labelInRadioButton {
-		width: calc(~"100% - 3rem");
-		padding-right: 1px;
-		vertical-align: top;
-		height: 3rem;
-		line-height: 3rem;
-		cursor: default;
-		max-width: 100%;
-		text-overflow: ellipsis;
-		overflow: hidden;
-		pointer-events: none;
-	}
+.sapMRb .sapMRbInner input {
+	margin: 0; /* FF puts margin */
+	visibility: hidden;
+	width: 0;
+}
+
+/* Label */
+.sapMRb ui5-label.labelInRadioButton {
+	width: calc(~"100% - 3rem");
+	padding-right: 1px;
+	vertical-align: top;
+	height: 3rem;
+	line-height: 3rem;
+	cursor: default;
+	max-width: 100%;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	pointer-events: none;
 }
 
 /* SVG */
@@ -141,52 +148,62 @@ ui5-radiobutton {
 	height: 3rem;
 	width: 3rem;
 	pointer-events: none;
+}
 
-	.sapMRbSvgOuter {
-		stroke: @sapUiFieldBorderColor;
-	}
+.sapMRbSvg .sapMRbSvgOuter {
+	stroke: @sapUiFieldBorderColor;
+}
 
-	.sapMRbSvgInner {
-		fill: none;
-	}
+.sapMRbSvg .sapMRbSvgInner {
+	fill: none;
 }
 
 /* Compact size */
-.sapUiSizeCompact {
-	.sapMRb {
-		height : 2rem;
+.sapUiSizeCompact .sapMRb {
+	height : 2rem;
+}
 
-		&:focus:before {
-			top: .375rem;
-			bottom: .375rem;
-			left: .375rem;
-			right: .325rem;
-		}
+.sapUiSizeCompact .sapMRb:focus:before {
+	top: .375rem;
+	bottom: .375rem;
+	left: .375rem;
+	right: .325rem;
+}
 
-		&.sapMRbHasLabel:focus:before {
-			right: 0;
-		}
+.sapUiSizeCompact .sapMRb.sapMRbHasLabel:focus:before {
+	right: 0;
+}
 
-		.sapMRbInner {
-			width: 2rem;
-			height: 2rem;
-			display: flex;
-			align-items: center;
-			justify-content: center;
+.sapUiSizeCompact .sapMRb .sapMRbInner {
+	width: 2rem;
+	height: 2rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
 
-			.sapMRbSvg {
-				height: 1rem;
-				width: 1rem;
-				line-height: 1rem;
-			}
-		}
+.sapUiSizeCompact .sapMRb .sapMRbInner .sapMRbSvg {
+	height: 1rem;
+	width: 1rem;
+	line-height: 1rem;
+}
 
-		ui5-label.labelInRadioButton {
-			line-height: 2rem;
-			height: 2rem;
-			width: calc(~"100% - 2rem + 1px");
-		}
-	}
+.sapUiSizeCompact .sapMRb ui5-label.labelInRadioButton {
+	line-height: 2rem;
+	height: 2rem;
+	width: calc(~"100% - 2rem + 1px");
+}
+
+/* RTL */
+span[dir="rtl"] .sapMRb.sapMRbHasLabel:focus:before {
+	left: 0;
+	right: 0.625rem;
+}
+
+/* RTL in Compact */
+span[dir="rtl"].sapUiSizeCompact .sapMRb.sapMRbHasLabel:focus:before {
+	left: 0;
+	right: 0.375rem;
 }
 
 /* ListItem Context */
@@ -194,23 +211,6 @@ ui5-radiobutton {
 	fill: @sapUiListBackground;
 }
 
-/* RTL */
-span[dir="rtl"] {
-	.sapMRb.sapMRbHasLabel:focus:before {
-		left: 0;
- 		right: 0.625rem;
-	}
-}
-
-/* RTL in Compact */
-span[dir="rtl"] {
-	&.sapUiSizeCompact .sapMRb.sapMRbHasLabel:focus:before {
-		left: 0;
- 		right: 0.375rem;
-	}
-}
-
-/* ListItem Context */
 ui5-radiobutton.radioButtonInListItem .sapMRb .sapMRbInner .sapMRbSvgOuter {
 	fill: @sapUiListBackground;
 }

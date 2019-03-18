@@ -1,0 +1,16 @@
+<div class="{{classes.main}}">
+	{{#unless ctr.hideIcon}}
+		<ui5-icon class="ui5-messagestrip-icon" src="{{icon}}"></ui5-icon>
+	{{/unless}}
+
+	<span class="{{classes.label}}">{{ctr._nodeText}}</span> 
+
+	{{#unless ctr.hideCloseButton}}
+		<ui5-icon
+			class="{{classes.closeIcon}}"
+			src="sap-icon://decline"
+			tabindex="0"
+			@press="{{ctr._closeButton.press}}">
+		</ui5-icon>
+	{{/unless}}
+</div>

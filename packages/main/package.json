@@ -44,7 +44,7 @@
     }
   },
   "scripts": {
-    "build": "npm-run-all --sequential clean lint build:templates build:samples build:styles build:less copy:src build:bundle copy:i18n",
+    "build": "npm-run-all --sequential clean lint build:templates build:samples build:styles build:less copy:src build:bundle copy:i18n copy:webcomponents-polyfill ",
     "build:less": "rollup -c rollup.config.less.js",
     "build:bundle": "rollup -c --environment ES5_BUILD",
     "build:templates": "mkdirp src/build/compiled && node ./lib/hbs2ui5/index.js -d src/ -o src/build/compiled",
@@ -64,7 +64,8 @@
     "copy:test": "cpx \"test/**/*.*\" dist/test-resources",
     "copy:pages": "cpx \"test/**/pages/*.*\" dist/test-resources",
     "copy:qunit": "cpx \"test/**/qunit/*.*\" dist/test-resources",
-    "dev": "npm-run-all --parallel watch:less watch:templates watch:samples watch:pages watch:qunit watch:src watch:bundle watch:styles-bundles watch:styles-components",
+    "copy:webcomponents-polyfill": "cpx \"../../node_modules/@webcomponents/webcomponentsjs/**/*.*\" dist/webcomponentsjs/",
+    "dev": "npm-run-all --parallel watch:less watch:templates watch:samples watch:pages watch:qunit watch:src watch:bundle watch:styles-bundles watch:styles-components copy:webcomponents-polyfill",
     "start": "npm-run-all --parallel serve:static dev",
     "lint": "eslint .",
     "test:wdio": "npm-run-all --parallel --race serve:static test:wdio-run",
@@ -102,6 +103,7 @@
     "@wdio/mocha-framework": "^5.4.13",
     "@wdio/spec-reporter": "^5.4.3",
     "@wdio/sync": "^5.4.13",
+    "@webcomponents/webcomponentsjs": "^2.2.7",
     "chromedriver": "^2.45.0",
     "clean-css": "^4.2.1",
     "copy-and-watch": "^0.1.2",

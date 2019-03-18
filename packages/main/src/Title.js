@@ -77,10 +77,6 @@ class Title extends WebComponent {
 		return TitleRenderer;
 	}
 
-	constructor(state) {
-		super(state);
-	}
-
 	static calculateTemplateContext(state) {
 		const context = {
 			tag: (state.level === TitleLevel.Auto ? "div" : state.level).toLowerCase(),

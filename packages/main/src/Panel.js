@@ -203,8 +203,8 @@ class Panel extends WebComponent {
 		return PanelTemplateContext.calculate;
 	}
 
-	constructor(state) {
-		super(state);
+	constructor() {
+		super();
 
 		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
 

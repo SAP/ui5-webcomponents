@@ -81,10 +81,6 @@ class Dialog extends Popup {
 		return DialogRenderer;
 	}
 
-	constructor(state) {
-		super(state);
-	}
-
 	/**
 	* Opens the <code>ui5-dialog</code>.
 	* @public

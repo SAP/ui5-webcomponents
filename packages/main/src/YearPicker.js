@@ -90,8 +90,8 @@ class YearPicker extends WebComponent {
 		return YearPickerRenderer;
 	}
 
-	constructor(state) {
-		super(state);
+	constructor() {
+		super();
 
 		this._oLocale = getFormatLocale();
 

@@ -74,6 +74,10 @@ pre.prettyprint > xmp {
 	margin: 0 8px 8px 0;
 }
 
+.samples-vertical-align {
+	vertical-align: middle;
+}
+
 .samples-margin-bottom {
 	margin-bottom: 8px;
 }

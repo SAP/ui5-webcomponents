@@ -306,8 +306,8 @@ class TabContainer extends WebComponent {
 		}
 	}
 
-	constructor(state) {
-		super(state);
+	constructor() {
+		super();
 
 		this._updateScrollingHandler = this._updateScrolling.bind(this);
 

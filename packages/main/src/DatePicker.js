@@ -214,9 +214,8 @@ class DatePicker extends WebComponent {
 	}
 
 
-	constructor(state) {
-		super(state);
-
+	constructor() {
+		super();
 		this._input = {};
 		this._input.type = InputType.Text;
 		this._input.icon = {};

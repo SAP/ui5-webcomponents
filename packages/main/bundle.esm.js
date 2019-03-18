@@ -31,6 +31,7 @@ import Select from "./dist/Select";
 import ShellBar from "./dist/ShellBar";
 import ShellBarItem from "./dist/ShellBarItem";
 import Switch from "./dist/Switch";
+import MessageStrip from "./dist/MessageStrip";
 import TabContainer from "./dist/TabContainer";
 import Tab from "./dist/Tab";
 import TabSeparator from "./dist/TabSeparator";

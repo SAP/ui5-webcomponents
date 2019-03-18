@@ -1,3 +1,4 @@
+import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
 import List from "./List";
 import Popover from "./Popover";
 import StandardListItem from "./StandardListItem"; // ensure <ui5-li> is loaded
@@ -274,7 +275,9 @@ Suggestions.SCROLL_STEP = 48;
 
 // The List and Popover components would be rendered
 // by the issuer component`s template.
-List.define();
-Popover.define();
+Bootstrap.boot().then(() => {
+	List.define();
+	Popover.define();
+});
 
 export default Suggestions;

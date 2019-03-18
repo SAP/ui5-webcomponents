@@ -87,10 +87,6 @@ const metadata = {
  * @public
  */
 class StandardListItem extends ListItem {
-	constructor(state) {
-		super(state);
-	}
-
 	static get renderer() {
 		return StandardListItemRenderer;
 	}

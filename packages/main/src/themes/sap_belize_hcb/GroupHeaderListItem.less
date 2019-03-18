@@ -1,87 +1,11 @@
 /* ============================= */
-/* Base HCB theme                    */
+/* Base HCB theme                */
 /* ============================= */
 @import "../base/GroupHeaderListItem.less";
 @import "../sap_belize/GroupHeaderListItem.less";
 
 /* ============================= */
-/* Global Belize parameters      */
+/* Global Belize HCB parameters  */
 /* ============================= */
 @import "./base.less";
 @import "./global.less";
-
-.sapMGHLI .sapMLIBSelectM,
-.sapMGHLI .sapMLIBSelectS,
-.sapMGHLI .sapMLIBSelectD,
-.sapMGHLI .sapMListTblSelCol {
-	display: none;
-}
-
-.sapMGHLI .sapMLIBUnread,
-.sapMGHLI .sapMListTblUnreadCol {
-	display: none;
-}
-
-.sapMGHLIUpperCase {
-	text-transform: uppercase;
-}
-
-.sapMGHLI > .sapMLIBContent,
-.sapMGHLICell > .sapMLIBContent {
-	display: -webkit-box;
-	display: flex;
-	-webkit-box-align: center;
-	align-items: center;
-}
-
-.sapMGHLITitle,
-.sapMGHLICounter {
-	display: block;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-} 
-
-.sapMGHLICounter {
-	padding-left: 0.25rem;
-	webkit-box-flex: 0;
-	flex: none;
-}
-
-.sapMGHLI {
-	-webkit-align-items: flex-end;
-	align-items: flex-end;
-}
-
-.sapMListUl .sapMLIB.sapMGHLI {
-	height: 2rem;
-	line-height: 2rem;
-	font-size: @sapMFontHeader6Size;
-	font-weight: @sapUiFontHeaderWeight;
-	color: @sapUiListTableGroupHeaderTextColor;
-	background: @sapUiListGroupHeaderBackground;
-	border-bottom: 1px solid @sapUiListTableGroupHeaderBorderColor;
-}
-
-.sapMListUl > .sapMLIB.sapMGHLI {
-	background: @sapUiListGroupHeaderBackground;
-	height: 3rem;
-	line-height: 2rem;
-	padding-top: 1rem;
-}
-
-.sapMGHLI.sapMLIBActive.sapMLIB,
-.sapMGHLI.sapMLIBActive.sapMLIB > td {
-	color: @sapUiListActiveTextColor;
-	background: @sapUiListActiveBackground;
-}
-
-.sapMGHLICell {
-	padding: 0 1rem;
-}
-
-/* group headers should have background color grey so that they are distinguishable from ListItems */
-.sapMListTbl .sapMGHLI.sapMLIB:not(.sapMLIBActive):not(.sapMLIBSelected):not(:hover),
-.sapMListTbl .sapMGHLI.sapMLIB.sapMLIBTypeInactive {
-	background: @sapUiListTableGroupHeaderBackground;
-}

@@ -159,10 +159,6 @@ class Button extends WebComponent {
 		return ButtonTemplateContext.calculate;
 	}
 
-	constructor() {
-		super();
-	}
-
 	onBeforeRendering() {
 		if (this.icon) {
 			this._iconSettings = {

@@ -189,8 +189,8 @@ class Popover extends Popup {
 		return PopoverRenderer;
 	}
 
-	constructor(state) {
-		super(state);
+	constructor() {
+		super();
 
 		this._documentMouseDownHandler = this.documentMouseDown.bind(this);
 

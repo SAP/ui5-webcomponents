@@ -121,8 +121,8 @@ class DayPicker extends WebComponent {
 		return DayPickerRenderer;
 	}
 
-	constructor(state) {
-		super(state);
+	constructor() {
+		super();
 		this._oLocale = getFormatLocale();
 		this._oLocaleData = new LocaleData(this._oLocale);
 
@@ -245,7 +245,7 @@ class DayPicker extends WebComponent {
 				id: `${this._id}-WH${i.toString()}`,
 				name: aDayNamesWide[weekday],
 				ultraShortName: aUltraShortNames[weekday],
-				classes: "sapWCDayPickerWH",
+				classes: "sapWCDayPickerDayName",
 			};
 
 			this._dayNames.push(dayName);

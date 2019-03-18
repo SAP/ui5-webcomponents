@@ -55,10 +55,6 @@ class ListItemBase extends WebComponent {
 		return metadata;
 	}
 
-	constructor(state) {
-		super(state);
-	}
-
 	static get calculateTemplateContext() {
 		return ListItemBaseTemplateContext.calculate;
 	}
@@ -85,7 +81,7 @@ class ListItemBase extends WebComponent {
 		}
 	}
 
-	onsaptabprevious(event) {
+	_handleTabPrevious(event) {
 		const target = event.target.shadowRoot.activeElement;
 
 		if (this.shouldForwardTabBefore(target)) {
