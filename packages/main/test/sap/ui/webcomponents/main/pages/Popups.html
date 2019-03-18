@@ -65,11 +65,10 @@
 	<ui5-popover placement-type="Bottom" horizontal-align="Stretch" hide-arrow hide-header initial-focus="input1" class="wcPopoverWithList">
 		<ui5-list id="myList" inset separators="Inner" mode="MultiSelect" footer-text="Copyright" no-data-text="No data">
 			<!-- Header -->
-			<ui5-toolbar data-ui5-slot="header">
+			<div style="display: flex; align-items: center;" data-ui5-slot="header">
 				<ui5-title>Countries:</ui5-title>
-				<ui5-toolbar-spacer></ui5-toolbar-spacer>
 				<ui5-button type="Accept">OK</ui5-button>
-			</ui5-toolbar>
+			</div>
 			<!-- Items -->
 			<ui5-li>Argentina</ui5-li>
 			<ui5-li>Bulgaria</ui5-li>

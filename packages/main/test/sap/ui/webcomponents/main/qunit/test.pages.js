@@ -29,6 +29,5 @@
 		"TextArea",
 		"Title",
 		"ToggleButton",
-		"Toolbar",
 	];
 }));

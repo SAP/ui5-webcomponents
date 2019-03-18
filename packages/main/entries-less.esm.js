@@ -118,14 +118,6 @@ import "./src/themes/sap_belize/ToggleButton.less";
 import "./src/themes/sap_belize_hcb/ToggleButton.less";
 import "./src/themes/sap_fiori_3/ToggleButton.less";
 
-import "./src/themes/sap_belize/Toolbar.less";
-import "./src/themes/sap_belize_hcb/Toolbar.less";
-import "./src/themes/sap_fiori_3/Toolbar.less";
-
-import "./src/themes/sap_belize/ToolbarSpacer.less";
-import "./src/themes/sap_belize_hcb/ToolbarSpacer.less";
-import "./src/themes/sap_fiori_3/ToolbarSpacer.less";
-
 import "./src/themes/sap_belize/List.less";
 import "./src/themes/sap_belize_hcb/List.less";
 import "./src/themes/sap_fiori_3/List.less";

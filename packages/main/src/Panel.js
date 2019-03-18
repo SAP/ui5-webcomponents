@@ -32,8 +32,6 @@ const metadata = {
 
 		/**
 		 * Defines the <code>ui5-panel</code> header area.
-		 * For example, you can use <code>ui5-toolbar</code> and add extra
-		 * components for user interactions.
 		 * <br><br>
 		 * <b>Note:</b> When a header is provided, the <code>headerText</code> property is ignored.
 		 *
@@ -158,7 +156,7 @@ const metadata = {
  * </ul>
  *
  * <h3>Structure</h3>
- * A panel consists of a title bar with a header text or header toolbar and a content area.
+ * A panel consists of a title bar with a header text or custom header.
  * <br>
  * The content area can contain an arbitrary set of controls.
  * The header can contain a title with text and icons, buttons, and a

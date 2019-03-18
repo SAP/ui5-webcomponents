@@ -43,8 +43,6 @@ import Timeline from "./dist/Timeline";
 import TimelineItem from "./dist/TimelineItem";
 import Title from "./dist/Title";
 import ToggleButton from "./dist/ToggleButton";
-import Toolbar from "./dist/Toolbar";
-import ToolbarSpacer from "./dist/ToolbarSpacer";
 
 import List from "./dist/List";
 import StandardListItem from "./dist/StandardListItem";

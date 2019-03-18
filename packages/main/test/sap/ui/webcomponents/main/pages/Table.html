@@ -75,20 +75,13 @@
 
 <body>
 
-	<!-- Header toolbar -->
-	<ui5-toolbar>
+	<!-- Header -->
+	<div style="display:flex; align-items: center;">
 		<ui5-button id="size-btn-650">Lower table size to 650px</ui5-button>
 		<ui5-button id="size-btn-500">Lower table size to 500px</ui5-button>
 		<ui5-label>Products table - resize your browser to make some columns pop-in</ui5-label>
 		<button id="toggleSticky" style="height: 32px">Toggle Sticky Column Header</button>
-	</ui5-toolbar>
-
-	<!-- Info toolbar -->
-	<ui5-toolbar toolbar-style="Clear" design="Info">
-		<span>
-			<i>Wide range of available products</i>
-		</span>
-	</ui5-toolbar>
+	</div>
 
 	<ui5-table class="demo-table" id="tbl">
 		<!-- Columns -->

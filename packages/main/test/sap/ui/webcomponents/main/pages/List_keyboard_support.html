@@ -22,6 +22,12 @@
 		#myList {width: 700px;}
 		.focusable {height: 2rem;background: yellow;outline: none;box-sizing: border-box;}
 		.focusable:focus {border: 2px dotted red;}
+
+		.header {
+			display: flex;
+			align-items: center;
+			width: 100%;
+		}
 	</style>
 </head>
 
@@ -37,15 +43,14 @@
 
 	<ui5-list id="myList" inset separators="Inner"
 		mode="MultiSelect"
-		header-text="Text when no toolbar"
+		header-text="Text when no header provided"
 		footer-text="Copyright"
 		no-data-text="No data">
 
-		<ui5-toolbar active data-ui5-slot="header">
+		<div data-ui5-slot="header" class="header">
 			<div>Countries</div>
-			<ui5-toolbar-spacer></ui5-toolbar-spacer>
 			<ui5-button type="Accept">Export</ui5-button>
-		</ui5-toolbar>
+		</div>
 
 		<!-- Items -->
 		<ui5-li>Argentina</ui5-li>
@@ -69,7 +74,7 @@
 
 	<ui5-list id="myList" inset separators="Inner"
 		mode="MultiSelect"
-		header-text="Text when no toolbar"
+		header-text="Text when no header provided"
 		footer-text="Copyright"
 		no-data-text="No data">
 
