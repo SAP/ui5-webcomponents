@@ -8,12 +8,12 @@
 	{{#if ctr.fixed}}
 		{{> header}}
 	{{else}}
-		<header class="{{classes.header}}">
+		<header @click="{{ctr._header.press}}" class="{{classes.header}}" tabindex="{{headerTabIndex}}">
 			<ui5-icon
 				class="{{classes.icon}}"
 				src="{{ctr._icon.src}}"
 				title="{{ctr._icon.title}}"
-				tabindex="0"
+				tabindex="{{iconTabIndex}}"
 				aria-expanded="{{expanded}}"
 				aria-labelledby="{{ariaLabelledBy}}"
 				@press="{{ctr._icon.press}}"

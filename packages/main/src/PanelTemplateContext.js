@@ -5,6 +5,8 @@ class PanelTemplateContext {
 			expanded: !state.collapsed,
 			ariaLabelledBy: state.header ? undefined : `${state._id}-header`,
 			accRole: state.accessibleRole.toLowerCase(),
+			headerTabIndex: !state.header ? "0" : undefined,
+			iconTabIndex: state.header ? "0" : undefined,
 			classes: {
 				main: {
 					sapMPanel: true,
@@ -13,6 +15,7 @@ class PanelTemplateContext {
 					sapMPanelWrappingDivTb: state.header,
 					sapMPanelWrappingDivTbExpanded: state.header && state.collapsed,
 					sapMPanelWrappingDiv: !state.header,
+					sapMPanelWrappingDivClickable: !state.header,
 					sapMPanelWrappingDivExpanded: !state.header && !state.collapsed,
 				},
 				icon: {
