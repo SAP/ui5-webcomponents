@@ -35,7 +35,10 @@ const injectWebComponentStyle = (tagName, cssText) => {
 	if (injectedForTags.indexOf(tagName) !== -1) {
 		return;
 	}
-	createStyleInHead(cssText, { "data-sap-source": tagName });
+	createStyleInHead(cssText, {
+		"data-sap-source": tagName,
+		"disabled": "disabled",
+	});
 	injectedForTags.push(tagName);
 
 	// IE only
