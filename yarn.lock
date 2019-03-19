@@ -8085,10 +8085,10 @@ rollup-plugin-node-resolve@^4.0.0:
     is-module "^1.0.0"
     resolve "^1.10.0"
 
-rollup-plugin-notify@^1.0.6:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/rollup-plugin-notify/-/rollup-plugin-notify-1.0.6.tgz#b379c7e541dccf6343773673b41b1c07d26110ed"
-  integrity sha512-MzpHXL9SAxeZq5ha+V5P8YvkvFI4xDb8MIie0qPvx8QcpW9zCi49VxheUrLRDTZAhQEY9xh1lpQzAgKlYZrkAg==
+rollup-plugin-notify@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-notify/-/rollup-plugin-notify-1.1.0.tgz#b3ede094eb71412ca9a8cbf044a51300d40557be"
+  integrity sha512-7DMQBbutrr0QxxpFhlLHuUfCfE4iEwm2zTz4S6ylBkUxcmr3cm7osvOUqnjo7e2Vrmr2dovqFElC6vdrugQOig==
   dependencies:
     node-notifier "^5.2.1"
     strip-ansi "^4.0.0"
