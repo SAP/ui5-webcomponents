@@ -1,5 +1,5 @@
-commit cadf9969aa6437c8fcbe59cc7654c61e67b4e3ac
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Tue Mar 19 15:19:42 2019 +0200
+commit 992fb1b3bea56d0040a3d9a046a951e102f72888
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Tue Mar 19 15:54:02 2019 +0200
 
-    fix(ui5-li): fix description text in compact mode (#211)
+    refactor(ui5-dialog): remove sap-phone classes (#200)
