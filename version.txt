@@ -1,5 +1,5 @@
-commit fb8c2e7d6f77022b5942fe81478150c1f501f763
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Mon Mar 18 17:08:24 2019 +0200
+commit 0934d70f1962c26c746acdbaa3008b97bcb643e9
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Mar 19 10:25:44 2019 +0200
 
-    chore: prepare playground for release (#203)
+    docs(ui5-panel): improve sample readability in HCB (#205)
