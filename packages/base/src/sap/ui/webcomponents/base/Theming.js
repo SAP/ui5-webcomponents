@@ -58,8 +58,6 @@ const getEffectiveStyle = async (theme, styleUrls, tag) => {
 	return cssText;
 };
 
-window.setTheme = setTheme; // for testing easily
-
 export {
 	getDefaultTheme,
 	attachThemeChange,
