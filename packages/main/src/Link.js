@@ -152,7 +152,7 @@ const metadata = {
 class Link extends WebComponent {
 	constructor() {
 		super();
-		this._dummyAnchor = document.createElement('a');
+		this._dummyAnchor = document.createElement("a");
 	}
 
 	static get metadata() {
@@ -168,7 +168,7 @@ class Link extends WebComponent {
 			&& this.href
 			&& this._isCrossOrigin();
 
-			this._state._rel = needsNoReferrer ? "noreferrer" : undefined;
+		this._state._rel = needsNoReferrer ? "noreferrer" : undefined;
 	}
 
 	ontap(event) {
