@@ -1,9 +1,7 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
 import URI from "@ui5/webcomponents-base/src/types/URI";
-import Integer from "@ui5/webcomponents-base/src/types/Integer";
 import TabBase from "./TabBase";
 import TabTemplateContext from "./TabTemplateContext";
-import TabDesignMode from "./types/TabDesignMode";
 import IconColor from "./types/IconColor";
 import Icon from "./Icon";
 import TabRenderer from "./build/compiled/TabRenderer.lit";
@@ -47,14 +45,15 @@ const metadata = {
 		 */
 		disabled: {
 			type: Boolean,
+			defaultValue: false,
 		},
 
 		/**
-		 * Represents the "count" text, which is displayed in the tab filter.
+		 * Represents the "additionalText" text, which is displayed in the tab filter.
 		 * @type {String}
 		 * @public
 		 */
-		count: {
+		additionalText: {
 			type: String,
 			defaultValue: "",
 		},
@@ -85,27 +84,10 @@ const metadata = {
 			defaultValue: IconColor.Default,
 		},
 
-		/**
-		 * Specifies whether the icon and the texts are placed vertically or horizontally.
-		 * @type {TabDesignMode}
-		 * @public
-		 */
-		design: {
-			type: TabDesignMode,
-			defaultValue: TabDesignMode.Vertical,
+		selected: {
+			type: Boolean,
+			defaultValue: false,
 		},
-
-		_showAll: { type: Boolean },
-		_isSelected: { type: Boolean, defaultValue: false },
-		_isInline: { type: Boolean },
-		_isNoIcon: { type: Boolean },
-		_isNoText: { type: Boolean },
-		_tabIndex: { type: String, defaultValue: "-1" },
-		_posinset: { type: Integer },
-		_setsize: { type: Integer },
-		_contentId: { type: String, defaultValue: " " },
-		_labelledbyControls: { type: String, defaultValue: " " },
-		_isIconColorRead: { type: Boolean },
 	},
 	events: /** @lends sap.ui.webcomponents.main.Tab.prototype */ {
 

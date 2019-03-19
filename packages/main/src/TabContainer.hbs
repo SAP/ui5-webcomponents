@@ -1,155 +1,137 @@
 <div {{> controlData}} class="{{classes.main}}">
-	<div role='tablist' class="{{classes.tablist}}">
-		<ui5-icon
-			src="sap-icon://slim-arrow-left"
-			class="{{ctr._leftArrow.classes}}"
-			tabindex="-1"></ui5-icon>
-		<div id="{{ctr._id}}-scrollContainer" class="sapMITBScrollContainer">
-			<div id="{{ctr._id}}-head" tabindex="-1" class="{{classes.head}}">
-				{{#each ctr._headerItems}}
-					{{#if isSeparator}}
-						{{> renderTabSeparator}}
-					{{else}}
-						{{> renderTab}}
+	<div class="{{classes.header}}" id="{{ctr._id}}-header">
+		<ui5-icon @press="{{ctr._headerBackArrow.click}}" class="{{classes.headerBackArrow}}" src="sap-icon://slim-arrow-left" tabindex="-1"></ui5-icon>
+
+		<!-- tab items -->
+		<div class="{{classes.headerScrollContainer}}" id="{{ctr._id}}-headerScrollContainer">
+			<ul role="tablist" class="{{classes.headerList}}">
+				{{#each renderItems}}
+					{{#unless this.isSeparator}}
+						<li class="{{this.headerItemClasses}}"
+							@click="{{../ctr._headerItem.click}}"
+							role="tab"
+							data-position="{{this.position}}"
+							aria-posinset="{{this.position}}"
+							aria-setsize="{{../renderItems.length}}"
+							aria-controls="ui5-tc-contentItem-{{this.position}}"
+							aria-selected="{{this.selected}}"
+							aria-disabled="{{this.disabled}}"
+							disabled="{{this.disabled}}"
+							aria-labelledby="{{this.ariaLabelledBy}}"
+						>
+							{{#if this.isTextOnlyTab}}
+								{{> textOnlyTab}}
+							{{/if}}
+
+							{{#if this.isIconTab}}
+								{{> iconTab}}
+							{{/if}}
+
+							{{#if this.isMixedModeTab}}
+								{{> mixedModeTab}}
+							{{/if}}
+						</li>
+					{{/unless}}
+					{{#if this.isSeparator}}
+						<li role="separator" class="{{../classes.separator}}"></li>
 					{{/if}}
 				{{/each}}
-			</div>
+			</ul>
 		</div>
-		<ui5-icon
-			src="sap-icon://slim-arrow-right"
-			class="{{ctr._rightArrow.classes}}"
-			tabindex="-1"></ui5-icon>
+
+		<ui5-icon @press="{{ctr._headerForwardArrow.click}}" class="{{classes.headerForwardArrow}}" src="sap-icon://slim-arrow-right" tabindex="-1"></ui5-icon>
+
+		<!-- overflow button -->
 		{{#if ctr.showOverflow}}
-			<ui5-button ._customAttributes="{{ctr._overflowButton._customAttributes}}"
-						id="{{ctr._id}}-overflow-button"
-						class="{{ctr._overflowButton.classes}}"
-						@press="{{ctr._overflowButton.onPress}}"
-						icon="sap-icon://slim-arrow-down" type="Transparent"></ui5-button>
+			<ui5-button
+				@press="{{ctr._overflowButton.click}}"
+				class="{{classes.overflowButton}}"
+				icon="sap-icon://slim-arrow-down"
+				type="Transparent"
+			></ui5-button>
 		{{/if}}
 	</div>
-	<div id="{{ctr._id}}-containerContent" class="{{classes.content}}">
-		<div id="{{ctr._id}}-content" class="sapMITBContent" role="tabpanel">
-			{{#each ctr._selectedContent}}
-				<slot name="{{this._slot}}"></slot>
-			{{/each}}
-		</div>
+
+	<!-- content area -->
+	<div class="{{classes.content}}">
+		{{#each renderItems}}
+			{{#unless this.isSeparator}}
+				<div class="{{this.contentItemClasses}}" id="ui5-tc-contentItem-{{this.position}}">
+					<slot name="{{this.item._slot}}"></slot>
+				</div>
+			{{/unless}}
+		{{/each}}
 	</div>
-	{{#if ctr.showOverflow}}
-		<ui5-popover id="{{ctr._id}}-popover"
-					 hide-arrow
-					 hide-header
-					 placement-type="Bottom"
-					 horizontal-align="Right">
-			<ui5-list @itemPress="{{ctr._overflowList.onItemPress}}">
-				{{#each ctr._overflowList.items}}
+
+	<!-- overflow menu -->
+	<ui5-popover
+		id="{{ctr._id}}-overflowMenu"
+		hide-arrow
+		hide-header
+		placement-type="Bottom"
+		horizontal-align="Right">
+		<ui5-list @itemPress="{{ctr._overflowList.click}}">
+			{{#each renderItems}}
+				{{#unless this.isSeparator}}
 					<ui5-li-custom id="{{this.id}}"
-								   type="{{this.type}}"
-								   selected="{{this.selected}}"
-								   class="{{this.classes}}">
-						<div class="{{this.innerClasses}}">
-							{{#if this.content.icon}}
-								<ui5-icon src="{{this.content.icon}}" class="sapMITBSelectItemIcon"></ui5-icon>
+						class="{{this.overflowItemClasses}}"
+						type="{{this.overflowItemState}}"
+						data-position="{{this.position}}"
+						selected="{{this.selected}}"
+						disabled="{{this.disabled}}"
+					>
+						<div class="{{this.overflowItemContentClasses}}">
+							{{#if this.item.icon}}
+								<ui5-icon src="{{this.item.icon}}"></ui5-icon>
 							{{/if}}
-							{{#unless this.content._isNoText}}
-								<span class="sapMITBText sapMText sapMTextNoWrap">{{this.content.displayText}}</span>
-							{{/unless}}
-							{{#if this.content.isIconColorRead}}
-								<div id="{{this.content._id}}-iconColor" style="display: none;">{{this.content.iconColor}}</div>
+
+							{{this.item.text}}
+
+							{{#if this.item.additionalText}}
+								({{this.item.additionalText}})
 							{{/if}}
 						</div>
 					</ui5-li-custom>
-				{{/each}}
-			</ui5-list>
-		</ui5-popover>
-	{{/if}}
+				{{/unless}}s
+			{{/each}}
+		</ui5-list>
+	</ui5-popover>
 </div>
 
-{{#*inline "renderTab"}}
-	<div id="{{id}}"
-			tabindex="{{_tabIndex}}"
-			class="{{classes.main}}"
-			role="tab"
-			aria-selected="{{isSelected}}"
-			aria-disabled="{{isDisabled}}"
-			aria-posinset="{{posinset}}"
-			aria-setsize="{{setsize}}"
-			aria-controls="{{contentId}}"
-			aria-labelledby="{{labelledbyControls}}">
-		{{#if showAll}}
-			<div id="{{id}}-tab" class="sapMITBTab">
-		<span id="{{id}}-count" class="sapMITBCount">
-			{{count}}
+{{#*inline "textOnlyTab"}}
+	<div class="{{this.headerItemContentClasses}}">
+		<span class="{{this.headerItemTextClasses}}" id="{{this.item._id}}-text">
+			{{this.item.text}}
 		</span>
-			</div>
-			{{#if displayText}}
-				<div id="{{id}}-text" class="sapMITBText">
-					{{displayText}}
-				</div>
-			{{/if}}
-		{{else if isHorizontalDesign}}
-			<div id="{{id}}-tab" class="sapMITBTab">
-				{{#if isIconColorRead}}
-					<div id="{{id}}-iconColor" style="display: none;">{{iconColor}}</div>
-				{{/if}}
-				{{#if icon}}
-					<ui5-icon src="{{icon}}" class="sapMITBFilterIcon  sapMITBFilter{{iconColor}}"></ui5-icon>
-				{{/if}}
-			</div>
-			<div class="sapMITBHorizontalWrapper">
-			<span id="{{id}}-count" class="sapMITBCount">
-				{{count}}
-			</span>
-				<div id="{{id}}-text" class="sapMITBText">
-					{{displayText}}
-				</div>
-			</div>
-		{{else if isInline}}
-			<div id="{{id}}-text" class="sapMITBText">
-				{{displayText}}
-			</div>
-		{{else if isNoIcon}}
-			<div id="{{id}}-tab" class="sapMITBTab">
-			<span id="{{id}}-count" class="sapMITBCount">
-				{{count}}
-			</span>
-			</div>
-			{{#if displayText}}
-				<div id="{{id}}-text" class="sapMITBText">
-					{{displayText}}
-				</div>
-			{{/if}}
-		{{else if isNoText}}
-			<div id="{{id}}-tab" class="sapMITBTab">
-				{{#if isIconColorRead}}
-					<div id="{{id}}-iconColor" style="display: none;">{{iconColor}}</div>
-				{{/if}}
-				{{#if icon}}
-					<ui5-icon src="{{icon}}" class="sapMITBFilterIcon sapMITBFilter{{iconColor}}"></ui5-icon>
-				{{/if}}
-				<span id="{{id}}-count" class="sapMITBCount">
-					{{count}}
-				</span>
-			</div>
-		{{else}}
-			<div id="{{id}}-tab" class="sapMITBTab">
-				{{#if isIconColorRead}}
-					<div id="{{id}}-iconColor" style="display: none;">{{iconColor}}</div>
-				{{/if}}
-				{{#if icon}}
-					<ui5-icon src="{{icon}}" class="sapMITBFilterIcon sapMITBFilter{{iconColor}}"></ui5-icon>
-				{{/if}}
-				<span id="{{id}}-count" class="sapMITBCount">
-					{{count}}
-				</span>
-			</div>
-			<div id="{{id}}-text" class="sapMITBText">
-				{{displayText}}
-			</div>
+
+		{{#if this.item.additionalText}}
+			<span class="{{this.headerItemAdditionalTextClasses}}" id="{{this.item._id}}-additionalText">({{this.item.additionalText}})</span>
 		{{/if}}
-		<div class="sapMITBContentArrow"></div>
 	</div>
 {{/inline}}
 
-{{#*inline "renderTabSeparator"}}
-	<div role="separator" class="sapMITBItem sapMITBSep sapMITBSepLine"></div>
+{{#*inline "iconTab"}}
+	<ui5-icon src="{{this.item.icon}}" class="{{this.headerItemIconClasses}}"></ui5-icon>
+
+	<div class="{{this.headerItemContentClasses}}">
+		{{#if this.item.additionalText}}
+			<span class="{{this.headerItemAdditionalTextClasses}}" id="{{this.item._id}}-additionalText">{{this.item.additionalText}}</span>
+		{{/if}}
+
+		<span class="{{this.headerItemTextClasses}}" id="{{this.item._id}}-text">
+			{{this.item.text}}
+		</span>
+	</div>
+{{/inline}}
+
+{{#*inline "mixedModeTab"}}
+	<div class="{{this.headerItemContentClasses}}">
+		{{#if this.item.additionalText}}
+			<span class="{{this.headerItemAdditionalTextClasses}}" id="{{this.item._id}}-additionalText">{{this.item.additionalText}}</span>
+		{{/if}}
+
+		<span class="{{this.headerItemTextClasses}}" id="{{this.item._id}}-text">
+			{{this.item.text}}
+		</span>
+	</div>
 {{/inline}}
