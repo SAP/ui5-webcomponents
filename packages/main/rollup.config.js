@@ -78,11 +78,6 @@ const getPlugins = ({ transpile }) => {
 		publicPath: DEPLOY_PUBLIC_PATH + "/resources/sap/ui/webcomponents/main/",
 	}));
 
-	if (process.env.DEV) {
-		plugins.push(notify({
-			success: true
-		}));
-	}
 
 	if (transpile) {
 		plugins.push(babel({
@@ -96,6 +91,12 @@ const getPlugins = ({ transpile }) => {
 
 	if (!process.env.DEV) {
 		plugins.push(terser());
+	}
+
+	if (process.env.DEV) {
+		plugins.push(notify({
+			success: true
+		}));
 	}
 
 	return plugins;
