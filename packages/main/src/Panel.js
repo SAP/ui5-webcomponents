@@ -288,7 +288,6 @@ class Panel extends WebComponent {
 	}
 
 	_headerOnTarget(target) {
-		debugger;
 		return target.classList.contains("sapMPanelWrappingDiv");
 	}
 
