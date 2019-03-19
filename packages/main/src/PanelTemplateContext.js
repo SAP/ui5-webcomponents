@@ -1,6 +1,6 @@
 class PanelTemplateContext {
 	static calculate(state) {
-		const headerClickable = state.headerClickable && !state.fixed;
+		const headerClickable = !state.fixed && !state.header;
 
 		const context = {
 			ctr: state,
