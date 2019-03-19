@@ -1,5 +1,5 @@
-commit da2cc8e00132173c9bc8f645db1822010fd2f610
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Tue Mar 19 14:14:02 2019 +0200
+commit cadf9969aa6437c8fcbe59cc7654c61e67b4e3ac
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Tue Mar 19 15:19:42 2019 +0200
 
-    playground: fix landing page for IE11 (#208)
+    fix(ui5-li): fix description text in compact mode (#211)
