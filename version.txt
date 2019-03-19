@@ -1,5 +1,5 @@
-commit b9300c674f374f9e1354d39b824789b863a83fcc
+commit da2cc8e00132173c9bc8f645db1822010fd2f610
 Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Tue Mar 19 13:44:18 2019 +0200
+Date:   Tue Mar 19 14:14:02 2019 +0200
 
-    chore: bump rollup-plugin-notify (#207)
+    playground: fix landing page for IE11 (#208)
