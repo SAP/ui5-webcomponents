@@ -83,11 +83,7 @@ sap.ui.define([
 
 		discoverSamples: function (oModel) {
 			var newComponents = [
-				"MessageStrip",
-				"Select",
-				"ShellBar",
-				"Switch",
-				"Timeline"
+				"MessageStrip"
 			];
 			return jQuery.ajax({
 				url: getRealBaseURI() + "/resources/sap/ui/webcomponents/main/playground.json"

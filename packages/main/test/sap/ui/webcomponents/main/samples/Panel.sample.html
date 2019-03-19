@@ -37,6 +37,10 @@
 			justify-content: space-between;
 			width: 100%;
 		}
+
+		.hcb-background .content-color {
+			color: #fff;
+		}
 	</style>
 </head>
 <body class="sapUiBody example-wrapper">
@@ -51,23 +55,25 @@
 		<div class="snippet">
 			<ui5-panel width="100%" accessible-role="Complementary"
 				header-text="Both expandable and expanded" class="full-width">
-				<h1 data-ui5-slot="content">I am a native heading! </h1>
+				<h1 data-ui5-slot="content" class="content-color">I am a native heading!</h1>
 				<ui5-label data-ui5-slot="content" wrap>Short text.</ui5-label>
 				<br>
 				<ui5-label data-ui5-slot="content" wrap>Another text.</ui5-label>
-				<p>
-				Aute ullamco officia fugiat culpa do tempor tempor aute excepteur magna. Quis velit adipisicing excepteur do eu duis elit. Sunt ea pariatur nulla est laborum proident sunt labore commodo Lorem laboris nisi Lorem.
+				<p class="content-color">
+					Aute ullamco officia fugiat culpa do tempor tempor aute excepteur magna. Quis velit adipisicing excepteur do eu duis elit. Sunt ea pariatur nulla est laborum proident sunt labore commodo Lorem laboris nisi Lorem.
 				</p>
 			</ui5-panel>
 		</div>
 		<pre class="prettyprint lang-html"><xmp>
-<ui5-panel width="100%" accessible-role="Complementary" header-text="Both expandable and expanded" class="full-width">
-	<h1 data-ui5-slot="content">I am a native heading! </h1>
+
+<ui5-panel width="100%" accessible-role="Complementary"
+	header-text="Both expandable and expanded" class="full-width">
+	<h1 data-ui5-slot="content" class="content-color">I am a native heading!</h1>
 	<ui5-label data-ui5-slot="content" wrap>Short text.</ui5-label>
 	<br>
 	<ui5-label data-ui5-slot="content" wrap>Another text.</ui5-label>
-	<p>
-	Aute ullamco officia fugiat culpa do tempor tempor aute excepteur magna. Quis velit adipisicing excepteur do eu duis elit. Sunt ea pariatur nulla est laborum proident sunt labore commodo Lorem laboris nisi Lorem.
+	<p class="content-color">
+		Aute ullamco officia fugiat culpa do tempor tempor aute excepteur magna. Quis velit adipisicing excepteur do eu duis elit. Sunt ea pariatur nulla est laborum proident sunt labore commodo Lorem laboris nisi Lorem.
 	</p>
 </ui5-panel>
 		</xmp></pre>
