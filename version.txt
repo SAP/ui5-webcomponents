@@ -1,5 +1,8 @@
-commit 992fb1b3bea56d0040a3d9a046a951e102f72888
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Tue Mar 19 15:54:02 2019 +0200
+commit a98f544c70074fcfaf27fb89f9c0a583b7748e6c
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Mar 19 16:04:11 2019 +0200
 
-    refactor(ui5-dialog): remove sap-phone classes (#200)
+    fix(ui5-panel): correct inon size on small screens (#213)
+    
+    The icon used to shrink.on small screen, now it has min width and height.
+    Fixes: https://github.com/SAP/ui5-webcomponents/issues/212
