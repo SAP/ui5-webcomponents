@@ -1,5 +1,5 @@
-commit 291829a7d1edfea895a08088c5d61dacc41d61bc
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Tue Mar 19 11:44:02 2019 +0200
+commit b9300c674f374f9e1354d39b824789b863a83fcc
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Tue Mar 19 13:44:18 2019 +0200
 
-    feat: framework-level support for CSS Custom Properties (#196)
+    chore: bump rollup-plugin-notify (#207)
