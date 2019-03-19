@@ -71,7 +71,7 @@ class ToggleButton extends Button {
 		return ToggleButtonRenderer;
 	}
 
-	ontap() {
+	onclick() {
 		if (!this.disabled) {
 			this.pressed = !this.pressed;
 			this.fireEvent("press", { pressed: this.pressed });

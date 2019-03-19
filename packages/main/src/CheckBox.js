@@ -179,7 +179,7 @@ class CheckBox extends WebComponent {
 		this._label.textDirection = this.textDirection;
 	}
 
-	ontap() {
+	onclick() {
 		this.toggle();
 	}
 

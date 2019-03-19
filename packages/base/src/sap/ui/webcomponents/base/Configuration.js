@@ -15,7 +15,6 @@ const CONFIGURATION = {
 	supportedLanguages,
 	calendarType: null,
 	derivedRTL: null,
-	"xx-wc-force-default-gestures": false,
 	"xx-wc-no-conflict": false, // no URL
 };
 
@@ -38,11 +37,6 @@ const getCompactSize = () => {
 
 const getSupportedLanguages = () => {
 	return CONFIGURATION.supportedLanguages;
-};
-
-/* WC specifics */
-const getWCForceDefaultGestures = () => {
-	return CONFIGURATION["xx-wc-force-default-gestures"];
 };
 
 const getWCNoConflict = () => {
@@ -134,7 +128,6 @@ export {
 	getRTL,
 	getLanguage,
 	getCompactSize,
-	getWCForceDefaultGestures,
 	getWCNoConflict,
 	getCalendarType,
 	getLocale,

@@ -163,7 +163,7 @@ class Select extends WebComponent {
 	}
 
 	/* Event handling */
-	ontap(event) {
+	onclick(event) {
 		if (this.disabled) {
 			return;
 		}
