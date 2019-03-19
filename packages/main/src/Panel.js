@@ -228,9 +228,8 @@ class Panel extends WebComponent {
 			this._contentExpanded = !this.collapsed;
 		}
 
-		const toggleWithInternalHeader = !this.header && !this.fixed;
-		this._header.press = toggleWithInternalHeader ? this._toggle : this._noOp;
-		this._icon.press = toggleWithInternalHeader ? this._noOp : this._toggle;
+		this._header.press = !this.header ? this._toggle : this._noOp;
+		this._icon.press = this.header ? this._toggle : this._noOp;
 	}
 
 	onkeydown(event) {
