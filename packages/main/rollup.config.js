@@ -7,6 +7,10 @@ import url from "rollup-plugin-url";
 import { terser } from "rollup-plugin-terser";
 import notify from 'rollup-plugin-notify';
 import filesize from 'rollup-plugin-filesize';
+import postcss from 'rollup-plugin-postcss';
+import postcssImport from 'postcss-import';
+import postcssNesting from 'postcss-nesting';
+import csso from 'postcss-csso';
 
 
 const DIST = path.normalize("dist");
@@ -42,6 +46,24 @@ const getPlugins = ({ transpile }) => {
 			return gzipSize;
 		}
 	}));
+	// component styles
+	plugins.push(
+		postcss({
+			plugins: [postcssNesting()],
+			inject: false,
+			exclude: ["**/*.less", "**/parameters-bundle.css"],
+		})
+	);
+	// parameters bundle
+	plugins.push(
+		postcss({
+			plugins: [postcssImport(), csso({comments: true})],
+			inject: false,
+			include: ["**/parameters-bundle.css"],
+			exclude: ["**/*.less"],
+		})
+	);
+
 	plugins.push(ui5DevImportCheckerPlugin());
 
 	plugins.push(url({

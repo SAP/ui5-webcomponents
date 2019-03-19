@@ -1,47 +1,69 @@
-import { getTheme } from "../Configuration";
-import { attachThemeChange, getEffectiveStyle } from "../Theming";
+import createStyleInHead from "../util/createStyleInHead";
 
-class StyleInjection {
-	constructor() {
-		this.tagNamesInHead = [];
-		this.tagsToStyleUrls = new Map();
-		attachThemeChange(this.updateStylesInHead.bind(this));
+const injectedForTags = [];
+
+/**
+ * Creates/updates a style element holding all CSS Custom Properties
+ * @param cssText
+ */
+const injectThemeProperties = cssText => {
+	// Needed for all browsers
+	let styleElement = document.head.querySelector(`style[ui5-webcomponents-theme-properties]`);
+	if (styleElement) {
+		styleElement.textContent = cssText || "";	// in case of undefined
+	} else {
+		styleElement = createStyleInHead(cssText, { "ui5-webcomponents-theme-properties": "" });
 	}
 
-	createStyleTag(tagName, styleUrls, cssText) {
-		if (this.tagNamesInHead.indexOf(tagName) !== -1) {
-			return;
-		}
+	// IE only
+	if (window.CSSVarsSimulation) {
+		window.CSSVarsSimulation.findCSSVars(cssText);
+	}
+};
 
-		const style = document.createElement("style");
-		style.type = "text/css";
-		style.setAttribute("data-sap-source", tagName);
-		style.innerHTML = cssText;
-		document.head.appendChild(style);
-
-		this.tagNamesInHead.push(tagName);
-		this.tagsToStyleUrls.set(tagName, styleUrls);
+/**
+ * Creates a style element holding the CSS for a web component (and resolves CSS Custom Properties for IE)
+ * @param tagName
+ * @param cssText
+ */
+const injectWebComponentStyle = (tagName, cssText) => {
+	if (!window.ShadyDOM) {
+		return;
 	}
 
-	async updateStylesInHead() {
-		if (!window.ShadyDOM) {
-			return;
-		}
-
-		const theme = getTheme();
-		this.tagNamesInHead.forEach(async tagName => {
-			const styleUrls = this.tagsToStyleUrls.get(tagName);
-			const css = await getEffectiveStyle(theme, styleUrls, tagName);
-
-			const styleElement = document.head.querySelector(`style[data-sap-source="${tagName}"]`);
-
-			if (styleElement) {
-				styleElement.innerHTML = css || "";	// in case of undefined
-			} else {
-				this.createStyleTag(tagName, styleUrls, css || "");
-			}
-		});
+	// Edge and IE
+	if (injectedForTags.indexOf(tagName) !== -1) {
+		return;
 	}
-}
+	createStyleInHead(cssText, { "data-sap-source": tagName });
+	injectedForTags.push(tagName);
 
-export default new StyleInjection();
+	// IE only
+	if (window.CSSVarsSimulation) {
+		const resolvedVarsCSS = window.CSSVarsSimulation.applyCSSVars(cssText);
+		createStyleInHead(resolvedVarsCSS, { "data-sap-source-replaced-vars": tagName });
+	}
+};
+
+/**
+ * Updates the style elements holding the CSS for all web components by resolving the CSS Custom properties
+ */
+const updateWebComponentStyles = () => {
+	if (!window.CSSVarsSimulation) {
+		return;
+	}
+
+	// IE only
+	injectedForTags.forEach(tagName => {
+		const originalStyleElement = document.head.querySelector(`style[data-sap-source="${tagName}"]`);
+		const replacedVarsStyleElement = document.head.querySelector(`style[data-sap-source-replaced-vars="${tagName}"]`);
+		const resolvedVarsCSS = window.CSSVarsSimulation.applyCSSVars(originalStyleElement.textContent);
+		replacedVarsStyleElement.textContent = resolvedVarsCSS;
+	});
+};
+
+export {
+	injectThemeProperties,
+	injectWebComponentStyle,
+	updateWebComponentStyles,
+};
