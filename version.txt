@@ -1,5 +1,5 @@
-commit 0934d70f1962c26c746acdbaa3008b97bcb643e9
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Mar 19 10:25:44 2019 +0200
+commit 291829a7d1edfea895a08088c5d61dacc41d61bc
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Tue Mar 19 11:44:02 2019 +0200
 
-    docs(ui5-panel): improve sample readability in HCB (#205)
+    feat: framework-level support for CSS Custom Properties (#196)
