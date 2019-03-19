@@ -196,7 +196,7 @@ class RadioButton extends WebComponent {
 		this._group = this.group;
 	}
 
-	ontap() {
+	onclick() {
 		return this.toggle();
 	}
 

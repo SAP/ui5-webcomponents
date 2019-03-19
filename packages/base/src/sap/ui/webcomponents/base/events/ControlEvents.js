@@ -1,5 +1,3 @@
-import Gestures from "./DefaultGestures";
-
 /**
  * @namespace
  * @public
@@ -54,12 +52,6 @@ oControlEvents.events = [ // IMPORTANT: update the public documentation when ext
 	"touchcancel",
 ];
 
-oControlEvents.gestures = [
-	"down",
-	"up",
-	"tap",
-];
-
 /**
  * Binds all events for listening with the given callback function.
  *
@@ -70,10 +62,6 @@ oControlEvents.bindAnyEvent = function bindAnyEvent(fnCallback) {
 	if (fnCallback) {
 		oControlEvents.events.forEach(event => {
 			document.addEventListener(event, fnCallback);
-		});
-
-		oControlEvents.gestures.forEach(gesture => {
-			Gestures.addListener(document, gesture, fnCallback);
 		});
 	}
 };
@@ -88,10 +76,6 @@ oControlEvents.unbindAnyEvent = function unbindAnyEvent(fnCallback) {
 	if (fnCallback) {
 		oControlEvents.events.forEach(event => {
 			document.removeEventListener(event, fnCallback);
-		});
-
-		oControlEvents.gestures.forEach(gesture => {
-			Gestures.removeListener(document, gesture, fnCallback);
 		});
 	}
 };

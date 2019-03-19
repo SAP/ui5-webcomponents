@@ -135,7 +135,7 @@ class Switch extends WebComponent {
 		return SwitchRenderer;
 	}
 
-	ontap(event) {
+	onclick(event) {
 		this.toggle();
 	}
 

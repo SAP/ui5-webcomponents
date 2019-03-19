@@ -292,7 +292,7 @@ class DatePicker extends WebComponent {
 		}
 	}
 
-	ontap(event) {
+	onclick(event) {
 		const icon = this.shadowRoot.querySelector("ui5-icon");
 		const isIconTab = (event.ui5target === icon);
 

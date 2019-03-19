@@ -158,7 +158,7 @@ class Link extends WebComponent {
 		return LinkRederer;
 	}
 
-	ontap(event) {
+	onclick(event) {
 		if (this.disabled) {
 			return;
 		}

@@ -2,7 +2,6 @@
 import "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/browsersupport/Edge";
 
 import "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/shims/jquery-shim";
-import "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/events/PolymerGestures";
 import "./src/ThemePropertiesProvider";
 
 import Gregorian from "@ui5/webcomponents-core/dist/sap/ui/core/date/Gregorian";

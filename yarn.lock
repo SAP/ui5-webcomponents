@@ -679,13 +679,6 @@
   resolved "https://registry.yarnpkg.com/@openui5/themelib_sap_belize/-/themelib_sap_belize-1.63.0.tgz#107498bf1f9a71253c55159867769bf79b5efc65"
   integrity sha512-PAh68KPGcnQ+blekbMdipT8IZJPvSFQq6TZ+0x4MhgMSv9gNH/KtCysbDc/T765QHQgpL6XuiOxHpIPWNxihQQ==
 
-"@polymer/polymer@^3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@polymer/polymer/-/polymer-3.1.0.tgz#3e1b7447a1e350fd654e1823def655d0f0828a70"
-  integrity sha512-hwN8IMERsFATz/9dSMxYHL+84J9uBkPuuarxJWlTsppZ4CAYTZKnepBfNrKoyNsafBmA3yXBiiKPPf+fJtza7A==
-  dependencies:
-    "@webcomponents/shadycss" "^1.5.2"
-
 "@types/estree@0.0.39":
   version "0.0.39"
   resolved "https://registry.yarnpkg.com/@types/estree/-/estree-0.0.39.tgz#e177e699ee1b8c22d23174caaa7422644389509f"
@@ -963,11 +956,6 @@
   dependencies:
     "@wdio/logger" "^5.6.3"
     deepmerge "^3.2.0"
-
-"@webcomponents/shadycss@^1.5.2":
-  version "1.9.0"
-  resolved "https://registry.yarnpkg.com/@webcomponents/shadycss/-/shadycss-1.9.0.tgz#8450465037370d4f5c32e801bb2554a7cf2f5037"
-  integrity sha512-g8Xa+6RSEME4g/wLJW4YII0eq15rvXp76RxPAuv7hx+Bdoi7GzZJ/EoZOUfyIbqAsQbII1TcWD4/+Xhs5NcM1w==
 
 "@webcomponents/webcomponentsjs@^2.2.7":
   version "2.2.7"

@@ -177,21 +177,21 @@ class Button extends WebComponent {
 		}
 	}
 
-	ontap(event) {
+	onclick(event) {
 		event.isMarked = "button";
 		if (!this.disabled) {
 			this.fireEvent("press", {});
 		}
 	}
 
-	ondown(event) {
+	onmousedown(event) {
 		event.isMarked = "button";
 		if (this.activeIcon) {
 			this._active = true;
 		}
 	}
 
-	onup(event) {
+	onmouseup(event) {
 		event.isMarked = "button";
 		if (this.activeIcon) {
 			this._active = false;
