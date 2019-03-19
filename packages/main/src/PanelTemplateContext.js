@@ -6,7 +6,7 @@ class PanelTemplateContext {
 			ariaLabelledBy: state.header ? undefined : `${state._id}-header`,
 			accRole: state.accessibleRole.toLowerCase(),
 			headerTabIndex: !state.header ? "0" : undefined,
-			iconTabIndex: !state.header ?  "0" : undefined,
+			iconTabIndex: state.header ? "0" : undefined,
 			classes: {
 				main: {
 					sapMPanel: true,
