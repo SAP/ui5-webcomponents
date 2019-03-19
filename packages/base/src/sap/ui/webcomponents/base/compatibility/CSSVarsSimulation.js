@@ -14,19 +14,14 @@ const findCSSVars = styleString => {
 };
 
 /**
- * Replaces all occurrences of CSS vars with their values (and fallback values)
+ * Replaces all occurrences of CSS vars with their values (or fallback values)
  * @param styleString - string containing CSS selectors
  * @returns {*}
  */
 const applyCSSVars = styleString => {
-	// Replace all variables, with or without default value (default value removed too)
-	vars.forEach((varValue, varName) => {
-		const re = new RegExp(`var\\(\\s*${varName}.*?\\)`, "g");
-		styleString = styleString.replace(re, varValue);
+	styleString = styleString.replace(/var\(\s*([^,]+),?\s*(.*?)?\)/g, (match, name, fallback) => {
+		return vars.get(name) || fallback || "";
 	});
-
-	// Replace all unresolved variables with their default values
-	styleString = styleString.replace(/var\(.*?,\s*(.*?)\)/g, "$1");
 
 	return styleString;
 };
