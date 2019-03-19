@@ -1,5 +1,5 @@
-commit c5c1786c1c481c0e97a8b3d7d17dfffb48e1e74e
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Mar 19 16:34:32 2019 +0200
+commit e27c4451bd200dd18000b9f5c30fc47545cd8400
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Tue Mar 19 16:50:05 2019 +0200
 
-    feat(ui5-panel): make the header clickable (#204)
+    improvement: replace CSS custom properties more efficiently (#210)
