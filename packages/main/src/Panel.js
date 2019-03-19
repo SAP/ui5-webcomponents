@@ -228,8 +228,9 @@ class Panel extends WebComponent {
 			this._contentExpanded = !this.collapsed;
 		}
 
-		this._header.press = !this.header ? this._toggle : this._noOp;
-		this._icon.press = this.header ? this._toggle : this._noOp;
+		const toggleWithInternalHeader = !this.header;
+		this._header.press = toggleWithInternalHeader ? this._toggle : this._noOp;
+		this._icon.press = !toggleWithInternalHeader ? this._toggle : this._noOp;
 	}
 
 	onkeydown(event) {
@@ -287,11 +288,8 @@ class Panel extends WebComponent {
 	}
 
 	_headerOnTarget(target) {
-		return target === this._getHeader();
-	}
-
-	_getHeader() {
-		return this.shadowRoot.querySelector(".sapMPanelWrappingDiv");
+		debugger;
+		return target.classList.contains("sapMPanelWrappingDiv");
 	}
 
 	static async define(...params) {
