@@ -1,8 +1,5 @@
-commit a98f544c70074fcfaf27fb89f9c0a583b7748e6c
+commit c5c1786c1c481c0e97a8b3d7d17dfffb48e1e74e
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Mar 19 16:04:11 2019 +0200
+Date:   Tue Mar 19 16:34:32 2019 +0200
 
-    fix(ui5-panel): correct inon size on small screens (#213)
-    
-    The icon used to shrink.on small screen, now it has min width and height.
-    Fixes: https://github.com/SAP/ui5-webcomponents/issues/212
+    feat(ui5-panel): make the header clickable (#204)
