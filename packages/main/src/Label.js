@@ -110,18 +110,10 @@ class Label extends WebComponent {
 	}
 
 	onclick() {
-		const labelFor = this.for;
+		const elementToFocus = document.getElementById(this.for);
 
-		if (labelFor) {
-			if (isCustomElement(labelFor)) {
-				LabelEnablement.labelElement(labelFor);
-			} else {
-				const elementToFocus = document.getElementById(labelFor);
-
-				if (elementToFocus) {
-					document.getElementById(labelFor).focus();
-				}
-			}
+		if (elementToFocus) {
+			elementToFocus.focus();
 		}
 	}
 
