@@ -6,7 +6,7 @@
 @import "./global.less";
 
 /* =============================== */
-/* CSS for control sap.m/CheckBox  */
+/* CSS for control ui5-checkbox  */
 /* Base theme                      */
 /* =============================== */
 
@@ -53,6 +53,7 @@ ui5-checkbox {
 	background: @sapUiFieldBackground;
 	outline: none;
 	position: relative;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
 
@@ -156,6 +157,7 @@ ui5-checkbox {
 	display: flex;
 	position: absolute;
 	justify-content: center;
+	align-items: center;
 	font-family: "SAP-icons";
 	color: @_ui5_checkbox_checkmark_color;
 	width: 100%;
@@ -165,7 +167,7 @@ ui5-checkbox {
 	user-select: none;
 	-ms-user-select: none;
 	-webkit-user-select: none;
-	cursor: ;
+	cursor: default;
 }
 
 .ui5-checkbox-inner input {
