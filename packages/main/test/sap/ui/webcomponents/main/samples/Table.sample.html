@@ -31,13 +31,13 @@
 	</script>
 
 	<style>
-	.headerToolbar {
+	.header {
 		display: flex;
-		justify-content: space-around;
+		justify-content: space-between;
 		align-items: center;
 		flex-wrap: wrap;
 		height: fit-content;
-		padding: 0 1rem 1rem;
+		padding: 0.5rem;
 	}
 
 	html[data-sap-ui-browser=ie11] .table-example,
@@ -46,7 +46,7 @@
 		display: none;
 	}
 
-	.hcb-background .headerToolbar {
+	.hcb-background .header {
 		color: #fff;
 	}
 	</style>
@@ -66,18 +66,11 @@
 		<h3>Basic Table</h3>
 		<div class="snippet flex-column">
 
-			<!-- Header toolbar -->
-			<div class="headerToolbar">
+			<!-- Header -->
+			<div class="header">
 				<span>Products table - resize your browser to make some columns pop-in</span>
 				<ui5-button id="toggleSticky">Toggle Sticky Column Header</ui5-button>
 			</div>
-
-			<!-- Info toolbar -->
-			<ui5-toolbar toolbar-style="Clear" design="Info">
-				<span>
-					<i>Wide range of available products</i>
-				</span>
-			</ui5-toolbar>
 
 			<ui5-table class="demo-table" id="tbl">
 				<!-- Columns -->
@@ -105,18 +98,11 @@
 
 		</div>
 		<pre class="prettyprint lang-html"><xmp>
-<!-- Header toolbar -->
-<div class="headerToolbar">
+<!-- Header -->
+<div class="header">
 	<span>Products table - resize your browser to make some columns pop-in</span>
 	<button id="toggleSticky" style="height: 32px">Toggle Sticky Column Header</button>
 </div>
-
-<!-- Info toolbar -->
-<ui5-toolbar toolbar-style="Clear" design="Info">
-	<span>
-		<i>Wide range of available products</i>
-	</span>
-</ui5-toolbar>
 
 <ui5-table class="demo-table" id="table">
 	<!-- Columns -->

@@ -2,7 +2,7 @@
 import "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/browsersupport/Edge";
 
 import "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/shims/jquery-shim";
-import "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/events/PolymerGestures";
+import "./src/ThemePropertiesProvider";
 
 import Gregorian from "@ui5/webcomponents-core/dist/sap/ui/core/date/Gregorian";
 import Buddhist from "@ui5/webcomponents-core/dist/sap/ui/core/date/Buddhist";
@@ -43,8 +43,6 @@ import Timeline from "./dist/Timeline";
 import TimelineItem from "./dist/TimelineItem";
 import Title from "./dist/Title";
 import ToggleButton from "./dist/ToggleButton";
-import Toolbar from "./dist/Toolbar";
-import ToolbarSpacer from "./dist/ToolbarSpacer";
 
 import List from "./dist/List";
 import StandardListItem from "./dist/StandardListItem";

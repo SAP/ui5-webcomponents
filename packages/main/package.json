@@ -1,6 +1,6 @@
 {
   "name": "@ui5/webcomponents",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "description": "UI5 Web Components: webcomponents.main",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
@@ -44,7 +44,7 @@
     }
   },
   "scripts": {
-    "build": "npm-run-all --sequential clean lint build:templates build:samples build:less copy:src build:bundle copy:i18n copy:webcomponents-polyfill ",
+    "build": "npm-run-all --sequential clean lint build:templates build:samples build:styles build:less copy:src build:bundle copy:i18n copy:webcomponents-polyfill ",
     "build:less": "rollup -c rollup.config.less.js",
     "build:bundle": "rollup -c --environment ES5_BUILD",
     "build:templates": "mkdirp src/build/compiled && node ./lib/hbs2ui5/index.js -d src/ -o src/build/compiled",
@@ -53,6 +53,11 @@
     "build:qunit": "npm run copy:qunit",
     "build:api": "jsdoc -c ../../lib/jsdoc/config.json",
     "build:docs": "node ../../lib/documentation/index.js",
+    "build:styles": "npm-run-all --sequential build:styles-bundles build:styles-components",
+    "build:styles-bundles": "postcss src/**/parameters-bundle.css --config config/postcss.bundles --base src --dir dist/",
+    "build:styles-components": "postcss src/themes-next/*.css --config config/postcss.components --base src --dir dist/",
+    "watch:styles-bundles": "postcss src/**/parameters-bundle.css --config config/postcss.bundles --base src --dir dist/ -w",
+    "watch:styles-components": "postcss src/themes-next/*.css --config config/postcss.components --base src --dir dist/ -w",
     "clean": "rimraf dist src/build",
     "copy:src": "copy-and-watch \"src/**/*.js\" \"src/**/i18n/*.json\" dist/",
     "copy:i18n": "cpx \"src/i18n/*.json\" dist/i18n",
@@ -60,7 +65,7 @@
     "copy:pages": "cpx \"test/**/pages/*.*\" dist/test-resources",
     "copy:qunit": "cpx \"test/**/qunit/*.*\" dist/test-resources",
     "copy:webcomponents-polyfill": "cpx \"../../node_modules/@webcomponents/webcomponentsjs/**/*.*\" dist/webcomponentsjs/",
-    "dev": "npm-run-all --parallel watch:less watch:templates watch:samples watch:pages watch:qunit watch:src watch:bundle copy:webcomponents-polyfill",
+    "dev": "npm-run-all --parallel watch:less watch:templates watch:samples watch:pages watch:qunit watch:src watch:bundle watch:styles-bundles watch:styles-components copy:webcomponents-polyfill",
     "start": "npm-run-all --parallel serve:static dev",
     "lint": "eslint .",
     "test:wdio": "npm-run-all --parallel --race serve:static test:wdio-run",
@@ -84,8 +89,8 @@
     "url": "https://github.com/SAP/ui5-webcomponents.git"
   },
   "dependencies": {
-    "@ui5/webcomponents-base": "^0.8.0",
-    "@ui5/webcomponents-core": "^0.8.0"
+    "@ui5/webcomponents-base": "0.9.0",
+    "@ui5/webcomponents-core": "0.9.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.2",
@@ -118,6 +123,11 @@
     "mkdirp": "^0.5.1",
     "npm-run-all": "^4.1.3",
     "npm-watch": "^0.4.0",
+    "postcss": "^7.0.14",
+    "postcss-cli": "^6.1.1",
+    "postcss-csso": "^3.0.0",
+    "postcss-import": "^12.0.1",
+    "postcss-nesting": "^7.0.0",
     "puppeteer": "^1.11.0",
     "rimraf": "^2.6.2",
     "rollup": "^1.1.2",
@@ -126,7 +136,9 @@
     "rollup-plugin-filesize": "^6.0.1",
     "rollup-plugin-less": "^1.1.2",
     "rollup-plugin-node-resolve": "^4.0.0",
-    "rollup-plugin-notify": "^1.0.6",
+    "rollup-plugin-notify": "^1.1.0",
+    "rollup-plugin-postcss": "^2.0.3",
+    "rollup-plugin-string": "^2.0.2",
     "rollup-plugin-terser": "^4.0.3",
     "rollup-plugin-url": "^2.2.0",
     "rollup-plugin-visualizer": "^0.9.2",

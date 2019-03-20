@@ -4,6 +4,7 @@ import { getIconURI } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/bas
 import slideDown from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/animations/slideDown";
 import slideUp from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/animations/slideUp";
 import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/events/PseudoEvents";
 import PanelTemplateContext from "./PanelTemplateContext";
 import BackgroundDesign from "./types/BackgroundDesign";
 import PanelAccessibleRole from "./types/PanelAccessibleRole";
@@ -32,8 +33,6 @@ const metadata = {
 
 		/**
 		 * Defines the <code>ui5-panel</code> header area.
-		 * For example, you can use <code>ui5-toolbar</code> and add extra
-		 * components for user interactions.
 		 * <br><br>
 		 * <b>Note:</b> When a header is provided, the <code>headerText</code> property is ignored.
 		 *
@@ -123,6 +122,9 @@ const metadata = {
 		_icon: {
 			type: Object,
 		},
+		_header: {
+			type: Object,
+		},
 		_contentExpanded: {
 			type: Boolean,
 		},
@@ -158,7 +160,7 @@ const metadata = {
  * </ul>
  *
  * <h3>Structure</h3>
- * A panel consists of a title bar with a header text or header toolbar and a content area.
+ * A panel consists of a title bar with a header text or custom header.
  * <br>
  * The content area can contain an arbitrary set of controls.
  * The header can contain a title with text and icons, buttons, and a
@@ -208,13 +210,16 @@ class Panel extends WebComponent {
 
 		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
 
+		this._header = {};
+
 		this._icon = {};
 		this._icon.id = `${this.id}-CollapsedImg`;
 		this._icon.src = getIconURI("navigation-right-arrow");
-
 		this._icon.title = this.resourceBundle.getText("PANEL_ICON");
 		this._icon.functional = true;
-		this._icon.press = event => { event.preventDefault(); this._toggleOpen(); };
+
+		this._toggle = event => { event.preventDefault(); this._toggleOpen(); };
+		this._noOp = () => {};
 	}
 
 	onBeforeRendering() {
@@ -222,9 +227,37 @@ class Panel extends WebComponent {
 		if (!this._animationRunning) {
 			this._contentExpanded = !this.collapsed;
 		}
+
+		const toggleWithInternalHeader = !this.header;
+		this._header.press = toggleWithInternalHeader ? this._toggle : this._noOp;
+		this._icon.press = !toggleWithInternalHeader ? this._toggle : this._noOp;
+	}
+
+	onkeydown(event) {
+		const headerUsed = this._headerOnTarget(event.ui5target);
+
+		if (isEnter(event) && headerUsed) {
+			this._toggleOpen();
+		}
+
+		if (isSpace(event) && headerUsed) {
+			event.preventDefault();
+		}
+	}
+
+	onkeyup(event) {
+		const headerUsed = this._headerOnTarget(event.ui5target);
+
+		if (isSpace(event) && headerUsed) {
+			this._toggleOpen();
+		}
 	}
 
 	_toggleOpen() {
+		if (this.fixed) {
+			return;
+		}
+
 		this.collapsed = !this.collapsed;
 		this._animationRunning = true;
 
@@ -252,6 +285,10 @@ class Panel extends WebComponent {
 
 	_fireExpandEvent() {
 		this.fireEvent("expand", {});
+	}
+
+	_headerOnTarget(target) {
+		return target.classList.contains("sapMPanelWrappingDiv");
 	}
 
 	static async define(...params) {

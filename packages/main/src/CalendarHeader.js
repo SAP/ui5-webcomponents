@@ -94,7 +94,7 @@ class CalendarHeader extends WebComponent {
 		this.fireEvent("btn2Press", event);
 	}
 
-	ontap(event) {
+	onclick(event) {
 		const composedPath = event.composedPath();
 
 		for (let index = 0; index < composedPath.length; index++) {

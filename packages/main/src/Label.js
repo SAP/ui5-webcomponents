@@ -109,7 +109,7 @@ class Label extends WebComponent {
 		return LabelRenderer;
 	}
 
-	ontap() {
+	onclick() {
 		const labelFor = this.for;
 
 		if (labelFor) {
