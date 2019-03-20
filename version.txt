@@ -1,5 +1,5 @@
-commit a0080227b55bea5a56b93639642099e7b8e9f28f
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Wed Mar 20 13:50:04 2019 +0200
+commit dd17224efcad91427fff91db1c0fdc3cf284acb1
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Mar 20 14:46:58 2019 +0200
 
-    fix(ui5-li): fix delete list item button height (#221)
+    refactor: remove the LabelEnablement module (#218)
