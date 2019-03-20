@@ -9,29 +9,26 @@
 /* CSS for control sap.m/CheckBox  */
 /* Base theme                      */
 /* =============================== */
-@_ui5_checkbox_height: 3rem;
-@_ui5_checkbox_compact_height: 2rem;
-@_ui5_checkbox_square_hover_bg: @sapUiFieldHoverBackground;
-@_ui5_checkbox_square_hover_border_color: @sapUiFieldHoverBorderColor;
-@_ui5_checkbox_square_outline_width: 1px;
-@_ui5_checkbox_square_border_width: 0.125rem;
-@_ui5_checkbox_square_error_border_width: 0.125rem;
-@_ui5_checkbox_square_warning_border_width: 0.125rem;
-@_ui5_checkbox_square_error_border_style: solid;
-@_ui5_checkbox_square_warning_border_style: solid;
-@_ui5_checkbox_square_disabled_border_color: @sapUiFieldBorderColor;
-@_ui5_checkbox_square_disabled_bg_color: @sapUiFieldBackground;
-@_ui5_checkbox_square_disabled_error_border_color: @sapUiFieldInvalidColor;
-@_ui5_checkbox_square_border_radius: 0;
-@_ui5_checkbox_checkmark_color: @sapUiSelected;
+
+@_ui5_checkbox_width_height: 3rem;
+@_ui5_checkbox_compact_width_height: 2rem;
+@_ui5_checkbox_hover_background: @sapUiFieldHoverBackground;
+@_ui5_checkbox_inner_width_height: 1.375rem;
+@_ui5_checkbox_inner_border: solid .125rem @sapUiFieldBorderColor;
+@_ui5_checkbox_inner_border_radius: 0;
+@_ui5_checkbox_inner_error_border: 0.125rem solid @sapUiFieldInvalidColor;
+@_ui5_checkbox_inner_warning_border: 0.125rem solid @sapUiFieldWarningColor;
+@_ui5_checkbox_inner_readonly_border: 0.125rem solid @sapUiFieldReadOnlyBorderColor;
 @_ui5_checkbox_checkmark_warning_color: darken(@sapUiFieldWarningColor, 100);
-@_ui5_checkbox_checkmark_line_height: inherit;
-@_ui5_checkbox_checkmark_compact_line_height: inherit;
-@_ui5_checkbox_checkmark_compact_height: 0.75rem;
-@_ui5_checkbox_checkmark_compact_width: 0.75rem;
-@_ui5_checkbox_focus_border_width: 1px;
-@_ui5_checkbox_focus_outline_element_top: 0.6875rem;
-@_ui5_checkbox_focus_outline_element_bottom: 0.6875rem;
+@_ui5_checkbox_checkmark_color: @sapUiSelected;
+@_ui5_checkbox_focus_left_top_bottom_position: .6875rem;
+@_ui5_checkbox_compact_no_label_focus_right: 0px;
+@_ui5_checkbox_no_label_focus_right: .6875rem;
+@_ui5_checkbox_focus_outline: 1px dotted @sapUiContentFocusColor;
+@_ui5_checkbox_compact_inner_size: 1rem;
+@_ui5_checkbox_compact_focus_left_top_bottom_position: .375rem;
+@_ui5_checkbox_wrapped_content_margin_top: 0.125rem;
+@_ui5_checkbox_wrapped_focus_padding: .375rem;
 
 :host(ui5-checkbox) {
 	display: inline-block;
@@ -39,274 +36,189 @@
 	max-width: 100%;
 }
 
-// required for browsers with no shadow DOM native support
 ui5-checkbox {
 	display: inline-block;
 	overflow: hidden;
 	max-width: 100%;
 }
 
-.sapMCb {
+.ui5-checkbox-wrapper {
+	min-height: @_ui5_checkbox_width_height;
+	min-width: @_ui5_checkbox_width_height;
 	display: flex;
 	align-items: center;
-	position: relative;
+	padding-left: .8125rem;
+	padding-right: 0.125rem;
 	box-sizing: border-box;
-	height: 100%;
-	min-height: @_ui5_checkbox_height;
-	padding: 0 .875rem;
-	max-width: 100%;
-	max-height: 100%;
-	cursor: default;
-}
-
-.sapMCb:not(.sapMCbBgDis).sapMCbHasLabel:focus:before {
-	pointer-events: none;
-}
-
-.sapMCb:focus {
+	background: @sapUiFieldBackground;
 	outline: none;
+	position: relative;
 }
 
-.sapMCb:after {
-	/* 
-	* this is a hack for a bug in IE 
-	* https://github.com/philipwalton/flexbugs/issues/231
-	*/
-	content: '';
+
+.ui5-checkbox-wrapper::after {
+	content: "";
 	min-height: inherit;
 	font-size: 0;
 }
 
-.sapMCbBg {
-	background-color: @sapUiFieldBackground;
-	border-width: @_ui5_checkbox_square_border_width;
-	border-style: solid;
-	border-radius: @_ui5_checkbox_square_border_radius;
-	border-color: @sapUiFieldBorderColor;
-	display: inline-block;
-	position: relative;
-	height: 1.125rem;
-	width: 1.125rem;
-	min-height: 1.125rem;
-	min-width: 1.125rem;
-	text-align: center;
-	pointer-events: none;
-}
-
-.sapMCbBg.sapMCbMarkChecked:before {
-	content: "\e05b";
-	font-family: "SAP-icons";
-	display: inline-block;
-	color: @_ui5_checkbox_checkmark_color;
-	width: 100%;
-	line-height: @_ui5_checkbox_checkmark_line_height;
-}
-
-.sapMCbBg.sapMCbMark {
-	font-size: inherit;
-}
-
-/* ChekBox With Label */
-.sapMCb.sapMCbHasLabel {
-	padding-right: 0;
-}
-
-.sapMCb.sapMCbHasLabel .sapWCLabelInCheckBox {
-	padding-left: 0.875rem;
-	vertical-align: bottom;
-	cursor: default;
-	pointer-events: none;
-}
-
-/* ChekBox With Wrapping */
-.sapMCb.sapMCbWrapped.sapMCbHasLabel {
+.ui5-checkbox-wrapper.ui5-checkbox-with-label.ui5-checkbox--wrap {
+	min-height: auto;
+	padding-top: .6875rem;
+	box-sizing: border-box;
+	padding-bottom: .6875rem;
 	align-items: flex-start;
-
-	.sapMCbBg {
-		top: 0.875rem;
-	}
-
-	.sapWCLabelInCheckBox {
-		line-height: 3rem;
-		overflow: hidden;
-		align-self: center;
-		margin: 0.675rem 0;
-	}
 }
 
-/* Read only */
-.sapMCb.sapMCbRo .sapMCbBg,
-.sapMCb.sapMCbRo.sapMCbWarn .sapMCbBg {
-	background-color: @sapUiFieldReadOnlyBackground;
+.ui5-checkbox-wrapper.ui5-checkbox-with-label.ui5-checkbox--wrap .ui5-checkbox-inner,
+.ui5-checkbox-wrapper.ui5-checkbox-with-label.ui5-checkbox--wrap .ui5-checkbox-label {
+	margin-top: @_ui5_checkbox_wrapped_content_margin_top;
 }
 
-.sapMCb.sapMCbRo .sapMCbBg {
-	border-color: @sapUiFieldReadOnlyBorderColor;
-}
-.sapMCb.sapMCbRo.sapMCbWarn .sapMCbBg {
-	border-color: @sapUiFieldWarningColor;
+.ui5-checkbox--disabled {
+	opacity: .5;
 }
 
-/* Disabled */
-.sapMCbBgDis {
-	opacity: @sapUiContentDisabledOpacity;
-}
-
-.sapMCbBgDis > .sapMCbBg {
-	border-color: @_ui5_checkbox_square_disabled_border_color;
-	background-color: @_ui5_checkbox_square_disabled_bg_color;
-}
-
-/* Disabled and Checked */
-.sapMCbBg.sapMCbBgDis.sapMCbMarkChecked:before {
-	color: fade(@sapUiSelected, 25);
-}
-
-/* Hover */
-.sapMCb:not(.sapMCbWarn):not(.sapMCbErr):hover .sapMCbBg.sapMCbHoverable {
-	border-color: @_ui5_checkbox_square_hover_border_color;
-	background: @_ui5_checkbox_square_hover_bg;
-}
-
-/* Value State Warning */
-.sapMCb.sapMCbWarn .sapMCbBg {
-	background-color: @sapUiFieldWarningBackground;
-	border-color: @sapUiFieldWarningColor;
-	border-width: @_ui5_checkbox_square_warning_border_width;
-	border-style: @_ui5_checkbox_square_warning_border_style;
-}
-
-.sapMCb.sapMCbWarn .sapMCbBg.sapMCbMarkChecked:before {
-	color: @_ui5_checkbox_checkmark_warning_color;
-}
-
-/* Value State Error */
-.sapMCb.sapMCbErr .sapMCbBg {
-	background-color: @sapUiFieldInvalidBackground;
-	border-color: @sapUiFieldInvalidColor;
-	border-width: @_ui5_checkbox_square_error_border_width;
-	border-style: @_ui5_checkbox_square_error_border_style;
-}
-
-.sapMCb.sapMCbErr .sapMCbBg.sapMCbMarkChecked:before {
+.ui5-checkbox--error .ui5-checkbox-inner {
+	background: @sapUiFieldInvalidBackground;
+	border: @_ui5_checkbox_inner_error_border;
 	color: @sapUiFieldInvalidColor;
 }
 
-.sapMCb.sapMCbErr.sapMCbBgDis .sapMCbBg {
-	border-color: @_ui5_checkbox_square_disabled_error_border_color;
+.ui5-checkbox--error.ui5-checkbox--hoverable:hover .ui5-checkbox-inner {
+	background: @sapUiFieldInvalidBackground;
+	color: @sapUiFieldInvalidColor;
+	border-color: @sapUiFieldInvalidColor;
 }
 
-/* CheckBox focus */
-.sapMCbBg:focus,
-.sapMCbBg:active,
-.sapMCbBg.sapMCbBgDis:focus {
-	-webkit-tap-highlight-color: rgba(255, 255, 255, 0);
-	outline: none;
+.ui5-checkbox--error .ui5-checkbox-inner--checked::before {
+	color: @sapUiFieldInvalidColor;
 }
 
-.sapMCb:not(.sapMCbBgDis):not(.sapMCbHasLabel):focus > .sapMCbBg {
-	outline-width: @_ui5_checkbox_square_outline_width;
-	outline-style: dotted;
-	outline-color: @sapUiContentFocusColor;
+.ui5-checkbox--warning .ui5-checkbox-inner {
+	background: @sapUiFieldWarningBackground;
+	border: @_ui5_checkbox_inner_warning_border;
+	color: @sapUiFieldWarningColor;
 }
 
-.sapMCb:not(.sapMCbBgDis).sapMCbHasLabel:focus:before {
+.ui5-checkbox--warning.ui5-checkbox--hoverable:hover .ui5-checkbox-inner {
+	background: @sapUiFieldWarningBackground;
+	color: @sapUiFieldWarningColor;
+	border-color: @sapUiFieldWarningColor;
+}
+
+.ui5-checkbox--warning .ui5-checkbox-inner--checked::before {
+	color: @_ui5_checkbox_checkmark_warning_color;
+}
+
+.ui5-checkbox--hoverable:hover .ui5-checkbox-inner {
+	background: @_ui5_checkbox_hover_background;
+	border-color: @sapUiFieldHoverBorderColor;
+}
+
+.ui5-checkbox--readonly:not(.ui5-checkbox--warning):not(.ui5-checkbox--error) .ui5-checkbox-inner {
+	background: @sapUiFieldReadOnlyBackground;
+	border: @_ui5_checkbox_inner_readonly_border;
+	color: @sapUiContentNonInteractiveIconColor;
+}
+
+.ui5-checkbox-wrapper:focus::before {
 	content: "";
-	display: block;
 	position: absolute;
-	top: @_ui5_checkbox_focus_outline_element_top;
-	bottom: @_ui5_checkbox_focus_outline_element_bottom;
-	left: 0.75rem;
-	right: 0;
-	border: @_ui5_checkbox_focus_border_width dotted @sapUiContentFocusColor;
+	top: @_ui5_checkbox_focus_left_top_bottom_position;
+	left: .6875rem;
+	right: 0px;
+	bottom: @_ui5_checkbox_focus_left_top_bottom_position;
+	border: @_ui5_checkbox_focus_outline;
 }
 
-.sapMCb.sapMCbWrapped:not(.sapMCbBgDis).sapMCbHasLabel:focus:before {
-	top: 0.75rem;
-	bottom: 0.65rem;
-	left: 0.75rem;
-	right: 0;
+.ui5-checkbox-wrapper:not(.ui5-checkbox-with-label):focus::after {
+	right: @_ui5_checkbox_no_label_focus_right;
 }
 
-.sapMCbBg > input {
+.ui5-checkbox-inner {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-width: @_ui5_checkbox_inner_width_height;
+	max-width: @_ui5_checkbox_inner_width_height;
+	height: @_ui5_checkbox_inner_width_height;
+	max-height: @_ui5_checkbox_inner_width_height;
+	border: @_ui5_checkbox_inner_border;
+	border-radius: @_ui5_checkbox_inner_border_radius;
+	box-sizing: border-box;
+	position: relative;
+	cursor: default;
+}
+
+.ui5-checkbox-inner--checked::before {
+	content: "\e05b";
+	display: flex;
+	position: absolute;
+	justify-content: center;
+	font-family: "SAP-icons";
+	color: @_ui5_checkbox_checkmark_color;
+	width: 100%;
+	height: 100%;
+	left: 0;
+	top: 0;
+	user-select: none;
+	-ms-user-select: none;
+	-webkit-user-select: none;
+	cursor: ;
+}
+
+.ui5-checkbox-inner input {
 	-webkit-appearance: none;
 	visibility: hidden;
 	width: 0;
-	// In FF the input needs to be positioned exactly behind the visible checkbox
-	// for the focus outline.
 	left: 0;
 	position: absolute;
 	font-size: inherit;
 }
 
-/* TODO remove after 1.62 version */
-[data-sap-ui-wc-root][data-sap-ui-browser^="ed"].sap-desktop .sapMCb:not(.sapMCbBgDis):not(.sapMCbHasLabel):focus > .sapMCbBg,
-[data-sap-ui-wc-root][data-sap-ui-browser^="ie"].sap-desktop .sapMCb:not(.sapMCbBgDis):not(.sapMCbHasLabel):focus > .sapMCbBg {
-	outline-style: dashed;
+.ui5-checkbox-wrapper .ui5-checkbox-label {
+	margin-left: .8125rem;
+	cursor: default;
+	pointer-events: none;
+	user-select: none;
+	-ms-user-select: none;
+	-webkit-user-select: none;
 }
 
-[data-sap-ui-wc-root][data-sap-ui-browser^="ie"].sap-desktop .sapMCb:not(.sapMCbBgDis).sapMCbHasLabel:focus:before,
-[data-sap-ui-wc-root][data-sap-ui-browser^="ed"].sap-desktop .sapMCb:not(.sapMCbBgDis).sapMCbHasLabel:focus:before {
-	border: @_ui5_checkbox_focus_border_width dashed @sapUiContentFocusColor;
+.sapUiSizeCompact .ui5-checkbox-wrapper {
+	min-height: @_ui5_checkbox_compact_width_height;
+	min-width: @_ui5_checkbox_compact_width_height;
 }
 
-/* Compact */
-.sapUiSizeCompact {
-
-	.sapMCb {
-		min-height: @_ui5_checkbox_compact_height;
-		padding: 0 .5rem;
-	}
-
-	.sapMCbBg {
-		left: 0.025rem;
-		top: 0.025rem;
-		height: @_ui5_checkbox_checkmark_compact_height;
-		width: @_ui5_checkbox_checkmark_compact_width;
-		min-width: @_ui5_checkbox_checkmark_compact_width;
-		min-height: @_ui5_checkbox_checkmark_compact_height;
-		line-height: 0.75rem;
-		font-size: 0.625rem;
-	}
-
-	.sapMCbBg.sapMCbMarkChecked:before {
-		line-height: @_ui5_checkbox_checkmark_compact_line_height;
-	}
-
-	/* ChekBox With Label */
-	.sapMCb.sapMCbHasLabel .sapWCLabelInCheckBox {
-		padding-left: 0.5rem;
-		vertical-align: bottom;
-	}
-
-	/* ChekBox With Wrapping */
-	.sapMCb.sapMCbWrapped.sapMCbHasLabel .sapMCbBg {
-		top: 0.5rem;
-	}
-
-	.sapMCb.sapMCbWrapped.sapMCbHasLabel .sapWCLabelInCheckBox {
-		line-height: 2rem;
-		margin: .25rem 0;
-	}
-
-	.sapMCb:not(.sapMCbBgDis).sapMCbHasLabel:focus:before {
-		top: 0.35rem;
-		bottom: 0.325rem;
-		left: .375rem;
-	}
+.sapUiSizeCompact .ui5-checkbox-inner {
+	max-height: @_ui5_checkbox_compact_inner_size;
+	height: @_ui5_checkbox_compact_inner_size;
+	max-width: @_ui5_checkbox_compact_inner_size;
+	min-width: @_ui5_checkbox_compact_inner_size;
+	font-size: .625rem;
+	border-radius: 0;
 }
 
-/* RTL */
-[dir="rtl"] .sapMCb:not(.sapMCbBgDis).sapMCbHasLabel:focus:before {
-	left: 0;
-	right: 0.675rem;
+.sapUiSizeCompact .ui5-checkbox-wrapper:focus::before {
+	top: @_ui5_checkbox_compact_focus_left_top_bottom_position;
+	left: .6875rem;
+	right: 0px;
+	bottom: @_ui5_checkbox_compact_focus_left_top_bottom_position;
+	border: @_ui5_checkbox_focus_outline;
 }
 
-[dir="rtl"] .sapMCb.sapMCbHasLabel {
-	padding: 0 .875rem;
-	padding-left: 0;
+.sapUiSizeCompact .ui5-checkbox-wrapper:not(.ui5-checkbox-with-label):focus::after {
+	right: @_ui5_checkbox_compact_no_label_focus_right;
 }
 
-[dir="rtl"] .sapMCb.sapMCbHasLabel .sapWCLabelInCheckBox {
-	padding: 0 .875rem 0 0;
+.sapUiSizeCompact .ui5-checkbox-wrapper.ui5-checkbox-with-label.ui5-checkbox--wrap {
+	min-height: auto;
+	padding-top: @_ui5_checkbox_wrapped_focus_padding;
+	padding-bottom: @_ui5_checkbox_wrapped_focus_padding;
+}
+
+span[dir="rtl"] .ui5-checkbox-wrapper .ui5-checkbox-label {
+	margin-left: 0;
+	margin-right: .8125rem;
 }

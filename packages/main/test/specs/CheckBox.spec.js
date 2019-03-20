@@ -27,7 +27,7 @@ describe("CheckBox general interaction", () => {
 
 	it("tests truncating and wrapping", () => {
 		const CHECKBOX_DEFAULT_HEIGHT = 44;
-		const truncatingCb = browser.findElementDeep("#truncatingCb >>> .sapMCb");
+		const truncatingCb = browser.findElementDeep("#truncatingCb >>> .ui5-checkbox-wrapper");
 		const wrappingCb = browser.findElementDeep("#wrappingCb");
 
 		const truncatingCbHeight = truncatingCb.getSize("height");

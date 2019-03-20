@@ -14,14 +14,10 @@
 /* CSS for ui5-checkbox            */
 /* HCB parameters                  */
 /* =============================== */
-@_ui5_checkbox_focus_border_width: 0.125rem;
-@_ui5_checkbox_square_hover_bg: @sapUiSelected;
-@_ui5_checkbox_square_hover_border_color: @sapUiFieldBorderColor;
-@_ui5_checkbox_square_outline_width: 0.125rem;
-@_ui5_checkbox_square_error_border_style: dashed;
-@_ui5_checkbox_square_warning_border_style: dashed;
-@_ui5_checkbox_square_disabled_border_color: @sapUiHcReducedForeground;
-@_ui5_checkbox_square_disabled_bg_color: @sapUiHcReducedBackground;
-@_ui5_checkbox_square_disabled_error_border_color: @sapUiHcReducedForeground;
+@_ui5_checkbox_inner_border_radius: 0;
 @_ui5_checkbox_checkmark_color: @sapUiContentIconColor;
+@_ui5_checkbox_inner_error_border: 0.125rem dashed @sapUiFieldInvalidColor;
+@_ui5_checkbox_inner_warning_border: 0.125rem dashed @sapUiFieldWarningColor;
 @_ui5_checkbox_checkmark_warning_color: @sapUiFieldWarningColor;
+@_ui5_checkbox_hover_background: @sapUiSelected;
+@_ui5_checkbox_focus_outline: 0.125rem dotted @sapUiContentFocusColor;
