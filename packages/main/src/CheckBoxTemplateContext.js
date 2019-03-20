@@ -19,25 +19,25 @@ class CheckBoxTemplateContext {
 	}
 
 	static getMainClasses(state) {
+		const hoverable = !state.disabled && !state.readOnly && isDesktop();
+
 		return {
-			sapMCb: true,
-			sapMCbHasLabel: !!state.text,
-			sapMCbBgDis: state.disabled,
-			sapMCbRo: state.readOnly,
-			sapMCbErr: state.valueState === "Error",
-			sapMCbWarn: state.valueState === "Warning",
-			sapMCbWrapped: state.wrap,
+			"ui5-checkbox-wrapper": true,
+			"ui5-checkbox-with-label": !!state.text,
+			"ui5-checkbox--disabled": state.disabled,
+			"ui5-checkbox--readonly": state.readOnly,
+			"ui5-checkbox--error": state.valueState === "Error",
+			"ui5-checkbox--warning": state.valueState === "Warning",
+			"ui5-checkbox--wrap": state.wrap,
+			"ui5-checkbox--hoverable": hoverable,
 		};
 	}
 
 	static getInnerClasses(state) {
-		const hoverable = !state.disabled && !state.readOnly && isDesktop();
-
 		return {
-			sapMCbBg: true,
-			sapMCbHoverable: hoverable,
-			sapMCbMark: true,
-			sapMCbMarkChecked: !!state.checked,
+			"ui5-checkbox-inner": true,
+			"ui5-checkbox-inner-mark": true,
+			"ui5-checkbox-inner--checked": !!state.checked,
 		};
 	}
 }

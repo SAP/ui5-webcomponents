@@ -11,7 +11,6 @@
 		"Button",
 		"Calendar",
 		"Card",
-		"CheckBox",
 		// "DatePicker",
 		// "DayPicker",
 		"Dialog",
