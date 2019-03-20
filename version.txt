@@ -1,8 +1,5 @@
-commit 5dd912f8a69c6172b3ad950b86f0b13c4da88a3d
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Wed Mar 20 15:05:50 2019 +0200
+commit c1f98a3c51c0d20137007479619a9a604d023a9a
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Mar 20 15:12:58 2019 +0200
 
-    playground: fix yarn start command (#222)
-    
-    the playground starts correctly instead of showing a directory listing
-    changes in webcomponents and sample pages are reflected and shown on refresh
+    fix(ui5-checkbox): correct setting of aria-readonly (#220)
