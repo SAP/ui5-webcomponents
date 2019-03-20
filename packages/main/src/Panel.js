@@ -282,7 +282,7 @@ class Panel extends WebComponent {
 		Promise.all(animations).then(_ => {
 			this._animationRunning = false;
 			this._contentExpanded = !this.collapsed;
-			this.fireEvent("toggle", {});
+			this.fireEvent("toggle");
 		});
 	}
 
