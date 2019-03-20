@@ -27,13 +27,12 @@
 
 	<script>
 		document.addEventListener("DOMContentLoaded", function () {
-			panel1.addEventListener("expand", function (event) {
+			panel1.addEventListener("toggle", function (event) {
 				console.log(event);
-				event.target.headerText = event.detail.expand ? "Click to collapse!" : "Click to expand!";
+				event.target.headerText = event.target.collapsed ? "Click to expand!" : "Click to collapse!";
 				field1.value = parseInt(field1.value) + 1;
 			});
-			panel2.addEventListener("expand", function (event) {
-				event.target.headerText = event.detail.expand ? "Click to collapse!" : "Click to expand!";
+			panel2.addEventListener("toggle", function (event) {
 				field2.value = parseInt(field2.value) + 1;
 			});
 

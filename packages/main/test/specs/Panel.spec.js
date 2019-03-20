@@ -3,7 +3,7 @@ const assert = require("assert");
 describe("Panel general interaction", () => {
 	browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/Panel.html");
 
-	it("tests expand event upon header click", () => {
+	it("tests toggle event upon header click", () => {
 		const header = browser.findElementDeep("#panel1 >>> .sapMPanelWrappingDiv");
 		const field = browser.$("#field1");
 
@@ -19,7 +19,7 @@ describe("Panel general interaction", () => {
 		assert.strictEqual(field.getProperty("value"), "3", "Press should be called 3 times");
 	});
 
-	it("tests expand event upon icon click with custom header", () => {
+	it("tests toggle event upon icon click with custom header", () => {
 		const icon = browser.findElementDeep("#panel2 >>> ui5-icon");
 		const field = browser.$("#field2");
 

@@ -140,7 +140,7 @@ const metadata = {
 		 * @event
 		 * @public
 		 */
-		expand: {},
+		toggle: {},
 	},
 };
 
@@ -163,8 +163,11 @@ const metadata = {
  * A panel consists of a title bar with a header text or custom header.
  * <br>
  * The content area can contain an arbitrary set of controls.
- * The header can contain a title with text and icons, buttons, and a
- * collapse icon, which allows to show/hide the content area.
+ * The header is clickable and can be used to toggle between the expanded and collapsed state.
+ * It includes an icon which rotates depending on the state.
+ * <br>
+ * The custom header can be set through the <code>header</code> slot and it may contain arbitraray content, such as: title, buttons or any other HTML elements.
+ * <br><b>Note:</b> the custom header is not clickable out of the box, but in this case the icon is interactive and allows to show/hide the content area.
  *
  * <h3>Responsive Behavior</h3>
  * <ul>
@@ -279,12 +282,8 @@ class Panel extends WebComponent {
 		Promise.all(animations).then(_ => {
 			this._animationRunning = false;
 			this._contentExpanded = !this.collapsed;
-			this._fireExpandEvent();
+			this.fireEvent("toggle");
 		});
-	}
-
-	_fireExpandEvent() {
-		this.fireEvent("expand", {});
 	}
 
 	_headerOnTarget(target) {
