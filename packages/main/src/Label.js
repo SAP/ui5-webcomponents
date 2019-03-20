@@ -1,6 +1,5 @@
 import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
 import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
-import LabelEnablement from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/LabelEnablement";
 import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
 // Template
 import LabelRenderer from "./build/compiled/LabelRenderer.lit";
@@ -64,11 +63,6 @@ const metadata = {
 		},
 	},
 	renderer: LabelRenderer,
-};
-
-const isCustomElement = id => {
-	const element = document.getElementById(id);// Should discuss this line;
-	return !!(element && element.tagName.toLowerCase().startsWith("ui5-"));
 };
 
 /**
