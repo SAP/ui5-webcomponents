@@ -43,11 +43,13 @@
 	{{/if}}
 
 	{{#if modeDelete}}
-		<ui5-button
+		<div class="deleteListItem">
+			<ui5-button
 				id="{{ctr._id}}-deleteSelectionControl"
 				type="Transparent"
 				icon="sap-icon://decline"
 				@press="{{ctr._fnOnDelete}}"
-		></ui5-button>
+			></ui5-button>
+		</div>
 	{{/if}}
 {{/inline}}
