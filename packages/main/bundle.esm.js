@@ -59,7 +59,10 @@ window.isIE = isIE; // attached to the window object for testing purposes
 // Note: keep in sync with rollup.config value for IIFE
 import * as configuration from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Configuration";
 import * as Theming from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Theming";
+import { getFormatterInstance } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/dates/DateFormat";
+
 window["sap-ui-webcomponents-main-bundle"] = {
 	configuration,
 	Theming,
+	getFormatterInstance,
 };

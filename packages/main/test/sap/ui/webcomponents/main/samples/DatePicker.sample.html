@@ -39,6 +39,15 @@
 		</div>
 		<pre class="prettyprint lang-html"><xmp>
 <ui5-datepicker id="myDatepicker1"></ui5-datepicker>
+<script>
+	import { getFormatterInstance } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/dates/DateFormat";
+	getFormatterInstance({
+		style: "short"
+	}).then(formatter => {
+		const dp = document.getElementById('myDatepicker1');
+		dp.setAttribute('value', formatter.format(new Date()));
+	});
+</script>
 	</xmp></pre>
 	</section>
 
@@ -182,6 +191,7 @@
 	</script>
 
 	<script defer src="../../../../../../www/samples/settings.js"></script>
+	<script defer src="../../../../../../www/samples/dates.js"></script>
 </body>
 
 </html>
