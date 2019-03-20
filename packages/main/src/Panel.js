@@ -166,8 +166,8 @@ const metadata = {
  * The header is clickable and can be used to toggle between the expanded and collapsed state.
  * It includes an icon which rotates depending on the state.
  * <br>
- * The custom header can be set through the <code>header</code> slot and it may contain arbitraray content, such as: title, buttons.
- * <br><b>Note:</b> the custom header is not clickable out of the box, but in this case there is still an icon which allows to show/hide the content area.
+ * The custom header can be set through the <code>header</code> slot and it may contain arbitraray content, such as: title, buttons or any other HTML elements.
+ * <br><b>Note:</b> the custom header is not clickable out of the box, but in this case the icon is interactive and allows to show/hide the content area.
  *
  * <h3>Responsive Behavior</h3>
  * <ul>
