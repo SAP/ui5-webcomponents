@@ -1,5 +1,9 @@
-commit c1f98a3c51c0d20137007479619a9a604d023a9a
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Mar 20 15:12:58 2019 +0200
+commit 6887985978613c977db5d41f935f799509415d3b
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Wed Mar 20 16:43:00 2019 +0200
 
-    fix(ui5-checkbox): correct setting of aria-readonly (#220)
+    refactor(ui5-checkbox): improve styling (#199)
+    
+    - fixes some tiny visual bugs
+    - removes CheckBox.qunit.js
+    - removes browser specific CSS
