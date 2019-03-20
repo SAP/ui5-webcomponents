@@ -7,15 +7,13 @@ class CheckBoxTemplateContext {
 
 		const context = {
 			ctr: state,
-			readOnly: !state.disabled,
+			ariaReadonly: state.readOnly ? "true" : undefined,
 			tabIndex: state.disabled ? undefined : "0",
 			classes: { main: mainClasses, inner: innerClasses },
 			styles: {
 				main: {},
 			},
 		};
-
-		context.ariaReadonly = context.readOnly ? "true" : undefined;
 
 		return context;
 	}
