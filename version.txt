@@ -1,5 +1,5 @@
-commit e27c4451bd200dd18000b9f5c30fc47545cd8400
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Tue Mar 19 16:50:05 2019 +0200
+commit a0080227b55bea5a56b93639642099e7b8e9f28f
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Wed Mar 20 13:50:04 2019 +0200
 
-    improvement: replace CSS custom properties more efficiently (#210)
+    fix(ui5-li): fix delete list item button height (#221)
