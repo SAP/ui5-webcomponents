@@ -1,5 +1,7 @@
-commit 1111dbf59c604f91b52fb9e2a59dc9212fb7ff97
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Thu Mar 21 10:26:40 2019 +0200
+commit cb781f1b26bd05518c2058c35db1836f156943b0
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Thu Mar 21 12:00:09 2019 +0200
 
-    fix(ui5-switch): fix layouting on IE (#223)
+    fix(ui5-li): fix typo (#224)
+    
+    This typo was breaking text alignment in the playground
