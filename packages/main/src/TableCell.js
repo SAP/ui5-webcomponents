@@ -1,6 +1,6 @@
-import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
-import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
-import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
+import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
+import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
 import TableCellRenderer from "./build/compiled/TableCellRenderer.lit";
 
 // Styles

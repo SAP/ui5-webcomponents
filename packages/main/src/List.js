@@ -1,9 +1,9 @@
-import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
-import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
-import ItemNavigation from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/delegate/ItemNavigation";
-import FocusHelper from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/FocusHelper";
-import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
-import { isTabNext } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/events/PseudoEvents";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
+import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
+import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation";
+import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper";
+import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
+import { isTabNext } from "@ui5/webcomponents-base/src/events/PseudoEvents";
 import ListItemBase from "./ListItemBase";
 import ListMode from "./types/ListMode";
 import BackgroundDesign from "./types/BackgroundDesign";

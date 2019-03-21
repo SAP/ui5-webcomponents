@@ -1,4 +1,4 @@
-import { registerThemeProperties } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/theming/ThemeProperties";
+import { registerThemeProperties } from "@ui5/webcomponents-base/src/theming/ThemeProperties";
 
 // import belizeThemeProperties from "./themes-next/sap_belize/parameters-bundle.css";
 import belizeHcbThemeProperties from "./themes-next/sap_belize_hcb/parameters-bundle.css";

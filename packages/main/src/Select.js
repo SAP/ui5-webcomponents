@@ -1,5 +1,5 @@
-import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
-import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
+import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
 import {
 	isSpace,
 	isUp,
@@ -7,10 +7,10 @@ import {
 	isRight,
 	isLeft,
 	isEnter,
-} from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/events/PseudoEvents";
-import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
+} from "@ui5/webcomponents-base/src/events/PseudoEvents";
+import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
 import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes";
-import ValueState from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/ValueState";
+import ValueState from "@ui5/webcomponents-base/src/types/ValueState";
 import Suggestions from "./Suggestions";
 
 // Template

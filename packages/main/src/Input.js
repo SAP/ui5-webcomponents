@@ -1,8 +1,8 @@
-import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
-import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
+import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
 import { isIE } from "@ui5/webcomponents-core/dist/sap/ui/Device";
-import ValueState from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/ValueState";
-import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
+import ValueState from "@ui5/webcomponents-base/src/types/ValueState";
+import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
 import {
 	isUp,
 	isDown,
@@ -10,7 +10,7 @@ import {
 	isSpace,
 	isEnter,
 	isRight,
-} from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/events/PseudoEvents";
+} from "@ui5/webcomponents-base/src/events/PseudoEvents";
 import Icon from "./Icon";
 import InputType from "./types/InputType";
 // Template

@@ -1,4 +1,4 @@
-import CalendarType from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/dates/CalendarType";
+import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType";
 
 class CalendarTemplateContext {
 	static calculate(state) {

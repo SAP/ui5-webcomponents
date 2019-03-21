@@ -1,7 +1,7 @@
-import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
-import FocusHelper from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/FocusHelper";
-import Integer from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/Integer";
-import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
+import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
+import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper";
+import Integer from "@ui5/webcomponents-base/src/types/Integer";
+import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
 
 // Styles
 import belize from "./themes/sap_belize/Popup.less";

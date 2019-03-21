@@ -1,5 +1,5 @@
-import { getIconInfo } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/IconPool";
-import { getRTL } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Configuration";
+import { getIconInfo } from "@ui5/webcomponents-base/src/IconPool";
+import { getRTL } from "@ui5/webcomponents-base/src/Configuration";
 
 const dir = getRTL() ? "rtl" : "ltr";
 

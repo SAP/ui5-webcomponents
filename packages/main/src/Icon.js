@@ -1,8 +1,8 @@
-import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
-import URI from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/URI";
-import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
-import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/events/PseudoEvents";
+import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
+import URI from "@ui5/webcomponents-base/src/types/URI";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
+import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents";
 import IconTemplateContext from "./IconTemplateContext";
 import IconRenderer from "./build/compiled/IconRenderer.lit";
 

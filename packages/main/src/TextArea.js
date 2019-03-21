@@ -1,8 +1,8 @@
-import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
-import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
-import CSSSize from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/CSSSize";
-import Integer from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/Integer";
-import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
+import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
+import CSSSize from "@ui5/webcomponents-base/src/types/CSSSize";
+import Integer from "@ui5/webcomponents-base/src/types/Integer";
+import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
 import TextAreaTemplateContext from "./TextAreaTemplateContext";
 import TextAreaRenderer from "./build/compiled/TextAreaRenderer.lit";
 import { fetchResourceBundle, getResourceBundle } from "./ResourceBundleProvider";
