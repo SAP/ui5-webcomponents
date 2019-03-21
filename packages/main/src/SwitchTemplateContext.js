@@ -1,4 +1,5 @@
 import SwitchType from "./types/SwitchType";
+import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device";
 
 class SwitchTemplateContext {
 	static calculate(state) {
@@ -24,6 +25,7 @@ class SwitchTemplateContext {
 			"ui5-switch--disabled": state.disabled,
 			"ui5-switch--checked": state.checked,
 			"ui5-switch--semantic": state.type === SwitchType.Graphical,
+			"ui5-switch__desktop": isDesktop(),
 		};
 	}
 }
