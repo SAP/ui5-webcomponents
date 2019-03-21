@@ -1,5 +1,6 @@
 import DataType from "./types/DataType";
 import Function from "./types/Function";
+import { isDescendantOfClass } from "./util/isDescendantOfClass";
 
 class WebComponentMetadata {
 	constructor(metadata) {
@@ -90,7 +91,7 @@ const validateSingleProperty = (value, propData) => {
 	if (propertyType === Function) {
 		return typeof value === "function" ? value : undefined;
 	}
-	if (isDescendantOf(propertyType, DataType)) {
+	if (isDescendantOfClass(propertyType, DataType)) {
 		return propertyType.isValid(value) ? value : propData.defaultValue;
 	}
 };
@@ -106,20 +107,6 @@ const validateSingleSlot = (value, propData) => {
 	}
 
 	return value;
-};
-
-const isDescendantOf = (klass, baseKlass, inclusive = false) => {
-	if (typeof klass !== "function" || typeof baseKlass !== "function") {
-		return false;
-	}
-	if (inclusive && klass === baseKlass) {
-		return true;
-	}
-	let parent = klass;
-	do {
-		parent = Object.getPrototypeOf(parent);
-	} while (parent !== null && parent !== baseKlass);
-	return parent === baseKlass;
 };
 
 export default WebComponentMetadata;

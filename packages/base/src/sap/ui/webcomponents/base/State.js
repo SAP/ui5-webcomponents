@@ -1,4 +1,6 @@
+import DataType from "./types/DataType";
 import Function from "./types/Function";
+import { isDescendantOfClass } from "./util/isDescendantOfClass";
 
 class State {
 	constructor(control) {
@@ -43,8 +45,11 @@ class State {
 					value = MetadataClass.constructor.validatePropertyValue(value, propData);
 
 					const oldState = this._data[prop];
+					const propertyType = propData.type;
 
-					if (propData.type instanceof Object) {
+					if (propertyType === Boolean || propertyType === String || isDescendantOfClass(propertyType, DataType)) {
+						isDifferent = oldState !== value;
+					} else if (propertyType instanceof Object) {
 						isDifferent = JSON.stringify(oldState) !== JSON.stringify(value);
 					} else {
 						isDifferent = oldState !== value;
@@ -52,7 +57,7 @@ class State {
 
 					if (isDifferent) {
 						this._data[prop] = value;
-						if (propData.nonVisual || propData.type === Function) {
+						if (propData.nonVisual || propertyType === Function) {
 							return;
 						}
 						this._control._invalidate(prop, value);
