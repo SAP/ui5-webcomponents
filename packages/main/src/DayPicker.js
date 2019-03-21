@@ -59,7 +59,6 @@ const metadata = {
 		selectedDates: {
 			type: Integer,
 			multiple: true,
-			deepEqual: true,
 		},
 
 		_weeks: {

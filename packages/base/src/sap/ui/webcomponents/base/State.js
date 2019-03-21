@@ -44,7 +44,7 @@ class State {
 
 					const oldState = this._data[prop];
 
-					if (propData.deepEqual) {
+					if (propData.type instanceof Object) {
 						isDifferent = JSON.stringify(oldState) !== JSON.stringify(value);
 					} else {
 						isDifferent = oldState !== value;

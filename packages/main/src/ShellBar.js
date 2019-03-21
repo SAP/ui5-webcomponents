@@ -120,7 +120,6 @@ const metadata = {
 
 		_itemsInfo: {
 			type: Object,
-			deepEqual: true,
 		},
 
 		_actionList: {
