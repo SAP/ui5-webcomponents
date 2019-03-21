@@ -216,7 +216,7 @@ const metadata = {
  * <br><br>
  * To benefit from the built-in selection mechanism, you can use the available
  * selection modes, such as
- * <code>SingleSelect</code>, <code>MultiSelect<code> and <code>Delete<code>.
+ * <code>SingleSelect</code>, <code>MultiSelect</code> and <code>Delete</code>.
  * <br><br>
  * Additionally, the <code>ui5-list</code> provides header, footer, and customization for the list item separators.
  *
