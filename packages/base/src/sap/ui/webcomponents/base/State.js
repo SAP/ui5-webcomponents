@@ -47,9 +47,7 @@ class State {
 					const oldState = this._data[prop];
 					const propertyType = propData.type;
 
-					if (propertyType === Boolean || propertyType === String || isDescendantOfClass(propertyType, DataType)) {
-						isDifferent = oldState !== value;
-					} else if (propertyType instanceof Object) {
+					if (propertyType === Object) {
 						isDifferent = JSON.stringify(oldState) !== JSON.stringify(value);
 					} else {
 						isDifferent = oldState !== value;
