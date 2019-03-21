@@ -20,7 +20,7 @@ class SwitchTemplateContext {
 
 	static getMainClasses(state) {
 		return {
-			"ui5-switch": true,
+			"ui5-switch-wrapper": true,
 			"ui5-switch--disabled": state.disabled,
 			"ui5-switch--checked": state.checked,
 			"ui5-switch--semantic": state.type === SwitchType.Graphical,
