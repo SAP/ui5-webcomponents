@@ -1,9 +1,5 @@
-commit 6887985978613c977db5d41f935f799509415d3b
+commit 1111dbf59c604f91b52fb9e2a59dc9212fb7ff97
 Author: Martin <martin.r.hristov@gmail.com>
-Date:   Wed Mar 20 16:43:00 2019 +0200
+Date:   Thu Mar 21 10:26:40 2019 +0200
 
-    refactor(ui5-checkbox): improve styling (#199)
-    
-    - fixes some tiny visual bugs
-    - removes CheckBox.qunit.js
-    - removes browser specific CSS
+    fix(ui5-switch): fix layouting on IE (#223)
