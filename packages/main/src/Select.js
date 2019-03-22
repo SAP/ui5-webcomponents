@@ -94,6 +94,10 @@ const metadata = {
 			type: Boolean,
 			defaultValue: false,
 		},
+
+		_fnClickSelectBox: {
+			type: Function
+		}
 	},
 	events: /** @lends sap.ui.webcomponents.main.Select.prototype */ {
 		/**
@@ -156,6 +160,7 @@ class Select extends WebComponent {
 		this._setSelectedItem(null);
 		this._setPreviewedItem(null);
 		this.Suggestions = new Suggestions(this, "items", true /* move focus with arrow keys */);
+		this._fnClickSelectBox = this.toggleList.bind(this);
 	}
 
 	onBeforeRendering() {
@@ -163,13 +168,12 @@ class Select extends WebComponent {
 	}
 
 	/* Event handling */
-	onclick(event) {
+	toggleList(event) {
 		if (this.disabled) {
 			return;
 		}
-		if (event.target === this) {
-			this.Suggestions.toggle();
-		}
+
+		this.Suggestions.toggle();
 	}
 
 	onkeydown(event) {
