@@ -1,11 +1,5 @@
-commit 0e8e46075da8c23a3b7830ee1dacfe97e1f26d57
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Fri Mar 22 10:20:27 2019 +0200
+commit 79445d0d455459d7b7b03bb056b3236a29f0228c
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Fri Mar 22 11:22:30 2019 +0200
 
-    refactor(base): flatten project structure (#227)
-    
-    BREAKING CHANGE: All files required from the base now have different
-    path. sap/ui/webcomponents/base/ is removed.
-    
-    old: @ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent
-    new: @ui5/webcomponents-base/src/WebComponent
+    fix: slots work in Safari (#230)
