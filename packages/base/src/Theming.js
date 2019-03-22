@@ -7,7 +7,7 @@ import { injectThemeProperties, updateWebComponentStyles } from "./theming/Style
 const themeChangeCallbacks = [];
 
 const getDefaultTheme = () => {
-	return "sap_fiori_3";
+	return "sap_fiori_3??";
 };
 
 const attachThemeChange = function attachThemeChange(callback) {

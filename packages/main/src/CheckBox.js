@@ -2,6 +2,7 @@ import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
 import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState";
+import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
 
 // Template
 import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
@@ -10,13 +11,17 @@ import CheckBoxTemplateContext from "./CheckBoxTemplateContext";
 import Label from "./Label";
 
 // Styles
-import belize from "./themes/sap_belize/CheckBox.less";
-import belizeHcb from "./themes/sap_belize_hcb/CheckBox.less";
-import fiori3 from "./themes/sap_fiori_3/CheckBox.less";
+// import belize from "./themes/sap_belize/CheckBox.less";
+// import belizeHcb from "./themes/sap_belize_hcb/CheckBox.less";
+// import fiori3 from "./themes/sap_fiori_3/CheckBox.less";
 
-ShadowDOM.registerStyle("sap_belize", "CheckBox.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "CheckBox.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "CheckBox.css", fiori3);
+import buttonCss from "./themes-next/CheckBox.css";
+addCustomCSS("ui5-checkbox", "sap_fiori_3", buttonCss);
+addCustomCSS("ui5-checkbox", "sap_belize_hcb", buttonCss);
+
+// ShadowDOM.registerStyle("sap_belize", "CheckBox.css", belize);
+// ShadowDOM.registerStyle("sap_belize_hcb", "CheckBox.css", belizeHcb);
+// ShadowDOM.registerStyle("sap_fiori_3", "CheckBox.css", fiori3);
 
 /**
  * @public
