@@ -11,8 +11,8 @@ import {
 import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
 import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState";
-import Suggestions from "./Suggestions";
 import Function from "@ui5/webcomponents-base/src/types/Function";
+import Suggestions from "./Suggestions";
 
 // Template
 import SelectRenderer from "./build/compiled/SelectRenderer.lit";
