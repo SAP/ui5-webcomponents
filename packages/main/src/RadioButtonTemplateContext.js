@@ -25,7 +25,7 @@ class RadioButtonTemplateContext {
 			context = {
 				ctr: state,
 				readOnly: state.disabled || state.readOnly,
-				tabIndex: state.disabled ? undefined : "0",
+				tabIndex: state.disabled || !state.selected ? "-1" : "0",
 				circle: compact ? SVGConfig.compact : SVGConfig.default,
 				classes: { main: mainClasses, inner: innerClasses },
 				styles: {
