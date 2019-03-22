@@ -1,6 +1,4 @@
-import DataType from "./types/DataType";
 import Function from "./types/Function";
-import { isDescendantOfClass } from "./util/isDescendantOfClass";
 
 class State {
 	constructor(control) {
