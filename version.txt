@@ -1,5 +1,5 @@
-commit 79445d0d455459d7b7b03bb056b3236a29f0228c
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Mar 22 11:22:30 2019 +0200
+commit c00ab4acf335bf2c83388cf6a8a07caa25014f05
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Fri Mar 22 13:24:55 2019 +0200
 
-    fix: slots work in Safari (#230)
+    playground: fix mobile usability (#233)
