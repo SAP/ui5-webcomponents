@@ -1,9 +1,9 @@
-import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
+import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
 import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes";
-import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
 
 // Template
-import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
+import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
 import SwitchRenderer from "./build/compiled/SwitchRenderer.lit";
 import SwitchTemplateContext from "./SwitchTemplateContext";
 import SwitchType from "./types/SwitchType";

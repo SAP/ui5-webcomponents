@@ -1,10 +1,10 @@
-import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
-import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
-import { getIconURI } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/IconPool";
-import slideDown from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/animations/slideDown";
-import slideUp from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/animations/slideUp";
-import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/events/PseudoEvents";
+import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
+import { getIconURI } from "@ui5/webcomponents-base/src/IconPool";
+import slideDown from "@ui5/webcomponents-base/src/animations/slideDown";
+import slideUp from "@ui5/webcomponents-base/src/animations/slideUp";
+import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents";
 import PanelTemplateContext from "./PanelTemplateContext";
 import BackgroundDesign from "./types/BackgroundDesign";
 import PanelAccessibleRole from "./types/PanelAccessibleRole";

@@ -1,5 +1,5 @@
-import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
-import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
+import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
 import ListItemBase from "./ListItemBase";
 // Template
 import GroupHeaderListItemRenderer from "./build/compiled/GroupHeaderListItemRenderer.lit";

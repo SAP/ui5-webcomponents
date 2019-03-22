@@ -1,7 +1,7 @@
 // ESM bundle targets Edge + browsers with native support
-import "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/browsersupport/Edge";
+import "@ui5/webcomponents-base/src/browsersupport/Edge";
 
-import "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/shims/jquery-shim";
+import "@ui5/webcomponents-base/src/shims/jquery-shim";
 import "./src/ThemePropertiesProvider";
 
 import Gregorian from "@ui5/webcomponents-core/dist/sap/ui/core/date/Gregorian";
@@ -50,15 +50,15 @@ import CustomListItem from "./dist/CustomListItem";
 import GroupHeaderListItem from "./dist/GroupHeaderListItem";
 
 // used in test pages
-import RenderScheduler from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/RenderScheduler";
+import RenderScheduler from "@ui5/webcomponents-base/src/RenderScheduler";
 window.RenderScheduler = RenderScheduler;
 import { isIE } from "@ui5/webcomponents-core/dist/sap/ui/Device";
 window.isIE = isIE; // attached to the window object for testing purposes
 
 
 // Note: keep in sync with rollup.config value for IIFE
-import * as configuration from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Configuration";
-import * as Theming from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Theming";
+import * as configuration from "@ui5/webcomponents-base/src/Configuration";
+import * as Theming from "@ui5/webcomponents-base/src/Theming";
 window["sap-ui-webcomponents-main-bundle"] = {
 	configuration,
 	Theming,

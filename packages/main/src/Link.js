@@ -1,8 +1,8 @@
-import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
-import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
+import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
 import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes";
-import URI from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/URI";
-import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
+import URI from "@ui5/webcomponents-base/src/types/URI";
+import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
 import LinkType from "./types/LinkType";
 // Template
 import LinkRederer from "./build/compiled/LinkRenderer.lit";

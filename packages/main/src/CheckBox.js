@@ -1,10 +1,10 @@
-import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
-import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
+import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
 import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes";
-import ValueState from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/ValueState";
+import ValueState from "@ui5/webcomponents-base/src/types/ValueState";
 
 // Template
-import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
+import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
 import CheckBoxRenderer from "./build/compiled/CheckBoxRenderer.lit";
 import CheckBoxTemplateContext from "./CheckBoxTemplateContext";
 import Label from "./Label";

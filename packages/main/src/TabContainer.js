@@ -1,10 +1,10 @@
-import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
-import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
-import ScrollEnablement from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/delegate/ScrollEnablement";
-import ItemNavigation from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/delegate/ItemNavigation";
-import ResizeHandler from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/delegate/ResizeHandler";
-import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/events/PseudoEvents";
+import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
+import ScrollEnablement from "@ui5/webcomponents-base/src/delegate/ScrollEnablement";
+import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation";
+import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler";
+import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents";
 import TabContainerTemplateContext from "./TabContainerTemplateContext";
 import TabBase from "./TabBase";
 import Tab from "./Tab";

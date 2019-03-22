@@ -32,7 +32,7 @@ function ui5DevImportCheckerPlugin() {
 			}
 
 			if (/import.*"@ui5\/webcomponents-core\/dist\/sap\/ui\/core\/IconPool/.test(code)) {
-				throw new Error(`You need to import '@ui5/webcomponents-base/src/sap/ui/webcomponents/base/IconPool' instead of IconPool ${file}`);
+				throw new Error(`You need to import '@ui5/webcomponents-base/src/IconPool' instead of IconPool ${file}`);
 			}
 		}
 	};

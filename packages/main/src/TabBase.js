@@ -1,4 +1,4 @@
-import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
+import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
 
 /**
  * @public
