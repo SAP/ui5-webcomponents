@@ -1,5 +1,6 @@
 import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
 import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler";
+import { isSpace } from "@ui5/webcomponents-base/src/events/PseudoEvents";
 import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
 import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
@@ -199,6 +200,12 @@ class Table extends WebComponent {
 
 	onRowFocused(event) {
 		this._itemNavigation.update(event.target);
+	}
+
+	onkeydown(event) {
+		if(isSpace(event)) {
+			event.preventDefault();
+		}
 	}
 
 	popinContent(_event) {
