@@ -47,7 +47,7 @@ class State {
 					const propertyType = propData.type;
 
 					if (propertyType === Object) {
-						isDifferent = deepEqual(oldState, value);
+						isDifferent = !deepEqual(oldState, value);
 					} else {
 						isDifferent = oldState !== value;
 					}

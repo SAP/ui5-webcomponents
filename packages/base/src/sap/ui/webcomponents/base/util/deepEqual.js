@@ -63,7 +63,7 @@ const deepEqual = (a, b, maxDepth, contains, depth) => {
 			return a.valueOf() === b.valueOf();
 		}
 
-		Object.keys(a).forEach((i) => {
+		Object.keys(a).forEach(i => {
 			if (!deepEqual(a[i], b[i], maxDepth, contains, depth + 1)) {
 				return false;
 			}
@@ -73,6 +73,10 @@ const deepEqual = (a, b, maxDepth, contains, depth) => {
 	}
 
 	return false;
+};
+
+const isNaN = () => {
+	return Number.isNaN || window.isNaN; // eslint-disable-line
 };
 
 export default deepEqual;
