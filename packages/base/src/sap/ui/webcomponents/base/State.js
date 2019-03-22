@@ -1,4 +1,5 @@
 import Function from "./types/Function";
+import deepEqual from "./util/deepEqual";
 
 class State {
 	constructor(control) {
@@ -46,7 +47,7 @@ class State {
 					const propertyType = propData.type;
 
 					if (propertyType === Object) {
-						isDifferent = JSON.stringify(oldState) !== JSON.stringify(value);
+						isDifferent = deepEqual(oldState, value);
 					} else {
 						isDifferent = oldState !== value;
 					}
