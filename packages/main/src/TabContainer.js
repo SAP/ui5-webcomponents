@@ -743,7 +743,7 @@ class TabContainer extends WebComponent {
 		}
 	}
 
-	ontap(event) {
+	onclick(event) {
 		const icon = event.composedPath().filter(element => {
 			return element.classList && element.classList.contains("sapMITBArrowScroll");
 		})[0];

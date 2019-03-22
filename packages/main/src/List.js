@@ -34,9 +34,7 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.List.prototype */ {
 
 		/**
-		 * Defines the header area.
-		 * For example, you can use <code>ui5-toolbar</code> or any other HTML element.
-		 * <br><br>
+		 * Defines the <code>ui5-li</code> header.
 		 * <b>Note:</b> When <code>header</code> is set, the
 		 * <code>headerText</code> property is ignored.
 		 *

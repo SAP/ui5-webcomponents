@@ -167,6 +167,7 @@ class Link extends WebComponent {
 		return LinkRederer;
 	}
 
+
 	onBeforeRendering() {
 		const needsNoReferrer = this.target === "_blank"
 			&& this.href
@@ -175,7 +176,7 @@ class Link extends WebComponent {
 		this._rel = needsNoReferrer ? "noreferrer" : undefined;
 	}
 
-	ontap(event) {
+	onclick(event) {
 		if (this.disabled) {
 			return;
 		}

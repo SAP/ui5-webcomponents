@@ -125,14 +125,14 @@ class ListItem extends ListItemBase {
 		}
 	}
 
-	ondown(event) {
+	onmousedown(event) {
 		if (event.isMarked === "button") {
 			return;
 		}
 		this.activate();
 	}
 
-	onup(event) {
+	onmouseup(event) {
 		if (event.isMarked === "button") {
 			return;
 		}
@@ -143,7 +143,7 @@ class ListItem extends ListItemBase {
 		this.deactivate();
 	}
 
-	ontap(event) {
+	onclick(event) {
 		if (event.isMarked === "button") {
 			return;
 		}

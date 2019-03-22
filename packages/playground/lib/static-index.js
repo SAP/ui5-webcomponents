@@ -28,7 +28,6 @@ tagNameMap = {
     "Timeline": "ui5-timeline",
     "Title": "ui5-title",
     "ToggleButton": "ui5-togglebutton",
-    "Toolbar": "ui5-toolbar",
 }
 
 const generateSiteMap = (componentNames) => {

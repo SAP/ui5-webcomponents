@@ -6,7 +6,6 @@ import Integer from "./types/Integer";
 import ControlRenderer from "./ControlRenderer";
 import RenderScheduler from "./RenderScheduler";
 import TemplateContext from "./TemplateContext";
-import { attachThemeChange } from "./Theming";
 import State from "./State";
 
 const metadata = {
@@ -50,19 +49,6 @@ class WebComponent extends HTMLElement {
 		this._domRefReadyPromise._deferredResolve = deferredResolve;
 
 		this._monitoredChildProps = new Map();
-
-		// Only for native Shadow DOM, and only when present
-		if (!window.ShadyDOM && !this.constructor.getMetadata().getNoShadowDOM()) {
-			attachThemeChange(this._onThemeChange.bind(this));
-		}
-	}
-
-	_onThemeChange() {
-		const klass = this.constructor;
-		const tag = klass.getMetadata().getTag();
-		const styleURLs = klass.getMetadata().getStyleUrl();
-
-		ShadowDOM.updateStyle(tag, this.shadowRoot, styleURLs);
 	}
 
 	_whenShadowRootReady() {

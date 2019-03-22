@@ -1,3 +1,5 @@
+import { isPhone } from "@ui5/webcomponents-core/dist/sap/ui/Device";
+
 class DialogTemplateContext {
 	static calculate(state) {
 		const context = {
@@ -11,6 +13,7 @@ class DialogTemplateContext {
 				dialogParent: {
 					sapMDialogParent: true,
 					sapMDialogStretched: state.stretch,
+					"ui5-phone": isPhone(),
 				},
 				main: {
 					sapMPopup: true,

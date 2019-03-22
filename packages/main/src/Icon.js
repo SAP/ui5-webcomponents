@@ -90,7 +90,7 @@ class Icon extends WebComponent {
 		HTMLElement.prototype.focus.call(this);
 	}
 
-	ontap() {
+	onclick() {
 		this.fireEvent("press");
 	}
 
@@ -99,7 +99,7 @@ class Icon extends WebComponent {
 			event.preventDefault();
 			this.__spaceDown = true;
 		} else if (isEnter(event)) {
-			this.ontap(event);
+			this.onclick(event);
 		}
 	}
 

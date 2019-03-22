@@ -150,10 +150,10 @@ TestHelper.ready(function () {
 				panel = this.getPanelRoot();
 
 			this.panel.setAttribute("header-text", "New Header Text");
-			this.panel.innerHTML = "<ui5-toolbar data-ui5-slot='header'></ui5-toolbar>";
+			this.panel.innerHTML = "<div data-ui5-slot='header'></div>";
 
 			RenderScheduler.whenFinished().then(function () {
-				assert.ok(panel.querySelector(".sapMPanelWrappingDivTb"), "header toolbar is added in the DOM");
+				assert.ok(panel.querySelector(".sapMPanelWrappingDivTb"), "header is added in the DOM");
 				assert.notOk(panel.querySelector(".sapMPanelHdr"), "header text is ignored");
 
 				done();
@@ -167,10 +167,10 @@ TestHelper.ready(function () {
 				panel = this.getPanelRoot();
 
 			this.panel.setAttribute("header-text", "New Header Text");
-			this.panel.innerHTML = "<ui5-toolbar data-ui5-slot='header'></ui5-toolbar>";
+			this.panel.innerHTML = "<div data-ui5-slot='header'></div>";
 
 			RenderScheduler.whenFinished().then(function () {
-				assert.ok(panel.querySelector(".sapMPanelWrappingDivTb"), "header toolbar is added in the DOM");
+				assert.ok(panel.querySelector(".sapMPanelWrappingDivTb"), "header is added in the DOM");
 				assert.notOk(panel.querySelector(".sapMPanelHdr"), "header text is ignored");
 
 				done();
