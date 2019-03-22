@@ -3,9 +3,11 @@ import "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/browsersupport/IE1
 
 import * as configuration from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Configuration";
 import * as Theming from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Theming";
+import { getFormatterInstance } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/dates/DateFormat";
 import "./bundle.esm";
 
 export {
 	configuration,
 	Theming,
+	getFormatterInstance
 };
