@@ -1,4 +1,4 @@
-import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
 import List from "./List";
 import Popover from "./Popover";
 import StandardListItem from "./StandardListItem"; // ensure <ui5-li> is loaded

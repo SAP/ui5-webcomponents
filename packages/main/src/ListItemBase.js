@@ -1,7 +1,7 @@
-import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
-import FocusHelper from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/FocusHelper";
-import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
-import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/events/PseudoEvents";
+import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
+import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper";
+import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
+import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/src/events/PseudoEvents";
 import ListItemBaseTemplateContext from "./ListItemBaseTemplateContext";
 
 // Styles

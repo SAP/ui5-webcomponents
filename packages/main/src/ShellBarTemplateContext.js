@@ -1,4 +1,4 @@
-import { getRTL } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Configuration";
+import { getRTL } from "@ui5/webcomponents-base/src/Configuration";
 
 class ShellBarTemplateContext {
 	static calculate(state) {

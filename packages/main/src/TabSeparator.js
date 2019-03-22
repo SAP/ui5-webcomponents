@@ -1,4 +1,4 @@
-import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
 import TabSeparatorTemplateContext from "./TabSeparatorTemplateContext";
 import TabBase from "./TabBase";
 import TabSeparatorRenderer from "./build/compiled/TabSeparatorRenderer.lit";

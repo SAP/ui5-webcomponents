@@ -1,8 +1,8 @@
-import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
-import URI from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/URI";
-import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
-import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
-import { isIconURI } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/IconPool";
+import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
+import URI from "@ui5/webcomponents-base/src/types/URI";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
+import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
+import { isIconURI } from "@ui5/webcomponents-base/src/IconPool";
 import CardRenderer from "./build/compiled/CardRenderer.lit";
 import Icon from "./Icon";
 

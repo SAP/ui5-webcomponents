@@ -1,8 +1,8 @@
-import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
-import Integer from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/Integer";
-import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
-import CSSSize from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/CSSSize";
-import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
+import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
+import Integer from "@ui5/webcomponents-base/src/types/Integer";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
+import CSSSize from "@ui5/webcomponents-base/src/types/CSSSize";
+import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
 import TableColumnRenderer from "./build/compiled/TableColumnRenderer.lit";
 
 // Styles

@@ -1,16 +1,16 @@
-import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
-import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
-import { getLocale } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/LocaleProvider";
-import { getCalendarType } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Configuration";
-import { getFormatLocale } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/FormatSettings";
-import ItemNavigation from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/delegate/ItemNavigation";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/events/PseudoEvents";
-import Integer from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/Integer";
+import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
+import { getLocale } from "@ui5/webcomponents-base/src/LocaleProvider";
+import { getCalendarType } from "@ui5/webcomponents-base/src/Configuration";
+import { getFormatLocale } from "@ui5/webcomponents-base/src/FormatSettings";
+import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents";
+import Integer from "@ui5/webcomponents-base/src/types/Integer";
 import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData";
-import CalendarDate from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/dates/CalendarDate";
-import { calculateWeekNumber } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/dates/CalendarUtils";
-import CalendarType from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/dates/CalendarType";
-import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
+import CalendarDate from "@ui5/webcomponents-base/src/dates/CalendarDate";
+import { calculateWeekNumber } from "@ui5/webcomponents-base/src/dates/CalendarUtils";
+import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType";
+import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
 import DayPickerTemplateContext from "./DayPickerTemplateContext";
 import DayPickerRenderer from "./build/compiled/DayPickerRenderer.lit";
 

@@ -1,5 +1,5 @@
-import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
-import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
+import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
 import DialogTemplateContext from "./DialogTemplateContext";
 import Popup from "./Popup";
 // Template
