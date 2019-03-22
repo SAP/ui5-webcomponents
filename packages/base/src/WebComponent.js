@@ -394,7 +394,7 @@ class WebComponent extends HTMLElement {
 		const domChildren = Array.from(this.children);
 		domChildren.filter(child => child._slot).forEach(child => {
 			child.setAttribute("slot", child._slot);
-		})
+		});
 	}
 
 	_getTemplateContext() {
