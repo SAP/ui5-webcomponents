@@ -1,5 +1,11 @@
-commit 3412ef306523549c639bd6f229d3e6dbd2aea39c
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Mar 21 16:27:11 2019 +0200
+commit 0e8e46075da8c23a3b7830ee1dacfe97e1f26d57
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Fri Mar 22 10:20:27 2019 +0200
 
-    fix(ui5-checkbox): remove background from touchable area (#226)
+    refactor(base): flatten project structure (#227)
+    
+    BREAKING CHANGE: All files required from the base now have different
+    path. sap/ui/webcomponents/base/ is removed.
+    
+    old: @ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent
+    new: @ui5/webcomponents-base/src/WebComponent
