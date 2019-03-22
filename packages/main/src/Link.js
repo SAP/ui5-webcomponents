@@ -93,6 +93,10 @@ const metadata = {
 		wrap: {
 			type: Boolean,
 		},
+
+		_rel: {
+			type: String,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Link.prototype */ {
 
@@ -168,7 +172,7 @@ class Link extends WebComponent {
 			&& this.href
 			&& this._isCrossOrigin();
 
-		this._state._rel = needsNoReferrer ? "noreferrer" : undefined;
+		this._rel = needsNoReferrer ? "noreferrer" : undefined;
 	}
 
 	ontap(event) {
