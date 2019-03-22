@@ -203,7 +203,7 @@ class Table extends WebComponent {
 	}
 
 	onkeydown(event) {
-		if(isSpace(event)) {
+		if (isSpace(event)) {
 			event.preventDefault();
 		}
 	}
