@@ -170,7 +170,6 @@ class WebComponent extends HTMLElement {
 			} else {
 				this._state[slot] = child;
 			}
-			child.setAttribute("slot", slotName);
 		});
 	}
 
@@ -382,10 +381,20 @@ class WebComponent extends HTMLElement {
 		delete this._invalidated;
 		ControlRenderer.render(this);
 
+		// Safari requires that children get the slot attribute only after the slot tags have been rendered in the shadow DOM
+		this._assignSlotsToChildren();
+
 		// onAfterRendering
 		if (typeof this.onAfterRendering === "function") {
 			this.onAfterRendering();
 		}
+	}
+
+	_assignSlotsToChildren() {
+		const domChildren = Array.from(this.children);
+		domChildren.filter(child => child._slot).forEach(child => {
+			child.setAttribute("slot", child._slot);
+		});
 	}
 
 	_getTemplateContext() {
