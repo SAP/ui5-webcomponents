@@ -1,16 +1,16 @@
-import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
-import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
+import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
 import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData";
-import { getCalendarType } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Configuration";
-import { getFormatLocale } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/FormatSettings";
-import { isEnter, isSpace } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/events/PseudoEvents";
-import ItemNavigation from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/delegate/ItemNavigation";
-import { getLocale } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/LocaleProvider";
-import Integer from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/Integer";
+import { getCalendarType } from "@ui5/webcomponents-base/src/Configuration";
+import { getFormatLocale } from "@ui5/webcomponents-base/src/FormatSettings";
+import { isEnter, isSpace } from "@ui5/webcomponents-base/src/events/PseudoEvents";
+import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation";
+import { getLocale } from "@ui5/webcomponents-base/src/LocaleProvider";
+import Integer from "@ui5/webcomponents-base/src/types/Integer";
 import DateFormat from "@ui5/webcomponents-core/dist/sap/ui/core/format/DateFormat";
-import CalendarType from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/dates/CalendarType";
-import CalendarDate from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/dates/CalendarDate";
-import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
+import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType";
+import CalendarDate from "@ui5/webcomponents-base/src/dates/CalendarDate";
+import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
 import YearPickerTemplateContext from "./YearPickerTemplateContext";
 import YearPickerRenderer from "./build/compiled/YearPickerRenderer.lit";
 

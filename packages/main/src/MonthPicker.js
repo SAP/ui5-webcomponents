@@ -1,15 +1,15 @@
-import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
-import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
-import { getCalendarType } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Configuration";
-import { getFormatLocale } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/FormatSettings";
-import ItemNavigation from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/delegate/ItemNavigation";
-import Integer from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/Integer";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/events/PseudoEvents";
+import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
+import { getCalendarType } from "@ui5/webcomponents-base/src/Configuration";
+import { getFormatLocale } from "@ui5/webcomponents-base/src/FormatSettings";
+import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation";
+import Integer from "@ui5/webcomponents-base/src/types/Integer";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents";
 import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData";
-import { getLocale } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/LocaleProvider";
-import CalendarType from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/dates/CalendarType";
-import CalendarDate from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/dates/CalendarDate";
-import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
+import { getLocale } from "@ui5/webcomponents-base/src/LocaleProvider";
+import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType";
+import CalendarDate from "@ui5/webcomponents-base/src/dates/CalendarDate";
+import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
 import MonthPickerTemplateContext from "./MonthPickerTemplateContext";
 import MonthPickerRenderer from "./build/compiled/MonthPickerRenderer.lit";
 
