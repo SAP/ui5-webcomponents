@@ -3,9 +3,9 @@
 	style="{{styles.main}}"
 	tabindex="{{tabIndex}}">
 	<div
-        class="sapWCSelectLabel"
-        @click="{{ctr._fnClickSelectBox}}">
-        <ui5-label>{{ctr._text}}</ui5-label>
+		class="sapWCSelectLabel"
+		@click="{{ctr._fnClickSelectBox}}">
+		<ui5-label>{{ctr._text}}</ui5-label>
 	</div>
 
 	{{#if ctr.items}}
@@ -23,8 +23,8 @@
 	{{/if}}
 
 	<ui5-icon
-        src="sap-icon://slim-arrow-down"
-        class="sapWCSelectDropDownIcon"
-        @press="{{ctr._fnClickSelectBox}}"
-    ></ui5-icon>
+		src="sap-icon://slim-arrow-down"
+		class="sapWCSelectDropDownIcon"
+		@press="{{ctr._fnClickSelectBox}}"
+	></ui5-icon>
 </div>
