@@ -12,6 +12,7 @@ import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
 import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState";
 import Suggestions from "./Suggestions";
+import Function from "@ui5/webcomponents-base/src/types/Function";
 
 // Template
 import SelectRenderer from "./build/compiled/SelectRenderer.lit";
@@ -96,8 +97,8 @@ const metadata = {
 		},
 
 		_fnClickSelectBox: {
-			type: Function
-		}
+			type: Function,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Select.prototype */ {
 		/**
@@ -168,7 +169,7 @@ class Select extends WebComponent {
 	}
 
 	/* Event handling */
-	toggleList(event) {
+	toggleList() {
 		if (this.disabled) {
 			return;
 		}
