@@ -9,5 +9,5 @@ import "./bundle.esm";
 export {
 	configuration,
 	Theming,
-	getFormatterInstance
+	getFormatterInstance,
 };
