@@ -1,5 +1,5 @@
-commit c00ab4acf335bf2c83388cf6a8a07caa25014f05
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Fri Mar 22 13:24:55 2019 +0200
+commit 912f434946206d71e117b8542dae602e3a76829e
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Sun Mar 24 15:21:12 2019 +0200
 
-    playground: fix mobile usability (#233)
+    fix(ui5-shellbar): add missing dependency to ui5-popover (#234)
