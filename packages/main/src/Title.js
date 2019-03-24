@@ -10,7 +10,7 @@ import titleCss from "./themes-next/Title.css";
 
 addCustomCSS("ui5-title", "sap_fiori_3", titleCss);
 addCustomCSS("ui5-title", "sap_belize", titleCss);
-addCustomCSS("ui5-title", "sap_belize_hcb", titleCss)
+addCustomCSS("ui5-title", "sap_belize_hcb", titleCss);
 
 /**
  * @public
