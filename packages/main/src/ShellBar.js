@@ -9,6 +9,7 @@ import { isSpace, isEscape } from "@ui5/webcomponents-base/src/events/PseudoEven
 import StandardListItem from "./StandardListItem";
 import List from "./List";
 import Icon from "./Icon";
+import Popover from "./Popover";
 
 // Template
 import ShellBarRenderer from "./build/compiled/ShellBarRenderer.lit";
@@ -716,8 +717,10 @@ class ShellBar extends WebComponent {
 	static async define(...params) {
 		await Promise.all([
 			Icon.define(),
-			StandardListItem.define(),
 			List.define(),
+			Popover.define(),
+
+			StandardListItem.define(),
 		]);
 
 		super.define(...params);
