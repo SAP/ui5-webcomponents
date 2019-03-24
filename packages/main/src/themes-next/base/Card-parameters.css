@@ -1,0 +1,9 @@
+:root {
+	/* fiori3: #ccc | belize: #ccc | hcb: #000 */
+	/* --_ui5_card_border_color: darken(var(--sapUiTileBackground), 20); */
+	--_ui5_card_border_color: #ccc;
+	--_ui5_card_content_padding: 1rem;
+	--_ui5_card_header_active_bg: #f0f0f0;
+	--_ui5_card_header_hover_bg: lighten(var(--_ui5_card_header_active_bg), 4);
+	--_ui5_card_header_border_color: var(--_ui5_card_border_color);
+}

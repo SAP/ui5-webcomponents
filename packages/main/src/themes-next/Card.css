@@ -1,0 +1,121 @@
+:host(ui5-card) {
+	display: inline-block;
+	width: 100%;
+}
+
+ui5-card {
+	display: inline-block;
+	width: 100%;
+}
+
+.sapFCard {
+	width: 100%;
+	height: 100%;
+	color: var(--sapUiGroupTitleTextColor);
+	background: var(--sapUiTileBackground);
+	box-shadow: var(--sapUiShadowLevel0);
+	border-radius: 0.25rem;
+	border: 1px solid var(--_ui5_card_border_color);
+	overflow: hidden;
+	font-family: var(--sapUiFontFamily);
+	font-size: var(--sapUiFontSize);
+}
+
+.sapFCardHeader {
+	display: flex;
+	align-items: flex-start;
+	background: var(--sapUiTileBackground);
+	border-bottom: 1px solid var(--_ui5_card_header_border_color);
+	padding: var(--_ui5_card_content_padding);
+}
+
+.sapFCardHeader:hover {
+	background: var(--_ui5_card_header_hover_bg);
+}
+
+.sapFCardHeader:active {
+	background: var(--_ui5_card_header_active_bg);
+}
+
+.sapFCardHeader .sapFCardHeaderText {
+	flex: 1;
+}
+
+.sapFCardHeader .sapFCardAvatar {
+	height: 3rem;
+	width: 3rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-right: 0.75rem;
+}
+
+.sapFCardHeader .sapFCardAvatar.sapFCardHeaderImg {
+	border-radius: 50%;
+}
+
+.sapFCardHeader .sapFCardAvatar .sapFCardHeaderIcon {
+	font-size: 1.5rem;
+	color: var(--sapUiTileIconColor);
+}
+
+.sapFCardHeader .sapFCardStatus {
+	font-family: var(--sapUiFontFamily);
+	font-size: var(--sapMFontSmallSize);
+	color: var(--sapUiTileTextColor);
+	text-align: left;
+	line-height: 1.125rem;
+	padding-left: 1rem;
+	margin-left: auto;
+	text-wrap: avoid;
+	display: inline-block;
+}
+
+.sapFCardHeader .sapFCardHeaderText .sapFCardTitle {
+	font-family: var(--sapUiFontHeaderFamily);
+	font-size: var(--sapMFontHeader5Size);
+	font-weight: var(--sapUiFontHeaderWeight);
+	color: var(--sapUiTileTitleTextColor);
+	max-height: 3.5rem;
+}
+
+.sapFCardHeader .sapFCardHeaderText .sapFCardSubtitle {
+	font-family: var(--sapUiFontFamily);
+	font-size: var(--sapMFontMediumSize);
+	font-weight: normal;
+	color: var(--sapUiTileTextColor);
+	margin-top: 0.5rem;
+	max-height: 2.1rem;
+}
+
+.sapFCardHeader .sapFCardHeaderText .sapFCardTitle,
+.sapFCardHeader .sapFCardHeaderText .sapFCardSubtitle {
+	text-align: left;
+	text-overflow: ellipsis;
+	white-space: normal;
+	word-wrap: break-word;
+	overflow: hidden;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	display: -webkit-box;
+	max-width: 100%;
+}
+
+[dir="rtl"] .sapFCardHeader .sapFCardAvatar {
+	margin-left: 0.75rem;
+	margin-right: 0;
+}
+
+[dir="rtl"] .sapFCardHeader .sapFCardStatus {
+	padding-right: 1rem;
+	padding-left: 0rem;
+	margin-right: auto;
+}
+
+[dir="rtl"] .sapFCardHeader .sapFCardHeaderText .sapFCardTitle {
+	text-align: right;
+}
+
+[dir="rtl"] .sapFCardHeader .sapFCardHeaderText .sapFCardSubtitle {
+	text-align: right;
+} 
