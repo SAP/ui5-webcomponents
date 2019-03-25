@@ -96,8 +96,8 @@ const metadata = {
 	events: /** @lends sap.ui.webcomponents.main.Card.prototype */ {
 
 		/**
-		 * Fired when the <code>ui5-card</code> header is pressed
-		 * click/tap or by using the Enter or Space key.
+		 * Fired when the <code>ui5-card</code> header is pressed 
+		 * by click/tap or by using the Enter or Space key.
 		 *
 		 * @event
 		 * @public
@@ -171,36 +171,41 @@ class Card extends WebComponent {
 	headerPress(event) {
 		const click = event.type === "click";
 		const keydown = event.type === "keydown";
-		const keyup = event.type === "keyup";
-		const space = isSpace(event);
-		const enter = isEnter(event);
 
 		if (click) {
 			this.fireEvent("headerPress");
 			return;
 		}
 
-		if (enter && keydown) {
-			this._headerActive = true;
-			this.fireEvent("headerPress");
+		if (isEnter(event)) {
+			this._handleEnter(keydown);
 			return;
 		}
 
-		if (enter && keyup) {
-			this._headerActive = false;
-			return;
-		}
-
-		if (space && keydown) {
-			this._headerActive = true;
+		if (isSpace(event)) {
 			event.preventDefault();
-			return 
+			this._handleSpace(keydown);
+		}
+	}
+
+	_handleEnter(keydown) {
+		if (keydown) {
+			this._headerActive = true;
+			this.fireEvent("headerPress");
+			return;
 		}
 
-		if (space && keyup) {
-			this._headerActive = false;
-			this.fireEvent("headerPress");
+		this._headerActive = false;
+	}
+
+	_handleSpace(keydown) {
+		if (keydown) {
+			this._headerActive = true;
+			return;
 		}
+
+		this._headerActive = false;
+		this.fireEvent("headerPress");
 	}
 }
 
