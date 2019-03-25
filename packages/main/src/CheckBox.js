@@ -4,7 +4,6 @@ import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState";
 import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
 
-// Template
 import CheckBoxRenderer from "./build/compiled/CheckBoxRenderer.lit";
 import CheckBoxTemplateContext from "./CheckBoxTemplateContext";
 import Label from "./Label";
