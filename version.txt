@@ -1,7 +1,5 @@
-commit 7daf417b8f174e61c8e1babfd321bde665a0827d
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Mon Mar 25 15:18:07 2019 +0200
+commit a6c4d29a59a621e3076a5d239d0989068897ff2d
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Mon Mar 25 23:25:53 2019 +0200
 
-    improvement: add css custom properties for belize (#244)
-    
-    manually exported from less
+    feat(ui5-select): select opens with space (#245)
