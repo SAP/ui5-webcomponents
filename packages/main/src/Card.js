@@ -3,7 +3,7 @@ import URI from "@ui5/webcomponents-base/src/types/URI";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
 import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
 import { isIconURI } from "@ui5/webcomponents-base/src/IconPool";
-import { isSpace, isEnter, } from "@ui5/webcomponents-base/src/events/PseudoEvents";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents";
 import Function from "@ui5/webcomponents-base/src/types/Function";
 import CardRenderer from "./build/compiled/CardRenderer.lit";
 import Icon from "./Icon";
@@ -96,7 +96,7 @@ const metadata = {
 	events: /** @lends sap.ui.webcomponents.main.Card.prototype */ {
 
 		/**
-		 * Fired when the <code>ui5-card</code> header is pressed 
+		 * Fired when the <code>ui5-card</code> header is pressed
 		 * by click/tap or by using the Enter or Space key.
 		 *
 		 * @event
@@ -155,7 +155,7 @@ class Card extends WebComponent {
 			renderIcon: state.icon && !state.image,
 			classes: {
 				header: {
-					"sapFCardHeader" : true,
+					"sapFCardHeader": true,
 					"sapFCardHeaderActive": state._headerActive,
 				},
 			},
