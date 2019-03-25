@@ -3,6 +3,8 @@ import URI from "@ui5/webcomponents-base/src/types/URI";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
 import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
 import { isIconURI } from "@ui5/webcomponents-base/src/IconPool";
+import { isSpace, isEnter, } from "@ui5/webcomponents-base/src/events/PseudoEvents";
+import Function from "@ui5/webcomponents-base/src/types/Function";
 import CardRenderer from "./build/compiled/CardRenderer.lit";
 import Icon from "./Icon";
 
@@ -82,6 +84,26 @@ const metadata = {
 			type: URI,
 			defaultValue: null,
 		},
+
+		_headerActive: {
+			type: Boolean,
+		},
+
+		_headerPress: {
+			type: Function,
+		},
+	},
+	events: /** @lends sap.ui.webcomponents.main.Card.prototype */ {
+
+		/**
+		 * Fired when the <code>ui5-card</code> header is pressed
+		 * click/tap or by using the Enter or Space key.
+		 *
+		 * @event
+		 * @public
+		 * @since 0.10.0
+		 */
+		headerPress: {},
 	},
 };
 
@@ -107,6 +129,12 @@ const metadata = {
  * @public
  */
 class Card extends WebComponent {
+	constructor() {
+		super();
+
+		this._headerPress = this.headerPress.bind(this);
+	}
+
 	static get metadata() {
 		return metadata;
 	}
@@ -125,6 +153,12 @@ class Card extends WebComponent {
 			image,
 			ctr: state,
 			renderIcon: state.icon && !state.image,
+			classes: {
+				header: {
+					"sapFCardHeader" : true,
+					"sapFCardHeaderActive": state._headerActive,
+				},
+			},
 		};
 	}
 
@@ -132,6 +166,41 @@ class Card extends WebComponent {
 		await Icon.define();
 
 		super.define(...params);
+	}
+
+	headerPress(event) {
+		const click = event.type === "click";
+		const keydown = event.type === "keydown";
+		const keyup = event.type === "keyup";
+		const space = isSpace(event);
+		const enter = isEnter(event);
+
+		if (click) {
+			this.fireEvent("headerPress");
+			return;
+		}
+
+		if (enter && keydown) {
+			this._headerActive = true;
+			this.fireEvent("headerPress");
+			return;
+		}
+
+		if (enter && keyup) {
+			this._headerActive = false;
+			return;
+		}
+
+		if (space && keydown) {
+			this._headerActive = true;
+			event.preventDefault();
+			return 
+		}
+
+		if (space && keyup) {
+			this._headerActive = false;
+			this.fireEvent("headerPress");
+		}
 	}
 }
 
