@@ -96,8 +96,8 @@ const metadata = {
 	events: /** @lends sap.ui.webcomponents.main.Card.prototype */ {
 
 		/**
-		 * Fired when the <code>ui5-card</code> header is pressed
-		 * click/tap or by using the Enter or Space key.
+		 * Fired when the <code>ui5-card</code> header is pressed 
+		 * by click/tap or by using the Enter or Space key.
 		 *
 		 * @event
 		 * @public
