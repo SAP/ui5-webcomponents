@@ -1,5 +1,7 @@
-commit f2a18cf484f3b104096524214af426fe410de992
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Mon Mar 25 10:24:32 2019 +0200
+commit 7daf417b8f174e61c8e1babfd321bde665a0827d
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Mon Mar 25 15:18:07 2019 +0200
 
-    fix(ui5-radiobutton): fix keyboard handling on TAB/SHIFT+TAB (#231)
+    improvement: add css custom properties for belize (#244)
+    
+    manually exported from less
