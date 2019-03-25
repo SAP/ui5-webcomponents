@@ -20,7 +20,7 @@ describe("RadioButton general interaction", () => {
 		const field = browser.findElementDeep("#field");
 
 		radioButton1.click();
-		radioButton1.keys("ArrowDown");
+		radioButton1.keys("Tab");
 
 		radioButton2.keys("Enter");
 		assert.strictEqual(field.getProperty("value"), "2", "Select event should be fired one more time.");
@@ -35,7 +35,7 @@ describe("RadioButton general interaction", () => {
 		const field = browser.findElementDeep("#field");
 
 		radioButton1.click();
-		radioButton1.keys("ArrowDown");
+		radioButton1.keys("Tab");
 
 		radioButton2.keys("Space");
 		assert.strictEqual(field.getProperty("value"), "3", "Select event should be fired one more time.");
