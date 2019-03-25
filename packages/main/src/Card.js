@@ -190,22 +190,18 @@ class Card extends WebComponent {
 
 	_handleEnter(keydown) {
 		if (keydown) {
-			this._headerActive = true;
 			this.fireEvent("headerPress");
-			return;
 		}
 
-		this._headerActive = false;
+		this._headerActive = keydown;
 	}
 
 	_handleSpace(keydown) {
-		if (keydown) {
-			this._headerActive = true;
-			return;
+		if (!keydown) {
+			this.fireEvent("headerPress");
 		}
 
-		this._headerActive = false;
-		this.fireEvent("headerPress");
+		this._headerActive = keydown;
 	}
 }
 
