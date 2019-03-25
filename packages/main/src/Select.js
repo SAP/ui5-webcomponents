@@ -158,6 +158,7 @@ class Select extends WebComponent {
 	constructor() {
 		super();
 
+		this._closing = false; // Flag for handling open/close on space
 		this._setSelectedItem(null);
 		this._setPreviewedItem(null);
 		this.Suggestions = new Suggestions(this, "items", true /* move focus with arrow keys */);
@@ -191,6 +192,11 @@ class Select extends WebComponent {
 		}
 
 		if (isSpace(event)) {
+			if (!this._isOpened()) {
+				this._closing = true;
+				return event.preventDefault();
+			}
+			this._closing = false;
 			return this.Suggestions.onSpace(event);
 		}
 
@@ -203,6 +209,12 @@ class Select extends WebComponent {
 		if (key === KeyCodes.F4 || (event.altKey && Select.ARROWS.includes(key))) {
 			event.preventDefault();
 			this.Suggestions.toggle();
+		}
+	}
+
+	onkeyup(event) {
+		if (isSpace(event)) {
+			return this.Suggestions.toggle(this._closing); // Open Suggestions
 		}
 	}
 
