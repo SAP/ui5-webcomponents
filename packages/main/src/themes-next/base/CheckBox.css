@@ -12,11 +12,14 @@
 --_ui5_checkbox_checkmark_warning_color: #000;
 --_ui5_checkbox_checkmark_color: var(--sapUiSelected);
 --_ui5_checkbox_focus_left_top_bottom_position: .6875rem;
---_ui5_checkbox_compact_no_label_focus_right: 0px;
+--_ui5_checkbox_compact_no_label_focus_right: 1px;
 --_ui5_checkbox_no_label_focus_right: .6875rem;
 --_ui5_checkbox_focus_outline: 1px dotted var(--sapUiContentFocusColor);
 --_ui5_checkbox_compact_inner_size: 1rem;
 --_ui5_checkbox_compact_focus_left_top_bottom_position: .375rem;
 --_ui5_checkbox_wrapped_content_margin_top: 0.125rem;
 --_ui5_checkbox_wrapped_focus_padding: .375rem;
+--_ui5_checkbox_wrapped_focus_left_top_bottom_position: .5625rem;
+--_ui5_checkbox_compact_wrapped_focus_left_top_bottom_position: .4375rem;
+--_ui5_checkbox_compact_wrapped_label_margin_top: -1px;
 }
