@@ -1,5 +1,5 @@
-commit 912f434946206d71e117b8542dae602e3a76829e
+commit 02bb56ebdb06bb9c59c309616c0f7f0790635de1
 Author: Martin <martin.r.hristov@gmail.com>
-Date:   Sun Mar 24 15:21:12 2019 +0200
+Date:   Mon Mar 25 09:10:16 2019 +0200
 
-    fix(ui5-shellbar): add missing dependency to ui5-popover (#234)
+    fix(ui5-checkbox): fixes issues with focus outline and wrapping (#238)
