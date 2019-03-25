@@ -2,7 +2,9 @@
 	class="{{classes.main}}"
 	style="{{styles.main}}"
 	tabindex="{{tabIndex}}">
-	<div class="sapWCSelectLabel">
+	<div
+		class="sapWCSelectLabel"
+		@click="{{ctr._fnClickSelectBox}}">
 		<ui5-label>{{ctr._text}}</ui5-label>
 	</div>
 
@@ -20,5 +22,9 @@
 		</ui5-popover>
 	{{/if}}
 
-	<ui5-icon src="sap-icon://slim-arrow-down" class="sapWCSelectDropDownIcon"></ui5-icon>
+	<ui5-icon
+		src="sap-icon://slim-arrow-down"
+		class="sapWCSelectDropDownIcon"
+		@press="{{ctr._fnClickSelectBox}}"
+	></ui5-icon>
 </div>
