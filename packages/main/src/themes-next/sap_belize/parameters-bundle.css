@@ -1,3 +1,9 @@
 @import "./global-parameters.css";
 
+<<<<<<< Updated upstream
 @import "./Button-parameters.css";
+=======
+@import "./Button-parameters.css";
+@import "./Panel-parameters.css";
+@import "./Popover-parameters.css";
+>>>>>>> Stashed changes

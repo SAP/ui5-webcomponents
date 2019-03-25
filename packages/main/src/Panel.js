@@ -1,9 +1,9 @@
 import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
+import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
 import { getIconURI } from "@ui5/webcomponents-base/src/IconPool";
 import slideDown from "@ui5/webcomponents-base/src/animations/slideDown";
 import slideUp from "@ui5/webcomponents-base/src/animations/slideUp";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents";
 import PanelTemplateContext from "./PanelTemplateContext";
 import BackgroundDesign from "./types/BackgroundDesign";
@@ -12,14 +12,12 @@ import PanelRenderer from "./build/compiled/PanelRenderer.lit";
 import { fetchResourceBundle, getResourceBundle } from "./ResourceBundleProvider";
 
 // Styles
-import belize from "./themes/sap_belize/Panel.less";
-import belizeHcb from "./themes/sap_belize_hcb/Panel.less";
-import fiori3 from "./themes/sap_fiori_3/Panel.less";
+// Styles
+import panelCss from "./themes-next/Panel.css";
 
-ShadowDOM.registerStyle("sap_belize", "Panel.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "Panel.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "Panel.css", fiori3);
-
+addCustomCSS("ui5-panel", "sap_fiori_3", panelCss);
+addCustomCSS("ui5-panel", "sap_belize", panelCss);
+addCustomCSS("ui5-panel", "sap_belize_hcb", panelCss);
 /**
  * @public
  */
