@@ -1,5 +1,5 @@
-commit 02bb56ebdb06bb9c59c309616c0f7f0790635de1
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Mon Mar 25 09:10:16 2019 +0200
+commit a4915df67d8c4790f9558ad24750d8fa17fc215a
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Mon Mar 25 10:13:00 2019 +0200
 
-    fix(ui5-checkbox): fixes issues with focus outline and wrapping (#238)
+    fix: select correctly opens on click (#235)
