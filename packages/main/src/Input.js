@@ -6,10 +6,8 @@ import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
 import {
 	isUp,
 	isDown,
-	isLeft,
 	isSpace,
 	isEnter,
-	isRight,
 } from "@ui5/webcomponents-base/src/events/PseudoEvents";
 import Icon from "./Icon";
 import InputType from "./types/InputType";
