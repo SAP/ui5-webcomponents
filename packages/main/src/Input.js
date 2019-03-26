@@ -338,14 +338,6 @@ class Input extends WebComponent {
 			return this._handleDown(event);
 		}
 
-		if (isRight(event)) {
-			return this._handleRight(event);
-		}
-
-		if (isLeft(event)) {
-			return this._handleLeft(event);
-		}
-
 		if (isSpace(event)) {
 			return this._handleSpace(event);
 		}
@@ -366,14 +358,6 @@ class Input extends WebComponent {
 		if (this.Suggestions) {
 			this.Suggestions.onDown(event);
 		}
-	}
-
-	_handleRight(event) {
-		this._handleDown(event);
-	}
-
-	_handleLeft(event) {
-		this._handleUp(event);
 	}
 
 	_handleSpace(event) {
