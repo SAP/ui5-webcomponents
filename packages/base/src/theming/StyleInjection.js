@@ -3,11 +3,12 @@ import createStyleInHead from "../util/createStyleInHead";
 const injectedForTags = [];
 
 const runPonyfill = () => {
-	if (typeof window.cssVars !== "function") {
+	if (typeof window.CSSVarsPonyfill === "undefined") {
 		return;
 	}
 
-	window.cssVars({
+	window.CSSVarsPonyfill.resetCssVars();
+	window.CSSVarsPonyfill.cssVars({
 		rootElement: document.head,
 		include: "style[ui5-webcomponents-theme-properties],style[data-sap-source]",
 		silent: true,
