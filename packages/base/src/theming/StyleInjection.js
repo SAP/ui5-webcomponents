@@ -3,15 +3,14 @@ import createStyleInHead from "../util/createStyleInHead";
 const injectedForTags = [];
 
 const runPonyfill = () => {
-	if (typeof cssVars !== "function") {
+	if (typeof window.cssVars !== "function") {
 		return;
 	}
 
 	window.cssVars({
 		rootElement: document.head,
 		include: "style[ui5-webcomponents-theme-properties],style[data-sap-source]",
-		silent: true,
-		watch: true,
+		silent: true
 	});
 };
 
