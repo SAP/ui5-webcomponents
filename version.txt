@@ -1,5 +1,5 @@
-commit f81c1175aa5e9aebc76883119bfe2f6089c48e19
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Tue Mar 26 11:27:46 2019 +0200
+commit 59b80be7dd1b08f3a332bf8240d05c7ddf13548b
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Mar 26 14:41:06 2019 +0200
 
-    feat: make css vars fallback script work with embedded vars (#251)
+    feat(ui5-card): fires headerPress event upon header click (#250)
