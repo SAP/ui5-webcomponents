@@ -33,6 +33,7 @@ module.exports = postcss.plugin('add fallback plugin', function (opts) {
 			} else {
 				params.set(decl.prop, decl.value);
 			}
+			params.set(decl.prop, decl.value);
 		});
 
 		// add the importFrom file as dependency so this file is processed again on changes
