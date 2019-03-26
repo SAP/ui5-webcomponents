@@ -1,5 +1,6 @@
 const postcss = require('postcss');
 const fs = require('fs');
+const arrayUniq = require('array-uniq');
 
 const findCSSVars = styleString => {
 	const vars = new Map();
@@ -24,12 +25,16 @@ module.exports = postcss.plugin('add fallback plugin', function (opts) {
 
 		root.walkDecls(decl => {
 			// extract var name
-			const match = decl.value.match(/var\((.+)\)/);
-			if (match) {
-				const varName = match[1];
-				if (params.has(varName)) {
-					decl.value = decl.value.replace(varName, `${varName}, ${params.get(varName)}`)
-				}
+			let matches = decl.value.match(/var\(([^\,\(\)]+)\)/g);
+			matches = arrayUniq(matches);
+			if (matches) {
+				matches.forEach(varMatch => {
+					const varNameMatch = varMatch.match(/var\((.*)\)/);
+					const varName = varNameMatch[1];
+					if (params.has(varName)) {
+						decl.value = decl.value.replace(new RegExp(varName, 'g'), `${varName}, ${params.get(varName)}`)
+					}
+				});
 			}
 			params.set(decl.prop, decl.value);
 		});

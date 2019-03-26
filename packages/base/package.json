@@ -25,6 +25,7 @@
     "url-search-params-polyfill": "^5.0.0"
   },
   "devDependencies": {
+    "array-uniq": "^2.0.0",
     "eslint": "^5.13.0",
     "eslint-config-airbnb-base": "^13.1.0"
   },
