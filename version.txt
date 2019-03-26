@@ -1,5 +1,5 @@
-commit 59b80be7dd1b08f3a332bf8240d05c7ddf13548b
+commit 4ea4d21a1e665ba0fa09902cd792fe39e82f0416
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Mar 26 14:41:06 2019 +0200
+Date:   Tue Mar 26 15:19:17 2019 +0200
 
-    feat(ui5-card): fires headerPress event upon header click (#250)
+    refactor(ui5-checkbox): apply css vars (#236)
