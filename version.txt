@@ -1,7 +1,5 @@
-commit e1af8b727dca2360fcbe4e6b92961d6b7a9f1062
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Tue Mar 26 10:03:54 2019 +0200
+commit f81c1175aa5e9aebc76883119bfe2f6089c48e19
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Tue Mar 26 11:27:46 2019 +0200
 
-    refactor(ui5-switch): replace sap-* selectors (#229)
-    
-    * renames sap-desktop class to ui5-switch-desktop
+    feat: make css vars fallback script work with embedded vars (#251)
