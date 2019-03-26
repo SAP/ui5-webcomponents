@@ -2470,6 +2470,11 @@ css-value@^0.0.1:
   resolved "https://registry.yarnpkg.com/css-value/-/css-value-0.0.1.tgz#5efd6c2eea5ea1fd6b6ac57ec0427b18452424ea"
   integrity sha1-Xv1sLupeof1rasV+wEJ7GEUkJOo=
 
+css-vars-ponyfill@^1.17.2:
+  version "1.17.2"
+  resolved "https://registry.yarnpkg.com/css-vars-ponyfill/-/css-vars-ponyfill-1.17.2.tgz#18ec7bc2fd186ebfaf99ee367b2628aed43889db"
+  integrity sha512-hhdJTdUd9UM0wewdO8+301kba6F5GdfPwIj/lFd13il3xn0yfEuRhrDmLPMfg6R9nPLgbcU0wAp0DRUO/ucE3Q==
+
 css-what@2.1, css-what@^2.1.2:
   version "2.1.3"
   resolved "https://registry.yarnpkg.com/css-what/-/css-what-2.1.3.tgz#a6d7604573365fe74686c3f311c56513d88285f2"

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/css-vars-ponyfill@1"></script>
+
+    <style> :host(ui5-checkbox) {
+        display: inline-block;
+        overflow: hidden;
+        max-width: 100%;
+    }
+
+    ui5-checkbox {
+        display: inline-block;
+        overflow: hidden;
+        max-width: 100%;
+    }
+
+    .ui5-checkbox-wrapper {
+        min-height: var(--_ui5_checkbox_width_height, 2.75rem);
+        min-width: var(--_ui5_checkbox_width_height, 2.75rem);
+        display: flex;
+        align-items: center;
+        padding-left: .8125rem;
+        padding-right: 0.125rem;
+        box-sizing: border-box;
+        outline: none;
+        position: relative;
+        -webkit-tap-highlight-color: rgba(0,0,0,0);
+    }
+
+
+    .ui5-checkbox-wrapper::after {
+        content: "";
+        min-height: inherit;
+        font-size: 0;
+    }
+
+    .ui5-checkbox-wrapper.ui5-checkbox-with-label.ui5-checkbox--wrap {
+        min-height: auto;
+        padding-top: .6875rem;
+        box-sizing: border-box;
+        padding-bottom: .6875rem;
+        align-items: flex-start;
+    }
+
+    .ui5-checkbox-wrapper.ui5-checkbox-with-label.ui5-checkbox--wrap .ui5-checkbox-inner,
+    .ui5-checkbox-wrapper.ui5-checkbox-with-label.ui5-checkbox--wrap .ui5-checkbox-label {
+        margin-top: var(--_ui5_checkbox_wrapped_content_margin_top, 0);
+    }
+
+    .ui5-checkbox--disabled {
+        opacity: .5;
+    }
+
+    .ui5-checkbox--error .ui5-checkbox-inner {
+        background: var(--sapUiFieldInvalidBackground, #fff);
+        border: var(--_ui5_checkbox_inner_error_border, 0.125rem solid var(--sapUiFieldInvalidColor, #bb0000));
+        color: var(--sapUiFieldInvalidColor, #bb0000);
+    }
+
+    .ui5-checkbox--error.ui5-checkbox--hoverable:hover .ui5-checkbox-inner {
+        background: var(--sapUiFieldInvalidBackground, #fff);
+        color: var(--sapUiFieldInvalidColor, #bb0000);
+        border-color: var(--sapUiFieldInvalidColor, #bb0000);
+    }
+
+    .ui5-checkbox--error .ui5-checkbox-inner--checked::before {
+        color: var(--sapUiFieldInvalidColor, #bb0000);
+    }
+
+    .ui5-checkbox--warning .ui5-checkbox-inner {
+        background: var(--sapUiFieldWarningBackground, #fff);
+        border: var(--_ui5_checkbox_inner_warning_border, 0.125rem solid var(--sapUiFieldWarningColor, #e9730c));
+        color: var(--sapUiFieldWarningColor, #e9730c);
+    }
+
+    .ui5-checkbox--warning.ui5-checkbox--hoverable:hover .ui5-checkbox-inner {
+        background: var(--sapUiFieldWarningBackground, #fff);
+        color: var(--sapUiFieldWarningColor, #e9730c);
+        border-color: var(--sapUiFieldWarningColor, #e9730c);
+    }
+
+    .ui5-checkbox--warning .ui5-checkbox-inner--checked::before {
+        color: var(--_ui5_checkbox_checkmark_warning_color, #000);
+    }
+
+    .ui5-checkbox--hoverable:hover .ui5-checkbox-inner {
+        background: var(--_ui5_checkbox_hover_background, var(--sapUiFieldHoverBackground, #fff));
+        border-color: var(--sapUiFieldHoverBorderColor, #0854a0);
+    }
+
+    .ui5-checkbox--readonly:not(.ui5-checkbox--warning):not(.ui5-checkbox--error) .ui5-checkbox-inner {
+        background: var(--sapUiFieldReadOnlyBackground, rgba(242, 242, 242, 0.5));
+        border: var(--_ui5_checkbox_inner_readonly_border, 1px solid var(--sapUiFieldReadOnlyBorderColor, #89919a));
+        color: var(--sapUiContentNonInteractiveIconColor, #6a6d70);
+    }
+
+    .ui5-checkbox-wrapper:focus::before {
+        content: "";
+        position: absolute;
+        top: var(--_ui5_checkbox_focus_left_top_bottom_position, .5625rem);
+        left: .6875rem;
+        right: 0px;
+        bottom: var(--_ui5_checkbox_focus_left_top_bottom_position, .5625rem);
+        border: var(--_ui5_checkbox_focus_outline, 1px dotted var(--sapUiContentFocusColor, #000));
+    }
+
+    .ui5-checkbox-wrapper:not(.ui5-checkbox-with-label):focus::after {
+        right: var(--_ui5_checkbox_no_label_focus_right, .4375rem);
+    }
+
+    .ui5-checkbox-inner {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-width: var(--_ui5_checkbox_inner_width_height, 1.375rem);
+        max-width: var(--_ui5_checkbox_inner_width_height, 1.375rem);
+        height: var(--_ui5_checkbox_inner_width_height, 1.375rem);
+        max-height: var(--_ui5_checkbox_inner_width_height, 1.375rem);
+        border: var(--_ui5_checkbox_inner_border, .0625rem solid var(--sapUiFieldBorderColor, #89919a));
+        border-radius: var(--_ui5_checkbox_inner_border_radius, .125rem);
+        background: var(--sapUiFieldBackground, #fff);
+        box-sizing: border-box;
+        position: relative;
+        cursor: default;
+        pointer-events: none;
+    }
+
+    .ui5-checkbox-inner--checked::before {
+        content: "\e05b";
+        display: flex;
+        position: absolute;
+        justify-content: center;
+        align-items: center;
+        font-family: "SAP-icons";
+        color: var(--_ui5_checkbox_checkmark_color, var(--sapUiSelected, #0854a0));
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        user-select: none;
+        -ms-user-select: none;
+        -webkit-user-select: none;
+        cursor: default;
+    }
+
+    .ui5-checkbox-inner input {
+        -webkit-appearance: none;
+        visibility: hidden;
+        width: 0;
+        left: 0;
+        position: absolute;
+        font-size: inherit;
+    }
+
+    .ui5-checkbox-wrapper .ui5-checkbox-label {
+        margin-left: .8125rem;
+        cursor: default;
+        pointer-events: none;
+        user-select: none;
+        -ms-user-select: none;
+        -webkit-user-select: none;
+    }
+
+    .sapUiSizeCompact .ui5-checkbox-wrapper {
+        min-height: var(--_ui5_checkbox_compact_width_height, 2rem);
+        min-width: var(--_ui5_checkbox_compact_width_height, 2rem);
+    }
+
+    .sapUiSizeCompact .ui5-checkbox-inner {
+        max-height: var(--_ui5_checkbox_compact_inner_size, 1rem);
+        height: var(--_ui5_checkbox_compact_inner_size, 1rem);
+        max-width: var(--_ui5_checkbox_compact_inner_size, 1rem);
+        min-width: var(--_ui5_checkbox_compact_inner_size, 1rem);
+        font-size: .625rem;
+        border-radius: 0;
+    }
+
+    .sapUiSizeCompact .ui5-checkbox-wrapper:focus::before {
+        top: var(--_ui5_checkbox_compact_focus_left_top_bottom_position, .375rem);
+        left: .6875rem;
+        right: 0px;
+        bottom: var(--_ui5_checkbox_compact_focus_left_top_bottom_position, .375rem);
+        border: var(--_ui5_checkbox_focus_outline, 1px dotted var(--sapUiContentFocusColor, #000));
+    }
+
+    .sapUiSizeCompact .ui5-checkbox-wrapper:not(.ui5-checkbox-with-label):focus::after {
+        right: var(--_ui5_checkbox_compact_no_label_focus_right, 1px);
+    }
+
+    .sapUiSizeCompact .ui5-checkbox-wrapper.ui5-checkbox-with-label.ui5-checkbox--wrap {
+        min-height: auto;
+        padding-top: var(--_ui5_checkbox_wrapped_focus_padding, .5rem);
+        padding-bottom: var(--_ui5_checkbox_wrapped_focus_padding, .5rem);
+    }
+
+    span[dir="rtl"] .ui5-checkbox-wrapper .ui5-checkbox-label {
+        margin-left: 0;
+        margin-right: .8125rem;
+    }</style>
+</head>
+<body>
+
+</body>
+</html>

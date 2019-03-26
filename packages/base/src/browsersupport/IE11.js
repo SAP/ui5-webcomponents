@@ -27,7 +27,7 @@ import "../thirdparty/fetch";
 import "regenerator-runtime/runtime";
 
 // CSS Custom Properties
-import "../compatibility/CSSVarsSimulation";
+// import "../compatibility/CSSVarsSimulation";
 
 // Plus all polyfills needed for Edge are also needed for IE11
 import "./Edge";
