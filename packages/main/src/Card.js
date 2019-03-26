@@ -89,7 +89,15 @@ const metadata = {
 			type: Boolean,
 		},
 
-		_headerPress: {
+		_headerClick: {
+			type: Function,
+		},
+
+		_headerKeydown: {
+			type: Function,
+		},
+
+		_headerKeyup: {
 			type: Function,
 		},
 	},
@@ -132,7 +140,9 @@ class Card extends WebComponent {
 	constructor() {
 		super();
 
-		this._headerPress = this.headerPress.bind(this);
+		this._headerClick = this.headerClick.bind(this);
+		this._headerKeydown = this.headerKeydown.bind(this);
+		this._headerKeyup = this.headerKeyup.bind(this);
 	}
 
 	static get metadata() {
@@ -168,40 +178,34 @@ class Card extends WebComponent {
 		super.define(...params);
 	}
 
-	headerPress(event) {
-		const click = event.type === "click";
-		const keydown = event.type === "keydown";
+	headerClick() {
+		this.fireEvent("headerPress");
+	}
 
-		if (click) {
+	headerKeydown(event) {
+		const enter = isEnter(event);
+		const space = isSpace(event);
+
+		this._headerActive = enter || space;
+
+		if (enter) {
 			this.fireEvent("headerPress");
 			return;
 		}
 
-		if (isEnter(event)) {
-			this._handleEnter(keydown);
-			return;
-		}
-
-		if (isSpace(event)) {
+		if (space) {
 			event.preventDefault();
-			this._handleSpace(keydown);
 		}
 	}
 
-	_handleEnter(keydown) {
-		if (keydown) {
+	headerKeyup(event) {
+		const space = isSpace(event);
+
+		this._headerActive = false;
+
+		if (space) {
 			this.fireEvent("headerPress");
 		}
-
-		this._headerActive = keydown;
-	}
-
-	_handleSpace(keydown) {
-		if (!keydown) {
-			this.fireEvent("headerPress");
-		}
-
-		this._headerActive = keydown;
 	}
 }
 
