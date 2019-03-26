@@ -1,5 +1,7 @@
-commit a6c4d29a59a621e3076a5d239d0989068897ff2d
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Mon Mar 25 23:25:53 2019 +0200
+commit e1af8b727dca2360fcbe4e6b92961d6b7a9f1062
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Tue Mar 26 10:03:54 2019 +0200
 
-    feat(ui5-select): select opens with space (#245)
+    refactor(ui5-switch): replace sap-* selectors (#229)
+    
+    * renames sap-desktop class to ui5-switch-desktop
