@@ -23,13 +23,16 @@ module.exports = postcss.plugin('add fallback plugin', function (opts) {
 		}
 
 		root.walkDecls(decl => {
-			let match;
 			// extract var name
-			while (match = decl.value.match(/var\(([^\(\)]+)\)/)) {
-				const varName = match[1];
-				if (params.has(varName)) {
-					decl.value = decl.value.replace(varName, `${varName}, ${params.get(varName)}`)
-				}
+			const matches = decl.value.match(/var\(([^\(\)]+)\)/g);
+			if (matches) {
+				matches.forEach(varMatch => {
+					const varNameMatch = varMatch.match(/var\((.*)\)/);
+					const varName = varNameMatch[1];
+					if (params.has(varName)) {
+						decl.value = decl.value.replace(varName, `${varName}, ${params.get(varName)}`)
+					}
+				});
 			}
 			params.set(decl.prop, decl.value);
 		});
