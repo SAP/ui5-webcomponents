@@ -7,11 +7,11 @@ const runPonyfill = () => {
 		return;
 	}
 
-	cssVars({
+	window.cssVars({
 		rootElement: document.head,
 		include: "style[ui5-webcomponents-theme-properties],style[data-sap-source]",
 		silent: true,
-		watch: true
+		watch: true,
 	});
 };
 
