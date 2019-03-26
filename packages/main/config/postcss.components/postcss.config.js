@@ -6,4 +6,4 @@ module.exports = {
     postcssNesting(),
     postcssAddFallback({importFrom: "./dist/themes-next/sap_fiori_3/parameters-bundle.css"}),
   ]
-}
+};

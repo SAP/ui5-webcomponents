@@ -65,6 +65,19 @@ describe("Select general interaction", () => {
 		assert.ok(selectText.getHTML(false).indexOf(CURRENTLY_SELECTED_ITEM) === -1, "Arrow Down should change selected item");
 	});
 
+
+	it("opens upon space", () => {
+		const btn = $("#myBtn2");
+		const select = $("#mySelect");
+		const popover = browser.findElementDeep("#mySelect >>> ui5-popover >>> .sapMPopover");
+
+		btn.click();
+		btn.keys("Tab");
+
+		browser.keys("Space");
+		assert.ok(popover.isDisplayedInViewport(), "Select is opened.");
+	});
+
 	it("toggles upon F4", () => {
 		const btn = $("#myBtn2");
 		const select = $("#mySelect");
