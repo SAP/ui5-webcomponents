@@ -56,13 +56,14 @@ describe("Select general interaction", () => {
 		const btn = $("#myBtn2");
 		const select = $("#mySelect");
 		const selectText = browser.findElementDeep("#mySelect2 >>> ui5-label");
-		const CURRENTLY_SELECTED_ITEM = "Cozy";
+		const EXPECTED_SELECTION_TEXT1 = "Compact";
+		const EXPECTED_SELECTION_TEXT2 = "Condensed";
 
 		select.keys("ArrowUp");
-		assert.ok(selectText.getHTML(false).indexOf(CURRENTLY_SELECTED_ITEM) === -1, "Arrow Up should change selected item");
+		assert.ok(selectText.getHTML(false).indexOf(EXPECTED_SELECTION_TEXT1) > -1, "Arrow Up should change selected item");
 
 		select.keys("ArrowDown");
-		assert.ok(selectText.getHTML(false).indexOf(CURRENTLY_SELECTED_ITEM) === -1, "Arrow Down should change selected item");
+		assert.ok(selectText.getHTML(false).indexOf(EXPECTED_SELECTION_TEXT2) > -1, "Arrow Down should change selected item");
 	});
 
 
