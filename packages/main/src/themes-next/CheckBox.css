@@ -1,0 +1,215 @@
+:host(ui5-checkbox) {
+	display: inline-block;
+	overflow: hidden;
+	max-width: 100%;
+}
+
+ui5-checkbox {
+	display: inline-block;
+	overflow: hidden;
+	max-width: 100%;
+}
+
+.ui5-checkbox-wrapper {
+	min-height: var(--_ui5_checkbox_width_height);
+	min-width: var(--_ui5_checkbox_width_height);
+	display: flex;
+	align-items: center;
+	padding-left: .8125rem;
+	padding-right: 0.125rem;
+	box-sizing: border-box;
+	outline: none;
+	position: relative;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+
+.ui5-checkbox-wrapper::after {
+	content: "";
+	min-height: inherit;
+	font-size: 0;
+}
+
+.ui5-checkbox-wrapper.ui5-checkbox-with-label.ui5-checkbox--wrap {
+	min-height: auto;
+	padding-top: .6875rem;
+	box-sizing: border-box;
+	padding-bottom: .6875rem;
+	align-items: flex-start;
+}
+
+.ui5-checkbox-wrapper.ui5-checkbox-with-label.ui5-checkbox--wrap .ui5-checkbox-inner,
+.ui5-checkbox-wrapper.ui5-checkbox-with-label.ui5-checkbox--wrap .ui5-checkbox-label {
+	margin-top: var(--_ui5_checkbox_wrapped_content_margin_top);
+}
+
+.sapUiSizeCompact .ui5-checkbox-wrapper.ui5-checkbox-with-label.ui5-checkbox--wrap .ui5-checkbox-label {
+	margin-top: var(--_ui5_checkbox_compact_wrapped_label_margin_top);
+}
+
+.ui5-checkbox--disabled {
+	opacity: .5;
+}
+
+.ui5-checkbox--error .ui5-checkbox-inner {
+	background: var(--sapUiFieldInvalidBackground);
+	border: var(--_ui5_checkbox_inner_error_border);
+	color: var(--sapUiFieldInvalidColor);
+}
+
+.ui5-checkbox--error.ui5-checkbox--hoverable:hover .ui5-checkbox-inner {
+	background: var(--sapUiFieldInvalidBackground);
+	color: var(--sapUiFieldInvalidColor);
+	border-color: var(--sapUiFieldInvalidColor);
+}
+
+.ui5-checkbox--error .ui5-checkbox-inner--checked::before {
+	color: var(--sapUiFieldInvalidColor);
+}
+
+.ui5-checkbox--warning .ui5-checkbox-inner {
+	background: var(--sapUiFieldWarningBackground);
+	border: var(--_ui5_checkbox_inner_warning_border);
+	color: var(--sapUiFieldWarningColor);
+}
+
+.ui5-checkbox--warning.ui5-checkbox--hoverable:hover .ui5-checkbox-inner {
+	background: var(--sapUiFieldWarningBackground);
+	color: var(--sapUiFieldWarningColor);
+	border-color: var(--sapUiFieldWarningColor);
+}
+
+.ui5-checkbox--warning .ui5-checkbox-inner--checked::before {
+	color: var(--_ui5_checkbox_checkmark_warning_color);
+}
+
+.ui5-checkbox--hoverable:hover .ui5-checkbox-inner {
+	background: var(--_ui5_checkbox_hover_background);
+	border-color: var(--sapUiFieldHoverBorderColor);
+}
+
+.ui5-checkbox--readonly:not(.ui5-checkbox--warning):not(.ui5-checkbox--error) .ui5-checkbox-inner {
+	background: var(--sapUiFieldReadOnlyBackground);
+	border: var(--_ui5_checkbox_inner_readonly_border);
+	color: var(--sapUiContentNonInteractiveIconColor);
+}
+
+.ui5-checkbox-wrapper:focus::before {
+	content: "";
+	position: absolute;
+	top: var(--_ui5_checkbox_focus_left_top_bottom_position);
+	left: .6875rem;
+	right: 0px;
+	bottom: var(--_ui5_checkbox_focus_left_top_bottom_position);
+	border: var(--_ui5_checkbox_focus_outline);
+}
+
+.ui5-checkbox-wrapper.ui5-checkbox--wrap:focus::before {
+	bottom: var(--_ui5_checkbox_wrapped_focus_left_top_bottom_position);
+}
+
+.ui5-checkbox-wrapper:not(.ui5-checkbox-with-label):focus::before {
+	right: var(--_ui5_checkbox_no_label_focus_right);
+}
+
+.ui5-checkbox-inner {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-width: var(--_ui5_checkbox_inner_width_height);
+	max-width: var(--_ui5_checkbox_inner_width_height);
+	height: var(--_ui5_checkbox_inner_width_height);
+	max-height: var(--_ui5_checkbox_inner_width_height);
+	border: var(--_ui5_checkbox_inner_border);
+	border-radius: var(--_ui5_checkbox_inner_border_radius);
+	background: var(--sapUiFieldBackground);
+	box-sizing: border-box;
+	position: relative;
+	cursor: default;
+	pointer-events: none;
+}
+
+.ui5-checkbox-inner--checked::before {
+	content: "\e05b";
+	display: flex;
+	position: absolute;
+	justify-content: center;
+	align-items: center;
+	font-family: "SAP-icons";
+	color: var(--_ui5_checkbox_checkmark_color);
+	width: 100%;
+	height: 100%;
+	left: 0;
+	top: 0;
+	user-select: none;
+	-ms-user-select: none;
+	-webkit-user-select: none;
+	cursor: default;
+}
+
+.ui5-checkbox-inner input {
+	-webkit-appearance: none;
+	visibility: hidden;
+	width: 0;
+	left: 0;
+	position: absolute;
+	font-size: inherit;
+}
+
+.ui5-checkbox-wrapper .ui5-checkbox-label {
+	margin-left: .8125rem;
+	cursor: default;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+	pointer-events: none;
+	user-select: none;
+	-ms-user-select: none;
+	-webkit-user-select: none;
+}
+
+.sapUiSizeCompact .ui5-checkbox-wrapper {
+	min-height: var(--_ui5_checkbox_compact_width_height);
+	min-width: var(--_ui5_checkbox_compact_width_height);
+}
+
+.sapUiSizeCompact .ui5-checkbox-inner {
+	max-height: var(--_ui5_checkbox_compact_inner_size);
+	height: var(--_ui5_checkbox_compact_inner_size);
+	max-width: var(--_ui5_checkbox_compact_inner_size);
+	min-width: var(--_ui5_checkbox_compact_inner_size);
+	font-size: .625rem;
+	border-radius: 0;
+}
+
+.sapUiSizeCompact .ui5-checkbox-wrapper:focus::before {
+	top: var(--_ui5_checkbox_compact_focus_left_top_bottom_position);
+	left: .6875rem;
+	right: 0px;
+	bottom: var(--_ui5_checkbox_compact_focus_left_top_bottom_position);
+	border: var(--_ui5_checkbox_focus_outline);
+}
+
+.sapUiSizeCompact .ui5-checkbox-wrapper:not(.ui5-checkbox-with-label):focus::before {
+	right: var(--_ui5_checkbox_compact_no_label_focus_right);
+}
+
+.sapUiSizeCompact .ui5-checkbox-wrapper.ui5-checkbox-with-label.ui5-checkbox--wrap {
+	min-height: auto;
+	padding-top: var(--_ui5_checkbox_wrapped_focus_padding);
+	padding-bottom: var(--_ui5_checkbox_wrapped_focus_padding);
+}
+
+.sapUiSizeCompact .ui5-checkbox-wrapper.ui5-checkbox--wrap:focus::before {
+	bottom: var(--_ui5_checkbox_compact_wrapped_focus_left_top_bottom_position);
+}
+
+.sapUiSizeCompact .ui5-checkbox-wrapper .ui5-checkbox-label {
+	width: calc(100% - .8125rem - var(--_ui5_checkbox_compact_inner_size));
+}
+
+
+span[dir="rtl"] .ui5-checkbox-wrapper .ui5-checkbox-label {
+	margin-left: 0;
+	margin-right: .8125rem;
+}
