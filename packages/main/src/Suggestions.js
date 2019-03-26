@@ -165,7 +165,6 @@ class Suggestions {
 	}
 
 	_handleItemNavigation(forward) {
-
 		if (!this._getItems().length) {
 			return;
 		}
