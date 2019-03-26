@@ -4,8 +4,6 @@ import {
 	isSpace,
 	isUp,
 	isDown,
-	isRight,
-	isLeft,
 	isEnter,
 } from "@ui5/webcomponents-base/src/events/PseudoEvents";
 import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
@@ -183,12 +181,20 @@ class Select extends WebComponent {
 			return;
 		}
 
-		if (isUp(event) || isLeft(event)) {
-			return this.Suggestions.onUp(event);
+		if (isUp(event)) {
+			this.Suggestions.onUp(event);
+
+			if (this.items.length > 1 && !this._opened) {
+				this._fireChange(this._selectedItem);
+			}
 		}
 
-		if (isDown(event) || isRight(event)) {
-			return this.Suggestions.onDown(event);
+		if (isDown(event)) {
+			this.Suggestions.onDown(event);
+
+			if (this.items.length > 1 && !this._opened) {
+				this._fireChange(this._selectedItem);
+			}
 		}
 
 		if (isSpace(event)) {
