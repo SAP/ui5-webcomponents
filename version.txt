@@ -1,5 +1,9 @@
-commit ca3ec103c0786128516c7d86f9c9267422ddb2a9
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Mar 27 09:00:13 2019 +0200
+commit c29d970ad74122e5abf191d34ca5cfc647ceecdf
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Wed Mar 27 10:47:03 2019 +0200
 
-    refactor: use an own copy of css vars ponyfill and modify it (#255)
+    fix: checks navigator language for rtl enabling (#253)
+    
+    - RTL is now set from the configuration by priority. If no configuration for
+    rtl or language is provided - navigator language is checked.
+    - getEffectiveRTL module is added as an util.
