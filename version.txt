@@ -1,9 +1,5 @@
-commit c29d970ad74122e5abf191d34ca5cfc647ceecdf
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Wed Mar 27 10:47:03 2019 +0200
+commit 25ab0f9cef03298d15e8d2d9002f8648f8dca059
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Mar 27 11:10:42 2019 +0200
 
-    fix: checks navigator language for rtl enabling (#253)
-    
-    - RTL is now set from the configuration by priority. If no configuration for
-    rtl or language is provided - navigator language is checked.
-    - getEffectiveRTL module is added as an util.
+    refactor(ui5-link): apply css vars (#239)
