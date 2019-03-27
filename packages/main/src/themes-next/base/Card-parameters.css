@@ -8,4 +8,5 @@
 	/* --_ui5_card_header_hover_bg: lighten(var(--_ui5_card_header_active_bg), 4); */
 	--_ui5_card_header_hover_bg: #fafafa;
 	--_ui5_card_header_border_color: var(--_ui5_card_border_color);
+	--_ui5_card_header_focus_border:  1px dotted var(--sapUiContentFocusColor);
 }
