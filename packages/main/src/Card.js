@@ -1,7 +1,7 @@
 import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
 import URI from "@ui5/webcomponents-base/src/types/URI";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
+import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
 import { isIconURI } from "@ui5/webcomponents-base/src/IconPool";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents";
 import Function from "@ui5/webcomponents-base/src/types/Function";
@@ -9,13 +9,11 @@ import CardRenderer from "./build/compiled/CardRenderer.lit";
 import Icon from "./Icon";
 
 // Styles
-import belize from "./themes/sap_belize/Card.less";
-import belizeHcb from "./themes/sap_belize_hcb/Card.less";
-import fiori3 from "./themes/sap_fiori_3/Card.less";
+import cardCss from "./themes-next/Card.css";
 
-ShadowDOM.registerStyle("sap_belize", "Card.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "Card.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "Card.css", fiori3);
+addCustomCSS("ui5-card", "sap_fiori_3", cardCss);
+addCustomCSS("ui5-card", "sap_belize", cardCss);
+addCustomCSS("ui5-card", "sap_belize_hcb", cardCss);
 
 /**
  * @public

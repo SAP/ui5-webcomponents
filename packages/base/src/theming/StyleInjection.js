@@ -1,18 +1,25 @@
 import createStyleInHead from "../util/createStyleInHead";
 
 const injectedForTags = [];
+let ponyfillTimer;
+
+const ponyfillNeeded = () => !!window.CSSVarsPonyfill;
 
 const runPonyfill = () => {
-	if (typeof window.CSSVarsPonyfill === "undefined") {
-		return;
-	}
+	ponyfillTimer = undefined;
 
 	window.CSSVarsPonyfill.resetCssVars();
 	window.CSSVarsPonyfill.cssVars({
 		rootElement: document.head,
-		include: "style[ui5-webcomponents-theme-properties],style[data-sap-source]",
+		include: "style[data-ui5-webcomponents-theme-properties],style[data-ui5-webcomponent-styles]",
 		silent: true,
 	});
+};
+
+const schedulePonyfill = () => {
+	if (!ponyfillTimer) {
+		ponyfillTimer = window.setTimeout(runPonyfill, 0);
+	}
 };
 
 /**
@@ -21,14 +28,17 @@ const runPonyfill = () => {
  */
 const injectThemeProperties = cssText => {
 	// Needed for all browsers
-	let styleElement = document.head.querySelector(`style[ui5-webcomponents-theme-properties]`);
+	const styleElement = document.head.querySelector(`style[data-ui5-webcomponents-theme-properties]`);
 	if (styleElement) {
 		styleElement.textContent = cssText || "";	// in case of undefined
 	} else {
-		styleElement = createStyleInHead(cssText, { "ui5-webcomponents-theme-properties": "" });
+		createStyleInHead(cssText, { "data-ui5-webcomponents-theme-properties": "" });
 	}
 
-	runPonyfill();
+	// When changing the theme, run the ponyfill immediately
+	if (ponyfillNeeded()) {
+		runPonyfill();
+	}
 };
 
 /**
@@ -37,32 +47,23 @@ const injectThemeProperties = cssText => {
  * @param cssText
  */
 const injectWebComponentStyle = (tagName, cssText) => {
-	if (!window.ShadyDOM) {
-		return;
-	}
-
 	// Edge and IE
 	if (injectedForTags.indexOf(tagName) !== -1) {
 		return;
 	}
 	createStyleInHead(cssText, {
-		"data-sap-source": tagName,
+		"data-ui5-webcomponent-styles": tagName,
 		"disabled": "disabled",
 	});
 	injectedForTags.push(tagName);
 
-	runPonyfill();
-};
-
-/**
- * Updates the style elements holding the CSS for all web components by resolving the CSS Custom properties
- */
-const updateWebComponentStyles = () => {
-	runPonyfill();
+	// When injecting component styles, more might come in the same tick, so run the ponyfill async (to avoid double work)
+	if (ponyfillNeeded()) {
+		schedulePonyfill();
+	}
 };
 
 export {
 	injectThemeProperties,
 	injectWebComponentStyle,
-	updateWebComponentStyles,
 };
