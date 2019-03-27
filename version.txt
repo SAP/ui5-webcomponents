@@ -1,5 +1,5 @@
-commit bb46034167cb6cf47f859e36173b0ec5e94ab43a
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Wed Mar 27 11:41:00 2019 +0200
+commit a7ff51f7cbe257cc3396f947fbb24fd14ce6a9d3
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Wed Mar 27 13:59:55 2019 +0200
 
-    feat(ui5-select): selection can be changed with arrows while closed (#254)
+    improvement: use css vars ponyfill more efficiently (#257)
