@@ -26,8 +26,10 @@ import "../thirdparty/fetch";
 // async - await
 import "regenerator-runtime/runtime";
 
-// CSS Custom Properties
-import "../compatibility/CSSVarsSimulation";
+
+import cssVars from "css-vars-ponyfill";
 
 // Plus all polyfills needed for Edge are also needed for IE11
 import "./Edge";
+
+window.cssVars = cssVars;

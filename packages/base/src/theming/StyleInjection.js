@@ -2,6 +2,18 @@ import createStyleInHead from "../util/createStyleInHead";
 
 const injectedForTags = [];
 
+const runPonyfill = () => {
+	if (typeof window.cssVars !== "function") {
+		return;
+	}
+
+	window.cssVars({
+		rootElement: document.head,
+		include: "style[ui5-webcomponents-theme-properties],style[data-sap-source]",
+		silent: true,
+	});
+};
+
 /**
  * Creates/updates a style element holding all CSS Custom Properties
  * @param cssText
@@ -15,10 +27,7 @@ const injectThemeProperties = cssText => {
 		styleElement = createStyleInHead(cssText, { "ui5-webcomponents-theme-properties": "" });
 	}
 
-	// IE only
-	if (window.CSSVarsSimulation) {
-		window.CSSVarsSimulation.findCSSVars(cssText);
-	}
+	runPonyfill();
 };
 
 /**
@@ -41,28 +50,14 @@ const injectWebComponentStyle = (tagName, cssText) => {
 	});
 	injectedForTags.push(tagName);
 
-	// IE only
-	if (window.CSSVarsSimulation) {
-		const resolvedVarsCSS = window.CSSVarsSimulation.applyCSSVars(cssText);
-		createStyleInHead(resolvedVarsCSS, { "data-sap-source-replaced-vars": tagName });
-	}
+	runPonyfill();
 };
 
 /**
  * Updates the style elements holding the CSS for all web components by resolving the CSS Custom properties
  */
 const updateWebComponentStyles = () => {
-	if (!window.CSSVarsSimulation) {
-		return;
-	}
-
-	// IE only
-	injectedForTags.forEach(tagName => {
-		const originalStyleElement = document.head.querySelector(`style[data-sap-source="${tagName}"]`);
-		const replacedVarsStyleElement = document.head.querySelector(`style[data-sap-source-replaced-vars="${tagName}"]`);
-		const resolvedVarsCSS = window.CSSVarsSimulation.applyCSSVars(originalStyleElement.textContent);
-		replacedVarsStyleElement.textContent = resolvedVarsCSS;
-	});
+	runPonyfill();
 };
 
 export {

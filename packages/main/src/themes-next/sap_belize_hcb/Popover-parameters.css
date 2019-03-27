@@ -1,0 +1,5 @@
+@import "../base/Popover-parameters.css";
+
+:root {
+	--_ui5_popover_arrow_shadow_color: rgba(255,255,255,.3);
+}
