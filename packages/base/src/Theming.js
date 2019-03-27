@@ -42,7 +42,7 @@ const setTheme = async theme => {
 	themeChangeCallbacks.forEach(callback => callback(theme));
 };
 
-const getEffectiveStyle = (ElementClass) => {
+const getEffectiveStyle = ElementClass => {
 	const theme = getTheme();
 	const styleUrls = ElementClass.getMetadata().getStyleUrl();
 	const tag = ElementClass.getMetadata().getTag();

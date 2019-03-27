@@ -71,7 +71,6 @@ class WebComponent extends HTMLElement {
 			const oldStyle = this.shadowRoot.querySelector("style");
 			oldStyle.textContent = newStyle.textContent;
 		}
-
 	}
 
 	_generateId() {

@@ -17,8 +17,8 @@ const createConstructableStyleSheet = css => {
 };
 
 const _createStyle = (tagName, styleContent) => {
-    const theme = getTheme();
-    const key = theme + tagName;
+	const theme = getTheme();
+	const key = theme + tagName;
 	if (styleMap.has(key)) {
 		return styleMap.get(key);
 	}
@@ -34,10 +34,11 @@ const _createStyle = (tagName, styleContent) => {
 	return style;
 };
 
-const createStyle = (ElementClass) => {
-    const tagName = ElementClass.getMetadata().getTag();
-    const styleContent = getEffectiveStyle(ElementClass);
-    return _createStyle(tagName, styleContent);
+const createStyle = ElementClass => {
+	const tagName = ElementClass.getMetadata().getTag();
+	const styleContent = getEffectiveStyle(ElementClass);
+	return _createStyle(tagName, styleContent);
 };
 
+// eslint-disable-next-line
 export { createStyle };
