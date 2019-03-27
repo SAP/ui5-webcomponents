@@ -1,5 +1,5 @@
-commit 25ab0f9cef03298d15e8d2d9002f8648f8dca059
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Mar 27 11:10:42 2019 +0200
+commit bb46034167cb6cf47f859e36173b0ec5e94ab43a
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Wed Mar 27 11:41:00 2019 +0200
 
-    refactor(ui5-link): apply css vars (#239)
+    feat(ui5-select): selection can be changed with arrows while closed (#254)
