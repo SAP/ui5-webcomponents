@@ -10,7 +10,7 @@ const runPonyfill = () => {
 	window.CSSVarsPonyfill.resetCssVars();
 	window.CSSVarsPonyfill.cssVars({
 		rootElement: document.head,
-		include: "style[ui5-webcomponents-theme-properties],style[data-sap-source]",
+		include: "style[data-ui5-webcomponents-theme-properties],style[data-ui5-webcomponent-styles]",
 		silent: true,
 	});
 };
@@ -21,11 +21,11 @@ const runPonyfill = () => {
  */
 const injectThemeProperties = cssText => {
 	// Needed for all browsers
-	let styleElement = document.head.querySelector(`style[ui5-webcomponents-theme-properties]`);
+	const styleElement = document.head.querySelector(`style[data-ui5-webcomponents-theme-properties]`);
 	if (styleElement) {
 		styleElement.textContent = cssText || "";	// in case of undefined
 	} else {
-		styleElement = createStyleInHead(cssText, { "ui5-webcomponents-theme-properties": "" });
+		createStyleInHead(cssText, { "data-ui5-webcomponents-theme-properties": "" });
 	}
 
 	runPonyfill();
@@ -37,16 +37,12 @@ const injectThemeProperties = cssText => {
  * @param cssText
  */
 const injectWebComponentStyle = (tagName, cssText) => {
-	if (!window.ShadyDOM) {
-		return;
-	}
-
 	// Edge and IE
 	if (injectedForTags.indexOf(tagName) !== -1) {
 		return;
 	}
 	createStyleInHead(cssText, {
-		"data-sap-source": tagName,
+		"data-ui5-webcomponent-styles": tagName,
 		"disabled": "disabled",
 	});
 	injectedForTags.push(tagName);
@@ -54,15 +50,7 @@ const injectWebComponentStyle = (tagName, cssText) => {
 	runPonyfill();
 };
 
-/**
- * Updates the style elements holding the CSS for all web components by resolving the CSS Custom properties
- */
-const updateWebComponentStyles = () => {
-	runPonyfill();
-};
-
 export {
 	injectThemeProperties,
 	injectWebComponentStyle,
-	updateWebComponentStyles,
 };
