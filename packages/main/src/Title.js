@@ -1,17 +1,16 @@
 import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
+import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
 import TitleLevel from "./types/TitleLevel";
 import TitleRenderer from "./build/compiled/TitleRenderer.lit";
 
 // Styles
-import belize from "./themes/sap_belize/Title.less";
-import belizeHcb from "./themes/sap_belize_hcb/Title.less";
-import fiori3 from "./themes/sap_fiori_3/Title.less";
+// Styles
+import titleCss from "./themes-next/Title.css";
 
-ShadowDOM.registerStyle("sap_belize", "Title.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "Title.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "Title.css", fiori3);
+addCustomCSS("ui5-title", "sap_fiori_3", titleCss);
+addCustomCSS("ui5-title", "sap_belize", titleCss);
+addCustomCSS("ui5-title", "sap_belize_hcb", titleCss);
 
 /**
  * @public
