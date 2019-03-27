@@ -1,18 +1,17 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
+import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
+
 import DialogTemplateContext from "./DialogTemplateContext";
 import Popup from "./Popup";
 // Template
 import DialogRenderer from "./build/compiled/DialogRenderer.lit";
 
 // Styles
-import belize from "./themes/sap_belize/Dialog.less";
-import belizeHcb from "./themes/sap_belize_hcb/Dialog.less";
-import fiori3 from "./themes/sap_fiori_3/Dialog.less";
+import dialogCss from "./themes-next/Dialog.css";
 
-ShadowDOM.registerStyle("sap_belize", "Dialog.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "Dialog.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "Dialog.css", fiori3);
+addCustomCSS("ui5-dialog", "sap_fiori_3", dialogCss);
+addCustomCSS("ui5-dialog", "sap_belize", dialogCss);
+addCustomCSS("ui5-dialog", "sap_belize_hcb", dialogCss);
 
 /**
  * @public
