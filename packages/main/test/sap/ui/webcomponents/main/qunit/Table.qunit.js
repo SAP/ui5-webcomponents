@@ -33,9 +33,9 @@ TestHelper.ready(function () {
 			fixture.innerHTML = "";
 			this.table = null;
 		});
-		
+
 		QUnit.test("Two column grid should be created with 2 columns", function (assert) {
-			var tableDOM = this.tableShadowRoot.children[1].children[0];
+			var tableDOM = this.table._getRoot().children[0];
 			var tableColumn = tableDOM.children[0];
 			var columnGridStyles = tableColumn.style["grid-template-columns"];
 
@@ -50,8 +50,8 @@ TestHelper.ready(function () {
 			col1.setAttribute("width", "100px");
 
 			RenderScheduler.whenFinished().then(function() {
-				var tableDOM = this.tableShadowRoot.children[1].children[0];
-				var rollDom = roll1.shadowRoot.children[1].children[0];
+				var tableDOM = this.table._getRoot().children[0];
+				var rollDom = roll1._getRoot().children[0];
 				var tableColumn = tableDOM.children[0];
 				var columnGridStyles = tableColumn.style["grid-template-columns"];
 
@@ -68,12 +68,12 @@ TestHelper.ready(function () {
 
 			this.table.style["display"] = "inline-block";
 			this.table.style["width"] = "400px";
-			
+
 			col1.setAttribute("min-width", "500px");
 
 			setTimeout(function() {
-				var tableDOM = this.tableShadowRoot.children[1].children[0];
-				var rollDom = roll1.shadowRoot.children[1].children[0];
+				var tableDOM = this.table._getRoot().children[0];
+				var rollDom = roll1._getRoot().children[0];
 				var tableColumn = tableDOM.children[0];
 				var columnGridStyles = tableColumn.style["grid-template-columns"];
 
@@ -91,13 +91,13 @@ TestHelper.ready(function () {
 
 			this.table.style["display"] = "inline-block";
 			this.table.style["width"] = "400px";
-			
+
 			col1.setAttribute("min-width", "500px");
 			col1.setAttribute("demand-popin", true);
 
 			setTimeout(function() {
-				var tableDOM = this.tableShadowRoot.children[1].children[0];
-				var rollDom = roll1.shadowRoot.children[1].children[0];
+				var tableDOM = this.table._getRoot().children[0];
+				var rollDom = roll1._getRoot().children[0];
 				var tableColumn = tableDOM.children[0];
 				var columnGridStyles = tableColumn.style["grid-template-columns"];
 
