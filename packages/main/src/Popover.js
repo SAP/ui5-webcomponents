@@ -1,6 +1,6 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
+import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
 import Integer from "@ui5/webcomponents-base/src/types/Integer";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
 import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper";
 import PopoverTemplateContext from "./PopoverTemplateContext";
 import PopoverPlacementType from "./types/PopoverPlacementType";
@@ -12,14 +12,11 @@ import Popup from "./Popup";
 import PopoverRenderer from "./build/compiled/PopoverRenderer.lit";
 
 // Styles
-import belize from "./themes/sap_belize/Popover.less";
-import belizeHcb from "./themes/sap_belize_hcb/Popover.less";
-import fiori3 from "./themes/sap_fiori_3/Popover.less";
+import popoverCss from "./themes-next/Popover.css";
 
-ShadowDOM.registerStyle("sap_belize", "Popover.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "Popover.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "Popover.css", fiori3);
-
+addCustomCSS("ui5-popover", "sap_fiori_3", popoverCss);
+addCustomCSS("ui5-popover", "sap_belize", popoverCss);
+addCustomCSS("ui5-popover", "sap_belize_hcb", popoverCss);
 /**
  * @public
  */

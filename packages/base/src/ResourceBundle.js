@@ -1,3 +1,4 @@
+import "./shims/jquery-shim";
 import ResourceBundle from "@ui5/webcomponents-core/dist/sap/base/i18n/ResourceBundle";
 import { getLanguage } from "./LocaleProvider";
 import { registerModuleContent } from "./ResourceLoaderOverrides";

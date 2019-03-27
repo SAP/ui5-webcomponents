@@ -1,0 +1,6 @@
+@import "../base/Link-parameters.css";
+
+:root {
+	--_ui5_link_outline_element_size: calc(100% - 0.1875rem);
+	--_ui5_link_subtle_color: #d9d9d9;
+}

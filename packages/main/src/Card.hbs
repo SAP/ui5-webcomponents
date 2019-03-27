@@ -1,5 +1,9 @@
 <div {{> controlData}} class="sapFCard">
-	<header class="sapFCardHeader">
+	<header class="{{classes.header}}"
+		@click="{{ctr._headerClick}}"
+		@keydown="{{ctr._headerKeydown}}"
+		@keyup="{{ctr._headerKeyup}}"
+		tabindex="0">
 		{{#if image}}
 			<img src="{{ctr.avatar}}" aria-label="Avatar" class="sapFCardAvatar sapFCardHeaderImg">
 		{{/if}}
