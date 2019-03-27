@@ -2,7 +2,7 @@ import { getTheme, _setTheme } from "./Configuration";
 import { getStyles } from "./theming/ThemeBundle";
 import { getCustomCSS } from "./theming/CustomStyle";
 import { getThemeProperties } from "./theming/ThemeProperties";
-import { injectThemeProperties, updateWebComponentStyles } from "./theming/StyleInjection";
+import { injectThemeProperties } from "./theming/StyleInjection";
 
 const themeChangeCallbacks = [];
 
@@ -25,7 +25,6 @@ const applyTheme = async () => {
 		cssText = await getThemeProperties("@ui5/webcomponents", theme);
 	}
 	injectThemeProperties(cssText);
-	updateWebComponentStyles();
 };
 
 const setTheme = async theme => {

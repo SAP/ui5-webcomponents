@@ -37,20 +37,14 @@ class Suggestions {
 
 	/* Public methods */
 	onUp(event) {
-		if (this.isOpened()) {
-			event.preventDefault();
-			this._handleItemNavigation(false /* forward */);
-			return true;
-		}
+		event.preventDefault();
+		this._handleItemNavigation(false /* forward */);
 		return true;
 	}
 
 	onDown(event) {
-		if (this.isOpened()) {
-			event.preventDefault();
-			this._handleItemNavigation(true /* forward */);
-			return true;
-		}
+		event.preventDefault();
+		this._handleItemNavigation(true /* forward */);
 		return true;
 	}
 
@@ -171,10 +165,6 @@ class Suggestions {
 	}
 
 	_handleItemNavigation(forward) {
-		if (!this.isOpened()) {
-			return;
-		}
-
 		if (!this._getItems().length) {
 			return;
 		}
