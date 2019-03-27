@@ -65,7 +65,7 @@ class WebComponent extends HTMLElement {
 			return;
 		}
 		const newStyle = createStyle(this.constructor);
-		if (window.CSSStyleSheet) {
+		if (document.adoptedStyleSheets) {
 			this.shadowRoot.adoptedStyleSheets = [newStyle];
 		} else {
 			const oldStyle = this.shadowRoot.querySelector("style");
@@ -86,7 +86,7 @@ class WebComponent extends HTMLElement {
 		const shadowDOM = await ShadowDOM.prepareShadowDOM(this.constructor);
 		this.shadowRoot.appendChild(shadowDOM);
 
-		if (window.CSSStyleSheet) {
+		if (document.adoptedStyleSheets) {
 			const style = createStyle(this.constructor);
 			this.shadowRoot.adoptedStyleSheets = [style];
 		}
