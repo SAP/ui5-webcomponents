@@ -1,5 +1,5 @@
-commit a7ff51f7cbe257cc3396f947fbb24fd14ce6a9d3
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Mar 27 13:59:55 2019 +0200
+commit 775fe7761a3d857d78c928bb0c39de5ec83359a0
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Mar 27 14:26:51 2019 +0200
 
-    improvement: use css vars ponyfill more efficiently (#257)
+     refactor(ui5-card): apply css vars (#246)
