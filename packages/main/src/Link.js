@@ -1,21 +1,20 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
 import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
+import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
 import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes";
 import URI from "@ui5/webcomponents-base/src/types/URI";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
 import LinkType from "./types/LinkType";
+
 // Template
 import LinkRederer from "./build/compiled/LinkRenderer.lit";
 import LinkTemplateContext from "./LinkTemplateContext";
 
 // Styles
-import belize from "./themes/sap_belize/Link.less";
-import belizeHcb from "./themes/sap_belize_hcb/Link.less";
-import fiori3 from "./themes/sap_fiori_3/Link.less";
+import linkCss from "./themes-next/Link.css";
 
-ShadowDOM.registerStyle("sap_belize", "Link.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "Link.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "Link.css", fiori3);
+addCustomCSS("ui5-link", "sap_fiori_3", linkCss);
+addCustomCSS("ui5-link", "sap_belize", linkCss);
+addCustomCSS("ui5-link", "sap_belize_hcb", linkCss);
 
 /**
  * @public
