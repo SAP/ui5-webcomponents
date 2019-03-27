@@ -42,8 +42,11 @@ const setTheme = async theme => {
 	themeChangeCallbacks.forEach(callback => callback(theme));
 };
 
-const getEffectiveStyle = async (theme, styleUrls, tag) => {
-	const styles = await getStyles(theme, styleUrls);
+const getEffectiveStyle = (ElementClass) => {
+	const theme = getTheme();
+	const styleUrls = ElementClass.getMetadata().getStyleUrl();
+	const tag = ElementClass.getMetadata().getTag();
+	const styles = getStyles(theme, styleUrls);
 	const cssContent = [];
 	styles.forEach(css => {
 		cssContent.push(css);

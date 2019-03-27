@@ -7,6 +7,8 @@ import ControlRenderer from "./ControlRenderer";
 import RenderScheduler from "./RenderScheduler";
 import TemplateContext from "./TemplateContext";
 import State from "./State";
+import { createStyle } from "./CSS";
+import { attachThemeChange } from "./Theming";
 
 const metadata = {
 	properties: {
@@ -42,6 +44,8 @@ class WebComponent extends HTMLElement {
 		this._upgradeAllProperties();
 		this._shadowRootReadyPromise = this._initializeShadowRoot();
 
+		attachThemeChange(this.onThemeChanged.bind(this));
+
 		let deferredResolve;
 		this._domRefReadyPromise = new Promise(resolve => {
 			deferredResolve = resolve;
@@ -55,39 +59,53 @@ class WebComponent extends HTMLElement {
 		return this._shadowRootReadyPromise;
 	}
 
+	onThemeChanged() {
+		if (window.ShadyDOM) {
+			// polyfill theme handling is in head styles directly
+			return;
+		}
+		const newStyle = createStyle(this.constructor);
+		if (window.CSSStyleSheet) {
+			this.shadowRoot.adoptedStyleSheets = [newStyle];
+		} else {
+			const oldStyle = this.shadowRoot.querySelector("style");
+			oldStyle.textContent = newStyle.textContent;
+		}
+
+	}
+
 	_generateId() {
 		this._id = this.constructor._nextID();
 	}
 
-	_initializeShadowRoot() {
+	async _initializeShadowRoot() {
 		if (this.constructor.getMetadata().getNoShadowDOM()) {
 			return Promise.resolve();
 		}
 
 		this.attachShadow({ mode: "open" });
-		return new Promise(resolve => {
-			ShadowDOM.prepareShadowDOM(this.constructor).then(shadowDOM => {
-				this.shadowRoot.appendChild(shadowDOM);
-				resolve();
-			});
-		});
+		const shadowDOM = await ShadowDOM.prepareShadowDOM(this.constructor);
+		this.shadowRoot.appendChild(shadowDOM);
+
+		if (window.CSSStyleSheet) {
+			const style = createStyle(this.constructor);
+			this.shadowRoot.adoptedStyleSheets = [style];
+		}
 	}
 
-	connectedCallback() {
+	async connectedCallback() {
 		if (this.constructor.getMetadata().getNoShadowDOM()) {
 			return;
 		}
 
-		this._whenShadowRootReady().then(() => {
-			this._processChildren();
-			RenderScheduler.renderImmediately(this).then(() => {
-				this._domRefReadyPromise._deferredResolve();
-				this._startObservingDOMChildren();
-				if (typeof this.onEnterDOM === "function") {
-					this.onEnterDOM();
-				}
-			});
-		});
+		await this._whenShadowRootReady();
+		this._processChildren();
+		await RenderScheduler.renderImmediately(this);
+		this._domRefReadyPromise._deferredResolve();
+		this._startObservingDOMChildren();
+		if (typeof this.onEnterDOM === "function") {
+			this.onEnterDOM();
+		}
 	}
 
 	disconnectedCallback() {
