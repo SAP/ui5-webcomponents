@@ -1,6 +1,6 @@
-import { getRTL, getLanguage } from "./Configuration";
-import getDesigntimePropertyAsArray from "./util/getDesigntimePropertyAsArray";
-import detectNavigatorLanguage from "./util/detectNavigatorLanguage";
+import { getRTL, getLanguage } from "../Configuration";
+import getDesigntimePropertyAsArray from "./getDesigntimePropertyAsArray";
+import detectNavigatorLanguage from "./detectNavigatorLanguage";
 
 const M_ISO639_OLD_TO_NEW = {
 	"iw": "he",
@@ -27,6 +27,4 @@ const getEffectiveRTL = () => {
 	return impliesRTL(getLanguage() || detectNavigatorLanguage());
 };
 
-export default {};
-
-export { getEffectiveRTL };
+export default getEffectiveRTL;

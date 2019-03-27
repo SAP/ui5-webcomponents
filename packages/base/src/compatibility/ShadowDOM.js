@@ -1,5 +1,5 @@
 import { getTheme, getCompactSize } from "../Configuration";
-import { getEffectiveRTL } from "../RTL";
+import getEffectiveRTL from "../util/getEffectiveRTL";
 
 import { injectWebComponentStyle } from "../theming/StyleInjection";
 import { registerStyle } from "../theming/ThemeBundle";
