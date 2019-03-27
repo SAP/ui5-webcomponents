@@ -1,18 +1,12 @@
 import CalendarType from "@ui5/webcomponents-core/dist/sap/ui/core/CalendarType";
-
-const getDesigntimePropertyAsArray = sValue => {
-	const m = /\$([-a-z0-9A-Z._]+)(?::([^$]*))?\$/.exec(sValue);
-	return (m && m[2]) ? m[2].split(/,/) : null;
-};
-
-const supportedLanguages = getDesigntimePropertyAsArray("$core-i18n-locales:,ar,bg,ca,cs,da,de,el,en,es,et,fi,fr,hi,hr,hu,it,iw,ja,ko,lt,lv,nl,no,pl,pt,ro,ru,sh,sk,sl,sv,th,tr,uk,vi,zh_CN,zh_TW$");
+import getDesigntimePropertyAsArray from "./util/getDesigntimePropertyAsArray";
 
 const CONFIGURATION = {
 	theme: "sap_fiori_3",
 	rtl: null,
 	language: null,
 	compactSize: false,
-	supportedLanguages,
+	supportedLanguages: null,
 	calendarType: null,
 	derivedRTL: null,
 	"xx-wc-no-conflict": false, // no URL
@@ -24,7 +18,7 @@ const getTheme = () => {
 };
 
 const getRTL = () => {
-	return CONFIGURATION.rtl === null ? CONFIGURATION.derivedRTL : CONFIGURATION.rtl;
+	return CONFIGURATION.rtl;
 };
 
 const getLanguage = () => {
@@ -36,7 +30,7 @@ const getCompactSize = () => {
 };
 
 const getSupportedLanguages = () => {
-	return CONFIGURATION.supportedLanguages;
+	return getDesigntimePropertyAsArray("$core-i18n-locales:,ar,bg,ca,cs,da,de,el,en,es,et,fi,fr,hi,hr,hu,it,iw,ja,ko,lt,lv,nl,no,pl,pt,ro,ru,sh,sk,sl,sv,th,tr,uk,vi,zh_CN,zh_TW$");
 };
 
 const getWCNoConflict = () => {
