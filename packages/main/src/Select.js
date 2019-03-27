@@ -183,18 +183,12 @@ class Select extends WebComponent {
 
 		if (isUp(event)) {
 			this.Suggestions.onUp(event);
-
-			if (this.items.length > 1 && !this._opened) {
-				this._fireChange(this._selectedItem);
-			}
+			this._changeSelectionWhileClosed();
 		}
 
 		if (isDown(event)) {
 			this.Suggestions.onDown(event);
-
-			if (this.items.length > 1 && !this._opened) {
-				this._fireChange(this._selectedItem);
-			}
+			this._changeSelectionWhileClosed();
 		}
 
 		if (isSpace(event)) {
@@ -306,6 +300,13 @@ class Select extends WebComponent {
 
 		if (position !== undefined) {
 			this._updateSelectedItemPos(position);
+		}
+	}
+
+	_changeSelectionWhileClosed() {
+		if (this.items.length > 1 && !this._opened) {
+			this._select(this._getPreviewedItem());
+			this._fireChange(this._getSelectedItem());
 		}
 	}
 
