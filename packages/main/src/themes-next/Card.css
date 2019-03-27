@@ -33,6 +33,7 @@ ui5-card {
 	background: var(--_ui5_card_header_hover_bg);
 }
 
+.sapFCardHeader.sapFCardHeaderActive,
 .sapFCardHeader:active {
 	background: var(--_ui5_card_header_active_bg);
 }

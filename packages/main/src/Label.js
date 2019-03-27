@@ -1,18 +1,17 @@
 import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
+import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
+
 // Template
 import LabelRenderer from "./build/compiled/LabelRenderer.lit";
 import LabelTemplateContext from "./LabelTemplateContext";
 
 // Styles
-import belize from "./themes/sap_belize/Label.less";
-import belizeHcb from "./themes/sap_belize_hcb/Label.less";
-import fiori3 from "./themes/sap_fiori_3/Label.less";
+import labelCss from "./themes-next/Label.css";
 
-ShadowDOM.registerStyle("sap_belize", "Label.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "Label.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "Label.css", fiori3);
+addCustomCSS("ui5-label", "sap_fiori_3", labelCss);
+addCustomCSS("ui5-label", "sap_belize", labelCss);
+addCustomCSS("ui5-label", "sap_belize_hcb", labelCss);
 
 /**
  * @public

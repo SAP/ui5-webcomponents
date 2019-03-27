@@ -1,0 +1,85 @@
+:host(ui5-link) {
+	display: inline-block;
+	max-width: 100%;
+}
+
+:host(ui5-link) span[data-sap-ui-wc-root] {
+	display: flex;
+}
+
+ui5-link {
+	display: inline-block;
+	max-width: 100%;
+}
+
+ui5-link span[data-sap-ui-wc-root] {
+	display: flex;
+}
+
+.sapMLnk {
+	color: var(--sapUiLink);
+	text-decoration: none;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	word-wrap: normal;
+	font-family: var(--sapUiFontFamily);
+	font-size: var(--sapMFontMediumSize);
+	cursor: pointer;
+	display: inline-block;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	outline: none;
+}
+
+.sapMLnk:not(.sapMLnkDsbl):hover,
+.sapMLnk.sapMLnkSubtle:not(.sapMLnkDsbl):hover {
+	text-decoration: underline;
+	color: var(--sapUiLinkHover);
+}
+
+.sapMLnk:visited {
+	color: var(--sapUiLinkVisited);
+}
+
+.sapMLnk.sapMLnkDsbl {
+	text-shadow: none;
+	outline: none;
+	cursor: default;
+	pointer-events: none;
+	opacity: var(--_ui5_link_opacity);
+}
+
+.sapMLnk.sapMLnkEmphasized {
+	font-weight: bold;
+}
+
+.sapMLnk.sapMLnkSubtle,
+.sapMLnk.sapMLnkSubtle:visited {
+	color: var(--_ui5_link_subtle_color);
+}
+
+.sapMLnk.sapMLnkSubtle:focus {
+	color: var(--sapUiLink);
+}
+
+.sapMLnk.sapMLnkWrapping {
+	white-space: normal;
+	word-wrap: break-word;
+}
+
+.sapMLnk:focus {
+	text-decoration: underline;
+}
+
+.sapMLnk:focus::after {
+	content: "";
+	width: var(--_ui5_link_outline_element_size);
+	height: var(--_ui5_link_outline_element_size);
+	position: absolute;
+	left: 0px;
+	border: 1px dotted var(--sapUiContentFocusColor);
+	top: 0;
+	outline: none;
+}

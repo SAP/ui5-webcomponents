@@ -6,10 +6,8 @@ import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
 import {
 	isUp,
 	isDown,
-	isLeft,
 	isSpace,
 	isEnter,
-	isRight,
 } from "@ui5/webcomponents-base/src/events/PseudoEvents";
 import Icon from "./Icon";
 import InputType from "./types/InputType";
@@ -338,14 +336,6 @@ class Input extends WebComponent {
 			return this._handleDown(event);
 		}
 
-		if (isRight(event)) {
-			return this._handleRight(event);
-		}
-
-		if (isLeft(event)) {
-			return this._handleLeft(event);
-		}
-
 		if (isSpace(event)) {
 			return this._handleSpace(event);
 		}
@@ -366,14 +356,6 @@ class Input extends WebComponent {
 		if (this.Suggestions) {
 			this.Suggestions.onDown(event);
 		}
-	}
-
-	_handleRight(event) {
-		this._handleDown(event);
-	}
-
-	_handleLeft(event) {
-		this._handleUp(event);
 	}
 
 	_handleSpace(event) {

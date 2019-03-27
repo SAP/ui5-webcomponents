@@ -3,6 +3,8 @@ import URI from "@ui5/webcomponents-base/src/types/URI";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
 import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
 import { isIconURI } from "@ui5/webcomponents-base/src/IconPool";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents";
+import Function from "@ui5/webcomponents-base/src/types/Function";
 import CardRenderer from "./build/compiled/CardRenderer.lit";
 import Icon from "./Icon";
 
@@ -80,6 +82,34 @@ const metadata = {
 			type: URI,
 			defaultValue: null,
 		},
+
+		_headerActive: {
+			type: Boolean,
+		},
+
+		_headerClick: {
+			type: Function,
+		},
+
+		_headerKeydown: {
+			type: Function,
+		},
+
+		_headerKeyup: {
+			type: Function,
+		},
+	},
+	events: /** @lends sap.ui.webcomponents.main.Card.prototype */ {
+
+		/**
+		 * Fired when the <code>ui5-card</code> header is pressed
+		 * by click/tap or by using the Enter or Space key.
+		 *
+		 * @event
+		 * @public
+		 * @since 0.10.0
+		 */
+		headerPress: {},
 	},
 };
 
@@ -105,6 +135,14 @@ const metadata = {
  * @public
  */
 class Card extends WebComponent {
+	constructor() {
+		super();
+
+		this._headerClick = this.headerClick.bind(this);
+		this._headerKeydown = this.headerKeydown.bind(this);
+		this._headerKeyup = this.headerKeyup.bind(this);
+	}
+
 	static get metadata() {
 		return metadata;
 	}
@@ -123,6 +161,12 @@ class Card extends WebComponent {
 			image,
 			ctr: state,
 			renderIcon: state.icon && !state.image,
+			classes: {
+				header: {
+					"sapFCardHeader": true,
+					"sapFCardHeaderActive": state._headerActive,
+				},
+			},
 		};
 	}
 
@@ -130,6 +174,36 @@ class Card extends WebComponent {
 		await Icon.define();
 
 		super.define(...params);
+	}
+
+	headerClick() {
+		this.fireEvent("headerPress");
+	}
+
+	headerKeydown(event) {
+		const enter = isEnter(event);
+		const space = isSpace(event);
+
+		this._headerActive = enter || space;
+
+		if (enter) {
+			this.fireEvent("headerPress");
+			return;
+		}
+
+		if (space) {
+			event.preventDefault();
+		}
+	}
+
+	headerKeyup(event) {
+		const space = isSpace(event);
+
+		this._headerActive = false;
+
+		if (space) {
+			this.fireEvent("headerPress");
+		}
 	}
 }
 

@@ -1,0 +1,12 @@
+
+@import "../base/CheckBox.css";
+
+:root {
+--_ui5_checkbox_inner_border_radius: 0;
+--_ui5_checkbox_checkmark_color: var(--sapUiContentIconColor);
+--_ui5_checkbox_inner_error_border: 0.125rem dashed var(--sapUiFieldInvalidColor);
+--_ui5_checkbox_inner_warning_border: 0.125rem dashed var(--sapUiFieldWarningColor);
+--_ui5_checkbox_checkmark_warning_color: var(--sapUiFieldWarningColor);
+--_ui5_checkbox_hover_background: var(--sapUiSelected);
+--_ui5_checkbox_focus_outline: 0.125rem dotted var(--sapUiContentFocusColor);
+}

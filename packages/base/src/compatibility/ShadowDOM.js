@@ -1,4 +1,5 @@
-import { getTheme, getRTL, getCompactSize } from "../Configuration";
+import { getTheme, getCompactSize } from "../Configuration";
+import getEffectiveRTL from "../util/getEffectiveRTL";
 
 import { injectWebComponentStyle } from "../theming/StyleInjection";
 import { registerStyle } from "../theming/ThemeBundle";
@@ -34,7 +35,7 @@ class ShadowDOM {
 		const theme = getTheme();
 		const styleUrls = ElementClass.getMetadata().getStyleUrl();
 		const tag = ElementClass.getMetadata().getTag();
-		const isRTL = getRTL();
+		const isRTL = getEffectiveRTL();
 		const isCompact = getCompactSize();
 
 		let shadowDOM,
