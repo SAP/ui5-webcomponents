@@ -1,11 +1,12 @@
 import createStyleInHead from "../util/createStyleInHead";
 
 const injectedForTags = [];
+let ponyfillTimer;
+
+const ponyfillNeeded = () => !!window.CSSVarsPonyfill;
 
 const runPonyfill = () => {
-	if (typeof window.CSSVarsPonyfill === "undefined") {
-		return;
-	}
+	ponyfillTimer = undefined;
 
 	window.CSSVarsPonyfill.resetCssVars();
 	window.CSSVarsPonyfill.cssVars({
@@ -13,6 +14,12 @@ const runPonyfill = () => {
 		include: "style[data-ui5-webcomponents-theme-properties],style[data-ui5-webcomponent-styles]",
 		silent: true,
 	});
+};
+
+const schedulePonyfill = () => {
+	if (!ponyfillTimer) {
+		ponyfillTimer = window.setTimeout(runPonyfill, 0);
+	}
 };
 
 /**
@@ -28,7 +35,10 @@ const injectThemeProperties = cssText => {
 		createStyleInHead(cssText, { "data-ui5-webcomponents-theme-properties": "" });
 	}
 
-	runPonyfill();
+	// When changing the theme, run the ponyfill immediately
+	if (ponyfillNeeded()) {
+		runPonyfill();
+	}
 };
 
 /**
@@ -47,7 +57,10 @@ const injectWebComponentStyle = (tagName, cssText) => {
 	});
 	injectedForTags.push(tagName);
 
-	runPonyfill();
+	// When injecting component styles, more might come in the same tick, so run the ponyfill async (to avoid double work)
+	if (ponyfillNeeded()) {
+		schedulePonyfill();
+	}
 };
 
 export {
