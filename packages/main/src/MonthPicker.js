@@ -9,18 +9,16 @@ import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData";
 import { getLocale } from "@ui5/webcomponents-base/src/LocaleProvider";
 import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType";
 import CalendarDate from "@ui5/webcomponents-base/src/dates/CalendarDate";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
+import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
 import MonthPickerTemplateContext from "./MonthPickerTemplateContext";
 import MonthPickerRenderer from "./build/compiled/MonthPickerRenderer.lit";
 
 // Styles
-import belize from "./themes/sap_belize/MonthPicker.less";
-import belizeHcb from "./themes/sap_belize_hcb/MonthPicker.less";
-import fiori3 from "./themes/sap_fiori_3/MonthPicker.less";
+import styles from "./themes-next/MonthPicker.css";
 
-ShadowDOM.registerStyle("sap_belize", "MonthPicker.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "MonthPicker.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "MonthPicker.css", fiori3);
+addCustomCSS("ui5-month-picker", "sap_fiori_3", styles);
+addCustomCSS("ui5-month-picker", "sap_belize", styles);
+addCustomCSS("ui5-month-picker", "sap_belize_hcb", styles);
 
 /**
  * @public
