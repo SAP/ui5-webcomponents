@@ -52,6 +52,21 @@ describe("Select general interaction", () => {
 		assert.ok(selectText.getHTML(false).indexOf(EXPECTED_SELECTION_TEXT2) !== -1, "Select label is correct.");
 	});
 
+	it("changes selection while closed with Arrow Up/Down", () => {
+		const btn = $("#myBtn2");
+		const select = $("#mySelect");
+		const selectText = browser.findElementDeep("#mySelect2 >>> ui5-label");
+		const EXPECTED_SELECTION_TEXT1 = "Compact";
+		const EXPECTED_SELECTION_TEXT2 = "Condensed";
+
+		select.keys("ArrowUp");
+		assert.ok(selectText.getHTML(false).indexOf(EXPECTED_SELECTION_TEXT1) > -1, "Arrow Up should change selected item");
+
+		select.keys("ArrowDown");
+		assert.ok(selectText.getHTML(false).indexOf(EXPECTED_SELECTION_TEXT2) > -1, "Arrow Down should change selected item");
+	});
+
+
 	it("opens upon space", () => {
 		const btn = $("#myBtn2");
 		const select = $("#mySelect");
