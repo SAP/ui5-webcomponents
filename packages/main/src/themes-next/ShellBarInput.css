@@ -1,0 +1,28 @@
+.sapWCShellBarSearchFieldElement.sapWCInputBase .sapWCInputBaseContentWrapper {
+	background-color: var(--sapUiShellColor);
+	border: 1px solid lighten(var(--sapUiShellBorderColor), 30);
+}
+
+.sapWCShellBarSearchFieldElement.sapWCInputBase .sapWCInputBaseContentWrapper:hover:not(.sapWCInputBaseContentWrapperError):not(.sapWCInputBaseContentWrapperWarning):not(.sapWCInputBaseContentWrapperSuccess):not(.sapWCInputBaseDisabledWrapper):not(.sapWCInputBaseReadonlyWrapper) {
+	background: var(--sapUiShellHoverBackground);
+	border: 1px solid lighten(var(--sapUiShellBorderColor), 30);
+}
+
+.sapWCShellBarSearchFieldElement.sapWCInputBase .sapWCInputBaseInner {
+	color: var(--sapUiShellTextColor);
+}
+
+.sapWCShellBarSearchFieldElement.sapWCInputBase.sapWCFocus .sapWCInputBaseContentWrapper::after {
+	border: 1px dotted var(--sapUiContentContrastFocusColor);
+}
+
+.sapUiSizeCompact .sapWCShellBarSearchFieldElement.sapWCInput {
+	height: 2.25rem;
+}
+
+.sapUiSizeCompact .sapWCFocus .sapWCInputBaseContentWrapper::after {
+	width: calc(100% - 0.25rem);
+	height: calc(100% - 0.25rem);
+	top: 1px;
+	left: 1px;
+}
