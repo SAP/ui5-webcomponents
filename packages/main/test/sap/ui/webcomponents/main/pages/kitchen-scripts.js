@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	var sideNav = document.getElementById("side-nav");
 	var mainContent = document.getElementById("main-content");
 	var Configuration = window["sap-ui-webcomponents-main-bundle"].configuration;
+	var Theming = window["sap-ui-webcomponents-main-bundle"].Theming;
 	var COMPACT = Configuration.getCompactSize();
 	var RTL = Configuration.getRTL();
 	var THEME = Configuration.getTheme();
@@ -63,11 +64,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 	btnTheme.addEventListener('press', function(e) {
 		var theme = e.target.pressed ? HCB : FIORI3;
-		var param = buildParam(btnCompact.pressed, btnRTL.pressed, theme);
-		var currentURL = window.location.href;
-		var newURL = currentURL.slice(0, currentURL.indexOf("kitchen")) + param;
+		Theming.setTheme(theme);
 
-		window.location.href = newURL;
+		if (theme === HCB) {
+			document.body.style="background: #333";
+		} else {
+			document.body.style="background: #fff";
+		}
 	}, false);
 
 	menuBtn.addEventListener('press', function(event) {
