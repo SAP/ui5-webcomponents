@@ -1,9 +1,21 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
+import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
 import URI from "@ui5/webcomponents-base/src/types/URI";
 import ListItem from "./ListItem";
 import Icon from "./Icon";
 import StandardListItemTemplateContext from "./StandardListItemTemplateContext";
 import StandardListItemRenderer from "./build/compiled/StandardListItemRenderer.lit";
+
+// Styles
+import listItemCss from "./themes-next/ListItem.css";
+import listItemBaseCss from "./themes-next/ListItemBase.css";
+
+addCustomCSS("ui5-li", "sap_fiori_3", listItemCss);
+addCustomCSS("ui5-li", "sap_fiori_3", listItemBaseCss);
+addCustomCSS("ui5-li", "sap_belize", listItemCss);
+addCustomCSS("ui5-li", "sap_belize", listItemBaseCss);
+addCustomCSS("ui5-li", "sap_belize_hcb", listItemCss);
+addCustomCSS("ui5-li", "sap_belize_hcb", listItemBaseCss);
 
 /**
  * @public
