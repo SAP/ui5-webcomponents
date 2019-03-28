@@ -21,7 +21,7 @@ import radioButtonCss from "./themes-next/RadioButton.css";
 
 addCustomCSS("ui5-radiobutton", "sap_fiori_3", radioButtonCss);
 addCustomCSS("ui5-radiobutton", "sap_belize", radioButtonCss);
-addCustomCSS("ui5-radiobutton", "sap_belize_hcb", radioButtonCss);;
+addCustomCSS("ui5-radiobutton", "sap_belize_hcb", radioButtonCss);
 
 /**
  * @public
