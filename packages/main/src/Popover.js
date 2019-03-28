@@ -7,6 +7,7 @@ import PopoverPlacementType from "./types/PopoverPlacementType";
 import PopoverVerticalAlign from "./types/PopoverVerticalAlign";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign";
 import Popup from "./Popup";
+import RenderScheduler from "@ui5/webcomponents-base/src/RenderScheduler";
 
 // Template
 import PopoverRenderer from "./build/compiled/PopoverRenderer.lit";
@@ -551,7 +552,11 @@ class Popover extends Popup {
 
 		this.resetFocus();
 
-		this.fireEvent("afterClose", {});
+		RenderScheduler.whenFinished()
+			.then(_ => {
+				this.fireEvent("afterClose", {});
+			});
+
 	}
 
 	getPopoverSize() {
