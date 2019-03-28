@@ -1,6 +1,7 @@
 import "@ui5/webcomponents-base/src/shims/jquery-shim";
 import "@ui5/webcomponents-base/src/shims/Core-shim";
 import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
+import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
 import { fetchCldrData } from "@ui5/webcomponents-base/src/CLDR";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
 import { getLocale } from "@ui5/webcomponents-base/src/LocaleProvider";
@@ -11,7 +12,6 @@ import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData";
 import CalendarDate from "@ui5/webcomponents-base/src/dates/CalendarDate";
 import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType";
 import Integer from "@ui5/webcomponents-base/src/types/Integer";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
 import CalendarTemplateContext from "./CalendarTemplateContext";
 import CalendarHeader from "./CalendarHeader";
 import DayPicker from "./DayPicker";
@@ -23,13 +23,11 @@ import CalendarRenderer from "./build/compiled/CalendarRenderer.lit";
 import "@ui5/webcomponents-core/dist/sap/ui/core/date/Gregorian";
 
 // Styles
-import belize from "./themes/sap_belize/Calendar.less";
-import belizeHcb from "./themes/sap_belize_hcb/Calendar.less";
-import fiori3 from "./themes/sap_fiori_3/Calendar.less";
+import calendarCSS from "./themes-next/Calendar.css";
 
-ShadowDOM.registerStyle("sap_belize", "Calendar.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "Calendar.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "Calendar.css", fiori3);
+addCustomCSS("ui5-calendar", "sap_fiori_3", calendarCSS);
+addCustomCSS("ui5-calendar", "sap_belize_hcb", calendarCSS);
+addCustomCSS("ui5-calendar", "sap_belize", calendarCSS);
 
 /**
  * @public
