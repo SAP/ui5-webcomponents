@@ -1,16 +1,18 @@
 import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
 import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper";
 import Integer from "@ui5/webcomponents-base/src/types/Integer";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
+import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
 
 // Styles
-import belize from "./themes/sap_belize/Popup.less";
-import belizeHcb from "./themes/sap_belize_hcb/Popup.less";
-import fiori3 from "./themes/sap_fiori_3/Popup.less";
+import styles from "./themes-next/Popup.css";
 
-ShadowDOM.registerStyle("sap_belize", "Popup.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "Popup.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "Popup.css", fiori3);
+addCustomCSS("ui5-dialog", "sap_fiori_3", styles);
+addCustomCSS("ui5-dialog", "sap_belize", styles);
+addCustomCSS("ui5-dialog", "sap_belize_hcb", styles);
+
+addCustomCSS("ui5-popover", "sap_fiori_3", styles);
+addCustomCSS("ui5-popover", "sap_belize", styles);
+addCustomCSS("ui5-popover", "sap_belize_hcb", styles);
 
 /**
  * @public
