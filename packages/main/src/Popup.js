@@ -7,6 +7,7 @@ import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
 import belize from "./themes/sap_belize/Popup.less";
 import belizeHcb from "./themes/sap_belize_hcb/Popup.less";
 import fiori3 from "./themes/sap_fiori_3/Popup.less";
+import { isEscape } from "@ui5/webcomponents-base/src/events/PseudoEvents";
 
 ShadowDOM.registerStyle("sap_belize", "Popup.css", belize);
 ShadowDOM.registerStyle("sap_belize_hcb", "Popup.css", belizeHcb);
@@ -252,8 +253,7 @@ class Popup extends WebComponent {
 	}
 
 	documentKeyDown(event) {
-		// escape key
-		if (event.keyCode === 27 && this.isTopPopup()) {
+		if (isEscape(event) && this.isTopPopup()) {
 			this.escPressed = true;
 			this.close();
 		}
