@@ -1,9 +1,5 @@
-commit 41bb5976b7d293f4862db769bbd2c5d2cb4a2d8e
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Thu Mar 28 05:36:33 2019 +0200
+commit 97283eb550ec951180a519aeb6d44246d8f88c0f
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu Mar 28 13:40:39 2019 +0200
 
-    improvement: optimize css (#266)
-    
-    - combine :root selectors in the parameters bundle
-    - remove duplicate properties in the parameters bundle
-    - minify css of both bundle and component outputs
+    refactor(ui5-icon): apply css vars (#261)
