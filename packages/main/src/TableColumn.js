@@ -2,17 +2,15 @@ import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
 import Integer from "@ui5/webcomponents-base/src/types/Integer";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
 import CSSSize from "@ui5/webcomponents-base/src/types/CSSSize";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
+import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
 import TableColumnRenderer from "./build/compiled/TableColumnRenderer.lit";
 
 // Styles
-import belize from "./themes/sap_belize/TableColumn.less";
-import belizeHcb from "./themes/sap_belize_hcb/TableColumn.less";
-import fiori3 from "./themes/sap_fiori_3/TableColumn.less";
+import styles from "./themes-next/TableColumn.css";
 
-ShadowDOM.registerStyle("sap_belize", "TableColumn.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "TableColumn.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "TableColumn.css", fiori3);
+addCustomCSS("ui5-table-column", "sap_fiori_3", styles);
+addCustomCSS("ui5-table-column", "sap_belize", styles);
+addCustomCSS("ui5-table-column", "sap_belize_hcb", styles);
 
 const metadata = {
 	tag: "ui5-table-column",
