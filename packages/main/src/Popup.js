@@ -2,6 +2,7 @@ import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
 import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper";
 import Integer from "@ui5/webcomponents-base/src/types/Integer";
 import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
+import { isEscape } from "@ui5/webcomponents-base/src/events/PseudoEvents";
 
 // Styles
 import styles from "./themes-next/Popup.css";
@@ -254,8 +255,7 @@ class Popup extends WebComponent {
 	}
 
 	documentKeyDown(event) {
-		// escape key
-		if (event.keyCode === 27 && this.isTopPopup()) {
+		if (isEscape(event) && this.isTopPopup()) {
 			this.escPressed = true;
 			this.close();
 		}
