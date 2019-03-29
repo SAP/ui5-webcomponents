@@ -7,12 +7,12 @@ ui5-button {
 }
 
 span[dir="rtl"] .sapMBtn.sapMBtnWithIcon .sapMBtnText {
-	margin-right: var(--_sap_ui_webcomponents_main_button_base_icon_margin);
+	margin-right: var(--_ui5_button_base_icon_margin);
 	margin-left: 0;
 }
 
 span[dir="rtl"] .sapMBtn.sapMBtnIconEnd .sapWCIconInButton {
-	margin-right: var(--_sap_ui_webcomponents_main_button_base_icon_margin);
+	margin-right: var(--_ui5_button_base_icon_margin);
 	margin-left: 0;
 }
 
@@ -27,13 +27,13 @@ span[data-sap-ui-wc-root].sapUiSizeCompact .sapWCIconInButton {
 }
 
 span[data-sap-ui-wc-root].sapUiSizeCompact .sapMBtn {
-	min-height: var(--_sap_ui_webcomponents_main_button_compact_height);
-	min-width: var(--_sap_ui_webcomponents_main_button_base_min_compact_width);
+	min-height: var(--_ui5_button_compact_height);
+	min-width: var(--_ui5_button_base_min_compact_width);
 }
 
 span[data-sap-ui-wc-root] .sapMBtn {
-	min-width: var(--_sap_ui_webcomponents_main_button_base_min_width);
-	min-height: var(--_sap_ui_webcomponents_main_button_base_height);
+	min-width: var(--_ui5_button_base_min_width);
+	min-height: var(--_ui5_button_base_height);
 }
 
 span[data-sap-ui-wc-root] .sapMBtn::before {
@@ -50,8 +50,8 @@ span[data-sap-ui-wc-root] .sapMBtn::before {
 	font-size: var(--sapMFontMediumSize);
 	font-weight: normal;
 	box-sizing: border-box;
-	padding: var(--_sap_ui_webcomponents_main_button_base_padding);
-	border-radius: var(--_sap_ui_webcomponents_main_button_border_radius);
+	padding: var(--_ui5_button_base_padding);
+	border-radius: var(--_ui5_button_border_radius);
 	border-width: 0.0625rem;
 	cursor: pointer;
 	display: flex;
@@ -70,7 +70,7 @@ span[data-sap-ui-wc-root] .sapMBtn::before {
 }
 
 .sapMBtn .sapWCIconInButton {
-	font-size: var(--_sap_ui_webcomponents_main_button_base_icon_only_font_size);
+	font-size: var(--_ui5_button_base_icon_only_font_size);
 	position: relative;
 }
 
@@ -79,11 +79,11 @@ span[data-sap-ui-wc-root] .sapMBtn::before {
 }
 
 .sapMBtn.sapMBtnIconEnd  .sapWCIconInButton {
-	margin-left: var(--_sap_ui_webcomponents_main_button_base_icon_margin);
+	margin-left: var(--_ui5_button_base_icon_margin);
 }
 
 .sapMBtn.sapMBtnNoText {
-	padding: var(--_sap_ui_webcomponents_main_button_base_icon_only_padding);
+	padding: var(--_ui5_button_base_icon_only_padding);
 }
 
 .sapMBtnText {
@@ -92,7 +92,7 @@ span[data-sap-ui-wc-root] .sapMBtn::before {
 }
 
 .sapMBtn.sapMBtnWithIcon .sapMBtnText {
-	margin-left: var(--_sap_ui_webcomponents_main_button_base_icon_margin);
+	margin-left: var(--_ui5_button_base_icon_margin);
 }
 
 .sapMBtnDisabled {
@@ -102,12 +102,12 @@ span[data-sap-ui-wc-root] .sapMBtn::before {
 
 .sapMBtn:focus::after {
 	content: "";
-	border: 1px dotted var(--sapUiContentFocusColor);
 	position: absolute;
-	top: 1px;
-	bottom: 1px;
-	left: 1px;
-	right: 1px;
+	border: var(--_ui5_button_focus_after_border);
+	top: var(--_ui5_button_focus_after_top);
+	bottom: var(--_ui5_button_focus_after_bottom);
+	left: var(--_ui5_button_focus_after_left);
+	right: var(--_ui5_button_focus_after_right);
 }
 
 .sapMBtn::-moz-focus-inner {
@@ -118,7 +118,7 @@ span[data-sap-ui-wc-root] .sapMBtn::before {
 .sapMBtn:active {
 	background-image: none;
 	background-color: var(--sapUiButtonActiveBackground);
-	border-color: var(--sapUiButtonActiveBorderColor);
+	border-color: var(--_ui5_button_active_border_color);
 	color: var(--sapUiButtonActiveTextColor);
 	text-shadow: none;
 }
@@ -130,31 +130,34 @@ span[data-sap-ui-wc-root] .sapMBtn::before {
 
 .sapMBtn.sapMBtnPositive {
 	background-color: var(--sapUiButtonAcceptBackground);
-	border-color: var(--sapUiButtonAcceptBorderColor);
+	border-color: var(--_ui5_button_positive_border_color);
 	color: var(--sapUiButtonAcceptTextColor);
 	text-shadow: var(--sapUiShadowText);
 }
 
 .sapMBtn.sapMBtnPositive:hover {
 	background-color: var(--sapUiButtonAcceptHoverBackground);
-	border-color: var(--sapUiButtonAcceptHoverBorderColor);
+	border-color: var(--_ui5_button_positive_border_hover_color);
 }
 
 .sapMBtn.sapMBtnPositive.sapMBtnActive,
 .sapMBtn.sapMBtnPositive:active {
 	background-color: var(--sapUiButtonAcceptActiveBackground);
-	border-color: var(--sapUiButtonAcceptActiveBorderColor);
+	border-color: var(--_ui5_button_positive_border_active_color);
 	color: var(--sapUiButtonActiveTextColor);
 	text-shadow: none;
 }
 
+.sapMBtn.sapMBtnPositive:focus {
+	border-color: var(--_ui5_button_positive_focus_border_color);
+}
 .sapMBtn.sapMBtnPositive.sapMBtnActive:focus::after,
 .sapMBtn.sapMBtnPositive:active:focus::after {
 	border-color: var(--sapUiContentContrastFocusColor);
 }
 
 .sapMBtn.sapMBtnPositive:focus::after {
-	border-color: var(--sapUiContentFocusColor);
+	border-color: var(--_ui5_button_positive_border_focus_hover_color);
 }
 
 .sapMBtn.sapMBtnNegative {
@@ -169,10 +172,14 @@ span[data-sap-ui-wc-root] .sapMBtn::before {
 	border-color: var(--sapUiButtonRejectHoverBorderColor);
 }
 
+.sapMBtn.sapMBtnNegative:focus {
+	border-color: var(--_ui5_button_negative_focus_border_color);
+}
+
 .sapMBtn.sapMBtnNegative.sapMBtnActive,
 .sapMBtn.sapMBtnNegative:active {
 	background-color: var(--sapUiButtonRejectActiveBackground);
-	border-color: var(--sapUiButtonRejectActiveBorderColor);
+	border-color: var(--_ui5_button_negative_active_border_color);
 	color: var(--sapUiButtonActiveTextColor);
 	text-shadow: none;
 }
@@ -183,7 +190,7 @@ span[data-sap-ui-wc-root] .sapMBtn::before {
 }
 
 .sapMBtn.sapMBtnNegative:focus::after {
-	border-color: var(--sapUiContentFocusColor);
+	border-color: var(--_ui5_button_positive_border_focus_hover_color);
 }
 
 .sapMBtn.sapMBtnEmphasized {
@@ -211,8 +218,12 @@ span[data-sap-ui-wc-root] .sapMBtn::before {
 	border-color: var(--sapUiContentContrastFocusColor);
 }
 
+.sapMBtn.sapMBtnEmphasized:focus {
+	border-color: var(--_ui5_button_emphasized_focused_border_color);
+}
+
 .sapMBtn.sapMBtnEmphasized:focus::after {
-	border-color: var(--sapUiContentFocusColor);
+	border-color: var(--_ui5_button_positive_border_focus_hover_color);
 }
 
 .sapMBtn.sapMBtnTransparent {
@@ -236,29 +247,4 @@ span[data-sap-ui-wc-root] .sapMBtn::before {
 
 .sapMBtn.sapMBtnTransparent:hover:not(:active) {
 	border-color: transparent;
-}
-
-/* HCB Specific Styles */
-.sapMBtn {
-	border-radius: 0.375rem;
-}
-
-.sapMBtn:active:focus,
-.sapMBtn:focus:hover,
-.sapMBtn:active:hover:focus {
-	border-color: transparent;
-}
-
-.sapMBtn:focus {
-	border-color: transparent;
-}
-
-.sapMBtn:focus::after {
-	border: 0.125rem dotted var(--sapUiContentFocusColor);
-	width: 100%;
-	height: 100%;
-	left: -1px;
-	top: -1px;
-	width: calc(100% - 0.125rem);
-	height: calc(100% - 0.125rem);
 }
