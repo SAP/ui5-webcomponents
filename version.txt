@@ -1,5 +1,5 @@
-commit 3bc0580bad32afac5410224e0739a9451d895878
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Mar 29 10:47:49 2019 +0200
+commit 9e63807e439d0c51a9e0cc328428560dd3f352a0
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Fri Mar 29 10:52:27 2019 +0200
 
-    refactor(ui5-messagestrip): apply css vars (#262)
+    refactor(ui5-calendar-header): apply css vars (#278)
