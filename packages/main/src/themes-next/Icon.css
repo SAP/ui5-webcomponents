@@ -1,0 +1,53 @@
+:host(ui5-icon) {
+	display: inline-block;
+	outline: none;
+	color: var(--sapUiContentNonInteractiveIconColor);
+}
+
+:host(ui5-icon) span[data-sap-ui-wc-root] {
+	display: flex;
+	width: 100%;
+	height: 100%;
+}
+
+ui5-icon {
+	display: inline-block;
+	outline: none;
+	color: var(--sapUiContentNonInteractiveIconColor);
+}
+
+ui5-icon span[data-sap-ui-wc-root] {
+	display: flex;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+}
+
+.sapWCIcon {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	outline: none;
+	border-style: none;
+	pointer-events: none;
+}
+
+.sapWCIcon:before {
+	content: attr(data-sap-ui-icon-content);
+	speak: none;
+	font-weight: normal;
+	-webkit-font-smoothing: antialiased;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+}
+
+[dir=rtl] .sapWCIconMirrorInRTL:not(.sapWCIconSuppressMirrorInRTL):before,
+[dir=rtl] .sapWCIconMirrorInRTL:not(.sapWCIconSuppressMirrorInRTL):after {
+	transform: scale(-1, 1);
+}

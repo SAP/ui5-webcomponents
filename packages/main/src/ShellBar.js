@@ -2,7 +2,7 @@ import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
 import { getRTL } from "@ui5/webcomponents-base/src/Configuration";
 import URI from "@ui5/webcomponents-base/src/types/URI";
 import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
+import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
 import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler";
 import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation";
 import { isSpace, isEscape } from "@ui5/webcomponents-base/src/events/PseudoEvents";
@@ -16,13 +16,11 @@ import ShellBarRenderer from "./build/compiled/ShellBarRenderer.lit";
 import ShellBarTemplateContext from "./ShellBarTemplateContext";
 
 // Styles
-import fiori3 from "./themes/sap_fiori_3/ShellBar.less";
-import belize from "./themes/sap_belize/ShellBar.less";
-import belizeHcb from "./themes/sap_belize_hcb/ShellBar.less";
+import styles from "./themes-next/ShellBar.css";
 
-ShadowDOM.registerStyle("sap_fiori_3", "ShellBar.css", fiori3);
-ShadowDOM.registerStyle("sap_belize", "ShellBar.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "ShellBar.css", belizeHcb);
+addCustomCSS("ui5-shellbar", "sap_belize", styles);
+addCustomCSS("ui5-shellbar", "sap_belize_hcb", styles);
+addCustomCSS("ui5-shellbar", "sap_fiori_3", styles);
 
 /**
  * @public

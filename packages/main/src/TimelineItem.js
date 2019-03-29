@@ -1,6 +1,6 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
 import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
+import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
 import URI from "@ui5/webcomponents-base/src/types/URI";
 import Integer from "@ui5/webcomponents-base/src/types/Integer";
 import Function from "@ui5/webcomponents-base/src/types/Function";
@@ -12,13 +12,11 @@ import TimelineItemTemplateContext from "./TimelineItemTemplateContext";
 import TimelineItemRenderer from "./build/compiled/TimelineItemRenderer.lit";
 
 // Styles
-import belize from "./themes/sap_belize/TimelineItem.less";
-import belizeHcb from "./themes/sap_belize_hcb/TimelineItem.less";
-import fiori3 from "./themes/sap_fiori_3/TimelineItem.less";
+import styles from "./themes-next/TimelineItem.css";
 
-ShadowDOM.registerStyle("sap_belize", "TimelineItem.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "TimelineItem.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "TimelineItem.css", fiori3);
+addCustomCSS("ui5-timeline-item", "sap_belize", styles);
+addCustomCSS("ui5-timeline-item", "sap_belize_hcb", styles);
+addCustomCSS("ui5-timeline-item", "sap_fiori_3", styles);
 
 /**
  * @public
