@@ -1,19 +1,17 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
 import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
+import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
 import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation";
 import TimelineTemplateContext from "./TimelineTemplateContext";
 import TimelineItem from "./TimelineItem";
 import TimelineRenderer from "./build/compiled/TimelineRenderer.lit";
 
 // Styles
-import belize from "./themes/sap_belize/Timeline.less";
-import belizeHcb from "./themes/sap_belize_hcb/Timeline.less";
-import fiori3 from "./themes/sap_fiori_3/Timeline.less";
+import styles from "./themes-next/Timeline.css";
 
-ShadowDOM.registerStyle("sap_belize", "Timeline.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "Timeline.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "Timeline.css", fiori3);
+addCustomCSS("ui5-timeline", "sap_belize", styles);
+addCustomCSS("ui5-timeline", "sap_belize_hcb", styles);
+addCustomCSS("ui5-timeline", "sap_fiori_3", styles);
 
 /**
  * @public
