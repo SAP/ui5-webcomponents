@@ -1,0 +1,80 @@
+
+.sapMSLI.sapMLIBActive .sapMSLITitle,
+.sapMSLI.sapMLIBActive .sapMSLIDescription {
+	color: var(--sapUiListActiveTextColor);
+}
+
+.sapMSLI .sapMSLITextWrapper {
+	display: flex;
+	flex-direction: column;
+	min-width: 1px;
+	line-height: normal;
+}
+
+.sapMSLI .sapMSLITitle {
+	font-size: var(--sapMFontLargeSize);
+	color: var(--sapUiListTextColor);
+}
+
+.sapMSLI .sapMSLITitle,
+.sapMSLI .sapMSLIDescription {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.sapMSLI .sapMSLIDescription {
+	font-size: var(--sapMFontMediumSize);
+	color: var(--sapUiContentLabelColor);
+}
+
+.sapMSLI .sapMSLIImg {
+	margin: 0.5rem 0.75rem 0.5rem 0rem;
+	height: 2rem;
+	width: 2rem;
+}
+
+.sapMSLI .sapMLIBContent {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	-webkit-box-flex: 1;
+	flex: auto;
+	display: -webkit-box;
+	display: flex;
+	-webkit-box-align: center;
+	align-items: center;
+}
+
+.sapMSLI .sapMDeleteListItemButton {
+	display: flex;
+	align-items: center;
+}
+
+/* ListItem with title and description (should be 5rem in height in both compact and cozy) */
+.sapUiSizeCompact .sapMSLI.sapMSLIWithTitleAndDescription,
+.sapMSLI.sapMSLIWithTitleAndDescription {
+	height: 5rem;
+	padding: 1rem;
+}
+
+.sapUiSizeCompact .sapMSLI.sapMSLIWithTitleAndDescription .sapMSLITitle,
+.sapMSLI.sapMSLIWithTitleAndDescription .sapMSLITitle{
+	padding-bottom: 0.375rem;
+}
+
+/* Compact size */
+.sapUiSizeCompact .sapMSLI:not(.sapMSLIWithTitleAndDescription) {
+		height: 2rem;
+}
+.sapUiSizeCompact .sapMSLI:not(.sapMSLIWithTitleAndDescription) .sapMSLITitle {
+	height: 2rem;
+	line-height: 2rem;
+	font-size: var(--sapMFontMediumSize);
+}
+
+.sapUiSizeCompact .sapMSLI:not(.sapMSLIWithTitleAndDescription) .sapMSLIImg {
+	margin-top: 0.55rem;
+	height: 1.75rem;
+	width: 1.75rem;
+}
