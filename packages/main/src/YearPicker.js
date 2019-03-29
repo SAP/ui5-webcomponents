@@ -10,17 +10,16 @@ import Integer from "@ui5/webcomponents-base/src/types/Integer";
 import DateFormat from "@ui5/webcomponents-core/dist/sap/ui/core/format/DateFormat";
 import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType";
 import CalendarDate from "@ui5/webcomponents-base/src/dates/CalendarDate";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
+import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
 import YearPickerTemplateContext from "./YearPickerTemplateContext";
 import YearPickerRenderer from "./build/compiled/YearPickerRenderer.lit";
 
-import belize from "./themes/sap_belize/YearPicker.less";
-import belizeHcb from "./themes/sap_belize_hcb/YearPicker.less";
-import fiori3 from "./themes/sap_fiori_3/YearPicker.less";
+// Styles
+import styles from "./themes-next/YearPicker.css";
 
-ShadowDOM.registerStyle("sap_belize", "YearPicker.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "YearPicker.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "YearPicker.css", fiori3);
+addCustomCSS("ui5-yearpicker", "sap_fiori_3", styles);
+addCustomCSS("ui5-yearpicker", "sap_belize", styles);
+addCustomCSS("ui5-yearpicker", "sap_belize_hcb", styles);
 
 /**
  * @public
