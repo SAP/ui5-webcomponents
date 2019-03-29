@@ -2,19 +2,17 @@ import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
 import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
 import CSSSize from "@ui5/webcomponents-base/src/types/CSSSize";
 import Integer from "@ui5/webcomponents-base/src/types/Integer";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
+import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
 import TextAreaTemplateContext from "./TextAreaTemplateContext";
 import TextAreaRenderer from "./build/compiled/TextAreaRenderer.lit";
 import { fetchResourceBundle, getResourceBundle } from "./ResourceBundleProvider";
 
 // Styles
-import belize from "./themes/sap_belize/TextArea.less";
-import belizeHcb from "./themes/sap_belize_hcb/TextArea.less";
-import fiori3 from "./themes/sap_fiori_3/TextArea.less";
+import styles from "./themes-next/TextArea.css";
 
-ShadowDOM.registerStyle("sap_belize", "TextArea.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "TextArea.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "TextArea.css", fiori3);
+addCustomCSS("ui5-textarea", "sap_belize", styles);
+addCustomCSS("ui5-textarea", "sap_belize_hcb", styles);
+addCustomCSS("ui5-textarea", "sap_fiori_3", styles);
 
 /**
  * @public

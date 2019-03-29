@@ -1,18 +1,17 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
+import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
 import ListItemBase from "./ListItemBase";
+
 // Template
 import GroupHeaderListItemRenderer from "./build/compiled/GroupHeaderListItemRenderer.lit";
 import GroupHeaderListItemTemplateContext from "./GroupHeaderListItemTemplateContext";
 
 // Styles
-import belize from "./themes/sap_belize/GroupHeaderListItem.less";
-import belizeHcb from "./themes/sap_belize_hcb/GroupHeaderListItem.less";
-import fiori3 from "./themes/sap_fiori_3/GroupHeaderListItem.less";
+import groupheaderListItemCss from "./themes-next/GroupHeaderListItem.css";
 
-ShadowDOM.registerStyle("sap_belize", "GroupHeaderListItem.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "GroupHeaderListItem.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "GroupHeaderListItem.css", fiori3);
+addCustomCSS("ui5-li-groupheader", "sap_fiori_3", groupheaderListItemCss);
+addCustomCSS("ui5-li-groupheader", "sap_belize", groupheaderListItemCss);
+addCustomCSS("ui5-li-groupheader", "sap_belize_hcb", groupheaderListItemCss);
 
 /**
  * @public

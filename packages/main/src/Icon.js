@@ -1,19 +1,17 @@
 import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
 import URI from "@ui5/webcomponents-base/src/types/URI";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
+import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents";
 import IconTemplateContext from "./IconTemplateContext";
 import IconRenderer from "./build/compiled/IconRenderer.lit";
 
 // Styles
-import belize from "./themes/sap_belize/Icon.less";
-import belizeHcb from "./themes/sap_belize_hcb/Icon.less";
-import fiori3 from "./themes/sap_fiori_3/Icon.less";
+import iconCss from "./themes-next/Icon.css";
 
-ShadowDOM.registerStyle("sap_belize", "Icon.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "Icon.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "Icon.css", fiori3);
+addCustomCSS("ui5-icon", "sap_fiori_3", iconCss);
+addCustomCSS("ui5-icon", "sap_belize", iconCss);
+addCustomCSS("ui5-icon", "sap_belize_hcb", iconCss);
 
 /**
  * @public

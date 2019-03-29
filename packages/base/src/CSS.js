@@ -24,7 +24,7 @@ const _createStyle = (tagName, styleContent) => {
 	}
 
 	let style;
-	if (window.CSSStyleSheet) {
+	if (document.adoptedStyleSheets) {
 		style = createConstructableStyleSheet(styleContent);
 	} else {
 		style = createStyleElement(styleContent);
