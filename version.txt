@@ -1,5 +1,5 @@
-commit 52c4a4c8028c9b543abdd42df02265e491868dfd
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Fri Mar 29 14:38:51 2019 +0200
+commit 1d6a80b1a4fb79fcc30d234e3364b83d0d51dce5
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Fri Mar 29 15:18:23 2019 +0200
 
-    refactor(ui5-input): apply css vars (#288)
+    refactor(ui5-popover): fire afterClose event after closing (#279)
