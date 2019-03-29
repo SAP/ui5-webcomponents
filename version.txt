@@ -1,5 +1,5 @@
-commit 660ad2def3d001d88bc42b2ddbae181244999d0d
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Mar 29 06:18:23 2019 +0200
+commit 4d8b43cdb54202f9e8fd34845c2a9a25b7cb3655
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Fri Mar 29 06:37:26 2019 +0200
 
-    chore: create derived-colors files per theme (#276)
+    refactor(ui5-daypicker): apply css vars (#263)
