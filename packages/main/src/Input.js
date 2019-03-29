@@ -2,7 +2,7 @@ import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
 import { isIE } from "@ui5/webcomponents-core/dist/sap/ui/Device";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
+import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
 import {
 	isUp,
 	isDown,
@@ -16,23 +16,16 @@ import InputRenderer from "./build/compiled/InputRenderer.lit";
 import InputTemplateContext from "./InputTemplateContext";
 
 // Styles
-import belize from "./themes/sap_belize/Input.less";
-import belizeHcb from "./themes/sap_belize_hcb/Input.less";
-import fiori3 from "./themes/sap_fiori_3/Input.less";
+import styles from "./themes-next/Input.css";
+import shellbarInput from "./themes-next/ShellBarInput.css";
 
-// Styles for searchField
-import shellBarInput from "./themes/sap_fiori_3/ShellBarInput.less";
-import shellBarInputBelize from "./themes/sap_belize/ShellBarInput.less";
-import shellBarInputBelizeHcb from "./themes/sap_belize_hcb/ShellBarInput.less";
+addCustomCSS("ui5-input", "sap_fiori_3", styles);
+addCustomCSS("ui5-input", "sap_belize", styles);
+addCustomCSS("ui5-input", "sap_belize_hcb", styles);
 
-ShadowDOM.registerStyle("sap_belize", "Input.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "Input.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "Input.css", fiori3);
-
-
-ShadowDOM.registerStyle("sap_fiori_3", "ShellBarInput.css", shellBarInput);
-ShadowDOM.registerStyle("sap_belize", "ShellBarInput.css", shellBarInputBelize);
-ShadowDOM.registerStyle("sap_belize_hcb", "ShellBarInput.css", shellBarInputBelizeHcb);
+addCustomCSS("ui5-input", "sap_fiori_3", shellbarInput);
+addCustomCSS("ui5-input", "sap_belize", shellbarInput);
+addCustomCSS("ui5-input", "sap_belize_hcb", shellbarInput);
 
 /**
  * @public
