@@ -1,5 +1,5 @@
-commit 827125f84784d9450fce80c020152f625270a312
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Fri Mar 29 13:50:41 2019 +0200
+commit 52c4a4c8028c9b543abdd42df02265e491868dfd
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Fri Mar 29 14:38:51 2019 +0200
 
-    refactor(popup): use new pseudoevents (#277)
+    refactor(ui5-input): apply css vars (#288)
