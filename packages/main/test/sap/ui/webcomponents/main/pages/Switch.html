@@ -13,6 +13,7 @@
 	></script>
 
 	<script nomodule src="../../../../../../resources/sap/ui/webcomponents/main/bundle.es5.js"></script>
+	<script>delete Document.prototype.adoptedStyleSheets</script>
 </head>
 
 <style>
@@ -20,7 +21,7 @@
 		margin: 8px;
 	}
 </style>
-<body>
+<body style="background: black;">
 	<h3>Default Switch</h3>
 	<div style="display: flex">
 		<ui5-switch style="width:200px" text-on="On" text-off="Off"></ui5-switch>

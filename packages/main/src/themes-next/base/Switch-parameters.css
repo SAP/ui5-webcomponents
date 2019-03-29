@@ -1,12 +1,4 @@
 :root {
-	--sapUiButtonBackgroundDarken2: rgb(250, 250, 250); /* darken(@sapUiButtonBackground, 2) */
-	--sapUiButtonBackgroundDarken7: rgb(237, 237, 237); /* darken(@sapUiButtonBackground, 7) */
-	--sapUiButtonHoverBackgroundDarken2: rgb(226, 240, 254); /* darken(@sapUiButtonHoverBackground, 2) */
-	--sapUiSuccessBGLighten5: rgb(255, 255, 255); /* lighten(@sapUiSuccessBG, 5) */
-	--sapUiErrorBGLighten4: rgb(255, 255, 255); /* lighten(@sapUiErrorBG,4) */
-	--sapUiToggleButtonPressedBackgroundLighten50Desaturate47: rgb(192, 212, 231); /* lighten(desaturate(@sapUiToggleButtonPressedBackground, 47), 50) */
-	--sapUiToggleButtonPressedBackgroundLighten19Desaturate46: rgb(77, 133, 187); /* lighten(desaturate(@sapUiToggleButtonPressedBorderColor, 46), 19) */
-
 	/* switch */
 	--_ui5_switch_height: 2.75rem;
 	--_ui5_switch_width: 3.875rem;
