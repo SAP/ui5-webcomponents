@@ -1,0 +1,111 @@
+:host(ui5-calendar-header) {
+	display: inline-block;
+	width: 100%;
+}
+
+ui5-calendar-header {
+	display: inline-block;
+	width: 100%;
+}
+
+.sapWCCalHead {
+	display: flex;
+	height: 3rem;
+	padding: 0.25rem 0;
+	box-sizing: border-box;
+}
+
+.sapWCCalHead ui5-button {
+	height: 100%;
+}
+
+.sapWCCalHeadArrowButton {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 2.5rem;
+	background-color: var(--sapUiButtonLiteBackground);
+	color: var(--sapUiButtonTextColor);
+	cursor: pointer;
+	overflow: hidden;
+	white-space: nowrap;
+	padding: 0;
+	font-size: var(--sapMFontMediumSize);
+}
+
+.sapWCCalHeadArrowButton:focus {
+	outline: none;
+}
+
+.sapWCCalHeadArrowButton:hover {
+	background-color: var(--sapUiButtonHoverBackground);
+	color: var(--sapUiButtonHoverTextColor);
+}
+
+.sapWCCalHeadArrowButton:active {
+	background-color: var(--sapUiButtonActiveBackground);
+	color: var(--sapUiButtonActiveTextColor);
+}
+
+.sapWCCalHeadArrowButton,
+.sapWCCalHeadMiddleButton {
+	border: var(--_ui5_calendar_header_arrow_button_border);
+	border-radius: var(--_ui5_calendar_header_arrow_button_border_radius);
+}
+
+.sapWCCalHeadMidButtonContainer {
+	display: flex;
+	justify-content: space-around;
+	flex: 1;
+	padding: 0 0.5rem;
+}
+
+.sapWCCalHeadMidButtonContainer .sapWCCalHeadMiddleButton:first-child {
+	margin-right: 0.5rem;
+}
+
+.sapWCCalHeadMiddleButton {
+	font-family: var(--sapUiFontFamily);
+	width: var(--_ui5_calendar_header_middle_button_width);
+	flex: var(--_ui5_calendar_header_middle_button_flex);
+	position: relative;
+	box-sizing: border-box;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.sapWCCalHeadMiddleButton:focus {
+	border: var(--_ui5_calendar_header_middle_button_focus_border);
+	border-radius: var(--_ui5_calendar_header_middle_button_focus_border_radius);
+}
+
+.sapWCCalHeadMiddleButton:focus::after {
+	content: "";
+	display: var(--_ui5_calendar_header_middle_button_focus_after_display);
+	width: var(--_ui5_calendar_header_middle_button_focus_after_width);
+	height: var(--_ui5_calendar_header_middle_button_focus_after_height);
+	border: 1px dotted var(--sapUiContentFocusColor);
+	position: absolute;
+	top: var(--_ui5_calendar_header_middle_button_focus_after_top_offset);
+	left: var(--_ui5_calendar_header_middle_button_focus_after_left_offset);
+}
+
+.sapWCCalHeadMiddleButton:focus:active::after {
+	border-color: var(--sapUiContentContrastFocusColor);
+}
+
+.sapUiSizeCompact .sapWCCalHead {
+	height: 2rem;
+	padding: 0;
+}
+
+.sapUiSizeCompact .sapWCCalHeadArrowButton {
+	width: 2rem;
+}
+
+[dir=rtl] .sapWCCalHeadMidButtonContainer .sapWCCalHeadMiddleButton:first-child {
+	margin-left: 0.5rem;
+	margin-right: 0;
+}

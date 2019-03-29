@@ -10,18 +10,16 @@ import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData";
 import CalendarDate from "@ui5/webcomponents-base/src/dates/CalendarDate";
 import { calculateWeekNumber } from "@ui5/webcomponents-base/src/dates/CalendarUtils";
 import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
+import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
 import DayPickerTemplateContext from "./DayPickerTemplateContext";
 import DayPickerRenderer from "./build/compiled/DayPickerRenderer.lit";
 
 // Styles
-import belize from "./themes/sap_belize/DayPicker.less";
-import belizeHcb from "./themes/sap_belize_hcb/DayPicker.less";
-import fiori3 from "./themes/sap_fiori_3/DayPicker.less";
+import dayPickerCSS from "./themes-next/DayPicker.css";
 
-ShadowDOM.registerStyle("sap_belize", "DayPicker.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "DayPicker.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "DayPicker.css", fiori3);
+addCustomCSS("ui5-daypicker", "sap_fiori_3", dayPickerCSS);
+addCustomCSS("ui5-daypicker", "sap_belize", dayPickerCSS);
+addCustomCSS("ui5-daypicker", "sap_belize_hcb", dayPickerCSS);
 
 /**
  * @public

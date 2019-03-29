@@ -1,21 +1,19 @@
 import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
 import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
+import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
 
 // Template
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
 import SwitchRenderer from "./build/compiled/SwitchRenderer.lit";
 import SwitchTemplateContext from "./SwitchTemplateContext";
 import SwitchType from "./types/SwitchType";
 
 // Styles
-import belize from "./themes/sap_belize/Switch.less";
-import belizeHcb from "./themes/sap_belize_hcb/Switch.less";
-import fiori3 from "./themes/sap_fiori_3/Switch.less";
+import switchCss from "./themes-next/Switch.css";
 
-ShadowDOM.registerStyle("sap_belize", "Switch.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "Switch.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "Switch.css", fiori3);
+addCustomCSS("ui5-switch", "sap_fiori_3", switchCss);
+addCustomCSS("ui5-switch", "sap_belize", switchCss);
+addCustomCSS("ui5-switch", "sap_belize_hcb", switchCss);
 
 /**
  * @public

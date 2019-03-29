@@ -1,17 +1,15 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
+import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
 import Button from "./Button";
 import ToggleButtonTemplateContext from "./ToggleButtonTemplateContext";
 import ToggleButtonRenderer from "./build/compiled/ToggleButtonRenderer.lit";
 
 // Styles
-import belize from "./themes/sap_belize/ToggleButton.less";
-import belizeHcb from "./themes/sap_belize_hcb/ToggleButton.less";
-import fiori3 from "./themes/sap_fiori_3/ToggleButton.less";
+import toggleBtnCss from "./themes-next/ToggleButton.css";
 
-ShadowDOM.registerStyle("sap_belize", "ToggleButton.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "ToggleButton.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "ToggleButton.css", fiori3);
+addCustomCSS("ui5-togglebutton", "sap_fiori_3", toggleBtnCss);
+addCustomCSS("ui5-togglebutton", "sap_belize", toggleBtnCss);
+addCustomCSS("ui5-togglebutton", "sap_belize_hcb", toggleBtnCss);
 
 /**
  * @public

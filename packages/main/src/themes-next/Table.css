@@ -1,0 +1,30 @@
+:host(ui5-table) {
+	display: inline-block;
+	width: 100%;
+}
+
+ui5-table {
+	display: inline-block;
+	width: 100%;
+}
+
+.sapWCTableHeader {
+	width: 100%;
+	display: grid;
+	border-bottom: 1px solid var(--sapUiListTableGroupHeaderBorderColor);
+	height: 3rem;
+}
+
+.sapWCTableColumnWrapper {
+	background: var(--sapUiListHeaderBackground);
+	border-bottom: 1px solid var(--sapUiListBorderColor);
+	height: 100%;
+	font-family: var(--sapUiFontFamily);
+	font-size: var(--sapMFontMediumSize);
+	font-weight: normal;
+	color: var(--sapUiListTextColor)
+}
+
+.sapUiSizeCompact .sapWCTableHeader {
+	height: 2rem;
+}

@@ -1,17 +1,15 @@
 import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
+import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
 import TableCell from "./TableCell";
 import TableRowRenderer from "./build/compiled/TableRowRenderer.lit";
 
 // Styles
-import belize from "./themes/sap_belize/TableRow.less";
-import belizeHcb from "./themes/sap_belize_hcb/TableRow.less";
-import fiori3 from "./themes/sap_fiori_3/TableRow.less";
+import styles from "./themes-next/TableRow.css";
 
-ShadowDOM.registerStyle("sap_belize", "TableRow.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "TableRow.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "TableRow.css", fiori3);
+addCustomCSS("ui5-table-row", "sap_fiori_3", styles);
+addCustomCSS("ui5-table-row", "sap_belize", styles);
+addCustomCSS("ui5-table-row", "sap_belize_hcb", styles);
 
 /**
  * @public

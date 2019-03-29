@@ -1,0 +1,88 @@
+:host(ui5-month-picker) {
+	display: inline-block;
+	width: 100%;
+	height: 100%;
+}
+
+ui5-month-picker {
+	display: inline-block;
+	width: 100%;
+	height: 100%;
+}
+
+.sapWCMonthPicker {
+	padding: 2rem 0 1rem 0;
+	display: flex;
+	flex-direction: column;
+	font-family: var(--sapUiFontFamily);
+	font-size: var(--sapMFontMediumSize);
+	justify-content: center;
+	align-items: center;
+}
+
+.sapWCMonthPickerItem {
+	display: flex;
+	width: calc(33.333% - 0.125rem);
+	height: 3rem;
+	color: var(--sapUiBaseText);
+	background-color: var(--_ui5_monthpicker_item_background_color);
+	align-items: center;
+	justify-content: center;
+	margin: var(--_ui5_monthpicker_item_margin);
+	box-sizing: border-box;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	cursor: default;
+	outline: none;
+	position: relative;
+	border: var(--_ui5_monthpicker_item_border);
+	border-radius: var(--_ui5_monthpicker_item_border_radius);
+}
+
+.sapWCMonthPickerItem:hover {
+	background-color: var(--_ui5_monthpicker_item_hover_background_color);
+}
+
+.sapWCMonthPickerItem.sapWCMonthPickerItemSel {
+	background-color: var(--sapUiSelected);
+	color: var(--sapUiContentContrastTextColor);
+}
+
+.sapWCMonthPickerItem.sapWCMonthPickerItemSel:focus {
+	background-color: var(--_ui5_monthpicker_item_selected_focus);
+}
+
+.sapWCMonthPickerItem.sapWCMonthPickerItemSel:focus::after {
+	border-color: var(--sapUiContentContrastFocusColor);
+}
+
+.sapWCMonthPickerItem.sapWCMonthPickerItemSel:hover {
+	background-color: var(--_ui5_monthpicker_item_selected_focus);
+}
+
+.sapWCMonthPickerItem:focus {
+	background-color: var(--_ui5_monthpicker_item_focus_background_color);
+}
+
+.sapWCMonthPickerItem:focus::after {
+	content: "";
+	position: absolute;
+	width: var(--_ui5_monthpicker_item_focus_after_width);
+	height: var(--_ui5_monthpicker_item_focus_after_height);
+	border: var(--_ui5_monthpicker_item_focus_after_border);
+	top: var(--_ui5_monthpicker_item_focus_after_offset);
+	left: var(--_ui5_monthpicker_item_focus_after_offset);
+}
+
+.sapWCMonthPickerQuarter {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+}
+
+.sapUiSizeCompact .sapWCMonthPickerItem {
+	height: 2rem;
+}

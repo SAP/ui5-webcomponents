@@ -1,20 +1,18 @@
 import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
 import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
+import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
 import CalendarHeaderTemplateContext from "./CalendarHeaderTemplateContext";
 import Button from "./Button";
 import ButtonType from "./types/ButtonType";
 import CalendarHeaderRenderer from "./build/compiled/CalendarHeaderRenderer.lit";
 
 // Styles
-import belize from "./themes/sap_belize/CalendarHeader.less";
-import belizeHcb from "./themes/sap_belize_hcb/CalendarHeader.less";
-import fiori3 from "./themes/sap_fiori_3/CalendarHeader.less";
+import styles from "./themes-next/CalendarHeader.css";
 
-ShadowDOM.registerStyle("sap_belize", "CalendarHeader.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "CalendarHeader.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "CalendarHeader.css", fiori3);
+addCustomCSS("ui5-calendar-header", "sap_belize", styles);
+addCustomCSS("ui5-calendar-header", "sap_belize_hcb", styles);
+addCustomCSS("ui5-calendar-header", "sap_fiori_3", styles);
 
 const metadata = {
 	tag: "ui5-calendar-header",
