@@ -1,7 +1,5 @@
-commit a162ea1c897f904bee6f6d2539206844f04025c1
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Fri Mar 29 10:30:28 2019 +0200
+commit 01133b781520aa223e5ac5748a53aed56fc9f45b
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Fri Mar 29 10:39:47 2019 +0200
 
-    refactor(ui5-table): apply css vars (#280)
-    
-    - adopt TableColumn, TableRow and TableCell
+    refactor(ui5-li-custom): apply css vars (#285)
