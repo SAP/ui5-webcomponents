@@ -1,1 +1,9 @@
 @import "../base/YearPicker-parameters.css";
+
+:root {
+	--_ui5_yearpicker_item_border_radius: 0.25rem;
+	--_ui5_yearpicker_item_background_color: #f7f7f7; /* darken(@sapUiListBackground, 3); */
+	--_ui5_yearpicker_item_hover_background_color: #f7f7f7; /* darken(@sapUiListBackground, 3); */
+	--_ui5_yearpicker_item_focus_background_color: #f7f7f7 ;/* darken(@sapUiListBackground, 3); */
+	--_ui5_yearpicker_item_selected_focus: #053b70; /* darken(var(--sapUiSelected), 10); */
+}

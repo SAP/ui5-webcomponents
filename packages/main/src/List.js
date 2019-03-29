@@ -2,7 +2,8 @@ import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
 import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
 import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation";
 import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
+import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
+
 import { isTabNext } from "@ui5/webcomponents-base/src/events/PseudoEvents";
 import ListItemBase from "./ListItemBase";
 import ListMode from "./types/ListMode";
@@ -14,13 +15,11 @@ import ListRenderer from "./build/compiled/ListRenderer.lit";
 import ListTemplateContext from "./ListTemplateContext";
 
 // Styles
-import belize from "./themes/sap_belize/List.less";
-import belizeHcb from "./themes/sap_belize_hcb/List.less";
-import fiori3 from "./themes/sap_fiori_3/List.less";
+import listCss from "./themes-next/List.css";
 
-ShadowDOM.registerStyle("sap_belize", "List.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "List.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "List.css", fiori3);
+addCustomCSS("ui5-list", "sap_fiori_3", listCss);
+addCustomCSS("ui5-list", "sap_belize", listCss);
+addCustomCSS("ui5-list", "sap_belize_hcb", listCss);
 
 /**
  * @public
