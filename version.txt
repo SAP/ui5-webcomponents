@@ -1,5 +1,5 @@
-commit 4a2180cb9a9918567dd2b97c7755c1e152c20424
+commit 2c9f5c2fc603b6733cb924ee6f8910028a39eb29
 Author: Martin <martin.r.hristov@gmail.com>
-Date:   Fri Mar 29 09:32:02 2019 +0200
+Date:   Fri Mar 29 10:14:20 2019 +0200
 
-    refactor(ui5-shellbar): apply css vars (#281)
+    refactor(popup): apply css vars (#284)
