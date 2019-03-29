@@ -1,5 +1,5 @@
-commit 01133b781520aa223e5ac5748a53aed56fc9f45b
+commit 3bc0580bad32afac5410224e0739a9451d895878
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Mar 29 10:39:47 2019 +0200
+Date:   Fri Mar 29 10:47:49 2019 +0200
 
-    refactor(ui5-li-custom): apply css vars (#285)
+    refactor(ui5-messagestrip): apply css vars (#262)
