@@ -1,5 +1,5 @@
-commit 4d8b43cdb54202f9e8fd34845c2a9a25b7cb3655
+commit 4a2180cb9a9918567dd2b97c7755c1e152c20424
 Author: Martin <martin.r.hristov@gmail.com>
-Date:   Fri Mar 29 06:37:26 2019 +0200
+Date:   Fri Mar 29 09:32:02 2019 +0200
 
-    refactor(ui5-daypicker): apply css vars (#263)
+    refactor(ui5-shellbar): apply css vars (#281)
