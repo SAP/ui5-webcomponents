@@ -1,5 +1,5 @@
-commit 97283eb550ec951180a519aeb6d44246d8f88c0f
+commit 660ad2def3d001d88bc42b2ddbae181244999d0d
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Mar 28 13:40:39 2019 +0200
+Date:   Fri Mar 29 06:18:23 2019 +0200
 
-    refactor(ui5-icon): apply css vars (#261)
+    chore: create derived-colors files per theme (#276)
