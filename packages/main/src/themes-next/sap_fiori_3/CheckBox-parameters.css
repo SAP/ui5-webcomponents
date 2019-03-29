@@ -1,4 +1,4 @@
-@import "../base/CheckBox.css";
+@import "../base/CheckBox-parameters.css";
 
 :root {
 	--_ui5_checkbox_width_height: 2.75rem;

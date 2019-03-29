@@ -1,16 +1,15 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
+import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
 import ListItem from "./ListItem";
 import CustomListItemTemplateContext from "./CustomListItemTemplateContext";
 import CustomListItemRenderer from "./build/compiled/CustomListItemRenderer.lit";
 
-import belize from "./themes/sap_belize/CustomListItem.less";
-import belizeHcb from "./themes/sap_belize_hcb/CustomListItem.less";
-import fiori3 from "./themes/sap_fiori_3/CustomListItem.less";
+// Styles
+import columnListItemCss from "./themes-next/CustomListItem.css";
 
-ShadowDOM.registerStyle("sap_belize", "CustomListItem.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "CustomListItem.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "CustomListItem.css", fiori3);
+addCustomCSS("ui5-li-custom", "sap_fiori_3", columnListItemCss);
+addCustomCSS("ui5-li-custom", "sap_belize", columnListItemCss);
+addCustomCSS("ui5-li-custom", "sap_belize_hcb", columnListItemCss);
 
 /**
  * @public

@@ -22,7 +22,7 @@ const getStyle = (theme, styleName) => {
 	}
 };
 
-const getStyles = async (theme, styleNames) => {
+const getStyles = (theme, styleNames) => {
 	return styleNames.map(styleName => getStyle(theme, styleName));
 };
 

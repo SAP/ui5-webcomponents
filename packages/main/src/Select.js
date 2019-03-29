@@ -6,8 +6,8 @@ import {
 	isDown,
 	isEnter,
 } from "@ui5/webcomponents-base/src/events/PseudoEvents";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
 import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes";
+import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState";
 import Function from "@ui5/webcomponents-base/src/types/Function";
 import Suggestions from "./Suggestions";
@@ -17,13 +17,11 @@ import SelectRenderer from "./build/compiled/SelectRenderer.lit";
 import SelectTemplateContext from "./SelectTemplateContext";
 
 // Styles
-import belize from "./themes/sap_belize/Select.less";
-import belizeHcb from "./themes/sap_belize_hcb/Select.less";
-import fiori3 from "./themes/sap_fiori_3/Select.less";
+import selectCss from "./themes-next/Select.css";
 
-ShadowDOM.registerStyle("sap_belize", "Select.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "Select.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "Select.css", fiori3);
+addCustomCSS("ui5-select", "sap_fiori_3", selectCss);
+addCustomCSS("ui5-select", "sap_belize", selectCss);
+addCustomCSS("ui5-select", "sap_belize_hcb", selectCss);
 
 /**
  * @public

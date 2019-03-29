@@ -1,21 +1,11 @@
 import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes";
 import Function from "@ui5/webcomponents-base/src/types/Function";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
 import ListItemType from "./types/ListItemType";
 import ListMode from "./types/ListMode";
 import ListItemBase from "./ListItemBase";
 import "./RadioButton";
 import "./CheckBox";
 import "./Button";
-
-// Styles
-import belize from "./themes/sap_belize/ListItem.less";
-import belizeHcb from "./themes/sap_belize_hcb/ListItem.less";
-import fiori3 from "./themes/sap_fiori_3/ListItem.less";
-
-ShadowDOM.registerStyle("sap_belize", "ListItem.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "ListItem.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "ListItem.css", fiori3);
 
 /**
  * @public

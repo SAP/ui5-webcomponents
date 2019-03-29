@@ -1,20 +1,18 @@
 import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
 import URI from "@ui5/webcomponents-base/src/types/URI";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
+import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
 import MessageStripTemplateContext from "./MessageStripTemplateContext";
 import MessageStripType from "./types/MessageStripType";
 import MessageStripRenderer from "./build/compiled/MessageStripRenderer.lit";
 import Icon from "./Icon";
 
 // Styles
-import belize from "./themes/sap_belize/MessageStrip.less";
-import belizeHcb from "./themes/sap_belize_hcb/MessageStrip.less";
-import fiori3 from "./themes/sap_fiori_3/MessageStrip.less";
+import messageStripCss from "./themes-next/MessageStrip.css";
 
-ShadowDOM.registerStyle("sap_belize", "MessageStrip.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "MessageStrip.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "MessageStrip.css", fiori3);
+addCustomCSS("ui5-messagestrip", "sap_fiori_3", messageStripCss);
+addCustomCSS("ui5-messagestrip", "sap_belize", messageStripCss);
+addCustomCSS("ui5-messagestrip", "sap_belize_hcb", messageStripCss);
 
 /**
  * @public
