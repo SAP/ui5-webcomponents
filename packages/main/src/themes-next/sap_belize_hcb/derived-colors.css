@@ -1,0 +1,6 @@
+@import "../base/derived-colors.css";
+
+:root {
+	--sapUiSuccessBGLighten5: rgb(13, 13, 13);
+	--sapUiErrorBGLighten4: rgb(13, 13, 13);
+}
