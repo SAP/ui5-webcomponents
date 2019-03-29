@@ -1,6 +1,6 @@
 import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
+import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
 import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState";
 import {
@@ -17,13 +17,11 @@ import RadioButtonRenderer from "./build/compiled/RadioButtonRenderer.lit";
 import RadioButtonTemplateContext from "./RadioButtonTemplateContext";
 
 // Styles
-import belize from "./themes/sap_belize/RadioButton.less";
-import belizeHcb from "./themes/sap_belize_hcb/RadioButton.less";
-import fiori3 from "./themes/sap_fiori_3/RadioButton.less";
+import radioButtonCss from "./themes-next/RadioButton.css";
 
-ShadowDOM.registerStyle("sap_belize", "RadioButton.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "RadioButton.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "RadioButton.css", fiori3);
+addCustomCSS("ui5-radiobutton", "sap_fiori_3", radioButtonCss);
+addCustomCSS("ui5-radiobutton", "sap_belize", radioButtonCss);
+addCustomCSS("ui5-radiobutton", "sap_belize_hcb", radioButtonCss);
 
 /**
  * @public
