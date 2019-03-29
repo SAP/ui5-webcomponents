@@ -1,4 +1,5 @@
 @import "./global-parameters.css";
+@import "./derived-colors.css";
 
 @import "./Button-parameters.css";
 @import "./Card-parameters.css";
@@ -9,6 +10,7 @@
 @import "./MonthPicker-parameters.css";
 @import "./Panel-parameters.css";
 @import "./Popover-parameters.css";
+@import "./DayPicker-parameters.css";
 @import "./Select-parameters.css";
 @import "./Switch-parameters.css";
 @import "./TextArea-parameters.css";
