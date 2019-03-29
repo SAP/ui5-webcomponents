@@ -1,0 +1,172 @@
+
+:host(ui5-daypicker) {
+	display: inline-block;
+	height: 100%;
+	width: 100%;
+}
+
+ui5-daypicker {
+	display: inline-block;
+	height: 100%;
+	width: 100%;
+}
+
+.sapWCDayPickerWeekName,
+.sapWCDayPickerDayName,
+.sapWCDayPickerItem {
+	width: 2.25rem;
+	height: 2.875rem;
+	margin-top: var(--_ui5_daypicker_item_margin);
+	margin-right: var(--_ui5_daypicker_item_margin);
+	font-family: var(--sapUiFontFamily);
+	border-radius: var(--_ui5_daypicker_item_border_radius);
+}
+
+.sapWCDayPickerWeekName {
+	color: var(--_ui5_daypicker_weekname_color);
+}
+
+.sapWCDayPickerContent {
+	display: flex;
+	flex-direction: column;
+	font-family: var(--sapUiFontFamily);
+}
+
+.sapWCDayPickerDaysNamesContainer {
+	display: flex;
+	height: var(--_ui5_daypicker_daynames_container_height);
+}
+
+.sapWCDayPickerWeekNumberContainer {
+	padding-top: var(--_ui5_daypicker_weeknumbers_container_padding_top);
+}
+
+.sapWCDayPickerWeekName,
+.sapWCDayPickerDayName,
+.sapWCDayPickerWeekNameContainer,
+.sapWCDayPickerItem {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: var(--sapMFontSmallSize);
+	outline: none;
+	box-sizing: border-box;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.sapWCDayPickerItem {
+	position: relative;
+	color: var(--sapUiBaseText);
+	background: var(--_ui5_daypicker_item_background_color);
+	font-size: var(--sapMFontMediumSize);
+	border: var(--_ui5_daypicker_item_border);
+}
+
+.sapWCDayPickerItem:hover {
+	background: var(--_ui5_daypicker_item_hover_background_color);
+}
+
+.sapWCDayPickerDayText {
+	display: flex;
+	width: 100%;
+	height: 100%;
+	justify-content: center;
+	align-items: center;
+	box-sizing: border-box;
+}
+
+.sapWCDayPickerDayName {
+	color: var(--_ui5_daypicker_dayname_color);
+	height: 100%;
+}
+
+.sapWCDayPickerItem.sapWCDayPickerItemWeekEnd {
+	background: var(--_ui5_daypicker_item_weekend_background_color);
+}
+
+.sapWCDayPickerItem.sapWCDayPickerItemWeekEnd:hover {
+	background: var(--_ui5_daypicker_item_weekend_hover_background_color);
+}
+
+.sapWCDayPickerItem.sapWCDayPickerItemOtherMonth {
+	color: var(--_ui5_daypicker_item_othermonth_color);
+	background: var(--_ui5_daypicker_item_othermonth_background_color);
+	border-color: transparent;
+}
+
+.sapWCDayPickerItem.sapWCDayPickerItemOtherMonth:hover,
+.sapWCDayPickerItem.sapWCDayPickerItemWeekEnd.sapWCDayPickerItemOtherMonth:hover {
+	color: var(--_ui5_daypicker_item_othermonth_hover_color);
+	background: var(--_ui5_daypicker_item_othermonth_hover_background_color);
+}
+
+.sapWCDayPickerItem:focus::after {
+	content: "";
+	width: calc(100% - 0.25rem);
+	height: calc(100% - 0.25rem);
+	border: var(--_ui5_daypicker_item_outline_width) dotted var(--sapUiContentFocusColor);
+	position: absolute;
+	top: var(--_ui5_daypicker_item_outline_offset);
+	left: var(--_ui5_daypicker_item_outline_offset);
+}
+
+.sapWCDayPickerItem.sapWCDayPickerItemNow {
+	border: 0.125rem solid var(--sapUiCalendarColorToday);
+}
+
+.sapWCDayPickerItem.sapWCDayPickerItemSel .sapWCDayPickerDayText {
+	background: var(--_ui5_daypicker_item_selected_background_color);
+	color: var(--sapUiContentContrastTextColor);
+}
+
+.sapWCDayPickerItem.sapWCDayPickerItemSel.sapWCDayPickerItemNow .sapWCDayPickerDayText {
+	border: 1px solid var(--_ui5_daypicker_item_now_selected_text_border_color);
+	border-radius: var(--_ui5_daypicker_item_now_inner_border_radius);
+}
+
+.sapWCDayPickerItem.sapWCDayPickerItemSel.sapWCDayPickerItemNow:focus::after {
+	width: var(--_ui5_daypicker_item_now_selected_focus_after_width);
+	height: var(--_ui5_daypicker_item_now_selected_focus_after_height);
+	border-color: var(--sapUiContentFocusColor);
+	top: 0px;
+	left: 0px;
+}
+
+.sapWCDayPickerItem.sapWCDayPickerItemSel:hover {
+	background: var(--_ui5_daypicker_item_selected_hover_background_color);
+	color: var(--sapUiContentContrastTextColor);
+}
+
+.sapWCDayPickerItem.sapWCDayPickerItemSel:focus::after {
+	border-color: var(--sapUiContentContrastFocusColor);
+}
+
+.sapWCDayPickerItemsContainer {
+	outline: none;
+}
+
+.sapWCDayPickerItemsContainer > :first-child {
+	justify-content: flex-end;
+}
+
+.sapWCEmptyWeek {
+	height: 3rem;
+}
+
+.sapUiSizeCompact .sapWCDayPickerWeekNumberContainer {
+	padding-top: 2rem;
+}
+
+.sapUiSizeCompact .sapWCDayPickerWeekName,
+.sapUiSizeCompact .sapWCDayPickerDayName,
+.sapUiSizeCompact .sapWCDayPickerItem {
+	width: 2rem;
+	height: 2rem;
+}
+
+.sapUiSizeCompact .sapWCEmptyWeek {
+	height: 2.125rem;
+}
