@@ -1,4 +1,5 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
+import RenderScheduler from "@ui5/webcomponents-base/src/RenderScheduler";
 import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
 import Integer from "@ui5/webcomponents-base/src/types/Integer";
 import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper";
@@ -7,7 +8,7 @@ import PopoverPlacementType from "./types/PopoverPlacementType";
 import PopoverVerticalAlign from "./types/PopoverVerticalAlign";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign";
 import Popup from "./Popup";
-import RenderScheduler from "@ui5/webcomponents-base/src/RenderScheduler";
+
 
 // Template
 import PopoverRenderer from "./build/compiled/PopoverRenderer.lit";
@@ -556,7 +557,6 @@ class Popover extends Popup {
 			.then(_ => {
 				this.fireEvent("afterClose", {});
 			});
-
 	}
 
 	getPopoverSize() {
