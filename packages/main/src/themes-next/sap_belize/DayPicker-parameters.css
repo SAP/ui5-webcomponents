@@ -1,11 +1,1 @@
 @import "../base/DayPicker-parameters.css";
-
-:root {
-	--_ui5_daypicker_item_background_color: #f2f2f2; 
-	--_ui5_daypicker_item_hover_background_color: #d9d9d9;
-	--_ui5_daypicker_item_selected_background_color: #346187;
-	--_ui5_daypicker_item_selected_hover_background_color: #346187;
-	--_ui5_daypicker_item_weekend_background_color: #dedede;
-	--_ui5_daypicker_item_weekend_hover_background_color: #ccc;
-	--_ui5_daypicker_item_othermonth_hover_background_color: #e6e6e6;
-}
