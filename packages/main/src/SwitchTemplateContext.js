@@ -7,6 +7,7 @@ class SwitchTemplateContext {
 		const textOn = graphical ? "" : state.textOn;
 		const textOff = graphical ? "" : state.textOff;
 		const mainClasses = SwitchTemplateContext.getMainClasses(state);
+		const hasLabel = graphical || textOn || textOff;
 
 		const context = {
 			ctr: state,
@@ -15,6 +16,8 @@ class SwitchTemplateContext {
 			tabIndex: state.disabled ? undefined : "0",
 			classes: { main: mainClasses },
 		};
+
+		context.classes.main["ui5-switch--no-label"] = !hasLabel;
 
 		return context;
 	}

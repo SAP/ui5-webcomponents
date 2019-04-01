@@ -23,6 +23,10 @@ span[data-sap-ui-wc-root] {
 	-webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
+.ui5-switch-wrapper.ui5-switch--no-label {
+	min-width: var(--_ui5_switch_no_label_width);
+}
+
 .ui5-switch-inner {
 	display: flex;
 	align-items: center;
@@ -42,6 +46,10 @@ span[data-sap-ui-wc-root] {
 	border-color: var(--sapUiContentForegroundBorderColor);
 	border-radius: var(--_ui5_switch_track_border_radius);
 	box-sizing: border-box;
+}
+
+.ui5-switch--no-label .ui5-switch-track {
+	height: var(--_ui5_switch_track_no_label_height);
 }
 
 .ui5-switch-slider {
@@ -310,6 +318,14 @@ span[data-sap-ui-wc-root] {
 	/* Move slider to oposite end, taking into account the handle as an offset. */
 	/* Note: translate(calc()) does not work in IE11 */
 	transform: translateX(100%) translateX(-1.5rem);
+}
+
+.sapUiSizeCompact .ui5-switch-wrapper.ui5-switch--no-label {
+	min-width: var(--_ui5_switch_compact_no_label_width);
+}
+
+.sapUiSizeCompact .ui5-switch--no-label .ui5-switch-track {
+	height: var(--_ui5_switch_track_compact_no_label_height);
 }
 
 /* RTL */
