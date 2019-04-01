@@ -1,5 +1,5 @@
-commit 63b0c5388827145a6fe7040c2e9775ba5c7f3aff
+commit 14cfd66bc416f6986a682d1d59d5d2e0b9fb3f60
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Mar 29 15:57:18 2019 +0200
+Date:   Mon Apr 1 13:02:25 2019 +0300
 
-    refactor(ui5-button): apply css vars (#289)
+    chore: extract derived colors (#291)
