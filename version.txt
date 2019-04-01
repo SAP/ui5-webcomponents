@@ -1,5 +1,5 @@
-commit 14cfd66bc416f6986a682d1d59d5d2e0b9fb3f60
+commit b4902acc06d03cac5d581c83a505d452c681defd
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Apr 1 13:02:25 2019 +0300
+Date:   Mon Apr 1 13:36:09 2019 +0300
 
-    chore: extract derived colors (#291)
+    chore: correct belize derived colors (#292)
