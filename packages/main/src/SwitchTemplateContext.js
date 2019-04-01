@@ -20,7 +20,7 @@ class SwitchTemplateContext {
 	}
 
 	static getMainClasses(state) {
-		const graphical = state.type === SwitchType.Graphical
+		const graphical = state.type === SwitchType.Graphical;
 		const hasLabel = graphical || state.textOn || state.textOff;
 
 		return {
