@@ -3,8 +3,6 @@
 	--_ui5_radiobutton_border_width: 1px;
 	--_ui5_radiobutton_selected_fill: var(--sapUiSelected);
 	--_ui5_radiobutton_selected_error_fill: var(--sapUiFieldInvalidColor);
-	/* Fiori 3 and Belize: #000 */
-	/* --_ui5_radiobutton_selected_warning_fill: darken(var(--sapUiFieldWarningColor), 100); */
-	--_ui5_radiobutton_selected_warning_fill: #000;
+	--_ui5_radiobutton_selected_warning_fill: var(--sapUiFieldWarningColorDarken100);
 	--_ui5_radiobutton_warning_error_border_dash: 0;
 }
