@@ -261,6 +261,7 @@ span[data-sap-ui-wc-root] {
 }
 
 .ui5-switch-desktop.ui5-switch-wrapper.ui5-switch--checked:not(.ui5-switch--disabled):hover .ui5-switch-track {
+	background: var(--_ui5_switch_track_hover_checked_bg);
 	border-color: var(--_ui5_switch_track_hover_border_color);
 }
 

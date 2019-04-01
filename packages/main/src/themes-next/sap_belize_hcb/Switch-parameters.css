@@ -8,6 +8,7 @@
 	--_ui5_switch_track_bg: var(--sapUiButtonBackground);
 	--_ui5_switch_track_checked_bg: var(--sapUiToggleButtonPressedBackground);
 	--_ui5_switch_track_hover_bg: var(--sapUiButtonBackground);
+	--_ui5_switch_track_hover_checked_bg: var(--sapUiButtonBackground);
 	--_ui5_switch_track_hover_border_color: var(--sapUiBaseText);
 	--_ui5_switch_track_border_color: var(--sapUiButtonBackground);
 	--_ui5_switch_track_checked_border_color: var(--sapUiContentForegroundBorderColor);
