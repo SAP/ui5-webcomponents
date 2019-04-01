@@ -1,8 +1,8 @@
 :root {
-	--_ui5_yearpicker_item_background_color: #f7f7f7; /* lighten(@sapUiContentForegroundColor, 7); */
-	--_ui5_yearpicker_item_hover_background_color: #f7f7f7; /* lighten(@sapUiContentForegroundColor, 7); */
-	--_ui5_yearpicker_item_focus_background_color: #d9d9d9; /* darken(@sapUiContentForegroundColor, 5); */
-	--_ui5_yearpicker_item_selected_focus: #346187; /* darken(var(--sapUiSelected), 10); */
+	--_ui5_yearpicker_item_background_color: var(--sapUiContentForegroundColorLighten7); /* lighten(@sapUiContentForegroundColor, 7); */
+	--_ui5_yearpicker_item_hover_background_color: var(--sapUiContentForegroundColorLighten7); /* lighten(@sapUiContentForegroundColor, 7); */
+	--_ui5_yearpicker_item_focus_background_color: var(--sapUiContentForegroundColorDarken5); /* darken(@sapUiContentForegroundColor, 5); */
+	--_ui5_yearpicker_item_selected_focus: var(--sapUiSelectedDarken10); /* darken(var(--sapUiSelected), 10); */
 
 	--_ui5_yearpicker_item_border: none;
 	--_ui5_yearpicker_item_border_radius: 0;

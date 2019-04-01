@@ -1,11 +1,7 @@
 @import "../base/DayPicker-parameters.css";
 
 :root {
-	--_ui5_daypicker_item_background_color: #0d0d0d; 
-	--_ui5_daypicker_item_hover_background_color: #7a5100;
-	--_ui5_daypicker_item_selected_background_color: #0a4066;
-	--_ui5_daypicker_item_selected_hover_background_color: #0a4066;
-
+	--_ui5_daypicker_item_hover_background_color: var(--sapUiHighlight);
 	--_ui5_daypicker_item_margin: 0;
 	--_ui5_daypicker_item_border: 1px solid var(--sapUiListBorderColor);
 	--_ui5_daypicker_item_outline_width: 0.125rem;
