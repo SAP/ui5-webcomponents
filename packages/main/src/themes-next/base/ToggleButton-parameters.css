@@ -5,6 +5,6 @@
 	--_ui5_button_compact_height: 1.625rem;
 	--_ui5_toggle_button_pressed_focussed: var(--sapUiToggleButtonPressedBorderColor);
 	--_ui5_toggle_button_pressed_focussed_hovered: var(--sapUiToggleButtonPressedBorderColor);
-	--_ui5_toggle_button_negative_active_bg: rgb(136, 0, 0);
-	--_ui5_toggle_button_positive_active_bg: rgb(10, 81, 40);
+	--_ui5_toggle_button_pressed_negative_hover: var(--sapUiButtonRejectActiveBackgroundDarken5);
+	--_ui5_toggle_button_pressed_positive_hover: var(--sapUiButtonAcceptActiveBackgroundDarken5);
 }

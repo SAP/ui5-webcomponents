@@ -27,6 +27,7 @@ span[data-sap-ui-wc-root].sapUiSizeCompact .sapWCIconInButton {
 }
 
 span[data-sap-ui-wc-root].sapUiSizeCompact .sapMBtn {
+	padding: var(--_ui5_button_compact_padding);
 	min-height: var(--_ui5_button_compact_height);
 	min-width: var(--_ui5_button_base_min_compact_width);
 }
@@ -72,6 +73,7 @@ span[data-sap-ui-wc-root] .sapMBtn::before {
 .sapMBtn .sapWCIconInButton {
 	font-size: var(--_ui5_button_base_icon_only_font_size);
 	position: relative;
+	color: inherit;
 }
 
 .sapMBtn.sapMBtnIconEnd {
