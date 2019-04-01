@@ -1,5 +1,5 @@
-commit 9692b6996e05b6bf3ddfd389538ec2f22287453a
+commit 48dc5271d0c4446ca2527e53ca8d1aa561ac39f3
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Apr 1 15:01:33 2019 +0300
+Date:   Mon Apr 1 16:45:27 2019 +0300
 
-    chore: use derived parameters in components (#293)
+    refactor(ui5-switch): update component styling (#295)
