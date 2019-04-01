@@ -3,6 +3,4 @@
 :root {
 	--_ui5_toggle_button_pressed_focussed: transparent;
 	--_ui5_toggle_button_pressed_focussed_hovered: transparent;
-	--_ui5_toggle_button_negative_active_bg: rgb(97, 64, 0);
-	--_ui5_toggle_button_positive_active_bg: rgb(97, 64, 0);
 }

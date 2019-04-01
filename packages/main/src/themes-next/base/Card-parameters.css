@@ -1,7 +1,5 @@
 :root {
-	/* fiori3: #ccc | belize: #ccc | hcb: #000 */
-	/* --_ui5_card_border_color: darken(var(--sapUiTileBackground), 20); */
-	--_ui5_card_border_color: #ccc;
+	--_ui5_card_border_color: var(--sapUiTileBackgroundDarken20);
 	--_ui5_card_content_padding: 1rem;
 	--_ui5_card_header_active_bg: #f0f0f0;
 	/* fiori3: #fafafa | belize: #fafafa | hcb: #7a5100*/

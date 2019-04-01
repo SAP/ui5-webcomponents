@@ -1,11 +1,11 @@
 .sapWCShellBarSearchFieldElement.sapWCInputBase .sapWCInputBaseContentWrapper {
 	background-color: var(--sapUiShellColor);
-	border: 1px solid lighten(var(--sapUiShellBorderColor), 30);
+	border: 1px solid var(--sapUiShellBorderColorLighten30);
 }
 
 .sapWCShellBarSearchFieldElement.sapWCInputBase .sapWCInputBaseContentWrapper:hover:not(.sapWCInputBaseContentWrapperError):not(.sapWCInputBaseContentWrapperWarning):not(.sapWCInputBaseContentWrapperSuccess):not(.sapWCInputBaseDisabledWrapper):not(.sapWCInputBaseReadonlyWrapper) {
 	background: var(--sapUiShellHoverBackground);
-	border: 1px solid lighten(var(--sapUiShellBorderColor), 30);
+	border: 1px solid var(--sapUiShellBorderColorLighten30);
 }
 
 .sapWCShellBarSearchFieldElement.sapWCInputBase .sapWCInputBaseInner {
