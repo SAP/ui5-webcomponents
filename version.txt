@@ -1,5 +1,5 @@
-commit b4902acc06d03cac5d581c83a505d452c681defd
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Apr 1 13:36:09 2019 +0300
+commit 168a65ac5cb9a8e2547dca00842a43b738d0a522
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Mon Apr 1 14:53:41 2019 +0300
 
-    chore: correct belize derived colors (#292)
+    chore: use derived parameters in calendar related components (#294)
