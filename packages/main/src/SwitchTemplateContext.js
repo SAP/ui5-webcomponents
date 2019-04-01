@@ -7,7 +7,6 @@ class SwitchTemplateContext {
 		const textOn = graphical ? "" : state.textOn;
 		const textOff = graphical ? "" : state.textOff;
 		const mainClasses = SwitchTemplateContext.getMainClasses(state);
-		const hasLabel = graphical || textOn || textOff;
 
 		const context = {
 			ctr: state,
@@ -17,18 +16,20 @@ class SwitchTemplateContext {
 			classes: { main: mainClasses },
 		};
 
-		context.classes.main["ui5-switch--no-label"] = !hasLabel;
-
 		return context;
 	}
 
 	static getMainClasses(state) {
+		const graphical = state.type === SwitchType.Graphical
+		const hasLabel = graphical || state.textOn || state.textOff;
+
 		return {
 			"ui5-switch-wrapper": true,
 			"ui5-switch-desktop": isDesktop(),
 			"ui5-switch--disabled": state.disabled,
 			"ui5-switch--checked": state.checked,
-			"ui5-switch--semantic": state.type === SwitchType.Graphical,
+			"ui5-switch--semantic": graphical,
+			"ui5-switch--no-label": !hasLabel,
 		};
 	}
 }
