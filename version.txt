@@ -1,5 +1,5 @@
-commit 48dc5271d0c4446ca2527e53ca8d1aa561ac39f3
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Apr 1 16:45:27 2019 +0300
+commit a26097b0fb3244422aa12698970c3a9c19a6a1fa
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Tue Apr 2 09:33:42 2019 +0300
 
-    refactor(ui5-switch): update component styling (#295)
+    chore(button): apply changes from visual spec (#296)
