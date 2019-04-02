@@ -22,4 +22,6 @@
 	--sapUiButtonHoverBackgroundDarken2: #e2f0fe;
 	--sapUiButtonRejectActiveBackgroundDarken5: #880000;
 	--sapUiButtonAcceptActiveBackgroundDarken5: #0a5128;
+	--sapUiButtonRejectActiveBackgroundLighten5: #bb0000;
+	--sapUiButtonAcceptActiveBackgroundLighten5: #107e3e;
 }
