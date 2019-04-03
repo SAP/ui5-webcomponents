@@ -609,7 +609,9 @@ class ShellBar extends WebComponent {
 	}
 
 	_handleNotificationsPress(event) {
-		this.fireEvent("notificationsPress");
+		this.fireEvent("notificationsPress", {
+			iconRef: this.shadowRoot.querySelector(".sapWCShellBarBellIcon"),
+		});
 	}
 
 	_handleProfilePress(event) {
@@ -620,7 +622,7 @@ class ShellBar extends WebComponent {
 
 	_handleProductSwitchPress(event) {
 		this.fireEvent("productSwitchPress", {
-			detail: this.shadowRoot.querySelector(".sapWCShellBarIconProductSwitch"),
+			iconRef: this.shadowRoot.querySelector(".sapWCShellBarIconProductSwitch"),
 		});
 	}
 
