@@ -182,12 +182,12 @@ const metadata = {
 		 * Fired, when the primaryTitle is pressed.
 		 *
 		 * @event
-		 * @param {HTMLElement} iconRef dom ref of the clicked icon
+		 * @param {HTMLElement} targetRef dom ref of the clicked element
 		 * @public
 		 */
 		titlePress: {
 			detail: {
-				iconRef: { type: HTMLElement },
+				targetRef: { type: HTMLElement },
 			},
 		},
 
@@ -197,12 +197,12 @@ const metadata = {
 		 *
 		 *
 		 * @event
-		 * @param {HTMLElement} iconRef dom ref of the clicked icon
+		 * @param {HTMLElement} targetRef dom ref of the clicked element
 		 * @public
 		 */
 		notificationsPress: {
 			detail: {
-				iconRef: { type: HTMLElement },
+				targetRef: { type: HTMLElement },
 			},
 		},
 
@@ -210,12 +210,12 @@ const metadata = {
 		 * Fired, when the profile icon is pressed.
 		 *
 		 * @event
-		 * @param {HTMLElement} iconRef dom ref of the clicked icon
+		 * @param {HTMLElement} targetRef dom ref of the clicked element
 		 * @public
 		 */
 		profilePress: {
 			detail: {
-				iconRef: { type: HTMLElement },
+				targetRef: { type: HTMLElement },
 			},
 		},
 
@@ -223,12 +223,12 @@ const metadata = {
 		 * Fired, when the product switch icon is pressed.
 		 *
 		 * @event
-		 * @param {HTMLElement} iconRef dom ref of the clicked icon
+		 * @param {HTMLElement} targetRef dom ref of the clicked element
 		 * @public
 		 */
 		productSwitchPress: {
 			detail: {
-				iconRef: { type: HTMLElement },
+				targetRef: { type: HTMLElement },
 			},
 		},
 	},
@@ -306,7 +306,7 @@ class ShellBar extends WebComponent {
 		this._header = {
 			press: event => {
 				this.fireEvent("titlePress", {
-					iconRef: this.shadowRoot.querySelector(".sapWCShellBarMenuButton"),
+					targetRef: this.shadowRoot.querySelector(".sapWCShellBarMenuButton"),
 				});
 			},
 		};
@@ -610,19 +610,19 @@ class ShellBar extends WebComponent {
 
 	_handleNotificationsPress(event) {
 		this.fireEvent("notificationsPress", {
-			iconRef: this.shadowRoot.querySelector(".sapWCShellBarBellIcon"),
+			targetRef: this.shadowRoot.querySelector(".sapWCShellBarBellIcon"),
 		});
 	}
 
 	_handleProfilePress(event) {
 		this.fireEvent("profilePress", {
-			iconRef: this.shadowRoot.querySelector(".sapWCShellBarImageButton"),
+			targetRef: this.shadowRoot.querySelector(".sapWCShellBarImageButton"),
 		});
 	}
 
 	_handleProductSwitchPress(event) {
 		this.fireEvent("productSwitchPress", {
-			iconRef: this.shadowRoot.querySelector(".sapWCShellBarIconProductSwitch"),
+			targetRef: this.shadowRoot.querySelector(".sapWCShellBarIconProductSwitch"),
 		});
 	}
 
