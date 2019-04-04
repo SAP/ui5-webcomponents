@@ -158,12 +158,12 @@
 
 	<script>
 		shellbar.addEventListener("profilePress", function(event) {
-			popover.openBy(event.detail.iconRef);
+			popover.openBy(event.detail.targetRef);
 			window["press-input"].value = "Profile";
 		});
 
 		shellbar.addEventListener("titlePress", function(event) {
-			window["app-list-popover"].openBy(event.detail.iconRef);
+			window["app-list-popover"].openBy(event.detail.targetRef);
 			window["press-input"].value = "Title";
 		});
 
