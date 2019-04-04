@@ -1,5 +1,7 @@
-commit a26097b0fb3244422aa12698970c3a9c19a6a1fa
+commit 2641ec6fb8427c823d9ede0c0250f49ad950981d
 Author: Martin <martin.r.hristov@gmail.com>
-Date:   Tue Apr 2 09:33:42 2019 +0300
+Date:   Thu Apr 4 10:54:06 2019 +0300
 
-    chore(button): apply changes from visual spec (#296)
+    fix(ui5-shellbar): pass correct values for events details (#298)
+    
+    fixes: https://github.com/SAP/ui5-webcomponents/issues/297
