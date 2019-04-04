@@ -23,6 +23,19 @@ const metadata = {
 		"MessageStrip.css",
 	],
 	usesNodeText: true,
+	slots: /** @lends sap.ui.webcomponents.main.MessageStrip.prototype */ {
+		/**
+		 * Defines the content of the message strip.
+		 * Use this if you need to use elements other than text within the message bar.
+		 * @type {HTMLElement[]}
+		 * @slot
+		 * @public
+		 */
+		content: {
+			type: HTMLElement,
+			multiple: false,
+		},
+	},
 	properties: /** @lends sap.ui.webcomponents.main.MessageStrip.prototype */ {
 
 		/**

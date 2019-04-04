@@ -144,7 +144,8 @@ class WebComponent extends HTMLElement {
 		const hasChildren = this.constructor.getMetadata().hasSlots();
 		if (usesNodeText) {
 			this._updateNodeText();
-		} else if (hasChildren) {
+		}
+		if (hasChildren) {
 			this._updateSlots();
 		}
 		this.onChildrenChanged(mutations);

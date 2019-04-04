@@ -48,12 +48,22 @@
 			<ui5-messagestrip class="samples-margin-bottom" type="Positive">Positive MessageStrip</ui5-messagestrip>
 			<ui5-messagestrip class="samples-margin-bottom" type="Negative">Negative MessageStrip</ui5-messagestrip>
 			<ui5-messagestrip class="samples-margin-bottom" type="Warning">Warning MessageStrip</ui5-messagestrip>
+			<ui5-messagestrip class="samples-margin-bottom" type="Information">
+				<div class="messagestrip-content" data-ui5-slot="content">
+					A message strip with a link <ui5-link target="_blank" href="https://github.com/SAP/ui5-webcomponents">to Github</ui5-link>
+				</div>
+			</ui5-messagestrip>
 		</div>
 		<pre class="prettyprint lang-html"><xmp>
 <ui5-messagestrip type="Information">Information MessageStrip</ui5-messagestrip>
 <ui5-messagestrip type="Positive">Positive MessageStrip</ui5-messagestrip>
 <ui5-messagestrip type="Negative">Negative MessageStrip</ui5-messagestrip>
 <ui5-messagestrip type="Warning">Warning MessageStrip</ui5-messagestrip>
+<ui5-messagestrip type="Information">
+	<div class="messagestrip-content" data-ui5-slot="content">
+		A message strip with a link <ui5-link target="_blank" href="https://github.com/SAP/ui5-webcomponents">to Github</ui5-link>
+	</div>
+</ui5-messagestrip>
 <script>
 	document.querySelectorAll("ui5-messagestrip").forEach(function(messageStrip) {
 		messageStrip.addEventListener("close", function() {
