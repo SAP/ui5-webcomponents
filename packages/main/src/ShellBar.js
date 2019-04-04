@@ -2,6 +2,7 @@ import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
 import { getRTL } from "@ui5/webcomponents-base/src/Configuration";
 import URI from "@ui5/webcomponents-base/src/types/URI";
 import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
+import Function from "@ui5/webcomponents-base/src/types/Function";
 import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
 import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler";
 import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation";
@@ -136,6 +137,14 @@ const metadata = {
 		_header: {
 			type: Object,
 		},
+
+		_logoPress: {
+			type: Function,
+		},
+
+		_coPilotPress: {
+			type: Function,
+		},
 	},
 
 	slots: /** @lends  sap.ui.webcomponents.main.ShellBar.prototype */ {
@@ -227,6 +236,32 @@ const metadata = {
 		 * @public
 		 */
 		productSwitchPress: {
+			detail: {
+				targetRef: { type: HTMLElement },
+			},
+		},
+
+		/**
+		 * Fired, when the logo is pressed.
+		 *
+		 * @event
+		 * @param {HTMLElement} targetRef dom ref of the clicked element
+		 * @public
+		 */
+		logoPress: {
+			detail: {
+				targetRef: { type: HTMLElement },
+			},
+		},
+
+		/**
+		 * Fired, when the co pilot is pressed.
+		 *
+		 * @event
+		 * @param {HTMLElement} targetRef dom ref of the clicked element
+		 * @public
+		 */
+		coPilotPress: {
 			detail: {
 				targetRef: { type: HTMLElement },
 			},
@@ -373,6 +408,18 @@ class ShellBar extends WebComponent {
 		this._handleResize = event => {
 			this.shadowRoot.querySelector("ui5-popover").close();
 			this._overflowActions();
+		};
+
+		this._logoPress = event => {
+			this.fireEvent("logoPress", {
+				targetRef: this.shadowRoot.querySelector(".sapWCShellBarLogo"),
+			});
+		};
+
+		this._coPilotPress = event => {
+			this.fireEvent("coPilotPress", {
+				targetRef: this.shadowRoot.querySelector(".ui5-shellbar-coPilot"),
+			});
 		};
 	}
 

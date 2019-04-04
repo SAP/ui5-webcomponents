@@ -228,6 +228,22 @@ describe("Component Behaviour", () => {
 				assert.strictEqual(input.getValue(), "Product Switch", "Input value is set by click event of Product Switch icon");
 			});
 
+			it("tests logoPress event", () => {
+				const logo = browser.findElementDeep("#shellbar >>> .sapWCShellBarLogo");
+				const input = browser.findElementDeep("#press-input");
+
+				logo.click();
+				assert.strictEqual(input.getValue(), "Logo", "Input value is set by click event of Logo");
+			});
+
+			it("tests coPilotPress event", () => {
+				const coPilot = browser.findElementDeep("#shellbar >>> .ui5-shellbar-coPilot");
+				const input = browser.findElementDeep("#press-input");
+
+				coPilot.click();
+				assert.strictEqual(input.getValue(), "CoPilot", "Input value is set by click event of CoPilot");
+			});
+
 			it("tests if searchfield appears when clicking on search icon", () => {
 				const searchIcon = browser.findElementDeep("#shellbar >>> .sapWCShellBarSearchIcon");
 				const searchField = browser.findElementDeep("#shellbar ui5-input");
