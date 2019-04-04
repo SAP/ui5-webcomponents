@@ -97,11 +97,11 @@
 
 <script>
 	shellbar.addEventListener("profilePress", function(event) {
-		window["action-popover"].openBy(event.detail.iconRef);
+		window["action-popover"].openBy(event.detail.targetRef);
 	});
 
 	shellbar.addEventListener("titlePress", function(event) {
-		window["app-list-popover"].openBy(event.detail.iconRef);
+		window["app-list-popover"].openBy(event.detail.targetRef);
 	});
 </script>
 				</div>
@@ -156,11 +156,11 @@
 
 <script>
 	shellbar.addEventListener("profilePress", function(event) {
-		popover.openBy(event.detail.iconRef);
+		popover.openBy(event.detail.targetRef);
 	});
 
 	shellbar.addEventListener("titlePress", function(event) {
-		window["app-list-popover"].openBy(event.detail.iconRef);
+		window["app-list-popover"].openBy(event.detail.targetRef);
 	});
 </script>
 		</xmp>
