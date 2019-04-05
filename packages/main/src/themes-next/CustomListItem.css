@@ -15,12 +15,20 @@ ui5-li-custom .sap-phone .sapMLIB {
 }
 
 .sapMLIB.sapMCustomLI {
+	height: auto;
+	min-height: 3rem;
 	padding: 0;
 }
 
 ui5-checkbox.multiSelectionCheckBox,
 ui5-radiobutton.singleSelectionRadioButton {
+	display: flex;
+	align-items: center;
 	min-width: 3rem;
+}
+
+.sapUiSizeCompact .sapMLIB.sapMCustomLI {
+	min-height: 2rem;
 }
 
 .sapUiSizeCompact ui5-checkbox.multiSelectionCheckBox,
