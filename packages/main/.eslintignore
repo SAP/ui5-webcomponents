@@ -9,3 +9,4 @@ bundle.es5.js
 rollup.config*.js
 wdio.conf.js
 postcss.config.js
+global-derived-colors.js
