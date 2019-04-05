@@ -1,3 +1,5 @@
+import "@ui5/webcomponents-base/src/shims/jquery-shim";
+import "@ui5/webcomponents-base/src/shims/Core-shim";
 import DateFormat from "@ui5/webcomponents-core/dist/sap/ui/core/format/DateFormat";
 
 class TimelineItemTemplateContext {
