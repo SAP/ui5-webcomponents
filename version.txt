@@ -1,9 +1,5 @@
-commit dbb98c8a84f01b0d2460c9dc224d91a73482dfa2
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Fri Apr 5 14:08:40 2019 +0300
+commit 5902704f058897ec3fc5aa339018da8ba05c5851
+Author: a-z-ivanov <yogaaaaa@yahoo.com>
+Date:   Fri Apr 5 04:23:46 2019 -0700
 
-    fix: transform css files to es6 modules (#306)
-    
-    - bundling without an additional setup for importing css files used to be broken
-    - all css files are now distributed as es6 modules that export a single string
-    - ui5-togglebutton used to override some css variables defined in the ui5-button
+    fix(ui5-link): noreferrer for cross-origin links (#202)
