@@ -1,10 +1,5 @@
-commit 5d1c9206d25c11be8a42741f977f2d30b399b3d7
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Thu Apr 4 14:16:39 2019 +0300
+commit d91f23734a3100f8da61effba9e5b9e70ff0a19d
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Fri Apr 5 14:00:33 2019 +0300
 
-    refactor(ui5-shellbar): rename press handlers param (#300)
-    
-    BREAKING CHANGE: press handlers used to have param "iconRef". As not always
-    an Icon is pressed (e.g. title is not an icon) - the parameter is renamed to targetRef.
-    
-    Fixes: https://github.com/SAP/ui5-webcomponents/issues/297
+    fix(docs): fix card sample page (#305)
