@@ -46,23 +46,6 @@ const getPlugins = ({ transpile }) => {
 			return gzipSize;
 		}
 	}));
-	// component styles
-	plugins.push(
-		postcss({
-			plugins: [postcssNesting()],
-			inject: false,
-			exclude: ["**/*.less", "**/parameters-bundle.css"],
-		})
-	);
-	// parameters bundle
-	plugins.push(
-		postcss({
-			plugins: [postcssImport(), csso({comments: true})],
-			inject: false,
-			include: ["**/parameters-bundle.css"],
-			exclude: ["**/*.less"],
-		})
-	);
 
 	plugins.push(ui5DevImportCheckerPlugin());
 

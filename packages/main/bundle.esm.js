@@ -2,7 +2,7 @@
 import "@ui5/webcomponents-base/src/browsersupport/Edge";
 
 import "@ui5/webcomponents-base/src/shims/jquery-shim";
-import "./src/ThemePropertiesProvider";
+import "./dist/ThemePropertiesProvider";
 
 import Gregorian from "@ui5/webcomponents-core/dist/sap/ui/core/date/Gregorian";
 import Buddhist from "@ui5/webcomponents-core/dist/sap/ui/core/date/Buddhist";

@@ -1,8 +1,4 @@
 :root {
-	--_ui5_button_base_min_width: 2.5rem;
-	--_ui5_button_base_min_compact_width: 2rem;
-	--_ui5_button_base_height: 2.5rem;
-	--_ui5_button_compact_height: 1.625rem;
 	--_ui5_toggle_button_pressed_focussed: var(--sapUiToggleButtonPressedBorderColor);
 	--_ui5_toggle_button_pressed_focussed_hovered: var(--sapUiToggleButtonPressedBorderColor);
 	--_ui5_toggle_button_pressed_negative_hover: var(--sapUiButtonRejectActiveBackgroundDarken5);
