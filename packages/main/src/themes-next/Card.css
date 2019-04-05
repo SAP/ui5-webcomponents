@@ -30,6 +30,12 @@ ui5-card {
 	padding: var(--_ui5_card_content_padding);
 }
 
+
+.sapFCard.sapFCardNoContent .sapFCardHeader {
+	height: calc(100% - 2*var(--_ui5_card_content_padding));
+	border-bottom: none;
+}
+
 .sapFCardHeader:focus {
 	outline: none;
 }
