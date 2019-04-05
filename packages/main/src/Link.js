@@ -92,6 +92,10 @@ const metadata = {
 		wrap: {
 			type: Boolean,
 		},
+
+		_rel: {
+			type: String,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Link.prototype */ {
 
@@ -149,12 +153,26 @@ const metadata = {
  * @public
  */
 class Link extends WebComponent {
+	constructor() {
+		super();
+		this._dummyAnchor = document.createElement("a");
+	}
+
 	static get metadata() {
 		return metadata;
 	}
 
 	static get renderer() {
 		return LinkRederer;
+	}
+
+
+	onBeforeRendering() {
+		const needsNoReferrer = this.target === "_blank"
+			&& this.href
+			&& this._isCrossOrigin();
+
+		this._rel = needsNoReferrer ? "noreferrer" : undefined;
 	}
 
 	onclick(event) {
@@ -196,6 +214,16 @@ class Link extends WebComponent {
 			oClickEvent.initEvent("click" /* event type */, false/* no-bubbling */, true /* cancelable */);
 			this.getDomRef().dispatchEvent(oClickEvent);
 		}
+	}
+
+	_isCrossOrigin() {
+		const loc = window.location;
+
+		this._dummyAnchor.href = this.href;
+
+		return !(this._dummyAnchor.hostname === loc.hostname
+			&& this._dummyAnchor.port === loc.port
+			&& this._dummyAnchor.protocol === loc.protocol);
 	}
 
 	static get calculateTemplateContext() {
