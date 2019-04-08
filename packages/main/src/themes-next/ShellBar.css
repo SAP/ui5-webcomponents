@@ -193,6 +193,7 @@ ui5-shellbar {
 }
 
 .sapWCShellBarLogo {
+	cursor: pointer;
 	height: 1.675rem;
 }
 

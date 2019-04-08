@@ -155,6 +155,7 @@ class Card extends WebComponent {
 		const hasAvatar = !!state.avatar;
 		const icon = hasAvatar && isIconURI(state.avatar);
 		const image = hasAvatar && !icon;
+		const hasContent = !!state.content.length;
 
 		return {
 			icon,
@@ -162,6 +163,10 @@ class Card extends WebComponent {
 			ctr: state,
 			renderIcon: state.icon && !state.image,
 			classes: {
+				main: {
+					"sapFCard": true,
+					"sapFCardNoContent": !hasContent,
+				},
 				header: {
 					"sapFCardHeader": true,
 					"sapFCardHeaderActive": state._headerActive,
