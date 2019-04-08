@@ -87,9 +87,9 @@ describe("Component Behaviour", () => {
 			const notificationsIcon = browser.findElementDeep("#shellbar >>> .sapWCShellBarBellIcon");
 			const profileIcon = browser.findElementDeep("#shellbar >>> .sapWCShellBarImageButton");
 			const productSwitchIcon = browser.findElementDeep("#shellbar >>> .sapWCShellBarIconProductSwitch");
-			const overflowPopover = browser.findElementDeep("#shellbar >>> ui5-popover");
-			const overflowPopoverItem1 = browser.findElementDeep("#shellbar >>> ui5-popover ui5-li:first-child");
-			const overflowPopoverItem2 = browser.findElementDeep("#shellbar >>> ui5-popover ui5-li:nth-child(2)");
+			const overflowPopover = browser.findElementDeep("#shellbar >>> .sapWCShellBarOverflowPopover");
+			const overflowPopoverItem1 = browser.findElementDeep("#shellbar >>> .sapWCShellBarOverflowPopover ui5-li:first-child");
+			const overflowPopoverItem2 = browser.findElementDeep("#shellbar >>> .sapWCShellBarOverflowPopover ui5-li:nth-child(2)");
 			const html = shellbarWrapper.getHTML();
 
 			overflowButton.click();
@@ -120,7 +120,7 @@ describe("Component Behaviour", () => {
 			const shellbarWrapper = browser.findElementDeep("#shellbar >>> div");
 			const html = shellbarWrapper.getHTML();
 			const productSwitchIcon = browser.findElementDeep("#shellbar >>> .sapWCShellBarIconProductSwitch");
-			const overflowPopover = browser.findElementDeep("#shellbar >>> ui5-popover");
+			const overflowPopover = browser.findElementDeep("#shellbar >>> .sapWCShellBarOverflowPopover");
 
 			assert.strictEqual(html.indexOf("sapWCShellBarSizeM") !== -1, true, "M Breakpoint class should be set");
 
@@ -136,7 +136,7 @@ describe("Component Behaviour", () => {
 			const shellbarWrapper = browser.findElementDeep("#shellbar >>> div");
 			const html = shellbarWrapper.getHTML();
 			const productSwitchIcon = browser.findElementDeep("#shellbar >>> .sapWCShellBarIconProductSwitch");
-			const overflowPopover = browser.findElementDeep("#shellbar >>> ui5-popover");
+			const overflowPopover = browser.findElementDeep("#shellbar >>> .sapWCShellBarOverflowPopover");
 			const notificationsIcon = browser.findElementDeep("#shellbar >>> .sapWCShellBarBellIcon");
 
 			assert.strictEqual(html.indexOf("sapWCShellBarSizeM") !== -1, true, "M Breakpoint class should be set");
@@ -171,7 +171,7 @@ describe("Component Behaviour", () => {
 			const notificationsIcon = browser.findElementDeep("#shellbar >>> .sapWCShellBarBellIcon");
 			const profileIcon = browser.findElementDeep("#shellbar >>> .sapWCShellBarImageButton");
 			const productSwitchIcon = browser.findElementDeep("#shellbar >>> .sapWCShellBarIconProductSwitch");
-			const overflowPopover = browser.findElementDeep("#shellbar >>> ui5-popover");
+			const overflowPopover = browser.findElementDeep("#shellbar >>> .sapWCShellBarOverflowPopover");
 			const listItemsCount = overflowPopover.getHTML().split("</ui5-li>").length - 1;
 
 			assert.strictEqual(html.indexOf("sapWCShellBarSizeS") !== -1, true, "S Breakpoint class should be set");
@@ -194,12 +194,12 @@ describe("Component Behaviour", () => {
 				browser.setWindowSize(1920, 1080);
 			});
 
-			it("tests titlePress event", () => {
+			it("tests opening of menu", () => {
 				const primaryTitle = browser.findElementDeep("#shellbar >>> .sapWCShellBarMenuButton");
-				const input = browser.findElementDeep("#press-input");
-
+				const menuPopover = browser.findElementDeep("#shellbar >>> .sapWCShellBarMenuPopover");
+	
 				primaryTitle.click();
-				assert.strictEqual(input.getValue(), "Title", "Input value is set by click event of Title");
+				assert.ok(menuPopover.isDisplayedInViewport(), "Menu should be shown");
 			});
 
 			it("tests notificationsPress event", () => {
@@ -244,6 +244,22 @@ describe("Component Behaviour", () => {
 				assert.strictEqual(input.getValue(), "CoPilot", "Input value is set by click event of CoPilot");
 			});
 
+			it("tests menuItemPress event", () => {
+				const primaryTitle = browser.findElementDeep("#shellbar >>> .sapWCShellBarMenuButton");
+				const firstMenuItem = browser.findElementDeep("#shellbar #menu-item-1");
+				const secondMenuItem = browser.findElementDeep("#shellbar #menu-item-2");
+				const input = browser.findElementDeep("#press-input");
+	
+				primaryTitle.click();
+				firstMenuItem.click();
+
+				assert.strictEqual(input.getValue(), "Application 1", "Input value is set by click event of the first menu item");
+
+				secondMenuItem.click();
+
+				assert.strictEqual(input.getValue(), "Application 2", "Input value is set by click event of the second menu item");
+			});
+
 			it("tests if searchfield appears when clicking on search icon", () => {
 				const searchIcon = browser.findElementDeep("#shellbar >>> .sapWCShellBarSearchIcon");
 				const searchField = browser.findElementDeep("#shellbar ui5-input");
@@ -265,12 +281,12 @@ describe("Component Behaviour", () => {
 				browser.setWindowSize(510, 1080);
 			});
 
-			it("tests titlePress event", () => {
+			it("tests opening of menu", () => {
 				const primaryTitle = browser.findElementDeep("#shellbar >>> .sapWCShellBarMenuButton");
-				const input = browser.findElementDeep("#press-input");
-
+				const menuPopover = browser.findElementDeep("#shellbar >>> .sapWCShellBarMenuPopover");
+	
 				primaryTitle.click();
-				assert.strictEqual(input.getValue(), "Title", "Input value is set by click event of Title");
+				assert.ok(menuPopover.isDisplayedInViewport(), "Menu should be shown");
 			});
 
 			it("tests notificationsPress event", () => {

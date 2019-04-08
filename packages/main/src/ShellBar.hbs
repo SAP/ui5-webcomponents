@@ -26,6 +26,14 @@
 			</button>
 		{{/if}}
 
+		<ui5-popover class="sapWCShellBarMenuPopover" hide-header placement-type="Bottom">
+			<ui5-list separators="None" mode="SingleSelect" @itemPress={{ctr._menuItemPress}}>
+				{{#each ctr.menuItems}}
+					<slot name="{{this._slot}}"></slot>
+				{{/each}}
+			</ui5-list>
+		</ui5-popover>
+
 		<h2 class="{{classes.secondaryTitle}}">{{ctr.secondaryTitle}}</h2>
 	</div>
 
@@ -67,7 +75,7 @@
 		</div>
 	</div>
 
-	<ui5-popover placement-type="Bottom" horizontal-align="{{popoverHorizontalAlign}}" hide-header hide-arrow>
+	<ui5-popover class="sapWCShellBarOverflowPopover" placement-type="Bottom" horizontal-align="{{popoverHorizontalAlign}}" hide-header hide-arrow>
 		<ui5-list separators="None" @itemPress="{{ctr._actionList.itemPress}}">
 			{{#each _hiddenIcons}}
 				<ui5-li
