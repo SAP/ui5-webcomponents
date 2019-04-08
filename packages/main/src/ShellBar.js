@@ -167,7 +167,7 @@ const metadata = {
 			multiple: true,
 		},
 
-			/**
+		/**
 		 * Defines the items displayed in menu after a click on the primary title.
 		 * </br></br>
 		 * <b>Note:</b>
@@ -372,7 +372,7 @@ class ShellBar extends WebComponent {
 		};
 
 		this._menuItemPress = event => {
-			this.fireEvent("menuItemPress",  {
+			this.fireEvent("menuItemPress", {
 				item: event.detail.item,
 			});
 		};
