@@ -1,5 +1,5 @@
-commit f2211231a9229af26a225dc2c139000d6b059feb
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Mon Apr 8 11:05:00 2019 +0300
+commit f778dbf566eedd1592f75bae5f75c4f480ae72dd
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Apr 8 15:22:25 2019 +0300
 
-    feat(ui5-shellbar): adds logoPress and coPilotPress events (#301)
+     fix(ui5-card): remove header double border if no content (#312)
