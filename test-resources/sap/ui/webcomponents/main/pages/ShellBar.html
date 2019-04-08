@@ -175,6 +175,14 @@
 			window["press-input"].value = "Product Switch"
 		});
 
+		shellbar.addEventListener("logoPress", function(event) {
+			window["press-input"].value = "Logo"
+		});
+
+		shellbar.addEventListener("coPilotPress", function(event) {
+			window["press-input"].value = "CoPilot"
+		});
+
 		["disc", "call"].forEach(function(id) {
 			window[id].addEventListener("press", function(event) {
 				window["press-input"].value = event.target.id;

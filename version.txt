@@ -1,5 +1,5 @@
-commit 5902704f058897ec3fc5aa339018da8ba05c5851
-Author: a-z-ivanov <yogaaaaa@yahoo.com>
-Date:   Fri Apr 5 04:23:46 2019 -0700
+commit f2211231a9229af26a225dc2c139000d6b059feb
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Mon Apr 8 11:05:00 2019 +0300
 
-    fix(ui5-link): noreferrer for cross-origin links (#202)
+    feat(ui5-shellbar): adds logoPress and coPilotPress events (#301)
