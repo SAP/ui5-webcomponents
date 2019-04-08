@@ -3,8 +3,8 @@
 /* ===================================== */
 :root {
 	/* PRIMARY COLORS */
-	--sapPrimary1: #ff00cc;
-	--sapPrimary2: #8cff00;
+	--sapPrimary1: #3f5161;
+	--sapPrimary2: #427cac;
 	--sapPrimary3: #eff4f9;
 	--sapPrimary4: #ffffff;
 	--sapPrimary5: #fafafa;
@@ -71,7 +71,7 @@
 	--sapNeutralTextColor: var(--sapNeutralColor);
 	/*  #5e696e */
 	/* Semantic Foreground Colors */
-	--sapNegativeColor: #00bb0c;
+	--sapNegativeColor: #bb0000;
 	--sapCriticalColor: #e78c07;
 	--sapPositiveColor: #2b7c2b;
 	--sapInformativeColor: #427cac;

@@ -1,10 +1,10 @@
 const derivations = {
 	"--sapHighlightColor": () => darken("--sapBrandColor", 10),
-	"--sapBackgroundColorDefault": () => () =>  darken("--sapPrimary3", 2),
-	"--sapBackgroundColor": () => () => darken("--sapPrimary3", 2),
+	"--sapBackgroundColorDefault": () =>  darken("--sapPrimary3", 2),
+	"--sapBackgroundColor": () => darken("--sapPrimary3", 2),
 
-	"--sapErrorBackground": () => () => lighten("--sapNegativeColor", 59.5),
-	"--sapWarningBackground": () => () => lighten("--sapCriticalColor", 49),
+	"--sapErrorBackground": () => lighten("--sapNegativeColor", 59.5),
+	"--sapWarningBackground": () => lighten("--sapCriticalColor", 49),
 	"--sapSuccessBackground": () => lighten("--sapPositiveColor", 69),
 	"--sapInformationBackground": () => lighten("--sapInformativeColor", 55),
 	"--sapNeutralBackground": () => lighten("--sapNeutralColor", 53),
@@ -56,7 +56,7 @@ const derivations = {
 	"--sapUiNotificationBarBG": () => fade("--sapUiPrimary7", 98),
 	"--sapUiNotifierSeparator": () => darken("--sapUiPrimary7", 20),
 	"--sapUiNotificationBarBorder": () => lighten("--sapUiPrimary7", 20),
-	"--sapUiCalloutShadow": () => 0px 6px 12px 0px fade("--sapUiContentShadowColor", 30),
+	// "--sapUiCalloutShadow": () => 0px 6px 12px 0px fade("--sapUiContentShadowColor", 30),
 	"--sapUiButtonIconColor": () => contrast("--sapUiButtonBackground", "--sapUiContentIconColor", "--sapUiContentContrastIconColor", "--sapUiContentContrastTextThreshold"),
 	"--sapUiButtonActiveTextColor": () => contrast("--sapUiButtonActiveBackground", "--sapUiButtonTextColor", "--sapUiContentContrastTextColor", "--sapUiContentContrastTextThreshold"),
 	"--sapUiButtonEmphasizedHoverBackground": () => darken("--sapUiButtonEmphasizedBackground", 7),
