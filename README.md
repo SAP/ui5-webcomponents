@@ -66,13 +66,13 @@ If your application should run on browsers without native Web Components support
 ### Edge only
 
 ```js
-import "@ui5/webcomponents-base/src/browsersupport/Edge";
+import "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/browsersupport/Edge";
 ```
 
 ### Edge and IE11
 
 ```js
-import "@ui5/webcomponents-base/src/browsersupport/IE11";
+import "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/browsersupport/IE11";
 ```
 
 *Note:* Importing the module for IE11 support automatically enables Edge support as well, so there is no need to import them both explicitly.
