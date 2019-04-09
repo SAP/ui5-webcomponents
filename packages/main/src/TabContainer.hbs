@@ -11,6 +11,8 @@
 							id="{{this.item._id}}"
 							tabindex="{{this.item._tabIndex}}"
 							@click="{{../ctr._headerItem.click}}"
+							@keydown="{{../ctr._headerItem.keydown}}"
+							@keyup="{{../ctr._headerItem.keyup}}"
 							role="tab"
 							aria-posinset="{{this.position}}"
 							aria-setsize="{{../renderItems.length}}"

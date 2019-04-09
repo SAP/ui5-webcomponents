@@ -4,6 +4,7 @@ import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler";
 import ScrollEnablement from "@ui5/webcomponents-base/src/delegate/ScrollEnablement";
 import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation";
 import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents";
 import TabContainerTemplateContext from "./TabContainerTemplateContext";
 import TabContainerRenderer from "./build/compiled/TabContainerRenderer.lit";
 import Button from "./Button";
@@ -175,7 +176,9 @@ class TabContainer extends WebComponent {
 	constructor() {
 		super();
 
-		this._onTabItemSelect = this._onTabItemSelect.bind(this);
+		this._onHeaderItemSelect = this._onHeaderItemSelect.bind(this);
+		this._onHeaderItemKeyDown = this._onHeaderItemKeyDown.bind(this);
+		this._onHeaderItemKeyUp = this._onHeaderItemKeyUp.bind(this);
 		this._onOverflowListItemSelect = this._onOverflowListItemSelect.bind(this);
 		this._onOverflowButtonClick = this._onOverflowButtonClick.bind(this);
 		this._onHeaderBackArrowClick = this._onHeaderBackArrowClick.bind(this);
@@ -184,7 +187,9 @@ class TabContainer extends WebComponent {
 		this._updateScrolling = this._updateScrolling.bind(this);
 
 		this._headerItem = {
-			click: this._onTabItemSelect,
+			click: this._onHeaderItemSelect,
+			keydown: this._onHeaderItemKeyDown,
+			keyup: this._onHeaderItemKeyUp,
 		};
 
 		this._overflowButton = {
@@ -233,6 +238,23 @@ class TabContainer extends WebComponent {
 		ResizeHandler.deregister(this._getHeader(), this._handleHeaderResize);
 	}
 
+	_onHeaderItemKeyDown(event) {
+		if (isEnter(event)) {
+			this._onHeaderItemSelect(event);
+		}
+
+		// Prevent Scrolling
+		if (isSpace(event)) {
+			event.preventDefault();
+		}
+	}
+
+	_onHeaderItemKeyUp(event) {
+		if (isSpace(event)) {
+			this._onHeaderItemSelect(event);
+		}
+	}
+
 	_initItemNavigation() {
 		this._itemNavigation = new ItemNavigation(this);
 		this._itemNavigation.getItemsCallback = () => this.items;
@@ -240,7 +262,7 @@ class TabContainer extends WebComponent {
 		this._delegates.push(this._itemNavigation);
 	}
 
-	_onTabItemSelect(event) {
+	_onHeaderItemSelect(event) {
 		if (!event.target.getAttribute("disabled")) {
 			this._onItemSelect(event.target);
 		}
