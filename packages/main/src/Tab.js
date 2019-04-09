@@ -1,5 +1,6 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
 import URI from "@ui5/webcomponents-base/src/types/URI";
+import Function from "@ui5/webcomponents-base/src/types/Function";
 import TabBase from "./TabBase";
 import TabTemplateContext from "./TabTemplateContext";
 import IconColor from "./types/IconColor";
@@ -88,6 +89,15 @@ const metadata = {
 			type: Boolean,
 			defaultValue: false,
 		},
+
+		_tabIndex: {
+			type: String,
+			defaultValue: "-1",
+		},
+
+		_getTabContainerHeaderItemCallback: {
+			type: Function,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Tab.prototype */ {
 
@@ -124,6 +134,16 @@ class Tab extends TabBase {
 		await Icon.define();
 
 		super.define(...params);
+	}
+
+	getFocusDomRef() {
+		let focusedDomRef = super.getFocusDomRef();
+
+		if (this._getTabContainerHeaderItemCallback) {
+			focusedDomRef = this._getTabContainerHeaderItemCallback();
+		}
+
+		return focusedDomRef;
 	}
 }
 

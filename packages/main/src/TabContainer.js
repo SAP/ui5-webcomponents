@@ -257,7 +257,7 @@ class TabContainer extends WebComponent {
 
 	_initItemNavigation() {
 		this._itemNavigation = new ItemNavigation(this);
-		this._itemNavigation.getItemsCallback = () => this.items;
+		this._itemNavigation.getItemsCallback = () => this._getTabs();
 
 		this._delegates.push(this._itemNavigation);
 	}
@@ -276,6 +276,7 @@ class TabContainer extends WebComponent {
 
 	_onItemSelect(target) {
 		const selectedIndex = this.items.findIndex(item => item._id === target.id);
+		const selectedTabIndex = this._getTabs().findIndex(item => item._id === target.id);
 		const currentSelectedTab = this.items[selectedIndex];
 
 		// update selected items
@@ -285,7 +286,7 @@ class TabContainer extends WebComponent {
 				item.selected = selected;
 
 				if (selected) {
-					this._itemNavigation.current = index;
+					this._itemNavigation.current = selectedTabIndex;
 				}
 			}
 		}, this);
@@ -334,6 +335,10 @@ class TabContainer extends WebComponent {
 
 	_getHeader() {
 		return this.shadowRoot.querySelector(`#${this._id}-header`);
+	}
+
+	_getTabs() {
+		return this.items.filter(item => !item.isSeparator());
 	}
 
 	_getHeaderScrollContainer() {
