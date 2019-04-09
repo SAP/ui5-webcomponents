@@ -67,6 +67,12 @@
 	<ui5-shellbar-item data-ui5-slot="items" id="call" src="sap-icon://incoming-call" text="Incoming Calls"></ui5-shellbar-item>
 
 	<ui5-input data-ui5-slot="searchField"></ui5-input>
+
+	<ui5-li data-ui5-slot="menuItems" type="Active">Application 1</ui5-li>
+	<ui5-li data-ui5-slot="menuItems" type="Active">Application 2</ui5-li>
+	<ui5-li data-ui5-slot="menuItems" type="Active">Application 3</ui5-li>
+	<ui5-li data-ui5-slot="menuItems" type="Active">Application 4</ui5-li>
+	<ui5-li data-ui5-slot="menuItems" type="Active">Application 5</ui5-li>
 </ui5-shellbar>
 
 <ui5-popover id="action-popover" hide-header placement-type="Bottom">
@@ -85,24 +91,11 @@
 	</div>
 </ui5-popover>
 
-<ui5-popover id="app-list-popover" hide-header placement-type="Bottom">
-	<ui5-list separators="None">
-		<ui5-li type="Active">Application 1</ui5-li>
-		<ui5-li type="Active">Application 2</ui5-li>
-		<ui5-li type="Active">Application 3</ui5-li>
-		<ui5-li type="Active">Application 4</ui5-li>
-		<ui5-li type="Active">Application 5</ui5-li>
-	</ui5-list>
-</ui5-popover>
-
 <script>
 	shellbar.addEventListener("profilePress", function(event) {
 		window["action-popover"].openBy(event.detail.targetRef);
 	});
 
-	shellbar.addEventListener("titlePress", function(event) {
-		window["app-list-popover"].openBy(event.detail.targetRef);
-	});
 </script>
 				</div>
 
@@ -126,6 +119,13 @@
 	<ui5-shellbar-item data-ui5-slot="items" id="call" src="sap-icon://incoming-call" text="Incoming Calls"></ui5-shellbar-item>
 
 	<ui5-input data-ui5-slot="searchField"></ui5-input>
+
+	<ui5-li data-ui5-slot="menuItems" type="Active">Application 1</ui5-li>
+	<ui5-li data-ui5-slot="menuItems" type="Active">Application 2</ui5-li>
+	<ui5-li data-ui5-slot="menuItems" type="Active">Application 3</ui5-li>
+	<ui5-li data-ui5-slot="menuItems" type="Active">Application 4</ui5-li>
+	<ui5-li data-ui5-slot="menuItems" type="Active">Application 5</ui5-li>
+
 </ui5-shellbar>
 
 <ui5-popover id="popover" hide-header placement-type="Bottom">
@@ -144,24 +144,11 @@
 	</div>
 </ui5-popover>
 
-<ui5-popover id="app-list-popover" hide-header placement-type="Bottom">
-	<ui5-list separators="None">
-		<ui5-li type="Active">Application 1</ui5-li>
-		<ui5-li type="Active">Application 2</ui5-li>
-		<ui5-li type="Active">Application 3</ui5-li>
-		<ui5-li type="Active">Application 4</ui5-li>
-		<ui5-li type="Active">Application 5</ui5-li>
-	</ui5-list>
-</ui5-popover>
-
 <script>
 	shellbar.addEventListener("profilePress", function(event) {
 		popover.openBy(event.detail.targetRef);
 	});
 
-	shellbar.addEventListener("titlePress", function(event) {
-		window["app-list-popover"].openBy(event.detail.targetRef);
-	});
 </script>
 		</xmp>
 				</pre>
@@ -380,6 +367,11 @@ The <code>ui5-shellbar</code> is meant to serve as an application header and inc
                       <div class="cell api-table-content-cell api-table-content-cell-description">Defines the <code>ui5-shellbar</code> aditional items. </br></br> <b>Note:</b> You can use the &nbsp;&lt;ui5-shellbar-item>&lt;/ui5-shellbar-item>.</div>
                     </div>
                     <div class="row api-table-roll-even">
+                      <div class="cell api-table-content-cell api-table-content-cell-bold">menuItems</div>
+                      <div class="cell api-table-content-cell">HTMLElement</div>
+                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the items displayed in menu after a click on the primary title. </br></br> <b>Note:</b> You can use the &nbsp;&lt;ui5-li>&lt;/ui5-li> and its ancestors.</div>
+                    </div>
+                    <div class="row api-table-roll-odd">
                       <div class="cell api-table-content-cell api-table-content-cell-bold">searchField</div>
                       <div class="cell api-table-content-cell">HTMLElement [0..n]</div>
                       <div class="cell api-table-content-cell api-table-content-cell-description">Defines the <code>ui5-input</code>, that will be used as a search field.</div>
@@ -415,6 +407,15 @@ The <code>ui5-shellbar</code> is meant to serve as an application header and inc
                         <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> HTMLElement </br> <strong class="api-table-event-description bold">description:</strong> dom ref of the clicked element</div>
                         </tr>
                       <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">menuItemPress</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">Fired, when a menu item is selected</div>
+                      </div>
+            
+                        <tr class="api-table-event-param" >
+                        <div class="cell api-table-param-name api-table-content-cell api-table-content-cell-bold">item</div>
+                        <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> HTMLElement </br> <strong class="api-table-event-description bold">description:</strong> dom ref of the clicked list item</div>
+                        </tr>
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">notificationsPress</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">Fired, when the notification icon is pressed.</div>
                       </div>
@@ -423,7 +424,7 @@ The <code>ui5-shellbar</code> is meant to serve as an application header and inc
                         <div class="cell api-table-param-name api-table-content-cell api-table-content-cell-bold">targetRef</div>
                         <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> HTMLElement </br> <strong class="api-table-event-description bold">description:</strong> dom ref of the clicked element</div>
                         </tr>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">productSwitchPress</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">Fired, when the product switch icon is pressed.</div>
                       </div>
@@ -432,18 +433,9 @@ The <code>ui5-shellbar</code> is meant to serve as an application header and inc
                         <div class="cell api-table-param-name api-table-content-cell api-table-content-cell-bold">targetRef</div>
                         <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> HTMLElement </br> <strong class="api-table-event-description bold">description:</strong> dom ref of the clicked element</div>
                         </tr>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">profilePress</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">Fired, when the profile icon is pressed.</div>
-                      </div>
-            
-                        <tr class="api-table-event-param" >
-                        <div class="cell api-table-param-name api-table-content-cell api-table-content-cell-bold">targetRef</div>
-                        <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> HTMLElement </br> <strong class="api-table-event-description bold">description:</strong> dom ref of the clicked element</div>
-                        </tr>
-                      <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">titlePress</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">Fired, when the primaryTitle is pressed.</div>
                       </div>
             
                         <tr class="api-table-event-param" >

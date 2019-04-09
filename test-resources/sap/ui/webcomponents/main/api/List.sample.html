@@ -61,33 +61,33 @@
 		<h3>List in Single-selection Mode</h3>
 		<div class="snippet">
 			<ui5-list id="country-selector" class="full-width" mode="SingleSelect" header-text="Select a country:">
-				<ui5-li key="Argentina" type="Active" selected icon="sap-icon://map" icon-end>Argentina</ui5-li>
-				<ui5-li key="Bulgaria" type="Active" icon="sap-icon://map" icon-end>Bulgaria</ui5-li>
-				<ui5-li key="China" type="Active" icon="sap-icon://map" icon-end>China</ui5-li>
-				<ui5-li key="Denmark" type="Inactive"  icon="sap-icon://map" icon-end>Denmark (ui5-li type='Inactive')</ui5-li>
+				<ui5-li type="Active" selected icon="sap-icon://map" icon-end>Argentina</ui5-li>
+				<ui5-li type="Active" icon="sap-icon://map" icon-end>Bulgaria</ui5-li>
+				<ui5-li type="Active" icon="sap-icon://map" icon-end>China</ui5-li>
+				<ui5-li type="Inactive"  icon="sap-icon://map" icon-end>Denmark (ui5-li type='Inactive')</ui5-li>
 			</ui5-list>
 
 			<script>
 				document.getElementById('country-selector').addEventListener("selectionChange", function (event) {
-					var selectedItemsKeys = event.detail.items;
+					var selectedItems = event.detail.items;
 
-					alert("Key of the selected item:  " + selectedItemsKeys[0].getAttribute("key"));
+					alert("The selected item:  " + selectedItems[0].textContent);
 				});
 			</script>
 		</div>
 		<pre class="prettyprint lang-html"><xmp>
 <ui5-list id="country-selector" mode="SingleSelect" header-text="Select a country:">
-	<ui5-li key="Argentina" type="Active" selected icon="sap-icon://map" icon-end>Argentina</ui5-li>
-	<ui5-li key="Bulgaria" type="Active" icon="sap-icon://map" icon-end>Bulgaria</ui5-li>
-	<ui5-li key="China" type="Active" icon="sap-icon://map" icon-end>China</ui5-li>
-	<ui5-li key="Denmark" type="Inactive"  icon="sap-icon://map" icon-end>Denmark (ui5-li type='Inactive')</ui5-li>
+	<ui5-li type="Active" selected icon="sap-icon://map" icon-end>Argentina</ui5-li>
+	<ui5-li type="Active" icon="sap-icon://map" icon-end>Bulgaria</ui5-li>
+	<ui5-li type="Active" icon="sap-icon://map" icon-end>China</ui5-li>
+	<ui5-li type="Inactive"  icon="sap-icon://map" icon-end>Denmark (ui5-li type='Inactive')</ui5-li>
 </ui5-list>
 
 <script>
 	document.getElementById('country-selector').addEventListener("selectionChange", function (event) {
-		var selectedItemsKeys = event.detail.items;
+		var selectedItems = event.detail.items;
 
-		alert("Key of the selected item:  " + selectedItemsKeys.join(", "));
+		alert("The selected item:  " + selectedItems[0].textContent);
 	});
 </script>
 		</xmp></pre>
@@ -164,16 +164,16 @@
 		<h3>List in Delete Mode</h3>
 		<div class="snippet">
 			<ui5-list id="myList5" class="full-width" mode="Delete" header-text="Note: The list items removal is up to application developers">
-				<ui5-li key="arg">Argentina</ui5-li>
-				<ui5-li key="bg">Bulgaria</ui5-li>
-				<ui5-li key="ch">China</ui5-li>
+				<ui5-li>Argentina</ui5-li>
+				<ui5-li>Bulgaria</ui5-li>
+				<ui5-li>China</ui5-li>
 			</ui5-list>
 		</div>
 		<pre class="prettyprint lang-html"><xmp>
 <ui5-list id="myList5" mode="Delete" header-text="Note: The list items removal is up to application developers">
-	<ui5-li key="arg">Argentina</ui5-li>
-	<ui5-li key="bg">Bulgaria</ui5-li>
-	<ui5-li key="ch">China</ui5-li>
+	<ui5-li>Argentina</ui5-li>
+	<ui5-li>Bulgaria</ui5-li>
+	<ui5-li>China</ui5-li>
 </ui5-list>
 		</xmp></pre>
 	</section>

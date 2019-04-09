@@ -1,5 +1,13 @@
-commit f778dbf566eedd1592f75bae5f75c4f480ae72dd
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Apr 8 15:22:25 2019 +0300
+commit f24f78bc0ffc8d6fffcf7fe3b770dfbfeef2d51e
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Tue Apr 9 11:00:20 2019 +0300
 
-     fix(ui5-card): remove header double border if no content (#312)
+    feat(ui5-shellbar): menuItems slot and menuItemPress event (#317)
+    
+    - menuItems renders list items in a popover which is might be open by clicking the primary title
+    - menuItemPress is fired when a menu item is pressed
+    - if no menu items are defined - no arrow down is rendered next to the primary title
+    
+    BREAKING CHANGE: titlePress event is removed and replaced by menuItems slot.
+    
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/290
