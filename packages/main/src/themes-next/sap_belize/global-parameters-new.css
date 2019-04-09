@@ -9,7 +9,7 @@
 	--sapUiBaseBG: var(--sapBackgroundColor); /*  #fafafa */
 	--sapUiGlobalBackgroundColor: var(--sapBackgroundColor);
 	--sapUiFontFamily: var(--sapFontFamily);
-	--sapUiFontSize: 16px; /*  var(--sapFontSize); */
+	--sapUiFontSize: var(--sapFontSize);
 	--sapUiBaseText: var(--sapTextColor); /*  #333333 */
 	--sapUiLink: var(--sapLinkColor); /*  #0070b1 */
 	--sapUiGlobalLogo: var(--sapCompanyLogo);
@@ -286,6 +286,10 @@
 	--sapUiDragAndDropActiveColor: var(--sapUiLink);
 	--sapUiDragAndDropActiveBorderColor: var(--sapUiLink);
 	--sapGroup_Title_FontSize: var(--sapFontSize);
-	/* sapUiShadowText: 0 0 0.125rem var(--sapUiContentContrastShadowColor); */
-	/* sapUiShadowHeader: 0 0.125rem 0 0 var(--sapUiObjectHeaderBackground), inset 0 -0.125rem 0 0 var(--sapUiObjectHeaderBorderColor) */
+	/* sapUiShadowText: 0 0 0.125rem var(--sapUiContentContrastShadowColor);
+	sapUiShadowHeader: 0 0.125rem 0 0 var(--sapUiObjectHeaderBackground), inset 0 -0.125rem 0 0 var(--sapUiObjectHeaderBorderColor)
+	sapUiShadowLevel0: 0 0 0 1px var(--sapUiContentShadowColorFade15);
+	sapUiShadowLevel1: 0 0.125rem 0.5rem 0 var(--sapUiContentShadowColorFade15), var(--sapUiShadowLevel0);
+	sapUiShadowLevel2: 0 0.625rem 1.875rem 0 var(--sapUiContentShadowColorFade15), var(--sapUiShadowLevel0);
+	sapUiShadowLevel3: 0 1.25rem 5rem 0 var(--sapUiContentShadowColorFade15), var(--sapUiShadowLevel0); */
 }

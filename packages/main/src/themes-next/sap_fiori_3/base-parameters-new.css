@@ -157,5 +157,5 @@
 	--sapTile_Background: var(--sapBaseColor);
 	--sapTile_BorderColor: transparent;
 
-	--sapUiShadowText: 0 0 0.125rem var(--sapUiContentContrastShadowColor),
+	--sapUiShadowText: 0 0 0.125rem var(--sapUiContentContrastShadowColor);
 }

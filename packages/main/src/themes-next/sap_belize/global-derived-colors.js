@@ -98,11 +98,8 @@ const derivations = {
 	"--sapUiInfobarHoverBackground": () => darken("--sapUiInfobarBackground", 3),
 	"--sapUiObjectHeaderBorderColor": () => darken("--sapUiObjectHeaderBackground", 8),
 	"--sapUiDragAndDropActiveBackground": () => fade("--sapUiLink", 5),
-	// --sapUiSegmentedButtonActiveTextColor: contrast(var(--sapUiSegmentedButtonActiveBackground), var(--sapUiSegmentedButtonTextColor), var(--sapUiContentContrastTextColor), var(--sapUiContentContrastTextThreshold));
-	// "--sapUiShadowLevel0": () => 0 0 0 1 px fade("--sapUiContentShadowColor", 15),
-	// "--sapUiShadowLevel1": () => 0 0.125 rem 0.5 rem 0 fade("--sapUiContentShadowColor", 15),
-	// "--sapUiShadowLevel2": () => 0 0.625 rem 1.875 rem 0 fade("--sapUiContentShadowColor", 15),
-	// "--sapUiShadowLevel3": () => 0 1.25 rem 5 rem 0 fade("--sapUiContentShadowColor", 15),
+	"--sapUiSegmentedButtonActiveTextColor": () => contrast("--sapUiSegmentedButtonActiveBackground", "--sapUiSegmentedButtonTextColor", "--sapUiContentContrastTextColor", "--sapUiContentContrastTextThreshold"),
+	"--sapUiContentShadowColorFade15": () => fade("--sapUiContentShadowColor", 15),
 };
 
 exports.derivations = derivations;

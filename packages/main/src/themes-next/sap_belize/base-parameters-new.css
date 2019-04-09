@@ -27,8 +27,7 @@
 	--sapBackgroundColorDefault: var(--sapPrimary5);
 	--sapBackgroundColor: var(--sapPrimary5);
 	--sapFontFamily: "72", "72full", Arial, Helvetica, sans-serif;
-	/* sapFontSize: calc(0.875 * (sapContent_GridSize)); */
-	/*  0.75em; */
+	--sapFontSize: calc(0.875 * (sapContent_GridSize)); /*  0.75em; */
 	--sapTextColor: var(--sapPrimary7);
 	--sapLinkColor: #0070b1;
 	--sapCompanyLogo: none;
@@ -88,9 +87,9 @@
 	--sapSelectedColor: var(--sapHighlightColor);
 	--sapActiveColor: var(--sapHighlightColor);
 	--sapTitleColor: var(--sapTextColor);
-	/* sapElement_LineHeight: calc(3 * var(--sapContent_GridSize));
-	sapElement_Height: calc(2.5 * var(--sapContent_GridSize));
-	sapElement_BorderWidth: calc(0.0625 * var(--sapContent_GridSize)); */
+	--sapElement_LineHeight: calc(3 * var(--sapContent_GridSize));
+	--sapElement_Height: calc(2.5 * var(--sapContent_GridSize));
+	--sapElement_BorderWidth: calc(0.0625 * var(--sapContent_GridSize));
 	--sapContent_LineHeight: 1.4;
 	/*  1.3; */
 	--sapContent_ElementHeight: 1.37em;
@@ -112,9 +111,7 @@
 	--sapContent_ForegroundBorderColor: var(--sapPrimary6);
 	--sapContent_BadgeBackground: var(--sapAccentColor3);
 	--sapButton_BorderWidth: var(--sapElement_BorderWidth);
-	/*  1px; */
-	/* sapButton_BorderCornerRadius: calc(0.2 * var(--sapContent_GridSize)); */
-	/*  3px; */
+	--sapButton_BorderCornerRadius: calc(0.2 * var(--sapContent_GridSize));
 	--sapButton_Hover_BorderColor: var(--sapButton_BorderColor);
 	--sapButton_Reject_Background: var(--sapButton_Background);
 	--sapButton_Accept_Background: var(--sapButton_Background);
@@ -123,7 +120,6 @@
 	--sapField_TextColor: #000;
 	--sapField_HelpBackground: var(--sapField_Background);
 	--sapField_BorderWidth: var(--sapElement_BorderWidth);
-	/*  1px; */
 	--sapField_BorderCornerRadius: 0;
 	--sapField_Hover_Background: var(--sapField_Background);
 	--sapField_Hover_BorderColor: var(--sapHighlightColor);
