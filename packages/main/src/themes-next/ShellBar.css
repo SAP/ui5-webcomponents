@@ -40,20 +40,20 @@ ui5-shellbar {
 	font-weight: bold;
 }
 
-.sapWCShellBarMenuButton:hover,
+.sapWCShellBarMenuButton.sapWCShellBarMenuButtonInteractive:hover,
 .sapWCShellBarIconButton:hover,
 .sapWCShellBarImageButton:hover {
 	background: var(--sapUiShellHoverBackground);
 }
 
-.sapWCShellBarMenuButton:active,
+.sapWCShellBarMenuButton.sapWCShellBarMenuButtonInteractive:active,
 .sapWCShellBarIconButton:active,
 .sapWCShellBarImageButton:active {
 	background: var(--sapUiShellActiveBackground);
 	color: var(--sapUiShellActiveTextColor);
 }
 
-.sapWCShellBarMenuButton:focus::after,
+.sapWCShellBarMenuButton.sapWCShellBarMenuButtonInteractive:focus::after,
 .sapWCShellBarIconButton:focus::after,
 .sapWCShellBarImageButton:focus::after {
 	content: "";
@@ -67,7 +67,7 @@ ui5-shellbar {
 	z-index: 1;
 }
 
-.sapWCShellBarMenuButton::-moz-focus-inner {
+.sapWCShellBarMenuButton.sapWCShellBarMenuButtonInteractive::-moz-focus-inner {
 	border: none;
 }
 
@@ -107,7 +107,7 @@ ui5-shellbar {
 	overflow: hidden;
 }
 
-.sapWCShellBarMenuButtonArrow {
+.sapWCShellBarMenuButtonInteractive .sapWCShellBarMenuButtonArrow {
 	display: inline-block;
 	margin-left: 0.5rem;
 	width: 10px;
@@ -197,6 +197,10 @@ ui5-shellbar {
 	height: 1.675rem;
 }
 
+.sapWCShellBarLogo:not([src]) {
+	display: none;
+}
+
 .sapWCShellBarIconButton {
 	min-width: 2.25rem;
 	font-size: 1rem;
@@ -232,6 +236,19 @@ ui5-shellbar {
 	display: flex;
 	align-items: center;
 	padding: 0.25rem 0.5rem;
+	cursor: text;
+	-webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+	user-select: text;
+}
+
+.sapWCShellBarMenuButton.sapWCShellBarMenuButtonInteractive {
+	-webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+	user-select: none;
+	cursor: pointer;
 }
 
 .sapWCShellBarMenuButton.sapWCShellBarMenuButtonNoLogo {
@@ -379,7 +396,7 @@ span[dir=rtl] .sapWCShellBarMenuButton {
 	margin-left: 0;
 }
 
-span[dir=rtl] .sapWCShellBarMenuButtonArrow {
+span[dir=rtl] .sapWCShellBarMenuButtonInteractive .sapWCShellBarMenuButtonArrow {
 	margin-right: .5rem;
 	margin-left: 0;
 }

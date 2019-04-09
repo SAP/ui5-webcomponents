@@ -44,6 +44,7 @@ class ShellBarTemplateContext {
 					"sapWCShellBarMenuButtonNoTitle": !state.primaryTitle,
 					"sapWCShellBarMenuButtonNoLogo": !state.logo,
 					"sapWCShellBarMenuButtonMerged": state._breakpointSize === "S",
+					"sapWCShellBarMenuButtonInteractive": !!state.menuItems.length,
 					"sapWCShellBarMenuButton": true,
 				},
 				buttonTitle: {
