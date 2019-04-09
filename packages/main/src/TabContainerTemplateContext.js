@@ -45,7 +45,7 @@ class TabContainerTemplateContext {
 		};
 
 		context.renderItems = context.ctr.items.map((item, index) => {
-			const isSeparator = item.isSeparator && item.isSeparator();
+			const isSeparator = item.isSeparator();
 
 			if (isSeparator) {
 				return { isSeparator };

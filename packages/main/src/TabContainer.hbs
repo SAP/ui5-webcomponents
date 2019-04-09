@@ -8,6 +8,8 @@
 				{{#each renderItems}}
 					{{#unless this.isSeparator}}
 						<li class="{{this.headerItemClasses}}"
+							id="ui5-tc-headerItem-{{this.item._id}}"
+							tabindex="{{this.item._tabIndex}}"
 							@click="{{../ctr._headerItem.click}}"
 							role="tab"
 							data-position="{{this.position}}"

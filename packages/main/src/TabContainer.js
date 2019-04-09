@@ -2,6 +2,7 @@ import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
 import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler";
 import ScrollEnablement from "@ui5/webcomponents-base/src/delegate/ScrollEnablement";
+import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation";
 import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
 import TabContainerTemplateContext from "./TabContainerTemplateContext";
 import TabContainerRenderer from "./build/compiled/TabContainerRenderer.lit";
@@ -206,6 +207,19 @@ class TabContainer extends WebComponent {
 		this._scrollEnablement = new ScrollEnablement();
 		this._scrollEnablement.attachEvent("scroll", this._updateScrolling);
 		this._delegates.push(this._scrollEnablement);
+
+		// Init ItemNavigation
+		this._initItemNavigation();
+	}
+
+	onBeforeRendering() {
+		this.items.forEach(item => {
+			if (!item.isSeparator()) {
+				item._getTabContainerHeaderItemCallback = _ => {
+					return this.getDomRef().querySelector(`#ui5-tc-headerItem-${item._id}`);
+				};
+			}
+		});
 	}
 
 	onAfterRendering() {
@@ -219,6 +233,13 @@ class TabContainer extends WebComponent {
 
 	onExitDOM() {
 		ResizeHandler.deregister(this._getHeader(), this._handleHeaderResize);
+	}
+
+	_initItemNavigation() {
+		this._itemNavigation = new ItemNavigation(this);
+		this._itemNavigation.getItemsCallback = () => this.items.filter(item => !item.isSeparator());
+
+		this._delegates.push(this._itemNavigation);
 	}
 
 	_onTabItemSelect(event) {

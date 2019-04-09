@@ -74,6 +74,16 @@
 	opacity: 0.5;
 }
 
+.ui5-tc__headerItem:focus {
+	outline: none;
+}
+
+.ui5-tc__headerItem--withIcon:focus .ui5-tc-headerItemIcon,
+.ui5-tc__headerItem--mixedMode:focus .ui5-tc__headerItemContent,
+.ui5-tc__headerItem--textOnly:focus .ui5-tc__headerItemContent{
+	outline: var(--_ui5_tc_headerItemFocus_border);
+}
+
 /*** Icon and text Tab styles ***/
 .ui5-tc__headerItem--withIcon,
 .ui5-tc__headerItem--mixedMode {
