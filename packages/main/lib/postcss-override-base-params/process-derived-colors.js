@@ -23,6 +23,10 @@ const extractName = varRef => {
 	return result[1];
 };
 
+const isCalcUsed = value => {
+	return value.includes("calc(");
+};
+
 const isStatic = value => {
 	return !value.includes("var(--");
 };
@@ -76,7 +80,6 @@ global.desaturate = async (col, value) => {
 }
 
 global.mix = async (color1, color2, value) => {
-	;
 	const color1Value = await getPromiseFor(color1);
 	const color2Value = await getPromiseFor(color2);
 	const col1 = new Color(color1Value.replace("#", ""))
@@ -134,7 +137,7 @@ const findCSSVars = styleString => {
 	couples.forEach(couple => {
 		const [varName, varValue] = couple.split(/:\s*/);
 
-		if (isStatic(varValue)) {
+		if (isStatic(varValue) || isCalcUsed(varValue)) {
 			resolvePromiseFor(varName, varValue);
 		} else { // Case: variable, that reference another variable, e.g. --a: var(--b);
 			let refName = extractName(varValue); // extract the variable that we depend on, e.g. --b
