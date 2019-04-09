@@ -12,4 +12,10 @@ describe("Card general interaction", () => {
 
 		assert.strictEqual(field.getProperty("value"), "3", "headerPress should be called 3 times");
 	});
+
+	it("Uses slotted header instead of properties", () => {
+		const cardHeader = browser.findElementDeep(".header-slot-item");
+
+		assert.ok(cardHeader.isDisplayed(), "Content from slot should take advantage");
+	});
 });

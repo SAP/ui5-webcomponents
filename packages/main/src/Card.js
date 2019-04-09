@@ -36,6 +36,18 @@ const metadata = {
 			type: HTMLElement,
 			multiple: true,
 		},
+
+		/**
+		 * Defines the header of the <code>ui5-card</code>.
+		 * If not given standart card header will be applied.
+		 * @type {HTMLElement[]}
+		 * @slot
+		 * @public
+		 * @since 0.10.0
+		 */
+		header: {
+			type: HTMLElement,
+		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.Card.prototype */ {
 

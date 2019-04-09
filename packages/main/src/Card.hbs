@@ -4,26 +4,32 @@
 		@keydown="{{ctr._headerKeydown}}"
 		@keyup="{{ctr._headerKeyup}}"
 		tabindex="0">
-		{{#if image}}
-			<img src="{{ctr.avatar}}" aria-label="Avatar" class="sapFCardAvatar sapFCardHeaderImg">
-		{{/if}}
-		
-		{{#if icon}}
-			<span role="img" aria-label="Avatar" class="sapFCardAvatar">
-				<ui5-icon class="sapFCardHeaderIcon" src="{{ctr.avatar}}"></ui5-icon>
-			</span>
-		{{/if}}
+		{{#if ctr.header}}
+			<slot name="{{ctr.header._slot}}"></slot>
+		{{else}}
 
-		<div class="sapFCardHeaderText">
-			{{#if ctr.heading}}
-				<div class="sapFCardTitle">{{ctr.heading}}</div>
+			{{#if image}}
+				<img src="{{ctr.avatar}}" aria-label="Avatar" class="sapFCardAvatar sapFCardHeaderImg">
 			{{/if}}
 
-			{{#if ctr.subtitle}}
-				<div class="sapFCardSubtitle ">{{ctr.subtitle}}</div>
+			{{#if icon}}
+				<span role="img" aria-label="Avatar" class="sapFCardAvatar">
+					<ui5-icon class="sapFCardHeaderIcon" src="{{ctr.avatar}}"></ui5-icon>
+				</span>
 			{{/if}}
-		</div>
-		<span class="sapFCardStatus">{{ctr.status}}</span>
+
+			<div class="sapFCardHeaderText">
+				{{#if ctr.heading}}
+					<div class="sapFCardTitle">{{ctr.heading}}</div>
+				{{/if}}
+
+				{{#if ctr.subtitle}}
+					<div class="sapFCardSubtitle ">{{ctr.subtitle}}</div>
+				{{/if}}
+			</div>
+			<span class="sapFCardStatus">{{ctr.status}}</span>
+
+		{{/if}}
 	</header>
 	<section class="sapFCardContent">
 		{{#each ctr.content}}
