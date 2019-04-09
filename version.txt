@@ -1,7 +1,5 @@
-commit 76bf9f3ac77bcb6ef7961095bb8d337345f87bef
+commit a0458b5ccd345ea43e60d95d95d82f57540822b9
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Apr 9 11:36:28 2019 +0300
+Date:   Tue Apr 9 16:08:43 2019 +0300
 
-    fix(ui5-li-custom): enable setting height of the custom content (#311)
-    
-    Fixes: https://github.com/SAP/ui5-webcomponents/issues/310
+    chore: visualize events since info (#319)
