@@ -13,7 +13,6 @@
 	box-shadow: var(--_ui5_tc_header_box_shadow);
 	display: flex;
 	align-items: center;
-	padding-top: 1rem;
 }
 
 .ui-tc__headerScrollContainer {
@@ -78,6 +77,7 @@
 /*** Icon and text Tab styles ***/
 .ui5-tc__headerItem--withIcon,
 .ui5-tc__headerItem--mixedMode {
+	margin-top: 0.75rem;
 	padding-bottom: 0.75rem;
 }
 
