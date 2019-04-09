@@ -94,6 +94,11 @@
 	position: relative;
 }
 
+.ui5-tc__headerItem--selected .ui5-tc-headerItemIcon {
+	background-color: var(--sapUiHighlight);
+	color: var(--sapUiGroupContentBackground);
+}
+
 .ui5-tc__headerItem--withIcon .ui5-tc__headerItemAdditionalText {
 	display: block;
 	margin-bottom: 0.625rem;
