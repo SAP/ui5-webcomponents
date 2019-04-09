@@ -96,6 +96,24 @@ global.spin = async (col, value) => {
 	});
 }
 
+global.any = async (...derivations) => {
+	let result = "";
+
+	const derivedPromises = derivations.map(derivation => getPromiseFor(derivation.var));
+
+	await Promise.all(derivedPromises).then((values) => {
+
+		values.forEach((value, i) => {
+			if (i > 0) {
+				result += `, `;
+			}
+			result += `${derivations[i].static} ${value}`;
+		})
+	});
+
+	return result;
+}
+
 const varPromises = new Map();
 const unresolvedNames = new Set();
 const outputVars = new Map();
@@ -154,7 +172,7 @@ const processDerivations = (derivations) => {
 	Object.keys(derivations).map(async newParam => {
 		const transform = derivations[newParam];
 		const derivedColor = await transform();
-		resolvePromiseFor(newParam, derivedColor.toRGB());
+		resolvePromiseFor(newParam, derivedColor.toRGB ? derivedColor.toRGB() : derivedColor);
 	});
 }
 
