@@ -74,7 +74,8 @@
 	opacity: 0.5;
 }
 
-.ui5-tc__headerItem:focus {
+.ui5-tc__headerItem:focus,
+.ui5-tc__separator:focus {
 	outline: none;
 }
 

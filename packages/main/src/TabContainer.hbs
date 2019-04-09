@@ -8,11 +8,10 @@
 				{{#each renderItems}}
 					{{#unless this.isSeparator}}
 						<li class="{{this.headerItemClasses}}"
-							id="ui5-tc-headerItem-{{this.item._id}}"
+							id="{{this.item._id}}"
 							tabindex="{{this.item._tabIndex}}"
 							@click="{{../ctr._headerItem.click}}"
 							role="tab"
-							data-position="{{this.position}}"
 							aria-posinset="{{this.position}}"
 							aria-setsize="{{../renderItems.length}}"
 							aria-controls="ui5-tc-contentItem-{{this.position}}"
@@ -35,7 +34,12 @@
 						</li>
 					{{/unless}}
 					{{#if this.isSeparator}}
-						<li role="separator" class="{{../classes.separator}}"></li>
+						<li id="{{this._id}}"
+							tabindex="{{this._tabIndex}}"
+							role="separator"
+							class="{{../classes.separator}}"
+						>
+						</li>
 					{{/if}}
 				{{/each}}
 			</ul>
@@ -75,10 +79,9 @@
 		<ui5-list @itemPress="{{ctr._overflowList.click}}">
 			{{#each renderItems}}
 				{{#unless this.isSeparator}}
-					<ui5-li-custom id="{{this.id}}"
+					<ui5-li-custom id="{{this.item._id}}"
 						class="{{this.overflowItemClasses}}"
 						type="{{this.overflowItemState}}"
-						data-position="{{this.position}}"
 						selected="{{this.selected}}"
 						disabled="{{this.disabled}}"
 					>

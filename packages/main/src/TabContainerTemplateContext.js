@@ -48,7 +48,7 @@ class TabContainerTemplateContext {
 			const isSeparator = item.isSeparator();
 
 			if (isSeparator) {
-				return { isSeparator };
+				return { isSeparator, _tabIndex: item._tabIndex, _id: item._id };
 			}
 
 			return {

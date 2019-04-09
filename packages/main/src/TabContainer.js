@@ -214,11 +214,9 @@ class TabContainer extends WebComponent {
 
 	onBeforeRendering() {
 		this.items.forEach(item => {
-			if (!item.isSeparator()) {
-				item._getTabContainerHeaderItemCallback = _ => {
-					return this.getDomRef().querySelector(`#ui5-tc-headerItem-${item._id}`);
-				};
-			}
+			item._getTabContainerHeaderItemCallback = _ => {
+				return this.getDomRef().querySelector(`#${item._id}`);
+			};
 		});
 	}
 
@@ -237,7 +235,7 @@ class TabContainer extends WebComponent {
 
 	_initItemNavigation() {
 		this._itemNavigation = new ItemNavigation(this);
-		this._itemNavigation.getItemsCallback = () => this.items.filter(item => !item.isSeparator());
+		this._itemNavigation.getItemsCallback = () => this.items;
 
 		this._delegates.push(this._itemNavigation);
 	}
@@ -251,16 +249,24 @@ class TabContainer extends WebComponent {
 	_onOverflowListItemSelect(event) {
 		this._onItemSelect(event.detail.item);
 		this._getPopover().close();
+		this.shadowRoot.querySelector(`#${event.detail.item.id}`).focus();
 	}
 
 	_onItemSelect(target) {
-		const selectedIndex = parseInt(target.getAttribute("data-position")) - 1;
+		const selectedIndex = this.items.findIndex(item => item._id === target.id);
 		const currentSelectedTab = this.items[selectedIndex];
 
 		// update selected items
 		this.items.forEach((item, index) => {
-			item.selected = selectedIndex === index;
-		});
+			if (!item.isSeparator()) {
+				const selected = selectedIndex === index;
+				item.selected = selected;
+
+				if (selected) {
+					this._itemNavigation.current = index;
+				}
+			}
+		}, this);
 
 		// update collapsed state
 		if (!this.fixed) {

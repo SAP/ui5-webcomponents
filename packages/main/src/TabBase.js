@@ -1,10 +1,19 @@
 import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
+import Function from "@ui5/webcomponents-base/src/types/Function";
 
 /**
  * @public
  */
 const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.TabBase.prototype */{
+		_tabIndex: {
+			type: String,
+			defaultValue: "-1",
+		},
+
+		_getTabContainerHeaderItemCallback: {
+			type: Function,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.TabBase.prototype */ {
 	},
@@ -23,6 +32,16 @@ const metadata = {
 class TabBase extends WebComponent {
 	static get metadata() {
 		return metadata;
+	}
+
+	getFocusDomRef() {
+		let focusedDomRef = super.getFocusDomRef();
+
+		if (this._getTabContainerHeaderItemCallback) {
+			focusedDomRef = this._getTabContainerHeaderItemCallback();
+		}
+
+		return focusedDomRef;
 	}
 
 	isSeparator() {
