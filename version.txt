@@ -1,5 +1,5 @@
-commit 515121f2e871279f29e2b2a5c332c9f589c7d715
+commit b59abd60e156566ea720eaf19ca9796119026d29
 Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Wed Apr 10 16:12:49 2019 +0300
+Date:   Wed Apr 10 18:16:02 2019 +0300
 
-    fix(configuration): fix map literals (#324)
+    fix(ui5-radiobutton): fix focus in ie11 (#327)
