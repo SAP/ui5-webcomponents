@@ -1,5 +1,5 @@
-commit a0458b5ccd345ea43e60d95d95d82f57540822b9
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Apr 9 16:08:43 2019 +0300
+commit d58320bc2761e75900cd91a64555932727326094
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Wed Apr 10 16:10:01 2019 +0300
 
-    chore: visualize events since info (#319)
+    fix(ui5-checkbox): fIx checkbox width in ie11
