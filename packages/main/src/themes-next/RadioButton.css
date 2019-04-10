@@ -10,9 +10,13 @@ ui5-radiobutton {
 	overflow: hidden;
 }
 
+span[data-sap-ui-wc-root] {
+	display: inline-block;
+}
+
 .sapMRb {
 	position: relative;
-	display: inline-flex;
+	display: flex;
 	flex-wrap: nowrap;
 	outline: none;
 	max-width: 100%;
@@ -28,13 +32,8 @@ ui5-radiobutton {
 	opacity: var(--sapUiContentDisabledOpacity);
 }
 
-/* Disabled on focus */
-.sapMRb.sapMRbDis:focus:before {
-	display: none;
-}
-
 /* Focused */
-.sapMRb:focus:before {
+.sapMRb:not(.sapMRbDis):focus:before {
 	content: "";
 	display: block;
 	position: absolute;
