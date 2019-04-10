@@ -1,3 +1,4 @@
+const postcss = require("postcss");
 const fs = require("fs");
 const registry = require("less/lib/less/functions/function-registry");
 require("less/lib/less/functions/color");
@@ -11,10 +12,6 @@ const lessSaturate = registry.get("saturate");
 const lessDesaturate = registry.get("desaturate");
 const lessMix = registry.get("mix");
 const lessSpin = registry.get("spin");
-const theme = process.argv[2] || "sap_fiori_3";
-const baseParamsFile = `../../src/themes-next/${theme}/base-parameters-new.css`;
-const globalParamsFile = `../../src/themes-next/${theme}/global-parameters-new.css`;
-const derivations = require(`../../src/themes-next/${theme}/derived-colors`).derivations;
 
 const readFile = (filePath) => fs.readFileSync(filePath).toString();
 
@@ -31,25 +28,30 @@ const isStatic = value => {
 	return !value.includes("var(--");
 };
 
+const getColorValue = async (col) => {
+	let colorValue = col instanceof Promise ? await col : await getPromiseFor(col);
+	colorValue = colorValue.toRGB ? colorValue.toRGB() : colorValue;
+
+	return colorValue;
+}
+
 global.darken = async (col, value) => {
-	const colorValue = await getPromiseFor(col);
+	const colorValue = await getColorValue(col);
 	return lessDarken(new Color(colorValue.replace("#", "")), {
 		value
 	});
 }
 
 global.lighten = async (col, value) => {
-	let colorValue = col instanceof Promise ? await col : await getPromiseFor(col);
-	colorValue = colorValue.toRGB ? colorValue.toRGB() : colorValue;
-
+	const colorValue = await getColorValue(col);
 	return lessLighten(new Color(colorValue.replace("#", "")), { value });
 }
 
 global.contrast = async (color, dark, light, threshold) => {
-	const colorValue = await getPromiseFor(color);
-	const darkValue = await getPromiseFor(dark);
-	const lightValue = await getPromiseFor(light);
-	const thresholdValue = await getPromiseFor(threshold);
+	const colorValue = await getColorValue(color);
+	const darkValue = await getColorValue(dark);
+	const lightValue = await getColorValue(light);
+	const thresholdValue = await getColorValue(threshold);
 
 	const col1 = new Color(colorValue.replace("#", ""))
 	const col2 = new Color(darkValue.replace("#", ""));
@@ -59,29 +61,29 @@ global.contrast = async (color, dark, light, threshold) => {
 }
 
 global.fade = async (col, value) => {
-	const colorValue = await getPromiseFor(col);
+	const colorValue = await getColorValue(col);
 	return lessFade(new Color(colorValue.replace("#", "")), {
 		value
 	});
 }
 
 global.saturate = async (col, value) => {
-	const colorValue = await getPromiseFor(col);
+	const colorValue = await getColorValue(col);
 	return lessSaturate(new Color(colorValue.replace("#", "")), {
 		value
 	});
 }
 
 global.desaturate = async (col, value) => {
-	const colorValue = await getPromiseFor(col);
+	const colorValue = await getColorValue(col);
 	return lessDesaturate(new Color(colorValue.replace("#", "")), {
 		value
 	});
 }
 
 global.mix = async (color1, color2, value) => {
-	const color1Value = await getPromiseFor(color1);
-	const color2Value = await getPromiseFor(color2);
+	const color1Value = await getColorValue(color1);
+	const color2Value = await getColorValue(color2);
 	const col1 = new Color(color1Value.replace("#", ""))
 	const col2 = new Color(color2Value.replace("#", ""))
 	return lessMix(col1, col2, {
@@ -90,7 +92,7 @@ global.mix = async (color1, color2, value) => {
 }
 
 global.spin = async (col, value) => {
-	const colorValue = await getPromiseFor(col);
+	const colorValue = await getColorValue(col);
 	return lessSpin(new Color(colorValue.replace("#", "")), {
 		value
 	});
@@ -99,7 +101,7 @@ global.spin = async (col, value) => {
 global.any = async (...derivations) => {
 	let result = "";
 
-	const derivedPromises = derivations.map(derivation => getPromiseFor(derivation.var));
+	const derivedPromises = derivations.map(derivation => getColorValue(derivation.var));
 
 	await Promise.all(derivedPromises).then((values) => {
 
@@ -117,6 +119,7 @@ global.any = async (...derivations) => {
 const varPromises = new Map();
 const unresolvedNames = new Set();
 const outputVars = new Map();
+const originalRefs = new Map();
 
 const getPromiseFor = varName => {
 	if (varPromises.has(varName)) {
@@ -158,6 +161,8 @@ const findCSSVars = styleString => {
 		if (isStatic(varValue) || isCalcUsed(varValue)) {
 			resolvePromiseFor(varName, varValue);
 		} else { // Case: variable, that reference another variable, e.g. --a: var(--b);
+			originalRefs.set(varName, varValue);
+
 			let refName = extractName(varValue); // extract the variable that we depend on, e.g. --b
 			let refPromise = getPromiseFor(refName);
 
@@ -176,23 +181,79 @@ const processDerivations = (derivations) => {
 	});
 }
 
-// Step 1: Read entry params files
-const baseParameters = readFile(baseParamsFile);
-const globalParameters = readFile(globalParamsFile);
-const allParameters = baseParameters.concat(globalParameters);
+const restoreRefs = () => {
+	Array.from(originalRefs.entries()).forEach(([key, value]) => {
+		outputVars.set(key, value);
+	})
+};
 
-// Step 2: Find all vars and which are unresolved (has not calculated value)
-findCSSVars(allParameters);
+const clearMaps = () => {
+	varPromises.clear();
+	unresolvedNames.clear();
+	outputVars.clear();
+	originalRefs.clear();
+}
 
-// Step 3: Process derivations
-processDerivations(derivations);
+const pluginQueue = [];
 
-// Step 4: Output the result
-setTimeout(_ => {
-	Array.from(outputVars.entries()).forEach(([key, value]) => {
-		console.log(`${key}: ${value};`)
-	});
-}, 500)
+module.exports = postcss.plugin('process derived colors', function (opts) {
+	opts = opts || {};
+
+	return async function (root) {
+		const theme = root.source.input.from.match(/themes-next\/(\w+)\//)[1];
+
+		const prevPlugins = [...pluginQueue];
+
+		let pluginFinishedResolve;
+		pluginFinished = new Promise(resolve => {
+			pluginFinishedResolve = resolve;
+		});
+		pluginQueue.push(pluginFinished);
+
+		await Promise.all(prevPlugins);
+		console.log('plugin start:', theme);
+
+		const baseParamsFile = `./src/themes-next/${theme}/base-parameters-new.css`;
+		const globalParamsFile = `./src/themes-next/${theme}/global-parameters-new.css`;
+		const derivations = require(`../../src/themes-next/${theme}/derived-colors`).derivations;
+
+		clearMaps();
+		const result = [];
+		// Step 1: Read entry params files
+		const baseParameters = readFile(baseParamsFile);
+		const globalParameters = readFile(globalParamsFile);
+		let allParameters;
+		if (theme === "sap_belize") {
+			allParameters = root.toString();
+		} else {
+			allParameters = baseParameters.concat(globalParameters);
+		}
+
+		// Step 2: Find all vars and which are unresolved (has not calculated value)
+		findCSSVars(allParameters);
+
+		// Step 3: Process derivations
+		processDerivations(derivations);
+		// Step 4: Output the result
+		setTimeout(_ => {
+			// Step 5: Restore refs
+			restoreRefs();
+			Array.from(outputVars.entries()).forEach(([key, value]) => {
+				result.push(`${key}: ${value};`)
+			});
+
+			const newRoot = postcss.parse(`:root { ${result.join("\n") }}`);
+
+			root.removeAll();
+			root.append(...newRoot.nodes);
+			console.log('plugin end:', theme);
+
+			pluginFinishedResolve();
+		}, 500);
+		return pluginFinished;
+	}
+})
+
 
 // Worst case
 // "--sapUiSegmentedButtonFooterBorderColor": () => lighten("--sapUiButtonBorderColor", 8),

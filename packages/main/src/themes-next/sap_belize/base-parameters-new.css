@@ -27,7 +27,7 @@
 	--sapBackgroundColorDefault: var(--sapPrimary5);
 	--sapBackgroundColor: var(--sapPrimary5);
 	--sapFontFamily: "72", "72full", Arial, Helvetica, sans-serif;
-	--sapFontSize: calc(0.875 * (sapContent_GridSize)); /*  0.75em; */
+	--sapFontSize: calc(0.875 * var(--sapContent_GridSize)); /*  0.75em; */
 	--sapTextColor: var(--sapPrimary7);
 	--sapLinkColor: #0070b1;
 	--sapCompanyLogo: none;
@@ -35,7 +35,7 @@
 	--sapBackgroundImageOpacity: 1.0;
 	--sapBackgroundImageRepeat: false;
 	--sapContent_GridSize: 1rem;
-	
+
 	/* Semantic Border Colors */
 	--sapErrorBorderColor: var(--sapErrorColor);
 	/*  #ee0000 */
