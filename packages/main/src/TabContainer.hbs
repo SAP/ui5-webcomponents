@@ -120,9 +120,11 @@
 			<span class="{{this.headerItemAdditionalTextClasses}}" id="{{this.item._id}}-additionalText">{{this.item.additionalText}}</span>
 		{{/if}}
 
-		<span class="{{this.headerItemTextClasses}}" id="{{this.item._id}}-text">
-			{{this.item.text}}
-		</span>
+		{{#if this.item.text}}
+			<span class="{{this.headerItemTextClasses}}" id="{{this.item._id}}-text">
+				{{this.item.text}}
+			</span>
+		{{/if}}
 	</div>
 {{/inline}}
 
@@ -132,8 +134,10 @@
 			<span class="{{this.headerItemAdditionalTextClasses}}" id="{{this.item._id}}-additionalText">{{this.item.additionalText}}</span>
 		{{/if}}
 
-		<span class="{{this.headerItemTextClasses}}" id="{{this.item._id}}-text">
-			{{this.item.text}}
-		</span>
+		{{#if this.item.text}}
+			<span class="{{this.headerItemTextClasses}}" id="{{this.item._id}}-text">
+				{{this.item.text}}
+			</span>
+		{{/if}}
 	</div>
 {{/inline}}

@@ -120,9 +120,9 @@ ui5-tabcontainer {
 	text-shadow: none;
 }
 
-.ui5-tc__headerItem--withIcon .ui5-tc__headerItemAdditionalText {
+.ui5-tc__headerItem--withIcon .ui5-tc__headerItemAdditionalText + .ui5-tc__headerItemText {
 	display: block;
-	margin-bottom: 0.625rem;
+	margin-top: 0.625rem;
 }
 /*** END Icon and text Tab styles ***/
 
@@ -301,7 +301,7 @@ ui5-tabcontainer {
 }
 
 .sapUiSizeCompact .ui5-tc__headerItem--textOnly {
-	line-height: 2rem;
+	line-height: 1.325rem;
 }
 
 .sapUiSizeCompact .ui5-tc-headerItemIcon {
@@ -310,8 +310,8 @@ ui5-tabcontainer {
 	width: 2rem;
 }
 
-.sapUiSizeCompact .ui5-tc__headerItem--withIcon .ui5-tc__headerItemAdditionalText {
-	margin-bottom: 0.3125rem;
+.sapUiSizeCompact .ui5-tc__headerItem--withIcon  .ui5-tc__headerItemAdditionalText + .ui5-tc__headerItemText {
+	margin-top: 0.3125rem;
 }
 
 
