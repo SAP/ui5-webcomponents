@@ -1,5 +1,5 @@
-commit d58320bc2761e75900cd91a64555932727326094
+commit 515121f2e871279f29e2b2a5c332c9f589c7d715
 Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Wed Apr 10 16:10:01 2019 +0300
+Date:   Wed Apr 10 16:12:49 2019 +0300
 
-    fix(ui5-checkbox): fIx checkbox width in ie11
+    fix(configuration): fix map literals (#324)
