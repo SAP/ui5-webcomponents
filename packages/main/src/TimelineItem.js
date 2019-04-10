@@ -87,22 +87,13 @@ const metadata = {
 		},
 
 		/**
-		 * It's a UNIX timestamp - seconds since 00:00:00 UTC on Jan 1, 1970.
-		 * @type {Integer}
+		 * Defines the subtitle text of the component.
+		 * @type {String}
 		 * @public
 		 */
-		timestamp: {
-			type: Integer,
-		},
-
-		/**
-		 * Defines the format of date/time of the component.
-		 * @type {Integer}
-		 * @public
-		 */
-		timeFormat: {
+		subtitleText: {
 			type: String,
-			defaultValue: "dd.MM.YYYY hh:mm",
+			defaultValue: "",
 		},
 
 		_onItemNamePress: {
