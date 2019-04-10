@@ -60,10 +60,9 @@ const _setTheme = themeName => {
 	CONFIGURATION.theme = themeName;
 };
 
-const booleanMapping = new Map([
-	["true", true],
-	["false", false],
-]);
+const booleanMapping = new Map();
+booleanMapping.set("true", true);
+booleanMapping.set("false", false);
 
 let runtimeConfig = {};
 
