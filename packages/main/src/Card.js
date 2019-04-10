@@ -39,8 +39,8 @@ const metadata = {
 
 		/**
 		 * Defines the header of the <code>ui5-card</code>.
-		 * If not given standart card header will be applied.
-		 * @type {HTMLElement[]}
+		 * If not given standard card header will be displayed.
+		 * @type {HTMLElement}
 		 * @slot
 		 * @public
 		 * @since 0.10.0
