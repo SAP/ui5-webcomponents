@@ -2,7 +2,6 @@ import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
 import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
 import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
 import URI from "@ui5/webcomponents-base/src/types/URI";
-import Integer from "@ui5/webcomponents-base/src/types/Integer";
 import Function from "@ui5/webcomponents-base/src/types/Function";
 import { fetchCldrData } from "@ui5/webcomponents-base/src/CLDR";
 import { getLocale } from "@ui5/webcomponents-base/src/LocaleProvider";
