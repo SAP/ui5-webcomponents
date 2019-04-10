@@ -218,6 +218,7 @@ ui5-tabcontainer {
 .ui5-tc__headerItem--positive .ui5-tc-headerItemIcon,
 .ui5-tc__overflowItem--positive {
 	color: var(--sapUiPositive);
+	border-color: var(--_ui5_tc_headerItem_positive_selected_border_color);
 }
 
 .ui5-tc__headerItem--positive.ui5-tc__headerItem--selected .ui5-tc-headerItemIcon {
@@ -234,6 +235,7 @@ ui5-tabcontainer {
 .ui5-tc__headerItem--negative .ui5-tc-headerItemIcon,
 .ui5-tc__overflowItem--negative {
 	color: var(--sapUiNegative);
+	border-color: var(--_ui5_tc_headerItem_negative_selected_border_color);
 }
 
 .ui5-tc__headerItem--negative.ui5-tc__headerItem--selected .ui5-tc-headerItemIcon {
@@ -250,6 +252,7 @@ ui5-tabcontainer {
 .ui5-tc__headerItem--critical .ui5-tc-headerItemIcon,
 .ui5-tc__overflowItem--critical {
 	color: var(--sapUiCritical);
+	border-color: var(--_ui5_tc_headerItem_critical_selected_border_color);
 }
 
 .ui5-tc__headerItem--critical.ui5-tc__headerItem--selected .ui5-tc-headerItemIcon {
@@ -266,6 +269,7 @@ ui5-tabcontainer {
 .ui5-tc__headerItem--neutral .ui5-tc-headerItemIcon,
 .ui5-tc__overflowItem--neutral {
 	color: var(--sapUiNeutral);
+	border-color: var(--_ui5_tc_headerItem_neutral_selected_border_color);
 }
 
 .ui5-tc__headerItem--neutral.ui5-tc__headerItem--selected .ui5-tc-headerItemIcon {

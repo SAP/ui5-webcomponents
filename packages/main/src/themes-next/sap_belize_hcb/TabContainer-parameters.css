@@ -5,6 +5,10 @@
 	--_ui5_tc_headerItem_focus_border: 0.125rem dotted var(--sapUiContentFocusColor);
 	--_ui5_tc_headerItemIcon_border: 1px solid var(--sapUiObjectHeaderBorderColor);
 	--_ui5_tc_headerItemIcon_color: var(--sapUiObjectHeaderBorderColor);
+	--_ui5_tc_headerItem_positive_selected_border_color: var(--sapUiObjectHeaderBorderColor);
+	--_ui5_tc_headerItem_negative_selected_border_color: var(--sapUiObjectHeaderBorderColor);
+	--_ui5_tc_headerItem_critical_selected_border_color: var(--sapUiObjectHeaderBorderColor);
+	--_ui5_tc_headerItem_neutral_selected_border_color: var(--sapUiObjectHeaderBorderColor);
 	--_ui5_tc_headerItemIcon_selected_background: var(--sapUiSelected);
 	--_ui5_tc_headerItemIcon_selected_color: var(--sapUiContentIconColor);
 	--_ui5_tc_headerItemIcon_positive_selected_background: var(--sapUiSelected);
