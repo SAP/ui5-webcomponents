@@ -66,7 +66,7 @@ ui5-tabcontainer {
 .ui5-tc__headerItem--selected.ui5-tc__headerItem--mixedMode .ui5-tc__headerItemContent::after,
 .ui5-tc__headerItem--selected .ui5-tc-headerItemIcon::after {
 	content: "";
-	border-bottom: var(--_ui5_tc_headerItemContent_border_bottom_width) solid var(--_ui5_tc_headerItemContent_border_bottom_default_color);
+	border-bottom: var(--_ui5_tc_headerItemContent_border_bottom);
 	width: 100%;
 	position: absolute;
 	bottom: 0;
