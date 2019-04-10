@@ -64,6 +64,7 @@ class TabContainerTemplateContext {
 				headerItemClasses: calculateHeaderItemClasses(item, context),
 				headerItemContentClasses: calculateHeaderItemContentClasses(item),
 				headerItemIconClasses: calculateHeaderItemIconClasses(item),
+				headerItemSemanticIconClasses: calculateHeaderItemSemanticIconClasses(item),
 				headerItemTextClasses: calculateHeaderItemTextClasses(item),
 				headerItemAdditionalTextClasses: calculateHeaderItemAdditionalTextClasses(item),
 				overflowItemClasses: calculateOverflowItemClasses(item),
@@ -132,6 +133,16 @@ const calculateHeaderItemContentClasses = item => {
 
 const calculateHeaderItemIconClasses = item => {
 	const classes = ["ui5-tc-headerItemIcon"];
+
+	return classes.join(" ");
+};
+
+const calculateHeaderItemSemanticIconClasses = item => {
+	const classes = ["ui5-tc-headerItemSemanticIcon"];
+
+	if (item.iconColor !== IconColor.Default) {
+		classes.push(`ui5-tc-headerItemSemanticIcon--${item.iconColor.toLowerCase()}`);
+	}
 
 	return classes.join(" ");
 };

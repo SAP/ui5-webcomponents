@@ -90,8 +90,29 @@ ui5-tabcontainer {
 
 .ui5-tc__headerItem--withIcon:focus .ui5-tc-headerItemIcon,
 .ui5-tc__headerItem--mixedMode:focus .ui5-tc__headerItemContent,
-.ui5-tc__headerItem--textOnly:focus .ui5-tc__headerItemContent{
+.ui5-tc__headerItem--textOnly:focus .ui5-tc__headerItemContent {
 	outline: var(--_ui5_tc_headerItem_focus_border);
+}
+
+.ui5-tc-headerItemSemanticIcon::before {
+	display: var(--_ui5_tc_headerItemSemanticIcon_display);
+	font-family: "SAP-icons";
+	font-size: 0.75rem;
+	margin-right: 0.25rem;
+	speak: none;
+	-webkit-font-smoothing: antialiased;
+}
+
+.ui5-tc-headerItemSemanticIcon--positive::before {
+	content: "\e1ab";
+}
+
+.ui5-tc-headerItemSemanticIcon--negative::before {
+	content: "\e1ac";
+}
+
+.ui5-tc-headerItemSemanticIcon--critical::before {
+	content: "\e1ae";
 }
 
 /*** Icon and text Tab styles ***/
@@ -216,6 +237,7 @@ ui5-tabcontainer {
 /*** Semantic states ***/
 .ui5-tc__headerItem--positive.ui5-tc__headerItem--textOnly,
 .ui5-tc__headerItem--positive .ui5-tc-headerItemIcon,
+.ui5-tc-headerItemSemanticIcon--positive::before,
 .ui5-tc__overflowItem--positive {
 	color: var(--sapUiPositive);
 	border-color: var(--_ui5_tc_headerItem_positive_selected_border_color);
@@ -233,6 +255,7 @@ ui5-tabcontainer {
 
 .ui5-tc__headerItem--negative.ui5-tc__headerItem--textOnly,
 .ui5-tc__headerItem--negative .ui5-tc-headerItemIcon,
+.ui5-tc-headerItemSemanticIcon--negative::before,
 .ui5-tc__overflowItem--negative {
 	color: var(--sapUiNegative);
 	border-color: var(--_ui5_tc_headerItem_negative_selected_border_color);
@@ -250,6 +273,7 @@ ui5-tabcontainer {
 
 .ui5-tc__headerItem--critical.ui5-tc__headerItem--textOnly,
 .ui5-tc__headerItem--critical .ui5-tc-headerItemIcon,
+.ui5-tc-headerItemSemanticIcon--critical::before,
 .ui5-tc__overflowItem--critical {
 	color: var(--sapUiCritical);
 	border-color: var(--_ui5_tc_headerItem_critical_selected_border_color);
@@ -285,6 +309,11 @@ ui5-tabcontainer {
 /*** RTL ***/
 [dir=rtl] .ui5-tc__headerItem:last-child {
 	margin-left: 0;
+}
+
+[dir=rtl] .ui5-tc-headerItemSemanticIcon::before {
+	margin-left: 0.25rem;
+	margin-right: 0;
 }
 
 [dir=rtl] .ui5-tc-headerItemIcon {

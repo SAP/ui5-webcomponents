@@ -103,6 +103,7 @@
 {{#*inline "textOnlyTab"}}
 	<div class="{{this.headerItemContentClasses}}">
 		<span class="{{this.headerItemTextClasses}}" id="{{this.item._id}}-text">
+			<span class="{{this.headerItemSemanticIconClasses}}"></span>
 			{{this.item.text}}
 		</span>
 
@@ -122,6 +123,7 @@
 
 		{{#if this.item.text}}
 			<span class="{{this.headerItemTextClasses}}" id="{{this.item._id}}-text">
+				<span class="{{this.headerItemSemanticIconClasses}}"></span>
 				{{this.item.text}}
 			</span>
 		{{/if}}
@@ -136,6 +138,7 @@
 
 		{{#if this.item.text}}
 			<span class="{{this.headerItemTextClasses}}" id="{{this.item._id}}-text">
+				<span class="{{this.headerItemSemanticIconClasses}}"></span>
 				{{this.item.text}}
 			</span>
 		{{/if}}

@@ -10,6 +10,7 @@
 	--_ui5_tc_headerItem_neutral_selected_border_color: var(--sapUiNeutral);
 	--_ui5_tc_headerItemContent_border_bottom: 0.125rem solid var(--sapUiSelected);
 	--_ui5_tc_headerItem_focus_border: 1px dotted var(--sapUiContentFocusColor);
+	--_ui5_tc_headerItemSemanticIcon_display: none;
 
 	/* Header Item icons */
 	--_ui5_tc_headerItemIcon_border: 1px solid var(--sapUiHighlight);
