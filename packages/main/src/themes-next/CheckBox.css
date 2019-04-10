@@ -10,6 +10,10 @@ ui5-checkbox {
 	max-width: 100%;
 }
 
+span[data-sap-ui-wc-root] {
+	display: inline-block;
+}
+
 .ui5-checkbox-wrapper {
 	min-height: var(--_ui5_checkbox_width_height);
 	min-width: var(--_ui5_checkbox_width_height);
