@@ -102,8 +102,8 @@ ui5-tabcontainer {
 }
 
 .ui5-tc-headerItemIcon {
-	border: 1px solid currentColor;
-	color: var(--sapUiHighlight);
+	border: var(--_ui5_tc_headerItemIcon_border);
+	color: var(--_ui5_tc_headerItemIcon_color);
 	text-shadow: var(--sapUiShadowText);
 	pointer-events: none;
 	border-radius: 50%;
@@ -115,8 +115,8 @@ ui5-tabcontainer {
 }
 
 .ui5-tc__headerItem--selected .ui5-tc-headerItemIcon {
-	background-color: var(--sapUiHighlight);
-	color: var(--sapUiGroupContentBackground);
+	background-color: var(--_ui5_tc_headerItemIcon_selected_background);
+	color: var(--_ui5_tc_headerItemIcon_selected_color);
 	text-shadow: none;
 }
 
