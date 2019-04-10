@@ -218,11 +218,16 @@ class TabContainer extends WebComponent {
 	}
 
 	onBeforeRendering() {
+		const hasSelected = this.items.find(item => item.selected);
 		this.items.forEach(item => {
 			item._getTabContainerHeaderItemCallback = _ => {
 				return this.getDomRef().querySelector(`#${item._id}`);
 			};
 		});
+
+		if (!hasSelected) {
+			this.items[0].selected = true;
+		}
 	}
 
 	onAfterRendering() {
