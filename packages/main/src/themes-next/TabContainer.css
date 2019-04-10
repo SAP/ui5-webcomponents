@@ -214,6 +214,7 @@ ui5-tabcontainer {
 }
 
 /*** Semantic states ***/
+.ui5-tc__headerItem--positive.ui5-tc__headerItem--textOnly,
 .ui5-tc__headerItem--positive .ui5-tc-headerItemIcon,
 .ui5-tc__overflowItem--positive {
 	color: var(--sapUiPositive);
@@ -229,6 +230,7 @@ ui5-tabcontainer {
 	border-color: var(--sapUiPositive);
 }
 
+.ui5-tc__headerItem--negative.ui5-tc__headerItem--textOnly,
 .ui5-tc__headerItem--negative .ui5-tc-headerItemIcon,
 .ui5-tc__overflowItem--negative {
 	color: var(--sapUiNegative);
@@ -244,6 +246,7 @@ ui5-tabcontainer {
 	border-color: var(--sapUiNegative);
 }
 
+.ui5-tc__headerItem--critical.ui5-tc__headerItem--textOnly,
 .ui5-tc__headerItem--critical .ui5-tc-headerItemIcon,
 .ui5-tc__overflowItem--critical {
 	color: var(--sapUiCritical);
@@ -259,6 +262,7 @@ ui5-tabcontainer {
 	border-color: var(--sapUiCritical);
 }
 
+.ui5-tc__headerItem--nutral.ui5-tc__headerItem--textOnly,
 .ui5-tc__headerItem--neutral .ui5-tc-headerItemIcon,
 .ui5-tc__overflowItem--neutral {
 	color: var(--sapUiNeutral);
