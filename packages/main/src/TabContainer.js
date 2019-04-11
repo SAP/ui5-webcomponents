@@ -218,7 +218,7 @@ class TabContainer extends WebComponent {
 	}
 
 	onBeforeRendering() {
-		const hasSelected = this.items.find(item => item.selected);
+		const hasSelected = this.items.some(item => item.selected);
 		this.items.forEach(item => {
 			item._getTabContainerHeaderItemCallback = _ => {
 				return this.getDomRef().querySelector(`#${item._id}`);
@@ -280,8 +280,8 @@ class TabContainer extends WebComponent {
 	}
 
 	_onItemSelect(target) {
-		const selectedIndex = this.items.findIndex(item => item._id === target.id);
-		const selectedTabIndex = this._getTabs().findIndex(item => item._id === target.id);
+		const selectedIndex = findIndex(this.items, item => item._id === target.id);
+		const selectedTabIndex = findIndex(this._getTabs(), item => item._id === target.id);
 		const currentSelectedTab = this.items[selectedIndex];
 
 		// update selected items
@@ -370,6 +370,18 @@ class TabContainer extends WebComponent {
 		super.define(...params);
 	}
 }
+
+const findIndex = (arr, predicate) => {
+	for (let i = 0; i < arr.length; i++) {
+		const result = predicate(arr[i]);
+
+		if (result) {
+			return i;
+		}
+	}
+
+	return -1;
+};
 
 Bootstrap.boot().then(_ => {
 	TabContainer.define();
