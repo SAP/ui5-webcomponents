@@ -1,4 +1,4 @@
-const themeDerivations = require("./global-derived-colors").derivations;
-const componentDerivations = require("../base/component-derived-colors").derivations;
+const themeDerivationsFactory = require("./global-derived-colors");
+const componentDerivationsFactory = require("../base/component-derived-colors");
 
-exports.derivations = { ...themeDerivations, ...componentDerivations };
+module.exports = [themeDerivationsFactory, componentDerivationsFactory];

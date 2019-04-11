@@ -1,5 +1,4 @@
 const postcss = require("postcss");
-const fs = require("fs");
 const registry = require("less/lib/less/functions/function-registry");
 require("less/lib/less/functions/color");
 const Color = require("less/lib/less/tree/color");
@@ -12,8 +11,6 @@ const lessSaturate = registry.get("saturate");
 const lessDesaturate = registry.get("desaturate");
 const lessMix = registry.get("mix");
 const lessSpin = registry.get("spin");
-
-const readFile = (filePath) => fs.readFileSync(filePath).toString();
 
 const extractName = varRef => {
 	const result = varRef.match(/var\((--\w+),?.*\)/);
@@ -35,19 +32,17 @@ const getColorValue = async (col) => {
 	return colorValue;
 }
 
-global.darken = async (col, value) => {
+const darken = async (col, value) => {
 	const colorValue = await getColorValue(col);
-	return lessDarken(new Color(colorValue.replace("#", "")), {
-		value
-	});
+	return lessDarken(new Color(colorValue.replace("#", "")), { value });
 }
 
-global.lighten = async (col, value) => {
+const lighten = async (col, value) => {
 	const colorValue = await getColorValue(col);
 	return lessLighten(new Color(colorValue.replace("#", "")), { value });
 }
 
-global.contrast = async (color, dark, light, threshold) => {
+const contrast = async (color, dark, light, threshold) => {
 	const colorValue = await getColorValue(color);
 	const darkValue = await getColorValue(dark);
 	const lightValue = await getColorValue(light);
@@ -60,28 +55,28 @@ global.contrast = async (color, dark, light, threshold) => {
 	return lessContrast(col1, col2, col3, new Dimension(thresholdValue));
 }
 
-global.fade = async (col, value) => {
+const fade = async (col, value) => {
 	const colorValue = await getColorValue(col);
 	return lessFade(new Color(colorValue.replace("#", "")), {
 		value
 	});
 }
 
-global.saturate = async (col, value) => {
+const saturate = async (col, value) => {
 	const colorValue = await getColorValue(col);
 	return lessSaturate(new Color(colorValue.replace("#", "")), {
 		value
 	});
 }
 
-global.desaturate = async (col, value) => {
+const desaturate = async (col, value) => {
 	const colorValue = await getColorValue(col);
 	return lessDesaturate(new Color(colorValue.replace("#", "")), {
 		value
 	});
 }
 
-global.mix = async (color1, color2, value) => {
+const mix = async (color1, color2, value) => {
 	const color1Value = await getColorValue(color1);
 	const color2Value = await getColorValue(color2);
 	const col1 = new Color(color1Value.replace("#", ""))
@@ -91,14 +86,14 @@ global.mix = async (color1, color2, value) => {
 	});
 }
 
-global.spin = async (col, value) => {
+const spin = async (col, value) => {
 	const colorValue = await getColorValue(col);
 	return lessSpin(new Color(colorValue.replace("#", "")), {
 		value
 	});
 }
 
-global.any = async (...derivations) => {
+const any = async (...derivations) => {
 	let result = "";
 
 	const derivedPromises = derivations.map(derivation => getColorValue(derivation.var));
@@ -222,8 +217,6 @@ module.exports = postcss.plugin('process derived colors', function (opts) {
 		await Promise.all(prevPlugins);
 		console.log('plugin start:', theme);
 
-		const derivations = require(`../../src/themes-next/${theme}/derived-colors`).derivations;
-
 		clearMaps();
 		const result = [];
 		// Step 1: Read entry params files
@@ -234,6 +227,13 @@ module.exports = postcss.plugin('process derived colors', function (opts) {
 			pluginFinishedResolve();
 			return pluginFinished;
 		}
+
+		// collect derivation functions
+		const derivationFactories = require(`../../src/themes-next/${theme}/derived-colors`);
+		let derivations = {};
+		derivationFactories.forEach(factory => {
+			Object.assign(derivations, factory({ darken, lighten, contrast, fade, saturate, desaturate, mix, spin, any }))
+		});
 
 		// Step 2: Find all vars and which are unresolved (has not calculated value)
 		findCSSVars(allParameters);
