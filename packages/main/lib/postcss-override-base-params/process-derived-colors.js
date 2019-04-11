@@ -16,7 +16,7 @@ const lessSpin = registry.get("spin");
 const readFile = (filePath) => fs.readFileSync(filePath).toString();
 
 const extractName = varRef => {
-	const result = varRef.match(/var\((--\w+)\)/);
+	const result = varRef.match(/var\((--\w+),?.*\)/);
 	return result[1];
 };
 
@@ -226,7 +226,8 @@ module.exports = postcss.plugin('process derived colors', function (opts) {
 		if (theme === "sap_belize") {
 			allParameters = root.toString();
 		} else {
-			allParameters = baseParameters.concat(globalParameters);
+			pluginFinishedResolve();
+			return pluginFinished;
 		}
 
 		// Step 2: Find all vars and which are unresolved (has not calculated value)
