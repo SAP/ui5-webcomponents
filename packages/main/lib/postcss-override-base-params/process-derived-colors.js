@@ -173,12 +173,21 @@ const findCSSVars = styleString => {
 	});
 };
 
-const processDerivations = (derivations) => {
-	Object.keys(derivations).map(async newParam => {
+const processDerivations = async (derivations) => {
+	const transformations = Object.keys(derivations).map(async newParam => {
 		const transform = derivations[newParam];
 		const derivedColor = await transform();
 		resolvePromiseFor(newParam, derivedColor.toRGB ? derivedColor.toRGB() : derivedColor);
 	});
+
+	const timeoutPromise = new Promise(resolve => {
+		setTimeout(resolve, 500);
+	});
+
+	await Promise.race([
+		Promise.all(transformations),
+		timeoutPromise
+	]);
 }
 
 const restoreRefs = () => {
@@ -213,15 +222,11 @@ module.exports = postcss.plugin('process derived colors', function (opts) {
 		await Promise.all(prevPlugins);
 		console.log('plugin start:', theme);
 
-		const baseParamsFile = `./src/themes-next/${theme}/base-parameters-new.css`;
-		const globalParamsFile = `./src/themes-next/${theme}/global-parameters-new.css`;
 		const derivations = require(`../../src/themes-next/${theme}/derived-colors`).derivations;
 
 		clearMaps();
 		const result = [];
 		// Step 1: Read entry params files
-		const baseParameters = readFile(baseParamsFile);
-		const globalParameters = readFile(globalParamsFile);
 		let allParameters;
 		if (theme === "sap_belize") {
 			allParameters = root.toString();
@@ -234,23 +239,22 @@ module.exports = postcss.plugin('process derived colors', function (opts) {
 		findCSSVars(allParameters);
 
 		// Step 3: Process derivations
-		processDerivations(derivations);
+		await processDerivations(derivations);
+		console.log({unresolvedNames});
+		// Step 4: Restore refs
+		restoreRefs();
 		// Step 4: Output the result
-		setTimeout(_ => {
-			// Step 5: Restore refs
-			restoreRefs();
-			Array.from(outputVars.entries()).forEach(([key, value]) => {
-				result.push(`${key}: ${value};`)
-			});
+		Array.from(outputVars.entries()).forEach(([key, value]) => {
+			result.push(`${key}: ${value};`)
+		});
 
-			const newRoot = postcss.parse(`:root { ${result.join("\n") }}`);
+		const newRoot = postcss.parse(`:root { ${result.join("\n") }}`);
 
-			root.removeAll();
-			root.append(...newRoot.nodes);
-			console.log('plugin end:', theme);
+		root.removeAll();
+		root.append(...newRoot.nodes);
+		console.log('plugin end:', theme);
 
-			pluginFinishedResolve();
-		}, 500);
+		pluginFinishedResolve();
 		return pluginFinished;
 	}
 })
