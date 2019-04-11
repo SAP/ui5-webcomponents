@@ -1,5 +1,5 @@
-commit b59abd60e156566ea720eaf19ca9796119026d29
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Wed Apr 10 18:16:02 2019 +0300
+commit c1f4c9ceda99243f8fe8a9a7a917940098889957
+Author: Andreas Kunz <andreas.kunz@sap.com>
+Date:   Thu Apr 11 11:56:15 2019 +0200
 
-    fix(ui5-radiobutton): fix focus in ie11 (#327)
+    docs: clarify that licenses of subcomponents do not apply to the project (#329)
