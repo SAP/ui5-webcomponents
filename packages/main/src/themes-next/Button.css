@@ -37,7 +37,7 @@ span[data-sap-ui-wc-root] .sapMBtn {
 	min-height: var(--_ui5_button_base_height);
 }
 
-span[data-sap-ui-wc-root] .sapMBtn::before {
+ui5-button span[data-sap-ui-wc-root] .sapMBtn::before {
 	/* this is a hack for a bug in IE https:/* github.com/philipwalton/flexbugs/issues/231 */
 	content: '';
 	min-height: inherit;
