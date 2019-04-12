@@ -6,6 +6,10 @@ ui5-togglebutton {
 	display: inline-block;
 }
 
+.sapMBtn.sapMToggleBtnPressed {
+	text-shadow: none;
+}
+
 .sapMBtn.sapMToggleBtnPressed.sapMBtnNegative {
 	background-color: var(--sapUiButtonRejectActiveBackground);
 	border-color: var(--sapUiButtonRejectActiveBorderColor);
@@ -30,10 +34,9 @@ ui5-togglebutton {
 	border-color: var(--sapUiButtonAcceptActiveBorderColor);
 }
 
-.sapMBtn.sapMToggleBtnPressed:not(:active):not(:hover),
+.sapMBtn.sapMToggleBtnPressed.sapMBtnDefault:not(:active):not(:hover),
 .sapMBtn.sapMToggleBtnPressed.sapMBtnEmphasized:not(:active):not(:hover),
 .sapMBtn.sapMToggleBtnPressed.sapMBtnTransparent:not(:active):not(:hover) {
-	text-shadow: none;
 	background-color: var(--sapUiToggleButtonPressedBackground);
 	border-color: var(--sapUiToggleButtonPressedBorderColor);
 	color: var(--sapUiToggleButtonPressedTextColor);
