@@ -40,11 +40,11 @@
 	<section>
 		<h3>Basic TabContainer</h3>
 		<div class="snippet">
-			<ui5-tabcontainer class="full-width" show-overflow selected-index="2">
+			<ui5-tabcontainer class="full-width" show-overflow>
 				<ui5-tab icon="sap-icon://menu" text="Tab 1">
 					<ui5-label>Quibusdam, veniam! Architecto debitis iusto ad et, asperiores quisquam perferendis reprehenderit ipsa voluptate minus minima, perspiciatis cum. Totam harum necessitatibus numquam voluptatum.</ui5-label>
 				</ui5-tab>
-				<ui5-tab icon="sap-icon://activities" text="Tab 2">
+				<ui5-tab icon="sap-icon://activities" text="Tab 2" selected>
 					<ui5-label>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga magni facere error dicta beatae optio repudiandae vero, quidem voluptatibus perferendis eum maiores rem tempore voluptates aperiam eos enim delectus unde.</ui5-label>
 				</ui5-tab>
 				<ui5-tab icon="sap-icon://add" text="Tab 3">
@@ -60,11 +60,11 @@
 			</ui5-tabcontainer>
 		</div>
 		<pre class="prettyprint lang-html"><xmp>
-<ui5-tabcontainer class="full-width" show-overflow selected-index="2">
-	<ui5-tab icon="sap-icon://menu" text="Tab 1">
+<ui5-tabcontainer class="full-width" show-overflow>
+	<ui5-tab text="Tab 1">
 		<ui5-label>Quibusdam, veniam! Architecto debitis iusto ad et, asperiores quisquam perferendis reprehenderit ipsa voluptate minus minima, perspiciatis cum. Totam harum necessitatibus numquam voluptatum.</ui5-label>
 	</ui5-tab>
-	<ui5-tab icon="sap-icon://activities" text="Tab 2">
+	<ui5-tab icon="sap-icon://activities" text="Tab 2" selected>
 		<ui5-label>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga magni facere error dicta beatae optio repudiandae vero, quidem voluptatibus perferendis eum maiores rem tempore voluptates aperiam eos enim delectus unde.</ui5-label>
 	</ui5-tab>
 	<ui5-tab icon="sap-icon://add" text="Tab 3">
@@ -84,18 +84,18 @@
 	<section>
 		<h3>Text Only TabContainer</h3>
 		<div class="snippet">
-			<ui5-tabcontainer class="full-width" collapsed fixed show-overflow selected-index="2">
+			<ui5-tabcontainer class="full-width" collapsed fixed show-overflow>
 				<ui5-tab text="Home"></ui5-tab>
-				<ui5-tab text="What's new"></ui5-tab>
+				<ui5-tab text="What's new" selected></ui5-tab>
 				<ui5-tab text="Who are we"></ui5-tab>
 				<ui5-tab text="About"></ui5-tab>
 				<ui5-tab text="Contacts"></ui5-tab>
 			</ui5-tabcontainer>
 		</div>
 		<pre class="prettyprint lang-html"><xmp>
-<ui5-tabcontainer class="full-width" collapsed fixed show-overflow selected-index="2">
+<ui5-tabcontainer class="full-width" collapsed fixed show-overflow>
 	<ui5-tab text="Home"></ui5-tab>
-	<ui5-tab text="What's new"></ui5-tab>
+	<ui5-tab text="What's new" selected></ui5-tab>
 	<ui5-tab text="Who are we"></ui5-tab>
 	<ui5-tab text="About"></ui5-tab>
 <ui5-tab text="Contacts"></ui5-tab>
@@ -137,14 +137,6 @@ The <code>ui5-tabcontainer</code> can hold two types of entities: <ul> <li><code
                     </div>
             
                       <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">backgroundDesign <br> <code>background-design</code></div>
-                        <div class="cell api-table-content-cell">BackgroundDesign</div>
-                        <div class="cell api-table-content-cell">BackgroundDesign.Solid</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Specifies the background color of the IconTabBar. <br><br> Depending on the theme, you can change the state of the background color to <code>Solid</code> (default), <code>Translucent</code>, or <code>Transparent</code>.
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">collapsed <br> <code></code></div>
                         <div class="cell api-table-content-cell">Boolean</div>
                         <div class="cell api-table-content-cell"></div>
@@ -152,36 +144,12 @@ The <code>ui5-tabcontainer</code> can hold two types of entities: <ul> <li><code
                             Determines whether the tab content is collapsed.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">fixed <br> <code></code></div>
                         <div class="cell api-table-content-cell">Boolean</div>
                         <div class="cell api-table-content-cell"></div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                             Determines whether the tabs are in a fixed state that is not expandable/collapsible by user interaction.
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">headerBackgroundDesign <br> <code>header-background-design</code></div>
-                        <div class="cell api-table-content-cell">BackgroundDesign</div>
-                        <div class="cell api-table-content-cell"></div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Specifies the background color of the header. <br><br> Depending on the theme, you can change the state of the background color to <code>Solid</code> (default), <code>Translucent</code>, or <code>Transparent</code>.
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">headerMode <br> <code>header-mode</code></div>
-                        <div class="cell api-table-content-cell">TabContainerHeaderMode</div>
-                        <div class="cell api-table-content-cell"></div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Specifies the header mode. Available options are: <code>Standard</code> and <code>Inline</code>. <br><br> In <code>Standard</code> mode the <code>count</code> and the <code>text</code> are displayed in two separate lines. In <code>Inline</code> mode the <code>count</code> and the <code>text</code> are displayed in single line. <br><br> <b>Note:</b> The <code>Inline</code> mode works only when no icons are set.
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">selectedIndex <br> <code>selected-index</code></div>
-                        <div class="cell api-table-content-cell">String</div>
-                        <div class="cell api-table-content-cell"></div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the selected tab item by refering its index, following the zero based numbering. For example, the first item is under <code>index="0"</code>.
                         </div>
                       </div>
                       <div class="row api-table-roll-even">
@@ -210,11 +178,6 @@ The <code>ui5-tabcontainer</code> can hold two types of entities: <ul> <li><code
                   </div>
             
                     <div class="row api-table-roll-even">
-                      <div class="cell api-table-content-cell api-table-content-cell-bold">content</div>
-                      <div class="cell api-table-content-cell">HTMLElement [0..n]</div>
-                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the default container content.</div>
-                    </div>
-                    <div class="row api-table-roll-odd">
                       <div class="cell api-table-content-cell api-table-content-cell-bold">items</div>
                       <div class="cell api-table-content-cell">TabBase [0..n]</div>
                       <div class="cell api-table-content-cell api-table-content-cell-description">Defines the tabs. <br><b>Note:</b> Only <code>ui5-tab</code> and <code>ui5-tab-separator</code> are allowed.</div>
@@ -266,22 +229,14 @@ The <code>ui5-tabcontainer</code> can hold two types of entities: <ul> <li><code
                     </div>
             
                       <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">count <br> <code></code></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">additionalText <br> <code>additional-text</code></div>
                         <div class="cell api-table-content-cell">String</div>
                         <div class="cell api-table-content-cell"></div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Represents the "count" text, which is displayed in the tab filter.
+                            Represents the "additionalText" text, which is displayed in the tab filter.
                         </div>
                       </div>
                       <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">design <br> <code></code></div>
-                        <div class="cell api-table-content-cell">TabDesignMode</div>
-                        <div class="cell api-table-content-cell"></div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Specifies whether the icon and the texts are placed vertically or horizontally.
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">disabled <br> <code></code></div>
                         <div class="cell api-table-content-cell">Boolean</div>
                         <div class="cell api-table-content-cell"></div>
@@ -289,7 +244,7 @@ The <code>ui5-tabcontainer</code> can hold two types of entities: <ul> <li><code
                             Enabled items can be selected.
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">icon <br> <code></code></div>
                         <div class="cell api-table-content-cell">URI</div>
                         <div class="cell api-table-content-cell"></div>
@@ -297,7 +252,7 @@ The <code>ui5-tabcontainer</code> can hold two types of entities: <ul> <li><code
                             Specifies the icon to be displayed for the tab filter.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">iconColor <br> <code>icon-color</code></div>
                         <div class="cell api-table-content-cell">IconColor</div>
                         <div class="cell api-table-content-cell"></div>
@@ -307,7 +262,7 @@ The <code>ui5-tabcontainer</code> can hold two types of entities: <ul> <li><code
             If an icon font is used, the color can be chosen from the icon colors (sap.ui.core.IconColor). Possible semantic colors are: Neutral, Positive, Critical, Negative. Instead of the semantic icon color the brand color can be used, this is named Default. Semantic colors and brand colors should not be mixed up inside one IconTabBar.
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">text <br> <code></code></div>
                         <div class="cell api-table-content-cell">String</div>
                         <div class="cell api-table-content-cell"></div>

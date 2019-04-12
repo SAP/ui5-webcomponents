@@ -1,5 +1,18 @@
-commit c1f4c9ceda99243f8fe8a9a7a917940098889957
-Author: Andreas Kunz <andreas.kunz@sap.com>
-Date:   Thu Apr 11 11:56:15 2019 +0200
+commit aa516ff1fe2084a2a3ea02bb7cebc98c2ef9ec57
+Author: Adrian Bobev <adrian.bobev@gmail.com>
+Date:   Fri Apr 12 09:05:15 2019 +0300
 
-    docs: clarify that licenses of subcomponents do not apply to the project (#329)
+    refactor(ui5-tabcontainer): refactor the component (#318)
+    
+    Closes: https://github.com/SAP/ui5-webcomponents/issues/313
+    
+    BREAKING CHANGE: 'selectedIndex' property is removed. Instead use 'selected' property of the Tab
+    BREAKING CHANGE: 'headerMode' property is removed. All Tabs by Fiori guidelines are rendered in
+    inline mode
+    BREAKING CHANGE: 'headerBackgroundDesign' property is removed
+    BREAKING CHANGE: 'backgroundDesign' property is removed
+    BREAKING CHANGE: 'content' property is removed. Instead if you want to use the TabContainer as
+    a filter just use it with 'collapsed' set to true and 'fixed' set to true
+    BREAKING CHANGE: 'TabContainerDensityMode' is deleted. To set different size modes use ?sap-ui-compactSize=true
+    BREAKING CHANGE: Tab's 'design' property is removed
+    BREAKING CHANGE: Tab's 'count' property is removed. Instead use the additional-text property
