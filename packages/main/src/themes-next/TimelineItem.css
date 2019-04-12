@@ -141,7 +141,7 @@ ui5-timeline-item {
 	vertical-align: top;
 }
 
-.sapWCTimelineItemTime {
+.sapWCTimelineItemSubtitle {
 	color: var(--sapUiContentLabelColor);
 	font-family: var(--sapUiFontFamily);
 	font-weight: 400;
