@@ -1,18 +1,11 @@
-commit aa516ff1fe2084a2a3ea02bb7cebc98c2ef9ec57
+commit 287548ef83da12767a791d2abba3cf294cceba86
 Author: Adrian Bobev <adrian.bobev@gmail.com>
-Date:   Fri Apr 12 09:05:15 2019 +0300
+Date:   Fri Apr 12 11:18:44 2019 +0300
 
-    refactor(ui5-tabcontainer): refactor the component (#318)
+    refactor(ui5-timeline): change timestamp property to subtitleText (#321)
     
-    Closes: https://github.com/SAP/ui5-webcomponents/issues/313
+    Closes: https://github.com/SAP/ui5-webcomponents/issues/299
     
-    BREAKING CHANGE: 'selectedIndex' property is removed. Instead use 'selected' property of the Tab
-    BREAKING CHANGE: 'headerMode' property is removed. All Tabs by Fiori guidelines are rendered in
-    inline mode
-    BREAKING CHANGE: 'headerBackgroundDesign' property is removed
-    BREAKING CHANGE: 'backgroundDesign' property is removed
-    BREAKING CHANGE: 'content' property is removed. Instead if you want to use the TabContainer as
-    a filter just use it with 'collapsed' set to true and 'fixed' set to true
-    BREAKING CHANGE: 'TabContainerDensityMode' is deleted. To set different size modes use ?sap-ui-compactSize=true
-    BREAKING CHANGE: Tab's 'design' property is removed
-    BREAKING CHANGE: Tab's 'count' property is removed. Instead use the additional-text property
+    BREAKING CHANGE: 'timestamp' and 'timeFormat'  properties are removed.
+    Instead use subtitle-text property and directly format the text as
+    desired.
