@@ -23,9 +23,12 @@ const derivationsFactory = ({ darken, lighten, contrast, fade, saturate, desatur
 		"--sapField_ReadOnly_BorderColor": () => lighten("--sapField_BorderColor", 5),
 		"--sapGroup_TitleBorderColor": () => lighten("--sapPrimary6", 5),
 		"--sapGroup_TitleTextColor": () => contrast("--sapBackgroundColor", "--sapTitleColor", "--sapContent_ContrastTextColor", "--sapContent_ContrastTextThreshold"), // #333
-
 		"--sapGroup_ContentBackground": () => lighten("--sapBackgroundColor", 2),
 		"--sapGroup_ContentBorderColor": () => darken("--sapGroup_ContentBackground", 8),
+
+		"--sapShell_TextColor": () => darken("--sapBrandColor", 10),
+		"--sapShell_Background": () => darken(desaturate("--sapBaseColor", 6), 11),
+		"--sapShell_BackgroundPatternColor": () => fade("--sapPrimary4", 8),
 		"--sapList_SelectionBackgroundColor": () => lighten(desaturate("--sapSelectedColor", 2), 47),
 		"--sapList_Hover_Background": () => contrast("--sapList_Background", darken("--sapList_Background", 6), lighten("--sapList_Background", 6)),
 		"--sapScrollBar_FaceColor": () => darken("--sapPrimary6", 5),
@@ -45,10 +48,12 @@ const derivationsFactory = ({ darken, lighten, contrast, fade, saturate, desatur
 		"--sapList_BorderColor": () => darken("--sapList_Background", 10.15),
 		"--sapList_HeaderBackground": () => darken("--sapPrimary4", 3),
 		"--sapList_HeaderTextColor": () => contrast("--sapList_HeaderBackground", "--sapTitleColor", "--sapContent_ContrastTextColor", "--sapContent_ContrastTextThreshold"),
+
 		"--sapPageFooter_TextColor": () => contrast("--sapPageFooter_Background", "--sapTextColor", "--sapContent_ContrastTextColor", "--sapContent_ContrastTextThreshold"),
 		"--sapInfobar_Background": () => darken("--sapAccentColor7", 5),
 		"--sapToolbar_SeparatorColor": () => fade("--sapPrimary1", 20),
 		"--sapHighlightTextColor": () => contrast("--sapHighlightColor", "--sapTextColor", "--sapContent_ContrastTextColor", "--sapContent_ContrastTextThreshold"),
+
 		"--sapUiShellHoverBackground": () => darken("--sapUiBrand", 10),
 		"--sapUiShellActiveBackground": () => darken("--sapUiBrand", 17),
 		"--sapUiShellActiveTextColor": () => lighten("--sapUiBrand", 55),
@@ -56,9 +61,6 @@ const derivationsFactory = ({ darken, lighten, contrast, fade, saturate, desatur
 		"--sapUiShellContainerBackground": () => lighten("--sapUiShellBackground", 16),
 		"--sapUiShellAltContainerBackground": () => darken(saturate("--sapUiShellBackground", 6), 28),
 		"--sapUiShellGroupTextColor": () => darken(desaturate("--sapUiShellTextColor", 100), 16.5),
-		"--sapUiUx3ShellHoverColor": () => lighten("--sapUiPrimary7", 27),
-		"--sapUiUx3ShellGradientBottom": () => lighten("--sapUiUx3ShellHeaderColor", 17.3), // transparent
-		"--sapUiUx3ShellGradientTop": () => spin(mix("--sapUiHighlight", lighten("--sapUiUx3ShellGradientBottom", 22), 3), 9), // transparent
 		"--sapUiLinkInverted": () => lighten("--sapUiLink", 40),
 		"--sapUiNotificationBarBG": () => fade("--sapUiPrimary7", 98),
 		"--sapUiNotifierSeparator": () => darken("--sapUiPrimary7", 20),

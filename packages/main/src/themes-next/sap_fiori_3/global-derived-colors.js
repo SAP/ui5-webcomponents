@@ -1,13 +1,4 @@
-const derivationsFactory = ({
-	darken,
-	lighten,
-	contrast,
-	fade,
-	saturate,
-	desaturate,
-	any
-}) => {
-
+const derivationsFactory = ({ darken, lighten, contrast, fade, saturate, desaturate, mix, spin, any }) => {
 	const derivations = {
 		"--sapHighlightColor": () => darken("--sapBrandColor", 10),
 		"--sapBackgroundColorDefault": () => darken("--sapPrimary3", 2),

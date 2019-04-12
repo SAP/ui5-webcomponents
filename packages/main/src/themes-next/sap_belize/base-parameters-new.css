@@ -24,6 +24,7 @@
 	--sapHighlightColor: var(--sapBrandColor);
 	--sapBaseColor: var(--sapPrimary3);
 	--sapShellColor: transparent;
+	--sapShell_BorderColor: transparent;
 	--sapBackgroundColorDefault: var(--sapPrimary5);
 	--sapBackgroundColor: var(--sapPrimary5);
 	--sapFontFamily: "72", "72full", Arial, Helvetica, sans-serif;

@@ -1,10 +1,4 @@
-const derivationsFactory = ({
-	lighten,
-	contrast,
-	fade,
-	any
-}) => {
-
+const derivationsFactory = ({ darken, lighten, contrast, fade, saturate, desaturate, mix, spin, any }) => {
 	const derivations = {
 		"--sapHighlightTextColor": () => contrast("--sapHighlightColor", "--sapTextColor", "--sapContent_ContrastTextColor", "--sapContent_ContrastTextThreshold"),
 		"--sapTile_TitleTextColor": () => contrast("--sapTile_Background", "--sapTile_TextColor", "--sapContent_ContrastTextColor", "--sapContent_ContrastTextThreshold"),

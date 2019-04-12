@@ -46,13 +46,19 @@ const contrast = async (color, dark, light, threshold) => {
 	const colorValue = await getColorValue(color);
 	const darkValue = await getColorValue(dark);
 	const lightValue = await getColorValue(light);
-	const thresholdValue = await getColorValue(threshold);
-
-	const col1 = new Color(colorValue.replace("#", ""))
+	const col1 = new Color(colorValue.replace("#", ""));
 	const col2 = new Color(darkValue.replace("#", ""));
-	const col3 = new Color(lightValue.replace("#", ""))
+	const col3 = new Color(lightValue.replace("#", ""));
 
-	return lessContrast(col1, col2, col3, new Dimension(thresholdValue));
+	let thresholdValue;
+
+	if (threshold) {
+		thresholdValue = await getColorValue(threshold);
+		thresholdValue = new Dimension(thresholdValue)
+	}
+
+
+	return lessContrast(col1, col2, col3, thresholdValue);
 }
 
 const fade = async (col, value) => {
