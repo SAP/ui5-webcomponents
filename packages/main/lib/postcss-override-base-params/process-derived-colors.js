@@ -221,12 +221,12 @@ module.exports = postcss.plugin('process derived colors', function (opts) {
 		const result = [];
 		// Step 1: Read entry params files
 		let allParameters;
-		if (theme === "sap_belize") {
+		// if (theme === "sap_belize" || theme === "sap_fiori_3") {
 			allParameters = root.toString();
-		} else {
-			pluginFinishedResolve();
-			return pluginFinished;
-		}
+		// } else {
+		// 	pluginFinishedResolve();
+		// 	return pluginFinished;
+		// }
 
 		// collect derivation functions
 		const derivationFactories = require(`../../src/themes-next/${theme}/derived-colors`);
