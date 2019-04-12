@@ -30,7 +30,7 @@ ui5-togglebutton {
 	border-color: var(--sapUiButtonAcceptActiveBorderColor);
 }
 
-.sapMBtn.sapMToggleBtnPressed:not(:active):not(:hover),
+.sapMBtn.sapMToggleBtnPressed.sapMBtnDefault:not(:active):not(:hover),
 .sapMBtn.sapMToggleBtnPressed.sapMBtnEmphasized:not(:active):not(:hover),
 .sapMBtn.sapMToggleBtnPressed.sapMBtnTransparent:not(:active):not(:hover) {
 	text-shadow: none;
