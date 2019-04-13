@@ -1,5 +1,5 @@
-commit 966c40ccf845459c6efabf6433ba8c43d18b546f
+commit 280f85d637a8632a4610acc8014b684ac983cdf7
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Apr 12 16:13:41 2019 +0300
+Date:   Sat Apr 13 18:38:25 2019 +0300
 
-     fix(ui5-togglebutton): correct negative/positive stylings (#330)
+    fix(ui5-togglebutton): correct default btn hover and text hover (#332)
