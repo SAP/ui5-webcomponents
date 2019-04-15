@@ -160,6 +160,16 @@ class Button extends WebComponent {
 		return ButtonTemplateContext.calculate;
 	}
 
+	constructor() {
+		super();
+
+		this._deactivate = () => {
+			if (this._active) {
+				this._active = false;
+			}
+		}
+	}
+
 	onBeforeRendering() {
 		if (this.icon) {
 			this._iconSettings = {
@@ -168,6 +178,14 @@ class Button extends WebComponent {
 		} else {
 			this._iconSettings = null;
 		}
+	}
+
+	onEnterDOM() {
+		document.addEventListener("mouseup", this._deactivate);
+	}
+	
+	onExitDOM() {
+		document.removeEventListener("mouseup", this._deactivate);
 	}
 
 	onclick(event) {
@@ -179,16 +197,14 @@ class Button extends WebComponent {
 
 	onmousedown(event) {
 		event.isMarked = "button";
-		if (this.activeIcon) {
+
+		if (!this.disabled) {
 			this._active = true;
 		}
 	}
 
 	onmouseup(event) {
 		event.isMarked = "button";
-		if (this.activeIcon) {
-			this._active = false;
-		}
 	}
 
 	onkeydown(event) {

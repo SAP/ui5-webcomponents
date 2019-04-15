@@ -81,16 +81,6 @@ class ToggleButton extends Button {
 		}
 	}
 
-	/*
-	* @override
-	*/
-	onkeydown() {}
-
-	/*
-	* @override
-	*/
-	onkeyup() {}
-
 	static get calculateTemplateContext() {
 		return ToggleButtonTemplateContext.calculate;
 	}
