@@ -167,7 +167,7 @@ class Button extends WebComponent {
 			if (this._active) {
 				this._active = false;
 			}
-		}
+		};
 	}
 
 	onBeforeRendering() {
@@ -183,7 +183,7 @@ class Button extends WebComponent {
 	onEnterDOM() {
 		document.addEventListener("mouseup", this._deactivate);
 	}
-	
+
 	onExitDOM() {
 		document.removeEventListener("mouseup", this._deactivate);
 	}
