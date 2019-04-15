@@ -1,5 +1,5 @@
-commit 98a2c4e18b21353bcc1491e44db7e519cbd149d6
+commit b00ab522c88bee0a8c12adc4da24e507abe9465a
 Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Mon Apr 15 08:47:41 2019 +0300
+Date:   Mon Apr 15 14:02:03 2019 +0300
 
-    fix(ui5-button): fix height (#331)
+    fix(ui5-button): fix width in ie11 (#325)
