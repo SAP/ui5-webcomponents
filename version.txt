@@ -1,5 +1,5 @@
-commit 280f85d637a8632a4610acc8014b684ac983cdf7
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Sat Apr 13 18:38:25 2019 +0300
+commit 98a2c4e18b21353bcc1491e44db7e519cbd149d6
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Mon Apr 15 08:47:41 2019 +0300
 
-    fix(ui5-togglebutton): correct default btn hover and text hover (#332)
+    fix(ui5-button): fix height (#331)
