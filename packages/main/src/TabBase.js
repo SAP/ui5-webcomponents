@@ -24,6 +24,10 @@ class TabBase extends WebComponent {
 	static get metadata() {
 		return metadata;
 	}
+
+	isSeparator() {
+		return false;
+	}
 }
 
 export default TabBase;

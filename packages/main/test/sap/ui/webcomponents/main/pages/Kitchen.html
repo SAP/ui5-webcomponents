@@ -19,6 +19,7 @@
 	<script src="../../../../../../resources/sap/ui/webcomponents/main/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../../../../../resources/sap/ui/webcomponents/main/bundle.es5.js">
 	</script>
+	<script>delete Document.prototype.adoptedStyleSheets;</script>
 </head>
 
 <body>
@@ -112,6 +113,21 @@
 					<ui5-li icon="sap-icon://syntax">React</ui5-li>
 					<ui5-li icon="sap-icon://syntax">Algorithms</ui5-li>
 				</ui5-list>
+			</ui5-card>
+
+			<ui5-card
+				style="flex-basis:20%;"
+				avatar="sap-icon://employee"
+				heading="Goerge M."
+				subtitle="Visioner">
+			</ui5-card>
+
+			<ui5-card
+				style="flex-basis:20%;"
+				avatar="sap-icon://employee"
+				heading="Linda M."
+				subtitle="Enthusiast"
+				status="1 of 3">
 			</ui5-card>
 		</section>
 
@@ -374,19 +390,19 @@
 		<section class="row">
 			<ui5-list header-text="Products" mode="SingleSelectEnd">
 				<ui5-li-custom type="Active">
-					<div style="width: 100%; height: 3rem; display: flex; align-items: center; justify-content: space-between">
+					<div style="width: 100%; height: 5rem; display: flex; align-items: center; justify-content: space-between">
 						<span>Laptop HP 2GB RAM Dual-core</span>
 						<ui5-link>Go to SAP</ui5-link>
 					</div>
 				</ui5-li-custom>
 				<ui5-li-custom type="Active">
-					<div style="width: 100%; height: 3rem; display: flex; align-items: center; justify-content: space-between">
+					<div style="width: 100%; height: 5rem; display: flex; align-items: center; justify-content: space-between">
 						<span>Laptop HP 2GB RAM Dual-core</span>
 						<ui5-link>Go to SAP</ui5-link>
 					</div>
 				</ui5-li-custom>
 				<ui5-li-custom type="Active">
-					<div style="width: 100%; height: 3rem; display: flex; align-items: center; justify-content: space-between">
+					<div style="width: 100%; height: 5rem; display: flex; align-items: center; justify-content: space-between">
 						<span>Laptop HP 2GB RAM Dual-core</span>
 						<ui5-link>Go to SAP</ui5-link>
 					</div>
@@ -395,19 +411,19 @@
 
 			<ui5-list header-text="Products" mode="MultiSelect">
 					<ui5-li-custom type="Active">
-						<div style="width: 100%; height: 3rem; display: flex; align-items: center; justify-content: space-between">
+						<div style="width: 100%; height: 8rem; display: flex; align-items: center; justify-content: space-between">
 							<span>Laptop HP 2GB RAM Dual-core</span>
 							<ui5-link>Go to SAP</ui5-link>
 						</div>
 					</ui5-li-custom>
 					<ui5-li-custom type="Active">
-						<div style="width: 100%; height: 3rem; display: flex; align-items: center; justify-content: space-between">
+						<div style="width: 100%; height: 8rem; display: flex; align-items: center; justify-content: space-between">
 							<span>Laptop HP 2GB RAM Dual-core</span>
 							<ui5-link>Go to SAP</ui5-link>
 						</div>
 					</ui5-li-custom>
 					<ui5-li-custom type="Active">
-						<div style="width: 100%; height: 3rem; display: flex; align-items: center; justify-content: space-between">
+						<div style="width: 100%; height: 8rem; display: flex; align-items: center; justify-content: space-between">
 							<span>Laptop HP 2GB RAM Dual-core</span>
 							<ui5-link>Go to SAP</ui5-link>
 						</div>

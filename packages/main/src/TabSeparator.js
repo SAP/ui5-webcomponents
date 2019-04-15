@@ -38,6 +38,10 @@ class TabSeparator extends TabBase {
 	static get calculateTemplateContext() {
 		return TabSeparatorTemplateContext.calculate;
 	}
+
+	isSeparator() {
+		return true;
+	}
 }
 
 Bootstrap.boot().then(_ => {

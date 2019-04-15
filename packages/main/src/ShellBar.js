@@ -2,6 +2,7 @@ import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
 import { getRTL } from "@ui5/webcomponents-base/src/Configuration";
 import URI from "@ui5/webcomponents-base/src/types/URI";
 import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
+import Function from "@ui5/webcomponents-base/src/types/Function";
 import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
 import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler";
 import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation";
@@ -136,6 +137,18 @@ const metadata = {
 		_header: {
 			type: Object,
 		},
+
+		_logoPress: {
+			type: Function,
+		},
+
+		_coPilotPress: {
+			type: Function,
+		},
+
+		_menuItemPress: {
+			type: Function,
+		},
 	},
 
 	slots: /** @lends  sap.ui.webcomponents.main.ShellBar.prototype */ {
@@ -150,6 +163,22 @@ const metadata = {
 		 * @public
 		 */
 		items: {
+			type: HTMLElement,
+			multiple: true,
+		},
+
+		/**
+		 * Defines the items displayed in menu after a click on the primary title.
+		 * </br></br>
+		 * <b>Note:</b>
+		 * You can use the &nbsp;&lt;ui5-li>&lt;/ui5-li> and its ancestors.
+		 *
+		 * @type {HTMLElement}
+		 * @slot
+		 * @since 0.10
+		 * @public
+		 */
+		menuItems: {
 			type: HTMLElement,
 			multiple: true,
 		},
@@ -178,19 +207,6 @@ const metadata = {
 	},
 	defaultSlot: "items",
 	events: /** @lends sap.ui.webcomponents.main.ShellBar.prototype */ {
-		/**
-		 * Fired, when the primaryTitle is pressed.
-		 *
-		 * @event
-		 * @param {HTMLElement} targetRef dom ref of the clicked element
-		 * @public
-		 */
-		titlePress: {
-			detail: {
-				targetRef: { type: HTMLElement },
-			},
-		},
-
 		/**
 		 *
 		 * Fired, when the notification icon is pressed.
@@ -229,6 +245,48 @@ const metadata = {
 		productSwitchPress: {
 			detail: {
 				targetRef: { type: HTMLElement },
+			},
+		},
+
+		/**
+		 * Fired, when the logo is pressed.
+		 *
+		 * @event
+		 * @param {HTMLElement} targetRef dom ref of the clicked element
+		 * @since 0.10
+		 * @public
+		 */
+		logoPress: {
+			detail: {
+				targetRef: { type: HTMLElement },
+			},
+		},
+
+		/**
+		 * Fired, when the co pilot is pressed.
+		 *
+		 * @event
+		 * @param {HTMLElement} targetRef dom ref of the clicked element
+		 * @since 0.10
+		 * @public
+		 */
+		coPilotPress: {
+			detail: {
+				targetRef: { type: HTMLElement },
+			},
+		},
+
+		/**
+		 * Fired, when a menu item is selected
+		 *
+		 * @event
+		 * @param {HTMLElement} item dom ref of the clicked list item
+		 * @since 0.10
+		 * @public
+		 */
+		menuItemPress: {
+			detail: {
+				item: { type: HTMLElement },
 			},
 		},
 	},
@@ -297,7 +355,7 @@ class ShellBar extends WebComponent {
 
 		this._actionList = {
 			itemPress: event => {
-				const popover = this.shadowRoot.querySelector("ui5-popover");
+				const popover = this.shadowRoot.querySelector(".sapWCShellBarOverflowPopover");
 
 				popover.close();
 			},
@@ -305,10 +363,18 @@ class ShellBar extends WebComponent {
 
 		this._header = {
 			press: event => {
-				this.fireEvent("titlePress", {
-					targetRef: this.shadowRoot.querySelector(".sapWCShellBarMenuButton"),
-				});
+				const menuPopover = this.shadowRoot.querySelector(".sapWCShellBarMenuPopover");
+
+				if (this.menuItems.length) {
+					menuPopover.openBy(this.shadowRoot.querySelector(".sapWCShellBarMenuButton"));
+				}
 			},
+		};
+
+		this._menuItemPress = event => {
+			this.fireEvent("menuItemPress", {
+				item: event.detail.item,
+			});
 		};
 
 		this._itemNav = new ItemNavigation(this);
@@ -371,8 +437,20 @@ class ShellBar extends WebComponent {
 		};
 
 		this._handleResize = event => {
-			this.shadowRoot.querySelector("ui5-popover").close();
+			this.shadowRoot.querySelector(".sapWCShellBarOverflowPopover").close();
 			this._overflowActions();
+		};
+
+		this._logoPress = event => {
+			this.fireEvent("logoPress", {
+				targetRef: this.shadowRoot.querySelector(".sapWCShellBarLogo"),
+			});
+		};
+
+		this._coPilotPress = event => {
+			this.fireEvent("coPilotPress", {
+				targetRef: this.shadowRoot.querySelector(".ui5-shellbar-coPilot"),
+			});
 		};
 	}
 
@@ -524,7 +602,7 @@ class ShellBar extends WebComponent {
 	}
 
 	_toggleActionPopover() {
-		const popover = this.shadowRoot.querySelector("ui5-popover");
+		const popover = this.shadowRoot.querySelector(".sapWCShellBarOverflowPopover");
 		const overflowButton = this.shadowRoot.querySelector(".sapWCShellBarOverflowIcon");
 		popover.openBy(overflowButton);
 	}

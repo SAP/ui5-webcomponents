@@ -67,6 +67,12 @@
 	<ui5-shellbar-item data-ui5-slot="items" id="call" src="sap-icon://incoming-call" text="Incoming Calls"></ui5-shellbar-item>
 
 	<ui5-input data-ui5-slot="searchField"></ui5-input>
+
+	<ui5-li data-ui5-slot="menuItems" type="Active">Application 1</ui5-li>
+	<ui5-li data-ui5-slot="menuItems" type="Active">Application 2</ui5-li>
+	<ui5-li data-ui5-slot="menuItems" type="Active">Application 3</ui5-li>
+	<ui5-li data-ui5-slot="menuItems" type="Active">Application 4</ui5-li>
+	<ui5-li data-ui5-slot="menuItems" type="Active">Application 5</ui5-li>
 </ui5-shellbar>
 
 <ui5-popover id="action-popover" hide-header placement-type="Bottom">
@@ -85,24 +91,11 @@
 	</div>
 </ui5-popover>
 
-<ui5-popover id="app-list-popover" hide-header placement-type="Bottom">
-	<ui5-list separators="None">
-		<ui5-li type="Active">Application 1</ui5-li>
-		<ui5-li type="Active">Application 2</ui5-li>
-		<ui5-li type="Active">Application 3</ui5-li>
-		<ui5-li type="Active">Application 4</ui5-li>
-		<ui5-li type="Active">Application 5</ui5-li>
-	</ui5-list>
-</ui5-popover>
-
 <script>
 	shellbar.addEventListener("profilePress", function(event) {
 		window["action-popover"].openBy(event.detail.targetRef);
 	});
 
-	shellbar.addEventListener("titlePress", function(event) {
-		window["app-list-popover"].openBy(event.detail.targetRef);
-	});
 </script>
 				</div>
 
@@ -126,6 +119,13 @@
 	<ui5-shellbar-item data-ui5-slot="items" id="call" src="sap-icon://incoming-call" text="Incoming Calls"></ui5-shellbar-item>
 
 	<ui5-input data-ui5-slot="searchField"></ui5-input>
+
+	<ui5-li data-ui5-slot="menuItems" type="Active">Application 1</ui5-li>
+	<ui5-li data-ui5-slot="menuItems" type="Active">Application 2</ui5-li>
+	<ui5-li data-ui5-slot="menuItems" type="Active">Application 3</ui5-li>
+	<ui5-li data-ui5-slot="menuItems" type="Active">Application 4</ui5-li>
+	<ui5-li data-ui5-slot="menuItems" type="Active">Application 5</ui5-li>
+
 </ui5-shellbar>
 
 <ui5-popover id="popover" hide-header placement-type="Bottom">
@@ -144,24 +144,11 @@
 	</div>
 </ui5-popover>
 
-<ui5-popover id="app-list-popover" hide-header placement-type="Bottom">
-	<ui5-list separators="None">
-		<ui5-li type="Active">Application 1</ui5-li>
-		<ui5-li type="Active">Application 2</ui5-li>
-		<ui5-li type="Active">Application 3</ui5-li>
-		<ui5-li type="Active">Application 4</ui5-li>
-		<ui5-li type="Active">Application 5</ui5-li>
-	</ui5-list>
-</ui5-popover>
-
 <script>
 	shellbar.addEventListener("profilePress", function(event) {
 		popover.openBy(event.detail.targetRef);
 	});
 
-	shellbar.addEventListener("titlePress", function(event) {
-		window["app-list-popover"].openBy(event.detail.targetRef);
-	});
 </script>
 		</xmp>
 				</pre>
