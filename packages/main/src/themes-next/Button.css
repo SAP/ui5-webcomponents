@@ -16,10 +16,8 @@ span[dir="rtl"] .sapMBtn.sapMBtnIconEnd .sapWCIconInButton {
 	margin-left: 0;
 }
 
-span[data-sap-ui-wc-root] {
+ui5-button span[data-sap-ui-wc-root] {
 	display: inline-block;
-	width: 100%;
-	height: 100%;
 }
 
 span[data-sap-ui-wc-root].sapUiSizeCompact .sapWCIconInButton {
