@@ -1,5 +1,5 @@
-commit b00ab522c88bee0a8c12adc4da24e507abe9465a
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Mon Apr 15 14:02:03 2019 +0300
+commit 444875612145b0cd8bdfb7e4c1a31aabcf037447
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Mon Apr 15 15:50:42 2019 +0300
 
-    fix(ui5-button): fix width in ie11 (#325)
+    chore: make the styles build work properly on windows (#336)
