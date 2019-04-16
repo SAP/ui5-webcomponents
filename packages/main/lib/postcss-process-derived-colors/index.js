@@ -17,6 +17,14 @@ const extractName = varRef => {
 	return result[1];
 };
 
+const getColorInstance = colorValue => {
+	return new Color(colorValue.replace("#", ""));
+};
+
+const toRGBA = col => {
+	return `rgba(${col.rgb}, ${col.alpha})`;
+};
+
 const isCalcUsed = value => {
 	return value.includes("calc(");
 };
@@ -34,21 +42,21 @@ const getColorValue = async (col) => {
 
 const darken = async (col, value) => {
 	const colorValue = await getColorValue(col);
-	return lessDarken(new Color(colorValue.replace("#", "")), { value });
+	return lessDarken(getColorInstance(colorValue), { value });
 }
 
 const lighten = async (col, value) => {
 	const colorValue = await getColorValue(col);
-	return lessLighten(new Color(colorValue.replace("#", "")), { value });
+	return lessLighten(getColorInstance(colorValue), { value });
 }
 
 const contrast = async (color, dark, light, threshold) => {
 	const colorValue = await getColorValue(color);
 	const darkValue = await getColorValue(dark);
 	const lightValue = await getColorValue(light);
-	const col1 = new Color(colorValue.replace("#", ""));
-	const col2 = new Color(darkValue.replace("#", ""));
-	const col3 = new Color(lightValue.replace("#", ""));
+	const col1 = getColorInstance(colorValue);
+	const col2 = getColorInstance(darkValue);
+	const col3 = getColorInstance(lightValue);
 
 	let thresholdValue;
 
@@ -63,21 +71,21 @@ const contrast = async (color, dark, light, threshold) => {
 
 const fade = async (col, value) => {
 	const colorValue = await getColorValue(col);
-	return lessFade(new Color(colorValue.replace("#", "")), {
+	return lessFade(getColorInstance(colorValue), {
 		value
 	});
 }
 
 const saturate = async (col, value) => {
 	const colorValue = await getColorValue(col);
-	return lessSaturate(new Color(colorValue.replace("#", "")), {
+	return lessSaturate(getColorInstance(colorValue), {
 		value
 	});
 }
 
 const desaturate = async (col, value) => {
 	const colorValue = await getColorValue(col);
-	return lessDesaturate(new Color(colorValue.replace("#", "")), {
+	return lessDesaturate(getColorInstance(colorValue), {
 		value
 	});
 }
@@ -85,8 +93,8 @@ const desaturate = async (col, value) => {
 const mix = async (color1, color2, value) => {
 	const color1Value = await getColorValue(color1);
 	const color2Value = await getColorValue(color2);
-	const col1 = new Color(color1Value.replace("#", ""))
-	const col2 = new Color(color2Value.replace("#", ""))
+	const col1 = getColorInstance(color1Value);
+	const col2 = getColorInstance(color2Value);
 	return lessMix(col1, col2, {
 		value
 	});
@@ -94,7 +102,7 @@ const mix = async (color1, color2, value) => {
 
 const spin = async (col, value) => {
 	const colorValue = await getColorValue(col);
-	return lessSpin(new Color(colorValue.replace("#", "")), {
+	return lessSpin(getColorInstance(colorValue), {
 		value
 	});
 }
@@ -178,7 +186,15 @@ const processDerivations = async (derivations) => {
 	const transformations = Object.keys(derivations).map(async newParam => {
 		const transform = derivations[newParam];
 		const derivedColor = await transform();
-		resolvePromiseFor(newParam, derivedColor.toRGB ? derivedColor.toRGB() : derivedColor);
+		let resultValue;
+
+		if (derivedColor.alpha && derivedColor.alpha !== 1) { // respect the alpha channel
+			resultValue = toRGBA(derivedColor);
+		} else {
+			resultValue = derivedColor.toRGB ? derivedColor.toRGB() : derivedColor;
+		}
+
+		resolvePromiseFor(newParam, resultValue);
 	});
 
 	const timeoutPromise = new Promise(resolve => {
@@ -225,31 +241,28 @@ module.exports = postcss.plugin('process derived colors', function (opts) {
 
 		clearMaps();
 		const result = [];
-		// Step 1: Read entry params files
-		let allParameters;
-		// if (theme === "sap_belize" || theme === "sap_fiori_3") {
-			allParameters = root.toString();
-		// } else {
-		// 	pluginFinishedResolve();
-		// 	return pluginFinished;
-		// }
 
-		// collect derivation functions
+		// Step 1: Read entry params files
+		let allParameters = root.toString();
+
+		// Step2: Collect derivation functions
 		const derivationFactories = require(`../../src/themes-next/${theme}/derived-colors`);
 		let derivations = {};
 		derivationFactories.forEach(factory => {
 			Object.assign(derivations, factory({ darken, lighten, contrast, fade, saturate, desaturate, mix, spin, any }))
 		});
 
-		// Step 2: Find all vars and which are unresolved (has not calculated value)
+		// Step 3: Find all vars and which are unresolved (has not calculated value)
 		findCSSVars(allParameters);
 
-		// Step 3: Process derivations
+		// Step 4: Process derivations
 		await processDerivations(derivations);
 		console.log({unresolvedNames});
-		// Step 4: Restore refs
+
+		// Step 5: Restore refs
 		restoreRefs();
-		// Step 4: Output the result
+
+		// Step 6: Output the result
 		Array.from(outputVars.entries()).forEach(([key, value]) => {
 			result.push(`${key}: ${value};`)
 		});
@@ -263,16 +276,4 @@ module.exports = postcss.plugin('process derived colors', function (opts) {
 		pluginFinishedResolve();
 		return pluginFinished;
 	}
-})
-
-
-// Worst case
-// "--sapUiSegmentedButtonFooterBorderColor": () => lighten("--sapUiButtonBorderColor", 8),
-
-// --sapUiButtonBorderColor: var(--sapButton_BorderColor);
-
-// "--sapButton_BorderColor": () => darken("--sapButton_Background", 30), //should be #ababab
-
-// "--sapButton_Background": () => darken("--sapPrimary4", 3), //should be #f7f7f7
-
-// --sapPrimary4: #ffffff;
+});
