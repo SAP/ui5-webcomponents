@@ -1,4 +1,4 @@
-const derivationsFactory = ({ darken, lighten, contrast, fade, saturate, desaturate, mix, spin, any }) => {
+const derivationsFactory = ({ darken, lighten, contrast, fade, saturate, desaturate, mix, spin, concat }) => {
 	const derivations = {
 		"--sapHighlightColor": () => darken("--sapBrandColor", 10),
 		"--sapBackgroundColorDefault": () => darken("--sapPrimary3", 2),
@@ -58,7 +58,7 @@ const derivationsFactory = ({ darken, lighten, contrast, fade, saturate, desatur
 		"--sapUiNotifierSeparator": () => darken("--sapUiPrimary7", 20),
 		"--sapUiNotificationBarBorder": () => lighten("--sapUiPrimary7", 20),
 		"--sapUiContentShadowColorFade30": () => fade("--sapUiContentShadowColor", 30),
-		"--sapUiCalloutShadow": () => any({
+		"--sapUiCalloutShadow": () => concat({
 			static: "0px 6px 12px 0px",
 			var: "--sapUiContentShadowColorFade30"
 		}),
@@ -91,30 +91,30 @@ const derivationsFactory = ({ darken, lighten, contrast, fade, saturate, desatur
 		"--sapUiObjectHeaderBorderColor": () => darken("--sapUiObjectHeaderBackground", 15),
 		"--sapUiDragAndDropActiveBackground": () => fade("--sapUiLink", 5),
 		"--sapUiContentShadowColorFade5": () => fade("--sapUiContentShadowColor", 5),
-		"--sapUiShadowHeader": () => any({
+		"--sapUiShadowHeader": () => concat({
 			static: "0 1px 0.5rem 0",
 			var: "--sapUiContentShadowColorFade5"
 		}),
 		"--sapUiContentShadowColorFade15": () => fade("--sapUiContentShadowColor", 15),
-		"--sapUiShadowLevel0": () => any({
+		"--sapUiShadowLevel0": () => concat({
 			static: "0 0 0 1px",
 			var: "--sapUiContentShadowColorFade15"
 		}),
-		"--sapUiShadowLevel1": () => any({
+		"--sapUiShadowLevel1": () => concat({
 			static: "0 0.125rem 0.5rem 0",
 			var: "--sapUiContentShadowColorFade15"
 		}, {
 			static: "",
 			var: "--sapUiShadowLevel0"
 		}),
-		"--sapUiShadowLevel2": () => any({
+		"--sapUiShadowLevel2": () => concat({
 			static: "0 0.625rem 1.875rem 0",
 			var: "--sapUiContentShadowColorFade15"
 		}, {
 			static: "",
 			var: "--sapUiShadowLevel0"
 		}),
-		"--sapUiShadowLevel3": () => any({
+		"--sapUiShadowLevel3": () => concat({
 			static: "0 1.25rem 5rem 0",
 			var: "--sapUiContentShadowColorFade15"
 		}, {

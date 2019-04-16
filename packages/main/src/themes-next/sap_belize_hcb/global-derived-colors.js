@@ -1,4 +1,4 @@
-const derivationsFactory = ({ darken, lighten, contrast, fade, saturate, desaturate, mix, spin, any }) => {
+const derivationsFactory = ({ darken, lighten, contrast, fade, saturate, desaturate, mix, spin, concat }) => {
 	const derivations = {
 		"--sapHighlightTextColor": () => contrast("--sapHighlightColor", "--sapTextColor", "--sapContent_ContrastTextColor", "--sapContent_ContrastTextThreshold"),
 		"--sapTile_TitleTextColor": () => contrast("--sapTile_Background", "--sapTile_TextColor", "--sapContent_ContrastTextColor", "--sapContent_ContrastTextThreshold"),
@@ -17,21 +17,21 @@ const derivationsFactory = ({ darken, lighten, contrast, fade, saturate, desatur
 		"--sapUiContentContrastShadowColorFade60": () => fade("--sapUiContentContrastShadowColor", 60),
 		"--sapUiContentContrastShadowColorFade80": () => fade("--sapUiContentContrastShadowColor", 80),
 
-		"--sapUiShadowLevel1": () => any({
+		"--sapUiShadowLevel1": () => concat({
 			static: "0 0 1rem 0",
 			var: "--sapUiContentContrastShadowColorFade50"
 		}, {
 			static: "0 0 0 2px",
 			var: "--sapUiContentShadowColor"
 		}),
-		"--sapUiShadowLevel2": () => any({
+		"--sapUiShadowLevel2": () => concat({
 			static: "0 0.25rem 2rem 0",
 			var: "--sapUiContentContrastShadowColorFade60"
 		}, {
 			static: "0 0 0 2px",
 			var: "--sapUiContentShadowColor"
 		}),
-		"--sapUiShadowLevel3": () => any({
+		"--sapUiShadowLevel3": () => concat({
 			static: "0 0.625rem 4rem 0",
 			var: "--sapUiContentContrastShadowColorFade80"
 		}, {

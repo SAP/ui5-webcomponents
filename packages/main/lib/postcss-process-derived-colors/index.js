@@ -12,19 +12,6 @@ const lessDesaturate = registry.get("desaturate");
 const lessMix = registry.get("mix");
 const lessSpin = registry.get("spin");
 
-const extractName = varRef => {
-	const result = varRef.match(/var\((--\w+),?.*\)/);
-	return result[1];
-};
-
-const getColorInstance = colorValue => {
-	return new Color(colorValue.replace("#", ""));
-};
-
-const toRGBA = col => {
-	return `rgba(${col.rgb}, ${col.alpha})`;
-};
-
 const isCalcUsed = value => {
 	return value.includes("calc(");
 };
@@ -33,12 +20,28 @@ const isStatic = value => {
 	return !value.includes("var(--");
 };
 
+const getNormalizedColorValue = colorValue => {
+	if (colorValue.alpha && colorValue.alpha !== 1) {
+		return toRGBA(colorValue);
+	}
+
+	return colorValue.toRGB ? colorValue.toRGB() : colorValue;
+}
+
 const getColorValue = async (col) => {
 	let colorValue = col instanceof Promise ? await col : await getPromiseFor(col);
-	colorValue = colorValue.toRGB ? colorValue.toRGB() : colorValue;
+	colorValue = getNormalizedColorValue(colorValue);
 
 	return colorValue;
 }
+
+const getColorInstance = colorValue => {
+	return new Color(colorValue.replace("#", ""));
+};
+
+const toRGBA = col => {
+	return `rgba(${col.rgb}, ${col.alpha})`;
+};
 
 const darken = async (col, value) => {
 	const colorValue = await getColorValue(col);
@@ -107,7 +110,7 @@ const spin = async (col, value) => {
 	});
 }
 
-const any = async (...derivations) => {
+const concat = async (...derivations) => {
 	let result = "";
 
 	const derivedPromises = derivations.map(derivation => getColorValue(derivation.var));
@@ -129,6 +132,11 @@ const varPromises = new Map();
 const unresolvedNames = new Set();
 const outputVars = new Map();
 const originalRefs = new Map();
+
+const extractName = varRef => {
+	const result = varRef.match(/var\((--\w+),?.*\)/);
+	return result[1];
+};
 
 const getPromiseFor = varName => {
 	if (varPromises.has(varName)) {
@@ -186,13 +194,7 @@ const processDerivations = async (derivations) => {
 	const transformations = Object.keys(derivations).map(async newParam => {
 		const transform = derivations[newParam];
 		const derivedColor = await transform();
-		let resultValue;
-
-		if (derivedColor.alpha && derivedColor.alpha !== 1) { // respect the alpha channel
-			resultValue = toRGBA(derivedColor);
-		} else {
-			resultValue = derivedColor.toRGB ? derivedColor.toRGB() : derivedColor;
-		}
+		const resultValue = getNormalizedColorValue(derivedColor);
 
 		resolvePromiseFor(newParam, resultValue);
 	});
@@ -249,7 +251,7 @@ module.exports = postcss.plugin('process derived colors', function (opts) {
 		const derivationFactories = require(`../../src/themes-next/${theme}/derived-colors`);
 		let derivations = {};
 		derivationFactories.forEach(factory => {
-			Object.assign(derivations, factory({ darken, lighten, contrast, fade, saturate, desaturate, mix, spin, any }))
+			Object.assign(derivations, factory({ darken, lighten, contrast, fade, saturate, desaturate, mix, spin, concat }))
 		});
 
 		// Step 3: Find all vars and which are unresolved (has not calculated value)
