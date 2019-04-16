@@ -159,6 +159,20 @@ const metadata = {
 		},
 
 		/**
+		 * Determines the name with which the <code>ui5-input</code> will be submitted in an HTML form.
+		 *
+		 * <b>Note:</b> When set, a native <code>input</code> HTML element
+		 * will be created inside the <code>ui5-input</code> so that it can be submitted as
+		 * part of an HTML form. Do not use this property unless you need to submit a form.
+		 *
+		 * @type {String}
+		 * @public
+		 */
+		name: {
+			type: String
+		},
+
+		/**
 		 * Defines whether the <code>ui5-input</code> should show suggestions, if such are present.
 		 *
 		 * @type {Boolean}
@@ -311,6 +325,7 @@ class Input extends WebComponent {
 		if (this.showSuggestions) {
 			this.enableSuggestions();
 		}
+		this.manageFormSupport();
 	}
 
 	onAfterRendering() {
@@ -498,6 +513,25 @@ class Input extends WebComponent {
 	onOpen() {}
 
 	onClose() {}
+
+	manageFormSupport() {
+		const needsNativeInput = !!this.name;
+		let nativeInput = this.querySelector("input[type=hidden]");
+		if (needsNativeInput && !nativeInput) {
+			nativeInput = document.createElement("input");
+			nativeInput.type = "hidden";
+			this.appendChild(nativeInput);
+		}
+		if (!needsNativeInput && nativeInput) {
+			this.removeChild(nativeInput);
+		}
+
+		if (needsNativeInput) {
+			nativeInput.disabled = this.disabled;
+			nativeInput.name = this.name;
+			nativeInput.value = this.value;
+		}
+	}
 }
 
 Bootstrap.boot().then(_ => {

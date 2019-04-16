@@ -147,6 +147,10 @@ const metadata = {
 			defaultValue: 0,
 		},
 
+		name: {
+			type: String
+		},
+
 		_height: {
 			type: CSSSize,
 			defaultValue: null,
@@ -240,6 +244,8 @@ class TextArea extends WebComponent {
 			// this should be complex calc between line height and paddings - TODO: make it stable
 			this._maxHeight = `${this.growingMaxLines * 1.4 * 14 + 9}px`;
 		}
+
+		this.manageFormSupport();
 	}
 
 	getInputDomRef() {
@@ -319,6 +325,25 @@ class TextArea extends WebComponent {
 		return {
 			exceededText, leftCharactersCount, calcedMaxLength,
 		};
+	}
+
+	manageFormSupport() {
+		const needsNativeInput = !!this.name;
+		let nativeInput = this.querySelector("input[type=hidden]");
+		if (needsNativeInput && !nativeInput) {
+			nativeInput = document.createElement("input");
+			nativeInput.type = "hidden";
+			this.appendChild(nativeInput);
+		}
+		if (!needsNativeInput && nativeInput) {
+			this.removeChild(nativeInput);
+		}
+
+		if (needsNativeInput) {
+			nativeInput.disabled = this.disabled;
+			nativeInput.name = this.name;
+			nativeInput.value = this.value;
+		}
 	}
 
 	static async define(...params) {
