@@ -64,7 +64,7 @@ ui5-button span[data-sap-ui-wc-root] .sapMBtn::before {
 	position: relative;
 }
 
-.sapMBtn:hover {
+.sapMBtn:not(.sapMBtnActive):hover {
 	background: var(--sapUiButtonHoverBackground);
 }
 
@@ -114,8 +114,7 @@ ui5-button span[data-sap-ui-wc-root] .sapMBtn::before {
 	border: 0;
 }
 
-.sapMBtnActive,
-.sapMBtn:active {
+.sapMBtnActive {
 	background-image: none;
 	background-color: var(--sapUiButtonActiveBackground);
 	border-color: var(--_ui5_button_active_border_color);
@@ -123,8 +122,7 @@ ui5-button span[data-sap-ui-wc-root] .sapMBtn::before {
 	text-shadow: none;
 }
 
-.sapMBtnActive:focus::after,
-.sapMBtn:active:focus::after {
+.sapMBtnActive:focus::after {
 	border-color: var(--sapUiContentContrastFocusColor);
 }
 
@@ -140,8 +138,7 @@ ui5-button span[data-sap-ui-wc-root] .sapMBtn::before {
 	border-color: var(--_ui5_button_positive_border_hover_color);
 }
 
-.sapMBtn.sapMBtnPositive.sapMBtnActive,
-.sapMBtn.sapMBtnPositive:active {
+.sapMBtn.sapMBtnPositive.sapMBtnActive {
 	background-color: var(--sapUiButtonAcceptActiveBackground);
 	border-color: var(--_ui5_button_positive_border_active_color);
 	color: var(--sapUiButtonActiveTextColor);
@@ -151,8 +148,7 @@ ui5-button span[data-sap-ui-wc-root] .sapMBtn::before {
 .sapMBtn.sapMBtnPositive:focus {
 	border-color: var(--_ui5_button_positive_focus_border_color);
 }
-.sapMBtn.sapMBtnPositive.sapMBtnActive:focus::after,
-.sapMBtn.sapMBtnPositive:active:focus::after {
+.sapMBtn.sapMBtnPositive.sapMBtnActive:focus::after {
 	border-color: var(--sapUiContentContrastFocusColor);
 }
 
@@ -176,16 +172,14 @@ ui5-button span[data-sap-ui-wc-root] .sapMBtn::before {
 	border-color: var(--_ui5_button_negative_focus_border_color);
 }
 
-.sapMBtn.sapMBtnNegative.sapMBtnActive,
-.sapMBtn.sapMBtnNegative:active {
+.sapMBtn.sapMBtnNegative.sapMBtnActive {
 	background-color: var(--sapUiButtonRejectActiveBackground);
 	border-color: var(--_ui5_button_negative_active_border_color);
 	color: var(--sapUiButtonActiveTextColor);
 	text-shadow: none;
 }
 
-.sapMBtn.sapMBtnNegative.sapMBtnActive:focus::after,
-.sapMBtn.sapMBtnNegative:active:focus::after {
+.sapMBtn.sapMBtnNegative.sapMBtnActive:focus::after {
 	border-color: var(--sapUiContentContrastFocusColor);
 }
 
@@ -205,16 +199,14 @@ ui5-button span[data-sap-ui-wc-root] .sapMBtn::before {
 	border-color: var(--sapUiButtonEmphasizedHoverBorderColor);
 }
 
-.sapMBtn.sapMBtnEmphasized.sapMBtnActive,
-.sapMBtn.sapMBtnEmphasized:active {
+.sapMBtn.sapMBtnEmphasized.sapMBtnActive {
 	background-color: var(--sapUiButtonEmphasizedActiveBackground);
 	border-color: var(--sapUiButtonEmphasizedActiveBorderColor);
 	color: var(--sapUiButtonActiveTextColor);
 	text-shadow: none;
 }
 
-.sapMBtn.sapMBtnEmphasized.sapMBtnActive:focus::after,
-.sapMBtn.sapMBtnEmphasized:active:focus::after {
+.sapMBtn.sapMBtnEmphasized.sapMBtnActive:focus::after {
 	border-color: var(--sapUiContentContrastFocusColor);
 }
 
@@ -238,13 +230,12 @@ ui5-button span[data-sap-ui-wc-root] .sapMBtn::before {
 	background-color: var(--sapUiButtonLiteHoverBackground);
 }
 
-.sapMBtn.sapMBtnTransparent.sapMBtnActive,
-.sapMBtn.sapMBtnTransparent:active {
+.sapMBtn.sapMBtnTransparent.sapMBtnActive {
 	background-color: var(--sapUiButtonLiteActiveBackground);
 	color: var(--sapUiButtonActiveTextColor);
 	text-shadow: none;
 }
 
-.sapMBtn.sapMBtnTransparent:hover:not(:active) {
+.sapMBtn.sapMBtnTransparent:hover:not(.sapMBtnActive) {
 	border-color: transparent;
 }
