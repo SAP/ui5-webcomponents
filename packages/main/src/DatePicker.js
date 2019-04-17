@@ -7,12 +7,12 @@ import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes";
 import { getCalendarType } from "@ui5/webcomponents-base/src/Configuration";
 import { getLocale } from "@ui5/webcomponents-base/src/LocaleProvider";
 import { getIconURI } from "@ui5/webcomponents-base/src/IconPool";
+import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
 import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData";
 import DateFormat from "@ui5/webcomponents-core/dist/sap/ui/core/format/DateFormat";
 import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType";
 import CalendarDate from "@ui5/webcomponents-base/src/dates/CalendarDate";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
 import DatePickerTemplateContext from "./DatePickerTemplateContext";
 import Icon from "./Icon";
 import Popover from "./Popover";
@@ -23,17 +23,15 @@ import Input from "./Input";
 import InputType from "./types/InputType";
 import DatePickerRenderer from "./build/compiled/DatePickerRenderer.lit";
 
-// Styles
-import belize from "./themes/sap_belize/DatePicker.less";
-import belizeHcb from "./themes/sap_belize_hcb/DatePicker.less";
-import fiori3 from "./themes/sap_fiori_3/DatePicker.less";
-
 // default calendar for bundling
 import "@ui5/webcomponents-core/dist/sap/ui/core/date/Gregorian";
 
-ShadowDOM.registerStyle("sap_belize", "DatePicker.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "DatePicker.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "DatePicker.css", fiori3);
+// Styles
+import datePickerCss from "./themes-next/DatePicker.css";
+
+addCustomCSS("ui5-datepicker", "sap_fiori_3", datePickerCss);
+addCustomCSS("ui5-datepicker", "sap_belize", datePickerCss);
+addCustomCSS("ui5-datepicker", "sap_belize_hcb", datePickerCss);
 
 /**
  * @public
