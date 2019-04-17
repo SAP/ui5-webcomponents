@@ -22,6 +22,7 @@ import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign";
 import Input from "./Input";
 import InputType from "./types/InputType";
 import DatePickerRenderer from "./build/compiled/DatePickerRenderer.lit";
+import { manageNativeHiddenInput } from "./util/FormSupport";
 
 // Styles
 import belize from "./themes/sap_belize/DatePicker.less";
@@ -121,6 +122,10 @@ const metadata = {
 		placeholder: {
 			defaultValue: null,
 			type: String,
+		},
+
+		name: {
+			type: String
 		},
 
 		_isPickerOpen: {
@@ -290,6 +295,8 @@ class DatePicker extends WebComponent {
 		} else {
 			this._calendar.selectedDates = [];
 		}
+
+		manageNativeHiddenInput(this);
 	}
 
 	onclick(event) {

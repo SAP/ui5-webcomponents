@@ -7,6 +7,7 @@ import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
 import CheckBoxRenderer from "./build/compiled/CheckBoxRenderer.lit";
 import CheckBoxTemplateContext from "./CheckBoxTemplateContext";
 import Label from "./Label";
+import { manageNativeHiddenInput } from "./util/FormSupport";
 
 // Styles
 import checkboxCss from "./themes-next/CheckBox.css";
@@ -97,6 +98,10 @@ const metadata = {
 		wrap: {
 			type: Boolean,
 		},
+		
+		name: {
+			type: String
+		},
 
 		_label: {
 			type: Object,
@@ -167,6 +172,10 @@ class CheckBox extends WebComponent {
 
 	onBeforeRendering() {
 		this.syncLabel();
+		manageNativeHiddenInput(this, (element, nativeInput) => {
+			nativeInput.disabled = element.disabled || !element.checked;
+			nativeInput.value = element.checked ? "on" : undefined;
+		});
 	}
 
 	syncLabel() {

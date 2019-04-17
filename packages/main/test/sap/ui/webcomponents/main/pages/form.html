@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
-    <title>ui5-input</title>
+    <title>Form support</title>
     <script src="../../../../../../webcomponentsjs/webcomponents-loader.js"></script>
     <script src="../../../../../../resources/sap/ui/webcomponents/main/bundle.esm.js" type="module"></script>
     <script nomodule src="../../../../../../resources/sap/ui/webcomponents/main/bundle.es5.js"></script>
@@ -61,7 +61,21 @@
     <br/>
     <ui5-textarea name="ta" value="My text"></ui5-textarea>
 
+    <br>
+    <ui5-datepicker name="dp"></ui5-datepicker>
+
     <br/>
+
+    <br>
+    <input name="native_cb" type="checkbox"/>
+
+    <br>
+    <ui5-checkbox name="cb"></ui5-checkbox>
+
+    <br>
+    <ui5-button>Does not submit forms</ui5-button>
+
+    <ui5-button submit-forms>Submits forms</ui5-button>
     <input type="submit"/>
 </form>
 

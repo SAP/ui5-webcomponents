@@ -8,6 +8,7 @@ import ButtonTemplateContext from "./ButtonTemplateContext";
 import ButtonType from "./types/ButtonType";
 import ButtonRenderer from "./build/compiled/ButtonRenderer.lit";
 import Icon from "./Icon";
+import { manageNativeSubmitInput, triggerNativeSubmit } from "./util/FormSupport";
 
 // Styles
 import buttonCss from "./themes-next/Button.css";
@@ -90,6 +91,17 @@ const metadata = {
 		activeIcon: { type: URI, defaultValue: null },
 
 		/**
+		 * When set to <code>true</code>, the <code>ui5-button</code> will
+		 * automatically submit forms upon <code>press</code>.
+		 *
+		 * @type {boolean}
+		 * @public
+		 */
+		submitForms: {
+			type: Boolean
+		},
+
+		/**
 		 * Used to switch the active state (pressed or not) of the <code>ui5-button</code>.
 		 */
 		_active: { type: Boolean },
@@ -168,12 +180,14 @@ class Button extends WebComponent {
 		} else {
 			this._iconSettings = null;
 		}
+		manageNativeSubmitInput(this);
 	}
 
 	onclick(event) {
 		event.isMarked = "button";
 		if (!this.disabled) {
 			this.fireEvent("press", {});
+			triggerNativeSubmit(this);
 		}
 	}
 

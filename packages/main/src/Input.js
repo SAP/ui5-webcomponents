@@ -11,7 +11,7 @@ import {
 } from "@ui5/webcomponents-base/src/events/PseudoEvents";
 import Icon from "./Icon";
 import InputType from "./types/InputType";
-import { manageFormSupport } from "./util/FormSupport";
+import { manageNativeHiddenInput } from "./util/FormSupport";
 // Template
 import InputRenderer from "./build/compiled/InputRenderer.lit";
 import InputTemplateContext from "./InputTemplateContext";
@@ -326,7 +326,7 @@ class Input extends WebComponent {
 		if (this.showSuggestions) {
 			this.enableSuggestions();
 		}
-		manageFormSupport(this);
+		manageNativeHiddenInput(this);
 	}
 
 	onAfterRendering() {
