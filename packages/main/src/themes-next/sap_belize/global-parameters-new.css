@@ -2,16 +2,16 @@
 /* Global Parameters                     */
 /* ===================================== */
 :root {
-	--sapUiBrand: var(--sapBrandColor); /*  #427cac */
-	--sapUiHighlight: var(--sapHighlightColor); /*  #427cac */
+	--sapUiBrand: var(--sapBrandColor);
+	--sapUiHighlight: var(--sapHighlightColor);
 	--sapUiBaseColor: var(--sapBaseColor);
-	--sapUiShellColor: var(--sapShellColor); /*  transparent */
-	--sapUiBaseBG: var(--sapBackgroundColor); /*  #fafafa */
+	--sapUiShellColor: var(--sapShellColor);
+	--sapUiBaseBG: var(--sapBackgroundColor);
 	--sapUiGlobalBackgroundColor: var(--sapBackgroundColor);
 	--sapUiFontFamily: var(--sapFontFamily);
 	--sapUiFontSize: var(--sapFontSize);
-	--sapUiBaseText: var(--sapTextColor); /*  #333333 */
-	--sapUiLink: var(--sapLinkColor); /*  #0070b1 */
+	--sapUiBaseText: var(--sapTextColor);
+	--sapUiLink: var(--sapLinkColor);
 	--sapUiGlobalLogo: var(--sapCompanyLogo);
 	--sapUiGlobalBackgroundImage: var(--sapBackgroundImage);
 	--sapUiBackgroundImage: var(--sapBackgroundImage);
@@ -23,14 +23,14 @@
 	--sapUiSelected: var(--sapSelectedColor);
 	--sapUiActive: var(--sapActiveColor);
 	--sapUiHighlightTextColor: var(--sapHighlightTextColor);
-	--sapUiTextTitle: var(--sapTitleColor); /*  was "Quick" default #333333 */
+	--sapUiTextTitle: var(--sapTitleColor);
 	--sapUiElementLineHeight: var(--sapElement_LineHeight);
 	--sapUiElementHeight: var(--sapElement_Height);
 	--sapUiElementBorderWidth: var(--sapElement_BorderWidth);
-	--sapUiContentLineHeight: var(--sapContent_LineHeight); /*  1.3; */
-	--sapUiContentElementHeight: var(--sapContent_ElementHeight); /*  1.37em; */
-	--sapUiContentElementHeightPX: var(--sapContent_ElementHeight_PX); /*  22px; */
-	--sapUiContentIconHeight: var(--sapContent_IconHeight); /*  16px; */
+	--sapUiContentLineHeight: var(--sapContent_LineHeight);
+	--sapUiContentElementHeight: var(--sapContent_ElementHeight);
+	--sapUiContentElementHeightPX: var(--sapContent_ElementHeight_PX);
+	--sapUiContentIconHeight: var(--sapContent_IconHeight);
 	--sapUiContentIconColor: var(--sapContent_IconColor);
 	--sapUiContentContrastIconColor: var(--sapContent_ContrastIconColor);
 	--sapUiContentNonInteractiveIconColor: var(--sapContent_NonInteractiveIconColor);
@@ -58,7 +58,7 @@
 	--sapUiShellBorderColor: var(--sapShell_BorderColor);
 	--sapUiShellTextColor: var(--sapShell_TextColor);
 	--sapUiButtonBorderWidth: var(--sapButton_BorderWidth);
-	--sapUiButtonBorderCornerRadius: var(--sapButton_BorderCornerRadius); /*  2px; */
+	--sapUiButtonBorderCornerRadius: var(--sapButton_BorderCornerRadius);
 	--sapUiButtonBackground: var(--sapButton_Background);
 	--sapUiButtonBorderColor: var(--sapButton_BorderColor);
 	--sapUiButtonTextColor: var(--sapButton_TextColor);
@@ -134,7 +134,7 @@
 	/*  ============================================ */
 	/*  UX Reference Set - do not use in Controls!! */
 	/*  ============================================ */
-	--sapUiContentGridSize: var(--sapContent_GridSize); /*  1rem; */
+	--sapUiContentGridSize: var(--sapContent_GridSize);
 	/*  ===================================== */
 	/*  Primary Colors */
 	/*  ===================================== */
@@ -148,46 +148,46 @@
 	/*  ===================================== */
 	/*  Accent Colors */
 	/*  ===================================== */
-	--sapUiAccent1: var(--sapAccentColor1); /*  #f0ab00 */
-	--sapUiAccent2: var(--sapAccentColor2); /*  #f27020 */
-	--sapUiAccent3: var(--sapAccentColor3); /*  #e52929 */
-	--sapUiAccent4: var(--sapAccentColor4); /*  #ab218e */
-	--sapUiAccent5: var(--sapAccentColor5); /*  #007cc0 */
-	--sapUiAccent6: var(--sapAccentColor6); /*  #008a3b */
-	--sapUiAccent7: var(--sapAccentColor7); /*  #004990 */
-	--sapUiAccent8: var(--sapAccentColor8); /*  #009de0 */
+	--sapUiAccent1: var(--sapAccentColor1);
+	--sapUiAccent2: var(--sapAccentColor2);
+	--sapUiAccent3: var(--sapAccentColor3);
+	--sapUiAccent4: var(--sapAccentColor4);
+	--sapUiAccent5: var(--sapAccentColor5);
+	--sapUiAccent6: var(--sapAccentColor6);
+	--sapUiAccent7: var(--sapAccentColor7);
+	--sapUiAccent8: var(--sapAccentColor8);
 	/*  ===================================== */
 	/*  Semantic Colors */
 	/*  ===================================== */
 	/*  Semantic Background Colors */
-	--sapUiErrorBG: var(--sapErrorBackground); /*  #ffe4e4 */
-	--sapUiWarningBG: var(--sapWarningBackground); /*  #fef0db */
-	--sapUiSuccessBG: var(--sapSuccessBackground); /*  #e4f6e4 */
-	--sapUiInformationBG: var(--sapInformationBackground); /*  #ebf2f7 */
-	--sapUiNeutralBG: var(--sapNeutralBackground); /*  #f4f5f6 */
+	--sapUiErrorBG: var(--sapErrorBackground);
+	--sapUiWarningBG: var(--sapWarningBackground);
+	--sapUiSuccessBG: var(--sapSuccessBackground);
+	--sapUiInformationBG: var(--sapInformationBackground);
+	--sapUiNeutralBG: var(--sapNeutralBackground);
 	/*  Semantic Border Colors */
-	--sapUiErrorBorder: var(--sapErrorBorderColor); /*  #ee0000 */
-	--sapUiWarningBorder: var(--sapWarningBorderColor); /*  #f9a429 */
-	--sapUiSuccessBorder: var(--sapSuccessBorderColor); /*  #38a238 */
-	--sapUiInformationBorder: var(--sapInformationBorderColor); /*  #427cac */
-	--sapUiNeutralBorder: var(--sapNeutralColor); /*  #5e696e */
+	--sapUiErrorBorder: var(--sapErrorBorderColor);
+	--sapUiWarningBorder: var(--sapWarningBorderColor);
+	--sapUiSuccessBorder: var(--sapSuccessBorderColor);
+	--sapUiInformationBorder: var(--sapInformationBorderColor);
+	--sapUiNeutralBorder: var(--sapNeutralColor);
 	/*  Semantic Foreground Elements */
-	--sapUiNegativeElement: var(--sapNegativeElementColor); /*  #bb0000 */
-	--sapUiCriticalElement: var(--sapCriticalElementColor); /*  #e78c07 */
-	--sapUiPositiveElement: var(--sapPositiveElementColor); /*  #2b7c2b */
-	--sapUiInformativeElement: var(--sapInformativeElementColor); /*  #427cac */
-	--sapUiNeutralElement: var(--sapNeutralElementColor); /*  #5e696e */
+	--sapUiNegativeElement: var(--sapNegativeElementColor);
+	--sapUiCriticalElement: var(--sapCriticalElementColor);
+	--sapUiPositiveElement: var(--sapPositiveElementColor);
+	--sapUiInformativeElement: var(--sapInformativeElementColor);
+	--sapUiNeutralElement: var(--sapNeutralElementColor);
 	/*  Semantic Text */
-	--sapUiNegativeText: var(--sapNegativeTextColor); /*  #bb0000 */
-	--sapUiCriticalText: var(--sapCriticalTextColor); /*  #e78c07 */
-	--sapUiPositiveText: var(--sapPositiveTextColor); /*  #2b7c2b */
-	--sapUiInformativeText: var(--sapInformativeTextColor); /*  #427cac */
-	--sapUiNeutralText: var(--sapNeutralTextColor); /*  #5e696e */
-	--sapUiNegative: var(--sapNegativeColor); /*  #bb0000 */
-	--sapUiCritical: var(--sapCriticalColor); /*  #e78c07 */
-	--sapUiPositive: var(--sapPositiveColor); /*  #2b7c2b */
-	--sapUiInformative: var(--sapInformativeColor); /*  #427cac */
-	--sapUiNeutral: var(--sapNeutralColor); /*  #5e696e */
+	--sapUiNegativeText: var(--sapNegativeTextColor);
+	--sapUiCriticalText: var(--sapCriticalTextColor);
+	--sapUiPositiveText: var(--sapPositiveTextColor);
+	--sapUiInformativeText: var(--sapInformativeTextColor);
+	--sapUiNeutralText: var(--sapNeutralTextColor);
+	--sapUiNegative: var(--sapNegativeColor);
+	--sapUiCritical: var(--sapCriticalColor);
+	--sapUiPositive: var(--sapPositiveColor);
+	--sapUiInformative: var(--sapInformativeColor);
+	--sapUiNeutral: var(--sapNeutralColor);
 	--sapUiIndication1: var(--sapIndicationColor_1);
 	--sapUiIndication2: var(--sapIndicationColor_2);
 	--sapUiIndication3: var(--sapIndicationColor_3);
@@ -197,15 +197,15 @@
 	--sapUiFontHeaderFamily: var(--sapUiFontFamily);
 	--sapUiFontHeaderWeight: normal;
 	/*  use these "sapM"-prefixed parameters for sap.m controls */
-	--sapMFontHeader1Size: 1.625rem; /*   26px */
-	--sapMFontHeader2Size: 1.375rem; /*   22px */
-	--sapMFontHeader3Size: 1.250rem; /*   20px */
-	--sapMFontHeader4Size: 1.125rem; /*   18px */
-	--sapMFontHeader5Size: 1rem; /*   16px */
-	--sapMFontHeader6Size: 0.875rem; /*   14px */
-	--sapMFontSmallSize: 0.75rem; /*  12px */
-	--sapMFontMediumSize: 0.875rem; /*  14px */
-	--sapMFontLargeSize: 1rem; /*  16px */
+	--sapMFontHeader1Size: 1.625rem;
+	--sapMFontHeader2Size: 1.375rem;
+	--sapMFontHeader3Size: 1.250rem;
+	--sapMFontHeader4Size: 1.125rem;
+	--sapMFontHeader5Size: 1rem;
+	--sapMFontHeader6Size: 0.875rem;
+	--sapMFontSmallSize: 0.75rem;
+	--sapMFontMediumSize: 0.875rem;
+	--sapMFontLargeSize: 1rem;
 	--sapUiTranslucentBGOpacity: 0;
 	--sapMPlatformDependent: false;
 	/*  ===================================== */
