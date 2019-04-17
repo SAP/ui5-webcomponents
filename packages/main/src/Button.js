@@ -8,7 +8,6 @@ import ButtonTemplateContext from "./ButtonTemplateContext";
 import ButtonType from "./types/ButtonType";
 import ButtonRenderer from "./build/compiled/ButtonRenderer.lit";
 import Icon from "./Icon";
-import { manageNativeSubmitInput, triggerNativeSubmit } from "./util/FormSupport";
 
 // Styles
 import buttonCss from "./themes-next/Button.css";
@@ -97,7 +96,7 @@ const metadata = {
 		 * @type {boolean}
 		 * @public
 		 */
-		submitForms: {
+		submits: {
 			type: Boolean,
 		},
 
@@ -180,14 +179,15 @@ class Button extends WebComponent {
 		} else {
 			this._iconSettings = null;
 		}
-		manageNativeSubmitInput(this);
 	}
 
 	onclick(event) {
 		event.isMarked = "button";
 		if (!this.disabled) {
 			this.fireEvent("press", {});
-			triggerNativeSubmit(this);
+			if (Button.FormSupport) {
+				Button.FormSupport.triggerFormSubmit(this);
+			}
 		}
 	}
 

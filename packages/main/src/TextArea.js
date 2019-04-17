@@ -6,7 +6,6 @@ import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
 import TextAreaTemplateContext from "./TextAreaTemplateContext";
 import TextAreaRenderer from "./build/compiled/TextAreaRenderer.lit";
 import { fetchResourceBundle, getResourceBundle } from "./ResourceBundleProvider";
-import { manageNativeHiddenInput } from "./util/FormSupport";
 
 // Styles
 import styles from "./themes-next/TextArea.css";
@@ -246,7 +245,9 @@ class TextArea extends WebComponent {
 			this._maxHeight = `${this.growingMaxLines * 1.4 * 14 + 9}px`;
 		}
 
-		manageNativeHiddenInput(this);
+		if (TextArea.FormSupport) {
+			TextArea.FormSupport.manageNativeHiddenInput(this);
+		}
 	}
 
 	getInputDomRef() {

@@ -7,7 +7,6 @@ import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
 import CheckBoxRenderer from "./build/compiled/CheckBoxRenderer.lit";
 import CheckBoxTemplateContext from "./CheckBoxTemplateContext";
 import Label from "./Label";
-import { manageNativeHiddenInput } from "./util/FormSupport";
 
 // Styles
 import checkboxCss from "./themes-next/CheckBox.css";
@@ -172,10 +171,13 @@ class CheckBox extends WebComponent {
 
 	onBeforeRendering() {
 		this.syncLabel();
-		manageNativeHiddenInput(this, (element, nativeInput) => {
-			nativeInput.disabled = element.disabled || !element.checked;
-			nativeInput.value = element.checked ? "on" : undefined;
-		});
+
+		if (CheckBox.FormSupport) {
+			CheckBox.FormSupport.manageNativeHiddenInput(this, (element, nativeInput) => {
+				nativeInput.disabled = element.disabled || !element.checked;
+				nativeInput.value = element.checked ? "on" : undefined;
+			});
+		}
 	}
 
 	syncLabel() {

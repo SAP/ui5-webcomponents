@@ -49,6 +49,9 @@ import StandardListItem from "./dist/StandardListItem";
 import CustomListItem from "./dist/CustomListItem";
 import GroupHeaderListItem from "./dist/GroupHeaderListItem";
 
+// used for forms
+import InputElementsFormSupport from "./dist/InputElementsFormSupport";
+
 // used in test pages
 import RenderScheduler from "@ui5/webcomponents-base/src/RenderScheduler";
 window.RenderScheduler = RenderScheduler;
