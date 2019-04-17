@@ -81,7 +81,7 @@ class WebComponent extends HTMLElement {
 		const isCompact = getCompactSize();
 
 		if (isCompact) {
-			this.setAttribute("data-ui5-compact", "")
+			this.setAttribute("data-ui5-compact", "");
 		}
 
 		if (this.constructor.getMetadata().getNoShadowDOM()) {
