@@ -98,7 +98,7 @@ const metadata = {
 		 * @public
 		 */
 		submitForms: {
-			type: Boolean
+			type: Boolean,
 		},
 
 		/**

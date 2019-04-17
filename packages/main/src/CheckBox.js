@@ -98,9 +98,9 @@ const metadata = {
 		wrap: {
 			type: Boolean,
 		},
-		
+
 		name: {
-			type: String
+			type: String,
 		},
 
 		_label: {

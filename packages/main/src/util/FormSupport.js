@@ -10,6 +10,7 @@ const manageNativeHiddenInput = (element, nativeInputUpdateCallback) => {
 		nativeInput = document.createElement("input");
 		nativeInput.type = "hidden";
 		nativeInput.setAttribute("data-ui5-webcomponents-form-support", "");
+		nativeInput.slot = "formSupport";
 		element.appendChild(nativeInput);
 	}
 	if (!needsNativeInput && nativeInput) {
@@ -22,12 +23,14 @@ const manageNativeHiddenInput = (element, nativeInputUpdateCallback) => {
 	}
 };
 
-const manageNativeSubmitInput = (element) => {
+const manageNativeSubmitInput = element => {
 	const needsNativeSubmit = !!element.submitForms;
 	let nativeSubmit = element.querySelector("input[type=submit][data-ui5-webcomponents-form-support]");
 	if (needsNativeSubmit && !nativeSubmit) {
 		nativeSubmit = document.createElement("input");
 		nativeSubmit.type = "submit";
+		nativeSubmit.style.display = "none";
+		nativeSubmit.slot = "formSupport";
 		nativeSubmit.setAttribute("data-ui5-webcomponents-form-support", "");
 		element.appendChild(nativeSubmit);
 	}
@@ -36,7 +39,7 @@ const manageNativeSubmitInput = (element) => {
 	}
 };
 
-const triggerNativeSubmit = (element) => {
+const triggerNativeSubmit = element => {
 	const nativeSubmit = element.querySelector("input[type=submit][data-ui5-webcomponents-form-support]");
 	if (nativeSubmit) {
 		nativeSubmit.click();

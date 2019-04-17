@@ -170,7 +170,7 @@ const metadata = {
 		 * @public
 		 */
 		name: {
-			type: String
+			type: String,
 		},
 
 		/**

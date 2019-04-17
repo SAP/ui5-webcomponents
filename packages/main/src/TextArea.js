@@ -149,7 +149,7 @@ const metadata = {
 		},
 
 		name: {
-			type: String
+			type: String,
 		},
 
 		_height: {
