@@ -1,10 +1,5 @@
-commit 0776e01b903f775fbf4d3ef5214b2fc8a87184a4
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Tue Apr 16 22:17:19 2019 +0300
+commit 3978327d7f2049e5cc5b26d4ea2c4e6d47091fcf
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Apr 17 14:13:45 2019 +0300
 
-    fix(ui5-button): removes active state after tabbing on an pressed button (#335)
-    
-    - The activate state of the buttons used to be displayed and controlled by the :active CSS selector. Seems like :active has some issues on different browsers and it is not consistently implemented. Therefore, the active state is now controlled by a javascript implementation.
-    - chromium issue: https://bugs.chromium.org/p/chromium/issues/detail?id=945854
-    
-    fixes: https://github.com/SAP/ui5-webcomponents/issues/156
+    refactor(ui5-datepicker): convert less to css (#338)
