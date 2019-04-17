@@ -275,7 +275,7 @@ html.sap-desktop .sapContrast .sapMLnk:focus:not(.sapMLnkDsbl) {
 
 
 /* Change Select default styles */
-.switch-container .select-width.sapMSlt.sapMSltDefault.sapMSltHoverable.sapMSltMinWidth.sapMSltWithArrow {
+.switch-container .select-width.sapMSlt.sapMSltDefault.sapMSltMinWidth.sapMSltWithArrow {
 	background-color: #000;
 }
 
