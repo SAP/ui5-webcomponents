@@ -1,4 +1,4 @@
-import { getWCNoConflict } from "./Configuration";
+import { getWCNoConflict, getCompactSize } from "./Configuration";
 import DOMObserver from "./compatibility/DOMObserver";
 import ShadowDOM from "./compatibility/ShadowDOM";
 import WebComponentMetadata from "./WebComponentMetadata";
@@ -78,6 +78,12 @@ class WebComponent extends HTMLElement {
 	}
 
 	async _initializeShadowRoot() {
+		const isCompact = getCompactSize();
+
+		if (isCompact) {
+			this.setAttribute("data-ui5-compact", "")
+		}
+
 		if (this.constructor.getMetadata().getNoShadowDOM()) {
 			return Promise.resolve();
 		}
@@ -213,6 +219,12 @@ class WebComponent extends HTMLElement {
 
 	_updateAttribute(name, newValue) {
 		if (!WebComponentMetadata.isPublicProperty(name)) {
+			const propData = this.constructor.getMetadata().getProperties()[name];
+
+			if (propData.writeInDom) {
+				this[newValue ? "setAttribute" : "removeAttribute"](`data-ui5-${name}`, "");
+			}
+
 			return;
 		}
 

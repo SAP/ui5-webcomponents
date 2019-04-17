@@ -85,6 +85,7 @@ const metadata = {
 		_opened: {
 			type: Boolean,
 			defaultValue: false,
+			writeInDom: true,
 		},
 
 		_focused: {

@@ -1,23 +1,40 @@
 :host(ui5-select) {
 	display: inline-block;
 	width: 100%;
+
+	border: 1px solid var(--sapUiFieldBorderColor);
+	overflow: hidden;
+	box-sizing: border-box;
+	height: 2.25rem;
 }
 
 ui5-select {
 	display: inline-block;
 	width: 100%;
+
+	border: 1px solid var(--sapUiFieldBorderColor);
+	overflow: hidden;
+	box-sizing: border-box;
+	height: 2.25rem;
+}
+
+:host(ui5-select:not([disabled]):not([value-state]):not([data-ui5-_opened]):hover) {
+	border: 1px solid var(--sapUiFieldHoverBorderColor);
+}
+
+ui5-select:not([disabled]):not([value-state]):not([data-ui5-_opened]):hover {
+	border: 1px solid var(--sapUiFieldHoverBorderColor);
 }
 
 .sapWCSelect {
-	height: 2.25rem;
 	max-width: 100%;
 	min-width: 5rem;
+	height: 100%;
 	position: relative;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	background-color: var(--sapUiFieldBackground);
-	border: 1px solid var(--sapUiFieldBorderColor);
 	box-sizing: border-box;
 	padding-left: 0.5rem;
 	cursor: pointer;
@@ -27,7 +44,6 @@ ui5-select {
 /* Hovered */
 .sapWCSelect:hover:not(.sapWCSelectDisabled):not(.sapWCSelectState):not(.sapWCSelectOpened) {
 	background-color: var(--sapUiFieldHoverBackground);
-	border: 1px solid var(--sapUiFieldHoverBorderColor); 
 }
 
 /* Hovered Icon */
@@ -44,9 +60,17 @@ ui5-select {
 /* Disabled */
 .sapWCSelect.sapWCSelectDisabled {
 	background: var(--_ui5_select_disabled_background);
-	border-color: var(--_ui5_select_disabled_border_color);
 	cursor: default;
+}
+
+:host(ui5-select[disabled]) {
 	opacity: 0.5;
+	border-color: var(--_ui5_select_disabled_border_color);
+}
+
+ui5-select[disabled] {
+	opacity: 0.5;
+	border-color: var(--_ui5_select_disabled_border_color);
 }
 
 /* Focused */
@@ -88,32 +112,67 @@ ui5-select {
 }
 
  /* States */
-.sapWCSelectState {
+ :host(ui5-select[value-state]:not([value-state="None"])) {
 	border-style: solid;
 	border-width: 0.125rem;
 }
 
-.sapWCSelectError {
+ui5-select[value-state]:not([value-state="None"]) {
+	border-style: solid;
+	border-width: 0.125rem;
+}
+
+:host(ui5-select[value-state="Error"]:not([disabled])) {
 	border: var(--_ui5_select_state_error_warning_border_width) var(--_ui5_select_state_error_warning_border_style) var(--sapUiFieldInvalidColor);
+}
+
+ui5-select[value-state="Error"]:not([disabled]) {
+	border: var(--_ui5_select_state_error_warning_border_width) var(--_ui5_select_state_error_warning_border_style) var(--sapUiFieldInvalidColor);
+}
+
+:host(ui5-select[value-state="Warning"]:not([disabled])) {
+	border: var(--_ui5_select_state_error_warning_border_width) var(--_ui5_select_state_error_warning_border_style) var(--sapUiFieldWarningColor);
+}
+
+ui5-select[value-state="Warning"]:not([disabled]) {
+	border: var(--_ui5_select_state_error_warning_border_width) var(--_ui5_select_state_error_warning_border_style) var(--sapUiFieldWarningColor);
+}
+
+:host(ui5-select[value-state="Success"]:not([disabled])) {
+	border-color: var(--sapUiFieldSuccessColor);
+}
+
+ui5-select[value-state="Success"]:not([disabled]) {
+	border-color: var(--sapUiFieldSuccessColor);
+}
+
+.sapWCSelectError {
 	background-color: var(--sapUiFieldInvalidBackground);
 }
 
 .sapWCSelectWarning {
-	border: var(--_ui5_select_state_error_warning_border_width) var(--_ui5_select_state_error_warning_border_style) var(--sapUiFieldWarningColor);
 	background-color: var(--sapUiFieldWarningBackground);
 }
 
 .sapWCSelectSuccess {
 	background-color: var(--sapUiFieldSuccessBackground);
-	border-color: var(--sapUiFieldSuccessColor);
 }
 
 /* Compact */
-.sapUiSizeCompact .sapWCSelect {
+
+:host(ui5-select[data-ui5-compact]) {
 	height: 1.625rem;
 }
 
-.sapUiSizeCompact .sapWCSelect  .sapWCSelectDropDownIcon {
+ui5-select[data-ui5-compact] {
+	height: 1.625rem;
+}
+
+:host(ui5-select[data-ui5-compact]) .sapWCSelectDropDownIcon {
+	width: 2rem;
+}
+
+ui5-select[data-ui5-compact] .sapWCSelectDropDownIcon {
 	width: 2rem;
 }
 
