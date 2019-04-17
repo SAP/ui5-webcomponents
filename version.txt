@@ -1,5 +1,12 @@
-commit 3978327d7f2049e5cc5b26d4ea2c4e6d47091fcf
+commit 0333f74409604a67a188ba033e90d039fe4fe7d4
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Apr 17 14:13:45 2019 +0300
+Date:   Wed Apr 17 14:23:48 2019 +0300
 
-    refactor(ui5-datepicker): convert less to css (#338)
+    chore: enable build for derived css variables (#308)
+    
+    Add postcss plugin to calculate all derived css variables
+    Details (applies for each theme):
+    * global-parameters-new.css (would be renamed later) is the new version of global-parameters.css
+    * base-parameters-new.css (would be renamed later) is the new version of base-parameters.css
+    * global-derived-colors.js - include all base and global derived css variables
+    * component-derived-colors.js - include all component derived css variables
