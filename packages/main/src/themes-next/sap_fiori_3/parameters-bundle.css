@@ -1,5 +1,5 @@
-@import "./global-parameters.css";
-@import "./derived-colors.css";
+@import "./base-parameters-new.css";
+@import "./global-parameters-new.css";
 
 @import "./Button-parameters.css";
 @import "./Card-parameters.css";

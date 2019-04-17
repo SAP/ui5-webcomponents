@@ -7,7 +7,11 @@ module.exports = {
   plugins: [
     postcssNesting(),
     postcssAddFallback({importFrom: "./dist/css/themes-next/sap_fiori_3/parameters-bundle.css"}),
-    cssnano(),
+	cssnano({preset: [
+		'default', {
+			mergeLonghand: false, // https://github.com/cssnano/cssnano/issues/675
+		},
+	]}, ),
     postcssCSStoESM(),
   ]
 };
