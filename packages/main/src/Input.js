@@ -11,6 +11,7 @@ import {
 } from "@ui5/webcomponents-base/src/events/PseudoEvents";
 import Icon from "./Icon";
 import InputType from "./types/InputType";
+import { manageFormSupport } from "./util/FormSupport";
 // Template
 import InputRenderer from "./build/compiled/InputRenderer.lit";
 import InputTemplateContext from "./InputTemplateContext";
@@ -325,7 +326,7 @@ class Input extends WebComponent {
 		if (this.showSuggestions) {
 			this.enableSuggestions();
 		}
-		this.manageFormSupport();
+		manageFormSupport(this);
 	}
 
 	onAfterRendering() {
@@ -513,25 +514,6 @@ class Input extends WebComponent {
 	onOpen() {}
 
 	onClose() {}
-
-	manageFormSupport() {
-		const needsNativeInput = !!this.name;
-		let nativeInput = this.querySelector("input[type=hidden]");
-		if (needsNativeInput && !nativeInput) {
-			nativeInput = document.createElement("input");
-			nativeInput.type = "hidden";
-			this.appendChild(nativeInput);
-		}
-		if (!needsNativeInput && nativeInput) {
-			this.removeChild(nativeInput);
-		}
-
-		if (needsNativeInput) {
-			nativeInput.disabled = this.disabled;
-			nativeInput.name = this.name;
-			nativeInput.value = this.value;
-		}
-	}
 }
 
 Bootstrap.boot().then(_ => {

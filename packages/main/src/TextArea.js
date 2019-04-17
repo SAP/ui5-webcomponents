@@ -6,6 +6,7 @@ import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
 import TextAreaTemplateContext from "./TextAreaTemplateContext";
 import TextAreaRenderer from "./build/compiled/TextAreaRenderer.lit";
 import { fetchResourceBundle, getResourceBundle } from "./ResourceBundleProvider";
+import { manageFormSupport } from "./util/FormSupport";
 
 // Styles
 import styles from "./themes-next/TextArea.css";
@@ -245,7 +246,7 @@ class TextArea extends WebComponent {
 			this._maxHeight = `${this.growingMaxLines * 1.4 * 14 + 9}px`;
 		}
 
-		this.manageFormSupport();
+		manageFormSupport(this);
 	}
 
 	getInputDomRef() {
@@ -325,25 +326,6 @@ class TextArea extends WebComponent {
 		return {
 			exceededText, leftCharactersCount, calcedMaxLength,
 		};
-	}
-
-	manageFormSupport() {
-		const needsNativeInput = !!this.name;
-		let nativeInput = this.querySelector("input[type=hidden]");
-		if (needsNativeInput && !nativeInput) {
-			nativeInput = document.createElement("input");
-			nativeInput.type = "hidden";
-			this.appendChild(nativeInput);
-		}
-		if (!needsNativeInput && nativeInput) {
-			this.removeChild(nativeInput);
-		}
-
-		if (needsNativeInput) {
-			nativeInput.disabled = this.disabled;
-			nativeInput.name = this.name;
-			nativeInput.value = this.value;
-		}
 	}
 
 	static async define(...params) {
