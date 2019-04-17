@@ -31,7 +31,7 @@ import datePickerCss from "./themes-next/DatePicker.css";
 
 addCustomCSS("ui5-datepicker", "sap_fiori_3", datePickerCss);
 addCustomCSS("ui5-datepicker", "sap_belize", datePickerCss);
-addCustomCSS("ui5-datepicker", "sap_belize_hcb", datePickerCss);;
+addCustomCSS("ui5-datepicker", "sap_belize_hcb", datePickerCss);
 
 /**
  * @public
