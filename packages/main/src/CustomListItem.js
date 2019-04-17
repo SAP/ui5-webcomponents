@@ -5,7 +5,7 @@ import CustomListItemTemplateContext from "./CustomListItemTemplateContext";
 import CustomListItemRenderer from "./build/compiled/CustomListItemRenderer.lit";
 
 // Styles
-import columnListItemCss from "./themes-next/CustomListItem.css";
+import columnListItemCss from "./themes/CustomListItem.css";
 
 addCustomCSS("ui5-li-custom", "sap_fiori_3", columnListItemCss);
 addCustomCSS("ui5-li-custom", "sap_belize", columnListItemCss);

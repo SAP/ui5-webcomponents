@@ -122,7 +122,7 @@ module.exports = postcss.plugin('process derived colors', function (opts) {
 	opts = opts || {};
 
 	return async function (root) {
-		const theme = root.source.input.from.match(/themes-next\/(\w+)\//)[1];
+		const theme = root.source.input.from.match(/themes\/(\w+)\//)[1];
 
 		const prevPlugins = [...pluginQueue];
 
@@ -142,7 +142,7 @@ module.exports = postcss.plugin('process derived colors', function (opts) {
 		let allParameters = root.toString();
 
 		// Step2: Collect derivation functions
-		const derivationFactories = require(`../../src/themes-next/${theme}/derived-colors`);
+		const derivationFactories = require(`../../src/themes/${theme}/derived-colors`);
 		let derivations = {};
 		derivationFactories.forEach(factory => {
 			Object.assign(derivations, factory(lessFunctions));

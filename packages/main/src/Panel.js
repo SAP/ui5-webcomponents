@@ -12,7 +12,7 @@ import PanelRenderer from "./build/compiled/PanelRenderer.lit";
 import { fetchResourceBundle, getResourceBundle } from "./ResourceBundleProvider";
 
 // Styles
-import panelCss from "./themes-next/Panel.css";
+import panelCss from "./themes/Panel.css";
 
 addCustomCSS("ui5-panel", "sap_fiori_3", panelCss);
 addCustomCSS("ui5-panel", "sap_belize", panelCss);

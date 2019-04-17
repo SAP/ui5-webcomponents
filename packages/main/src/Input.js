@@ -16,8 +16,8 @@ import InputRenderer from "./build/compiled/InputRenderer.lit";
 import InputTemplateContext from "./InputTemplateContext";
 
 // Styles
-import styles from "./themes-next/Input.css";
-import shellbarInput from "./themes-next/ShellBarInput.css";
+import styles from "./themes/Input.css";
+import shellbarInput from "./themes/ShellBarInput.css";
 
 addCustomCSS("ui5-input", "sap_fiori_3", styles);
 addCustomCSS("ui5-input", "sap_belize", styles);

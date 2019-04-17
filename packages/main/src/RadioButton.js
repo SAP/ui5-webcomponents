@@ -17,7 +17,7 @@ import RadioButtonRenderer from "./build/compiled/RadioButtonRenderer.lit";
 import RadioButtonTemplateContext from "./RadioButtonTemplateContext";
 
 // Styles
-import radioButtonCss from "./themes-next/RadioButton.css";
+import radioButtonCss from "./themes/RadioButton.css";
 
 addCustomCSS("ui5-radiobutton", "sap_fiori_3", radioButtonCss);
 addCustomCSS("ui5-radiobutton", "sap_belize", radioButtonCss);

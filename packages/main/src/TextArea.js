@@ -8,7 +8,7 @@ import TextAreaRenderer from "./build/compiled/TextAreaRenderer.lit";
 import { fetchResourceBundle, getResourceBundle } from "./ResourceBundleProvider";
 
 // Styles
-import styles from "./themes-next/TextArea.css";
+import styles from "./themes/TextArea.css";
 
 addCustomCSS("ui5-textarea", "sap_belize", styles);
 addCustomCSS("ui5-textarea", "sap_belize_hcb", styles);

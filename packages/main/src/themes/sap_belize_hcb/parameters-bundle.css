@@ -1,5 +1,5 @@
-@import "./base-parameters-new.css";
-@import "./global-parameters-new.css";
+@import "./base-parameters.css";
+@import "./global-parameters.css";
 
 @import "./Button-parameters.css";
 @import "./CalendarHeader-parameters.css";

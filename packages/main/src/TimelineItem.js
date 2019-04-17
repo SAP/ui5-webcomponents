@@ -11,7 +11,7 @@ import TimelineItemTemplateContext from "./TimelineItemTemplateContext";
 import TimelineItemRenderer from "./build/compiled/TimelineItemRenderer.lit";
 
 // Styles
-import styles from "./themes-next/TimelineItem.css";
+import styles from "./themes/TimelineItem.css";
 
 addCustomCSS("ui5-timeline-item", "sap_belize", styles);
 addCustomCSS("ui5-timeline-item", "sap_belize_hcb", styles);

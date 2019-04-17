@@ -17,7 +17,7 @@ import ShellBarRenderer from "./build/compiled/ShellBarRenderer.lit";
 import ShellBarTemplateContext from "./ShellBarTemplateContext";
 
 // Styles
-import styles from "./themes-next/ShellBar.css";
+import styles from "./themes/ShellBar.css";
 
 addCustomCSS("ui5-shellbar", "sap_belize", styles);
 addCustomCSS("ui5-shellbar", "sap_belize_hcb", styles);

@@ -8,7 +8,7 @@ import MessageStripRenderer from "./build/compiled/MessageStripRenderer.lit";
 import Icon from "./Icon";
 
 // Styles
-import messageStripCss from "./themes-next/MessageStrip.css";
+import messageStripCss from "./themes/MessageStrip.css";
 
 addCustomCSS("ui5-messagestrip", "sap_fiori_3", messageStripCss);
 addCustomCSS("ui5-messagestrip", "sap_belize", messageStripCss);
