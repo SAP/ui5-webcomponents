@@ -21,11 +21,7 @@ const isStatic = value => {
 };
 
 const getNormalizedColorValue = colorValue => {
-	if (colorValue.alpha && colorValue.alpha !== 1) {
-		return toRGBA(colorValue);
-	}
-
-	return colorValue.toRGB ? colorValue.toRGB() : colorValue;
+	return colorValue.toCSS ? colorValue.toCSS() : colorValue;
 }
 
 const getColorValue = async (col) => {
@@ -39,9 +35,6 @@ const getColorInstance = colorValue => {
 	return new Color(colorValue.replace("#", ""));
 };
 
-const toRGBA = col => {
-	return `rgba(${col.rgb}, ${col.alpha})`;
-};
 
 const darken = async (col, value) => {
 	const colorValue = await getColorValue(col);
