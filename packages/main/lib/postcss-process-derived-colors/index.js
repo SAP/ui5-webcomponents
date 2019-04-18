@@ -122,7 +122,8 @@ module.exports = postcss.plugin('process derived colors', function (opts) {
 	opts = opts || {};
 
 	return async function (root) {
-		const theme = root.source.input.from.match(/themes\/(\w+)\//)[1];
+		const match = root.source.input.from.match(/themes-next\/(\w+)\//) || root.source.input.from.match(/themes-next\\(\w+)\\/);
+		const theme = match[1];
 
 		const prevPlugins = [...pluginQueue];
 
