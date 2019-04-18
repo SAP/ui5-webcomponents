@@ -147,6 +147,16 @@ const metadata = {
 			defaultValue: 0,
 		},
 
+		/**
+		 * Determines the name with which the <code>ui5-textarea</code> will be submitted in an HTML form.
+		 *
+		 * <b>Note:</b> When set, a native <code>input</code> HTML element
+		 * will be created inside the <code>ui5-textarea</code> so that it can be submitted as
+		 * part of an HTML form. Do not use this property unless you need to submit a form.
+		 *
+		 * @type {String}
+		 * @public
+		 */
 		name: {
 			type: String,
 		},

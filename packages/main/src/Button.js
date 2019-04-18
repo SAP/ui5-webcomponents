@@ -91,7 +91,7 @@ const metadata = {
 
 		/**
 		 * When set to <code>true</code>, the <code>ui5-button</code> will
-		 * automatically submit forms upon <code>press</code>.
+		 * automatically submit the nearest form element upon <code>press</code>.
 		 *
 		 * @type {boolean}
 		 * @public
