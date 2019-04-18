@@ -15,7 +15,7 @@ import Popover from "./Popover";
 import TabBase from "./TabBase";
 
 // Styles
-import buttonCss from "./themes-next/TabContainer.css";
+import buttonCss from "./themes/TabContainer.css";
 
 addCustomCSS("ui5-tabcontainer", "sap_fiori_3", buttonCss);
 addCustomCSS("ui5-tabcontainer", "sap_belize", buttonCss);

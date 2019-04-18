@@ -9,7 +9,7 @@ import SwitchTemplateContext from "./SwitchTemplateContext";
 import SwitchType from "./types/SwitchType";
 
 // Styles
-import switchCss from "./themes-next/Switch.css";
+import switchCss from "./themes/Switch.css";
 
 addCustomCSS("ui5-switch", "sap_fiori_3", switchCss);
 addCustomCSS("ui5-switch", "sap_belize", switchCss);

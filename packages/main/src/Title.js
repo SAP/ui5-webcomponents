@@ -6,7 +6,7 @@ import TitleRenderer from "./build/compiled/TitleRenderer.lit";
 
 // Styles
 // Styles
-import titleCss from "./themes-next/Title.css";
+import titleCss from "./themes/Title.css";
 
 addCustomCSS("ui5-title", "sap_fiori_3", titleCss);
 addCustomCSS("ui5-title", "sap_belize", titleCss);

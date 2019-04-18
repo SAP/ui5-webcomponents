@@ -17,7 +17,7 @@ import SelectRenderer from "./build/compiled/SelectRenderer.lit";
 import SelectTemplateContext from "./SelectTemplateContext";
 
 // Styles
-import selectCss from "./themes-next/Select.css";
+import selectCss from "./themes/Select.css";
 
 addCustomCSS("ui5-select", "sap_fiori_3", selectCss);
 addCustomCSS("ui5-select", "sap_belize", selectCss);

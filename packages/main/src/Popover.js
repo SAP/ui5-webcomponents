@@ -14,7 +14,7 @@ import Popup from "./Popup";
 import PopoverRenderer from "./build/compiled/PopoverRenderer.lit";
 
 // Styles
-import popoverCss from "./themes-next/Popover.css";
+import popoverCss from "./themes/Popover.css";
 
 addCustomCSS("ui5-popover", "sap_fiori_3", popoverCss);
 addCustomCSS("ui5-popover", "sap_belize", popoverCss);

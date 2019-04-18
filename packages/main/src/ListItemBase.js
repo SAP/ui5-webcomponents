@@ -1,17 +1,7 @@
 import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
 import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
 import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/src/events/PseudoEvents";
 import ListItemBaseTemplateContext from "./ListItemBaseTemplateContext";
-
-// Styles
-import belize from "./themes/sap_belize/ListItemBase.less";
-import belizeHcb from "./themes/sap_belize_hcb/ListItemBase.less";
-import fiori3 from "./themes/sap_fiori_3/ListItemBase.less";
-
-ShadowDOM.registerStyle("sap_belize", "ListItemBase.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "ListItemBase.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "ListItemBase.css", fiori3);
 
 /**
  * @public

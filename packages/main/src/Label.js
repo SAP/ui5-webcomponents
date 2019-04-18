@@ -7,7 +7,7 @@ import LabelRenderer from "./build/compiled/LabelRenderer.lit";
 import LabelTemplateContext from "./LabelTemplateContext";
 
 // Styles
-import labelCss from "./themes-next/Label.css";
+import labelCss from "./themes/Label.css";
 
 addCustomCSS("ui5-label", "sap_fiori_3", labelCss);
 addCustomCSS("ui5-label", "sap_belize", labelCss);

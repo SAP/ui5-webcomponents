@@ -15,7 +15,7 @@ import YearPickerTemplateContext from "./YearPickerTemplateContext";
 import YearPickerRenderer from "./build/compiled/YearPickerRenderer.lit";
 
 // Styles
-import styles from "./themes-next/YearPicker.css";
+import styles from "./themes/YearPicker.css";
 
 addCustomCSS("ui5-yearpicker", "sap_fiori_3", styles);
 addCustomCSS("ui5-yearpicker", "sap_belize", styles);

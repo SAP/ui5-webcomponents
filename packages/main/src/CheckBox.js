@@ -9,7 +9,7 @@ import CheckBoxTemplateContext from "./CheckBoxTemplateContext";
 import Label from "./Label";
 
 // Styles
-import checkboxCss from "./themes-next/CheckBox.css";
+import checkboxCss from "./themes/CheckBox.css";
 
 addCustomCSS("ui5-checkbox", "sap_fiori_3", checkboxCss);
 addCustomCSS("ui5-checkbox", "sap_belize", checkboxCss);

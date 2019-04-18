@@ -7,7 +7,7 @@ import Popup from "./Popup";
 import DialogRenderer from "./build/compiled/DialogRenderer.lit";
 
 // Styles
-import dialogCss from "./themes-next/Dialog.css";
+import dialogCss from "./themes/Dialog.css";
 
 addCustomCSS("ui5-dialog", "sap_fiori_3", dialogCss);
 addCustomCSS("ui5-dialog", "sap_belize", dialogCss);

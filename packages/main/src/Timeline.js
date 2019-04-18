@@ -7,7 +7,7 @@ import TimelineItem from "./TimelineItem";
 import TimelineRenderer from "./build/compiled/TimelineRenderer.lit";
 
 // Styles
-import styles from "./themes-next/Timeline.css";
+import styles from "./themes/Timeline.css";
 
 addCustomCSS("ui5-timeline", "sap_belize", styles);
 addCustomCSS("ui5-timeline", "sap_belize_hcb", styles);

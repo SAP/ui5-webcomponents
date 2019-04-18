@@ -6,7 +6,7 @@ import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
 import TableColumnRenderer from "./build/compiled/TableColumnRenderer.lit";
 
 // Styles
-import styles from "./themes-next/TableColumn.css";
+import styles from "./themes/TableColumn.css";
 
 addCustomCSS("ui5-table-column", "sap_fiori_3", styles);
 addCustomCSS("ui5-table-column", "sap_belize", styles);

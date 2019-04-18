@@ -6,7 +6,7 @@ const cssnano = require('cssnano');
 module.exports = {
   plugins: [
     postcssNesting(),
-    postcssAddFallback({importFrom: "./dist/css/themes-next/sap_fiori_3/parameters-bundle.css"}),
+    postcssAddFallback({importFrom: "./dist/css/themes/sap_fiori_3/parameters-bundle.css"}),
 	cssnano({preset: [
 		'default', {
 			mergeLonghand: false, // https://github.com/cssnano/cssnano/issues/675

@@ -7,7 +7,7 @@ import IconTemplateContext from "./IconTemplateContext";
 import IconRenderer from "./build/compiled/IconRenderer.lit";
 
 // Styles
-import iconCss from "./themes-next/Icon.css";
+import iconCss from "./themes/Icon.css";
 
 addCustomCSS("ui5-icon", "sap_fiori_3", iconCss);
 addCustomCSS("ui5-icon", "sap_belize", iconCss);

@@ -5,7 +5,7 @@ import TableCell from "./TableCell";
 import TableRowRenderer from "./build/compiled/TableRowRenderer.lit";
 
 // Styles
-import styles from "./themes-next/TableRow.css";
+import styles from "./themes/TableRow.css";
 
 addCustomCSS("ui5-table-row", "sap_fiori_3", styles);
 addCustomCSS("ui5-table-row", "sap_belize", styles);
