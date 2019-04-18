@@ -27,7 +27,7 @@ import DatePickerRenderer from "./build/compiled/DatePickerRenderer.lit";
 import "@ui5/webcomponents-core/dist/sap/ui/core/date/Gregorian";
 
 // Styles
-import datePickerCss from "./themes-next/DatePicker.css";
+import datePickerCss from "./themes/DatePicker.css";
 
 addCustomCSS("ui5-datepicker", "sap_fiori_3", datePickerCss);
 addCustomCSS("ui5-datepicker", "sap_belize", datePickerCss);

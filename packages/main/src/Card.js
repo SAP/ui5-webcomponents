@@ -9,7 +9,7 @@ import CardRenderer from "./build/compiled/CardRenderer.lit";
 import Icon from "./Icon";
 
 // Styles
-import cardCss from "./themes-next/Card.css";
+import cardCss from "./themes/Card.css";
 
 addCustomCSS("ui5-card", "sap_fiori_3", cardCss);
 addCustomCSS("ui5-card", "sap_belize", cardCss);

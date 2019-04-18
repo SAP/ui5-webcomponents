@@ -14,7 +14,7 @@ import MonthPickerTemplateContext from "./MonthPickerTemplateContext";
 import MonthPickerRenderer from "./build/compiled/MonthPickerRenderer.lit";
 
 // Styles
-import styles from "./themes-next/MonthPicker.css";
+import styles from "./themes/MonthPicker.css";
 
 addCustomCSS("ui5-month-picker", "sap_fiori_3", styles);
 addCustomCSS("ui5-month-picker", "sap_belize", styles);

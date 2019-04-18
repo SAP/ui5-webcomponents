@@ -15,7 +15,7 @@ import ListRenderer from "./build/compiled/ListRenderer.lit";
 import ListTemplateContext from "./ListTemplateContext";
 
 // Styles
-import listCss from "./themes-next/List.css";
+import listCss from "./themes/List.css";
 
 addCustomCSS("ui5-list", "sap_fiori_3", listCss);
 addCustomCSS("ui5-list", "sap_belize", listCss);

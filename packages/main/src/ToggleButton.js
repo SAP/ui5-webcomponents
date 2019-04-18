@@ -5,8 +5,8 @@ import ToggleButtonTemplateContext from "./ToggleButtonTemplateContext";
 import ToggleButtonRenderer from "./build/compiled/ToggleButtonRenderer.lit";
 
 // Styles
-import btnCss from "./themes-next/Button.css";
-import toggleBtnCss from "./themes-next/ToggleButton.css";
+import btnCss from "./themes/Button.css";
+import toggleBtnCss from "./themes/ToggleButton.css";
 
 addCustomCSS("ui5-togglebutton", "sap_fiori_3", btnCss);
 addCustomCSS("ui5-togglebutton", "sap_belize", btnCss);

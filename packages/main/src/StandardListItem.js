@@ -7,8 +7,8 @@ import StandardListItemTemplateContext from "./StandardListItemTemplateContext";
 import StandardListItemRenderer from "./build/compiled/StandardListItemRenderer.lit";
 
 // Styles
-import listItemCss from "./themes-next/ListItem.css";
-import listItemBaseCss from "./themes-next/ListItemBase.css";
+import listItemCss from "./themes/ListItem.css";
+import listItemBaseCss from "./themes/ListItemBase.css";
 
 addCustomCSS("ui5-li", "sap_fiori_3", listItemCss);
 addCustomCSS("ui5-li", "sap_fiori_3", listItemBaseCss);

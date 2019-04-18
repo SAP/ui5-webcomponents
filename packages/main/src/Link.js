@@ -10,7 +10,7 @@ import LinkRederer from "./build/compiled/LinkRenderer.lit";
 import LinkTemplateContext from "./LinkTemplateContext";
 
 // Styles
-import linkCss from "./themes-next/Link.css";
+import linkCss from "./themes/Link.css";
 
 addCustomCSS("ui5-link", "sap_fiori_3", linkCss);
 addCustomCSS("ui5-link", "sap_belize", linkCss);

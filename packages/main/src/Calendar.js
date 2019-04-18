@@ -23,7 +23,7 @@ import CalendarRenderer from "./build/compiled/CalendarRenderer.lit";
 import "@ui5/webcomponents-core/dist/sap/ui/core/date/Gregorian";
 
 // Styles
-import calendarCSS from "./themes-next/Calendar.css";
+import calendarCSS from "./themes/Calendar.css";
 
 addCustomCSS("ui5-calendar", "sap_fiori_3", calendarCSS);
 addCustomCSS("ui5-calendar", "sap_belize_hcb", calendarCSS);

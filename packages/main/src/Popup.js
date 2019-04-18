@@ -5,7 +5,7 @@ import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
 import { isEscape } from "@ui5/webcomponents-base/src/events/PseudoEvents";
 
 // Styles
-import styles from "./themes-next/Popup.css";
+import styles from "./themes/Popup.css";
 
 addCustomCSS("ui5-dialog", "sap_fiori_3", styles);
 addCustomCSS("ui5-dialog", "sap_belize", styles);

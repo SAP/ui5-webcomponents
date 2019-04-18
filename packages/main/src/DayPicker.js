@@ -15,7 +15,7 @@ import DayPickerTemplateContext from "./DayPickerTemplateContext";
 import DayPickerRenderer from "./build/compiled/DayPickerRenderer.lit";
 
 // Styles
-import dayPickerCSS from "./themes-next/DayPicker.css";
+import dayPickerCSS from "./themes/DayPicker.css";
 
 addCustomCSS("ui5-daypicker", "sap_fiori_3", dayPickerCSS);
 addCustomCSS("ui5-daypicker", "sap_belize", dayPickerCSS);

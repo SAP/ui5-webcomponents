@@ -7,10 +7,16 @@ import GroupHeaderListItemRenderer from "./build/compiled/GroupHeaderListItemRen
 import GroupHeaderListItemTemplateContext from "./GroupHeaderListItemTemplateContext";
 
 // Styles
-import groupheaderListItemCss from "./themes-next/GroupHeaderListItem.css";
+import listItemBaseCss from "./themes/ListItemBase.css";
+import groupheaderListItemCss from "./themes/GroupHeaderListItem.css";
 
+addCustomCSS("ui5-li-groupheader", "sap_fiori_3", listItemBaseCss);
 addCustomCSS("ui5-li-groupheader", "sap_fiori_3", groupheaderListItemCss);
+
+addCustomCSS("ui5-li-groupheader", "sap_belize", listItemBaseCss);
 addCustomCSS("ui5-li-groupheader", "sap_belize", groupheaderListItemCss);
+
+addCustomCSS("ui5-li-groupheader", "sap_belize_hcb", listItemBaseCss);
 addCustomCSS("ui5-li-groupheader", "sap_belize_hcb", groupheaderListItemCss);
 
 /**

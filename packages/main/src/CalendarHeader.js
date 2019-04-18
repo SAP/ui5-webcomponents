@@ -8,7 +8,7 @@ import ButtonType from "./types/ButtonType";
 import CalendarHeaderRenderer from "./build/compiled/CalendarHeaderRenderer.lit";
 
 // Styles
-import styles from "./themes-next/CalendarHeader.css";
+import styles from "./themes/CalendarHeader.css";
 
 addCustomCSS("ui5-calendar-header", "sap_belize", styles);
 addCustomCSS("ui5-calendar-header", "sap_belize_hcb", styles);
