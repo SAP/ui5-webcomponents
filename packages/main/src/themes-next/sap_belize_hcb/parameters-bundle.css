@@ -1,10 +1,12 @@
-@import "./global-parameters.css";
-@import "./derived-colors.css";
+@import "./base-parameters-new.css";
+@import "./global-parameters-new.css";
 
 @import "./Button-parameters.css";
 @import "./CalendarHeader-parameters.css";
 @import "./Card-parameters.css";
 @import "./CheckBox-parameters.css";
+@import "./DatePicker-parameters.css";
+@import "./DayPicker-parameters.css";
 @import "./Input-parameters.css";
 @import "./Link-parameters.css";
 @import "./ListItemBase-parameters.css";
@@ -13,7 +15,6 @@
 @import "./Panel-parameters.css";
 @import "./Popover-parameters.css";
 @import "./RadioButton-parameters.css";
-@import "./DayPicker-parameters.css";
 @import "./Select-parameters.css";
 @import "./Switch-parameters.css";
 @import "./TabContainer-parameters.css";
