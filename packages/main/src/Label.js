@@ -1,12 +1,12 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
+import WebComponent from "@ui5/webcomponents-base/src/WebComponent.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 
 // Template
-import LabelRenderer from "./build/compiled/LabelRenderer.lit";
-import LabelTemplateContext from "./LabelTemplateContext";
+import LabelRenderer from "./build/compiled/LabelRenderer.lit.js";
+import LabelTemplateContext from "./LabelTemplateContext.js";
 
 // Styles
-import labelCss from "./themes/Label.css";
+import labelCss from "./themes/Label.css.js";
 
 /**
  * @public

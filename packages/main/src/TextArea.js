@@ -1,13 +1,13 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import CSSSize from "@ui5/webcomponents-base/src/types/CSSSize";
-import Integer from "@ui5/webcomponents-base/src/types/Integer";
-import TextAreaTemplateContext from "./TextAreaTemplateContext";
-import TextAreaRenderer from "./build/compiled/TextAreaRenderer.lit";
-import { fetchResourceBundle, getResourceBundle } from "./ResourceBundleProvider";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import WebComponent from "@ui5/webcomponents-base/src/WebComponent.js";
+import CSSSize from "@ui5/webcomponents-base/src/types/CSSSize.js";
+import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
+import TextAreaTemplateContext from "./TextAreaTemplateContext.js";
+import TextAreaRenderer from "./build/compiled/TextAreaRenderer.lit.js";
+import { fetchResourceBundle, getResourceBundle } from "./ResourceBundleProvider.js";
 
 // Styles
-import styles from "./themes/TextArea.css";
+import styles from "./themes/TextArea.css.js";
 
 /**
  * @public

@@ -1,20 +1,20 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation";
-import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import WebComponent from "@ui5/webcomponents-base/src/WebComponent.js";
+import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
+import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper.js";
 
-import { isTabNext } from "@ui5/webcomponents-base/src/events/PseudoEvents";
-import ListItemBase from "./ListItemBase";
-import ListMode from "./types/ListMode";
-import BackgroundDesign from "./types/BackgroundDesign";
-import ListSeparators from "./types/ListSeparators";
-import ListItemType from "./types/ListItemType";
+import { isTabNext } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import ListItemBase from "./ListItemBase.js";
+import ListMode from "./types/ListMode.js";
+import BackgroundDesign from "./types/BackgroundDesign.js";
+import ListSeparators from "./types/ListSeparators.js";
+import ListItemType from "./types/ListItemType.js";
 // Template
-import ListRenderer from "./build/compiled/ListRenderer.lit";
-import ListTemplateContext from "./ListTemplateContext";
+import ListRenderer from "./build/compiled/ListRenderer.lit.js";
+import ListTemplateContext from "./ListTemplateContext.js";
 
 // Styles
-import listCss from "./themes/List.css";
+import listCss from "./themes/List.css.js";
 
 /**
  * @public

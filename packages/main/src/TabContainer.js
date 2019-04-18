@@ -1,20 +1,20 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler";
-import ScrollEnablement from "@ui5/webcomponents-base/src/delegate/ScrollEnablement";
-import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents";
-import TabContainerTemplateContext from "./TabContainerTemplateContext";
-import TabContainerRenderer from "./build/compiled/TabContainerRenderer.lit";
-import Button from "./Button";
-import CustomListItem from "./CustomListItem";
-import Icon from "./Icon";
-import List from "./List";
-import Popover from "./Popover";
-import TabBase from "./TabBase";
+import WebComponent from "@ui5/webcomponents-base/src/WebComponent.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler.js";
+import ScrollEnablement from "@ui5/webcomponents-base/src/delegate/ScrollEnablement.js";
+import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import TabContainerTemplateContext from "./TabContainerTemplateContext.js";
+import TabContainerRenderer from "./build/compiled/TabContainerRenderer.lit.js";
+import Button from "./Button.js";
+import CustomListItem from "./CustomListItem.js";
+import Icon from "./Icon.js";
+import List from "./List.js";
+import Popover from "./Popover.js";
+import TabBase from "./TabBase.js";
 
 // Styles
-import buttonCss from "./themes/TabContainer.css";
+import buttonCss from "./themes/TabContainer.css.js";
 
 const SCROLL_STEP = 128;
 

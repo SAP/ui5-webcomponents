@@ -1,4 +1,4 @@
-import WebComponent from "./WebComponent";
+import WebComponent from "./WebComponent.js";
 
 const rFocusable = /^(?:input|select|textarea|button)$/i,
 	rClickable = /^(?:a|area)$/i;

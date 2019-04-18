@@ -1,11 +1,11 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import Integer from "@ui5/webcomponents-base/src/types/Integer";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import CSSSize from "@ui5/webcomponents-base/src/types/CSSSize";
-import TableColumnRenderer from "./build/compiled/TableColumnRenderer.lit";
+import WebComponent from "@ui5/webcomponents-base/src/WebComponent.js";
+import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import CSSSize from "@ui5/webcomponents-base/src/types/CSSSize.js";
+import TableColumnRenderer from "./build/compiled/TableColumnRenderer.lit.js";
 
 // Styles
-import styles from "./themes/TableColumn.css";
+import styles from "./themes/TableColumn.css.js";
 
 const metadata = {
 	tag: "ui5-table-column",

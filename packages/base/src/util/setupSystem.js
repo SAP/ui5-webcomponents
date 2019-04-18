@@ -1,4 +1,4 @@
-import { getSystem } from "@ui5/webcomponents-core/dist/sap/ui/Device";
+import { getSystem } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 
 const setupSystem = node => {
 	const system = getSystem();

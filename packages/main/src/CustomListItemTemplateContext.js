@@ -1,4 +1,4 @@
-import ListItemTemplateContext from "./ListItemTemplateContext";
+import ListItemTemplateContext from "./ListItemTemplateContext.js";
 
 class CustomListItemTemplateContext {
 	static calculate(state) {

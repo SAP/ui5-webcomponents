@@ -1,19 +1,19 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import { getCalendarType } from "@ui5/webcomponents-base/src/Configuration";
-import { getFormatLocale } from "@ui5/webcomponents-base/src/FormatSettings";
-import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation";
-import Integer from "@ui5/webcomponents-base/src/types/Integer";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents";
-import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData";
-import { getLocale } from "@ui5/webcomponents-base/src/LocaleProvider";
-import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType";
-import CalendarDate from "@ui5/webcomponents-base/src/dates/CalendarDate";
-import MonthPickerTemplateContext from "./MonthPickerTemplateContext";
-import MonthPickerRenderer from "./build/compiled/MonthPickerRenderer.lit";
+import WebComponent from "@ui5/webcomponents-base/src/WebComponent.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import { getCalendarType } from "@ui5/webcomponents-base/src/Configuration.js";
+import { getFormatLocale } from "@ui5/webcomponents-base/src/FormatSettings.js";
+import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
+import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData.js";
+import { getLocale } from "@ui5/webcomponents-base/src/LocaleProvider.js";
+import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType.js";
+import CalendarDate from "@ui5/webcomponents-base/src/dates/CalendarDate.js";
+import MonthPickerTemplateContext from "./MonthPickerTemplateContext.js";
+import MonthPickerRenderer from "./build/compiled/MonthPickerRenderer.lit.js";
 
 // Styles
-import styles from "./themes/MonthPicker.css";
+import styles from "./themes/MonthPicker.css.js";
 
 /**
  * @public

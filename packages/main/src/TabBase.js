@@ -1,4 +1,4 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
+import WebComponent from "@ui5/webcomponents-base/src/WebComponent.js";
 
 /**
  * @public

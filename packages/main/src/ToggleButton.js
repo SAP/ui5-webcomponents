@@ -1,10 +1,10 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import Button from "./Button";
-import ToggleButtonTemplateContext from "./ToggleButtonTemplateContext";
-import ToggleButtonRenderer from "./build/compiled/ToggleButtonRenderer.lit";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import Button from "./Button.js";
+import ToggleButtonTemplateContext from "./ToggleButtonTemplateContext.js";
+import ToggleButtonRenderer from "./build/compiled/ToggleButtonRenderer.lit.js";
 
 // Styles
-import toggleBtnCss from "./themes/ToggleButton.css";
+import toggleBtnCss from "./themes/ToggleButton.css.js";
 
 /**
  * @public

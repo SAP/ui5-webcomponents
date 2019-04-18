@@ -1,7 +1,7 @@
-import { getTheme, _setTheme } from "./Configuration";
-import { getCustomCSS } from "./theming/CustomStyle";
-import { getThemeProperties } from "./theming/ThemeProperties";
-import { injectThemeProperties } from "./theming/StyleInjection";
+import { getTheme, _setTheme } from "./Configuration.js";
+import { getCustomCSS } from "./theming/CustomStyle.js";
+import { getThemeProperties } from "./theming/ThemeProperties.js";
+import { injectThemeProperties } from "./theming/StyleInjection.js";
 
 const themeChangeCallbacks = [];
 

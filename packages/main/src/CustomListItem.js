@@ -1,10 +1,10 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import ListItem from "./ListItem";
-import CustomListItemTemplateContext from "./CustomListItemTemplateContext";
-import CustomListItemRenderer from "./build/compiled/CustomListItemRenderer.lit";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import ListItem from "./ListItem.js";
+import CustomListItemTemplateContext from "./CustomListItemTemplateContext.js";
+import CustomListItemRenderer from "./build/compiled/CustomListItemRenderer.lit.js";
 
 // Styles
-import columnListItemCss from "./themes/CustomListItem.css";
+import columnListItemCss from "./themes/CustomListItem.css.js";
 
 /**
  * @public

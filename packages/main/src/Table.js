@@ -1,13 +1,13 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler";
-import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import TableColumn from "./TableColumn";
-import TableRow from "./TableRow";
-import TableRenderer from "./build/compiled/TableRenderer.lit";
+import WebComponent from "@ui5/webcomponents-base/src/WebComponent.js";
+import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler.js";
+import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import TableColumn from "./TableColumn.js";
+import TableRow from "./TableRow.js";
+import TableRenderer from "./build/compiled/TableRenderer.lit.js";
 
 // Styles
-import styles from "./themes/Table.css";
+import styles from "./themes/Table.css.js";
 
 /**
  * @public

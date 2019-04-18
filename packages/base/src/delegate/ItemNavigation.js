@@ -5,10 +5,10 @@ import {
 	isRight,
 	isHome,
 	isEnd,
-} from "../events/PseudoEvents";
+} from "../events/PseudoEvents.js";
 
-import EventProvider from "../EventProvider";
-import WebComponent from "../WebComponent";
+import EventProvider from "../EventProvider.js";
+import WebComponent from "../WebComponent.js";
 
 // navigatable items must have id and tabindex
 class ItemNavigation extends EventProvider {

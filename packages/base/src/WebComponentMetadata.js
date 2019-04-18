@@ -1,5 +1,5 @@
-import DataType from "./types/DataType";
-import Function from "./types/Function";
+import DataType from "./types/DataType.js";
+import Function from "./types/Function.js";
 
 class WebComponentMetadata {
 	constructor(metadata) {

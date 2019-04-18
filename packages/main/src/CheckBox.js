@@ -1,14 +1,14 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes";
-import ValueState from "@ui5/webcomponents-base/src/types/ValueState";
+import WebComponent from "@ui5/webcomponents-base/src/WebComponent.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes.js";
+import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
 
-import CheckBoxRenderer from "./build/compiled/CheckBoxRenderer.lit";
-import CheckBoxTemplateContext from "./CheckBoxTemplateContext";
-import Label from "./Label";
+import CheckBoxRenderer from "./build/compiled/CheckBoxRenderer.lit.js";
+import CheckBoxTemplateContext from "./CheckBoxTemplateContext.js";
+import Label from "./Label.js";
 
 // Styles
-import checkboxCss from "./themes/CheckBox.css";
+import checkboxCss from "./themes/CheckBox.css.js";
 
 /**
  * @public

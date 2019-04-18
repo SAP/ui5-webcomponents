@@ -1,4 +1,4 @@
-import RenderQueue from "./RenderQueue";
+import RenderQueue from "./RenderQueue.js";
 
 const MAX_RERENDER_COUNT = 10;
 

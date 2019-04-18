@@ -1,5 +1,5 @@
-import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device";
-import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration";
+import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
+import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
 
 const SVGConfig = {
 	"compact": {

@@ -1,10 +1,11 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import TitleLevel from "./types/TitleLevel";
-import TitleRenderer from "./build/compiled/TitleRenderer.lit";
+import WebComponent from "@ui5/webcomponents-base/src/WebComponent.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import TitleLevel from "./types/TitleLevel.js";
+import TitleRenderer from "./build/compiled/TitleRenderer.lit.js";
 
 // Styles
-import titleCss from "./themes/Title.css";
+// Styles
+import titleCss from "./themes/Title.css.js";
 
 /**
  * @public

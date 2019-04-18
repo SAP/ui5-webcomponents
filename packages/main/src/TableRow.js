@@ -1,10 +1,10 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import TableCell from "./TableCell";
-import TableRowRenderer from "./build/compiled/TableRowRenderer.lit";
+import WebComponent from "@ui5/webcomponents-base/src/WebComponent.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import TableCell from "./TableCell.js";
+import TableRowRenderer from "./build/compiled/TableRowRenderer.lit.js";
 
 // Styles
-import styles from "./themes/TableRow.css";
+import styles from "./themes/TableRow.css.js";
 
 /**
  * @public

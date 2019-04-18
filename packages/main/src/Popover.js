@@ -1,19 +1,19 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import RenderScheduler from "@ui5/webcomponents-base/src/RenderScheduler";
-import Integer from "@ui5/webcomponents-base/src/types/Integer";
-import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper";
-import PopoverTemplateContext from "./PopoverTemplateContext";
-import PopoverPlacementType from "./types/PopoverPlacementType";
-import PopoverVerticalAlign from "./types/PopoverVerticalAlign";
-import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign";
-import Popup from "./Popup";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import RenderScheduler from "@ui5/webcomponents-base/src/RenderScheduler.js";
+import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
+import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper.js";
+import PopoverTemplateContext from "./PopoverTemplateContext.js";
+import PopoverPlacementType from "./types/PopoverPlacementType.js";
+import PopoverVerticalAlign from "./types/PopoverVerticalAlign.js";
+import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
+import Popup from "./Popup.js";
 
 
 // Template
-import PopoverRenderer from "./build/compiled/PopoverRenderer.lit";
+import PopoverRenderer from "./build/compiled/PopoverRenderer.lit.js";
 
 // Styles
-import popoverCss from "./themes/Popover.css";
+import popoverCss from "./themes/Popover.css.js";
 
 /**
  * @public
@@ -184,7 +184,7 @@ class Popover extends Popup {
 	}
 
 	static get styles() {
-		return popoverCss;
+		return [Popup.styles, popoverCss];
 	}
 
 	constructor() {

@@ -1,9 +1,9 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import URI from "@ui5/webcomponents-base/src/types/URI";
-import ListItem from "./ListItem";
-import Icon from "./Icon";
-import StandardListItemTemplateContext from "./StandardListItemTemplateContext";
-import StandardListItemRenderer from "./build/compiled/StandardListItemRenderer.lit";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import URI from "@ui5/webcomponents-base/src/types/URI.js";
+import ListItem from "./ListItem.js";
+import Icon from "./Icon.js";
+import StandardListItemTemplateContext from "./StandardListItemTemplateContext.js";
+import StandardListItemRenderer from "./build/compiled/StandardListItemRenderer.lit.js";
 
 // Styles
 

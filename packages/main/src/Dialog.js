@@ -1,12 +1,12 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 
-import DialogTemplateContext from "./DialogTemplateContext";
-import Popup from "./Popup";
+import DialogTemplateContext from "./DialogTemplateContext.js";
+import Popup from "./Popup.js";
 // Template
-import DialogRenderer from "./build/compiled/DialogRenderer.lit";
+import DialogRenderer from "./build/compiled/DialogRenderer.lit.js";
 
 // Styles
-import dialogCss from "./themes/Dialog.css";
+import dialogCss from "./themes/Dialog.css.js";
 
 /**
  * @public

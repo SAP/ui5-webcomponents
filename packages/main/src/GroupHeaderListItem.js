@@ -1,12 +1,12 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import ListItemBase from "./ListItemBase";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import ListItemBase from "./ListItemBase.js";
 
 // Template
-import GroupHeaderListItemRenderer from "./build/compiled/GroupHeaderListItemRenderer.lit";
-import GroupHeaderListItemTemplateContext from "./GroupHeaderListItemTemplateContext";
+import GroupHeaderListItemRenderer from "./build/compiled/GroupHeaderListItemRenderer.lit.js";
+import GroupHeaderListItemTemplateContext from "./GroupHeaderListItemTemplateContext.js";
 
 // Styles
-import groupheaderListItemCss from "./themes/GroupHeaderListItem.css";
+import groupheaderListItemCss from "./themes/GroupHeaderListItem.css.js";
 
 
 /**

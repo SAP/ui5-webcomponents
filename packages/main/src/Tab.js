@@ -1,11 +1,11 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import URI from "@ui5/webcomponents-base/src/types/URI";
-import Function from "@ui5/webcomponents-base/src/types/Function";
-import TabBase from "./TabBase";
-import TabTemplateContext from "./TabTemplateContext";
-import IconColor from "./types/IconColor";
-import Icon from "./Icon";
-import TabRenderer from "./build/compiled/TabRenderer.lit";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import URI from "@ui5/webcomponents-base/src/types/URI.js";
+import Function from "@ui5/webcomponents-base/src/types/Function.js";
+import TabBase from "./TabBase.js";
+import TabTemplateContext from "./TabTemplateContext.js";
+import IconColor from "./types/IconColor.js";
+import Icon from "./Icon.js";
+import TabRenderer from "./build/compiled/TabRenderer.lit.js";
 
 /**
  * @public
