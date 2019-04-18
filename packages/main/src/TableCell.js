@@ -1,23 +1,15 @@
 import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
 import TableCellRenderer from "./build/compiled/TableCellRenderer.lit";
 
 // Styles
 import styles from "./themes/TableCell.css";
-
-addCustomCSS("ui5-table-cell", "sap_fiori_3", styles);
-addCustomCSS("ui5-table-cell", "sap_belize", styles);
-addCustomCSS("ui5-table-cell", "sap_belize_hcb", styles);
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-table-cell",
-	styleUrl: [
-		"TableCell.css",
-	],
 	slots: /** @lends sap.ui.webcomponents.main.TableCell.prototype */ {
 		/**
 		 * Specifies the content of the <code>ui5-table-cell</code>.
@@ -67,6 +59,10 @@ const metadata = {
 class TableCell extends WebComponent {
 	static get metadata() {
 		return metadata;
+	}
+
+	static get styles() {
+		return styles;
 	}
 
 	static get renderer() {

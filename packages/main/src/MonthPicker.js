@@ -9,25 +9,17 @@ import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData";
 import { getLocale } from "@ui5/webcomponents-base/src/LocaleProvider";
 import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType";
 import CalendarDate from "@ui5/webcomponents-base/src/dates/CalendarDate";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
 import MonthPickerTemplateContext from "./MonthPickerTemplateContext";
 import MonthPickerRenderer from "./build/compiled/MonthPickerRenderer.lit";
 
 // Styles
 import styles from "./themes/MonthPicker.css";
 
-addCustomCSS("ui5-month-picker", "sap_fiori_3", styles);
-addCustomCSS("ui5-month-picker", "sap_belize", styles);
-addCustomCSS("ui5-month-picker", "sap_belize_hcb", styles);
-
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-month-picker",
-	styleUrl: [
-		"MonthPicker.css",
-	],
 	properties: /** @lends  sap.ui.webcomponents.main.MonthPicker.prototype */ {
 		/**
 		 * A UNIX timestamp - seconds since 00:00:00 UTC on Jan 1, 1970.
@@ -85,6 +77,10 @@ class MonthPicker extends WebComponent {
 
 	static get renderer() {
 		return MonthPickerRenderer;
+	}
+
+	static get styles() {
+		return styles;
 	}
 
 	constructor() {

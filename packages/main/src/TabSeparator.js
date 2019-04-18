@@ -8,7 +8,6 @@ import TabSeparatorRenderer from "./build/compiled/TabSeparatorRenderer.lit";
  */
 const metadata = {
 	tag: "ui5-tab-separator",
-	styleUrl: [],
 	properties: /** @lends sap.ui.webcomponents.main.TabSeparator.prototype */{
 	},
 	events: /** @lends sap.ui.webcomponents.main.TabSeparator.prototype */{

@@ -10,25 +10,17 @@ import Integer from "@ui5/webcomponents-base/src/types/Integer";
 import DateFormat from "@ui5/webcomponents-core/dist/sap/ui/core/format/DateFormat";
 import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType";
 import CalendarDate from "@ui5/webcomponents-base/src/dates/CalendarDate";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
 import YearPickerTemplateContext from "./YearPickerTemplateContext";
 import YearPickerRenderer from "./build/compiled/YearPickerRenderer.lit";
 
 // Styles
 import styles from "./themes/YearPicker.css";
 
-addCustomCSS("ui5-yearpicker", "sap_fiori_3", styles);
-addCustomCSS("ui5-yearpicker", "sap_belize", styles);
-addCustomCSS("ui5-yearpicker", "sap_belize_hcb", styles);
-
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-yearpicker",
-	styleUrl: [
-		"YearPicker.css",
-	],
 	properties: /** @lends  sap.ui.webcomponents.main.YearPicker.prototype */ {
 		/**
 		 * A UNIX timestamp - seconds since 00:00:00 UTC on Jan 1, 1970.
@@ -83,6 +75,10 @@ const metadata = {
 class YearPicker extends WebComponent {
 	static get metadata() {
 		return metadata;
+	}
+
+	static get styles() {
+		return styles;
 	}
 
 	static get renderer() {

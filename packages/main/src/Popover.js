@@ -1,6 +1,5 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
 import RenderScheduler from "@ui5/webcomponents-base/src/RenderScheduler";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
 import Integer from "@ui5/webcomponents-base/src/types/Integer";
 import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper";
 import PopoverTemplateContext from "./PopoverTemplateContext";
@@ -16,15 +15,11 @@ import PopoverRenderer from "./build/compiled/PopoverRenderer.lit";
 // Styles
 import popoverCss from "./themes/Popover.css";
 
-addCustomCSS("ui5-popover", "sap_fiori_3", popoverCss);
-addCustomCSS("ui5-popover", "sap_belize", popoverCss);
-addCustomCSS("ui5-popover", "sap_belize_hcb", popoverCss);
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-popover",
-	styleUrl: ["Popup.css", "Popover.css"],
 	properties: /** @lends sap.ui.webcomponents.main.Popover.prototype */ {
 
 		/**
@@ -186,6 +181,10 @@ class Popover extends Popup {
 
 	static get renderer() {
 		return PopoverRenderer;
+	}
+
+	static get styles() {
+		return popoverCss;
 	}
 
 	constructor() {

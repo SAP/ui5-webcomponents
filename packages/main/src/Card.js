@@ -1,7 +1,6 @@
 import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
 import URI from "@ui5/webcomponents-base/src/types/URI";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
 import { isIconURI } from "@ui5/webcomponents-base/src/IconPool";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents";
 import Function from "@ui5/webcomponents-base/src/types/Function";
@@ -11,18 +10,11 @@ import Icon from "./Icon";
 // Styles
 import cardCss from "./themes/Card.css";
 
-addCustomCSS("ui5-card", "sap_fiori_3", cardCss);
-addCustomCSS("ui5-card", "sap_belize", cardCss);
-addCustomCSS("ui5-card", "sap_belize_hcb", cardCss);
-
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-card",
-	styleUrl: [
-		"Card.css",
-	],
 	defaultSlot: "content",
 	slots: /** @lends sap.ui.webcomponents.main.Card.prototype */ {
 
@@ -149,6 +141,10 @@ class Card extends WebComponent {
 
 	static get renderer() {
 		return CardRenderer;
+	}
+
+	static get styles() {
+		return cardCss;
 	}
 
 	static calculateTemplateContext(state) {

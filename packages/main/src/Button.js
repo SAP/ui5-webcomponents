@@ -2,7 +2,6 @@ import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
 import URI from "@ui5/webcomponents-base/src/types/URI";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
 import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
 
 import ButtonTemplateContext from "./ButtonTemplateContext";
 import ButtonType from "./types/ButtonType";
@@ -12,18 +11,11 @@ import Icon from "./Icon";
 // Styles
 import buttonCss from "./themes/Button.css";
 
-addCustomCSS("ui5-button", "sap_fiori_3", buttonCss);
-addCustomCSS("ui5-button", "sap_belize", buttonCss);
-addCustomCSS("ui5-button", "sap_belize_hcb", buttonCss);
-
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-button",
-	styleUrl: [
-		"Button.css",
-	],
 	usesNodeText: true,
 	properties: /** @lends sap.ui.webcomponents.main.Button.prototype */ {
 
@@ -150,6 +142,10 @@ const metadata = {
 class Button extends WebComponent {
 	static get metadata() {
 		return metadata;
+	}
+
+	static get styles() {
+		return buttonCss;
 	}
 
 	static get renderer() {

@@ -1,5 +1,4 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
 
 import DialogTemplateContext from "./DialogTemplateContext";
 import Popup from "./Popup";
@@ -9,19 +8,11 @@ import DialogRenderer from "./build/compiled/DialogRenderer.lit";
 // Styles
 import dialogCss from "./themes/Dialog.css";
 
-addCustomCSS("ui5-dialog", "sap_fiori_3", dialogCss);
-addCustomCSS("ui5-dialog", "sap_belize", dialogCss);
-addCustomCSS("ui5-dialog", "sap_belize_hcb", dialogCss);
-
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-dialog",
-	styleUrl: [
-		"Popup.css",
-		"Dialog.css",
-	],
 	properties: /** @lends  sap.ui.webcomponents.main.Dialog.prototype */ {
 		/**
 		 * Determines whether the <code>ui5-dialog</code> should be stretched to fullscreen.
@@ -78,6 +69,10 @@ class Dialog extends Popup {
 
 	static get renderer() {
 		return DialogRenderer;
+	}
+
+	static get styles() {
+		return [Popup.styles, dialogCss];
 	}
 
 	/**

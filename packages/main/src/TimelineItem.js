@@ -1,6 +1,5 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
 import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
 import URI from "@ui5/webcomponents-base/src/types/URI";
 import Function from "@ui5/webcomponents-base/src/types/Function";
 import { fetchCldrData } from "@ui5/webcomponents-base/src/CLDR";
@@ -13,18 +12,11 @@ import TimelineItemRenderer from "./build/compiled/TimelineItemRenderer.lit";
 // Styles
 import styles from "./themes/TimelineItem.css";
 
-addCustomCSS("ui5-timeline-item", "sap_belize", styles);
-addCustomCSS("ui5-timeline-item", "sap_belize_hcb", styles);
-addCustomCSS("ui5-timeline-item", "sap_fiori_3", styles);
-
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-timeline-item",
-	styleUrl: [
-		"TimelineItem.css",
-	],
 	defaultSlot: "description",
 	slots: /** @lends sap.ui.webcomponents.main.TimelineItem.prototype */ {
 		/**
@@ -145,6 +137,10 @@ class TimelineItem extends WebComponent {
 
 	static get calculateTemplateContext() {
 		return TimelineItemTemplateContext.calculate;
+	}
+
+	static get styles() {
+		return styles;
 	}
 
 	constructor() {

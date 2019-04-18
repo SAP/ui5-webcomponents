@@ -1,7 +1,6 @@
 import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
 import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
 
 // Template
 import SwitchRenderer from "./build/compiled/SwitchRenderer.lit";
@@ -11,16 +10,11 @@ import SwitchType from "./types/SwitchType";
 // Styles
 import switchCss from "./themes/Switch.css";
 
-addCustomCSS("ui5-switch", "sap_fiori_3", switchCss);
-addCustomCSS("ui5-switch", "sap_belize", switchCss);
-addCustomCSS("ui5-switch", "sap_belize_hcb", switchCss);
-
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-switch",
-	styleUrl: ["Switch.css"],
 	properties: /** @lends sap.ui.webcomponents.main.Switch.prototype */ {
 
 		/**
@@ -127,6 +121,10 @@ const metadata = {
 class Switch extends WebComponent {
 	static get metadata() {
 		return metadata;
+	}
+
+	static get styles() {
+		return switchCss;
 	}
 
 	static get renderer() {

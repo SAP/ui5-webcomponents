@@ -1,5 +1,4 @@
 import { getTheme, _setTheme } from "./Configuration";
-import { getStyles } from "./theming/ThemeBundle";
 import { getCustomCSS } from "./theming/CustomStyle";
 import { getThemeProperties } from "./theming/ThemeProperties";
 import { injectThemeProperties } from "./theming/StyleInjection";
@@ -43,21 +42,14 @@ const setTheme = async theme => {
 
 const getEffectiveStyle = ElementClass => {
 	const theme = getTheme();
-	const styleUrls = ElementClass.getMetadata().getStyleUrl();
 	const tag = ElementClass.getMetadata().getTag();
-	const styles = getStyles(theme, styleUrls);
-	const cssContent = [];
-	styles.forEach(css => {
-		cssContent.push(css);
-	});
+	const customStyle = getCustomCSS(theme, tag) || "";
+	let componentStyles = ElementClass.styles;
 
-	const customStyle = getCustomCSS(theme, tag);
-	if (customStyle) {
-		cssContent.push(customStyle);
+	if (Array.isArray(componentStyles)) {
+		componentStyles = componentStyles.join(" ");
 	}
-
-	const cssText = cssContent.join(" ");
-	return cssText;
+	return `${componentStyles} ${customStyle}`;
 };
 
 export {

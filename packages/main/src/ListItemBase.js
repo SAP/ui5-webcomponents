@@ -3,6 +3,10 @@ import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper";
 import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/src/events/PseudoEvents";
 import ListItemBaseTemplateContext from "./ListItemBaseTemplateContext";
 
+// Styles
+import styles from "./themes/ListItemBase.css";
+
+
 /**
  * @public
  */
@@ -47,6 +51,10 @@ class ListItemBase extends WebComponent {
 
 	static get calculateTemplateContext() {
 		return ListItemBaseTemplateContext.calculate;
+	}
+
+	static get styles() {
+		return styles;
 	}
 
 	onfocusin(event) {

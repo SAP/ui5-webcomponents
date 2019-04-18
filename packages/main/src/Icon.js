@@ -1,7 +1,6 @@
 import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
 import URI from "@ui5/webcomponents-base/src/types/URI";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents";
 import IconTemplateContext from "./IconTemplateContext";
 import IconRenderer from "./build/compiled/IconRenderer.lit";
@@ -9,18 +8,11 @@ import IconRenderer from "./build/compiled/IconRenderer.lit";
 // Styles
 import iconCss from "./themes/Icon.css";
 
-addCustomCSS("ui5-icon", "sap_fiori_3", iconCss);
-addCustomCSS("ui5-icon", "sap_belize", iconCss);
-addCustomCSS("ui5-icon", "sap_belize_hcb", iconCss);
-
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-icon",
-	styleUrl: [
-		"Icon.css",
-	],
 	properties: /** @lends sap.ui.webcomponents.main.Icon.prototype */ {
 
 		/**
@@ -82,6 +74,10 @@ class Icon extends WebComponent {
 
 	static get calculateTemplateContext() {
 		return IconTemplateContext.calculate;
+	}
+
+	static get styles() {
+		return iconCss;
 	}
 
 	focus() {

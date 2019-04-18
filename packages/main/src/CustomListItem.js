@@ -1,5 +1,4 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
 import ListItem from "./ListItem";
 import CustomListItemTemplateContext from "./CustomListItemTemplateContext";
 import CustomListItemRenderer from "./build/compiled/CustomListItemRenderer.lit";
@@ -7,20 +6,11 @@ import CustomListItemRenderer from "./build/compiled/CustomListItemRenderer.lit"
 // Styles
 import columnListItemCss from "./themes/CustomListItem.css";
 
-addCustomCSS("ui5-li-custom", "sap_fiori_3", columnListItemCss);
-addCustomCSS("ui5-li-custom", "sap_belize", columnListItemCss);
-addCustomCSS("ui5-li-custom", "sap_belize_hcb", columnListItemCss);
-
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-li-custom",
-	styleUrl: [
-		"ListItemBase.css",
-		"ListItem.css",
-		"CustomListItem.css",
-	],
 	defaultSlot: "content",
 	slots: /** @lends sap.ui.webcomponents.main.CustomListItem.prototype */ {
 
@@ -65,6 +55,10 @@ class CustomListItem extends ListItem {
 
 	static get calculateTemplateContext() {
 		return CustomListItemTemplateContext.calculate;
+	}
+
+	static get styles() {
+		return [ListItem.styles, columnListItemCss];
 	}
 }
 

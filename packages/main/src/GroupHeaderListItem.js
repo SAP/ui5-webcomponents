@@ -1,5 +1,4 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
 import ListItemBase from "./ListItemBase";
 
 // Template
@@ -7,27 +6,14 @@ import GroupHeaderListItemRenderer from "./build/compiled/GroupHeaderListItemRen
 import GroupHeaderListItemTemplateContext from "./GroupHeaderListItemTemplateContext";
 
 // Styles
-import listItemBaseCss from "./themes/ListItemBase.css";
 import groupheaderListItemCss from "./themes/GroupHeaderListItem.css";
 
-addCustomCSS("ui5-li-groupheader", "sap_fiori_3", listItemBaseCss);
-addCustomCSS("ui5-li-groupheader", "sap_fiori_3", groupheaderListItemCss);
-
-addCustomCSS("ui5-li-groupheader", "sap_belize", listItemBaseCss);
-addCustomCSS("ui5-li-groupheader", "sap_belize", groupheaderListItemCss);
-
-addCustomCSS("ui5-li-groupheader", "sap_belize_hcb", listItemBaseCss);
-addCustomCSS("ui5-li-groupheader", "sap_belize_hcb", groupheaderListItemCss);
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-li-groupheader",
-	styleUrl: [
-		"ListItemBase.css",
-		"GroupHeaderListItem.css",
-	],
 	usesNodeText: true,
 	properties: /** @lends  sap.ui.webcomponents.main.GroupHeaderListItem.prototype */ {
 	},
@@ -58,6 +44,10 @@ class GroupHeaderListItem extends ListItemBase {
 
 	static get calculateTemplateContext() {
 		return GroupHeaderListItemTemplateContext.calculate;
+	}
+
+	static get styles() {
+		return [ListItemBase.styles, groupheaderListItemCss];
 	}
 }
 
