@@ -1,12 +1,5 @@
-commit 0333f74409604a67a188ba033e90d039fe4fe7d4
+commit 4f5b67d1d1310c0b7887cae5627832b43bb56f85
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Apr 17 14:23:48 2019 +0300
+Date:   Thu Apr 18 09:40:14 2019 +0300
 
-    chore: enable build for derived css variables (#308)
-    
-    Add postcss plugin to calculate all derived css variables
-    Details (applies for each theme):
-    * global-parameters-new.css (would be renamed later) is the new version of global-parameters.css
-    * base-parameters-new.css (would be renamed later) is the new version of base-parameters.css
-    * global-derived-colors.js - include all base and global derived css variables
-    * component-derived-colors.js - include all component derived css variables
+    docs: fix settings background on mobile (#341)
