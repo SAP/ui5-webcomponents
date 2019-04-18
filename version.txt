@@ -1,5 +1,5 @@
-commit 4f5b67d1d1310c0b7887cae5627832b43bb56f85
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Apr 18 09:40:14 2019 +0300
+commit 1b395a5f5200a2cdbb01a79d25bac57001e419ba
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Thu Apr 18 10:51:53 2019 +0300
 
-    docs: fix settings background on mobile (#341)
+    chore: make derived colors build work on windows (#342)
