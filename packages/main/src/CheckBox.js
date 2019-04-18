@@ -185,7 +185,7 @@ class CheckBox extends WebComponent {
 		if (CheckBox.FormSupport) {
 			CheckBox.FormSupport.manageNativeHiddenInput(this, (element, nativeInput) => {
 				nativeInput.disabled = element.disabled || !element.checked;
-				nativeInput.value = element.checked ? "on" : undefined;
+				nativeInput.value = element.checked ? "on" : "";
 			});
 		}
 	}
