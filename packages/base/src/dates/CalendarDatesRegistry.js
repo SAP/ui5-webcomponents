@@ -1,5 +1,5 @@
-import Gregorian from "@ui5/webcomponents-core/dist/sap/ui/core/date/Gregorian";
-import CalendarType from "@ui5/webcomponents-core/dist/sap/ui/core/CalendarType";
+import Gregorian from "@ui5/webcomponents-core/dist/sap/ui/core/date/Gregorian.js";
+import CalendarType from "@ui5/webcomponents-core/dist/sap/ui/core/CalendarType.js";
 
 const registry = new Map();
 registry.set(CalendarType.Gregorian, Gregorian);

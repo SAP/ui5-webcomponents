@@ -1,21 +1,21 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData";
-import { getCalendarType } from "@ui5/webcomponents-base/src/Configuration";
-import { getFormatLocale } from "@ui5/webcomponents-base/src/FormatSettings";
-import { isEnter, isSpace } from "@ui5/webcomponents-base/src/events/PseudoEvents";
-import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation";
-import { getLocale } from "@ui5/webcomponents-base/src/LocaleProvider";
-import Integer from "@ui5/webcomponents-base/src/types/Integer";
-import DateFormat from "@ui5/webcomponents-core/dist/sap/ui/core/format/DateFormat";
-import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType";
-import CalendarDate from "@ui5/webcomponents-base/src/dates/CalendarDate";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
-import YearPickerTemplateContext from "./YearPickerTemplateContext";
-import YearPickerRenderer from "./build/compiled/YearPickerRenderer.lit";
+import WebComponent from "@ui5/webcomponents-base/src/WebComponent.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData.js";
+import { getCalendarType } from "@ui5/webcomponents-base/src/Configuration.js";
+import { getFormatLocale } from "@ui5/webcomponents-base/src/FormatSettings.js";
+import { isEnter, isSpace } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
+import { getLocale } from "@ui5/webcomponents-base/src/LocaleProvider.js";
+import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
+import DateFormat from "@ui5/webcomponents-core/dist/sap/ui/core/format/DateFormat.js";
+import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType.js";
+import CalendarDate from "@ui5/webcomponents-base/src/dates/CalendarDate.js";
+import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle.js";
+import YearPickerTemplateContext from "./YearPickerTemplateContext.js";
+import YearPickerRenderer from "./build/compiled/YearPickerRenderer.lit.js";
 
 // Styles
-import styles from "./themes/YearPicker.css";
+import styles from "./themes/YearPicker.css.js";
 
 addCustomCSS("ui5-yearpicker", "sap_fiori_3", styles);
 addCustomCSS("ui5-yearpicker", "sap_belize", styles);

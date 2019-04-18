@@ -1,4 +1,4 @@
-import { getRTL } from "@ui5/webcomponents-base/src/Configuration";
+import { getRTL } from "@ui5/webcomponents-base/src/Configuration.js";
 
 class ShellBarTemplateContext {
 	static calculate(state) {

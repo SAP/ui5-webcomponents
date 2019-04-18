@@ -1,6 +1,6 @@
-import UniversalDate from "@ui5/webcomponents-core/dist/sap/ui/core/date/UniversalDate";
-import Locale from "@ui5/webcomponents-core/dist/sap/ui/core/Locale";
-import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData";
+import UniversalDate from "@ui5/webcomponents-core/dist/sap/ui/core/date/UniversalDate.js";
+import Locale from "@ui5/webcomponents-core/dist/sap/ui/core/Locale.js";
+import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData.js";
 
 const calculateWeekNumber = (oDate, iYear, oLocale, oLocaleData) => {
 	let iWeekNum = 0;

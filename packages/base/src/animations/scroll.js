@@ -1,5 +1,5 @@
-import animate from "./animate";
-import animationConfig from "./config";
+import animate from "./animate.js";
+import animationConfig from "./config.js";
 
 export default ({
 	element = animationConfig.element,

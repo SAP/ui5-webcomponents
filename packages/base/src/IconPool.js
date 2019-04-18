@@ -1,4 +1,4 @@
-import URI from "@ui5/webcomponents-core/dist/sap/ui/thirdparty/URI";
+import URI from "@ui5/webcomponents-core/dist/sap/ui/thirdparty/URI.js";
 /* eslint-disable */
 
 const SAP_ICON_FONT_FAMILY = 'SAP-icons';

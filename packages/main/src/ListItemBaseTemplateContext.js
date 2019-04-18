@@ -1,4 +1,4 @@
-import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device";
+import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 
 class ListItemBaseTemplateContext {
 	static calculate(state) {

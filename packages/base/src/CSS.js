@@ -1,5 +1,5 @@
-import { getTheme } from "./Configuration";
-import { getEffectiveStyle } from "./Theming";
+import { getTheme } from "./Configuration.js";
+import { getEffectiveStyle } from "./Theming.js";
 
 const styleMap = new Map();
 

@@ -1,5 +1,5 @@
-import { getIconInfo } from "@ui5/webcomponents-base/src/IconPool";
-import { getRTL } from "@ui5/webcomponents-base/src/Configuration";
+import { getIconInfo } from "@ui5/webcomponents-base/src/IconPool.js";
+import { getRTL } from "@ui5/webcomponents-base/src/Configuration.js";
 
 const dir = getRTL() ? "rtl" : "ltr";
 

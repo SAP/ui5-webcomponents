@@ -1,4 +1,4 @@
-import UniversalDate from "@ui5/webcomponents-core/dist/sap/ui/core/date/UniversalDate";
+import UniversalDate from "@ui5/webcomponents-core/dist/sap/ui/core/date/UniversalDate.js";
 
 class CalendarDate {
 	constructor() {

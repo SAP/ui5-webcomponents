@@ -1,12 +1,12 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
-import Button from "./Button";
-import ToggleButtonTemplateContext from "./ToggleButtonTemplateContext";
-import ToggleButtonRenderer from "./build/compiled/ToggleButtonRenderer.lit";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle.js";
+import Button from "./Button.js";
+import ToggleButtonTemplateContext from "./ToggleButtonTemplateContext.js";
+import ToggleButtonRenderer from "./build/compiled/ToggleButtonRenderer.lit.js";
 
 // Styles
-import btnCss from "./themes/Button.css";
-import toggleBtnCss from "./themes/ToggleButton.css";
+import btnCss from "./themes/Button.css.js";
+import toggleBtnCss from "./themes/ToggleButton.css.js";
 
 addCustomCSS("ui5-togglebutton", "sap_fiori_3", btnCss);
 addCustomCSS("ui5-togglebutton", "sap_belize", btnCss);

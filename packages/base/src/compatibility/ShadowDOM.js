@@ -1,14 +1,14 @@
-import { getTheme, getCompactSize } from "../Configuration";
-import getEffectiveRTL from "../util/getEffectiveRTL";
+import { getTheme, getCompactSize } from "../Configuration.js";
+import getEffectiveRTL from "../util/getEffectiveRTL.js";
 
-import { injectWebComponentStyle } from "../theming/StyleInjection";
-import { registerStyle } from "../theming/ThemeBundle";
+import { injectWebComponentStyle } from "../theming/StyleInjection.js";
+import { registerStyle } from "../theming/ThemeBundle.js";
 
-import setupBrowser from "../util/setupBrowser";
-import setupOS from "../util/setupOS";
-import setupSystem from "../util/setupSystem";
-import { getEffectiveStyle } from "../Theming";
-import { createStyle } from "../CSS";
+import setupBrowser from "../util/setupBrowser.js";
+import setupOS from "../util/setupOS.js";
+import setupSystem from "../util/setupSystem.js";
+import { getEffectiveStyle } from "../Theming.js";
+import { createStyle } from "../CSS.js";
 
 // shadow DOM templates per tag
 const shadowDOMTemplates = new Map();

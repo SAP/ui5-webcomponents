@@ -1,16 +1,16 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import URI from "@ui5/webcomponents-base/src/types/URI";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
+import WebComponent from "@ui5/webcomponents-base/src/WebComponent.js";
+import URI from "@ui5/webcomponents-base/src/types/URI.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes.js";
+import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle.js";
 
-import ButtonTemplateContext from "./ButtonTemplateContext";
-import ButtonType from "./types/ButtonType";
-import ButtonRenderer from "./build/compiled/ButtonRenderer.lit";
-import Icon from "./Icon";
+import ButtonTemplateContext from "./ButtonTemplateContext.js";
+import ButtonType from "./types/ButtonType.js";
+import ButtonRenderer from "./build/compiled/ButtonRenderer.lit.js";
+import Icon from "./Icon.js";
 
 // Styles
-import buttonCss from "./themes/Button.css";
+import buttonCss from "./themes/Button.css.js";
 
 addCustomCSS("ui5-button", "sap_fiori_3", buttonCss);
 addCustomCSS("ui5-button", "sap_belize", buttonCss);

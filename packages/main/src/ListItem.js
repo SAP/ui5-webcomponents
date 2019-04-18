@@ -1,11 +1,11 @@
-import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes";
-import Function from "@ui5/webcomponents-base/src/types/Function";
-import ListItemType from "./types/ListItemType";
-import ListMode from "./types/ListMode";
-import ListItemBase from "./ListItemBase";
-import "./RadioButton";
-import "./CheckBox";
-import "./Button";
+import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes.js";
+import Function from "@ui5/webcomponents-base/src/types/Function.js";
+import ListItemType from "./types/ListItemType.js";
+import ListMode from "./types/ListMode.js";
+import ListItemBase from "./ListItemBase.js";
+import "./RadioButton.js";
+import "./CheckBox.js";
+import "./Button.js";
 
 /**
  * @public

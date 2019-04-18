@@ -1,4 +1,4 @@
-import LinkType from "./types/LinkType";
+import LinkType from "./types/LinkType.js";
 
 class LinkTemplateContext {
 	static calculate(state) {

@@ -1,11 +1,11 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
-import TableCell from "./TableCell";
-import TableRowRenderer from "./build/compiled/TableRowRenderer.lit";
+import WebComponent from "@ui5/webcomponents-base/src/WebComponent.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle.js";
+import TableCell from "./TableCell.js";
+import TableRowRenderer from "./build/compiled/TableRowRenderer.lit.js";
 
 // Styles
-import styles from "./themes/TableRow.css";
+import styles from "./themes/TableRow.css.js";
 
 addCustomCSS("ui5-table-row", "sap_fiori_3", styles);
 addCustomCSS("ui5-table-row", "sap_belize", styles);

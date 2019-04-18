@@ -1,14 +1,14 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
-import ListItemBase from "./ListItemBase";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle.js";
+import ListItemBase from "./ListItemBase.js";
 
 // Template
-import GroupHeaderListItemRenderer from "./build/compiled/GroupHeaderListItemRenderer.lit";
-import GroupHeaderListItemTemplateContext from "./GroupHeaderListItemTemplateContext";
+import GroupHeaderListItemRenderer from "./build/compiled/GroupHeaderListItemRenderer.lit.js";
+import GroupHeaderListItemTemplateContext from "./GroupHeaderListItemTemplateContext.js";
 
 // Styles
-import listItemBaseCss from "./themes/ListItemBase.css";
-import groupheaderListItemCss from "./themes/GroupHeaderListItem.css";
+import listItemBaseCss from "./themes/ListItemBase.css.js";
+import groupheaderListItemCss from "./themes/GroupHeaderListItem.css.js";
 
 addCustomCSS("ui5-li-groupheader", "sap_fiori_3", listItemBaseCss);
 addCustomCSS("ui5-li-groupheader", "sap_fiori_3", groupheaderListItemCss);

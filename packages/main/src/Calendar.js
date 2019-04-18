@@ -1,29 +1,29 @@
-import "@ui5/webcomponents-base/src/shims/jquery-shim";
-import "@ui5/webcomponents-base/src/shims/Core-shim";
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
-import { fetchCldrData } from "@ui5/webcomponents-base/src/CLDR";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import { getLocale } from "@ui5/webcomponents-base/src/LocaleProvider";
-import { getCalendarType } from "@ui5/webcomponents-base/src/Configuration";
-import { getFormatLocale } from "@ui5/webcomponents-base/src/FormatSettings";
-import DateFormat from "@ui5/webcomponents-core/dist/sap/ui/core/format/DateFormat";
-import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData";
-import CalendarDate from "@ui5/webcomponents-base/src/dates/CalendarDate";
-import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType";
-import Integer from "@ui5/webcomponents-base/src/types/Integer";
-import CalendarTemplateContext from "./CalendarTemplateContext";
-import CalendarHeader from "./CalendarHeader";
-import DayPicker from "./DayPicker";
-import MonthPicker from "./MonthPicker";
-import YearPicker from "./YearPicker";
-import CalendarRenderer from "./build/compiled/CalendarRenderer.lit";
+import "@ui5/webcomponents-base/src/shims/jquery-shim.js";
+import "@ui5/webcomponents-base/src/shims/Core-shim.js";
+import WebComponent from "@ui5/webcomponents-base/src/WebComponent.js";
+import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle.js";
+import { fetchCldrData } from "@ui5/webcomponents-base/src/CLDR.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import { getLocale } from "@ui5/webcomponents-base/src/LocaleProvider.js";
+import { getCalendarType } from "@ui5/webcomponents-base/src/Configuration.js";
+import { getFormatLocale } from "@ui5/webcomponents-base/src/FormatSettings.js";
+import DateFormat from "@ui5/webcomponents-core/dist/sap/ui/core/format/DateFormat.js";
+import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData.js";
+import CalendarDate from "@ui5/webcomponents-base/src/dates/CalendarDate.js";
+import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType.js";
+import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
+import CalendarTemplateContext from "./CalendarTemplateContext.js";
+import CalendarHeader from "./CalendarHeader.js";
+import DayPicker from "./DayPicker.js";
+import MonthPicker from "./MonthPicker.js";
+import YearPicker from "./YearPicker.js";
+import CalendarRenderer from "./build/compiled/CalendarRenderer.lit.js";
 
 // default calendar for bundling
-import "@ui5/webcomponents-core/dist/sap/ui/core/date/Gregorian";
+import "@ui5/webcomponents-core/dist/sap/ui/core/date/Gregorian.js";
 
 // Styles
-import calendarCSS from "./themes/Calendar.css";
+import calendarCSS from "./themes/Calendar.css.js";
 
 addCustomCSS("ui5-calendar", "sap_fiori_3", calendarCSS);
 addCustomCSS("ui5-calendar", "sap_belize_hcb", calendarCSS);

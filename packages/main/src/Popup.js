@@ -1,11 +1,11 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper";
-import Integer from "@ui5/webcomponents-base/src/types/Integer";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
-import { isEscape } from "@ui5/webcomponents-base/src/events/PseudoEvents";
+import WebComponent from "@ui5/webcomponents-base/src/WebComponent.js";
+import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper.js";
+import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
+import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle.js";
+import { isEscape } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 
 // Styles
-import styles from "./themes/Popup.css";
+import styles from "./themes/Popup.css.js";
 
 addCustomCSS("ui5-dialog", "sap_fiori_3", styles);
 addCustomCSS("ui5-dialog", "sap_belize", styles);

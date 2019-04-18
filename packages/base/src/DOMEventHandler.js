@@ -1,6 +1,6 @@
-import ControlEvents from "./events/ControlEvents";
-import getOriginalEventTarget from "./events/getOriginalEventTarget";
-import WebComponent from "./WebComponent";
+import ControlEvents from "./events/ControlEvents.js";
+import getOriginalEventTarget from "./events/getOriginalEventTarget.js";
+import WebComponent from "./WebComponent.js";
 
 const handleEvent = function handleEvent(event) {
 	// Get the DOM node where the original event occurred

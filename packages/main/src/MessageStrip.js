@@ -1,14 +1,14 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import URI from "@ui5/webcomponents-base/src/types/URI";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
-import MessageStripTemplateContext from "./MessageStripTemplateContext";
-import MessageStripType from "./types/MessageStripType";
-import MessageStripRenderer from "./build/compiled/MessageStripRenderer.lit";
-import Icon from "./Icon";
+import WebComponent from "@ui5/webcomponents-base/src/WebComponent.js";
+import URI from "@ui5/webcomponents-base/src/types/URI.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle.js";
+import MessageStripTemplateContext from "./MessageStripTemplateContext.js";
+import MessageStripType from "./types/MessageStripType.js";
+import MessageStripRenderer from "./build/compiled/MessageStripRenderer.lit.js";
+import Icon from "./Icon.js";
 
 // Styles
-import messageStripCss from "./themes/MessageStrip.css";
+import messageStripCss from "./themes/MessageStrip.css.js";
 
 addCustomCSS("ui5-messagestrip", "sap_fiori_3", messageStripCss);
 addCustomCSS("ui5-messagestrip", "sap_belize", messageStripCss);

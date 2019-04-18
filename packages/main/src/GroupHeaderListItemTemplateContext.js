@@ -1,4 +1,4 @@
-import ListItemBaseTemplateContext from "./ListItemBaseTemplateContext";
+import ListItemBaseTemplateContext from "./ListItemBaseTemplateContext.js";
 
 class GroupHeaderListItemTemplateContext {
 	static calculate(state) {
