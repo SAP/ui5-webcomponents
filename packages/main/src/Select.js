@@ -1,23 +1,23 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
+import WebComponent from "@ui5/webcomponents-base/src/WebComponent.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import {
 	isSpace,
 	isUp,
 	isDown,
 	isEnter,
-} from "@ui5/webcomponents-base/src/events/PseudoEvents";
-import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
-import ValueState from "@ui5/webcomponents-base/src/types/ValueState";
-import Function from "@ui5/webcomponents-base/src/types/Function";
-import Suggestions from "./Suggestions";
+} from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes.js";
+import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle.js";
+import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
+import Function from "@ui5/webcomponents-base/src/types/Function.js";
+import Suggestions from "./Suggestions.js";
 
 // Template
-import SelectRenderer from "./build/compiled/SelectRenderer.lit";
-import SelectTemplateContext from "./SelectTemplateContext";
+import SelectRenderer from "./build/compiled/SelectRenderer.lit.js";
+import SelectTemplateContext from "./SelectTemplateContext.js";
 
 // Styles
-import selectCss from "./themes/Select.css";
+import selectCss from "./themes/Select.css.js";
 
 addCustomCSS("ui5-select", "sap_fiori_3", selectCss);
 addCustomCSS("ui5-select", "sap_belize", selectCss);

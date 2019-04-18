@@ -1,16 +1,16 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
-import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes";
-import URI from "@ui5/webcomponents-base/src/types/URI";
-import LinkType from "./types/LinkType";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import WebComponent from "@ui5/webcomponents-base/src/WebComponent.js";
+import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle.js";
+import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes.js";
+import URI from "@ui5/webcomponents-base/src/types/URI.js";
+import LinkType from "./types/LinkType.js";
 
 // Template
-import LinkRederer from "./build/compiled/LinkRenderer.lit";
-import LinkTemplateContext from "./LinkTemplateContext";
+import LinkRederer from "./build/compiled/LinkRenderer.lit.js";
+import LinkTemplateContext from "./LinkTemplateContext.js";
 
 // Styles
-import linkCss from "./themes/Link.css";
+import linkCss from "./themes/Link.css.js";
 
 addCustomCSS("ui5-link", "sap_fiori_3", linkCss);
 addCustomCSS("ui5-link", "sap_belize", linkCss);

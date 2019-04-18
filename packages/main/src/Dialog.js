@@ -1,13 +1,13 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle.js";
 
-import DialogTemplateContext from "./DialogTemplateContext";
-import Popup from "./Popup";
+import DialogTemplateContext from "./DialogTemplateContext.js";
+import Popup from "./Popup.js";
 // Template
-import DialogRenderer from "./build/compiled/DialogRenderer.lit";
+import DialogRenderer from "./build/compiled/DialogRenderer.lit.js";
 
 // Styles
-import dialogCss from "./themes/Dialog.css";
+import dialogCss from "./themes/Dialog.css.js";
 
 addCustomCSS("ui5-dialog", "sap_fiori_3", dialogCss);
 addCustomCSS("ui5-dialog", "sap_belize", dialogCss);

@@ -29,7 +29,7 @@ const convertImports = (srcPath) => {
 			if (!relativePath.startsWith(".")) {
 				relativePath = "./" + relativePath;
 			}
-			let relativeImport = relativePath + "/" + importeeFile;
+			let relativeImport = `${relativePath}/${importeeFile}.js`;
 			// console.log(importee + " --> " + relativeImport);
 			node.source.value = relativeImport;
 			changed = true;

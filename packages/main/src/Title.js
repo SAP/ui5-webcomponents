@@ -1,12 +1,12 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
-import TitleLevel from "./types/TitleLevel";
-import TitleRenderer from "./build/compiled/TitleRenderer.lit";
+import WebComponent from "@ui5/webcomponents-base/src/WebComponent.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle.js";
+import TitleLevel from "./types/TitleLevel.js";
+import TitleRenderer from "./build/compiled/TitleRenderer.lit.js";
 
 // Styles
 // Styles
-import titleCss from "./themes/Title.css";
+import titleCss from "./themes/Title.css.js";
 
 addCustomCSS("ui5-title", "sap_fiori_3", titleCss);
 addCustomCSS("ui5-title", "sap_belize", titleCss);

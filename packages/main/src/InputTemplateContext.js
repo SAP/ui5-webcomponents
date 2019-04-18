@@ -1,4 +1,4 @@
-import { isIE } from "@ui5/webcomponents-core/dist/sap/ui/Device";
+import { isIE } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 
 class InputTemplateContext {
 	static calculate(state) {

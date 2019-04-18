@@ -1,7 +1,7 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper";
-import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/src/events/PseudoEvents";
-import ListItemBaseTemplateContext from "./ListItemBaseTemplateContext";
+import WebComponent from "@ui5/webcomponents-base/src/WebComponent.js";
+import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper.js";
+import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import ListItemBaseTemplateContext from "./ListItemBaseTemplateContext.js";
 
 /**
  * @public

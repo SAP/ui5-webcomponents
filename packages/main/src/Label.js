@@ -1,13 +1,13 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
+import WebComponent from "@ui5/webcomponents-base/src/WebComponent.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle.js";
 
 // Template
-import LabelRenderer from "./build/compiled/LabelRenderer.lit";
-import LabelTemplateContext from "./LabelTemplateContext";
+import LabelRenderer from "./build/compiled/LabelRenderer.lit.js";
+import LabelTemplateContext from "./LabelTemplateContext.js";
 
 // Styles
-import labelCss from "./themes/Label.css";
+import labelCss from "./themes/Label.css.js";
 
 addCustomCSS("ui5-label", "sap_fiori_3", labelCss);
 addCustomCSS("ui5-label", "sap_belize", labelCss);

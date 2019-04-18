@@ -1,5 +1,5 @@
-import CalendarType from "@ui5/webcomponents-core/dist/sap/ui/core/CalendarType";
-import getDesigntimePropertyAsArray from "./util/getDesigntimePropertyAsArray";
+import CalendarType from "@ui5/webcomponents-core/dist/sap/ui/core/CalendarType.js";
+import getDesigntimePropertyAsArray from "./util/getDesigntimePropertyAsArray.js";
 
 const CONFIGURATION = {
 	theme: "sap_fiori_3",

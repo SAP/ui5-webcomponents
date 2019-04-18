@@ -1,11 +1,11 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
-import ListItem from "./ListItem";
-import CustomListItemTemplateContext from "./CustomListItemTemplateContext";
-import CustomListItemRenderer from "./build/compiled/CustomListItemRenderer.lit";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle.js";
+import ListItem from "./ListItem.js";
+import CustomListItemTemplateContext from "./CustomListItemTemplateContext.js";
+import CustomListItemRenderer from "./build/compiled/CustomListItemRenderer.lit.js";
 
 // Styles
-import columnListItemCss from "./themes/CustomListItem.css";
+import columnListItemCss from "./themes/CustomListItem.css.js";
 
 addCustomCSS("ui5-li-custom", "sap_fiori_3", columnListItemCss);
 addCustomCSS("ui5-li-custom", "sap_belize", columnListItemCss);

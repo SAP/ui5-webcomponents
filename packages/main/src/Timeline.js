@@ -1,13 +1,13 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
-import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation";
-import TimelineTemplateContext from "./TimelineTemplateContext";
-import TimelineItem from "./TimelineItem";
-import TimelineRenderer from "./build/compiled/TimelineRenderer.lit";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import WebComponent from "@ui5/webcomponents-base/src/WebComponent.js";
+import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle.js";
+import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
+import TimelineTemplateContext from "./TimelineTemplateContext.js";
+import TimelineItem from "./TimelineItem.js";
+import TimelineRenderer from "./build/compiled/TimelineRenderer.lit.js";
 
 // Styles
-import styles from "./themes/Timeline.css";
+import styles from "./themes/Timeline.css.js";
 
 addCustomCSS("ui5-timeline", "sap_belize", styles);
 addCustomCSS("ui5-timeline", "sap_belize_hcb", styles);

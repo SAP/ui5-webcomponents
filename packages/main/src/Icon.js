@@ -1,13 +1,13 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import URI from "@ui5/webcomponents-base/src/types/URI";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents";
-import IconTemplateContext from "./IconTemplateContext";
-import IconRenderer from "./build/compiled/IconRenderer.lit";
+import WebComponent from "@ui5/webcomponents-base/src/WebComponent.js";
+import URI from "@ui5/webcomponents-base/src/types/URI.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import IconTemplateContext from "./IconTemplateContext.js";
+import IconRenderer from "./build/compiled/IconRenderer.lit.js";
 
 // Styles
-import iconCss from "./themes/Icon.css";
+import iconCss from "./themes/Icon.css.js";
 
 addCustomCSS("ui5-icon", "sap_fiori_3", iconCss);
 addCustomCSS("ui5-icon", "sap_belize", iconCss);

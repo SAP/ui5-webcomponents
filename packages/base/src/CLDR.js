@@ -73,8 +73,8 @@ import zh_HK from "@ui5/webcomponents-core/dist/sap/ui/core/cldr/zh_HK.json";
 import zh_SG from "@ui5/webcomponents-core/dist/sap/ui/core/cldr/zh_SG.json";
 import zh_TW from "@ui5/webcomponents-core/dist/sap/ui/core/cldr/zh_TW.json";
 
-import { registerModuleContent } from "./ResourceLoaderOverrides";
-import { fetchTextOnce } from "./util/FetchHelper";
+import { registerModuleContent } from "./ResourceLoaderOverrides.js";
+import { fetchTextOnce } from "./util/FetchHelper.js";
 
 const cldrData = {
 	ar,

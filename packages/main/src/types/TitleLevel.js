@@ -1,4 +1,4 @@
-import DataType from "@ui5/webcomponents-base/src/types/DataType";
+import DataType from "@ui5/webcomponents-base/src/types/DataType.js";
 
 const TitleLevels = {
 	H1: "H1",

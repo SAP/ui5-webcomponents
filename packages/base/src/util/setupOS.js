@@ -1,4 +1,4 @@
-import { getOS } from "@ui5/webcomponents-core/dist/sap/ui/Device";
+import { getOS } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 
 const setupOS = node => {
 	let osCSS = null;

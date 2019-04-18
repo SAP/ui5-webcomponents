@@ -1,5 +1,5 @@
-import AnimationQueue from "./AnimationQueue";
-import animationConfig from "./config";
+import AnimationQueue from "./AnimationQueue.js";
+import animationConfig from "./config.js";
 
 export default ({
 	beforeStart = animationConfig.identity,

@@ -1,7 +1,7 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import TabSeparatorTemplateContext from "./TabSeparatorTemplateContext";
-import TabBase from "./TabBase";
-import TabSeparatorRenderer from "./build/compiled/TabSeparatorRenderer.lit";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import TabSeparatorTemplateContext from "./TabSeparatorTemplateContext.js";
+import TabBase from "./TabBase.js";
+import TabSeparatorRenderer from "./build/compiled/TabSeparatorRenderer.lit.js";
 
 /**
  * @public

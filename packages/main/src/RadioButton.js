@@ -1,8 +1,8 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
-import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes";
-import ValueState from "@ui5/webcomponents-base/src/types/ValueState";
+import WebComponent from "@ui5/webcomponents-base/src/WebComponent.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle.js";
+import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes.js";
+import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
 import {
 	isSpace,
 	isEnter,
@@ -10,14 +10,14 @@ import {
 	isLeft,
 	isUp,
 	isRight,
-} from "@ui5/webcomponents-base/src/events/PseudoEvents";
-import RadioButtonGroup from "./RadioButtonGroup";
+} from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import RadioButtonGroup from "./RadioButtonGroup.js";
 // Template
-import RadioButtonRenderer from "./build/compiled/RadioButtonRenderer.lit";
-import RadioButtonTemplateContext from "./RadioButtonTemplateContext";
+import RadioButtonRenderer from "./build/compiled/RadioButtonRenderer.lit.js";
+import RadioButtonTemplateContext from "./RadioButtonTemplateContext.js";
 
 // Styles
-import radioButtonCss from "./themes/RadioButton.css";
+import radioButtonCss from "./themes/RadioButton.css.js";
 
 addCustomCSS("ui5-radiobutton", "sap_fiori_3", radioButtonCss);
 addCustomCSS("ui5-radiobutton", "sap_belize", radioButtonCss);

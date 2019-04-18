@@ -1,4 +1,4 @@
-import LitRenderer from "./renderer/LitRenderer";
+import LitRenderer from "./renderer/LitRenderer.js";
 
 const RendererImpl = LitRenderer;
 

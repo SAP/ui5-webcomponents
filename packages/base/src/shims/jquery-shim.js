@@ -1,6 +1,6 @@
 /* eslint-disable */
-import { inject as injectJQuery } from "@ui5/webcomponents-core/dist/sap/ui/thirdparty/jquery";
-import isPlainObject from "@ui5/webcomponents-core/dist/sap/base/util/isPlainObject";
+import { inject as injectJQuery } from "@ui5/webcomponents-core/dist/sap/ui/thirdparty/jquery.js";
+import isPlainObject from "@ui5/webcomponents-core/dist/sap/base/util/isPlainObject.js";
 
 var jQuery = {
 	extend: function() {
