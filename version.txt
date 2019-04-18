@@ -1,5 +1,13 @@
-commit 1b395a5f5200a2cdbb01a79d25bac57001e419ba
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu Apr 18 10:51:53 2019 +0300
+commit 2cf5e317ac849111c2493842aab602a965ebc774
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu Apr 18 14:25:26 2019 +0300
 
-    chore: make derived colors build work on windows (#342)
+    chore: remove all less files (#340)
+    
+    * Remove all less files
+    * Remove all build steps, related to the less files
+    * Move all css files from theme-next to theme
+    * Rename base-parameters-new.css to base-parameters.css
+    * Rename global-parameters-new.css to global-parameters.css
+    * Adapt the styles imports within all components
+    * Change all occurrences of theme-next in file paths
