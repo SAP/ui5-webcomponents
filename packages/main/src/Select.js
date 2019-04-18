@@ -11,6 +11,7 @@ import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState";
 import Function from "@ui5/webcomponents-base/src/types/Function";
 import Suggestions from "./Suggestions";
+import Option from "./Option";
 
 // Template
 import SelectRenderer from "./build/compiled/SelectRenderer.lit";
@@ -41,12 +42,12 @@ const metadata = {
 		 * If more than one item is defined as selected, the last one would be considered as the selected one.
 		 * <br/><br/>
 		 * <b>Note:</b> Use the <code>ui5-li</code> component to define the desired options.
-		 * @type {HTMLElement[]}
+		 * @type {Option[]}
 		 * @slot
 		 * @public
 		 */
 		items: {
-			type: HTMLElement,
+			type: Option,
 			multiple: true,
 		},
 	},
@@ -128,8 +129,6 @@ const metadata = {
  * <br>
  * <h3>ES6 Module Import</h3>
  * <code>import "@ui5/webcomponents/dist/Select";</code>
- * <br>
- * <code>import "@ui5/webcomponents/dist/StandardListItem";</code> (<code>ui5-li</code>)
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Select
@@ -343,6 +342,12 @@ class Select extends WebComponent {
 
 	_fireChange(item) {
 		this.fireEvent("change", { selectedItem: item });
+	}
+
+	static async define(...params) {
+		await Option.define();
+
+		super.define(...params);
 	}
 }
 
