@@ -12,7 +12,6 @@ import TabRenderer from "./build/compiled/TabRenderer.lit.js";
  */
 const metadata = {
 	tag: "ui5-tab",
-	styleUrl: [],
 	defaultSlot: "content",
 	slots: /** @lends sap.ui.webcomponents.main.Tab.prototype */ {
 

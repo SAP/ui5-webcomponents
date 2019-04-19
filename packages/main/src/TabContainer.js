@@ -3,7 +3,6 @@ import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler.js";
 import ScrollEnablement from "@ui5/webcomponents-base/src/delegate/ScrollEnablement.js";
 import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import TabContainerTemplateContext from "./TabContainerTemplateContext.js";
 import TabContainerRenderer from "./build/compiled/TabContainerRenderer.lit.js";
@@ -16,10 +15,6 @@ import TabBase from "./TabBase.js";
 
 // Styles
 import buttonCss from "./themes/TabContainer.css.js";
-
-addCustomCSS("ui5-tabcontainer", "sap_fiori_3", buttonCss);
-addCustomCSS("ui5-tabcontainer", "sap_belize", buttonCss);
-addCustomCSS("ui5-tabcontainer", "sap_belize_hcb", buttonCss);
 
 const SCROLL_STEP = 128;
 
@@ -44,9 +39,6 @@ const metadata = {
 			listenFor: { include: ["*"] },
 		},
 	},
-	styleUrl: [
-		"TabContainer.css",
-	],
 	properties: /** @lends  sap.ui.webcomponents.main.TabContainer.prototype */ {
 		/**
 		 * Determines whether the tabs are in a fixed state that is not
@@ -167,6 +159,10 @@ const metadata = {
 class TabContainer extends WebComponent {
 	static get metadata() {
 		return metadata;
+	}
+
+	static get styles() {
+		return buttonCss;
 	}
 
 	static get renderer() {

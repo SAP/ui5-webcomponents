@@ -2,7 +2,6 @@ import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import WebComponent from "@ui5/webcomponents-base/src/WebComponent.js";
 import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
 import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper.js";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle.js";
 
 import { isTabNext } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import ListItemBase from "./ListItemBase.js";
@@ -17,18 +16,11 @@ import ListTemplateContext from "./ListTemplateContext.js";
 // Styles
 import listCss from "./themes/List.css.js";
 
-addCustomCSS("ui5-list", "sap_fiori_3", listCss);
-addCustomCSS("ui5-list", "sap_belize", listCss);
-addCustomCSS("ui5-list", "sap_belize_hcb", listCss);
-
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-list",
-	styleUrl: [
-		"List.css",
-	],
 	defaultSlot: "items",
 	slots: /** @lends sap.ui.webcomponents.main.List.prototype */ {
 
@@ -244,6 +236,10 @@ class List extends WebComponent {
 
 	static get renderer() {
 		return ListRenderer;
+	}
+
+	static get styles() {
+		return listCss;
 	}
 
 	constructor() {

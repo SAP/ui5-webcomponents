@@ -1,6 +1,5 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import WebComponent from "@ui5/webcomponents-base/src/WebComponent.js";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle.js";
 import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes.js";
 import URI from "@ui5/webcomponents-base/src/types/URI.js";
 import LinkType from "./types/LinkType.js";
@@ -12,16 +11,11 @@ import LinkTemplateContext from "./LinkTemplateContext.js";
 // Styles
 import linkCss from "./themes/Link.css.js";
 
-addCustomCSS("ui5-link", "sap_fiori_3", linkCss);
-addCustomCSS("ui5-link", "sap_belize", linkCss);
-addCustomCSS("ui5-link", "sap_belize_hcb", linkCss);
-
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-link",
-	styleUrl: ["Link.css"],
 	usesNodeText: true,
 	properties: /** @lends  sap.ui.webcomponents.main.Link.prototype */  {
 
@@ -164,6 +158,10 @@ class Link extends WebComponent {
 
 	static get renderer() {
 		return LinkRederer;
+	}
+
+	static get styles() {
+		return linkCss;
 	}
 
 

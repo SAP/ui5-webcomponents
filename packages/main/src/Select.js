@@ -7,7 +7,6 @@ import {
 	isEnter,
 } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes.js";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle.js";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
 import Function from "@ui5/webcomponents-base/src/types/Function.js";
 import Suggestions from "./Suggestions.js";
@@ -19,18 +18,11 @@ import SelectTemplateContext from "./SelectTemplateContext.js";
 // Styles
 import selectCss from "./themes/Select.css.js";
 
-addCustomCSS("ui5-select", "sap_fiori_3", selectCss);
-addCustomCSS("ui5-select", "sap_belize", selectCss);
-addCustomCSS("ui5-select", "sap_belize_hcb", selectCss);
-
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-select",
-	styleUrl: [
-		"Select.css",
-	],
 	defaultSlot: "items",
 	slots: /** @lends sap.ui.webcomponents.main.Select.prototype */ {
 
@@ -149,6 +141,10 @@ class Select extends WebComponent {
 
 	static get calculateTemplateContext() {
 		return SelectTemplateContext.calculate;
+	}
+
+	static get styles() {
+		return selectCss;
 	}
 
 	constructor() {

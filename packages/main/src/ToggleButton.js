@@ -1,30 +1,16 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle.js";
 import Button from "./Button.js";
 import ToggleButtonTemplateContext from "./ToggleButtonTemplateContext.js";
 import ToggleButtonRenderer from "./build/compiled/ToggleButtonRenderer.lit.js";
 
 // Styles
-import btnCss from "./themes/Button.css.js";
 import toggleBtnCss from "./themes/ToggleButton.css.js";
-
-addCustomCSS("ui5-togglebutton", "sap_fiori_3", btnCss);
-addCustomCSS("ui5-togglebutton", "sap_belize", btnCss);
-addCustomCSS("ui5-togglebutton", "sap_belize_hcb", btnCss);
-
-addCustomCSS("ui5-togglebutton", "sap_fiori_3", toggleBtnCss);
-addCustomCSS("ui5-togglebutton", "sap_belize", toggleBtnCss);
-addCustomCSS("ui5-togglebutton", "sap_belize_hcb", toggleBtnCss);
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-togglebutton",
-	styleUrl: [
-		"Button.css",
-		"ToggleButton.css",
-	],
 	usesNodeText: true,
 	properties: /** @lends  sap.ui.webcomponents.main.ToggleButton.prototype */ {
 		/**
@@ -72,6 +58,10 @@ class ToggleButton extends Button {
 
 	static get renderer() {
 		return ToggleButtonRenderer;
+	}
+
+	static get styles() {
+		return [Button.style, toggleBtnCss];
 	}
 
 	onclick() {

@@ -3,7 +3,6 @@ import { getRTL } from "@ui5/webcomponents-base/src/Configuration.js";
 import URI from "@ui5/webcomponents-base/src/types/URI.js";
 import WebComponent from "@ui5/webcomponents-base/src/WebComponent.js";
 import Function from "@ui5/webcomponents-base/src/types/Function.js";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle.js";
 import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
 import { isSpace, isEscape } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
@@ -19,18 +18,11 @@ import ShellBarTemplateContext from "./ShellBarTemplateContext.js";
 // Styles
 import styles from "./themes/ShellBar.css.js";
 
-addCustomCSS("ui5-shellbar", "sap_belize", styles);
-addCustomCSS("ui5-shellbar", "sap_belize_hcb", styles);
-addCustomCSS("ui5-shellbar", "sap_fiori_3", styles);
-
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-shellbar",
-	styleUrl: [
-		"ShellBar.css",
-	],
 	properties: /** @lends  sap.ui.webcomponents.main.ShellBar.prototype */ {
 
 		/**
@@ -314,6 +306,10 @@ const metadata = {
 class ShellBar extends WebComponent {
 	static get metadata() {
 		return metadata;
+	}
+
+	static get styles() {
+		return styles;
 	}
 
 	static get renderer() {

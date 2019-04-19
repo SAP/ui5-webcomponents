@@ -7,7 +7,6 @@ import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes.js";
 import { getCalendarType } from "@ui5/webcomponents-base/src/Configuration.js";
 import { getLocale } from "@ui5/webcomponents-base/src/LocaleProvider.js";
 import { getIconURI } from "@ui5/webcomponents-base/src/IconPool.js";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle.js";
 import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData.js";
 import DateFormat from "@ui5/webcomponents-core/dist/sap/ui/core/format/DateFormat.js";
 import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType.js";
@@ -29,18 +28,11 @@ import "@ui5/webcomponents-core/dist/sap/ui/core/date/Gregorian.js";
 // Styles
 import datePickerCss from "./themes/DatePicker.css.js";
 
-addCustomCSS("ui5-datepicker", "sap_fiori_3", datePickerCss);
-addCustomCSS("ui5-datepicker", "sap_belize", datePickerCss);
-addCustomCSS("ui5-datepicker", "sap_belize_hcb", datePickerCss);
-
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-datepicker",
-	styleUrl: [
-		"DatePicker.css",
-	],
 	properties: /** @lends  sap.ui.webcomponents.main.DatePicker.prototype */ {
 		/**
 		 * Defines a formatted date value.
@@ -211,6 +203,9 @@ class DatePicker extends WebComponent {
 		return DatePickerTemplateContext.calculate;
 	}
 
+	static get styles() {
+		return datePickerCss;
+	}
 
 	constructor() {
 		super();

@@ -1,24 +1,16 @@
 import WebComponent from "@ui5/webcomponents-base/src/WebComponent.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle.js";
 import TableCell from "./TableCell.js";
 import TableRowRenderer from "./build/compiled/TableRowRenderer.lit.js";
 
 // Styles
 import styles from "./themes/TableRow.css.js";
 
-addCustomCSS("ui5-table-row", "sap_fiori_3", styles);
-addCustomCSS("ui5-table-row", "sap_belize", styles);
-addCustomCSS("ui5-table-row", "sap_belize_hcb", styles);
-
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-table-row",
-	styleUrl: [
-		"TableRow.css",
-	],
 	defaultSlot: "cells",
 	slots: /** @lends sap.ui.webcomponents.main.TableRow.prototype */ {
 		/**
@@ -67,6 +59,10 @@ const metadata = {
 class TableRow extends WebComponent {
 	static get metadata() {
 		return metadata;
+	}
+
+	static get styles() {
+		return styles;
 	}
 
 	static get renderer() {
