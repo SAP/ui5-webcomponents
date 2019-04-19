@@ -28,7 +28,7 @@ class RadioButtonGroup {
 
 		const group = this.getGroup(groupName);
 		const selectedRadio = this.selectedRadios.get(group);
-	
+
 		// Remove the radioBtn from the given group
 		group.forEach((_radioBtn, idx, arr) => {
 			if (radioBtn._id === _radioBtn._id) {
@@ -87,13 +87,11 @@ class RadioButtonGroup {
 	}
 
 	static updateSelectionInGroup(radioBtnToSelect, groupName) {
-		const group = this.getGroup(groupName);
 		const selectedRadio = this.selectedRadios.get(groupName);
 
 		this._deselectRadio(selectedRadio);
 		this._selectRadio(radioBtnToSelect);
 		this.selectedRadios.set(groupName, radioBtnToSelect);
-		console.log(groupName + "dasdada" + this.selectedRadios.entries());
 	}
 
 	static get groups() {

@@ -173,7 +173,7 @@ class RadioButton extends UI5Element {
 	syncGroup() {
 		const oldGroup = this._group;
 		const currentGroup = this.group;
-		const selected = this.selected
+		const selected = this.selected;
 		const previouslySelected = this._selected;
 
 		if (currentGroup !== oldGroup) {
@@ -181,7 +181,7 @@ class RadioButton extends UI5Element {
 				// remove the control from the previous group
 				RadioButtonGroup.removeFromGroup(this, oldGroup);
 			}
-			
+
 			if (currentGroup) {
 				// add the control to the existing group
 				RadioButtonGroup.addToGroup(this, currentGroup);
