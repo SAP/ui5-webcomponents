@@ -1,5 +1,5 @@
-commit b61860f9c66c8782a98cdf218667cd222d4cb8c0
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Fri Apr 19 11:34:21 2019 +0300
+commit 9eed566cbb07af3baf12f7370a924c3c1b626e11
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Fri Apr 19 14:06:32 2019 +0300
 
-    feat: adds static method styles to base class (#345)
+    chore: rename WebComponent to UI5Element (#346)
