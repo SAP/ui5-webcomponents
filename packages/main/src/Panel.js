@@ -1,4 +1,4 @@
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { getIconURI } from "@ui5/webcomponents-base/src/IconPool.js";
 import slideDown from "@ui5/webcomponents-base/src/animations/slideDown.js";
