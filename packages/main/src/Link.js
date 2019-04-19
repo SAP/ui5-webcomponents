@@ -1,5 +1,5 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent.js";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle.js";
 import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes.js";
 import URI from "@ui5/webcomponents-base/src/types/URI.js";
@@ -147,12 +147,12 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Link
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-link
  * @usestextcontent
  * @public
  */
-class Link extends WebComponent {
+class Link extends UI5Element {
 	constructor() {
 		super();
 		this._dummyAnchor = document.createElement("a");

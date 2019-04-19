@@ -1,5 +1,5 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent.js";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
 import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper.js";
 import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle.js";
@@ -232,12 +232,12 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.List
- * @extends WebComponent
+ * @extends UI5Element
  * @tagname ui5-list
  * @appenddocs StandardListItem CustomListItem GroupHeaderListItem
  * @public
  */
-class List extends WebComponent {
+class List extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}

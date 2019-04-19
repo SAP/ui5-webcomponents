@@ -1,4 +1,4 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent.js";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle.js";
 import { getIconURI } from "@ui5/webcomponents-base/src/IconPool.js";
@@ -188,11 +188,11 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Panel
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-panel
  * @public
  */
-class Panel extends WebComponent {
+class Panel extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}

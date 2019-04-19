@@ -1,4 +1,4 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent.js";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { getLocale } from "@ui5/webcomponents-base/src/LocaleProvider.js";
 import { getCalendarType } from "@ui5/webcomponents-base/src/Configuration.js";
@@ -106,11 +106,11 @@ const MIN_YEAR = 1;
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.DayPicker
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-daypicker
  * @public
  */
-class DayPicker extends WebComponent {
+class DayPicker extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}

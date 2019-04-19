@@ -1,5 +1,5 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent.js";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle.js";
 import URI from "@ui5/webcomponents-base/src/types/URI.js";
 import Function from "@ui5/webcomponents-base/src/types/Function.js";
@@ -129,12 +129,12 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.TimelineItem
- * @extends WebComponent
+ * @extends UI5Element
  * @tagname ui5-timeline
  * @usestextcontent
  * @public
  */
-class TimelineItem extends WebComponent {
+class TimelineItem extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
