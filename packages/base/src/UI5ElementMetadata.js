@@ -14,10 +14,6 @@ class UI5ElementMetadata {
 		return this.metadata.noShadowDOM;
 	}
 
-	getStyleUrl() {
-		return this.metadata.styleUrl || [];
-	}
-
 	usesNodeText() {
 		return !!this.metadata.usesNodeText;
 	}

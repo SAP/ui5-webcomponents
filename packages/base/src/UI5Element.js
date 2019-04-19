@@ -261,6 +261,9 @@ class UI5Element extends HTMLElement {
 		return metadata;
 	}
 
+	static get styles() {
+		return "";
+	}
 
 	_initializeState() {
 		const StateClass = this.constructor.StateClass;

@@ -7,6 +7,9 @@ import "./RadioButton.js";
 import "./CheckBox.js";
 import "./Button.js";
 
+// Styles
+import styles from "./themes/ListItem.css";
+
 /**
  * @public
  */
@@ -73,6 +76,10 @@ const metadata = {
 class ListItem extends ListItemBase {
 	static get metadata() {
 		return metadata;
+	}
+
+	static get styles() {
+		return [styles, ListItemBase.styles];
 	}
 
 	constructor() {

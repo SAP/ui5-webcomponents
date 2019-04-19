@@ -1,6 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle.js";
 import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes.js";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
 import {
@@ -19,18 +18,11 @@ import RadioButtonTemplateContext from "./RadioButtonTemplateContext.js";
 // Styles
 import radioButtonCss from "./themes/RadioButton.css.js";
 
-addCustomCSS("ui5-radiobutton", "sap_fiori_3", radioButtonCss);
-addCustomCSS("ui5-radiobutton", "sap_belize", radioButtonCss);
-addCustomCSS("ui5-radiobutton", "sap_belize_hcb", radioButtonCss);
-
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-radiobutton",
-	styleUrl: [
-		"RadioButton.css",
-	],
 	properties: /** @lends sap.ui.webcomponents.main.RadioButton.prototype */  {
 
 		/**
@@ -156,6 +148,10 @@ class RadioButton extends UI5Element {
 
 	static get renderer() {
 		return RadioButtonRenderer;
+	}
+
+	static get styles() {
+		return radioButtonCss;
 	}
 
 	constructor() {

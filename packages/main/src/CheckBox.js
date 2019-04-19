@@ -2,7 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes.js";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle.js";
 
 import CheckBoxRenderer from "./build/compiled/CheckBoxRenderer.lit.js";
 import CheckBoxTemplateContext from "./CheckBoxTemplateContext.js";
@@ -11,16 +10,11 @@ import Label from "./Label.js";
 // Styles
 import checkboxCss from "./themes/CheckBox.css.js";
 
-addCustomCSS("ui5-checkbox", "sap_fiori_3", checkboxCss);
-addCustomCSS("ui5-checkbox", "sap_belize", checkboxCss);
-addCustomCSS("ui5-checkbox", "sap_belize_hcb", checkboxCss);
-
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-checkbox",
-	styleUrl: ["CheckBox.css"],
 	properties: /** @lends sap.ui.webcomponents.main.CheckBox.prototype */ {
 
 		/**
@@ -158,6 +152,10 @@ class CheckBox extends UI5Element {
 
 	static get renderer() {
 		return CheckBoxRenderer;
+	}
+
+	static get styles() {
+		return checkboxCss;
 	}
 
 	constructor() {

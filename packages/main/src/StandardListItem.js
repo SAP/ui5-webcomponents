@@ -1,5 +1,4 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle.js";
 import URI from "@ui5/webcomponents-base/src/types/URI.js";
 import ListItem from "./ListItem.js";
 import Icon from "./Icon.js";
@@ -7,25 +6,12 @@ import StandardListItemTemplateContext from "./StandardListItemTemplateContext.j
 import StandardListItemRenderer from "./build/compiled/StandardListItemRenderer.lit.js";
 
 // Styles
-import listItemCss from "./themes/ListItem.css.js";
-import listItemBaseCss from "./themes/ListItemBase.css.js";
-
-addCustomCSS("ui5-li", "sap_fiori_3", listItemCss);
-addCustomCSS("ui5-li", "sap_fiori_3", listItemBaseCss);
-addCustomCSS("ui5-li", "sap_belize", listItemCss);
-addCustomCSS("ui5-li", "sap_belize", listItemBaseCss);
-addCustomCSS("ui5-li", "sap_belize_hcb", listItemCss);
-addCustomCSS("ui5-li", "sap_belize_hcb", listItemBaseCss);
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-li",
-	styleUrl: [
-		"ListItemBase.css",
-		"ListItem.css",
-	],
 	usesNodeText: true,
 	properties: /** @lends sap.ui.webcomponents.main.StandardListItem.prototype */ {
 
@@ -101,6 +87,10 @@ const metadata = {
 class StandardListItem extends ListItem {
 	static get renderer() {
 		return StandardListItemRenderer;
+	}
+
+	static get styles() {
+		return ListItem.styles;
 	}
 
 	static get metadata() {

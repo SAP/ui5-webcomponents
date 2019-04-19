@@ -1,7 +1,6 @@
 import "@ui5/webcomponents-base/src/shims/jquery-shim.js";
 import "@ui5/webcomponents-base/src/shims/Core-shim.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle.js";
 import { fetchCldrData } from "@ui5/webcomponents-base/src/CLDR.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { getLocale } from "@ui5/webcomponents-base/src/LocaleProvider.js";
@@ -25,18 +24,11 @@ import "@ui5/webcomponents-core/dist/sap/ui/core/date/Gregorian.js";
 // Styles
 import calendarCSS from "./themes/Calendar.css.js";
 
-addCustomCSS("ui5-calendar", "sap_fiori_3", calendarCSS);
-addCustomCSS("ui5-calendar", "sap_belize_hcb", calendarCSS);
-addCustomCSS("ui5-calendar", "sap_belize", calendarCSS);
-
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-calendar",
-	styleUrl: [
-		"Calendar.css",
-	],
 	properties: /** @lends  sap.ui.webcomponents.main.Calendar.prototype */ {
 		/**
 		 * It's a UNIX timestamp - seconds since 00:00:00 UTC on Jan 1, 1970.
@@ -122,6 +114,10 @@ class Calendar extends UI5Element {
 
 	static get renderer() {
 		return CalendarRenderer;
+	}
+
+	static get styles() {
+		return calendarCSS;
 	}
 
 	constructor() {

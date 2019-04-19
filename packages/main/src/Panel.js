@@ -1,6 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle.js";
 import { getIconURI } from "@ui5/webcomponents-base/src/IconPool.js";
 import slideDown from "@ui5/webcomponents-base/src/animations/slideDown.js";
 import slideUp from "@ui5/webcomponents-base/src/animations/slideUp.js";
@@ -14,17 +13,11 @@ import { fetchResourceBundle, getResourceBundle } from "./ResourceBundleProvider
 // Styles
 import panelCss from "./themes/Panel.css.js";
 
-addCustomCSS("ui5-panel", "sap_fiori_3", panelCss);
-addCustomCSS("ui5-panel", "sap_belize", panelCss);
-addCustomCSS("ui5-panel", "sap_belize_hcb", panelCss);
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-panel",
-	styleUrl: [
-		"Panel.css",
-	],
 	defaultSlot: "content",
 	slots: /** @lends sap.ui.webcomponents.main.Panel.prototype */ {
 
@@ -203,6 +196,10 @@ class Panel extends UI5Element {
 
 	static get calculateTemplateContext() {
 		return PanelTemplateContext.calculate;
+	}
+
+	static get styles() {
+		return panelCss;
 	}
 
 	constructor() {

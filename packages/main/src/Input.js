@@ -2,7 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { isIE } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle.js";
 import {
 	isUp,
 	isDown,
@@ -19,23 +18,11 @@ import InputTemplateContext from "./InputTemplateContext.js";
 import styles from "./themes/Input.css.js";
 import shellbarInput from "./themes/ShellBarInput.css.js";
 
-addCustomCSS("ui5-input", "sap_fiori_3", styles);
-addCustomCSS("ui5-input", "sap_belize", styles);
-addCustomCSS("ui5-input", "sap_belize_hcb", styles);
-
-addCustomCSS("ui5-input", "sap_fiori_3", shellbarInput);
-addCustomCSS("ui5-input", "sap_belize", shellbarInput);
-addCustomCSS("ui5-input", "sap_belize_hcb", shellbarInput);
-
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-input",
-	styleUrl: [
-		"Input.css",
-		"ShellBarInput.css",
-	],
 	defaultSlot: "suggestionItems",
 	slots: /** @lends sap.ui.webcomponents.main.Input.prototype */ {
 
@@ -269,6 +256,10 @@ class Input extends UI5Element {
 
 	static get calculateTemplateContext() {
 		return InputTemplateContext.calculate;
+	}
+
+	static get styles() {
+		return [styles, shellbarInput];
 	}
 
 	constructor() {

@@ -1,7 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import URI from "@ui5/webcomponents-base/src/types/URI.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle.js";
 import MessageStripTemplateContext from "./MessageStripTemplateContext.js";
 import MessageStripType from "./types/MessageStripType.js";
 import MessageStripRenderer from "./build/compiled/MessageStripRenderer.lit.js";
@@ -10,18 +9,11 @@ import Icon from "./Icon.js";
 // Styles
 import messageStripCss from "./themes/MessageStrip.css.js";
 
-addCustomCSS("ui5-messagestrip", "sap_fiori_3", messageStripCss);
-addCustomCSS("ui5-messagestrip", "sap_belize", messageStripCss);
-addCustomCSS("ui5-messagestrip", "sap_belize_hcb", messageStripCss);
-
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-messagestrip",
-	styleUrl: [
-		"MessageStrip.css",
-	],
 	usesNodeText: true,
 	properties: /** @lends sap.ui.webcomponents.main.MessageStrip.prototype */ {
 
@@ -126,6 +118,10 @@ class MessageStrip extends UI5Element {
 
 	static get calculateTemplateContext() {
 		return MessageStripTemplateContext.calculate;
+	}
+
+	static get styles() {
+		return messageStripCss;
 	}
 
 	constructor() {
