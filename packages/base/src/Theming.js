@@ -1,5 +1,5 @@
 import { getTheme, _setTheme } from "./Configuration.js";
-import { getCustomCSS } from "./theming/CustomStyle.js";
+import { addCustomCSS, getCustomCSS } from "./theming/CustomStyle.js";
 import { getThemeProperties } from "./theming/ThemeProperties.js";
 import { injectThemeProperties } from "./theming/StyleInjection.js";
 
@@ -58,4 +58,5 @@ export {
 	applyTheme,
 	setTheme,
 	getEffectiveStyle,
+	addCustomCSS,
 };
