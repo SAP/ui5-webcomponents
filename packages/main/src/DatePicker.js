@@ -124,6 +124,9 @@ const metadata = {
 		/**
 		 * Determines the name with which the <code>ui5-datepicker</code> will be submitted in an HTML form.
 		 *
+		 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
+		 * <code>import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";</code>
+		 *
 		 * <b>Note:</b> When set, a native <code>input</code> HTML element
 		 * will be created inside the <code>ui5-datepicker</code> so that it can be submitted as
 		 * part of an HTML form. Do not use this property unless you need to submit a form.
@@ -305,6 +308,8 @@ class DatePicker extends WebComponent {
 
 		if (DatePicker.FormSupport) {
 			DatePicker.FormSupport.manageNativeHiddenInput(this);
+		} else if (this.name) {
+			console.warn(`In order for the "name" property to have effect, you should also: import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";`); // eslint-disable-line
 		}
 	}
 

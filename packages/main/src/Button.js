@@ -93,6 +93,9 @@ const metadata = {
 		 * When set to <code>true</code>, the <code>ui5-button</code> will
 		 * automatically submit the nearest form element upon <code>press</code>.
 		 *
+		 * <b>Important:</b> For the <code>submits</code> property to have effect, you must add the following import to your project:
+		 * <code>import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";</code>
+		 *
 		 * @type {boolean}
 		 * @public
 		 */
@@ -188,6 +191,10 @@ class Button extends WebComponent {
 			};
 		} else {
 			this._iconSettings = null;
+		}
+
+		if (this.submits && !Button.FormSupport) {
+			console.warn(`In order for the "submits" property to have effect, you should also: import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";`); // eslint-disable-line
 		}
 	}
 
