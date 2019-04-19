@@ -1,14 +1,5 @@
-commit 16438a68082f4ff4affeab3b64a6bc5395dd89f7
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Apr 18 17:11:27 2019 +0300
+commit b61860f9c66c8782a98cdf218667cd222d4cb8c0
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Fri Apr 19 11:34:21 2019 +0300
 
-    chore: rewrite imports with file extensions (#344)
-    
-    Rewrite all imports across all packages (core, base and main) with file extensions
-    and force writing them this way by adding an eslint rule.
-    Example:
-    import WebComponent from "@ui5/webcomponents-base/src/WebComponent.js";
-    import ButtonRenderer from "./build/compiled/ButtonRenderer.lit.js";
-    import buttonCss from "./themes/Button.css.js";
-    * Packages are ignored: import { render } from "lit-html";
-    * The eslint rule is: "import/extensions": ["error", "ignorePackages"]
+    feat: adds static method styles to base class (#345)
