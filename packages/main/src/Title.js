@@ -1,4 +1,4 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent.js";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import TitleLevel from "./types/TitleLevel.js";
 import TitleRenderer from "./build/compiled/TitleRenderer.lit.js";
@@ -54,12 +54,12 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Title
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-title
  * @usestextcontent
  * @public
  */
-class Title extends WebComponent {
+class Title extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}

@@ -1,4 +1,4 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent.js";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes.js";
 import CalendarHeaderTemplateContext from "./CalendarHeaderTemplateContext.js";
@@ -39,7 +39,7 @@ const metadata = {
 	},
 };
 
-class CalendarHeader extends WebComponent {
+class CalendarHeader extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}

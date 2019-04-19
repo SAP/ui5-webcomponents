@@ -1,5 +1,5 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent.js";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import CSSSize from "@ui5/webcomponents-base/src/types/CSSSize.js";
 import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
 import TextAreaTemplateContext from "./TextAreaTemplateContext.js";
@@ -197,11 +197,11 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.TextArea
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-textarea
  * @public
  */
-class TextArea extends WebComponent {
+class TextArea extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}

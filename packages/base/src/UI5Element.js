@@ -1,7 +1,7 @@
 import { getWCNoConflict } from "./Configuration.js";
 import DOMObserver from "./compatibility/DOMObserver.js";
 import ShadowDOM from "./compatibility/ShadowDOM.js";
-import WebComponentMetadata from "./WebComponentMetadata.js";
+import UI5ElementMetadata from "./UI5ElementMetadata.js";
 import Integer from "./types/Integer.js";
 import ControlRenderer from "./ControlRenderer.js";
 import RenderScheduler from "./RenderScheduler.js";
@@ -36,7 +36,7 @@ const metadata = {
 const DefinitionsSet = new Set();
 const IDMap = new Map();
 
-class WebComponent extends HTMLElement {
+class UI5Element extends HTMLElement {
 	constructor() {
 		super();
 		this._generateId();
@@ -212,7 +212,7 @@ class WebComponent extends HTMLElement {
 	}
 
 	_updateAttribute(name, newValue) {
-		if (!WebComponentMetadata.isPublicProperty(name)) {
+		if (!UI5ElementMetadata.isPublicProperty(name)) {
 			return;
 		}
 
@@ -289,7 +289,7 @@ class WebComponent extends HTMLElement {
 		}
 
 		const metadatas = [Object.assign(klass.metadata, {})];
-		while (klass !== WebComponent) {
+		while (klass !== UI5Element) {
 			klass = Object.getPrototypeOf(klass);
 			metadatas.push(klass.metadata);
 		}
@@ -314,7 +314,7 @@ class WebComponent extends HTMLElement {
 			return result;
 		}, {});
 
-		this._metadata = new WebComponentMetadata(result);
+		this._metadata = new UI5ElementMetadata(result);
 		return this._metadata;
 	}
 
@@ -507,7 +507,7 @@ class WebComponent extends HTMLElement {
 		// This will be false if the normal event is prevented
 		const normalEventResult = this.dispatchEvent(customEvent);
 
-		if (WebComponent.noConflictEvents.includes(name)) {
+		if (UI5Element.noConflictEvents.includes(name)) {
 			customEvent = new CustomEvent(`ui5-${name}`, {
 				detail: data,
 				composed: false,
@@ -636,4 +636,4 @@ const nameCollidesWithNative = name => {
 	return classes.some(klass => klass.prototype.hasOwnProperty(name)); // eslint-disable-line
 };
 
-export default WebComponent;
+export default UI5Element;

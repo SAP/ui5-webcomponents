@@ -1,4 +1,4 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent.js";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import {
 	isSpace,
@@ -125,12 +125,12 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Select
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-input
  * @public
  * @since 0.8.0
  */
-class Select extends WebComponent {
+class Select extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}

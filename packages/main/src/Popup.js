@@ -1,4 +1,4 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent.js";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper.js";
 import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
 import { isEscape } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
@@ -194,10 +194,10 @@ function updateBodyScrolling(hasModal) {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Popup
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @public
  */
-class Popup extends WebComponent {
+class Popup extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}

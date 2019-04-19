@@ -1,5 +1,5 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent.js";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
 import TimelineTemplateContext from "./TimelineTemplateContext.js";
 import TimelineItem from "./TimelineItem.js";
@@ -47,13 +47,13 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Timeline
- * @extends WebComponent
+ * @extends UI5Element
  * @tagname ui5-timeline
  * @appenddocs TimelineItem
  * @public
  * @since 0.8.0
  */
-class Timeline extends WebComponent {
+class Timeline extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}

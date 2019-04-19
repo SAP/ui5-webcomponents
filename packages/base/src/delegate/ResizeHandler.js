@@ -1,4 +1,4 @@
-import WebComponent from "../WebComponent.js";
+import UI5Element from "../UI5Element.js";
 import NativeResize from "./NativeResize.js";
 import CustomResize from "./CustomResize.js";
 
@@ -38,7 +38,7 @@ class ResizeHandler {
 	 * @memberof ResizeHandler
 	 */
 	static register(ref, callback) {
-		if (ref instanceof WebComponent) {
+		if (ref instanceof UI5Element) {
 			ref = ref.getDomRef();
 		}
 
@@ -53,7 +53,7 @@ class ResizeHandler {
 	 * @memberof ResizeHandler
 	 */
 	static deregister(ref, callback) {
-		if (ref instanceof WebComponent) {
+		if (ref instanceof UI5Element) {
 			ref = ref.getDomRef();
 		}
 

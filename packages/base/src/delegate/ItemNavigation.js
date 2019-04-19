@@ -8,7 +8,7 @@ import {
 } from "../events/PseudoEvents.js";
 
 import EventProvider from "../EventProvider.js";
-import WebComponent from "../WebComponent.js";
+import UI5Element from "../UI5Element.js";
 
 // navigatable items must have id and tabindex
 class ItemNavigation extends EventProvider {
@@ -180,7 +180,7 @@ class ItemNavigation extends EventProvider {
 
 		const currentItem = items[this.currentIndex];
 
-		if (currentItem instanceof WebComponent) {
+		if (currentItem instanceof UI5Element) {
 			return currentItem.getFocusDomRef();
 		}
 

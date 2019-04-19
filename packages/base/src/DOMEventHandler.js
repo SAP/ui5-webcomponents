@@ -1,6 +1,6 @@
 import ControlEvents from "./events/ControlEvents.js";
 import getOriginalEventTarget from "./events/getOriginalEventTarget.js";
-import WebComponent from "./WebComponent.js";
+import UI5Element from "./UI5Element.js";
 
 const handleEvent = function handleEvent(event) {
 	// Get the DOM node where the original event occurred
@@ -19,15 +19,15 @@ const handleEvent = function handleEvent(event) {
 
 
 const processDOMNode = function processDOMNode(node, event) {
-	if (node && node instanceof WebComponent) {
+	if (node && node instanceof UI5Element) {
 		return dispatchEvent(node, event);
 	}
 	return true;
 };
 
-const dispatchEvent = function dispatchEvent(ui5WebComponent, event) {
+const dispatchEvent = function dispatchEvent(element, event) {
 	// Handle the original event (such as "keydown")
-	ui5WebComponent._handleEvent(event);
+	element._handleEvent(event);
 	if (event.isImmediatePropagationStopped()) {
 		return false;
 	}

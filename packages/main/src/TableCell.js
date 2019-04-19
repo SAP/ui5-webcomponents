@@ -1,4 +1,4 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent.js";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import TableCellRenderer from "./build/compiled/TableCellRenderer.lit.js";
 
@@ -52,11 +52,11 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.TableCell
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-table-cell
  * @public
  */
-class TableCell extends WebComponent {
+class TableCell extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
