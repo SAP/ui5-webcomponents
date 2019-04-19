@@ -1,4 +1,4 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent.js";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper.js";
 import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import ListItemBaseTemplateContext from "./ListItemBaseTemplateContext.js";
@@ -41,10 +41,10 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.ListItemBase
- * @extends WebComponent
+ * @extends UI5Element
  * @public
  */
-class ListItemBase extends WebComponent {
+class ListItemBase extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}

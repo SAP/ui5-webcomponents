@@ -1,4 +1,4 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent.js";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import CSSSize from "@ui5/webcomponents-base/src/types/CSSSize.js";
@@ -97,11 +97,11 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.TableColumn
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-table-column
  * @public
  */
-class TableColumn extends WebComponent {
+class TableColumn extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}

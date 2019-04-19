@@ -1,4 +1,4 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent.js";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 
@@ -113,12 +113,12 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Switch
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-switch
  * @public
  * @since 0.8.0
  */
-class Switch extends WebComponent {
+class Switch extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
