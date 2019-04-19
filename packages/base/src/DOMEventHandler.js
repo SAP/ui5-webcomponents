@@ -25,9 +25,9 @@ const processDOMNode = function processDOMNode(node, event) {
 	return true;
 };
 
-const dispatchEvent = function dispatchEvent(ui5UI5Element, event) {
+const dispatchEvent = function dispatchEvent(element, event) {
 	// Handle the original event (such as "keydown")
-	ui5UI5Element._handleEvent(event);
+	element._handleEvent(event);
 	if (event.isImmediatePropagationStopped()) {
 		return false;
 	}
