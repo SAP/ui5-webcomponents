@@ -1,10 +1,10 @@
-import Input from "./Input";
-import TextArea from "./TextArea";
-import DatePicker from "./DatePicker";
-import CheckBox from "./CheckBox";
-import Button from "./Button";
+import Input from "./Input.js";
+import TextArea from "./TextArea.js";
+import DatePicker from "./DatePicker.js";
+import CheckBox from "./CheckBox.js";
+import Button from "./Button.js";
 
-import FormSupport from "./util/FormSupport";
+import FormSupport from "./util/FormSupport.js";
 
 Input.FormSupport = FormSupport;
 TextArea.FormSupport = FormSupport;
