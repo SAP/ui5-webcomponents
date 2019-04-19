@@ -1,25 +1,17 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
-import TitleLevel from "./types/TitleLevel";
-import TitleRenderer from "./build/compiled/TitleRenderer.lit";
+import WebComponent from "@ui5/webcomponents-base/src/WebComponent.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import TitleLevel from "./types/TitleLevel.js";
+import TitleRenderer from "./build/compiled/TitleRenderer.lit.js";
 
 // Styles
 // Styles
-import titleCss from "./themes-next/Title.css";
-
-addCustomCSS("ui5-title", "sap_fiori_3", titleCss);
-addCustomCSS("ui5-title", "sap_belize", titleCss);
-addCustomCSS("ui5-title", "sap_belize_hcb", titleCss);
+import titleCss from "./themes/Title.css.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-title",
-	styleUrl: [
-		"Title.css",
-	],
 	usesNodeText: true,
 	properties: /** @lends sap.ui.webcomponents.main.Title.prototype */ {
 
@@ -74,6 +66,10 @@ class Title extends WebComponent {
 
 	static get renderer() {
 		return TitleRenderer;
+	}
+
+	static get styles() {
+		return titleCss;
 	}
 
 	static calculateTemplateContext(state) {

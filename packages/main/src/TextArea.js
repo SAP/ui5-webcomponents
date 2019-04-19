@@ -1,27 +1,19 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import CSSSize from "@ui5/webcomponents-base/src/types/CSSSize";
-import Integer from "@ui5/webcomponents-base/src/types/Integer";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
-import TextAreaTemplateContext from "./TextAreaTemplateContext";
-import TextAreaRenderer from "./build/compiled/TextAreaRenderer.lit";
-import { fetchResourceBundle, getResourceBundle } from "./ResourceBundleProvider";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import WebComponent from "@ui5/webcomponents-base/src/WebComponent.js";
+import CSSSize from "@ui5/webcomponents-base/src/types/CSSSize.js";
+import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
+import TextAreaTemplateContext from "./TextAreaTemplateContext.js";
+import TextAreaRenderer from "./build/compiled/TextAreaRenderer.lit.js";
+import { fetchResourceBundle, getResourceBundle } from "./ResourceBundleProvider.js";
 
 // Styles
-import styles from "./themes-next/TextArea.css";
-
-addCustomCSS("ui5-textarea", "sap_belize", styles);
-addCustomCSS("ui5-textarea", "sap_belize_hcb", styles);
-addCustomCSS("ui5-textarea", "sap_fiori_3", styles);
+import styles from "./themes/TextArea.css.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-textarea",
-	styleUrl: [
-		"TextArea.css",
-	],
 	properties: /** @lends sap.ui.webcomponents.main.TextArea.prototype */ {
 		/**
 		 * Defines the value of the Web Component.
@@ -229,6 +221,10 @@ const metadata = {
 class TextArea extends WebComponent {
 	static get metadata() {
 		return metadata;
+	}
+
+	static get styles() {
+		return styles;
 	}
 
 	static get renderer() {

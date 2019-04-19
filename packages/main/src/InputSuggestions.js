@@ -1,5 +1,5 @@
-import Input from "./Input";
-import Suggestions from "./Suggestions";
+import Input from "./Input.js";
+import Suggestions from "./Suggestions.js";
 
 class InputSuggestions {}
 Input.getSuggestions = () => Suggestions;

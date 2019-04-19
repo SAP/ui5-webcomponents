@@ -1,14 +1,13 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import TabSeparatorTemplateContext from "./TabSeparatorTemplateContext";
-import TabBase from "./TabBase";
-import TabSeparatorRenderer from "./build/compiled/TabSeparatorRenderer.lit";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import TabSeparatorTemplateContext from "./TabSeparatorTemplateContext.js";
+import TabBase from "./TabBase.js";
+import TabSeparatorRenderer from "./build/compiled/TabSeparatorRenderer.lit.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-tab-separator",
-	styleUrl: [],
 	properties: /** @lends sap.ui.webcomponents.main.TabSeparator.prototype */{
 	},
 	events: /** @lends sap.ui.webcomponents.main.TabSeparator.prototype */{

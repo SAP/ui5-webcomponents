@@ -1,5 +1,5 @@
-import DataType from "./types/DataType";
-import Function from "./types/Function";
+import DataType from "./types/DataType.js";
+import Function from "./types/Function.js";
 
 class WebComponentMetadata {
 	constructor(metadata) {
@@ -12,10 +12,6 @@ class WebComponentMetadata {
 
 	getNoShadowDOM() {
 		return this.metadata.noShadowDOM;
-	}
-
-	getStyleUrl() {
-		return this.metadata.styleUrl || [];
 	}
 
 	usesNodeText() {

@@ -1,17 +1,11 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
-import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/src/events/PseudoEvents";
-import ListItemBaseTemplateContext from "./ListItemBaseTemplateContext";
+import WebComponent from "@ui5/webcomponents-base/src/WebComponent.js";
+import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper.js";
+import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import ListItemBaseTemplateContext from "./ListItemBaseTemplateContext.js";
 
 // Styles
-import belize from "./themes/sap_belize/ListItemBase.less";
-import belizeHcb from "./themes/sap_belize_hcb/ListItemBase.less";
-import fiori3 from "./themes/sap_fiori_3/ListItemBase.less";
+import styles from "./themes/ListItemBase.css";
 
-ShadowDOM.registerStyle("sap_belize", "ListItemBase.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "ListItemBase.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "ListItemBase.css", fiori3);
 
 /**
  * @public
@@ -57,6 +51,10 @@ class ListItemBase extends WebComponent {
 
 	static get calculateTemplateContext() {
 		return ListItemBaseTemplateContext.calculate;
+	}
+
+	static get styles() {
+		return styles;
 	}
 
 	onfocusin(event) {

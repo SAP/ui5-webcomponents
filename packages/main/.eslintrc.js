@@ -46,6 +46,7 @@ module.exports = {
 		// "consistent-return": 1, // removed for UI5 WebComponents
 		"curly": [2, "all"],
 		// "default-case": 1, // removed for UI5 WebComponents
+		"import/extensions": ["error", "ignorePackages"], // override for UI5 WebComponents
 		"no-alert": 2,
 		"no-caller": 2,
 		"no-div-regex": 2,

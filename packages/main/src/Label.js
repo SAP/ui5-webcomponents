@@ -1,26 +1,18 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
+import WebComponent from "@ui5/webcomponents-base/src/WebComponent.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 
 // Template
-import LabelRenderer from "./build/compiled/LabelRenderer.lit";
-import LabelTemplateContext from "./LabelTemplateContext";
+import LabelRenderer from "./build/compiled/LabelRenderer.lit.js";
+import LabelTemplateContext from "./LabelTemplateContext.js";
 
 // Styles
-import labelCss from "./themes-next/Label.css";
-
-addCustomCSS("ui5-label", "sap_fiori_3", labelCss);
-addCustomCSS("ui5-label", "sap_belize", labelCss);
-addCustomCSS("ui5-label", "sap_belize_hcb", labelCss);
+import labelCss from "./themes/Label.css.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-label",
-	styleUrl: [
-		"Label.css",
-	],
 	usesNodeText: true,
 	properties: /** @lends sap.ui.webcomponents.main.Label.prototype */  {
 
@@ -100,6 +92,10 @@ class Label extends WebComponent {
 
 	static get renderer() {
 		return LabelRenderer;
+	}
+
+	static get styles() {
+		return labelCss;
 	}
 
 	onclick() {

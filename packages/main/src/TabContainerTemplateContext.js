@@ -1,4 +1,4 @@
-import IconColor from "./types/IconColor";
+import IconColor from "./types/IconColor.js";
 
 class TabContainerTemplateContext {
 	static calculate(state) {

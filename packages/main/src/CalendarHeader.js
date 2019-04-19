@@ -1,24 +1,16 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
-import CalendarHeaderTemplateContext from "./CalendarHeaderTemplateContext";
-import Button from "./Button";
-import ButtonType from "./types/ButtonType";
-import CalendarHeaderRenderer from "./build/compiled/CalendarHeaderRenderer.lit";
+import WebComponent from "@ui5/webcomponents-base/src/WebComponent.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes.js";
+import CalendarHeaderTemplateContext from "./CalendarHeaderTemplateContext.js";
+import Button from "./Button.js";
+import ButtonType from "./types/ButtonType.js";
+import CalendarHeaderRenderer from "./build/compiled/CalendarHeaderRenderer.lit.js";
 
 // Styles
-import styles from "./themes-next/CalendarHeader.css";
-
-addCustomCSS("ui5-calendar-header", "sap_belize", styles);
-addCustomCSS("ui5-calendar-header", "sap_belize_hcb", styles);
-addCustomCSS("ui5-calendar-header", "sap_fiori_3", styles);
+import styles from "./themes/CalendarHeader.css.js";
 
 const metadata = {
 	tag: "ui5-calendar-header",
-	styleUrl: [
-		"CalendarHeader.css",
-	],
 	properties: {
 		monthText: {
 			type: String,
@@ -54,6 +46,10 @@ class CalendarHeader extends WebComponent {
 
 	static get renderer() {
 		return CalendarHeaderRenderer;
+	}
+
+	static get styles() {
+		return styles;
 	}
 
 	constructor() {

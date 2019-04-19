@@ -1,4 +1,4 @@
-import DataType from "./DataType";
+import DataType from "./DataType.js";
 
 /**
  * Different states.

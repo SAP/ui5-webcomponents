@@ -11,6 +11,7 @@ module.exports = {
 	},
 	"rules": {
 		"comma-dangle": [2, "always-multiline"], // difference from openui5
+		"import/extensions": ["error", "ignorePackages"], // override for UI5 WebComponents
 		"no-cond-assign": 2,
 		"no-console": 2,
 		"no-constant-condition": 2,

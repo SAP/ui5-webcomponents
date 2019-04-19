@@ -1,9 +1,9 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import URI from "@ui5/webcomponents-base/src/types/URI";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import WebComponent from "@ui5/webcomponents-base/src/WebComponent.js";
+import URI from "@ui5/webcomponents-base/src/types/URI.js";
 
 // Template
-import ShellBarItemRenderer from "./build/compiled/ShellBarItemRenderer.lit";
+import ShellBarItemRenderer from "./build/compiled/ShellBarItemRenderer.lit.js";
 
 /**
  * @public

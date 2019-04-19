@@ -1,5 +1,5 @@
-import EventProvider from "../EventProvider";
-import scroll from "../animations/scroll";
+import EventProvider from "../EventProvider.js";
+import scroll from "../animations/scroll.js";
 
 const scrollEventName = "scroll";
 

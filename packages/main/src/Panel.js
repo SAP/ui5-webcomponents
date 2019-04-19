@@ -1,30 +1,23 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
-import { getIconURI } from "@ui5/webcomponents-base/src/IconPool";
-import slideDown from "@ui5/webcomponents-base/src/animations/slideDown";
-import slideUp from "@ui5/webcomponents-base/src/animations/slideUp";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents";
-import PanelTemplateContext from "./PanelTemplateContext";
-import BackgroundDesign from "./types/BackgroundDesign";
-import PanelAccessibleRole from "./types/PanelAccessibleRole";
-import PanelRenderer from "./build/compiled/PanelRenderer.lit";
-import { fetchResourceBundle, getResourceBundle } from "./ResourceBundleProvider";
+import WebComponent from "@ui5/webcomponents-base/src/WebComponent.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import { getIconURI } from "@ui5/webcomponents-base/src/IconPool.js";
+import slideDown from "@ui5/webcomponents-base/src/animations/slideDown.js";
+import slideUp from "@ui5/webcomponents-base/src/animations/slideUp.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import PanelTemplateContext from "./PanelTemplateContext.js";
+import BackgroundDesign from "./types/BackgroundDesign.js";
+import PanelAccessibleRole from "./types/PanelAccessibleRole.js";
+import PanelRenderer from "./build/compiled/PanelRenderer.lit.js";
+import { fetchResourceBundle, getResourceBundle } from "./ResourceBundleProvider.js";
 
 // Styles
-import panelCss from "./themes-next/Panel.css";
+import panelCss from "./themes/Panel.css.js";
 
-addCustomCSS("ui5-panel", "sap_fiori_3", panelCss);
-addCustomCSS("ui5-panel", "sap_belize", panelCss);
-addCustomCSS("ui5-panel", "sap_belize_hcb", panelCss);
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-panel",
-	styleUrl: [
-		"Panel.css",
-	],
 	defaultSlot: "content",
 	slots: /** @lends sap.ui.webcomponents.main.Panel.prototype */ {
 
@@ -203,6 +196,10 @@ class Panel extends WebComponent {
 
 	static get calculateTemplateContext() {
 		return PanelTemplateContext.calculate;
+	}
+
+	static get styles() {
+		return panelCss;
 	}
 
 	constructor() {

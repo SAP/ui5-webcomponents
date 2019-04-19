@@ -1,14 +1,14 @@
-import { getWCNoConflict } from "./Configuration";
-import DOMObserver from "./compatibility/DOMObserver";
-import ShadowDOM from "./compatibility/ShadowDOM";
-import WebComponentMetadata from "./WebComponentMetadata";
-import Integer from "./types/Integer";
-import ControlRenderer from "./ControlRenderer";
-import RenderScheduler from "./RenderScheduler";
-import TemplateContext from "./TemplateContext";
-import State from "./State";
-import { createStyle } from "./CSS";
-import { attachThemeChange } from "./Theming";
+import { getWCNoConflict } from "./Configuration.js";
+import DOMObserver from "./compatibility/DOMObserver.js";
+import ShadowDOM from "./compatibility/ShadowDOM.js";
+import WebComponentMetadata from "./WebComponentMetadata.js";
+import Integer from "./types/Integer.js";
+import ControlRenderer from "./ControlRenderer.js";
+import RenderScheduler from "./RenderScheduler.js";
+import TemplateContext from "./TemplateContext.js";
+import State from "./State.js";
+import { createStyle } from "./CSS.js";
+import { attachThemeChange } from "./Theming.js";
 
 const metadata = {
 	properties: {
@@ -261,6 +261,9 @@ class WebComponent extends HTMLElement {
 		return metadata;
 	}
 
+	static get styles() {
+		return "";
+	}
 
 	_initializeState() {
 		const StateClass = this.constructor.StateClass;

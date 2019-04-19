@@ -1,4 +1,4 @@
-import createStyleInHead from "../util/createStyleInHead";
+import createStyleInHead from "../util/createStyleInHead.js";
 
 const injectedForTags = [];
 let ponyfillTimer;

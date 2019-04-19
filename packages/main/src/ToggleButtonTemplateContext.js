@@ -1,4 +1,4 @@
-import ButtonTemplateContext from "./ButtonTemplateContext";
+import ButtonTemplateContext from "./ButtonTemplateContext.js";
 
 class ToggleButtonTemplateContext {
 	static calculate(state) {

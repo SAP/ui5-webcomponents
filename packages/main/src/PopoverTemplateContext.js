@@ -1,4 +1,4 @@
-import PopoverPlacementType from "./types/PopoverPlacementType";
+import PopoverPlacementType from "./types/PopoverPlacementType.js";
 
 class PopoverTemplateContext {
 	static calculate(state) {

@@ -1,6 +1,6 @@
-import WebComponent from "../WebComponent";
-import NativeResize from "./NativeResize";
-import CustomResize from "./CustomResize";
+import WebComponent from "../WebComponent.js";
+import NativeResize from "./NativeResize.js";
+import CustomResize from "./CustomResize.js";
 
 class ResizeHandler {
 	static initialize() {

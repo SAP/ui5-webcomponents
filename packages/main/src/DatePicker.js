@@ -1,46 +1,38 @@
-import "@ui5/webcomponents-base/src/shims/jquery-shim";
-import "@ui5/webcomponents-base/src/shims/Core-shim";
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import { fetchCldrData } from "@ui5/webcomponents-base/src/CLDR";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes";
-import { getCalendarType } from "@ui5/webcomponents-base/src/Configuration";
-import { getLocale } from "@ui5/webcomponents-base/src/LocaleProvider";
-import { getIconURI } from "@ui5/webcomponents-base/src/IconPool";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
-import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData";
-import DateFormat from "@ui5/webcomponents-core/dist/sap/ui/core/format/DateFormat";
-import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType";
-import CalendarDate from "@ui5/webcomponents-base/src/dates/CalendarDate";
-import ValueState from "@ui5/webcomponents-base/src/types/ValueState";
-import DatePickerTemplateContext from "./DatePickerTemplateContext";
-import Icon from "./Icon";
-import Popover from "./Popover";
-import Calendar from "./Calendar";
-import PopoverPlacementType from "./types/PopoverPlacementType";
-import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign";
-import Input from "./Input";
-import InputType from "./types/InputType";
-import DatePickerRenderer from "./build/compiled/DatePickerRenderer.lit";
+import "@ui5/webcomponents-base/src/shims/jquery-shim.js";
+import "@ui5/webcomponents-base/src/shims/Core-shim.js";
+import WebComponent from "@ui5/webcomponents-base/src/WebComponent.js";
+import { fetchCldrData } from "@ui5/webcomponents-base/src/CLDR.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes.js";
+import { getCalendarType } from "@ui5/webcomponents-base/src/Configuration.js";
+import { getLocale } from "@ui5/webcomponents-base/src/LocaleProvider.js";
+import { getIconURI } from "@ui5/webcomponents-base/src/IconPool.js";
+import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData.js";
+import DateFormat from "@ui5/webcomponents-core/dist/sap/ui/core/format/DateFormat.js";
+import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType.js";
+import CalendarDate from "@ui5/webcomponents-base/src/dates/CalendarDate.js";
+import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
+import DatePickerTemplateContext from "./DatePickerTemplateContext.js";
+import Icon from "./Icon.js";
+import Popover from "./Popover.js";
+import Calendar from "./Calendar.js";
+import PopoverPlacementType from "./types/PopoverPlacementType.js";
+import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
+import Input from "./Input.js";
+import InputType from "./types/InputType.js";
+import DatePickerRenderer from "./build/compiled/DatePickerRenderer.lit.js";
 
 // default calendar for bundling
-import "@ui5/webcomponents-core/dist/sap/ui/core/date/Gregorian";
+import "@ui5/webcomponents-core/dist/sap/ui/core/date/Gregorian.js";
 
 // Styles
-import datePickerCss from "./themes-next/DatePicker.css";
-
-addCustomCSS("ui5-datepicker", "sap_fiori_3", datePickerCss);
-addCustomCSS("ui5-datepicker", "sap_belize", datePickerCss);
-addCustomCSS("ui5-datepicker", "sap_belize_hcb", datePickerCss);
+import datePickerCss from "./themes/DatePicker.css.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-datepicker",
-	styleUrl: [
-		"DatePicker.css",
-	],
 	properties: /** @lends  sap.ui.webcomponents.main.DatePicker.prototype */ {
 		/**
 		 * Defines a formatted date value.
@@ -228,6 +220,9 @@ class DatePicker extends WebComponent {
 		return DatePickerTemplateContext.calculate;
 	}
 
+	static get styles() {
+		return datePickerCss;
+	}
 
 	constructor() {
 		super();

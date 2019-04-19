@@ -1,6 +1,6 @@
-import { getRTL, getLanguage } from "../Configuration";
-import getDesigntimePropertyAsArray from "./getDesigntimePropertyAsArray";
-import detectNavigatorLanguage from "./detectNavigatorLanguage";
+import { getRTL, getLanguage } from "../Configuration.js";
+import getDesigntimePropertyAsArray from "./getDesigntimePropertyAsArray.js";
+import detectNavigatorLanguage from "./detectNavigatorLanguage.js";
 
 const M_ISO639_OLD_TO_NEW = {
 	"iw": "he",

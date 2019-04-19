@@ -1,30 +1,22 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
-import URI from "@ui5/webcomponents-base/src/types/URI";
-import Function from "@ui5/webcomponents-base/src/types/Function";
-import { fetchCldrData } from "@ui5/webcomponents-base/src/CLDR";
-import { getLocale } from "@ui5/webcomponents-base/src/LocaleProvider";
-import Icon from "./Icon";
-import Link from "./Link";
-import TimelineItemTemplateContext from "./TimelineItemTemplateContext";
-import TimelineItemRenderer from "./build/compiled/TimelineItemRenderer.lit";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import WebComponent from "@ui5/webcomponents-base/src/WebComponent.js";
+import URI from "@ui5/webcomponents-base/src/types/URI.js";
+import Function from "@ui5/webcomponents-base/src/types/Function.js";
+import { fetchCldrData } from "@ui5/webcomponents-base/src/CLDR.js";
+import { getLocale } from "@ui5/webcomponents-base/src/LocaleProvider.js";
+import Icon from "./Icon.js";
+import Link from "./Link.js";
+import TimelineItemTemplateContext from "./TimelineItemTemplateContext.js";
+import TimelineItemRenderer from "./build/compiled/TimelineItemRenderer.lit.js";
 
 // Styles
-import styles from "./themes-next/TimelineItem.css";
-
-addCustomCSS("ui5-timeline-item", "sap_belize", styles);
-addCustomCSS("ui5-timeline-item", "sap_belize_hcb", styles);
-addCustomCSS("ui5-timeline-item", "sap_fiori_3", styles);
+import styles from "./themes/TimelineItem.css.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-timeline-item",
-	styleUrl: [
-		"TimelineItem.css",
-	],
 	defaultSlot: "description",
 	slots: /** @lends sap.ui.webcomponents.main.TimelineItem.prototype */ {
 		/**
@@ -145,6 +137,10 @@ class TimelineItem extends WebComponent {
 
 	static get calculateTemplateContext() {
 		return TimelineItemTemplateContext.calculate;
+	}
+
+	static get styles() {
+		return styles;
 	}
 
 	constructor() {

@@ -1,41 +1,28 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import { isIE } from "@ui5/webcomponents-core/dist/sap/ui/Device";
-import ValueState from "@ui5/webcomponents-base/src/types/ValueState";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
+import WebComponent from "@ui5/webcomponents-base/src/WebComponent.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import { isIE } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
+import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
 import {
 	isUp,
 	isDown,
 	isSpace,
 	isEnter,
-} from "@ui5/webcomponents-base/src/events/PseudoEvents";
-import Icon from "./Icon";
-import InputType from "./types/InputType";
+} from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import Icon from "./Icon.js";
+import InputType from "./types/InputType.js";
 // Template
-import InputRenderer from "./build/compiled/InputRenderer.lit";
-import InputTemplateContext from "./InputTemplateContext";
+import InputRenderer from "./build/compiled/InputRenderer.lit.js";
+import InputTemplateContext from "./InputTemplateContext.js";
 
 // Styles
-import styles from "./themes-next/Input.css";
-import shellbarInput from "./themes-next/ShellBarInput.css";
-
-addCustomCSS("ui5-input", "sap_fiori_3", styles);
-addCustomCSS("ui5-input", "sap_belize", styles);
-addCustomCSS("ui5-input", "sap_belize_hcb", styles);
-
-addCustomCSS("ui5-input", "sap_fiori_3", shellbarInput);
-addCustomCSS("ui5-input", "sap_belize", shellbarInput);
-addCustomCSS("ui5-input", "sap_belize_hcb", shellbarInput);
+import styles from "./themes/Input.css.js";
+import shellbarInput from "./themes/ShellBarInput.css.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-input",
-	styleUrl: [
-		"Input.css",
-		"ShellBarInput.css",
-	],
 	defaultSlot: "suggestionItems",
 	slots: /** @lends sap.ui.webcomponents.main.Input.prototype */ {
 
@@ -286,6 +273,10 @@ class Input extends WebComponent {
 
 	static get calculateTemplateContext() {
 		return InputTemplateContext.calculate;
+	}
+
+	static get styles() {
+		return [styles, shellbarInput];
 	}
 
 	constructor() {

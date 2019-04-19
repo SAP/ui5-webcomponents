@@ -1,4 +1,4 @@
-import { fetchTextOnce } from "../util/FetchHelper";
+import { fetchTextOnce } from "../util/FetchHelper.js";
 
 const themeURLs = new Map();
 const propertiesStyles = new Map();
