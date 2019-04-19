@@ -255,7 +255,7 @@ class TextArea extends UI5Element {
 		}
 
 		if (TextArea.FormSupport) {
-			TextArea.FormSupport.manageNativeHiddenInput(this);
+			TextArea.FormSupport.syncNativeHiddenInput(this);
 		} else if (this.name) {
 			console.warn(`In order for the "name" property to have effect, you should also: import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";`); // eslint-disable-line
 		}

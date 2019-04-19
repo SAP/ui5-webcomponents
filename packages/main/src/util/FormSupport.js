@@ -4,7 +4,7 @@ class FormSupport {
 	 * @param element - the WebComponent that needs form support
 	 * @param nativeInputUpdateCallback - determines how the native input's disabled and value properties are calculated
 	 */
-	static manageNativeHiddenInput(element, nativeInputUpdateCallback) {
+	static syncNativeHiddenInput(element, nativeInputUpdateCallback) {
 		const needsNativeInput = !!element.name;
 		let nativeInput = element.querySelector("input[type=hidden][data-ui5-webcomponents-form-support]");
 		if (needsNativeInput && !nativeInput) {

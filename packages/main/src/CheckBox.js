@@ -184,7 +184,7 @@ class CheckBox extends UI5Element {
 		this.syncLabel();
 
 		if (CheckBox.FormSupport) {
-			CheckBox.FormSupport.manageNativeHiddenInput(this, (element, nativeInput) => {
+			CheckBox.FormSupport.syncNativeHiddenInput(this, (element, nativeInput) => {
 				nativeInput.disabled = element.disabled || !element.checked;
 				nativeInput.value = element.checked ? "on" : "";
 			});

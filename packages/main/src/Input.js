@@ -321,7 +321,7 @@ class Input extends UI5Element {
 		}
 
 		if (Input.FormSupport) {
-			Input.FormSupport.manageNativeHiddenInput(this);
+			Input.FormSupport.syncNativeHiddenInput(this);
 		} else if (this.name) {
 			console.warn(`In order for the "name" property to have effect, you should also: import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";`); // eslint-disable-line
 		}
