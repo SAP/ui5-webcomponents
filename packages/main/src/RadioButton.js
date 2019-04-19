@@ -157,6 +157,7 @@ class RadioButton extends UI5Element {
 	constructor() {
 		super();
 		this._label = {};
+		this.firstRendering = true;
 	}
 
 	onBeforeRendering() {
@@ -172,22 +173,28 @@ class RadioButton extends UI5Element {
 	syncGroup() {
 		const oldGroup = this._group;
 		const currentGroup = this.group;
+		const selected = this.selected
+		const previouslySelected = this._selected;
 
-		if (currentGroup === oldGroup) {
-			return;
+		if (currentGroup !== oldGroup) {
+			if (oldGroup) {
+				// remove the control from the previous group
+				RadioButtonGroup.removeFromGroup(this, oldGroup);
+			}
+			
+			if (currentGroup) {
+				// add the control to the existing group
+				RadioButtonGroup.addToGroup(this, currentGroup);
+			}
 		}
 
-		if (oldGroup) {
-			// remove the control from the previous group
-			RadioButtonGroup.removeFromGroup(this, oldGroup);
-		}
-
-		if (currentGroup) {
-			// add the control to the existing group
-			RadioButtonGroup.addToGroup(this, currentGroup);
+		if (currentGroup && selected && !previouslySelected && !this.firstRendering) {
+			RadioButtonGroup.selectItem(this, currentGroup);
 		}
 
 		this._group = this.group;
+		this._selected = selected;
+		this.firstRendering = false;
 	}
 
 	onclick() {
@@ -244,6 +251,8 @@ class RadioButton extends UI5Element {
 		if (!this.canToggle()) {
 			return this;
 		}
+
+		this._selected = !this.selected;
 
 		if (!this.group) {
 			this.selected = !this.selected;

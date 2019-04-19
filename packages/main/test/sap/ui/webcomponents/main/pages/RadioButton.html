@@ -46,6 +46,16 @@
 		<ui5-radiobutton id="groupRb6" group="b" text="Option D"></ui5-radiobutton>
 	</section>
 
+	<div id="radioGroup" class="radio-section">
+		<ui5-title>Group of states</ui5-title>
+		<ui5-label id="lblRadioGroup"></ui5-label>
+		<ui5-label id="lblEventCounter"></ui5-label>
+		<ui5-radiobutton id="groupRb7" text="None" value-state="None" selected group="GroupB"></ui5-radiobutton>
+		<ui5-radiobutton id="groupRb8" text="Warning" value-state="Warning" group="GroupB"></ui5-radiobutton>
+		<ui5-radiobutton id="groupRb9"text="Error" value-state="Error" group="GroupB"></ui5-radiobutton>
+		<ui5-radiobutton id="groupRb10" text="Default" value-state="None" selected group="GroupB"></ui5-radiobutton>
+	</div>
+
 	<section>
 		<ui5-title>ui5-radiobutton states</ui5-title></p>
 		<ui5-radiobutton id="myRb6" selected text="Default"></ui5-radiobutton>
@@ -69,6 +79,7 @@
 
 	<script>
 		var counter = 0;
+		var groupEventCounter = 0;
 
 		[window["rb1"], window["rb2"], window["rb3"], window["rb4"]].forEach(function(radio) {
 			radio.addEventListener("select", function(event) {
@@ -76,6 +87,12 @@
 				window["field"].value = counter;
 			});
 		})
+
+		radioGroup.addEventListener("select", function(e) {
+			var radio = e.target;
+			lblRadioGroup.innerHTML = radio.text;
+			lblEventCounter.innerHTML = ++groupEventCounter;
+		});
 </script>
 </body>
 </html>

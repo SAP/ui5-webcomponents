@@ -8,30 +8,37 @@ class RadioButtonGroup {
 	}
 
 	static removeGroup(groupName) {
+		this.selectedRadios.delete(groupName);
 		return this.groups.delete(groupName);
 	}
 
-	static addToGroup(control, groupName) {
+	static addToGroup(radioBtn, groupName) {
 		if (this.hasGroup(groupName)) {
-			this.getGroup(groupName).push(control);
+			this._enforceSingleSelection(groupName, radioBtn);
+			this.getGroup(groupName).push(radioBtn);
 		} else {
-			this.createGroup(control, groupName);
+			this.createGroup(radioBtn, groupName);
 		}
 	}
 
-	static removeFromGroup(control, groupName) {
+	static removeFromGroup(radioBtn, groupName) {
 		if (!this.hasGroup(groupName)) {
 			return;
 		}
 
 		const group = this.getGroup(groupName);
-
-		// Remove the control from the given group
-		group.forEach((_control, idx, arr) => {
-			if (control._id === _control._id) {
+		const selectedRadio = this.selectedRadios.get(group);
+	
+		// Remove the radioBtn from the given group
+		group.forEach((_radioBtn, idx, arr) => {
+			if (radioBtn._id === _radioBtn._id) {
 				return arr.splice(idx, 1);
 			}
 		});
+
+		if (selectedRadio === radioBtn) {
+			this.selectedRadios.set(group, null);
+		}
 
 		// Remove the group if it is empty
 		if (!group.length) {
@@ -39,10 +46,12 @@ class RadioButtonGroup {
 		}
 	}
 
-	static createGroup(control, groupName) {
-		if (!this.hasGroup(groupName)) {
-			this.groups.set(groupName, [control]);
+	static createGroup(radioBtn, groupName) {
+		if (radioBtn.selected) {
+			this.selectedRadios.set(groupName, radioBtn);
 		}
+
+		this.groups.set(groupName, [radioBtn]);
 	}
 
 	static selectNextItem(item, groupName) {
@@ -56,16 +65,7 @@ class RadioButtonGroup {
 
 		const nextItemToSelect = this._nextSelectable(currentItemPosition, group);
 
-		// de-select all the rest
-		group.forEach(radio => {
-			if (radio._id !== nextItemToSelect._id) {
-				radio.selected = false;
-				radio.fireEvent("select", { selected: radio.selected });
-			}
-		});
-
-		// select the next item
-		this._selectItem(nextItemToSelect);
+		this.updateSelectionInGroup(nextItemToSelect, groupName);
 	}
 
 	static selectPreviousItem(item, groupName) {
@@ -79,30 +79,21 @@ class RadioButtonGroup {
 
 		const previousItemToSelect = this._previousSelectable(currentItemPosition, group);
 
-		// de-select all the rest
-		group.forEach(radio => {
-			if (radio._id !== previousItemToSelect._id) {
-				radio.selected = false;
-				radio.fireEvent("select", { selected: radio.selected });
-			}
-		});
-
-		// select the next item
-		this._selectItem(previousItemToSelect);
+		this.updateSelectionInGroup(previousItemToSelect, groupName);
 	}
 
 	static selectItem(item, groupName) {
+		this.updateSelectionInGroup(item, groupName);
+	}
+
+	static updateSelectionInGroup(radioBtnToSelect, groupName) {
 		const group = this.getGroup(groupName);
+		const selectedRadio = this.selectedRadios.get(groupName);
 
-		// de-select all the rest
-		group.forEach(radio => {
-			if (radio._id !== item._id) {
-				radio.selected = false;
-				radio.fireEvent("select", { selected: radio.selected });
-			}
-		});
-
-		this._selectItem(item);
+		this._deselectRadio(selectedRadio);
+		this._selectRadio(radioBtnToSelect);
+		this.selectedRadios.set(groupName, radioBtnToSelect);
+		console.log(groupName + "dasdada" + this.selectedRadios.entries());
 	}
 
 	static get groups() {
@@ -112,48 +103,76 @@ class RadioButtonGroup {
 		return this._groups;
 	}
 
-	static _selectItem(item) {
-		item.focus();
-		item.selected = true;
-		item.fireEvent("select", { selected: item.selected });
+	static get selectedRadios() {
+		if (!this._selectedRadios) {
+			this._selectedRadios = new Map();
+		}
+		return this._selectedRadios;
+	}
+
+	static _deselectRadio(radioBtn) {
+		radioBtn.selected = false;
+		// radioBtn.fireEvent("select"); to be discussed
+	}
+
+	static _selectRadio(radioBtn) {
+		radioBtn.focus();
+		radioBtn.selected = true;
+		radioBtn._selected = true;
+		radioBtn.fireEvent("select");
 	}
 
 	static _nextSelectable(pos, group) {
 		const groupLength = group.length;
-		let nextItemToSelect = null;
+		let nextRadioToSelect = null;
 
 		if (pos === groupLength - 1) {
 			if (!group[0].disabled) {
-				nextItemToSelect = group[0];
+				nextRadioToSelect = group[0];
 			} else {
 				return this._nextSelectable(0, group);
 			}
 		} else if (!group[++pos].disabled) {
-			nextItemToSelect = group[pos];
+			nextRadioToSelect = group[pos];
 		} else {
 			return this._nextSelectable(pos, group);
 		}
 
-		return nextItemToSelect;
+		return nextRadioToSelect;
 	}
 
 	static _previousSelectable(pos, group) {
 		const groupLength = group.length;
-		let previousSelectable = null;
+		let previousRadioToSelect = null;
 
 		if (pos === 0) {
 			if (!group[groupLength - 1].disabled) {
-				previousSelectable = group[groupLength - 1];
+				previousRadioToSelect = group[groupLength - 1];
 			} else {
 				return this._previousSelectable(groupLength - 1, group);
 			}
 		} else if (!group[--pos].disabled) {
-			previousSelectable = group[pos];
+			previousRadioToSelect = group[pos];
 		} else {
 			return this._previousSelectable(pos, group);
 		}
 
-		return previousSelectable;
+		return previousRadioToSelect;
+	}
+
+	static _enforceSingleSelection(group, radioBtn) {
+		if (!radioBtn.selected) {
+			return;
+		}
+
+		const selectedRadio = this.selectedRadios.get(group);
+
+		if (!selectedRadio) {
+			return;
+		}
+
+		this._deselectRadio(selectedRadio);
+		this.selectedRadios.set(group, radioBtn);
 	}
 }
 
