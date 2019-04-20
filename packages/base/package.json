@@ -4,6 +4,7 @@
   "description": "UI5 Web Components: webcomponents.base",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
+  "module": "index.js",
   "keywords": [
     "openui5",
     "sapui5",
