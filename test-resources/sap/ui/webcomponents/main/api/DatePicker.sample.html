@@ -231,6 +231,18 @@ If a date is entered by typing it into the input field, it must fit to the used 
                         </div>
                       </div>
                       <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">name <br> <code></code></div>
+                        <div class="cell api-table-content-cell">String</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Determines the name with which the <code>ui5-datepicker</code> will be submitted in an HTML form.
+            
+            <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project: <code>import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";</code>
+            
+            <b>Note:</b> When set, a native <code>input</code> HTML element will be created inside the <code>ui5-datepicker</code> so that it can be submitted as part of an HTML form. Do not use this property unless you need to submit a form.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">placeholder <br> <code></code></div>
                         <div class="cell api-table-content-cell">string</div>
                         <div class="cell api-table-content-cell"></div>
@@ -238,7 +250,7 @@ If a date is entered by typing it into the input field, it must fit to the used 
                             Defines a short hint, intended to aid the user with data entry when the <code>ui5-datepicker</code> has no value. <br><br> <b>Note:</b> The placeholder is not supported in IE. If the placeholder is provided, it won`t be displayed in IE.
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">primaryCalendarType <br> <code>primary-calendar-type</code></div>
                         <div class="cell api-table-content-cell">string</div>
                         <div class="cell api-table-content-cell"></div>
@@ -246,7 +258,7 @@ If a date is entered by typing it into the input field, it must fit to the used 
                             Determines the calendar type. The input value is formated according to the calendar type and the picker shows months and years from the specified calendar.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">readonly <br> <code></code></div>
                         <div class="cell api-table-content-cell">boolean</div>
                         <div class="cell api-table-content-cell"></div>
@@ -254,7 +266,7 @@ If a date is entered by typing it into the input field, it must fit to the used 
                             Determines whether the <code>ui5-datepicker</code> is displayed as readonly.
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">value <br> <code></code></div>
                         <div class="cell api-table-content-cell">string</div>
                         <div class="cell api-table-content-cell"></div>
@@ -262,7 +274,7 @@ If a date is entered by typing it into the input field, it must fit to the used 
                             Defines a formatted date value.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">valueState <br> <code>value-state</code></div>
                         <div class="cell api-table-content-cell">string</div>
                         <div class="cell api-table-content-cell"></div>

@@ -1,8 +1,5 @@
-commit 2e2439a91db182da4f528a8e7a163ce8eb200669
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Sun Apr 21 00:12:40 2019 +0300
+commit 188d2314d041a896c08f4a04878de43921560f56
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Mon Apr 22 09:27:45 2019 +0300
 
-    feat: provide named exports for some base modules (#347)
-    
-    - UI5Element is now default export of webcomponents-base
-    - Theming features exported in - "@ui5/webcomponents-base/Theming"
+    feat: enable form support and name attribute for inputs (#337)

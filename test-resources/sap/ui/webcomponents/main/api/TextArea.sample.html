@@ -119,6 +119,18 @@ The <code>ui5-textarea</code> component provides large spaces for text entries i
                         </div>
                       </div>
                       <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">name <br> <code></code></div>
+                        <div class="cell api-table-content-cell">String</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Determines the name with which the <code>ui5-textarea</code> will be submitted in an HTML form.
+            
+            <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project: <code>import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";</code>
+            
+            <b>Note:</b> When set, a native <code>input</code> HTML element will be created inside the <code>ui5-textarea</code> so that it can be submitted as part of an HTML form. Do not use this property unless you need to submit a form.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">placeholder <br> <code></code></div>
                         <div class="cell api-table-content-cell">string</div>
                         <div class="cell api-table-content-cell">&quot;&quot;</div>
@@ -126,7 +138,7 @@ The <code>ui5-textarea</code> component provides large spaces for text entries i
                             Defines a short hint intended to aid the user with data entry when the component has no value.
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">readonly <br> <code></code></div>
                         <div class="cell api-table-content-cell">boolean</div>
                         <div class="cell api-table-content-cell">false</div>
@@ -134,7 +146,7 @@ The <code>ui5-textarea</code> component provides large spaces for text entries i
                             Defines whether the <code>ui5-textarea</code> is readonly. </br></br> <b>Note:</b> A readonly <code>ui5-textarea</code> is not editable, but still provides visual feedback upon user interaction.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">rows <br> <code></code></div>
                         <div class="cell api-table-content-cell">number</div>
                         <div class="cell api-table-content-cell">0</div>
@@ -142,7 +154,7 @@ The <code>ui5-textarea</code> component provides large spaces for text entries i
                             Defines the number of visible text lines for the component. <br><br> <b>Notes:</b> <ul> <li>If the <code>growing</code> property is enabled, this property defines the minimum rows to be displayed in the textarea.</li> <li>The CSS <code>height</code> property wins over the <code>rows</code> property, if both are set.</li> </ul>
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">showExceededText <br> <code>show-exceeded-text</code></div>
                         <div class="cell api-table-content-cell">boolean</div>
                         <div class="cell api-table-content-cell">false</div>
@@ -150,7 +162,7 @@ The <code>ui5-textarea</code> component provides large spaces for text entries i
                             Determines whether the characters exceeding the maximum allowed character count are visible in the <code>ui5-textarea</code>. <br><br> If set to <code>false</code>, the user is not allowed to enter more characters than what is set in the <code>maxLength</code> property. If set to <code>true</code> the characters exceeding the <code>maxLength</code> value are selected on paste and the counter below the <code>ui5-textarea</code> displays their number.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">value <br> <code></code></div>
                         <div class="cell api-table-content-cell">string</div>
                         <div class="cell api-table-content-cell">&quot;&quot;</div>
