@@ -1,5 +1,5 @@
-commit e588f96c21470638dd1234a414e40cd77c6ae4b4
-Author: Adrian Bobev <adrian.bobev@gmail.com>
-Date:   Mon Apr 22 14:48:23 2019 +0300
+commit 4fae1ff9007d5b034fff96c00c4096fd8e9b8b87
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Apr 22 16:58:57 2019 +0300
 
-    chore(release): publish v0.10.0 (#350)
+    fix(ui5-li): fix styles import extension (#351)
