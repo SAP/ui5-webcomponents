@@ -92,8 +92,8 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the name of the <code>ui5-radiobutton</code> and
-		 * radio buttons with the same <code>name</code> will form a radio button group.
+		 * Defines the name of the <code>ui5-radiobutton</code>.
+		 * Radio buttons with the same <code>name</code> will form a radio button group.
 		 * <br/><b>Note:</b>
 		 * The selection can be changed with <code>ARROW_UP/DOWN</code> and <code>ARROW_LEFT/RIGHT</code> keys between radios in same group.
 		 * <br/><b>Note:</b>
