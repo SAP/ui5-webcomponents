@@ -92,12 +92,17 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the group to which the <code>ui5-radiobutton</code> belongs.
+		 * Defines the name of the <code>ui5-radiobutton</code> and
+		 * radio buttons with the same <code>name</code> will form a radio button group.
+		 * <br/><b>Note:</b>
+		 * The selection can be changed with <code>ARROW_UP/DOWN</code> and <code>ARROW_LEFT/RIGHT</code> keys between radios in same group.
+		 * <br/><b>Note:</b>
+		 * Only one radio button can be selected per group.
 		 *
 		 * @type {string}
 		 * @public
 		 */
-		group: {
+		name: {
 			defaultValue: "",
 			type: String,
 		},
@@ -127,8 +132,8 @@ const metadata = {
  * When a <code>ui5-radiobutton</code> is selected by the user, the
  * <code>select</code> event is fired.
  * When a <code>ui5-radiobutton</code> that is within a group is selected, the one
- * that was previously selected gets
- * automatically deselected.
+ * that was previously selected gets automatically deselected. You can group radio buttons by using the <code>name</code> property.
+ * 
  *
  * <h3>ES6 Module Import</h3>
  *
@@ -157,7 +162,6 @@ class RadioButton extends UI5Element {
 	constructor() {
 		super();
 		this._label = {};
-		this.firstRendering = true;
 	}
 
 	onBeforeRendering() {
@@ -171,10 +175,8 @@ class RadioButton extends UI5Element {
 	}
 
 	syncGroup() {
-		const oldGroup = this._group;
-		const currentGroup = this.group;
-		const selected = this.selected;
-		const previouslySelected = this._selected;
+		const oldGroup = this._name;
+		const currentGroup = this.name;
 
 		if (currentGroup !== oldGroup) {
 			if (oldGroup) {
@@ -188,13 +190,11 @@ class RadioButton extends UI5Element {
 			}
 		}
 
-		if (currentGroup && selected && !previouslySelected && !this.firstRendering) {
-			RadioButtonGroup.selectItem(this, currentGroup);
-		}
+		if (currentGroup) {
+			RadioButtonGroup.enforceSingleSelection(this, currentGroup);
+		}	
 
-		this._group = this.group;
-		this._selected = selected;
-		this.firstRendering = false;
+		this._name = this.name;
 	}
 
 	onclick() {
@@ -202,7 +202,7 @@ class RadioButton extends UI5Element {
 	}
 
 	_handleDown(event) {
-		const currentGroup = this.group;
+		const currentGroup = this.name;
 
 		if (!currentGroup) {
 			return;
@@ -213,7 +213,7 @@ class RadioButton extends UI5Element {
 	}
 
 	_handleUp(event) {
-		const currentGroup = this.group;
+		const currentGroup = this.name;
 
 		if (!currentGroup) {
 			return;
@@ -252,15 +252,13 @@ class RadioButton extends UI5Element {
 			return this;
 		}
 
-		this._selected = !this.selected;
-
-		if (!this.group) {
+		if (!this.name) {
 			this.selected = !this.selected;
 			this.fireEvent("select");
 			return this;
 		}
 
-		RadioButtonGroup.selectItem(this, this.group);
+		RadioButtonGroup.selectItem(this, this.name);
 		return this;
 	}
 

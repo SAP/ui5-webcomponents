@@ -7,6 +7,10 @@ class RadioButtonGroup {
 		return this.groups.get(groupName);
 	}
 
+	static getSelectedRadioFromGroup(groupName) {
+		return this.selectedRadios.get(groupName);
+	}
+
 	static removeGroup(groupName) {
 		this.selectedRadios.delete(groupName);
 		return this.groups.delete(groupName);
@@ -14,7 +18,7 @@ class RadioButtonGroup {
 
 	static addToGroup(radioBtn, groupName) {
 		if (this.hasGroup(groupName)) {
-			this._enforceSingleSelection(groupName, radioBtn);
+			this.enforceSingleSelection(radioBtn, groupName);
 			this.getGroup(groupName).push(radioBtn);
 		} else {
 			this.createGroup(radioBtn, groupName);
@@ -27,9 +31,9 @@ class RadioButtonGroup {
 		}
 
 		const group = this.getGroup(groupName);
-		const selectedRadio = this.selectedRadios.get(group);
+		const selectedRadio = this.getSelectedRadioFromGroup(groupName);
 
-		// Remove the radioBtn from the given group
+		// Remove the radio button from the given group
 		group.forEach((_radioBtn, idx, arr) => {
 			if (radioBtn._id === _radioBtn._id) {
 				return arr.splice(idx, 1);
@@ -37,7 +41,7 @@ class RadioButtonGroup {
 		});
 
 		if (selectedRadio === radioBtn) {
-			this.selectedRadios.set(group, null);
+			this.selectedRadios.set(groupName, null);
 		}
 
 		// Remove the group if it is empty
@@ -87,37 +91,26 @@ class RadioButtonGroup {
 	}
 
 	static updateSelectionInGroup(radioBtnToSelect, groupName) {
-		const selectedRadio = this.selectedRadios.get(groupName);
+		const selectedRadio = this.getSelectedRadioFromGroup(groupName);
 
 		this._deselectRadio(selectedRadio);
 		this._selectRadio(radioBtnToSelect);
 		this.selectedRadios.set(groupName, radioBtnToSelect);
 	}
 
-	static get groups() {
-		if (!this._groups) {
-			this._groups = new Map();
-		}
-		return this._groups;
-	}
-
-	static get selectedRadios() {
-		if (!this._selectedRadios) {
-			this._selectedRadios = new Map();
-		}
-		return this._selectedRadios;
-	}
-
 	static _deselectRadio(radioBtn) {
-		radioBtn.selected = false;
-		// radioBtn.fireEvent("select"); to be discussed
+		if (radioBtn) {
+			radioBtn.selected = false;
+		}
 	}
 
 	static _selectRadio(radioBtn) {
-		radioBtn.focus();
-		radioBtn.selected = true;
-		radioBtn._selected = true;
-		radioBtn.fireEvent("select");
+		if (radioBtn) {
+			radioBtn.focus();
+			radioBtn.selected = true;
+			radioBtn._selected = true;
+			radioBtn.fireEvent("select");
+		}
 	}
 
 	static _nextSelectable(pos, group) {
@@ -158,19 +151,37 @@ class RadioButtonGroup {
 		return previousRadioToSelect;
 	}
 
-	static _enforceSingleSelection(group, radioBtn) {
-		if (!radioBtn.selected) {
-			return;
-		}
-
-		const selectedRadio = this.selectedRadios.get(group);
+	static enforceSingleSelection(radioBtn, groupName) {
+		const selectedRadio = this.getSelectedRadioFromGroup(groupName);
 
 		if (!selectedRadio) {
 			return;
 		}
 
-		this._deselectRadio(selectedRadio);
-		this.selectedRadios.set(group, radioBtn);
+		if (radioBtn.selected) {
+			if(radioBtn !== selectedRadio) {
+				this._deselectRadio(selectedRadio);
+				this.selectedRadios.set(groupName, radioBtn);
+			}
+		} else {
+			if (radioBtn === selectedRadio) {
+				this.selectedRadios.set(groupName, null);
+			}
+		}
+	}
+
+	static get groups() {
+		if (!this._groups) {
+			this._groups = new Map();
+		}
+		return this._groups;
+	}
+
+	static get selectedRadios() {
+		if (!this._selectedRadios) {
+			this._selectedRadios = new Map();
+		}
+		return this._selectedRadios;
 	}
 }
 

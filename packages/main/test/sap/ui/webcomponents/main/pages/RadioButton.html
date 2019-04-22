@@ -34,26 +34,27 @@
 
 	<section class="radio-section">
 		<ui5-title>ui5-radiobutton in group</ui5-title>
-		<ui5-radiobutton id="groupRb1" group="a" selected text="Option A long long should shrink long long text text text text text text text text"></ui5-radiobutton>
-		<ui5-radiobutton id="groupRb2" group="a" disabled text="Option C"></ui5-radiobutton>
-		<ui5-radiobutton id="groupRb3" group="a" text="Option D"></ui5-radiobutton>
+		<ui5-radiobutton id="groupRb1" name="a" selected text="Option A long long should shrink long long text text text text text text text text"></ui5-radiobutton>
+		<ui5-radiobutton id="groupRb2" name="a" disabled text="Option C"></ui5-radiobutton>
+		<ui5-radiobutton id="groupRb3" name="a" text="Option D"></ui5-radiobutton>
 	</section>
 
 	<section class="radio-section">
 		<ui5-title>ui5-radiobutton in group</ui5-title>
-		<ui5-radiobutton id="groupRb4" group="b" selected text="Option A long long should shrink long long text text text text text text text text"></ui5-radiobutton>
-		<ui5-radiobutton id="groupRb5" group="b" disabled text="Option C"></ui5-radiobutton>
-		<ui5-radiobutton id="groupRb6" group="b" text="Option D"></ui5-radiobutton>
+		<ui5-radiobutton id="groupRb4" name="b" selected text="Option A long long should shrink long long text text text text text text text text"></ui5-radiobutton>
+		<ui5-radiobutton id="groupRb5" name="b" disabled text="Option C"></ui5-radiobutton>
+		<ui5-radiobutton id="groupRb6" name="b" text="Option D"></ui5-radiobutton>
 	</section>
 
 	<div id="radioGroup" class="radio-section">
 		<ui5-title>Group of states</ui5-title>
 		<ui5-label id="lblRadioGroup"></ui5-label>
 		<ui5-label id="lblEventCounter"></ui5-label>
-		<ui5-radiobutton id="groupRb7" text="None" value-state="None" selected group="GroupB"></ui5-radiobutton>
-		<ui5-radiobutton id="groupRb8" text="Warning" value-state="Warning" group="GroupB"></ui5-radiobutton>
-		<ui5-radiobutton id="groupRb9"text="Error" value-state="Error" group="GroupB"></ui5-radiobutton>
-		<ui5-radiobutton id="groupRb10" text="Default" value-state="None" selected group="GroupB"></ui5-radiobutton>
+		<ui5-radiobutton id="groupRb7" text="None selected" value-state="None" selected name="GroupB"></ui5-radiobutton>
+		<ui5-radiobutton id="groupRb8" text="Warning" value-state="Warning" name="GroupB"></ui5-radiobutton>
+		<ui5-radiobutton id="groupRb9"text="Error" value-state="Error" name="GroupB"></ui5-radiobutton>
+		<ui5-radiobutton id="groupRb10" text="Default selected" value-state="None" selected name="GroupB"></ui5-radiobutton>
+		<ui5-radiobutton id="groupRb11" text="Other group selected" value-state="None" selected name="GroupBB"></ui5-radiobutton>
 	</div>
 
 	<section>
