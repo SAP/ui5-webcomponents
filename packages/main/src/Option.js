@@ -1,17 +1,12 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
 import URI from "@ui5/webcomponents-base/src/types/URI";
-import StandardListItem from "./StandardListItem";
-
-import OptionRenderer from "./build/compiled/OptionRenderer.lit";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-option",
-	styleUrl: [
-	],
 	usesNodeText: true,
 	properties: /** @lends  sap.ui.webcomponents.main.Option.prototype */  {
 		selected: {
@@ -31,19 +26,9 @@ const metadata = {
 	},
 };
 
-class Option extends WebComponent {
+class Option extends UI5Element {
 	static get metadata() {
 		return metadata;
-	}
-
-	static get renderer() {
-		return OptionRenderer;
-	}
-
-	static async define(...params) {
-		await StandardListItem.define();
-
-		super.define(...params);
 	}
 }
 

@@ -10,6 +10,7 @@ import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes.js";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
 import Function from "@ui5/webcomponents-base/src/types/Function.js";
 import Suggestions from "./Suggestions.js";
+import StandardListItem from "./StandardListItem";
 import Option from "./Option";
 
 // Template
@@ -341,7 +342,10 @@ class Select extends UI5Element {
 	}
 
 	static async define(...params) {
-		await Option.define();
+		await Promise.all([
+			Option.define(),
+			StandardListItem.define(),
+		]);
 
 		super.define(...params);
 	}
