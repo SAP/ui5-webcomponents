@@ -139,6 +139,23 @@ const metadata = {
 			defaultValue: 0,
 		},
 
+		/**
+		 * Determines the name with which the <code>ui5-textarea</code> will be submitted in an HTML form.
+		 *
+		 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
+		 * <code>import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";</code>
+		 *
+		 * <b>Note:</b> When set, a native <code>input</code> HTML element
+		 * will be created inside the <code>ui5-textarea</code> so that it can be submitted as
+		 * part of an HTML form. Do not use this property unless you need to submit a form.
+		 *
+		 * @type {String}
+		 * @public
+		 */
+		name: {
+			type: String,
+		},
+
 		_height: {
 			type: CSSSize,
 			defaultValue: null,
@@ -235,6 +252,12 @@ class TextArea extends UI5Element {
 		if (this.growingMaxLines) {
 			// this should be complex calc between line height and paddings - TODO: make it stable
 			this._maxHeight = `${this.growingMaxLines * 1.4 * 14 + 9}px`;
+		}
+
+		if (TextArea.FormSupport) {
+			TextArea.FormSupport.syncNativeHiddenInput(this);
+		} else if (this.name) {
+			console.warn(`In order for the "name" property to have effect, you should also: import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";`); // eslint-disable-line
 		}
 	}
 

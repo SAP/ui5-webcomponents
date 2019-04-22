@@ -82,6 +82,20 @@ const metadata = {
 		activeIcon: { type: URI, defaultValue: null },
 
 		/**
+		 * When set to <code>true</code>, the <code>ui5-button</code> will
+		 * automatically submit the nearest form element upon <code>press</code>.
+		 *
+		 * <b>Important:</b> For the <code>submits</code> property to have effect, you must add the following import to your project:
+		 * <code>import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";</code>
+		 *
+		 * @type {boolean}
+		 * @public
+		 */
+		submits: {
+			type: Boolean,
+		},
+
+		/**
 		 * Used to switch the active state (pressed or not) of the <code>ui5-button</code>.
 		 */
 		_active: { type: Boolean },
@@ -174,6 +188,10 @@ class Button extends UI5Element {
 		} else {
 			this._iconSettings = null;
 		}
+
+		if (this.submits && !Button.FormSupport) {
+			console.warn(`In order for the "submits" property to have effect, you should also: import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";`); // eslint-disable-line
+		}
 	}
 
 	onEnterDOM() {
@@ -188,6 +206,9 @@ class Button extends UI5Element {
 		event.isMarked = "button";
 		if (!this.disabled) {
 			this.fireEvent("press", {});
+			if (Button.FormSupport) {
+				Button.FormSupport.triggerFormSubmit(this);
+			}
 		}
 	}
 
