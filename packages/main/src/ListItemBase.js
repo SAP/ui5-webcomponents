@@ -4,7 +4,7 @@ import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/src/events/Pse
 import ListItemBaseTemplateContext from "./ListItemBaseTemplateContext.js";
 
 // Styles
-import styles from "./themes/ListItemBase.css";
+import styles from "./themes/ListItemBase.css.js";
 
 
 /**
