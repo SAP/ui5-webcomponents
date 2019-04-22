@@ -188,9 +188,7 @@ class RadioButton extends UI5Element {
 				// add the control to the existing group
 				RadioButtonGroup.addToGroup(this, currentGroup);
 			}
-		}
-
-		if (currentGroup) {
+		} else if (currentGroup) {
 			RadioButtonGroup.enforceSingleSelection(this, currentGroup);
 		}
 
