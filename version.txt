@@ -1,5 +1,5 @@
-commit 188d2314d041a896c08f4a04878de43921560f56
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Mon Apr 22 09:27:45 2019 +0300
+commit f23085c62a8b13f1361f1e54118ebbd686fc180f
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Mon Apr 22 11:31:04 2019 +0300
 
-    feat: enable form support and name attribute for inputs (#337)
+    fix: prevent merging of :host(tag) and tag css rules (#349)
