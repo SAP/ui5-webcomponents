@@ -133,7 +133,7 @@ const metadata = {
  * <code>select</code> event is fired.
  * When a <code>ui5-radiobutton</code> that is within a group is selected, the one
  * that was previously selected gets automatically deselected. You can group radio buttons by using the <code>name</code> property.
- * 
+ *
  *
  * <h3>ES6 Module Import</h3>
  *
@@ -192,7 +192,7 @@ class RadioButton extends UI5Element {
 
 		if (currentGroup) {
 			RadioButtonGroup.enforceSingleSelection(this, currentGroup);
-		}	
+		}
 
 		this._name = this.name;
 	}

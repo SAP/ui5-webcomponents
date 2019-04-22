@@ -159,14 +159,12 @@ class RadioButtonGroup {
 		}
 
 		if (radioBtn.selected) {
-			if(radioBtn !== selectedRadio) {
+			if (radioBtn !== selectedRadio) {
 				this._deselectRadio(selectedRadio);
 				this.selectedRadios.set(groupName, radioBtn);
 			}
-		} else {
-			if (radioBtn === selectedRadio) {
-				this.selectedRadios.set(groupName, null);
-			}
+		} else if (radioBtn === selectedRadio) {
+			this.selectedRadios.set(groupName, null);
 		}
 	}
 
