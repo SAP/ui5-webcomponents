@@ -1,5 +1,5 @@
-import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device";
-import SwitchType from "./types/SwitchType";
+import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
+import SwitchType from "./types/SwitchType.js";
 
 class SwitchTemplateContext {
 	static calculate(state) {

@@ -1,41 +1,28 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import { isIE } from "@ui5/webcomponents-core/dist/sap/ui/Device";
-import ValueState from "@ui5/webcomponents-base/src/types/ValueState";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import { isIE } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
+import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
 import {
 	isUp,
 	isDown,
 	isSpace,
 	isEnter,
-} from "@ui5/webcomponents-base/src/events/PseudoEvents";
-import Icon from "./Icon";
-import InputType from "./types/InputType";
+} from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import Icon from "./Icon.js";
+import InputType from "./types/InputType.js";
 // Template
-import InputRenderer from "./build/compiled/InputRenderer.lit";
-import InputTemplateContext from "./InputTemplateContext";
+import InputRenderer from "./build/compiled/InputRenderer.lit.js";
+import InputTemplateContext from "./InputTemplateContext.js";
 
 // Styles
-import styles from "./themes-next/Input.css";
-import shellbarInput from "./themes-next/ShellBarInput.css";
-
-addCustomCSS("ui5-input", "sap_fiori_3", styles);
-addCustomCSS("ui5-input", "sap_belize", styles);
-addCustomCSS("ui5-input", "sap_belize_hcb", styles);
-
-addCustomCSS("ui5-input", "sap_fiori_3", shellbarInput);
-addCustomCSS("ui5-input", "sap_belize", shellbarInput);
-addCustomCSS("ui5-input", "sap_belize_hcb", shellbarInput);
+import styles from "./themes/Input.css.js";
+import shellbarInput from "./themes/ShellBarInput.css.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-input",
-	styleUrl: [
-		"Input.css",
-		"ShellBarInput.css",
-	],
 	defaultSlot: "suggestionItems",
 	slots: /** @lends sap.ui.webcomponents.main.Input.prototype */ {
 
@@ -159,6 +146,23 @@ const metadata = {
 		},
 
 		/**
+		 * Determines the name with which the <code>ui5-input</code> will be submitted in an HTML form.
+		 *
+		 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
+		 * <code>import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";</code>
+		 *
+		 * <b>Note:</b> When set, a native <code>input</code> HTML element
+		 * will be created inside the <code>ui5-input</code> so that it can be submitted as
+		 * part of an HTML form. Do not use this property unless you need to submit a form.
+		 *
+		 * @type {String}
+		 * @public
+		 */
+		name: {
+			type: String,
+		},
+
+		/**
 		 * Defines whether the <code>ui5-input</code> should show suggestions, if such are present.
 		 *
 		 * @type {Boolean}
@@ -254,11 +258,11 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Input
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-input
  * @public
  */
-class Input extends WebComponent {
+class Input extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
@@ -269,6 +273,10 @@ class Input extends WebComponent {
 
 	static get calculateTemplateContext() {
 		return InputTemplateContext.calculate;
+	}
+
+	static get styles() {
+		return [styles, shellbarInput];
 	}
 
 	constructor() {
@@ -310,6 +318,12 @@ class Input extends WebComponent {
 	onBeforeRendering() {
 		if (this.showSuggestions) {
 			this.enableSuggestions();
+		}
+
+		if (Input.FormSupport) {
+			Input.FormSupport.syncNativeHiddenInput(this);
+		} else if (this.name) {
+			console.warn(`In order for the "name" property to have effect, you should also: import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";`); // eslint-disable-line
 		}
 	}
 

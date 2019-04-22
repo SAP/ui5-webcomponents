@@ -1,27 +1,19 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import URI from "@ui5/webcomponents-base/src/types/URI";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
-import MessageStripTemplateContext from "./MessageStripTemplateContext";
-import MessageStripType from "./types/MessageStripType";
-import MessageStripRenderer from "./build/compiled/MessageStripRenderer.lit";
-import Icon from "./Icon";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import URI from "@ui5/webcomponents-base/src/types/URI.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import MessageStripTemplateContext from "./MessageStripTemplateContext.js";
+import MessageStripType from "./types/MessageStripType.js";
+import MessageStripRenderer from "./build/compiled/MessageStripRenderer.lit.js";
+import Icon from "./Icon.js";
 
 // Styles
-import messageStripCss from "./themes-next/MessageStrip.css";
-
-addCustomCSS("ui5-messagestrip", "sap_fiori_3", messageStripCss);
-addCustomCSS("ui5-messagestrip", "sap_belize", messageStripCss);
-addCustomCSS("ui5-messagestrip", "sap_belize_hcb", messageStripCss);
+import messageStripCss from "./themes/MessageStrip.css.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-messagestrip",
-	styleUrl: [
-		"MessageStrip.css",
-	],
 	usesNodeText: true,
 	properties: /** @lends sap.ui.webcomponents.main.MessageStrip.prototype */ {
 
@@ -109,13 +101,13 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.MessageStrip
- * @extends WebComponent
+ * @extends UI5Element
  * @tagname ui5-messagestrip
  * @usestextcontent
  * @public
  * @since 0.9.0
  */
-class MessageStrip extends WebComponent {
+class MessageStrip extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
@@ -126,6 +118,10 @@ class MessageStrip extends WebComponent {
 
 	static get calculateTemplateContext() {
 		return MessageStripTemplateContext.calculate;
+	}
+
+	static get styles() {
+		return messageStripCss;
 	}
 
 	constructor() {

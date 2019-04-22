@@ -1,4 +1,4 @@
-import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType";
+import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType.js";
 
 class CalendarTemplateContext {
 	static calculate(state) {

@@ -1,26 +1,20 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes";
-import ValueState from "@ui5/webcomponents-base/src/types/ValueState";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes.js";
+import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
 
-import CheckBoxRenderer from "./build/compiled/CheckBoxRenderer.lit";
-import CheckBoxTemplateContext from "./CheckBoxTemplateContext";
-import Label from "./Label";
+import CheckBoxRenderer from "./build/compiled/CheckBoxRenderer.lit.js";
+import CheckBoxTemplateContext from "./CheckBoxTemplateContext.js";
+import Label from "./Label.js";
 
 // Styles
-import checkboxCss from "./themes-next/CheckBox.css";
-
-addCustomCSS("ui5-checkbox", "sap_fiori_3", checkboxCss);
-addCustomCSS("ui5-checkbox", "sap_belize", checkboxCss);
-addCustomCSS("ui5-checkbox", "sap_belize_hcb", checkboxCss);
+import checkboxCss from "./themes/CheckBox.css.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-checkbox",
-	styleUrl: ["CheckBox.css"],
 	properties: /** @lends sap.ui.webcomponents.main.CheckBox.prototype */ {
 
 		/**
@@ -98,6 +92,23 @@ const metadata = {
 			type: Boolean,
 		},
 
+		/**
+		 * Determines the name with which the <code>ui5-checkbox</code> will be submitted in an HTML form.
+		 *
+		 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
+		 * <code>import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";</code>
+		 *
+		 * <b>Note:</b> When set, a native <code>input</code> HTML element
+		 * will be created inside the <code>ui5-checkbox</code> so that it can be submitted as
+		 * part of an HTML form. Do not use this property unless you need to submit a form.
+		 *
+		 * @type {String}
+		 * @public
+		 */
+		name: {
+			type: String,
+		},
+
 		_label: {
 			type: Object,
 		},
@@ -147,17 +158,21 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.CheckBox
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-checkbox
  * @public
  */
-class CheckBox extends WebComponent {
+class CheckBox extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
 
 	static get renderer() {
 		return CheckBoxRenderer;
+	}
+
+	static get styles() {
+		return checkboxCss;
 	}
 
 	constructor() {
@@ -167,6 +182,15 @@ class CheckBox extends WebComponent {
 
 	onBeforeRendering() {
 		this.syncLabel();
+
+		if (CheckBox.FormSupport) {
+			CheckBox.FormSupport.syncNativeHiddenInput(this, (element, nativeInput) => {
+				nativeInput.disabled = element.disabled || !element.checked;
+				nativeInput.value = element.checked ? "on" : "";
+			});
+		} else if (this.name) {
+			console.warn(`In order for the "name" property to have effect, you should also: import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";`); // eslint-disable-line
+		}
 	}
 
 	syncLabel() {

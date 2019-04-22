@@ -1,8 +1,8 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import List from "./List";
-import Popover from "./Popover";
-import StandardListItem from "./StandardListItem"; // ensure <ui5-li> is loaded
-import CustomListItem from "./CustomListItem"; // ensure <ui5-li-custom> is loaded
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import List from "./List.js";
+import Popover from "./Popover.js";
+import StandardListItem from "./StandardListItem.js"; // ensure <ui5-li> is loaded
+import CustomListItem from "./CustomListItem.js"; // ensure <ui5-li-custom> is loaded
 
 (function noTreeShaked() {
 	`${StandardListItem}${CustomListItem}`; //eslint-disable-line

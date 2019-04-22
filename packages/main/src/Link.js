@@ -1,27 +1,21 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
-import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes";
-import URI from "@ui5/webcomponents-base/src/types/URI";
-import LinkType from "./types/LinkType";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes.js";
+import URI from "@ui5/webcomponents-base/src/types/URI.js";
+import LinkType from "./types/LinkType.js";
 
 // Template
-import LinkRederer from "./build/compiled/LinkRenderer.lit";
-import LinkTemplateContext from "./LinkTemplateContext";
+import LinkRederer from "./build/compiled/LinkRenderer.lit.js";
+import LinkTemplateContext from "./LinkTemplateContext.js";
 
 // Styles
-import linkCss from "./themes-next/Link.css";
-
-addCustomCSS("ui5-link", "sap_fiori_3", linkCss);
-addCustomCSS("ui5-link", "sap_belize", linkCss);
-addCustomCSS("ui5-link", "sap_belize_hcb", linkCss);
+import linkCss from "./themes/Link.css.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-link",
-	styleUrl: ["Link.css"],
 	usesNodeText: true,
 	properties: /** @lends  sap.ui.webcomponents.main.Link.prototype */  {
 
@@ -147,12 +141,12 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Link
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-link
  * @usestextcontent
  * @public
  */
-class Link extends WebComponent {
+class Link extends UI5Element {
 	constructor() {
 		super();
 		this._dummyAnchor = document.createElement("a");
@@ -164,6 +158,10 @@ class Link extends WebComponent {
 
 	static get renderer() {
 		return LinkRederer;
+	}
+
+	static get styles() {
+		return linkCss;
 	}
 
 

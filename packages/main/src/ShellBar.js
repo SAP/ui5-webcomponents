@@ -1,36 +1,28 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import { getRTL } from "@ui5/webcomponents-base/src/Configuration";
-import URI from "@ui5/webcomponents-base/src/types/URI";
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import Function from "@ui5/webcomponents-base/src/types/Function";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
-import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler";
-import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation";
-import { isSpace, isEscape } from "@ui5/webcomponents-base/src/events/PseudoEvents";
-import StandardListItem from "./StandardListItem";
-import List from "./List";
-import Icon from "./Icon";
-import Popover from "./Popover";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import { getRTL } from "@ui5/webcomponents-base/src/Configuration.js";
+import URI from "@ui5/webcomponents-base/src/types/URI.js";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import Function from "@ui5/webcomponents-base/src/types/Function.js";
+import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler.js";
+import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
+import { isSpace, isEscape } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import StandardListItem from "./StandardListItem.js";
+import List from "./List.js";
+import Icon from "./Icon.js";
+import Popover from "./Popover.js";
 
 // Template
-import ShellBarRenderer from "./build/compiled/ShellBarRenderer.lit";
-import ShellBarTemplateContext from "./ShellBarTemplateContext";
+import ShellBarRenderer from "./build/compiled/ShellBarRenderer.lit.js";
+import ShellBarTemplateContext from "./ShellBarTemplateContext.js";
 
 // Styles
-import styles from "./themes-next/ShellBar.css";
-
-addCustomCSS("ui5-shellbar", "sap_belize", styles);
-addCustomCSS("ui5-shellbar", "sap_belize_hcb", styles);
-addCustomCSS("ui5-shellbar", "sap_fiori_3", styles);
+import styles from "./themes/ShellBar.css.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-shellbar",
-	styleUrl: [
-		"ShellBar.css",
-	],
 	properties: /** @lends  sap.ui.webcomponents.main.ShellBar.prototype */ {
 
 		/**
@@ -305,15 +297,19 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.ShellBar
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-shellbar
  * @appenddocs ShellBarItem
  * @public
  * @since 0.8.0
  */
-class ShellBar extends WebComponent {
+class ShellBar extends UI5Element {
 	static get metadata() {
 		return metadata;
+	}
+
+	static get styles() {
+		return styles;
 	}
 
 	static get renderer() {

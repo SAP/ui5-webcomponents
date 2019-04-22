@@ -1,19 +1,10 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper";
-import Integer from "@ui5/webcomponents-base/src/types/Integer";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
-import { isEscape } from "@ui5/webcomponents-base/src/events/PseudoEvents";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper.js";
+import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
+import { isEscape } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 
 // Styles
-import styles from "./themes-next/Popup.css";
-
-addCustomCSS("ui5-dialog", "sap_fiori_3", styles);
-addCustomCSS("ui5-dialog", "sap_belize", styles);
-addCustomCSS("ui5-dialog", "sap_belize_hcb", styles);
-
-addCustomCSS("ui5-popover", "sap_fiori_3", styles);
-addCustomCSS("ui5-popover", "sap_belize", styles);
-addCustomCSS("ui5-popover", "sap_belize_hcb", styles);
+import styles from "./themes/Popup.css.js";
 
 /**
  * @public
@@ -203,12 +194,16 @@ function updateBodyScrolling(hasModal) {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Popup
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @public
  */
-class Popup extends WebComponent {
+class Popup extends UI5Element {
 	static get metadata() {
 		return metadata;
+	}
+
+	static get styles() {
+		return styles;
 	}
 
 	static getNextZIndex() {

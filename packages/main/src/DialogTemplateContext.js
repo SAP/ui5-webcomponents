@@ -1,4 +1,4 @@
-import { isPhone } from "@ui5/webcomponents-core/dist/sap/ui/Device";
+import { isPhone } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 
 class DialogTemplateContext {
 	static calculate(state) {

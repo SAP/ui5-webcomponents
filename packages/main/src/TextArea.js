@@ -1,27 +1,19 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import CSSSize from "@ui5/webcomponents-base/src/types/CSSSize";
-import Integer from "@ui5/webcomponents-base/src/types/Integer";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
-import TextAreaTemplateContext from "./TextAreaTemplateContext";
-import TextAreaRenderer from "./build/compiled/TextAreaRenderer.lit";
-import { fetchResourceBundle, getResourceBundle } from "./ResourceBundleProvider";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import CSSSize from "@ui5/webcomponents-base/src/types/CSSSize.js";
+import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
+import TextAreaTemplateContext from "./TextAreaTemplateContext.js";
+import TextAreaRenderer from "./build/compiled/TextAreaRenderer.lit.js";
+import { fetchResourceBundle, getResourceBundle } from "./ResourceBundleProvider.js";
 
 // Styles
-import styles from "./themes-next/TextArea.css";
-
-addCustomCSS("ui5-textarea", "sap_belize", styles);
-addCustomCSS("ui5-textarea", "sap_belize_hcb", styles);
-addCustomCSS("ui5-textarea", "sap_fiori_3", styles);
+import styles from "./themes/TextArea.css.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-textarea",
-	styleUrl: [
-		"TextArea.css",
-	],
 	properties: /** @lends sap.ui.webcomponents.main.TextArea.prototype */ {
 		/**
 		 * Defines the value of the Web Component.
@@ -147,6 +139,23 @@ const metadata = {
 			defaultValue: 0,
 		},
 
+		/**
+		 * Determines the name with which the <code>ui5-textarea</code> will be submitted in an HTML form.
+		 *
+		 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
+		 * <code>import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";</code>
+		 *
+		 * <b>Note:</b> When set, a native <code>input</code> HTML element
+		 * will be created inside the <code>ui5-textarea</code> so that it can be submitted as
+		 * part of an HTML form. Do not use this property unless you need to submit a form.
+		 *
+		 * @type {String}
+		 * @public
+		 */
+		name: {
+			type: String,
+		},
+
 		_height: {
 			type: CSSSize,
 			defaultValue: null,
@@ -205,13 +214,17 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.TextArea
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-textarea
  * @public
  */
-class TextArea extends WebComponent {
+class TextArea extends UI5Element {
 	static get metadata() {
 		return metadata;
+	}
+
+	static get styles() {
+		return styles;
 	}
 
 	static get renderer() {
@@ -239,6 +252,12 @@ class TextArea extends WebComponent {
 		if (this.growingMaxLines) {
 			// this should be complex calc between line height and paddings - TODO: make it stable
 			this._maxHeight = `${this.growingMaxLines * 1.4 * 14 + 9}px`;
+		}
+
+		if (TextArea.FormSupport) {
+			TextArea.FormSupport.syncNativeHiddenInput(this);
+		} else if (this.name) {
+			console.warn(`In order for the "name" property to have effect, you should also: import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";`); // eslint-disable-line
 		}
 	}
 

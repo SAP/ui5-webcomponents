@@ -1,37 +1,29 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import {
 	isSpace,
 	isUp,
 	isDown,
 	isEnter,
-} from "@ui5/webcomponents-base/src/events/PseudoEvents";
-import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
-import ValueState from "@ui5/webcomponents-base/src/types/ValueState";
-import Function from "@ui5/webcomponents-base/src/types/Function";
-import Suggestions from "./Suggestions";
+} from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes.js";
+import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
+import Function from "@ui5/webcomponents-base/src/types/Function.js";
+import Suggestions from "./Suggestions.js";
 import Option from "./Option";
 
 // Template
-import SelectRenderer from "./build/compiled/SelectRenderer.lit";
-import SelectTemplateContext from "./SelectTemplateContext";
+import SelectRenderer from "./build/compiled/SelectRenderer.lit.js";
+import SelectTemplateContext from "./SelectTemplateContext.js";
 
 // Styles
-import selectCss from "./themes-next/Select.css";
-
-addCustomCSS("ui5-select", "sap_fiori_3", selectCss);
-addCustomCSS("ui5-select", "sap_belize", selectCss);
-addCustomCSS("ui5-select", "sap_belize_hcb", selectCss);
+import selectCss from "./themes/Select.css.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-select",
-	styleUrl: [
-		"Select.css",
-	],
 	defaultSlot: "items",
 	slots: /** @lends sap.ui.webcomponents.main.Select.prototype */ {
 
@@ -132,12 +124,12 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Select
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-input
  * @public
  * @since 0.8.0
  */
-class Select extends WebComponent {
+class Select extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
@@ -148,6 +140,10 @@ class Select extends WebComponent {
 
 	static get calculateTemplateContext() {
 		return SelectTemplateContext.calculate;
+	}
+
+	static get styles() {
+		return selectCss;
 	}
 
 	constructor() {

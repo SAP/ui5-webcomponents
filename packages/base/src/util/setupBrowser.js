@@ -1,4 +1,4 @@
-import { getBrowser } from "@ui5/webcomponents-core/dist/sap/ui/Device";
+import { getBrowser } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 
 const setupBrowser = node => {
 	const b = getBrowser();

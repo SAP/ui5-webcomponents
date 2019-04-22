@@ -1,23 +1,15 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
-import TableCellRenderer from "./build/compiled/TableCellRenderer.lit";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import TableCellRenderer from "./build/compiled/TableCellRenderer.lit.js";
 
 // Styles
-import styles from "./themes-next/TableCell.css";
-
-addCustomCSS("ui5-table-cell", "sap_fiori_3", styles);
-addCustomCSS("ui5-table-cell", "sap_belize", styles);
-addCustomCSS("ui5-table-cell", "sap_belize_hcb", styles);
+import styles from "./themes/TableCell.css.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-table-cell",
-	styleUrl: [
-		"TableCell.css",
-	],
 	slots: /** @lends sap.ui.webcomponents.main.TableCell.prototype */ {
 		/**
 		 * Specifies the content of the <code>ui5-table-cell</code>.
@@ -60,13 +52,17 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.TableCell
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-table-cell
  * @public
  */
-class TableCell extends WebComponent {
+class TableCell extends UI5Element {
 	static get metadata() {
 		return metadata;
+	}
+
+	static get styles() {
+		return styles;
 	}
 
 	static get renderer() {

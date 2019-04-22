@@ -1,34 +1,26 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import { getLocale } from "@ui5/webcomponents-base/src/LocaleProvider";
-import { getCalendarType } from "@ui5/webcomponents-base/src/Configuration";
-import { getFormatLocale } from "@ui5/webcomponents-base/src/FormatSettings";
-import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents";
-import Integer from "@ui5/webcomponents-base/src/types/Integer";
-import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData";
-import CalendarDate from "@ui5/webcomponents-base/src/dates/CalendarDate";
-import { calculateWeekNumber } from "@ui5/webcomponents-base/src/dates/CalendarUtils";
-import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
-import DayPickerTemplateContext from "./DayPickerTemplateContext";
-import DayPickerRenderer from "./build/compiled/DayPickerRenderer.lit";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import { getLocale } from "@ui5/webcomponents-base/src/LocaleProvider.js";
+import { getCalendarType } from "@ui5/webcomponents-base/src/Configuration.js";
+import { getFormatLocale } from "@ui5/webcomponents-base/src/FormatSettings.js";
+import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
+import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData.js";
+import CalendarDate from "@ui5/webcomponents-base/src/dates/CalendarDate.js";
+import { calculateWeekNumber } from "@ui5/webcomponents-base/src/dates/CalendarUtils.js";
+import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType.js";
+import DayPickerTemplateContext from "./DayPickerTemplateContext.js";
+import DayPickerRenderer from "./build/compiled/DayPickerRenderer.lit.js";
 
 // Styles
-import dayPickerCSS from "./themes-next/DayPicker.css";
-
-addCustomCSS("ui5-daypicker", "sap_fiori_3", dayPickerCSS);
-addCustomCSS("ui5-daypicker", "sap_belize", dayPickerCSS);
-addCustomCSS("ui5-daypicker", "sap_belize_hcb", dayPickerCSS);
+import dayPickerCSS from "./themes/DayPicker.css.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-daypicker",
-	styleUrl: [
-		"DayPicker.css",
-	],
 	properties: /** @lends  sap.ui.webcomponents.main.DayPicker.prototype */ {
 		/**
 		 * A UNIX timestamp - seconds since 00:00:00 UTC on Jan 1, 1970.
@@ -106,17 +98,21 @@ const MIN_YEAR = 1;
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.DayPicker
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-daypicker
  * @public
  */
-class DayPicker extends WebComponent {
+class DayPicker extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
 
 	static get renderer() {
 		return DayPickerRenderer;
+	}
+
+	static get styles() {
+		return dayPickerCSS;
 	}
 
 	constructor() {

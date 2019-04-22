@@ -1,4 +1,4 @@
-import { fetchTextOnce } from "../util/FetchHelper";
+import { fetchTextOnce } from "../util/FetchHelper.js";
 
 const themeURLs = new Map();
 const propertiesStyles = new Map();
@@ -26,6 +26,10 @@ const getThemeProperties = async (packageName, themeName) => {
 
 const fetchThemeProperties = async (packageName, themeName) => {
 	const url = themeURLs.get(`${packageName}_${themeName}`);
+
+	if (!url) {
+		throw new Error(`You have to import @ui5/webcomponents/dist/ThemePropertiesProvider module to use theme switching`);
+	}
 	return fetchTextOnce(url);
 };
 
