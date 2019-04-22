@@ -1,5 +1,5 @@
-commit f23085c62a8b13f1361f1e54118ebbd686fc180f
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Mon Apr 22 11:31:04 2019 +0300
+commit e588f96c21470638dd1234a414e40cd77c6ae4b4
+Author: Adrian Bobev <adrian.bobev@gmail.com>
+Date:   Mon Apr 22 14:48:23 2019 +0300
 
-    fix: prevent merging of :host(tag) and tag css rules (#349)
+    chore(release): publish v0.10.0 (#350)
