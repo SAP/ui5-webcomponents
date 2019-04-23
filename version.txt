@@ -1,5 +1,14 @@
-commit f4dee1cb82e3f3559aca916548bac7a8618f9d42
+commit 4d7d9c3d7a7b82b2ba93c09edc60e96c5a90728b
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Apr 23 11:35:48 2019 +0300
+Date:   Tue Apr 23 13:50:10 2019 +0300
 
-    fix(ui5-togglebutton): add base styles (#352)
+    refactor(ui5-radiobutton): improve group handling (#348)
+    
+    * Added new property "name", which replaces the property "group" (removed with this change)
+    * When selection changes within the group by user interaction - single "select" event is being fired and
+    the newly selected radio button is the event target.
+    * if more than one radio buttons within a group is set as selected, the last one is effectively selected.
+    * if  a ui5-radiobutton is added to a new group, the single selection rule would be applied.
+    * if the selected state is programatically changed, the single selection rule is applied and no event is fired.
+    
+    BREAKING CHANGE: the property "group" is replaced by the "name" property.
