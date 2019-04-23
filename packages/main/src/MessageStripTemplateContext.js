@@ -8,7 +8,7 @@ class MessageStripTemplateContext {
 					"ui5-messagestrip-close-icon": true,
 				},
 				main: {
-					"ui5-messagestrip": true,
+					"ui5-messagestrip-root": true,
 					"ui5-messagestrip-icon--hidden": state.hideIcon,
 					"ui5-messagestrip-close-icon--hidden": state.hideCloseButton,
 					[MessageStripTemplateContext.getTypeClasses(state)]: true,
