@@ -245,7 +245,7 @@ class Suggestions {
 	}
 
 	_getItems() {
-		return this._getComponent().getSlottedNodes(this.slotName);
+		return typeof this.slotName === "string" ? this._getComponent().getSlottedNodes(this.slotName) : this.slotName;
 	}
 
 	_getComponent() {

@@ -16,7 +16,14 @@
 			horizontal-align="Stretch">
 				<ui5-list separators="None">
 					{{#each ctr.items}}
-						<slot name="{{this._slot}}"></slot>
+                        <ui5-li
+                                id="{{this._id}}"
+                                value="{{this.value}}"
+                                icon="{{this.icon}}"
+                                ?selected="{{this.selected}}"
+                        >
+                            {{this.textContent}}
+                        </ui5-li>
 					{{/each}}
 				</ui5-list>
 		</ui5-popover>

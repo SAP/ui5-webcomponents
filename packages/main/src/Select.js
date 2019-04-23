@@ -10,8 +10,8 @@ import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes.js";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
 import Function from "@ui5/webcomponents-base/src/types/Function.js";
 import Suggestions from "./Suggestions.js";
-import StandardListItem from "./StandardListItem";
-import Option from "./Option";
+import StandardListItem from "./StandardListItem.js";
+import Option from "./Option.js";
 
 // Template
 import SelectRenderer from "./build/compiled/SelectRenderer.lit.js";
@@ -159,6 +159,10 @@ class Select extends UI5Element {
 
 	onBeforeRendering() {
 		this._validateSelection();
+	}
+
+	onAfterRendering() {
+		this.Suggestions.slotName = this.shadowRoot.querySelectorAll("ui5-li");
 	}
 
 	/* Event handling */

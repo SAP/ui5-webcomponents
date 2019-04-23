@@ -1,12 +1,13 @@
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import URI from "@ui5/webcomponents-base/src/types/URI";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import URI from "@ui5/webcomponents-base/src/types/URI.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-option",
+	noShadowDOM: true,
 	usesNodeText: true,
 	properties: /** @lends  sap.ui.webcomponents.main.Option.prototype */  {
 		selected: {
