@@ -17,6 +17,9 @@ class RadioButtonGroup {
 	}
 
 	static addToGroup(radioBtn, groupName) {
+		if (groupName === "GroupB") {
+			debugger;
+		}
 		if (this.hasGroup(groupName)) {
 			this.enforceSingleSelection(radioBtn, groupName);
 			this.getGroup(groupName).push(radioBtn);
@@ -51,6 +54,10 @@ class RadioButtonGroup {
 	}
 
 	static createGroup(radioBtn, groupName) {
+		if (groupName === "GroupB") {
+			debugger;
+		}
+
 		if (radioBtn.selected) {
 			this.selectedRadios.set(groupName, radioBtn);
 		}
@@ -155,6 +162,7 @@ class RadioButtonGroup {
 		const selectedRadio = this.getSelectedRadioFromGroup(groupName);
 
 		if (!selectedRadio) {
+			radioBtn.selected && this.selectedRadios.set(groupName, radioBtn);
 			return;
 		}
 
@@ -179,6 +187,7 @@ class RadioButtonGroup {
 		if (!this._selectedRadios) {
 			this._selectedRadios = new Map();
 		}
+		window.iMap = this._selectedRadios;
 		return this._selectedRadios;
 	}
 }
