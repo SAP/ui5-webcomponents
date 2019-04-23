@@ -12,6 +12,9 @@ import TimelineItemRenderer from "./build/compiled/TimelineItemRenderer.lit.js";
 // Styles
 import styles from "./themes/TimelineItem.css.js";
 
+// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
+import "./ThemePropertiesProvider.js";
+
 /**
  * @public
  */

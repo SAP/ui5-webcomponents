@@ -9,6 +9,9 @@ import CalendarHeaderRenderer from "./build/compiled/CalendarHeaderRenderer.lit.
 // Styles
 import styles from "./themes/CalendarHeader.css.js";
 
+// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
+import "./ThemePropertiesProvider.js";
+
 const metadata = {
 	tag: "ui5-calendar-header",
 	properties: {
