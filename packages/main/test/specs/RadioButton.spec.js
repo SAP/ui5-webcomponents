@@ -99,8 +99,8 @@ describe("RadioButton general interaction", () => {
 		// radio with property selected=true and actually selected as subsequent
 		const radioButtonActuallySelected = browser.findElementDeep("#groupRb10 >>> .sapMRb");
 
-		assert.ok(!radioButtonNotSelected1.hasClass("sapMRbSel"), "The radio is not selected as following one selected");
-		assert.ok(!radioButtonNotSelected2.hasClass("sapMRbSel"), "The radio is not selected as following one selected");
+		assert.ok(!radioButtonNotSelected1.hasClass("sapMRbSel"), "The radio is not selected as the last one is selected");
+		assert.ok(!radioButtonNotSelected2.hasClass("sapMRbSel"), "The radio is not selected as the last one is selected");
 		assert.ok(radioButtonActuallySelected.hasClass("sapMRbSel"), 'The correct radio is selected');
 	});
 
