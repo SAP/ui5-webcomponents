@@ -17,9 +17,6 @@ class RadioButtonGroup {
 	}
 
 	static addToGroup(radioBtn, groupName) {
-		if (groupName === "GroupB") {
-			debugger;
-		}
 		if (this.hasGroup(groupName)) {
 			this.enforceSingleSelection(radioBtn, groupName);
 			this.getGroup(groupName).push(radioBtn);
@@ -54,10 +51,6 @@ class RadioButtonGroup {
 	}
 
 	static createGroup(radioBtn, groupName) {
-		if (groupName === "GroupB") {
-			debugger;
-		}
-
 		if (radioBtn.selected) {
 			this.selectedRadios.set(groupName, radioBtn);
 		}
