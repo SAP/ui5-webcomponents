@@ -1,28 +1,23 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import URI from "@ui5/webcomponents-base/src/types/URI";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
-import { isIconURI } from "@ui5/webcomponents-base/src/IconPool";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents";
-import Function from "@ui5/webcomponents-base/src/types/Function";
-import CardRenderer from "./build/compiled/CardRenderer.lit";
-import Icon from "./Icon";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import URI from "@ui5/webcomponents-base/src/types/URI.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import { isIconURI } from "@ui5/webcomponents-base/src/IconPool.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import Function from "@ui5/webcomponents-base/src/types/Function.js";
+import CardRenderer from "./build/compiled/CardRenderer.lit.js";
+import Icon from "./Icon.js";
 
 // Styles
-import cardCss from "./themes/Card.css";
+import cardCss from "./themes/Card.css.js";
 
-addCustomCSS("ui5-card", "sap_fiori_3", cardCss);
-addCustomCSS("ui5-card", "sap_belize", cardCss);
-addCustomCSS("ui5-card", "sap_belize_hcb", cardCss);
+// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
+import "./ThemePropertiesProvider.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-card",
-	styleUrl: [
-		"Card.css",
-	],
 	defaultSlot: "content",
 	slots: /** @lends sap.ui.webcomponents.main.Card.prototype */ {
 
@@ -130,11 +125,11 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Card
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-card
  * @public
  */
-class Card extends WebComponent {
+class Card extends UI5Element {
 	constructor() {
 		super();
 
@@ -149,6 +144,10 @@ class Card extends WebComponent {
 
 	static get renderer() {
 		return CardRenderer;
+	}
+
+	static get styles() {
+		return cardCss;
 	}
 
 	static calculateTemplateContext(state) {

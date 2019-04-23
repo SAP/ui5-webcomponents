@@ -1,9 +1,12 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import URI from "@ui5/webcomponents-base/src/types/URI";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import URI from "@ui5/webcomponents-base/src/types/URI.js";
 
 // Template
-import ShellBarItemRenderer from "./build/compiled/ShellBarItemRenderer.lit";
+import ShellBarItemRenderer from "./build/compiled/ShellBarItemRenderer.lit.js";
+
+// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
+import "./ThemePropertiesProvider.js";
 
 /**
  * @public
@@ -55,11 +58,11 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.ShellBarItem
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-shellbar-item
  * @public
  */
-class ShellBarItem extends WebComponent {
+class ShellBarItem extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}

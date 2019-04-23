@@ -1,4 +1,4 @@
-import Function from "./types/Function";
+import Function from "./types/Function.js";
 
 class State {
 	constructor(control) {

@@ -1,34 +1,29 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation";
-import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
+import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper.js";
 
-import { isTabNext } from "@ui5/webcomponents-base/src/events/PseudoEvents";
-import ListItemBase from "./ListItemBase";
-import ListMode from "./types/ListMode";
-import BackgroundDesign from "./types/BackgroundDesign";
-import ListSeparators from "./types/ListSeparators";
-import ListItemType from "./types/ListItemType";
+import { isTabNext } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import ListItemBase from "./ListItemBase.js";
+import ListMode from "./types/ListMode.js";
+import BackgroundDesign from "./types/BackgroundDesign.js";
+import ListSeparators from "./types/ListSeparators.js";
+import ListItemType from "./types/ListItemType.js";
 // Template
-import ListRenderer from "./build/compiled/ListRenderer.lit";
-import ListTemplateContext from "./ListTemplateContext";
+import ListRenderer from "./build/compiled/ListRenderer.lit.js";
+import ListTemplateContext from "./ListTemplateContext.js";
 
 // Styles
-import listCss from "./themes/List.css";
+import listCss from "./themes/List.css.js";
 
-addCustomCSS("ui5-list", "sap_fiori_3", listCss);
-addCustomCSS("ui5-list", "sap_belize", listCss);
-addCustomCSS("ui5-list", "sap_belize_hcb", listCss);
+// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
+import "./ThemePropertiesProvider.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-list",
-	styleUrl: [
-		"List.css",
-	],
 	defaultSlot: "items",
 	slots: /** @lends sap.ui.webcomponents.main.List.prototype */ {
 
@@ -232,18 +227,22 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.List
- * @extends WebComponent
+ * @extends UI5Element
  * @tagname ui5-list
  * @appenddocs StandardListItem CustomListItem GroupHeaderListItem
  * @public
  */
-class List extends WebComponent {
+class List extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
 
 	static get renderer() {
 		return ListRenderer;
+	}
+
+	static get styles() {
+		return listCss;
 	}
 
 	constructor() {

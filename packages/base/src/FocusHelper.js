@@ -1,4 +1,4 @@
-import WebComponent from "./WebComponent";
+import UI5Element from "./UI5Element.js";
 
 const rFocusable = /^(?:input|select|textarea|button)$/i,
 	rClickable = /^(?:a|area)$/i;
@@ -36,7 +36,7 @@ class FocusHelper {
 	}
 
 	static getCorrectElement(element) {
-		if (element instanceof WebComponent) {
+		if (element instanceof UI5Element) {
 			// Focus the CustomElement itself or provide getDomRef of each ?
 			return element.getFocusDomRef();
 		}

@@ -1,27 +1,22 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler";
-import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
-import TableColumn from "./TableColumn";
-import TableRow from "./TableRow";
-import TableRenderer from "./build/compiled/TableRenderer.lit";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler.js";
+import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import TableColumn from "./TableColumn.js";
+import TableRow from "./TableRow.js";
+import TableRenderer from "./build/compiled/TableRenderer.lit.js";
 
 // Styles
-import styles from "./themes/Table.css";
+import styles from "./themes/Table.css.js";
 
-addCustomCSS("ui5-table", "sap_fiori_3", styles);
-addCustomCSS("ui5-table", "sap_belize", styles);
-addCustomCSS("ui5-table", "sap_belize_hcb", styles);
+// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
+import "./ThemePropertiesProvider.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-table",
-	styleUrl: [
-		"Table.css",
-	],
 	slots: /** @lends sap.ui.webcomponents.main.Table.prototype */ {
 
 		/**
@@ -112,14 +107,18 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Table
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-table
  * @appenddocs TableColumn TableRow TableCell
  * @public
  */
-class Table extends WebComponent {
+class Table extends UI5Element {
 	static get metadata() {
 		return metadata;
+	}
+
+	static get styles() {
+		return styles;
 	}
 
 	static get renderer() {

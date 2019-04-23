@@ -1,5 +1,5 @@
-import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device";
-import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration";
+import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
+import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
 
 const SVGConfig = {
 	"compact": {
@@ -25,7 +25,7 @@ class RadioButtonTemplateContext {
 			context = {
 				ctr: state,
 				readOnly: state.disabled || state.readOnly,
-				tabIndex: state.disabled || (!state.selected && state.group) ? "-1" : "0",
+				tabIndex: state.disabled || (!state.selected && state.name) ? "-1" : "0",
 				circle: compact ? SVGConfig.compact : SVGConfig.default,
 				classes: { main: mainClasses, inner: innerClasses },
 				styles: {

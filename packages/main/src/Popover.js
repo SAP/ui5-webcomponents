@@ -1,30 +1,28 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import RenderScheduler from "@ui5/webcomponents-base/src/RenderScheduler";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
-import Integer from "@ui5/webcomponents-base/src/types/Integer";
-import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper";
-import PopoverTemplateContext from "./PopoverTemplateContext";
-import PopoverPlacementType from "./types/PopoverPlacementType";
-import PopoverVerticalAlign from "./types/PopoverVerticalAlign";
-import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign";
-import Popup from "./Popup";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import RenderScheduler from "@ui5/webcomponents-base/src/RenderScheduler.js";
+import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
+import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper.js";
+import PopoverTemplateContext from "./PopoverTemplateContext.js";
+import PopoverPlacementType from "./types/PopoverPlacementType.js";
+import PopoverVerticalAlign from "./types/PopoverVerticalAlign.js";
+import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
+import Popup from "./Popup.js";
 
 
 // Template
-import PopoverRenderer from "./build/compiled/PopoverRenderer.lit";
+import PopoverRenderer from "./build/compiled/PopoverRenderer.lit.js";
 
 // Styles
-import popoverCss from "./themes/Popover.css";
+import popoverCss from "./themes/Popover.css.js";
 
-addCustomCSS("ui5-popover", "sap_fiori_3", popoverCss);
-addCustomCSS("ui5-popover", "sap_belize", popoverCss);
-addCustomCSS("ui5-popover", "sap_belize_hcb", popoverCss);
+// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
+import "./ThemePropertiesProvider.js";
+
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-popover",
-	styleUrl: ["Popup.css", "Popover.css"],
 	properties: /** @lends sap.ui.webcomponents.main.Popover.prototype */ {
 
 		/**
@@ -186,6 +184,10 @@ class Popover extends Popup {
 
 	static get renderer() {
 		return PopoverRenderer;
+	}
+
+	static get styles() {
+		return [Popup.styles, popoverCss];
 	}
 
 	constructor() {

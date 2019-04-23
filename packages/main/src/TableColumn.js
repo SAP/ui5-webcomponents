@@ -1,22 +1,17 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import Integer from "@ui5/webcomponents-base/src/types/Integer";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import CSSSize from "@ui5/webcomponents-base/src/types/CSSSize";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
-import TableColumnRenderer from "./build/compiled/TableColumnRenderer.lit";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import CSSSize from "@ui5/webcomponents-base/src/types/CSSSize.js";
+import TableColumnRenderer from "./build/compiled/TableColumnRenderer.lit.js";
 
 // Styles
-import styles from "./themes/TableColumn.css";
+import styles from "./themes/TableColumn.css.js";
 
-addCustomCSS("ui5-table-column", "sap_fiori_3", styles);
-addCustomCSS("ui5-table-column", "sap_belize", styles);
-addCustomCSS("ui5-table-column", "sap_belize_hcb", styles);
+// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
+import "./ThemePropertiesProvider.js";
 
 const metadata = {
 	tag: "ui5-table-column",
-	styleUrl: [
-		"TableColumn.css",
-	],
 	slots: /** @lends sap.ui.webcomponents.main.TableColumn.prototype */ {
 
 		/**
@@ -105,13 +100,17 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.TableColumn
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-table-column
  * @public
  */
-class TableColumn extends WebComponent {
+class TableColumn extends UI5Element {
 	static get metadata() {
 		return metadata;
+	}
+
+	static get styles() {
+		return styles;
 	}
 
 	static get renderer() {

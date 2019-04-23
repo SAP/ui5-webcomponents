@@ -1,7 +1,7 @@
-import DataType from "./types/DataType";
-import Function from "./types/Function";
+import DataType from "./types/DataType.js";
+import Function from "./types/Function.js";
 
-class WebComponentMetadata {
+class UI5ElementMetadata {
 	constructor(metadata) {
 		this.metadata = metadata;
 	}
@@ -12,10 +12,6 @@ class WebComponentMetadata {
 
 	getNoShadowDOM() {
 		return this.metadata.noShadowDOM;
-	}
-
-	getStyleUrl() {
-		return this.metadata.styleUrl || [];
 	}
 
 	usesNodeText() {
@@ -29,7 +25,7 @@ class WebComponentMetadata {
 	getObservedProps() {
 		const properties = this.getProperties();
 		const allProps = Object.keys(properties);
-		const observedProps = allProps.filter(WebComponentMetadata.isPublicProperty);
+		const observedProps = allProps.filter(UI5ElementMetadata.isPublicProperty);
 		return observedProps;
 	}
 
@@ -122,4 +118,4 @@ const isDescendantOf = (klass, baseKlass, inclusive = false) => {
 	return parent === baseKlass;
 };
 
-export default WebComponentMetadata;
+export default UI5ElementMetadata;

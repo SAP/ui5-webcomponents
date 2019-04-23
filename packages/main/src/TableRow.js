@@ -1,24 +1,19 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
-import TableCell from "./TableCell";
-import TableRowRenderer from "./build/compiled/TableRowRenderer.lit";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import TableCell from "./TableCell.js";
+import TableRowRenderer from "./build/compiled/TableRowRenderer.lit.js";
 
 // Styles
-import styles from "./themes/TableRow.css";
+import styles from "./themes/TableRow.css.js";
 
-addCustomCSS("ui5-table-row", "sap_fiori_3", styles);
-addCustomCSS("ui5-table-row", "sap_belize", styles);
-addCustomCSS("ui5-table-row", "sap_belize_hcb", styles);
+// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
+import "./ThemePropertiesProvider.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-table-row",
-	styleUrl: [
-		"TableRow.css",
-	],
 	defaultSlot: "cells",
 	slots: /** @lends sap.ui.webcomponents.main.TableRow.prototype */ {
 		/**
@@ -60,13 +55,17 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.TableRow
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-table-row
  * @public
  */
-class TableRow extends WebComponent {
+class TableRow extends UI5Element {
 	static get metadata() {
 		return metadata;
+	}
+
+	static get styles() {
+		return styles;
 	}
 
 	static get renderer() {

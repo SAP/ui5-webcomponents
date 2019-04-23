@@ -1,7 +1,7 @@
-import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device";
-import ListMode from "./types/ListMode";
-import ListItemType from "./types/ListItemType";
-import ListItemBaseTemplateContext from "./ListItemBaseTemplateContext";
+import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
+import ListMode from "./types/ListMode.js";
+import ListItemType from "./types/ListItemType.js";
+import ListItemBaseTemplateContext from "./ListItemBaseTemplateContext.js";
 
 class ListItemTemplateContext {
 	static calculate(state) {

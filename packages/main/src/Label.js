@@ -1,26 +1,21 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 
 // Template
-import LabelRenderer from "./build/compiled/LabelRenderer.lit";
-import LabelTemplateContext from "./LabelTemplateContext";
+import LabelRenderer from "./build/compiled/LabelRenderer.lit.js";
+import LabelTemplateContext from "./LabelTemplateContext.js";
 
 // Styles
-import labelCss from "./themes/Label.css";
+import labelCss from "./themes/Label.css.js";
 
-addCustomCSS("ui5-label", "sap_fiori_3", labelCss);
-addCustomCSS("ui5-label", "sap_belize", labelCss);
-addCustomCSS("ui5-label", "sap_belize_hcb", labelCss);
+// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
+import "./ThemePropertiesProvider.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-label",
-	styleUrl: [
-		"Label.css",
-	],
 	usesNodeText: true,
 	properties: /** @lends sap.ui.webcomponents.main.Label.prototype */  {
 
@@ -88,18 +83,22 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Label
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-label
  * @usestextcontent
  * @public
  */
-class Label extends WebComponent {
+class Label extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
 
 	static get renderer() {
 		return LabelRenderer;
+	}
+
+	static get styles() {
+		return labelCss;
 	}
 
 	onclick() {

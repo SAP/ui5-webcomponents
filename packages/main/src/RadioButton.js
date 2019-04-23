@@ -1,8 +1,7 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
-import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes";
-import ValueState from "@ui5/webcomponents-base/src/types/ValueState";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes.js";
+import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
 import {
 	isSpace,
 	isEnter,
@@ -10,27 +9,23 @@ import {
 	isLeft,
 	isUp,
 	isRight,
-} from "@ui5/webcomponents-base/src/events/PseudoEvents";
-import RadioButtonGroup from "./RadioButtonGroup";
+} from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import RadioButtonGroup from "./RadioButtonGroup.js";
 // Template
-import RadioButtonRenderer from "./build/compiled/RadioButtonRenderer.lit";
-import RadioButtonTemplateContext from "./RadioButtonTemplateContext";
+import RadioButtonRenderer from "./build/compiled/RadioButtonRenderer.lit.js";
+import RadioButtonTemplateContext from "./RadioButtonTemplateContext.js";
 
 // Styles
-import radioButtonCss from "./themes/RadioButton.css";
+import radioButtonCss from "./themes/RadioButton.css.js";
 
-addCustomCSS("ui5-radiobutton", "sap_fiori_3", radioButtonCss);
-addCustomCSS("ui5-radiobutton", "sap_belize", radioButtonCss);
-addCustomCSS("ui5-radiobutton", "sap_belize_hcb", radioButtonCss);
+// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
+import "./ThemePropertiesProvider.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-radiobutton",
-	styleUrl: [
-		"RadioButton.css",
-	],
 	properties: /** @lends sap.ui.webcomponents.main.RadioButton.prototype */  {
 
 		/**
@@ -100,12 +95,17 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the group to which the <code>ui5-radiobutton</code> belongs.
+		 * Defines the name of the <code>ui5-radiobutton</code>.
+		 * Radio buttons with the same <code>name</code> will form a radio button group.
+		 * <br/><b>Note:</b>
+		 * The selection can be changed with <code>ARROW_UP/DOWN</code> and <code>ARROW_LEFT/RIGHT</code> keys between radios in same group.
+		 * <br/><b>Note:</b>
+		 * Only one radio button can be selected per group.
 		 *
 		 * @type {string}
 		 * @public
 		 */
-		group: {
+		name: {
 			defaultValue: "",
 			type: String,
 		},
@@ -135,8 +135,8 @@ const metadata = {
  * When a <code>ui5-radiobutton</code> is selected by the user, the
  * <code>select</code> event is fired.
  * When a <code>ui5-radiobutton</code> that is within a group is selected, the one
- * that was previously selected gets
- * automatically deselected.
+ * that was previously selected gets automatically deselected. You can group radio buttons by using the <code>name</code> property.
+ *
  *
  * <h3>ES6 Module Import</h3>
  *
@@ -145,17 +145,21 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.RadioButton
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-radiobutton
  * @public
  */
-class RadioButton extends WebComponent {
+class RadioButton extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
 
 	static get renderer() {
 		return RadioButtonRenderer;
+	}
+
+	static get styles() {
+		return radioButtonCss;
 	}
 
 	constructor() {
@@ -174,24 +178,24 @@ class RadioButton extends WebComponent {
 	}
 
 	syncGroup() {
-		const oldGroup = this._group;
-		const currentGroup = this.group;
+		const oldGroup = this._name;
+		const currentGroup = this.name;
 
-		if (currentGroup === oldGroup) {
-			return;
+		if (currentGroup !== oldGroup) {
+			if (oldGroup) {
+				// remove the control from the previous group
+				RadioButtonGroup.removeFromGroup(this, oldGroup);
+			}
+
+			if (currentGroup) {
+				// add the control to the existing group
+				RadioButtonGroup.addToGroup(this, currentGroup);
+			}
+		} else if (currentGroup) {
+			RadioButtonGroup.enforceSingleSelection(this, currentGroup);
 		}
 
-		if (oldGroup) {
-			// remove the control from the previous group
-			RadioButtonGroup.removeFromGroup(this, oldGroup);
-		}
-
-		if (currentGroup) {
-			// add the control to the existing group
-			RadioButtonGroup.addToGroup(this, currentGroup);
-		}
-
-		this._group = this.group;
+		this._name = this.name;
 	}
 
 	onclick() {
@@ -199,7 +203,7 @@ class RadioButton extends WebComponent {
 	}
 
 	_handleDown(event) {
-		const currentGroup = this.group;
+		const currentGroup = this.name;
 
 		if (!currentGroup) {
 			return;
@@ -210,7 +214,7 @@ class RadioButton extends WebComponent {
 	}
 
 	_handleUp(event) {
-		const currentGroup = this.group;
+		const currentGroup = this.name;
 
 		if (!currentGroup) {
 			return;
@@ -249,13 +253,13 @@ class RadioButton extends WebComponent {
 			return this;
 		}
 
-		if (!this.group) {
+		if (!this.name) {
 			this.selected = !this.selected;
 			this.fireEvent("select");
 			return this;
 		}
 
-		RadioButtonGroup.selectItem(this, this.group);
+		RadioButtonGroup.selectItem(this, this.name);
 		return this;
 	}
 

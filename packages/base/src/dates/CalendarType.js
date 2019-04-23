@@ -1,4 +1,4 @@
-import DataType from "../types/DataType";
+import DataType from "../types/DataType.js";
 
 /**
  * Different calendar types.

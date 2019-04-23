@@ -1,29 +1,24 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import URI from "@ui5/webcomponents-base/src/types/URI";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import URI from "@ui5/webcomponents-base/src/types/URI.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes.js";
 
-import ButtonTemplateContext from "./ButtonTemplateContext";
-import ButtonType from "./types/ButtonType";
-import ButtonRenderer from "./build/compiled/ButtonRenderer.lit";
-import Icon from "./Icon";
+import ButtonTemplateContext from "./ButtonTemplateContext.js";
+import ButtonType from "./types/ButtonType.js";
+import ButtonRenderer from "./build/compiled/ButtonRenderer.lit.js";
+import Icon from "./Icon.js";
 
 // Styles
-import buttonCss from "./themes/Button.css";
+import buttonCss from "./themes/Button.css.js";
 
-addCustomCSS("ui5-button", "sap_fiori_3", buttonCss);
-addCustomCSS("ui5-button", "sap_belize", buttonCss);
-addCustomCSS("ui5-button", "sap_belize_hcb", buttonCss);
+// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
+import "./ThemePropertiesProvider.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-button",
-	styleUrl: [
-		"Button.css",
-	],
 	usesNodeText: true,
 	properties: /** @lends sap.ui.webcomponents.main.Button.prototype */ {
 
@@ -90,6 +85,20 @@ const metadata = {
 		activeIcon: { type: URI, defaultValue: null },
 
 		/**
+		 * When set to <code>true</code>, the <code>ui5-button</code> will
+		 * automatically submit the nearest form element upon <code>press</code>.
+		 *
+		 * <b>Important:</b> For the <code>submits</code> property to have effect, you must add the following import to your project:
+		 * <code>import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";</code>
+		 *
+		 * @type {boolean}
+		 * @public
+		 */
+		submits: {
+			type: Boolean,
+		},
+
+		/**
 		 * Used to switch the active state (pressed or not) of the <code>ui5-button</code>.
 		 */
 		_active: { type: Boolean },
@@ -142,14 +151,18 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Button
- * @extends WebComponent
+ * @extends UI5Element
  * @tagname ui5-button
  * @usestextcontent
  * @public
  */
-class Button extends WebComponent {
+class Button extends UI5Element {
 	static get metadata() {
 		return metadata;
+	}
+
+	static get styles() {
+		return buttonCss;
 	}
 
 	static get renderer() {
@@ -178,6 +191,10 @@ class Button extends WebComponent {
 		} else {
 			this._iconSettings = null;
 		}
+
+		if (this.submits && !Button.FormSupport) {
+			console.warn(`In order for the "submits" property to have effect, you should also: import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";`); // eslint-disable-line
+		}
 	}
 
 	onEnterDOM() {
@@ -192,6 +209,9 @@ class Button extends WebComponent {
 		event.isMarked = "button";
 		if (!this.disabled) {
 			this.fireEvent("press", {});
+			if (Button.FormSupport) {
+				Button.FormSupport.triggerFormSubmit(this);
+			}
 		}
 	}
 

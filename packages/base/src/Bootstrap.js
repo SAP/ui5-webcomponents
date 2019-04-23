@@ -1,10 +1,10 @@
-import whenDOMReady from "./util/whenDOMReady";
-import EventEnrichment from "./events/EventEnrichment";
-import { insertIconFontFace } from "./IconFonts";
-import DOMEventHandler from "./DOMEventHandler";
-import { initConfiguration } from "./Configuration";
-import { applyTheme } from "./Theming";
-import whenPolyfillLoaded from "./compatibility/whenPolyfillLoaded";
+import whenDOMReady from "./util/whenDOMReady.js";
+import EventEnrichment from "./events/EventEnrichment.js";
+import { insertIconFontFace } from "./IconFonts.js";
+import DOMEventHandler from "./DOMEventHandler.js";
+import { initConfiguration } from "./Configuration.js";
+import { applyTheme } from "./Theming.js";
+import whenPolyfillLoaded from "./compatibility/whenPolyfillLoaded.js";
 
 EventEnrichment.run();
 

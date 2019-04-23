@@ -1,30 +1,19 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
-import Button from "./Button";
-import ToggleButtonTemplateContext from "./ToggleButtonTemplateContext";
-import ToggleButtonRenderer from "./build/compiled/ToggleButtonRenderer.lit";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import Button from "./Button.js";
+import ToggleButtonTemplateContext from "./ToggleButtonTemplateContext.js";
+import ToggleButtonRenderer from "./build/compiled/ToggleButtonRenderer.lit.js";
 
 // Styles
-import btnCss from "./themes/Button.css";
-import toggleBtnCss from "./themes/ToggleButton.css";
+import toggleBtnCss from "./themes/ToggleButton.css.js";
 
-addCustomCSS("ui5-togglebutton", "sap_fiori_3", btnCss);
-addCustomCSS("ui5-togglebutton", "sap_belize", btnCss);
-addCustomCSS("ui5-togglebutton", "sap_belize_hcb", btnCss);
-
-addCustomCSS("ui5-togglebutton", "sap_fiori_3", toggleBtnCss);
-addCustomCSS("ui5-togglebutton", "sap_belize", toggleBtnCss);
-addCustomCSS("ui5-togglebutton", "sap_belize_hcb", toggleBtnCss);
+// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
+import "./ThemePropertiesProvider.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-togglebutton",
-	styleUrl: [
-		"Button.css",
-		"ToggleButton.css",
-	],
 	usesNodeText: true,
 	properties: /** @lends  sap.ui.webcomponents.main.ToggleButton.prototype */ {
 		/**
@@ -72,6 +61,10 @@ class ToggleButton extends Button {
 
 	static get renderer() {
 		return ToggleButtonRenderer;
+	}
+
+	static get styles() {
+		return [Button.styles, toggleBtnCss];
 	}
 
 	onclick() {

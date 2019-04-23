@@ -1,26 +1,21 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import URI from "@ui5/webcomponents-base/src/types/URI";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import { addCustomCSS } from "@ui5/webcomponents-base/src/theming/CustomStyle";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents";
-import IconTemplateContext from "./IconTemplateContext";
-import IconRenderer from "./build/compiled/IconRenderer.lit";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import URI from "@ui5/webcomponents-base/src/types/URI.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import IconTemplateContext from "./IconTemplateContext.js";
+import IconRenderer from "./build/compiled/IconRenderer.lit.js";
 
 // Styles
-import iconCss from "./themes/Icon.css";
+import iconCss from "./themes/Icon.css.js";
 
-addCustomCSS("ui5-icon", "sap_fiori_3", iconCss);
-addCustomCSS("ui5-icon", "sap_belize", iconCss);
-addCustomCSS("ui5-icon", "sap_belize_hcb", iconCss);
+// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
+import "./ThemePropertiesProvider.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-icon",
-	styleUrl: [
-		"Icon.css",
-	],
 	properties: /** @lends sap.ui.webcomponents.main.Icon.prototype */ {
 
 		/**
@@ -67,11 +62,11 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Icon
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-icon
  * @public
  */
-class Icon extends WebComponent {
+class Icon extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
@@ -82,6 +77,10 @@ class Icon extends WebComponent {
 
 	static get calculateTemplateContext() {
 		return IconTemplateContext.calculate;
+	}
+
+	static get styles() {
+		return iconCss;
 	}
 
 	focus() {
