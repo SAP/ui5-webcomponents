@@ -1,5 +1,12 @@
-commit ca5f62c9ffa9baefb51c5902343e01e0d6af6a1b
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Tue Apr 23 14:01:47 2019 +0300
+commit dcd64a9718b0ce90d7d8db7c087ae25953f4ea9e
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Tue Apr 23 15:24:59 2019 +0300
 
-    fix(ui5-messagestrip): fix layout in ie (#353)
+    fix: switch theme for single imported components (#356)
+    
+    When importing a single component like show in the documentation,
+    the url parameters for setting a theme stopped working,
+    unless a ThemePropertiesProvider module is also imported.
+    
+    This change returns the previous behaviour, where the single
+    imports have all features working.
