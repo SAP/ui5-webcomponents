@@ -186,6 +186,17 @@ class CheckBox extends UI5Element {
 	onBeforeRendering() {
 		this.syncLabel();
 
+		this._enableFormSupport();
+	}
+
+	syncLabel() {
+		this._label = Object.assign({}, this._label);
+		this._label.text = this.text;
+		this._label.wrap = this.wrap;
+		this._label.textDirection = this.textDirection;
+	}
+
+	_enableFormSupport() {
 		if (CheckBox.FormSupport) {
 			CheckBox.FormSupport.syncNativeHiddenInput(this, (element, nativeInput) => {
 				nativeInput.disabled = element.disabled || !element.checked;
@@ -194,13 +205,6 @@ class CheckBox extends UI5Element {
 		} else if (this.name) {
 			console.warn(`In order for the "name" property to have effect, you should also: import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";`); // eslint-disable-line
 		}
-	}
-
-	syncLabel() {
-		this._label = Object.assign({}, this._label);
-		this._label.text = this.text;
-		this._label.wrap = this.wrap;
-		this._label.textDirection = this.textDirection;
 	}
 
 	onclick() {

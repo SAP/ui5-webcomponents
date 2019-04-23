@@ -102,12 +102,35 @@ const metadata = {
 		 * <br/><b>Note:</b>
 		 * Only one radio button can be selected per group.
 		 *
+		 * <b>Important:</b> For the <code>name</code> property to have effect when submitting forms, you must add the following import to your project:
+		 * <code>import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";</code>
+		 *
+		 * <b>Note:</b> When set, a native <code>input</code> HTML element
+		 * will be created inside the <code>ui5-radiobutton</code> so that it can be submitted as
+		 * part of an HTML form.
+		 *
 		 * @type {string}
 		 * @public
 		 */
 		name: {
 			defaultValue: "",
 			type: String,
+		},
+
+		/**
+		 * Defines the form value of the <code>ui5-radiobutton</code>.
+		 * When a form with a radio button group is submitted, the group's value
+		 * will be the value of the currently selected radio button.
+		 *
+		 * <b>Important:</b> For the <code>value</code> property to have effect, you must add the following import to your project:
+		 * <code>import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";</code>
+		 *
+		 * @type {string}
+		 * @public
+		 */
+		value: {
+			type: String,
+			defaultValue: "",
 		},
 
 		_label: {
@@ -170,6 +193,8 @@ class RadioButton extends UI5Element {
 	onBeforeRendering() {
 		this.syncLabel();
 		this.syncGroup();
+
+		this._enableFormSupport();
 	}
 
 	syncLabel() {
@@ -196,6 +221,17 @@ class RadioButton extends UI5Element {
 		}
 
 		this._name = this.name;
+	}
+
+	_enableFormSupport() {
+		if (RadioButton.FormSupport) {
+			RadioButton.FormSupport.syncNativeHiddenInput(this, (element, nativeInput) => {
+				nativeInput.disabled = element.disabled || !element.selected;
+				nativeInput.value = element.selected ? element.value : "";
+			});
+		} else if (this.value) {
+			console.warn(`In order for the "value" property to have effect, you should also: import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";`); // eslint-disable-line
+		}
 	}
 
 	onclick() {
