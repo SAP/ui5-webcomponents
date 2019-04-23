@@ -155,14 +155,12 @@ class RadioButtonGroup {
 		const selectedRadio = this.getSelectedRadioFromGroup(groupName);
 
 		if (radioBtn.selected) {
-
 			if (!selectedRadio) {
 				this.selectedRadios.set(groupName, radioBtn);
 			} else if (radioBtn !== selectedRadio) {
 				this._deselectRadio(selectedRadio);
 				this.selectedRadios.set(groupName, radioBtn);
 			}
-
 		} else if (radioBtn === selectedRadio) {
 			this.selectedRadios.set(groupName, null);
 		}
