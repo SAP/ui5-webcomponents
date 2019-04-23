@@ -191,14 +191,7 @@ class RadioButton extends UI5Element {
 		this.syncLabel();
 		this.syncGroup();
 
-		if (RadioButton.FormSupport) {
-			RadioButton.FormSupport.syncNativeHiddenInput(this, (element, nativeInput) => {
-				nativeInput.disabled = element.disabled || !element.selected;
-				nativeInput.value = element.selected ? element.value : "";
-			});
-		} else if (this.value) {
-			console.warn(`In order for the "value" property to have effect, you should also: import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";`); // eslint-disable-line
-		}
+		this._enableFormSupport();
 	}
 
 	syncLabel() {
@@ -225,6 +218,17 @@ class RadioButton extends UI5Element {
 		}
 
 		this._name = this.name;
+	}
+
+	_enableFormSupport() {
+		if (RadioButton.FormSupport) {
+			RadioButton.FormSupport.syncNativeHiddenInput(this, (element, nativeInput) => {
+				nativeInput.disabled = element.disabled || !element.selected;
+				nativeInput.value = element.selected ? element.value : "";
+			});
+		} else if (this.value) {
+			console.warn(`In order for the "value" property to have effect, you should also: import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";`); // eslint-disable-line
+		}
 	}
 
 	onclick() {
