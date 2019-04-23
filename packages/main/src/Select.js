@@ -225,20 +225,33 @@ class Select extends UI5Element {
 	}
 
 	/* Suggestions Interface methods */
+
+	_listItemToOption(listItem) {
+		let matchingOption;
+		this.items.forEach(option => {
+			if (option._id === listItem.id) {
+				matchingOption = option;
+			}
+		});
+		return matchingOption;
+	}
+
 	onItemFocused() {}
 
 	onItemSelected(item) {
-		if (this._getSelectedItem() === item) {
+		const option = this._listItemToOption(item);
+		if (this._getSelectedItem() === option) {
 			return;
 		}
 
-		this._select(item);
-		this._fireChange(item);
+		this._select(option);
+		this._fireChange(option);
 	}
 
 	onItemPreviewed(item) {
-		this._setPreviewedItem(item);
-		this._setText(item.textContent);
+		const option = this._listItemToOption(item);
+		this._setPreviewedItem(option);
+		this._setText(option.textContent);
 	}
 
 	onOpen() {
