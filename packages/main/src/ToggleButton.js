@@ -61,7 +61,7 @@ class ToggleButton extends Button {
 	}
 
 	static get styles() {
-		return [Button.style, toggleBtnCss];
+		return [Button.styles, toggleBtnCss];
 	}
 
 	onclick() {
