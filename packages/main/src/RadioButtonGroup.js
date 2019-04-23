@@ -180,7 +180,6 @@ class RadioButtonGroup {
 		if (!this._selectedRadios) {
 			this._selectedRadios = new Map();
 		}
-		window.iMap = this._selectedRadios;
 		return this._selectedRadios;
 	}
 }
