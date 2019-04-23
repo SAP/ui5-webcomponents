@@ -24,6 +24,9 @@ import "@ui5/webcomponents-core/dist/sap/ui/core/date/Gregorian.js";
 // Styles
 import calendarCSS from "./themes/Calendar.css.js";
 
+// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
+import "./ThemePropertiesProvider.js";
+
 /**
  * @public
  */

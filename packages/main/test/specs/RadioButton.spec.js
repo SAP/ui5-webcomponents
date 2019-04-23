@@ -92,13 +92,15 @@ describe("RadioButton general interaction", () => {
 	});
 	
 	it("tests single selection within group, even if multiple radios are set as selected", () => {
-		// radio with property selected=true, but not selected
-		const radioButtonNotSelected = browser.findElementDeep("#groupRb7 >>> .sapMRb");
+		// radios with property selected=true, but not selected
+		const radioButtonNotSelected1 = browser.findElementDeep("#groupRb8 >>> .sapMRb");
+		const radioButtonNotSelected2 = browser.findElementDeep("#groupRb9 >>> .sapMRb");
 
 		// radio with property selected=true and actually selected as subsequent
 		const radioButtonActuallySelected = browser.findElementDeep("#groupRb10 >>> .sapMRb");
 
-		assert.ok(!radioButtonNotSelected.hasClass("sapMRbSel"), "The radio is not selected as following one selected");
+		assert.ok(!radioButtonNotSelected1.hasClass("sapMRbSel"), "The radio is not selected as the last one is selected");
+		assert.ok(!radioButtonNotSelected2.hasClass("sapMRbSel"), "The radio is not selected as the last one is selected");
 		assert.ok(radioButtonActuallySelected.hasClass("sapMRbSel"), 'The correct radio is selected');
 	});
 

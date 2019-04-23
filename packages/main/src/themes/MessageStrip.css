@@ -14,7 +14,7 @@ span[data-sap-ui-wc-root] {
 	display: flex;
 }
 
-.ui5-messagestrip {
+.ui5-messagestrip-root {
 	width: 100%;
 	height: 100%;
 	display: flex;
@@ -27,7 +27,7 @@ span[data-sap-ui-wc-root] {
 	position: relative;
 }
 
-.ui5-messagestrip .ui5-messagestrip-icon {
+.ui5-messagestrip-root .ui5-messagestrip-icon {
 	width: var(--_ui5_messagestrip_icon_width);
 	box-sizing: border-box;
 	position: absolute;
@@ -35,13 +35,13 @@ span[data-sap-ui-wc-root] {
 	left: 0px;
 }
 
-.ui5-messagestrip .ui5-messagestrip-text {
+.ui5-messagestrip -root.ui5-messagestrip-text {
 	width: 100%;
 	color: var(--sapTextColor);
 	line-height: 1.2;
 }
 
-.ui5-messagestrip ui5-button {
+.ui5-messagestrip-root ui5-button {
 	height: var(--_ui5_messagestrip_button_height);
 	border-width: var(--_ui5_messagestrip_button_border_width);
 	border-style: var(--_ui5_messagestrip_button_border_style);
