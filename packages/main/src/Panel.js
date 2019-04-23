@@ -13,6 +13,9 @@ import { fetchResourceBundle, getResourceBundle } from "./ResourceBundleProvider
 // Styles
 import panelCss from "./themes/Panel.css.js";
 
+// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
+import "./ThemePropertiesProvider.js";
+
 /**
  * @public
  */

@@ -16,6 +16,9 @@ import YearPickerRenderer from "./build/compiled/YearPickerRenderer.lit.js";
 // Styles
 import styles from "./themes/YearPicker.css.js";
 
+// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
+import "./ThemePropertiesProvider.js";
+
 /**
  * @public
  */

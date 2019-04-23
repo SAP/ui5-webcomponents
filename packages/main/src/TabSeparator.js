@@ -3,6 +3,9 @@ import TabSeparatorTemplateContext from "./TabSeparatorTemplateContext.js";
 import TabBase from "./TabBase.js";
 import TabSeparatorRenderer from "./build/compiled/TabSeparatorRenderer.lit.js";
 
+// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
+import "./ThemePropertiesProvider.js";
+
 /**
  * @public
  */
