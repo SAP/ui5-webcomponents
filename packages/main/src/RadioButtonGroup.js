@@ -154,16 +154,15 @@ class RadioButtonGroup {
 	static enforceSingleSelection(radioBtn, groupName) {
 		const selectedRadio = this.getSelectedRadioFromGroup(groupName);
 
-		if (!selectedRadio) {
-			radioBtn.selected && this.selectedRadios.set(groupName, radioBtn);
-			return;
-		}
-
 		if (radioBtn.selected) {
-			if (radioBtn !== selectedRadio) {
+
+			if (!selectedRadio) {
+				this.selectedRadios.set(groupName, radioBtn);
+			} else if (radioBtn !== selectedRadio) {
 				this._deselectRadio(selectedRadio);
 				this.selectedRadios.set(groupName, radioBtn);
 			}
+
 		} else if (radioBtn === selectedRadio) {
 			this.selectedRadios.set(groupName, null);
 		}
