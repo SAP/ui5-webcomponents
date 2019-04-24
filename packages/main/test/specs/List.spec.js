@@ -10,11 +10,13 @@ describe("Date Picker Tests", () => {
 		const itemPressResultField = $("#itemPressResultField");
 		const selectionChangeResultField = $("#selectionChangeResultField");
 		const firstItem = $("#listEvents #country1");
+		const inactiveItem = $("#listEvents #country4");
 
 		firstItem.click();
+		inactiveItem.click();
 
-		assert.strictEqual(itemPressResultField.getProperty("value"), "1", "itemPress event has been fired.");
-		assert.strictEqual(selectionChangeResultField.getProperty("value"), "1", "selectionChange event has been fired.");
+		assert.strictEqual(itemPressResultField.getProperty("value"), "2", "itemPress event has been fired twice");
+		assert.strictEqual(selectionChangeResultField.getProperty("value"), "2", "selectionChange event has been fired.");
 	});
 
 	it("header text", () => {
