@@ -93,6 +93,9 @@ const validateSingleProperty = (value, propData) => {
 
 const validateSingleSlot = (value, propData) => {
 	const getSlottedElement = el => {
+		if (!el.tagName) {
+			return el;
+		}
 		return el.tagName.toUpperCase() !== "SLOT" ? el : getSlottedElement(el.assignedNodes()[0]);
 	};
 	const propertyType = propData.type;

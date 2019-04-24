@@ -25,7 +25,11 @@
 	<!-- content area -->
 	<div class="{{classes.content}}" tabindex="-1" style="{{styles.content}}">
 		{{#each ctr.content}}
-			<slot name="{{this._slot}}"></slot>
+            {{#if this._slot}}
+			    <slot name="{{this._slot}}"></slot>
+            {{else}}
+                {{this.textContent}}
+            {{/if}}
 		{{/each}}
 	</div>
 </div>

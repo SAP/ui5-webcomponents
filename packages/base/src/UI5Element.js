@@ -155,7 +155,7 @@ class UI5Element extends HTMLElement {
 	}
 
 	_updateSlots() {
-		const domChildren = Array.from(this.children);
+		const domChildren = Array.from(this.childNodes).filter(node => !(node instanceof Comment));
 
 		const slotsMap = this.constructor.getMetadata().getSlots();
 		for (const [prop, propData] of Object.entries(slotsMap)) { // eslint-disable-line
@@ -167,21 +167,25 @@ class UI5Element extends HTMLElement {
 		}
 		const autoIncrementMap = new Map();
 		domChildren.forEach(child => {
-			const slot = child.getAttribute("data-ui5-slot") || this.constructor.getMetadata().getDefaultSlot();
+			const slot = (child instanceof HTMLElement) && child.getAttribute("data-ui5-slot") || this.constructor.getMetadata().getDefaultSlot();
 			if (slotsMap[slot] === undefined) {
 				const validValues = Object.keys(slotsMap).join(", ");
 				console.warn(`Unknown data-ui5-slot value: ${slot}, ignoring`, child, `Valid data-ui5-slot values are: ${validValues}`); // eslint-disable-line
 				return;
 			}
-			let slotName;
-			if (slotsMap[slot].multiple) {
-				const nextId = (autoIncrementMap.get(slot) || 0) + 1;
-				slotName = `${slot}-${nextId}`;
-				autoIncrementMap.set(slot, nextId);
-			} else {
-				slotName = slot;
+
+			if (child instanceof HTMLElement) {
+				let slotName;
+				if (slotsMap[slot].multiple) {
+					const nextId = (autoIncrementMap.get(slot) || 0) + 1;
+					slotName = `${slot}-${nextId}`;
+					autoIncrementMap.set(slot, nextId);
+				} else {
+					slotName = slot;
+				}
+				child._slot = slotName;
 			}
-			child._slot = slotName;
+
 			if (slotsMap[slot].multiple) {
 				this._state[slot] = [...this._state[slot], child];
 			} else {
@@ -525,6 +529,11 @@ class UI5Element extends HTMLElement {
 
 	getSlottedNodes(slotName) {
 		const getSlottedElement = el => {
+
+			if (!el.tagName) {
+				return el;
+			}
+
 			if (el.tagName.toUpperCase() !== "SLOT") {
 				return el;
 			}

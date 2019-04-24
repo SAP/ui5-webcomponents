@@ -25,31 +25,30 @@
 
     <script nomodule src="../../../../../../resources/sap/ui/webcomponents/main/bundle.es5.js">
     </script>
+
+    <style>
+        span.red {
+            color: red;
+        }
+    </style>
 </head>
 
 <body>
 
-    <ui5-link href="http://www.google.com" target="_blank">Normal link</ui5-link>
-    <br>
-    <ui5-link id="l" href="http://www.google.com" target="_blank">Default prevented</ui5-link>
-    <br>
-    <ui5-button id="b" type="Emphasized">Action Bar Button</ui5-button>
+    <ui5-panel>
+        Hello <span class="red">world</span> !
+        <br>
+        <span class="red">text in span</span> text no span. <!-- comment -->
+    </ui5-panel>
 
-    <ui5-datepicker primary-calendar-type="Gregorian"></ui5-datepicker>
+    <ui5-panel>
+        <div>Text in div</div>
+        <ui5-button>OK</ui5-button>
+    </ui5-panel>
 
-    <ui5-input show-suggestions id="ii">
-        <ui5-li type="Active">Anna</ui5-li>
-        <ui5-li type="Active">Anelia</ui5-li>
-        <ui5-li type="Active">Bobi</ui5-li>
-    </ui5-input>
-
-
-    <script>
-        var l = document.getElementById("l");
-        l.addEventListener("press", function(e) {
-            e.preventDefault();
-        });
-    </script>
+    <ui5-panel>
+        Text only
+    </ui5-panel>
 
 </body>
 </html>
