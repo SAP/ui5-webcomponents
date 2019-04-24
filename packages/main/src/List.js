@@ -149,8 +149,7 @@ const metadata = {
 	events: /** @lends  sap.ui.webcomponents.main.List.prototype */ {
 
 		/**
-		 * Fired when an item is pressed, unless the item's <code>type</code> property
-		 * is set to <code>Inactive</code>.
+		 * Fired when an item is pressed.
 		 *
 		 * @event
 		 * @param {HTMLElement} item the pressed item.
@@ -449,9 +448,7 @@ class List extends UI5Element {
 	onItemPress(event) {
 		const pressedItem = event.detail.item;
 
-		if (pressedItem.type === ListItemType.Active) {
-			this.fireEvent("itemPress", { item: pressedItem });
-		}
+		this.fireEvent("itemPress", { item: pressedItem });
 
 		if (!this._selectionRequested && this.mode !== ListMode.Delete) {
 			this._selectionRequested = true;
