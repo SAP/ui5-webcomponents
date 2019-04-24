@@ -167,4 +167,21 @@ describe("Select general interaction", () => {
 		
 		assert.strictEqual(inputResult.getProperty("value"), "6", "Change event should be fired");
 	});
+
+	it("fires change event after selecting a previewed item", () => {
+		const select = $("#mySelect");
+		const inputResult = browser.findElementDeep("#inputResult >>> input");
+
+		select.click();
+		select.keys("ArrowDown");
+
+		select.keys("Escape");
+
+		select.click();
+		const firstItem = $("#mySelect ui5-li[slot=items-1]");
+
+		firstItem.click();
+
+		assert.strictEqual(inputResult.getProperty("value"), "7", "Change event should be fired");
+	});
 });

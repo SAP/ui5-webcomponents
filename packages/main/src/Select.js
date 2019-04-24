@@ -153,7 +153,7 @@ class Select extends UI5Element {
 
 		this._closing = false; // Flag for handling open/close on space
 		this._selectedItemBeforeOpen = null; // Stores the selected item before opening the picker
-		this._escapePresssed = false; // Identifies if the escape is pressed when picker is open
+		this._escapePressed = false; // Identifies if the escape is pressed when picker is open
 
 
 		this._setSelectedItem(null);
@@ -209,9 +209,7 @@ class Select extends UI5Element {
 			});
 
 			this._select(this._selectedItemBeforeOpen, this.items.indexOf(this._selectedItemBeforeOpen));
-			this._escapePresssed = true;
-		} else {
-			this._escapePresssed = false;
+			this._escapePressed = true;
 		}
 
 		const key = event.which;
@@ -266,10 +264,12 @@ class Select extends UI5Element {
 	onClose() {
 		this._opened = false; // invalidating property
 
-		if ((this._getSelectedItem() !== this._selectedItemBeforeOpen) && !this._escapePresssed) {
+		if ((this._getSelectedItem() !== this._selectedItemBeforeOpen) && !this._escapePressed) {
 			const previewedItem = this._getSelectedItem();
 			this._fireChange(previewedItem);
 		}
+
+		this._escapePressed = false;
 	}
 
 	/* Private methods */
