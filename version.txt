@@ -1,5 +1,10 @@
-commit 96a05174b678297860ee696831fe97bcefbf6d81
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Tue Apr 23 16:37:05 2019 +0300
+commit 3d184209035779a3a7ae61408f7bae75d19e4fde
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Wed Apr 24 11:41:01 2019 +0300
 
-    feat: enable radio button form support (#357)
+    fix(ui5-select): preselect first item if none is selected (#358)
+    
+    - pressing escape now reverts the selection before opening the picker
+    - focusing out the popover now triggers a change event (if selection is changed)
+    
+    Fixes: https://github.com/SAP/ui5-webcomponents/issues/339
