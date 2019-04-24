@@ -8,7 +8,6 @@ import ListItemBase from "./ListItemBase.js";
 import ListMode from "./types/ListMode.js";
 import BackgroundDesign from "./types/BackgroundDesign.js";
 import ListSeparators from "./types/ListSeparators.js";
-import ListItemType from "./types/ListItemType.js";
 // Template
 import ListRenderer from "./build/compiled/ListRenderer.lit.js";
 import ListTemplateContext from "./ListTemplateContext.js";
