@@ -1,10 +1,5 @@
-commit 3d184209035779a3a7ae61408f7bae75d19e4fde
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Wed Apr 24 11:41:01 2019 +0300
+commit 0c108585bfc2bf6b58bc0f99bc8064d4ba261657
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Apr 24 14:06:51 2019 +0300
 
-    fix(ui5-select): preselect first item if none is selected (#358)
-    
-    - pressing escape now reverts the selection before opening the picker
-    - focusing out the popover now triggers a change event (if selection is changed)
-    
-    Fixes: https://github.com/SAP/ui5-webcomponents/issues/339
+    chore(release): publish v0.10.1 (#361)
