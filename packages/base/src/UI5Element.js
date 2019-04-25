@@ -155,10 +155,17 @@ class UI5Element extends HTMLElement {
 	}
 
 	_updateSlots() {
-		const domChildren = Array.from(this.childNodes).filter(node => !(node instanceof Comment));
-
 		const slotsMap = this.constructor.getMetadata().getSlots();
 		const defaultSlot = this.constructor.getMetadata().getDefaultSlot();
+		const canSlotText = slotsMap[defaultSlot] !== undefined && slotsMap[defaultSlot].type === Node;
+
+		let domChildren;
+		if (canSlotText) {
+			domChildren = Array.from(this.childNodes).filter(node => !(node instanceof Comment));
+		} else {
+			domChildren = Array.from(this.children);
+		}
+
 		for (const [prop, propData] of Object.entries(slotsMap)) { // eslint-disable-line
 			if (propData.multiple) {
 				this._state[prop] = [];
@@ -166,6 +173,7 @@ class UI5Element extends HTMLElement {
 				this._state[prop] = null;
 			}
 		}
+
 		const autoIncrementMap = new Map();
 		domChildren.forEach(child => {
 			const namedSlot = (child instanceof HTMLElement) && child.getAttribute("data-ui5-slot");
