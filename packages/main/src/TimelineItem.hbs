@@ -16,7 +16,7 @@
 
 		{{#if ctr.description}}
 			<div class="sapWCTimelineItemDesc">
-				<slot name="{{ctr.description._slot}}"></slot>
+                {{> renderChild ctr.description}}
 			</div>
 		{{/if}}
 		<span class="sapWCTimelineBubbleArrow sapWCTimelineBubbleArrowLeft"></span>

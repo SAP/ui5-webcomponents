@@ -20,7 +20,7 @@
 			data-sap-focus-ref
 	/>
 		{{#if ctr.icon}}
-			<slot name="{{ctr.icon._slot}}"></slot>
+            {{> renderChild ctr.icon}}
 		{{/if}}
 	</div>
 
@@ -33,7 +33,7 @@
 				initial-focus="{{ctr._id}}-inner">
 					<ui5-list separators="Inner">
 						{{#each ctr.suggestionItems}}
-							<slot name="{{this._slot}}"></slot>
+                            {{> renderChild this}}
 						{{/each}}
 					</ui5-list>
 			</ui5-popover>

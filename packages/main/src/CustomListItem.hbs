@@ -2,6 +2,6 @@
 
 {{#*inline "listItemContent"}}
     {{#each ctr.content}}
-        <slot name="{{this._slot}}" />
+        {{> renderChild this}}
     {{/each}}
 {{/inline}}

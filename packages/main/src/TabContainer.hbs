@@ -60,7 +60,7 @@
 		{{#each renderItems}}
 			{{#unless this.isSeparator}}
 				<div class="{{this.contentItemClasses}}" id="ui5-tc-contentItem-{{this.position}}">
-					<slot name="{{this.item._slot}}"></slot>
+                    {{> renderChild this.item}}
 				</div>
 			{{/unless}}
 		{{/each}}

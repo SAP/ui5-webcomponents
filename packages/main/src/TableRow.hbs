@@ -5,7 +5,7 @@
 >
 	{{#each visibleCells}}
 		<div class="{{../classes.cellWrapper}}">
-			<slot name="{{this._slot}}"></slot>
+            {{> renderChild this}}
 		</div>
 	{{/each}}
 
@@ -15,7 +15,7 @@
 
 			<span class="{{../classes.popinTitle}}">{{this.popinText}}</span>
 			<div>
-				<slot name="{{this.cell._slot}}"></slot>
+                {{> renderChild this.cell}}
 			</div>
 		</div>
 	{{/each}}

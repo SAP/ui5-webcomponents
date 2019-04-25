@@ -16,7 +16,7 @@
 			horizontal-align="Stretch">
 				<ui5-list separators="None">
 					{{#each ctr.items}}
-						<slot name="{{this._slot}}"></slot>
+                        {{> renderChild this}}
 					{{/each}}
 				</ui5-list>
 		</ui5-popover>

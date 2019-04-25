@@ -4,7 +4,7 @@
 >
 	<!-- header -->
 	{{#if ctr.header}}
-		<slot name="{{ctr.header._slot}}" />
+        {{> renderChild ctr.header}}
 	{{/if}}
 	{{#if shouldRenderH1}}
 		<header id="{{ctr._id}}-header" class="sapMListHdr sapMListHdrText">
@@ -16,7 +16,7 @@
 
 	<ul id="{{ctr._id}}-listUl" class="{{classes.ul}}">
 		{{#each ctr.items}}
-			<slot name="{{this._slot}}" />
+            {{> renderChild this}}
 		{{/each}}
 
 		{{#if showNoDataText}}

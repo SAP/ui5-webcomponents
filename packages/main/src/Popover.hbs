@@ -5,7 +5,7 @@
 			<div id="{{ctr._id}}-content" role="application" style="{{styles.content}}" class="sapMPopupContent">
 				<div class="sapMPopupScroll">
 					{{#each ctr.content}}
-						<slot name="{{this._slot}}"></slot>
+                        {{> renderChild this}}
 					{{/each}}
 				</div>
 			</div>
@@ -21,7 +21,7 @@
 		<header>
 			{{#if ctr.header}}
 				<div role="toolbar" class="sapMPopupHeader">
-					<slot name="{{ctr.header._slot}}"></slot>
+                    {{> renderChild ctr.header}}
 				</div>
 			{{else}}
 				<h2 role="toolbar" class="sapMPopupHeader sapMPopupHeaderText">{{ctr.headerText}}</h2>
@@ -34,7 +34,7 @@
 	{{#if ctr.footer}}
 		<footer>
 			<div class="sapMPopupFooter">
-				<slot name="{{ctr.footer._slot}}"></slot>
+                {{> renderChild ctr.footer}}
 			</div>
 		</footer>
 	{{/if}}

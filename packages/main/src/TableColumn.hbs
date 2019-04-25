@@ -1,5 +1,5 @@
 <div {{> controlData}} style="{{styles.main}}" class="{{classes.main}}" >
 	{{#if ctr.header}}
-		<slot name="{{ctr.header._slot}}"></slot>
+        {{> renderChild ctr.header}}
 	{{/if}}
 </div>

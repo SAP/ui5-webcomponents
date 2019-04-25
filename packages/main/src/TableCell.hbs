@@ -3,6 +3,6 @@
 	style="{{styles.main}}">
 
 	{{#each ctr.content}}
-		<slot name="{{this._slot}}"></slot>
+        {{> renderChild this}}
 	{{/each}}
 </div>

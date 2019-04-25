@@ -2,7 +2,7 @@
 	<ul class="sapWCTimelineList">
 		{{#each ctr.items}}
 			<li class="sapWCTimelineListItem">
-				<slot name="{{this._slot}}"></slot>
+                {{> renderChild this}}
 			</li>
 		{{/each}}
 	</ul>
