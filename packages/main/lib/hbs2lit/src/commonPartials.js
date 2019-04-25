@@ -1,7 +1,6 @@
-var aPartials = [`
+const aPartials = [`
 {{#*inline "controlData"}}
 	id="{{ctr._id}}"
-	data-sap-ui="{{ctr._id}}"
 	aria-hidden="{{ariaHidden}}"
 {{/inline}}`, `
 {{#*inline "accAttributes"}}
@@ -13,6 +12,14 @@ var aPartials = [`
 	aria-checked="{{ctr.checked}}"
 	aria-describedby="{{ctr.describedby}}"
 	aria-labelledby="{{ctr.labelledby}}"
-{{/inline}}`];
+{{/inline}}`, `
+{{#*inline renderChild}}
+  	{{#if this._slot}}
+		<slot name="{{this._slot}}"></slot>
+	{{else}}
+		{{this.textContent}}
+	{{/if}}
+{{/inline}}
+`];
 
 module.exports = aPartials;

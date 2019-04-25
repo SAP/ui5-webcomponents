@@ -25,11 +25,7 @@
 	<!-- content area -->
 	<div class="{{classes.content}}" tabindex="-1" style="{{styles.content}}">
 		{{#each ctr.content}}
-            {{#if this._slot}}
-			    <slot name="{{this._slot}}"></slot>
-            {{else}}
-                {{this.textContent}}
-            {{/if}}
+            {{> renderChild this}}
 		{{/each}}
 	</div>
 </div>
@@ -37,7 +33,7 @@
 {{#*inline "header"}}
 	{{#if ctr.header}}
 		<div class="sapMPanelHdrToolbar">
-			<slot name="{{ctr.header._slot}}"></slot>
+			{{> renderChild ctr.header}}
 		</div>
 	{{/if}}
 	{{#if shouldRenderH1}}
