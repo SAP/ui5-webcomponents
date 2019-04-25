@@ -17,7 +17,20 @@ import "./ThemePropertiesProvider.js";
  */
 const metadata = {
 	tag: "ui5-messagestrip",
-	usesNodeText: true,
+	defaultSlot: "content",
+	slots: {
+
+		/**
+		 * Defines the content of the <code>ui5-messagestrip</code>.
+		 * @type {Node[]}
+		 * @slot
+		 * @public
+		 */
+		content: {
+			type: Node,
+			multiple: true,
+		},
+	},
 	properties: /** @lends sap.ui.webcomponents.main.MessageStrip.prototype */ {
 
 		/**
