@@ -158,6 +158,7 @@ class UI5Element extends HTMLElement {
 		const domChildren = Array.from(this.childNodes).filter(node => !(node instanceof Comment));
 
 		const slotsMap = this.constructor.getMetadata().getSlots();
+		const defaultSlot = this.constructor.getMetadata().getDefaultSlot();
 		for (const [prop, propData] of Object.entries(slotsMap)) { // eslint-disable-line
 			if (propData.multiple) {
 				this._state[prop] = [];
@@ -167,7 +168,8 @@ class UI5Element extends HTMLElement {
 		}
 		const autoIncrementMap = new Map();
 		domChildren.forEach(child => {
-			const slot = (child instanceof HTMLElement) && child.getAttribute("data-ui5-slot") || this.constructor.getMetadata().getDefaultSlot();
+			const namedSlot = (child instanceof HTMLElement) && child.getAttribute("data-ui5-slot");
+			const slot = namedSlot || defaultSlot;
 			if (slotsMap[slot] === undefined) {
 				const validValues = Object.keys(slotsMap).join(", ");
 				console.warn(`Unknown data-ui5-slot value: ${slot}, ignoring`, child, `Valid data-ui5-slot values are: ${validValues}`); // eslint-disable-line
@@ -529,7 +531,6 @@ class UI5Element extends HTMLElement {
 
 	getSlottedNodes(slotName) {
 		const getSlottedElement = el => {
-
 			if (!el.tagName) {
 				return el;
 			}
