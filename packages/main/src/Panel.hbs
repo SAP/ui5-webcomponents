@@ -33,7 +33,7 @@
 {{#*inline "header"}}
 	{{#if ctr.header}}
 		<div class="sapMPanelHdrToolbar">
-			{{> renderChild ctr.header}}
+            <slot name="{{ctr.header._slot}}"></slot>
 		</div>
 	{{/if}}
 	{{#if shouldRenderH1}}

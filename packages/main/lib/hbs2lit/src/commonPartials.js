@@ -13,7 +13,7 @@ const aPartials = [`
 	aria-describedby="{{ctr.describedby}}"
 	aria-labelledby="{{ctr.labelledby}}"
 {{/inline}}`, `
-{{#*inline renderChild}}
+{{#*inline "renderChild"}}
   	{{#if this._slot}}
 		<slot name="{{this._slot}}"></slot>
 	{{else}}

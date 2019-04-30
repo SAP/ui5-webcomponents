@@ -24,7 +24,7 @@
 		<header>
 			{{#if ctr.header}}
 				<div role="heading" class="sapMPopupHeader">
-                    {{> renderChild ctr.header}}
+                    <slot name="{{ctr.header._slot}}"></slot>
 				</div>
 			{{else}}
 				<h2 role="heading" class="sapMPopupHeader sapMPopupHeaderText">{{ctr.headerText}}</h2>
@@ -37,7 +37,7 @@
 	{{#if ctr.footer}}
 		<footer>
 			<div class="sapMPopupFooter">
-                {{> renderChild ctr.footer}}
+                <slot name="{{ctr.footer._slot}}"></slot>
 			</div>
 		</footer>
 	{{/if}}
