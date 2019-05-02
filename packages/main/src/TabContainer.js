@@ -12,8 +12,6 @@ import Icon from "./Icon.js";
 import List from "./List.js";
 import Popover from "./Popover.js";
 import TabBase from "./TabBase.js";
-import Tab from "./Tab.js";
-import TabSeparator from "./TabSeparator.js";
 
 // Styles
 import tabContainerCss from "./themes/TabContainer.css.js";
@@ -151,7 +149,9 @@ const metadata = {
  *
  * <code>import "@ui5/webcomponents/dist/TabContainer";</code>
  * <br>
- * <b>Note:</b> This also includes the <code>ui5-tab</code> and <code>ui5-tab-separator</code> Web Components.
+ * <code>import "@ui5/webcomponents/dist/Tab";</code> (for <code>ui5-tab</code>)
+ * <br>
+ * <code>import "@ui5/webcomponents/dist/TabSeparator";</code> (for <code>ui5-tab-separator</code>)
  *
  * @constructor
  * @author SAP SE
@@ -366,8 +366,6 @@ class TabContainer extends UI5Element {
 			Icon.define(),
 			List.define(),
 			Popover.define(),
-			Tab.define(),
-			TabSeparator.define(),
 		]);
 
 		super.define(...params);
