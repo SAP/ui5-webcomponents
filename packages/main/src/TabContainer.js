@@ -12,6 +12,8 @@ import Icon from "./Icon.js";
 import List from "./List.js";
 import Popover from "./Popover.js";
 import TabBase from "./TabBase.js";
+import Tab from "./Tab.js";
+import TabSeparator from "./TabSeparator.js";
 
 // Styles
 import tabContainerCss from "./themes/TabContainer.css.js";
@@ -364,6 +366,8 @@ class TabContainer extends UI5Element {
 			Icon.define(),
 			List.define(),
 			Popover.define(),
+			Tab.define(),
+			TabSeparator.define(),
 		]);
 
 		super.define(...params);
