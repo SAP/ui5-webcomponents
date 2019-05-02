@@ -1,5 +1,7 @@
-commit d6c5058557200791c2038d122822c7b187c7d15c
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Apr 24 14:51:44 2019 +0300
+commit 711743014372394044cf70f675fa1de1c5b9192d
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Thu May 2 15:19:57 2019 +0300
 
-    chore: update changelog (#362)
+    fix: update tab container documentation (#370)
+    
+    fixes #369
