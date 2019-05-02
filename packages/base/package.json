@@ -1,6 +1,6 @@
 {
   "name": "@ui5/webcomponents-base",
-  "version": "0.9.0",
+  "version": "0.10.1",
   "description": "UI5 Web Components: webcomponents.base",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
@@ -20,7 +20,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@ui5/webcomponents-core": "0.9.0",
+    "@ui5/webcomponents-core": "0.10.1",
     "lit-html": "^1.0.0",
     "regenerator-runtime": "0.12.1",
     "url-search-params-polyfill": "^5.0.0"

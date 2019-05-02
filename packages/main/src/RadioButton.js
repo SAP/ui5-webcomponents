@@ -18,6 +18,9 @@ import RadioButtonTemplateContext from "./RadioButtonTemplateContext.js";
 // Styles
 import radioButtonCss from "./themes/RadioButton.css.js";
 
+// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
+import "./ThemePropertiesProvider.js";
+
 /**
  * @public
  */
@@ -92,14 +95,42 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the group to which the <code>ui5-radiobutton</code> belongs.
+		 * Defines the name of the <code>ui5-radiobutton</code>.
+		 * Radio buttons with the same <code>name</code> will form a radio button group.
+		 * <br/><b>Note:</b>
+		 * The selection can be changed with <code>ARROW_UP/DOWN</code> and <code>ARROW_LEFT/RIGHT</code> keys between radios in same group.
+		 * <br/><b>Note:</b>
+		 * Only one radio button can be selected per group.
+		 *
+		 * <b>Important:</b> For the <code>name</code> property to have effect when submitting forms, you must add the following import to your project:
+		 * <code>import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";</code>
+		 *
+		 * <b>Note:</b> When set, a native <code>input</code> HTML element
+		 * will be created inside the <code>ui5-radiobutton</code> so that it can be submitted as
+		 * part of an HTML form.
 		 *
 		 * @type {string}
 		 * @public
 		 */
-		group: {
+		name: {
 			defaultValue: "",
 			type: String,
+		},
+
+		/**
+		 * Defines the form value of the <code>ui5-radiobutton</code>.
+		 * When a form with a radio button group is submitted, the group's value
+		 * will be the value of the currently selected radio button.
+		 *
+		 * <b>Important:</b> For the <code>value</code> property to have effect, you must add the following import to your project:
+		 * <code>import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";</code>
+		 *
+		 * @type {string}
+		 * @public
+		 */
+		value: {
+			type: String,
+			defaultValue: "",
 		},
 
 		_label: {
@@ -127,8 +158,8 @@ const metadata = {
  * When a <code>ui5-radiobutton</code> is selected by the user, the
  * <code>select</code> event is fired.
  * When a <code>ui5-radiobutton</code> that is within a group is selected, the one
- * that was previously selected gets
- * automatically deselected.
+ * that was previously selected gets automatically deselected. You can group radio buttons by using the <code>name</code> property.
+ *
  *
  * <h3>ES6 Module Import</h3>
  *
@@ -162,6 +193,8 @@ class RadioButton extends UI5Element {
 	onBeforeRendering() {
 		this.syncLabel();
 		this.syncGroup();
+
+		this._enableFormSupport();
 	}
 
 	syncLabel() {
@@ -170,24 +203,35 @@ class RadioButton extends UI5Element {
 	}
 
 	syncGroup() {
-		const oldGroup = this._group;
-		const currentGroup = this.group;
+		const oldGroup = this._name;
+		const currentGroup = this.name;
 
-		if (currentGroup === oldGroup) {
-			return;
+		if (currentGroup !== oldGroup) {
+			if (oldGroup) {
+				// remove the control from the previous group
+				RadioButtonGroup.removeFromGroup(this, oldGroup);
+			}
+
+			if (currentGroup) {
+				// add the control to the existing group
+				RadioButtonGroup.addToGroup(this, currentGroup);
+			}
+		} else if (currentGroup) {
+			RadioButtonGroup.enforceSingleSelection(this, currentGroup);
 		}
 
-		if (oldGroup) {
-			// remove the control from the previous group
-			RadioButtonGroup.removeFromGroup(this, oldGroup);
-		}
+		this._name = this.name;
+	}
 
-		if (currentGroup) {
-			// add the control to the existing group
-			RadioButtonGroup.addToGroup(this, currentGroup);
+	_enableFormSupport() {
+		if (RadioButton.FormSupport) {
+			RadioButton.FormSupport.syncNativeHiddenInput(this, (element, nativeInput) => {
+				nativeInput.disabled = element.disabled || !element.selected;
+				nativeInput.value = element.selected ? element.value : "";
+			});
+		} else if (this.value) {
+			console.warn(`In order for the "value" property to have effect, you should also: import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";`); // eslint-disable-line
 		}
-
-		this._group = this.group;
 	}
 
 	onclick() {
@@ -195,7 +239,7 @@ class RadioButton extends UI5Element {
 	}
 
 	_handleDown(event) {
-		const currentGroup = this.group;
+		const currentGroup = this.name;
 
 		if (!currentGroup) {
 			return;
@@ -206,7 +250,7 @@ class RadioButton extends UI5Element {
 	}
 
 	_handleUp(event) {
-		const currentGroup = this.group;
+		const currentGroup = this.name;
 
 		if (!currentGroup) {
 			return;
@@ -245,13 +289,13 @@ class RadioButton extends UI5Element {
 			return this;
 		}
 
-		if (!this.group) {
+		if (!this.name) {
 			this.selected = !this.selected;
 			this.fireEvent("select");
 			return this;
 		}
 
-		RadioButtonGroup.selectItem(this, this.group);
+		RadioButtonGroup.selectItem(this, this.name);
 		return this;
 	}
 

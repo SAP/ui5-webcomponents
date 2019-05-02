@@ -14,7 +14,10 @@ import Popover from "./Popover.js";
 import TabBase from "./TabBase.js";
 
 // Styles
-import buttonCss from "./themes/TabContainer.css.js";
+import tabContainerCss from "./themes/TabContainer.css.js";
+
+// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
+import "./ThemePropertiesProvider.js";
 
 const SCROLL_STEP = 128;
 
@@ -146,7 +149,9 @@ const metadata = {
  *
  * <code>import "@ui5/webcomponents/dist/TabContainer";</code>
  * <br>
- * <b>Note:</b> This also includes the <code>ui5-tab</code> and <code>ui5-tab-separator</code> Web Components.
+ * <code>import "@ui5/webcomponents/dist/Tab";</code> (for <code>ui5-tab</code>)
+ * <br>
+ * <code>import "@ui5/webcomponents/dist/TabSeparator";</code> (for <code>ui5-tab-separator</code>)
  *
  * @constructor
  * @author SAP SE
@@ -162,7 +167,7 @@ class TabContainer extends UI5Element {
 	}
 
 	static get styles() {
-		return buttonCss;
+		return tabContainerCss;
 	}
 
 	static get renderer() {

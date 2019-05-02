@@ -6,6 +6,9 @@ import ToggleButtonRenderer from "./build/compiled/ToggleButtonRenderer.lit.js";
 // Styles
 import toggleBtnCss from "./themes/ToggleButton.css.js";
 
+// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
+import "./ThemePropertiesProvider.js";
+
 /**
  * @public
  */
@@ -61,7 +64,7 @@ class ToggleButton extends Button {
 	}
 
 	static get styles() {
-		return [Button.style, toggleBtnCss];
+		return [Button.styles, toggleBtnCss];
 	}
 
 	onclick() {

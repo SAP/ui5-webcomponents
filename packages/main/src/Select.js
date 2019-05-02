@@ -5,6 +5,7 @@ import {
 	isUp,
 	isDown,
 	isEnter,
+	isEscape,
 } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes.js";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
@@ -19,6 +20,9 @@ import SelectTemplateContext from "./SelectTemplateContext.js";
 
 // Styles
 import selectCss from "./themes/Select.css.js";
+
+// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
+import "./ThemePropertiesProvider.js";
 
 /**
  * @public
@@ -151,6 +155,10 @@ class Select extends UI5Element {
 		super();
 
 		this._closing = false; // Flag for handling open/close on space
+		this._selectedItemBeforeOpen = null; // Stores the selected item before opening the picker
+		this._escapePressed = false; // Identifies if the escape is pressed when picker is open
+
+
 		this._setSelectedItem(null);
 		this._setPreviewedItem(null);
 		this.Suggestions = new Suggestions(this, "items", true /* move focus with arrow keys */);
@@ -202,6 +210,15 @@ class Select extends UI5Element {
 			this.Suggestions.onEnter(event);
 		}
 
+		if (isEscape(event) && this._opened && this._selectedItemBeforeOpen) {
+			this.items.forEach(item => {
+				item.selected = false;
+			});
+
+			this._select(this._selectedItemBeforeOpen, this.items.indexOf(this._selectedItemBeforeOpen));
+			this._escapePressed = true;
+		}
+
 		const key = event.which;
 
 		if (key === KeyCodes.F4 || (event.altKey && Select.ARROWS.includes(key))) {
@@ -245,7 +262,6 @@ class Select extends UI5Element {
 		}
 
 		this._select(option);
-		this._fireChange(option);
 	}
 
 	onItemPreviewed(item) {
@@ -255,21 +271,30 @@ class Select extends UI5Element {
 	}
 
 	onOpen() {
-		this._opened = true;// invalidating property
+		this._opened = true; // invalidating property
+
+		const selectedItem = this._getSelectedItem();
+
+		if (selectedItem) {
+			this._selectedItemBeforeOpen = selectedItem;
+			selectedItem.focus();
+		}
 	}
 
 	onClose() {
-		this._opened = false;// invalidating property
+		this._opened = false; // invalidating property
 
-		if (this._isSelectionChanged()) {
-			const previewedItem = this._getPreviewedItem();
+		if ((this._getSelectedItem() !== this._selectedItemBeforeOpen) && !this._escapePressed) {
+			const previewedItem = this._getSelectedItem();
 			this._fireChange(previewedItem);
 		}
+
+		this._escapePressed = false;
 	}
 
 	/* Private methods */
 	_validateSelection() {
-		if (this._isOpened()) {
+		if (this._isOpened() || !this.items.length) {
 			return;
 		}
 
@@ -285,6 +310,11 @@ class Select extends UI5Element {
 				selectedItemPos = idx;
 			}
 		});
+
+		if (!selectedItem) {
+			selectedItem = this.items[0];
+			selectedItemPos = 0;
+		}
 
 		if (this._getSelectedItem() !== selectedItem) {
 			this._select(selectedItem, selectedItemPos);
