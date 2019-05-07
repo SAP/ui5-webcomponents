@@ -418,7 +418,7 @@ class Input extends UI5Element {
 
 		try {
 			const Suggestions = Input.getSuggestions();
-			this.Suggestions = new Suggestions(this, "suggestionItems");
+			this.Suggestions = new Suggestions(this);
 		} catch (err) {
 			throw new Error(`You have to import @ui5/webcomponents/dist/InputSuggestions module to use ui5-input suggestions:: ${err}`);
 		}
@@ -502,6 +502,11 @@ class Input extends UI5Element {
 	}
 
 	/* Suggestions interface  */
+
+	getSuggestionItems() {
+		return this.getSlottedNodes("suggestionItems");
+	}
+
 	onItemFocused() {}
 
 	onItemSelected(item, keyboardUsed) {

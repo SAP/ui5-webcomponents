@@ -29,23 +29,24 @@ import "./ThemePropertiesProvider.js";
  */
 const metadata = {
 	tag: "ui5-select",
-	defaultSlot: "items",
+	defaultSlot: "options",
 	slots: /** @lends sap.ui.webcomponents.main.Select.prototype */ {
 
 		/**
-		 * Defines the <code>ui5-select</code> items.
+		 * Defines the <code>ui5-select</code> options.
 		 * <br/><br/>
-		 * <b>Note:</b> Only one selected item is allowed.
-		 * If more than one item is defined as selected, the last one would be considered as the selected one.
+		 * <b>Note:</b> Only one selected option is allowed.
+		 * If more than one option is defined as selected, the last one would be considered as the selected one.
 		 * <br/><br/>
-		 * <b>Note:</b> Use the <code>ui5-li</code> component to define the desired options.
+		 * <b>Note:</b> Use the <code>ui5-option</code> component to define the desired options.
 		 * @type {Option[]}
 		 * @slot
 		 * @public
 		 */
-		items: {
+		options: {
 			type: Option,
 			multiple: true,
+			listenFor: { include: ["*"] },
 		},
 	},
 	properties: /** @lends  sap.ui.webcomponents.main.Select.prototype */  {
@@ -80,6 +81,16 @@ const metadata = {
 			defaultValue: "",
 		},
 
+		_previewedItem: {
+			type: Object,
+			defaultValue: null,
+		},
+
+		_selectedItem: {
+			type: Object,
+			defaultValue: null,
+		},
+
 		_opened: {
 			type: Boolean,
 			defaultValue: false,
@@ -96,15 +107,15 @@ const metadata = {
 	},
 	events: /** @lends sap.ui.webcomponents.main.Select.prototype */ {
 		/**
-		 * Fired when the selected item changes.
+		 * Fired when the selected option changes.
 		 *
 		 * @event
-		 * @param {HTMLElement} item the selected item.
+		 * @param {HTMLElement} option the selected option.
 		 * @public
 		 */
 		change: {
 			detail: {
-				selectedItem: {},
+				selectedOption: {},
 			},
 		},
 	},
@@ -115,7 +126,7 @@ const metadata = {
  * <h3 class="comment-api-title"> Overview </h3>
  *
  * The <code>ui5-select</code> component is used to create a drop-down list.
- * The items inside the <code>ui5-select</code> define the available options by using the <code>ui5-li</code> component.
+ * You can define the available options by using the <code>ui5-option</code> component.
  *
  * <h3>Keyboard Handling</h3>
  * The <code>ui5-select</code> provides advanced keyboard handling.
@@ -158,19 +169,34 @@ class Select extends UI5Element {
 		this._selectedItemBeforeOpen = null; // Stores the selected item before opening the picker
 		this._escapePressed = false; // Identifies if the escape is pressed when picker is open
 
-
-		this._setSelectedItem(null);
-		this._setPreviewedItem(null);
-		this.Suggestions = new Suggestions(this, "items", true /* move focus with arrow keys */);
+		this.Suggestions = new Suggestions(this, true /* move focus with arrow keys */);
 		this._fnClickSelectBox = this.toggleList.bind(this);
 	}
 
 	onBeforeRendering() {
+		console.log('select -> onBeforeRendering')
 		this._validateSelection();
+		this._setText();
 	}
 
-	onAfterRendering() {
-		this.Suggestions.slotName = this.shadowRoot.querySelectorAll("ui5-li");
+	_setText() {
+		// If there is a previewed item, use its text
+		if (this._previewedItem) {
+			this._text = this._previewedItem.textContent;
+			return;
+		}
+
+		// If there is a selected item, use its text
+		if (this._selectedItem) {
+			this._text = this._selectedItem.textContent;
+			return;
+		}
+
+		this.options.forEach(option => {
+			if (option.selected) {
+				this._text = option.textContent;
+			}
+		}, this);
 	}
 
 	/* Event handling */
@@ -211,11 +237,11 @@ class Select extends UI5Element {
 		}
 
 		if (isEscape(event) && this._opened && this._selectedItemBeforeOpen) {
-			this.items.forEach(item => {
+			this.getSuggestionItems().forEach(item => {
 				item.selected = false;
 			});
 
-			this._select(this._selectedItemBeforeOpen, this.items.indexOf(this._selectedItemBeforeOpen));
+			this._select(this._selectedItemBeforeOpen, this.getSuggestionItems().indexOf(this._selectedItemBeforeOpen));
 			this._escapePressed = true;
 		}
 
@@ -243,6 +269,11 @@ class Select extends UI5Element {
 
 	/* Suggestions Interface methods */
 
+	getSuggestionItems() {
+		return [...this.shadowRoot.querySelectorAll("ui5-li")];
+	}
+
+	/*
 	_listItemToOption(listItem) {
 		let matchingOption;
 		this.items.forEach(option => {
@@ -252,28 +283,28 @@ class Select extends UI5Element {
 		});
 		return matchingOption;
 	}
+	*/
 
 	onItemFocused() {}
 
 	onItemSelected(item) {
-		const option = this._listItemToOption(item);
-		if (this._getSelectedItem() === option) {
+		console.log("onItemSelected", item);
+		if (this._selectedItem === item) {
 			return;
 		}
 
-		this._select(option);
+		this._select(item);
 	}
 
 	onItemPreviewed(item) {
-		const option = this._listItemToOption(item);
-		this._setPreviewedItem(option);
-		this._setText(option.textContent);
+		console.log("onItemPreviewed", item);
+		this._previewedItem = item;
 	}
 
 	onOpen() {
 		this._opened = true; // invalidating property
 
-		const selectedItem = this._getSelectedItem();
+		const selectedItem = this._selectedItem;
 
 		if (selectedItem) {
 			this._selectedItemBeforeOpen = selectedItem;
@@ -284,8 +315,8 @@ class Select extends UI5Element {
 	onClose() {
 		this._opened = false; // invalidating property
 
-		if ((this._getSelectedItem() !== this._selectedItemBeforeOpen) && !this._escapePressed) {
-			const previewedItem = this._getSelectedItem();
+		if ((this._selectedItem !== this._selectedItemBeforeOpen) && !this._escapePressed) {
+			const previewedItem = this._selectedItem;
 			this._fireChange(previewedItem);
 		}
 
@@ -294,14 +325,14 @@ class Select extends UI5Element {
 
 	/* Private methods */
 	_validateSelection() {
-		if (this._isOpened() || !this.items.length) {
+		if (this._isOpened() || !this.getSuggestionItems().length) {
 			return;
 		}
 
 		let selectedItem = null;
 		let selectedItemPos = null;
 
-		this.items.forEach((item, idx) => {
+		this.getSuggestionItems().forEach((item, idx) => {
 			if (item.selected) {
 				if (selectedItem) {
 					selectedItem.selected = false;
@@ -312,67 +343,36 @@ class Select extends UI5Element {
 		});
 
 		if (!selectedItem) {
-			selectedItem = this.items[0];
+			selectedItem = this.getSuggestionItems()[0];
 			selectedItemPos = 0;
 		}
 
-		if (this._getSelectedItem() !== selectedItem) {
+		if (this._selectedItem !== selectedItem) {
 			this._select(selectedItem, selectedItemPos);
 		}
 	}
 
 	_isSelectionChanged() {
-		const previewedItem = this._getPreviewedItem();
-		const selectedItem = this._getSelectedItem();
+		const previewedItem = this._previewedItem;
+		const selectedItem = this._selectedItem;
 
 		return previewedItem && selectedItem !== previewedItem;
 	}
 
 	_select(item, position) {
-		const selectedItem = this._getSelectedItem();
-
-		if (selectedItem) {
-			selectedItem.selected = false;
-		}
-
-		this._setSelectedItem(item);
-		this._setPreviewedItem(null);
-		this._setText(item.textContent);
+		this._selectedItem = item;
+		this._previewedItem = null;
 
 		if (position !== undefined) {
 			this._updateSelectedItemPos(position);
 		}
+		this._syncOptions();
 	}
 
 	_changeSelectionWhileClosed() {
-		if (this.items.length > 1 && !this._opened) {
-			this._select(this._getPreviewedItem());
-			this._fireChange(this._getSelectedItem());
-		}
-	}
-
-	_setSelectedItem(item) {
-		if (item) {
-			item.selected = true;
-		}
-		this._selectedItem = item;
-	}
-
-	_getSelectedItem() {
-		return this._selectedItem;
-	}
-
-	_setPreviewedItem(item) {
-		this._previewedItem = item;
-	}
-
-	_getPreviewedItem() {
-		return this._previewedItem;
-	}
-
-	_setText(text) {
-		if (this.text !== text) {
-			this._text = text; // invaldiating property
+		if (this.getSuggestionItems().length > 1 && !this._opened) {
+			this._select(this._previewedItem);
+			this._fireChange(this._selectedItem);
 		}
 	}
 
@@ -386,6 +386,12 @@ class Select extends UI5Element {
 
 	_fireChange(item) {
 		this.fireEvent("change", { selectedItem: item });
+	}
+
+	_syncOptions() {
+		this.options.forEach(option => {
+			option.selected = option._id === this._selectedItem.id;
+		}, this);
 	}
 
 	static async define(...params) {

@@ -8,22 +8,23 @@
 		<ui5-label>{{ctr._text}}</ui5-label>
 	</div>
 
-	{{#if ctr.items}}
+	{{#if ctr.options}}
 		<ui5-popover
 			placement-type="Bottom"
 			hide-header="true"
 			hide-arrow="true"
 			horizontal-align="Stretch">
 				<ui5-list separators="None">
-					{{#each ctr.items}}
-                        <ui5-li
-                                id="{{this._id}}"
-                                value="{{this.value}}"
-                                icon="{{this.icon}}"
-                                ?selected="{{this.selected}}"
-                        >
-                            {{this.textContent}}
-                        </ui5-li>
+					{{#each ctr.options}}
+						<ui5-li
+								id="{{this._id}}"
+                                type="Active"
+								value="{{this.value}}"
+								icon="{{this.icon}}"
+								?selected="{{this.selected}}"
+						>
+							{{this.textContent}}
+						</ui5-li>
 					{{/each}}
 				</ui5-list>
 		</ui5-popover>

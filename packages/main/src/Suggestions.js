@@ -4,7 +4,7 @@ import Popover from "./Popover.js";
 import StandardListItem from "./StandardListItem.js"; // ensure <ui5-li> is loaded
 import CustomListItem from "./CustomListItem.js"; // ensure <ui5-li-custom> is loaded
 
-(function noTreeShaked() {
+(function noTreeShaken() {
 	`${StandardListItem}${CustomListItem}`; //eslint-disable-line
 }());
 
@@ -16,12 +16,9 @@ import CustomListItem from "./CustomListItem.js"; // ensure <ui5-li-custom> is l
  * @author SAP SE
  */
 class Suggestions {
-	constructor(component, slotName, handleFocus) {
+	constructor(component, handleFocus = false) {
 		// The component, that the suggestion would plug into.
 		this.component = component;
-
-		// Defines the items` slot name.
-		this.slotName = slotName;
 
 		// Defines, if the focus will be moved via the arrow keys.
 		this.handleFocus = handleFocus;
@@ -95,7 +92,6 @@ class Suggestions {
 
 	onItemSelected(selectedItem, keyboardUsed) {
 		const item = selectedItem || this._getItems()[this.selectedItemIndex];
-
 		this.selectedItemIndex = this._getItems().indexOf(item);
 
 		this._getComponent().onItemSelected(item, keyboardUsed);
@@ -108,6 +104,7 @@ class Suggestions {
 
 	/* Private methods */
 	onItemPress(oEvent) {
+		console.log("onItemPress", oEvent);
 		this.onItemSelected(oEvent.detail.item, false /* keyboardUsed */);
 	}
 
@@ -245,7 +242,9 @@ class Suggestions {
 	}
 
 	_getItems() {
-		return typeof this.slotName === "string" ? this._getComponent().getSlottedNodes(this.slotName) : this.slotName;
+		const items = this._getComponent().getSuggestionItems();
+		console.log("_getItems", items);
+		return items;
 	}
 
 	_getComponent() {
