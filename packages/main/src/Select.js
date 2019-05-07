@@ -174,8 +174,8 @@ class Select extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		console.log('select -> onBeforeRendering')
-		this._validateSelection();
+		console.log('select -> onBeforeRendering');
+		//this._validateSelection();
 		this._setText();
 	}
 
