@@ -7,6 +7,10 @@
 <div id="{{ctr._id}}-wrapper"
 	class="{{classes.wrapper}}"
 >
+	{{#if ctr._beginContent}}
+		<slot name="{{ctr._beginContent._slot}}"></slot>
+	{{/if}}
+
 	<input id="{{ctr._id}}-inner"
 			class="sapWCInputBaseInner"
 			type="{{type}}"

@@ -31,6 +31,7 @@ import ShellBar from "./dist/ShellBar.js";
 import ShellBarItem from "./dist/ShellBarItem.js";
 import Switch from "./dist/Switch.js";
 import MessageStrip from "./dist/MessageStrip.js";
+import MultiComboBox from "./dist/MultiComboBox.js";
 import TabContainer from "./dist/TabContainer.js";
 import Tab from "./dist/Tab.js";
 import TabSeparator from "./dist/TabSeparator.js";
@@ -42,6 +43,8 @@ import TextArea from "./dist/TextArea.js";
 import Timeline from "./dist/Timeline.js";
 import TimelineItem from "./dist/TimelineItem.js";
 import Title from "./dist/Title.js";
+import Token from "./dist/Token.js";
+import Tokenizer from "./dist/Tokenizer.js";
 import ToggleButton from "./dist/ToggleButton.js";
 
 import List from "./dist/List.js";

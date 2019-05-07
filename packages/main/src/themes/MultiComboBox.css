@@ -1,0 +1,34 @@
+:host(ui5-multi-combobox) {
+	display: inline-block;
+	width: 100%;
+
+	--_ui5_popover_content_padding: 0;
+}
+
+.ui5-multi-combobox--wrapper {
+	display: flex;
+	overflow: hidden;
+	width: 100%;
+	height: 100%;
+}
+
+.ui5-multi-combobox---icon {
+	color: var(--sapUiContentIconColor);
+	cursor: pointer;
+	outline: none;
+	box-sizing: border-box;
+}
+
+.ui5-multi-combobox---icon:active {
+	background-color: var(--sapUiButtonLiteActiveBackground);
+	color: var(--sapUiButtonActiveTextColor);
+}
+
+.ui5-multi-combobox---icon.ui5-multi-combobox-icon-pressed {
+	background: var(--sapUiToggleButtonPressedBackground);
+	color: var(--sapUiButtonActiveTextColor);
+}
+
+.ui5-multi-combobox---icon:not(.ui5-multi-combobox-icon-pressed):not(:active):hover {
+	background: var(--sapUiButtonLiteHoverBackground);
+}

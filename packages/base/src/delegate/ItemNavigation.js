@@ -169,6 +169,10 @@ class ItemNavigation extends EventProvider {
 	_getCurrentItem() {
 		const items = this._getItems();
 
+		if (!items.length) {
+			return null;
+		}
+
 		// normalize the index
 		while (this.currentIndex >= items.length) {
 			this.currentIndex -= this.rowSize;

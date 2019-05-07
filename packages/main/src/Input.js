@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { isIE } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
+
 import {
 	isUp,
 	isDown,
@@ -61,6 +62,10 @@ const metadata = {
 			type: HTMLElement,
 			multiple: true,
 		},
+
+		_beginContent: {
+			type: HTMLElement,
+		}
 	},
 	properties: /** @lends  sap.ui.webcomponents.main.Input.prototype */  {
 

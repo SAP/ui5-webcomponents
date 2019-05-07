@@ -1,0 +1,7 @@
+<div tabindex="{{ctr._tabIndex}}" @click="{{ctr._handlers.select}}" @keydown="{{ctr._handlers.keydown}}" class="ui5-token--wrapper">
+	<span class="ui5-token--text">{{ctr._nodeText}}</span>
+
+	{{#unless ctr.readonly}}
+		<ui5-icon @click="{{ctr._handlers.delete}}" src="sap-icon://sys-cancel" class="ui5-token--icon"></ui5-icon>
+	{{/unless}}
+</div>
