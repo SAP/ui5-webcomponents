@@ -8173,6 +8173,11 @@ rollup-plugin-filesize@^6.0.1:
     gzip-size "^5.0.0"
     terser "^3.10.0"
 
+rollup-plugin-generate-html-template@^1.1.3:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-generate-html-template/-/rollup-plugin-generate-html-template-1.1.3.tgz#78b147beb3d197898cbc9f8ebbacf29e60474ca1"
+  integrity sha512-RhYt/rkxYeQdNKRHU+0diJ2auq/w0WA85BFXrHlv/k2M8dPNqycHtRfMcSGo43Cl9aL8Y6WywnyewqV9PieMEQ==
+
 rollup-plugin-less@^1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/rollup-plugin-less/-/rollup-plugin-less-1.1.2.tgz#c4bffacc24928b7f657a7a06e09930a3e2ebdfad"

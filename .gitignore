@@ -5,6 +5,7 @@ temp
 target
 dist
 build
+single_import
 
 # Ignore default target directory for the npm package 'ui5-codecompletion'
 .ui5
