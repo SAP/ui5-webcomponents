@@ -85,9 +85,15 @@ class ListItem extends ListItemBase {
 	constructor() {
 		super();
 		this._fnOnDelete = this.onDelete.bind(this);
+
+		this._whenShadowRootReady().then(this.attachFocusHandlers.bind(this));
 	}
 
 	onBeforeRendering() {}
+
+	attachFocusHandlers() {
+		this.shadowRoot.addEventListener("focusout", this.onfocusout.bind(this));
+	}
 
 	onkeydown(event) {
 		super.onkeydown(event);
@@ -137,6 +143,7 @@ class ListItem extends ListItemBase {
 	}
 
 	onfocusout(event) {
+		console.log("LI => focusout");
 		this.deactivate();
 	}
 
@@ -154,6 +161,7 @@ class ListItem extends ListItemBase {
 	}
 
 	deactivate() {
+		console.log("LI => deactivate");
 		this._active = false;
 	}
 
