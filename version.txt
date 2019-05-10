@@ -1,7 +1,5 @@
-commit 711743014372394044cf70f675fa1de1c5b9192d
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu May 2 15:19:57 2019 +0300
+commit 8220d1676e99ccdba2012588c8688655f77c4465
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Fri May 10 16:51:44 2019 +0300
 
-    fix: update tab container documentation (#370)
-    
-    fixes #369
+    chore(release): update version in playground (#377)
