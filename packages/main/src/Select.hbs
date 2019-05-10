@@ -15,9 +15,7 @@
 			hide-arrow="true"
 			horizontal-align="Stretch">
 				<ui5-list separators="None">
-					{{#each ctr.items}}
-						<slot name="{{this._slot}}"></slot>
-					{{/each}}
+					<slot></slot>
 				</ui5-list>
 		</ui5-popover>
 	{{/if}}

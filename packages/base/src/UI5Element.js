@@ -157,6 +157,7 @@ class UI5Element extends HTMLElement {
 	_updateSlots() {
 		const domChildren = Array.from(this.children);
 
+		// Init the _state object based on the supported slots
 		const slotsMap = this.constructor.getMetadata().getSlots();
 		for (const [prop, propData] of Object.entries(slotsMap)) { // eslint-disable-line
 			if (propData.multiple) {
@@ -165,29 +166,52 @@ class UI5Element extends HTMLElement {
 				this._state[prop] = null;
 			}
 		}
+
 		const autoIncrementMap = new Map();
 		domChildren.forEach(child => {
-			const slot = child.getAttribute("data-ui5-slot") || this.constructor.getMetadata().getDefaultSlot();
+			// Determine the logical slot for the child
+			const slot = this._getLogicalSlot(child); // Warning: this function uses a side effect
+
+			// Check if the slot is supported
 			if (slotsMap[slot] === undefined) {
 				const validValues = Object.keys(slotsMap).join(", ");
 				console.warn(`Unknown data-ui5-slot value: ${slot}, ignoring`, child, `Valid data-ui5-slot values are: ${validValues}`); // eslint-disable-line
 				return;
 			}
-			let slotName;
-			if (slotsMap[slot].multiple) {
+
+			// For children that need individual slots, calculate them
+			if (slotsMap[slot].individualSlots) {
 				const nextId = (autoIncrementMap.get(slot) || 0) + 1;
-				slotName = `${slot}-${nextId}`;
 				autoIncrementMap.set(slot, nextId);
-			} else {
-				slotName = slot;
+				child._individualSlot = `${slot}-${nextId}`;
 			}
-			child._slot = slotName;
+
+			// Distribute the child in the _state object
 			if (slotsMap[slot].multiple) {
 				this._state[slot] = [...this._state[slot], child];
 			} else {
 				this._state[slot] = child;
 			}
 		});
+	}
+
+	_getLogicalSlot(child) {
+		// Check for explicitly given logical slot
+		const ui5Slot = child.getAttribute("data-ui5-slot");
+		if (ui5Slot) {
+			child._compatibilitySlot = ui5Slot; // side effect
+			return ui5Slot;
+		}
+
+		// Discover the slot based on the real slot name (f.e. content-32 => content)
+		const slot = child.getAttribute("slot");
+		if (slot) {
+			const match = child.match(/^([^-]+)-\d+$/);
+			return match[1];
+		}
+
+		// Use default slot as a fallback
+		return this.constructor.getMetadata().getDefaultSlot();
 	}
 
 	static get observedAttributes() {
@@ -412,8 +436,17 @@ class UI5Element extends HTMLElement {
 
 	_assignSlotsToChildren() {
 		const domChildren = Array.from(this.children);
-		domChildren.filter(child => child._slot).forEach(child => {
-			child.setAttribute("slot", child._slot);
+		domChildren.filter(child => child._individualSlot).forEach(child => {
+			child.setAttribute("slot", child._individualSlot);
+		});
+
+		const defaultSlot = this.constructor.getMetadata().getDefaultSlot();
+		domChildren.filter(child => child._compatibilitySlot).forEach(child => {
+			const hasSlot = !!child.getAttribute("slot");
+			const needsSlot = child._compatibilitySlot !== defaultSlot;
+			if (!hasSlot && needsSlot) {
+				child.setAttribute("slot", child._compatibilitySlot);
+			}
 		});
 	}
 
@@ -524,19 +557,14 @@ class UI5Element extends HTMLElement {
 	}
 
 	getSlottedNodes(slotName) {
-		const getSlottedElement = el => {
-			if (el.tagName.toUpperCase() !== "SLOT") {
-				return el;
+		const reducer = (acc, curr) => {
+			if (curr.tagName.toUpperCase() !== "SLOT") {
+				return acc.concat([curr]);
 			}
-
-			const nodes = el.assignedNodes();
-
-			if (nodes.length) {
-				return getSlottedElement(nodes[0]);
-			}
+			return acc.concat(curr.assignedElements({ flatten: true }));
 		};
 
-		return this[slotName].map(getSlottedElement);
+		return this[slotName].reduce(reducer, []);
 	}
 
 	/**

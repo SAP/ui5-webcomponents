@@ -92,15 +92,17 @@ const validateSingleProperty = (value, propData) => {
 };
 
 const validateSingleSlot = (value, propData) => {
+	/*
 	const getSlottedElement = el => {
-		return el.tagName.toUpperCase() !== "SLOT" ? el : getSlottedElement(el.assignedNodes()[0]);
+		return el.tagName.toUpperCase() !== "SLOT" ? el : getSlottedElement(el.assignedElements()[0]);
 	};
 	const propertyType = propData.type;
 
 	if (value !== null && !(getSlottedElement(value) instanceof propertyType)) {
 		throw new Error(`${value} is not of type ${propertyType}`);
 	}
-
+	*/
+	
 	return value;
 };
 
