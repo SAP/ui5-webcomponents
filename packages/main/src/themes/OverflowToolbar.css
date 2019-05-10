@@ -1,0 +1,48 @@
+:host(ui5-overflow-toolbar) {
+	width: 100%;
+	display: inline-block;
+}
+
+ui5-overflow-toolbar {
+	width: 100%;
+	display: inline-block;
+}
+
+span[data-sap-ui-wc-root] {
+	width: 100%;
+}
+
+.ui5-overflow-toolbar {
+	height: 2.75rem;
+	padding: 0 0.5rem 0 1rem;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	background-color: var(--sapUiToolbarBackground);
+}
+
+.ui5-overflow-toolbar-items {
+	width: calc(100% - 2.5rem);
+	height: 100%;
+	display: flex;
+	flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.ui5-overflow-toolbar-items > ::slotted(*) {
+	margin-right: 0.5rem;
+}
+
+.ui5-overflow-toolbar-items > * {
+	margin-right: 0.5rem;
+}
+
+.ui5-overflow-toolbar-popover-content {
+	width: 130px;
+}
+
+.ui5-overflow-toolbar .ui5-overflow-toolbar-popover-content > ::slotted(*) {
+	width: 100% !important;
+	--sapUiButtonBorderColor: transparent;
+	--sapUiButtonHorizontalTextAlign: flex-start;
+}

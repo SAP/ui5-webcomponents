@@ -23,6 +23,7 @@ import InputSuggestions from "./dist/InputSuggestions.js";
 import Label from "./dist/Label.js";
 import Link from "./dist/Link.js";
 import DayPicker from "./dist/DayPicker.js";
+import OverflowToolbar from "./dist/OverflowToolbar.js";
 import Popover from "./dist/Popover.js";
 import Panel from "./dist/Panel.js";
 import RadioButton from "./dist/RadioButton.js";

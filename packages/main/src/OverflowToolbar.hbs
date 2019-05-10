@@ -1,0 +1,32 @@
+<section class="ui5-overflow-toolbar">	
+	<div class="ui5-overflow-toolbar-items">
+		{{#each ctr._items}}
+			{{#unless this.overflowed}}
+				<slot class="ui5-overflow-toolbar-item" name="{{this.ref._slot}}" />				
+			{{/unless}}
+		{{/each}}
+	</div>
+
+	{{#if ctr._overflowing}}
+		<ui5-button
+			type="Transparent"
+			class="ui5-overflow-toolbar-overflow-button"
+			icon="sap-icon://overflow"
+			@press="{{ctr._overflowButton.press}}">
+		</ui5-button>
+	{{/if}}
+
+	<ui5-popover
+		id="{{ctr._id}}-overflowMenu"
+		allowTargetOverlap="true"
+		placement-type="Bottom"
+		horizontal-align="Right">
+			<div class="ui5-overflow-toolbar-popover-content">
+				{{#each ctr._items}}
+					{{#if this.overflowed}}
+						<slot class="ui5-overflow-toolbar-item" name="{{this.ref._slot}}" />
+					{{/if}}
+				{{/each}}
+			</div>
+	</ui5-popover>
+</section>
