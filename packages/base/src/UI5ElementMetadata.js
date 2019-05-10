@@ -92,17 +92,23 @@ const validateSingleProperty = (value, propData) => {
 };
 
 const validateSingleSlot = (value, propData) => {
-	/*
-	const getSlottedElement = el => {
-		return el.tagName.toUpperCase() !== "SLOT" ? el : getSlottedElement(el.assignedElements()[0]);
+
+	if (value === null) {
+		return value;
+	}
+
+	const getSlottedElements = el => {
+		return el.tagName.toUpperCase() !== "SLOT" ? [el] : el.assignedElements({ flatten: true });
 	};
 	const propertyType = propData.type;
 
-	if (value !== null && !(getSlottedElement(value) instanceof propertyType)) {
-		throw new Error(`${value} is not of type ${propertyType}`);
-	}
-	*/
-	
+	const slottedElements = getSlottedElements(value);
+	slottedElements.forEach(el => {
+		if (!(el instanceof propertyType)) {
+			throw new Error(`${el} is not of type ${propertyType}`);
+		}
+	});
+
 	return value;
 };
 
