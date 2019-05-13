@@ -1,23 +1,20 @@
-const customCSSMap = new Map();
+const customCSSFor = {};
 
-const addCustomCSS = (tag, theme, css) => {
-	let themeCustomCSS = customCSSMap.get(theme);
-
-	if (!themeCustomCSS) {
-		customCSSMap.set(theme, {});
-		themeCustomCSS = customCSSMap.get(theme);
+const addCustomCSS = (tag, css, ...rest) => {
+	// TODO remove deprecation error after 1 release
+	if (rest.length) {
+		throw new Error("addCustomCSS no longer accepts theme specific CSS. new signature is `addCustomCSS(tag, css)`");
 	}
 
-	if (!themeCustomCSS[tag]) {
-		themeCustomCSS[tag] = [];
+	if (!customCSSFor[tag]) {
+		customCSSFor[tag] = [];
 	}
 
-	themeCustomCSS[tag].push(css);
+	customCSSFor[tag].push(css);
 };
 
-const getCustomCSS = (theme, tag) => {
-	const themeCustomCSS = customCSSMap.get(theme);
-	return themeCustomCSS && themeCustomCSS[tag] ? themeCustomCSS[tag].join("") : "";
+const getCustomCSS = (tag) => {
+	return customCSSFor[tag] ? customCSSFor[tag].join("") : "";
 };
 
 export { addCustomCSS, getCustomCSS };
