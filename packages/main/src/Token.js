@@ -1,5 +1,6 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import { getTheme } from "@ui5/webcomponents-base/src/Configuration";
 
 import TokenRenderer from "./build/compiled/TokenRenderer.lit.js";
 
@@ -64,6 +65,7 @@ class Token extends UI5Element {
 		return state => {
 			return {
 				ctr: state,
+				iconURI: getTheme() === "sap_fiori_3" ? "sap-icon://decline" : "sap-icon://sys-cancel",
 			}
 		};
 	}
@@ -84,8 +86,9 @@ class Token extends UI5Element {
 			},
 			keydown: event => {
 				const isBS = isBackSpace(event);
-				const isD = isDelete(event)
-				if (isBS || isD) {
+				const isD = isDelete(event);
+
+				if (!this.readonly && (isBS || isD)) {
 					this.fireEvent("delete", {
 						backSpace: isBS,
 						delete: isD,

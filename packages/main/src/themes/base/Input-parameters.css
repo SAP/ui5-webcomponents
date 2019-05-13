@@ -13,5 +13,6 @@
 	--_ui5_input_disabled_background: var(--sapUiFieldBackground);
 	--sap_wc_input_disabled_opacity: 0.5;
 	--sap_wc_input_icon_min_width: 2.375rem;
+	--sap_wc_input_compact_min_width: 2rem;
 
 }

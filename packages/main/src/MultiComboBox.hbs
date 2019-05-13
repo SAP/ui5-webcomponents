@@ -2,14 +2,16 @@
 	<ui5-input id="ui5-multi-combobox--input"
 		value="{{ctr.value}}"
 		placeholder="{{ctr.placeholder}}"
-		.disabled={{ctr.disabled}}
-		.readonly={{ctr.readonly}}
+		?disabled={{ctr.disabled}}
+		?readonly={{ctr.readonly}}
 		value-state="{{ctr.valueState}}"
 		show-suggestions
-		@input="{{ctr._inputChage}}">
+		@input="{{ctr._inputChage}}"
+		@keydown="{{ctr._keydown}}">
 
 		<ui5-tokenizer data-ui5-slot="_beginContent"
 			show-more
+			?disabled="{{ctr.disabled}}"
 			style="{{styles.tokenizer}}"
 			@showMoreItemsPress="{{ctr._showMorePopover}}"
 			@tokenDelete="{{ctr._tokenDelete}}"

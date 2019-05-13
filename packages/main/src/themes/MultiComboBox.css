@@ -5,6 +5,7 @@
 	--_ui5_popover_content_padding: 0;
 }
 
+
 .ui5-multi-combobox--wrapper {
 	display: flex;
 	overflow: hidden;
@@ -12,11 +13,18 @@
 	height: 100%;
 }
 
+
+
 .ui5-multi-combobox--icon {
 	color: var(--sapUiContentIconColor);
 	cursor: pointer;
 	outline: none;
 	box-sizing: border-box;
+	width: 2.375rem;
+}
+
+.ui5-multi-combobox--icon[data-ui5-compact-size] {
+	width: 2rem;
 }
 
 .ui5-multi-combobox--icon:active {

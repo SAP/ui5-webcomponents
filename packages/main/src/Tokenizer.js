@@ -20,19 +20,18 @@ const metadata = {
 	tag: "ui5-tokenizer",
 	defaultSlot: "description",
 	slots: /** @lends sap.ui.webcomponents.main.Tokenizer.prototype */ {
-		tokens: { 
+		tokens: {
 			type: HTMLElement,
 			multiple: true,
-			listenFor: { include: ["*"] },
 		},
 	},
 	defaultSlot: "tokens",
 	properties: /** @lends sap.ui.webcomponents.main.Tokenizer.prototype */ {
 		showMore: { type: Boolean },
+		disabled: { type: Boolean },
 
 		_openOverflowPopover: { type: Function },
 		_tokenDelete: { type: Function },
-		_tokenSelect: { type: Function },
 		_hiddenTokens: { type: Object, multiple: true },
 	},
 	events: /** @lends sap.ui.webcomponents.main.Tokenizer.prototype */ {
@@ -87,43 +86,18 @@ class Tokenizer extends UI5Element {
 
 		this._itemsCount = 0;
 		this._lastIndex = 0;
-
-		this._handleResize = sizes => {
-			const overflowTokens = this._getTokens(true);
-
-			if (!overflowTokens.length) {
-				this._hiddenTokens = [];
-			}
-
-			if (this._hiddenTokens.length !== overflowTokens.length) {
-				this._hiddenTokens = overflowTokens;
-			}
-		}
-
-		this._openOverflowPopover = () => {
-			this.fireEvent("showMoreItemsPress");
-		}
-
-		this._tokenDelete = event => {
-			if (event.detail && event.detail.backSpace) {
-				this._deleteByBackspace();
-			}
-
-			this._updateAndFocus();
-			this.fireEvent("tokenDelete", { ref: event.target });
-		}
-
-		this._tokenSelect = event => {
-			const oldValue = event.target.selected;
-
-			this.tokens.forEach(token => token.selected = false);
-
-			event.target.selected = !oldValue;
-		}
-
+		this._lastTokenCount = 0;
+		this._recalculateLayouting = false;
+		this._resizeHandler = this._handleResize.bind(this);
 		this._itemNav = new ItemNavigation(this);
+		this._tokenDelete = this._handleTokenDelete.bind(this);
+		this._openOverflowPopover = this._handleOpenOverflowPopover.bind(this);
 
 		this._itemNav.getItemsCallback = () => {
+			if (this.disabled) {
+				return [];
+			}
+
 			return this._getTokens();
 		};
 
@@ -132,20 +106,41 @@ class Tokenizer extends UI5Element {
 
 	onBeforeRendering() {
 		this._itemNav.init();
+
+		if (this._lastTokenCount !== this.tokens.length) {
+			this._recalculateLayouting = true;
+		}
+
+		this._lastTokenCount = this.tokens.length;
 	}
 
 	onAfterRendering() {
-		requestAnimationFrame(() => {
+		if (this._recalculateLayouting) {
 			this._handleResize();
-		}, 0);
+			this._recalculateLayouting = false;
+		}
 	}
 
 	onEnterDOM() {
-		ResizeHandler.register(this.shadowRoot.querySelector(".ui5-tokenizer--content"), this._handleResize);
+		ResizeHandler.register(this.shadowRoot.querySelector(".ui5-tokenizer--content"), this._resizeHandler);
 	}
 
 	onExitDOM() {
-		ResizeHandler.deregister(this.shadowRoot.querySelector(".ui5-tokenizer--content"), this._handleResize);
+		ResizeHandler.deregister(this.shadowRoot.querySelector(".ui5-tokenizer--content"), this._resizeHandler);
+	}
+
+	_handleOpenOverflowPopover() {
+		this.fireEvent("showMoreItemsPress");
+	}
+
+	_handleResize() {
+		const overflowTokens = this._getTokens(true);
+
+		if (!overflowTokens.length) {
+			this._hiddenTokens = [];
+		}
+
+		this._hiddenTokens = overflowTokens;
 	}
 
 	_getTokens(overflow) {
@@ -158,7 +153,7 @@ class Tokenizer extends UI5Element {
 		const firstTokenTop = firstToken.getBoundingClientRect().top;
 		const tokens = [];
 
-		if (firstToken && this.tokens.length > 1) {				
+		if (firstToken && this.tokens.length) {
 			this.tokens.forEach(token => {
 				const tokenTop = token.getBoundingClientRect().top;
 				const tokenOverflows = overflow && tokenTop > firstTokenTop;
@@ -169,6 +164,15 @@ class Tokenizer extends UI5Element {
 		}
 
 		return tokens;
+	}
+
+	_handleTokenDelete(event) {
+		if (event.detail && event.detail.backSpace) {
+			this._deleteByBackspace();
+		}
+
+		this._updateAndFocus();
+		this.fireEvent("tokenDelete", { ref: event.target });
 	}
 
 	/* Keyboard handling */

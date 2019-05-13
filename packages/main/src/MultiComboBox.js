@@ -1,6 +1,7 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
+import { isShow } from "@ui5/webcomponents-base/src/events/PseudoEvents";
 
 import MultiComboBoxRenderer from "./build/compiled/MultiComboBoxRenderer.lit.js";
 
@@ -107,6 +108,7 @@ const metadata = {
 		_selectedItemsSelectionChange: { type: Function },
 		_afterAllPopoverClose: { type: Function },
 		_afterAllPopoverOpen: { type: Function },
+		_keydown: { type: Function },
 		_inputChage: { type: Function },
 		_filteredItems: { type: Object },
 		_iconPressed: { type: Boolean },
@@ -270,6 +272,15 @@ class MultiComboBox extends UI5Element {
 
 		this._afterAllPopoverOpen = () => {
 			this._toggleIcon();
+		}
+
+		this._keydown = this._handleKeyDown.bind(this);
+	}
+
+
+	_handleKeyDown(event) {
+		if (isShow(event)) {
+			this._togglePopover();
 		}
 	}
 

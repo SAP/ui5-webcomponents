@@ -5,6 +5,10 @@
 	height: 2.25rem;
 }
 
+:host(ui5-tokenizer[data-ui5-compact-size]) .ui5-tokenizer--wrapper {
+	padding: 0.1875rem 0.125rem;
+}
+
 .ui5-tokenizer--wrapper {
 	height: 100%;
 	display: flex;
@@ -38,3 +42,4 @@
 	white-space: nowrap;
 	font-size: var(--sapMFontMediumSize);
 }
+
