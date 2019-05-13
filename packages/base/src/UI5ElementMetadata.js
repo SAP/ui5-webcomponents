@@ -96,6 +96,11 @@ const validateSingleSlot = (value, propData) => {
 		return value;
 	}
 
+	// TODO FIX
+	if (!value.tagName) {
+		return value;
+	}
+
 	const getSlottedElements = el => {
 		return el.tagName.toUpperCase() !== "SLOT" ? [el] : el.assignedElements({ flatten: true });
 	};

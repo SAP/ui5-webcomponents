@@ -46,7 +46,7 @@ const metadata = {
 		 * @public
 		 */
 		content: {
-			type: HTMLElement,
+			type: Node,
 			multiple: true,
 		},
 	},

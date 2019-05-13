@@ -155,10 +155,18 @@ class UI5Element extends HTMLElement {
 	}
 
 	_updateSlots() {
-		const domChildren = Array.from(this.children);
+		const slotsMap = this.constructor.getMetadata().getSlots();
+		const defaultSlot = this.constructor.getMetadata().getDefaultSlot();
+		const canSlotText = slotsMap[defaultSlot] !== undefined && slotsMap[defaultSlot].type === Node;
+
+		let domChildren;
+		if (canSlotText) {
+			domChildren = Array.from(this.childNodes);
+		} else {
+			domChildren = Array.from(this.children);
+		}
 
 		// Init the _state object based on the supported slots
-		const slotsMap = this.constructor.getMetadata().getSlots();
 		for (const [prop, propData] of Object.entries(slotsMap)) { // eslint-disable-line
 			if (propData.multiple) {
 				this._state[prop] = [];
@@ -196,6 +204,13 @@ class UI5Element extends HTMLElement {
 	}
 
 	_getLogicalSlot(child) {
+		const defaultSlot = this.constructor.getMetadata().getDefaultSlot();
+
+		// Text nodes can only go to the default slot
+		if (!(child instanceof HTMLElement)) {
+			return defaultSlot;
+		}
+
 		// Check for explicitly given logical slot
 		const ui5Slot = child.getAttribute("data-ui5-slot");
 		if (ui5Slot) {
@@ -211,7 +226,7 @@ class UI5Element extends HTMLElement {
 		}
 
 		// Use default slot as a fallback
-		return this.constructor.getMetadata().getDefaultSlot();
+		return defaultSlot;
 	}
 
 	static get observedAttributes() {
