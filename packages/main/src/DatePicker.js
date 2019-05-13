@@ -362,8 +362,7 @@ class DatePicker extends UI5Element {
 	 * @public
 	 */
 	isValid(value = "") {
-		return !!this.getFormat().parse(value);
-		// return !!(value && this.getFormat().parse(value));
+		return !!(value && this.getFormat().parse(value));
 	}
 
 	// because the parser understands more than one format
