@@ -1,5 +1,10 @@
-commit 8220d1676e99ccdba2012588c8688655f77c4465
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Fri May 10 16:51:44 2019 +0300
+commit cbf00a830280b4d514ab0871e65537c8745b9b4a
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Mon May 13 13:41:01 2019 +0300
 
-    chore(release): update version in playground (#377)
+    feat: add data-ui5-compact-size attribute to root when compact is set (#382)
+    
+    - in order to have easier styling of the sizes of the components all the css
+    should be applied to the root of the element (such as width, height, etc).
+    - when having a compact size setting applied, all components should change their sizes, in
+    order to track this change in the css we add a private data attribute to the root of each element
