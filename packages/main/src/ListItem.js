@@ -28,13 +28,17 @@ const metadata = {
 
 		/**
 		 * Defines the visual indication and behavior of the list items.
-		 * Available options are <code>Active</code> and <code>Inactive</code>.
+		 * Available options are <code>Active</code> (by default) and <code>Inactive</code>.
+		 * </br></br>
+		 * <b>Note:</b> When set to <code>Active</code>, the item will provide visual response upon press and hover,
+		 * while with type <code>Inactive</code> - will not.
+		 *
 		 * @type {string}
 		 * @public
 		*/
 		type: {
 			type: ListItemType,
-			defaultValue: ListItemType.Inactive,
+			defaultValue: ListItemType.Active,
 		},
 
 		_active: {

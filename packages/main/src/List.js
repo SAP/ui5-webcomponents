@@ -8,6 +8,7 @@ import ListItemBase from "./ListItemBase.js";
 import ListMode from "./types/ListMode.js";
 import BackgroundDesign from "./types/BackgroundDesign.js";
 import ListSeparators from "./types/ListSeparators.js";
+import ListItemType from "./types/ListItemType.js";
 // Template
 import ListRenderer from "./build/compiled/ListRenderer.lit.js";
 import ListTemplateContext from "./ListTemplateContext.js";
@@ -148,7 +149,8 @@ const metadata = {
 	events: /** @lends  sap.ui.webcomponents.main.List.prototype */ {
 
 		/**
-		 * Fired when an item is pressed.
+		 * Fired when an item is pressed, unless the item's <code>type</code> property
+		 * is set to <code>Inactive</code>.
 		 *
 		 * @event
 		 * @param {HTMLElement} item the pressed item.
@@ -447,7 +449,9 @@ class List extends UI5Element {
 	onItemPress(event) {
 		const pressedItem = event.detail.item;
 
-		this.fireEvent("itemPress", { item: pressedItem });
+		if (pressedItem.type === ListItemType.Active) {
+			this.fireEvent("itemPress", { item: pressedItem });
+		}
 
 		if (!this._selectionRequested && this.mode !== ListMode.Delete) {
 			this._selectionRequested = true;
