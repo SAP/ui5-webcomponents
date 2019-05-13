@@ -178,7 +178,7 @@ class MultiComboBox extends UI5Element {
 				},
 				classes: {
 					icon: {
-						[`ui5-multi-combobox---icon`]: true,
+						[`ui5-multi-combobox--icon`]: true,
 						[`ui5-multi-combobox-icon-pressed`]: state._iconPressed,
 					}
 				}
@@ -251,9 +251,11 @@ class MultiComboBox extends UI5Element {
 
 		this._tokenizerFocusOut = event => {
 			const tokenizer = this.shadowRoot.querySelector('ui5-tokenizer');
-			const tokens = tokenizer.tokens.length - 1;
+			const tokensCount = tokenizer.tokens.length - 1;
 
-			if (tokens === 0 && this._deleting) {
+			tokenizer.tokens.forEach(token => token.selected = false);
+
+			if (tokensCount === 0 && this._deleting) {
 				setTimeout(() => {
 					this.shadowRoot.querySelector('ui5-input').focus();
 				}, 0);

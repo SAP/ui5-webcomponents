@@ -12,23 +12,31 @@
 	height: 100%;
 }
 
-.ui5-multi-combobox---icon {
+.ui5-multi-combobox--icon {
 	color: var(--sapUiContentIconColor);
 	cursor: pointer;
 	outline: none;
 	box-sizing: border-box;
 }
 
-.ui5-multi-combobox---icon:active {
+.ui5-multi-combobox--icon:active {
 	background-color: var(--sapUiButtonLiteActiveBackground);
 	color: var(--sapUiButtonActiveTextColor);
 }
 
-.ui5-multi-combobox---icon.ui5-multi-combobox-icon-pressed {
+.ui5-multi-combobox--icon.ui5-multi-combobox-icon-pressed {
 	background: var(--sapUiToggleButtonPressedBackground);
 	color: var(--sapUiButtonActiveTextColor);
 }
 
-.ui5-multi-combobox---icon:not(.ui5-multi-combobox-icon-pressed):not(:active):hover {
+.ui5-multi-combobox--icon:not(.ui5-multi-combobox-icon-pressed):not(:active):hover {
 	background: var(--sapUiButtonLiteHoverBackground);
+}
+
+.ui5-multi-combobox--token {
+	height: 80%;
+}
+
+span.sapUiSizeCompact .ui5-multi-combobox--token {
+	height: 100%;
 }

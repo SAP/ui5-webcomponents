@@ -11,7 +11,7 @@
 	--_ui5_input_disabled_font_weight: normal;
 	--_ui5_input_disabled_border_color: var(--sapUiFieldBorderColor);
 	--_ui5_input_disabled_background: var(--sapUiFieldBackground);
-	--sap_wc_input_disabled_opacity: 1;
+	--sap_wc_input_disabled_opacity: 0.5;
 	--sap_wc_input_icon_min_width: 2.375rem;
 
 }

@@ -17,7 +17,7 @@
 		>
 			{{#each ctr.items}}
 				{{#if this.selected}}
-					<ui5-token .readonly="{{../../ctr.readonly}}" data-ui5-id="{{this._id}}" >{{this._nodeText}}</ui5-token>
+					<ui5-token ?readonly="{{../../ctr.readonly}}" class="ui5-multi-combobox--token" data-ui5-id="{{this._id}}" >{{this._nodeText}}</ui5-token>
 				{{/if}}
 			{{/each}}
 		</ui5-tokenizer>
@@ -38,12 +38,12 @@
 		hide-header
 		?hide-arrow={{editable}}
 		placement-type="Bottom">
-		<ui5-list mode="{{selectedItemsListMode}}"
+		<ui5-list separators="None" mode="{{selectedItemsListMode}}"
 			style="{{styles.listMinWidth}}"
 			@selectionChange={{ctr._selectedItemsSelectionChange}}>
 			{{#each ctr.items}}
 				{{#if this.selected}}
-					<ui5-li data-ui5-token-id="{{this._id}}" .selected="{{../../editable}}">{{this._nodeText}}</ui5-li>
+					<ui5-li type="Active" data-ui5-token-id="{{this._id}}" .selected="{{../../editable}}">{{this._nodeText}}</ui5-li>
 				{{/if}}
 			{{/each}}
 		</ui5-list>
@@ -59,9 +59,9 @@
 		@selectionChange={{ctr._allItemsSelectionChange}}
 		@afterClose={{ctr._afterAllPopoverClose}}
 		@afterOpen={{ctr._afterAllPopoverOpen}}>
-		<ui5-list mode="MultiSelect" style="{{styles.listMinWidth}}">
+		<ui5-list separators="None" mode="MultiSelect" style="{{styles.listMinWidth}}">
 			{{#each ctr._filteredItems}}
-					<ui5-li ?selected={{this.selected}} data-ui5-token-id="{{this._id}}">{{this._nodeText}}</ui5-li>
+					<ui5-li type="Active" ?selected={{this.selected}} data-ui5-token-id="{{this._id}}">{{this._nodeText}}</ui5-li>
 			{{/each}}
 		</ui5-list>
 	</ui5-popover>

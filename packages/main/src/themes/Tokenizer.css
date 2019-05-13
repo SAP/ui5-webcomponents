@@ -17,13 +17,10 @@
 }
 
 .ui5-tokenizer--token--wrapper {
-	display: inline-block;
-	height: 100%;
-}
-
-.ui5-tokenizer--token--wrapper:not(:nth-child(1)) {
-	display: inline-block;
+	display: inline-flex;
+	align-items: center;
 	box-sizing: border-box;
+	height: 100%;
 }
 
 .ui5-tokenizer--content {

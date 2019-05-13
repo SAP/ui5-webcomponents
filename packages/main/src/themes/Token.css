@@ -3,7 +3,7 @@
 	background: var(--sapUiButtonBackground);
 	border-width: 1px;
 	border-style: solid;
-	border-color: var(--sapUiButtonBorderColor);
+	border-color: var(--_ui5_token_border_color);
 	border-radius: 0.125rem;
 	color: var(--sapUiButtonTextColor);
 	font-size: var(--sapMFontMediumSize);
@@ -15,7 +15,7 @@
 
 :host(ui5-token:not([readonly]):hover) {
 	background: var(--sapUiButtonHoverBackground);
-	border: 1px solid var(--sapUiButtonHoverBorderColor);
+	border-color: var(--sapUiButtonHoverBackgroundDarken5);
 }
 
 :host(ui5-token[selected]:not([readonly])) {
