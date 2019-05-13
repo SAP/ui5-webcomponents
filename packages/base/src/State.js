@@ -116,16 +116,6 @@ class State {
 				},
 			});
 		}
-
-		Object.defineProperty(proto, "_nodeText", {
-			get() {
-				return this._data._nodeText;
-			},
-			set(value) {
-				this._data._nodeText = value;
-				this._control._invalidate("_nodeText", value);
-			},
-		});
 	}
 
 	static generateDefaultState(MetadataClass) {

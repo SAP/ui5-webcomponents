@@ -12,7 +12,7 @@ class LabelTemplateContext {
 	static getMainClasses(state) {
 		return {
 			sapMLabel: true,
-			sapMLabelNoText: !state._nodeText,
+			sapMLabelNoText: !state.text.length,
 			sapMLabelWrapped: state.wrap,
 			sapMLabelRequired: state.required,
 		};

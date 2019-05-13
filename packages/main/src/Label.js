@@ -16,7 +16,6 @@ import "./ThemePropertiesProvider.js";
  */
 const metadata = {
 	tag: "ui5-label",
-	usesNodeText: true,
 	properties: /** @lends sap.ui.webcomponents.main.Label.prototype */  {
 
 		/**
@@ -56,6 +55,21 @@ const metadata = {
 			type: String,
 		},
 	},
+	slots: {
+		/**
+		 * Defines the text of the <code>ui5-label</code>.
+		 * <br><b>Note:</b> This slot is expected to only contain text. Use HTML Elements at your own risk.
+		 *
+		 * @type {Node[]}
+		 * @slot
+		 * @public
+		 */
+		text: {
+			type: Node,
+			multiple: true,
+		},
+	},
+	defaultSlot: "text",
 	renderer: LabelRenderer,
 };
 

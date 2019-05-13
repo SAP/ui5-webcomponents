@@ -14,10 +14,6 @@ class UI5ElementMetadata {
 		return this.metadata.noShadowDOM;
 	}
 
-	usesNodeText() {
-		return !!this.metadata.usesNodeText;
-	}
-
 	getDefaultSlot() {
 		return this.metadata.defaultSlot || "content";
 	}

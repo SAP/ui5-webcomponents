@@ -5,7 +5,7 @@ class LinkTemplateContext {
 		const mainClasses = LinkTemplateContext.getMainClasses(state);
 
 		const context = {
-			tabIndex: (state.disabled || !state._nodeText.length) ? "-1" : "0",
+			tabIndex: (state.disabled || !state.text.length) ? "-1" : "0",
 			ctr: state,
 			classes: { main: mainClasses },
 			styles: {},

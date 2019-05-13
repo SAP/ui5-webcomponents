@@ -16,9 +16,23 @@ import "./ThemePropertiesProvider.js";
  */
 const metadata = {
 	tag: "ui5-li-groupheader",
-	usesNodeText: true,
 	properties: /** @lends  sap.ui.webcomponents.main.GroupHeaderListItem.prototype */ {
 	},
+	slots: {
+		/**
+		 * Defines the text of the <code>ui5-li-groupheader</code>.
+		 * <br><b>Note:</b> This slot is expected to only contain text. Use HTML Elements at your own risk.
+		 *
+		 * @type {Node[]}
+		 * @slot
+		 * @public
+		 */
+		text: {
+			type: Node,
+			multiple: true,
+		},
+	},
+	defaultSlot: "text",
 	events: /** @lends  sap.ui.webcomponents.main.GroupHeaderListItem.prototype */ {
 	},
 };

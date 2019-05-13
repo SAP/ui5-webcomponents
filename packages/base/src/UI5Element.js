@@ -120,14 +120,13 @@ class UI5Element extends HTMLElement {
 
 	_startObservingDOMChildren() {
 		const shouldObserveChildren = this.constructor.getMetadata().hasSlots();
-		const shouldObserveText = this.constructor.getMetadata().usesNodeText();
-		if (!shouldObserveChildren && !shouldObserveText) {
+		if (!shouldObserveChildren) {
 			return;
 		}
 		const mutationObserverOptions = {
 			childList: true,
-			subtree: shouldObserveText,
-			characterData: shouldObserveText,
+			subtree: true,
+			characterData: true,
 		};
 		DOMObserver.observeDOMNode(this, this._processChildren.bind(this), mutationObserverOptions);
 	}
@@ -140,18 +139,11 @@ class UI5Element extends HTMLElement {
 	}
 
 	_processChildren(mutations) {
-		const usesNodeText = this.constructor.getMetadata().usesNodeText();
-		const hasChildren = this.constructor.getMetadata().hasSlots();
-		if (usesNodeText) {
-			this._updateNodeText();
-		} else if (hasChildren) {
+		const hasSlots = this.constructor.getMetadata().hasSlots();
+		if (hasSlots) {
 			this._updateSlots();
 		}
 		this.onChildrenChanged(mutations);
-	}
-
-	_updateNodeText() {
-		this._state._nodeText = this.textContent;
 	}
 
 	_updateSlots() {
@@ -636,16 +628,6 @@ class UI5Element extends HTMLElement {
 				},
 			});
 		}
-
-		// Node Text
-		Object.defineProperty(proto, "_nodeText", {
-			get() {
-				return this._state._nodeText;
-			},
-			set() {
-				throw new Error("Cannot set node text directly, use the DOM APIs");
-			},
-		});
 	}
 
 	static get noConflictEvents() {

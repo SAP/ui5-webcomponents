@@ -17,7 +17,6 @@ import "./ThemePropertiesProvider.js";
  */
 const metadata = {
 	tag: "ui5-messagestrip",
-	usesNodeText: true,
 	properties: /** @lends sap.ui.webcomponents.main.MessageStrip.prototype */ {
 
 		/**
@@ -69,6 +68,21 @@ const metadata = {
 
 		_closeButton: { type: Object },
 	},
+	slots: {
+		/**
+		 * Defines the text of the <code>ui5-messagestrip</code>.
+		 * <br><b>Note:</b> This slot is expected to only contain text. Use HTML Elements at your own risk.
+		 *
+		 * @type {Node[]}
+		 * @slot
+		 * @public
+		 */
+		text: {
+			type: Node,
+			multiple: true,
+		},
+	},
+	defaultSlot: "text",
 	events: /** @lends sap.ui.webcomponents.main.MessageStrip.prototype */ {
 
 		/**
