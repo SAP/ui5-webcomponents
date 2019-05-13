@@ -31,8 +31,6 @@
 	<ui5-datepicker id="dp11"></ui5-datepicker>
 	<ui5-datepicker id="dp12"></ui5-datepicker>
 	<ui5-datepicker id="dp13"></ui5-datepicker>
-	<ui5-datepicker id="dp14" format-pattern="MMM d, y" value="Jun 10, 2019"></ui5-datepicker>
-	<ui5-button id="btnRemoval">Remove value</ui5-button>
 
 	<label id='lbl'>0</label>
 	<label for="inputTimezone">Timezone:</label>
@@ -69,10 +67,6 @@
 		document.querySelector("#dp13").addEventListener("change", function(e) {
 			document.querySelector('#lblTomorrow').innerHTML = ++counterTomorrow;
 			document.querySelector('#lblTomorrowDate').innerHTML = e.target.value;
-		});
-
-		btnRemoval.addEventListener("press", function(e){
-			dp14.removeAttribute("value");
 		});
 	</script>
 </body>
