@@ -527,4 +527,12 @@ describe("Date Picker Tests", () => {
 
 		assert.ok(datepicker.getFirstDisplayedYear().getProperty("innerHTML").indexOf("0001") > -1, "First year in the year picker is correct");
 	});
+
+	it("Removal of the 'value' attribute programatically does not cause an error", () => {
+		const button = browser.findElementDeep("#dp14btn");
+
+		button.click(); // remove the value attribute of ui5-datepicker #dp14
+
+		assert.ok(true, "The attribute removal does not throw an error");
+	});
 });
