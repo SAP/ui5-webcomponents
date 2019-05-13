@@ -1,4 +1,4 @@
-import { getWCNoConflict } from "./Configuration.js";
+import { getWCNoConflict, getCompactSize } from "./Configuration.js";
 import DOMObserver from "./compatibility/DOMObserver.js";
 import ShadowDOM from "./compatibility/ShadowDOM.js";
 import UI5ElementMetadata from "./UI5ElementMetadata.js";
@@ -78,6 +78,12 @@ class UI5Element extends HTMLElement {
 	}
 
 	async _initializeShadowRoot() {
+		const isCompact = getCompactSize();
+
+		if (isCompact) {
+			this.setAttribute("data-ui5-compact-size", "");
+		}
+
 		if (this.constructor.getMetadata().getNoShadowDOM()) {
 			return Promise.resolve();
 		}
