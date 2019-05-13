@@ -13,6 +13,10 @@
 		}
 	</script>
 
+	<!-- <script>
+		window.ShadyDOM = { force: true };
+		window.customElements.forcePolyfill = true;
+	</script> -->
 	<script src="../../../../../../webcomponentsjs/webcomponents-loader.js"></script>
 	<script src="../../../../../../resources/sap/ui/webcomponents/main/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../../../../../resources/sap/ui/webcomponents/main/bundle.es5.js">
@@ -20,6 +24,14 @@
 	<style>
 		.myCard {
 			max-width: 300px;
+		}
+	</style>
+	<style data-ui5-parts-styles>
+		ui5-card.online::part(status) {
+			color: green;
+		}
+		ui5-card.offline::part(status) {
+			color: red;
 		}
 	</style>
 </head>
@@ -43,11 +55,49 @@
 	<ui5-input id="field" value="0"></ui5-input>
 </ui5-card>
 
-<script>
+<ui5-card
+	id="card1"
+	status="online"
+	heading="Main server"
+	class="myCard online">
+	<ui5-list id="myList3" separators="Inner">
+		<ui5-li icon="sap-icon://horizontal-bullet-chart" >Template Based Segmentation</ui5-li>
+		<ui5-li icon="sap-icon://opportunity" >Segmentation Models</ui5-li>
+		<ui5-li icon="sap-icon://line-charts" >Marketing plans</ui5-li>
+		<ui5-li icon="sap-icon://horizontal-bar-chart" >Target Groups</ui5-li>
+		<ui5-li icon="sap-icon://org-chart" >Program Structure</ui5-li>
+		<ui5-li icon="sap-icon://bar-chart" >AdWords Campaigns</ui5-li>
+		<ui5-li icon="sap-icon://tools-opportunity" >Winter Campaign Results</ui5-li>
+	</ui5-list>
+
+	<ui5-input id="field" value="0"></ui5-input>
+</ui5-card>
+
+<ui5-card
+	id="card2"
+	status="offline"
+	heading="Backup server"
+	class="myCard offline">
+	<ui5-list id="myList3" separators="Inner">
+		<ui5-li icon="sap-icon://horizontal-bullet-chart" >Template Based Segmentation</ui5-li>
+		<ui5-li icon="sap-icon://opportunity" >Segmentation Models</ui5-li>
+		<ui5-li icon="sap-icon://line-charts" >Marketing plans</ui5-li>
+		<ui5-li icon="sap-icon://horizontal-bar-chart" >Target Groups</ui5-li>
+		<ui5-li icon="sap-icon://org-chart" >Program Structure</ui5-li>
+		<ui5-li icon="sap-icon://bar-chart" >AdWords Campaigns</ui5-li>
+		<ui5-li icon="sap-icon://tools-opportunity" >Winter Campaign Results</ui5-li>
+	</ui5-list>
+
+	<ui5-input id="field" value="0"></ui5-input>
+</ui5-card>
+
+<script type="module">
 	card.addEventListener("headerPress", function (event) {
 		console.log(event);
 		field.value = parseInt(field.value) + 1;
 	});
+
+	window["sap-ui-webcomponents-main-bundle"].polyfillShadowParts("style[data-ui5-parts-styles]");
 </script>
 </body>
 </html>
