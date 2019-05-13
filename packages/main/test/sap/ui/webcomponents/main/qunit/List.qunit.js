@@ -173,11 +173,12 @@ TestHelper.ready(function() {
 				listUl = this.getListUl(),
 				listItems = list.querySelectorAll("ui5-li"),
 				listItemsInShadowDOM = listUl.querySelectorAll("slot"),
-				expectedChildrenCount = 3;
+				expectedChildrenCount = 3,
+				expectedSlotsCount = 1;
 
 			// asssert
 			assert.equal(listItems.length, expectedChildrenCount, "List has 3 childs in the Light DOM.");
-			assert.equal(listItemsInShadowDOM.length, expectedChildrenCount, "List ul element has 3 child slots in the Shadow DOM.");
+			assert.equal(listItemsInShadowDOM.length, expectedSlotsCount, "List ul element has 1 slot for all children in the Shadow DOM.");
 		});
 
 		QUnit.test("header", function (assert) {
