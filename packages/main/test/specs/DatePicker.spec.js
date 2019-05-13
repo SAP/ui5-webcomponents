@@ -529,7 +529,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("Removal of the 'value' attribute programatically does not cause an error", () => {
-		const button = browser.findElementDeep("#dp14btn");
+		const button = browser.$("#btnRemoval");
 
 		button.click(); // remove the value attribute of ui5-datepicker #dp14
 
