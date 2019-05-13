@@ -92,7 +92,6 @@ const validateSingleProperty = (value, propData) => {
 };
 
 const validateSingleSlot = (value, propData) => {
-
 	if (value === null) {
 		return value;
 	}
