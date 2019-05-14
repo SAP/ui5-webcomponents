@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta charset="utf-8">
 
-	<title>Button</title>
+	<title>MultiComboBox test page</title>
 	<script>
-			delete Document.prototype.adoptedStyleSheets
-		</script>
+		delete Document.prototype.adoptedStyleSheets
+	</script>
 
 	<script data-id="sap-ui-config" type="application/json">
 		{
 			"rtl": false,
-			"compactSize": true
+			"compactSize": false
 		}
 	</script>
 
@@ -23,10 +24,17 @@
 </head>
 
 <body style="padding: 50px">
-	<!-- <ui5-token>UI5 WebComponents</ui5-token> -->
 
-	<br />
-	<br />
+	<style>
+		.demo-section {
+			margin-top: 30px;
+		}
+
+		.demo-section ui5-multi-combobox {
+			margin-top: 10px;
+		}
+	</style>
+	<!-- <ui5-token>UI5 WebComponents</ui5-token> -->
 
 	<!-- <ui5-token selected>UI5 WebComponents</ui5-token> -->
 
@@ -39,8 +47,7 @@
 		<ui5-token>webcomponents</ui5-token>
 	</ui5-tokenizer>
 
-	<br />
-	<br />
+	<span>value </span>
 
 	<ui5-tokenizer show-more style="width: 100%">
 		<ui5-token>World!</ui5-token>
@@ -48,8 +55,7 @@
 		<ui5-token>Hristovthelong</ui5-token>
 	</ui5-tokenizer>
 
-	<br />
-	<br />
+	<span>value </span>
 
 	<ui5-tokenizer show-more style="width: 100%">
 		<ui5-token>B</ui5-token>
@@ -61,86 +67,168 @@
 		<ui5-token>B</ui5-token>
 	</ui5-tokenizer>
 
-	<br />
-	<br /> -->
+<span>value </span>-->
 
-	<ui5-multi-combobox style="width: 100%" value="Hello World">
-		<ui5-li selected type="Active">Cosy</ui5-li>
-		<ui5-li type="Active">Compact</ui5-li>
-		<ui5-li selected type="Active">Condensed</ui5-li>
-		<ui5-li selected type="Active">Longest word in the world</ui5-li>
-	</ui5-multi-combobox>
+	<div class="demo-section">
+		<span>Predefined value</span>
 
-	<br />
-	<br />
+		<ui5-multi-combobox style="width: 100%" value="Hello World">
+			<ui5-li selected type="Active">Cosy</ui5-li>
+			<ui5-li type="Active">Compact</ui5-li>
+			<ui5-li selected type="Active">Condensed</ui5-li>
+			<ui5-li selected type="Active">Longest word in the world</ui5-li>
+		</ui5-multi-combobox>
+	</div>
+	<div class="demo-section">
+		<span>Validating input and predefined value</span>
 
-	<ui5-multi-combobox style="width: 100%" value="com" validate-input>
-		<ui5-li selected type="Active">Cosy</ui5-li>
-		<ui5-li type="Active">Compact</ui5-li>
-		<ui5-li selected type="Active">Condensed</ui5-li>
-		<ui5-li selected type="Active">Longest word in the world</ui5-li>
-	</ui5-multi-combobox>
+		<ui5-multi-combobox style="width: 100%" value="com" validate-input>
+			<ui5-li selected type="Active">Cosy</ui5-li>
+			<ui5-li type="Active">Compact</ui5-li>
+			<ui5-li selected type="Active">Condensed</ui5-li>
+			<ui5-li selected type="Active">Longest word in the world</ui5-li>
+		</ui5-multi-combobox>
+	</div>
+	<div class="demo-section">
+		<span>Validating input and placeholder </span>
 
-	<br />
-	<br />
+		<ui5-multi-combobox style="width: 100%" placeholder="Some initial text" validate-input>
+			<ui5-li selected type="Active">Cosy</ui5-li>
+			<ui5-li type="Active">Compact</ui5-li>
+			<ui5-li selected type="Active">Condensed</ui5-li>
+			<ui5-li selected type="Active">Longest word in the world</ui5-li>
+		</ui5-multi-combobox>
+	</div>
+	<div class="demo-section">
+		<span>disabled and placeholder </span>
 
-	<ui5-multi-combobox style="width: 100%" placeholder="Some initial text" validate-input>
-		<ui5-li selected type="Active">Cosy</ui5-li>
-		<ui5-li type="Active">Compact</ui5-li>
-		<ui5-li selected type="Active">Condensed</ui5-li>
-		<ui5-li selected type="Active">Longest word in the world</ui5-li>
-	</ui5-multi-combobox>
+		<ui5-multi-combobox style="width: 100%" placeholder="Some initial text" disabled>
+			<ui5-li selected type="Active">Cosy</ui5-li>
+			<ui5-li type="Active">Compact</ui5-li>
+			<ui5-li selected type="Active">Condensed</ui5-li>
+			<ui5-li selected type="Active">Longest word in the world</ui5-li>
+		</ui5-multi-combobox>
+	</div>
+	<div class="demo-section">
+		<span>value state success </span>
 
-	<br />
-	<br />
+		<ui5-multi-combobox style="width: 100%" placeholder="Some initial text" value-state="Success">
+			<ui5-li selected type="Active">Cosy</ui5-li>
+			<ui5-li type="Active">Compact</ui5-li>
+			<ui5-li selected type="Active">Condensed</ui5-li>
+			<ui5-li selected type="Active">Longest word in the world</ui5-li>
+		</ui5-multi-combobox>
+	</div>
+	<div class="demo-section">
+		<span>value state warning </span>
 
-	<ui5-multi-combobox style="width: 100%" placeholder="Some initial text" disabled>
-		<ui5-li selected type="Active">Cosy</ui5-li>
-		<ui5-li type="Active">Compact</ui5-li>
-		<ui5-li selected type="Active">Condensed</ui5-li>
-		<ui5-li selected type="Active">Longest word in the world</ui5-li>
-	</ui5-multi-combobox>
+		<ui5-multi-combobox style="width: 100%" placeholder="Some initial text" value-state="Warning">
+			<ui5-li selected type="Active">Cosy</ui5-li>
+			<ui5-li type="Active">Compact</ui5-li>
+			<ui5-li selected type="Active">Condensed</ui5-li>
+			<ui5-li selected type="Active">Longest word in the world</ui5-li>
+		</ui5-multi-combobox>
+	</div>
+	<div class="demo-section">
+		<span>value state error </span>
 
-	<br />
-	<br />
+		<ui5-multi-combobox style="width: 100%" placeholder="Some initial text" value-state="Error">
+			<ui5-li selected type="Active">Cosy</ui5-li>
+			<ui5-li type="Active">Compact</ui5-li>
+			<ui5-li selected type="Active">Condensed</ui5-li>
+			<ui5-li selected type="Active">Longest word in the world</ui5-li>
+		</ui5-multi-combobox>
+	</div>
+	<div class="demo-section">
+		<span>readonly </span>
 
-	<ui5-multi-combobox style="width: 100%" placeholder="Some initial text" value-state="Success">
-		<ui5-li selected type="Active">Cosy</ui5-li>
-		<ui5-li type="Active">Compact</ui5-li>
-		<ui5-li selected type="Active">Condensed</ui5-li>
-		<ui5-li selected type="Active">Longest word in the world</ui5-li>
-	</ui5-multi-combobox>
+		<ui5-multi-combobox style="width: 100%" placeholder="Some initial text" readonly>
+			<ui5-li selected type="Active">Cosy</ui5-li>
+			<ui5-li type="Active">Compact</ui5-li>
+			<ui5-li selected type="Active">Condensed</ui5-li>
+			<ui5-li selected type="Active">Longest word in the world</ui5-li>
+		</ui5-multi-combobox>
+	</div>
 
-	<br />
-	<br />
+	<div class="demo-section">
+		<span>MultiComboBox with items</span>
 
-	<ui5-multi-combobox style="width: 100%" placeholder="Some initial text" value-state="Warning">
-		<ui5-li selected type="Active">Cosy</ui5-li>
-		<ui5-li type="Active">Compact</ui5-li>
-		<ui5-li selected type="Active">Condensed</ui5-li>
-		<ui5-li selected type="Active">Longest word in the world</ui5-li>
-	</ui5-multi-combobox>
+		<ui5-multi-combobox style="width: 100%" placeholder="Some initial text" id="mcb">
+			<ui5-li type="Active" id="first-item">Cosy</ui5-li>
+			<ui5-li type="Active">Compact</ui5-li>
+			<ui5-li type="Active">Condensed</ui5-li>
+			<ui5-li type="Active">Longest word in the world</ui5-li>
+		</ui5-multi-combobox>
+	</div>
 
-	<br />
-	<br />
+	<div class="demo-section">
+			<span>MultiComboBox n more</span> </br>
+	
+			<ui5-multi-combobox style="width: 320px" placeholder="Some initial text" id="more-mcb">
+				<ui5-li type="Active" selected>Cosy</ui5-li>
+				<ui5-li type="Active" selected>Compact</ui5-li>
+				<ui5-li type="Active">Condensed</ui5-li>
+				<ui5-li type="Active" selected>Longest word in the world</ui5-li>
+			</ui5-multi-combobox>
+		</div>
 
-	<ui5-multi-combobox style="width: 100%" placeholder="Some initial text" value-state="Error">
-		<ui5-li selected type="Active">Cosy</ui5-li>
-		<ui5-li type="Active">Compact</ui5-li>
-		<ui5-li selected type="Active">Condensed</ui5-li>
-		<ui5-li selected type="Active">Longest word in the world</ui5-li>
-	</ui5-multi-combobox>
+		<div class="demo-section">
+				<span>MultiComboBox with validate-input</span>
+		
+				<ui5-multi-combobox style="width: 100%" placeholder="Some initial text" id="mcb-validation" validate-input>
+					<ui5-li type="Active">Cosy</ui5-li>
+					<ui5-li type="Active">Compact</ui5-li>
+					<ui5-li type="Active">Condensed</ui5-li>
+					<ui5-li type="Active">Longest word in the world</ui5-li>
+				</ui5-multi-combobox>
+			</div>
 
-	<br />
-	<br />
 
-	<ui5-multi-combobox style="width: 100%" placeholder="Some initial text" readonly>
-		<ui5-li selected type="Active">Cosy</ui5-li>
-		<ui5-li type="Active">Compact</ui5-li>
-		<ui5-li selected type="Active">Condensed</ui5-li>
-		<ui5-li selected type="Active">Longest word in the world</ui5-li>
-	</ui5-multi-combobox>
+	<hr class="demo-section">
 
+	<div class="demo-section">
+		<span>Fired event: </span>
+		<input type="text" id="events-input" />
+
+		<br>
+		<br>
+
+		<span>Parameters Count: </span>
+		<input type="text" id="events-parameters" />
+
+		<br>
+		<br>
+
+		<span>Event call count: </span>
+		<input type="text" id="events-call-count" value="0"/>
+
+		<br>
+		<br>
+
+		<button id="reset-btn">Reset fields</button>
+	</div>
+
+
+	<script>
+
+		const eventNameInput = document.getElementById("events-input");
+		const eventParamsInput = document.getElementById("events-parameters");
+		const callCountInput = document.getElementById("events-call-count");
+		const resetBtn = document.getElementById("reset-btn");
+
+		document.getElementById("mcb").addEventListener("selectionChange", event => {
+			eventNameInput.value = "selectionChange";
+			eventParamsInput.value = event.detail.items.length;
+			callCountInput.value = parseInt(callCountInput.value) + 1;
+		});
+
+		resetBtn.addEventListener("click", event => {
+			eventNameInput.value = "";
+			eventParamsInput.value = "";
+			callCountInput.value = "";
+		});
+	</script>
 
 </body>
+
 </html>

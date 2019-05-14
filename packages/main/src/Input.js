@@ -65,7 +65,7 @@ const metadata = {
 
 		_beginContent: {
 			type: HTMLElement,
-		}
+		},
 	},
 	properties: /** @lends  sap.ui.webcomponents.main.Input.prototype */  {
 

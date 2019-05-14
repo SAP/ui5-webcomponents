@@ -27,7 +27,6 @@
 		{{#unless ctr.readonly}}
 			<ui5-icon src="sap-icon://slim-arrow-down" 
 				data-ui5-slot="icon"
-				tabindex="-1"
 				@press={{ctr._showAllItemsPopover}}
 				class={{classes.icon}}
 			></ui5-icon>
@@ -61,7 +60,7 @@
 		@selectionChange={{ctr._allItemsSelectionChange}}
 		@afterClose={{ctr._afterAllPopoverClose}}
 		@afterOpen={{ctr._afterAllPopoverOpen}}>
-		<ui5-list separators="None" mode="MultiSelect" style="{{styles.listMinWidth}}">
+		<ui5-list separators="None" mode="MultiSelect" style="{{styles.listMinWidth}}" class="ui5-multi-combobox-all-items-list">
 			{{#each ctr._filteredItems}}
 					<ui5-li type="Active" ?selected={{this.selected}} data-ui5-token-id="{{this._id}}">{{this._nodeText}}</ui5-li>
 			{{/each}}

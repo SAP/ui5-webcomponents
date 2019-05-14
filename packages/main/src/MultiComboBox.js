@@ -1,7 +1,8 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
-import { isShow } from "@ui5/webcomponents-base/src/events/PseudoEvents";
+import Function from "@ui5/webcomponents-base/src/types/Function.js";
+import { isShow, isDown } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 
 import MultiComboBoxRenderer from "./build/compiled/MultiComboBoxRenderer.lit.js";
 
@@ -10,14 +11,12 @@ import styles from "./themes/MultiComboBox.css.js";
 
 // all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
 import "./ThemePropertiesProvider.js";
-import Function from "@ui5/webcomponents-base/src/types/Function";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-multi-combobox",
-	defaultSlot: "description",
 	defaultSlot: "items",
 	slots: /** @lends sap.ui.webcomponents.main.MultiComboBox.prototype */ {
 		items: {
@@ -55,7 +54,7 @@ const metadata = {
 
 		/**
 		 * Defines if the user input will be prevented if no matching item has been found
-		 * 
+		 *
 		 * @type {boolean}
 		 * @public
 		 */
@@ -87,15 +86,15 @@ const metadata = {
 			defaultValue: ValueState.None,
 		},
 
-			/**
-		 * Defines whether the <code>ui5-multi-combobox</code> is readonly.
-		 * <br><br>
-		 * <b>Note:</b> A read-only <code>ui5-multi-combobox</code> is not editable,
-		 * but still provides visual feedback upon user interaction.
-		 *
-		 * @type {boolean}
-		 * @public
-		 */
+	/**
+	 * Defines whether the <code>ui5-multi-combobox</code> is readonly.
+	 * <br><br>
+	 * <b>Note:</b> A read-only <code>ui5-multi-combobox</code> is not editable,
+	 * but still provides visual feedback upon user interaction.
+	 *
+	 * @type {boolean}
+	 * @public
+	 */
 		readonly: {
 			type: Boolean,
 		},
@@ -115,8 +114,7 @@ const metadata = {
 	},
 	events: /** @lends sap.ui.webcomponents.main.MultiComboBox.prototype */ {
 		/**
-		 * Fired when the value of the <code>ui5-multi-combobox</code> changes at each keystroke,
-		 * and when a suggestion item has been selected.
+		 * Fired when the value of the <code>ui5-multi-combobox</code> changes at each keystroke.
 		 *
 		 * @event
 		 * @public
@@ -219,13 +217,14 @@ class MultiComboBox extends UI5Element {
 			const input = event.target;
 			const value = input.value;
 			const filteredItems = this._filterItems(value);
+			const oldValueState = input.valueState;
 
 			if (!filteredItems.length && value && this.validateInput) {
 				input.value = this._inputLastValue;
 				input.valueState = "Error";
 
 				setTimeout(() => {
-					input.valueState = "None";
+					input.valueState = oldValueState;
 				}, 2000);
 				return;
 			}
@@ -279,8 +278,14 @@ class MultiComboBox extends UI5Element {
 
 
 	_handleKeyDown(event) {
-		if (isShow(event)) {
+		if (isShow(event) && !this.readonly && !this.disabled) {
 			this._togglePopover();
+		}
+
+		if (isDown(event) && this._getPopover()._isOpen && this.items.length) {
+			const list = this.shadowRoot.querySelector(".ui5-multi-combobox-all-items-list");
+			list._itemNavigation.current = 0;
+			list.items[0].focus();
 		}
 	}
 
@@ -334,9 +339,9 @@ class MultiComboBox extends UI5Element {
 		if (!hasSelectedItem) {
 			const morePopover = this.shadowRoot.querySelector(`.ui5-multi-combobox-selected-items--popover`);
 
-			morePopover.close();
+			morePopover && morePopover.close();
 		}
-		
+
 		const input = this.shadowRoot.querySelector("ui5-input");
 
 		if (input && !input.value) {

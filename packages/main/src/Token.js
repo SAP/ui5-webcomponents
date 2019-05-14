@@ -21,18 +21,52 @@ const metadata = {
 	usesNodeText: true,
 	slots: /** @lends sap.ui.webcomponents.main.Token.prototype */ {},
 	properties: /** @lends sap.ui.webcomponents.main.Token.prototype */ {
+
+		/**
+		 * Defines whether the <code>ui5-token</code> is selected or not.
+		 *
+		 * @type {boolean}
+		 * @public
+		 */
 		selected: { type: Boolean },
+
+		/**
+		 * Defines whether the <code>ui5-token</code> is read-only.
+		 * <br><br>
+		 * <b>Note:</b> A read-only <code>ui5-token</code> can not be deleted or selected,
+		 * but still provides visual feedback upon user interaction.
+		 *
+		 * @type {boolean}
+		 * @public
+		 */
 		readonly: { type: Boolean },
+
 		_handlers: { type: Object },
 		_tabIndex: { type: String, defaultValue: "-1" },
 	},
 	events: /** @lends sap.ui.webcomponents.main.Token.prototype */ {
+
+		/**
+		 * Fired when the backspace, delete or close icon of the token is pressed
+		 *
+		 * @event
+		 * @param {boolean} backSpace indicates whether token is deleted by backspace key
+		 * @param {boolean} delete indicates whether token is deleted by delete key
+		 * @public
+		 */
 		delete: {
 			detail: {
 				backSpace: { type: Boolean },
 				delete: { type: Boolean },
 			}
 		},
+
+		/**
+		 * Fired when the a token is selected by user interaction with mouse, clicking space or enter
+		 *
+		 * @event
+		 * @public
+		 */
 		select: {}
 	},
 };
@@ -50,7 +84,7 @@ const metadata = {
  * @extends UI5Element
  * @tagname ui5-timeline
  * @usestextcontent
- * @public
+ * @private
  */
 class Token extends UI5Element {
 	static get metadata() {
