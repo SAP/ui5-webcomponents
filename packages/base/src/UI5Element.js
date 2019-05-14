@@ -80,7 +80,7 @@ class UI5Element extends HTMLElement {
 	async _initializeShadowRoot() {
 		const isCompact = getCompactSize();
 
- 		if (isCompact) {
+		if (isCompact) {
 			this.setAttribute("data-ui5-compact-size", "");
 		}
 

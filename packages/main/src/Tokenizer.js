@@ -62,7 +62,7 @@ const metadata = {
  * @extends UI5Element
  * @tagname ui5-timeline
  * @usestextcontent
- * @public
+ * @private
  */
 class Tokenizer extends UI5Element {
 	static get metadata() {
