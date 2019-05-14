@@ -31,7 +31,7 @@ TestHelper.ready(function() {
 		});
 
 		QUnit.test("Default settings", function (assert) {
-			assert.expect(8);
+			assert.expect(9);
 
 			var listItemRoot = this.getListItemRoot(),
 				existingClasses = ["sapMLIB", "sapMSLI", "sapMLIB-CTX", "sapMLIBBorder", "sapMLIBHoverable", "sapMLIBActionable", "sapMLIBTypeActive"],
@@ -96,19 +96,15 @@ TestHelper.ready(function() {
 		});
 
 		QUnit.test("set string props", function (assert) {
-			assert.expect(5);
+			assert.expect(2);
 
 			var done = assert.async(),
 				listItem = this.listItem,
 				listItemRoot = this.getListItemRoot(),
-				background = "Transparent",
 				mode = "MultiSelect",
 				tabIndex = "0";
 
 			var props = [{
-					prop: "_background",
-					value: background
-				},{
 					prop: "_mode",
 					value: mode
 				},{
@@ -125,7 +121,6 @@ TestHelper.ready(function() {
 				// assert
 				var selectionControl = listItemRoot.querySelector("ui5-checkbox");
 
-				assert.ok(listItemRoot.classList.contains("sapMLIBTransparent"), "listItem contains the 'sapMLIBTransparent' class");
 				assert.equal(listItemRoot.getAttribute("tabindex"), tabIndex, "listItem has correct tabIndex");
 				assert.ok(selectionControl, "listItem renders a selection control");
 
@@ -164,11 +159,11 @@ TestHelper.ready(function() {
 			assert.expect(2);
 
 			var listItemRoot = this.getListItemRoot(),
-				existingClasses = ["sapMGHLI", "sapMLIBTypeActive"];
+				existingClasses = ["sapMGHLI", "sapMLIBTypeInactive"];
 
 			// assert
 			existingClasses.forEach(function(className) {
-				assert.ok(listItemRoot.classList.contains(className), "root element does contains " + className);
+				assert.ok(listItemRoot.classList.contains(className), "root element contains " + className);
 			});
 		});
 	});

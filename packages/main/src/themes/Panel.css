@@ -12,6 +12,7 @@ ui5-panel {
 	overflow: hidden;
 	box-sizing: border-box;
 	position: relative;
+	background-color: var(--_ui5_panel_background_color);
 }
 
 .sapMPanel > header {
@@ -32,7 +33,6 @@ ui5-panel {
 	transition: transform 0.4s ease-out;
 	cursor: pointer;
 	position: relative;
-
 }
 
 .sapMPanel > header ui5-icon.sapMPanelIcon.sapMPanelIconExpanded {
@@ -77,6 +77,7 @@ ui5-panel {
 	box-sizing: border-box;
 	overflow: auto;
 	white-space: normal;
+	border-bottom: 1px solid var(--_ui5_panel_bottom_border_color);
 }
 
 .sapMPanelContent:focus {
@@ -86,6 +87,7 @@ ui5-panel {
 .sapMPanelWrappingDiv,
 .sapMPanelWrappingDivTb {
 	position: relative;
+	background-color: var(--_ui5_panel_background_color);
 }
 
 .sapMPanelWrappingDiv {
@@ -127,24 +129,12 @@ ui5-panel {
 	margin-left: 0;
 }
 
-.sapMPanelBGSolid {
-	background-color: var(--sapUiGroupContentBackground);
-}
-
-.sapMPanelBGTransparent {
-	background-color: transparent;
-}
-
 /* if Panel is not expandable, we do wish header to come with own border */
 .sapMPanel > .sapMPanelHdr,
 /* notice: sapMPanelWrappingDiv is available if Panel is expandable */
 .sapMPanelWrappingDiv,
 /* do not want border if expanded and if only header text */
 .sapMPanelWrappingDivTb {
-	border-bottom: 1px solid var(--sapUiGroupTitleBorderColor);
-}
-
-.sapMPanelContent:not(.sapMPanelBGTransparent) {
 	border-bottom: 1px solid var(--sapUiGroupTitleBorderColor);
 }
 
