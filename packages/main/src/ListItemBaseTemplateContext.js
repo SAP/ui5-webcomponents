@@ -23,7 +23,6 @@ class ListItemBaseTemplateContext {
 			"sapMLIB-CTX": true,
 			sapMLIBShowSeparator: true,
 			sapMLIBFocusable: isDesktop(),
-			[`sapMLIB${state._background}`]: !!state._background,
 		};
 	}
 
