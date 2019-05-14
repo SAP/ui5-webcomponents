@@ -96,7 +96,7 @@ TestHelper.ready(function() {
 		});
 
 		QUnit.test("set string props", function (assert) {
-			assert.expect(5);
+			assert.expect(4);
 
 			var done = assert.async(),
 				listItem = this.listItem,
