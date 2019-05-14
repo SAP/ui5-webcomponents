@@ -1,9 +1,5 @@
-commit 17069dbf54d0382c0336f16cc934cc6718c76af0
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Tue May 14 15:24:09 2019 +0300
+commit 47aaa3da87dd8e39856c12edb16dcff73d75aa24
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue May 14 17:32:12 2019 +0300
 
-    chore: add script for i18n build (#385)
-    
-    - takes the openui5 i18n message bundles
-    - filters by the used keys only (USED_KEYS.txt)
-    - saves the result in the target JSON format for use at runtime
+    refactor(ui5-panel): remove backgroundDesign property (#383)
