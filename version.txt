@@ -1,5 +1,9 @@
-commit eb4dcf20abbb0b9191fefbd99914afda2cb2f635
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon May 13 16:12:19 2019 +0300
+commit d6b4ab56793308056fc790c93994253bb857766f
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Tue May 14 12:01:59 2019 +0300
 
-     fix(ui5-datepicker): fix js error thrown upon 'value' attr removal (#381)
+    refactor: make custom CSS theme independent (#386)
+    
+    With the move to CSS custom properties, the CSS that is added to the shadow DOM is theme independent and never changed when the theme is changed. Theme dependent styling has to be achieved by use of CSS cutsom properties only. This method is adjusted to reflect the standard framework behaviour.
+    
+    BREAKING CHANGE: the signature of the addCustomCSS method exported by "@ui5/webcomponents-base/Theming.js" is changed from addCustomCSS(tag, theme, css) to addCustomCSS(tag, css)
