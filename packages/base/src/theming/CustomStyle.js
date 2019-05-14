@@ -13,7 +13,7 @@ const addCustomCSS = (tag, css, ...rest) => {
 	customCSSFor[tag].push(css);
 };
 
-const getCustomCSS = (tag) => {
+const getCustomCSS = tag => {
 	return customCSSFor[tag] ? customCSSFor[tag].join("") : "";
 };
 
