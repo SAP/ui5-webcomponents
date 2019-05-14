@@ -1,5 +1,9 @@
-commit 47aaa3da87dd8e39856c12edb16dcff73d75aa24
+commit 4b64a9c900f91020f7fb4de64043e0fef658ea98
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue May 14 17:32:12 2019 +0300
+Date:   Tue May 14 17:42:34 2019 +0300
 
-    refactor(ui5-panel): remove backgroundDesign property (#383)
+    fix(ui5-messagestrip): remove height 100% on element tag (#387)
+    
+    Issue, the message strip used to take full parent height, although it might contain only few words.
+    Solution: remove the height 100% on element tag, as it can be alter any time by the consumers.
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/375
