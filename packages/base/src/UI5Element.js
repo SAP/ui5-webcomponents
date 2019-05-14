@@ -498,7 +498,7 @@ class UI5Element extends HTMLElement {
 		let compatEventResult = true; // Initialized to true, because if the event is not fired at all, it should be considered "not-prevented"
 		const noConflict = getWCNoConflict();
 
-		const conflictEvent = new CustomEvent(`ui5-${name}`, {
+		const noConflictEvent = new CustomEvent(`ui5-${name}`, {
 			detail: data,
 			composed: false,
 			bubbles: true,
@@ -506,9 +506,9 @@ class UI5Element extends HTMLElement {
 		});
 
 		// This will be false if the compat event is prevented
-		compatEventResult = this.dispatchEvent(conflictEvent);
+		compatEventResult = this.dispatchEvent(noConflictEvent);
 
-		if (noConflict) {
+		if (noConflict === true || (noConflict.events && noConflict.events.includes && noConflict.events.includes(name))) {
 			return compatEventResult;
 		}
 
@@ -606,18 +606,6 @@ class UI5Element extends HTMLElement {
 				throw new Error("Cannot set node text directly, use the DOM APIs");
 			},
 		});
-	}
-
-	static get noConflictEvents() {
-		if (!this._noConflictEvents) {
-			const noConflictConfig = getWCNoConflict();
-			this._noConflictEvents = [];
-			if (typeof noConflictConfig === "object" && typeof noConflictConfig.events === "string") {
-				this._noConflictEvents = noConflictConfig.events.split(",").map(evtName => evtName.trim());
-			}
-		}
-
-		return this._noConflictEvents;
 	}
 }
 const kebabToCamelCase = string => toCamelCase(string.split("-"));

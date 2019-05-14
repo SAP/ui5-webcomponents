@@ -257,11 +257,11 @@ class List extends UI5Element {
 
 		this._previouslySelectedItem = null;
 
-		this.addEventListener("_press", this.onItemPress.bind(this));
-		this.addEventListener("_focused", this.onItemFocused.bind(this));
-		this.addEventListener("_forwardAfter", this.onForwardAfter.bind(this));
-		this.addEventListener("_forwardBefore", this.onForwardBefore.bind(this));
-		this.addEventListener("_selectionRequested", this.onSelectionRequested.bind(this));
+		this.addEventListener("ui5-_press", this.onItemPress.bind(this));
+		this.addEventListener("ui5-_focused", this.onItemFocused.bind(this));
+		this.addEventListener("ui5-_forwardAfter", this.onForwardAfter.bind(this));
+		this.addEventListener("ui5-_forwardBefore", this.onForwardBefore.bind(this));
+		this.addEventListener("ui5-_selectionRequested", this.onSelectionRequested.bind(this));
 	}
 
 	onBeforeRendering() {
