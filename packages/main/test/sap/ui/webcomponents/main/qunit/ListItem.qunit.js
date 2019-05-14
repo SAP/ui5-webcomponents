@@ -101,15 +101,11 @@ TestHelper.ready(function() {
 			var done = assert.async(),
 				listItem = this.listItem,
 				listItemRoot = this.getListItemRoot(),
-				background = "Transparent",
 				mode = "MultiSelect",
 				tabIndex = "0",
 				type = "Active";
 
 			var props = [{
-					prop: "_background",
-					value: background
-				},{
 					prop: "_mode",
 					value: mode
 				},{
@@ -129,7 +125,6 @@ TestHelper.ready(function() {
 				// assert
 				var selectionControl = listItemRoot.querySelector("ui5-checkbox");
 
-				assert.ok(listItemRoot.classList.contains("sapMLIBTransparent"), "listItem contains the 'sapMLIBTransparent' class");
 				assert.ok(listItemRoot.classList.contains("sapMLIBHoverable"), "listItem contains the 'sapMLIBHoverable' class");
 				assert.ok(listItemRoot.classList.contains("sapMLIBActionable"), "listItem contains the 'sapMLIBActionable' class");
 				assert.equal(listItemRoot.getAttribute("tabindex"), tabIndex, "listItem has correct tabIndex");

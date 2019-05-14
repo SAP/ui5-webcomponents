@@ -6,7 +6,6 @@ import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper.js";
 import { isTabNext } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import ListItemBase from "./ListItemBase.js";
 import ListMode from "./types/ListMode.js";
-import BackgroundDesign from "./types/BackgroundDesign.js";
 import ListSeparators from "./types/ListSeparators.js";
 import ListItemType from "./types/ListItemType.js";
 // Template
@@ -54,19 +53,6 @@ const metadata = {
 		},
 	},
 	properties: /** @lends  sap.ui.webcomponents.main.List.prototype */ {
-
-		/**
-		 * Defines the background design of the <code>ui5-list</code>.
-		 * <br><br>
-		 * <b>Note:</b> Available options are <code>Solid</code> and <code>Transparent</code>.
-		 *
-		 * @type {string}
-		 * @public
-		 */
-		backgroundDesign: {
-			type: BackgroundDesign,
-			defaultValue: BackgroundDesign.Solid,
-		},
 
 		/**
 		 * Defines the <code>ui5-list</code> header text.
@@ -285,7 +271,6 @@ class List extends UI5Element {
 				|| (this.separators === ListSeparators.Inner && !isLastChild);
 
 			item._mode = this.mode;
-			item._background = this.backgroundDesign;
 			item._hideBorder = !showBottomBorder;
 		});
 
