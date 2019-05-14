@@ -3,7 +3,7 @@ import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import URI from "@ui5/webcomponents-base/src/types/URI.js";
 import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler.js";
 import OverflowToolbarTemplateContext from "./OverflowToolbarTemplateContext.js";
-import OverflowToolbarRenderer from "./build/compiled/OverflowToolbarRenderer.lit";
+import OverflowToolbarRenderer from "./build/compiled/OverflowToolbarRenderer.lit.js";
 import Button from "./Button.js";
 import Popover from "./Popover.js";
 
@@ -143,6 +143,8 @@ class OverflowToolbar extends UI5Element {
 				press: this._handleToggleOverflowMenu.bind(this),
 			};
 
+			this.overflowingIndex = -1;
+
 			this._items = this.items.map(item => {
 				return {
 					ref: item,
@@ -173,11 +175,24 @@ class OverflowToolbar extends UI5Element {
 	_handleResize() {
 		let width = this._getItemsWrapper().offsetWidth;
 
+		for (let i = 0; i < this._items.length; i++) {
+			width -= this._widthOfElements[i] + 8;
+			if (width <= 0) {
+				if (this.overflowingIndex === i) {
+					return; // There is no change in overflowing
+				}
+				this.overflowingIndex = i;
+				break;
+			}
+			this.overflowingIndex = -1;
+		}
+
 		this._items = this.items.map((item, index) => {
-			width -= this._widthOfElements[index];
 			return {
 				ref: item,
-				overflowed: width <= this._widthOfElements[index],
+				overflowed: this.overflowingIndex === -1
+					? false
+					: index >= this.overflowingIndex,
 			};
 		});
 
