@@ -88,18 +88,6 @@ const metadata = {
 		},
 
 		/**
-		 * Determines the background color of the <code>ui5-panel</code>.
-		 * Available options are <code>Solid</code> and <code>Transparent</code>.
-		 *
-		 * @type {BackgroundDesign}
-		 * @public
-		 */
-		backgroundDesign: {
-			type: BackgroundDesign,
-			defaultValue: BackgroundDesign.Solid,
-		},
-
-		/**
 		 * Sets the accessible aria role of the <code>ui5-panel</code>.
 		 * Depending on the usage, you can change the role from the default <code>Form</code>
 		 * to <code>Region</code> or <code>Complementary</code>.
