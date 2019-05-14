@@ -1,16 +1,16 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler.js";
+import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
+import Function from "@ui5/webcomponents-base/src/types/Function.js";
 
 import TokenizerRenderer from "./build/compiled/TokenizerRenderer.lit.js";
-import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler";
-import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
 
 // Styles
 import styles from "./themes/Tokenizer.css.js";
 
 // all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
 import "./ThemePropertiesProvider.js";
-import Function from "@ui5/webcomponents-base/src/types/Function";
 import TokenizerTemplateContext from "./TokenizerTemplateContext.js";
 
 /**
@@ -18,7 +18,6 @@ import TokenizerTemplateContext from "./TokenizerTemplateContext.js";
  */
 const metadata = {
 	tag: "ui5-tokenizer",
-	defaultSlot: "description",
 	slots: /** @lends sap.ui.webcomponents.main.Tokenizer.prototype */ {
 		tokens: {
 			type: HTMLElement,
@@ -38,14 +37,14 @@ const metadata = {
 		tokenDelete: {
 			detail: {
 				ref: { type: HTMLElement },
-			}
+			},
 		},
 
 		showMoreItemsPress: {
 			detail: {
 				ref: { type: HTMLElement },
-			}
-		}
+			},
+		},
 	},
 };
 

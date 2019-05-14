@@ -8,7 +8,7 @@ class TokenizerTemplateContext {
 				content: {
 					"ui5-tokenizer--content": true,
 					"ui5-tokenizer-nmore--content": state.showMore,
-				}
+				},
 			},
 		};
 

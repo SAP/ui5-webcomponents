@@ -86,15 +86,15 @@ const metadata = {
 			defaultValue: ValueState.None,
 		},
 
-	/**
-	 * Defines whether the <code>ui5-multi-combobox</code> is readonly.
-	 * <br><br>
-	 * <b>Note:</b> A read-only <code>ui5-multi-combobox</code> is not editable,
-	 * but still provides visual feedback upon user interaction.
-	 *
-	 * @type {boolean}
-	 * @public
-	 */
+		/**
+		 * Defines whether the <code>ui5-multi-combobox</code> is readonly.
+		 * <br><br>
+		 * <b>Note:</b> A read-only <code>ui5-multi-combobox</code> is not editable,
+		 * but still provides visual feedback upon user interaction.
+		 *
+		 * @type {boolean}
+		 * @public
+		 */
 		readonly: {
 			type: Boolean,
 		},
@@ -133,7 +133,7 @@ const metadata = {
 			detail: {
 				items: { type: Array },
 			},
-		}
+		},
 	},
 };
 
@@ -174,15 +174,15 @@ class MultiComboBox extends UI5Element {
 						"max-width": "100%",
 						"min-width": "0px",
 						"height": "100%",
-					}
+					},
 				},
 				classes: {
 					icon: {
 						[`ui5-multi-combobox--icon`]: true,
 						[`ui5-multi-combobox-icon-pressed`]: state._iconPressed,
-					}
-				}
-			}
+					},
+				},
+			};
 		};
 	}
 
@@ -199,19 +199,19 @@ class MultiComboBox extends UI5Element {
 
 		this._showMorePopover = event => {
 			this._togglePopover(true);
-		}
+		};
 
 		this._showAllItemsPopover = event => {
 			this._togglePopover(false);
-		}
+		};
 
 		this._allItemsSelectionChange = event => {
 			this._listSelectionChange(event);
-		}
+		};
 
 		this._selectedItemsSelectionChange = event => {
 			this._listSelectionChange(event);
-		}
+		};
 
 		this._inputChage = event => {
 			const input = event.target;
@@ -240,38 +240,38 @@ class MultiComboBox extends UI5Element {
 			}
 
 			this.fireEvent("input");
-		}
+		};
 
 		this._tokenDelete = event => {
 			const token = event.detail.ref;
-			const item = this.items.filter(item => item._id === token.getAttribute("data-ui5-id"))[0];
+			const deletingItem = this.items.filter(item => item._id === token.getAttribute("data-ui5-id"))[0];
 
-			item.selected = false;
+			deletingItem.selected = false;
 			this._deleting = true;
-		}
+		};
 
 		this._tokenizerFocusOut = event => {
-			const tokenizer = this.shadowRoot.querySelector('ui5-tokenizer');
+			const tokenizer = this.shadowRoot.querySelector("ui5-tokenizer");
 			const tokensCount = tokenizer.tokens.length - 1;
 
-			tokenizer.tokens.forEach(token => token.selected = false);
+			tokenizer.tokens.forEach(token => { token.selected = false; });
 
 			if (tokensCount === 0 && this._deleting) {
 				setTimeout(() => {
-					this.shadowRoot.querySelector('ui5-input').focus();
+					this.shadowRoot.querySelector("ui5-input").focus();
 				}, 0);
 			}
 
 			this._deleting = false;
-		}
+		};
 
 		this._afterAllPopoverClose = () => {
 			this._toggleIcon();
-		}
+		};
 
 		this._afterAllPopoverOpen = () => {
 			this._toggleIcon();
-		}
+		};
 
 		this._keydown = this._handleKeyDown.bind(this);
 	}
@@ -296,7 +296,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_toggleIcon() {
-		this._iconPressed = !this._iconPressed
+		this._iconPressed = !this._iconPressed;
 	}
 
 	_getSelectedItems() {

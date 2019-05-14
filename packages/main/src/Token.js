@@ -1,6 +1,12 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import { getTheme } from "@ui5/webcomponents-base/src/Configuration";
+import { getTheme } from "@ui5/webcomponents-base/src/Configuration.js";
+import {
+	isBackSpace,
+	isEnter,
+	isSpace,
+	isDelete,
+} from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 
 import TokenRenderer from "./build/compiled/TokenRenderer.lit.js";
 
@@ -9,8 +15,6 @@ import styles from "./themes/Token.css.js";
 
 // all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
 import "./ThemePropertiesProvider.js";
-
-import { isBackSpace, isEnter, isSpace, isDelete } from "@ui5/webcomponents-base/src/events/PseudoEvents";
 
 /**
  * @public
@@ -44,6 +48,7 @@ const metadata = {
 		_handlers: { type: Object },
 		_tabIndex: { type: String, defaultValue: "-1" },
 	},
+
 	events: /** @lends sap.ui.webcomponents.main.Token.prototype */ {
 
 		/**
@@ -54,11 +59,11 @@ const metadata = {
 		 * @param {boolean} delete indicates whether token is deleted by delete key
 		 * @public
 		 */
-		delete: {
+		"delete": {
 			detail: {
-				backSpace: { type: Boolean },
-				delete: { type: Boolean },
-			}
+				"backSpace": { type: Boolean },
+				"delete": { type: Boolean },
+			},
 		},
 
 		/**
@@ -67,7 +72,7 @@ const metadata = {
 		 * @event
 		 * @public
 		 */
-		select: {}
+		select: {},
 	},
 };
 
@@ -100,7 +105,7 @@ class Token extends UI5Element {
 			return {
 				ctr: state,
 				iconURI: getTheme() === "sap_fiori_3" ? "sap-icon://decline" : "sap-icon://sys-cancel",
-			}
+			};
 		};
 	}
 
@@ -112,27 +117,27 @@ class Token extends UI5Element {
 		super();
 
 		this._handlers = {
-			select: () => {
+			"select": () => {
 				this.fireEvent("select", {});
 			},
-			delete: () => {
+			"delete": () => {
 				this.fireEvent("delete");
 			},
-			keydown: event => {
+			"keydown": event => {
 				const isBS = isBackSpace(event);
 				const isD = isDelete(event);
 
 				if (!this.readonly && (isBS || isD)) {
 					this.fireEvent("delete", {
 						backSpace: isBS,
-						delete: isD,
+						"delete": isD,
 					});
 				}
 
 				if (isEnter(event) || isSpace(event)) {
 					this.fireEvent("select", {});
 				}
-			}
+			},
 		};
 	}
 
