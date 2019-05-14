@@ -39,7 +39,7 @@ const getWCNoConflict = () => {
 
 const _setWCNoConflict = value => {
 	CONFIGURATION["xx-wc-no-conflict"] = value;
-}
+};
 
 /* Calendar stuff */
 const getCalendarType = () => {
