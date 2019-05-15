@@ -46,10 +46,10 @@ const metadata = {
 		 * </br></br>
 		 * Example: </br>
 		 * &lt;ui5-input show-suggestions></br>
-		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li type="Active">Item #1&lt;/ui5-li></br>
-		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li type="Active">Item #2&lt;/ui5-li></br>
+		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li>Item #1&lt;/ui5-li></br>
+		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li>Item #2&lt;/ui5-li></br>
 		 * &lt;/ui5-input>
-		 * <ui5-input show-suggestions><ui5-li type="Active">Item #1</ui5-li><ui5-li type="Active">Item #2</ui5-li></ui5-input>
+		 * <ui5-input show-suggestions><ui5-li>Item #1</ui5-li><ui5-li>Item #2</ui5-li></ui5-input>
 		 * </br></br>
 		 * <b>Note:</b> The suggestion would be displayed only if the <code>showSuggestions</code>
 		 * property is set to <code>true</code>.

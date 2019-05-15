@@ -13,7 +13,7 @@ describe("Date Picker Tests", () => {
 
 		firstItem.click();
 
-		assert.strictEqual(itemPressResultField.getProperty("value"), "1", "itemPress event has been fired.");
+		assert.strictEqual(itemPressResultField.getProperty("value"), "1", "itemPress event has been fired once");
 		assert.strictEqual(selectionChangeResultField.getProperty("value"), "1", "selectionChange event has been fired.");
 	});
 

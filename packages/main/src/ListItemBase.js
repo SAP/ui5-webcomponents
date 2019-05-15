@@ -18,10 +18,6 @@ const metadata = {
 			type: Boolean,
 		},
 
-		_background: {
-			type: String,
-		},
-
 		_tabIndex: {
 			type: String,
 			defaultValue: "-1",

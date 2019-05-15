@@ -92,11 +92,11 @@
 		dp.addEventListener('keydown', function() { console.log('keydown')});
 		dp.addEventListener('blur', function() { console.log('blur')});
 
-		dp.addEventListener('change', function(e) {
+		dp.addEventListener('ui5-change', function(e) {
 			console.log('change: ', e.detail);
 			labelChange.innerHTML = 'change: ' + JSON.stringify(e.detail);
 		});
-		dp.addEventListener('liveChange', function(e) {
+		dp.addEventListener('ui5-liveChange', function(e) {
 			console.log('liveChange: ', e.detail);
 			labelLiveChange.innerHTML = 'liveChange: ' + JSON.stringify(e.detail);
 		});
