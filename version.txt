@@ -1,5 +1,5 @@
-commit 49d71af3cd42d352d3c59204ecbcf997908dd48a
+commit 0d5edd8577ee067d8ad1b81c9797a80d9f6ad054
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed May 15 11:47:42 2019 +0300
+Date:   Wed May 15 12:49:20 2019 +0300
 
-    chore: remove BackgroundDesign enumaration (#388)
+    refactor(ui5-li): make item type 'Active' by default (#359)
