@@ -143,7 +143,7 @@ class Tokenizer extends UI5Element {
 	}
 
 	_getTokens(overflow) {
-		const firstToken = this.shadowRoot.querySelector("#ui5-tokenizer-token-placeholder");
+		const firstToken = this.shadowRoot.querySelector(".ui5-tokenizer-token-placeholder");
 
 		if (!firstToken) {
 			return [];

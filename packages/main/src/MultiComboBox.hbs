@@ -11,10 +11,11 @@
 
 		<ui5-tokenizer data-ui5-slot="_beginContent"
 			show-more
+			class="ui5-multi-combobox-tokenizer"
 			?disabled="{{ctr.disabled}}"
 			style="{{styles.tokenizer}}"
-			@showMoreItemsPress="{{ctr._showMorePopover}}"
-			@tokenDelete="{{ctr._tokenDelete}}"
+			@ui5-showMoreItemsPress="{{ctr._showMorePopover}}"
+			@ui5-tokenDelete="{{ctr._tokenDelete}}"
 			@focusout="{{ctr._tokenizerFocusOut}}"
 		>
 			{{#each ctr.items}}
@@ -27,7 +28,7 @@
 		{{#unless ctr.readonly}}
 			<ui5-icon src="sap-icon://slim-arrow-down" 
 				data-ui5-slot="icon"
-				@press={{ctr._showAllItemsPopover}}
+				@ui5-press={{ctr._showAllItemsPopover}}
 				class={{classes.icon}}
 			></ui5-icon>
 		{{/unless}}
@@ -41,7 +42,7 @@
 		placement-type="Bottom">
 		<ui5-list separators="None" mode="{{selectedItemsListMode}}"
 			style="{{styles.listMinWidth}}"
-			@selectionChange={{ctr._selectedItemsSelectionChange}}>
+			@ui5-selectionChange={{ctr._selectedItemsSelectionChange}}>
 			{{#each ctr.items}}
 				{{#if this.selected}}
 					<ui5-li type="Active" data-ui5-token-id="{{this._id}}" .selected="{{../../editable}}">{{this._nodeText}}</ui5-li>
@@ -57,9 +58,9 @@
 		initial-focus="ui5-multi-combobox--input"
 		horizontal-align="Left"
 		placement-type="Bottom"
-		@selectionChange={{ctr._allItemsSelectionChange}}
-		@afterClose={{ctr._afterAllPopoverClose}}
-		@afterOpen={{ctr._afterAllPopoverOpen}}>
+		@ui5-selectionChange={{ctr._allItemsSelectionChange}}
+		@ui5-afterClose={{ctr._afterAllPopoverClose}}
+		@ui5-afterOpen={{ctr._afterAllPopoverOpen}}>
 		<ui5-list separators="None" mode="MultiSelect" style="{{styles.listMinWidth}}" class="ui5-multi-combobox-all-items-list">
 			{{#each ctr._filteredItems}}
 					<ui5-li type="Active" ?selected={{this.selected}} data-ui5-token-id="{{this._id}}">{{this._nodeText}}</ui5-li>

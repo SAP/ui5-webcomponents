@@ -1,6 +1,6 @@
-<div class="ui5-tokenizer--wrapper">
-	<div class="{{classes.content}}" @delete={{ctr._tokenDelete}}>
-		<div id="ui5-tokenizer-token-placeholder" style="display: inline-block; height: 100%; margin-left: -3px">
+<div class="{{classes.wrapper}}">
+	<div class="{{classes.content}}" @ui5-delete={{ctr._tokenDelete}}>
+		<div class="ui5-tokenizer-token-placeholder">
 			<div style="display: inline-block"></div>
 		</div>
 		{{#each ctr.tokens}}

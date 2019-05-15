@@ -171,7 +171,6 @@ class MultiComboBox extends UI5Element {
 					tokenizer: {
 						"border": "none",
 						"width": "auto",
-						"max-width": "100%",
 						"min-width": "0px",
 						"height": "100%",
 					},
@@ -248,6 +247,8 @@ class MultiComboBox extends UI5Element {
 
 			deletingItem.selected = false;
 			this._deleting = true;
+
+			this.fireEvent("selectionChange", { items: this._getSelectedItems() });
 		};
 
 		this._tokenizerFocusOut = event => {
@@ -291,7 +292,7 @@ class MultiComboBox extends UI5Element {
 
 	_filterItems(value) {
 		return this.items.filter(item => {
-			return item._nodeText.toLowerCase().startsWith(value.toLowerCase());
+			return item.textContent && item.textContent.toLowerCase().startsWith(value.toLowerCase());
 		});
 	}
 

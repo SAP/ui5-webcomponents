@@ -128,6 +128,8 @@ class Token extends UI5Element {
 				const isD = isDelete(event);
 
 				if (!this.readonly && (isBS || isD)) {
+					event.preventDefault();
+
 					this.fireEvent("delete", {
 						backSpace: isBS,
 						"delete": isD,

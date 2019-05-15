@@ -5,6 +5,10 @@
 	--_ui5_popover_content_padding: 0;
 }
 
+ui5-multi-combobox {
+	display: inline-block;
+	width: 100%;
+}
 
 .ui5-multi-combobox--wrapper {
 	display: flex;
@@ -47,4 +51,8 @@
 
 span.sapUiSizeCompact .ui5-multi-combobox--token {
 	height: 100%;
+}
+
+.ui5-multi-combobox-tokenizer {
+	max-width: calc(100% - 3rem - var(--sap_wc_input_icon_min_width));
 }

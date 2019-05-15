@@ -72,7 +72,8 @@
 	<div class="demo-section">
 		<span>Predefined value</span>
 
-		<ui5-multi-combobox style="width: 100%" value="Hello World">
+		<br>
+		<ui5-multi-combobox style="width: 560px" value="Hello World">
 			<ui5-li selected type="Active">Cosy</ui5-li>
 			<ui5-li type="Active">Compact</ui5-li>
 			<ui5-li selected type="Active">Condensed</ui5-li>
@@ -82,7 +83,8 @@
 	<div class="demo-section">
 		<span>Validating input and predefined value</span>
 
-		<ui5-multi-combobox style="width: 100%" value="com" validate-input>
+		<br>
+		<ui5-multi-combobox style="width: 560px" value="com" validate-input>
 			<ui5-li selected type="Active">Cosy</ui5-li>
 			<ui5-li type="Active">Compact</ui5-li>
 			<ui5-li selected type="Active">Condensed</ui5-li>
@@ -92,7 +94,8 @@
 	<div class="demo-section">
 		<span>Validating input and placeholder </span>
 
-		<ui5-multi-combobox style="width: 100%" placeholder="Some initial text" validate-input>
+		<br>
+		<ui5-multi-combobox style="width: 560px" placeholder="Some initial text" validate-input>
 			<ui5-li selected type="Active">Cosy</ui5-li>
 			<ui5-li type="Active">Compact</ui5-li>
 			<ui5-li selected type="Active">Condensed</ui5-li>
@@ -102,7 +105,8 @@
 	<div class="demo-section">
 		<span>disabled and placeholder </span>
 
-		<ui5-multi-combobox style="width: 100%" placeholder="Some initial text" disabled>
+		<br>
+		<ui5-multi-combobox style="width: 560px" placeholder="Some initial text" disabled>
 			<ui5-li selected type="Active">Cosy</ui5-li>
 			<ui5-li type="Active">Compact</ui5-li>
 			<ui5-li selected type="Active">Condensed</ui5-li>
@@ -112,7 +116,8 @@
 	<div class="demo-section">
 		<span>value state success </span>
 
-		<ui5-multi-combobox style="width: 100%" placeholder="Some initial text" value-state="Success">
+		<br>
+		<ui5-multi-combobox style="width: 560px" placeholder="Some initial text" value-state="Success">
 			<ui5-li selected type="Active">Cosy</ui5-li>
 			<ui5-li type="Active">Compact</ui5-li>
 			<ui5-li selected type="Active">Condensed</ui5-li>
@@ -122,7 +127,8 @@
 	<div class="demo-section">
 		<span>value state warning </span>
 
-		<ui5-multi-combobox style="width: 100%" placeholder="Some initial text" value-state="Warning">
+		<br>
+		<ui5-multi-combobox style="width: 560px" placeholder="Some initial text" value-state="Warning">
 			<ui5-li selected type="Active">Cosy</ui5-li>
 			<ui5-li type="Active">Compact</ui5-li>
 			<ui5-li selected type="Active">Condensed</ui5-li>
@@ -132,7 +138,8 @@
 	<div class="demo-section">
 		<span>value state error </span>
 
-		<ui5-multi-combobox style="width: 100%" placeholder="Some initial text" value-state="Error">
+		<br>
+		<ui5-multi-combobox style="width: 560px" placeholder="Some initial text" value-state="Error">
 			<ui5-li selected type="Active">Cosy</ui5-li>
 			<ui5-li type="Active">Compact</ui5-li>
 			<ui5-li selected type="Active">Condensed</ui5-li>
@@ -142,7 +149,8 @@
 	<div class="demo-section">
 		<span>readonly </span>
 
-		<ui5-multi-combobox style="width: 100%" placeholder="Some initial text" readonly>
+		<br>
+		<ui5-multi-combobox style="width: 560px" placeholder="Some initial text" readonly>
 			<ui5-li selected type="Active">Cosy</ui5-li>
 			<ui5-li type="Active">Compact</ui5-li>
 			<ui5-li selected type="Active">Condensed</ui5-li>
@@ -153,7 +161,8 @@
 	<div class="demo-section">
 		<span>MultiComboBox with items</span>
 
-		<ui5-multi-combobox style="width: 100%" placeholder="Some initial text" id="mcb">
+		<br>
+		<ui5-multi-combobox style="width: 560px" placeholder="Some initial text" id="mcb">
 			<ui5-li type="Active" id="first-item">Cosy</ui5-li>
 			<ui5-li type="Active">Compact</ui5-li>
 			<ui5-li type="Active">Condensed</ui5-li>
@@ -175,7 +184,8 @@
 		<div class="demo-section">
 				<span>MultiComboBox with validate-input</span>
 		
-				<ui5-multi-combobox style="width: 100%" placeholder="Some initial text" id="mcb-validation" validate-input>
+				<br>
+				<ui5-multi-combobox style="width: 560px" placeholder="Some initial text" id="mcb-validation" validate-input>
 					<ui5-li type="Active">Cosy</ui5-li>
 					<ui5-li type="Active">Compact</ui5-li>
 					<ui5-li type="Active">Condensed</ui5-li>
@@ -216,7 +226,7 @@
 		const callCountInput = document.getElementById("events-call-count");
 		const resetBtn = document.getElementById("reset-btn");
 
-		document.getElementById("mcb").addEventListener("selectionChange", event => {
+		document.getElementById("mcb").addEventListener("ui5-selectionChange", event => {
 			eventNameInput.value = "selectionChange";
 			eventParamsInput.value = event.detail.items.length;
 			callCountInput.value = parseInt(callCountInput.value) + 1;
