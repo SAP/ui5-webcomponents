@@ -24,9 +24,9 @@
 
 	<h3> Input with suggestions</h3>
 	<ui5-input id="myInput2" show-suggestions>
-		<ui5-li type="Active">Cozy</ui5-li>
-		<ui5-li type="Active">Compact</ui5-li>
-		<ui5-li type="Active">Condensed</ui5-li>
+		<ui5-li>Cozy</ui5-li>
+		<ui5-li>Compact</ui5-li>
+		<ui5-li>Condensed</ui5-li>
 	</ui5-input>
 
 	<h3> Input disabled</h3>
@@ -108,7 +108,6 @@
 
 			suggestionItems.forEach(function(item) {
 				var li = document.createElement("ui5-li");
-				li.type = "Active";
 				li.id = item.key;
 				li.textContent = item.text;
 				input.appendChild(li);

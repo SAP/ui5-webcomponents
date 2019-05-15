@@ -31,11 +31,11 @@ TestHelper.ready(function() {
 		});
 
 		QUnit.test("Default settings", function (assert) {
-			assert.expect(8);
+			assert.expect(9);
 
 			var listItemRoot = this.getListItemRoot(),
-				existingClasses = ["sapMLIB", "sapMSLI", "sapMLIB-CTX", "sapMLIBBorder"],
-				nonExistingClasses = ["sapMLIBSelected", "sapMLIBActive", "sapMLIBHoverable", "sapMLIBActionable"];
+				existingClasses = ["sapMLIB", "sapMSLI", "sapMLIB-CTX", "sapMLIBBorder", "sapMLIBHoverable", "sapMLIBActionable", "sapMLIBTypeActive"],
+				nonExistingClasses = ["sapMLIBSelected",  "sapMLIBActive"];
 
 			// assert
 			existingClasses.forEach(function(className) {
@@ -96,14 +96,13 @@ TestHelper.ready(function() {
 		});
 
 		QUnit.test("set string props", function (assert) {
-			assert.expect(4);
+			assert.expect(2);
 
 			var done = assert.async(),
 				listItem = this.listItem,
 				listItemRoot = this.getListItemRoot(),
 				mode = "MultiSelect",
-				tabIndex = "0",
-				type = "Active";
+				tabIndex = "0";
 
 			var props = [{
 					prop: "_mode",
@@ -111,9 +110,6 @@ TestHelper.ready(function() {
 				},{
 					prop: "_tabIndex",
 					value: tabIndex
-				},{
-					prop: "type",
-					value: type
 				}];
 
 			props.forEach(function(propInfo) {
@@ -125,8 +121,6 @@ TestHelper.ready(function() {
 				// assert
 				var selectionControl = listItemRoot.querySelector("ui5-checkbox");
 
-				assert.ok(listItemRoot.classList.contains("sapMLIBHoverable"), "listItem contains the 'sapMLIBHoverable' class");
-				assert.ok(listItemRoot.classList.contains("sapMLIBActionable"), "listItem contains the 'sapMLIBActionable' class");
 				assert.equal(listItemRoot.getAttribute("tabindex"), tabIndex, "listItem has correct tabIndex");
 				assert.ok(selectionControl, "listItem renders a selection control");
 
@@ -169,7 +163,7 @@ TestHelper.ready(function() {
 
 			// assert
 			existingClasses.forEach(function(className) {
-				assert.ok(listItemRoot.classList.contains(className), "root element does contains " + className);
+				assert.ok(listItemRoot.classList.contains(className), "root element contains " + className);
 			});
 		});
 	});
