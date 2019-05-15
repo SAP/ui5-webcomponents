@@ -206,7 +206,7 @@
 			infoLbl.innerHTML = "Items " + info[count];
 		};
 
-		list.addEventListener("itemDelete", function (event) {
+		list.addEventListener("ui5-itemDelete", function (event) {
 			var item = event.detail.item;
 			var newItems = list.items.filter(function (x) {
 				return x.id !== item.id;
@@ -220,30 +220,30 @@
 			updateInfo(newItems.length);
 		});
 
-		resetBtn.addEventListener("press", resetList);
+		resetBtn.addEventListener("ui5-press", resetList);
 
-		singleSelectList.addEventListener("selectionChange", function (event) {
+		singleSelectList.addEventListener("ui5-selectionChange", function (event) {
 			var selectedItems = event.detail.items;
 
 			alert("Selection changed: " + selectedItems.map(item => item.id).join("/"));
 		});
 
-		singleSelectEndList.addEventListener("itemPress", function (event) {
+		singleSelectEndList.addEventListener("ui5-itemPress", function (event) {
 			var pressedItem = event.detail.item;
 			lblItemPress.innerHTML = "Event] itemPress :: " + pressedItem.id;
 		});
 
-		singleSelectEndList.addEventListener("selectionChange", function (event) {
+		singleSelectEndList.addEventListener("ui5-selectionChange", function (event) {
 			var selectedItems = event.detail.items;
 			lblSelectionChange.innerHTML = "|Event] selectionChange :: " + selectedItems.map(item => item.id).join("/");
 		});
 
-		multiSelectList.addEventListener("itemPress", function (event) {
+		multiSelectList.addEventListener("ui5-itemPress", function (event) {
 			var pressedItem = event.detail.item;
 			lblItemPress2.innerHTML = "Event] itemPress :: " + pressedItem.id;
 		});
 
-		multiSelectList.addEventListener("selectionChange", function (event) {
+		multiSelectList.addEventListener("ui5-selectionChange", function (event) {
 			var selectedItems = event.detail.items;
 			lblSelectionChange2.innerHTML = "Event] selectionChange :: " + selectedItems.map(item => item.id).join("/");
 		});

@@ -181,8 +181,8 @@ class Table extends UI5Element {
 
 		this.rows.forEach(row => {
 			row._columnsInfo = columnSettings;
-			row.removeEventListener("_focused", this.fnOnRowFocused);
-			row.addEventListener("_focused", this.fnOnRowFocused);
+			row.removeEventListener("ui5-_focused", this.fnOnRowFocused);
+			row.addEventListener("ui5-_focused", this.fnOnRowFocused);
 		});
 	}
 
