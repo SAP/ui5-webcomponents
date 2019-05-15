@@ -163,33 +163,33 @@
 	</ui5-input>
 
 	<script>
-		shellbar.addEventListener("profilePress", function(event) {
+		shellbar.addEventListener("ui5-profilePress", function(event) {
 			popover.openBy(event.detail.targetRef);
 			window["press-input"].value = "Profile";
 		});
 
-		shellbar.addEventListener("notificationsPress", function(event) {
+		shellbar.addEventListener("ui5-notificationsPress", function(event) {
 			window["press-input"].value = "Notifications"
 		});
 
-		shellbar.addEventListener("productSwitchPress", function(event) {
+		shellbar.addEventListener("ui5-productSwitchPress", function(event) {
 			window["press-input"].value = "Product Switch"
 		});
 
-		shellbar.addEventListener("logoPress", function(event) {
+		shellbar.addEventListener("ui5-logoPress", function(event) {
 			window["press-input"].value = "Logo"
 		});
 
-		shellbar.addEventListener("coPilotPress", function(event) {
+		shellbar.addEventListener("ui5-coPilotPress", function(event) {
 			window["press-input"].value = "CoPilot"
 		});
 
-		shellbar.addEventListener("menuItemPress", function(event) {
+		shellbar.addEventListener("ui5-menuItemPress", function(event) {
 			window["press-input"].value = event.detail.item.textContent;
 		});
 
 		["disc", "call"].forEach(function(id) {
-			window[id].addEventListener("press", function(event) {
+			window[id].addEventListener("ui5-press", function(event) {
 				window["press-input"].value = event.target.id;
 			});
 		});

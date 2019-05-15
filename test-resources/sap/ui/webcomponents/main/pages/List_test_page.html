@@ -51,14 +51,14 @@
 			document.querySelector("#lblResult").innerHTML = e.detail.item.innerHTML + ": " + ++itemDeleteCounter;
 		}
 
-		list1.addEventListener("itemDelete", deleteItemHandler);
+		list1.addEventListener("ui5-itemDelete", deleteItemHandler);
 
-		listEvents.addEventListener("itemPress", function (event) {
+		listEvents.addEventListener("ui5-itemPress", function (event) {
 			itemPressCounter += 1;
 			itemPressResultField.value = itemPressCounter;
 		});
 
-		listEvents.addEventListener("selectionChange", function (event) {
+		listEvents.addEventListener("ui5-selectionChange", function (event) {
 			selectionChangeCounter += 1;
 			selectionChangeResultField.value = selectionChangeCounter;
 		});

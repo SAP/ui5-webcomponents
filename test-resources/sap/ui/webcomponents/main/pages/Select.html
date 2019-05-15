@@ -64,18 +64,18 @@
 	var counter = 0;
 
 	// Select
-	select.addEventListener("change", function(e) {
+	select.addEventListener("ui5-change", function(e) {
 		lbl.innerHTML = "selected item :: " + e.detail.selectedItem.textContent + " :: " + (++counter);
 		inputResult.value = counter;
 	});
 
-	select2.addEventListener("change", function(e) {
+	select2.addEventListener("ui5-change", function(e) {
 		++counter;
 		inputResult.value = counter;
 	});
 
 	// Input with Suggestions
-	input.addEventListener("input", function (event) {
+	input.addEventListener("ui5-input", function (event) {
 		var value = event.target.value;
 		var suggestionItems = [];
 
@@ -100,7 +100,7 @@
 
 
 	// HCB button
-	btn.addEventListener("press", function(event) {
+	btn.addEventListener("ui5-press", function(event) {
 		const hcb = event.target.pressed;
 		const styles = hcb ? "background:#333;color:palegoldenrod;" : "background:#fff;color:#333;";
 		const theme = hcb ? "sap_belize_hcb" : "sap_fiori_3";
@@ -125,7 +125,7 @@
 
 	var initialItemsHTML = "";
 
-	addItemsBtn.addEventListener("press", event => {
+	addItemsBtn.addEventListener("ui5-press", event => {
 		initialItemsHTML = select.innerHTML;
 
 		var li = document.createElement('ui5-li');
@@ -137,7 +137,7 @@
 		select.appendChild(li);
 	});
 
-	restoreItemsBtn.addEventListener("press", event => {
+	restoreItemsBtn.addEventListener("ui5-press", event => {
 		select.innerHTML = initialItemsHTML;
 	});
 </script>
