@@ -228,6 +228,7 @@ class MultiComboBox extends UI5Element {
 				return;
 			}
 
+
 			this._inputLastValue = input.value;
 			this.value = input.value;
 			this._filteredItems = filteredItems;
@@ -329,6 +330,7 @@ class MultiComboBox extends UI5Element {
 		}
 
 		otherPopover && otherPopover.close();
+
 		popover && popover.openBy(this);
 	}
 

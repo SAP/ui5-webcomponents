@@ -44,9 +44,11 @@ describe("MultiComboBox general interaction", () => {
 			input.click();
 			input.keys("c");
 
-			const list = browser.findElementDeep("#mcb >>> .ui5-multi-combobox-all-items--popover ui5-list");
+			const list = browser.findElementDeep("#mcb >>> .ui5-multi-combobox-all-items-list");
 
 			assert.ok(popover.isDisplayedInViewport(), "Popover should be displayed in the viewport");
+
+
 			assert.strictEqual(list.getProperty("items").length, 3, "3 items should be shown");
 
 			input.keys("o");
@@ -85,13 +87,9 @@ describe("MultiComboBox general interaction", () => {
 		it("tests if n more is applied and corresponding popover", () => {
 			$("#more-mcb").scrollIntoView();
 
-			const token1 = browser.findElementDeep("#more-mcb >>> ui5-tokenizer ui5-token[slot='tokens-1']");
-			const token2 = browser.findElementDeep("#more-mcb >>> ui5-tokenizer ui5-token[slot='tokens-2']");
-			const token3 = browser.findElementDeep("#more-mcb >>> ui5-tokenizer ui5-token[slot='tokens-3']");
+			const nMoreText = browser.findElementDeep("#more-mcb >>> ui5-tokenizer >>> .ui5-tokenizer-more-text");
 
-			assert.ok(token1.isDisplayed(), "token 1 should be visible");
-			assert.ok(token2.isDisplayed(), "token 2 should be visible");
-			assert.ok(!token3.isDisplayed(), "token 3 should not be visible");
+			assert.ok(nMoreText.getText(), "1 More", "token 1 should be visible");
 		});
 	});
 });
