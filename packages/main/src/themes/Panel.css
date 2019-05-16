@@ -12,7 +12,7 @@ ui5-panel {
 	overflow: hidden;
 	box-sizing: border-box;
 	position: relative;
-	background-color: var(--_ui5_panel_background_color);
+	background-color: var(--ui5-panel-background-color);
 }
 
 .sapMPanel > header {
@@ -77,7 +77,7 @@ ui5-panel {
 	box-sizing: border-box;
 	overflow: auto;
 	white-space: normal;
-	border-bottom: 1px solid var(--_ui5_panel_bottom_border_color);
+	border-bottom: 1px solid var(--ui5-panel-bottom-border-color);
 }
 
 .sapMPanelContent:focus {
@@ -87,7 +87,7 @@ ui5-panel {
 .sapMPanelWrappingDiv,
 .sapMPanelWrappingDivTb {
 	position: relative;
-	background-color: var(--_ui5_panel_background_color);
+	background-color: var(--ui5-panel-background-color);
 }
 
 .sapMPanelWrappingDiv {
