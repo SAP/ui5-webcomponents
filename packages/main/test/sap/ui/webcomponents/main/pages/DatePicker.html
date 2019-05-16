@@ -36,7 +36,7 @@
 			title='Delivery Date!'>
 		</ui5-datepicker>
 		<ui5-label id="lblChange">change: N/A</ui5-label><br/>
-		<ui5-label id="lblLiveChange">liveChange: N/A</ui5-label><br/>
+		<ui5-label id="lblLiveChange">input: N/A</ui5-label><br/>
 
 		<h3>format-pattern - 'short', value - 'tomorrow'</h3>
 		<ui5-datepicker id='dp6'
@@ -96,12 +96,12 @@
 			console.log('change: ', e.detail);
 			labelChange.innerHTML = 'change: ' + JSON.stringify(e.detail);
 		});
-		dp.addEventListener('ui5-liveChange', function(e) {
-			console.log('liveChange: ', e.detail);
-			labelLiveChange.innerHTML = 'liveChange: ' + JSON.stringify(e.detail);
+		dp.addEventListener('ui5-input', function(e) {
+			console.log('input: ', e.detail);
+			labelLiveChange.innerHTML = 'input: ' + JSON.stringify(e.detail);
 		});
 
-		$('#ui5-datepicker--startDate').on('liveChange change', (function(e) {
+		$('#ui5-datepicker--startDate').on('ui5-input change', (function(e) {
 			var dp = $('#ui5-datepicker--startDate')[0];
 			dp.setAttribute('value-state', e.detail.valid ? 'None' : 'Error');
 			$('#startDate').val($('#ui5-datepicker--startDate').val());
