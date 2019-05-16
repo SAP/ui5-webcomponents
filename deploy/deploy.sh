@@ -24,6 +24,17 @@
 
 set -e # Exit with nonzero exit code if anything fails
 
+RELEASE_MESSAGE="chore(release): publish v"
+
+# Determine if the current commit is release
+is_release=`expr index "$TRAVIS_COMMIT_MESSAGE" "$RELEASE_MESSAGE"`
+
+# Get the current version if commit is release
+index=${#RELEASE_MESSAGE}
+length="$((${#TRAVIS_COMMIT_MESSAGE}-$index))"
+result=${TRAVIS_COMMIT_MESSAGE:$index:$length }
+echo $result #echoes the current version
+
 # Config variables
 REPO=`git config remote.origin.url`
 SSH_REPO=${REPO/https:\/\/${GH_URL}\//git@${GH_URL}:}
@@ -35,21 +46,63 @@ git clone --quiet --branch=gh-pages $REPO gh-pages || git checkout --orphan gh-p
 echo "Before remove gh-pages"
 ls -a gh-pages
 
+###
+### Publish master on every commit
+###
+
+echo "Before update master version on gh-pages"
+
 # Clean gh-pages existing contents
-rm -rf gh-pages/* || exit 0
+rm -rf gh-pages/master|| exit 0
 
 # Run the build again so rollup can generate the correct public path urls
 cd $TRAVIS_BUILD_DIR
-DEPLOY_PUBLIC_PATH=https://sap.github.io/ui5-webcomponents yarn build
+DEPLOY_PUBLIC_PATH=https://sap.github.io/ui5-webcomponents/master yarn build
 
 # Move master build folder to gh-pages folder
-cp -Rf $TRAVIS_BUILD_DIR/packages/playground/dist/* gh-pages
+cp -Rf $TRAVIS_BUILD_DIR/packages/playground/dist/* gh-pages/master
 
 # put the commit id as version
 echo "$(git log -1 HEAD)" > gh-pages/version.txt
 
-echo "After update gh-pages"
+echo "After update master version on gh-pages"
 ls -a gh-pages
+
+###
+### End of publish master on every commit
+###
+
+
+###
+### Publish public only on release commit
+###
+
+if [[ $TRAVIS_COMMIT_MESSAGE == *"$RELEASE_MESSAGE"* ]]; then
+  echo "Before update release version on gh-pages"
+
+  # Enable use of extended pattern matching operators(*, ?, @, !)
+  shopt -s extglob
+
+  # Remove all folders and files, but folder master
+  rm -v !("gh-pages/master")|| exit 0
+
+  # Run the build again so rollup can generate the correct public path urls
+  cd $TRAVIS_BUILD_DIR
+  DEPLOY_PUBLIC_PATH=https://sap.github.io/ui5-webcomponents/ yarn build
+
+  # Move master build folder to gh-pages folder
+  cp -Rf $TRAVIS_BUILD_DIR/packages/playground/dist/* gh-pages
+
+  # put the commit id as version
+  echo "$(git log -1 HEAD)" > gh-pages/version.txt
+
+  echo "After update release version on gh-pages"
+  ls -a gh-pages
+fi
+
+###
+### End of publish public only on release commit
+###
 
 # Configure Git
 cd gh-pages
