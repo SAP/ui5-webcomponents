@@ -57,7 +57,7 @@
 		dp.setAttribute('value-state', e.detail.valid ? 'None' : 'Error');
 		console.log('change: ', e.detail);
 	});
-	dp.addEventListener('liveChange', (e) => console.log('liveChange: ', e.detail));
+	dp.addEventListener('input', (e) => console.log('input: ', e.detail));
 </script>
 	</xmp></pre>
 	</section>
@@ -178,7 +178,7 @@
 			dp.setAttribute('value-state', e.detail.valid? 'None' : 'Error');
 			console.log('change: ', e.detail);
 		});
-		dp.addEventListener('liveChange', function(e) {console.log('liveChange: ', e.detail)});
+		dp.addEventListener('input', function(e) {console.log('input: ', e.detail)});
 	</script>
 
 	<script defer src="../../../../../../www/samples/settings.js"></script>
@@ -303,9 +303,9 @@ If a date is entered by typing it into the input field, it must fit to the used 
                       </div>
             
                       <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">liveChange</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">input</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                        Fired when the value of the <code>ui5-datepicker</code> is changed, for example at each keypress.
+                        Fired when the value of the <code>ui5-datepicker</code> is changed at each key stroke.
                         </div>
                       </div>
             

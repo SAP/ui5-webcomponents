@@ -60,9 +60,9 @@
 </head>
 <body>
 	<div class="header">
-			<ui5-radiobutton id="sap_fiori_3" group="theme" text="Fiori 3" selected></ui5-radiobutton>
-			<ui5-radiobutton id="sap_belize_hcb" group="theme" text="HCB_Custom"></ui5-radiobutton>
-			<ui5-radiobutton id="sap_belize" group="theme" text="Belize"></ui5-radiobutton>
+			<ui5-radiobutton id="sap_fiori_3" name="theme" text="Fiori 3" selected></ui5-radiobutton>
+			<ui5-radiobutton id="sap_belize_hcb" name="theme" text="HCB_Custom"></ui5-radiobutton>
+			<ui5-radiobutton id="sap_belize" name="theme" text="Belize"></ui5-radiobutton>
 	</div>
 
 	<div class="content">
@@ -86,7 +86,7 @@
 		$(function () {
 			var pickers = $('ui5-datepicker');
 
-			pickers.on('liveChange change', (function(e) {
+			pickers.on('input change', (function(e) {
 				this.setAttribute('value-state', e.detail.valid ? 'None' : 'Error');
 				$('#startDate').val($(this).val());
 				$('#startDate').trigger('change');
@@ -144,11 +144,11 @@
 
 			// theme change sample
 			var Theming = window["sap-ui-webcomponents-main-bundle"].Theming;
-            Theming.addCustomCSS('ui5-input', 'sap_belize_hcb', inputCSS);
-            Theming.addCustomCSS('ui5-icon', 'sap_belize_hcb', iconCSS);
+            Theming.addCustomCSS('ui5-input', inputCSS);
+            Theming.addCustomCSS('ui5-icon', iconCSS);
 
-			$('ui5-radiobutton[group="theme"]').on("select", function (event) {
-				if (event.detail.selected) {
+			$('ui5-radiobutton[name="theme"]').on("select", function (event) {
+				if (event.target.selected) {
 					var theme = event.target.id;
 					if (theme === "sap_belize_hcb") {
 						// only for the radio buttons sample page

@@ -1,9 +1,5 @@
-commit f0129dea4de7c70f8d90090717888f243b79140c
-Author: Gustavo Kath <gustavokath@outlook.com>
-Date:   Thu May 16 01:05:36 2019 -0300
+commit 676c1e68df2e348df54a970d5748f5dc6d688531
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu May 16 15:19:45 2019 +0300
 
-    docs(ui5-popover): adjust component sample
-    
-    Change things that were different in the example from the code that is being executed
-      - Fix some ids that were different
-      - Change the `open()` function to `openBy()`
+     refactor(ui5-datepicker): rename event 'liveChange' to 'input' (#394)
