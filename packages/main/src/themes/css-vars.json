@@ -5,7 +5,7 @@
 			"description": "Defines the <code>ui5-li-groupheader</code> background color"
 		}
 	],
-	"StandardListItem": [
+	"ListItem": [
 		{
 			"name": "--ui5-listitem-background-color",
 			"description": "Defines the<code>ui5-li</code> background color"
