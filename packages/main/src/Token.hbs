@@ -1,7 +1,7 @@
-<div tabindex="{{ctr._tabIndex}}" @click="{{ctr._handlers.select}}" @keydown="{{ctr._handlers.keydown}}" class="ui5-token--wrapper">
+<div tabindex="{{ctr._tabIndex}}" @click="{{ctr._select}}" @keydown="{{ctr._keydown}}" class="ui5-token--wrapper">
 	<span class="ui5-token--text">{{ctr._nodeText}}</span>
 
 	{{#unless ctr.readonly}}
-		<ui5-icon @click="{{ctr._handlers.delete}}" src="{{iconURI}}" class="ui5-token--icon"></ui5-icon>
+		<ui5-icon @click="{{ctr._delete}}" src="{{iconURI}}" class="ui5-token--icon"></ui5-icon>
 	{{/unless}}
 </div>

@@ -4,6 +4,7 @@ import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler.js
 import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
 import Function from "@ui5/webcomponents-base/src/types/Function.js";
 
+import { fetchResourceBundle, getResourceBundle } from "./ResourceBundleProvider.js";
 import TokenizerRenderer from "./build/compiled/TokenizerRenderer.lit.js";
 
 // Styles
@@ -29,6 +30,7 @@ const metadata = {
 		showMore: { type: Boolean },
 		disabled: { type: Boolean },
 
+		_nMoreText: { type: String },
 		_openOverflowPopover: { type: Function },
 		_tokenDelete: { type: Function },
 		_hiddenTokens: { type: Object, multiple: true },
@@ -101,6 +103,7 @@ class Tokenizer extends UI5Element {
 		};
 
 		this._delegates.push(this._itemNav);
+		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
@@ -111,6 +114,7 @@ class Tokenizer extends UI5Element {
 		}
 
 		this._lastTokenCount = this.tokens.length;
+		this._nMoreText = this.resourceBundle.getText("MULTIINPUT_SHOW_MORE_TOKENS", [this._hiddenTokens.length]);
 	}
 
 	onAfterRendering() {
@@ -197,8 +201,7 @@ class Tokenizer extends UI5Element {
 	}
 
 	static async define(...params) {
-		await Promise.all([]);
-
+		await fetchResourceBundle("@ui5/webcomponents");
 		super.define(...params);
 	}
 }

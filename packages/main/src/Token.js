@@ -7,7 +7,9 @@ import {
 	isSpace,
 	isDelete,
 } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import Function from "@ui5/webcomponents-base/src/types/Function.js";
 
+import Icon from "./Icon.js";
 import TokenRenderer from "./build/compiled/TokenRenderer.lit.js";
 
 // Styles
@@ -45,7 +47,9 @@ const metadata = {
 		 */
 		readonly: { type: Boolean },
 
-		_handlers: { type: Object },
+		_delete: { type: Function },
+		_select: { type: Function },
+		_keydown: { type: Function },
 		_tabIndex: { type: String, defaultValue: "-1" },
 	},
 
@@ -115,36 +119,41 @@ class Token extends UI5Element {
 
 	constructor() {
 		super();
-
-		this._handlers = {
-			"select": () => {
-				this.fireEvent("select", {});
-			},
-			"delete": () => {
-				this.fireEvent("delete");
-			},
-			"keydown": event => {
-				const isBS = isBackSpace(event);
-				const isD = isDelete(event);
-
-				if (!this.readonly && (isBS || isD)) {
-					event.preventDefault();
-
-					this.fireEvent("delete", {
-						backSpace: isBS,
-						"delete": isD,
-					});
-				}
-
-				if (isEnter(event) || isSpace(event)) {
-					this.fireEvent("select", {});
-				}
-			},
-		};
+		this._select = this._handleSelect.bind(this);
+		this._delete = this._handleDelete.bind(this);
+		this._keydown = this._handleKeyDown.bind(this);
 	}
 
+	_handleSelect() {
+		this.fireEvent("select", {});
+	 }
+
+	_handleDelete() {
+		this.fireEvent("delete");
+	 }
+
+	_handleKeyDown(event) {
+		const isBS = isBackSpace(event);
+		const isD = isDelete(event);
+
+		if (!this.readonly && (isBS || isD)) {
+			event.preventDefault();
+
+			this.fireEvent("delete", {
+				backSpace: isBS,
+				"delete": isD,
+			});
+		}
+
+		if (isEnter(event) || isSpace(event)) {
+			this.fireEvent("select", {});
+		}
+	 }
+
 	static async define(...params) {
-		await Promise.all([]);
+		await Promise.all([
+			Icon.define(),
+		]);
 
 		super.define(...params);
 	}

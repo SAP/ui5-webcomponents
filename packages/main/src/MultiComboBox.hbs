@@ -13,7 +13,6 @@
 			show-more
 			class="ui5-multi-combobox-tokenizer"
 			?disabled="{{ctr.disabled}}"
-			style="{{styles.tokenizer}}"
 			@ui5-showMoreItemsPress="{{ctr._showMorePopover}}"
 			@ui5-tokenDelete="{{ctr._tokenDelete}}"
 			@focusout="{{ctr._tokenizerFocusOut}}"
@@ -29,7 +28,7 @@
 			<ui5-icon src="sap-icon://slim-arrow-down" 
 				data-ui5-slot="icon"
 				@ui5-press={{ctr._showAllItemsPopover}}
-				class={{classes.icon}}
+				class="ui5-multi-combobox--icon {{classes.icon}}"
 			></ui5-icon>
 		{{/unless}}
 	</ui5-input>
@@ -41,7 +40,6 @@
 		?hide-arrow={{editable}}
 		placement-type="Bottom">
 		<ui5-list separators="None" mode="{{selectedItemsListMode}}"
-			style="{{styles.listMinWidth}}"
 			@ui5-selectionChange={{ctr._selectedItemsSelectionChange}}>
 			{{#each ctr.items}}
 				{{#if this.selected}}
@@ -61,7 +59,7 @@
 		@ui5-selectionChange={{ctr._allItemsSelectionChange}}
 		@ui5-afterClose={{ctr._afterAllPopoverClose}}
 		@ui5-afterOpen={{ctr._afterAllPopoverOpen}}>
-		<ui5-list separators="None" mode="MultiSelect" style="{{styles.listMinWidth}}" class="ui5-multi-combobox-all-items-list">
+		<ui5-list separators="None" mode="MultiSelect" class="ui5-multi-combobox-all-items-list">
 			{{#each ctr._filteredItems}}
 					<ui5-li type="Active" ?selected={{this.selected}} data-ui5-token-id="{{this._id}}">{{this._nodeText}}</ui5-li>
 			{{/each}}

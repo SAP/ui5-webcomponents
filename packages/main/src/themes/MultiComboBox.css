@@ -55,4 +55,8 @@ span.sapUiSizeCompact .ui5-multi-combobox--token {
 
 .ui5-multi-combobox-tokenizer {
 	max-width: calc(100% - 3rem - var(--sap_wc_input_icon_min_width));
+	border: none;
+	width: auto;
+	min-width: 0px;
+	height: 100%;
 }
