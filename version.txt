@@ -1,5 +1,9 @@
-commit 0d5edd8577ee067d8ad1b81c9797a80d9f6ad054
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed May 15 12:49:20 2019 +0300
+commit f0129dea4de7c70f8d90090717888f243b79140c
+Author: Gustavo Kath <gustavokath@outlook.com>
+Date:   Thu May 16 01:05:36 2019 -0300
 
-    refactor(ui5-li): make item type 'Active' by default (#359)
+    docs(ui5-popover): adjust component sample
+    
+    Change things that were different in the example from the code that is being executed
+      - Fix some ids that were different
+      - Change the `open()` function to `openBy()`
