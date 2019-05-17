@@ -26,7 +26,7 @@ set -e # Exit with nonzero exit code if anything fails
 
 # Determine if the current commit is release
 TRAVIS_MASTER_BRANCH="master"
-TRAVIS_DEPLOY_BRANCH="website"
+TRAVIS_LATEST_RELEASE_WEBSITE_BRANCH="latest-release-website"
 
 # Config variables
 REPO=`git config remote.origin.url`
@@ -39,9 +39,9 @@ git clone --quiet --branch=gh-pages $REPO gh-pages || git checkout --orphan gh-p
 echo "Before remove gh-pages"
 ls -a gh-pages
 
-if [ "$TRAVIS_BRANCH" == "$TRAVIS_DEPLOY_BRANCH" ]; then
+if [ "$TRAVIS_BRANCH" == "$TRAVIS_LATEST_RELEASE_WEBSITE_BRANCH" ]; then
   ###
-  ### Publish public only on release commit in deploy branch
+  ### Publish docs on commit in latest-release-website branch
   ###
 
   echo "Before update release version on gh-pages"
@@ -49,8 +49,10 @@ if [ "$TRAVIS_BRANCH" == "$TRAVIS_DEPLOY_BRANCH" ]; then
   # Enable use of extended pattern matching operators(*, ?, @, !)
   shopt -s extglob
 
-  # Remove all folders and files, but folder master
-  rm -v !("gh-pages/master")|| exit 0
+  # Remove all folders and files from gh-pages, but folder master
+  cd gh-pages
+  rm -v !("master")|| exit 0
+  cd..
 
   # Run the build again so rollup can generate the correct public path urls
   cd $TRAVIS_BUILD_DIR
@@ -66,12 +68,12 @@ if [ "$TRAVIS_BRANCH" == "$TRAVIS_DEPLOY_BRANCH" ]; then
   ls -a gh-pages
 
   ###
-  ### End of publish public only on release commit in deploy branch
+  ### End of publish docs on commit in latest-release-website branch
   ###
 
   elif [ "$TRAVIS_BRANCH" == "$TRAVIS_MASTER_BRANCH" ]; then
   ###
-  ### Publish master on every commit
+  ### Publish master on every commit in master branch
   ###
 
   echo "Before update master version on gh-pages"
@@ -93,7 +95,7 @@ if [ "$TRAVIS_BRANCH" == "$TRAVIS_DEPLOY_BRANCH" ]; then
   ls -a gh-pages
 
   ###
-  ### End of publish master on every commit
+  ### End of publish master on every commit in master branch
   ###
 fi
 
