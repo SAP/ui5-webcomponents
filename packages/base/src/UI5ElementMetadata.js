@@ -92,18 +92,20 @@ const validateSingleSlot = (value, propData) => {
 		return value;
 	}
 
-	// TODO FIX
-	if (!value.tagName) {
-		return value;
-	}
+	const getSlottedNodes = el => {
+		const isTag = el instanceof HTMLElement;
+		const isSlot = isTag && el.tagName.toUpperCase() === "SLOT";
 
-	const getSlottedElements = el => {
-		return el.tagName.toUpperCase() !== "SLOT" ? [el] : el.assignedElements({ flatten: true });
+		if (isSlot) {
+			return el.assignedElements({ flatten: true });
+		}
+
+		return [el];
 	};
 	const propertyType = propData.type;
 
-	const slottedElements = getSlottedElements(value);
-	slottedElements.forEach(el => {
+	const slottedNodes = getSlottedNodes(value);
+	slottedNodes.forEach(el => {
 		if (!(el instanceof propertyType)) {
 			throw new Error(`${el} is not of type ${propertyType}`);
 		}
