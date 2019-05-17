@@ -26,6 +26,10 @@ span.sapUiSizeCompact .ui5-tokenizer--wrapper {
 	font-family: var(--sapUiFontFamily);
 }
 
+.ui5-tokenizer-no-padding {
+	padding: 0;
+}
+
 .ui5-tokenizer--wrapper.ui5-tokenizer-nmore--wrapper {
 	overflow-x: hidden;
 }

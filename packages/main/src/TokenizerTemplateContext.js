@@ -7,6 +7,7 @@ class TokenizerTemplateContext {
 				wrapper: {
 					"ui5-tokenizer-nmore--wrapper": state.showMore,
 					"ui5-tokenizer--wrapper": true,
+					"ui5-tokenizer-no-padding": !state.tokens.length,
 				},
 				content: {
 					"ui5-tokenizer--content": true,

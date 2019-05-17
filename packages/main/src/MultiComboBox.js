@@ -26,6 +26,20 @@ const metadata = {
 	tag: "ui5-multi-combobox",
 	defaultSlot: "items",
 	slots: /** @lends sap.ui.webcomponents.main.MultiComboBox.prototype */ {
+		/**
+		 * Defines the <code>ui5-multi-combobox</code> items.
+		 * </br></br>
+		 * Example: </br>
+		 * &lt;ui5-multi-combobox></br>
+		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li>Item #1&lt;/ui5-li></br>
+		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li>Item #2&lt;/ui5-li></br>
+		 * &lt;/ui5-multi-combobox>
+		 * <br> <br>
+		 *
+		 * @type {HTMLElement[]}
+		 * @slot
+		 * @public
+		 */
 		items: {
 			type: HTMLElement,
 			multiple: true,
@@ -115,11 +129,20 @@ const metadata = {
 		_afterAllPopoverClose: { type: Function },
 		_afterAllPopoverOpen: { type: Function },
 		_keydown: { type: Function },
-		_inputChage: { type: Function },
+		_inputLiveChange: { type: Function },
+		_inputChange: { type: Function },
 		_filteredItems: { type: Object },
 		_iconPressed: { type: Boolean },
 	},
 	events: /** @lends sap.ui.webcomponents.main.MultiComboBox.prototype */ {
+		/**
+		 * Fired when the input operation has finished by pressing Enter or on focusout.
+		 *
+		 * @event
+		 * @public
+		 */
+		change: {},
+
 		/**
 		 * Fired when the value of the <code>ui5-multi-combobox</code> changes at each keystroke.
 		 *
@@ -156,7 +179,6 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.MultiComboBox
  * @extends UI5Element
  * @tagname ui5-timeline
- * @usestextcontent
  * @public
  */
 class MultiComboBox extends UI5Element {
@@ -177,6 +199,7 @@ class MultiComboBox extends UI5Element {
 				classes: {
 					icon: {
 						[`ui5-multi-combobox-icon-pressed`]: state._iconPressed,
+						[`ui5-multi-combobox--icon`]: true,
 					},
 				},
 			};
@@ -210,9 +233,11 @@ class MultiComboBox extends UI5Element {
 			this._listSelectionChange(event);
 		};
 
-		this._inputChage = this._handleInputLiveChange.bind(this);
+		this._inputLiveChange = this._handleInputLiveChange.bind(this);
 		this._tokenDelete = this._handleTokenDelete.bind(this);
 		this._tokenizerFocusOut = this._handleTokenizerFocusOut.bind(this);
+
+		this._inputChange = () => this.fireEvent("change");
 
 		this._afterAllPopoverClose = () => {
 			this._toggleIcon();

@@ -33,6 +33,10 @@
 		.demo-section ui5-multi-combobox {
 			margin-top: 10px;
 		}
+
+		ui5-multi-combobox:not(:defined) {
+			display: none;
+		}
 	</style>
 	<!-- <ui5-token>UI5 WebComponents</ui5-token> -->
 
@@ -73,11 +77,11 @@
 		<span>Predefined value</span>
 
 		<br>
-		<ui5-multi-combobox style="width: 560px" value="Hello World">
-			<ui5-li selected type="Active">Cosy</ui5-li>
-			<ui5-li type="Active">Compact</ui5-li>
-			<ui5-li selected type="Active">Condensed</ui5-li>
-			<ui5-li selected type="Active">Longest word in the world</ui5-li>
+		<ui5-multi-combobox style="width: 560px;" value="Hello World">
+			<ui5-li style="display: none" selected type="Active">Cosy</ui5-li>
+			<ui5-li style="display: none" type="Active">Compact</ui5-li>
+			<ui5-li style="display: none" selected type="Active">Condensed</ui5-li>
+			<ui5-li style="display: none" selected type="Active">Longest word in the world</ui5-li>
 		</ui5-multi-combobox>
 	</div>
 	<div class="demo-section">

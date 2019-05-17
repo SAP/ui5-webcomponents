@@ -6,7 +6,8 @@
 		?readonly={{ctr.readonly}}
 		value-state="{{ctr.valueState}}"
 		show-suggestions
-		@ui5-input="{{ctr._inputChage}}"
+		@ui5-input="{{ctr._inputLiveChange}}"
+		@ui5-change={{ctr._inputChange}}
 		@keydown="{{ctr._keydown}}">
 
 		<ui5-tokenizer data-ui5-slot="_beginContent"
@@ -28,7 +29,7 @@
 			<ui5-icon src="sap-icon://slim-arrow-down" 
 				data-ui5-slot="icon"
 				@ui5-press={{ctr._showAllItemsPopover}}
-				class="ui5-multi-combobox--icon {{classes.icon}}"
+				class="{{classes.icon}}"
 			></ui5-icon>
 		{{/unless}}
 	</ui5-input>
