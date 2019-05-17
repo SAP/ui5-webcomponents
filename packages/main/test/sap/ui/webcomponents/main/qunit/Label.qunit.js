@@ -109,7 +109,7 @@ TestHelper.ready(function() {
 
 			RenderScheduler.whenFinished().then(function () {
 				// assert
-				assert.equal(getActualText(this.label), newText, "component text has changed");
+				assert.equal(getActualText(label), newText, "component text has changed");
 				done();
 			});
 		});
