@@ -10,7 +10,8 @@
 	<link rel="stylesheet" href="../../../../../../www/home/core.css">
 
 	<script src="../../../../../../test-resources/playground/libs/google-code-prettify/prettify.js"></script>
-	<link href="../../../../../../test-resources/playground/libs/google-code-prettify/sunburst.css" type="text/css" rel="stylesheet">
+	<link href="../../../../../../test-resources/playground/libs/google-code-prettify/sunburst.css" type="text/css"
+		rel="stylesheet">
 
 	<link href="../../../../../../test-resources/playground/css/api.css" type="text/css" rel="stylesheet">
 
@@ -22,35 +23,34 @@
 	</script>
 
 	<script src="../../../../../../webcomponentsjs/webcomponents-loader.js"></script>
-	<script src="../../../../../../resources/sap/ui/webcomponents/main/bundle.esm.js"
-	        type="module"
-	>
+	<script src="../../../../../../resources/sap/ui/webcomponents/main/bundle.esm.js" type="module">
 	</script>
 
 	<script nomodule src="../../../../../../resources/sap/ui/webcomponents/main/bundle.es5.js">
 	</script>
 
 	<style>
-	.header {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		flex-wrap: wrap;
-		height: fit-content;
-		padding: 0.5rem;
-	}
+		.header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			flex-wrap: wrap;
+			height: fit-content;
+			padding: 0.5rem;
+		}
 
-	html[data-sap-ui-browser=ie11] .table-example,
-	html[data-sap-ui-browser=ed15] .table-example,
-	html:not([data-sap-ui-browser^=ie]):not([data-sap-ui-browser^=ed]) .table-unsupported {
-		display: none;
-	}
+		html[data-sap-ui-browser=ie11] .table-example,
+		html[data-sap-ui-browser=ed15] .table-example,
+		html:not([data-sap-ui-browser^=ie]):not([data-sap-ui-browser^=ed]) .table-unsupported {
+			display: none;
+		}
 
-	.hcb-background .header {
-		color: #fff;
-	}
+		.hcb-background .header {
+			color: #fff;
+		}
 	</style>
 </head>
+
 <body class="sapUiBody example-wrapper">
 	<header>
 		<h2 class="control-header">Table</h2>
@@ -90,7 +90,7 @@
 					<span style="line-height: 1.4rem" data-ui5-slot="header">Weight</span>
 				</ui5-table-column>
 
-				<ui5-table-column data-ui5-slot="columns" >
+				<ui5-table-column data-ui5-slot="columns">
 					<span style="line-height: 1.4rem" data-ui5-slot="header">Price</span>
 				</ui5-table-column>
 
@@ -126,6 +126,58 @@
 		<span style="line-height: 1.4rem" data-ui5-slot="header">Price</span>
 	</ui5-table-column>
 
+</ui5-table>
+		</xmp></pre>
+	</section>
+
+	<section>
+		<h3>Table with No Data</h3>
+		<div class="snippet flex-column">
+			<ui5-table class="demo-table" no-data-text="No Data" show-no-data>
+				<!-- Columns -->
+				<ui5-table-column data-ui5-slot="columns" width="12em">
+					<span style="line-height: 1.4rem" data-ui5-slot="header">Product</span>
+				</ui5-table-column>
+
+				<ui5-table-column data-ui5-slot="columns" min-width="800" popin-text="Supplier">
+					<span style="line-height: 1.4rem" data-ui5-slot="header">Supplier</span>
+				</ui5-table-column>
+
+				<ui5-table-column data-ui5-slot="columns" min-width="600" popin-text="Dimensions" demand-popin>
+					<span style="line-height: 1.4rem" data-ui5-slot="header">Dimensions</span>
+				</ui5-table-column>
+
+				<ui5-table-column data-ui5-slot="columns" min-width="600" popin-text="Weight" demand-popin>
+					<span style="line-height: 1.4rem" data-ui5-slot="header">Weight</span>
+				</ui5-table-column>
+
+				<ui5-table-column data-ui5-slot="columns">
+					<span style="line-height: 1.4rem" data-ui5-slot="header">Price</span>
+				</ui5-table-column>
+			</ui5-table>
+		</div>
+
+		<pre class="prettyprint lang-html"><xmp>
+<ui5-table class="demo-table" no-data-text="No Data" show-no-data>
+	<ui5-table-column data-ui5-slot="columns" width="12em">
+		<span style="line-height: 1.4rem" data-ui5-slot="header">Product</span>
+	</ui5-table-column>
+
+	<ui5-table-column data-ui5-slot="columns" min-width="800" popin-text="Supplier">
+		<span style="line-height: 1.4rem" data-ui5-slot="header">Supplier</span>
+	</ui5-table-column>
+
+	<ui5-table-column data-ui5-slot="columns" min-width="600" popin-text="Dimensions" demand-popin>
+		<span style="line-height: 1.4rem" data-ui5-slot="header">Dimensions</span>
+	</ui5-table-column>
+
+	<ui5-table-column data-ui5-slot="columns" min-width="600" popin-text="Weight" demand-popin>
+		<span style="line-height: 1.4rem" data-ui5-slot="header">Weight</span>
+	</ui5-table-column>
+
+	<ui5-table-column data-ui5-slot="columns">
+		<span style="line-height: 1.4rem" data-ui5-slot="header">Price</span>
+	</ui5-table-column>
 </ui5-table>
 		</xmp></pre>
 	</section>

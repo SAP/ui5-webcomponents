@@ -28,3 +28,15 @@ ui5-table {
 .sapUiSizeCompact .sapWCTableHeader {
 	height: 2rem;
 }
+
+.sapWCTableNoData{
+	overflow: hidden;
+	padding: .25rem .0625rem;
+	font-family: var(--sapUiFontFamily);
+	font-size: 0.875rem;
+	box-sizing: border-box;
+	color: var(--sapUiListTextColor);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
