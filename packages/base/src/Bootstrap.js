@@ -1,4 +1,5 @@
 import whenDOMReady from "./util/whenDOMReady.js";
+import injectGlobalStyles from "./util/injectGlobalStyles.js";
 import EventEnrichment from "./events/EventEnrichment.js";
 import { insertIconFontFace } from "./IconFonts.js";
 import DOMEventHandler from "./DOMEventHandler.js";
@@ -19,6 +20,7 @@ const Bootstrap = {
 
 		bootPromise = new Promise(async resolve => {
 			await whenDOMReady();
+			injectGlobalStyles();
 			initConfiguration();
 			applyTheme();
 			insertIconFontFace();
