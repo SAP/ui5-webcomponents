@@ -39,10 +39,10 @@ const metadata = {
 			defaultValue: TitleLevel.H2,
 		},
 	},
-	slots: {
+	slots: /** @lends sap.ui.webcomponents.main.Title.prototype */ {
 		/**
 		 * Defines the text of the <code>ui5-title</code>.
-		 * <br><b>Note:</b> This slot is expected to only contain text. Use HTML Elements at your own risk.
+		 * <br><b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 		 *
 		 * @type {Node[]}
 		 * @slot
@@ -73,7 +73,6 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.Title
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-title
- * @usestextcontent
  * @public
  */
 class Title extends UI5Element {

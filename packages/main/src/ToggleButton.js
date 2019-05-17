@@ -51,7 +51,6 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.ToggleButton
  * @extends Button
  * @tagname ui5-togglebutton
- * @usestextcontent
  * @public
  */
 class ToggleButton extends Button {

@@ -126,7 +126,6 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.TimelineItem
  * @extends UI5Element
  * @tagname ui5-timeline
- * @usestextcontent
  * @public
  */
 class TimelineItem extends UI5Element {

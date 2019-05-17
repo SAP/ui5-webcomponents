@@ -68,10 +68,10 @@ const metadata = {
 
 		_closeButton: { type: Object },
 	},
-	slots: {
+	slots: /** @lends sap.ui.webcomponents.main.MessageStrip.prototype */ {
 		/**
 		 * Defines the text of the <code>ui5-messagestrip</code>.
-		 * <br><b>Note:</b> This slot is expected to only contain text. Use HTML Elements at your own risk.
+		 * <br><b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 		 *
 		 * @type {Node[]}
 		 * @slot
@@ -120,7 +120,6 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.MessageStrip
  * @extends UI5Element
  * @tagname ui5-messagestrip
- * @usestextcontent
  * @public
  * @since 0.9.0
  */

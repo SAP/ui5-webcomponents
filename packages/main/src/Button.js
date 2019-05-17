@@ -104,10 +104,10 @@ const metadata = {
 
 		_iconSettings: { type: Object },
 	},
-	slots: {
+	slots: /** @lends sap.ui.webcomponents.main.Button.prototype */ {
 		/**
 		 * Defines the text of the <code>ui5-button</code>.
-		 * <br><b>Note:</b> This slot is expected to only contain text. Use HTML Elements at your own risk.
+		 * <br><b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 		 *
 		 * @type {Node[]}
 		 * @slot

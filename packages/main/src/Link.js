@@ -93,10 +93,10 @@ const metadata = {
 			type: String,
 		},
 	},
-	slots: {
+	slots: /** @lends sap.ui.webcomponents.main.Link.prototype */ {
 		/**
 		 * Defines the text of the <code>ui5-link</code>.
-		 * <br><b>Note:</b> This slot is expected to only contain text. Use HTML Elements at your own risk.
+		 * <br><b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 		 *
 		 * @type {Node[]}
 		 * @slot
@@ -160,7 +160,6 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.Link
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-link
- * @usestextcontent
  * @public
  */
 class Link extends UI5Element {
