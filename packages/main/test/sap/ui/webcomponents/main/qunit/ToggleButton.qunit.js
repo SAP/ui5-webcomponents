@@ -5,7 +5,7 @@ TestHelper.ready(function () {
 	var fixture = window.document.querySelector("#qunit-fixture");
 
 	var getActualText = function(el) {
-		return el.shadowRoot.querySelector('.sapMBtnText>bdi>slot').assignedNodes()[0];
+		return el.shadowRoot.querySelector('.sapMBtnText>bdi>slot').assignedNodes()[0].textContent;
 	};
 
 	QUnit.module("Web Components", {
