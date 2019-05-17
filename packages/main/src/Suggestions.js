@@ -118,10 +118,10 @@ class Suggestions {
 
 	_attachItemsListeners() {
 		const list = this._getList();
-		list.removeEventListener("itemPress", this.fnOnSuggestionItemPress);
-		list.addEventListener("itemPress", this.fnOnSuggestionItemPress);
-		list.removeEventListener("itemFocused", this.fnOnSuggestionItemFocus);
-		list.addEventListener("itemFocused", this.fnOnSuggestionItemFocus);
+		list.removeEventListener("ui5-itemPress", this.fnOnSuggestionItemPress);
+		list.addEventListener("ui5-itemPress", this.fnOnSuggestionItemPress);
+		list.removeEventListener("ui5-itemFocused", this.fnOnSuggestionItemFocus);
+		list.addEventListener("ui5-itemFocused", this.fnOnSuggestionItemFocus);
 	}
 
 	_attachPopupListeners() {
@@ -130,12 +130,12 @@ class Suggestions {
 		}
 
 		if (!this.attachedAfterOpened) {
-			this._getPopover().addEventListener("afterOpen", this._onOpen.bind(this));
+			this._getPopover().addEventListener("ui5-afterOpen", this._onOpen.bind(this));
 			this.attachedAfterOpened = true;
 		}
 
 		if (!this.attachedAfterClose) {
-			this._getPopover().addEventListener("afterClose", this._onClose.bind(this));
+			this._getPopover().addEventListener("ui5-afterClose", this._onClose.bind(this));
 			this.attachedAfterClose = true;
 		}
 	}

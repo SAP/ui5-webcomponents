@@ -90,7 +90,6 @@ TestHelper.ready(function() {
 				listFooter,
 				listHeader,
 				listNoDataEl,
-				backgroundDesign = "Transparent",
 				headerText = "header",
 				footerText = "footer",
 				noDataText = "no data",
@@ -106,9 +105,6 @@ TestHelper.ready(function() {
 				},{
 					prop: "noDataText",
 					value: noDataText
-				},{
-					prop: "backgroundDesign",
-					value: backgroundDesign
 				},{
 					prop: "separators",
 					value: separators

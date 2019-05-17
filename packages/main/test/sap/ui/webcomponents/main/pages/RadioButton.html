@@ -83,13 +83,13 @@
 		var groupEventCounter = 0;
 
 		[window["rb1"], window["rb2"], window["rb3"], window["rb4"]].forEach(function(radio) {
-			radio.addEventListener("select", function(event) {
+			radio.addEventListener("ui5-select", function(event) {
 				counter += 1;
 				window["field"].value = counter;
 			});
 		})
 
-		radioGroup.addEventListener("select", function(e) {
+		radioGroup.addEventListener("ui5-select", function(e) {
 			var radio = e.target;
 			lblRadioGroup.innerHTML = radio.text;
 			lblEventCounter.innerHTML = ++groupEventCounter;

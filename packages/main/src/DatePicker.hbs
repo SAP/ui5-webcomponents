@@ -11,8 +11,8 @@
 			?disabled="{{ctr.disabled}}"
 			?readonly="{{ctr.readonly}}"
 			value-state="{{ctr.valueState}}"
-			@change="{{ctr._input.onChange}}"
-			@input="{{ctr._input.onLiveChange}}"
+			@ui5-change="{{ctr._input.onChange}}"
+			@ui5-input="{{ctr._input.onLiveChange}}"
 			data-sap-focus-ref
 	>
 		{{#if showIcon}}
@@ -35,8 +35,8 @@
 			horizontal-align="{{ctr._popover.horizontalAlign}}"
 			stay-open-on-scroll="{{ctr._popover.stayOpenOnScroll}}"
 			.customClasses="{{ctr._popover._customClasses}}"
-			@afterClose="{{ctr._popover.afterClose}}"
-			@afterOpen="{{ctr._popover.afterOpen}}"
+			@ui5-afterClose="{{ctr._popover.afterClose}}"
+			@ui5-afterOpen="{{ctr._popover.afterOpen}}"
 	>
 		<ui5-calendar
 				id="{{ctr._id}}-calendar"
@@ -45,7 +45,7 @@
 				format-pattern="{{ctr._calendar.formatPattern}}"
 				timestamp="{{ctr._calendar.timestamp}}"
 				.selectedDates="{{ctr._calendar.selectedDates}}"
-				@selectedDatesChange="{{ctr._calendar.onSelectedDatesChange}}"
+				@ui5-selectedDatesChange="{{ctr._calendar.onSelectedDatesChange}}"
 		></ui5-calendar>
 	</ui5-popover>
 

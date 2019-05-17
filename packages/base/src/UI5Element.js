@@ -1,4 +1,4 @@
-import { getWCNoConflict } from "./Configuration.js";
+import { getWCNoConflict, getCompactSize } from "./Configuration.js";
 import DOMObserver from "./compatibility/DOMObserver.js";
 import ShadowDOM from "./compatibility/ShadowDOM.js";
 import UI5ElementMetadata from "./UI5ElementMetadata.js";
@@ -78,6 +78,12 @@ class UI5Element extends HTMLElement {
 	}
 
 	async _initializeShadowRoot() {
+		const isCompact = getCompactSize();
+
+		if (isCompact) {
+			this.setAttribute("data-ui5-compact-size", "");
+		}
+
 		if (this.constructor.getMetadata().getNoShadowDOM()) {
 			return Promise.resolve();
 		}
@@ -536,8 +542,23 @@ class UI5Element extends HTMLElement {
 	 */
 	fireEvent(name, data, cancelable) {
 		let compatEventResult = true; // Initialized to true, because if the event is not fired at all, it should be considered "not-prevented"
+		const noConflict = getWCNoConflict();
 
-		let customEvent = new CustomEvent(name, {
+		const noConflictEvent = new CustomEvent(`ui5-${name}`, {
+			detail: data,
+			composed: false,
+			bubbles: true,
+			cancelable,
+		});
+
+		// This will be false if the compat event is prevented
+		compatEventResult = this.dispatchEvent(noConflictEvent);
+
+		if (noConflict === true || (noConflict.events && noConflict.events.includes && noConflict.events.includes(name))) {
+			return compatEventResult;
+		}
+
+		const customEvent = new CustomEvent(name, {
 			detail: data,
 			composed: false,
 			bubbles: true,
@@ -546,18 +567,6 @@ class UI5Element extends HTMLElement {
 
 		// This will be false if the normal event is prevented
 		const normalEventResult = this.dispatchEvent(customEvent);
-
-		if (UI5Element.noConflictEvents.includes(name)) {
-			customEvent = new CustomEvent(`ui5-${name}`, {
-				detail: data,
-				composed: false,
-				bubbles: true,
-				cancelable,
-			});
-
-			// This will be false if the compat event is prevented
-			compatEventResult = this.dispatchEvent(customEvent);
-		}
 
 		// Return false if any of the two events was prevented (its result was false).
 		return normalEventResult && compatEventResult;
@@ -628,18 +637,6 @@ class UI5Element extends HTMLElement {
 				},
 			});
 		}
-	}
-
-	static get noConflictEvents() {
-		if (!this._noConflictEvents) {
-			const noConflictConfig = getWCNoConflict();
-			this._noConflictEvents = [];
-			if (typeof noConflictConfig === "object" && typeof noConflictConfig.events === "string") {
-				this._noConflictEvents = noConflictConfig.events.split(",").map(evtName => evtName.trim());
-			}
-		}
-
-		return this._noConflictEvents;
 	}
 }
 const kebabToCamelCase = string => toCamelCase(string.split("-"));

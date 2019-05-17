@@ -156,7 +156,7 @@
 		var counter = 0;
 
 		[button, disabledButton].forEach(function (el) {
-			el.addEventListener("press", function(event) {
+			el.addEventListener("ui5-press", function(event) {
 				counter += 1;
 				input.value = counter;
 			});

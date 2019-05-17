@@ -1,16 +1,12 @@
 .sapMLIB.sapMGHLI {
 	height: 3rem;
 	color: var(--sapUiListTableGroupHeaderTextColor);
-	background: var(--sapUiListGroupHeaderBackground);
+	background: var(--_ui5_group_header_listitem_background_color);
 	padding-top: 1rem;
 	font-size: var(--sapMFontHeader6Size);
 	font-weight: var(--sapUiFontHeaderWeight);
 	line-height: 2rem;
 	border-bottom: 1px solid var(--sapUiListTableGroupHeaderBorderColor);
-}
-
-.sapMLIB.sapMGHLI.sapMLIBTransparent {
-	background: rgba(255,255,255,0);
 }
 
 .sapMGHLI > .sapMLIBContent {

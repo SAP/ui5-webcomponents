@@ -5,7 +5,6 @@ import slideDown from "@ui5/webcomponents-base/src/animations/slideDown.js";
 import slideUp from "@ui5/webcomponents-base/src/animations/slideUp.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import PanelTemplateContext from "./PanelTemplateContext.js";
-import BackgroundDesign from "./types/BackgroundDesign.js";
 import PanelAccessibleRole from "./types/PanelAccessibleRole.js";
 import PanelRenderer from "./build/compiled/PanelRenderer.lit.js";
 import { fetchResourceBundle, getResourceBundle } from "./ResourceBundleProvider.js";
@@ -85,18 +84,6 @@ const metadata = {
 		 */
 		collapsed: {
 			type: Boolean,
-		},
-
-		/**
-		 * Determines the background color of the <code>ui5-panel</code>.
-		 * Available options are <code>Solid</code> and <code>Transparent</code>.
-		 *
-		 * @type {BackgroundDesign}
-		 * @public
-		 */
-		backgroundDesign: {
-			type: BackgroundDesign,
-			defaultValue: BackgroundDesign.Solid,
 		},
 
 		/**

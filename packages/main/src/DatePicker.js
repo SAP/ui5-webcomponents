@@ -158,14 +158,14 @@ const metadata = {
 		 * @public
 		*/
 		change: {},
+
 		/**
-		 * Fired when the value of the <code>ui5-datepicker</code> is changed,
-		 * for example at each keypress.
+		 * Fired when the value of the <code>ui5-datepicker</code> is changed at each key stroke.
 		 *
 		 * @event
 		 * @public
 		*/
-		liveChange: {},
+		input: {},
 	},
 };
 
@@ -353,7 +353,7 @@ class DatePicker extends UI5Element {
 		const isValid = this.isValid(nextValue);
 
 		this.value = nextValue;
-		this.fireEvent("liveChange", { value: nextValue, valid: isValid });
+		this.fireEvent("input", { value: nextValue, valid: isValid });
 	}
 
 	/**
@@ -362,7 +362,7 @@ class DatePicker extends UI5Element {
 	 * @public
 	 */
 	isValid(value = "") {
-		return !!this.getFormat().parse(value);
+		return !!(value && this.getFormat().parse(value));
 	}
 
 	// because the parser understands more than one format
