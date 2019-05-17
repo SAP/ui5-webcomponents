@@ -3,12 +3,10 @@ import createStyleInHead from "./createStyleInHead.js";
 const buildNotDefinedStyles = () => {
 	const tags = [
 		"button",
-		"label"
+		"label",
 	];
 
-	return tags.reduce((acc, current) => {
-		return acc + `ui5-${current}:not(:defined) { display: none; }\n`;
-	}, "");
+	return tags.reduce((acc, current) => `${acc}ui5-${current}:not(:defined) { display: none; }\n`, "");
 };
 
 const injectGlobalStyles = () => {
