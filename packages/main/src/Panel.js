@@ -4,6 +4,7 @@ import { getIconURI } from "@ui5/webcomponents-base/src/IconPool.js";
 import slideDown from "@ui5/webcomponents-base/src/animations/slideDown.js";
 import slideUp from "@ui5/webcomponents-base/src/animations/slideUp.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import Icon from "./Icon.js";
 import PanelTemplateContext from "./PanelTemplateContext.js";
 import PanelAccessibleRole from "./types/PanelAccessibleRole.js";
 import PanelRenderer from "./build/compiled/PanelRenderer.lit.js";
@@ -275,7 +276,10 @@ class Panel extends UI5Element {
 	}
 
 	static async define(...params) {
-		await fetchResourceBundle("@ui5/webcomponents");
+		await Promise.all([
+			fetchResourceBundle("@ui5/webcomponents"),
+			Icon.define(),
+		]);
 
 		super.define(...params);
 	}
