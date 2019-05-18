@@ -1,5 +1,5 @@
-commit 676c1e68df2e348df54a970d5748f5dc6d688531
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu May 16 15:19:45 2019 +0300
+commit 650bcb095addac8075c1b0b7307e75a7895f8019
+Author: Gabriel Borges <gabriel.borges.fernandes@gmail.com>
+Date:   Sat May 18 14:58:52 2019 -0300
 
-     refactor(ui5-datepicker): rename event 'liveChange' to 'input' (#394)
+    fix(ui5-panel): add missing dependency for ui5-icon (#406)
