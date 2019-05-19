@@ -68,6 +68,7 @@ const metadata = {
 		 * </ul>
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		stickyColumnHeader: {

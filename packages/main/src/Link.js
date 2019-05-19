@@ -28,6 +28,7 @@ const metadata = {
 		 * <b>Note:</b> When disabled, the link cannot be triggered by the user.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		disabled: {
@@ -84,6 +85,7 @@ const metadata = {
 		 * <b>Note:</b> the text is truncated by default.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		wrap: {

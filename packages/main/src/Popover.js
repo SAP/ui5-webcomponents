@@ -29,6 +29,7 @@ const metadata = {
 		 * Determines on which side the <code>ui5-popover</code> is placed at.
 		 *
 		 * @type {PopoverPlacementType}
+		 * @defaultvalue "Right"
 		 * @public
 		 */
 		placementType: {
@@ -40,6 +41,7 @@ const metadata = {
 		 * Determines the horizontal alignment of the <code>ui5-popover</code>.
 		 *
 		 * @type {PopoverHorizontalAlign}
+		 * @defaultvalue "Center"
 		 * @public
 		 */
 		horizontalAlign: {
@@ -51,6 +53,7 @@ const metadata = {
 		 * Determines the vertical alignment of the <code>ui5-popover</code>.
 		 *
 		 * @type {PopoverVerticalAlign}
+		 * @defaultvalue "Center"
 		 * @public
 		 */
 		verticalAlign: {
@@ -64,6 +67,7 @@ const metadata = {
 		 * If enabled, it blocks any interaction with the background.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		modal: {
@@ -74,6 +78,7 @@ const metadata = {
 		 * Determines whether the <code>ui5-popover</code> arrow is hidden.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		hideArrow: {
@@ -84,6 +89,7 @@ const metadata = {
 		 * Determines whether the <code>ui5-popover</code> would close upon user scroll.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		stayOpenOnScroll: {
@@ -95,6 +101,7 @@ const metadata = {
 		 * over the target.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		allowTargetOverlap: {

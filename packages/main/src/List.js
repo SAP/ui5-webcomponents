@@ -82,6 +82,7 @@ const metadata = {
 		 * Determines whether the list items are indented.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		inset: {
@@ -95,6 +96,7 @@ const metadata = {
 		 * <code>MultiSelect</code>, and <code>Delete</code>.
 		 *
 		 * @type {string}
+		 * @defaultvalue "None"
 		 * @public
 		 */
 		mode: {
@@ -125,6 +127,7 @@ const metadata = {
 		 * </ul>
 		 *
 		 * @type {string}
+		 * @defaultvalue "All"
 		 * @public
 		 */
 		separators: {

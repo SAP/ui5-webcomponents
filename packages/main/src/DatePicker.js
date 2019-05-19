@@ -87,6 +87,7 @@ const metadata = {
 		 * Determines whether the <code>ui5-datepicker</code> is displayed as disabled.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		disabled: {
@@ -97,6 +98,7 @@ const metadata = {
 		 * Determines whether the <code>ui5-datepicker</code> is displayed as readonly.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		readonly: {

@@ -30,7 +30,8 @@ class State {
 					if (typeof this._data[prop] !== "undefined") {
 						return this._data[prop];
 					}
-					if (propData.type === "boolean") {
+
+					if (propData.type === "boolean" || propData.type === Boolean) {
 						return false;
 					} else if (propData.multiple) { // eslint-disable-line
 						return [];

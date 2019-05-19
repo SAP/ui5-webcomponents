@@ -22,6 +22,7 @@ const metadata = {
 		 * Determines whether the <code>ui5-title</code> should wrap.
 		 *
 		 * @type {Boolean}
+		 * @defaultvalue false
 		 * @public
 		*/
 		wrap: {
