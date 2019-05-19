@@ -36,4 +36,10 @@ describe("CheckBox general interaction", () => {
 		assert.strictEqual(truncatingCbHeight, CHECKBOX_DEFAULT_HEIGHT, "The size of the checkbox is : " + truncatingCbHeight);
 		assert.ok(wrappingCbHeight > CHECKBOX_DEFAULT_HEIGHT, "The size of the checkbox is more than: " + CHECKBOX_DEFAULT_HEIGHT);
 	});
+
+	it("tests checked default value is false", () => {
+		const checkBox = browser.findElementDeep("#cb1");
+
+		assert.strictEqual(checkBox.checked, false, "Check if default value for checked is false");
+	});
 });
