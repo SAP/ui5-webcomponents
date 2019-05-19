@@ -62,6 +62,7 @@ const metadata = {
 		 * Defines if the value of <code>no-data-text</code> will be diplayed when there is no rows present in the table.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		showNoData: {
