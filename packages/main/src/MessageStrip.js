@@ -32,7 +32,7 @@ const metadata = {
 		 */
 		type: {
 			type: MessageStripType,
-			defaultValue: MessageStripType.Information
+			defaultValue: MessageStripType.Information,
 		},
 
 		/**
@@ -52,7 +52,7 @@ const metadata = {
 		 */
 		icon: {
 			type: URI,
-			defaultValue: null
+			defaultValue: null,
 		},
 
 		/**
@@ -78,7 +78,7 @@ const metadata = {
 		},
 
 		_closeButton: {
-			type: Object
+			type: Object,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.MessageStrip.prototype */ {
