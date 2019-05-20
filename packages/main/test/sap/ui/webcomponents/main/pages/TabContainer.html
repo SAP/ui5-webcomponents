@@ -27,6 +27,7 @@
 	<script nomodule src="../../../../../../resources/sap/ui/webcomponents/main/bundle.es5.js">
 	</script>
 
+<script>delete Document.prototype.adoptedStyleSheets;</script>
 	<style>
 		html,
 		body {
@@ -68,7 +69,7 @@
 	<h1 class="header-title">ui5-tabcontainer</h1>
 </header>
 
-<section class="main">
+<!-- <section class="main">
 	<div class="samples">
 		<h2>Tab Container</h2>
 		<div class="sample">
@@ -104,7 +105,7 @@
 					<ui5-button>Button 3</ui5-button>
 				</ui5-tab>
 			</ui5-tabcontainer>
-		</div>
+		</div> -->
 
 		<div class="sample">
 			<h4>Icon only</h4>
@@ -123,7 +124,7 @@
 			</ui5-tabcontainer>
 		</div>
 
-		<div class="sample">
+		<!-- <div class="sample">
 			<h4>Text only</h4>
 
 			<ui5-tabcontainer show-overflow="true" id="tabContainerTextOnly">
@@ -187,6 +188,6 @@
 	document.getElementById("tabContainer1").addEventListener("ui5-itemSelect", function (event) {
 		document.getElementById("result").innerHTML = event.detail.item.text;
 	});
-</script>
+</script> -->
 </body>
 </html>

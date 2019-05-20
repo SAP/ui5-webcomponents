@@ -31,12 +31,16 @@ class State {
 						return this._data[prop];
 					}
 
+					const propDefaultValue = propData.defaultValue;
+
 					if (propData.type === Boolean) {
 						return false;
+					} else if (propData.type === String) {
+						return propDefaultValue || "";
 					} else if (propData.multiple) { // eslint-disable-line
 						return [];
 					} else {
-						return propData.defaultValue;
+						return propDefaultValue;
 					}
 				},
 				set(value) {
@@ -125,10 +129,10 @@ class State {
 		// Initialize properties
 		const props = MetadataClass.getProperties();
 		for (const propName in props) { // eslint-disable-line
-
+			const propType = props[propName].type;
 			const propDefaultValue = props[propName].defaultValue;
 
-			if (props[propName].type === Boolean) {
+			if (propType === Boolean) {
 				defaultState[propName] = false;
 
 				if (propDefaultValue !== undefined) {
@@ -136,8 +140,10 @@ class State {
 				}
 			} else if (props[propName].multiple) {
 				defaultState[propName] = [];
-			} else if (props[propName].type === Object) {
+			} else if (propType === Object) {
 				defaultState[propName] = "defaultValue" in props[propName] ? props[propName].defaultValue : {};
+			} else if (propType === String) {
+				defaultState[propName] = propDefaultValue || "";
 			} else {
 				defaultState[propName] = propDefaultValue;
 			}

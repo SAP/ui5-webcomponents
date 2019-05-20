@@ -60,7 +60,6 @@ const metadata = {
 		 */
 		target: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**

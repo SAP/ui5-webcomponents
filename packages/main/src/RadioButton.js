@@ -77,7 +77,6 @@ const metadata = {
 		 * @public
 		 */
 		text: {
-			defaultValue: null,
 			type: String,
 		},
 
@@ -118,7 +117,6 @@ const metadata = {
 		 */
 		name: {
 			defaultValue: "",
-			type: String,
 		},
 
 		/**
@@ -134,7 +132,6 @@ const metadata = {
 		 */
 		value: {
 			type: String,
-			defaultValue: "",
 		},
 
 		_label: {

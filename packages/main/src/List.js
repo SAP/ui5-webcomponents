@@ -64,7 +64,6 @@ const metadata = {
 		 */
 		headerText: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
@@ -75,7 +74,6 @@ const metadata = {
 		 */
 		footerText: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
@@ -112,7 +110,6 @@ const metadata = {
 		 */
 		noDataText: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**

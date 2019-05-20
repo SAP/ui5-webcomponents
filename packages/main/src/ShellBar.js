@@ -45,7 +45,6 @@ const metadata = {
 		 */
 		primaryTitle: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
@@ -57,7 +56,6 @@ const metadata = {
 		 */
 		secondaryTitle: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
@@ -112,7 +110,6 @@ const metadata = {
 
 		_breakpointSize: {
 			type: String,
-			defaultValue: "",
 		},
 
 		_itemsInfo: {

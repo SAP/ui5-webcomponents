@@ -41,7 +41,6 @@ const metadata = {
 		 */
 		heading: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
@@ -51,7 +50,6 @@ const metadata = {
 		 */
 		subtitle: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
@@ -61,7 +59,6 @@ const metadata = {
 		 */
 		status: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**

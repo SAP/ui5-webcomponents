@@ -22,7 +22,7 @@ const _convertSingleClass = (oClass, customStyleClasses) => {
 
 const _convertStyles = function _convertStyles(styles) {
 	if (!styles) {
-		return;
+		return "";
 	}
 
 	for (const i in styles) { // eslint-disable-line
@@ -34,10 +34,10 @@ const _convertStyles = function _convertStyles(styles) {
 				result.push(`${key}: ${stylesNs[key]}`);
 			}
 		});
-		styles[i] = result.length ? result.join("; ") : undefined;
+		styles[i] = result.length ? result.join("; ") : "";
 	}
 
-	return styles;
+	return styles || "";
 };
 
 class TemplateContext {

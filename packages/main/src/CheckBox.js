@@ -70,7 +70,6 @@ const metadata = {
 		 * @public
 		 */
 		text: {
-			defaultValue: "",
 			type: String,
 		},
 
@@ -84,8 +83,8 @@ const metadata = {
 		 * @public
 		 */
 		valueState: {
-			defaultValue: ValueState.None,
 			type: ValueState,
+			defaultValue: ValueState.None,
 		},
 
 		/**
@@ -112,6 +111,7 @@ const metadata = {
 		 * part of an HTML form. Do not use this property unless you need to submit a form.
 		 *
 		 * @type {String}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		name: {

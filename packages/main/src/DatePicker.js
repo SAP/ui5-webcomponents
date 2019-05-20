@@ -45,7 +45,6 @@ const metadata = {
 		 */
 		value: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
@@ -114,7 +113,6 @@ const metadata = {
 		 * @public
 		 */
 		placeholder: {
-			defaultValue: null,
 			type: String,
 		},
 

@@ -59,7 +59,7 @@ HTMLLitVisitor.prototype.MustacheStatement = function(mustache) {
 		this.blocks[this.currentKey()] += "${index}";
 	} else {
 		const path = normalizePath.call(this, mustache.path.original);
-		this.blocks[this.currentKey()] += "${ifTruthy(" + path + ")}";
+		this.blocks[this.currentKey()] += "${" + path + "}";
 	}
 };
 

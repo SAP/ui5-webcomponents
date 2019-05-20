@@ -53,7 +53,6 @@ const metadata = {
 		 * @public
 		 */
 		"for": {
-			defaultValue: "",
 			type: String,
 		},
 	},

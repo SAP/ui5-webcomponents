@@ -38,7 +38,6 @@ const metadata = {
 		 */
 		text: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
@@ -59,7 +58,6 @@ const metadata = {
 		 */
 		additionalText: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**

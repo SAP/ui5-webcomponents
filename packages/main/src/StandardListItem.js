@@ -25,7 +25,6 @@ const metadata = {
 		 */
 		description: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**

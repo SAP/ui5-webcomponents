@@ -63,7 +63,6 @@ const metadata = {
 		 */
 		headerText: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**

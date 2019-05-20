@@ -56,7 +56,6 @@ const metadata = {
 		 */
 		itemName: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
@@ -78,7 +77,6 @@ const metadata = {
 		 */
 		titleText: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
@@ -88,7 +86,6 @@ const metadata = {
 		 */
 		subtitleText: {
 			type: String,
-			defaultValue: "",
 		},
 
 		_onItemNamePress: {

@@ -26,7 +26,6 @@ const metadata = {
 		 * @public
 		 */
 		value: {
-			defaultValue: "",
 			type: String,
 		},
 
@@ -65,7 +64,6 @@ const metadata = {
 		 * @public
 		 */
 		placeholder: {
-			defaultValue: "",
 			type: String,
 		},
 
@@ -96,7 +94,7 @@ const metadata = {
 		 */
 		maxLength: {
 			type: Integer,
-			defaultValue: null,
+			defaultValue: "",
 		},
 
 		/**
@@ -174,7 +172,6 @@ const metadata = {
 		},
 		_maxHeight: {
 			type: String,
-			defaultValue: "",
 		},
 		_focussed: {
 			type: Boolean,

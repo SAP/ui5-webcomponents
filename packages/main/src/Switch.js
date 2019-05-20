@@ -58,7 +58,6 @@ const metadata = {
 		 */
 		textOn: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
@@ -71,7 +70,6 @@ const metadata = {
 		 */
 		textOff: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**

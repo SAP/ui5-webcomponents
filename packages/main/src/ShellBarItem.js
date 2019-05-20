@@ -31,7 +31,6 @@ const metadata = {
 		 */
 		text: {
 			type: String,
-			defaultValue: null,
 		},
 
 		_icon: { type: HTMLElement },

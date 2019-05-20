@@ -51,7 +51,6 @@ const metadata = {
 		 */
 		popinText: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
