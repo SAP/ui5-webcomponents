@@ -26,10 +26,12 @@ const metadata = {
 		 * <b>Note:</b> A disabled <code>ui5-checkbox</code> is completely uninteractive.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		disabled: {
 			type: Boolean,
+			defaultValue: false,
 		},
 
 		/**
@@ -39,10 +41,12 @@ const metadata = {
 		 * but still provides visual feedback upon user interaction.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		readOnly: {
 			type: Boolean,
+			defaultValue: false,
 		},
 
 		/**
@@ -53,16 +57,19 @@ const metadata = {
 		 * pressing the Enter or Space key.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		checked: {
 			type: Boolean,
+			defaultValue: false,
 		},
 
 		/**
 		 * Defines the text of the <code>ui5-checkbox</code>.
 		 *
 		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		text: {
@@ -76,6 +83,7 @@ const metadata = {
 		 * <b>Note:</b> Available options are <code>Warning</code>, <code>Error</code>, and <code>None</code> (default).
 		 *
 		 * @type {string}
+		 * @defaultvalue None
 		 * @public
 		 */
 		valueState: {
@@ -89,10 +97,12 @@ const metadata = {
 		 * <b>Note:</b> By default, the text truncates when there is not enough space.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		wrap: {
 			type: Boolean,
+			defaultValue: false,
 		},
 
 		/**
