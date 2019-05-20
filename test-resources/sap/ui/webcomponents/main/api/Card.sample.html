@@ -157,31 +157,31 @@
 			<ui5-card heading="New Purchase Orders" subtitle="Today" status="3 of 15" >
 				<ui5-table class="demo-table content-padding">
 					<!-- Columns -->
-					<ui5-table-column data-ui5-slot="columns">
-						<div data-ui5-slot="header">
+					<ui5-table-column slot="columns">
+						<div slot="header">
 							<ui5-label>Sales Order</ui5-label>
 						</div>
 					</ui5-table-column>
 
-					<ui5-table-column data-ui5-slot="columns">
-						<div data-ui5-slot="header">
+					<ui5-table-column slot="columns">
+						<div slot="header">
 							<ui5-label>Customer</ui5-label>
 						</div>
 					</ui5-table-column>
 
-					<ui5-table-column data-ui5-slot="columns">
-						<div data-ui5-slot="header">
+					<ui5-table-column slot="columns">
+						<div slot="header">
 							<ui5-label>Net Amount</ui5-label>
 						</div>
 					</ui5-table-column>
 
-					<ui5-table-column data-ui5-slot="columns" min-width="450" popin-text="Status" demand-popin>
-						<div data-ui5-slot="header">
+					<ui5-table-column slot="columns" min-width="450" popin-text="Status" demand-popin>
+						<div slot="header">
 							<ui5-label>Status</ui5-label>
 						</div>
 					</ui5-table-column>
 
-					<ui5-table-row data-ui5-slot="rows">
+					<ui5-table-row slot="rows">
 						<ui5-table-cell>
 							<ui5-label>5000010050</ui5-label>
 						</ui5-table-cell>
@@ -196,7 +196,7 @@
 						</ui5-table-cell>
 					</ui5-table-row>
 
-					<ui5-table-row data-ui5-slot="rows">
+					<ui5-table-row slot="rows">
 						<ui5-table-cell>
 							<ui5-label>5000010051</ui5-label>
 						</ui5-table-cell>
@@ -211,7 +211,7 @@
 						</ui5-table-cell>
 					</ui5-table-row>
 
-					<ui5-table-row data-ui5-slot="rows">
+					<ui5-table-row slot="rows">
 						<ui5-table-cell>
 							<ui5-label>5000010052</ui5-label>
 						</ui5-table-cell>
@@ -239,32 +239,32 @@
 <ui5-card heading="New Purchase Orders" subtitle="Today" status="3 of 15" class="medium">
 	<ui5-table class="demo-table content-padding">
 		<!-- Columns -->
-		<ui5-table-column data-ui5-slot="columns">
-			<div data-ui5-slot="header">
+		<ui5-table-column slot="columns">
+			<div slot="header">
 				<ui5-label>Sales Order</ui5-label>
 			</div>
 		</ui5-table-column>
 
-		<ui5-table-column data-ui5-slot="columns">
-			<div data-ui5-slot="header">
+		<ui5-table-column slot="columns">
+			<div slot="header">
 				<ui5-label>Customer</ui5-label>
 			</div>
 		</ui5-table-column>
 
-		<ui5-table-column data-ui5-slot="columns">
-			<div data-ui5-slot="header">
+		<ui5-table-column slot="columns">
+			<div slot="header">
 				<ui5-label>Net Amount</ui5-label>
 			</div>
 		</ui5-table-column>
 
-		<ui5-table-column data-ui5-slot="columns" min-width="450" popin-text="Status" demand-popin>
-			<div data-ui5-slot="header">
+		<ui5-table-column slot="columns" min-width="450" popin-text="Status" demand-popin>
+			<div slot="header">
 				<ui5-label>Status</ui5-label>
 			</div>
 		</ui5-table-column>
 
 		<!-- Rows -->
-		<ui5-table-row data-ui5-slot="rows">
+		<ui5-table-row slot="rows">
 			<ui5-table-cell>
 				<ui5-label>5000010051</ui5-label>
 			</ui5-table-cell>
@@ -533,7 +533,7 @@ The <code>ui5-card</code> is a component that represents information in the form
                 <h3 class="comment-api-title space-top" >Children</h3>
             	<p class="small-space-top" >
             	  This Web Component accepts other HTML Elements as children. 
-            	  Use the <code>data-ui5-slot</code> attribute to define the category of each child, if more than one category is accepted.
+            	  Use the <code>slot</code> attribute to define the category of each child, if more than one category is accepted.
             	  You can provide multiple children for the categories marked with <code>[0..n]</code> or just one otherwise.
             	</p>
             

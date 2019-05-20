@@ -65,7 +65,7 @@
 	<ui5-popover placement-type="Bottom" horizontal-align="Stretch" hide-arrow hide-header initial-focus="input1" class="wcPopoverWithList">
 		<ui5-list id="myList" inset separators="Inner" mode="MultiSelect" footer-text="Copyright" no-data-text="No data">
 			<!-- Header -->
-			<div style="display: flex; align-items: center;" data-ui5-slot="header">
+			<div style="display: flex; align-items: center;" slot="header">
 				<ui5-title>Countries:</ui5-title>
 				<ui5-button type="Accept">OK</ui5-button>
 			</div>
@@ -102,12 +102,12 @@
 
 			<ui5-dialog class="wcDialog" initial-focus="focusButton" header-text="Web Component Dialog">
 
-				<div data-ui5-slot="header" id="head1" style="display: flex; align-items: center;padding: 0 0.5rem">
+				<div slot="header" id="head1" style="display: flex; align-items: center;padding: 0 0.5rem">
 					<div style="flex: 1; text-align: center">Custom Header</div>
 					<ui5-button icon="sap-icon://decline"></ui5-button>
 				</div>
 
-				<div data-ui5-slot="footer" style="display: flex; align-items: center;padding: 0 0.5rem">
+				<div slot="footer" style="display: flex; align-items: center;padding: 0 0.5rem">
 					<div style="flex: 1; text-align: center">Custom Footer</div>
 					<ui5-button id="focusButton">Accept</ui5-button>
 				</div>
@@ -136,11 +136,11 @@
 		<h5>Web Component</h5>
 		<ui5-button class="wcBtnOpenPopover">Open Popover</ui5-button>
 		<ui5-popover placement-type="Top" class="wcPopover" header-text="Web Component Popover">
-			<div data-ui5-slot="header" style="display: flex; align-items: center;padding: 0 0.5rem">
+			<div slot="header" style="display: flex; align-items: center;padding: 0 0.5rem">
 				<div style="flex: 1; text-align: center">Custom Header</div>
 				<ui5-button icon="sap-icon://decline"></ui5-button>
 			</div>
-			<div data-ui5-slot="footer" style="display: flex; align-items: center;padding: 0 0.5rem">
+			<div slot="footer" style="display: flex; align-items: center;padding: 0 0.5rem">
 				<div style="flex: 1; text-align: center">Custom Footer</div>
 				<ui5-button>Accept</ui5-button>
 			</div>

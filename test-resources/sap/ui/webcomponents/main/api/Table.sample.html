@@ -74,24 +74,24 @@
 
 			<ui5-table class="demo-table" id="tbl">
 				<!-- Columns -->
-				<ui5-table-column data-ui5-slot="columns" width="12em">
-					<span style="line-height: 1.4rem" data-ui5-slot="header">Product</span>
+				<ui5-table-column slot="columns" width="12em">
+					<span style="line-height: 1.4rem" slot="header">Product</span>
 				</ui5-table-column>
 
-				<ui5-table-column data-ui5-slot="columns" min-width="800" popin-text="Supplier">
-					<span style="line-height: 1.4rem" data-ui5-slot="header">Supplier</span>
+				<ui5-table-column slot="columns" min-width="800" popin-text="Supplier">
+					<span style="line-height: 1.4rem" slot="header">Supplier</span>
 				</ui5-table-column>
 
-				<ui5-table-column data-ui5-slot="columns" min-width="600" popin-text="Dimensions" demand-popin>
-					<span style="line-height: 1.4rem" data-ui5-slot="header">Dimensions</span>
+				<ui5-table-column slot="columns" min-width="600" popin-text="Dimensions" demand-popin>
+					<span style="line-height: 1.4rem" slot="header">Dimensions</span>
 				</ui5-table-column>
 
-				<ui5-table-column data-ui5-slot="columns" min-width="600" popin-text="Weight" demand-popin>
-					<span style="line-height: 1.4rem" data-ui5-slot="header">Weight</span>
+				<ui5-table-column slot="columns" min-width="600" popin-text="Weight" demand-popin>
+					<span style="line-height: 1.4rem" slot="header">Weight</span>
 				</ui5-table-column>
 
-				<ui5-table-column data-ui5-slot="columns" >
-					<span style="line-height: 1.4rem" data-ui5-slot="header">Price</span>
+				<ui5-table-column slot="columns" >
+					<span style="line-height: 1.4rem" slot="header">Price</span>
 				</ui5-table-column>
 
 			</ui5-table>
@@ -106,24 +106,24 @@
 
 <ui5-table class="demo-table" id="table">
 	<!-- Columns -->
-	<ui5-table-column data-ui5-slot="columns" width="12em">
-		<span style="line-height: 1.4rem" data-ui5-slot="header">Product</span>
+	<ui5-table-column slot="columns" width="12em">
+		<span style="line-height: 1.4rem" slot="header">Product</span>
 	</ui5-table-column>
 
-	<ui5-table-column data-ui5-slot="columns" min-width="800" popin-text="Supplier">
-		<span style="line-height: 1.4rem" data-ui5-slot="header">Supplier</span>
+	<ui5-table-column slot="columns" min-width="800" popin-text="Supplier">
+		<span style="line-height: 1.4rem" slot="header">Supplier</span>
 	</ui5-table-column>
 
-	<ui5-table-column data-ui5-slot="columns" min-width="600" popin-text="Dimensions" demand-popin>
-		<span style="line-height: 1.4rem" data-ui5-slot="header">Dimensions</span>
+	<ui5-table-column slot="columns" min-width="600" popin-text="Dimensions" demand-popin>
+		<span style="line-height: 1.4rem" slot="header">Dimensions</span>
 	</ui5-table-column>
 
-	<ui5-table-column data-ui5-slot="columns" min-width="600" popin-text="Weight" demand-popin>
-		<span style="line-height: 1.4rem" data-ui5-slot="header">Weight</span>
+	<ui5-table-column slot="columns" min-width="600" popin-text="Weight" demand-popin>
+		<span style="line-height: 1.4rem" slot="header">Weight</span>
 	</ui5-table-column>
 
-	<ui5-table-column data-ui5-slot="columns">
-		<span style="line-height: 1.4rem" data-ui5-slot="header">Price</span>
+	<ui5-table-column slot="columns">
+		<span style="line-height: 1.4rem" slot="header">Price</span>
 	</ui5-table-column>
 
 </ui5-table>
@@ -380,7 +380,7 @@
 
 		let html = '';
 		products.ProductCollection.forEach(function(product, index) {
-			html += '<ui5-table-row data-ui5-slot="rows">'
+			html += '<ui5-table-row slot="rows">'
 							+ '<ui5-table-cell>'
 								+ '<div class="double-line-content">'
 									+ '<span>'
@@ -459,7 +459,7 @@ The <code>ui5-table</code> component provides a set of sophisticated and conveni
                 <h3 class="comment-api-title space-top" >Children</h3>
             	<p class="small-space-top" >
             	  This Web Component accepts other HTML Elements as children. 
-            	  Use the <code>data-ui5-slot</code> attribute to define the category of each child, if more than one category is accepted.
+            	  Use the <code>slot</code> attribute to define the category of each child, if more than one category is accepted.
             	  You can provide multiple children for the categories marked with <code>[0..n]</code> or just one otherwise.
             	</p>
             
@@ -546,7 +546,7 @@ The <code>ui5-table-column</code> component allows to define column specific pro
                 <h3 class="comment-api-title space-top" >Children</h3>
             	<p class="small-space-top" >
             	  This Web Component accepts other HTML Elements as children. 
-            	  Use the <code>data-ui5-slot</code> attribute to define the category of each child, if more than one category is accepted.
+            	  Use the <code>slot</code> attribute to define the category of each child, if more than one category is accepted.
             	  You can provide multiple children for the categories marked with <code>[0..n]</code> or just one otherwise.
             	</p>
             
@@ -581,7 +581,7 @@ The <code>ui5-table-row</code> component represents a row in the <code>ui5-table
                 <h3 class="comment-api-title space-top" >Children</h3>
             	<p class="small-space-top" >
             	  This Web Component accepts other HTML Elements as children. 
-            	  Use the <code>data-ui5-slot</code> attribute to define the category of each child, if more than one category is accepted.
+            	  Use the <code>slot</code> attribute to define the category of each child, if more than one category is accepted.
             	  You can provide multiple children for the categories marked with <code>[0..n]</code> or just one otherwise.
             	</p>
             
@@ -616,7 +616,7 @@ The <code>ui5-table-cell</code> component defines the structure of the data in a
                 <h3 class="comment-api-title space-top" >Children</h3>
             	<p class="small-space-top" >
             	  This Web Component accepts other HTML Elements as children. 
-            	  Use the <code>data-ui5-slot</code> attribute to define the category of each child, if more than one category is accepted.
+            	  Use the <code>slot</code> attribute to define the category of each child, if more than one category is accepted.
             	  You can provide multiple children for the categories marked with <code>[0..n]</code> or just one otherwise.
             	</p>
             

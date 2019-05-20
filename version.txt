@@ -1,5 +1,5 @@
-commit c2eba4e8246215a4617a941ec1bb6b7e0ae52d46
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon May 20 14:30:54 2019 +0300
+commit e4907b9c91233ad93e0febd403880379b482b39d
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Mon May 20 16:01:04 2019 +0300
 
-    refactor(ui5-checkbox, ui5-radiobutton): rename "readOnly" to "readonly" (#413)
+    feat: simplify slots
