@@ -1,5 +1,5 @@
-commit e198fa5c5d77b70428f73c37b5988c03b5825fcf
+commit dcfccecfbc1b8df139618e4d71260c671d6aef93
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon May 20 10:30:28 2019 +0300
+Date:   Mon May 20 11:14:06 2019 +0300
 
-    feat: add CSS variables section in API Ref (#399)
+    chore: remove boolean props defaultValue from metadata (#411)
