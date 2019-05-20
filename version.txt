@@ -1,5 +1,5 @@
-commit 9bdd2c5858697674bc7800f72bfe17774cba471c
-Author: Gustavo Kath <gustavokath@outlook.com>
-Date:   Mon May 20 03:31:46 2019 -0300
+commit e198fa5c5d77b70428f73c37b5988c03b5825fcf
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon May 20 10:30:28 2019 +0300
 
-    fix(ui5-checkbox): correct default values of the boolean props  (#408)
+    feat: add CSS variables section in API Ref (#399)
