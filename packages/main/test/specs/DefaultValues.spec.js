@@ -25,7 +25,7 @@ describe("Default values", () => {
 		assertBooleanProperty(button, "submits");
 
 		// CheckBox
-		assertBooleanProperty(cb, "readOnly");
+		assertBooleanProperty(cb, "readonly");
 		assertBooleanProperty(cb, "checked");
 		assertBooleanProperty(cb, "disabled");
 
@@ -54,7 +54,7 @@ describe("Default values", () => {
 		assertBooleanProperty(panel, "fixed");
 
 		// RadioButton
-		assertBooleanProperty(radiobutton, "readOnly");
+		assertBooleanProperty(radiobutton, "readonly");
 		assertBooleanProperty(radiobutton, "selected");
 		assertBooleanProperty(radiobutton, "disabled");
 
