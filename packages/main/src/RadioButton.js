@@ -51,7 +51,7 @@ const metadata = {
 		 * @defaultvalue false
 		 * @public
 		 */
-		readOnly: {
+		readonly: {
 			type: Boolean,
 		},
 
@@ -304,7 +304,7 @@ class RadioButton extends UI5Element {
 	}
 
 	canToggle() {
-		return !(this.disabled || this.readOnly || this.selected);
+		return !(this.disabled || this.readonly || this.selected);
 	}
 
 	static get calculateTemplateContext() {

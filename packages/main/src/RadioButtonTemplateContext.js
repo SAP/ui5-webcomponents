@@ -24,7 +24,7 @@ class RadioButtonTemplateContext {
 			innerClasses = RadioButtonTemplateContext.getInnerClasses(state),
 			context = {
 				ctr: state,
-				readOnly: state.disabled || state.readOnly,
+				readonly: state.disabled || state.readonly,
 				tabIndex: state.disabled || (!state.selected && state.name) ? "-1" : "0",
 				circle: compact ? SVGConfig.compact : SVGConfig.default,
 				classes: { main: mainClasses, inner: innerClasses },
@@ -42,14 +42,14 @@ class RadioButtonTemplateContext {
 			sapMRbHasLabel: state.text && state.text.length > 0,
 			sapMRbSel: state.selected,
 			sapMRbDis: state.disabled,
-			sapMRbRo: state.readOnly,
+			sapMRbRo: state.readonly,
 			sapMRbErr: state.valueState === "Error",
 			sapMRbWarn: state.valueState === "Warning",
 		};
 	}
 
 	static getInnerClasses(state) {
-		const hoverable = !state.disabled && !state.readOnly && isDesktop();
+		const hoverable = !state.disabled && !state.readonly && isDesktop();
 
 		return {
 			sapMRbInner: true,
