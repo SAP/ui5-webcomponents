@@ -144,7 +144,6 @@ class State {
 				if (propDefaultValue !== undefined) {
 					console.warn("The 'defaultValue' metadata key is ignored for all booleans properties, they would be initialized with 'false' by default"); // eslint-disable-line
 				}
-
 			} else if (props[propName].multiple) {
 				defaultState[propName] = [];
 			} else if (props[propName].type === Object) {
