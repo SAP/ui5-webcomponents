@@ -1,5 +1,5 @@
-commit 9c243f90567cd65e9f0a0d0ac8987c8f442815a7
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon May 20 09:14:23 2019 +0300
+commit 9bdd2c5858697674bc7800f72bfe17774cba471c
+Author: Gustavo Kath <gustavokath@outlook.com>
+Date:   Mon May 20 03:31:46 2019 -0300
 
-    chore: make boolean props false by default (#409)
+    fix(ui5-checkbox): correct default values of the boolean props  (#408)
