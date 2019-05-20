@@ -69,7 +69,7 @@
 	<ui5-panel id="p1" collapsed accessible-role="Complementary">
 
 		<!-- Panel header -->
-		<div data-ui5-slot="header" class="header">
+		<div slot="header" class="header">
 			<ui5-title>Expandable but not expanded</ui5-title>
 			<ui5-button id="b1">Add child </ui5-button>
 			<ui5-label id="l1">No new children added yet.</ui5-label>
@@ -78,8 +78,9 @@
 		</div>
 
 		<!-- Content -->
-		<ui5-title id="p1-content1" data-ui5-slot="content">Lorem ipsum!</ui5-title>
-		<ui5-label id="p1-content2" data-ui5-slot="content" wrap>
+        This is my panel <!-- fafa --> <br>
+		<ui5-title id="p1-content1">Lorem ipsum!</ui5-title>
+		<ui5-label id="p1-content2" wrap>
 			Lorem ipsum dolor sit amet, tamquam invidunt cu sed, unum regione mel ea, quo ea alia novum. Ne qui illud zril
 			nostrum, vel ea sint dicant postea. Vel ne facete tritani, neglegentur concludaturque sed te. His animal dolorum ut.
 			Aeterno appareat ei mei, cu sed elit scripserit, an quodsi oportere accusamus quo. Pri ea probo corpora rationibus,
@@ -106,8 +107,8 @@
 
 
 		<!-- Content -->
-		<ui5-title data-ui5-slot="content">Lorem ipsum!</ui5-title>
-		<ui5-label data-ui5-slot="content" wrap>
+		<ui5-title>Lorem ipsum!</ui5-title>
+		<ui5-label wrap>
 			Lorem ipsum dolor sit amet, tamquam invidunt cu sed, unum regione mel ea, quo ea alia novum. Ne qui illud zril
 			nostrum, vel ea sint dicant postea. Vel ne facete tritani, neglegentur concludaturque sed te. His animal dolorum ut.
 			Aeterno appareat ei mei, cu sed elit scripserit, an quodsi oportere accusamus quo. Pri ea probo corpora rationibus,
@@ -133,9 +134,9 @@
 	<ui5-panel fixed accessible-role="Complementary" header-text="Expanded, but not expandable">
 
 		<!-- Content -->
-		<ui5-title data-ui5-slot="content">Lorem ipsum!</ui5-title>
+		<ui5-title>Lorem ipsum!</ui5-title>
 		<br>
-		<ui5-label data-ui5-slot="content" wrap>
+		<ui5-label wrap>
 			Some short text.
 		</ui5-label>
 
@@ -146,9 +147,9 @@
 	<ui5-panel collapsed fixed accessible-role="Complementary" header-text="Neither expandable, nor expanded">
 
 		<!-- Content -->
-		<ui5-title data-ui5-slot="content">Lorem ipsum!</ui5-title>
+		<ui5-title>Lorem ipsum!</ui5-title>
 		<br>
-		<ui5-label data-ui5-slot="content" wrap>
+		<ui5-label wrap>
 			Some short text.
 		</ui5-label>
 
@@ -159,9 +160,9 @@
 	<ui5-panel id="panel1" collapsed header-text="Click to expand!">
 
 		<!-- Content -->
-		<ui5-title data-ui5-slot="content">This is a demo how to use the &quot;expand&quot; event.</ui5-title>
+		<ui5-title>This is a demo how to use the &quot;expand&quot; event.</ui5-title>
 		<br>
-		<ui5-label data-ui5-slot="content" wrap>
+		<ui5-label wrap>
 			Some short text.
 		</ui5-label>
 
@@ -170,14 +171,14 @@
 	<ui5-panel id="panel2" collapsed accessible-role="Complementary">
 
 		<!-- Header -->
-		<div data-ui5-slot="header" class="header">
+		<div slot="header" class="header">
 			<ui5-title>Expandable but not expanded</ui5-title>
 		</div>
 
 		<!-- Content -->
-		<ui5-title data-ui5-slot="content">This is a demo how to use the &quot;expand&quot; event.</ui5-title>
+		<ui5-title>This is a demo how to use the &quot;expand&quot; event.</ui5-title>
 		<br>
-		<ui5-label data-ui5-slot="content" wrap>
+		<ui5-label wrap>
 			Some short text.
 		</ui5-label>
 	</ui5-panel>

@@ -30,6 +30,7 @@ const metadata = {
 		rows: {
 			type: TableRow,
 			multiple: true,
+			individualSlots: true,
 		},
 
 		/**
@@ -43,6 +44,7 @@ const metadata = {
 		columns: {
 			type: TableColumn,
 			multiple: true,
+			individualSlots: true,
 			listenFor: { exclude: ["header"] },
 		},
 	},

@@ -6,9 +6,7 @@
 			<section class="sapMDialogSection">
 				<div style="{{styles.content}}" class="sapMPopupContent">
 					<div class="sapMPopupScroll">
-						{{#each ctr.content}}
-							<slot name="{{this._slot}}"></slot>
-						{{/each}}
+						<slot></slot>
 					</div>
 				</div>
 			</section>
@@ -24,7 +22,7 @@
 		<header>
 			{{#if ctr.header}}
 				<div role="heading" class="sapMPopupHeader">
-					<slot name="{{ctr.header._slot}}"></slot>
+					<slot name="header"></slot>
 				</div>
 			{{else}}
 				<h2 role="heading" class="sapMPopupHeader sapMPopupHeaderText">{{ctr.headerText}}</h2>
@@ -37,7 +35,7 @@
 	{{#if ctr.footer}}
 		<footer>
 			<div class="sapMPopupFooter">
-				<slot name="{{ctr.footer._slot}}"></slot>
+				<slot name="footer"></slot>
 			</div>
 		</footer>
 	{{/if}}

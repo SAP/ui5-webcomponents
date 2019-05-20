@@ -3,7 +3,7 @@
 	<div class="{{classes.leftContainer}}">
 
 		{{#if ctr.icon}}
-			<slot name="{{ctr.icon._slot}}"></slot>
+			<slot name="icon"></slot>
 		{{/if}}
 
 		{{#unless interactiveLogo}}
@@ -28,9 +28,7 @@
 
 		<ui5-popover class="sapWCShellBarMenuPopover" hide-header placement-type="Bottom">
 			<ui5-list separators="None" mode="SingleSelect" @ui5-itemPress={{ctr._menuItemPress}}>
-				{{#each ctr.menuItems}}
-					<slot name="{{this._slot}}"></slot>
-				{{/each}}
+				<slot name="menuItems"></slot>
 			</ui5-list>
 		</ui5-popover>
 
@@ -98,7 +96,7 @@
 		@focusout={{ctr._searchField.focusout}}
 	>
 		{{#if ctr.searchField}}
-			<slot name="{{ctr.searchField._slot}}"></slot>
+			<slot name="searchField"></slot>
 		{{/if}}
 	</div>
 </div>

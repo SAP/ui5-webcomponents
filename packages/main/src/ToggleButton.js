@@ -14,7 +14,6 @@ import "./ThemePropertiesProvider.js";
  */
 const metadata = {
 	tag: "ui5-togglebutton",
-	usesNodeText: true,
 	properties: /** @lends  sap.ui.webcomponents.main.ToggleButton.prototype */ {
 		/**
 		 * Determines whether the <code>ui5-togglebutton</code> is displayed as pressed.
@@ -27,6 +26,7 @@ const metadata = {
 			type: Boolean,
 		},
 	},
+	defaultSlot: "text",
 };
 
 /**
@@ -52,7 +52,6 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.ToggleButton
  * @extends Button
  * @tagname ui5-togglebutton
- * @usestextcontent
  * @public
  */
 class ToggleButton extends Button {

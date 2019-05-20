@@ -26,8 +26,6 @@
 		<span class="sapFCardStatus">{{ctr.status}}</span>
 	</header>
 	<section class="sapFCardContent">
-		{{#each ctr.content}}
-			<slot name="{{this._slot}}"></slot>
-		{{/each}}
+        <slot></slot>
 	</section>
 </div>

@@ -14,9 +14,9 @@
 			></ui5-icon>
 		{{/if}}
 
-		{{#if ctr._nodeText}}
+		{{#if ctr.text.length}}
 			<span id="{{ctr._id}}-content" class="{{classes.text}}">
-				<bdi>{{ctr._nodeText}}</bdi>
+				<bdi><slot></slot></bdi>
 			</span>
 		{{/if}}
 </button>

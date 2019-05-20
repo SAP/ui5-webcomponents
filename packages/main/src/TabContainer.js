@@ -39,6 +39,7 @@ const metadata = {
 		items: {
 			type: TabBase,
 			multiple: true,
+			individualSlots: true,
 			listenFor: { include: ["*"] },
 		},
 	},

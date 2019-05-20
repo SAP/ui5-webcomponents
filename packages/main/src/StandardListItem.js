@@ -15,7 +15,6 @@ import "./ThemePropertiesProvider.js";
  */
 const metadata = {
 	tag: "ui5-li",
-	usesNodeText: true,
 	properties: /** @lends sap.ui.webcomponents.main.StandardListItem.prototype */ {
 
 		/**
@@ -70,6 +69,21 @@ const metadata = {
 			defaultValue: null,
 		},
 	},
+	slots: /** @lends sap.ui.webcomponents.main.StandardListItem.prototype */ {
+		/**
+		 * Defines the text of the <code>ui5-li</code>.
+		 * <br><b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+		 *
+		 * @type {Node[]}
+		 * @slot
+		 * @public
+		 */
+		text: {
+			type: Node,
+			multiple: true,
+		},
+	},
+	defaultSlot: "text",
 };
 
 /**
@@ -85,7 +99,6 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.StandardListItem
  * @extends ListItem
  * @tagname ui5-li
- * @usestextcontent
  * @public
  */
 class StandardListItem extends ListItem {

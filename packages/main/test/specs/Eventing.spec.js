@@ -5,7 +5,7 @@ describe("Eventing", () => {
 	it("Default prevented", () => {
 		browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/Eventing.html");
 
-		const innerLink = browser.findElementDeep("#defaultPreventedLink >>> a");
+		const innerLink = browser.findElementDeep("#defaultPreventedLink");
 		innerLink.click();
 
 		const hrefIsSame = browser.execute(() => {
@@ -17,7 +17,7 @@ describe("Eventing", () => {
 	it("Default not prevented", () => {
 		browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/Eventing.html");
 
-		const innerLink = browser.findElementDeep("#normalLink >>> a");
+		const innerLink = browser.findElementDeep("#normalLink");
 		innerLink.click();
 
 		const hrefChanged = browser.execute(() => {

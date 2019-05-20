@@ -66,7 +66,7 @@ describe("Input general interaction", () => {
 
 		assert.ok(popover.isDisplayedInViewport(), "suggestions are opened.");
 		
-		item = $("#myInput ui5-li[slot=suggestionItems-1]");
+		item = $("#myInput ui5-li:first-child");
 		item.click();
 
 		assert.ok(!popover.isDisplayedInViewport(), "suggestions are closed");
@@ -74,7 +74,7 @@ describe("Input general interaction", () => {
 		assert.strictEqual(inputResult.getProperty("value"), "1", "suggestionItemSelected event called once");
 
 		suggestionsInput.keys("\b");
-		item = $("#myInput ui5-li[slot=suggestionItems-1]");
+		item = $("#myInput ui5-li:first-child");
 		item.click();
 
 		assert.strictEqual(suggestionsInput.getProperty("value"), "Portugal", "First item has been selected again");

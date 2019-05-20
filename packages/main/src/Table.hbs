@@ -5,7 +5,7 @@
 	<div class="{{classes.main}}" style="{{styles.main}}">
 		{{#each visibleColumns}}
 			<div class="sapWCTableColumnWrapper">
-				<slot name="{{this._slot}}"></slot>
+				<slot name="{{this._individualSlot}}"></slot>
 			</div>
 		{{/each}}
 	</div>
@@ -14,7 +14,7 @@
 	{{#each ctr.rows}}
 		<div style="width: 100%"
 		>
-			<slot name="{{this._slot}}"></slot>
+			<slot name="{{this._individualSlot}}"></slot>
 		</div>
 	{{/each}}
 </div>
