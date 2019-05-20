@@ -175,33 +175,33 @@ class UI5Element extends HTMLElement {
 
 		const autoIncrementMap = new Map();
 		domChildren.forEach(child => {
-			// Determine the logical slot for the child
-			const slot = this._getLogicalSlot(child); // Warning: this function uses a side effect
+			// Determine the type of the child (mainly by the slot attribute)
+			const childType = this._getChildType(child);
 
-			// Check if the slot is supported
-			if (slotsMap[slot] === undefined) {
+			// Check if the childType is supported
+			if (slotsMap[childType] === undefined) {
 				const validValues = Object.keys(slotsMap).join(", ");
-				console.warn(`Unknown slot value: ${slot}, ignoring`, child, `Valid slot values are: ${validValues}`); // eslint-disable-line
+				console.warn(`Unknown childType: ${childType}, ignoring`, child, `Valid values are: ${validValues}`); // eslint-disable-line
 				return;
 			}
 
 			// For children that need individual slots, calculate them
-			if (slotsMap[slot].individualSlots) {
-				const nextId = (autoIncrementMap.get(slot) || 0) + 1;
-				autoIncrementMap.set(slot, nextId);
-				child._individualSlot = `${slot}-${nextId}`;
+			if (slotsMap[childType].individualSlots) {
+				const nextId = (autoIncrementMap.get(childType) || 0) + 1;
+				autoIncrementMap.set(childType, nextId);
+				child._individualSlot = `${childType}-${nextId}`;
 			}
 
 			// Distribute the child in the _state object
-			if (slotsMap[slot].multiple) {
-				this._state[slot] = [...this._state[slot], child];
+			if (slotsMap[childType].multiple) {
+				this._state[childType] = [...this._state[childType], child];
 			} else {
-				this._state[slot] = child;
+				this._state[childType] = child;
 			}
 		});
 	}
 
-	_getLogicalSlot(child) {
+	_getChildType(child) {
 		const defaultSlot = this.constructor.getMetadata().getDefaultSlot();
 
 		// Text nodes can only go to the default slot
@@ -212,7 +212,6 @@ class UI5Element extends HTMLElement {
 		// Check for explicitly given logical slot
 		const ui5Slot = child.getAttribute("data-ui5-slot");
 		if (ui5Slot) {
-			child._compatibilitySlot = ui5Slot; // side effect
 			return ui5Slot;
 		}
 
@@ -448,12 +447,37 @@ class UI5Element extends HTMLElement {
 	}
 
 	_assignSlotsToChildren() {
-		const domChildren = Array.from(this.children);
-		domChildren.filter(child => child._individualSlot).forEach(child => {
-			child.setAttribute("slot", child._individualSlot);
-		});
-
 		const defaultSlot = this.constructor.getMetadata().getDefaultSlot();
+		const domChildren = Array.from(this.children);
+
+		domChildren.forEach(child => {
+			const childType = this._getChildType(child);
+			const slot = child.getAttribute("slot");
+			const hasSlot = !!slot;
+
+			// Assign individual slots, f.e. items => items-1
+			if (child._individualSlot) {
+				child.setAttribute("slot", child._individualSlot);
+				return;
+			}
+
+			// If the user set a slot equal to the default slot, f.e. slot="content", remove it
+			// Otherwise, stop here
+			if (childType === defaultSlot) {
+				if (hasSlot) {
+					child.removeAttribute("slot");
+				}
+				return;
+			}
+
+			// Compatibility - for the ones with "data-ui5-slot"
+			// If they don't have a slot yet, and are not of the default child type, set childType as slot
+			if (!hasSlot) {
+				child.setAttribute("slot", childType);
+			}
+		}, this);
+
+
 		domChildren.filter(child => child._compatibilitySlot).forEach(child => {
 			const hasSlot = !!child.getAttribute("slot");
 			const needsSlot = child._compatibilitySlot !== defaultSlot;
