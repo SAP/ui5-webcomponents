@@ -31,7 +31,7 @@ class State {
 						return this._data[prop];
 					}
 
-					if (propData.type === "boolean" || propData.type === Boolean) {
+					if (propData.type === Boolean) {
 						return false;
 					} else if (propData.multiple) { // eslint-disable-line
 						return [];

@@ -81,11 +81,10 @@ const metadata = {
 
 		_first: {
 			type: Boolean,
-			defaultValue: false,
 		},
+
 		_last: {
 			type: Boolean,
-			defaultValue: false,
 		},
 	},
 };

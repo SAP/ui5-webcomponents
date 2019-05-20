@@ -59,7 +59,6 @@ const metadata = {
 		 */
 		disabled: {
 			type: Boolean,
-			defaultValue: false,
 		},
 
 		/**
@@ -82,12 +81,10 @@ const metadata = {
 
 		_opened: {
 			type: Boolean,
-			defaultValue: false,
 		},
 
 		_focused: {
 			type: Boolean,
-			defaultValue: false,
 		},
 
 		_fnClickSelectBox: {
