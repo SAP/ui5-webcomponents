@@ -20,6 +20,7 @@ const metadata = {
 		 * Determines whether the <code>ui5-togglebutton</code> is displayed as pressed.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		pressed: {

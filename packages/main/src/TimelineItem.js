@@ -63,6 +63,7 @@ const metadata = {
 		 * Defines whether the name is clickable.
 		 *
 		 * @type {Boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		itemNameClickable: {

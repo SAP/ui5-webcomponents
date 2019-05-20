@@ -61,6 +61,7 @@ const metadata = {
 		 * Setting this property to <code>true</code>, shows this column as pop-in instead of hiding it.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		demandPopin: {

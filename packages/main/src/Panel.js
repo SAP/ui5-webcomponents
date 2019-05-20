@@ -71,6 +71,7 @@ const metadata = {
 		 * expandable/collapsible by user interaction.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		fixed: {
@@ -81,6 +82,7 @@ const metadata = {
 		 * Indicates whether the <code>ui5-panel</code> is collapsed and only the header is displayed.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		collapsed: {

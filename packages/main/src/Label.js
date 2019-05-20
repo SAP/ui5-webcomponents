@@ -25,6 +25,7 @@ const metadata = {
 		 * <b>Note:</b> Usually indicates that user input is required.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		required: {
@@ -37,6 +38,7 @@ const metadata = {
 		 * <b>Note:</b> By default the text would truncate.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		wrap: {
