@@ -44,7 +44,7 @@ const metadata = {
 		 * @defaultvalue false
 		 * @public
 		 */
-		readOnly: {
+		readonly: {
 			type: Boolean,
 			defaultValue: false,
 		},
@@ -161,7 +161,7 @@ const metadata = {
  * <br><br>
  * You can disable the <code>ui5-checkbox</code> by setting the <code>disabled</code> property to
  * <code>true</code>,
- * or use the <code>ui5-checkbox</code> in read-only mode by setting the <code>readOnly</code>
+ * or use the <code>ui5-checkbox</code> in read-only mode by setting the <code>readonly</code>
  * property to <code>true</code>.
  *
  * <h3>ES6 Module Import</h3>
@@ -246,7 +246,7 @@ class CheckBox extends UI5Element {
 	}
 
 	canToggle() {
-		return !(this.disabled || this.readOnly);
+		return !(this.disabled || this.readonly);
 	}
 
 	static get calculateTemplateContext() {
