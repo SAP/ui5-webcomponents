@@ -17,7 +17,7 @@
 	>
 		{{#if showIcon}}
 			<ui5-icon
-				data-ui5-slot="icon"
+				slot="icon"
 				src="{{ctr._input.icon.src}}"
 				class="{{classes.icon}}"
 				tabindex="-1"
@@ -40,7 +40,6 @@
 	>
 		<ui5-calendar
 				id="{{ctr._id}}-calendar"
-				data-ui5-slot="content"
 				primary-calendar-type="{{ctr._calendar.primaryCalendarType}}"
 				format-pattern="{{ctr._calendar.formatPattern}}"
 				timestamp="{{ctr._calendar.timestamp}}"

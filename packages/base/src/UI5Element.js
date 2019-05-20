@@ -181,7 +181,7 @@ class UI5Element extends HTMLElement {
 			// Check if the slot is supported
 			if (slotsMap[slot] === undefined) {
 				const validValues = Object.keys(slotsMap).join(", ");
-				console.warn(`Unknown data-ui5-slot value: ${slot}, ignoring`, child, `Valid data-ui5-slot values are: ${validValues}`); // eslint-disable-line
+				console.warn(`Unknown slot value: ${slot}, ignoring`, child, `Valid slot values are: ${validValues}`); // eslint-disable-line
 				return;
 			}
 
@@ -216,11 +216,11 @@ class UI5Element extends HTMLElement {
 			return ui5Slot;
 		}
 
-		// Discover the slot based on the real slot name (f.e. content-32 => content)
+		// Discover the slot based on the real slot name (f.e. footer => footer, or content-32 => content)
 		const slot = child.getAttribute("slot");
 		if (slot) {
-			const match = child.match(/^([^-]+)-\d+$/);
-			return match[1];
+			const match = slot.match(/^([^-]+)-\d+$/);
+			return match ? match[1] : slot;
 		}
 
 		// Use default slot as a fallback

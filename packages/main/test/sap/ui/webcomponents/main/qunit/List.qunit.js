@@ -146,7 +146,7 @@ TestHelper.ready(function() {
 		});
 		hooks.beforeEach(function () {
 			var html = "<ui5-list id='myList'>"
-				+ "<div id='header' active data-ui5-slot='header'><div>Header</div></div>"
+				+ "<div id='header' active slot='header'><div>Header</div></div>"
 				+ "<ui5-li id='key1' type='Active'>First</ui5-li>"
 				+ "<ui5-li id='key2' type='Active'>Second</ui5-li>"
 				+ "<ui5-li id='key3' type='Active'>Third</ui5-li>"
