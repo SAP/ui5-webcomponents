@@ -40,6 +40,6 @@ describe("CheckBox general interaction", () => {
 	it("tests checked default value is false", () => {
 		const checkBox = browser.findElementDeep("#cb1");
 
-		assert.strictEqual(checkBox.checked, false, "Check if default value for checked is false");
+		assert.strictEqual(checkBox.getProperty("checked"), false, "Check if default value for checked is false");
 	});
 });
