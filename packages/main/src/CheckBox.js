@@ -31,7 +31,6 @@ const metadata = {
 		 */
 		disabled: {
 			type: Boolean,
-			defaultValue: false,
 		},
 
 		/**
@@ -46,7 +45,6 @@ const metadata = {
 		 */
 		readOnly: {
 			type: Boolean,
-			defaultValue: false,
 		},
 
 		/**
@@ -62,7 +60,6 @@ const metadata = {
 		 */
 		checked: {
 			type: Boolean,
-			defaultValue: false,
 		},
 
 		/**
@@ -102,7 +99,6 @@ const metadata = {
 		 */
 		wrap: {
 			type: Boolean,
-			defaultValue: false,
 		},
 
 		/**

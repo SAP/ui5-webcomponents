@@ -136,7 +136,6 @@ const metadata = {
 		},
 
 		_isPickerOpen: {
-			defaultValue: false,
 			type: Boolean,
 		},
 

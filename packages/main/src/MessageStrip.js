@@ -30,7 +30,10 @@ const metadata = {
 		 * @defaultvalue "Information"
 		 * @public
 		 */
-		type: { type: MessageStripType, defaultValue: MessageStripType.Information },
+		type: {
+			type: MessageStripType,
+			defaultValue: MessageStripType.Information,
+		},
 
 		/**
 		 * Defines the icon to be displayed as graphical element within the <code>ui5-messagestrip</code>.
@@ -47,7 +50,10 @@ const metadata = {
 		 * @defaultvalue ""
 		 * @public
 		 */
-		icon: { type: URI, defaultValue: null },
+		icon: {
+			type: URI,
+			defaultValue: null,
+		},
 
 		/**
 		 * Defines whether the MessageStrip renders icon in the beginning.
@@ -56,7 +62,9 @@ const metadata = {
 		 * @defaultvalue false
 		 * @public
 		 */
-		hideIcon: { type: Boolean, defaultValue: false },
+		hideIcon: {
+			type: Boolean,
+		},
 
 		/**
 		 * Defines whether the MessageStrip renders close icon.
@@ -65,9 +73,13 @@ const metadata = {
 		 * @defaultvalue false
 		 * @public
 		 */
-		hideCloseButton: { type: Boolean, defaultValue: false },
+		hideCloseButton: {
+			type: Boolean,
+		},
 
-		_closeButton: { type: Object },
+		_closeButton: {
+			type: Object,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.MessageStrip.prototype */ {
 
