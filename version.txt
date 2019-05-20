@@ -1,5 +1,5 @@
-commit 650bcb095addac8075c1b0b7307e75a7895f8019
-Author: Gabriel Borges <gabriel.borges.fernandes@gmail.com>
-Date:   Sat May 18 14:58:52 2019 -0300
+commit 9c243f90567cd65e9f0a0d0ac8987c8f442815a7
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon May 20 09:14:23 2019 +0300
 
-    fix(ui5-panel): add missing dependency for ui5-icon (#406)
+    chore: make boolean props false by default (#409)
