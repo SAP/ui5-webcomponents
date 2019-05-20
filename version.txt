@@ -1,5 +1,5 @@
-commit dcfccecfbc1b8df139618e4d71260c671d6aef93
+commit c2eba4e8246215a4617a941ec1bb6b7e0ae52d46
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon May 20 11:14:06 2019 +0300
+Date:   Mon May 20 14:30:54 2019 +0300
 
-    chore: remove boolean props defaultValue from metadata (#411)
+    refactor(ui5-checkbox, ui5-radiobutton): rename "readOnly" to "readonly" (#413)
