@@ -98,13 +98,13 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * An entry posted on the timeline.
+ * Tokens are small items of information (similar to tags) that mainly serve to visualize previously selected items.
  *
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Token
  * @extends UI5Element
- * @tagname ui5-timeline
+ * @tagname ui5-token
  * @usestextcontent
  * @private
  */
@@ -164,9 +164,7 @@ class Token extends UI5Element {
 	 }
 
 	static async define(...params) {
-		await Promise.all([
-			Icon.define(),
-		]);
+		await Icon.define();
 
 		super.define(...params);
 	}

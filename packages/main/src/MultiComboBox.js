@@ -53,11 +53,12 @@ const metadata = {
 		 * <b>Note:</b> The property is updated upon typing.
 		 *
 		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		value: {
-			defaultValue: "",
 			type: String,
+			defaultValue: "",
 		},
 
 		/**
@@ -66,17 +67,19 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> The placeholder is not supported in IE. If the placeholder is provided, it won`t be displayed in IE.
 		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		placeholder: {
-			defaultValue: null,
 			type: String,
+			defaultValue: "",
 		},
 
 		/**
 		 * Defines if the user input will be prevented if no matching item has been found
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		validateInput: {
@@ -86,9 +89,10 @@ const metadata = {
 		/**
 		 * Defines whether <code>ui5-multi-combobox</code> is in disabled state.
 		 * <br><br>
-		 * <b>Note:</b> A disabled <code>ui5-input</code> is completely uninteractive.
+		 * <b>Note:</b> A disabled <code>ui5-multi-combobox</code> is completely uninteractive.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		disabled: {
@@ -100,6 +104,7 @@ const metadata = {
 		 * Available options are: <code>None</code>, <code>Success</code>, <code>Warning</code>, and <code>Error</code>.
 		 *
 		 * @type {string}
+		 * @defaultvalue "None"
 		 * @public
 		 */
 		valueState: {
@@ -114,6 +119,7 @@ const metadata = {
 		 * but still provides visual feedback upon user interaction.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		readonly: {
@@ -172,14 +178,28 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * An entry posted on the timeline.
+ * The <code>ui5-multi-combobox</code> component provides a list box with items and a text field allowing the user to either type a value directly into the control or choose from the list of existing items.
+ * 
+ * A drop-down list for selecting and filtering values.
+ * <h3>Description</h3>
+ * The <code>ui5-multi-combobox</code> component is commonly used to enable users to select one or more options from a predefined list. The control provides an editable input field to filter the list, and a dropdown arrow of available options.
+ * The select options in the list have checkboxes that permit multi-selection. Entered values are displayed as tokens.
+ * <h3>Structure</h3>
+ * The <code>ui5-multi-combobox</code> consists of the following elements:
+ * <ul>
+ * <li> Tokenizer - a list of tokens with selected options.
+ * <li> Input field - displays the selected option/s as token/s. Users can type to filter the list.
+ * <li> Drop-down arrow - expands\collapses the option list.</li>
+ * <li> Option list - the list of available options.</li>
+ * </ul>
  *
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.MultiComboBox
  * @extends UI5Element
- * @tagname ui5-timeline
+ * @tagname ui5-multi-combobox
  * @public
+ * @since 0.11.0
  */
 class MultiComboBox extends UI5Element {
 	static get metadata() {
@@ -254,7 +274,7 @@ class MultiComboBox extends UI5Element {
 		const input = event.target;
 		const value = input.value;
 		const filteredItems = this._filterItems(value);
-		const oldValueState = input.valueState;
+		const oldValueState = this.valueState;
 
 		if (!filteredItems.length && value && this.validateInput) {
 			input.value = this._inputLastValue;

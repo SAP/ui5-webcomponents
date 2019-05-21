@@ -56,13 +56,13 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * An entry posted on the timeline.
+ * A container for tokens.
  *
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Tokenizer
  * @extends UI5Element
- * @tagname ui5-timeline
+ * @tagname ui5-tokenizer
  * @usestextcontent
  * @private
  */
