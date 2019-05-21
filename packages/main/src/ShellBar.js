@@ -30,7 +30,7 @@ const metadata = {
 
 		/**
 		 * Defines the <code>logo</code> source URI.
-		 * @type {String}
+		 * @type {string}
 		 * @public
 		 */
 		logo: {
@@ -40,7 +40,8 @@ const metadata = {
 
 		/**
 		 * Defines the <code>primaryTitle</code>.
-		 * @type {String}
+		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		primaryTitle: {
@@ -51,7 +52,8 @@ const metadata = {
 		 * Defines the <code>secondaryTitle</code>.
 		 * <br><br>
 		 * <b>Note:</b> On smaller screen width, the <code>secondaryTitle</code> would be hidden.
-		 * @type {String}
+		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		secondaryTitle: {
@@ -61,7 +63,8 @@ const metadata = {
 		/**
 		 * Defines the <code>notificationCount</code>,
 		 * displayed in the notification icon top-right corner.
-		 * @type {String}
+		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		notificationCount: {

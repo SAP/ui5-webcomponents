@@ -59,6 +59,7 @@ const metadata = {
 		 * <b>Note:</b> This property is overridden by the <code>header</code> slot.
 		 *
 		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		headerText: {

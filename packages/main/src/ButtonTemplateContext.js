@@ -2,7 +2,7 @@ class ButtonTemplateContext {
 	static calculate(state) {
 		return {
 			ctr: state,
-			tabindex: state._customAttributes.tabindex || "",
+			tabindex: state._customAttributes.tabindex,
 			classes: {
 				main: ButtonTemplateContext.getMainClasses(state),
 				icon: ButtonTemplateContext.getIconClasses(state),

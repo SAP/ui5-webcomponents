@@ -25,7 +25,7 @@ class TextAreaTemplateContext {
 			maxLength: state._exceededTextProps.calcedMaxLength,
 			exceededText: state._exceededTextProps.exceededText,
 			textTokens: state._mirrorText,
-			tabIndex: state.disabled ? "" : "0",
+			tabIndex: state.disabled ? undefined : "0",
 			classes: {
 				main: mainClasses,
 				inner: innerClasses,

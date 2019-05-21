@@ -32,7 +32,8 @@ const metadata = {
 		 * Defines the title level.
 		 * Supported values are from <code>H5</code> to <code>H1</code>.
 		 *
-		 * @type {String}
+		 * @type {string}
+		 * @defaultvalue: "H2"
 		 * @public
 		*/
 		level: {

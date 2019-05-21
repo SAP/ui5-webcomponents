@@ -60,6 +60,7 @@ const metadata = {
 		 * <b>Note:</b> If <code>header</code> is set this property is ignored.
 		 *
 		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		headerText: {
@@ -70,6 +71,7 @@ const metadata = {
 		 * Defines the footer text.
 		 *
 		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		footerText: {
@@ -106,6 +108,7 @@ const metadata = {
 		 * Defines the text that is displayed when the <code>ui5-list</code> contains no items.
 		 *
 		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		noDataText: {

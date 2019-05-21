@@ -54,6 +54,7 @@ const metadata = {
 		 * Defines the ID of the HTML Element, which will get the initial focus.
 		 *
 		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		initialFocus: {
@@ -74,6 +75,7 @@ const metadata = {
 		 * Defines the header text.
 		 *
 		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		headerText: {

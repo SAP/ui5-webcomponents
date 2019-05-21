@@ -36,7 +36,8 @@ const metadata = {
 
 		/**
 		 * Defines the title displayed in the <code>ui5-card</code> header.
-		 * @type {String}
+		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		heading: {
@@ -45,7 +46,8 @@ const metadata = {
 
 		/**
 		 * Defines the subtitle displayed in the <code>ui5-card</code> header.
-		 * @type {String}
+		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		subtitle: {
@@ -54,7 +56,8 @@ const metadata = {
 
 		/**
 		 * Defines the status displayed in the <code>ui5-card</code> header.
-		 * @type {String}
+		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		status: {

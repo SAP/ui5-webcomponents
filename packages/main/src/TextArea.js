@@ -94,7 +94,7 @@ const metadata = {
 		 */
 		maxLength: {
 			type: Integer,
-			defaultValue: "",
+			defaultValue: null,
 		},
 
 		/**
@@ -148,7 +148,8 @@ const metadata = {
 		 * will be created inside the <code>ui5-textarea</code> so that it can be submitted as
 		 * part of an HTML form. Do not use this property unless you need to submit a form.
 		 *
-		 * @type {String}
+		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		name: {

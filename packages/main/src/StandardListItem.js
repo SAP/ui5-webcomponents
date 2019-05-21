@@ -19,7 +19,8 @@ const metadata = {
 
 		/**
 		 * Defines the description displayed right under the item text, if such is present.
-		 * @type {String}
+		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 * @since 0.8.0
 		 */

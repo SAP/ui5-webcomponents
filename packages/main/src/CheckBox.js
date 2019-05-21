@@ -79,7 +79,7 @@ const metadata = {
 		 * <b>Note:</b> Available options are <code>Warning</code>, <code>Error</code>, and <code>None</code> (default).
 		 *
 		 * @type {string}
-		 * @defaultvalue None
+		 * @defaultvalue "None"
 		 * @public
 		 */
 		valueState: {
@@ -110,7 +110,7 @@ const metadata = {
 		 * will be created inside the <code>ui5-checkbox</code> so that it can be submitted as
 		 * part of an HTML form. Do not use this property unless you need to submit a form.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 */

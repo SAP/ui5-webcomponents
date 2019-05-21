@@ -50,6 +50,7 @@ const metadata = {
 		 * <b>Note:</b> Can be used with both <code>ui5-input</code> and native input.
 		 *
 		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		"for": {

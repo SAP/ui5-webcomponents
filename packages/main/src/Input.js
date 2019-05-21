@@ -83,6 +83,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> The placeholder is not supported in IE. If the placeholder is provided, it won`t be displayed in IE.
 		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		placeholder: {
@@ -117,11 +118,12 @@ const metadata = {
 		 * </ul>
 		 *
 		 * @type {string}
+		 * @defaultvalue "Text"
 		 * @public
 		 */
 		type: {
-			defaultValue: InputType.Text,
 			type: InputType,
+			defaultValue: InputType.Text,
 		},
 
 		/**
@@ -130,6 +132,7 @@ const metadata = {
 		 * <b>Note:</b> The property is updated upon typing.
 		 *
 		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		value: {
@@ -141,6 +144,7 @@ const metadata = {
 		 * Available options are: <code>None</code>, <code>Success</code>, <code>Warning</code>, and <code>Error</code>.
 		 *
 		 * @type {string}
+		 * @defaultvalue "None"
 		 * @public
 		 */
 		valueState: {
@@ -158,7 +162,8 @@ const metadata = {
 		 * will be created inside the <code>ui5-input</code> so that it can be submitted as
 		 * part of an HTML form. Do not use this property unless you need to submit a form.
 		 *
-		 * @type {String}
+		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		name: {

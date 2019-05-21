@@ -113,6 +113,7 @@ const metadata = {
 		 * part of an HTML form.
 		 *
 		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		name: {
@@ -128,6 +129,7 @@ const metadata = {
 		 * <code>import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";</code>
 		 *
 		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		value: {

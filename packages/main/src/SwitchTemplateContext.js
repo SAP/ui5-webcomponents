@@ -12,7 +12,7 @@ class SwitchTemplateContext {
 			ctr: state,
 			textOn,
 			textOff,
-			tabIndex: state.disabled ? "" : "0",
+			tabIndex: state.disabled ? undefined : "0",
 			classes: { main: mainClasses },
 		};
 
