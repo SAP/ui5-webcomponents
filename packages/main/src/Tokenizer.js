@@ -23,6 +23,7 @@ const metadata = {
 		tokens: {
 			type: HTMLElement,
 			multiple: true,
+			individualSlots: true,
 		},
 	},
 	defaultSlot: "tokens",

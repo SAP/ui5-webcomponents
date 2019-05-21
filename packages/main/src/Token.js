@@ -23,9 +23,22 @@ import "./ThemePropertiesProvider.js";
  */
 const metadata = {
 	tag: "ui5-token",
-	defaultSlot: "description",
+	defaultSlot: "text",
 	usesNodeText: true,
-	slots: /** @lends sap.ui.webcomponents.main.Token.prototype */ {},
+	slots: /** @lends sap.ui.webcomponents.main.Token.prototype */ {
+		/**
+		 * Defines the text of the <code>ui5-token</code>.
+		 * <br><b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+		 *
+		 * @type {Node[]}
+		 * @slot
+		 * @public
+		 */
+		text: {
+			type: Node,
+			multiple: true,
+		},
+	},
 	properties: /** @lends sap.ui.webcomponents.main.Token.prototype */ {
 
 		/**
