@@ -63,6 +63,7 @@ const metadata = {
 		 * Defines whether the name is clickable.
 		 *
 		 * @type {Boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		itemNameClickable: {
@@ -126,7 +127,6 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.TimelineItem
  * @extends UI5Element
  * @tagname ui5-timeline
- * @usestextcontent
  * @public
  */
 class TimelineItem extends UI5Element {

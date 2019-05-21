@@ -125,7 +125,7 @@ TestHelper.ready(function () {
 				panel = this.getPanelRoot();
 
 			this.panel.setAttribute("header-text", "New Header Text");
-			this.panel.innerHTML = "<div data-ui5-slot='header'></div>";
+			this.panel.innerHTML = "<div slot='header'></div>";
 
 			RenderScheduler.whenFinished().then(function () {
 				assert.ok(panel.querySelector(".sapMPanelWrappingDivTb"), "header is added in the DOM");
@@ -142,7 +142,7 @@ TestHelper.ready(function () {
 				panel = this.getPanelRoot();
 
 			this.panel.setAttribute("header-text", "New Header Text");
-			this.panel.innerHTML = "<div data-ui5-slot='header'></div>";
+			this.panel.innerHTML = "<div slot='header'></div>";
 
 			RenderScheduler.whenFinished().then(function () {
 				assert.ok(panel.querySelector(".sapMPanelWrappingDivTb"), "header is added in the DOM");

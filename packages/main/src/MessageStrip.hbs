@@ -3,7 +3,7 @@
 		<ui5-icon class="ui5-messagestrip-icon" src="{{icon}}"></ui5-icon>
 	{{/unless}}
 
-	<span class="{{classes.label}}">{{ctr._nodeText}}</span> 
+	<span class="{{classes.label}}"><slot></slot></span>
 
 	{{#unless ctr.hideCloseButton}}
 		<ui5-icon

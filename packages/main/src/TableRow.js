@@ -27,6 +27,7 @@ const metadata = {
 		cells: {
 			type: TableCell,
 			multiple: true,
+			individualSlots: true,
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.TableRow.prototype */ {

@@ -28,6 +28,7 @@ const metadata = {
 		items: {
 			type: TimelineItem,
 			multiple: true,
+			individualSlots: true,
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.Timeline.prototype */ {

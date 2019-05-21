@@ -87,6 +87,7 @@ const metadata = {
 		 * Determines whether the <code>ui5-datepicker</code> is displayed as disabled.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		disabled: {
@@ -97,6 +98,7 @@ const metadata = {
 		 * Determines whether the <code>ui5-datepicker</code> is displayed as readonly.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		readonly: {
@@ -134,7 +136,6 @@ const metadata = {
 		},
 
 		_isPickerOpen: {
-			defaultValue: false,
 			type: Boolean,
 		},
 
@@ -158,14 +159,14 @@ const metadata = {
 		 * @public
 		*/
 		change: {},
+
 		/**
-		 * Fired when the value of the <code>ui5-datepicker</code> is changed,
-		 * for example at each keypress.
+		 * Fired when the value of the <code>ui5-datepicker</code> is changed at each key stroke.
 		 *
 		 * @event
 		 * @public
 		*/
-		liveChange: {},
+		input: {},
 	},
 };
 
@@ -353,7 +354,7 @@ class DatePicker extends UI5Element {
 		const isValid = this.isValid(nextValue);
 
 		this.value = nextValue;
-		this.fireEvent("liveChange", { value: nextValue, valid: isValid });
+		this.fireEvent("input", { value: nextValue, valid: isValid });
 	}
 
 	/**

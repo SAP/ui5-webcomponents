@@ -54,11 +54,11 @@ const metadata = {
 		 * <b>Note:</b> A disabled <code>ui5-select</code> is noninteractive.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		disabled: {
 			type: Boolean,
-			defaultValue: false,
 		},
 
 		/**
@@ -66,6 +66,7 @@ const metadata = {
 		 * Available options are: <code>None</code>, <code>Success</code>, <code>Warning</code> and <code>Error</code>.
 		 *
 		 * @type {string}
+		 * @defaultvalue "None"
 		 * @public
 		 */
 		valueState: {
@@ -80,12 +81,10 @@ const metadata = {
 
 		_opened: {
 			type: Boolean,
-			defaultValue: false,
 		},
 
 		_focused: {
 			type: Boolean,
-			defaultValue: false,
 		},
 
 		_fnClickSelectBox: {

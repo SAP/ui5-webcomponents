@@ -4,7 +4,7 @@
 >
 	<!-- header -->
 	{{#if ctr.header}}
-		<slot name="{{ctr.header._slot}}" />
+		<slot name="header" />
 	{{/if}}
 	{{#if shouldRenderH1}}
 		<header id="{{ctr._id}}-header" class="sapMListHdr sapMListHdrText">
@@ -15,9 +15,7 @@
 	<div id="{{ctr._id}}-before" tabindex="0" class="sapMListDummyArea"></div>
 
 	<ul id="{{ctr._id}}-listUl" class="{{classes.ul}}">
-		{{#each ctr.items}}
-			<slot name="{{this._slot}}" />
-		{{/each}}
+        <slot></slot>
 
 		{{#if showNoDataText}}
 			<li id="{{ctr._id}}-nodata" class="{{classes.noData}}" tabindex="{{noDataTabIndex}}">

@@ -7,7 +7,7 @@ class CheckBoxTemplateContext {
 
 		const context = {
 			ctr: state,
-			ariaReadonly: state.readOnly,
+			ariaReadonly: state.readonly,
 			tabIndex: state.disabled ? undefined : "0",
 			classes: { main: mainClasses, inner: innerClasses },
 			styles: {
@@ -19,13 +19,13 @@ class CheckBoxTemplateContext {
 	}
 
 	static getMainClasses(state) {
-		const hoverable = !state.disabled && !state.readOnly && isDesktop();
+		const hoverable = !state.disabled && !state.readonly && isDesktop();
 
 		return {
 			"ui5-checkbox-wrapper": true,
 			"ui5-checkbox-with-label": !!state.text,
 			"ui5-checkbox--disabled": state.disabled,
-			"ui5-checkbox--readonly": state.readOnly,
+			"ui5-checkbox--readonly": state.readonly,
 			"ui5-checkbox--error": state.valueState === "Error",
 			"ui5-checkbox--warning": state.valueState === "Warning",
 			"ui5-checkbox--wrap": state.wrap,

@@ -1,7 +1,7 @@
 .sapMLIB.sapMGHLI {
 	height: 3rem;
 	color: var(--sapUiListTableGroupHeaderTextColor);
-	background: var(--_ui5_group_header_listitem_background_color);
+	background: var(--ui5-group-header-listitem-background-color);
 	padding-top: 1rem;
 	font-size: var(--sapMFontHeader6Size);
 	font-weight: var(--sapUiFontHeaderWeight);

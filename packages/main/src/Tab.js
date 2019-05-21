@@ -44,6 +44,7 @@ const metadata = {
 		/**
 		 * Enabled items can be selected.
 		 * @type {Boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		disabled: {
@@ -80,6 +81,7 @@ const metadata = {
 		 * Instead of the semantic icon color the brand color can be used, this is named Default.
 		 * Semantic colors and brand colors should not be mixed up inside one IconTabBar.
 		 * @type {IconColor}
+		 * @defaultvalue "Default"
 		 * @public
 		 */
 		iconColor: {
@@ -87,6 +89,13 @@ const metadata = {
 			defaultValue: IconColor.Default,
 		},
 
+		/**
+		 * Specifies if the <code>ui5-tab</code> is selected.
+		 *
+		 * @type {Boolean}
+		 * @defaultvalue false
+		 * @public
+		 */
 		selected: {
 			type: Boolean,
 			defaultValue: false,

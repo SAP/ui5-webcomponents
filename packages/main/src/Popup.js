@@ -65,6 +65,7 @@ const metadata = {
 		 * Defines whether the header is hidden.
 		 *
 		 * @type {Boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		hideHeader: {

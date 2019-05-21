@@ -11,7 +11,7 @@ describe("Select general interaction", () => {
 
 		select.click();
 
-		const firstItem = $("#mySelect ui5-li[slot=items-1]");
+		const firstItem = $("#mySelect ui5-li:first-child");
 		firstItem.click();
 
 		assert.strictEqual(inputResult.getProperty("value"), "1", "Fired change event is called once.");
@@ -24,7 +24,7 @@ describe("Select general interaction", () => {
 
 		select.click();
 
-		const firstItem = $("#mySelect ui5-li[slot=items-1]");
+		const firstItem = $("#mySelect ui5-li:first-child");
 		firstItem.click();
 
 		assert.strictEqual(inputResult.getProperty("value"), "1", "Event not fired when already selected item is selected");
@@ -129,7 +129,7 @@ describe("Select general interaction", () => {
 
 		addItemsBtn.click();
 
-		const firstItem = $("#mySelect ui5-li[slot=items-1]");
+		const firstItem = $("#mySelect ui5-li:first-child");
 
 		assert.ok(firstItem.getProperty("selected"), "First Item should be selected");
 
@@ -178,7 +178,7 @@ describe("Select general interaction", () => {
 		select.keys("Escape");
 
 		select.click();
-		const firstItem = $("#mySelect ui5-li[slot=items-1]");
+		const firstItem = $("#mySelect ui5-li:first-child");
 
 		firstItem.click();
 

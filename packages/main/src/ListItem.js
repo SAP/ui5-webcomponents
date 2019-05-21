@@ -20,6 +20,7 @@ const metadata = {
 		/**
 		 * Defines the selected state of the <code>ListItem</code>.
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		selected: {
@@ -34,6 +35,7 @@ const metadata = {
 		 * while with type <code>Inactive</code> - will not.
 		 *
 		 * @type {string}
+		 * @defaultvalue "Active"
 		 * @public
 		*/
 		type: {
