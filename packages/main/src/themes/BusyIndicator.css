@@ -10,11 +10,11 @@ ui5-busy-indicator span [data-sap-ui-wc-root] {
 	height: 100%;
 }
 
-:host(ui5-busy-indicator[visible]){
+:host(ui5-busy-indicator[invisible]){
 	display: none;
 }
 
-ui5-busy-indicator[visible] {
+ui5-busy-indicator[invisible] {
 	display: none;
 }
 

@@ -37,7 +37,7 @@ const metadata = {
 		 * @defaultvalue false
 		 * @public
 		 */
-		visible: { type: Boolean, defaultValue: false },
+		invisible: { type: Boolean, defaultValue: false },
 	},
 };
 
