@@ -176,32 +176,32 @@ class UI5Element extends HTMLElement {
 		const autoIncrementMap = new Map();
 		domChildren.forEach(child => {
 			// Determine the type of the child (mainly by the slot attribute)
-			const childType = this._getChildType(child);
+			const slotName = this._getSlotName(child);
 
-			// Check if the childType is supported
-			if (slotsMap[childType] === undefined) {
+			// Check if the slotName is supported
+			if (slotsMap[slotName] === undefined) {
 				const validValues = Object.keys(slotsMap).join(", ");
-				console.warn(`Unknown childType: ${childType}, ignoring`, child, `Valid values are: ${validValues}`); // eslint-disable-line
+				console.warn(`Unknown slotName: ${slotName}, ignoring`, child, `Valid values are: ${validValues}`); // eslint-disable-line
 				return;
 			}
 
 			// For children that need individual slots, calculate them
-			if (slotsMap[childType].individualSlots) {
-				const nextId = (autoIncrementMap.get(childType) || 0) + 1;
-				autoIncrementMap.set(childType, nextId);
-				child._individualSlot = `${childType}-${nextId}`;
+			if (slotsMap[slotName].individualSlots) {
+				const nextId = (autoIncrementMap.get(slotName) || 0) + 1;
+				autoIncrementMap.set(slotName, nextId);
+				child._individualSlot = `${slotName}-${nextId}`;
 			}
 
 			// Distribute the child in the _state object
-			if (slotsMap[childType].multiple) {
-				this._state[childType] = [...this._state[childType], child];
+			if (slotsMap[slotName].multiple) {
+				this._state[slotName] = [...this._state[slotName], child];
 			} else {
-				this._state[childType] = child;
+				this._state[slotName] = child;
 			}
 		});
 	}
 
-	_getChildType(child) {
+	_getSlotName(child) {
 		const defaultSlot = this.constructor.getMetadata().getDefaultSlot();
 
 		// Text nodes can only go to the default slot
@@ -218,7 +218,7 @@ class UI5Element extends HTMLElement {
 		// Discover the slot based on the real slot name (f.e. footer => footer, or content-32 => content)
 		const slot = child.getAttribute("slot");
 		if (slot) {
-			const match = slot.match(/^([^-]+)-\d+$/);
+			const match = slot.match(/^(.+?)-\d+$/);
 			return match ? match[1] : slot;
 		}
 
@@ -363,7 +363,7 @@ class UI5Element extends HTMLElement {
 	_attachChildPropertyUpdated(child, propData) {
 		const listenFor = propData.listenFor,
 			childMetadata = child.constructor.getMetadata(),
-			childType = child.getAttribute("data-ui5-slot"), // all slotted children have the same configuration
+			slotName = this._getSlotName(child), // all slotted children have the same configuration
 			childProperties = childMetadata.getProperties();
 
 		let observedProps = [],
@@ -380,8 +380,8 @@ class UI5Element extends HTMLElement {
 			notObservedProps = Array.isArray(listenFor.exclude) ? listenFor.exclude : [];
 		}
 
-		if (!this._monitoredChildProps.has(childType)) {
-			this._monitoredChildProps.set(childType, { observedProps, notObservedProps });
+		if (!this._monitoredChildProps.has(slotName)) {
+			this._monitoredChildProps.set(slotName, { observedProps, notObservedProps });
 		}
 
 		child.addEventListener("_propertyChange", this._onChildPropertyUpdated);
@@ -396,7 +396,8 @@ class UI5Element extends HTMLElement {
 			return;
 		}
 
-		const propsMetadata = this.parentNode._monitoredChildProps.get(this.getAttribute("data-ui5-slot"));
+		const slotName = this._getSlotName(this);
+		const propsMetadata = this.parentNode._monitoredChildProps.get(slotName);
 
 		if (!propsMetadata) {
 			return;
@@ -451,7 +452,7 @@ class UI5Element extends HTMLElement {
 		const domChildren = Array.from(this.children);
 
 		domChildren.forEach(child => {
-			const childType = this._getChildType(child);
+			const slotName = this._getSlotName(child);
 			const slot = child.getAttribute("slot");
 			const hasSlot = !!slot;
 
@@ -463,7 +464,7 @@ class UI5Element extends HTMLElement {
 
 			// If the user set a slot equal to the default slot, f.e. slot="content", remove it
 			// Otherwise, stop here
-			if (childType === defaultSlot) {
+			if (slotName === defaultSlot) {
 				if (hasSlot) {
 					child.removeAttribute("slot");
 				}
@@ -471,9 +472,9 @@ class UI5Element extends HTMLElement {
 			}
 
 			// Compatibility - for the ones with "data-ui5-slot"
-			// If they don't have a slot yet, and are not of the default child type, set childType as slot
+			// If they don't have a slot yet, and are not of the default child type, set slotName as slot
 			if (!hasSlot) {
-				child.setAttribute("slot", childType);
+				child.setAttribute("slot", slotName);
 			}
 		}, this);
 
