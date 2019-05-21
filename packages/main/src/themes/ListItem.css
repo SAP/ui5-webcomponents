@@ -78,3 +78,7 @@
 	height: 1.75rem;
 	width: 1.75rem;
 }
+
+.sapUiSizeCompact ui5-checkbox.multiSelectionCheckBox {
+	margin-right: 0.5rem;
+}
