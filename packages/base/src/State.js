@@ -35,7 +35,7 @@ class State {
 
 					if (propData.type === Boolean) {
 						return false;
-					} else if (propData.type === String) {
+					} else if (propData.type === String) {  // eslint-disable-line
 						return propDefaultValue || "";
 					} else if (propData.multiple) { // eslint-disable-line
 						return [];
