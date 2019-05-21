@@ -83,14 +83,6 @@ class BusyIndicator extends UI5Element {
 		return BusyIndicatorTemplateContext.calculate;
 	}
 
-	onAfterRendering() {
-		const circles = this.getCircles();
-
-		circles.forEach((circle, index) => {
-			circle.classList.add(`circle-animation-${index}`);
-		});
-	}
-
 	getCircles() {
 		return this.getDomRef().querySelectorAll(`.ui5-busy-indicator-circle`);
 	}
