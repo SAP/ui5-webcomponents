@@ -22,6 +22,12 @@ sap.ui.loader._.getModuleContent = (moduleName, url) => {
 		return getModulecontentOrig(moduleName, url);
 	}
 
+	const missingModule = moduleName.match(/sap\/ui\/core\/cldr\/(\w+)\.json/);
+
+	if (missingModule) {
+		throw new Error(`CLDR data for locale ${missingModule[1]} is not loaded!`)
+	}
+
 	return "";
 };
 
