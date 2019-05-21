@@ -69,8 +69,7 @@ const fetchCldrData = async (language, region, script) => {
 	if (cldrObj) {
 		// inlined from build or fetched independently
 		registerModuleContent(`sap/ui/core/cldr/${localeId}.json`, JSON.stringify(cldrObj));
-		return cldrObj;
-	} if (url) {
+	} else if (url) {
 		// fetch it
 		const cldrText = await fetchTextOnce(url);
 		registerModuleContent(`sap/ui/core/cldr/${localeId}.json`, cldrText);
