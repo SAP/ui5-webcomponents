@@ -2,6 +2,7 @@
 @import "./global-parameters.css";
 
 @import "./Button-parameters.css";
+@import "./BusyIndicator-parameters.css";
 @import "./Card-parameters.css";
 @import "./CheckBox-parameters.css";
 @import "./DatePicker-parameters.css";

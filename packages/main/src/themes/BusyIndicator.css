@@ -4,33 +4,85 @@
 	height: 100%;
 }
 
-.ui5-busy-indicator-wrapper {
-	display: flex;
+ui5-busy-indicator span [data-sap-ui-wc-root] {
+	display: inline-block;
+	width: 100%;
+	height: 100%;
 }
 
-.circle {
+:host(ui5-busy-indicator[visible]){
+	display: none;
+}
+
+ui5-busy-indicator[visible] {
+	display: none;
+}
+
+.ui5-busy-indicator-wrapper {
 	display: flex;
-	width: 44px;
-	height: 44px;
-	margin: 0 .5rem;
-	background: #00a4eb;
-	border: 1px solid #00a4eb;
+	justify-content: center;
+	align-items: center;
+}
+
+.ui5-busy-indicator-circle {
+	display: flex;
+	background-color: var(--ui5-busy-indicator-color);
 	border-radius: 50%;
 }
 
+/* Belize specific */
+.ui5-busy-indicator-circle::before {
+	content: "";
+    width: 100%;
+    height: 100%;
+	border-radius: 100%;
+}
+
+.ui5-busy-indicator-small {
+	width: 3rem;
+    height: 1rem;
+}
+
+.ui5-busy-indicator-medium {
+	width: 5rem;
+    height: 2rem;
+}
+
+.ui5-busy-indicator-large {
+	width: 8rem;
+	height: 3rem;
+}
+
+.ui5-busy-indicator-small > .ui5-busy-indicator-circle {
+	width: 0.125rem;
+	height: 0.125rem;
+	margin: 0 0.2rem;
+}
+
+.ui5-busy-indicator-medium > .ui5-busy-indicator-circle {
+	width: 0.5rem;
+	height: 0.5rem;
+	margin: 0 0.4rem;
+}
+
+.ui5-busy-indicator-large > .ui5-busy-indicator-circle {
+	width: 1rem;
+	height: 1rem;
+	margin: 0 .75rem;
+}
+
 .circle-animation-0 {
-	animation: grow 1.6s infinite ease-in-out;
+	animation: grow 1.6s infinite cubic-bezier(0.32, 0.06, 0.85, 1.11);
 }
 
 .circle-animation-1 {
-	animation: grow 1.6s infinite ease-in-out;
-	animation-delay: 150ms;
+	animation: grow 1.6s infinite cubic-bezier(0.32, 0.06, 0.85, 1.11);
+	animation-delay: 200ms;
 }
 
 .circle-animation-2 {
-	animation: grow 1.6s infinite ease-in-out;
-	animation-delay: 300ms;
-	
+	animation: grow 1.6s infinite cubic-bezier(0.32, 0.06, 0.85, 1.11);
+	animation-delay: 400ms;
 }
 
 @keyframes grow {
@@ -40,15 +92,13 @@
 		-o-transform: scale( 1.0);
 		-ms-transform: scale( 1.0);
 		transform: scale( 1.0);
-		background-color: #00a4eb;
 	}
 
 	25% {
-		-webkit-transform: scale( 1.3 );
-		-moz-transform: scale( 1.3 );
-		-o-transform: scale( 1.3 );
-		-ms-transform: scale( 1.3 );
-		transform: scale( 1.3 );
-		background-color: #fff;
+		-webkit-transform: scale(2.5);
+		-moz-transform: scale(2.5);
+		-o-transform: scale(2.5);
+		-ms-transform: scale(2.5);
+		transform: scale(2.5);
 	}
 }

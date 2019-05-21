@@ -33,10 +33,31 @@
 	<script defer src="../../../../../../www/samples/settings.js"></script>
 	<script>delete Document.prototype.adoptedStyleSheets;</script>
 
+	<style>
+		.center {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-direction: column;
+		}
+	</style>
 </head>
 <body class="sapUiBody example-wrapper">
-
-	<ui5-busy-indicator></ui5-busy-indicator>
+	<section>
+			<h3>Busy Indicator</h3>
+			<div class="snippet center">
+				<ui5-busy-indicator size="Small"></ui5-busy-indicator>
+				<ui5-busy-indicator size="Medium"></ui5-busy-indicator>
+				<ui5-busy-indicator size="Large"></ui5-busy-indicator>
+			</div>
+		<pre class="prettyprint lang-html"><xmp>
+<div>
+	<ui5-busy-indicator size="Small"></ui5-busy-indicator>
+	<ui5-busy-indicator size="Medium"></ui5-busy-indicator>
+	<ui5-busy-indicator size="Large"></ui5-busy-indicator>
+</div>
+		</xmp></pre>
+		</section>
 
 	<script>
 		window.prettyPrint();
