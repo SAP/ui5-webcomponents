@@ -1,5 +1,7 @@
-commit 9e0c9aabb174d50a21cf9297e2cceee72ed5e221
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Tue May 21 15:44:15 2019 +0300
+commit 115900b7c79583f6f5d3199a47845b29e3f0a898
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Tue May 21 19:44:11 2019 +0300
 
-    improvement: fix slots edge cases (#417)
+    feat(ui5-multi-combobox): initial implementation (#379)
+    
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/314
