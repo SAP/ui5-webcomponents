@@ -1,7 +1,7 @@
 import {
 	AttributePart,
 	directive,
-	noChange
+	noChange,
 } from "lit-html";
 
 /*
@@ -13,11 +13,9 @@ export default directive(value => part => {
 			const name = part.committer.name;
 			part.committer.element.removeAttribute(name);
 		}
+	} else if (part.committer && part.committer.element && part.committer.element.getAttribute(part.committer.name) === value) {
+		part.setValue(noChange);
 	} else {
-		if (part.committer && part.committer.element && part.committer.element.getAttribute(part.committer.name) === value) {
-			part.setValue(noChange);
-		} else {
-			part.setValue(value);
-		}
+		part.setValue(value);
 	}
 });
