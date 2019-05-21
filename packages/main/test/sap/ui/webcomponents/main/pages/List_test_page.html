@@ -20,6 +20,7 @@
 	</ui5-list>
 	<ui5-input id="itemPressResultField" placeholder="itemPress result"></ui5-input>
 	<ui5-input id="selectionChangeResultField" placeholder="selectionChange result"></ui5-input>
+	<ui5-input id="selectionChangeResultPreviousItemsParameter" placeholder="selectionChange previousSelection result"></ui5-input>
 
 	<ui5-list id="list1" header-text="API: GroupHeaderListItem">
 		<ui5-li-groupheader>New Items</ui5-li-groupheader>
@@ -63,6 +64,10 @@
 			selectionChangeCounter += 1;
 			selectionChangeResultField.value = selectionChangeCounter;
 		});
+
+		listEvents.addEventListener("ui5-selectionChange", function(event) {
+			selectionChangeResultPreviousItemsParameter.value = event.detail.previousSelection[0].id;
+		})
 	</script>
 </body>
 </html>

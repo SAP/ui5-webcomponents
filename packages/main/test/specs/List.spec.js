@@ -17,6 +17,17 @@ describe("Date Picker Tests", () => {
 		assert.strictEqual(selectionChangeResultField.getProperty("value"), "1", "selectionChange event has been fired.");
 	});
 
+	it("selectionChange events provides previousSelection item", () => {
+		const list = $("#listEvents");
+		const selectionChangeResultPreviousItemsParameter = $("#selectionChangeResultPreviousItemsParameter");
+		const firstItem = $("#listEvents #country1");
+		const secondItem = $("#listEvents #country2");
+
+		firstItem.click();
+
+		assert.strictEqual(secondItem.getProperty("id"), selectionChangeResultPreviousItemsParameter.getProperty("value"));
+	});
+
 	it("header text", () => {
 		list.id = "#list1";
 

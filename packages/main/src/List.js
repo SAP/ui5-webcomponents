@@ -294,7 +294,7 @@ class List extends UI5Element {
 		}
 
 		if (selectionChange) {
-			this.fireEvent("selectionChange", { items: this.getSelectedItems(), previousSelection});
+			this.fireEvent("selectionChange", { items: this.getSelectedItems(), previousSelection });
 		}
 	}
 
