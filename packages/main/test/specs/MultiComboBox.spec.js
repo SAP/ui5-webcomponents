@@ -9,7 +9,7 @@ describe("MultiComboBox general interaction", () => {
 			const icon = browser.findElementDeep("#mcb >>> #ui5-multi-combobox--input ui5-icon");
 			const popover = browser.findElementDeep("#mcb >>> .ui5-multi-combobox-all-items--popover");
 			const firstItem = browser.findElementDeep("#first-item");
-			const firstItemCheckbox = browser.findElementDeep("#mcb >>> .ui5-multi-combobox-all-items--popover ui5-li[slot=items-1] >>> ui5-checkbox");
+			const firstItemCheckbox = browser.findElementDeep("#mcb >>> .ui5-multi-combobox-all-items-list > ui5-li >>> ui5-checkbox");
 			const eventInput = $("#events-input");
 			const paramsInput = $("#events-parameters");
 			const callCountInput = $("#events-call-count");
