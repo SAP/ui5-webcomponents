@@ -285,7 +285,7 @@ class List extends UI5Element {
 	* ITEM SELECTION BASED ON THE CURRENT MODE
 	*/
 	onSelectionRequested(event) {
-		const previousSelection = this.getSelectedItems();
+		const previouslySelectedItems = this.getSelectedItems();
 		let selectionChange = false;
 		this._selectionRequested = true;
 
@@ -294,7 +294,7 @@ class List extends UI5Element {
 		}
 
 		if (selectionChange) {
-			this.fireEvent("selectionChange", { items: this.getSelectedItems(), previousSelection });
+			this.fireEvent("selectionChange", { selectedItems: this.getSelectedItems(), previouslySelectedItems });
 		}
 	}
 

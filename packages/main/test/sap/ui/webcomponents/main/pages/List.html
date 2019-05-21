@@ -223,6 +223,7 @@
 		resetBtn.addEventListener("ui5-press", resetList);
 
 		singleSelectList.addEventListener("ui5-selectionChange", function (event) {
+			debugger;
 			var selectedItems = event.detail.items;
 
 			alert("Selection changed: " + selectedItems.map(item => item.id).join("/"));
@@ -234,6 +235,7 @@
 		});
 
 		singleSelectEndList.addEventListener("ui5-selectionChange", function (event) {
+			debugger;
 			var selectedItems = event.detail.items;
 			lblSelectionChange.innerHTML = "|Event] selectionChange :: " + selectedItems.map(item => item.id).join("/");
 		});
