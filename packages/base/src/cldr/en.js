@@ -1,3 +1,4 @@
+/* eslint comma-dangle: ["error", "never"] */
 import { registerCldrData } from "../CLDR.js";
 
 const en = {
@@ -4782,6 +4783,6 @@ const en = {
 			"_start": "1989-1-8"
 		}
 	}
-}
+};
 
 registerCldrData("en", en);

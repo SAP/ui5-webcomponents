@@ -1,5 +1,6 @@
 import "@ui5/webcomponents-base/src/shims/jquery-shim.js";
 import "@ui5/webcomponents-base/src/shims/Core-shim.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import { fetchCldrData } from "@ui5/webcomponents-base/src/CLDR.js";
 import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes.js";
@@ -29,7 +30,6 @@ import datePickerCss from "./themes/DatePicker.css.js";
 
 // all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
 import "./ThemePropertiesProvider.js";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 
 /**
  * @public

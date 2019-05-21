@@ -2,6 +2,7 @@
 import "./ThemePropertiesProvider.js";
 
 import DatePicker from "./DatePickerElement.js";
+
 DatePicker.define();
 
 export default DatePicker;

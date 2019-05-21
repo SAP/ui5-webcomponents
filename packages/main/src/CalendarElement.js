@@ -10,13 +10,13 @@ import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData.js";
 import CalendarDate from "@ui5/webcomponents-base/src/dates/CalendarDate.js";
 import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType.js";
 import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import CalendarTemplateContext from "./CalendarTemplateContext.js";
 import CalendarHeader from "./CalendarHeader.js";
 import DayPicker from "./DayPicker.js";
 import MonthPicker from "./MonthPicker.js";
 import YearPicker from "./YearPicker.js";
 import CalendarRenderer from "./build/compiled/CalendarRenderer.lit.js";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 
 // default calendar for bundling
 import "@ui5/webcomponents-core/dist/sap/ui/core/date/Gregorian.js";

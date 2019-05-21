@@ -161,7 +161,7 @@ Suggested pattern: "cldr\\\/.*\\\.json"`);
 /* eslint-enable */
 
 Object.entries(cldrData).forEach(([key, value]) => {
-	if (typeof(value) === "object") {
+	if (typeof (value) === "object") {
 		registerCldrData(key, value);
 	} else {
 		registerCldrUrl(key, value);

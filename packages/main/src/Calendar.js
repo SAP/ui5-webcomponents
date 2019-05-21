@@ -5,6 +5,7 @@ import "@ui5/webcomponents-base/src/shims/Core-shim.js";
 import "./ThemePropertiesProvider.js";
 
 import Calendar from "./CalendarElement.js";
+
 Calendar.define();
 
 export default Calendar;
