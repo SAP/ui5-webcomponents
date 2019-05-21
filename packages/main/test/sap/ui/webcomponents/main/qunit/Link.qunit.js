@@ -39,8 +39,8 @@ TestHelper.ready(function() {
 				assert.notOk(link.classList.contains(className), "root element does not contain " + className);
 			});
 
-			assert.notOk(link.hasAttribute('href'), "Rendered without 'href' by default");
-			assert.notOk(link.hasAttribute('target'), "Rendered without 'target' by default");
+			assert.notOk(link.getAttribute('href'), "Rendered without 'href' by default");
+			assert.notOk(link.getAttribute('target'), "Rendered without 'target' by default");
 		});
 	});
 

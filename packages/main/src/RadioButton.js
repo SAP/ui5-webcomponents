@@ -116,7 +116,7 @@ const metadata = {
 		 * @public
 		 */
 		name: {
-			defaultValue: "",
+			type: String,
 		},
 
 		/**
