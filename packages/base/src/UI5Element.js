@@ -176,7 +176,7 @@ class UI5Element extends HTMLElement {
 		const autoIncrementMap = new Map();
 		domChildren.forEach(child => {
 			// Determine the type of the child (mainly by the slot attribute)
-			const slotName = this._getSlotName(child);
+			const slotName = this.constructor._getSlotName(child);
 
 			// Check if the slotName is supported
 			if (slotsMap[slotName] === undefined) {
@@ -199,31 +199,6 @@ class UI5Element extends HTMLElement {
 				this._state[slotName] = child;
 			}
 		});
-	}
-
-	_getSlotName(child) {
-		const defaultSlot = this.constructor.getMetadata().getDefaultSlot();
-
-		// Text nodes can only go to the default slot
-		if (!(child instanceof HTMLElement)) {
-			return defaultSlot;
-		}
-
-		// Check for explicitly given logical slot
-		const ui5Slot = child.getAttribute("data-ui5-slot");
-		if (ui5Slot) {
-			return ui5Slot;
-		}
-
-		// Discover the slot based on the real slot name (f.e. footer => footer, or content-32 => content)
-		const slot = child.getAttribute("slot");
-		if (slot) {
-			const match = slot.match(/^(.+?)-\d+$/);
-			return match ? match[1] : slot;
-		}
-
-		// Use default slot as a fallback
-		return defaultSlot;
 	}
 
 	static get observedAttributes() {
@@ -363,7 +338,7 @@ class UI5Element extends HTMLElement {
 	_attachChildPropertyUpdated(child, propData) {
 		const listenFor = propData.listenFor,
 			childMetadata = child.constructor.getMetadata(),
-			slotName = this._getSlotName(child), // all slotted children have the same configuration
+			slotName = this.constructor._getSlotName(child), // all slotted children have the same configuration
 			childProperties = childMetadata.getProperties();
 
 		let observedProps = [],
@@ -396,7 +371,7 @@ class UI5Element extends HTMLElement {
 			return;
 		}
 
-		const slotName = this._getSlotName(this);
+		const slotName = this.constructor._getSlotName(this);
 		const propsMetadata = this.parentNode._monitoredChildProps.get(slotName);
 
 		if (!propsMetadata) {
@@ -452,7 +427,7 @@ class UI5Element extends HTMLElement {
 		const domChildren = Array.from(this.children);
 
 		domChildren.forEach(child => {
-			const slotName = this._getSlotName(child);
+			const slotName = this.constructor._getSlotName(child);
 			const slot = child.getAttribute("slot");
 			const hasSlot = !!slot;
 
@@ -620,6 +595,31 @@ class UI5Element extends HTMLElement {
 		const nextNumber = lastNumber !== undefined ? lastNumber + 1 : 1;
 		IDMap.set(className, nextNumber);
 		return `__${className}${nextNumber}`;
+	}
+
+	static _getSlotName(child) {
+		const defaultSlot = this.getMetadata().getDefaultSlot();
+
+		// Text nodes can only go to the default slot
+		if (!(child instanceof HTMLElement)) {
+			return defaultSlot;
+		}
+
+		// Check for explicitly given logical slot
+		const ui5Slot = child.getAttribute("data-ui5-slot");
+		if (ui5Slot) {
+			return ui5Slot;
+		}
+
+		// Discover the slot based on the real slot name (f.e. footer => footer, or content-32 => content)
+		const slot = child.getAttribute("slot");
+		if (slot) {
+			const match = slot.match(/^(.+?)-\d+$/);
+			return match ? match[1] : slot;
+		}
+
+		// Use default slot as a fallback
+		return defaultSlot;
 	}
 
 	static generateAccessors() {
