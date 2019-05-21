@@ -48,7 +48,7 @@ const metadata = {
 		press: {
 			detail: {
 				targetRef: { type: HTMLElement },
-			}
+			},
 		},
 	},
 };
