@@ -69,7 +69,7 @@
 
 			<script>
 				document.getElementById('country-selector').addEventListener("selectionChange", function (event) {
-					var selectedItems = event.detail.items;
+					var selectedItems = event.detail.selectedItems;
 
 					alert("The selected item:  " + selectedItems[0].textContent);
 				});
@@ -85,7 +85,7 @@
 
 <script>
 	document.getElementById('country-selector').addEventListener("selectionChange", function (event) {
-		var selectedItems = event.detail.items;
+		var selectedItems = event.detail.selectedItems;
 
 		alert("The selected item:  " + selectedItems[0].textContent);
 	});

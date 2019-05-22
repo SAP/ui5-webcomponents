@@ -223,7 +223,7 @@
 		resetBtn.addEventListener("ui5-press", resetList);
 
 		singleSelectList.addEventListener("ui5-selectionChange", function (event) {
-			var selectedItems = event.detail.items;
+			var selectedItems = event.detail.selectedItems;
 
 			alert("Selection changed: " + selectedItems.map(item => item.id).join("/"));
 		});
@@ -234,7 +234,7 @@
 		});
 
 		singleSelectEndList.addEventListener("ui5-selectionChange", function (event) {
-			var selectedItems = event.detail.items;
+			var selectedItems = event.detail.selectedItems;
 			lblSelectionChange.innerHTML = "|Event] selectionChange :: " + selectedItems.map(item => item.id).join("/");
 		});
 
@@ -244,7 +244,7 @@
 		});
 
 		multiSelectList.addEventListener("ui5-selectionChange", function (event) {
-			var selectedItems = event.detail.items;
+			var selectedItems = event.detail.selectedItems;
 			lblSelectionChange2.innerHTML = "Event] selectionChange :: " + selectedItems.map(item => item.id).join("/");
 		});
 	</script>
