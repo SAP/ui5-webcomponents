@@ -2,8 +2,6 @@ import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import URI from "@ui5/webcomponents-base/src/types/URI.js";
 import Function from "@ui5/webcomponents-base/src/types/Function.js";
-import { fetchCldrData } from "@ui5/webcomponents-base/src/CLDR.js";
-import { getLocale } from "@ui5/webcomponents-base/src/LocaleProvider.js";
 import Icon from "./Icon.js";
 import Link from "./Link.js";
 import TimelineItemTemplateContext from "./TimelineItemTemplateContext.js";
@@ -51,16 +49,16 @@ const metadata = {
 		/**
 		 * Defines the name of the item.
 		 *
-		 * @type {String}
+		 * @type {string}
+		 * @defaultvalue false
 		 * @public
 		 */
 		itemName: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
-		 * Defines whether the name is clickable.
+		 * Defines whether the <code>itemName</code> is clickable.
 		 *
 		 * @type {Boolean}
 		 * @defaultvalue false
@@ -73,22 +71,22 @@ const metadata = {
 		/**
 		 * Defines the title text of the component.
 		 *
-		 * @type {String}
+		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		titleText: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
 		 * Defines the subtitle text of the component.
-		 * @type {String}
+		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		subtitleText: {
 			type: String,
-			defaultValue: "",
 		},
 
 		_onItemNamePress: {
@@ -158,7 +156,6 @@ class TimelineItem extends UI5Element {
 
 	static async define(...params) {
 		await Promise.all([
-			fetchCldrData(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
 			Icon.define(),
 			Link.define(),
 		]);

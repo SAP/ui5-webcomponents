@@ -11,6 +11,8 @@ class ButtonTemplateContext {
 				},
 			},
 			styles: {
+				main: {
+				},
 			},
 			iconSrc: state._active ? state.activeIcon : state.icon,
 			ariaDisabled: state.disabled ? "true" : undefined,

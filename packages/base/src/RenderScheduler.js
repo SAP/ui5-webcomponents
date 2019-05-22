@@ -116,7 +116,21 @@ class RenderScheduler {
 	/**
 	 * return a promise that will be resolved once all ui5 webcomponents on the page have their shadow root ready
 	 */
-	static whenShadowDOMReady() {
+	static async whenShadowDOMReady() {
+		const undefinedElements = document.querySelectorAll(":not(:defined)");
+
+		const definedPromises = [...undefinedElements].map(
+		  el => customElements.whenDefined(el.localName)
+		);
+		const timeoutPromise = new Promise(resolve => setTimeout(resolve, 5000));
+
+		await Promise.race([Promise.all(definedPromises), timeoutPromise]);
+		const stillUndefined = document.querySelectorAll(":not(:defined)");
+		if (stillUndefined.length) {
+			// eslint-disable-next-line
+			console.warn("undefined elements after 5 seconds: ", [...stillUndefined].map(el => el.localName));
+		}
+
 		// TODO: track promises internally, the dom traversal is a POC only
 		const ui5Components = Array.from(document.querySelectorAll("*")).filter(_ => _._shadowRootReadyPromise);
 		return Promise.all(ui5Components.map(comp => comp._whenShadowRootReady()))

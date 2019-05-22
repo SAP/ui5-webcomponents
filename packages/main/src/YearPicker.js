@@ -36,7 +36,7 @@ const metadata = {
 		/**
 		 * Sets a calendar type used for display.
 		 * If not set, the calendar type of the global configuration is used.
-		 * @type {String}
+		 * @type {string}
 		 * @public
 		 */
 		primaryCalendarType: {

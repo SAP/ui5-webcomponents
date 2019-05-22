@@ -3,10 +3,10 @@ class PanelTemplateContext {
 		const context = {
 			ctr: state,
 			expanded: !state.collapsed,
-			ariaLabelledBy: state.header ? undefined : `${state._id}-header`,
+			ariaLabelledBy: state.header ? "" : `${state._id}-header`,
 			accRole: state.accessibleRole.toLowerCase(),
-			headerTabIndex: !state.header ? "0" : undefined,
-			iconTabIndex: state.header ? "0" : undefined,
+			headerTabIndex: !state.header ? "0" : "",
+			iconTabIndex: state.header ? "0" : "",
 			classes: {
 				main: {
 					sapMPanel: true,

@@ -40,6 +40,7 @@ const metadata = {
 		 * <b>Note:</b> Standard hyperlink behavior is supported.
 		 *
 		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		href: {
@@ -56,11 +57,11 @@ const metadata = {
 		 * <li>This property must only be used when the <code>href</code> property is set.</li></ul>
 		 *
 		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		target: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
@@ -68,7 +69,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> Avaialble options are <code>Default</code>, <code>Subtle</code>, and <code>Emphasized</code>.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue "Default"
 		 * @public
 		 */

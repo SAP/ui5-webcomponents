@@ -47,11 +47,11 @@ const metadata = {
 		 * The text for the column when it pops in.
 		 *
 		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		popinText: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**

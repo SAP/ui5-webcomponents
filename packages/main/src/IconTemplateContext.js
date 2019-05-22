@@ -12,8 +12,8 @@ class IconTemplateContext {
 			ctr: state,
 			iconContent: iconInfo.content,
 			role: state._customAttributes.role || role,
-			ariaExpanded: state._customAttributes["aria-expanded"],
-			ariaLabelledBy: state._customAttributes["aria-labelledby"],
+			ariaExpanded: state._customAttributes["aria-expanded"] || "",
+			ariaLabelledBy: state._customAttributes["aria-labelledby"] || "",
 			classes: {
 				main: IconTemplateContext.getMainClasses(state, iconInfo),
 			},

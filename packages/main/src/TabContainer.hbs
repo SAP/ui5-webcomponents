@@ -18,8 +18,8 @@
 							aria-setsize="{{../renderItems.length}}"
 							aria-controls="ui5-tc-contentItem-{{this.position}}"
 							aria-selected="{{this.selected}}"
-							aria-disabled="{{this.disabled}}"
-							disabled="{{this.disabled}}"
+							?aria-disabled="{{this.disabled}}"
+							?disabled="{{this.disabled}}"
 							aria-labelledby="{{this.ariaLabelledBy}}"
 						>
 							{{#if this.isTextOnlyTab}}
@@ -79,8 +79,8 @@
 					<ui5-li-custom id="{{this.item._id}}"
 						class="{{this.overflowItemClasses}}"
 						type="{{this.overflowItemState}}"
-						selected="{{this.selected}}"
-						disabled="{{this.disabled}}"
+						?selected="{{this.selected}}"
+						?disabled="{{this.disabled}}"
 					>
 						<div class="{{this.overflowItemContentClasses}}">
 							{{#if this.item.icon}}
