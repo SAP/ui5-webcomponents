@@ -69,7 +69,7 @@
 
 			<script>
 				document.getElementById('country-selector').addEventListener("selectionChange", function (event) {
-					var selectedItems = event.detail.items;
+					var selectedItems = event.detail.selectedItems;
 
 					alert("The selected item:  " + selectedItems[0].textContent);
 				});
@@ -85,7 +85,7 @@
 
 <script>
 	document.getElementById('country-selector').addEventListener("selectionChange", function (event) {
-		var selectedItems = event.detail.items;
+		var selectedItems = event.detail.selectedItems;
 
 		alert("The selected item:  " + selectedItems[0].textContent);
 	});
@@ -340,8 +340,10 @@ The <code>ui5-list</code> component allows displaying a list of items, advanced 
                       </div>
             
                         <tr class="api-table-event-param" >
-                        <div class="cell api-table-param-name api-table-content-cell api-table-content-cell-bold">item</div>
-                        <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> HTMLElement </br> <strong class="api-table-event-description bold">description:</strong> the deleted item.</div>
+                          <div class="api-table-content-event-params-wrapper">
+                            <div class="cell api-table-param-name api-table-content-cell api-table-content-cell-bold">item</div>
+                            <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> HTMLElement </br> <strong class="api-table-event-description bold">description:</strong> the deleted item.</div>
+                          </div>
                         </tr>
                       <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">itemPress</div>
@@ -351,8 +353,10 @@ The <code>ui5-list</code> component allows displaying a list of items, advanced 
                       </div>
             
                         <tr class="api-table-event-param" >
-                        <div class="cell api-table-param-name api-table-content-cell api-table-content-cell-bold">item</div>
-                        <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> HTMLElement </br> <strong class="api-table-event-description bold">description:</strong> the pressed item.</div>
+                          <div class="api-table-content-event-params-wrapper">
+                            <div class="cell api-table-param-name api-table-content-cell api-table-content-cell-bold">item</div>
+                            <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> HTMLElement </br> <strong class="api-table-event-description bold">description:</strong> the pressed item.</div>
+                          </div>
                         </tr>
                       <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">selectionChange</div>
@@ -362,8 +366,16 @@ The <code>ui5-list</code> component allows displaying a list of items, advanced 
                       </div>
             
                         <tr class="api-table-event-param" >
-                        <div class="cell api-table-param-name api-table-content-cell api-table-content-cell-bold">items</div>
-                        <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> Array </br> <strong class="api-table-event-description bold">description:</strong> an array of the selected items.</div>
+                          <div class="api-table-content-event-params-wrapper">
+                            <div class="cell api-table-param-name api-table-content-cell api-table-content-cell-bold">selectedItems</div>
+                            <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> Array </br> <strong class="api-table-event-description bold">description:</strong> an array of the selected items.</div>
+                          </div>
+                        </tr>
+                        <tr class="api-table-event-param" >
+                          <div class="api-table-content-event-params-wrapper">
+                            <div class="cell api-table-param-name api-table-content-cell api-table-content-cell-bold">previouslySelectedItems</div>
+                            <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> Array </br> <strong class="api-table-event-description bold">description:</strong> an array of the previously selected items.</div>
+                          </div>
                         </tr>
                   </div>
             

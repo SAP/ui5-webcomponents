@@ -1,5 +1,7 @@
-commit b3e3b3f7c522f69e50984e1aaa5e8d1d2df3670c
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed May 22 10:28:31 2019 +0300
+commit f0fc8f2ac5ea5edab0d689001becf9a7c7fb4feb
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Wed May 22 10:56:12 2019 +0300
 
-    fix: broken child property observation (#423)
+    feat(ui5-list): selectionChange event provides previousSelection items (#418)
+    
+    BREAKING CHANGE: the "selectionChange" event param "items" is renamed to "selectedItems".
