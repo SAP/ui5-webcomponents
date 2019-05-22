@@ -2,7 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import BusyIndicatorTemplateContext from "./BusyIndicatorTemplateContext.js";
 import BusyIndicatorRenderer from "./build/compiled/BusyIndicatorRenderer.lit.js";
-import Icon from "./Icon.js";
 
 // Styles
 import busyIndicatorCss from "./themes/BusyIndicator.css.js";
@@ -16,7 +15,6 @@ import BusyIndicatorType from "./types/BusyIndicatorType.js";
  */
 const metadata = {
 	tag: "ui5-busy-indicator",
-	usesNodeText: true,
 	properties: /** @lends sap.ui.webcomponents.main.BusyIndicator.prototype */ {
 		/**
 		 * Defines the size of the <code>ui5-busy-indicator</code>.
@@ -37,7 +35,7 @@ const metadata = {
 		 * @defaultvalue false
 		 * @public
 		 */
-		invisible: { type: Boolean, defaultValue: false },
+		hide: { type: Boolean, defaultValue: false },
 	},
 };
 
@@ -83,13 +81,7 @@ class BusyIndicator extends UI5Element {
 		return BusyIndicatorTemplateContext.calculate;
 	}
 
-	getCircles() {
-		return this.getDomRef().querySelectorAll(`.ui5-busy-indicator-circle`);
-	}
-
 	static async define(...params) {
-		await Icon.define();
-
 		super.define(...params);
 	}
 }
