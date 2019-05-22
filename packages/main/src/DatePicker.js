@@ -529,7 +529,6 @@ class DatePicker extends UI5Element {
 	}
 
 	static async define() {
-		await Bootstrap.boot();
 		await Promise.all([
 			fetchCldrData(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
 			Icon.define(),
@@ -557,6 +556,8 @@ const getDomTarget = event => {
 	return target;
 };
 
-DatePicker.define();
+Bootstrap.boot().then(() => {
+	DatePicker.define();
+});
 
 export default DatePicker;

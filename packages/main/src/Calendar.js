@@ -485,7 +485,6 @@ class Calendar extends UI5Element {
 	}
 
 	static async define(...params) {
-		await Bootstrap.boot();
 		await Promise.all([
 			fetchCldrData(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
 			CalendarHeader.define(),
@@ -497,7 +496,8 @@ class Calendar extends UI5Element {
 		super.define(...params);
 	}
 }
-
-Calendar.define();
+Bootstrap.boot().then(() => {
+	Calendar.define();
+});
 
 export default Calendar;
