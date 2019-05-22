@@ -528,7 +528,7 @@ class DatePicker extends UI5Element {
 		return { isInput };
 	}
 
-	static async define() {
+	static async define(...params) {
 		await Promise.all([
 			fetchCldrData(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
 			Icon.define(),
@@ -537,7 +537,7 @@ class DatePicker extends UI5Element {
 			Input.define(),
 		]);
 
-		super.define();
+		super.define(...params);
 	}
 }
 
@@ -556,7 +556,7 @@ const getDomTarget = event => {
 	return target;
 };
 
-Bootstrap.boot().then(() => {
+Bootstrap.boot().then(_ => {
 	DatePicker.define();
 });
 
