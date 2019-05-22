@@ -76,7 +76,6 @@ const metadata = {
 
 		_text: {
 			type: String,
-			defaultValue: "",
 		},
 
 		_opened: {

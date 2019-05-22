@@ -273,7 +273,7 @@ class TabContainer extends UI5Element {
 	}
 
 	_onHeaderItemSelect(event) {
-		if (!event.target.getAttribute("disabled")) {
+		if (!event.target.hasAttribute("disabled")) {
 			this._onItemSelect(event.target);
 		}
 	}

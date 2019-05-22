@@ -26,12 +26,12 @@ const metadata = {
 
 		/**
 		 * Defines the item text.
-		 * @type {String}
+		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		text: {
 			type: String,
-			defaultValue: null,
 		},
 
 		_icon: { type: HTMLElement },

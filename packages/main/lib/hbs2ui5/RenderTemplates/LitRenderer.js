@@ -1,7 +1,7 @@
 const buildRenderer = (controlName, litTemplate) => {
 	return `
-/* eslint no-unused-vars: 0 */	
-import ifTruthy from '@ui5/webcomponents-base/src/renderer/ifTruthy.js';
+/* eslint no-unused-vars: 0 */
+import ifDefined from '@ui5/webcomponents-base/src/renderer/ifDefined.js';
 import { html, svg, repeat } from '@ui5/webcomponents-base/src/renderer/LitRenderer.js';
 const ${controlName}LitRenderer = {};
 ${litTemplate}

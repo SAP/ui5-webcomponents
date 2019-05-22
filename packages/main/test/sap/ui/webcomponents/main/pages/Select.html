@@ -91,7 +91,6 @@
 
 		suggestionItems.forEach(function(item) {
 			var li = document.createElement("ui5-li");
-			li.type = "Active";
 			li.id = item.key;
 			li.textContent = item.text;
 			input.appendChild(li);
@@ -112,7 +111,6 @@
 
 	countries.forEach(function(item, idx) {
 		var li = document.createElement("ui5-li");
-		li.type = "Active";
 		li.id = item.key;
 
 		if (idx === 0) {

@@ -28,7 +28,7 @@ const metadata = {
 		 * <br>
 		 * <code>src='sap-icons://add'</code>, <code>src='sap-icons://delete'</code>, <code>src='sap-icons://employee'</code>.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @public
 		*/
 		src: { type: URI, defaultValue: null },

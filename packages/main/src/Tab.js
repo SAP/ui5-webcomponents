@@ -33,12 +33,12 @@ const metadata = {
 
 		/**
 		 * The text to be displayed for the item.
-		 * @type {String}
+		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		text: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
@@ -54,12 +54,12 @@ const metadata = {
 
 		/**
 		 * Represents the "additionalText" text, which is displayed in the tab filter.
-		 * @type {String}
+		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		additionalText: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**

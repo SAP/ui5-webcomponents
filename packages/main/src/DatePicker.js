@@ -41,11 +41,11 @@ const metadata = {
 		 * Defines a formatted date value.
 		 *
 		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		value: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
@@ -54,6 +54,7 @@ const metadata = {
 		 * <code>Success</code>.
 		 *
 		 * @type {string}
+		 * @defaultvalue "None"
 		 * @public
 		 */
 		valueState: {
@@ -65,6 +66,7 @@ const metadata = {
 		 * Determines the format, displayed in the input field.
 		 *
 		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		formatPattern: {
@@ -74,7 +76,7 @@ const metadata = {
 		/**
 		 * Determines the calendar type.
 		 * The input value is formated according to the calendar type and the picker shows
-		 * months and years from the specified calendar.
+		 * months and years from the specified calendar. Available options are: "Gregorian", "Islamic", "Japanese", "Buddhist" and "Persian".
 		 *
 		 * @type {string}
 		 * @public
@@ -111,10 +113,10 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> The placeholder is not supported in IE. If the placeholder is provided, it won`t be displayed in IE.
 		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		placeholder: {
-			defaultValue: null,
 			type: String,
 		},
 
@@ -128,7 +130,8 @@ const metadata = {
 		 * will be created inside the <code>ui5-datepicker</code> so that it can be submitted as
 		 * part of an HTML form. Do not use this property unless you need to submit a form.
 		 *
-		 * @type {String}
+		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		name: {
