@@ -34,6 +34,7 @@ const metadata = {
 		 * <b>Note:</b> A disabled <code>ui5-radiobutton</code> is completely uninteractive.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		disabled: {
@@ -47,9 +48,10 @@ const metadata = {
 		 * but still provides visual feedback upon user interaction.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
-		readOnly: {
+		readonly: {
 			type: Boolean,
 		},
 
@@ -61,6 +63,7 @@ const metadata = {
 		 * or by using the Space or Enter key.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		selected: {
@@ -87,6 +90,7 @@ const metadata = {
 		 * the <code>ui5-radiobutton</code>.
 		 *
 		 * @type {string}
+		 * @defaultvalue "None"
 		 * @public
 		 */
 		valueState: {
@@ -300,7 +304,7 @@ class RadioButton extends UI5Element {
 	}
 
 	canToggle() {
-		return !(this.disabled || this.readOnly || this.selected);
+		return !(this.disabled || this.readonly || this.selected);
 	}
 
 	static get calculateTemplateContext() {

@@ -28,7 +28,7 @@ const metadata = {
 		 * pressing the <code>Enter</code> or <code>Space</code> key.
 		 *
 		 * @type {boolean}
-		 * @default false
+		 * @defaultvalue false
 		 * @public
 		 */
 		checked: {
@@ -41,7 +41,7 @@ const metadata = {
 		 * <b>Note:</b> A disabled <code>ui5-switch</code> is noninteractive.
 		 *
 		 * @type {boolean}
-		 * @default false
+		 * @defaultvalue false
 		 * @public
 		 */
 		disabled: {
@@ -83,7 +83,7 @@ const metadata = {
 		 * <b>Note:</b> If <code>Graphical</code> type is set,
 		 * positive and negative icons will replace the <code>textOn</code> and <code>textOff</code>.
 		 * @type {string}
-		 * @default Textual
+		 * @defaultvalue "Textual"
 		 * @public
 		 */
 		type: {

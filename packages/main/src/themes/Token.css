@@ -1,0 +1,138 @@
+:host(ui5-token) {
+	display: inline-block;
+	background: var(--sapUiButtonBackground);
+	border-width: 1px;
+	border-style: solid;
+	border-color: var(--_ui5_token_border_color);
+	border-radius: var(--_ui5_token_border_radius);
+	color: var(--_ui5_token_text_color);
+	height: 1.625rem;
+	box-sizing: border-box;
+}
+
+:host(ui5-token[data-ui5-compact-size]) {
+	font-size: 0.75rem;
+	height: 1.25rem;
+}
+
+:host(ui5-token[data-ui5-compact-size]) .ui5-token--icon {
+	padding: 0 0.25rem;
+	width: 0.75rem;
+	height: 0.75rem;
+}
+
+:host(ui5-token:not([readonly]):hover) {
+	background: var(--sapUiButtonHoverBackground);
+	border-color: var(--_ui5_token_hover_border_color);
+}
+
+:host(ui5-token[selected]:not([readonly])) {
+	color: var(--sapUiToggleButtonPressedTextColor);
+	background: var(--sapUiToggleButtonPressedBackground);
+	border: 1px solid var(--sapUiToggleButtonPressedBorderColor);
+}
+
+:host(ui5-token[selected]:not([readonly]):hover) {
+	background: var(--sapUiToggleButtonPressedHoverBackground);
+	border: 1px solid var(--sapUiToggleButtonPressedHoverBorderColor);
+}
+
+:host(ui5-token[readonly]) {
+	color: var(--sapUiContentForegroundTextColor);
+}
+
+:host(ui5-token[readonly]) .ui5-token--wrapper {
+	padding-right: 0.375rem;
+}
+
+:host(ui5-token[selected]) .ui5-token--wrapper:focus {
+	outline: 1px dotted var(--sapUiContentContrastFocusColor);
+}
+
+/* IE selectors */
+
+ui5-token {
+	display: inline-block;
+	background: var(--sapUiButtonBackground);
+	border-width: 1px;
+	border-style: solid;
+	border-color: var(--_ui5_token_border_color);
+	border-radius: var(--_ui5_token_border_radius);
+	color: var(--_ui5_token_text_color);
+	height: 1rem;
+	box-sizing: border-box;
+}
+
+ui5-token[data-ui5-compact-size] {
+	font-size: 0.75rem;
+	height: 1.25rem;
+}
+
+ui5-token[data-ui5-compact-size] .ui5-token--icon {
+	padding: 0 0.25rem;
+	width: 0.75rem;
+	height: 0.75rem;
+}
+
+ui5-token:not([readonly]):hover {
+	background: var(--sapUiButtonHoverBackground);
+	border-color: var(--_ui5_token_hover_border_color);
+}
+
+ui5-token[selected]:not([readonly]) {
+	color: var(--sapUiToggleButtonPressedTextColor);
+	background: var(--sapUiToggleButtonPressedBackground);
+	border: 1px solid var(--sapUiToggleButtonPressedBorderColor);
+}
+
+ui5-token[selected]:not([readonly]):hover {
+	background: var(--sapUiToggleButtonPressedHoverBackground);
+	border: 1px solid var(--sapUiToggleButtonPressedHoverBorderColor);
+}
+
+ui5-token[readonly] {
+	color: var(--sapUiContentForegroundTextColor);
+}
+
+ui5-token[readonly] .ui5-token--wrapper {
+	padding-right: 0.375rem;
+}
+
+ui5-token[selected] .ui5-token--wrapper:focus {
+	outline: 1px dotted var(--sapUiContentContrastFocusColor);
+}
+
+/* end of IE selectors */
+
+.ui5-token--icon {
+	padding: 0.25rem 0.5rem; 
+	color: inherit;
+	cursor: pointer;
+	width: 1rem;
+	height: 1rem;
+	color: var(--_ui5_token_icon_color);
+}
+
+.ui5-token--wrapper {
+	display: flex;
+	align-items: center;
+	height: 100%;
+	width: 100%;
+	cursor: default;
+	padding-left: 0.375rem;
+	padding-top: 0.25rem;
+	padding-bottom: 0.25rem;
+	box-sizing: border-box;
+	font-size: var(--sapMFontMediumSize);
+	font-family: var(--sapUiFontFamily);
+	user-select: none;
+}
+
+.ui5-token--wrapper:focus {
+	outline-offset: -2px;
+	outline: 1px dotted var(--sapUiContentFocusColor);
+}
+
+.ui5-token--text {
+	white-space: nowrap;
+}

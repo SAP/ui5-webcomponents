@@ -15,9 +15,7 @@
 			hide-arrow="true"
 			horizontal-align="Stretch">
 				<ui5-list separators="None">
-					{{#each ctr.items}}
-						<slot name="{{this._slot}}"></slot>
-					{{/each}}
+					<slot></slot>
 				</ui5-list>
 		</ui5-popover>
 	{{/if}}
@@ -25,6 +23,6 @@
 	<ui5-icon
 		src="sap-icon://slim-arrow-down"
 		class="sapWCSelectDropDownIcon"
-		@press="{{ctr._fnClickSelectBox}}"
+		@ui5-press="{{ctr._fnClickSelectBox}}"
 	></ui5-icon>
 </div>

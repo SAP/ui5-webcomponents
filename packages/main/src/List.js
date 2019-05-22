@@ -6,7 +6,6 @@ import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper.js";
 import { isTabNext } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import ListItemBase from "./ListItemBase.js";
 import ListMode from "./types/ListMode.js";
-import BackgroundDesign from "./types/BackgroundDesign.js";
 import ListSeparators from "./types/ListSeparators.js";
 import ListItemType from "./types/ListItemType.js";
 // Template
@@ -56,19 +55,6 @@ const metadata = {
 	properties: /** @lends  sap.ui.webcomponents.main.List.prototype */ {
 
 		/**
-		 * Defines the background design of the <code>ui5-list</code>.
-		 * <br><br>
-		 * <b>Note:</b> Available options are <code>Solid</code> and <code>Transparent</code>.
-		 *
-		 * @type {string}
-		 * @public
-		 */
-		backgroundDesign: {
-			type: BackgroundDesign,
-			defaultValue: BackgroundDesign.Solid,
-		},
-
-		/**
 		 * Defines the <code>ui5-list</code> header text.
 		 * <br><br>
 		 * <b>Note:</b> If <code>header</code> is set this property is ignored.
@@ -96,6 +82,7 @@ const metadata = {
 		 * Determines whether the list items are indented.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		inset: {
@@ -109,6 +96,7 @@ const metadata = {
 		 * <code>MultiSelect</code>, and <code>Delete</code>.
 		 *
 		 * @type {string}
+		 * @defaultvalue "None"
 		 * @public
 		 */
 		mode: {
@@ -139,6 +127,7 @@ const metadata = {
 		 * </ul>
 		 *
 		 * @type {string}
+		 * @defaultvalue "All"
 		 * @public
 		 */
 		separators: {
@@ -182,12 +171,14 @@ const metadata = {
 		 * in <code>SingleSelect</code> and <code>MultiSelect</code> modes.
 		 *
 		 * @event
-		 * @param {Array} items an array of the selected items.
+		 * @param {Array} selectedItems an array of the selected items.
+		 * @param {Array} previouslySelectedItems an array of the previously selected items.
 		 * @public
 		 */
 		selectionChange: {
 			detail: {
-				items: { type: Array },
+				selectedItems: { type: Array },
+				previouslySelectedItems: { type: Array },
 			},
 		},
 	},
@@ -257,11 +248,11 @@ class List extends UI5Element {
 
 		this._previouslySelectedItem = null;
 
-		this.addEventListener("_press", this.onItemPress.bind(this));
-		this.addEventListener("_focused", this.onItemFocused.bind(this));
-		this.addEventListener("_forwardAfter", this.onForwardAfter.bind(this));
-		this.addEventListener("_forwardBefore", this.onForwardBefore.bind(this));
-		this.addEventListener("_selectionRequested", this.onSelectionRequested.bind(this));
+		this.addEventListener("ui5-_press", this.onItemPress.bind(this));
+		this.addEventListener("ui5-_focused", this.onItemFocused.bind(this));
+		this.addEventListener("ui5-_forwardAfter", this.onForwardAfter.bind(this));
+		this.addEventListener("ui5-_forwardBefore", this.onForwardBefore.bind(this));
+		this.addEventListener("ui5-_selectionRequested", this.onSelectionRequested.bind(this));
 	}
 
 	onBeforeRendering() {
@@ -285,7 +276,6 @@ class List extends UI5Element {
 				|| (this.separators === ListSeparators.Inner && !isLastChild);
 
 			item._mode = this.mode;
-			item._background = this.backgroundDesign;
 			item._hideBorder = !showBottomBorder;
 		});
 
@@ -296,6 +286,7 @@ class List extends UI5Element {
 	* ITEM SELECTION BASED ON THE CURRENT MODE
 	*/
 	onSelectionRequested(event) {
+		const previouslySelectedItems = this.getSelectedItems();
 		let selectionChange = false;
 		this._selectionRequested = true;
 
@@ -304,7 +295,7 @@ class List extends UI5Element {
 		}
 
 		if (selectionChange) {
-			this.fireEvent("selectionChange", { items: this.getSelectedItems() });
+			this.fireEvent("selectionChange", { selectedItems: this.getSelectedItems(), previouslySelectedItems });
 		}
 	}
 

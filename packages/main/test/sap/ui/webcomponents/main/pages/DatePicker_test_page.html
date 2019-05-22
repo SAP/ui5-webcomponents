@@ -62,9 +62,9 @@
 			document.querySelector('#lbl').innerHTML = ++counter;
 		}
 
-		document.querySelector("#dp5").addEventListener("change", increaseCounter);
-		document.querySelector("#dp8").addEventListener("change", increaseCounter);
-		document.querySelector("#dp13").addEventListener("change", function(e) {
+		document.querySelector("#dp5").addEventListener("ui5-change", increaseCounter);
+		document.querySelector("#dp8").addEventListener("ui5-change", increaseCounter);
+		document.querySelector("#dp13").addEventListener("ui5-change", function(e) {
 			document.querySelector('#lblTomorrow').innerHTML = ++counterTomorrow;
 			document.querySelector('#lblTomorrowDate').innerHTML = e.target.value;
 		});

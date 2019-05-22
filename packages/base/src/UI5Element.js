@@ -126,14 +126,13 @@ class UI5Element extends HTMLElement {
 
 	_startObservingDOMChildren() {
 		const shouldObserveChildren = this.constructor.getMetadata().hasSlots();
-		const shouldObserveText = this.constructor.getMetadata().usesNodeText();
-		if (!shouldObserveChildren && !shouldObserveText) {
+		if (!shouldObserveChildren) {
 			return;
 		}
 		const mutationObserverOptions = {
 			childList: true,
-			subtree: shouldObserveText,
-			characterData: shouldObserveText,
+			subtree: true,
+			characterData: true,
 		};
 		DOMObserver.observeDOMNode(this, this._processChildren.bind(this), mutationObserverOptions);
 	}
@@ -146,24 +145,26 @@ class UI5Element extends HTMLElement {
 	}
 
 	_processChildren(mutations) {
-		const usesNodeText = this.constructor.getMetadata().usesNodeText();
-		const hasChildren = this.constructor.getMetadata().hasSlots();
-		if (usesNodeText) {
-			this._updateNodeText();
-		} else if (hasChildren) {
+		const hasSlots = this.constructor.getMetadata().hasSlots();
+		if (hasSlots) {
 			this._updateSlots();
 		}
 		this.onChildrenChanged(mutations);
 	}
 
-	_updateNodeText() {
-		this._state._nodeText = this.textContent;
-	}
-
 	_updateSlots() {
-		const domChildren = Array.from(this.children);
-
 		const slotsMap = this.constructor.getMetadata().getSlots();
+		const defaultSlot = this.constructor.getMetadata().getDefaultSlot();
+		const canSlotText = slotsMap[defaultSlot] !== undefined && slotsMap[defaultSlot].type === Node;
+
+		let domChildren;
+		if (canSlotText) {
+			domChildren = Array.from(this.childNodes);
+		} else {
+			domChildren = Array.from(this.children);
+		}
+
+		// Init the _state object based on the supported slots
 		for (const [prop, propData] of Object.entries(slotsMap)) { // eslint-disable-line
 			if (propData.multiple) {
 				this._state[prop] = [];
@@ -171,27 +172,31 @@ class UI5Element extends HTMLElement {
 				this._state[prop] = null;
 			}
 		}
+
 		const autoIncrementMap = new Map();
 		domChildren.forEach(child => {
-			const slot = child.getAttribute("data-ui5-slot") || this.constructor.getMetadata().getDefaultSlot();
-			if (slotsMap[slot] === undefined) {
+			// Determine the type of the child (mainly by the slot attribute)
+			const slotName = this.constructor._getSlotName(child);
+
+			// Check if the slotName is supported
+			if (slotsMap[slotName] === undefined) {
 				const validValues = Object.keys(slotsMap).join(", ");
-				console.warn(`Unknown data-ui5-slot value: ${slot}, ignoring`, child, `Valid data-ui5-slot values are: ${validValues}`); // eslint-disable-line
+				console.warn(`Unknown slotName: ${slotName}, ignoring`, child, `Valid values are: ${validValues}`); // eslint-disable-line
 				return;
 			}
-			let slotName;
-			if (slotsMap[slot].multiple) {
-				const nextId = (autoIncrementMap.get(slot) || 0) + 1;
-				slotName = `${slot}-${nextId}`;
-				autoIncrementMap.set(slot, nextId);
-			} else {
-				slotName = slot;
+
+			// For children that need individual slots, calculate them
+			if (slotsMap[slotName].individualSlots) {
+				const nextId = (autoIncrementMap.get(slotName) || 0) + 1;
+				autoIncrementMap.set(slotName, nextId);
+				child._individualSlot = `${slotName}-${nextId}`;
 			}
-			child._slot = slotName;
-			if (slotsMap[slot].multiple) {
-				this._state[slot] = [...this._state[slot], child];
+
+			// Distribute the child in the _state object
+			if (slotsMap[slotName].multiple) {
+				this._state[slotName] = [...this._state[slotName], child];
 			} else {
-				this._state[slot] = child;
+				this._state[slotName] = child;
 			}
 		});
 	}
@@ -333,7 +338,7 @@ class UI5Element extends HTMLElement {
 	_attachChildPropertyUpdated(child, propData) {
 		const listenFor = propData.listenFor,
 			childMetadata = child.constructor.getMetadata(),
-			childType = child.getAttribute("data-ui5-slot"), // all slotted children have the same configuration
+			slotName = this.constructor._getSlotName(child), // all slotted children have the same configuration
 			childProperties = childMetadata.getProperties();
 
 		let observedProps = [],
@@ -350,23 +355,26 @@ class UI5Element extends HTMLElement {
 			notObservedProps = Array.isArray(listenFor.exclude) ? listenFor.exclude : [];
 		}
 
-		if (!this._monitoredChildProps.has(childType)) {
-			this._monitoredChildProps.set(childType, { observedProps, notObservedProps });
+		if (!this._monitoredChildProps.has(slotName)) {
+			this._monitoredChildProps.set(slotName, { observedProps, notObservedProps });
 		}
 
-		child.addEventListener("_propertyChange", this._onChildPropertyUpdated);
+		child.addEventListener("_propertyChange", this._invalidateParentOfPropertyUpdate);
 	}
 
 	_detachChildPropertyUpdated(child) {
-		child.removeEventListener("_propertyChange", this._onChildPropertyUpdated);
+		child.removeEventListener("_propertyChange", this._invalidateParentOfPropertyUpdate);
 	}
 
-	_onChildPropertyUpdated(prop) {
-		if (!this.parentNode) {
+	_invalidateParentOfPropertyUpdate(prop) {
+		// The web component to be invalidated
+		const parentNode = this.parentNode;
+		if (!parentNode) {
 			return;
 		}
 
-		const propsMetadata = this.parentNode._monitoredChildProps.get(this.getAttribute("data-ui5-slot"));
+		const slotName = parentNode.constructor._getSlotName(this);
+		const propsMetadata = parentNode._monitoredChildProps.get(slotName);
 
 		if (!propsMetadata) {
 			return;
@@ -374,7 +382,7 @@ class UI5Element extends HTMLElement {
 		const { observedProps, notObservedProps } = propsMetadata;
 
 		if (observedProps.includes(prop.detail.name) && !notObservedProps.includes(prop.detail.name)) {
-			this.parentNode._invalidate("_parent_", this);
+			parentNode._invalidate("_parent_", this);
 		}
 	}
 
@@ -417,9 +425,43 @@ class UI5Element extends HTMLElement {
 	}
 
 	_assignSlotsToChildren() {
+		const defaultSlot = this.constructor.getMetadata().getDefaultSlot();
 		const domChildren = Array.from(this.children);
-		domChildren.filter(child => child._slot).forEach(child => {
-			child.setAttribute("slot", child._slot);
+
+		domChildren.forEach(child => {
+			const slotName = this.constructor._getSlotName(child);
+			const slot = child.getAttribute("slot");
+			const hasSlot = !!slot;
+
+			// Assign individual slots, f.e. items => items-1
+			if (child._individualSlot) {
+				child.setAttribute("slot", child._individualSlot);
+				return;
+			}
+
+			// If the user set a slot equal to the default slot, f.e. slot="content", remove it
+			// Otherwise, stop here
+			if (slotName === defaultSlot) {
+				if (hasSlot) {
+					child.removeAttribute("slot");
+				}
+				return;
+			}
+
+			// Compatibility - for the ones with "data-ui5-slot"
+			// If they don't have a slot yet, and are not of the default child type, set slotName as slot
+			if (!hasSlot) {
+				child.setAttribute("slot", slotName);
+			}
+		}, this);
+
+
+		domChildren.filter(child => child._compatibilitySlot).forEach(child => {
+			const hasSlot = !!child.getAttribute("slot");
+			const needsSlot = child._compatibilitySlot !== defaultSlot;
+			if (!hasSlot && needsSlot) {
+				child.setAttribute("slot", child._compatibilitySlot);
+			}
 		});
 	}
 
@@ -502,8 +544,23 @@ class UI5Element extends HTMLElement {
 	 */
 	fireEvent(name, data, cancelable) {
 		let compatEventResult = true; // Initialized to true, because if the event is not fired at all, it should be considered "not-prevented"
+		const noConflict = getWCNoConflict();
 
-		let customEvent = new CustomEvent(name, {
+		const noConflictEvent = new CustomEvent(`ui5-${name}`, {
+			detail: data,
+			composed: false,
+			bubbles: true,
+			cancelable,
+		});
+
+		// This will be false if the compat event is prevented
+		compatEventResult = this.dispatchEvent(noConflictEvent);
+
+		if (noConflict === true || (noConflict.events && noConflict.events.includes && noConflict.events.includes(name))) {
+			return compatEventResult;
+		}
+
+		const customEvent = new CustomEvent(name, {
 			detail: data,
 			composed: false,
 			bubbles: true,
@@ -513,36 +570,19 @@ class UI5Element extends HTMLElement {
 		// This will be false if the normal event is prevented
 		const normalEventResult = this.dispatchEvent(customEvent);
 
-		if (UI5Element.noConflictEvents.includes(name)) {
-			customEvent = new CustomEvent(`ui5-${name}`, {
-				detail: data,
-				composed: false,
-				bubbles: true,
-				cancelable,
-			});
-
-			// This will be false if the compat event is prevented
-			compatEventResult = this.dispatchEvent(customEvent);
-		}
-
 		// Return false if any of the two events was prevented (its result was false).
 		return normalEventResult && compatEventResult;
 	}
 
 	getSlottedNodes(slotName) {
-		const getSlottedElement = el => {
-			if (el.tagName.toUpperCase() !== "SLOT") {
-				return el;
+		const reducer = (acc, curr) => {
+			if (curr.tagName.toUpperCase() !== "SLOT") {
+				return acc.concat([curr]);
 			}
-
-			const nodes = el.assignedNodes();
-
-			if (nodes.length) {
-				return getSlottedElement(nodes[0]);
-			}
+			return acc.concat(curr.assignedElements({ flatten: true }));
 		};
 
-		return this[slotName].map(getSlottedElement);
+		return this[slotName].reduce(reducer, []);
 	}
 
 	/**
@@ -557,6 +597,31 @@ class UI5Element extends HTMLElement {
 		const nextNumber = lastNumber !== undefined ? lastNumber + 1 : 1;
 		IDMap.set(className, nextNumber);
 		return `__${className}${nextNumber}`;
+	}
+
+	static _getSlotName(child) {
+		const defaultSlot = this.getMetadata().getDefaultSlot();
+
+		// Text nodes can only go to the default slot
+		if (!(child instanceof HTMLElement)) {
+			return defaultSlot;
+		}
+
+		// Check for explicitly given logical slot
+		const ui5Slot = child.getAttribute("data-ui5-slot");
+		if (ui5Slot) {
+			return ui5Slot;
+		}
+
+		// Discover the slot based on the real slot name (f.e. footer => footer, or content-32 => content)
+		const slot = child.getAttribute("slot");
+		if (slot) {
+			const match = slot.match(/^(.+?)-\d+$/);
+			return match ? match[1] : slot;
+		}
+
+		// Use default slot as a fallback
+		return defaultSlot;
 	}
 
 	static generateAccessors() {
@@ -599,28 +664,6 @@ class UI5Element extends HTMLElement {
 				},
 			});
 		}
-
-		// Node Text
-		Object.defineProperty(proto, "_nodeText", {
-			get() {
-				return this._state._nodeText;
-			},
-			set() {
-				throw new Error("Cannot set node text directly, use the DOM APIs");
-			},
-		});
-	}
-
-	static get noConflictEvents() {
-		if (!this._noConflictEvents) {
-			const noConflictConfig = getWCNoConflict();
-			this._noConflictEvents = [];
-			if (typeof noConflictConfig === "object" && typeof noConflictConfig.events === "string") {
-				this._noConflictEvents = noConflictConfig.events.split(",").map(evtName => evtName.trim());
-			}
-		}
-
-		return this._noConflictEvents;
 	}
 }
 const kebabToCamelCase = string => toCamelCase(string.split("-"));

@@ -114,7 +114,6 @@ const metadata = {
 		 */
 		showExceededText: {
 			type: Boolean,
-			defaultValue: false,
 		},
 
 		/**
@@ -127,7 +126,6 @@ const metadata = {
 		 */
 		growing: {
 			type: Boolean,
-			defaultValue: false,
 		},
 
 		/**
@@ -180,7 +178,6 @@ const metadata = {
 		},
 		_focussed: {
 			type: Boolean,
-			defaultValue: false,
 		},
 		_listeners: {
 			type: Object,

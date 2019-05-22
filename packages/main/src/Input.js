@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { isIE } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
+
 import {
 	isUp,
 	isDown,
@@ -45,10 +46,10 @@ const metadata = {
 		 * </br></br>
 		 * Example: </br>
 		 * &lt;ui5-input show-suggestions></br>
-		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li type="Active">Item #1&lt;/ui5-li></br>
-		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li type="Active">Item #2&lt;/ui5-li></br>
+		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li>Item #1&lt;/ui5-li></br>
+		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li>Item #2&lt;/ui5-li></br>
 		 * &lt;/ui5-input>
-		 * <ui5-input show-suggestions><ui5-li type="Active">Item #1</ui5-li><ui5-li type="Active">Item #2</ui5-li></ui5-input>
+		 * <ui5-input show-suggestions><ui5-li>Item #1</ui5-li><ui5-li>Item #2</ui5-li></ui5-input>
 		 * </br></br>
 		 * <b>Note:</b> The suggestion would be displayed only if the <code>showSuggestions</code>
 		 * property is set to <code>true</code>.
@@ -61,6 +62,10 @@ const metadata = {
 			type: HTMLElement,
 			multiple: true,
 		},
+
+		_beginContent: {
+			type: HTMLElement,
+		},
 	},
 	properties: /** @lends  sap.ui.webcomponents.main.Input.prototype */  {
 
@@ -70,6 +75,7 @@ const metadata = {
 		 * <b>Note:</b> A disabled <code>ui5-input</code> is completely uninteractive.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		disabled: {
@@ -96,6 +102,7 @@ const metadata = {
 		 * but still provides visual feedback upon user interaction.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		readonly: {
@@ -169,6 +176,7 @@ const metadata = {
 		 * Defines whether the <code>ui5-input</code> should show suggestions, if such are present.
 		 *
 		 * @type {Boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		showSuggestions: {
@@ -432,7 +440,7 @@ class Input extends UI5Element {
 	}
 
 	selectSuggestion(item, keyboardUsed) {
-		const itemText = item._nodeText;
+		const itemText = item.textContent;
 		const fireInput = keyboardUsed
 			? this.valueBeforeItemSelection !== itemText : this.value !== itemText;
 

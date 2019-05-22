@@ -93,6 +93,7 @@ const metadata = {
 		/**
 		 * Defines, if the product switch icon would be displayed.
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		showProductSwitch: {
@@ -102,6 +103,7 @@ const metadata = {
 		/**
 		 * Defines, if the product CoPilot icon would be displayed.
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		showCoPilot: {

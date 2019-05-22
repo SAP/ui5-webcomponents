@@ -19,7 +19,6 @@ import "./ThemePropertiesProvider.js";
  */
 const metadata = {
 	tag: "ui5-link",
-	usesNodeText: true,
 	properties: /** @lends  sap.ui.webcomponents.main.Link.prototype */  {
 
 		/**
@@ -28,6 +27,7 @@ const metadata = {
 		 * <b>Note:</b> When disabled, the link cannot be triggered by the user.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		disabled: {
@@ -84,6 +84,7 @@ const metadata = {
 		 * <b>Note:</b> the text is truncated by default.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		wrap: {
@@ -94,6 +95,21 @@ const metadata = {
 			type: String,
 		},
 	},
+	slots: /** @lends sap.ui.webcomponents.main.Link.prototype */ {
+		/**
+		 * Defines the text of the <code>ui5-link</code>.
+		 * <br><b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+		 *
+		 * @type {Node[]}
+		 * @slot
+		 * @public
+		 */
+		text: {
+			type: Node,
+			multiple: true,
+		},
+	},
+	defaultSlot: "text",
 	events: /** @lends sap.ui.webcomponents.main.Link.prototype */ {
 
 		/**
@@ -146,7 +162,6 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.Link
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-link
- * @usestextcontent
  * @public
  */
 class Link extends UI5Element {

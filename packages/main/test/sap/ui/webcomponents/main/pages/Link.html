@@ -67,7 +67,7 @@
 		var input = document.querySelector("#helper-input");
 
 		[link, disLink].forEach(function(element) {
-			element.addEventListener("press", function(event) {
+			element.addEventListener("ui5-press", function(event) {
 				input.value = parseInt(input.value) + 1;
 			});
 		});

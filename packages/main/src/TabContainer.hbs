@@ -1,6 +1,6 @@
 <div {{> controlData}} class="{{classes.main}}">
 	<div class="{{classes.header}}" id="{{ctr._id}}-header">
-		<ui5-icon @press="{{ctr._headerBackArrow.click}}" class="{{classes.headerBackArrow}}" src="sap-icon://slim-arrow-left" tabindex="-1"></ui5-icon>
+		<ui5-icon @ui5-press="{{ctr._headerBackArrow.click}}" class="{{classes.headerBackArrow}}" src="sap-icon://slim-arrow-left" tabindex="-1"></ui5-icon>
 
 		<!-- tab items -->
 		<div class="{{classes.headerScrollContainer}}" id="{{ctr._id}}-headerScrollContainer">
@@ -42,12 +42,12 @@
 			</ul>
 		</div>
 
-		<ui5-icon @press="{{ctr._headerForwardArrow.click}}" class="{{classes.headerForwardArrow}}" src="sap-icon://slim-arrow-right" tabindex="-1"></ui5-icon>
+		<ui5-icon @ui5-press="{{ctr._headerForwardArrow.click}}" class="{{classes.headerForwardArrow}}" src="sap-icon://slim-arrow-right" tabindex="-1"></ui5-icon>
 
 		<!-- overflow button -->
 		{{#if ctr.showOverflow}}
 			<ui5-button
-				@press="{{ctr._overflowButton.click}}"
+				@ui5-press="{{ctr._overflowButton.click}}"
 				class="{{classes.overflowButton}}"
 				icon="sap-icon://slim-arrow-down"
 				type="Transparent"
@@ -60,7 +60,7 @@
 		{{#each renderItems}}
 			{{#unless this.isSeparator}}
 				<div class="{{this.contentItemClasses}}" id="ui5-tc-contentItem-{{this.position}}">
-					<slot name="{{this.item._slot}}"></slot>
+					<slot name="{{this.item._individualSlot}}"></slot>
 				</div>
 			{{/unless}}
 		{{/each}}
@@ -73,7 +73,7 @@
 		hide-header
 		placement-type="Bottom"
 		horizontal-align="Right">
-		<ui5-list @itemPress="{{ctr._overflowList.click}}">
+		<ui5-list @ui5-itemPress="{{ctr._overflowList.click}}">
 			{{#each renderItems}}
 				{{#unless this.isSeparator}}
 					<ui5-li-custom id="{{this.item._id}}"

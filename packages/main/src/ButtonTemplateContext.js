@@ -22,7 +22,7 @@ class ButtonTemplateContext {
 			sapMBtn: true,
 			sapMBtnActive: state._active,
 			sapMBtnWithIcon: state.icon,
-			sapMBtnNoText: !state._nodeText,
+			sapMBtnNoText: !state.text.length,
 			sapMBtnDisabled: state.disabled,
 			sapMBtnIconEnd: state.iconEnd,
 			[`sapMBtn${state.type}`]: true,

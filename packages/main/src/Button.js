@@ -19,7 +19,6 @@ import "./ThemePropertiesProvider.js";
  */
 const metadata = {
 	tag: "ui5-button",
-	usesNodeText: true,
 	properties: /** @lends sap.ui.webcomponents.main.Button.prototype */ {
 
 		/**
@@ -92,6 +91,7 @@ const metadata = {
 		 * <code>import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";</code>
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		submits: {
@@ -105,6 +105,21 @@ const metadata = {
 
 		_iconSettings: { type: Object },
 	},
+	slots: /** @lends sap.ui.webcomponents.main.Button.prototype */ {
+		/**
+		 * Defines the text of the <code>ui5-button</code>.
+		 * <br><b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+		 *
+		 * @type {Node[]}
+		 * @slot
+		 * @public
+		 */
+		text: {
+			type: Node,
+			multiple: true,
+		},
+	},
+	defaultSlot: "text",
 	events: /** @lends sap.ui.webcomponents.main.Button.prototype */ {
 
 		/**
@@ -153,7 +168,6 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.Button
  * @extends UI5Element
  * @tagname ui5-button
- * @usestextcontent
  * @public
  */
 class Button extends UI5Element {

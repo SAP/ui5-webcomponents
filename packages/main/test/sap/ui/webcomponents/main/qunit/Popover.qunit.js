@@ -7,11 +7,11 @@ TestHelper.ready(function () {
 		beforeEach: function() {
 			var html = '<ui5-button id="myButton"></ui5-button>'
 				+ '<ui5-popover id="myPopover">'
-					+ '<div data-ui5-slot="header">'
+					+ '<div slot="header">'
 						+ '<div  class="customHeaderText">Custom Header</div>'
 						+ '<ui5-button icon="sap-icon://decline"></ui5-button>'
 					+ '</div>'
-					+ '<div data-ui5-slot="footer">'
+					+ '<div slot="footer">'
 						+ '<div class="customFooterText" >Custom Footer</div>'
 						+ '<ui5-button>Accept</ui5-button>'
 					+ '</div>'

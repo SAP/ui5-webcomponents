@@ -24,8 +24,8 @@
 
 <body>
 	<ui5-button id="button1" type="Emphasized">Action Bar Button</ui5-button>
-	<ui5-button>Primary button</ui5-button>
-	<ui5-button type="Transparent">Secondary button</ui5-button>
+	<ui5-button>Primary <br> button</ui5-button>
+	<ui5-button type="Transparent">Secondary <span style="color:red;">button</span></ui5-button>
 	<ui5-button disabled id="button-disabled">Inactive</ui5-button>
 	<ui5-button type="Positive">Accept</ui5-button>
 	<ui5-button type="Negative">Decline</ui5-button>
@@ -35,7 +35,7 @@
 
 	<ui5-input id="field"></ui5-input>
 
-	<ui5-button type="Emphasized">Action Bar Button</ui5-button>
+	<ui5-button type="Emphasized">Action<br> Bar<br> Button</ui5-button>
 	<ui5-button>Primary button</ui5-button>
 	<ui5-button type="Transparent">Secondary button</ui5-button>
 	<ui5-button disabled>Inactive</ui5-button>
@@ -156,7 +156,7 @@
 		var counter = 0;
 
 		[button, disabledButton].forEach(function (el) {
-			el.addEventListener("press", function(event) {
+			el.addEventListener("ui5-press", function(event) {
 				counter += 1;
 				input.value = counter;
 			});

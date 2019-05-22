@@ -30,7 +30,8 @@ class State {
 					if (typeof this._data[prop] !== "undefined") {
 						return this._data[prop];
 					}
-					if (propData.type === "boolean") {
+
+					if (propData.type === Boolean) {
 						return false;
 					} else if (propData.multiple) { // eslint-disable-line
 						return [];
@@ -116,16 +117,6 @@ class State {
 				},
 			});
 		}
-
-		Object.defineProperty(proto, "_nodeText", {
-			get() {
-				return this._data._nodeText;
-			},
-			set(value) {
-				this._data._nodeText = value;
-				this._control._invalidate("_nodeText", value);
-			},
-		});
 	}
 
 	static generateDefaultState(MetadataClass) {
@@ -134,14 +125,21 @@ class State {
 		// Initialize properties
 		const props = MetadataClass.getProperties();
 		for (const propName in props) { // eslint-disable-line
-			if (props[propName].type === "boolean") {
+
+			const propDefaultValue = props[propName].defaultValue;
+
+			if (props[propName].type === Boolean) {
 				defaultState[propName] = false;
+
+				if (propDefaultValue !== undefined) {
+					console.warn("The 'defaultValue' metadata key is ignored for all booleans properties, they would be initialized with 'false' by default"); // eslint-disable-line
+				}
 			} else if (props[propName].multiple) {
 				defaultState[propName] = [];
 			} else if (props[propName].type === Object) {
 				defaultState[propName] = "defaultValue" in props[propName] ? props[propName].defaultValue : {};
 			} else {
-				defaultState[propName] = props[propName].defaultValue;
+				defaultState[propName] = propDefaultValue;
 			}
 		}
 

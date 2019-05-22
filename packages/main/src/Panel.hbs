@@ -16,7 +16,7 @@
 				tabindex="{{iconTabIndex}}"
 				aria-expanded="{{expanded}}"
 				aria-labelledby="{{ariaLabelledBy}}"
-				@press="{{ctr._icon.press}}"
+				@ui5-press="{{ctr._icon.press}}"
 			></ui5-icon>
 			{{> header}}
 		</header>
@@ -24,16 +24,14 @@
 
 	<!-- content area -->
 	<div class="{{classes.content}}" tabindex="-1" style="{{styles.content}}">
-		{{#each ctr.content}}
-			<slot name="{{this._slot}}"></slot>
-		{{/each}}
+        <slot></slot>
 	</div>
 </div>
 
 {{#*inline "header"}}
 	{{#if ctr.header}}
 		<div class="sapMPanelHdrToolbar">
-			<slot name="{{ctr.header._slot}}"></slot>
+			<slot name="header"></slot>
 		</div>
 	{{/if}}
 	{{#if shouldRenderH1}}

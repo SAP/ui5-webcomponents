@@ -37,7 +37,7 @@
 		var counter = 0;
 
 		[checkBox1, checkBox2].forEach(function(el) {
-			el.addEventListener("change", function(event) {
+			el.addEventListener("ui5-change", function(event) {
 				counter += 1;
 				input.value = counter;
 			});

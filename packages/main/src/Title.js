@@ -15,13 +15,13 @@ import "./ThemePropertiesProvider.js";
  */
 const metadata = {
 	tag: "ui5-title",
-	usesNodeText: true,
 	properties: /** @lends sap.ui.webcomponents.main.Title.prototype */ {
 
 		/**
 		 * Determines whether the <code>ui5-title</code> should wrap.
 		 *
 		 * @type {Boolean}
+		 * @defaultvalue false
 		 * @public
 		*/
 		wrap: {
@@ -40,6 +40,21 @@ const metadata = {
 			defaultValue: TitleLevel.H2,
 		},
 	},
+	slots: /** @lends sap.ui.webcomponents.main.Title.prototype */ {
+		/**
+		 * Defines the text of the <code>ui5-title</code>.
+		 * <br><b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+		 *
+		 * @type {Node[]}
+		 * @slot
+		 * @public
+		 */
+		text: {
+			type: Node,
+			multiple: true,
+		},
+	},
+	defaultSlot: "text",
 };
 
 /**
@@ -59,7 +74,6 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.Title
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-title
- * @usestextcontent
  * @public
  */
 class Title extends UI5Element {

@@ -20,6 +20,7 @@ const derivationsFactory = ({ darken, lighten, contrast, fade, saturate, desatur
 		"--sapUiButtonBackgroundDarken7": () => darken("--sapUiButtonBackground", 7), // #e5e5e5;
 		"--sapUiButtonBackgroundDarken2": () => darken("--sapUiButtonBackground", 2), // #f2f2f2;
 		"--sapUiButtonHoverBackgroundDarken2": () => darken("--sapUiButtonHoverBackground", 2), // #e5e5e5;
+		"--sapUiButtonHoverBackgroundDarken5": () => darken("--sapUiButtonHoverBackground", 5),
 		"--sapUiButtonRejectActiveBackgroundDarken5": () => darken("--sapUiButtonRejectActiveBackground", 5), // #a20000;
 		"--sapUiButtonAcceptActiveBackgroundDarken5": () => darken("--sapUiButtonAcceptActiveBackground", 5), // #246924;
 		"--sapUiContentForegroundColorLighten5": () => lighten("--sapUiContentForegroundColor", 5), // #f2f2f2;
@@ -29,6 +30,7 @@ const derivationsFactory = ({ darken, lighten, contrast, fade, saturate, desatur
 		"--sapUiContentForegroundColorDarken10": () => darken("--sapUiContentForegroundColor", 10), // #cccccc;
 		"--sapUiButtonRejectActiveBackgroundLighten5": () => lighten("--sapUiButtonRejectActiveBackground", 5),
 		"--sapUiButtonAcceptActiveBackgroundLighten5": () => lighten("--sapUiButtonAcceptActiveBackground", 5),
+		"--sapUiButtonBackgroundDarken10": () => darken("--sapUiButtonBackground", 10),
 	};
 
 	return derivations;

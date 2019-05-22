@@ -16,7 +16,7 @@
 
 		{{#if ctr.description}}
 			<div class="sapWCTimelineItemDesc">
-				<slot name="{{ctr.description._slot}}"></slot>
+				<slot></slot>
 			</div>
 		{{/if}}
 		<span class="sapWCTimelineBubbleArrow sapWCTimelineBubbleArrowLeft"></span>
@@ -25,7 +25,7 @@
 
 {{#*inline "itemName"}}
 	{{#if ctr.itemNameClickable}}
-		<ui5-link @press="{{ctr._onItemNamePress}}">{{ctr.itemName}}</ui5-link>
+		<ui5-link @ui5-press="{{ctr._onItemNamePress}}">{{ctr.itemName}}</ui5-link>
 	{{/if}}
 
 	{{#unless ctr.itemNameClickable}}

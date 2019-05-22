@@ -30,6 +30,7 @@ const metadata = {
 		rows: {
 			type: TableRow,
 			multiple: true,
+			individualSlots: true,
 		},
 
 		/**
@@ -43,6 +44,7 @@ const metadata = {
 		columns: {
 			type: TableColumn,
 			multiple: true,
+			individualSlots: true,
 			listenFor: { exclude: ["header"] },
 		},
 	},
@@ -68,6 +70,7 @@ const metadata = {
 		 * </ul>
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		stickyColumnHeader: {
@@ -181,8 +184,8 @@ class Table extends UI5Element {
 
 		this.rows.forEach(row => {
 			row._columnsInfo = columnSettings;
-			row.removeEventListener("_focused", this.fnOnRowFocused);
-			row.addEventListener("_focused", this.fnOnRowFocused);
+			row.removeEventListener("ui5-_focused", this.fnOnRowFocused);
+			row.addEventListener("ui5-_focused", this.fnOnRowFocused);
 		});
 	}
 

@@ -26,6 +26,7 @@ const metadata = {
 		 * <b>Note:</b> A disabled <code>ui5-checkbox</code> is completely uninteractive.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		disabled: {
@@ -39,9 +40,10 @@ const metadata = {
 		 * but still provides visual feedback upon user interaction.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
-		readOnly: {
+		readonly: {
 			type: Boolean,
 		},
 
@@ -53,6 +55,7 @@ const metadata = {
 		 * pressing the Enter or Space key.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		checked: {
@@ -63,6 +66,7 @@ const metadata = {
 		 * Defines the text of the <code>ui5-checkbox</code>.
 		 *
 		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		text: {
@@ -76,6 +80,7 @@ const metadata = {
 		 * <b>Note:</b> Available options are <code>Warning</code>, <code>Error</code>, and <code>None</code> (default).
 		 *
 		 * @type {string}
+		 * @defaultvalue None
 		 * @public
 		 */
 		valueState: {
@@ -89,6 +94,7 @@ const metadata = {
 		 * <b>Note:</b> By default, the text truncates when there is not enough space.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		wrap: {
@@ -151,7 +157,7 @@ const metadata = {
  * <br><br>
  * You can disable the <code>ui5-checkbox</code> by setting the <code>disabled</code> property to
  * <code>true</code>,
- * or use the <code>ui5-checkbox</code> in read-only mode by setting the <code>readOnly</code>
+ * or use the <code>ui5-checkbox</code> in read-only mode by setting the <code>readonly</code>
  * property to <code>true</code>.
  *
  * <h3>ES6 Module Import</h3>
@@ -236,7 +242,7 @@ class CheckBox extends UI5Element {
 	}
 
 	canToggle() {
-		return !(this.disabled || this.readOnly);
+		return !(this.disabled || this.readonly);
 	}
 
 	static get calculateTemplateContext() {

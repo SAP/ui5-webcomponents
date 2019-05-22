@@ -36,7 +36,7 @@ TestHelper.ready(function () {
 			assert.notOk(radiobutton.classList.contains(expectedClass), "root element does not have ." + expectedClass);
 		});
 
-		QUnit.test("The 'read-only' is not set by default", function (assert) {
+		QUnit.test("The 'readonly' is not set by default", function (assert) {
 			var expectedClass = "sapMRbRo",
 				radiobutton = this.getRadioButtonRoot();
 
@@ -97,14 +97,14 @@ TestHelper.ready(function () {
 			});
 		});
 
-		QUnit.test("changing the 'read-only' is reflected in the DOM", function (assert) {
+		QUnit.test("changing the 'readonly' is reflected in the DOM", function (assert) {
 			assert.expect(1);
 
 			var done = assert.async(),
 				expectedClass = "sapMRbRo",
 				radiobutton = this.getRadioButtonRoot();
 
-			this.radiobutton.setAttribute("read-only", "");
+			this.radiobutton.setAttribute("readonly", "");
 
 			RenderScheduler.whenFinished().then(function () {
 				assert.ok(radiobutton.classList.contains(expectedClass), "root element has ." + expectedClass);
