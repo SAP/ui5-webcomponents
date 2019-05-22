@@ -1,7 +1,7 @@
 import DataType from "@ui5/webcomponents-base/src/types/DataType.js";
 
 /**
- * Different types of Button.
+ * Different types of BusyIndicator.
  */
 const BusyIndicatorTypes = {
 	/**
