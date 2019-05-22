@@ -171,13 +171,14 @@ const metadata = {
 		 * in <code>SingleSelect</code> and <code>MultiSelect</code> modes.
 		 *
 		 * @event
-		 * @param {Array} items an array of the selected items.
+		 * @param {Array} selectedItems an array of the selected items.
+		 * @param {Array} previouslySelectedItems an array of the previously selected items.
 		 * @public
 		 */
 		selectionChange: {
 			detail: {
-				items: { type: Array },
-				previousSelection: { type: Array },
+				selectedItems: { type: Array },
+				previouslySelectedItems: { type: Array },
 			},
 		},
 	},
