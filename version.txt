@@ -1,16 +1,5 @@
-commit 60611c4fcb0e011acd154c5bc9e2c48e6a74011b
+commit 1696cefd29e6676ce5c9a491acb6dfe217357688
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed May 22 11:43:24 2019 +0300
+Date:   Wed May 22 13:11:30 2019 +0300
 
-     fix: fix "ifDefined" to update DOM only when attrs are changed (#415)
-    
-    * Background: "ifThruthy" removes an attribute key and value if value is falsy, but it makes the templates less efficient, as lit-html updates attributes no matter, if the value is changed which causes some issues.
-    * Fixes: https://github.com/SAP/ui5-webcomponents/issues/401
-    * Changes:
-    * Rename "ifThruthy" to "ifDefined" and correct the directive logic to update only if the result of the directive is different from the previous value.
-    * Attributes undefined, null and empty strings are removed from DOM.
-    * Remove obsolete "common" partials
-    * Make use of boolean props syntax in lit-html
-    * Fix  default value for string props, the default becomes empty string or the the value, given via the defaultValue metadata key.
-    * Clean templates from non-existing component properties (tooltip, dir..)
-    * Remove type: "Active" everywhere the ui5-li is used, as it is "Active" by default
+    doc: add since,new labels to MultiComboBox sample (#424)
