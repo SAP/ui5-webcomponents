@@ -1,10 +1,5 @@
-commit 1f62ddae473619c5baec07636c17dbedc3edf97c
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Wed May 22 14:25:27 2019 +0300
+commit e6393aed6e3f6162cf23e05841007078c0d6db41
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed May 22 17:01:54 2019 +0300
 
-    feat: fetch ui5-datepicker assets from CDN (#420)
-    
-    - the CLDR data is fetched by default from the ui5 CDN
-    - no more JSON imports when importing ui5-datepicker
-    - still available as CLDRAssets.js if apps want to bundle the CLDR data
-    with a build plugin
+    chore: filter out ui5 webcomponents in #whenFinished (#425)
