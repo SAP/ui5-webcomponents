@@ -371,7 +371,7 @@ class UI5Element extends HTMLElement {
 			return;
 		}
 
-		const slotName = this.constructor._getSlotName(this);
+		const slotName = this.parentNode.constructor._getSlotName(this);
 		const propsMetadata = this.parentNode._monitoredChildProps.get(slotName);
 
 		if (!propsMetadata) {
