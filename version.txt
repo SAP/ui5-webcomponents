@@ -1,5 +1,10 @@
-commit 1696cefd29e6676ce5c9a491acb6dfe217357688
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed May 22 13:11:30 2019 +0300
+commit 1f62ddae473619c5baec07636c17dbedc3edf97c
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Wed May 22 14:25:27 2019 +0300
 
-    doc: add since,new labels to MultiComboBox sample (#424)
+    feat: fetch ui5-datepicker assets from CDN (#420)
+    
+    - the CLDR data is fetched by default from the ui5 CDN
+    - no more JSON imports when importing ui5-datepicker
+    - still available as CLDRAssets.js if apps want to bundle the CLDR data
+    with a build plugin
