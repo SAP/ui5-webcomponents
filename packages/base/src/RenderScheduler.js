@@ -117,20 +117,17 @@ class RenderScheduler {
 	 * return a promise that will be resolved once all ui5 webcomponents on the page have their shadow root ready
 	 */
 	static async whenShadowDOMReady() {
-		const undefinedElements = document.querySelectorAll(':not(:defined)');
+		const undefinedElements = document.querySelectorAll(":not(:defined)");
 
 		const definedPromises = [...undefinedElements].map(
 		  el => customElements.whenDefined(el.localName)
 		);
-		const timeoutPromise = new Promise(resolve => {
-			setTimeout(_ => {
-				resolve();
-			}, 5000);
-		});
+		const timeoutPromise = new Promise(resolve => setTimeout(resolve, 5000));
 
 		await Promise.race([Promise.all(definedPromises), timeoutPromise]);
-		const stillUndefined = document.querySelectorAll(':not(:defined)');
+		const stillUndefined = document.querySelectorAll(":not(:defined)");
 		if (stillUndefined.length) {
+			// eslint-disable-next-line
 			console.warn("undefined elements after 5 seconds: ", [...stillUndefined].map(el => el.localName));
 		}
 
