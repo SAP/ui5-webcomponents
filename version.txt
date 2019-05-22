@@ -1,5 +1,5 @@
-commit e6393aed6e3f6162cf23e05841007078c0d6db41
+commit 23257f45647b77a2648968b0fa8b3de442a3b028
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed May 22 17:01:54 2019 +0300
+Date:   Wed May 22 18:14:33 2019 +0300
 
-    chore: filter out ui5 webcomponents in #whenFinished (#425)
+    chore(release): publish v0.11.0 (#426)
