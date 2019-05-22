@@ -563,5 +563,4 @@ Bootstrap.boot().then(_ => {
 	DatePicker.define();
 });
 
-
 export default DatePicker;
