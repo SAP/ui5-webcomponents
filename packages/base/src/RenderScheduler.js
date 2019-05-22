@@ -123,7 +123,7 @@ class RenderScheduler {
 	static async whenShadowDOMReady() {
 		const undefinedElements = this.getNotDefinedComponents();
 
-		const definedPromises = [...undefinedElements].map(
+		const definedPromises = undefinedElements.map(
 		  el => customElements.whenDefined(el.localName)
 		);
 		const timeoutPromise = new Promise(resolve => setTimeout(resolve, 5000));
