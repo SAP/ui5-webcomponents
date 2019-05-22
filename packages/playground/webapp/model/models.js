@@ -84,7 +84,6 @@ sap.ui.define([
 		discoverSamples: function (oModel) {
 			var newComponents = [
 				// Add new components here
-				"BusyIndicator"
 			];
 			return jQuery.ajax({
 				url: getRealBaseURI() + "/resources/sap/ui/webcomponents/main/playground.json"
