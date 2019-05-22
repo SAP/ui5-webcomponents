@@ -359,20 +359,22 @@ class UI5Element extends HTMLElement {
 			this._monitoredChildProps.set(slotName, { observedProps, notObservedProps });
 		}
 
-		child.addEventListener("_propertyChange", this._onChildPropertyUpdated);
+		child.addEventListener("_propertyChange", this._invalidateParentOfPropertyUpdate);
 	}
 
 	_detachChildPropertyUpdated(child) {
-		child.removeEventListener("_propertyChange", this._onChildPropertyUpdated);
+		child.removeEventListener("_propertyChange", this._invalidateParentOfPropertyUpdate);
 	}
 
-	_onChildPropertyUpdated(prop) {
-		if (!this.parentNode) {
+	_invalidateParentOfPropertyUpdate(prop) {
+		// The web component to be invalidated
+		const parentNode = this.parentNode;
+		if (!parentNode) {
 			return;
 		}
 
-		const slotName = this.constructor._getSlotName(this);
-		const propsMetadata = this.parentNode._monitoredChildProps.get(slotName);
+		const slotName = parentNode.constructor._getSlotName(this);
+		const propsMetadata = parentNode._monitoredChildProps.get(slotName);
 
 		if (!propsMetadata) {
 			return;
@@ -380,7 +382,7 @@ class UI5Element extends HTMLElement {
 		const { observedProps, notObservedProps } = propsMetadata;
 
 		if (observedProps.includes(prop.detail.name) && !notObservedProps.includes(prop.detail.name)) {
-			this.parentNode._invalidate("_parent_", this);
+			parentNode._invalidate("_parent_", this);
 		}
 	}
 
