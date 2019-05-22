@@ -42,10 +42,14 @@
 </head>
 <body class="sapUiBody example-wrapper">
 
-	<header>
+	<header class="component-heading">
 		<h2 class="control-header">MultiComboBox</h2>
-		<div style="margin-bottom: 2rem; font-weight: 300; font-size: 1.1rem; color: #666666;">&lt;ui5-multi-combobox&gt;</div>
+		<div class="component-heading-since">
+			<span><!--since_tag_marker--></span>
+		</div>
 	</header>
+
+	<div style="margin-bottom: 2rem; font-weight: 300; font-size: 1.1rem; color: #666666;">&lt;ui5-multi-combobox&gt;</div>
 
 	<section>
 		<h3>Basic MultiComboBox</h3>
@@ -143,39 +147,41 @@
 	<section>
 			<h3>MultiComboBox with Value State</h3>
 			<div class="snippet">
-				<ui5-multi-combobox value="Success" value-state="Success">
-					<ui5-li>Hello</ui5-li>
-					<ui5-li>UI5</ui5-li>
-					<ui5-li>Web Components</ui5-li>
+				<ui5-multi-combobox value-state="Success">
+					<ui5-li>Fortune</ui5-li>
+					<ui5-li>Luck</ui5-li>
+					<ui5-li selected>Success</ui5-li>
 				</ui5-multi-combobox>
-				<ui5-multi-combobox value="Warning" value-state="Warning">
-					<ui5-li>Hello</ui5-li>
-					<ui5-li>UI5</ui5-li>
-					<ui5-li>Web Components</ui5-li>
+				
+				<ui5-multi-combobox value-state="Warning">
+					<ui5-li>Attention</ui5-li>
+					<ui5-li>Caution</ui5-li>
+					<ui5-li selected>Warning</ui5-li>
 				</ui5-multi-combobox>
-				<ui5-multi-combobox value="Error" value-state="Error">
-					<ui5-li>Hello</ui5-li>
-					<ui5-li>UI5</ui5-li>
-					<ui5-li>Web Components</ui5-li>
+				
+				<ui5-multi-combobox value-state="Error">
+					<ui5-li>Fault</ui5-li>
+					<ui5-li selected>Error</ui5-li>
+					<ui5-li>Mistake</ui5-li>
 				</ui5-multi-combobox>
 			</div>
 			<pre class="prettyprint lang-html"><xmp>
-<ui5-multi-combobox value="Success" value-state="Success">
-	<ui5-li>Hello</ui5-li>
-	<ui5-li>UI5</ui5-li>
-	<ui5-li>Web Components</ui5-li>
+<ui5-multi-combobox value-state="Success">
+	<ui5-li>Fortune</ui5-li>
+	<ui5-li>Luck</ui5-li>
+	<ui5-li selected>Success</ui5-li>
 </ui5-multi-combobox>
 
-<ui5-multi-combobox value="Warning" value-state="Warning">
-	<ui5-li>Hello</ui5-li>
-	<ui5-li>UI5</ui5-li>
-	<ui5-li>Web Components</ui5-li>
+<ui5-multi-combobox value-state="Warning">
+	<ui5-li>Attention</ui5-li>
+	<ui5-li>Caution</ui5-li>
+	<ui5-li selected>Warning</ui5-li>
 </ui5-multi-combobox>
 
-<ui5-multi-combobox value="Error" value-state="Error">
-	<ui5-li>Hello</ui5-li>
-	<ui5-li>UI5</ui5-li>
-	<ui5-li>Web Components</ui5-li>
+<ui5-multi-combobox value-state="Error">
+	<ui5-li>Fault</ui5-li>
+	<ui5-li selected>Error</ui5-li>
+	<ui5-li>Mistake</ui5-li>
 </ui5-multi-combobox>
 			</xmp></pre>
 		</section>
