@@ -1,7 +1,5 @@
-commit 115900b7c79583f6f5d3199a47845b29e3f0a898
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Tue May 21 19:44:11 2019 +0300
+commit b3e3b3f7c522f69e50984e1aaa5e8d1d2df3670c
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Wed May 22 10:28:31 2019 +0300
 
-    feat(ui5-multi-combobox): initial implementation (#379)
-    
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/314
+    fix: broken child property observation (#423)
