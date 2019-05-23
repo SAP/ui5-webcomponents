@@ -1,5 +1,5 @@
-commit 23257f45647b77a2648968b0fa8b3de442a3b028
+commit e9550ce3d283453a12f25530b4ffc741f3b51e08
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed May 22 18:14:33 2019 +0300
+Date:   Thu May 23 09:27:56 2019 +0300
 
-    chore(release): publish v0.11.0 (#426)
+    doc: update version info (#427)
