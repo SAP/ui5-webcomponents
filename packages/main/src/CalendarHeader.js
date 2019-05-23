@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import CalendarHeaderTemplateContext from "./CalendarHeaderTemplateContext.js";
 import Button from "./Button.js";
 import ButtonType from "./types/ButtonType.js";
@@ -111,7 +111,7 @@ class CalendarHeader extends UI5Element {
 	}
 
 	onkeydown(event) {
-		if (event.which === KeyCodes.SPACE || event.which === KeyCodes.ENTER) {
+		if (isSpace(event) || isEnter(event)) {
 			const showPickerButton = event.ui5target.getAttribute("data-sap-show-picker");
 
 			if (showPickerButton) {
