@@ -205,18 +205,16 @@ class UI5Element extends HTMLElement {
 	_clearSlot(slot) {
 		const slotData = this.constructor.getMetadata().getSlots()[slot];
 
-		/*
 		let children = this._state[slot];
 		if (!Array.isArray(children)) {
 			children = [children];
 		}
 
 		children.forEach(el => {
-			if (el._detachChildPropertyUpdated) {
+			if (el && el._attachChildPropertyUpdated) {
 				this._detachChildPropertyUpdated(el);
 			}
 		});
-		*/
 
 		if (slotData.multiple) {
 			this._state[slot] = [];
@@ -229,11 +227,9 @@ class UI5Element extends HTMLElement {
 		const slotData = this.constructor.getMetadata().getSlots()[slot];
 		child = this.constructor.getMetadata().constructor.validateSlotValue(child, slotData);
 
-		/*
 		if (child._attachChildPropertyUpdated) {
 			this._attachChildPropertyUpdated(child, slotData);
 		}
-		*/
 
 		return child;
 	}
