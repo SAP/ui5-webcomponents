@@ -1,5 +1,5 @@
-commit 515617770b5917dfb8a290d6987f1e8fa6facdff
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu May 23 16:39:41 2019 +0300
+commit f87e8a84b7ea9eaf8a6c50f9af50c7e9602d3bfe
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Thu May 23 17:51:16 2019 +0300
 
-     fix(ui5-title): render correct h{n} tag based on the "level" property (#437)
+    docs: update keyboard handling docs (#440)
