@@ -116,6 +116,9 @@ const metadata = {
  * </br>
  * Note: the component would not automatically stretch to fit the whole text width.
  *
+ * <h3>Keyboard Handling</h3>
+ * The state can be changed by pressing the Space and Enter keys.
+ *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/Switch";</code>
