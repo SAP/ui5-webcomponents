@@ -1,5 +1,5 @@
-commit 5b2efc85e22a268bd1a338cff4f2641f7b9315e3
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu May 23 14:30:01 2019 +0300
+commit 64985b231b47185dad1e8e0f9abfc37e97c8cbf5
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Thu May 23 15:41:17 2019 +0300
 
-    doc: improve samples ACC by setting role="application" (#433)
+    refactor usage of pseudo events (#436)
