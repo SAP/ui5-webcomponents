@@ -167,11 +167,7 @@ class UI5Element extends HTMLElement {
 
 		// Init the _state object based on the supported slots
 		for (const [slot, slotData] of Object.entries(slotsMap)) { // eslint-disable-line
-			if (slotData.multiple) {
-				this._state[slot] = [];
-			} else {
-				this._state[slot] = null;
-			}
+			this._clearSlot(slot);
 		}
 
 		const autoIncrementMap = new Map();
@@ -194,12 +190,52 @@ class UI5Element extends HTMLElement {
 			}
 
 			// Distribute the child in the _state object
+			child = this._prepareForSlot(slotName, child);
 			if (slotsMap[slotName].multiple) {
-				this._state[slotName] = [...this._state[slotName], child];
+				this._state[slotName].push(child);
 			} else {
 				this._state[slotName] = child;
 			}
 		});
+
+		this._invalidate();
+	}
+
+	// Removes all children from the slot and detaches listeners, if any
+	_clearSlot(slot) {
+		const slotData = this.constructor.getMetadata().getSlots()[slot];
+
+		/*
+		let children = this._state[slot];
+		if (!Array.isArray(children)) {
+			children = [children];
+		}
+
+		children.forEach(el => {
+			if (el._detachChildPropertyUpdated) {
+				this._detachChildPropertyUpdated(el);
+			}
+		});
+		*/
+
+		if (slotData.multiple) {
+			this._state[slot] = [];
+		} else {
+			this._state[slot] = null;
+		}
+	}
+
+	_prepareForSlot(slot, child) {
+		const slotData = this.constructor.getMetadata().getSlots()[slot];
+		child = this.constructor.getMetadata().constructor.validateSlotValue(child, slotData);
+
+		/*
+		if (child._attachChildPropertyUpdated) {
+			this._attachChildPropertyUpdated(child, slotData);
+		}
+		*/
+
+		return child;
 	}
 
 	static get observedAttributes() {
@@ -280,6 +316,7 @@ class UI5Element extends HTMLElement {
 	_initializeState() {
 		const defaultState = this.constructor._getDefaultState();
 		this._state = Object.assign({}, defaultState);
+		this._state._id = this._id;
 		this._delegates = [];
 	}
 
