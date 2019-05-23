@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 
 // Template
 import SwitchRenderer from "./build/compiled/SwitchRenderer.lit.js";
@@ -139,17 +139,17 @@ class Switch extends UI5Element {
 	}
 
 	onkeydown(event) {
-		if (event.keyCode === KeyCodes.SPACE) {
+		if (isSpace(event)) {
 			event.preventDefault();
 		}
 
-		if (event.keyCode === KeyCodes.ENTER) {
+		if (isEnter(event)) {
 			this.toggle();
 		}
 	}
 
 	onkeyup(event) {
-		if (event.keyCode === KeyCodes.SPACE) {
+		if (isSpace(event)) {
 			this.toggle();
 		}
 	}
