@@ -103,7 +103,7 @@
 	<section>
 		<h3>Card with List</h3>
 		<div class="snippet card-container">
-			<ui5-card avatar="sap-icon://group" heading="Team 6" subtitle="Direct Reports" status="6 of 6" class="medium">
+			<ui5-card avatar="sap-icon://group" heading="Team 6" subtitle="Direct Reports" status="6 of 6" class="medium" role="region">
 				<div class="card-content">
 					<ui5-list separators="None" class="card-content-child">
 						<ui5-li image="../../../../../../www/samples/images/man_avatar_1.png" description="User Researcher">Alain Chevalier</ui5-li>
@@ -133,7 +133,8 @@
 	heading="Team 6"
 	subtitle="Direct Reports"
 	status="6 of 6"
-	class="medium">
+	class="medium"
+	role="region">
 	<div class="card-content">
 		<ui5-list separators="None" class="card-content-child">
 			<ui5-li image="../../../../../../www/samples/images/man_avatar_1.png" description="User Researcher">Alain Chevalier</ui5-li>
@@ -154,7 +155,7 @@
 	<section>
 		<h3>Card with Table</h3>
 		<div class="snippet card-container">
-			<ui5-card heading="New Purchase Orders" subtitle="Today" status="3 of 15" >
+			<ui5-card heading="New Purchase Orders" subtitle="Today" status="3 of 15" role="region">
 				<ui5-table class="demo-table content-padding">
 					<!-- Columns -->
 					<ui5-table-column slot="columns">
@@ -236,7 +237,7 @@
 .status-warning {color: #e9730c;}
 .status-success {color: #107e3e;}
 </style>
-<ui5-card heading="New Purchase Orders" subtitle="Today" status="3 of 15" class="medium">
+<ui5-card heading="New Purchase Orders" subtitle="Today" status="3 of 15" class="medium" role="region">
 	<ui5-table class="demo-table content-padding">
 		<!-- Columns -->
 		<ui5-table-column slot="columns">
@@ -288,7 +289,7 @@
 	<section>
 		<h3>Card with Timeline</h3>
 		<div class="snippet card-container">
-			<ui5-card heading="Upcoming Activities" subtitle="For Today" class="medium">
+			<ui5-card heading="Upcoming Activities" subtitle="For Today" class="medium" role="region">
 				<ui5-timeline>
 					<ui5-timeline-item id="test-item" title-text="called" timestamp="1487583000000" icon="sap-icon://phone" item-name="John Smith" item-name-clickable></ui5-timeline-item>
 					<ui5-timeline-item title-text="Weekly Sync - CP Design" timestamp="1517349600000" icon="sap-icon://calendar">
@@ -306,7 +307,8 @@
 <ui5-card
 	heading="Upcoming Activities"
 	subtitle="For Today"
-	class="meidum">
+	class="meidum"
+	role="region">
 	<ui5-timeline>
 		<ui5-timeline-item id="test-item" title-text="called" timestamp="1487583000000" icon="sap-icon://phone" item-name="John Smith" item-name-clickable></ui5-timeline-item>
 		<ui5-timeline-item title-text="Weekly Sync - CP Design" timestamp="1517349600000" icon="sap-icon://calendar">
@@ -324,7 +326,7 @@
 	<section>
 		<h3>More Cards</h3>
 		<div class="snippet card-container">
-			<ui5-card avatar="../../../../../../www/samples/images/man_avatar_1.png" heading="David Willams" subtitle="Sales Manager" class="small">
+			<ui5-card avatar="../../../../../../www/samples/images/man_avatar_1.png" heading="David Willams" subtitle="Sales Manager" class="small" role="region" role="region">
 				<ui5-list separators="Inner" class="content-padding">
 					<ui5-li icon="sap-icon://competitor" icon-end>Personal Development</ui5-li>
 					<ui5-li icon="sap-icon://wallet" icon-end>Finance</ui5-li>
@@ -376,7 +378,7 @@
 				</ui5-list>
 			</ui5-card>
 
-			<ui5-card avatar="../../../../../../www/samples/images/woman_avatar_1.png" heading="Dona Maria Moore" subtitle="Senior Sales Executive" class="small">
+			<ui5-card avatar="../../../../../../www/samples/images/woman_avatar_1.png" heading="Dona Maria Moore" subtitle="Senior Sales Executive" class="small" role="region">
 				<div class="content content-padding">
 					<ui5-title level="H5" style="padding-bottom: 1rem;">Contact details</ui5-title>
 
@@ -400,7 +402,7 @@
 
 		<pre class="prettyprint lang-html">
 <xmp>
-<ui5-card avatar="../../../../../../www/samples/images/man_avatar_1.png" heading="David Willams" subtitle="Sales Manager" class="small">
+<ui5-card avatar="../../../../../../www/samples/images/man_avatar_1.png" heading="David Willams" subtitle="Sales Manager" class="small" role="region">
 	<ui5-list separators="Inner" class="content-padding">
 		<ui5-li icon="sap-icon://competitor" icon-end>Personal Development</ui5-li>
 		<ui5-li icon="sap-icon://wallet" icon-end>Finance</ui5-li>
