@@ -92,12 +92,7 @@ class Title extends UI5Element {
 
 	static calculateTemplateContext(state) {
 		const context = {
-			h1: state.level === TitleLevel.H1,
-			h2: state.level === TitleLevel.H2 || state.level === TitleLevel.Auto,
-			h3: state.level === TitleLevel.H3,
-			h4: state.level === TitleLevel.H4,
-			h5: state.level === TitleLevel.H5,
-			h6: state.level === TitleLevel.H6,
+			[`${state.level.toLowerCase()}`]: true,
 			ctr: state,
 			classes: {
 				main: {
