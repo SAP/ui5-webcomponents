@@ -11,6 +11,7 @@ import DateFormat from "@ui5/webcomponents-core/dist/sap/ui/core/format/DateForm
 import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType.js";
 import CalendarDate from "@ui5/webcomponents-base/src/dates/CalendarDate.js";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
+import { isShow } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import DatePickerTemplateContext from "./DatePickerTemplateContext.js";
 import Icon from "./Icon.js";
 import Popover from "./Popover.js";
@@ -29,7 +30,6 @@ import datePickerCss from "./themes/DatePicker.css.js";
 
 // all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
 import "./ThemePropertiesProvider.js";
-import { isShow } from "@ui5/webcomponents-base/src/events/PseudoEvents";
 
 /**
  * @public

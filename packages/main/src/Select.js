@@ -213,8 +213,6 @@ class Select extends UI5Element {
 			this._escapePressed = true;
 		}
 
-		const key = event.which;
-
 		if (isShow(event)) {
 			event.preventDefault();
 			this.Suggestions.toggle();

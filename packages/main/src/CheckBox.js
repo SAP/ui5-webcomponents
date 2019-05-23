@@ -1,9 +1,9 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
-
-import CheckBoxRenderer from "./build/compiled/CheckBoxRenderer.lit.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import CheckBoxTemplateContext from "./CheckBoxTemplateContext.js";
+import CheckBoxRenderer from "./build/compiled/CheckBoxRenderer.lit.js";
 import Label from "./Label.js";
 
 // Styles
@@ -11,7 +11,6 @@ import checkboxCss from "./themes/CheckBox.css.js";
 
 // all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
 import "./ThemePropertiesProvider.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents";
 
 /**
  * @public

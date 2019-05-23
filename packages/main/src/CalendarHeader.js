@@ -1,5 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import CalendarHeaderTemplateContext from "./CalendarHeaderTemplateContext.js";
 import Button from "./Button.js";
 import ButtonType from "./types/ButtonType.js";
@@ -10,7 +11,6 @@ import styles from "./themes/CalendarHeader.css.js";
 
 // all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
 import "./ThemePropertiesProvider.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents";
 
 const metadata = {
 	tag: "ui5-calendar-header",

@@ -1,4 +1,5 @@
 import Function from "@ui5/webcomponents-base/src/types/Function.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import ListItemType from "./types/ListItemType.js";
 import ListMode from "./types/ListMode.js";
 import ListItemBase from "./ListItemBase.js";
@@ -8,7 +9,6 @@ import "./Button.js";
 
 // Styles
 import styles from "./themes/ListItem.css.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents";
 
 /**
  * @public
