@@ -97,7 +97,7 @@ const validateSingleSlot = (value, propData) => {
 		const isSlot = isTag && el.tagName.toUpperCase() === "SLOT";
 
 		if (isSlot) {
-			return el.assignedElements({ flatten: true });
+			return el.assignedNodes({ flatten: true }).filter(item => item instanceof HTMLElement);
 		}
 
 		return [el];
