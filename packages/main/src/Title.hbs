@@ -1,9 +1,71 @@
-<h2
-	{{> controlData}}
-	class="{{classes.main}}"
-	style="{{styles.main}}"
-	role="heading">
-	<span id="{{ctr._id}}-inner">
-		<slot></slot>
-	</span>
-</h2>
+{{#if h1}}
+		<h1
+			{{> controlData}}
+			class="{{classes.main}}"
+			style="{{styles.main}}"
+			role="heading">
+			<span id="{{ctr._id}}-inner">
+				<slot></slot>
+			</span>
+		</h1>
+{{/if}}
+		
+{{#if h2}}
+		<h2
+			{{> controlData}}
+			class="{{classes.main}}"
+			style="{{styles.main}}"
+			role="heading">
+			<span id="{{ctr._id}}-inner">
+				<slot></slot>
+			</span>
+		</h2>
+{{/if}}
+
+{{#if h3}}
+		<h3
+			{{> controlData}}
+			class="{{classes.main}}"
+			style="{{styles.main}}"
+			role="heading">
+			<span id="{{ctr._id}}-inner">
+				<slot></slot>
+			</span>
+		</h3>
+{{/if}}
+
+{{#if h4}}
+		<h4
+			{{> controlData}}
+			class="{{classes.main}}"
+			style="{{styles.main}}"
+			role="heading">
+			<span id="{{ctr._id}}-inner">
+				<slot></slot>
+			</span>
+		</h4>
+{{/if}}
+
+{{#if h5}}
+		<h5
+			{{> controlData}}
+			class="{{classes.main}}"
+			style="{{styles.main}}"
+			role="heading">
+			<span id="{{ctr._id}}-inner">
+				<slot></slot>
+			</span>
+		</h5>
+{{/if}}
+
+{{#if h6}}
+		<h6
+			{{> controlData}}
+			class="{{classes.main}}"
+			style="{{styles.main}}"
+			role="heading">
+			<span id="{{ctr._id}}-inner">
+				<slot></slot>
+			</span>
+		</h6>
+{{/if}}
