@@ -4,9 +4,7 @@
 			class="{{classes.main}}"
 			style="{{styles.main}}"
 			role="heading">
-			<span id="{{ctr._id}}-inner">
-				<slot></slot>
-			</span>
+				{{> titleInner}}
 		</h1>
 {{/if}}
 		
@@ -16,9 +14,7 @@
 			class="{{classes.main}}"
 			style="{{styles.main}}"
 			role="heading">
-			<span id="{{ctr._id}}-inner">
-				<slot></slot>
-			</span>
+				{{> titleInner}}
 		</h2>
 {{/if}}
 
@@ -28,9 +24,7 @@
 			class="{{classes.main}}"
 			style="{{styles.main}}"
 			role="heading">
-			<span id="{{ctr._id}}-inner">
-				<slot></slot>
-			</span>
+				{{> titleInner}}
 		</h3>
 {{/if}}
 
@@ -40,9 +34,7 @@
 			class="{{classes.main}}"
 			style="{{styles.main}}"
 			role="heading">
-			<span id="{{ctr._id}}-inner">
-				<slot></slot>
-			</span>
+				{{> titleInner}}
 		</h4>
 {{/if}}
 
@@ -52,9 +44,7 @@
 			class="{{classes.main}}"
 			style="{{styles.main}}"
 			role="heading">
-			<span id="{{ctr._id}}-inner">
-				<slot></slot>
-			</span>
+				{{> titleInner}}
 		</h5>
 {{/if}}
 
@@ -64,8 +54,12 @@
 			class="{{classes.main}}"
 			style="{{styles.main}}"
 			role="heading">
-			<span id="{{ctr._id}}-inner">
-				<slot></slot>
-			</span>
+				{{> titleInner}}
 		</h6>
 {{/if}}
+
+{{#*inline "titleInner"}}
+	<span id="{{ctr._id}}-inner">
+		<slot></slot>
+	</span>
+{{/inline}}
