@@ -1,5 +1,9 @@
-commit 64985b231b47185dad1e8e0f9abfc37e97c8cbf5
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu May 23 15:41:17 2019 +0300
+commit c559ac0bb54c40152cd7c0bd435d84affaf109b9
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Thu May 23 16:00:26 2019 +0300
 
-    refactor usage of pseudo events (#436)
+    fix(ui5-multi-combobox): docs and API improvements (#438)
+    
+    - suggestion module is no longer needed to run the component
+    - documentation with keyboard handling is updated
+    - sample page responsiveness is improved
