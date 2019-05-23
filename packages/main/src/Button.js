@@ -1,8 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import URI from "@ui5/webcomponents-base/src/types/URI.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes.js";
-
+import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import ButtonTemplateContext from "./ButtonTemplateContext.js";
 import ButtonType from "./types/ButtonType.js";
 import ButtonRenderer from "./build/compiled/ButtonRenderer.lit.js";
@@ -242,13 +241,13 @@ class Button extends UI5Element {
 	}
 
 	onkeydown(event) {
-		if (event.which === KeyCodes.SPACE || event.which === KeyCodes.ENTER) {
+		if (isSpace(event) || isEnter(event)) {
 			this._active = true;
 		}
 	}
 
 	onkeyup(event) {
-		if (event.which === KeyCodes.SPACE || event.which === KeyCodes.ENTER) {
+		if (isSpace(event) || isEnter(event)) {
 			this._active = false;
 		}
 	}

@@ -28,7 +28,7 @@ const isDelete = event => (event.key ? (event.key === "Delete" || event.key === 
 
 const isShow = event => {
 	if (event.key) {
-		return (event.key === "F4" && !hasModifierKeys(event)) || ((event.key === "ArrowDown" || event.key === "Down") && checkModifierKeys(event, /* Ctrl */ false, /* Alt */ true, /* Shift */ false));
+		return (event.key === "F4" && !hasModifierKeys(event)) || (((event.key === "ArrowDown" || event.key === "Down") || (event.key === "ArrowUp" || event.key === "Up")) && checkModifierKeys(event, /* Ctrl */ false, /* Alt */ true, /* Shift */ false));
 	}
 
 	return (event.keyCode === KeyCodes.F4 && !hasModifierKeys(event)) || (event.keyCode === KeyCodes.ARROW_DOWN && checkModifierKeys(event, /* Ctrl */ false, /* Alt */ true, /* Shift */ false));

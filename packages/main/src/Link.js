@@ -1,7 +1,7 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes.js";
 import URI from "@ui5/webcomponents-base/src/types/URI.js";
+import { isSpace } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import LinkType from "./types/LinkType.js";
 
 // Template
@@ -204,13 +204,11 @@ class Link extends UI5Element {
 	}
 
 	onkeydown(event) {
-		const eventKeyCode = event.keyCode;
-
 		if (this.disabled) {
 			return;
 		}
 
-		if (eventKeyCode === KeyCodes.SPACE) {
+		if (isSpace(event)) {
 			event.preventDefault();
 		}
 	}
@@ -220,7 +218,7 @@ class Link extends UI5Element {
 			return;
 		}
 
-		if (event.keyCode === KeyCodes.SPACE) {
+		if (isSpace(event)) {
 			const defaultPrevented = !this.fireEvent("press", {}, true);
 			if (defaultPrevented) {
 				return;
