@@ -12,10 +12,10 @@ describe("Rendering", () => {
 		const titleH6Tag = browser.findElementDeep("#titleH6 >>> h6.sapMTitle");
 
 		assert.ok(titleH1Tag, "h1 tag is rendered for level='H1'");
-		assert.ok(titleH2Tag, "h2 tag is rendered for level='H1'");
-		assert.ok(titleH3Tag, "h3 tag is rendered for level='H1'");
-		assert.ok(titleH4Tag, "h4 tag is rendered for level='H1'");
-		assert.ok(titleH5Tag, "h5 tag is rendered for level='H1'");
-		assert.ok(titleH6Tag, "h6 tag is rendered for level='H1'");
+		assert.ok(titleH2Tag, "h2 tag is rendered for level='H2'");
+		assert.ok(titleH3Tag, "h3 tag is rendered for level='H3'");
+		assert.ok(titleH4Tag, "h4 tag is rendered for level='H4'");
+		assert.ok(titleH5Tag, "h5 tag is rendered for level='H5'");
+		assert.ok(titleH6Tag, "h6 tag is rendered for level='H6'");
 	});
 });
