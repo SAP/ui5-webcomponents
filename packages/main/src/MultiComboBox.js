@@ -192,7 +192,16 @@ const metadata = {
  * <li> Drop-down arrow - expands\collapses the option list.</li>
  * <li> Option list - the list of available options.</li>
  * </ul>
- * <h3>Keyboard handling</h3>
+ * <h3>Keyboard Handling</h3>
+ *
+ * The <code>ui5-multi-combobox</code> provides advanced keyboard handling.
+ *
+ * <h4>Picker</h3>
+ * If the <code>ui5-multi-combobox</code> is focused,
+ * you can open or close the drop-down by pressing <code>F4</code>, <code>ALT+UP</code> or <code>ALT+DOWN</code> keys.
+ * Once the drop-down is opened, you can use the <code>UP</code> and <code>DOWN</code> arrow keys
+ * to navigate through the available options and select one by pressing the <code>Space</code> or <code>Enter</code> keys.
+ * <br>
  *
  * <h4>Tokens</h2>
  * <ul>
@@ -201,8 +210,9 @@ const metadata = {
  * <li> Backspace -  deletes the token and focus the next token. </li>
  * </ul>
  *
- * <h4>Picker</h3>
- * Alt + arrow down or F4 - opens the picker.
+ * <h3>ES6 Module Import</h3>
+ *
+ * <code>import "@ui5/webcomponents/dist/MultiComboBox";</code>
  *
  *
  * @constructor
