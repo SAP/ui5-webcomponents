@@ -52,7 +52,7 @@ const metadata = {
 		 * Defines the text of the <code>ui5-switch</code> when switched on.
 		 *
 		 * <br><br>
-		 * <b>Note:</b> We recommend using short texts (up to 3 letters, because larger texts might be cut off.
+		 * <b>Note:</b> We recommend using short texts, up to 3 letters (larger texts would be cut off).
 		 * @type {string}
 		 * @defaultvalue: ""
 		 * @public
@@ -65,7 +65,7 @@ const metadata = {
 		 * Defines the text of the <code>ui5-switch</code> when switched off.
 		 *
 		 * <br><br>
-		 * <b>Note:</b> We recommend using short texts (up to 3 letters, because larger texts might be cut off.
+		 * <b>Note:</b> We recommend using short texts, up to 3 letters (larger texts would be cut off).
 		 * @type {string}
 		 * @defaultvalue: ""
 		 * @public
@@ -108,6 +108,13 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  * The <code>ui5-switch</code> component is used for changing between binary states.
+ * </br>
+ * The component can display texts, that will be switched, based on the component state, via the <code>textOn</code> and <code>textOff</code> properties,
+ * but texts longer than 3 letters will be cuttted off.
+ * </br>
+ * However, users are able to customize the width of <code>ui5-switch</code> with pure CSS (&lt;ui5-switch style="width: 200px">), and set widths, depending on the texts they would use.
+ * </br>
+ * Note: the component would not automatically stretch to fit the whole text width.
  *
  * <h3>ES6 Module Import</h3>
  *
