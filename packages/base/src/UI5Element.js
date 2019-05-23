@@ -9,6 +9,7 @@ import TemplateContext from "./TemplateContext.js";
 import State from "./State.js";
 import { createStyle } from "./CSS.js";
 import { attachThemeChange } from "./Theming.js";
+import Function from "./types/Function";
 
 const metadata = {
 	properties: {
@@ -258,11 +259,13 @@ class UI5Element extends HTMLElement {
 	}
 
 	static define() {
-		const tag = this.getMetadata().getTag();
+		const meta = this.getMetadata();
+		const tag = meta.getTag();
 
 		if (!DefinitionsSet.has(tag)) {
 			DefinitionsSet.add(tag);
-			this.generateAccessors();
+			this.generateAccessors(this);
+			this.generateDefaultState();
 			window.customElements.define(tag, this);
 		}
 		return this;
@@ -277,19 +280,8 @@ class UI5Element extends HTMLElement {
 	}
 
 	_initializeState() {
-		const StateClass = this.constructor.StateClass;
-		this._state = new StateClass(this);
-
+		this._state = Object.assign({}, this.constructor._defaultState);
 		this._delegates = [];
-	}
-
-	static get StateClass() {
-		if (!this.hasOwnProperty("_StateClass")) { // eslint-disable-line
-			this._StateClass = class extends State {};
-			this._StateClass.generateAccessors(this.getMetadata());
-		}
-
-		return this._StateClass;
 	}
 
 	static getMetadata() {
@@ -624,6 +616,46 @@ class UI5Element extends HTMLElement {
 		return defaultSlot;
 	}
 
+	static generateDefaultState() {
+		const MetadataClass = this.getMetadata();
+		const defaultState = {};
+
+		// Initialize properties
+		const props = MetadataClass.getProperties();
+		for (const propName in props) { // eslint-disable-line
+			const propType = props[propName].type;
+			const propDefaultValue = props[propName].defaultValue;
+
+			if (propType === Boolean) {
+				defaultState[propName] = false;
+
+				if (propDefaultValue !== undefined) {
+					console.warn("The 'defaultValue' metadata key is ignored for all booleans properties, they would be initialized with 'false' by default"); // eslint-disable-line
+				}
+			} else if (props[propName].multiple) {
+				defaultState[propName] = [];
+			} else if (propType === Object) {
+				defaultState[propName] = "defaultValue" in props[propName] ? props[propName].defaultValue : {};
+			} else if (propType === String) {
+				defaultState[propName] = propDefaultValue || "";
+			} else {
+				defaultState[propName] = propDefaultValue;
+			}
+		}
+
+		// Initialize slots
+		const slots = MetadataClass.getSlots();
+		for (const slotName in slots) { // eslint-disable-line
+			if (slots[slotName].multiple) {
+				defaultState[slotName] = [];
+			} else {
+				defaultState[slotName] = null;
+			}
+		}
+
+		this._defaultState = defaultState;
+	}
+
 	static generateAccessors() {
 		const proto = this.prototype;
 
@@ -640,24 +672,62 @@ class UI5Element extends HTMLElement {
 
 			Object.defineProperty(proto, prop, {
 				get() {
-					return this._state[prop];
+					if (this._state[prop] !== undefined) {
+						return this._state[prop];
+					}
+
+					const propDefaultValue = propData.defaultValue;
+
+					if (propData.type === Boolean) {
+						return false;
+					} else if (propData.type === String) {  // eslint-disable-line
+						return propDefaultValue || "";
+					} else if (propData.multiple) { // eslint-disable-line
+						return [];
+					} else {
+						return propDefaultValue;
+					}
 				},
 				set(value) {
-					this._state[prop] = value;
+					let isDifferent = false;
+					value = this.constructor.getMetadata().constructor.validatePropertyValue(value, propData);
+
+					const oldState = this._state[prop];
+
+					if (propData.deepEqual) {
+						isDifferent = JSON.stringify(oldState) !== JSON.stringify(value);
+					} else {
+						isDifferent = oldState !== value;
+					}
+
+					if (isDifferent) {
+						this._state[prop] = value;
+						if (propData.nonVisual || propData.type === Function) {
+							return;
+						}
+						this._invalidate(prop, value);
+						this._propertyChange(prop, value);
+					}
 				},
 			});
 		}
 
 		// Slots
 		const slots = this.getMetadata().getSlots();
-		for (const [slot] of Object.entries(slots)) { // eslint-disable-line
+		for (const [slot, slotData] of Object.entries(slots)) { // eslint-disable-line
 			if (nameCollidesWithNative(slot)) {
 				throw new Error(`"${slot}" is not a valid property name. Use a name that does not collide with DOM APIs`);
 			}
 
 			Object.defineProperty(proto, slot, {
 				get() {
-					return this._state[slot];
+					if (this._state[slot] !== undefined) {
+						return this._state[slot];
+					}
+					if (slotData.multiple) {
+						return [];
+					}
+					return null;
 				},
 				set() {
 					throw new Error("Cannot set slots directly, use the DOM APIs");

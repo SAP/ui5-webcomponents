@@ -87,7 +87,7 @@ const validateSingleProperty = (value, propData) => {
 	}
 };
 
-const validateSingleSlot = (value, propData) => {
+const validateSingleSlot = (value, slotData) => {
 	if (value === null) {
 		return value;
 	}
@@ -102,7 +102,7 @@ const validateSingleSlot = (value, propData) => {
 
 		return [el];
 	};
-	const propertyType = propData.type;
+	const propertyType = slotData.type;
 
 	const slottedNodes = getSlottedNodes(value);
 	slottedNodes.forEach(el => {
