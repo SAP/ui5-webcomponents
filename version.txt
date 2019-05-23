@@ -1,5 +1,5 @@
-commit c54c812e33e4e5db792d5482d8ac423a9100f908
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu May 23 11:54:52 2019 +0300
+commit 5b2efc85e22a268bd1a338cff4f2641f7b9315e3
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu May 23 14:30:01 2019 +0300
 
-    fix: do not use assignedElements (#432)
+    doc: improve samples ACC by setting role="application" (#433)
