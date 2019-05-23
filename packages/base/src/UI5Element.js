@@ -166,11 +166,11 @@ class UI5Element extends HTMLElement {
 		}
 
 		// Init the _state object based on the supported slots
-		for (const [prop, propData] of Object.entries(slotsMap)) { // eslint-disable-line
-			if (propData.multiple) {
-				this._state[prop] = [];
+		for (const [slot, slotData] of Object.entries(slotsMap)) { // eslint-disable-line
+			if (slotData.multiple) {
+				this._state[slot] = [];
 			} else {
-				this._state[prop] = null;
+				this._state[slot] = null;
 			}
 		}
 
@@ -259,8 +259,7 @@ class UI5Element extends HTMLElement {
 	}
 
 	static define() {
-		const meta = this.getMetadata();
-		const tag = meta.getTag();
+		const tag = this.getMetadata().getTag();
 
 		if (!DefinitionsSet.has(tag)) {
 			DefinitionsSet.add(tag);
