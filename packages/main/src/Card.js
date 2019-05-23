@@ -110,7 +110,8 @@ const metadata = {
 		/**
 		 * Fired when the <code>ui5-card</code> header is pressed
 		 * by click/tap or by using the Enter or Space key.
-		 *
+		 * <br><br>
+		 * <b>Note:</b> The event would be fired only if the <code>headerInteractive</code> property is set to true.
 		 * @event
 		 * @public
 		 * @since 0.10.0
