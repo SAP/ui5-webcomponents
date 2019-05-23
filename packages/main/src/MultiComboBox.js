@@ -200,6 +200,10 @@ const metadata = {
  * to navigate through the available options and select one by pressing the <code>Space</code> or <code>Enter</code> keys.
  * <br>
  *
+ * <h3>ES6 Module Import</h3>
+ *
+ * <code>import "@ui5/webcomponents/dist/MultiComboBox";</code>
+ *
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.MultiComboBox
