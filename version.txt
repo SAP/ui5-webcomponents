@@ -1,9 +1,5 @@
-commit c559ac0bb54c40152cd7c0bd435d84affaf109b9
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Thu May 23 16:00:26 2019 +0300
+commit 515617770b5917dfb8a290d6987f1e8fa6facdff
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu May 23 16:39:41 2019 +0300
 
-    fix(ui5-multi-combobox): docs and API improvements (#438)
-    
-    - suggestion module is no longer needed to run the component
-    - documentation with keyboard handling is updated
-    - sample page responsiveness is improved
+     fix(ui5-title): render correct h{n} tag based on the "level" property (#437)
