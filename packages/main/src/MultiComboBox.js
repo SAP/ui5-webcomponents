@@ -192,6 +192,18 @@ const metadata = {
  * <li> Drop-down arrow - expands\collapses the option list.</li>
  * <li> Option list - the list of available options.</li>
  * </ul>
+ * <h3>Keyboard handling</h3>
+ *
+ * <h4>Tokens</h2>
+ * <ul>
+ * <li> Left/Right arrow keys - moves the focus selection form the currently focues token to the previous/next one (if available). </li>
+ * <li> Delete -  deletes the token and focuses the previous token. </li>
+ * <li> Backspace -  deletes the token and focus the next token. </li>
+ * </ul>
+ *
+ * <h4>Picker</h3>
+ * Alt + arrow down or F4 - opens the picker.
+ *
  *
  * @constructor
  * @author SAP SE
@@ -327,10 +339,12 @@ class MultiComboBox extends UI5Element {
 
 	_handleKeyDown(event) {
 		if (isShow(event) && !this.readonly && !this.disabled) {
+			event.preventDefault();
 			this._togglePopover();
 		}
 
 		if (isDown(event) && this._getPopover()._isOpen && this.items.length) {
+			event.preventDefault();
 			const list = this.shadowRoot.querySelector(".ui5-multi-combobox-all-items-list");
 			list._itemNavigation.current = 0;
 			list.items[0].focus();
