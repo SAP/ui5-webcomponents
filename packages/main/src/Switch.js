@@ -54,7 +54,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> We recommend using short texts, up to 3 letters (larger texts would be cut off).
 		 * @type {string}
-		 * @defaultvalue: ""
+		 * @defaultvalue ""
 		 * @public
 		 */
 		textOn: {
@@ -67,7 +67,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> We recommend using short texts, up to 3 letters (larger texts would be cut off).
 		 * @type {string}
-		 * @defaultvalue: ""
+		 * @defaultvalue ""
 		 * @public
 		 */
 		textOff: {
