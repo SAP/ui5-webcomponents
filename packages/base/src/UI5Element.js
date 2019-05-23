@@ -264,8 +264,7 @@ class UI5Element extends HTMLElement {
 
 		if (!DefinitionsSet.has(tag)) {
 			DefinitionsSet.add(tag);
-			this.generateAccessors(this);
-			this.generateDefaultState();
+			this.generateAccessors();
 			window.customElements.define(tag, this);
 		}
 		return this;
@@ -280,7 +279,8 @@ class UI5Element extends HTMLElement {
 	}
 
 	_initializeState() {
-		this._state = Object.assign({}, this.constructor._defaultState);
+		const defaultState = this.constructor._getDefaultState();
+		this._state = Object.assign({}, defaultState);
 		this._delegates = [];
 	}
 
@@ -616,7 +616,11 @@ class UI5Element extends HTMLElement {
 		return defaultSlot;
 	}
 
-	static generateDefaultState() {
+	static _getDefaultState() {
+		if (this._defaultState) {
+			return this._defaultState;
+		}
+
 		const MetadataClass = this.getMetadata();
 		const defaultState = {};
 
@@ -654,6 +658,7 @@ class UI5Element extends HTMLElement {
 		}
 
 		this._defaultState = defaultState;
+		return defaultState;
 	}
 
 	static generateAccessors() {
