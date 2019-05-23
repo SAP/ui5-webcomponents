@@ -169,11 +169,14 @@ class Card extends UI5Element {
 		const icon = hasAvatar && isIconURI(state.avatar);
 		const image = hasAvatar && !icon;
 		const hasContent = !!state.content.length;
-
+		const role = state.headerInteractive ? "button" : undefined;
+		const tabindex = state.headerInteractive ? "0" : undefined;
 
 		return {
 			icon,
 			image,
+			role,
+			tabindex,
 			ctr: state,
 			renderIcon: state.icon && !state.image,
 			classes: {

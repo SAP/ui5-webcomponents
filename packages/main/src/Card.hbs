@@ -3,7 +3,8 @@
 		@click="{{ctr._headerClick}}"
 		@keydown="{{ctr._headerKeydown}}"
 		@keyup="{{ctr._headerKeyup}}"
-		tabindex="0">
+		tabindex="{{tabindex}}"
+		role="{{role}}">
 		{{#if image}}
 			<img src="{{ctr.avatar}}" aria-label="Avatar" class="sapFCardAvatar sapFCardHeaderImg">
 		{{/if}}
