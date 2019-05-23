@@ -1,6 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes.js";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
 
 import CheckBoxRenderer from "./build/compiled/CheckBoxRenderer.lit.js";
@@ -12,6 +11,7 @@ import checkboxCss from "./themes/CheckBox.css.js";
 
 // all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
 import "./ThemePropertiesProvider.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents";
 
 /**
  * @public
@@ -218,17 +218,17 @@ class CheckBox extends UI5Element {
 	}
 
 	onkeydown(event) {
-		if (event.keyCode === KeyCodes.SPACE) {
+		if (isSpace(event)) {
 			event.preventDefault();
 		}
 
-		if (event.keyCode === KeyCodes.ENTER) {
+		if (isEnter(event)) {
 			this.toggle();
 		}
 	}
 
 	onkeyup(event) {
-		if (event.keyCode === KeyCodes.SPACE) {
+		if (isSpace(event)) {
 			this.toggle();
 		}
 	}

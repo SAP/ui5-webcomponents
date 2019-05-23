@@ -13,6 +13,7 @@ import buttonCss from "./themes/Button.css.js";
 
 // all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
 import "./ThemePropertiesProvider.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents";
 
 /**
  * @public
@@ -242,13 +243,13 @@ class Button extends UI5Element {
 	}
 
 	onkeydown(event) {
-		if (event.which === KeyCodes.SPACE || event.which === KeyCodes.ENTER) {
+		if (isSpace(event) || isEnter(event)) {
 			this._active = true;
 		}
 	}
 
 	onkeyup(event) {
-		if (event.which === KeyCodes.SPACE || event.which === KeyCodes.ENTER) {
+		if (isSpace(event) || isEnter(event)) {
 			this._active = false;
 		}
 	}

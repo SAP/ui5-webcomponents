@@ -3,7 +3,6 @@ import "@ui5/webcomponents-base/src/shims/Core-shim.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import { fetchCldrData } from "@ui5/webcomponents-base/src/CLDR.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes.js";
 import { getCalendarType } from "@ui5/webcomponents-base/src/Configuration.js";
 import { getLocale } from "@ui5/webcomponents-base/src/LocaleProvider.js";
 import { getIconURI } from "@ui5/webcomponents-base/src/IconPool.js";
@@ -30,6 +29,7 @@ import datePickerCss from "./themes/DatePicker.css.js";
 
 // all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
 import "./ThemePropertiesProvider.js";
+import { isShow } from "@ui5/webcomponents-base/src/events/PseudoEvents";
 
 /**
  * @public
@@ -239,7 +239,6 @@ class DatePicker extends UI5Element {
 		this._input.icon.src = getIconURI("appointment-2");
 		this._input.onChange = this._handleInputChange.bind(this);
 		this._input.onLiveChange = this._handleInputLiveChange.bind(this);
-		this.aArrows = [KeyCodes.ARROW_DOWN, KeyCodes.ARROW_UP]; // keys we need for keyboard handling
 
 		this._popover = {
 			placementType: PopoverPlacementType.Bottom,
@@ -325,11 +324,7 @@ class DatePicker extends UI5Element {
 	}
 
 	onkeydown(event) {
-		if (event.which === KeyCodes.ALT) {
-			return;
-		}
-
-		if (event.which === KeyCodes.F4 || (event.altKey && this.aArrows.includes(event.which))) {
+		if (isShow(event)) {
 			this.togglePicker();
 			this._getInput().focus();
 		}

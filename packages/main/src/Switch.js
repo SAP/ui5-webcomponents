@@ -1,5 +1,4 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 
 // Template
@@ -12,6 +11,7 @@ import switchCss from "./themes/Switch.css.js";
 
 // all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
 import "./ThemePropertiesProvider.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents";
 
 /**
  * @public
@@ -139,17 +139,17 @@ class Switch extends UI5Element {
 	}
 
 	onkeydown(event) {
-		if (event.keyCode === KeyCodes.SPACE) {
+		if (isSpace(event)) {
 			event.preventDefault();
 		}
 
-		if (event.keyCode === KeyCodes.ENTER) {
+		if (isEnter(event)) {
 			this.toggle();
 		}
 	}
 
 	onkeyup(event) {
-		if (event.keyCode === KeyCodes.SPACE) {
+		if (isSpace(event)) {
 			this.toggle();
 		}
 	}

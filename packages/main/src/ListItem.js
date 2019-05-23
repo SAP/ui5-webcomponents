@@ -1,4 +1,3 @@
-import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes.js";
 import Function from "@ui5/webcomponents-base/src/types/Function.js";
 import ListItemType from "./types/ListItemType.js";
 import ListMode from "./types/ListMode.js";
@@ -9,6 +8,7 @@ import "./Button.js";
 
 // Styles
 import styles from "./themes/ListItem.css.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents";
 
 /**
  * @public
@@ -98,32 +98,27 @@ class ListItem extends ListItemBase {
 	onkeydown(event) {
 		super.onkeydown(event);
 
-		const spaceUsed = event.which === KeyCodes.SPACE;
-		const enterUsed = event.which === KeyCodes.ENTER;
 		const itemActive = this.type === ListItemType.Active;
 
-		if (spaceUsed) {
+		if (isSpace(event)) {
 			event.preventDefault();
 		}
 
-		if ((spaceUsed || enterUsed) && itemActive) {
+		if ((isSpace(event) || isEnter(event)) && itemActive) {
 			this.activate();
 		}
 
-		if (enterUsed) {
+		if (isEnter(event)) {
 			this.fireItemPress();
 		}
 	}
 
 	onkeyup(event) {
-		const spaceUsed = event.which === KeyCodes.SPACE;
-		const enterUsed = event.which === KeyCodes.ENTER;
-
-		if (spaceUsed || enterUsed) {
+		if (isSpace(event) || isEnter(event)) {
 			this.deactivate();
 		}
 
-		if (spaceUsed) {
+		if (isSpace(event)) {
 			this.fireItemPress();
 		}
 	}

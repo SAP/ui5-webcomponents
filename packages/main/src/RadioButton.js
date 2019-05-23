@@ -1,6 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes.js";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
 import {
 	isSpace,
@@ -282,7 +281,7 @@ class RadioButton extends UI5Element {
 	}
 
 	onkeyup(event) {
-		if (event.keyCode === KeyCodes.SPACE) {
+		if (isSpace(event)) {
 			this.toggle();
 		}
 	}
