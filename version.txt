@@ -1,5 +1,5 @@
-commit f87e8a84b7ea9eaf8a6c50f9af50c7e9602d3bfe
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu May 23 17:51:16 2019 +0300
+commit e70156225f0052fb7d2b7b811f193aaf2038b689
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Sat May 25 18:43:12 2019 +0300
 
-    docs: update keyboard handling docs (#440)
+    fix(ui5-tabcontainer): remove typo from component template (#446)
