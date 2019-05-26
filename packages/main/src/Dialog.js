@@ -24,6 +24,7 @@ const metadata = {
 		 * 90% of the viewport.
 		 *
 		 * @type {Boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		stretch: {

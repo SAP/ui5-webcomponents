@@ -1,12 +1,15 @@
 <div {{> controlData}}
 	class="{{classes.main}}"
 	style="{{styles.main}}"
-	aria-invalid="{{ariaInvalid}}"
-	aria-labelledBy="{{ariaLabelledBy}}"
+	?aria-invalid="{{ariaInvalid}}"
 >
 <div id="{{ctr._id}}-wrapper"
 	class="{{classes.wrapper}}"
 >
+	{{#if ctr._beginContent}}
+		<slot name="_beginContent"></slot>
+	{{/if}}
+
 	<input id="{{ctr._id}}-inner"
 			class="sapWCInputBaseInner"
 			type="{{type}}"
@@ -20,7 +23,7 @@
 			data-sap-focus-ref
 	/>
 		{{#if ctr.icon}}
-			<slot name="{{ctr.icon._slot}}"></slot>
+			<slot name="icon"></slot>
 		{{/if}}
 	</div>
 
@@ -32,9 +35,7 @@
 				horizontal-align="Stretch"
 				initial-focus="{{ctr._id}}-inner">
 					<ui5-list separators="Inner">
-						{{#each ctr.suggestionItems}}
-							<slot name="{{this._slot}}"></slot>
-						{{/each}}
+                        <slot></slot>
 					</ui5-list>
 			</ui5-popover>
 	{{/if}}

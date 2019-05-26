@@ -22,6 +22,18 @@ const isTabNext = event => (event.key ? event.key === "Tab" : event.keyCode === 
 
 const isTabPrevious = event => (event.key ? event.key === "Tab" : event.keyCode === KeyCodes.TAB) && checkModifierKeys(event, /* Ctrl */ false, /* Alt */ false, /* Shift */ true);
 
+const isBackSpace = event => (event.key ? (event.key === "Backspace" || event.key === "Backspace") : event.keyCode === KeyCodes.BACKSPACE) && !hasModifierKeys(event);
+
+const isDelete = event => (event.key ? (event.key === "Delete" || event.key === "Delete") : event.keyCode === KeyCodes.DELETE) && !hasModifierKeys(event);
+
+const isShow = event => {
+	if (event.key) {
+		return (event.key === "F4" && !hasModifierKeys(event)) || (((event.key === "ArrowDown" || event.key === "Down") || (event.key === "ArrowUp" || event.key === "Up")) && checkModifierKeys(event, /* Ctrl */ false, /* Alt */ true, /* Shift */ false));
+	}
+
+	return (event.keyCode === KeyCodes.F4 && !hasModifierKeys(event)) || (event.keyCode === KeyCodes.ARROW_DOWN && checkModifierKeys(event, /* Ctrl */ false, /* Alt */ true, /* Shift */ false));
+};
+
 const hasModifierKeys = event => event.shiftKey || event.altKey || getCtrlKey(event);
 
 const getCtrlKey = event => !!(event.metaKey || event.ctrlKey); // double negation doesn't have effect on boolean but ensures null and undefined are equivalent to false.
@@ -40,4 +52,7 @@ export {
 	isEscape,
 	isTabNext,
 	isTabPrevious,
+	isBackSpace,
+	isDelete,
+	isShow,
 };

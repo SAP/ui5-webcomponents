@@ -54,17 +54,18 @@ const metadata = {
 		 * Defines the ID of the HTML Element, which will get the initial focus.
 		 *
 		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		initialFocus: {
 			type: String,
-			defaultValue: null,
 			association: true,
 		},
 		/**
 		 * Defines whether the header is hidden.
 		 *
 		 * @type {Boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		hideHeader: {
@@ -74,11 +75,11 @@ const metadata = {
 		 * Defines the header text.
 		 *
 		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		headerText: {
 			type: String,
-			defaultValue: "",
 		},
 
 		_isOpen: {
@@ -300,7 +301,7 @@ class Popup extends UI5Element {
 		const initialFocus = this.initialFocus;
 		let initialFocusDomRef = this.initialFocus;
 
-		if (typeof initialFocus === "string") {
+		if (initialFocus && typeof initialFocus === "string") {
 			initialFocusDomRef = document.getElementById(initialFocus);
 
 			if (!initialFocusDomRef) {

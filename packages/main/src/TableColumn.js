@@ -47,11 +47,11 @@ const metadata = {
 		 * The text for the column when it pops in.
 		 *
 		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		popinText: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
@@ -61,6 +61,7 @@ const metadata = {
 		 * Setting this property to <code>true</code>, shows this column as pop-in instead of hiding it.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		demandPopin: {
@@ -80,11 +81,10 @@ const metadata = {
 
 		_first: {
 			type: Boolean,
-			defaultValue: false,
 		},
+
 		_last: {
 			type: Boolean,
-			defaultValue: false,
 		},
 	},
 };

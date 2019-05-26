@@ -1,6 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes.js";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
 import {
 	isSpace,
@@ -34,6 +33,7 @@ const metadata = {
 		 * <b>Note:</b> A disabled <code>ui5-radiobutton</code> is completely uninteractive.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		disabled: {
@@ -47,9 +47,10 @@ const metadata = {
 		 * but still provides visual feedback upon user interaction.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
-		readOnly: {
+		readonly: {
 			type: Boolean,
 		},
 
@@ -61,6 +62,7 @@ const metadata = {
 		 * or by using the Space or Enter key.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		selected: {
@@ -74,7 +76,6 @@ const metadata = {
 		 * @public
 		 */
 		text: {
-			defaultValue: null,
 			type: String,
 		},
 
@@ -87,6 +88,7 @@ const metadata = {
 		 * the <code>ui5-radiobutton</code>.
 		 *
 		 * @type {string}
+		 * @defaultvalue "None"
 		 * @public
 		 */
 		valueState: {
@@ -110,10 +112,10 @@ const metadata = {
 		 * part of an HTML form.
 		 *
 		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		name: {
-			defaultValue: "",
 			type: String,
 		},
 
@@ -126,11 +128,11 @@ const metadata = {
 		 * <code>import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";</code>
 		 *
 		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		value: {
 			type: String,
-			defaultValue: "",
 		},
 
 		_label: {
@@ -279,7 +281,7 @@ class RadioButton extends UI5Element {
 	}
 
 	onkeyup(event) {
-		if (event.keyCode === KeyCodes.SPACE) {
+		if (isSpace(event)) {
 			this.toggle();
 		}
 	}
@@ -300,7 +302,7 @@ class RadioButton extends UI5Element {
 	}
 
 	canToggle() {
-		return !(this.disabled || this.readOnly || this.selected);
+		return !(this.disabled || this.readonly || this.selected);
 	}
 
 	static get calculateTemplateContext() {

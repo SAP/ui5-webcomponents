@@ -8,6 +8,7 @@
 	<script src="../../../../../../webcomponentsjs/webcomponents-loader.js"></script>
 	<script src="../../../../../../resources/sap/ui/webcomponents/main/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../../../../../resources/sap/ui/webcomponents/main/bundle.es5.js"></script>
+	<script>delete Document.prototype.adoptedStyleSheets;</script>
 </head>
 
 <body>
@@ -32,7 +33,7 @@
 
 	<br/><br/>
 
-	<ui5-list header-text="API: icon">
+	<!-- <ui5-list header-text="API: icon">
 		<ui5-li  icon="sap-icon://navigation-right-arrow">Option 1</ui5-li>
 		<ui5-li  icon="sap-icon://navigation-right-arrow">Option 2</ui5-li>
 		<ui5-li  icon="sap-icon://navigation-right-arrow">Option 3</ui5-li>
@@ -223,7 +224,7 @@
 		resetBtn.addEventListener("ui5-press", resetList);
 
 		singleSelectList.addEventListener("ui5-selectionChange", function (event) {
-			var selectedItems = event.detail.items;
+			var selectedItems = event.detail.selectedItems;
 
 			alert("Selection changed: " + selectedItems.map(item => item.id).join("/"));
 		});
@@ -234,7 +235,7 @@
 		});
 
 		singleSelectEndList.addEventListener("ui5-selectionChange", function (event) {
-			var selectedItems = event.detail.items;
+			var selectedItems = event.detail.selectedItems;
 			lblSelectionChange.innerHTML = "|Event] selectionChange :: " + selectedItems.map(item => item.id).join("/");
 		});
 
@@ -244,9 +245,9 @@
 		});
 
 		multiSelectList.addEventListener("ui5-selectionChange", function (event) {
-			var selectedItems = event.detail.items;
+			var selectedItems = event.detail.selectedItems;
 			lblSelectionChange2.innerHTML = "Event] selectionChange :: " + selectedItems.map(item => item.id).join("/");
 		});
-	</script>
+	</script> -->
 </body>
 </html>

@@ -14,10 +14,6 @@ class UI5ElementMetadata {
 		return this.metadata.noShadowDOM;
 	}
 
-	usesNodeText() {
-		return !!this.metadata.usesNodeText;
-	}
-
 	getDefaultSlot() {
 		return this.metadata.defaultSlot || "content";
 	}
@@ -92,14 +88,28 @@ const validateSingleProperty = (value, propData) => {
 };
 
 const validateSingleSlot = (value, propData) => {
-	const getSlottedElement = el => {
-		return el.tagName.toUpperCase() !== "SLOT" ? el : getSlottedElement(el.assignedNodes()[0]);
+	if (value === null) {
+		return value;
+	}
+
+	const getSlottedNodes = el => {
+		const isTag = el instanceof HTMLElement;
+		const isSlot = isTag && el.tagName.toUpperCase() === "SLOT";
+
+		if (isSlot) {
+			return el.assignedNodes({ flatten: true }).filter(item => item instanceof HTMLElement);
+		}
+
+		return [el];
 	};
 	const propertyType = propData.type;
 
-	if (value !== null && !(getSlottedElement(value) instanceof propertyType)) {
-		throw new Error(`${value} is not of type ${propertyType}`);
-	}
+	const slottedNodes = getSlottedNodes(value);
+	slottedNodes.forEach(el => {
+		if (!(el instanceof propertyType)) {
+			throw new Error(`${el} is not of type ${propertyType}`);
+		}
+	});
 
 	return value;
 };

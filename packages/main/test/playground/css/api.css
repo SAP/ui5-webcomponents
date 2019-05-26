@@ -263,6 +263,12 @@ pre.prettyprint>xmp {
 	padding: 1rem 0.8rem 1rem 1rem;
 }
 
+.api-table-content-event-params-wrapper {
+	width: 100%;
+    display: flex;
+    align-items: flex-start;
+}
+
 .cell.api-table-content-cell.api-table-content-cell-description {
 	font-size: 14px;
 	flex: 1 50%;

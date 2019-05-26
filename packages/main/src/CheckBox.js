@@ -1,10 +1,9 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes.js";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
-
-import CheckBoxRenderer from "./build/compiled/CheckBoxRenderer.lit.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import CheckBoxTemplateContext from "./CheckBoxTemplateContext.js";
+import CheckBoxRenderer from "./build/compiled/CheckBoxRenderer.lit.js";
 import Label from "./Label.js";
 
 // Styles
@@ -26,6 +25,7 @@ const metadata = {
 		 * <b>Note:</b> A disabled <code>ui5-checkbox</code> is completely uninteractive.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		disabled: {
@@ -39,9 +39,10 @@ const metadata = {
 		 * but still provides visual feedback upon user interaction.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
-		readOnly: {
+		readonly: {
 			type: Boolean,
 		},
 
@@ -53,6 +54,7 @@ const metadata = {
 		 * pressing the Enter or Space key.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		checked: {
@@ -63,10 +65,10 @@ const metadata = {
 		 * Defines the text of the <code>ui5-checkbox</code>.
 		 *
 		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		text: {
-			defaultValue: "",
 			type: String,
 		},
 
@@ -76,11 +78,12 @@ const metadata = {
 		 * <b>Note:</b> Available options are <code>Warning</code>, <code>Error</code>, and <code>None</code> (default).
 		 *
 		 * @type {string}
+		 * @defaultvalue "None"
 		 * @public
 		 */
 		valueState: {
-			defaultValue: ValueState.None,
 			type: ValueState,
+			defaultValue: ValueState.None,
 		},
 
 		/**
@@ -89,6 +92,7 @@ const metadata = {
 		 * <b>Note:</b> By default, the text truncates when there is not enough space.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		wrap: {
@@ -105,7 +109,8 @@ const metadata = {
 		 * will be created inside the <code>ui5-checkbox</code> so that it can be submitted as
 		 * part of an HTML form. Do not use this property unless you need to submit a form.
 		 *
-		 * @type {String}
+		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		name: {
@@ -151,7 +156,7 @@ const metadata = {
  * <br><br>
  * You can disable the <code>ui5-checkbox</code> by setting the <code>disabled</code> property to
  * <code>true</code>,
- * or use the <code>ui5-checkbox</code> in read-only mode by setting the <code>readOnly</code>
+ * or use the <code>ui5-checkbox</code> in read-only mode by setting the <code>readonly</code>
  * property to <code>true</code>.
  *
  * <h3>ES6 Module Import</h3>
@@ -212,17 +217,17 @@ class CheckBox extends UI5Element {
 	}
 
 	onkeydown(event) {
-		if (event.keyCode === KeyCodes.SPACE) {
+		if (isSpace(event)) {
 			event.preventDefault();
 		}
 
-		if (event.keyCode === KeyCodes.ENTER) {
+		if (isEnter(event)) {
 			this.toggle();
 		}
 	}
 
 	onkeyup(event) {
-		if (event.keyCode === KeyCodes.SPACE) {
+		if (isSpace(event)) {
 			this.toggle();
 		}
 	}
@@ -236,7 +241,7 @@ class CheckBox extends UI5Element {
 	}
 
 	canToggle() {
-		return !(this.disabled || this.readOnly);
+		return !(this.disabled || this.readonly);
 	}
 
 	static get calculateTemplateContext() {

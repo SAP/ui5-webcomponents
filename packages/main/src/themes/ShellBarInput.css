@@ -19,10 +19,3 @@
 .sapUiSizeCompact .sapWCShellBarSearchFieldElement.sapWCInput {
 	height: 2.25rem;
 }
-
-.sapUiSizeCompact .sapWCFocus .sapWCInputBaseContentWrapper::after {
-	width: calc(100% - 0.25rem);
-	height: calc(100% - 0.25rem);
-	top: 1px;
-	left: 1px;
-}

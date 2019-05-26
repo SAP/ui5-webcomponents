@@ -60,28 +60,29 @@ const metadata = {
 		 * <b>Note:</b> If <code>header</code> is set this property is ignored.
 		 *
 		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		headerText: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
 		 * Defines the footer text.
 		 *
 		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		footerText: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
 		 * Determines whether the list items are indented.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		inset: {
@@ -95,6 +96,7 @@ const metadata = {
 		 * <code>MultiSelect</code>, and <code>Delete</code>.
 		 *
 		 * @type {string}
+		 * @defaultvalue "None"
 		 * @public
 		 */
 		mode: {
@@ -106,11 +108,11 @@ const metadata = {
 		 * Defines the text that is displayed when the <code>ui5-list</code> contains no items.
 		 *
 		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		noDataText: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
@@ -125,6 +127,7 @@ const metadata = {
 		 * </ul>
 		 *
 		 * @type {string}
+		 * @defaultvalue "All"
 		 * @public
 		 */
 		separators: {
@@ -168,12 +171,14 @@ const metadata = {
 		 * in <code>SingleSelect</code> and <code>MultiSelect</code> modes.
 		 *
 		 * @event
-		 * @param {Array} items an array of the selected items.
+		 * @param {Array} selectedItems an array of the selected items.
+		 * @param {Array} previouslySelectedItems an array of the previously selected items.
 		 * @public
 		 */
 		selectionChange: {
 			detail: {
-				items: { type: Array },
+				selectedItems: { type: Array },
+				previouslySelectedItems: { type: Array },
 			},
 		},
 	},
@@ -281,6 +286,7 @@ class List extends UI5Element {
 	* ITEM SELECTION BASED ON THE CURRENT MODE
 	*/
 	onSelectionRequested(event) {
+		const previouslySelectedItems = this.getSelectedItems();
 		let selectionChange = false;
 		this._selectionRequested = true;
 
@@ -289,7 +295,7 @@ class List extends UI5Element {
 		}
 
 		if (selectionChange) {
-			this.fireEvent("selectionChange", { items: this.getSelectedItems() });
+			this.fireEvent("selectionChange", { selectedItems: this.getSelectedItems(), previouslySelectedItems });
 		}
 	}
 

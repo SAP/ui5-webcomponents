@@ -26,7 +26,6 @@ const metadata = {
 		 * @public
 		 */
 		value: {
-			defaultValue: "",
 			type: String,
 		},
 
@@ -65,7 +64,6 @@ const metadata = {
 		 * @public
 		 */
 		placeholder: {
-			defaultValue: "",
 			type: String,
 		},
 
@@ -114,7 +112,6 @@ const metadata = {
 		 */
 		showExceededText: {
 			type: Boolean,
-			defaultValue: false,
 		},
 
 		/**
@@ -127,7 +124,6 @@ const metadata = {
 		 */
 		growing: {
 			type: Boolean,
-			defaultValue: false,
 		},
 
 		/**
@@ -152,7 +148,8 @@ const metadata = {
 		 * will be created inside the <code>ui5-textarea</code> so that it can be submitted as
 		 * part of an HTML form. Do not use this property unless you need to submit a form.
 		 *
-		 * @type {String}
+		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		name: {
@@ -176,11 +173,9 @@ const metadata = {
 		},
 		_maxHeight: {
 			type: String,
-			defaultValue: "",
 		},
 		_focussed: {
 			type: Boolean,
-			defaultValue: false,
 		},
 		_listeners: {
 			type: Object,

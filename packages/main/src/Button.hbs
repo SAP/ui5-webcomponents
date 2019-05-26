@@ -2,9 +2,8 @@
 		type="button"
 		class="{{classes.main}}"
 		style="{{styles.main}}"
-		disabled="{{ctr.disabled}}"
-		aria-disabled="{{ariaDisabled}}"
-		title="{{ctr.tooltip}}"
+		?disabled="{{ctr.disabled}}"
+		?aria-disabled="{{ariaDisabled}}"
 		tabindex="{{tabindex}}"
 		data-sap-focus-ref
 		{{> ariaPressed}}
@@ -16,9 +15,11 @@
 			></ui5-icon>
 		{{/if}}
 
-		{{#if ctr._nodeText}}
-			<span id="{{ctr._id}}-content" dir="{{dir}}" class="{{classes.text}}">
-				<bdi>{{ctr._nodeText}}</bdi>
+		{{#if ctr.text.length}}
+			<span id="{{ctr._id}}-content" class="{{classes.text}}">
+				<bdi>
+					<slot></slot>
+				</bdi>
 			</span>
 		{{/if}}
 </button>

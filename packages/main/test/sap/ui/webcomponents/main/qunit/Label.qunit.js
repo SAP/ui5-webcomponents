@@ -4,6 +4,10 @@ TestHelper.ready(function() {
 
 	var fixture = window.document.querySelector("#qunit-fixture");
 
+	var getActualText = function(el) {
+		return el.shadowRoot.querySelector('.sapMLabel>bdi>slot').assignedNodes()[0].textContent;
+	};
+
 	QUnit.module("Rendering", function (hooks) {
 		hooks.before(function() {
 			this.getLabelRoot = function() {
@@ -98,7 +102,6 @@ TestHelper.ready(function() {
 
 			var done = assert.async(),
 				label = this.getLabel(),
-				labelRoot = this.getLabelRoot(),
 				newText = "Changed Label";
 
 			// act
@@ -106,7 +109,7 @@ TestHelper.ready(function() {
 
 			RenderScheduler.whenFinished().then(function () {
 				// assert
-				assert.equal(labelRoot.textContent.trim(), newText, "component text has changed");
+				assert.equal(getActualText(label), newText, "component text has changed");
 				done();
 			});
 		});

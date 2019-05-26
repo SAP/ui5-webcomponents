@@ -3,7 +3,6 @@ import "@ui5/webcomponents-base/src/shims/Core-shim.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import { fetchCldrData } from "@ui5/webcomponents-base/src/CLDR.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes.js";
 import { getCalendarType } from "@ui5/webcomponents-base/src/Configuration.js";
 import { getLocale } from "@ui5/webcomponents-base/src/LocaleProvider.js";
 import { getIconURI } from "@ui5/webcomponents-base/src/IconPool.js";
@@ -12,6 +11,7 @@ import DateFormat from "@ui5/webcomponents-core/dist/sap/ui/core/format/DateForm
 import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType.js";
 import CalendarDate from "@ui5/webcomponents-base/src/dates/CalendarDate.js";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
+import { isShow } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import DatePickerTemplateContext from "./DatePickerTemplateContext.js";
 import Icon from "./Icon.js";
 import Popover from "./Popover.js";
@@ -41,11 +41,11 @@ const metadata = {
 		 * Defines a formatted date value.
 		 *
 		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		value: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
@@ -54,6 +54,7 @@ const metadata = {
 		 * <code>Success</code>.
 		 *
 		 * @type {string}
+		 * @defaultvalue "None"
 		 * @public
 		 */
 		valueState: {
@@ -65,6 +66,7 @@ const metadata = {
 		 * Determines the format, displayed in the input field.
 		 *
 		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		formatPattern: {
@@ -74,7 +76,7 @@ const metadata = {
 		/**
 		 * Determines the calendar type.
 		 * The input value is formated according to the calendar type and the picker shows
-		 * months and years from the specified calendar.
+		 * months and years from the specified calendar. Available options are: "Gregorian", "Islamic", "Japanese", "Buddhist" and "Persian".
 		 *
 		 * @type {string}
 		 * @public
@@ -87,6 +89,7 @@ const metadata = {
 		 * Determines whether the <code>ui5-datepicker</code> is displayed as disabled.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		disabled: {
@@ -97,6 +100,7 @@ const metadata = {
 		 * Determines whether the <code>ui5-datepicker</code> is displayed as readonly.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		readonly: {
@@ -109,10 +113,10 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> The placeholder is not supported in IE. If the placeholder is provided, it won`t be displayed in IE.
 		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		placeholder: {
-			defaultValue: null,
 			type: String,
 		},
 
@@ -126,7 +130,8 @@ const metadata = {
 		 * will be created inside the <code>ui5-datepicker</code> so that it can be submitted as
 		 * part of an HTML form. Do not use this property unless you need to submit a form.
 		 *
-		 * @type {String}
+		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		name: {
@@ -134,7 +139,6 @@ const metadata = {
 		},
 
 		_isPickerOpen: {
-			defaultValue: false,
 			type: Boolean,
 		},
 
@@ -199,6 +203,15 @@ const metadata = {
  * For example, if the <code>format-pattern</code> is "yyyy-MM-dd",
  * a valid value string is "2015-07-30" and the same is displayed in the input.
  *
+ * <h3>Keyboard Handling</h3>
+ * The <code>ui5-datepicker</code> provides advanced keyboard handling.
+ * If the <code>ui5-datepicker</code> is focused,
+ * you can open or close the drop-down by pressing <code>F4</code>, <code>ALT+UP</code> or <code>ALT+DOWN</code> keys.
+ * Once the drop-down is opened, you can use the <code>UP</code>, <code>DOWN</code>, <code>LEFT</code>, <code>right</code> arrow keys
+ * to navigate through the dates and select one by pressing the <code>Space</code> or <code>Enter</code> keys. Moreover you can
+ * use tab to reach the buttons for changing month and year.
+ * <br>
+ *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/DatePicker";</code>
@@ -235,7 +248,6 @@ class DatePicker extends UI5Element {
 		this._input.icon.src = getIconURI("appointment-2");
 		this._input.onChange = this._handleInputChange.bind(this);
 		this._input.onLiveChange = this._handleInputLiveChange.bind(this);
-		this.aArrows = [KeyCodes.ARROW_DOWN, KeyCodes.ARROW_UP]; // keys we need for keyboard handling
 
 		this._popover = {
 			placementType: PopoverPlacementType.Bottom,
@@ -321,11 +333,7 @@ class DatePicker extends UI5Element {
 	}
 
 	onkeydown(event) {
-		if (event.which === KeyCodes.ALT) {
-			return;
-		}
-
-		if (event.which === KeyCodes.F4 || (event.altKey && this.aArrows.includes(event.which))) {
+		if (isShow(event)) {
 			this.togglePicker();
 			this._getInput().focus();
 		}
@@ -558,6 +566,5 @@ const getDomTarget = event => {
 Bootstrap.boot().then(_ => {
 	DatePicker.define();
 });
-
 
 export default DatePicker;

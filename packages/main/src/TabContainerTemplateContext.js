@@ -58,7 +58,7 @@ class TabContainerTemplateContext {
 				isIconTab: item.icon,
 				position: index + 1,
 				disabled: item.disabled || undefined,
-				selected: item.selected || undefined,
+				selected: item.selected || false,
 				ariaLabelledBy: calculateAriaLabelledBy(item),
 				contentItemClasses: calculateContentItemClasses(item),
 				headerItemClasses: calculateHeaderItemClasses(item, context),

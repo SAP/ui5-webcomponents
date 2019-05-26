@@ -160,10 +160,18 @@ ui5-input {
 }
 
 /* Input Icon */
-::slotted(ui5-icon) {
+:host(ui5-input) ::slotted(ui5-icon) {
 	min-width: var(--sap_wc_input_icon_min_width);
 }
 
 ui5-input ui5-icon {
 	min-width: var(--sap_wc_input_icon_min_width);
+}
+
+:host(ui5-input[data-ui5-compact-size]) ::slotted(ui5-icon) {
+	min-width: var(--sap_wc_input_compact_min_width);
+}
+
+ui5-input[data-ui5-compact-size] ui5-icon {
+	min-width: var(--sap_wc_input_compact_min_width);
 }

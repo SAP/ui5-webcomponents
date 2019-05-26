@@ -1,7 +1,7 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes.js";
 import URI from "@ui5/webcomponents-base/src/types/URI.js";
+import { isSpace } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import LinkType from "./types/LinkType.js";
 
 // Template
@@ -19,7 +19,6 @@ import "./ThemePropertiesProvider.js";
  */
 const metadata = {
 	tag: "ui5-link",
-	usesNodeText: true,
 	properties: /** @lends  sap.ui.webcomponents.main.Link.prototype */  {
 
 		/**
@@ -28,6 +27,7 @@ const metadata = {
 		 * <b>Note:</b> When disabled, the link cannot be triggered by the user.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		disabled: {
@@ -40,6 +40,7 @@ const metadata = {
 		 * <b>Note:</b> Standard hyperlink behavior is supported.
 		 *
 		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		href: {
@@ -56,11 +57,11 @@ const metadata = {
 		 * <li>This property must only be used when the <code>href</code> property is set.</li></ul>
 		 *
 		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		target: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
@@ -68,7 +69,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> Avaialble options are <code>Default</code>, <code>Subtle</code>, and <code>Emphasized</code>.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue "Default"
 		 * @public
 		 */
@@ -84,6 +85,7 @@ const metadata = {
 		 * <b>Note:</b> the text is truncated by default.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		wrap: {
@@ -94,6 +96,21 @@ const metadata = {
 			type: String,
 		},
 	},
+	slots: /** @lends sap.ui.webcomponents.main.Link.prototype */ {
+		/**
+		 * Defines the text of the <code>ui5-link</code>.
+		 * <br><b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+		 *
+		 * @type {Node[]}
+		 * @slot
+		 * @public
+		 */
+		text: {
+			type: Node,
+			multiple: true,
+		},
+	},
+	defaultSlot: "text",
 	events: /** @lends sap.ui.webcomponents.main.Link.prototype */ {
 
 		/**
@@ -146,7 +163,6 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.Link
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-link
- * @usestextcontent
  * @public
  */
 class Link extends UI5Element {
@@ -188,13 +204,11 @@ class Link extends UI5Element {
 	}
 
 	onkeydown(event) {
-		const eventKeyCode = event.keyCode;
-
 		if (this.disabled) {
 			return;
 		}
 
-		if (eventKeyCode === KeyCodes.SPACE) {
+		if (isSpace(event)) {
 			event.preventDefault();
 		}
 	}
@@ -204,7 +218,7 @@ class Link extends UI5Element {
 			return;
 		}
 
-		if (event.keyCode === KeyCodes.SPACE) {
+		if (isSpace(event)) {
 			const defaultPrevented = !this.fireEvent("press", {}, true);
 			if (defaultPrevented) {
 				return;

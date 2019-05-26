@@ -2,8 +2,8 @@
 
 {{#*inline "listItemContent"}}
 	<div class="sapMSLITextWrapper">
-		{{#if ctr._nodeText}}
-			<span class="sapMSLITitle">{{ctr._nodeText}}</span>
+		{{#if ctr.text.length}}
+			<span class="sapMSLITitle"><slot></slot></span>
 		{{/if}}
 		{{#if ctr.description}}
 			<span class="sapMSLIDescription">{{ctr.description}}</span>

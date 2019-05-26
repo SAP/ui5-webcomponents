@@ -3,7 +3,7 @@
 	style="{{styles.main}}"
 	role="radio"
 	aria-checked="{{ctr.selected}}"
-	aria-readonly="{{readOnly}}"
+	?aria-readonly="{{readonly}}"
 	tabindex="{{tabIndex}}">
 
 	<div class='{{classes.inner}}'>
@@ -11,7 +11,7 @@
 			<circle class="sapMRbSvgOuter" cx="{{circle.x}}" cy="{{circle.y}}" r="{{circle.rOuter}}" stroke-width="2" fill="none" />
 			<circle class="sapMRbSvgInner" cx="{{circle.x}}" cy="{{circle.y}}" r="{{circle.rInner}}" stroke-width="10" />
 		</svg>
- 		<input type='radio' ?checked="{{ctr.selected}}" ?readonly="{{ctr.readOnly}}" ?disabled="{{ctr.readOnly}}" name="{{ctr.name}}" data-sap-no-tab-ref/>
+ 		<input type='radio' ?checked="{{ctr.selected}}" ?readonly="{{ctr.readonly}}" ?disabled="{{ctr.readonly}}" name="{{ctr.name}}" data-sap-no-tab-ref/>
 	</div>
 
 	{{#if ctr._label.text}}

@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 
 // Template
 import SwitchRenderer from "./build/compiled/SwitchRenderer.lit.js";
@@ -28,7 +28,7 @@ const metadata = {
 		 * pressing the <code>Enter</code> or <code>Space</code> key.
 		 *
 		 * @type {boolean}
-		 * @default false
+		 * @defaultvalue false
 		 * @public
 		 */
 		checked: {
@@ -41,7 +41,7 @@ const metadata = {
 		 * <b>Note:</b> A disabled <code>ui5-switch</code> is noninteractive.
 		 *
 		 * @type {boolean}
-		 * @default false
+		 * @defaultvalue false
 		 * @public
 		 */
 		disabled: {
@@ -54,11 +54,11 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> We recommend using short texts (up to 3 letters, because larger texts might be cut off.
 		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		textOn: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
@@ -67,11 +67,11 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> We recommend using short texts (up to 3 letters, because larger texts might be cut off.
 		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		textOff: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
@@ -83,7 +83,7 @@ const metadata = {
 		 * <b>Note:</b> If <code>Graphical</code> type is set,
 		 * positive and negative icons will replace the <code>textOn</code> and <code>textOff</code>.
 		 * @type {string}
-		 * @default Textual
+		 * @defaultvalue "Textual"
 		 * @public
 		 */
 		type: {
@@ -139,17 +139,17 @@ class Switch extends UI5Element {
 	}
 
 	onkeydown(event) {
-		if (event.keyCode === KeyCodes.SPACE) {
+		if (isSpace(event)) {
 			event.preventDefault();
 		}
 
-		if (event.keyCode === KeyCodes.ENTER) {
+		if (isEnter(event)) {
 			this.toggle();
 		}
 	}
 
 	onkeyup(event) {
-		if (event.keyCode === KeyCodes.SPACE) {
+		if (isSpace(event)) {
 			this.toggle();
 		}
 	}

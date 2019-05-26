@@ -16,7 +16,6 @@ import "./ThemePropertiesProvider.js";
  */
 const metadata = {
 	tag: "ui5-label",
-	usesNodeText: true,
 	properties: /** @lends sap.ui.webcomponents.main.Label.prototype */  {
 
 		/**
@@ -25,6 +24,7 @@ const metadata = {
 		 * <b>Note:</b> Usually indicates that user input is required.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		required: {
@@ -37,6 +37,7 @@ const metadata = {
 		 * <b>Note:</b> By default the text would truncate.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		wrap: {
@@ -49,13 +50,28 @@ const metadata = {
 		 * <b>Note:</b> Can be used with both <code>ui5-input</code> and native input.
 		 *
 		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		"for": {
-			defaultValue: "",
 			type: String,
 		},
 	},
+	slots: /** @lends sap.ui.webcomponents.main.Label.prototype */ {
+		/**
+		 * Defines the text of the <code>ui5-label</code>.
+		 * <br><b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+		 *
+		 * @type {Node[]}
+		 * @slot
+		 * @public
+		 */
+		text: {
+			type: Node,
+			multiple: true,
+		},
+	},
+	defaultSlot: "text",
 	renderer: LabelRenderer,
 };
 
@@ -85,7 +101,6 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.Label
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-label
- * @usestextcontent
  * @public
  */
 class Label extends UI5Element {

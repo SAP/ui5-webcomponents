@@ -6,8 +6,8 @@ import {
 	isDown,
 	isEnter,
 	isEscape,
+	isShow,
 } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes.js";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
 import Function from "@ui5/webcomponents-base/src/types/Function.js";
 import Suggestions from "./Suggestions.js";
@@ -54,11 +54,11 @@ const metadata = {
 		 * <b>Note:</b> A disabled <code>ui5-select</code> is noninteractive.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		disabled: {
 			type: Boolean,
-			defaultValue: false,
 		},
 
 		/**
@@ -66,6 +66,7 @@ const metadata = {
 		 * Available options are: <code>None</code>, <code>Success</code>, <code>Warning</code> and <code>Error</code>.
 		 *
 		 * @type {string}
+		 * @defaultvalue "None"
 		 * @public
 		 */
 		valueState: {
@@ -75,17 +76,14 @@ const metadata = {
 
 		_text: {
 			type: String,
-			defaultValue: "",
 		},
 
 		_opened: {
 			type: Boolean,
-			defaultValue: false,
 		},
 
 		_focused: {
 			type: Boolean,
-			defaultValue: false,
 		},
 
 		_fnClickSelectBox: {
@@ -215,9 +213,7 @@ class Select extends UI5Element {
 			this._escapePressed = true;
 		}
 
-		const key = event.which;
-
-		if (key === KeyCodes.F4 || (event.altKey && Select.ARROWS.includes(key))) {
+		if (isShow(event)) {
 			event.preventDefault();
 			this.Suggestions.toggle();
 		}
@@ -371,8 +367,6 @@ class Select extends UI5Element {
 		this.fireEvent("change", { selectedItem: item });
 	}
 }
-
-Select.ARROWS = [KeyCodes.ARROW_DOWN, KeyCodes.ARROW_UP];
 
 Bootstrap.boot().then(_ => {
 	Select.define();

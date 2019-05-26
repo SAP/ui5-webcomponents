@@ -4,6 +4,10 @@ TestHelper.ready(function () {
 
 	var fixture = window.document.querySelector("#qunit-fixture");
 
+	var getActualText = function(el) {
+		return el.shadowRoot.querySelector('.sapMBtnText>bdi>slot').assignedNodes()[0].textContent;
+	};
+
 	QUnit.module("Web Components", {
 		beforeEach: function () {
 			var html = '<ui5-togglebutton id="myButton">Button</ui5-togglebutton>';
@@ -20,7 +24,7 @@ TestHelper.ready(function () {
 	});
 
 	QUnit.test("rendering", function (assert) {
-		assert.strictEqual(this.button.shadowRoot.querySelector('.sapMBtnText>bdi').textContent, 'Button', "Button text is correct");
+		assert.strictEqual(getActualText(this.button), 'Button', "Button text is correct");
 		assert.notOk(this.button.hasAttribute('pressed'), 'Button is in not pressed state');
 	});
 

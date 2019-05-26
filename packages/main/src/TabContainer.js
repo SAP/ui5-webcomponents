@@ -39,6 +39,7 @@ const metadata = {
 		items: {
 			type: TabBase,
 			multiple: true,
+			individualSlots: true,
 			listenFor: { include: ["*"] },
 		},
 	},
@@ -48,6 +49,7 @@ const metadata = {
 		 * expandable/collapsible by user interaction.
 		 *
 		 * @type {Boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		fixed: {
@@ -58,6 +60,7 @@ const metadata = {
 		 * Determines whether the tab content is collapsed.
 		 *
 		 * @type {Boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		collapsed: {
@@ -71,6 +74,7 @@ const metadata = {
 		 * so that it's easier for the user to select a specific tab filter.
 		 *
 		 * @type {Boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		showOverflow: {
@@ -269,7 +273,7 @@ class TabContainer extends UI5Element {
 	}
 
 	_onHeaderItemSelect(event) {
-		if (!event.target.getAttribute("disabled")) {
+		if (!event.target.hasAttribute("disabled")) {
 			this._onItemSelect(event.target);
 		}
 	}
