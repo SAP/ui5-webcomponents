@@ -4,34 +4,42 @@
 	max-width: 100%;
 }
 
+/* ducplicated for IE */
 ui5-checkbox {
 	display: inline-block;
 	overflow: hidden;
 	max-width: 100%;
 }
 
-span[data-sap-ui-wc-root] {
-	display: inline-block;
-}
-
 .ui5-checkbox-wrapper {
-	min-height: var(--_ui5_checkbox_width_height);
-	min-width: var(--_ui5_checkbox_width_height);
+	position: relative;
 	display: flex;
 	align-items: center;
-	padding-left: .8125rem;
-	padding-right: 0.125rem;
+	width: 100%;
+	min-height: var(--_ui5_checkbox_width_height);
+	min-width: var(--_ui5_checkbox_width_height);
+	padding: 0 var(--_ui5_checkbox_wrapper_padding);
 	box-sizing: border-box;
 	outline: none;
-	position: relative;
 	-webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
+.ui5-checkbox-wrapper:not(.ui5-checkbox-with-label) {
+	justify-content: center;
+}
 
 .ui5-checkbox-wrapper::after {
 	content: "";
 	min-height: inherit;
 	font-size: 0;
+}
+
+.ui5-checkbox-wrapper.ui5-checkbox-with-label {
+	padding-right: 0;
+}
+
+.ui5-checkbox-wrapper.ui5-checkbox-with-label:focus::before {
+	right: 0;
 }
 
 .ui5-checkbox-wrapper.ui5-checkbox-with-label.ui5-checkbox--wrap {
@@ -45,10 +53,6 @@ span[data-sap-ui-wc-root] {
 .ui5-checkbox-wrapper.ui5-checkbox-with-label.ui5-checkbox--wrap .ui5-checkbox-inner,
 .ui5-checkbox-wrapper.ui5-checkbox-with-label.ui5-checkbox--wrap .ui5-checkbox-label {
 	margin-top: var(--_ui5_checkbox_wrapped_content_margin_top);
-}
-
-.sapUiSizeCompact .ui5-checkbox-wrapper.ui5-checkbox-with-label.ui5-checkbox--wrap .ui5-checkbox-label {
-	margin-top: var(--_ui5_checkbox_compact_wrapped_label_margin_top);
 }
 
 .ui5-checkbox--disabled {
@@ -101,19 +105,15 @@ span[data-sap-ui-wc-root] {
 .ui5-checkbox-wrapper:focus::before {
 	content: "";
 	position: absolute;
-	top: var(--_ui5_checkbox_focus_left_top_bottom_position);
-	left: .6875rem;
-	right: 0px;
-	bottom: var(--_ui5_checkbox_focus_left_top_bottom_position);
+	top: var(--_ui5_checkbox_focus_position);
+	left: var(--_ui5_checkbox_focus_position);
+	right: var(--_ui5_checkbox_focus_position);
+	bottom: var(--_ui5_checkbox_focus_position);
 	border: var(--_ui5_checkbox_focus_outline);
 }
 
 .ui5-checkbox-wrapper.ui5-checkbox--wrap:focus::before {
 	bottom: var(--_ui5_checkbox_wrapped_focus_left_top_bottom_position);
-}
-
-.ui5-checkbox-wrapper:not(.ui5-checkbox-with-label):focus::before {
-	right: var(--_ui5_checkbox_no_label_focus_right);
 }
 
 .ui5-checkbox-inner {
@@ -161,7 +161,7 @@ span[data-sap-ui-wc-root] {
 }
 
 .ui5-checkbox-wrapper .ui5-checkbox-label {
-	margin-left: .8125rem;
+	margin-left: var(--_ui5_checkbox_wrapper_padding);
 	cursor: default;
 	text-overflow: ellipsis;
 	overflow: hidden;
@@ -172,9 +172,11 @@ span[data-sap-ui-wc-root] {
 	-webkit-user-select: none;
 }
 
+/* Compact */
 .sapUiSizeCompact .ui5-checkbox-wrapper {
 	min-height: var(--_ui5_checkbox_compact_width_height);
 	min-width: var(--_ui5_checkbox_compact_width_height);
+	padding: 0 var(--_ui5_checkbox_compact_wrapper_padding);
 }
 
 .sapUiSizeCompact .ui5-checkbox-inner {
@@ -183,19 +185,14 @@ span[data-sap-ui-wc-root] {
 	max-width: var(--_ui5_checkbox_compact_inner_size);
 	min-width: var(--_ui5_checkbox_compact_inner_size);
 	font-size: .625rem;
-	border-radius: 0;
 }
 
 .sapUiSizeCompact .ui5-checkbox-wrapper:focus::before {
-	top: var(--_ui5_checkbox_compact_focus_left_top_bottom_position);
-	left: .6875rem;
-	right: 0px;
-	bottom: var(--_ui5_checkbox_compact_focus_left_top_bottom_position);
+	top: var(--_ui5_checkbox_compact_focus_position);
+	left: var(--_ui5_checkbox_compact_focus_position);
+	right: var(--_ui5_checkbox_compact_focus_position);
+	bottom: var(--_ui5_checkbox_compact_focus_position);
 	border: var(--_ui5_checkbox_focus_outline);
-}
-
-.sapUiSizeCompact .ui5-checkbox-wrapper:not(.ui5-checkbox-with-label):focus::before {
-	right: var(--_ui5_checkbox_compact_no_label_focus_right);
 }
 
 .sapUiSizeCompact .ui5-checkbox-wrapper.ui5-checkbox-with-label.ui5-checkbox--wrap {
@@ -204,16 +201,40 @@ span[data-sap-ui-wc-root] {
 	padding-bottom: var(--_ui5_checkbox_wrapped_focus_padding);
 }
 
+.sapUiSizeCompact .ui5-checkbox-wrapper.ui5-checkbox-with-label.ui5-checkbox--wrap .ui5-checkbox-label {
+	margin-top: var(--_ui5_checkbox_compact_wrapped_label_margin_top);
+}
+
 .sapUiSizeCompact .ui5-checkbox-wrapper.ui5-checkbox--wrap:focus::before {
-	bottom: var(--_ui5_checkbox_compact_wrapped_focus_left_top_bottom_position);
+	bottom: var(--_ui5_checkbox_compact_focus_position);
 }
 
 .sapUiSizeCompact .ui5-checkbox-wrapper .ui5-checkbox-label {
+	margin-left: var(--_ui5_checkbox_compact_wrapper_padding);
 	width: calc(100% - .8125rem - var(--_ui5_checkbox_compact_inner_size));
 }
 
+/* RTL */
+span[dir="rtl"] .ui5-checkbox-wrapper.ui5-checkbox-with-label {
+	padding-left: 0;
+	padding-right: var(--_ui5_checkbox_wrapper_padding);
+}
+
+span[dir="rtl"] .ui5-checkbox-wrapper.ui5-checkbox-with-label:focus::before {
+	left: 0;
+	right: var(--_ui5_checkbox_focus_position);
+}
 
 span[dir="rtl"] .ui5-checkbox-wrapper .ui5-checkbox-label {
 	margin-left: 0;
-	margin-right: .8125rem;
+	margin-right: var(--_ui5_checkbox_compact_wrapper_padding);
+}
+
+/* RTL + Compact */
+span[dir="rtl"].sapUiSizeCompact .ui5-checkbox-wrapper.ui5-checkbox-with-label {
+	padding-right: var(--_ui5_checkbox_compact_wrapper_padding);
+}
+
+span[dir="rtl"].sapUiSizeCompact .ui5-checkbox-wrapper.ui5-checkbox-with-label:focus::before {
+	right: var(--_ui5_checkbox_compact_focus_position);
 }
