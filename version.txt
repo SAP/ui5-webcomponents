@@ -1,5 +1,13 @@
-commit e70156225f0052fb7d2b7b811f193aaf2038b689
+commit 88e10fe603c13aa29ee968f508089eba283d06b4
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Sat May 25 18:43:12 2019 +0300
+Date:   Mon May 27 09:58:12 2019 +0300
 
-    fix(ui5-tabcontainer): remove typo from component template (#446)
+     fix(ui5-radiobutton): fix touch area size (#445)
+    
+    * correct touch area size and outer circle radius, according to the latest Fiori 3 spec
+    * correct outer circle width, based on the valueState
+    * declare aria-readonly as standard attribute (not boolean) as
+    JAWS does not announce readonly, if just aria-readonly is present,
+    but it is fine if aria-readonly="true"
+    * add keyboard handling section
+    * FIXES: https://github.com/SAP/ui5-webcomponents/issues/443
