@@ -6,7 +6,6 @@ import Integer from "./types/Integer.js";
 import ControlRenderer from "./ControlRenderer.js";
 import RenderScheduler from "./RenderScheduler.js";
 import TemplateContext from "./TemplateContext.js";
-import State from "./State.js";
 import { createStyle } from "./CSS.js";
 import { attachThemeChange } from "./Theming.js";
 import Function from "./types/Function";

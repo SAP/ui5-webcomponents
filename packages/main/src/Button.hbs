@@ -2,21 +2,21 @@
 		type="button"
 		class="{{classes.main}}"
 		style="{{styles.main}}"
-		?disabled="{{ctr.disabled}}"
+		?disabled="{{disabled}}"
 		?aria-disabled="{{ariaDisabled}}"
 		tabindex="{{tabindex}}"
 		data-sap-focus-ref
 		{{> ariaPressed}}
 	>
-		{{#if ctr._iconSettings}}
+		{{#if _iconSettings}}
 			<ui5-icon
 				class="{{classes.icon}}"
-				src="{{ctr._iconSettings.src}}"
+				src="{{_iconSettings.src}}"
 			></ui5-icon>
 		{{/if}}
 
-		{{#if ctr.text.length}}
-			<span id="{{ctr._id}}-content" class="{{classes.text}}">
+		{{#if textContent}}
+			<span id="{{_id}}-content" class="{{classes.text}}">
 				<bdi>
 					<slot></slot>
 				</bdi>

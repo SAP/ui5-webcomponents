@@ -3,7 +3,6 @@ import URI from "@ui5/webcomponents-base/src/types/URI.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes.js";
 
-import ButtonTemplateContext from "./ButtonTemplateContext.js";
 import ButtonType from "./types/ButtonType.js";
 import ButtonRenderer from "./build/compiled/ButtonRenderer.lit.js";
 import Icon from "./Icon.js";
@@ -183,10 +182,6 @@ class Button extends UI5Element {
 		return ButtonRenderer;
 	}
 
-	static get calculateTemplateContext() {
-		return ButtonTemplateContext.calculate;
-	}
-
 	constructor() {
 		super();
 
@@ -255,6 +250,44 @@ class Button extends UI5Element {
 
 	onfocusout(_event) {
 		this._active = false;
+	}
+
+	get templateContext() {
+		return {
+			textContent: this.textContent,
+			tabindex: this._customAttributes.tabindex,
+			classes: {
+				main: this.mainClasses,
+				icon: this.iconClasses,
+				text: {
+					sapMBtnText: true,
+				},
+			},
+			styles: {
+				main: {
+				},
+			},
+			iconSrc: this._active ? this.activeIcon : this.icon,
+			ariaDisabled: this.disabled ? "true" : undefined,
+		};
+	}
+
+	get mainClasses() {
+		return {
+			sapMBtn: true,
+			sapMBtnActive: this._active,
+			sapMBtnWithIcon: this.icon,
+			sapMBtnNoText: !this.text.length,
+			sapMBtnDisabled: this.disabled,
+			sapMBtnIconEnd: this.iconEnd,
+			[`sapMBtn${this.type}`]: true,
+		};
+	}
+
+	get iconClasses() {
+		return {
+			sapWCIconInButton: true,
+		};
 	}
 
 	static async define(...params) {

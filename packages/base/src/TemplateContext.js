@@ -43,10 +43,9 @@ const _convertStyles = function _convertStyles(styles) {
 class TemplateContext {
 	// calculate control template context
 	static calculate(control) {
-		const templateContextMethod = control.constructor.calculateTemplateContext;
-		const templateContext = templateContextMethod(control._state);
+		const templateContext = Object.assign({}, control, control.templateContext);
 		if (!templateContext.hasOwnProperty("ariaHidden")) { // eslint-disable-line
-			templateContext.ariaHidden = control._state.hidden ? "true" : undefined;
+			templateContext.ariaHidden = control.hidden ? "true" : undefined;
 		}
 
 		templateContext.classes = _convertClasses(templateContext.classes, control._customClasses);
