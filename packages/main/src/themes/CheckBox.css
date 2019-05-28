@@ -13,7 +13,7 @@ ui5-checkbox {
 
 .ui5-checkbox-wrapper {
 	position: relative;
-	display: flex;
+	display: inline-flex;
 	align-items: center;
 	width: 100%;
 	min-height: var(--_ui5_checkbox_width_height);

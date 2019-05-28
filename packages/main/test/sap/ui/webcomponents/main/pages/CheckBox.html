@@ -21,7 +21,7 @@
 
 <body>
 	<ui5-checkbox id="cb1"></ui5-checkbox>
-	<ui5-checkbox id="cb1" value-state="Error"></ui5-checkbox>
+	<ui5-checkbox id="cbError" value-state="Error"></ui5-checkbox>
 	<ui5-checkbox id="cb2" disabled></ui5-checkbox>
 	<ui5-checkbox id="truncatingCb" text="Long long long text that should truncate at some point" style="width: 300px"></ui5-checkbox>
 	<ui5-checkbox id="wrappingCb" text="Longest ever text written in English that have to truncate immediately because it is so long of course!" style="width: 300px"></ui5-checkbox>
@@ -33,9 +33,8 @@
 	<ui5-checkbox wrap text="Longest ever text written in English that have to truncate immediately because it is so long of course!"></ui5-checkbox>
 
 	<ui5-button id="hcbButton">TUen Lights On/Off</ui5-button>
-</body>
 
-<script>
+	<script>
 		var hcb = false;
 		var input = document.querySelector("#field");
 		var checkBox1 = document.querySelector("#cb1");
@@ -55,4 +54,5 @@
 			document.body.style.backgroundColor = bg;
 		});
 </script>
+</body>
 </html>
