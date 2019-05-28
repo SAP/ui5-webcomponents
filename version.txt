@@ -1,5 +1,5 @@
-commit 88311391b7d204ed523bcca944ac7ed87303d060
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue May 28 13:18:57 2019 +0300
+commit 014a14c2e5cd79ec85f042a6b2f2af9782ed2d40
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Tue May 28 19:03:51 2019 +0300
 
-    fix(ui5-checkbox): fix touchArea size (#448)
+    chore: add directory field to package.json files (#452)
