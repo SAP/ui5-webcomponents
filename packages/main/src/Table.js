@@ -146,7 +146,7 @@ class Table extends UI5Element {
 						"grid-template-columns": "",
 						position: state.stickyColumnHeader ? "sticky" : "",
 						top: state.stickyColumnHeader ? "0px" : "",
-						"z-index": state.stickyColumnHeader ?  "1" : "",
+						"z-index": state.stickyColumnHeader ? "1" : "",
 					},
 				},
 			};
