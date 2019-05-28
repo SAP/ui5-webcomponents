@@ -1,13 +1,5 @@
-commit 88e10fe603c13aa29ee968f508089eba283d06b4
+commit 88311391b7d204ed523bcca944ac7ed87303d060
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon May 27 09:58:12 2019 +0300
+Date:   Tue May 28 13:18:57 2019 +0300
 
-     fix(ui5-radiobutton): fix touch area size (#445)
-    
-    * correct touch area size and outer circle radius, according to the latest Fiori 3 spec
-    * correct outer circle width, based on the valueState
-    * declare aria-readonly as standard attribute (not boolean) as
-    JAWS does not announce readonly, if just aria-readonly is present,
-    but it is fine if aria-readonly="true"
-    * add keyboard handling section
-    * FIXES: https://github.com/SAP/ui5-webcomponents/issues/443
+    fix(ui5-checkbox): fix touchArea size (#448)
