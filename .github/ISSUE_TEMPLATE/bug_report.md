@@ -14,7 +14,7 @@ Steps to reproduce the behavior:
 3. ...
 
 **Isolated example**
-You can privde an isolated exaple of the issue using [CodeSandbox](https://codesandbox.io/s/ui5webcomponents-9l8k8)
+Provide isolated example using [CodeSandbox](https://codesandbox.io/s/ui5webcomponents-9l8k8)
 
 **Expected behavior**
 A clear and concise description of what you expected to happen.
