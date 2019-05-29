@@ -13,14 +13,6 @@ import { attachThemeChange } from "./Theming.js";
 const metadata = {
 	properties: {
 		/**
-		 * CSS classes that will be applied to the top-level element of the control
-		 */
-		_customClasses: {
-			type: String,
-			multiple: true,
-		},
-
-		/**
 		 * Attributes (most commonly accessibility-related) that will be passed to the control.
 		 * The control has the responsibility to render these attributes
 		 */

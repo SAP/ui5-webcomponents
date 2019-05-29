@@ -254,7 +254,6 @@ class DatePicker extends UI5Element {
 				const calendar = popover.querySelector(`#${this._id}-calendar`);
 
 				this._input = Object.assign({}, this._input);
-				this._input.icon._customClasses = "sapWCDatePickerIcon";
 				this._isPickerOpen = false;
 
 				if (this._focusInputAfterClose) {
@@ -294,8 +293,6 @@ class DatePicker extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		this._popover._customClasses = [];
-
 		this._input.placeholder = this.placeholder;
 		this._input._iconNonFocusable = true;
 
@@ -472,7 +469,6 @@ class DatePicker extends UI5Element {
 	openPicker(options) {
 		this._changeCalendarSelection();
 		this._input = Object.assign({}, this._input);
-		this._input.icon._customClasses = "sapWCDatePickerIcon sapWCInputBaseIconPressed";
 
 		if (options && options.focusInput) {
 			this._focusInputAfterOpen = true;

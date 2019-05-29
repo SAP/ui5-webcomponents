@@ -81,7 +81,6 @@ class Timeline extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		this.addItemsCustomClass();
 		this._itemNavigation.init();
 	}
 
@@ -90,10 +89,6 @@ class Timeline extends UI5Element {
 		this._itemNavigation.getItemsCallback = () => this.items;
 
 		this._delegates.push(this._itemNavigation);
-	}
-
-	addItemsCustomClass() {
-		this.items[this.items.length - 1]._customClasses = ["sapWCTimelineItemLast"];
 	}
 
 	static async define(...params) {
