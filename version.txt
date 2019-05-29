@@ -1,7 +1,5 @@
-commit b8e8600c9063f6d3cebdfcbac1a277f2702b05f3
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed May 29 09:09:38 2019 +0300
+commit b96759dd62f3f8592caf316b9c36058900c9937c
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Wed May 29 11:29:57 2019 +0300
 
-     fix(ui5-table): fix sticky column headers being overlapped by cells (#453)
-    
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/451
+    chore: add link to codesandbox in bug report template (#458)
