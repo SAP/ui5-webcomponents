@@ -1,5 +1,4 @@
 import DataType from "./types/DataType.js";
-import Function from "./types/Function.js";
 
 class UI5ElementMetadata {
 	constructor(metadata) {

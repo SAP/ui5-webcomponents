@@ -9,7 +9,6 @@ import {
 	isShow,
 } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
-import Function from "@ui5/webcomponents-base/src/types/Function.js";
 import Suggestions from "./Suggestions.js";
 
 // Template

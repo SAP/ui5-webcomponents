@@ -1,5 +1,3 @@
-import Function from "./types/Function.js";
-
 class State {
 	constructor(control) {
 		this._control = control;

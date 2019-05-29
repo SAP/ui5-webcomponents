@@ -1,4 +1,3 @@
-import Function from "@ui5/webcomponents-base/src/types/Function.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import ListItemType from "./types/ListItemType.js";
 import ListMode from "./types/ListMode.js";
