@@ -14,10 +14,10 @@ import BusyIndicatorType from "./types/BusyIndicatorType.js";
  * @public
  */
 const metadata = {
-	tag: "ui5-busy-indicator",
+	tag: "ui5-busyindicator",
 	properties: /** @lends sap.ui.webcomponents.main.BusyIndicator.prototype */ {
 		/**
-		 * Defines the size of the <code>ui5-busy-indicator</code>.
+		 * Defines the size of the <code>ui5-busyindicator</code>.
 		 * </br></br>
 		 * <b>Note:</b> Available options are "Small", "Medium", "Large"
 		 *
@@ -34,13 +34,13 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * The <code>ui5-busy-indicator</code> signals that some operation is going on and that the
+ * The <code>ui5-busyindicator</code> signals that some operation is going on and that the
  *  user must wait. It does not block the current UI screen so other operations could be
  *  triggered in parallel.
  *
  * <h3>Usage</h3>
- * For the <code>ui5-busy-indicator</code> you can define the size of the indicator as well
- * as whether it is shown or hidden. If you wish to hide it use the html attribute <code>hidden</code>.
+ * For the <code>ui5-busyindicator</code> you can define the size of the indicator as well
+ * as whether it is shown or hidden. In order to hide it, use the html attribute <code>hidden</code> or <code>display: none;</code>
  *
  * <h3>ES6 Module Import</h3>
  *
@@ -50,8 +50,7 @@ const metadata = {
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.BusyIndicator
  * @extends UI5Element
- * @tagname ui5-busy-indicator
- * @usestextcontent
+ * @tagname ui5-busyindicator
  * @public
  */
 class BusyIndicator extends UI5Element {
@@ -69,10 +68,6 @@ class BusyIndicator extends UI5Element {
 
 	static get calculateTemplateContext() {
 		return BusyIndicatorTemplateContext.calculate;
-	}
-
-	static async define(...params) {
-		super.define(...params);
 	}
 }
 

@@ -10,8 +10,8 @@ class BusyIndicatorTemplateContext {
 
 	static calculateClasses(state) {
 		return {
-			"ui5-busy-indicator-wrapper": true,
-			[`ui5-busy-indicator-${state.size.toLowerCase()}`]: true,
+			"ui5-busyindicator-wrapper": true,
+			[`ui5-busyindicator-${state.size.toLowerCase()}`]: true,
 		};
 	}
 }
