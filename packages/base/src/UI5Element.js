@@ -302,7 +302,6 @@ class UI5Element extends HTMLElement {
 	_initializeState() {
 		const defaultState = this.constructor._getDefaultState();
 		this._state = Object.assign({}, defaultState);
-		this._state._id = this._id;
 		this._delegates = [];
 	}
 

@@ -29,8 +29,27 @@
 
 <body>
 
-
+    <ui5-link href="http://www.google.com" target="_blank">Normal link</ui5-link>
+    <br>
+    <ui5-link id="l" href="http://www.google.com" target="_blank">Default prevented</ui5-link>
+    <br>
     <ui5-button id="b" type="Emphasized">Action Bar Button</ui5-button>
+
+    <ui5-datepicker primary-calendar-type="Gregorian"></ui5-datepicker>
+
+    <ui5-input show-suggestions id="ii">
+        <ui5-li>Anna</ui5-li>
+        <ui5-li>Anelia</ui5-li>
+        <ui5-li>Bobi</ui5-li>
+    </ui5-input>
+
+
+    <script>
+        var l = document.getElementById("l");
+        l.addEventListener("ui5-press", function(e) {
+            e.preventDefault();
+        });
+    </script>
 
 </body>
 </html>
