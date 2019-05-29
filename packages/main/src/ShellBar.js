@@ -2,7 +2,6 @@ import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { getRTL } from "@ui5/webcomponents-base/src/Configuration.js";
 import URI from "@ui5/webcomponents-base/src/types/URI.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import Function from "@ui5/webcomponents-base/src/types/Function.js";
 import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
 import { isSpace, isEscape } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
@@ -352,13 +351,20 @@ class ShellBar extends UI5Element {
 		this._isInitialRendering = true;
 		this._focussedItem = null;
 
+		// marks if preventDefault() is called in item's press handler
+		this._defaultItemPressPrevented = false;
+
 		const that = this;
 
 		this._actionList = {
 			itemPress: event => {
 				const popover = this.shadowRoot.querySelector(".sapWCShellBarOverflowPopover");
 
-				popover.close();
+				if (!this._defaultItemPressPrevented) {
+					popover.close();
+				}
+
+				this._defaultItemPressPrevented = false;
 			},
 		};
 
@@ -457,18 +463,8 @@ class ShellBar extends UI5Element {
 
 	onBeforeRendering() {
 		const size = this._handleBarBreakpoints();
-		const searchField = this.shadowRoot.querySelector(`#${this._id}-searchfield-wrapper`);
-
 		if (size !== "S") {
 			this._itemNav.init();
-		}
-
-		if (this.searchField && searchField) {
-			const inputSlot = searchField.children[0];
-
-			if (inputSlot) {
-				inputSlot.assignedNodes()[0]._customClasses = ["sapWCShellBarSearchFieldElement"];
-			}
 		}
 	}
 
@@ -477,6 +473,19 @@ class ShellBar extends UI5Element {
 
 		if (this._focussedItem) {
 			this._focussedItem._tabIndex = "0";
+		}
+	}
+
+	/**
+	 * Closes the overflow area.
+	 * Useful to manually close the overflow after having suppressed automatic closing with preventDefault() of ShellbarItem's press event
+	 * @public
+	 */
+	closeOverflow() {
+		const popover = this.shadowRoot.querySelector(".sapWCShellBarOverflowPopover");
+
+		if (popover) {
+			popover.close();
 		}
 	}
 
@@ -679,7 +688,13 @@ class ShellBar extends UI5Element {
 		this._itemNav.currentIndex = elementIndex;
 
 		if (refItemId) {
-			this.items.filter(item => item.shadowRoot.querySelector(`#${refItemId}`))[0].fireEvent("press");
+			const shellbarItem = this.items.filter(item => {
+				return item.shadowRoot.querySelector(`#${refItemId}`);
+			})[0];
+
+			const prevented = !shellbarItem.fireEvent("press", { targetRef: event.target }, true);
+
+			this._defaultItemPressPrevented = prevented;
 		}
 	}
 

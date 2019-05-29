@@ -1,16 +1,14 @@
 :host(ui5-title) {
-	display: inline-block;
+	display: block;
 	max-width: 100%;
 	color: var(--sapUiGroupTitleTextColor);
-	vertical-align: bottom;
 }
 
 ui5-title {
-	display: inline-block;
+	display: block;
 	overflow: hidden;
 	color: var(--sapUiGroupTitleTextColor);
 	max-width: 100%;
-	vertical-align: bottom;
 }
 
 .sapMTitle {

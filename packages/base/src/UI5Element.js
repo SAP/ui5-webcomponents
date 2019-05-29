@@ -13,14 +13,6 @@ import Function from "./types/Function";
 const metadata = {
 	properties: {
 		/**
-		 * CSS classes that will be applied to the top-level element of the control
-		 */
-		_customClasses: {
-			type: String,
-			multiple: true,
-		},
-
-		/**
 		 * Attributes (most commonly accessibility-related) that will be passed to the control.
 		 * The control has the responsibility to render these attributes
 		 */
@@ -602,7 +594,7 @@ class UI5Element extends HTMLElement {
 			if (curr.tagName.toUpperCase() !== "SLOT") {
 				return acc.concat([curr]);
 			}
-			return acc.concat(curr.assignedElements({ flatten: true }));
+			return acc.concat(curr.assignedNodes({ flatten: true }).filter(item => item instanceof HTMLElement));
 		};
 
 		return this[slotName].reduce(reducer, []);

@@ -1,5 +1,4 @@
 import DataType from "./types/DataType.js";
-import Function from "./types/Function.js";
 
 class UI5ElementMetadata {
 	constructor(metadata) {
@@ -99,7 +98,7 @@ const validateSingleSlot = (value, slotData) => {
 		const isSlot = isTag && el.tagName.toUpperCase() === "SLOT";
 
 		if (isSlot) {
-			return el.assignedElements({ flatten: true });
+			return el.assignedNodes({ flatten: true }).filter(item => item instanceof HTMLElement);
 		}
 
 		return [el];

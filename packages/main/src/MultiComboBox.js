@@ -1,7 +1,6 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
-import Function from "@ui5/webcomponents-base/src/types/Function.js";
 import { isShow, isDown } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 
 import MultiComboBoxRenderer from "./build/compiled/MultiComboBoxRenderer.lit.js";
@@ -192,6 +191,28 @@ const metadata = {
  * <li> Drop-down arrow - expands\collapses the option list.</li>
  * <li> Option list - the list of available options.</li>
  * </ul>
+ * <h3>Keyboard Handling</h3>
+ *
+ * The <code>ui5-multi-combobox</code> provides advanced keyboard handling.
+ *
+ * <h4>Picker</h3>
+ * If the <code>ui5-multi-combobox</code> is focused,
+ * you can open or close the drop-down by pressing <code>F4</code>, <code>ALT+UP</code> or <code>ALT+DOWN</code> keys.
+ * Once the drop-down is opened, you can use the <code>UP</code> and <code>DOWN</code> arrow keys
+ * to navigate through the available options and select one by pressing the <code>Space</code> or <code>Enter</code> keys.
+ * <br>
+ *
+ * <h4>Tokens</h2>
+ * <ul>
+ * <li> Left/Right arrow keys - moves the focus selection form the currently focues token to the previous/next one (if available). </li>
+ * <li> Delete -  deletes the token and focuses the previous token. </li>
+ * <li> Backspace -  deletes the token and focus the next token. </li>
+ * </ul>
+ *
+ * <h3>ES6 Module Import</h3>
+ *
+ * <code>import "@ui5/webcomponents/dist/MultiComboBox";</code>
+ *
  *
  * @constructor
  * @author SAP SE
@@ -327,10 +348,12 @@ class MultiComboBox extends UI5Element {
 
 	_handleKeyDown(event) {
 		if (isShow(event) && !this.readonly && !this.disabled) {
+			event.preventDefault();
 			this._togglePopover();
 		}
 
 		if (isDown(event) && this._getPopover()._isOpen && this.items.length) {
+			event.preventDefault();
 			const list = this.shadowRoot.querySelector(".ui5-multi-combobox-all-items-list");
 			list._itemNavigation.current = 0;
 			list.items[0].focus();

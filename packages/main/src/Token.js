@@ -7,7 +7,6 @@ import {
 	isSpace,
 	isDelete,
 } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-import Function from "@ui5/webcomponents-base/src/types/Function.js";
 
 import Icon from "./Icon.js";
 import TokenRenderer from "./build/compiled/TokenRenderer.lit.js";

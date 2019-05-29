@@ -1,9 +1,6 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import URI from "@ui5/webcomponents-base/src/types/URI.js";
-import Function from "@ui5/webcomponents-base/src/types/Function.js";
-import { fetchCldrData } from "@ui5/webcomponents-base/src/CLDR.js";
-import { getLocale } from "@ui5/webcomponents-base/src/LocaleProvider.js";
 import Icon from "./Icon.js";
 import Link from "./Link.js";
 import TimelineItemTemplateContext from "./TimelineItemTemplateContext.js";
@@ -158,7 +155,6 @@ class TimelineItem extends UI5Element {
 
 	static async define(...params) {
 		await Promise.all([
-			fetchCldrData(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
 			Icon.define(),
 			Link.define(),
 		]);
