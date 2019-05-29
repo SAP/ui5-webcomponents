@@ -252,24 +252,29 @@ class Button extends UI5Element {
 		this._active = false;
 	}
 
-	get templateContext() {
+	get rawClasses() {
 		return {
-			textContent: this.textContent,
-			tabindex: this._customAttributes.tabindex,
-			classes: {
-				main: this.mainClasses,
-				icon: this.iconClasses,
-				text: {
-					sapMBtnText: true,
-				},
+			main: this.mainClasses,
+			icon: this.iconClasses,
+			text: {
+				sapMBtnText: true,
 			},
-			styles: {
-				main: {
-				},
-			},
-			iconSrc: this._active ? this.activeIcon : this.icon,
-			ariaDisabled: this.disabled ? "true" : undefined,
 		};
+	}
+
+	get rawStyles() {
+		return {
+			main: {
+			},
+		};
+	}
+
+	get iconSrc() {
+		return this._active ? this.activeIcon : this.icon;
+	}
+
+	get ariaDisabled() {
+		return this.disabled ? "true" : undefined;
 	}
 
 	get mainClasses() {
