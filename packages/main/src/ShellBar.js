@@ -464,18 +464,8 @@ class ShellBar extends UI5Element {
 
 	onBeforeRendering() {
 		const size = this._handleBarBreakpoints();
-		const searchField = this.shadowRoot.querySelector(`#${this._id}-searchfield-wrapper`);
-
 		if (size !== "S") {
 			this._itemNav.init();
-		}
-
-		if (this.searchField && searchField) {
-			const inputSlot = searchField.children[0];
-
-			if (inputSlot) {
-				inputSlot.assignedNodes()[0]._customClasses = ["sapWCShellBarSearchFieldElement"];
-			}
 		}
 	}
 
