@@ -4,7 +4,7 @@ class TemplateContext {
 		let templateContext;
 
 		// Compatibility - old template context
-		if (control.constructor.hasOwnProperty("calculateTemplateContext")) {
+		if (control.constructor.hasOwnProperty("calculateTemplateContext")) { // eslint-disable-line
 			const templateContextMethod = control.constructor.calculateTemplateContext;
 			templateContext = templateContextMethod(control);
 		} else {
