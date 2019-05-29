@@ -18,6 +18,11 @@ const convertImports = (srcPath) => {
 		if (node.type === "ImportDeclaration") {
 			let importee = node.source.value;
 			if (importee.startsWith(".")) {
+				// add .js extension if missing
+				if (!importee.endsWith(".js")) {
+					node.source.value += ".js"
+					changed = true;
+				}
 				return;
 			}
 			let importeeDir = path.dirname(importee);

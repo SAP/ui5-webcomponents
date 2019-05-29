@@ -497,10 +497,8 @@ class Calendar extends UI5Element {
 		super.define(...params);
 	}
 }
-
 Bootstrap.boot().then(_ => {
 	Calendar.define();
 });
-
 
 export default Calendar;

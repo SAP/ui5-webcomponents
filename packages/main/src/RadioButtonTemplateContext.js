@@ -3,22 +3,24 @@ import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
 
 const SVGConfig = {
 	"compact": {
-		x: 8,
-		y: 8,
-		rInner: 3.5,
-		rOuter: 7,
+		x: 16,
+		y: 16,
+		rInner: 3,
+		rOuter: 8,
 	},
 	"default": {
-		x: 24,
-		y: 24,
+		x: 22,
+		y: 22,
 		rInner: 5,
-		rOuter: 10,
+		rOuter: 11,
 	},
 };
+
 
 class RadioButtonTemplateContext {
 	static calculate(state) {
 		const compact = getCompactSize();
+		const circle = compact ? SVGConfig.compact : SVGConfig.default;
 
 		const mainClasses = RadioButtonTemplateContext.getMainClasses(state),
 			innerClasses = RadioButtonTemplateContext.getInnerClasses(state),
@@ -26,7 +28,8 @@ class RadioButtonTemplateContext {
 				ctr: state,
 				readonly: state.disabled || state.readonly,
 				tabIndex: state.disabled || (!state.selected && state.name) ? "-1" : "0",
-				circle: compact ? SVGConfig.compact : SVGConfig.default,
+				circle,
+				strokeWidth: state.valueState === "None" ? "1" : "2",
 				classes: { main: mainClasses, inner: innerClasses },
 				styles: {
 					main: {},

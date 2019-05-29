@@ -158,6 +158,13 @@
 		</ui5-list>
 	</ui5-popover>
 
+	<ui5-popover id="custom-item-popover" hide-header placement-type="Bottom">
+		<ui5-list separators="None">
+			<ui5-li id="custom-item-1" type="Active">Custom Popover Item 1</ui5-li>
+			<ui5-li type="Active">Custom Popover Item 2</ui5-li>
+		</ui5-list>
+	</ui5-popover>
+
 	<ui5-input id="press-input" style="margin-top: 2rem; width: 240px;">
 
 	</ui5-input>
@@ -190,7 +197,9 @@
 
 		["disc", "call"].forEach(function(id) {
 			window[id].addEventListener("ui5-press", function(event) {
+				event.preventDefault();
 				window["press-input"].value = event.target.id;
+				window["custom-item-popover"].openBy(event.detail.targetRef);
 			});
 		});
 	</script>

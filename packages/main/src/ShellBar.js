@@ -352,13 +352,20 @@ class ShellBar extends UI5Element {
 		this._isInitialRendering = true;
 		this._focussedItem = null;
 
+		// marks if preventDefault() is called in item's press handler
+		this._defaultItemPressPrevented = false;
+
 		const that = this;
 
 		this._actionList = {
 			itemPress: event => {
 				const popover = this.shadowRoot.querySelector(".sapWCShellBarOverflowPopover");
 
-				popover.close();
+				if (!this._defaultItemPressPrevented) {
+					popover.close();
+				}
+
+				this._defaultItemPressPrevented = false;
 			},
 		};
 
@@ -467,6 +474,19 @@ class ShellBar extends UI5Element {
 
 		if (this._focussedItem) {
 			this._focussedItem._tabIndex = "0";
+		}
+	}
+
+	/**
+	 * Closes the overflow area.
+	 * Useful to manually close the overflow after having suppressed automatic closing with preventDefault() of ShellbarItem's press event
+	 * @public
+	 */
+	closeOverflow() {
+		const popover = this.shadowRoot.querySelector(".sapWCShellBarOverflowPopover");
+
+		if (popover) {
+			popover.close();
 		}
 	}
 
@@ -669,7 +689,13 @@ class ShellBar extends UI5Element {
 		this._itemNav.currentIndex = elementIndex;
 
 		if (refItemId) {
-			this.items.filter(item => item.shadowRoot.querySelector(`#${refItemId}`))[0].fireEvent("press");
+			const shellbarItem = this.items.filter(item => {
+				return item.shadowRoot.querySelector(`#${refItemId}`);
+			})[0];
+
+			const prevented = !shellbarItem.fireEvent("press", { targetRef: event.target }, true);
+
+			this._defaultItemPressPrevented = prevented;
 		}
 	}
 

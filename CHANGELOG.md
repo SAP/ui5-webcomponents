@@ -3,6 +3,57 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0](https://github.com/SAP/ui5-webcomponents/compare/v0.10.1...v0.11.0) (2019-05-22)
+
+
+### Bug Fixes
+
+* **ui5-checkbox:** correct default values of the boolean props  ([#408](https://github.com/SAP/ui5-webcomponents/issues/408)) ([9bdd2c5](https://github.com/SAP/ui5-webcomponents/commit/9bdd2c5))
+* **ui5-messagestrip:** remove height 100% from element tag ([#387](https://github.com/SAP/ui5-webcomponents/issues/387)) ([4b64a9c](https://github.com/SAP/ui5-webcomponents/commit/4b64a9c))
+* **ui5-panel:** add missing dependency for ui5-icon ([#406](https://github.com/SAP/ui5-webcomponents/issues/406)) ([650bcb0](https://github.com/SAP/ui5-webcomponents/commit/650bcb0))
+* fix broken child property observation ([#423](https://github.com/SAP/ui5-webcomponents/issues/423)) ([b3e3b3f](https://github.com/SAP/ui5-webcomponents/commit/b3e3b3f))
+* fix API build for composite components  ([#391](https://github.com/SAP/ui5-webcomponents/issues/391)) ([dcb829b](https://github.com/SAP/ui5-webcomponents/commit/dcb829b))
+* prevent dual event dispatching in no conflict mode ([#363](https://github.com/SAP/ui5-webcomponents/issues/363)) ([4cbe3de](https://github.com/SAP/ui5-webcomponents/commit/4cbe3de))
+* update tab container documentation ([#370](https://github.com/SAP/ui5-webcomponents/issues/370)) ([7117430](https://github.com/SAP/ui5-webcomponents/commit/7117430)), closes [#369](https://github.com/SAP/ui5-webcomponents/issues/369)
+
+
+### Code Refactoring
+
+* make custom CSS theme independent ([#386](https://github.com/SAP/ui5-webcomponents/issues/386)) ([d6b4ab5](https://github.com/SAP/ui5-webcomponents/commit/d6b4ab5))
+* **ui5-datepicker:** rename event 'liveChange' to 'input' ([#394](https://github.com/SAP/ui5-webcomponents/pull/394))
+* **ui5-panel:** remove backgroundDesign property ([#384](https://github.com/SAP/ui5-webcomponents/pull/384))
+* **ui5-panel:** remove backgroundDesign property ([#383](https://github.com/SAP/ui5-webcomponents/pull/383))
+* **ui5-checkbox:** rename "readOnly" to "readonly" ([#413](https://github.com/SAP/ui5-webcomponents/pull/413))
+* **ui5-radiobutton:** rename "readOnly" to "readonly" ([#413](https://github.com/SAP/ui5-webcomponents/pull/413))
+
+
+### Features
+
+* **ui5-multi-combobox:** initial implementation ([#379](https://github.com/SAP/ui5-webcomponents/issues/379)) ([115900b](https://github.com/SAP/ui5-webcomponents/commit/115900b))
+* **ui5-list:** selectionChange event provides previously selected items ([#418](https://github.com/SAP/ui5-webcomponents/issues/418)) ([f0fc8f2](https://github.com/SAP/ui5-webcomponents/commit/f0fc8f2))
+* **ui5-shellbar:** API improvements ([#421](https://github.com/SAP/ui5-webcomponents/issues/421)) ([e0ff36d](https://github.com/SAP/ui5-webcomponents/commit/e0ff36d))
+* add CSS variables section in API Ref ([#399](https://github.com/SAP/ui5-webcomponents/issues/399)) ([e198fa5](https://github.com/SAP/ui5-webcomponents/commit/e198fa5))
+* add data-ui5-compact-size attribute to root when compact is set ([#382](https://github.com/SAP/ui5-webcomponents/issues/382)) ([cbf00a8](https://github.com/SAP/ui5-webcomponents/commit/cbf00a8))
+* fetch ui5-datepicker assets from CDN ([#420](https://github.com/SAP/ui5-webcomponents/issues/420)) ([1f62dda](https://github.com/SAP/ui5-webcomponents/commit/1f62dda))
+* simplify slots usage ([e4907b9](https://github.com/SAP/ui5-webcomponents/commit/e4907b9))
+
+
+### BREAKING CHANGES
+
+* **ui5-list:** the "selectionChange" event param "items" has been renamed to "selectedItems".
+* **ui5-list:** the "backgroundDesign" property has been removed, use the corresponding
+CSS variable (--_ui5_listitem_background_color) to alter the list items` background.
+* **ui5-panel:** the "backgroundDesign" property has been removed, use the corresponding
+CSS variables (--_ui5_panel_background_color) to alter the panel background.
+* **ui5-datepicker:** 'liveChange' event has been renamed to 'input'.
+* **ui5-checkbox:** property "readOnly" has been renamed to "readonly".
+* **ui5-radiobutton:** property "readOnly" has been renamed to "readonly".
+* the signature of the addCustomCSS method exported by "@ui5/webcomponents-base/Theming.js" is changed from addCustomCSS(tag, theme, css) to addCustomCSS(tag, css)
+
+
+
+
+
 ## [0.10.1](https://github.com/SAP/ui5-webcomponents/compare/v0.10.0...v0.10.1) (2019-04-24)
 
 

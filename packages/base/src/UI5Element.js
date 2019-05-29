@@ -571,7 +571,7 @@ class UI5Element extends HTMLElement {
 			if (curr.tagName.toUpperCase() !== "SLOT") {
 				return acc.concat([curr]);
 			}
-			return acc.concat(curr.assignedElements({ flatten: true }));
+			return acc.concat(curr.assignedNodes({ flatten: true }).filter(item => item instanceof HTMLElement));
 		};
 
 		return this[slotName].reduce(reducer, []);

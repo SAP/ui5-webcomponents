@@ -42,9 +42,14 @@ const metadata = {
 		 * Fired, when the item is pressed.
 		 *
 		 * @event
+		 * @param {HTMLElement} targetRef dom ref of the clicked element
 		 * @public
 		 */
-		press: {},
+		press: {
+			detail: {
+				targetRef: { type: HTMLElement },
+			},
+		},
 	},
 };
 
