@@ -1,5 +1,7 @@
-commit 19ba7f70af3f78535fb02d4ee4e8303d1313f271
+commit 097ddad28fda47d5c1b7b8b41ca4e050f3e7a841
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed May 29 13:59:30 2019 +0300
+Date:   Wed May 29 14:19:03 2019 +0300
 
-    refactor: use lit maps for templates (#459)
+    refactor: remove custom Function data type (#463)
+    
+    Overrides the global Function in non-modular usage
