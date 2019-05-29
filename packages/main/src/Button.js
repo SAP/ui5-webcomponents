@@ -251,7 +251,7 @@ class Button extends UI5Element {
 		this._active = false;
 	}
 
-	get rawClasses() {
+	get classes() {
 		return {
 			main: this.mainClasses,
 			icon: this.iconClasses,
@@ -261,7 +261,7 @@ class Button extends UI5Element {
 		};
 	}
 
-	get rawStyles() {
+	get styles() {
 		return {
 			main: {
 			},

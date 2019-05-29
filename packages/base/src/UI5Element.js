@@ -8,7 +8,6 @@ import RenderScheduler from "./RenderScheduler.js";
 import TemplateContext from "./TemplateContext.js";
 import { createStyle } from "./CSS.js";
 import { attachThemeChange } from "./Theming.js";
-import Function from "./types/Function";
 
 const metadata = {
 	properties: {
