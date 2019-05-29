@@ -1,5 +1,5 @@
-commit f7f07d23b2d4eb7a7fab0ab755ac42c7b69f84d0
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Wed May 29 16:05:16 2019 +0300
+commit 9c59de5845f1f393a1f1599bf2528848f167689f
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed May 29 16:09:31 2019 +0300
 
-    fix: fix styles for hidden attribute (#464)
+    fix(ui5-select): fix component clickable area (#462)
