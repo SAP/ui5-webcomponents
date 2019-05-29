@@ -1,9 +1,9 @@
-:host(ui5-card) {
+:host(ui5-card:not([hidden])) {
 	display: inline-block;
 	width: 100%;
 }
 
-ui5-card {
+ui5-card:not([hidden]) {
 	display: inline-block;
 	width: 100%;
 }
