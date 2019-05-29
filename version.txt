@@ -1,7 +1,5 @@
-commit 097ddad28fda47d5c1b7b8b41ca4e050f3e7a841
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed May 29 14:19:03 2019 +0300
+commit f7f07d23b2d4eb7a7fab0ab755ac42c7b69f84d0
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Wed May 29 16:05:16 2019 +0300
 
-    refactor: remove custom Function data type (#463)
-    
-    Overrides the global Function in non-modular usage
+    fix: fix styles for hidden attribute (#464)
