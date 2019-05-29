@@ -26,16 +26,6 @@ const metadata = {
 		 * @public
 		 */
 		size: { type: BusyIndicatorType, defaultValue: BusyIndicatorType.Large },
-		/**
-		 * Defines if the <code>ui5-busy-indicator</code> is visible.
-		 * </br></br>
-		 * <b>Note:</b> Available options are true and false
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		hide: { type: Boolean, defaultValue: false },
 	},
 };
 
@@ -50,7 +40,7 @@ const metadata = {
  *
  * <h3>Usage</h3>
  * For the <code>ui5-busy-indicator</code> you can define the size of the indicator as well
- *  as whether it is shown or hidden.
+ * as whether it is shown or hidden. If you wish to hide it use the html attribute <code>hidden</code>.
  *
  * <h3>ES6 Module Import</h3>
  *
