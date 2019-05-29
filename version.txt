@@ -1,5 +1,5 @@
-commit b96759dd62f3f8592caf316b9c36058900c9937c
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Wed May 29 11:29:57 2019 +0300
+commit 19ba7f70af3f78535fb02d4ee4e8303d1313f271
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Wed May 29 13:59:30 2019 +0300
 
-    chore: add link to codesandbox in bug report template (#458)
+    refactor: use lit maps for templates (#459)
