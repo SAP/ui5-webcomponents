@@ -1,5 +1,7 @@
-commit 014a14c2e5cd79ec85f042a6b2f2af9782ed2d40
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Tue May 28 19:03:51 2019 +0300
+commit b8e8600c9063f6d3cebdfcbac1a277f2702b05f3
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed May 29 09:09:38 2019 +0300
 
-    chore: add directory field to package.json files (#452)
+     fix(ui5-table): fix sticky column headers being overlapped by cells (#453)
+    
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/451
