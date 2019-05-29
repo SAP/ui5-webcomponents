@@ -200,9 +200,9 @@ class UI5Element extends HTMLElement {
 			children = [children];
 		}
 
-		children.forEach(el => {
-			if (el && el._attachChildPropertyUpdated) {
-				this._detachChildPropertyUpdated(el);
+		children.forEach(child => {
+			if (child && child._attachChildPropertyUpdated) {
+				this._detachChildPropertyUpdated(child);
 			}
 		});
 

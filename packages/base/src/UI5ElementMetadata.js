@@ -53,12 +53,6 @@ class UI5ElementMetadata {
 	}
 
 	static validateSlotValue(value, slotData) {
-		/*
-		const isMultiple = slotData.multiple;
-		if (isMultiple) {
-			return value.map(propValue => validateSingleSlot(propValue, slotData));
-		}
-		*/
 		return validateSingleSlot(value, slotData);
 	}
 }
