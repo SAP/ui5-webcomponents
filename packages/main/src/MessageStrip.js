@@ -5,6 +5,7 @@ import MessageStripTemplateContext from "./MessageStripTemplateContext.js";
 import MessageStripType from "./types/MessageStripType.js";
 import MessageStripRenderer from "./build/compiled/MessageStripRenderer.lit.js";
 import Icon from "./Icon.js";
+import { fetchResourceBundle, getResourceBundle } from "./ResourceBundleProvider.js";
 
 // Styles
 import messageStripCss from "./themes/MessageStrip.css.js";
@@ -78,6 +79,10 @@ const metadata = {
 
 		_closeButton: {
 			type: Object,
+		},
+
+		_closeButtonText: {
+			type: String,
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.MessageStrip.prototype */ {
@@ -158,13 +163,21 @@ class MessageStrip extends UI5Element {
 		this._closeButton = {
 			press: this._handleCloseIconPress.bind(this),
 		};
+
+		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
 	}
 
 	_handleCloseIconPress() {
 		this.fireEvent("close", {});
 	}
 
+	onBeforeRendering() {
+		this._closeButtonText = this.resourceBundle.getText("MESSAGE_STRIP_CLOSE_BUTTON");
+	}
+
 	static async define(...params) {
+		await fetchResourceBundle("@ui5/webcomponents");
+
 		await Promise.all([
 			Icon.define(),
 		]);

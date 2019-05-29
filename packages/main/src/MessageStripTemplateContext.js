@@ -2,6 +2,7 @@ class MessageStripTemplateContext {
 	static calculate(state) {
 		return {
 			ctr: state,
+			hiddenText: `Message Strip ${state.type} ${state.hideCloseButton ? "" : "closable"}.`,
 			classes: {
 				label: MessageStripTemplateContext.getLabelClasses(state),
 				closeIcon: {
