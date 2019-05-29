@@ -1,9 +1,9 @@
-:host(ui5-list) {
+:host(ui5-list:not([hidden])) {
 	display: block;
 	max-width: 100%;
 }
 
-ui5-list {
+ui5-list:not([hidden]) {
 	display: block;
 	max-width: 100%;
 }

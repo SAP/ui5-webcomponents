@@ -1,9 +1,9 @@
-:host(ui5-datepicker) {
+:host(ui5-datepicker:not([hidden])) {
 	display: inline-block;
 	width: 100%;
 }
 
-ui5-datepicker {
+ui5-datepicker:not([hidden]) {
 	display: inline-block;
 	width: 100%;
 }

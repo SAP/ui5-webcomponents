@@ -1,10 +1,10 @@
-:host(ui5-title) {
+:host(ui5-title:not([hidden])) {
 	display: block;
 	max-width: 100%;
 	color: var(--sapUiGroupTitleTextColor);
 }
 
-ui5-title {
+ui5-title:not([hidden]) {
 	display: block;
 	overflow: hidden;
 	color: var(--sapUiGroupTitleTextColor);

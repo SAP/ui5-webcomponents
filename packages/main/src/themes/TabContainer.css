@@ -1,12 +1,12 @@
 /* ============================= */
 /* Global Base parameters        */
 /* ============================= */
-:host(ui5-tabcontainer) {
+:host(ui5-tabcontainer:not([hidden])) {
 	display: inline-block;
 	width: 100%;
 }
 
-ui5-tabcontainer {
+ui5-tabcontainer:not([hidden]) {
 	width: 100%;
 }
 

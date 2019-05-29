@@ -1,9 +1,9 @@
-:host(ui5-link) {
+:host(ui5-link:not([hidden])) {
 	display: inline-block;
 	max-width: 100%;
 }
 
-:host(ui5-link) span[data-sap-ui-wc-root] {
+:host(ui5-link:not([hidden])) span[data-sap-ui-wc-root] {
 	display: flex;
 }
 

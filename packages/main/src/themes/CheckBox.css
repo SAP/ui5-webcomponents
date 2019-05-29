@@ -1,11 +1,11 @@
-:host(ui5-checkbox) {
+:host(ui5-checkbox:not([hidden])) {
 	display: inline-block;
 	overflow: hidden;
 	max-width: 100%;
 }
 
 /* ducplicated for IE */
-ui5-checkbox {
+ui5-checkbox:not([hidden]) {
 	display: inline-block;
 	overflow: hidden;
 	max-width: 100%;

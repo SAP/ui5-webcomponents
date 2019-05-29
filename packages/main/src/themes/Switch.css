@@ -1,10 +1,10 @@
 
 
-:host(ui5-switch) {
+:host(ui5-switch:not([hidden])) {
 	display: inline-block;
 }
 
-ui5-switch {
+ui5-switch:not([hidden]) {
 	display: inline-block;
 }
 

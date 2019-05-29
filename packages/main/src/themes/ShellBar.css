@@ -1,9 +1,9 @@
-:host(ui5-shellbar) {
+:host(ui5-shellbar:not([hidden])) {
 	display: inline-block;
 	width: 100%;
 }
 
-ui5-shellbar {
+ui5-shellbar:not([hidden]) {
 	display: inline-block;
 	width: 100%;
 }

@@ -1,9 +1,9 @@
-:host(ui5-select) {
+:host(ui5-select:not([hidden])) {
 	display: inline-block;
 	width: 100%;
 }
 
-ui5-select {
+ui5-select:not([hidden]) {
 	display: inline-block;
 	width: 100%;
 }
