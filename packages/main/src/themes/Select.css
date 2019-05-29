@@ -67,8 +67,11 @@ ui5-select {
 
 /* Text */
 .sapWCSelect .sapWCSelectLabel {
-	min-width: 1rem;
+	display: inline-flex;
+	align-items: center;
 	width: 100%;
+	height: 100%;
+	min-width: 1rem;
 }
 
 .sapWCSelect .sapWCSelectLabel ui5-label {
