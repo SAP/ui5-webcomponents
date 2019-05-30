@@ -1,5 +1,5 @@
-commit 9533ff8cf4233910fa4e5a8bf85027d1f7ab7d2e
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu May 30 15:21:29 2019 +0300
+commit 34e21e5c6faf5930186391780c6d83bf1351ed11
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Thu May 30 16:36:02 2019 +0300
 
-    refactor: remove template context from dialog (#476)
+    refactor: remove template context from table (#474)
