@@ -73,69 +73,62 @@ class TableRow extends UI5Element {
 		return TableRowRenderer;
 	}
 
-	static get calculateTemplateContext() {
-		return state => {
-			const context = {
-				ctr: state,
-				visibleCells: [],
-				popinCells: [],
-				columnInfo: state._columnsInfo,
-				classes: {
-					main: {
-						sapWCTableRow: true,
-						sapWCTableRowWithBorder: true,
-					},
-					popin: {
-						sapWCTablePopinRow: true,
-					},
-					popinTitle: {
-						sapWCTablePopinTitle: true,
-					},
-					cellWrapper: {
-						sapMWCTableRowCellContainer: true,
-					},
-				},
-				styles: {
-					main: {
-						"grid-template-columns": "",
-					},
-					popin: {
-						"grid-column-end": 6,
-					},
-				},
-			};
+	onBeforeRendering() {
+		this.visibleCells = [];
+		this.popinCells = [];
 
-			this.calculateCellsStyles(context);
-
-			context.visibleColumnLength = context.visibleCells.length + 1;
-
-
-			return context;
-		};
-	}
-
-	static calculateCellsStyles(context) {
-		context.columnInfo.forEach((info, index) => {
+		this._columnsInfo.forEach((info, index) => {
 			if (info.visible) {
-				// width of cells
-				context.styles.main["grid-template-columns"] += `minmax(0, ${info.width || "1fr"}) `;
-
-				context.visibleCells.push(context.ctr.cells[index]);
-
-				context.ctr.cells[index]._firstInRow = (index === 0);
+				this.visibleCells.push(this.cells[index]);
+				this.cells[index]._firstInRow = (index === 0);
 			} else if (info.demandPopin) {
-				context.popinCells.push({
-					cell: context.ctr.cells[index],
+				this.popinCells.push({
+					cell: this.cells[index],
 					popinText: info.popinText,
 				});
 			}
 		}, this);
 
-		const lastVisibleCell = context.visibleCells[context.visibleCells.length - 1];
+		this.visibleColumnLength = this.visibleCells.length + 1;
+
+		const lastVisibleCell = this.visibleCells[this.visibleCells.length - 1];
 
 		if (lastVisibleCell) {
 			lastVisibleCell._lastInRow = true;
 		}
+	}
+
+	get classes() {
+		return {
+			main: {
+				sapWCTableRow: true,
+				sapWCTableRowWithBorder: true,
+			},
+			popin: {
+				sapWCTablePopinRow: true,
+			},
+			popinTitle: {
+				sapWCTablePopinTitle: true,
+			},
+			cellWrapper: {
+				sapMWCTableRowCellContainer: true,
+			},
+		};
+	}
+
+	get styles() {
+		const gridTemplateColumns = this._columnsInfo.reduce((acc, info) => {
+			return info.visible ? `${acc}minmax(0, ${info.width || "1fr"}) ` : acc;
+		}, "");
+
+		return {
+			main: {
+				"grid-template-columns": gridTemplateColumns,
+			},
+			popin: {
+				"grid-column-end": 6,
+			},
+		};
 	}
 
 	onfocusin(event) {
