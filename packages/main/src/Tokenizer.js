@@ -104,6 +104,8 @@ class Tokenizer extends UI5Element {
 			return this._getTokens();
 		};
 
+		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
+
 		this._delegates.push(this._itemNav);
 	}
 
@@ -203,7 +205,6 @@ class Tokenizer extends UI5Element {
 
 	static async define(...params) {
 		await fetchResourceBundle("@ui5/webcomponents");
-		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
 
 		super.define(...params);
 	}

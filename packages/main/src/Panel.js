@@ -201,6 +201,7 @@ class Panel extends UI5Element {
 		this._icon.id = `${this.id}-CollapsedImg`;
 		this._icon.src = getIconURI("navigation-right-arrow");
 		this._icon.functional = true;
+		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
 
 		this._toggle = event => { event.preventDefault(); this._toggleOpen(); };
 		this._noOp = () => {};
@@ -272,13 +273,6 @@ class Panel extends UI5Element {
 		return target.classList.contains("sapMPanelWrappingDiv");
 	}
 
-	async connectedCallback() {
-		await fetchResourceBundle("@ui5/webcomponents");
-		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
-
-		super.connectedCallback();
-	}
-
 	get expanded() {
 		return !this.collapsed;
 	}
@@ -341,7 +335,6 @@ class Panel extends UI5Element {
 			Icon.define(),
 		]);
 
-		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
 		super.define(...params);
 	}
 }

@@ -238,6 +238,8 @@ class TextArea extends UI5Element {
 	constructor() {
 		super();
 
+		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
+
 		this._listeners = {
 			change: this._handleChange.bind(this),
 		};
@@ -340,7 +342,6 @@ class TextArea extends UI5Element {
 
 	static async define(...params) {
 		await fetchResourceBundle("@ui5/webcomponents");
-		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
 
 		super.define(...params);
 	}
