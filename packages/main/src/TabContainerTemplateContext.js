@@ -59,6 +59,7 @@ class TabContainerTemplateContext {
 				position: index + 1,
 				disabled: item.disabled || undefined,
 				selected: item.selected || false,
+				hidden: !item.selected,
 				ariaLabelledBy: calculateAriaLabelledBy(item),
 				contentItemClasses: calculateContentItemClasses(item),
 				headerItemClasses: calculateHeaderItemClasses(item, context),
@@ -185,10 +186,6 @@ const calculateOverflowItemState = item => {
 
 const calculateContentItemClasses = item => {
 	const classes = ["ui5-tc__contentItem"];
-
-	if (!item.selected) {
-		classes.push(" ui5-tc__contentItem--hidden");
-	}
 
 	return classes.join(" ");
 };

@@ -73,9 +73,9 @@ class ToggleButton extends Button {
 		}
 	}
 
-	get mainClasses() {
-		const result = Object.getOwnPropertyDescriptor(Button.prototype, "mainClasses").get.call(this);
-		result.sapMToggleBtnPressed = this.pressed;
+	get classes() {
+		const result = super.classes;
+		result.main.sapMToggleBtnPressed = this.pressed;
 		return result;
 	}
 }
