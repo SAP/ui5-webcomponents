@@ -1,7 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-import CalendarHeaderTemplateContext from "./CalendarHeaderTemplateContext.js";
 import Button from "./Button.js";
 import ButtonType from "./types/ButtonType.js";
 import CalendarHeaderRenderer from "./build/compiled/CalendarHeaderRenderer.lit.js";
@@ -120,8 +119,19 @@ class CalendarHeader extends UI5Element {
 		}
 	}
 
-	static get calculateTemplateContext() {
-		return CalendarHeaderTemplateContext.calculate;
+	get classes() {
+		return {
+			main: {
+				sapWCCalHead: true,
+			},
+			buttons: {
+				sapWCCalHeadArrowButton: true,
+			},
+			middleButtons: {
+				sapWCCalHeadMiddleButton: true,
+				sapWCCalHeadArrowButton: true,
+			},
+		};
 	}
 
 	static async define(...params) {
