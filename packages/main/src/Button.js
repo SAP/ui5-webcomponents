@@ -253,8 +253,18 @@ class Button extends UI5Element {
 
 	get classes() {
 		return {
-			main: this.mainClasses,
-			icon: this.iconClasses,
+			main: {
+				sapMBtn: true,
+				sapMBtnActive: this._active,
+				sapMBtnWithIcon: this.icon,
+				sapMBtnNoText: !this.text.length,
+				sapMBtnDisabled: this.disabled,
+				sapMBtnIconEnd: this.iconEnd,
+				[`sapMBtn${this.type}`]: true,
+			},
+			icon: {
+				sapWCIconInButton: true,
+			},
 			text: {
 				sapMBtnText: true,
 			},
@@ -267,24 +277,6 @@ class Button extends UI5Element {
 
 	get ariaDisabled() {
 		return this.disabled ? "true" : undefined;
-	}
-
-	get mainClasses() {
-		return {
-			sapMBtn: true,
-			sapMBtnActive: this._active,
-			sapMBtnWithIcon: this.icon,
-			sapMBtnNoText: !this.text.length,
-			sapMBtnDisabled: this.disabled,
-			sapMBtnIconEnd: this.iconEnd,
-			[`sapMBtn${this.type}`]: true,
-		};
-	}
-
-	get iconClasses() {
-		return {
-			sapWCIconInButton: true,
-		};
 	}
 
 	static async define(...params) {
