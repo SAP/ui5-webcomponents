@@ -1,5 +1,5 @@
-commit 34e21e5c6faf5930186391780c6d83bf1351ed11
+commit 65a2664fb86f443b3c1db62f3ad3445b29708973
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu May 30 16:36:02 2019 +0300
+Date:   Thu May 30 16:46:46 2019 +0300
 
-    refactor: remove template context from table (#474)
+    refactor: remove template context for date picker (#471)
