@@ -2,7 +2,6 @@ import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import RenderScheduler from "@ui5/webcomponents-base/src/RenderScheduler.js";
 import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
 import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper.js";
-import PopoverTemplateContext from "./PopoverTemplateContext.js";
 import PopoverPlacementType from "./types/PopoverPlacementType.js";
 import PopoverVerticalAlign from "./types/PopoverVerticalAlign.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
@@ -595,8 +594,64 @@ class Popover extends Popup {
 			|| Math.abs(newRect.top - targetRect.top) > diffTolerance;
 	}
 
-	static get calculateTemplateContext() {
-		return PopoverTemplateContext.calculate;
+	get classes() {
+		const placementType = this._actualPlacementType;
+
+		return {
+			frame: {
+				sapMPopupFrame: true,
+				sapMPopupFrameOpen: this._isOpen,
+			},
+			main: {
+				sapMPopup: true,
+				sapMPopover: true,
+			},
+			blockLayer: {
+				sapUiBLy: true,
+				sapMPopupBlockLayer: true,
+				sapMPopupBlockLayerHidden: !this.modal || this._hideBlockLayer,
+			},
+			arrow: {
+				sapMPopoverArr: true,
+				sapMPopoverArrHidden: this.hideArrow,
+				sapMPopoverArrLeft: placementType === PopoverPlacementType.Right,
+				sapMPopoverArrRight: placementType === PopoverPlacementType.Left,
+				sapMPopoverArrUp: placementType === PopoverPlacementType.Bottom,
+				sapMPopoverArrDown: placementType === PopoverPlacementType.Top,
+			},
+		};
+	}
+
+	get styles() {
+		return {
+			main: {
+				left: `${this._left}px`,
+				top: `${this._top}px`,
+				width: this._width,
+				height: this._height,
+				"z-index": this._zIndex + 1,
+			},
+			content: {
+				"max-height": `${this._maxContentHeight}px`,
+			},
+			arrow: {
+				transform: `translate(${this._arrowTranslateX}px, ${this._arrowTranslateY}px)`,
+			},
+			blockLayer: {
+				"z-index": this._zIndex,
+			},
+		};
+	}
+
+	get headerId() {
+		return this.hideHeader ? undefined : `${this._id}-header`;
+	}
+
+	get focusHelper() {
+		return {
+			forwardToLast: this._focusElementsHandlers.forwardToLast,
+			forwardToFirst: this._focusElementsHandlers.forwardToFirst,
+		};
 	}
 }
 
