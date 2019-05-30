@@ -3,9 +3,8 @@ import DOMObserver from "./compatibility/DOMObserver.js";
 import ShadowDOM from "./compatibility/ShadowDOM.js";
 import UI5ElementMetadata from "./UI5ElementMetadata.js";
 import Integer from "./types/Integer.js";
-import ControlRenderer from "./ControlRenderer.js";
+import Renderer from "./Renderer.js";
 import RenderScheduler from "./RenderScheduler.js";
-import TemplateContext from "./TemplateContext.js";
 import { createStyle } from "./CSS.js";
 import { attachThemeChange } from "./Theming.js";
 
@@ -342,12 +341,6 @@ class UI5Element extends HTMLElement {
 		return this._metadata;
 	}
 
-	static calculateTemplateContext(state) {
-		return {
-			ctr: state,
-		};
-	}
-
 	_attachChildPropertyUpdated(child, propData) {
 		const listenFor = propData.listenFor,
 			childMetadata = child.constructor.getMetadata(),
@@ -426,7 +419,7 @@ class UI5Element extends HTMLElement {
 		// render
 		// console.log(this.getDomRef() ? "RE-RENDER" : "FIRST RENDER", this);
 		delete this._invalidated;
-		ControlRenderer.render(this);
+		Renderer.render(this);
 
 		// Safari requires that children get the slot attribute only after the slot tags have been rendered in the shadow DOM
 		this._assignSlotsToChildren();
@@ -476,10 +469,6 @@ class UI5Element extends HTMLElement {
 				child.setAttribute("slot", child._compatibilitySlot);
 			}
 		});
-	}
-
-	_getTemplateContext() {
-		return TemplateContext.calculate(this);
 	}
 
 	getDomRef() {
