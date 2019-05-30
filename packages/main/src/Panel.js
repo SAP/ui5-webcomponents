@@ -4,11 +4,11 @@ import { getIconURI } from "@ui5/webcomponents-base/src/IconPool.js";
 import slideDown from "@ui5/webcomponents-base/src/animations/slideDown.js";
 import slideUp from "@ui5/webcomponents-base/src/animations/slideUp.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/src/ResourceBundle.js";
 import Icon from "./Icon.js";
 import PanelTemplateContext from "./PanelTemplateContext.js";
 import PanelAccessibleRole from "./types/PanelAccessibleRole.js";
 import PanelRenderer from "./build/compiled/PanelRenderer.lit.js";
-import { fetchResourceBundle, getResourceBundle } from "./ResourceBundleProvider.js";
 
 // Styles
 import panelCss from "./themes/Panel.css.js";

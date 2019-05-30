@@ -2,8 +2,8 @@ import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
+import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/src/ResourceBundle.js";
 
-import { fetchResourceBundle, getResourceBundle } from "./ResourceBundleProvider.js";
 import TokenizerRenderer from "./build/compiled/TokenizerRenderer.lit.js";
 
 // Styles

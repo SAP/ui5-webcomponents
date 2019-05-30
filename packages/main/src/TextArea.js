@@ -4,7 +4,9 @@ import CSSSize from "@ui5/webcomponents-base/src/types/CSSSize.js";
 import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
 import TextAreaTemplateContext from "./TextAreaTemplateContext.js";
 import TextAreaRenderer from "./build/compiled/TextAreaRenderer.lit.js";
-import { fetchResourceBundle, getResourceBundle } from "./ResourceBundleProvider.js";
+import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/src/ResourceBundle.js";
+
+import { TEXTAREA_CHARACTERS_LEFT, TEXTAREA_CHARACTERS_EXCEEDED } from "./i18n/defaults.js";
 
 // Styles
 import styles from "./themes/TextArea.css.js";
@@ -239,8 +241,6 @@ class TextArea extends UI5Element {
 		this._listeners = {
 			change: this._handleChange.bind(this),
 		};
-
-		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
@@ -324,9 +324,9 @@ class TextArea extends UI5Element {
 				leftCharactersCount = maxLength - this.value.length;
 
 				if (leftCharactersCount >= 0) {
-					exceededText = this.resourceBundle.getText("TEXTAREA_CHARACTERS_LEFT", [leftCharactersCount]);
+					exceededText = this.resourceBundle.getText(TEXTAREA_CHARACTERS_LEFT, [leftCharactersCount]);
 				} else {
-					exceededText = this.resourceBundle.getText("TEXTAREA_CHARACTERS_EXCEEDED", [Math.abs(leftCharactersCount)]);
+					exceededText = this.resourceBundle.getText(TEXTAREA_CHARACTERS_EXCEEDED, [Math.abs(leftCharactersCount)]);
 				}
 			}
 		} else {
@@ -337,11 +337,12 @@ class TextArea extends UI5Element {
 			exceededText, leftCharactersCount, calcedMaxLength,
 		};
 	}
-
-	static async define(...params) {
+	
+	async connectedCallback() {
 		await fetchResourceBundle("@ui5/webcomponents");
+		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
 
-		super.define(...params);
+		super.connectedCallback();
 	}
 }
 
