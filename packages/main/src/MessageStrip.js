@@ -167,7 +167,7 @@ class MessageStrip extends UI5Element {
 		super.define(...params);
 	}
 
-	static typeClasses() {
+	static typeClassesMappings() {
 		return {
 			"Information": "ui5-messagestrip--info",
 			"Positive": "ui5-messagestrip--positive",
@@ -204,21 +204,11 @@ class MessageStrip extends UI5Element {
 	}
 
 	get messageStripIcon() {
-		return this.icon || {
-			"Information": "sap-icon://message-information",
-			"Positive": "sap-icon://message-success",
-			"Negative": "sap-icon://message-error",
-			"Warning": "sap-icon://message-warning",
-		}[this.type];
+		return this.icon || MessageStrip.iconMappings()[this.type];
 	}
 
 	get getTypeClasses() {
-		return {
-			"Information": "ui5-messagestrip--info",
-			"Positive": "ui5-messagestrip--positive",
-			"Negative": "ui5-messagestrip--negative",
-			"Warning": "ui5-messagestrip--warning",
-		}[this.type];
+		return MessageStrip.typeClassesMappings()[this.type];
 	}
 }
 
