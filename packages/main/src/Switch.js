@@ -197,7 +197,7 @@ class Switch extends UI5Element {
 				"ui5-switch--checked": this.checked,
 				"ui5-switch--semantic": graphical,
 				"ui5-switch--no-label": !hasLabel,
-			}
+			},
 		};
 	}
 }
