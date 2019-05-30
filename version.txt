@@ -1,5 +1,5 @@
-commit a685221cd69b4ad8f3440a0b9efcd5234c3b07c1
-Author: Adrian Bobev <adrian.bobev@gmail.com>
-Date:   Thu May 30 14:34:23 2019 +0300
+commit 9533ff8cf4233910fa4e5a8bf85027d1f7ab7d2e
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Thu May 30 15:21:29 2019 +0300
 
-    chore(ui5-tabcontainer): hide content with html hiddden attribute (#473)
+    refactor: remove template context from dialog (#476)
