@@ -555,7 +555,7 @@ class Input extends UI5Element {
 		return this.readonly && !this.disabled;
 	}
 
-	get type() {
+	get inputType() {
 		return this.type.toLowerCase();
 	}
 
