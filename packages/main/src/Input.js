@@ -541,15 +541,14 @@ class Input extends UI5Element {
 				sapWCInputBaseReadonlyWrapper: this.readonly && !this.disabled,
 				sapWCInputBaseContentWrapperState: hasState,
 				[`sapWCInputBaseContentWrapper${this.valueState}`]: hasState,
-
-			}
-		}
+			},
+		};
 	}
 
 	get placeholder() {
 		// We don`t support placeholder for IE,
 		// because IE fires input events, when placeholder exists, leading to functional degredations.
-		isIE() ? "" : this.placeholder;
+		return isIE() ? "" : this.placeholder;
 	}
 
 	get _readonly() {
@@ -561,11 +560,7 @@ class Input extends UI5Element {
 	}
 
 	get ariaInvalid() {
-		return this.valueState === "Error" ? "true" : undefined
-	}
-
-	get mainStyles() {
-
+		return this.valueState === "Error" ? "true" : undefined;
 	}
 }
 
