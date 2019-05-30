@@ -3,15 +3,11 @@ class BusyIndicatorTemplateContext {
 		return {
 			ctr: state,
 			classes: {
-				main: BusyIndicatorTemplateContext.calculateClasses(state),
+				main: {
+					"ui5-busyindicator-wrapper": true,
+					[`ui5-busyindicator-${state.size.toLowerCase()}`]: true,
+				}
 			},
-		};
-	}
-
-	static calculateClasses(state) {
-		return {
-			"ui5-busyindicator-wrapper": true,
-			[`ui5-busyindicator-${state.size.toLowerCase()}`]: true,
 		};
 	}
 }
