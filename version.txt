@@ -1,5 +1,5 @@
-commit 1155806d3ae782a4ea2a59e17c8cbe4b0c3b1cda
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu May 30 17:06:10 2019 +0300
+commit c177f1068e5398a0a3cbbd6bbc0ffaa774f4b6bf
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Thu May 30 17:30:17 2019 +0300
 
-    refactor: remove template context from messagestrip (#488)
+    refactor: remove support for template context on framework level (#489)
