@@ -30,15 +30,12 @@ const metadata = {
 
 		_firstInRow: {
 			type: Boolean,
-			defaultValue: false,
 		},
 		_lastInRow: {
 			type: Boolean,
-			defaultValue: false,
 		},
 		_hasBorder: {
 			type: Boolean,
-			defaultValue: false,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.TableCell.prototype */ {

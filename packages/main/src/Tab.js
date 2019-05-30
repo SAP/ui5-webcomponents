@@ -48,7 +48,6 @@ const metadata = {
 		 */
 		disabled: {
 			type: Boolean,
-			defaultValue: false,
 		},
 
 		/**
@@ -97,7 +96,6 @@ const metadata = {
 		 */
 		selected: {
 			type: Boolean,
-			defaultValue: false,
 		},
 
 		_tabIndex: {
