@@ -3,7 +3,6 @@ import "@ui5/webcomponents-base/src/shims/Core-shim.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import { fetchCldrData } from "@ui5/webcomponents-base/src/CLDR.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes.js";
 import { getCalendarType } from "@ui5/webcomponents-base/src/Configuration.js";
 import { getLocale } from "@ui5/webcomponents-base/src/LocaleProvider.js";
 import { getIconURI } from "@ui5/webcomponents-base/src/IconPool.js";
@@ -12,6 +11,7 @@ import DateFormat from "@ui5/webcomponents-core/dist/sap/ui/core/format/DateForm
 import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType.js";
 import CalendarDate from "@ui5/webcomponents-base/src/dates/CalendarDate.js";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
+import { isShow } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import DatePickerTemplateContext from "./DatePickerTemplateContext.js";
 import Icon from "./Icon.js";
 import Popover from "./Popover.js";
@@ -203,6 +203,15 @@ const metadata = {
  * For example, if the <code>format-pattern</code> is "yyyy-MM-dd",
  * a valid value string is "2015-07-30" and the same is displayed in the input.
  *
+ * <h3>Keyboard Handling</h3>
+ * The <code>ui5-datepicker</code> provides advanced keyboard handling.
+ * If the <code>ui5-datepicker</code> is focused,
+ * you can open or close the drop-down by pressing <code>F4</code>, <code>ALT+UP</code> or <code>ALT+DOWN</code> keys.
+ * Once the drop-down is opened, you can use the <code>UP</code>, <code>DOWN</code>, <code>LEFT</code>, <code>right</code> arrow keys
+ * to navigate through the dates and select one by pressing the <code>Space</code> or <code>Enter</code> keys. Moreover you can
+ * use tab to reach the buttons for changing month and year.
+ * <br>
+ *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/DatePicker";</code>
@@ -239,7 +248,6 @@ class DatePicker extends UI5Element {
 		this._input.icon.src = getIconURI("appointment-2");
 		this._input.onChange = this._handleInputChange.bind(this);
 		this._input.onLiveChange = this._handleInputLiveChange.bind(this);
-		this.aArrows = [KeyCodes.ARROW_DOWN, KeyCodes.ARROW_UP]; // keys we need for keyboard handling
 
 		this._popover = {
 			placementType: PopoverPlacementType.Bottom,
@@ -254,7 +262,6 @@ class DatePicker extends UI5Element {
 				const calendar = popover.querySelector(`#${this._id}-calendar`);
 
 				this._input = Object.assign({}, this._input);
-				this._input.icon._customClasses = "sapWCDatePickerIcon";
 				this._isPickerOpen = false;
 
 				if (this._focusInputAfterClose) {
@@ -294,8 +301,6 @@ class DatePicker extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		this._popover._customClasses = [];
-
 		this._input.placeholder = this.placeholder;
 		this._input._iconNonFocusable = true;
 
@@ -325,11 +330,7 @@ class DatePicker extends UI5Element {
 	}
 
 	onkeydown(event) {
-		if (event.which === KeyCodes.ALT) {
-			return;
-		}
-
-		if (event.which === KeyCodes.F4 || (event.altKey && this.aArrows.includes(event.which))) {
+		if (isShow(event)) {
 			this.togglePicker();
 			this._getInput().focus();
 		}
@@ -472,7 +473,6 @@ class DatePicker extends UI5Element {
 	openPicker(options) {
 		this._changeCalendarSelection();
 		this._input = Object.assign({}, this._input);
-		this._input.icon._customClasses = "sapWCDatePickerIcon sapWCInputBaseIconPressed";
 
 		if (options && options.focusInput) {
 			this._focusInputAfterOpen = true;

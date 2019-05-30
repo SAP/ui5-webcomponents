@@ -1,8 +1,8 @@
-:host(ui5-textarea) {
+:host(ui5-textarea:not([hidden])) {
 	display: inline-block;
 }
 
-ui5-textarea {
+ui5-textarea:not([hidden]) {
 	display: inline-block;
 }
 

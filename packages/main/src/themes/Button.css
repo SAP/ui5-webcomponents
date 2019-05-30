@@ -1,8 +1,8 @@
-:host(ui5-button) {
+:host(ui5-button:not([hidden])) {
 	display: inline-block;
 }
 
-ui5-button {
+ui5-button:not([hidden]) {
 	display: inline-block;
 }
 

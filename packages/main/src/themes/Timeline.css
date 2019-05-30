@@ -1,5 +1,8 @@
-ui5-timeline,
-:host(ui5-timeline) {
+:host(ui5-timeline:not([hidden])) {
+	display: block;
+}
+
+ui5-timeline:not([hidden]) {
 	display: block;
 }
 

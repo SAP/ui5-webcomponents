@@ -1,11 +1,11 @@
-:host(ui5-multi-combobox) {
+:host(ui5-multi-combobox:not([hidden])) {
 	display: inline-block;
 	width: 100%;
 
 	--_ui5_popover_content_padding: 0;
 }
 
-ui5-multi-combobox {
+ui5-multi-combobox:not([hidden]) {
 	display: inline-block;
 	width: 100%;
 }

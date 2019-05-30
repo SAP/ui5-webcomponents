@@ -1,7 +1,6 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import URI from "@ui5/webcomponents-base/src/types/URI.js";
-import Function from "@ui5/webcomponents-base/src/types/Function.js";
 import Icon from "./Icon.js";
 import Link from "./Link.js";
 import TimelineItemTemplateContext from "./TimelineItemTemplateContext.js";

@@ -1,6 +1,4 @@
 {
-  "name": "@ui5/webcomponents-root",
-  "version": "0.7.0",
   "description": "UI5 Web Components",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
@@ -10,10 +8,6 @@
     "sapui5",
     "ui5"
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/SAP/ui5-webcomponents.git"
-  },
   "scripts": {
     "build": "npm-run-all --sequential build:core build:base build:main build:playground",
     "build:core": "cd packages/core && yarn build",

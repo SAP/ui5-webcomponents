@@ -1,9 +1,9 @@
-:host(ui5-messagestrip) {
+:host(ui5-messagestrip:not([hidden])) {
 	display: inline-block;
 	width: 100%;
 }
 
-ui5-messagestrip {
+ui5-messagestrip:not([hidden]) {
 	display: inline-block;
 	width: 100%;
 }

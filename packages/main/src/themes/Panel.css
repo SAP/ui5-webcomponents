@@ -1,8 +1,8 @@
-:host(ui5-panel) {
+:host(ui5-panel:not([hidden])) {
 	display: block;
 }
 
-ui5-panel {
+ui5-panel:not([hidden]) {
 	display: block;
 }
 

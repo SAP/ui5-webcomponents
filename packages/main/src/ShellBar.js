@@ -2,7 +2,6 @@ import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { getRTL } from "@ui5/webcomponents-base/src/Configuration.js";
 import URI from "@ui5/webcomponents-base/src/types/URI.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import Function from "@ui5/webcomponents-base/src/types/Function.js";
 import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
 import { isSpace, isEscape } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
@@ -464,18 +463,8 @@ class ShellBar extends UI5Element {
 
 	onBeforeRendering() {
 		const size = this._handleBarBreakpoints();
-		const searchField = this.shadowRoot.querySelector(`#${this._id}-searchfield-wrapper`);
-
 		if (size !== "S") {
 			this._itemNav.init();
-		}
-
-		if (this.searchField && searchField) {
-			const inputSlot = searchField.children[0];
-
-			if (inputSlot) {
-				inputSlot.assignedNodes()[0]._customClasses = ["sapWCShellBarSearchFieldElement"];
-			}
 		}
 	}
 

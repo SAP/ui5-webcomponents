@@ -1,5 +1,4 @@
 import DataType from "./types/DataType.js";
-import Function from "./types/Function.js";
 
 class UI5ElementMetadata {
 	constructor(metadata) {
@@ -54,10 +53,6 @@ class UI5ElementMetadata {
 	}
 
 	static validateSlotValue(value, slotData) {
-		const isMultiple = slotData.multiple;
-		if (isMultiple) {
-			return value.map(propValue => validateSingleSlot(propValue, slotData));
-		}
 		return validateSingleSlot(value, slotData);
 	}
 }
@@ -87,7 +82,7 @@ const validateSingleProperty = (value, propData) => {
 	}
 };
 
-const validateSingleSlot = (value, propData) => {
+const validateSingleSlot = (value, slotData) => {
 	if (value === null) {
 		return value;
 	}
@@ -97,12 +92,12 @@ const validateSingleSlot = (value, propData) => {
 		const isSlot = isTag && el.tagName.toUpperCase() === "SLOT";
 
 		if (isSlot) {
-			return el.assignedElements({ flatten: true });
+			return el.assignedNodes({ flatten: true }).filter(item => item instanceof HTMLElement);
 		}
 
 		return [el];
 	};
-	const propertyType = propData.type;
+	const propertyType = slotData.type;
 
 	const slottedNodes = getSlottedNodes(value);
 	slottedNodes.forEach(el => {
