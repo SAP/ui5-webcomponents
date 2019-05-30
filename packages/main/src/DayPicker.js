@@ -10,7 +10,6 @@ import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData.js";
 import CalendarDate from "@ui5/webcomponents-base/src/dates/CalendarDate.js";
 import { calculateWeekNumber } from "@ui5/webcomponents-base/src/dates/CalendarUtils.js";
 import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType.js";
-import DayPickerTemplateContext from "./DayPickerTemplateContext.js";
 import DayPickerRenderer from "./build/compiled/DayPickerRenderer.lit.js";
 
 // Styles
@@ -431,8 +430,33 @@ class DayPicker extends UI5Element {
 		return this._oLocaleData.getFirstDayOfWeek();
 	}
 
-	static get calculateTemplateContext() {
-		return DayPickerTemplateContext.calculate;
+	get classes() {
+		return {
+			wrapper: {
+				"sapWCDayPicker": true,
+			},
+			weekNumberContainer: {
+				"sapWCDayPickerWeekNumberContainer": true,
+				"sapWCDayPickerHideWeekNumbers": this.primaryCalendarType === "Islamic",
+			},
+			weekDaysContainer: {
+				"sapWCDayPickerDaysNamesContainer": true,
+			},
+			content: {
+				"sapWCDayPickerContent": true,
+			},
+		};
+	}
+
+	get styles() {
+		return {
+			wrapper: {
+				display: this._hidden ? "none" : "flex",
+			},
+			main: {
+				width: "100%",
+			},
+		};
 	}
 }
 

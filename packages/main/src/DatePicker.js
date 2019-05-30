@@ -12,7 +12,6 @@ import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType.js";
 import CalendarDate from "@ui5/webcomponents-base/src/dates/CalendarDate.js";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
 import { isShow } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-import DatePickerTemplateContext from "./DatePickerTemplateContext.js";
 import Icon from "./Icon.js";
 import Popover from "./Popover.js";
 import Calendar from "./Calendar.js";
@@ -230,10 +229,6 @@ class DatePicker extends UI5Element {
 
 	static get renderer() {
 		return DatePickerRenderer;
-	}
-
-	static get calculateTemplateContext() {
-		return DatePickerTemplateContext.calculate;
 	}
 
 	static get styles() {
@@ -529,6 +524,26 @@ class DatePicker extends UI5Element {
 		}
 
 		return { isInput };
+	}
+
+	get classes() {
+		return {
+			main: {
+				sapMDP: true,
+			},
+			icon: {
+				sapWCDPIcon: true,
+				sapWCDPIconPressed: this._isPickerOpen,
+			},
+		};
+	}
+
+	get styles() {
+		return {
+			main: {
+				width: "100%",
+			},
+		};
 	}
 
 	static async define(...params) {

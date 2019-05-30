@@ -11,7 +11,6 @@ import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData.js";
 import CalendarDate from "@ui5/webcomponents-base/src/dates/CalendarDate.js";
 import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType.js";
 import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
-import CalendarTemplateContext from "./CalendarTemplateContext.js";
 import CalendarHeader from "./CalendarHeader.js";
 import DayPicker from "./DayPicker.js";
 import MonthPicker from "./MonthPicker.js";
@@ -481,8 +480,31 @@ class Calendar extends UI5Element {
 		}
 	}
 
-	static get calculateTemplateContext() {
-		return CalendarTemplateContext.calculate;
+	get classes() {
+		return {
+			main: {
+				sapUiCal: true,
+				sapUiCalIslamic: this.primaryCalendarType === CalendarType.Islamic,
+			},
+			dayPicker: {
+				"sapWCDayPickerHidden": !this._yearPicker._hidden || !this._monthPicker._hidden,
+			},
+			yearPicker: {
+				"sapWCYearPickerHidden": this._yearPicker._hidden,
+			},
+			monthPicker: {
+				"sapWCMonthPickerHidden": this._monthPicker._hidden,
+			},
+		};
+	}
+
+	get styles() {
+		return {
+			main: {
+				"height": `${this._calendarHeight ? `${this._calendarHeight}px` : "auto"}`,
+				"width": `${this._calendarWidth ? `${this._calendarWidth}px` : "auto"}`,
+			},
+		};
 	}
 
 	static async define(...params) {
