@@ -1,5 +1,5 @@
-commit bd4b30454a1c24258f3071f8ff64d63e83ad4167
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu May 30 08:44:41 2019 +0300
+commit 43e31e72b4a7cedcb6db21631fab8dc7beb64bed
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu May 30 08:50:06 2019 +0300
 
-    refactor: remove redundant boolean value defaults (#466)
+     fix(ui5-togglebutton): fix text vertical alignment in IE (#465)
