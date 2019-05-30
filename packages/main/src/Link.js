@@ -6,7 +6,6 @@ import LinkType from "./types/LinkType.js";
 
 // Template
 import LinkRederer from "./build/compiled/LinkRenderer.lit.js";
-import LinkTemplateContext from "./LinkTemplateContext.js";
 
 // Styles
 import linkCss from "./themes/Link.css.js";
@@ -241,8 +240,25 @@ class Link extends UI5Element {
 			&& this._dummyAnchor.protocol === loc.protocol);
 	}
 
-	static get calculateTemplateContext() {
-		return LinkTemplateContext.calculate;
+	get tabIndex() {
+		return (this.disabled || !this.text.length) ? "-1" : "0";
+	}
+
+	get ariaDisabled() {
+		return this.disabled ? "true" : undefined;
+	}
+
+	get classes() {
+		return {
+			main: {
+				sapMLnk: true,
+				sapMLnkSubtle: this.type === LinkType.Subtle,
+				sapMLnkEmphasized: this.type === LinkType.Emphasized,
+				sapMLnkWrapping: this.wrap,
+				sapMLnkDsbl: this.disabled,
+				sapMLnkMaxWidth: true,
+			},
+		};
 	}
 }
 
