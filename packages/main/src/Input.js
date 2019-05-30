@@ -545,7 +545,7 @@ class Input extends UI5Element {
 		};
 	}
 
-	get placeholder() {
+	get inputPlaceholder() {
 		// We don`t support placeholder for IE,
 		// because IE fires input events, when placeholder exists, leading to functional degredations.
 		return isIE() ? "" : this.placeholder;
