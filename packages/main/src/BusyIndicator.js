@@ -1,6 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import BusyIndicatorTemplateContext from "./BusyIndicatorTemplateContext.js";
 import BusyIndicatorRenderer from "./build/compiled/BusyIndicatorRenderer.lit.js";
 
 // Styles
@@ -66,8 +65,13 @@ class BusyIndicator extends UI5Element {
 		return BusyIndicatorRenderer;
 	}
 
-	static get calculateTemplateContext() {
-		return BusyIndicatorTemplateContext.calculate;
+	get classes() {
+		return {
+			main: {
+				"ui5-busyindicator-wrapper": true,
+				[`ui5-busyindicator-${this.size.toLowerCase()}`]: true,
+			},
+		};
 	}
 }
 
