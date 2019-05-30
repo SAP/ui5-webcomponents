@@ -1,7 +1,7 @@
-<div {{> controlData}}
+<div
 	class="{{classes.main}}"
 	role="checkbox"
-	aria-checked="{{ctr.checked}}"
+	aria-checked="{{checked}}"
 	tabindex="{{tabIndex}}">
 	<div class="ui5-switch-inner">
 		<div class="ui5-switch-track">
@@ -12,5 +12,5 @@
 			</div>
 		</div>
 	</div>
-	<input type='checkbox' ?checked="{{ctr.checked}}" class="ui5-switch-input" data-sap-no-tab-ref/>
+	<input type='checkbox' ?checked="{{checked}}" class="ui5-switch-input" data-sap-no-tab-ref/>
 </div>
