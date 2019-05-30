@@ -1,5 +1,5 @@
-commit 43e31e72b4a7cedcb6db21631fab8dc7beb64bed
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu May 30 08:50:06 2019 +0300
+commit 1d5897352d2bdb34f914ce6f69a59930968e636d
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Thu May 30 09:51:24 2019 +0300
 
-     fix(ui5-togglebutton): fix text vertical alignment in IE (#465)
+    refactor: simplify state (#450)
