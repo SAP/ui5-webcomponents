@@ -5,9 +5,11 @@ import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.
 import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/src/ResourceBundle.js";
 
 import TokenizerRenderer from "./build/compiled/TokenizerRenderer.lit.js";
+import { MULTIINPUT_SHOW_MORE_TOKENS } from "./i18n/defaults.js";
 
 // Styles
 import styles from "./themes/Tokenizer.css.js";
+
 
 // all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
 import "./ThemePropertiesProvider.js";
@@ -103,7 +105,6 @@ class Tokenizer extends UI5Element {
 		};
 
 		this._delegates.push(this._itemNav);
-		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
@@ -114,7 +115,7 @@ class Tokenizer extends UI5Element {
 		}
 
 		this._lastTokenCount = this.tokens.length;
-		this._nMoreText = this.resourceBundle.getText("MULTIINPUT_SHOW_MORE_TOKENS", [this._hiddenTokens.length]);
+		this._nMoreText = this.resourceBundle.getText(MULTIINPUT_SHOW_MORE_TOKENS, [this._hiddenTokens.length]);
 	}
 
 	onAfterRendering() {
@@ -200,9 +201,11 @@ class Tokenizer extends UI5Element {
 		}
 	}
 
-	static async define(...params) {
+	async connectedCallback() {
 		await fetchResourceBundle("@ui5/webcomponents");
-		super.define(...params);
+		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
+
+		super.connectedCallback();
 	}
 }
 

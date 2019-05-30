@@ -20,8 +20,8 @@ const fetchResourceBundle = async packageId => {
 	const bundlesForPackage = bundleURLs.get(packageId);
 
 	if (!bundlesForPackage) {
-		console.warn(`Message bundle assets are not configured. Falling back to english texts.`,
-		` You need to import @ui5/webcomponents/dist/MessageBundleAssets.js with a build tool that supports JSON imports.`);
+		console.warn(`Message bundle assets are not configured. Falling back to english texts.`, /* eslint-disable-line */
+		` You need to import @ui5/webcomponents/dist/MessageBundleAssets.js with a build tool that supports JSON imports.`); /* eslint-disable-line */
 		return;
 	}
 
@@ -55,7 +55,6 @@ const registerMessageBundles = (packageId, bundlesMap) => {
 };
 
 class ResourceBundleFallback {
-
 	getText(textObj, ...params) {
 		return formatMessage(textObj.defaultText, params);
 	}
@@ -78,9 +77,9 @@ const getResourceBundle = packageId => {
 		return new ResourceBundleWrapper(ResourceBundle.create({
 			url: `${packageId}.properties`,
 		}));
-	} else {
-		return new ResourceBundleFallback();
 	}
+
+	return new ResourceBundleFallback();
 };
 
 export { fetchResourceBundle, registerMessageBundles, getResourceBundle };

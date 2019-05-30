@@ -2,9 +2,9 @@ import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import CSSSize from "@ui5/webcomponents-base/src/types/CSSSize.js";
 import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
+import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/src/ResourceBundle.js";
 import TextAreaTemplateContext from "./TextAreaTemplateContext.js";
 import TextAreaRenderer from "./build/compiled/TextAreaRenderer.lit.js";
-import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/src/ResourceBundle.js";
 
 import { TEXTAREA_CHARACTERS_LEFT, TEXTAREA_CHARACTERS_EXCEEDED } from "./i18n/defaults.js";
 
@@ -337,7 +337,7 @@ class TextArea extends UI5Element {
 			exceededText, leftCharactersCount, calcedMaxLength,
 		};
 	}
-	
+
 	async connectedCallback() {
 		await fetchResourceBundle("@ui5/webcomponents");
 		this.resourceBundle = getResourceBundle("@ui5/webcomponents");

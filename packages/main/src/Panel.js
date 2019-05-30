@@ -10,6 +10,8 @@ import PanelTemplateContext from "./PanelTemplateContext.js";
 import PanelAccessibleRole from "./types/PanelAccessibleRole.js";
 import PanelRenderer from "./build/compiled/PanelRenderer.lit.js";
 
+import { PANEL_ICON } from "./i18n/defaults.js";
+
 // Styles
 import panelCss from "./themes/Panel.css.js";
 
@@ -198,14 +200,11 @@ class Panel extends UI5Element {
 	constructor() {
 		super();
 
-		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
-
 		this._header = {};
 
 		this._icon = {};
 		this._icon.id = `${this.id}-CollapsedImg`;
 		this._icon.src = getIconURI("navigation-right-arrow");
-		this._icon.title = this.resourceBundle.getText("PANEL_ICON");
 		this._icon.functional = true;
 
 		this._toggle = event => { event.preventDefault(); this._toggleOpen(); };
@@ -219,6 +218,7 @@ class Panel extends UI5Element {
 		}
 
 		const toggleWithInternalHeader = !this.header;
+		this._icon.title = this.resourceBundle.getText(PANEL_ICON);
 		this._header.press = toggleWithInternalHeader ? this._toggle : this._noOp;
 		this._icon.press = !toggleWithInternalHeader ? this._toggle : this._noOp;
 	}
@@ -277,11 +277,15 @@ class Panel extends UI5Element {
 		return target.classList.contains("sapMPanelWrappingDiv");
 	}
 
+	async connectedCallback() {
+		await fetchResourceBundle("@ui5/webcomponents");
+		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
+
+		super.connectedCallback();
+	}
+
 	static async define(...params) {
-		await Promise.all([
-			fetchResourceBundle("@ui5/webcomponents"),
-			Icon.define(),
-		]);
+		await Icon.define();
 
 		super.define(...params);
 	}
