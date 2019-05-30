@@ -1,5 +1,5 @@
-commit 05ee03f4b10b048a208ce531687dda17c23d089a
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu May 30 17:01:44 2019 +0300
+commit 1155806d3ae782a4ea2a59e17c8cbe4b0c3b1cda
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Thu May 30 17:06:10 2019 +0300
 
-    refactor: remove template context for link and switch (#487)
+    refactor: remove template context from messagestrip (#488)
