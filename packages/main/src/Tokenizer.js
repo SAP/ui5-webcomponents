@@ -201,11 +201,11 @@ class Tokenizer extends UI5Element {
 		}
 	}
 
-	async connectedCallback() {
+	static async define(...params) {	
 		await fetchResourceBundle("@ui5/webcomponents");
 		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
 
-		super.connectedCallback();
+		super.define(...params);	
 	}
 }
 
