@@ -128,42 +128,6 @@ class Table extends UI5Element {
 		return TableRenderer;
 	}
 
-	static get calculateTemplateContext() {
-		return state => {
-			const context = {
-				ctr: state,
-				visibleColumns: [],
-				classes: {
-					main: {
-						sapWCTableHeader: true,
-					},
-					columns: {
-						sapWCTableColumnWrapper: true,
-					},
-				},
-				styles: {
-					main: {
-						"grid-template-columns": "",
-						position: state.stickyColumnHeader ? "sticky" : "",
-						top: state.stickyColumnHeader ? "0px" : "",
-						"z-index": state.stickyColumnHeader ? "1" : "",
-					},
-				},
-			};
-
-			context.ctr.columns.forEach((column, index) => {
-				if (!context.ctr._hiddenColumns[index]) {
-					context.visibleColumns.push(column);
-
-					// width of columns
-					context.styles.main["grid-template-columns"] += `minmax(0, ${column.width || "1fr"}) `;
-				}
-			}, this);
-
-			return context;
-		};
-	}
-
 	constructor() {
 		super();
 
@@ -187,6 +151,10 @@ class Table extends UI5Element {
 			row._columnsInfo = columnSettings;
 			row.removeEventListener("ui5-_focused", this.fnOnRowFocused);
 			row.addEventListener("ui5-_focused", this.fnOnRowFocused);
+		});
+
+		this.visibleColumns = this.columns.filter((column, index) => {
+			return !this._hiddenColumns[index];
 		});
 	}
 
@@ -249,6 +217,32 @@ class Table extends UI5Element {
 				visible: !this._hiddenColumns[index],
 			};
 		}, this);
+	}
+
+	get classes() {
+		return {
+			main: {
+				sapWCTableHeader: true,
+			},
+			columns: {
+				sapWCTableColumnWrapper: true,
+			},
+		};
+	}
+
+	get styles() {
+		const gridTemplateColumns = this.visibleColumns.reduce((acc, column) => {
+			return `${acc}minmax(0, ${column.width || "1fr"}) `;
+		}, "");
+
+		return {
+			main: {
+				"grid-template-columns": gridTemplateColumns,
+				position: this.stickyColumnHeader ? "sticky" : "",
+				top: this.stickyColumnHeader ? "0px" : "",
+				"z-index": this.stickyColumnHeader ? "1" : "",
+			},
+		};
 	}
 }
 
