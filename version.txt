@@ -1,5 +1,7 @@
-commit 2980ff5eaba950f5d2ee0b4dd6a1b0e7dd4f9d75
+commit 0e4b1c98caa391f8ccdf37e35f3ff2af0b4a833c
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu May 30 09:58:22 2019 +0300
+Date:   Thu May 30 13:20:00 2019 +0300
 
-    chore: add tests for 'hidden' property (#468)
+    chore(release): publish v0.11.1 (#470)
+    
+    No code changes
