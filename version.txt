@@ -1,7 +1,5 @@
-commit 0e4b1c98caa391f8ccdf37e35f3ff2af0b4a833c
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu May 30 13:20:00 2019 +0300
+commit a685221cd69b4ad8f3440a0b9efcd5234c3b07c1
+Author: Adrian Bobev <adrian.bobev@gmail.com>
+Date:   Thu May 30 14:34:23 2019 +0300
 
-    chore(release): publish v0.11.1 (#470)
-    
-    No code changes
+    chore(ui5-tabcontainer): hide content with html hiddden attribute (#473)
