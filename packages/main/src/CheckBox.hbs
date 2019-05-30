@@ -1,20 +1,17 @@
-<div {{> controlData}}
+<div
 	class="{{classes.main}}"
-	style="{{styles.main}}"
 	role="checkbox"
-	aria-checked="{{ctr.checked}}"
-	?aria-readonly="{{ariaReadonly}}"
+	aria-checked="{{checked}}"
+	aria-readonly="{{ariaReadonly}}"
+	aria-disabled="{{ariaDisabled}}"
 	tabindex="{{tabIndex}}">
-		<div id="{{ctr._id}}-CbBg" class="{{classes.inner}}">
-			<input id="{{ctr._id}}-CB" type='checkbox' ?checked="{{ctr.checked}}" ?readonly="{{ctr.readonly}}" data-sap-no-tab-ref/>
+		<div id="{{_id}}-CbBg" class="{{classes.inner}}">
+			<input id="{{_id}}-CB" type='checkbox' ?checked="{{checked}}" ?readonly="{{readonly}}" ?disabled="{{disabled}}"data-sap-no-tab-ref/>
 		</div>
 
-		{{#if ctr._label.text}}
-		<ui5-label
-				class="ui5-checkbox-label"
-				?wrap="{{ctr._label.wrap}}"
-		>{{ctr._label.text}}</ui5-label>
+		{{#if _label.text}}
+			<ui5-label class="ui5-checkbox-label" ?wrap="{{_label.wrap}}">{{_label.text}}</ui5-label>
 		{{/if}}
 
-	<slot name="formSupport"></slot>
+		<slot name="formSupport"></slot>
 </div>

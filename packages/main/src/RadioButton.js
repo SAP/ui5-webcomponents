@@ -1,3 +1,5 @@
+import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
+import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
@@ -12,7 +14,6 @@ import {
 import RadioButtonGroup from "./RadioButtonGroup.js";
 // Template
 import RadioButtonRenderer from "./build/compiled/RadioButtonRenderer.lit.js";
-import RadioButtonTemplateContext from "./RadioButtonTemplateContext.js";
 
 // Styles
 import radioButtonCss from "./themes/RadioButton.css.js";
@@ -148,6 +149,21 @@ const metadata = {
 		 * @public
 		 */
 		select: {},
+	},
+};
+
+const SVGConfig = {
+	"compact": {
+		x: 16,
+		y: 16,
+		rInner: 3,
+		rOuter: 8,
+	},
+	"default": {
+		x: 22,
+		y: 22,
+		rInner: 5,
+		rOuter: 11,
 	},
 };
 
@@ -315,8 +331,42 @@ class RadioButton extends UI5Element {
 		return !(this.disabled || this.readonly || this.selected);
 	}
 
-	static get calculateTemplateContext() {
-		return RadioButtonTemplateContext.calculate;
+	get classes() {
+		return {
+			main: {
+				sapMRb: true,
+				sapMRbHasLabel: this.text && this.text.length > 0,
+				sapMRbSel: this.selected,
+				sapMRbDis: this.disabled,
+				sapMRbRo: this.readonly,
+				sapMRbErr: this.valueState === "Error",
+				sapMRbWarn: this.valueState === "Warning",
+			},
+			inner: {
+				sapMRbInner: true,
+				sapMRbHoverable: !this.disabled && !this.readonly && isDesktop(),
+			},
+		};
+	}
+
+	get ariaReadonly() {
+		return this.readonly ? "true" : undefined;
+	}
+
+	get ariaDisabled() {
+		return this.disabled ? "true" : undefined;
+	}
+
+	get tabIndex() {
+		return this.disabled || (!this.selected && this.name) ? "-1" : "0";
+	}
+
+	get strokeWidth() {
+		return this.valueState === "None" ? "1" : "2";
+	}
+
+	get circle() {
+		return getCompactSize() ? SVGConfig.compact : SVGConfig.default;
 	}
 }
 

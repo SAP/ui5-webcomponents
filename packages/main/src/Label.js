@@ -3,7 +3,6 @@ import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 
 // Template
 import LabelRenderer from "./build/compiled/LabelRenderer.lit.js";
-import LabelTemplateContext from "./LabelTemplateContext.js";
 
 // Styles
 import labelCss from "./themes/Label.css.js";
@@ -116,16 +115,23 @@ class Label extends UI5Element {
 		return labelCss;
 	}
 
+	get classes() {
+		return {
+			main: {
+				sapMLabel: true,
+				sapMLabelNoText: !this.text.length,
+				sapMLabelWrapped: this.wrap,
+				sapMLabelRequired: this.required,
+			},
+		};
+	}
+
 	onclick() {
 		const elementToFocus = document.getElementById(this.for);
 
 		if (elementToFocus) {
 			elementToFocus.focus();
 		}
-	}
-
-	static get calculateTemplateContext() {
-		return LabelTemplateContext.calculate;
 	}
 }
 
