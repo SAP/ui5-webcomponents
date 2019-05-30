@@ -337,7 +337,7 @@ class Panel extends UI5Element {
 
 	static async define(...params) {
 		await Promise.all([
-			fetchResourceBundle("@ui5/webcomponents"),		
+			fetchResourceBundle("@ui5/webcomponents"),
 			Icon.define(),
 		]);
 
