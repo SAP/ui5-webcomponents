@@ -1,5 +1,5 @@
-commit 149622b82809a72d9b1d084dae55af4818641c2c
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu May 30 16:55:41 2019 +0300
+commit 05ee03f4b10b048a208ce531687dda17c23d089a
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Thu May 30 17:01:44 2019 +0300
 
-    refactor: remove template context from input (#481)
+    refactor: remove template context for link and switch (#487)
