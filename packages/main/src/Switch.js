@@ -1,10 +1,10 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 
 // Template
 import SwitchRenderer from "./build/compiled/SwitchRenderer.lit.js";
-import SwitchTemplateContext from "./SwitchTemplateContext.js";
 import SwitchType from "./types/SwitchType.js";
 
 // Styles
@@ -171,8 +171,34 @@ class Switch extends UI5Element {
 		}
 	}
 
-	static get calculateTemplateContext() {
-		return SwitchTemplateContext.calculate;
+	get textOn() {
+		const graphical = this.type === SwitchType.Graphical;
+		return graphical ? "" : this.textOn;
+	}
+
+	get textOff() {
+		const graphical = this.type === SwitchType.Graphical;
+		return graphical ? "" : this.textOff;
+	}
+
+	get tabIndex() {
+		return this.disabled ? undefined : "0";
+	}
+
+	get classes() {
+		const graphical = this.type === SwitchType.Graphical;
+		const hasLabel = graphical || this.textOn || this.textOff;
+
+		return {
+			main: {
+				"ui5-switch-wrapper": true,
+				"ui5-switch-desktop": isDesktop(),
+				"ui5-switch--disabled": this.disabled,
+				"ui5-switch--checked": this.checked,
+				"ui5-switch--semantic": graphical,
+				"ui5-switch--no-label": !hasLabel,
+			},
+		};
 	}
 }
 
