@@ -1,39 +1,39 @@
-<div {{> controlData}}
+<div
 	class="{{classes.main}}"
-	style="{{styles.main}}"
+	style="width: 100%;"
 	?aria-invalid="{{ariaInvalid}}"
 >
-<div id="{{ctr._id}}-wrapper"
+<div id="{{_id}}-wrapper"
 	class="{{classes.wrapper}}"
 >
-	{{#if ctr._beginContent}}
+	{{#if _beginContent}}
 		<slot name="_beginContent"></slot>
 	{{/if}}
 
-	<input id="{{ctr._id}}-inner"
+	<input id="{{_id}}-inner"
 			class="sapWCInputBaseInner"
 			type="{{type}}"
-			?disabled="{{ctr.disabled}}"
+			?disabled="{{disabled}}"
 			?readonly="{{_readonly}}"
-			.value="{{ctr.value}}"
-			placeholder="{{ctr.placeholder}}"
-			@input="{{ctr._input.onInput}}"
-			@change="{{ctr._input.change}}"
+			.value="{{value}}"
+			placeholder="{{placeholder}}"
+			@input="{{_input.onInput}}"
+			@change="{{_input.change}}"
 			data-sap-no-tab-ref
 			data-sap-focus-ref
 	/>
-		{{#if ctr.icon}}
+		{{#if icon}}
 			<slot name="icon"></slot>
 		{{/if}}
 	</div>
 
-	{{#if ctr.showSuggestions}}
+	{{#if showSuggestions}}
 			<ui5-popover
 				placement-type="Bottom"
 				hide-header="true"
 				hide-arrow="true"
 				horizontal-align="Stretch"
-				initial-focus="{{ctr._id}}-inner">
+				initial-focus="{{_id}}-inner">
 					<ui5-list separators="Inner">
                         <slot></slot>
 					</ui5-list>

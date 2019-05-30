@@ -13,7 +13,6 @@ import Icon from "./Icon.js";
 import InputType from "./types/InputType.js";
 // Template
 import InputRenderer from "./build/compiled/InputRenderer.lit.js";
-import InputTemplateContext from "./InputTemplateContext.js";
 
 // Styles
 import styles from "./themes/Input.css.js";
@@ -285,10 +284,6 @@ class Input extends UI5Element {
 		return InputRenderer;
 	}
 
-	static get calculateTemplateContext() {
-		return InputTemplateContext.calculate;
-	}
-
 	static get styles() {
 		return [styles, shellbarInput];
 	}
@@ -526,6 +521,52 @@ class Input extends UI5Element {
 	onOpen() {}
 
 	onClose() {}
+
+	get classes() {
+		const hasState = this.valueState !== "None";
+
+		return {
+			main: {
+				sapWCInputBase: true,
+				sapWCInputBaseWidthPadding: true,
+				sapWCInputBaseDisabled: this.disabled,
+				sapWCInputBaseReadonly: this.readonly,
+				sapWCInput: true,
+				sapWCInputFocused: this._focused,
+				sapWCFocus: this._focused,
+			},
+			wrapper: {
+				sapWCInputBaseContentWrapper: true,
+				sapWCInputBaseDisabledWrapper: this.disabled,
+				sapWCInputBaseReadonlyWrapper: this.readonly && !this.disabled,
+				sapWCInputBaseContentWrapperState: hasState,
+				[`sapWCInputBaseContentWrapper${this.valueState}`]: hasState,
+
+			}
+		}
+	}
+
+	get placeholder() {
+		// We don`t support placeholder for IE,
+		// because IE fires input events, when placeholder exists, leading to functional degredations.
+		isIE() ? "" : this.placeholder;
+	}
+
+	get _readonly() {
+		return this.readonly && !this.disabled;
+	}
+
+	get type() {
+		return this.type.toLowerCase();
+	}
+
+	get ariaInvalid() {
+		return this.valueState === "Error" ? "true" : undefined
+	}
+
+	get mainStyles() {
+
+	}
 }
 
 Bootstrap.boot().then(_ => {
