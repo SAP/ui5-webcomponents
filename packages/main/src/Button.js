@@ -261,13 +261,6 @@ class Button extends UI5Element {
 		};
 	}
 
-	get styles() {
-		return {
-			main: {
-			},
-		};
-	}
-
 	get iconSrc() {
 		return this._active ? this.activeIcon : this.icon;
 	}

@@ -1,28 +1,4 @@
-<button
-		type="button"
-		class="{{classes.main}}"
-		style="{{styles.main}}"
-		?disabled="{{disabled}}"
-		?aria-disabled="{{ariaDisabled}}"
-		tabindex="{{_customAttributes.tabindex}}"
-		data-sap-focus-ref
-		{{> ariaPressed}}
-	>
-		{{#if _iconSettings}}
-			<ui5-icon
-				class="{{classes.icon}}"
-				src="{{_iconSettings.src}}"
-			></ui5-icon>
-		{{/if}}
-
-		{{#if textContent}}
-			<span id="{{_id}}-content" class="{{classes.text}}">
-				<bdi>
-					<slot></slot>
-				</bdi>
-			</span>
-		{{/if}}
-</button>
+{{>include "./Button.hbs"}}
 
 {{#*inline "ariaPressed"}}
 	aria-pressed="{{pressed}}"
