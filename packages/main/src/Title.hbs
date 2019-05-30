@@ -1,8 +1,6 @@
 {{#if h1}}
 		<h1
-			{{> controlData}}
 			class="{{classes.main}}"
-			style="{{styles.main}}"
 			role="heading">
 				{{> titleInner}}
 		</h1>
@@ -10,9 +8,7 @@
 		
 {{#if h2}}
 		<h2
-			{{> controlData}}
 			class="{{classes.main}}"
-			style="{{styles.main}}"
 			role="heading">
 				{{> titleInner}}
 		</h2>
@@ -20,9 +16,7 @@
 
 {{#if h3}}
 		<h3
-			{{> controlData}}
 			class="{{classes.main}}"
-			style="{{styles.main}}"
 			role="heading">
 				{{> titleInner}}
 		</h3>
@@ -30,9 +24,7 @@
 
 {{#if h4}}
 		<h4
-			{{> controlData}}
 			class="{{classes.main}}"
-			style="{{styles.main}}"
 			role="heading">
 				{{> titleInner}}
 		</h4>
@@ -40,9 +32,7 @@
 
 {{#if h5}}
 		<h5
-			{{> controlData}}
 			class="{{classes.main}}"
-			style="{{styles.main}}"
 			role="heading">
 				{{> titleInner}}
 		</h5>
@@ -50,16 +40,14 @@
 
 {{#if h6}}
 		<h6
-			{{> controlData}}
 			class="{{classes.main}}"
-			style="{{styles.main}}"
 			role="heading">
 				{{> titleInner}}
 		</h6>
 {{/if}}
 
 {{#*inline "titleInner"}}
-	<span id="{{ctr._id}}-inner">
+	<span id="{{_id}}-inner">
 		<slot></slot>
 	</span>
 {{/inline}}

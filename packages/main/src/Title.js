@@ -90,24 +90,43 @@ class Title extends UI5Element {
 		return titleCss;
 	}
 
-	static calculateTemplateContext(state) {
-		const context = {
-			[`${state.level.toLowerCase()}`]: true,
-			ctr: state,
-			classes: {
-				main: {
-					sapMTitle: true,
-					sapMTitleWrap: state.wrap,
-					sapUiSelectable: true,
-					[`sapMTitleStyle${state.level}`]: true,
-				},
-			},
-			styles: {
-				main: {},
+	get normalizedLevel() {
+		return this.level.toLowerCase();
+	}
+
+	get h1() {
+		return this.normalizedLevel === "h1";
+	}
+
+	get h2() {
+		return this.normalizedLevel === "h2";
+	}
+
+	get h3() {
+		return this.normalizedLevel === "h3";
+	}
+
+	get h4() {
+		return this.normalizedLevel === "h4";
+	}
+
+	get h5() {
+		return this.normalizedLevel === "h5";
+	}
+
+	get h6() {
+		return this.normalizedLevel === "h6";
+	}
+
+	get classes() {
+		return {
+			main: {
+				sapMTitle: true,
+				sapMTitleWrap: this.wrap,
+				sapUiSelectable: true,
+				[`sapMTitleStyle${this.level}`]: true,
 			},
 		};
-
-		return context;
 	}
 }
 

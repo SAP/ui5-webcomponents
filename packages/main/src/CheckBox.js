@@ -1,8 +1,8 @@
+import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-import CheckBoxTemplateContext from "./CheckBoxTemplateContext.js";
 import CheckBoxRenderer from "./build/compiled/CheckBoxRenderer.lit.js";
 import Label from "./Label.js";
 
@@ -244,8 +244,36 @@ class CheckBox extends UI5Element {
 		return !(this.disabled || this.readonly);
 	}
 
-	static get calculateTemplateContext() {
-		return CheckBoxTemplateContext.calculate;
+	get classes() {
+		return {
+			main: {
+				"ui5-checkbox-wrapper": true,
+				"ui5-checkbox-with-label": !!this.text,
+				"ui5-checkbox--disabled": this.disabled,
+				"ui5-checkbox--readonly": this.readonly,
+				"ui5-checkbox--error": this.valueState === "Error",
+				"ui5-checkbox--warning": this.valueState === "Warning",
+				"ui5-checkbox--wrap": this.wrap,
+				"ui5-checkbox--hoverable": !this.disabled && !this.readonly && isDesktop(),
+			},
+			inner: {
+				"ui5-checkbox-inner": true,
+				"ui5-checkbox-inner-mark": true,
+				"ui5-checkbox-inner--checked": !!this.checked,
+			},
+		};
+	}
+
+	get ariaReadonly() {
+		return this.readonly ? "true" : undefined;
+	}
+
+	get ariaDisabled() {
+		return this.disabled ? "true" : undefined;
+	}
+
+	get tabIndex() {
+		return this.disabled ? undefined : "0";
 	}
 
 	static async define(...params) {
