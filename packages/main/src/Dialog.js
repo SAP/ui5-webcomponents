@@ -139,7 +139,7 @@ class Dialog extends Popup {
 				sapMPopupBlockLayer: true,
 				sapMPopupBlockLayerHidden: this._hideBlockLayer,
 			},
-		}
+		};
 	}
 
 	get zindex() {
