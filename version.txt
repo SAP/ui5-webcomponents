@@ -1,5 +1,5 @@
-commit 65a2664fb86f443b3c1db62f3ad3445b29708973
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu May 30 16:46:46 2019 +0300
+commit 149622b82809a72d9b1d084dae55af4818641c2c
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Thu May 30 16:55:41 2019 +0300
 
-    refactor: remove template context for date picker (#471)
+    refactor: remove template context from input (#481)
