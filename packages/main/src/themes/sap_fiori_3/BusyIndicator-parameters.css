@@ -1,5 +1,1 @@
 @import "../base/BusyIndicator-parameters.css";
-
-:root {
-    --ui5-busyindicator-color: var(--sapUiContentIconColor);	
-}
