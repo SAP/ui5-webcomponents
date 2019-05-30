@@ -116,15 +116,6 @@ class Token extends UI5Element {
 		return TokenRenderer;
 	}
 
-	static get calculateTemplateContext() {
-		return state => {
-			return {
-				ctr: state,
-				iconURI: getTheme() === "sap_fiori_3" ? "sap-icon://decline" : "sap-icon://sys-cancel",
-			};
-		};
-	}
-
 	static get styles() {
 		return styles;
 	}
@@ -160,7 +151,11 @@ class Token extends UI5Element {
 		if (isEnter(event) || isSpace(event)) {
 			this.fireEvent("select", {});
 		}
-	 }
+	}
+
+	get iconURI() {
+		return getTheme() === "sap_fiori_3" ? "sap-icon://decline" : "sap-icon://sys-cancel";
+	}
 
 	static async define(...params) {
 		await Icon.define();

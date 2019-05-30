@@ -1,9 +1,9 @@
 <div class="{{classes.wrapper}}">
-	<div class="{{classes.content}}" @ui5-delete={{ctr._tokenDelete}}>
+	<div class="{{classes.content}}" @ui5-delete={{_tokenDelete}}>
 		<div class="ui5-tokenizer-token-placeholder">
 			<div style="display: inline-block"></div>
 		</div>
-		{{#each ctr.tokens}}
+		{{#each tokens}}
 			<div class="ui5-tokenizer--token--wrapper">
 				<slot name="{{this._individualSlot}}"></slot>
 			</div>
@@ -11,6 +11,6 @@
 	</div>
 
 	{{#if showNMore}}
-		<span @click="{{ctr._openOverflowPopover}}" class="ui5-tokenizer-more-text">{{ctr._nMoreText}}</span>
+		<span @click="{{_openOverflowPopover}}" class="ui5-tokenizer-more-text">{{_nMoreText}}</span>
 	{{/if}}
 </div>
