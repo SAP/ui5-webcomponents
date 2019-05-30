@@ -113,7 +113,7 @@ class ListItemBase extends UI5Element {
 			},
 			inner: {
 				sapMLIBContent: true,
-			}
+			},
 		};
 	}
 }
