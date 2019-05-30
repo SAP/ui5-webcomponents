@@ -3,7 +3,6 @@ import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import URI from "@ui5/webcomponents-base/src/types/URI.js";
 import Icon from "./Icon.js";
 import Link from "./Link.js";
-import TimelineItemTemplateContext from "./TimelineItemTemplateContext.js";
 import TimelineItemRenderer from "./build/compiled/TimelineItemRenderer.lit.js";
 
 // Styles
@@ -135,10 +134,6 @@ class TimelineItem extends UI5Element {
 		return TimelineItemRenderer;
 	}
 
-	static get calculateTemplateContext() {
-		return TimelineItemTemplateContext.calculate;
-	}
-
 	static get styles() {
 		return styles;
 	}
@@ -151,6 +146,15 @@ class TimelineItem extends UI5Element {
 
 	onItemNamePress() {
 		this.fireEvent("itemNamePress", {});
+	}
+
+	get classes() {
+		return {
+			indicator: {
+				sapWCTimelineIndicator: true,
+				sapWCTimelineIndicatorNoIcon: !this.icon,
+			},
+		};
 	}
 
 	static async define(...params) {
