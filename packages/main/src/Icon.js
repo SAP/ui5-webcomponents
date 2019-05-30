@@ -110,8 +110,8 @@ class Icon extends UI5Element {
 			main: {
 				sapWCIcon: true,
 				sapWCIconMirrorInRTL: !iconInfo.suppressMirroring,
-			}
-		}
+			},
+		};
 	}
 
 	get ariaLabelledBy() {
@@ -128,7 +128,7 @@ class Icon extends UI5Element {
 
 	get iconContent() {
 		const iconInfo = getIconInfo(this.src) || {};
-		return iconInfo.content;s
+		return iconInfo.content;
 	}
 
 	get dir() {
