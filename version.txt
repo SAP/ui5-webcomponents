@@ -1,5 +1,5 @@
-commit 1d5897352d2bdb34f914ce6f69a59930968e636d
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu May 30 09:51:24 2019 +0300
+commit 2980ff5eaba950f5d2ee0b4dd6a1b0e7dd4f9d75
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu May 30 09:58:22 2019 +0300
 
-    refactor: simplify state (#450)
+    chore: add tests for 'hidden' property (#468)
