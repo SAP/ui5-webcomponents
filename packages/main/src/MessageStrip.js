@@ -198,7 +198,7 @@ class MessageStrip extends UI5Element {
 				"ui5-messagestrip-root": true,
 				"ui5-messagestrip-icon--hidden": this.hideIcon,
 				"ui5-messagestrip-close-icon--hidden": this.hideCloseButton,
-				[this.getTypeClasses]: true,
+				[this.typeClasses]: true,
 			},
 		};
 	}
@@ -207,7 +207,7 @@ class MessageStrip extends UI5Element {
 		return this.icon || MessageStrip.iconMappings()[this.type];
 	}
 
-	get getTypeClasses() {
+	get typeClasses() {
 		return MessageStrip.typeClassesMappings()[this.type];
 	}
 }
