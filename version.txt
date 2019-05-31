@@ -1,5 +1,5 @@
-commit da60be0f2edca0390de0602bf85dece0fa95344e
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri May 31 13:55:15 2019 +0300
+commit 5543d3062ef0750d5fd4769fafa86f8bb6f55143
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Fri May 31 14:26:27 2019 +0300
 
-    refactor: remove custom attributes (#492)
+    fix: fix list footer font family (#494)
