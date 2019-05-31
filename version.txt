@@ -1,5 +1,5 @@
-commit 6b6b5443607be92261eab43d312c08dd53602a2d
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Fri May 31 09:58:45 2019 +0300
+commit 5d4b644ca2a86d8a2b9704129cd908705ef8adec
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Fri May 31 10:12:00 2019 +0300
 
-    feat(ui5-busyindicator): initial implementation (#416)
+    refactor: replace usages of the word control in the main project (#491)
