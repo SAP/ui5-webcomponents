@@ -5,15 +5,15 @@ const MAX_RERENDER_COUNT = 10;
 // Tells whether a render task is currently scheduled
 let renderTaskId;
 
-// Queue for invalidated controls
-const invalidatedControls = new RenderQueue();
+// Queue for invalidated web components
+const invalidatedWebComponents = new RenderQueue();
 
 let renderTaskPromise,
 	renderTaskPromiseResolve,
 	taskResult;
 
 /**
- * Class that manages the rendering/re-rendering of controls
+ * Class that manages the rendering/re-rendering of web components
  * This is always asynchronous
  */
 class RenderScheduler {
@@ -22,21 +22,21 @@ class RenderScheduler {
 	}
 
 	/**
-	 * Queues a control for re-rendering
-	 * @param control
+	 * Queues a web component for re-rendering
+	 * @param webComponent
 	 */
-	static renderDeferred(control) {
-		// Enqueue the control
-		const res = invalidatedControls.add(control);
+	static renderDeferred(webComponent) {
+		// Enqueue the web component
+		const res = invalidatedWebComponents.add(webComponent);
 
 		// Schedule a rendering task
 		RenderScheduler.scheduleRenderTask();
 		return res;
 	}
 
-	static renderImmediately(control) {
-		// Enqueue the control
-		const res = invalidatedControls.add(control);
+	static renderImmediately(webComponent) {
+		// Enqueue the web component
+		const res = invalidatedWebComponents.add(webComponent);
 
 		// Immediately start a render task
 		RenderScheduler.runRenderTask();
@@ -48,43 +48,43 @@ class RenderScheduler {
 	 */
 	static scheduleRenderTask() {
 		if (!renderTaskId) {
-			// renderTaskId = window.setTimeout(RenderScheduler.renderControls, 3000); // Task
-			// renderTaskId = Promise.resolve().then(RenderScheduler.renderControls); // Micro task
-			renderTaskId = window.requestAnimationFrame(RenderScheduler.renderControls); // AF
+			// renderTaskId = window.setTimeout(RenderScheduler.renderWebComponents, 3000); // Task
+			// renderTaskId = Promise.resolve().then(RenderScheduler.renderWebComponents); // Micro task
+			renderTaskId = window.requestAnimationFrame(RenderScheduler.renderWebComponents); // AF
 		}
 	}
 
 	static runRenderTask() {
 		if (!renderTaskId) {
-			renderTaskId = 1; // prevent another rendering task from being scheduled, all controls should use this task
-			RenderScheduler.renderControls();
+			renderTaskId = 1; // prevent another rendering task from being scheduled, all web components should use this task
+			RenderScheduler.renderWebComponents();
 		}
 	}
 
-	static renderControls() {
+	static renderWebComponents() {
 		// console.log("------------- NEW RENDER TASK ---------------");
 
-		let controlInfo,
-			control,
+		let webComponentInfo,
+			webComponent,
 			promise;
 		const renderStats = new Map();
-		while (controlInfo = invalidatedControls.shift()) { // eslint-disable-line
-			control = controlInfo.control;
-			promise = controlInfo.promise;
+		while (webComponentInfo = invalidatedWebComponents.shift()) { // eslint-disable-line
+			webComponent = webComponentInfo.webComponent;
+			promise = webComponentInfo.promise;
 
-			const timesRerendered = renderStats.get(control) || 0;
+			const timesRerendered = renderStats.get(webComponent) || 0;
 			if (timesRerendered > MAX_RERENDER_COUNT) {
-				// console.warn("WARNING RERENDER", control);
-				throw new Error(`Control re-rendered too many times this task, max allowed is: ${MAX_RERENDER_COUNT}`);
+				// console.warn("WARNING RERENDER", webComponent);
+				throw new Error(`Web component re-rendered too many times this task, max allowed is: ${MAX_RERENDER_COUNT}`);
 			}
-			control._render();
+			webComponent._render();
 			promise._deferredResolve();
-			renderStats.set(control, timesRerendered + 1);
+			renderStats.set(webComponent, timesRerendered + 1);
 		}
 
 		// wait for Mutation observer just in case
 		setTimeout(() => {
-			if (invalidatedControls.getList().length === 0) {
+			if (invalidatedWebComponents.getList().length === 0) {
 				RenderScheduler._resolveTaskPromise();
 			}
 		}, 200);
@@ -93,7 +93,7 @@ class RenderScheduler {
 	}
 
 	/**
-	 * return a promise that will be resolved once all invalidated controls are rendered
+	 * return a promise that will be resolved once all invalidated web components are rendered
 	 */
 	static whenDOMUpdated() {
 		if (renderTaskPromise) {
@@ -103,7 +103,7 @@ class RenderScheduler {
 		renderTaskPromise = new Promise(resolve => {
 			renderTaskPromiseResolve = resolve;
 			window.requestAnimationFrame(() => {
-				if (invalidatedControls.getList().length === 0) {
+				if (invalidatedWebComponents.getList().length === 0) {
 					renderTaskPromise = undefined;
 					resolve();
 				}
@@ -147,7 +147,7 @@ class RenderScheduler {
 	}
 
 	static _resolveTaskPromise() {
-		if (invalidatedControls.getList().length > 0) {
+		if (invalidatedWebComponents.getList().length > 0) {
 			// More updates are pending. Resolve will be called again
 			return;
 		}
