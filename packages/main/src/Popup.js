@@ -92,7 +92,7 @@ const metadata = {
 			type: Boolean,
 		},
 	},
-	events:  /** @lends  sap.ui.webcomponents.main.Popup.prototype */ {
+	events: /** @lends  sap.ui.webcomponents.main.Popup.prototype */ {
 
 		/**
 		 * Fired before the component is opened.
