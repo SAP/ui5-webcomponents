@@ -1,5 +1,5 @@
-commit d7c40e84df6b001a7e5ee08a221f43937b3ef718
+commit da60be0f2edca0390de0602bf85dece0fa95344e
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri May 31 10:17:13 2019 +0300
+Date:   Fri May 31 13:55:15 2019 +0300
 
-    refactor: remove references to controls in the base project (#490)
+    refactor: remove custom attributes (#492)
