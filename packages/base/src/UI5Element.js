@@ -9,15 +9,6 @@ import { createStyle } from "./CSS.js";
 import { attachThemeChange } from "./Theming.js";
 
 const metadata = {
-	properties: {
-		/**
-		 * Attributes (most commonly accessibility-related) that will be passed to the web component.
-		 * The web component has the responsibility to render these attributes
-		 */
-		_customAttributes: {
-			type: Object,
-		},
-	},
 	events: {
 		_propertyChange: {},
 	},
