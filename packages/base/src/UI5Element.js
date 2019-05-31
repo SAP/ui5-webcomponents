@@ -716,7 +716,7 @@ class UI5Element extends HTMLElement {
 
 					if (isDifferent) {
 						this._state[prop] = value;
-						if (propData.nonVisual || propData.type === Function) {
+						if (propData.nonVisual) {
 							return;
 						}
 						this._invalidate(prop, value);

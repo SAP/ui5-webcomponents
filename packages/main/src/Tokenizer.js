@@ -30,8 +30,6 @@ const metadata = {
 		disabled: { type: Boolean },
 
 		_nMoreText: { type: String },
-		_openOverflowPopover: { type: Function },
-		_tokenDelete: { type: Function },
 		_hiddenTokens: { type: Object, multiple: true },
 	},
 	events: /** @lends sap.ui.webcomponents.main.Tokenizer.prototype */ {
@@ -86,8 +84,6 @@ class Tokenizer extends UI5Element {
 		this._recalculateLayouting = false;
 		this._resizeHandler = this._handleResize.bind(this);
 		this._itemNav = new ItemNavigation(this);
-		this._tokenDelete = this._handleTokenDelete.bind(this);
-		this._openOverflowPopover = this._handleOpenOverflowPopover.bind(this);
 
 		this._itemNav.getItemsCallback = () => {
 			if (this.disabled) {
@@ -127,7 +123,7 @@ class Tokenizer extends UI5Element {
 		ResizeHandler.deregister(this.shadowRoot.querySelector(".ui5-tokenizer--content"), this._resizeHandler);
 	}
 
-	_handleOpenOverflowPopover() {
+	_openOverflowPopover() {
 		this.fireEvent("showMoreItemsPress");
 	}
 
@@ -164,7 +160,7 @@ class Tokenizer extends UI5Element {
 		return tokens;
 	}
 
-	_handleTokenDelete(event) {
+	_tokenDelete(event) {
 		if (event.detail && event.detail.backSpace) {
 			this._deleteByBackspace();
 		}

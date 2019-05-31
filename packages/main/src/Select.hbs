@@ -1,7 +1,7 @@
 <div class="{{classes.main}}" tabindex="{{tabIndex}}">
 	<div
 		class="sapWCSelectLabel"
-		@click="{{_fnClickSelectBox}}">
+		@click="{{toggleList}}">
 		<ui5-label>{{_text}}</ui5-label>
 	</div>
 
@@ -20,6 +20,6 @@
 	<ui5-icon
 		src="sap-icon://slim-arrow-down"
 		class="sapWCSelectDropDownIcon"
-		@ui5-press="{{_fnClickSelectBox}}"
+		@ui5-press="{{toggleList}}"
 	></ui5-icon>
 </div>
