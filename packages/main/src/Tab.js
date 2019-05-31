@@ -1,19 +1,18 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import URI from "@ui5/webcomponents-base/src/types/URI";
-import Integer from "@ui5/webcomponents-base/src/types/Integer";
-import TabBase from "./TabBase";
-import TabTemplateContext from "./TabTemplateContext";
-import TabDesignMode from "./types/TabDesignMode";
-import IconColor from "./types/IconColor";
-import Icon from "./Icon";
-import TabRenderer from "./build/compiled/TabRenderer.lit";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import URI from "@ui5/webcomponents-base/src/types/URI.js";
+import TabBase from "./TabBase.js";
+import IconColor from "./types/IconColor.js";
+import Icon from "./Icon.js";
+import TabRenderer from "./build/compiled/TabRenderer.lit.js";
+
+// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
+import "./ThemePropertiesProvider.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-tab",
-	styleUrl: [],
 	defaultSlot: "content",
 	slots: /** @lends sap.ui.webcomponents.main.Tab.prototype */ {
 
@@ -32,17 +31,18 @@ const metadata = {
 
 		/**
 		 * The text to be displayed for the item.
-		 * @type {String}
+		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		text: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
 		 * Enabled items can be selected.
 		 * @type {Boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		disabled: {
@@ -50,13 +50,13 @@ const metadata = {
 		},
 
 		/**
-		 * Represents the "count" text, which is displayed in the tab filter.
-		 * @type {String}
+		 * Represents the "additionalText" text, which is displayed in the tab filter.
+		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
-		count: {
+		additionalText: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
@@ -78,6 +78,7 @@ const metadata = {
 		 * Instead of the semantic icon color the brand color can be used, this is named Default.
 		 * Semantic colors and brand colors should not be mixed up inside one IconTabBar.
 		 * @type {IconColor}
+		 * @defaultvalue "Default"
 		 * @public
 		 */
 		iconColor: {
@@ -86,26 +87,24 @@ const metadata = {
 		},
 
 		/**
-		 * Specifies whether the icon and the texts are placed vertically or horizontally.
-		 * @type {TabDesignMode}
+		 * Specifies if the <code>ui5-tab</code> is selected.
+		 *
+		 * @type {Boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
-		design: {
-			type: TabDesignMode,
-			defaultValue: TabDesignMode.Vertical,
+		selected: {
+			type: Boolean,
 		},
 
-		_showAll: { type: Boolean },
-		_isSelected: { type: Boolean, defaultValue: false },
-		_isInline: { type: Boolean },
-		_isNoIcon: { type: Boolean },
-		_isNoText: { type: Boolean },
-		_tabIndex: { type: String, defaultValue: "-1" },
-		_posinset: { type: Integer },
-		_setsize: { type: Integer },
-		_contentId: { type: String, defaultValue: " " },
-		_labelledbyControls: { type: String, defaultValue: " " },
-		_isIconColorRead: { type: Boolean },
+		_tabIndex: {
+			type: String,
+			defaultValue: "-1",
+		},
+
+		_getTabContainerHeaderItemCallback: {
+			type: Function,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Tab.prototype */ {
 
@@ -134,14 +133,20 @@ class Tab extends TabBase {
 		return TabRenderer;
 	}
 
-	static get calculateTemplateContext() {
-		return TabTemplateContext.calculate;
-	}
-
 	static async define(...params) {
 		await Icon.define();
 
 		super.define(...params);
+	}
+
+	getFocusDomRef() {
+		let focusedDomRef = super.getFocusDomRef();
+
+		if (this._getTabContainerHeaderItemCallback) {
+			focusedDomRef = this._getTabContainerHeaderItemCallback();
+		}
+
+		return focusedDomRef;
 	}
 }
 

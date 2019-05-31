@@ -1,28 +1,22 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import URI from "@ui5/webcomponents-base/src/types/URI";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents";
-import IconTemplateContext from "./IconTemplateContext";
-import IconRenderer from "./build/compiled/IconRenderer.lit";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import URI from "@ui5/webcomponents-base/src/types/URI.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import { getIconInfo } from "@ui5/webcomponents-base/src/IconPool.js";
+import { getRTL } from "@ui5/webcomponents-base/src/Configuration.js";
+import IconRenderer from "./build/compiled/IconRenderer.lit.js";
 
 // Styles
-import belize from "./themes/sap_belize/Icon.less";
-import belizeHcb from "./themes/sap_belize_hcb/Icon.less";
-import fiori3 from "./themes/sap_fiori_3/Icon.less";
+import iconCss from "./themes/Icon.css.js";
 
-ShadowDOM.registerStyle("sap_belize", "Icon.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "Icon.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "Icon.css", fiori3);
+// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
+import "./ThemePropertiesProvider.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-icon",
-	styleUrl: [
-		"Icon.css",
-	],
 	properties: /** @lends sap.ui.webcomponents.main.Icon.prototype */ {
 
 		/**
@@ -35,7 +29,7 @@ const metadata = {
 		 * <br>
 		 * <code>src='sap-icons://add'</code>, <code>src='sap-icons://delete'</code>, <code>src='sap-icons://employee'</code>.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @public
 		*/
 		src: { type: URI, defaultValue: null },
@@ -69,11 +63,11 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Icon
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-icon
  * @public
  */
-class Icon extends WebComponent {
+class Icon extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
@@ -82,8 +76,8 @@ class Icon extends WebComponent {
 		return IconRenderer;
 	}
 
-	static get calculateTemplateContext() {
-		return IconTemplateContext.calculate;
+	static get styles() {
+		return iconCss;
 	}
 
 	focus() {
@@ -108,6 +102,42 @@ class Icon extends WebComponent {
 			this.fireEvent("press");
 			this.__spaceDown = false;
 		}
+	}
+
+	get classes() {
+		const iconInfo = getIconInfo(this.src) || {};
+		return {
+			main: {
+				sapWCIcon: true,
+				sapWCIconMirrorInRTL: !iconInfo.suppressMirroring,
+			},
+		};
+	}
+
+	get ariaLabelledBy() {
+		return this._customAttributes["aria-labelledby"] || "";
+	}
+
+	get ariaExpanded() {
+		return this._customAttributes["aria-expanded"] || "";
+	}
+
+	get role() {
+		return this._customAttributes.role || "presentation";
+	}
+
+	get iconContent() {
+		const iconInfo = getIconInfo(this.src) || {};
+		return iconInfo.content;
+	}
+
+	get dir() {
+		return getRTL() ? "rtl" : "ltr";
+	}
+
+	get fontStyle() {
+		const iconInfo = getIconInfo(this.src) || {};
+		return `font-family: '${iconInfo.fontFamily}'`;
 	}
 }
 

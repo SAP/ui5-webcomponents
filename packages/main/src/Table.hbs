@@ -1,20 +1,20 @@
-<div {{> controlData}}
+<div
 	style="display: grid; place-items: center;">
 
 	<!-- columns -->
 	<div class="{{classes.main}}" style="{{styles.main}}">
 		{{#each visibleColumns}}
 			<div class="sapWCTableColumnWrapper">
-				<slot name="{{this._slot}}"></slot>
+				<slot name="{{this._individualSlot}}"></slot>
 			</div>
 		{{/each}}
 	</div>
 
 	<!-- rows -->
-	{{#each ctr.rows}}
+	{{#each rows}}
 		<div style="width: 100%"
 		>
-			<slot name="{{this._slot}}"></slot>
+			<slot name="{{this._individualSlot}}"></slot>
 		</div>
 	{{/each}}
 </div>

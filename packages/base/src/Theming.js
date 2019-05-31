@@ -1,8 +1,7 @@
-import { getTheme, _setTheme } from "./Configuration";
-import { getStyles } from "./theming/ThemeBundle";
-import { getCustomCSS } from "./theming/CustomStyle";
-import { getThemeProperties } from "./theming/ThemeProperties";
-import { injectThemeProperties, updateWebComponentStyles } from "./theming/StyleInjection";
+import { getTheme, _setTheme } from "./Configuration.js";
+import { addCustomCSS, getCustomCSS } from "./theming/CustomStyle.js";
+import { getThemeProperties } from "./theming/ThemeProperties.js";
+import { injectThemeProperties } from "./theming/StyleInjection.js";
 
 const themeChangeCallbacks = [];
 
@@ -25,7 +24,6 @@ const applyTheme = async () => {
 		cssText = await getThemeProperties("@ui5/webcomponents", theme);
 	}
 	injectThemeProperties(cssText);
-	updateWebComponentStyles();
 };
 
 const setTheme = async theme => {
@@ -42,20 +40,15 @@ const setTheme = async theme => {
 	themeChangeCallbacks.forEach(callback => callback(theme));
 };
 
-const getEffectiveStyle = async (theme, styleUrls, tag) => {
-	const styles = await getStyles(theme, styleUrls);
-	const cssContent = [];
-	styles.forEach(css => {
-		cssContent.push(css);
-	});
+const getEffectiveStyle = ElementClass => {
+	const tag = ElementClass.getMetadata().getTag();
+	const customStyle = getCustomCSS(tag) || "";
+	let componentStyles = ElementClass.styles;
 
-	const customStyle = getCustomCSS(theme, tag);
-	if (customStyle) {
-		cssContent.push(customStyle);
+	if (Array.isArray(componentStyles)) {
+		componentStyles = componentStyles.join(" ");
 	}
-
-	const cssText = cssContent.join(" ");
-	return cssText;
+	return `${componentStyles} ${customStyle}`;
 };
 
 export {
@@ -64,4 +57,5 @@ export {
 	applyTheme,
 	setTheme,
 	getEffectiveStyle,
+	addCustomCSS,
 };

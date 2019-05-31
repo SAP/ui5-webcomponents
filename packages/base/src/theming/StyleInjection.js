@@ -1,6 +1,26 @@
-import createStyleInHead from "../util/createStyleInHead";
+import createStyleInHead from "../util/createStyleInHead.js";
 
 const injectedForTags = [];
+let ponyfillTimer;
+
+const ponyfillNeeded = () => !!window.CSSVarsPonyfill;
+
+const runPonyfill = () => {
+	ponyfillTimer = undefined;
+
+	window.CSSVarsPonyfill.resetCssVars();
+	window.CSSVarsPonyfill.cssVars({
+		rootElement: document.head,
+		include: "style[data-ui5-webcomponents-theme-properties],style[data-ui5-webcomponent-styles]",
+		silent: true,
+	});
+};
+
+const schedulePonyfill = () => {
+	if (!ponyfillTimer) {
+		ponyfillTimer = window.setTimeout(runPonyfill, 0);
+	}
+};
 
 /**
  * Creates/updates a style element holding all CSS Custom Properties
@@ -8,16 +28,16 @@ const injectedForTags = [];
  */
 const injectThemeProperties = cssText => {
 	// Needed for all browsers
-	let styleElement = document.head.querySelector(`style[ui5-webcomponents-theme-properties]`);
+	const styleElement = document.head.querySelector(`style[data-ui5-webcomponents-theme-properties]`);
 	if (styleElement) {
 		styleElement.textContent = cssText || "";	// in case of undefined
 	} else {
-		styleElement = createStyleInHead(cssText, { "ui5-webcomponents-theme-properties": "" });
+		createStyleInHead(cssText, { "data-ui5-webcomponents-theme-properties": "" });
 	}
 
-	// IE only
-	if (window.CSSVarsSimulation) {
-		window.CSSVarsSimulation.findCSSVars(cssText);
+	// When changing the theme, run the ponyfill immediately
+	if (ponyfillNeeded()) {
+		runPonyfill();
 	}
 };
 
@@ -27,46 +47,23 @@ const injectThemeProperties = cssText => {
  * @param cssText
  */
 const injectWebComponentStyle = (tagName, cssText) => {
-	if (!window.ShadyDOM) {
-		return;
-	}
-
 	// Edge and IE
 	if (injectedForTags.indexOf(tagName) !== -1) {
 		return;
 	}
 	createStyleInHead(cssText, {
-		"data-sap-source": tagName,
+		"data-ui5-webcomponent-styles": tagName,
 		"disabled": "disabled",
 	});
 	injectedForTags.push(tagName);
 
-	// IE only
-	if (window.CSSVarsSimulation) {
-		const resolvedVarsCSS = window.CSSVarsSimulation.applyCSSVars(cssText);
-		createStyleInHead(resolvedVarsCSS, { "data-sap-source-replaced-vars": tagName });
+	// When injecting component styles, more might come in the same tick, so run the ponyfill async (to avoid double work)
+	if (ponyfillNeeded()) {
+		schedulePonyfill();
 	}
-};
-
-/**
- * Updates the style elements holding the CSS for all web components by resolving the CSS Custom properties
- */
-const updateWebComponentStyles = () => {
-	if (!window.CSSVarsSimulation) {
-		return;
-	}
-
-	// IE only
-	injectedForTags.forEach(tagName => {
-		const originalStyleElement = document.head.querySelector(`style[data-sap-source="${tagName}"]`);
-		const replacedVarsStyleElement = document.head.querySelector(`style[data-sap-source-replaced-vars="${tagName}"]`);
-		const resolvedVarsCSS = window.CSSVarsSimulation.applyCSSVars(originalStyleElement.textContent);
-		replacedVarsStyleElement.textContent = resolvedVarsCSS;
-	});
 };
 
 export {
 	injectThemeProperties,
 	injectWebComponentStyle,
-	updateWebComponentStyles,
 };

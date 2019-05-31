@@ -1,26 +1,19 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
-import TableCell from "./TableCell";
-import TableRowRenderer from "./build/compiled/TableRowRenderer.lit";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import TableCell from "./TableCell.js";
+import TableRowRenderer from "./build/compiled/TableRowRenderer.lit.js";
 
 // Styles
-import belize from "./themes/sap_belize/TableRow.less";
-import belizeHcb from "./themes/sap_belize_hcb/TableRow.less";
-import fiori3 from "./themes/sap_fiori_3/TableRow.less";
+import styles from "./themes/TableRow.css.js";
 
-ShadowDOM.registerStyle("sap_belize", "TableRow.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "TableRow.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "TableRow.css", fiori3);
+// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
+import "./ThemePropertiesProvider.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-table-row",
-	styleUrl: [
-		"TableRow.css",
-	],
 	defaultSlot: "cells",
 	slots: /** @lends sap.ui.webcomponents.main.TableRow.prototype */ {
 		/**
@@ -34,6 +27,7 @@ const metadata = {
 		cells: {
 			type: TableCell,
 			multiple: true,
+			individualSlots: true,
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.TableRow.prototype */ {
@@ -62,82 +56,79 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.TableRow
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-table-row
  * @public
  */
-class TableRow extends WebComponent {
+class TableRow extends UI5Element {
 	static get metadata() {
 		return metadata;
+	}
+
+	static get styles() {
+		return styles;
 	}
 
 	static get renderer() {
 		return TableRowRenderer;
 	}
 
-	static get calculateTemplateContext() {
-		return state => {
-			const context = {
-				ctr: state,
-				visibleCells: [],
-				popinCells: [],
-				columnInfo: state._columnsInfo,
-				classes: {
-					main: {
-						sapWCTableRow: true,
-						sapWCTableRowWithBorder: true,
-					},
-					popin: {
-						sapWCTablePopinRow: true,
-					},
-					popinTitle: {
-						sapWCTablePopinTitle: true,
-					},
-					cellWrapper: {
-						sapMWCTableRowCellContainer: true,
-					},
-				},
-				styles: {
-					main: {
-						"grid-template-columns": "",
-					},
-					popin: {
-						"grid-column-end": 6,
-					},
-				},
-			};
+	onBeforeRendering() {
+		this.visibleCells = [];
+		this.popinCells = [];
 
-			this.calculateCellsStyles(context);
-
-			context.visibleColumnLength = context.visibleCells.length + 1;
-
-
-			return context;
-		};
-	}
-
-	static calculateCellsStyles(context) {
-		context.columnInfo.forEach((info, index) => {
+		this._columnsInfo.forEach((info, index) => {
 			if (info.visible) {
-				// width of cells
-				context.styles.main["grid-template-columns"] += `minmax(0, ${info.width || "1fr"}) `;
-
-				context.visibleCells.push(context.ctr.cells[index]);
-
-				context.ctr.cells[index]._firstInRow = (index === 0);
+				this.visibleCells.push(this.cells[index]);
+				this.cells[index]._firstInRow = (index === 0);
 			} else if (info.demandPopin) {
-				context.popinCells.push({
-					cell: context.ctr.cells[index],
+				this.popinCells.push({
+					cell: this.cells[index],
 					popinText: info.popinText,
 				});
 			}
 		}, this);
 
-		const lastVisibleCell = context.visibleCells[context.visibleCells.length - 1];
+		this.visibleColumnLength = this.visibleCells.length + 1;
+
+		const lastVisibleCell = this.visibleCells[this.visibleCells.length - 1];
 
 		if (lastVisibleCell) {
 			lastVisibleCell._lastInRow = true;
 		}
+	}
+
+	get classes() {
+		return {
+			main: {
+				sapWCTableRow: true,
+				sapWCTableRowWithBorder: true,
+			},
+			popin: {
+				sapWCTablePopinRow: true,
+			},
+			popinTitle: {
+				sapWCTablePopinTitle: true,
+			},
+			cellWrapper: {
+				sapMWCTableRowCellContainer: true,
+			},
+		};
+	}
+
+	get styles() {
+		const gridTemplateColumns = this._columnsInfo.reduce((acc, info) => {
+			return info.visible ? `${acc}minmax(0, ${info.width || "1fr"}) ` : acc;
+		}, "");
+
+		return {
+			main: {
+				"grid-template-columns": gridTemplateColumns,
+			},
+			popin: {
+				"grid-column-end": 6,
+			},
+		};
 	}
 
 	onfocusin(event) {

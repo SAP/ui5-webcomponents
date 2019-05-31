@@ -1,0 +1,190 @@
+:host(ui5-timeline-item:not([hidden])) {
+	display: block;
+}
+
+ui5-timeline-item:not([hidden]) {
+	display: block;
+}
+
+.sapWCTimelineItem {
+	display: flex;
+}
+
+.sapWCTimelineIndicator {
+	position: relative;
+	width: 2rem;
+}
+
+.sapWCTimelineIndicator::before {
+	content: "";
+	display: inline-block;
+	background-color: var(--sapUiContentForegroundBorderColor);
+	width: 1px;
+	position: absolute;
+	top: 2.125rem;
+	bottom: -1.625rem;
+	left: 50%;
+}
+
+/* Line when no Icon is provided */
+.sapWCTimelineIndicatorNoIcon::before {
+	bottom: -2.125rem;
+	top: 1.875rem;
+}
+
+/* No Icon Dot */
+.sapWCTimelineIndicatorNoIcon::after {
+	content: "";
+	display: inline-block;
+	box-sizing: border-box;
+	border: 1px solid var(--sapContent_NonInteractiveIconColor);
+	background-color: var(--sapContent_NonInteractiveIconColor);
+	border-radius: 50%;
+	width: .4375rem;
+	height: .4375rem;
+	position: absolute;
+	top: 0.9375rem;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+:host(ui5-timeline-item:last-child) .sapWCTimelineIndicator::before {
+	display: none;
+}
+
+ui5-timeline-item:last-child .sapWCTimelineIndicator::before {
+    display: none;
+}
+
+.sapWCTimelineItemIcon {
+	color: var(--sapContent_NonInteractiveIconColor);
+	font-size: 1.375rem;
+	margin-top: .25rem;
+	width: 100%;
+}
+
+.sapWCTimelineBubble {
+	background: var(--sapUiGroupContentBackground);
+	border: 1px solid var(--sapUiListBorderColor);
+	box-sizing: border-box;
+	border-radius: 0.25rem;
+	flex: 1;
+	position: relative;
+	margin-left: .5rem;
+	padding: 1rem;
+}
+
+.sapWCTimelineBubble:focus {
+	outline: none;
+}
+
+.sapWCTimelineBubble:focus::after {
+	content: "";
+	border: var(--_ui5_TimelineItem_bubble_outline_width) dotted var(--sapUiContentFocusColor);
+	position: absolute;
+	top: var(--_ui5_TimelineItem_bubble_outline_top);
+	right: var(--_ui5_TimelineItem_bubble_outline_right);
+	bottom: var(--_ui5_TimelineItem_bubble_outline_bottom);
+	left: var(--_ui5_TimelineItem_bubble_outline_left);
+	pointer-events: none;
+}
+
+.sapWCTimelineBubbleArrow {
+	width: var(--_ui5_TimelineItem_arrow_size);
+	padding-bottom: var(--_ui5_TimelineItem_arrow_size);
+	position: absolute;
+	pointer-events: none;
+	top: 0;
+	left: 0;
+	overflow: hidden;
+}
+
+.sapWCTimelineBubbleArrow::before {
+	content: "";
+	background: var(--sapUiGroupContentBackground);
+	border: 1px solid var(--sapUiListBorderColor);
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	transform-origin: 0 100%;
+	transform: rotate(45deg);
+}
+
+.sapWCTimelineBubbleArrowLeft {
+	left: calc(-1 * var(--_ui5_TimelineItem_arrow_size));
+}
+
+.sapWCTimelineBubbleArrowLeft::before {
+	left: 50%;
+	width: 50%;
+	transform-origin: 100% 100%;
+}
+
+.sapWCTimelineBubbleArrowRight {
+	right: calc(-1 * var(--_ui5_TimelineItem_arrow_size));
+	left: auto;
+}
+
+.sapWCTimelineBubbleArrowRight::before {
+	width: 50%;
+	transform-origin: 0 0;
+}
+
+.sapWCTimelineItemTitle,
+.sapWCTimelineItemDesc {
+	color: var(--sapUiListTextColor);
+	font-family: var(--sapUiFontFamily);
+	font-weight: 400;
+	font-size: var(--sapMFontMediumSize);
+}
+
+.sapWCTimelineItemTitle span {
+	display: inline-block;
+	vertical-align: top;
+}
+
+.sapWCTimelineItemSubtitle {
+	color: var(--sapUiContentLabelColor);
+	font-family: var(--sapUiFontFamily);
+	font-weight: 400;
+	font-size: var(--sapMFontSmallSize);
+	padding-top: .375rem;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.sapWCTimelineItemDesc {
+	padding-top: .75rem;
+}
+
+.sapUiSizeCompact .sapWCTimelineBubble {
+	padding: .5rem;
+}
+
+.sapUiSizeCompact .sapWCTimelineIndicator::before {
+	bottom: -.5rem;
+}
+
+[dir=rtl] .sapWCTimelineBubbleArrowLeft {
+	right: calc(-1 * var(--_ui5_TimelineItem_arrow_size));
+	left: auto;
+	transform: scale(-1, 1);
+}
+
+[dir=rtl] .sapWCTimelineBubbleArrowRight {
+	right: calc(-1 * var(--_ui5_TimelineItem_arrow_size));
+	left: auto;
+}
+
+[dir=rtl] .sapWCTimelineBubble {
+	margin-left: auto;
+	margin-right: .5rem;
+}
+
+[dir=rtl] .sapWCTimelineBubble:focus::after {
+	left: var(--_ui5_TimelineItem_bubble_rtl_left_offset);
+	right: var(--_ui5_TimelineItem_bubble_rtl_right_offset);
+}

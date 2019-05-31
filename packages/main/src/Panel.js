@@ -1,33 +1,25 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import { getIconURI } from "@ui5/webcomponents-base/src/IconPool";
-import slideDown from "@ui5/webcomponents-base/src/animations/slideDown";
-import slideUp from "@ui5/webcomponents-base/src/animations/slideUp";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents";
-import PanelTemplateContext from "./PanelTemplateContext";
-import BackgroundDesign from "./types/BackgroundDesign";
-import PanelAccessibleRole from "./types/PanelAccessibleRole";
-import PanelRenderer from "./build/compiled/PanelRenderer.lit";
-import { fetchResourceBundle, getResourceBundle } from "./ResourceBundleProvider";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import { getIconURI } from "@ui5/webcomponents-base/src/IconPool.js";
+import slideDown from "@ui5/webcomponents-base/src/animations/slideDown.js";
+import slideUp from "@ui5/webcomponents-base/src/animations/slideUp.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import Icon from "./Icon.js";
+import PanelAccessibleRole from "./types/PanelAccessibleRole.js";
+import PanelRenderer from "./build/compiled/PanelRenderer.lit.js";
+import { fetchResourceBundle, getResourceBundle } from "./ResourceBundleProvider.js";
 
 // Styles
-import belize from "./themes/sap_belize/Panel.less";
-import belizeHcb from "./themes/sap_belize_hcb/Panel.less";
-import fiori3 from "./themes/sap_fiori_3/Panel.less";
+import panelCss from "./themes/Panel.css.js";
 
-ShadowDOM.registerStyle("sap_belize", "Panel.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "Panel.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "Panel.css", fiori3);
+// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
+import "./ThemePropertiesProvider.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-panel",
-	styleUrl: [
-		"Panel.css",
-	],
 	defaultSlot: "content",
 	slots: /** @lends sap.ui.webcomponents.main.Panel.prototype */ {
 
@@ -53,7 +45,7 @@ const metadata = {
 		 * @public
 		 */
 		content: {
-			type: HTMLElement,
+			type: Node,
 			multiple: true,
 		},
 	},
@@ -66,11 +58,11 @@ const metadata = {
 		 * <b>Note:</b> This property is overridden by the <code>header</code> slot.
 		 *
 		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		headerText: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
@@ -78,6 +70,7 @@ const metadata = {
 		 * expandable/collapsible by user interaction.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		fixed: {
@@ -88,22 +81,11 @@ const metadata = {
 		 * Indicates whether the <code>ui5-panel</code> is collapsed and only the header is displayed.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		collapsed: {
 			type: Boolean,
-		},
-
-		/**
-		 * Determines the background color of the <code>ui5-panel</code>.
-		 * Available options are <code>Solid</code> and <code>Transparent</code>.
-		 *
-		 * @type {BackgroundDesign}
-		 * @public
-		 */
-		backgroundDesign: {
-			type: BackgroundDesign,
-			defaultValue: BackgroundDesign.Solid,
 		},
 
 		/**
@@ -191,11 +173,11 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Panel
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-panel
  * @public
  */
-class Panel extends WebComponent {
+class Panel extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
@@ -204,8 +186,8 @@ class Panel extends WebComponent {
 		return PanelRenderer;
 	}
 
-	static get calculateTemplateContext() {
-		return PanelTemplateContext.calculate;
+	static get styles() {
+		return panelCss;
 	}
 
 	constructor() {
@@ -290,8 +272,67 @@ class Panel extends WebComponent {
 		return target.classList.contains("sapMPanelWrappingDiv");
 	}
 
+	get expanded() {
+		return !this.collapsed;
+	}
+
+	get ariaLabelledBy() {
+		return this.header ? "" : `${this._id}-header`;
+	}
+
+	get accRole() {
+		return this.accessibleRole.toLowerCase();
+	}
+
+	get headerTabIndex() {
+		return !this.header ? "0" : "";
+	}
+
+	get iconTabIndex() {
+		return this.header ? "0" : "";
+	}
+
+	get shouldRenderH1() {
+		return !this.header && (this.headerText || !this.fixed);
+	}
+
+	get classes() {
+		return {
+			main: {
+				sapMPanel: true,
+			},
+			header: {
+				sapMPanelWrappingDivTb: this.header,
+				sapMPanelWrappingDivTbExpanded: this.header && this.collapsed,
+				sapMPanelWrappingDiv: !this.header,
+				sapMPanelWrappingDivClickable: !this.header,
+				sapMPanelWrappingDivExpanded: !this.header && !this.collapsed,
+			},
+			icon: {
+				sapMPanelIconExpanded: !this.collapsed,
+				sapMPanelIcon: true,
+			},
+			content: {
+				sapMPanelContent: true,
+				sapMPanelExpandablePart: !this.fixed,
+				[`sapMPanelBG${this.backgroundDesign}`]: true,
+			},
+		};
+	}
+
+	get styles() {
+		return {
+			content: {
+				display: this._contentExpanded ? "block" : "none",
+			},
+		};
+	}
+
 	static async define(...params) {
-		await fetchResourceBundle("@ui5/webcomponents");
+		await Promise.all([
+			fetchResourceBundle("@ui5/webcomponents"),
+			Icon.define(),
+		]);
 
 		super.define(...params);
 	}

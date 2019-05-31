@@ -1,31 +1,37 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
-import ListItemBase from "./ListItemBase";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import ListItemBase from "./ListItemBase.js";
+
 // Template
-import GroupHeaderListItemRenderer from "./build/compiled/GroupHeaderListItemRenderer.lit";
-import GroupHeaderListItemTemplateContext from "./GroupHeaderListItemTemplateContext";
+import GroupHeaderListItemRenderer from "./build/compiled/GroupHeaderListItemRenderer.lit.js";
 
 // Styles
-import belize from "./themes/sap_belize/GroupHeaderListItem.less";
-import belizeHcb from "./themes/sap_belize_hcb/GroupHeaderListItem.less";
-import fiori3 from "./themes/sap_fiori_3/GroupHeaderListItem.less";
+import groupheaderListItemCss from "./themes/GroupHeaderListItem.css.js";
 
-ShadowDOM.registerStyle("sap_belize", "GroupHeaderListItem.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "GroupHeaderListItem.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "GroupHeaderListItem.css", fiori3);
+// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
+import "./ThemePropertiesProvider.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-li-groupheader",
-	styleUrl: [
-		"ListItemBase.css",
-		"GroupHeaderListItem.css",
-	],
-	usesNodeText: true,
 	properties: /** @lends  sap.ui.webcomponents.main.GroupHeaderListItem.prototype */ {
 	},
+	slots: /** @lends sap.ui.webcomponents.main.GroupHeaderListItem.prototype */ {
+		/**
+		 * Defines the text of the <code>ui5-li-groupheader</code>.
+		 * <br><b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+		 *
+		 * @type {Node[]}
+		 * @slot
+		 * @public
+		 */
+		text: {
+			type: Node,
+			multiple: true,
+		},
+	},
+	defaultSlot: "text",
 	events: /** @lends  sap.ui.webcomponents.main.GroupHeaderListItem.prototype */ {
 	},
 };
@@ -39,7 +45,6 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.GroupHeaderListItem
  * @extends ListItemBase
  * @tagname ui5-li-groupheader
- * @usestextcontent
  * @public
  */
 class GroupHeaderListItem extends ListItemBase {
@@ -51,8 +56,23 @@ class GroupHeaderListItem extends ListItemBase {
 		return metadata;
 	}
 
-	static get calculateTemplateContext() {
-		return GroupHeaderListItemTemplateContext.calculate;
+	static get styles() {
+		return [ListItemBase.styles, groupheaderListItemCss];
+	}
+
+	get classes() {
+		const result = super.classes;
+
+		// Modify main classes
+		result.main.sapMGHLI = true;
+		result.main.sapMLIBTypeInactive = true;
+
+		// Define span classes
+		result.span = {
+			sapMGHLITitle: true,
+		};
+
+		return result;
 	}
 }
 

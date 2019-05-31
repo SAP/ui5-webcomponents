@@ -1,5 +1,6 @@
-import Locale from "./Locale";
-import { getLanguage as getConfigLanguage } from "./Configuration";
+import Locale from "./Locale.js";
+import detectNavigatorLanguage from "./util/detectNavigatorLanguage.js";
+import { getLanguage as getConfigLanguage } from "./Configuration.js";
 
 const convertToLocaleOrNull = lang => {
 	try {
@@ -12,21 +13,6 @@ const convertToLocaleOrNull = lang => {
 };
 
 /**
- * Detects the language based on locale of the browser
- */
-const detectLanguage = () => {
-	const browserLanguages = navigator.languages;
-
-	const navigatorLanguage = () => {
-		return navigator.language;
-	};
-
-	const rawLocale = (browserLanguages && browserLanguages[0]) || navigatorLanguage() || navigator.userLanguage || navigator.browserLanguage;
-
-	return rawLocale || "en";
-};
-
-/**
  * Returns the locale based on the configured language Configuration#getLanguage
  * If no language has been configured - a new locale based on browser language is returned
  */
@@ -35,7 +21,7 @@ const getLocale = () => {
 		return new Locale(getConfigLanguage());
 	}
 
-	return convertToLocaleOrNull(detectLanguage());
+	return convertToLocaleOrNull(detectNavigatorLanguage());
 };
 
 /**

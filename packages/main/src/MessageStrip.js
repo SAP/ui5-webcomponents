@@ -1,30 +1,21 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import URI from "@ui5/webcomponents-base/src/types/URI";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
-import MessageStripTemplateContext from "./MessageStripTemplateContext";
-import MessageStripType from "./types/MessageStripType";
-import MessageStripRenderer from "./build/compiled/MessageStripRenderer.lit";
-import Icon from "./Icon";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import URI from "@ui5/webcomponents-base/src/types/URI.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import MessageStripType from "./types/MessageStripType.js";
+import MessageStripRenderer from "./build/compiled/MessageStripRenderer.lit.js";
+import Icon from "./Icon.js";
 
 // Styles
-import belize from "./themes/sap_belize/MessageStrip.less";
-import belizeHcb from "./themes/sap_belize_hcb/MessageStrip.less";
-import fiori3 from "./themes/sap_fiori_3/MessageStrip.less";
+import messageStripCss from "./themes/MessageStrip.css.js";
 
-ShadowDOM.registerStyle("sap_belize", "MessageStrip.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "MessageStrip.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "MessageStrip.css", fiori3);
+// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
+import "./ThemePropertiesProvider.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-messagestrip",
-	styleUrl: [
-		"MessageStrip.css",
-	],
-	usesNodeText: true,
 	properties: /** @lends sap.ui.webcomponents.main.MessageStrip.prototype */ {
 
 		/**
@@ -37,7 +28,10 @@ const metadata = {
 		 * @defaultvalue "Information"
 		 * @public
 		 */
-		type: { type: MessageStripType, defaultValue: MessageStripType.Information },
+		type: {
+			type: MessageStripType,
+			defaultValue: MessageStripType.Information,
+		},
 
 		/**
 		 * Defines the icon to be displayed as graphical element within the <code>ui5-messagestrip</code>.
@@ -54,7 +48,10 @@ const metadata = {
 		 * @defaultvalue ""
 		 * @public
 		 */
-		icon: { type: URI, defaultValue: null },
+		icon: {
+			type: URI,
+			defaultValue: null,
+		},
 
 		/**
 		 * Defines whether the MessageStrip renders icon in the beginning.
@@ -63,7 +60,9 @@ const metadata = {
 		 * @defaultvalue false
 		 * @public
 		 */
-		hideIcon: { type: Boolean, defaultValue: false },
+		hideIcon: {
+			type: Boolean,
+		},
 
 		/**
 		 * Defines whether the MessageStrip renders close icon.
@@ -72,10 +71,29 @@ const metadata = {
 		 * @defaultvalue false
 		 * @public
 		 */
-		hideCloseButton: { type: Boolean, defaultValue: false },
+		hideCloseButton: {
+			type: Boolean,
+		},
 
-		_closeButton: { type: Object },
+		_closeButton: {
+			type: Object,
+		},
 	},
+	slots: /** @lends sap.ui.webcomponents.main.MessageStrip.prototype */ {
+		/**
+		 * Defines the text of the <code>ui5-messagestrip</code>.
+		 * <br><b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+		 *
+		 * @type {Node[]}
+		 * @slot
+		 * @public
+		 */
+		text: {
+			type: Node,
+			multiple: true,
+		},
+	},
+	defaultSlot: "text",
 	events: /** @lends sap.ui.webcomponents.main.MessageStrip.prototype */ {
 
 		/**
@@ -111,13 +129,12 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.MessageStrip
- * @extends WebComponent
+ * @extends UI5Element
  * @tagname ui5-messagestrip
- * @usestextcontent
  * @public
  * @since 0.9.0
  */
-class MessageStrip extends WebComponent {
+class MessageStrip extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
@@ -126,8 +143,8 @@ class MessageStrip extends WebComponent {
 		return MessageStripRenderer;
 	}
 
-	static get calculateTemplateContext() {
-		return MessageStripTemplateContext.calculate;
+	static get styles() {
+		return messageStripCss;
 	}
 
 	constructor() {
@@ -148,6 +165,50 @@ class MessageStrip extends WebComponent {
 		]);
 
 		super.define(...params);
+	}
+
+	static typeClassesMappings() {
+		return {
+			"Information": "ui5-messagestrip--info",
+			"Positive": "ui5-messagestrip--positive",
+			"Negative": "ui5-messagestrip--negative",
+			"Warning": "ui5-messagestrip--warning",
+		};
+	}
+
+	static iconMappings() {
+		return {
+			"Information": "sap-icon://message-information",
+			"Positive": "sap-icon://message-success",
+			"Negative": "sap-icon://message-error",
+			"Warning": "sap-icon://message-warning",
+		};
+	}
+
+	get classes() {
+		return {
+			label: {
+				"ui5-messagestrip-text": true,
+				"ui5-messagestripNoCloseButton": this.hideCloseButton,
+			},
+			closeIcon: {
+				"ui5-messagestrip-close-icon": true,
+			},
+			main: {
+				"ui5-messagestrip-root": true,
+				"ui5-messagestrip-icon--hidden": this.hideIcon,
+				"ui5-messagestrip-close-icon--hidden": this.hideCloseButton,
+				[this.typeClasses]: true,
+			},
+		};
+	}
+
+	get messageStripIcon() {
+		return this.icon || MessageStrip.iconMappings()[this.type];
+	}
+
+	get typeClasses() {
+		return MessageStrip.typeClassesMappings()[this.type];
 	}
 }
 

@@ -1,28 +1,21 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
-import DialogTemplateContext from "./DialogTemplateContext";
-import Popup from "./Popup";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+
+import { isPhone } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
+import Popup from "./Popup.js";
 // Template
-import DialogRenderer from "./build/compiled/DialogRenderer.lit";
+import DialogRenderer from "./build/compiled/DialogRenderer.lit.js";
 
 // Styles
-import belize from "./themes/sap_belize/Dialog.less";
-import belizeHcb from "./themes/sap_belize_hcb/Dialog.less";
-import fiori3 from "./themes/sap_fiori_3/Dialog.less";
+import dialogCss from "./themes/Dialog.css.js";
 
-ShadowDOM.registerStyle("sap_belize", "Dialog.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "Dialog.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "Dialog.css", fiori3);
+// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
+import "./ThemePropertiesProvider.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-dialog",
-	styleUrl: [
-		"Popup.css",
-		"Dialog.css",
-	],
 	properties: /** @lends  sap.ui.webcomponents.main.Dialog.prototype */ {
 		/**
 		 * Determines whether the <code>ui5-dialog</code> should be stretched to fullscreen.
@@ -31,6 +24,7 @@ const metadata = {
 		 * 90% of the viewport.
 		 *
 		 * @type {Boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		stretch: {
@@ -81,6 +75,10 @@ class Dialog extends Popup {
 		return DialogRenderer;
 	}
 
+	static get styles() {
+		return [Popup.styles, dialogCss];
+	}
+
 	/**
 	* Opens the <code>ui5-dialog</code>.
 	* @public
@@ -121,8 +119,35 @@ class Dialog extends Popup {
 		this.fireEvent("afterClose", { });
 	}
 
-	static get calculateTemplateContext() {
-		return DialogTemplateContext.calculate;
+	get classes() {
+		return {
+			frame: {
+				sapMPopupFrame: true,
+				sapMPopupFrameOpen: this._isOpen,
+			},
+			dialogParent: {
+				sapMDialogParent: true,
+				sapMDialogStretched: this.stretch,
+				"ui5-phone": isPhone(),
+			},
+			main: {
+				sapMPopup: true,
+				sapMDialog: true,
+			},
+			blockLayer: {
+				sapUiBLy: true,
+				sapMPopupBlockLayer: true,
+				sapMPopupBlockLayerHidden: this._hideBlockLayer,
+			},
+		};
+	}
+
+	get zindex() {
+		return `z-index: ${this._zIndex + 1};`;
+	}
+
+	get blockLayer() {
+		return `z-index: ${this._zIndex};`;
 	}
 }
 

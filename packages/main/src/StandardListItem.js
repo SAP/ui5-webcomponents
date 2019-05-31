@@ -1,31 +1,30 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import URI from "@ui5/webcomponents-base/src/types/URI";
-import ListItem from "./ListItem";
-import Icon from "./Icon";
-import StandardListItemTemplateContext from "./StandardListItemTemplateContext";
-import StandardListItemRenderer from "./build/compiled/StandardListItemRenderer.lit";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import URI from "@ui5/webcomponents-base/src/types/URI.js";
+import ListItem from "./ListItem.js";
+import Icon from "./Icon.js";
+import StandardListItemRenderer from "./build/compiled/StandardListItemRenderer.lit.js";
+
+// Styles
+
+// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
+import "./ThemePropertiesProvider.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-li",
-	styleUrl: [
-		"ListItemBase.css",
-		"ListItem.css",
-	],
-	usesNodeText: true,
 	properties: /** @lends sap.ui.webcomponents.main.StandardListItem.prototype */ {
 
 		/**
 		 * Defines the description displayed right under the item text, if such is present.
-		 * @type {String}
+		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 * @since 0.8.0
 		 */
 		description: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
@@ -49,6 +48,7 @@ const metadata = {
 		 * <b>Note:</b> If <code>image</code> is set, the <code>icon</code> would be displayed after the <code>image</code>.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		iconEnd: {
@@ -68,6 +68,21 @@ const metadata = {
 			defaultValue: null,
 		},
 	},
+	slots: /** @lends sap.ui.webcomponents.main.StandardListItem.prototype */ {
+		/**
+		 * Defines the text of the <code>ui5-li</code>.
+		 * <br><b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+		 *
+		 * @type {Node[]}
+		 * @slot
+		 * @public
+		 */
+		text: {
+			type: Node,
+			multiple: true,
+		},
+	},
+	defaultSlot: "text",
 };
 
 /**
@@ -83,7 +98,6 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.StandardListItem
  * @extends ListItem
  * @tagname ui5-li
- * @usestextcontent
  * @public
  */
 class StandardListItem extends ListItem {
@@ -91,12 +105,35 @@ class StandardListItem extends ListItem {
 		return StandardListItemRenderer;
 	}
 
+	static get styles() {
+		return ListItem.styles;
+	}
+
 	static get metadata() {
 		return metadata;
 	}
 
-	static get calculateTemplateContext() {
-		return StandardListItemTemplateContext.calculate;
+	get displayImage() {
+		return !!this.image;
+	}
+
+	get displayIconBegin() {
+		return (this.icon && !this.iconEnd);
+	}
+
+	get displayIconEnd() {
+		return (this.icon && this.iconEnd);
+	}
+
+	get classes() {
+		const result = super.classes;
+		const hasDesc = this.description && !!this.description.length;
+		const hasTitle = this.textContent;
+
+		// Modify main classes
+		result.main.sapMSLIWithTitleAndDescription = hasDesc && hasTitle;
+
+		return result;
 	}
 
 	static async define(...params) {

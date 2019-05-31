@@ -1,12 +1,14 @@
-import { getTheme, getRTL, getCompactSize } from "../Configuration";
+import { getTheme, getCompactSize } from "../Configuration.js";
+import getEffectiveRTL from "../util/getEffectiveRTL.js";
 
-import { injectWebComponentStyle } from "../theming/StyleInjection";
-import { registerStyle } from "../theming/ThemeBundle";
+import { injectWebComponentStyle } from "../theming/StyleInjection.js";
+import { registerStyle } from "../theming/ThemeBundle.js";
 
-import setupBrowser from "../util/setupBrowser";
-import setupOS from "../util/setupOS";
-import setupSystem from "../util/setupSystem";
-import { getEffectiveStyle } from "../Theming";
+import setupBrowser from "../util/setupBrowser.js";
+import setupOS from "../util/setupOS.js";
+import setupSystem from "../util/setupSystem.js";
+import { getEffectiveStyle } from "../Theming.js";
+import { createStyle } from "../CSS.js";
 
 // shadow DOM templates per tag
 const shadowDOMTemplates = new Map();
@@ -23,18 +25,9 @@ class ShadowDOM {
 		registerStyle(theme, styleName, styleContent);
 	}
 
-	static async updateStyle(tag, shadowRoot, styleUrls) {
-		const theme = getTheme();
-		const newStyle = await getEffectiveStyle(theme, styleUrls, tag);
-
-		shadowRoot.querySelector("style").textContent = newStyle;
-	}
-
 	static async prepareShadowDOM(ElementClass) {
-		const theme = getTheme();
-		const styleUrls = ElementClass.getMetadata().getStyleUrl();
 		const tag = ElementClass.getMetadata().getTag();
-		const isRTL = getRTL();
+		const isRTL = getEffectiveRTL();
 		const isCompact = getCompactSize();
 
 		let shadowDOM,
@@ -42,7 +35,7 @@ class ShadowDOM {
 
 		if (window.ShadyDOM) {
 			// inject the styles in the <head>
-			const cssContent = await getEffectiveStyle(theme, styleUrls, tag);
+			const cssContent = getEffectiveStyle(ElementClass);
 			injectWebComponentStyle(tag, cssContent);
 
 			// Create the shadow DOM root span
@@ -50,11 +43,11 @@ class ShadowDOM {
 			rootSpan.setAttribute("data-sap-ui-wc-root", "");
 			shadowDOM = rootSpan;
 		} else {
-			let template = this._getTemplateFor(theme, tag);
+			let template = this._getTemplateFor(tag);
 
 			if (!template) {
-				const cssText = await getEffectiveStyle(theme, styleUrls, tag);
-				template = this._createTemplateFor(theme, tag, cssText);
+				const style = createStyle(ElementClass);
+				template = this._createTemplateFor(tag, style);
 			}
 			shadowDOM = template.content.cloneNode(true);
 
@@ -76,12 +69,14 @@ class ShadowDOM {
 		return shadowDOM;
 	}
 
-	static _getTemplateFor(theme, tag) {
+	static _getTemplateFor(tag) {
+		const theme = getTheme();
 		const themeMap = shadowDOMTemplates.get(theme);
 		return themeMap && themeMap.get(tag);
 	}
 
-	static _createTemplateFor(theme, tag, css) {
+	static _createTemplateFor(tag, style) {
+		const theme = getTheme();
 		let themeMap = shadowDOMTemplates.get(theme);
 		if (!themeMap) {
 			themeMap = new Map();
@@ -89,10 +84,9 @@ class ShadowDOM {
 		}
 		const template = document.createElement("template");
 
-		// Create a local <style> tag for the real shadow DOM
-		const style = document.createElement("style");
-		style.innerHTML = css;
-		template.content.appendChild(style);
+		if (style instanceof HTMLElement) {
+			template.content.appendChild(style);
+		}
 
 		// Create a root span
 		const root = document.createElement("span");

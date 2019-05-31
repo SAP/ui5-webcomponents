@@ -1,39 +1,30 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import {
 	isSpace,
 	isUp,
 	isDown,
-	isRight,
-	isLeft,
 	isEnter,
-} from "@ui5/webcomponents-base/src/events/PseudoEvents";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
-import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes";
-import ValueState from "@ui5/webcomponents-base/src/types/ValueState";
-import Suggestions from "./Suggestions";
+	isEscape,
+	isShow,
+} from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
+import Suggestions from "./Suggestions.js";
 
 // Template
-import SelectRenderer from "./build/compiled/SelectRenderer.lit";
-import SelectTemplateContext from "./SelectTemplateContext";
+import SelectRenderer from "./build/compiled/SelectRenderer.lit.js";
 
 // Styles
-import belize from "./themes/sap_belize/Select.less";
-import belizeHcb from "./themes/sap_belize_hcb/Select.less";
-import fiori3 from "./themes/sap_fiori_3/Select.less";
+import selectCss from "./themes/Select.css.js";
 
-ShadowDOM.registerStyle("sap_belize", "Select.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "Select.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "Select.css", fiori3);
+// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
+import "./ThemePropertiesProvider.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-select",
-	styleUrl: [
-		"Select.css",
-	],
 	defaultSlot: "items",
 	slots: /** @lends sap.ui.webcomponents.main.Select.prototype */ {
 
@@ -61,11 +52,11 @@ const metadata = {
 		 * <b>Note:</b> A disabled <code>ui5-select</code> is noninteractive.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		disabled: {
 			type: Boolean,
-			defaultValue: false,
 		},
 
 		/**
@@ -73,6 +64,7 @@ const metadata = {
 		 * Available options are: <code>None</code>, <code>Success</code>, <code>Warning</code> and <code>Error</code>.
 		 *
 		 * @type {string}
+		 * @defaultvalue "None"
 		 * @public
 		 */
 		valueState: {
@@ -82,17 +74,18 @@ const metadata = {
 
 		_text: {
 			type: String,
-			defaultValue: "",
 		},
 
 		_opened: {
 			type: Boolean,
-			defaultValue: false,
 		},
 
 		_focused: {
 			type: Boolean,
-			defaultValue: false,
+		},
+
+		_fnClickSelectBox: {
+			type: Function,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Select.prototype */ {
@@ -132,12 +125,12 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Select
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-input
  * @public
  * @since 0.8.0
  */
-class Select extends WebComponent {
+class Select extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
@@ -146,16 +139,22 @@ class Select extends WebComponent {
 		return SelectRenderer;
 	}
 
-	static get calculateTemplateContext() {
-		return SelectTemplateContext.calculate;
+	static get styles() {
+		return selectCss;
 	}
 
 	constructor() {
 		super();
 
+		this._closing = false; // Flag for handling open/close on space
+		this._selectedItemBeforeOpen = null; // Stores the selected item before opening the picker
+		this._escapePressed = false; // Identifies if the escape is pressed when picker is open
+
+
 		this._setSelectedItem(null);
 		this._setPreviewedItem(null);
 		this.Suggestions = new Suggestions(this, "items", true /* move focus with arrow keys */);
+		this._fnClickSelectBox = this.toggleList.bind(this);
 	}
 
 	onBeforeRendering() {
@@ -163,13 +162,12 @@ class Select extends WebComponent {
 	}
 
 	/* Event handling */
-	onclick(event) {
+	toggleList() {
 		if (this.disabled) {
 			return;
 		}
-		if (event.target === this) {
-			this.Suggestions.toggle();
-		}
+
+		this.Suggestions.toggle();
 	}
 
 	onkeydown(event) {
@@ -177,15 +175,22 @@ class Select extends WebComponent {
 			return;
 		}
 
-		if (isUp(event) || isLeft(event)) {
-			return this.Suggestions.onUp(event);
+		if (isUp(event)) {
+			this.Suggestions.onUp(event);
+			this._changeSelectionWhileClosed();
 		}
 
-		if (isDown(event) || isRight(event)) {
-			return this.Suggestions.onDown(event);
+		if (isDown(event)) {
+			this.Suggestions.onDown(event);
+			this._changeSelectionWhileClosed();
 		}
 
 		if (isSpace(event)) {
+			if (!this._isOpened()) {
+				this._closing = true;
+				return event.preventDefault();
+			}
+			this._closing = false;
 			return this.Suggestions.onSpace(event);
 		}
 
@@ -193,11 +198,24 @@ class Select extends WebComponent {
 			this.Suggestions.onEnter(event);
 		}
 
-		const key = event.which;
+		if (isEscape(event) && this._opened && this._selectedItemBeforeOpen) {
+			this.items.forEach(item => {
+				item.selected = false;
+			});
 
-		if (key === KeyCodes.F4 || (event.altKey && Select.ARROWS.includes(key))) {
+			this._select(this._selectedItemBeforeOpen, this.items.indexOf(this._selectedItemBeforeOpen));
+			this._escapePressed = true;
+		}
+
+		if (isShow(event)) {
 			event.preventDefault();
 			this.Suggestions.toggle();
+		}
+	}
+
+	onkeyup(event) {
+		if (isSpace(event)) {
+			return this.Suggestions.toggle(this._closing); // Open Suggestions
 		}
 	}
 
@@ -218,7 +236,6 @@ class Select extends WebComponent {
 		}
 
 		this._select(item);
-		this._fireChange(item);
 	}
 
 	onItemPreviewed(item) {
@@ -227,21 +244,30 @@ class Select extends WebComponent {
 	}
 
 	onOpen() {
-		this._opened = true;// invalidating property
+		this._opened = true; // invalidating property
+
+		const selectedItem = this._getSelectedItem();
+
+		if (selectedItem) {
+			this._selectedItemBeforeOpen = selectedItem;
+			selectedItem.focus();
+		}
 	}
 
 	onClose() {
-		this._opened = false;// invalidating property
+		this._opened = false; // invalidating property
 
-		if (this._isSelectionChanged()) {
-			const previewedItem = this._getPreviewedItem();
+		if ((this._getSelectedItem() !== this._selectedItemBeforeOpen) && !this._escapePressed) {
+			const previewedItem = this._getSelectedItem();
 			this._fireChange(previewedItem);
 		}
+
+		this._escapePressed = false;
 	}
 
 	/* Private methods */
 	_validateSelection() {
-		if (this._isOpened()) {
+		if (this._isOpened() || !this.items.length) {
 			return;
 		}
 
@@ -257,6 +283,11 @@ class Select extends WebComponent {
 				selectedItemPos = idx;
 			}
 		});
+
+		if (!selectedItem) {
+			selectedItem = this.items[0];
+			selectedItemPos = 0;
+		}
 
 		if (this._getSelectedItem() !== selectedItem) {
 			this._select(selectedItem, selectedItemPos);
@@ -283,6 +314,13 @@ class Select extends WebComponent {
 
 		if (position !== undefined) {
 			this._updateSelectedItemPos(position);
+		}
+	}
+
+	_changeSelectionWhileClosed() {
+		if (this.items.length > 1 && !this._opened) {
+			this._select(this._getPreviewedItem());
+			this._fireChange(this._getSelectedItem());
 		}
 	}
 
@@ -322,9 +360,24 @@ class Select extends WebComponent {
 	_fireChange(item) {
 		this.fireEvent("change", { selectedItem: item });
 	}
-}
 
-Select.ARROWS = [KeyCodes.ARROW_DOWN, KeyCodes.ARROW_UP];
+	get classes() {
+		return {
+			main: {
+				"sapWCSelect": true,
+				"sapWCSelectFocused": this._focused,
+				"sapWCSelectDisabled": this.disabled,
+				"sapWCSelectOpened": this._opened,
+				"sapWCSelectState": this.valueState !== "None",
+				[`sapWCSelect${this.valueState}`]: true,
+			},
+		};
+	}
+
+	get tabIndex() {
+		return this.disabled ? "-1" : "0";
+	}
+}
 
 Bootstrap.boot().then(_ => {
 	Select.define();

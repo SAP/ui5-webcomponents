@@ -1,10 +1,11 @@
-<a {{> controlData}}
+<a
 	class="{{classes.main}}"
 	role="link"
-	href="{{ctr.href}}"
-	target="{{ctr.target}}"
+	href="{{href}}"
+	target="{{target}}"
+	rel="{{_rel}}"
 	tabindex="{{tabIndex}}"
-	?disabled="{{ctr.disabled}}"
+	?disabled="{{disabled}}"
 	aria-disabled="{{ariaDisabled}}">
-	{{ctr._nodeText}}
+	<slot></slot>
 </a>

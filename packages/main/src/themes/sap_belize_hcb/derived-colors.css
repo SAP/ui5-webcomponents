@@ -1,0 +1,31 @@
+@import "../base/derived-colors.css";
+
+:root {
+	--sapUiFieldWarningColorDarken100: #000000;
+	--sapUiListBackgroundDarken3: #f7f7f7;
+	--sapUiListBackgroundDarken10: #000000;
+	--sapUiListBackgroundDarken13: #dedede;
+	--sapUiListBackgroundDarken15: #d9d9d9;
+	--sapUiListBackgroundDarken20: #cccccc;
+	--sapUiTileBackgroundDarken20: #000000;
+	--sapUiListBorderColorLighten10: #b3b3b3;
+	--sapUiActiveLighten3: #085caf;
+	--sapUiLinkDarken15: #d9d9d9;
+	--sapUiSelectedDarken10: #0a4066;
+	--sapUiShellBorderColorLighten30: #ffffff;
+	--sapUiToggleButtonPressedBackgroundLighten50Desaturate47: #c1d4e1;
+	--sapUiToggleButtonPressedBorderColorLighten19Desaturate46: #ffffff;
+	--sapUiSuccessBGLighten5: #0d0d0d;
+	--sapUiErrorBGLighten4: #0a0a0a;
+	--sapUiButtonBackgroundDarken7: #000000;
+	--sapUiButtonBackgroundDarken2: #000000;
+	--sapUiButtonHoverBackgroundDarken2: #704a00;
+	--sapUiButtonRejectActiveBackgroundDarken5: #614000;
+	--sapUiButtonAcceptActiveBackgroundDarken5: #614000;
+
+	--sapUiContentForegroundColorLighten5: #0d0d0d;
+	--sapUiContentForegroundColorLighten7: #121212;
+	--sapUiContentForegroundColorDarken3: #000000;
+	--sapUiContentForegroundColorDarken5: #000000;
+	--sapUiContentForegroundColorDarken10: #000000;
+}

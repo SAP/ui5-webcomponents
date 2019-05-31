@@ -35,13 +35,13 @@
 
 <body>
 	<section class="group">
-		<h2>link</h2>
-		<ui5-link href="#" id="link">link</ui5-link><span>native span</span>
+		<h2>cross-origin</h2>
+		<ui5-link href="https://www.google.com" target="_blank" id="link">link</ui5-link><span>native span</span>
 	</section>
 
 	<section class="group">
 		<h2>Disabled link</h2>
-		<ui5-link id="disabled-link" disabled>Disabled link</ui5-link>
+		<ui5-link href="/a.html" id="disabled-link" disabled>Disabled link</ui5-link>
 	</section>
 
 	<section class="group">
@@ -67,7 +67,7 @@
 		var input = document.querySelector("#helper-input");
 
 		[link, disLink].forEach(function(element) {
-			element.addEventListener("press", function(event) {
+			element.addEventListener("ui5-press", function(event) {
 				input.value = parseInt(input.value) + 1;
 			});
 		});

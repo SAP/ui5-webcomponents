@@ -1,27 +1,18 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
-import ListItem from "./ListItem";
-import CustomListItemTemplateContext from "./CustomListItemTemplateContext";
-import CustomListItemRenderer from "./build/compiled/CustomListItemRenderer.lit";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import ListItem from "./ListItem.js";
+import CustomListItemRenderer from "./build/compiled/CustomListItemRenderer.lit.js";
 
-import belize from "./themes/sap_belize/CustomListItem.less";
-import belizeHcb from "./themes/sap_belize_hcb/CustomListItem.less";
-import fiori3 from "./themes/sap_fiori_3/CustomListItem.less";
+// Styles
+import columnListItemCss from "./themes/CustomListItem.css.js";
 
-ShadowDOM.registerStyle("sap_belize", "CustomListItem.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "CustomListItem.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "CustomListItem.css", fiori3);
+// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
+import "./ThemePropertiesProvider.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-li-custom",
-	styleUrl: [
-		"ListItemBase.css",
-		"ListItem.css",
-		"CustomListItem.css",
-	],
 	defaultSlot: "content",
 	slots: /** @lends sap.ui.webcomponents.main.CustomListItem.prototype */ {
 
@@ -64,8 +55,17 @@ class CustomListItem extends ListItem {
 		return CustomListItemRenderer;
 	}
 
-	static get calculateTemplateContext() {
-		return CustomListItemTemplateContext.calculate;
+	static get styles() {
+		return [ListItem.styles, columnListItemCss];
+	}
+
+	get classes() {
+		const result = super.classes;
+
+		// Modify main classes
+		result.main.sapMCustomLI = true;
+
+		return result;
 	}
 }
 

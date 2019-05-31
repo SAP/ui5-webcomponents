@@ -1,18 +1,6 @@
+import getDesigntimePropertyAsArray from "./util/getDesigntimePropertyAsArray.js";
+
 const rLocale = /^((?:[A-Z]{2,3}(?:-[A-Z]{3}){0,3})|[A-Z]{4}|[A-Z]{5,8})(?:-([A-Z]{4}))?(?:-([A-Z]{2}|[0-9]{3}))?((?:-[0-9A-Z]{5,8}|-[0-9][0-9A-Z]{3})*)((?:-[0-9A-WYZ](?:-[0-9A-Z]{2,8})+)*)(?:-(X(?:-[0-9A-Z]{1,8})+))?$/i;
-
-const M_ISO639_OLD_TO_NEW = {
-	"iw": "he",
-	"ji": "yi",
-	"in": "id",
-	"sh": "sr",
-};
-
-function getDesigntimePropertyAsArray(sValue) {
-	const m = /\$([-a-z0-9A-Z._]+)(?::([^$]*))?\$/.exec(sValue);
-	return m && m[2] ? m[2].split(/,/) : null;
-}
-
-const A_RTL_LOCALES = getDesigntimePropertyAsArray("$cldr-rtl-locales:ar,fa,he$") || [];
 
 class Locale {
 	constructor(sLocaleId) {
@@ -99,19 +87,6 @@ class Locale {
 			r.push(this.sPrivateUse);
 		}
 		return r.join("-");
-	}
-
-	static _impliesRTL(vLanguage) {
-		const oLocale = vLanguage instanceof Locale ? vLanguage : new Locale(vLanguage);
-		let sLanguage = oLocale.getLanguage() || "";
-
-		sLanguage = (sLanguage && M_ISO639_OLD_TO_NEW[sLanguage]) || sLanguage;
-
-		const sRegion = oLocale.getRegion() || "";
-		if (sRegion && A_RTL_LOCALES.indexOf(`${sLanguage}_${sRegion}`) >= 0) {
-			return true;
-		}
-		return A_RTL_LOCALES.indexOf(sLanguage) >= 0;
 	}
 
 	static get _cldrLocales() {

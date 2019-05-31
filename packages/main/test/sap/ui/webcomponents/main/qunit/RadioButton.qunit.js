@@ -36,7 +36,7 @@ TestHelper.ready(function () {
 			assert.notOk(radiobutton.classList.contains(expectedClass), "root element does not have ." + expectedClass);
 		});
 
-		QUnit.test("The 'read-only' is not set by default", function (assert) {
+		QUnit.test("The 'readonly' is not set by default", function (assert) {
 			var expectedClass = "sapMRbRo",
 				radiobutton = this.getRadioButtonRoot();
 
@@ -56,7 +56,7 @@ TestHelper.ready(function () {
 			assert.notOk(radiobutton.querySelector("ui5-label"), "the default text is empty and ui5-label is not rendered.");
 		});
 
-		QUnit.test("The 'group' is not set by default", function (assert) {
+		QUnit.test("The 'name' is not set by default", function (assert) {
 			var radiobutton = this.getRadioButtonRoot();
 
 			assert.notOk(radiobutton.querySelector("input").getAttribute("name"), "there is no name attribute");
@@ -97,14 +97,14 @@ TestHelper.ready(function () {
 			});
 		});
 
-		QUnit.test("changing the 'read-only' is reflected in the DOM", function (assert) {
+		QUnit.test("changing the 'readonly' is reflected in the DOM", function (assert) {
 			assert.expect(1);
 
 			var done = assert.async(),
 				expectedClass = "sapMRbRo",
 				radiobutton = this.getRadioButtonRoot();
 
-			this.radiobutton.setAttribute("read-only", "");
+			this.radiobutton.setAttribute("readonly", "");
 
 			RenderScheduler.whenFinished().then(function () {
 				assert.ok(radiobutton.classList.contains(expectedClass), "root element has ." + expectedClass);
@@ -157,27 +157,27 @@ TestHelper.ready(function () {
 			});
 		});
 
-		QUnit.test("changing the 'group' is reflected in the DOM", function (assert) {
+		QUnit.test("changing the 'name' is reflected in the DOM", function (assert) {
 			assert.expect(1);
 
 			var done = assert.async(),
-				expectedGroup = "test",
+				expectedName = "test",
 				radiobutton = this.getRadioButtonRoot();
 
-			this.radiobutton.setAttribute("group", expectedGroup);
+			this.radiobutton.setAttribute("name", expectedName);
 
 			RenderScheduler.whenFinished().then(function () {
-				assert.equal(radiobutton.querySelector("input").getAttribute("name"), expectedGroup,  "the name is set to " + expectedGroup);
+				assert.equal(radiobutton.querySelector("input").getAttribute("name"), expectedName,  "the name is set to " + expectedName);
 				done();
 			});
 		});
 	});
 
-	QUnit.module("Group", function (hooks) {
+	QUnit.module("Name", function (hooks) {
 		hooks.beforeEach(function () {
-			var html = '<ui5-radiobutton id="myRb11" group="a" text="first" selected></ui5-radiobutton>'
-			+ '<ui5-radiobutton id="myRb12" group="a" text="second"></ui5-radiobutton>'
-			+ '<ui5-radiobutton id="myRb13" group="a" text="third"></ui5-radiobutton>';
+			var html = '<ui5-radiobutton id="myRb11" name="a" text="first" selected></ui5-radiobutton>'
+			+ '<ui5-radiobutton id="myRb12" name="a" text="second"></ui5-radiobutton>'
+			+ '<ui5-radiobutton id="myRb13" name="a" text="third"></ui5-radiobutton>';
 
 			fixture.innerHTML = html;
 

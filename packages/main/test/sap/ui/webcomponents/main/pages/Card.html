@@ -26,6 +26,7 @@
 <body>
 
 <ui5-card
+	id="card"
 	status="4 of 10"
 	heading="Quick Links"
 	class="myCard">
@@ -38,7 +39,15 @@
 		<ui5-li icon="sap-icon://bar-chart" >AdWords Campaigns</ui5-li>
 		<ui5-li icon="sap-icon://tools-opportunity" >Winter Campaign Results</ui5-li>
 	</ui5-list>
+
+	<ui5-input id="field" value="0"></ui5-input>
 </ui5-card>
 
+<script>
+	card.addEventListener("ui5-headerPress", function (event) {
+		console.log(event);
+		field.value = parseInt(field.value) + 1;
+	});
+</script>
 </body>
 </html>

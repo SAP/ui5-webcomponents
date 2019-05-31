@@ -1,33 +1,27 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
-import TitleLevel from "./types/TitleLevel";
-import TitleRenderer from "./build/compiled/TitleRenderer.lit";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import TitleLevel from "./types/TitleLevel.js";
+import TitleRenderer from "./build/compiled/TitleRenderer.lit.js";
 
 // Styles
-import belize from "./themes/sap_belize/Title.less";
-import belizeHcb from "./themes/sap_belize_hcb/Title.less";
-import fiori3 from "./themes/sap_fiori_3/Title.less";
+// Styles
+import titleCss from "./themes/Title.css.js";
 
-ShadowDOM.registerStyle("sap_belize", "Title.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "Title.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "Title.css", fiori3);
+// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
+import "./ThemePropertiesProvider.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-title",
-	styleUrl: [
-		"Title.css",
-	],
-	usesNodeText: true,
 	properties: /** @lends sap.ui.webcomponents.main.Title.prototype */ {
 
 		/**
 		 * Determines whether the <code>ui5-title</code> should wrap.
 		 *
 		 * @type {Boolean}
+		 * @defaultvalue false
 		 * @public
 		*/
 		wrap: {
@@ -38,7 +32,8 @@ const metadata = {
 		 * Defines the title level.
 		 * Supported values are from <code>H5</code> to <code>H1</code>.
 		 *
-		 * @type {String}
+		 * @type {string}
+		 * @defaultvalue: "H2"
 		 * @public
 		*/
 		level: {
@@ -46,6 +41,21 @@ const metadata = {
 			defaultValue: TitleLevel.H2,
 		},
 	},
+	slots: /** @lends sap.ui.webcomponents.main.Title.prototype */ {
+		/**
+		 * Defines the text of the <code>ui5-title</code>.
+		 * <br><b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+		 *
+		 * @type {Node[]}
+		 * @slot
+		 * @public
+		 */
+		text: {
+			type: Node,
+			multiple: true,
+		},
+	},
+	defaultSlot: "text",
 };
 
 /**
@@ -63,12 +73,11 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Title
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-title
- * @usestextcontent
  * @public
  */
-class Title extends WebComponent {
+class Title extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
@@ -77,24 +86,47 @@ class Title extends WebComponent {
 		return TitleRenderer;
 	}
 
-	static calculateTemplateContext(state) {
-		const context = {
-			tag: (state.level === TitleLevel.Auto ? "div" : state.level).toLowerCase(),
-			ctr: state,
-			classes: {
-				main: {
-					sapMTitle: true,
-					sapMTitleWrap: state.wrap,
-					sapUiSelectable: true,
-					[`sapMTitleStyle${state.level}`]: true,
-				},
-			},
-			styles: {
-				main: {},
+	static get styles() {
+		return titleCss;
+	}
+
+	get normalizedLevel() {
+		return this.level.toLowerCase();
+	}
+
+	get h1() {
+		return this.normalizedLevel === "h1";
+	}
+
+	get h2() {
+		return this.normalizedLevel === "h2";
+	}
+
+	get h3() {
+		return this.normalizedLevel === "h3";
+	}
+
+	get h4() {
+		return this.normalizedLevel === "h4";
+	}
+
+	get h5() {
+		return this.normalizedLevel === "h5";
+	}
+
+	get h6() {
+		return this.normalizedLevel === "h6";
+	}
+
+	get classes() {
+		return {
+			main: {
+				sapMTitle: true,
+				sapMTitleWrap: this.wrap,
+				sapUiSelectable: true,
+				[`sapMTitleStyle${this.level}`]: true,
 			},
 		};
-
-		return context;
 	}
 }
 

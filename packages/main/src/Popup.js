@@ -1,16 +1,13 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper";
-import Integer from "@ui5/webcomponents-base/src/types/Integer";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper.js";
+import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
+import { isEscape } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 
 // Styles
-import belize from "./themes/sap_belize/Popup.less";
-import belizeHcb from "./themes/sap_belize_hcb/Popup.less";
-import fiori3 from "./themes/sap_fiori_3/Popup.less";
+import styles from "./themes/Popup.css.js";
 
-ShadowDOM.registerStyle("sap_belize", "Popup.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "Popup.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "Popup.css", fiori3);
+// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
+import "./ThemePropertiesProvider.js";
 
 /**
  * @public
@@ -57,17 +54,18 @@ const metadata = {
 		 * Defines the ID of the HTML Element, which will get the initial focus.
 		 *
 		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		initialFocus: {
 			type: String,
-			defaultValue: null,
 			association: true,
 		},
 		/**
 		 * Defines whether the header is hidden.
 		 *
 		 * @type {Boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		hideHeader: {
@@ -77,11 +75,11 @@ const metadata = {
 		 * Defines the header text.
 		 *
 		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		headerText: {
 			type: String,
-			defaultValue: "",
 		},
 
 		_isOpen: {
@@ -200,12 +198,16 @@ function updateBodyScrolling(hasModal) {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Popup
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @public
  */
-class Popup extends WebComponent {
+class Popup extends UI5Element {
 	static get metadata() {
 		return metadata;
+	}
+
+	static get styles() {
+		return styles;
 	}
 
 	static getNextZIndex() {
@@ -252,8 +254,7 @@ class Popup extends WebComponent {
 	}
 
 	documentKeyDown(event) {
-		// escape key
-		if (event.keyCode === 27 && this.isTopPopup()) {
+		if (isEscape(event) && this.isTopPopup()) {
 			this.escPressed = true;
 			this.close();
 		}
@@ -300,7 +301,7 @@ class Popup extends WebComponent {
 		const initialFocus = this.initialFocus;
 		let initialFocusDomRef = this.initialFocus;
 
-		if (typeof initialFocus === "string") {
+		if (initialFocus && typeof initialFocus === "string") {
 			initialFocusDomRef = document.getElementById(initialFocus);
 
 			if (!initialFocusDomRef) {

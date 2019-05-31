@@ -1,28 +1,22 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import URI from "@ui5/webcomponents-base/src/types/URI";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
-import { isIconURI } from "@ui5/webcomponents-base/src/IconPool";
-import CardRenderer from "./build/compiled/CardRenderer.lit";
-import Icon from "./Icon";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import URI from "@ui5/webcomponents-base/src/types/URI.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import { isIconURI } from "@ui5/webcomponents-base/src/IconPool.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import CardRenderer from "./build/compiled/CardRenderer.lit.js";
+import Icon from "./Icon.js";
 
 // Styles
-import belize from "./themes/sap_belize/Card.less";
-import belizeHcb from "./themes/sap_belize_hcb/Card.less";
-import fiori3 from "./themes/sap_fiori_3/Card.less";
+import cardCss from "./themes/Card.css.js";
 
-ShadowDOM.registerStyle("sap_belize", "Card.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "Card.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "Card.css", fiori3);
+// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
+import "./ThemePropertiesProvider.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-card",
-	styleUrl: [
-		"Card.css",
-	],
 	defaultSlot: "content",
 	slots: /** @lends sap.ui.webcomponents.main.Card.prototype */ {
 
@@ -41,32 +35,32 @@ const metadata = {
 
 		/**
 		 * Defines the title displayed in the <code>ui5-card</code> header.
-		 * @type {String}
+		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		heading: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
 		 * Defines the subtitle displayed in the <code>ui5-card</code> header.
-		 * @type {String}
+		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		subtitle: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
 		 * Defines the status displayed in the <code>ui5-card</code> header.
-		 * @type {String}
+		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		status: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
@@ -82,6 +76,34 @@ const metadata = {
 			type: URI,
 			defaultValue: null,
 		},
+
+		_headerActive: {
+			type: Boolean,
+		},
+
+		_headerClick: {
+			type: Function,
+		},
+
+		_headerKeydown: {
+			type: Function,
+		},
+
+		_headerKeyup: {
+			type: Function,
+		},
+	},
+	events: /** @lends sap.ui.webcomponents.main.Card.prototype */ {
+
+		/**
+		 * Fired when the <code>ui5-card</code> header is pressed
+		 * by click/tap or by using the Enter or Space key.
+		 *
+		 * @event
+		 * @public
+		 * @since 0.10.0
+		 */
+		headerPress: {},
 	},
 };
 
@@ -102,11 +124,19 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Card
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-card
  * @public
  */
-class Card extends WebComponent {
+class Card extends UI5Element {
+	constructor() {
+		super();
+
+		this._headerClick = this.headerClick.bind(this);
+		this._headerKeydown = this.headerKeydown.bind(this);
+		this._headerKeyup = this.headerKeyup.bind(this);
+	}
+
 	static get metadata() {
 		return metadata;
 	}
@@ -115,23 +145,65 @@ class Card extends WebComponent {
 		return CardRenderer;
 	}
 
-	static calculateTemplateContext(state) {
-		const hasAvatar = !!state.avatar;
-		const icon = hasAvatar && isIconURI(state.avatar);
-		const image = hasAvatar && !icon;
+	static get styles() {
+		return cardCss;
+	}
 
+	get classes() {
 		return {
-			icon,
-			image,
-			ctr: state,
-			renderIcon: state.icon && !state.image,
+			main: {
+				"sapFCard": true,
+				"sapFCardNoContent": !this.content.length,
+			},
+			header: {
+				"sapFCardHeader": true,
+				"sapFCardHeaderActive": this._headerActive,
+			},
 		};
+	}
+
+	get icon() {
+		return !!this.avatar && isIconURI(this.avatar);
+	}
+
+	get image() {
+		return !!this.avatar && !this.icon;
 	}
 
 	static async define(...params) {
 		await Icon.define();
 
 		super.define(...params);
+	}
+
+	headerClick() {
+		this.fireEvent("headerPress");
+	}
+
+	headerKeydown(event) {
+		const enter = isEnter(event);
+		const space = isSpace(event);
+
+		this._headerActive = enter || space;
+
+		if (enter) {
+			this.fireEvent("headerPress");
+			return;
+		}
+
+		if (space) {
+			event.preventDefault();
+		}
+	}
+
+	headerKeyup(event) {
+		const space = isSpace(event);
+
+		this._headerActive = false;
+
+		if (space) {
+			this.fireEvent("headerPress");
+		}
 	}
 }
 

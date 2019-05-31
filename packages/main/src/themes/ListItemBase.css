@@ -1,0 +1,115 @@
+
+:host(ui5-li:not([hidden])) {
+	display: block;
+}
+
+:host(ui5-li) .sap-phone .sapMLIB {
+	outline: none;
+}
+
+ui5-li:not([hidden]) {
+	display: block;
+}
+
+ui5-li .sap-phone .sapMLIB {
+	outline: none;
+}
+
+.sapMLIB {
+	position: relative;
+	display: flex;
+	height: 3rem;
+	width: 100%;
+	padding: 0 1rem 0 1rem;
+	background: var(--ui5-listitem-background-color);
+	box-sizing: border-box;
+}
+
+.sapMLIBHoverable:hover {
+	background : var(--sapUiListHoverBackground);
+}
+
+.sapMLIB.sapMLIBSelected {
+	background: var(--sapUiListSelectionBackgroundColor);
+}
+
+.sapMLIB.sapMLIBActive {
+	color: var(--sapUiListActiveTextColor);
+	background: var(--sapUiListActiveBackground);
+}
+
+.sapMLIB.sapMLIBHoverable.sapMLIBSelected:hover {
+	background : var(--sapUiListSelectionHoverBackground);
+}
+
+.sapMLIB.sapMLIBHoverable.sapMLIBSelected.sapMLIBActive:hover {
+	background: var(--sapUiListActiveBackground);
+}
+
+.sapMLIB.sapMLIBFocusable:focus {
+	outline: none;
+}
+
+.sapMLIB.sapMLIBFocusable:focus:after,
+.sapMLIB.sapMLIBFocusable .sapMLIBContent:focus:after {
+	content: "";
+	border: var(--_ui5_listitembase_focus_width) dotted var(--sapUiContentFocusColor);
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	pointer-events: none;
+}
+
+.sapMLIB.sapMLIBActive.sapMLIBFocusable:focus,
+.sapMLIB.sapMLIBActive.sapMLIBFocusable .sapMLIBContent:focus {
+	outline-color: var(--sapUiContentContrastFocusColor);
+}
+
+.sapMLIB.sapMLIBBorder {
+	border-bottom: 1px solid var(--sapUiListBorderColor);
+}
+
+.sapMLIB.sapMLIBActive .sapMLIBIcon {
+	color: var(--sapUiListActiveTextColor);
+}
+
+.sapMLIBIcon {
+	color: var(--sapUiContentNonInteractiveIconColor);
+	padding-right: 1rem;
+}
+
+.sapMLIBContent {
+	max-width: 100%;
+	min-height: 100%;
+	font-family: var(--sapUiFontFamily);
+}
+
+.sapMLIBActionable,
+.sapMLIBActionable > .sapMLIBIcon {
+	cursor: pointer;
+}
+
+.sapMLIBFocusable.sapMLIBLegacyOutline:focus {
+	outline: none;
+}
+
+/* RTL */
+:host(ui5-li) span[dir="rtl"] .sapMLIBIcon {
+	padding-left: 1rem;
+	padding-right: 0;
+}
+
+:host(ui5-li) span[dir="rtl"] .sapMSLIImg {
+	margin: .5rem 0 .5rem 0.75rem;
+}
+
+ui5-li span[dir="rtl"] .sapMLIBIcon {
+	padding-left: 1rem;
+	padding-right: 0;
+}
+
+ui5-li span[dir="rtl"] .sapMSLIImg {
+	margin: .5rem 0 .5rem 0.75rem;
+}

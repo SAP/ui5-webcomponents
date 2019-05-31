@@ -1,8 +1,8 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import List from "./List";
-import Popover from "./Popover";
-import StandardListItem from "./StandardListItem"; // ensure <ui5-li> is loaded
-import CustomListItem from "./CustomListItem"; // ensure <ui5-li-custom> is loaded
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import List from "./List.js";
+import Popover from "./Popover.js";
+import StandardListItem from "./StandardListItem.js"; // ensure <ui5-li> is loaded
+import CustomListItem from "./CustomListItem.js"; // ensure <ui5-li-custom> is loaded
 
 (function noTreeShaked() {
 	`${StandardListItem}${CustomListItem}`; //eslint-disable-line
@@ -37,20 +37,14 @@ class Suggestions {
 
 	/* Public methods */
 	onUp(event) {
-		if (this.isOpened()) {
-			event.preventDefault();
-			this._handleItemNavigation(false /* forward */);
-			return true;
-		}
+		event.preventDefault();
+		this._handleItemNavigation(false /* forward */);
 		return true;
 	}
 
 	onDown(event) {
-		if (this.isOpened()) {
-			event.preventDefault();
-			this._handleItemNavigation(true /* forward */);
-			return true;
-		}
+		event.preventDefault();
+		this._handleItemNavigation(true /* forward */);
 		return true;
 	}
 
@@ -124,10 +118,10 @@ class Suggestions {
 
 	_attachItemsListeners() {
 		const list = this._getList();
-		list.removeEventListener("itemPress", this.fnOnSuggestionItemPress);
-		list.addEventListener("itemPress", this.fnOnSuggestionItemPress);
-		list.removeEventListener("itemFocused", this.fnOnSuggestionItemFocus);
-		list.addEventListener("itemFocused", this.fnOnSuggestionItemFocus);
+		list.removeEventListener("ui5-itemPress", this.fnOnSuggestionItemPress);
+		list.addEventListener("ui5-itemPress", this.fnOnSuggestionItemPress);
+		list.removeEventListener("ui5-itemFocused", this.fnOnSuggestionItemFocus);
+		list.addEventListener("ui5-itemFocused", this.fnOnSuggestionItemFocus);
 	}
 
 	_attachPopupListeners() {
@@ -136,12 +130,12 @@ class Suggestions {
 		}
 
 		if (!this.attachedAfterOpened) {
-			this._getPopover().addEventListener("afterOpen", this._onOpen.bind(this));
+			this._getPopover().addEventListener("ui5-afterOpen", this._onOpen.bind(this));
 			this.attachedAfterOpened = true;
 		}
 
 		if (!this.attachedAfterClose) {
-			this._getPopover().addEventListener("afterClose", this._onClose.bind(this));
+			this._getPopover().addEventListener("ui5-afterClose", this._onClose.bind(this));
 			this.attachedAfterClose = true;
 		}
 	}
@@ -171,10 +165,6 @@ class Suggestions {
 	}
 
 	_handleItemNavigation(forward) {
-		if (!this.isOpened()) {
-			return;
-		}
-
 		if (!this._getItems().length) {
 			return;
 		}

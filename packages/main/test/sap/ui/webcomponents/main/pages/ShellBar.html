@@ -71,15 +71,15 @@
 		primary-title="Custom Actions"
 		secondary-title="Second Title"
 	>
-		<ui5-shellbar-item data-ui5-slot="items" src="sap-icon://accelerated" text="Hello World!"></ui5-shellbar-item>
-		<ui5-shellbar-item data-ui5-slot="items" src="sap-icon://accept" text="Hello World!"></ui5-shellbar-item>
-		<ui5-shellbar-item data-ui5-slot="items" src="sap-icon://alert" text="Hello World!"></ui5-shellbar-item>
-		<ui5-shellbar-item data-ui5-slot="items" src="sap-icon://discussion" text="Hello World!"></ui5-shellbar-item>
-		<ui5-shellbar-item data-ui5-slot="items" src="sap-icon://error" text="Hello World!"></ui5-shellbar-item>
-		<ui5-shellbar-item data-ui5-slot="items" src="sap-icon://hello-world" text="UI5 Webcomponents"></ui5-shellbar-item>
-		<ui5-shellbar-item data-ui5-slot="items" src="sap-icon://laptop" text="UI5 Webcomponents"></ui5-shellbar-item>
-		<ui5-shellbar-item data-ui5-slot="items" src="sap-icon://nutrition-activity" text="UI5 Webcomponents"></ui5-shellbar-item>
-		<ui5-shellbar-item data-ui5-slot="items" src="sap-icon://sound-loud" text="UI5 Webcomponents"></ui5-shellbar-item>
+		<ui5-shellbar-item src="sap-icon://accelerated" text="Hello World!"></ui5-shellbar-item>
+		<ui5-shellbar-item src="sap-icon://accept" text="Hello World!"></ui5-shellbar-item>
+		<ui5-shellbar-item src="sap-icon://alert" text="Hello World!"></ui5-shellbar-item>
+		<ui5-shellbar-item src="sap-icon://discussion" text="Hello World!"></ui5-shellbar-item>
+		<ui5-shellbar-item src="sap-icon://error" text="Hello World!"></ui5-shellbar-item>
+		<ui5-shellbar-item src="sap-icon://hello-world" text="UI5 Webcomponents"></ui5-shellbar-item>
+		<ui5-shellbar-item src="sap-icon://laptop" text="UI5 Webcomponents"></ui5-shellbar-item>
+		<ui5-shellbar-item src="sap-icon://nutrition-activity" text="UI5 Webcomponents"></ui5-shellbar-item>
+		<ui5-shellbar-item src="sap-icon://sound-loud" text="UI5 Webcomponents"></ui5-shellbar-item>
 	</ui5-shellbar>
 
 	<ui5-shellbar
@@ -95,12 +95,12 @@
 		show-notifications
 		show-product-switch
 	>
-		<ui5-shellbar-item data-ui5-slot="items" src="sap-icon://activities" text="Tasks"></ui5-shellbar-item>
-		<ui5-shellbar-item data-ui5-slot="items" src="sap-icon://thing-type" text="Messages"></ui5-shellbar-item>
-		<ui5-shellbar-item data-ui5-slot="items" src="sap-icon://action-settings" text="Settings"></ui5-shellbar-item>
-		<ui5-shellbar-item data-ui5-slot="items" src="sap-icon://sys-help" text="Help"></ui5-shellbar-item>
+		<ui5-shellbar-item src="sap-icon://activities" text="Tasks"></ui5-shellbar-item>
+		<ui5-shellbar-item src="sap-icon://thing-type" text="Messages"></ui5-shellbar-item>
+		<ui5-shellbar-item src="sap-icon://action-settings" text="Settings"></ui5-shellbar-item>
+		<ui5-shellbar-item src="sap-icon://sys-help" text="Help"></ui5-shellbar-item>
 
-		<ui5-input data-ui5-slot="searchField"></ui5-input>
+		<ui5-input slot="searchField"></ui5-input>
 
 	</ui5-shellbar>
 
@@ -118,12 +118,18 @@
 		show-co-pilot
 	>
 
-		<ui5-icon src="nav-back" data-ui5-slot="icon" tabindex="0"></ui5-icon>
+		<ui5-icon src="nav-back" slot="icon" tabindex="0"></ui5-icon>
 
-		<ui5-shellbar-item data-ui5-slot="items" id="disc" src="sap-icon://disconnected" text="Disconnect"></ui5-shellbar-item>
-		<ui5-shellbar-item data-ui5-slot="items" id="call" src="sap-icon://incoming-call" text="Incoming Calls"></ui5-shellbar-item>
+		<ui5-shellbar-item id="disc" src="sap-icon://disconnected" text="Disconnect"></ui5-shellbar-item>
+		<ui5-shellbar-item id="call" src="sap-icon://incoming-call" text="Incoming Calls"></ui5-shellbar-item>
 
-		<ui5-input data-ui5-slot="searchField"></ui5-input>
+		<ui5-input slot="searchField"></ui5-input>
+
+		<ui5-li id="menu-item-1" slot="menuItems">Application 1</ui5-li>
+		<ui5-li id="menu-item-2" slot="menuItems">Application 2</ui5-li>
+		<ui5-li slot="menuItems">Application 3</ui5-li>
+		<ui5-li slot="menuItems">Application 4</ui5-li>
+		<ui5-li slot="menuItems">Application 5</ui5-li>
 	</ui5-shellbar>
 
 	<ui5-popover id="popover" hide-header placement-type="Bottom">
@@ -133,22 +139,29 @@
 
 		<div class="popover-content">
 			<ui5-list separators="None" >
-				<ui5-li type="Active"icon="sap-icon://sys-find">App Finder</ui5-li>
-				<ui5-li type="Active"icon="sap-icon://settings">Settings</ui5-li>
-				<ui5-li type="Active"icon="sap-icon://edit">Edit Home Page</ui5-li>
-				<ui5-li type="Active"icon="sap-icon://sys-help">Help</ui5-li>
-				<ui5-li type="Active"icon="sap-icon://log">Sign out</ui5-li>
+				<ui5-li icon="sap-icon://sys-find">App Finder</ui5-li>
+				<ui5-li icon="sap-icon://settings">Settings</ui5-li>
+				<ui5-li icon="sap-icon://edit">Edit Home Page</ui5-li>
+				<ui5-li icon="sap-icon://sys-help">Help</ui5-li>
+				<ui5-li icon="sap-icon://log">Sign out</ui5-li>
 			</ui5-list>
 		</div>
 	</ui5-popover>
 
 	<ui5-popover id="app-list-popover" hide-header placement-type="Bottom">
 		<ui5-list separators="None">
-			<ui5-li type="Active">Application 1</ui5-li>
-			<ui5-li type="Active">Application 2</ui5-li>
-			<ui5-li type="Active">Application 3</ui5-li>
-			<ui5-li type="Active">Application 4</ui5-li>
-			<ui5-li type="Active">Application 5</ui5-li>
+			<ui5-li>Application 1</ui5-li>
+			<ui5-li>Application 2</ui5-li>
+			<ui5-li>Application 3</ui5-li>
+			<ui5-li>Application 4</ui5-li>
+			<ui5-li>Application 5</ui5-li>
+		</ui5-list>
+	</ui5-popover>
+
+	<ui5-popover id="custom-item-popover" hide-header placement-type="Bottom">
+		<ui5-list separators="None">
+			<ui5-li id="custom-item-1" type="Active">Custom Popover Item 1</ui5-li>
+			<ui5-li type="Active">Custom Popover Item 2</ui5-li>
 		</ui5-list>
 	</ui5-popover>
 
@@ -157,27 +170,36 @@
 	</ui5-input>
 
 	<script>
-		shellbar.addEventListener("profilePress", function(event) {
-			popover.openBy(event.detail.iconRef);
+		shellbar.addEventListener("ui5-profilePress", function(event) {
+			popover.openBy(event.detail.targetRef);
 			window["press-input"].value = "Profile";
 		});
 
-		shellbar.addEventListener("titlePress", function(event) {
-			window["app-list-popover"].openBy(event.detail.iconRef);
-			window["press-input"].value = "Title";
-		});
-
-		shellbar.addEventListener("notificationsPress", function(event) {
+		shellbar.addEventListener("ui5-notificationsPress", function(event) {
 			window["press-input"].value = "Notifications"
 		});
 
-		shellbar.addEventListener("productSwitchPress", function(event) {
+		shellbar.addEventListener("ui5-productSwitchPress", function(event) {
 			window["press-input"].value = "Product Switch"
 		});
 
+		shellbar.addEventListener("ui5-logoPress", function(event) {
+			window["press-input"].value = "Logo"
+		});
+
+		shellbar.addEventListener("ui5-coPilotPress", function(event) {
+			window["press-input"].value = "CoPilot"
+		});
+
+		shellbar.addEventListener("ui5-menuItemPress", function(event) {
+			window["press-input"].value = event.detail.item.textContent;
+		});
+
 		["disc", "call"].forEach(function(id) {
-			window[id].addEventListener("press", function(event) {
+			window[id].addEventListener("ui5-press", function(event) {
+				event.preventDefault();
 				window["press-input"].value = event.target.id;
+				window["custom-item-popover"].openBy(event.detail.targetRef);
 			});
 		});
 	</script>

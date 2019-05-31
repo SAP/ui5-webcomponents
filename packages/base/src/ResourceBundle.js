@@ -1,7 +1,8 @@
-import ResourceBundle from "@ui5/webcomponents-core/dist/sap/base/i18n/ResourceBundle";
-import { getLanguage } from "./LocaleProvider";
-import { registerModuleContent } from "./ResourceLoaderOverrides";
-import { fetchJsonOnce } from "./util/FetchHelper";
+import "./shims/jquery-shim.js";
+import ResourceBundle from "@ui5/webcomponents-core/dist/sap/base/i18n/ResourceBundle.js";
+import { getLanguage } from "./LocaleProvider.js";
+import { registerModuleContent } from "./ResourceLoaderOverrides.js";
+import { fetchJsonOnce } from "./util/FetchHelper.js";
 
 const bundleURLs = new Map();
 const singletonPromises = new Map();

@@ -1,28 +1,20 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+
 // Template
-import LabelRenderer from "./build/compiled/LabelRenderer.lit";
-import LabelTemplateContext from "./LabelTemplateContext";
+import LabelRenderer from "./build/compiled/LabelRenderer.lit.js";
 
 // Styles
-import belize from "./themes/sap_belize/Label.less";
-import belizeHcb from "./themes/sap_belize_hcb/Label.less";
-import fiori3 from "./themes/sap_fiori_3/Label.less";
+import labelCss from "./themes/Label.css.js";
 
-ShadowDOM.registerStyle("sap_belize", "Label.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "Label.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "Label.css", fiori3);
+// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
+import "./ThemePropertiesProvider.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-label",
-	styleUrl: [
-		"Label.css",
-	],
-	usesNodeText: true,
 	properties: /** @lends sap.ui.webcomponents.main.Label.prototype */  {
 
 		/**
@@ -31,6 +23,7 @@ const metadata = {
 		 * <b>Note:</b> Usually indicates that user input is required.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		required: {
@@ -43,6 +36,7 @@ const metadata = {
 		 * <b>Note:</b> By default the text would truncate.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		wrap: {
@@ -55,13 +49,28 @@ const metadata = {
 		 * <b>Note:</b> Can be used with both <code>ui5-input</code> and native input.
 		 *
 		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		"for": {
-			defaultValue: "",
 			type: String,
 		},
 	},
+	slots: /** @lends sap.ui.webcomponents.main.Label.prototype */ {
+		/**
+		 * Defines the text of the <code>ui5-label</code>.
+		 * <br><b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+		 *
+		 * @type {Node[]}
+		 * @slot
+		 * @public
+		 */
+		text: {
+			type: Node,
+			multiple: true,
+		},
+	},
+	defaultSlot: "text",
 	renderer: LabelRenderer,
 };
 
@@ -89,12 +98,11 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Label
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-label
- * @usestextcontent
  * @public
  */
-class Label extends WebComponent {
+class Label extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
@@ -103,16 +111,27 @@ class Label extends WebComponent {
 		return LabelRenderer;
 	}
 
+	static get styles() {
+		return labelCss;
+	}
+
+	get classes() {
+		return {
+			main: {
+				sapMLabel: true,
+				sapMLabelNoText: !this.text.length,
+				sapMLabelWrapped: this.wrap,
+				sapMLabelRequired: this.required,
+			},
+		};
+	}
+
 	onclick() {
 		const elementToFocus = document.getElementById(this.for);
 
 		if (elementToFocus) {
 			elementToFocus.focus();
 		}
-	}
-
-	static get calculateTemplateContext() {
-		return LabelTemplateContext.calculate;
 	}
 }
 

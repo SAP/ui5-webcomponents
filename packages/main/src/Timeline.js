@@ -1,28 +1,20 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
-import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation";
-import TimelineTemplateContext from "./TimelineTemplateContext";
-import TimelineItem from "./TimelineItem";
-import TimelineRenderer from "./build/compiled/TimelineRenderer.lit";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
+import TimelineItem from "./TimelineItem.js";
+import TimelineRenderer from "./build/compiled/TimelineRenderer.lit.js";
 
 // Styles
-import belize from "./themes/sap_belize/Timeline.less";
-import belizeHcb from "./themes/sap_belize_hcb/Timeline.less";
-import fiori3 from "./themes/sap_fiori_3/Timeline.less";
+import styles from "./themes/Timeline.css.js";
 
-ShadowDOM.registerStyle("sap_belize", "Timeline.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "Timeline.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "Timeline.css", fiori3);
+// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
+import "./ThemePropertiesProvider.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-timeline",
-	styleUrl: [
-		"Timeline.css",
-	],
 	defaultSlot: "items",
 	slots: /** @lends sap.ui.webcomponents.main.Timeline.prototype */ {
 		/**
@@ -35,6 +27,7 @@ const metadata = {
 		items: {
 			type: TimelineItem,
 			multiple: true,
+			individualSlots: true,
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.Timeline.prototype */ {
@@ -57,23 +50,23 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Timeline
- * @extends WebComponent
+ * @extends UI5Element
  * @tagname ui5-timeline
  * @appenddocs TimelineItem
  * @public
  * @since 0.8.0
  */
-class Timeline extends WebComponent {
+class Timeline extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
 
-	static get renderer() {
-		return TimelineRenderer;
+	static get styles() {
+		return styles;
 	}
 
-	static get calculateTemplateContext() {
-		return TimelineTemplateContext.calculate;
+	static get renderer() {
+		return TimelineRenderer;
 	}
 
 	constructor() {
@@ -83,7 +76,6 @@ class Timeline extends WebComponent {
 	}
 
 	onBeforeRendering() {
-		this.addItemsCustomClass();
 		this._itemNavigation.init();
 	}
 
@@ -92,10 +84,6 @@ class Timeline extends WebComponent {
 		this._itemNavigation.getItemsCallback = () => this.items;
 
 		this._delegates.push(this._itemNavigation);
-	}
-
-	addItemsCustomClass() {
-		this.items[this.items.length - 1]._customClasses = ["sapWCTimelineItemLast"];
 	}
 
 	static async define(...params) {

@@ -1,4 +1,4 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 
 /**
  * @public
@@ -17,12 +17,16 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.TabBase
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @public
  */
-class TabBase extends WebComponent {
+class TabBase extends UI5Element {
 	static get metadata() {
 		return metadata;
+	}
+
+	isSeparator() {
+		return false;
 	}
 }
 

@@ -1,29 +1,21 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import CSSSize from "@ui5/webcomponents-base/src/types/CSSSize";
-import Integer from "@ui5/webcomponents-base/src/types/Integer";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
-import TextAreaTemplateContext from "./TextAreaTemplateContext";
-import TextAreaRenderer from "./build/compiled/TextAreaRenderer.lit";
-import { fetchResourceBundle, getResourceBundle } from "./ResourceBundleProvider";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import CSSSize from "@ui5/webcomponents-base/src/types/CSSSize.js";
+import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
+import TextAreaRenderer from "./build/compiled/TextAreaRenderer.lit.js";
+import { fetchResourceBundle, getResourceBundle } from "./ResourceBundleProvider.js";
 
 // Styles
-import belize from "./themes/sap_belize/TextArea.less";
-import belizeHcb from "./themes/sap_belize_hcb/TextArea.less";
-import fiori3 from "./themes/sap_fiori_3/TextArea.less";
+import styles from "./themes/TextArea.css.js";
 
-ShadowDOM.registerStyle("sap_belize", "TextArea.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "TextArea.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "TextArea.css", fiori3);
+// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
+import "./ThemePropertiesProvider.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-textarea",
-	styleUrl: [
-		"TextArea.css",
-	],
 	properties: /** @lends sap.ui.webcomponents.main.TextArea.prototype */ {
 		/**
 		 * Defines the value of the Web Component.
@@ -33,7 +25,6 @@ const metadata = {
 		 * @public
 		 */
 		value: {
-			defaultValue: "",
 			type: String,
 		},
 
@@ -72,7 +63,6 @@ const metadata = {
 		 * @public
 		 */
 		placeholder: {
-			defaultValue: "",
 			type: String,
 		},
 
@@ -121,7 +111,6 @@ const metadata = {
 		 */
 		showExceededText: {
 			type: Boolean,
-			defaultValue: false,
 		},
 
 		/**
@@ -134,7 +123,6 @@ const metadata = {
 		 */
 		growing: {
 			type: Boolean,
-			defaultValue: false,
 		},
 
 		/**
@@ -147,6 +135,24 @@ const metadata = {
 		growingMaxLines: {
 			type: Integer,
 			defaultValue: 0,
+		},
+
+		/**
+		 * Determines the name with which the <code>ui5-textarea</code> will be submitted in an HTML form.
+		 *
+		 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
+		 * <code>import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";</code>
+		 *
+		 * <b>Note:</b> When set, a native <code>input</code> HTML element
+		 * will be created inside the <code>ui5-textarea</code> so that it can be submitted as
+		 * part of an HTML form. Do not use this property unless you need to submit a form.
+		 *
+		 * @type {string}
+		 * @defaultvalue: ""
+		 * @public
+		 */
+		name: {
+			type: String,
 		},
 
 		_height: {
@@ -166,11 +172,9 @@ const metadata = {
 		},
 		_maxHeight: {
 			type: String,
-			defaultValue: "",
 		},
 		_focussed: {
 			type: Boolean,
-			defaultValue: false,
 		},
 		_listeners: {
 			type: Object,
@@ -207,21 +211,21 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.TextArea
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-textarea
  * @public
  */
-class TextArea extends WebComponent {
+class TextArea extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
 
-	static get renderer() {
-		return TextAreaRenderer;
+	static get styles() {
+		return styles;
 	}
 
-	static get calculateTemplateContext() {
-		return TextAreaTemplateContext.calculate;
+	static get renderer() {
+		return TextAreaRenderer;
 	}
 
 	constructor() {
@@ -241,6 +245,12 @@ class TextArea extends WebComponent {
 		if (this.growingMaxLines) {
 			// this should be complex calc between line height and paddings - TODO: make it stable
 			this._maxHeight = `${this.growingMaxLines * 1.4 * 14 + 9}px`;
+		}
+
+		if (TextArea.FormSupport) {
+			TextArea.FormSupport.syncNativeHiddenInput(this);
+		} else if (this.name) {
+			console.warn(`In order for the "name" property to have effect, you should also: import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";`); // eslint-disable-line
 		}
 	}
 
@@ -321,6 +331,61 @@ class TextArea extends WebComponent {
 		return {
 			exceededText, leftCharactersCount, calcedMaxLength,
 		};
+	}
+
+	get classes() {
+		return {
+			main: {
+				sapWCTextArea: true,
+				sapWCTextAreaWarning: (this._exceededTextProps.leftCharactersCount < 0),
+				sapWCTextAreaGrowing: this.growing,
+				sapWCTextAreaNoMaxLines: !this.growingMaxLines,
+				sapWCTextAreaWithCounter: this.showExceededText,
+				sapWCTextAreaDisabled: this.disabled,
+				sapWCTextAreaReadonly: this.readonly,
+			},
+			inner: {
+				sapWCTextAreaInner: true,
+				sapWCTextAreaStateInner: (this._exceededTextProps.leftCharactersCount < 0),
+				sapWCTextAreaWarningInner: (this._exceededTextProps.leftCharactersCount < 0),
+			},
+			exceededText: {
+				sapWCTextAreaExceededText: true,
+			},
+			mirror: {
+				sapWCTextAreaMirror: true,
+			},
+			focusDiv: {
+				sapWCTextAreaFocusDiv: true,
+				sapWCTextAreaHasFocus: this._focussed,
+			},
+		};
+	}
+
+	get styles() {
+		const lineHeight = 1.4 * 16;
+
+		return {
+			mirror: {
+				"max-height": this._maxHeight,
+			},
+			main: {
+				width: "100%",
+				height: (this.rows && !this.growing) ? `${this.rows * lineHeight}px` : "100%",
+			},
+			focusDiv: {
+				"height": (this.showExceededText ? "calc(100% - 26px)" : "100%"),
+				"max-height": (this._maxHeight),
+			},
+		};
+	}
+
+	get tabIndex() {
+		return this.disabled ? undefined : "0";
+	}
+
+	get ariaInvalid() {
+		return this.valueState === "Error" ? "true" : undefined;
 	}
 
 	static async define(...params) {

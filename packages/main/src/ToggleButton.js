@@ -1,39 +1,31 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
-import Button from "./Button";
-import ToggleButtonTemplateContext from "./ToggleButtonTemplateContext";
-import ToggleButtonRenderer from "./build/compiled/ToggleButtonRenderer.lit";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import Button from "./Button.js";
+import ToggleButtonRenderer from "./build/compiled/ToggleButtonRenderer.lit.js";
 
 // Styles
-import belize from "./themes/sap_belize/ToggleButton.less";
-import belizeHcb from "./themes/sap_belize_hcb/ToggleButton.less";
-import fiori3 from "./themes/sap_fiori_3/ToggleButton.less";
+import toggleBtnCss from "./themes/ToggleButton.css.js";
 
-ShadowDOM.registerStyle("sap_belize", "ToggleButton.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "ToggleButton.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "ToggleButton.css", fiori3);
+// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
+import "./ThemePropertiesProvider.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-togglebutton",
-	styleUrl: [
-		"Button.css",
-		"ToggleButton.css",
-	],
-	usesNodeText: true,
 	properties: /** @lends  sap.ui.webcomponents.main.ToggleButton.prototype */ {
 		/**
 		 * Determines whether the <code>ui5-togglebutton</code> is displayed as pressed.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		pressed: {
 			type: Boolean,
 		},
 	},
+	defaultSlot: "text",
 };
 
 /**
@@ -59,7 +51,6 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.ToggleButton
  * @extends Button
  * @tagname ui5-togglebutton
- * @usestextcontent
  * @public
  */
 class ToggleButton extends Button {
@@ -71,6 +62,10 @@ class ToggleButton extends Button {
 		return ToggleButtonRenderer;
 	}
 
+	static get styles() {
+		return [Button.styles, toggleBtnCss];
+	}
+
 	onclick() {
 		if (!this.disabled) {
 			this.pressed = !this.pressed;
@@ -78,18 +73,10 @@ class ToggleButton extends Button {
 		}
 	}
 
-	/*
-	* @override
-	*/
-	onkeydown() {}
-
-	/*
-	* @override
-	*/
-	onkeyup() {}
-
-	static get calculateTemplateContext() {
-		return ToggleButtonTemplateContext.calculate;
+	get classes() {
+		const result = super.classes;
+		result.main.sapMToggleBtnPressed = this.pressed;
+		return result;
 	}
 }
 

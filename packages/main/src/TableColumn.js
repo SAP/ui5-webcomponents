@@ -1,24 +1,17 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import Integer from "@ui5/webcomponents-base/src/types/Integer";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import CSSSize from "@ui5/webcomponents-base/src/types/CSSSize";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
-import TableColumnRenderer from "./build/compiled/TableColumnRenderer.lit";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import CSSSize from "@ui5/webcomponents-base/src/types/CSSSize.js";
+import TableColumnRenderer from "./build/compiled/TableColumnRenderer.lit.js";
 
 // Styles
-import belize from "./themes/sap_belize/TableColumn.less";
-import belizeHcb from "./themes/sap_belize_hcb/TableColumn.less";
-import fiori3 from "./themes/sap_fiori_3/TableColumn.less";
+import styles from "./themes/TableColumn.css.js";
 
-ShadowDOM.registerStyle("sap_belize", "TableColumn.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "TableColumn.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "TableColumn.css", fiori3);
+// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
+import "./ThemePropertiesProvider.js";
 
 const metadata = {
 	tag: "ui5-table-column",
-	styleUrl: [
-		"TableColumn.css",
-	],
 	slots: /** @lends sap.ui.webcomponents.main.TableColumn.prototype */ {
 
 		/**
@@ -54,11 +47,11 @@ const metadata = {
 		 * The text for the column when it pops in.
 		 *
 		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		popinText: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
@@ -68,6 +61,7 @@ const metadata = {
 		 * Setting this property to <code>true</code>, shows this column as pop-in instead of hiding it.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		demandPopin: {
@@ -87,11 +81,10 @@ const metadata = {
 
 		_first: {
 			type: Boolean,
-			defaultValue: false,
 		},
+
 		_last: {
 			type: Boolean,
-			defaultValue: false,
 		},
 	},
 };
@@ -107,36 +100,31 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.TableColumn
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-table-column
  * @public
  */
-class TableColumn extends WebComponent {
+class TableColumn extends UI5Element {
 	static get metadata() {
 		return metadata;
+	}
+
+	static get styles() {
+		return styles;
 	}
 
 	static get renderer() {
 		return TableColumnRenderer;
 	}
 
-	static calculateTemplateContext(state) {
-		const context = {
-			ctr: state,
-			classes: {
-				main: {
-					sapWCTableColumn: true,
-					sapWCTableColumnFirst: state._first,
-					sapWCTableColumnLast: state._last,
-				},
-			},
-			styles: {
-				main: {
-				},
+	get classes() {
+		return {
+			main: {
+				sapWCTableColumn: true,
+				sapWCTableColumnFirst: this._first,
+				sapWCTableColumnLast: this._last,
 			},
 		};
-
-		return context;
 	}
 }
 

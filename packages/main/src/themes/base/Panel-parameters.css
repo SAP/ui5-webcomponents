@@ -1,0 +1,5 @@
+:root {
+	--ui5-panel-background-color: var(--sapUiGroupContentBackground);
+	--ui5-panel-bottom-border-color: var(--sapUiGroupTitleBorderColor);
+	--_ui5_panel_focus_border: 1px dotted var(--sapUiContentFocusColor);
+}

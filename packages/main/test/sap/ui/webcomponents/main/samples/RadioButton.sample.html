@@ -30,7 +30,7 @@
 	<script nomodule src="../../../../../../resources/sap/ui/webcomponents/main/bundle.es5.js">
 	</script>
 </head>
-<body class="sapUiBody example-wrapper">
+<body class="sapUiBody example-wrapper" role="application">
 
 	<header>
 		<h2 class="control-header">RadioButton</h2>
@@ -40,54 +40,74 @@
 	<section>
 		<h3>Basic RadioButton Types</h3>
 		<div class="snippet">
-			<ui5-radiobutton text="Option A" selected group="GroupA"></ui5-radiobutton>
-			<ui5-radiobutton text="Option B" value-state="None" group="GroupA"></ui5-radiobutton>
-			<ui5-radiobutton text="Option C" value-state="Warning" group="GroupA"></ui5-radiobutton>
-			<ui5-radiobutton text="Option D" value-state="Error" group="GroupA"></ui5-radiobutton>
-			<ui5-radiobutton text="Option E" disabled group="GroupA"></ui5-radiobutton>
+			<ui5-radiobutton text="Option A" selected name="GroupA"></ui5-radiobutton>
+			<ui5-radiobutton text="Option B" value-state="None" name="GroupA"></ui5-radiobutton>
+			<ui5-radiobutton text="Option C" value-state="Warning" name="GroupA"></ui5-radiobutton>
+			<ui5-radiobutton text="Option D" value-state="Error" name="GroupA"></ui5-radiobutton>
+			<ui5-radiobutton text="Option E" disabled name="GroupA"></ui5-radiobutton>
 		</div>
 		<pre class="prettyprint lang-html"><xmp>
-<ui5-radiobutton text="Option A" selected group="GroupA"></ui5-radiobutton>
-<ui5-radiobutton text="Option B" value-state="None" group="GroupA"></ui5-radiobutton>
-<ui5-radiobutton text="Option C" value-state="Warning" group="GroupA"></ui5-radiobutton>
-<ui5-radiobutton text="Option D" value-state="Error" group="GroupA"></ui5-radiobutton>
-<ui5-radiobutton text="Option E" disabled group="GroupA"></ui5-radiobutton>
+<ui5-radiobutton text="Option A" selected name="GroupA"></ui5-radiobutton>
+<ui5-radiobutton text="Option B" value-state="None" name="GroupA"></ui5-radiobutton>
+<ui5-radiobutton text="Option C" value-state="Warning" name="GroupA"></ui5-radiobutton>
+<ui5-radiobutton text="Option D" value-state="Error" name="GroupA"></ui5-radiobutton>
+<ui5-radiobutton text="Option E" disabled name="GroupA"></ui5-radiobutton>
 		</xmp></pre>
 	</section>
 
-	<h3>Grouped RadioButton (navigate with UP and DOWN arrow keys)</h3>
+	<h3>RadioButton in group - navigate via [UP/Right] and [DOWN/Left] arrow keys</h3>
 		<div class="snippet" style="display: flex; flex-wrap: wrap; justify-content: space-around;">
-			<div class="radio-button-group">
-				<ui5-title>First Group</ui5-title>
-				<ui5-radiobutton text="None" value-state="None" selected group="GroupB"></ui5-radiobutton>
-				<ui5-radiobutton text="Warning" value-state="Warning" group="GroupB"></ui5-radiobutton>
-				<ui5-radiobutton text="Error" value-state="Error" group="GroupB"></ui5-radiobutton>
+			<div id="radioGroup" class="radio-button-group">
+				<ui5-title>Group of states</ui5-title>
+				<ui5-label id="lblRadioGroup">Selected radio: None</ui5-label>
+				<ui5-radiobutton text="None" value-state="None" selected name="GroupB"></ui5-radiobutton>
+				<ui5-radiobutton text="Warning" value-state="Warning" name="GroupB"></ui5-radiobutton>
+				<ui5-radiobutton text="Error" value-state="Error" name="GroupB"></ui5-radiobutton>
 			</div>
-			<div class="radio-button-group">
-				<ui5-title>Second Group</ui5-title>
-				<ui5-radiobutton text="Option A" selected group="GroupC"></ui5-radiobutton>
-				<ui5-radiobutton text="Option B" value-state="None" group="GroupC"></ui5-radiobutton>
-				<ui5-radiobutton text="Option C" value-state="None" group="GroupC"></ui5-radiobutton>
+			<div id="radioGroup2" class="radio-button-group">
+				<ui5-title>Group of options</ui5-title>
+				<ui5-label id="lblRadioGroup2">Selected radio: Option A</ui5-label>
+				<ui5-radiobutton text="Option A" selected name="GroupC"></ui5-radiobutton>
+				<ui5-radiobutton text="Option B" value-state="None" name="GroupC"></ui5-radiobutton>
+				<ui5-radiobutton text="Option C" value-state="None" name="GroupC"></ui5-radiobutton>
 			</div>
 		</div>
 		<pre class="prettyprint lang-html"><xmp>
-<div class="radio-button-group">
-	<ui5-title>First Group</ui5-title>
-	<ui5-radiobutton text="None" value-state="None" selected group="GroupB"></ui5-radiobutton>
-	<ui5-radiobutton text="Warning" value-state="Warning" group="GroupB"></ui5-radiobutton>
-	<ui5-radiobutton text="Error" value-state="Error" group="GroupB"></ui5-radiobutton>
+<script>
+radioGroup.addEventListener("select", function(e) {
+	lblRadioGroup.innerHTML = e.target.text;
+});
+</script>
+
+<div id="radioGroup" class="radio-button-group">
+	<ui5-title>Group of states</ui5-title>
+	<ui5-label id="lblRadioGroup">Selected radio: None</ui5-label>
+	<ui5-radiobutton text="None" value-state="None" selected name="GroupB"></ui5-radiobutton>
+	<ui5-radiobutton text="Warning" value-state="Warning" name="GroupB"></ui5-radiobutton>
+	<ui5-radiobutton text="Error" value-state="Error" name="GroupB"></ui5-radiobutton>
 </div>
-<div class="radio-button-group">
-	<ui5-title>Second Group</ui5-title>
-	<ui5-radiobutton text="Option A" selected group="GroupC"></ui5-radiobutton>
-	<ui5-radiobutton text="Option B" value-state="None" group="GroupC"></ui5-radiobutton>
-	<ui5-radiobutton text="Option C" value-state="None" group="GroupC"></ui5-radiobutton>
+<div id="radioGroup2" class="radio-button-group">
+	<ui5-title>Group of options</ui5-title>
+	<ui5-label id="lblRadioGroup2">Selected radio: Option A</ui5-label>
+	<ui5-radiobutton text="Option A" selected name="GroupC"></ui5-radiobutton>
+	<ui5-radiobutton text="Option B" value-state="None" name="GroupC"></ui5-radiobutton>
+	<ui5-radiobutton text="Option C" value-state="None" name="GroupC"></ui5-radiobutton>
 </div>
 		</xmp></pre>
 	</section>
 
 	<script>
 		window.prettyPrint();
+	</script>
+
+	<script>
+		radioGroup.addEventListener("select", function(e) {
+			lblRadioGroup.innerHTML = e.target.text;
+		});
+
+		radioGroup2.addEventListener("select", function(e) {
+			lblRadioGroup2.innerHTML = e.target.text;
+		});
 	</script>
 
 	<script defer src="../../../../../../www/samples/settings.js"></script>

@@ -1,0 +1,29 @@
+.sapMLIB.sapMGHLI {
+	height: 3rem;
+	color: var(--sapUiListTableGroupHeaderTextColor);
+	background: var(--ui5-group-header-listitem-background-color);
+	padding-top: 1rem;
+	font-size: var(--sapMFontHeader6Size);
+	font-weight: var(--sapUiFontHeaderWeight);
+	line-height: 2rem;
+	border-bottom: 1px solid var(--sapUiListTableGroupHeaderBorderColor);
+}
+
+.sapMGHLI > .sapMLIBContent {
+	display: -webkit-box;
+	display: flex;
+	-webkit-box-align: center;
+	align-items: center;
+}
+
+.sapMGHLITitle {
+	display: block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+} 
+
+/* Compact size */
+.sapUiSizeCompact .sapMGHLI {
+	height: 2rem;
+}

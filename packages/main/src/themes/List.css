@@ -1,0 +1,94 @@
+:host(ui5-list:not([hidden])) {
+	display: block;
+	max-width: 100%;
+}
+
+ui5-list:not([hidden]) {
+	display: block;
+	max-width: 100%;
+}
+
+.sapMList {
+	width: 100%;
+	height: 100%;
+	position: relative;
+	box-sizing: border-box;
+}
+
+.sapMList.sapMListInsetBG {
+	padding: 2rem;
+}
+
+.sapMList .sapMListUl {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+
+.sapMList .sapMListUl:focus {
+	outline: none;
+}
+
+.sapMList .sapMListDummyArea {
+	position: fixed; /* keep it in the visible viewport, so that IE does not scroll on focus */
+}
+
+.sapMList .sapMListNoData {
+	list-style-type: none;
+	display: -webkit-box;
+	display: flex;
+	-webkit-box-align: center;
+	align-items: center;
+	-webkit-box-pack: center;
+	justify-content: center;
+	color: var(--sapUiListTextColor);
+	background-color: var(--sapUiListBackground);
+	border-bottom: 1px solid var(--sapUiListBorderColor);
+	padding: 0 1rem !important;
+	height:3rem;
+}
+
+
+.sapMList .sapMListHdrText {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	box-sizing: border-box;
+	font-size: var(--sapMFontHeader4Size);
+	font-family: var(--sapUiFontHeaderFamily);
+	color: var(--sapUiGroupTitleTextColor);
+	height: 3rem;
+	line-height: 3rem;
+	padding: 0 1rem;
+	background-color: var(--sapUiGroupTitleBackground);
+	border-bottom: 1px solid var(--sapUiGroupTitleBorderColor);
+}
+.sapMList .sapMListFtr {
+	height: 2rem;
+	box-sizing: border-box;
+	-webkit-text-size-adjust: none;	/* To improve readability Mobile Safari automatically increases the size of small text so let's disable this */
+	font-size: var(--sapMFontMediumSize);
+	line-height: 2rem;
+	background-color: var(--sapUiListFooterBackground);
+	color: var(--sapUiListFooterTextColor);
+	padding: 0 1rem;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.sapMList .sapMListShowSeparatorsNone .sapMListNoData {
+	border-bottom: 0px;
+}
+
+.sapMList .sapMListNoDataText {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+/* Compact size */
+.sapUiSizeCompact .sapMList .sapMListNoData {
+	height: 2rem;
+	font-size: var(--sapMFontMediumSize);
+}

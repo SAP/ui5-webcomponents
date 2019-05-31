@@ -1,26 +1,18 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
-import CalendarHeaderTemplateContext from "./CalendarHeaderTemplateContext";
-import Button from "./Button";
-import ButtonType from "./types/ButtonType";
-import CalendarHeaderRenderer from "./build/compiled/CalendarHeaderRenderer.lit";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import Button from "./Button.js";
+import ButtonType from "./types/ButtonType.js";
+import CalendarHeaderRenderer from "./build/compiled/CalendarHeaderRenderer.lit.js";
 
 // Styles
-import belize from "./themes/sap_belize/CalendarHeader.less";
-import belizeHcb from "./themes/sap_belize_hcb/CalendarHeader.less";
-import fiori3 from "./themes/sap_fiori_3/CalendarHeader.less";
+import styles from "./themes/CalendarHeader.css.js";
 
-ShadowDOM.registerStyle("sap_belize", "CalendarHeader.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "CalendarHeader.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "CalendarHeader.css", fiori3);
+// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
+import "./ThemePropertiesProvider.js";
 
 const metadata = {
 	tag: "ui5-calendar-header",
-	styleUrl: [
-		"CalendarHeader.css",
-	],
 	properties: {
 		monthText: {
 			type: String,
@@ -49,13 +41,17 @@ const metadata = {
 	},
 };
 
-class CalendarHeader extends WebComponent {
+class CalendarHeader extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
 
 	static get renderer() {
 		return CalendarHeaderRenderer;
+	}
+
+	static get styles() {
+		return styles;
 	}
 
 	constructor() {
@@ -114,7 +110,7 @@ class CalendarHeader extends WebComponent {
 	}
 
 	onkeydown(event) {
-		if (event.which === KeyCodes.SPACE || event.which === KeyCodes.ENTER) {
+		if (isSpace(event) || isEnter(event)) {
 			const showPickerButton = event.ui5target.getAttribute("data-sap-show-picker");
 
 			if (showPickerButton) {
@@ -123,8 +119,19 @@ class CalendarHeader extends WebComponent {
 		}
 	}
 
-	static get calculateTemplateContext() {
-		return CalendarHeaderTemplateContext.calculate;
+	get classes() {
+		return {
+			main: {
+				sapWCCalHead: true,
+			},
+			buttons: {
+				sapWCCalHeadArrowButton: true,
+			},
+			middleButtons: {
+				sapWCCalHeadMiddleButton: true,
+				sapWCCalHeadArrowButton: true,
+			},
+		};
 	}
 
 	static async define(...params) {

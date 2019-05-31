@@ -1,25 +1,18 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
-import TableCellRenderer from "./build/compiled/TableCellRenderer.lit";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import TableCellRenderer from "./build/compiled/TableCellRenderer.lit.js";
 
 // Styles
-import belize from "./themes/sap_belize/TableCell.less";
-import belizeHcb from "./themes/sap_belize_hcb/TableCell.less";
-import fiori3 from "./themes/sap_fiori_3/TableCell.less";
+import styles from "./themes/TableCell.css.js";
 
-ShadowDOM.registerStyle("sap_belize", "TableCell.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "TableCell.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "TableCell.css", fiori3);
+// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
+import "./ThemePropertiesProvider.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-table-cell",
-	styleUrl: [
-		"TableCell.css",
-	],
 	slots: /** @lends sap.ui.webcomponents.main.TableCell.prototype */ {
 		/**
 		 * Specifies the content of the <code>ui5-table-cell</code>.
@@ -37,15 +30,12 @@ const metadata = {
 
 		_firstInRow: {
 			type: Boolean,
-			defaultValue: false,
 		},
 		_lastInRow: {
 			type: Boolean,
-			defaultValue: false,
 		},
 		_hasBorder: {
 			type: Boolean,
-			defaultValue: false,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.TableCell.prototype */ {
@@ -62,37 +52,32 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.TableCell
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-table-cell
  * @public
  */
-class TableCell extends WebComponent {
+class TableCell extends UI5Element {
 	static get metadata() {
 		return metadata;
+	}
+
+	static get styles() {
+		return styles;
 	}
 
 	static get renderer() {
 		return TableCellRenderer;
 	}
 
-	static calculateTemplateContext(state) {
-		const context = {
-			ctr: state,
-			classes: {
-				main: {
-					sapWCTableCell: true,
-					sapWCTableCellFirst: state._firstInRow,
-					sapWCTableCellLast: state._lastInRow,
-					sapWCTableCellWithBorder: state._hasBorder,
-				},
-			},
-			styles: {
-				main: {
-				},
+	get classes() {
+		return {
+			main: {
+				sapWCTableCell: true,
+				sapWCTableCellFirst: this._firstInRow,
+				sapWCTableCellLast: this._lastInRow,
+				sapWCTableCellWithBorder: this._hasBorder,
 			},
 		};
-
-		return context;
 	}
 }
 

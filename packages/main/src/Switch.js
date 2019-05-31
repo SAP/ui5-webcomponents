@@ -1,28 +1,23 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 
 // Template
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
-import SwitchRenderer from "./build/compiled/SwitchRenderer.lit";
-import SwitchTemplateContext from "./SwitchTemplateContext";
-import SwitchType from "./types/SwitchType";
+import SwitchRenderer from "./build/compiled/SwitchRenderer.lit.js";
+import SwitchType from "./types/SwitchType.js";
 
 // Styles
-import belize from "./themes/sap_belize/Switch.less";
-import belizeHcb from "./themes/sap_belize_hcb/Switch.less";
-import fiori3 from "./themes/sap_fiori_3/Switch.less";
+import switchCss from "./themes/Switch.css.js";
 
-ShadowDOM.registerStyle("sap_belize", "Switch.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "Switch.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "Switch.css", fiori3);
+// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
+import "./ThemePropertiesProvider.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-switch",
-	styleUrl: ["Switch.css"],
 	properties: /** @lends sap.ui.webcomponents.main.Switch.prototype */ {
 
 		/**
@@ -33,7 +28,7 @@ const metadata = {
 		 * pressing the <code>Enter</code> or <code>Space</code> key.
 		 *
 		 * @type {boolean}
-		 * @default false
+		 * @defaultvalue false
 		 * @public
 		 */
 		checked: {
@@ -46,7 +41,7 @@ const metadata = {
 		 * <b>Note:</b> A disabled <code>ui5-switch</code> is noninteractive.
 		 *
 		 * @type {boolean}
-		 * @default false
+		 * @defaultvalue false
 		 * @public
 		 */
 		disabled: {
@@ -57,26 +52,26 @@ const metadata = {
 		 * Defines the text of the <code>ui5-switch</code> when switched on.
 		 *
 		 * <br><br>
-		 * <b>Note:</b> We recommend using short texts (up to 3 letters, because larger texts might be cut off.
+		 * <b>Note:</b> We recommend using short texts, up to 3 letters (larger texts would be cut off).
 		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		textOn: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
 		 * Defines the text of the <code>ui5-switch</code> when switched off.
 		 *
 		 * <br><br>
-		 * <b>Note:</b> We recommend using short texts (up to 3 letters, because larger texts might be cut off.
+		 * <b>Note:</b> We recommend using short texts, up to 3 letters (larger texts would be cut off).
 		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		textOff: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
@@ -88,7 +83,7 @@ const metadata = {
 		 * <b>Note:</b> If <code>Graphical</code> type is set,
 		 * positive and negative icons will replace the <code>textOn</code> and <code>textOff</code>.
 		 * @type {string}
-		 * @default Textual
+		 * @defaultvalue "Textual"
 		 * @public
 		 */
 		type: {
@@ -113,6 +108,16 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  * The <code>ui5-switch</code> component is used for changing between binary states.
+ * </br>
+ * The component can display texts, that will be switched, based on the component state, via the <code>textOn</code> and <code>textOff</code> properties,
+ * but texts longer than 3 letters will be cuttted off.
+ * </br>
+ * However, users are able to customize the width of <code>ui5-switch</code> with pure CSS (&lt;ui5-switch style="width: 200px">), and set widths, depending on the texts they would use.
+ * </br>
+ * Note: the component would not automatically stretch to fit the whole text width.
+ *
+ * <h3>Keyboard Handling</h3>
+ * The state can be changed by pressing the Space and Enter keys.
  *
  * <h3>ES6 Module Import</h3>
  *
@@ -121,14 +126,18 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Switch
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-switch
  * @public
  * @since 0.8.0
  */
-class Switch extends WebComponent {
+class Switch extends UI5Element {
 	static get metadata() {
 		return metadata;
+	}
+
+	static get styles() {
+		return switchCss;
 	}
 
 	static get renderer() {
@@ -140,17 +149,17 @@ class Switch extends WebComponent {
 	}
 
 	onkeydown(event) {
-		if (event.keyCode === KeyCodes.SPACE) {
+		if (isSpace(event)) {
 			event.preventDefault();
 		}
 
-		if (event.keyCode === KeyCodes.ENTER) {
+		if (isEnter(event)) {
 			this.toggle();
 		}
 	}
 
 	onkeyup(event) {
-		if (event.keyCode === KeyCodes.SPACE) {
+		if (isSpace(event)) {
 			this.toggle();
 		}
 	}
@@ -162,8 +171,34 @@ class Switch extends WebComponent {
 		}
 	}
 
-	static get calculateTemplateContext() {
-		return SwitchTemplateContext.calculate;
+	get textOn() {
+		const graphical = this.type === SwitchType.Graphical;
+		return graphical ? "" : this.textOn;
+	}
+
+	get textOff() {
+		const graphical = this.type === SwitchType.Graphical;
+		return graphical ? "" : this.textOff;
+	}
+
+	get tabIndex() {
+		return this.disabled ? undefined : "0";
+	}
+
+	get classes() {
+		const graphical = this.type === SwitchType.Graphical;
+		const hasLabel = graphical || this.textOn || this.textOff;
+
+		return {
+			main: {
+				"ui5-switch-wrapper": true,
+				"ui5-switch-desktop": isDesktop(),
+				"ui5-switch--disabled": this.disabled,
+				"ui5-switch--checked": this.checked,
+				"ui5-switch--semantic": graphical,
+				"ui5-switch--no-label": !hasLabel,
+			},
+		};
 	}
 }
 

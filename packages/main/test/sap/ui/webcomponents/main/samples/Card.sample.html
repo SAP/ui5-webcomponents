@@ -103,7 +103,7 @@
 	<section>
 		<h3>Card with List</h3>
 		<div class="snippet card-container">
-			<ui5-card avatar="sap-icon://group" heading="Team 6" subtitle="Direct Reports" status="6 of 6" class="medium">
+			<ui5-card avatar="sap-icon://group" heading="Team 6" subtitle="Direct Reports" status="6 of 6" class="medium" >
 				<div class="card-content">
 					<ui5-list separators="None" class="card-content-child">
 						<ui5-li image="../../../../../../www/samples/images/man_avatar_1.png" description="User Researcher">Alain Chevalier</ui5-li>
@@ -132,7 +132,7 @@
 <ui5-card avatar="sap-icon://group"
 	heading="Team 6"
 	subtitle="Direct Reports"
-	tatus="6 of 6"
+	status="6 of 6"
 	class="medium">
 	<div class="card-content">
 		<ui5-list separators="None" class="card-content-child">
@@ -154,34 +154,34 @@
 	<section>
 		<h3>Card with Table</h3>
 		<div class="snippet card-container">
-			<ui5-card heading="New Purchase Orders" subtitle="Today" status="3 of 15" >
+			<ui5-card heading="New Purchase Orders" subtitle="Today" status="3 of 15">
 				<ui5-table class="demo-table content-padding">
 					<!-- Columns -->
-					<ui5-table-column data-ui5-slot="columns">
-						<div data-ui5-slot="header">
+					<ui5-table-column slot="columns">
+						<div slot="header">
 							<ui5-label>Sales Order</ui5-label>
 						</div>
 					</ui5-table-column>
 
-					<ui5-table-column data-ui5-slot="columns">
-						<div data-ui5-slot="header">
+					<ui5-table-column slot="columns">
+						<div slot="header">
 							<ui5-label>Customer</ui5-label>
 						</div>
 					</ui5-table-column>
 
-					<ui5-table-column data-ui5-slot="columns">
-						<div data-ui5-slot="header">
+					<ui5-table-column slot="columns">
+						<div slot="header">
 							<ui5-label>Net Amount</ui5-label>
 						</div>
 					</ui5-table-column>
 
-					<ui5-table-column data-ui5-slot="columns" min-width="450" popin-text="Status" demand-popin>
-						<div data-ui5-slot="header">
+					<ui5-table-column slot="columns" min-width="450" popin-text="Status" demand-popin>
+						<div slot="header">
 							<ui5-label>Status</ui5-label>
 						</div>
 					</ui5-table-column>
 
-					<ui5-table-row data-ui5-slot="rows">
+					<ui5-table-row slot="rows">
 						<ui5-table-cell>
 							<ui5-label>5000010050</ui5-label>
 						</ui5-table-cell>
@@ -196,7 +196,7 @@
 						</ui5-table-cell>
 					</ui5-table-row>
 
-					<ui5-table-row data-ui5-slot="rows">
+					<ui5-table-row slot="rows">
 						<ui5-table-cell>
 							<ui5-label>5000010051</ui5-label>
 						</ui5-table-cell>
@@ -211,7 +211,7 @@
 						</ui5-table-cell>
 					</ui5-table-row>
 
-					<ui5-table-row data-ui5-slot="rows">
+					<ui5-table-row slot="rows">
 						<ui5-table-cell>
 							<ui5-label>5000010052</ui5-label>
 						</ui5-table-cell>
@@ -239,32 +239,32 @@
 <ui5-card heading="New Purchase Orders" subtitle="Today" status="3 of 15" class="medium">
 	<ui5-table class="demo-table content-padding">
 		<!-- Columns -->
-		<ui5-table-column data-ui5-slot="columns">
-			<div data-ui5-slot="header">
+		<ui5-table-column slot="columns">
+			<div slot="header">
 				<ui5-label>Sales Order</ui5-label>
 			</div>
 		</ui5-table-column>
 
-		<ui5-table-column data-ui5-slot="columns">
-			<div data-ui5-slot="header">
+		<ui5-table-column slot="columns">
+			<div slot="header">
 				<ui5-label>Customer</ui5-label>
 			</div>
 		</ui5-table-column>
 
-		<ui5-table-column data-ui5-slot="columns">
-			<div data-ui5-slot="header">
+		<ui5-table-column slot="columns">
+			<div slot="header">
 				<ui5-label>Net Amount</ui5-label>
 			</div>
 		</ui5-table-column>
 
-		<ui5-table-column data-ui5-slot="columns" min-width="450" popin-text="Status" demand-popin>
-			<div data-ui5-slot="header">
+		<ui5-table-column slot="columns" min-width="450" popin-text="Status" demand-popin>
+			<div slot="header">
 				<ui5-label>Status</ui5-label>
 			</div>
 		</ui5-table-column>
 
 		<!-- Rows -->
-		<ui5-table-row data-ui5-slot="rows">
+		<ui5-table-row slot="rows">
 			<ui5-table-cell>
 				<ui5-label>5000010051</ui5-label>
 			</ui5-table-cell>
@@ -417,25 +417,6 @@
 }
 </style>
 
-<ui5-card avatar="../../../../../../www/samples/images/woman_avatar_1.png" heading="Dona Maria Moore" subtitle="Senior Sales Executive" class="small">
-	<div class="content content-padding">
-		<ui5-title level="H5" style="padding-bottom: 1rem;">Contact details</ui5-title>
-
-		<div class="content-group">
-			<ui5-label>Company Name</ui5-label>
-			<ui5-title level="H6">Company A</ui5-title>
-		</div>
-		<div class="content-group">
-			<ui5-label>Address</ui5-label>
-			<ui5-title level="H6">481 West Street, Anytown 45066, USA</ui5-title>
-		</div>
-		<div class="content-group">
-			<ui5-label>Website</ui5-label>
-			<ui5-link target="_blank">www.company_a.example.com</ui5-link>
-		</div>
-	</div>
-</ui5-card>
-
 <style>
 .item {display: flex;width: 100%;justify-content: space-between;}
 .item-content-begin {display: flex;flex-direction: column;}
@@ -461,6 +442,25 @@
 		</ui5-li-custom>
 		...
 	</ui5-list>
+</ui5-card>
+
+<ui5-card avatar="../../../../../../www/samples/images/woman_avatar_1.png" heading="Dona Maria Moore" subtitle="Senior Sales Executive" class="small">
+	<div class="content content-padding">
+		<ui5-title level="H5" style="padding-bottom: 1rem;">Contact details</ui5-title>
+
+		<div class="content-group">
+			<ui5-label>Company Name</ui5-label>
+			<ui5-title level="H6">Company A</ui5-title>
+		</div>
+		<div class="content-group">
+			<ui5-label>Address</ui5-label>
+			<ui5-title level="H6">481 West Street, Anytown 45066, USA</ui5-title>
+		</div>
+		<div class="content-group">
+			<ui5-label>Website</ui5-label>
+			<ui5-link target="_blank">www.company_a.example.com</ui5-link>
+		</div>
+	</div>
 </ui5-card>
 </xmp>
 		</pre>

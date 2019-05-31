@@ -1,33 +1,21 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
-import URI from "@ui5/webcomponents-base/src/types/URI";
-import Integer from "@ui5/webcomponents-base/src/types/Integer";
-import Function from "@ui5/webcomponents-base/src/types/Function";
-import { fetchCldrData } from "@ui5/webcomponents-base/src/CLDR";
-import { getLocale } from "@ui5/webcomponents-base/src/LocaleProvider";
-import Icon from "./Icon";
-import Link from "./Link";
-import TimelineItemTemplateContext from "./TimelineItemTemplateContext";
-import TimelineItemRenderer from "./build/compiled/TimelineItemRenderer.lit";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import URI from "@ui5/webcomponents-base/src/types/URI.js";
+import Icon from "./Icon.js";
+import Link from "./Link.js";
+import TimelineItemRenderer from "./build/compiled/TimelineItemRenderer.lit.js";
 
 // Styles
-import belize from "./themes/sap_belize/TimelineItem.less";
-import belizeHcb from "./themes/sap_belize_hcb/TimelineItem.less";
-import fiori3 from "./themes/sap_fiori_3/TimelineItem.less";
+import styles from "./themes/TimelineItem.css.js";
 
-ShadowDOM.registerStyle("sap_belize", "TimelineItem.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "TimelineItem.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "TimelineItem.css", fiori3);
+// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
+import "./ThemePropertiesProvider.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-timeline-item",
-	styleUrl: [
-		"TimelineItem.css",
-	],
 	defaultSlot: "description",
 	slots: /** @lends sap.ui.webcomponents.main.TimelineItem.prototype */ {
 		/**
@@ -59,18 +47,19 @@ const metadata = {
 		/**
 		 * Defines the name of the item.
 		 *
-		 * @type {String}
+		 * @type {string}
+		 * @defaultvalue false
 		 * @public
 		 */
 		itemName: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
-		 * Defines whether the name is clickable.
+		 * Defines whether the <code>itemName</code> is clickable.
 		 *
 		 * @type {Boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		itemNameClickable: {
@@ -80,31 +69,22 @@ const metadata = {
 		/**
 		 * Defines the title text of the component.
 		 *
-		 * @type {String}
+		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		titleText: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
-		 * It's a UNIX timestamp - seconds since 00:00:00 UTC on Jan 1, 1970.
-		 * @type {Integer}
+		 * Defines the subtitle text of the component.
+		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
-		timestamp: {
-			type: Integer,
-		},
-
-		/**
-		 * Defines the format of date/time of the component.
-		 * @type {Integer}
-		 * @public
-		 */
-		timeFormat: {
+		subtitleText: {
 			type: String,
-			defaultValue: "dd.MM.YYYY hh:mm",
 		},
 
 		_onItemNamePress: {
@@ -141,12 +121,11 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.TimelineItem
- * @extends WebComponent
+ * @extends UI5Element
  * @tagname ui5-timeline
- * @usestextcontent
  * @public
  */
-class TimelineItem extends WebComponent {
+class TimelineItem extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
@@ -155,8 +134,8 @@ class TimelineItem extends WebComponent {
 		return TimelineItemRenderer;
 	}
 
-	static get calculateTemplateContext() {
-		return TimelineItemTemplateContext.calculate;
+	static get styles() {
+		return styles;
 	}
 
 	constructor() {
@@ -169,9 +148,17 @@ class TimelineItem extends WebComponent {
 		this.fireEvent("itemNamePress", {});
 	}
 
+	get classes() {
+		return {
+			indicator: {
+				sapWCTimelineIndicator: true,
+				sapWCTimelineIndicatorNoIcon: !this.icon,
+			},
+		};
+	}
+
 	static async define(...params) {
 		await Promise.all([
-			fetchCldrData(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
 			Icon.define(),
 			Link.define(),
 		]);

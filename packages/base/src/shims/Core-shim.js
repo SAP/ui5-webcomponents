@@ -1,6 +1,6 @@
-import { inject as injectCore } from "@ui5/webcomponents-core/dist/sap/ui/core/Core";
-import * as Configuration from "../Configuration";
-import * as FormatSettings from "../FormatSettings";
+import { inject as injectCore } from "@ui5/webcomponents-core/dist/sap/ui/core/Core.js";
+import * as Configuration from "../Configuration.js";
+import * as FormatSettings from "../FormatSettings.js";
 
 /**
  * Shim for the OpenUI5 core

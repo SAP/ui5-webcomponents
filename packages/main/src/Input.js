@@ -1,50 +1,31 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import { isIE } from "@ui5/webcomponents-core/dist/sap/ui/Device";
-import ValueState from "@ui5/webcomponents-base/src/types/ValueState";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import { isIE } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
+import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
+
 import {
 	isUp,
 	isDown,
-	isLeft,
 	isSpace,
 	isEnter,
-	isRight,
-} from "@ui5/webcomponents-base/src/events/PseudoEvents";
-import Icon from "./Icon";
-import InputType from "./types/InputType";
+} from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import Icon from "./Icon.js";
+import InputType from "./types/InputType.js";
 // Template
-import InputRenderer from "./build/compiled/InputRenderer.lit";
-import InputTemplateContext from "./InputTemplateContext";
+import InputRenderer from "./build/compiled/InputRenderer.lit.js";
 
 // Styles
-import belize from "./themes/sap_belize/Input.less";
-import belizeHcb from "./themes/sap_belize_hcb/Input.less";
-import fiori3 from "./themes/sap_fiori_3/Input.less";
+import styles from "./themes/Input.css.js";
+import shellbarInput from "./themes/ShellBarInput.css.js";
 
-// Styles for searchField
-import shellBarInput from "./themes/sap_fiori_3/ShellBarInput.less";
-import shellBarInputBelize from "./themes/sap_belize/ShellBarInput.less";
-import shellBarInputBelizeHcb from "./themes/sap_belize_hcb/ShellBarInput.less";
-
-ShadowDOM.registerStyle("sap_belize", "Input.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "Input.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "Input.css", fiori3);
-
-
-ShadowDOM.registerStyle("sap_fiori_3", "ShellBarInput.css", shellBarInput);
-ShadowDOM.registerStyle("sap_belize", "ShellBarInput.css", shellBarInputBelize);
-ShadowDOM.registerStyle("sap_belize_hcb", "ShellBarInput.css", shellBarInputBelizeHcb);
+// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
+import "./ThemePropertiesProvider.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-input",
-	styleUrl: [
-		"Input.css",
-		"ShellBarInput.css",
-	],
 	defaultSlot: "suggestionItems",
 	slots: /** @lends sap.ui.webcomponents.main.Input.prototype */ {
 
@@ -64,10 +45,10 @@ const metadata = {
 		 * </br></br>
 		 * Example: </br>
 		 * &lt;ui5-input show-suggestions></br>
-		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li type="Active">Item #1&lt;/ui5-li></br>
-		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li type="Active">Item #2&lt;/ui5-li></br>
+		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li>Item #1&lt;/ui5-li></br>
+		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li>Item #2&lt;/ui5-li></br>
 		 * &lt;/ui5-input>
-		 * <ui5-input show-suggestions><ui5-li type="Active">Item #1</ui5-li><ui5-li type="Active">Item #2</ui5-li></ui5-input>
+		 * <ui5-input show-suggestions><ui5-li>Item #1</ui5-li><ui5-li>Item #2</ui5-li></ui5-input>
 		 * </br></br>
 		 * <b>Note:</b> The suggestion would be displayed only if the <code>showSuggestions</code>
 		 * property is set to <code>true</code>.
@@ -80,6 +61,10 @@ const metadata = {
 			type: HTMLElement,
 			multiple: true,
 		},
+
+		_beginContent: {
+			type: HTMLElement,
+		},
 	},
 	properties: /** @lends  sap.ui.webcomponents.main.Input.prototype */  {
 
@@ -89,6 +74,7 @@ const metadata = {
 		 * <b>Note:</b> A disabled <code>ui5-input</code> is completely uninteractive.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		disabled: {
@@ -101,10 +87,10 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> The placeholder is not supported in IE. If the placeholder is provided, it won`t be displayed in IE.
 		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		placeholder: {
-			defaultValue: null,
 			type: String,
 		},
 
@@ -115,6 +101,7 @@ const metadata = {
 		 * but still provides visual feedback upon user interaction.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		readonly: {
@@ -135,11 +122,12 @@ const metadata = {
 		 * </ul>
 		 *
 		 * @type {string}
+		 * @defaultvalue "Text"
 		 * @public
 		 */
 		type: {
-			defaultValue: InputType.Text,
 			type: InputType,
+			defaultValue: InputType.Text,
 		},
 
 		/**
@@ -148,10 +136,10 @@ const metadata = {
 		 * <b>Note:</b> The property is updated upon typing.
 		 *
 		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		value: {
-			defaultValue: "",
 			type: String,
 		},
 
@@ -160,6 +148,7 @@ const metadata = {
 		 * Available options are: <code>None</code>, <code>Success</code>, <code>Warning</code>, and <code>Error</code>.
 		 *
 		 * @type {string}
+		 * @defaultvalue "None"
 		 * @public
 		 */
 		valueState: {
@@ -168,9 +157,28 @@ const metadata = {
 		},
 
 		/**
+		 * Determines the name with which the <code>ui5-input</code> will be submitted in an HTML form.
+		 *
+		 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
+		 * <code>import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";</code>
+		 *
+		 * <b>Note:</b> When set, a native <code>input</code> HTML element
+		 * will be created inside the <code>ui5-input</code> so that it can be submitted as
+		 * part of an HTML form. Do not use this property unless you need to submit a form.
+		 *
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @public
+		 */
+		name: {
+			type: String,
+		},
+
+		/**
 		 * Defines whether the <code>ui5-input</code> should show suggestions, if such are present.
 		 *
 		 * @type {Boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		showSuggestions: {
@@ -263,11 +271,11 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Input
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-input
  * @public
  */
-class Input extends WebComponent {
+class Input extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
@@ -276,8 +284,8 @@ class Input extends WebComponent {
 		return InputRenderer;
 	}
 
-	static get calculateTemplateContext() {
-		return InputTemplateContext.calculate;
+	static get styles() {
+		return [styles, shellbarInput];
 	}
 
 	constructor() {
@@ -320,6 +328,12 @@ class Input extends WebComponent {
 		if (this.showSuggestions) {
 			this.enableSuggestions();
 		}
+
+		if (Input.FormSupport) {
+			Input.FormSupport.syncNativeHiddenInput(this);
+		} else if (this.name) {
+			console.warn(`In order for the "name" property to have effect, you should also: import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";`); // eslint-disable-line
+		}
 	}
 
 	onAfterRendering() {
@@ -336,14 +350,6 @@ class Input extends WebComponent {
 
 		if (isDown(event)) {
 			return this._handleDown(event);
-		}
-
-		if (isRight(event)) {
-			return this._handleRight(event);
-		}
-
-		if (isLeft(event)) {
-			return this._handleLeft(event);
 		}
 
 		if (isSpace(event)) {
@@ -366,14 +372,6 @@ class Input extends WebComponent {
 		if (this.Suggestions) {
 			this.Suggestions.onDown(event);
 		}
-	}
-
-	_handleRight(event) {
-		this._handleDown(event);
-	}
-
-	_handleLeft(event) {
-		this._handleUp(event);
 	}
 
 	_handleSpace(event) {
@@ -440,7 +438,7 @@ class Input extends WebComponent {
 	}
 
 	selectSuggestion(item, keyboardUsed) {
-		const itemText = item._nodeText;
+		const itemText = item.textContent;
 		const fireInput = keyboardUsed
 			? this.valueBeforeItemSelection !== itemText : this.value !== itemText;
 
@@ -523,6 +521,47 @@ class Input extends WebComponent {
 	onOpen() {}
 
 	onClose() {}
+
+	get classes() {
+		const hasState = this.valueState !== "None";
+
+		return {
+			main: {
+				sapWCInputBase: true,
+				sapWCInputBaseWidthPadding: true,
+				sapWCInputBaseDisabled: this.disabled,
+				sapWCInputBaseReadonly: this.readonly,
+				sapWCInput: true,
+				sapWCInputFocused: this._focused,
+				sapWCFocus: this._focused,
+			},
+			wrapper: {
+				sapWCInputBaseContentWrapper: true,
+				sapWCInputBaseDisabledWrapper: this.disabled,
+				sapWCInputBaseReadonlyWrapper: this.readonly && !this.disabled,
+				sapWCInputBaseContentWrapperState: hasState,
+				[`sapWCInputBaseContentWrapper${this.valueState}`]: hasState,
+			},
+		};
+	}
+
+	get inputPlaceholder() {
+		// We don`t support placeholder for IE,
+		// because IE fires input events, when placeholder exists, leading to functional degredations.
+		return isIE() ? "" : this.placeholder;
+	}
+
+	get _readonly() {
+		return this.readonly && !this.disabled;
+	}
+
+	get inputType() {
+		return this.type.toLowerCase();
+	}
+
+	get ariaInvalid() {
+		return this.valueState === "Error" ? "true" : undefined;
+	}
 }
 
 Bootstrap.boot().then(_ => {

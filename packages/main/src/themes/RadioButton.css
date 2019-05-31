@@ -1,0 +1,195 @@
+:host(ui5-radiobutton:not([hidden])) {
+	max-width: 100%;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	display: inline-block;
+}
+
+ui5-radiobutton:not([hidden]) {
+	max-width: 100%;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	display: inline-block;
+}
+
+.sapMRb {
+	position: relative;
+	display: flex;
+	flex-wrap: nowrap;
+	outline: none;
+	max-width: 100%;
+}
+
+/* Selected */
+.sapMRb.sapMRbSel .sapMRbSvgInner {
+	fill: var(--_ui5_radiobutton_selected_fill);
+}
+
+/* Disabled */
+.sapMRb.sapMRbDis {
+	opacity: var(--sapUiContentDisabledOpacity);
+}
+
+/* Focused */
+.sapMRb:not(.sapMRbDis):focus:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0.5rem;
+	bottom: 0.5rem;
+	left: 0.5rem;
+	right: 0.5rem;
+	pointer-events: none;
+	border: var(--_ui5_radiobutton_border_width) dotted var(--sapUiContentFocusColor);
+}
+
+.sapMRb.sapMRbHasLabel:focus:before {
+	right: 0;
+}
+
+/* Read only */
+.sapMRb.sapMRbRo.sapMRbSel .sapMRbSvgInner {
+	fill: var(--sapUiContentNonInteractiveIconColor);
+}
+
+.sapMRb.sapMRbRo .sapMRbSvgOuter {
+	fill: var(--sapUiFieldReadOnlyBackground);
+	stroke: var(--sapUiFieldReadOnlyBorderColor);
+}
+
+/* Error state */
+.sapMRb.sapMRbErr.sapMRbSel .sapMRbSvgInner {
+	fill: var(--_ui5_radiobutton_selected_error_fill);
+}
+.sapMRb.sapMRbErr .sapMRbSvgOuter,
+.sapMRb.sapMRbErr:hover .sapMRbInner.sapMRbHoverable:hover .sapMRbSvgOuter {
+	stroke: var(--sapUiFieldInvalidColor);
+	fill: var(--sapUiFieldInvalidBackground);
+}
+
+/* Warning state */
+.sapMRb.sapMRbWarn.sapMRbSel .sapMRbSvgInner {
+	fill: var(--_ui5_radiobutton_selected_warning_fill);
+}
+.sapMRb.sapMRbWarn .sapMRbSvgOuter,
+.sapMRb.sapMRbWarn:hover .sapMRbInner.sapMRbHoverable:hover .sapMRbSvgOuter {
+	stroke: var(--sapUiFieldWarningColor);
+	fill: var(--sapUiFieldWarningBackground);
+}
+
+.sapMRb.sapMRbErr,
+.sapMRb.sapMRbWarn {
+	stroke-dasharray: var(--_ui5_radiobutton_warning_error_border_dash);
+}
+
+/* Inner */
+.sapMRb .sapMRbInner {
+	width: 2.75rem;
+	height: 2.75rem;
+	font-size: 1rem; /* override font size of the message dialog */
+	pointer-events: none;
+	vertical-align: top;
+	display: inline-block;
+}
+
+.sapMRb .sapMRbInner:focus {
+	outline: none;
+}
+
+/* Hovered */
+.sapMRb:not(.sapMRbWarn):not(.sapMRbErr):hover .sapMRbHoverable .sapMRbSvgOuter {
+	fill: var(--_ui5_radiobutton_hover_fill);
+	stroke: var(--sapUiFieldHoverBorderColor);
+}
+
+.sapMRb .sapMRbInner input {
+	margin: 0; /* FF puts margin */
+	visibility: hidden;
+	width: 0;
+}
+
+/* Label */
+.sapMRb ui5-label.labelInRadioButton {
+	width: calc(100% - 2.75rem);
+	padding-right: 1px;
+	vertical-align: top;
+	height: 2.75rem;
+	line-height: 2.75rem;
+	cursor: default;
+	max-width: 100%;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	pointer-events: none;
+}
+
+/* SVG */
+.sapMRbSvg {
+	height: 2.75rem;
+	width: 2.75rem;
+	pointer-events: none;
+}
+
+.sapMRbSvg .sapMRbSvgOuter {
+	stroke: var(--sapUiFieldBorderColor);
+}
+
+.sapMRbSvg .sapMRbSvgInner {
+	fill: none;
+}
+
+/* Compact size */
+.sapUiSizeCompact .sapMRb {
+	height : 2rem;
+}
+
+.sapUiSizeCompact .sapMRb:focus:before {
+	top: .375rem;
+	bottom: .375rem;
+	left: .375rem;
+	right: .325rem;
+}
+
+.sapUiSizeCompact .sapMRb.sapMRbHasLabel:focus:before {
+	right: 0;
+}
+
+.sapUiSizeCompact .sapMRb .sapMRbInner {
+	width: 2rem;
+	height: 2rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.sapUiSizeCompact .sapMRb .sapMRbInner .sapMRbSvg {
+	height: 2rem;
+	width: 2rem;
+	line-height: 2rem;
+}
+
+.sapUiSizeCompact .sapMRb ui5-label.labelInRadioButton {
+	line-height: 2rem;
+	height: 2rem;
+	width: calc(100% - 2rem + 1px);
+}
+
+/* RTL */
+span[dir="rtl"] .sapMRb.sapMRbHasLabel:focus:before {
+	left: 0;
+	right: 0.5rem;
+}
+
+/* RTL in Compact */
+span[dir="rtl"].sapUiSizeCompact .sapMRb.sapMRbHasLabel:focus:before {
+	left: 0;
+	right: 0.375rem;
+}
+
+/* ListItem Context */
+:host(ui5-radiobutton.singleSelectionRadioButton) .sapMRb .sapMRbInner .sapMRbSvgOuter {
+	fill: var(--sapUiListBackground);
+}
+
+ui5-radiobutton.singleSelectionRadioButton .sapMRb .sapMRbInner .sapMRbSvgOuter {
+	fill: var(--sapUiListBackground);
+}

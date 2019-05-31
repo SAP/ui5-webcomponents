@@ -1,41 +1,34 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import { getRTL } from "@ui5/webcomponents-base/src/Configuration";
-import URI from "@ui5/webcomponents-base/src/types/URI";
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
-import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler";
-import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation";
-import { isSpace, isEscape } from "@ui5/webcomponents-base/src/events/PseudoEvents";
-import StandardListItem from "./StandardListItem";
-import List from "./List";
-import Icon from "./Icon";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import { getRTL } from "@ui5/webcomponents-base/src/Configuration.js";
+import URI from "@ui5/webcomponents-base/src/types/URI.js";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler.js";
+import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
+import { isSpace, isEscape } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import StandardListItem from "./StandardListItem.js";
+import List from "./List.js";
+import Icon from "./Icon.js";
+import Popover from "./Popover.js";
 
 // Template
-import ShellBarRenderer from "./build/compiled/ShellBarRenderer.lit";
-import ShellBarTemplateContext from "./ShellBarTemplateContext";
+import ShellBarRenderer from "./build/compiled/ShellBarRenderer.lit.js";
 
 // Styles
-import fiori3 from "./themes/sap_fiori_3/ShellBar.less";
-import belize from "./themes/sap_belize/ShellBar.less";
-import belizeHcb from "./themes/sap_belize_hcb/ShellBar.less";
+import styles from "./themes/ShellBar.css.js";
 
-ShadowDOM.registerStyle("sap_fiori_3", "ShellBar.css", fiori3);
-ShadowDOM.registerStyle("sap_belize", "ShellBar.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "ShellBar.css", belizeHcb);
+// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
+import "./ThemePropertiesProvider.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-shellbar",
-	styleUrl: [
-		"ShellBar.css",
-	],
 	properties: /** @lends  sap.ui.webcomponents.main.ShellBar.prototype */ {
 
 		/**
 		 * Defines the <code>logo</code> source URI.
-		 * @type {String}
+		 * @type {string}
 		 * @public
 		 */
 		logo: {
@@ -45,30 +38,31 @@ const metadata = {
 
 		/**
 		 * Defines the <code>primaryTitle</code>.
-		 * @type {String}
+		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		primaryTitle: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
 		 * Defines the <code>secondaryTitle</code>.
 		 * <br><br>
 		 * <b>Note:</b> On smaller screen width, the <code>secondaryTitle</code> would be hidden.
-		 * @type {String}
+		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		secondaryTitle: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
 		 * Defines the <code>notificationCount</code>,
 		 * displayed in the notification icon top-right corner.
-		 * @type {String}
+		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		notificationCount: {
@@ -98,6 +92,7 @@ const metadata = {
 		/**
 		 * Defines, if the product switch icon would be displayed.
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		showProductSwitch: {
@@ -107,6 +102,7 @@ const metadata = {
 		/**
 		 * Defines, if the product CoPilot icon would be displayed.
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		showCoPilot: {
@@ -115,7 +111,6 @@ const metadata = {
 
 		_breakpointSize: {
 			type: String,
-			defaultValue: "",
 		},
 
 		_itemsInfo: {
@@ -137,6 +132,18 @@ const metadata = {
 		_header: {
 			type: Object,
 		},
+
+		_logoPress: {
+			type: Function,
+		},
+
+		_coPilotPress: {
+			type: Function,
+		},
+
+		_menuItemPress: {
+			type: Function,
+		},
 	},
 
 	slots: /** @lends  sap.ui.webcomponents.main.ShellBar.prototype */ {
@@ -151,6 +158,22 @@ const metadata = {
 		 * @public
 		 */
 		items: {
+			type: HTMLElement,
+			multiple: true,
+		},
+
+		/**
+		 * Defines the items displayed in menu after a click on the primary title.
+		 * </br></br>
+		 * <b>Note:</b>
+		 * You can use the &nbsp;&lt;ui5-li>&lt;/ui5-li> and its ancestors.
+		 *
+		 * @type {HTMLElement}
+		 * @slot
+		 * @since 0.10
+		 * @public
+		 */
+		menuItems: {
 			type: HTMLElement,
 			multiple: true,
 		},
@@ -180,30 +203,17 @@ const metadata = {
 	defaultSlot: "items",
 	events: /** @lends sap.ui.webcomponents.main.ShellBar.prototype */ {
 		/**
-		 * Fired, when the primaryTitle is pressed.
-		 *
-		 * @event
-		 * @param {HTMLElement} iconRef dom ref of the clicked icon
-		 * @public
-		 */
-		titlePress: {
-			detail: {
-				iconRef: { type: HTMLElement },
-			},
-		},
-
-		/**
 		 *
 		 * Fired, when the notification icon is pressed.
 		 *
 		 *
 		 * @event
-		 * @param {HTMLElement} iconRef dom ref of the clicked icon
+		 * @param {HTMLElement} targetRef dom ref of the clicked element
 		 * @public
 		 */
 		notificationsPress: {
 			detail: {
-				iconRef: { type: HTMLElement },
+				targetRef: { type: HTMLElement },
 			},
 		},
 
@@ -211,12 +221,12 @@ const metadata = {
 		 * Fired, when the profile icon is pressed.
 		 *
 		 * @event
-		 * @param {HTMLElement} iconRef dom ref of the clicked icon
+		 * @param {HTMLElement} targetRef dom ref of the clicked element
 		 * @public
 		 */
 		profilePress: {
 			detail: {
-				iconRef: { type: HTMLElement },
+				targetRef: { type: HTMLElement },
 			},
 		},
 
@@ -224,12 +234,54 @@ const metadata = {
 		 * Fired, when the product switch icon is pressed.
 		 *
 		 * @event
-		 * @param {HTMLElement} iconRef dom ref of the clicked icon
+		 * @param {HTMLElement} targetRef dom ref of the clicked element
 		 * @public
 		 */
 		productSwitchPress: {
 			detail: {
-				iconRef: { type: HTMLElement },
+				targetRef: { type: HTMLElement },
+			},
+		},
+
+		/**
+		 * Fired, when the logo is pressed.
+		 *
+		 * @event
+		 * @param {HTMLElement} targetRef dom ref of the clicked element
+		 * @since 0.10
+		 * @public
+		 */
+		logoPress: {
+			detail: {
+				targetRef: { type: HTMLElement },
+			},
+		},
+
+		/**
+		 * Fired, when the co pilot is pressed.
+		 *
+		 * @event
+		 * @param {HTMLElement} targetRef dom ref of the clicked element
+		 * @since 0.10
+		 * @public
+		 */
+		coPilotPress: {
+			detail: {
+				targetRef: { type: HTMLElement },
+			},
+		},
+
+		/**
+		 * Fired, when a menu item is selected
+		 *
+		 * @event
+		 * @param {HTMLElement} item dom ref of the clicked list item
+		 * @since 0.10
+		 * @public
+		 */
+		menuItemPress: {
+			detail: {
+				item: { type: HTMLElement },
 			},
 		},
 	},
@@ -248,23 +300,23 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.ShellBar
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-shellbar
  * @appenddocs ShellBarItem
  * @public
  * @since 0.8.0
  */
-class ShellBar extends WebComponent {
+class ShellBar extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
 
-	static get renderer() {
-		return ShellBarRenderer;
+	static get styles() {
+		return styles;
 	}
 
-	static get calculateTemplateContext() {
-		return ShellBarTemplateContext.calculate;
+	static get renderer() {
+		return ShellBarRenderer;
 	}
 
 	static get FIORI_3_BREAKPOINTS() {
@@ -294,22 +346,37 @@ class ShellBar extends WebComponent {
 		this._isInitialRendering = true;
 		this._focussedItem = null;
 
+		// marks if preventDefault() is called in item's press handler
+		this._defaultItemPressPrevented = false;
+
 		const that = this;
 
 		this._actionList = {
 			itemPress: event => {
-				const popover = this.shadowRoot.querySelector("ui5-popover");
+				const popover = this.shadowRoot.querySelector(".sapWCShellBarOverflowPopover");
 
-				popover.close();
+				if (!this._defaultItemPressPrevented) {
+					popover.close();
+				}
+
+				this._defaultItemPressPrevented = false;
 			},
 		};
 
 		this._header = {
 			press: event => {
-				this.fireEvent("titlePress", {
-					iconRef: this.shadowRoot.querySelector(".sapWCShellBarMenuButton"),
-				});
+				const menuPopover = this.shadowRoot.querySelector(".sapWCShellBarMenuPopover");
+
+				if (this.menuItems.length) {
+					menuPopover.openBy(this.shadowRoot.querySelector(".sapWCShellBarMenuButton"));
+				}
 			},
+		};
+
+		this._menuItemPress = event => {
+			this.fireEvent("menuItemPress", {
+				item: event.detail.item,
+			});
 		};
 
 		this._itemNav = new ItemNavigation(this);
@@ -372,26 +439,36 @@ class ShellBar extends WebComponent {
 		};
 
 		this._handleResize = event => {
-			this.shadowRoot.querySelector("ui5-popover").close();
+			this.shadowRoot.querySelector(".sapWCShellBarOverflowPopover").close();
 			this._overflowActions();
+		};
+
+		this._logoPress = event => {
+			this.fireEvent("logoPress", {
+				targetRef: this.shadowRoot.querySelector(".sapWCShellBarLogo"),
+			});
+		};
+
+		this._coPilotPress = event => {
+			this.fireEvent("coPilotPress", {
+				targetRef: this.shadowRoot.querySelector(".ui5-shellbar-coPilot"),
+			});
 		};
 	}
 
 	onBeforeRendering() {
 		const size = this._handleBarBreakpoints();
-		const searchField = this.shadowRoot.querySelector(`#${this._id}-searchfield-wrapper`);
-
 		if (size !== "S") {
 			this._itemNav.init();
 		}
 
-		if (this.searchField && searchField) {
-			const inputSlot = searchField.children[0];
+		this._hiddenIcons = this._itemsInfo.filter(info => {
+			const isHidden = (info.classes.indexOf("sapWCShellBarHiddenIcon") !== -1);
+			const isSet = info.classes.indexOf("sapWCShellBarUnsetIcon") === -1;
+			const isOverflowIcon = info.classes.indexOf("sapWCShellBarOverflowIcon") !== -1;
 
-			if (inputSlot) {
-				inputSlot.assignedNodes()[0]._customClasses = ["sapWCShellBarSearchFieldElement"];
-			}
-		}
+			return isHidden && isSet && !isOverflowIcon;
+		});
 	}
 
 	onAfterRendering() {
@@ -399,6 +476,19 @@ class ShellBar extends WebComponent {
 
 		if (this._focussedItem) {
 			this._focussedItem._tabIndex = "0";
+		}
+	}
+
+	/**
+	 * Closes the overflow area.
+	 * Useful to manually close the overflow after having suppressed automatic closing with preventDefault() of ShellbarItem's press event
+	 * @public
+	 */
+	closeOverflow() {
+		const popover = this.shadowRoot.querySelector(".sapWCShellBarOverflowPopover");
+
+		if (popover) {
+			popover.close();
 		}
 	}
 
@@ -504,13 +594,13 @@ class ShellBar extends WebComponent {
 			return 1;
 		});
 
-		const focussedItem = items.filter(item => {
+		const focusedItem = items.filter(item => {
 			return (item.classes.indexOf("sapWCShellBarUnsetIcon") === -1)
 				&& (item.classes.indexOf("sapWCShellBarOverflowIcon") === -1)
 				&& (item.classes.indexOf("sapWCShellBarHiddenIcon") === -1);
 		})[0];
 
-		return focussedItem;
+		return focusedItem;
 	}
 
 	_overflowActions() {
@@ -525,7 +615,7 @@ class ShellBar extends WebComponent {
 	}
 
 	_toggleActionPopover() {
-		const popover = this.shadowRoot.querySelector("ui5-popover");
+		const popover = this.shadowRoot.querySelector(".sapWCShellBarOverflowPopover");
 		const overflowButton = this.shadowRoot.querySelector(".sapWCShellBarOverflowIcon");
 		popover.openBy(overflowButton);
 	}
@@ -601,7 +691,13 @@ class ShellBar extends WebComponent {
 		this._itemNav.currentIndex = elementIndex;
 
 		if (refItemId) {
-			this.items.filter(item => item.shadowRoot.querySelector(`#${refItemId}`))[0].fireEvent("press");
+			const shellbarItem = this.items.filter(item => {
+				return item.shadowRoot.querySelector(`#${refItemId}`);
+			})[0];
+
+			const prevented = !shellbarItem.fireEvent("press", { targetRef: event.target }, true);
+
+			this._defaultItemPressPrevented = prevented;
 		}
 	}
 
@@ -610,18 +706,20 @@ class ShellBar extends WebComponent {
 	}
 
 	_handleNotificationsPress(event) {
-		this.fireEvent("notificationsPress");
+		this.fireEvent("notificationsPress", {
+			targetRef: this.shadowRoot.querySelector(".sapWCShellBarBellIcon"),
+		});
 	}
 
 	_handleProfilePress(event) {
 		this.fireEvent("profilePress", {
-			iconRef: this.shadowRoot.querySelector(".sapWCShellBarImageButton"),
+			targetRef: this.shadowRoot.querySelector(".sapWCShellBarImageButton"),
 		});
 	}
 
 	_handleProductSwitchPress(event) {
 		this.fireEvent("productSwitchPress", {
-			detail: this.shadowRoot.querySelector(".sapWCShellBarIconProductSwitch"),
+			targetRef: this.shadowRoot.querySelector(".sapWCShellBarIconProductSwitch"),
 		});
 	}
 
@@ -713,11 +811,77 @@ class ShellBar extends WebComponent {
 		return items;
 	}
 
+	get classes() {
+		return {
+			wrapper: {
+				"sapWCShellBarWrapper": true,
+				[`sapWCShellBarSize${this._breakpointSize}`]: true,
+				"sapWCShellBarHasSearchField": this.searchField,
+				"sapWCShellBarBlockLayerShown": this._showBlockLayer,
+				"sapWCShellBarHasNotifications": !!this.notificationCount,
+			},
+			leftContainer: {
+				"sapWCShellBarOverflowContainer": true,
+				"sapWCShellBarOverflowContainerLeft": true,
+			},
+			logo: {
+				"sapWCShellBarLogo": true,
+			},
+			button: {
+				"sapWCShellBarMenuButtonNoTitle": !this.primaryTitle,
+				"sapWCShellBarMenuButtonNoLogo": !this.logo,
+				"sapWCShellBarMenuButtonMerged": this._breakpointSize === "S",
+				"sapWCShellBarMenuButtonInteractive": !!this.menuItems.length,
+				"sapWCShellBarMenuButton": true,
+			},
+			buttonTitle: {
+				"sapWCShellBarMenuButtonTitle": true,
+			},
+			secondaryTitle: {
+				"sapWCShellBarSecondaryTitle": true,
+			},
+			arrow: {
+				"sapWCShellBarMenuButtonArrow": true,
+			},
+			searchField: {
+				"sapWCShellBarSearchField": true,
+				"sapWCShellBarSearchFieldHidden": !this._showBlockLayer,
+			},
+			blockLayer: {
+				"sapWCShellBarBlockLayer": true,
+				"sapWCShellBarBlockLayerHidden": !this._showBlockLayer,
+			},
+		};
+	}
+
+	get styles() {
+		return {
+			searchField: {
+				[getRTL() ? "left" : "right"]: this._searchField.right,
+				"top": `${parseInt(this._searchField.top)}px`,
+			},
+		};
+	}
+
+	get interactiveLogo() {
+		return this._breakpointSize === "S";
+	}
+
+	get showArrowDown() {
+		return this.primaryTitle || (this.logo && this.interactiveLogo);
+	}
+
+	get popoverHorizontalAlign() {
+		return getRTL() ? "Left" : "Right";
+	}
+
 	static async define(...params) {
 		await Promise.all([
 			Icon.define(),
-			StandardListItem.define(),
 			List.define(),
+			Popover.define(),
+
+			StandardListItem.define(),
 		]);
 
 		super.define(...params);

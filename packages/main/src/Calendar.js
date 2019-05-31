@@ -1,44 +1,36 @@
-import "@ui5/webcomponents-base/src/shims/jquery-shim";
-import "@ui5/webcomponents-base/src/shims/Core-shim";
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import { fetchCldrData } from "@ui5/webcomponents-base/src/CLDR";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import { getLocale } from "@ui5/webcomponents-base/src/LocaleProvider";
-import { getCalendarType } from "@ui5/webcomponents-base/src/Configuration";
-import { getFormatLocale } from "@ui5/webcomponents-base/src/FormatSettings";
-import DateFormat from "@ui5/webcomponents-core/dist/sap/ui/core/format/DateFormat";
-import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData";
-import CalendarDate from "@ui5/webcomponents-base/src/dates/CalendarDate";
-import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType";
-import Integer from "@ui5/webcomponents-base/src/types/Integer";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
-import CalendarTemplateContext from "./CalendarTemplateContext";
-import CalendarHeader from "./CalendarHeader";
-import DayPicker from "./DayPicker";
-import MonthPicker from "./MonthPicker";
-import YearPicker from "./YearPicker";
-import CalendarRenderer from "./build/compiled/CalendarRenderer.lit";
+import "@ui5/webcomponents-base/src/shims/jquery-shim.js";
+import "@ui5/webcomponents-base/src/shims/Core-shim.js";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import { fetchCldrData } from "@ui5/webcomponents-base/src/CLDR.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import { getLocale } from "@ui5/webcomponents-base/src/LocaleProvider.js";
+import { getCalendarType } from "@ui5/webcomponents-base/src/Configuration.js";
+import { getFormatLocale } from "@ui5/webcomponents-base/src/FormatSettings.js";
+import DateFormat from "@ui5/webcomponents-core/dist/sap/ui/core/format/DateFormat.js";
+import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData.js";
+import CalendarDate from "@ui5/webcomponents-base/src/dates/CalendarDate.js";
+import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType.js";
+import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
+import CalendarHeader from "./CalendarHeader.js";
+import DayPicker from "./DayPicker.js";
+import MonthPicker from "./MonthPicker.js";
+import YearPicker from "./YearPicker.js";
+import CalendarRenderer from "./build/compiled/CalendarRenderer.lit.js";
 
 // default calendar for bundling
-import "@ui5/webcomponents-core/dist/sap/ui/core/date/Gregorian";
+import "@ui5/webcomponents-core/dist/sap/ui/core/date/Gregorian.js";
 
 // Styles
-import belize from "./themes/sap_belize/Calendar.less";
-import belizeHcb from "./themes/sap_belize_hcb/Calendar.less";
-import fiori3 from "./themes/sap_fiori_3/Calendar.less";
+import calendarCSS from "./themes/Calendar.css.js";
 
-ShadowDOM.registerStyle("sap_belize", "Calendar.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "Calendar.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "Calendar.css", fiori3);
+// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
+import "./ThemePropertiesProvider.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-calendar",
-	styleUrl: [
-		"Calendar.css",
-	],
 	properties: /** @lends  sap.ui.webcomponents.main.Calendar.prototype */ {
 		/**
 		 * It's a UNIX timestamp - seconds since 00:00:00 UTC on Jan 1, 1970.
@@ -52,6 +44,7 @@ const metadata = {
 		/**
 		 * Sets a calendar type used for display.
 		 * If not set, the calendar type of the global configuration is used.
+		 * Available options are: "Gregorian", "Islamic", "Japanese", "Buddhist" and "Persian".
 		 * @type {string}
 		 * @public
 		 */
@@ -113,17 +106,21 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Calendar
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-calendar
  * @public
  */
-class Calendar extends WebComponent {
+class Calendar extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
 
 	static get renderer() {
 		return CalendarRenderer;
+	}
+
+	static get styles() {
+		return calendarCSS;
 	}
 
 	constructor() {
@@ -483,8 +480,31 @@ class Calendar extends WebComponent {
 		}
 	}
 
-	static get calculateTemplateContext() {
-		return CalendarTemplateContext.calculate;
+	get classes() {
+		return {
+			main: {
+				sapUiCal: true,
+				sapUiCalIslamic: this.primaryCalendarType === CalendarType.Islamic,
+			},
+			dayPicker: {
+				"sapWCDayPickerHidden": !this._yearPicker._hidden || !this._monthPicker._hidden,
+			},
+			yearPicker: {
+				"sapWCYearPickerHidden": this._yearPicker._hidden,
+			},
+			monthPicker: {
+				"sapWCMonthPickerHidden": this._monthPicker._hidden,
+			},
+		};
+	}
+
+	get styles() {
+		return {
+			main: {
+				"height": `${this._calendarHeight ? `${this._calendarHeight}px` : "auto"}`,
+				"width": `${this._calendarWidth ? `${this._calendarWidth}px` : "auto"}`,
+			},
+		};
 	}
 
 	static async define(...params) {
@@ -499,10 +519,8 @@ class Calendar extends WebComponent {
 		super.define(...params);
 	}
 }
-
 Bootstrap.boot().then(_ => {
 	Calendar.define();
 });
-
 
 export default Calendar;

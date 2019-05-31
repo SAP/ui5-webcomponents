@@ -1,36 +1,28 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import { getLocale } from "@ui5/webcomponents-base/src/LocaleProvider";
-import { getCalendarType } from "@ui5/webcomponents-base/src/Configuration";
-import { getFormatLocale } from "@ui5/webcomponents-base/src/FormatSettings";
-import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents";
-import Integer from "@ui5/webcomponents-base/src/types/Integer";
-import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData";
-import CalendarDate from "@ui5/webcomponents-base/src/dates/CalendarDate";
-import { calculateWeekNumber } from "@ui5/webcomponents-base/src/dates/CalendarUtils";
-import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
-import DayPickerTemplateContext from "./DayPickerTemplateContext";
-import DayPickerRenderer from "./build/compiled/DayPickerRenderer.lit";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import { getLocale } from "@ui5/webcomponents-base/src/LocaleProvider.js";
+import { getCalendarType } from "@ui5/webcomponents-base/src/Configuration.js";
+import { getFormatLocale } from "@ui5/webcomponents-base/src/FormatSettings.js";
+import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
+import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData.js";
+import CalendarDate from "@ui5/webcomponents-base/src/dates/CalendarDate.js";
+import { calculateWeekNumber } from "@ui5/webcomponents-base/src/dates/CalendarUtils.js";
+import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType.js";
+import DayPickerRenderer from "./build/compiled/DayPickerRenderer.lit.js";
 
 // Styles
-import belize from "./themes/sap_belize/DayPicker.less";
-import belizeHcb from "./themes/sap_belize_hcb/DayPicker.less";
-import fiori3 from "./themes/sap_fiori_3/DayPicker.less";
+import dayPickerCSS from "./themes/DayPicker.css.js";
 
-ShadowDOM.registerStyle("sap_belize", "DayPicker.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "DayPicker.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "DayPicker.css", fiori3);
+// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
+import "./ThemePropertiesProvider.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-daypicker",
-	styleUrl: [
-		"DayPicker.css",
-	],
 	properties: /** @lends  sap.ui.webcomponents.main.DayPicker.prototype */ {
 		/**
 		 * A UNIX timestamp - seconds since 00:00:00 UTC on Jan 1, 1970.
@@ -108,17 +100,21 @@ const MIN_YEAR = 1;
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.DayPicker
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-daypicker
  * @public
  */
-class DayPicker extends WebComponent {
+class DayPicker extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
 
 	static get renderer() {
 		return DayPickerRenderer;
+	}
+
+	static get styles() {
+		return dayPickerCSS;
 	}
 
 	constructor() {
@@ -434,8 +430,33 @@ class DayPicker extends WebComponent {
 		return this._oLocaleData.getFirstDayOfWeek();
 	}
 
-	static get calculateTemplateContext() {
-		return DayPickerTemplateContext.calculate;
+	get classes() {
+		return {
+			wrapper: {
+				"sapWCDayPicker": true,
+			},
+			weekNumberContainer: {
+				"sapWCDayPickerWeekNumberContainer": true,
+				"sapWCDayPickerHideWeekNumbers": this.primaryCalendarType === "Islamic",
+			},
+			weekDaysContainer: {
+				"sapWCDayPickerDaysNamesContainer": true,
+			},
+			content: {
+				"sapWCDayPickerContent": true,
+			},
+		};
+	}
+
+	get styles() {
+		return {
+			wrapper: {
+				display: this._hidden ? "none" : "flex",
+			},
+			main: {
+				width: "100%",
+			},
+		};
 	}
 }
 

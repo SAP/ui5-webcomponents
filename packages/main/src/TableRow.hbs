@@ -1,11 +1,11 @@
-<div {{> controlData}}
+<div
 	class="{{classes.main}}"
 	style="{{styles.main}}"
-	tabindex="{{ctr._tabIndex}}"
+	tabindex="{{_tabIndex}}"
 >
 	{{#each visibleCells}}
 		<div class="{{../classes.cellWrapper}}">
-			<slot name="{{this._slot}}"></slot>
+			<slot name="{{this._individualSlot}}"></slot>
 		</div>
 	{{/each}}
 
@@ -15,7 +15,7 @@
 
 			<span class="{{../classes.popinTitle}}">{{this.popinText}}</span>
 			<div>
-				<slot name="{{this.cell._slot}}"></slot>
+				<slot name="{{this.cell._individualSlot}}"></slot>
 			</div>
 		</div>
 	{{/each}}

@@ -1,35 +1,27 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation";
-import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
-import { isTabNext } from "@ui5/webcomponents-base/src/events/PseudoEvents";
-import ListItemBase from "./ListItemBase";
-import ListMode from "./types/ListMode";
-import BackgroundDesign from "./types/BackgroundDesign";
-import ListSeparators from "./types/ListSeparators";
-import ListItemType from "./types/ListItemType";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
+import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper.js";
+import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
+import { isTabNext } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import ListItemBase from "./ListItemBase.js";
+import ListMode from "./types/ListMode.js";
+import ListSeparators from "./types/ListSeparators.js";
+import ListItemType from "./types/ListItemType.js";
 // Template
-import ListRenderer from "./build/compiled/ListRenderer.lit";
-import ListTemplateContext from "./ListTemplateContext";
+import ListRenderer from "./build/compiled/ListRenderer.lit.js";
 
 // Styles
-import belize from "./themes/sap_belize/List.less";
-import belizeHcb from "./themes/sap_belize_hcb/List.less";
-import fiori3 from "./themes/sap_fiori_3/List.less";
+import listCss from "./themes/List.css.js";
 
-ShadowDOM.registerStyle("sap_belize", "List.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "List.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "List.css", fiori3);
+// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
+import "./ThemePropertiesProvider.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-list",
-	styleUrl: [
-		"List.css",
-	],
 	defaultSlot: "items",
 	slots: /** @lends sap.ui.webcomponents.main.List.prototype */ {
 
@@ -62,46 +54,34 @@ const metadata = {
 	properties: /** @lends  sap.ui.webcomponents.main.List.prototype */ {
 
 		/**
-		 * Defines the background design of the <code>ui5-list</code>.
-		 * <br><br>
-		 * <b>Note:</b> Available options are <code>Solid</code> and <code>Transparent</code>.
-		 *
-		 * @type {string}
-		 * @public
-		 */
-		backgroundDesign: {
-			type: BackgroundDesign,
-			defaultValue: BackgroundDesign.Solid,
-		},
-
-		/**
 		 * Defines the <code>ui5-list</code> header text.
 		 * <br><br>
 		 * <b>Note:</b> If <code>header</code> is set this property is ignored.
 		 *
 		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		headerText: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
 		 * Defines the footer text.
 		 *
 		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		footerText: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
 		 * Determines whether the list items are indented.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		inset: {
@@ -115,6 +95,7 @@ const metadata = {
 		 * <code>MultiSelect</code>, and <code>Delete</code>.
 		 *
 		 * @type {string}
+		 * @defaultvalue "None"
 		 * @public
 		 */
 		mode: {
@@ -126,11 +107,11 @@ const metadata = {
 		 * Defines the text that is displayed when the <code>ui5-list</code> contains no items.
 		 *
 		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		noDataText: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
@@ -145,6 +126,7 @@ const metadata = {
 		 * </ul>
 		 *
 		 * @type {string}
+		 * @defaultvalue "All"
 		 * @public
 		 */
 		separators: {
@@ -188,12 +170,14 @@ const metadata = {
 		 * in <code>SingleSelect</code> and <code>MultiSelect</code> modes.
 		 *
 		 * @event
-		 * @param {Array} items an array of the selected items.
+		 * @param {Array} selectedItems an array of the selected items.
+		 * @param {Array} previouslySelectedItems an array of the previously selected items.
 		 * @public
 		 */
 		selectionChange: {
 			detail: {
-				items: { type: Array },
+				selectedItems: { type: Array },
+				previouslySelectedItems: { type: Array },
 			},
 		},
 	},
@@ -233,18 +217,22 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.List
- * @extends WebComponent
+ * @extends UI5Element
  * @tagname ui5-list
  * @appenddocs StandardListItem CustomListItem GroupHeaderListItem
  * @public
  */
-class List extends WebComponent {
+class List extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
 
 	static get renderer() {
 		return ListRenderer;
+	}
+
+	static get styles() {
+		return listCss;
 	}
 
 	constructor() {
@@ -259,11 +247,11 @@ class List extends WebComponent {
 
 		this._previouslySelectedItem = null;
 
-		this.addEventListener("_press", this.onItemPress.bind(this));
-		this.addEventListener("_focused", this.onItemFocused.bind(this));
-		this.addEventListener("_forwardAfter", this.onForwardAfter.bind(this));
-		this.addEventListener("_forwardBefore", this.onForwardBefore.bind(this));
-		this.addEventListener("_selectionRequested", this.onSelectionRequested.bind(this));
+		this.addEventListener("ui5-_press", this.onItemPress.bind(this));
+		this.addEventListener("ui5-_focused", this.onItemFocused.bind(this));
+		this.addEventListener("ui5-_forwardAfter", this.onForwardAfter.bind(this));
+		this.addEventListener("ui5-_forwardBefore", this.onForwardBefore.bind(this));
+		this.addEventListener("ui5-_selectionRequested", this.onSelectionRequested.bind(this));
 	}
 
 	onBeforeRendering() {
@@ -287,7 +275,6 @@ class List extends WebComponent {
 				|| (this.separators === ListSeparators.Inner && !isLastChild);
 
 			item._mode = this.mode;
-			item._background = this.backgroundDesign;
 			item._hideBorder = !showBottomBorder;
 		});
 
@@ -298,6 +285,7 @@ class List extends WebComponent {
 	* ITEM SELECTION BASED ON THE CURRENT MODE
 	*/
 	onSelectionRequested(event) {
+		const previouslySelectedItems = this.getSelectedItems();
 		let selectionChange = false;
 		this._selectionRequested = true;
 
@@ -306,7 +294,7 @@ class List extends WebComponent {
 		}
 
 		if (selectionChange) {
-			this.fireEvent("selectionChange", { items: this.getSelectedItems() });
+			this.fireEvent("selectionChange", { selectedItems: this.getSelectedItems(), previouslySelectedItems });
 		}
 	}
 
@@ -567,8 +555,34 @@ class List extends WebComponent {
 		return focused;
 	}
 
-	static get calculateTemplateContext() {
-		return ListTemplateContext.calculate;
+	get shouldRenderH1() {
+		return !this.header && this.headerText;
+	}
+
+	get showNoDataText() {
+		return this.items.length === 0 && this.noDataText;
+	}
+
+	get classes() {
+		return {
+			main: {
+				sapMList: true,
+				sapMListInsetBG: this.inset,
+			},
+			ul: {
+				sapMListItems: true,
+				sapMListUl: true,
+				[`sapMListShowSeparators${this.separators}`]: true,
+				[`sapMListMode${this.mode}`]: true,
+				sapMListInset: this.inset,
+			},
+			noData: {
+				sapMLIB: true,
+				sapMListNoData: true,
+				sapMLIBTypeInactive: true,
+				sapMLIBFocusable: isDesktop(),
+			},
+		};
 	}
 }
 

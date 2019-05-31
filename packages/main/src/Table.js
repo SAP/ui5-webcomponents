@@ -1,30 +1,23 @@
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler";
-import { isSpace } from "@ui5/webcomponents-base/src/events/PseudoEvents";
-import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
-import TableColumn from "./TableColumn";
-import TableRow from "./TableRow";
-import TableRenderer from "./build/compiled/TableRenderer.lit";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler.js";
+import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import { isSpace } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import TableColumn from "./TableColumn.js";
+import TableRow from "./TableRow.js";
+import TableRenderer from "./build/compiled/TableRenderer.lit.js";
 
 // Styles
-import belize from "./themes/sap_belize/Table.less";
-import belizeHcb from "./themes/sap_belize_hcb/Table.less";
-import fiori3 from "./themes/sap_fiori_3/Table.less";
+import styles from "./themes/Table.css.js";
 
-ShadowDOM.registerStyle("sap_belize", "Table.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "Table.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "Table.css", fiori3);
+// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
+import "./ThemePropertiesProvider.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-table",
-	styleUrl: [
-		"Table.css",
-	],
 	slots: /** @lends sap.ui.webcomponents.main.Table.prototype */ {
 
 		/**
@@ -38,6 +31,7 @@ const metadata = {
 		rows: {
 			type: TableRow,
 			multiple: true,
+			individualSlots: true,
 		},
 
 		/**
@@ -51,6 +45,7 @@ const metadata = {
 		columns: {
 			type: TableColumn,
 			multiple: true,
+			individualSlots: true,
 			listenFor: { exclude: ["header"] },
 		},
 	},
@@ -76,6 +71,7 @@ const metadata = {
 		 * </ul>
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		stickyColumnHeader: {
@@ -115,53 +111,22 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Table
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-table
  * @appenddocs TableColumn TableRow TableCell
  * @public
  */
-class Table extends WebComponent {
+class Table extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
 
-	static get renderer() {
-		return TableRenderer;
+	static get styles() {
+		return styles;
 	}
 
-	static get calculateTemplateContext() {
-		return state => {
-			const context = {
-				ctr: state,
-				visibleColumns: [],
-				classes: {
-					main: {
-						sapWCTableHeader: true,
-					},
-					columns: {
-						sapWCTableColumnWrapper: true,
-					},
-				},
-				styles: {
-					main: {
-						"grid-template-columns": "",
-						position: state.stickyColumnHeader ? "sticky" : "",
-						top: state.stickyColumnHeader ? "0px" : "",
-					},
-				},
-			};
-
-			context.ctr.columns.forEach((column, index) => {
-				if (!context.ctr._hiddenColumns[index]) {
-					context.visibleColumns.push(column);
-
-					// width of columns
-					context.styles.main["grid-template-columns"] += `minmax(0, ${column.width || "1fr"}) `;
-				}
-			}, this);
-
-			return context;
-		};
+	static get renderer() {
+		return TableRenderer;
 	}
 
 	constructor() {
@@ -185,8 +150,12 @@ class Table extends WebComponent {
 
 		this.rows.forEach(row => {
 			row._columnsInfo = columnSettings;
-			row.removeEventListener("_focused", this.fnOnRowFocused);
-			row.addEventListener("_focused", this.fnOnRowFocused);
+			row.removeEventListener("ui5-_focused", this.fnOnRowFocused);
+			row.addEventListener("ui5-_focused", this.fnOnRowFocused);
+		});
+
+		this.visibleColumns = this.columns.filter((column, index) => {
+			return !this._hiddenColumns[index];
 		});
 	}
 
@@ -255,6 +224,32 @@ class Table extends WebComponent {
 				visible: !this._hiddenColumns[index],
 			};
 		}, this);
+	}
+
+	get classes() {
+		return {
+			main: {
+				sapWCTableHeader: true,
+			},
+			columns: {
+				sapWCTableColumnWrapper: true,
+			},
+		};
+	}
+
+	get styles() {
+		const gridTemplateColumns = this.visibleColumns.reduce((acc, column) => {
+			return `${acc}minmax(0, ${column.width || "1fr"}) `;
+		}, "");
+
+		return {
+			main: {
+				"grid-template-columns": gridTemplateColumns,
+				position: this.stickyColumnHeader ? "sticky" : "",
+				top: this.stickyColumnHeader ? "0px" : "",
+				"z-index": this.stickyColumnHeader ? "1" : "",
+			},
+		};
 	}
 }
 

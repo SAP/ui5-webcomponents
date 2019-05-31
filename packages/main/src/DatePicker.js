@@ -1,58 +1,50 @@
-import "@ui5/webcomponents-base/src/shims/jquery-shim";
-import "@ui5/webcomponents-base/src/shims/Core-shim";
-import WebComponent from "@ui5/webcomponents-base/src/WebComponent";
-import { fetchCldrData } from "@ui5/webcomponents-base/src/CLDR";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap";
-import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes";
-import { getCalendarType } from "@ui5/webcomponents-base/src/Configuration";
-import { getLocale } from "@ui5/webcomponents-base/src/LocaleProvider";
-import { getIconURI } from "@ui5/webcomponents-base/src/IconPool";
-import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData";
-import DateFormat from "@ui5/webcomponents-core/dist/sap/ui/core/format/DateFormat";
-import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType";
-import CalendarDate from "@ui5/webcomponents-base/src/dates/CalendarDate";
-import ValueState from "@ui5/webcomponents-base/src/types/ValueState";
-import ShadowDOM from "@ui5/webcomponents-base/src/compatibility/ShadowDOM";
-import DatePickerTemplateContext from "./DatePickerTemplateContext";
-import Icon from "./Icon";
-import Popover from "./Popover";
-import Calendar from "./Calendar";
-import PopoverPlacementType from "./types/PopoverPlacementType";
-import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign";
-import Input from "./Input";
-import InputType from "./types/InputType";
-import DatePickerRenderer from "./build/compiled/DatePickerRenderer.lit";
-
-// Styles
-import belize from "./themes/sap_belize/DatePicker.less";
-import belizeHcb from "./themes/sap_belize_hcb/DatePicker.less";
-import fiori3 from "./themes/sap_fiori_3/DatePicker.less";
+import "@ui5/webcomponents-base/src/shims/jquery-shim.js";
+import "@ui5/webcomponents-base/src/shims/Core-shim.js";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import { fetchCldrData } from "@ui5/webcomponents-base/src/CLDR.js";
+import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import { getCalendarType } from "@ui5/webcomponents-base/src/Configuration.js";
+import { getLocale } from "@ui5/webcomponents-base/src/LocaleProvider.js";
+import { getIconURI } from "@ui5/webcomponents-base/src/IconPool.js";
+import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData.js";
+import DateFormat from "@ui5/webcomponents-core/dist/sap/ui/core/format/DateFormat.js";
+import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType.js";
+import CalendarDate from "@ui5/webcomponents-base/src/dates/CalendarDate.js";
+import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
+import { isShow } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import Icon from "./Icon.js";
+import Popover from "./Popover.js";
+import Calendar from "./Calendar.js";
+import PopoverPlacementType from "./types/PopoverPlacementType.js";
+import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
+import Input from "./Input.js";
+import InputType from "./types/InputType.js";
+import DatePickerRenderer from "./build/compiled/DatePickerRenderer.lit.js";
 
 // default calendar for bundling
-import "@ui5/webcomponents-core/dist/sap/ui/core/date/Gregorian";
+import "@ui5/webcomponents-core/dist/sap/ui/core/date/Gregorian.js";
 
-ShadowDOM.registerStyle("sap_belize", "DatePicker.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "DatePicker.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "DatePicker.css", fiori3);
+// Styles
+import datePickerCss from "./themes/DatePicker.css.js";
+
+// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
+import "./ThemePropertiesProvider.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-datepicker",
-	styleUrl: [
-		"DatePicker.css",
-	],
 	properties: /** @lends  sap.ui.webcomponents.main.DatePicker.prototype */ {
 		/**
 		 * Defines a formatted date value.
 		 *
 		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		value: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
@@ -61,6 +53,7 @@ const metadata = {
 		 * <code>Success</code>.
 		 *
 		 * @type {string}
+		 * @defaultvalue "None"
 		 * @public
 		 */
 		valueState: {
@@ -72,6 +65,7 @@ const metadata = {
 		 * Determines the format, displayed in the input field.
 		 *
 		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		formatPattern: {
@@ -81,7 +75,7 @@ const metadata = {
 		/**
 		 * Determines the calendar type.
 		 * The input value is formated according to the calendar type and the picker shows
-		 * months and years from the specified calendar.
+		 * months and years from the specified calendar. Available options are: "Gregorian", "Islamic", "Japanese", "Buddhist" and "Persian".
 		 *
 		 * @type {string}
 		 * @public
@@ -94,6 +88,7 @@ const metadata = {
 		 * Determines whether the <code>ui5-datepicker</code> is displayed as disabled.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		disabled: {
@@ -104,6 +99,7 @@ const metadata = {
 		 * Determines whether the <code>ui5-datepicker</code> is displayed as readonly.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		readonly: {
@@ -116,15 +112,32 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> The placeholder is not supported in IE. If the placeholder is provided, it won`t be displayed in IE.
 		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		placeholder: {
-			defaultValue: null,
+			type: String,
+		},
+
+		/**
+		 * Determines the name with which the <code>ui5-datepicker</code> will be submitted in an HTML form.
+		 *
+		 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
+		 * <code>import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";</code>
+		 *
+		 * <b>Note:</b> When set, a native <code>input</code> HTML element
+		 * will be created inside the <code>ui5-datepicker</code> so that it can be submitted as
+		 * part of an HTML form. Do not use this property unless you need to submit a form.
+		 *
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @public
+		 */
+		name: {
 			type: String,
 		},
 
 		_isPickerOpen: {
-			defaultValue: false,
 			type: Boolean,
 		},
 
@@ -148,14 +161,14 @@ const metadata = {
 		 * @public
 		*/
 		change: {},
+
 		/**
-		 * Fired when the value of the <code>ui5-datepicker</code> is changed,
-		 * for example at each keypress.
+		 * Fired when the value of the <code>ui5-datepicker</code> is changed at each key stroke.
 		 *
 		 * @event
 		 * @public
 		*/
-		liveChange: {},
+		input: {},
 	},
 };
 
@@ -189,6 +202,15 @@ const metadata = {
  * For example, if the <code>format-pattern</code> is "yyyy-MM-dd",
  * a valid value string is "2015-07-30" and the same is displayed in the input.
  *
+ * <h3>Keyboard Handling</h3>
+ * The <code>ui5-datepicker</code> provides advanced keyboard handling.
+ * If the <code>ui5-datepicker</code> is focused,
+ * you can open or close the drop-down by pressing <code>F4</code>, <code>ALT+UP</code> or <code>ALT+DOWN</code> keys.
+ * Once the drop-down is opened, you can use the <code>UP</code>, <code>DOWN</code>, <code>LEFT</code>, <code>right</code> arrow keys
+ * to navigate through the dates and select one by pressing the <code>Space</code> or <code>Enter</code> keys. Moreover you can
+ * use tab to reach the buttons for changing month and year.
+ * <br>
+ *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/DatePicker";</code>
@@ -196,11 +218,11 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.DatePicker
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-datepicker
  * @public
  */
-class DatePicker extends WebComponent {
+class DatePicker extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
@@ -209,10 +231,9 @@ class DatePicker extends WebComponent {
 		return DatePickerRenderer;
 	}
 
-	static get calculateTemplateContext() {
-		return DatePickerTemplateContext.calculate;
+	static get styles() {
+		return datePickerCss;
 	}
-
 
 	constructor() {
 		super();
@@ -222,7 +243,6 @@ class DatePicker extends WebComponent {
 		this._input.icon.src = getIconURI("appointment-2");
 		this._input.onChange = this._handleInputChange.bind(this);
 		this._input.onLiveChange = this._handleInputLiveChange.bind(this);
-		this.aArrows = [KeyCodes.ARROW_DOWN, KeyCodes.ARROW_UP]; // keys we need for keyboard handling
 
 		this._popover = {
 			placementType: PopoverPlacementType.Bottom,
@@ -237,7 +257,6 @@ class DatePicker extends WebComponent {
 				const calendar = popover.querySelector(`#${this._id}-calendar`);
 
 				this._input = Object.assign({}, this._input);
-				this._input.icon._customClasses = "sapWCDatePickerIcon";
 				this._isPickerOpen = false;
 
 				if (this._focusInputAfterClose) {
@@ -277,8 +296,6 @@ class DatePicker extends WebComponent {
 	}
 
 	onBeforeRendering() {
-		this._popover._customClasses = [];
-
 		this._input.placeholder = this.placeholder;
 		this._input._iconNonFocusable = true;
 
@@ -289,6 +306,12 @@ class DatePicker extends WebComponent {
 			this._changeCalendarSelection();
 		} else {
 			this._calendar.selectedDates = [];
+		}
+
+		if (DatePicker.FormSupport) {
+			DatePicker.FormSupport.syncNativeHiddenInput(this);
+		} else if (this.name) {
+			console.warn(`In order for the "name" property to have effect, you should also: import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";`); // eslint-disable-line
 		}
 	}
 
@@ -302,11 +325,7 @@ class DatePicker extends WebComponent {
 	}
 
 	onkeydown(event) {
-		if (event.which === KeyCodes.ALT) {
-			return;
-		}
-
-		if (event.which === KeyCodes.F4 || (event.altKey && this.aArrows.includes(event.which))) {
+		if (isShow(event)) {
 			this.togglePicker();
 			this._getInput().focus();
 		}
@@ -334,7 +353,7 @@ class DatePicker extends WebComponent {
 		const isValid = this.isValid(nextValue);
 
 		this.value = nextValue;
-		this.fireEvent("liveChange", { value: nextValue, valid: isValid });
+		this.fireEvent("input", { value: nextValue, valid: isValid });
 	}
 
 	/**
@@ -343,7 +362,7 @@ class DatePicker extends WebComponent {
 	 * @public
 	 */
 	isValid(value = "") {
-		return !!this.getFormat().parse(value);
+		return !!(value && this.getFormat().parse(value));
 	}
 
 	// because the parser understands more than one format
@@ -449,7 +468,6 @@ class DatePicker extends WebComponent {
 	openPicker(options) {
 		this._changeCalendarSelection();
 		this._input = Object.assign({}, this._input);
-		this._input.icon._customClasses = "sapWCDatePickerIcon sapWCInputBaseIconPressed";
 
 		if (options && options.focusInput) {
 			this._focusInputAfterOpen = true;
@@ -508,6 +526,26 @@ class DatePicker extends WebComponent {
 		return { isInput };
 	}
 
+	get classes() {
+		return {
+			main: {
+				sapMDP: true,
+			},
+			icon: {
+				sapWCDPIcon: true,
+				sapWCDPIconPressed: this._isPickerOpen,
+			},
+		};
+	}
+
+	get styles() {
+		return {
+			main: {
+				width: "100%",
+			},
+		};
+	}
+
 	static async define(...params) {
 		await Promise.all([
 			fetchCldrData(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
@@ -539,6 +577,5 @@ const getDomTarget = event => {
 Bootstrap.boot().then(_ => {
 	DatePicker.define();
 });
-
 
 export default DatePicker;

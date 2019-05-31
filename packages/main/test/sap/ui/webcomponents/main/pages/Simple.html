@@ -38,15 +38,15 @@
     <ui5-datepicker primary-calendar-type="Gregorian"></ui5-datepicker>
 
     <ui5-input show-suggestions id="ii">
-        <ui5-li type="Active">Anna</ui5-li>
-        <ui5-li type="Active">Anelia</ui5-li>
-        <ui5-li type="Active">Bobi</ui5-li>
+        <ui5-li>Anna</ui5-li>
+        <ui5-li>Anelia</ui5-li>
+        <ui5-li>Bobi</ui5-li>
     </ui5-input>
 
 
     <script>
         var l = document.getElementById("l");
-        l.addEventListener("press", function(e) {
+        l.addEventListener("ui5-press", function(e) {
             e.preventDefault();
         });
     </script>
