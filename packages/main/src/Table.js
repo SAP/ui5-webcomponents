@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import { isSpace } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import TableColumn from "./TableColumn.js";
 import TableRow from "./TableRow.js";
 import TableRenderer from "./build/compiled/TableRenderer.lit.js";
@@ -168,6 +169,12 @@ class Table extends UI5Element {
 
 	onRowFocused(event) {
 		this._itemNavigation.update(event.target);
+	}
+
+	onkeydown(event) {
+		if (isSpace(event)) {
+			event.preventDefault();
+		}
 	}
 
 	popinContent(_event) {
