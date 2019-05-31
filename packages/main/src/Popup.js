@@ -92,33 +92,38 @@ const metadata = {
 			type: Boolean,
 		},
 	},
-	events: {
+	events:  /** @lends  sap.ui.webcomponents.main.Popup.prototype */ {
+
 		/**
-		 * Fired before the Web Component is opened.
+		 * Fired before the component is opened.
 		 *
 		 * @public
 		 * @event
 		 */
+
 		beforeOpen: {},
 		/**
-		 * Fired after the Web Component is opened.
+		 * Fired after the component is opened.
 		 *
 		 * @public
 		 * @event
 		 */
+
 		afterOpen: {},
 		/**
-		 * Fired before the Web Component is closed.
+		 * Fired before the component is closed.
 		 *
 		 * @public
 		 * @event
-		 * @param {Boolean} escPressed Indicate that ESC key triggered the event.
+		 * @param {Boolean} escPressed Indicates that <code>ESC</code> key has triggered the event.
 		 */
+
 		beforeClose: {
 			escPressed: { type: Boolean },
 		},
+
 		/**
-		 * Fired after the Web Component is closed.
+		 * Fired after the component is closed.
 		 *
 		 * @public
 		 * @event
