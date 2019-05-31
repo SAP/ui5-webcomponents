@@ -201,7 +201,6 @@ class Panel extends UI5Element {
 		this._icon.id = `${this.id}-CollapsedImg`;
 		this._icon.src = getIconURI("navigation-right-arrow");
 		this._icon.title = this.resourceBundle.getText("PANEL_ICON");
-		this._icon.functional = true;
 
 		this._toggle = event => { event.preventDefault(); this._toggleOpen(); };
 		this._noOp = () => {};
