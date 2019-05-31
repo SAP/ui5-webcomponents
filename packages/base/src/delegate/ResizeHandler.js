@@ -33,7 +33,7 @@ class ResizeHandler {
 	/**
 	 * @static
 	 * @public
-	 * @param {*} ref Reference to a UI5 Control or DOM Element to be observed
+	 * @param {*} ref Reference to a UI5 Web Component or DOM Element to be observed
 	 * @param {*} callback Callback to be executed
 	 * @memberof ResizeHandler
 	 */
@@ -49,7 +49,7 @@ class ResizeHandler {
 	/**
 	 * @static
 	 * @public
-	 * @param {*} ref Reference to UI5 Control or DOM Element to be unobserved
+	 * @param {*} ref Reference to UI5 Web Component or DOM Element to be unobserved
 	 * @memberof ResizeHandler
 	 */
 	static deregister(ref, callback) {

@@ -11,8 +11,8 @@ import { attachThemeChange } from "./Theming.js";
 const metadata = {
 	properties: {
 		/**
-		 * Attributes (most commonly accessibility-related) that will be passed to the control.
-		 * The control has the responsibility to render these attributes
+		 * Attributes (most commonly accessibility-related) that will be passed to the web component.
+		 * The web component has the responsibility to render these attributes
 		 */
 		_customAttributes: {
 			type: Object,
@@ -393,7 +393,7 @@ class UI5Element extends HTMLElement {
 	}
 
 	/**
-	 * Asynchronously re-renders an already rendered control
+	 * Asynchronously re-renders an already rendered web component
 	 * @private
 	 */
 	_invalidate() {
@@ -506,7 +506,7 @@ class UI5Element extends HTMLElement {
 	}
 
 	/**
-	 * Calls the event handler on the control for a native event
+	 * Calls the event handler on the web component for a native event
 	 *
 	 * @param event The event object
 	 * @private
@@ -589,7 +589,6 @@ class UI5Element extends HTMLElement {
 
 	/**
 	 * Used to generate the next auto-increment id for the current class
-	 * Note: do not call Control._nextID (static) but rather this.constructor._nextID (polymorphic)
 	 * @returns {string}
 	 * @private
 	 */
