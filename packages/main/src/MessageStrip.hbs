@@ -1,24 +1,23 @@
 <div class="{{classes.main}}"
-	id="{{ctr._id}}"
 	role="alert"
 	aria-live="assertive"
-	aria-labelledby="{{ctr._id}}">
+	aria-labelledby="{{_id}}">
 
-	{{#unless ctr.hideIcon}}
-		<ui5-icon class="ui5-messagestrip-icon" src="{{icon}}"></ui5-icon>
+	{{#unless hideIcon}}
+		<ui5-icon class="ui5-messagestrip-icon" src="{{messageStripIcon}}"></ui5-icon>
 	{{/unless}}
 
 	<span class="ui5-messagestrip-hidden-text">{{hiddenText}}</span>
 	<span class="{{classes.label}}"><slot></slot></span>
 
-	{{#unless ctr.hideCloseButton}}
+	{{#unless hideCloseButton}}
 		<ui5-icon
 			class="{{classes.closeIcon}}"
 			src="sap-icon://decline"
 			tabindex="0"
 			role="button"
-			title="{{ctr._closeButtonText}}"
-			@ui5-press="{{ctr._closeButton.press}}">
+			title="{{_closeButtonText}}"
+			@ui5-press="{{_closeButton.press}}">
 		</ui5-icon>
 	{{/unless}}
 </div>

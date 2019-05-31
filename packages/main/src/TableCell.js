@@ -30,15 +30,12 @@ const metadata = {
 
 		_firstInRow: {
 			type: Boolean,
-			defaultValue: false,
 		},
 		_lastInRow: {
 			type: Boolean,
-			defaultValue: false,
 		},
 		_hasBorder: {
 			type: Boolean,
-			defaultValue: false,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.TableCell.prototype */ {
@@ -72,24 +69,15 @@ class TableCell extends UI5Element {
 		return TableCellRenderer;
 	}
 
-	static calculateTemplateContext(state) {
-		const context = {
-			ctr: state,
-			classes: {
-				main: {
-					sapWCTableCell: true,
-					sapWCTableCellFirst: state._firstInRow,
-					sapWCTableCellLast: state._lastInRow,
-					sapWCTableCellWithBorder: state._hasBorder,
-				},
-			},
-			styles: {
-				main: {
-				},
+	get classes() {
+		return {
+			main: {
+				sapWCTableCell: true,
+				sapWCTableCellFirst: this._firstInRow,
+				sapWCTableCellLast: this._lastInRow,
+				sapWCTableCellWithBorder: this._hasBorder,
 			},
 		};
-
-		return context;
 	}
 }
 

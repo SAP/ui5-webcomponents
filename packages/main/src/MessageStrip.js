@@ -1,7 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import URI from "@ui5/webcomponents-base/src/types/URI.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import MessageStripTemplateContext from "./MessageStripTemplateContext.js";
 import MessageStripType from "./types/MessageStripType.js";
 import MessageStripRenderer from "./build/compiled/MessageStripRenderer.lit.js";
 import Icon from "./Icon.js";
@@ -149,10 +148,6 @@ class MessageStrip extends UI5Element {
 		return MessageStripRenderer;
 	}
 
-	static get calculateTemplateContext() {
-		return MessageStripTemplateContext.calculate;
-	}
-
 	static get styles() {
 		return messageStripCss;
 	}
@@ -183,6 +178,54 @@ class MessageStrip extends UI5Element {
 		]);
 
 		super.define(...params);
+	}
+
+	static typeClassesMappings() {
+		return {
+			"Information": "ui5-messagestrip--info",
+			"Positive": "ui5-messagestrip--positive",
+			"Negative": "ui5-messagestrip--negative",
+			"Warning": "ui5-messagestrip--warning",
+		};
+	}
+
+	static iconMappings() {
+		return {
+			"Information": "sap-icon://message-information",
+			"Positive": "sap-icon://message-success",
+			"Negative": "sap-icon://message-error",
+			"Warning": "sap-icon://message-warning",
+		};
+	}
+
+	get hiddenText() {
+		return `Message Strip ${this.type} ${this.hideCloseButton ? "" : "closable"}.`;
+	}
+
+	get classes() {
+		return {
+			label: {
+				"ui5-messagestrip-text": true,
+				"ui5-messagestripNoCloseButton": this.hideCloseButton,
+			},
+			closeIcon: {
+				"ui5-messagestrip-close-icon": true,
+			},
+			main: {
+				"ui5-messagestrip-root": true,
+				"ui5-messagestrip-icon--hidden": this.hideIcon,
+				"ui5-messagestrip-close-icon--hidden": this.hideCloseButton,
+				[this.typeClasses]: true,
+			},
+		};
+	}
+
+	get messageStripIcon() {
+		return this.icon || MessageStrip.iconMappings()[this.type];
+	}
+
+	get typeClasses() {
+		return MessageStrip.typeClassesMappings()[this.type];
 	}
 }
 

@@ -1,7 +1,7 @@
 {
 	"source": {
 		"include": "src",
-		"excludePattern": "(/|\\\\)library-all\\.js|(/|\\\\).*-preload\\.js|^jquery-.*\\.js|^sap-.*\\.js|.+Renderer\\.lit\\.js|.+TemplateContext\\.js|.*library\\.js"
+		"excludePattern": "(/|\\\\)library-all\\.js|(/|\\\\).*-preload\\.js|^jquery-.*\\.js|^sap-.*\\.js|.+Renderer\\.lit\\.js|.*library\\.js"
 	},
 	"opts" : {
 		"recurse": true,

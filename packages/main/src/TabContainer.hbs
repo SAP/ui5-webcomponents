@@ -1,18 +1,18 @@
-<div {{> controlData}} class="{{classes.main}}">
-	<div class="{{classes.header}}" id="{{ctr._id}}-header">
-		<ui5-icon @ui5-press="{{ctr._headerBackArrow.click}}" class="{{classes.headerBackArrow}}" src="sap-icon://slim-arrow-left" tabindex="-1"></ui5-icon>
+<div class="{{classes.main}}">
+	<div class="{{classes.header}}" id="{{_id}}-header">
+		<ui5-icon @ui5-press="{{_headerBackArrow.click}}" class="{{classes.headerBackArrow}}" src="sap-icon://slim-arrow-left" tabindex="-1"></ui5-icon>
 
 		<!-- tab items -->
-		<div class="{{classes.headerScrollContainer}}" id="{{ctr._id}}-headerScrollContainer">
+		<div class="{{classes.headerScrollContainer}}" id="{{_id}}-headerScrollContainer">
 			<ul role="tablist" class="{{classes.headerList}}">
 				{{#each renderItems}}
 					{{#unless this.isSeparator}}
 						<li class="{{this.headerItemClasses}}"
 							id="{{this.item._id}}"
 							tabindex="{{this.item._tabIndex}}"
-							@click="{{../ctr._headerItem.click}}"
-							@keydown="{{../ctr._headerItem.keydown}}"
-							@keyup="{{../ctr._headerItem.keyup}}"
+							@click="{{../_headerItem.click}}"
+							@keydown="{{../_headerItem.keydown}}"
+							@keyup="{{../_headerItem.keyup}}"
 							role="tab"
 							aria-posinset="{{this.position}}"
 							aria-setsize="{{../renderItems.length}}"
@@ -42,12 +42,12 @@
 			</ul>
 		</div>
 
-		<ui5-icon @ui5-press="{{ctr._headerForwardArrow.click}}" class="{{classes.headerForwardArrow}}" src="sap-icon://slim-arrow-right" tabindex="-1"></ui5-icon>
+		<ui5-icon @ui5-press="{{_headerForwardArrow.click}}" class="{{classes.headerForwardArrow}}" src="sap-icon://slim-arrow-right" tabindex="-1"></ui5-icon>
 
 		<!-- overflow button -->
-		{{#if ctr.showOverflow}}
+		{{#if showOverflow}}
 			<ui5-button
-				@ui5-press="{{ctr._overflowButton.click}}"
+				@ui5-press="{{_overflowButton.click}}"
 				class="{{classes.overflowButton}}"
 				icon="sap-icon://slim-arrow-down"
 				type="Transparent"
@@ -59,7 +59,7 @@
 	<div class="{{classes.content}}">
 		{{#each renderItems}}
 			{{#unless this.isSeparator}}
-				<div class="{{this.contentItemClasses}}" id="ui5-tc-contentItem-{{this.position}}">
+				<div class="{{this.contentItemClasses}}" id="ui5-tc-contentItem-{{this.position}}" ?hidden="{{this.hidden}}">
 					<slot name="{{this.item._individualSlot}}"></slot>
 				</div>
 			{{/unless}}
@@ -68,12 +68,12 @@
 
 	<!-- overflow menu -->
 	<ui5-popover
-		id="{{ctr._id}}-overflowMenu"
+		id="{{_id}}-overflowMenu"
 		hide-arrow
 		hide-header
 		placement-type="Bottom"
 		horizontal-align="Right">
-		<ui5-list @ui5-itemPress="{{ctr._overflowList.click}}">
+		<ui5-list @ui5-itemPress="{{_overflowList.click}}">
 			{{#each renderItems}}
 				{{#unless this.isSeparator}}
 					<ui5-li-custom id="{{this.item._id}}"

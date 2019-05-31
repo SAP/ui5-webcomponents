@@ -4,8 +4,12 @@ const assertBooleanProperty = (el, prop) => {
 	assert.strictEqual(el.getProperty(prop), false, "the value should be false by default.");
 }
 
-describe("Default values", () => {
-	browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/DefaultValues.html");
+const assertHidden = component => {
+	assert.strictEqual(component.isDisplayedInViewport(), false, "the component is hidden.");
+}
+
+describe("General assertions", () => {
+	browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/Components.html");
 
 	it("tests boolean props default", () => {
 		const button = browser.$("#btn");
@@ -67,5 +71,33 @@ describe("Default values", () => {
 
 		// ToggleButton
 		assertBooleanProperty(toggleBtn, "pressed");
+	});
+
+	it("tests components with 'hidden' property are not visible", () => {
+		[
+			browser.$("#busyIndicator2"),
+			browser.$("#btn2"),
+			browser.$("#card2"),
+			browser.$("#cb2"),
+			browser.$("#dp2"),
+			browser.$("#icon2"),
+			browser.$("#inp2"),
+			browser.$("#ln2"),
+			browser.$("#lbl2"),
+			browser.$("#list2"),
+			browser.$("#ms2"),
+			browser.$("#mcbx2"),
+			browser.$("#p2"),
+			browser.$("#radioBtn2"),
+			browser.$("#select2"),
+			browser.$("#shellbar2"),
+			browser.$("#sw2"),
+			browser.$("#txtarea2"),
+			browser.$("#timeline2"),
+			browser.$("#toggleBtn2"),
+			browser.$("#title2"),
+			browser.$("#tbl2"),
+			browser.$("#tc2")
+		].forEach(assertHidden);
 	});
 });

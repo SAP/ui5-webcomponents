@@ -1,6 +1,5 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import Button from "./Button.js";
-import ToggleButtonTemplateContext from "./ToggleButtonTemplateContext.js";
 import ToggleButtonRenderer from "./build/compiled/ToggleButtonRenderer.lit.js";
 
 // Styles
@@ -74,8 +73,10 @@ class ToggleButton extends Button {
 		}
 	}
 
-	static get calculateTemplateContext() {
-		return ToggleButtonTemplateContext.calculate;
+	get classes() {
+		const result = super.classes;
+		result.main.sapMToggleBtnPressed = this.pressed;
+		return result;
 	}
 }
 

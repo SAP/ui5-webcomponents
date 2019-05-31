@@ -1,22 +1,21 @@
-<div {{> controlData}}
+<div
 		data-sap-ui-fastnavgroup="true"
 		class="{{classes.main}}"
-		style="{{styles.main}}"
 		role="{{accRole}}"
 >
 	<!-- header: either header or h1 with header text -->
-	{{#if ctr.fixed}}
+	{{#if fixed}}
 		{{> header}}
 	{{else}}
-		<header @click="{{ctr._header.press}}" class="{{classes.header}}" tabindex="{{headerTabIndex}}">
+		<header @click="{{_header.press}}" class="{{classes.header}}" tabindex="{{headerTabIndex}}">
 			<ui5-icon
 				class="{{classes.icon}}"
-				src="{{ctr._icon.src}}"
-				title="{{ctr._icon.title}}"
+				src="{{_icon.src}}"
+				title="{{_icon.title}}"
 				tabindex="{{iconTabIndex}}"
 				aria-expanded="{{expanded}}"
 				aria-labelledby="{{ariaLabelledBy}}"
-				@ui5-press="{{ctr._icon.press}}"
+				@ui5-press="{{_icon.press}}"
 			></ui5-icon>
 			{{> header}}
 		</header>
@@ -29,14 +28,14 @@
 </div>
 
 {{#*inline "header"}}
-	{{#if ctr.header}}
+	{{#if header}}
 		<div class="sapMPanelHdrToolbar">
 			<slot name="header"></slot>
 		</div>
 	{{/if}}
 	{{#if shouldRenderH1}}
-		<h1 id="{{ctr._id}}-header" class="sapMPanelHdr">
-			{{ctr.headerText}}
+		<h1 id="{{_id}}-header" class="sapMPanelHdr">
+			{{headerText}}
 		</h1>
 	{{/if}}
 {{/inline}}

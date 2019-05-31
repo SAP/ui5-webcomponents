@@ -2,7 +2,7 @@ import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
 import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper.js";
-
+import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 import { isTabNext } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import ListItemBase from "./ListItemBase.js";
 import ListMode from "./types/ListMode.js";
@@ -10,7 +10,6 @@ import ListSeparators from "./types/ListSeparators.js";
 import ListItemType from "./types/ListItemType.js";
 // Template
 import ListRenderer from "./build/compiled/ListRenderer.lit.js";
-import ListTemplateContext from "./ListTemplateContext.js";
 
 // Styles
 import listCss from "./themes/List.css.js";
@@ -556,8 +555,34 @@ class List extends UI5Element {
 		return focused;
 	}
 
-	static get calculateTemplateContext() {
-		return ListTemplateContext.calculate;
+	get shouldRenderH1() {
+		return !this.header && this.headerText;
+	}
+
+	get showNoDataText() {
+		return this.items.length === 0 && this.noDataText;
+	}
+
+	get classes() {
+		return {
+			main: {
+				sapMList: true,
+				sapMListInsetBG: this.inset,
+			},
+			ul: {
+				sapMListItems: true,
+				sapMListUl: true,
+				[`sapMListShowSeparators${this.separators}`]: true,
+				[`sapMListMode${this.mode}`]: true,
+				sapMListInset: this.inset,
+			},
+			noData: {
+				sapMLIB: true,
+				sapMListNoData: true,
+				sapMLIBTypeInactive: true,
+				sapMLIBFocusable: isDesktop(),
+			},
+		};
 	}
 }
 

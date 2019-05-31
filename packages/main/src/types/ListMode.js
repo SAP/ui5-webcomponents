@@ -20,7 +20,7 @@ const ListModes = {
 	SingleSelectBegin: "SingleSelectBegin",
 
 	/**
-	 * Selected item is highlighted but no selection control is visible
+	 * Selected item is highlighted but no selection element is visible
 	 * (only one list item can be selected).
 	 * @public
 	 */

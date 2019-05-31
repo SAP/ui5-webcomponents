@@ -2,29 +2,29 @@
 
 {{#*inline "listItemContent"}}
 	<div class="sapMSLITextWrapper">
-		{{#if ctr.text.length}}
+		{{#if text.length}}
 			<span class="sapMSLITitle"><slot></slot></span>
 		{{/if}}
-		{{#if ctr.description}}
-			<span class="sapMSLIDescription">{{ctr.description}}</span>
+		{{#if description}}
+			<span class="sapMSLIDescription">{{description}}</span>
 		{{/if}}
 	</div>
 {{/inline}}
 
 {{#*inline "imageBegin"}}
 	{{#if displayImage}}
-		<img src="{{ctr.image}}" class="sapMSLIImg">
+		<img src="{{image}}" class="sapMSLIImg">
 	{{/if}}
 {{/inline}}
 
 {{#*inline "iconBegin"}}
 	{{#if displayIconBegin}}
-		<ui5-icon src="{{ctr.icon}}" class="sapMLIBIcon"></ui5-icon>
+		<ui5-icon src="{{icon}}" class="sapMLIBIcon"></ui5-icon>
 	{{/if}}
 {{/inline}}
 
 {{#*inline "iconEnd"}}
 	{{#if displayIconEnd}}
-		<ui5-icon src="{{ctr.icon}}" class="sapMLIBIcon"></ui5-icon>
+		<ui5-icon src="{{icon}}" class="sapMLIBIcon"></ui5-icon>
 	{{/if}}
 {{/inline}}

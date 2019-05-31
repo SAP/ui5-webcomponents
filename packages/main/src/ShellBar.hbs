@@ -1,24 +1,24 @@
-<div {{> controlData}} class="{{classes.wrapper}}">
+<div class="{{classes.wrapper}}">
 
 	<div class="{{classes.leftContainer}}">
 
-		{{#if ctr.icon}}
+		{{#if icon}}
 			<slot name="icon"></slot>
 		{{/if}}
 
 		{{#unless interactiveLogo}}
-			<img class="{{classes.logo}}" src="{{ctr.logo}}" @click="{{ctr._logoPress}}" />
+			<img class="{{classes.logo}}" src="{{logo}}" @click="{{_logoPress}}" />
 		{{/unless}}
 
 		{{#if showArrowDown}}
-			<button tabindex="0" class="{{classes.button}}" @click="{{ctr._header.press}}">
+			<button tabindex="0" class="{{classes.button}}" @click="{{_header.press}}">
 				{{#if interactiveLogo}}
-					<img class="{{classes.logo}}" src="{{ctr.logo}}" />
+					<img class="{{classes.logo}}" src="{{logo}}" />
 				{{/if}}
 
-				{{#if ctr.primaryTitle}}
+				{{#if primaryTitle}}
 					<h1 class="{{classes.buttonTitle}}">
-						<bdi class="{{classes.title}}">{{ctr.primaryTitle}}</bdi>
+						<bdi class="{{classes.title}}">{{primaryTitle}}</bdi>
 					</h1>
 				{{/if}}
 
@@ -27,16 +27,16 @@
 		{{/if}}
 
 		<ui5-popover class="sapWCShellBarMenuPopover" hide-header placement-type="Bottom">
-			<ui5-list separators="None" mode="SingleSelect" @ui5-itemPress={{ctr._menuItemPress}}>
+			<ui5-list separators="None" mode="SingleSelect" @ui5-itemPress={{_menuItemPress}}>
 				<slot name="menuItems"></slot>
 			</ui5-list>
 		</ui5-popover>
 
-		<h2 class="{{classes.secondaryTitle}}">{{ctr.secondaryTitle}}</h2>
+		<h2 class="{{classes.secondaryTitle}}">{{secondaryTitle}}</h2>
 	</div>
 
 	<div class="sapWCShellBarOverflowContainer sapWCShellBarOverflowContainerMiddle">
-		{{#if ctr.showCoPilot}}
+		{{#if showCoPilot}}
 			{{> coPilot}}
 		{{else}}
 			<span class="sapWCShellBarCoPilotPlaceholder"></span>
@@ -46,11 +46,11 @@
 	<div class="sapWCShellBarOverflowContainer sapWCShellBarOverflowContainerRight">
 
 		<div class="sapWCShellBarOverflowContainerRightChild">
-			{{#each ctr._itemsInfo}}
+			{{#each _itemsInfo}}
 				{{#if this.src}}
 					<ui5-icon
 						tabindex="{{this._tabIndex}}"
-						data-ui5-notification-count="{{../../ctr.notificationCount}}"
+						data-ui5-notification-count="{{../notificationCount}}"
 						data-ui5-external-action-item-id="{{this.refItemid}}"
 						class="{{this.classes}}"
 						src="{{this.src}}"
@@ -74,7 +74,7 @@
 	</div>
 
 	<ui5-popover class="sapWCShellBarOverflowPopover" placement-type="Bottom" horizontal-align="{{popoverHorizontalAlign}}" hide-header hide-arrow>
-		<ui5-list separators="None" @ui5-itemPress="{{ctr._actionList.itemPress}}">
+		<ui5-list separators="None" @ui5-itemPress="{{_actionList.itemPress}}">
 			{{#each _hiddenIcons}}
 				<ui5-li
 					data-ui5-external-action-item-id="{{this.refItemid}}" 
@@ -90,19 +90,19 @@
 	<div class="{{classes.blockLayer}}">
 	</div>
 
-	<div id="{{ctr._id}}-searchfield-wrapper"
+	<div id="{{_id}}-searchfield-wrapper"
 		class="{{classes.searchField}}"
 		style="{{styles.searchField}}"
-		@focusout={{ctr._searchField.focusout}}
+		@focusout={{_searchField.focusout}}
 	>
-		{{#if ctr.searchField}}
+		{{#if searchField}}
 			<slot name="searchField"></slot>
 		{{/if}}
 	</div>
 </div>
 
 {{#*inline "coPilot"}}
-	<svg @click="{{ctr._coPilotPress}}" version="1.1" width="44" height="44" viewBox="-150 -150 300 300" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+	<svg @click="{{_coPilotPress}}" version="1.1" width="44" height="44" viewBox="-150 -150 300 300" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
 		style="background-color: transparent; cursor: pointer;" class="ui5-shellbar-coPilot">
 		<defs>
 			<linearGradient id="grad1" x1="0%" x2="100%" y1="100%" y2="0%">

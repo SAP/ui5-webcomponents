@@ -53,10 +53,6 @@ class UI5ElementMetadata {
 	}
 
 	static validateSlotValue(value, slotData) {
-		const isMultiple = slotData.multiple;
-		if (isMultiple) {
-			return value.map(propValue => validateSingleSlot(propValue, slotData));
-		}
 		return validateSingleSlot(value, slotData);
 	}
 }
@@ -86,7 +82,7 @@ const validateSingleProperty = (value, propData) => {
 	}
 };
 
-const validateSingleSlot = (value, propData) => {
+const validateSingleSlot = (value, slotData) => {
 	if (value === null) {
 		return value;
 	}
@@ -101,7 +97,7 @@ const validateSingleSlot = (value, propData) => {
 
 		return [el];
 	};
-	const propertyType = propData.type;
+	const propertyType = slotData.type;
 
 	const slottedNodes = getSlottedNodes(value);
 	slottedNodes.forEach(el => {

@@ -231,22 +231,6 @@ class MultiComboBox extends UI5Element {
 		return MultiComboBoxRenderer;
 	}
 
-	static get calculateTemplateContext() {
-		return state => {
-			return {
-				ctr: state,
-				editable: !state.readonly,
-				selectedItemsListMode: state.readonly ? "None" : "MultiSelect",
-				classes: {
-					icon: {
-						[`ui5-multi-combobox-icon-pressed`]: state._iconPressed,
-						[`ui5-multi-combobox--icon`]: true,
-					},
-				},
-			};
-		};
-	}
-
 	static get styles() {
 		return styles;
 	}
@@ -422,6 +406,24 @@ class MultiComboBox extends UI5Element {
 
 		const filteredItems = this._filterItems(this.value);
 		this._filteredItems = filteredItems;
+	}
+
+
+	get editable() {
+		return !this.readonly;
+	}
+
+	get selectedItemsListMode() {
+		return this.readonly ? "None" : "MultiSelect";
+	}
+
+	get classes() {
+		return {
+			icon: {
+				[`ui5-multi-combobox-icon-pressed`]: this._iconPressed,
+				[`ui5-multi-combobox--icon`]: true,
+			},
+		};
 	}
 
 	static async define(...params) {

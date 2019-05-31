@@ -2,7 +2,6 @@ import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import URI from "@ui5/webcomponents-base/src/types/URI.js";
 import ListItem from "./ListItem.js";
 import Icon from "./Icon.js";
-import StandardListItemTemplateContext from "./StandardListItemTemplateContext.js";
 import StandardListItemRenderer from "./build/compiled/StandardListItemRenderer.lit.js";
 
 // Styles
@@ -114,8 +113,27 @@ class StandardListItem extends ListItem {
 		return metadata;
 	}
 
-	static get calculateTemplateContext() {
-		return StandardListItemTemplateContext.calculate;
+	get displayImage() {
+		return !!this.image;
+	}
+
+	get displayIconBegin() {
+		return (this.icon && !this.iconEnd);
+	}
+
+	get displayIconEnd() {
+		return (this.icon && this.iconEnd);
+	}
+
+	get classes() {
+		const result = super.classes;
+		const hasDesc = this.description && !!this.description.length;
+		const hasTitle = this.textContent;
+
+		// Modify main classes
+		result.main.sapMSLIWithTitleAndDescription = hasDesc && hasTitle;
+
+		return result;
 	}
 
 	static async define(...params) {
