@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>&lt;ui5-busyindicator&gt;</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<link rel="stylesheet" href="../../../../../../www/home/core.css">
+
+	<script src="../../../../../../test-resources/playground/libs/google-code-prettify/prettify.js"></script>
+	<link href="../../../../../../test-resources/playground/libs/google-code-prettify/sunburst.css" type="text/css" rel="stylesheet">
+
+	<link href="../../../../../../test-resources/playground/css/api.css" type="text/css" rel="stylesheet">
+
+	<script data-id="sap-ui-config" type="application/json">
+		{
+			"theme": "sap_fiori_3",
+			"language": "EN"
+		}
+	</script>
+
+	<script src="../../../../../../webcomponentsjs/webcomponents-loader.js"></script>
+	<script src="../../../../../../resources/sap/ui/webcomponents/main/bundle.esm.js"
+		type="module"
+	>
+	</script>
+
+	<script nomodule src="../../../../../../resources/sap/ui/webcomponents/main/bundle.es5.js">
+	</script>
+
+	<script defer src="../../../../../../www/samples/settings.js"></script>
+	<script>delete Document.prototype.adoptedStyleSheets;</script>
+
+	<style>
+		.center {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-direction: column;
+		}
+	</style>
+</head>
+<body class="sapUiBody example-wrapper">
+
+	<header>
+		<div class="control-header">Busy Indicator</div>
+		<div style="margin-bottom: 2rem; font-weight: 300; font-size: 1.1rem; color: #666666;">&lt;ui5-busyindicator&gt;</div>
+	</header>
+
+	<section>
+			<h3>Busy Indicator with different size</h3>
+			<div class="snippet center">
+				<ui5-busyindicator size="Small"></ui5-busyindicator>
+				<ui5-busyindicator size="Medium"></ui5-busyindicator>
+				<ui5-busyindicator size="Large"></ui5-busyindicator>
+			</div>
+		<pre class="prettyprint lang-html"><xmp>
+<div>
+	<ui5-busyindicator size="Small"></ui5-busyindicator>
+	<ui5-busyindicator size="Medium"></ui5-busyindicator>
+	<ui5-busyindicator size="Large"></ui5-busyindicator>
+</div>
+		</xmp></pre>
+		</section>
+
+	<script>
+		window.prettyPrint();
+	</script>
+</body>
+
+</html>

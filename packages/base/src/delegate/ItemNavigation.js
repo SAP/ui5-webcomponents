@@ -12,14 +12,14 @@ import UI5Element from "../UI5Element.js";
 
 // navigatable items must have id and tabindex
 class ItemNavigation extends EventProvider {
-	constructor(rootControl, options = {}) {
+	constructor(rootWebComponent, options = {}) {
 		super();
 
 		this.currentIndex = options.currentIndex || 0;
 		this.rowSize = options.rowSize || 1;
 		this.cyclic = options.cyclic || false;
 
-		this.rootControl = rootControl;
+		this.rootWebComponent = rootWebComponent;
 	}
 
 	init() {
@@ -188,11 +188,11 @@ class ItemNavigation extends EventProvider {
 			return currentItem.getFocusDomRef();
 		}
 
-		if (!this.rootControl.getDomRef()) {
+		if (!this.rootWebComponent.getDomRef()) {
 			return;
 		}
 
-		return this.rootControl.getDomRef().querySelector(`#${currentItem.id}`);
+		return this.rootWebComponent.getDomRef().querySelector(`#${currentItem.id}`);
 	}
 
 	set setItemsCallback(fn) {

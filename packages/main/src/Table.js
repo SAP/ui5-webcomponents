@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import { isSpace } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import TableColumn from "./TableColumn.js";
 import TableRow from "./TableRow.js";
 import TableRenderer from "./build/compiled/TableRenderer.lit.js";
@@ -128,42 +129,6 @@ class Table extends UI5Element {
 		return TableRenderer;
 	}
 
-	static get calculateTemplateContext() {
-		return state => {
-			const context = {
-				ctr: state,
-				visibleColumns: [],
-				classes: {
-					main: {
-						sapWCTableHeader: true,
-					},
-					columns: {
-						sapWCTableColumnWrapper: true,
-					},
-				},
-				styles: {
-					main: {
-						"grid-template-columns": "",
-						position: state.stickyColumnHeader ? "sticky" : "",
-						top: state.stickyColumnHeader ? "0px" : "",
-						"z-index": state.stickyColumnHeader ? "1" : "",
-					},
-				},
-			};
-
-			context.ctr.columns.forEach((column, index) => {
-				if (!context.ctr._hiddenColumns[index]) {
-					context.visibleColumns.push(column);
-
-					// width of columns
-					context.styles.main["grid-template-columns"] += `minmax(0, ${column.width || "1fr"}) `;
-				}
-			}, this);
-
-			return context;
-		};
-	}
-
 	constructor() {
 		super();
 
@@ -188,6 +153,10 @@ class Table extends UI5Element {
 			row.removeEventListener("ui5-_focused", this.fnOnRowFocused);
 			row.addEventListener("ui5-_focused", this.fnOnRowFocused);
 		});
+
+		this.visibleColumns = this.columns.filter((column, index) => {
+			return !this._hiddenColumns[index];
+		});
 	}
 
 	onEnterDOM() {
@@ -200,6 +169,12 @@ class Table extends UI5Element {
 
 	onRowFocused(event) {
 		this._itemNavigation.update(event.target);
+	}
+
+	onkeydown(event) {
+		if (isSpace(event)) {
+			event.preventDefault();
+		}
 	}
 
 	popinContent(_event) {
@@ -249,6 +224,32 @@ class Table extends UI5Element {
 				visible: !this._hiddenColumns[index],
 			};
 		}, this);
+	}
+
+	get classes() {
+		return {
+			main: {
+				sapWCTableHeader: true,
+			},
+			columns: {
+				sapWCTableColumnWrapper: true,
+			},
+		};
+	}
+
+	get styles() {
+		const gridTemplateColumns = this.visibleColumns.reduce((acc, column) => {
+			return `${acc}minmax(0, ${column.width || "1fr"}) `;
+		}, "");
+
+		return {
+			main: {
+				"grid-template-columns": gridTemplateColumns,
+				position: this.stickyColumnHeader ? "sticky" : "",
+				top: this.stickyColumnHeader ? "0px" : "",
+				"z-index": this.stickyColumnHeader ? "1" : "",
+			},
+		};
 	}
 }
 

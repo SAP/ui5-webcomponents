@@ -117,23 +117,14 @@ class TableColumn extends UI5Element {
 		return TableColumnRenderer;
 	}
 
-	static calculateTemplateContext(state) {
-		const context = {
-			ctr: state,
-			classes: {
-				main: {
-					sapWCTableColumn: true,
-					sapWCTableColumnFirst: state._first,
-					sapWCTableColumnLast: state._last,
-				},
-			},
-			styles: {
-				main: {
-				},
+	get classes() {
+		return {
+			main: {
+				sapWCTableColumn: true,
+				sapWCTableColumnFirst: this._first,
+				sapWCTableColumnLast: this._last,
 			},
 		};
-
-		return context;
 	}
 }
 

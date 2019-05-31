@@ -2,9 +2,6 @@ const Handlebars = require("handlebars/dist/handlebars.min.js");
 const path = require("path");
 const Visitor = Handlebars.Visitor;
 
-const RENDERING_CLASS = "ControlRenderer";
-const FN_RENDER_CHILD = "renderInPlace";
-
 function HTMLLitVisitor(debug) {
 	this.blockCounter = 0;
 	this.keys = [];

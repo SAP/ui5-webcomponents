@@ -12,7 +12,6 @@ import Popover from "./Popover.js";
 
 // Template
 import ShellBarRenderer from "./build/compiled/ShellBarRenderer.lit.js";
-import ShellBarTemplateContext from "./ShellBarTemplateContext.js";
 
 // Styles
 import styles from "./themes/ShellBar.css.js";
@@ -320,10 +319,6 @@ class ShellBar extends UI5Element {
 		return ShellBarRenderer;
 	}
 
-	static get calculateTemplateContext() {
-		return ShellBarTemplateContext.calculate;
-	}
-
 	static get FIORI_3_BREAKPOINTS() {
 		return [
 			559,
@@ -466,6 +461,14 @@ class ShellBar extends UI5Element {
 		if (size !== "S") {
 			this._itemNav.init();
 		}
+
+		this._hiddenIcons = this._itemsInfo.filter(info => {
+			const isHidden = (info.classes.indexOf("sapWCShellBarHiddenIcon") !== -1);
+			const isSet = info.classes.indexOf("sapWCShellBarUnsetIcon") === -1;
+			const isOverflowIcon = info.classes.indexOf("sapWCShellBarOverflowIcon") !== -1;
+
+			return isHidden && isSet && !isOverflowIcon;
+		});
 	}
 
 	onAfterRendering() {
@@ -591,13 +594,13 @@ class ShellBar extends UI5Element {
 			return 1;
 		});
 
-		const focussedItem = items.filter(item => {
+		const focusedItem = items.filter(item => {
 			return (item.classes.indexOf("sapWCShellBarUnsetIcon") === -1)
 				&& (item.classes.indexOf("sapWCShellBarOverflowIcon") === -1)
 				&& (item.classes.indexOf("sapWCShellBarHiddenIcon") === -1);
 		})[0];
 
-		return focussedItem;
+		return focusedItem;
 	}
 
 	_overflowActions() {
@@ -806,6 +809,70 @@ class ShellBar extends UI5Element {
 			},
 		];
 		return items;
+	}
+
+	get classes() {
+		return {
+			wrapper: {
+				"sapWCShellBarWrapper": true,
+				[`sapWCShellBarSize${this._breakpointSize}`]: true,
+				"sapWCShellBarHasSearchField": this.searchField,
+				"sapWCShellBarBlockLayerShown": this._showBlockLayer,
+				"sapWCShellBarHasNotifications": !!this.notificationCount,
+			},
+			leftContainer: {
+				"sapWCShellBarOverflowContainer": true,
+				"sapWCShellBarOverflowContainerLeft": true,
+			},
+			logo: {
+				"sapWCShellBarLogo": true,
+			},
+			button: {
+				"sapWCShellBarMenuButtonNoTitle": !this.primaryTitle,
+				"sapWCShellBarMenuButtonNoLogo": !this.logo,
+				"sapWCShellBarMenuButtonMerged": this._breakpointSize === "S",
+				"sapWCShellBarMenuButtonInteractive": !!this.menuItems.length,
+				"sapWCShellBarMenuButton": true,
+			},
+			buttonTitle: {
+				"sapWCShellBarMenuButtonTitle": true,
+			},
+			secondaryTitle: {
+				"sapWCShellBarSecondaryTitle": true,
+			},
+			arrow: {
+				"sapWCShellBarMenuButtonArrow": true,
+			},
+			searchField: {
+				"sapWCShellBarSearchField": true,
+				"sapWCShellBarSearchFieldHidden": !this._showBlockLayer,
+			},
+			blockLayer: {
+				"sapWCShellBarBlockLayer": true,
+				"sapWCShellBarBlockLayerHidden": !this._showBlockLayer,
+			},
+		};
+	}
+
+	get styles() {
+		return {
+			searchField: {
+				[getRTL() ? "left" : "right"]: this._searchField.right,
+				"top": `${parseInt(this._searchField.top)}px`,
+			},
+		};
+	}
+
+	get interactiveLogo() {
+		return this._breakpointSize === "S";
+	}
+
+	get showArrowDown() {
+		return this.primaryTitle || (this.logo && this.interactiveLogo);
+	}
+
+	get popoverHorizontalAlign() {
+		return getRTL() ? "Left" : "Right";
 	}
 
 	static async define(...params) {

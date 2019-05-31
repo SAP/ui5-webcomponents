@@ -13,7 +13,6 @@ import styles from "./themes/Tokenizer.css.js";
 
 // all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
 import "./ThemePropertiesProvider.js";
-import TokenizerTemplateContext from "./TokenizerTemplateContext.js";
 
 /**
  * @public
@@ -74,10 +73,6 @@ class Tokenizer extends UI5Element {
 
 	static get renderer() {
 		return TokenizerRenderer;
-	}
-
-	static get calculateTemplateContext() {
-		return TokenizerTemplateContext.calculate;
 	}
 
 	static get styles() {
@@ -201,6 +196,24 @@ class Tokenizer extends UI5Element {
 		} else {
 			this._itemNav.currentIndex = newIndex;
 		}
+	}
+
+	get showNMore() {
+		return this.showMore && this._hiddenTokens.length;
+	}
+
+	get classes() {
+		return {
+			wrapper: {
+				"ui5-tokenizer-nmore--wrapper": this.showMore,
+				"ui5-tokenizer--wrapper": true,
+				"ui5-tokenizer-no-padding": !this.tokens.length,
+			},
+			content: {
+				"ui5-tokenizer--content": true,
+				"ui5-tokenizer-nmore--content": this.showMore,
+			},
+		};
 	}
 
 	static async define(...params) {

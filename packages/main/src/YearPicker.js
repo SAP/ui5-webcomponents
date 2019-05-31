@@ -10,7 +10,6 @@ import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
 import DateFormat from "@ui5/webcomponents-core/dist/sap/ui/core/format/DateFormat.js";
 import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType.js";
 import CalendarDate from "@ui5/webcomponents-base/src/dates/CalendarDate.js";
-import YearPickerTemplateContext from "./YearPickerTemplateContext.js";
 import YearPickerRenderer from "./build/compiled/YearPickerRenderer.lit.js";
 
 // Styles
@@ -201,10 +200,6 @@ class YearPicker extends UI5Element {
 		return parseInt(sTimestamp);
 	}
 
-	static get calculateTemplateContext() {
-		return YearPickerTemplateContext.calculate;
-	}
-
 	onkeydown(event) {
 		if (isEnter(event)) {
 			return this._handleEnter(event);
@@ -258,6 +253,22 @@ class YearPicker extends UI5Element {
 		}
 
 		this.timestamp = oCalDate.valueOf() / 1000;
+	}
+
+	get classes() {
+		return {
+			yearInterval: {
+				sapWCYearPickerIntervalContainer: true,
+			},
+		};
+	}
+
+	get styles() {
+		return {
+			main: {
+				display: this._hidden ? "none" : "",
+			},
+		};
 	}
 }
 

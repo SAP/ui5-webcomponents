@@ -1,12 +1,12 @@
 class RenderQueue {
 	constructor() {
-		this.list = []; // Used to store the controls in order
-		this.promises = new Map(); // Used to store promises for control rendering
+		this.list = []; // Used to store the web components in order
+		this.promises = new Map(); // Used to store promises for web component rendering
 	}
 
-	add(control) {
-		if (this.promises.has(control)) {
-			return this.promises.get(control);
+	add(webComponent) {
+		if (this.promises.has(webComponent)) {
+			return this.promises.get(webComponent);
 		}
 
 		let deferredResolve;
@@ -15,18 +15,18 @@ class RenderQueue {
 		});
 		promise._deferredResolve = deferredResolve;
 
-		this.list.push(control);
-		this.promises.set(control, promise);
+		this.list.push(webComponent);
+		this.promises.set(webComponent, promise);
 
 		return promise;
 	}
 
 	shift() {
-		const control = this.list.shift();
-		if (control) {
-			const promise = this.promises.get(control);
-			this.promises.delete(control);
-			return { control, promise };
+		const webComponent = this.list.shift();
+		if (webComponent) {
+			const promise = this.promises.get(webComponent);
+			this.promises.delete(webComponent);
+			return { webComponent, promise };
 		}
 	}
 
@@ -34,8 +34,8 @@ class RenderQueue {
 		return this.list;
 	}
 
-	isAdded(control) {
-		return this.promises.has(control);
+	isAdded(webComponent) {
+		return this.promises.has(webComponent);
 	}
 }
 

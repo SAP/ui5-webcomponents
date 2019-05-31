@@ -1,7 +1,6 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import URI from "@ui5/webcomponents-base/src/types/URI.js";
 import TabBase from "./TabBase.js";
-import TabTemplateContext from "./TabTemplateContext.js";
 import IconColor from "./types/IconColor.js";
 import Icon from "./Icon.js";
 import TabRenderer from "./build/compiled/TabRenderer.lit.js";
@@ -132,10 +131,6 @@ class Tab extends TabBase {
 
 	static get renderer() {
 		return TabRenderer;
-	}
-
-	static get calculateTemplateContext() {
-		return TabTemplateContext.calculate;
 	}
 
 	static async define(...params) {

@@ -3,17 +3,16 @@ import DOMObserver from "./compatibility/DOMObserver.js";
 import ShadowDOM from "./compatibility/ShadowDOM.js";
 import UI5ElementMetadata from "./UI5ElementMetadata.js";
 import Integer from "./types/Integer.js";
-import ControlRenderer from "./ControlRenderer.js";
+import Renderer from "./Renderer.js";
 import RenderScheduler from "./RenderScheduler.js";
-import TemplateContext from "./TemplateContext.js";
 import { createStyle } from "./CSS.js";
 import { attachThemeChange } from "./Theming.js";
 
 const metadata = {
 	properties: {
 		/**
-		 * Attributes (most commonly accessibility-related) that will be passed to the control.
-		 * The control has the responsibility to render these attributes
+		 * Attributes (most commonly accessibility-related) that will be passed to the web component.
+		 * The web component has the responsibility to render these attributes
 		 */
 		_customAttributes: {
 			type: Object,
@@ -342,12 +341,6 @@ class UI5Element extends HTMLElement {
 		return this._metadata;
 	}
 
-	static calculateTemplateContext(state) {
-		return {
-			ctr: state,
-		};
-	}
-
 	_attachChildPropertyUpdated(child, propData) {
 		const listenFor = propData.listenFor,
 			childMetadata = child.constructor.getMetadata(),
@@ -400,7 +393,7 @@ class UI5Element extends HTMLElement {
 	}
 
 	/**
-	 * Asynchronously re-renders an already rendered control
+	 * Asynchronously re-renders an already rendered web component
 	 * @private
 	 */
 	_invalidate() {
@@ -426,7 +419,7 @@ class UI5Element extends HTMLElement {
 		// render
 		// console.log(this.getDomRef() ? "RE-RENDER" : "FIRST RENDER", this);
 		delete this._invalidated;
-		ControlRenderer.render(this);
+		Renderer.render(this);
 
 		// Safari requires that children get the slot attribute only after the slot tags have been rendered in the shadow DOM
 		this._assignSlotsToChildren();
@@ -478,10 +471,6 @@ class UI5Element extends HTMLElement {
 		});
 	}
 
-	_getTemplateContext() {
-		return TemplateContext.calculate(this);
-	}
-
 	getDomRef() {
 		if (!this.shadowRoot || this.shadowRoot.children.length === 0) {
 			return;
@@ -517,7 +506,7 @@ class UI5Element extends HTMLElement {
 	}
 
 	/**
-	 * Calls the event handler on the control for a native event
+	 * Calls the event handler on the web component for a native event
 	 *
 	 * @param event The event object
 	 * @private
@@ -600,7 +589,6 @@ class UI5Element extends HTMLElement {
 
 	/**
 	 * Used to generate the next auto-increment id for the current class
-	 * Note: do not call Control._nextID (static) but rather this.constructor._nextID (polymorphic)
 	 * @returns {string}
 	 * @private
 	 */

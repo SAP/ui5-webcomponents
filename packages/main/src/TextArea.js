@@ -3,7 +3,6 @@ import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import CSSSize from "@ui5/webcomponents-base/src/types/CSSSize.js";
 import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
 import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/src/ResourceBundle.js";
-import TextAreaTemplateContext from "./TextAreaTemplateContext.js";
 import TextAreaRenderer from "./build/compiled/TextAreaRenderer.lit.js";
 
 import { TEXTAREA_CHARACTERS_LEFT, TEXTAREA_CHARACTERS_EXCEEDED } from "./i18n/defaults.js";
@@ -231,10 +230,6 @@ class TextArea extends UI5Element {
 		return TextAreaRenderer;
 	}
 
-	static get calculateTemplateContext() {
-		return TextAreaTemplateContext.calculate;
-	}
-
 	constructor() {
 		super();
 
@@ -338,6 +333,61 @@ class TextArea extends UI5Element {
 		return {
 			exceededText, leftCharactersCount, calcedMaxLength,
 		};
+	}
+
+	get classes() {
+		return {
+			main: {
+				sapWCTextArea: true,
+				sapWCTextAreaWarning: (this._exceededTextProps.leftCharactersCount < 0),
+				sapWCTextAreaGrowing: this.growing,
+				sapWCTextAreaNoMaxLines: !this.growingMaxLines,
+				sapWCTextAreaWithCounter: this.showExceededText,
+				sapWCTextAreaDisabled: this.disabled,
+				sapWCTextAreaReadonly: this.readonly,
+			},
+			inner: {
+				sapWCTextAreaInner: true,
+				sapWCTextAreaStateInner: (this._exceededTextProps.leftCharactersCount < 0),
+				sapWCTextAreaWarningInner: (this._exceededTextProps.leftCharactersCount < 0),
+			},
+			exceededText: {
+				sapWCTextAreaExceededText: true,
+			},
+			mirror: {
+				sapWCTextAreaMirror: true,
+			},
+			focusDiv: {
+				sapWCTextAreaFocusDiv: true,
+				sapWCTextAreaHasFocus: this._focussed,
+			},
+		};
+	}
+
+	get styles() {
+		const lineHeight = 1.4 * 16;
+
+		return {
+			mirror: {
+				"max-height": this._maxHeight,
+			},
+			main: {
+				width: "100%",
+				height: (this.rows && !this.growing) ? `${this.rows * lineHeight}px` : "100%",
+			},
+			focusDiv: {
+				"height": (this.showExceededText ? "calc(100% - 26px)" : "100%"),
+				"max-height": (this._maxHeight),
+			},
+		};
+	}
+
+	get tabIndex() {
+		return this.disabled ? undefined : "0";
+	}
+
+	get ariaInvalid() {
+		return this.valueState === "Error" ? "true" : undefined;
 	}
 
 	static async define(...params) {

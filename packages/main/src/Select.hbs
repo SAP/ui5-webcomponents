@@ -1,14 +1,11 @@
-<div {{> controlData}}
-	class="{{classes.main}}"
-	style="{{styles.main}}"
-	tabindex="{{tabIndex}}">
+<div class="{{classes.main}}" tabindex="{{tabIndex}}">
 	<div
 		class="sapWCSelectLabel"
-		@click="{{ctr._fnClickSelectBox}}">
-		<ui5-label>{{ctr._text}}</ui5-label>
+		@click="{{_fnClickSelectBox}}">
+		<ui5-label>{{_text}}</ui5-label>
 	</div>
 
-	{{#if ctr.items}}
+	{{#if items}}
 		<ui5-popover
 			placement-type="Bottom"
 			hide-header="true"
@@ -23,6 +20,6 @@
 	<ui5-icon
 		src="sap-icon://slim-arrow-down"
 		class="sapWCSelectDropDownIcon"
-		@ui5-press="{{ctr._fnClickSelectBox}}"
+		@ui5-press="{{_fnClickSelectBox}}"
 	></ui5-icon>
 </div>

@@ -2,7 +2,8 @@ import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import URI from "@ui5/webcomponents-base/src/types/URI.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-import IconTemplateContext from "./IconTemplateContext.js";
+import { getIconInfo } from "@ui5/webcomponents-base/src/IconPool.js";
+import { getRTL } from "@ui5/webcomponents-base/src/Configuration.js";
 import IconRenderer from "./build/compiled/IconRenderer.lit.js";
 
 // Styles
@@ -75,10 +76,6 @@ class Icon extends UI5Element {
 		return IconRenderer;
 	}
 
-	static get calculateTemplateContext() {
-		return IconTemplateContext.calculate;
-	}
-
 	static get styles() {
 		return iconCss;
 	}
@@ -105,6 +102,42 @@ class Icon extends UI5Element {
 			this.fireEvent("press");
 			this.__spaceDown = false;
 		}
+	}
+
+	get classes() {
+		const iconInfo = getIconInfo(this.src) || {};
+		return {
+			main: {
+				sapWCIcon: true,
+				sapWCIconMirrorInRTL: !iconInfo.suppressMirroring,
+			},
+		};
+	}
+
+	get ariaLabelledBy() {
+		return this._customAttributes["aria-labelledby"] || "";
+	}
+
+	get ariaExpanded() {
+		return this._customAttributes["aria-expanded"] || "";
+	}
+
+	get role() {
+		return this._customAttributes.role || "presentation";
+	}
+
+	get iconContent() {
+		const iconInfo = getIconInfo(this.src) || {};
+		return iconInfo.content;
+	}
+
+	get dir() {
+		return getRTL() ? "rtl" : "ltr";
+	}
+
+	get fontStyle() {
+		const iconInfo = getIconInfo(this.src) || {};
+		return `font-family: '${iconInfo.fontFamily}'`;
 	}
 }
 
