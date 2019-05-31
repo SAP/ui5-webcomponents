@@ -1,5 +1,5 @@
-commit 5d4b644ca2a86d8a2b9704129cd908705ef8adec
+commit d7c40e84df6b001a7e5ee08a221f43937b3ef718
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri May 31 10:12:00 2019 +0300
+Date:   Fri May 31 10:17:13 2019 +0300
 
-    refactor: replace usages of the word control in the main project (#491)
+    refactor: remove references to controls in the base project (#490)
