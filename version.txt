@@ -1,5 +1,5 @@
-commit c177f1068e5398a0a3cbbd6bbc0ffaa774f4b6bf
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu May 30 17:30:17 2019 +0300
+commit 6b6b5443607be92261eab43d312c08dd53602a2d
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Fri May 31 09:58:45 2019 +0300
 
-    refactor: remove support for template context on framework level (#489)
+    feat(ui5-busyindicator): initial implementation (#416)
