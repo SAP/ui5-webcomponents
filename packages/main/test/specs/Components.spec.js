@@ -75,6 +75,7 @@ describe("General assertions", () => {
 
 	it("tests components with 'hidden' property are not visible", () => {
 		[
+			browser.$("#busyIndicator2"),
 			browser.$("#btn2"),
 			browser.$("#card2"),
 			browser.$("#cb2"),

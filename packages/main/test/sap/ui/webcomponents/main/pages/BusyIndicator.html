@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<title>Busy Indicator</title>
+	<script>
+		delete Document.prototype.adoptedStyleSheets
+	</script>
+
+	<script data-id="sap-ui-config" type="application/json">
+		{
+			"rtl": false,
+			"compactSize": false
+		}
+	</script>
+
+	<script src="../../../../../../webcomponentsjs/webcomponents-loader.js"></script>
+	<script src="../../../../../../resources/sap/ui/webcomponents/main/bundle.esm.js" type="module"></script>
+	<script nomodule src="../../../../../../resources/sap/ui/webcomponents/main/bundle.es5.js">
+	</script>
+</head>
+
+<body>
+	<ui5-busyindicator id="indicator1"></ui5-busyindicator>
+	<ui5-busyindicator id="indicator2" hidden></ui5-busyindicator>
+</body>
+</html>
