@@ -273,9 +273,9 @@ class Popover extends Popup {
 			}
 		}
 
-		if (this._targetControl) {
-			const targetControlRect = this._targetControl.getBoundingClientRect();
-			if (Popover.isInRect(x, y, targetControlRect)) {
+		if (this._targetElement) {
+			const targetElementRect = this._targetElement.getBoundingClientRect();
+			if (Popover.isInRect(x, y, targetElementRect)) {
 				return true;
 			}
 		}
@@ -290,7 +290,7 @@ class Popover extends Popup {
 	}
 
 	checkDocking() {
-		if (!this.stayOpenOnScroll && this.isTargetControlMoved()) {
+		if (!this.stayOpenOnScroll && this.hasTargetElementMoved()) {
 			this.close();
 		}
 
@@ -301,7 +301,7 @@ class Popover extends Popup {
 			height: popoverDomRef.offsetHeight,
 		};
 
-		const targetRect = Popover.getClientRect(this._targetControl);
+		const targetRect = Popover.getClientRect(this._targetElement);
 
 		this.setLocation(targetRect, popoverSize);
 	}
@@ -500,7 +500,7 @@ class Popover extends Popup {
 	 * set in the <code>ui5-popover</code>.
 	 * @public
 	 */
-	openBy(control) {
+	openBy(element) {
 		if (this._isOpen) {
 			return;
 		}
@@ -512,12 +512,12 @@ class Popover extends Popup {
 
 		this.storeCurrentFocus();
 
-		const targetDomRef = control;
+		const targetDomRef = element;
 
 		const popoverSize = this.getPopoverSize();
 		const targetRect = Popover.getClientRect(targetDomRef);
 
-		this._targetControl = targetDomRef;
+		this._targetElement = targetDomRef;
 		this._targetRect = targetRect;
 
 		this.setLocation(targetRect, popoverSize);
@@ -586,8 +586,8 @@ class Popover extends Popup {
 		};
 	}
 
-	isTargetControlMoved() {
-		const newRect = this._targetControl.getBoundingClientRect();
+	hasTargetElementMoved() {
+		const newRect = this._targetElement.getBoundingClientRect();
 		const targetRect = this._targetRect;
 
 		return Math.abs(newRect.left - targetRect.left) > diffTolerance

@@ -52,10 +52,6 @@ const metadata = {
 			defaultValue: ListMode.None,
 		},
 
-		_selectionControl: {
-			type: Object,
-		},
-
 		_fnOnDelete: {
 			type: Function,
 		},
@@ -183,13 +179,13 @@ class ListItem extends ListItemBase {
 		return result;
 	}
 
-	get placeSelectionControlBefore() {
+	get placeSelectionElementBefore() {
 		return this._mode === ListMode.MultiSelect
 			|| this._mode === ListMode.SingleSelectBegin;
 	}
 
-	get placeSelectionControlAfter() {
-		return !this.placeSelectionControlBefore
+	get placeSelectionElementAfter() {
+		return !this.placeSelectionElementBefore
 			&& (this._mode === ListMode.SingleSelectEnd || this._mode === ListMode.Delete);
 	}
 
