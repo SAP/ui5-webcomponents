@@ -1,5 +1,5 @@
-commit 5543d3062ef0750d5fd4769fafa86f8bb6f55143
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Fri May 31 14:26:27 2019 +0300
+commit 5fed0a62cb96b8bc790922c65e2de59cb0815672
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Sat Jun 1 13:19:04 2019 +0300
 
-    fix: fix list footer font family (#494)
+     fix(ui5-tabcontainer): fix the text colour of the selected tab (#496)
