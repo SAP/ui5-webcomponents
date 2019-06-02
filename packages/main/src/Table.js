@@ -51,9 +51,10 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.Table.prototype */ {
 
 		/**
-		 * Defines the text that will be displayed when there is no data and <code>show-no-date</code> is present.
+		 * Defines the text that will be displayed when there is no data and <code>showNoData</code> is present.
 		 *
 		 * @type {String}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		noDataText: {
@@ -69,7 +70,6 @@ const metadata = {
 		 */
 		showNoData: {
 			type: Boolean,
-			defaultValue: false,
 		},
 		/**
 		 * Determines whether the column headers remain fixed at the top of the page during
