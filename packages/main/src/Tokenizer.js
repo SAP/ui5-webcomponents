@@ -2,7 +2,6 @@ import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
-import Function from "@ui5/webcomponents-base/src/types/Function.js";
 
 import { fetchResourceBundle, getResourceBundle } from "./ResourceBundleProvider.js";
 import TokenizerRenderer from "./build/compiled/TokenizerRenderer.lit.js";
@@ -12,7 +11,6 @@ import styles from "./themes/Tokenizer.css.js";
 
 // all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
 import "./ThemePropertiesProvider.js";
-import TokenizerTemplateContext from "./TokenizerTemplateContext.js";
 
 /**
  * @public
@@ -73,10 +71,6 @@ class Tokenizer extends UI5Element {
 
 	static get renderer() {
 		return TokenizerRenderer;
-	}
-
-	static get calculateTemplateContext() {
-		return TokenizerTemplateContext.calculate;
 	}
 
 	static get styles() {
@@ -199,6 +193,24 @@ class Tokenizer extends UI5Element {
 		} else {
 			this._itemNav.currentIndex = newIndex;
 		}
+	}
+
+	get showNMore() {
+		return this.showMore && this._hiddenTokens.length;
+	}
+
+	get classes() {
+		return {
+			wrapper: {
+				"ui5-tokenizer-nmore--wrapper": this.showMore,
+				"ui5-tokenizer--wrapper": true,
+				"ui5-tokenizer-no-padding": !this.tokens.length,
+			},
+			content: {
+				"ui5-tokenizer--content": true,
+				"ui5-tokenizer-nmore--content": this.showMore,
+			},
+		};
 	}
 
 	static async define(...params) {

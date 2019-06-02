@@ -2,7 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import URI from "@ui5/webcomponents-base/src/types/URI.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-import ButtonTemplateContext from "./ButtonTemplateContext.js";
 import ButtonType from "./types/ButtonType.js";
 import ButtonRenderer from "./build/compiled/ButtonRenderer.lit.js";
 import Icon from "./Icon.js";
@@ -182,10 +181,6 @@ class Button extends UI5Element {
 		return ButtonRenderer;
 	}
 
-	static get calculateTemplateContext() {
-		return ButtonTemplateContext.calculate;
-	}
-
 	constructor() {
 		super();
 
@@ -254,6 +249,34 @@ class Button extends UI5Element {
 
 	onfocusout(_event) {
 		this._active = false;
+	}
+
+	get classes() {
+		return {
+			main: {
+				sapMBtn: true,
+				sapMBtnActive: this._active,
+				sapMBtnWithIcon: this.icon,
+				sapMBtnNoText: !this.text.length,
+				sapMBtnDisabled: this.disabled,
+				sapMBtnIconEnd: this.iconEnd,
+				[`sapMBtn${this.type}`]: true,
+			},
+			icon: {
+				sapWCIconInButton: true,
+			},
+			text: {
+				sapMBtnText: true,
+			},
+		};
+	}
+
+	get iconSrc() {
+		return this._active ? this.activeIcon : this.icon;
+	}
+
+	get ariaDisabled() {
+		return this.disabled ? "true" : undefined;
 	}
 
 	static async define(...params) {

@@ -2,11 +2,11 @@
 	outline: none;
 }
 
-:host(ui5-li-custom) {
+:host(ui5-li-custom:not([hidden])) {
 	display: block;
 }
 
-ui5-li-custom {
+ui5-li-custom:not([hidden]) {
 	display: block;
 }
 

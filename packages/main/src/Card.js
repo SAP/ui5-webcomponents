@@ -3,7 +3,6 @@ import URI from "@ui5/webcomponents-base/src/types/URI.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { isIconURI } from "@ui5/webcomponents-base/src/IconPool.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-import Function from "@ui5/webcomponents-base/src/types/Function.js";
 import CardRenderer from "./build/compiled/CardRenderer.lit.js";
 import Icon from "./Icon.js";
 
@@ -150,28 +149,25 @@ class Card extends UI5Element {
 		return cardCss;
 	}
 
-	static calculateTemplateContext(state) {
-		const hasAvatar = !!state.avatar;
-		const icon = hasAvatar && isIconURI(state.avatar);
-		const image = hasAvatar && !icon;
-		const hasContent = !!state.content.length;
-
+	get classes() {
 		return {
-			icon,
-			image,
-			ctr: state,
-			renderIcon: state.icon && !state.image,
-			classes: {
-				main: {
-					"sapFCard": true,
-					"sapFCardNoContent": !hasContent,
-				},
-				header: {
-					"sapFCardHeader": true,
-					"sapFCardHeaderActive": state._headerActive,
-				},
+			main: {
+				"sapFCard": true,
+				"sapFCardNoContent": !this.content.length,
+			},
+			header: {
+				"sapFCardHeader": true,
+				"sapFCardHeaderActive": this._headerActive,
 			},
 		};
+	}
+
+	get icon() {
+		return !!this.avatar && isIconURI(this.avatar);
+	}
+
+	get image() {
+		return !!this.avatar && !this.icon;
 	}
 
 	static async define(...params) {

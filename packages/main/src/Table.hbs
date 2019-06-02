@@ -1,4 +1,4 @@
-<div {{> controlData}}
+<div
 	style="display: grid; place-items: center;">
 
 	<!-- columns -->
@@ -11,10 +11,10 @@
 	</div>
 
 	<!-- rows -->
-	{{#each ctr.rows}}
-	<div style="width: 100%">
-    <slot name="{{this._individualSlot}}"></slot>
-	</div>
+	{{#each rows}}
+		<div style="width: 100%">
+			<slot name="{{this._individualSlot}}"></slot>
+		</div>
 	{{/each}}
 
 	{{#unless ctr.rows.length}}

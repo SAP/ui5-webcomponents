@@ -1,9 +1,15 @@
-:host(ui5-togglebutton) {
+:host(ui5-togglebutton:not([hidden])) {
 	display: inline-block;
 }
 
-ui5-togglebutton {
+ui5-togglebutton:not([hidden]) {
 	display: inline-block;
+}
+
+ui5-togglebutton .sapMBtn::before { /* this is a hack for a bug in IE https:/* github.com/philipwalton/flexbugs/issues/231 */
+	content: '';
+	min-height: inherit;
+	font-size: 0;
 }
 
 .sapMBtn.sapMToggleBtnPressed {

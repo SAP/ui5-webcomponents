@@ -75,10 +75,6 @@ class ShellBarItem extends UI5Element {
 	static get renderer() {
 		return ShellBarItemRenderer;
 	}
-
-	static get calculateTemplateContext() {
-		return state => { return { ctr: state }; };
-	}
 }
 
 Bootstrap.boot().then(_ => {

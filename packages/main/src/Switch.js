@@ -1,10 +1,10 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 
 // Template
 import SwitchRenderer from "./build/compiled/SwitchRenderer.lit.js";
-import SwitchTemplateContext from "./SwitchTemplateContext.js";
 import SwitchType from "./types/SwitchType.js";
 
 // Styles
@@ -52,9 +52,9 @@ const metadata = {
 		 * Defines the text of the <code>ui5-switch</code> when switched on.
 		 *
 		 * <br><br>
-		 * <b>Note:</b> We recommend using short texts (up to 3 letters, because larger texts might be cut off.
+		 * <b>Note:</b> We recommend using short texts, up to 3 letters (larger texts would be cut off).
 		 * @type {string}
-		 * @defaultvalue: ""
+		 * @defaultvalue ""
 		 * @public
 		 */
 		textOn: {
@@ -65,9 +65,9 @@ const metadata = {
 		 * Defines the text of the <code>ui5-switch</code> when switched off.
 		 *
 		 * <br><br>
-		 * <b>Note:</b> We recommend using short texts (up to 3 letters, because larger texts might be cut off.
+		 * <b>Note:</b> We recommend using short texts, up to 3 letters (larger texts would be cut off).
 		 * @type {string}
-		 * @defaultvalue: ""
+		 * @defaultvalue ""
 		 * @public
 		 */
 		textOff: {
@@ -108,6 +108,16 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  * The <code>ui5-switch</code> component is used for changing between binary states.
+ * </br>
+ * The component can display texts, that will be switched, based on the component state, via the <code>textOn</code> and <code>textOff</code> properties,
+ * but texts longer than 3 letters will be cuttted off.
+ * </br>
+ * However, users are able to customize the width of <code>ui5-switch</code> with pure CSS (&lt;ui5-switch style="width: 200px">), and set widths, depending on the texts they would use.
+ * </br>
+ * Note: the component would not automatically stretch to fit the whole text width.
+ *
+ * <h3>Keyboard Handling</h3>
+ * The state can be changed by pressing the Space and Enter keys.
  *
  * <h3>ES6 Module Import</h3>
  *
@@ -161,8 +171,34 @@ class Switch extends UI5Element {
 		}
 	}
 
-	static get calculateTemplateContext() {
-		return SwitchTemplateContext.calculate;
+	get textOn() {
+		const graphical = this.type === SwitchType.Graphical;
+		return graphical ? "" : this.textOn;
+	}
+
+	get textOff() {
+		const graphical = this.type === SwitchType.Graphical;
+		return graphical ? "" : this.textOff;
+	}
+
+	get tabIndex() {
+		return this.disabled ? undefined : "0";
+	}
+
+	get classes() {
+		const graphical = this.type === SwitchType.Graphical;
+		const hasLabel = graphical || this.textOn || this.textOff;
+
+		return {
+			main: {
+				"ui5-switch-wrapper": true,
+				"ui5-switch-desktop": isDesktop(),
+				"ui5-switch--disabled": this.disabled,
+				"ui5-switch--checked": this.checked,
+				"ui5-switch--semantic": graphical,
+				"ui5-switch--no-label": !hasLabel,
+			},
+		};
 	}
 }
 

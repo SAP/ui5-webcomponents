@@ -7,7 +7,6 @@ import {
 	isSpace,
 	isDelete,
 } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-import Function from "@ui5/webcomponents-base/src/types/Function.js";
 
 import Icon from "./Icon.js";
 import TokenRenderer from "./build/compiled/TokenRenderer.lit.js";
@@ -117,15 +116,6 @@ class Token extends UI5Element {
 		return TokenRenderer;
 	}
 
-	static get calculateTemplateContext() {
-		return state => {
-			return {
-				ctr: state,
-				iconURI: getTheme() === "sap_fiori_3" ? "sap-icon://decline" : "sap-icon://sys-cancel",
-			};
-		};
-	}
-
 	static get styles() {
 		return styles;
 	}
@@ -161,7 +151,11 @@ class Token extends UI5Element {
 		if (isEnter(event) || isSpace(event)) {
 			this.fireEvent("select", {});
 		}
-	 }
+	}
+
+	get iconURI() {
+		return getTheme() === "sap_fiori_3" ? "sap-icon://decline" : "sap-icon://sys-cancel";
+	}
 
 	static async define(...params) {
 		await Icon.define();

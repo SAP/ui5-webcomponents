@@ -1,7 +1,6 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
-import Function from "@ui5/webcomponents-base/src/types/Function.js";
 import { isShow, isDown } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 
 import MultiComboBoxRenderer from "./build/compiled/MultiComboBoxRenderer.lit.js";
@@ -232,22 +231,6 @@ class MultiComboBox extends UI5Element {
 		return MultiComboBoxRenderer;
 	}
 
-	static get calculateTemplateContext() {
-		return state => {
-			return {
-				ctr: state,
-				editable: !state.readonly,
-				selectedItemsListMode: state.readonly ? "None" : "MultiSelect",
-				classes: {
-					icon: {
-						[`ui5-multi-combobox-icon-pressed`]: state._iconPressed,
-						[`ui5-multi-combobox--icon`]: true,
-					},
-				},
-			};
-		};
-	}
-
 	static get styles() {
 		return styles;
 	}
@@ -423,6 +406,24 @@ class MultiComboBox extends UI5Element {
 
 		const filteredItems = this._filterItems(this.value);
 		this._filteredItems = filteredItems;
+	}
+
+
+	get editable() {
+		return !this.readonly;
+	}
+
+	get selectedItemsListMode() {
+		return this.readonly ? "None" : "MultiSelect";
+	}
+
+	get classes() {
+		return {
+			icon: {
+				[`ui5-multi-combobox-icon-pressed`]: this._iconPressed,
+				[`ui5-multi-combobox--icon`]: true,
+			},
+		};
 	}
 
 	static async define(...params) {

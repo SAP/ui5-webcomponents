@@ -9,12 +9,10 @@ import {
 	isShow,
 } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
-import Function from "@ui5/webcomponents-base/src/types/Function.js";
 import Suggestions from "./Suggestions.js";
 
 // Template
 import SelectRenderer from "./build/compiled/SelectRenderer.lit.js";
-import SelectTemplateContext from "./SelectTemplateContext.js";
 
 // Styles
 import selectCss from "./themes/Select.css.js";
@@ -139,10 +137,6 @@ class Select extends UI5Element {
 
 	static get renderer() {
 		return SelectRenderer;
-	}
-
-	static get calculateTemplateContext() {
-		return SelectTemplateContext.calculate;
 	}
 
 	static get styles() {
@@ -365,6 +359,23 @@ class Select extends UI5Element {
 
 	_fireChange(item) {
 		this.fireEvent("change", { selectedItem: item });
+	}
+
+	get classes() {
+		return {
+			main: {
+				"sapWCSelect": true,
+				"sapWCSelectFocused": this._focused,
+				"sapWCSelectDisabled": this.disabled,
+				"sapWCSelectOpened": this._opened,
+				"sapWCSelectState": this.valueState !== "None",
+				[`sapWCSelect${this.valueState}`]: true,
+			},
+		};
+	}
+
+	get tabIndex() {
+		return this.disabled ? "-1" : "0";
 	}
 }
 

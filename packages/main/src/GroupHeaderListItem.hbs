@@ -1,8 +1,7 @@
-<li {{> controlData}}
-	tabindex="{{ctr._tabIndex}}"
-	style="{{styles.main}}"
+<li
+	tabindex="{{_tabIndex}}"
 	class="{{classes.main}}">
-		<div id="{{ctr._id}}-content" class="{{classes.inner}}">
+		<div id="{{_id}}-content" class="{{classes.inner}}">
 				<span class="{{classes.span}}"><slot></slot></span>
 		</div>
 </li>

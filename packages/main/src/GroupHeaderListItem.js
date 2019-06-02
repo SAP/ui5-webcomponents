@@ -3,7 +3,6 @@ import ListItemBase from "./ListItemBase.js";
 
 // Template
 import GroupHeaderListItemRenderer from "./build/compiled/GroupHeaderListItemRenderer.lit.js";
-import GroupHeaderListItemTemplateContext from "./GroupHeaderListItemTemplateContext.js";
 
 // Styles
 import groupheaderListItemCss from "./themes/GroupHeaderListItem.css.js";
@@ -57,12 +56,23 @@ class GroupHeaderListItem extends ListItemBase {
 		return metadata;
 	}
 
-	static get calculateTemplateContext() {
-		return GroupHeaderListItemTemplateContext.calculate;
-	}
-
 	static get styles() {
 		return [ListItemBase.styles, groupheaderListItemCss];
+	}
+
+	get classes() {
+		const result = super.classes;
+
+		// Modify main classes
+		result.main.sapMGHLI = true;
+		result.main.sapMLIBTypeInactive = true;
+
+		// Define span classes
+		result.span = {
+			sapMGHLITitle: true,
+		};
+
+		return result;
 	}
 }
 

@@ -1,18 +1,14 @@
-:host(ui5-radiobutton) {
+:host(ui5-radiobutton:not([hidden])) {
 	max-width: 100%;
 	text-overflow: ellipsis;
 	overflow: hidden;
 	display: inline-block;
 }
 
-ui5-radiobutton {
+ui5-radiobutton:not([hidden]) {
 	max-width: 100%;
 	text-overflow: ellipsis;
 	overflow: hidden;
-	display: inline-block;
-}
-
-span[data-sap-ui-wc-root] {
 	display: inline-block;
 }
 
@@ -39,10 +35,10 @@ span[data-sap-ui-wc-root] {
 	content: "";
 	display: block;
 	position: absolute;
-	top: .625rem;
-	bottom: .625rem;
-	left: .625rem;
-	right: .625rem;
+	top: 0.5rem;
+	bottom: 0.5rem;
+	left: 0.5rem;
+	right: 0.5rem;
 	pointer-events: none;
 	border: var(--_ui5_radiobutton_border_width) dotted var(--sapUiContentFocusColor);
 }
@@ -88,8 +84,8 @@ span[data-sap-ui-wc-root] {
 
 /* Inner */
 .sapMRb .sapMRbInner {
-	width: 3rem;
-	height: 3rem;
+	width: 2.75rem;
+	height: 2.75rem;
 	font-size: 1rem; /* override font size of the message dialog */
 	pointer-events: none;
 	vertical-align: top;
@@ -114,11 +110,11 @@ span[data-sap-ui-wc-root] {
 
 /* Label */
 .sapMRb ui5-label.labelInRadioButton {
-	width: calc(100% - 3rem);
+	width: calc(100% - 2.75rem);
 	padding-right: 1px;
 	vertical-align: top;
-	height: 3rem;
-	line-height: 3rem;
+	height: 2.75rem;
+	line-height: 2.75rem;
 	cursor: default;
 	max-width: 100%;
 	text-overflow: ellipsis;
@@ -128,8 +124,8 @@ span[data-sap-ui-wc-root] {
 
 /* SVG */
 .sapMRbSvg {
-	height: 3rem;
-	width: 3rem;
+	height: 2.75rem;
+	width: 2.75rem;
 	pointer-events: none;
 }
 
@@ -166,9 +162,9 @@ span[data-sap-ui-wc-root] {
 }
 
 .sapUiSizeCompact .sapMRb .sapMRbInner .sapMRbSvg {
-	height: 1rem;
-	width: 1rem;
-	line-height: 1rem;
+	height: 2rem;
+	width: 2rem;
+	line-height: 2rem;
 }
 
 .sapUiSizeCompact .sapMRb ui5-label.labelInRadioButton {
@@ -180,7 +176,7 @@ span[data-sap-ui-wc-root] {
 /* RTL */
 span[dir="rtl"] .sapMRb.sapMRbHasLabel:focus:before {
 	left: 0;
-	right: 0.625rem;
+	right: 0.5rem;
 }
 
 /* RTL in Compact */

@@ -1,4 +1,4 @@
-import ControlEvents from "./events/ControlEvents.js";
+import ManagedEvents from "./events/ManagedEvents.js";
 import getOriginalEventTarget from "./events/getOriginalEventTarget.js";
 import UI5Element from "./UI5Element.js";
 
@@ -58,11 +58,11 @@ class DOMEventHandler {
 	}
 
 	static start() {
-		ControlEvents.bindAnyEvent(handleEvent);
+		ManagedEvents.bindAllEvents(handleEvent);
 	}
 
 	static stop() {
-		ControlEvents.unbindAnyEvent(handleEvent);
+		ManagedEvents.unbindAllEvents(handleEvent);
 	}
 }
 

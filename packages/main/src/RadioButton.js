@@ -1,3 +1,5 @@
+import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
+import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
@@ -12,7 +14,6 @@ import {
 import RadioButtonGroup from "./RadioButtonGroup.js";
 // Template
 import RadioButtonRenderer from "./build/compiled/RadioButtonRenderer.lit.js";
-import RadioButtonTemplateContext from "./RadioButtonTemplateContext.js";
 
 // Styles
 import radioButtonCss from "./themes/RadioButton.css.js";
@@ -103,7 +104,7 @@ const metadata = {
 		 * The selection can be changed with <code>ARROW_UP/DOWN</code> and <code>ARROW_LEFT/RIGHT</code> keys between radios in same group.
 		 * <br/><b>Note:</b>
 		 * Only one radio button can be selected per group.
-		 *
+		 * <br/>
 		 * <b>Important:</b> For the <code>name</code> property to have effect when submitting forms, you must add the following import to your project:
 		 * <code>import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";</code>
 		 *
@@ -123,7 +124,7 @@ const metadata = {
 		 * Defines the form value of the <code>ui5-radiobutton</code>.
 		 * When a form with a radio button group is submitted, the group's value
 		 * will be the value of the currently selected radio button.
-		 *
+		 * <br/>
 		 * <b>Important:</b> For the <code>value</code> property to have effect, you must add the following import to your project:
 		 * <code>import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";</code>
 		 *
@@ -151,6 +152,21 @@ const metadata = {
 	},
 };
 
+const SVGConfig = {
+	"compact": {
+		x: 16,
+		y: 16,
+		rInner: 3,
+		rOuter: 8,
+	},
+	"default": {
+		x: 22,
+		y: 22,
+		rInner: 5,
+		rOuter: 11,
+	},
+};
+
 /**
  * @class
  *
@@ -161,7 +177,17 @@ const metadata = {
  * <code>select</code> event is fired.
  * When a <code>ui5-radiobutton</code> that is within a group is selected, the one
  * that was previously selected gets automatically deselected. You can group radio buttons by using the <code>name</code> property.
+ * <br/>
+ * Note: if <code>ui5-radiobutton</code> is not part of a group, it can be selected once, but can not be deselected back.
  *
+ * <h3>Keyboard Handling</h3>
+ *
+ * Once the <code>ui5-radiobutton</code> is on focus, it might be selected by pressing the Space and Enter keys.
+ * <br/>
+ * The Arrow Down/Arrow Up and Arrow Left/Arrow Right keys can be used to change selection between next/previous radio buttons in one group,
+ * while TAB and SHIFT + TAB can be used to enter or leave the radio button group.
+ * <br/>
+ * Note: On entering radio button group, the focus goes to the currently selected radio button.
  *
  * <h3>ES6 Module Import</h3>
  *
@@ -305,8 +331,42 @@ class RadioButton extends UI5Element {
 		return !(this.disabled || this.readonly || this.selected);
 	}
 
-	static get calculateTemplateContext() {
-		return RadioButtonTemplateContext.calculate;
+	get classes() {
+		return {
+			main: {
+				sapMRb: true,
+				sapMRbHasLabel: this.text && this.text.length > 0,
+				sapMRbSel: this.selected,
+				sapMRbDis: this.disabled,
+				sapMRbRo: this.readonly,
+				sapMRbErr: this.valueState === "Error",
+				sapMRbWarn: this.valueState === "Warning",
+			},
+			inner: {
+				sapMRbInner: true,
+				sapMRbHoverable: !this.disabled && !this.readonly && isDesktop(),
+			},
+		};
+	}
+
+	get ariaReadonly() {
+		return this.readonly ? "true" : undefined;
+	}
+
+	get ariaDisabled() {
+		return this.disabled ? "true" : undefined;
+	}
+
+	get tabIndex() {
+		return this.disabled || (!this.selected && this.name) ? "-1" : "0";
+	}
+
+	get strokeWidth() {
+		return this.valueState === "None" ? "1" : "2";
+	}
+
+	get circle() {
+		return getCompactSize() ? SVGConfig.compact : SVGConfig.default;
 	}
 }
 

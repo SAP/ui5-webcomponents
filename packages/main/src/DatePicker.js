@@ -12,7 +12,6 @@ import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType.js";
 import CalendarDate from "@ui5/webcomponents-base/src/dates/CalendarDate.js";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
 import { isShow } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-import DatePickerTemplateContext from "./DatePickerTemplateContext.js";
 import Icon from "./Icon.js";
 import Popover from "./Popover.js";
 import Calendar from "./Calendar.js";
@@ -232,10 +231,6 @@ class DatePicker extends UI5Element {
 		return DatePickerRenderer;
 	}
 
-	static get calculateTemplateContext() {
-		return DatePickerTemplateContext.calculate;
-	}
-
 	static get styles() {
 		return datePickerCss;
 	}
@@ -262,7 +257,6 @@ class DatePicker extends UI5Element {
 				const calendar = popover.querySelector(`#${this._id}-calendar`);
 
 				this._input = Object.assign({}, this._input);
-				this._input.icon._customClasses = "sapWCDatePickerIcon";
 				this._isPickerOpen = false;
 
 				if (this._focusInputAfterClose) {
@@ -302,8 +296,6 @@ class DatePicker extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		this._popover._customClasses = [];
-
 		this._input.placeholder = this.placeholder;
 		this._input._iconNonFocusable = true;
 
@@ -476,7 +468,6 @@ class DatePicker extends UI5Element {
 	openPicker(options) {
 		this._changeCalendarSelection();
 		this._input = Object.assign({}, this._input);
-		this._input.icon._customClasses = "sapWCDatePickerIcon sapWCInputBaseIconPressed";
 
 		if (options && options.focusInput) {
 			this._focusInputAfterOpen = true;
@@ -533,6 +524,26 @@ class DatePicker extends UI5Element {
 		}
 
 		return { isInput };
+	}
+
+	get classes() {
+		return {
+			main: {
+				sapMDP: true,
+			},
+			icon: {
+				sapWCDPIcon: true,
+				sapWCDPIconPressed: this._isPickerOpen,
+			},
+		};
+	}
+
+	get styles() {
+		return {
+			main: {
+				width: "100%",
+			},
+		};
 	}
 
 	static async define(...params) {

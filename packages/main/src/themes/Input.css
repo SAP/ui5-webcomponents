@@ -1,9 +1,9 @@
-:host(ui5-input) {
+:host(ui5-input:not([hidden])) {
 	display: inline-block;
 	width: 100%;
 }
 
-ui5-input {
+ui5-input:not([hidden]) {
 	display: inline-block;
 	width: 100%;
 }
