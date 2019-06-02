@@ -42,4 +42,5 @@ ui5-table:not([hidden]) {
 	box-sizing: border-box;
 	color: var(--sapUiListTextColor);
 	min-height: 3rem;
+	border-bottom: 1px solid var(--sapUiListTableGroupHeaderBorderColor);
 }

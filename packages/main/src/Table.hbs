@@ -17,13 +17,11 @@
 		</div>
 	{{/each}}
 
-	{{#unless ctr.rows.length}}
-		{{#if ctr.showNoData}}
-			<div style="width: 100%">
-				<div id="noData" class="sapWCTableNoDataRow">
-					<span>{{ctr.noDataText}}</span>
-				</div>
-			</div>
+	{{#unless rows.length}}
+		{{#if showNoData}}
+			<div id="noData" class="sapWCTableNoDataRow">
+				<span>{{noDataText}}</span>
+		</div>
 		{{/if}}
 	{{/unless}}
 </div>
