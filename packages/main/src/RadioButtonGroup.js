@@ -118,15 +118,15 @@ class RadioButtonGroup {
 		let nextRadioToSelect = null;
 
 		if (pos === groupLength - 1) {
-			if (!group[0].disabled) {
-				nextRadioToSelect = group[0];
+			if (group[0].disabled || group[0].readonly) {
+				return this._nextSelectable(1, group);
 			} else {
-				return this._nextSelectable(0, group);
+				nextRadioToSelect = group[0];
 			}
-		} else if (!group[++pos].disabled) {
-			nextRadioToSelect = group[pos];
+		} else if (group[pos + 1].disabled || group[pos + 1].readonly) {
+			return this._nextSelectable(pos + 1, group);
 		} else {
-			return this._nextSelectable(pos, group);
+			nextRadioToSelect = group[pos + 1];
 		}
 
 		return nextRadioToSelect;
@@ -135,17 +135,16 @@ class RadioButtonGroup {
 	static _previousSelectable(pos, group) {
 		const groupLength = group.length;
 		let previousRadioToSelect = null;
-
 		if (pos === 0) {
-			if (!group[groupLength - 1].disabled) {
-				previousRadioToSelect = group[groupLength - 1];
-			} else {
+			if (group[groupLength - 1].disabled || group[groupLength - 1].readonly) {
 				return this._previousSelectable(groupLength - 1, group);
+			} else {
+				previousRadioToSelect = group[groupLength - 1];
 			}
-		} else if (!group[--pos].disabled) {
-			previousRadioToSelect = group[pos];
+		} else if (group[pos - 1].disabled || group[pos - 1].readonly) {
+			return this._previousSelectable(pos - 1, group);
 		} else {
-			return this._previousSelectable(pos, group);
+			previousRadioToSelect = group[pos - 1];
 		}
 
 		return previousRadioToSelect;
