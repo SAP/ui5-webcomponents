@@ -59,9 +59,6 @@ const metadata = {
 		 */
 		readonly: { type: Boolean },
 
-		_delete: { type: Function },
-		_select: { type: Function },
-		_keydown: { type: Function },
 		_tabIndex: { type: String, defaultValue: "-1" },
 	},
 
@@ -120,22 +117,15 @@ class Token extends UI5Element {
 		return styles;
 	}
 
-	constructor() {
-		super();
-		this._select = this._handleSelect.bind(this);
-		this._delete = this._handleDelete.bind(this);
-		this._keydown = this._handleKeyDown.bind(this);
-	}
-
-	_handleSelect() {
-		this.fireEvent("select", {});
+	_select() {
+		this.fireEvent("select");
 	 }
 
-	_handleDelete() {
+	 _delete() {
 		this.fireEvent("delete");
 	 }
 
-	_handleKeyDown(event) {
+	 _keydown(event) {
 		const isBS = isBackSpace(event);
 		const isD = isDelete(event);
 

@@ -87,10 +87,6 @@ const metadata = {
 			type: String,
 		},
 
-		_onItemNamePress: {
-			type: Function,
-		},
-
 		_tabIndex: {
 			type: String,
 			defaultValue: "-1",
@@ -140,8 +136,6 @@ class TimelineItem extends UI5Element {
 
 	constructor() {
 		super();
-
-		this._onItemNamePress = this.onItemNamePress.bind(this);
 	}
 
 	onItemNamePress() {
