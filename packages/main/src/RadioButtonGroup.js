@@ -120,9 +120,8 @@ class RadioButtonGroup {
 		if (pos === groupLength - 1) {
 			if (group[0].disabled || group[0].readonly) {
 				return this._nextSelectable(1, group);
-			} else {
-				nextRadioToSelect = group[0];
 			}
+			nextRadioToSelect = group[0];
 		} else if (group[pos + 1].disabled || group[pos + 1].readonly) {
 			return this._nextSelectable(pos + 1, group);
 		} else {
@@ -138,9 +137,8 @@ class RadioButtonGroup {
 		if (pos === 0) {
 			if (group[groupLength - 1].disabled || group[groupLength - 1].readonly) {
 				return this._previousSelectable(groupLength - 1, group);
-			} else {
-				previousRadioToSelect = group[groupLength - 1];
 			}
+			previousRadioToSelect = group[groupLength - 1];
 		} else if (group[pos - 1].disabled || group[pos - 1].readonly) {
 			return this._previousSelectable(pos - 1, group);
 		} else {
