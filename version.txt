@@ -1,5 +1,5 @@
-commit 8a9d27ea0f894a9296d4245161a3336dcb53078d
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Jun 3 11:38:31 2019 +0300
+commit 2261f1c0b0758c7d3d98926b667e93e9f6057b03
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Mon Jun 3 18:57:06 2019 +0300
 
-    docs(ui5-dialog, ui5-popover): show public events as part of the API (#495)
+    fix(ui5-radiobutton): make readonly radiobuttons not selectable via keyboard (#500)
