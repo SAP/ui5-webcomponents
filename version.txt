@@ -1,5 +1,9 @@
-commit 5fed0a62cb96b8bc790922c65e2de59cb0815672
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Sat Jun 1 13:19:04 2019 +0300
+commit 3a0335d878fc8904685f5f3dc7975840ef62c841
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Mon Jun 3 11:16:46 2019 +0300
 
-     fix(ui5-tabcontainer): fix the text colour of the selected tab (#496)
+    refactor: call all event listeners with 'this' pointing to the component (#493)
+    
+    - adds eventContext to the LitRenderer
+    - removes type: Function props from the metadata
+    - refactors all components that used to define functions in metadata
