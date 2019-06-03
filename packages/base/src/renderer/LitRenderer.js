@@ -1,8 +1,18 @@
-import { render } from "lit-html";
+import { html, render } from "lit-html";
 
 class LitRenderer {
-	static render(renderResult, domNode) {
-		render(renderResult, domNode);
+
+	/**
+	 * Renders "templateResult" by replacing the content of "domNode", and optionally prepends a style tag containing "styles"
+	 * @param templateResult - lit template result object
+	 * @param domNode - the node whose content will be replaced
+	 * @param styles - if given, will be prepended in a style tag
+	 */
+	static render(templateResult, domNode, styles) {
+		if (styles) {
+			templateResult = html`<style data-ui5-shadow-root-styles>${styles}</style>${templateResult}`;
+		}
+		render(templateResult, domNode);
 	}
 }
 

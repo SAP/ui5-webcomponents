@@ -1,14 +1,18 @@
 import LitRenderer from "./renderer/LitRenderer.js";
+import { getShadowRootStyle } from "./CSS.js";
 
 const RendererImpl = LitRenderer;
 
 class Renderer {
-	static render(webComponent) {
-		const root = webComponent._getRoot();
-		const renderer = Object.getPrototypeOf(webComponent).constructor.renderer.render;
-		const renderResult = renderer(webComponent);
+	static render(element) {
+		const root = element._getRoot();
+		const { render } = Object.getPrototypeOf(element).constructor.renderer;
+		const renderResult = render(element);
 
-		RendererImpl.render(renderResult, root);
+		// For browsers that do not support constructable style sheets (and not using the polyfill)
+		const styleToPrepend = getShadowRootStyle(element.constructor);
+
+		RendererImpl.render(renderResult, root, styleToPrepend);
 	}
 }
 
