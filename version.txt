@@ -1,9 +1,5 @@
-commit 3a0335d878fc8904685f5f3dc7975840ef62c841
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Mon Jun 3 11:16:46 2019 +0300
+commit 8a9d27ea0f894a9296d4245161a3336dcb53078d
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Jun 3 11:38:31 2019 +0300
 
-    refactor: call all event listeners with 'this' pointing to the component (#493)
-    
-    - adds eventContext to the LitRenderer
-    - removes type: Function props from the metadata
-    - refactors all components that used to define functions in metadata
+    docs(ui5-dialog, ui5-popover): show public events as part of the API (#495)
