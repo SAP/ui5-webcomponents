@@ -62,6 +62,10 @@ ui5-tabcontainer:not([hidden]) {
 	pointer-events: none;
 }
 
+.ui5-tc__headerItem--selected.ui5-tc__headerItem--textOnly {
+	color: var(--sapUiSelected);
+}
+
 .ui5-tc__headerItem--selected.ui5-tc__headerItem--textOnly .ui5-tc__headerItemContent::after,
 .ui5-tc__headerItem--selected.ui5-tc__headerItem--mixedMode .ui5-tc__headerItemContent::after,
 .ui5-tc__headerItem--selected .ui5-tc-headerItemIcon::after {

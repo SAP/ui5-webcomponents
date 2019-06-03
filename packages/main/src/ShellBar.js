@@ -132,18 +132,6 @@ const metadata = {
 		_header: {
 			type: Object,
 		},
-
-		_logoPress: {
-			type: Function,
-		},
-
-		_coPilotPress: {
-			type: Function,
-		},
-
-		_menuItemPress: {
-			type: Function,
-		},
 	},
 
 	slots: /** @lends  sap.ui.webcomponents.main.ShellBar.prototype */ {
@@ -373,12 +361,6 @@ class ShellBar extends UI5Element {
 			},
 		};
 
-		this._menuItemPress = event => {
-			this.fireEvent("menuItemPress", {
-				item: event.detail.item,
-			});
-		};
-
 		this._itemNav = new ItemNavigation(this);
 
 		this._itemNav.getItemsCallback = () => {
@@ -442,18 +424,24 @@ class ShellBar extends UI5Element {
 			this.shadowRoot.querySelector(".sapWCShellBarOverflowPopover").close();
 			this._overflowActions();
 		};
+	}
 
-		this._logoPress = event => {
-			this.fireEvent("logoPress", {
-				targetRef: this.shadowRoot.querySelector(".sapWCShellBarLogo"),
-			});
-		};
+	_menuItemPress(event) {
+		this.fireEvent("menuItemPress", {
+			item: event.detail.item,
+		});
+	}
 
-		this._coPilotPress = event => {
-			this.fireEvent("coPilotPress", {
-				targetRef: this.shadowRoot.querySelector(".ui5-shellbar-coPilot"),
-			});
-		};
+	_logoPress(event) {
+		this.fireEvent("logoPress", {
+			targetRef: this.shadowRoot.querySelector(".sapWCShellBarLogo"),
+		});
+	}
+
+	_coPilotPress(event) {
+		this.fireEvent("coPilotPress", {
+			targetRef: this.shadowRoot.querySelector(".ui5-shellbar-coPilot"),
+		});
 	}
 
 	onBeforeRendering() {

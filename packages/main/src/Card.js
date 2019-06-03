@@ -80,18 +80,6 @@ const metadata = {
 		_headerActive: {
 			type: Boolean,
 		},
-
-		_headerClick: {
-			type: Function,
-		},
-
-		_headerKeydown: {
-			type: Function,
-		},
-
-		_headerKeyup: {
-			type: Function,
-		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Card.prototype */ {
 
@@ -129,14 +117,6 @@ const metadata = {
  * @public
  */
 class Card extends UI5Element {
-	constructor() {
-		super();
-
-		this._headerClick = this.headerClick.bind(this);
-		this._headerKeydown = this.headerKeydown.bind(this);
-		this._headerKeyup = this.headerKeyup.bind(this);
-	}
-
 	static get metadata() {
 		return metadata;
 	}
@@ -176,11 +156,11 @@ class Card extends UI5Element {
 		super.define(...params);
 	}
 
-	headerClick() {
+	_headerClick() {
 		this.fireEvent("headerPress");
 	}
 
-	headerKeydown(event) {
+	_headerKeydown(event) {
 		const enter = isEnter(event);
 		const space = isSpace(event);
 
@@ -196,7 +176,7 @@ class Card extends UI5Element {
 		}
 	}
 
-	headerKeyup(event) {
+	_headerKeyup(event) {
 		const space = isSpace(event);
 
 		this._headerActive = false;

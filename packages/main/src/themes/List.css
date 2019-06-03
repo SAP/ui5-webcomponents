@@ -68,6 +68,7 @@ ui5-list:not([hidden]) {
 	box-sizing: border-box;
 	-webkit-text-size-adjust: none;	/* To improve readability Mobile Safari automatically increases the size of small text so let's disable this */
 	font-size: var(--sapMFontMediumSize);
+	font-family: var(--sapUiFontFamily,var(--sapFontFamily,"72","72full",Arial,Helvetica,sans-serif));
 	line-height: 2rem;
 	background-color: var(--sapUiListFooterBackground);
 	color: var(--sapUiListFooterTextColor);

@@ -12,7 +12,7 @@ class Renderer {
 		// For browsers that do not support constructable style sheets (and not using the polyfill)
 		const styleToPrepend = getShadowRootStyle(element.constructor);
 
-		RendererImpl.render(renderResult, root, styleToPrepend);
+		RendererImpl.render(renderResult, root, element, styleToPrepend);
 	}
 }
 

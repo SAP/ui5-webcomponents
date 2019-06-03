@@ -74,9 +74,6 @@ const validateSingleProperty = (value, propData) => {
 	if (propertyType === Object) {
 		return typeof value === "object" ? value : propData.defaultValue;
 	}
-	if (propertyType === Function) {
-		return typeof value === "function" ? value : undefined;
-	}
 	if (isDescendantOf(propertyType, DataType)) {
 		return propertyType.isValid(value) ? value : propData.defaultValue;
 	}

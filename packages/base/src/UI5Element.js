@@ -8,15 +8,6 @@ import { getConstructableStyle, createHeadStyle } from "./CSS.js";
 import { attachThemeChange } from "./Theming.js";
 
 const metadata = {
-	properties: {
-		/**
-		 * Attributes (most commonly accessibility-related) that will be passed to the web component.
-		 * The web component has the responsibility to render these attributes
-		 */
-		_customAttributes: {
-			type: Object,
-		},
-	},
 	events: {
 		_propertyChange: {},
 	},
@@ -716,7 +707,7 @@ class UI5Element extends HTMLElement {
 
 					if (isDifferent) {
 						this._state[prop] = value;
-						if (propData.nonVisual || propData.type === Function) {
+						if (propData.nonVisual) {
 							return;
 						}
 						this._invalidate(prop, value);

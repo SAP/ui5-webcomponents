@@ -83,10 +83,6 @@ const metadata = {
 		_focused: {
 			type: Boolean,
 		},
-
-		_fnClickSelectBox: {
-			type: Function,
-		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Select.prototype */ {
 		/**
@@ -154,7 +150,6 @@ class Select extends UI5Element {
 		this._setSelectedItem(null);
 		this._setPreviewedItem(null);
 		this.Suggestions = new Suggestions(this, "items", true /* move focus with arrow keys */);
-		this._fnClickSelectBox = this.toggleList.bind(this);
 	}
 
 	onBeforeRendering() {
