@@ -12,7 +12,7 @@ class LitRenderer {
 		if (styles) {
 			templateResult = html`<style data-ui5-shadow-root-styles>${styles}</style>${templateResult}`;
 		}
-		render(templateResult, domNode, {eventContext});
+		render(templateResult, domNode, { eventContext });
 	}
 }
 
