@@ -54,7 +54,7 @@ const metadata = {
 		/**
 		 * Defines the text that will be displayed when there is no data and <code>showNoData</code> is present.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue: ""
 		 * @public
 		 */
