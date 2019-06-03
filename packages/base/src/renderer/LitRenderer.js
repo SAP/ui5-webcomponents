@@ -1,7 +1,6 @@
 import { html, render } from "lit-html";
 
 class LitRenderer {
-
 	/**
 	 * Renders "templateResult" by replacing the content of "domNode", and optionally prepends a style tag containing "styles"
 	 * @param templateResult - lit template result object

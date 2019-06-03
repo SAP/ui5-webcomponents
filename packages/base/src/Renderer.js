@@ -5,7 +5,7 @@ const RendererImpl = LitRenderer;
 
 class Renderer {
 	static render(element) {
-		const root = element._getRoot();
+		const root = element.shadowRoot;
 		const { render } = Object.getPrototypeOf(element).constructor.renderer;
 		const renderResult = render(element);
 

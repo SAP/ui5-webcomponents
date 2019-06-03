@@ -479,16 +479,12 @@ class UI5Element extends HTMLElement {
 			return;
 		}
 
-		return this._getRoot().children[0];
+		return this.shadowRoot.children.length === 1
+			? this.shadowRoot.children[0] : this.shadowRoot.children[1];
 	}
 
 	_waitForDomRef() {
 		return this._domRefReadyPromise;
-	}
-
-	_getRoot() {
-		// return this.shadowRoot.querySelector("[data-sap-ui-wc-root]");
-		return this.shadowRoot;
 	}
 
 	getFocusDomRef() {
