@@ -4,7 +4,9 @@ import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import MessageStripType from "./types/MessageStripType.js";
 import MessageStripRenderer from "./build/compiled/MessageStripRenderer.lit.js";
 import Icon from "./Icon.js";
-import { fetchResourceBundle, getResourceBundle } from "./ResourceBundleProvider.js";
+import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/src/ResourceBundle.js";
+
+import { MESSAGE_STRIP_CLOSE_BUTTON } from "./i18n/defaults.js";
 
 // Styles
 import messageStripCss from "./themes/MessageStrip.css.js";
@@ -195,7 +197,7 @@ class MessageStrip extends UI5Element {
 	}
 
 	get _closeButtonText() {
-		return this.resourceBundle.getText("MESSAGE_STRIP_CLOSE_BUTTON");
+		return this.resourceBundle.getText(MESSAGE_STRIP_CLOSE_BUTTON);
 	}
 
 	get classes() {

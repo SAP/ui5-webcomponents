@@ -18,9 +18,15 @@ const PANEL_ICON = {
 	defaultText: "Expand/Collapse",
 };
 
+const MESSAGE_STRIP_CLOSE_BUTTON = {
+	key: "MESSAGE_STRIP_CLOSE_BUTTON",
+	defaultText: "Message Strip Close",
+}
+
 export {
 	MULTIINPUT_SHOW_MORE_TOKENS,
 	TEXTAREA_CHARACTERS_LEFT,
 	TEXTAREA_CHARACTERS_EXCEEDED,
 	PANEL_ICON,
+	MESSAGE_STRIP_CLOSE_BUTTON,
 };
