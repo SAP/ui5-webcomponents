@@ -86,7 +86,7 @@ const metadata = {
 		 * @defaultvalue "Textual"
 		 * @public
 		 */
-		type: {
+		design: {
 			type: String,
 			defaultValue: SwitchType.Textual,
 		},
@@ -172,12 +172,12 @@ class Switch extends UI5Element {
 	}
 
 	get textOn() {
-		const graphical = this.type === SwitchType.Graphical;
+		const graphical = this.design === SwitchType.Graphical;
 		return graphical ? "" : this.textOn;
 	}
 
 	get textOff() {
-		const graphical = this.type === SwitchType.Graphical;
+		const graphical = this.design === SwitchType.Graphical;
 		return graphical ? "" : this.textOff;
 	}
 
@@ -186,7 +186,7 @@ class Switch extends UI5Element {
 	}
 
 	get classes() {
-		const graphical = this.type === SwitchType.Graphical;
+		const graphical = this.design === SwitchType.Graphical;
 		const hasLabel = graphical || this.textOn || this.textOff;
 
 		return {
