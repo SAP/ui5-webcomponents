@@ -1,8 +1,8 @@
 import { render } from "lit-html";
 
 class LitRenderer {
-	static render(renderResult, domNode) {
-		render(renderResult, domNode);
+	static render(renderResult, domNode, options) {
+		render(renderResult, domNode, options);
 	}
 }
 

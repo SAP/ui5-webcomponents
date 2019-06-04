@@ -125,17 +125,6 @@ const metadata = {
 			type: Boolean,
 		},
 
-		_showMorePopover: { type: Function },
-		_tokenDelete: { type: Function },
-		_tokenizerFocusOut: { type: Function },
-		_showAllItemsPopover: { type: Function },
-		_allItemsSelectionChange: { type: Function },
-		_selectedItemsSelectionChange: { type: Function },
-		_afterAllPopoverClose: { type: Function },
-		_afterAllPopoverOpen: { type: Function },
-		_keydown: { type: Function },
-		_inputLiveChange: { type: Function },
-		_inputChange: { type: Function },
 		_filteredItems: { type: Object },
 		_iconPressed: { type: Boolean },
 	},
@@ -241,41 +230,21 @@ class MultiComboBox extends UI5Element {
 		this._filteredItems = [];
 		this._inputLastValue = "";
 		this._deleting = false;
-
-		this._showMorePopover = event => {
-			this._togglePopover(true);
-		};
-
-		this._showAllItemsPopover = event => {
-			this._togglePopover(false);
-		};
-
-		this._allItemsSelectionChange = event => {
-			this._listSelectionChange(event);
-		};
-
-		this._selectedItemsSelectionChange = event => {
-			this._listSelectionChange(event);
-		};
-
-		this._inputLiveChange = this._handleInputLiveChange.bind(this);
-		this._tokenDelete = this._handleTokenDelete.bind(this);
-		this._tokenizerFocusOut = this._handleTokenizerFocusOut.bind(this);
-
-		this._inputChange = () => this.fireEvent("change");
-
-		this._afterAllPopoverClose = () => {
-			this._toggleIcon();
-		};
-
-		this._afterAllPopoverOpen = () => {
-			this._toggleIcon();
-		};
-
-		this._keydown = this._handleKeyDown.bind(this);
 	}
 
-	_handleInputLiveChange(event) {
+	_inputChange() {
+		this.fireEvent("change");
+	}
+
+	_showMorePopover() {
+		this._togglePopover(true);
+	}
+
+	_showAllItemsPopover() {
+		this._togglePopover(false);
+	}
+
+	_inputLiveChange(event) {
 		const input = event.target;
 		const value = input.value;
 		const filteredItems = this._filterItems(value);
@@ -305,7 +274,7 @@ class MultiComboBox extends UI5Element {
 		this.fireEvent("input");
 	}
 
-	_handleTokenDelete(event) {
+	_tokenDelete(event) {
 		const token = event.detail.ref;
 		const deletingItem = this.items.filter(item => item._id === token.getAttribute("data-ui5-id"))[0];
 
@@ -315,7 +284,7 @@ class MultiComboBox extends UI5Element {
 		this.fireEvent("selectionChange", { items: this._getSelectedItems() });
 	}
 
-	_handleTokenizerFocusOut() {
+	_tokenizerFocusOut() {
 		const tokenizer = this.shadowRoot.querySelector("ui5-tokenizer");
 		const tokensCount = tokenizer.tokens.length - 1;
 
@@ -330,7 +299,7 @@ class MultiComboBox extends UI5Element {
 		this._deleting = false;
 	}
 
-	_handleKeyDown(event) {
+	_keydown(event) {
 		if (isShow(event) && !this.readonly && !this.disabled) {
 			event.preventDefault();
 			this._togglePopover();

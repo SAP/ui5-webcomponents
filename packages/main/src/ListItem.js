@@ -51,10 +51,6 @@ const metadata = {
 			type: ListMode,
 			defaultValue: ListMode.None,
 		},
-
-		_fnOnDelete: {
-			type: Function,
-		},
 	},
 	events: {
 		_press: {},
@@ -82,11 +78,6 @@ class ListItem extends ListItemBase {
 
 	static get styles() {
 		return [styles, ListItemBase.styles];
-	}
-
-	constructor() {
-		super();
-		this._fnOnDelete = this.onDelete.bind(this);
 	}
 
 	onBeforeRendering() {}
@@ -154,7 +145,7 @@ class ListItem extends ListItemBase {
 		this._active = false;
 	}
 
-	onDelete(event) {
+	_onDelete(event) {
 		this.fireEvent("_selectionRequested", { item: this, selected: event.selected });
 	}
 
