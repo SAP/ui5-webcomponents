@@ -69,19 +69,6 @@ const metadata = {
 		iconEnd: { type: Boolean },
 
 		/**
-		 * Defines an alternative icon for the active (depressed) state of the <code>ui5-button</code>.
-		 * <br><br>
-		 * <b>Note:</b> Both <code>icon</code> and <code>activeIcon</code>
-		 * properties should be defined and have the type
-		 * icon font.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		activeIcon: { type: URI, defaultValue: null },
-
-		/**
 		 * When set to <code>true</code>, the <code>ui5-button</code> will
 		 * automatically submit the nearest form element upon <code>press</code>.
 		 *
@@ -192,14 +179,6 @@ class Button extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		if (this.icon) {
-			this._iconSettings = {
-				src: this._active && this.activeIcon ? this.activeIcon : this.icon,
-			};
-		} else {
-			this._iconSettings = null;
-		}
-
 		if (this.submits && !Button.FormSupport) {
 			console.warn(`In order for the "submits" property to have effect, you should also: import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";`); // eslint-disable-line
 		}
@@ -269,10 +248,6 @@ class Button extends UI5Element {
 				sapMBtnText: true,
 			},
 		};
-	}
-
-	get iconSrc() {
-		return this._active ? this.activeIcon : this.icon;
 	}
 
 	get ariaDisabled() {
