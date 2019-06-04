@@ -14,6 +14,7 @@
 	--_ui5_button_focus_after_right: 1px;
 	--_ui5_button_focus_after_left: 1px;
 	--_ui5_button_focus_after_top: 1px;
+	--_ui5_button_emphasized_font_weight: normal;
 
 	--_ui5_button_focussed_border_color: var(--sapUiButtonBorderColor);
 	--_ui5_button_active_border_color: var(--sapUiButtonActiveBorderColor);
