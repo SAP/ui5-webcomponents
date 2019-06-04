@@ -21,7 +21,7 @@ const PANEL_ICON = {
 const MESSAGE_STRIP_CLOSE_BUTTON = {
 	key: "MESSAGE_STRIP_CLOSE_BUTTON",
 	defaultText: "Message Strip Close",
-}
+};
 
 export {
 	MULTIINPUT_SHOW_MORE_TOKENS,
