@@ -1,5 +1,5 @@
-commit 2261f1c0b0758c7d3d98926b667e93e9f6057b03
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Mon Jun 3 18:57:06 2019 +0300
+commit abfb2219d038e6e676214a7f78542da8297612c8
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Tue Jun 4 16:07:03 2019 +0300
 
-    fix(ui5-radiobutton): make readonly radiobuttons not selectable via keyboard (#500)
+    feat: inline english texts if no translation is fetched (#479)
