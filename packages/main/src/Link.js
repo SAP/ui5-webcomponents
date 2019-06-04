@@ -72,7 +72,7 @@ const metadata = {
 		 * @defaultvalue "Default"
 		 * @public
 		 */
-		type: {
+		design: {
 			type: LinkType,
 			defaultValue: LinkType.Default,
 		},
@@ -252,8 +252,8 @@ class Link extends UI5Element {
 		return {
 			main: {
 				sapMLnk: true,
-				sapMLnkSubtle: this.type === LinkType.Subtle,
-				sapMLnkEmphasized: this.type === LinkType.Emphasized,
+				sapMLnkSubtle: this.design === LinkType.Subtle,
+				sapMLnkEmphasized: this.design === LinkType.Emphasized,
 				sapMLnkWrapping: this.wrap,
 				sapMLnkDsbl: this.disabled,
 				sapMLnkMaxWidth: true,
