@@ -4,19 +4,11 @@
 	cursor: text;
 }
 
-:host(ui5-label) span[data-sap-ui-wc-root] {
-	display: flex;
-}
-
 ui5-label:not([hidden]) {
 	display: inline-block;
 	max-width: 100%;
 	overflow: hidden;
 	cursor: text;
-}
-
-ui5-label span[data-sap-ui-wc-root] {
-	display: flex;
 }
 
 .sapMLabel {

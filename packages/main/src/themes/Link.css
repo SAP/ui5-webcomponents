@@ -3,17 +3,9 @@
 	max-width: 100%;
 }
 
-:host(ui5-link:not([hidden])) span[data-sap-ui-wc-root] {
-	display: flex;
-}
-
 ui5-link {
 	display: inline-block;
 	max-width: 100%;
-}
-
-ui5-link span[data-sap-ui-wc-root] {
-	display: flex;
 }
 
 .sapMLnk {
