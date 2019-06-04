@@ -114,18 +114,6 @@ class Icon extends UI5Element {
 		};
 	}
 
-	get ariaLabelledBy() {
-		return this._customAttributes["aria-labelledby"] || "";
-	}
-
-	get ariaExpanded() {
-		return this._customAttributes["aria-expanded"] || "";
-	}
-
-	get role() {
-		return this._customAttributes.role || "presentation";
-	}
-
 	get iconContent() {
 		const iconInfo = getIconInfo(this.src) || {};
 		return iconInfo.content;

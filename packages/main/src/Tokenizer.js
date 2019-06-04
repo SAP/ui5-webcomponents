@@ -2,12 +2,14 @@ import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
+import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/src/ResourceBundle.js";
 
-import { fetchResourceBundle, getResourceBundle } from "./ResourceBundleProvider.js";
 import TokenizerRenderer from "./build/compiled/TokenizerRenderer.lit.js";
+import { MULTIINPUT_SHOW_MORE_TOKENS } from "./i18n/defaults.js";
 
 // Styles
 import styles from "./themes/Tokenizer.css.js";
+
 
 // all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
 import "./ThemePropertiesProvider.js";
@@ -30,8 +32,6 @@ const metadata = {
 		disabled: { type: Boolean },
 
 		_nMoreText: { type: String },
-		_openOverflowPopover: { type: Function },
-		_tokenDelete: { type: Function },
 		_hiddenTokens: { type: Object, multiple: true },
 	},
 	events: /** @lends sap.ui.webcomponents.main.Tokenizer.prototype */ {
@@ -86,8 +86,6 @@ class Tokenizer extends UI5Element {
 		this._recalculateLayouting = false;
 		this._resizeHandler = this._handleResize.bind(this);
 		this._itemNav = new ItemNavigation(this);
-		this._tokenDelete = this._handleTokenDelete.bind(this);
-		this._openOverflowPopover = this._handleOpenOverflowPopover.bind(this);
 
 		this._itemNav.getItemsCallback = () => {
 			if (this.disabled) {
@@ -97,8 +95,9 @@ class Tokenizer extends UI5Element {
 			return this._getTokens();
 		};
 
-		this._delegates.push(this._itemNav);
 		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
+
+		this._delegates.push(this._itemNav);
 	}
 
 	onBeforeRendering() {
@@ -109,7 +108,7 @@ class Tokenizer extends UI5Element {
 		}
 
 		this._lastTokenCount = this.tokens.length;
-		this._nMoreText = this.resourceBundle.getText("MULTIINPUT_SHOW_MORE_TOKENS", [this._hiddenTokens.length]);
+		this._nMoreText = this.resourceBundle.getText(MULTIINPUT_SHOW_MORE_TOKENS, [this._hiddenTokens.length]);
 	}
 
 	onAfterRendering() {
@@ -127,7 +126,7 @@ class Tokenizer extends UI5Element {
 		ResizeHandler.deregister(this.shadowRoot.querySelector(".ui5-tokenizer--content"), this._resizeHandler);
 	}
 
-	_handleOpenOverflowPopover() {
+	_openOverflowPopover() {
 		this.fireEvent("showMoreItemsPress");
 	}
 
@@ -164,7 +163,7 @@ class Tokenizer extends UI5Element {
 		return tokens;
 	}
 
-	_handleTokenDelete(event) {
+	_tokenDelete(event) {
 		if (event.detail && event.detail.backSpace) {
 			this._deleteByBackspace();
 		}
@@ -215,6 +214,7 @@ class Tokenizer extends UI5Element {
 
 	static async define(...params) {
 		await fetchResourceBundle("@ui5/webcomponents");
+
 		super.define(...params);
 	}
 }

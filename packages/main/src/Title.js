@@ -18,9 +18,9 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.Title.prototype */ {
 
 		/**
-		 * Determines whether the <code>ui5-title</code> should wrap.
+		 * Defines whether the <code>ui5-title</code> would wrap.
 		 *
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		*/
@@ -29,11 +29,11 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the title level.
-		 * Supported values are from <code>H5</code> to <code>H1</code>.
+		 * Defines the <code>ui5-title</code> level.
+		 * Available options are: <code>"H6"</code> to <code>"H1"</code>.
 		 *
 		 * @type {string}
-		 * @defaultvalue: "H2"
+		 * @defaultvalue "H2"
 		 * @public
 		*/
 		level: {

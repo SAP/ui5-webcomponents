@@ -25,7 +25,7 @@
 
 {{#*inline "itemName"}}
 	{{#if itemNameClickable}}
-		<ui5-link @ui5-press="{{_onItemNamePress}}">{{itemName}}</ui5-link>
+		<ui5-link @ui5-press="{{onItemNamePress}}">{{itemName}}</ui5-link>
 	{{/if}}
 
 	{{#unless itemNameClickable}}

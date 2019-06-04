@@ -101,10 +101,6 @@ const metadata = {
 			type: String,
 			defaultValue: "-1",
 		},
-
-		_getTabContainerHeaderItemCallback: {
-			type: Function,
-		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Tab.prototype */ {
 
