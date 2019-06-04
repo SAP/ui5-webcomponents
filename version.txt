@@ -1,5 +1,7 @@
-commit abfb2219d038e6e676214a7f78542da8297612c8
+commit 8d8c34316d34bf6b3ecb8caeb2c767965edc886a
 Author: Martin <martin.r.hristov@gmail.com>
-Date:   Tue Jun 4 16:07:03 2019 +0300
+Date:   Tue Jun 4 16:36:18 2019 +0300
 
-    feat: inline english texts if no translation is fetched (#479)
+    refactor(ui5-button): remove activeIcon property (#513)
+    
+    BREAKING CHANGE: activeIcon property is removed
