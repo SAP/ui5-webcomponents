@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import URI from "@ui5/webcomponents-base/src/types/URI.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
 import ButtonType from "./types/ButtonType.js";
 import ButtonRenderer from "./build/compiled/ButtonRenderer.lit.js";
 import Icon from "./Icon.js";
@@ -261,6 +262,7 @@ class Button extends UI5Element {
 				sapMBtnDisabled: this.disabled,
 				sapMBtnIconEnd: this.iconEnd,
 				[`sapMBtn${this.type}`]: true,
+				sapUiSizeCompact: getCompactSize(),
 			},
 			icon: {
 				sapWCIconInButton: true,

@@ -1,4 +1,5 @@
 import { getWCNoConflict, getCompactSize } from "./Configuration.js";
+import getEffectiveRTL from "./util/getEffectiveRTL.js";
 import DOMObserver from "./compatibility/DOMObserver.js";
 import UI5ElementMetadata from "./UI5ElementMetadata.js";
 import Integer from "./types/Integer.js";
@@ -576,6 +577,11 @@ class UI5Element extends HTMLElement {
 		};
 
 		return this[slotName].reduce(reducer, []);
+	}
+
+	get rtl() {
+		const isRTL = getEffectiveRTL();
+		return isRTL ? "rtl" : undefined;
 	}
 
 	/**
