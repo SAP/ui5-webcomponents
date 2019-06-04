@@ -50,6 +50,28 @@ const metadata = {
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.Table.prototype */ {
+
+		/**
+		 * Defines the text that will be displayed when there is no data and <code>showNoData</code> is present.
+		 *
+		 * @type {string}
+		 * @defaultvalue: ""
+		 * @public
+		 */
+		noDataText: {
+			type: String,
+		},
+
+		/**
+		 * Defines if the value of <code>noDataText</code> will be diplayed when there is no rows present in the table.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 */
+		showNoData: {
+			type: Boolean,
+		},
 		/**
 		 * Determines whether the column headers remain fixed at the top of the page during
 		 * vertical scrolling as long as the Web Component is in the viewport.
