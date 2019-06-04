@@ -3,7 +3,7 @@
 	display: block;
 }
 
-:host(ui5-li) .sap-phone .sapMLIB {
+:host(ui5-li) .sap-phone.sapMLIB {
 	outline: none;
 }
 
@@ -11,7 +11,7 @@ ui5-li:not([hidden]) {
 	display: block;
 }
 
-ui5-li .sap-phone .sapMLIB {
+ui5-li .sap-phone.sapMLIB {
 	outline: none;
 }
 
