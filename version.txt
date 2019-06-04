@@ -1,7 +1,9 @@
-commit 8d8c34316d34bf6b3ecb8caeb2c767965edc886a
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Tue Jun 4 16:36:18 2019 +0300
+commit 907d513f5b84c4824a2e7fa9df48d58b6cdd8016
+Author: Gustavo Kath <gustavokath@outlook.com>
+Date:   Tue Jun 4 13:53:08 2019 -0300
 
-    refactor(ui5-button): remove activeIcon property (#513)
+    feat(ui5-table): add noDataText for ui5-table without rows (#402)
     
-    BREAKING CHANGE: activeIcon property is removed
+     - Added property `no-data-text` for storing the text that will be displayed
+     - Added property `show-no-data` to check if no data text should be displayed
+    - Fixes #389
