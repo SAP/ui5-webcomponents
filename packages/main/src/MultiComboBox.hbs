@@ -37,7 +37,7 @@
 		class="ui5-multi-combobox-selected-items--popover"
 		horizontal-align="Stretch"
 		hide-header
-		?hide-arrow={{editable}}
+		?arrow-hiden={{editable}}
 		placement-type="Bottom">
 		<ui5-list separators="None" mode="{{selectedItemsListMode}}"
 			@ui5-selectionChange={{_listSelectionChange}}>
@@ -51,7 +51,7 @@
 
 	<ui5-popover class="ui5-multi-combobox-all-items--popover"
 		hide-header
-		hide-arrow
+		arrow-hiden
 		horizontal-align="Stretch"
 		initial-focus="ui5-multi-combobox--input"
 		horizontal-align="Left"

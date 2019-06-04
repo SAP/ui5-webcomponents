@@ -248,7 +248,7 @@ class DatePicker extends UI5Element {
 			placementType: PopoverPlacementType.Bottom,
 			horizontalAlign: PopoverHorizontalAlign.Left,
 			hideHeader: true,
-			hideArrow: true,
+			arrowHidden: true,
 			allowTargetOverlap: true,
 			stayOpenOnScroll: true,
 			afterClose: () => {
