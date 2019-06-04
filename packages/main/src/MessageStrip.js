@@ -79,10 +79,6 @@ const metadata = {
 		_closeButton: {
 			type: Object,
 		},
-
-		_closeButtonText: {
-			type: String,
-		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.MessageStrip.prototype */ {
 		/**
@@ -166,10 +162,6 @@ class MessageStrip extends UI5Element {
 		this.fireEvent("close", {});
 	}
 
-	onBeforeRendering() {
-		this._closeButtonText = this.resourceBundle.getText("MESSAGE_STRIP_CLOSE_BUTTON");
-	}
-
 	static async define(...params) {
 		await fetchResourceBundle("@ui5/webcomponents");
 
@@ -200,6 +192,10 @@ class MessageStrip extends UI5Element {
 
 	get hiddenText() {
 		return `Message Strip ${this.type} ${this.hideCloseButton ? "" : "closable"}.`;
+	}
+
+	get _closeButtonText() {
+		return this.resourceBundle.getText("MESSAGE_STRIP_CLOSE_BUTTON");
 	}
 
 	get classes() {
