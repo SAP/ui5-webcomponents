@@ -110,7 +110,7 @@ class ListItemBase extends UI5Element {
 				"sapMLIB-CTX": true,
 				sapMLIBShowSeparator: true,
 				sapMLIBFocusable: isDesktop(),
-				"sap-phone": isPhone()
+				"sap-phone": isPhone(),
 			},
 			inner: {
 				sapMLIBContent: true,
