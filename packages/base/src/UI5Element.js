@@ -14,7 +14,6 @@ const metadata = {
 	},
 };
 
-const DefinitionsSet = new Set();
 const IDMap = new Map();
 
 class UI5Element extends HTMLElement {
@@ -277,8 +276,7 @@ class UI5Element extends HTMLElement {
 	static define() {
 		const tag = this.getMetadata().getTag();
 
-		if (!DefinitionsSet.has(tag) && this.wasRegistered(tag)) {
-			DefinitionsSet.add(tag);
+		if (this.wasRegistered(tag)) {
 			this.generateAccessors();
 			window.customElements.define(tag, this);
 		}
