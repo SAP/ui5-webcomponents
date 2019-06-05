@@ -1,6 +1,5 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import URI from "@ui5/webcomponents-base/src/types/URI.js";
 
 // Template
 import ShellBarItemRenderer from "./build/compiled/ShellBarItemRenderer.lit.js";
@@ -16,12 +15,11 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.ShellBarItem.prototype */ {
 		/**
 		 * Defines the item source URI.
-		 * @type {URI}
+		 * @type {string}
 		 * @public
 		 */
 		src: {
-			type: URI,
-			defaultValue: null,
+			type: String,
 		},
 
 		/**

@@ -1,5 +1,4 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import URI from "@ui5/webcomponents-base/src/types/URI.js";
 import TabBase from "./TabBase.js";
 import IconColor from "./types/IconColor.js";
 import Icon from "./Icon.js";
@@ -61,12 +60,11 @@ const metadata = {
 
 		/**
 		 * Specifies the icon to be displayed for the tab filter.
-		 * @type {URI}
+		 * @type {string}
 		 * @public
 		 */
 		icon: {
-			type: URI,
-			defaultValue: "",
+			type: String,
 		},
 
 		/**

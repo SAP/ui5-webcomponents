@@ -1,5 +1,4 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import URI from "@ui5/webcomponents-base/src/types/URI.js";
 import ListItem from "./ListItem.js";
 import Icon from "./Icon.js";
 import StandardListItemRenderer from "./build/compiled/StandardListItemRenderer.lit.js";
@@ -38,8 +37,7 @@ const metadata = {
 		 * @public
 		 */
 		icon: {
-			type: URI,
-			defaultValue: null,
+			type: String,
 		},
 
 		/**
@@ -64,8 +62,7 @@ const metadata = {
 		 * @public
 		 */
 		image: {
-			type: URI,
-			defaultValue: null,
+			type: String,
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.StandardListItem.prototype */ {

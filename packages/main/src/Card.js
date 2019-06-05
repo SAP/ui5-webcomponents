@@ -1,5 +1,4 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import URI from "@ui5/webcomponents-base/src/types/URI.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { isIconURI } from "@ui5/webcomponents-base/src/IconPool.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
@@ -75,17 +74,16 @@ const metadata = {
 		},
 
 		/**
-		 * Defines image source URI or built-in icon source URI.
+		 * Defines image source URI or built-in icon font URI.
 		 * </br></br>
 		 * <b>Note:</b>
 		 * SAP-icons font provides numerous options. To find all the available icons, see the
 		 * <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
-		 * @type {URI}
+		 * @type {string}
 		 * @public
 		 */
 		avatar: {
-			type: URI,
-			defaultValue: null,
+			type: String,
 		},
 
 		_headerActive: {
