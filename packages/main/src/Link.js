@@ -1,6 +1,5 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import URI from "@ui5/webcomponents-base/src/types/URI.js";
 import { isSpace } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import LinkType from "./types/LinkType.js";
 
@@ -21,9 +20,9 @@ const metadata = {
 	properties: /** @lends  sap.ui.webcomponents.main.Link.prototype */  {
 
 		/**
-		 * Determines whether the <code>ui5-link</code> is disabled.
+		 * Defines whether the <code>ui5-link</code> is disabled.
 		 * <br><br>
-		 * <b>Note:</b> When disabled, the link cannot be triggered by the user.
+		 * <b>Note:</b> When disabled, the <code>ui5-link</code cannot be triggered by the user.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -34,7 +33,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the <code>ui5-link</code> target URI.
+		 * Defines the <code>ui5-link</code> href.
 		 * <br><br>
 		 * <b>Note:</b> Standard hyperlink behavior is supported.
 		 *
@@ -43,8 +42,7 @@ const metadata = {
 		 * @public
 		 */
 		href: {
-			type: URI,
-			defaultValue: "",
+			type: String,
 		},
 
 		/**

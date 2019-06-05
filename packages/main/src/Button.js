@@ -1,5 +1,4 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import URI from "@ui5/webcomponents-base/src/types/URI.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import ButtonType from "./types/ButtonType.js";
@@ -29,7 +28,10 @@ const metadata = {
 		 * @defaultvalue "Default"
 		 * @public
 		 */
-		type: { type: ButtonType, defaultValue: ButtonType.Default },
+		type: {
+			type: ButtonType,
+			defaultValue: ButtonType.Default,
+		},
 
 		/**
 		 * Defines whether the <code>ui5-button</code> is disabled
@@ -41,7 +43,9 @@ const metadata = {
 		 * @defaultvalue false
 		 * @public
 		 */
-		disabled: { type: Boolean },
+		disabled: {
+			type: Boolean,
+		},
 
 		/**
 		 * Defines the icon to be displayed as graphical element within the <code>ui5-button</code>.
@@ -53,11 +57,13 @@ const metadata = {
 		 *
 		 * See all the available icons in the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
 		 *
-		 * @type {URI}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 */
-		icon: { type: URI, defaultValue: null },
+		icon: {
+			type: String,
+		},
 
 		/**
 		 * Defines whether the icon should be displayed after the <code>ui5-button</code> text.
@@ -66,7 +72,9 @@ const metadata = {
 		 * @defaultvalue false
 		 * @public
 		 */
-		iconEnd: { type: Boolean },
+		iconEnd: {
+			type: Boolean,
+		},
 
 		/**
 		 * When set to <code>true</code>, the <code>ui5-button</code> will
@@ -86,9 +94,13 @@ const metadata = {
 		/**
 		 * Used to switch the active state (pressed or not) of the <code>ui5-button</code>.
 		 */
-		_active: { type: Boolean },
+		_active: {
+			type: Boolean,
+		},
 
-		_iconSettings: { type: Object },
+		_iconSettings: {
+			type: Object,
+		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.Button.prototype */ {
 		/**
