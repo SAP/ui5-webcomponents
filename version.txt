@@ -1,5 +1,5 @@
-commit 53cdc931526994bd02e49d7696225db808aa6116
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Wed Jun 5 11:02:13 2019 +0300
+commit ac2e248ce1c5d415c2b73b642a83582335c71dd7
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Jun 5 11:07:33 2019 +0300
 
-    fix(ui5-button): bold text in fiori_3 when button is emphasized (#512)
+    refactor: remove URI type (#511)
