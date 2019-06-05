@@ -1,5 +1,5 @@
-commit 9d74ecd8d48a1b3028080b7a68f6181f4cc92263
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Wed Jun 5 09:00:55 2019 +0300
+commit 53cdc931526994bd02e49d7696225db808aa6116
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Wed Jun 5 11:02:13 2019 +0300
 
-    chore(ui5-busyindicator): add since tag (#510)
+    fix(ui5-button): bold text in fiori_3 when button is emphasized (#512)
