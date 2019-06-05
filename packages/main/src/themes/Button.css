@@ -1,8 +1,8 @@
-:host(ui5-button) {
+:host(ui5-button:not([hidden])) {
 	display: inline-block;
 }
 
-ui5-button {
+ui5-button:not([hidden]) {
 	display: inline-block;
 }
 
@@ -206,16 +206,13 @@ ui5-button span[data-sap-ui-wc-root] .sapMBtn::before {
 	text-shadow: none;
 }
 
+.sapMBtn.sapMBtnEmphasized:focus::after,
 .sapMBtn.sapMBtnEmphasized.sapMBtnActive:focus::after {
 	border-color: var(--sapUiContentContrastFocusColor);
 }
 
 .sapMBtn.sapMBtnEmphasized:focus {
 	border-color: var(--_ui5_button_emphasized_focused_border_color);
-}
-
-.sapMBtn.sapMBtnEmphasized:focus::after {
-	border-color: var(--_ui5_button_positive_border_focus_hover_color);
 }
 
 .sapMBtn.sapMBtnTransparent {

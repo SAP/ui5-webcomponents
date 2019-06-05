@@ -4,11 +4,12 @@ import { getIconURI } from "@ui5/webcomponents-base/src/IconPool.js";
 import slideDown from "@ui5/webcomponents-base/src/animations/slideDown.js";
 import slideUp from "@ui5/webcomponents-base/src/animations/slideUp.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/src/ResourceBundle.js";
 import Icon from "./Icon.js";
-import PanelTemplateContext from "./PanelTemplateContext.js";
 import PanelAccessibleRole from "./types/PanelAccessibleRole.js";
 import PanelRenderer from "./build/compiled/PanelRenderer.lit.js";
-import { fetchResourceBundle, getResourceBundle } from "./ResourceBundleProvider.js";
+
+import { PANEL_ICON } from "./i18n/defaults.js";
 
 // Styles
 import panelCss from "./themes/Panel.css.js";
@@ -187,10 +188,6 @@ class Panel extends UI5Element {
 		return PanelRenderer;
 	}
 
-	static get calculateTemplateContext() {
-		return PanelTemplateContext.calculate;
-	}
-
 	static get styles() {
 		return panelCss;
 	}
@@ -198,15 +195,13 @@ class Panel extends UI5Element {
 	constructor() {
 		super();
 
-		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
-
 		this._header = {};
 
 		this._icon = {};
 		this._icon.id = `${this.id}-CollapsedImg`;
 		this._icon.src = getIconURI("navigation-right-arrow");
-		this._icon.title = this.resourceBundle.getText("PANEL_ICON");
 		this._icon.functional = true;
+		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
 
 		this._toggle = event => { event.preventDefault(); this._toggleOpen(); };
 		this._noOp = () => {};
@@ -219,6 +214,7 @@ class Panel extends UI5Element {
 		}
 
 		const toggleWithInternalHeader = !this.header;
+		this._icon.title = this.resourceBundle.getText(PANEL_ICON);
 		this._header.press = toggleWithInternalHeader ? this._toggle : this._noOp;
 		this._icon.press = !toggleWithInternalHeader ? this._toggle : this._noOp;
 	}
@@ -275,6 +271,62 @@ class Panel extends UI5Element {
 
 	_headerOnTarget(target) {
 		return target.classList.contains("sapMPanelWrappingDiv");
+	}
+
+	get expanded() {
+		return !this.collapsed;
+	}
+
+	get ariaLabelledBy() {
+		return this.header ? "" : `${this._id}-header`;
+	}
+
+	get accRole() {
+		return this.accessibleRole.toLowerCase();
+	}
+
+	get headerTabIndex() {
+		return !this.header ? "0" : "";
+	}
+
+	get iconTabIndex() {
+		return this.header ? "0" : "";
+	}
+
+	get shouldRenderH1() {
+		return !this.header && (this.headerText || !this.fixed);
+	}
+
+	get classes() {
+		return {
+			main: {
+				sapMPanel: true,
+			},
+			header: {
+				sapMPanelWrappingDivTb: this.header,
+				sapMPanelWrappingDivTbExpanded: this.header && this.collapsed,
+				sapMPanelWrappingDiv: !this.header,
+				sapMPanelWrappingDivClickable: !this.header,
+				sapMPanelWrappingDivExpanded: !this.header && !this.collapsed,
+			},
+			icon: {
+				sapMPanelIconExpanded: !this.collapsed,
+				sapMPanelIcon: true,
+			},
+			content: {
+				sapMPanelContent: true,
+				sapMPanelExpandablePart: !this.fixed,
+				[`sapMPanelBG${this.backgroundDesign}`]: true,
+			},
+		};
+	}
+
+	get styles() {
+		return {
+			content: {
+				display: this._contentExpanded ? "block" : "none",
+			},
+		};
 	}
 
 	static async define(...params) {

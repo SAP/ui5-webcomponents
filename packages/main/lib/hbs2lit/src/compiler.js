@@ -1,7 +1,6 @@
 const HTMLLitVisitor = require("./litVisitor2");
 const PartialsVisitor = require("./partialsVisitor");
 const Handlebars = require("handlebars/dist/handlebars.min.js");
-const aCommonPartials = require("./commonPartials");
 const includesReplacer = require("./includesReplacer");
 
 const removeWhiteSpaces = (source) => {
@@ -12,7 +11,6 @@ const compileString = async (sInput, config) => {
 	let sPreprocessed = sInput;
 
 	sPreprocessed = await includesReplacer.replace(sPreprocessed, config);
-	sPreprocessed += aCommonPartials.join("\n");
 	sPreprocessed = removeWhiteSpaces(sPreprocessed);
 
 	const ast = Handlebars.parse(sPreprocessed);

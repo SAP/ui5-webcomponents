@@ -1,33 +1,33 @@
 <div class="ui5-multi-combobox--wrapper">
 	<ui5-input id="ui5-multi-combobox--input"
-		value="{{ctr.value}}"
-		placeholder="{{ctr.placeholder}}"
-		?disabled={{ctr.disabled}}
-		?readonly={{ctr.readonly}}
-		value-state="{{ctr.valueState}}"
-		@ui5-input="{{ctr._inputLiveChange}}"
-		@ui5-change={{ctr._inputChange}}
-		@keydown="{{ctr._keydown}}">
+		value="{{value}}"
+		placeholder="{{placeholder}}"
+		?disabled={{disabled}}
+		?readonly={{readonly}}
+		value-state="{{valueState}}"
+		@ui5-input="{{_inputLiveChange}}"
+		@ui5-change={{_inputChange}}
+		@keydown="{{_keydown}}">
 
 		<ui5-tokenizer slot="_beginContent"
 			show-more
 			class="ui5-multi-combobox-tokenizer"
-			?disabled="{{ctr.disabled}}"
-			@ui5-showMoreItemsPress="{{ctr._showMorePopover}}"
-			@ui5-tokenDelete="{{ctr._tokenDelete}}"
-			@focusout="{{ctr._tokenizerFocusOut}}"
+			?disabled="{{disabled}}"
+			@ui5-showMoreItemsPress="{{_showMorePopover}}"
+			@ui5-tokenDelete="{{_tokenDelete}}"
+			@focusout="{{_tokenizerFocusOut}}"
 		>
-			{{#each ctr.items}}
+			{{#each items}}
 				{{#if this.selected}}
-					<ui5-token ?readonly="{{../../ctr.readonly}}" class="ui5-multi-combobox--token" data-ui5-id="{{this._id}}" >{{this.textContent}}</ui5-token>
+					<ui5-token ?readonly="{{../readonly}}" class="ui5-multi-combobox--token" data-ui5-id="{{this._id}}" >{{this.textContent}}</ui5-token>
 				{{/if}}
 			{{/each}}
 		</ui5-tokenizer>
 
-		{{#unless ctr.readonly}}
+		{{#unless readonly}}
 			<ui5-icon src="sap-icon://slim-arrow-down" 
 				slot="icon"
-				@ui5-press={{ctr._showAllItemsPopover}}
+				@ui5-press={{_showAllItemsPopover}}
 				class="{{classes.icon}}"
 			></ui5-icon>
 		{{/unless}}
@@ -40,10 +40,10 @@
 		?hide-arrow={{editable}}
 		placement-type="Bottom">
 		<ui5-list separators="None" mode="{{selectedItemsListMode}}"
-			@ui5-selectionChange={{ctr._selectedItemsSelectionChange}}>
-			{{#each ctr.items}}
+			@ui5-selectionChange={{_listSelectionChange}}>
+			{{#each items}}
 				{{#if this.selected}}
-					<ui5-li type="Active" data-ui5-token-id="{{this._id}}" .selected="{{../../editable}}">{{this.textContent}}</ui5-li>
+					<ui5-li type="Active" data-ui5-token-id="{{this._id}}" .selected="{{../editable}}">{{this.textContent}}</ui5-li>
 				{{/if}}
 			{{/each}}
 		</ui5-list>
@@ -56,11 +56,11 @@
 		initial-focus="ui5-multi-combobox--input"
 		horizontal-align="Left"
 		placement-type="Bottom"
-		@ui5-selectionChange={{ctr._allItemsSelectionChange}}
-		@ui5-afterClose={{ctr._afterAllPopoverClose}}
-		@ui5-afterOpen={{ctr._afterAllPopoverOpen}}>
+		@ui5-selectionChange={{_listSelectionChange}}
+		@ui5-afterClose={{_toggleIcon}}
+		@ui5-afterOpen={{_toggleIcon}}>
 		<ui5-list separators="None" mode="MultiSelect" class="ui5-multi-combobox-all-items-list">
-			{{#each ctr._filteredItems}}
+			{{#each _filteredItems}}
 					<ui5-li type="Active" ?selected={{this.selected}} data-ui5-token-id="{{this._id}}">{{this.textContent}}</ui5-li>
 			{{/each}}
 		</ui5-list>

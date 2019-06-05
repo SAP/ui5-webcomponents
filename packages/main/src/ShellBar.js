@@ -2,7 +2,6 @@ import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { getRTL } from "@ui5/webcomponents-base/src/Configuration.js";
 import URI from "@ui5/webcomponents-base/src/types/URI.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import Function from "@ui5/webcomponents-base/src/types/Function.js";
 import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
 import { isSpace, isEscape } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
@@ -13,7 +12,6 @@ import Popover from "./Popover.js";
 
 // Template
 import ShellBarRenderer from "./build/compiled/ShellBarRenderer.lit.js";
-import ShellBarTemplateContext from "./ShellBarTemplateContext.js";
 
 // Styles
 import styles from "./themes/ShellBar.css.js";
@@ -133,18 +131,6 @@ const metadata = {
 
 		_header: {
 			type: Object,
-		},
-
-		_logoPress: {
-			type: Function,
-		},
-
-		_coPilotPress: {
-			type: Function,
-		},
-
-		_menuItemPress: {
-			type: Function,
 		},
 	},
 
@@ -321,10 +307,6 @@ class ShellBar extends UI5Element {
 		return ShellBarRenderer;
 	}
 
-	static get calculateTemplateContext() {
-		return ShellBarTemplateContext.calculate;
-	}
-
 	static get FIORI_3_BREAKPOINTS() {
 		return [
 			559,
@@ -377,12 +359,6 @@ class ShellBar extends UI5Element {
 					menuPopover.openBy(this.shadowRoot.querySelector(".sapWCShellBarMenuButton"));
 				}
 			},
-		};
-
-		this._menuItemPress = event => {
-			this.fireEvent("menuItemPress", {
-				item: event.detail.item,
-			});
 		};
 
 		this._itemNav = new ItemNavigation(this);
@@ -448,35 +424,39 @@ class ShellBar extends UI5Element {
 			this.shadowRoot.querySelector(".sapWCShellBarOverflowPopover").close();
 			this._overflowActions();
 		};
+	}
 
-		this._logoPress = event => {
-			this.fireEvent("logoPress", {
-				targetRef: this.shadowRoot.querySelector(".sapWCShellBarLogo"),
-			});
-		};
+	_menuItemPress(event) {
+		this.fireEvent("menuItemPress", {
+			item: event.detail.item,
+		});
+	}
 
-		this._coPilotPress = event => {
-			this.fireEvent("coPilotPress", {
-				targetRef: this.shadowRoot.querySelector(".ui5-shellbar-coPilot"),
-			});
-		};
+	_logoPress(event) {
+		this.fireEvent("logoPress", {
+			targetRef: this.shadowRoot.querySelector(".sapWCShellBarLogo"),
+		});
+	}
+
+	_coPilotPress(event) {
+		this.fireEvent("coPilotPress", {
+			targetRef: this.shadowRoot.querySelector(".ui5-shellbar-coPilot"),
+		});
 	}
 
 	onBeforeRendering() {
 		const size = this._handleBarBreakpoints();
-		const searchField = this.shadowRoot.querySelector(`#${this._id}-searchfield-wrapper`);
-
 		if (size !== "S") {
 			this._itemNav.init();
 		}
 
-		if (this.searchField && searchField) {
-			const inputSlot = searchField.children[0];
+		this._hiddenIcons = this._itemsInfo.filter(info => {
+			const isHidden = (info.classes.indexOf("sapWCShellBarHiddenIcon") !== -1);
+			const isSet = info.classes.indexOf("sapWCShellBarUnsetIcon") === -1;
+			const isOverflowIcon = info.classes.indexOf("sapWCShellBarOverflowIcon") !== -1;
 
-			if (inputSlot) {
-				inputSlot.assignedNodes()[0]._customClasses = ["sapWCShellBarSearchFieldElement"];
-			}
-		}
+			return isHidden && isSet && !isOverflowIcon;
+		});
 	}
 
 	onAfterRendering() {
@@ -602,13 +582,13 @@ class ShellBar extends UI5Element {
 			return 1;
 		});
 
-		const focussedItem = items.filter(item => {
+		const focusedItem = items.filter(item => {
 			return (item.classes.indexOf("sapWCShellBarUnsetIcon") === -1)
 				&& (item.classes.indexOf("sapWCShellBarOverflowIcon") === -1)
 				&& (item.classes.indexOf("sapWCShellBarHiddenIcon") === -1);
 		})[0];
 
-		return focussedItem;
+		return focusedItem;
 	}
 
 	_overflowActions() {
@@ -817,6 +797,70 @@ class ShellBar extends UI5Element {
 			},
 		];
 		return items;
+	}
+
+	get classes() {
+		return {
+			wrapper: {
+				"sapWCShellBarWrapper": true,
+				[`sapWCShellBarSize${this._breakpointSize}`]: true,
+				"sapWCShellBarHasSearchField": this.searchField,
+				"sapWCShellBarBlockLayerShown": this._showBlockLayer,
+				"sapWCShellBarHasNotifications": !!this.notificationCount,
+			},
+			leftContainer: {
+				"sapWCShellBarOverflowContainer": true,
+				"sapWCShellBarOverflowContainerLeft": true,
+			},
+			logo: {
+				"sapWCShellBarLogo": true,
+			},
+			button: {
+				"sapWCShellBarMenuButtonNoTitle": !this.primaryTitle,
+				"sapWCShellBarMenuButtonNoLogo": !this.logo,
+				"sapWCShellBarMenuButtonMerged": this._breakpointSize === "S",
+				"sapWCShellBarMenuButtonInteractive": !!this.menuItems.length,
+				"sapWCShellBarMenuButton": true,
+			},
+			buttonTitle: {
+				"sapWCShellBarMenuButtonTitle": true,
+			},
+			secondaryTitle: {
+				"sapWCShellBarSecondaryTitle": true,
+			},
+			arrow: {
+				"sapWCShellBarMenuButtonArrow": true,
+			},
+			searchField: {
+				"sapWCShellBarSearchField": true,
+				"sapWCShellBarSearchFieldHidden": !this._showBlockLayer,
+			},
+			blockLayer: {
+				"sapWCShellBarBlockLayer": true,
+				"sapWCShellBarBlockLayerHidden": !this._showBlockLayer,
+			},
+		};
+	}
+
+	get styles() {
+		return {
+			searchField: {
+				[getRTL() ? "left" : "right"]: this._searchField.right,
+				"top": `${parseInt(this._searchField.top)}px`,
+			},
+		};
+	}
+
+	get interactiveLogo() {
+		return this._breakpointSize === "S";
+	}
+
+	get showArrowDown() {
+		return this.primaryTitle || (this.logo && this.interactiveLogo);
+	}
+
+	get popoverHorizontalAlign() {
+		return getRTL() ? "Left" : "Right";
 	}
 
 	static async define(...params) {

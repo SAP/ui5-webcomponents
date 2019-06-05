@@ -2,7 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import URI from "@ui5/webcomponents-base/src/types/URI.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-import ButtonTemplateContext from "./ButtonTemplateContext.js";
 import ButtonType from "./types/ButtonType.js";
 import ButtonRenderer from "./build/compiled/ButtonRenderer.lit.js";
 import Icon from "./Icon.js";
@@ -68,19 +67,6 @@ const metadata = {
 		 * @public
 		 */
 		iconEnd: { type: Boolean },
-
-		/**
-		 * Defines an alternative icon for the active (depressed) state of the <code>ui5-button</code>.
-		 * <br><br>
-		 * <b>Note:</b> Both <code>icon</code> and <code>activeIcon</code>
-		 * properties should be defined and have the type
-		 * icon font.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		activeIcon: { type: URI, defaultValue: null },
 
 		/**
 		 * When set to <code>true</code>, the <code>ui5-button</code> will
@@ -182,10 +168,6 @@ class Button extends UI5Element {
 		return ButtonRenderer;
 	}
 
-	static get calculateTemplateContext() {
-		return ButtonTemplateContext.calculate;
-	}
-
 	constructor() {
 		super();
 
@@ -197,14 +179,6 @@ class Button extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		if (this.icon) {
-			this._iconSettings = {
-				src: this._active && this.activeIcon ? this.activeIcon : this.icon,
-			};
-		} else {
-			this._iconSettings = null;
-		}
-
 		if (this.submits && !Button.FormSupport) {
 			console.warn(`In order for the "submits" property to have effect, you should also: import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";`); // eslint-disable-line
 		}
@@ -254,6 +228,30 @@ class Button extends UI5Element {
 
 	onfocusout(_event) {
 		this._active = false;
+	}
+
+	get classes() {
+		return {
+			main: {
+				sapMBtn: true,
+				sapMBtnActive: this._active,
+				sapMBtnWithIcon: this.icon,
+				sapMBtnNoText: !this.text.length,
+				sapMBtnDisabled: this.disabled,
+				sapMBtnIconEnd: this.iconEnd,
+				[`sapMBtn${this.type}`]: true,
+			},
+			icon: {
+				sapWCIconInButton: true,
+			},
+			text: {
+				sapMBtnText: true,
+			},
+		};
+	}
+
+	get ariaDisabled() {
+		return this.disabled ? "true" : undefined;
 	}
 
 	static async define(...params) {

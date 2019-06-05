@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper.js";
 import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-import ListItemBaseTemplateContext from "./ListItemBaseTemplateContext.js";
+import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 
 // Styles
 import styles from "./themes/ListItemBase.css.js";
@@ -43,10 +43,6 @@ const metadata = {
 class ListItemBase extends UI5Element {
 	static get metadata() {
 		return metadata;
-	}
-
-	static get calculateTemplateContext() {
-		return ListItemBaseTemplateContext.calculate;
 	}
 
 	static get styles() {
@@ -104,6 +100,21 @@ class ListItemBase extends UI5Element {
 	*/
 	shouldForwardTabBefore(target) {
 		return this.getDomRef() === target;
+	}
+
+	get classes() {
+		return {
+			main: {
+				sapMLIBBorder: !this._hideBorder,
+				sapMLIB: true,
+				"sapMLIB-CTX": true,
+				sapMLIBShowSeparator: true,
+				sapMLIBFocusable: isDesktop(),
+			},
+			inner: {
+				sapMLIBContent: true,
+			},
+		};
 	}
 }
 

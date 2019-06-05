@@ -1,5 +1,5 @@
-import Function from "@ui5/webcomponents-base/src/types/Function.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 import ListItemType from "./types/ListItemType.js";
 import ListMode from "./types/ListMode.js";
 import ListItemBase from "./ListItemBase.js";
@@ -51,14 +51,6 @@ const metadata = {
 			type: ListMode,
 			defaultValue: ListMode.None,
 		},
-
-		_selectionControl: {
-			type: Object,
-		},
-
-		_fnOnDelete: {
-			type: Function,
-		},
 	},
 	events: {
 		_press: {},
@@ -86,11 +78,6 @@ class ListItem extends ListItemBase {
 
 	static get styles() {
 		return [styles, ListItemBase.styles];
-	}
-
-	constructor() {
-		super();
-		this._fnOnDelete = this.onDelete.bind(this);
 	}
 
 	onBeforeRendering() {}
@@ -158,12 +145,55 @@ class ListItem extends ListItemBase {
 		this._active = false;
 	}
 
-	onDelete(event) {
+	_onDelete(event) {
 		this.fireEvent("_selectionRequested", { item: this, selected: event.selected });
 	}
 
 	fireItemPress() {
 		this.fireEvent("_press", { item: this, selected: this.selected });
+	}
+
+	get classes() {
+		const result = super.classes;
+
+		const desktop = isDesktop();
+		const isActionable = (this.type === ListItemType.Active) && (this._mode !== ListMode.Delete);
+
+		// Modify main classes
+		result.main[`sapMLIBType${this.type}`] = true;
+		result.main.sapMSLI = true;
+		result.main.sapMLIBActionable = desktop && isActionable;
+		result.main.sapMLIBHoverable = desktop && isActionable;
+		result.main.sapMLIBSelected = this.selected;
+		result.main.sapMLIBActive = this._active;
+
+		return result;
+	}
+
+	get placeSelectionElementBefore() {
+		return this._mode === ListMode.MultiSelect
+			|| this._mode === ListMode.SingleSelectBegin;
+	}
+
+	get placeSelectionElementAfter() {
+		return !this.placeSelectionElementBefore
+			&& (this._mode === ListMode.SingleSelectEnd || this._mode === ListMode.Delete);
+	}
+
+	get modeSingleSelect() {
+		return [
+			ListMode.SingleSelectBegin,
+			ListMode.SingleSelectEnd,
+			ListMode.SingleSelect,
+		].includes(this._mode);
+	}
+
+	get modeMultiSelect() {
+		return this._mode === ListMode.MultiSelect;
+	}
+
+	get modeDelete() {
+		return this._mode === ListMode.Delete;
 	}
 }
 

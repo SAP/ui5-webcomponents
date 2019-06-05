@@ -1,16 +1,16 @@
-<div {{> controlData}} class="{{classes.wrapper}}" style="{{styles.wrapper}}">
+<div class="{{classes.wrapper}}" style="{{styles.wrapper}}">
 
 	<div class="{{classes.weekNumberContainer}}">
-		{{#each ctr._weekNumbers}}
+		{{#each _weekNumbers}}
 			<div class="sapWCDayPickerWeekNameContainer">
 				<span class="sapWCDayPickerWeekName">{{this}}</span>
 			</div>
 		{{/each}}
 	</div>
 
-	<div id="{{ctr._id}}-content" class="{{classes.content}}">
+	<div id="{{_id}}-content" class="{{classes.content}}">
 		<div role="row" class="{{classes.weekDaysContainer}}">
-			{{#each ctr._dayNames}}
+			{{#each _dayNames}}
 				<div
 					id={{this._id}}
 					role="columnheader"
@@ -20,8 +20,8 @@
 				</div>
 			{{/each}}
 		</div>
-		<div id="{{ctr._id}}-days" class="sapWCDayPickerItemsContainer" tabindex="-1">
-			{{#each ctr._weeks}}
+		<div id="{{_id}}-days" class="sapWCDayPickerItemsContainer" tabindex="-1">
+			{{#each _weeks}}
 				{{#if this.length}}
 					<div style="display: flex;">
 						{{#each this}}

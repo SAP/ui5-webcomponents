@@ -32,7 +32,7 @@ TestHelper.ready(function () {
 		QUnit.test("The default 'headerText' is empty string", function (assert) {
 			var panel = this.getPanelRoot(),
 				sExpected = "";
-
+				
 			assert.equal(panel.querySelector(".sapMPanelHdr").innerText.trim(), sExpected, "headerText is empty string");
 		});
 

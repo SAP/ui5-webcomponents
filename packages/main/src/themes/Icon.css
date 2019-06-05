@@ -1,4 +1,4 @@
-:host(ui5-icon) {
+:host(ui5-icon:not([hidden])) {
 	display: inline-block;
 	outline: none;
 	color: var(--sapUiContentNonInteractiveIconColor);
@@ -10,7 +10,7 @@
 	height: 100%;
 }
 
-ui5-icon {
+ui5-icon:not([hidden]) {
 	display: inline-block;
 	outline: none;
 	color: var(--sapUiContentNonInteractiveIconColor);

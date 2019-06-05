@@ -4,12 +4,15 @@ import "@ui5/webcomponents-base/src/browsersupport/Edge.js";
 import "@ui5/webcomponents-base/src/shims/jquery-shim.js";
 import "./dist/ThemePropertiesProvider.js";
 
+import "@ui5/webcomponents/dist/MessageBundleAssets.js";
+
 import Gregorian from "@ui5/webcomponents-core/dist/sap/ui/core/date/Gregorian.js";
 import Buddhist from "@ui5/webcomponents-core/dist/sap/ui/core/date/Buddhist.js";
 import Islamic from "@ui5/webcomponents-core/dist/sap/ui/core/date/Islamic.js";
 import Japanese from "@ui5/webcomponents-core/dist/sap/ui/core/date/Japanese.js";
 import Persian from "@ui5/webcomponents-core/dist/sap/ui/core/date/Persian.js";
 
+import BusyIndicator from "./dist/BusyIndicator.js";
 import Button from "./dist/Button.js";
 import CheckBox from "./dist/CheckBox.js";
 import Card from "./dist/Card.js";

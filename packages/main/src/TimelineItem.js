@@ -1,10 +1,8 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import URI from "@ui5/webcomponents-base/src/types/URI.js";
-import Function from "@ui5/webcomponents-base/src/types/Function.js";
 import Icon from "./Icon.js";
 import Link from "./Link.js";
-import TimelineItemTemplateContext from "./TimelineItemTemplateContext.js";
 import TimelineItemRenderer from "./build/compiled/TimelineItemRenderer.lit.js";
 
 // Styles
@@ -89,10 +87,6 @@ const metadata = {
 			type: String,
 		},
 
-		_onItemNamePress: {
-			type: Function,
-		},
-
 		_tabIndex: {
 			type: String,
 			defaultValue: "-1",
@@ -136,22 +130,25 @@ class TimelineItem extends UI5Element {
 		return TimelineItemRenderer;
 	}
 
-	static get calculateTemplateContext() {
-		return TimelineItemTemplateContext.calculate;
-	}
-
 	static get styles() {
 		return styles;
 	}
 
 	constructor() {
 		super();
-
-		this._onItemNamePress = this.onItemNamePress.bind(this);
 	}
 
 	onItemNamePress() {
 		this.fireEvent("itemNamePress", {});
+	}
+
+	get classes() {
+		return {
+			indicator: {
+				sapWCTimelineIndicator: true,
+				sapWCTimelineIndicatorNoIcon: !this.icon,
+			},
+		};
 	}
 
 	static async define(...params) {

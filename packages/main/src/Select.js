@@ -9,12 +9,10 @@ import {
 	isShow,
 } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
-import Function from "@ui5/webcomponents-base/src/types/Function.js";
 import Suggestions from "./Suggestions.js";
 
 // Template
 import SelectRenderer from "./build/compiled/SelectRenderer.lit.js";
-import SelectTemplateContext from "./SelectTemplateContext.js";
 
 // Styles
 import selectCss from "./themes/Select.css.js";
@@ -85,10 +83,6 @@ const metadata = {
 		_focused: {
 			type: Boolean,
 		},
-
-		_fnClickSelectBox: {
-			type: Function,
-		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Select.prototype */ {
 		/**
@@ -141,10 +135,6 @@ class Select extends UI5Element {
 		return SelectRenderer;
 	}
 
-	static get calculateTemplateContext() {
-		return SelectTemplateContext.calculate;
-	}
-
 	static get styles() {
 		return selectCss;
 	}
@@ -160,7 +150,6 @@ class Select extends UI5Element {
 		this._setSelectedItem(null);
 		this._setPreviewedItem(null);
 		this.Suggestions = new Suggestions(this, "items", true /* move focus with arrow keys */);
-		this._fnClickSelectBox = this.toggleList.bind(this);
 	}
 
 	onBeforeRendering() {
@@ -365,6 +354,23 @@ class Select extends UI5Element {
 
 	_fireChange(item) {
 		this.fireEvent("change", { selectedItem: item });
+	}
+
+	get classes() {
+		return {
+			main: {
+				"sapWCSelect": true,
+				"sapWCSelectFocused": this._focused,
+				"sapWCSelectDisabled": this.disabled,
+				"sapWCSelectOpened": this._opened,
+				"sapWCSelectState": this.valueState !== "None",
+				[`sapWCSelect${this.valueState}`]: true,
+			},
+		};
+	}
+
+	get tabIndex() {
+		return this.disabled ? "-1" : "0";
 	}
 }
 

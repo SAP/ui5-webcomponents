@@ -3,7 +3,6 @@ import URI from "@ui5/webcomponents-base/src/types/URI.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { isIconURI } from "@ui5/webcomponents-base/src/IconPool.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-import Function from "@ui5/webcomponents-base/src/types/Function.js";
 import CardRenderer from "./build/compiled/CardRenderer.lit.js";
 import Icon from "./Icon.js";
 
@@ -92,18 +91,6 @@ const metadata = {
 		_headerActive: {
 			type: Boolean,
 		},
-
-		_headerClick: {
-			type: Function,
-		},
-
-		_headerKeydown: {
-			type: Function,
-		},
-
-		_headerKeyup: {
-			type: Function,
-		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Card.prototype */ {
 
@@ -145,14 +132,6 @@ const metadata = {
  * @public
  */
 class Card extends UI5Element {
-	constructor() {
-		super();
-
-		this._headerClick = this.headerClick.bind(this);
-		this._headerKeydown = this.headerKeydown.bind(this);
-		this._headerKeyup = this.headerKeyup.bind(this);
-	}
-
 	static get metadata() {
 		return metadata;
 	}
@@ -165,33 +144,34 @@ class Card extends UI5Element {
 		return cardCss;
 	}
 
-	static calculateTemplateContext(state) {
-		const hasAvatar = !!state.avatar;
-		const icon = hasAvatar && isIconURI(state.avatar);
-		const image = hasAvatar && !icon;
-		const hasContent = !!state.content.length;
-		const role = state.headerInteractive ? "button" : undefined;
-		const tabindex = state.headerInteractive ? "0" : undefined;
-
+	get classes() {
 		return {
-			icon,
-			image,
-			role,
-			tabindex,
-			ctr: state,
-			renderIcon: state.icon && !state.image,
-			classes: {
-				main: {
-					"sapFCard": true,
-					"sapFCardNoContent": !hasContent,
-				},
-				header: {
-					"sapFCardHeader": true,
-					"sapFCardHeaderInteractive": state.headerInteractive,
-					"sapFCardHeaderActive": state.headerInteractive && state._headerActive,
-				},
+			main: {
+				"sapFCard": true,
+				"sapFCardNoContent": !this.content.length,
+			},
+			header: {
+				"sapFCardHeader": true,
+				"sapFCardHeaderInteractive": this.headerInteractive,
+				"sapFCardHeaderActive": this.headerInteractive && this._headerActive,
 			},
 		};
+	}
+
+	get icon() {
+		return !!this.avatar && isIconURI(this.avatar);
+	}
+
+	get image() {
+		return !!this.avatar && !this.icon;
+	}
+
+	get role() {
+		return this.headerInteractive ? "button" : undefined;
+	}
+
+	get tabindex() {
+		return this.headerInteractive ? "0" : undefined;
 	}
 
 	static async define(...params) {
@@ -200,13 +180,13 @@ class Card extends UI5Element {
 		super.define(...params);
 	}
 
-	headerClick() {
+	_headerClick() {
 		if (this.headerInteractive) {
 			this.fireEvent("headerPress");
 		}
 	}
 
-	headerKeydown(event) {
+	_headerKeydown(event) {
 		if (!this.headerInteractive) {
 			return;
 		}
@@ -226,7 +206,7 @@ class Card extends UI5Element {
 		}
 	}
 
-	headerKeyup(event) {
+	_headerKeyup(event) {
 		if (!this.headerInteractive) {
 			return;
 		}

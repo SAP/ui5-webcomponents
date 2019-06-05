@@ -1,7 +1,6 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
-import Function from "@ui5/webcomponents-base/src/types/Function.js";
 import { isShow, isDown } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 
 import MultiComboBoxRenderer from "./build/compiled/MultiComboBoxRenderer.lit.js";
@@ -126,17 +125,6 @@ const metadata = {
 			type: Boolean,
 		},
 
-		_showMorePopover: { type: Function },
-		_tokenDelete: { type: Function },
-		_tokenizerFocusOut: { type: Function },
-		_showAllItemsPopover: { type: Function },
-		_allItemsSelectionChange: { type: Function },
-		_selectedItemsSelectionChange: { type: Function },
-		_afterAllPopoverClose: { type: Function },
-		_afterAllPopoverOpen: { type: Function },
-		_keydown: { type: Function },
-		_inputLiveChange: { type: Function },
-		_inputChange: { type: Function },
 		_filteredItems: { type: Object },
 		_iconPressed: { type: Boolean },
 	},
@@ -192,7 +180,16 @@ const metadata = {
  * <li> Drop-down arrow - expands\collapses the option list.</li>
  * <li> Option list - the list of available options.</li>
  * </ul>
- * <h3>Keyboard handling</h3>
+ * <h3>Keyboard Handling</h3>
+ *
+ * The <code>ui5-multi-combobox</code> provides advanced keyboard handling.
+ *
+ * <h4>Picker</h3>
+ * If the <code>ui5-multi-combobox</code> is focused,
+ * you can open or close the drop-down by pressing <code>F4</code>, <code>ALT+UP</code> or <code>ALT+DOWN</code> keys.
+ * Once the drop-down is opened, you can use the <code>UP</code> and <code>DOWN</code> arrow keys
+ * to navigate through the available options and select one by pressing the <code>Space</code> or <code>Enter</code> keys.
+ * <br>
  *
  * <h4>Tokens</h2>
  * <ul>
@@ -201,8 +198,9 @@ const metadata = {
  * <li> Backspace -  deletes the token and focus the next token. </li>
  * </ul>
  *
- * <h4>Picker</h3>
- * Alt + arrow down or F4 - opens the picker.
+ * <h3>ES6 Module Import</h3>
+ *
+ * <code>import "@ui5/webcomponents/dist/MultiComboBox";</code>
  *
  *
  * @constructor
@@ -222,22 +220,6 @@ class MultiComboBox extends UI5Element {
 		return MultiComboBoxRenderer;
 	}
 
-	static get calculateTemplateContext() {
-		return state => {
-			return {
-				ctr: state,
-				editable: !state.readonly,
-				selectedItemsListMode: state.readonly ? "None" : "MultiSelect",
-				classes: {
-					icon: {
-						[`ui5-multi-combobox-icon-pressed`]: state._iconPressed,
-						[`ui5-multi-combobox--icon`]: true,
-					},
-				},
-			};
-		};
-	}
-
 	static get styles() {
 		return styles;
 	}
@@ -248,41 +230,21 @@ class MultiComboBox extends UI5Element {
 		this._filteredItems = [];
 		this._inputLastValue = "";
 		this._deleting = false;
-
-		this._showMorePopover = event => {
-			this._togglePopover(true);
-		};
-
-		this._showAllItemsPopover = event => {
-			this._togglePopover(false);
-		};
-
-		this._allItemsSelectionChange = event => {
-			this._listSelectionChange(event);
-		};
-
-		this._selectedItemsSelectionChange = event => {
-			this._listSelectionChange(event);
-		};
-
-		this._inputLiveChange = this._handleInputLiveChange.bind(this);
-		this._tokenDelete = this._handleTokenDelete.bind(this);
-		this._tokenizerFocusOut = this._handleTokenizerFocusOut.bind(this);
-
-		this._inputChange = () => this.fireEvent("change");
-
-		this._afterAllPopoverClose = () => {
-			this._toggleIcon();
-		};
-
-		this._afterAllPopoverOpen = () => {
-			this._toggleIcon();
-		};
-
-		this._keydown = this._handleKeyDown.bind(this);
 	}
 
-	_handleInputLiveChange(event) {
+	_inputChange() {
+		this.fireEvent("change");
+	}
+
+	_showMorePopover() {
+		this._togglePopover(true);
+	}
+
+	_showAllItemsPopover() {
+		this._togglePopover(false);
+	}
+
+	_inputLiveChange(event) {
 		const input = event.target;
 		const value = input.value;
 		const filteredItems = this._filterItems(value);
@@ -312,7 +274,7 @@ class MultiComboBox extends UI5Element {
 		this.fireEvent("input");
 	}
 
-	_handleTokenDelete(event) {
+	_tokenDelete(event) {
 		const token = event.detail.ref;
 		const deletingItem = this.items.filter(item => item._id === token.getAttribute("data-ui5-id"))[0];
 
@@ -322,7 +284,7 @@ class MultiComboBox extends UI5Element {
 		this.fireEvent("selectionChange", { items: this._getSelectedItems() });
 	}
 
-	_handleTokenizerFocusOut() {
+	_tokenizerFocusOut() {
 		const tokenizer = this.shadowRoot.querySelector("ui5-tokenizer");
 		const tokensCount = tokenizer.tokens.length - 1;
 
@@ -337,7 +299,7 @@ class MultiComboBox extends UI5Element {
 		this._deleting = false;
 	}
 
-	_handleKeyDown(event) {
+	_keydown(event) {
 		if (isShow(event) && !this.readonly && !this.disabled) {
 			event.preventDefault();
 			this._togglePopover();
@@ -413,6 +375,24 @@ class MultiComboBox extends UI5Element {
 
 		const filteredItems = this._filterItems(this.value);
 		this._filteredItems = filteredItems;
+	}
+
+
+	get editable() {
+		return !this.readonly;
+	}
+
+	get selectedItemsListMode() {
+		return this.readonly ? "None" : "MultiSelect";
+	}
+
+	get classes() {
+		return {
+			icon: {
+				[`ui5-multi-combobox-icon-pressed`]: this._iconPressed,
+				[`ui5-multi-combobox--icon`]: true,
+			},
+		};
 	}
 
 	static async define(...params) {

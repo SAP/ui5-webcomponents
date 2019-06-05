@@ -1,20 +1,19 @@
-<div {{> controlData}}
-	class="{{classes.main}}"
-	style="{{styles.main}}"
+<div class="{{classes.main}}"
 	role="radio"
-	aria-checked="{{ctr.selected}}"
-	?aria-readonly="{{readonly}}"
+	aria-checked="{{selected}}"
+	aria-readonly="{{ariaReadonly}}"
+	aria-disabled="{{ariaDisabled}}"
 	tabindex="{{tabIndex}}">
 
 	<div class='{{classes.inner}}'>
 		<svg class="sapMRbSvg" focusable="false">
-			<circle class="sapMRbSvgOuter" cx="{{circle.x}}" cy="{{circle.y}}" r="{{circle.rOuter}}" stroke-width="2" fill="none" />
+			<circle class="sapMRbSvgOuter" cx="{{circle.x}}" cy="{{circle.y}}" r="{{circle.rOuter}}" stroke-width="{{strokeWidth}}" fill="none" />
 			<circle class="sapMRbSvgInner" cx="{{circle.x}}" cy="{{circle.y}}" r="{{circle.rInner}}" stroke-width="10" />
 		</svg>
- 		<input type='radio' ?checked="{{ctr.selected}}" ?readonly="{{ctr.readonly}}" ?disabled="{{ctr.readonly}}" name="{{ctr.name}}" data-sap-no-tab-ref/>
+ 		<input type='radio' ?checked="{{selected}}" ?readonly="{{readonly}}" ?disabled="{{disabled}}" name="{{name}}" data-sap-no-tab-ref/>
 	</div>
 
-	{{#if ctr._label.text}}
-		<ui5-label class="labelInRadioButton">{{ctr._label.text}}</ui5-label>
+	{{#if _label.text}}
+		<ui5-label class="labelInRadioButton">{{_label.text}}</ui5-label>
 	{{/if}}
 </div>

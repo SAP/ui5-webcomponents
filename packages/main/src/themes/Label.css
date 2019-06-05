@@ -1,4 +1,4 @@
-:host(ui5-label) {
+:host(ui5-label:not([hidden])) {
 	display: inline-block;
 	max-width: 100%;
 	cursor: text;
@@ -8,7 +8,7 @@
 	display: flex;
 }
 
-ui5-label {
+ui5-label:not([hidden]) {
 	display: inline-block;
 	max-width: 100%;
 	overflow: hidden;

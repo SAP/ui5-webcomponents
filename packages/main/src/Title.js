@@ -18,9 +18,9 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.Title.prototype */ {
 
 		/**
-		 * Determines whether the <code>ui5-title</code> should wrap.
+		 * Defines whether the <code>ui5-title</code> would wrap.
 		 *
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		*/
@@ -29,11 +29,11 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the title level.
-		 * Supported values are from <code>H5</code> to <code>H1</code>.
+		 * Defines the <code>ui5-title</code> level.
+		 * Available options are: <code>"H6"</code> to <code>"H1"</code>.
 		 *
 		 * @type {string}
-		 * @defaultvalue: "H2"
+		 * @defaultvalue "H2"
 		 * @public
 		*/
 		level: {
@@ -90,24 +90,43 @@ class Title extends UI5Element {
 		return titleCss;
 	}
 
-	static calculateTemplateContext(state) {
-		const context = {
-			tag: (state.level === TitleLevel.Auto ? "div" : state.level).toLowerCase(),
-			ctr: state,
-			classes: {
-				main: {
-					sapMTitle: true,
-					sapMTitleWrap: state.wrap,
-					sapUiSelectable: true,
-					[`sapMTitleStyle${state.level}`]: true,
-				},
-			},
-			styles: {
-				main: {},
+	get normalizedLevel() {
+		return this.level.toLowerCase();
+	}
+
+	get h1() {
+		return this.normalizedLevel === "h1";
+	}
+
+	get h2() {
+		return this.normalizedLevel === "h2";
+	}
+
+	get h3() {
+		return this.normalizedLevel === "h3";
+	}
+
+	get h4() {
+		return this.normalizedLevel === "h4";
+	}
+
+	get h5() {
+		return this.normalizedLevel === "h5";
+	}
+
+	get h6() {
+		return this.normalizedLevel === "h6";
+	}
+
+	get classes() {
+		return {
+			main: {
+				sapMTitle: true,
+				sapMTitleWrap: this.wrap,
+				sapUiSelectable: true,
+				[`sapMTitleStyle${this.level}`]: true,
 			},
 		};
-
-		return context;
 	}
 }
 

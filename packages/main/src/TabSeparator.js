@@ -1,5 +1,4 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import TabSeparatorTemplateContext from "./TabSeparatorTemplateContext.js";
 import TabBase from "./TabBase.js";
 import TabSeparatorRenderer from "./build/compiled/TabSeparatorRenderer.lit.js";
 
@@ -35,10 +34,6 @@ class TabSeparator extends TabBase {
 
 	static get renderer() {
 		return TabSeparatorRenderer;
-	}
-
-	static get calculateTemplateContext() {
-		return TabSeparatorTemplateContext.calculate;
 	}
 
 	isSeparator() {

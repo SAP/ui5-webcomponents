@@ -1,12 +1,12 @@
-<div {{> controlData}}
+<div
 	class="{{classes.main}}"
 	style="{{styles.main}}"
 	?aria-invalid="{{ariaInvalid}}"
 >
 
-	{{#if ctr.growing}}
-		<div id="{{ctr._id}}-mirror" style="{{styles.mirror}}" class="{{classes.mirror}}" aria-hidden="true">
-			{{#each textTokens}}
+	{{#if growing}}
+		<div id="{{_id}}-mirror" style="{{styles.mirror}}" class="{{classes.mirror}}" aria-hidden="true">
+			{{#each _mirrorText}}
 				{{this.text}}
 
 				{{#unless this.last}}
@@ -18,20 +18,20 @@
 
 	<div class="{{classes.focusDiv}}" style="{{styles.inner}}">
 		<textarea
-			id="{{ctr._id}}-inner"
+			id="{{_id}}-inner"
 			class="{{classes.inner}}"
-			placeholder="{{ ctr.placeholder }}"
-			?disabled="{{ctr.disabled}}"
-			?readonly="{{ctr.readonly}}"
-			maxlength="{{maxLength}}"
-			.value="{{ctr.value}}"
-			@change="{{ctr._listeners.change}}"
+			placeholder="{{ placeholder }}"
+			?disabled="{{disabled}}"
+			?readonly="{{readonly}}"
+			maxlength="{{_exceededTextProps.calcedMaxLength}}"
+			.value="{{value}}"
+			@change="{{_listeners.change}}"
 			data-sap-focus-ref>
 		</textarea>
 	</div>
 
-	{{#if ctr.showExceededText}}
-		<span class="{{classes.exceededText}}">{{exceededText}}</span>
+	{{#if showExceededText}}
+		<span class="{{classes.exceededText}}">{{_exceededTextProps.exceededText}}</span>
 	{{/if}}
 
 	<slot name="formSupport"></slot>

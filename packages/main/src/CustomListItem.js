@@ -1,6 +1,5 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import ListItem from "./ListItem.js";
-import CustomListItemTemplateContext from "./CustomListItemTemplateContext.js";
 import CustomListItemRenderer from "./build/compiled/CustomListItemRenderer.lit.js";
 
 // Styles
@@ -56,12 +55,17 @@ class CustomListItem extends ListItem {
 		return CustomListItemRenderer;
 	}
 
-	static get calculateTemplateContext() {
-		return CustomListItemTemplateContext.calculate;
-	}
-
 	static get styles() {
 		return [ListItem.styles, columnListItemCss];
+	}
+
+	get classes() {
+		const result = super.classes;
+
+		// Modify main classes
+		result.main.sapMCustomLI = true;
+
+		return result;
 	}
 }
 

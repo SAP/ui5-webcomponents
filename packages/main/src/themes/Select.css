@@ -1,9 +1,9 @@
-:host(ui5-select) {
+:host(ui5-select:not([hidden])) {
 	display: inline-block;
 	width: 100%;
 }
 
-ui5-select {
+ui5-select:not([hidden]) {
 	display: inline-block;
 	width: 100%;
 }
@@ -19,7 +19,6 @@ ui5-select {
 	background-color: var(--sapUiFieldBackground);
 	border: 1px solid var(--sapUiFieldBorderColor);
 	box-sizing: border-box;
-	padding-left: 0.5rem;
 	cursor: pointer;
 	outline: none;
 }
@@ -67,8 +66,12 @@ ui5-select {
 
 /* Text */
 .sapWCSelect .sapWCSelectLabel {
-	min-width: 1rem;
+	display: inline-flex;
+	align-items: center;
 	width: 100%;
+	height: 100%;
+	min-width: 1rem;
+	padding-left: 0.5rem;
 }
 
 .sapWCSelect .sapWCSelectLabel ui5-label {
@@ -118,7 +121,7 @@ ui5-select {
 }
 
 /* RTL */
-:host(ui5-select) span[dir="rtl"] .sapWCSelect {
+:host(ui5-select) span[dir="rtl"] .sapWCSelect .sapWCSelectLabel {
 	padding-left: 0;
 	padding-right: 0.5rem;
 }
@@ -128,7 +131,7 @@ ui5-select {
 	border-right: var(--_ui5_select_rtl_hover_icon_right_border);
 }
 
-ui5-select span[dir="rtl"] .sapWCSelect {
+ui5-select span[dir="rtl"] .sapWCSelect .sapWCSelectLabel {
 	padding-left: 0;
 	padding-right: 0.5rem;
 }

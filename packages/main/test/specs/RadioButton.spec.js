@@ -55,7 +55,7 @@ describe("RadioButton general interaction", () => {
 		assert.strictEqual(field.getProperty("value"), "3", "Select event should not be called any more, as radio is disabled.");
 	});
 
-	it("tests radio buttons selection within group with AROW-RIGHT key", () => {
+	it("tests radio buttons selection within group with ARROW-RIGHT key", () => {
 		const field = browser.$("#field");
 		const radioButtonPreviouslySelected = browser.$("#groupRb1");
 		const radioButtonToBeSelected = browser.$("#groupRb3");
@@ -71,7 +71,7 @@ describe("RadioButton general interaction", () => {
 		radioButtonToBeSelected.keys("Tab");
 	});
 
-	it("tests radio buttons selection within group with AROW-LEFT key", () => {
+	it("tests radio buttons selection within group with ARROW-LEFT key", () => {
 		const radioButtonPreviouslySelected = browser.$("#groupRb4");
 		const radioButtonToBeSelected = browser.$("#groupRb6");
 

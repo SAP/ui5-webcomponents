@@ -9,7 +9,6 @@ import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData.js";
 import { getLocale } from "@ui5/webcomponents-base/src/LocaleProvider.js";
 import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType.js";
 import CalendarDate from "@ui5/webcomponents-base/src/dates/CalendarDate.js";
-import MonthPickerTemplateContext from "./MonthPickerTemplateContext.js";
 import MonthPickerRenderer from "./build/compiled/MonthPickerRenderer.lit.js";
 
 // Styles
@@ -189,8 +188,20 @@ class MonthPicker extends UI5Element {
 		return parseInt(oMonthDomRef);
 	}
 
-	static get calculateTemplateContext() {
-		return MonthPickerTemplateContext.calculate;
+	get classes() {
+		return {
+			quarter: {
+				"sapWCMonthPickerQuarter": true,
+			},
+		};
+	}
+
+	get styles() {
+		return {
+			main: {
+				display: this._hidden ? "none" : "",
+			},
+		};
 	}
 }
 
