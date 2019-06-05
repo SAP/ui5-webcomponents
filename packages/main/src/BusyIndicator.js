@@ -51,6 +51,7 @@ const metadata = {
  * @extends UI5Element
  * @tagname ui5-busyindicator
  * @public
+ * @since 0.12.0
  */
 class BusyIndicator extends UI5Element {
 	static get metadata() {
