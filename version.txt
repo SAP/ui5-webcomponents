@@ -1,9 +1,5 @@
-commit 907d513f5b84c4824a2e7fa9df48d58b6cdd8016
-Author: Gustavo Kath <gustavokath@outlook.com>
-Date:   Tue Jun 4 13:53:08 2019 -0300
+commit 9d74ecd8d48a1b3028080b7a68f6181f4cc92263
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Wed Jun 5 09:00:55 2019 +0300
 
-    feat(ui5-table): add noDataText for ui5-table without rows (#402)
-    
-     - Added property `no-data-text` for storing the text that will be displayed
-     - Added property `show-no-data` to check if no data text should be displayed
-    - Fixes #389
+    chore(ui5-busyindicator): add since tag (#510)
