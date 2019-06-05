@@ -1,8 +1,11 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/src/ResourceBundle.js";
 import MessageStripType from "./types/MessageStripType.js";
 import MessageStripRenderer from "./build/compiled/MessageStripRenderer.lit.js";
 import Icon from "./Icon.js";
+
+import { MESSAGE_STRIP_CLOSE_BUTTON } from "./i18n/defaults.js";
 
 // Styles
 import messageStripCss from "./themes/MessageStrip.css.js";
@@ -152,6 +155,8 @@ class MessageStrip extends UI5Element {
 		this._closeButton = {
 			press: this._handleCloseIconPress.bind(this),
 		};
+
+		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
 	}
 
 	_handleCloseIconPress() {
@@ -159,6 +164,8 @@ class MessageStrip extends UI5Element {
 	}
 
 	static async define(...params) {
+		await fetchResourceBundle("@ui5/webcomponents");
+
 		await Promise.all([
 			Icon.define(),
 		]);
@@ -182,6 +189,14 @@ class MessageStrip extends UI5Element {
 			"Negative": "sap-icon://message-error",
 			"Warning": "sap-icon://message-warning",
 		};
+	}
+
+	get hiddenText() {
+		return `Message Strip ${this.type} ${this.hideCloseButton ? "" : "closable"}.`;
+	}
+
+	get _closeButtonText() {
+		return this.resourceBundle.getText(MESSAGE_STRIP_CLOSE_BUTTON);
 	}
 
 	get classes() {
