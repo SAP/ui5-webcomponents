@@ -25,6 +25,15 @@ const metadata = {
 		 * @public
 		 */
 		size: { type: BusyIndicatorType, defaultValue: BusyIndicatorType.Large },
+
+		/**
+		 * Defines if the busy indicator is visible on the screen. By default it is not.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 */
+		active: { type: Boolean },
 	},
 };
 
