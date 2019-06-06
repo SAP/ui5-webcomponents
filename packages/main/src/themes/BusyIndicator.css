@@ -8,6 +8,16 @@
 	pointer-events: none;
 }
 
+ui5-busyindicator {
+	display: inline-block;
+}
+
+ui5-busyindicator[active] {
+	opacity: 1;
+	background-color: var(--sapBackgroundColorFade72);
+	pointer-events: none;
+}
+
 span[data-sap-ui-wc-root] {
 	background-color: inherit;
 }

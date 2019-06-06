@@ -28,7 +28,7 @@
 	
 	<br/>
 	<br/>
-	<ui5-busyindicator size="Medium" active id="indicator2" hidden></ui5-busyindicator>
+	<ui5-busyindicator size="Medium" active id="indicator2"></ui5-busyindicator>
 	
 	<br/>
 	<br/>
@@ -52,6 +52,20 @@
 	<ui5-busyindicator id="busy-container" style="width: 520px" size="Medium">
 		<ui5-list id="fetch-list" no-data-text="No Data" header-text="Available Items" style="width: 100%"></ui5-list>
 	</ui5-busyindicator>
+
+
+	<br>
+	<br>
+	<br>
+	<br>
+
+	<ui5-busyindicator size="Medium" active style="width: 500px; margin-left: 100px">
+			<ui5-list style="width: 100%; border: 1px solid black;">
+				<ui5-li>Item 1</ui5-li>
+				<ui5-li>Item 2</ui5-li>
+				<ui5-li>Item 3</ui5-li>
+			</ui5-list>
+		</ui5-busyindicator>
 
 	<script>
 		const busyIndocator = document.getElementById("busy-container");
