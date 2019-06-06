@@ -4,6 +4,7 @@ import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.
 import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper.js";
 import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 import { isTabNext } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
 import ListItemBase from "./ListItemBase.js";
 import ListMode from "./types/ListMode.js";
 import ListSeparators from "./types/ListSeparators.js";
@@ -571,6 +572,7 @@ class List extends UI5Element {
 			main: {
 				sapMList: true,
 				sapMListInsetBG: this.inset,
+				sapUiSizeCompact: getCompactSize(),
 			},
 			ul: {
 				sapMListItems: true,

@@ -89,7 +89,7 @@ ui5-list:not([hidden]) {
 }
 
 /* Compact size */
-.sapUiSizeCompact .sapMList .sapMListNoData {
+.sapUiSizeCompact.sapMList .sapMListNoData {
 	height: 2rem;
 	font-size: var(--sapMFontMediumSize);
 }

@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper.js";
 import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import { isDesktop, isPhone } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
+import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
 
 // Styles
 import styles from "./themes/ListItemBase.css.js";
@@ -111,6 +112,7 @@ class ListItemBase extends UI5Element {
 				sapMLIBShowSeparator: true,
 				sapMLIBFocusable: isDesktop(),
 				"sap-phone": isPhone(),
+				"sapUiSizeCompact": getCompactSize(),
 			},
 			inner: {
 				sapMLIBContent: true,

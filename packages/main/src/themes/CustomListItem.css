@@ -31,7 +31,7 @@ ui5-radiobutton.singleSelectionRadioButton {
 	min-width: 3rem;
 }
 
-.sapUiSizeCompact .sapMLIB.sapMCustomLI,
+.sapUiSizeCompact.sapMLIB.sapMCustomLI,
 .sapUiSizeCompact ui5-checkbox.multiSelectionCheckBox,
 .sapUiSizeCompact ui5-radiobutton.singleSelectionRadioButton {
 	min-width: 2rem;

@@ -151,7 +151,7 @@ ui5-input:not([hidden]) {
 	width: 0;
 }
 
-.sapUiSizeCompact .sapWCInputBase {
+.sapUiSizeCompact.sapWCInputBase {
 	height: var(--_ui5_input_compact_height);
 }
 

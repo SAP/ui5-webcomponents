@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { isIE } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
+import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
 
 import {
 	isUp,
@@ -534,6 +535,7 @@ class Input extends UI5Element {
 				sapWCInput: true,
 				sapWCInputFocused: this._focused,
 				sapWCFocus: this._focused,
+				sapUiSizeCompact: getCompactSize(),
 			},
 			wrapper: {
 				sapWCInputBaseContentWrapper: true,
