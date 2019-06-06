@@ -269,14 +269,10 @@ class UI5Element extends HTMLElement {
 		observedProps.forEach(this._upgradeProperty.bind(this));
 	}
 
-	static wasRegistered(tag) {
-		return !customElements.get(tag);
-	}
-
 	static define() {
 		const tag = this.getMetadata().getTag();
 
-		if (UI5Element.wasRegistered(tag)) {
+		if (!customElements.get(tag)) {
 			this.generateAccessors();
 			window.customElements.define(tag, this);
 		}
