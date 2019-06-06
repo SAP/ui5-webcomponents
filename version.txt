@@ -1,5 +1,5 @@
-commit a082472e083d241843c29422aafc5cded84e0671
-Author: vbersch <ViktorBersch@hotmail.de>
-Date:   Thu Jun 6 13:05:00 2019 +0200
+commit 8c9af86751d4830267acb9e500ceccbd144903e2
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Thu Jun 6 15:11:26 2019 +0300
 
-    docs: fix typo in Readme (#516)
+    refactor: check if custom element has been registered (#514)
