@@ -26,11 +26,6 @@ button.sapUiSizeCompact.sapMBtn {
 	min-width: var(--_ui5_button_base_min_compact_width);
 }
 
-button.sapMBtn {
-	min-width: var(--_ui5_button_base_min_width);
-	min-height: var(--_ui5_button_base_height);
-}
-
 ui5-button .sapMBtn::before {
 	/* this is a hack for a bug in IE https:/* github.com/philipwalton/flexbugs/issues/231 */
 	content: '';
@@ -41,6 +36,8 @@ ui5-button .sapMBtn::before {
 .sapMBtn {
 	width: 100%;
 	height: 100%;
+	min-width: var(--_ui5_button_base_min_width);
+	min-height: var(--_ui5_button_base_height);
 	font-family: var(--sapUiFontFamily);
 	font-size: var(--sapMFontMediumSize);
 	font-weight: normal;
