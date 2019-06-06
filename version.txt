@@ -1,5 +1,5 @@
-commit 8c9af86751d4830267acb9e500ceccbd144903e2
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu Jun 6 15:11:26 2019 +0300
+commit 5709e31a660607a16fa266adf2cdaf9b82e0d2b9
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu Jun 6 16:31:59 2019 +0300
 
-    refactor: check if custom element has been registered (#514)
+    refactor(ui5-tab): rename iconColor to semanticColor (#518)

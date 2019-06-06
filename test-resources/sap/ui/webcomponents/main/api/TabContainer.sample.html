@@ -234,7 +234,7 @@ The <code>ui5-tabcontainer</code> can hold two types of entities: <ul> <li><code
                       <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">additionalText <br> <code>additional-text</code></div>
                         <div class="cell api-table-content-cell">string</div>
-                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell">&quot;&quot;</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                             Represents the "additionalText" text, which is displayed in the tab filter.
                         </div>
@@ -250,22 +250,12 @@ The <code>ui5-tabcontainer</code> can hold two types of entities: <ul> <li><code
                       <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">icon <br> <code></code></div>
                         <div class="cell api-table-content-cell">string</div>
-                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell">&quot;&quot;</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Specifies the icon to be displayed for the tab filter.
+                            Defines the icon source URI to be displayed as graphical element within the <code>ui5-tab</code>. The SAP-icons font provides numerous built-in icons. See all the available icons in the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
                         </div>
                       </div>
                       <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">iconColor <br> <code>icon-color</code></div>
-                        <div class="cell api-table-content-cell">IconColor</div>
-                        <div class="cell api-table-content-cell">&quot;Default&quot;</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Specifies the icon color.
-            
-            If an icon font is used, the color can be chosen from the icon colors (sap.ui.core.IconColor). Possible semantic colors are: Neutral, Positive, Critical, Negative. Instead of the semantic icon color the brand color can be used, this is named Default. Semantic colors and brand colors should not be mixed up inside one IconTabBar.
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">selected <br> <code></code></div>
                         <div class="cell api-table-content-cell">Boolean</div>
                         <div class="cell api-table-content-cell">false</div>
@@ -273,10 +263,18 @@ The <code>ui5-tabcontainer</code> can hold two types of entities: <ul> <li><code
                             Specifies if the <code>ui5-tab</code> is selected.
                         </div>
                       </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">semanticColor <br> <code>semantic-color</code></div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell">&quot;Default&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the <code>ui5-tab</code> semantic color. The color is applied to: <ul> <li>the <code>ui5-tab</code> icon</li> <li>the <code>text</code> when <code>ui5-tab</code> overflows</li> <li>the tab selection line</li> </ul> <br> Available semantic colors are: <code>"Default"</code>, <code>"Neutral", <code>"Positive"</code>, <code>"Critical"</code> and <code>"Negative"</code>. <br><br> <b>Note:</b> The color value depends on the current theme.
+                        </div>
+                      </div>
                       <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">text <br> <code></code></div>
                         <div class="cell api-table-content-cell">string</div>
-                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell">&quot;&quot;</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                             The text to be displayed for the item.
                         </div>
