@@ -128,21 +128,21 @@ ui5-card:not([hidden]) {
 	max-width: 100%;
 }
 
-[dir="rtl"].sapFCardHeader .sapFCardAvatar {
+[dir="rtl"] .sapFCardHeader .sapFCardAvatar {
 	margin-left: 0.75rem;
 	margin-right: 0;
 }
 
-[dir="rtl"].sapFCardHeader .sapFCardStatus {
+[dir="rtl"] .sapFCardHeader .sapFCardStatus {
 	padding-right: 1rem;
 	padding-left: 0rem;
 	margin-right: auto;
 }
 
-[dir="rtl"].sapFCardHeader .sapFCardHeaderText .sapFCardTitle {
+[dir="rtl"] .sapFCardHeader .sapFCardHeaderText .sapFCardTitle {
 	text-align: right;
 }
 
-[dir="rtl"].sapFCardHeader .sapFCardHeaderText .sapFCardSubtitle {
+[dir="rtl"] .sapFCardHeader .sapFCardHeaderText .sapFCardSubtitle {
 	text-align: right;
 } 

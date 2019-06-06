@@ -2,6 +2,7 @@ import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import CSSSize from "@ui5/webcomponents-base/src/types/CSSSize.js";
 import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
+import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
 import TextAreaRenderer from "./build/compiled/TextAreaRenderer.lit.js";
 import { fetchResourceBundle, getResourceBundle } from "./ResourceBundleProvider.js";
 
@@ -386,6 +387,10 @@ class TextArea extends UI5Element {
 
 	get ariaInvalid() {
 		return this.valueState === "Error" ? "true" : undefined;
+	}
+
+	get rtl() {
+		return getEffectiveRTL() ? "rtl" : undefined;
 	}
 
 	static async define(...params) {

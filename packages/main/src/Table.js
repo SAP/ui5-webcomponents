@@ -13,6 +13,7 @@ import styles from "./themes/Table.css.js";
 
 // all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
 import "./ThemePropertiesProvider.js";
+import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL";
 
 /**
  * @public
@@ -252,6 +253,10 @@ class Table extends UI5Element {
 				"z-index": this.stickyColumnHeader ? "1" : "",
 			},
 		};
+	}
+	
+	get rtl() {
+		return getEffectiveRTL() ? "rtl" : undefined;
 	}
 }
 
