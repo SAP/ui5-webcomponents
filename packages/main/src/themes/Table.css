@@ -25,6 +25,6 @@ ui5-table:not([hidden]) {
 	color: var(--sapUiListTextColor)
 }
 
-.sapUiSizeCompact .sapWCTableHeader {
+.sapUiSizeCompact.sapWCTableHeader {
 	height: 2rem;
 }

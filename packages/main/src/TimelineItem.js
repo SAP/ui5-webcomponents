@@ -3,6 +3,7 @@ import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import URI from "@ui5/webcomponents-base/src/types/URI.js";
 import Icon from "./Icon.js";
 import Link from "./Link.js";
+import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
 import TimelineItemRenderer from "./build/compiled/TimelineItemRenderer.lit.js";
 
 // Styles
@@ -144,6 +145,10 @@ class TimelineItem extends UI5Element {
 
 	get classes() {
 		return {
+			main: {
+				sapWCTimelineItem: true,
+				sapUiSizeCompact: getCompactSize(),
+			},
 			indicator: {
 				sapWCTimelineIndicator: true,
 				sapWCTimelineIndicatorNoIcon: !this.icon,

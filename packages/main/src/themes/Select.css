@@ -112,11 +112,11 @@ ui5-select:not([hidden]) {
 }
 
 /* Compact */
-.sapUiSizeCompact .sapWCSelect {
+.sapUiSizeCompact.sapWCSelect {
 	height: 1.625rem;
 }
 
-.sapUiSizeCompact .sapWCSelect  .sapWCSelectDropDownIcon {
+.sapUiSizeCompact.sapWCSelect  .sapWCSelectDropDownIcon {
 	width: 2rem;
 }
 

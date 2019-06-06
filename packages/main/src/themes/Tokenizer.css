@@ -12,7 +12,7 @@ ui5-tokenizer {
 	height: 2.25rem;
 }
 
-span.sapUiSizeCompact .ui5-tokenizer--wrapper {
+.sapUiSizeCompact.ui5-tokenizer--wrapper {
 	padding: 0.1875rem 0.125rem;
 }
 

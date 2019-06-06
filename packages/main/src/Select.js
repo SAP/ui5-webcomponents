@@ -10,6 +10,7 @@ import {
 } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
 import Suggestions from "./Suggestions.js";
+import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
 
 // Template
 import SelectRenderer from "./build/compiled/SelectRenderer.lit.js";
@@ -365,6 +366,7 @@ class Select extends UI5Element {
 				"sapWCSelectOpened": this._opened,
 				"sapWCSelectState": this.valueState !== "None",
 				[`sapWCSelect${this.valueState}`]: true,
+				"sapUiSizeCompact": getCompactSize(),
 			},
 		};
 	}

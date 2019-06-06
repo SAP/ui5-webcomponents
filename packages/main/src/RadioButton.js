@@ -20,6 +20,7 @@ import radioButtonCss from "./themes/RadioButton.css.js";
 
 // all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
 import "./ThemePropertiesProvider.js";
+import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL";
 
 /**
  * @public
@@ -341,6 +342,7 @@ class RadioButton extends UI5Element {
 				sapMRbRo: this.readonly,
 				sapMRbErr: this.valueState === "Error",
 				sapMRbWarn: this.valueState === "Warning",
+				sapUiSizeCompact: getCompactSize(),
 			},
 			inner: {
 				sapMRbInner: true,
@@ -367,6 +369,11 @@ class RadioButton extends UI5Element {
 
 	get circle() {
 		return getCompactSize() ? SVGConfig.compact : SVGConfig.default;
+	}
+
+
+	get rtl() {
+		return getEffectiveRTL() ? "rtl" : undefined;
 	}
 }
 
