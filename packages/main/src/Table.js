@@ -4,6 +4,7 @@ import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { isSpace } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
+import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
 import TableColumn from "./TableColumn.js";
 import TableRow from "./TableRow.js";
 import TableRenderer from "./build/compiled/TableRenderer.lit.js";
@@ -13,7 +14,6 @@ import styles from "./themes/Table.css.js";
 
 // all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
 import "./ThemePropertiesProvider.js";
-import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL";
 
 /**
  * @public
