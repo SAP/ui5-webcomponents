@@ -86,7 +86,7 @@ import "@ui5/webcomponents/dist/Label"; // loads ui5-label
 ```
 
 ## Configure
-UI5 Web Components have built-in internalization and globalization support. Language, compact/cozy switch, date/time settings and theme can be changed with parameters.
+UI5 Web Components have built-in internationalization and globalization support. Language, compact/cozy switch, date/time settings and theme can be changed with parameters.
 
 To provide configuration settings, create a ```script``` tag having ```data-id="sap-ui-config"``` and ```type="application/json"```:
 
