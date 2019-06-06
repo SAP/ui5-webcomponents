@@ -1,10 +1,10 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import URI from "@ui5/webcomponents-base/src/types/URI.js";
-import Icon from "./Icon.js";
-import Link from "./Link.js";
 import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
 import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
+import Icon from "./Icon.js";
+import Link from "./Link.js";
 import TimelineItemRenderer from "./build/compiled/TimelineItemRenderer.lit.js";
 
 // Styles

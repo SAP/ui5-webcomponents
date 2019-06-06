@@ -8,10 +8,10 @@ import {
 	isEscape,
 	isShow,
 } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
 import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
 import Suggestions from "./Suggestions.js";
-import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
 
 // Template
 import SelectRenderer from "./build/compiled/SelectRenderer.lit.js";
