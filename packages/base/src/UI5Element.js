@@ -275,6 +275,8 @@ class UI5Element extends HTMLElement {
 		if (!customElements.get(tag)) {
 			this.generateAccessors();
 			window.customElements.define(tag, this);
+		} else {
+			console.warn(`Skipping definition of tag ${tag}, because it was already defined.`); // eslint-disable-line
 		}
 		return this;
 	}
