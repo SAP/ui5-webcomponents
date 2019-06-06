@@ -121,22 +121,22 @@ ui5-select:not([hidden]) {
 }
 
 /* RTL */
-:host(ui5-select) span[dir="rtl"] .sapWCSelect .sapWCSelectLabel {
+:host(ui5-select) [dir="rtl"].sapWCSelect .sapWCSelectLabel {
 	padding-left: 0;
 	padding-right: 0.5rem;
 }
 
-:host(ui5-select) span[dir="rtl"] .sapWCSelect:hover:not(.sapWCSelectDisabled) .sapWCSelectDropDownIcon {
+:host(ui5-select) [dir="rtl"].sapWCSelect:hover:not(.sapWCSelectDisabled) .sapWCSelectDropDownIcon {
 	border-left: var(--_ui5_select_rtl_hover_icon_left_border);
 	border-right: var(--_ui5_select_rtl_hover_icon_right_border);
 }
 
-ui5-select span[dir="rtl"] .sapWCSelect .sapWCSelectLabel {
+ui5-select [dir="rtl"].sapWCSelect .sapWCSelectLabel {
 	padding-left: 0;
 	padding-right: 0.5rem;
 }
 
-ui5-select span[dir="rtl"] .sapWCSelect:hover:not(.sapWCSelectDisabled) .sapWCSelectDropDownIcon {
+ui5-select [dir="rtl"].sapWCSelect:hover:not(.sapWCSelectDisabled) .sapWCSelectDropDownIcon {
 	border-left: var(--_ui5_select_rtl_hover_icon_left_border);
 	border-right: var(--_ui5_select_rtl_hover_icon_right_border);
 }

@@ -96,20 +96,20 @@ ui5-li .sap-phone.sapMLIB {
 }
 
 /* RTL */
-:host(ui5-li) span[dir="rtl"] .sapMLIBIcon {
+:host(ui5-li) [dir="rtl"] .sapMLIBIcon {
 	padding-left: 1rem;
 	padding-right: 0;
 }
 
-:host(ui5-li) span[dir="rtl"] .sapMSLIImg {
+:host(ui5-li) [dir="rtl"] .sapMSLIImg {
 	margin: .5rem 0 .5rem 0.75rem;
 }
 
-ui5-li span[dir="rtl"] .sapMLIBIcon {
+ui5-li [dir="rtl"] .sapMLIBIcon {
 	padding-left: 1rem;
 	padding-right: 0;
 }
 
-ui5-li span[dir="rtl"] .sapMSLIImg {
+ui5-li [dir="rtl"] .sapMSLIImg {
 	margin: .5rem 0 .5rem 0.75rem;
 }

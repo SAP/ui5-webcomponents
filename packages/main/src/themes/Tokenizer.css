@@ -63,11 +63,3 @@ ui5-tokenizer {
 	width: 1px;
 	margin-top: auto;
 }
-
-/* Edge / IE specific coding */
-
-span[data-sap-ui-wc-root] {
-	display: flex;
-	height: 100%;
-	width: 100%;
-}

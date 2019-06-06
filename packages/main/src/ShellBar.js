@@ -5,6 +5,7 @@ import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
 import { isSpace, isEscape } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
 import StandardListItem from "./StandardListItem.js";
 import List from "./List.js";
 import Icon from "./Icon.js";
@@ -861,6 +862,10 @@ class ShellBar extends UI5Element {
 
 	get popoverHorizontalAlign() {
 		return getRTL() ? "Left" : "Right";
+	}
+
+	get rtl() {
+		return getEffectiveRTL() ? "rtl" : undefined;
 	}
 
 	static async define(...params) {

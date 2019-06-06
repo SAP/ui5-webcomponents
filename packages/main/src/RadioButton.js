@@ -1,5 +1,6 @@
 import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
+import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
@@ -20,7 +21,6 @@ import radioButtonCss from "./themes/RadioButton.css.js";
 
 // all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
 import "./ThemePropertiesProvider.js";
-import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL";
 
 /**
  * @public

@@ -4,6 +4,7 @@ import URI from "@ui5/webcomponents-base/src/types/URI.js";
 import Icon from "./Icon.js";
 import Link from "./Link.js";
 import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
+import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
 import TimelineItemRenderer from "./build/compiled/TimelineItemRenderer.lit.js";
 
 // Styles
@@ -154,6 +155,10 @@ class TimelineItem extends UI5Element {
 				sapWCTimelineIndicatorNoIcon: !this.icon,
 			},
 		};
+	}
+
+	get rtl() {
+		return getEffectiveRTL() ? "rtl" : undefined;
 	}
 
 	static async define(...params) {

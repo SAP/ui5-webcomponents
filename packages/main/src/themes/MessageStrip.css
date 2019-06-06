@@ -8,10 +8,6 @@ ui5-messagestrip:not([hidden]) {
 	width: 100%;
 }
 
-span[data-sap-ui-wc-root] {
-	display: flex;
-}
-
 .ui5-messagestrip-root {
 	width: 100%;
 	height: 100%;

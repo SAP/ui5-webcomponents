@@ -8,11 +8,6 @@ ui5-switch:not([hidden]) {
 	display: inline-block;
 }
 
-span[data-sap-ui-wc-root] {
-	display: inline-block;
-	width: 100%;
-}
-
 .ui5-switch-wrapper {
 	position: relative;
 	width: 100%;
