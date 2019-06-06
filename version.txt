@@ -1,5 +1,5 @@
-commit 1b9dc8a6d0e2b105a8b68b39409075a40d85be58
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Jun 6 10:30:24 2019 +0300
+commit a082472e083d241843c29422aafc5cded84e0671
+Author: vbersch <ViktorBersch@hotmail.de>
+Date:   Thu Jun 6 13:05:00 2019 +0200
 
-    chore: update handlebars due to vulnarability alert (#515)
+    docs: fix typo in Readme (#516)
