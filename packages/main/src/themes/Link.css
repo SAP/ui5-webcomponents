@@ -1,5 +1,5 @@
 :host(ui5-link:not([hidden])) {
-	display: inline-block;
+	display: inline-flex;
 	max-width: 100%;
 }
 

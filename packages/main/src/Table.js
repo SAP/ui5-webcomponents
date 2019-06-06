@@ -254,7 +254,7 @@ class Table extends UI5Element {
 			},
 		};
 	}
-	
+
 	get rtl() {
 		return getEffectiveRTL() ? "rtl" : undefined;
 	}

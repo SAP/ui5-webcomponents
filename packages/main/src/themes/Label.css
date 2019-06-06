@@ -1,5 +1,5 @@
 :host(ui5-label:not([hidden])) {
-	display: inline-block;
+	display: inline-flex;
 	max-width: 100%;
 	cursor: text;
 }
