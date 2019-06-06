@@ -11,7 +11,7 @@ import Icon from "./Icon.js";
 import List from "./List.js";
 import Popover from "./Popover.js";
 import TabBase from "./TabBase.js";
-import IconColor from "./types/IconColor.js";
+import SemanticColor from "./types/SemanticColor.js";
 
 // Styles
 import tabContainerCss from "./themes/TabContainer.css.js";
@@ -504,8 +504,8 @@ const calculateHeaderItemClasses = (item, mixedMode) => {
 		classes.push("ui5-tc__headerItem--mixedMode");
 	}
 
-	if (item.iconColor !== IconColor.Default) {
-		classes.push(`ui5-tc__headerItem--${item.iconColor.toLowerCase()}`);
+	if (item.semanticColor !== SemanticColor.Default) {
+		classes.push(`ui5-tc__headerItem--${item.semanticColor.toLowerCase()}`);
 	}
 
 	return classes.join(" ");
@@ -526,8 +526,8 @@ const calculateHeaderItemIconClasses = item => {
 const calculateHeaderItemSemanticIconClasses = item => {
 	const classes = ["ui5-tc-headerItemSemanticIcon"];
 
-	if (item.iconColor !== IconColor.Default) {
-		classes.push(`ui5-tc-headerItemSemanticIcon--${item.iconColor.toLowerCase()}`);
+	if (item.semanticColor !== SemanticColor.Default) {
+		classes.push(`ui5-tc-headerItemSemanticIcon--${item.semanticColor.toLowerCase()}`);
 	}
 
 	return classes.join(" ");
@@ -548,8 +548,8 @@ const calculateHeaderItemAdditionalTextClasses = item => {
 const calculateOverflowItemClasses = item => {
 	const classes = ["ui5-tc__overflowItem"];
 
-	if (item.iconColor !== IconColor.Default) {
-		classes.push(`ui5-tc__overflowItem--${item.iconColor.toLowerCase()}`);
+	if (item.semanticColor !== SemanticColor.Default) {
+		classes.push(`ui5-tc__overflowItem--${item.semanticColor.toLowerCase()}`);
 	}
 
 	if (item.disabled) {
