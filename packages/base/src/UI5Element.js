@@ -270,7 +270,7 @@ class UI5Element extends HTMLElement {
 	}
 
 	static wasRegistered(tag) {
-		return document.createElement(tag).constructor === HTMLElement;
+		return !customElements.get(tag);
 	}
 
 	static define() {
