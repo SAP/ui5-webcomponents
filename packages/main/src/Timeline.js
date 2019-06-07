@@ -1,6 +1,7 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
+import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
 import TimelineItem from "./TimelineItem.js";
 import TimelineRenderer from "./build/compiled/TimelineRenderer.lit.js";
 
@@ -84,6 +85,15 @@ class Timeline extends UI5Element {
 		this._itemNavigation.getItemsCallback = () => this.items;
 
 		this._delegates.push(this._itemNavigation);
+	}
+
+	get classes() {
+		return {
+			main: {
+				sapWCTimeline: true,
+				sapUiSizeCompact: getCompactSize(),
+			},
+		};
 	}
 
 	static async define(...params) {

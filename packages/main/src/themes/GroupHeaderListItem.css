@@ -24,6 +24,6 @@
 } 
 
 /* Compact size */
-.sapUiSizeCompact .sapMGHLI {
+.sapUiSizeCompact.sapMGHLI {
 	height: 2rem;
 }

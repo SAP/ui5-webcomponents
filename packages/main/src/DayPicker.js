@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { getLocale } from "@ui5/webcomponents-base/src/LocaleProvider.js";
-import { getCalendarType } from "@ui5/webcomponents-base/src/Configuration.js";
+import { getCalendarType, getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
 import { getFormatLocale } from "@ui5/webcomponents-base/src/FormatSettings.js";
 import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
@@ -434,6 +434,7 @@ class DayPicker extends UI5Element {
 		return {
 			wrapper: {
 				"sapWCDayPicker": true,
+				"sapUiSizeCompact": getCompactSize(),
 			},
 			weekNumberContainer: {
 				"sapWCDayPickerWeekNumberContainer": true,

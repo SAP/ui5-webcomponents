@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import { getCalendarType } from "@ui5/webcomponents-base/src/Configuration.js";
+import { getCalendarType, getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
 import { getFormatLocale } from "@ui5/webcomponents-base/src/FormatSettings.js";
 import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
 import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
@@ -190,6 +190,10 @@ class MonthPicker extends UI5Element {
 
 	get classes() {
 		return {
+			main: {
+				"sapWCMonthPicker": true,
+				"sapUiSizeCompact": getCompactSize(),
+			},
 			quarter: {
 				"sapWCMonthPickerQuarter": true,
 			},

@@ -8,11 +8,6 @@ ui5-switch:not([hidden]) {
 	display: inline-block;
 }
 
-span[data-sap-ui-wc-root] {
-	display: inline-block;
-	width: 100%;
-}
-
 .ui5-switch-wrapper {
 	position: relative;
 	width: 100%;
@@ -296,64 +291,64 @@ span[data-sap-ui-wc-root] {
 }
 
 /* Compact size */
-.sapUiSizeCompact .ui5-switch-wrapper {
+.sapUiSizeCompact.ui5-switch-wrapper {
 	height: var(--_ui5_switch_compact_height);
 	min-width: var(--_ui5_switch_compact_width);
 }
 
-.sapUiSizeCompact .ui5-switch-wrapper {
+.sapUiSizeCompact.ui5-switch-wrapper {
 	height: var(--_ui5_switch_compact_height);
 	min-width: var(--_ui5_switch_compact_width);
 }
 
-.sapUiSizeCompact .ui5-switch-wrapper .ui5-switch-handle {
+.sapUiSizeCompact.ui5-switch-wrapper .ui5-switch-handle {
 	height: var(--_ui5_switch_handle_compact_height);
 	width: var(--_ui5_switch_handle_compact_width); 
 }
 
-.sapUiSizeCompact .ui5-switch-wrapper .ui5-switch-text--on {
+.sapUiSizeCompact.ui5-switch-wrapper .ui5-switch-text--on {
 	left: calc(-100% + 1.5625rem);
 }
 
-.sapUiSizeCompact .ui5-switch-wrapper.ui5-switch--checked .ui5-switch-slider {
+.sapUiSizeCompact.ui5-switch-wrapper.ui5-switch--checked .ui5-switch-slider {
 	/* Move slider to oposite end, taking into account the handle as an offset. */
 	/* Note: translate(calc()) does not work in IE11 */
 	transform: translateX(100%) translateX(-1.5rem);
 }
 
-.sapUiSizeCompact .ui5-switch-wrapper.ui5-switch--no-label {
+.sapUiSizeCompact.ui5-switch-wrapper.ui5-switch--no-label {
 	min-width: var(--_ui5_switch_compact_no_label_width);
 }
 
-.sapUiSizeCompact .ui5-switch--no-label .ui5-switch-track {
+.sapUiSizeCompact.ui5-switch--no-label .ui5-switch-track {
 	height: var(--_ui5_switch_track_compact_no_label_height);
 }
 
 /* RTL */
-[dir="rtl"] .ui5-switch-wrapper .ui5-switch-handle {
+[dir="rtl"].ui5-switch-wrapper .ui5-switch-handle {
 	left: 0;
 	right: -1px;
 }
 
-[dir="rtl"] .ui5-switch-wrapper.ui5-switch--checked .ui5-switch-slider {
+[dir="rtl"].ui5-switch-wrapper.ui5-switch--checked .ui5-switch-slider {
 	transform: translateX(1.875rem) translateX(-100%);
 }
 
-[dir="rtl"] .ui5-switch-wrapper .ui5-switch-text--on {
+[dir="rtl"].ui5-switch-wrapper .ui5-switch-text--on {
 	right: calc(-100% + 1.9125rem);
 	left: auto;
 }
 
-[dir="rtl"] .ui5-switch-wrapper .ui5-switch-text--off {
+[dir="rtl"].ui5-switch-wrapper .ui5-switch-text--off {
 	right: auto;
 	left: 0;
 }
 
 /* RTL + Compact */
-.sapUiSizeCompact[dir="rtl"] .ui5-switch-wrapper.ui5-switch--checked .ui5-switch-slider {
+.sapUiSizeCompact[dir="rtl"].ui5-switch-wrapper.ui5-switch--checked .ui5-switch-slider {
 	transform: translateX(-100%) translateX(1.5rem);
 }
 
-.sapUiSizeCompact[dir="rtl"] .ui5-switch-wrapper .ui5-switch-text--on {
+.sapUiSizeCompact[dir="rtl"].ui5-switch-wrapper .ui5-switch-text--on {
 	right: calc(-100% + 1.5625rem);
 }

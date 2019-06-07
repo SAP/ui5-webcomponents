@@ -1,14 +1,10 @@
 :host(ui5-label:not([hidden])) {
-	display: inline-block;
+	display: inline-flex;
 	max-width: 100%;
 	cursor: text;
 	color: var(--sapUiContentLabelColor);
 	font-family: var(--sapUiFontFamily);
 	font-size: var(--sapMFontMediumSize);
-}
-
-:host(ui5-label) span[data-sap-ui-wc-root] {
-	display: flex;
 }
 
 ui5-label:not([hidden]) {
@@ -19,10 +15,6 @@ ui5-label:not([hidden]) {
 	font-family: var(--sapUiFontFamily);
 	font-size: var(--sapMFontMediumSize);
 	cursor: text;
-}
-
-ui5-label span[data-sap-ui-wc-root] {
-	display: flex;
 }
 
 .sapMLabel {

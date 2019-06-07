@@ -4,6 +4,8 @@ import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler.js
 import ScrollEnablement from "@ui5/webcomponents-base/src/delegate/ScrollEnablement.js";
 import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
+import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
 import TabContainerRenderer from "./build/compiled/TabContainerRenderer.lit.js";
 import Button from "./Button.js";
 import CustomListItem from "./CustomListItem.js";
@@ -397,6 +399,7 @@ class TabContainer extends UI5Element {
 		return {
 			main: {
 				"ui5-tab-container": true,
+				"sapUiSizeCompact": getCompactSize(),
 			},
 			header: {
 				"ui5-tc__header": true,
@@ -434,6 +437,10 @@ class TabContainer extends UI5Element {
 
 	get mixedMode() {
 		return this.items.some(item => item.icon) && this.items.some(item => item.text);
+	}
+
+	get rtl() {
+		return getEffectiveRTL() ? "rtl" : undefined;
 	}
 
 	static async define(...params) {

@@ -1,11 +1,10 @@
 import { getWCNoConflict, getCompactSize } from "./Configuration.js";
 import DOMObserver from "./compatibility/DOMObserver.js";
-import ShadowDOM from "./compatibility/ShadowDOM.js";
 import UI5ElementMetadata from "./UI5ElementMetadata.js";
 import Integer from "./types/Integer.js";
 import Renderer from "./Renderer.js";
 import RenderScheduler from "./RenderScheduler.js";
-import { createStyle } from "./CSS.js";
+import { getConstructableStyle, createHeadStyle } from "./CSS.js";
 import { attachThemeChange } from "./Theming.js";
 
 const metadata = {
@@ -44,7 +43,7 @@ class UI5Element extends HTMLElement {
 			// polyfill theme handling is in head styles directly
 			return;
 		}
-		const newStyle = createStyle(this.constructor);
+		const newStyle = getConstructableStyle(this.constructor);
 		if (document.adoptedStyleSheets) {
 			this.shadowRoot.adoptedStyleSheets = [newStyle];
 		} else {
@@ -69,11 +68,15 @@ class UI5Element extends HTMLElement {
 		}
 
 		this.attachShadow({ mode: "open" });
-		const shadowDOM = await ShadowDOM.prepareShadowDOM(this.constructor);
-		this.shadowRoot.appendChild(shadowDOM);
 
+		// IE11, Edge
+		if (window.ShadyDOM) {
+			createHeadStyle(this.constructor);
+		}
+
+		// Chrome
 		if (document.adoptedStyleSheets) {
-			const style = createStyle(this.constructor);
+			const style = getConstructableStyle(this.constructor);
 			this.shadowRoot.adoptedStyleSheets = [style];
 		}
 	}
@@ -467,15 +470,12 @@ class UI5Element extends HTMLElement {
 			return;
 		}
 
-		return this._getRoot().children[0];
+		return this.shadowRoot.children.length === 1
+			? this.shadowRoot.children[0] : this.shadowRoot.children[1];
 	}
 
 	_waitForDomRef() {
 		return this._domRefReadyPromise;
-	}
-
-	_getRoot() {
-		return this.shadowRoot.querySelector("[data-sap-ui-wc-root]");
 	}
 
 	getFocusDomRef() {
