@@ -1,5 +1,5 @@
-commit 5709e31a660607a16fa266adf2cdaf9b82e0d2b9
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Jun 6 16:31:59 2019 +0300
+commit 4003029520489dacdca16c63d8b939d45645913f
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Fri Jun 7 13:18:20 2019 +0300
 
-    refactor(ui5-tab): rename iconColor to semanticColor (#518)
+    refactor: remove placeholder span from shadow root (#503)
