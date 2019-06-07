@@ -1,5 +1,4 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import URI from "@ui5/webcomponents-base/src/types/URI.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
@@ -31,7 +30,10 @@ const metadata = {
 		 * @defaultvalue "Default"
 		 * @public
 		 */
-		type: { type: ButtonType, defaultValue: ButtonType.Default },
+		type: {
+			type: ButtonType,
+			defaultValue: ButtonType.Default,
+		},
 
 		/**
 		 * Defines whether the <code>ui5-button</code> is disabled
@@ -43,7 +45,9 @@ const metadata = {
 		 * @defaultvalue false
 		 * @public
 		 */
-		disabled: { type: Boolean },
+		disabled: {
+			type: Boolean,
+		},
 
 		/**
 		 * Defines the icon to be displayed as graphical element within the <code>ui5-button</code>.
@@ -55,11 +59,13 @@ const metadata = {
 		 *
 		 * See all the available icons in the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
 		 *
-		 * @type {URI}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 */
-		icon: { type: URI, defaultValue: null },
+		icon: {
+			type: String,
+		},
 
 		/**
 		 * Defines whether the icon should be displayed after the <code>ui5-button</code> text.
@@ -68,20 +74,9 @@ const metadata = {
 		 * @defaultvalue false
 		 * @public
 		 */
-		iconEnd: { type: Boolean },
-
-		/**
-		 * Defines an alternative icon for the active (depressed) state of the <code>ui5-button</code>.
-		 * <br><br>
-		 * <b>Note:</b> Both <code>icon</code> and <code>activeIcon</code>
-		 * properties should be defined and have the type
-		 * icon font.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		activeIcon: { type: URI, defaultValue: null },
+		iconEnd: {
+			type: Boolean,
+		},
 
 		/**
 		 * When set to <code>true</code>, the <code>ui5-button</code> will
@@ -101,9 +96,13 @@ const metadata = {
 		/**
 		 * Used to switch the active state (pressed or not) of the <code>ui5-button</code>.
 		 */
-		_active: { type: Boolean },
+		_active: {
+			type: Boolean,
+		},
 
-		_iconSettings: { type: Object },
+		_iconSettings: {
+			type: Object,
+		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.Button.prototype */ {
 		/**
@@ -194,14 +193,6 @@ class Button extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		if (this.icon) {
-			this._iconSettings = {
-				src: this._active && this.activeIcon ? this.activeIcon : this.icon,
-			};
-		} else {
-			this._iconSettings = null;
-		}
-
 		if (this.submits && !Button.FormSupport) {
 			console.warn(`In order for the "submits" property to have effect, you should also: import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";`); // eslint-disable-line
 		}
@@ -272,10 +263,6 @@ class Button extends UI5Element {
 				sapMBtnText: true,
 			},
 		};
-	}
-
-	get iconSrc() {
-		return this._active ? this.activeIcon : this.icon;
 	}
 
 	get ariaDisabled() {

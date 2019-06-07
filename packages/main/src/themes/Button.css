@@ -185,6 +185,7 @@ ui5-button .sapMBtn::before {
 	border-color: var(--sapUiButtonEmphasizedBorderColor);
 	color: var(--sapUiButtonEmphasizedTextColor);
 	text-shadow: 0 0 0.125rem var(--sapUiButtonEmphasizedTextShadow);
+	font-weight: var(--_ui5_button_emphasized_font_weight);
 }
 
 .sapMBtn.sapMBtnEmphasized:hover {

@@ -1,6 +1,6 @@
 import DataType from "@ui5/webcomponents-base/src/types/DataType.js";
 
-const IconColors = {
+const SemanticColors = {
 	/**
 	 * Default color (brand color)
 	 * @public
@@ -33,12 +33,12 @@ const IconColors = {
 };
 
 
-class IconColor extends DataType {
+class SemanticColor extends DataType {
 	static isValid(value) {
-		return !!IconColors[value];
+		return !!SemanticColors[value];
 	}
 }
 
-IconColor.generataTypeAcessors(IconColors);
+SemanticColor.generataTypeAcessors(SemanticColors);
 
-export default IconColor;
+export default SemanticColor;

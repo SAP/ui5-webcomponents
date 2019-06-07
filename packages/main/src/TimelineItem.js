@@ -1,6 +1,5 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import URI from "@ui5/webcomponents-base/src/types/URI.js";
 import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
 import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
 import Icon from "./Icon.js";
@@ -40,11 +39,13 @@ const metadata = {
 		 *
 		 * See all the available icons in the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
 		 *
-		 * @type {URI}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 */
-		icon: { type: URI, defaultValue: null },
+		icon: {
+			type: String,
+		},
 
 		/**
 		 * Defines the name of the item.

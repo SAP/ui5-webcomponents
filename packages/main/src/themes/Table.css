@@ -28,3 +28,19 @@ ui5-table:not([hidden]) {
 .sapUiSizeCompact.sapWCTableHeader {
 	height: 2rem;
 }
+
+.sapWCTableNoDataRow {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	height: auto;
+	justify-content: center;
+	text-align: center;
+	padding: 0.5rem 1rem;
+	font-family: var(--sapUiFontFamily);
+	font-size: 0.875rem;
+	box-sizing: border-box;
+	color: var(--sapUiListTextColor);
+	min-height: 3rem;
+	border-bottom: 1px solid var(--sapUiListTableGroupHeaderBorderColor);
+}

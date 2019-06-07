@@ -1,6 +1,5 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { getRTL } from "@ui5/webcomponents-base/src/Configuration.js";
-import URI from "@ui5/webcomponents-base/src/types/URI.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
@@ -33,8 +32,7 @@ const metadata = {
 		 * @public
 		 */
 		logo: {
-			type: URI,
-			defaultValue: null,
+			type: String,
 		},
 
 		/**
@@ -71,14 +69,13 @@ const metadata = {
 		},
 
 		/**
-		 * Defines URI of the profile action.
-		 * If no URI is set - profile will be excluded from actions.
-		 * @type {URI}
+		 * Defines the source URI of the profile action.
+		 * If no source is set - profile will be excluded from actions.
+		 * @type {string}
 		 * @public
 		 */
 		profile: {
-			type: URI,
-			defaultValue: "",
+			type: String,
 		},
 
 		/**

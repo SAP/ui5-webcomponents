@@ -134,3 +134,11 @@ ui5-messagestrip:not([hidden]) {
 .ui5-messagestrip-close-icon:active:focus::after {
 	border: var(--_ui5_messagestrip_focus_width) dotted var(--sapUiContentContrastFocusColor);
 }
+
+.ui5-messagestrip-hidden-text {
+	position: absolute;
+	clip: rect(1px,1px,1px,1px);
+	user-select: none;
+	left: 0;
+	top: 0;
+}

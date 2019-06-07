@@ -1,9 +1,11 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import URI from "@ui5/webcomponents-base/src/types/URI.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/src/ResourceBundle.js";
 import MessageStripType from "./types/MessageStripType.js";
 import MessageStripRenderer from "./build/compiled/MessageStripRenderer.lit.js";
 import Icon from "./Icon.js";
+
+import { MESSAGE_STRIP_CLOSE_BUTTON } from "./i18n/defaults.js";
 
 // Styles
 import messageStripCss from "./themes/MessageStrip.css.js";
@@ -34,8 +36,9 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the icon to be displayed as graphical element within the <code>ui5-messagestrip</code>.
-		 * If no icon is given, the default icon for the MessageStrip type will be added.
+		 * Defines the icon src URI to be displayed as graphical element within the <code>ui5-messagestrip</code>.
+		 * <br></br>
+		 * <b>Note:</b> If no icon is given, the default icon for the <code>ui5-messagestrip</code> type will be added.
 		 * The SAP-icons font provides numerous options.
 		 * <br></br>
 		 * Example:
@@ -44,13 +47,12 @@ const metadata = {
 		 *
 		 * See all the available icons in the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
 		 *
-		 * @type {URI}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 */
 		icon: {
-			type: URI,
-			defaultValue: null,
+			type: String,
 		},
 
 		/**
@@ -153,6 +155,8 @@ class MessageStrip extends UI5Element {
 		this._closeButton = {
 			press: this._handleCloseIconPress.bind(this),
 		};
+
+		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
 	}
 
 	_handleCloseIconPress() {
@@ -160,6 +164,8 @@ class MessageStrip extends UI5Element {
 	}
 
 	static async define(...params) {
+		await fetchResourceBundle("@ui5/webcomponents");
+
 		await Promise.all([
 			Icon.define(),
 		]);
@@ -183,6 +189,14 @@ class MessageStrip extends UI5Element {
 			"Negative": "sap-icon://message-error",
 			"Warning": "sap-icon://message-warning",
 		};
+	}
+
+	get hiddenText() {
+		return `Message Strip ${this.type} ${this.hideCloseButton ? "" : "closable"}.`;
+	}
+
+	get _closeButtonText() {
+		return this.resourceBundle.getText(MESSAGE_STRIP_CLOSE_BUTTON);
 	}
 
 	get classes() {
