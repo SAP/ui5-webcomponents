@@ -3,7 +3,6 @@ import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { isIE } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
 import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
-import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
 import {
 	isUp,
 	isDown,
@@ -563,10 +562,6 @@ class Input extends UI5Element {
 
 	get ariaInvalid() {
 		return this.valueState === "Error" ? "true" : undefined;
-	}
-
-	get rtl() {
-		return getEffectiveRTL() ? "rtl" : undefined;
 	}
 }
 

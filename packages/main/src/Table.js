@@ -4,7 +4,6 @@ import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { isSpace } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
-import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
 import TableColumn from "./TableColumn.js";
 import TableRow from "./TableRow.js";
 import TableRenderer from "./build/compiled/TableRenderer.lit.js";
@@ -253,10 +252,6 @@ class Table extends UI5Element {
 				"z-index": this.stickyColumnHeader ? "1" : "",
 			},
 		};
-	}
-
-	get rtl() {
-		return getEffectiveRTL() ? "rtl" : undefined;
 	}
 }
 
