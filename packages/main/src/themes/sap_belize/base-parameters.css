@@ -20,6 +20,9 @@
 	--sapAccentColor6: #0092d1;
 	--sapAccentColor7: #1a9898;
 	--sapAccentColor8: #759421;
+	--sapAccentColor9: #925ace;
+	--sapAccentColor10: #647987;
+
 	--sapBrandColor: var(--sapPrimary2);
 	--sapHighlightColor: var(--sapBrandColor);
 	--sapBaseColor: var(--sapPrimary3);

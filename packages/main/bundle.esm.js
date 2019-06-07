@@ -12,6 +12,7 @@ import Islamic from "@ui5/webcomponents-core/dist/sap/ui/core/date/Islamic.js";
 import Japanese from "@ui5/webcomponents-core/dist/sap/ui/core/date/Japanese.js";
 import Persian from "@ui5/webcomponents-core/dist/sap/ui/core/date/Persian.js";
 
+import Badge from "./dist/Badge.js";
 import BusyIndicator from "./dist/BusyIndicator.js";
 import Button from "./dist/Button.js";
 import CheckBox from "./dist/CheckBox.js";

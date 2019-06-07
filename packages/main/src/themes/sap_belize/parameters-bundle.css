@@ -1,6 +1,7 @@
 @import "./base-parameters.css";
 @import "./global-parameters.css";
 
+@import "./Badge-parameters.css";
 @import "./Button-parameters.css";
 @import "./BusyIndicator-parameters.css";
 @import "./Popover-parameters.css";
