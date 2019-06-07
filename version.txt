@@ -1,5 +1,5 @@
-commit 4003029520489dacdca16c63d8b939d45645913f
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Jun 7 13:18:20 2019 +0300
+commit 8496211767c7f2501f1773ac91c573ea09dd24ac
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Fri Jun 7 16:50:30 2019 +0300
 
-    refactor: remove placeholder span from shadow root (#503)
+    feat(ui5-badge): iniital implementation (#521)
