@@ -8,6 +8,8 @@ import {
 	isEscape,
 	isShow,
 } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
+import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
 import Suggestions from "./Suggestions.js";
 
@@ -365,12 +367,17 @@ class Select extends UI5Element {
 				"sapWCSelectOpened": this._opened,
 				"sapWCSelectState": this.valueState !== "None",
 				[`sapWCSelect${this.valueState}`]: true,
+				"sapUiSizeCompact": getCompactSize(),
 			},
 		};
 	}
 
 	get tabIndex() {
 		return this.disabled ? "-1" : "0";
+	}
+
+	get rtl() {
+		return getEffectiveRTL() ? "rtl" : undefined;
 	}
 }
 

@@ -27,7 +27,7 @@ ui5-timeline:not([hidden]) {
 	margin-bottom: 0;
 }
 
-.sapUiSizeCompact .sapWCTimeline {
+.sapUiSizeCompact.sapWCTimeline {
 	padding: .5rem;
 }
 

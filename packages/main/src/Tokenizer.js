@@ -2,8 +2,8 @@ import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
+import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
 import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/src/ResourceBundle.js";
-
 import TokenizerRenderer from "./build/compiled/TokenizerRenderer.lit.js";
 import { MULTIINPUT_SHOW_MORE_TOKENS } from "./i18n/defaults.js";
 
@@ -204,6 +204,7 @@ class Tokenizer extends UI5Element {
 				"ui5-tokenizer-nmore--wrapper": this.showMore,
 				"ui5-tokenizer--wrapper": true,
 				"ui5-tokenizer-no-padding": !this.tokens.length,
+				"sapUiSizeCompact": getCompactSize(),
 			},
 			content: {
 				"ui5-tokenizer--content": true,

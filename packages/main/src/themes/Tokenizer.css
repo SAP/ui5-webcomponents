@@ -12,7 +12,7 @@ ui5-tokenizer {
 	height: 2.25rem;
 }
 
-span.sapUiSizeCompact .ui5-tokenizer--wrapper {
+.sapUiSizeCompact.ui5-tokenizer--wrapper {
 	padding: 0.1875rem 0.125rem;
 }
 
@@ -62,12 +62,4 @@ span.sapUiSizeCompact .ui5-tokenizer--wrapper {
 	height: 1px;
 	width: 1px;
 	margin-top: auto;
-}
-
-/* Edge / IE specific coding */
-
-span[data-sap-ui-wc-root] {
-	display: flex;
-	height: 100%;
-	width: 100%;
 }

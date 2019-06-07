@@ -2,6 +2,8 @@ import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
+import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
+import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
 
 // Template
 import SwitchRenderer from "./build/compiled/SwitchRenderer.lit.js";
@@ -197,8 +199,13 @@ class Switch extends UI5Element {
 				"ui5-switch--checked": this.checked,
 				"ui5-switch--semantic": graphical,
 				"ui5-switch--no-label": !hasLabel,
+				"sapUiSizeCompact": getCompactSize(),
 			},
 		};
+	}
+
+	get rtl() {
+		return getEffectiveRTL() ? "rtl" : undefined;
 	}
 }
 

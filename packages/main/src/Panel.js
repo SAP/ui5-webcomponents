@@ -4,6 +4,7 @@ import { getIconURI } from "@ui5/webcomponents-base/src/IconPool.js";
 import slideDown from "@ui5/webcomponents-base/src/animations/slideDown.js";
 import slideUp from "@ui5/webcomponents-base/src/animations/slideUp.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
 import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/src/ResourceBundle.js";
 import Icon from "./Icon.js";
 import PanelAccessibleRole from "./types/PanelAccessibleRole.js";
@@ -301,6 +302,7 @@ class Panel extends UI5Element {
 		return {
 			main: {
 				sapMPanel: true,
+				sapUiSizeCompact: getCompactSize(),
 			},
 			header: {
 				sapMPanelWrappingDivTb: this.header,

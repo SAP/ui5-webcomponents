@@ -18,10 +18,6 @@ ui5-busyindicator:not([hidden])[active] {
 	pointer-events: none;
 }
 
-span[data-sap-ui-wc-root] {
-	background-color: inherit;
-}
-
 .ui5-busyindicator-wrapper {	
 	display: flex;
 	justify-content: center;

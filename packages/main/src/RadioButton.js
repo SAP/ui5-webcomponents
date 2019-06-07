@@ -1,5 +1,6 @@
 import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
+import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
@@ -341,6 +342,7 @@ class RadioButton extends UI5Element {
 				sapMRbRo: this.readonly,
 				sapMRbErr: this.valueState === "Error",
 				sapMRbWarn: this.valueState === "Warning",
+				sapUiSizeCompact: getCompactSize(),
 			},
 			inner: {
 				sapMRbInner: true,
@@ -367,6 +369,11 @@ class RadioButton extends UI5Element {
 
 	get circle() {
 		return getCompactSize() ? SVGConfig.compact : SVGConfig.default;
+	}
+
+
+	get rtl() {
+		return getEffectiveRTL() ? "rtl" : undefined;
 	}
 }
 
