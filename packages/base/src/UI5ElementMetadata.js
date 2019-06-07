@@ -17,11 +17,12 @@ class UI5ElementMetadata {
 		return this.metadata.defaultSlot || "content";
 	}
 
-	getObservedProps() {
-		const properties = this.getProperties();
-		const allProps = Object.keys(properties);
-		const observedProps = allProps.filter(UI5ElementMetadata.isPublicProperty);
-		return observedProps;
+	getPropsList() {
+		return Object.keys(this.getProperties());
+	}
+
+	getPublicPropsList() {
+		return this.getPropsList().filter(UI5ElementMetadata.isPublicProperty);
 	}
 
 	getSlots() {
@@ -99,7 +100,18 @@ const validateSingleSlot = (value, slotData) => {
 	const slottedNodes = getSlottedNodes(value);
 	slottedNodes.forEach(el => {
 		if (!(el instanceof propertyType)) {
-			throw new Error(`${el} is not of type ${propertyType}`);
+			const isHTMLElement = el instanceof HTMLElement;
+			const tagName = isHTMLElement && el.tagName.toLowerCase();
+			const isCustomElement = isHTMLElement && tagName.includes("-");
+			if (isCustomElement && slotData.lateValidation) {
+				window.customElements.whenDefined(tagName).then(() => {
+					if (!(el instanceof propertyType)) {
+						throw new Error(`${el} is not of type ${propertyType}`);
+					}
+				});
+			} else {
+				throw new Error(`${el} is not of type ${propertyType}`);
+			}
 		}
 	});
 
