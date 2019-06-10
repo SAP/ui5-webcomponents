@@ -1,5 +1,5 @@
-commit 54060c5a6a72ab97a7beb776ca69e88c18ef1a7b
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Mon Jun 10 15:43:56 2019 +0300
+commit 1d812e5f6bf1fb86346499f02c13f26aab1b40ad
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Jun 10 15:56:56 2019 +0300
 
-    refactor: make input suggestions use the features registry (#529)
+    chore: update readme (#531)
