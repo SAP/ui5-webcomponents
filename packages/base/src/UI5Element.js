@@ -13,6 +13,7 @@ const metadata = {
 	},
 };
 
+const DefinitionsSet = new Set();
 const IDMap = new Map();
 
 class UI5Element extends HTMLElement {
@@ -274,11 +275,15 @@ class UI5Element extends HTMLElement {
 	static define() {
 		const tag = this.getMetadata().getTag();
 
-		if (!customElements.get(tag)) {
+		const definedLocally = DefinitionsSet.has(tag);
+		const definedGlobally = customElements.get(tag);
+
+		if (definedGlobally && !definedLocally) {
+			console.warn(`Skipping definition of tag ${tag}, because it was already defined by another instance of ui5-webcomponents.`); // eslint-disable-line
+		} else if (!definedGlobally) {
 			this.generateAccessors();
+			DefinitionsSet.add(tag);
 			window.customElements.define(tag, this);
-		} else {
-			console.warn(`Skipping definition of tag ${tag}, because it was already defined.`); // eslint-disable-line
 		}
 		return this;
 	}
