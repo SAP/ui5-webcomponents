@@ -1,5 +1,9 @@
-commit c266590a6a5c8790c798524ce789ef8c6e5dc4e3
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Mon Jun 10 13:16:01 2019 +0300
+commit ff59a9811776a64ccd1a2e0e1882db6ffb84849c
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Mon Jun 10 13:29:58 2019 +0300
 
-    refactor: use a feature registry to enable form support (#528)
+    feat(ui5-busyindicator): introduce active property and simplify usage (#519)
+    
+    - busy indicator is invisible by default
+    - it can slot any content
+    - active property sets its visibility
