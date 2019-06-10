@@ -1,5 +1,5 @@
-commit 8496211767c7f2501f1773ac91c573ea09dd24ac
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Jun 7 16:50:30 2019 +0300
+commit da1c4309800a741aa0aacfa5388d505000ce8e61
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Mon Jun 10 10:32:03 2019 +0300
 
-    feat(ui5-badge): iniital implementation (#521)
+    feat(ui5-li): parameterize listitembase border bottom (#520)
