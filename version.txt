@@ -1,5 +1,5 @@
-commit 1709455a3fc6a730505aec41be224bf912de721c
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Mon Jun 10 13:36:21 2019 +0300
+commit c452d60dce8050562703a75757a0581b0614bd9f
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Mon Jun 10 13:44:38 2019 +0300
 
-    refactor: skip warning when element is defined locally (#527)
+    feat(base): implement late validation (#522)
