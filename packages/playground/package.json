@@ -1,7 +1,7 @@
 {
   "name": "@ui5/webcomponents-playground",
   "private": true,
-  "version": "0.11.1",
+  "version": "0.12.0",
   "description": "UI5 Web Components Playground",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
@@ -41,7 +41,7 @@
     "@openui5/sap.ui.core": "^1.60.2",
     "@openui5/sap.ui.layout": "^1.60.2",
     "@openui5/themelib_sap_belize": "^1.60.2",
-    "@ui5/webcomponents": "0.11.1"
+    "@ui5/webcomponents": "0.12.0"
   },
   "devDependencies": {
     "@ui5/cli": "^1.2.0",
