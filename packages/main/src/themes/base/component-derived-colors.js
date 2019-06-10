@@ -31,6 +31,7 @@ const derivationsFactory = ({ darken, lighten, contrast, fade, saturate, desatur
 		"--sapUiButtonRejectActiveBackgroundLighten5": () => lighten("--sapUiButtonRejectActiveBackground", 5),
 		"--sapUiButtonAcceptActiveBackgroundLighten5": () => lighten("--sapUiButtonAcceptActiveBackground", 5),
 		"--sapUiButtonBackgroundDarken10": () => darken("--sapUiButtonBackground", 10),
+		"--sapBackgroundColorFade72": () => fade("--sapBackgroundColor", 72),
 		"--sapUiAccent1Lighten50": () => lighten("--sapUiAccent1", 50),
 		"--sapUiAccent2Lighten40": () => lighten("--sapUiAccent2", 40),
 		"--sapUiAccent3Lighten46": () => lighten("--sapUiAccent3", 46),
