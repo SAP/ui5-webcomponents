@@ -1,5 +1,5 @@
-commit a18d6cb2680dc98bcb4dcee2f493db981d938028
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Jun 10 14:49:30 2019 +0300
+commit 54060c5a6a72ab97a7beb776ca69e88c18ef1a7b
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Mon Jun 10 15:43:56 2019 +0300
 
-    chore(release): publish v0.12.0 (#530)
+    refactor: make input suggestions use the features registry (#529)
