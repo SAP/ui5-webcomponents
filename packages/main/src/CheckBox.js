@@ -3,6 +3,7 @@ import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
 import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
+import { getFeature } from "@ui5/webcomponents-base/src/FeaturesRegistry.js";
 import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import CheckBoxRenderer from "./build/compiled/CheckBoxRenderer.lit.js";
@@ -204,8 +205,9 @@ class CheckBox extends UI5Element {
 	}
 
 	_enableFormSupport() {
-		if (CheckBox.FormSupport) {
-			CheckBox.FormSupport.syncNativeHiddenInput(this, (element, nativeInput) => {
+		const FormSupport = getFeature("FormSupport");
+		if (FormSupport) {
+			FormSupport.syncNativeHiddenInput(this, (element, nativeInput) => {
 				nativeInput.disabled = element.disabled || !element.checked;
 				nativeInput.value = element.checked ? "on" : "";
 			});

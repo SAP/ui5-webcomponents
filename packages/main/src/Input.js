@@ -3,6 +3,7 @@ import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { isIE } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
 import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
+import { getFeature } from "@ui5/webcomponents-base/src/FeaturesRegistry.js";
 import {
 	isUp,
 	isDown,
@@ -329,8 +330,9 @@ class Input extends UI5Element {
 			this.enableSuggestions();
 		}
 
-		if (Input.FormSupport) {
-			Input.FormSupport.syncNativeHiddenInput(this);
+		const FormSupport = getFeature("FormSupport");
+		if (FormSupport) {
+			FormSupport.syncNativeHiddenInput(this);
 		} else if (this.name) {
 			console.warn(`In order for the "name" property to have effect, you should also: import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";`); // eslint-disable-line
 		}

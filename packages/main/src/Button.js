@@ -3,6 +3,7 @@ import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
 import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
+import { getFeature } from "@ui5/webcomponents-base/src/FeaturesRegistry.js";
 import ButtonType from "./types/ButtonType.js";
 import ButtonRenderer from "./build/compiled/ButtonRenderer.lit.js";
 import Icon from "./Icon.js";
@@ -193,7 +194,8 @@ class Button extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		if (this.submits && !Button.FormSupport) {
+		const FormSupport = getFeature("FormSupport");
+		if (this.submits && !FormSupport) {
 			console.warn(`In order for the "submits" property to have effect, you should also: import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";`); // eslint-disable-line
 		}
 	}
@@ -210,8 +212,9 @@ class Button extends UI5Element {
 		event.isMarked = "button";
 		if (!this.disabled) {
 			this.fireEvent("press", {});
-			if (Button.FormSupport) {
-				Button.FormSupport.triggerFormSubmit(this);
+			const FormSupport = getFeature("FormSupport");
+			if (FormSupport) {
+				FormSupport.triggerFormSubmit(this);
 			}
 		}
 	}
