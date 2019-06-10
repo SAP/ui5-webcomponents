@@ -68,7 +68,7 @@ ui5-li .sap-phone.sapMLIB {
 }
 
 .sapMLIB.sapMLIBBorder {
-	border-bottom: 1px solid var(--sapUiListBorderColor);
+	border-bottom: var(--ui5-listitem-border-bottom);
 }
 
 .sapMLIB.sapMLIBActive .sapMLIBIcon {
