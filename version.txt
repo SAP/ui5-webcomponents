@@ -1,9 +1,5 @@
-commit ff59a9811776a64ccd1a2e0e1882db6ffb84849c
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Mon Jun 10 13:29:58 2019 +0300
+commit 1709455a3fc6a730505aec41be224bf912de721c
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Mon Jun 10 13:36:21 2019 +0300
 
-    feat(ui5-busyindicator): introduce active property and simplify usage (#519)
-    
-    - busy indicator is invisible by default
-    - it can slot any content
-    - active property sets its visibility
+    refactor: skip warning when element is defined locally (#527)
