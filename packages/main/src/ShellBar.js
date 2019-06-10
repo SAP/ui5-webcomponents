@@ -1,6 +1,7 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { getRTL } from "@ui5/webcomponents-base/src/Configuration.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
 import { isSpace, isEscape } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
@@ -299,6 +300,10 @@ class ShellBar extends UI5Element {
 
 	static get styles() {
 		return styles;
+	}
+
+	static get render() {
+		return litRender;
 	}
 
 	static get template() {

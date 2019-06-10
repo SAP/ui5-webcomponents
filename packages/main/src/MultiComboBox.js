@@ -1,5 +1,6 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
 import { isShow, isDown } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
@@ -214,6 +215,10 @@ const metadata = {
 class MultiComboBox extends UI5Element {
 	static get metadata() {
 		return metadata;
+	}
+
+	static get render() {
+		return litRender;
 	}
 
 	static get template() {

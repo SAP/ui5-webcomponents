@@ -1,4 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import CSSSize from "@ui5/webcomponents-base/src/types/CSSSize.js";
@@ -111,6 +112,10 @@ class TableColumn extends UI5Element {
 
 	static get styles() {
 		return styles;
+	}
+
+	static get render() {
+		return litRender;
 	}
 
 	static get template() {

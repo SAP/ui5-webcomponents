@@ -1,4 +1,5 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import Button from "./Button.js";
 import ToggleButtonTemplate from "./build/compiled/ToggleButtonTemplate.lit.js";
 
@@ -56,6 +57,10 @@ const metadata = {
 class ToggleButton extends Button {
 	static get metadata() {
 		return metadata;
+	}
+
+	static get render() {
+		return litRender;
 	}
 
 	static get template() {

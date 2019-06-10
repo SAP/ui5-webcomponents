@@ -1,4 +1,5 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import RenderScheduler from "@ui5/webcomponents-base/src/RenderScheduler.js";
 import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
 import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper.js";
@@ -186,6 +187,10 @@ const arrowSize = 8;
 class Popover extends Popup {
 	static get metadata() {
 		return metadata;
+	}
+
+	static get render() {
+		return litRender;
 	}
 
 	static get template() {

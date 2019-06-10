@@ -1,4 +1,5 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import TabBase from "./TabBase.js";
 import SemanticColor from "./types/SemanticColor.js";
 import Icon from "./Icon.js";
@@ -129,6 +130,10 @@ const metadata = {
 class Tab extends TabBase {
 	static get metadata() {
 		return metadata;
+	}
+
+	static get render() {
+		return litRender;
 	}
 
 	static get template() {

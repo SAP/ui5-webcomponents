@@ -1,4 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/src/ResourceBundle.js";
 import MessageStripType from "./types/MessageStripType.js";
@@ -139,6 +140,10 @@ const metadata = {
 class MessageStrip extends UI5Element {
 	static get metadata() {
 		return metadata;
+	}
+
+	static get render() {
+		return litRender;
 	}
 
 	static get template() {

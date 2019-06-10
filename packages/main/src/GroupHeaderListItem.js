@@ -1,4 +1,5 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import ListItemBase from "./ListItemBase.js";
 
 // Template
@@ -48,6 +49,10 @@ const metadata = {
  * @public
  */
 class GroupHeaderListItem extends ListItemBase {
+	static get render() {
+		return litRender;
+	}
+
 	static get template() {
 		return GroupHeaderListItemTemplate;
 	}

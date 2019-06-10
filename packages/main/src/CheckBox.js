@@ -1,5 +1,6 @@
 import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
 import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
@@ -176,6 +177,10 @@ const metadata = {
 class CheckBox extends UI5Element {
 	static get metadata() {
 		return metadata;
+	}
+
+	static get render() {
+		return litRender;
 	}
 
 	static get template() {

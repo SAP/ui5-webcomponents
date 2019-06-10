@@ -1,4 +1,5 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 
 import { isPhone } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 import Popup from "./Popup.js";
@@ -69,6 +70,10 @@ const metadata = {
 class Dialog extends Popup {
 	static get metadata() {
 		return metadata;
+	}
+
+	static get render() {
+		return litRender;
 	}
 
 	static get template() {

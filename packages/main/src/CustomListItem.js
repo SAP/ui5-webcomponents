@@ -1,4 +1,5 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import ListItem from "./ListItem.js";
 import CustomListItemTemplate from "./build/compiled/CustomListItemTemplate.lit.js";
 
@@ -49,6 +50,10 @@ const metadata = {
 class CustomListItem extends ListItem {
 	static get metadata() {
 		return metadata;
+	}
+
+	static get render() {
+		return litRender;
 	}
 
 	static get template() {

@@ -1,4 +1,5 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import ListItem from "./ListItem.js";
 import Icon from "./Icon.js";
 import StandardListItemTemplate from "./build/compiled/StandardListItemTemplate.lit.js";
@@ -98,6 +99,10 @@ const metadata = {
  * @public
  */
 class StandardListItem extends ListItem {
+	static get render() {
+		return litRender;
+	}
+
 	static get template() {
 		return StandardListItemTemplate;
 	}

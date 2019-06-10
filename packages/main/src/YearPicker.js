@@ -1,4 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData.js";
 import { getCalendarType, getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
@@ -81,6 +82,10 @@ class YearPicker extends UI5Element {
 
 	static get styles() {
 		return styles;
+	}
+
+	static get render() {
+		return litRender;
 	}
 
 	static get template() {

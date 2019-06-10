@@ -1,4 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { getIconURI } from "@ui5/webcomponents-base/src/IconPool.js";
 import slideDown from "@ui5/webcomponents-base/src/animations/slideDown.js";
@@ -183,6 +184,10 @@ const metadata = {
 class Panel extends UI5Element {
 	static get metadata() {
 		return metadata;
+	}
+
+	static get render() {
+		return litRender;
 	}
 
 	static get template() {

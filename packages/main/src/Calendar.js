@@ -1,6 +1,7 @@
 import "@ui5/webcomponents-base/src/shims/jquery-shim.js";
 import "@ui5/webcomponents-base/src/shims/Core-shim.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import { fetchCldrData } from "@ui5/webcomponents-base/src/CLDR.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { getLocale } from "@ui5/webcomponents-base/src/LocaleProvider.js";
@@ -113,6 +114,10 @@ const metadata = {
 class Calendar extends UI5Element {
 	static get metadata() {
 		return metadata;
+	}
+
+	static get render() {
+		return litRender;
 	}
 
 	static get template() {

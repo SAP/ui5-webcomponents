@@ -1,4 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler.js";
 import ScrollEnablement from "@ui5/webcomponents-base/src/delegate/ScrollEnablement.js";
@@ -174,6 +175,10 @@ class TabContainer extends UI5Element {
 
 	static get styles() {
 		return tabContainerCss;
+	}
+
+	static get render() {
+		return litRender;
 	}
 
 	static get template() {
