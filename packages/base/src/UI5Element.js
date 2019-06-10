@@ -217,7 +217,7 @@ class UI5Element extends HTMLElement {
 	}
 
 	static get observedAttributes() {
-		const observedProps = this.getMetadata().getObservedProps();
+		const observedProps = this.getMetadata().getPublicPropsList();
 		return observedProps.map(camelToKebabCase);
 	}
 
@@ -268,8 +268,8 @@ class UI5Element extends HTMLElement {
 	}
 
 	_upgradeAllProperties() {
-		const observedProps = this.constructor.getMetadata().getObservedProps();
-		observedProps.forEach(this._upgradeProperty.bind(this));
+		const allProps = this.constructor.getMetadata().getPropsList();
+		allProps.forEach(this._upgradeProperty.bind(this));
 	}
 
 	static define() {

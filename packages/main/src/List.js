@@ -9,9 +9,6 @@ import ListItemBase from "./ListItemBase.js";
 import ListMode from "./types/ListMode.js";
 import ListSeparators from "./types/ListSeparators.js";
 import ListItemType from "./types/ListItemType.js";
-import StandardListItem from "./StandardListItem.js";
-import CustomListItem from "./CustomListItem.js";
-import GroupHeaderListItem from "./GroupHeaderListItem.js";
 // Template
 import ListRenderer from "./build/compiled/ListRenderer.lit.js";
 
@@ -588,16 +585,6 @@ class List extends UI5Element {
 				sapMLIBFocusable: isDesktop(),
 			},
 		};
-	}
-
-	static async define(...params) {
-		await Promise.all([
-			StandardListItem.define(),
-			CustomListItem.define(),
-			GroupHeaderListItem.define(),
-		]);
-
-		super.define(...params);
 	}
 }
 
