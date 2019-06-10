@@ -9,10 +9,6 @@
 		{
 			"name": "--ui5-listitem-background-color",
 			"description": "Defines the<code>ui5-li</code> background color"
-		},
-		{
-			"name": "--ui5-listitem-border-bottom",
-			"description": "Defines the border bottom of each list item<code>ui5-li</code>"
 		}
 	],
 	"Panel": [
