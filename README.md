@@ -33,9 +33,6 @@ UI5 remains what it is: the best choice for…
 - [UI5 Web Components](https://sap.github.io/ui5-webcomponents)
 - [UI5 Web Components - Playground and API Reference](https://sap.github.io/ui5-webcomponents/playground/)
 
-## Requirements
-- [Node.js](https://nodejs.org/) (**version 8.5 or higher** ⚠️)
-
 ## Download and Installation
 To consume UI5 Web Components, first you need to install the NPM module:
 
@@ -138,6 +135,7 @@ UI5 Web Components support different calendar types (Gregorian, Islamic, Japanes
 
 ### Requirements
 - [Yarn](https://yarnpkg.com/en)
+- [Node.js](https://nodejs.org/) (**version 8.5 or higher**)
 
 You can clone the UI5 Web Components repository and start the Playground app with the following commands:
 
