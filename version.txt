@@ -1,5 +1,5 @@
-commit a07880d0aba04165f1d6931c2e79dd5232b5a514
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Jun 10 12:48:39 2019 +0300
+commit c266590a6a5c8790c798524ce789ef8c6e5dc4e3
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Mon Jun 10 13:16:01 2019 +0300
 
-    fix(ui5-li): remove active state onmouseup (#525)
+    refactor: use a feature registry to enable form support (#528)
