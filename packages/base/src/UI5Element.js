@@ -57,12 +57,6 @@ class UI5Element extends HTMLElement {
 	}
 
 	async _initializeShadowRoot() {
-		const isCompact = getCompactSize();
-
-		if (isCompact) {
-			this.setAttribute("data-ui5-compact-size", "");
-		}
-
 		if (this.constructor.getMetadata().getNoShadowDOM()) {
 			return Promise.resolve();
 		}
@@ -82,6 +76,11 @@ class UI5Element extends HTMLElement {
 	}
 
 	async connectedCallback() {
+		const isCompact = getCompactSize();
+		if (isCompact) {
+			this.setAttribute("data-ui5-compact-size", "");
+		}
+
 		if (this.constructor.getMetadata().getNoShadowDOM()) {
 			return;
 		}
