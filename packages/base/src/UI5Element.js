@@ -275,14 +275,15 @@ class UI5Element extends HTMLElement {
 	static define() {
 		const tag = this.getMetadata().getTag();
 
-		if (!DefinitionsSet.has(tag)) {
-			if (!customElements.get(tag)) {
-				DefinitionsSet.add(tag);
-				this.generateAccessors();
-				window.customElements.define(tag, this);
-				return this;
-			}
-			console.warn(`Skipping definition of tag ${tag}, because it was already defined.`); // eslint-disable-line
+		const definedLocally = DefinitionsSet.has(tag);
+		const definedGlobally = customElements.get(tag);
+
+		if (definedGlobally && !definedLocally) {
+			console.warn(`Skipping definition of tag ${tag}, because it was already defined by another instance of ui5-webcomponents.`); // eslint-disable-line
+		} else if (!definedGlobally) {
+			this.generateAccessors();
+			DefinitionsSet.add(tag);
+			window.customElements.define(tag, this);
 		}
 		return this;
 	}
