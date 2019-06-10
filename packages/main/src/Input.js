@@ -424,11 +424,11 @@ class Input extends UI5Element {
 			return;
 		}
 
-		try {
-			const Suggestions = Input.getSuggestions();
+		const Suggestions = getFeature("InputSuggestions");
+		if (Suggestions) {
 			this.Suggestions = new Suggestions(this, "suggestionItems");
-		} catch (err) {
-			throw new Error(`You have to import @ui5/webcomponents/dist/InputSuggestions module to use ui5-input suggestions:: ${err}`);
+		} else {
+			throw new Error(`You have to import @ui5/webcomponents/dist/InputSuggestions.js module to use ui5-input suggestions`);
 		}
 	}
 
