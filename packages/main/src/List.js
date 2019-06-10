@@ -50,7 +50,6 @@ const metadata = {
 		items: {
 			type: ListItemBase,
 			multiple: true,
-			lateValidation: true,
 		},
 	},
 	properties: /** @lends  sap.ui.webcomponents.main.List.prototype */ {

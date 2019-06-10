@@ -103,14 +103,12 @@ const validateSingleSlot = (value, slotData) => {
 			const isHTMLElement = el instanceof HTMLElement;
 			const tagName = isHTMLElement && el.tagName.toLowerCase();
 			const isCustomElement = isHTMLElement && tagName.includes("-");
-			if (isCustomElement && slotData.lateValidation) {
+			if (isCustomElement) {
 				window.customElements.whenDefined(tagName).then(() => {
 					if (!(el instanceof propertyType)) {
 						throw new Error(`${el} is not of type ${propertyType}`);
 					}
 				});
-			} else {
-				throw new Error(`${el} is not of type ${propertyType}`);
 			}
 		}
 	});
