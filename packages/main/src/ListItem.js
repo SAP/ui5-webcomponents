@@ -89,6 +89,7 @@ class ListItem extends ListItemBase {
 			}
 		};
 	}
+
 	onBeforeRendering() {}
 
 	onEnterDOM() {
