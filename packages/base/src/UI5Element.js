@@ -2,10 +2,9 @@ import { getWCNoConflict, getCompactSize } from "./Configuration.js";
 import DOMObserver from "./compatibility/DOMObserver.js";
 import UI5ElementMetadata from "./UI5ElementMetadata.js";
 import Integer from "./types/Integer.js";
-import LitRenderer from "./renderer/LitRenderer.js";
-import { getShadowRootStyle } from "./CSS.js";
+import litRender from "./renderer/LitRenderer.js";
 import RenderScheduler from "./RenderScheduler.js";
-import { getConstructableStyle, createHeadStyle } from "./CSS.js";
+import { getConstructableStyle, createHeadStyle, getShadowRootStyle } from "./CSS.js";
 import { attachThemeChange } from "./Theming.js";
 
 const metadata = {
@@ -433,7 +432,7 @@ class UI5Element extends HTMLElement {
 		const renderResult = this.constructor.renderer(this);
 		// For browsers that do not support constructable style sheets (and not using the polyfill)
 		const styleToPrepend = getShadowRootStyle(this.constructor);
-		LitRenderer.render(renderResult, this.shadowRoot, this, styleToPrepend);
+		litRender(renderResult, this.shadowRoot, this, styleToPrepend);
 	}
 
 	_assignSlotsToChildren() {
