@@ -429,7 +429,7 @@ class UI5Element extends HTMLElement {
 	}
 
 	_updateShadowRoot() {
-		const renderResult = this.constructor.renderer(this);
+		const renderResult = this.constructor.template(this);
 		// For browsers that do not support constructable style sheets (and not using the polyfill)
 		const styleToPrepend = getShadowRootStyle(this.constructor);
 		litRender(renderResult, this.shadowRoot, this, styleToPrepend);

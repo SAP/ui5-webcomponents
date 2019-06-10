@@ -4,7 +4,7 @@ import { isSpace } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import LinkType from "./types/LinkType.js";
 
 // Template
-import LinkRederer from "./build/compiled/LinkRenderer.lit.js";
+import LinkRederer from "./build/compiled/LinkTemplate.lit.js";
 
 // Styles
 import linkCss from "./themes/Link.css.js";
@@ -172,7 +172,7 @@ class Link extends UI5Element {
 		return metadata;
 	}
 
-	static get renderer() {
+	static get template() {
 		return LinkRederer;
 	}
 

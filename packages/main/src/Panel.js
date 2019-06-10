@@ -8,7 +8,7 @@ import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
 import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/src/ResourceBundle.js";
 import Icon from "./Icon.js";
 import PanelAccessibleRole from "./types/PanelAccessibleRole.js";
-import PanelRenderer from "./build/compiled/PanelRenderer.lit.js";
+import PanelTemplate from "./build/compiled/PanelTemplate.lit.js";
 
 import { PANEL_ICON } from "./i18n/defaults.js";
 
@@ -185,8 +185,8 @@ class Panel extends UI5Element {
 		return metadata;
 	}
 
-	static get renderer() {
-		return PanelRenderer;
+	static get template() {
+		return PanelTemplate;
 	}
 
 	static get styles() {

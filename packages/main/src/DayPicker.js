@@ -10,7 +10,7 @@ import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData.js";
 import CalendarDate from "@ui5/webcomponents-base/src/dates/CalendarDate.js";
 import { calculateWeekNumber } from "@ui5/webcomponents-base/src/dates/CalendarUtils.js";
 import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType.js";
-import DayPickerRenderer from "./build/compiled/DayPickerRenderer.lit.js";
+import DayPickerTemplate from "./build/compiled/DayPickerTemplate.lit.js";
 
 // Styles
 import dayPickerCSS from "./themes/DayPicker.css.js";
@@ -109,8 +109,8 @@ class DayPicker extends UI5Element {
 		return metadata;
 	}
 
-	static get renderer() {
-		return DayPickerRenderer;
+	static get template() {
+		return DayPickerTemplate;
 	}
 
 	static get styles() {

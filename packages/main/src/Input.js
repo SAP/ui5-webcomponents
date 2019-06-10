@@ -13,7 +13,7 @@ import {
 import Icon from "./Icon.js";
 import InputType from "./types/InputType.js";
 // Template
-import InputRenderer from "./build/compiled/InputRenderer.lit.js";
+import InputTemplate from "./build/compiled/InputTemplate.lit.js";
 
 // Styles
 import styles from "./themes/Input.css.js";
@@ -281,8 +281,8 @@ class Input extends UI5Element {
 		return metadata;
 	}
 
-	static get renderer() {
-		return InputRenderer;
+	static get template() {
+		return InputTemplate;
 	}
 
 	static get styles() {

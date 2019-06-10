@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 
 // Template
-import LabelRenderer from "./build/compiled/LabelRenderer.lit.js";
+import LabelTemplate from "./build/compiled/LabelTemplate.lit.js";
 
 // Styles
 import labelCss from "./themes/Label.css.js";
@@ -71,7 +71,6 @@ const metadata = {
 		},
 	},
 	defaultSlot: "text",
-	renderer: LabelRenderer,
 };
 
 /**
@@ -107,8 +106,8 @@ class Label extends UI5Element {
 		return metadata;
 	}
 
-	static get renderer() {
-		return LabelRenderer;
+	static get template() {
+		return LabelTemplate;
 	}
 
 	static get styles() {

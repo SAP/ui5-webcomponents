@@ -6,7 +6,7 @@ import { isSpace } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
 import TableColumn from "./TableColumn.js";
 import TableRow from "./TableRow.js";
-import TableRenderer from "./build/compiled/TableRenderer.lit.js";
+import TableTemplate from "./build/compiled/TableTemplate.lit.js";
 
 // Styles
 import styles from "./themes/Table.css.js";
@@ -148,8 +148,8 @@ class Table extends UI5Element {
 		return styles;
 	}
 
-	static get renderer() {
-		return TableRenderer;
+	static get template() {
+		return TableTemplate;
 	}
 
 	constructor() {

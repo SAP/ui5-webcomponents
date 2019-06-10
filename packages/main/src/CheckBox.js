@@ -6,7 +6,7 @@ import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
 import { getFeature } from "@ui5/webcomponents-base/src/FeaturesRegistry.js";
 import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-import CheckBoxRenderer from "./build/compiled/CheckBoxRenderer.lit.js";
+import CheckBoxTemplate from "./build/compiled/CheckBoxTemplate.lit.js";
 import Label from "./Label.js";
 
 // Styles
@@ -178,8 +178,8 @@ class CheckBox extends UI5Element {
 		return metadata;
 	}
 
-	static get renderer() {
-		return CheckBoxRenderer;
+	static get template() {
+		return CheckBoxTemplate;
 	}
 
 	static get styles() {

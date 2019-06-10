@@ -9,7 +9,7 @@ import {
 } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 
 import Icon from "./Icon.js";
-import TokenRenderer from "./build/compiled/TokenRenderer.lit.js";
+import TokenTemplate from "./build/compiled/TokenTemplate.lit.js";
 
 // Styles
 import styles from "./themes/Token.css.js";
@@ -109,8 +109,8 @@ class Token extends UI5Element {
 		return metadata;
 	}
 
-	static get renderer() {
-		return TokenRenderer;
+	static get template() {
+		return TokenTemplate;
 	}
 
 	static get styles() {

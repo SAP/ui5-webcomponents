@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import TableCell from "./TableCell.js";
-import TableRowRenderer from "./build/compiled/TableRowRenderer.lit.js";
+import TableRowTemplate from "./build/compiled/TableRowTemplate.lit.js";
 
 // Styles
 import styles from "./themes/TableRow.css.js";
@@ -69,8 +69,8 @@ class TableRow extends UI5Element {
 		return styles;
 	}
 
-	static get renderer() {
-		return TableRowRenderer;
+	static get template() {
+		return TableRowTemplate;
 	}
 
 	onBeforeRendering() {

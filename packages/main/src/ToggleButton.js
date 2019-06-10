@@ -1,6 +1,6 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import Button from "./Button.js";
-import ToggleButtonRenderer from "./build/compiled/ToggleButtonRenderer.lit.js";
+import ToggleButtonTemplate from "./build/compiled/ToggleButtonTemplate.lit.js";
 
 // Styles
 import toggleBtnCss from "./themes/ToggleButton.css.js";
@@ -58,8 +58,8 @@ class ToggleButton extends Button {
 		return metadata;
 	}
 
-	static get renderer() {
-		return ToggleButtonRenderer;
+	static get template() {
+		return ToggleButtonTemplate;
 	}
 
 	static get styles() {

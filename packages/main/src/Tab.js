@@ -2,7 +2,7 @@ import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import TabBase from "./TabBase.js";
 import SemanticColor from "./types/SemanticColor.js";
 import Icon from "./Icon.js";
-import TabRenderer from "./build/compiled/TabRenderer.lit.js";
+import TabTemplate from "./build/compiled/TabTemplate.lit.js";
 
 // all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
 import "./ThemePropertiesProvider.js";
@@ -131,8 +131,8 @@ class Tab extends TabBase {
 		return metadata;
 	}
 
-	static get renderer() {
-		return TabRenderer;
+	static get template() {
+		return TabTemplate;
 	}
 
 	static async define(...params) {

@@ -10,7 +10,7 @@ import ListMode from "./types/ListMode.js";
 import ListSeparators from "./types/ListSeparators.js";
 import ListItemType from "./types/ListItemType.js";
 // Template
-import ListRenderer from "./build/compiled/ListRenderer.lit.js";
+import ListTemplate from "./build/compiled/ListTemplate.lit.js";
 
 // Styles
 import listCss from "./themes/List.css.js";
@@ -228,8 +228,8 @@ class List extends UI5Element {
 		return metadata;
 	}
 
-	static get renderer() {
-		return ListRenderer;
+	static get template() {
+		return ListTemplate;
 	}
 
 	static get styles() {

@@ -15,7 +15,7 @@ import {
 } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import RadioButtonGroup from "./RadioButtonGroup.js";
 // Template
-import RadioButtonRenderer from "./build/compiled/RadioButtonRenderer.lit.js";
+import RadioButtonTemplate from "./build/compiled/RadioButtonTemplate.lit.js";
 
 // Styles
 import radioButtonCss from "./themes/RadioButton.css.js";
@@ -207,8 +207,8 @@ class RadioButton extends UI5Element {
 		return metadata;
 	}
 
-	static get renderer() {
-		return RadioButtonRenderer;
+	static get template() {
+		return RadioButtonTemplate;
 	}
 
 	static get styles() {

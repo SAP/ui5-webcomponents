@@ -15,7 +15,7 @@ import CalendarHeader from "./CalendarHeader.js";
 import DayPicker from "./DayPicker.js";
 import MonthPicker from "./MonthPicker.js";
 import YearPicker from "./YearPicker.js";
-import CalendarRenderer from "./build/compiled/CalendarRenderer.lit.js";
+import CalendarTemplate from "./build/compiled/CalendarTemplate.lit.js";
 
 // default calendar for bundling
 import "@ui5/webcomponents-core/dist/sap/ui/core/date/Gregorian.js";
@@ -115,8 +115,8 @@ class Calendar extends UI5Element {
 		return metadata;
 	}
 
-	static get renderer() {
-		return CalendarRenderer;
+	static get template() {
+		return CalendarTemplate;
 	}
 
 	static get styles() {

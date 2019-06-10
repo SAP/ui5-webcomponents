@@ -1,9 +1,8 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import TitleLevel from "./types/TitleLevel.js";
-import TitleRenderer from "./build/compiled/TitleRenderer.lit.js";
+import TitleTemplate from "./build/compiled/TitleTemplate.lit.js";
 
-// Styles
 // Styles
 import titleCss from "./themes/Title.css.js";
 
@@ -82,8 +81,8 @@ class Title extends UI5Element {
 		return metadata;
 	}
 
-	static get renderer() {
-		return TitleRenderer;
+	static get template() {
+		return TitleTemplate;
 	}
 
 	static get styles() {

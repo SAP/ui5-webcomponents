@@ -10,7 +10,7 @@ import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
 import DateFormat from "@ui5/webcomponents-core/dist/sap/ui/core/format/DateFormat.js";
 import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType.js";
 import CalendarDate from "@ui5/webcomponents-base/src/dates/CalendarDate.js";
-import YearPickerRenderer from "./build/compiled/YearPickerRenderer.lit.js";
+import YearPickerTemplate from "./build/compiled/YearPickerTemplate.lit.js";
 
 // Styles
 import styles from "./themes/YearPicker.css.js";
@@ -83,8 +83,8 @@ class YearPicker extends UI5Element {
 		return styles;
 	}
 
-	static get renderer() {
-		return YearPickerRenderer;
+	static get template() {
+		return YearPickerTemplate;
 	}
 
 	constructor() {

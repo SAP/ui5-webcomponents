@@ -4,7 +4,7 @@ import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js
 import Icon from "./Icon.js";
 
 // Template
-import BadgeRenderer from "./build/compiled/BadgeRenderer.lit.js";
+import BadgeTemplate from "./build/compiled/BadgeTemplate.lit.js";
 
 // Styles
 import badgeCss from "./themes/Badge.css.js";
@@ -60,7 +60,6 @@ const metadata = {
 
 	},
 	defaultSlot: "text",
-	renderer: BadgeRenderer,
 };
 
 /**
@@ -94,8 +93,8 @@ class Badge extends UI5Element {
 		return metadata;
 	}
 
-	static get renderer() {
-		return BadgeRenderer;
+	static get template() {
+		return BadgeTemplate;
 	}
 
 	static get styles() {

@@ -4,7 +4,7 @@ import CSSSize from "@ui5/webcomponents-base/src/types/CSSSize.js";
 import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
 import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/src/ResourceBundle.js";
 import { getFeature } from "@ui5/webcomponents-base/src/FeaturesRegistry.js";
-import TextAreaRenderer from "./build/compiled/TextAreaRenderer.lit.js";
+import TextAreaTemplate from "./build/compiled/TextAreaTemplate.lit.js";
 
 import { TEXTAREA_CHARACTERS_LEFT, TEXTAREA_CHARACTERS_EXCEEDED } from "./i18n/defaults.js";
 
@@ -227,8 +227,8 @@ class TextArea extends UI5Element {
 		return styles;
 	}
 
-	static get renderer() {
-		return TextAreaRenderer;
+	static get template() {
+		return TextAreaTemplate;
 	}
 
 	constructor() {

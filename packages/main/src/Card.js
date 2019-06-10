@@ -3,7 +3,7 @@ import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { isIconURI } from "@ui5/webcomponents-base/src/IconPool.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
-import CardRenderer from "./build/compiled/CardRenderer.lit.js";
+import CardTemplate from "./build/compiled/CardTemplate.lit.js";
 import Icon from "./Icon.js";
 
 // Styles
@@ -121,8 +121,8 @@ class Card extends UI5Element {
 		return metadata;
 	}
 
-	static get renderer() {
-		return CardRenderer;
+	static get template() {
+		return CardTemplate;
 	}
 
 	static get styles() {

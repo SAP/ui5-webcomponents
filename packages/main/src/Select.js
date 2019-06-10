@@ -14,7 +14,7 @@ import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
 import Suggestions from "./Suggestions.js";
 
 // Template
-import SelectRenderer from "./build/compiled/SelectRenderer.lit.js";
+import SelectTemplate from "./build/compiled/SelectTemplate.lit.js";
 
 // Styles
 import selectCss from "./themes/Select.css.js";
@@ -133,8 +133,8 @@ class Select extends UI5Element {
 		return metadata;
 	}
 
-	static get renderer() {
-		return SelectRenderer;
+	static get template() {
+		return SelectTemplate;
 	}
 
 	static get styles() {

@@ -9,7 +9,7 @@ import Popup from "./Popup.js";
 
 
 // Template
-import PopoverRenderer from "./build/compiled/PopoverRenderer.lit.js";
+import PopoverTemplate from "./build/compiled/PopoverTemplate.lit.js";
 
 // Styles
 import popoverCss from "./themes/Popover.css.js";
@@ -188,8 +188,8 @@ class Popover extends Popup {
 		return metadata;
 	}
 
-	static get renderer() {
-		return PopoverRenderer;
+	static get template() {
+		return PopoverTemplate;
 	}
 
 	static get styles() {

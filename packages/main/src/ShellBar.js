@@ -11,7 +11,7 @@ import Icon from "./Icon.js";
 import Popover from "./Popover.js";
 
 // Template
-import ShellBarRenderer from "./build/compiled/ShellBarRenderer.lit.js";
+import ShellBarTemplate from "./build/compiled/ShellBarTemplate.lit.js";
 
 // Styles
 import styles from "./themes/ShellBar.css.js";
@@ -301,8 +301,8 @@ class ShellBar extends UI5Element {
 		return styles;
 	}
 
-	static get renderer() {
-		return ShellBarRenderer;
+	static get template() {
+		return ShellBarTemplate;
 	}
 
 	static get FIORI_3_BREAKPOINTS() {

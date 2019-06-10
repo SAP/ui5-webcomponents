@@ -5,7 +5,7 @@ import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
 import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
 import Button from "./Button.js";
 import ButtonType from "./types/ButtonType.js";
-import CalendarHeaderRenderer from "./build/compiled/CalendarHeaderRenderer.lit.js";
+import CalendarHeaderTemplate from "./build/compiled/CalendarHeaderTemplate.lit.js";
 
 // Styles
 import styles from "./themes/CalendarHeader.css.js";
@@ -48,8 +48,8 @@ class CalendarHeader extends UI5Element {
 		return metadata;
 	}
 
-	static get renderer() {
-		return CalendarHeaderRenderer;
+	static get template() {
+		return CalendarHeaderTemplate;
 	}
 
 	static get styles() {

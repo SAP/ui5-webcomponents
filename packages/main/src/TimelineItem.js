@@ -4,7 +4,7 @@ import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
 import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
 import Icon from "./Icon.js";
 import Link from "./Link.js";
-import TimelineItemRenderer from "./build/compiled/TimelineItemRenderer.lit.js";
+import TimelineItemTemplate from "./build/compiled/TimelineItemTemplate.lit.js";
 
 // Styles
 import styles from "./themes/TimelineItem.css.js";
@@ -129,8 +129,8 @@ class TimelineItem extends UI5Element {
 		return metadata;
 	}
 
-	static get renderer() {
-		return TimelineItemRenderer;
+	static get template() {
+		return TimelineItemTemplate;
 	}
 
 	static get styles() {

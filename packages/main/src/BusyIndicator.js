@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import BusyIndicatorRenderer from "./build/compiled/BusyIndicatorRenderer.lit.js";
+import BusyIndicatorTemplate from "./build/compiled/BusyIndicatorTemplate.lit.js";
 
 // Styles
 import busyIndicatorCss from "./themes/BusyIndicator.css.js";
@@ -71,8 +71,8 @@ class BusyIndicator extends UI5Element {
 		return busyIndicatorCss;
 	}
 
-	static get renderer() {
-		return BusyIndicatorRenderer;
+	static get template() {
+		return BusyIndicatorTemplate;
 	}
 
 	get classes() {
