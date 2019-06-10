@@ -1,5 +1,5 @@
-commit da1c4309800a741aa0aacfa5388d505000ce8e61
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Mon Jun 10 10:32:03 2019 +0300
+commit 0f3b8e4e97764796227eea7d799fa42c9e57cebc
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Mon Jun 10 10:43:45 2019 +0300
 
-    feat(ui5-li): parameterize listitembase border bottom (#520)
+    fix: access DOM in connectedCallback instead of constructor (#524)
