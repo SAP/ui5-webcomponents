@@ -11,7 +11,8 @@ describe("Select general interaction", () => {
 
 		select.click();
 
-		const firstItem = $("#mySelect ui5-li:first-child");
+		const firstItem = browser.findElementDeep("#mySelect >>> ui5-li:first-child");
+
 		firstItem.click();
 
 		assert.strictEqual(inputResult.getProperty("value"), "1", "Fired change event is called once.");
@@ -24,7 +25,7 @@ describe("Select general interaction", () => {
 
 		select.click();
 
-		const firstItem = $("#mySelect ui5-li:first-child");
+		const firstItem = browser.findElementDeep("#mySelect >>> ui5-li:first-child");
 		firstItem.click();
 
 		assert.strictEqual(inputResult.getProperty("value"), "1", "Event not fired when already selected item is selected");
@@ -129,9 +130,11 @@ describe("Select general interaction", () => {
 
 		addItemsBtn.click();
 
-		const firstItem = $("#mySelect ui5-li:first-child");
+		const firstOption = browser.findElementDeep("#mySelect ui5-option:first-child");
+		const firstListItem = browser.findElementDeep("#mySelect >>> ui5-li:first-child");
 
-		assert.ok(firstItem.getProperty("selected"), "First Item should be selected");
+		assert.ok(firstOption.getProperty("selected"), "First option should be selected");
+		assert.ok(firstListItem.getProperty("selected"), "First list item should be selected");
 
 		restoreItemsBtn.click();
 	});
@@ -145,10 +148,10 @@ describe("Select general interaction", () => {
 		select.keys("ArrowDown");
 		select.keys("Escape");
 
-		const selectedItem = $("#mySelect ui5-li[selected]");
+		const selectedOption = browser.findElementDeep("#mySelect ui5-option[selected]");
 		const selectTextAfterEscape = browser.findElementDeep("#mySelect >>> ui5-label").getHTML(false);
 
-		assert.ok(selectedItem.getProperty("selected"), "Initially selected item should remain selected");
+		assert.ok(selectedOption.getProperty("selected"), "Initially selected item should remain selected");
 		assert.strictEqual(inputResult.getProperty("value"), "5", "Change event should not be fired");
 		assert.strictEqual(selectTextAfterEscape, selectText, "Initially selected item should remain selected");
 	});
@@ -178,7 +181,7 @@ describe("Select general interaction", () => {
 		select.keys("Escape");
 
 		select.click();
-		const firstItem = $("#mySelect ui5-li:first-child");
+		const firstItem = browser.findElementDeep("#mySelect >>> ui5-li:first-child");
 
 		firstItem.click();
 
