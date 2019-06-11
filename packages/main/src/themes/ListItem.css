@@ -31,12 +31,13 @@
 }
 
 .sapMSLI-info {
+	margin: 0 0.25rem;
 	color: var(--sapUiNeutralText);
+	font-size: 0.875rem;
+	flex-shrink: 0;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-	font-size: 0.875rem;
-	margin: 0 0.25rem;
 }
 
 .sapMSLI-info--warning {
