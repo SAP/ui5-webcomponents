@@ -1,10 +1,11 @@
 :host(ui5-label:not([hidden])) {
 	display: inline-flex;
 	max-width: 100%;
-	cursor: text;
 	color: var(--sapUiContentLabelColor);
 	font-family: var(--sapUiFontFamily);
 	font-size: var(--sapMFontMediumSize);
+	font-weight: normal;
+	cursor: text;
 }
 
 ui5-label:not([hidden]) {
@@ -14,13 +15,14 @@ ui5-label:not([hidden]) {
 	color: var(--sapUiContentLabelColor);
 	font-family: var(--sapUiFontFamily);
 	font-size: var(--sapMFontMediumSize);
+	font-weight: normal;
 	cursor: text;
 }
 
 .sapMLabel {
 	display: inline-block;
 	width: 100%;
-	font-weight: normal;
+	font-weight: inherit;
 	text-overflow: ellipsis;
 	overflow: hidden;
 	white-space: nowrap;
