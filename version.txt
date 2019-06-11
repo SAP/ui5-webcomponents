@@ -1,5 +1,5 @@
-commit 71e7495e296e150fd3ef82a6e5778cfa758e9242
+commit f1d8a854ec5d8c781de20425782ed9d3a775c205
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Jun 11 16:32:21 2019 +0300
+Date:   Tue Jun 11 16:37:58 2019 +0300
 
-    chore: update version labels (#536)
+    feat(ui5-li): add info and infoState properties (#539)
