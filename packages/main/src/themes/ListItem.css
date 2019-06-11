@@ -1,6 +1,7 @@
 
 .sapMSLI.sapMLIBActive .sapMSLITitle,
-.sapMSLI.sapMLIBActive .sapMSLIDescription {
+.sapMSLI.sapMLIBActive .sapMSLIDescription,
+.sapMSLI.sapMLIBActive .sapMSLI-info {
 	color: var(--sapUiListActiveTextColor);
 }
 
@@ -9,6 +10,7 @@
 	flex-direction: column;
 	min-width: 1px;
 	line-height: normal;
+	flex: auto;
 }
 
 .sapMSLI .sapMSLITitle {
@@ -26,6 +28,27 @@
 .sapMSLI .sapMSLIDescription {
 	font-size: var(--sapMFontMediumSize);
 	color: var(--sapUiContentLabelColor);
+}
+
+.sapMSLI-info {
+	color: var(--sapUiNeutralText);
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-size: 0.875rem;
+	margin: 0 0.25rem;
+}
+
+.sapMSLI-info--warning {
+	color: var(--sapUiCriticalText);
+}
+
+.sapMSLI-info--success {
+	color: var(--sapUiPositiveText);
+}
+
+.sapMSLI-info--error {
+	color: var(--sapUiNegativeText);
 }
 
 .sapMSLI .sapMSLIImg {
@@ -61,6 +84,10 @@
 .sapUiSizeCompact.sapMSLI.sapMSLIWithTitleAndDescription .sapMSLITitle,
 .sapMSLI.sapMSLIWithTitleAndDescription .sapMSLITitle{
 	padding-bottom: 0.375rem;
+}
+
+.sapMSLI.sapMSLIWithTitleAndDescription .sapMSLI-info {
+	align-self: flex-end;
 }
 
 /* Compact size */
