@@ -1,4 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler.js";
 import ScrollEnablement from "@ui5/webcomponents-base/src/delegate/ScrollEnablement.js";
@@ -6,7 +7,7 @@ import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
 import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
-import TabContainerRenderer from "./build/compiled/TabContainerRenderer.lit.js";
+import TabContainerTemplate from "./build/compiled/TabContainerTemplate.lit.js";
 import Button from "./Button.js";
 import CustomListItem from "./CustomListItem.js";
 import Icon from "./Icon.js";
@@ -176,8 +177,12 @@ class TabContainer extends UI5Element {
 		return tabContainerCss;
 	}
 
-	static get renderer() {
-		return TabContainerRenderer;
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return TabContainerTemplate;
 	}
 
 	constructor() {

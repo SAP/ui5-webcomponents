@@ -3,6 +3,7 @@ import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
 import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
 import { getFeature } from "@ui5/webcomponents-base/src/FeaturesRegistry.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
 import {
@@ -15,7 +16,7 @@ import {
 } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import RadioButtonGroup from "./RadioButtonGroup.js";
 // Template
-import RadioButtonRenderer from "./build/compiled/RadioButtonRenderer.lit.js";
+import RadioButtonTemplate from "./build/compiled/RadioButtonTemplate.lit.js";
 
 // Styles
 import radioButtonCss from "./themes/RadioButton.css.js";
@@ -207,8 +208,12 @@ class RadioButton extends UI5Element {
 		return metadata;
 	}
 
-	static get renderer() {
-		return RadioButtonRenderer;
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return RadioButtonTemplate;
 	}
 
 	static get styles() {

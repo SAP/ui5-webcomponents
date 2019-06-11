@@ -1,6 +1,7 @@
 import "@ui5/webcomponents-base/src/shims/jquery-shim.js";
 import "@ui5/webcomponents-base/src/shims/Core-shim.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import { fetchCldrData } from "@ui5/webcomponents-base/src/CLDR.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { getCalendarType } from "@ui5/webcomponents-base/src/Configuration.js";
@@ -20,7 +21,7 @@ import PopoverPlacementType from "./types/PopoverPlacementType.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import Input from "./Input.js";
 import InputType from "./types/InputType.js";
-import DatePickerRenderer from "./build/compiled/DatePickerRenderer.lit.js";
+import DatePickerTemplate from "./build/compiled/DatePickerTemplate.lit.js";
 
 // default calendar for bundling
 import "@ui5/webcomponents-core/dist/sap/ui/core/date/Gregorian.js";
@@ -228,8 +229,12 @@ class DatePicker extends UI5Element {
 		return metadata;
 	}
 
-	static get renderer() {
-		return DatePickerRenderer;
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return DatePickerTemplate;
 	}
 
 	static get styles() {
