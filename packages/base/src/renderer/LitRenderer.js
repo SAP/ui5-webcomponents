@@ -1,8 +1,8 @@
 import { html, render } from "lit-html";
 
-const litRender = (templateResult, domNode, eventContext, styles) => {
+const litRender = (templateResult, domNode, styles, {eventContext} = {}) => {
 	if (styles) {
-		templateResult = html`<style data-ui5-shadow-root-styles>${styles}</style>${templateResult}`;
+		templateResult = html`<style>${styles}</style>${templateResult}`;
 	}
 	render(templateResult, domNode, { eventContext });
 };
