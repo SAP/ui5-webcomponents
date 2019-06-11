@@ -1,5 +1,5 @@
-commit 88c794aa92e9071f732094754017609227859d1b
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Tue Jun 11 09:47:13 2019 +0300
+commit 3da0dd5d680919638bd2cf8f0ed8c86989fc4555
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Jun 11 11:13:07 2019 +0300
 
-    feat(ui5-label): expose font-weight property on root tag (#534)
+    fix(ui5-badge): correct text font (#535)
