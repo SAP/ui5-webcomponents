@@ -1,6 +1,6 @@
 import { html, render } from "lit-html";
 
-const litRender = (templateResult, domNode, styles, {eventContext} = {}) => {
+const litRender = (templateResult, domNode, styles, { eventContext } = {}) => {
 	if (styles) {
 		templateResult = html`<style>${styles}</style>${templateResult}`;
 	}

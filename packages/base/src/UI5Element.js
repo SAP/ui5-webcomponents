@@ -431,7 +431,7 @@ class UI5Element extends HTMLElement {
 		const renderResult = this.constructor.template(this);
 		// For browsers that do not support constructable style sheets (and not using the polyfill)
 		const styleToPrepend = getShadowRootStyle(this.constructor);
-		this.constructor.render(renderResult, this.shadowRoot, styleToPrepend, {eventContext: this});
+		this.constructor.render(renderResult, this.shadowRoot, styleToPrepend, { eventContext: this });
 	}
 
 	_assignSlotsToChildren() {
