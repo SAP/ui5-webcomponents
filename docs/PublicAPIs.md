@@ -8,42 +8,42 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 
 Web Component | Tag name | Module import
 -----|----------|------------------
-Badge| ui5-badge | <code>import Badge from "@ui5/webcomponents/dist/Badge.js";</code>
-Busy Indicator| ui5-busyindicator | <code>import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";</code>
-Button | ui5-button | <code>import Button from "@ui5/webcomponents/dist/Button.js";</code>
-Card | ui5-card | <code>import Card from "@ui5/webcomponents/dist/Card.js";</code>
-Checkbox | ui5-checkbox | <code>import CheckBox from "@ui5/webcomponents/dist/CheckBox.js";</code>
-Date Picker | ui5-datepicker | <code>import DatePicker from "@ui5/webcomponents/dist/DatePicker.js";</code>
-Dialog | ui5-dialog | <code>import Dialog from "@ui5/webcomponents/dist/Dialog.js";</code>
-Icon | ui5-icon | <code>import Icon from "@ui5/webcomponents/dist/Icon.js";</code>
-Input | ui5-input | <code>import Input from "@ui5/webcomponents/dist/Input.js";</code>
-Label | ui5-label | <code>import Label from "@ui5/webcomponents/dist/Label.js";</code>
-Link | ui5-link | <code>import Link from "@ui5/webcomponents/dist/Link.js";</code>
-List | ui5-list | <code>import List from "@ui5/webcomponents/dist/List.js";</code>
-List - Standard Item | ui5-li | <code>import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";</code>
-List - Custom Item | ui5-li-custom | <code>import CustomListItem from "@ui5/webcomponents/dist/CustomListItem.js";</code>
-List - Group Header Item | ui5-li-groupheader | <code>import GroupHeaderListItem from "@ui5/webcomponents/dist/GroupHeaderListItem.js";</code>
-Message Strip | ui5-messagestrip | <code>import MessageStrip from "@ui5/webcomponents/dist/MessageStrip.js";</code>
-Multi Combo Box | ui5-multicombobox | <code>import MultiComboBox from "@ui5/webcomponents/dist/MultiComboBox.js";</code>
-Panel | ui5-panel | <code>import Panel from "@ui5/webcomponents/dist/Panel.js";</code>
-Popover | ui5-popover | <code>import Popover from "@ui5/webcomponents/dist/Popover.js";</code>
-Radio Button | ui5-radiobutton | <code>import RadioButton from "@ui5/webcomponents/dist/RadioButton.js";</code>
-Select | ui5-select | <code>import Select from "@ui5/webcomponents/dist/Select.js";</code>
-Shell Bar (Fiori 3) | ui5-shellbar | <code>import ShellBar from "@ui5/webcomponents/dist/ShellBar.js";</code>
-Shell Bar Item | ui5-shellbar-item | <code>import ShellBarItem from "@ui5/webcomponents/dist/ShellBarItem.js";</code>
-Switch | ui5-switch | <code>import Switch from "@ui5/webcomponents/dist/Switch.js";</code>
-Tab Container | ui5-tabcontainer | <code>import TabContainer from "@ui5/webcomponents/dist/TabContainer.js";</code>
-Tab | ui5-tab | <code>import Tab from "@ui5/webcomponents/dist/Tab.js";</code>
-Tab Separator| ui5-tab-separator | <code>import TabSeparator from "@ui5/webcomponents/dist/TabSeparator.js";</code>
-Table | ui5-table | <code>import Table from "@ui5/webcomponents/dist/Table.js";</code>
+Badge| ui5-badge | <code>import "@ui5/webcomponents/dist/Badge.js";</code>
+Busy Indicator| ui5-busyindicator | <code>import "@ui5/webcomponents/dist/BusyIndicator.js";</code>
+Button | ui5-button | <code>import "@ui5/webcomponents/dist/Button.js";</code>
+Card | ui5-card | <code>import "@ui5/webcomponents/dist/Card.js";</code>
+Checkbox | ui5-checkbox | <code>import "@ui5/webcomponents/dist/CheckBox.js";</code>
+Date Picker | ui5-datepicker | <code>import "@ui5/webcomponents/dist/DatePicker.js";</code>
+Dialog | ui5-dialog | <code>import "@ui5/webcomponents/dist/Dialog.js";</code>
+Icon | ui5-icon | <code>import "@ui5/webcomponents/dist/Icon.js";</code>
+Input | ui5-input | <code>import "@ui5/webcomponents/dist/Input.js";</code>
+Label | ui5-label | <code>import "@ui5/webcomponents/dist/Label.js";</code>
+Link | ui5-link | <code>import "@ui5/webcomponents/dist/Link.js";</code>
+List | ui5-list | <code>import "@ui5/webcomponents/dist/List.js";</code>
+List - Standard Item | ui5-li | <code>import S"@ui5/webcomponents/dist/StandardListItem.js";</code>
+List - Custom Item | ui5-li-custom | <code>import "@ui5/webcomponents/dist/CustomListItem.js";</code>
+List - Group Header Item | ui5-li-groupheader | <code>import "@ui5/webcomponents/dist/GroupHeaderListItem.js";</code>
+Message Strip | ui5-messagestrip | <code>import "@ui5/webcomponents/dist/MessageStrip.js";</code>
+Multi Combo Box | ui5-multicombobox | <code>import "@ui5/webcomponents/dist/MultiComboBox.js";</code>
+Panel | ui5-panel | <code>import "@ui5/webcomponents/dist/Panel.js";</code>
+Popover | ui5-popover | <code>import "@ui5/webcomponents/dist/Popover.js";</code>
+Radio Button | ui5-radiobutton | <code>import "@ui5/webcomponents/dist/RadioButton.js";</code>
+Select | ui5-select | <code>import "@ui5/webcomponents/dist/Select.js";</code>
+Shell Bar (Fiori 3) | ui5-shellbar | <code>import "@ui5/webcomponents/dist/ShellBar.js";</code>
+Shell Bar Item | ui5-shellbar-item | <code>import "@ui5/webcomponents/dist/ShellBarItem.js";</code>
+Switch | ui5-switch | <code>import "@ui5/webcomponents/dist/Switch.js";</code>
+Tab Container | ui5-tabcontainer | <code>import "@ui5/webcomponents/dist/TabContainer.js";</code>
+Tab | ui5-tab | <code>import "@ui5/webcomponents/dist/Tab.js";</code>
+Tab Separator| ui5-tab-separator | <code>import "@ui5/webcomponents/dist/TabSeparator.js";</code>
+Table | ui5-table | <code>import "@ui5/webcomponents/dist/Table.js";</code>
 Table Column | ui5-table-column | comes with ui5-table
 Table Row | ui5-table-row | comes with ui5-table
 Table Cell | ui5-table-cell | comes with ui5-table
-Textarea | ui5-textarea | <code>import TextArea from "@ui5/webcomponents/dist/TextArea.js";</code>
-Timeline | ui5-timeline | <code>import Timeline from "@ui5/webcomponents/dist/Timeline.js";</code>
+Textarea | ui5-textarea | <code>import "@ui5/webcomponents/dist/TextArea.js";</code>
+Timeline | ui5-timeline | <code>import "@ui5/webcomponents/dist/Timeline.js";</code>
 Timeline Item | ui5-timeline-item | comes with ui5-timeline
-Title | ui5-title | <code>import Title from "@ui5/webcomponents/dist/Title.js";</code>
-Toggle Button | ui5-togglebutton | <code>import ToggleButton from "@ui5/webcomponents/dist/ToggleButton.js";</code>
+Title | ui5-title | <code>import "@ui5/webcomponents/dist/Title.js";</code>
+Toggle Button | ui5-togglebutton | <code>import "@ui5/webcomponents/dist/ToggleButton.js";</code>
 
 ## Additional public modules
 
@@ -55,7 +55,7 @@ Table of contents:
 - [Preface](#preface)
 - [Old browser support (Edge, IE11)](#oldbrowsersupport)
 - [Theming](#theming) 
-- [Translation](#translation) 
+- [Translation](#internationalization) 
 - [Form Support](#formsupport) 
 - [Input Suggestions](#inputsuggestions) 
 - [Advanced Calendar Types](#advancedcalendartypes) 
@@ -147,7 +147,7 @@ import { setTheme } from "@ui5/webcomponents-base/Theming.js";
 setTheme("sap_belize_hcb");
 ```
 
-<a name="translation"></a>
+<a name="internationalization"></a>
 ### 3. Translation
 
 ```js
@@ -174,7 +174,7 @@ Note: importing the module above will produce the following warning message in t
 > Suggested pattern: "i18n\/.*\.json"
 
 What this means is that it's recommended to instruct your source code bundling software 
-(some of the most popular being Webpack and Rollup) not to include all the translation files
+(some of the most popular being Webpack and Rollup) not to include all the internationalization files
 (files that match the <code>i18n\/.*\.json</code> pattern) in your applications's javascript bundle, 
 but rather to leave them out. At runtime, they will be fetched on demand, if ever requested. 
 Currently there are very few texts that need translation in UI5 Web Components, but these may grow over time
