@@ -9,7 +9,6 @@ import TableColumnTemplate from "./build/compiled/TableColumnTemplate.lit.js";
 import styles from "./themes/TableColumn.css.js";
 
 
-
 const metadata = {
 	tag: "ui5-table-column",
 	slots: /** @lends sap.ui.webcomponents.main.TableColumn.prototype */ {

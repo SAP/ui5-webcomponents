@@ -20,7 +20,6 @@ import SemanticColor from "./types/SemanticColor.js";
 import tabContainerCss from "./themes/TabContainer.css.js";
 
 
-
 const SCROLL_STEP = 128;
 
 /**

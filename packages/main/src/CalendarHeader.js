@@ -12,7 +12,6 @@ import CalendarHeaderTemplate from "./build/compiled/CalendarHeaderTemplate.lit.
 import styles from "./themes/CalendarHeader.css.js";
 
 
-
 const metadata = {
 	tag: "ui5-calendar-header",
 	properties: {

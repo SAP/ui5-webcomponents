@@ -5,7 +5,6 @@ import "./dist/ThemePropertiesProvider.js";
 
 import "@ui5/webcomponents/dist/MessageBundleAssets.js";
 
-import Gregorian from "@ui5/webcomponents-core/dist/sap/ui/core/date/Gregorian.js";
 import Buddhist from "@ui5/webcomponents-core/dist/sap/ui/core/date/Buddhist.js";
 import Islamic from "@ui5/webcomponents-core/dist/sap/ui/core/date/Islamic.js";
 import Japanese from "@ui5/webcomponents-core/dist/sap/ui/core/date/Japanese.js";
