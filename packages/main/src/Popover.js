@@ -15,9 +15,6 @@ import PopoverTemplate from "./build/compiled/PopoverTemplate.lit.js";
 // Styles
 import popoverCss from "./themes/Popover.css.js";
 
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
-
 /**
  * @public
  */

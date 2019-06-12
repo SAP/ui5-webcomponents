@@ -8,8 +8,7 @@ import TableColumnTemplate from "./build/compiled/TableColumnTemplate.lit.js";
 // Styles
 import styles from "./themes/TableColumn.css.js";
 
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
+
 
 const metadata = {
 	tag: "ui5-table-column",

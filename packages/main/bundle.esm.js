@@ -1,7 +1,6 @@
 // ESM bundle targets Edge + browsers with native support
 import "@ui5/webcomponents-base/src/browsersupport/Edge.js";
 
-import "@ui5/webcomponents-base/src/shims/jquery-shim.js";
 import "./dist/ThemePropertiesProvider.js";
 
 import "@ui5/webcomponents/dist/MessageBundleAssets.js";

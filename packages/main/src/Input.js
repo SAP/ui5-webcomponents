@@ -20,9 +20,6 @@ import InputTemplate from "./build/compiled/InputTemplate.lit.js";
 import styles from "./themes/Input.css.js";
 import shellbarInput from "./themes/ShellBarInput.css.js";
 
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
-
 /**
  * @public
  */

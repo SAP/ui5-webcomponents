@@ -19,8 +19,7 @@ import SemanticColor from "./types/SemanticColor.js";
 // Styles
 import tabContainerCss from "./themes/TabContainer.css.js";
 
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
+
 
 const SCROLL_STEP = 128;
 
