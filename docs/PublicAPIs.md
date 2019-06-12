@@ -52,19 +52,13 @@ be imported in order to add new, or configure the existing functionality.
 
 Table of contents:
 
-[Preface](#preface)
-
-[Old browser support (Edge, IE11)](#oldbrowsers)
-
-[Theming](#theming) 
-
-[Translation](#translation) 
-
-[Form Support](#formsupport) 
-
-[Input Suggestions](#inputsuggestions) 
-
-[Advanced Calendar Types](#advancedcalendartypes) 
+- [Preface](#preface)
+- [Old browser support (Edge, IE11)](#oldbrowsers)
+- [Theming](#theming) 
+- [Translation](#translation) 
+- [Form Support](#formsupport) 
+- [Input Suggestions](#inputsuggestions) 
+- [Advanced Calendar Types](#advancedcalendartypes) 
 
 <a name="preface"></a>
 ### Preface
