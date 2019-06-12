@@ -433,7 +433,7 @@ class Input extends UI5Element {
 		if (Suggestions) {
 			this.Suggestions = new Suggestions(this, "suggestionItems");
 		} else {
-			throw new Error(`You have to import @ui5/webcomponents/dist/InputSuggestions.js module to use ui5-input suggestions`);
+			throw new Error(`You have to import "@ui5/webcomponents/dist/InputSuggestions.js" module to use ui5-input suggestions`);
 		}
 	}
 
