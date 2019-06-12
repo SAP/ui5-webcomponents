@@ -46,15 +46,15 @@ To enable the functionality, import the above module into your app.
 
 ## Old browser support (Edge, IE11)
 
-Most modern browsers (<b>Chrome, Firefox, Safari</b>) support Web Components natively.
+Most modern browsers (**Chrome, Firefox, Safari**) support Web Components natively.
 
-If your app needs to be able to run additionally on <b>Edge</b>, you should import the following module: 
+If your app needs to be able to run additionally on **Edge**, you should import the following module: 
 
 ```js
 import "@ui5/webcomponents-base/src/browsersupport/Edge.js";
 ```
 
-and if your app needs to run on both <b>Edge</b> and <b>IE11</b>, you should instead import:
+and if your app needs to run on both **Edge** and **IE11**, you should instead import:
 
 ```js
 import "@ui5/webcomponents-base/src/browsersupport/IE11.js";
@@ -62,7 +62,8 @@ import "@ui5/webcomponents-base/src/browsersupport/IE11.js";
 (this also includes Edge support).
 
 In addition, you should load the official Web Components polyfill in your index file, as described in:
-<a target="_blank" href="https://github.com/webcomponents/webcomponentsjs">https://github.com/webcomponents/webcomponentsjs</a>.
+[https://github.com/webcomponents/webcomponentsjs](https://github.com/webcomponents/webcomponentsjs).
+
 See the "Using webcomponents-loader.js" section for more details.
 
 Please note that the aforementioned <code>webcomponents-loader.js</code> is not shipped as part of UI5 Web Components,
@@ -92,10 +93,12 @@ import { setTheme } from "@ui5/webcomponents-base/Theming.js";
 By default UI5 Web Components come with the SAP Quartz, a.k.a. Fiori 3 (techinical name: sap_fiori_3) theme.
 By importing the first module, listed above, you also get support for the:
  - SAP Belize (sap_belize)
- - Sab Belize High Contrast Black (sap_belize_hcb) 
+ - SAP Belize High Contrast Black (sap_belize_hcb) 
  
- themes.
+themes.
 
 By importing the second module, you get the:
+
 <code>const setTheme = async theme => {...}</code>
+
 method that allows you to change the theme during runtime, if necessary.
