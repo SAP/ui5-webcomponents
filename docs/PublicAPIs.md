@@ -2,9 +2,11 @@
 
 ## UI5 Web Components
 
-Here's a comprehensive list of all UI5 Web Components and their respective modules
+Here's a comprehensive list of all UI5 Web Components, their tags, and their respective module imports:
 
-Name | Tag name | Module import
+For API documentation and samples, please check the [UI5 Web Components Playground](https://sap.github.io/ui5-webcomponents/playground/)
+
+Web Component | Tag name | Module import
 -----|----------|------------------
 Badge| ui5-badge | <code>import Badge from "@ui5/webcomponents/dist/Badge.js";</code>
 Busy Indicator| ui5-busyindicator | <code>import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";</code>
@@ -48,6 +50,17 @@ Toggle Button | ui5-togglebutton | <code>import ToggleButton from "@ui5/webcompo
 Apart from the Web Components themselves, there are a number of additional modules that can 
 be imported in order to add new, or configure the existing functionality.
 
+Table of contents:
+
+[Preface](#preface)
+[Old browser support (Edge, IE11)](#oldbrowsers)
+[Theming](#theming) 
+[](#) 
+[](#) 
+[](#) 
+[](#) 
+
+<a name="preface"></a>
 ### Preface
 
 One of the main ideas behind UI5 Web Components is to be as lightweight as possible. Therefore only the 
@@ -57,7 +70,8 @@ and modern browser support (Chrome, Firefox, Safari) are provided by just import
 Additional features, configuration settings, or old browser support are opt-in only and you should import
 (and configure) such manually, only if needed by your app. 
 
-### Old browser support (Edge, IE11)
+<a name="oldbrowsers"></a>
+### 1. Old browser support (Edge, IE11)
 
 Most modern browsers (**Chrome, Firefox, Safari**) support Web Components natively.
 
@@ -90,7 +104,8 @@ Example:
 
 As shown in the example above, it's recommended to load the webcomponents polyfill first, and the web components next.
 
-### Theming
+<a name="theming"></a>
+### 2. Theming
 
 ```js
 import "@ui5/webcomponents/dist/ThemePropertiesProvider.js";
@@ -132,7 +147,7 @@ import { setTheme } from "@ui5/webcomponents-base/Theming.js";
 setTheme("sap_belize_hcb");
 ```
 
-### Translation
+### 3. Translation
 
 ```js
 import "@ui5/webcomponents/dist/MessageBundleAssets.js";
@@ -187,7 +202,7 @@ plugins.push(url({
 Please note that the code above is just sample snippet, taken from the UI5 Web Components playground app
 rollup configuration file and will not work on its own.
 
-### Form Support
+### 4. Form Support
 
 ```js
 import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport.js";
@@ -215,7 +230,7 @@ In addition, the:
 
 element will be able to submit the closest ```form``` it's placed in, provided you set its <code>submits</code> attribute.
 
-### Input Suggestions
+### 5. Input Suggestions
 
 ```js
 import "@ui5/webcomponents/dist/InputSuggestions";
@@ -228,7 +243,7 @@ Since input suggestions may not always be needed, they do not come as part of th
 
 To enable the functionality, import the above module into your app.
 
-### Advanced calendar types
+### 6. Advanced calendar types
 
 ```js
 import Buddhist from "@ui5/webcomponents-core/dist/sap/ui/core/date/Buddhist.js";
