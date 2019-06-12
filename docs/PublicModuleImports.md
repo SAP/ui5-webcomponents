@@ -99,7 +99,7 @@ but should be imported separately.
 Example:
 ```html
 <script src="path/to/your/copy/of/webcomponents-loader.js"></script>
-<script src="path/to/your/app/javasacript/bundle.js" type="module"></script>
+<script src="path/to/your/javasacript/app.js" type="module"></script>
 ```
 
 As shown in the example above, it's recommended to load the webcomponents polyfill first, and the web components next.
@@ -207,7 +207,7 @@ rollup configuration file and will not work on its own.
 ### 4. Form Support
 
 ```js
-import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport.js";
+import "@ui5/webcomponents/dist/InputElementsFormSupport.js";
 ```
 
 HTML ```<form>``` only submits a couple of standard HTML elements such as ```<input>``` and ```<textarea>``` to name a few.
@@ -250,10 +250,10 @@ To enable the functionality, import the above module into your app.
 ### 6. Advanced calendar types
 
 ```js
-import Buddhist from "@ui5/webcomponents-core/dist/sap/ui/core/date/Buddhist.js";
-import Islamic from "@ui5/webcomponents-core/dist/sap/ui/core/date/Islamic.js";
-import Japanese from "@ui5/webcomponents-core/dist/sap/ui/core/date/Japanese.js";
-import Persian from "@ui5/webcomponents-core/dist/sap/ui/core/date/Persian.js";
+import "@ui5/webcomponents-core/dist/sap/ui/core/date/Buddhist.js";
+import "@ui5/webcomponents-core/dist/sap/ui/core/date/Islamic.js";
+import "@ui5/webcomponents-core/dist/sap/ui/core/date/Japanese.js";
+import "@ui5/webcomponents-core/dist/sap/ui/core/date/Persian.js";
 ```
 
 The <code>ui5-datepicker</code> web component supports Gregorian Calendar by default.
