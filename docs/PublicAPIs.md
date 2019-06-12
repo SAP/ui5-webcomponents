@@ -53,12 +53,18 @@ be imported in order to add new, or configure the existing functionality.
 Table of contents:
 
 [Preface](#preface)
+
 [Old browser support (Edge, IE11)](#oldbrowsers)
+
 [Theming](#theming) 
-[](#) 
-[](#) 
-[](#) 
-[](#) 
+
+[Translation](#translation) 
+
+[Form Support](#formsupport) 
+
+[Input Suggestions](#inputsuggestions) 
+
+[Advanced Calendar Types](#advancedcalendartypes) 
 
 <a name="preface"></a>
 ### Preface
@@ -70,7 +76,7 @@ and modern browser support (Chrome, Firefox, Safari) are provided by just import
 Additional features, configuration settings, or old browser support are opt-in only and you should import
 (and configure) such manually, only if needed by your app. 
 
-<a name="oldbrowsers"></a>
+<a name="oldbrowsersupport"></a>
 ### 1. Old browser support (Edge, IE11)
 
 Most modern browsers (**Chrome, Firefox, Safari**) support Web Components natively.
@@ -147,6 +153,7 @@ import { setTheme } from "@ui5/webcomponents-base/Theming.js";
 setTheme("sap_belize_hcb");
 ```
 
+<a name="translation"></a>
 ### 3. Translation
 
 ```js
@@ -202,6 +209,7 @@ plugins.push(url({
 Please note that the code above is just sample snippet, taken from the UI5 Web Components playground app
 rollup configuration file and will not work on its own.
 
+<a name="formsupport"></a>
 ### 4. Form Support
 
 ```js
@@ -230,6 +238,7 @@ In addition, the:
 
 element will be able to submit the closest ```form``` it's placed in, provided you set its <code>submits</code> attribute.
 
+<a name="inputsuggestions"></a>
 ### 5. Input Suggestions
 
 ```js
@@ -243,6 +252,7 @@ Since input suggestions may not always be needed, they do not come as part of th
 
 To enable the functionality, import the above module into your app.
 
+<a name="advancedcalendartypes"></a>
 ### 6. Advanced calendar types
 
 ```js
