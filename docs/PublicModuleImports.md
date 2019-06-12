@@ -55,7 +55,7 @@ Table of contents:
 - [Preface](#preface)
 - [Old browser support (Edge, IE11)](#oldbrowsersupport)
 - [Theming](#theming) 
-- [Translation](#internationalization) 
+- [Internationalization](#internationalization) 
 - [Form Support](#formsupport) 
 - [Input Suggestions](#inputsuggestions) 
 - [Advanced Calendar Types](#advancedcalendartypes) 
@@ -148,7 +148,7 @@ setTheme("sap_belize_hcb");
 ```
 
 <a name="internationalization"></a>
-### 3. Translation
+### 3. Internationalization
 
 ```js
 import "@ui5/webcomponents/dist/MessageBundleAssets.js";
