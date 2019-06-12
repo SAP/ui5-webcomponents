@@ -1,5 +1,5 @@
-commit f89d8aeb2e63bac3747b3b08efe5026a61d05289
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Jun 12 12:35:05 2019 +0300
+commit ac256d52be901e5169322a503c40194d623f0572
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Wed Jun 12 14:42:41 2019 +0300
 
-    chore: fix import maps and add a notepad web component (#537)
+    chore(ui5-input): change error message (#541)
