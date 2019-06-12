@@ -1,4 +1,4 @@
-# Public modules
+# Public module imports
 
 ## UI5 Web Components
 
