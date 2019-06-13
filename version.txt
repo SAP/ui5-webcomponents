@@ -1,5 +1,9 @@
-commit ac256d52be901e5169322a503c40194d623f0572
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Wed Jun 12 14:42:41 2019 +0300
+commit 92a85fa8e0854e1a1842b5fb1ee16cb7f5b0c203
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Thu Jun 13 18:26:11 2019 +0300
 
-    chore(ui5-input): change error message (#541)
+    fix: remove custom "falsy" checks from ifDefined (#544)
+    
+    - all string attributes with an empty string value will now be written in the DOM
+    
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/542
