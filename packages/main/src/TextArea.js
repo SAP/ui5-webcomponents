@@ -192,6 +192,15 @@ const metadata = {
 		 * @public
 		 */
 		change: {},
+
+		/**
+		 * Fired when the value of the <code>ui5-textarea</code> changes at each keystroke or when
+		 * something is pasted.
+		 * 
+		 * @event
+		 * @public
+		 */
+		input: {},
 	},
 };
 
@@ -243,6 +252,7 @@ class TextArea extends UI5Element {
 
 		this._listeners = {
 			change: this._handleChange.bind(this),
+			input: this._handleInput.bind(this)
 		};
 	}
 
@@ -293,6 +303,17 @@ class TextArea extends UI5Element {
 
 	_handleChange() {
 		this.fireEvent("change", {});
+	}
+
+	_handleInput(event) {
+		const nativeTextarea = this.getInputDomRef()
+		if (event.target === nativeTextarea) {
+			// stop the native event, as the semantic "input" would be fired.
+			event.stopImmediatePropagation();
+		}
+
+		this.value = nativeTextarea.value;
+		this.fireEvent("input", {});
 	}
 
 	_tokenizeText(value) {
