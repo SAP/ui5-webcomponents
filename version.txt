@@ -1,9 +1,11 @@
-commit 32ec3b39269147cf4a10ff4096f42ab2104d09d9
+commit 37b2b0761f10e855b234f4557387c552e393d31e
 Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Fri Jun 14 16:36:13 2019 +0300
+Date:   Fri Jun 14 17:11:18 2019 +0300
 
-    chore: add css params in json format (#549)
+    fix: fix broken translations (#548)
     
-    this will be used to enable using JSON imports for theming parameters
-    now there is either an inline .js import
-    or a .css import which bundlers might try to inject in the head
+    when a locale other than english is selected, the missing core-shim.js
+    import was causing the wrong locale to be used by the
+    core/ResourceBundle
+    now with adding the Core-shim.js import, all resource bundles
+    will have the correct locale at run time
