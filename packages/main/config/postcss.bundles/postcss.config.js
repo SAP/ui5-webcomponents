@@ -1,6 +1,7 @@
 const postcssImport = require('postcss-import');
 const combineSelectors = require('postcss-combine-duplicated-selectors');
 const postcssCSStoESM = require('../../lib/postcss-css-to-esm/index.js');
+const postcssCSStoJSON = require('../../lib/postcss-css-to-json/index.js');
 const postcssDerivedColors = require('../../lib/postcss-process-derived-colors/index');
 const cssnano = require('cssnano');
 const postcssAddFallback = require('../../lib/postcss-add-fallback/index.js');
@@ -19,5 +20,6 @@ module.exports = {
             },
         ]}, ),
         postcssCSStoESM(),
+        postcssCSStoJSON(),
     ]
 };
