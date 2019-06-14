@@ -1,4 +1,5 @@
 import "./shims/jquery-shim.js";
+import "./shims/Core-shim.js";
 import ResourceBundle from "@ui5/webcomponents-core/dist/sap/base/i18n/ResourceBundle.js";
 import formatMessage from "@ui5/webcomponents-core/dist/sap/base/strings/formatMessage.js";
 import { getLanguage } from "./LocaleProvider.js";
