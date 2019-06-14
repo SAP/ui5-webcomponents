@@ -242,6 +242,8 @@ class TabContainer extends UI5Element {
 		}
 
 		this.calculateRenderItems();
+
+		this._itemNavigation.init();
 	}
 
 	calculateRenderItems() {
