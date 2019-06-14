@@ -1,9 +1,5 @@
-commit 92a85fa8e0854e1a1842b5fb1ee16cb7f5b0c203
+commit 0127c2f03587638f8ffc0fa0c289225afd9bcfd5
 Author: Martin <martin.r.hristov@gmail.com>
-Date:   Thu Jun 13 18:26:11 2019 +0300
+Date:   Fri Jun 14 14:10:20 2019 +0300
 
-    fix: remove custom "falsy" checks from ifDefined (#544)
-    
-    - all string attributes with an empty string value will now be written in the DOM
-    
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/542
+    fix(ui5-tabcontainer): set initial tab index (#545)
