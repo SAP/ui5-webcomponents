@@ -1,5 +1,9 @@
-commit 0127c2f03587638f8ffc0fa0c289225afd9bcfd5
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Fri Jun 14 14:10:20 2019 +0300
+commit 32ec3b39269147cf4a10ff4096f42ab2104d09d9
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Fri Jun 14 16:36:13 2019 +0300
 
-    fix(ui5-tabcontainer): set initial tab index (#545)
+    chore: add css params in json format (#549)
+    
+    this will be used to enable using JSON imports for theming parameters
+    now there is either an inline .js import
+    or a .css import which bundlers might try to inject in the head
