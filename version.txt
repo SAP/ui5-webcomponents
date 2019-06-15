@@ -1,11 +1,5 @@
-commit 37b2b0761f10e855b234f4557387c552e393d31e
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Fri Jun 14 17:11:18 2019 +0300
+commit a2715377b661d499144aa6c584410b651da7d503
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Sat Jun 15 11:45:50 2019 +0300
 
-    fix: fix broken translations (#548)
-    
-    when a locale other than english is selected, the missing core-shim.js
-    import was causing the wrong locale to be used by the
-    core/ResourceBundle
-    now with adding the Core-shim.js import, all resource bundles
-    will have the correct locale at run time
+    docs: update current version label color (#552)
