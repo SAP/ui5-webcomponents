@@ -113,8 +113,6 @@ class Badge extends UI5Element {
 		} else {
 			this.removeAttribute("__has-icon");
 		}
-
-		this.setAttribute("color-scheme", this.colorScheme);
 	}
 
 	get hasText() {
