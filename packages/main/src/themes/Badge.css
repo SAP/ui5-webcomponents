@@ -5,8 +5,8 @@
 	max-width: 100%;
 	padding: 0 0.625rem;
 	color: var(--sapUiBaseText);
-	background: var(--sapUiGroupContentBackground);
-	border: solid 1px var(--sapUiGroupContentBorderColor);
+	background: var(--ui5-badge-bg-color-scheme-1);
+	border: solid 1px var(--ui5-badge-border-color-scheme-1);
 	border-radius: 1.125rem;
 	box-sizing: border-box;
 	font-size: var(--sapMFontSmallSize);
@@ -114,8 +114,8 @@ ui5-badge:not([hidden]) {
 	max-width: 100%;
 	padding: 0 0.625rem;
 	color: var(--sapUiBaseText);
-	background: var(--sapUiGroupContentBackground);
-	border: solid 1px var(--sapUiGroupContentBorderColor); 
+	background: var(--ui5-badge-bg-color-scheme-1);
+	border: solid 1px var(--ui5-badge-border-color-scheme-1);
 	border-radius: 1.125rem;
 	box-sizing: border-box;
 	font-size: var(--sapMFontSmallSize);
