@@ -61,7 +61,7 @@ const wrapDirectory = (directory, outputDir) => {
 
 const writeRenderers = (outputDir, controlName, fileContent) => {
 	try {
-		const compiledFilePath = `${outputDir}${path.sep}${controlName}Renderer.lit.js`;
+		const compiledFilePath = `${outputDir}${path.sep}${controlName}Template.lit.js`;
 
 		// strip DOS line endings because the break the source maps
 		let fileContentUnix = fileContent.replace(/\r\n/g, "\n");

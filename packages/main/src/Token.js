@@ -1,5 +1,6 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import { getTheme } from "@ui5/webcomponents-base/src/Configuration.js";
 import {
 	isBackSpace,
@@ -9,7 +10,7 @@ import {
 } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 
 import Icon from "./Icon.js";
-import TokenRenderer from "./build/compiled/TokenRenderer.lit.js";
+import TokenTemplate from "./build/compiled/TokenTemplate.lit.js";
 
 // Styles
 import styles from "./themes/Token.css.js";
@@ -109,8 +110,12 @@ class Token extends UI5Element {
 		return metadata;
 	}
 
-	static get renderer() {
-		return TokenRenderer;
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return TokenTemplate;
 	}
 
 	static get styles() {
