@@ -169,6 +169,10 @@ class Select extends UI5Element {
 	_togglePopover() {
 		const popover = this.shadowRoot.querySelector("#ui5-select--popover");
 
+		if (this.disabled) {
+			return;
+		}
+
 		if (this._isPickerOpen) {
 			popover.close();
 		} else {
@@ -248,7 +252,11 @@ class Select extends UI5Element {
 	}
 
 	_applyFocusAfterOpen() {
-		const li = this.shadowRoot.querySelector(`#${this.options[this._selectedIndex]._id}-li`);
+		if (!this.selectedOption) {
+			return;
+		}
+
+		const li = this.shadowRoot.querySelector(`#${this.selectedOption._id}-li`);
 
 		li.parentElement._itemNavigation.currentIndex = this._selectedIndex;
 		li && li.focus();
