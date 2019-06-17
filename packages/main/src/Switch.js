@@ -5,7 +5,6 @@ import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 
 // Template
 import SwitchRenderer from "./build/compiled/SwitchRenderer.lit.js";
-import SwitchType from "./types/SwitchType.js";
 
 // Styles
 import switchCss from "./themes/Switch.css.js";
@@ -86,9 +85,8 @@ const metadata = {
 		 * @defaultvalue "Textual"
 		 * @public
 		 */
-		design: {
-			type: String,
-			defaultValue: SwitchType.Textual,
+		graphical: {
+			type: Boolean,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Switch.prototype */ {
@@ -172,13 +170,11 @@ class Switch extends UI5Element {
 	}
 
 	get textOn() {
-		const graphical = this.design === SwitchType.Graphical;
-		return graphical ? "" : this.textOn;
+		return this.graphical ? "" : this.textOn;
 	}
 
 	get textOff() {
-		const graphical = this.design === SwitchType.Graphical;
-		return graphical ? "" : this.textOff;
+		return this.graphical ? "" : this.textOff;
 	}
 
 	get tabIndex() {
@@ -186,8 +182,7 @@ class Switch extends UI5Element {
 	}
 
 	get classes() {
-		const graphical = this.design === SwitchType.Graphical;
-		const hasLabel = graphical || this.textOn || this.textOff;
+		const hasLabel = this.graphical || this.textOn || this.textOff;
 
 		return {
 			main: {
@@ -195,7 +190,7 @@ class Switch extends UI5Element {
 				"ui5-switch-desktop": isDesktop(),
 				"ui5-switch--disabled": this.disabled,
 				"ui5-switch--checked": this.checked,
-				"ui5-switch--semantic": graphical,
+				"ui5-switch--semantic": this.graphical,
 				"ui5-switch--no-label": !hasLabel,
 			},
 		};
