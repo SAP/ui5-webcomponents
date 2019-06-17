@@ -6,7 +6,8 @@
 		@click="{{_headerClick}}"
 		@keydown="{{_headerKeydown}}"
 		@keyup="{{_headerKeyup}}"
-		tabindex="0">
+		tabindex="{{tabindex}}"
+		role="{{role}}">
 		{{#if image}}
 			<img src="{{avatar}}" aria-label="Avatar" class="sapFCardAvatar sapFCardHeaderImg">
 		{{/if}}

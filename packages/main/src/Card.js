@@ -65,6 +65,17 @@ const metadata = {
 		},
 
 		/**
+		 * Defines if the <code>ui5-card</code> header would be interactive,
+		 * e.g gets hover effect, gets focused and <code>headerPress</code> event is fired, when it is pressed.
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 */
+		headerInteractive: {
+			type: Boolean,
+		},
+
+		/**
 		 * Defines image source URI or built-in icon font URI.
 		 * </br></br>
 		 * <b>Note:</b>
@@ -75,7 +86,6 @@ const metadata = {
 		 */
 		avatar: {
 			type: String,
-			defaultValue: null,
 		},
 
 		_headerActive: {
@@ -87,7 +97,8 @@ const metadata = {
 		/**
 		 * Fired when the <code>ui5-card</code> header is pressed
 		 * by click/tap or by using the Enter or Space key.
-		 *
+		 * <br><br>
+		 * <b>Note:</b> The event would be fired only if the <code>headerInteractive</code> property is set to true.
 		 * @event
 		 * @public
 		 * @since 0.10.0
@@ -105,6 +116,9 @@ const metadata = {
  * The content area of a <code>ui5-card</code> can be arbitrary HTML content.
  * The header can be used through several properties, such as:
  * <code>heading</code>, <code>subtitle</code>, <code>status</code> and <code>avatar</code>.
+ *
+ * <h3>Keyboard handling</h3>
+ * In case you enable <code>headerInteractive</cdoe> property, you can press the <code>ui5-card</code> header by Space and Enter keys.
  *
  * <h3>ES6 Module Import</h3>
  *
@@ -142,7 +156,8 @@ class Card extends UI5Element {
 			},
 			header: {
 				"sapFCardHeader": true,
-				"sapFCardHeaderActive": this._headerActive,
+				"sapFCardHeaderInteractive": this.headerInteractive,
+				"sapFCardHeaderActive": this.headerInteractive && this._headerActive,
 			},
 		};
 	}
@@ -155,6 +170,14 @@ class Card extends UI5Element {
 		return !!this.avatar && !this.icon;
 	}
 
+	get role() {
+		return this.headerInteractive ? "button" : undefined;
+	}
+
+	get tabindex() {
+		return this.headerInteractive ? "0" : undefined;
+	}
+
 	static async define(...params) {
 		await Icon.define();
 
@@ -162,10 +185,16 @@ class Card extends UI5Element {
 	}
 
 	_headerClick() {
-		this.fireEvent("headerPress");
+		if (this.headerInteractive) {
+			this.fireEvent("headerPress");
+		}
 	}
 
 	_headerKeydown(event) {
+		if (!this.headerInteractive) {
+			return;
+		}
+
 		const enter = isEnter(event);
 		const space = isSpace(event);
 
@@ -182,6 +211,10 @@ class Card extends UI5Element {
 	}
 
 	_headerKeyup(event) {
+		if (!this.headerInteractive) {
+			return;
+		}
+
 		const space = isSpace(event);
 
 		this._headerActive = false;
