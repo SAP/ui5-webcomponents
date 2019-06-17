@@ -103,14 +103,19 @@
 	<section>
 		<h3>Card with List</h3>
 		<div class="snippet card-container">
-			<ui5-card avatar="sap-icon://group" heading="Team 6" subtitle="Direct Reports" status="6 of 6" class="medium" >
+			<ui5-card avatar="sap-icon://group" heading="Team Space" subtitle="Direct Reports" status="3 of 10" class="medium">
 				<div class="card-content">
-					<ui5-list separators="None" class="card-content-child">
+					<ui5-list separators="None" class="card-content-child" style="width: 100%">
 						<ui5-li image="../../../../../../www/samples/images/man_avatar_1.png" description="User Researcher">Alain Chevalier</ui5-li>
 						<ui5-li image="../../../../../../www/samples/images/woman_avatar_1.png" description="Artist">Monique Legrand</ui5-li>
 						<ui5-li image="../../../../../../www/samples/images/woman_avatar_2.png" description="UX Specialist">Michael Adams</ui5-li>
 					</ui5-list>
-					<ui5-list separators="None" class="card-content-child">
+					
+				</div>
+			</ui5-card>
+			<ui5-card avatar="sap-icon://group" heading="This header is interactive" header-interactive subtitle="Click, press Enter or Space" status="3 of 6" class="medium">
+				<div class="card-content">
+					<ui5-list separators="None" class="card-content-child" style="width: 100%">
 						<ui5-li image="../../../../../../www/samples/images/man_avatar_2.png" description="Software Architect">Richard Wilson</ui5-li>
 						<ui5-li image="../../../../../../www/samples/images/woman_avatar_3.png" description="Visual Designer">Elena Petrova</ui5-li>
 						<ui5-li image="../../../../../../www/samples/images/man_avatar_3.png" description="Quality Specialist">John Miller</ui5-li>
@@ -129,18 +134,19 @@
 }
 </style>
 
-<ui5-card avatar="sap-icon://group"
-	heading="Team 6"
-	subtitle="Direct Reports"
-	status="6 of 6"
-	class="medium">
+<ui5-card avatar="sap-icon://group" heading="Team Space" subtitle="Direct Reports" status="3 of 10" class="medium">
 	<div class="card-content">
-		<ui5-list separators="None" class="card-content-child">
+		<ui5-list separators="None" class="card-content-child" style="width: 100%">
 			<ui5-li image="../../../../../../www/samples/images/man_avatar_1.png" description="User Researcher">Alain Chevalier</ui5-li>
 			<ui5-li image="../../../../../../www/samples/images/woman_avatar_1.png" description="Artist">Monique Legrand</ui5-li>
 			<ui5-li image="../../../../../../www/samples/images/woman_avatar_2.png" description="UX Specialist">Michael Adams</ui5-li>
 		</ui5-list>
-		<ui5-list separators="None" class="card-content-child">
+		
+	</div>
+</ui5-card>
+<ui5-card avatar="sap-icon://group" heading="This header is interactive" header-interactive subtitle="Click, press Enter or Space" status="3 of 6" class="medium">
+	<div class="card-content">
+		<ui5-list separators="None" class="card-content-child" style="width: 100%">
 			<ui5-li image="../../../../../../www/samples/images/man_avatar_2.png" description="Software Architect">Richard Wilson</ui5-li>
 			<ui5-li image="../../../../../../www/samples/images/woman_avatar_3.png" description="Visual Designer">Elena Petrova</ui5-li>
 			<ui5-li image="../../../../../../www/samples/images/man_avatar_3.png" description="Quality Specialist">John Miller</ui5-li>
@@ -479,6 +485,8 @@
 
 The <code>ui5-card</code> is a component that represents information in the form of a tile with separate header and content areas. The content area of a <code>ui5-card</code> can be arbitrary HTML content. The header can be used through several properties, such as: <code>heading</code>, <code>subtitle</code>, <code>status</code> and <code>avatar</code>.
 
+<h3>Keyboard handling</h3> In case you enable <code>headerInteractive</cdoe> property, you can press the <code>ui5-card</code> header by Space and Enter keys.
+
 <h3>ES6 Module Import</h3>
 
 <code>import "@ui5/webcomponents/dist/Card";</code>
@@ -504,6 +512,14 @@ The <code>ui5-card</code> is a component that represents information in the form
                         </div>
                       </div>
                       <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">headerInteractive <br> <code>header-interactive</code></div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell">false</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines if the <code>ui5-card</code> header would be interactive, e.g gets hover effect, gets focused and <code>headerPress</code> event is fired, when it is pressed.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">heading <br> <code></code></div>
                         <div class="cell api-table-content-cell">string</div>
                         <div class="cell api-table-content-cell">&quot;&quot;</div>
@@ -511,7 +527,7 @@ The <code>ui5-card</code> is a component that represents information in the form
                             Defines the title displayed in the <code>ui5-card</code> header.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">status <br> <code></code></div>
                         <div class="cell api-table-content-cell">string</div>
                         <div class="cell api-table-content-cell">&quot;&quot;</div>
@@ -519,7 +535,7 @@ The <code>ui5-card</code> is a component that represents information in the form
                             Defines the status displayed in the <code>ui5-card</code> header.
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">subtitle <br> <code></code></div>
                         <div class="cell api-table-content-cell">string</div>
                         <div class="cell api-table-content-cell">&quot;&quot;</div>
@@ -564,7 +580,7 @@ The <code>ui5-card</code> is a component that represents information in the form
                       <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">headerPress</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                        Fired when the <code>ui5-card</code> header is pressed by click/tap or by using the Enter or Space key.
+                        Fired when the <code>ui5-card</code> header is pressed by click/tap or by using the Enter or Space key. <br><br> <b>Note:</b> The event would be fired only if the <code>headerInteractive</code> property is set to true.
                             <div class="api-table-content-cell-bold api-table-content-cell-since">since v0.10.0</div>
                         </div>
                       </div>

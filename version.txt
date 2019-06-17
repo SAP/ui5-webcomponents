@@ -1,5 +1,5 @@
-commit c59c43e18959c54ba283b5691259f1117407dfcb
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Mon Jun 17 09:50:16 2019 +0300
+commit 98f7075c40908faf5bd157d10581a4ba54d33927
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Jun 17 10:36:15 2019 +0300
 
-    chore: cleanup unused rollup and postcss deps (#550)
+    feat(ui5-card): add "headerInteractive" property (#439)
