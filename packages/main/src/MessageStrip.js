@@ -60,7 +60,7 @@ const metadata = {
 		 * @defaultvalue false
 		 * @public
 		 */
-		iconHidden: {
+		noIcon: {
 			type: Boolean,
 		},
 
@@ -196,7 +196,7 @@ class MessageStrip extends UI5Element {
 			},
 			main: {
 				"ui5-messagestrip-root": true,
-				"ui5-messagestrip-icon--hidden": this.iconHidden,
+				"ui5-messagestrip-icon--hidden": this.noIcon,
 				"ui5-messagestrip-close-icon--hidden": this.hideCloseButton,
 				[this.typeClasses]: true,
 			},
