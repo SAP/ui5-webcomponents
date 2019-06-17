@@ -471,7 +471,7 @@ class Popover extends Popup {
 
 		let maxContentHeight = Math.round(maxHeight);
 
-		if (!this.hideHeader) {
+		if (!this.noHeader) {
 			const headerDomRef = this.getPopupDomRef().querySelector(".sapMPopupHeader");
 			if (headerDomRef) {
 				maxContentHeight = Math.round(maxHeight - headerDomRef.offsetHeight);
@@ -649,7 +649,7 @@ class Popover extends Popup {
 	}
 
 	get headerId() {
-		return this.hideHeader ? undefined : `${this._id}-header`;
+		return this.noHeader ? undefined : `${this._id}-header`;
 	}
 
 	get focusHelper() {

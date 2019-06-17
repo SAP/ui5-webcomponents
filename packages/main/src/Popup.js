@@ -68,7 +68,7 @@ const metadata = {
 		 * @defaultvalue false
 		 * @public
 		 */
-		hideHeader: {
+		noHeader: {
 			type: Boolean,
 		},
 		/**
