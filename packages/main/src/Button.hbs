@@ -5,11 +5,12 @@
 		aria-disabled="{{ariaDisabled}}"
 		data-sap-focus-ref
 		{{> ariaPressed}}
+		dir="{{rtl}}"
 	>
-		{{#if _iconSettings}}
+		{{#if icon}}
 			<ui5-icon
 				class="{{classes.icon}}"
-				src="{{_iconSettings.src}}"
+				src="{{icon}}"
 			></ui5-icon>
 		{{/if}}
 

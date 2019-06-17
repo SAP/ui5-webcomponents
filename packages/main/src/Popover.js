@@ -1,4 +1,5 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import RenderScheduler from "@ui5/webcomponents-base/src/RenderScheduler.js";
 import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
 import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper.js";
@@ -9,7 +10,7 @@ import Popup from "./Popup.js";
 
 
 // Template
-import PopoverRenderer from "./build/compiled/PopoverRenderer.lit.js";
+import PopoverTemplate from "./build/compiled/PopoverTemplate.lit.js";
 
 // Styles
 import popoverCss from "./themes/Popover.css.js";
@@ -188,8 +189,12 @@ class Popover extends Popup {
 		return metadata;
 	}
 
-	static get renderer() {
-		return PopoverRenderer;
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return PopoverTemplate;
 	}
 
 	static get styles() {

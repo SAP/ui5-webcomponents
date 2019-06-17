@@ -1,9 +1,9 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import URI from "@ui5/webcomponents-base/src/types/URI.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import TabBase from "./TabBase.js";
-import IconColor from "./types/IconColor.js";
+import SemanticColor from "./types/SemanticColor.js";
 import Icon from "./Icon.js";
-import TabRenderer from "./build/compiled/TabRenderer.lit.js";
+import TabTemplate from "./build/compiled/TabTemplate.lit.js";
 
 // all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
 import "./ThemePropertiesProvider.js";
@@ -32,7 +32,7 @@ const metadata = {
 		/**
 		 * The text to be displayed for the item.
 		 * @type {string}
-		 * @defaultvalue: ""
+		 * @defaultvalue ""
 		 * @public
 		 */
 		text: {
@@ -52,7 +52,7 @@ const metadata = {
 		/**
 		 * Represents the "additionalText" text, which is displayed in the tab filter.
 		 * @type {string}
-		 * @defaultvalue: ""
+		 * @defaultvalue ""
 		 * @public
 		 */
 		additionalText: {
@@ -60,30 +60,37 @@ const metadata = {
 		},
 
 		/**
-		 * Specifies the icon to be displayed for the tab filter.
-		 * @type {URI}
+		 * Defines the icon source URI to be displayed as graphical element within the <code>ui5-tab</code>.
+		 * The SAP-icons font provides numerous built-in icons.
+		 * See all the available icons in the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
+		 *
+		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		icon: {
-			type: URI,
-			defaultValue: "",
+			type: String,
 		},
 
 		/**
-		 * Specifies the icon color.
-		 *
-		 * If an icon font is used, the color can be chosen from the icon colors
-		 * (sap.ui.core.IconColor).
-		 * Possible semantic colors are: Neutral, Positive, Critical, Negative.
-		 * Instead of the semantic icon color the brand color can be used, this is named Default.
-		 * Semantic colors and brand colors should not be mixed up inside one IconTabBar.
-		 * @type {IconColor}
+		 * Defines the <code>ui5-tab</code> semantic color.
+		 * The color is applied to:
+		 * <ul>
+		 * <li>the <code>ui5-tab</code> icon</li>
+		 * <li>the <code>text</code> when <code>ui5-tab</code> overflows</li>
+		 * <li>the tab selection line</li>
+		 * </ul>
+		 * <br>
+		 * Available semantic colors are: <code>"Default"</code>, <code>"Neutral", <code>"Positive"</code>, <code>"Critical"</code> and <code>"Negative"</code>.
+		 * <br><br>
+		 * <b>Note:</b> The color value depends on the current theme.
+		 * @type {string}
 		 * @defaultvalue "Default"
 		 * @public
 		 */
-		iconColor: {
-			type: IconColor,
-			defaultValue: IconColor.Default,
+		semanticColor: {
+			type: SemanticColor,
+			defaultValue: SemanticColor.Default,
 		},
 
 		/**
@@ -125,8 +132,12 @@ class Tab extends TabBase {
 		return metadata;
 	}
 
-	static get renderer() {
-		return TabRenderer;
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return TabTemplate;
 	}
 
 	static async define(...params) {

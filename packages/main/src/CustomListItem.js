@@ -1,6 +1,7 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import ListItem from "./ListItem.js";
-import CustomListItemRenderer from "./build/compiled/CustomListItemRenderer.lit.js";
+import CustomListItemTemplate from "./build/compiled/CustomListItemTemplate.lit.js";
 
 // Styles
 import columnListItemCss from "./themes/CustomListItem.css.js";
@@ -51,8 +52,12 @@ class CustomListItem extends ListItem {
 		return metadata;
 	}
 
-	static get renderer() {
-		return CustomListItemRenderer;
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return CustomListItemTemplate;
 	}
 
 	static get styles() {

@@ -1,11 +1,11 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import URI from "@ui5/webcomponents-base/src/types/URI.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import { isSpace } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import LinkType from "./types/LinkType.js";
 
 // Template
-import LinkRederer from "./build/compiled/LinkRenderer.lit.js";
+import LinkRederer from "./build/compiled/LinkTemplate.lit.js";
 
 // Styles
 import linkCss from "./themes/Link.css.js";
@@ -21,9 +21,9 @@ const metadata = {
 	properties: /** @lends  sap.ui.webcomponents.main.Link.prototype */  {
 
 		/**
-		 * Determines whether the <code>ui5-link</code> is disabled.
+		 * Defines whether the <code>ui5-link</code> is disabled.
 		 * <br><br>
-		 * <b>Note:</b> When disabled, the link cannot be triggered by the user.
+		 * <b>Note:</b> When disabled, the <code>ui5-link</code cannot be triggered by the user.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -34,7 +34,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the <code>ui5-link</code> target URI.
+		 * Defines the <code>ui5-link</code> href.
 		 * <br><br>
 		 * <b>Note:</b> Standard hyperlink behavior is supported.
 		 *
@@ -43,8 +43,7 @@ const metadata = {
 		 * @public
 		 */
 		href: {
-			type: URI,
-			defaultValue: "",
+			type: String,
 		},
 
 		/**
@@ -174,7 +173,11 @@ class Link extends UI5Element {
 		return metadata;
 	}
 
-	static get renderer() {
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
 		return LinkRederer;
 	}
 
@@ -259,6 +262,10 @@ class Link extends UI5Element {
 				sapMLnkMaxWidth: true,
 			},
 		};
+	}
+
+	get parsedRef() {
+		return this.href.length > 0 ? this.href : undefined;
 	}
 }
 

@@ -1,17 +1,18 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { getRTL } from "@ui5/webcomponents-base/src/Configuration.js";
-import URI from "@ui5/webcomponents-base/src/types/URI.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
 import { isSpace, isEscape } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
 import StandardListItem from "./StandardListItem.js";
 import List from "./List.js";
 import Icon from "./Icon.js";
 import Popover from "./Popover.js";
 
 // Template
-import ShellBarRenderer from "./build/compiled/ShellBarRenderer.lit.js";
+import ShellBarTemplate from "./build/compiled/ShellBarTemplate.lit.js";
 
 // Styles
 import styles from "./themes/ShellBar.css.js";
@@ -32,8 +33,7 @@ const metadata = {
 		 * @public
 		 */
 		logo: {
-			type: URI,
-			defaultValue: null,
+			type: String,
 		},
 
 		/**
@@ -70,14 +70,13 @@ const metadata = {
 		},
 
 		/**
-		 * Defines URI of the profile action.
-		 * If no URI is set - profile will be excluded from actions.
-		 * @type {URI}
+		 * Defines the source URI of the profile action.
+		 * If no source is set - profile will be excluded from actions.
+		 * @type {string}
 		 * @public
 		 */
 		profile: {
-			type: URI,
-			defaultValue: "",
+			type: String,
 		},
 
 		/**
@@ -303,8 +302,12 @@ class ShellBar extends UI5Element {
 		return styles;
 	}
 
-	static get renderer() {
-		return ShellBarRenderer;
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return ShellBarTemplate;
 	}
 
 	static get FIORI_3_BREAKPOINTS() {
@@ -861,6 +864,10 @@ class ShellBar extends UI5Element {
 
 	get popoverHorizontalAlign() {
 		return getRTL() ? "Left" : "Right";
+	}
+
+	get rtl() {
+		return getEffectiveRTL() ? "rtl" : undefined;
 	}
 
 	static async define(...params) {

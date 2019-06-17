@@ -138,22 +138,22 @@ ui5-radiobutton:not([hidden]) {
 }
 
 /* Compact size */
-.sapUiSizeCompact .sapMRb {
+.sapUiSizeCompact.sapMRb {
 	height : 2rem;
 }
 
-.sapUiSizeCompact .sapMRb:focus:before {
+.sapUiSizeCompact.sapMRb:focus:before {
 	top: .375rem;
 	bottom: .375rem;
 	left: .375rem;
 	right: .325rem;
 }
 
-.sapUiSizeCompact .sapMRb.sapMRbHasLabel:focus:before {
+.sapUiSizeCompact.sapMRb.sapMRbHasLabel:focus:before {
 	right: 0;
 }
 
-.sapUiSizeCompact .sapMRb .sapMRbInner {
+.sapUiSizeCompact.sapMRb .sapMRbInner {
 	width: 2rem;
 	height: 2rem;
 	display: flex;
@@ -161,26 +161,26 @@ ui5-radiobutton:not([hidden]) {
 	justify-content: center;
 }
 
-.sapUiSizeCompact .sapMRb .sapMRbInner .sapMRbSvg {
+.sapUiSizeCompact.sapMRb .sapMRbInner .sapMRbSvg {
 	height: 2rem;
 	width: 2rem;
 	line-height: 2rem;
 }
 
-.sapUiSizeCompact .sapMRb ui5-label.labelInRadioButton {
+.sapUiSizeCompact.sapMRb ui5-label.labelInRadioButton {
 	line-height: 2rem;
 	height: 2rem;
 	width: calc(100% - 2rem + 1px);
 }
 
 /* RTL */
-span[dir="rtl"] .sapMRb.sapMRbHasLabel:focus:before {
+[dir="rtl"].sapMRb.sapMRbHasLabel:focus:before {
 	left: 0;
 	right: 0.5rem;
 }
 
 /* RTL in Compact */
-span[dir="rtl"].sapUiSizeCompact .sapMRb.sapMRbHasLabel:focus:before {
+span[dir="rtl"].sapUiSizeCompact.sapMRb.sapMRbHasLabel:focus:before {
 	left: 0;
 	right: 0.375rem;
 }

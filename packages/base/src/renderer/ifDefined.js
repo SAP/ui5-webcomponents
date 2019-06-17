@@ -8,7 +8,7 @@ import {
 	lit-html directive that removes and attribute if it is undefined
 */
 export default directive(value => part => {
-	if ((value === undefined || value === null || value === "") && part instanceof AttributePart) {
+	if ((value === undefined) && part instanceof AttributePart) {
 		if (value !== part.value) {
 			const name = part.committer.name;
 			part.committer.element.removeAttribute(name);

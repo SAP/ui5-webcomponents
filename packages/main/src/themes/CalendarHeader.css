@@ -96,12 +96,12 @@ ui5-calendar-header {
 	border-color: var(--sapUiContentContrastFocusColor);
 }
 
-.sapUiSizeCompact .sapWCCalHead {
+.sapUiSizeCompact.sapWCCalHead {
 	height: 2rem;
 	padding: 0;
 }
 
-.sapUiSizeCompact .sapWCCalHeadArrowButton {
+.sapUiSizeCompact.sapWCCalHeadArrowButton {
 	width: 2rem;
 }
 
