@@ -1,5 +1,5 @@
-commit a2715377b661d499144aa6c584410b651da7d503
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Sat Jun 15 11:45:50 2019 +0300
+commit c59c43e18959c54ba283b5691259f1117407dfcb
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Mon Jun 17 09:50:16 2019 +0300
 
-    docs: update current version label color (#552)
+    chore: cleanup unused rollup and postcss deps (#550)
