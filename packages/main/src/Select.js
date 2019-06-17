@@ -41,7 +41,7 @@ const metadata = {
 		 * <b>Note:</b> Only one selected item is allowed.
 		 * If more than one item is defined as selected, the last one would be considered as the selected one.
 		 * <br/><br/>
-		 * <b>Note:</b> Use the <code>ui5-li</code> component to define the desired options.
+		 * <b>Note:</b> Use the <code>ui5-option</code> component to define the desired options.
 		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
@@ -110,10 +110,9 @@ const metadata = {
 
 /**
  * @class
- * <h3 class="comment-api-title"> Overview </h3>
  *
  * The <code>ui5-select</code> component is used to create a drop-down list.
- * The items inside the <code>ui5-select</code> define the available options by using the <code>ui5-li</code> component.
+ * The items inside the <code>ui5-select</code> define the available options by using the <code>ui5-option</code> component.
  *
  * <h3>Keyboard Handling</h3>
  * The <code>ui5-select</code> provides advanced keyboard handling.
@@ -125,12 +124,13 @@ const metadata = {
  * <h3>ES6 Module Import</h3>
  * <code>import "@ui5/webcomponents/dist/Select";</code>
  * <br>
- * <code>import "@ui5/webcomponents/dist/StandardListItem";</code> (<code>ui5-li</code>)
+ * <code>import "@ui5/webcomponents/dist/Option";</code>
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Select
  * @extends sap.ui.webcomponents.base.UI5Element
- * @tagname ui5-input
+ * @tagname ui5-select
+ * @appenddocs Option
  * @public
  * @since 0.8.0
  */
