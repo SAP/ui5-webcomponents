@@ -100,12 +100,12 @@ class ListItem extends ListItemBase {
 
 	onEnterDOM() {
 		document.addEventListener("mouseup", this.deactivate);
-		document.addEventListener("keydown", this.deactivateByKey);
+		document.addEventListener("keyup", this.deactivateByKey);
 	}
 
 	onExitDOM() {
 		document.removeEventListener("mouseup", this.deactivate);
-		document.removeEventListener("keydown", this.deactivateByKey);
+		document.removeEventListener("keyup", this.deactivateByKey);
 	}
 
 	onkeydown(event) {
