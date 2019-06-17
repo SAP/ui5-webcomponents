@@ -122,7 +122,6 @@ sap.ui.define([
 		},
 
 		selectView: function(sComponent) {
-			debugger;
 			if (sComponent) {
 				this.getModel().getProperty("/navigation/1/items").forEach(function(oComponent) {
 					if (oComponent.key === sComponent) {
@@ -137,7 +136,6 @@ sap.ui.define([
 					}
 				}.bind(this));
 			} else {
-				debugger;
 				document.title = "Home - UI5 Web Components";
 				this.getModel().setProperty("/showNavigationLinks", false);
 				this.getModel().setProperty("/selectedView", getRealBaseURI() + "www/home/");
