@@ -1,4 +1,11 @@
-# Angular
+# Get started with UI5 Web Components & Angular
+
+In this tutorial, we are going to show how to get add UI5 Web Components in your application. UI5 Web Components can be added to both new Angular application as well as already existing one.
+
+## 0. Prerequisites
+
+All you need in order to go through this tutorial is [Node](https://nodejs.org/).
+
 ## 1. Install Angular CLI: 
 ```
 npm install -g @angular/cli
@@ -16,7 +23,7 @@ npm install @ui5/webcomponents --save
 ```
 
 ## 4. Before using UI5 Web Components, you have to allow the use of custom elements in Angular
-In the module, that you wish to use UI5 Web Components, you have to import CUSTOM_ELEMENTS_SCHEMA:
+To do so, in ```app.module.ts``` you have to import CUSTOM_ELEMENTS_SCHEMA:
 ```js
 import { ..., CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 ```

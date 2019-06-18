@@ -1,4 +1,6 @@
-# VueJS
+# Get started with UI5 Web Components & VueJS
+
+In this tutorial, we are going to show how to get add UI5 Web Components in your application. UI5 Web Components can be added to both new VueJS application as well as already existing one.
 
 ## 1. Install Vue CLI:
 ```
