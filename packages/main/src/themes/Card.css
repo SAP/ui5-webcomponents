@@ -43,7 +43,7 @@ ui5-card:not([hidden]) {
 	outline: none;
 }
 
-.sapFCardHeader:focus:before {
+.sapFCardHeader.sapFCardHeaderInteractive:focus:before {
 	content: "";
 	position: absolute;
 	border: var(--_ui5_card_header_focus_border);
@@ -54,13 +54,13 @@ ui5-card:not([hidden]) {
 	bottom: 1px;
 }
 
-.sapFCardHeader:hover {
+.sapFCardHeader.sapFCardHeaderInteractive:hover {
 	cursor: pointer;
 	background: var(--_ui5_card_header_hover_bg);
 }
 
 .sapFCardHeader.sapFCardHeaderActive,
-.sapFCardHeader:active {
+.sapFCardHeader.sapFCardHeaderInteractive:active {
 	background: var(--_ui5_card_header_active_bg);
 }
 

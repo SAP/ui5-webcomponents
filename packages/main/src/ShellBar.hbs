@@ -1,5 +1,7 @@
-<div class="{{classes.wrapper}}">
-
+<div
+	class="{{classes.wrapper}}"
+	dir="{{rtl}}"
+>
 	<div class="{{classes.leftContainer}}">
 
 		{{#if icon}}
@@ -26,7 +28,7 @@
 			</button>
 		{{/if}}
 
-		<ui5-popover class="sapWCShellBarMenuPopover" hide-header placement-type="Bottom">
+		<ui5-popover class="sapWCShellBarMenuPopover" no-header placement-type="Bottom">
 			<ui5-list separators="None" mode="SingleSelect" @ui5-itemPress={{_menuItemPress}}>
 				<slot name="menuItems"></slot>
 			</ui5-list>
@@ -73,7 +75,7 @@
 		</div>
 	</div>
 
-	<ui5-popover class="sapWCShellBarOverflowPopover" placement-type="Bottom" horizontal-align="{{popoverHorizontalAlign}}" hide-header no-arrow>
+	<ui5-popover class="sapWCShellBarOverflowPopover" placement-type="Bottom" horizontal-align="{{popoverHorizontalAlign}}" no-header no-arrow>
 		<ui5-list separators="None" @ui5-itemPress="{{_actionList.itemPress}}">
 			{{#each _hiddenIcons}}
 				<ui5-li

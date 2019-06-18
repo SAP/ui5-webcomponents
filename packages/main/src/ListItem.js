@@ -80,7 +80,25 @@ class ListItem extends ListItemBase {
 		return [styles, ListItemBase.styles];
 	}
 
+	constructor() {
+		super();
+
+		this.deactivate = () => {
+			if (this._active) {
+				this._active = false;
+			}
+		};
+	}
+
 	onBeforeRendering() {}
+
+	onEnterDOM() {
+		document.addEventListener("mouseup", this.deactivate);
+	}
+
+	onExitDOM() {
+		document.removeEventListener("mouseup", this.deactivate);
+	}
 
 	onkeydown(event) {
 		super.onkeydown(event);
@@ -141,9 +159,6 @@ class ListItem extends ListItemBase {
 		}
 	}
 
-	deactivate() {
-		this._active = false;
-	}
 
 	_onDelete(event) {
 		this.fireEvent("_selectionRequested", { item: this, selected: event.selected });

@@ -1,17 +1,20 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler.js";
 import ScrollEnablement from "@ui5/webcomponents-base/src/delegate/ScrollEnablement.js";
 import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-import TabContainerRenderer from "./build/compiled/TabContainerRenderer.lit.js";
+import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
+import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
+import TabContainerTemplate from "./build/compiled/TabContainerTemplate.lit.js";
 import Button from "./Button.js";
 import CustomListItem from "./CustomListItem.js";
 import Icon from "./Icon.js";
 import List from "./List.js";
 import Popover from "./Popover.js";
 import TabBase from "./TabBase.js";
-import IconColor from "./types/IconColor.js";
+import SemanticColor from "./types/SemanticColor.js";
 
 // Styles
 import tabContainerCss from "./themes/TabContainer.css.js";
@@ -174,8 +177,12 @@ class TabContainer extends UI5Element {
 		return tabContainerCss;
 	}
 
-	static get renderer() {
-		return TabContainerRenderer;
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return TabContainerTemplate;
 	}
 
 	constructor() {
@@ -235,6 +242,8 @@ class TabContainer extends UI5Element {
 		}
 
 		this.calculateRenderItems();
+
+		this._itemNavigation.init();
 	}
 
 	calculateRenderItems() {
@@ -397,6 +406,7 @@ class TabContainer extends UI5Element {
 		return {
 			main: {
 				"ui5-tab-container": true,
+				"sapUiSizeCompact": getCompactSize(),
 			},
 			header: {
 				"ui5-tc__header": true,
@@ -434,6 +444,10 @@ class TabContainer extends UI5Element {
 
 	get mixedMode() {
 		return this.items.some(item => item.icon) && this.items.some(item => item.text);
+	}
+
+	get rtl() {
+		return getEffectiveRTL() ? "rtl" : undefined;
 	}
 
 	static async define(...params) {
@@ -504,8 +518,8 @@ const calculateHeaderItemClasses = (item, mixedMode) => {
 		classes.push("ui5-tc__headerItem--mixedMode");
 	}
 
-	if (item.iconColor !== IconColor.Default) {
-		classes.push(`ui5-tc__headerItem--${item.iconColor.toLowerCase()}`);
+	if (item.semanticColor !== SemanticColor.Default) {
+		classes.push(`ui5-tc__headerItem--${item.semanticColor.toLowerCase()}`);
 	}
 
 	return classes.join(" ");
@@ -526,8 +540,8 @@ const calculateHeaderItemIconClasses = item => {
 const calculateHeaderItemSemanticIconClasses = item => {
 	const classes = ["ui5-tc-headerItemSemanticIcon"];
 
-	if (item.iconColor !== IconColor.Default) {
-		classes.push(`ui5-tc-headerItemSemanticIcon--${item.iconColor.toLowerCase()}`);
+	if (item.semanticColor !== SemanticColor.Default) {
+		classes.push(`ui5-tc-headerItemSemanticIcon--${item.semanticColor.toLowerCase()}`);
 	}
 
 	return classes.join(" ");
@@ -548,8 +562,8 @@ const calculateHeaderItemAdditionalTextClasses = item => {
 const calculateOverflowItemClasses = item => {
 	const classes = ["ui5-tc__overflowItem"];
 
-	if (item.iconColor !== IconColor.Default) {
-		classes.push(`ui5-tc__overflowItem--${item.iconColor.toLowerCase()}`);
+	if (item.semanticColor !== SemanticColor.Default) {
+		classes.push(`ui5-tc__overflowItem--${item.semanticColor.toLowerCase()}`);
 	}
 
 	if (item.disabled) {

@@ -138,6 +138,6 @@ ui5-panel:not([hidden]) {
 	border-bottom: 1px solid var(--sapUiGroupTitleBorderColor);
 }
 
-.sapUiSizeCompact .sapMPanel > header {
+.sapUiSizeCompact.sapMPanel > header {
 	height: 2rem;
 }

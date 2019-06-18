@@ -1,11 +1,13 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { isSpace } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
 import TableColumn from "./TableColumn.js";
 import TableRow from "./TableRow.js";
-import TableRenderer from "./build/compiled/TableRenderer.lit.js";
+import TableTemplate from "./build/compiled/TableTemplate.lit.js";
 
 // Styles
 import styles from "./themes/Table.css.js";
@@ -50,6 +52,28 @@ const metadata = {
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.Table.prototype */ {
+
+		/**
+		 * Defines the text that will be displayed when there is no data and <code>showNoData</code> is present.
+		 *
+		 * @type {string}
+		 * @defaultvalue: ""
+		 * @public
+		 */
+		noDataText: {
+			type: String,
+		},
+
+		/**
+		 * Defines if the value of <code>noDataText</code> will be diplayed when there is no rows present in the table.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 */
+		showNoData: {
+			type: Boolean,
+		},
 		/**
 		 * Determines whether the column headers remain fixed at the top of the page during
 		 * vertical scrolling as long as the Web Component is in the viewport.
@@ -125,8 +149,12 @@ class Table extends UI5Element {
 		return styles;
 	}
 
-	static get renderer() {
-		return TableRenderer;
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return TableTemplate;
 	}
 
 	constructor() {
@@ -230,6 +258,7 @@ class Table extends UI5Element {
 		return {
 			main: {
 				sapWCTableHeader: true,
+				sapUiSizeCompact: getCompactSize(),
 			},
 			columns: {
 				sapWCTableColumnWrapper: true,

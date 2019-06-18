@@ -4,6 +4,7 @@ describe("Card general interaction", () => {
 
 	it("fires headerPress upon click, Enter and Space", () => {
 		const cardHeader = browser.findElementDeep("#card >>> .sapFCardHeader");
+		const cardHeader2 = browser.findElementDeep("#card2 >>> .sapFCardHeader");
 		const field = browser.$("#field");
 
 		cardHeader.click();
@@ -11,5 +12,12 @@ describe("Card general interaction", () => {
 		cardHeader.keys("Enter");
 
 		assert.strictEqual(field.getProperty("value"), "3", "headerPress should be called 3 times");
+
+
+		cardHeader2.click();
+		cardHeader2.keys("Space");
+		cardHeader2.keys("Enter");
+
+		assert.strictEqual(field.getProperty("value"), "3", "events count should remain 3 as the header is not interactive.");
 	});
 });

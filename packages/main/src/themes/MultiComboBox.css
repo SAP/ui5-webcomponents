@@ -49,7 +49,7 @@ ui5-multi-combobox:not([hidden]) {
 	height: 80%;
 }
 
-span.sapUiSizeCompact .ui5-multi-combobox--token {
+.sapUiSizeCompact .ui5-multi-combobox--token {
 	height: 100%;
 }
 

@@ -13,9 +13,7 @@
 	</script>
 
 	<script src="../../../../../../webcomponentsjs/webcomponents-loader.js"></script>
-	<script src="../../../../../../resources/sap/ui/webcomponents/main/bundle.esm.js"
-		type="module"
-	>
+	<script src="../../../../../../resources/sap/ui/webcomponents/main/bundle.esm.js" type="module">
 	</script>
 
 	<script nomodule src="../../../../../../resources/sap/ui/webcomponents/main/bundle.es5.js">
@@ -115,6 +113,20 @@
 			</div>
 		</ui5-table-column>
 
+	</ui5-table>
+
+
+	<ui5-table class="no-data-table" id="tableNoData" no-data-text="No Data" show-no-data>
+		<ui5-table-column id="column-1" data-ui5-slot="columns">
+			<div class="column-content" data-ui5-slot="header">
+				<ui5-label>Product</ui5-label>
+			</div>
+		</ui5-table-column>
+		<ui5-table-column id="column-2" data-ui5-slot="columns">
+			<div class="column-content" data-ui5-slot="header">
+				<ui5-label>Supplier</ui5-label>
+			</div>
+		</ui5-table-column>
 	</ui5-table>
 
 
@@ -2918,7 +2930,7 @@
 
 						</ui5-table-row>`;
 			if (index > 4) {
-			    return;
+				return;
 			}
 
 			html += test;

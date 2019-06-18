@@ -32,4 +32,10 @@ describe("Table general interaction", () => {
 		assert.strictEqual((rowHTML.split("sapMWCTableRowCellContainer").length - 1), 2, "columns should be 2");
 		assert.strictEqual((rowHTML.split("sapWCTablePopinRow").length - 1), 2, "popin rows should be 2");
 	});
+
+	it("tests if noData div is displayed for empty table", () => {
+		const noDataRow = browser.findElementDeep("#tableNoData >>> div div.sapWCTableNoDataRow");
+
+		assert.strictEqual(noDataRow.isExisting(), true, 'noData div is present');
+	});
 });

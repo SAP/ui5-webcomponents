@@ -20,6 +20,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		document.body.style="background: #fff";
 	}
 
+	if (RTL) {
+		document.body.setAttribute("dir", "rtl");
+	} else {
+		document.body.removeAttribute("dir");
+	}
+
 	/* SideNav */
 	function toggleSideNav(toggle) {
 		if (toggle) {

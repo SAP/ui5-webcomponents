@@ -1,4 +1,4 @@
-import { fetchResourceBundle, registerMessageBundles, getResourceBundle } from "@ui5/webcomponents-base/src/ResourceBundle.js";
+import { registerMessageBundles } from "@ui5/webcomponents-base/src/ResourceBundle.js";
 
 import ar from "./i18n/messagebundle_ar.json";
 import bg from "./i18n/messagebundle_bg.json";
@@ -97,5 +97,3 @@ Suggested pattern: "i18n\\\/.*\\\.json"`);
 /* eslint-enable */
 
 registerMessageBundles("@ui5/webcomponents", bundleMap);
-
-export { fetchResourceBundle, getResourceBundle };
