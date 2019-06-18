@@ -84,16 +84,16 @@
 	<section>
 		<h3>MessageStrip With No Icon</h3>
 		<div class="snippet">
-			<ui5-messagestrip class="samples-margin-bottom" type="Information" hide-icon>Information MessageStrip With No Icon</ui5-messagestrip>
-			<ui5-messagestrip class="samples-margin-bottom" type="Positive" hide-icon>Positive MessageStrip With No Icon</ui5-messagestrip>
-			<ui5-messagestrip class="samples-margin-bottom" type="Negative" hide-icon>Negative MessageStrip With No Icon</ui5-messagestrip>
-			<ui5-messagestrip class="samples-margin-bottom" type="Warning" hide-icon>Warning MessageStrip With No Icon</ui5-messagestrip>
+			<ui5-messagestrip class="samples-margin-bottom" type="Information" no-icon>Information MessageStrip With No Icon</ui5-messagestrip>
+			<ui5-messagestrip class="samples-margin-bottom" type="Positive" no-icon>Positive MessageStrip With No Icon</ui5-messagestrip>
+			<ui5-messagestrip class="samples-margin-bottom" type="Negative" no-icon>Negative MessageStrip With No Icon</ui5-messagestrip>
+			<ui5-messagestrip class="samples-margin-bottom" type="Warning" no-icon>Warning MessageStrip With No Icon</ui5-messagestrip>
 		</div>
 		<pre class="prettyprint lang-html"><xmp>
-<ui5-messagestrip type="Information" hide-icon>Information MessageStrip With No Icon</ui5-messagestrip>
-<ui5-messagestrip type="Positive" hide-icon>Positive MessageStrip With No Icon</ui5-messagestrip>
-<ui5-messagestrip type="Negative" hide-icon>Negative MessageStrip With No Icon</ui5-messagestrip>
-<ui5-messagestrip type="Warning" hide-icon>Warning MessageStrip With No Icon</ui5-messagestrip>
+<ui5-messagestrip type="Information" no-icon>Information MessageStrip With No Icon</ui5-messagestrip>
+<ui5-messagestrip type="Positive" no-icon>Positive MessageStrip With No Icon</ui5-messagestrip>
+<ui5-messagestrip type="Negative" no-icon>Negative MessageStrip With No Icon</ui5-messagestrip>
+<ui5-messagestrip type="Warning" no-icon>Warning MessageStrip With No Icon</ui5-messagestrip>
 <script>
 	document.querySelectorAll("ui5-messagestrip").forEach(function(messageStrip) {
 		messageStrip.addEventListener("close", function() {
@@ -107,15 +107,15 @@
 	<section>
 		<h3>Custom MessageStrip</h3>
 		<div class="snippet">
-			<ui5-messagestrip class="samples-margin-bottom samples-vertical-align" style="width: 200px;" type="Information" hide-icon no-close-button>You have new message.</ui5-messagestrip>
+			<ui5-messagestrip class="samples-margin-bottom samples-vertical-align" style="width: 200px;" type="Information" no-icon no-close-button>You have new message.</ui5-messagestrip>
 			<ui5-messagestrip class="samples-margin-bottom samples-vertical-align" style="width: 200px;" type="Positive" no-close-button>Successfull login!</ui5-messagestrip>
-			<ui5-messagestrip class="samples-margin-bottom samples-vertical-align" style="width: 200px;" type="Negative" hide-icon>Access denied!</ui5-messagestrip>
+			<ui5-messagestrip class="samples-margin-bottom samples-vertical-align" style="width: 200px;" type="Negative" no-icon>Access denied!</ui5-messagestrip>
 			<ui5-messagestrip class="samples-margin-bottom samples-vertical-align" style="width: 200px;" type="Warning">Update is required.</ui5-messagestrip>
 		</div>
 		<pre class="prettyprint lang-html"><xmp>
-<ui5-messagestrip type="Information" style="width: 200px;" hide-icon no-close-button>You have new message.</ui5-messagestrip>
+<ui5-messagestrip type="Information" style="width: 200px;" no-icon no-close-button>You have new message.</ui5-messagestrip>
 <ui5-messagestrip type="Positive" style="width: 200px;" no-close-button>Successfull login!</ui5-messagestrip>
-<ui5-messagestrip type="Negative" style="width: 200px;" hide-icon>Access denied!</ui5-messagestrip>
+<ui5-messagestrip type="Negative" style="width: 200px;" no-icon>Access denied!</ui5-messagestrip>
 <ui5-messagestrip type="Warning" style="width: 200px;">Update is required.</ui5-messagestrip>
 <script>
 	document.querySelectorAll("ui5-messagestrip").forEach(function(messageStrip) {

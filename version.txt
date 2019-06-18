@@ -1,5 +1,7 @@
-commit f94945559d1b553307400fd57f7780a637e63c3d
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Tue Jun 18 14:39:17 2019 +0300
+commit 2314fc3acd855f27cbbd61d94e8b96b3a5c51a35
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Tue Jun 18 16:16:38 2019 +0300
 
-    refactor: set default slots for table, remove old data-ui5-slot from … (#554)
+    refactor(ui5-messagestrip): rename hideIcon property to noIcon (#507)
+    
+    BREAKING CHANGE: hideIcon property is renamed to noIcon
