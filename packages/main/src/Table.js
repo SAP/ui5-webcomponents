@@ -51,6 +51,7 @@ const metadata = {
 			listenFor: { exclude: ["header"] },
 		},
 	},
+	defaultSlot: "rows",
 	properties: /** @lends sap.ui.webcomponents.main.Table.prototype */ {
 
 		/**

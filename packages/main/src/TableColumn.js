@@ -26,6 +26,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
+	defaultSlot: "header",
 	properties: /** @lends sap.ui.webcomponents.main.TableColumn.prototype */ {
 
 		/**
