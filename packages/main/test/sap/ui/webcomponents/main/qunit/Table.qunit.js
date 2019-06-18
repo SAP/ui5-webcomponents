@@ -12,7 +12,7 @@ TestHelper.ready(function () {
 						'<ui5-table-column slot="columns" id="col2">' +
 						'	<span slot="header" >Column 1</span>' +
 						'</ui5-table-column>' +
-						'<ui5-table-row slot="rows" id="roll1">' +
+						'<ui5-table-row  id="roll1">' +
 						'	<ui5-table-cell id="cell1">' +
 						'		<span>World</span>' +
 						'	</ui5-table-cell>' +

@@ -609,7 +609,7 @@ class UI5Element extends HTMLElement {
 			return defaultSlot;
 		}
 
-		// Check for explicitly given logical slot
+		// Check for explicitly given logical slot - for backward compatibility, should not be used
 		const ui5Slot = child.getAttribute("data-ui5-slot");
 		if (ui5Slot) {
 			return ui5Slot;
