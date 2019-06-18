@@ -1,11 +1,9 @@
 import { getWCNoConflict, getCompactSize } from "./Configuration.js";
 import DOMObserver from "./compatibility/DOMObserver.js";
-import ShadowDOM from "./compatibility/ShadowDOM.js";
 import UI5ElementMetadata from "./UI5ElementMetadata.js";
 import Integer from "./types/Integer.js";
-import Renderer from "./Renderer.js";
 import RenderScheduler from "./RenderScheduler.js";
-import { createStyle } from "./CSS.js";
+import { getConstructableStyle, createHeadStyle, getShadowRootStyle } from "./CSS.js";
 import { attachThemeChange } from "./Theming.js";
 
 const metadata = {
@@ -45,7 +43,7 @@ class UI5Element extends HTMLElement {
 			// polyfill theme handling is in head styles directly
 			return;
 		}
-		const newStyle = createStyle(this.constructor);
+		const newStyle = getConstructableStyle(this.constructor);
 		if (document.adoptedStyleSheets) {
 			this.shadowRoot.adoptedStyleSheets = [newStyle];
 		} else {
@@ -59,27 +57,30 @@ class UI5Element extends HTMLElement {
 	}
 
 	async _initializeShadowRoot() {
-		const isCompact = getCompactSize();
-
-		if (isCompact) {
-			this.setAttribute("data-ui5-compact-size", "");
-		}
-
 		if (this.constructor.getMetadata().getNoShadowDOM()) {
 			return Promise.resolve();
 		}
 
 		this.attachShadow({ mode: "open" });
-		const shadowDOM = await ShadowDOM.prepareShadowDOM(this.constructor);
-		this.shadowRoot.appendChild(shadowDOM);
 
+		// IE11, Edge
+		if (window.ShadyDOM) {
+			createHeadStyle(this.constructor);
+		}
+
+		// Chrome
 		if (document.adoptedStyleSheets) {
-			const style = createStyle(this.constructor);
+			const style = getConstructableStyle(this.constructor);
 			this.shadowRoot.adoptedStyleSheets = [style];
 		}
 	}
 
 	async connectedCallback() {
+		const isCompact = getCompactSize();
+		if (isCompact) {
+			this.setAttribute("data-ui5-compact-size", "");
+		}
+
 		if (this.constructor.getMetadata().getNoShadowDOM()) {
 			return;
 		}
@@ -215,7 +216,7 @@ class UI5Element extends HTMLElement {
 	}
 
 	static get observedAttributes() {
-		const observedProps = this.getMetadata().getObservedProps();
+		const observedProps = this.getMetadata().getPublicPropsList();
 		return observedProps.map(camelToKebabCase);
 	}
 
@@ -266,16 +267,21 @@ class UI5Element extends HTMLElement {
 	}
 
 	_upgradeAllProperties() {
-		const observedProps = this.constructor.getMetadata().getObservedProps();
-		observedProps.forEach(this._upgradeProperty.bind(this));
+		const allProps = this.constructor.getMetadata().getPropsList();
+		allProps.forEach(this._upgradeProperty.bind(this));
 	}
 
 	static define() {
 		const tag = this.getMetadata().getTag();
 
-		if (!DefinitionsSet.has(tag)) {
-			DefinitionsSet.add(tag);
+		const definedLocally = DefinitionsSet.has(tag);
+		const definedGlobally = customElements.get(tag);
+
+		if (definedGlobally && !definedLocally) {
+			console.warn(`Skipping definition of tag ${tag}, because it was already defined by another instance of ui5-webcomponents.`); // eslint-disable-line
+		} else if (!definedGlobally) {
 			this.generateAccessors();
+			DefinitionsSet.add(tag);
 			window.customElements.define(tag, this);
 		}
 		return this;
@@ -400,25 +406,32 @@ class UI5Element extends HTMLElement {
 	}
 
 	_render() {
-		// onBeforeRendering
+		// Call the onBeforeRendering hook
 		if (typeof this.onBeforeRendering === "function") {
 			this._suppressInvalidation = true;
 			this.onBeforeRendering();
 			delete this._suppressInvalidation;
 		}
 
-		// render
+		// Update the shadow root with the render result
 		// console.log(this.getDomRef() ? "RE-RENDER" : "FIRST RENDER", this);
 		delete this._invalidated;
-		Renderer.render(this);
+		this._updateShadowRoot();
 
 		// Safari requires that children get the slot attribute only after the slot tags have been rendered in the shadow DOM
 		this._assignSlotsToChildren();
 
-		// onAfterRendering
+		// Call the onAfterRendering hook
 		if (typeof this.onAfterRendering === "function") {
 			this.onAfterRendering();
 		}
+	}
+
+	_updateShadowRoot() {
+		const renderResult = this.constructor.template(this);
+		// For browsers that do not support constructable style sheets (and not using the polyfill)
+		const styleToPrepend = getShadowRootStyle(this.constructor);
+		this.constructor.render(renderResult, this.shadowRoot, styleToPrepend, { eventContext: this });
 	}
 
 	_assignSlotsToChildren() {
@@ -467,15 +480,12 @@ class UI5Element extends HTMLElement {
 			return;
 		}
 
-		return this._getRoot().children[0];
+		return this.shadowRoot.children.length === 1
+			? this.shadowRoot.children[0] : this.shadowRoot.children[1];
 	}
 
 	_waitForDomRef() {
 		return this._domRefReadyPromise;
-	}
-
-	_getRoot() {
-		return this.shadowRoot.querySelector("[data-sap-ui-wc-root]");
 	}
 
 	getFocusDomRef() {

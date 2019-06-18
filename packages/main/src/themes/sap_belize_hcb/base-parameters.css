@@ -40,6 +40,9 @@
 	--sapAccentColor6: #6bd3ff;
 	--sapAccentColor7: #7fc6c6;
 	--sapAccentColor8: #b2e484;
+	--sapAccentColor9: #b995e0;
+	--sapAccentColor10: #b0bcc5;
+
 	/* Semantic Background Colors */
 	--sapErrorBackground: var(--sapHC_StandardBackground);
 	--sapWarningBackground: var(--sapHC_StandardBackground);

@@ -1,8 +1,13 @@
-<div class="{{classes.main}}">
+<div class="{{classes.main}}"
+	role="alert"
+	aria-live="assertive"
+	aria-labelledby="{{_id}}">
+
 	{{#unless noIcon}}
 		<ui5-icon class="ui5-messagestrip-icon" src="{{messageStripIcon}}"></ui5-icon>
 	{{/unless}}
 
+	<span class="ui5-messagestrip-hidden-text">{{hiddenText}}</span>
 	<span class="{{classes.label}}"><slot></slot></span>
 
 	{{#unless hideCloseButton}}
@@ -10,6 +15,8 @@
 			class="{{classes.closeIcon}}"
 			src="sap-icon://decline"
 			tabindex="0"
+			role="button"
+			title="{{_closeButtonText}}"
 			@ui5-press="{{_closeButton.press}}">
 		</ui5-icon>
 	{{/unless}}

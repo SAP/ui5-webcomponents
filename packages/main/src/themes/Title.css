@@ -2,12 +2,16 @@
 	display: block;
 	max-width: 100%;
 	color: var(--sapUiGroupTitleTextColor);
+	font-family: var(--sapUiFontHeaderFamily);
+	text-shadow: var(--sapUiShadowText);
 }
 
 ui5-title:not([hidden]) {
 	display: block;
 	overflow: hidden;
 	color: var(--sapUiGroupTitleTextColor);
+	font-family: var(--sapUiFontHeaderFamily);
+	text-shadow: var(--sapUiShadowText);
 	max-width: 100%;
 }
 
@@ -15,8 +19,6 @@ ui5-title:not([hidden]) {
 	display: inline-block;
 	position: relative;
 	font-weight: var(--sapUiFontHeaderWeight);
-	font-family: var(--sapUiFontHeaderFamily);
-	text-shadow: var(--sapUiShadowText);
 	box-sizing: border-box;
 	overflow: hidden;
 	text-overflow: ellipsis;
