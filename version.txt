@@ -1,7 +1,5 @@
-commit efff8630230168d4264af14cfd5b0a6fbd3a44a7
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Tue Jun 18 14:36:07 2019 +0300
+commit f94945559d1b553307400fd57f7780a637e63c3d
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Tue Jun 18 14:39:17 2019 +0300
 
-    refactor(ui5-popover): rename hideArrow property to noArrow (#509)
-    
-    BREAKING CHANGE: hideArrow property is renamed to noArrow
+    refactor: set default slots for table, remove old data-ui5-slot from … (#554)
