@@ -68,16 +68,16 @@
 	<section>
 		<h3>MessageStrip With No Close Button</h3>
 		<div class="snippet">
-			<ui5-messagestrip class="samples-margin-bottom" type="Information" hide-close-button>Information MessageStrip With No Close Button</ui5-messagestrip>
-			<ui5-messagestrip class="samples-margin-bottom" type="Positive" hide-close-button>Positive MessageStrip With No Close Button</ui5-messagestrip>
-			<ui5-messagestrip class="samples-margin-bottom" type="Negative" hide-close-button>Negative MessageStrip With No Close Button</ui5-messagestrip>
-			<ui5-messagestrip class="samples-margin-bottom" type="Warning" hide-close-button>Warning MessageStrip With No Close Button</ui5-messagestrip>
+			<ui5-messagestrip class="samples-margin-bottom" type="Information" no-close-button>Information MessageStrip With No Close Button</ui5-messagestrip>
+			<ui5-messagestrip class="samples-margin-bottom" type="Positive" no-close-button>Positive MessageStrip With No Close Button</ui5-messagestrip>
+			<ui5-messagestrip class="samples-margin-bottom" type="Negative" no-close-button>Negative MessageStrip With No Close Button</ui5-messagestrip>
+			<ui5-messagestrip class="samples-margin-bottom" type="Warning" no-close-button>Warning MessageStrip With No Close Button</ui5-messagestrip>
 		</div>
 		<pre class="prettyprint lang-html"><xmp>
-<ui5-messagestrip type="Information" hide-close-button>Information MessageStrip With No Close Button</ui5-messagestrip>
-<ui5-messagestrip type="Positive" hide-close-button>Positive MessageStrip With No Close Button</ui5-messagestrip>
-<ui5-messagestrip type="Negative" hide-close-button>Negative MessageStrip With No Close Button</ui5-messagestrip>
-<ui5-messagestrip type="Warning" hide-close-button>Warning MessageStrip With No Close Button</ui5-messagestrip>
+<ui5-messagestrip type="Information" no-close-button>Information MessageStrip With No Close Button</ui5-messagestrip>
+<ui5-messagestrip type="Positive" no-close-button>Positive MessageStrip With No Close Button</ui5-messagestrip>
+<ui5-messagestrip type="Negative" no-close-button>Negative MessageStrip With No Close Button</ui5-messagestrip>
+<ui5-messagestrip type="Warning" no-close-button>Warning MessageStrip With No Close Button</ui5-messagestrip>
 		</xmp></pre>
 	</section>
 
@@ -107,14 +107,14 @@
 	<section>
 		<h3>Custom MessageStrip</h3>
 		<div class="snippet">
-			<ui5-messagestrip class="samples-margin-bottom samples-vertical-align" style="width: 200px;" type="Information" hide-icon hide-close-button>You have new message.</ui5-messagestrip>
-			<ui5-messagestrip class="samples-margin-bottom samples-vertical-align" style="width: 200px;" type="Positive" hide-close-button>Successfull login!</ui5-messagestrip>
+			<ui5-messagestrip class="samples-margin-bottom samples-vertical-align" style="width: 200px;" type="Information" hide-icon no-close-button>You have new message.</ui5-messagestrip>
+			<ui5-messagestrip class="samples-margin-bottom samples-vertical-align" style="width: 200px;" type="Positive" no-close-button>Successfull login!</ui5-messagestrip>
 			<ui5-messagestrip class="samples-margin-bottom samples-vertical-align" style="width: 200px;" type="Negative" hide-icon>Access denied!</ui5-messagestrip>
 			<ui5-messagestrip class="samples-margin-bottom samples-vertical-align" style="width: 200px;" type="Warning">Update is required.</ui5-messagestrip>
 		</div>
 		<pre class="prettyprint lang-html"><xmp>
-<ui5-messagestrip type="Information" style="width: 200px;" hide-icon hide-close-button>You have new message.</ui5-messagestrip>
-<ui5-messagestrip type="Positive" style="width: 200px;" hide-close-button>Successfull login!</ui5-messagestrip>
+<ui5-messagestrip type="Information" style="width: 200px;" hide-icon no-close-button>You have new message.</ui5-messagestrip>
+<ui5-messagestrip type="Positive" style="width: 200px;" no-close-button>Successfull login!</ui5-messagestrip>
 <ui5-messagestrip type="Negative" style="width: 200px;" hide-icon>Access denied!</ui5-messagestrip>
 <ui5-messagestrip type="Warning" style="width: 200px;">Update is required.</ui5-messagestrip>
 <script>
@@ -165,14 +165,6 @@ For the <code>ui5-messagestrip</code> component, you can define whether it displ
                     </div>
             
                       <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">hideCloseButton <br> <code>hide-close-button</code></div>
-                        <div class="cell api-table-content-cell">boolean</div>
-                        <div class="cell api-table-content-cell">false</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines whether the MessageStrip renders close icon.
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">hideIcon <br> <code>hide-icon</code></div>
                         <div class="cell api-table-content-cell">boolean</div>
                         <div class="cell api-table-content-cell">false</div>
@@ -180,7 +172,7 @@ For the <code>ui5-messagestrip</code> component, you can define whether it displ
                             Defines whether the MessageStrip renders icon in the beginning.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">icon <br> <code></code></div>
                         <div class="cell api-table-content-cell">string</div>
                         <div class="cell api-table-content-cell">&quot;&quot;</div>
@@ -188,6 +180,14 @@ For the <code>ui5-messagestrip</code> component, you can define whether it displ
                             Defines the icon src URI to be displayed as graphical element within the <code>ui5-messagestrip</code>. <br></br> <b>Note:</b> If no icon is given, the default icon for the <code>ui5-messagestrip</code> type will be added. The SAP-icons font provides numerous options. <br></br> Example: <br> <pre>ui5-messagestrip icon="sap-icon://palette"</pre>
             
             See all the available icons in the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">noCloseButton <br> <code>no-close-button</code></div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell">false</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines whether the MessageStrip renders close icon.
                         </div>
                       </div>
                       <div class="row api-table-roll-odd">

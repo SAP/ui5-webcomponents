@@ -1,7 +1,7 @@
-commit 11dc3b1c4d868eb23257634bfa59d30e76af31b4
+commit efff8630230168d4264af14cfd5b0a6fbd3a44a7
 Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Mon Jun 17 13:37:30 2019 +0300
+Date:   Tue Jun 18 14:36:07 2019 +0300
 
-    refactor(ui5-popover): hideHeader property renamed to noHeader (#553)
+    refactor(ui5-popover): rename hideArrow property to noArrow (#509)
     
-    BREAKING CHANGE: hideHeader property renamed to noHeader
+    BREAKING CHANGE: hideArrow property is renamed to noArrow
