@@ -74,7 +74,7 @@ const metadata = {
 		 * @defaultvalue false
 		 * @public
 		 */
-		hideCloseButton: {
+		noCloseButton: {
 			type: Boolean,
 		},
 
@@ -208,7 +208,7 @@ class MessageStrip extends UI5Element {
 		return {
 			label: {
 				"ui5-messagestrip-text": true,
-				"ui5-messagestripNoCloseButton": this.hideCloseButton,
+				"ui5-messagestripNoCloseButton": this.noCloseButton,
 			},
 			closeIcon: {
 				"ui5-messagestrip-close-icon": true,
@@ -216,7 +216,7 @@ class MessageStrip extends UI5Element {
 			main: {
 				"ui5-messagestrip-root": true,
 				"ui5-messagestrip-icon--hidden": this.hideIcon,
-				"ui5-messagestrip-close-icon--hidden": this.hideCloseButton,
+				"ui5-messagestrip-close-icon--hidden": this.noCloseButton,
 				[this.typeClasses]: true,
 			},
 		};
