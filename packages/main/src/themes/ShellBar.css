@@ -386,31 +386,31 @@ ui5-shellbar:not([hidden]) {
 	background: var(--sapUiShellColor);
 }
 
-span[dir=rtl] ::slotted(ui5-icon) {
+[dir="rtl"] ::slotted(ui5-icon) {
 	margin-left: 0.5rem;
 	margin-right: 0;
 }
 
-span[dir=rtl] .sapWCShellBarMenuButton {
+[dir="rtl"] .sapWCShellBarMenuButton {
 	margin-right: 0.5rem;
 	margin-left: 0;
 }
 
-span[dir=rtl] .sapWCShellBarMenuButtonInteractive .sapWCShellBarMenuButtonArrow {
+[dir="rtl"] .sapWCShellBarMenuButtonInteractive .sapWCShellBarMenuButtonArrow {
 	margin-right: .5rem;
 	margin-left: 0;
 }
 
-span[dir=rtl] .sapWCShellBarOverflowContainerRight {
+[dir="rtl"] .sapWCShellBarOverflowContainerRight {
 	margin-right: 8rem;
 	margin-left: 0;
 }
 
-span[dir=rtl] .sapWCShellBarOverflowContainerRight .sapWCShellBarOverflowContainerRightChild {
+[dir="rtl"] .sapWCShellBarOverflowContainerRight .sapWCShellBarOverflowContainerRightChild {
 	float: left;
 }
 
-span[dir=rtl] .sapWCShellBarSizeS .sapWCShellBarOverflowContainerRight {
+[dir="rtl"] .sapWCShellBarSizeS .sapWCShellBarOverflowContainerRight {
 	margin-right: 0;
 }
 

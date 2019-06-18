@@ -1,4 +1,8 @@
-<div class="{{classes.main}}" tabindex="{{tabIndex}}">
+<div
+	class="{{classes.main}}"
+	tabindex="{{tabIndex}}"
+	dir="{{rtl}}"
+>
 	<div
 		class="sapWCSelectLabel"
 		@click="{{toggleList}}">
@@ -8,7 +12,7 @@
 	{{#if items}}
 		<ui5-popover
 			placement-type="Bottom"
-			hide-header="true"
+			no-header="true"
 			no-arrow="true"
 			horizontal-align="Stretch">
 				<ui5-list separators="None">

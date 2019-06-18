@@ -1,7 +1,7 @@
-import Input from "./Input.js";
+import { registerFeature } from "@ui5/webcomponents-base/src/FeaturesRegistry.js";
 import Suggestions from "./Suggestions.js";
 
-class InputSuggestions {}
-Input.getSuggestions = () => Suggestions;
+// Add suggestions support to the global features registry so that Input.js can use it
+registerFeature("InputSuggestions", Suggestions);
 
-export default InputSuggestions;
+export default Suggestions;

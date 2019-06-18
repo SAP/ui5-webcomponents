@@ -8,10 +8,6 @@ ui5-messagestrip:not([hidden]) {
 	width: 100%;
 }
 
-span[data-sap-ui-wc-root] {
-	display: flex;
-}
-
 .ui5-messagestrip-root {
 	width: 100%;
 	height: 100%;
@@ -137,4 +133,12 @@ span[data-sap-ui-wc-root] {
 
 .ui5-messagestrip-close-icon:active:focus::after {
 	border: var(--_ui5_messagestrip_focus_width) dotted var(--sapUiContentContrastFocusColor);
+}
+
+.ui5-messagestrip-hidden-text {
+	position: absolute;
+	clip: rect(1px,1px,1px,1px);
+	user-select: none;
+	left: 0;
+	top: 0;
 }

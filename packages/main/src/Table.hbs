@@ -12,9 +12,16 @@
 
 	<!-- rows -->
 	{{#each rows}}
-		<div style="width: 100%"
-		>
+		<div style="width: 100%">
 			<slot name="{{this._individualSlot}}"></slot>
 		</div>
 	{{/each}}
+
+	{{#unless rows.length}}
+		{{#if showNoData}}
+			<div id="noData" class="sapWCTableNoDataRow">
+				<span>{{noDataText}}</span>
+		</div>
+		{{/if}}
+	{{/unless}}
 </div>
