@@ -6,76 +6,77 @@ Here's a comprehensive list of all UI5 Web Components, their tags, and their res
 
 For API documentation and samples, please check the [UI5 Web Components Playground](https://sap.github.io/ui5-webcomponents/playground/)
 
-Web Component | Tag name | Module import
------|----------|------------------
-Badge| ui5-badge | <code>import "@ui5/webcomponents/dist/Badge.js";</code>
-Busy Indicator| ui5-busyindicator | <code>import "@ui5/webcomponents/dist/BusyIndicator.js";</code>
-Button | ui5-button | <code>import "@ui5/webcomponents/dist/Button.js";</code>
-Card | ui5-card | <code>import "@ui5/webcomponents/dist/Card.js";</code>
-Checkbox | ui5-checkbox | <code>import "@ui5/webcomponents/dist/CheckBox.js";</code>
-Date Picker | ui5-datepicker | <code>import "@ui5/webcomponents/dist/DatePicker.js";</code>
-Dialog | ui5-dialog | <code>import "@ui5/webcomponents/dist/Dialog.js";</code>
-Icon | ui5-icon | <code>import "@ui5/webcomponents/dist/Icon.js";</code>
-Input | ui5-input | <code>import "@ui5/webcomponents/dist/Input.js";</code>
-Label | ui5-label | <code>import "@ui5/webcomponents/dist/Label.js";</code>
-Link | ui5-link | <code>import "@ui5/webcomponents/dist/Link.js";</code>
-List | ui5-list | <code>import "@ui5/webcomponents/dist/List.js";</code>
-List - Standard Item | ui5-li | <code>import S"@ui5/webcomponents/dist/StandardListItem.js";</code>
-List - Custom Item | ui5-li-custom | <code>import "@ui5/webcomponents/dist/CustomListItem.js";</code>
-List - Group Header Item | ui5-li-groupheader | <code>import "@ui5/webcomponents/dist/GroupHeaderListItem.js";</code>
-Message Strip | ui5-messagestrip | <code>import "@ui5/webcomponents/dist/MessageStrip.js";</code>
-Multi Combo Box | ui5-multicombobox | <code>import "@ui5/webcomponents/dist/MultiComboBox.js";</code>
-Panel | ui5-panel | <code>import "@ui5/webcomponents/dist/Panel.js";</code>
-Popover | ui5-popover | <code>import "@ui5/webcomponents/dist/Popover.js";</code>
-Radio Button | ui5-radiobutton | <code>import "@ui5/webcomponents/dist/RadioButton.js";</code>
-Select | ui5-select | <code>import "@ui5/webcomponents/dist/Select.js";</code>
-Shell Bar (Fiori 3) | ui5-shellbar | <code>import "@ui5/webcomponents/dist/ShellBar.js";</code>
-Shell Bar Item | ui5-shellbar-item | <code>import "@ui5/webcomponents/dist/ShellBarItem.js";</code>
-Switch | ui5-switch | <code>import "@ui5/webcomponents/dist/Switch.js";</code>
-Tab Container | ui5-tabcontainer | <code>import "@ui5/webcomponents/dist/TabContainer.js";</code>
-Tab | ui5-tab | <code>import "@ui5/webcomponents/dist/Tab.js";</code>
-Tab Separator| ui5-tab-separator | <code>import "@ui5/webcomponents/dist/TabSeparator.js";</code>
-Table | ui5-table | <code>import "@ui5/webcomponents/dist/Table.js";</code>
-Table Column | ui5-table-column | comes with ui5-table
-Table Row | ui5-table-row | comes with ui5-table
-Table Cell | ui5-table-cell | comes with ui5-table
-Textarea | ui5-textarea | <code>import "@ui5/webcomponents/dist/TextArea.js";</code>
-Timeline | ui5-timeline | <code>import "@ui5/webcomponents/dist/Timeline.js";</code>
-Timeline Item | ui5-timeline-item | comes with ui5-timeline
-Title | ui5-title | <code>import "@ui5/webcomponents/dist/Title.js";</code>
-Toggle Button | ui5-togglebutton | <code>import "@ui5/webcomponents/dist/ToggleButton.js";</code>
+|      Web Component       |       Tag name       |                       Module import                        |
+| ------------------------ | -------------------- | ---------------------------------------------------------- |
+| Badge                    | `ui5-badge`          | `import "@ui5/webcomponents/dist/Badge.js";`               |
+| Busy Indicator           | `ui5-busyindicator`  | `import "@ui5/webcomponents/dist/BusyIndicator.js";`       |
+| Button                   | `ui5-button`         | `import "@ui5/webcomponents/dist/Button.js";`              |
+| Card                     | `ui5-card`           | `import "@ui5/webcomponents/dist/Card.js";`                |
+| Checkbox                 | `ui5-checkbox`       | `import "@ui5/webcomponents/dist/CheckBox.js";`            |
+| Date Picker              | `ui5-datepicker`     | `import "@ui5/webcomponents/dist/DatePicker.js";`          |
+| Dialog                   | `ui5-dialog`         | `import "@ui5/webcomponents/dist/Dialog.js";`              |
+| Icon                     | `ui5-icon`           | `import "@ui5/webcomponents/dist/Icon.js";`                |
+| Input                    | `ui5-input`          | `import "@ui5/webcomponents/dist/Input.js";`               |
+| Label                    | `ui5-label`          | `import "@ui5/webcomponents/dist/Label.js";`               |
+| Link                     | `ui5-link`           | `import "@ui5/webcomponents/dist/Link.js";`                |
+| List                     | `ui5-list`           | `import "@ui5/webcomponents/dist/List.js";`                |
+| List - Standard Item     | `ui5-li`             | `import S"@ui5/webcomponents/dist/StandardListItem.js";`   |
+| List - Custom Item       | `ui5-li-custom`      | `import "@ui5/webcomponents/dist/CustomListItem.js";`      |
+| List - Group Header Item | `ui5-li-groupheader` | `import "@ui5/webcomponents/dist/GroupHeaderListItem.js";` |
+| Message Strip            | `ui5-messagestrip`   | `import "@ui5/webcomponents/dist/MessageStrip.js";`        |
+| Multi Combo Box          | `ui5-multicombobox`  | `import "@ui5/webcomponents/dist/MultiComboBox.js";`       |
+| Panel                    | `ui5-panel`          | `import "@ui5/webcomponents/dist/Panel.js";`               |
+| Popover                  | `ui5-popover`        | `import "@ui5/webcomponents/dist/Popover.js";`             |
+| Radio Button             | `ui5-radiobutton`    | `import "@ui5/webcomponents/dist/RadioButton.js";`         |
+| Select                   | `ui5-select`         | `import "@ui5/webcomponents/dist/Select.js";`              |
+| Shell Bar (Fiori 3)      | `ui5-shellbar`       | `import "@ui5/webcomponents/dist/ShellBar.js";`            |
+| Shell Bar Item           | `ui5-shellbar-item`  | `import "@ui5/webcomponents/dist/ShellBarItem.js";`        |
+| Switch                   | `ui5-switch`         | `import "@ui5/webcomponents/dist/Switch.js";`              |
+| Tab Container            | `ui5-tabcontainer`   | `import "@ui5/webcomponents/dist/TabContainer.js";`        |
+| Tab                      | `ui5-tab`            | `import "@ui5/webcomponents/dist/Tab.js";`                 |
+| Tab Separator            | `ui5-tab-separator`  | `import "@ui5/webcomponents/dist/TabSeparator.js";`        |
+| Table                    | `ui5-table`          | `import "@ui5/webcomponents/dist/Table.js";`               |
+| Table Column             | `ui5-table-column`   | comes with ui5-table                                       |
+| Table Row                | `ui5-table-row`      | comes with ui5-table                                       |
+| Table Cell               | `ui5-table-cell`     | comes with ui5-table                                       |
+| Textarea                 | `ui5-textarea`       | `import "@ui5/webcomponents/dist/TextArea.js";`            |
+| Timeline                 | `ui5-timeline`       | `import "@ui5/webcomponents/dist/Timeline.js";`            |
+| Timeline Item            | `ui5-timeline-item`  | comes with ui5-timeline                                    |
+| Title                    | `ui5-title`          | `import "@ui5/webcomponents/dist/Title.js";`               |
+| Toggle Button            | `ui5-togglebutton`   | `import "@ui5/webcomponents/dist/ToggleButton.js";`        |
+
 
 ## Additional public modules
 
-Apart from the Web Components themselves, there are a number of additional modules that can 
+Apart from the Web Components themselves, there are a number of additional modules that can
 be imported in order to add new, or configure the existing functionality.
 
 Table of contents:
 
 - [Preface](#preface)
 - [Old browser support (Edge, IE11)](#oldbrowsersupport)
-- [Theming](#theming) 
-- [Internationalization](#internationalization) 
-- [Form Support](#formsupport) 
-- [Input Suggestions](#inputsuggestions) 
-- [Advanced Calendar Types](#advancedcalendartypes) 
+- [Theming](#theming)
+- [Internationalization](#internationalization)
+- [Form Support](#formsupport)
+- [Input Suggestions](#inputsuggestions)
+- [Advanced Calendar Types](#advancedcalendartypes)
 
 <a name="preface"></a>
 ### Preface
 
-One of the main ideas behind UI5 Web Components is to be as lightweight as possible. Therefore only the 
-main features (such as behavior, accessibility), default configuration settings (for example theme, language) 
+One of the main ideas behind UI5 Web Components is to be as lightweight as possible. Therefore only the
+main features (such as behavior, accessibility), default configuration settings (for example theme, language)
 and modern browser support (Chrome, Firefox, Safari) are provided by just importing the Web Component module.
 
 Additional features, configuration settings, or old browser support are opt-in only and you should import
-(and configure) such manually, only if needed by your app. 
+(and configure) such manually, only if needed by your app.
 
 <a name="oldbrowsersupport"></a>
 ### 1. Old browser support (Edge, IE11)
 
 Most modern browsers (**Chrome, Firefox, Safari**) support Web Components natively.
 
-If your app needs to be able to run additionally on **Edge**, you should import the following module: 
+If your app needs to be able to run additionally on **Edge**, you should import the following module:
 
 ```js
 import "@ui5/webcomponents-base/src/browsersupport/Edge.js";
@@ -112,7 +113,7 @@ import "@ui5/webcomponents/dist/ThemePropertiesProvider.js";
 ```
 (for additional themes support)
 
-and 
+and
 ```js
 import { setTheme } from "@ui5/webcomponents-base/Theming.js";
 ```
@@ -121,8 +122,8 @@ import { setTheme } from "@ui5/webcomponents-base/Theming.js";
 By default UI5 Web Components come with the SAP Quartz, a.k.a. Fiori 3 (techinical name: sap_fiori_3) theme.
 By importing the first module, listed above, you also get support for the:
  - SAP Belize (sap_belize)
- - SAP Belize High Contrast Black (sap_belize_hcb) 
- 
+ - SAP Belize High Contrast Black (sap_belize_hcb)
+
 themes.
 
 You can configure the theme by setting the <code>theme</code> key in the configuration object.
@@ -169,14 +170,14 @@ Example:
 ```
 
 Note: importing the module above will produce the following warning message in the browser's console:
-> Inefficient bundling detected: consider bundling i18n imports as URLs instead of inlining them. 
+> Inefficient bundling detected: consider bundling i18n imports as URLs instead of inlining them.
 > See rollup-plugin-url or webpack file-loader for more information.
 > Suggested pattern: "i18n\/.*\.json"
 
-What this means is that it's recommended to instruct your source code bundling software 
+What this means is that it's recommended to instruct your source code bundling software
 (some of the most popular being Webpack and Rollup) not to include all the internationalization files
-(files that match the <code>i18n\/.*\.json</code> pattern) in your applications's javascript bundle, 
-but rather to leave them out. At runtime, they will be fetched on demand, if ever requested. 
+(files that match the <code>i18n\/.*\.json</code> pattern) in your applications's javascript bundle,
+but rather to leave them out. At runtime, they will be fetched on demand, if ever requested.
 Currently there are very few texts that need translation in UI5 Web Components, but these may grow over time
 so it's always a good idea to implement the optimization, suggested above.
 
@@ -215,7 +216,7 @@ HTML ```<form>``` only submits a couple of standard HTML elements such as ```<in
 Web Components that function as inputs, such as UI5's ```<ui5-input>```, ```<ui5-checkbox>```, ```<ui5-textarea>``` are therefore
 not submitted by the form out of the box.
 
-Generally this is not an issue, as very few modern applications submit forms in the classic way. 
+Generally this is not an issue, as very few modern applications submit forms in the classic way.
 
 If you however need to submit forms, you can import the module above and it will enrich:
 - ui5-input
@@ -224,7 +225,7 @@ If you however need to submit forms, you can import the module above and it will
 - ui5-radiobutton
 - ui5-datepicker
 
-with functionality, allowing them to be submitted in forms (provided you set their <code>name</code> attribute) just as 
+with functionality, allowing them to be submitted in forms (provided you set their <code>name</code> attribute) just as
 any standard HTML input element would be.
 
 In addition, the:
