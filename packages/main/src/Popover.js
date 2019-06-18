@@ -81,7 +81,7 @@ const metadata = {
 		 * @defaultvalue false
 		 * @public
 		 */
-		hideArrow: {
+		noArrow: {
 			type: Boolean,
 		},
 
@@ -417,7 +417,7 @@ class Popover extends Popup {
 		this._width = width;
 		this._height = height;
 
-		const arrowOffset = this.hideArrow ? 0 : arrowSize;
+		const arrowOffset = this.noArrow ? 0 : arrowSize;
 
 		// calc popover positions
 		switch (placementType) {
@@ -618,7 +618,7 @@ class Popover extends Popup {
 			},
 			arrow: {
 				sapMPopoverArr: true,
-				sapMPopoverArrHidden: this.hideArrow,
+				sapMPopoverArrHidden: this.noArrow,
 				sapMPopoverArrLeft: placementType === PopoverPlacementType.Right,
 				sapMPopoverArrRight: placementType === PopoverPlacementType.Left,
 				sapMPopoverArrUp: placementType === PopoverPlacementType.Bottom,
