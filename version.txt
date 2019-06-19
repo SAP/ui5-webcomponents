@@ -1,5 +1,7 @@
-commit f0d5e574414b07398a2bff540e9a288873953ea8
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Jun 19 09:07:27 2019 +0300
+commit d61339d947bc9ba76eaf2400b3735724168c1f61
+Author: Elena Stoyanova <elenastoyanovaaa@gmail.com>
+Date:   Wed Jun 19 11:22:44 2019 +0300
 
-    chore: create public API docs, change some feature defaults (#540)
+    refactor(ui5-button): remove aria-disabled (#558)
+    
+    As the button has a disabled attribute the aria-disabled attribute is not needed.
