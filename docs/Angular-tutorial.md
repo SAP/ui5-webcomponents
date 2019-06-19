@@ -2,10 +2,6 @@
 
 In this tutorial, we are going to show how to get add UI5 Web Components in your application. UI5 Web Components can be added to both new Angular application as well as already existing one.
 
-## 0. Prerequisites
-
-All you need in order to go through this tutorial is [Node](https://nodejs.org/).
-
 ## 1. Install Angular CLI: 
 ```
 npm install -g @angular/cli
