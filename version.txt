@@ -1,7 +1,5 @@
-commit 3965a00b5106aa72ac6b657ff72a8dee616b59f6
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Wed Jun 19 13:50:25 2019 +0300
+commit db494fead4e4ee2d588d825f434e663a3cb1179c
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Wed Jun 19 17:17:04 2019 +0300
 
-    refactor(ui5-link): rename type property to design (#505)
-    
-    BREAKING CHANGE: property type is renamed to design
+    doc: add faq.md (#561)
