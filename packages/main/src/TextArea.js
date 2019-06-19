@@ -12,9 +12,6 @@ import { TEXTAREA_CHARACTERS_LEFT, TEXTAREA_CHARACTERS_EXCEEDED } from "./i18n/d
 // Styles
 import styles from "./themes/TextArea.css.js";
 
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
-
 /**
  * @public
  */

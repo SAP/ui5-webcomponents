@@ -16,9 +16,6 @@ import ListTemplate from "./build/compiled/ListTemplate.lit.js";
 // Styles
 import listCss from "./themes/List.css.js";
 
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
-
 /**
  * @public
  */

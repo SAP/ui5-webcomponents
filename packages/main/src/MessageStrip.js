@@ -11,9 +11,6 @@ import { MESSAGE_STRIP_CLOSE_BUTTON } from "./i18n/defaults.js";
 // Styles
 import messageStripCss from "./themes/MessageStrip.css.js";
 
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
-
 /**
  * @public
  */

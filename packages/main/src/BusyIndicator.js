@@ -6,8 +6,7 @@ import BusyIndicatorTemplate from "./build/compiled/BusyIndicatorTemplate.lit.js
 // Styles
 import busyIndicatorCss from "./themes/BusyIndicator.css.js";
 
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
+
 import BusyIndicatorType from "./types/BusyIndicatorType.js";
 
 /**

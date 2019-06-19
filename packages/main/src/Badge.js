@@ -10,9 +10,6 @@ import BadgeTemplate from "./build/compiled/BadgeTemplate.lit.js";
 // Styles
 import badgeCss from "./themes/Badge.css.js";
 
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
-
 /**
  * @public
  */
