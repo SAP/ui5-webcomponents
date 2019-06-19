@@ -2,7 +2,7 @@ import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import URI from "@ui5/webcomponents-base/src/types/URI.js";
 import { isSpace } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-import LinkType from "./types/LinkType.js";
+import LinkDesign from "./types/LinkDesign.js";
 
 // Template
 import LinkRederer from "./build/compiled/LinkRenderer.lit.js";
@@ -73,8 +73,8 @@ const metadata = {
 		 * @public
 		 */
 		design: {
-			type: LinkType,
-			defaultValue: LinkType.Default,
+			type: LinkDesign,
+			defaultValue: LinkDesign.Default,
 		},
 
 		/**
@@ -252,8 +252,8 @@ class Link extends UI5Element {
 		return {
 			main: {
 				sapMLnk: true,
-				sapMLnkSubtle: this.design === LinkType.Subtle,
-				sapMLnkEmphasized: this.design === LinkType.Emphasized,
+				sapMLnkSubtle: this.design === LinkDesign.Subtle,
+				sapMLnkEmphasized: this.design === LinkDesign.Emphasized,
 				sapMLnkWrapping: this.wrap,
 				sapMLnkDsbl: this.disabled,
 				sapMLnkMaxWidth: true,
