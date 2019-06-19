@@ -30,12 +30,12 @@ const ButtonTypes = {
 	Emphasized: "Emphasized",
 };
 
-class ButtonType extends DataType {
+class ButtonDesign extends DataType {
 	static isValid(value) {
 		return !!ButtonTypes[value];
 	}
 }
 
-ButtonType.generataTypeAcessors(ButtonTypes);
+ButtonDesign.generataTypeAcessors(ButtonTypes);
 
-export default ButtonType;
+export default ButtonDesign;

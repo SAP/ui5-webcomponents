@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import URI from "@ui5/webcomponents-base/src/types/URI.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-import ButtonType from "./types/ButtonType.js";
+import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonRenderer from "./build/compiled/ButtonRenderer.lit.js";
 import Icon from "./Icon.js";
 
@@ -25,11 +25,11 @@ const metadata = {
 		 * <b>Note:</b> Available options are "Default", "Emphasized", "Positive",
 		 * "Negative", and "Transparent".
 		 *
-		 * @type {ButtonType}
+		 * @type {ButtonDesign}
 		 * @defaultvalue "Default"
 		 * @public
 		 */
-		design: { type: ButtonType, defaultValue: ButtonType.Default },
+		design: { type: ButtonDesign, defaultValue: ButtonDesign.Default },
 
 		/**
 		 * Defines whether the <code>ui5-button</code> is disabled

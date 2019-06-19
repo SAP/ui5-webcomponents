@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import Button from "./Button.js";
-import ButtonType from "./types/ButtonType.js";
+import ButtonDesign from "./types/ButtonDesign.js";
 import CalendarHeaderRenderer from "./build/compiled/CalendarHeaderRenderer.lit.js";
 
 // Styles
@@ -63,10 +63,10 @@ class CalendarHeader extends UI5Element {
 		this._btnNext.icon = "sap-icon://slim-arrow-right";
 
 		this._btn1 = {};
-		this._btn1.type = ButtonType.Transparent;
+		this._btn1.type = ButtonDesign.Transparent;
 
 		this._btn2 = {};
-		this._btn2.type = ButtonType.Transparent;
+		this._btn2.type = ButtonDesign.Transparent;
 	}
 
 	onBeforeRendering() {
