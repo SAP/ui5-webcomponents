@@ -89,8 +89,8 @@ import "@ui5/webcomponents-base/src/browsersupport/IE11.js";
 ```
 (this also includes Edge support).
 
-In addition, you should load the official Web Components polyfill in your index file, as described in:
-[https://github.com/webcomponents/webcomponentsjs](https://github.com/webcomponents/webcomponentsjs).
+In addition, you should load the official Web Components polyfill in your index file, as described
+[here](https://github.com/webcomponents/polyfills/tree/master/packages/webcomponentsjs).
 
 See the "Using webcomponents-loader.js" section for more details.
 
