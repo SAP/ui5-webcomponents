@@ -2,7 +2,7 @@
 
 **Q: How can I play with UI5 Web Components easily?**
 
-**A:** Use this [Sandbox](https://codesandbox.io/s/71r1x5o51q?fontsize=14&module=%2Findex.html) 
+**A:** Use this [CodeSandBox](https://codesandbox.io/s/71r1x5o51q?fontsize=14&module=%2Findex.html) 
 
 
 **Q: Where is the documentation?**
@@ -20,7 +20,7 @@
 **A:** No. The best practice is to build your own bundle. See [this article](https://blogs.sap.com/2019/04/01/the-fastest-way-to-get-started-with-ui5-web-components/) for details.
 
 
-**Q: Are UI5 Web Components public?**
+**Q: Are UI5 Web Components APIs stable?**
 
 **A:** Not yet, but a 1.0.0 RC is nearing around the end of June 2019
 
