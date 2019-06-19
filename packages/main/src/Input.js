@@ -317,13 +317,6 @@ class Input extends UI5Element {
 		this.ACTION_ENTER = "enter";
 		this.ACTION_USER_INPUT = "input";
 
-		this._input = {
-			onInput: this._onInput.bind(this),
-			change: event => {
-				this.fireEvent(this.EVENT_CHANGE);
-			},
-		};
-
 		this._whenShadowRootReady().then(this.attachFocusHandlers.bind(this));
 	}
 
@@ -401,7 +394,11 @@ class Input extends UI5Element {
 		this.previousValue = "";
 	}
 
-	_onInput(event) {
+	_handleChange(event) {
+		this.fireEvent(this.EVENT_CHANGE);
+	}
+
+	_handleInput(event) {
 		if (event.target === this.getInputDOMRef()) {
 			// stop the native event, as the semantic "input" would be fired.
 			event.stopImmediatePropagation();
