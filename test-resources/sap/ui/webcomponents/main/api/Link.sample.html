@@ -38,18 +38,18 @@
 	</header>
 
 	<section>
-		<h3>Different Link Types</h3>
+		<h3>Different Link Designs</h3>
 		<div class="snippet">
 			<ui5-link class="samples-big-margin-right" href="https://www.sap.com" target="_blank">Standard Link</ui5-link>
-			<ui5-link class="samples-big-margin-right" href="https://www.sap.com" target="_blank" type="Subtle">Subtle link</ui5-link>
+			<ui5-link class="samples-big-margin-right" href="https://www.sap.com" target="_blank" design="Subtle">Subtle link</ui5-link>
 			<ui5-link class="samples-big-margin-right" href="https://www.sap.com" target="_blank" disabled>Disabled</ui5-link>
-			<ui5-link class="samples-big-margin-right" href="https://www.sap.com" target="_blank" type="Emphasized">Emphasized</ui5-link>
+			<ui5-link class="samples-big-margin-right" href="https://www.sap.com" target="_blank" design="Emphasized">Emphasized</ui5-link>
 		</div>
 		<pre class="prettyprint lang-html"><xmp>
 <ui5-link href="https://www.sap.com" target="_blank">Standard Link</ui5-link>
-<ui5-link href="https://www.sap.com" target="_blank" type="Subtle">Subtle link</ui5-link>
+<ui5-link href="https://www.sap.com" target="_blank" design="Subtle">Subtle link</ui5-link>
 <ui5-link href="https://www.sap.com" target="_blank" disabled>Disabled</ui5-link>
-<ui5-link href="https://www.sap.com" target="_blank" type="Emphasized">Emphasized</ui5-link>
+<ui5-link href="https://www.sap.com" target="_blank" design="Emphasized">Emphasized</ui5-link>
 		</xmp></pre>
 	</section>
 
@@ -66,7 +66,7 @@
 
 <h3>Usage</h3>
 
-You can set the <code>ui5-link</code> to be enabled or disabled. <br><br> To create a visual hierarchy in large lists of links, you can set the less important links as <code>Subtle</code> or the more important ones as <code>Emphasized</code> by using the <code>type</code> property. <br><br> If the <code>href</code> property is set, the link behaves as the basic HTML anchor tag (<code><a></code>) and opens the specified URL in the given target frame (<code>target</code> property). To specify where the linked content is opened, you can use the <code>target</code> property.
+You can set the <code>ui5-link</code> to be enabled or disabled. <br><br> To create a visual hierarchy in large lists of links, you can set the less important links as <code>Subtle</code> or the more important ones as <code>Emphasized</code> by using the <code>design</code> property. <br><br> If the <code>href</code> property is set, the link behaves as the basic HTML anchor tag (<code><a></code>) and opens the specified URL in the given target frame (<code>target</code> property). To specify where the linked content is opened, you can use the <code>target</code> property.
 
 <h3>Responsive behavior</h3>
 
@@ -89,6 +89,14 @@ If there is not enough space, the text of the <code>ui5-link</code> becomes trun
                     </div>
             
                       <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">design <br> <code></code></div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell">&quot;Default&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the <code>ui5-link</code> design. <br><br> <b>Note:</b> Avaialble options are <code>Default</code>, <code>Subtle</code>, and <code>Emphasized</code>.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">disabled <br> <code></code></div>
                         <div class="cell api-table-content-cell">boolean</div>
                         <div class="cell api-table-content-cell">false</div>
@@ -96,7 +104,7 @@ If there is not enough space, the text of the <code>ui5-link</code> becomes trun
                             Defines whether the <code>ui5-link</code> is disabled. <br><br> <b>Note:</b> When disabled, the <code>ui5-link</code cannot be triggered by the user.
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">href <br> <code></code></div>
                         <div class="cell api-table-content-cell">string</div>
                         <div class="cell api-table-content-cell">&quot;&quot;</div>
@@ -104,20 +112,12 @@ If there is not enough space, the text of the <code>ui5-link</code> becomes trun
                             Defines the <code>ui5-link</code> href. <br><br> <b>Note:</b> Standard hyperlink behavior is supported.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">target <br> <code></code></div>
                         <div class="cell api-table-content-cell">string</div>
                         <div class="cell api-table-content-cell">&quot;&quot;</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                             Defines the <code>ui5-link</code> target. <br><br> <b>Notes:</b> <ul><li>Available options are the standard values: <code>_self</code>, <code>_top</code>, <code>_blank</code>, <code>_parent</code>, and <code>_search</code>.</li> <li>This property must only be used when the <code>href</code> property is set.</li></ul>
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">type <br> <code></code></div>
-                        <div class="cell api-table-content-cell">string</div>
-                        <div class="cell api-table-content-cell">&quot;Default&quot;</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the <code>ui5-link</code> type. <br><br> <b>Note:</b> Avaialble options are <code>Default</code>, <code>Subtle</code>, and <code>Emphasized</code>.
                         </div>
                       </div>
                       <div class="row api-table-roll-even">

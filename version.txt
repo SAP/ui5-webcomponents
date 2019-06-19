@@ -1,9 +1,7 @@
-commit 9d81d32ce0f345b1ca783b38c38f6fd3a1df8c40
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Jun 19 11:59:50 2019 +0300
+commit 3965a00b5106aa72ac6b657ff72a8dee616b59f6
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Wed Jun 19 13:50:25 2019 +0300
 
-    chore: write a simple how to use article (#557)
+    refactor(ui5-link): rename type property to design (#505)
     
-    * chore: write a simple how to use article
-    
-    * some typos
+    BREAKING CHANGE: property type is renamed to design
