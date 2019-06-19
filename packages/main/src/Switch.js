@@ -80,13 +80,11 @@ const metadata = {
 		/**
 		 * Defines the <code>ui5-switch</code> type.
 		 * <br>
-		 * Available options are <code>Textual</code> and <code>Graphical</code>.
 		 *
-		 * <br><br>
-		 * <b>Note:</b> If <code>Graphical</code> type is set,
+		 * <b>Note:</b> If <code>graphical</code> type is set,
 		 * positive and negative icons will replace the <code>textOn</code> and <code>textOff</code>.
 		 * @type {string}
-		 * @defaultvalue "Textual"
+		 * @defaultvalue false
 		 * @public
 		 */
 		graphical: {
