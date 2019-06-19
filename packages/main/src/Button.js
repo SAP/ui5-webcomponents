@@ -270,10 +270,6 @@ class Button extends UI5Element {
 		};
 	}
 
-	get ariaDisabled() {
-		return this.disabled ? "true" : undefined;
-	}
-
 	get rtl() {
 		return getEffectiveRTL() ? "rtl" : undefined;
 	}
