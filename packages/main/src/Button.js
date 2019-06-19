@@ -5,7 +5,7 @@ import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvent
 import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
 import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
 import { getFeature } from "@ui5/webcomponents-base/src/FeaturesRegistry.js";
-import ButtonType from "./types/ButtonType.js";
+import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonTemplate from "./build/compiled/ButtonTemplate.lit.js";
 import Icon from "./Icon.js";
 
@@ -20,18 +20,18 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.Button.prototype */ {
 
 		/**
-		 * Defines the <code>ui5-button</code> type.
+		 * Defines the <code>ui5-button</code> design.
 		 * </br></br>
 		 * <b>Note:</b> Available options are "Default", "Emphasized", "Positive",
 		 * "Negative", and "Transparent".
 		 *
-		 * @type {ButtonType}
+		 * @type {ButtonDesign}
 		 * @defaultvalue "Default"
 		 * @public
 		 */
-		type: {
-			type: ButtonType,
-			defaultValue: ButtonType.Default,
+		design: {
+			type: ButtonDesign,
+			defaultValue: ButtonDesign.Default,
 		},
 
 		/**
@@ -258,7 +258,7 @@ class Button extends UI5Element {
 				sapMBtnNoText: !this.text.length,
 				sapMBtnDisabled: this.disabled,
 				sapMBtnIconEnd: this.iconEnd,
-				[`sapMBtn${this.type}`]: true,
+				[`sapMBtn${this.design}`]: true,
 				sapUiSizeCompact: getCompactSize(),
 			},
 			icon: {
