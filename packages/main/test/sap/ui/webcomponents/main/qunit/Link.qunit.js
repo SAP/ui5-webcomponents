@@ -112,7 +112,7 @@ TestHelper.ready(function() {
 					prop: 'target',
 					value: expectedTarget
 				}, {
-					prop: 'type',
+					prop: 'design',
 					value: type1
 				}];
 

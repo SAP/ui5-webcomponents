@@ -20,12 +20,12 @@ const LinkTypes = {
 	Emphasized: "Emphasized",
 };
 
-class LinkType extends DataType {
+class LinkDesign extends DataType {
 	static isValid(value) {
 		return !!LinkTypes[value];
 	}
 }
 
-LinkType.generataTypeAcessors(LinkTypes);
+LinkDesign.generataTypeAcessors(LinkTypes);
 
-export default LinkType;
+export default LinkDesign;

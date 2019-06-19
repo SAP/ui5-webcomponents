@@ -2,7 +2,7 @@ import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import { isSpace } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-import LinkType from "./types/LinkType.js";
+import LinkDesign from "./types/LinkDesign.js";
 
 // Template
 import LinkRederer from "./build/compiled/LinkTemplate.lit.js";
@@ -60,7 +60,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the <code>ui5-link</code> type.
+		 * Defines the <code>ui5-link</code> design.
 		 * <br><br>
 		 * <b>Note:</b> Avaialble options are <code>Default</code>, <code>Subtle</code>, and <code>Emphasized</code>.
 		 *
@@ -68,9 +68,9 @@ const metadata = {
 		 * @defaultvalue "Default"
 		 * @public
 		 */
-		type: {
-			type: LinkType,
-			defaultValue: LinkType.Default,
+		design: {
+			type: LinkDesign,
+			defaultValue: LinkDesign.Default,
 		},
 
 		/**
@@ -137,7 +137,7 @@ const metadata = {
  * <br><br>
  * To create a visual hierarchy in large lists of links, you can set the less important links as
  * <code>Subtle</code> or the more important ones as <code>Emphasized</code>
- * by using the <code>type</code> property.
+ * by using the <code>design</code> property.
  * <br><br>
  * If the <code>href</code> property is set, the link behaves as the basic HTML
  * anchor tag (<code><a></code>) and opens the specified URL in the given target frame (<code>target</code> property).
@@ -252,8 +252,8 @@ class Link extends UI5Element {
 		return {
 			main: {
 				sapMLnk: true,
-				sapMLnkSubtle: this.type === LinkType.Subtle,
-				sapMLnkEmphasized: this.type === LinkType.Emphasized,
+				sapMLnkSubtle: this.design === LinkDesign.Subtle,
+				sapMLnkEmphasized: this.design === LinkDesign.Emphasized,
 				sapMLnkWrapping: this.wrap,
 				sapMLnkDsbl: this.disabled,
 				sapMLnkMaxWidth: true,
