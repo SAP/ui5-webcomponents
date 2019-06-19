@@ -98,7 +98,7 @@ will be done internally by your framework of choice.
 	provided by the framework you're using, and the framework will be the one updating it for you.
 	
 	Finally, there are UI5 Web Components that only accept other HTML elements (of any kind or specific ones - check the
-	documentation for each individual Web Components requirements).
+	documentation for each individual Web Component's requirements).
 	
 	For example ```<ui5-popover>``` may contain any HTML element - standard elements and other custom elements alike.
 	
@@ -207,7 +207,7 @@ will be done internally by your framework of choice.
 	if ever, need to call ```addEventListener``` yourself.
 	Please note however that some frameworks (f.e. React) cannot use their standard syntax
 	for binding to custom events, but only for standard ones (such as ```click```). In these cases you
-	should call ```addEventListener manually```.
+	should call ```addEventListener``` manually.
 
 5. How do I call public methods?
 
