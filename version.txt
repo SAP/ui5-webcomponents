@@ -1,7 +1,5 @@
-commit 2314fc3acd855f27cbbd61d94e8b96b3a5c51a35
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Tue Jun 18 16:16:38 2019 +0300
+commit f0d5e574414b07398a2bff540e9a288873953ea8
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Wed Jun 19 09:07:27 2019 +0300
 
-    refactor(ui5-messagestrip): rename hideIcon property to noIcon (#507)
-    
-    BREAKING CHANGE: hideIcon property is renamed to noIcon
+    chore: create public API docs, change some feature defaults (#540)
