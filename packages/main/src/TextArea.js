@@ -180,9 +180,6 @@ const metadata = {
 		_focussed: {
 			type: Boolean,
 		},
-		_listeners: {
-			type: Object,
-		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.TextArea.prototype */ {
 		/**
@@ -249,11 +246,6 @@ class TextArea extends UI5Element {
 		super();
 
 		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
-
-		this._listeners = {
-			change: this._handleChange.bind(this),
-			input: this._handleInput.bind(this),
-		};
 	}
 
 	onBeforeRendering() {

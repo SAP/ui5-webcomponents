@@ -25,8 +25,8 @@
 			?readonly="{{readonly}}"
 			maxlength="{{_exceededTextProps.calcedMaxLength}}"
 			.value="{{value}}"
-			@input="{{_listeners.input}}"
-			@change="{{_listeners.change}}"
+			@input="{{_handleInput}}"
+			@change="{{_handleChange}}"
 			data-sap-focus-ref>
 		</textarea>
 	</div>
