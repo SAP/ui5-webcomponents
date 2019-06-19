@@ -1,16 +1,15 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
-
-import { fetchResourceBundle, getResourceBundle } from "./ResourceBundleProvider.js";
-import TokenizerRenderer from "./build/compiled/TokenizerRenderer.lit.js";
+import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
+import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/src/ResourceBundle.js";
+import TokenizerTemplate from "./build/compiled/TokenizerTemplate.lit.js";
+import { MULTIINPUT_SHOW_MORE_TOKENS } from "./i18n/defaults.js";
 
 // Styles
 import styles from "./themes/Tokenizer.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
 
 /**
  * @public
@@ -67,8 +66,12 @@ class Tokenizer extends UI5Element {
 		return metadata;
 	}
 
-	static get renderer() {
-		return TokenizerRenderer;
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return TokenizerTemplate;
 	}
 
 	static get styles() {
@@ -93,8 +96,9 @@ class Tokenizer extends UI5Element {
 			return this._getTokens();
 		};
 
-		this._delegates.push(this._itemNav);
 		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
+
+		this._delegates.push(this._itemNav);
 	}
 
 	onBeforeRendering() {
@@ -105,7 +109,7 @@ class Tokenizer extends UI5Element {
 		}
 
 		this._lastTokenCount = this.tokens.length;
-		this._nMoreText = this.resourceBundle.getText("MULTIINPUT_SHOW_MORE_TOKENS", [this._hiddenTokens.length]);
+		this._nMoreText = this.resourceBundle.getText(MULTIINPUT_SHOW_MORE_TOKENS, [this._hiddenTokens.length]);
 	}
 
 	onAfterRendering() {
@@ -201,6 +205,7 @@ class Tokenizer extends UI5Element {
 				"ui5-tokenizer-nmore--wrapper": this.showMore,
 				"ui5-tokenizer--wrapper": true,
 				"ui5-tokenizer-no-padding": !this.tokens.length,
+				"sapUiSizeCompact": getCompactSize(),
 			},
 			content: {
 				"ui5-tokenizer--content": true,
@@ -211,6 +216,7 @@ class Tokenizer extends UI5Element {
 
 	static async define(...params) {
 		await fetchResourceBundle("@ui5/webcomponents");
+
 		super.define(...params);
 	}
 }

@@ -1,4 +1,7 @@
-<div class="{{classes.main}}">
+<div
+	class="{{classes.main}}"
+	dir="{{rtl}}"
+>
 	<div class="{{classes.header}}" id="{{_id}}-header">
 		<ui5-icon @ui5-press="{{_headerBackArrow.click}}" class="{{classes.headerBackArrow}}" src="sap-icon://slim-arrow-left" tabindex="-1"></ui5-icon>
 
@@ -69,8 +72,8 @@
 	<!-- overflow menu -->
 	<ui5-popover
 		id="{{_id}}-overflowMenu"
-		hide-arrow
-		hide-header
+		no-arrow
+		no-header
 		placement-type="Bottom"
 		horizontal-align="Right">
 		<ui5-list @ui5-itemPress="{{_overflowList.click}}">

@@ -1,0 +1,22 @@
+:root {
+	--ui5-badge-bg-color-scheme-1: var(--sapUiAccent1Lighten50);
+	--ui5-badge-border-color-scheme-1: var(--sapUiAccent1);
+	--ui5-badge-bg-color-scheme-2: var(--sapUiAccent2Lighten40);
+	--ui5-badge-border-color-scheme-2: var(--sapUiAccent2);
+	--ui5-badge-bg-color-scheme-3: var(--sapUiAccent3Lighten46);
+	--ui5-badge-border-color-scheme-3: var(--sapUiAccent3);
+	--ui5-badge-bg-color-scheme-4:var(--sapUiAccent4Lighten46);
+	--ui5-badge-border-color-scheme-4: var(--sapUiAccent4);
+	--ui5-badge-bg-color-scheme-5: var(--sapUiAccent5Lighten32);
+	--ui5-badge-border-color-scheme-5: var(--sapUiAccent5);
+	--ui5-badge-bg-color-scheme-6: var(--sapUiAccent6Lighten52);
+	--ui5-badge-border-color-scheme-6: var(--sapUiAccent6);
+	--ui5-badge-bg-color-scheme-7: var(--sapUiAccent7Lighten64);
+	--ui5-badge-border-color-scheme-7: var(--sapUiAccent7);
+	--ui5-badge-bg-color-scheme-8: var(--sapUiAccent8Lighten61);
+	--ui5-badge-border-color-scheme-8: var(--sapUiAccent8);
+	--ui5-badge-bg-color-scheme-9: var(--sapUiAccent9Lighten37);
+	--ui5-badge-border-color-scheme-9: var(--sapUiAccent9);
+	--ui5-badge-bg-color-scheme-10: var(--sapUiAccent10Lighten49);
+	--ui5-badge-border-color-scheme-10: var(--sapUiAccent10);
+}

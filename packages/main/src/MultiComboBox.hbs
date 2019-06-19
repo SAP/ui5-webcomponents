@@ -1,4 +1,4 @@
-<div class="ui5-multi-combobox--wrapper">
+<div class="{{classes.main}}">
 	<ui5-input id="ui5-multi-combobox--input"
 		value="{{value}}"
 		placeholder="{{placeholder}}"
@@ -36,8 +36,8 @@
 	<ui5-popover 
 		class="ui5-multi-combobox-selected-items--popover"
 		horizontal-align="Stretch"
-		hide-header
-		?hide-arrow={{editable}}
+		no-header
+		?no-arrow={{editable}}
 		placement-type="Bottom">
 		<ui5-list separators="None" mode="{{selectedItemsListMode}}"
 			@ui5-selectionChange={{_listSelectionChange}}>
@@ -50,8 +50,8 @@
 	</ui5-popover>
 
 	<ui5-popover class="ui5-multi-combobox-all-items--popover"
-		hide-header
-		hide-arrow
+		no-arrow
+		no-header
 		horizontal-align="Stretch"
 		initial-focus="ui5-multi-combobox--input"
 		horizontal-align="Left"

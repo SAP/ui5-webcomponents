@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.12.0](https://github.com/SAP/openui5/compare/v0.11.0...v0.12.0) (2019-06-10)
+
+**Note:** Version bump only for package @ui5/webcomponents-playground
+
+
+
+
+
 ## [0.11.1](https://github.com/SAP/openui5/compare/v0.11.0...v0.11.1) (2019-05-30)
 
 **Note:** Version bump only for package @ui5/webcomponents-playground

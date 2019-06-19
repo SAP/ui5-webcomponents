@@ -1,16 +1,17 @@
 import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
+import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
+import { getFeature } from "@ui5/webcomponents-base/src/FeaturesRegistry.js";
+import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-import CheckBoxRenderer from "./build/compiled/CheckBoxRenderer.lit.js";
+import CheckBoxTemplate from "./build/compiled/CheckBoxTemplate.lit.js";
 import Label from "./Label.js";
 
 // Styles
 import checkboxCss from "./themes/CheckBox.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
 
 /**
  * @public
@@ -175,8 +176,12 @@ class CheckBox extends UI5Element {
 		return metadata;
 	}
 
-	static get renderer() {
-		return CheckBoxRenderer;
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return CheckBoxTemplate;
 	}
 
 	static get styles() {
@@ -202,8 +207,9 @@ class CheckBox extends UI5Element {
 	}
 
 	_enableFormSupport() {
-		if (CheckBox.FormSupport) {
-			CheckBox.FormSupport.syncNativeHiddenInput(this, (element, nativeInput) => {
+		const FormSupport = getFeature("FormSupport");
+		if (FormSupport) {
+			FormSupport.syncNativeHiddenInput(this, (element, nativeInput) => {
 				nativeInput.disabled = element.disabled || !element.checked;
 				nativeInput.value = element.checked ? "on" : "";
 			});
@@ -255,6 +261,7 @@ class CheckBox extends UI5Element {
 				"ui5-checkbox--warning": this.valueState === "Warning",
 				"ui5-checkbox--wrap": this.wrap,
 				"ui5-checkbox--hoverable": !this.disabled && !this.readonly && isDesktop(),
+				"sapUiSizeCompact": getCompactSize(),
 			},
 			inner: {
 				"ui5-checkbox-inner": true,
@@ -274,6 +281,10 @@ class CheckBox extends UI5Element {
 
 	get tabIndex() {
 		return this.disabled ? undefined : "0";
+	}
+
+	get rtl() {
+		return getEffectiveRTL() ? "rtl" : undefined;
 	}
 
 	static async define(...params) {

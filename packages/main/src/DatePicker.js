@@ -1,11 +1,13 @@
 import "@ui5/webcomponents-base/src/shims/jquery-shim.js";
 import "@ui5/webcomponents-base/src/shims/Core-shim.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import { fetchCldrData } from "@ui5/webcomponents-base/src/CLDR.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { getCalendarType } from "@ui5/webcomponents-base/src/Configuration.js";
 import { getLocale } from "@ui5/webcomponents-base/src/LocaleProvider.js";
 import { getIconURI } from "@ui5/webcomponents-base/src/IconPool.js";
+import { getFeature } from "@ui5/webcomponents-base/src/FeaturesRegistry.js";
 import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData.js";
 import DateFormat from "@ui5/webcomponents-core/dist/sap/ui/core/format/DateFormat.js";
 import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType.js";
@@ -19,16 +21,13 @@ import PopoverPlacementType from "./types/PopoverPlacementType.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import Input from "./Input.js";
 import InputType from "./types/InputType.js";
-import DatePickerRenderer from "./build/compiled/DatePickerRenderer.lit.js";
+import DatePickerTemplate from "./build/compiled/DatePickerTemplate.lit.js";
 
 // default calendar for bundling
 import "@ui5/webcomponents-core/dist/sap/ui/core/date/Gregorian.js";
 
 // Styles
 import datePickerCss from "./themes/DatePicker.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
 
 /**
  * @public
@@ -227,8 +226,12 @@ class DatePicker extends UI5Element {
 		return metadata;
 	}
 
-	static get renderer() {
-		return DatePickerRenderer;
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return DatePickerTemplate;
 	}
 
 	static get styles() {
@@ -247,8 +250,8 @@ class DatePicker extends UI5Element {
 		this._popover = {
 			placementType: PopoverPlacementType.Bottom,
 			horizontalAlign: PopoverHorizontalAlign.Left,
-			hideHeader: true,
-			hideArrow: true,
+			noHeader: true,
+			noArrow: true,
 			allowTargetOverlap: true,
 			stayOpenOnScroll: true,
 			afterClose: () => {
@@ -308,8 +311,9 @@ class DatePicker extends UI5Element {
 			this._calendar.selectedDates = [];
 		}
 
-		if (DatePicker.FormSupport) {
-			DatePicker.FormSupport.syncNativeHiddenInput(this);
+		const FormSupport = getFeature("FormSupport");
+		if (FormSupport) {
+			FormSupport.syncNativeHiddenInput(this);
 		} else if (this.name) {
 			console.warn(`In order for the "name" property to have effect, you should also: import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";`); // eslint-disable-line
 		}

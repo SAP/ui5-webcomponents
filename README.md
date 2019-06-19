@@ -33,9 +33,6 @@ UI5 remains what it is: the best choice for…
 - [UI5 Web Components](https://sap.github.io/ui5-webcomponents)
 - [UI5 Web Components - Playground and API Reference](https://sap.github.io/ui5-webcomponents/playground/)
 
-## Requirements
-- [Node.js](https://nodejs.org/) (**version 8.5 or higher** ⚠️)
-
 ## Download and Installation
 To consume UI5 Web Components, first you need to install the NPM module:
 
@@ -48,7 +45,7 @@ Import the desired component(s) in your app to define the UI5 Web Component.
 For example, to use ```ui5-button``` you need to import it:
 
 ```js
-import "@ui5/webcomponents/dist/Button"; // loads ui5-button
+import "@ui5/webcomponents/dist/Button.js"; // loads ui5-button
 ```
 
 Then, you can use the custom element in an HTML page:
@@ -66,13 +63,13 @@ If your application should run on browsers without native Web Components support
 ### Edge only
 
 ```js
-import "@ui5/webcomponents-base/src/browsersupport/Edge";
+import "@ui5/webcomponents-base/src/browsersupport/Edge.js";
 ```
 
 ### Edge and IE11
 
 ```js
-import "@ui5/webcomponents-base/src/browsersupport/IE11";
+import "@ui5/webcomponents-base/src/browsersupport/IE11.js";
 ```
 
 *Note:* Importing the module for IE11 support automatically enables Edge support as well, so there is no need to import them both explicitly.
@@ -80,13 +77,13 @@ import "@ui5/webcomponents-base/src/browsersupport/IE11";
 Example:
 
 ```js
-import "@ui5/webcomponents-base/src/browsersupport/IE11"; // This will enable Edge and IE11 support for all Web Components below
-import "@ui5/webcomponents/dist/Button"; // loads ui5-button
-import "@ui5/webcomponents/dist/Label"; // loads ui5-label
+import "@ui5/webcomponents-base/src/browsersupport/IE11.js"; // This will enable Edge and IE11 support for all Web Components below
+import "@ui5/webcomponents/dist/Button.js"; // loads ui5-button
+import "@ui5/webcomponents/dist/Label.js"; // loads ui5-label
 ```
 
 ## Configure
-UI5 Web Components have built-in internalization and globalization support. Language, compact/cozy switch, date/time settings and theme can be changed with parameters.
+UI5 Web Components have built-in internationalization and globalization support. Language, compact/cozy switch, date/time settings and theme can be changed with parameters.
 
 To provide configuration settings, create a ```script``` tag having ```data-id="sap-ui-config"``` and ```type="application/json"```:
 
@@ -106,7 +103,7 @@ UI5 Web Components support right-to-left text direction (RTL). To enable RTL glo
 ```html
 <script data-id="sap-ui-config" type="application/json">
 {
-  "language": "EN",
+  "language": "en",
   "rtl": true
 }
 </script>
@@ -138,6 +135,7 @@ UI5 Web Components support different calendar types (Gregorian, Islamic, Japanes
 
 ### Requirements
 - [Yarn](https://yarnpkg.com/en)
+- [Node.js](https://nodejs.org/) (**version 8.5 or higher**)
 
 You can clone the UI5 Web Components repository and start the Playground app with the following commands:
 

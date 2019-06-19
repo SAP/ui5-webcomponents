@@ -1,15 +1,13 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 
 import { isPhone } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 import Popup from "./Popup.js";
 // Template
-import DialogRenderer from "./build/compiled/DialogRenderer.lit.js";
+import DialogTemplate from "./build/compiled/DialogTemplate.lit.js";
 
 // Styles
 import dialogCss from "./themes/Dialog.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
 
 /**
  * @public
@@ -71,8 +69,12 @@ class Dialog extends Popup {
 		return metadata;
 	}
 
-	static get renderer() {
-		return DialogRenderer;
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return DialogTemplate;
 	}
 
 	static get styles() {

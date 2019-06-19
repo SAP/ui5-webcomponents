@@ -1,8 +1,10 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { isIE } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
-
+import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
+import { getFeature } from "@ui5/webcomponents-base/src/FeaturesRegistry.js";
 import {
 	isUp,
 	isDown,
@@ -12,14 +14,11 @@ import {
 import Icon from "./Icon.js";
 import InputType from "./types/InputType.js";
 // Template
-import InputRenderer from "./build/compiled/InputRenderer.lit.js";
+import InputTemplate from "./build/compiled/InputTemplate.lit.js";
 
 // Styles
 import styles from "./themes/Input.css.js";
 import shellbarInput from "./themes/ShellBarInput.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
 
 /**
  * @public
@@ -280,8 +279,12 @@ class Input extends UI5Element {
 		return metadata;
 	}
 
-	static get renderer() {
-		return InputRenderer;
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return InputTemplate;
 	}
 
 	static get styles() {
@@ -329,8 +332,9 @@ class Input extends UI5Element {
 			this.enableSuggestions();
 		}
 
-		if (Input.FormSupport) {
-			Input.FormSupport.syncNativeHiddenInput(this);
+		const FormSupport = getFeature("FormSupport");
+		if (FormSupport) {
+			FormSupport.syncNativeHiddenInput(this);
 		} else if (this.name) {
 			console.warn(`In order for the "name" property to have effect, you should also: import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";`); // eslint-disable-line
 		}
@@ -422,11 +426,11 @@ class Input extends UI5Element {
 			return;
 		}
 
-		try {
-			const Suggestions = Input.getSuggestions();
+		const Suggestions = getFeature("InputSuggestions");
+		if (Suggestions) {
 			this.Suggestions = new Suggestions(this, "suggestionItems");
-		} catch (err) {
-			throw new Error(`You have to import @ui5/webcomponents/dist/InputSuggestions module to use ui5-input suggestions:: ${err}`);
+		} else {
+			throw new Error(`You have to import "@ui5/webcomponents/dist/InputSuggestions.js" module to use ui5-input suggestions`);
 		}
 	}
 
@@ -534,6 +538,7 @@ class Input extends UI5Element {
 				sapWCInput: true,
 				sapWCInputFocused: this._focused,
 				sapWCFocus: this._focused,
+				sapUiSizeCompact: getCompactSize(),
 			},
 			wrapper: {
 				sapWCInputBaseContentWrapper: true,

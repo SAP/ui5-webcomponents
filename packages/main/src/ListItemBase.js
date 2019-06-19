@@ -1,11 +1,12 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper.js";
 import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
+import { isDesktop, isPhone } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
+import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
+import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
 
 // Styles
 import styles from "./themes/ListItemBase.css.js";
-
 
 /**
  * @public
@@ -110,11 +111,17 @@ class ListItemBase extends UI5Element {
 				"sapMLIB-CTX": true,
 				sapMLIBShowSeparator: true,
 				sapMLIBFocusable: isDesktop(),
+				"sap-phone": isPhone(),
+				"sapUiSizeCompact": getCompactSize(),
 			},
 			inner: {
 				sapMLIBContent: true,
 			},
 		};
+	}
+
+	get rtl() {
+		return getEffectiveRTL() ? "rtl" : undefined;
 	}
 }
 

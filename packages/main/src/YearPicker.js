@@ -1,7 +1,8 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData.js";
-import { getCalendarType } from "@ui5/webcomponents-base/src/Configuration.js";
+import { getCalendarType, getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
 import { getFormatLocale } from "@ui5/webcomponents-base/src/FormatSettings.js";
 import { isEnter, isSpace } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
@@ -10,13 +11,10 @@ import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
 import DateFormat from "@ui5/webcomponents-core/dist/sap/ui/core/format/DateFormat.js";
 import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType.js";
 import CalendarDate from "@ui5/webcomponents-base/src/dates/CalendarDate.js";
-import YearPickerRenderer from "./build/compiled/YearPickerRenderer.lit.js";
+import YearPickerTemplate from "./build/compiled/YearPickerTemplate.lit.js";
 
 // Styles
 import styles from "./themes/YearPicker.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
 
 /**
  * @public
@@ -83,8 +81,12 @@ class YearPicker extends UI5Element {
 		return styles;
 	}
 
-	static get renderer() {
-		return YearPickerRenderer;
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return YearPickerTemplate;
 	}
 
 	constructor() {
@@ -257,6 +259,10 @@ class YearPicker extends UI5Element {
 
 	get classes() {
 		return {
+			main: {
+				sapWCYearPicker: true,
+				sapUiSizeCompact: getCompactSize(),
+			},
 			yearInterval: {
 				sapWCYearPickerIntervalContainer: true,
 			},

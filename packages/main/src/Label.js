@@ -1,14 +1,12 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 
 // Template
-import LabelRenderer from "./build/compiled/LabelRenderer.lit.js";
+import LabelTemplate from "./build/compiled/LabelTemplate.lit.js";
 
 // Styles
 import labelCss from "./themes/Label.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
 
 /**
  * @public
@@ -71,7 +69,6 @@ const metadata = {
 		},
 	},
 	defaultSlot: "text",
-	renderer: LabelRenderer,
 };
 
 /**
@@ -107,8 +104,12 @@ class Label extends UI5Element {
 		return metadata;
 	}
 
-	static get renderer() {
-		return LabelRenderer;
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return LabelTemplate;
 	}
 
 	static get styles() {

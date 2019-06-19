@@ -1,9 +1,10 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
 import { isShow, isDown } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-
-import MultiComboBoxRenderer from "./build/compiled/MultiComboBoxRenderer.lit.js";
+import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
+import MultiComboBoxTemplate from "./build/compiled/MultiComboBoxTemplate.lit.js";
 import Input from "./Input.js";
 import Tokenizer from "./Tokenizer.js";
 import Token from "./Token.js";
@@ -14,9 +15,6 @@ import StandardListItem from "./StandardListItem.js";
 
 // Styles
 import styles from "./themes/MultiComboBox.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
 
 /**
  * @public
@@ -216,8 +214,12 @@ class MultiComboBox extends UI5Element {
 		return metadata;
 	}
 
-	static get renderer() {
-		return MultiComboBoxRenderer;
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return MultiComboBoxTemplate;
 	}
 
 	static get styles() {
@@ -388,6 +390,10 @@ class MultiComboBox extends UI5Element {
 
 	get classes() {
 		return {
+			main: {
+				"ui5-multi-combobox--wrapper": true,
+				"sapUiSizeCompact": getCompactSize(),
+			},
 			icon: {
 				[`ui5-multi-combobox-icon-pressed`]: this._iconPressed,
 				[`ui5-multi-combobox--icon`]: true,

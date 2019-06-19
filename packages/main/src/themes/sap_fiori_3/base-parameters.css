@@ -22,16 +22,16 @@
 	--sapPrimary6: #32363a;
 	--sapPrimary7: #6a6d70;
 
-	--sapAccentColor1: #e38b16;
-	--sapAccentColor2: #dc7474;
+	--sapAccentColor1: #d08014;
+	--sapAccentColor2: #d04343;
 	--sapAccentColor3: #db1f77;
 	--sapAccentColor4: #c0399f;
 	--sapAccentColor5: #6367de;
-	--sapAccentColor6: #5899da;
-	--sapAccentColor7: #13a4b4;
+	--sapAccentColor6: #286eb4;
+	--sapAccentColor7: #0f828f;
 	--sapAccentColor8: #7ca10c;
-	--sapAccentColor9: #925ace;
-	--sapAccentColor10: #8497a4;
+	--sapAccentColor9: #925ace; 
+	--sapAccentColor10: #647987;
 
 	--sapErrorBorderColor: var(--sapNegativeColor);
 	--sapWarningBorderColor: var(--sapCriticalColor);

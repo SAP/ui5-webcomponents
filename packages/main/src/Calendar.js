@@ -1,6 +1,7 @@
 import "@ui5/webcomponents-base/src/shims/jquery-shim.js";
 import "@ui5/webcomponents-base/src/shims/Core-shim.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import { fetchCldrData } from "@ui5/webcomponents-base/src/CLDR.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { getLocale } from "@ui5/webcomponents-base/src/LocaleProvider.js";
@@ -15,16 +16,13 @@ import CalendarHeader from "./CalendarHeader.js";
 import DayPicker from "./DayPicker.js";
 import MonthPicker from "./MonthPicker.js";
 import YearPicker from "./YearPicker.js";
-import CalendarRenderer from "./build/compiled/CalendarRenderer.lit.js";
+import CalendarTemplate from "./build/compiled/CalendarTemplate.lit.js";
 
 // default calendar for bundling
 import "@ui5/webcomponents-core/dist/sap/ui/core/date/Gregorian.js";
 
 // Styles
 import calendarCSS from "./themes/Calendar.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
 
 /**
  * @public
@@ -115,8 +113,12 @@ class Calendar extends UI5Element {
 		return metadata;
 	}
 
-	static get renderer() {
-		return CalendarRenderer;
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return CalendarTemplate;
 	}
 
 	static get styles() {

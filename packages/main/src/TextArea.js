@@ -1,15 +1,16 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import CSSSize from "@ui5/webcomponents-base/src/types/CSSSize.js";
 import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
-import TextAreaRenderer from "./build/compiled/TextAreaRenderer.lit.js";
-import { fetchResourceBundle, getResourceBundle } from "./ResourceBundleProvider.js";
+import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/src/ResourceBundle.js";
+import { getFeature } from "@ui5/webcomponents-base/src/FeaturesRegistry.js";
+import TextAreaTemplate from "./build/compiled/TextAreaTemplate.lit.js";
+
+import { TEXTAREA_CHARACTERS_LEFT, TEXTAREA_CHARACTERS_EXCEEDED } from "./i18n/defaults.js";
 
 // Styles
 import styles from "./themes/TextArea.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
 
 /**
  * @public
@@ -224,18 +225,22 @@ class TextArea extends UI5Element {
 		return styles;
 	}
 
-	static get renderer() {
-		return TextAreaRenderer;
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return TextAreaTemplate;
 	}
 
 	constructor() {
 		super();
 
+		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
+
 		this._listeners = {
 			change: this._handleChange.bind(this),
 		};
-
-		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
@@ -247,8 +252,9 @@ class TextArea extends UI5Element {
 			this._maxHeight = `${this.growingMaxLines * 1.4 * 14 + 9}px`;
 		}
 
-		if (TextArea.FormSupport) {
-			TextArea.FormSupport.syncNativeHiddenInput(this);
+		const FormSupport = getFeature("FormSupport");
+		if (FormSupport) {
+			FormSupport.syncNativeHiddenInput(this);
 		} else if (this.name) {
 			console.warn(`In order for the "name" property to have effect, you should also: import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";`); // eslint-disable-line
 		}
@@ -319,9 +325,9 @@ class TextArea extends UI5Element {
 				leftCharactersCount = maxLength - this.value.length;
 
 				if (leftCharactersCount >= 0) {
-					exceededText = this.resourceBundle.getText("TEXTAREA_CHARACTERS_LEFT", [leftCharactersCount]);
+					exceededText = this.resourceBundle.getText(TEXTAREA_CHARACTERS_LEFT, [leftCharactersCount]);
 				} else {
-					exceededText = this.resourceBundle.getText("TEXTAREA_CHARACTERS_EXCEEDED", [Math.abs(leftCharactersCount)]);
+					exceededText = this.resourceBundle.getText(TEXTAREA_CHARACTERS_EXCEEDED, [Math.abs(leftCharactersCount)]);
 				}
 			}
 		} else {

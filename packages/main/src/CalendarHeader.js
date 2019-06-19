@@ -1,15 +1,16 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
+import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
 import Button from "./Button.js";
 import ButtonDesign from "./types/ButtonDesign.js";
-import CalendarHeaderRenderer from "./build/compiled/CalendarHeaderRenderer.lit.js";
+import CalendarHeaderTemplate from "./build/compiled/CalendarHeaderTemplate.lit.js";
 
 // Styles
 import styles from "./themes/CalendarHeader.css.js";
 
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
 
 const metadata = {
 	tag: "ui5-calendar-header",
@@ -46,8 +47,12 @@ class CalendarHeader extends UI5Element {
 		return metadata;
 	}
 
-	static get renderer() {
-		return CalendarHeaderRenderer;
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return CalendarHeaderTemplate;
 	}
 
 	static get styles() {
@@ -123,6 +128,7 @@ class CalendarHeader extends UI5Element {
 		return {
 			main: {
 				sapWCCalHead: true,
+				sapUiSizeCompact: getCompactSize(),
 			},
 			buttons: {
 				sapWCCalHeadArrowButton: true,
@@ -132,6 +138,10 @@ class CalendarHeader extends UI5Element {
 				sapWCCalHeadArrowButton: true,
 			},
 		};
+	}
+
+	get rtl() {
+		return getEffectiveRTL() ? "rtl" : undefined;
 	}
 
 	static async define(...params) {

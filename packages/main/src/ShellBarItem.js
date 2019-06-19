@@ -1,12 +1,9 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import URI from "@ui5/webcomponents-base/src/types/URI.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 
 // Template
-import ShellBarItemRenderer from "./build/compiled/ShellBarItemRenderer.lit.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
+import ShellBarItemTemplate from "./build/compiled/ShellBarItemTemplate.lit.js";
 
 /**
  * @public
@@ -16,12 +13,11 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.ShellBarItem.prototype */ {
 		/**
 		 * Defines the item source URI.
-		 * @type {URI}
+		 * @type {string}
 		 * @public
 		 */
 		src: {
-			type: URI,
-			defaultValue: null,
+			type: String,
 		},
 
 		/**
@@ -72,8 +68,12 @@ class ShellBarItem extends UI5Element {
 		return metadata;
 	}
 
-	static get renderer() {
-		return ShellBarItemRenderer;
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return ShellBarItemTemplate;
 	}
 }
 

@@ -1,0 +1,196 @@
+:host(ui5-badge:not([hidden])) {
+	display: inline-flex;
+	height: 1.125rem;
+	min-width: 1.125rem;
+	max-width: 100%;
+	padding: 0 0.625rem;
+	color: var(--sapUiBaseText);
+	background: var(--ui5-badge-bg-color-scheme-1);
+	border: solid 1px var(--ui5-badge-border-color-scheme-1);
+	border-radius: 1.125rem;
+	box-sizing: border-box;
+	font-size: var(--sapMFontSmallSize);
+	font-family: var(--sapUiFontFamily);
+	text-align: center;
+}
+
+/* Bagde with Icon */
+:host(ui5-badge[__has-icon]) {
+	padding: 0 0.3125rem;
+}
+
+:host(ui5-badge[__has-icon]) .ui5-badge-text {
+	padding-left: 0.1875rem;
+}
+
+/* RTL */
+:host(ui5-badge[__has-icon]) .ui5-badge-wrapper[rtl] .ui5-badge-text {
+	padding-right: 0.1875rem;
+}
+
+/* Scheme 1 */
+:host(ui5-badge[color-scheme="1"]) {  
+	background-color: var(--ui5-badge-bg-color-scheme-1);
+	border-color: var(--ui5-badge-border-color-scheme-1);
+}
+
+/* Scheme 2 */
+:host(ui5-badge[color-scheme="2"]) { 
+	background-color: var(--ui5-badge-bg-color-scheme-2);
+	border-color: var(--ui5-badge-border-color-scheme-2);
+}
+
+/* Scheme 3 */
+:host(ui5-badge[color-scheme="3"]) { 
+	background-color: var(--ui5-badge-bg-color-scheme-3);
+	border-color: var(--ui5-badge-border-color-scheme-3);
+}
+
+/* Scheme 4 */
+:host(ui5-badge[color-scheme="4"]) { 
+	background-color: var(--ui5-badge-bg-color-scheme-4);
+	border-color: var(--ui5-badge-border-color-scheme-4);
+}
+
+/* Scheme 5 */
+:host(ui5-badge[color-scheme="5"]) { 
+	background-color: var(--ui5-badge-bg-color-scheme-5);
+	border-color: var(--ui5-badge-border-color-scheme-5);
+}
+
+/* Scheme 6 */
+:host(ui5-badge[color-scheme="6"]) { 
+	background-color: var(--ui5-badge-bg-color-scheme-6);
+	border-color: var(--ui5-badge-border-color-scheme-6);
+}
+
+/* Scheme 7 */
+:host(ui5-badge[color-scheme="7"]) { 
+	background-color: var(--ui5-badge-bg-color-scheme-7);
+	border-color: var(--ui5-badge-border-color-scheme-7);
+}
+
+/* Scheme 8 */
+:host(ui5-badge[color-scheme="8"]) { 
+	background-color: var(--ui5-badge-bg-color-scheme-8);
+	border-color: var(--ui5-badge-border-color-scheme-8);
+}
+
+/* Scheme 9 */
+:host(ui5-badge[color-scheme="9"]) { 
+	background-color: var(--ui5-badge-bg-color-scheme-9);
+	border-color: var(--ui5-badge-border-color-scheme-9);
+}
+
+/* Scheme 10 */
+:host(ui5-badge[color-scheme="10"]) { 
+	background-color: var(--ui5-badge-bg-color-scheme-10);
+	border-color: var(--ui5-badge-border-color-scheme-10);
+}
+
+.ui5-badge-wrapper {
+	display: inline-flex;
+	align-items: center;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.ui5-badge-text {
+	width: 100%;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	text-transform: uppercase;
+	letter-spacing: 0.0125rem;
+}
+
+/* ================================== */
+/* ======= IE pair of styles ======== */
+/* ================================== */
+ui5-badge:not([hidden]) {
+	display: inline-flex;
+	height: 1.125rem;
+	min-width: 1.125rem;
+	max-width: 100%;
+	padding: 0 0.625rem;
+	color: var(--sapUiBaseText);
+	background: var(--ui5-badge-bg-color-scheme-1);
+	border: solid 1px var(--ui5-badge-border-color-scheme-1);
+	border-radius: 1.125rem;
+	box-sizing: border-box;
+	font-size: var(--sapMFontSmallSize);
+	font-family: var(--sapUiFontFamily);
+	text-align: center;
+}
+
+ui5-badge[__has-icon] {
+	padding: 0 0.3125rem;
+}
+
+ui5-badge[__has-icon] .ui5-badge-text {
+	padding-left: 0.1875rem;
+}
+
+ui5-badge[__has-icon] .ui5-badge-wrapper[rtl] .ui5-badge-text {
+	padding-right: 0.1875rem;
+}
+
+/* Scheme 1 */
+ui5-badge[color-scheme="1"] {  
+	background-color: var(--ui5-badge-bg-color-scheme-1);
+	border-color: var(--ui5-badge-border-color-scheme-1);
+}
+
+/* Scheme 2 */
+ui5-badge[color-scheme="2"] { 
+	background-color: var(--ui5-badge-bg-color-scheme-2);
+	border-color: var(--ui5-badge-border-color-scheme-2);
+}
+
+/* Scheme 3 */
+ui5-badge[color-scheme="3"] { 
+	background-color: var(--ui5-badge-bg-color-scheme-3);
+	border-color: var(--ui5-badge-border-color-scheme-3);
+}
+
+/* Scheme 4 */
+ui5-badge[color-scheme="4"] { 
+	background-color: var(--ui5-badge-bg-color-scheme-4);
+	border-color: var(--ui5-badge-border-color-scheme-4);
+}
+
+/* Scheme 5 */
+ui5-badge[color-scheme="5"] { 
+	background-color: var(--ui5-badge-bg-color-scheme-5);
+	border-color: var(--ui5-badge-border-color-scheme-5);
+}
+
+/* Scheme 6 */
+ui5-badge[color-scheme="6"] { 
+	background-color: var(--ui5-badge-bg-color-scheme-6);
+	border-color: var(--ui5-badge-border-color-scheme-6);
+}
+
+/* Scheme 7 */
+ui5-badge[color-scheme="7"] { 
+	background-color: var(--ui5-badge-bg-color-scheme-7);
+	border-color: var(--ui5-badge-border-color-scheme-7);
+}
+
+/* Scheme 8 */
+ui5-badge[color-scheme="8"] { 
+	background-color: var(--ui5-badge-bg-color-scheme-8);
+	border-color: var(--ui5-badge-border-color-scheme-8);
+}	
+
+/* Scheme 9 */
+ui5-badge[color-scheme="9"] { 
+	background-color: var(--ui5-badge-bg-color-scheme-9);
+	border-color: var(--ui5-badge-border-color-scheme-9);
+}
+
+/* Scheme 10 */
+ui5-badge[color-scheme="10"] { 
+	background-color: var(--ui5-badge-bg-color-scheme-10);
+	border-color: var(--ui5-badge-border-color-scheme-10);
+}

@@ -1,0 +1,7 @@
+<div class="ui5-badge-wrapper" dir="{{rtl}}">
+	<slot name="icon"></slot>
+
+	{{#if hasText}}
+		<label class="ui5-badge-text"><bdi><slot></slot></bdi></label>
+	{{/if}}
+</div>
