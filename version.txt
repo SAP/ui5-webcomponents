@@ -1,7 +1,9 @@
-commit d61339d947bc9ba76eaf2400b3735724168c1f61
-Author: Elena Stoyanova <elenastoyanovaaa@gmail.com>
-Date:   Wed Jun 19 11:22:44 2019 +0300
+commit 9d81d32ce0f345b1ca783b38c38f6fd3a1df8c40
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Wed Jun 19 11:59:50 2019 +0300
 
-    refactor(ui5-button): remove aria-disabled (#558)
+    chore: write a simple how to use article (#557)
     
-    As the button has a disabled attribute the aria-disabled attribute is not needed.
+    * chore: write a simple how to use article
+    
+    * some typos
