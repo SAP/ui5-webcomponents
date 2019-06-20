@@ -1,9 +1,5 @@
-commit 2e4486bade06138da19aca0dfa26a30d7a242a57
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Thu Jun 20 11:39:26 2019 +0300
+commit 2d94b6010ee37d4f4382e652d2eefc92034b6a8c
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Thu Jun 20 13:07:51 2019 +0300
 
-    refactor(ui5-select): change default slot from list items to options (#532)
-    
-    This change makes the ui5-select web component use dedicated items: ui5-option instead of ui5-li
-    
-    BREAKING CHANGE: Use ui5-option instead of ui5-li in ui5-select
+    fix(ui5-switch): change getters names (#566)
