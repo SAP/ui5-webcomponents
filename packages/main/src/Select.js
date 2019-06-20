@@ -246,7 +246,7 @@ class Select extends UI5Element {
 		if (FormSupport) {
 			FormSupport.syncNativeHiddenInput(this, (element, nativeInput) => {
 				nativeInput.disabled = element.disabled;
-				nativeInput.value = element.selectedOption;
+				nativeInput.value = element.selectedOption.value;
 			});
 		} else if (this.name) {
 			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/InputElementsFormSupport.js";`); // eslint-disable-line
