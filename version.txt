@@ -1,5 +1,5 @@
-commit 0f010a67145a424c1ff32a243bf74b889f2e359e
+commit 5bd0c883d8344334f22d14eb9a9d93cefc2b5abb
 Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu Jun 20 10:25:30 2019 +0300
+Date:   Thu Jun 20 10:40:05 2019 +0300
 
-    remove binding from event handlers (#562)
+    Update link in docs (#563)
