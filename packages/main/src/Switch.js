@@ -172,11 +172,11 @@ class Switch extends UI5Element {
 		}
 	}
 
-	get _TextOn() {
+	get _textOn() {
 		return this.graphical ? "" : this.textOn;
 	}
 
-	get _TextOff() {
+	get _textOff() {
 		return this.graphical ? "" : this.textOff;
 	}
 
