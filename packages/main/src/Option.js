@@ -38,6 +38,20 @@ const metadata = {
 	events: /** @lends sap.ui.webcomponents.main.Option.prototype */ {},
 };
 
+/**
+ * @class
+ *
+ * <h3 class="comment-api-title">Overview</h3>
+ *
+ * The <code>ui5-option</code> component defines the content of an opton in the <code>ui5-select</code>.
+ *
+ * @constructor
+ * @author SAP SE
+ * @alias sap.ui.webcomponents.main.Option
+ * @extends sap.ui.webcomponents.base.UI5Element
+ * @tagname ui5-option
+ * @public
+ */
 class Option extends UI5Element {
 	static get metadata() {
 		return metadata;
