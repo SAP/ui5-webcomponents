@@ -65,7 +65,7 @@
 
 	// Select
 	select.addEventListener("ui5-change", function(e) {
-		lbl.innerHTML = "selected item :: " + e.detail.selectedItem.textContent + " :: " + (++counter);
+		lbl.innerHTML = "selected item :: " + e.detail.selectedOption.textContent + " :: " + (++counter);
 		inputResult.value = counter;
 	});
 

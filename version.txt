@@ -1,5 +1,9 @@
-commit 2d94b6010ee37d4f4382e652d2eefc92034b6a8c
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu Jun 20 13:07:51 2019 +0300
+commit 89e3508db7a0426e52abfeca449fa589eeb4936e
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Thu Jun 20 13:29:13 2019 +0300
 
-    fix(ui5-switch): change getters names (#566)
+    feat: add form support for ui5-select (#565)
+    
+    ui5-select gets "name" attribute, ui5-option gets "value" attribute
+    
+    BREAKING CHANGE: the parameter of the change event is now called "selectedOption"; ui5-select enforces ui5-option as children in the metadata
