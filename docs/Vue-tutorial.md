@@ -1,35 +1,41 @@
-# Get started with UI5 Web Components & VueJS
+# Get Started with UI5 Web Components & VueJS
 
-In this tutorial, we are going to show how to get add UI5 Web Components in your application. UI5 Web Components can be added to both new VueJS application as well as already existing one.
+In this tutorial you will learn how to add UI5 Web Components to your application. The UI5 Web Components can be added both to new VueJS applications, as well as already existing ones.
 
-## 1. Install Vue CLI:
+## Step 1. Install Vue CLI:
 ```
 npm install -g @vue/cli
 ```
 
-## 2. Init new appp:
+## Step 2. Init New App:
 ```
 vue create ui5-web-components-application
 cd ui5-web-components-application
 ```
 
-## 3. Add UI5 Web Components:
+## Step 3. Add UI5 Web Components:
 ```
 npm install @ui5/webcomponents --save
 ```
 
-## 4. Add UI5 Web Components to Vue ignoredElement by adding the following line to your ```main.js``` file
+## Step 4. Add UI5 Web Components to Vue ignoredElement
+Add the following line to your ```main.js``` file:
 
 ```js
 Vue.config.ignoredElements = [/^ui5-/];
 ```
 
-## 5. Import the components that you are going to use:
+## Step 5. Import the Components That You Are Going to Use:
 ```js
 import "@ui5/webcomponents/dist/Button";
 ```
 
-## 6. Use the imported elements in your application:
+## Step 6. Use the Imported Elements in Your Application:
 ```html
 <ui5-button>Hello world!</ui5-button>
+```
+
+## Step 7: Launch the Application:
+```
+yarn serve
 ```
