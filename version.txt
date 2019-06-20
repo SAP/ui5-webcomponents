@@ -1,5 +1,5 @@
-commit 5bd0c883d8344334f22d14eb9a9d93cefc2b5abb
+commit e2c8f5e2e5401ceac25253b2461f92876acb4b26
 Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu Jun 20 10:40:05 2019 +0300
+Date:   Thu Jun 20 10:43:40 2019 +0300
 
-    Update link in docs (#563)
+    fix failing test (#564)
