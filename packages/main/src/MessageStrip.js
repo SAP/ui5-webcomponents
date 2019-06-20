@@ -1,17 +1,15 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/src/ResourceBundle.js";
 import MessageStripType from "./types/MessageStripType.js";
-import MessageStripRenderer from "./build/compiled/MessageStripRenderer.lit.js";
+import MessageStripTemplate from "./build/compiled/MessageStripTemplate.lit.js";
 import Icon from "./Icon.js";
 
 import { MESSAGE_STRIP_CLOSE_BUTTON } from "./i18n/defaults.js";
 
 // Styles
 import messageStripCss from "./themes/MessageStrip.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
 
 /**
  * @public
@@ -62,7 +60,7 @@ const metadata = {
 		 * @defaultvalue false
 		 * @public
 		 */
-		hideIcon: {
+		noIcon: {
 			type: Boolean,
 		},
 
@@ -73,7 +71,7 @@ const metadata = {
 		 * @defaultvalue false
 		 * @public
 		 */
-		hideCloseButton: {
+		noCloseButton: {
 			type: Boolean,
 		},
 
@@ -141,8 +139,12 @@ class MessageStrip extends UI5Element {
 		return metadata;
 	}
 
-	static get renderer() {
-		return MessageStripRenderer;
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return MessageStripTemplate;
 	}
 
 	static get styles() {
@@ -192,7 +194,7 @@ class MessageStrip extends UI5Element {
 	}
 
 	get hiddenText() {
-		return `Message Strip ${this.type} ${this.hideCloseButton ? "" : "closable"}.`;
+		return `Message Strip ${this.type} ${this.noCloseButton ? "" : "closable"}.`;
 	}
 
 	get _closeButtonText() {
@@ -203,15 +205,15 @@ class MessageStrip extends UI5Element {
 		return {
 			label: {
 				"ui5-messagestrip-text": true,
-				"ui5-messagestripNoCloseButton": this.hideCloseButton,
+				"ui5-messagestripNoCloseButton": this.noCloseButton,
 			},
 			closeIcon: {
 				"ui5-messagestrip-close-icon": true,
 			},
 			main: {
 				"ui5-messagestrip-root": true,
-				"ui5-messagestrip-icon--hidden": this.hideIcon,
-				"ui5-messagestrip-close-icon--hidden": this.hideCloseButton,
+				"ui5-messagestrip-icon--hidden": this.noIcon,
+				"ui5-messagestrip-close-icon--hidden": this.noCloseButton,
 				[this.typeClasses]: true,
 			},
 		};

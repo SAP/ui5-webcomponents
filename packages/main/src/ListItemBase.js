@@ -8,7 +8,6 @@ import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js
 // Styles
 import styles from "./themes/ListItemBase.css.js";
 
-
 /**
  * @public
  */

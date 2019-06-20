@@ -1,18 +1,16 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import CSSSize from "@ui5/webcomponents-base/src/types/CSSSize.js";
 import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
 import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/src/ResourceBundle.js";
 import { getFeature } from "@ui5/webcomponents-base/src/FeaturesRegistry.js";
-import TextAreaRenderer from "./build/compiled/TextAreaRenderer.lit.js";
+import TextAreaTemplate from "./build/compiled/TextAreaTemplate.lit.js";
 
 import { TEXTAREA_CHARACTERS_LEFT, TEXTAREA_CHARACTERS_EXCEEDED } from "./i18n/defaults.js";
 
 // Styles
 import styles from "./themes/TextArea.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
 
 /**
  * @public
@@ -227,8 +225,12 @@ class TextArea extends UI5Element {
 		return styles;
 	}
 
-	static get renderer() {
-		return TextAreaRenderer;
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return TextAreaTemplate;
 	}
 
 	constructor() {

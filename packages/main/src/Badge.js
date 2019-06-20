@@ -1,16 +1,14 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
 import Icon from "./Icon.js";
 
 // Template
-import BadgeRenderer from "./build/compiled/BadgeRenderer.lit.js";
+import BadgeTemplate from "./build/compiled/BadgeTemplate.lit.js";
 
 // Styles
 import badgeCss from "./themes/Badge.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
 
 /**
  * @public
@@ -22,7 +20,7 @@ const metadata = {
 		/**
 		 * Defines the color scheme of the <code>ui5-badge</code>.
 		 * There are 10 predefined schemes. Each scheme applies different values for the <code>background-color> and <code>border-color</code>.
-		 * To use one you can set a number from <code>"1"</code> to <code>"10"</code>.
+		 * To use one you can set a number from <code>"1"</code> to <code>"10"</code>. The <code>colorScheme</code> <code>"1"</code> will be set by default.
 		 * <br><br>
 		 * <b>Note:</b> color schemes have no visual representation in High Contrast Black (sap_belize_hcb) theme.
 		 * @type {string}
@@ -31,6 +29,7 @@ const metadata = {
 		 */
 		colorScheme: {
 			type: String,
+			defaultValue: "1",
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.Badge.prototype */ {
@@ -60,7 +59,6 @@ const metadata = {
 
 	},
 	defaultSlot: "text",
-	renderer: BadgeRenderer,
 };
 
 /**
@@ -94,8 +92,12 @@ class Badge extends UI5Element {
 		return metadata;
 	}
 
-	static get renderer() {
-		return BadgeRenderer;
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return BadgeTemplate;
 	}
 
 	static get styles() {

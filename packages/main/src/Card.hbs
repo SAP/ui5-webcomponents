@@ -6,7 +6,8 @@
 		@click="{{_headerClick}}"
 		@keydown="{{_headerKeydown}}"
 		@keyup="{{_headerKeyup}}"
-		tabindex="0">
+		tabindex="{{tabindex}}"
+		role="{{role}}">
 		{{#if image}}
 			<img src="{{avatar}}" aria-label="Avatar" class="sapFCardAvatar sapFCardHeaderImg">
 		{{/if}}
@@ -26,7 +27,7 @@
 				<div class="sapFCardSubtitle ">{{subtitle}}</div>
 			{{/if}}
 		</div>
-		<span class="sapFCardStatus">{{status}}</span>
+		<span part="status" class="sapFCardStatus">{{status}}</span>
 	</header>
 	<section class="sapFCardContent">
         <slot></slot>

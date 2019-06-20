@@ -1,16 +1,14 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { isIconURI } from "@ui5/webcomponents-base/src/IconPool.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
-import CardRenderer from "./build/compiled/CardRenderer.lit.js";
+import CardTemplate from "./build/compiled/CardTemplate.lit.js";
 import Icon from "./Icon.js";
 
 // Styles
 import cardCss from "./themes/Card.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
 
 /**
  * @public
@@ -64,6 +62,17 @@ const metadata = {
 		},
 
 		/**
+		 * Defines if the <code>ui5-card</code> header would be interactive,
+		 * e.g gets hover effect, gets focused and <code>headerPress</code> event is fired, when it is pressed.
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 */
+		headerInteractive: {
+			type: Boolean,
+		},
+
+		/**
 		 * Defines image source URI or built-in icon font URI.
 		 * </br></br>
 		 * <b>Note:</b>
@@ -74,7 +83,6 @@ const metadata = {
 		 */
 		avatar: {
 			type: String,
-			defaultValue: null,
 		},
 
 		_headerActive: {
@@ -86,7 +94,8 @@ const metadata = {
 		/**
 		 * Fired when the <code>ui5-card</code> header is pressed
 		 * by click/tap or by using the Enter or Space key.
-		 *
+		 * <br><br>
+		 * <b>Note:</b> The event would be fired only if the <code>headerInteractive</code> property is set to true.
 		 * @event
 		 * @public
 		 * @since 0.10.0
@@ -105,6 +114,9 @@ const metadata = {
  * The header can be used through several properties, such as:
  * <code>heading</code>, <code>subtitle</code>, <code>status</code> and <code>avatar</code>.
  *
+ * <h3>Keyboard handling</h3>
+ * In case you enable <code>headerInteractive</cdoe> property, you can press the <code>ui5-card</code> header by Space and Enter keys.
+ *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/Card";</code>
@@ -121,8 +133,12 @@ class Card extends UI5Element {
 		return metadata;
 	}
 
-	static get renderer() {
-		return CardRenderer;
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return CardTemplate;
 	}
 
 	static get styles() {
@@ -137,7 +153,8 @@ class Card extends UI5Element {
 			},
 			header: {
 				"sapFCardHeader": true,
-				"sapFCardHeaderActive": this._headerActive,
+				"sapFCardHeaderInteractive": this.headerInteractive,
+				"sapFCardHeaderActive": this.headerInteractive && this._headerActive,
 			},
 		};
 	}
@@ -150,6 +167,14 @@ class Card extends UI5Element {
 		return !!this.avatar && !this.icon;
 	}
 
+	get role() {
+		return this.headerInteractive ? "button" : undefined;
+	}
+
+	get tabindex() {
+		return this.headerInteractive ? "0" : undefined;
+	}
+
 	static async define(...params) {
 		await Icon.define();
 
@@ -157,10 +182,16 @@ class Card extends UI5Element {
 	}
 
 	_headerClick() {
-		this.fireEvent("headerPress");
+		if (this.headerInteractive) {
+			this.fireEvent("headerPress");
+		}
 	}
 
 	_headerKeydown(event) {
+		if (!this.headerInteractive) {
+			return;
+		}
+
 		const enter = isEnter(event);
 		const space = isSpace(event);
 
@@ -177,6 +208,10 @@ class Card extends UI5Element {
 	}
 
 	_headerKeyup(event) {
+		if (!this.headerInteractive) {
+			return;
+		}
+
 		const space = isSpace(event);
 
 		this._headerActive = false;

@@ -1,5 +1,6 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
 import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper.js";
 import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
@@ -10,13 +11,10 @@ import ListMode from "./types/ListMode.js";
 import ListSeparators from "./types/ListSeparators.js";
 import ListItemType from "./types/ListItemType.js";
 // Template
-import ListRenderer from "./build/compiled/ListRenderer.lit.js";
+import ListTemplate from "./build/compiled/ListTemplate.lit.js";
 
 // Styles
 import listCss from "./themes/List.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
 
 /**
  * @public
@@ -228,8 +226,12 @@ class List extends UI5Element {
 		return metadata;
 	}
 
-	static get renderer() {
-		return ListRenderer;
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return ListTemplate;
 	}
 
 	static get styles() {

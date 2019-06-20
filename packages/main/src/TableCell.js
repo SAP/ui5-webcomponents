@@ -1,12 +1,10 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import TableCellRenderer from "./build/compiled/TableCellRenderer.lit.js";
+import TableCellTemplate from "./build/compiled/TableCellTemplate.lit.js";
 
 // Styles
 import styles from "./themes/TableCell.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
 
 /**
  * @public
@@ -65,8 +63,12 @@ class TableCell extends UI5Element {
 		return styles;
 	}
 
-	static get renderer() {
-		return TableCellRenderer;
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return TableCellTemplate;
 	}
 
 	get classes() {

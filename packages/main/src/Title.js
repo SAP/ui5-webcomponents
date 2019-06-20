@@ -1,14 +1,11 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import TitleLevel from "./types/TitleLevel.js";
-import TitleRenderer from "./build/compiled/TitleRenderer.lit.js";
+import TitleTemplate from "./build/compiled/TitleTemplate.lit.js";
 
-// Styles
 // Styles
 import titleCss from "./themes/Title.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
 
 /**
  * @public
@@ -82,8 +79,12 @@ class Title extends UI5Element {
 		return metadata;
 	}
 
-	static get renderer() {
-		return TitleRenderer;
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return TitleTemplate;
 	}
 
 	static get styles() {

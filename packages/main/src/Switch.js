@@ -1,4 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
@@ -6,14 +7,11 @@ import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
 import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
 
 // Template
-import SwitchRenderer from "./build/compiled/SwitchRenderer.lit.js";
-import SwitchType from "./types/SwitchType.js";
+import SwitchTemplate from "./build/compiled/SwitchTemplate.lit.js";
+
 
 // Styles
 import switchCss from "./themes/Switch.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
 
 /**
  * @public
@@ -79,18 +77,15 @@ const metadata = {
 		/**
 		 * Defines the <code>ui5-switch</code> type.
 		 * <br>
-		 * Available options are <code>Textual</code> and <code>Graphical</code>.
 		 *
-		 * <br><br>
-		 * <b>Note:</b> If <code>Graphical</code> type is set,
+		 * <b>Note:</b> If <code>graphical</code> type is set,
 		 * positive and negative icons will replace the <code>textOn</code> and <code>textOff</code>.
 		 * @type {string}
-		 * @defaultvalue "Textual"
+		 * @defaultvalue false
 		 * @public
 		 */
-		type: {
-			type: String,
-			defaultValue: SwitchType.Textual,
+		graphical: {
+			type: Boolean,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Switch.prototype */ {
@@ -142,8 +137,12 @@ class Switch extends UI5Element {
 		return switchCss;
 	}
 
-	static get renderer() {
-		return SwitchRenderer;
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return SwitchTemplate;
 	}
 
 	onclick(event) {
@@ -174,13 +173,11 @@ class Switch extends UI5Element {
 	}
 
 	get textOn() {
-		const graphical = this.type === SwitchType.Graphical;
-		return graphical ? "" : this.textOn;
+		return this.graphical ? "" : this.textOn;
 	}
 
 	get textOff() {
-		const graphical = this.type === SwitchType.Graphical;
-		return graphical ? "" : this.textOff;
+		return this.graphical ? "" : this.textOff;
 	}
 
 	get tabIndex() {
@@ -188,8 +185,7 @@ class Switch extends UI5Element {
 	}
 
 	get classes() {
-		const graphical = this.type === SwitchType.Graphical;
-		const hasLabel = graphical || this.textOn || this.textOff;
+		const hasLabel = this.graphical || this.textOn || this.textOff;
 
 		return {
 			main: {
@@ -197,7 +193,7 @@ class Switch extends UI5Element {
 				"ui5-switch-desktop": isDesktop(),
 				"ui5-switch--disabled": this.disabled,
 				"ui5-switch--checked": this.checked,
-				"ui5-switch--semantic": graphical,
+				"ui5-switch--semantic": this.graphical,
 				"ui5-switch--no-label": !hasLabel,
 				"sapUiSizeCompact": getCompactSize(),
 			},

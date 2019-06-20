@@ -1,4 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import {
 	isSpace,
@@ -18,13 +19,10 @@ import StandardListItem from "./StandardListItem.js";
 import Icon from "./Icon.js";
 
 // Template
-import SelectRenderer from "./build/compiled/SelectRenderer.lit.js";
+import SelectTemplate from "./build/compiled/SelectTemplate.lit.js";
 
 // Styles
 import selectCss from "./themes/Select.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
 
 /**
  * @public
@@ -138,8 +136,12 @@ class Select extends UI5Element {
 		return metadata;
 	}
 
-	static get renderer() {
-		return SelectRenderer;
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return SelectTemplate;
 	}
 
 	static get styles() {

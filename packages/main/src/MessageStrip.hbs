@@ -3,14 +3,14 @@
 	aria-live="assertive"
 	aria-labelledby="{{_id}}">
 
-	{{#unless hideIcon}}
+	{{#unless noIcon}}
 		<ui5-icon class="ui5-messagestrip-icon" src="{{messageStripIcon}}"></ui5-icon>
 	{{/unless}}
 
 	<span class="ui5-messagestrip-hidden-text">{{hiddenText}}</span>
 	<span class="{{classes.label}}"><slot></slot></span>
 
-	{{#unless hideCloseButton}}
+	{{#unless noCloseButton}}
 		<ui5-icon
 			class="{{classes.closeIcon}}"
 			src="sap-icon://decline"

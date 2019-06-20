@@ -29,7 +29,6 @@ const compileString = async (sInput, config) => {
 		result += lv.blocks[key] + "\n";
 	}
 
-	result += "const renderMe = " + lv.mainBlock + ";";
 	return result;
 };
 

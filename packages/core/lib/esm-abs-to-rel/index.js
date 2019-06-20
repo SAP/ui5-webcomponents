@@ -34,6 +34,8 @@ const convertImports = (srcPath) => {
 			if (!relativePath.startsWith(".")) {
 				relativePath = "./" + relativePath;
 			}
+
+			relativePath = relativePath.replace(/\\/g, "/"); // the browser expects unix paths
 			let relativeImport = `${relativePath}/${importeeFile}.js`;
 			// console.log(importee + " --> " + relativeImport);
 			node.source.value = relativeImport;

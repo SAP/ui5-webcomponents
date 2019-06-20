@@ -1,4 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { getCalendarType, getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
 import { getFormatLocale } from "@ui5/webcomponents-base/src/FormatSettings.js";
@@ -9,13 +10,10 @@ import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData.js";
 import { getLocale } from "@ui5/webcomponents-base/src/LocaleProvider.js";
 import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType.js";
 import CalendarDate from "@ui5/webcomponents-base/src/dates/CalendarDate.js";
-import MonthPickerRenderer from "./build/compiled/MonthPickerRenderer.lit.js";
+import MonthPickerTemplate from "./build/compiled/MonthPickerTemplate.lit.js";
 
 // Styles
 import styles from "./themes/MonthPicker.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
 
 /**
  * @public
@@ -77,8 +75,12 @@ class MonthPicker extends UI5Element {
 		return metadata;
 	}
 
-	static get renderer() {
-		return MonthPickerRenderer;
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return MonthPickerTemplate;
 	}
 
 	static get styles() {

@@ -1,18 +1,15 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
 import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
 import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/src/ResourceBundle.js";
-import TokenizerRenderer from "./build/compiled/TokenizerRenderer.lit.js";
+import TokenizerTemplate from "./build/compiled/TokenizerTemplate.lit.js";
 import { MULTIINPUT_SHOW_MORE_TOKENS } from "./i18n/defaults.js";
 
 // Styles
 import styles from "./themes/Tokenizer.css.js";
-
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
 
 /**
  * @public
@@ -69,8 +66,12 @@ class Tokenizer extends UI5Element {
 		return metadata;
 	}
 
-	static get renderer() {
-		return TokenizerRenderer;
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return TokenizerTemplate;
 	}
 
 	static get styles() {

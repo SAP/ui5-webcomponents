@@ -1,12 +1,12 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import BusyIndicatorRenderer from "./build/compiled/BusyIndicatorRenderer.lit.js";
+import BusyIndicatorTemplate from "./build/compiled/BusyIndicatorTemplate.lit.js";
 
 // Styles
 import busyIndicatorCss from "./themes/BusyIndicator.css.js";
 
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
+
 import BusyIndicatorType from "./types/BusyIndicatorType.js";
 
 /**
@@ -71,8 +71,12 @@ class BusyIndicator extends UI5Element {
 		return busyIndicatorCss;
 	}
 
-	static get renderer() {
-		return BusyIndicatorRenderer;
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return BusyIndicatorTemplate;
 	}
 
 	get classes() {

@@ -1,4 +1,5 @@
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import RenderScheduler from "@ui5/webcomponents-base/src/RenderScheduler.js";
 import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
 import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper.js";
@@ -9,13 +10,10 @@ import Popup from "./Popup.js";
 
 
 // Template
-import PopoverRenderer from "./build/compiled/PopoverRenderer.lit.js";
+import PopoverTemplate from "./build/compiled/PopoverTemplate.lit.js";
 
 // Styles
 import popoverCss from "./themes/Popover.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
 
 /**
  * @public
@@ -80,7 +78,7 @@ const metadata = {
 		 * @defaultvalue false
 		 * @public
 		 */
-		hideArrow: {
+		noArrow: {
 			type: Boolean,
 		},
 
@@ -188,8 +186,12 @@ class Popover extends Popup {
 		return metadata;
 	}
 
-	static get renderer() {
-		return PopoverRenderer;
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return PopoverTemplate;
 	}
 
 	static get styles() {
@@ -412,7 +414,7 @@ class Popover extends Popup {
 		this._width = width;
 		this._height = height;
 
-		const arrowOffset = this.hideArrow ? 0 : arrowSize;
+		const arrowOffset = this.noArrow ? 0 : arrowSize;
 
 		// calc popover positions
 		switch (placementType) {
@@ -466,7 +468,7 @@ class Popover extends Popup {
 
 		let maxContentHeight = Math.round(maxHeight);
 
-		if (!this.hideHeader) {
+		if (!this.noHeader) {
 			const headerDomRef = this.getPopupDomRef().querySelector(".sapMPopupHeader");
 			if (headerDomRef) {
 				maxContentHeight = Math.round(maxHeight - headerDomRef.offsetHeight);
@@ -613,7 +615,7 @@ class Popover extends Popup {
 			},
 			arrow: {
 				sapMPopoverArr: true,
-				sapMPopoverArrHidden: this.hideArrow,
+				sapMPopoverArrHidden: this.noArrow,
 				sapMPopoverArrLeft: placementType === PopoverPlacementType.Right,
 				sapMPopoverArrRight: placementType === PopoverPlacementType.Left,
 				sapMPopoverArrUp: placementType === PopoverPlacementType.Bottom,
@@ -644,7 +646,7 @@ class Popover extends Popup {
 	}
 
 	get headerId() {
-		return this.hideHeader ? undefined : `${this._id}-header`;
+		return this.noHeader ? undefined : `${this._id}-header`;
 	}
 
 	get focusHelper() {

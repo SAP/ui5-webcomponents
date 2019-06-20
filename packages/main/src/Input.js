@@ -1,4 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { isIE } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
@@ -13,14 +14,11 @@ import {
 import Icon from "./Icon.js";
 import InputType from "./types/InputType.js";
 // Template
-import InputRenderer from "./build/compiled/InputRenderer.lit.js";
+import InputTemplate from "./build/compiled/InputTemplate.lit.js";
 
 // Styles
 import styles from "./themes/Input.css.js";
 import shellbarInput from "./themes/ShellBarInput.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
 
 /**
  * @public
@@ -281,8 +279,12 @@ class Input extends UI5Element {
 		return metadata;
 	}
 
-	static get renderer() {
-		return InputRenderer;
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return InputTemplate;
 	}
 
 	static get styles() {
@@ -314,13 +316,6 @@ class Input extends UI5Element {
 		// all user interactions
 		this.ACTION_ENTER = "enter";
 		this.ACTION_USER_INPUT = "input";
-
-		this._input = {
-			onInput: this._onInput.bind(this),
-			change: event => {
-				this.fireEvent(this.EVENT_CHANGE);
-			},
-		};
 
 		this._whenShadowRootReady().then(this.attachFocusHandlers.bind(this));
 	}
@@ -399,7 +394,11 @@ class Input extends UI5Element {
 		this.previousValue = "";
 	}
 
-	_onInput(event) {
+	_handleChange(event) {
+		this.fireEvent(this.EVENT_CHANGE);
+	}
+
+	_handleInput(event) {
 		if (event.target === this.getInputDOMRef()) {
 			// stop the native event, as the semantic "input" would be fired.
 			event.stopImmediatePropagation();
@@ -428,7 +427,7 @@ class Input extends UI5Element {
 		if (Suggestions) {
 			this.Suggestions = new Suggestions(this, "suggestionItems");
 		} else {
-			throw new Error(`You have to import @ui5/webcomponents/dist/InputSuggestions.js module to use ui5-input suggestions`);
+			throw new Error(`You have to import "@ui5/webcomponents/dist/InputSuggestions.js" module to use ui5-input suggestions`);
 		}
 	}
 

@@ -1,4 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { getIconURI } from "@ui5/webcomponents-base/src/IconPool.js";
 import slideDown from "@ui5/webcomponents-base/src/animations/slideDown.js";
@@ -8,15 +9,12 @@ import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
 import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/src/ResourceBundle.js";
 import Icon from "./Icon.js";
 import PanelAccessibleRole from "./types/PanelAccessibleRole.js";
-import PanelRenderer from "./build/compiled/PanelRenderer.lit.js";
+import PanelTemplate from "./build/compiled/PanelTemplate.lit.js";
 
 import { PANEL_ICON } from "./i18n/defaults.js";
 
 // Styles
 import panelCss from "./themes/Panel.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
 
 /**
  * @public
@@ -185,8 +183,12 @@ class Panel extends UI5Element {
 		return metadata;
 	}
 
-	static get renderer() {
-		return PanelRenderer;
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return PanelTemplate;
 	}
 
 	static get styles() {

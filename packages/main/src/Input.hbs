@@ -17,8 +17,8 @@
 			?readonly="{{_readonly}}"
 			.value="{{value}}"
 			placeholder="{{inputPlaceholder}}"
-			@input="{{_input.onInput}}"
-			@change="{{_input.change}}"
+			@input="{{_handleInput}}"
+			@change="{{_handleChange}}"
 			data-sap-no-tab-ref
 			data-sap-focus-ref
 	/>
@@ -30,8 +30,8 @@
 	{{#if showSuggestions}}
 			<ui5-popover
 				placement-type="Bottom"
-				hide-header="true"
-				hide-arrow="true"
+				no-header
+				no-arrow
 				horizontal-align="Stretch"
 				initial-focus="{{_id}}-inner">
 					<ui5-list separators="Inner">

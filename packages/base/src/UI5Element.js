@@ -2,9 +2,8 @@ import { getWCNoConflict, getCompactSize } from "./Configuration.js";
 import DOMObserver from "./compatibility/DOMObserver.js";
 import UI5ElementMetadata from "./UI5ElementMetadata.js";
 import Integer from "./types/Integer.js";
-import Renderer from "./Renderer.js";
 import RenderScheduler from "./RenderScheduler.js";
-import { getConstructableStyle, createHeadStyle } from "./CSS.js";
+import { getConstructableStyle, createHeadStyle, getShadowRootStyle } from "./CSS.js";
 import { attachThemeChange } from "./Theming.js";
 
 const metadata = {
@@ -407,25 +406,32 @@ class UI5Element extends HTMLElement {
 	}
 
 	_render() {
-		// onBeforeRendering
+		// Call the onBeforeRendering hook
 		if (typeof this.onBeforeRendering === "function") {
 			this._suppressInvalidation = true;
 			this.onBeforeRendering();
 			delete this._suppressInvalidation;
 		}
 
-		// render
+		// Update the shadow root with the render result
 		// console.log(this.getDomRef() ? "RE-RENDER" : "FIRST RENDER", this);
 		delete this._invalidated;
-		Renderer.render(this);
+		this._updateShadowRoot();
 
 		// Safari requires that children get the slot attribute only after the slot tags have been rendered in the shadow DOM
 		this._assignSlotsToChildren();
 
-		// onAfterRendering
+		// Call the onAfterRendering hook
 		if (typeof this.onAfterRendering === "function") {
 			this.onAfterRendering();
 		}
+	}
+
+	_updateShadowRoot() {
+		const renderResult = this.constructor.template(this);
+		// For browsers that do not support constructable style sheets (and not using the polyfill)
+		const styleToPrepend = getShadowRootStyle(this.constructor);
+		this.constructor.render(renderResult, this.shadowRoot, styleToPrepend, { eventContext: this });
 	}
 
 	_assignSlotsToChildren() {
@@ -603,7 +609,7 @@ class UI5Element extends HTMLElement {
 			return defaultSlot;
 		}
 
-		// Check for explicitly given logical slot
+		// Check for explicitly given logical slot - for backward compatibility, should not be used
 		const ui5Slot = child.getAttribute("data-ui5-slot");
 		if (ui5Slot) {
 			return ui5Slot;
