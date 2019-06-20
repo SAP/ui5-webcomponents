@@ -225,6 +225,7 @@ If you however need to submit forms, you can import the module above and it will
 - ui5-checkbox
 - ui5-radiobutton
 - ui5-datepicker
+- ui5-select
 
 with functionality, allowing them to be submitted in forms (provided you set their <code>name</code> attribute) just as
 any standard HTML input element would be.

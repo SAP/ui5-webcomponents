@@ -68,6 +68,7 @@ const metadata = {
 
 		/**
 		 * Determines the name with which the <code>ui5-select</code> will be submitted in an HTML form.
+		 * The value of the <code>ui5-select</code> will be the value of the currently selected <code>ui5-option</code>.
 		 *
 		 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
 		 * <code>import "@ui5/webcomponents/dist/InputElementsFormSupport.js";</code>
