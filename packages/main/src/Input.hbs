@@ -17,8 +17,8 @@
 			?readonly="{{_readonly}}"
 			.value="{{value}}"
 			placeholder="{{inputPlaceholder}}"
-			@input="{{_input.onInput}}"
-			@change="{{_input.change}}"
+			@input="{{_handleInput}}"
+			@change="{{_handleChange}}"
 			data-sap-no-tab-ref
 			data-sap-focus-ref
 	/>

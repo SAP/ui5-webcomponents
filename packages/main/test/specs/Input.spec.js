@@ -106,8 +106,6 @@ describe("Input general interaction", () => {
 		const innerInput = browser.findElementDeep("#input1 >>> input");
 
 		input1.setProperty("value", "");
-		input1.setProperty("value", "aaa");
-		input1.setProperty("value", "");
 
 		assert.strictEqual(input1.getProperty("value"), "", "Property value should be empty");
 		assert.strictEqual(innerInput.getProperty("value"), "", "Inner's property value should be empty");
