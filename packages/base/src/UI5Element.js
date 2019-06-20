@@ -39,7 +39,7 @@ class UI5Element extends HTMLElement {
 	}
 
 	onThemeChanged() {
-		if (window.ShadyDOM) {
+		if (window.ShadyDOM || this.constructor.getMetadata().getNoShadowDOM()) {
 			// polyfill theme handling is in head styles directly
 			return;
 		}

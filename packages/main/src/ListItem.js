@@ -80,8 +80,14 @@ class ListItem extends ListItemBase {
 		return [styles, ListItemBase.styles];
 	}
 
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
+
+		this.deactivateByKey = event => {
+			if (isEnter(event)) {
+				this.deactivate();
+			}
+		};
 
 		this.deactivate = () => {
 			if (this._active) {
@@ -94,10 +100,12 @@ class ListItem extends ListItemBase {
 
 	onEnterDOM() {
 		document.addEventListener("mouseup", this.deactivate);
+		document.addEventListener("keyup", this.deactivateByKey);
 	}
 
 	onExitDOM() {
 		document.removeEventListener("mouseup", this.deactivate);
+		document.removeEventListener("keyup", this.deactivateByKey);
 	}
 
 	onkeydown(event) {
