@@ -1,5 +1,5 @@
-commit db494fead4e4ee2d588d825f434e663a3cb1179c
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Jun 19 17:17:04 2019 +0300
+commit 0f010a67145a424c1ff32a243bf74b889f2e359e
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Thu Jun 20 10:25:30 2019 +0300
 
-    doc: add faq.md (#561)
+    remove binding from event handlers (#562)
