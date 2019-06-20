@@ -3,7 +3,7 @@ import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import { getIconInfo } from "@ui5/webcomponents-base/src/IconPool.js";
-import { getRTL } from "@ui5/webcomponents-base/src/Configuration.js";
+import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
 import IconTemplate from "./build/compiled/IconTemplate.lit.js";
 
 // Styles
@@ -122,7 +122,7 @@ class Icon extends UI5Element {
 	}
 
 	get dir() {
-		return getRTL() ? "rtl" : "ltr";
+		return getEffectiveRTL() ? "rtl" : "ltr";
 	}
 
 	get fontStyle() {
