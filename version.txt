@@ -1,9 +1,5 @@
-commit 89e3508db7a0426e52abfeca449fa589eeb4936e
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu Jun 20 13:29:13 2019 +0300
+commit 591d81addd881a662c1252d3ecb9abe850d6263b
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu Jun 20 16:59:33 2019 +0300
 
-    feat: add form support for ui5-select (#565)
-    
-    ui5-select gets "name" attribute, ui5-option gets "value" attribute
-    
-    BREAKING CHANGE: the parameter of the change event is now called "selectedOption"; ui5-select enforces ui5-option as children in the metadata
+    fix(ui5-icon): correct RTL appearance (#569)
