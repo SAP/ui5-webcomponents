@@ -83,12 +83,12 @@ class ListItem extends ListItemBase {
 	constructor(props) {
 		super(props);
 
-		this.deactivateByKey = (event) => {
+		this.deactivateByKey = event => {
 			if (isEnter(event)) {
 				this.deactivate();
 			}
-		}
-	
+		};
+
 		this.deactivate = () => {
 			if (this._active) {
 				this._active = false;
