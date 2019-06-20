@@ -1,5 +1,9 @@
-commit d641cce0cb90957e20676873d67db6a30d706b13
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Jun 20 10:54:27 2019 +0300
+commit 2e4486bade06138da19aca0dfa26a30d7a242a57
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Thu Jun 20 11:39:26 2019 +0300
 
-    chore: correct usage of no-arrow, no-header (#560)
+    refactor(ui5-select): change default slot from list items to options (#532)
+    
+    This change makes the ui5-select web component use dedicated items: ui5-option instead of ui5-li
+    
+    BREAKING CHANGE: Use ui5-option instead of ui5-li in ui5-select

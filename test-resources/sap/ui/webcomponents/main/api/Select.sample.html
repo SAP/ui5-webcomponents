@@ -59,26 +59,26 @@
 		<h3>Basic Select</h3>
 		<div class="snippet">
 			<ui5-select class="select">
-				<ui5-li icon="sap-icon://iphone">Phone</ui5-li>
-				<ui5-li icon="sap-icon://ipad">Tablet</ui5-li>
-				<ui5-li icon="sap-icon://laptop" selected>Desktop</ui5-li>
+				<ui5-option icon="sap-icon://iphone">Phone</ui5-option>
+				<ui5-option icon="sap-icon://ipad">Tablet</ui5-option>
+				<ui5-option icon="sap-icon://laptop" selected>Desktop</ui5-option>
 			</ui5-select>
 			<ui5-select disabled class="select">
-					<ui5-li icon="sap-icon://iphone" selected>Phone</ui5-li>
-					<ui5-li icon="sap-icon://ipad">Tablet</ui5-li>
-					<ui5-li icon="sap-icon://laptop">Desktop</ui5-li>
+					<ui5-option icon="sap-icon://iphone" selected>Phone</ui5-option>
+					<ui5-option icon="sap-icon://ipad">Tablet</ui5-option>
+					<ui5-option icon="sap-icon://laptop">Desktop</ui5-option>
 			</ui5-select>
 		</div>
 		<pre class="prettyprint lang-html"><xmp>
 <ui5-select class="select">
-	<ui5-li icon="sap-icon://iphone">Phone</ui5-li>
-	<ui5-li icon="sap-icon://ipad">Tablet</ui5-li>
-	<ui5-li icon="sap-icon://laptop" selected>Desktop</ui5-li>
+	<ui5-option icon="sap-icon://iphone">Phone</ui5-option>
+	<ui5-option icon="sap-icon://ipad">Tablet</ui5-option>
+	<ui5-option icon="sap-icon://laptop" selected>Desktop</ui5-option>
 </ui5-select>
 <ui5-select disabled class="select">
-	<ui5-li icon="sap-icon://iphone" selected>Phone</ui5-li>
-	<ui5-li icon="sap-icon://ipad">Tablet</ui5-li>
-	<ui5-li icon="sap-icon://laptop">Desktop</ui5-li>
+	<ui5-option icon="sap-icon://iphone" selected>Phone</ui5-option>
+	<ui5-option icon="sap-icon://ipad">Tablet</ui5-option>
+	<ui5-option icon="sap-icon://laptop">Desktop</ui5-option>
 </ui5-select>
 		</xmp></pre>
 	</section>
@@ -87,36 +87,36 @@
 		<h3>Select with Value State</h3>
 		<div class="snippet">
 			<ui5-select value-state="Success" class="select">
-					<ui5-li icon="sap-icon://meal" selected>Apple</ui5-li>
-					<ui5-li icon="sap-icon://meal">Avocado</ui5-li>
-					<ui5-li icon="sap-icon://meal">Mango</ui5-li>
+					<ui5-option icon="sap-icon://meal" selected>Apple</ui5-option>
+					<ui5-option icon="sap-icon://meal">Avocado</ui5-option>
+					<ui5-option icon="sap-icon://meal">Mango</ui5-option>
 			</ui5-select>
 			<ui5-select value-state="Warning" class="select">
-					<ui5-li icon="sap-icon://meal">Orange</ui5-li>
-					<ui5-li icon="sap-icon://meal" selected>Pumpkin</ui5-li>
-					<ui5-li icon="sap-icon://meal">Carrot</ui5-li>
+					<ui5-option icon="sap-icon://meal">Orange</ui5-option>
+					<ui5-option icon="sap-icon://meal" selected>Pumpkin</ui5-option>
+					<ui5-option icon="sap-icon://meal">Carrot</ui5-option>
 			</ui5-select>
 			<ui5-select value-state="Error" class="select">
-					<ui5-li icon="sap-icon://meal">Strawberry</ui5-li>
-					<ui5-li icon="sap-icon://meal">Tomato</ui5-li>
-					<ui5-li icon="sap-icon://meal" selected>Red Chili Pepper</ui5-li>
+					<ui5-option icon="sap-icon://meal">Strawberry</ui5-option>
+					<ui5-option icon="sap-icon://meal">Tomato</ui5-option>
+					<ui5-option icon="sap-icon://meal" selected>Red Chili Pepper</ui5-option>
 			</ui5-select>
 		</div>
 		<pre class="prettyprint lang-html"><xmp>
 <ui5-select value-state="Success" class="select">
-	<ui5-li icon="sap-icon://meal" selected>Apple</ui5-li>
-	<ui5-li icon="sap-icon://meal">Avocado</ui5-li>
-	<ui5-li icon="sap-icon://meal">Mango</ui5-li>
+	<ui5-option icon="sap-icon://meal" selected>Apple</ui5-option>
+	<ui5-option icon="sap-icon://meal">Avocado</ui5-option>
+	<ui5-option icon="sap-icon://meal">Mango</ui5-option>
 </ui5-select>
 <ui5-select value-state="Warning" class="select">
-	<ui5-li icon="sap-icon://meal">Orange</ui5-li>
-	<ui5-li icon="sap-icon://meal" selected>Pumpkin</ui5-li>
-	<ui5-li icon="sap-icon://meal">Carrot</ui5-li>
+	<ui5-option icon="sap-icon://meal">Orange</ui5-option>
+	<ui5-option icon="sap-icon://meal" selected>Pumpkin</ui5-option>
+	<ui5-option icon="sap-icon://meal">Carrot</ui5-option>
 </ui5-select>
 <ui5-select value-state="Error" class="select">
-	<ui5-li icon="sap-icon://meal">Strawberry</ui5-li>
-	<ui5-li icon="sap-icon://meal">Tomato</ui5-li>
-	<ui5-li icon="sap-icon://meal" selected>Red Chili Pepper</ui5-li>
+	<ui5-option icon="sap-icon://meal">Strawberry</ui5-option>
+	<ui5-option icon="sap-icon://meal">Tomato</ui5-option>
+	<ui5-option icon="sap-icon://meal" selected>Red Chili Pepper</ui5-option>
 </ui5-select>
 		</xmp></pre>
 	</section>
@@ -130,11 +130,9 @@
     <div class="page-container">
       <div class="api-container">
         <section class="component-description">
-          <h3 class="comment-api-title"> Overview </h3>
+          The <code>ui5-select</code> component is used to create a drop-down list. The items inside the <code>ui5-select</code> define the available options by using the <code>ui5-option</code> component.
 
-The <code>ui5-select</code> component is used to create a drop-down list. The items inside the <code>ui5-select</code> define the available options by using the <code>ui5-li</code> component.
-
-<h3>Keyboard Handling</h3> The <code>ui5-select</code> provides advanced keyboard handling. If the <code>ui5-select</code> is focused, you can open or close the drop-down by pressing <code>F4</code>, <code>ALT+UP</code> or <code>ALT+DOWN</code> keys. Once the drop-down is opened, you can use the <code>UP</code> and <code>DOWN</code> arrow keys to navigate through the available options and select one by pressing the <code>Space</code> or <code>Enter</code> keys. <br> <h3>ES6 Module Import</h3> <code>import "@ui5/webcomponents/dist/Select";</code> <br> <code>import "@ui5/webcomponents/dist/StandardListItem";</code> (<code>ui5-li</code>)
+<h3>Keyboard Handling</h3> The <code>ui5-select</code> provides advanced keyboard handling. If the <code>ui5-select</code> is focused, you can open or close the drop-down by pressing <code>F4</code>, <code>ALT+UP</code> or <code>ALT+DOWN</code> keys. Once the drop-down is opened, you can use the <code>UP</code> and <code>DOWN</code> arrow keys to navigate through the available options and select one by pressing the <code>Space</code> or <code>Enter</code> keys. <br> <h3>ES6 Module Import</h3> <code>import "@ui5/webcomponents/dist/Select";</code> <br> <code>import "@ui5/webcomponents/dist/Option";</code>
           <section class="component-api space-top">
             
                   <h3 class="comment-api-title" >Properties/Attributes</h3>
@@ -182,9 +180,9 @@ The <code>ui5-select</code> component is used to create a drop-down list. The it
                   </div>
             
                     <div class="row api-table-roll-even">
-                      <div class="cell api-table-content-cell api-table-content-cell-bold">items</div>
+                      <div class="cell api-table-content-cell api-table-content-cell-bold">options</div>
                       <div class="cell api-table-content-cell">HTMLElement [0..n]</div>
-                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the <code>ui5-select</code> items. <br/><br/> <b>Note:</b> Only one selected item is allowed. If more than one item is defined as selected, the last one would be considered as the selected one. <br/><br/> <b>Note:</b> Use the <code>ui5-li</code> component to define the desired options.</div>
+                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the <code>ui5-select</code> items. <br/><br/> <b>Note:</b> Only one selected item is allowed. If more than one item is defined as selected, the last one would be considered as the selected one. <br/><br/> <b>Note:</b> Use the <code>ui5-option</code> component to define the desired options.</div>
                     </div>
             
                 </div>
@@ -218,6 +216,49 @@ The <code>ui5-select</code> component is used to create a drop-down list. The it
         </section>
       </div>
     </div>
+      <div class="api-container appended-doc">
+        <h1>Option</h1>
+        <section class="component-description">
+          <h3 class="comment-api-title">Overview</h3>
+
+The <code>ui5-option</code> component defines the content of an opton in the <code>ui5-select</code>.
+          <section class="component-api space-top">
+            
+                  <h3 class="comment-api-title" >Properties/Attributes</h3>
+                  <p class="small-space-top" >You can use both properties and attributes with the same effect. The name of each attribute is listed below the name of the property, if different.</p>
+            
+                  <div class="small-space-top api-table">
+                    <div class="head api-table-header-roll">
+                      <div class="cell api-table-header-cell">Name</div>
+                      <div class="cell api-table-header-cell">Type</div>
+                      <div class="cell api-table-header-cell">Default Value</div>
+                      <div class="cell api-table-header-cell">Description</div>
+                    </div>
+            
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">icon <br> <code></code></div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the <code>icon</code> source URI. </br></br> <b>Note:</b> SAP-icons font provides numerous buil-in icons. To find all the available icons, see the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">selected <br> <code></code></div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell">false</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the selected state of the <code>ui5-option</code>.
+                        </div>
+                      </div>
+            
+                  </div>
+            
+            
+            
+          </section>
+        </section>
+      </div>
     <footer class="footer-wrapper">
       <div class="footer-links">
         <a class="separator" href="https://www.sap.com/about/legal/privacy.html" target="_blank">Privacy Policy</a>
