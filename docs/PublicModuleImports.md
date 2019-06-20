@@ -29,6 +29,7 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 | Popover                  | `ui5-popover`        | `import "@ui5/webcomponents/dist/Popover.js";`             |
 | Radio Button             | `ui5-radiobutton`    | `import "@ui5/webcomponents/dist/RadioButton.js";`         |
 | Select                   | `ui5-select`         | `import "@ui5/webcomponents/dist/Select.js";`              |
+| Select Option            | `ui5-option`         | comes with ui5-select              |
 | Shell Bar (Fiori 3)      | `ui5-shellbar`       | `import "@ui5/webcomponents/dist/ShellBar.js";`            |
 | Shell Bar Item           | `ui5-shellbar-item`  | `import "@ui5/webcomponents/dist/ShellBarItem.js";`        |
 | Switch                   | `ui5-switch`         | `import "@ui5/webcomponents/dist/Switch.js";`              |
@@ -224,6 +225,7 @@ If you however need to submit forms, you can import the module above and it will
 - ui5-checkbox
 - ui5-radiobutton
 - ui5-datepicker
+- ui5-select
 
 with functionality, allowing them to be submitted in forms (provided you set their <code>name</code> attribute) just as
 any standard HTML input element would be.

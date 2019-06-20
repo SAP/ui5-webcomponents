@@ -10,8 +10,10 @@ import {
 	isShow,
 } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
+import { getFeature } from "@ui5/webcomponents-base/src/FeaturesRegistry.js";
 import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
+import Option from "./Option.js";
 import Label from "./Label.js";
 import Popover from "./Popover.js";
 import List from "./List.js";
@@ -33,18 +35,18 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.Select.prototype */ {
 
 		/**
-		 * Defines the <code>ui5-select</code> items.
+		 * Defines the <code>ui5-select</code> options.
 		 * <br/><br/>
-		 * <b>Note:</b> Only one selected item is allowed.
-		 * If more than one item is defined as selected, the last one would be considered as the selected one.
+		 * <b>Note:</b> Only one selected option is allowed.
+		 * If more than one option is defined as selected, the last one would be considered as the selected one.
 		 * <br/><br/>
 		 * <b>Note:</b> Use the <code>ui5-option</code> component to define the desired options.
-		 * @type {HTMLElement[]}
+		 * @type {Option[]}
 		 * @slot
 		 * @public
 		 */
 		options: {
-			type: HTMLElement,
+			type: Option,
 			multiple: true,
 			listenFor: { include: ["*"] },
 		},
@@ -62,6 +64,25 @@ const metadata = {
 		 */
 		disabled: {
 			type: Boolean,
+		},
+
+		/**
+		 * Determines the name with which the <code>ui5-select</code> will be submitted in an HTML form.
+		 * The value of the <code>ui5-select</code> will be the value of the currently selected <code>ui5-option</code>.
+		 *
+		 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
+		 * <code>import "@ui5/webcomponents/dist/InputElementsFormSupport.js";</code>
+		 *
+		 * <b>Note:</b> When set, a native <code>input</code> HTML element
+		 * will be created inside the <code>ui5-select</code> so that it can be submitted as
+		 * part of an HTML form. Do not use this property unless you need to submit a form.
+		 *
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @public
+		 */
+		name: {
+			type: String,
 		},
 
 		/**
@@ -99,7 +120,7 @@ const metadata = {
 		 */
 		change: {
 			detail: {
-				selectedItem: {},
+				selectedOption: {},
 			},
 		},
 	},
@@ -160,6 +181,7 @@ class Select extends UI5Element {
 
 	onBeforeRendering() {
 		this._syncSelection();
+		this._enableFormSupport();
 	}
 
 	get _isPickerOpen() {
@@ -218,6 +240,18 @@ class Select extends UI5Element {
 		}
 
 		this._syncedOptions = opts;
+	}
+
+	_enableFormSupport() {
+		const FormSupport = getFeature("FormSupport");
+		if (FormSupport) {
+			FormSupport.syncNativeHiddenInput(this, (element, nativeInput) => {
+				nativeInput.disabled = element.disabled;
+				nativeInput.value = element.selectedOption.value;
+			});
+		} else if (this.name) {
+			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/InputElementsFormSupport.js";`); // eslint-disable-line
+		}
 	}
 
 	_keydown(event) {
@@ -285,7 +319,7 @@ class Select extends UI5Element {
 			this._selectedIndex = nextIndex === -1 ? this._selectedIndex : nextIndex;
 
 			if (shouldFireEvent) {
-				this.fireEvent("change", { selectedItem: this.options[nextIndex] });
+				this.fireEvent("change", { selectedOption: this.options[nextIndex] });
 			}
 		}
 
@@ -316,7 +350,7 @@ class Select extends UI5Element {
 			this._select(this._selectedIndexBeforeOpen);
 			this._escapePressed = false;
 		} else if (this._lastSelectedOption !== this.options[this._selectedIndex]) {
-			this.fireEvent("change", { selectedItem: this.options[this._selectedIndex] });
+			this.fireEvent("change", { selectedOption: this.options[this._selectedIndex] });
 			this._lastSelectedOption = this.options[this._selectedIndex];
 		}
 	}
@@ -353,6 +387,7 @@ class Select extends UI5Element {
 
 	static async define(...params) {
 		await Promise.all([
+			Option.define(),
 			Label.define(),
 			Popover.define(),
 			List.define(),

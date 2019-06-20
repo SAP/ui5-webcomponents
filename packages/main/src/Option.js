@@ -33,6 +33,17 @@ const metadata = {
 			type: String,
 			defaultValue: null,
 		},
+
+		/**
+		 * Defines the value of the <code>ui5-select</code> inside an HTML Form element when this <code>ui5-option</code> is selected.
+		 * For more information on HTML Form support, see the <code>name</code> property of <code>ui5-select</code>.
+		 *
+		 * @type {string}
+		 * @public
+		 */
+		value: {
+			type: String,
+		},
 	},
 
 	events: /** @lends sap.ui.webcomponents.main.Option.prototype */ {},
