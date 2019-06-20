@@ -1,5 +1,5 @@
-commit e2c8f5e2e5401ceac25253b2461f92876acb4b26
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu Jun 20 10:43:40 2019 +0300
+commit d641cce0cb90957e20676873d67db6a30d706b13
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu Jun 20 10:54:27 2019 +0300
 
-    fix failing test (#564)
+    chore: correct usage of no-arrow, no-header (#560)
