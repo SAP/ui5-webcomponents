@@ -1,4 +1,3 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import ListItemBase from "./ListItemBase.js";
 
@@ -78,8 +77,6 @@ class GroupHeaderListItem extends ListItemBase {
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	GroupHeaderListItem.define();
-});
+GroupHeaderListItem.define();
 
 export default GroupHeaderListItem;

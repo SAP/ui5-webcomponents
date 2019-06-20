@@ -1,3 +1,4 @@
+import boot from "./boot.js";
 import { getWCNoConflict, getCompactSize } from "./Configuration.js";
 import DOMObserver from "./compatibility/DOMObserver.js";
 import UI5ElementMetadata from "./UI5ElementMetadata.js";
@@ -271,7 +272,8 @@ class UI5Element extends HTMLElement {
 		allProps.forEach(this._upgradeProperty.bind(this));
 	}
 
-	static define() {
+	static async define() {
+		await boot();
 		const tag = this.getMetadata().getTag();
 
 		const definedLocally = DefinitionsSet.has(tag);
@@ -586,6 +588,15 @@ class UI5Element extends HTMLElement {
 		};
 
 		return this[slotName].reduce(reducer, []);
+	}
+
+	/**
+	 * Used to duck-type UI5 elements without using instanceof
+	 * @returns {boolean}
+	 * @private
+	 */
+	get _isUI5Element() {
+		return true;
 	}
 
 	/**

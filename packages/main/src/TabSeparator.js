@@ -1,4 +1,3 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import TabBase from "./TabBase.js";
 import TabSeparatorTemplate from "./build/compiled/TabSeparatorTemplate.lit.js";
@@ -43,8 +42,6 @@ class TabSeparator extends TabBase {
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	TabSeparator.define();
-});
+TabSeparator.define();
 
 export default TabSeparator;

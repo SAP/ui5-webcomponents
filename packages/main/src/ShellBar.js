@@ -1,4 +1,3 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { getRTL } from "@ui5/webcomponents-base/src/Configuration.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
@@ -872,7 +871,6 @@ class ShellBar extends UI5Element {
 			Icon.define(),
 			List.define(),
 			Popover.define(),
-
 			StandardListItem.define(),
 		]);
 
@@ -880,8 +878,6 @@ class ShellBar extends UI5Element {
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	ShellBar.define();
-});
+ShellBar.define();
 
 export default ShellBar;

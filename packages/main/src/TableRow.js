@@ -1,6 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import TableCell from "./TableCell.js";
 import TableRowTemplate from "./build/compiled/TableRowTemplate.lit.js";
 
@@ -138,8 +137,6 @@ class TableRow extends UI5Element {
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	TableRow.define();
-});
+TableRow.define();
 
 export default TableRow;

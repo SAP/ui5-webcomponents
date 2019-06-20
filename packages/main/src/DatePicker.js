@@ -3,7 +3,6 @@ import "@ui5/webcomponents-base/src/shims/Core-shim.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import { fetchCldrData } from "@ui5/webcomponents-base/src/CLDR.js";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { getCalendarType } from "@ui5/webcomponents-base/src/Configuration.js";
 import { getLocale } from "@ui5/webcomponents-base/src/LocaleProvider.js";
 import { getIconURI } from "@ui5/webcomponents-base/src/IconPool.js";
@@ -550,7 +549,7 @@ class DatePicker extends UI5Element {
 
 	static async define(...params) {
 		await Promise.all([
-			fetchCldrData(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
+			fetchCldrData(),
 			Icon.define(),
 			Popover.define(),
 			Calendar.define(),
@@ -576,8 +575,6 @@ const getDomTarget = event => {
 	return target;
 };
 
-Bootstrap.boot().then(_ => {
-	DatePicker.define();
-});
+DatePicker.define();
 
 export default DatePicker;

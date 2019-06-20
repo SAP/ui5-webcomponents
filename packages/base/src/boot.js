@@ -10,25 +10,22 @@ EventEnrichment.run();
 
 let bootPromise;
 
-const Bootstrap = {
-
-	boot() {
-		if (bootPromise) {
-			return bootPromise;
-		}
-
-		bootPromise = new Promise(async resolve => {
-			await whenDOMReady();
-			initConfiguration();
-			applyTheme();
-			insertIconFontFace();
-			DOMEventHandler.start();
-			await whenPolyfillLoaded();
-			resolve();
-		});
-
+const boot = () => {
+	if (bootPromise) {
 		return bootPromise;
-	},
+	}
+
+	bootPromise = new Promise(async resolve => {
+		await whenDOMReady();
+		initConfiguration();
+		applyTheme();
+		insertIconFontFace();
+		DOMEventHandler.start();
+		await whenPolyfillLoaded();
+		resolve();
+	});
+
+	return bootPromise;
 };
 
-export default Bootstrap;
+export default boot;

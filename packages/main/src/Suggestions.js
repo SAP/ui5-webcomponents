@@ -1,4 +1,3 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import List from "./List.js";
 import Popover from "./Popover.js";
 import StandardListItem from "./StandardListItem.js"; // ensure <ui5-li> is loaded
@@ -265,9 +264,7 @@ Suggestions.SCROLL_STEP = 48;
 
 // The List and Popover components would be rendered
 // by the issuer component`s template.
-Bootstrap.boot().then(() => {
-	List.define();
-	Popover.define();
-});
+List.define();
+Popover.define();
 
 export default Suggestions;

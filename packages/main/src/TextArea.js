@@ -1,4 +1,3 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import CSSSize from "@ui5/webcomponents-base/src/types/CSSSize.js";
@@ -401,8 +400,6 @@ class TextArea extends UI5Element {
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	TextArea.define();
-});
+TextArea.define();
 
 export default TextArea;

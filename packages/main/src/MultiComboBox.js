@@ -1,4 +1,3 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
@@ -416,8 +415,6 @@ class MultiComboBox extends UI5Element {
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	MultiComboBox.define();
-});
+MultiComboBox.define();
 
 export default MultiComboBox;

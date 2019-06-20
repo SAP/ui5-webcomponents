@@ -30,7 +30,6 @@
     </script>
 <script type="module">
 	import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-	import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 	import litRender, { html } from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 	import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
 
@@ -90,9 +89,7 @@
         }
 	}
 
-	Bootstrap.boot().then(_ => {
-		Notepad.define();
-	});
+	Notepad.define();
 
 
 </script>

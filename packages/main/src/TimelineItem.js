@@ -1,4 +1,3 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
@@ -174,8 +173,6 @@ class TimelineItem extends UI5Element {
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	TimelineItem.define();
-});
+TimelineItem.define();
 
 export default TimelineItem;

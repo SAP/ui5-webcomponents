@@ -1,6 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData.js";
 import { getCalendarType, getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
 import { getFormatLocale } from "@ui5/webcomponents-base/src/FormatSettings.js";
@@ -283,8 +282,6 @@ YearPicker._MIDDLE_ITEM_INDEX = 7;
 YearPicker._MAX_YEAR = 9999;
 YearPicker._MIN_YEAR = 1;
 
-Bootstrap.boot().then(_ => {
-	YearPicker.define();
-});
+YearPicker.define();
 
 export default YearPicker;

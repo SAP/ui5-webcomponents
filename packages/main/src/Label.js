@@ -1,6 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 
 // Template
 import LabelTemplate from "./build/compiled/LabelTemplate.lit.js";
@@ -136,8 +135,6 @@ class Label extends UI5Element {
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	Label.define();
-});
+Label.define();
 
 export default Label;

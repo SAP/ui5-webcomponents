@@ -1,4 +1,3 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
 import ListItem from "./ListItem.js";
@@ -171,8 +170,6 @@ class StandardListItem extends ListItem {
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	StandardListItem.define();
-});
+StandardListItem.define();
 
 export default StandardListItem;

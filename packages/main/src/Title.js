@@ -1,6 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import TitleLevel from "./types/TitleLevel.js";
 import TitleTemplate from "./build/compiled/TitleTemplate.lit.js";
 
@@ -131,8 +130,6 @@ class Title extends UI5Element {
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	Title.define();
-});
+Title.define();
 
 export default Title;
