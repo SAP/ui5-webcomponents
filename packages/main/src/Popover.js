@@ -1,4 +1,3 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import RenderScheduler from "@ui5/webcomponents-base/src/RenderScheduler.js";
 import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
@@ -657,8 +656,6 @@ class Popover extends Popup {
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	Popover.define();
-});
+Popover.define();
 
 export default Popover;

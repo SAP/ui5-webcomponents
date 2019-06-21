@@ -1,6 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { getCalendarType, getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
 import { getFormatLocale } from "@ui5/webcomponents-base/src/FormatSettings.js";
 import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
@@ -211,8 +210,6 @@ class MonthPicker extends UI5Element {
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	MonthPicker.define();
-});
+MonthPicker.define();
 
 export default MonthPicker;

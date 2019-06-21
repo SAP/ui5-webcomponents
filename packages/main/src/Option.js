@@ -1,5 +1,4 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 
 /**
 * @public
@@ -69,8 +68,6 @@ class Option extends UI5Element {
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	Option.define();
-});
+Option.define();
 
 export default Option;

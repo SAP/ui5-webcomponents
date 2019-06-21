@@ -1,6 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler.js";
 import ScrollEnablement from "@ui5/webcomponents-base/src/delegate/ScrollEnablement.js";
 import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
@@ -587,8 +586,6 @@ const calculateContentItemClasses = item => {
 	return classes.join(" ");
 };
 
-Bootstrap.boot().then(_ => {
-	TabContainer.define();
-});
+TabContainer.define();
 
 export default TabContainer;

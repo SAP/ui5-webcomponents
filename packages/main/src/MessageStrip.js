@@ -1,6 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/src/ResourceBundle.js";
 import MessageStripType from "./types/MessageStripType.js";
 import MessageStripTemplate from "./build/compiled/MessageStripTemplate.lit.js";
@@ -168,9 +167,7 @@ class MessageStrip extends UI5Element {
 	static async define(...params) {
 		await fetchResourceBundle("@ui5/webcomponents");
 
-		await Promise.all([
-			Icon.define(),
-		]);
+		await Icon.define();
 
 		super.define(...params);
 	}
@@ -228,8 +225,6 @@ class MessageStrip extends UI5Element {
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	MessageStrip.define();
-});
+MessageStrip.define();
 
 export default MessageStrip;

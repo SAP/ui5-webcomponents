@@ -4,7 +4,6 @@ import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js
 import { getFeature } from "@ui5/webcomponents-base/src/FeaturesRegistry.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
 import {
 	isSpace,
@@ -381,8 +380,6 @@ class RadioButton extends UI5Element {
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	RadioButton.define();
-});
+RadioButton.define();
 
 export default RadioButton;

@@ -1,6 +1,5 @@
 import ManagedEvents from "./events/ManagedEvents.js";
 import getOriginalEventTarget from "./events/getOriginalEventTarget.js";
-import UI5Element from "./UI5Element.js";
 
 const handleEvent = function handleEvent(event) {
 	// Get the DOM node where the original event occurred
@@ -19,7 +18,7 @@ const handleEvent = function handleEvent(event) {
 
 
 const processDOMNode = function processDOMNode(node, event) {
-	if (node && node instanceof UI5Element) {
+	if (node && node._isUI5Element) {
 		return dispatchEvent(node, event);
 	}
 	return true;

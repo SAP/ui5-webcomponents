@@ -1,7 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import CSSSize from "@ui5/webcomponents-base/src/types/CSSSize.js";
 import TableColumnTemplate from "./build/compiled/TableColumnTemplate.lit.js";
 
@@ -132,8 +131,6 @@ class TableColumn extends UI5Element {
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	TableColumn.define();
-});
+TableColumn.define();
 
 export default TableColumn;
