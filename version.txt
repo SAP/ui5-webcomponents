@@ -1,5 +1,5 @@
-commit 7802f59969c1e464edfbf8db00077ea275d5f5be
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Jun 21 15:52:14 2019 +0300
+commit 50655409ebbcd96a8180a0f50ac672cd6fd635c9
+Author: Elena Stoyanova <elena.stoyanova@sap.com>
+Date:   Fri Jun 21 16:19:29 2019 +0300
 
-    chore: temporarily disable failing test (#574)
+    chore: add common ACC invisible text styles (#575)
