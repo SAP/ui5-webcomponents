@@ -1,6 +1,9 @@
 <li
 	tabindex="{{_tabIndex}}"
-	class="{{classes.main}}">
+	class="{{classes.main}}"
+	@focusin="{{onfocusin}}"
+	@focusout="{{onfocusout}}"
+>
 		<div id="{{_id}}-content" class="{{classes.inner}}">
 				<span class="{{classes.span}}"><slot></slot></span>
 		</div>

@@ -2,6 +2,7 @@
 	class="{{classes.main}}"
 	style="{{styles.main}}"
 	tabindex="{{_tabIndex}}"
+	@focusin="{{onfocusin}}"
 >
 	{{#each visibleCells}}
 		<div class="{{../classes.cellWrapper}}">

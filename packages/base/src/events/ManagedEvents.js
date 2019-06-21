@@ -4,8 +4,6 @@ ManagedEvents.events = [
 	"click",
 	"dblclick",
 	"contextmenu",
-	"focusin",
-	"focusout",
 	"keydown",
 	"keypress",
 	"keyup",

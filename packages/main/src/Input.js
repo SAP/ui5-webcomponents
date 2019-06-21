@@ -315,8 +315,6 @@ class Input extends UI5Element {
 		// all user interactions
 		this.ACTION_ENTER = "enter";
 		this.ACTION_USER_INPUT = "input";
-
-		this._whenShadowRootReady().then(this.attachFocusHandlers.bind(this));
 	}
 
 	onBeforeRendering() {
@@ -409,12 +407,6 @@ class Input extends UI5Element {
 		if (this.Suggestions) {
 			this.Suggestions.updateSelectedItemPosition(null);
 		}
-	}
-
-	/* Private Methods */
-	attachFocusHandlers() {
-		this.shadowRoot.addEventListener("focusout", this.onfocusout.bind(this));
-		this.shadowRoot.addEventListener("focusin", this.onfocusin.bind(this));
 	}
 
 	enableSuggestions() {
