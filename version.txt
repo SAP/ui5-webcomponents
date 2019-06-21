@@ -1,5 +1,5 @@
-commit 7231c7ce5cc3dd541bf06e199fdd12a019ac09ae
-Author: Elena Stoyanova <elena.stoyanova@sap.com>
-Date:   Fri Jun 21 15:16:18 2019 +0300
+commit 7802f59969c1e464edfbf8db00077ea275d5f5be
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Fri Jun 21 15:52:14 2019 +0300
 
-    refactor(ui5-title): Remove unneeded accessibility role (#573)
+    chore: temporarily disable failing test (#574)
