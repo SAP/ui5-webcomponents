@@ -1,4 +1,4 @@
-<span class="{{classes.frame}}">
+<span class="{{classes.frame}}" @focusin="{{onfocusin}}">
 	<span id="{{_id}}-firstfe" tabindex="0" @focusin={{focusHelper.forwardToLast}}></span>	
 	<div style="{{styles.main}}" role="dialog" aria-labelledby="{{headerId}}" tabindex="-1" class="{{classes.main}}">
 			{{> header}}
