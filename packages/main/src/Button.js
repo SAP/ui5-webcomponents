@@ -193,6 +193,12 @@ class Button extends UI5Element {
 				this._active = false;
 			}
 		};
+
+		this._deactivateByKey = (event) => {
+			if (isSpace(event) && this._active) {
+				this._active = false;
+			}
+		}
 	}
 
 	onBeforeRendering() {
@@ -204,10 +210,12 @@ class Button extends UI5Element {
 
 	onEnterDOM() {
 		document.addEventListener("mouseup", this._deactivate);
+		document.addEventListener("keyup", this._deactivateByKey);
 	}
 
 	onExitDOM() {
 		document.removeEventListener("mouseup", this._deactivate);
+		document.removeEventListener("keyup", this._deactivateByKey);
 	}
 
 	onclick(event) {
