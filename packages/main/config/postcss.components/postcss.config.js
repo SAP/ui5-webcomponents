@@ -13,8 +13,8 @@ module.exports = {
 					mergeLonghand: false, // https://github.com/cssnano/cssnano/issues/675
 					mergeRules: false, // https://github.com/cssnano/cssnano/issues/730
 				},
-			],
+			]
 		}),
 		postcssCSStoESM(),
-	],
+	]
 };
