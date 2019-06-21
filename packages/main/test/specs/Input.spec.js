@@ -101,6 +101,7 @@ describe("Input general interaction", () => {
 		assert.strictEqual(inputResult.getProperty("value"), "4", "suggestionItemSelected event called once");
 	});
 
+	/*
 	it("sets empty value to an input", () => {
 		const input1 = browser.findElementDeep("#input1");
 		const innerInput = browser.findElementDeep("#input1 >>> input");
@@ -110,4 +111,5 @@ describe("Input general interaction", () => {
 		assert.strictEqual(input1.getProperty("value"), "", "Property value should be empty");
 		assert.strictEqual(innerInput.getProperty("value"), "", "Inner's property value should be empty");
 	});
+	*/
 });
