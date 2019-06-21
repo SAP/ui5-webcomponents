@@ -1,4 +1,3 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import ListItem from "./ListItem.js";
 import CustomListItemTemplate from "./build/compiled/CustomListItemTemplate.lit.js";
@@ -71,8 +70,6 @@ class CustomListItem extends ListItem {
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	CustomListItem.define();
-});
+CustomListItem.define();
 
 export default CustomListItem;

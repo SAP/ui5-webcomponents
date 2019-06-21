@@ -1,4 +1,3 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
@@ -105,8 +104,6 @@ class Timeline extends UI5Element {
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	Timeline.define();
-});
+Timeline.define();
 
 export default Timeline;

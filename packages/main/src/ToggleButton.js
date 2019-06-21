@@ -1,4 +1,3 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import Button from "./Button.js";
 import ToggleButtonTemplate from "./build/compiled/ToggleButtonTemplate.lit.js";
@@ -82,8 +81,6 @@ class ToggleButton extends Button {
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	ToggleButton.define();
-});
+ToggleButton.define();
 
 export default ToggleButton;

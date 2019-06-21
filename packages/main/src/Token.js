@@ -1,4 +1,3 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import { getTheme } from "@ui5/webcomponents-base/src/Configuration.js";
@@ -156,8 +155,6 @@ class Token extends UI5Element {
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	Token.define();
-});
+Token.define();
 
 export default Token;

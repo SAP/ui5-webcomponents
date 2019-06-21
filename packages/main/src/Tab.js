@@ -1,4 +1,3 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import TabBase from "./TabBase.js";
 import SemanticColor from "./types/SemanticColor.js";
@@ -154,8 +153,6 @@ class Tab extends TabBase {
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	Tab.define();
-});
+Tab.define();
 
 export default Tab;

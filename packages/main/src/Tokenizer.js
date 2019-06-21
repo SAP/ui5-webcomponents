@@ -1,4 +1,3 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler.js";
@@ -221,8 +220,6 @@ class Tokenizer extends UI5Element {
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	Tokenizer.define();
-});
+Tokenizer.define();
 
 export default Tokenizer;

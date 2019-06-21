@@ -1,4 +1,3 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 
 import { isPhone } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
@@ -153,8 +152,6 @@ class Dialog extends Popup {
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	Dialog.define();
-});
+Dialog.define();
 
 export default Dialog;

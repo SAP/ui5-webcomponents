@@ -1,6 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import { getIconInfo } from "@ui5/webcomponents-base/src/IconPool.js";
 import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
@@ -131,8 +130,6 @@ class Icon extends UI5Element {
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	Icon.define();
-});
+Icon.define();
 
 export default Icon;
