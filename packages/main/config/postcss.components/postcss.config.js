@@ -1,10 +1,12 @@
+const postcssImport = require('postcss-import');
 const postcssAddFallback = require('../../lib/postcss-add-fallback/index.js');
 const postcssCSStoESM = require('../../lib/postcss-css-to-esm/index.js');
 const cssnano = require('cssnano');
 
 module.exports = {
 	plugins: [
-		postcssAddFallback({importFrom: "./dist/css/themes/sap_fiori_3/parameters-bundle.css"}),
+		postcssImport(),
+		postcssAddFallback({importFrom: './dist/css/themes/sap_fiori_3/parameters-bundle.css'}),
 		cssnano({
 			preset: [
 				'default', {
