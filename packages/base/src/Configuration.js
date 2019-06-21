@@ -56,6 +56,7 @@ const getCalendarType = () => {
 
 		if (type) {
 			return type;
+		}
 	}
 
 	return CalendarType.Gregorian;
