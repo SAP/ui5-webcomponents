@@ -510,7 +510,7 @@ class Calendar extends UI5Element {
 
 	static async define(...params) {
 		await Promise.all([
-			fetchCldrData(),
+			fetchCldrData(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
 			CalendarHeader.define(),
 			DayPicker.define(),
 			MonthPicker.define(),

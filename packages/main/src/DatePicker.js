@@ -549,7 +549,7 @@ class DatePicker extends UI5Element {
 
 	static async define(...params) {
 		await Promise.all([
-			fetchCldrData(),
+			fetchCldrData(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
 			Icon.define(),
 			Popover.define(),
 			Calendar.define(),

@@ -27,7 +27,6 @@ const fetchResourceBundle = async packageId => {
 		return;
 	}
 
-	await boot();
 	const language = getLanguage();
 
 	let localeId = ResourceBundle.__normalize(language);

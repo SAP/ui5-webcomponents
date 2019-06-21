@@ -61,10 +61,9 @@ const resolveMissingMappings = () => {
 	});
 };
 
-const fetchCldrData = async () => {
-	await boot();
+const fetchCldrData = async (language, region, script) => {
 	resolveMissingMappings();
-	const localeId = calcLocale(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript());
+	const localeId = calcLocale(language, region, script);
 
 	const cldrObj = cldrData[localeId];
 	const url = cldrUrls[localeId];
