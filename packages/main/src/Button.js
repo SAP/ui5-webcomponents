@@ -16,7 +16,7 @@ import buttonCss from "./themes/Button.css.js";
  * @public
  */
 const metadata = {
-	tag: "ui5-button", 
+	tag: "ui5-button",
 	properties: /** @lends sap.ui.webcomponents.main.Button.prototype */ {
 
 		/**
