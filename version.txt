@@ -1,5 +1,5 @@
-commit 89c6a688ee1852c88f3b9c9f0f01a1e816437470
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Jun 21 16:54:48 2019 +0300
+commit d3067d8742efac644a04a2391efb206356975354
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Fri Jun 21 17:38:16 2019 +0300
 
-    refactor: delete old helpers, move some closure functions to utils (#577)
+    refactor: remove focusout and focusin calling by convention (#576)
