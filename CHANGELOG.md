@@ -25,6 +25,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * **ui5-popover:** rename hideArrow property to noArrow ([#509](https://github.com/SAP/ui5-webcomponents/issues/509)) ([efff863](https://github.com/SAP/ui5-webcomponents/commit/efff863))
 * **ui5-select:** change default slot from list items to options ([#532](https://github.com/SAP/ui5-webcomponents/issues/532)) ([2e4486b](https://github.com/SAP/ui5-webcomponents/commit/2e4486b))
 * **ui5-switch:** rename type property to graphical ([#506](https://github.com/SAP/ui5-webcomponents/issues/506)) ([0040e85](https://github.com/SAP/ui5-webcomponents/commit/0040e85))
+* **ui5-title:** remove unneeded accessibility role ([#573](https://github.com/SAP/ui5-webcomponents/pull/573))
+* **ui5-button:** remove aria-disabled ([#558](https://github.com/SAP/ui5-webcomponents/pull/558))
+* **framework:** stop calling focusout and focusin by convention ([#576](https://github.com/SAP/ui5-webcomponents/pull/558))
 
 
 ### Features
@@ -32,7 +35,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * **ui5-card:** add "headerInteractive" property ([#439](https://github.com/SAP/ui5-webcomponents/issues/439)) ([98f7075](https://github.com/SAP/ui5-webcomponents/commit/98f7075))
 * **ui5-label:** expose font-weight property on root tag ([#534](https://github.com/SAP/ui5-webcomponents/issues/534)) ([88c794a](https://github.com/SAP/ui5-webcomponents/commit/88c794a))
 * **ui5-li:** add info and infoState properties ([#539](https://github.com/SAP/ui5-webcomponents/issues/539)) ([f1d8a85](https://github.com/SAP/ui5-webcomponents/commit/f1d8a85))
-* add form support for ui5-select ([#565](https://github.com/SAP/ui5-webcomponents/issues/565)) ([89e3508](https://github.com/SAP/ui5-webcomponents/commit/89e3508))
+* **ui5-select:** add form support([#565](https://github.com/SAP/ui5-webcomponents/issues/565)) ([89e3508](https://github.com/SAP/ui5-webcomponents/commit/89e3508))
 
 
 ### BREAKING CHANGES
