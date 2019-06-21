@@ -1,4 +1,5 @@
 import DataType from "./types/DataType.js";
+import isDescendantOf from "./util/isDescendantOf.js";
 
 class UI5ElementMetadata {
 	constructor(metadata) {
@@ -114,20 +115,6 @@ const validateSingleSlot = (value, slotData) => {
 	});
 
 	return value;
-};
-
-const isDescendantOf = (klass, baseKlass, inclusive = false) => {
-	if (typeof klass !== "function" || typeof baseKlass !== "function") {
-		return false;
-	}
-	if (inclusive && klass === baseKlass) {
-		return true;
-	}
-	let parent = klass;
-	do {
-		parent = Object.getPrototypeOf(parent);
-	} while (parent !== null && parent !== baseKlass);
-	return parent === baseKlass;
 };
 
 export default UI5ElementMetadata;
