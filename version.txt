@@ -1,5 +1,5 @@
-commit 591d81addd881a662c1252d3ecb9abe850d6263b
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Jun 20 16:59:33 2019 +0300
+commit 242bd2f257a8eedb8b6ea284e665175b59b04265
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Fri Jun 21 13:18:55 2019 +0300
 
-    fix(ui5-icon): correct RTL appearance (#569)
+    Add tutorials for different frameworks (#555)
