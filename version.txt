@@ -1,5 +1,5 @@
-commit 4e3e6249256ab4480ded954c27a6a5de26d567fd
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Jun 21 22:51:05 2019 +0300
+commit 296d4fa15c5eff02349744d9329f53b85807e964
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Sat Jun 22 07:03:36 2019 +0300
 
-    chore: release v0.13.0 (#578)
+    fix: fix default slot rendering of table column (#579)
