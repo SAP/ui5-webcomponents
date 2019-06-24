@@ -142,11 +142,14 @@ const getDerivedColorsConfig = (theme) => {
 	}
 }
 
-config = config.concat([
-	getDerivedColorsConfig("sap_belize"),
-	getDerivedColorsConfig("sap_belize_hcb"),
-	getDerivedColorsConfig("sap_fiori_3"),
-]);
+if (!process.env.DEV) {
+	// only in PROD, not used for development
+	config = config.concat([
+		getDerivedColorsConfig("sap_belize"),
+		getDerivedColorsConfig("sap_belize_hcb"),
+		getDerivedColorsConfig("sap_fiori_3"),
+	]);
+}
 
 if (process.env.ES5_BUILD) {
 	config = config.concat(getES5Config());
