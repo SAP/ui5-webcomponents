@@ -29,7 +29,7 @@ const metadata = {
 		 * @public
 		 */
 		design: {
-			type: ButtonDesign,
+			type: ButtonDesign
 			defaultValue: ButtonDesign.Default
 		},
 
