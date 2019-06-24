@@ -30,7 +30,7 @@ const metadata = {
 		 */
 		design: {
 			type: ButtonDesign,
-			defaultValue: ButtonDesign.Default,
+			defaultValue: ButtonDesign.Default
 		},
 
 		/**
