@@ -14,7 +14,6 @@ import styles from "./themes/TimelineItem.css.js";
  */
 const metadata = {
 	tag: "ui5-timeline-item",
-	defaultSlot: "description",
 	slots: /** @lends sap.ui.webcomponents.main.TimelineItem.prototype */ {
 		/**
 		 * Determines the description of the <code>ui5-timeline-item</code>.
@@ -23,7 +22,8 @@ const metadata = {
 		 * @slot
 		 * @public
 		 */
-		description: {
+		"default": {
+			alias: "description",
 			type: HTMLElement,
 			multiple: false,
 		},

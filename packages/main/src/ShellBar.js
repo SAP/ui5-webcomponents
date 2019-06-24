@@ -140,7 +140,8 @@ const metadata = {
 		 * @slot
 		 * @public
 		 */
-		items: {
+		"default": {
+			alias: "items",
 			type: HTMLElement,
 			multiple: true,
 		},
@@ -157,6 +158,7 @@ const metadata = {
 		 * @public
 		 */
 		menuItems: {
+			alias: "menuItems",
 			type: HTMLElement,
 			multiple: true,
 		},
@@ -169,6 +171,7 @@ const metadata = {
 		 * @public
 		 */
 		searchField: {
+			alias: "searchField",
 			type: HTMLElement,
 		},
 
@@ -180,10 +183,10 @@ const metadata = {
 		 * @public
 		 */
 		icon: {
+			alias: "icon",
 			type: HTMLElement,
 		},
 	},
-	defaultSlot: "items",
 	events: /** @lends sap.ui.webcomponents.main.ShellBar.prototype */ {
 		/**
 		 *

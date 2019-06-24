@@ -30,7 +30,6 @@ import selectCss from "./themes/Select.css.js";
  */
 const metadata = {
 	tag: "ui5-select",
-	defaultSlot: "options",
 	slots: /** @lends sap.ui.webcomponents.main.Select.prototype */ {
 
 		/**
@@ -44,7 +43,8 @@ const metadata = {
 		 * @slot
 		 * @public
 		 */
-		options: {
+		"default": {
+			alias: "options",
 			type: Option,
 			multiple: true,
 			listenFor: { include: ["*"] },

@@ -20,7 +20,6 @@ import listCss from "./themes/List.css.js";
  */
 const metadata = {
 	tag: "ui5-list",
-	defaultSlot: "items",
 	slots: /** @lends sap.ui.webcomponents.main.List.prototype */ {
 
 		/**
@@ -44,9 +43,10 @@ const metadata = {
 		 * @slot
 		 * @public
 		 */
-		items: {
+		"default": {
 			type: ListItemBase,
 			multiple: true,
+			alias: "items",
 		},
 	},
 	properties: /** @lends  sap.ui.webcomponents.main.List.prototype */ {

@@ -26,7 +26,6 @@ const SCROLL_STEP = 128;
  */
 const metadata = {
 	tag: "ui5-tabcontainer",
-	defaultSlot: "items",
 	slots: /** @lends  sap.ui.webcomponents.main.TabContainer.prototype */ {
 		/**
 		 * Defines the tabs.
@@ -36,7 +35,8 @@ const metadata = {
 		 * @public
 		 * @slot
 		 */
-		items: {
+		"default": {
+			alias: "items",
 			type: TabBase,
 			multiple: true,
 			individualSlots: true,
@@ -234,7 +234,7 @@ class TabContainer extends UI5Element {
 			};
 		});
 
-		if (!hasSelected) {
+		if (this.items.length && !hasSelected) {
 			this.items[0].selected = true;
 		}
 

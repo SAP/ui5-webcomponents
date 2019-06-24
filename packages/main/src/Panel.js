@@ -20,7 +20,6 @@ import panelCss from "./themes/Panel.css.js";
  */
 const metadata = {
 	tag: "ui5-panel",
-	defaultSlot: "content",
 	slots: /** @lends sap.ui.webcomponents.main.Panel.prototype */ {
 
 		/**
@@ -44,7 +43,7 @@ const metadata = {
 		 * @slot
 		 * @public
 		 */
-		content: {
+		"default": {
 			type: Node,
 			multiple: true,
 		},

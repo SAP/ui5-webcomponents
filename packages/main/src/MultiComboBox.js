@@ -20,7 +20,6 @@ import styles from "./themes/MultiComboBox.css.js";
  */
 const metadata = {
 	tag: "ui5-multi-combobox",
-	defaultSlot: "items",
 	slots: /** @lends sap.ui.webcomponents.main.MultiComboBox.prototype */ {
 		/**
 		 * Defines the <code>ui5-multi-combobox</code> items.
@@ -36,7 +35,8 @@ const metadata = {
 		 * @slot
 		 * @public
 		 */
-		items: {
+		"default": {
+			alias: "items",
 			type: HTMLElement,
 			multiple: true,
 			listenFor: { include: ["*"] },

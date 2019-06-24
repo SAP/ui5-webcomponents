@@ -24,7 +24,6 @@ import shellbarInput from "./themes/ShellBarInput.css.js";
  */
 const metadata = {
 	tag: "ui5-input",
-	defaultSlot: "suggestionItems",
 	slots: /** @lends sap.ui.webcomponents.main.Input.prototype */ {
 
 		/**
@@ -55,7 +54,8 @@ const metadata = {
 		 * @slot
 		 * @public
 		 */
-		suggestionItems: {
+		"default": {
+			alias: "suggestionItems",
 			type: HTMLElement,
 			multiple: true,
 		},

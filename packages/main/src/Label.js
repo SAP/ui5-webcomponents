@@ -62,12 +62,11 @@ const metadata = {
 		 * @slot
 		 * @public
 		 */
-		text: {
+		"default": {
 			type: Node,
 			multiple: true,
 		},
 	},
-	defaultSlot: "text",
 };
 
 /**
@@ -119,7 +118,7 @@ class Label extends UI5Element {
 		return {
 			main: {
 				sapMLabel: true,
-				sapMLabelNoText: !this.text.length,
+				sapMLabelNoText: !this.textContent.length,
 				sapMLabelWrapped: this.wrap,
 				sapMLabelRequired: this.required,
 			},

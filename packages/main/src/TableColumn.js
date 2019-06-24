@@ -19,11 +19,11 @@ const metadata = {
 		 * @slot
 		 * @public
 		 */
-		header: {
+		"default": {
+			alias: "header",
 			type: HTMLElement,
 		},
 	},
-	defaultSlot: "header",
 	properties: /** @lends sap.ui.webcomponents.main.TableColumn.prototype */ {
 
 		/**

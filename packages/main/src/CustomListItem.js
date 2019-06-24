@@ -10,7 +10,6 @@ import columnListItemCss from "./themes/CustomListItem.css.js";
  */
 const metadata = {
 	tag: "ui5-li-custom",
-	defaultSlot: "content",
 	slots: /** @lends sap.ui.webcomponents.main.CustomListItem.prototype */ {
 
 		/**
@@ -19,7 +18,7 @@ const metadata = {
 		 * @slot
 		 * @public
 		 */
-		content: {
+		"default": {
 			type: HTMLElement,
 			multiple: true,
 		},

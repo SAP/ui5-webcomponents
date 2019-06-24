@@ -7,10 +7,10 @@ TestHelper.ready(function () {
 		hooks.beforeEach(function () {
 				var domString = '<ui5-table id="table" style="display: inline-block; width: 100%; height: 500px;">' +
 						'<ui5-table-column slot="columns" id="col1">' +
-						'	<span slot="header" >Column 1</span>' +
+						'	<span >Column 1</span>' +
 						'</ui5-table-column>' +
 						'<ui5-table-column slot="columns" id="col2">' +
-						'	<span slot="header" >Column 1</span>' +
+						'	<span >Column 1</span>' +
 						'</ui5-table-column>' +
 						'<ui5-table-row  id="roll1">' +
 						'	<ui5-table-cell id="cell1">' +

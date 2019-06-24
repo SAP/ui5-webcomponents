@@ -18,7 +18,7 @@ const metadata = {
 		 * @slot
 		 * @public
 		 */
-		content: {
+		"default": {
 			type: HTMLElement,
 			multiple: true,
 		},

@@ -11,7 +11,6 @@ import styles from "./themes/TableRow.css.js";
  */
 const metadata = {
 	tag: "ui5-table-row",
-	defaultSlot: "cells",
 	slots: /** @lends sap.ui.webcomponents.main.TableRow.prototype */ {
 		/**
 		 * Defines the cells of the <code>ui5-table-row</code>.
@@ -21,7 +20,8 @@ const metadata = {
 		 * @slot
 		 * @public
 		 */
-		cells: {
+		"default": {
+			alias: "cells",
 			type: TableCell,
 			multiple: true,
 			individualSlots: true,

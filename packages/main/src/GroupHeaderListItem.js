@@ -23,12 +23,11 @@ const metadata = {
 		 * @slot
 		 * @public
 		 */
-		text: {
+		"default": {
 			type: Node,
 			multiple: true,
 		},
 	},
-	defaultSlot: "text",
 	events: /** @lends  sap.ui.webcomponents.main.GroupHeaderListItem.prototype */ {
 	},
 };

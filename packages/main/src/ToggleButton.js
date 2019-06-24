@@ -22,7 +22,6 @@ const metadata = {
 			type: Boolean,
 		},
 	},
-	defaultSlot: "text",
 };
 
 /**
