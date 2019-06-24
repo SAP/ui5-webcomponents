@@ -157,7 +157,6 @@ const metadata = {
 		 * @public
 		 */
 		menuItems: {
-			alias: "menuItems",
 			type: HTMLElement,
 		},
 
@@ -169,7 +168,6 @@ const metadata = {
 		 * @public
 		 */
 		searchField: {
-			alias: "searchField",
 			type: HTMLElement,
 			single: true,
 		},
@@ -182,7 +180,6 @@ const metadata = {
 		 * @public
 		 */
 		icon: {
-			alias: "icon",
 			type: HTMLElement,
 			single: true,
 		},

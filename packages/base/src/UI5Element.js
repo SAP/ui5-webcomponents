@@ -150,9 +150,7 @@ class UI5Element extends HTMLElement {
 
 		// Init the _state object based on the supported slots
 		for (const [slot, slotData] of Object.entries(slotsMap)) { // eslint-disable-line
-			if (slotData.alias) {
-				this._clearSlot(slot);
-			}
+			this._clearSlot(slot);
 		}
 
 		const autoIncrementMap = new Map();
@@ -182,12 +180,11 @@ class UI5Element extends HTMLElement {
 			}
 
 			// Distribute the child in the _state object
-			if (slotData.alias) {
-				if (slotData.single) {
-					this._state[slotData.alias] = child;
-				} else {
-					this._state[slotData.alias].push(child);
-				}
+			const accessor = slotData.alias || slotName;
+			if (slotData.single) {
+				this._state[accessor] = child;
+			} else {
+				this._state[accessor].push(child);
 			}
 		});
 
@@ -197,9 +194,9 @@ class UI5Element extends HTMLElement {
 	// Removes all children from the slot and detaches listeners, if any
 	_clearSlot(slot) {
 		const slotData = this.constructor.getMetadata().getSlots()[slot];
-		const alias = slotData.alias;
+		const accessor = slotData.alias || slot;
 
-		let children = this._state[alias];
+		let children = this._state[accessor];
 		if (!Array.isArray(children)) {
 			children = [children];
 		}
@@ -211,9 +208,9 @@ class UI5Element extends HTMLElement {
 		});
 
 		if (slotData.single) {
-			this._state[alias] = null;
+			this._state[accessor] = null;
 		} else {
-			this._state[alias] = [];
+			this._state[accessor] = [];
 		}
 	}
 
@@ -668,11 +665,12 @@ class UI5Element extends HTMLElement {
 
 		// Initialize slots
 		const slots = MetadataClass.getSlots();
-		for (const slotName in slots) { // eslint-disable-line
-			if (slots[slotName].single) {
-				defaultState[slotName] = null;
+		for (const [slot, slotData] of Object.entries(slots)) { // eslint-disable-line
+			const accessor = slotData.alias || slot;
+			if (slotData.single) {
+				defaultState[accessor] = null;
 			} else {
-				defaultState[slotName] = [];
+				defaultState[accessor] = [];
 			}
 		}
 
@@ -743,23 +741,21 @@ class UI5Element extends HTMLElement {
 				throw new Error(`"${slot}" is not a valid property name. Use a name that does not collide with DOM APIs`);
 			}
 
-			const alias = slotData.alias;
-			if (alias) {
-				Object.defineProperty(proto, alias, {
-					get() {
-						if (this._state[alias] !== undefined) {
-							return this._state[alias];
-						}
-						if (slotData.single) {
-							return null;
-						}
-						return [];
-					},
-					set() {
-						throw new Error("Cannot set slots directly, use the DOM APIs");
-					},
-				});
-			}
+			const accessor = slotData.alias || slot;
+			Object.defineProperty(proto, accessor, {
+				get() {
+					if (this._state[accessor] !== undefined) {
+						return this._state[accessor];
+					}
+					if (slotData.single) {
+						return null;
+					}
+					return [];
+				},
+				set() {
+					throw new Error("Cannot set slots directly, use the DOM APIs");
+				},
+			});
 		}
 	}
 }

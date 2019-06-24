@@ -32,7 +32,6 @@ const metadata = {
 		 * @public
 		 */
 		header: {
-			alias: "header",
 			type: HTMLElement,
 			single: true,
 		},

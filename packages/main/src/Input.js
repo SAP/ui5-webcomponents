@@ -34,7 +34,6 @@ const metadata = {
 		 * @public
 		 */
 		icon: {
-			alias: "icon",
 			type: Icon,
 			single: true,
 		},

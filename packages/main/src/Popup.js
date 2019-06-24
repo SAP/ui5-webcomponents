@@ -31,7 +31,6 @@ const metadata = {
 		 * @public
 		 */
 		header: {
-			alias: "header",
 			type: HTMLElement,
 			single: true,
 		},
@@ -44,7 +43,6 @@ const metadata = {
 		 * @public
 		 */
 		footer: {
-			alias: "footer",
 			type: HTMLElement,
 			single: true,
 		},

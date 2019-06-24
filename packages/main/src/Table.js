@@ -41,7 +41,6 @@ const metadata = {
 		 * @public
 		 */
 		columns: {
-			alias: "columns",
 			type: TableColumn,
 			individualSlots: true,
 			listenFor: { exclude: ["header"] },
