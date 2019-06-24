@@ -1,4 +1,3 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import List from "./List.js";
 import Popover from "./Popover.js";
 import StandardListItem from "./StandardListItem.js"; // ensure <ui5-li> is loaded
@@ -118,10 +117,10 @@ class Suggestions {
 
 	_attachItemsListeners() {
 		const list = this._getList();
-		list.removeEventListener("itemPress", this.fnOnSuggestionItemPress);
-		list.addEventListener("itemPress", this.fnOnSuggestionItemPress);
-		list.removeEventListener("itemFocused", this.fnOnSuggestionItemFocus);
-		list.addEventListener("itemFocused", this.fnOnSuggestionItemFocus);
+		list.removeEventListener("ui5-itemPress", this.fnOnSuggestionItemPress);
+		list.addEventListener("ui5-itemPress", this.fnOnSuggestionItemPress);
+		list.removeEventListener("ui5-itemFocused", this.fnOnSuggestionItemFocus);
+		list.addEventListener("ui5-itemFocused", this.fnOnSuggestionItemFocus);
 	}
 
 	_attachPopupListeners() {
@@ -130,12 +129,12 @@ class Suggestions {
 		}
 
 		if (!this.attachedAfterOpened) {
-			this._getPopover().addEventListener("afterOpen", this._onOpen.bind(this));
+			this._getPopover().addEventListener("ui5-afterOpen", this._onOpen.bind(this));
 			this.attachedAfterOpened = true;
 		}
 
 		if (!this.attachedAfterClose) {
-			this._getPopover().addEventListener("afterClose", this._onClose.bind(this));
+			this._getPopover().addEventListener("ui5-afterClose", this._onClose.bind(this));
 			this.attachedAfterClose = true;
 		}
 	}
@@ -265,9 +264,7 @@ Suggestions.SCROLL_STEP = 48;
 
 // The List and Popover components would be rendered
 // by the issuer component`s template.
-Bootstrap.boot().then(() => {
-	List.define();
-	Popover.define();
-});
+List.define();
+Popover.define();
 
 export default Suggestions;

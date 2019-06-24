@@ -6,9 +6,6 @@ import { isEscape } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 // Styles
 import styles from "./themes/Popup.css.js";
 
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
-
 /**
  * @public
  */
@@ -54,31 +51,32 @@ const metadata = {
 		 * Defines the ID of the HTML Element, which will get the initial focus.
 		 *
 		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		initialFocus: {
 			type: String,
-			defaultValue: null,
 			association: true,
 		},
 		/**
 		 * Defines whether the header is hidden.
 		 *
 		 * @type {Boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
-		hideHeader: {
+		noHeader: {
 			type: Boolean,
 		},
 		/**
 		 * Defines the header text.
 		 *
 		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		headerText: {
 			type: String,
-			defaultValue: "",
 		},
 
 		_isOpen: {
@@ -91,33 +89,38 @@ const metadata = {
 			type: Boolean,
 		},
 	},
-	events: {
+	events: /** @lends  sap.ui.webcomponents.main.Popup.prototype */ {
+
 		/**
-		 * Fired before the Web Component is opened.
+		 * Fired before the component is opened.
 		 *
 		 * @public
 		 * @event
 		 */
+
 		beforeOpen: {},
 		/**
-		 * Fired after the Web Component is opened.
+		 * Fired after the component is opened.
 		 *
 		 * @public
 		 * @event
 		 */
+
 		afterOpen: {},
 		/**
-		 * Fired before the Web Component is closed.
+		 * Fired before the component is closed.
 		 *
 		 * @public
 		 * @event
-		 * @param {Boolean} escPressed Indicate that ESC key triggered the event.
+		 * @param {Boolean} escPressed Indicates that <code>ESC</code> key has triggered the event.
 		 */
+
 		beforeClose: {
 			escPressed: { type: Boolean },
 		},
+
 		/**
-		 * Fired after the Web Component is closed.
+		 * Fired after the component is closed.
 		 *
 		 * @public
 		 * @event
@@ -300,7 +303,7 @@ class Popup extends UI5Element {
 		const initialFocus = this.initialFocus;
 		let initialFocusDomRef = this.initialFocus;
 
-		if (typeof initialFocus === "string") {
+		if (initialFocus && typeof initialFocus === "string") {
 			initialFocusDomRef = document.getElementById(initialFocus);
 
 			if (!initialFocusDomRef) {

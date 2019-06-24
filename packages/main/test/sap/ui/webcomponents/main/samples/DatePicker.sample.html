@@ -23,7 +23,7 @@
 	<script nomodule src="../../../../../../resources/sap/ui/webcomponents/main/bundle.es5.js">
 	</script>
 </head>
-<body class="sapUiBody example-wrapper">
+<body class="sapUiBody example-wrapper" role="application">
 
 	<header>
 		<h2 class="control-header">DatePicker</h2>
@@ -57,7 +57,7 @@
 		dp.setAttribute('value-state', e.detail.valid ? 'None' : 'Error');
 		console.log('change: ', e.detail);
 	});
-	dp.addEventListener('liveChange', (e) => console.log('liveChange: ', e.detail));
+	dp.addEventListener('input', (e) => console.log('input: ', e.detail));
 </script>
 	</xmp></pre>
 	</section>
@@ -178,7 +178,7 @@
 			dp.setAttribute('value-state', e.detail.valid? 'None' : 'Error');
 			console.log('change: ', e.detail);
 		});
-		dp.addEventListener('liveChange', function(e) {console.log('liveChange: ', e.detail)});
+		dp.addEventListener('input', function(e) {console.log('input: ', e.detail)});
 	</script>
 
 	<script defer src="../../../../../../www/samples/settings.js"></script>

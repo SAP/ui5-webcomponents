@@ -1,15 +1,12 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 
-import DialogTemplateContext from "./DialogTemplateContext.js";
+import { isPhone } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 import Popup from "./Popup.js";
 // Template
-import DialogRenderer from "./build/compiled/DialogRenderer.lit.js";
+import DialogTemplate from "./build/compiled/DialogTemplate.lit.js";
 
 // Styles
 import dialogCss from "./themes/Dialog.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
 
 /**
  * @public
@@ -24,6 +21,7 @@ const metadata = {
 		 * 90% of the viewport.
 		 *
 		 * @type {Boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		stretch: {
@@ -70,8 +68,12 @@ class Dialog extends Popup {
 		return metadata;
 	}
 
-	static get renderer() {
-		return DialogRenderer;
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return DialogTemplate;
 	}
 
 	static get styles() {
@@ -118,13 +120,38 @@ class Dialog extends Popup {
 		this.fireEvent("afterClose", { });
 	}
 
-	static get calculateTemplateContext() {
-		return DialogTemplateContext.calculate;
+	get classes() {
+		return {
+			frame: {
+				sapMPopupFrame: true,
+				sapMPopupFrameOpen: this._isOpen,
+			},
+			dialogParent: {
+				sapMDialogParent: true,
+				sapMDialogStretched: this.stretch,
+				"ui5-phone": isPhone(),
+			},
+			main: {
+				sapMPopup: true,
+				sapMDialog: true,
+			},
+			blockLayer: {
+				sapUiBLy: true,
+				sapMPopupBlockLayer: true,
+				sapMPopupBlockLayerHidden: this._hideBlockLayer,
+			},
+		};
+	}
+
+	get zindex() {
+		return `z-index: ${this._zIndex + 1};`;
+	}
+
+	get blockLayer() {
+		return `z-index: ${this._zIndex};`;
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	Dialog.define();
-});
+Dialog.define();
 
 export default Dialog;

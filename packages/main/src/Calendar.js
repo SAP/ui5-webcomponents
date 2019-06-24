@@ -1,8 +1,8 @@
 import "@ui5/webcomponents-base/src/shims/jquery-shim.js";
 import "@ui5/webcomponents-base/src/shims/Core-shim.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import { fetchCldrData } from "@ui5/webcomponents-base/src/CLDR.js";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { getLocale } from "@ui5/webcomponents-base/src/LocaleProvider.js";
 import { getCalendarType } from "@ui5/webcomponents-base/src/Configuration.js";
 import { getFormatLocale } from "@ui5/webcomponents-base/src/FormatSettings.js";
@@ -11,21 +11,17 @@ import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData.js";
 import CalendarDate from "@ui5/webcomponents-base/src/dates/CalendarDate.js";
 import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType.js";
 import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
-import CalendarTemplateContext from "./CalendarTemplateContext.js";
 import CalendarHeader from "./CalendarHeader.js";
 import DayPicker from "./DayPicker.js";
 import MonthPicker from "./MonthPicker.js";
 import YearPicker from "./YearPicker.js";
-import CalendarRenderer from "./build/compiled/CalendarRenderer.lit.js";
+import CalendarTemplate from "./build/compiled/CalendarTemplate.lit.js";
 
 // default calendar for bundling
 import "@ui5/webcomponents-core/dist/sap/ui/core/date/Gregorian.js";
 
 // Styles
 import calendarCSS from "./themes/Calendar.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
 
 /**
  * @public
@@ -45,6 +41,7 @@ const metadata = {
 		/**
 		 * Sets a calendar type used for display.
 		 * If not set, the calendar type of the global configuration is used.
+		 * Available options are: "Gregorian", "Islamic", "Japanese", "Buddhist" and "Persian".
 		 * @type {string}
 		 * @public
 		 */
@@ -115,8 +112,12 @@ class Calendar extends UI5Element {
 		return metadata;
 	}
 
-	static get renderer() {
-		return CalendarRenderer;
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return CalendarTemplate;
 	}
 
 	static get styles() {
@@ -480,8 +481,31 @@ class Calendar extends UI5Element {
 		}
 	}
 
-	static get calculateTemplateContext() {
-		return CalendarTemplateContext.calculate;
+	get classes() {
+		return {
+			main: {
+				sapUiCal: true,
+				sapUiCalIslamic: this.primaryCalendarType === CalendarType.Islamic,
+			},
+			dayPicker: {
+				"sapWCDayPickerHidden": !this._yearPicker._hidden || !this._monthPicker._hidden,
+			},
+			yearPicker: {
+				"sapWCYearPickerHidden": this._yearPicker._hidden,
+			},
+			monthPicker: {
+				"sapWCMonthPickerHidden": this._monthPicker._hidden,
+			},
+		};
+	}
+
+	get styles() {
+		return {
+			main: {
+				"height": `${this._calendarHeight ? `${this._calendarHeight}px` : "auto"}`,
+				"width": `${this._calendarWidth ? `${this._calendarWidth}px` : "auto"}`,
+			},
+		};
 	}
 
 	static async define(...params) {
@@ -497,9 +521,6 @@ class Calendar extends UI5Element {
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	Calendar.define();
-});
-
+Calendar.define();
 
 export default Calendar;

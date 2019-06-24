@@ -6,13 +6,13 @@ TestHelper.ready(function () {
 	QUnit.module("API: Integration", function (hooks) {
 		hooks.beforeEach(function () {
 				var domString = '<ui5-table id="table" style="display: inline-block; width: 100%; height: 500px;">' +
-						'<ui5-table-column data-ui5-slot="columns" id="col1">' +
-						'	<span data-ui5-slot="header" >Column 1</span>' +
+						'<ui5-table-column slot="columns" id="col1">' +
+						'	<span slot="header" >Column 1</span>' +
 						'</ui5-table-column>' +
-						'<ui5-table-column data-ui5-slot="columns" id="col2">' +
-						'	<span data-ui5-slot="header" >Column 1</span>' +
+						'<ui5-table-column slot="columns" id="col2">' +
+						'	<span slot="header" >Column 1</span>' +
 						'</ui5-table-column>' +
-						'<ui5-table-row data-ui5-slot="rows" id="roll1">' +
+						'<ui5-table-row  id="roll1">' +
 						'	<ui5-table-cell id="cell1">' +
 						'		<span>World</span>' +
 						'	</ui5-table-cell>' +
@@ -35,7 +35,7 @@ TestHelper.ready(function () {
 		});
 
 		QUnit.test("Two column grid should be created with 2 columns", function (assert) {
-			var tableDOM = this.table._getRoot().children[0];
+			var tableDOM = this.table.getDomRef();
 			var tableColumn = tableDOM.children[0];
 			var columnGridStyles = tableColumn.style["grid-template-columns"];
 
@@ -50,8 +50,8 @@ TestHelper.ready(function () {
 			col1.setAttribute("width", "100px");
 
 			RenderScheduler.whenFinished().then(function() {
-				var tableDOM = this.table._getRoot().children[0];
-				var rollDom = roll1._getRoot().children[0];
+				var tableDOM = this.table.getDomRef();
+				var rollDom = roll1.getDomRef();
 				var tableColumn = tableDOM.children[0];
 				var columnGridStyles = tableColumn.style["grid-template-columns"];
 
@@ -72,8 +72,8 @@ TestHelper.ready(function () {
 			col1.setAttribute("min-width", "500px");
 
 			setTimeout(function() {
-				var tableDOM = this.table._getRoot().children[0];
-				var rollDom = roll1._getRoot().children[0];
+				var tableDOM = this.table.getDomRef();
+				var rollDom = roll1.getDomRef();
 				var tableColumn = tableDOM.children[0];
 				var columnGridStyles = tableColumn.style["grid-template-columns"];
 
@@ -96,8 +96,8 @@ TestHelper.ready(function () {
 			col1.setAttribute("demand-popin", true);
 
 			setTimeout(function() {
-				var tableDOM = this.table._getRoot().children[0];
-				var rollDom = roll1._getRoot().children[0];
+				var tableDOM = this.table.getDomRef();
+				var rollDom = roll1.getDomRef();
 				var tableColumn = tableDOM.children[0];
 				var columnGridStyles = tableColumn.style["grid-template-columns"];
 

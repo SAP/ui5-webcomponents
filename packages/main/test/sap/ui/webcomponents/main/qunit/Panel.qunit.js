@@ -32,7 +32,7 @@ TestHelper.ready(function () {
 		QUnit.test("The default 'headerText' is empty string", function (assert) {
 			var panel = this.getPanelRoot(),
 				sExpected = "";
-
+				
 			assert.equal(panel.querySelector(".sapMPanelHdr").innerText.trim(), sExpected, "headerText is empty string");
 		});
 
@@ -47,14 +47,6 @@ TestHelper.ready(function () {
 			var panel = this.getPanelRoot();
 
 			assert.equal(panel.querySelector(".sapMPanelContent").style.display, "block", "the content div is shown");
-		});
-
-		QUnit.test("The default 'backgroundDesign' is 'Solid'", function (assert) {
-			var panel = this.getPanelRoot(),
-				panelContent = panel.querySelector(".sapMPanelContent"),
-				expectedClass = "sapMPanelBGSolid";
-
-			assert.ok(panelContent.classList.contains(expectedClass), "the content div has ." + expectedClass);
 		});
 
 		QUnit.test("The default 'accessibleRole' is 'Form'", function (assert) {
@@ -110,23 +102,6 @@ TestHelper.ready(function () {
 			});
 		});
 
-		QUnit.test("changing the 'backgroundDesign' is reflected in the DOM", function (assert) {
-			assert.expect(1);
-
-			var done = assert.async(),
-				panel = this.getPanelRoot(),
-				panelContent = panel.querySelector(".sapMPanelContent"),
-				expectedClass = "sapMPanelBGSolid";
-
-			this.panel.setAttribute("background-design", "Solid");
-
-			RenderScheduler.whenFinished().then(function () {
-				assert.ok(panelContent.classList.contains(expectedClass), "the content div has ." + expectedClass);
-
-				done();
-			});
-		});
-
 		QUnit.test("changing the 'accessibleRole' is reflected in the DOM", function (assert) {
 			assert.expect(1);
 
@@ -150,7 +125,7 @@ TestHelper.ready(function () {
 				panel = this.getPanelRoot();
 
 			this.panel.setAttribute("header-text", "New Header Text");
-			this.panel.innerHTML = "<div data-ui5-slot='header'></div>";
+			this.panel.innerHTML = "<div slot='header'></div>";
 
 			RenderScheduler.whenFinished().then(function () {
 				assert.ok(panel.querySelector(".sapMPanelWrappingDivTb"), "header is added in the DOM");
@@ -167,7 +142,7 @@ TestHelper.ready(function () {
 				panel = this.getPanelRoot();
 
 			this.panel.setAttribute("header-text", "New Header Text");
-			this.panel.innerHTML = "<div data-ui5-slot='header'></div>";
+			this.panel.innerHTML = "<div slot='header'></div>";
 
 			RenderScheduler.whenFinished().then(function () {
 				assert.ok(panel.querySelector(".sapMPanelWrappingDivTb"), "header is added in the DOM");

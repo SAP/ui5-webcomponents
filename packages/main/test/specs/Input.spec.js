@@ -66,7 +66,7 @@ describe("Input general interaction", () => {
 
 		assert.ok(popover.isDisplayedInViewport(), "suggestions are opened.");
 		
-		item = $("#myInput ui5-li[slot=suggestionItems-1]");
+		item = $("#myInput ui5-li:first-child");
 		item.click();
 
 		assert.ok(!popover.isDisplayedInViewport(), "suggestions are closed");
@@ -74,7 +74,7 @@ describe("Input general interaction", () => {
 		assert.strictEqual(inputResult.getProperty("value"), "1", "suggestionItemSelected event called once");
 
 		suggestionsInput.keys("\b");
-		item = $("#myInput ui5-li[slot=suggestionItems-1]");
+		item = $("#myInput ui5-li:first-child");
 		item.click();
 
 		assert.strictEqual(suggestionsInput.getProperty("value"), "Portugal", "First item has been selected again");
@@ -100,4 +100,16 @@ describe("Input general interaction", () => {
 		assert.strictEqual(suggestionsInput.getProperty("value"), "Condensed", "First item has been selected");
 		assert.strictEqual(inputResult.getProperty("value"), "4", "suggestionItemSelected event called once");
 	});
+
+	/*
+	it("sets empty value to an input", () => {
+		const input1 = browser.findElementDeep("#input1");
+		const innerInput = browser.findElementDeep("#input1 >>> input");
+
+		input1.setProperty("value", "");
+
+		assert.strictEqual(input1.getProperty("value"), "", "Property value should be empty");
+		assert.strictEqual(innerInput.getProperty("value"), "", "Inner's property value should be empty");
+	});
+	*/
 });

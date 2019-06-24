@@ -13,9 +13,7 @@
 	</script>
 
 	<script src="../../../../../../webcomponentsjs/webcomponents-loader.js"></script>
-	<script src="../../../../../../resources/sap/ui/webcomponents/main/bundle.esm.js"
-		type="module"
-	>
+	<script src="../../../../../../resources/sap/ui/webcomponents/main/bundle.esm.js" type="module">
 	</script>
 
 	<script nomodule src="../../../../../../resources/sap/ui/webcomponents/main/bundle.es5.js">
@@ -85,36 +83,50 @@
 
 	<ui5-table class="demo-table" id="tbl">
 		<!-- Columns -->
-		<ui5-table-column id="column-1" data-ui5-slot="columns" width="350px">
-			<div class="column-content" data-ui5-slot="header">
+		<ui5-table-column id="column-1" slot="columns" width="350px">
+			<div class="column-content" slot="header">
 				<ui5-label>Product</ui5-label>
 			</div>
 		</ui5-table-column>
 
-		<ui5-table-column id="column-2" data-ui5-slot="columns" min-width="800" popin-text="Supplier">
-			<div class="column-content" data-ui5-slot="header">
+		<ui5-table-column id="column-2" slot="columns" min-width="800" popin-text="Supplier">
+			<div class="column-content" slot="header">
 				<ui5-label>Supplier</ui5-label>
 			</div>
 		</ui5-table-column>
 
-		<ui5-table-column id="column-3" data-ui5-slot="columns" min-width="600" popin-text="Dimensions" demand-popin>
-			<div class="column-content" data-ui5-slot="header">
+		<ui5-table-column id="column-3" slot="columns" min-width="600" popin-text="Dimensions" demand-popin>
+			<div class="column-content" slot="header">
 				<ui5-label>Dimensions</ui5-label>
 			</div>
 		</ui5-table-column>
 
-		<ui5-table-column id="column-4" data-ui5-slot="columns" min-width="600" popin-text="Weight" demand-popin>
-			<div class="column-content" data-ui5-slot="header">
+		<ui5-table-column id="column-4" slot="columns" min-width="600" popin-text="Weight" demand-popin>
+			<div class="column-content" slot="header">
 				<ui5-label>Weight</ui5-label>
 			</div>
 		</ui5-table-column>
 
-		<ui5-table-column id="column-5" data-ui5-slot="columns">
-			<div class="column-content" data-ui5-slot="header">
+		<ui5-table-column id="column-5" slot="columns">
+			<div class="column-content" slot="header">
 				<ui5-label>Price</ui5-label>
 			</div>
 		</ui5-table-column>
 
+	</ui5-table>
+
+
+	<ui5-table class="no-data-table" id="tableNoData" no-data-text="No Data" show-no-data>
+		<ui5-table-column id="column-1" slot="columns">
+			<div class="column-content">
+				<ui5-label>Product</ui5-label>
+			</div>
+		</ui5-table-column>
+		<ui5-table-column id="column-2" slot="columns">
+			<div class="column-content">
+				<ui5-label>Supplier</ui5-label>
+			</div>
+		</ui5-table-column>
 	</ui5-table>
 
 
@@ -2888,7 +2900,7 @@
 
 		let html = '';
 		products.ProductCollection.forEach((product, index) => {
-			test = `<ui5-table-row data-ui5-slot="rows" id=roll-${index}>
+			test = `<ui5-table-row  id=roll-${index}>
 							<ui5-table-cell>
 								<div class="double-line-content">
 									<ui5-label>
@@ -2918,7 +2930,7 @@
 
 						</ui5-table-row>`;
 			if (index > 4) {
-			    return;
+				return;
 			}
 
 			html += test;
@@ -2930,11 +2942,11 @@
 			document.getElementById("tbl").stickyColumnHeader = !document.getElementById("tbl").stickyColumnHeader
 		});
 
-		document.getElementById("size-btn-650").addEventListener("press", event => {
+		document.getElementById("size-btn-650").addEventListener("ui5-press", event => {
 			document.getElementById("tbl").style.width = "650px";
 		});
 
-		document.getElementById("size-btn-500").addEventListener("press", event => {
+		document.getElementById("size-btn-500").addEventListener("ui5-press", event => {
 			document.getElementById("tbl").style.width = "500px";
 		});
 	</script>

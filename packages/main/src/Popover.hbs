@@ -1,40 +1,38 @@
-<span {{> controlData}} class="{{classes.frame}}">
-	<span id="{{ctr._id}}-firstfe" tabindex="0" @focusin={{focusHelper.forwardToLast}}></span>	
+<span class="{{classes.frame}}" @focusin="{{onfocusin}}">
+	<span id="{{_id}}-firstfe" tabindex="0" @focusin={{focusHelper.forwardToLast}}></span>	
 	<div style="{{styles.main}}" role="dialog" aria-labelledby="{{headerId}}" tabindex="-1" class="{{classes.main}}">
 			{{> header}}
-			<div id="{{ctr._id}}-content" role="application" style="{{styles.content}}" class="sapMPopupContent">
+			<div id="{{_id}}-content" role="application" style="{{styles.content}}" class="sapMPopupContent">
 				<div class="sapMPopupScroll">
-					{{#each ctr.content}}
-						<slot name="{{this._slot}}"></slot>
-					{{/each}}
+					<slot></slot>
 				</div>
 			</div>
 			{{> footer}}
-			<span id="{{ctr._id}}-arrow" style="{{styles.arrow}}" class="{{classes.arrow}}"></span>
+			<span id="{{_id}}-arrow" style="{{styles.arrow}}" class="{{classes.arrow}}"></span>
 		</div>
-	<span id="{{ctr._id}}-lastfe" tabindex="0" @focusin={{focusHelper.forwardToFirst}}></span>
-	<div tabindex="0" id="{{ctr._id}}-blocklayer" style="{{styles.blockLayer}}" class="{{classes.blockLayer}}"></div>
+	<span id="{{_id}}-lastfe" tabindex="0" @focusin={{focusHelper.forwardToFirst}}></span>
+	<div tabindex="0" id="{{_id}}-blocklayer" style="{{styles.blockLayer}}" class="{{classes.blockLayer}}"></div>
 </span>
 
 {{#*inline "header"}}
-	{{#unless ctr.hideHeader}}
+	{{#unless noHeader}}
 		<header>
-			{{#if ctr.header}}
+			{{#if header}}
 				<div role="toolbar" class="sapMPopupHeader">
-					<slot name="{{ctr.header._slot}}"></slot>
+					<slot name="header"></slot>
 				</div>
 			{{else}}
-				<h2 role="toolbar" class="sapMPopupHeader sapMPopupHeaderText">{{ctr.headerText}}</h2>
+				<h2 role="toolbar" class="sapMPopupHeader sapMPopupHeaderText">{{headerText}}</h2>
 			{{/if}}
 		</header>
 	{{/unless}}
 {{/inline}}
 
 {{#*inline "footer"}}
-	{{#if ctr.footer}}
+	{{#if footer}}
 		<footer>
 			<div class="sapMPopupFooter">
-				<slot name="{{ctr.footer._slot}}"></slot>
+				<slot name="footer"></slot>
 			</div>
 		</footer>
 	{{/if}}

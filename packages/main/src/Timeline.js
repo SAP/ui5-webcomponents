@@ -1,15 +1,12 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
-import TimelineTemplateContext from "./TimelineTemplateContext.js";
+import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
 import TimelineItem from "./TimelineItem.js";
-import TimelineRenderer from "./build/compiled/TimelineRenderer.lit.js";
+import TimelineTemplate from "./build/compiled/TimelineTemplate.lit.js";
 
 // Styles
 import styles from "./themes/Timeline.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
 
 /**
  * @public
@@ -28,6 +25,7 @@ const metadata = {
 		items: {
 			type: TimelineItem,
 			multiple: true,
+			individualSlots: true,
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.Timeline.prototype */ {
@@ -65,12 +63,12 @@ class Timeline extends UI5Element {
 		return styles;
 	}
 
-	static get renderer() {
-		return TimelineRenderer;
+	static get render() {
+		return litRender;
 	}
 
-	static get calculateTemplateContext() {
-		return TimelineTemplateContext.calculate;
+	static get template() {
+		return TimelineTemplate;
 	}
 
 	constructor() {
@@ -80,7 +78,6 @@ class Timeline extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		this.addItemsCustomClass();
 		this._itemNavigation.init();
 	}
 
@@ -91,8 +88,13 @@ class Timeline extends UI5Element {
 		this._delegates.push(this._itemNavigation);
 	}
 
-	addItemsCustomClass() {
-		this.items[this.items.length - 1]._customClasses = ["sapWCTimelineItemLast"];
+	get classes() {
+		return {
+			main: {
+				sapWCTimeline: true,
+				sapUiSizeCompact: getCompactSize(),
+			},
+		};
 	}
 
 	static async define(...params) {
@@ -102,8 +104,6 @@ class Timeline extends UI5Element {
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	Timeline.define();
-});
+Timeline.define();
 
 export default Timeline;

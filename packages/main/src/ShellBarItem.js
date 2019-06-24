@@ -1,12 +1,8 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import URI from "@ui5/webcomponents-base/src/types/URI.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 
 // Template
-import ShellBarItemRenderer from "./build/compiled/ShellBarItemRenderer.lit.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
+import ShellBarItemTemplate from "./build/compiled/ShellBarItemTemplate.lit.js";
 
 /**
  * @public
@@ -16,22 +12,21 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.ShellBarItem.prototype */ {
 		/**
 		 * Defines the item source URI.
-		 * @type {URI}
+		 * @type {string}
 		 * @public
 		 */
 		src: {
-			type: URI,
-			defaultValue: null,
+			type: String,
 		},
 
 		/**
 		 * Defines the item text.
-		 * @type {String}
+		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		text: {
 			type: String,
-			defaultValue: null,
 		},
 
 		_icon: { type: HTMLElement },
@@ -42,9 +37,14 @@ const metadata = {
 		 * Fired, when the item is pressed.
 		 *
 		 * @event
+		 * @param {HTMLElement} targetRef dom ref of the clicked element
 		 * @public
 		 */
-		press: {},
+		press: {
+			detail: {
+				targetRef: { type: HTMLElement },
+			},
+		},
 	},
 };
 
@@ -67,17 +67,15 @@ class ShellBarItem extends UI5Element {
 		return metadata;
 	}
 
-	static get renderer() {
-		return ShellBarItemRenderer;
+	static get render() {
+		return litRender;
 	}
 
-	static get calculateTemplateContext() {
-		return state => { return { ctr: state }; };
+	static get template() {
+		return ShellBarItemTemplate;
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	ShellBarItem.define();
-});
+ShellBarItem.define();
 
 export default ShellBarItem;

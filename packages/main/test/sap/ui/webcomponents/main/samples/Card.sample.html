@@ -103,14 +103,19 @@
 	<section>
 		<h3>Card with List</h3>
 		<div class="snippet card-container">
-			<ui5-card avatar="sap-icon://group" heading="Team 6" subtitle="Direct Reports" status="6 of 6" class="medium">
+			<ui5-card avatar="sap-icon://group" heading="Team Space" subtitle="Direct Reports" status="3 of 10" class="medium">
 				<div class="card-content">
-					<ui5-list separators="None" class="card-content-child">
+					<ui5-list separators="None" class="card-content-child" style="width: 100%">
 						<ui5-li image="../../../../../../www/samples/images/man_avatar_1.png" description="User Researcher">Alain Chevalier</ui5-li>
 						<ui5-li image="../../../../../../www/samples/images/woman_avatar_1.png" description="Artist">Monique Legrand</ui5-li>
 						<ui5-li image="../../../../../../www/samples/images/woman_avatar_2.png" description="UX Specialist">Michael Adams</ui5-li>
 					</ui5-list>
-					<ui5-list separators="None" class="card-content-child">
+					
+				</div>
+			</ui5-card>
+			<ui5-card avatar="sap-icon://group" heading="This header is interactive" header-interactive subtitle="Click, press Enter or Space" status="3 of 6" class="medium">
+				<div class="card-content">
+					<ui5-list separators="None" class="card-content-child" style="width: 100%">
 						<ui5-li image="../../../../../../www/samples/images/man_avatar_2.png" description="Software Architect">Richard Wilson</ui5-li>
 						<ui5-li image="../../../../../../www/samples/images/woman_avatar_3.png" description="Visual Designer">Elena Petrova</ui5-li>
 						<ui5-li image="../../../../../../www/samples/images/man_avatar_3.png" description="Quality Specialist">John Miller</ui5-li>
@@ -129,18 +134,19 @@
 }
 </style>
 
-<ui5-card avatar="sap-icon://group"
-	heading="Team 6"
-	subtitle="Direct Reports"
-	status="6 of 6"
-	class="medium">
+<ui5-card avatar="sap-icon://group" heading="Team Space" subtitle="Direct Reports" status="3 of 10" class="medium">
 	<div class="card-content">
-		<ui5-list separators="None" class="card-content-child">
+		<ui5-list separators="None" class="card-content-child" style="width: 100%">
 			<ui5-li image="../../../../../../www/samples/images/man_avatar_1.png" description="User Researcher">Alain Chevalier</ui5-li>
 			<ui5-li image="../../../../../../www/samples/images/woman_avatar_1.png" description="Artist">Monique Legrand</ui5-li>
 			<ui5-li image="../../../../../../www/samples/images/woman_avatar_2.png" description="UX Specialist">Michael Adams</ui5-li>
 		</ui5-list>
-		<ui5-list separators="None" class="card-content-child">
+		
+	</div>
+</ui5-card>
+<ui5-card avatar="sap-icon://group" heading="This header is interactive" header-interactive subtitle="Click, press Enter or Space" status="3 of 6" class="medium">
+	<div class="card-content">
+		<ui5-list separators="None" class="card-content-child" style="width: 100%">
 			<ui5-li image="../../../../../../www/samples/images/man_avatar_2.png" description="Software Architect">Richard Wilson</ui5-li>
 			<ui5-li image="../../../../../../www/samples/images/woman_avatar_3.png" description="Visual Designer">Elena Petrova</ui5-li>
 			<ui5-li image="../../../../../../www/samples/images/man_avatar_3.png" description="Quality Specialist">John Miller</ui5-li>
@@ -154,34 +160,34 @@
 	<section>
 		<h3>Card with Table</h3>
 		<div class="snippet card-container">
-			<ui5-card heading="New Purchase Orders" subtitle="Today" status="3 of 15" >
+			<ui5-card heading="New Purchase Orders" subtitle="Today" status="3 of 15">
 				<ui5-table class="demo-table content-padding">
 					<!-- Columns -->
-					<ui5-table-column data-ui5-slot="columns">
-						<div data-ui5-slot="header">
+					<ui5-table-column slot="columns">
+						<div slot="header">
 							<ui5-label>Sales Order</ui5-label>
 						</div>
 					</ui5-table-column>
 
-					<ui5-table-column data-ui5-slot="columns">
-						<div data-ui5-slot="header">
+					<ui5-table-column slot="columns">
+						<div slot="header">
 							<ui5-label>Customer</ui5-label>
 						</div>
 					</ui5-table-column>
 
-					<ui5-table-column data-ui5-slot="columns">
-						<div data-ui5-slot="header">
+					<ui5-table-column slot="columns">
+						<div slot="header">
 							<ui5-label>Net Amount</ui5-label>
 						</div>
 					</ui5-table-column>
 
-					<ui5-table-column data-ui5-slot="columns" min-width="450" popin-text="Status" demand-popin>
-						<div data-ui5-slot="header">
+					<ui5-table-column slot="columns" min-width="450" popin-text="Status" demand-popin>
+						<div slot="header">
 							<ui5-label>Status</ui5-label>
 						</div>
 					</ui5-table-column>
 
-					<ui5-table-row data-ui5-slot="rows">
+					<ui5-table-row >
 						<ui5-table-cell>
 							<ui5-label>5000010050</ui5-label>
 						</ui5-table-cell>
@@ -196,7 +202,7 @@
 						</ui5-table-cell>
 					</ui5-table-row>
 
-					<ui5-table-row data-ui5-slot="rows">
+					<ui5-table-row >
 						<ui5-table-cell>
 							<ui5-label>5000010051</ui5-label>
 						</ui5-table-cell>
@@ -211,7 +217,7 @@
 						</ui5-table-cell>
 					</ui5-table-row>
 
-					<ui5-table-row data-ui5-slot="rows">
+					<ui5-table-row >
 						<ui5-table-cell>
 							<ui5-label>5000010052</ui5-label>
 						</ui5-table-cell>
@@ -239,32 +245,32 @@
 <ui5-card heading="New Purchase Orders" subtitle="Today" status="3 of 15" class="medium">
 	<ui5-table class="demo-table content-padding">
 		<!-- Columns -->
-		<ui5-table-column data-ui5-slot="columns">
-			<div data-ui5-slot="header">
+		<ui5-table-column slot="columns">
+			<div slot="header">
 				<ui5-label>Sales Order</ui5-label>
 			</div>
 		</ui5-table-column>
 
-		<ui5-table-column data-ui5-slot="columns">
-			<div data-ui5-slot="header">
+		<ui5-table-column slot="columns">
+			<div slot="header">
 				<ui5-label>Customer</ui5-label>
 			</div>
 		</ui5-table-column>
 
-		<ui5-table-column data-ui5-slot="columns">
-			<div data-ui5-slot="header">
+		<ui5-table-column slot="columns">
+			<div slot="header">
 				<ui5-label>Net Amount</ui5-label>
 			</div>
 		</ui5-table-column>
 
-		<ui5-table-column data-ui5-slot="columns" min-width="450" popin-text="Status" demand-popin>
-			<div data-ui5-slot="header">
+		<ui5-table-column slot="columns" min-width="450" popin-text="Status" demand-popin>
+			<div slot="header">
 				<ui5-label>Status</ui5-label>
 			</div>
 		</ui5-table-column>
 
 		<!-- Rows -->
-		<ui5-table-row data-ui5-slot="rows">
+		<ui5-table-row >
 			<ui5-table-cell>
 				<ui5-label>5000010051</ui5-label>
 			</ui5-table-cell>

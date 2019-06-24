@@ -1,31 +1,28 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import Button from "./Button.js";
-import ToggleButtonTemplateContext from "./ToggleButtonTemplateContext.js";
-import ToggleButtonRenderer from "./build/compiled/ToggleButtonRenderer.lit.js";
+import ToggleButtonTemplate from "./build/compiled/ToggleButtonTemplate.lit.js";
 
 // Styles
 import toggleBtnCss from "./themes/ToggleButton.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-togglebutton",
-	usesNodeText: true,
 	properties: /** @lends  sap.ui.webcomponents.main.ToggleButton.prototype */ {
 		/**
 		 * Determines whether the <code>ui5-togglebutton</code> is displayed as pressed.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		pressed: {
 			type: Boolean,
 		},
 	},
+	defaultSlot: "text",
 };
 
 /**
@@ -51,7 +48,6 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.ToggleButton
  * @extends Button
  * @tagname ui5-togglebutton
- * @usestextcontent
  * @public
  */
 class ToggleButton extends Button {
@@ -59,8 +55,12 @@ class ToggleButton extends Button {
 		return metadata;
 	}
 
-	static get renderer() {
-		return ToggleButtonRenderer;
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return ToggleButtonTemplate;
 	}
 
 	static get styles() {
@@ -74,13 +74,13 @@ class ToggleButton extends Button {
 		}
 	}
 
-	static get calculateTemplateContext() {
-		return ToggleButtonTemplateContext.calculate;
+	get classes() {
+		const result = super.classes;
+		result.main.sapMToggleBtnPressed = this.pressed;
+		return result;
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	ToggleButton.define();
-});
+ToggleButton.define();
 
 export default ToggleButton;

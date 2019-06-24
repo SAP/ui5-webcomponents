@@ -1,14 +1,12 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import CSSSize from "@ui5/webcomponents-base/src/types/CSSSize.js";
-import TableColumnRenderer from "./build/compiled/TableColumnRenderer.lit.js";
+import TableColumnTemplate from "./build/compiled/TableColumnTemplate.lit.js";
 
 // Styles
 import styles from "./themes/TableColumn.css.js";
 
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
 
 const metadata = {
 	tag: "ui5-table-column",
@@ -25,6 +23,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
+	defaultSlot: "header",
 	properties: /** @lends sap.ui.webcomponents.main.TableColumn.prototype */ {
 
 		/**
@@ -47,11 +46,11 @@ const metadata = {
 		 * The text for the column when it pops in.
 		 *
 		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		popinText: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
@@ -61,6 +60,7 @@ const metadata = {
 		 * Setting this property to <code>true</code>, shows this column as pop-in instead of hiding it.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		demandPopin: {
@@ -80,11 +80,10 @@ const metadata = {
 
 		_first: {
 			type: Boolean,
-			defaultValue: false,
 		},
+
 		_last: {
 			type: Boolean,
-			defaultValue: false,
 		},
 	},
 };
@@ -113,32 +112,25 @@ class TableColumn extends UI5Element {
 		return styles;
 	}
 
-	static get renderer() {
-		return TableColumnRenderer;
+	static get render() {
+		return litRender;
 	}
 
-	static calculateTemplateContext(state) {
-		const context = {
-			ctr: state,
-			classes: {
-				main: {
-					sapWCTableColumn: true,
-					sapWCTableColumnFirst: state._first,
-					sapWCTableColumnLast: state._last,
-				},
-			},
-			styles: {
-				main: {
-				},
+	static get template() {
+		return TableColumnTemplate;
+	}
+
+	get classes() {
+		return {
+			main: {
+				sapWCTableColumn: true,
+				sapWCTableColumnFirst: this._first,
+				sapWCTableColumnLast: this._last,
 			},
 		};
-
-		return context;
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	TableColumn.define();
-});
+TableColumn.define();
 
 export default TableColumn;

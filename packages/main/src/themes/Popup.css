@@ -65,7 +65,7 @@
 .sapMPopup .sapMPopupScroll {
 	vertical-align: middle;
 	box-sizing: border-box;
-	padding: 0.4375em;
+	padding: var(--_ui5_popover_content_padding);
 }
 
 .sapUiBLy {

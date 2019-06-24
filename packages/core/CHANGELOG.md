@@ -3,6 +3,57 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.13.1](https://github.com/SAP/ui5-webcomponents/compare/v0.13.0...v0.13.1) (2019-06-22)
+
+**Note:** Version bump only for package @ui5/webcomponents-core
+
+
+
+
+
+# [0.13.0](https://github.com/SAP/ui5-webcomponents/compare/v0.12.0...v0.13.0) (2019-06-21)
+
+**Note:** Version bump only for package @ui5/webcomponents-core
+
+
+
+
+
+# [0.12.0](https://github.com/SAP/ui5-webcomponents/compare/v0.11.0...v0.12.0) (2019-06-10)
+
+**Note:** Version bump only for package @ui5/webcomponents-core
+
+
+
+
+
+## [0.11.1](https://github.com/SAP/ui5-webcomponents/compare/v0.11.0...v0.11.1) (2019-05-30)
+
+**Note:** Version bump only for package @ui5/webcomponents-core
+
+
+
+
+
+# [0.11.0](https://github.com/SAP/ui5-webcomponents/compare/v0.10.1...v0.11.0) (2019-05-22)
+
+
+### Features
+
+* fetch ui5-datepicker assets from CDN ([#420](https://github.com/SAP/ui5-webcomponents/issues/420)) ([1f62dda](https://github.com/SAP/ui5-webcomponents/commit/1f62dda))
+
+
+
+
+
+## [0.10.1](https://github.com/SAP/ui5-webcomponents/compare/v0.10.0...v0.10.1) (2019-04-24)
+
+**Note:** Version bump only for package @ui5/webcomponents-core
+
+
+
+
+
 # [0.10.0](https://github.com/SAP/ui5-webcomponents/compare/v0.9.0...v0.10.0) (2019-04-22)
 
 **Note:** Version bump only for package @ui5/webcomponents-core

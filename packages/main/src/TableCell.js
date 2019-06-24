@@ -1,12 +1,9 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import TableCellRenderer from "./build/compiled/TableCellRenderer.lit.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
+import TableCellTemplate from "./build/compiled/TableCellTemplate.lit.js";
 
 // Styles
 import styles from "./themes/TableCell.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
 
 /**
  * @public
@@ -30,15 +27,12 @@ const metadata = {
 
 		_firstInRow: {
 			type: Boolean,
-			defaultValue: false,
 		},
 		_lastInRow: {
 			type: Boolean,
-			defaultValue: false,
 		},
 		_hasBorder: {
 			type: Boolean,
-			defaultValue: false,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.TableCell.prototype */ {
@@ -68,33 +62,26 @@ class TableCell extends UI5Element {
 		return styles;
 	}
 
-	static get renderer() {
-		return TableCellRenderer;
+	static get render() {
+		return litRender;
 	}
 
-	static calculateTemplateContext(state) {
-		const context = {
-			ctr: state,
-			classes: {
-				main: {
-					sapWCTableCell: true,
-					sapWCTableCellFirst: state._firstInRow,
-					sapWCTableCellLast: state._lastInRow,
-					sapWCTableCellWithBorder: state._hasBorder,
-				},
-			},
-			styles: {
-				main: {
-				},
+	static get template() {
+		return TableCellTemplate;
+	}
+
+	get classes() {
+		return {
+			main: {
+				sapWCTableCell: true,
+				sapWCTableCellFirst: this._firstInRow,
+				sapWCTableCellLast: this._lastInRow,
+				sapWCTableCellWithBorder: this._hasBorder,
 			},
 		};
-
-		return context;
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	TableCell.define();
-});
+TableCell.define();
 
 export default TableCell;

@@ -1,22 +1,17 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 
 // Template
-import LabelRenderer from "./build/compiled/LabelRenderer.lit.js";
-import LabelTemplateContext from "./LabelTemplateContext.js";
+import LabelTemplate from "./build/compiled/LabelTemplate.lit.js";
 
 // Styles
 import labelCss from "./themes/Label.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-label",
-	usesNodeText: true,
 	properties: /** @lends sap.ui.webcomponents.main.Label.prototype */  {
 
 		/**
@@ -25,6 +20,7 @@ const metadata = {
 		 * <b>Note:</b> Usually indicates that user input is required.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		required: {
@@ -37,6 +33,7 @@ const metadata = {
 		 * <b>Note:</b> By default the text would truncate.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		wrap: {
@@ -49,14 +46,28 @@ const metadata = {
 		 * <b>Note:</b> Can be used with both <code>ui5-input</code> and native input.
 		 *
 		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		"for": {
-			defaultValue: "",
 			type: String,
 		},
 	},
-	renderer: LabelRenderer,
+	slots: /** @lends sap.ui.webcomponents.main.Label.prototype */ {
+		/**
+		 * Defines the text of the <code>ui5-label</code>.
+		 * <br><b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+		 *
+		 * @type {Node[]}
+		 * @slot
+		 * @public
+		 */
+		text: {
+			type: Node,
+			multiple: true,
+		},
+	},
+	defaultSlot: "text",
 };
 
 /**
@@ -85,7 +96,6 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.Label
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-label
- * @usestextcontent
  * @public
  */
 class Label extends UI5Element {
@@ -93,12 +103,27 @@ class Label extends UI5Element {
 		return metadata;
 	}
 
-	static get renderer() {
-		return LabelRenderer;
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return LabelTemplate;
 	}
 
 	static get styles() {
 		return labelCss;
+	}
+
+	get classes() {
+		return {
+			main: {
+				sapMLabel: true,
+				sapMLabelNoText: !this.text.length,
+				sapMLabelWrapped: this.wrap,
+				sapMLabelRequired: this.required,
+			},
+		};
 	}
 
 	onclick() {
@@ -108,14 +133,8 @@ class Label extends UI5Element {
 			elementToFocus.focus();
 		}
 	}
-
-	static get calculateTemplateContext() {
-		return LabelTemplateContext.calculate;
-	}
 }
 
-Bootstrap.boot().then(_ => {
-	Label.define();
-});
+Label.define();
 
 export default Label;

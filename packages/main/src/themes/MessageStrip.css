@@ -1,17 +1,13 @@
-:host(ui5-messagestrip) {
+@import "./InvisibleTextStyles.css";
+
+:host(ui5-messagestrip:not([hidden])) {
 	display: inline-block;
 	width: 100%;
-	height: 100%;
 }
 
-ui5-messagestrip {
+ui5-messagestrip:not([hidden]) {
 	display: inline-block;
 	width: 100%;
-	height: 100%;
-}
-
-span[data-sap-ui-wc-root] {
-	display: flex;
 }
 
 .ui5-messagestrip-root {

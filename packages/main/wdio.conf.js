@@ -276,6 +276,8 @@ exports.config = {
         const waitFor = ["click", "elementClick", "keys", "findElement", "elementClear", "elementSendKeys"];
         if (waitFor.includes(commandName)) {
             browser.executeAsync(function (done) {
+                // run all the tests in no conflict mode
+                window["sap-ui-webcomponents-main-bundle"].configuration._setWCNoConflict(true);
                 RenderScheduler.whenFinished().then(done);
             });
         }

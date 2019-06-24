@@ -1,48 +1,53 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import {
 	isSpace,
 	isUp,
 	isDown,
 	isEnter,
+	isEscape,
+	isShow,
 } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes.js";
+import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
+import { getFeature } from "@ui5/webcomponents-base/src/FeaturesRegistry.js";
+import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
-import Function from "@ui5/webcomponents-base/src/types/Function.js";
-import Suggestions from "./Suggestions.js";
+import Option from "./Option.js";
+import Label from "./Label.js";
+import Popover from "./Popover.js";
+import List from "./List.js";
+import StandardListItem from "./StandardListItem.js";
+import Icon from "./Icon.js";
 
 // Template
-import SelectRenderer from "./build/compiled/SelectRenderer.lit.js";
-import SelectTemplateContext from "./SelectTemplateContext.js";
+import SelectTemplate from "./build/compiled/SelectTemplate.lit.js";
 
 // Styles
 import selectCss from "./themes/Select.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-select",
-	defaultSlot: "items",
+	defaultSlot: "options",
 	slots: /** @lends sap.ui.webcomponents.main.Select.prototype */ {
 
 		/**
-		 * Defines the <code>ui5-select</code> items.
+		 * Defines the <code>ui5-select</code> options.
 		 * <br/><br/>
-		 * <b>Note:</b> Only one selected item is allowed.
-		 * If more than one item is defined as selected, the last one would be considered as the selected one.
+		 * <b>Note:</b> Only one selected option is allowed.
+		 * If more than one option is defined as selected, the last one would be considered as the selected one.
 		 * <br/><br/>
-		 * <b>Note:</b> Use the <code>ui5-li</code> component to define the desired options.
-		 * @type {HTMLElement[]}
+		 * <b>Note:</b> Use the <code>ui5-option</code> component to define the desired options.
+		 * @type {Option[]}
 		 * @slot
 		 * @public
 		 */
-		items: {
-			type: HTMLElement,
+		options: {
+			type: Option,
 			multiple: true,
+			listenFor: { include: ["*"] },
 		},
 	},
 	properties: /** @lends  sap.ui.webcomponents.main.Select.prototype */  {
@@ -53,11 +58,30 @@ const metadata = {
 		 * <b>Note:</b> A disabled <code>ui5-select</code> is noninteractive.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		disabled: {
 			type: Boolean,
-			defaultValue: false,
+		},
+
+		/**
+		 * Determines the name with which the <code>ui5-select</code> will be submitted in an HTML form.
+		 * The value of the <code>ui5-select</code> will be the value of the currently selected <code>ui5-option</code>.
+		 *
+		 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
+		 * <code>import "@ui5/webcomponents/dist/InputElementsFormSupport.js";</code>
+		 *
+		 * <b>Note:</b> When set, a native <code>input</code> HTML element
+		 * will be created inside the <code>ui5-select</code> so that it can be submitted as
+		 * part of an HTML form. Do not use this property unless you need to submit a form.
+		 *
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @public
+		 */
+		name: {
+			type: String,
 		},
 
 		/**
@@ -65,6 +89,7 @@ const metadata = {
 		 * Available options are: <code>None</code>, <code>Success</code>, <code>Warning</code> and <code>Error</code>.
 		 *
 		 * @type {string}
+		 * @defaultvalue "None"
 		 * @public
 		 */
 		valueState: {
@@ -74,21 +99,14 @@ const metadata = {
 
 		_text: {
 			type: String,
-			defaultValue: "",
 		},
 
 		_opened: {
 			type: Boolean,
-			defaultValue: false,
 		},
 
 		_focused: {
 			type: Boolean,
-			defaultValue: false,
-		},
-
-		_fnClickSelectBox: {
-			type: Function,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Select.prototype */ {
@@ -101,7 +119,7 @@ const metadata = {
 		 */
 		change: {
 			detail: {
-				selectedItem: {},
+				selectedOption: {},
 			},
 		},
 	},
@@ -109,10 +127,9 @@ const metadata = {
 
 /**
  * @class
- * <h3 class="comment-api-title"> Overview </h3>
  *
  * The <code>ui5-select</code> component is used to create a drop-down list.
- * The items inside the <code>ui5-select</code> define the available options by using the <code>ui5-li</code> component.
+ * The items inside the <code>ui5-select</code> define the available options by using the <code>ui5-option</code> component.
  *
  * <h3>Keyboard Handling</h3>
  * The <code>ui5-select</code> provides advanced keyboard handling.
@@ -124,12 +141,13 @@ const metadata = {
  * <h3>ES6 Module Import</h3>
  * <code>import "@ui5/webcomponents/dist/Select";</code>
  * <br>
- * <code>import "@ui5/webcomponents/dist/StandardListItem";</code> (<code>ui5-li</code>)
+ * <code>import "@ui5/webcomponents/dist/Option";</code>
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Select
  * @extends sap.ui.webcomponents.base.UI5Element
- * @tagname ui5-input
+ * @tagname ui5-select
+ * @appenddocs Option
  * @public
  * @since 0.8.0
  */
@@ -138,12 +156,12 @@ class Select extends UI5Element {
 		return metadata;
 	}
 
-	static get renderer() {
-		return SelectRenderer;
+	static get render() {
+		return litRender;
 	}
 
-	static get calculateTemplateContext() {
-		return SelectTemplateContext.calculate;
+	static get template() {
+		return SelectTemplate;
 	}
 
 	static get styles() {
@@ -153,202 +171,233 @@ class Select extends UI5Element {
 	constructor() {
 		super();
 
-		this._closing = false; // Flag for handling open/close on space
-		this._setSelectedItem(null);
-		this._setPreviewedItem(null);
-		this.Suggestions = new Suggestions(this, "items", true /* move focus with arrow keys */);
-		this._fnClickSelectBox = this.toggleList.bind(this);
+		this._syncedOptions = [];
+		this._selectedIndex = -1;
+		this._selectedIndexBeforeOpen = -1;
+		this._escapePressed = false;
+		this._lastSelectedOption = null;
 	}
 
 	onBeforeRendering() {
-		this._validateSelection();
+		this._syncSelection();
+		this._enableFormSupport();
 	}
 
-	/* Event handling */
-	toggleList() {
+	get _isPickerOpen() {
+		const popover = this.shadowRoot.querySelector("#ui5-select--popover");
+
+		return popover && popover._isOpen;
+	}
+
+	_togglePopover() {
+		const popover = this.shadowRoot.querySelector("#ui5-select--popover");
+
 		if (this.disabled) {
 			return;
 		}
 
-		this.Suggestions.toggle();
+		if (this._isPickerOpen) {
+			popover.close();
+		} else {
+			popover.openBy(this);
+		}
 	}
 
-	onkeydown(event) {
-		if (this.disabled) {
-			return;
-		}
-
-		if (isUp(event)) {
-			this.Suggestions.onUp(event);
-			this._changeSelectionWhileClosed();
-		}
-
-		if (isDown(event)) {
-			this.Suggestions.onDown(event);
-			this._changeSelectionWhileClosed();
-		}
-
-		if (isSpace(event)) {
-			if (!this._isOpened()) {
-				this._closing = true;
-				return event.preventDefault();
+	_syncSelection() {
+		let lastSelectedOptionIndex = -1;
+		const opts = this.options.map((opt, index) => {
+			if (opt.selected) {
+				lastSelectedOptionIndex = index;
 			}
-			this._closing = false;
-			return this.Suggestions.onSpace(event);
-		}
 
-		if (isEnter(event)) {
-			this.Suggestions.onEnter(event);
-		}
+			opt.selected = false;
 
-		const key = event.which;
-
-		if (key === KeyCodes.F4 || (event.altKey && Select.ARROWS.includes(key))) {
-			event.preventDefault();
-			this.Suggestions.toggle();
-		}
-	}
-
-	onkeyup(event) {
-		if (isSpace(event)) {
-			return this.Suggestions.toggle(this._closing); // Open Suggestions
-		}
-	}
-
-	onfocusin(event) {
-		this._focused = true; // invalidating property
-	}
-
-	onfocusout(event) {
-		this._focused = false; // invalidating property
-	}
-
-	/* Suggestions Interface methods */
-	onItemFocused() {}
-
-	onItemSelected(item) {
-		if (this._getSelectedItem() === item) {
-			return;
-		}
-
-		this._select(item);
-		this._fireChange(item);
-	}
-
-	onItemPreviewed(item) {
-		this._setPreviewedItem(item);
-		this._setText(item.textContent);
-	}
-
-	onOpen() {
-		this._opened = true;// invalidating property
-	}
-
-	onClose() {
-		this._opened = false;// invalidating property
-
-		if (this._isSelectionChanged()) {
-			const previewedItem = this._getPreviewedItem();
-			this._fireChange(previewedItem);
-		}
-	}
-
-	/* Private methods */
-	_validateSelection() {
-		if (this._isOpened()) {
-			return;
-		}
-
-		let selectedItem = null;
-		let selectedItemPos = null;
-
-		this.items.forEach((item, idx) => {
-			if (item.selected) {
-				if (selectedItem) {
-					selectedItem.selected = false;
-				}
-				selectedItem = item;
-				selectedItemPos = idx;
-			}
+			return {
+				selected: false,
+				icon: opt.icon,
+				value: opt.value,
+				textContent: opt.textContent,
+				id: opt._id,
+			};
 		});
 
-		if (this._getSelectedItem() !== selectedItem) {
-			this._select(selectedItem, selectedItemPos);
+		if (lastSelectedOptionIndex > -1) {
+			opts[lastSelectedOptionIndex].selected = true;
+			this.options[lastSelectedOptionIndex].selected = true;
+			this._text = opts[lastSelectedOptionIndex].textContent;
+			this._selectedIndex = lastSelectedOptionIndex;
+		} else {
+			this._text = "";
+			this._selectedIndex = -1;
+		}
+
+		if (lastSelectedOptionIndex === -1 && opts[0]) {
+			opts[0].selected = true;
+			this.options[0].selected = true;
+			this._selectedIndex = 0;
+			this._text = this.options[0].textContent;
+		}
+
+		this._syncedOptions = opts;
+	}
+
+	_enableFormSupport() {
+		const FormSupport = getFeature("FormSupport");
+		if (FormSupport) {
+			FormSupport.syncNativeHiddenInput(this, (element, nativeInput) => {
+				nativeInput.disabled = element.disabled;
+				nativeInput.value = element.selectedOption.value;
+			});
+		} else if (this.name) {
+			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/InputElementsFormSupport.js";`); // eslint-disable-line
 		}
 	}
 
-	_isSelectionChanged() {
-		const previewedItem = this._getPreviewedItem();
-		const selectedItem = this._getSelectedItem();
-
-		return previewedItem && selectedItem !== previewedItem;
-	}
-
-	_select(item, position) {
-		const selectedItem = this._getSelectedItem();
-
-		if (selectedItem) {
-			selectedItem.selected = false;
+	_keydown(event) {
+		if (isShow(event)) {
+			this._togglePopover();
 		}
 
-		this._setSelectedItem(item);
-		this._setPreviewedItem(null);
-		this._setText(item.textContent);
-
-		if (position !== undefined) {
-			this._updateSelectedItemPos(position);
+		if (!this._isPickerOpen) {
+			this._handleArrowNavigation(event, true);
 		}
 	}
 
-	_changeSelectionWhileClosed() {
-		if (this.items.length > 1 && !this._opened) {
-			this._select(this._getPreviewedItem());
-			this._fireChange(this._getSelectedItem());
+	_keyup(event) {
+		if (isSpace(event) && !this._isPickerOpen) {
+			this._togglePopover();
 		}
 	}
 
-	_setSelectedItem(item) {
-		if (item) {
-			item.selected = true;
+	_getSelectedItemIndex(item) {
+		return [].indexOf.call(item.parentElement.children, item);
+	}
+
+	_select(index) {
+		this.options[this._selectedIndex].selected = false;
+		this._selectedIndex = index;
+		this.options[index].selected = true;
+	}
+
+	_selectionChange(event) {
+		const selectedItemIndex = this._getSelectedItemIndex(event.detail.item);
+
+		this._select(selectedItemIndex);
+		this._togglePopover();
+	}
+
+	_applyFocusAfterOpen() {
+		if (!this.selectedOption) {
+			return;
 		}
-		this._selectedItem = item;
+
+		const li = this.shadowRoot.querySelector(`#${this.selectedOption._id}-li`);
+
+		li.parentElement._itemNavigation.currentIndex = this._selectedIndex;
+		li && li.focus();
 	}
 
-	_getSelectedItem() {
-		return this._selectedItem;
+	_handlePickerKeydown(event) {
+		this._handleArrowNavigation(event, false);
 	}
 
-	_setPreviewedItem(item) {
-		this._previewedItem = item;
-	}
+	_handleArrowNavigation(event, shouldFireEvent) {
+		let nextIndex = -1;
+		const isDownKey = isDown(event);
+		const isUpKey = isUp(event);
 
-	_getPreviewedItem() {
-		return this._previewedItem;
-	}
+		if (isDownKey || isUpKey) {
+			if (isDownKey) {
+				nextIndex = this._getNextOptionIndex();
+			} else {
+				nextIndex = this._getPreviousOptionIndex();
+			}
 
-	_setText(text) {
-		if (this.text !== text) {
-			this._text = text; // invaldiating property
+			this.options[this._selectedIndex].selected = false;
+			this.options[nextIndex].selected = true;
+			this._selectedIndex = nextIndex === -1 ? this._selectedIndex : nextIndex;
+
+			if (shouldFireEvent) {
+				this.fireEvent("change", { selectedOption: this.options[nextIndex] });
+			}
+		}
+
+		if (isEscape(event)) {
+			this._escapePressed = true;
+		}
+
+		if (isEnter(event) || isSpace(event)) {
+			this._shouldClosePopover = true;
 		}
 	}
 
-	_updateSelectedItemPos(position) {
-		this.Suggestions.updateSelectedItemPosition(position);
+	_getNextOptionIndex() {
+		return this._selectedIndex === (this.options.length - 1) ? 0 : (this._selectedIndex + 1);
 	}
 
-	_isOpened() {
-		return this.Suggestions.isOpened();
+	_getPreviousOptionIndex() {
+		return this._selectedIndex === 0 ? (this.options.length - 1) : (this._selectedIndex - 1);
 	}
 
-	_fireChange(item) {
-		this.fireEvent("change", { selectedItem: item });
+	_beforeOpen() {
+		this._selectedIndexBeforeOpen = this._selectedIndex;
+		this._lastSelectedOption = this.options[this._selectedIndex];
+	}
+
+	_afterClose() {
+		if (this._escapePressed) {
+			this._select(this._selectedIndexBeforeOpen);
+			this._escapePressed = false;
+		} else if (this._lastSelectedOption !== this.options[this._selectedIndex]) {
+			this.fireEvent("change", { selectedOption: this.options[this._selectedIndex] });
+			this._lastSelectedOption = this.options[this._selectedIndex];
+		}
+	}
+
+	get _currentSelectedItem() {
+		return this.shadowRoot.querySelector(`#${this.options[this._selectedIndex]._id}-li`);
+	}
+
+	get selectedOption() {
+		return this.options[this._selectedIndex];
+	}
+
+	get classes() {
+		return {
+			main: {
+				"sapWCSelect": true,
+				"sapWCSelectFocused": this._focused,
+				"sapWCSelectDisabled": this.disabled,
+				"sapWCSelectOpened": this._opened,
+				"sapWCSelectState": this.valueState !== "None",
+				[`sapWCSelect${this.valueState}`]: true,
+				"sapUiSizeCompact": getCompactSize(),
+			},
+		};
+	}
+
+	get tabIndex() {
+		return this.disabled ? "-1" : "0";
+	}
+
+	get rtl() {
+		return getEffectiveRTL() ? "rtl" : undefined;
+	}
+
+	static async define(...params) {
+		await Promise.all([
+			Option.define(),
+			Label.define(),
+			Popover.define(),
+			List.define(),
+			StandardListItem.define(),
+			Icon.define(),
+		]);
+
+		super.define(...params);
 	}
 }
 
-Select.ARROWS = [KeyCodes.ARROW_DOWN, KeyCodes.ARROW_UP];
-
-Bootstrap.boot().then(_ => {
-	Select.define();
-});
+Select.define();
 
 export default Select;

@@ -1,12 +1,12 @@
 /* ============================= */
 /* Global Base parameters        */
 /* ============================= */
-:host(ui5-tabcontainer) {
+:host(ui5-tabcontainer:not([hidden])) {
 	display: inline-block;
 	width: 100%;
 }
 
-ui5-tabcontainer {
+ui5-tabcontainer:not([hidden]) {
 	width: 100%;
 }
 
@@ -60,6 +60,10 @@ ui5-tabcontainer {
 
 .ui5-tc__headerItemContent {
 	pointer-events: none;
+}
+
+.ui5-tc__headerItem--selected.ui5-tc__headerItem--textOnly {
+	color: var(--sapUiSelected);
 }
 
 .ui5-tc__headerItem--selected.ui5-tc__headerItem--textOnly .ui5-tc__headerItemContent::after,

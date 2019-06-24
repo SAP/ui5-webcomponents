@@ -1,9 +1,9 @@
-:host(ui5-list) {
+:host(ui5-list:not([hidden])) {
 	display: block;
 	max-width: 100%;
 }
 
-ui5-list {
+ui5-list:not([hidden]) {
 	display: block;
 	max-width: 100%;
 }
@@ -68,6 +68,7 @@ ui5-list {
 	box-sizing: border-box;
 	-webkit-text-size-adjust: none;	/* To improve readability Mobile Safari automatically increases the size of small text so let's disable this */
 	font-size: var(--sapMFontMediumSize);
+	font-family: var(--sapUiFontFamily,var(--sapFontFamily,"72","72full",Arial,Helvetica,sans-serif));
 	line-height: 2rem;
 	background-color: var(--sapUiListFooterBackground);
 	color: var(--sapUiListFooterTextColor);
@@ -88,7 +89,7 @@ ui5-list {
 }
 
 /* Compact size */
-.sapUiSizeCompact .sapMList .sapMListNoData {
+.sapUiSizeCompact.sapMList .sapMListNoData {
 	height: 2rem;
 	font-size: var(--sapMFontMediumSize);
 }

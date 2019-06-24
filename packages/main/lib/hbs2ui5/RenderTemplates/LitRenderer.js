@@ -1,12 +1,10 @@
 const buildRenderer = (controlName, litTemplate) => {
 	return `
-/* eslint no-unused-vars: 0 */	
-import ifTruthy from '@ui5/webcomponents-base/src/renderer/ifTruthy.js';
-import { html, svg, repeat } from '@ui5/webcomponents-base/src/renderer/LitRenderer.js';
-const ${controlName}LitRenderer = {};
+/* eslint no-unused-vars: 0 */
+import ifDefined from '@ui5/webcomponents-base/src/renderer/ifDefined.js';
+import { html, svg, repeat, classMap, styleMap } from '@ui5/webcomponents-base/src/renderer/LitRenderer.js';
 ${litTemplate}
-${controlName}LitRenderer.render = renderMe;
-export default ${controlName}LitRenderer;`
+export default block0;`
 };
 
 module.exports = {

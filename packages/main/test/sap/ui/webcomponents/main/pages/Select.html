@@ -15,21 +15,24 @@
 
 <body>
 	<ui5-togglebutton id="myBtn">turn lights</ui5-togglebutton>
+	<ui5-button id="add-items-btn">Add new Items</ui5-button>
+	<ui5-button id="restore-items-btn">Restore Items</ui5-button>
 	<ui5-button id="myBtn2">click</ui5-button>
+
 
 	<h2>Content size</h2>
 	<ui5-label id="lblResult"></ui5-label>
 	<ui5-select id="mySelect">
-		<ui5-li type="Active" selected>Cozy</ui5-li>
-		<ui5-li type="Active" selected>Compact</ui5-li>
-		<ui5-li type="Active" selected>Condensed</ui5-li>
+		<ui5-option selected>Cozy</ui5-option>
+		<ui5-option selected>Compact</ui5-option>
+		<ui5-option selected>Condensed</ui5-option>
 	</ui5-select>
 
 	<h2>Error Select</h2>
 	<ui5-select id="mySelect2" value-state="Error">
-		<ui5-li type="Active" selected>Cozy</ui5-li>
-		<ui5-li type="Active" selected>Compact</ui5-li>
-		<ui5-li type="Active" selected>Condensed</ui5-li>
+		<ui5-option selected>Cozy</ui5-option>
+		<ui5-option selected>Compact</ui5-option>
+		<ui5-option selected>Condensed</ui5-option>
 	</ui5-select>
 
 	<h2>Warning Select</h2>
@@ -50,6 +53,8 @@
 	var sap_database_entries = [{ key: "Afg", text: "Afghanistan" }, { key: "Arg", text: "Argentina" }, { key: "Alb", text: "Albania" }, { key: "Arm", text: "Armenia" }, { key: "Alg", text: "Algeria" }, { key: "And", text: "Andorra" }, { key: "Ang", text: "Angola" }, { key: "Ast", text: "Austria" }, { key: "Aus", text: "Australia" }, { key: "Aze", text: "Azerbaijan" }, { key: "Aruba", text: "Aruba" }, { key: "Antigua", text: "Antigua and Barbuda" }, { key: "Bel", text: "Belarus" }, { key: "Bel", text: "Belgium" }, { key: "Bg", text: "Bulgaria" }, { key: "Bra", text: "Brazil" }, { key: "Ch", text: "China" }, { key: "Cub", text: "Cuba" }, { key: "Chil", text: "Chili" }, { key: "Lat", text: "Latvia" }, { key: "Lit", text: "Litva" }, { key: "Prt", text: "Portugal" }, { key: "Sen", text: "Senegal" }, { key: "Ser", text: "Serbia" }, { key: "Afg", text: "Seychelles" }, { key: "Sierra", text: "Sierra Leone" }, { key: "Sgp", text: "Singapore" }, { key: "Sint", text: "Sint Maarten" }, { key: "Slv", text: "Slovakia" }, { key: "Slo", text: "Slovenia" }];
 
 	var btn = document.getElementById('myBtn');
+	var addItemsBtn = document.getElementById('add-items-btn');
+	var restoreItemsBtn = document.getElementById('restore-items-btn');
 	var input = document.getElementById('myInput');
 	var inputResult = document.getElementById('inputResult');
 	var select = document.getElementById('mySelect');
@@ -59,18 +64,18 @@
 	var counter = 0;
 
 	// Select
-	select.addEventListener("change", function(e) {
-		lbl.innerHTML = "selected item :: " + e.detail.selectedItem.textContent + " :: " + (++counter);
+	select.addEventListener("ui5-change", function(e) {
+		lbl.innerHTML = "selected item :: " + e.detail.selectedOption.textContent + " :: " + (++counter);
 		inputResult.value = counter;
 	});
 
-	select2.addEventListener("change", function(e) {
+	select2.addEventListener("ui5-change", function(e) {
 		++counter;
 		inputResult.value = counter;
 	});
 
 	// Input with Suggestions
-	input.addEventListener("input", function (event) {
+	input.addEventListener("ui5-input", function (event) {
 		var value = event.target.value;
 		var suggestionItems = [];
 
@@ -86,7 +91,6 @@
 
 		suggestionItems.forEach(function(item) {
 			var li = document.createElement("ui5-li");
-			li.type = "Active";
 			li.id = item.key;
 			li.textContent = item.text;
 			input.appendChild(li);
@@ -95,7 +99,7 @@
 
 
 	// HCB button
-	btn.addEventListener("press", function(event) {
+	btn.addEventListener("ui5-press", function(event) {
 		const hcb = event.target.pressed;
 		const styles = hcb ? "background:#333;color:palegoldenrod;" : "background:#fff;color:#333;";
 		const theme = hcb ? "sap_belize_hcb" : "sap_fiori_3";
@@ -106,8 +110,7 @@
 	});
 
 	countries.forEach(function(item, idx) {
-		var li = document.createElement("ui5-li");
-		li.type = "Active";
+		var li = document.createElement("ui5-option");
 		li.id = item.key;
 
 		if (idx === 0) {
@@ -116,6 +119,23 @@
 
 		li.textContent = item.text;
 		select3.appendChild(li);
+	});
+
+	var initialItemsHTML = "";
+
+	addItemsBtn.addEventListener("ui5-press", event => {
+		initialItemsHTML = select.innerHTML;
+
+		var li = document.createElement('ui5-option');
+
+		li.textContent = "New";
+
+		select.innerHTML = "";
+		select.appendChild(li);
+	});
+
+	restoreItemsBtn.addEventListener("ui5-press", event => {
+		select.innerHTML = initialItemsHTML;
 	});
 </script>
 </body>

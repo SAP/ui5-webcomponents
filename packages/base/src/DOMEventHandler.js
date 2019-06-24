@@ -1,6 +1,5 @@
-import ControlEvents from "./events/ControlEvents.js";
+import ManagedEvents from "./events/ManagedEvents.js";
 import getOriginalEventTarget from "./events/getOriginalEventTarget.js";
-import UI5Element from "./UI5Element.js";
 
 const handleEvent = function handleEvent(event) {
 	// Get the DOM node where the original event occurred
@@ -19,7 +18,7 @@ const handleEvent = function handleEvent(event) {
 
 
 const processDOMNode = function processDOMNode(node, event) {
-	if (node && node instanceof UI5Element) {
+	if (node && node._isUI5Element) {
 		return dispatchEvent(node, event);
 	}
 	return true;
@@ -58,11 +57,11 @@ class DOMEventHandler {
 	}
 
 	static start() {
-		ControlEvents.bindAnyEvent(handleEvent);
+		ManagedEvents.bindAllEvents(handleEvent);
 	}
 
 	static stop() {
-		ControlEvents.unbindAnyEvent(handleEvent);
+		ManagedEvents.unbindAllEvents(handleEvent);
 	}
 }
 

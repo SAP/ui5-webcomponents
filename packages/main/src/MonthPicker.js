@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import { getCalendarType } from "@ui5/webcomponents-base/src/Configuration.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
+import { getCalendarType, getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
 import { getFormatLocale } from "@ui5/webcomponents-base/src/FormatSettings.js";
 import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
 import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
@@ -9,14 +9,10 @@ import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData.js";
 import { getLocale } from "@ui5/webcomponents-base/src/LocaleProvider.js";
 import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType.js";
 import CalendarDate from "@ui5/webcomponents-base/src/dates/CalendarDate.js";
-import MonthPickerTemplateContext from "./MonthPickerTemplateContext.js";
-import MonthPickerRenderer from "./build/compiled/MonthPickerRenderer.lit.js";
+import MonthPickerTemplate from "./build/compiled/MonthPickerTemplate.lit.js";
 
 // Styles
 import styles from "./themes/MonthPicker.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
 
 /**
  * @public
@@ -35,7 +31,7 @@ const metadata = {
 		/**
 		 * Sets a calendar type used for display.
 		 * If not set, the calendar type of the global configuration is used.
-		 * @type {String}
+		 * @type {string}
 		 * @public
 		 */
 		primaryCalendarType: {
@@ -78,8 +74,12 @@ class MonthPicker extends UI5Element {
 		return metadata;
 	}
 
-	static get renderer() {
-		return MonthPickerRenderer;
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return MonthPickerTemplate;
 	}
 
 	static get styles() {
@@ -189,13 +189,27 @@ class MonthPicker extends UI5Element {
 		return parseInt(oMonthDomRef);
 	}
 
-	static get calculateTemplateContext() {
-		return MonthPickerTemplateContext.calculate;
+	get classes() {
+		return {
+			main: {
+				"sapWCMonthPicker": true,
+				"sapUiSizeCompact": getCompactSize(),
+			},
+			quarter: {
+				"sapWCMonthPickerQuarter": true,
+			},
+		};
+	}
+
+	get styles() {
+		return {
+			main: {
+				display: this._hidden ? "none" : "",
+			},
+		};
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	MonthPicker.define();
-});
+MonthPicker.define();
 
 export default MonthPicker;

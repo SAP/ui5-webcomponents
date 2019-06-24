@@ -1,26 +1,13 @@
-:host(ui5-icon) {
+:host(ui5-icon:not([hidden])) {
 	display: inline-block;
 	outline: none;
 	color: var(--sapUiContentNonInteractiveIconColor);
 }
 
-:host(ui5-icon) span[data-sap-ui-wc-root] {
-	display: flex;
-	width: 100%;
-	height: 100%;
-}
-
-ui5-icon {
+ui5-icon:not([hidden]) {
 	display: inline-block;
 	outline: none;
 	color: var(--sapUiContentNonInteractiveIconColor);
-}
-
-ui5-icon span[data-sap-ui-wc-root] {
-	display: flex;
-	width: 100%;
-	height: 100%;
-	pointer-events: none;
 }
 
 .sapWCIcon {
@@ -47,7 +34,7 @@ ui5-icon span[data-sap-ui-wc-root] {
 	pointer-events: none;
 }
 
-[dir=rtl] .sapWCIconMirrorInRTL:not(.sapWCIconSuppressMirrorInRTL):before,
-[dir=rtl] .sapWCIconMirrorInRTL:not(.sapWCIconSuppressMirrorInRTL):after {
+[dir=rtl].sapWCIconMirrorInRTL:not(.sapWCIconSuppressMirrorInRTL):before,
+[dir=rtl].sapWCIconMirrorInRTL:not(.sapWCIconSuppressMirrorInRTL):after {
 	transform: scale(-1, 1);
 }

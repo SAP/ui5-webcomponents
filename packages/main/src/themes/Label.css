@@ -1,31 +1,28 @@
-:host(ui5-label) {
-	display: inline-block;
+:host(ui5-label:not([hidden])) {
+	display: inline-flex;
 	max-width: 100%;
+	color: var(--sapUiContentLabelColor);
+	font-family: var(--sapUiFontFamily);
+	font-size: var(--sapMFontMediumSize);
+	font-weight: normal;
 	cursor: text;
 }
 
-:host(ui5-label) span[data-sap-ui-wc-root] {
-	display: flex;
-}
-
-ui5-label {
+ui5-label:not([hidden]) {
 	display: inline-block;
 	max-width: 100%;
 	overflow: hidden;
+	color: var(--sapUiContentLabelColor);
+	font-family: var(--sapUiFontFamily);
+	font-size: var(--sapMFontMediumSize);
+	font-weight: normal;
 	cursor: text;
-}
-
-ui5-label span[data-sap-ui-wc-root] {
-	display: flex;
 }
 
 .sapMLabel {
 	display: inline-block;
 	width: 100%;
-	color: var(--sapUiContentLabelColor);
-	font-family: var(--sapUiFontFamily);
-	font-size: var(--sapMFontMediumSize);
-	font-weight: normal;
+	font-weight: inherit;
 	text-overflow: ellipsis;
 	overflow: hidden;
 	white-space: nowrap;

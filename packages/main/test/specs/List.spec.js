@@ -13,8 +13,19 @@ describe("Date Picker Tests", () => {
 
 		firstItem.click();
 
-		assert.strictEqual(itemPressResultField.getProperty("value"), "1", "itemPress event has been fired.");
+		assert.strictEqual(itemPressResultField.getProperty("value"), "1", "itemPress event has been fired once");
 		assert.strictEqual(selectionChangeResultField.getProperty("value"), "1", "selectionChange event has been fired.");
+	});
+
+	it("selectionChange events provides previousSelection item", () => {
+		const list = $("#listEvents");
+		const selectionChangeResultPreviousItemsParameter = $("#selectionChangeResultPreviousItemsParameter");
+		const firstItem = $("#listEvents #country1");
+		const secondItem = $("#listEvents #country2");
+
+		firstItem.click();
+
+		assert.strictEqual(secondItem.getProperty("id"), selectionChangeResultPreviousItemsParameter.getProperty("value"));
 	});
 
 	it("header text", () => {
@@ -89,10 +100,10 @@ describe("Date Picker Tests", () => {
 
 	it("item size and classed, when an item has both text and description", () => {
 		const ITEM_WITH_DESCRIPTION_AND_TITLE_HEIGHT = 80;
-		const firstItem =  $("#listWithDesc ui5-li[slot=items-1]");
+		const firstItem =  $("#listWithDesc ui5-li:first-child");
 		const firstItemHeight = firstItem.getSize("height");
-		const rootElement =  browser.findElementDeep("#listWithDesc ui5-li[slot=items-1] >>> .sapMSLI");
-		const descriptionElement =  browser.findElementDeep("#listWithDesc ui5-li[slot=items-1] >>> .sapMSLIDescription");
+		const rootElement =  browser.findElementDeep("#listWithDesc ui5-li:first-child >>> .sapMSLI");
+		const descriptionElement =  browser.findElementDeep("#listWithDesc ui5-li:first-child >>> .sapMSLIDescription");
 
 		assert.strictEqual(firstItemHeight, ITEM_WITH_DESCRIPTION_AND_TITLE_HEIGHT, "The size of the item is : " + firstItemHeight);
 		assert.ok(descriptionElement, "The description span is rendered.");

@@ -1,41 +1,32 @@
-:host(ui5-button) {
+:host(ui5-button:not([hidden])) {
 	display: inline-block;
 }
 
-ui5-button {
+ui5-button:not([hidden]) {
 	display: inline-block;
 }
 
-span[dir="rtl"] .sapMBtn.sapMBtnWithIcon .sapMBtnText {
+button[dir="rtl"].sapMBtn.sapMBtnWithIcon .sapMBtnText {
 	margin-right: var(--_ui5_button_base_icon_margin);
 	margin-left: 0;
 }
 
-span[dir="rtl"] .sapMBtn.sapMBtnIconEnd .sapWCIconInButton {
+button[dir="rtl"].sapMBtn.sapMBtnIconEnd .sapWCIconInButton {
 	margin-right: var(--_ui5_button_base_icon_margin);
 	margin-left: 0;
 }
 
-ui5-button span[data-sap-ui-wc-root] {
-	display: inline-block;
-}
-
-span[data-sap-ui-wc-root].sapUiSizeCompact .sapWCIconInButton {
+button.sapUiSizeCompact .sapWCIconInButton {
 	font-size: 1rem;
 }
 
-span[data-sap-ui-wc-root].sapUiSizeCompact .sapMBtn {
+button.sapUiSizeCompact.sapMBtn {
 	padding: var(--_ui5_button_compact_padding);
 	min-height: var(--_ui5_button_compact_height);
 	min-width: var(--_ui5_button_base_min_compact_width);
 }
 
-span[data-sap-ui-wc-root] .sapMBtn {
-	min-width: var(--_ui5_button_base_min_width);
-	min-height: var(--_ui5_button_base_height);
-}
-
-ui5-button span[data-sap-ui-wc-root] .sapMBtn::before {
+ui5-button .sapMBtn::before {
 	/* this is a hack for a bug in IE https:/* github.com/philipwalton/flexbugs/issues/231 */
 	content: '';
 	min-height: inherit;
@@ -45,6 +36,8 @@ ui5-button span[data-sap-ui-wc-root] .sapMBtn::before {
 .sapMBtn {
 	width: 100%;
 	height: 100%;
+	min-width: var(--_ui5_button_base_min_width);
+	min-height: var(--_ui5_button_base_height);
 	font-family: var(--sapUiFontFamily);
 	font-size: var(--sapMFontMediumSize);
 	font-weight: normal;
@@ -192,6 +185,7 @@ ui5-button span[data-sap-ui-wc-root] .sapMBtn::before {
 	border-color: var(--sapUiButtonEmphasizedBorderColor);
 	color: var(--sapUiButtonEmphasizedTextColor);
 	text-shadow: 0 0 0.125rem var(--sapUiButtonEmphasizedTextShadow);
+	font-weight: var(--_ui5_button_emphasized_font_weight);
 }
 
 .sapMBtn.sapMBtnEmphasized:hover {
@@ -206,16 +200,13 @@ ui5-button span[data-sap-ui-wc-root] .sapMBtn::before {
 	text-shadow: none;
 }
 
+.sapMBtn.sapMBtnEmphasized:focus::after,
 .sapMBtn.sapMBtnEmphasized.sapMBtnActive:focus::after {
 	border-color: var(--sapUiContentContrastFocusColor);
 }
 
 .sapMBtn.sapMBtnEmphasized:focus {
 	border-color: var(--_ui5_button_emphasized_focused_border_color);
-}
-
-.sapMBtn.sapMBtnEmphasized:focus::after {
-	border-color: var(--_ui5_button_positive_border_focus_hover_color);
 }
 
 .sapMBtn.sapMBtnTransparent {

@@ -7,10 +7,6 @@ import url from "rollup-plugin-url";
 import { terser } from "rollup-plugin-terser";
 import notify from 'rollup-plugin-notify';
 import filesize from 'rollup-plugin-filesize';
-import postcss from 'rollup-plugin-postcss';
-import postcssImport from 'postcss-import';
-import postcssNesting from 'postcss-nesting';
-import csso from 'postcss-csso';
 import commonjs from 'rollup-plugin-commonjs';
 
 const DIST = path.normalize("dist");

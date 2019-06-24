@@ -27,6 +27,7 @@
 	<script nomodule src="../../../../../../resources/sap/ui/webcomponents/main/bundle.es5.js">
 	</script>
 
+<script>delete Document.prototype.adoptedStyleSheets;</script>
 	<style>
 		html,
 		body {
@@ -161,7 +162,7 @@
 		</div>
 
 		<div class="sample">
-			<h4>Tabs with input controls</h4>
+			<h4>Tabs with input elements</h4>
 
 			<ui5-tabcontainer show-overflow="true">
 				<ui5-tab text="Tab 1" selected>
@@ -184,7 +185,7 @@
 <script>
 	var result = document.getElementById("result");
 
-	document.getElementById("tabContainer1").addEventListener("itemSelect", function (event) {
+	document.getElementById("tabContainer1").addEventListener("ui5-itemSelect", function (event) {
 		document.getElementById("result").innerHTML = event.detail.item.text;
 	});
 </script>
