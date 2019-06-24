@@ -14,12 +14,12 @@ const metadata = {
 		/**
 		 * Specifies the content of the <code>ui5-table-cell</code>.
 		 *
-		 * @type {HTMLElement[]}
+		 * @type {Node[]}
 		 * @slot
 		 * @public
 		 */
 		"default": {
-			type: HTMLElement,
+			type: Node,
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.TableCell.prototype */ {

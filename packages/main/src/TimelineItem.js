@@ -18,7 +18,7 @@ const metadata = {
 		/**
 		 * Determines the description of the <code>ui5-timeline-item</code>.
 		 *
-		 * @type {HTMLElement}
+		 * @type {Node[]}
 		 * @slot
 		 * @public
 		 */

@@ -41,7 +41,7 @@ const metadata = {
 		 * Determines the content of the <code>ui5-panel</code>.
 		 * The content is visible only when the <code>ui5-panel</code> is expanded.
 		 *
-		 * @type {HTMLElement[]}
+		 * @type {Node[]}
 		 * @slot
 		 * @public
 		 */
