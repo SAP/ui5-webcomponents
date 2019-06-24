@@ -14,12 +14,12 @@ const metadata = {
 
 		/**
 		 * Defines the content of the <code>ui5-li-custom</code>.
-		 * @type {HTMLElement[]}
+		 * @type {Node[]}
 		 * @slot
 		 * @public
 		 */
 		"default": {
-			type: HTMLElement,
+			type: Node,
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.CustomListItem.prototype */ {

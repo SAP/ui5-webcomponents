@@ -15,12 +15,12 @@ const metadata = {
 
 		/**
 		 * Defines the content of the Web Component.
-		 * @type {HTMLElement[]}
+		 * @type {Node[]}
 		 * @slot
 		 * @public
 		 */
 		"default": {
-			type: HTMLElement,
+			type: Node,
 		},
 
 		/**

@@ -13,12 +13,12 @@ const metadata = {
 
 		/**
 		 * Defines the tab content.
-		 * @type {HTMLElement[]}
+		 * @type {Node[]}
 		 * @slot
 		 * @public
 		 */
 		"default": {
-			type: HTMLElement,
+			type: Node,
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.Tab.prototype */ {
