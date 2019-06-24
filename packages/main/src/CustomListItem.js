@@ -20,7 +20,6 @@ const metadata = {
 		 */
 		"default": {
 			type: HTMLElement,
-			multiple: true,
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.CustomListItem.prototype */ {

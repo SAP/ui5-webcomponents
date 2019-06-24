@@ -24,7 +24,6 @@ const metadata = {
 		"default": {
 			alias: "items",
 			type: TimelineItem,
-			multiple: true,
 			individualSlots: true,
 		},
 	},

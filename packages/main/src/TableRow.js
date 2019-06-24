@@ -23,7 +23,6 @@ const metadata = {
 		"default": {
 			alias: "cells",
 			type: TableCell,
-			multiple: true,
 			individualSlots: true,
 		},
 	},

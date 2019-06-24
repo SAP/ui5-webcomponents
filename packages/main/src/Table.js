@@ -29,7 +29,6 @@ const metadata = {
 		"default": {
 			alias: "rows",
 			type: TableRow,
-			multiple: true,
 			individualSlots: true,
 		},
 
@@ -44,7 +43,6 @@ const metadata = {
 		columns: {
 			alias: "columns",
 			type: TableColumn,
-			multiple: true,
 			individualSlots: true,
 			listenFor: { exclude: ["header"] },
 		},

@@ -33,6 +33,7 @@ const metadata = {
 		 */
 		header: {
 			type: HTMLElement,
+			single: true,
 		},
 
 		/**
@@ -45,7 +46,6 @@ const metadata = {
 		 */
 		"default": {
 			type: Node,
-			multiple: true,
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.Panel.prototype */ {

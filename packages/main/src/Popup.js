@@ -21,7 +21,6 @@ const metadata = {
 		 */
 		"default": {
 			type: HTMLElement,
-			multiple: true,
 		},
 
 		/**
@@ -33,6 +32,7 @@ const metadata = {
 		 */
 		header: {
 			type: HTMLElement,
+			single: true,
 		},
 
 		/**
@@ -44,6 +44,7 @@ const metadata = {
 		 */
 		footer: {
 			type: HTMLElement,
+			single: true,
 		},
 	},
 	properties: /** @lends  sap.ui.webcomponents.main.Popup.prototype */ {

@@ -30,7 +30,6 @@ const metadata = {
 		 */
 		"default": {
 			type: Node,
-			multiple: true,
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.Token.prototype */ {

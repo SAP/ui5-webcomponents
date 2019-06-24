@@ -46,7 +46,6 @@ const metadata = {
 		"default": {
 			alias: "options",
 			type: Option,
-			multiple: true,
 			listenFor: { include: ["*"] },
 		},
 	},

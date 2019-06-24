@@ -23,9 +23,8 @@ const metadata = {
 		 * @public
 		 */
 		"default": {
-			type: HTMLElement,
-			multiple: true,
 			alias: "content",
+			type: HTMLElement,
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.Card.prototype */ {

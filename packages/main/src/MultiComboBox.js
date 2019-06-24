@@ -38,7 +38,6 @@ const metadata = {
 		"default": {
 			alias: "items",
 			type: HTMLElement,
-			multiple: true,
 			listenFor: { include: ["*"] },
 		},
 	},

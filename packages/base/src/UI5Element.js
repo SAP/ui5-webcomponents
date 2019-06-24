@@ -183,10 +183,10 @@ class UI5Element extends HTMLElement {
 
 			// Distribute the child in the _state object
 			if (slotData.alias) {
-				if (slotData.multiple) {
-					this._state[slotData.alias].push(child);
-				} else {
+				if (slotData.single) {
 					this._state[slotData.alias] = child;
+				} else {
+					this._state[slotData.alias].push(child);
 				}
 			}
 		});
@@ -210,10 +210,10 @@ class UI5Element extends HTMLElement {
 			}
 		});
 
-		if (slotData.multiple) {
-			this._state[alias] = [];
-		} else {
+		if (slotData.single) {
 			this._state[alias] = null;
+		} else {
+			this._state[alias] = [];
 		}
 	}
 
@@ -669,10 +669,10 @@ class UI5Element extends HTMLElement {
 		// Initialize slots
 		const slots = MetadataClass.getSlots();
 		for (const slotName in slots) { // eslint-disable-line
-			if (slots[slotName].multiple) {
-				defaultState[slotName] = [];
-			} else {
+			if (slots[slotName].single) {
 				defaultState[slotName] = null;
+			} else {
+				defaultState[slotName] = [];
 			}
 		}
 
@@ -750,10 +750,10 @@ class UI5Element extends HTMLElement {
 						if (this._state[alias] !== undefined) {
 							return this._state[alias];
 						}
-						if (slotData.multiple) {
-							return [];
+						if (slotData.single) {
+							return null;
 						}
-						return null;
+						return [];
 					},
 					set() {
 						throw new Error("Cannot set slots directly, use the DOM APIs");

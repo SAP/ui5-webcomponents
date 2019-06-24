@@ -20,8 +20,8 @@ const metadata = {
 		 * @public
 		 */
 		"default": {
-			alias: "header",
 			type: HTMLElement,
+			single: true,
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.TableColumn.prototype */ {

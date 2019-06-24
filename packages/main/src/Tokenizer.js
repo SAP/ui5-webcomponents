@@ -19,7 +19,6 @@ const metadata = {
 		"default": {
 			alias: "tokens",
 			type: HTMLElement,
-			multiple: true,
 			individualSlots: true,
 		},
 	},

@@ -143,7 +143,6 @@ const metadata = {
 		"default": {
 			alias: "items",
 			type: HTMLElement,
-			multiple: true,
 		},
 
 		/**
@@ -160,7 +159,6 @@ const metadata = {
 		menuItems: {
 			alias: "menuItems",
 			type: HTMLElement,
-			multiple: true,
 		},
 
 		/**
@@ -173,6 +171,7 @@ const metadata = {
 		searchField: {
 			alias: "searchField",
 			type: HTMLElement,
+			single: true,
 		},
 
 		/**
@@ -185,6 +184,7 @@ const metadata = {
 		icon: {
 			alias: "icon",
 			type: HTMLElement,
+			single: true,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.ShellBar.prototype */ {

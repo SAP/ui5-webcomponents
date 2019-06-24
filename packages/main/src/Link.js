@@ -101,7 +101,6 @@ const metadata = {
 		 */
 		"default": {
 			type: Node,
-			multiple: true,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Link.prototype */ {

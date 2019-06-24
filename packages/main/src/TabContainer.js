@@ -38,7 +38,6 @@ const metadata = {
 		"default": {
 			alias: "items",
 			type: TabBase,
-			multiple: true,
 			individualSlots: true,
 			listenFor: { include: ["*"] },
 		},

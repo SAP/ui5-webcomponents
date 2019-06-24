@@ -33,6 +33,7 @@ const metadata = {
 		 */
 		header: {
 			type: HTMLElement,
+			single: true,
 		},
 
 		/**
@@ -44,9 +45,8 @@ const metadata = {
 		 * @public
 		 */
 		"default": {
-			type: ListItemBase,
-			multiple: true,
 			alias: "items",
+			type: ListItemBase,
 		},
 	},
 	properties: /** @lends  sap.ui.webcomponents.main.List.prototype */ {

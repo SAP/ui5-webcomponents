@@ -23,9 +23,7 @@ const metadata = {
 		 * @public
 		 */
 		"default": {
-			alias: "description",
-			type: HTMLElement,
-			multiple: false,
+			type: Node,
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.TimelineItem.prototype */ {

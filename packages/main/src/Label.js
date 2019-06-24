@@ -64,7 +64,6 @@ const metadata = {
 		 */
 		"default": {
 			type: Node,
-			multiple: true,
 		},
 	},
 };
