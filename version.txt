@@ -1,5 +1,5 @@
-commit 66f7268196a1baf7fd3fd9a538373b05219511bc
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Tue Jun 25 10:11:48 2019 +0300
+commit 1bba1035b0ec924602b0bdfc214504369de42e7c
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Tue Jun 25 11:38:35 2019 +0300
 
-    chore: add a minimal UI5 Web Component example (#581)
+    chore: add derived colors as es6 modules in dist (#374)
