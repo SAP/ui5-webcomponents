@@ -440,15 +440,6 @@ class UI5Element extends HTMLElement {
 				return;
 			}
 
-			// If the user set a slot equal to the default slot, f.e. slot="content", remove it
-			// Otherwise, stop here
-			if (slotName === "default") {
-				if (hasSlot) {
-					child.removeAttribute("slot");
-				}
-				return;
-			}
-
 			// Compatibility - for the ones with "data-ui5-slot"
 			// If they don't have a slot yet, and are not of the default child type, set slotName as slot
 			if (!hasSlot) {
