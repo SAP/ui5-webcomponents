@@ -306,6 +306,7 @@ class Select extends UI5Element {
 		const isUpKey = isUp(event);
 
 		if (isDownKey || isUpKey) {
+			event.preventDefault();
 			if (isDownKey) {
 				nextIndex = this._getNextOptionIndex();
 			} else {
