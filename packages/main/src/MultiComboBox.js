@@ -36,7 +36,7 @@ const metadata = {
 		 * @public
 		 */
 		"default": {
-			alias: "items",
+			propertyName: "items",
 			type: HTMLElement,
 			listenFor: { include: ["*"] },
 		},

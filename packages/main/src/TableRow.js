@@ -21,7 +21,7 @@ const metadata = {
 		 * @public
 		 */
 		"default": {
-			alias: "cells",
+			propertyName: "cells",
 			type: TableCell,
 			individualSlots: true,
 		},

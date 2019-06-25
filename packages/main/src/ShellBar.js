@@ -141,7 +141,7 @@ const metadata = {
 		 * @public
 		 */
 		"default": {
-			alias: "items",
+			propertyName: "items",
 			type: HTMLElement,
 		},
 

@@ -36,7 +36,7 @@ const metadata = {
 		 * @slot
 		 */
 		"default": {
-			alias: "items",
+			propertyName: "items",
 			type: TabBase,
 			individualSlots: true,
 			listenFor: { include: ["*"] },

@@ -56,7 +56,7 @@ const metadata = {
 		 * @public
 		 */
 		"default": {
-			alias: "suggestionItems",
+			propertyName: "suggestionItems",
 			type: HTMLElement,
 		},
 

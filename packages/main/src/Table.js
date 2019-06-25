@@ -27,7 +27,7 @@ const metadata = {
 		 * @public
 		 */
 		"default": {
-			alias: "rows",
+			propertyName: "rows",
 			type: TableRow,
 			individualSlots: true,
 		},

@@ -44,7 +44,7 @@ const metadata = {
 		 * @public
 		 */
 		"default": {
-			alias: "options",
+			propertyName: "options",
 			type: Option,
 			listenFor: { include: ["*"] },
 		},

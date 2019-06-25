@@ -149,8 +149,8 @@ class UI5Element extends HTMLElement {
 		}
 
 		// Init the _state object based on the supported slots
-		for (const [slot, slotData] of Object.entries(slotsMap)) { // eslint-disable-line
-			this._clearSlot(slot);
+		for (const [slotName, slotData] of Object.entries(slotsMap)) { // eslint-disable-line
+			this._clearSlot(slotName);
 		}
 
 		const autoIncrementMap = new Map();
@@ -180,11 +180,11 @@ class UI5Element extends HTMLElement {
 			}
 
 			// Distribute the child in the _state object
-			const accessor = slotData.alias || slotName;
+			const propertyName = slotData.propertyName || slotName;
 			if (slotData.single) {
-				this._state[accessor] = child;
+				this._state[propertyName] = child;
 			} else {
-				this._state[accessor].push(child);
+				this._state[propertyName].push(child);
 			}
 		});
 
@@ -192,11 +192,11 @@ class UI5Element extends HTMLElement {
 	}
 
 	// Removes all children from the slot and detaches listeners, if any
-	_clearSlot(slot) {
-		const slotData = this.constructor.getMetadata().getSlots()[slot];
-		const accessor = slotData.alias || slot;
+	_clearSlot(slotName) {
+		const slotData = this.constructor.getMetadata().getSlots()[slotName];
+		const propertyName = slotData.propertyName || slotName;
 
-		let children = this._state[accessor];
+		let children = this._state[propertyName];
 		if (!Array.isArray(children)) {
 			children = [children];
 		}
@@ -208,9 +208,9 @@ class UI5Element extends HTMLElement {
 		});
 
 		if (slotData.single) {
-			this._state[accessor] = null;
+			this._state[propertyName] = null;
 		} else {
-			this._state[accessor] = [];
+			this._state[propertyName] = [];
 		}
 	}
 
@@ -665,12 +665,12 @@ class UI5Element extends HTMLElement {
 
 		// Initialize slots
 		const slots = MetadataClass.getSlots();
-		for (const [slot, slotData] of Object.entries(slots)) { // eslint-disable-line
-			const accessor = slotData.alias || slot;
+		for (const [slotName, slotData] of Object.entries(slots)) { // eslint-disable-line
+			const propertyName = slotData.propertyName || slotName;
 			if (slotData.single) {
-				defaultState[accessor] = null;
+				defaultState[propertyName] = null;
 			} else {
-				defaultState[accessor] = [];
+				defaultState[propertyName] = [];
 			}
 		}
 
@@ -736,16 +736,16 @@ class UI5Element extends HTMLElement {
 
 		// Slots
 		const slots = this.getMetadata().getSlots();
-		for (const [slot, slotData] of Object.entries(slots)) { // eslint-disable-line
-			if (!isValidPropertyName(slot)) {
-				throw new Error(`"${slot}" is not a valid property name. Use a name that does not collide with DOM APIs`);
+		for (const [slotName, slotData] of Object.entries(slots)) { // eslint-disable-line
+			if (!isValidPropertyName(slotName)) {
+				throw new Error(`"${slotName}" is not a valid property name. Use a name that does not collide with DOM APIs`);
 			}
 
-			const accessor = slotData.alias || slot;
-			Object.defineProperty(proto, accessor, {
+			const propertyName = slotData.propertyName || slotName;
+			Object.defineProperty(proto, propertyName, {
 				get() {
-					if (this._state[accessor] !== undefined) {
-						return this._state[accessor];
+					if (this._state[propertyName] !== undefined) {
+						return this._state[propertyName];
 					}
 					if (slotData.single) {
 						return null;

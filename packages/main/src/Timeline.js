@@ -22,7 +22,7 @@ const metadata = {
 		 * @public
 		 */
 		"default": {
-			alias: "items",
+			propertyName: "items",
 			type: TimelineItem,
 			individualSlots: true,
 		},
