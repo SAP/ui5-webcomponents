@@ -411,7 +411,7 @@ class UI5Element extends HTMLElement {
 		this._updateShadowRoot();
 
 		// Safari requires that children get the slot attribute only after the slot tags have been rendered in the shadow DOM
-		this._assignSlotsToChildren();
+		this._assignIndividualSlotsToChildren();
 
 		// Call the onAfterRendering hook
 		if (typeof this.onAfterRendering === "function") {
@@ -426,33 +426,12 @@ class UI5Element extends HTMLElement {
 		this.constructor.render(renderResult, this.shadowRoot, styleToPrepend, { eventContext: this });
 	}
 
-	_assignSlotsToChildren() {
+	_assignIndividualSlotsToChildren() {
 		const domChildren = Array.from(this.children);
 
 		domChildren.forEach(child => {
-			const slotName = this.constructor._getSlotName(child);
-			const slot = child.getAttribute("slot");
-			const hasSlot = !!slot;
-
-			// Assign individual slots, f.e. items => items-1
 			if (child._individualSlot) {
 				child.setAttribute("slot", child._individualSlot);
-				return;
-			}
-
-			// Compatibility - for the ones with "data-ui5-slot"
-			// If they don't have a slot yet, and are not of the default child type, set slotName as slot
-			if (!hasSlot && slotName !== "default") {
-				child.setAttribute("slot", slotName);
-			}
-		}, this);
-
-
-		domChildren.filter(child => child._compatibilitySlot).forEach(child => {
-			const hasSlot = !!child.getAttribute("slot");
-			const needsSlot = child._compatibilitySlot !== "default";
-			if (!hasSlot && needsSlot) {
-				child.setAttribute("slot", child._compatibilitySlot);
 			}
 		});
 	}
@@ -596,12 +575,6 @@ class UI5Element extends HTMLElement {
 		// Text nodes can only go to the default slot
 		if (!(child instanceof HTMLElement)) {
 			return "default";
-		}
-
-		// Check for explicitly given logical slot - for backward compatibility, should not be used
-		const ui5Slot = child.getAttribute("data-ui5-slot");
-		if (ui5Slot) {
-			return ui5Slot;
 		}
 
 		// Discover the slot based on the real slot name (f.e. footer => footer, or content-32 => content)
