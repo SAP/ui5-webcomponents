@@ -1,5 +1,5 @@
-commit 593b471ee91c5a93bc79ec5c8c59e29b1288df71
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Tue Jun 25 13:05:22 2019 +0300
+commit 912562a605da3258cc0cb6776f15418c41d26485
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Tue Jun 25 14:52:14 2019 +0300
 
-    chore: add link to docs & tutorials in the playground (#584)
+    refactor: rework default slots (#583)
