@@ -442,7 +442,7 @@ class UI5Element extends HTMLElement {
 
 			// Compatibility - for the ones with "data-ui5-slot"
 			// If they don't have a slot yet, and are not of the default child type, set slotName as slot
-			if (!hasSlot) {
+			if (!hasSlot && slotName !== "default") {
 				child.setAttribute("slot", slotName);
 			}
 		}, this);
