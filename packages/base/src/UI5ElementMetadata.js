@@ -14,10 +14,6 @@ class UI5ElementMetadata {
 		return this.metadata.noShadowDOM;
 	}
 
-	getDefaultSlot() {
-		return this.metadata.defaultSlot || "content";
-	}
-
 	getPropsList() {
 		return Object.keys(this.getProperties());
 	}

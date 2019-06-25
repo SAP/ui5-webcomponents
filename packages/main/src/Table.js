@@ -26,9 +26,9 @@ const metadata = {
 		 * @slot
 		 * @public
 		 */
-		rows: {
+		"default": {
+			propertyName: "rows",
 			type: TableRow,
-			multiple: true,
 			individualSlots: true,
 		},
 
@@ -42,12 +42,10 @@ const metadata = {
 		 */
 		columns: {
 			type: TableColumn,
-			multiple: true,
 			individualSlots: true,
 			listenFor: { exclude: ["header"] },
 		},
 	},
-	defaultSlot: "rows",
 	properties: /** @lends sap.ui.webcomponents.main.Table.prototype */ {
 
 		/**

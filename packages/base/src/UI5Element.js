@@ -139,8 +139,7 @@ class UI5Element extends HTMLElement {
 
 	_updateSlots() {
 		const slotsMap = this.constructor.getMetadata().getSlots();
-		const defaultSlot = this.constructor.getMetadata().getDefaultSlot();
-		const canSlotText = slotsMap[defaultSlot] !== undefined && slotsMap[defaultSlot].type === Node;
+		const canSlotText = slotsMap.default !== undefined && slotsMap.default.type === Node;
 
 		let domChildren;
 		if (canSlotText) {
@@ -150,46 +149,50 @@ class UI5Element extends HTMLElement {
 		}
 
 		// Init the _state object based on the supported slots
-		for (const [slot, slotData] of Object.entries(slotsMap)) { // eslint-disable-line
-			this._clearSlot(slot);
+		for (const [slotName, slotData] of Object.entries(slotsMap)) { // eslint-disable-line
+			this._clearSlot(slotName);
 		}
 
 		const autoIncrementMap = new Map();
 		domChildren.forEach(child => {
 			// Determine the type of the child (mainly by the slot attribute)
 			const slotName = this.constructor._getSlotName(child);
+			const slotData = slotsMap[slotName];
 
 			// Check if the slotName is supported
-			if (slotsMap[slotName] === undefined) {
+			if (slotData === undefined) {
 				const validValues = Object.keys(slotsMap).join(", ");
 				console.warn(`Unknown slotName: ${slotName}, ignoring`, child, `Valid values are: ${validValues}`); // eslint-disable-line
 				return;
 			}
 
 			// For children that need individual slots, calculate them
-			if (slotsMap[slotName].individualSlots) {
+			if (slotData.individualSlots) {
 				const nextId = (autoIncrementMap.get(slotName) || 0) + 1;
 				autoIncrementMap.set(slotName, nextId);
 				child._individualSlot = `${slotName}-${nextId}`;
 			}
 
-			// Distribute the child in the _state object
-			child = this._prepareForSlot(slotName, child);
-			if (slotsMap[slotName].multiple) {
-				this._state[slotName].push(child);
-			} else {
-				this._state[slotName] = child;
+			child = this.constructor.getMetadata().constructor.validateSlotValue(child, slotData);
+
+			if (child._attachChildPropertyUpdated) {
+				this._attachChildPropertyUpdated(child, slotData);
 			}
+
+			// Distribute the child in the _state object
+			const propertyName = slotData.propertyName || slotName;
+			this._state[propertyName].push(child);
 		});
 
 		this._invalidate();
 	}
 
 	// Removes all children from the slot and detaches listeners, if any
-	_clearSlot(slot) {
-		const slotData = this.constructor.getMetadata().getSlots()[slot];
+	_clearSlot(slotName) {
+		const slotData = this.constructor.getMetadata().getSlots()[slotName];
+		const propertyName = slotData.propertyName || slotName;
 
-		let children = this._state[slot];
+		let children = this._state[propertyName];
 		if (!Array.isArray(children)) {
 			children = [children];
 		}
@@ -200,22 +203,7 @@ class UI5Element extends HTMLElement {
 			}
 		});
 
-		if (slotData.multiple) {
-			this._state[slot] = [];
-		} else {
-			this._state[slot] = null;
-		}
-	}
-
-	_prepareForSlot(slot, child) {
-		const slotData = this.constructor.getMetadata().getSlots()[slot];
-		child = this.constructor.getMetadata().constructor.validateSlotValue(child, slotData);
-
-		if (child._attachChildPropertyUpdated) {
-			this._attachChildPropertyUpdated(child, slotData);
-		}
-
-		return child;
+		this._state[propertyName] = [];
 	}
 
 	static get observedAttributes() {
@@ -439,7 +427,6 @@ class UI5Element extends HTMLElement {
 	}
 
 	_assignSlotsToChildren() {
-		const defaultSlot = this.constructor.getMetadata().getDefaultSlot();
 		const domChildren = Array.from(this.children);
 
 		domChildren.forEach(child => {
@@ -453,18 +440,9 @@ class UI5Element extends HTMLElement {
 				return;
 			}
 
-			// If the user set a slot equal to the default slot, f.e. slot="content", remove it
-			// Otherwise, stop here
-			if (slotName === defaultSlot) {
-				if (hasSlot) {
-					child.removeAttribute("slot");
-				}
-				return;
-			}
-
 			// Compatibility - for the ones with "data-ui5-slot"
 			// If they don't have a slot yet, and are not of the default child type, set slotName as slot
-			if (!hasSlot) {
+			if (!hasSlot && slotName !== "default") {
 				child.setAttribute("slot", slotName);
 			}
 		}, this);
@@ -472,7 +450,7 @@ class UI5Element extends HTMLElement {
 
 		domChildren.filter(child => child._compatibilitySlot).forEach(child => {
 			const hasSlot = !!child.getAttribute("slot");
-			const needsSlot = child._compatibilitySlot !== defaultSlot;
+			const needsSlot = child._compatibilitySlot !== "default";
 			if (!hasSlot && needsSlot) {
 				child.setAttribute("slot", child._compatibilitySlot);
 			}
@@ -615,11 +593,9 @@ class UI5Element extends HTMLElement {
 	}
 
 	static _getSlotName(child) {
-		const defaultSlot = this.getMetadata().getDefaultSlot();
-
 		// Text nodes can only go to the default slot
 		if (!(child instanceof HTMLElement)) {
-			return defaultSlot;
+			return "default";
 		}
 
 		// Check for explicitly given logical slot - for backward compatibility, should not be used
@@ -636,7 +612,7 @@ class UI5Element extends HTMLElement {
 		}
 
 		// Use default slot as a fallback
-		return defaultSlot;
+		return "default";
 	}
 
 	static _getDefaultState() {
@@ -672,12 +648,9 @@ class UI5Element extends HTMLElement {
 
 		// Initialize slots
 		const slots = MetadataClass.getSlots();
-		for (const slotName in slots) { // eslint-disable-line
-			if (slots[slotName].multiple) {
-				defaultState[slotName] = [];
-			} else {
-				defaultState[slotName] = null;
-			}
+		for (const [slotName, slotData] of Object.entries(slots)) { // eslint-disable-line
+			const propertyName = slotData.propertyName || slotName;
+			defaultState[propertyName] = [];
 		}
 
 		this._defaultState = defaultState;
@@ -742,20 +715,18 @@ class UI5Element extends HTMLElement {
 
 		// Slots
 		const slots = this.getMetadata().getSlots();
-		for (const [slot, slotData] of Object.entries(slots)) { // eslint-disable-line
-			if (!isValidPropertyName(slot)) {
-				throw new Error(`"${slot}" is not a valid property name. Use a name that does not collide with DOM APIs`);
+		for (const [slotName, slotData] of Object.entries(slots)) { // eslint-disable-line
+			if (!isValidPropertyName(slotName)) {
+				throw new Error(`"${slotName}" is not a valid property name. Use a name that does not collide with DOM APIs`);
 			}
 
-			Object.defineProperty(proto, slot, {
+			const propertyName = slotData.propertyName || slotName;
+			Object.defineProperty(proto, propertyName, {
 				get() {
-					if (this._state[slot] !== undefined) {
-						return this._state[slot];
+					if (this._state[propertyName] !== undefined) {
+						return this._state[propertyName];
 					}
-					if (slotData.multiple) {
-						return [];
-					}
-					return null;
+					return [];
 				},
 				set() {
 					throw new Error("Cannot set slots directly, use the DOM APIs");

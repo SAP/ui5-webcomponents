@@ -20,7 +20,6 @@ import listCss from "./themes/List.css.js";
  */
 const metadata = {
 	tag: "ui5-list",
-	defaultSlot: "items",
 	slots: /** @lends sap.ui.webcomponents.main.List.prototype */ {
 
 		/**
@@ -44,9 +43,9 @@ const metadata = {
 		 * @slot
 		 * @public
 		 */
-		items: {
+		"default": {
+			propertyName: "items",
 			type: ListItemBase,
-			multiple: true,
 		},
 	},
 	properties: /** @lends  sap.ui.webcomponents.main.List.prototype */ {
@@ -558,7 +557,7 @@ class List extends UI5Element {
 	}
 
 	get shouldRenderH1() {
-		return !this.header && this.headerText;
+		return !this.header.length && this.headerText;
 	}
 
 	get showNoDataText() {

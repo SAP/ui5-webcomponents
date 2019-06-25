@@ -20,7 +20,7 @@
 {{#*inline "header"}}
 	{{#unless noHeader}}
 		<header>
-			{{#if header}}
+			{{#if header.length}}
 				<div role="heading" class="sapMPopupHeader">
 					<slot name="header"></slot>
 				</div>
@@ -32,7 +32,7 @@
 {{/inline}}
 
 {{#*inline "footer"}}
-	{{#if footer}}
+	{{#if footer.length}}
 		<footer>
 			<div class="sapMPopupFooter">
 				<slot name="footer"></slot>

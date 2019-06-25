@@ -14,7 +14,6 @@ import cardCss from "./themes/Card.css.js";
  */
 const metadata = {
 	tag: "ui5-card",
-	defaultSlot: "content",
 	slots: /** @lends sap.ui.webcomponents.main.Card.prototype */ {
 
 		/**
@@ -23,9 +22,9 @@ const metadata = {
 		 * @slot
 		 * @public
 		 */
-		content: {
+		"default": {
+			propertyName: "content",
 			type: HTMLElement,
-			multiple: true,
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.Card.prototype */ {

@@ -111,12 +111,10 @@ const metadata = {
 		 * @slot
 		 * @public
 		 */
-		text: {
+		"default": {
 			type: Node,
-			multiple: true,
 		},
 	},
-	defaultSlot: "text",
 	events: /** @lends sap.ui.webcomponents.main.Button.prototype */ {
 
 		/**
@@ -254,7 +252,7 @@ class Button extends UI5Element {
 				sapMBtn: true,
 				sapMBtnActive: this._active,
 				sapMBtnWithIcon: this.icon,
-				sapMBtnNoText: !this.text.length,
+				sapMBtnNoText: !this.textContent.length,
 				sapMBtnDisabled: this.disabled,
 				sapMBtnIconEnd: this.iconEnd,
 				[`sapMBtn${this.design}`]: true,

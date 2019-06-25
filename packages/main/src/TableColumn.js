@@ -15,15 +15,14 @@ const metadata = {
 		/**
 		 * Defines the HTML Element to be displayed in the column header.
 		 *
-		 * @type {HTMLElement}
+		 * @type {Node[]}
 		 * @slot
 		 * @public
 		 */
-		header: {
-			type: HTMLElement,
+		"default": {
+			type: Node,
 		},
 	},
-	defaultSlot: "header",
 	properties: /** @lends sap.ui.webcomponents.main.TableColumn.prototype */ {
 
 		/**

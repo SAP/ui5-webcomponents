@@ -9,18 +9,16 @@ import TabTemplate from "./build/compiled/TabTemplate.lit.js";
  */
 const metadata = {
 	tag: "ui5-tab",
-	defaultSlot: "content",
 	slots: /** @lends sap.ui.webcomponents.main.Tab.prototype */ {
 
 		/**
 		 * Defines the tab content.
-		 * @type {HTMLElement[]}
+		 * @type {Node[]}
 		 * @slot
 		 * @public
 		 */
-		content: {
-			type: HTMLElement,
-			multiple: true,
+		"default": {
+			type: Node,
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.Tab.prototype */ {

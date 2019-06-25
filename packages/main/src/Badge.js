@@ -40,9 +40,8 @@ const metadata = {
 		 * @slot
 		 * @public
 		 */
-		text: {
+		"default": {
 			type: Node,
-			multiple: true,
 		},
 
 		/**
@@ -57,7 +56,6 @@ const metadata = {
 		},
 
 	},
-	defaultSlot: "text",
 };
 
 /**

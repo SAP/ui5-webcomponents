@@ -20,7 +20,6 @@ import panelCss from "./themes/Panel.css.js";
  */
 const metadata = {
 	tag: "ui5-panel",
-	defaultSlot: "content",
 	slots: /** @lends sap.ui.webcomponents.main.Panel.prototype */ {
 
 		/**
@@ -40,13 +39,12 @@ const metadata = {
 		 * Determines the content of the <code>ui5-panel</code>.
 		 * The content is visible only when the <code>ui5-panel</code> is expanded.
 		 *
-		 * @type {HTMLElement[]}
+		 * @type {Node[]}
 		 * @slot
 		 * @public
 		 */
-		content: {
+		"default": {
 			type: Node,
-			multiple: true,
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.Panel.prototype */ {
@@ -215,7 +213,7 @@ class Panel extends UI5Element {
 			this._contentExpanded = !this.collapsed;
 		}
 
-		const toggleWithInternalHeader = !this.header;
+		const toggleWithInternalHeader = !this.header.length;
 		this._icon.title = this.resourceBundle.getText(PANEL_ICON);
 		this._header.press = toggleWithInternalHeader ? this._toggle : this._noOp;
 		this._icon.press = !toggleWithInternalHeader ? this._toggle : this._noOp;
@@ -280,7 +278,7 @@ class Panel extends UI5Element {
 	}
 
 	get ariaLabelledBy() {
-		return this.header ? "" : `${this._id}-header`;
+		return this.header.length ? "" : `${this._id}-header`;
 	}
 
 	get accRole() {
@@ -288,15 +286,15 @@ class Panel extends UI5Element {
 	}
 
 	get headerTabIndex() {
-		return !this.header ? "0" : "";
+		return !this.header.length ? "0" : "";
 	}
 
 	get iconTabIndex() {
-		return this.header ? "0" : "";
+		return this.header.length ? "0" : "";
 	}
 
 	get shouldRenderH1() {
-		return !this.header && (this.headerText || !this.fixed);
+		return !this.header.length && (this.headerText || !this.fixed);
 	}
 
 	get classes() {
@@ -306,11 +304,11 @@ class Panel extends UI5Element {
 				sapUiSizeCompact: getCompactSize(),
 			},
 			header: {
-				sapMPanelWrappingDivTb: this.header,
-				sapMPanelWrappingDivTbExpanded: this.header && this.collapsed,
-				sapMPanelWrappingDiv: !this.header,
-				sapMPanelWrappingDivClickable: !this.header,
-				sapMPanelWrappingDivExpanded: !this.header && !this.collapsed,
+				sapMPanelWrappingDivTb: this.header.length,
+				sapMPanelWrappingDivTbExpanded: this.header.length && this.collapsed,
+				sapMPanelWrappingDiv: !this.header.length,
+				sapMPanelWrappingDivClickable: !this.header.length,
+				sapMPanelWrappingDivExpanded: !this.header.length && !this.collapsed,
 			},
 			icon: {
 				sapMPanelIconExpanded: !this.collapsed,

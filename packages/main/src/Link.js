@@ -99,12 +99,10 @@ const metadata = {
 		 * @slot
 		 * @public
 		 */
-		text: {
+		"default": {
 			type: Node,
-			multiple: true,
 		},
 	},
-	defaultSlot: "text",
 	events: /** @lends sap.ui.webcomponents.main.Link.prototype */ {
 
 		/**
@@ -240,7 +238,7 @@ class Link extends UI5Element {
 	}
 
 	get tabIndex() {
-		return (this.disabled || !this.text.length) ? "-1" : "0";
+		return (this.disabled || !this.textContent.length) ? "-1" : "0";
 	}
 
 	get ariaDisabled() {

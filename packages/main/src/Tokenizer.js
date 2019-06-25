@@ -16,13 +16,12 @@ import styles from "./themes/Tokenizer.css.js";
 const metadata = {
 	tag: "ui5-tokenizer",
 	slots: /** @lends sap.ui.webcomponents.main.Tokenizer.prototype */ {
-		tokens: {
+		"default": {
+			propertyName: "tokens",
 			type: HTMLElement,
-			multiple: true,
 			individualSlots: true,
 		},
 	},
-	defaultSlot: "tokens",
 	properties: /** @lends sap.ui.webcomponents.main.Tokenizer.prototype */ {
 		showMore: { type: Boolean },
 		disabled: { type: Boolean },
