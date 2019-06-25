@@ -181,11 +181,7 @@ class UI5Element extends HTMLElement {
 
 			// Distribute the child in the _state object
 			const propertyName = slotData.propertyName || slotName;
-			if (slotData.single) {
-				this._state[propertyName] = child;
-			} else {
-				this._state[propertyName].push(child);
-			}
+			this._state[propertyName].push(child);
 		});
 
 		this._invalidate();
@@ -207,11 +203,7 @@ class UI5Element extends HTMLElement {
 			}
 		});
 
-		if (slotData.single) {
-			this._state[propertyName] = null;
-		} else {
-			this._state[propertyName] = [];
-		}
+		this._state[propertyName] = [];
 	}
 
 	static get observedAttributes() {
@@ -667,11 +659,7 @@ class UI5Element extends HTMLElement {
 		const slots = MetadataClass.getSlots();
 		for (const [slotName, slotData] of Object.entries(slots)) { // eslint-disable-line
 			const propertyName = slotData.propertyName || slotName;
-			if (slotData.single) {
-				defaultState[propertyName] = null;
-			} else {
-				defaultState[propertyName] = [];
-			}
+			defaultState[propertyName] = [];
 		}
 
 		this._defaultState = defaultState;
@@ -746,9 +734,6 @@ class UI5Element extends HTMLElement {
 				get() {
 					if (this._state[propertyName] !== undefined) {
 						return this._state[propertyName];
-					}
-					if (slotData.single) {
-						return null;
 					}
 					return [];
 				},

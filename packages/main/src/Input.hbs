@@ -8,7 +8,7 @@
 <div id="{{_id}}-wrapper"
 	class="{{classes.wrapper}}"
 >
-	{{#if _beginContent}}
+	{{#if _beginContent.length}}
 		<slot name="_beginContent"></slot>
 	{{/if}}
 
@@ -24,7 +24,7 @@
 			data-sap-no-tab-ref
 			data-sap-focus-ref
 	/>
-		{{#if icon}}
+		{{#if icon.length}}
 			<slot name="icon"></slot>
 		{{/if}}
 	</div>

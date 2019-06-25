@@ -169,7 +169,6 @@ const metadata = {
 		 */
 		searchField: {
 			type: HTMLElement,
-			single: true,
 		},
 
 		/**
@@ -181,7 +180,6 @@ const metadata = {
 		 */
 		icon: {
 			type: HTMLElement,
-			single: true,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.ShellBar.prototype */ {
@@ -494,7 +492,7 @@ class ShellBar extends UI5Element {
 	}
 
 	_handleSizeS() {
-		const hasIcons = this.showNotifications || this.showProductSwitch || this.searchField || this.items.length;
+		const hasIcons = this.showNotifications || this.showProductSwitch || this.searchField.length || this.items.length;
 
 		this._itemsInfo = this._getAllItems(hasIcons).map(info => {
 			const isOverflowIcon = info.classes.indexOf("sapWCShellBarOverflowIcon") !== -1;
@@ -671,7 +669,7 @@ class ShellBar extends UI5Element {
 		const actions = this.shadowRoot.querySelectorAll(".sapWCShellBarItemCustomAction");
 		let elementIndex = [].indexOf.apply(actions, [event.target]);
 
-		if (this.searchField) {
+		if (this.searchField.length) {
 			elementIndex += 1;
 		}
 
@@ -721,10 +719,10 @@ class ShellBar extends UI5Element {
 			{
 				src: "sap-icon://search",
 				text: "Search",
-				classes: `${this.searchField ? "" : "sapWCShellBarUnsetIcon"} sapWCShellBarSearchIcon sapWCShellBarIconButton`,
+				classes: `${this.searchField.length ? "" : "sapWCShellBarUnsetIcon"} sapWCShellBarSearchIcon sapWCShellBarIconButton`,
 				priority: 4,
-				domOrder: this.searchField ? (++domOrder) : -1,
-				style: `order: ${this.searchField ? 1 : -10}`,
+				domOrder: this.searchField.length ? (++domOrder) : -1,
+				style: `order: ${this.searchField.length ? 1 : -10}`,
 				id: `${this._id}-item-${1}`,
 				press: this._handleSearchIconPress.bind(this),
 				_tabIndex: "-1",
@@ -803,7 +801,7 @@ class ShellBar extends UI5Element {
 			wrapper: {
 				"sapWCShellBarWrapper": true,
 				[`sapWCShellBarSize${this._breakpointSize}`]: true,
-				"sapWCShellBarHasSearchField": this.searchField,
+				"sapWCShellBarHasSearchField": this.searchField.length,
 				"sapWCShellBarBlockLayerShown": this._showBlockLayer,
 				"sapWCShellBarHasNotifications": !!this.notificationCount,
 			},

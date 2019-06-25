@@ -4,7 +4,7 @@
 >
 	<div class="{{classes.leftContainer}}">
 
-		{{#if icon}}
+		{{#if icon.length}}
 			<slot name="icon"></slot>
 		{{/if}}
 
@@ -97,7 +97,7 @@
 		style="{{styles.searchField}}"
 		@focusout={{_searchField.focusout}}
 	>
-		{{#if searchField}}
+		{{#if searchField.length}}
 			<slot name="searchField"></slot>
 		{{/if}}
 	</div>

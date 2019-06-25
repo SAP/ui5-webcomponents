@@ -33,7 +33,6 @@ const metadata = {
 		 */
 		header: {
 			type: HTMLElement,
-			single: true,
 		},
 
 		/**
@@ -558,7 +557,7 @@ class List extends UI5Element {
 	}
 
 	get shouldRenderH1() {
-		return !this.header && this.headerText;
+		return !this.header.length && this.headerText;
 	}
 
 	get showNoDataText() {

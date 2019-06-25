@@ -35,7 +35,6 @@ const metadata = {
 		 */
 		icon: {
 			type: Icon,
-			single: true,
 		},
 
 		/**
@@ -62,7 +61,6 @@ const metadata = {
 
 		_beginContent: {
 			type: HTMLElement,
-			single: true,
 		},
 	},
 	properties: /** @lends  sap.ui.webcomponents.main.Input.prototype */  {
