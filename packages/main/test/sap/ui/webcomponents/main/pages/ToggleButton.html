@@ -108,10 +108,9 @@
 		}
 	});
 
-	Array.prototype.slice.call(document.querySelectorAll("main-sample .toggleButton")).forEach(function (el) {
+	Array.prototype.slice.call(document.querySelectorAll("#main-sample .toggleButton")).forEach(function (el) {
 		el.addEventListener("click", function (event) {
 			var target = event.target;
-			debugger;
 
 			if (target.classList.contains("toggleButton")) {
 				clickResult.innerHTML = target.textContent + ": " + (target.pressed);

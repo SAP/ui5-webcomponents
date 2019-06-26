@@ -49,7 +49,7 @@ describe("ToggleButton general interaction", () => {
 		assert.strictEqual(result.getText(), "ToggleButton: false", "Enter triggered click and changed pressed state");
 	});
 
-	it("should not fire press event on a disabled togglebutton", () => {
+	it("should not fire click event on a disabled togglebutton", () => {
 		const toggleButton = browser.findElementDeep("#disabled-toggle-button >>> button");
 		const result = $("#click-result");
 
