@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import getOriginalEventTarget from "@ui5/webcomponents-base/src/events/getOriginalEventTarget.js";
+import getShadowDOMTarget from "@ui5/webcomponents-base/src/events/getShadowDOMTarget.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
 import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
@@ -97,11 +97,11 @@ class CalendarHeader extends UI5Element {
 
 	onclick(event) {
 		const composedPath = event.composedPath();
-		const originalTarget = getOriginalEventTarget(event);
+		const eventTarget = getShadowDOMTarget(event);
 
 		for (let index = 0; index < composedPath.length; index++) {
 			const sAttributeValue = composedPath[index].getAttribute && composedPath[index].getAttribute("data-sap-cal-head-button");
-			const showPickerButton = originalTarget.getAttribute("data-sap-show-picker");
+			const showPickerButton = eventTarget.getAttribute("data-sap-show-picker");
 
 			if (showPickerButton) {
 				this[`_show${showPickerButton}Picker`]();
@@ -116,9 +116,9 @@ class CalendarHeader extends UI5Element {
 	}
 
 	onkeydown(event) {
-		const originalTarget = getOriginalEventTarget(event);
+		const eventTarget = getShadowDOMTarget(event);
 		if (isSpace(event) || isEnter(event)) {
-			const showPickerButton = originalTarget.getAttribute("data-sap-show-picker");
+			const showPickerButton = eventTarget.getAttribute("data-sap-show-picker");
 
 			if (showPickerButton) {
 				this[`_show${showPickerButton}Picker`]();

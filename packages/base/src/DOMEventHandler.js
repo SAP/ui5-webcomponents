@@ -1,9 +1,9 @@
 import ManagedEvents from "./events/ManagedEvents.js";
-import getOriginalEventTarget from "./events/getOriginalEventTarget.js";
+import getShadowDOMTarget from "./events/getShadowDOMTarget.js";
 
 const handleEvent = function handleEvent(event) {
 	// Get the DOM node where the original event occurred
-	let target = getOriginalEventTarget(event);
+	let target = getShadowDOMTarget(event);
 
 	// Traverse the DOM
 	let shouldPropagate = true;

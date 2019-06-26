@@ -13,7 +13,7 @@ import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType.js";
 import CalendarDate from "@ui5/webcomponents-base/src/dates/CalendarDate.js";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
 import { isShow } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-import getOriginalEventTarget from "@ui5/webcomponents-base/src/events/getOriginalEventTarget.js";
+import getShadowDOMTarget from "@ui5/webcomponents-base/src/events/getShadowDOMTarget.js";
 import Icon from "./Icon.js";
 import Popover from "./Popover.js";
 import Calendar from "./Calendar.js";
@@ -318,11 +318,11 @@ class DatePicker extends UI5Element {
 	}
 
 	onclick(event) {
-		const originalTarget = getOriginalEventTarget(event);
+		const eventTarget = getShadowDOMTarget(event);
 		const icon = this.shadowRoot.querySelector("ui5-icon");
-		const isIconTab = (originalTarget === icon);
+		const isIconTab = (eventTarget === icon);
 
-		if (icon && (isIconTab || originalTarget.contains(icon.getDomRef()))) {
+		if (icon && (isIconTab || eventTarget.contains(icon.getDomRef()))) {
 			this.togglePicker();
 		}
 	}

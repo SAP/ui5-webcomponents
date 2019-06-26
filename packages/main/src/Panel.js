@@ -6,7 +6,6 @@ import slideUp from "@ui5/webcomponents-base/src/animations/slideUp.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
 import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/src/ResourceBundle.js";
-import getOriginalEventTarget from "@ui5/webcomponents-base/src/events/getOriginalEventTarget.js";
 import Icon from "./Icon.js";
 import PanelAccessibleRole from "./types/PanelAccessibleRole.js";
 import PanelTemplate from "./build/compiled/PanelTemplate.lit.js";
@@ -220,24 +219,18 @@ class Panel extends UI5Element {
 		this._icon.press = !toggleWithInternalHeader ? this._toggle : this._noOp;
 	}
 
-	onkeydown(event) {
-		const originalTarget = getOriginalEventTarget(event);
-		const headerUsed = this._headerOnTarget(originalTarget);
-
-		if (isEnter(event) && headerUsed) {
+	onHeaderKeyDown(event) {
+		if (isEnter(event)) {
 			this._toggleOpen();
 		}
 
-		if (isSpace(event) && headerUsed) {
+		if (isSpace(event)) {
 			event.preventDefault();
 		}
 	}
 
-	onkeyup(event) {
-		const originalTarget = getOriginalEventTarget(event);
-		const headerUsed = this._headerOnTarget(originalTarget);
-
-		if (isSpace(event) && headerUsed) {
+	onHeaderKeyUp(event) {
+		if (isSpace(event)) {
 			this._toggleOpen();
 		}
 	}
@@ -270,10 +263,6 @@ class Panel extends UI5Element {
 			this._contentExpanded = !this.collapsed;
 			this.fireEvent("toggle");
 		});
-	}
-
-	_headerOnTarget(target) {
-		return target.classList.contains("sapMPanelWrappingDiv");
 	}
 
 	get expanded() {

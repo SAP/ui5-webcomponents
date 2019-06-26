@@ -7,7 +7,7 @@
 	{{#if fixed}}
 		{{> header}}
 	{{else}}
-		<header @click="{{_header.press}}" class="{{classes.header}}" tabindex="{{headerTabIndex}}">
+		<header @click="{{_header.press}}" @keydown="{{onHeaderKeyDown}}" @keyup="{{onHeaderKeyUp}}" class="{{classes.header}}" tabindex="{{headerTabIndex}}">
 			<ui5-icon
 				class="{{classes.icon}}"
 				src="{{_icon.src}}"

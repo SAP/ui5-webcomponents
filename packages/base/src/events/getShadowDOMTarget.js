@@ -1,4 +1,4 @@
-const getOriginalEventTarget = function getOriginalEventTarget(event) {
+const getShadowDOMTarget = event => {
 	// Default - composedPath should be used (also covered by polyfill)
 	if (typeof event.composedPath === "function") {
 		const composedPath = event.composedPath();
@@ -11,4 +11,4 @@ const getOriginalEventTarget = function getOriginalEventTarget(event) {
 	return event.target;
 };
 
-export default getOriginalEventTarget;
+export default getShadowDOMTarget;
