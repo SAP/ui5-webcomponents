@@ -253,6 +253,11 @@ class DayPicker extends UI5Element {
 
 	onclick(event) {
 		const target = event.ui5target;
+
+		if (target.className.indexOf("sapWCDayPickerItem") === -1) {
+			return;
+		}
+
 		const dayPressed = this._isDayPressed(target);
 
 		if (dayPressed) {

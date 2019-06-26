@@ -4,7 +4,6 @@ import getOriginalEventTarget from "./events/getOriginalEventTarget.js";
 const handleEvent = function handleEvent(event) {
 	// Get the DOM node where the original event occurred
 	let target = getOriginalEventTarget(event);
-	event.ui5target = target;
 
 	// Traverse the DOM
 	let shouldPropagate = true;
