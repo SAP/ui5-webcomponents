@@ -1,9 +1,5 @@
-commit 71279630afaadcfc43342be756228346047ebe25
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Jun 26 13:29:42 2019 +0300
+commit ed569ce6697c82e3b29072f9c32b79e7520a5bc9
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Wed Jun 26 13:37:47 2019 +0300
 
-    docs: better explain slot usage (#594)
-    
-    BREAKING CHANGE: the "data-ui5-slot" attribute is deprecated. Use "slot" instead.
-    All slots can accept multiple child nodes now. Several web components can now accept
-    text in addition to HTML elements. See the documentation for details about individual web components.
+    chore: update togglebutton sample page (#587)
