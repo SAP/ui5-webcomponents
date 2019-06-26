@@ -439,8 +439,7 @@ class Popup extends UI5Element {
 		this._lastFocusableElement = null;
 	}
 
-	disconnectedCallback() {
-		super.disconnectedCallback();
+	onExitDOM() {
 		removeBodyStyles();
 	}
 }
