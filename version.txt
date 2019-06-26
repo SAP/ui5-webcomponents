@@ -1,24 +1,5 @@
-commit 387fa9af1a6842de82030863f40ae394bdaf82d0
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Wed Jun 26 13:51:44 2019 +0300
+commit f5721e6c26315af6fba631fe61df24934f197d64
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Wed Jun 26 15:27:45 2019 +0300
 
-    fix: disable click events for disabled ui5-button (#586)
-    
-    add pointer-events: none to host component so in case it is disabled,
-    the browser does not call click handlers registered to it.
-    
-    add chai for better assertion messages
-    
-    * move click handler to shadow dom
-    this way, the component can handle the click first and then the app handler
-    will have the correct component state in its click handler
-    
-    * remove event-related qunit tests
-    With click handlers registered in the shadow dom, the qunit tests
-    can no longer simulate events correctly.
-    For these scenarios, the wdio tests will be used anyway.
-    
-    * fix ie11 mousedown problem in IE11
-    remove disabled check, CSS takes care of that
-    
-    Fixes: #572
+    refactor: remove ui5target (#591)
