@@ -71,7 +71,7 @@ TestHelper.ready(function () {
 			RenderScheduler.whenFinished().then(function () {
 				var e = {
 					preventDefault: function() { },
-					ui5target: getDaysDomRefs.call(this)[20]
+					target: getDaysDomRefs.call(this)[20] // getOriginalEventTarget will return this as a fallback
 				};
 
 				this.month._handleEnter(e);
@@ -92,7 +92,7 @@ TestHelper.ready(function () {
 			RenderScheduler.whenFinished().then(function () {
 				var e = {
 					preventDefault: function() {},
-					ui5target: getDaysDomRefs.call(this)[20]
+					target: getDaysDomRefs.call(this)[20] // getOriginalEventTarget will return this as a fallback
 				};
 
 				this.month._handleSpace(e);

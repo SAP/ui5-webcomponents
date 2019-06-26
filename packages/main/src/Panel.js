@@ -6,6 +6,7 @@ import slideUp from "@ui5/webcomponents-base/src/animations/slideUp.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
 import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/src/ResourceBundle.js";
+import getOriginalEventTarget from "@ui5/webcomponents-base/src/events/getOriginalEventTarget.js";
 import Icon from "./Icon.js";
 import PanelAccessibleRole from "./types/PanelAccessibleRole.js";
 import PanelTemplate from "./build/compiled/PanelTemplate.lit.js";
@@ -220,7 +221,8 @@ class Panel extends UI5Element {
 	}
 
 	onkeydown(event) {
-		const headerUsed = this._headerOnTarget(event.ui5target);
+		const originalTarget = getOriginalEventTarget(event);
+		const headerUsed = this._headerOnTarget(originalTarget);
 
 		if (isEnter(event) && headerUsed) {
 			this._toggleOpen();
@@ -232,7 +234,8 @@ class Panel extends UI5Element {
 	}
 
 	onkeyup(event) {
-		const headerUsed = this._headerOnTarget(event.ui5target);
+		const originalTarget = getOriginalEventTarget(event);
+		const headerUsed = this._headerOnTarget(originalTarget);
 
 		if (isSpace(event) && headerUsed) {
 			this._toggleOpen();
