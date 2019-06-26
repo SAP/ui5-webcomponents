@@ -27,7 +27,7 @@ const metadata = {
 		 * <b>Note:</b> When <code>header</code> is set, the
 		 * <code>headerText</code> property is ignored.
 		 *
-		 * @type {HTMLElement}
+		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
 		 */

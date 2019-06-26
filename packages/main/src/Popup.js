@@ -26,7 +26,7 @@ const metadata = {
 		/**
 		 * Defines the header HTML Element.
 		 *
-		 * @type {HTMLElement}
+		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
 		 */
@@ -37,7 +37,7 @@ const metadata = {
 		/**
 		 * Defines the footer HTML Element.
 		 *
-		 * @type {HTMLElement}
+		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
 		 */
