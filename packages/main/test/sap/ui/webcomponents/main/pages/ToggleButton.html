@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+\<!DOCTYPE html>
 <html>
 
 <head>
@@ -89,18 +89,29 @@
 	</div>
 	<div class="result">
 		<h2>Result</h2>
-		<span id="result"></span>
+		<span id="press-result"></span>
+		<span id="click-result"></span>
 	</div>
 </section>
 
 <script>
-	var result = document.getElementById("result");
+	var pressResult = document.getElementById("press-result");
+	var clickResult = document.getElementById("click-result");
 
 	document.getElementById("main-sample").addEventListener("ui5-press", function (event) {
 		var target = event.target;
 
 		if (target.classList.contains("toggleButton")) {
-			result.innerHTML = target.textContent + ": " + event.detail.pressed;
+			pressResult.innerHTML = target.textContent + ": " + event.detail.pressed;
+		}
+	});
+
+	document.getElementById("main-sample").addEventListener("click", function (event) {
+		var target = event.target;
+
+		if (target.classList.contains("toggleButton")) {
+			clickResult.innerHTML = target.textContent + ": " + (event.ui5detail && event.ui5detail.pressed);
+			clickResult.innerHTML = target.textContent + ": " + (target.pressed);
 		}
 	});
 </script>

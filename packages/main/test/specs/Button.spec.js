@@ -16,15 +16,15 @@ describe("Button general interaction", () => {
 	});
 
 	it("tests pressing on disabled button", () => {
+		const button = browser.findElementDeep("#button-disabled >>> button");
+
 		assert.throws(() => {
-			const button = browser.findElementDeep("#button-disabled >>> button");
-
 			button.click();
-			button.keys("Space");
-			button.keys("Enter");
-
 		});
 
+		// don't test space and enter, as wdio always fires a click but the browser not.
+		// button.keys("Space");
+		// button.keys("Enter");
 		const field = browser.findElementDeep("#press-counter");
 		assert.strictEqual(field.getProperty("value"), "3", "Press should be called 3 times");
 	});

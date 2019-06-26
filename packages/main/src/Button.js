@@ -209,7 +209,7 @@ class Button extends UI5Element {
 		document.removeEventListener("mouseup", this._deactivate);
 	}
 
-	onclick(event) {
+	_onclick(event) {
 		event.isMarked = "button";
 		if (!this.disabled) {
 			this.fireEvent("press", {});
