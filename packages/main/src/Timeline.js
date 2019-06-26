@@ -27,10 +27,6 @@ const metadata = {
 			individualSlots: true,
 		},
 	},
-	properties: /** @lends sap.ui.webcomponents.main.Timeline.prototype */ {
-	},
-	events: /** @lends sap.ui.webcomponents.main.Timeline.prototype */ {
-	},
 };
 
 /**

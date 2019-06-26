@@ -136,7 +136,7 @@ const metadata = {
 		 * <b>Note:</b>
 		 * You can use the &nbsp;&lt;ui5-shellbar-item>&lt;/ui5-shellbar-item>.
 		 *
-		 * @type {HTMLElement}
+		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
 		 */
@@ -151,7 +151,7 @@ const metadata = {
 		 * <b>Note:</b>
 		 * You can use the &nbsp;&lt;ui5-li>&lt;/ui5-li> and its ancestors.
 		 *
-		 * @type {HTMLElement}
+		 * @type {HTMLElement[]}
 		 * @slot
 		 * @since 0.10
 		 * @public
