@@ -182,12 +182,25 @@ function updateBodyScrolling(hasModal) {
 }
 
 function addBodyStyles() {
+	const bodyStyleSheet = document.createElement("style");
+	bodyStyleSheet.id = "ui5-web-components-popup-styles";
+	bodyStyleSheet.type = "text/css";
+	bodyStyleSheet.innerHTML = `
+		.sapUiBLyBack {
+			width: 100%;
+			height: 100%;
+			position: fixed;
+			overflow: hidden;
+		}
+	`;
+	document.head.appendChild(bodyStyleSheet);
 	document.body.style.top = `-${window.pageYOffset}px`;
 	document.body.classList.add("sapUiBLyBack");
 }
 
 function removeBodyStyles() {
 	document.body.classList.remove("sapUiBLyBack");
+	document.getElementById("ui5-web-components-popup-styles").remove();
 	window.scrollTo(0, -parseFloat(document.body.style.top));
 	document.body.style.top = "";
 }
