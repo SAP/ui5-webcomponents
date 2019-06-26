@@ -176,21 +176,20 @@ function updateBodyScrolling(hasModal) {
 
 	createBLyBackStyle();
 
-	modifyBodyStyles(hasModal);
+	hasModal ? addBodyStyles() : removeBodyStyles();
 
 	isBodyScrollingDisabled = hasModal;
 }
 
-// @param {addStyles} boolean: defines if styles are added or removed
-function modifyBodyStyles(addStyles) {
-	if (addStyles) {
-		document.body.style.top = `-${window.pageYOffset}px`;
-		document.body.classList.add("sapUiBLyBack");
-	} else {
-		document.body.classList.remove("sapUiBLyBack");
-		window.scrollTo(0, -parseFloat(document.body.style.top));
-		document.body.style.top = "";
-	}
+function addBodyStyles() {
+	document.body.style.top = `-${window.pageYOffset}px`;
+	document.body.classList.add("sapUiBLyBack");
+}
+
+function removeBodyStyles() {
+	document.body.classList.remove("sapUiBLyBack");
+	window.scrollTo(0, -parseFloat(document.body.style.top));
+	document.body.style.top = "";
 }
 
 /**
@@ -427,7 +426,7 @@ class Popup extends UI5Element {
 
 	disconnectedCallback() {
 		super.disconnectedCallback();
-		modifyBodyStyles(false);
+		removeBodyStyles();
 	}
 }
 
