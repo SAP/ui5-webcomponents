@@ -6,6 +6,14 @@ ui5-button:not([hidden]) {
 	display: inline-block;
 }
 
+:host([disabled]) {
+	pointer-events: none;
+}
+
+ui5-button[disabled] {
+	pointer-events: none;
+}
+
 button[dir="rtl"].sapMBtn.sapMBtnWithIcon .sapMBtnText {
 	margin-right: var(--_ui5_button_base_icon_margin);
 	margin-left: 0;

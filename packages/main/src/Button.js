@@ -207,23 +207,18 @@ class Button extends UI5Element {
 		document.removeEventListener("mouseup", this._deactivate);
 	}
 
-	onclick(event) {
+	_onclick(event) {
 		event.isMarked = "button";
-		if (!this.disabled) {
-			this.fireEvent("press", {});
-			const FormSupport = getFeature("FormSupport");
-			if (FormSupport) {
-				FormSupport.triggerFormSubmit(this);
-			}
+		this.fireEvent("press", {});
+		const FormSupport = getFeature("FormSupport");
+		if (FormSupport) {
+			FormSupport.triggerFormSubmit(this);
 		}
 	}
 
-	onmousedown(event) {
+	_onmousedown(event) {
 		event.isMarked = "button";
-
-		if (!this.disabled) {
-			this._active = true;
-		}
+		this._active = true;
 	}
 
 	onmouseup(event) {
@@ -242,7 +237,7 @@ class Button extends UI5Element {
 		}
 	}
 
-	onfocusout(_event) {
+	_onfocusout(_event) {
 		this._active = false;
 	}
 

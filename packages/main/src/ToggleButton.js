@@ -66,11 +66,9 @@ class ToggleButton extends Button {
 		return [Button.styles, toggleBtnCss];
 	}
 
-	onclick() {
-		if (!this.disabled) {
-			this.pressed = !this.pressed;
-			this.fireEvent("press", { pressed: this.pressed });
-		}
+	_onclick(e) {
+		this.pressed = !this.pressed;
+		this.fireEvent("press", { pressed: this.pressed });
 	}
 
 	get classes() {

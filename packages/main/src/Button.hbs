@@ -5,7 +5,9 @@
 		data-sap-focus-ref
 		{{> ariaPressed}}
 		dir="{{rtl}}"
-		@focusout={{onfocusout}}
+		@focusout={{_onfocusout}}
+		@click={{_onclick}}
+		@mousedown={{_onmousedown}}
 	>
 		{{#if icon}}
 			<ui5-icon
