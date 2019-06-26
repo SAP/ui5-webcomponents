@@ -188,8 +188,8 @@ function updateBodyScrolling(hasModal) {
 
 	createBLyBackStyle();
 
-	if (hasModal) { 
-		addBodyStyles()
+	if (hasModal) {
+		addBodyStyles();
 	} else {
 		removeBodyStyles();
 	}
