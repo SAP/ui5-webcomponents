@@ -1,5 +1,9 @@
-commit f0c81a3e2a87c05ec635d0678f2ae9a6f98d83e2
+commit 71279630afaadcfc43342be756228346047ebe25
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Jun 26 10:17:23 2019 +0300
+Date:   Wed Jun 26 13:29:42 2019 +0300
 
-    refactor: remove support for data-ui5-slot (#590)
+    docs: better explain slot usage (#594)
+    
+    BREAKING CHANGE: the "data-ui5-slot" attribute is deprecated. Use "slot" instead.
+    All slots can accept multiple child nodes now. Several web components can now accept
+    text in addition to HTML elements. See the documentation for details about individual web components.
