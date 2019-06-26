@@ -139,7 +139,7 @@ class UI5Element extends HTMLElement {
 
 	_updateSlots() {
 		const slotsMap = this.constructor.getMetadata().getSlots();
-		const canSlotText = slotsMap.default !== undefined && slotsMap.default.type === Node;
+		const canSlotText = slotsMap.default && slotsMap.default.type === Node;
 
 		let domChildren;
 		if (canSlotText) {
@@ -175,7 +175,7 @@ class UI5Element extends HTMLElement {
 
 			child = this.constructor.getMetadata().constructor.validateSlotValue(child, slotData);
 
-			if (child._attachChildPropertyUpdated) {
+			if (child._isUI5Element) {
 				this._attachChildPropertyUpdated(child, slotData);
 			}
 
@@ -198,7 +198,7 @@ class UI5Element extends HTMLElement {
 		}
 
 		children.forEach(child => {
-			if (child && child._attachChildPropertyUpdated) {
+			if (child && child._isUI5Element) {
 				this._detachChildPropertyUpdated(child);
 			}
 		});
@@ -354,14 +354,14 @@ class UI5Element extends HTMLElement {
 			this._monitoredChildProps.set(slotName, { observedProps, notObservedProps });
 		}
 
-		child.addEventListener("_propertyChange", this._invalidateParentOfPropertyUpdate);
+		child.addEventListener("_propertyChange", this._invalidateParentOnPropertyUpdate);
 	}
 
 	_detachChildPropertyUpdated(child) {
-		child.removeEventListener("_propertyChange", this._invalidateParentOfPropertyUpdate);
+		child.removeEventListener("_propertyChange", this._invalidateParentOnPropertyUpdate);
 	}
 
-	_invalidateParentOfPropertyUpdate(prop) {
+	_invalidateParentOnPropertyUpdate(prop) {
 		// The web component to be invalidated
 		const parentNode = this.parentNode;
 		if (!parentNode) {
