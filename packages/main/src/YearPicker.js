@@ -7,6 +7,7 @@ import { isEnter, isSpace } from "@ui5/webcomponents-base/src/events/PseudoEvent
 import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
 import { getLocale } from "@ui5/webcomponents-base/src/LocaleProvider.js";
 import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
+import getShadowDOMTarget from "@ui5/webcomponents-base/src/events/getShadowDOMTarget.js";
 import DateFormat from "@ui5/webcomponents-core/dist/sap/ui/core/format/DateFormat.js";
 import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType.js";
 import CalendarDate from "@ui5/webcomponents-base/src/dates/CalendarDate.js";
@@ -187,8 +188,9 @@ class YearPicker extends UI5Element {
 	}
 
 	onclick(event) {
-		if (event.ui5target.className.indexOf("sapWCYearPickerItem") > -1) {
-			const timestamp = this.getTimestampFromDom(event.ui5target);
+		const eventTarget = getShadowDOMTarget(event);
+		if (eventTarget.className.indexOf("sapWCYearPickerItem") > -1) {
+			const timestamp = this.getTimestampFromDom(eventTarget);
 			this.timestamp = timestamp;
 			this._selectedYear = this._year;
 			this._itemNav.current = YearPicker._MIDDLE_ITEM_INDEX;
@@ -212,9 +214,10 @@ class YearPicker extends UI5Element {
 	}
 
 	_handleEnter(event) {
+		const eventTarget = getShadowDOMTarget(event);
 		event.preventDefault();
-		if (event.ui5target.className.indexOf("sapWCYearPickerItem") > -1) {
-			const timestamp = this.getTimestampFromDom(event.ui5target);
+		if (eventTarget.className.indexOf("sapWCYearPickerItem") > -1) {
+			const timestamp = this.getTimestampFromDom(eventTarget);
 
 			this.timestamp = timestamp;
 			this._selectedYear = this._year;
@@ -224,9 +227,10 @@ class YearPicker extends UI5Element {
 	}
 
 	_handleSpace(event) {
+		const eventTarget = getShadowDOMTarget(event);
 		event.preventDefault();
-		if (event.ui5target.className.indexOf("sapWCYearPickerItem") > -1) {
-			const timestamp = this.getTimestampFromDom(event.ui5target);
+		if (eventTarget.className.indexOf("sapWCYearPickerItem") > -1) {
+			const timestamp = this.getTimestampFromDom(eventTarget);
 
 			this._selectedYear = CalendarDate.fromTimestamp(
 				timestamp * 1000,

@@ -1,13 +1,19 @@
 <div
-		data-sap-ui-fastnavgroup="true"
-		class="{{classes.main}}"
-		role="{{accRole}}"
+	data-sap-ui-fastnavgroup="true"
+	class="{{classes.main}}"
+	role="{{accRole}}"
 >
 	<!-- header: either header or h1 with header text -->
 	{{#if fixed}}
 		{{> header}}
 	{{else}}
-		<header @click="{{_header.press}}" class="{{classes.header}}" tabindex="{{headerTabIndex}}">
+		<header
+            @click="{{_header.press}}"
+            @keydown="{{onHeaderKeyDown}}"
+            @keyup="{{onHeaderKeyUp}}"
+            class="{{classes.header}}"
+            tabindex="{{headerTabIndex}}"
+		>
 			<ui5-icon
 				class="{{classes.icon}}"
 				src="{{_icon.src}}"
@@ -23,7 +29,7 @@
 
 	<!-- content area -->
 	<div class="{{classes.content}}" tabindex="-1" style="{{styles.content}}">
-        <slot></slot>
+		<slot></slot>
 	</div>
 </div>
 

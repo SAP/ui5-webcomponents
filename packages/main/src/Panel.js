@@ -219,22 +219,26 @@ class Panel extends UI5Element {
 		this._icon.press = !toggleWithInternalHeader ? this._toggle : this._noOp;
 	}
 
-	onkeydown(event) {
-		const headerUsed = this._headerOnTarget(event.ui5target);
+	onHeaderKeyDown(event) {
+		if (!this._headerOnTarget(event.target)) {
+			return;
+		}
 
-		if (isEnter(event) && headerUsed) {
+		if (isEnter(event)) {
 			this._toggleOpen();
 		}
 
-		if (isSpace(event) && headerUsed) {
+		if (isSpace(event)) {
 			event.preventDefault();
 		}
 	}
 
-	onkeyup(event) {
-		const headerUsed = this._headerOnTarget(event.ui5target);
+	onHeaderKeyUp(event) {
+		if (!this._headerOnTarget(event.target)) {
+			return;
+		}
 
-		if (isSpace(event) && headerUsed) {
+		if (isSpace(event)) {
 			this._toggleOpen();
 		}
 	}
