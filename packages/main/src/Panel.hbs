@@ -1,13 +1,13 @@
 <div
-		data-sap-ui-fastnavgroup="true"
-		class="{{classes.main}}"
-		role="{{accRole}}"
+	data-sap-ui-fastnavgroup="true"
+	class="{{classes.main}}"
+	role="{{accRole}}"
 >
 	<!-- header: either header or h1 with header text -->
 	{{#if fixed}}
 		{{> header}}
 	{{else}}
-		<header 
+		<header
             @click="{{_header.press}}"
             @keydown="{{onHeaderKeyDown}}"
             @keyup="{{onHeaderKeyUp}}"

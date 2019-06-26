@@ -220,6 +220,10 @@ class Panel extends UI5Element {
 	}
 
 	onHeaderKeyDown(event) {
+		if (!this._headerOnTarget(event.target)) {
+			return;
+		}
+
 		if (isEnter(event)) {
 			this._toggleOpen();
 		}
@@ -230,6 +234,10 @@ class Panel extends UI5Element {
 	}
 
 	onHeaderKeyUp(event) {
+		if (!this._headerOnTarget(event.target)) {
+			return;
+		}
+
 		if (isSpace(event)) {
 			this._toggleOpen();
 		}
@@ -263,6 +271,10 @@ class Panel extends UI5Element {
 			this._contentExpanded = !this.collapsed;
 			this.fireEvent("toggle");
 		});
+	}
+
+	_headerOnTarget(target) {
+		return target.classList.contains("sapMPanelWrappingDiv");
 	}
 
 	get expanded() {
