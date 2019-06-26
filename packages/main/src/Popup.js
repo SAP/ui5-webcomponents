@@ -147,9 +147,6 @@ function createBLyBackStyle() {
 	}
 
 	customBLyBackStyleInserted = true;
-
-	const stylesheet = document.styleSheets[0];
-	stylesheet.insertRule(".sapUiBLyBack {overflow: hidden;position: fixed;width:100%;height: 100%;}", 0);
 }
 
 function updateBlockLayers() {
@@ -179,7 +176,14 @@ function updateBodyScrolling(hasModal) {
 
 	createBLyBackStyle();
 
-	if (hasModal) {
+	modifyBodyStyles(hasModal);
+
+	isBodyScrollingDisabled = hasModal;
+}
+
+// @param {addStyles} boolean: defines if styles are added or removed
+function modifyBodyStyles(addStyles) {
+	if (addStyles) {
 		document.body.style.top = `-${window.pageYOffset}px`;
 		document.body.classList.add("sapUiBLyBack");
 	} else {
@@ -187,8 +191,6 @@ function updateBodyScrolling(hasModal) {
 		window.scrollTo(0, -parseFloat(document.body.style.top));
 		document.body.style.top = "";
 	}
-
-	isBodyScrollingDisabled = hasModal;
 }
 
 /**
@@ -421,6 +423,11 @@ class Popup extends UI5Element {
 		}
 
 		this._lastFocusableElement = null;
+	}
+
+	disconnectedCallback() {
+		super.disconnectedCallback();
+		modifyBodyStyles(false);
 	}
 }
 
