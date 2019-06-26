@@ -68,11 +68,8 @@ class ToggleButton extends Button {
 	}
 
 	_onclick(e) {
-		if (!this.disabled) {
-			this.pressed = !this.pressed;
-			e.ui5detail = { pressed: this.pressed };
-			this.fireEvent("press", { pressed: this.pressed });
-		}
+		this.pressed = !this.pressed;
+		this.fireEvent("press", { pressed: this.pressed });
 	}
 
 	get classes() {
