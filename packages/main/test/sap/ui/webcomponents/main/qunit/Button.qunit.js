@@ -50,15 +50,4 @@ TestHelper.ready(function () {
 			done();
 		}.bind(this));
 	});
-
-	QUnit.test("events", function (assert) {
-		var done = assert.async();
-
-		this.button.addEventListener('press', function (event) {
-			assert.ok(true, 'press event is fired');
-			done();
-		});
-
-		this.button.click();
-	});
 });
