@@ -1,5 +1,5 @@
-commit bed055673c0ebd1b6d54f104a8cf51fff4940cd7
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Wed Jun 26 10:09:20 2019 +0300
+commit f0c81a3e2a87c05ec635d0678f2ae9a6f98d83e2
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Wed Jun 26 10:17:23 2019 +0300
 
-    fix(ui5-select): prevent select from scrolling when changing selection with arrows (#588)
+    refactor: remove support for data-ui5-slot (#590)
