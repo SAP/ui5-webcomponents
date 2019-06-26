@@ -24,7 +24,7 @@ class UI5Element extends HTMLElement {
 		this._generateId();
 		this._initializeState();
 		this._upgradeAllProperties();
-		this._shadowRootReadyPromise = this._initializeShadowRoot();
+		this._initializeShadowRoot();
 
 		attachThemeChange(this.onThemeChanged.bind(this));
 
@@ -35,10 +35,6 @@ class UI5Element extends HTMLElement {
 		this._domRefReadyPromise._deferredResolve = deferredResolve;
 
 		this._monitoredChildProps = new Map();
-	}
-
-	_whenShadowRootReady() {
-		return this._shadowRootReadyPromise;
 	}
 
 	onThemeChanged() {
@@ -59,9 +55,9 @@ class UI5Element extends HTMLElement {
 		this._id = this.constructor._nextID();
 	}
 
-	async _initializeShadowRoot() {
+	_initializeShadowRoot() {
 		if (this.constructor.getMetadata().getNoShadowDOM()) {
-			return Promise.resolve();
+			return;
 		}
 
 		this.attachShadow({ mode: "open" });
@@ -88,7 +84,6 @@ class UI5Element extends HTMLElement {
 			return;
 		}
 
-		await this._whenShadowRootReady();
 		this._processChildren();
 		await RenderScheduler.renderImmediately(this);
 		this._domRefReadyPromise._deferredResolve();
