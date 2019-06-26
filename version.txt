@@ -1,5 +1,24 @@
-commit ed569ce6697c82e3b29072f9c32b79e7520a5bc9
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Wed Jun 26 13:37:47 2019 +0300
+commit 387fa9af1a6842de82030863f40ae394bdaf82d0
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Wed Jun 26 13:51:44 2019 +0300
 
-    chore: update togglebutton sample page (#587)
+    fix: disable click events for disabled ui5-button (#586)
+    
+    add pointer-events: none to host component so in case it is disabled,
+    the browser does not call click handlers registered to it.
+    
+    add chai for better assertion messages
+    
+    * move click handler to shadow dom
+    this way, the component can handle the click first and then the app handler
+    will have the correct component state in its click handler
+    
+    * remove event-related qunit tests
+    With click handlers registered in the shadow dom, the qunit tests
+    can no longer simulate events correctly.
+    For these scenarios, the wdio tests will be used anyway.
+    
+    * fix ie11 mousedown problem in IE11
+    remove disabled check, CSS takes care of that
+    
+    Fixes: #572
