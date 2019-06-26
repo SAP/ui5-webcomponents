@@ -47,7 +47,7 @@ const metadata = {
 		/**
 		 * Defines the <code>ui5-icon</code> to be displayed in the <code>ui5-badge</code>.
 		 *
-		 * @type {Icon}
+		 * @type {Icon[]}
 		 * @slot
 		 * @public
 		 */
@@ -114,7 +114,7 @@ class Badge extends UI5Element {
 	}
 
 	get hasIcon() {
-		return !!this.icon;
+		return !!this.icon.length;
 	}
 
 	get rtl() {
