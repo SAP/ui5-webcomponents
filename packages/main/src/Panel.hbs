@@ -7,7 +7,13 @@
 	{{#if fixed}}
 		{{> header}}
 	{{else}}
-		<header @click="{{_header.press}}" @keydown="{{onHeaderKeyDown}}" @keyup="{{onHeaderKeyUp}}" class="{{classes.header}}" tabindex="{{headerTabIndex}}">
+		<header 
+				@click="{{_header.press}}" 
+				@keydown="{{onHeaderKeyDown}}" 
+				@keyup="{{onHeaderKeyUp}}" 
+				class="{{classes.header}}" 
+				tabindex="{{headerTabIndex}}"
+		>
 			<ui5-icon
 				class="{{classes.icon}}"
 				src="{{_icon.src}}"
@@ -23,7 +29,7 @@
 
 	<!-- content area -->
 	<div class="{{classes.content}}" tabindex="-1" style="{{styles.content}}">
-        <slot></slot>
+		<slot></slot>
 	</div>
 </div>
 
