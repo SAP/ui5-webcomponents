@@ -33,7 +33,7 @@
 
 	<br/><br/>
 
-	<!-- <ui5-list header-text="API: icon">
+	<ui5-list header-text="API: icon">
 		<ui5-li  icon="sap-icon://navigation-right-arrow">Option 1</ui5-li>
 		<ui5-li  icon="sap-icon://navigation-right-arrow">Option 2</ui5-li>
 		<ui5-li  icon="sap-icon://navigation-right-arrow">Option 3</ui5-li>
@@ -70,6 +70,8 @@
 	<br/><br/>
 
 	<ui5-label id="itemPress">[Event] itemPress :: n/a</ui5-label>
+	<br/><br/>
+	<ui5-label id="itemClick">[Event] itemClick :: n/a</ui5-label>
 	<br/><br/>
 	<ui5-label id="selectionChange">[Event] selectionChange :: n/a</ui5-label>
 	<ui5-list id="myList2" mode="SingleSelectEnd" header-text="API: mode='SingleSelectEnd'">
@@ -168,6 +170,7 @@
 		var resetBtn = document.getElementById('resetBtn');
 		var infoLbl = document.getElementById('infoLbl');
 		var lblItemPress = document.getElementById('itemPress');
+		var lblItemClick = document.getElementById('itemClick');
 		var lblSelectionChange = document.getElementById('selectionChange');
 		var lblItemPress2 = document.getElementById('itemPress2');
 		var lblSelectionChange2 = document.getElementById('selectionChange2');
@@ -233,6 +236,9 @@
 			var pressedItem = event.detail.item;
 			lblItemPress.innerHTML = "Event] itemPress :: " + pressedItem.id;
 		});
+		singleSelectEndList.addEventListener("ui5-itemClick", function (event) {
+			lblItemClick.innerHTML = "Event] itemClick :: " + event.detail.item.id;
+		});
 
 		singleSelectEndList.addEventListener("ui5-selectionChange", function (event) {
 			var selectedItems = event.detail.selectedItems;
@@ -248,6 +254,6 @@
 			var selectedItems = event.detail.selectedItems;
 			lblSelectionChange2.innerHTML = "Event] selectionChange :: " + selectedItems.map(item => item.id).join("/");
 		});
-	</script> -->
+	</script>
 </body>
 </html>

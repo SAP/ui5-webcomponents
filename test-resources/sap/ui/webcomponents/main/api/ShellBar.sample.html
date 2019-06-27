@@ -92,7 +92,7 @@
 </ui5-popover>
 
 <script>
-	shellbar.addEventListener("profilePress", function(event) {
+	shellbar.addEventListener("profileClick", function(event) {
 		window["action-popover"].openBy(event.detail.targetRef);
 	});
 
@@ -145,7 +145,7 @@
 </ui5-popover>
 
 <script>
-	shellbar.addEventListener("profilePress", function(event) {
+	shellbar.addEventListener("profileClick", function(event) {
 		popover.openBy(event.detail.targetRef);
 	});
 
@@ -389,9 +389,9 @@ The <code>ui5-shellbar</code> is meant to serve as an application header and inc
                     </div>
             
                       <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">coPilotPress</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">coPilotClick</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                        Fired, when the co pilot is pressed.
+                        Fired, when the co pilot is activated.
                             <div class="api-table-content-cell-bold api-table-content-cell-since">since v0.10</div>
                         </div>
                       </div>
@@ -399,13 +399,13 @@ The <code>ui5-shellbar</code> is meant to serve as an application header and inc
                         <tr class="api-table-event-param" >
                           <div class="api-table-content-event-params-wrapper">
                             <div class="cell api-table-param-name api-table-content-cell api-table-content-cell-bold">targetRef</div>
-                            <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> HTMLElement </br> <strong class="api-table-event-description bold">description:</strong> dom ref of the clicked element</div>
+                            <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> HTMLElement </br> <strong class="api-table-event-description bold">description:</strong> dom ref of the activated element</div>
                           </div>
                         </tr>
                       <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">logoPress</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">logoClick</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                        Fired, when the logo is pressed.
+                        Fired, when the logo is activated.
                             <div class="api-table-content-cell-bold api-table-content-cell-since">since v0.10</div>
                         </div>
                       </div>
@@ -413,13 +413,13 @@ The <code>ui5-shellbar</code> is meant to serve as an application header and inc
                         <tr class="api-table-event-param" >
                           <div class="api-table-content-event-params-wrapper">
                             <div class="cell api-table-param-name api-table-content-cell api-table-content-cell-bold">targetRef</div>
-                            <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> HTMLElement </br> <strong class="api-table-event-description bold">description:</strong> dom ref of the clicked element</div>
+                            <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> HTMLElement </br> <strong class="api-table-event-description bold">description:</strong> dom ref of the activated element</div>
                           </div>
                         </tr>
                       <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">menuItemPress</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">menuItemClick</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                        Fired, when a menu item is selected
+                        Fired, when a menu item is activated
                             <div class="api-table-content-cell-bold api-table-content-cell-since">since v0.10</div>
                         </div>
                       </div>
@@ -427,46 +427,46 @@ The <code>ui5-shellbar</code> is meant to serve as an application header and inc
                         <tr class="api-table-event-param" >
                           <div class="api-table-content-event-params-wrapper">
                             <div class="cell api-table-param-name api-table-content-cell api-table-content-cell-bold">item</div>
-                            <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> HTMLElement </br> <strong class="api-table-event-description bold">description:</strong> dom ref of the clicked list item</div>
+                            <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> HTMLElement </br> <strong class="api-table-event-description bold">description:</strong> dom ref of the activated list item</div>
                           </div>
                         </tr>
                       <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">notificationsPress</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">notificationsClick</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                        Fired, when the notification icon is pressed.
+                        Fired, when the notification icon is activated.
                         </div>
                       </div>
             
                         <tr class="api-table-event-param" >
                           <div class="api-table-content-event-params-wrapper">
                             <div class="cell api-table-param-name api-table-content-cell api-table-content-cell-bold">targetRef</div>
-                            <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> HTMLElement </br> <strong class="api-table-event-description bold">description:</strong> dom ref of the clicked element</div>
+                            <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> HTMLElement </br> <strong class="api-table-event-description bold">description:</strong> dom ref of the activated element</div>
                           </div>
                         </tr>
                       <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">productSwitchPress</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">productSwitchClick</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                        Fired, when the product switch icon is pressed.
+                        Fired, when the product switch icon is activated.
                         </div>
                       </div>
             
                         <tr class="api-table-event-param" >
                           <div class="api-table-content-event-params-wrapper">
                             <div class="cell api-table-param-name api-table-content-cell api-table-content-cell-bold">targetRef</div>
-                            <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> HTMLElement </br> <strong class="api-table-event-description bold">description:</strong> dom ref of the clicked element</div>
+                            <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> HTMLElement </br> <strong class="api-table-event-description bold">description:</strong> dom ref of the activated element</div>
                           </div>
                         </tr>
                       <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">profilePress</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">profileClick</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                        Fired, when the profile icon is pressed.
+                        Fired, when the profile icon is activated.
                         </div>
                       </div>
             
                         <tr class="api-table-event-param" >
                           <div class="api-table-content-event-params-wrapper">
                             <div class="cell api-table-param-name api-table-content-cell api-table-content-cell-bold">targetRef</div>
-                            <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> HTMLElement </br> <strong class="api-table-event-description bold">description:</strong> dom ref of the clicked element</div>
+                            <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> HTMLElement </br> <strong class="api-table-event-description bold">description:</strong> dom ref of the activated element</div>
                           </div>
                         </tr>
                   </div>

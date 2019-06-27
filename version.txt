@@ -1,5 +1,19 @@
-commit f5721e6c26315af6fba631fe61df24934f197d64
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Jun 26 15:27:45 2019 +0300
+commit 29f046ed03c6e4ad554689cef96d96ac6b3fe621
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Thu Jun 27 17:35:34 2019 +0300
 
-    refactor: remove ui5target (#591)
+    refactor: remove press event in favour of click (#597)
+    
+    also rename two-word events from press to click for consistency
+    
+    BREAKING CHANGE: ui5-button press event is renamed to click
+    BREAKING CHANGE: ui5-card headerPress event is renamed to headerClick
+    BREAKING CHANGE: ui5-link press event is renamed to click
+    BREAKING CHANGE: ui5-list itemPress event is renamed to itemClick
+    BREAKING CHANGE: ui5-shellbar notificationsPress event is renamed to notificationsClick
+    BREAKING CHANGE: ui5-shellbar profilePress event is renamed to profileClick
+    BREAKING CHANGE: ui5-shellbar productSwitchPress event is renamed to productSwitchClick
+    BREAKING CHANGE: ui5-shellbar logoPress event is renamed to logoClick
+    BREAKING CHANGE: ui5-shellbar coPilotPress event is renamed to coPilotClick
+    BREAKING CHANGE: ui5-shellbar menuItemPress event is renamed to menuItemClick
+    BREAKING CHANGE: ui5-timeline-item itemNamePress event is renamed to itemNameClick
