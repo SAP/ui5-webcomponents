@@ -1,6 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import { isSpace } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import LinkDesign from "./types/LinkDesign.js";
 
 // Template
@@ -106,13 +105,13 @@ const metadata = {
 	events: /** @lends sap.ui.webcomponents.main.Link.prototype */ {
 
 		/**
-		 * Fired when the <code>ui5-link</code> is triggered either with a click/tap
-		 * or by using the Space or Enter key.
+		 * Fired when the <code>ui5-link</code> is triggered either with a mouse/tap
+		 * or by using the Enter key.
 		 *
 		 * @event
 		 * @public
 		 */
-		press: {},
+		click: {},
 	},
 };
 
@@ -186,45 +185,6 @@ class Link extends UI5Element {
 			&& this._isCrossOrigin();
 
 		this._rel = needsNoReferrer ? "noreferrer" : undefined;
-	}
-
-	onclick(event) {
-		if (this.disabled) {
-			return;
-		}
-
-		const defaultPrevented = !this.fireEvent("press", {}, true);
-		if (defaultPrevented) {
-			event.preventDefault();
-		}
-	}
-
-	onkeydown(event) {
-		if (this.disabled) {
-			return;
-		}
-
-		if (isSpace(event)) {
-			event.preventDefault();
-		}
-	}
-
-	onkeyup(event) {
-		if (this.disabled) {
-			return;
-		}
-
-		if (isSpace(event)) {
-			const defaultPrevented = !this.fireEvent("press", {}, true);
-			if (defaultPrevented) {
-				return;
-			}
-
-			// Simulate click event
-			const oClickEvent = document.createEvent("MouseEvents");
-			oClickEvent.initEvent("click" /* event type */, false/* no-bubbling */, true /* cancelable */);
-			this.getDomRef().dispatchEvent(oClickEvent);
-		}
 	}
 
 	_isCrossOrigin() {

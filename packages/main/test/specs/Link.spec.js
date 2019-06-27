@@ -1,4 +1,4 @@
-const assert = require('assert');
+const assert = require('chai').assert;
 
 describe("General API", () => {
 	browser.url('http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/Link.html');
@@ -15,7 +15,9 @@ describe("General API", () => {
 		const disLink = browser.findElementDeep("#disabled-link");
 		const input = browser.findElementDeep("#helper-input");
 
-		disLink.click();
+		assert.throws(() => {
+			disLink.click();
+		});
 
 		assert.strictEqual(input.getValue(), "0", "Click should not be fired and value of input should not be changed");
 
@@ -24,14 +26,15 @@ describe("General API", () => {
 	it("should trigger press event onclick / enter / space", () => {
 		const link = browser.findElementDeep("#link");
 		const input = browser.findElementDeep("#helper-input");
+		const inputClick = browser.findElementDeep("#helper-input-click");
 
 		link.click();
-		assert.strictEqual(input.getValue(), "1", "Input's value should be increased by 1");
+		assert.strictEqual(input.getValue(), "1", "click: Input's value should be increased by 1");
+		assert.strictEqual(inputClick.getValue(), "1", "click: Input's value should be increased by 1");
 
 		link.keys("Enter");
-		assert.strictEqual(input.getValue(), "2", "Input's value should be increased by 1");
+		assert.strictEqual(input.getValue(), "2", "enter: Input's value should be increased by 1");
+		assert.strictEqual(inputClick.getValue(), "2", "enter: Input's value should be increased by 1");
 
-		link.keys("Space");
-		assert.strictEqual(input.getValue(), "3", "Input's value should be increased by 1");
 	});
 });

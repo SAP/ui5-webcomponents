@@ -170,28 +170,29 @@
 	</ui5-input>
 
 	<script>
-		shellbar.addEventListener("ui5-profilePress", function(event) {
+		shellbar.addEventListener("ui5-profileClick", function(event) {
+			debugger;
 			popover.openBy(event.detail.targetRef);
 			window["press-input"].value = "Profile";
 		});
 
-		shellbar.addEventListener("ui5-notificationsPress", function(event) {
+		shellbar.addEventListener("ui5-notificationsClick", function(event) {
 			window["press-input"].value = "Notifications"
 		});
 
-		shellbar.addEventListener("ui5-productSwitchPress", function(event) {
+		shellbar.addEventListener("ui5-productSwitchClick", function(event) {
 			window["press-input"].value = "Product Switch"
 		});
 
-		shellbar.addEventListener("ui5-logoPress", function(event) {
+		shellbar.addEventListener("ui5-logoClick", function(event) {
 			window["press-input"].value = "Logo"
 		});
 
-		shellbar.addEventListener("ui5-coPilotPress", function(event) {
+		shellbar.addEventListener("ui5-coPilotClick", function(event) {
 			window["press-input"].value = "CoPilot"
 		});
 
-		shellbar.addEventListener("ui5-menuItemPress", function(event) {
+		shellbar.addEventListener("ui5-menuItemClick", function(event) {
 			window["press-input"].value = event.detail.item.textContent;
 		});
 

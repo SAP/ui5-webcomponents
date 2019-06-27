@@ -185,82 +185,82 @@ const metadata = {
 	events: /** @lends sap.ui.webcomponents.main.ShellBar.prototype */ {
 		/**
 		 *
-		 * Fired, when the notification icon is pressed.
+		 * Fired, when the notification icon is activated.
 		 *
 		 *
 		 * @event
-		 * @param {HTMLElement} targetRef dom ref of the clicked element
+		 * @param {HTMLElement} targetRef dom ref of the activated element
 		 * @public
 		 */
-		notificationsPress: {
+		notificationsClick: {
 			detail: {
 				targetRef: { type: HTMLElement },
 			},
 		},
 
 		/**
-		 * Fired, when the profile icon is pressed.
+		 * Fired, when the profile icon is activated.
 		 *
 		 * @event
-		 * @param {HTMLElement} targetRef dom ref of the clicked element
+		 * @param {HTMLElement} targetRef dom ref of the activated element
 		 * @public
 		 */
-		profilePress: {
+		profileClick: {
 			detail: {
 				targetRef: { type: HTMLElement },
 			},
 		},
 
 		/**
-		 * Fired, when the product switch icon is pressed.
+		 * Fired, when the product switch icon is activated.
 		 *
 		 * @event
-		 * @param {HTMLElement} targetRef dom ref of the clicked element
+		 * @param {HTMLElement} targetRef dom ref of the activated element
 		 * @public
 		 */
-		productSwitchPress: {
+		productSwitchClick: {
 			detail: {
 				targetRef: { type: HTMLElement },
 			},
 		},
 
 		/**
-		 * Fired, when the logo is pressed.
+		 * Fired, when the logo is activated.
 		 *
 		 * @event
-		 * @param {HTMLElement} targetRef dom ref of the clicked element
+		 * @param {HTMLElement} targetRef dom ref of the activated element
 		 * @since 0.10
 		 * @public
 		 */
-		logoPress: {
+		logoClick: {
 			detail: {
 				targetRef: { type: HTMLElement },
 			},
 		},
 
 		/**
-		 * Fired, when the co pilot is pressed.
+		 * Fired, when the co pilot is activated.
 		 *
 		 * @event
-		 * @param {HTMLElement} targetRef dom ref of the clicked element
+		 * @param {HTMLElement} targetRef dom ref of the activated element
 		 * @since 0.10
 		 * @public
 		 */
-		coPilotPress: {
+		coPilotClick: {
 			detail: {
 				targetRef: { type: HTMLElement },
 			},
 		},
 
 		/**
-		 * Fired, when a menu item is selected
+		 * Fired, when a menu item is activated
 		 *
 		 * @event
-		 * @param {HTMLElement} item dom ref of the clicked list item
+		 * @param {HTMLElement} item dom ref of the activated list item
 		 * @since 0.10
 		 * @public
 		 */
-		menuItemPress: {
+		menuItemClick: {
 			detail: {
 				item: { type: HTMLElement },
 			},
@@ -424,19 +424,19 @@ class ShellBar extends UI5Element {
 	}
 
 	_menuItemPress(event) {
-		this.fireEvent("menuItemPress", {
+		this.fireEvent("menuItemClick", {
 			item: event.detail.item,
 		});
 	}
 
 	_logoPress(event) {
-		this.fireEvent("logoPress", {
+		this.fireEvent("logoClick", {
 			targetRef: this.shadowRoot.querySelector(".sapWCShellBarLogo"),
 		});
 	}
 
 	_coPilotPress(event) {
-		this.fireEvent("coPilotPress", {
+		this.fireEvent("coPilotClick", {
 			targetRef: this.shadowRoot.querySelector(".ui5-shellbar-coPilot"),
 		});
 	}
@@ -691,19 +691,19 @@ class ShellBar extends UI5Element {
 	}
 
 	_handleNotificationsPress(event) {
-		this.fireEvent("notificationsPress", {
+		this.fireEvent("notificationsClick", {
 			targetRef: this.shadowRoot.querySelector(".sapWCShellBarBellIcon"),
 		});
 	}
 
 	_handleProfilePress(event) {
-		this.fireEvent("profilePress", {
+		this.fireEvent("profileClick", {
 			targetRef: this.shadowRoot.querySelector(".sapWCShellBarImageButton"),
 		});
 	}
 
 	_handleProductSwitchPress(event) {
-		this.fireEvent("productSwitchPress", {
+		this.fireEvent("productSwitchClick", {
 			targetRef: this.shadowRoot.querySelector(".sapWCShellBarIconProductSwitch"),
 		});
 	}

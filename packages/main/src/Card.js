@@ -90,15 +90,15 @@ const metadata = {
 	events: /** @lends sap.ui.webcomponents.main.Card.prototype */ {
 
 		/**
-		 * Fired when the <code>ui5-card</code> header is pressed
-		 * by click/tap or by using the Enter or Space key.
+		 * Fired when the <code>ui5-card</code> header is activated
+		 * by mouse/tap or by using the Enter or Space key.
 		 * <br><br>
 		 * <b>Note:</b> The event would be fired only if the <code>headerInteractive</code> property is set to true.
 		 * @event
 		 * @public
 		 * @since 0.10.0
 		 */
-		headerPress: {},
+		headerClick: {},
 	},
 };
 
@@ -181,7 +181,7 @@ class Card extends UI5Element {
 
 	_headerClick() {
 		if (this.headerInteractive) {
-			this.fireEvent("headerPress");
+			this.fireEvent("headerClick");
 		}
 	}
 
@@ -196,7 +196,7 @@ class Card extends UI5Element {
 		this._headerActive = enter || space;
 
 		if (enter) {
-			this.fireEvent("headerPress");
+			this.fireEvent("headerClick");
 			return;
 		}
 
@@ -215,7 +215,7 @@ class Card extends UI5Element {
 		this._headerActive = false;
 
 		if (space) {
-			this.fireEvent("headerPress");
+			this.fireEvent("headerClick");
 		}
 	}
 
