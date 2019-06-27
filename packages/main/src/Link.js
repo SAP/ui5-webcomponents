@@ -178,7 +178,6 @@ class Link extends UI5Element {
 		return linkCss;
 	}
 
-
 	onBeforeRendering() {
 		const needsNoReferrer = this.target === "_blank"
 			&& this.href
