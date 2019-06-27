@@ -118,8 +118,8 @@ const metadata = {
 	events: /** @lends sap.ui.webcomponents.main.Button.prototype */ {
 
 		/**
-		 * Fired when the <code>ui5-button</code> is pressed either with a
-		 * click/tap or by using the Enter or Space key.
+		 * Fired when the <code>ui5-button</code> is activated either with a
+		 * mouse/tap or by using the Enter or Space key.
 		 * <br><br>
 		 * <b>Note:</b> The event will not be fired if the <code>disabled</code>
 		 * property is set to <code>true</code>.
@@ -127,7 +127,7 @@ const metadata = {
 		 * @event
 		 * @public
 		 */
-		press: {},
+		click: {},
 	},
 };
 
