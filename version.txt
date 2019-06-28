@@ -1,9 +1,5 @@
-commit de846367b0c284cb8db1c4fb698c7662c55fb5c0
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Jun 28 07:20:13 2019 +0200
+commit 410b8f6acdca566645e2b58131074e74f7077f48
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Fri Jun 28 11:42:19 2019 +0300
 
-    chore(release): publish v1.0.0-rc.1 (#598)
-    
-    * chore(release): publish v1.0.0-rc.1
-    
-    * update playground labels
+    fix(popup): remove body styles in onExitDOM (#593)
