@@ -148,8 +148,17 @@ function createBLyBackStyle() {
 
 	customBLyBackStyleInserted = true;
 
-	const stylesheet = document.styleSheets[0];
-	stylesheet.insertRule(".sapUiBLyBack {overflow: hidden;position: fixed;width:100%;height: 100%;}", 0);
+	const bodyStyleSheet = document.createElement("style");
+	bodyStyleSheet.type = "text/css";
+	bodyStyleSheet.innerHTML = `
+		.sapUiBLyBack {
+			width: 100%;
+			height: 100%;
+			position: fixed;
+			overflow: hidden;
+		}
+	`;
+	document.head.appendChild(bodyStyleSheet);
 }
 
 function updateBlockLayers() {
@@ -180,15 +189,22 @@ function updateBodyScrolling(hasModal) {
 	createBLyBackStyle();
 
 	if (hasModal) {
-		document.body.style.top = `-${window.pageYOffset}px`;
-		document.body.classList.add("sapUiBLyBack");
+		addBodyStyles();
 	} else {
-		document.body.classList.remove("sapUiBLyBack");
-		window.scrollTo(0, -parseFloat(document.body.style.top));
-		document.body.style.top = "";
+		removeBodyStyles();
 	}
-
 	isBodyScrollingDisabled = hasModal;
+}
+
+function addBodyStyles() {
+	document.body.style.top = `-${window.pageYOffset}px`;
+	document.body.classList.add("sapUiBLyBack");
+}
+
+function removeBodyStyles() {
+	document.body.classList.remove("sapUiBLyBack");
+	window.scrollTo(0, -parseFloat(document.body.style.top));
+	document.body.style.top = "";
 }
 
 /**
@@ -421,6 +437,10 @@ class Popup extends UI5Element {
 		}
 
 		this._lastFocusableElement = null;
+	}
+
+	onExitDOM() {
+		removeBodyStyles();
 	}
 }
 
