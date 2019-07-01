@@ -275,6 +275,15 @@ class Table extends UI5Element {
 			},
 		};
 	}
+
+	static async define(...params) {
+		await Promise.all([
+			TableColumn.define(),
+			TableRow.define(),
+		]);
+
+		super.define(...params);
+	}
 }
 
 Table.define();

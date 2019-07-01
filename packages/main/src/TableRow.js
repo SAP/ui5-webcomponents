@@ -134,6 +134,12 @@ class TableRow extends UI5Element {
 	onfocusin(event) {
 		this.fireEvent("_focused", event);
 	}
+
+	static async define(...params) {
+		await TableCell.define();
+
+		super.define(...params);
+	}
 }
 
 TableRow.define();
