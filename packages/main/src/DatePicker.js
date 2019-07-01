@@ -5,7 +5,6 @@ import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import { fetchCldrData } from "@ui5/webcomponents-base/src/CLDR.js";
 import { getCalendarType } from "@ui5/webcomponents-base/src/Configuration.js";
 import { getLocale } from "@ui5/webcomponents-base/src/LocaleProvider.js";
-import { getIconURI } from "@ui5/webcomponents-base/src/IconPool.js";
 import { getFeature } from "@ui5/webcomponents-base/src/FeaturesRegistry.js";
 import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData.js";
 import DateFormat from "@ui5/webcomponents-core/dist/sap/ui/core/format/DateFormat.js";
@@ -139,10 +138,6 @@ const metadata = {
 		_isPickerOpen: {
 			type: Boolean,
 		},
-
-		_input: {
-			type: Object,
-		},
 		_popover: {
 			type: Object,
 		},
@@ -240,12 +235,6 @@ class DatePicker extends UI5Element {
 
 	constructor() {
 		super();
-		this._input = {};
-		this._input.type = InputType.Text;
-		this._input.icon = {};
-		this._input.icon.src = getIconURI("appointment-2");
-		this._input.onChange = this._handleInputChange.bind(this);
-		this._input.onLiveChange = this._handleInputLiveChange.bind(this);
 
 		this._popover = {
 			placementType: PopoverPlacementType.Bottom,
@@ -257,7 +246,6 @@ class DatePicker extends UI5Element {
 				const popover = shadowRoot.querySelector(`#${this._id}-popover`);
 				const calendar = popover.querySelector(`#${this._id}-calendar`);
 
-				this._input = Object.assign({}, this._input);
 				this._isPickerOpen = false;
 
 				if (this._focusInputAfterClose) {
@@ -297,9 +285,6 @@ class DatePicker extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		this._input.placeholder = this.placeholder;
-		this._input._iconNonFocusable = true;
-
 		this._calendar.primaryCalendarType = this._primaryCalendarType;
 		this._calendar.formatPattern = this._formatPattern;
 
@@ -470,7 +455,6 @@ class DatePicker extends UI5Element {
 	 */
 	openPicker(options) {
 		this._changeCalendarSelection();
-		this._input = Object.assign({}, this._input);
 
 		if (options && options.focusInput) {
 			this._focusInputAfterOpen = true;
@@ -547,6 +531,10 @@ class DatePicker extends UI5Element {
 				width: "100%",
 			},
 		};
+	}
+
+	get type() {
+		return InputType.Text;
 	}
 
 	static async define(...params) {
