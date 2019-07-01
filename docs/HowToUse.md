@@ -149,31 +149,11 @@ will be done internally by your framework of choice.
 	of each child.
 	
 	Let's have a look at the ```<ui5-popover>``` again. After consulting the documentation we can see that this particular
-	Web Component accepts three categories of children: ```content, footer, header```, and for all three
-	categories (or ```slots```) the children can be of any type (```HTMLElement```);
+	Web Component accepts three categories of children: ```default, footer, header```. For ```footer``` and ```header``` 
+	the children can be any type of HTML Element (hence ```HTMLElement```) while for ```default``` they can be both 
+	HTML Elements and text (hence ```Node```).
 	
-	To tell the ```<ui5-popover>``` which child goes where, use the ```slot``` attribute.
-	
-	```html
-	<ui5-popover>
-		<div slot="header">This will be used as a header</div>
-	
-		<div slot="content">Some popover content</div>
-		<div slot="content">Some more content</div>
-	
-		<div slot="footer">
-			<ui5-button>Do some action</ui5-button>
-		</div>
-	</ui5-popover>
-	```
-	
-	Depending on the cardinality of each child category (```slot``` type), you can supply just one or
-	several children. For example, the ```content``` slot is denoted as ```HTMLElement [0..n]``` so you can 
-	pass as many children as you need for this slot, but both ```header``` and ```footer``` accept a single child
-	(```HTMLElement```).
-	
-	Additionally, you can omit the ```slot``` attribute altogether for the default slot for each UI5 Web Component.
-	So the code below will have the exactly same effect as the one above:
+	To tell the ```<ui5-popover>``` which child goes where, use the ```slot``` attribute on it.
 	
 	```html
 	<ui5-popover>
@@ -181,6 +161,7 @@ will be done internally by your framework of choice.
 	
 		<div>Some popover content</div>
 		<div>Some more content</div>
+		This text will also go to the default slot.
 	
 		<div slot="footer">
 			<ui5-button>Do some action</ui5-button>
@@ -188,26 +169,47 @@ will be done internally by your framework of choice.
 	</ui5-popover>
 	```
 	
-	...as ```content``` is the default slot, therefore no need to be specified explicitly.
+	You do not have to supply the ```slot``` attribute for the ```default``` slot of any Web Component.
 	
-4. How do I bind to events?
+	Also, since text nodes cannot have attributes in HTML, this also means that only the ```default``` slot can
+	accept text (can be of type ```Node```) and all text nodes go there. Every UI5 Web Component that has slots,
+	has at least a default slot.
+	
+	Here's a summary of ```slot``` types:
+	
+	| Slot type | Allowed children | Example |
+	|-----------|------------------|---------|
+	| ```Node``` | All HTML Elements and text | ```ui5-button``` default slot |
+	| ```HTMLElement``` | HTML Elements only (no text) | ```ui5-popover``` ```header``` slot |
+	| Base Class f.e. ```TabBase``` | Only HTML Elements of this class' descendents | ```ui5-tabcontainer``` ```default``` slot - accepts ```ui5-tab```, ```ui5-tabseparator``` only |
+	| Specific Class f.e. ```TableRow``` | Only HTML Elements of this class | ```ui5-table``` ```default``` slot only accepts ```ui5-table-row``` | 
+	
+4. How do I listen for events?
 
 	Again, you can use standard DOM methods for this task:
 	
 	```js
+	const myMessage = document.getElementsByTagName("ui5-messagestrip")[0];
+	myMessage.addEventListener("close", () => {
+		console.log("The user dismissed the message");
+	});
+
 	const myButton = document.getElementsByTagName("ui5-button")[0];
-	myButton.addEventListener("press", () => {
-		console.log("UI5 Button press event fired");
-	})
+	myButton.addEventListener("click", () => {
+		console.log("The user clicked the button");
+	});
 	```
 	
 	For the events fired by each UI5 Web Component, consult the documentation.
 	
 	Like with most other tasks, you'll use your framework's syntax to bind to events and you'll rarely,
 	if ever, need to call ```addEventListener``` yourself.
+
 	Please note however that some frameworks (f.e. React) cannot use their standard syntax
-	for binding to custom events, but only for standard ones (such as ```click```). In these cases you
-	should call ```addEventListener``` manually.
+	for binding to custom events (such as ```close```), but only for standard ones (such as ```click```). 
+	So for custom events in React you'd have to get a reference to the element and call ```addEventListener``` manually.
+	
+	For more information, please check our [React tutorial](React-tutorial.md);
 
 5. How do I call public methods?
 
