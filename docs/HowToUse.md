@@ -4,7 +4,17 @@ UI5 Web Components are just HTML. Therefore, their usage is identical
 to the usage of standard HTML elements. Usually Web Components creation and manipulation
 will be done internally by your framework of choice.
 
-1. How do I create a UI5 Web Component instance?
+Table of contents:
+
+- [How do I create a UI5 Web Component instance?](#create)
+- [How do I set the properties/attributes of UI5 Web Components?](#properties)
+- [How do I set the content of UI5 Web Components?](#content)
+- [How do I listen for events?](#events)
+- [How do I call public methods?](#methods)
+- [Concusion](#conclusion)
+
+<a name="create"></a>
+## 1. How do I create a UI5 Web Component instance?
 
 	The simplest way is to just add it to the `<body>`.
 
@@ -22,7 +32,8 @@ will be done internally by your framework of choice.
 
 	In most real-world scenarios the above will be done by your framework of choice.
 
-2. How do I set the properties/attributes of UI5 Web Components.
+<a name="properties"></a>
+## 2. How do I set the properties/attributes of UI5 Web Components?
 
 	You can use attributes and properties to the same effect. Keep in mind that attribute
 	names are "kebab-case" (f.e. `value-state`) while property names are "camelCase" (f.e. `valueState`).
@@ -59,7 +70,8 @@ will be done internally by your framework of choice.
 	myCb.removeAttribute("checked"); // same as myCB.checked = false;
 	```
 
-3. How do I set the content of UI5 Web Components
+<a name="content"></a>
+## 3. How do I set the content of UI5 Web Components?
 
 	Some UI5 Web Components do not accept children or text. They are just modified by
 	properties and attributes.
@@ -184,7 +196,8 @@ will be done internally by your framework of choice.
  | Base Class f.e. `TabBase`      | Only HTML Elements of this class' descendents | `ui5-tabcontainer` `default` slot - accepts `ui5-tab`, `ui5-tabseparator` only |
  | Specific Class f.e. `TableRow` | Only HTML Elements of this class              | `ui5-table` `default` slot only accepts `ui5-table-row`                        |
 
-4. How do I listen for events?
+<a name="events"></a>
+## 4. How do I listen for events?
 
 	Again, you can use standard DOM methods for this task:
 
@@ -211,7 +224,8 @@ will be done internally by your framework of choice.
 
 	For more information, please check our [React tutorial](React-tutorial.md);
 
-5. How do I call public methods?
+<a name="methods"></a>
+## 5. How do I call public methods?
 
 	Get a reference to the UI5 Web Component and call the method on it, as you would with any other HTML element.
 
@@ -222,7 +236,8 @@ will be done internally by your framework of choice.
 
 	Again, consult the documentation for the available public methods for each UI5 Web Component.
 
-6. Conclusion
+<a name="conclusion"></a>
+## 6. Conclusion
 
 	As you can see from this article, UI5 Web Components, being HTML elements in the first place,
 	comply to the same rules. There are some novelties that come with the Web Components standard,
