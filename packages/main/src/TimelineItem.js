@@ -101,7 +101,7 @@ const metadata = {
 		 * @event
 		 * @public
 		 */
-		itemNamePress: {},
+		itemNameClick: {},
 	},
 };
 
@@ -141,7 +141,7 @@ class TimelineItem extends UI5Element {
 	}
 
 	onItemNamePress() {
-		this.fireEvent("itemNamePress", {});
+		this.fireEvent("itemNameClick", {});
 	}
 
 	get classes() {

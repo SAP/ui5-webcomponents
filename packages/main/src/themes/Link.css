@@ -3,6 +3,14 @@
 	max-width: 100%;
 }
 
+:host([disabled]) {
+	pointer-events: none;
+}
+
+ui5-link[disabled] {
+	pointer-events: none;
+}
+
 ui5-link {
 	display: inline-block;
 	max-width: 100%;

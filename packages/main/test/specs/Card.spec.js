@@ -1,4 +1,4 @@
-const assert = require('assert');
+const assert = require('chai').assert;
 describe("Card general interaction", () => {
 	browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/Card.html");
 
