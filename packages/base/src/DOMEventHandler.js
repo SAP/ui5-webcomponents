@@ -49,6 +49,13 @@ const getParentDOMNode = function getParentDOMNode(node) {
 	return parentNode;
 };
 
+const isOtherInstanceRegistered = () => {
+	return window["@ui5/webcomponents-base/DOMEventHandler"];
+};
+
+const registerInstance = () => {
+	window["@ui5/webcomponents-base/DOMEventHandler"] = true;
+};
 
 class DOMEventHandler {
 	constructor() {
@@ -56,7 +63,11 @@ class DOMEventHandler {
 	}
 
 	static start() {
-		ManagedEvents.bindAllEvents(handleEvent);
+		// register the handlers just once in case other bundles include and call this method multiple times
+		if (!isOtherInstanceRegistered()) {
+			ManagedEvents.bindAllEvents(handleEvent);
+			registerInstance();
+		}
 	}
 
 	static stop() {
