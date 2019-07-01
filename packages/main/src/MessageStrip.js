@@ -73,10 +73,6 @@ const metadata = {
 		noCloseButton: {
 			type: Boolean,
 		},
-
-		_closeButton: {
-			type: Object,
-		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.MessageStrip.prototype */ {
 		/**
