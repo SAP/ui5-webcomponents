@@ -1,5 +1,5 @@
-commit 410b8f6acdca566645e2b58131074e74f7077f48
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Fri Jun 28 11:42:19 2019 +0300
+commit b0d09a968f813511e391444e16ea6a3c9b7d7b61
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Mon Jul 1 12:41:09 2019 +0300
 
-    fix(popup): remove body styles in onExitDOM (#593)
+    docs: fix slots and events documentation after recent changes (#600)
