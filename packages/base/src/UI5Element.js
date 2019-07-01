@@ -84,6 +84,7 @@ class UI5Element extends HTMLElement {
 			return;
 		}
 
+		await this._waitForChildrenUpgrade();
 		this._processChildren();
 		await RenderScheduler.renderImmediately(this);
 		this._domRefReadyPromise._deferredResolve();
@@ -102,6 +103,10 @@ class UI5Element extends HTMLElement {
 		if (typeof this.onExitDOM === "function") {
 			this.onExitDOM();
 		}
+	}
+
+	_waitForChildrenUpgrade() {
+		return Promise.resolve();
 	}
 
 	_startObservingDOMChildren() {
