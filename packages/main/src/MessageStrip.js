@@ -151,10 +151,6 @@ class MessageStrip extends UI5Element {
 	constructor() {
 		super();
 
-		this._closeButton = {
-			press: this._handleCloseIconPress.bind(this),
-		};
-
 		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
 	}
 
