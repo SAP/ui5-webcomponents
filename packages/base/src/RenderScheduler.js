@@ -135,10 +135,7 @@ class RenderScheduler {
 			console.warn("undefined elements after 5 seconds: ", [...stillUndefined].map(el => el.localName));
 		}
 
-		// TODO: track promises internally, the dom traversal is a POC only
-		const ui5Components = Array.from(document.querySelectorAll("*")).filter(_ => _._shadowRootReadyPromise);
-		return Promise.all(ui5Components.map(comp => comp._whenShadowRootReady()))
-			.then(() => Promise.resolve());	// qunit has a boolean cheack for the promise value and the array from the Promise all is considered truthy
+		return Promise.resolve();
 	}
 
 	static async whenFinished() {
