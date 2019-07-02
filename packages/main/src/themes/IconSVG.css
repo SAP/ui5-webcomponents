@@ -1,0 +1,18 @@
+:host {
+	display: inline-block;
+	width: 1rem;
+	height: 1rem;
+	outline: none;
+	fill: currentColor;
+}
+
+ui5-icon-svg {
+	display: inline-block;
+	width: 1rem;
+	height: 1rem;
+	fill: currentColor;
+}
+
+.sapWCIcon {
+	display:flex;
+}

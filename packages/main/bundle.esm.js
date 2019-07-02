@@ -12,6 +12,10 @@ import "./dist/features/InputElementsFormSupport.js";
 import "./dist/features/InputSuggestions.js";
 
 
+import "@ui5/webcomponents-base/src/icons/add-employee.js";
+import "@ui5/webcomponents-base/src/icons/factory.js";
+import "@ui5/webcomponents-base/src/Icons.js";
+
 import Badge from "./dist/Badge.js";
 import BusyIndicator from "./dist/BusyIndicator.js";
 import Button from "./dist/Button.js";
@@ -20,6 +24,7 @@ import Card from "./dist/Card.js";
 import DatePicker from "./dist/DatePicker.js";
 import Dialog from "./dist/Dialog.js";
 import Icon from "./dist/Icon.js";
+import IconSVG from "./dist/IconSVG.js";
 import Input from "./dist/Input.js";
 import Label from "./dist/Label.js";
 import Link from "./dist/Link.js";

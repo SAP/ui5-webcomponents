@@ -4,8 +4,10 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta charset="utf-8">
 
-	<title>Button</title>
-
+	<title>Icon</title>
+	<script>
+		delete Document.prototype.adoptedStyleSheets;
+	</script>
 	<script data-id="sap-ui-config" type="application/json">
 		{
 			"language": "EN",
@@ -26,6 +28,12 @@
 	<ui5-icon src="sap-icon://add-employee" class="icon-red"></ui5-icon>
 	<ui5-icon src="sap-icon://add-employee" class="icon-red icon-medium"></ui5-icon>
 	<ui5-icon src="sap-icon://add-employee" class="icon-red icon-small"></ui5-icon>
+	<br>
+	<ui5-icon src="sap-icon://add-employee"></ui5-icon>
+	<br>
+	<ui5-icon-svg style="width: 1rem; height: 1rem;" src="sap-icon://add-employee"></ui5-icon-svg>
+	<ui5-icon-svg style="width: 2rem; height: 2rem;" src="sap-icon://factory"></ui5-icon-svg>
+	<br>
 
 	<ui5-button icon="sap-icon://add-equipment"></ui5-button>
 
