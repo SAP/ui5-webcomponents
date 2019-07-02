@@ -42,7 +42,7 @@ class UI5Element extends HTMLElement {
 	}
 
 	onThemeChanged() {
-		if (window.ShadyDOM || this.constructor.getMetadata().getNoShadowDOM()) {
+		if (window.ShadyDOM || !this.constructor.needsShadowDOM()) {
 			// polyfill theme handling is in head styles directly
 			return;
 		}
@@ -60,7 +60,7 @@ class UI5Element extends HTMLElement {
 	}
 
 	async _initializeShadowRoot() {
-		if (this.constructor.getMetadata().getNoShadowDOM()) {
+		if (!this.constructor.needsShadowDOM()) {
 			return Promise.resolve();
 		}
 
@@ -84,7 +84,7 @@ class UI5Element extends HTMLElement {
 			this.setAttribute("data-ui5-compact-size", "");
 		}
 
-		if (this.constructor.getMetadata().getNoShadowDOM()) {
+		if (!this.constructor.needsShadowDOM()) {
 			return;
 		}
 
@@ -99,7 +99,7 @@ class UI5Element extends HTMLElement {
 	}
 
 	disconnectedCallback() {
-		if (this.constructor.getMetadata().getNoShadowDOM()) {
+		if (!this.constructor.needsShadowDOM()) {
 			return;
 		}
 
@@ -586,6 +586,10 @@ class UI5Element extends HTMLElement {
 
 		// Use default slot as a fallback
 		return "default";
+	}
+
+	static needsShadowDOM() {
+		return !!this.template;
 	}
 
 	static _getDefaultState() {
