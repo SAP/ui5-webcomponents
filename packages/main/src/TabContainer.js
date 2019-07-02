@@ -84,22 +84,6 @@ const metadata = {
 			type: Object,
 		},
 
-		_overflowButton: {
-			type: Object,
-		},
-
-		_headerBackArrow: {
-			type: Object,
-		},
-
-		_headerForwardArrow: {
-			type: Object,
-		},
-
-		_overflowList: {
-			type: Object,
-		},
-
 		_selectedTab: {
 			type: TabBase,
 			association: true,
@@ -184,15 +168,7 @@ class TabContainer extends UI5Element {
 	constructor() {
 		super();
 
-		this._onHeaderItemSelect = this._onHeaderItemSelect.bind(this);
-		this._onHeaderItemKeyDown = this._onHeaderItemKeyDown.bind(this);
-		this._onHeaderItemKeyUp = this._onHeaderItemKeyUp.bind(this);
-		this._onOverflowListItemSelect = this._onOverflowListItemSelect.bind(this);
-		this._onOverflowButtonClick = this._onOverflowButtonClick.bind(this);
-		this._onHeaderBackArrowClick = this._onHeaderBackArrowClick.bind(this);
-		this._onHeaderForwardArrowClick = this._onHeaderForwardArrowClick.bind(this);
 		this._handleHeaderResize = this._handleHeaderResize.bind(this);
-		this._updateScrolling = this._updateScrolling.bind(this);
 
 		this._headerItem = {
 			click: this._onHeaderItemSelect,
@@ -200,25 +176,9 @@ class TabContainer extends UI5Element {
 			keyup: this._onHeaderItemKeyUp,
 		};
 
-		this._overflowButton = {
-			click: this._onOverflowButtonClick,
-		};
-
-		this._headerBackArrow = {
-			click: this._onHeaderBackArrowClick,
-		};
-
-		this._headerForwardArrow = {
-			click: this._onHeaderForwardArrowClick,
-		};
-
-		this._overflowList = {
-			click: this._onOverflowListItemSelect,
-		};
-
 		// Init ScrollEnablement
 		this._scrollEnablement = new ScrollEnablement();
-		this._scrollEnablement.attachEvent("scroll", this._updateScrolling);
+		this._scrollEnablement.attachEvent("scroll", this._updateScrolling.bind(this));
 		this._delegates.push(this._scrollEnablement);
 
 		// Init ItemNavigation
