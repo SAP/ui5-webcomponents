@@ -80,10 +80,6 @@ const metadata = {
 			type: Boolean,
 		},
 
-		_headerItem: {
-			type: Object,
-		},
-
 		_selectedTab: {
 			type: TabBase,
 			association: true,
@@ -169,12 +165,6 @@ class TabContainer extends UI5Element {
 		super();
 
 		this._handleHeaderResize = this._handleHeaderResize.bind(this);
-
-		this._headerItem = {
-			click: this._onHeaderItemSelect,
-			keydown: this._onHeaderItemKeyDown,
-			keyup: this._onHeaderItemKeyUp,
-		};
 
 		// Init ScrollEnablement
 		this._scrollEnablement = new ScrollEnablement();
