@@ -1,5 +1,5 @@
-import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes.js";
-import Function from "@ui5/webcomponents-base/src/types/Function.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 import ListItemType from "./types/ListItemType.js";
 import ListMode from "./types/ListMode.js";
 import ListItemBase from "./ListItemBase.js";
@@ -20,6 +20,7 @@ const metadata = {
 		/**
 		 * Defines the selected state of the <code>ListItem</code>.
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		selected: {
@@ -28,13 +29,18 @@ const metadata = {
 
 		/**
 		 * Defines the visual indication and behavior of the list items.
-		 * Available options are <code>Active</code> and <code>Inactive</code>.
+		 * Available options are <code>Active</code> (by default) and <code>Inactive</code>.
+		 * </br></br>
+		 * <b>Note:</b> When set to <code>Active</code>, the item will provide visual response upon press and hover,
+		 * while with type <code>Inactive</code> - will not.
+		 *
 		 * @type {string}
+		 * @defaultvalue "Active"
 		 * @public
 		*/
 		type: {
 			type: ListItemType,
-			defaultValue: ListItemType.Inactive,
+			defaultValue: ListItemType.Active,
 		},
 
 		_active: {
@@ -44,14 +50,6 @@ const metadata = {
 		_mode: {
 			type: ListMode,
 			defaultValue: ListMode.None,
-		},
-
-		_selectionControl: {
-			type: Object,
-		},
-
-		_fnOnDelete: {
-			type: Function,
 		},
 	},
 	events: {
@@ -82,42 +80,58 @@ class ListItem extends ListItemBase {
 		return [styles, ListItemBase.styles];
 	}
 
-	constructor() {
-		super();
-		this._fnOnDelete = this.onDelete.bind(this);
+	constructor(props) {
+		super(props);
+
+		this.deactivateByKey = event => {
+			if (isEnter(event)) {
+				this.deactivate();
+			}
+		};
+
+		this.deactivate = () => {
+			if (this._active) {
+				this._active = false;
+			}
+		};
 	}
 
 	onBeforeRendering() {}
 
+	onEnterDOM() {
+		document.addEventListener("mouseup", this.deactivate);
+		document.addEventListener("keyup", this.deactivateByKey);
+	}
+
+	onExitDOM() {
+		document.removeEventListener("mouseup", this.deactivate);
+		document.removeEventListener("keyup", this.deactivateByKey);
+	}
+
 	onkeydown(event) {
 		super.onkeydown(event);
 
-		const spaceUsed = event.which === KeyCodes.SPACE;
-		const enterUsed = event.which === KeyCodes.ENTER;
 		const itemActive = this.type === ListItemType.Active;
 
-		if (spaceUsed) {
+		if (isSpace(event)) {
 			event.preventDefault();
 		}
 
-		if ((spaceUsed || enterUsed) && itemActive) {
+		if ((isSpace(event) || isEnter(event)) && itemActive) {
 			this.activate();
 		}
 
-		if (enterUsed) {
+		if (isEnter(event)) {
 			this.fireItemPress();
 		}
 	}
 
 	onkeyup(event) {
-		const spaceUsed = event.which === KeyCodes.SPACE;
-		const enterUsed = event.which === KeyCodes.ENTER;
-
-		if (spaceUsed || enterUsed) {
+		if (isSpace(event) || isEnter(event)) {
 			this.deactivate();
 		}
 
-		if (spaceUsed) {
+		if (isSpace(event)) {
 			this.fireItemPress();
 		}
 	}
@@ -153,16 +167,56 @@ class ListItem extends ListItemBase {
 		}
 	}
 
-	deactivate() {
-		this._active = false;
-	}
 
-	onDelete(event) {
+	_onDelete(event) {
 		this.fireEvent("_selectionRequested", { item: this, selected: event.selected });
 	}
 
 	fireItemPress() {
 		this.fireEvent("_press", { item: this, selected: this.selected });
+	}
+
+	get classes() {
+		const result = super.classes;
+
+		const desktop = isDesktop();
+		const isActionable = (this.type === ListItemType.Active) && (this._mode !== ListMode.Delete);
+
+		// Modify main classes
+		result.main[`sapMLIBType${this.type}`] = true;
+		result.main.sapMSLI = true;
+		result.main.sapMLIBActionable = desktop && isActionable;
+		result.main.sapMLIBHoverable = desktop && isActionable;
+		result.main.sapMLIBSelected = this.selected;
+		result.main.sapMLIBActive = this._active;
+
+		return result;
+	}
+
+	get placeSelectionElementBefore() {
+		return this._mode === ListMode.MultiSelect
+			|| this._mode === ListMode.SingleSelectBegin;
+	}
+
+	get placeSelectionElementAfter() {
+		return !this.placeSelectionElementBefore
+			&& (this._mode === ListMode.SingleSelectEnd || this._mode === ListMode.Delete);
+	}
+
+	get modeSingleSelect() {
+		return [
+			ListMode.SingleSelectBegin,
+			ListMode.SingleSelectEnd,
+			ListMode.SingleSelect,
+		].includes(this._mode);
+	}
+
+	get modeMultiSelect() {
+		return this._mode === ListMode.MultiSelect;
+	}
+
+	get modeDelete() {
+		return this._mode === ListMode.Delete;
 	}
 }
 

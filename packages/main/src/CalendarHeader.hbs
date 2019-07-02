@@ -1,38 +1,40 @@
-<div {{> controlData}}
-	class="{{classes.main}}">
+<div
+	class="{{classes.main}}"
+	dir="{{rtl}}"
+>
 
-	<ui5-icon id="{{ctr._id}}-btnPrev"
+	<ui5-icon id="{{_id}}-btnPrev"
 		class="{{classes.buttons}}"
-		src="{{ctr._btnPrev.icon}}"
+		src="{{_btnPrev.icon}}"
 		data-sap-cal-head-button="Prev">
 	</ui5-icon>
 
 	<div class="sapWCCalHeadMidButtonContainer">
 		<div
-			id="{{ctr._id}}-btn1"
+			id="{{_id}}-btn1"
 			class="{{classes.middleButtons}}"
-			type="{{ctr._btn1.type}}"
+			type="{{_btn1.type}}"
 			tabindex="0"
 			data-sap-show-picker="Month"
 		>
-			{{ctr._btn1.text}}
+			{{_btn1.text}}
 		</div>
 
 		<div
-			id="{{ctr._id}}-btn2"
+			id="{{_id}}-btn2"
 			class="{{classes.middleButtons}}"
-			type="{{ctr._btn2.type}}"
+			type="{{_btn2.type}}"
 			tabindex="0"
 			data-sap-show-picker="Year"
 		>
-			{{ctr._btn2.text}}
+			{{_btn2.text}}
 		</div>
 	</div>
 
 	<ui5-icon
-		id="{{ctr._id}}-btnNext"
+		id="{{_id}}-btnNext"
 		class="{{classes.buttons}}"
-		src="{{ctr._btnNext.icon}}"
+		src="{{_btnNext.icon}}"
 		data-sap-cal-head-button="Next">
 	</ui5-icon>
 

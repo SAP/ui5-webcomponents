@@ -1,38 +1,37 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import URI from "@ui5/webcomponents-base/src/types/URI.js";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes.js";
-
-import ButtonTemplateContext from "./ButtonTemplateContext.js";
-import ButtonType from "./types/ButtonType.js";
-import ButtonRenderer from "./build/compiled/ButtonRenderer.lit.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
+import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
+import { getFeature } from "@ui5/webcomponents-base/src/FeaturesRegistry.js";
+import ButtonDesign from "./types/ButtonDesign.js";
+import ButtonTemplate from "./build/compiled/ButtonTemplate.lit.js";
 import Icon from "./Icon.js";
 
 // Styles
 import buttonCss from "./themes/Button.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-button",
-	usesNodeText: true,
 	properties: /** @lends sap.ui.webcomponents.main.Button.prototype */ {
 
 		/**
-		 * Defines the <code>ui5-button</code> type.
+		 * Defines the <code>ui5-button</code> design.
 		 * </br></br>
 		 * <b>Note:</b> Available options are "Default", "Emphasized", "Positive",
 		 * "Negative", and "Transparent".
 		 *
-		 * @type {ButtonType}
+		 * @type {ButtonDesign}
 		 * @defaultvalue "Default"
 		 * @public
 		 */
-		type: { type: ButtonType, defaultValue: ButtonType.Default },
+		design: {
+			type: ButtonDesign,
+			defaultValue: ButtonDesign.Default,
+		},
 
 		/**
 		 * Defines whether the <code>ui5-button</code> is disabled
@@ -44,7 +43,9 @@ const metadata = {
 		 * @defaultvalue false
 		 * @public
 		 */
-		disabled: { type: Boolean },
+		disabled: {
+			type: Boolean,
+		},
 
 		/**
 		 * Defines the icon to be displayed as graphical element within the <code>ui5-button</code>.
@@ -56,11 +57,13 @@ const metadata = {
 		 *
 		 * See all the available icons in the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
 		 *
-		 * @type {URI}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 */
-		icon: { type: URI, defaultValue: null },
+		icon: {
+			type: String,
+		},
 
 		/**
 		 * Defines whether the icon should be displayed after the <code>ui5-button</code> text.
@@ -69,29 +72,19 @@ const metadata = {
 		 * @defaultvalue false
 		 * @public
 		 */
-		iconEnd: { type: Boolean },
-
-		/**
-		 * Defines an alternative icon for the active (depressed) state of the <code>ui5-button</code>.
-		 * <br><br>
-		 * <b>Note:</b> Both <code>icon</code> and <code>activeIcon</code>
-		 * properties should be defined and have the type
-		 * icon font.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		activeIcon: { type: URI, defaultValue: null },
+		iconEnd: {
+			type: Boolean,
+		},
 
 		/**
 		 * When set to <code>true</code>, the <code>ui5-button</code> will
 		 * automatically submit the nearest form element upon <code>press</code>.
 		 *
 		 * <b>Important:</b> For the <code>submits</code> property to have effect, you must add the following import to your project:
-		 * <code>import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";</code>
+		 * <code>import "@ui5/webcomponents/dist/InputElementsFormSupport.js";</code>
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		submits: {
@@ -101,15 +94,32 @@ const metadata = {
 		/**
 		 * Used to switch the active state (pressed or not) of the <code>ui5-button</code>.
 		 */
-		_active: { type: Boolean },
+		_active: {
+			type: Boolean,
+		},
 
-		_iconSettings: { type: Object },
+		_iconSettings: {
+			type: Object,
+		},
+	},
+	slots: /** @lends sap.ui.webcomponents.main.Button.prototype */ {
+		/**
+		 * Defines the text of the <code>ui5-button</code>.
+		 * <br><b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+		 *
+		 * @type {Node[]}
+		 * @slot
+		 * @public
+		 */
+		"default": {
+			type: Node,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Button.prototype */ {
 
 		/**
-		 * Fired when the <code>ui5-button</code> is pressed either with a
-		 * click/tap or by using the Enter or Space key.
+		 * Fired when the <code>ui5-button</code> is activated either with a
+		 * mouse/tap or by using the Enter or Space key.
 		 * <br><br>
 		 * <b>Note:</b> The event will not be fired if the <code>disabled</code>
 		 * property is set to <code>true</code>.
@@ -117,7 +127,7 @@ const metadata = {
 		 * @event
 		 * @public
 		 */
-		press: {},
+		click: {},
 	},
 };
 
@@ -153,7 +163,6 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.Button
  * @extends UI5Element
  * @tagname ui5-button
- * @usestextcontent
  * @public
  */
 class Button extends UI5Element {
@@ -165,35 +174,18 @@ class Button extends UI5Element {
 		return buttonCss;
 	}
 
-	static get renderer() {
-		return ButtonRenderer;
+	static get render() {
+		return litRender;
 	}
 
-	static get calculateTemplateContext() {
-		return ButtonTemplateContext.calculate;
-	}
-
-	constructor() {
-		super();
-
-		this._deactivate = () => {
-			if (this._active) {
-				this._active = false;
-			}
-		};
+	static get template() {
+		return ButtonTemplate;
 	}
 
 	onBeforeRendering() {
-		if (this.icon) {
-			this._iconSettings = {
-				src: this._active && this.activeIcon ? this.activeIcon : this.icon,
-			};
-		} else {
-			this._iconSettings = null;
-		}
-
-		if (this.submits && !Button.FormSupport) {
-			console.warn(`In order for the "submits" property to have effect, you should also: import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";`); // eslint-disable-line
+		const FormSupport = getFeature("FormSupport");
+		if (this.submits && !FormSupport) {
+			console.warn(`In order for the "submits" property to have effect, you should also: import "@ui5/webcomponents/dist/InputElementsFormSupport.js";`); // eslint-disable-line
 		}
 	}
 
@@ -205,22 +197,24 @@ class Button extends UI5Element {
 		document.removeEventListener("mouseup", this._deactivate);
 	}
 
-	onclick(event) {
-		event.isMarked = "button";
-		if (!this.disabled) {
-			this.fireEvent("press", {});
-			if (Button.FormSupport) {
-				Button.FormSupport.triggerFormSubmit(this);
-			}
+	_deactivate() {
+		if (this._active) {
+			this._active = false;
 		}
 	}
 
-	onmousedown(event) {
+	_onclick(event) {
 		event.isMarked = "button";
-
-		if (!this.disabled) {
-			this._active = true;
+		this.fireEvent("press", {});
+		const FormSupport = getFeature("FormSupport");
+		if (FormSupport) {
+			FormSupport.triggerFormSubmit(this);
 		}
+	}
+
+	_onmousedown(event) {
+		event.isMarked = "button";
+		this._active = true;
 	}
 
 	onmouseup(event) {
@@ -228,19 +222,44 @@ class Button extends UI5Element {
 	}
 
 	onkeydown(event) {
-		if (event.which === KeyCodes.SPACE || event.which === KeyCodes.ENTER) {
+		if (isSpace(event) || isEnter(event)) {
 			this._active = true;
 		}
 	}
 
 	onkeyup(event) {
-		if (event.which === KeyCodes.SPACE || event.which === KeyCodes.ENTER) {
+		if (isSpace(event) || isEnter(event)) {
 			this._active = false;
 		}
 	}
 
-	onfocusout(_event) {
+	_onfocusout(_event) {
 		this._active = false;
+	}
+
+	get classes() {
+		return {
+			main: {
+				sapMBtn: true,
+				sapMBtnActive: this._active,
+				sapMBtnWithIcon: this.icon,
+				sapMBtnNoText: !this.textContent.length,
+				sapMBtnDisabled: this.disabled,
+				sapMBtnIconEnd: this.iconEnd,
+				[`sapMBtn${this.design}`]: true,
+				sapUiSizeCompact: getCompactSize(),
+			},
+			icon: {
+				sapWCIconInButton: true,
+			},
+			text: {
+				sapMBtnText: true,
+			},
+		};
+	}
+
+	get rtl() {
+		return getEffectiveRTL() ? "rtl" : undefined;
 	}
 
 	static async define(...params) {
@@ -250,8 +269,6 @@ class Button extends UI5Element {
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	Button.define();
-});
+Button.define();
 
 export default Button;

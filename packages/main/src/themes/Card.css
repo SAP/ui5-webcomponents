@@ -1,9 +1,9 @@
-:host(ui5-card) {
+:host(ui5-card:not([hidden])) {
 	display: inline-block;
 	width: 100%;
 }
 
-ui5-card {
+ui5-card:not([hidden]) {
 	display: inline-block;
 	width: 100%;
 }
@@ -43,7 +43,7 @@ ui5-card {
 	outline: none;
 }
 
-.sapFCardHeader:focus:before {
+.sapFCardHeader.sapFCardHeaderInteractive:focus:before {
 	content: "";
 	position: absolute;
 	border: var(--_ui5_card_header_focus_border);
@@ -54,13 +54,13 @@ ui5-card {
 	bottom: 1px;
 }
 
-.sapFCardHeader:hover {
+.sapFCardHeader.sapFCardHeaderInteractive:hover {
 	cursor: pointer;
 	background: var(--_ui5_card_header_hover_bg);
 }
 
 .sapFCardHeader.sapFCardHeaderActive,
-.sapFCardHeader:active {
+.sapFCardHeader.sapFCardHeaderInteractive:active {
 	background: var(--_ui5_card_header_active_bg);
 }
 

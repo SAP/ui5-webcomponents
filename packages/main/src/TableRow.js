@@ -1,20 +1,16 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import TableCell from "./TableCell.js";
-import TableRowRenderer from "./build/compiled/TableRowRenderer.lit.js";
+import TableRowTemplate from "./build/compiled/TableRowTemplate.lit.js";
 
 // Styles
 import styles from "./themes/TableRow.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-table-row",
-	defaultSlot: "cells",
 	slots: /** @lends sap.ui.webcomponents.main.TableRow.prototype */ {
 		/**
 		 * Defines the cells of the <code>ui5-table-row</code>.
@@ -24,9 +20,10 @@ const metadata = {
 		 * @slot
 		 * @public
 		 */
-		cells: {
+		"default": {
+			propertyName: "cells",
 			type: TableCell,
-			multiple: true,
+			individualSlots: true,
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.TableRow.prototype */ {
@@ -68,73 +65,70 @@ class TableRow extends UI5Element {
 		return styles;
 	}
 
-	static get renderer() {
-		return TableRowRenderer;
+	static get render() {
+		return litRender;
 	}
 
-	static get calculateTemplateContext() {
-		return state => {
-			const context = {
-				ctr: state,
-				visibleCells: [],
-				popinCells: [],
-				columnInfo: state._columnsInfo,
-				classes: {
-					main: {
-						sapWCTableRow: true,
-						sapWCTableRowWithBorder: true,
-					},
-					popin: {
-						sapWCTablePopinRow: true,
-					},
-					popinTitle: {
-						sapWCTablePopinTitle: true,
-					},
-					cellWrapper: {
-						sapMWCTableRowCellContainer: true,
-					},
-				},
-				styles: {
-					main: {
-						"grid-template-columns": "",
-					},
-					popin: {
-						"grid-column-end": 6,
-					},
-				},
-			};
-
-			this.calculateCellsStyles(context);
-
-			context.visibleColumnLength = context.visibleCells.length + 1;
-
-
-			return context;
-		};
+	static get template() {
+		return TableRowTemplate;
 	}
 
-	static calculateCellsStyles(context) {
-		context.columnInfo.forEach((info, index) => {
+	onBeforeRendering() {
+		this.visibleCells = [];
+		this.popinCells = [];
+
+		this._columnsInfo.forEach((info, index) => {
 			if (info.visible) {
-				// width of cells
-				context.styles.main["grid-template-columns"] += `minmax(0, ${info.width || "1fr"}) `;
-
-				context.visibleCells.push(context.ctr.cells[index]);
-
-				context.ctr.cells[index]._firstInRow = (index === 0);
+				this.visibleCells.push(this.cells[index]);
+				this.cells[index]._firstInRow = (index === 0);
 			} else if (info.demandPopin) {
-				context.popinCells.push({
-					cell: context.ctr.cells[index],
+				this.popinCells.push({
+					cell: this.cells[index],
 					popinText: info.popinText,
 				});
 			}
 		}, this);
 
-		const lastVisibleCell = context.visibleCells[context.visibleCells.length - 1];
+		this.visibleColumnLength = this.visibleCells.length + 1;
+
+		const lastVisibleCell = this.visibleCells[this.visibleCells.length - 1];
 
 		if (lastVisibleCell) {
 			lastVisibleCell._lastInRow = true;
 		}
+	}
+
+	get classes() {
+		return {
+			main: {
+				sapWCTableRow: true,
+				sapWCTableRowWithBorder: true,
+			},
+			popin: {
+				sapWCTablePopinRow: true,
+			},
+			popinTitle: {
+				sapWCTablePopinTitle: true,
+			},
+			cellWrapper: {
+				sapMWCTableRowCellContainer: true,
+			},
+		};
+	}
+
+	get styles() {
+		const gridTemplateColumns = this._columnsInfo.reduce((acc, info) => {
+			return info.visible ? `${acc}minmax(0, ${info.width || "1fr"}) ` : acc;
+		}, "");
+
+		return {
+			main: {
+				"grid-template-columns": gridTemplateColumns,
+			},
+			popin: {
+				"grid-column-end": 6,
+			},
+		};
 	}
 
 	onfocusin(event) {
@@ -142,8 +136,6 @@ class TableRow extends UI5Element {
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	TableRow.define();
-});
+TableRow.define();
 
 export default TableRow;

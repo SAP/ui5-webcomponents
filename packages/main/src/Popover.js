@@ -1,8 +1,7 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import RenderScheduler from "@ui5/webcomponents-base/src/RenderScheduler.js";
 import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
 import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper.js";
-import PopoverTemplateContext from "./PopoverTemplateContext.js";
 import PopoverPlacementType from "./types/PopoverPlacementType.js";
 import PopoverVerticalAlign from "./types/PopoverVerticalAlign.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
@@ -10,13 +9,10 @@ import Popup from "./Popup.js";
 
 
 // Template
-import PopoverRenderer from "./build/compiled/PopoverRenderer.lit.js";
+import PopoverTemplate from "./build/compiled/PopoverTemplate.lit.js";
 
 // Styles
 import popoverCss from "./themes/Popover.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
 
 /**
  * @public
@@ -29,6 +25,7 @@ const metadata = {
 		 * Determines on which side the <code>ui5-popover</code> is placed at.
 		 *
 		 * @type {PopoverPlacementType}
+		 * @defaultvalue "Right"
 		 * @public
 		 */
 		placementType: {
@@ -40,6 +37,7 @@ const metadata = {
 		 * Determines the horizontal alignment of the <code>ui5-popover</code>.
 		 *
 		 * @type {PopoverHorizontalAlign}
+		 * @defaultvalue "Center"
 		 * @public
 		 */
 		horizontalAlign: {
@@ -51,6 +49,7 @@ const metadata = {
 		 * Determines the vertical alignment of the <code>ui5-popover</code>.
 		 *
 		 * @type {PopoverVerticalAlign}
+		 * @defaultvalue "Center"
 		 * @public
 		 */
 		verticalAlign: {
@@ -64,6 +63,7 @@ const metadata = {
 		 * If enabled, it blocks any interaction with the background.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		modal: {
@@ -74,9 +74,10 @@ const metadata = {
 		 * Determines whether the <code>ui5-popover</code> arrow is hidden.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
-		hideArrow: {
+		noArrow: {
 			type: Boolean,
 		},
 
@@ -84,6 +85,7 @@ const metadata = {
 		 * Determines whether the <code>ui5-popover</code> would close upon user scroll.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		stayOpenOnScroll: {
@@ -95,6 +97,7 @@ const metadata = {
 		 * over the target.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		allowTargetOverlap: {
@@ -182,8 +185,12 @@ class Popover extends Popup {
 		return metadata;
 	}
 
-	static get renderer() {
-		return PopoverRenderer;
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return PopoverTemplate;
 	}
 
 	static get styles() {
@@ -267,9 +274,9 @@ class Popover extends Popup {
 			}
 		}
 
-		if (this._targetControl) {
-			const targetControlRect = this._targetControl.getBoundingClientRect();
-			if (Popover.isInRect(x, y, targetControlRect)) {
+		if (this._targetElement) {
+			const targetElementRect = this._targetElement.getBoundingClientRect();
+			if (Popover.isInRect(x, y, targetElementRect)) {
 				return true;
 			}
 		}
@@ -284,7 +291,7 @@ class Popover extends Popup {
 	}
 
 	checkDocking() {
-		if (!this.stayOpenOnScroll && this.isTargetControlMoved()) {
+		if (!this.stayOpenOnScroll && this.hasTargetElementMoved()) {
 			this.close();
 		}
 
@@ -295,7 +302,7 @@ class Popover extends Popup {
 			height: popoverDomRef.offsetHeight,
 		};
 
-		const targetRect = Popover.getClientRect(this._targetControl);
+		const targetRect = Popover.getClientRect(this._targetElement);
 
 		this.setLocation(targetRect, popoverSize);
 	}
@@ -406,7 +413,7 @@ class Popover extends Popup {
 		this._width = width;
 		this._height = height;
 
-		const arrowOffset = this.hideArrow ? 0 : arrowSize;
+		const arrowOffset = this.noArrow ? 0 : arrowSize;
 
 		// calc popover positions
 		switch (placementType) {
@@ -460,8 +467,8 @@ class Popover extends Popup {
 
 		let maxContentHeight = Math.round(maxHeight);
 
-		if (!this.hideHeader) {
-			const headerDomRef = this.getPopupDomRef().querySelector(".sapMPopupHeader");
+		if (!this.noHeader) {
+			const headerDomRef = this.getPopupDomRef().querySelector(".ui5-popup-wrapper-header");
 			if (headerDomRef) {
 				maxContentHeight = Math.round(maxHeight - headerDomRef.offsetHeight);
 			}
@@ -494,7 +501,7 @@ class Popover extends Popup {
 	 * set in the <code>ui5-popover</code>.
 	 * @public
 	 */
-	openBy(control) {
+	openBy(element) {
 		if (this._isOpen) {
 			return;
 		}
@@ -506,12 +513,12 @@ class Popover extends Popup {
 
 		this.storeCurrentFocus();
 
-		const targetDomRef = control;
+		const targetDomRef = element;
 
 		const popoverSize = this.getPopoverSize();
 		const targetRect = Popover.getClientRect(targetDomRef);
 
-		this._targetControl = targetDomRef;
+		this._targetElement = targetDomRef;
 		this._targetRect = targetRect;
 
 		this.setLocation(targetRect, popoverSize);
@@ -562,8 +569,8 @@ class Popover extends Popup {
 	}
 
 	getPopoverSize() {
-		const popoverFrameDomRef = this.shadowRoot.querySelector(".sapMPopupFrame"); // this.getDomRef();
-		const popoverDomRef = popoverFrameDomRef.querySelector(".sapMPopover");
+		const popoverFrameDomRef = this.shadowRoot.querySelector(".ui5-popup-wrapper-frame"); // this.getDomRef();
+		const popoverDomRef = popoverFrameDomRef.querySelector(".ui5-popover-wrapper");
 
 		popoverFrameDomRef.style.visibility = "hidden";
 		popoverFrameDomRef.style.display = "block";
@@ -580,21 +587,75 @@ class Popover extends Popup {
 		};
 	}
 
-	isTargetControlMoved() {
-		const newRect = this._targetControl.getBoundingClientRect();
+	hasTargetElementMoved() {
+		const newRect = this._targetElement.getBoundingClientRect();
 		const targetRect = this._targetRect;
 
 		return Math.abs(newRect.left - targetRect.left) > diffTolerance
 			|| Math.abs(newRect.top - targetRect.top) > diffTolerance;
 	}
 
-	static get calculateTemplateContext() {
-		return PopoverTemplateContext.calculate;
+	get classes() {
+		const placementType = this._actualPlacementType;
+
+		return {
+			frame: {
+				"ui5-popup-wrapper-frame": true,
+				"ui5-popup-wrapper-frame--open": this._isOpen,
+			},
+			main: {
+				"ui5-popup-wrapper": true,
+				"ui5-popover-wrapper": true,
+			},
+			blockLayer: {
+				sapUiBLy: true,
+				"ui5-popup-wrapper-blockLayer": true,
+				"ui5-popup-wrapper-blockLayer--hidden": !this.modal || this._hideBlockLayer,
+			},
+			arrow: {
+				"ui5-popover-wrapper-arr": true,
+				"ui5-popover-wrapper-arr--hidden": this.noArrow,
+				"ui5-popover-wrapper-arrLeft": placementType === PopoverPlacementType.Right,
+				"ui5-popover-wrapper-arrRight": placementType === PopoverPlacementType.Left,
+				"ui5-popover-wrapper-arrUp": placementType === PopoverPlacementType.Bottom,
+				"ui5-popover-wrapper-arrDown": placementType === PopoverPlacementType.Top,
+			},
+		};
+	}
+
+	get styles() {
+		return {
+			main: {
+				left: `${this._left}px`,
+				top: `${this._top}px`,
+				width: this._width,
+				height: this._height,
+				"z-index": this._zIndex + 1,
+			},
+			content: {
+				"max-height": `${this._maxContentHeight}px`,
+			},
+			arrow: {
+				transform: `translate(${this._arrowTranslateX}px, ${this._arrowTranslateY}px)`,
+			},
+			blockLayer: {
+				"z-index": this._zIndex,
+			},
+		};
+	}
+
+	get headerId() {
+		return this.noHeader ? undefined : `${this._id}-header`;
+	}
+
+	get focusHelper() {
+		return {
+			forwardToLast: this._focusElementsHandlers.forwardToLast,
+			forwardToFirst: this._focusElementsHandlers.forwardToFirst,
+		};
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	Popover.define();
-});
+Popover.define();
 
 export default Popover;

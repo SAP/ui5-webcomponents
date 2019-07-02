@@ -1,15 +1,15 @@
-.sapMPopupFrame {
+.ui5-popup-wrapper-frame {
 	width: 0;
 	height: 0;
 	display: none;
 	visibility: visible;
 }
 
-.sapMPopupFrameOpen {
+.ui5-popup-wrapper-frame--open {
 	display: inline;
 }
 
-.sapMPopup {
+.ui5-popup-wrapper {
 	min-width: 6.25rem;
 	box-sizing: border-box;
 	outline: none;
@@ -22,7 +22,7 @@
 	min-height: 2rem;
 }
 
-.sapMPopup .sapMPopupHeader {
+.ui5-popup-wrapper .ui5-popup-wrapper-header {
 	margin: 0;
 	color: var(--sapUiPageHeaderTextColor);
 	font-size: 1rem;
@@ -31,14 +31,14 @@
 	border-bottom: 1px solid var(--sapUiPageFooterBorderColor);
 }
 
-.sapMPopup .sapMPopupHeaderText {
+.ui5-popup-wrapper .ui5-popup-wrapper-headerText {
 	padding: 0 0.25rem;
 	text-align: center;
 	height: 3rem;
 	line-height: 3rem;
 }
 
-.sapMPopup .sapMPopupFooter {
+.ui5-popup-wrapper .ui5-popup-wrapper-footer {
 	font-size: 1rem;
 	font-weight: 400;
 	font-family: var(--sapUiFontFamily);
@@ -48,7 +48,7 @@
 	color: var(--sapUiPageFooterTextColor);
 }
 
-.sapMPopup .sapMPopupContent {
+.ui5-popup-wrapper .ui5-popup-wrapper-content {
 	overflow: auto;
 	position: relative;
 	box-sizing: border-box;
@@ -56,16 +56,16 @@
 	border-radius: 0.25rem;
 }
 
-.sapMPopup .sapMPopupContent,
-.sapMPopup .sapMPopupFooter {
+.ui5-popup-wrapper .ui5-popup-wrapper-content,
+.ui5-popup-wrapper .ui5-popup-wrapper-footer {
 	border-bottom-left-radius: .25rem;
 	border-bottom-right-radius: .25rem;
 }
 
-.sapMPopup .sapMPopupScroll {
+.ui5-popup-wrapper .ui5-popup-wrapper-scroll {
 	vertical-align: middle;
 	box-sizing: border-box;
-	padding: 0.4375em;
+	padding: var(--_ui5_popover_content_padding);
 }
 
 .sapUiBLy {
@@ -80,10 +80,10 @@
 	outline: 0 none;
 }
 
-.sapMPopupBlockLayer {
+.ui5-popup-wrapper-blockLayer {
 	visibility: visible;
 }
 
-.sapMPopupBlockLayerHidden {
+.ui5-popup-wrapper-blockLayer--hidden {
 	display: none;
 }

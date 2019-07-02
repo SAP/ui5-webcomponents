@@ -32,7 +32,7 @@
 
 	<script defer src="../../../../../../www/samples/settings.js"></script>
 </head>
-<body class="sapUiBody example-wrapper">
+<body class="sapUiBody example-wrapper" role="application">
 
 	<header>
 		<div class="control-header">Button</div>
@@ -42,20 +42,20 @@
 	<section>
 		<h3>Basic Button</h3>
 		<div class="snippet">
-			<ui5-button class="samples-margin" type="Default">Enabled</ui5-button>
+			<ui5-button class="samples-margin" design="Default">Enabled</ui5-button>
 			<ui5-button class="samples-margin" disabled>Disabled</ui5-button>
-			<ui5-button class="samples-margin" type="Transparent">Cancel</ui5-button>
-			<ui5-button class="samples-margin" type="Positive" icon-end>Approve</ui5-button>
-			<ui5-button class="samples-margin"type="Negative">Decline</ui5-button>
-			<ui5-button class="samples-margin" type="Emphasized">Subscribe</ui5-button>
+			<ui5-button class="samples-margin" design="Transparent">Cancel</ui5-button>
+			<ui5-button class="samples-margin" design="Positive" icon-end>Approve</ui5-button>
+			<ui5-button class="samples-margin"design="Negative">Decline</ui5-button>
+			<ui5-button class="samples-margin" design="Emphasized">Subscribe</ui5-button>
 		</div>
 		<pre class="prettyprint lang-html"><xmp>
-<ui5-button type="Default">Enabled</ui5-button>
+<ui5-button design="Default">Enabled</ui5-button>
 <ui5-button disabled>Disabled</ui5-button>
-<ui5-button type="Transparent">Cancel</ui5-button>
-<ui5-button type="Positive" icon-end>Approve</ui5-button>
-<ui5-button type="Negative">Decline</ui5-button>
-<ui5-button type="Emphasized">Subscribe</ui5-button>
+<ui5-button design="Transparent">Cancel</ui5-button>
+<ui5-button design="Positive" icon-end>Approve</ui5-button>
+<ui5-button design="Negative">Decline</ui5-button>
+<ui5-button design="Emphasized">Subscribe</ui5-button>
 		</xmp></pre>
 	</section>
 
@@ -64,18 +64,18 @@
 		<div class="snippet">
 			<ui5-button class="samples-margin" icon="sap-icon://employee">Add</ui5-button>
 			<ui5-button class="samples-margin" icon="sap-icon://download" icon-end>Download</ui5-button>
-			<ui5-button class="samples-margin" icon="sap-icon://download" active-icon="sap-icon://menu">Active Icon</ui5-button>
-			<ui5-button class="samples-margin" type="Positive" icon="sap-icon://add">Add</ui5-button>
-			<ui5-button class="samples-margin" type="Negative" icon="sap-icon://delete">Remove</ui5-button>
-			<ui5-button class="samples-margin" type="Transparent" icon="sap-icon://accept">Accept</ui5-button>
+			<ui5-button class="samples-margin" icon="sap-icon://download">Active Icon</ui5-button>
+			<ui5-button class="samples-margin" design="Positive" icon="sap-icon://add">Add</ui5-button>
+			<ui5-button class="samples-margin" design="Negative" icon="sap-icon://delete">Remove</ui5-button>
+			<ui5-button class="samples-margin" design="Transparent" icon="sap-icon://accept">Accept</ui5-button>
 		</div>
 		<pre class="prettyprint lang-html"><xmp>
 <ui5-button icon="sap-icon://employee">Add</ui5-button>
 <ui5-button icon="sap-icon://download" icon-end>Download</ui5-button>
-<ui5-button icon="sap-icon://download" active-icon="sap-icon://menu">Active Icon</ui5-button>
-<ui5-button type="Positive" icon="sap-icon://add">Add</ui5-button>
-<ui5-button type="Negative" icon="sap-icon://delete">Remove</ui5-button>
-<ui5-button type="Transparent" icon="sap-icon://accept">Transparent</ui5-button>
+<ui5-button icon="sap-icon://download">Active Icon</ui5-button>
+<ui5-button design="Positive" icon="sap-icon://add">Add</ui5-button>
+<ui5-button design="Negative" icon="sap-icon://delete">Remove</ui5-button>
+<ui5-button design="Transparent" icon="sap-icon://accept">Transparent</ui5-button>
 		</xmp></pre>
 	</section>
 
@@ -97,43 +97,43 @@
 				<ui5-button class="samples-margin" icon="sap-icon://action-settings" aria-labelledby="lblSettings" ></ui5-button>
 				<ui5-button class="samples-margin" icon="sap-icon://add" aria-labelledby="lblAdd"></ui5-button>
 				<ui5-button class="samples-margin" icon="sap-icon://alert" aria-labelledby="lblAlert"></ui5-button>
-				<ui5-button class="samples-margin" icon="sap-icon://accept" type="Positive" aria-labelledby="lblAccept"></ui5-button>
-				<ui5-button class="samples-margin" icon="sap-icon://bookmark" type="Positive" aria-labelledby="lblBookmark"></ui5-button>
-				<ui5-button class="samples-margin" icon="sap-icon://cancel" type="Negative" aria-labelledby="lblCancel" ></ui5-button>
-				<ui5-button class="samples-margin" icon="sap-icon://call" type="Negative" aria-labelledby="lblCall" ></ui5-button>
-				<ui5-button class="samples-margin" icon="sap-icon://camera" type="Transparent" aria-labelledby="lblCamera"></ui5-button>
-				<ui5-button class="samples-margin" icon="sap-icon://cart" type="Transparent" aria-labelledby="lblCart"></ui5-button>
+				<ui5-button class="samples-margin" icon="sap-icon://accept" design="Positive" aria-labelledby="lblAccept"></ui5-button>
+				<ui5-button class="samples-margin" icon="sap-icon://bookmark" design="Positive" aria-labelledby="lblBookmark"></ui5-button>
+				<ui5-button class="samples-margin" icon="sap-icon://cancel" design="Negative" aria-labelledby="lblCancel" ></ui5-button>
+				<ui5-button class="samples-margin" icon="sap-icon://call" design="Negative" aria-labelledby="lblCall" ></ui5-button>
+				<ui5-button class="samples-margin" icon="sap-icon://camera" design="Transparent" aria-labelledby="lblCamera"></ui5-button>
+				<ui5-button class="samples-margin" icon="sap-icon://cart" design="Transparent" aria-labelledby="lblCart"></ui5-button>
 		</div>
 		<pre class="prettyprint lang-html"><xmp>
 <ui5-button icon="sap-icon://away" aria-labelledby="lblAway"></ui5-button>
 <ui5-button icon="sap-icon://action-settings" aria-labelledby="lblSettings" ></ui5-button>
 <ui5-button icon="sap-icon://add" aria-labelledby="lblAdd"></ui5-button>
 <ui5-button icon="sap-icon://alert" aria-labelledby="lblAlert"></ui5-button>
-<ui5-button icon="sap-icon://accept" type="Positive" aria-labelledby="lblAccept"></ui5-button>
-<ui5-button icon="sap-icon://bookmark" type="Positive" aria-labelledby="lblBookmark"></ui5-button>
-<ui5-button icon="sap-icon://cancel" type="Negative" aria-labelledby="lblCancel" ></ui5-button>
-<ui5-button icon="sap-icon://call" type="Negative" aria-labelledby="lblCall" ></ui5-button>
-<ui5-button icon="sap-icon://camera" type="Transparent" aria-labelledby="lblCamera"></ui5-button>
-<ui5-button icon="sap-icon://cart" type="Transparent" aria-labelledby="lblCart"></ui5-button>
+<ui5-button icon="sap-icon://accept" design="Positive" aria-labelledby="lblAccept"></ui5-button>
+<ui5-button icon="sap-icon://bookmark" design="Positive" aria-labelledby="lblBookmark"></ui5-button>
+<ui5-button icon="sap-icon://cancel" design="Negative" aria-labelledby="lblCancel" ></ui5-button>
+<ui5-button icon="sap-icon://call" design="Negative" aria-labelledby="lblCall" ></ui5-button>
+<ui5-button icon="sap-icon://camera" design="Transparent" aria-labelledby="lblCamera"></ui5-button>
+<ui5-button icon="sap-icon://cart" design="Transparent" aria-labelledby="lblCart"></ui5-button>
 <ui5-label style="display:none" id="lblAdd" aria-hidden="true">Add</ui5-label>
 		</xmp></pre>
 	</section>
 
 	<section>
-		<h3>Button with Type</h3>
+		<h3>Button with Design</h3>
 		<div class="snippet">
-			<ui5-button class="samples-margin" type="Emphasized">Submit</ui5-button>
-			<ui5-button class="samples-margin" type="Positive">Agree</ui5-button>
-			<ui5-button class="samples-margin" type="Negative">Decline</ui5-button>
+			<ui5-button class="samples-margin" design="Emphasized">Submit</ui5-button>
+			<ui5-button class="samples-margin" design="Positive">Agree</ui5-button>
+			<ui5-button class="samples-margin" design="Negative">Decline</ui5-button>
 			<ui5-button class="samples-margin" disabled>Disabled</ui5-button>
-			<ui5-button class="samples-margin" type="Transparent">Transparent</ui5-button>
+			<ui5-button class="samples-margin" design="Transparent">Transparent</ui5-button>
 		</div>
 		<pre class="prettyprint lang-html"><xmp>
-<ui5-button type="Emphasized">Submit</ui5-button>
-<ui5-button type="Positive">Agree</ui5-button>
-<ui5-button type="Negative">Decline</ui5-button>
+<ui5-button design="Emphasized">Submit</ui5-button>
+<ui5-button design="Positive">Agree</ui5-button>
+<ui5-button design="Negative">Decline</ui5-button>
 <ui5-button disabled>Disabled</ui5-button>
-<ui5-button type="Transparent">Transparent</ui5-button>
+<ui5-button design="Transparent">Transparent</ui5-button>
 		</xmp></pre>
 	</section>
 

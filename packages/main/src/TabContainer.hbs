@@ -1,25 +1,28 @@
-<div {{> controlData}} class="{{classes.main}}">
-	<div class="{{classes.header}}" id="{{ctr._id}}-header">
-		<ui5-icon @press="{{ctr._headerBackArrow.click}}" class="{{classes.headerBackArrow}}" src="sap-icon://slim-arrow-left" tabindex="-1"></ui5-icon>
+<div
+	class="{{classes.main}}"
+	dir="{{rtl}}"
+>
+	<div class="{{classes.header}}" id="{{_id}}-header">
+		<ui5-icon @ui5-press="{{_onHeaderBackArrowClick}}" class="{{classes.headerBackArrow}}" src="sap-icon://slim-arrow-left" tabindex="-1"></ui5-icon>
 
 		<!-- tab items -->
-		<div class="{{classes.headerScrollContainer}}" id="{{ctr._id}}-headerScrollContainer">
+		<div class="{{classes.headerScrollContainer}}" id="{{_id}}-headerScrollContainer">
 			<ul role="tablist" class="{{classes.headerList}}">
 				{{#each renderItems}}
 					{{#unless this.isSeparator}}
 						<li class="{{this.headerItemClasses}}"
 							id="{{this.item._id}}"
 							tabindex="{{this.item._tabIndex}}"
-							@click="{{../ctr._headerItem.click}}"
-							@keydown="{{../ctr._headerItem.keydown}}"
-							@keyup="{{../ctr._headerItem.keyup}}"
+							@click="{{../_onHeaderItemSelect}}"
+							@keydown="{{../	_onHeaderItemKeyDown}}"
+							@keyup="{{../_onHeaderItemKeyUp}}"
 							role="tab"
 							aria-posinset="{{this.position}}"
 							aria-setsize="{{../renderItems.length}}"
 							aria-controls="ui5-tc-contentItem-{{this.position}}"
 							aria-selected="{{this.selected}}"
-							aria-disabled="{{this.disabled}}"
-							disabled="{{this.disabled}}"
+							?aria-disabled="{{this.disabled}}"
+							?disabled="{{this.disabled}}"
 							aria-labelledby="{{this.ariaLabelledBy}}"
 						>
 							{{#if this.isTextOnlyTab}}
@@ -42,12 +45,12 @@
 			</ul>
 		</div>
 
-		<ui5-icon @press="{{ctr._headerForwardArrow.click}}" class="{{classes.headerForwardArrow}}" src="sap-icon://slim-arrow-right" tabindex="-1"></ui5-icon>
+		<ui5-icon @ui5-press="{{_onHeaderForwardArrowClick}}" class="{{classes.headerForwardArrow}}" src="sap-icon://slim-arrow-right" tabindex="-1"></ui5-icon>
 
 		<!-- overflow button -->
-		{{#if ctr.showOverflow}}
+		{{#if showOverflow}}
 			<ui5-button
-				@press="{{ctr._overflowButton.click}}"
+				@ui5-press="{{_onOverflowButtonClick}}"
 				class="{{classes.overflowButton}}"
 				icon="sap-icon://slim-arrow-down"
 				type="Transparent"
@@ -59,8 +62,8 @@
 	<div class="{{classes.content}}">
 		{{#each renderItems}}
 			{{#unless this.isSeparator}}
-				<div class="{{this.contentItemClasses}}" id="ui5-tc-contentItem-{{this.position}}">
-					<slot name="{{this.item._slot}}"></slot>
+				<div class="{{this.contentItemClasses}}" id="ui5-tc-contentItem-{{this.position}}" ?hidden="{{this.hidden}}">
+					<slot name="{{this.item._individualSlot}}"></slot>
 				</div>
 			{{/unless}}
 		{{/each}}
@@ -68,19 +71,19 @@
 
 	<!-- overflow menu -->
 	<ui5-popover
-		id="{{ctr._id}}-overflowMenu"
-		hide-arrow
-		hide-header
+		id="{{_id}}-overflowMenu"
+		no-arrow
+		no-header
 		placement-type="Bottom"
 		horizontal-align="Right">
-		<ui5-list @itemPress="{{ctr._overflowList.click}}">
+		<ui5-list @ui5-itemPress="{{_onOverflowListItemSelect}}">
 			{{#each renderItems}}
 				{{#unless this.isSeparator}}
 					<ui5-li-custom id="{{this.item._id}}"
 						class="{{this.overflowItemClasses}}"
 						type="{{this.overflowItemState}}"
-						selected="{{this.selected}}"
-						disabled="{{this.disabled}}"
+						?selected="{{this.selected}}"
+						?disabled="{{this.disabled}}"
 					>
 						<div class="{{this.overflowItemContentClasses}}">
 							{{#if this.item.icon}}
@@ -94,7 +97,7 @@
 							{{/if}}
 						</div>
 					</ui5-li-custom>
-				{{/unless}}s
+				{{/unless}}
 			{{/each}}
 		</ui5-list>
 	</ui5-popover>

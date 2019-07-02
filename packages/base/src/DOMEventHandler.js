@@ -1,11 +1,9 @@
-import ControlEvents from "./events/ControlEvents.js";
-import getOriginalEventTarget from "./events/getOriginalEventTarget.js";
-import UI5Element from "./UI5Element.js";
+import ManagedEvents from "./events/ManagedEvents.js";
+import getShadowDOMTarget from "./events/getShadowDOMTarget.js";
 
 const handleEvent = function handleEvent(event) {
 	// Get the DOM node where the original event occurred
-	let target = getOriginalEventTarget(event);
-	event.ui5target = target;
+	let target = getShadowDOMTarget(event);
 
 	// Traverse the DOM
 	let shouldPropagate = true;
@@ -19,7 +17,7 @@ const handleEvent = function handleEvent(event) {
 
 
 const processDOMNode = function processDOMNode(node, event) {
-	if (node && node instanceof UI5Element) {
+	if (node && node._isUI5Element) {
 		return dispatchEvent(node, event);
 	}
 	return true;
@@ -51,6 +49,13 @@ const getParentDOMNode = function getParentDOMNode(node) {
 	return parentNode;
 };
 
+const isOtherInstanceRegistered = () => {
+	return window["@ui5/webcomponents-base/DOMEventHandler"];
+};
+
+const registerInstance = () => {
+	window["@ui5/webcomponents-base/DOMEventHandler"] = true;
+};
 
 class DOMEventHandler {
 	constructor() {
@@ -58,11 +63,15 @@ class DOMEventHandler {
 	}
 
 	static start() {
-		ControlEvents.bindAnyEvent(handleEvent);
+		// register the handlers just once in case other bundles include and call this method multiple times
+		if (!isOtherInstanceRegistered()) {
+			ManagedEvents.bindAllEvents(handleEvent);
+			registerInstance();
+		}
 	}
 
 	static stop() {
-		ControlEvents.unbindAnyEvent(handleEvent);
+		ManagedEvents.unbindAllEvents(handleEvent);
 	}
 }
 

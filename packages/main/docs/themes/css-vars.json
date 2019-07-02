@@ -1,0 +1,24 @@
+{
+	"GroupHeaderListItem": [
+		{
+			"name": "--ui5-group-header-listitem-background-color",
+			"description": "Defines the <code>ui5-li-groupheader</code> background color"
+		}
+	],
+	"ListItem": [
+		{
+			"name": "--ui5-listitem-background-color",
+			"description": "Defines the<code>ui5-li</code> background color"
+		}
+	],
+	"Panel": [
+		{
+			"name": "--ui5-panel-background-color",
+			"description": "Defines the <code>ui5-panel</code> background color"
+		},
+		{
+			"name": "--ui5-panel-bottom-border-color",
+			"description": "Defines the <code>ui5-panel</code> bottom border color"
+		}
+	]
+}

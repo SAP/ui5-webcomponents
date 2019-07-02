@@ -1,24 +1,19 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import URI from "@ui5/webcomponents-base/src/types/URI.js";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import { isIconURI } from "@ui5/webcomponents-base/src/IconPool.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-import Function from "@ui5/webcomponents-base/src/types/Function.js";
-import CardRenderer from "./build/compiled/CardRenderer.lit.js";
+import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
+import CardTemplate from "./build/compiled/CardTemplate.lit.js";
 import Icon from "./Icon.js";
 
 // Styles
 import cardCss from "./themes/Card.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-card",
-	defaultSlot: "content",
 	slots: /** @lends sap.ui.webcomponents.main.Card.prototype */ {
 
 		/**
@@ -27,84 +22,83 @@ const metadata = {
 		 * @slot
 		 * @public
 		 */
-		content: {
+		"default": {
+			propertyName: "content",
 			type: HTMLElement,
-			multiple: true,
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.Card.prototype */ {
 
 		/**
 		 * Defines the title displayed in the <code>ui5-card</code> header.
-		 * @type {String}
+		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		heading: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
 		 * Defines the subtitle displayed in the <code>ui5-card</code> header.
-		 * @type {String}
+		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		subtitle: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
 		 * Defines the status displayed in the <code>ui5-card</code> header.
-		 * @type {String}
+		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		status: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
-		 * Defines image source URI or built-in icon source URI.
+		 * Defines if the <code>ui5-card</code> header would be interactive,
+		 * e.g gets hover effect, gets focused and <code>headerPress</code> event is fired, when it is pressed.
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 */
+		headerInteractive: {
+			type: Boolean,
+		},
+
+		/**
+		 * Defines image source URI or built-in icon font URI.
 		 * </br></br>
 		 * <b>Note:</b>
 		 * SAP-icons font provides numerous options. To find all the available icons, see the
 		 * <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
-		 * @type {URI}
+		 * @type {string}
 		 * @public
 		 */
 		avatar: {
-			type: URI,
-			defaultValue: null,
+			type: String,
 		},
 
 		_headerActive: {
 			type: Boolean,
 		},
-
-		_headerClick: {
-			type: Function,
-		},
-
-		_headerKeydown: {
-			type: Function,
-		},
-
-		_headerKeyup: {
-			type: Function,
-		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Card.prototype */ {
 
 		/**
-		 * Fired when the <code>ui5-card</code> header is pressed
-		 * by click/tap or by using the Enter or Space key.
-		 *
+		 * Fired when the <code>ui5-card</code> header is activated
+		 * by mouse/tap or by using the Enter or Space key.
+		 * <br><br>
+		 * <b>Note:</b> The event would be fired only if the <code>headerInteractive</code> property is set to true.
 		 * @event
 		 * @public
 		 * @since 0.10.0
 		 */
-		headerPress: {},
+		headerClick: {},
 	},
 };
 
@@ -118,6 +112,9 @@ const metadata = {
  * The header can be used through several properties, such as:
  * <code>heading</code>, <code>subtitle</code>, <code>status</code> and <code>avatar</code>.
  *
+ * <h3>Keyboard handling</h3>
+ * In case you enable <code>headerInteractive</cdoe> property, you can press the <code>ui5-card</code> header by Space and Enter keys.
+ *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/Card";</code>
@@ -130,48 +127,50 @@ const metadata = {
  * @public
  */
 class Card extends UI5Element {
-	constructor() {
-		super();
-
-		this._headerClick = this.headerClick.bind(this);
-		this._headerKeydown = this.headerKeydown.bind(this);
-		this._headerKeyup = this.headerKeyup.bind(this);
-	}
-
 	static get metadata() {
 		return metadata;
 	}
 
-	static get renderer() {
-		return CardRenderer;
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return CardTemplate;
 	}
 
 	static get styles() {
 		return cardCss;
 	}
 
-	static calculateTemplateContext(state) {
-		const hasAvatar = !!state.avatar;
-		const icon = hasAvatar && isIconURI(state.avatar);
-		const image = hasAvatar && !icon;
-		const hasContent = !!state.content.length;
-
+	get classes() {
 		return {
-			icon,
-			image,
-			ctr: state,
-			renderIcon: state.icon && !state.image,
-			classes: {
-				main: {
-					"sapFCard": true,
-					"sapFCardNoContent": !hasContent,
-				},
-				header: {
-					"sapFCardHeader": true,
-					"sapFCardHeaderActive": state._headerActive,
-				},
+			main: {
+				"sapFCard": true,
+				"sapFCardNoContent": !this.content.length,
+			},
+			header: {
+				"sapFCardHeader": true,
+				"sapFCardHeaderInteractive": this.headerInteractive,
+				"sapFCardHeaderActive": this.headerInteractive && this._headerActive,
 			},
 		};
+	}
+
+	get icon() {
+		return !!this.avatar && isIconURI(this.avatar);
+	}
+
+	get image() {
+		return !!this.avatar && !this.icon;
+	}
+
+	get role() {
+		return this.headerInteractive ? "button" : undefined;
+	}
+
+	get tabindex() {
+		return this.headerInteractive ? "0" : undefined;
 	}
 
 	static async define(...params) {
@@ -180,18 +179,24 @@ class Card extends UI5Element {
 		super.define(...params);
 	}
 
-	headerClick() {
-		this.fireEvent("headerPress");
+	_headerClick() {
+		if (this.headerInteractive) {
+			this.fireEvent("headerClick");
+		}
 	}
 
-	headerKeydown(event) {
+	_headerKeydown(event) {
+		if (!this.headerInteractive) {
+			return;
+		}
+
 		const enter = isEnter(event);
 		const space = isSpace(event);
 
 		this._headerActive = enter || space;
 
 		if (enter) {
-			this.fireEvent("headerPress");
+			this.fireEvent("headerClick");
 			return;
 		}
 
@@ -200,19 +205,25 @@ class Card extends UI5Element {
 		}
 	}
 
-	headerKeyup(event) {
+	_headerKeyup(event) {
+		if (!this.headerInteractive) {
+			return;
+		}
+
 		const space = isSpace(event);
 
 		this._headerActive = false;
 
 		if (space) {
-			this.fireEvent("headerPress");
+			this.fireEvent("headerClick");
 		}
+	}
+
+	get rtl() {
+		return getEffectiveRTL() ? "rtl" : undefined;
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	Card.define();
-});
+Card.define();
 
 export default Card;

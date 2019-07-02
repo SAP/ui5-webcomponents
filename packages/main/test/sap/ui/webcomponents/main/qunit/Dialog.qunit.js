@@ -7,11 +7,11 @@ TestHelper.ready(function () {
 	QUnit.module("Web Components", {
 		beforeEach: function() {
 			var html = '<ui5-dialog id="myDialog" header-text="Web Component Dialog">'
-				+ '<div data-ui5-slot="header">'
+				+ '<div slot="header">'
 					+ '<div  class="customHeaderText">Custom Header</div>'
 					+ '<ui5-button icon="sap-icon://decline"></ui5-button>'
 				+ '</div>'
-				+ '<div data-ui5-slot="footer">'
+				+ '<div slot="footer">'
 					+ '<div class="customFooterText" >Custom Footer</div>'
 					+ '<ui5-button>Accept</ui5-button>'
 				+ '</div>'
@@ -49,7 +49,7 @@ TestHelper.ready(function () {
 		this.dialog.addEventListener('afterOpen', function (event) {
 			var shadowRoot = this.dialog.shadowRoot;
 
-			assert.ok(shadowRoot.querySelector('.sapMPopupFrameOpen'), "Dialog is opened");
+			assert.ok(shadowRoot.querySelector('.ui5-popup-wrapper-frame--open'), "Dialog is opened");
 
 			// header
 			var header = shadowRoot.host.children[0];
@@ -68,7 +68,7 @@ TestHelper.ready(function () {
 
 		this.dialog.addEventListener('afterClose', function (event) {
 			RenderScheduler.whenFinished().then(function() {
-				assert.notOk(this.dialog.shadowRoot.querySelector('.sapMPopupFrameOpen'), "Dialog is closed");
+				assert.notOk(this.dialog.shadowRoot.querySelector('.ui5-popup-wrapper-frame--open'), "Dialog is closed");
 				done();
 			}.bind(this));
 		}.bind(this));

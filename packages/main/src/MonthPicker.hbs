@@ -1,12 +1,12 @@
-<div {{> controlData}}
-	class="sapWCMonthPicker"
+<div
+	class="{{classes.main}}"
 	role="grid"
 	aria-readonly="false"
 	aria-multiselectable="false"
 	style="{{styles.main}}"
 >
-	{{#each ctr._quarters}}
-		<div class="{{../../classes.quarter}}">
+	{{#each _quarters}}
+		<div class="{{../classes.quarter}}">
 
 			{{#each this}}
 				<div

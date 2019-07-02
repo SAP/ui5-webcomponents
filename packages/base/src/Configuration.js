@@ -1,6 +1,8 @@
 import CalendarType from "@ui5/webcomponents-core/dist/sap/ui/core/CalendarType.js";
 import getDesigntimePropertyAsArray from "./util/getDesigntimePropertyAsArray.js";
 
+let initialized = false;
+
 const CONFIGURATION = {
 	theme: "sap_fiori_3",
 	rtl: null,
@@ -14,18 +16,22 @@ const CONFIGURATION = {
 
 /* General settings */
 const getTheme = () => {
+	initConfiguration();
 	return CONFIGURATION.theme;
 };
 
 const getRTL = () => {
+	initConfiguration();
 	return CONFIGURATION.rtl;
 };
 
 const getLanguage = () => {
+	initConfiguration();
 	return CONFIGURATION.language;
 };
 
 const getCompactSize = () => {
+	initConfiguration();
 	return CONFIGURATION.compactSize;
 };
 
@@ -34,11 +40,17 @@ const getSupportedLanguages = () => {
 };
 
 const getWCNoConflict = () => {
+	initConfiguration();
 	return CONFIGURATION["xx-wc-no-conflict"];
+};
+
+const _setWCNoConflict = value => {
+	CONFIGURATION["xx-wc-no-conflict"] = value;
 };
 
 /* Calendar stuff */
 const getCalendarType = () => {
+	initConfiguration();
 	if (CONFIGURATION.calendarType) {
 		const type = Object.keys(CalendarType).filter(calType => calType === CONFIGURATION.calendarType)[0];
 
@@ -53,6 +65,7 @@ const getCalendarType = () => {
 const getOriginInfo = () => {};
 
 const getLocale = () => {
+	initConfiguration();
 	return CONFIGURATION.language;
 };
 
@@ -110,13 +123,18 @@ const applyConfigurations = () => {
 };
 
 const initConfiguration = () => {
+	if (initialized) {
+		return;
+	}
+
 	parseConfigurationScript();
 	parseURLParameters();
 	applyConfigurations();
+
+	initialized = true;
 };
 
 export {
-	initConfiguration,
 	getTheme,
 	getRTL,
 	getLanguage,
@@ -125,6 +143,7 @@ export {
 	getCalendarType,
 	getLocale,
 	_setTheme,
+	_setWCNoConflict,
 	getSupportedLanguages,
 	getOriginInfo,
 };

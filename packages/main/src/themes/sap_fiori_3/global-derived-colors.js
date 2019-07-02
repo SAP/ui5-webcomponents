@@ -91,6 +91,8 @@ const derivationsFactory = ({ darken, lighten, contrast, fade, saturate, desatur
 		"--sapUiObjectHeaderBorderColor": () => darken("--sapUiObjectHeaderBackground", 15),
 		"--sapUiDragAndDropActiveBackground": () => fade("--sapUiLink", 5),
 		"--sapUiContentShadowColorFade5": () => fade("--sapUiContentShadowColor", 5),
+		"--sapUiButtonBackgroundDarken24": () => darken("--sapUiButtonBackground", 24),
+		"--sapUiButtonHoverBorderColorLighten30": () => lighten("--sapUiButtonHoverBorderColor", 30),
 		"--sapUiShadowHeader": () => concat({
 			static: "0 1px 0.5rem 0",
 			var: "--sapUiContentShadowColorFade5"

@@ -1,23 +1,23 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler.js";
 import ScrollEnablement from "@ui5/webcomponents-base/src/delegate/ScrollEnablement.js";
 import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-import TabContainerTemplateContext from "./TabContainerTemplateContext.js";
-import TabContainerRenderer from "./build/compiled/TabContainerRenderer.lit.js";
+import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
+import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
+import TabContainerTemplate from "./build/compiled/TabContainerTemplate.lit.js";
 import Button from "./Button.js";
 import CustomListItem from "./CustomListItem.js";
 import Icon from "./Icon.js";
 import List from "./List.js";
 import Popover from "./Popover.js";
 import TabBase from "./TabBase.js";
+import SemanticColor from "./types/SemanticColor.js";
 
 // Styles
 import tabContainerCss from "./themes/TabContainer.css.js";
 
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
 
 const SCROLL_STEP = 128;
 
@@ -26,7 +26,6 @@ const SCROLL_STEP = 128;
  */
 const metadata = {
 	tag: "ui5-tabcontainer",
-	defaultSlot: "items",
 	slots: /** @lends  sap.ui.webcomponents.main.TabContainer.prototype */ {
 		/**
 		 * Defines the tabs.
@@ -36,9 +35,10 @@ const metadata = {
 		 * @public
 		 * @slot
 		 */
-		items: {
+		"default": {
+			propertyName: "items",
 			type: TabBase,
-			multiple: true,
+			individualSlots: true,
 			listenFor: { include: ["*"] },
 		},
 	},
@@ -48,6 +48,7 @@ const metadata = {
 		 * expandable/collapsible by user interaction.
 		 *
 		 * @type {Boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		fixed: {
@@ -58,6 +59,7 @@ const metadata = {
 		 * Determines whether the tab content is collapsed.
 		 *
 		 * @type {Boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		collapsed: {
@@ -71,30 +73,11 @@ const metadata = {
 		 * so that it's easier for the user to select a specific tab filter.
 		 *
 		 * @type {Boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		showOverflow: {
 			type: Boolean,
-		 },
-
-		_headerItem: {
-			type: Object,
-		},
-
-		_overflowButton: {
-			type: Object,
-		},
-
-		_headerBackArrow: {
-			type: Object,
-		},
-
-		_headerForwardArrow: {
-			type: Object,
-		},
-
-		_overflowList: {
-			type: Object,
 		},
 
 		_selectedTab: {
@@ -170,48 +153,22 @@ class TabContainer extends UI5Element {
 		return tabContainerCss;
 	}
 
-	static get renderer() {
-		return TabContainerRenderer;
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return TabContainerTemplate;
 	}
 
 	constructor() {
 		super();
 
-		this._onHeaderItemSelect = this._onHeaderItemSelect.bind(this);
-		this._onHeaderItemKeyDown = this._onHeaderItemKeyDown.bind(this);
-		this._onHeaderItemKeyUp = this._onHeaderItemKeyUp.bind(this);
-		this._onOverflowListItemSelect = this._onOverflowListItemSelect.bind(this);
-		this._onOverflowButtonClick = this._onOverflowButtonClick.bind(this);
-		this._onHeaderBackArrowClick = this._onHeaderBackArrowClick.bind(this);
-		this._onHeaderForwardArrowClick = this._onHeaderForwardArrowClick.bind(this);
 		this._handleHeaderResize = this._handleHeaderResize.bind(this);
-		this._updateScrolling = this._updateScrolling.bind(this);
-
-		this._headerItem = {
-			click: this._onHeaderItemSelect,
-			keydown: this._onHeaderItemKeyDown,
-			keyup: this._onHeaderItemKeyUp,
-		};
-
-		this._overflowButton = {
-			click: this._onOverflowButtonClick,
-		};
-
-		this._headerBackArrow = {
-			click: this._onHeaderBackArrowClick,
-		};
-
-		this._headerForwardArrow = {
-			click: this._onHeaderForwardArrowClick,
-		};
-
-		this._overflowList = {
-			click: this._onOverflowListItemSelect,
-		};
 
 		// Init ScrollEnablement
 		this._scrollEnablement = new ScrollEnablement();
-		this._scrollEnablement.attachEvent("scroll", this._updateScrolling);
+		this._scrollEnablement.attachEvent("scroll", this._updateScrolling.bind(this));
 		this._delegates.push(this._scrollEnablement);
 
 		// Init ItemNavigation
@@ -226,9 +183,45 @@ class TabContainer extends UI5Element {
 			};
 		});
 
-		if (!hasSelected) {
+		if (this.items.length && !hasSelected) {
 			this.items[0].selected = true;
 		}
+
+		this.calculateRenderItems();
+
+		this._itemNavigation.init();
+	}
+
+	calculateRenderItems() {
+		this.renderItems = this.items.map((item, index) => {
+			const isSeparator = item.isSeparator();
+
+			if (isSeparator) {
+				return { isSeparator, _tabIndex: item._tabIndex, _id: item._id };
+			}
+
+			return {
+				item,
+				isMixedModeTab: !item.icon && this.mixedMode,
+				isTextOnlyTab: !item.icon && !this.mixedMode,
+				isIconTab: item.icon,
+				position: index + 1,
+				disabled: item.disabled || undefined,
+				selected: item.selected || false,
+				hidden: !item.selected,
+				ariaLabelledBy: calculateAriaLabelledBy(item),
+				contentItemClasses: calculateContentItemClasses(item),
+				headerItemClasses: calculateHeaderItemClasses(item, this.mixedMode),
+				headerItemContentClasses: calculateHeaderItemContentClasses(item),
+				headerItemIconClasses: calculateHeaderItemIconClasses(item),
+				headerItemSemanticIconClasses: calculateHeaderItemSemanticIconClasses(item),
+				headerItemTextClasses: calculateHeaderItemTextClasses(item),
+				headerItemAdditionalTextClasses: calculateHeaderItemAdditionalTextClasses(item),
+				overflowItemClasses: calculateOverflowItemClasses(item),
+				overflowItemContentClasses: calculateOverflowItemContentClasses(item),
+				overflowItemState: calculateOverflowItemState(item),
+			};
+		}, this);
 	}
 
 	onAfterRendering() {
@@ -269,7 +262,7 @@ class TabContainer extends UI5Element {
 	}
 
 	_onHeaderItemSelect(event) {
-		if (!event.target.getAttribute("disabled")) {
+		if (!event.target.hasAttribute("disabled")) {
 			this._onItemSelect(event.target);
 		}
 	}
@@ -355,8 +348,52 @@ class TabContainer extends UI5Element {
 		return this.shadowRoot.querySelector(`#${this._id}-overflowMenu`);
 	}
 
-	static get calculateTemplateContext() {
-		return TabContainerTemplateContext.calculate;
+	get classes() {
+		return {
+			main: {
+				"ui5-tab-container": true,
+				"sapUiSizeCompact": getCompactSize(),
+			},
+			header: {
+				"ui5-tc__header": true,
+				"ui5-tc__header--scrollable": this._scrollable,
+			},
+			headerScrollContainer: {
+				"ui-tc__headerScrollContainer": true,
+			},
+			headerList: {
+				"ui5-tc__headerList": true,
+			},
+			separator: {
+				"ui5-tc__separator": true,
+			},
+			headerBackArrow: {
+				"ui5-tc__headerArrow": true,
+				"ui5-tc__headerArrowLeft": true,
+				"ui5-tc__headerArrow--visible": this._scrollableBack,
+			},
+			headerForwardArrow: {
+				"ui5-tc__headerArrow": true,
+				"ui5-tc__headerArrowRight": true,
+				"ui5-tc__headerArrow--visible": this._scrollableForward,
+			},
+			overflowButton: {
+				"ui-tc__overflowButton": true,
+				"ui-tc__overflowButton--visible": this._scrollable,
+			},
+			content: {
+				"ui5-tc__content": true,
+				"ui5-tc__content--collapsed": this.collapsed,
+			},
+		};
+	}
+
+	get mixedMode() {
+		return this.items.some(item => item.icon) && this.items.some(item => item.text);
+	}
+
+	get rtl() {
+		return getEffectiveRTL() ? "rtl" : undefined;
 	}
 
 	static async define(...params) {
@@ -384,8 +421,120 @@ const findIndex = (arr, predicate) => {
 	return -1;
 };
 
-Bootstrap.boot().then(_ => {
-	TabContainer.define();
-});
+/* CSS classes calculation helpers */
+
+const calculateAriaLabelledBy = item => {
+	const labels = [];
+
+	if (item.text) {
+		labels.push(`${item._id}-text`);
+	}
+
+	if (item.additionalText) {
+		labels.push(`${item._id}-additionalText`);
+	}
+
+	if (item.icon) {
+		labels.push(`${item._id}-icon`);
+	}
+
+	return labels.join(" ");
+};
+
+const calculateHeaderItemClasses = (item, mixedMode) => {
+	const classes = ["ui5-tc__headerItem"];
+
+	if (item.selected) {
+		classes.push("ui5-tc__headerItem--selected");
+	}
+
+	if (item.disabled) {
+		classes.push("ui5-tc__headerItem--disabled");
+	}
+
+	if (!item.icon && !mixedMode) {
+		classes.push("ui5-tc__headerItem--textOnly");
+	}
+
+	if (item.icon) {
+		classes.push("ui5-tc__headerItem--withIcon");
+	}
+
+	if (!item.icon && mixedMode) {
+		classes.push("ui5-tc__headerItem--mixedMode");
+	}
+
+	if (item.semanticColor !== SemanticColor.Default) {
+		classes.push(`ui5-tc__headerItem--${item.semanticColor.toLowerCase()}`);
+	}
+
+	return classes.join(" ");
+};
+
+const calculateHeaderItemContentClasses = item => {
+	const classes = ["ui5-tc__headerItemContent"];
+
+	return classes.join(" ");
+};
+
+const calculateHeaderItemIconClasses = item => {
+	const classes = ["ui5-tc-headerItemIcon"];
+
+	return classes.join(" ");
+};
+
+const calculateHeaderItemSemanticIconClasses = item => {
+	const classes = ["ui5-tc-headerItemSemanticIcon"];
+
+	if (item.semanticColor !== SemanticColor.Default) {
+		classes.push(`ui5-tc-headerItemSemanticIcon--${item.semanticColor.toLowerCase()}`);
+	}
+
+	return classes.join(" ");
+};
+
+const calculateHeaderItemTextClasses = item => {
+	const classes = ["ui5-tc__headerItemText"];
+
+	return classes.join(" ");
+};
+
+const calculateHeaderItemAdditionalTextClasses = item => {
+	const classes = ["ui5-tc__headerItemAdditionalText"];
+
+	return classes.join(" ");
+};
+
+const calculateOverflowItemClasses = item => {
+	const classes = ["ui5-tc__overflowItem"];
+
+	if (item.semanticColor !== SemanticColor.Default) {
+		classes.push(`ui5-tc__overflowItem--${item.semanticColor.toLowerCase()}`);
+	}
+
+	if (item.disabled) {
+		classes.push("ui5-tc__overflowItem--disabled");
+	}
+
+	return classes.join(" ");
+};
+
+const calculateOverflowItemContentClasses = item => {
+	const classes = ["ui5-tc__overflowItemContent"];
+
+	return classes.join(" ");
+};
+
+const calculateOverflowItemState = item => {
+	return item.disabled ? "Inactive" : "Active";
+};
+
+const calculateContentItemClasses = item => {
+	const classes = ["ui5-tc__contentItem"];
+
+	return classes.join(" ");
+};
+
+TabContainer.define();
 
 export default TabContainer;

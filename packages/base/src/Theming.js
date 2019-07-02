@@ -41,9 +41,8 @@ const setTheme = async theme => {
 };
 
 const getEffectiveStyle = ElementClass => {
-	const theme = getTheme();
 	const tag = ElementClass.getMetadata().getTag();
-	const customStyle = getCustomCSS(theme, tag) || "";
+	const customStyle = getCustomCSS(tag) || "";
 	let componentStyles = ElementClass.styles;
 
 	if (Array.isArray(componentStyles)) {

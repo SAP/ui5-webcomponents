@@ -1,43 +1,41 @@
-<span {{> controlData}} class="{{classes.frame}}">
-	<span id="{{ctr._id}}-firstfe" tabindex="0"></span>
-	<div style="{{styles.zindex}}" class="{{classes.dialogParent}}">
+<span class="{{classes.frame}}">
+	<span id="{{_id}}-firstfe" tabindex="0"></span>
+	<div style="{{zindex}}" class="{{classes.dialogParent}}">
 		<div tabindex="-1" aria-labelledby="{{headerId}}" role="dialog" class="{{classes.main}}">
 			{{> header}}
-			<section class="sapMDialogSection">
-				<div style="{{styles.content}}" class="sapMPopupContent">
-					<div class="sapMPopupScroll">
-						{{#each ctr.content}}
-							<slot name="{{this._slot}}"></slot>
-						{{/each}}
+			<section class="ui5-dialog-wrapper-section">
+				<div class="ui5-popup-wrapper-content">
+					<div class="ui5-popup-wrapper-scroll">
+						<slot></slot>
 					</div>
 				</div>
 			</section>
 			{{> footer}}
 		</div>
 	</div>
-	<span id="{{ctr._id}}-lastfe" tabindex="0"></span>
-	<div tabindex="0" id="{{ctr._id}}-blocklayer" style="{{styles.blockLayer}}" class="{{classes.blockLayer}}"></div>
+	<span id="{{_id}}-lastfe" tabindex="0"></span>
+	<div tabindex="0" id="{{_id}}-blocklayer" style="{{blockLayer}}" class="{{classes.blockLayer}}"></div>
 </span>
 
 {{#*inline "header"}}
-	{{#unless ctr.hideHeader}}
+	{{#unless noHeader}}
 		<header>
-			{{#if ctr.header}}
-				<div role="heading" class="sapMPopupHeader">
-					<slot name="{{ctr.header._slot}}"></slot>
+			{{#if header.length}}
+				<div role="heading" class="ui5-popup-wrapper-header">
+					<slot name="header"></slot>
 				</div>
 			{{else}}
-				<h2 role="heading" class="sapMPopupHeader sapMPopupHeaderText">{{ctr.headerText}}</h2>
+				<h2 role="heading" class="ui5-popup-wrapper-header ui5-popup-wrapper-headerText">{{headerText}}</h2>
 			{{/if}}
 		</header>
 	{{/unless}}
 {{/inline}}
 
 {{#*inline "footer"}}
-	{{#if ctr.footer}}
+	{{#if footer.length}}
 		<footer>
-			<div class="sapMPopupFooter">
-				<slot name="{{ctr.footer._slot}}"></slot>
+			<div class="ui5-popup-wrapper-footer">
+				<slot name="footer"></slot>
 			</div>
 		</footer>
 	{{/if}}

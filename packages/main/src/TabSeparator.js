@@ -1,10 +1,6 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import TabSeparatorTemplateContext from "./TabSeparatorTemplateContext.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import TabBase from "./TabBase.js";
-import TabSeparatorRenderer from "./build/compiled/TabSeparatorRenderer.lit.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
+import TabSeparatorTemplate from "./build/compiled/TabSeparatorTemplate.lit.js";
 
 /**
  * @public
@@ -33,12 +29,12 @@ class TabSeparator extends TabBase {
 		return metadata;
 	}
 
-	static get renderer() {
-		return TabSeparatorRenderer;
+	static get render() {
+		return litRender;
 	}
 
-	static get calculateTemplateContext() {
-		return TabSeparatorTemplateContext.calculate;
+	static get template() {
+		return TabSeparatorTemplate;
 	}
 
 	isSeparator() {
@@ -46,8 +42,6 @@ class TabSeparator extends TabBase {
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	TabSeparator.define();
-});
+TabSeparator.define();
 
 export default TabSeparator;

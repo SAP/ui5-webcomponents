@@ -7,11 +7,7 @@ import url from "rollup-plugin-url";
 import { terser } from "rollup-plugin-terser";
 import notify from 'rollup-plugin-notify';
 import filesize from 'rollup-plugin-filesize';
-import postcss from 'rollup-plugin-postcss';
-import postcssImport from 'postcss-import';
-import postcssNesting from 'postcss-nesting';
-import csso from 'postcss-csso';
-
+import commonjs from 'rollup-plugin-commonjs';
 
 const DIST = path.normalize("dist");
 const DIST_PLAYGROUND = path.normalize("dist/resources/sap/ui/webcomponents/main");
@@ -132,6 +128,28 @@ const getES5Config = () => {
 let config = [];
 
 config = config.concat(getES6Config());
+
+
+const getDerivedColorsConfig = (theme) => {
+	return {
+		input: `src/themes/${theme}/derived-colors.js`,
+		output: {
+			dir: `dist/themes/${theme}/`,
+			format: "esm",
+			sourcemap: true
+		},
+		plugins: [commonjs()],
+	}
+}
+
+if (!process.env.DEV) {
+	// only in PROD, not used for development
+	config = config.concat([
+		getDerivedColorsConfig("sap_belize"),
+		getDerivedColorsConfig("sap_belize_hcb"),
+		getDerivedColorsConfig("sap_fiori_3"),
+	]);
+}
 
 if (process.env.ES5_BUILD) {
 	config = config.concat(getES5Config());

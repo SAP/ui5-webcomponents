@@ -95,6 +95,19 @@ body {
     transition: all 0.5s ease-out;
 }
 
+.coding-button {
+	width: 20.75rem;
+	background: #fff;
+	color: #242424;
+	margin-right: 0.7rem;
+}
+
+.coding-button:hover {
+	background-color: #dbdbdb;
+    border-color: #dbdbdb;
+    transition: all 0.5s ease-out;
+}
+
 .secondary-button {
 	width: 11.44rem;
 	background: transparent;
@@ -120,7 +133,7 @@ body {
 .curr-version {
 	margin-top: 2rem;
 	font-family: "72-Light";
-	color: #777777;
+	color: #fafafa;
 }
 
 .main-strengths {

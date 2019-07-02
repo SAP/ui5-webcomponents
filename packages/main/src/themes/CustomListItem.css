@@ -1,16 +1,16 @@
-:host(ui5-li-custom) .sap-phone .sapMLIB {
+:host(ui5-li-custom) .sap-phone.sapMLIB {
 	outline: none;
 }
 
-:host(ui5-li-custom) {
+:host(ui5-li-custom:not([hidden])) {
 	display: block;
 }
 
-ui5-li-custom {
+ui5-li-custom:not([hidden]) {
 	display: block;
 }
 
-ui5-li-custom .sap-phone .sapMLIB {
+ui5-li-custom .sap-phone.sapMLIB {
 	outline: none;
 }
 
@@ -31,7 +31,7 @@ ui5-radiobutton.singleSelectionRadioButton {
 	min-width: 3rem;
 }
 
-.sapUiSizeCompact .sapMLIB.sapMCustomLI,
+.sapUiSizeCompact.sapMLIB.sapMCustomLI,
 .sapUiSizeCompact ui5-checkbox.multiSelectionCheckBox,
 .sapUiSizeCompact ui5-radiobutton.singleSelectionRadioButton {
 	min-width: 2rem;

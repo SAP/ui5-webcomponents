@@ -1,0 +1,7 @@
+@import "../base/YearPicker-parameters.css";
+
+:root {
+	--_ui5_token_border_radius: 0.125rem;
+	--_ui5_token_border_color: var(--sapUiButtonBorderColor);
+	--_ui5_token_hover_border_color: var(--sapUiButtonHoverBorderColor);
+}

@@ -72,7 +72,7 @@
 		</section>
 
 		<section class="row heading-row-centered">
-			<ui5-button type="Emphasized">Getting started</ui5-button>
+			<ui5-button design="Emphasized">Getting started</ui5-button>
 			<ui5-button>Download</ui5-button>
 		</section>
 
@@ -136,17 +136,17 @@
 		</section>
 
 		<section class="row row-centered">
-			<ui5-button type="Emphasized">Submit</ui5-button>
+			<ui5-button design="Emphasized">Submit</ui5-button>
 			<ui5-button disabled>Not available</ui5-button>
 			<ui5-button>Edit</ui5-button>
-			<ui5-button type="Transparent">Apply</ui5-button>
-			<ui5-button type="Transparent">Cancel</ui5-button>
+			<ui5-button design="Transparent">Apply</ui5-button>
+			<ui5-button design="Transparent">Cancel</ui5-button>
 			<ui5-button icon="sap-icon://nav-back">Back</ui5-button>
 			<ui5-button icon="sap-icon://feeder-arrow">Next</ui5-button>
-			<ui5-button type="Positive">Approve</ui5-button>
-			<ui5-button type="Negative">Decline</ui5-button>
+			<ui5-button design="Positive">Approve</ui5-button>
+			<ui5-button design="Negative">Decline</ui5-button>
 			<ui5-button icon="sap-icon://download" icon-end>Download</ui5-button>
-			<ui5-button icon="sap-icon://download" active-icon="sap-icon://menu">Activate</ui5-button>
+			<ui5-button icon="sap-icon://download">Activate</ui5-button>
 		</section>
 
 		<section class="row row-centered">
@@ -165,7 +165,7 @@
 					max-length="2"
 					show-exceeded-text>
 				</ui5-textarea>
-				<div data-ui5-slot="footer" style="display: flex; align-items: center;padding: 0.25rem 0.5rem">
+				<div slot="footer" style="display: flex; align-items: center;padding: 0.25rem 0.5rem">
 					<div style="flex: 1;"></div>
 					<ui5-button id="closePopoverButton">Close</ui5-button>
 				</div>
@@ -181,7 +181,7 @@
 					max-length="2"
 					show-exceeded-text>
 				</ui5-textarea>
-				<div data-ui5-slot="footer" style="display: flex; align-items: center;padding: 0.25rem 0.5rem">
+				<div slot="footer" style="display: flex; align-items: center;padding: 0.25rem 0.5rem">
 					<div style="flex: 1;"></div>
 					<ui5-button id="closeDialogButton">Close</ui5-button>
 				</div>
@@ -196,7 +196,7 @@
 					max-length="2"
 					show-exceeded-text>
 				</ui5-textarea>
-				<div data-ui5-slot="footer" style="display: flex; align-items: center;padding: 0.25rem 0.5rem">
+				<div slot="footer" style="display: flex; align-items: center;padding: 0.25rem 0.5rem">
 					<div style="flex: 1;"></div>
 					<ui5-button id="closeDialogStretched">Close</ui5-button>
 				</div>
@@ -231,27 +231,27 @@
 		</section>
 
 		<section class="row row-centered">
-			<ui5-link href="https://gmail.com" target="_blank" type="Emphasized">Emphasized</ui5-link>
+			<ui5-link href="https://gmail.com" target="_blank" design="Emphasized">Emphasized</ui5-link>
 			<ui5-link href="https://gmail.com" target="_blank">ui5 link</ui5-link>
-			<ui5-link href="https://gmail.com" target="_blank" type="Subtle">subtle link</ui5-link>
-			<ui5-link href="https://gmail.com" target="_blank" type="Emphasized">Emphasized</ui5-link>
+			<ui5-link href="https://gmail.com" target="_blank" design="Subtle">subtle link</ui5-link>
+			<ui5-link href="https://gmail.com" target="_blank" design="Emphasized">Emphasized</ui5-link>
 			<ui5-link href="https://gmail.com" target="_blank" disabled>disabled</ui5-link>
 			<ui5-link href="https://gmail.com" target="_blank">ui5 link</ui5-link>
-			<ui5-link href="https://gmail.com" target="_blank" type="Emphasized">Emphasized</ui5-link>
+			<ui5-link href="https://gmail.com" target="_blank" design="Emphasized">Emphasized</ui5-link>
 			<ui5-link href="https://gmail.com" target="_blank">ui5 link</ui5-link>
-			<ui5-link href="https://gmail.com" target="_blank" type="Subtle">subtle link</ui5-link>
-			<ui5-link href="https://gmail.com" target="_blank" type="Emphasized">Emphasized</ui5-link>
+			<ui5-link href="https://gmail.com" target="_blank" design="Subtle">subtle link</ui5-link>
+			<ui5-link href="https://gmail.com" target="_blank" design="Emphasized">Emphasized</ui5-link>
 			<ui5-link href="https://gmail.com" target="_blank">ui5 link</ui5-link>
 			<ui5-link href="https://gmail.com" target="_blank" disabled>disabled</ui5-link>
-			<ui5-link href="https://gmail.com" target="_blank" type="Emphasized">Emphasized</ui5-link>
+			<ui5-link href="https://gmail.com" target="_blank" design="Emphasized">Emphasized</ui5-link>
 		</section>
 
 		<section class="row">
 			<ui5-panel header-text="Panel">
-				<div style="display: flex;" data-ui5-slot="header">
+				<div style="display: flex;" slot="header">
 					<ui5-title level="H5">Countries</ui5-title>
 					<ui5-button id="button1" icon="sap-icon://refresh">Reset</ui5-button>
-					<ui5-button type="Negative">Cencel</ui5-button>
+					<ui5-button design="Negative">Cencel</ui5-button>
 				</div>
 
 				<ui5-list id="myList" mode="Delete">
@@ -261,10 +261,10 @@
 				</ui5-list>
 			</ui5-panel>
 			<ui5-panel header-text="Panel">
-				<div style="display: flex;" data-ui5-slot="header">
+				<div style="display: flex;" slot="header">
 					<ui5-title level="H5">Quarks</ui5-title>
 					<ui5-button id="button2" icon="sap-icon://add">Add</ui5-button>
-					<ui5-button type="Negative" icon="sap-icon://delete">Remove</ui5-button>
+					<ui5-button design="Negative" icon="sap-icon://delete">Remove</ui5-button>
 				</div>
 
 				<ui5-list id="myList2" mode="SingleSelectBegin">
@@ -274,10 +274,10 @@
 				</ui5-list>
 			</ui5-panel>
 			<ui5-panel header-text="Panel">
-				<div style="display: flex;" data-ui5-slot="header">
+				<div style="display: flex;" slot="header">
 						<ui5-title level="H5">Employees</ui5-title>
 						<ui5-button id="button3" icon="sap-icon://add">Add</ui5-button>
-						<ui5-button type="Negative" icon="sap-icon://delete">Remove</ui5-button>
+						<ui5-button design="Negative" icon="sap-icon://delete">Remove</ui5-button>
 				</div>
 
 					<ui5-list id="myList3" mode="MultiSelect">
@@ -292,13 +292,13 @@
 			<div style="display:flex;flex-direction:column;width:40%;">
 				<ui5-label required for="user">user:</ui5-label>
 				<ui5-input id="user" value-state="Warning" show-suggestions placeholder="username ...">
-					<ui5-icon id="user-icon" data-ui5-slot="icon" src="sap-icon://message-warning"></ui5-icon>
+					<ui5-icon id="user-icon" slot="icon" src="sap-icon://message-warning"></ui5-icon>
 				</ui5-input>
 			</div>
 			<div style="display:flex;flex-direction:column;width:40%;">
 				<ui5-label required for="pass">pass:</ui5-label>
 				<ui5-input id="pass" value-state="Error" type="Password" placeholder="pwd ...">
-						<ui5-icon data-ui5-slot="icon" src="sap-icon://message-error"></ui5-icon>
+						<ui5-icon slot="icon" src="sap-icon://message-error"></ui5-icon>
 				</ui5-input>
 			</div>
 		</section>
@@ -433,23 +433,23 @@
 
 		<section class="row">
 			<ui5-table style=" display: inline-block; width: 100%;">
-				<ui5-table-column demand-popin min-width="600px" popin-text="Component" data-ui5-slot="columns">
-					<span style="line-height: 3rem" data-ui5-slot="header" >Component</span>
+				<ui5-table-column demand-popin min-width="600px" popin-text="Component" slot="columns">
+					<span style="line-height: 3rem" >Component</span>
 				</ui5-table-column>
-				<ui5-table-column demand-popin min-width="1000px" popin-text="Accessibility" data-ui5-slot="columns">
-					<span style="line-height: 3rem"  data-ui5-slot="header">Accessibility</span>
+				<ui5-table-column demand-popin min-width="1000px" popin-text="Accessibility" slot="columns">
+					<span style="line-height: 3rem" >Accessibility</span>
 				</ui5-table-column>
-				<ui5-table-column demand-popin min-width="800px" popin-text="Text Coverage" data-ui5-slot="columns">
-					<span style="line-height: 3rem" data-ui5-slot="header">Test Coverage</span>
+				<ui5-table-column demand-popin min-width="800px" popin-text="Text Coverage" slot="columns">
+					<span style="line-height: 3rem">Test Coverage</span>
 				</ui5-table-column>
-				<ui5-table-column demand-popin min-width="600px" popin-text="RTL" data-ui5-slot="columns">
-					<span style="line-height: 3rem" data-ui5-slot="header">RTL</span>
+				<ui5-table-column demand-popin min-width="600px" popin-text="RTL" slot="columns">
+					<span style="line-height: 3rem">RTL</span>
 				</ui5-table-column>
-				<ui5-table-column demand-popin min-width="600px" popin-text="i18n" data-ui5-slot="columns">
-					<span style="line-height: 3rem" data-ui5-slot="header">i18n</span>
+				<ui5-table-column demand-popin min-width="600px" popin-text="i18n" slot="columns">
+					<span style="line-height: 3rem">i18n</span>
 				</ui5-table-column>
 
-				<ui5-table-row data-ui5-slot="rows">
+				<ui5-table-row >
 					<ui5-table-cell>
 						<span>Component 1</span>
 					</ui5-table-cell>
@@ -466,7 +466,7 @@
 						<span class="green">100%</span>
 					</ui5-table-cell>
 				</ui5-table-row>
-				<ui5-table-row data-ui5-slot="rows">
+				<ui5-table-row >
 					<ui5-table-cell>
 						<span>Component 2</span>
 					</ui5-table-cell>
@@ -483,7 +483,7 @@
 						<span class="green">100%</span>
 					</ui5-table-cell>
 				</ui5-table-row>
-				<ui5-table-row data-ui5-slot="rows">
+				<ui5-table-row >
 					<ui5-table-cell>
 						<span>Component 3</span>
 					</ui5-table-cell>
@@ -500,7 +500,7 @@
 						<span class="green">100%</span>
 					</ui5-table-cell>
 				</ui5-table-row>
-				<ui5-table-row data-ui5-slot="rows">
+				<ui5-table-row >
 					<ui5-table-cell>
 						<span>Component 4</span>
 					</ui5-table-cell>
@@ -517,7 +517,7 @@
 						<span class="green">100%</span>
 					</ui5-table-cell>
 				</ui5-table-row>
-				<ui5-table-row data-ui5-slot="rows">
+				<ui5-table-row >
 					<ui5-table-cell>
 						<span>Component 5</span>
 					</ui5-table-cell>
@@ -534,7 +534,7 @@
 						<span class="green">100%</span>
 					</ui5-table-cell>
 				</ui5-table-row>
-				<ui5-table-row data-ui5-slot="rows">
+				<ui5-table-row >
 					<ui5-table-cell>
 						<span>Component 6</span>
 					</ui5-table-cell>

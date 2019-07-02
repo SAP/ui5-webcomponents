@@ -4,6 +4,10 @@ TestHelper.ready(function () {
 
 	var fixture = window.document.querySelector("#qunit-fixture");
 
+	var getActualText = function(el) {
+		return el.shadowRoot.querySelector('.sapMBtnText>bdi>slot').assignedNodes()[0].textContent;
+	};
+
 	QUnit.module("Web Components", {
 		beforeEach: function () {
 			var html = '<ui5-button id="myButton">Button</ui5-button>';
@@ -20,7 +24,7 @@ TestHelper.ready(function () {
 	});
 
 	QUnit.test("rendering", function (assert) {
-		assert.strictEqual(this.button.shadowRoot.querySelector('.sapMBtnText>bdi').textContent, 'Button', "Button text is correct");
+		assert.strictEqual(getActualText(this.button), 'Button', "Button text is correct");
 	});
 
 	QUnit.test("icon", function (assert) {
@@ -42,19 +46,8 @@ TestHelper.ready(function () {
 		this.button.textContent = 'New Text';
 
 		RenderScheduler.whenFinished().then(function () {
-			assert.strictEqual(this.button.shadowRoot.querySelector('.sapMBtnText>bdi').textContent, 'New Text', "New text is correct");
+			assert.strictEqual(getActualText(this.button), 'New Text', "New text is correct");
 			done();
 		}.bind(this));
-	});
-
-	QUnit.test("events", function (assert) {
-		var done = assert.async();
-
-		this.button.addEventListener('press', function (event) {
-			assert.ok(true, 'press event is fired');
-			done();
-		});
-
-		this.button.click();
 	});
 });

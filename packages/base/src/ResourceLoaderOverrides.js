@@ -10,7 +10,7 @@ window.sap.ui = window.sap.ui || {};
 
 sap.ui.loader = sap.ui.loader || {};
 sap.ui.loader._ = sap.ui.loader._ || {};
-const getModulecontentOrig = sap.ui.loader._.getModuleContent;
+const getModuleContentOrig = sap.ui.loader._.getModuleContent;
 
 sap.ui.loader._.getModuleContent = (moduleName, url) => {
 	const customContent = resources.get(moduleName) || resources.get(url);
@@ -18,8 +18,14 @@ sap.ui.loader._.getModuleContent = (moduleName, url) => {
 	if (customContent) {
 		return customContent;
 	}
-	if (getModulecontentOrig) {
-		return getModulecontentOrig(moduleName, url);
+	if (getModuleContentOrig) {
+		return getModuleContentOrig(moduleName, url);
+	}
+
+	const missingModule = moduleName.match(/sap\/ui\/core\/cldr\/(\w+)\.json/);
+
+	if (missingModule) {
+		throw new Error(`CLDR data for locale ${missingModule[1]} is not loaded!`);
 	}
 
 	return "";

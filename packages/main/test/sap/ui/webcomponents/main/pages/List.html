@@ -8,6 +8,7 @@
 	<script src="../../../../../../webcomponentsjs/webcomponents-loader.js"></script>
 	<script src="../../../../../../resources/sap/ui/webcomponents/main/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../../../../../resources/sap/ui/webcomponents/main/bundle.es5.js"></script>
+	<script>delete Document.prototype.adoptedStyleSheets;</script>
 </head>
 
 <body>
@@ -15,45 +16,45 @@
 
 	<ui5-list header-text="API: GroupHeaderListItem" mode="MultiSelect">
 		<ui5-li-groupheader>New Items</ui5-li-groupheader>
-		<ui5-li image="./img/HT-1000.jpg" icon="sap-icon://navigation-right-arrow" type="Active">Laptop HP</ui5-li>
-		<ui5-li image="./img/HT-1010.jpg" icon="sap-icon://navigation-right-arrow" type="Active">Laptop Lenovo</ui5-li>
-		<ui5-li image="./img/HT-1022.jpg" icon="sap-icon://navigation-right-arrow" type="Active">IPhone 3</ui5-li>
+		<ui5-li image="./img/HT-1000.jpg" icon="sap-icon://navigation-right-arrow" info="Available">Laptop HP</ui5-li>
+		<ui5-li image="./img/HT-1010.jpg" icon="sap-icon://navigation-right-arrow" info="Re-stock" description="#12331232131" info-state="Error">Laptop Lenovo</ui5-li>
+		<ui5-li image="./img/HT-1022.jpg" icon="sap-icon://navigation-right-arrow" info="Re-stock" description="#12331232131"  info-state="Error">IPhone 3</ui5-li>
 
 		<ui5-li-groupheader>Discounted Items</ui5-li-groupheader>
-		<ui5-li image="./img/HT-1030.jpg" type="Active" icon-end icon="sap-icon://navigation-right-arrow">HP Monitor 24</ui5-li>
-		<ui5-li image="./img/HT-2026.jpg" type="Active" icon-end icon="sap-icon://navigation-right-arrow">Audio cabel</ui5-li>
-		<ui5-li image="./img/HT-2002.jpg" type="Active" icon-end icon="sap-icon://navigation-right-arrow">DVD set</ui5-li>
+		<ui5-li image="./img/HT-1030.jpg"  icon-end icon="sap-icon://navigation-right-arrow" description="#12331232131"  info="Reuqired" info-state="Error">HP Monitor 24</ui5-li>
+		<ui5-li image="./img/HT-2026.jpg"  icon-end icon="sap-icon://navigation-right-arrow" description="#12331232131"  info="Available" info-state="Success">Audio cabel</ui5-li>
+		<ui5-li image="./img/HT-2002.jpg"  icon-end icon="sap-icon://navigation-right-arrow" info="Reuqired" info-state="Warning">DVD set</ui5-li>
 
 		<ui5-li-groupheader>Discounted Items</ui5-li-groupheader>
-		<ui5-li image="./img/HT-1030.jpg" type="Active" icon="sap-icon://navigation-right-arrow">HP Monitor 24</ui5-li>
-		<ui5-li image="./img/HT-2026.jpg" type="Active" icon="sap-icon://navigation-right-arrow">Audio cabel</ui5-li>
-		<ui5-li image="./img/HT-2002.jpg" type="Active" icon="sap-icon://navigation-right-arrow">DVD set</ui5-li>
+		<ui5-li image="./img/HT-1030.jpg"  icon="sap-icon://navigation-right-arrow">HP Monitor 24</ui5-li>
+		<ui5-li image="./img/HT-2026.jpg"  icon="sap-icon://navigation-right-arrow">Audio cabel</ui5-li>
+		<ui5-li image="./img/HT-2002.jpg"  icon="sap-icon://navigation-right-arrow">DVD set</ui5-li>
 	</ui5-list>
 
 	<br/><br/>
 
 	<ui5-list header-text="API: icon">
-		<ui5-li type="Active" icon="sap-icon://navigation-right-arrow">Option 1</ui5-li>
-		<ui5-li type="Active" icon="sap-icon://navigation-right-arrow">Option 2</ui5-li>
-		<ui5-li type="Active" icon="sap-icon://navigation-right-arrow">Option 3</ui5-li>
-		<ui5-li type="Active" icon-end icon="sap-icon://navigation-right-arrow">Option 1</ui5-li>
-		<ui5-li type="Active" icon-end icon="sap-icon://navigation-right-arrow">Option 2</ui5-li>
-		<ui5-li type="Active" icon-end icon="sap-icon://navigation-right-arrow">Option 3</ui5-li>
+		<ui5-li  icon="sap-icon://navigation-right-arrow">Option 1</ui5-li>
+		<ui5-li  icon="sap-icon://navigation-right-arrow">Option 2</ui5-li>
+		<ui5-li  icon="sap-icon://navigation-right-arrow">Option 3</ui5-li>
+		<ui5-li  icon-end icon="sap-icon://navigation-right-arrow">Option 1</ui5-li>
+		<ui5-li  icon-end icon="sap-icon://navigation-right-arrow">Option 2</ui5-li>
+		<ui5-li  icon-end icon="sap-icon://navigation-right-arrow">Option 3</ui5-li>
 	</ui5-list>
 
 	<br/><br/>
 
 	<ui5-list header-text="API: image">
-		<ui5-li image="./img/HT-1000.jpg" type="Active">Laptop HP</ui5-li>
-		<ui5-li image="./img/HT-1010.jpg" type="Active">laptop Lenovo</ui5-li>
-		<ui5-li image="./img/HT-1022.jpg" type="Active">IPhone 3</ui5-li>
+		<ui5-li image="./img/HT-1000.jpg" >Laptop HP</ui5-li>
+		<ui5-li image="./img/HT-1010.jpg" >laptop Lenovo</ui5-li>
+		<ui5-li image="./img/HT-1022.jpg" >IPhone 3</ui5-li>
 	</ui5-list>
 
 	<br/><br/>
 
 	<ui5-list header-text="API: ListItem type='Active/Inactive'" mode="SingleSelect">
-		<ui5-li type="Active">Active item - press</ui5-li>
-		<ui5-li type="Active">Active item - press</ui5-li>
+		<ui5-li >Active item - press</ui5-li>
+		<ui5-li >Active item - press</ui5-li>
 		<ui5-li selected type="Inactive">Inactive item</ui5-li>
 		<ui5-li type="Inactive">Inactive item</ui5-li>
 	</ui5-list>
@@ -61,20 +62,22 @@
 	<br/><br/>
 
 	<ui5-list id="myList" mode="SingleSelect" header-text="API: mode='SingleSelect'">
-		<ui5-li id="country1" type="Active">Argentina</ui5-li>
-		<ui5-li id="country2" type="Active">Bulgaria</ui5-li>
-		<ui5-li id="country3" selected type="Active">China</ui5-li>
+		<ui5-li id="country1" >Argentina</ui5-li>
+		<ui5-li id="country2" >Bulgaria</ui5-li>
+		<ui5-li id="country3" selected >China</ui5-li>
 	</ui5-list>
 
 	<br/><br/>
 
 	<ui5-label id="itemPress">[Event] itemPress :: n/a</ui5-label>
 	<br/><br/>
+	<ui5-label id="itemClick">[Event] itemClick :: n/a</ui5-label>
+	<br/><br/>
 	<ui5-label id="selectionChange">[Event] selectionChange :: n/a</ui5-label>
 	<ui5-list id="myList2" mode="SingleSelectEnd" header-text="API: mode='SingleSelectEnd'">
-		<ui5-li id="country1" type="Active">Argentina</ui5-li>
-		<ui5-li id="country2" selected type="Active">Bulgaria</ui5-li>
-		<ui5-li id="country3" type="Active">China</ui5-li>
+		<ui5-li id="country1" >Argentina</ui5-li>
+		<ui5-li id="country2" selected >Bulgaria</ui5-li>
+		<ui5-li id="country3" >China</ui5-li>
 		<ui5-li id="country4" >Italy</ui5-li>
 		<ui5-li id="country5" >Vietnam</ui5-li>
 	</ui5-list>
@@ -82,9 +85,9 @@
 	<br/><br/>
 
 	<ui5-list id="myList3" mode="SingleSelectBegin" header-text="API: mode='SingleSelectBegin'">
-		<ui5-li id="country1" type="Active">Argentina</ui5-li>
-		<ui5-li id="country2" type="Active" selected>Bulgaria</ui5-li>
-		<ui5-li id="country3" type="Active">China</ui5-li>
+		<ui5-li id="country1" >Argentina</ui5-li>
+		<ui5-li id="country2"  selected>Bulgaria</ui5-li>
+		<ui5-li id="country3" >China</ui5-li>
 	</ui5-list>
 
 	<br/><br/>
@@ -113,9 +116,9 @@
 	<br/><br/>
 
 	<ui5-list header-text="API: ListItem selected">
-		<ui5-li selected="selected" image="./img/HT-1000.jpg" type="Active">Laptop HP</ui5-li>
-		<ui5-li image="./img/HT-1010.jpg" type="Active">laptop Lenovo</ui5-li>
-		<ui5-li image="./img/HT-1022.jpg" type="Active">IPhone 3</ui5-li>
+		<ui5-li selected="selected" image="./img/HT-1000.jpg" >Laptop HP</ui5-li>
+		<ui5-li image="./img/HT-1010.jpg" >laptop Lenovo</ui5-li>
+		<ui5-li image="./img/HT-1022.jpg" >IPhone 3</ui5-li>
 	</ui5-list>
 
 	<br/><br/>
@@ -144,15 +147,15 @@
 	</ui5-list>
 
 	<ui5-list header-text="API separators" separators="None">
-		<ui5-li type="Active">Option 1</ui5-li>
-		<ui5-li type="Active">Option 2</ui5-li>
-		<ui5-li type="Active">Option 3</ui5-li>
+		<ui5-li >Option 1</ui5-li>
+		<ui5-li >Option 2</ui5-li>
+		<ui5-li >Option 3</ui5-li>
 	</ui5-list>
 	<br/><br/>
 	<ui5-list separators="Inner">
-			<ui5-li type="Active">Option 1</ui5-li>
-			<ui5-li type="Active">Option 2</ui5-li>
-			<ui5-li type="Active">Option 3</ui5-li>
+			<ui5-li >Option 1</ui5-li>
+			<ui5-li >Option 2</ui5-li>
+			<ui5-li >Option 3</ui5-li>
 	</ui5-list>
 
 	<script>
@@ -167,6 +170,7 @@
 		var resetBtn = document.getElementById('resetBtn');
 		var infoLbl = document.getElementById('infoLbl');
 		var lblItemPress = document.getElementById('itemPress');
+		var lblItemClick = document.getElementById('itemClick');
 		var lblSelectionChange = document.getElementById('selectionChange');
 		var lblItemPress2 = document.getElementById('itemPress2');
 		var lblSelectionChange2 = document.getElementById('selectionChange2');
@@ -177,7 +181,7 @@
 
 		var getItems = function getItems(items) {
 			return items.map(function (item) {
-				return '<ui5-li type="Active" id="' + item.id + '">' + item.textContent + '</ui5-li>';
+				return '<ui5-li  id="' + item.id + '">' + item.textContent + '</ui5-li>';
 			}).join();
 		};
 
@@ -206,7 +210,7 @@
 			infoLbl.innerHTML = "Items " + info[count];
 		};
 
-		list.addEventListener("itemDelete", function (event) {
+		list.addEventListener("ui5-itemDelete", function (event) {
 			var item = event.detail.item;
 			var newItems = list.items.filter(function (x) {
 				return x.id !== item.id;
@@ -220,31 +224,34 @@
 			updateInfo(newItems.length);
 		});
 
-		resetBtn.addEventListener("press", resetList);
+		resetBtn.addEventListener("ui5-press", resetList);
 
-		singleSelectList.addEventListener("selectionChange", function (event) {
-			var selectedItems = event.detail.items;
+		singleSelectList.addEventListener("ui5-selectionChange", function (event) {
+			var selectedItems = event.detail.selectedItems;
 
 			alert("Selection changed: " + selectedItems.map(item => item.id).join("/"));
 		});
 
-		singleSelectEndList.addEventListener("itemPress", function (event) {
+		singleSelectEndList.addEventListener("ui5-itemPress", function (event) {
 			var pressedItem = event.detail.item;
 			lblItemPress.innerHTML = "Event] itemPress :: " + pressedItem.id;
 		});
+		singleSelectEndList.addEventListener("ui5-itemClick", function (event) {
+			lblItemClick.innerHTML = "Event] itemClick :: " + event.detail.item.id;
+		});
 
-		singleSelectEndList.addEventListener("selectionChange", function (event) {
-			var selectedItems = event.detail.items;
+		singleSelectEndList.addEventListener("ui5-selectionChange", function (event) {
+			var selectedItems = event.detail.selectedItems;
 			lblSelectionChange.innerHTML = "|Event] selectionChange :: " + selectedItems.map(item => item.id).join("/");
 		});
 
-		multiSelectList.addEventListener("itemPress", function (event) {
+		multiSelectList.addEventListener("ui5-itemPress", function (event) {
 			var pressedItem = event.detail.item;
 			lblItemPress2.innerHTML = "Event] itemPress :: " + pressedItem.id;
 		});
 
-		multiSelectList.addEventListener("selectionChange", function (event) {
-			var selectedItems = event.detail.items;
+		multiSelectList.addEventListener("ui5-selectionChange", function (event) {
+			var selectedItems = event.detail.selectedItems;
 			lblSelectionChange2.innerHTML = "Event] selectionChange :: " + selectedItems.map(item => item.id).join("/");
 		});
 	</script>

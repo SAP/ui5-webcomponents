@@ -1,8 +1,10 @@
-<li {{> controlData}}
-	tabindex="{{ctr._tabIndex}}"
-	style="{{styles.main}}"
-	class="{{classes.main}}">
-		<div id="{{ctr._id}}-content" class="{{classes.inner}}">
-				<span class="{{classes.span}}">{{ctr._nodeText}}</span>
+<li
+	tabindex="{{_tabIndex}}"
+	class="{{classes.main}}"
+	@focusin="{{onfocusin}}"
+	@focusout="{{onfocusout}}"
+>
+		<div id="{{_id}}-content" class="{{classes.inner}}">
+				<span class="{{classes.span}}"><slot></slot></span>
 		</div>
 </li>

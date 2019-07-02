@@ -1,8 +1,8 @@
-:host(ui5-timeline-item) {
+:host(ui5-timeline-item:not([hidden])) {
 	display: block;
 }
 
-ui5-timeline-item {
+ui5-timeline-item:not([hidden]) {
 	display: block;
 }
 
@@ -48,8 +48,12 @@ ui5-timeline-item {
 	transform: translateX(-50%);
 }
 
-.sapWCTimelineItemLast .sapWCTimelineIndicator::before {
+:host(ui5-timeline-item:last-child) .sapWCTimelineIndicator::before {
 	display: none;
+}
+
+ui5-timeline-item:last-child .sapWCTimelineIndicator::before {
+    display: none;
 }
 
 .sapWCTimelineItemIcon {

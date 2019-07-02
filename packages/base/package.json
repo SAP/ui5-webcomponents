@@ -1,6 +1,6 @@
 {
   "name": "@ui5/webcomponents-base",
-  "version": "0.10.1",
+  "version": "0.14.0",
   "description": "UI5 Web Components: webcomponents.base",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
@@ -12,7 +12,8 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/SAP/ui5-webcomponents.git"
+    "url": "https://github.com/SAP/ui5-webcomponents.git",
+    "directory": "packages/base"
   },
   "scripts": {
     "build": "npm run lint --scripts-prepend-node-path ",
@@ -20,7 +21,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@ui5/webcomponents-core": "0.10.1",
+    "@ui5/webcomponents-core": "0.14.0",
     "lit-html": "^1.0.0",
     "regenerator-runtime": "0.12.1",
     "url-search-params-polyfill": "^5.0.0"

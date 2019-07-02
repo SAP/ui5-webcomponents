@@ -1,17 +1,7 @@
-import Input from "./Input.js";
-import TextArea from "./TextArea.js";
-import DatePicker from "./DatePicker.js";
-import CheckBox from "./CheckBox.js";
-import RadioButton from "./RadioButton.js";
-import Button from "./Button.js";
-
+import { registerFeature } from "@ui5/webcomponents-base/src/FeaturesRegistry.js";
 import FormSupport from "./util/FormSupport.js";
 
-Input.FormSupport = FormSupport;
-TextArea.FormSupport = FormSupport;
-DatePicker.FormSupport = FormSupport;
-CheckBox.FormSupport = FormSupport;
-RadioButton.FormSupport = FormSupport;
-Button.FormSupport = FormSupport;
+// Add form support to the global features registry so that Web Components can find and use it
+registerFeature("FormSupport", FormSupport);
 
-export default {};
+export default FormSupport;

@@ -187,7 +187,7 @@ TestHelper.ready(function() {
 		});
 		hooks.beforeEach(function () {
 			var html = '<ui5-input id="myInput">'
-				+ '<ui5-icon id="icon" data-ui5-slot="icon" src="sap-icon://message-success"></ui5-icon>'
+				+ '<ui5-icon id="icon" slot="icon" src="sap-icon://message-success"></ui5-icon>'
 				+ '</ui5-input>';
 
 			fixture.innerHTML = html;

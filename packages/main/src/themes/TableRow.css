@@ -1,9 +1,9 @@
-:host(ui5-table-row) {
+:host(ui5-table-row:not([hidden])) {
 	display: inline-block;
 	width: 100%;
 }
 
-ui5-table-row {
+ui5-table-row:not([hidden]) {
 	display: inline-block;
 	width: 100%;
 }

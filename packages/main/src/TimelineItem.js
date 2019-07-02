@@ -1,37 +1,29 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import URI from "@ui5/webcomponents-base/src/types/URI.js";
-import Function from "@ui5/webcomponents-base/src/types/Function.js";
-import { fetchCldrData } from "@ui5/webcomponents-base/src/CLDR.js";
-import { getLocale } from "@ui5/webcomponents-base/src/LocaleProvider.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
+import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
+import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
 import Icon from "./Icon.js";
 import Link from "./Link.js";
-import TimelineItemTemplateContext from "./TimelineItemTemplateContext.js";
-import TimelineItemRenderer from "./build/compiled/TimelineItemRenderer.lit.js";
+import TimelineItemTemplate from "./build/compiled/TimelineItemTemplate.lit.js";
 
 // Styles
 import styles from "./themes/TimelineItem.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-timeline-item",
-	defaultSlot: "description",
 	slots: /** @lends sap.ui.webcomponents.main.TimelineItem.prototype */ {
 		/**
 		 * Determines the description of the <code>ui5-timeline-item</code>.
 		 *
-		 * @type {HTMLElement}
+		 * @type {Node[]}
 		 * @slot
 		 * @public
 		 */
-		description: {
-			type: HTMLElement,
-			multiple: false,
+		"default": {
+			type: Node,
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.TimelineItem.prototype */ {
@@ -42,27 +34,30 @@ const metadata = {
 		 *
 		 * See all the available icons in the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
 		 *
-		 * @type {URI}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 */
-		icon: { type: URI, defaultValue: null },
+		icon: {
+			type: String,
+		},
 
 		/**
 		 * Defines the name of the item.
 		 *
-		 * @type {String}
+		 * @type {string}
+		 * @defaultvalue false
 		 * @public
 		 */
 		itemName: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
-		 * Defines whether the name is clickable.
+		 * Defines whether the <code>itemName</code> is clickable.
 		 *
 		 * @type {Boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		itemNameClickable: {
@@ -72,26 +67,22 @@ const metadata = {
 		/**
 		 * Defines the title text of the component.
 		 *
-		 * @type {String}
+		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		titleText: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
 		 * Defines the subtitle text of the component.
-		 * @type {String}
+		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		subtitleText: {
 			type: String,
-			defaultValue: "",
-		},
-
-		_onItemNamePress: {
-			type: Function,
 		},
 
 		_tabIndex: {
@@ -110,7 +101,7 @@ const metadata = {
 		 * @event
 		 * @public
 		 */
-		itemNamePress: {},
+		itemNameClick: {},
 	},
 };
 
@@ -126,7 +117,6 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.TimelineItem
  * @extends UI5Element
  * @tagname ui5-timeline
- * @usestextcontent
  * @public
  */
 class TimelineItem extends UI5Element {
@@ -134,12 +124,12 @@ class TimelineItem extends UI5Element {
 		return metadata;
 	}
 
-	static get renderer() {
-		return TimelineItemRenderer;
+	static get render() {
+		return litRender;
 	}
 
-	static get calculateTemplateContext() {
-		return TimelineItemTemplateContext.calculate;
+	static get template() {
+		return TimelineItemTemplate;
 	}
 
 	static get styles() {
@@ -148,17 +138,31 @@ class TimelineItem extends UI5Element {
 
 	constructor() {
 		super();
-
-		this._onItemNamePress = this.onItemNamePress.bind(this);
 	}
 
 	onItemNamePress() {
-		this.fireEvent("itemNamePress", {});
+		this.fireEvent("itemNameClick", {});
+	}
+
+	get classes() {
+		return {
+			main: {
+				sapWCTimelineItem: true,
+				sapUiSizeCompact: getCompactSize(),
+			},
+			indicator: {
+				sapWCTimelineIndicator: true,
+				sapWCTimelineIndicatorNoIcon: !this.icon,
+			},
+		};
+	}
+
+	get rtl() {
+		return getEffectiveRTL() ? "rtl" : undefined;
 	}
 
 	static async define(...params) {
 		await Promise.all([
-			fetchCldrData(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
 			Icon.define(),
 			Link.define(),
 		]);
@@ -167,8 +171,6 @@ class TimelineItem extends UI5Element {
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	TimelineItem.define();
-});
+TimelineItem.define();
 
 export default TimelineItem;

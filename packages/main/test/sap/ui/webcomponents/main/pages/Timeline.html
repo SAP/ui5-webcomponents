@@ -86,10 +86,10 @@
 				<ui5-timeline>
 					<ui5-timeline-item id="test-item" title-text="called" subtitle-text="20.02.2017 11:30" icon="sap-icon://phone" item-name="Stanislava Baltova" item-name-clickable></ui5-timeline-item>
 					<ui5-timeline-item title-text="Weekly Sync - CP Design" subtitle-text="27.08.2017 (11:00 - 12:00)" icon="sap-icon://calendar">
-						<div>MR SOF02 2.43</div>
+						<ui5-label>MR SOF02 2.43</ui5-label>
 					</ui5-timeline-item>
 					<ui5-timeline-item title-text="Video Converence Call - UI5" subtitle-text="31.01.2018 (12:00 - 13:00)" icon="sap-icon://calendar" item-name="Stanislava Baltova">
-						<div>Online meeting</div>
+						Online meeting
 					</ui5-timeline-item>
 				</ui5-timeline>
 			</ui5-card>
@@ -104,7 +104,7 @@
 <script>
 	var result = document.getElementById("result");
 
-	document.getElementById("test-item").addEventListener("itemNamePress", function (event) {
+	document.getElementById("test-item").addEventListener("ui5-itemNameClick", function (event) {
 		result.innerHTML = event.target.getAttribute("item-name");
 	});
 </script>

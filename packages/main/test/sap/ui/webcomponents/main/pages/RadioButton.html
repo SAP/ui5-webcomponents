@@ -15,6 +15,8 @@
 	<script nomodule src="../../../../../../resources/sap/ui/webcomponents/main/bundle.es5.js">
 	</script>
 
+	<script>delete Document.prototype.adoptedStyleSheets;</script>
+
 	<style>
 		.radio-section {
 			display: flex;
@@ -25,7 +27,7 @@
 
 <body>
 	<h1>ui5-radiobutton</h1>
-	<ui5-radiobutton id="rb1" text="Option A"></ui5-radiobutton>
+	<ui5-radiobutton id="rb1"></ui5-radiobutton>
 	<ui5-radiobutton id="rb2" text="Option B"></ui5-radiobutton>
 	<ui5-radiobutton id="rb3" text="Option C"></ui5-radiobutton>
 	<ui5-radiobutton id="rb4" disabled text="Option D"></ui5-radiobutton>
@@ -36,6 +38,7 @@
 		<ui5-title>ui5-radiobutton in group</ui5-title>
 		<ui5-radiobutton id="groupRb1" name="a" selected text="Option A long long should shrink long long text text text text text text text text"></ui5-radiobutton>
 		<ui5-radiobutton id="groupRb2" name="a" disabled text="Option C"></ui5-radiobutton>
+		<ui5-radiobutton id="groupRbReadOnly" name="a" readonly text="Option E"></ui5-radiobutton>
 		<ui5-radiobutton id="groupRb3" name="a" text="Option D"></ui5-radiobutton>
 	</section>
 
@@ -60,9 +63,9 @@
 	<section>
 		<ui5-title>ui5-radiobutton states</ui5-title></p>
 		<ui5-radiobutton id="myRb6" selected text="Default"></ui5-radiobutton>
-		<ui5-radiobutton id="myRb7" read-only text="read only"></ui5-radiobutton>
+		<ui5-radiobutton id="myRb7" readonly text="read only"></ui5-radiobutton>
 		<ui5-radiobutton id="myRb8" disabled text="disabled"></ui5-radiobutton>
-		<ui5-radiobutton id="myRb9" read-only text="read only" selected></ui5-radiobutton>
+		<ui5-radiobutton id="myRb9" readonly text="read only" selected></ui5-radiobutton>
 		<ui5-radiobutton id="myRb10" disabled text="disabled" selected></ui5-radiobutton>
 		<ui5-radiobutton id="myRb11" value-state="Warning" text="warning"></ui5-radiobutton>
 		<ui5-radiobutton id="myRb12" value-state="Error" text="error"></ui5-radiobutton>
@@ -83,13 +86,13 @@
 		var groupEventCounter = 0;
 
 		[window["rb1"], window["rb2"], window["rb3"], window["rb4"]].forEach(function(radio) {
-			radio.addEventListener("select", function(event) {
+			radio.addEventListener("ui5-select", function(event) {
 				counter += 1;
 				window["field"].value = counter;
 			});
 		})
 
-		radioGroup.addEventListener("select", function(e) {
+		radioGroup.addEventListener("ui5-select", function(e) {
 			var radio = e.target;
 			lblRadioGroup.innerHTML = radio.text;
 			lblEventCounter.innerHTML = ++groupEventCounter;

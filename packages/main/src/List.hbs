@@ -1,38 +1,36 @@
-<div {{> controlData}}
+<div
 	class="{{classes.main}}"
-	style="{{styles.main}}"
+	@focusin="{{onfocusin}}"
 >
 	<!-- header -->
-	{{#if ctr.header}}
-		<slot name="{{ctr.header._slot}}" />
+	{{#if header.length}}
+		<slot name="header" />
 	{{/if}}
 	{{#if shouldRenderH1}}
-		<header id="{{ctr._id}}-header" class="sapMListHdr sapMListHdrText">
-			{{ctr.headerText}}
+		<header id="{{_id}}-header" class="sapMListHdr sapMListHdrText">
+			{{headerText}}
 		</header>
 	{{/if}}
 
-	<div id="{{ctr._id}}-before" tabindex="0" class="sapMListDummyArea"></div>
+	<div id="{{_id}}-before" tabindex="0" class="sapMListDummyArea"></div>
 
-	<ul id="{{ctr._id}}-listUl" class="{{classes.ul}}">
-		{{#each ctr.items}}
-			<slot name="{{this._slot}}" />
-		{{/each}}
+	<ul id="{{_id}}-listUl" class="{{classes.ul}}">
+        <slot></slot>
 
 		{{#if showNoDataText}}
-			<li id="{{ctr._id}}-nodata" class="{{classes.noData}}" tabindex="{{noDataTabIndex}}">
-				<div id="{{ctr._id}}-nodata-text" class="sapMListNoDataText">
-					{{ctr.noDataText}}
+			<li id="{{_id}}-nodata" class="{{classes.noData}}" tabindex="{{noDataTabIndex}}">
+				<div id="{{_id}}-nodata-text" class="sapMListNoDataText">
+					{{noDataText}}
 				</div>
 			</li>
 		{{/if}}
 	</ul>
 
-	{{#if ctr.footerText}}
-		<footer id="{{ctr._id}}-footer" class="sapMListFtr">
-			{{ctr.footerText}}
+	{{#if footerText}}
+		<footer id="{{_id}}-footer" class="sapMListFtr">
+			{{footerText}}
 		</footer>
 	{{/if}}
 
-	<div id="{{ctr._id}}-after" tabindex="0" class="sapMListDummyArea"></div>
+	<div id="{{_id}}-after" tabindex="0" class="sapMListDummyArea"></div>
 </div>

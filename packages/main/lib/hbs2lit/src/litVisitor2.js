@@ -2,9 +2,6 @@ const Handlebars = require("handlebars/dist/handlebars.min.js");
 const path = require("path");
 const Visitor = Handlebars.Visitor;
 
-const RENDERING_CLASS = "ControlRenderer";
-const FN_RENDER_CHILD = "renderInPlace";
-
 function HTMLLitVisitor(debug) {
 	this.blockCounter = 0;
 	this.keys = [];
@@ -59,7 +56,20 @@ HTMLLitVisitor.prototype.MustacheStatement = function(mustache) {
 		this.blocks[this.currentKey()] += "${index}";
 	} else {
 		const path = normalizePath.call(this, mustache.path.original);
-		this.blocks[this.currentKey()] += "${ifTruthy(" + path + ")}";
+		const hasCalculatingClasses = path.includes("context.classes");
+		const hasStylesCalculation = path.includes("context.styles");
+		
+		let parsedCode = "";
+
+		if (hasCalculatingClasses) {
+			parsedCode = `\${ifDefined(classMap(${path}))}`;
+		} else if (hasStylesCalculation) {
+			parsedCode = `\${ifDefined(styleMap(${path}))}`;
+		} else {
+			parsedCode = `\${ifDefined(${path})}`;
+		}
+
+		this.blocks[this.currentKey()] += parsedCode;
 	}
 };
 

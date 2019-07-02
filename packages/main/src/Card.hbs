@@ -1,33 +1,35 @@
-<div {{> controlData}} class="{{classes.main}}">
+<div
+	class="{{classes.main}}"
+	dir="{{rtl}}"
+>
 	<header class="{{classes.header}}"
-		@click="{{ctr._headerClick}}"
-		@keydown="{{ctr._headerKeydown}}"
-		@keyup="{{ctr._headerKeyup}}"
-		tabindex="0">
+		@click="{{_headerClick}}"
+		@keydown="{{_headerKeydown}}"
+		@keyup="{{_headerKeyup}}"
+		tabindex="{{tabindex}}"
+		role="{{role}}">
 		{{#if image}}
-			<img src="{{ctr.avatar}}" aria-label="Avatar" class="sapFCardAvatar sapFCardHeaderImg">
+			<img src="{{avatar}}" aria-label="Avatar" class="sapFCardAvatar sapFCardHeaderImg">
 		{{/if}}
 
 		{{#if icon}}
 			<span role="img" aria-label="Avatar" class="sapFCardAvatar">
-				<ui5-icon class="sapFCardHeaderIcon" src="{{ctr.avatar}}"></ui5-icon>
+				<ui5-icon class="sapFCardHeaderIcon" src="{{avatar}}"></ui5-icon>
 			</span>
 		{{/if}}
 
 		<div class="sapFCardHeaderText">
-			{{#if ctr.heading}}
-				<div class="sapFCardTitle">{{ctr.heading}}</div>
+			{{#if heading}}
+				<div class="sapFCardTitle">{{heading}}</div>
 			{{/if}}
 
-			{{#if ctr.subtitle}}
-				<div class="sapFCardSubtitle ">{{ctr.subtitle}}</div>
+			{{#if subtitle}}
+				<div class="sapFCardSubtitle ">{{subtitle}}</div>
 			{{/if}}
 		</div>
-		<span part="status" class="sapFCardStatus">{{ctr.status}}</span>
+		<span part="status" class="sapFCardStatus">{{status}}</span>
 	</header>
 	<section class="sapFCardContent">
-		{{#each ctr.content}}
-			<slot name="{{this._slot}}"></slot>
-		{{/each}}
+        <slot></slot>
 	</section>
 </div>

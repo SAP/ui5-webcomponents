@@ -7,11 +7,11 @@ TestHelper.ready(function () {
 		beforeEach: function() {
 			var html = '<ui5-button id="myButton"></ui5-button>'
 				+ '<ui5-popover id="myPopover">'
-					+ '<div data-ui5-slot="header">'
+					+ '<div slot="header">'
 						+ '<div  class="customHeaderText">Custom Header</div>'
 						+ '<ui5-button icon="sap-icon://decline"></ui5-button>'
 					+ '</div>'
-					+ '<div data-ui5-slot="footer">'
+					+ '<div slot="footer">'
 						+ '<div class="customFooterText" >Custom Footer</div>'
 						+ '<ui5-button>Accept</ui5-button>'
 					+ '</div>'
@@ -52,7 +52,7 @@ TestHelper.ready(function () {
 		this.popover.addEventListener('afterOpen', function (event) {
 			var shadowRoot = this.shadowRoot;
 
-			assert.ok(shadowRoot.querySelector('.sapMPopupFrameOpen'), "Popover is opened");
+			assert.ok(shadowRoot.querySelector('.ui5-popup-wrapper-frame--open'), "Popover is opened");
 
 			// header
 			var header = shadowRoot.host.children[0];
@@ -71,7 +71,7 @@ TestHelper.ready(function () {
 
 		this.popover.addEventListener('afterClose', function (event) {
 			RenderScheduler.whenFinished().then(function () {
-				assert.notOk(this.popover.shadowRoot.querySelector('.sapMPopupFrameOpen'), "Popover is closed");
+				assert.notOk(this.popover.shadowRoot.querySelector('.ui5-popup-wrapper-frame--open'), "Popover is closed");
 				done();
 			}.bind(this));
 		}.bind(this));

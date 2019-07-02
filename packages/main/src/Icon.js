@@ -1,15 +1,12 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import URI from "@ui5/webcomponents-base/src/types/URI.js";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-import IconTemplateContext from "./IconTemplateContext.js";
-import IconRenderer from "./build/compiled/IconRenderer.lit.js";
+import { getIconInfo } from "@ui5/webcomponents-base/src/IconPool.js";
+import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
+import IconTemplate from "./build/compiled/IconTemplate.lit.js";
 
 // Styles
 import iconCss from "./themes/Icon.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
 
 /**
  * @public
@@ -28,15 +25,16 @@ const metadata = {
 		 * <br>
 		 * <code>src='sap-icons://add'</code>, <code>src='sap-icons://delete'</code>, <code>src='sap-icons://employee'</code>.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @public
 		*/
-		src: { type: URI, defaultValue: null },
+		src: {
+			type: String,
+		},
 	},
 	events: {
 		press: {},
 	},
-	renderer: IconRenderer,
 };
 
 /**
@@ -71,12 +69,12 @@ class Icon extends UI5Element {
 		return metadata;
 	}
 
-	static get renderer() {
-		return IconRenderer;
+	static get render() {
+		return litRender;
 	}
 
-	static get calculateTemplateContext() {
-		return IconTemplateContext.calculate;
+	static get template() {
+		return IconTemplate;
 	}
 
 	static get styles() {
@@ -106,10 +104,32 @@ class Icon extends UI5Element {
 			this.__spaceDown = false;
 		}
 	}
+
+	get classes() {
+		const iconInfo = getIconInfo(this.src) || {};
+		return {
+			main: {
+				sapWCIcon: true,
+				sapWCIconMirrorInRTL: !iconInfo.suppressMirroring,
+			},
+		};
+	}
+
+	get iconContent() {
+		const iconInfo = getIconInfo(this.src) || {};
+		return iconInfo.content;
+	}
+
+	get dir() {
+		return getEffectiveRTL() ? "rtl" : "ltr";
+	}
+
+	get fontStyle() {
+		const iconInfo = getIconInfo(this.src) || {};
+		return `font-family: '${iconInfo.fontFamily}'`;
+	}
 }
 
-Bootstrap.boot().then(_ => {
-	Icon.define();
-});
+Icon.define();
 
 export default Icon;
