@@ -1,5 +1,5 @@
-commit d6be3dfb7191da9203134a36acf6b689e608c6a6
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Jul 2 13:16:48 2019 +0200
+commit cc916894ca2ffdb12d4ff62b677b40fbb7649864
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Tue Jul 2 14:20:16 2019 +0300
 
-    refactor(ui5-popover, ui5-dialog): CSS classes names (#605)
+    chore: remove unnecessary binding (#603)
