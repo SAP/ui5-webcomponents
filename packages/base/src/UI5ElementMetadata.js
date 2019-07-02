@@ -10,10 +10,6 @@ class UI5ElementMetadata {
 		return this.metadata.tag;
 	}
 
-	getNoShadowDOM() {
-		return this.metadata.noShadowDOM;
-	}
-
 	getPropsList() {
 		return Object.keys(this.getProperties());
 	}
