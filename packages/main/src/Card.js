@@ -165,8 +165,15 @@ class Card extends UI5Element {
 		return !!this.avatar && !this.icon;
 	}
 
-	get role() {
-		return this.headerInteractive ? "button" : undefined;
+	get _ariaLabelledBy() {
+		let result = "";
+		if (this.heading) {
+			result += this.heading;
+		}
+		if (this.subtitle) {
+			result += ` ${this.subtitle}`;
+		}
+		return result;
 	}
 
 	get tabindex() {

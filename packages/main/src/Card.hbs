@@ -1,13 +1,16 @@
 <div
 	class="{{classes.main}}"
 	dir="{{rtl}}"
+	role="region"
+	aria-labelledby="{{heading}}"
 >
 	<header class="{{classes.header}}"
 		@click="{{_headerClick}}"
 		@keydown="{{_headerKeydown}}"
 		@keyup="{{_headerKeyup}}"
 		tabindex="{{tabindex}}"
-		role="{{role}}">
+		role="group"
+		aria-labelledby="{{_ariaLabelledBy}}">
 		{{#if image}}
 			<img src="{{avatar}}" aria-label="Avatar" class="sapFCardAvatar sapFCardHeaderImg">
 		{{/if}}
@@ -29,7 +32,9 @@
 		</div>
 		<span part="status" class="sapFCardStatus">{{status}}</span>
 	</header>
-	<section class="sapFCardContent">
+	<section
+	class="sapFCardContent"
+	role="group">
         <slot></slot>
 	</section>
 </div>
