@@ -468,7 +468,7 @@ class Popover extends Popup {
 		let maxContentHeight = Math.round(maxHeight);
 
 		if (!this.noHeader) {
-			const headerDomRef = this.getPopupDomRef().querySelector(".sapMPopupHeader");
+			const headerDomRef = this.getPopupDomRef().querySelector(".ui5-popup-wrapper-header");
 			if (headerDomRef) {
 				maxContentHeight = Math.round(maxHeight - headerDomRef.offsetHeight);
 			}
@@ -569,8 +569,8 @@ class Popover extends Popup {
 	}
 
 	getPopoverSize() {
-		const popoverFrameDomRef = this.shadowRoot.querySelector(".sapMPopupFrame"); // this.getDomRef();
-		const popoverDomRef = popoverFrameDomRef.querySelector(".sapMPopover");
+		const popoverFrameDomRef = this.shadowRoot.querySelector(".ui5-popup-wrapper-frame"); // this.getDomRef();
+		const popoverDomRef = popoverFrameDomRef.querySelector(".ui5-popover-wrapper");
 
 		popoverFrameDomRef.style.visibility = "hidden";
 		popoverFrameDomRef.style.display = "block";
@@ -600,25 +600,25 @@ class Popover extends Popup {
 
 		return {
 			frame: {
-				sapMPopupFrame: true,
-				sapMPopupFrameOpen: this._isOpen,
+				"ui5-popup-wrapper-frame": true,
+				"ui5-popup-wrapper-frame--open": this._isOpen,
 			},
 			main: {
-				sapMPopup: true,
-				sapMPopover: true,
+				"ui5-popup-wrapper": true,
+				"ui5-popover-wrapper": true,
 			},
 			blockLayer: {
 				sapUiBLy: true,
-				sapMPopupBlockLayer: true,
-				sapMPopupBlockLayerHidden: !this.modal || this._hideBlockLayer,
+				"ui5-popup-wrapper-blockLayer": true,
+				"ui5-popup-wrapper-blockLayer--hidden": !this.modal || this._hideBlockLayer,
 			},
 			arrow: {
-				sapMPopoverArr: true,
-				sapMPopoverArrHidden: this.noArrow,
-				sapMPopoverArrLeft: placementType === PopoverPlacementType.Right,
-				sapMPopoverArrRight: placementType === PopoverPlacementType.Left,
-				sapMPopoverArrUp: placementType === PopoverPlacementType.Bottom,
-				sapMPopoverArrDown: placementType === PopoverPlacementType.Top,
+				"ui5-popover-wrapper-arr": true,
+				"ui5-popover-wrapper-arr--hidden": this.noArrow,
+				"ui5-popover-wrapper-arrLeft": placementType === PopoverPlacementType.Right,
+				"ui5-popover-wrapper-arrRight": placementType === PopoverPlacementType.Left,
+				"ui5-popover-wrapper-arrUp": placementType === PopoverPlacementType.Bottom,
+				"ui5-popover-wrapper-arrDown": placementType === PopoverPlacementType.Top,
 			},
 		};
 	}

@@ -1,7 +1,7 @@
 class DatePickerFGPage {
 
     get dpStart() { return $('#ui5-datepicker--startDate'); }
-    get startPopoverContent() { return browser.findElementDeep("#ui5-datepicker--startDate >>> ui5-popover >>> .sapMPopup"); }
+    get startPopoverContent() { return browser.findElementDeep("#ui5-datepicker--startDate >>> ui5-popover >>> .ui5-popup-wrapper"); }
     get startInnerInput() { return browser.findElementDeep("#ui5-datepicker--startDate >>> ui5-input >>> input"); }
     get dpEnd() { return $('#ui5-datepicker--endDate'); }
 

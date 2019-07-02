@@ -2,8 +2,8 @@
 	<span id="{{_id}}-firstfe" tabindex="0" @focusin={{focusHelper.forwardToLast}}></span>	
 	<div style="{{styles.main}}" role="dialog" aria-labelledby="{{headerId}}" tabindex="-1" class="{{classes.main}}">
 			{{> header}}
-			<div id="{{_id}}-content" role="application" style="{{styles.content}}" class="sapMPopupContent">
-				<div class="sapMPopupScroll">
+			<div id="{{_id}}-content" role="application" style="{{styles.content}}" class="ui5-popup-wrapper-content">
+				<div class="ui5-popup-wrapper-scroll">
 					<slot></slot>
 				</div>
 			</div>
@@ -18,11 +18,11 @@
 	{{#unless noHeader}}
 		<header>
 			{{#if header.length}}
-				<div role="toolbar" class="sapMPopupHeader">
+				<div role="toolbar" class="ui5-popup-wrapper-header">
 					<slot name="header"></slot>
 				</div>
 			{{else}}
-				<h2 role="toolbar" class="sapMPopupHeader sapMPopupHeaderText">{{headerText}}</h2>
+				<h2 role="toolbar" class="ui5-popup-wrapper-header ui5-popup-wrapper-headerText">{{headerText}}</h2>
 			{{/if}}
 		</header>
 	{{/unless}}
@@ -31,7 +31,7 @@
 {{#*inline "footer"}}
 	{{#if footer.length}}
 		<footer>
-			<div class="sapMPopupFooter">
+			<div class="ui5-popup-wrapper-footer">
 				<slot name="footer"></slot>
 			</div>
 		</footer>

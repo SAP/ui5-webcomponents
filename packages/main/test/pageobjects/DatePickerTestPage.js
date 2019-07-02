@@ -20,7 +20,7 @@ class DatePickerTestPage {
 	}
 
 	get popoverContent() {
-		return browser.findElementDeep(this._sut + " >>> ui5-popover >>> .sapMPopup");
+		return browser.findElementDeep(this._sut + " >>> ui5-popover >>> .ui5-popup-wrapper");
 	}
 
 	get calendar() {
