@@ -5,7 +5,7 @@ describe('Date Picker Field Glass modifications', () => {
     it('direct usage for comparison', () => {
         browser.url('http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/DatePicker_fg.html');
 
-        let popoverContent = browser.findElementDeep("#ui5-datepicker--startDate >>> ui5-popover >>> .sapMPopup");
+        let popoverContent = browser.findElementDeep("#ui5-datepicker--startDate >>> ui5-popover >>> .ui5-popup-wrapper");
         assert.ok(!popoverContent.isDisplayedInViewport(), "popover is initially hidden");
 
         const innerInput = browser.findElementDeep("#ui5-datepicker--startDate >>> ui5-input >>> input");

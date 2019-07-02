@@ -69,6 +69,7 @@ const metadata = {
 		},
 		/**
 		 * Defines the header text.
+		 * <br><b>Note:</b> If <code>header</code> slot is provided, the <code>headerText</code> is ignored.
 		 *
 		 * @type {string}
 		 * @defaultvalue: ""
@@ -279,7 +280,7 @@ class Popup extends UI5Element {
 
 	getPopupDomRef() {
 		const domRef = this.getDomRef();
-		return domRef && domRef.querySelector(".sapMPopup");
+		return domRef && domRef.querySelector(".ui5-popup-wrapper");
 	}
 
 	hitTest(_event) {

@@ -237,7 +237,7 @@ class Suggestions {
 	_getScrollContainer() {
 		if (!this._scrollContainer) {
 			const popover = this._getPopover();
-			this._scrollContainer = popover.getDomRef().querySelector(".sapMPopupContent");
+			this._scrollContainer = popover.getDomRef().querySelector(".ui5-popup-wrapper-content");
 		}
 
 		return this._scrollContainer;

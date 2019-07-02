@@ -3,9 +3,9 @@
 	<div style="{{zindex}}" class="{{classes.dialogParent}}">
 		<div tabindex="-1" aria-labelledby="{{headerId}}" role="dialog" class="{{classes.main}}">
 			{{> header}}
-			<section class="sapMDialogSection">
-				<div class="sapMPopupContent">
-					<div class="sapMPopupScroll">
+			<section class="ui5-dialog-wrapper-section">
+				<div class="ui5-popup-wrapper-content">
+					<div class="ui5-popup-wrapper-scroll">
 						<slot></slot>
 					</div>
 				</div>
@@ -21,11 +21,11 @@
 	{{#unless noHeader}}
 		<header>
 			{{#if header.length}}
-				<div role="heading" class="sapMPopupHeader">
+				<div role="heading" class="ui5-popup-wrapper-header">
 					<slot name="header"></slot>
 				</div>
 			{{else}}
-				<h2 role="heading" class="sapMPopupHeader sapMPopupHeaderText">{{headerText}}</h2>
+				<h2 role="heading" class="ui5-popup-wrapper-header ui5-popup-wrapper-headerText">{{headerText}}</h2>
 			{{/if}}
 		</header>
 	{{/unless}}
@@ -34,7 +34,7 @@
 {{#*inline "footer"}}
 	{{#if footer.length}}
 		<footer>
-			<div class="sapMPopupFooter">
+			<div class="ui5-popup-wrapper-footer">
 				<slot name="footer"></slot>
 			</div>
 		</footer>
