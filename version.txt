@@ -1,5 +1,5 @@
-commit 44a7878e0eef6b8bf7c8a41755cebdce0d350be2
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Tue Jul 2 10:04:47 2019 +0300
+commit d6be3dfb7191da9203134a36acf6b689e608c6a6
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Jul 2 13:16:48 2019 +0200
 
-    chore: remove unnecessary binding from messagestrip (#602)
+    refactor(ui5-popover, ui5-dialog): CSS classes names (#605)
