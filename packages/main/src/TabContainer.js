@@ -78,7 +78,7 @@ const metadata = {
 		 */
 		showOverflow: {
 			type: Boolean,
-		 },
+		},
 
 		_headerItem: {
 			type: Object,
