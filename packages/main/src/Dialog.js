@@ -123,22 +123,22 @@ class Dialog extends Popup {
 	get classes() {
 		return {
 			frame: {
-				sapMPopupFrame: true,
-				sapMPopupFrameOpen: this._isOpen,
+				"ui5-popup-wrapper-frame": true,
+				"ui5-popup-wrapper-frame--open": this._isOpen,
 			},
 			dialogParent: {
-				sapMDialogParent: true,
-				sapMDialogStretched: this.stretch,
+				"ui5-dialog-wrapper-parent": true,
+				"ui5-dialog-wrapper--stretched": this.stretch,
 				"ui5-phone": isPhone(),
 			},
 			main: {
-				sapMPopup: true,
-				sapMDialog: true,
+				"ui5-popup-wrapper": true,
+				"ui5-dialog-wrapper": true,
 			},
 			blockLayer: {
 				sapUiBLy: true,
-				sapMPopupBlockLayer: true,
-				sapMPopupBlockLayerHidden: this._hideBlockLayer,
+				"ui5-popup-wrapper-blockLayer": true,
+				"ui5-popup-wrapper-blockLayer--hidden": this._hideBlockLayer,
 			},
 		};
 	}

@@ -73,10 +73,6 @@ const metadata = {
 		noCloseButton: {
 			type: Boolean,
 		},
-
-		_closeButton: {
-			type: Object,
-		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.MessageStrip.prototype */ {
 		/**
@@ -150,10 +146,6 @@ class MessageStrip extends UI5Element {
 
 	constructor() {
 		super();
-
-		this._closeButton = {
-			press: this._handleCloseIconPress.bind(this),
-		};
 
 		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
 	}

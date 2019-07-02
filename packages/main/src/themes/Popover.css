@@ -1,9 +1,9 @@
-.sapMPopover {
+.ui5-popover-wrapper {
 	position: fixed;
 	z-index: 10;
 }
 
-.sapMPopoverArr {
+.ui5-popover-wrapper-arr {
 	pointer-events: none;
 	display: block;
 	width: 1rem;
@@ -12,7 +12,7 @@
 	overflow: hidden;
 }
 
-.sapMPopoverArr:after {
+.ui5-popover-wrapper-arr:after {
 	content: " ";
 	display: block;
 	width: 0.7rem;
@@ -22,58 +22,58 @@
 }
 
 /* pointing upward arrow */
-.sapMPopoverArrUp {
+.ui5-popover-wrapper-arrUp {
 	left: calc(50% - 0.5625rem);
 	top: -0.5rem;
 	height: 0.5625rem;
 
 }
-.sapMPopoverArrUp:after {
+.ui5-popover-wrapper-arrUp:after {
 	margin: 0.1875rem 0 0 0.1875rem;
 	box-shadow: -0.375rem 0.375rem 0.75rem 0 var(--_ui5_popover_arrow_shadow_color), 0 0 0.125rem 0 var(--_ui5_popover_arrow_shadow_color);
 }
 
 /* pointing right arrow */
-.sapMPopoverArrRight {
+.ui5-popover-wrapper-arrRight {
 	top: calc(50% - 0.5625rem);
 	right: -0.5625rem;
 	width: 0.5625rem;
 }
 
-.sapMPopoverArrRight:after {
+.ui5-popover-wrapper-arrRight:after {
 	margin: 0.1875rem 0 0 -0.375rem;
 	box-shadow: -0.375rem -0.375rem 0.75rem 0 var(--_ui5_popover_arrow_shadow_color), 0 0 0.125rem 0 var(--_ui5_popover_arrow_shadow_color);
 }
 
 /* pointing downward arrow */
-.sapMPopoverArrDown {
+.ui5-popover-wrapper-arrDown {
 	left: calc(50% - 0.5625rem);
 	height: 0.5625rem;
 }
 
-.sapMPopoverArrDown:after {
+.ui5-popover-wrapper-arrDown:after {
 	margin: -0.375rem 0 0 0.125rem;
 	box-shadow: 0.375rem -0.375rem 0.75rem 0 var(--_ui5_popover_arrow_shadow_color), 0 0 0.125rem 0 var(--_ui5_popover_arrow_shadow_color);
 }
 
 /* pointing left arrow */
-.sapMPopoverArrLeft {
+.ui5-popover-wrapper-arrLeft {
 	left: -0.5625rem;
 	top: calc(50% - 0.5625rem);
 	width: 0.5625rem;
 	height: 1rem;
 }
 
-.sapMPopoverArrLeft:after {
+.ui5-popover-wrapper-arrLeft:after {
 	margin: 0.125rem 0 0 0.25rem;
 	box-shadow: 0.375rem 0.375rem 0.75rem 0 var(--_ui5_popover_arrow_shadow_color), 0 0 0.125rem 0 var(--_ui5_popover_arrow_shadow_color);
 }
 
-.sapMPopoverArr.sapMPopoverArrHidden {
+.ui5-popover-wrapper-arr.ui5-popover-wrapper-arr--hidden {
 	display: none;
 }
 
 /* Fixes z-index issue on iOS within iframe without side effect in the rest of the browsers */
-.sapMPopover {
+.ui5-popover-wrapper {
 	transform: translate3d(0,0,0);
 }
