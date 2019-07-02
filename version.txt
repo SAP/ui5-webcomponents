@@ -1,5 +1,5 @@
-commit cc916894ca2ffdb12d4ff62b677b40fbb7649864
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Tue Jul 2 14:20:16 2019 +0300
+commit 1433b51ce2a0de71653ca75b4f4759dc9d64471c
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Tue Jul 2 16:16:43 2019 +0300
 
-    chore: remove unnecessary binding (#603)
+    refactor: remove the metadata entity noShadowDOM (#608)
