@@ -6,11 +6,11 @@ import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
 import { getFeature } from "@ui5/webcomponents-base/src/FeaturesRegistry.js";
 import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-import CheckBoxTemplate from "./build/templates/CheckBoxTemplate.lit.js";
+import CheckBoxTemplate from "./generated/templates/CheckBoxTemplate.lit.js";
 import Label from "./Label.js";
 
 // Styles
-import checkboxCss from "./build/themes/CheckBox.css.js";
+import checkboxCss from "./generated/themes/CheckBox.css.js";
 
 /**
  * @public

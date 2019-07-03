@@ -4,10 +4,10 @@ import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
 import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
 import Icon from "./Icon.js";
 import Link from "./Link.js";
-import TimelineItemTemplate from "./build/templates/TimelineItemTemplate.lit.js";
+import TimelineItemTemplate from "./generated/templates/TimelineItemTemplate.lit.js";
 
 // Styles
-import styles from "./build/themes/TimelineItem.css.js";
+import styles from "./generated/themes/TimelineItem.css.js";
 
 /**
  * @public

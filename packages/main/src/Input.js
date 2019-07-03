@@ -13,11 +13,11 @@ import {
 import Icon from "./Icon.js";
 import InputType from "./types/InputType.js";
 // Template
-import InputTemplate from "./build/templates/InputTemplate.lit.js";
+import InputTemplate from "./generated/templates/InputTemplate.lit.js";
 
 // Styles
-import styles from "./build/themes/Input.css.js";
-import shellbarInput from "./build/themes/ShellBarInput.css.js";
+import styles from "./generated/themes/Input.css.js";
+import shellbarInput from "./generated/themes/ShellBarInput.css.js";
 
 /**
  * @public

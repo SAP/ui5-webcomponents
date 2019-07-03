@@ -15,10 +15,10 @@ import {
 } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import RadioButtonGroup from "./RadioButtonGroup.js";
 // Template
-import RadioButtonTemplate from "./build/templates/RadioButtonTemplate.lit.js";
+import RadioButtonTemplate from "./generated/templates/RadioButtonTemplate.lit.js";
 
 // Styles
-import radioButtonCss from "./build/themes/RadioButton.css.js";
+import radioButtonCss from "./generated/themes/RadioButton.css.js";
 
 /**
  * @public

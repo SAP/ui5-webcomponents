@@ -46,7 +46,7 @@
   "scripts": {
     "build": "npm-run-all --sequential clean lint build:templates build:samples build:styles copy:src build:bundle copy:i18n copy:webcomponents-polyfill ",
     "build:bundle": "rollup -c --environment ES5_BUILD",
-    "build:templates": "mkdirp dist/build/templates && node ./lib/hbs2ui5/index.js -d src/ -o dist/build/templates",
+    "build:templates": "mkdirp dist/generated/templates && node ./lib/hbs2ui5/index.js -d src/ -o dist/generated/templates",
     "build:samples": "npm run copy:test --scripts-prepend-node-path && npm run build:api --scripts-prepend-node-path && npm run build:docs --scripts-prepend-node-path && node lib/playground/index.js",
     "build:pages": "npm run copy:pages",
     "build:qunit": "npm run copy:qunit",

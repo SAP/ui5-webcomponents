@@ -5,11 +5,11 @@ import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
 import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
 import { getFeature } from "@ui5/webcomponents-base/src/FeaturesRegistry.js";
 import ButtonDesign from "./types/ButtonDesign.js";
-import ButtonTemplate from "./build/templates/ButtonTemplate.lit.js";
+import ButtonTemplate from "./generated/templates/ButtonTemplate.lit.js";
 import Icon from "./Icon.js";
 
 // Styles
-import buttonCss from "./build/themes/Button.css.js";
+import buttonCss from "./generated/themes/Button.css.js";
 
 /**
  * @public

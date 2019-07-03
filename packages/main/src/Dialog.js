@@ -3,10 +3,10 @@ import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import { isPhone } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 import Popup from "./Popup.js";
 // Template
-import DialogTemplate from "./build/templates/DialogTemplate.lit.js";
+import DialogTemplate from "./generated/templates/DialogTemplate.lit.js";
 
 // Styles
-import dialogCss from "./build/themes/Dialog.css.js";
+import dialogCss from "./generated/themes/Dialog.css.js";
 
 /**
  * @public

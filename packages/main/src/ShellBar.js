@@ -11,10 +11,10 @@ import Icon from "./Icon.js";
 import Popover from "./Popover.js";
 
 // Template
-import ShellBarTemplate from "./build/templates/ShellBarTemplate.lit.js";
+import ShellBarTemplate from "./generated/templates/ShellBarTemplate.lit.js";
 
 // Styles
-import styles from "./build/themes/ShellBar.css.js";
+import styles from "./generated/themes/ShellBar.css.js";
 
 /**
  * @public

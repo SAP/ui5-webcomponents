@@ -4,12 +4,12 @@ import CSSSize from "@ui5/webcomponents-base/src/types/CSSSize.js";
 import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
 import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/src/ResourceBundle.js";
 import { getFeature } from "@ui5/webcomponents-base/src/FeaturesRegistry.js";
-import TextAreaTemplate from "./build/templates/TextAreaTemplate.lit.js";
+import TextAreaTemplate from "./generated/templates/TextAreaTemplate.lit.js";
 
 import { TEXTAREA_CHARACTERS_LEFT, TEXTAREA_CHARACTERS_EXCEEDED } from "./i18n/defaults.js";
 
 // Styles
-import styles from "./build/themes/TextArea.css.js";
+import styles from "./generated/themes/TextArea.css.js";
 
 /**
  * @public

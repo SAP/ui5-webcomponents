@@ -11,10 +11,10 @@ import CalendarDate from "@ui5/webcomponents-base/src/dates/CalendarDate.js";
 import { calculateWeekNumber } from "@ui5/webcomponents-base/src/dates/CalendarUtils.js";
 import getShadowDOMTarget from "@ui5/webcomponents-base/src/events/getShadowDOMTarget.js";
 import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType.js";
-import DayPickerTemplate from "./build/templates/DayPickerTemplate.lit.js";
+import DayPickerTemplate from "./generated/templates/DayPickerTemplate.lit.js";
 
 // Styles
-import dayPickerCSS from "./build/themes/DayPicker.css.js";
+import dayPickerCSS from "./generated/themes/DayPicker.css.js";
 
 /**
  * @public

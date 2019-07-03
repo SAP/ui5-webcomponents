@@ -2,13 +2,13 @@ import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/src/ResourceBundle.js";
 import MessageStripType from "./types/MessageStripType.js";
-import MessageStripTemplate from "./build/templates/MessageStripTemplate.lit.js";
+import MessageStripTemplate from "./generated/templates/MessageStripTemplate.lit.js";
 import Icon from "./Icon.js";
 
 import { MESSAGE_STRIP_CLOSE_BUTTON } from "./i18n/defaults.js";
 
 // Styles
-import messageStripCss from "./build/themes/MessageStrip.css.js";
+import messageStripCss from "./generated/themes/MessageStrip.css.js";
 
 /**
  * @public

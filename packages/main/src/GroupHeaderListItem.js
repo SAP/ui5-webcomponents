@@ -2,10 +2,10 @@ import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import ListItemBase from "./ListItemBase.js";
 
 // Template
-import GroupHeaderListItemTemplate from "./build/templates/GroupHeaderListItemTemplate.lit.js";
+import GroupHeaderListItemTemplate from "./generated/templates/GroupHeaderListItemTemplate.lit.js";
 
 // Styles
-import groupheaderListItemCss from "./build/themes/GroupHeaderListItem.css.js";
+import groupheaderListItemCss from "./generated/themes/GroupHeaderListItem.css.js";
 
 /**
  * @public

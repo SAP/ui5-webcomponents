@@ -2,10 +2,10 @@ import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
 import CSSSize from "@ui5/webcomponents-base/src/types/CSSSize.js";
-import TableColumnTemplate from "./build/templates/TableColumnTemplate.lit.js";
+import TableColumnTemplate from "./generated/templates/TableColumnTemplate.lit.js";
 
 // Styles
-import styles from "./build/themes/TableColumn.css.js";
+import styles from "./generated/themes/TableColumn.css.js";
 
 
 const metadata = {

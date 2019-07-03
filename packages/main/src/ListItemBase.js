@@ -6,7 +6,7 @@ import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
 import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
 
 // Styles
-import styles from "./build/themes/ListItemBase.css.js";
+import styles from "./generated/themes/ListItemBase.css.js";
 
 /**
  * @public

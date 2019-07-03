@@ -1,10 +1,10 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import TableCell from "./TableCell.js";
-import TableRowTemplate from "./build/templates/TableRowTemplate.lit.js";
+import TableRowTemplate from "./generated/templates/TableRowTemplate.lit.js";
 
 // Styles
-import styles from "./build/themes/TableRow.css.js";
+import styles from "./generated/themes/TableRow.css.js";
 
 /**
  * @public
