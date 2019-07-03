@@ -1,5 +1,5 @@
-commit 2f582d3aca984660b23593367882d7b2b234c370
+commit 8507f2ef1dfcd0082f6ff39103911a0ee944cad0
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Jul 3 17:15:08 2019 +0300
+Date:   Wed Jul 3 20:31:58 2019 +0300
 
-    chore: revert the recent button change (#614)
+    refactor: improve public imports and project structure (#612)
