@@ -116,7 +116,7 @@ import "@ui5/webcomponents/dist/ThemePropertiesProvider.js";
 
 and
 ```js
-import { setTheme } from "@ui5/webcomponents-base/src/features/Theming.js";
+import { setTheme } from "@ui5/webcomponents-base/src/Theming.js";
 ```
 (for changing the theme at runtime)
 
@@ -145,7 +145,7 @@ By importing the second module, you get the:
 method that allows you to change the theme during runtime, if necessary.
 Example:
 ```js
-import { setTheme } from "@ui5/webcomponents-base/src/features/Theming.js";
+import { setTheme } from "@ui5/webcomponents-base/src/Theming.js";
 setTheme("sap_belize_hcb");
 ```
 
