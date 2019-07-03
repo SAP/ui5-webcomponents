@@ -1,10 +1,10 @@
-import "@ui5/webcomponents-core/dist/sap/ui/core/date/Buddhist.js";
-import "@ui5/webcomponents-core/dist/sap/ui/core/date/Islamic.js";
-import "@ui5/webcomponents-core/dist/sap/ui/core/date/Japanese.js";
-import "@ui5/webcomponents-core/dist/sap/ui/core/date/Persian.js";
+import "@ui5/webcomponents-base/src/features/calendar/Buddhist.js";
+import "@ui5/webcomponents-base/src/features/calendar/Islamic.js";
+import "@ui5/webcomponents-base/src/features/calendar/Japanese.js";
+import "@ui5/webcomponents-base/src/features/calendar/Persian.js";
 
 // ESM bundle targets Edge + browsers with native support
-import "@ui5/webcomponents-base/src/browsersupport/Edge.js";
+import "@ui5/webcomponents-base/src/features/browsersupport/Edge.js";
 
 import "./dist/ThemePropertiesProvider.js";
 import "./dist/MessageBundleAssets.js";
@@ -56,7 +56,7 @@ window.isIE = isIE; // attached to the window object for testing purposes
 
 // Note: keep in sync with rollup.config value for IIFE
 import * as configuration from "@ui5/webcomponents-base/src/Configuration.js";
-import * as Theming from "@ui5/webcomponents-base/src/Theming.js";
+import * as Theming from "@ui5/webcomponents-base/src/features/Theming.js";
 window["sap-ui-webcomponents-main-bundle"] = {
 	configuration,
 	Theming,
