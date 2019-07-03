@@ -6,8 +6,8 @@ import "@ui5/webcomponents-core/dist/sap/ui/core/date/Persian.js";
 // ESM bundle targets Edge + browsers with native support
 import "@ui5/webcomponents-base/src/browsersupport/Edge.js";
 
-import "./dist/features/ThemePropertiesProvider.js";
-import "./dist/features/MessageBundleAssets.js";
+import "./dist/ThemePropertiesProvider.js";
+import "./dist/MessageBundleAssets.js";
 import "./dist/features/InputElementsFormSupport.js";
 import "./dist/features/InputSuggestions.js";
 
