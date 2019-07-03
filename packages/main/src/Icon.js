@@ -3,7 +3,7 @@ import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import { getIconInfo } from "@ui5/webcomponents-base/src/IconPool.js";
 import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
-import IconTemplate from "./build/compiled/IconTemplate.lit.js";
+import IconTemplate from "./build/templates/IconTemplate.lit.js";
 
 // Styles
 import iconCss from "./themes/Icon.css.js";

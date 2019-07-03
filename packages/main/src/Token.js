@@ -9,7 +9,7 @@ import {
 } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 
 import Icon from "./Icon.js";
-import TokenTemplate from "./build/compiled/TokenTemplate.lit.js";
+import TokenTemplate from "./build/templates/TokenTemplate.lit.js";
 
 // Styles
 import styles from "./themes/Token.css.js";

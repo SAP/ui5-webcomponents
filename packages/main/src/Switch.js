@@ -6,7 +6,7 @@ import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
 import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
 
 // Template
-import SwitchTemplate from "./build/compiled/SwitchTemplate.lit.js";
+import SwitchTemplate from "./build/templates/SwitchTemplate.lit.js";
 
 
 // Styles

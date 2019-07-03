@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 
 // Template
-import LabelTemplate from "./build/compiled/LabelTemplate.lit.js";
+import LabelTemplate from "./build/templates/LabelTemplate.lit.js";
 
 // Styles
 import labelCss from "./themes/Label.css.js";

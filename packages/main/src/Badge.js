@@ -4,7 +4,7 @@ import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js
 import Icon from "./Icon.js";
 
 // Template
-import BadgeTemplate from "./build/compiled/BadgeTemplate.lit.js";
+import BadgeTemplate from "./build/templates/BadgeTemplate.lit.js";
 
 // Styles
 import badgeCss from "./themes/Badge.css.js";

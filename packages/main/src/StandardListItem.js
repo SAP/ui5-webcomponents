@@ -2,7 +2,7 @@ import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
 import ListItem from "./ListItem.js";
 import Icon from "./Icon.js";
-import StandardListItemTemplate from "./build/compiled/StandardListItemTemplate.lit.js";
+import StandardListItemTemplate from "./build/templates/StandardListItemTemplate.lit.js";
 
 /**
  * @public

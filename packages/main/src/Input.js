@@ -13,7 +13,7 @@ import {
 import Icon from "./Icon.js";
 import InputType from "./types/InputType.js";
 // Template
-import InputTemplate from "./build/compiled/InputTemplate.lit.js";
+import InputTemplate from "./build/templates/InputTemplate.lit.js";
 
 // Styles
 import styles from "./themes/Input.css.js";

@@ -6,7 +6,7 @@ import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
 import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
 import Button from "./Button.js";
 import ButtonDesign from "./types/ButtonDesign.js";
-import CalendarHeaderTemplate from "./build/compiled/CalendarHeaderTemplate.lit.js";
+import CalendarHeaderTemplate from "./build/templates/CalendarHeaderTemplate.lit.js";
 
 // Styles
 import styles from "./themes/CalendarHeader.css.js";

@@ -20,7 +20,7 @@ import StandardListItem from "./StandardListItem.js";
 import Icon from "./Icon.js";
 
 // Template
-import SelectTemplate from "./build/compiled/SelectTemplate.lit.js";
+import SelectTemplate from "./build/templates/SelectTemplate.lit.js";
 
 // Styles
 import selectCss from "./themes/Select.css.js";

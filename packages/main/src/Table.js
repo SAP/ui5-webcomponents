@@ -6,7 +6,7 @@ import { isSpace } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
 import TableColumn from "./TableColumn.js";
 import TableRow from "./TableRow.js";
-import TableTemplate from "./build/compiled/TableTemplate.lit.js";
+import TableTemplate from "./build/templates/TableTemplate.lit.js";
 
 // Styles
 import styles from "./themes/Table.css.js";

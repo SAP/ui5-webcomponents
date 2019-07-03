@@ -11,7 +11,7 @@ import getShadowDOMTarget from "@ui5/webcomponents-base/src/events/getShadowDOMT
 import DateFormat from "@ui5/webcomponents-core/dist/sap/ui/core/format/DateFormat.js";
 import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType.js";
 import CalendarDate from "@ui5/webcomponents-base/src/dates/CalendarDate.js";
-import YearPickerTemplate from "./build/compiled/YearPickerTemplate.lit.js";
+import YearPickerTemplate from "./build/templates/YearPickerTemplate.lit.js";
 
 // Styles
 import styles from "./themes/YearPicker.css.js";

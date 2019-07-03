@@ -3,7 +3,7 @@ import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
 import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
 import TimelineItem from "./TimelineItem.js";
-import TimelineTemplate from "./build/compiled/TimelineTemplate.lit.js";
+import TimelineTemplate from "./build/templates/TimelineTemplate.lit.js";
 
 // Styles
 import styles from "./themes/Timeline.css.js";

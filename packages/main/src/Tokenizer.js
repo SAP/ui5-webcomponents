@@ -4,7 +4,7 @@ import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler.js
 import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
 import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
 import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/src/ResourceBundle.js";
-import TokenizerTemplate from "./build/compiled/TokenizerTemplate.lit.js";
+import TokenizerTemplate from "./build/templates/TokenizerTemplate.lit.js";
 import { MULTIINPUT_SHOW_MORE_TOKENS } from "./i18n/defaults.js";
 
 // Styles

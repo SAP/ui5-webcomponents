@@ -20,7 +20,7 @@ import PopoverPlacementType from "./types/PopoverPlacementType.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import Input from "./Input.js";
 import InputType from "./types/InputType.js";
-import DatePickerTemplate from "./build/compiled/DatePickerTemplate.lit.js";
+import DatePickerTemplate from "./build/templates/DatePickerTemplate.lit.js";
 
 // default calendar for bundling
 import "@ui5/webcomponents-core/dist/sap/ui/core/date/Gregorian.js";

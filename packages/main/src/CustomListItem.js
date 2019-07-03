@@ -1,6 +1,6 @@
 import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import ListItem from "./ListItem.js";
-import CustomListItemTemplate from "./build/compiled/CustomListItemTemplate.lit.js";
+import CustomListItemTemplate from "./build/templates/CustomListItemTemplate.lit.js";
 
 // Styles
 import columnListItemCss from "./themes/CustomListItem.css.js";
