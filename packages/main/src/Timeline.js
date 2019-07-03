@@ -6,7 +6,7 @@ import TimelineItem from "./TimelineItem.js";
 import TimelineTemplate from "./build/templates/TimelineTemplate.lit.js";
 
 // Styles
-import styles from "./themes/Timeline.css.js";
+import styles from "./build/themes/Timeline.css.js";
 
 /**
  * @public

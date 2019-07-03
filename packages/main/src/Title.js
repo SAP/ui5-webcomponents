@@ -4,7 +4,7 @@ import TitleLevel from "./types/TitleLevel.js";
 import TitleTemplate from "./build/templates/TitleTemplate.lit.js";
 
 // Styles
-import titleCss from "./themes/Title.css.js";
+import titleCss from "./build/themes/Title.css.js";
 
 /**
  * @public

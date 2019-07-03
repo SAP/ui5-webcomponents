@@ -7,7 +7,7 @@ import CardTemplate from "./build/templates/CardTemplate.lit.js";
 import Icon from "./Icon.js";
 
 // Styles
-import cardCss from "./themes/Card.css.js";
+import cardCss from "./build/themes/Card.css.js";
 
 /**
  * @public

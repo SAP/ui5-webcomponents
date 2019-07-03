@@ -12,7 +12,7 @@ import Popup from "./Popup.js";
 import PopoverTemplate from "./build/templates/PopoverTemplate.lit.js";
 
 // Styles
-import popoverCss from "./themes/Popover.css.js";
+import popoverCss from "./build/themes/Popover.css.js";
 
 /**
  * @public

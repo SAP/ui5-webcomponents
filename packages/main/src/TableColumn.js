@@ -5,7 +5,7 @@ import CSSSize from "@ui5/webcomponents-base/src/types/CSSSize.js";
 import TableColumnTemplate from "./build/templates/TableColumnTemplate.lit.js";
 
 // Styles
-import styles from "./themes/TableColumn.css.js";
+import styles from "./build/themes/TableColumn.css.js";
 
 
 const metadata = {

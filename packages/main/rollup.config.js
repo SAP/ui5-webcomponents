@@ -134,7 +134,7 @@ const getDerivedColorsConfig = (theme) => {
 	return {
 		input: `src/themes/${theme}/derived-colors.js`,
 		output: {
-			dir: `dist/themes/${theme}/`,
+			dir: `dist/build/themes/${theme}/`,
 			format: "esm",
 			sourcemap: true
 		},

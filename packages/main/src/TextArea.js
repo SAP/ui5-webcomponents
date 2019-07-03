@@ -9,7 +9,7 @@ import TextAreaTemplate from "./build/templates/TextAreaTemplate.lit.js";
 import { TEXTAREA_CHARACTERS_LEFT, TEXTAREA_CHARACTERS_EXCEEDED } from "./i18n/defaults.js";
 
 // Styles
-import styles from "./themes/TextArea.css.js";
+import styles from "./build/themes/TextArea.css.js";
 
 /**
  * @public

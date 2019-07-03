@@ -9,7 +9,7 @@ import ButtonTemplate from "./build/templates/ButtonTemplate.lit.js";
 import Icon from "./Icon.js";
 
 // Styles
-import buttonCss from "./themes/Button.css.js";
+import buttonCss from "./build/themes/Button.css.js";
 
 /**
  * @public

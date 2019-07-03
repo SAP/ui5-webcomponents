@@ -7,7 +7,7 @@ import Icon from "./Icon.js";
 import BadgeTemplate from "./build/templates/BadgeTemplate.lit.js";
 
 // Styles
-import badgeCss from "./themes/Badge.css.js";
+import badgeCss from "./build/themes/Badge.css.js";
 
 /**
  * @public

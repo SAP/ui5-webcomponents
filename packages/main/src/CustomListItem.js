@@ -3,7 +3,7 @@ import ListItem from "./ListItem.js";
 import CustomListItemTemplate from "./build/templates/CustomListItemTemplate.lit.js";
 
 // Styles
-import columnListItemCss from "./themes/CustomListItem.css.js";
+import columnListItemCss from "./build/themes/CustomListItem.css.js";
 
 /**
  * @public

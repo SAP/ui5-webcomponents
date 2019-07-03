@@ -6,7 +6,7 @@ import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js
 import IconTemplate from "./build/templates/IconTemplate.lit.js";
 
 // Styles
-import iconCss from "./themes/Icon.css.js";
+import iconCss from "./build/themes/Icon.css.js";
 
 /**
  * @public

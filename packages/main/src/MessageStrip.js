@@ -8,7 +8,7 @@ import Icon from "./Icon.js";
 import { MESSAGE_STRIP_CLOSE_BUTTON } from "./i18n/defaults.js";
 
 // Styles
-import messageStripCss from "./themes/MessageStrip.css.js";
+import messageStripCss from "./build/themes/MessageStrip.css.js";
 
 /**
  * @public

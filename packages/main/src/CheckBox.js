@@ -10,7 +10,7 @@ import CheckBoxTemplate from "./build/templates/CheckBoxTemplate.lit.js";
 import Label from "./Label.js";
 
 // Styles
-import checkboxCss from "./themes/CheckBox.css.js";
+import checkboxCss from "./build/themes/CheckBox.css.js";
 
 /**
  * @public

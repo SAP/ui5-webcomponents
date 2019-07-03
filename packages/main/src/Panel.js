@@ -13,7 +13,7 @@ import PanelTemplate from "./build/templates/PanelTemplate.lit.js";
 import { PANEL_ICON } from "./i18n/defaults.js";
 
 // Styles
-import panelCss from "./themes/Panel.css.js";
+import panelCss from "./build/themes/Panel.css.js";
 
 /**
  * @public

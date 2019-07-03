@@ -14,7 +14,7 @@ import Popover from "./Popover.js";
 import ShellBarTemplate from "./build/templates/ShellBarTemplate.lit.js";
 
 // Styles
-import styles from "./themes/ShellBar.css.js";
+import styles from "./build/themes/ShellBar.css.js";
 
 /**
  * @public

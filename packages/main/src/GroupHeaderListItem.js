@@ -5,7 +5,7 @@ import ListItemBase from "./ListItemBase.js";
 import GroupHeaderListItemTemplate from "./build/templates/GroupHeaderListItemTemplate.lit.js";
 
 // Styles
-import groupheaderListItemCss from "./themes/GroupHeaderListItem.css.js";
+import groupheaderListItemCss from "./build/themes/GroupHeaderListItem.css.js";
 
 /**
  * @public

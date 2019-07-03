@@ -21,7 +21,7 @@ import CalendarTemplate from "./build/templates/CalendarTemplate.lit.js";
 import "@ui5/webcomponents-core/dist/sap/ui/core/date/Gregorian.js";
 
 // Styles
-import calendarCSS from "./themes/Calendar.css.js";
+import calendarCSS from "./build/themes/Calendar.css.js";
 
 /**
  * @public

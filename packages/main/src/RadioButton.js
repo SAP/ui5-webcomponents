@@ -18,7 +18,7 @@ import RadioButtonGroup from "./RadioButtonGroup.js";
 import RadioButtonTemplate from "./build/templates/RadioButtonTemplate.lit.js";
 
 // Styles
-import radioButtonCss from "./themes/RadioButton.css.js";
+import radioButtonCss from "./build/themes/RadioButton.css.js";
 
 /**
  * @public

@@ -16,7 +16,7 @@ import TabBase from "./TabBase.js";
 import SemanticColor from "./types/SemanticColor.js";
 
 // Styles
-import tabContainerCss from "./themes/TabContainer.css.js";
+import tabContainerCss from "./build/themes/TabContainer.css.js";
 
 
 const SCROLL_STEP = 128;

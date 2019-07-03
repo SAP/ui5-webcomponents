@@ -9,7 +9,7 @@ import ButtonDesign from "./types/ButtonDesign.js";
 import CalendarHeaderTemplate from "./build/templates/CalendarHeaderTemplate.lit.js";
 
 // Styles
-import styles from "./themes/CalendarHeader.css.js";
+import styles from "./build/themes/CalendarHeader.css.js";
 
 
 const metadata = {

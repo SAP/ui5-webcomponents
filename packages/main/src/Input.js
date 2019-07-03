@@ -16,8 +16,8 @@ import InputType from "./types/InputType.js";
 import InputTemplate from "./build/templates/InputTemplate.lit.js";
 
 // Styles
-import styles from "./themes/Input.css.js";
-import shellbarInput from "./themes/ShellBarInput.css.js";
+import styles from "./build/themes/Input.css.js";
+import shellbarInput from "./build/themes/ShellBarInput.css.js";
 
 /**
  * @public

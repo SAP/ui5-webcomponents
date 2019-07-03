@@ -13,7 +13,7 @@ import getShadowDOMTarget from "@ui5/webcomponents-base/src/events/getShadowDOMT
 import MonthPickerTemplate from "./build/templates/MonthPickerTemplate.lit.js";
 
 // Styles
-import styles from "./themes/MonthPicker.css.js";
+import styles from "./build/themes/MonthPicker.css.js";
 
 /**
  * @public

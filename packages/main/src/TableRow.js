@@ -4,7 +4,7 @@ import TableCell from "./TableCell.js";
 import TableRowTemplate from "./build/templates/TableRowTemplate.lit.js";
 
 // Styles
-import styles from "./themes/TableRow.css.js";
+import styles from "./build/themes/TableRow.css.js";
 
 /**
  * @public

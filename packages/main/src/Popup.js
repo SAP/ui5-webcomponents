@@ -4,7 +4,7 @@ import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
 import { isEscape } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 
 // Styles
-import styles from "./themes/Popup.css.js";
+import styles from "./build/themes/Popup.css.js";
 
 /**
  * @public

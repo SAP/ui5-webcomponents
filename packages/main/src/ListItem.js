@@ -8,7 +8,7 @@ import "./CheckBox.js";
 import "./Button.js";
 
 // Styles
-import styles from "./themes/ListItem.css.js";
+import styles from "./build/themes/ListItem.css.js";
 
 /**
  * @public

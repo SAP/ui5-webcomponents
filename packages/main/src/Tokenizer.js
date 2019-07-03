@@ -8,7 +8,7 @@ import TokenizerTemplate from "./build/templates/TokenizerTemplate.lit.js";
 import { MULTIINPUT_SHOW_MORE_TOKENS } from "./i18n/defaults.js";
 
 // Styles
-import styles from "./themes/Tokenizer.css.js";
+import styles from "./build/themes/Tokenizer.css.js";
 
 /**
  * @public

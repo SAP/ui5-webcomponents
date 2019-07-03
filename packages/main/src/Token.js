@@ -12,7 +12,7 @@ import Icon from "./Icon.js";
 import TokenTemplate from "./build/templates/TokenTemplate.lit.js";
 
 // Styles
-import styles from "./themes/Token.css.js";
+import styles from "./build/themes/Token.css.js";
 
 /**
  * @public

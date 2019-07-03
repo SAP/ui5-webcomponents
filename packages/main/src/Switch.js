@@ -10,7 +10,7 @@ import SwitchTemplate from "./build/templates/SwitchTemplate.lit.js";
 
 
 // Styles
-import switchCss from "./themes/Switch.css.js";
+import switchCss from "./build/themes/Switch.css.js";
 
 /**
  * @public

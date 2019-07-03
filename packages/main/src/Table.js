@@ -9,7 +9,7 @@ import TableRow from "./TableRow.js";
 import TableTemplate from "./build/templates/TableTemplate.lit.js";
 
 // Styles
-import styles from "./themes/Table.css.js";
+import styles from "./build/themes/Table.css.js";
 
 /**
  * @public

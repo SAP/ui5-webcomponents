@@ -6,7 +6,7 @@ import Popup from "./Popup.js";
 import DialogTemplate from "./build/templates/DialogTemplate.lit.js";
 
 // Styles
-import dialogCss from "./themes/Dialog.css.js";
+import dialogCss from "./build/themes/Dialog.css.js";
 
 /**
  * @public

@@ -6,7 +6,7 @@ import LinkDesign from "./types/LinkDesign.js";
 import LinkRederer from "./build/templates/LinkTemplate.lit.js";
 
 // Styles
-import linkCss from "./themes/Link.css.js";
+import linkCss from "./build/themes/Link.css.js";
 
 /**
  * @public

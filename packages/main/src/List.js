@@ -13,7 +13,7 @@ import ListItemType from "./types/ListItemType.js";
 import ListTemplate from "./build/templates/ListTemplate.lit.js";
 
 // Styles
-import listCss from "./themes/List.css.js";
+import listCss from "./build/themes/List.css.js";
 
 /**
  * @public

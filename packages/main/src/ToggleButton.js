@@ -3,7 +3,7 @@ import Button from "./Button.js";
 import ToggleButtonTemplate from "./build/templates/ToggleButtonTemplate.lit.js";
 
 // Styles
-import toggleBtnCss from "./themes/ToggleButton.css.js";
+import toggleBtnCss from "./build/themes/ToggleButton.css.js";
 
 /**
  * @public

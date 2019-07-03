@@ -14,7 +14,7 @@ import CalendarDate from "@ui5/webcomponents-base/src/dates/CalendarDate.js";
 import YearPickerTemplate from "./build/templates/YearPickerTemplate.lit.js";
 
 // Styles
-import styles from "./themes/YearPicker.css.js";
+import styles from "./build/themes/YearPicker.css.js";
 
 /**
  * @public

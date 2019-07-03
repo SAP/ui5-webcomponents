@@ -23,7 +23,7 @@ import Icon from "./Icon.js";
 import SelectTemplate from "./build/templates/SelectTemplate.lit.js";
 
 // Styles
-import selectCss from "./themes/Select.css.js";
+import selectCss from "./build/themes/Select.css.js";
 
 /**
  * @public

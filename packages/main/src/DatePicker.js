@@ -26,7 +26,7 @@ import DatePickerTemplate from "./build/templates/DatePickerTemplate.lit.js";
 import "@ui5/webcomponents-core/dist/sap/ui/core/date/Gregorian.js";
 
 // Styles
-import datePickerCss from "./themes/DatePicker.css.js";
+import datePickerCss from "./build/themes/DatePicker.css.js";
 
 /**
  * @public

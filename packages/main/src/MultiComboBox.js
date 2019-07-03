@@ -13,7 +13,7 @@ import List from "./List.js";
 import StandardListItem from "./StandardListItem.js";
 
 // Styles
-import styles from "./themes/MultiComboBox.css.js";
+import styles from "./build/themes/MultiComboBox.css.js";
 
 /**
  * @public

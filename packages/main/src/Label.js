@@ -5,7 +5,7 @@ import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import LabelTemplate from "./build/templates/LabelTemplate.lit.js";
 
 // Styles
-import labelCss from "./themes/Label.css.js";
+import labelCss from "./build/themes/Label.css.js";
 
 /**
  * @public
