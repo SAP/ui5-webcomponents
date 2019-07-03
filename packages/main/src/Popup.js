@@ -434,6 +434,10 @@ class Popup extends UI5Element {
 	onExitDOM() {
 		removeBodyStyles();
 	}
+	
+	get role() {
+		return "heading";
+	}
 }
 
 export default Popup;

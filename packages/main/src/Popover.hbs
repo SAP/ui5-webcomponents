@@ -1,3 +1,5 @@
+{{>include "./Popup.hbs"}}
+
 <span class="{{classes.frame}}" @focusin="{{onfocusin}}">
 	<span id="{{_id}}-firstfe" tabindex="0" @focusin={{focusHelper.forwardToLast}}></span>	
 	<div style="{{styles.main}}" role="dialog" aria-labelledby="{{headerId}}" tabindex="-1" class="{{classes.main}}">
@@ -13,6 +15,7 @@
 	<span id="{{_id}}-lastfe" tabindex="0" @focusin={{focusHelper.forwardToFirst}}></span>
 	<div tabindex="0" id="{{_id}}-blocklayer" style="{{styles.blockLayer}}" class="{{classes.blockLayer}}"></div>
 </span>
+<<<<<<< Updated upstream
 
 {{#*inline "header"}}
 	{{#if hasHeader}}
@@ -37,3 +40,5 @@
 		</footer>
 	{{/if}}
 {{/inline}}
+=======
+>>>>>>> Stashed changes

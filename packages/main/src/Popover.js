@@ -662,6 +662,10 @@ class Popover extends Popup {
 	get hasFooter() {
 		return !!this.footer.length;
 	}
+
+	get role() {
+		return "toolbar";
+	}
 }
 
 Popover.define();
