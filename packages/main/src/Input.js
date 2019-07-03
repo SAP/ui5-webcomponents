@@ -255,15 +255,15 @@ const metadata = {
  * which enables you to react on any text change.
  * <br><br>
  * <b>Note:</b> If you are using the <code>ui5-input</code> as a single npm module,
- * don"t forget to import the <code>Suggestions</code> module from
- * "@ui5/webcomponents/dist/Suggestions"
+ * don"t forget to import the <code>InputSuggestions</code> module from
+ * "@ui5/webcomponents/dist/features/InputSuggestions.js"
  * to enable the suggestions functionality.
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/Input";</code>
+ * <code>import "@ui5/webcomponents/dist/Input.js";</code>
  * <br>
- * <code>import "@ui5/webcomponents/dist/InputSuggestions";</code> (optional - for input suggestions support)
+ * <code>import "@ui5/webcomponents/dist/features/InputSuggestions.js";</code> (optional - for input suggestions support)
  *
  * @constructor
  * @author SAP SE
