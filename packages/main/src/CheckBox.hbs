@@ -4,6 +4,8 @@
 	aria-checked="{{checked}}"
 	aria-readonly="{{ariaReadonly}}"
 	aria-disabled="{{ariaDisabled}}"
+	aria-labelledby="{{ariaLabelledBy}}"
+	aria-describedby="{{ariaDescribedBy}}"
 	tabindex="{{tabIndex}}"
 	dir="{{rtl}}"
 >
@@ -12,7 +14,11 @@
 		</div>
 
 		{{#if _label.text}}
-			<ui5-label class="ui5-checkbox-label" ?wrap="{{_label.wrap}}">{{_label.text}}</ui5-label>
+			<ui5-label id="{{_id}}-label" class="ui5-checkbox-label" ?wrap="{{_label.wrap}}">{{_label.text}}</ui5-label>
+		{{/if}}
+
+		{{#if hasValueState}}
+			<span id="{{_id}}-descr" class="ui5-hidden-text">{{valueStateText}}</span>
 		{{/if}}
 
 		<slot name="formSupport"></slot>

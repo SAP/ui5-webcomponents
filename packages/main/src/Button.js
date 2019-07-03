@@ -2,11 +2,14 @@ import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
+import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/src/ResourceBundle.js";
 import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
 import { getFeature } from "@ui5/webcomponents-base/src/FeaturesRegistry.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonTemplate from "./build/compiled/ButtonTemplate.lit.js";
 import Icon from "./Icon.js";
+
+import { BUTTON_ARIA_TYPE_ACCEPT, BUTTON_ARIA_TYPE_REJECT, BUTTON_ARIA_TYPE_EMPHASIZED } from "./i18n/defaults.js";
 
 // Styles
 import buttonCss from "./themes/Button.css.js";
@@ -190,6 +193,8 @@ class Button extends UI5Element {
 				this._active = false;
 			}
 		};
+
+		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
@@ -266,8 +271,34 @@ class Button extends UI5Element {
 		return getEffectiveRTL() ? "rtl" : undefined;
 	}
 
+	get hasButtonType() {
+		return this.design !== ButtonDesign.Default && this.design !== ButtonDesign.Transparent;
+	}
+
+	get buttonTypeText() {
+		let buttonTypeText;
+
+		switch (this.design) {
+		case ButtonDesign.Positive:
+			buttonTypeText = this.resourceBundle.getText(BUTTON_ARIA_TYPE_ACCEPT);
+			break;
+		case ButtonDesign.Negative:
+			buttonTypeText = this.resourceBundle.getText(BUTTON_ARIA_TYPE_REJECT);
+			break;
+		case ButtonDesign.Emphasized:
+			buttonTypeText = this.resourceBundle.getText(BUTTON_ARIA_TYPE_EMPHASIZED);
+			break;
+		default:
+			buttonTypeText = "";
+		}
+		return buttonTypeText;
+	}
+
 	static async define(...params) {
-		await Icon.define();
+		await Promise.all([
+			Icon.define(),
+			fetchResourceBundle("@ui5/webcomponents"),
+		]);
 
 		super.define(...params);
 	}

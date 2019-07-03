@@ -56,6 +56,17 @@ const metadata = {
 		},
 
 		/**
+		 * Defines whether the <code>ui5-textarea</code> is required.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 */
+		required: {
+			type: Boolean,
+		},
+
+		/**
 		 * Defines a short hint intended to aid the user with data entry when the component has no value.
 		 *
 		 * @type {string}
@@ -387,6 +398,10 @@ class TextArea extends UI5Element {
 
 	get tabIndex() {
 		return this.disabled ? undefined : "0";
+	}
+
+	get ariaDescribedBy() {
+		return this.showExceededText ? `${this._id}-exceededText` : undefined;
 	}
 
 	get ariaInvalid() {

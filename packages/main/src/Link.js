@@ -1,9 +1,12 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
+import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/src/ResourceBundle.js";
 import LinkDesign from "./types/LinkDesign.js";
 
 // Template
 import LinkRederer from "./build/compiled/LinkTemplate.lit.js";
+
+import { LINK_SUBTLE, LINK_EMPHASIZED } from "./i18n/defaults.js";
 
 // Styles
 import linkCss from "./themes/Link.css.js";
@@ -160,6 +163,7 @@ class Link extends UI5Element {
 	constructor() {
 		super();
 		this._dummyAnchor = document.createElement("a");
+		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
 	}
 
 	static get metadata() {
@@ -204,6 +208,26 @@ class Link extends UI5Element {
 		return this.disabled ? "true" : undefined;
 	}
 
+	get hasLinkType() {
+		return this.design !== LinkDesign.Default;
+	}
+
+	get linkTypeText() {
+		let linkTypeText;
+
+		switch (this.design) {
+		case LinkDesign.Subtle:
+			linkTypeText = this.resourceBundle.getText(LINK_SUBTLE);
+			break;
+		case LinkDesign.Emphasized:
+			linkTypeText = this.resourceBundle.getText(LINK_EMPHASIZED);
+			break;
+		default:
+			linkTypeText = "";
+		}
+		return linkTypeText;
+	}
+
 	get classes() {
 		return {
 			main: {
@@ -219,6 +243,12 @@ class Link extends UI5Element {
 
 	get parsedRef() {
 		return this.href.length > 0 ? this.href : undefined;
+	}
+
+	static async define(...params) {
+		await fetchResourceBundle("@ui5/webcomponents");
+
+		super.define(...params);
 	}
 }
 

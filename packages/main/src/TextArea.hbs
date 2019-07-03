@@ -25,7 +25,9 @@
 			placeholder="{{ placeholder }}"
 			?disabled="{{disabled}}"
 			?readonly="{{readonly}}"
+			?required="{{required}}"
 			maxlength="{{_exceededTextProps.calcedMaxLength}}"
+			aria-describedby={{ariaDescribedBy}}
 			.value="{{value}}"
 			@change="{{_listeners.change}}"
 			data-sap-focus-ref>
@@ -33,7 +35,7 @@
 	</div>
 
 	{{#if showExceededText}}
-		<span class="{{classes.exceededText}}">{{_exceededTextProps.exceededText}}</span>
+		<span id="{{_id}}-exceededText" class="{{classes.exceededText}}">{{_exceededTextProps.exceededText}}</span>
 	{{/if}}
 
 	<slot name="formSupport"></slot>

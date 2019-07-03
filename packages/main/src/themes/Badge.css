@@ -1,3 +1,5 @@
+@import "./InvisibleTextStyles.css";
+
 :host(ui5-badge:not([hidden])) {
 	display: inline-flex;
 	height: 1.125rem;

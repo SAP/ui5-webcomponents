@@ -8,4 +8,7 @@
 	?disabled="{{disabled}}"
 	aria-disabled="{{ariaDisabled}}">
 	<slot></slot>
+	{{#if hasLinkType}}
+		<span class="ui5-hidden-text">{{linkTypeText}}</span>
+	{{/if}}
 </a>

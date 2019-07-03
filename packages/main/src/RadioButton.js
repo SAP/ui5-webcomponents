@@ -17,6 +17,8 @@ import RadioButtonGroup from "./RadioButtonGroup.js";
 // Template
 import RadioButtonTemplate from "./build/compiled/RadioButtonTemplate.lit.js";
 
+import { VALUE_STATE_ERROR, VALUE_STATE_WARNING } from "./i18n/defaults.js";
+
 // Styles
 import radioButtonCss from "./themes/RadioButton.css.js";
 
@@ -360,6 +362,35 @@ class RadioButton extends UI5Element {
 
 	get ariaDisabled() {
 		return this.disabled ? "true" : undefined;
+	}
+
+	get ariaLabelledBy() {
+		return this.text ? `${this._id}-label` : undefined;
+	}
+
+	get ariaDescribedBy() {
+		return this.hasValueState ? `${this._id}-descr` : undefined;
+	}
+
+	get hasValueState() {
+		return this.valueState !== ValueState.None;
+	}
+
+	get valueStateText() {
+		let valueStateText;
+
+		switch (this.valueState) {
+		case ValueState.Error:
+			valueStateText = VALUE_STATE_ERROR.defaultText;
+			break;
+		case ValueState.Warning:
+			valueStateText = VALUE_STATE_WARNING.defaultText;
+			break;
+		default:
+			valueStateText = "";
+		}
+
+		return valueStateText;
 	}
 
 	get tabIndex() {

@@ -6,6 +6,8 @@ import Icon from "./Icon.js";
 // Template
 import BadgeTemplate from "./build/compiled/BadgeTemplate.lit.js";
 
+import { BADGE_DESCRIPTION } from "./i18n/defaults.js";
+
 // Styles
 import badgeCss from "./themes/Badge.css.js";
 
@@ -119,6 +121,10 @@ class Badge extends UI5Element {
 
 	get rtl() {
 		return getEffectiveRTL() ? "rtl" : undefined;
+	}
+
+	get badgeDescription() {
+		return BADGE_DESCRIPTION.defaultText;
 	}
 }
 
