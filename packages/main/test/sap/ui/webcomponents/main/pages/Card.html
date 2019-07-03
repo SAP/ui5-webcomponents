@@ -26,24 +26,31 @@
 			max-width: 300px;
 		}
 	</style>
+
 	<style data-ui5-parts-styles>
 		ui5-card.online::part(status) {
 			color: green;
-		}
-		ui5-card.offline::part(status) {
-			color: red;
+			font-size: 2rem;
 		}
 	</style>
+
+	<style data-ui5-parts-styles>
+		ui5-card.offline::part(status) {
+			color: red;
+			font-size: 2rem;
+		}
+	</style>
+
 </head>
 
 <body role="application">
 
 <ui5-card
 	id="card"
+	class="online myCard"
 	status="4 of 10"
 	heading="Quick Links"
-	header-interactive
-	class="myCard">
+	header-interactive>
 	<ui5-list id="myList3" separators="Inner">
 		<ui5-li icon="sap-icon://horizontal-bullet-chart" >Template Based Segmentation</ui5-li>
 		<ui5-li icon="sap-icon://opportunity" >Segmentation Models</ui5-li>
@@ -55,9 +62,9 @@
 
 <ui5-card
 	id="card2"
+	class="offline myCard"
 	status="4 of 10"
-	heading="Quick Links"
-	class="myCard">
+	heading="Quick Links">
 	<ui5-list id="myList3" separators="Inner">
 		<ui5-li icon="sap-icon://horizontal-bullet-chart" >Template Based Segmentation</ui5-li>
 		<ui5-li icon="sap-icon://opportunity" >Segmentation Models</ui5-li>
@@ -71,7 +78,6 @@
 		field.value = parseInt(field.value) + 1;
 	});
 
-	window["sap-ui-webcomponents-main-bundle"].polyfillShadowParts("style[data-ui5-parts-styles]");
 </script>
 </body>
 </html>

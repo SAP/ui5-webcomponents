@@ -182,6 +182,16 @@ class Button extends UI5Element {
 		return ButtonTemplate;
 	}
 
+	constructor (props) {
+		super(props);
+
+		this._deactivate = () => {
+			if (this._active) {
+				this._active = false;
+			}
+		} 
+	}
+
 	onBeforeRendering() {
 		const FormSupport = getFeature("FormSupport");
 		if (this.submits && !FormSupport) {
@@ -190,17 +200,15 @@ class Button extends UI5Element {
 	}
 
 	onEnterDOM() {
-		document.addEventListener("mouseup", this._deactivate);
+		document.addEventListener("mouseup", this._deactivate.bind(this));
 	}
 
 	onExitDOM() {
-		document.removeEventListener("mouseup", this._deactivate);
+		document.removeEventListener("mouseup", this._deactivate.bind(this));
 	}
 
-	_deactivate() {
-		if (this._active) {
-			this._active = false;
-		}
+	_deactivateHandler() {
+		return this._deactivate.bind(this);
 	}
 
 	_onclick(event) {
