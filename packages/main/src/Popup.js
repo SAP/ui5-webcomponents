@@ -57,16 +57,7 @@ const metadata = {
 			type: String,
 			association: true,
 		},
-		/**
-		 * Defines whether the header is hidden.
-		 *
-		 * @type {Boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		noHeader: {
-			type: Boolean,
-		},
+
 		/**
 		 * Defines the header text.
 		 * <br><b>Note:</b> If <code>header</code> slot is provided, the <code>headerText</code> is ignored.
@@ -442,6 +433,18 @@ class Popup extends UI5Element {
 
 	onExitDOM() {
 		removeBodyStyles();
+	}
+
+	get hasHeader() {
+		return !!(this.headerText.length || this.header.length);
+	}
+
+	get hasFooter() {
+		return !!this.footer.length;
+	}
+
+	get role() {
+		return "heading";
 	}
 }
 

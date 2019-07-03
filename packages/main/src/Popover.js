@@ -467,7 +467,7 @@ class Popover extends Popup {
 
 		let maxContentHeight = Math.round(maxHeight);
 
-		if (!this.noHeader) {
+		if (this.hasHeader) {
 			const headerDomRef = this.getPopupDomRef().querySelector(".ui5-popup-wrapper-header");
 			if (headerDomRef) {
 				maxContentHeight = Math.round(maxHeight - headerDomRef.offsetHeight);
@@ -645,7 +645,7 @@ class Popover extends Popup {
 	}
 
 	get headerId() {
-		return this.noHeader ? undefined : `${this._id}-header`;
+		return this.hasHeader ? `${this._id}-header` : undefined;
 	}
 
 	get focusHelper() {
@@ -653,6 +653,10 @@ class Popover extends Popup {
 			forwardToLast: this._focusElementsHandlers.forwardToLast,
 			forwardToFirst: this._focusElementsHandlers.forwardToFirst,
 		};
+	}
+
+	get role() {
+		return "toolbar";
 	}
 }
 
