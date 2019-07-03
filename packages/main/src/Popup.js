@@ -434,7 +434,15 @@ class Popup extends UI5Element {
 	onExitDOM() {
 		removeBodyStyles();
 	}
-	
+
+	get hasHeader() {
+		return !!(this.headerText.length || this.footer.length);
+	}
+
+	get hasFooter() {
+		return !!this.footer.length;
+	}
+
 	get role() {
 		return "heading";
 	}

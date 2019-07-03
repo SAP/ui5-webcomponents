@@ -655,14 +655,6 @@ class Popover extends Popup {
 		};
 	}
 
-	get hasHeader() {
-		return !!(this.headerText.length || this.footer.length);
-	}
-
-	get hasFooter() {
-		return !!this.footer.length;
-	}
-
 	get role() {
 		return "toolbar";
 	}
