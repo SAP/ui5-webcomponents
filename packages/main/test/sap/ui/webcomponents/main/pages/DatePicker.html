@@ -12,10 +12,10 @@
 	<script nomodule src="../../../../../../resources/sap/ui/webcomponents/main/bundle.es5.js">
 	</script>
 
-	<!-- <script
+	<script
 	src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
 	integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
-	crossorigin="anonymous"></script> -->
+	crossorigin="anonymous"></script>
 
 	<style>
 		.sapUiTheme-sap_fiori3 body {
@@ -101,28 +101,28 @@
 			labelLiveChange.innerHTML = 'input: ' + JSON.stringify(e.detail);
 		});
 
-		// $('#ui5-datepicker--startDate').on('ui5-input change', (function(e) {
-		// 	var dp = $('#ui5-datepicker--startDate')[0];
-		// 	dp.setAttribute('value-state', e.detail.valid ? 'None' : 'Error');
-		// 	$('#startDate').val($('#ui5-datepicker--startDate').val());
-		// 	$('#startDate').trigger('change');
-		// }));
+		$('#ui5-datepicker--startDate').on('ui5-input change', (function(e) {
+			var dp = $('#ui5-datepicker--startDate')[0];
+			dp.setAttribute('value-state', e.detail.valid ? 'None' : 'Error');
+			$('#startDate').val($('#ui5-datepicker--startDate').val());
+			$('#startDate').trigger('change');
+		}));
 
-		// $('#ui5-datepicker--startDate').dblclick(function(e) {
-		// 	var dp = $('#ui5-datepicker--startDate')[0];
-		// 	if (dp.getSemanticTargetInfo(e).isInput) {
-		// 		dp.value = dp.normalizeValue("today");
-		// 		dp.closePicker();
-		// 	}
-		// });
+		$('#ui5-datepicker--startDate').dblclick(function(e) {
+			var dp = $('#ui5-datepicker--startDate')[0];
+			if (dp.getSemanticTargetInfo(e).isInput) {
+				dp.value = dp.normalizeValue("today");
+				dp.closePicker();
+			}
+		});
 
-		// $('#ui5-datepicker--startDate').click(function(e) {
-		// 	var dp = $('#ui5-datepicker--startDate')[0];
-		// 	if (!dp.isOpen() && dp.getSemanticTargetInfo(e).isInput) {
-		// 		dp.setAttribute('value-state', 'None');
-		// 		dp.openPicker({ focusInput: true });
-		// 	}
-		// });
+		$('#ui5-datepicker--startDate').click(function(e) {
+			var dp = $('#ui5-datepicker--startDate')[0];
+			if (!dp.isOpen() && dp.getSemanticTargetInfo(e).isInput) {
+				dp.setAttribute('value-state', 'None');
+				dp.openPicker({ focusInput: true });
+			}
+		});
 	</script>
 </body>
 </html>

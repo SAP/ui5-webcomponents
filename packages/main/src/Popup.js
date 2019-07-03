@@ -60,7 +60,7 @@ const metadata = {
 
 		/**
 		 * Defines the header text.
-		 * <br><b>Note :</b> If <code>header</code> slot is provided, the <code>headerText</code> is ignored.
+		 * <br><b>Note:</b> If <code>header</code> slot is provided, the <code>headerText</code> is ignored.
 		 *
 		 * @type {string}
 		 * @defaultvalue: ""
@@ -436,7 +436,7 @@ class Popup extends UI5Element {
 	}
 
 	get hasHeader() {
-		return !!(this.headerText.length || this.footer.length);
+		return !!(this.headerText.length || this.header.length);
 	}
 
 	get hasFooter() {
