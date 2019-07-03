@@ -18,7 +18,7 @@
 </span>
 
 {{#*inline "header"}}
-	{{#unless noHeader}}
+	{{#if hasHeader}}
 		<header>
 			{{#if header.length}}
 				<div role="heading" class="ui5-popup-wrapper-header">
@@ -28,11 +28,11 @@
 				<h2 role="heading" class="ui5-popup-wrapper-header ui5-popup-wrapper-headerText">{{headerText}}</h2>
 			{{/if}}
 		</header>
-	{{/unless}}
+	{{/if}}
 {{/inline}}
 
 {{#*inline "footer"}}
-	{{#if footer.length}}
+	{{#if hasFooter}}
 		<footer>
 			<div class="ui5-popup-wrapper-footer">
 				<slot name="footer"></slot>

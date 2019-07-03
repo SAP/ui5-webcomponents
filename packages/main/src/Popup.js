@@ -57,19 +57,10 @@ const metadata = {
 			type: String,
 			association: true,
 		},
-		/**
-		 * Defines whether the header is hidden.
-		 *
-		 * @type {Boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		noHeader: {
-			type: Boolean,
-		},
+
 		/**
 		 * Defines the header text.
-		 * <br><b>Note:</b> If <code>header</code> slot is provided, the <code>headerText</code> is ignored.
+		 * <br><b>Note :</b> If <code>header</code> slot is provided, the <code>headerText</code> is ignored.
 		 *
 		 * @type {string}
 		 * @defaultvalue: ""
