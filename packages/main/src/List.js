@@ -10,10 +10,10 @@ import ListMode from "./types/ListMode.js";
 import ListSeparators from "./types/ListSeparators.js";
 import ListItemType from "./types/ListItemType.js";
 // Template
-import ListTemplate from "./build/compiled/ListTemplate.lit.js";
+import ListTemplate from "./generated/templates/ListTemplate.lit.js";
 
 // Styles
-import listCss from "./themes/List.css.js";
+import listCss from "./generated/themes/List.css.js";
 
 /**
  * @public

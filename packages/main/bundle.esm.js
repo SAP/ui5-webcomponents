@@ -1,14 +1,16 @@
+import "@ui5/webcomponents-base/src/features/calendar/Buddhist.js";
+import "@ui5/webcomponents-base/src/features/calendar/Islamic.js";
+import "@ui5/webcomponents-base/src/features/calendar/Japanese.js";
+import "@ui5/webcomponents-base/src/features/calendar/Persian.js";
+
 // ESM bundle targets Edge + browsers with native support
-import "@ui5/webcomponents-base/src/browsersupport/Edge.js";
+import "@ui5/webcomponents-base/src/features/browsersupport/Edge.js";
 
 import "./dist/ThemePropertiesProvider.js";
+import "./dist/MessageBundleAssets.js";
+import "./dist/features/InputElementsFormSupport.js";
+import "./dist/features/InputSuggestions.js";
 
-import "@ui5/webcomponents/dist/MessageBundleAssets.js";
-
-import Buddhist from "@ui5/webcomponents-core/dist/sap/ui/core/date/Buddhist.js";
-import Islamic from "@ui5/webcomponents-core/dist/sap/ui/core/date/Islamic.js";
-import Japanese from "@ui5/webcomponents-core/dist/sap/ui/core/date/Japanese.js";
-import Persian from "@ui5/webcomponents-core/dist/sap/ui/core/date/Persian.js";
 
 import Badge from "./dist/Badge.js";
 import BusyIndicator from "./dist/BusyIndicator.js";
@@ -19,7 +21,6 @@ import DatePicker from "./dist/DatePicker.js";
 import Dialog from "./dist/Dialog.js";
 import Icon from "./dist/Icon.js";
 import Input from "./dist/Input.js";
-import InputSuggestions from "./dist/InputSuggestions.js";
 import Label from "./dist/Label.js";
 import Link from "./dist/Link.js";
 import Popover from "./dist/Popover.js";
@@ -45,8 +46,6 @@ import StandardListItem from "./dist/StandardListItem.js";
 import CustomListItem from "./dist/CustomListItem.js";
 import GroupHeaderListItem from "./dist/GroupHeaderListItem.js";
 
-// used for forms
-import InputElementsFormSupport from "./dist/InputElementsFormSupport.js";
 
 // used in test pages
 import RenderScheduler from "@ui5/webcomponents-base/src/RenderScheduler.js";

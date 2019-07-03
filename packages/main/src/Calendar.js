@@ -15,13 +15,13 @@ import CalendarHeader from "./CalendarHeader.js";
 import DayPicker from "./DayPicker.js";
 import MonthPicker from "./MonthPicker.js";
 import YearPicker from "./YearPicker.js";
-import CalendarTemplate from "./build/compiled/CalendarTemplate.lit.js";
+import CalendarTemplate from "./generated/templates/CalendarTemplate.lit.js";
 
 // default calendar for bundling
 import "@ui5/webcomponents-core/dist/sap/ui/core/date/Gregorian.js";
 
 // Styles
-import calendarCSS from "./themes/Calendar.css.js";
+import calendarCSS from "./generated/themes/Calendar.css.js";
 
 /**
  * @public

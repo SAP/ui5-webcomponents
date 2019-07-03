@@ -6,11 +6,11 @@ import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
 import { getFeature } from "@ui5/webcomponents-base/src/FeaturesRegistry.js";
 import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-import CheckBoxTemplate from "./build/compiled/CheckBoxTemplate.lit.js";
+import CheckBoxTemplate from "./generated/templates/CheckBoxTemplate.lit.js";
 import Label from "./Label.js";
 
 // Styles
-import checkboxCss from "./themes/CheckBox.css.js";
+import checkboxCss from "./generated/themes/CheckBox.css.js";
 
 /**
  * @public
@@ -103,7 +103,7 @@ const metadata = {
 		 * Determines the name with which the <code>ui5-checkbox</code> will be submitted in an HTML form.
 		 *
 		 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
-		 * <code>import "@ui5/webcomponents/dist/InputElementsFormSupport.js";</code>
+		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
 		 *
 		 * <b>Note:</b> When set, a native <code>input</code> HTML element
 		 * will be created inside the <code>ui5-checkbox</code> so that it can be submitted as
@@ -213,7 +213,7 @@ class CheckBox extends UI5Element {
 				nativeInput.value = element.checked ? "on" : "";
 			});
 		} else if (this.name) {
-			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/InputElementsFormSupport.js";`); // eslint-disable-line
+			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
 		}
 	}
 

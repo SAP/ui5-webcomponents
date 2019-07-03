@@ -6,7 +6,7 @@ import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
 import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
-import TabContainerTemplate from "./build/compiled/TabContainerTemplate.lit.js";
+import TabContainerTemplate from "./generated/templates/TabContainerTemplate.lit.js";
 import Button from "./Button.js";
 import CustomListItem from "./CustomListItem.js";
 import Icon from "./Icon.js";
@@ -16,7 +16,7 @@ import TabBase from "./TabBase.js";
 import SemanticColor from "./types/SemanticColor.js";
 
 // Styles
-import tabContainerCss from "./themes/TabContainer.css.js";
+import tabContainerCss from "./generated/themes/TabContainer.css.js";
 
 
 const SCROLL_STEP = 128;

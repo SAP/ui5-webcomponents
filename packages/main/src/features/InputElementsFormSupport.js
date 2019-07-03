@@ -1,3 +1,5 @@
+import { registerFeature } from "@ui5/webcomponents-base/src/FeaturesRegistry.js";
+
 class FormSupport {
 	/**
 	 *
@@ -43,5 +45,8 @@ const copyDefaultProperties = (element, nativeInput) => {
 	nativeInput.disabled = element.disabled;
 	nativeInput.value = element.value;
 };
+
+// Add form support to the global features registry so that Web Components can find and use it
+registerFeature("FormSupport", FormSupport);
 
 export default FormSupport;

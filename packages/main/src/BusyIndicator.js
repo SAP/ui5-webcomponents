@@ -1,9 +1,9 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import BusyIndicatorTemplate from "./build/compiled/BusyIndicatorTemplate.lit.js";
+import BusyIndicatorTemplate from "./generated/templates/BusyIndicatorTemplate.lit.js";
 
 // Styles
-import busyIndicatorCss from "./themes/BusyIndicator.css.js";
+import busyIndicatorCss from "./generated/themes/BusyIndicator.css.js";
 
 
 import BusyIndicatorType from "./types/BusyIndicatorType.js";

@@ -1,9 +1,9 @@
 import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import Button from "./Button.js";
-import ToggleButtonTemplate from "./build/compiled/ToggleButtonTemplate.lit.js";
+import ToggleButtonTemplate from "./generated/templates/ToggleButtonTemplate.lit.js";
 
 // Styles
-import toggleBtnCss from "./themes/ToggleButton.css.js";
+import toggleBtnCss from "./generated/themes/ToggleButton.css.js";
 
 /**
  * @public

@@ -8,12 +8,12 @@ import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
 import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/src/ResourceBundle.js";
 import Icon from "./Icon.js";
 import PanelAccessibleRole from "./types/PanelAccessibleRole.js";
-import PanelTemplate from "./build/compiled/PanelTemplate.lit.js";
+import PanelTemplate from "./generated/templates/PanelTemplate.lit.js";
 
 import { PANEL_ICON } from "./i18n/defaults.js";
 
 // Styles
-import panelCss from "./themes/Panel.css.js";
+import panelCss from "./generated/themes/Panel.css.js";
 
 /**
  * @public

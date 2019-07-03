@@ -1,10 +1,10 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import TitleLevel from "./types/TitleLevel.js";
-import TitleTemplate from "./build/compiled/TitleTemplate.lit.js";
+import TitleTemplate from "./generated/templates/TitleTemplate.lit.js";
 
 // Styles
-import titleCss from "./themes/Title.css.js";
+import titleCss from "./generated/themes/Title.css.js";
 
 /**
  * @public

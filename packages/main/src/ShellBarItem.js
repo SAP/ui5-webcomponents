@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 
 // Template
-import ShellBarItemTemplate from "./build/compiled/ShellBarItemTemplate.lit.js";
+import ShellBarItemTemplate from "./generated/templates/ShellBarItemTemplate.lit.js";
 
 /**
  * @public

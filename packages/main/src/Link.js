@@ -3,10 +3,10 @@ import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import LinkDesign from "./types/LinkDesign.js";
 
 // Template
-import LinkRederer from "./build/compiled/LinkTemplate.lit.js";
+import LinkRederer from "./generated/templates/LinkTemplate.lit.js";
 
 // Styles
-import linkCss from "./themes/Link.css.js";
+import linkCss from "./generated/themes/Link.css.js";
 
 /**
  * @public

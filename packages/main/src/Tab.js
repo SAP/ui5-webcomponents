@@ -2,7 +2,7 @@ import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import TabBase from "./TabBase.js";
 import SemanticColor from "./types/SemanticColor.js";
 import Icon from "./Icon.js";
-import TabTemplate from "./build/compiled/TabTemplate.lit.js";
+import TabTemplate from "./generated/templates/TabTemplate.lit.js";
 
 /**
  * @public

@@ -10,10 +10,10 @@ import { getLocale } from "@ui5/webcomponents-base/src/LocaleProvider.js";
 import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType.js";
 import CalendarDate from "@ui5/webcomponents-base/src/dates/CalendarDate.js";
 import getShadowDOMTarget from "@ui5/webcomponents-base/src/events/getShadowDOMTarget.js";
-import MonthPickerTemplate from "./build/compiled/MonthPickerTemplate.lit.js";
+import MonthPickerTemplate from "./generated/templates/MonthPickerTemplate.lit.js";
 
 // Styles
-import styles from "./themes/MonthPicker.css.js";
+import styles from "./generated/themes/MonthPicker.css.js";
 
 /**
  * @public

@@ -9,10 +9,10 @@ import Popup from "./Popup.js";
 
 
 // Template
-import PopoverTemplate from "./build/compiled/PopoverTemplate.lit.js";
+import PopoverTemplate from "./generated/templates/PopoverTemplate.lit.js";
 
 // Styles
-import popoverCss from "./themes/Popover.css.js";
+import popoverCss from "./generated/themes/Popover.css.js";
 
 /**
  * @public

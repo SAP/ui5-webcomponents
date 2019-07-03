@@ -1,6 +1,6 @@
 import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import TabBase from "./TabBase.js";
-import TabSeparatorTemplate from "./build/compiled/TabSeparatorTemplate.lit.js";
+import TabSeparatorTemplate from "./generated/templates/TabSeparatorTemplate.lit.js";
 
 /**
  * @public

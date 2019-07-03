@@ -3,11 +3,11 @@ import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import { isIconURI } from "@ui5/webcomponents-base/src/IconPool.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
-import CardTemplate from "./build/compiled/CardTemplate.lit.js";
+import CardTemplate from "./generated/templates/CardTemplate.lit.js";
 import Icon from "./Icon.js";
 
 // Styles
-import cardCss from "./themes/Card.css.js";
+import cardCss from "./generated/themes/Card.css.js";
 
 /**
  * @public
