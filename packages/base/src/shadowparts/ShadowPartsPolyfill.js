@@ -1,6 +1,8 @@
 import supportsShadowParts from "./supportsShadowParts";
 import { addCustomCSS } from "../Theming";
 
+const tagsToInvalidate = new Set();
+
 /**
  * converts from part pseudo selectors to host and attribute selectors
  *
@@ -32,6 +34,8 @@ const polyfillStyles = (styleTag) => {
 			newSelector = newSelector.replace(`::part(${part})`, "");
 			newSelector += ` [part='${part}']`;
 
+			tagsToInvalidate.add(component);
+
 			if (window.ShadyDOM) {
 				// Shadow DOM polyfill running, adjust onply part selector
 				newSelector = selector.trim().replace(`::part(${part})`, "");
@@ -61,10 +65,13 @@ const applyTransformation = () => {
 
 	styleElements.forEach(styleTag => {
 		polyfillStyles(styleTag);
+
+		tagsToInvalidate.forEach(tag => {
+			document.querySelectorAll(tag).forEach(element => {
+				element._invalidate && element._invalidate();
+			});
+		});
 	});
 }
 
-applyTransformation();
-
-
-export default polyfillStyles;
+export { applyTransformation };

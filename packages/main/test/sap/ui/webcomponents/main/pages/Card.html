@@ -78,6 +78,10 @@
 		field.value = parseInt(field.value) + 1;
 	});
 
+	setTimeout(() => { 
+		window["sap-ui-webcomponents-main-bundle"].shadowPartsPolyfill.applyTransformation();
+	}, 100);
+
 </script>
 </body>
 </html>
