@@ -114,7 +114,7 @@ class RenderScheduler {
 	}
 
 	static getNotDefinedComponents() {
-		return Array.from(document.querySelectorAll(":not(:defined)")).filter(el => el.localName.startsWith("ui5-"));
+		return Array.from(document.querySelectorAll("*")).filter(el => el.localName.startsWith("ui5-") && !el._isUI5Element);
 	}
 
 	/**
