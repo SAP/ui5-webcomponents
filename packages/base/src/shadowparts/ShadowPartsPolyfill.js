@@ -54,8 +54,8 @@ const polyfillStyles = styleTag => {
 	});
 };
 
-const applyTransformation = () => {
-	if (supportsShadowParts()) {
+const applyTransformation = async () => {
+	if (await supportsShadowParts()) {
 		return;
 	}
 
@@ -72,4 +72,4 @@ const applyTransformation = () => {
 	});
 };
 
-export { applyTransformation }; // eslint-disable-line
+applyTransformation();

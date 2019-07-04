@@ -5,6 +5,7 @@ import "@ui5/webcomponents-base/dist/features/calendar/Persian.js";
 
 // ESM bundle targets Edge + browsers with native support
 import "@ui5/webcomponents-base/dist/features/browsersupport/Edge.js";
+import "@ui5/webcomponents-base/dist/shadowparts/ShadowPartsPolyfill.js";
 
 import "./dist/ThemePropertiesProvider.js";
 import "./dist/MessageBundleAssets.js";
@@ -57,10 +58,8 @@ window.isIE = isIE; // attached to the window object for testing purposes
 // Note: keep in sync with rollup.config value for IIFE
 import * as configuration from "@ui5/webcomponents-base/dist/Configuration.js";
 import * as Theming from "@ui5/webcomponents-base/dist/Theming.js";
-import { applyTransformation } from "@ui5/webcomponents-base/dist/shadowparts/ShadowPartsPolyfill.js";
 
 window["sap-ui-webcomponents-main-bundle"] = {
-	shadowPartsPolyfill: { applyTransformation },
 	configuration,
 	Theming,
 };

@@ -1,6 +1,8 @@
+import whenDOMReady from "../util/whenDOMReady.js";
+
 let prevCalculation;
 
-const supportsShadowParts = () => {
+const supportsShadowParts = async () => {
 	if (prevCalculation) {
 		return prevCalculation;
 	}
@@ -13,6 +15,9 @@ const supportsShadowParts = () => {
 			shadow.innerHTML = `<div hidden part='target'></div>`;
 		}
 	}
+
+	await whenDOMReady();
+
 	customElements.define("parts-feature-detection", PartsFeatureDetection);
 
 	// get initial font size
