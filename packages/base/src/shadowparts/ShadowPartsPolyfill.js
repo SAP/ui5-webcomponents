@@ -51,7 +51,7 @@ const polyfillStyles = styleTag => {
 
 	rulesFor.forEach((newRules, component) => {
 		addCustomCSS(component, newRules.join(""));
-	});		
+	});
 };
 
 const applyTransformation = () => {
