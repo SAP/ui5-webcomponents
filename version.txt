@@ -1,5 +1,5 @@
-commit d3a91973d909c1b88e8b5a1a2707caea55c0f614
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Jul 4 11:19:08 2019 +0300
+commit 9380dd95725a2e3e6ec2e776ae8c5de4f4aad0df
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Thu Jul 4 12:52:08 2019 +0300
 
-    fix(ui5-checkbox): set default font-size to checkmark (#618)
+    refactor: consume the base package from dist (#619)
