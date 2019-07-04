@@ -1,7 +1,0 @@
-
-/* eslint no-unused-vars: 0 */
-import ifDefined from '@ui5/webcomponents-base/src/renderer/ifDefined.js';
-import { html, svg, repeat, classMap, styleMap } from '@ui5/webcomponents-base/src/renderer/LitRenderer.js';
-const block0 = (context) => { return html`<div	class="${ifDefined(classMap(context.classes.main))}"	dir="${ifDefined(context.rtl)}"><ui5-icon id="${ifDefined(context._id)}-btnPrev"		class="${ifDefined(classMap(context.classes.buttons))}"		src="${ifDefined(context._btnPrev.icon)}"		data-sap-cal-head-button="Prev"></ui5-icon><div class="sapWCCalHeadMidButtonContainer"><div			id="${ifDefined(context._id)}-btn1"			class="${ifDefined(classMap(context.classes.middleButtons))}"			type="${ifDefined(context._btn1.type)}"			tabindex="0"			data-sap-show-picker="Month"		>			${ifDefined(context._btn1.text)}</div><div			id="${ifDefined(context._id)}-btn2"			class="${ifDefined(classMap(context.classes.middleButtons))}"			type="${ifDefined(context._btn2.type)}"			tabindex="0"			data-sap-show-picker="Year"		>			${ifDefined(context._btn2.text)}</div></div><ui5-icon		id="${ifDefined(context._id)}-btnNext"		class="${ifDefined(classMap(context.classes.buttons))}"		src="${ifDefined(context._btnNext.icon)}"		data-sap-cal-head-button="Next"></ui5-icon></div>`; };
-
-export default block0;

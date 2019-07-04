@@ -1,8 +1,0 @@
-
-/* eslint no-unused-vars: 0 */
-import ifDefined from '@ui5/webcomponents-base/src/renderer/ifDefined.js';
-import { html, svg, repeat, classMap, styleMap } from '@ui5/webcomponents-base/src/renderer/LitRenderer.js';
-const block0 = (context) => { return html`<div class="${ifDefined(classMap(context.classes.main))}"	role="radio"	aria-checked="${ifDefined(context.selected)}"	aria-readonly="${ifDefined(context.ariaReadonly)}"	aria-disabled="${ifDefined(context.ariaDisabled)}"	tabindex="${ifDefined(context.tabIndex)}"	dir="${ifDefined(context.rtl)}"><div class='${ifDefined(classMap(context.classes.inner))}'><svg class="sapMRbSvg" focusable="false"><circle class="sapMRbSvgOuter" cx="${ifDefined(context.circle.x)}" cy="${ifDefined(context.circle.y)}" r="${ifDefined(context.circle.rOuter)}" stroke-width="${ifDefined(context.strokeWidth)}" fill="none" /><circle class="sapMRbSvgInner" cx="${ifDefined(context.circle.x)}" cy="${ifDefined(context.circle.y)}" r="${ifDefined(context.circle.rInner)}" stroke-width="10" /></svg><input type='radio' ?checked="${ifDefined(context.selected)}" ?readonly="${ifDefined(context.readonly)}" ?disabled="${ifDefined(context.disabled)}" name="${ifDefined(context.name)}" data-sap-no-tab-ref/></div>	${ context._label.text ? block1(context) : undefined }</div>`; };
-const block1 = (context) => { return html`<ui5-label class="labelInRadioButton">${ifDefined(context._label.text)}</ui5-label>	`; };
-
-export default block0;

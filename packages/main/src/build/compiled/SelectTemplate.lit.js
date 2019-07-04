@@ -1,9 +1,0 @@
-
-/* eslint no-unused-vars: 0 */
-import ifDefined from '@ui5/webcomponents-base/src/renderer/ifDefined.js';
-import { html, svg, repeat, classMap, styleMap } from '@ui5/webcomponents-base/src/renderer/LitRenderer.js';
-const block0 = (context) => { return html`<div	class="${ifDefined(classMap(context.classes.main))}"	tabindex="${ifDefined(context.tabIndex)}"	dir="${ifDefined(context.rtl)}"	@keydown="${ifDefined(context._keydown)}"	@keyup="${ifDefined(context._keyup)}"><div		class="sapWCSelectLabel"		@click="${ifDefined(context._togglePopover)}"><ui5-label>${ifDefined(context._text)}</ui5-label></div>	${ context.options ? block1(context) : undefined }<ui5-icon		src="sap-icon://slim-arrow-down"		class="sapWCSelectDropDownIcon"		@ui5-press="${ifDefined(context._togglePopover)}"	></ui5-icon><slot name="formSupport"></slot></div>`; };
-const block1 = (context) => { return html`<ui5-popover			id="ui5-select--popover"			placement-type="Bottom"			no-header			no-arrow			horizontal-align="Stretch"			@ui5-afterOpen="${ifDefined(context._applyFocusAfterOpen)}"			@ui5-beforeOpen="${ifDefined(context._beforeOpen)}"			@ui5-afterClose="${ifDefined(context._afterClose)}"		><ui5-list mode="SingleSelect" separators="None" @keydown="${ifDefined(context._handlePickerKeydown)}" @ui5-itemPress="${ifDefined(context._selectionChange)}">					${ repeat(context._syncedOptions, undefined, (item, index) => block2(item, index, context)) }</ui5-list></ui5-popover>	`; };
-const block2 = (item, index, context) => { return html`<ui5-li ?selected="${ifDefined(item.selected)}" icon="${ifDefined(item.icon)}" id="${ifDefined(item.id)}-li">							${ifDefined(item.textContent)}</ui5-li>					`; };
-
-export default block0;

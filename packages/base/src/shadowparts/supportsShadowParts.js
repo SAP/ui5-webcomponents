@@ -9,11 +9,11 @@ const supportsShadowParts = () => {
 	class PartsFeatureDetection extends HTMLElement {
 		constructor() {
 			super();
-			var shadow = this.attachShadow({ mode: 'open' });
+			const shadow = this.attachShadow({ mode: "open" });
 			shadow.innerHTML = `<div hidden part='target'></div>`;
 		}
 	}
-	customElements.define('parts-feature-detection', PartsFeatureDetection);
+	customElements.define("parts-feature-detection", PartsFeatureDetection);
 
 	// get initial font size
 	const fdElement = document.createElement("parts-feature-detection");
@@ -35,6 +35,6 @@ const supportsShadowParts = () => {
 	prevCalculation = supportsParts;
 
 	return supportsParts;
-}
+};
 
 export default supportsShadowParts;

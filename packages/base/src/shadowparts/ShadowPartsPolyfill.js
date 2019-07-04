@@ -18,7 +18,7 @@ const tagsToInvalidate = new Set();
  *
  * and applies it to the shadow dom of the specific component only (ui5-card in this examople)
  */
-const polyfillStyles = (styleTag) => {
+const polyfillStyles = styleTag => {
 	const rulesFor = new Map();
 	const inp = styleTag.textContent;
 	const rules = inp.trim().split("}").filter(_ => _.includes("{"));
@@ -46,15 +46,13 @@ const polyfillStyles = (styleTag) => {
 				rulesFor.set(component, []);
 			}
 			rulesFor.get(component).push(`${newSelector} { ${content} }`);
-		};
-
+		}
 	});
 
-	for (const [component, newRules] of rulesFor.entries()) {
+	rulesFor.forEach((newRules, component) => {
 		addCustomCSS(component, newRules.join(""));
-	}
-
-}
+	});		
+};
 
 const applyTransformation = () => {
 	if (supportsShadowParts()) {
@@ -72,6 +70,6 @@ const applyTransformation = () => {
 			});
 		});
 	});
-}
+};
 
-export { applyTransformation };
+export { applyTransformation }; // eslint-disable-line
