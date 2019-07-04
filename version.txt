@@ -1,8 +1,5 @@
-commit c91c8114e7126615b4d69fc287a2ae255eb7c7ae
+commit 833a1c23ae3641686c1e3236d30106d884621ede
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Jul 4 17:06:19 2019 +0300
+Date:   Thu Jul 4 20:10:54 2019 +0300
 
-    fix(ui5-busyindicator): change z-index not to overlap popover or dialog (#624)
-    
-    ui5-popover and ui5-dialog start from z-index 100
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/610
+    docs: update version labels (#628)
