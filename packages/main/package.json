@@ -89,8 +89,8 @@
     "directory": "packages/main"
   },
   "dependencies": {
-    "@ui5/webcomponents-base": "1.0.0-rc.2",
-    "@ui5/webcomponents-core": "1.0.0-rc.2"
+    "@ui5/webcomponents-base": "0.15.0",
+    "@ui5/webcomponents-core": "0.15.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.2",
