@@ -1,5 +1,8 @@
-commit 5a0b7adbeacc8b0ac5c7fcb215cf9b15d4138cc2
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu Jul 4 14:28:54 2019 +0300
+commit c91c8114e7126615b4d69fc287a2ae255eb7c7ae
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu Jul 4 17:06:19 2019 +0300
 
-    fix: datepicker selection works on IE (#623)
+    fix(ui5-busyindicator): change z-index not to overlap popover or dialog (#624)
+    
+    ui5-popover and ui5-dialog start from z-index 100
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/610
