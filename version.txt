@@ -1,5 +1,5 @@
-commit b767276c22f1a07d12d7a20ab215f8de4b404243
+commit 622522128636f2e70bab56bbe5cf4d26695f5b46
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Jul 4 13:11:11 2019 +0300
+Date:   Thu Jul 4 13:13:26 2019 +0300
 
-    docs: remove active icon sample (#621)
+    fix(ui5-icon) set default font-size (#620)
