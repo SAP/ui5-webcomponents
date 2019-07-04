@@ -1,5 +1,5 @@
-commit 622522128636f2e70bab56bbe5cf4d26695f5b46
+commit 9410443c414bc702d8dbe6c34765bdfc49b49520
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Jul 4 13:13:26 2019 +0300
+Date:   Thu Jul 4 13:55:53 2019 +0300
 
-    fix(ui5-icon) set default font-size (#620)
+     chore(release): publish v1.0.0-rc.2 (#622)
