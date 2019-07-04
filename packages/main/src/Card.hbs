@@ -10,11 +10,11 @@
 		@keyup="{{_headerKeyup}}"
 		tabindex="{{tabindex}}"
 		role="group"
-		aria-labelledby="{{_ariaLabelledBy}}">
+		aria-labelledby="{{_id}}-heading {{_id}}-subtitle">
 		{{#if image}}
 			<img src="{{avatar}}" aria-label="Avatar" class="sapFCardAvatar sapFCardHeaderImg">
 		{{/if}}
-		
+
 		{{#if icon}}
 			<span role="img" aria-label="Avatar" class="sapFCardAvatar">
 				<ui5-icon class="sapFCardHeaderIcon" src="{{avatar}}"></ui5-icon>
@@ -23,11 +23,11 @@
 
 		<div class="sapFCardHeaderText">
 			{{#if heading}}
-				<div class="sapFCardTitle">{{heading}}</div>
+				<div id="{{_id}}-heading" class="sapFCardTitle">{{heading}}</div>
 			{{/if}}
 
 			{{#if subtitle}}
-				<div class="sapFCardSubtitle ">{{subtitle}}</div>
+				<div id="{{_id}}-subtitle" class="sapFCardSubtitle ">{{subtitle}}</div>
 			{{/if}}
 		</div>
 		<span part="status" class="sapFCardStatus">{{status}}</span>
