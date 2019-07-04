@@ -93,9 +93,7 @@ const validateSingleSlot = (value, slotData) => {
 	const slottedNodes = getSlottedNodes(value);
 	slottedNodes.forEach(el => {
 		if (!(el instanceof propertyType)) {
-			if (!(el instanceof propertyType)) {
-				throw new Error(`${el} is not of type ${propertyType}`);
-			}
+			throw new Error(`${el} is not of type ${propertyType}`);
 		}
 	});
 
