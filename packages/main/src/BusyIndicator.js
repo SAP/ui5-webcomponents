@@ -2,6 +2,8 @@ import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
 import BusyIndicatorTemplate from "./build/compiled/BusyIndicatorTemplate.lit.js";
 
+import { BUSY_INDICATOR_TITLE } from "./i18n/defaults.js";
+
 // Styles
 import busyIndicatorCss from "./themes/BusyIndicator.css.js";
 
@@ -85,6 +87,10 @@ class BusyIndicator extends UI5Element {
 				[`ui5-busyindicator-${this.size.toLowerCase()}`]: true,
 			},
 		};
+	}
+
+	get ariaTitle() {
+		return BUSY_INDICATOR_TITLE.defaultText;
 	}
 }
 

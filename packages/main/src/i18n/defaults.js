@@ -73,6 +73,11 @@ const VALUE_STATE_WARNING = {
 	defaultText: "Warning issued",
 };
 
+const BUSY_INDICATOR_TITLE = {
+	key: "BUSY_INDICATOR_TITLE",
+	defaultText: "Please wait",
+};
+
 export {
 	MULTIINPUT_SHOW_MORE_TOKENS,
 	TEXTAREA_CHARACTERS_LEFT,
@@ -89,4 +94,5 @@ export {
 	VALUE_STATE_SUCCESS,
 	VALUE_STATE_ERROR,
 	VALUE_STATE_WARNING,
+	BUSY_INDICATOR_TITLE,
 };
