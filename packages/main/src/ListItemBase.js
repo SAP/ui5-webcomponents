@@ -1,12 +1,12 @@
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper.js";
-import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import FocusHelper from "@ui5/webcomponents-base/dist/FocusHelper.js";
+import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import { isDesktop, isPhone } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
-import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
-import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
+import { getCompactSize } from "@ui5/webcomponents-base/dist/Configuration.js";
+import getEffectiveRTL from "@ui5/webcomponents-base/dist/util/getEffectiveRTL.js";
 
 // Styles
-import styles from "./themes/ListItemBase.css.js";
+import styles from "./generated/themes/ListItemBase.css.js";
 
 /**
  * @public

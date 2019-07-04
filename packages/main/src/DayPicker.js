@@ -1,20 +1,20 @@
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import { getLocale } from "@ui5/webcomponents-base/src/LocaleProvider.js";
-import { getCalendarType, getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
-import { getFormatLocale } from "@ui5/webcomponents-base/src/FormatSettings.js";
-import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { getLocale } from "@ui5/webcomponents-base/dist/LocaleProvider.js";
+import { getCalendarType, getCompactSize } from "@ui5/webcomponents-base/dist/Configuration.js";
+import { getFormatLocale } from "@ui5/webcomponents-base/dist/FormatSettings.js";
+import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData.js";
-import CalendarDate from "@ui5/webcomponents-base/src/dates/CalendarDate.js";
-import { calculateWeekNumber } from "@ui5/webcomponents-base/src/dates/CalendarUtils.js";
-import getShadowDOMTarget from "@ui5/webcomponents-base/src/events/getShadowDOMTarget.js";
-import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType.js";
-import DayPickerTemplate from "./build/compiled/DayPickerTemplate.lit.js";
+import CalendarDate from "@ui5/webcomponents-base/dist/dates/CalendarDate.js";
+import { calculateWeekNumber } from "@ui5/webcomponents-base/dist/dates/CalendarUtils.js";
+import getShadowDOMTarget from "@ui5/webcomponents-base/dist/events/getShadowDOMTarget.js";
+import CalendarType from "@ui5/webcomponents-base/dist/dates/CalendarType.js";
+import DayPickerTemplate from "./generated/templates/DayPickerTemplate.lit.js";
 
 // Styles
-import dayPickerCSS from "./themes/DayPicker.css.js";
+import dayPickerCSS from "./generated/themes/DayPicker.css.js";
 
 /**
  * @public

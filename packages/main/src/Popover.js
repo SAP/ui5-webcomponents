@@ -1,7 +1,7 @@
-import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import RenderScheduler from "@ui5/webcomponents-base/src/RenderScheduler.js";
-import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
-import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import FocusHelper from "@ui5/webcomponents-base/dist/FocusHelper.js";
 import PopoverPlacementType from "./types/PopoverPlacementType.js";
 import PopoverVerticalAlign from "./types/PopoverVerticalAlign.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
@@ -9,10 +9,10 @@ import Popup from "./Popup.js";
 
 
 // Template
-import PopoverTemplate from "./build/compiled/PopoverTemplate.lit.js";
+import PopoverTemplate from "./generated/templates/PopoverTemplate.lit.js";
 
 // Styles
-import popoverCss from "./themes/Popover.css.js";
+import popoverCss from "./generated/themes/Popover.css.js";
 
 /**
  * @public
@@ -467,7 +467,7 @@ class Popover extends Popup {
 
 		let maxContentHeight = Math.round(maxHeight);
 
-		if (!this.noHeader) {
+		if (this.hasHeader) {
 			const headerDomRef = this.getPopupDomRef().querySelector(".ui5-popup-wrapper-header");
 			if (headerDomRef) {
 				maxContentHeight = Math.round(maxHeight - headerDomRef.offsetHeight);
@@ -645,7 +645,7 @@ class Popover extends Popup {
 	}
 
 	get headerId() {
-		return this.noHeader ? undefined : `${this._id}-header`;
+		return this.hasHeader ? `${this._id}-header` : undefined;
 	}
 
 	get focusHelper() {
@@ -653,6 +653,10 @@ class Popover extends Popup {
 			forwardToLast: this._focusElementsHandlers.forwardToLast,
 			forwardToFirst: this._focusElementsHandlers.forwardToFirst,
 		};
+	}
+
+	get role() {
+		return "toolbar";
 	}
 }
 

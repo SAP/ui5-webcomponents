@@ -1,23 +1,23 @@
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isIE } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
-import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
-import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
-import { getFeature } from "@ui5/webcomponents-base/src/FeaturesRegistry.js";
+import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import { getCompactSize } from "@ui5/webcomponents-base/dist/Configuration.js";
+import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import {
 	isUp,
 	isDown,
 	isSpace,
 	isEnter,
-} from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+} from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import Icon from "./Icon.js";
 import InputType from "./types/InputType.js";
 // Template
-import InputTemplate from "./build/compiled/InputTemplate.lit.js";
+import InputTemplate from "./generated/templates/InputTemplate.lit.js";
 
 // Styles
-import styles from "./themes/Input.css.js";
-import shellbarInput from "./themes/ShellBarInput.css.js";
+import styles from "./generated/themes/Input.css.js";
+import shellbarInput from "./generated/themes/ShellBarInput.css.js";
 
 /**
  * @public
@@ -157,7 +157,7 @@ const metadata = {
 		 * Determines the name with which the <code>ui5-input</code> will be submitted in an HTML form.
 		 *
 		 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
-		 * <code>import "@ui5/webcomponents/dist/InputElementsFormSupport.js";</code>
+		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
 		 *
 		 * <b>Note:</b> When set, a native <code>input</code> HTML element
 		 * will be created inside the <code>ui5-input</code> so that it can be submitted as
@@ -255,15 +255,15 @@ const metadata = {
  * which enables you to react on any text change.
  * <br><br>
  * <b>Note:</b> If you are using the <code>ui5-input</code> as a single npm module,
- * don"t forget to import the <code>Suggestions</code> module from
- * "@ui5/webcomponents/dist/Suggestions"
+ * don"t forget to import the <code>InputSuggestions</code> module from
+ * "@ui5/webcomponents/dist/features/InputSuggestions.js"
  * to enable the suggestions functionality.
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/Input";</code>
+ * <code>import "@ui5/webcomponents/dist/Input.js";</code>
  * <br>
- * <code>import "@ui5/webcomponents/dist/InputSuggestions";</code> (optional - for input suggestions support)
+ * <code>import "@ui5/webcomponents/dist/features/InputSuggestions.js";</code> (optional - for input suggestions support)
  *
  * @constructor
  * @author SAP SE
@@ -325,7 +325,7 @@ class Input extends UI5Element {
 		if (FormSupport) {
 			FormSupport.syncNativeHiddenInput(this);
 		} else if (this.name) {
-			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/InputElementsFormSupport.js";`); // eslint-disable-line
+			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
 		}
 	}
 
@@ -417,7 +417,7 @@ class Input extends UI5Element {
 		if (Suggestions) {
 			this.Suggestions = new Suggestions(this, "suggestionItems");
 		} else {
-			throw new Error(`You have to import "@ui5/webcomponents/dist/InputSuggestions.js" module to use ui5-input suggestions`);
+			throw new Error(`You have to import "@ui5/webcomponents/dist/features/InputSuggestions.js" module to use ui5-input suggestions`);
 		}
 	}
 

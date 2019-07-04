@@ -1,3 +1,5 @@
+{{>include "./Popup.hbs"}}
+
 <span class="{{classes.frame}}">
 	<span id="{{_id}}-firstfe" tabindex="0"></span>
 	<div style="{{zindex}}" class="{{classes.dialogParent}}">
@@ -16,27 +18,3 @@
 	<span id="{{_id}}-lastfe" tabindex="0"></span>
 	<div tabindex="0" id="{{_id}}-blocklayer" style="{{blockLayer}}" class="{{classes.blockLayer}}"></div>
 </span>
-
-{{#*inline "header"}}
-	{{#unless noHeader}}
-		<header>
-			{{#if header.length}}
-				<div role="heading" class="ui5-popup-wrapper-header">
-					<slot name="header"></slot>
-				</div>
-			{{else}}
-				<h2 role="heading" class="ui5-popup-wrapper-header ui5-popup-wrapper-headerText">{{headerText}}</h2>
-			{{/if}}
-		</header>
-	{{/unless}}
-{{/inline}}
-
-{{#*inline "footer"}}
-	{{#if footer.length}}
-		<footer>
-			<div class="ui5-popup-wrapper-footer">
-				<slot name="footer"></slot>
-			</div>
-		</footer>
-	{{/if}}
-{{/inline}}

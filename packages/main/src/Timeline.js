@@ -1,12 +1,12 @@
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
-import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import { getCompactSize } from "@ui5/webcomponents-base/dist/Configuration.js";
 import TimelineItem from "./TimelineItem.js";
-import TimelineTemplate from "./build/compiled/TimelineTemplate.lit.js";
+import TimelineTemplate from "./generated/templates/TimelineTemplate.lit.js";
 
 // Styles
-import styles from "./themes/Timeline.css.js";
+import styles from "./generated/themes/Timeline.css.js";
 
 /**
  * @public

@@ -1,19 +1,19 @@
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import { getIconURI } from "@ui5/webcomponents-base/src/IconPool.js";
-import slideDown from "@ui5/webcomponents-base/src/animations/slideDown.js";
-import slideUp from "@ui5/webcomponents-base/src/animations/slideUp.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
-import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/src/ResourceBundle.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { getIconURI } from "@ui5/webcomponents-base/dist/IconPool.js";
+import slideDown from "@ui5/webcomponents-base/dist/animations/slideDown.js";
+import slideUp from "@ui5/webcomponents-base/dist/animations/slideUp.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import { getCompactSize } from "@ui5/webcomponents-base/dist/Configuration.js";
+import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
 import Icon from "./Icon.js";
 import PanelAccessibleRole from "./types/PanelAccessibleRole.js";
-import PanelTemplate from "./build/compiled/PanelTemplate.lit.js";
+import PanelTemplate from "./generated/templates/PanelTemplate.lit.js";
 
 import { PANEL_ICON } from "./i18n/defaults.js";
 
 // Styles
-import panelCss from "./themes/Panel.css.js";
+import panelCss from "./generated/themes/Panel.css.js";
 
 /**
  * @public

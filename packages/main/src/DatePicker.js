@@ -1,18 +1,18 @@
-import "@ui5/webcomponents-base/src/shims/jquery-shim.js";
-import "@ui5/webcomponents-base/src/shims/Core-shim.js";
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import { fetchCldrData } from "@ui5/webcomponents-base/src/CLDR.js";
-import { getCalendarType } from "@ui5/webcomponents-base/src/Configuration.js";
-import { getLocale } from "@ui5/webcomponents-base/src/LocaleProvider.js";
-import { getFeature } from "@ui5/webcomponents-base/src/FeaturesRegistry.js";
+import "@ui5/webcomponents-base/dist/shims/jquery-shim.js";
+import "@ui5/webcomponents-base/dist/shims/Core-shim.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { fetchCldrData } from "@ui5/webcomponents-base/dist/CLDR.js";
+import { getCalendarType } from "@ui5/webcomponents-base/dist/Configuration.js";
+import { getLocale } from "@ui5/webcomponents-base/dist/LocaleProvider.js";
+import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData.js";
 import DateFormat from "@ui5/webcomponents-core/dist/sap/ui/core/format/DateFormat.js";
-import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType.js";
-import CalendarDate from "@ui5/webcomponents-base/src/dates/CalendarDate.js";
-import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
-import { isShow } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-import getShadowDOMTarget from "@ui5/webcomponents-base/src/events/getShadowDOMTarget.js";
+import CalendarType from "@ui5/webcomponents-base/dist/dates/CalendarType.js";
+import CalendarDate from "@ui5/webcomponents-base/dist/dates/CalendarDate.js";
+import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import { isShow } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import getShadowDOMTarget from "@ui5/webcomponents-base/dist/events/getShadowDOMTarget.js";
 import Icon from "./Icon.js";
 import Popover from "./Popover.js";
 import Calendar from "./Calendar.js";
@@ -20,13 +20,13 @@ import PopoverPlacementType from "./types/PopoverPlacementType.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import Input from "./Input.js";
 import InputType from "./types/InputType.js";
-import DatePickerTemplate from "./build/compiled/DatePickerTemplate.lit.js";
+import DatePickerTemplate from "./generated/templates/DatePickerTemplate.lit.js";
 
 // default calendar for bundling
 import "@ui5/webcomponents-core/dist/sap/ui/core/date/Gregorian.js";
 
 // Styles
-import datePickerCss from "./themes/DatePicker.css.js";
+import datePickerCss from "./generated/themes/DatePicker.css.js";
 
 /**
  * @public
@@ -121,7 +121,7 @@ const metadata = {
 		 * Determines the name with which the <code>ui5-datepicker</code> will be submitted in an HTML form.
 		 *
 		 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
-		 * <code>import "@ui5/webcomponents/dist/InputElementsFormSupport.js";</code>
+		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
 		 *
 		 * <b>Note:</b> When set, a native <code>input</code> HTML element
 		 * will be created inside the <code>ui5-datepicker</code> so that it can be submitted as
@@ -298,7 +298,7 @@ class DatePicker extends UI5Element {
 		if (FormSupport) {
 			FormSupport.syncNativeHiddenInput(this);
 		} else if (this.name) {
-			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/InputElementsFormSupport.js";`); // eslint-disable-line
+			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
 		}
 	}
 

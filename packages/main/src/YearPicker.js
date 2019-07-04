@@ -1,20 +1,20 @@
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData.js";
-import { getCalendarType, getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
-import { getFormatLocale } from "@ui5/webcomponents-base/src/FormatSettings.js";
-import { isEnter, isSpace } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
-import { getLocale } from "@ui5/webcomponents-base/src/LocaleProvider.js";
-import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
-import getShadowDOMTarget from "@ui5/webcomponents-base/src/events/getShadowDOMTarget.js";
+import { getCalendarType, getCompactSize } from "@ui5/webcomponents-base/dist/Configuration.js";
+import { getFormatLocale } from "@ui5/webcomponents-base/dist/FormatSettings.js";
+import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import { getLocale } from "@ui5/webcomponents-base/dist/LocaleProvider.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import getShadowDOMTarget from "@ui5/webcomponents-base/dist/events/getShadowDOMTarget.js";
 import DateFormat from "@ui5/webcomponents-core/dist/sap/ui/core/format/DateFormat.js";
-import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType.js";
-import CalendarDate from "@ui5/webcomponents-base/src/dates/CalendarDate.js";
-import YearPickerTemplate from "./build/compiled/YearPickerTemplate.lit.js";
+import CalendarType from "@ui5/webcomponents-base/dist/dates/CalendarType.js";
+import CalendarDate from "@ui5/webcomponents-base/dist/dates/CalendarDate.js";
+import YearPickerTemplate from "./generated/templates/YearPickerTemplate.lit.js";
 
 // Styles
-import styles from "./themes/YearPicker.css.js";
+import styles from "./generated/themes/YearPicker.css.js";
 
 /**
  * @public
