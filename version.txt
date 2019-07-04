@@ -1,5 +1,5 @@
-commit 8507f2ef1dfcd0082f6ff39103911a0ee944cad0
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Jul 3 20:31:58 2019 +0300
+commit 5c38e092b4954fbd09af46cb3eb95e1a0071d8f8
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu Jul 4 10:33:47 2019 +0300
 
-    refactor: improve public imports and project structure (#612)
+    docs: remove new tags (#617)
