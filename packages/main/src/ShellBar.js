@@ -680,7 +680,7 @@ class ShellBar extends UI5Element {
 				return item.shadowRoot.querySelector(`#${refItemId}`);
 			})[0];
 
-			const prevented = !shellbarItem.fireEvent("press", { targetRef: event.target }, true);
+			const prevented = !shellbarItem.fireEvent("itemClick", { targetRef: event.target }, true);
 
 			this._defaultItemPressPrevented = prevented;
 		}
