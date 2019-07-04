@@ -11,6 +11,7 @@ const CONFIGURATION = {
 	supportedLanguages: null,
 	calendarType: null,
 	derivedRTL: null,
+	firstDayOfTheWeek: undefined,
 	"xx-wc-no-conflict": false, // no URL
 };
 
@@ -42,6 +43,10 @@ const getSupportedLanguages = () => {
 const getWCNoConflict = () => {
 	initConfiguration();
 	return CONFIGURATION["xx-wc-no-conflict"];
+};
+
+const getFirstDayOfTheWeek = () => {
+	return CONFIGURATION.firstDayOfTheWeek;
 };
 
 const _setWCNoConflict = value => {
@@ -146,4 +151,5 @@ export {
 	_setWCNoConflict,
 	getSupportedLanguages,
 	getOriginInfo,
+	getFirstDayOfTheWeek,
 };

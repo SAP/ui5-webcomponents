@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getLocale } from "@ui5/webcomponents-base/dist/LocaleProvider.js";
-import { getCalendarType, getCompactSize } from "@ui5/webcomponents-base/dist/Configuration.js";
+import { getCalendarType, getCompactSize, getFirstDayOfTheWeek } from "@ui5/webcomponents-base/dist/Configuration.js";
 import { getFormatLocale } from "@ui5/webcomponents-base/dist/FormatSettings.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
@@ -432,7 +432,7 @@ class DayPicker extends UI5Element {
 	}
 
 	_getFirstDayOfWeek() {
-		return this._oLocaleData.getFirstDayOfWeek();
+		return getFirstDayOfTheWeek() || this._oLocaleData.getFirstDayOfWeek();
 	}
 
 	get classes() {

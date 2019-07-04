@@ -1,11 +1,12 @@
 import UniversalDate from "@ui5/webcomponents-core/dist/sap/ui/core/date/UniversalDate.js";
 import Locale from "@ui5/webcomponents-core/dist/sap/ui/core/Locale.js";
 import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData.js";
+import { getFirstDayOfTheWeek } from "../Configuration";
 
 const calculateWeekNumber = (oDate, iYear, oLocale, oLocaleData) => {
 	let iWeekNum = 0;
 	let iWeekDay = 0;
-	const iFirstDayOfWeek = oLocaleData.getFirstDayOfWeek();
+	const iFirstDayOfWeek = getFirstDayOfTheWeek() || oLocaleData.getFirstDayOfWeek();
 
 	// search Locale for containing "en-US", since sometimes
 	// when any user settings have been defined, subtag "sapufmt" is added to the locale name
@@ -53,7 +54,7 @@ const calculateWeekNumber = (oDate, iYear, oLocale, oLocaleData) => {
 const getFirstDateOfWeek = oDate => {
 	const oUniversalDate = new UniversalDate(oDate.getTime()),
 		oLocaleData = LocaleData.getInstance(new Locale("en")),
-		iCLDRFirstWeekDay = oLocaleData.getFirstDayOfWeek();
+		iCLDRFirstWeekDay = getFirstDayOfTheWeek() || oLocaleData.getFirstDayOfWeek();
 
 
 	const oWeek = UniversalDate.getWeekByDate(oUniversalDate.getCalendarType(), oUniversalDate.getUTCFullYear(),
