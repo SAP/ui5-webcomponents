@@ -22,6 +22,7 @@
     "start": "cross-env DEV=true yarn build:core && cross-env DEV=true yarn build:base && cross-env DEV=true yarn build:main && npm-run-all --parallel dev:base dev:main serve:playground",
     "dev": "npm-run-all --parallel dev:base start:main",
     "dev:base": "cd packages/base && yarn dev",
+    "dev:main": "cd packages/main && yarn dev",
     "start:main": "cd packages/main && yarn start",
     "serve:playground": "cd packages/playground && yarn serve",
     "test": "cd packages/main && yarn test",

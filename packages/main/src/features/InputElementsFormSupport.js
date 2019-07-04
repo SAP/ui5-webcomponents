@@ -1,4 +1,4 @@
-import { registerFeature } from "@ui5/webcomponents-base/src/FeaturesRegistry.js";
+import { registerFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 
 class FormSupport {
 	/**

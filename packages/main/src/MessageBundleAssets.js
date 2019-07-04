@@ -1,4 +1,4 @@
-import { registerMessageBundles } from "@ui5/webcomponents-base/src/ResourceBundle.js";
+import { registerMessageBundles } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
 
 import ar from "./i18n/messagebundle_ar.json";
 import bg from "./i18n/messagebundle_bg.json";
