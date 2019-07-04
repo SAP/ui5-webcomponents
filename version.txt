@@ -1,5 +1,5 @@
-commit 9410443c414bc702d8dbe6c34765bdfc49b49520
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Jul 4 13:55:53 2019 +0300
+commit 5a0b7adbeacc8b0ac5c7fcb215cf9b15d4138cc2
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Thu Jul 4 14:28:54 2019 +0300
 
-     chore(release): publish v1.0.0-rc.2 (#622)
+    fix: datepicker selection works on IE (#623)
