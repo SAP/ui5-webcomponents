@@ -1,4 +1,4 @@
-import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 import ListItemType from "./types/ListItemType.js";
 import ListMode from "./types/ListMode.js";
@@ -8,7 +8,7 @@ import "./CheckBox.js";
 import "./Button.js";
 
 // Styles
-import styles from "./themes/ListItem.css.js";
+import styles from "./generated/themes/ListItem.css.js";
 
 /**
  * @public

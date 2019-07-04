@@ -1,15 +1,15 @@
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
-import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
-import { getFeature } from "@ui5/webcomponents-base/src/FeaturesRegistry.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import { getCompactSize } from "@ui5/webcomponents-base/dist/Configuration.js";
+import getEffectiveRTL from "@ui5/webcomponents-base/dist/util/getEffectiveRTL.js";
+import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import ButtonDesign from "./types/ButtonDesign.js";
-import ButtonTemplate from "./build/compiled/ButtonTemplate.lit.js";
+import ButtonTemplate from "./generated/templates/ButtonTemplate.lit.js";
 import Icon from "./Icon.js";
 
 // Styles
-import buttonCss from "./themes/Button.css.js";
+import buttonCss from "./generated/themes/Button.css.js";
 
 /**
  * @public
@@ -81,7 +81,7 @@ const metadata = {
 		 * automatically submit the nearest form element upon <code>press</code>.
 		 *
 		 * <b>Important:</b> For the <code>submits</code> property to have effect, you must add the following import to your project:
-		 * <code>import "@ui5/webcomponents/dist/InputElementsFormSupport.js";</code>
+		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -182,20 +182,20 @@ class Button extends UI5Element {
 		return ButtonTemplate;
 	}
 
-	constructor (props) {
-		super(props);
+	constructor() {
+		super();
 
 		this._deactivate = () => {
 			if (this._active) {
 				this._active = false;
 			}
-		} 
+		};
 	}
 
 	onBeforeRendering() {
 		const FormSupport = getFeature("FormSupport");
 		if (this.submits && !FormSupport) {
-			console.warn(`In order for the "submits" property to have effect, you should also: import "@ui5/webcomponents/dist/InputElementsFormSupport.js";`); // eslint-disable-line
+			console.warn(`In order for the "submits" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
 		}
 	}
 
@@ -205,10 +205,6 @@ class Button extends UI5Element {
 
 	onExitDOM() {
 		document.removeEventListener("mouseup", this._deactivate.bind(this));
-	}
-
-	_deactivateHandler() {
-		return this._deactivate.bind(this);
 	}
 
 	_onclick(event) {

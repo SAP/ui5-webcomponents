@@ -1,9 +1,9 @@
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
-import { isShow, isDown } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
-import MultiComboBoxTemplate from "./build/compiled/MultiComboBoxTemplate.lit.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import { isShow, isDown } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import { getCompactSize } from "@ui5/webcomponents-base/dist/Configuration.js";
+import MultiComboBoxTemplate from "./generated/templates/MultiComboBoxTemplate.lit.js";
 import Input from "./Input.js";
 import Tokenizer from "./Tokenizer.js";
 import Token from "./Token.js";
@@ -13,7 +13,7 @@ import List from "./List.js";
 import StandardListItem from "./StandardListItem.js";
 
 // Styles
-import styles from "./themes/MultiComboBox.css.js";
+import styles from "./generated/themes/MultiComboBox.css.js";
 
 /**
  * @public

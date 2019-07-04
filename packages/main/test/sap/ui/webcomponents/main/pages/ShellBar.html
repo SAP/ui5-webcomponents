@@ -132,7 +132,7 @@
 		<ui5-li slot="menuItems">Application 5</ui5-li>
 	</ui5-shellbar>
 
-	<ui5-popover id="popover" no-header placement-type="Bottom">
+	<ui5-popover id="popover" placement-type="Bottom">
 		<div class="popover-header">
 			<ui5-title style="padding: 0.25rem 1rem 0rem 1rem">John Doe</ui5-title>
 		</div>
@@ -148,7 +148,7 @@
 		</div>
 	</ui5-popover>
 
-	<ui5-popover id="app-list-popover" no-header placement-type="Bottom">
+	<ui5-popover id="app-list-popover" placement-type="Bottom">
 		<ui5-list separators="None">
 			<ui5-li>Application 1</ui5-li>
 			<ui5-li>Application 2</ui5-li>
@@ -158,7 +158,7 @@
 		</ui5-list>
 	</ui5-popover>
 
-	<ui5-popover id="custom-item-popover" no-header placement-type="Bottom">
+	<ui5-popover id="custom-item-popover" placement-type="Bottom">
 		<ui5-list separators="None">
 			<ui5-li id="custom-item-1" type="Active">Custom Popover Item 1</ui5-li>
 			<ui5-li type="Active">Custom Popover Item 2</ui5-li>
@@ -196,7 +196,7 @@
 		});
 
 		["disc", "call"].forEach(function(id) {
-			window[id].addEventListener("ui5-press", function(event) {
+			window[id].addEventListener("ui5-itemClick", function(event) {
 				event.preventDefault();
 				window["press-input"].value = event.target.id;
 				window["custom-item-popover"].openBy(event.detail.targetRef);

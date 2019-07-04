@@ -1,10 +1,10 @@
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper.js";
-import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
-import { isEscape } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import FocusHelper from "@ui5/webcomponents-base/dist/FocusHelper.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import { isEscape } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 
 // Styles
-import styles from "./themes/Popup.css.js";
+import styles from "./generated/themes/Popup.css.js";
 
 /**
  * @public
@@ -57,16 +57,7 @@ const metadata = {
 			type: String,
 			association: true,
 		},
-		/**
-		 * Defines whether the header is hidden.
-		 *
-		 * @type {Boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		noHeader: {
-			type: Boolean,
-		},
+
 		/**
 		 * Defines the header text.
 		 * <br><b>Note:</b> If <code>header</code> slot is provided, the <code>headerText</code> is ignored.
@@ -442,6 +433,18 @@ class Popup extends UI5Element {
 
 	onExitDOM() {
 		removeBodyStyles();
+	}
+
+	get hasHeader() {
+		return !!(this.headerText.length || this.header.length);
+	}
+
+	get hasFooter() {
+		return !!this.footer.length;
+	}
+
+	get role() {
+		return "heading";
 	}
 }
 

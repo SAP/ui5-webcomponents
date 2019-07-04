@@ -1,18 +1,18 @@
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import { getTheme } from "@ui5/webcomponents-base/src/Configuration.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { getTheme } from "@ui5/webcomponents-base/dist/Configuration.js";
 import {
 	isBackSpace,
 	isEnter,
 	isSpace,
 	isDelete,
-} from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+} from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 
 import Icon from "./Icon.js";
-import TokenTemplate from "./build/compiled/TokenTemplate.lit.js";
+import TokenTemplate from "./generated/templates/TokenTemplate.lit.js";
 
 // Styles
-import styles from "./themes/Token.css.js";
+import styles from "./generated/themes/Token.css.js";
 
 /**
  * @public
