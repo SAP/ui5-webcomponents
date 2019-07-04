@@ -5,20 +5,20 @@
 	<!-- INPUT -->
 	<ui5-input
 			id="{{_id}}-inner"
-			placeholder="{{_input.placeholder}}"
-			type="{{_input.type}}"
+			placeholder="{{placeholder}}"
+			type="{{type}}"
 			value="{{value}}"
 			?disabled="{{disabled}}"
 			?readonly="{{readonly}}"
 			value-state="{{valueState}}"
-			@ui5-change="{{_input.onChange}}"
-			@ui5-input="{{_input.onLiveChange}}"
+			@ui5-change="{{_handleInputChange}}"
+			@ui5-input="{{_handleInputLiveChange}}"
 			data-sap-focus-ref
 	>
 		{{#unless readonly}}
 			<ui5-icon
 				slot="icon"
-				src="{{_input.icon.src}}"
+				src="sap-icon://appointment-2"
 				class="{{classes.icon}}"
 				tabindex="-1"
 			></ui5-icon>
@@ -30,7 +30,6 @@
 			id="{{_id}}-popover"
 			allow-target-overlap="{{_popover.allowTargetOverlap}}"
 			placement-type="{{_popover.placementType}}"
-			no-header
 			no-arrow
 			horizontal-align="{{_popover.horizontalAlign}}"
 			stay-open-on-scroll="{{_popover.stayOpenOnScroll}}"

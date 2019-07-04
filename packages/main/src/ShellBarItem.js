@@ -1,8 +1,8 @@
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 
 // Template
-import ShellBarItemTemplate from "./build/compiled/ShellBarItemTemplate.lit.js";
+import ShellBarItemTemplate from "./generated/templates/ShellBarItemTemplate.lit.js";
 
 /**
  * @public
@@ -40,7 +40,7 @@ const metadata = {
 		 * @param {HTMLElement} targetRef dom ref of the clicked element
 		 * @public
 		 */
-		press: {
+		itemClick: {
 			detail: {
 				targetRef: { type: HTMLElement },
 			},

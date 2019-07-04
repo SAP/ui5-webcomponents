@@ -1,9 +1,10 @@
 {
   "name": "@ui5/webcomponents",
-  "version": "1.0.0-rc.1",
+  "version": "1.0.0-rc.2",
   "description": "UI5 Web Components: webcomponents.main",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
+  "private": false,
   "keywords": [
     "openui5",
     "sapui5",
@@ -46,7 +47,7 @@
   "scripts": {
     "build": "npm-run-all --sequential clean lint build:templates build:samples build:styles copy:src build:bundle copy:i18n copy:webcomponents-polyfill ",
     "build:bundle": "rollup -c --environment ES5_BUILD",
-    "build:templates": "mkdirp src/build/compiled && node ./lib/hbs2ui5/index.js -d src/ -o src/build/compiled",
+    "build:templates": "mkdirp dist/generated/templates && node ./lib/hbs2ui5/index.js -d src/ -o dist/generated/templates",
     "build:samples": "npm run copy:test --scripts-prepend-node-path && npm run build:api --scripts-prepend-node-path && npm run build:docs --scripts-prepend-node-path && node lib/playground/index.js",
     "build:pages": "npm run copy:pages",
     "build:qunit": "npm run copy:qunit",
@@ -57,7 +58,7 @@
     "build:styles-components": "postcss src/themes/*.css --config config/postcss.components --base src --dir dist/css/",
     "watch:styles-bundles": "postcss src/**/parameters-bundle.css --config config/postcss.bundles --base src --dir dist/css/ -w",
     "watch:styles-components": "postcss src/themes/*.css --config config/postcss.components --base src --dir dist/css/ -w",
-    "clean": "rimraf dist src/build",
+    "clean": "rimraf dist",
     "copy:src": "copy-and-watch \"src/**/*.js\" \"src/**/i18n/*.json\" dist/",
     "copy:i18n": "cpx \"src/i18n/*.json\" dist/i18n",
     "copy:test": "cpx \"test/**/*.*\" dist/test-resources",
@@ -88,8 +89,8 @@
     "directory": "packages/main"
   },
   "dependencies": {
-    "@ui5/webcomponents-base": "0.14.0",
-    "@ui5/webcomponents-core": "0.14.0"
+    "@ui5/webcomponents-base": "0.15.0",
+    "@ui5/webcomponents-core": "0.15.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.2",

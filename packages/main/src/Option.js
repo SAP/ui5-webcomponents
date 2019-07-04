@@ -1,11 +1,10 @@
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 
 /**
 * @public
 */
 const metadata = {
 	tag: "ui5-option",
-	noShadowDOM: true,
 	properties: /** @lends  sap.ui.webcomponents.main.Option.prototype */ {
 
 		/**

@@ -1,11 +1,11 @@
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 
 // Template
-import LabelTemplate from "./build/compiled/LabelTemplate.lit.js";
+import LabelTemplate from "./generated/templates/LabelTemplate.lit.js";
 
 // Styles
-import labelCss from "./themes/Label.css.js";
+import labelCss from "./generated/themes/Label.css.js";
 
 /**
  * @public

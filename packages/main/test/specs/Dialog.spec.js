@@ -9,7 +9,7 @@ describe("Dialog general interaction", () => {
 
 		btnOpenDialog.click();
 
-		const dialog = browser.findElementDeep("ui5-dialog >>> .sapMDialog");
+		const dialog = browser.findElementDeep("ui5-dialog >>> .ui5-dialog-wrapper");
 		assert.ok(dialog.isDisplayedInViewport(), "Dialog is opened.");
 
 		btnCloseDialog.click();

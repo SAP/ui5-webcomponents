@@ -141,6 +141,7 @@ ui5-checkbox:not([hidden]) {
 	position: absolute;
 	justify-content: center;
 	align-items: center;
+	font-size: var(--sapUiFontSize);
 	font-family: "SAP-icons";
 	color: var(--_ui5_checkbox_checkmark_color);
 	width: 100%;

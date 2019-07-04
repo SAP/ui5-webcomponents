@@ -1,15 +1,15 @@
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import getShadowDOMTarget from "@ui5/webcomponents-base/src/events/getShadowDOMTarget.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
-import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import getShadowDOMTarget from "@ui5/webcomponents-base/dist/events/getShadowDOMTarget.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import { getCompactSize } from "@ui5/webcomponents-base/dist/Configuration.js";
+import getEffectiveRTL from "@ui5/webcomponents-base/dist/util/getEffectiveRTL.js";
 import Button from "./Button.js";
 import ButtonDesign from "./types/ButtonDesign.js";
-import CalendarHeaderTemplate from "./build/compiled/CalendarHeaderTemplate.lit.js";
+import CalendarHeaderTemplate from "./generated/templates/CalendarHeaderTemplate.lit.js";
 
 // Styles
-import styles from "./themes/CalendarHeader.css.js";
+import styles from "./generated/themes/CalendarHeader.css.js";
 
 
 const metadata = {

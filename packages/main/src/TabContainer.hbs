@@ -3,7 +3,7 @@
 	dir="{{rtl}}"
 >
 	<div class="{{classes.header}}" id="{{_id}}-header">
-		<ui5-icon @ui5-press="{{_headerBackArrow.click}}" class="{{classes.headerBackArrow}}" src="sap-icon://slim-arrow-left" tabindex="-1"></ui5-icon>
+		<ui5-icon @ui5-press="{{_onHeaderBackArrowClick}}" class="{{classes.headerBackArrow}}" src="sap-icon://slim-arrow-left" tabindex="-1"></ui5-icon>
 
 		<!-- tab items -->
 		<div class="{{classes.headerScrollContainer}}" id="{{_id}}-headerScrollContainer">
@@ -13,9 +13,9 @@
 						<li class="{{this.headerItemClasses}}"
 							id="{{this.item._id}}"
 							tabindex="{{this.item._tabIndex}}"
-							@click="{{../_headerItem.click}}"
-							@keydown="{{../_headerItem.keydown}}"
-							@keyup="{{../_headerItem.keyup}}"
+							@click="{{../_onHeaderItemSelect}}"
+							@keydown="{{../	_onHeaderItemKeyDown}}"
+							@keyup="{{../_onHeaderItemKeyUp}}"
 							role="tab"
 							aria-posinset="{{this.position}}"
 							aria-setsize="{{../renderItems.length}}"
@@ -45,12 +45,12 @@
 			</ul>
 		</div>
 
-		<ui5-icon @ui5-press="{{_headerForwardArrow.click}}" class="{{classes.headerForwardArrow}}" src="sap-icon://slim-arrow-right" tabindex="-1"></ui5-icon>
+		<ui5-icon @ui5-press="{{_onHeaderForwardArrowClick}}" class="{{classes.headerForwardArrow}}" src="sap-icon://slim-arrow-right" tabindex="-1"></ui5-icon>
 
 		<!-- overflow button -->
 		{{#if showOverflow}}
 			<ui5-button
-				@ui5-press="{{_overflowButton.click}}"
+				@ui5-press="{{_onOverflowButtonClick}}"
 				class="{{classes.overflowButton}}"
 				icon="sap-icon://slim-arrow-down"
 				type="Transparent"
@@ -73,10 +73,9 @@
 	<ui5-popover
 		id="{{_id}}-overflowMenu"
 		no-arrow
-		no-header
 		placement-type="Bottom"
 		horizontal-align="Right">
-		<ui5-list @ui5-itemPress="{{_overflowList.click}}">
+		<ui5-list @ui5-itemPress="{{_onOverflowListItemSelect}}">
 			{{#each renderItems}}
 				{{#unless this.isSeparator}}
 					<ui5-li-custom id="{{this.item._id}}"

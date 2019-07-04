@@ -1,15 +1,15 @@
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import CSSSize from "@ui5/webcomponents-base/src/types/CSSSize.js";
-import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
-import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/src/ResourceBundle.js";
-import { getFeature } from "@ui5/webcomponents-base/src/FeaturesRegistry.js";
-import TextAreaTemplate from "./build/compiled/TextAreaTemplate.lit.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import CSSSize from "@ui5/webcomponents-base/dist/types/CSSSize.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
+import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
+import TextAreaTemplate from "./generated/templates/TextAreaTemplate.lit.js";
 
 import { TEXTAREA_CHARACTERS_LEFT, TEXTAREA_CHARACTERS_EXCEEDED } from "./i18n/defaults.js";
 
 // Styles
-import styles from "./themes/TextArea.css.js";
+import styles from "./generated/themes/TextArea.css.js";
 
 /**
  * @public
@@ -153,7 +153,7 @@ const metadata = {
 		 * Determines the name with which the <code>ui5-textarea</code> will be submitted in an HTML form.
 		 *
 		 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
-		 * <code>import "@ui5/webcomponents/dist/InputElementsFormSupport.js";</code>
+		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
 		 *
 		 * <b>Note:</b> When set, a native <code>input</code> HTML element
 		 * will be created inside the <code>ui5-textarea</code> so that it can be submitted as
@@ -267,7 +267,7 @@ class TextArea extends UI5Element {
 		if (FormSupport) {
 			FormSupport.syncNativeHiddenInput(this);
 		} else if (this.name) {
-			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/InputElementsFormSupport.js";`); // eslint-disable-line
+			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
 		}
 	}
 

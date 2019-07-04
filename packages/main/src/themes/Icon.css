@@ -25,6 +25,7 @@ ui5-icon:not([hidden]) {
 	content: attr(data-sap-ui-icon-content);
 	speak: none;
 	font-weight: normal;
+	font-size: var(--sapUiFontSize);
 	-webkit-font-smoothing: antialiased;
 	display: flex;
 	justify-content: center;

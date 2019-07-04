@@ -1,15 +1,15 @@
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/src/ResourceBundle.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
 import LinkDesign from "./types/LinkDesign.js";
 
 // Template
-import LinkRederer from "./build/compiled/LinkTemplate.lit.js";
+import LinkRederer from "./generated/templates/LinkTemplate.lit.js";
 
 import { LINK_SUBTLE, LINK_EMPHASIZED } from "./i18n/defaults.js";
 
 // Styles
-import linkCss from "./themes/Link.css.js";
+import linkCss from "./generated/themes/Link.css.js";
 
 /**
  * @public

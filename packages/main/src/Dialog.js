@@ -1,12 +1,12 @@
-import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 
 import { isPhone } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 import Popup from "./Popup.js";
 // Template
-import DialogTemplate from "./build/compiled/DialogTemplate.lit.js";
+import DialogTemplate from "./generated/templates/DialogTemplate.lit.js";
 
 // Styles
-import dialogCss from "./themes/Dialog.css.js";
+import dialogCss from "./generated/themes/Dialog.css.js";
 
 /**
  * @public
@@ -123,22 +123,22 @@ class Dialog extends Popup {
 	get classes() {
 		return {
 			frame: {
-				sapMPopupFrame: true,
-				sapMPopupFrameOpen: this._isOpen,
+				"ui5-popup-wrapper-frame": true,
+				"ui5-popup-wrapper-frame--open": this._isOpen,
 			},
 			dialogParent: {
-				sapMDialogParent: true,
-				sapMDialogStretched: this.stretch,
+				"ui5-dialog-wrapper-parent": true,
+				"ui5-dialog-wrapper--stretched": this.stretch,
 				"ui5-phone": isPhone(),
 			},
 			main: {
-				sapMPopup: true,
-				sapMDialog: true,
+				"ui5-popup-wrapper": true,
+				"ui5-dialog-wrapper": true,
 			},
 			blockLayer: {
 				sapUiBLy: true,
-				sapMPopupBlockLayer: true,
-				sapMPopupBlockLayerHidden: this._hideBlockLayer,
+				"ui5-popup-wrapper-blockLayer": true,
+				"ui5-popup-wrapper-blockLayer--hidden": this._hideBlockLayer,
 			},
 		};
 	}

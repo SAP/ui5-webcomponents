@@ -1,7 +1,9 @@
-import List from "./List.js";
-import Popover from "./Popover.js";
-import StandardListItem from "./StandardListItem.js"; // ensure <ui5-li> is loaded
-import CustomListItem from "./CustomListItem.js"; // ensure <ui5-li-custom> is loaded
+import { registerFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
+
+import List from "../List.js";
+import Popover from "../Popover.js";
+import StandardListItem from "../StandardListItem.js"; // ensure <ui5-li> is loaded
+import CustomListItem from "../CustomListItem.js"; // ensure <ui5-li-custom> is loaded
 
 (function noTreeShaked() {
 	`${StandardListItem}${CustomListItem}`; //eslint-disable-line
@@ -237,7 +239,7 @@ class Suggestions {
 	_getScrollContainer() {
 		if (!this._scrollContainer) {
 			const popover = this._getPopover();
-			this._scrollContainer = popover.getDomRef().querySelector(".sapMPopupContent");
+			this._scrollContainer = popover.getDomRef().querySelector(".ui5-popup-wrapper-content");
 		}
 
 		return this._scrollContainer;
@@ -266,5 +268,9 @@ Suggestions.SCROLL_STEP = 48;
 // by the issuer component`s template.
 List.define();
 Popover.define();
+
+
+// Add suggestions support to the global features registry so that Input.js can use it
+registerFeature("InputSuggestions", Suggestions);
 
 export default Suggestions;

@@ -28,7 +28,7 @@ function ui5DevImportCheckerPlugin() {
 			}
 
 			if (/import.*"@ui5\/webcomponents-core\/dist\/sap\/ui\/core\/IconPool/.test(code)) {
-				throw new Error(`You need to import '@ui5/webcomponents-base/src/IconPool' instead of IconPool ${file}`);
+				throw new Error(`You need to import '@ui5/webcomponents-base/dist/IconPool' instead of IconPool ${file}`);
 			}
 		}
 	};
@@ -134,7 +134,7 @@ const getDerivedColorsConfig = (theme) => {
 	return {
 		input: `src/themes/${theme}/derived-colors.js`,
 		output: {
-			dir: `dist/themes/${theme}/`,
+			dir: `dist/generated/themes/${theme}/`,
 			format: "esm",
 			sourcemap: true
 		},

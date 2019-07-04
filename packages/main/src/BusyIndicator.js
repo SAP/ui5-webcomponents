@@ -1,11 +1,11 @@
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import BusyIndicatorTemplate from "./build/compiled/BusyIndicatorTemplate.lit.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import BusyIndicatorTemplate from "./generated/templates/BusyIndicatorTemplate.lit.js";
 
 import { BUSY_INDICATOR_TITLE } from "./i18n/defaults.js";
 
 // Styles
-import busyIndicatorCss from "./themes/BusyIndicator.css.js";
+import busyIndicatorCss from "./generated/themes/BusyIndicator.css.js";
 
 
 import BusyIndicatorType from "./types/BusyIndicatorType.js";

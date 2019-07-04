@@ -1,12 +1,12 @@
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler.js";
-import ScrollEnablement from "@ui5/webcomponents-base/src/delegate/ScrollEnablement.js";
-import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
-import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
-import TabContainerTemplate from "./build/compiled/TabContainerTemplate.lit.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
+import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import { getCompactSize } from "@ui5/webcomponents-base/dist/Configuration.js";
+import getEffectiveRTL from "@ui5/webcomponents-base/dist/util/getEffectiveRTL.js";
+import TabContainerTemplate from "./generated/templates/TabContainerTemplate.lit.js";
 import Button from "./Button.js";
 import CustomListItem from "./CustomListItem.js";
 import Icon from "./Icon.js";
@@ -16,7 +16,7 @@ import TabBase from "./TabBase.js";
 import SemanticColor from "./types/SemanticColor.js";
 
 // Styles
-import tabContainerCss from "./themes/TabContainer.css.js";
+import tabContainerCss from "./generated/themes/TabContainer.css.js";
 
 
 const SCROLL_STEP = 128;
@@ -78,26 +78,6 @@ const metadata = {
 		 */
 		showOverflow: {
 			type: Boolean,
-		 },
-
-		_headerItem: {
-			type: Object,
-		},
-
-		_overflowButton: {
-			type: Object,
-		},
-
-		_headerBackArrow: {
-			type: Object,
-		},
-
-		_headerForwardArrow: {
-			type: Object,
-		},
-
-		_overflowList: {
-			type: Object,
 		},
 
 		_selectedTab: {
@@ -184,41 +164,11 @@ class TabContainer extends UI5Element {
 	constructor() {
 		super();
 
-		this._onHeaderItemSelect = this._onHeaderItemSelect.bind(this);
-		this._onHeaderItemKeyDown = this._onHeaderItemKeyDown.bind(this);
-		this._onHeaderItemKeyUp = this._onHeaderItemKeyUp.bind(this);
-		this._onOverflowListItemSelect = this._onOverflowListItemSelect.bind(this);
-		this._onOverflowButtonClick = this._onOverflowButtonClick.bind(this);
-		this._onHeaderBackArrowClick = this._onHeaderBackArrowClick.bind(this);
-		this._onHeaderForwardArrowClick = this._onHeaderForwardArrowClick.bind(this);
 		this._handleHeaderResize = this._handleHeaderResize.bind(this);
-		this._updateScrolling = this._updateScrolling.bind(this);
-
-		this._headerItem = {
-			click: this._onHeaderItemSelect,
-			keydown: this._onHeaderItemKeyDown,
-			keyup: this._onHeaderItemKeyUp,
-		};
-
-		this._overflowButton = {
-			click: this._onOverflowButtonClick,
-		};
-
-		this._headerBackArrow = {
-			click: this._onHeaderBackArrowClick,
-		};
-
-		this._headerForwardArrow = {
-			click: this._onHeaderForwardArrowClick,
-		};
-
-		this._overflowList = {
-			click: this._onOverflowListItemSelect,
-		};
 
 		// Init ScrollEnablement
 		this._scrollEnablement = new ScrollEnablement();
-		this._scrollEnablement.attachEvent("scroll", this._updateScrolling);
+		this._scrollEnablement.attachEvent("scroll", this._updateScrolling.bind(this));
 		this._delegates.push(this._scrollEnablement);
 
 		// Init ItemNavigation

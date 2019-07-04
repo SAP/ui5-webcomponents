@@ -63,13 +63,13 @@ If your application should run on browsers without native Web Components support
 ### Edge only
 
 ```js
-import "@ui5/webcomponents-base/src/browsersupport/Edge.js";
+import "@ui5/webcomponents-base/dist/features/browsersupport/Edge.js";
 ```
 
 ### Edge and IE11
 
 ```js
-import "@ui5/webcomponents-base/src/browsersupport/IE11.js";
+import "@ui5/webcomponents-base/dist/features/browsersupport/IE11.js";
 ```
 
 *Note:* Importing the module for IE11 support automatically enables Edge support as well, so there is no need to import them both explicitly.
@@ -77,7 +77,7 @@ import "@ui5/webcomponents-base/src/browsersupport/IE11.js";
 Example:
 
 ```js
-import "@ui5/webcomponents-base/src/browsersupport/IE11.js"; // This will enable Edge and IE11 support for all Web Components below
+import "@ui5/webcomponents-base/dist/features/browsersupport/IE11.js"; // This will enable Edge and IE11 support for all Web Components below
 import "@ui5/webcomponents/dist/Button.js"; // loads ui5-button
 import "@ui5/webcomponents/dist/Label.js"; // loads ui5-label
 ```

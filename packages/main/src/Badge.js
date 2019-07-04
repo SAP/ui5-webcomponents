@@ -1,15 +1,15 @@
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import getEffectiveRTL from "@ui5/webcomponents-base/dist/util/getEffectiveRTL.js";
 import Icon from "./Icon.js";
 
 // Template
-import BadgeTemplate from "./build/compiled/BadgeTemplate.lit.js";
+import BadgeTemplate from "./generated/templates/BadgeTemplate.lit.js";
 
 import { BADGE_DESCRIPTION } from "./i18n/defaults.js";
 
 // Styles
-import badgeCss from "./themes/Badge.css.js";
+import badgeCss from "./generated/themes/Badge.css.js";
 
 /**
  * @public

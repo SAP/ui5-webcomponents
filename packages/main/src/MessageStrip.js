@@ -1,14 +1,14 @@
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/src/ResourceBundle.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
 import MessageStripType from "./types/MessageStripType.js";
-import MessageStripTemplate from "./build/compiled/MessageStripTemplate.lit.js";
+import MessageStripTemplate from "./generated/templates/MessageStripTemplate.lit.js";
 import Icon from "./Icon.js";
 
 import { MESSAGE_STRIP_CLOSE_BUTTON } from "./i18n/defaults.js";
 
 // Styles
-import messageStripCss from "./themes/MessageStrip.css.js";
+import messageStripCss from "./generated/themes/MessageStrip.css.js";
 
 /**
  * @public
@@ -72,10 +72,6 @@ const metadata = {
 		 */
 		noCloseButton: {
 			type: Boolean,
-		},
-
-		_closeButton: {
-			type: Object,
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.MessageStrip.prototype */ {
@@ -150,10 +146,6 @@ class MessageStrip extends UI5Element {
 
 	constructor() {
 		super();
-
-		this._closeButton = {
-			press: this._handleCloseIconPress.bind(this),
-		};
 
 		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
 	}

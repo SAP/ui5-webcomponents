@@ -1,20 +1,20 @@
-import { getRTL } from "@ui5/webcomponents-base/src/Configuration.js";
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler.js";
-import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
-import { isSpace, isEscape } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
+import { getRTL } from "@ui5/webcomponents-base/dist/Configuration.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import { isSpace, isEscape } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import getEffectiveRTL from "@ui5/webcomponents-base/dist/util/getEffectiveRTL.js";
 import StandardListItem from "./StandardListItem.js";
 import List from "./List.js";
 import Icon from "./Icon.js";
 import Popover from "./Popover.js";
 
 // Template
-import ShellBarTemplate from "./build/compiled/ShellBarTemplate.lit.js";
+import ShellBarTemplate from "./generated/templates/ShellBarTemplate.lit.js";
 
 // Styles
-import styles from "./themes/ShellBar.css.js";
+import styles from "./generated/themes/ShellBar.css.js";
 
 /**
  * @public
@@ -680,7 +680,7 @@ class ShellBar extends UI5Element {
 				return item.shadowRoot.querySelector(`#${refItemId}`);
 			})[0];
 
-			const prevented = !shellbarItem.fireEvent("press", { targetRef: event.target }, true);
+			const prevented = !shellbarItem.fireEvent("itemClick", { targetRef: event.target }, true);
 
 			this._defaultItemPressPrevented = prevented;
 		}

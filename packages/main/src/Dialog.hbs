@@ -1,11 +1,13 @@
+{{>include "./Popup.hbs"}}
+
 <span class="{{classes.frame}}">
 	<span id="{{_id}}-firstfe" tabindex="0"></span>
 	<div style="{{zindex}}" class="{{classes.dialogParent}}">
 		<div tabindex="-1" aria-labelledby="{{headerId}}" role="dialog" class="{{classes.main}}">
 			{{> header}}
-			<section class="sapMDialogSection">
-				<div class="sapMPopupContent">
-					<div class="sapMPopupScroll">
+			<section class="ui5-dialog-wrapper-section">
+				<div class="ui5-popup-wrapper-content">
+					<div class="ui5-popup-wrapper-scroll">
 						<slot></slot>
 					</div>
 				</div>
@@ -16,27 +18,3 @@
 	<span id="{{_id}}-lastfe" tabindex="0"></span>
 	<div tabindex="0" id="{{_id}}-blocklayer" style="{{blockLayer}}" class="{{classes.blockLayer}}"></div>
 </span>
-
-{{#*inline "header"}}
-	{{#unless noHeader}}
-		<header>
-			{{#if header.length}}
-				<div role="heading" class="sapMPopupHeader">
-					<slot name="header"></slot>
-				</div>
-			{{else}}
-				<h2 role="heading" class="sapMPopupHeader sapMPopupHeaderText">{{headerText}}</h2>
-			{{/if}}
-		</header>
-	{{/unless}}
-{{/inline}}
-
-{{#*inline "footer"}}
-	{{#if footer.length}}
-		<footer>
-			<div class="sapMPopupFooter">
-				<slot name="footer"></slot>
-			</div>
-		</footer>
-	{{/if}}
-{{/inline}}
