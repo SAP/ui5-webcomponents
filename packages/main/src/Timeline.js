@@ -91,12 +91,6 @@ class Timeline extends UI5Element {
 			},
 		};
 	}
-
-	static async define(...params) {
-		await TimelineItem.define();
-
-		super.define(...params);
-	}
 }
 
 Timeline.define();

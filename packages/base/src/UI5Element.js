@@ -84,7 +84,6 @@ class UI5Element extends HTMLElement {
 			return;
 		}
 
-		await this._waitForChildrenUpgrade();
 		this._processChildren();
 		await RenderScheduler.renderImmediately(this);
 		this._domRefReadyPromise._deferredResolve();
@@ -103,10 +102,6 @@ class UI5Element extends HTMLElement {
 		if (typeof this.onExitDOM === "function") {
 			this.onExitDOM();
 		}
-	}
-
-	_waitForChildrenUpgrade() {
-		return Promise.resolve();
 	}
 
 	_startObservingDOMChildren() {
@@ -154,7 +149,7 @@ class UI5Element extends HTMLElement {
 		}
 
 		const autoIncrementMap = new Map();
-		domChildren.forEach(child => {
+		domChildren.forEach(async child => {
 			// Determine the type of the child (mainly by the slot attribute)
 			const slotName = this.constructor._getSlotName(child);
 			const slotData = slotsMap[slotName];
@@ -173,6 +168,17 @@ class UI5Element extends HTMLElement {
 				child._individualSlot = `${slotName}-${nextId}`;
 			}
 
+			// Await for not-yet-defined custom elements
+			if (child instanceof HTMLElement) {
+				const tagName = child.tagName.toLowerCase();
+				const isCustomElement = tagName.indexOf("-") !== -1;
+				if (isCustomElement && !window.customElements.get(tagName)) {
+					const whenDefinedPromise = window.customElements.whenDefined(tagName);
+					const timeoutPromise = new Promise(resolve => setTimeout(resolve, 1000));
+					await Promise.race([whenDefinedPromise, timeoutPromise]);
+				}
+			}
+
 			child = this.constructor.getMetadata().constructor.validateSlotValue(child, slotData);
 
 			if (child._isUI5Element) {
@@ -182,9 +188,8 @@ class UI5Element extends HTMLElement {
 			// Distribute the child in the _state object
 			const propertyName = slotData.propertyName || slotName;
 			this._state[propertyName].push(child);
+			this._invalidate();
 		});
-
-		this._invalidate();
 	}
 
 	// Removes all children from the slot and detaches listeners, if any
@@ -204,6 +209,7 @@ class UI5Element extends HTMLElement {
 		});
 
 		this._state[propertyName] = [];
+		this._invalidate();
 	}
 
 	static get observedAttributes() {
