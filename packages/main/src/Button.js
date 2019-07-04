@@ -200,11 +200,11 @@ class Button extends UI5Element {
 	}
 
 	onEnterDOM() {
-		document.addEventListener("mouseup", this._deactivate.bind(this));
+		document.addEventListener("mouseup", this._deactivate);
 	}
 
 	onExitDOM() {
-		document.removeEventListener("mouseup", this._deactivate.bind(this));
+		document.removeEventListener("mouseup", this._deactivate);
 	}
 
 	_onclick(event) {
