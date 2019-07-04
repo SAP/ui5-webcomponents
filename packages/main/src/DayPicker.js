@@ -255,10 +255,6 @@ class DayPicker extends UI5Element {
 	onclick(event) {
 		const target = getShadowDOMTarget(event);
 
-		if (target.className.indexOf("sapWCDayPickerItem") === -1) {
-			return;
-		}
-
 		const dayPressed = this._isDayPressed(target);
 
 		if (dayPressed) {
@@ -386,7 +382,7 @@ class DayPicker extends UI5Element {
 
 	_isDayPressed(target) {
 		const targetParent = target.parentNode;
-		return (target.className.indexOf("sapWCDayPickerItem") > -1) || (targetParent && targetParent.className.indexOf("sapWCDayPickerItem") > -1);
+		return (target.className.indexOf("sapWCDayPickerItem") > -1) || (targetParent && target.parentNode.classList.contains("sapWCDayPickerItem"));
 	}
 
 	_getVisibleDays(oStartDate, bIncludeBCDates) {
