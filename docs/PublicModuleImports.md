@@ -80,13 +80,13 @@ Most modern browsers (**Chrome, Firefox, Safari**) support Web Components native
 If your app needs to be able to run additionally on **Edge**, you should import the following module:
 
 ```js
-import "@ui5/webcomponents-base/src/features/browsersupport/Edge.js";
+import "@ui5/webcomponents-base/dist/features/browsersupport/Edge.js";
 ```
 
 and if your app needs to run on both **Edge** and **IE11**, you should instead import:
 
 ```js
-import "@ui5/webcomponents-base/src/features/browsersupport/IE11.js";
+import "@ui5/webcomponents-base/dist/features/browsersupport/IE11.js";
 ```
 (this also includes Edge support).
 
@@ -116,7 +116,7 @@ import "@ui5/webcomponents/dist/ThemePropertiesProvider.js";
 
 and
 ```js
-import { setTheme } from "@ui5/webcomponents-base/src/Theming.js";
+import { setTheme } from "@ui5/webcomponents-base/dist/Theming.js";
 ```
 (for changing the theme at runtime)
 
@@ -145,7 +145,7 @@ By importing the second module, you get the:
 method that allows you to change the theme during runtime, if necessary.
 Example:
 ```js
-import { setTheme } from "@ui5/webcomponents-base/src/Theming.js";
+import { setTheme } from "@ui5/webcomponents-base/dist/Theming.js";
 setTheme("sap_belize_hcb");
 ```
 
@@ -253,10 +253,10 @@ To enable the functionality, import the above module into your app.
 ### 6. Advanced calendar types
 
 ```js
-import "@ui5/webcomponents-base/src/features/calendar/Buddhist.js";
-import "@ui5/webcomponents-base/src/features/calendar/Islamic.js";
-import "@ui5/webcomponents-base/src/features/calendar/Japanese.js";
-import "@ui5/webcomponents-base/src/features/calendar/Persian.js";
+import "@ui5/webcomponents-base/dist/features/calendar/Buddhist.js";
+import "@ui5/webcomponents-base/dist/features/calendar/Islamic.js";
+import "@ui5/webcomponents-base/dist/features/calendar/Japanese.js";
+import "@ui5/webcomponents-base/dist/features/calendar/Persian.js";
 ```
 
 The <code>ui5-datepicker</code> web component supports Gregorian Calendar by default.

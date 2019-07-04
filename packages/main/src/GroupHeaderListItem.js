@@ -1,4 +1,4 @@
-import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ListItemBase from "./ListItemBase.js";
 
 // Template

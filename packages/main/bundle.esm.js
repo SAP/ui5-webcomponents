@@ -1,10 +1,10 @@
-import "@ui5/webcomponents-base/src/features/calendar/Buddhist.js";
-import "@ui5/webcomponents-base/src/features/calendar/Islamic.js";
-import "@ui5/webcomponents-base/src/features/calendar/Japanese.js";
-import "@ui5/webcomponents-base/src/features/calendar/Persian.js";
+import "@ui5/webcomponents-base/dist/features/calendar/Buddhist.js";
+import "@ui5/webcomponents-base/dist/features/calendar/Islamic.js";
+import "@ui5/webcomponents-base/dist/features/calendar/Japanese.js";
+import "@ui5/webcomponents-base/dist/features/calendar/Persian.js";
 
 // ESM bundle targets Edge + browsers with native support
-import "@ui5/webcomponents-base/src/features/browsersupport/Edge.js";
+import "@ui5/webcomponents-base/dist/features/browsersupport/Edge.js";
 
 import "./dist/ThemePropertiesProvider.js";
 import "./dist/MessageBundleAssets.js";
@@ -48,15 +48,15 @@ import GroupHeaderListItem from "./dist/GroupHeaderListItem.js";
 
 
 // used in test pages
-import RenderScheduler from "@ui5/webcomponents-base/src/RenderScheduler.js";
+import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
 window.RenderScheduler = RenderScheduler;
 import { isIE } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 window.isIE = isIE; // attached to the window object for testing purposes
 
 
 // Note: keep in sync with rollup.config value for IIFE
-import * as configuration from "@ui5/webcomponents-base/src/Configuration.js";
-import * as Theming from "@ui5/webcomponents-base/src/Theming.js";
+import * as configuration from "@ui5/webcomponents-base/dist/Configuration.js";
+import * as Theming from "@ui5/webcomponents-base/dist/Theming.js";
 window["sap-ui-webcomponents-main-bundle"] = {
 	configuration,
 	Theming,

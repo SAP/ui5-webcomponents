@@ -1,7 +1,7 @@
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper.js";
-import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
-import { isEscape } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import FocusHelper from "@ui5/webcomponents-base/dist/FocusHelper.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import { isEscape } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 
 // Styles
 import styles from "./generated/themes/Popup.css.js";

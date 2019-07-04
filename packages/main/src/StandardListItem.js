@@ -1,5 +1,5 @@
-import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import ListItem from "./ListItem.js";
 import Icon from "./Icon.js";
 import StandardListItemTemplate from "./generated/templates/StandardListItemTemplate.lit.js";

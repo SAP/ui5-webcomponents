@@ -4,7 +4,6 @@ tmp
 temp
 target
 dist
-build
 
 # Ignore default target directory for the npm package 'ui5-codecompletion'
 .ui5

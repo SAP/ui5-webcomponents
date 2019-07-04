@@ -1,4 +1,4 @@
-import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 
 import { isPhone } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 import Popup from "./Popup.js";
