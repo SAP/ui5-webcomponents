@@ -170,14 +170,14 @@ class UI5Element extends HTMLElement {
 
 			// Await for not-yet-defined custom elements
 			if (child instanceof HTMLElement) {
-				const tagName = child.tagName.toLowerCase();
-				const isCustomElement = tagName.indexOf("-") !== -1;
+				const localName = child.localName;
+				const isCustomElement = localName.indexOf("-") !== -1;
 				if (isCustomElement) {
-					const isDefined = window.customElements.get(tagName);
+					const isDefined = window.customElements.get(localName);
 					if (isDefined) {
 						window.customElements.upgrade(child);
 					} else {
-						const whenDefinedPromise = window.customElements.whenDefined(tagName);
+						const whenDefinedPromise = window.customElements.whenDefined(localName);
 						const timeoutPromise = new Promise(resolve => setTimeout(resolve, 1000));
 						await Promise.race([whenDefinedPromise, timeoutPromise]);
 					}
@@ -193,7 +193,7 @@ class UI5Element extends HTMLElement {
 			// Distribute the child in the _state object
 			const propertyName = slotData.propertyName || slotName;
 			this._state[propertyName].push(child);
-			this._invalidate();
+			this._invalidate(propertyName, child);
 		});
 	}
 
@@ -214,7 +214,7 @@ class UI5Element extends HTMLElement {
 		});
 
 		this._state[propertyName] = [];
-		this._invalidate();
+		this._invalidate(propertyName, []);
 	}
 
 	static get observedAttributes() {
@@ -398,6 +398,7 @@ class UI5Element extends HTMLElement {
 	 */
 	_invalidate() {
 		if (this._invalidated) {
+			// console.log("already invalidated", this, ...arguments);
 			return;
 		}
 
@@ -551,7 +552,7 @@ class UI5Element extends HTMLElement {
 
 	getSlottedNodes(slotName) {
 		const reducer = (acc, curr) => {
-			if (curr.tagName.toUpperCase() !== "SLOT") {
+			if (curr.localName !== "slot") {
 				return acc.concat([curr]);
 			}
 			return acc.concat(curr.assignedNodes({ flatten: true }).filter(item => item instanceof HTMLElement));

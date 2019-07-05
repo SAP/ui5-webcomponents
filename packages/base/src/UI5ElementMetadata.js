@@ -80,7 +80,7 @@ const validateSingleSlot = (value, slotData) => {
 
 	const getSlottedNodes = el => {
 		const isTag = el instanceof HTMLElement;
-		const isSlot = isTag && el.tagName.toUpperCase() === "SLOT";
+		const isSlot = isTag && el.localName === "slot";
 
 		if (isSlot) {
 			return el.assignedNodes({ flatten: true }).filter(item => item instanceof HTMLElement);
