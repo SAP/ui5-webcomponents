@@ -1,5 +1,7 @@
-commit 833a1c23ae3641686c1e3236d30106d884621ede
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Jul 4 20:10:54 2019 +0300
+commit a44cdc6f9f54fb1a4a1776ee142c05c18a95ec94
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Fri Jul 5 11:37:19 2019 +0300
 
-    docs: update version labels (#628)
+    fix: enable default icon size to be changed (#629)
+    
+    move the default font size to the host element so it can be styled externally
