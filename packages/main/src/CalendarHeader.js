@@ -95,26 +95,6 @@ class CalendarHeader extends UI5Element {
 		this.fireEvent("btn2Press", event);
 	}
 
-	onclick(event) {
-		const composedPath = event.composedPath();
-		const eventTarget = getShadowDOMTarget(event);
-
-		for (let index = 0; index < composedPath.length; index++) {
-			const sAttributeValue = composedPath[index].getAttribute && composedPath[index].getAttribute("data-sap-cal-head-button");
-			const showPickerButton = eventTarget.getAttribute("data-sap-show-picker");
-
-			if (showPickerButton) {
-				this[`_show${showPickerButton}Picker`]();
-				return;
-			}
-
-			if (sAttributeValue) {
-				this[`_handle${sAttributeValue}Press`]();
-				return;
-			}
-		}
-	}
-
 	onkeydown(event) {
 		const eventTarget = getShadowDOMTarget(event);
 		if (isSpace(event) || isEnter(event)) {

@@ -2,12 +2,18 @@
 	class="{{classes.main}}"
 	dir="{{rtl}}"
 >
-
-	<ui5-icon id="{{_id}}-btnPrev"
+	<div
 		class="{{classes.buttons}}"
-		src="{{_btnPrev.icon}}"
-		data-sap-cal-head-button="Prev">
-	</ui5-icon>
+		@click={{_handlePrevPress}}
+	>
+		<ui5-icon-svg
+			id="{{_id}}-btnPrev"
+			class="sapWCCalHeadArrowIcon"
+			src="{{_btnPrev.icon}}"
+			data-sap-cal-head-button="Prev"
+		>
+		</ui5-icon-svg>
+	</div>
 
 	<div class="sapWCCalHeadMidButtonContainer">
 		<div
@@ -15,7 +21,7 @@
 			class="{{classes.middleButtons}}"
 			type="{{_btn1.type}}"
 			tabindex="0"
-			data-sap-show-picker="Month"
+			@click={{_showMonthPicker}}
 		>
 			{{_btn1.text}}
 		</div>
@@ -25,17 +31,22 @@
 			class="{{classes.middleButtons}}"
 			type="{{_btn2.type}}"
 			tabindex="0"
-			data-sap-show-picker="Year"
+			@click={{_showYearPicker}}
+
 		>
 			{{_btn2.text}}
 		</div>
 	</div>
 
-	<ui5-icon
-		id="{{_id}}-btnNext"
+	<div
 		class="{{classes.buttons}}"
-		src="{{_btnNext.icon}}"
-		data-sap-cal-head-button="Next">
-	</ui5-icon>
+		@click={{_handleNextPress}}
+	>
+		<ui5-icon-svg
+			id="{{_id}}-btnNext"
+			class="sapWCCalHeadArrowIcon"
+			src="{{_btnNext.icon}}"
+		>
+		</ui5-icon-svg>
 
 </div>

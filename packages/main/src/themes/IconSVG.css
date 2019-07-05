@@ -2,17 +2,25 @@
 	display: inline-block;
 	width: 1rem;
 	height: 1rem;
-	outline: none;
+	color: var(--sapUiContentNonInteractiveIconColor);
 	fill: currentColor;
+	pointer-events: none;
 }
 
 ui5-icon-svg {
 	display: inline-block;
 	width: 1rem;
 	height: 1rem;
+	color: var(--sapUiContentNonInteractiveIconColor);
 	fill: currentColor;
+	pointer-events: none;
 }
 
-.sapWCIcon {
+.ui5-icon-root {
 	display:flex;
+	transform: scale(1, -1);
+}
+
+.ui5-icon-root[dir=rtl] {
+	transform: scale(-1, -1);
 }

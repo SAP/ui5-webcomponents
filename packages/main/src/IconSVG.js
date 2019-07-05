@@ -4,10 +4,10 @@ import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvent
 import { getIconInfo } from "@ui5/webcomponents-base/src/IconPool.js";
 import { getIconData } from "@ui5/webcomponents-base/src/SVGIconRegistry.js";
 import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
-import IconTemplate from "./build/compiled/IconSVGTemplate.lit.js";
+import IconTemplate from "./generated/templates/IconSVGTemplate.lit.js";
 
 // Styles
-import iconCss from "./themes/IconSVG.css.js";
+import iconCss from "./generated/themes/IconSVG.css.js";
 
 /**
  * @public
