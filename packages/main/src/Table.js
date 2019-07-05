@@ -164,6 +164,8 @@ class Table extends UI5Element {
 		this._delegates.push(this._itemNavigation);
 
 		this.fnOnRowFocused = this.onRowFocused.bind(this);
+
+		this._handleResize = this.popinContent.bind(this);
 	}
 
 	onBeforeRendering() {
@@ -183,11 +185,11 @@ class Table extends UI5Element {
 	}
 
 	onEnterDOM() {
-		ResizeHandler.register(this.getDomRef(), this.popinContent.bind(this));
+		ResizeHandler.register(this.getDomRef(), this._handleResize);
 	}
 
 	onExitDOM() {
-		ResizeHandler.deregister(this.getDomRef(), this.popinContent.bind(this));
+		ResizeHandler.deregister(this.getDomRef(), this._handleResize);
 	}
 
 	onRowFocused(event) {
