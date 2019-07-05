@@ -174,13 +174,12 @@ class UI5Element extends HTMLElement {
 				const isCustomElement = localName.indexOf("-") !== -1;
 				if (isCustomElement) {
 					const isDefined = window.customElements.get(localName);
-					if (isDefined) {
-						window.customElements.upgrade(child);
-					} else {
+					if (!isDefined) {
 						const whenDefinedPromise = window.customElements.whenDefined(localName);
 						const timeoutPromise = new Promise(resolve => setTimeout(resolve, 1000));
 						await Promise.race([whenDefinedPromise, timeoutPromise]);
 					}
+					window.customElements.upgrade(child);
 				}
 			}
 
