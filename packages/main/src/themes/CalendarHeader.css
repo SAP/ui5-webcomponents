@@ -22,6 +22,7 @@ ui5-calendar-header {
 .sapWCCalHeadArrowIcon {
 	color: var(--sapUiButtonTextColor);
 	width: 1.2rem;
+	pointer-events: none;	/* enable IE11 to receive :active state on above elements */
 }
 
 .sapWCCalHeadArrowButton:active .sapWCCalHeadArrowIcon {

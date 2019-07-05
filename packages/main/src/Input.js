@@ -34,7 +34,7 @@ const metadata = {
 		 * @public
 		 */
 		icon: {
-			type: Icon,
+			type: HTMLElement,
 		},
 
 		/**

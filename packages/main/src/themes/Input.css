@@ -162,16 +162,38 @@ ui5-input:not([hidden]) {
 /* Input Icon */
 :host(ui5-input) ::slotted(ui5-icon) {
 	min-width: var(--sap_wc_input_icon_min_width);
+
+}
+:host(ui5-input) ::slotted(ui5-icon-svg) {
+	width: 2.125rem;
+	height: 100%;
+	padding: 0.5rem;
 }
 
 ui5-input ui5-icon {
 	min-width: var(--sap_wc_input_icon_min_width);
 }
 
+ui5-input ui5-icon-svg {
+	width: 2.125rem;
+	height: 100%;
+	padding: 0.5rem;
+}
+
 :host(ui5-input[data-ui5-compact-size]) ::slotted(ui5-icon) {
 	min-width: var(--sap_wc_input_compact_min_width);
+}
+:host(ui5-input[data-ui5-compact-size]) ::slotted(ui5-icon-svg) {
+	width: 2rem;
+	height: 100%;
+	padding: 0.1875rem 0.4375rem;
 }
 
 ui5-input[data-ui5-compact-size] ui5-icon {
 	min-width: var(--sap_wc_input_compact_min_width);
+}
+ui5-input[data-ui5-compact-size] ui5-icon-svg {
+	width: 2rem;
+	height: 100%;
+	padding: 0.1875rem 0.4375rem;
 }
