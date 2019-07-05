@@ -132,7 +132,7 @@ class UI5Element extends HTMLElement {
 		this.onChildrenChanged(mutations);
 	}
 
-	async _updateSlots () {
+	async _updateSlots() {
 		const slotsMap = this.constructor.getMetadata().getSlots();
 		const canSlotText = slotsMap.default && slotsMap.default.type === Node;
 
