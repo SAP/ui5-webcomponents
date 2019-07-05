@@ -84,7 +84,7 @@ class UI5Element extends HTMLElement {
 			return;
 		}
 
-		this._processChildren();
+		await this._processChildren();
 		await RenderScheduler.renderImmediately(this);
 		this._domRefReadyPromise._deferredResolve();
 		this._startObservingDOMChildren();
@@ -124,15 +124,15 @@ class UI5Element extends HTMLElement {
 	onChildrenChanged(mutations) {
 	}
 
-	_processChildren(mutations) {
+	async _processChildren(mutations) {
 		const hasSlots = this.constructor.getMetadata().hasSlots();
 		if (hasSlots) {
-			this._updateSlots();
+			await this._updateSlots();
 		}
 		this.onChildrenChanged(mutations);
 	}
 
-	_updateSlots() {
+	async _updateSlots () {
 		const slotsMap = this.constructor.getMetadata().getSlots();
 		const canSlotText = slotsMap.default && slotsMap.default.type === Node;
 
@@ -149,7 +149,7 @@ class UI5Element extends HTMLElement {
 		}
 
 		const autoIncrementMap = new Map();
-		domChildren.forEach(async child => {
+		const allChildrenUpgraded = domChildren.map(async child => {
 			// Determine the type of the child (mainly by the slot attribute)
 			const slotName = this.constructor._getSlotName(child);
 			const slotData = slotsMap[slotName];
@@ -171,11 +171,11 @@ class UI5Element extends HTMLElement {
 			// Await for not-yet-defined custom elements
 			if (child instanceof HTMLElement) {
 				const localName = child.localName;
-				const isCustomElement = localName.indexOf("-") !== -1;
+				const isCustomElement = localName.includes("-");
 				if (isCustomElement) {
 					const isDefined = window.customElements.get(localName);
 					if (!isDefined) {
-						const whenDefinedPromise = window.customElements.whenDefined(localName);
+						const whenDefinedPromise = window.customElements.whenDefined(localName); // Class registered, but instances not upgraded yet
 						const timeoutPromise = new Promise(resolve => setTimeout(resolve, 1000));
 						await Promise.race([whenDefinedPromise, timeoutPromise]);
 					}
@@ -192,8 +192,10 @@ class UI5Element extends HTMLElement {
 			// Distribute the child in the _state object
 			const propertyName = slotData.propertyName || slotName;
 			this._state[propertyName].push(child);
-			this._invalidate(propertyName, child);
 		});
+
+		await allChildrenUpgraded;
+		this._invalidate();
 	}
 
 	// Removes all children from the slot and detaches listeners, if any
