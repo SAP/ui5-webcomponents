@@ -1,13 +1,15 @@
-:host(ui5-icon:not([hidden])) {
+:host(:not([hidden])) {
 	display: inline-block;
 	outline: none;
 	color: var(--sapUiContentNonInteractiveIconColor);
+	font-size: var(--sapUiFontSize);
 }
 
 ui5-icon:not([hidden]) {
 	display: inline-block;
 	outline: none;
 	color: var(--sapUiContentNonInteractiveIconColor);
+	font-size: var(--sapUiFontSize);
 }
 
 .sapWCIcon {
