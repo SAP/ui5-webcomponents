@@ -172,10 +172,15 @@ class UI5Element extends HTMLElement {
 			if (child instanceof HTMLElement) {
 				const tagName = child.tagName.toLowerCase();
 				const isCustomElement = tagName.indexOf("-") !== -1;
-				if (isCustomElement && !window.customElements.get(tagName)) {
-					const whenDefinedPromise = window.customElements.whenDefined(tagName);
-					const timeoutPromise = new Promise(resolve => setTimeout(resolve, 1000));
-					await Promise.race([whenDefinedPromise, timeoutPromise]);
+				if (isCustomElement) {
+					const isDefined = window.customElements.get(tagName);
+					if (isDefined) {
+						window.customElements.upgrade(child);
+					} else {
+						const whenDefinedPromise = window.customElements.whenDefined(tagName);
+						const timeoutPromise = new Promise(resolve => setTimeout(resolve, 1000));
+						await Promise.race([whenDefinedPromise, timeoutPromise]);
+					}
 				}
 			}
 
