@@ -26,7 +26,7 @@ ui5-select:not([hidden]) {
 /* Hovered */
 .sapWCSelect:hover:not(.sapWCSelectDisabled):not(.sapWCSelectState):not(.sapWCSelectOpened) {
 	background-color: var(--sapUiFieldHoverBackground);
-	border: 1px solid var(--sapUiFieldHoverBorderColor); 
+	border: 1px solid var(--sapUiFieldHoverBorderColor);
 }
 
 /* Hovered Icon */
@@ -80,9 +80,10 @@ ui5-select:not([hidden]) {
 
 /* Icon */
 .sapWCSelect .sapWCSelectDropDownIcon {
+    box-sizing: border-box;
 	width: 2.5rem;
 	height: 100%;
-	flex-shrink: 0;
+	padding: .4375rem .625rem;
 	color: var(--sapUiContentIconColor);
 }
 
@@ -118,6 +119,7 @@ ui5-select:not([hidden]) {
 
 .sapUiSizeCompact.sapWCSelect  .sapWCSelectDropDownIcon {
 	width: 2rem;
+	padding: 0.1875rem 0.4375rem;
 }
 
 /* RTL */
