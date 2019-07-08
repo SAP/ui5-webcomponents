@@ -17,7 +17,7 @@ const metadata = {
 		/**
 		 * Defines the size of the <code>ui5-busyindicator</code>.
 		 * </br></br>
-		 * <b>Note:</b> Available options are "Small", "Medium", "Large"
+		 * <b>Note:</b> Available options are "Small", "Medium" and "Large"
 		 *
 		 * @type {BusyIndicatorType}
 		 * @defaultvalue "Large"
