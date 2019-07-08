@@ -8,21 +8,21 @@
 		{{> header}}
 	{{else}}
 		<header
-            @click="{{_header.press}}"
-            @keydown="{{onHeaderKeyDown}}"
-            @keyup="{{onHeaderKeyUp}}"
+            @click="{{_headerClick}}"
+            @keydown="{{_headerKeyDown}}"
+            @keyup="{{_headerKeyUp}}"
             class="{{classes.header}}"
             tabindex="{{headerTabIndex}}"
 		>
-			<ui5-icon
+			<ui5-icon-svg
 				class="{{classes.icon}}"
 				src="{{_icon.src}}"
 				title="{{_icon.title}}"
 				tabindex="{{iconTabIndex}}"
 				aria-expanded="{{expanded}}"
 				aria-labelledby="{{ariaLabelledBy}}"
-				@ui5-press="{{_icon.press}}"
-			></ui5-icon>
+				data-ui5-panel-icon
+			></ui5-icon-svg>
 			{{> header}}
 		</header>
 	{{/if}}

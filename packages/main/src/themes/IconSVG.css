@@ -4,6 +4,7 @@
 	height: 1rem;
 	color: var(--sapUiContentNonInteractiveIconColor);
 	fill: currentColor;
+	outline: none;
 }
 
 ui5-icon-svg {
@@ -12,6 +13,7 @@ ui5-icon-svg {
 	height: 1rem;
 	color: var(--sapUiContentNonInteractiveIconColor);
 	fill: currentColor;
+	outline: none;
 }
 
 .ui5-icon-root {

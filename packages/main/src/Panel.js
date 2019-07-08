@@ -200,11 +200,7 @@ class Panel extends UI5Element {
 		this._icon = {};
 		this._icon.id = `${this.id}-CollapsedImg`;
 		this._icon.src = getIconURI("navigation-right-arrow");
-		this._icon.functional = true;
 		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
-
-		this._toggle = event => { event.preventDefault(); this._toggleOpen(); };
-		this._noOp = () => {};
 	}
 
 	onBeforeRendering() {
@@ -213,14 +209,29 @@ class Panel extends UI5Element {
 			this._contentExpanded = !this.collapsed;
 		}
 
-		const toggleWithInternalHeader = !this.header.length;
 		this._icon.title = this.resourceBundle.getText(PANEL_ICON);
-		this._header.press = toggleWithInternalHeader ? this._toggle : this._noOp;
-		this._icon.press = !toggleWithInternalHeader ? this._toggle : this._noOp;
 	}
 
-	onHeaderKeyDown(event) {
-		if (!this._headerOnTarget(event.target)) {
+	shouldToggle(node) {
+		const customContent = this.header.length;
+		if (customContent) {
+			return node.hasAttribute("data-ui5-panel-icon");
+		} else {
+			return true;
+		}
+
+	}
+
+	_headerClick(event) {
+		if (!this.shouldToggle(event.target)) {
+			return;
+		}
+
+		this._toggleOpen();
+	}
+
+	_headerKeyDown(event) {
+		if (!this.shouldToggle(event.target)) {
 			return;
 		}
 
@@ -233,8 +244,8 @@ class Panel extends UI5Element {
 		}
 	}
 
-	onHeaderKeyUp(event) {
-		if (!this._headerOnTarget(event.target)) {
+	_headerKeyUp(event) {
+		if (!this.shouldToggle(event.target)) {
 			return;
 		}
 
