@@ -6,7 +6,7 @@ import BusyIndicatorTemplate from "./generated/templates/BusyIndicatorTemplate.l
 import busyIndicatorCss from "./generated/themes/BusyIndicator.css.js";
 
 
-import BusyIndicatorType from "./types/BusyIndicatorType.js";
+import BusyIndicatorSize from "./types/BusyIndicatorSize.js";
 
 /**
  * @public
@@ -19,11 +19,11 @@ const metadata = {
 		 * </br></br>
 		 * <b>Note:</b> Available options are "Small", "Medium" and "Large"
 		 *
-		 * @type {BusyIndicatorType}
+		 * @type {BusyIndicatorSize}
 		 * @defaultvalue "Large"
 		 * @public
 		 */
-		size: { type: BusyIndicatorType, defaultValue: BusyIndicatorType.Large },
+		size: { type: BusyIndicatorSize, defaultValue: BusyIndicatorSize.Large },
 
 		/**
 		 * Defines if the busy indicator is visible on the screen. By default it is not.
