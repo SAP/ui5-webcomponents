@@ -24,11 +24,14 @@ ui5-multi-combobox:not([hidden]) {
 	cursor: pointer;
 	outline: none;
 	box-sizing: border-box;
-	width: 2.375rem;
+	width: 2.125rem;
+	padding: 0.4375rem 0.4375rem;
 }
 
 .ui5-multi-combobox--icon[data-ui5-compact-size] {
 	width: 2rem;
+	padding: 0.1875rem 0.4375rem;
+
 }
 
 .ui5-multi-combobox--icon:active {
