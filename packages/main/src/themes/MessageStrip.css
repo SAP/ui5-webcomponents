@@ -24,11 +24,11 @@ ui5-messagestrip:not([hidden]) {
 }
 
 .ui5-messagestrip-root .ui5-messagestrip-icon {
-	width: var(--_ui5_messagestrip_icon_width);
+	width: 1rem;
 	box-sizing: border-box;
 	position: absolute;
 	top: var(--_ui5_messagestrip_icon_top);
-	left: 0px;
+	left: 0.75rem;
 }
 
 .ui5-messagestrip -root.ui5-messagestrip-text {
@@ -54,8 +54,8 @@ ui5-messagestrip:not([hidden]) {
 }
 
 .ui5-messagestrip-text {
-	font-family: var(--sapUiFontFamily); 
-	font-size: var(--sapMFontMediumSize); 
+	font-family: var(--sapUiFontFamily);
+	font-size: var(--sapMFontMediumSize);
 }
 
 .ui5-messagestrip--info {
@@ -95,7 +95,10 @@ ui5-messagestrip:not([hidden]) {
 	color: var(--sapUiCriticalElement);
 }
 
-.ui5-messagestrip-close-icon {
+.ui5-messagestrip-close-icon-wrapper {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	width: var(--_ui5_messagestrip_close_button_size);
 	height: var(--_ui5_messagestrip_close_button_size);
 	border-radius: 0.2rem;
@@ -113,16 +116,16 @@ ui5-messagestrip:not([hidden]) {
 	user-select: none;
 }
 
-.ui5-messagestrip-close-icon:hover {
+.ui5-messagestrip-close-icon-wrapper:hover {
 	background-color: var(--sapUiButtonLiteHoverBackground);
 }
 
-.ui5-messagestrip-close-icon:active {
+.ui5-messagestrip-close-icon-wrapper:active {
 	background-color: var(--sapUiButtonLiteActiveBackground);
 	color: var(--sapUiButtonActiveTextColor);
 }
 
-.ui5-messagestrip-close-icon:focus::after {
+.ui5-messagestrip-close-icon-wrapper:focus::after {
 	content: "";
 	position: absolute;
 	top: 1px;
@@ -133,6 +136,6 @@ ui5-messagestrip:not([hidden]) {
 	pointer-events: none;
 }
 
-.ui5-messagestrip-close-icon:active:focus::after {
+.ui5-messagestrip-close-icon-wrapper:active:focus::after {
 	border: var(--_ui5_messagestrip_focus_width) dotted var(--sapUiContentContrastFocusColor);
 }

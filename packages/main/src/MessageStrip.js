@@ -1,6 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
+import { isEnter, isSpace } from "@ui5/webcomponents-base/src/events/PseudoEvents";
 import MessageStripType from "./types/MessageStripType.js";
 import MessageStripTemplate from "./generated/templates/MessageStripTemplate.lit.js";
 import Icon from "./Icon.js";
@@ -150,8 +151,24 @@ class MessageStrip extends UI5Element {
 		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
 	}
 
-	_handleCloseIconPress() {
+	_closeClick() {
 		this.fireEvent("close", {});
+	}
+
+	_closeKeyDown(event) {
+		if (isEnter(event)) {
+			this.fireEvent("close");
+		}
+
+		if (isSpace(event)) {
+			event.preventDefault();
+		}
+	}
+
+	_closeKeyUp(event) {
+		if (isSpace(event)) {
+			this.fireEvent("close");
+		}
 	}
 
 	static async define(...params) {
@@ -193,9 +210,6 @@ class MessageStrip extends UI5Element {
 			label: {
 				"ui5-messagestrip-text": true,
 				"ui5-messagestripNoCloseButton": this.noCloseButton,
-			},
-			closeIcon: {
-				"ui5-messagestrip-close-icon": true,
 			},
 			main: {
 				"ui5-messagestrip-root": true,
