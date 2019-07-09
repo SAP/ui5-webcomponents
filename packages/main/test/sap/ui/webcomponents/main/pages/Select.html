@@ -64,7 +64,7 @@
 	var counter = 0;
 
 	// Select
-	select.addEventListener("change", function(e) {
+	select.addEventListener("ui5-change", function(e) {
 		lbl.innerHTML = "selected item :: " + e.detail.selectedOption.textContent + " :: " + (++counter);
 		inputResult.value = counter;
 	});
