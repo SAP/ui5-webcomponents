@@ -64,7 +64,7 @@
 	var counter = 0;
 
 	// Select
-	select.addEventListener("ui5-change", function(e) {
+	select.addEventListener("change", function(e) {
 		lbl.innerHTML = "selected item :: " + e.detail.selectedOption.textContent + " :: " + (++counter);
 		inputResult.value = counter;
 	});
@@ -123,7 +123,7 @@
 
 	var initialItemsHTML = "";
 
-	addItemsBtn.addEventListener("ui5-press", event => {
+	addItemsBtn.addEventListener("ui5-press", function(event) {
 		initialItemsHTML = select.innerHTML;
 
 		var li = document.createElement('ui5-option');
@@ -134,10 +134,9 @@
 		select.appendChild(li);
 	});
 
-	restoreItemsBtn.addEventListener("ui5-press", event => {
+	restoreItemsBtn.addEventListener("ui5-press", function(event) {
 		select.innerHTML = initialItemsHTML;
 	});
 </script>
 </body>
-</html>
 </html>
