@@ -69,6 +69,10 @@
 		inputResult.value = counter;
 	});
 
+	select.addEventListener("ui5-change", function(e) {
+		console.log("Select change event fired", e);
+	});
+
 	select2.addEventListener("ui5-change", function(e) {
 		++counter;
 		inputResult.value = counter;
