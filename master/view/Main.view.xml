@@ -1,0 +1,100 @@
+<mvc:View class="sapUiSizeCompact customToolPage" controllerName="playground.controller.Main" xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:tnt="sap.tnt" xmlns:pc="playground.controls"
+	displayBlock="true">
+	<tnt:ToolPage sideExpanded="true" id="app">
+		<tnt:header>
+			<tnt:ToolHeader class="topNavigationHeader">
+				<Button id="sideNavigationToggleButton"
+					icon="sap-icon://menu2"
+					type="Transparent"
+					press="onSideNavButtonPress"
+					class="topNavigationHeaderHamburger">
+					<layoutData>
+						<OverflowToolbarLayoutData priority="NeverOverflow" />
+					</layoutData>
+				</Button>
+				<Image class="ui5-logo" src="{/ui5Image}" tooltip="UI5" press="onUI5LogoPressed"></Image>
+				<Link text="{i18n>title}" class="topNavigationHeaderHeading custom-title" tooltip="UI5" press="onUI5LogoPressed"></Link>
+
+				<ToolbarSpacer></ToolbarSpacer>
+
+				<Label class="version-label" text="v1.0.0-rc.2">
+					<layoutData>
+						<OverflowToolbarLayoutData priority="NeverOverflow" />
+					</layoutData>
+				</Label>
+
+				<Button class="settings-button" type="Transparent" icon="sap-icon://action-settings" press="toggleSettingsMenu">
+					<layoutData>
+						<OverflowToolbarLayoutData priority="NeverOverflow" />
+					</layoutData>
+				</Button>
+			</tnt:ToolHeader>
+		</tnt:header>
+		<tnt:sideContent>
+			<tnt:SideNavigation id="side-navigation" visible="true" itemSelect=".itemSelect">
+				<tnt:item>
+					<tnt:NavigationList items="{/navigation}" id="nl">
+						<tnt:NavigationListItem text="{title}" key="{key}" icon="{icon}" hasExpander="false" expanded="true" class="{class}" items="{path: 'items', templateShareable: true}">
+							<tnt:items>
+								<tnt:NavigationListItem text="{title}" key="{key}" icon="{icon}" expanded="{expanded}">
+									<tnt:customData>
+										<core:CustomData key="classes" value="new-label" writeToDom="{new}" />
+									</tnt:customData>
+								</tnt:NavigationListItem>
+							</tnt:items>
+						</tnt:NavigationListItem>
+					</tnt:NavigationList>
+				</tnt:item>
+			</tnt:SideNavigation>
+		</tnt:sideContent>
+		<tnt:mainContents>
+			<FlexBox class="switch-container" visible="{/showSettingsMenu}" width="100%" height="14.19rem" direction="Column" justifyContent="SpaceAround" alignItems="Center">
+				<FlexBox width="100%" justifyContent="SpaceBetween" wrap="Wrap">
+					<FlexBox direction="Column">
+						<Label text="Theme" labelFor="theme-cb"/>
+						<Select class="select-width" id="theme-cb" selectedKey="sap_fiori_3">
+							<core:Item key="sap_fiori_3" text="Fiori 3" />
+							<core:Item key="sap_belize_hcb" text="High Contrast Black" />
+							<core:Item key="sap_belize" text="Belize" />
+						</Select>
+					</FlexBox>
+
+					<FlexBox direction="Column">
+						<Label text="Content Density" labelFor="content-density-cb"/>
+						<Select class="select-width" id="content-densit-cb" selectedKey="false">
+							<core:Item key="false" text="Cozy" />
+							<core:Item key="true" text="Compact" />
+						</Select>
+					</FlexBox>
+
+					<FlexBox direction="Column">
+						<Label text="Text Direction" labelFor="direction-cb"/>
+						<Select class="select-width" id="direction-cb" selectedKey="false">
+							<core:Item key="false" text="LTR" />
+							<core:Item key="true" text="RTL" />
+						</Select>
+					</FlexBox>
+				</FlexBox>
+
+				<HBox width="100%" justifyContent="SpaceBetween" alignItems="Center">
+					<Label class="version-label-in-settings" text="v1.0.0-rc.2" />
+					<HBox class="settings-buttons-wrapper" width="100%" justifyContent="End">
+						<Button type="Transparent" text="Close" press="closeSettingsMenu" class="margin-end custom-button-height" />
+						<Button text="Apply" press="applyChangeSettings" class="custom-button-height" />
+					</HBox>
+				</HBox>
+			</FlexBox>
+
+			<FlexBox direction="Row" width="100%" height="100%" id="main-content-wrapper">
+				<pc:Frame id="ContentFrame" class="content-iframe" width="100%" height="100%" src="{/selectedView}"></pc:Frame>
+				<FlexBox width="10rem" class="side-links" visible="{/showNavigationLinks}">
+					<List width="10rem" id="links-list" class="links-list sapUiMediumMarginTop" itemPress="onLinkPressed">
+						<ActionListItem text="Samples"/>
+						<ActionListItem text="API Reference"/>
+					</List>
+				</FlexBox>
+			</FlexBox>
+		</tnt:mainContents>
+	</tnt:ToolPage>
+</mvc:View>

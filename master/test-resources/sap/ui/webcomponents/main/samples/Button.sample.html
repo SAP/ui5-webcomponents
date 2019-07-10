@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>&lt;ui5-button&gt;</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<link rel="stylesheet" href="../../../../../../www/home/core.css">
+
+	<script src="../../../../../../test-resources/playground/libs/google-code-prettify/prettify.js"></script>
+	<link href="../../../../../../test-resources/playground/libs/google-code-prettify/sunburst.css" type="text/css" rel="stylesheet">
+
+	<link href="../../../../../../test-resources/playground/css/api.css" type="text/css" rel="stylesheet">
+
+	<script data-id="sap-ui-config" type="application/json">
+		{
+			"theme": "sap_fiori_3",
+			"language": "EN"
+		}
+	</script>
+
+	<script src="../../../../../../webcomponentsjs/webcomponents-loader.js"></script>
+	<script src="../../../../../../resources/sap/ui/webcomponents/main/bundle.esm.js"
+		type="module"
+	>
+	</script>
+
+	<script nomodule src="../../../../../../resources/sap/ui/webcomponents/main/bundle.es5.js">
+	</script>
+
+	<script defer src="../../../../../../www/samples/settings.js"></script>
+</head>
+<body class="sapUiBody example-wrapper" role="application">
+
+	<header>
+		<div class="control-header">Button</div>
+		<div style="margin-bottom: 2rem; font-weight: 300; font-size: 1.1rem; color: #666666;">&lt;ui5-button&gt;</div>
+	</header>
+
+	<section>
+		<h3>Basic Button</h3>
+		<div class="snippet">
+			<ui5-button class="samples-margin" design="Default">Enabled</ui5-button>
+			<ui5-button class="samples-margin" disabled>Disabled</ui5-button>
+			<ui5-button class="samples-margin" design="Transparent">Cancel</ui5-button>
+			<ui5-button class="samples-margin" design="Positive" icon-end>Approve</ui5-button>
+			<ui5-button class="samples-margin"design="Negative">Decline</ui5-button>
+			<ui5-button class="samples-margin" design="Emphasized">Subscribe</ui5-button>
+		</div>
+		<pre class="prettyprint lang-html"><xmp>
+<ui5-button design="Default">Enabled</ui5-button>
+<ui5-button disabled>Disabled</ui5-button>
+<ui5-button design="Transparent">Cancel</ui5-button>
+<ui5-button design="Positive" icon-end>Approve</ui5-button>
+<ui5-button design="Negative">Decline</ui5-button>
+<ui5-button design="Emphasized">Subscribe</ui5-button>
+		</xmp></pre>
+	</section>
+
+	<section>
+		<h3>Button with Icon</h3>
+		<div class="snippet">
+			<ui5-button class="samples-margin" icon="sap-icon://employee">Add</ui5-button>
+			<ui5-button class="samples-margin" icon="sap-icon://download" icon-end>Download</ui5-button>
+			<ui5-button class="samples-margin" design="Positive" icon="sap-icon://add">Add</ui5-button>
+			<ui5-button class="samples-margin" design="Negative" icon="sap-icon://delete">Remove</ui5-button>
+			<ui5-button class="samples-margin" design="Transparent" icon="sap-icon://accept">Accept</ui5-button>
+		</div>
+		<pre class="prettyprint lang-html"><xmp>
+<ui5-button icon="sap-icon://employee">Add</ui5-button>
+<ui5-button icon="sap-icon://download" icon-end>Download</ui5-button>
+<ui5-button design="Positive" icon="sap-icon://add">Add</ui5-button>
+<ui5-button design="Negative" icon="sap-icon://delete">Remove</ui5-button>
+<ui5-button design="Transparent" icon="sap-icon://accept">Transparent</ui5-button>
+		</xmp></pre>
+	</section>
+
+	<section>
+		<h3>Icon Only Button</h3>
+		<div class="snippet">
+				<ui5-label style="display:none;" id="lblAdd" aria-hidden="true">Add</ui5-label>
+				<ui5-label style="display:none;" id="lblAlert" aria-hidden="true">Alert</ui5-label>
+				<ui5-label style="display:none;" id="lblAway" aria-hidden="true">Away</ui5-label>
+				<ui5-label style="display:none;" id="lblAccept" aria-hidden="true">Accept</ui5-label>
+				<ui5-label style="display:none;" id="lblBookmark" aria-hidden="true">Bookmark</ui5-label>
+				<ui5-label style="display:none;" id="lblCamera" aria-hidden="true">Camera</ui5-label>
+				<ui5-label style="display:none;" id="lblCall" aria-hidden="true">Call</ui5-label>
+				<ui5-label style="display:none;" id="lblCart" aria-hidden="true">Cart</ui5-label>
+				<ui5-label style="display:none;" id="lblCancel" aria-hidden="true">Cancel</ui5-label>
+				<ui5-label style="display:none;" id="lblSettings" aria-hidden="true">Settings</ui5-label>
+	
+				<ui5-button class="samples-margin" icon="sap-icon://away" aria-labelledby="lblAway"></ui5-button>
+				<ui5-button class="samples-margin" icon="sap-icon://action-settings" aria-labelledby="lblSettings" ></ui5-button>
+				<ui5-button class="samples-margin" icon="sap-icon://add" aria-labelledby="lblAdd"></ui5-button>
+				<ui5-button class="samples-margin" icon="sap-icon://alert" aria-labelledby="lblAlert"></ui5-button>
+				<ui5-button class="samples-margin" icon="sap-icon://accept" design="Positive" aria-labelledby="lblAccept"></ui5-button>
+				<ui5-button class="samples-margin" icon="sap-icon://bookmark" design="Positive" aria-labelledby="lblBookmark"></ui5-button>
+				<ui5-button class="samples-margin" icon="sap-icon://cancel" design="Negative" aria-labelledby="lblCancel" ></ui5-button>
+				<ui5-button class="samples-margin" icon="sap-icon://call" design="Negative" aria-labelledby="lblCall" ></ui5-button>
+				<ui5-button class="samples-margin" icon="sap-icon://camera" design="Transparent" aria-labelledby="lblCamera"></ui5-button>
+				<ui5-button class="samples-margin" icon="sap-icon://cart" design="Transparent" aria-labelledby="lblCart"></ui5-button>
+		</div>
+		<pre class="prettyprint lang-html"><xmp>
+<ui5-button icon="sap-icon://away" aria-labelledby="lblAway"></ui5-button>
+<ui5-button icon="sap-icon://action-settings" aria-labelledby="lblSettings" ></ui5-button>
+<ui5-button icon="sap-icon://add" aria-labelledby="lblAdd"></ui5-button>
+<ui5-button icon="sap-icon://alert" aria-labelledby="lblAlert"></ui5-button>
+<ui5-button icon="sap-icon://accept" design="Positive" aria-labelledby="lblAccept"></ui5-button>
+<ui5-button icon="sap-icon://bookmark" design="Positive" aria-labelledby="lblBookmark"></ui5-button>
+<ui5-button icon="sap-icon://cancel" design="Negative" aria-labelledby="lblCancel" ></ui5-button>
+<ui5-button icon="sap-icon://call" design="Negative" aria-labelledby="lblCall" ></ui5-button>
+<ui5-button icon="sap-icon://camera" design="Transparent" aria-labelledby="lblCamera"></ui5-button>
+<ui5-button icon="sap-icon://cart" design="Transparent" aria-labelledby="lblCart"></ui5-button>
+<ui5-label style="display:none" id="lblAdd" aria-hidden="true">Add</ui5-label>
+		</xmp></pre>
+	</section>
+
+	<section>
+		<h3>Button with Design</h3>
+		<div class="snippet">
+			<ui5-button class="samples-margin" design="Emphasized">Submit</ui5-button>
+			<ui5-button class="samples-margin" design="Positive">Agree</ui5-button>
+			<ui5-button class="samples-margin" design="Negative">Decline</ui5-button>
+			<ui5-button class="samples-margin" disabled>Disabled</ui5-button>
+			<ui5-button class="samples-margin" design="Transparent">Transparent</ui5-button>
+		</div>
+		<pre class="prettyprint lang-html"><xmp>
+<ui5-button design="Emphasized">Submit</ui5-button>
+<ui5-button design="Positive">Agree</ui5-button>
+<ui5-button design="Negative">Decline</ui5-button>
+<ui5-button disabled>Disabled</ui5-button>
+<ui5-button design="Transparent">Transparent</ui5-button>
+		</xmp></pre>
+	</section>
+
+	<script>
+		window.prettyPrint();
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,416 @@
+/* Override tnt tool header */
+.sapContrast.sapTntToolHeader.sapMTB.topNavigationHeader,
+.sapContrast .sapTntToolHeader.sapMTB.topNavigationHeader {
+	background-color: #000;
+}
+
+/* Override tnt tool header title */
+.sapContrast.sapTntToolHeader.sapMTB.topNavigationHeader .topNavigationHeaderHeading,
+.sapContrast .sapTntToolHeader.sapMTB.topNavigationHeader .topNavigationHeaderHeading {
+	font-size: 1.25rem;
+	font-family: '72-Bold', Arial, Helvetica, sans-serif;
+	color: #fff;
+	user-select: none;
+	text-decoration: none !important;
+    margin: 0;
+    padding: 0 .2rem;
+    box-sizing: border-box;
+    height: 100%;
+	line-height: 3rem;
+}
+
+/* Override tnt tool header hamburger */
+.sapContrast .topNavigationHeaderHamburger:not(.sapMBtnDisabled) .sapMBtnTransparent > .sapMBtnIcon,
+.sapContrast .topNavigationHeaderHamburger:not(.sapMBtnDisabled) .sapMBtnGhost > .sapMBtnIcon {
+	color: #fff;
+}
+
+/* Override tnt tool side nav */
+.sapContrast.sapTntSideNavigation,
+.sapContrast .sapTntSideNavigation {
+	border-right: 1px solid #CCCCCC !important;
+}
+
+/* Override side nav main items */
+.sapTntNavLI > li > .sapTntNavLIItem > .sapTntNavLIText {
+	color: #333 !important;
+	font-size: 1rem !important;
+	font-weight: bold;
+	font-family: '72-Bold', Arial, Helvetica, sans-serif !important;
+}
+
+.hcb .sapTntNavLI > li > .sapTntNavLIItem > .sapTntNavLIText  {
+	color: #fff !important;
+}
+
+.sapTntNavLI > li > .sapTntNavLIItem > .sapUiIcon {
+	color: #4A90E2 !important;
+}
+
+.sapUiSizeCompact .sapTntNavLI span.sapTntNavLIGroupIcon {
+	padding: 0 !important;
+}
+
+.side-links {
+	background-color: #fff !important;
+}
+
+/* Fix flickering behaviour of Action list items */
+.side-links .sapMLIB {
+	padding: 0;
+}
+
+.hcb .side-links {
+	background-color: #000 !important;
+	color: #fff !important;
+}
+
+.side-links .sapMLIB {
+	border-bottom: none;
+}
+
+.side-links .links-list .sapMLIB.sapMLIBActive {
+	background-color:  #2A2A2A !important;
+	color: #fff !important;
+}
+
+.hcb .side-links .links-list .sapMLIB.sapMLIBActive {
+	background-color: #fff !important;
+	color: #000 !important;
+}
+
+.hcb .side-links .links-list.sapMLIB.sapMLIBActive {
+	background-color: #fff !important;
+	color: #000 !important;
+}
+
+html.sap-desktop .hcb .side-links .links-list .sapMList .sapMLIB.sapMALI:not(.sapMLIBActive) {
+	background-color: #000 !important;
+	color: #fff !important;
+}
+
+.side-links .links-list .sapMALIText {
+	text-align: left;
+    padding-left: 2rem !important;
+}
+
+.side-links .links-list .sapMALIText:not(.sapMLIBActive){
+	color: #2A2A2A !important;
+}
+
+.side-links .links-list .sapMALIText:active {
+	color: #fff !important;
+}
+
+.side-links .links-list .selected-link .sapMALIText, .side-links .links-list .selected-link .sapMALIText:active {
+	color: #008EFF !important;
+	font-weight: bolder;
+}
+
+.hcb .side-links .links-list .sapMALIText, .hcb .side-links .links-list .sapMALIText:active {
+	color: #fff !important;
+	background-color: #000;
+}
+
+.hcb .side-links .links-list .sapMALIText:hover {
+	color: #000 !important;
+	background-color: #fff;
+}
+
+.sapTntToolPageMainContentWrapper > .sapMFlexBox.sapMFlexBoxAlignContentStretch.sapMFlexBoxAlignItemsStretch.sapMFlexBoxBGTransparent.sapMFlexBoxJustifyStart.sapMFlexBoxWrapNoWrap.sapMHBox > .sapMFlexBoxBGTransparent.sapMFlexItem.sapMFlexItemAlignAuto,
+.iframe-wrapper,
+.iframe-wrapper > *:first-child {
+	width: 100% !important;
+}
+
+.switch-container .sapUiSizeCompact .sapMBtn {
+	height: 3rem;
+}
+
+/* Override tnt tool side nav item */
+.sapContrast.sapTntSideNavigation,
+.sapContrast .sapTntSideNavigation,
+.sapContrast.sapTntNavLIItem,
+.sapContrast .sapTntNavLIItem,
+.sapContrast .sapTntNavLIGroupItem.sapTntNavLIItem {
+	user-select: none;
+	background-color: #fafafa !important;
+}
+
+.hcb .sapContrast.sapTntSideNavigation,
+.hcb .sapContrast .sapTntSideNavigation,
+.hcb .sapContrast.sapTntNavLIItem,
+.hcb .sapContrast .sapTntNavLIItem,
+.hcb .sapContrast .sapTntNavLIGroupItem.sapTntNavLIItem {
+	background-color: #000 !important;
+}
+
+.sapContrast .sapTntNavLIItem,
+.sapContrast.sapTntNavLIItem,
+.sapContrast.sapTntNavLIItem > .sapMText,
+.sapContrast .sapTntNavLIItem > .sapMText {
+	color: #2A2A2A !important;
+	font-size: 0.88rem !important;
+	font-family: '72-Regular', Arial, Helvetica, sans-serif;
+}
+
+.hcb .sapContrast .sapTntNavLIItem,
+.hcb .sapContrast.sapTntNavLIItem,
+.hcb .sapContrast.sapTntNavLIItem > .sapMText,
+.hcb .sapContrast .sapTntNavLIItem > .sapMText {
+	color: #fff !important;
+}
+
+.sapContrast.sapTntNavLIItem,
+.sapContrast .sapTntNavLIItem {
+	border: none !important;
+}
+
+/* Override side nav SELECTED item */
+.sapContrast.sapTntNavLIItem.sapTntNavLIItemSelected > .sapMText,
+.sapContrast .sapTntNavLIItem.sapTntNavLIItemSelected > .sapMText {
+	color: #4A90E2 !important;
+}
+
+.sapContrast.sapTntNavLIItem.sapTntNavLIItemSelected::before,
+.sapContrast .sapTntNavLIItem.sapTntNavLIItemSelected::before {
+	content: "";
+	width: 0.44rem;
+	height: 0.44rem;
+	border-radius: 50%;
+	background-color: #4A90E2;
+	position: absolute;
+	left: 2.05rem;
+	top: 0.8rem;
+	border: none !important;
+}
+
+.sapTntSideNavigation.sapTntSideNavigationNotExpandedWidth {
+	width: 0 !important;
+}
+
+.sap-desktop .sapUiSizeCompact .sapTntToolPageAsideCollapsed .sapTntToolPageMain,
+.sap-tablet .sapUiSizeCompact .sapTntToolPageAsideCollapsed .sapTntToolPageMain {
+	padding-left: 0 !important;
+}
+
+.sapTntSideNavigationFlexible {
+	padding-top: 2rem;
+}
+
+/* scroll bar */
+html.sap-desktop .sapContrast ::-webkit-scrollbar {
+	background-color: #F0F0F0 !important;
+}
+html.sap-desktop .sapContrast ::-webkit-scrollbar-thumb {
+	background-color: #A2A2A2 !important;
+	border-radius: 0.38rem;
+}
+.sapTntSideNavigationFlexible::-webkit-scrollbar {
+	width: .63rem !important;
+}
+
+/* remove focus */
+html.sap-desktop .sapContrast .sapMLnk:focus:not(.sapMLnkDsbl) {
+	outline: none !important;
+}
+
+/* style buttons in header toolbar */
+.sapContrast .sapMBtn:hover > .sapMBtnTransparent.sapMBtnHoverable {
+	background-color: #565656;
+}
+
+.sapMTB.topNavigationHeader .sapMLabel {
+	color: #fff !important;
+	padding-right: 0.3rem !important;
+}
+
+.sapContrast.sapTntToolHeader.sapMTB {
+	border-bottom: none !important;
+	border-left: none !important;
+	border-right: none !important;
+}
+
+.custom-button-height, .custom-button-height > span {
+	height: 2.38rem !important;
+	padding-top: 0 !important;
+	padding-bottom: 0 !important;
+	display: flex !important;
+	justify-content: center !important;
+	align-items: center !important;
+    border-radius: 2px !important;
+}
+
+.custom-button-height:hover {
+	background: rgba(179, 179, 179, 0.5) !important;
+	border-radius: 2px !important;
+	padding-top: 0 !important;
+	padding-bottom: 0 !important;
+}
+
+.switch-container .sapMBtnDefault.sapMBtnInner.sapMBtnText.sapMFocusable {
+	border: 2px solid #fff !important;
+	background-color: transparent;
+    border: none;
+}
+
+.switch-container .sapMBtnDefault.sapMBtnInner.sapMBtnText.sapMFocusable:hover {
+	background-color: rgba(179, 179, 179, 0.5);
+    border-color: rgba(179, 179, 179, 0.5);
+}
+
+.switch-container {
+	background-color: #222 !important;
+	height: 14.19rem !important;
+	padding: 0 3rem;
+}
+
+.switch-container .sapMHrdrCntrInner {
+	width: 100% !important;
+}
+
+.switch-container .sapMLabel {
+	color: white !important;
+}
+
+
+/* Change Select default styles */
+.switch-container .select-width.sapMSlt.sapMSltDefault.sapMSltMinWidth.sapMSltWithArrow {
+	background-color: #000;
+}
+
+.switch-container .select-width.sapMSlt.sapMSltDefault.sapMSltHoverable.sapMSltMinWidth.sapMSltWithArrow:hover,
+.switch-container .sapMSltPressed:not(.sapMSltDisabled):not(.sapMSltState) {
+	border-color: #fff;
+}
+
+.switch-container .sapMSltArrow {
+	color: #fff;
+	background-color: #000;
+}
+
+.switch-container .sapMSelectListItemText {
+	color: #fff;
+}
+
+.switch-container .sapMSltPressed > .sapMSltArrow {
+	background-color: #222;
+}
+/* End of Select restyling */
+
+/* Override Select Suggestions color */
+/* NB! Will affect all checkboxes! */
+.sapMSelectListItem {
+	background-color: #000 !important;
+    color: #fff !important;
+}
+.sapMSelectListItem:hover {
+	background-color: #222 !important;
+}
+
+li[data-classes="new-label"]::after {
+	content: "new";
+	height: 1.125rem;
+	padding: 0 0.625rem;
+	margin-right: 5px;
+	color: #4A90E2;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	font-family: '72-Regular', Arial, Helvetica, sans-serif;
+	font-size: .75rem;
+	font-weight: 600;
+	letter-spacing: 0.0125rem;
+}
+
+.hcb li[data-classes="new-label"]::after {
+	border-color: #fff;
+	color: #fff;
+	background-color: #000;
+}
+
+.settings-button {
+	padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    border-radius: 2px !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+	background-color: #222 !important;
+}
+
+.settings-button > span {
+    height: 2rem !important;
+    display: flex !important;
+	align-items: center;
+}
+
+.settings-button .sapMBtnIcon {
+	color: #fff !important;
+}
+
+.settings-button {
+	background-color: #222 !important;
+	color: #fff !important;
+}
+
+.settings-buttons-wrapper .sapMBtnContent {
+	color: #fff !important;
+}
+
+.select-width {
+	width: 20rem !important;
+}
+
+.ui5-logo {
+	width: 3rem;
+    box-sizing: border-box;
+    margin-right: 0 !important;
+    padding: 0 .25rem;
+}
+
+.ui5-logo:focus {
+	outline: none !important;	
+}
+
+.custom-link {
+	color: white !important;
+	text-decoration: none !important;
+}
+
+.margin-front-end {
+	margin: 0 1rem !important;
+}
+
+.margin-end {
+	margin-right: .25rem !important;
+}
+
+#ContentFrame {
+	width: 100%;
+}
+
+html[data-sap-ui-os^="iOS"] .customToolPage .sapTntToolPageMainContentWrapper {
+	overflow-y: scroll;
+	-webkit-overflow-scrolling: touch;
+}
+
+.version-label-in-settings {
+	display: none !important;
+}
+
+@media screen and (max-width: 1100px) {
+	.side-links {
+		display: none !important; 
+	}
+}
+
+@media screen and (max-width: 600px) {
+	.version-label {
+		display: none !important;
+	}
+	.version-label-in-settings {
+		display: inline-block !important;
+	}
+}

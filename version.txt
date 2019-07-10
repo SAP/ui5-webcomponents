@@ -1,7 +1,5 @@
-commit a44cdc6f9f54fb1a4a1776ee142c05c18a95ec94
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Fri Jul 5 11:37:19 2019 +0300
+commit d0dcacf8b9eac8a820e5ebfe1a3ddb35648a81ce
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Wed Jul 10 12:36:04 2019 +0300
 
-    fix: enable default icon size to be changed (#629)
-    
-    move the default font size to the host element so it can be styled externally
+    fix: deploying of master branch (#637)

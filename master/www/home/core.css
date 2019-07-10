@@ -1,0 +1,1836 @@
+/*!
+ * UI development toolkit for HTML5 (OpenUI5)
+ * (c) Copyright 2009-2018 SAP SE or an SAP affiliate company.
+ * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
+ */
+/*!
+ * UI development toolkit for HTML5 (OpenUI5)
+ * (c) Copyright 2009-2018 SAP SE or an SAP affiliate company.
+ * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
+ */
+ .sapUiBody {
+	background-color: #fafafa;
+	color: #333333;
+	font-family: "72",Arial,Helvetica,sans-serif;
+	font-size: 16px;
+	-webkit-tap-highlight-color: rgba(0,0,0,0)
+}
+
+.hcb-background {
+	background-color: #000 !important;
+}
+
+.hcb-background > .page-container *, .hcb-background > header *, .hcb-background > section > h3{
+	color: #fff !important;
+}
+
+.sapUiArea {
+	background-color: #fafafa;
+	color: #333333;
+	font-family: "72",Arial,Helvetica,sans-serif;
+	font-size: 16px
+}
+
+.sapUiHidden {
+	position: absolute;
+	visibility: hidden;
+	left: -10000px;
+	top: -10000px;
+	background-color: #fafafa;
+	color: #333333;
+	font-family: "72",Arial,Helvetica,sans-serif;
+	font-size: 16px
+}
+
+.sapUiForcedHidden,.sapUiForcedHidden * {
+	visibility: hidden!important
+}
+
+.sapUiCorePlaintext {
+	font-family: "72",Arial,Helvetica,sans-serif;
+	font-size: 16px;
+	line-height: 18px
+}
+
+.sapUiCoreDefaultFont {
+	font-family: "72",Arial,Helvetica,sans-serif;
+	font-size: 16px
+}
+
+.sapUiCoreDefaultCursor {
+	cursor: default
+}
+
+.sapUiBLy {
+	background-color: #CCCCCC;
+	opacity: 0.6;
+	filter: alpha(opacity=60);
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	position: fixed;
+	outline: 0 none
+}
+
+.sapUiPopupShield {
+	position: absolute
+}
+
+[data-sap-ui-type] {
+	visibility: hidden
+}
+
+.sapUiBody {
+	content-zooming: none;
+	-ms-content-zooming: none
+}
+
+@media (max-width: 599px) {
+	.sapUiHideOnPhone {
+		display:none!important
+	}
+
+	.sapUiVisibleOnlyOnTablet {
+		display: none!important
+	}
+
+	.sapUiVisibleOnlyOnDesktop {
+		display: none!important
+	}
+}
+
+@media (min-width: 600px) and (max-width:1023px) {
+	.sapUiHideOnTablet {
+		display:none!important
+	}
+
+	.sapUiVisibleOnlyOnDesktop {
+		display: none!important
+	}
+
+	.sapUiVisibleOnlyOnPhone {
+		display: none!important
+	}
+}
+
+@media (min-width: 1024px) {
+	.sapUiHideOnDesktop {
+		display:none!important
+	}
+
+	.sapUiVisibleOnlyOnTablet {
+		display: none!important
+	}
+
+	.sapUiVisibleOnlyOnPhone {
+		display: none!important
+	}
+}
+
+.sapUiOverlay {
+	background-color: rgba(250,250,250,0.8);
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0
+}
+
+.sapUiForceWidthAuto {
+	width: auto!important
+}
+
+.sapUiTinyMargin {
+	margin: 0.5rem!important
+}
+
+.sapUiSmallMargin {
+	margin: 1rem!important
+}
+
+.sapUiMediumMargin {
+	margin: 2rem!important
+}
+
+.sapUiLargeMargin {
+	margin: 3rem!important
+}
+
+.sapUiTinyMarginBeginEnd {
+	margin-left: 0.5rem!important;
+	margin-right: 0.5rem!important
+}
+
+.sapUiTinyMarginTopBottom {
+	margin-top: 0.5rem!important;
+	margin-bottom: 0.5rem!important
+}
+
+.sapUiSmallMarginBeginEnd {
+	margin-left: 1rem!important;
+	margin-right: 1rem!important
+}
+
+.sapUiSmallMarginTopBottom {
+	margin-top: 1rem!important;
+	margin-bottom: 1rem!important
+}
+
+.sapUiMediumMarginBeginEnd {
+	margin-left: 2rem!important;
+	margin-right: 2rem!important
+}
+
+.sapUiMediumMarginTopBottom {
+	margin-top: 2rem!important;
+	margin-bottom: 2rem!important
+}
+
+.sapUiLargeMarginBeginEnd {
+	margin-left: 3rem!important;
+	margin-right: 3rem!important
+}
+
+.sapUiLargeMarginTopBottom {
+	margin-top: 3rem!important;
+	margin-bottom: 3rem!important
+}
+
+.sapUiTinyMarginTop {
+	margin-top: 0.5rem!important
+}
+
+.sapUiTinyMarginBottom {
+	margin-bottom: 0.5rem!important
+}
+
+.sapUiTinyMarginBegin {
+	margin-left: 0.5rem!important
+}
+
+.sapUiTinyMarginEnd {
+	margin-right: 0.5rem!important
+}
+
+.sapUiSmallMarginTop {
+	margin-top: 1rem!important
+}
+
+.sapUiSmallMarginBottom {
+	margin-bottom: 1rem!important
+}
+
+.sapUiSmallMarginBegin {
+	margin-left: 1rem!important
+}
+
+.sapUiSmallMarginEnd {
+	margin-right: 1rem!important
+}
+
+.sapUiMediumMarginTop {
+	margin-top: 2rem!important
+}
+
+.sapUiMediumMarginBottom {
+	margin-bottom: 2rem!important
+}
+
+.sapUiMediumMarginBegin {
+	margin-left: 2rem!important
+}
+
+.sapUiMediumMarginEnd {
+	margin-right: 2rem!important
+}
+
+.sapUiLargeMarginTop {
+	margin-top: 3rem!important
+}
+
+.sapUiLargeMarginBottom {
+	margin-bottom: 3rem!important
+}
+
+.sapUiLargeMarginBegin {
+	margin-left: 3rem!important
+}
+
+.sapUiLargeMarginEnd {
+	margin-right: 3rem!important
+}
+
+@media (max-width: 599px) {
+	.sapMSplitContainerHideMode>.sapMSplitContainerDetail .sapUiResponsiveMargin,.sapMSplitContainerPortrait>.sapMSplitContainerDetail .sapUiResponsiveMargin,.sapUiResponsiveMargin {
+		margin:0 0 1rem 0!important
+	}
+}
+
+@media (min-width: 600px) and (max-width:1023px) {
+	.sapMSplitContainerHideMode>.sapMSplitContainerDetail .sapUiResponsiveMargin,.sapUiResponsiveMargin {
+		margin:1rem!important
+	}
+}
+
+@media (min-width: 1024px) {
+	.sapMSplitContainerHideMode>.sapMSplitContainerDetail .sapUiResponsiveMargin,.sapUiResponsiveMargin {
+		margin:1rem 2rem!important
+	}
+}
+
+.sapMSplitContainerMaster .sapUiResponsiveMargin {
+	margin: 0 0 1rem 0!important
+}
+
+.sapMSplitContainerDetail .sapUiResponsiveMargin {
+	margin: 1rem!important
+}
+
+.sapUiNoMargin {
+	margin: 0!important
+}
+
+.sapUiNoMarginTop {
+	margin-top: 0!important
+}
+
+.sapUiNoMarginBottom {
+	margin-bottom: 0!important
+}
+
+.sapUiNoMarginBegin {
+	margin-left: 0!important
+}
+
+.sapUiNoMarginEnd {
+	margin-right: 0!important
+}
+
+.sapUiInvisibleText,.sapUiHiddenPlaceholder {
+	display: none!important
+}
+
+.sapUiPseudoInvisibleText {
+	position: absolute!important;
+	clip: rect(1px,1px,1px,1px);
+	user-select: none;
+	left: 0;
+	top: 0
+}
+
+.sapMBtn.sapUiDebugTechnicalInfoAssistantButton {
+	margin-right: 0!important
+}
+
+.sapMBtn.sapUiDebugTechnicalInfoAssistantButton>.sapMBtnInner {
+	border-top-right-radius: 0!important;
+	border-bottom-right-radius: 0!important
+}
+
+.sapMBtn.sapUiDebugTechnicalInfoAssistantSettingsButton {
+	margin-left: 0!important
+}
+
+.sapMBtn.sapUiDebugTechnicalInfoAssistantSettingsButton>.sapMBtnInner {
+	border-top-left-radius: 0!important;
+	border-bottom-left-radius: 0!important
+}
+
+.sapUiBliLy {
+	position: absolute;
+	display: inline-block
+}
+
+.sapUiBliLy>iframe {
+	background-color: transparent;
+	border: none;
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	opacity: 0.01;
+	filter: alpha(opacity=1);
+	width: 100%;
+	height: 100%
+}
+
+.sapUiBusy {
+	background-image: url(../base/img/Busy.gif);
+	display: block;
+	width: 48px;
+	height: 48px;
+	outline: none;
+	cursor: wait;
+	top: 0!important
+}
+
+.sapUiBlyBusy {
+	cursor: wait
+}
+
+.sapUiDnDDragging {
+	opacity: 0.5
+}
+
+.sapUiDnDGhostContainer {
+	position: absolute;
+	top: -9999px;
+	left: -9999px
+}
+
+.sapUiDnDIndicator {
+	position: absolute;
+	pointer-events: none;
+	z-index: 99
+}
+
+.sapUiDnDIndicator[data-drop-position=Between] {
+	background: #0070b1
+}
+
+.sapUiDnDIndicator[data-drop-position=Between]:before {
+	content: "";
+	position: absolute;
+	width: 0.25rem;
+	height: 0.25rem;
+	border-radius: 0.25rem;
+	border: 0.125rem solid #0070b1;
+	background: #ffffff;
+	pointer-events: none
+}
+
+.sapUiDnDIndicator[data-drop-position=Between][data-drop-layout=Vertical] {
+	height: 0.125rem
+}
+
+.sapUiDnDIndicator[data-drop-position=Between][data-drop-layout=Vertical]:before {
+	top: -0.175rem
+}
+
+.sapUiDnDIndicator[data-drop-position=Between][data-drop-layout=Vertical]:before {
+	left: 0
+}
+
+.sapUiDnDIndicator[data-drop-position=Between][data-drop-layout=Horizontal] {
+	width: 0.125rem
+}
+
+.sapUiDnDIndicator[data-drop-position=Between][data-drop-layout=Horizontal]:before {
+	left: -0.175rem
+}
+
+.sapUiDnDIndicator[data-drop-position=Between][data-drop-layout=Horizontal]:before {
+	top: 0
+}
+
+.sapUiDnDIndicator[data-drop-position=On] {
+	background: rgba(0,112,177,0.05);
+	border: 0.125rem solid #0070b1;
+	box-sizing: border-box
+}
+
+[data-sap-ui-draggable=true] {
+	cursor: grab;
+	cursor: -moz-grab;
+	cursor: -webkit-grab
+}
+
+[data-sap-ui-draggable=true]:active {
+	cursor: grabbing;
+	cursor: -moz-grabbing;
+	cursor: -webkit-grabbing
+}
+
+.sapUiIcon {
+	position: relative;
+	cursor: default;
+	text-align: center;
+	display: inline-block;
+	vertical-align: baseline;
+	line-height: 1
+}
+
+.sapUiIconPointer {
+	cursor: pointer
+}
+
+html:not([data-sap-ui-browser^="ie"]):not([data-sap-ui-browser^="ed"]) .sapUiIcon:focus {
+	outline-width: 1px;
+	outline-style: dashed;
+	outline-offset: -1px
+}
+
+html[data-sap-ui-browser^="ie"] .sapUiIcon:focus,html[data-sap-ui-browser^="ed"] .sapUiIcon:focus {
+	outline: none
+}
+
+html[data-sap-ui-browser^="ie"] .sapUiIcon:focus::after,html[data-sap-ui-browser^="ed"] .sapUiIcon:focus::after {
+	content: "";
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	border-width: 1px;
+	border-style: dashed
+}
+
+.sapUiIcon::before {
+	content: attr(data-sap-ui-icon-content);
+	speak: none;
+	font-weight: normal;
+	-webkit-font-smoothing: antialiased
+}
+
+html[dir=rtl] .sapUiIconMirrorInRTL:not(.sapUiIconSuppressMirrorInRTL)::before,html[dir=rtl] .sapUiIconMirrorInRTL:not(.sapUiIconSuppressMirrorInRTL)::after {
+	transform: scale(-1,1);
+	-webkit-transform: scale(-1,1);
+	display: inline-block
+}
+
+.sapUiIconColorDefault {
+	color: #346187
+}
+
+.sapUiIconColorContrast {
+	color: #ffffff
+}
+
+.sapUiBlockLayer,.sapUiLocalBusyIndicator {
+	background-color: rgba(250,250,250,0.72);
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0
+}
+
+.sapUiLocalBusyIndicator {
+	opacity: 0;
+	transition: opacity 0.3s ease-in;
+	-webkit-transition: opacity 0.3s ease-in
+}
+
+.sapUiLocalBusyIndicator:focus {
+	outline: 1px dotted #000000
+}
+
+html[data-sap-ui-browser^="ie"] .sapUiLocalBusyIndicator:focus {
+	outline-style: dashed
+}
+
+.sapUiBlockLayer:not(:last-child) {
+	display: none
+}
+
+.sapUiLocalBusy .sapUiLocalBusy .sapUiBlockLayer {
+	display: none
+}
+
+.sapUiHiddenBusyIndicatorAnimation .sapUiLocalBusyIndicatorAnimation {
+	display: none
+}
+
+.sapUiLocalBusyIndicatorFade {
+	opacity: 1
+}
+
+.sapUiLocalBusyIndicatorSizeMedium {
+	font-size: 1rem
+}
+
+.sapUiLocalBusyIndicatorSizeBig {
+	font-size: 2rem;
+	background-color: transparent
+}
+
+.sapUiLocalBusyIndicatorAnimation {
+	position: absolute;
+	width: 3em;
+	top: 50%;
+	left: 50%
+}
+
+.sapUiLocalBusyIndicatorAnimation>div {
+	width: 1em;
+	height: 1em;
+	border-radius: 100%;
+	display: block;
+	float: left;
+	margin: 0;
+	position: relative;
+	top: -0.5em;
+	left: -1.5em;
+	text-indent: 1px
+}
+
+.sapUiLocalBusyIndicatorAnimation>div::before,.sapUiLocalBusyIndicatorAnimation>div::after {
+	content: "";
+	opacity: 1;
+	position: absolute;
+	z-index: -1;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	border-radius: 100%;
+}
+
+.sapUiLocalBusyIndicatorAnimation>div::before {
+	background: #427cac
+}
+
+.sapUiLocalBusyIndicatorAnimation>div::after {
+	box-shadow: inset 0 0 2px 1px rgba(66,124,172,0.8)
+}
+
+.sapUiLocalBusyIndicatorAnimation>div,.sapUiLocalBusyIndicatorAnimation>div::before,.sapUiLocalBusyIndicatorAnimation>div::after {
+	-webkit-animation-fill-mode: both;
+	animation-fill-mode: both
+}
+
+.sapUiLocalBusyIndicatorAnimStandard>div {
+	-webkit-animation: sapUiBusyAnimationStandard 1.8s infinite ease-in-out;
+	animation: sapUiBusyAnimationStandard 1.8s infinite ease-in-out
+}
+
+.sapUiLocalBusyIndicatorAnimStandard>div::before {
+	-webkit-animation: sapUiBusyAnimationStandardBackground 1.8s infinite ease-in-out;
+	animation: sapUiBusyAnimationStandardBackground 1.8s infinite ease-in-out
+}
+
+.sapUiLocalBusyIndicatorAnimStandard>div::after {
+	-webkit-animation: sapUiBusyAnimationStandardShadow 1.8s infinite ease-in-out;
+	animation: sapUiBusyAnimationStandardShadow 1.8s infinite ease-in-out
+}
+
+.sapUiLocalBusyIndicatorAnimStandard>div:nth-child(1) {
+	-webkit-animation-delay: -0.32s;
+	animation-delay: -0.32s
+}
+
+.sapUiLocalBusyIndicatorAnimStandard>div:nth-child(2) {
+	-webkit-animation-delay: -0.16s;
+	animation-delay: -0.16s
+}
+
+.sapUiLocalBusyIndicatorAnimSmall>div {
+	-webkit-animation: sapUiBusyAnimationSmall 1.6s infinite ease-in-out;
+	animation: sapUiBusyAnimationSmall 1.6s infinite ease-in-out
+}
+
+.sapUiLocalBusyIndicatorAnimSmall>div::before {
+	-webkit-animation: sapUiBusyAnimationSmallBackground 1.6s infinite ease-in-out;
+	animation: sapUiBusyAnimationSmallBackground 1.6s infinite ease-in-out
+}
+
+.sapUiLocalBusyIndicatorAnimSmall>div::after {
+	-webkit-animation: sapUiBusyAnimationSmallShadow 1.6s infinite ease-in-out;
+	animation: sapUiBusyAnimationSmallShadow 1.6s infinite ease-in-out
+}
+
+.sapUiLocalBusyIndicatorAnimSmall>div:nth-child(1),.sapUiLocalBusyIndicatorAnimSmall>div:nth-child(3) {
+	visibility: hidden
+}
+
+#sapUiBusyIndicator {
+	right: 0
+}
+
+#sapUiBusyIndicator>.sapUiLocalBusyIndicatorFade {
+	cursor: wait
+}
+
+.mixin-standard-background-animation-frames 0,.mixin-standard-background-animation-frames 80%,.mixin-standard-background-animation-frames 100% {
+	opacity: 1
+}
+
+.mixin-standard-background-animation-frames 40% {
+	opacity: 0.1
+}
+
+.mixin-standard-shadow-animation-frames 0,.mixin-standard-shadow-animation-frames 80%,.mixin-standard-shadow-animation-frames 100% {
+	opacity: 0
+}
+
+.mixin-standard-shadow-animation-frames 40% {
+	opacity: 1
+}
+
+.mixin-small-background-animation-frames 0,.mixin-small-background-animation-frames 100% {
+	opacity: 1
+}
+
+.mixin-small-background-animation-frames 50% {
+	opacity: 0.1
+}
+
+.mixin-small-shadow-animation-frames 0,.mixin-small-shadow-animation-frames 100% {
+	opacity: 0
+}
+
+.mixin-small-shadow-animation-frames 50% {
+	opacity: 1
+}
+
+@keyframes sapUiBusyAnimationStandard {
+	0%,80%,100% {
+		transform: scale(0.4)
+	}
+
+	40% {
+		transform: scale(1)
+	}
+}
+
+@-webkit-keyframes sapUiBusyAnimationStandard {
+	0%,80%,100% {
+		-webkit-transform: scale(0.4)
+	}
+
+	40% {
+		-webkit-transform: scale(1)
+	}
+}
+
+@keyframes sapUiBusyAnimationStandardBackground {
+	0%,80%,100% {
+		opacity: 1
+	}
+
+	40% {
+		opacity: 0.1
+	}
+}
+
+@-webkit-keyframes sapUiBusyAnimationStandardBackground {
+	0%,80%,100% {
+		opacity: 1
+	}
+
+	40% {
+		opacity: 0.1
+	}
+}
+
+@keyframes sapUiBusyAnimationStandardShadow {
+	0%,80%,100% {
+		opacity: 0
+	}
+
+	40% {
+		opacity: 1
+	}
+}
+
+@-webkit-keyframes sapUiBusyAnimationStandardShadow {
+	0%,80%,100% {
+		opacity: 0
+	}
+
+	40% {
+		opacity: 1
+	}
+}
+
+@keyframes sapUiBusyAnimationSmall {
+	0%,100% {
+		transform: scale(0.2)
+	}
+
+	50% {
+		transform: scale(1)
+	}
+}
+
+@-webkit-keyframes sapUiBusyAnimationSmall {
+	0%,100% {
+		-webkit-transform: scale(0.2)
+	}
+
+	50% {
+		-webkit-transform: scale(1)
+	}
+}
+
+@keyframes sapUiBusyAnimationSmallBackground {
+	0%,100% {
+		opacity: 1
+	}
+
+	50% {
+		opacity: 0.1
+	}
+}
+
+@-webkit-keyframes sapUiBusyAnimationSmallBackground {
+	0%,100% {
+		opacity: 1
+	}
+
+	50% {
+		opacity: 0.1
+	}
+}
+
+@keyframes sapUiBusyAnimationSmallShadow {
+	0%,100% {
+		opacity: 0
+	}
+
+	50% {
+		opacity: 1
+	}
+}
+
+@-webkit-keyframes sapUiBusyAnimationSmallShadow {
+	0%,100% {
+		opacity: 0
+	}
+
+	50% {
+		opacity: 1
+	}
+}
+
+.sapThemeFont {
+	font-family: "72",Arial,Helvetica,sans-serif;
+	font-size: 16px
+}
+
+.sapThemeFontFamily {
+	font-family: "72",Arial,Helvetica,sans-serif
+}
+
+.sapThemeFontSize {
+	font-size: 16px
+}
+
+.sapThemeText,.sapThemeText-asColor {
+	color: #333333
+}
+
+.sapThemeText-asBackgroundColor {
+	background-color: #333333
+}
+
+.sapThemeText-asBorderColor {
+	border-color: #333333
+}
+
+.sapThemeText-asOutlineColor {
+	outline-color: #333333
+}
+
+.sapThemeTextInverted,.sapThemeTextInverted-asColor {
+	color: #ffffff
+}
+
+.sapThemeBaseBG,.sapThemeBaseBG-asBackgroundColor {
+	background-color: #fafafa
+}
+
+.sapThemeBaseBG-asBorderColor {
+	border-color: #fafafa
+}
+
+.sapThemeBaseBG-asColor {
+	color: #fafafa
+}
+
+.sapThemeBrand,.sapThemeBrand-asColor {
+	color: #427cac
+}
+
+.sapThemeBrand-asBorderColor {
+	border-color: #427cac
+}
+
+.sapThemeBrand-asBackgroundColor {
+	background-color: #427cac
+}
+
+.sapThemeBrand-asOutlineColor {
+	outline-color: #427cac
+}
+
+.sapThemeHighlight,.sapThemeHighlight-asColor {
+	color: #427cac
+}
+
+.sapThemeHighlight-asBorderColor {
+	border-color: #427cac
+}
+
+.sapThemeHighlight-asBackgroundColor {
+	background-color: #427cac
+}
+
+.sapThemeHighlight-asOutlineColor {
+	outline-color: #427cac
+}
+
+.sapThemeForegroundBorderColor,.sapThemeForegroundBorderColor-asBorderColor {
+	border-color: #bfbfbf
+}
+
+.sapUiScrollBarTouch {
+	-webkit-overflow-scrolling: auto
+}
+
+.sapUiScrollBarTouch ::-webkit-scrollbar {
+	height: 7px;
+	width: 7px;
+	-webkit-appearance: none
+}
+
+.sapUiScrollBarTouch ::-webkit-scrollbar-thumb {
+	border-radius: 4px;
+	background-color: rgba(0,0,0,0.5);
+	-webkit-box-shadow: 0 0 1px rgba(255,255,255,0.5)
+}
+
+.sapUiShd {
+	box-shadow: 5px 5px 10px rgba(0,0,0,0.5)
+}
+
+.sapUiTInf {
+	border: 1px solid #000000;
+	background: #fafafa;
+	padding: 6px
+}
+
+.sapUiTInfCfg {
+	font-size: 0.9em;
+	overflow-y: auto;
+	max-height: 12em
+}
+
+.sapUiTInfMList {
+	font-size: 0.9em;
+	color: #cccccc;
+	overflow-y: auto;
+	max-height: 12em
+}
+
+.sapUiTInf>table>tbody>tr>td,.sapUiTInfMList,.sapUiTInfM {
+	-webkit-user-select: text;
+	-ms-user-select: text;
+	user-select: text
+}
+
+.sapUiTInfMEmbd {
+	color: #aaaaaa
+}
+
+.sapUiTInfMFail {
+	text-decoration: line-through
+}
+
+.sapUiTInfMMore,.sapUiTInfPCfg {
+	text-decoration: none;
+	color: #0070b1;
+	cursor: pointer
+}
+
+.sapUiTInfPMoreHidden {
+	display: none
+}
+
+.sapUiTInfPDiag {
+	border: 1px solid #000000;
+	background: #fafafa;
+	padding: 6px;
+	font-size: 0.9em
+}
+
+.sapUiTInfPDiag>h1 {
+	font-size: 1em;
+	font-weight: normal
+}
+
+.sapUiTInfPDiag>h3 {
+	font-size: 0.9em;
+	font-weight: normal;
+	margin-bottom: 0
+}
+
+.sapUiTInfPList {
+	font-size: 0.75em;
+	color: #cccccc;
+	background: white;
+	overflow-y: scroll;
+	max-height: 30em
+}
+
+.sapUiTInfPList .package>.expander {
+	display: inline-block;
+	color: black;
+	background-color: #fcfcfc;
+	width: 12px;
+	text-align: center;
+	border-radius: 4px;
+	cursor: pointer
+}
+
+.sapUiTInfPList .package>.name,.sapUiTInfPList .module>.name {
+	margin: 2px;
+	padding: 2px 4px;
+	display: inline-block;
+	border-radius: 3px;
+	cursor: pointer
+}
+
+.sapUiTInfPList .package>.name {
+	color: black;
+	background-color: #fafafa
+}
+
+.sapUiTInfPList .module>.name {
+	margin-left: 14px;
+	color: black;
+	background-color: #fafafa
+}
+
+.sapUiTInfPList .children {
+	padding-left: 1em
+}
+
+.sapUiTInfPList .children.none {
+	display: none
+}
+
+.sapUiTInfPList .children.packages {
+	display: block
+}
+
+.sapUiTInfPList .children.packages>.module {
+	display: none
+}
+
+.sapUiTInfPList .children.all {
+	display: block
+}
+
+.sapUiTInfPList .package.selected>.name,.sapUiTInfPList .module.selected>.name {
+	color: white;
+	background-color: blue!important
+}
+
+.sapUiTInfPList .package.selected .name,.sapUiTInfPList .module.selected>.name {
+	color: white;
+	background-color: lightblue
+}
+
+.sapUiTInfPList .selected .name {
+	color: white;
+	background-color: #ccccff
+}
+
+.sapUiTInfPDiag .result {
+	font-size: 0.9em;
+	margin: 8px 4px;
+	width: 600px
+}
+
+.sapUiTInfPDiag .result>span {
+	word-wrap: break-word
+}
+
+.sapUiTInfPDiag .footer {
+	padding-top: 5px
+}
+
+.sapUiTInfPDiag .footer>* {
+	float: right;
+	margin: 2px 8px
+}
+
+.sapUiView {
+	display: inline-block
+}
+
+.sapUiViewDisplayBlock {
+	display: block
+}
+
+* {
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	-webkit-touch-callout: none;
+	-webkit-text-size-adjust: none;
+	-ms-text-size-adjust: none
+}
+
+.sapMContainerMargin {
+	padding: 1rem
+}
+
+.sapMContainer2RemPadding {
+	padding: 2rem
+}
+
+html.sap-phone *,html.sap-tablet:not(.sap-desktop) * {
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	-webkit-user-drag: none
+}
+
+html.sap-phone input,html.sap-phone textarea,html.sap-phone [contenteditable=true],html.sap-phone [contenteditable=true]>div,html.sap-phone .sapUiSelectable,html.sap-tablet:not(.sap-desktop) input,html.sap-tablet:not(.sap-desktop) textarea,html.sap-tablet:not(.sap-desktop) [contenteditable=true],html.sap-tablet:not(.sap-desktop) [contenteditable=true]>div,html.sap-tablet:not(.sap-desktop) .sapUiSelectable {
+	-webkit-user-select: text;
+	-moz-user-select: text;
+	-ms-user-select: text;
+	user-select: text
+}
+
+.sapUiBody {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	font-family: "72",Arial,Helvetica,sans-serif;
+	font-size: 1rem
+}
+
+.sapUiBLy {
+	background-color: #000000;
+	opacity: 0.6
+}
+
+.sapUiSearchHighlightBG {
+	background-color: #d4f7db
+}
+
+.sapMPointer {
+	cursor: pointer
+}
+
+.sapMH1FontSize,.sapMH1Style {
+	font-size: 1.625rem!important
+}
+
+.sapMH2FontSize,.sapMH2Style {
+	font-size: 1.375rem!important
+}
+
+.sapMH3FontSize,.sapMH3Style {
+	font-size: 1.25rem!important
+}
+
+.sapMH4FontSize,.sapMH4Style {
+	font-size: 1.125rem!important
+}
+
+.sapMH5FontSize,.sapMH5Style {
+	font-size: 1rem!important
+}
+
+.sapMH6FontSize,.sapMH6Style {
+	font-size: 0.875rem!important
+}
+
+.sapMH1Style,.sapMH2Style,.sapMH3Style,.sapMH4Style,.sapMH5Style,.sapMH6Style {
+	font-family: "72",Arial,Helvetica,sans-serif!important;
+	font-weight: normal!important;
+	color: #333333!important;
+	text-shadow: 0 0 0.125rem #ffffff!important
+}
+
+.sapUiGlobalBackgroundColor,.sapUiStrongBackgroundColor,.sapMShellGlobalOuterBackground,.sapMShellGlobalInnerBackground,.sapUiBodyBackground,.sapUiBody {
+	background-color: transparent;
+	background-image: none;
+	background: none
+}
+
+.sapUiRootBackground,.sapMShellGlobalOuterBackground {
+	background: linear-gradient(to bottom,#a9c4df,#e7ecf0);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover
+}
+
+.sapUshellShell .sapMShellGlobalOuterBackground {
+	background: transparent
+}
+
+.sapUiGlobalBackgroundColor,.sapMShellGlobalInnerBackground {
+	background-color: #fafafa
+}
+
+.sapUiGlobalBackgroundColor .sapUiGlobalBackgroundColor:not(.sapUiGlobalBackgroundColorForce),.sapMGlobalBackgroundColor .sapUiGlobalBackgroundColor:not(.sapUiGlobalBackgroundColorForce) {
+	background-color: transparent;
+	background-image: none
+}
+
+.sapUiGlobalBackgroundImage {
+	display: block;
+	position: absolute;
+	box-sizing: border-box;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	opacity: 1;
+	background-image: none;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover
+}
+
+.sapUiGlobalBackgroundColor *>.sapUiGlobalBackgroundImage {
+	display: none
+}
+
+.sapUiGlobalBackgroundImage.sapUiGlobalBackgroundImageForce {
+	display: block
+}
+
+.sapMGlobalLogoImage {
+	background-image: none;
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center
+}
+
+.sapUiBodyBackground,.sapUiBody {
+	background-color: #fff;
+	background-image: none;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+}
+
+.sapUiBody {
+	background-attachment: fixed
+}
+
+.sapUiOverlay {
+	background-color: rgba(255,255,255,0.8)
+}
+
+.sapUiBusy {
+	display: none
+}
+
+@font-face {
+	font-family: '72';
+	font-style: normal;
+	font-weight: 400;
+	src: local('72'),url('fonts/72-Regular.woff2') format('woff2'),url('/fonts/72-Regular.woff') format('woff')
+}
+
+@font-face {
+	font-family: '72';
+	font-style: normal;
+	font-weight: 700;
+	src: local('72-Bold'),url('fonts/72-Bold.woff2') format('woff2'),url('/fonts/72-Bold.woff') format('woff')
+}
+
+html[data-sap-ui-browser*="ie"] .sapUiBody {
+	scrollbar-face-color:#b2b2b2;scrollbar-highlight-color:#b2b2b2;scrollbar-shadow-color:#b2b2b2;scrollbar-track-color:#ffffff}
+
+html.sap-desktop ::-webkit-scrollbar:horizontal {
+	height: 0.75rem
+}
+
+html.sap-desktop ::-webkit-scrollbar:vertical {
+	width: 0.75rem
+}
+
+html.sap-desktop ::-webkit-scrollbar {
+	background-color: #ffffff
+}
+
+html.sap-desktop ::-webkit-scrollbar-thumb {
+	background-color: #b2b2b2
+}
+
+html.sap-desktop ::-webkit-scrollbar-thumb:hover {
+	background-color: #ababab
+}
+
+html.sap-desktop ::-webkit-scrollbar-corner {
+	background-color: #ffffff
+}
+
+.sapUiDP {
+	width: 190px
+}
+
+.sapUiDPHead>button {
+	width: 16px
+}
+
+html:not([data-sap-ui-browser^="ie"]):not([data-sap-ui-browser^="ed"]) .sapUiIcon:focus {
+	outline-color: #000000
+}
+
+html[data-sap-ui-browser^="ie"] .sapUiIcon:focus::after,html[data-sap-ui-browser^="ed"] .sapUiIcon:focus::after {
+	border-color: #000000
+}
+
+.sapMTB-Info-CTX>.sapUiIcon {
+	width: 1rem;
+	font-size: 1rem;
+	color: #ffffff
+}
+
+.sapUiIconColorNeutral {
+	color: #5e696e
+}
+
+.sapUiIconColorCritical {
+	color: #e78c07
+}
+
+.sapUiIconColorPositive {
+	color: #2b7c2b
+}
+
+.sapUiIconColorNegative {
+	color: #bb0000
+}
+
+.sapUiIconBGColorNeutral {
+	background-color: #5e696e
+}
+
+.sapUiIconBGColorCritical {
+	background-color: #e78c07
+}
+
+.sapUiIconBGColorPositive {
+	background-color: #2b7c2b
+}
+
+.sapUiIconBGColorNegative {
+	background-color: #bb0000
+}
+
+.sapUiIconBGColorContrast {
+	background-color: #346187
+}
+
+.sapContrast {
+	color: #fafafa
+}
+
+.sapContrast.sapUiBody,.sapContrast .sapUiBody {
+	background-color: #3f5161;
+	color: #fafafa;
+	-webkit-tap-highlight-color: rgba(0,0,0,0)
+}
+
+.sapContrast.sapUiArea,.sapContrast .sapUiArea {
+	background-color: #3f5161;
+	color: #fafafa
+}
+
+.sapContrast.sapUiHidden,.sapContrast .sapUiHidden {
+	background-color: #3f5161;
+	color: #fafafa
+}
+
+.sapContrast.sapUiBLy,.sapContrast .sapUiBLy {
+	background-color: #CCCCCC;
+	outline: 0 none
+}
+
+.sapContrast.sapUiOverlay,.sapContrast .sapUiOverlay {
+	background-color: rgba(63,81,97,0.8)
+}
+
+.sapContrast.sapMBtn.sapUiDebugTechnicalInfoAssistantButton>.sapMBtnInner,.sapContrast .sapMBtn.sapUiDebugTechnicalInfoAssistantButton>.sapMBtnInner {
+	border-top-right-radius: 0!important;
+	border-bottom-right-radius: 0!important
+}
+
+.sapContrast.sapMBtn.sapUiDebugTechnicalInfoAssistantSettingsButton>.sapMBtnInner,.sapContrast .sapMBtn.sapUiDebugTechnicalInfoAssistantSettingsButton>.sapMBtnInner {
+	border-top-left-radius: 0!important;
+	border-bottom-left-radius: 0!important
+}
+
+.sapContrast.sapUiBliLy>iframe,.sapContrast .sapUiBliLy>iframe {
+	background-color: transparent;
+	border: none
+}
+
+.sapContrast.sapUiBusy,.sapContrast .sapUiBusy {
+	background-image: url(../base/img/Busy.gif);
+	outline: none
+}
+
+.sapContrast.sapUiDnDIndicator[data-drop-position=Between],.sapContrast .sapUiDnDIndicator[data-drop-position=Between] {
+	background: #7ed0ff
+}
+
+.sapContrast.sapUiDnDIndicator[data-drop-position=Between]:before,.sapContrast .sapUiDnDIndicator[data-drop-position=Between]:before {
+	border: 0.125rem solid #7ed0ff;
+	background: #ffffff
+}
+
+.sapContrast.sapUiDnDIndicator[data-drop-position=On],.sapContrast .sapUiDnDIndicator[data-drop-position=On] {
+	background: rgba(126,208,255,0.1);
+	border: 0.125rem solid #7ed0ff
+}
+
+html[data-sap-ui-browser^="ie"] .sapContrast .sapUiIcon:focus,html[data-sap-ui-browser^="ie"] .sapContrast.sapUiIcon:focus {
+	outline: none
+}
+
+html[data-sap-ui-browser^="ed"] .sapContrast .sapUiIcon:focus,html[data-sap-ui-browser^="ed"] .sapContrast.sapUiIcon:focus {
+	outline: none
+}
+
+.sapContrast.sapUiIconColorDefault,.sapContrast .sapUiIconColorDefault {
+	color: #cae4fb
+}
+
+.sapContrast.sapUiIconColorContrast,.sapContrast .sapUiIconColorContrast {
+	color: #2f3c48
+}
+
+.sapContrast.sapUiBlockLayer,.sapContrast .sapUiBlockLayer {
+	background-color: rgba(63,81,97,0.72)
+}
+
+.sapContrast.sapUiLocalBusyIndicator,.sapContrast .sapUiLocalBusyIndicator {
+	background-color: rgba(63,81,97,0.72)
+}
+
+.sapContrast.sapUiLocalBusyIndicator:focus,.sapContrast .sapUiLocalBusyIndicator:focus {
+	outline: 1px dotted #ffffff
+}
+
+.sapContrast.sapUiLocalBusyIndicatorSizeBig,.sapContrast .sapUiLocalBusyIndicatorSizeBig {
+	background-color: transparent
+}
+
+.sapContrast.sapUiLocalBusyIndicatorAnimation>div,.sapContrast .sapUiLocalBusyIndicatorAnimation>div {
+	text-indent: 1px
+}
+
+.sapContrast.sapUiLocalBusyIndicatorAnimation>div::before,.sapContrast .sapUiLocalBusyIndicatorAnimation>div::before {
+	background: #427cac
+}
+
+.sapContrast.sapThemeText,.sapContrast .sapThemeText {
+	color: #fafafa
+}
+
+.sapContrast.sapThemeText-asColor,.sapContrast .sapThemeText-asColor {
+	color: #fafafa
+}
+
+.sapContrast.sapThemeText-asBackgroundColor,.sapContrast .sapThemeText-asBackgroundColor {
+	background-color: #fafafa
+}
+
+.sapContrast.sapThemeText-asBorderColor,.sapContrast .sapThemeText-asBorderColor {
+	border-color: #fafafa
+}
+
+.sapContrast.sapThemeText-asOutlineColor,.sapContrast .sapThemeText-asOutlineColor {
+	outline-color: #fafafa
+}
+
+.sapContrast.sapThemeTextInverted,.sapContrast .sapThemeTextInverted {
+	color: #ffffff
+}
+
+.sapContrast.sapThemeTextInverted-asColor,.sapContrast .sapThemeTextInverted-asColor {
+	color: #ffffff
+}
+
+.sapContrast.sapThemeBaseBG,.sapContrast .sapThemeBaseBG {
+	background-color: #3f5161
+}
+
+.sapContrast.sapThemeBaseBG-asBackgroundColor,.sapContrast .sapThemeBaseBG-asBackgroundColor {
+	background-color: #3f5161
+}
+
+.sapContrast.sapThemeBaseBG-asBorderColor,.sapContrast .sapThemeBaseBG-asBorderColor {
+	border-color: #3f5161
+}
+
+.sapContrast.sapThemeBaseBG-asColor,.sapContrast .sapThemeBaseBG-asColor {
+	color: #3f5161
+}
+
+.sapContrast.sapThemeBrand,.sapContrast .sapThemeBrand {
+	color: #427cac
+}
+
+.sapContrast.sapThemeBrand-asColor,.sapContrast .sapThemeBrand-asColor {
+	color: #427cac
+}
+
+.sapContrast.sapThemeBrand-asBorderColor,.sapContrast .sapThemeBrand-asBorderColor {
+	border-color: #427cac
+}
+
+.sapContrast.sapThemeBrand-asBackgroundColor,.sapContrast .sapThemeBrand-asBackgroundColor {
+	background-color: #427cac
+}
+
+.sapContrast.sapThemeBrand-asOutlineColor,.sapContrast .sapThemeBrand-asOutlineColor {
+	outline-color: #427cac
+}
+
+.sapContrast.sapThemeHighlight,.sapContrast .sapThemeHighlight {
+	color: #91c8f6
+}
+
+.sapContrast.sapThemeHighlight-asColor,.sapContrast .sapThemeHighlight-asColor {
+	color: #91c8f6
+}
+
+.sapContrast.sapThemeHighlight-asBorderColor,.sapContrast .sapThemeHighlight-asBorderColor {
+	border-color: #91c8f6
+}
+
+.sapContrast.sapThemeHighlight-asBackgroundColor,.sapContrast .sapThemeHighlight-asBackgroundColor {
+	background-color: #91c8f6
+}
+
+.sapContrast.sapThemeHighlight-asOutlineColor,.sapContrast .sapThemeHighlight-asOutlineColor {
+	outline-color: #91c8f6
+}
+
+.sapContrast.sapThemeForegroundBorderColor,.sapContrast .sapThemeForegroundBorderColor {
+	border-color: #889eb1
+}
+
+.sapContrast.sapThemeForegroundBorderColor-asBorderColor,.sapContrast .sapThemeForegroundBorderColor-asBorderColor {
+	border-color: #889eb1
+}
+
+.sapContrast.sapUiScrollBarTouch ::-webkit-scrollbar-thumb,.sapContrast .sapUiScrollBarTouch ::-webkit-scrollbar-thumb {
+	background-color: rgba(0,0,0,0.5)
+}
+
+.sapContrast.sapUiTInf,.sapContrast .sapUiTInf {
+	border: 1px solid #000000;
+	background: #3f5161
+}
+
+.sapContrast.sapUiTInfMList,.sapContrast .sapUiTInfMList {
+	color: #ffffff
+}
+
+.sapContrast.sapUiTInfMEmbd,.sapContrast .sapUiTInfMEmbd {
+	color: #aaaaaa
+}
+
+.sapContrast.sapUiTInfMFail,.sapContrast .sapUiTInfMFail {
+	text-decoration: line-through
+}
+
+.sapContrast.sapUiTInfMMore,.sapContrast .sapUiTInfMMore {
+	text-decoration: none;
+	color: #7ed0ff
+}
+
+.sapContrast.sapUiTInfPCfg,.sapContrast .sapUiTInfPCfg {
+	text-decoration: none;
+	color: #7ed0ff
+}
+
+.sapContrast.sapUiTInfPDiag,.sapContrast .sapUiTInfPDiag {
+	border: 1px solid #000000;
+	background: #3f5161
+}
+
+.sapContrast.sapUiTInfPList,.sapContrast .sapUiTInfPList {
+	color: #ffffff;
+	background: white
+}
+
+.sapContrast.sapUiTInfPList .package>.expander,.sapContrast .sapUiTInfPList .package>.expander {
+	color: black;
+	background-color: #fcfcfc
+}
+
+.sapContrast.sapUiTInfPList .package>.name,.sapContrast .sapUiTInfPList .package>.name {
+	color: black;
+	background-color: #3f5161
+}
+
+.sapContrast.sapUiTInfPList .module>.name,.sapContrast .sapUiTInfPList .module>.name {
+	color: black;
+	background-color: #3f5161
+}
+
+.sapContrast.sapUiTInfPList .package.selected>.name,.sapContrast .sapUiTInfPList .package.selected>.name {
+	color: white;
+	background-color: blue!important
+}
+
+.sapContrast.sapUiTInfPList .module.selected>.name,.sapContrast .sapUiTInfPList .module.selected>.name {
+	color: white;
+	background-color: blue!important
+}
+
+.sapContrast.sapUiTInfPList .package.selected .name,.sapContrast .sapUiTInfPList .package.selected .name {
+	color: white;
+	background-color: lightblue
+}
+
+.sapContrast.sapUiTInfPList .module.selected>.name,.sapContrast .sapUiTInfPList .module.selected>.name {
+	color: white;
+	background-color: lightblue
+}
+
+.sapContrast.sapUiTInfPList .selected .name,.sapContrast .sapUiTInfPList .selected .name {
+	color: white;
+	background-color: #ccccff
+}
+
+.sapContrast * {
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	-webkit-text-size-adjust: none;
+	-ms-text-size-adjust: none
+}
+
+.sapContrast.sapUiBLy,.sapContrast .sapUiBLy {
+	background-color: #000000
+}
+
+.sapContrast.sapUiSearchHighlightBG,.sapContrast .sapUiSearchHighlightBG {
+	background-color: #058088
+}
+
+.sapContrast.sapMH1Style,.sapContrast .sapMH1Style {
+	color: #fafafa!important;
+	text-shadow: 0 0 0.125rem #000000!important
+}
+
+.sapContrast.sapMH2Style,.sapContrast .sapMH2Style {
+	color: #fafafa!important;
+	text-shadow: 0 0 0.125rem #000000!important
+}
+
+.sapContrast.sapMH3Style,.sapContrast .sapMH3Style {
+	color: #fafafa!important;
+	text-shadow: 0 0 0.125rem #000000!important
+}
+
+.sapContrast.sapMH4Style,.sapContrast .sapMH4Style {
+	color: #fafafa!important;
+	text-shadow: 0 0 0.125rem #000000!important
+}
+
+.sapContrast.sapMH5Style,.sapContrast .sapMH5Style {
+	color: #fafafa!important;
+	text-shadow: 0 0 0.125rem #000000!important
+}
+
+.sapContrast.sapMH6Style,.sapContrast .sapMH6Style {
+	color: #fafafa!important;
+	text-shadow: 0 0 0.125rem #000000!important
+}
+
+.sapContrast.sapUiGlobalBackgroundColor,.sapContrast .sapUiGlobalBackgroundColor {
+	background-color: transparent;
+	background-image: none;
+	background: none
+}
+
+.sapContrast.sapUiStrongBackgroundColor,.sapContrast .sapUiStrongBackgroundColor {
+	background-color: transparent;
+	background-image: none;
+	background: none
+}
+
+.sapContrast.sapMShellGlobalOuterBackground,.sapContrast .sapMShellGlobalOuterBackground {
+	background-color: transparent;
+	background-image: none;
+	background: none
+}
+
+.sapContrast.sapMShellGlobalInnerBackground,.sapContrast .sapMShellGlobalInnerBackground {
+	background-color: transparent;
+	background-image: none;
+	background: none
+}
+
+.sapContrast.sapUiBodyBackground,.sapContrast .sapUiBodyBackground {
+	background-color: transparent;
+	background-image: none;
+	background: none
+}
+
+.sapContrast.sapUiBody,.sapContrast .sapUiBody {
+	background-color: transparent;
+	background-image: none;
+	background: none
+}
+
+.sapContrast.sapUiRootBackground,.sapContrast .sapUiRootBackground {
+	background: linear-gradient(to bottom,#2a4863,#9dc0de);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover
+}
+
+.sapContrast.sapMShellGlobalOuterBackground,.sapContrast .sapMShellGlobalOuterBackground {
+	background: linear-gradient(to bottom,#2a4863,#9dc0de);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover
+}
+
+.sapContrast.sapUshellShell .sapMShellGlobalOuterBackground,.sapContrast .sapUshellShell .sapMShellGlobalOuterBackground {
+	background: transparent
+}
+
+.sapContrast.sapUiGlobalBackgroundColor,.sapContrast .sapUiGlobalBackgroundColor {
+	background-color: #3f5161
+}
+
+.sapContrast.sapMShellGlobalInnerBackground,.sapContrast .sapMShellGlobalInnerBackground {
+	background-color: #3f5161
+}
+
+.sapContrast.sapUiGlobalBackgroundColor .sapUiGlobalBackgroundColor:not(.sapUiGlobalBackgroundColorForce),.sapContrast .sapUiGlobalBackgroundColor .sapUiGlobalBackgroundColor:not(.sapUiGlobalBackgroundColorForce) {
+	background-color: transparent;
+	background-image: none
+}
+
+.sapContrast.sapMGlobalBackgroundColor .sapUiGlobalBackgroundColor:not(.sapUiGlobalBackgroundColorForce),.sapContrast .sapMGlobalBackgroundColor .sapUiGlobalBackgroundColor:not(.sapUiGlobalBackgroundColorForce) {
+	background-color: transparent;
+	background-image: none
+}
+
+.sapContrast.sapUiGlobalBackgroundImage,.sapContrast .sapUiGlobalBackgroundImage {
+	background-image: none;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover
+}
+
+.sapContrast.sapMGlobalLogoImage,.sapContrast .sapMGlobalLogoImage {
+	background-image: none;
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center
+}
+
+.sapContrast.sapUiBodyBackground,.sapContrast .sapUiBodyBackground {
+	background-color: #3f5161;
+	background-image: none;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover
+}
+
+.sapContrast.sapUiBody,.sapContrast .sapUiBody {
+	background-color: #3f5161;
+	background-image: none;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover
+}
+
+.sapContrast.sapUiBody,.sapContrast .sapUiBody {
+	background-attachment: fixed
+}
+
+.sapContrast.sapUiOverlay,.sapContrast .sapUiOverlay {
+	background-color: rgba(67,86,103,0.8)
+}
+
+html[data-sap-ui-browser*="ie"] .sapContrast .sapUiBody,html[data-sap-ui-browser*="ie"] .sapContrast.sapUiBody {
+	scrollbar-face-color:#0099db;scrollbar-highlight-color:#0099db;scrollbar-shadow-color:#0099db;scrollbar-track-color:#3f5161}
+
+html.sap-desktop .sapContrast ::-webkit-scrollbar {
+	background-color: #3f5161
+}
+
+html.sap-desktop .sapContrast ::-webkit-scrollbar-thumb {
+	background-color: #0099db
+}
+
+html.sap-desktop .sapContrast ::-webkit-scrollbar-thumb:hover {
+	background-color: #00a4eb
+}
+
+html.sap-desktop .sapContrast ::-webkit-scrollbar-corner {
+	background-color: #3f5161
+}
+
+html:not([data-sap-ui-browser^="ie"]):not([data-sap-ui-browser^="ed"]) .sapContrast .sapUiIcon:focus,html:not([data-sap-ui-browser^="ie"]):not([data-sap-ui-browser^="ed"]) .sapContrast.sapUiIcon:focus {
+	outline-color: #ffffff
+}
+
+html[data-sap-ui-browser^="ie"] .sapContrast .sapUiIcon:focus::after,html[data-sap-ui-browser^="ie"] .sapContrast.sapUiIcon:focus::after {
+	border-color: #ffffff
+}
+
+html[data-sap-ui-browser^="ed"] .sapContrast .sapUiIcon:focus::after,html[data-sap-ui-browser^="ed"] .sapContrast.sapUiIcon:focus::after {
+	border-color: #ffffff
+}
+
+.sapContrast.sapMTB-Info-CTX>.sapUiIcon,.sapContrast .sapMTB-Info-CTX>.sapUiIcon {
+	color: #ffffff
+}
+
+.sapContrast.sapUiIconColorNeutral,.sapContrast .sapUiIconColorNeutral {
+	color: #d3d7d9
+}
+
+.sapContrast.sapUiIconColorCritical,.sapContrast .sapUiIconColorCritical {
+	color: #fabd64
+}
+
+.sapContrast.sapUiIconColorPositive,.sapContrast .sapUiIconColorPositive {
+	color: #abe2ab
+}
+
+.sapContrast.sapUiIconColorNegative,.sapContrast .sapUiIconColorNegative {
+	color: #ff8888
+}
+
+.sapContrast.sapUiIconBGColorNeutral,.sapContrast .sapUiIconBGColorNeutral {
+	background-color: #d3d7d9
+}
+
+.sapContrast.sapUiIconBGColorCritical,.sapContrast .sapUiIconBGColorCritical {
+	background-color: #fabd64
+}
+
+.sapContrast.sapUiIconBGColorPositive,.sapContrast .sapUiIconBGColorPositive {
+	background-color: #abe2ab
+}
+
+.sapContrast.sapUiIconBGColorNegative,.sapContrast .sapUiIconBGColorNegative {
+	background-color: #ff8888
+}
+
+.sapContrast.sapUiIconBGColorContrast,.sapContrast .sapUiIconBGColorContrast {
+	background-color: #62b1f2
+}
+
+#sap-ui-theme-sap\.ui\.core {
+	background-image: url('data:text/plain;utf-8,%7B%22default%22%3A%7B%22sapBrandColor%22%3A%22%23427cac%22%2C%22sapHighlightColor%22%3A%22%23427cac%22%2C%22sapBaseColor%22%3A%22%23eff4f9%22%2C%22sapShellColor%22%3A%22transparent%22%2C%22sapBackgroundColor%22%3A%22%23fafafa%22%2C%22sapFontFamily%22%3A%22%5C%2272%5C%22%2C%20Arial%2C%20Helvetica%2C%20sans-serif%22%2C%22sapFontSize%22%3A%220.75em%22%2C%22sapTextColor%22%3A%22%23333333%22%2C%22sapLinkColor%22%3A%22%230070b1%22%2C%22sapCompanyLogo%22%3A%22none%22%2C%22sapBackgroundImage%22%3A%22none%22%2C%22sapBackgroundImageOpacity%22%3A%221%22%2C%22sapBackgroundImageRepeat%22%3A%22false%22%2C%22sapSelectedColor%22%3A%22%23427cac%22%2C%22sapActiveColor%22%3A%22%23427cac%22%2C%22sapHighlightTextColor%22%3A%22%23ffffff%22%2C%22sapTitleColor%22%3A%22%23333333%22%2C%22sapNegativeColor%22%3A%22%23bb0000%22%2C%22sapCriticalColor%22%3A%22%23e78c07%22%2C%22sapPositiveColor%22%3A%22%232b7c2b%22%2C%22sapNeutralColor%22%3A%22%235e696e%22%2C%22sapNegativeElementColor%22%3A%22%23bb0000%22%2C%22sapCriticalElementColor%22%3A%22%23e78c07%22%2C%22sapPositiveElementColor%22%3A%22%232b7c2b%22%2C%22sapNeutralElementColor%22%3A%22%235e696e%22%2C%22sapContent_LineHeight%22%3A%221.3%22%2C%22sapContent_ElementHeight%22%3A%221.37em%22%2C%22sapContent_ElementHeight_PX%22%3A%2222px%22%2C%22sapContent_IconHeight%22%3A%2216px%22%2C%22sapContent_IconColor%22%3A%22%23346187%22%2C%22sapContent_ContrastIconColor%22%3A%22%23ffffff%22%2C%22sapContent_NonInteractiveIconColor%22%3A%22%23878787%22%2C%22sapContent_MarkerIconColor%22%3A%22%23678bc7%22%2C%22sapContent_MarkerTextColor%22%3A%22%23147575%22%2C%22sapContent_ImagePlaceholderBackground%22%3A%22%23ceddec%22%2C%22sapContent_ImagePlaceholderForegroundColor%22%3A%22%23ffffff%22%2C%22sapContent_FocusColor%22%3A%22%23000000%22%2C%22sapContent_ContrastFocusColor%22%3A%22%23ffffff%22%2C%22sapContent_ShadowColor%22%3A%22%23000000%22%2C%22sapContent_ContrastShadowColor%22%3A%22%23ffffff%22%2C%22sapContent_SearchHighlightColor%22%3A%22%23d4f7db%22%2C%22sapContent_HelpColor%22%3A%22%233f8600%22%2C%22sapContent_LabelColor%22%3A%22%23666666%22%2C%22sapContent_MonospaceFontFamily%22%3A%22lucida%20console%2C%20monospace%22%2C%22sapContent_DisabledTextColor%22%3A%22rgba(51%2C%2051%2C%2051%2C%200.5)%22%2C%22sapContent_DisabledOpacity%22%3A%220.5%22%2C%22sapContent_ContrastTextThreshold%22%3A%220.65%22%2C%22sapContent_ContrastTextColor%22%3A%22%23ffffff%22%2C%22sapContent_ForegroundColor%22%3A%22%23e5e5e5%22%2C%22sapContent_ForegroundBorderColor%22%3A%22%23bfbfbf%22%2C%22sapContent_ForegroundTextColor%22%3A%22%23333333%22%2C%22sapShell_Background%22%3A%22%23c9d8e7%22%2C%22sapShell_BackgroundImage%22%3A%22linear-gradient(to%20bottom%2C%20%23a9c4df%2C%20%23e7ecf0)%22%2C%22sapShell_BackgroundGradient%22%3A%22linear-gradient(to%20bottom%2C%20%23a9c4df%2C%20%23e7ecf0)%22%2C%22sapShell_BackgroundImageOpacity%22%3A%221%22%2C%22sapShell_BackgroundImageRepeat%22%3A%22false%22%2C%22sapShell_BorderColor%22%3A%22transparent%22%2C%22sapShell_TextColor%22%3A%22%23346187%22%2C%22sapShell_Favicon%22%3A%22none%22%2C%22sapButton_BorderWidth%22%3A%221px%22%2C%22sapButton_BorderCornerRadius%22%3A%223px%22%2C%22sapButton_Background%22%3A%22%23f7f7f7%22%2C%22sapButton_BorderColor%22%3A%22%23ababab%22%2C%22sapButton_TextColor%22%3A%22%23346187%22%2C%22sapButton_Disabled_Background%22%3A%22%23ffffff%22%2C%22sapButton_Disabled_BorderColor%22%3A%22%23666666%22%2C%22sapButton_Disabled_TextColor%22%3A%22%23666666%22%2C%22sapButton_Hover_Background%22%3A%22%23ebebeb%22%2C%22sapButton_Hover_BorderColor%22%3A%22%23ababab%22%2C%22sapButton_Hover_TextColor%22%3A%22%23346187%22%2C%22sapButton_Emphasized_Background%22%3A%22%235496cd%22%2C%22sapButton_Emphasized_BorderColor%22%3A%22%23418ac7%22%2C%22sapButton_Emphasized_TextColor%22%3A%22%23ffffff%22%2C%22sapButton_Reject_Background%22%3A%22%23f7f7f7%22%2C%22sapButton_Accept_Background%22%3A%22%23f7f7f7%22%2C%22sapField_Background%22%3A%22%23ffffff%22%2C%22sapField_BorderColor%22%3A%22%23bfbfbf%22%2C%22sapField_TextColor%22%3A%22%23000000%22%2C%22sapField_HelpBackground%22%3A%22%23ffffff%22%2C%22sapField_BorderWidth%22%3A%221px%22%2C%22sapField_BorderCornerRadius%22%3A%220%22%2C%22sapField_Hover_Background%22%3A%22%23ffffff%22%2C%22sapField_Hover_BorderColor%22%3A%22%23427cac%22%2C%22sapField_Hover_HelpBackground%22%3A%22%23427cac%22%2C%22sapField_Focus_Background%22%3A%22%23ffffff%22%2C%22sapField_Focus_BorderColor%22%3A%22%23bfbfbf%22%2C%22sapField_Focus_HelpBackground%22%3A%22%23ffffff%22%2C%22sapField_Disabled_Background%22%3A%22%23959595%22%2C%22sapField_Disabled_BorderColor%22%3A%22%234f4f4f%22%2C%22sapField_Disabled_TextColor%22%3A%22rgba(51%2C%2051%2C%2051%2C%200.5)%22%2C%22sapField_Disabled_HelpBackground%22%3A%22%23959595%22%2C%22sapField_ReadOnly_Background%22%3A%22rgba(242%2C%20242%2C%20242%2C%200.5)%22%2C%22sapField_ReadOnly_BorderColor%22%3A%22%23cccccc%22%2C%22sapField_ReadOnly_HelpBackground%22%3A%22rgba(242%2C%20242%2C%20242%2C%200.5)%22%2C%22sapField_RequiredColor%22%3A%22%23c14646%22%2C%22sapField_InvalidColor%22%3A%22%23ee0000%22%2C%22sapField_InvalidBackground%22%3A%22%23ffffff%22%2C%22sapField_WarningColor%22%3A%22%23f9a429%22%2C%22sapField_WarningBackground%22%3A%22%23ffffff%22%2C%22sapField_SuccessColor%22%3A%22%2338a238%22%2C%22sapField_SuccessBackground%22%3A%22%23ffffff%22%2C%22sapGroup_TitleBackground%22%3A%22transparent%22%2C%22sapGroup_TitleBorderColor%22%3A%22%23cccccc%22%2C%22sapGroup_TitleTextColor%22%3A%22%23333333%22%2C%22sapGroup_Title_FontSize%22%3A%221em%22%2C%22sapGroup_ContentBackground%22%3A%22%23ffffff%22%2C%22sapGroup_ContentBorderColor%22%3A%22%23ebebeb%22%2C%22sapGroup_BorderWidth%22%3A%221px%22%2C%22sapGroup_BorderCornerRadius%22%3A%220%22%2C%22sapGroup_FooterBackground%22%3A%22transparent%22%2C%22sapToolbar_Background%22%3A%22transparent%22%2C%22sapToolbar_SeparatorColor%22%3A%22rgba(63%2C%2081%2C%2097%2C%200.2)%22%2C%22sapList_HeaderBackground%22%3A%22%23f7f7f7%22%2C%22sapList_HeaderBorderColor%22%3A%22%23e5e5e5%22%2C%22sapList_HeaderTextColor%22%3A%22%23333333%22%2C%22sapList_BorderColor%22%3A%22%23e5e5e5%22%2C%22sapList_BorderWidth%22%3A%221px%22%2C%22sapList_HighlightColor%22%3A%22%23427cac%22%2C%22sapList_SelectionBackgroundColor%22%3A%22%23e8eff6%22%2C%22sapList_Background%22%3A%22%23ffffff%22%2C%22sapList_Hover_Background%22%3A%22%23f0f0f0%22%2C%22sapScrollBar_FaceColor%22%3A%22%23b2b2b2%22%2C%22sapScrollBar_TrackColor%22%3A%22%23ffffff%22%2C%22sapScrollBar_BorderColor%22%3A%22%23b2b2b2%22%2C%22sapScrollBar_SymbolColor%22%3A%22%23346187%22%2C%22sapScrollBar_Dimension%22%3A%2216px%22%2C%22sapScrollBar_Hover_FaceColor%22%3A%22%23ababab%22%2C%22sapPageHeader_Background%22%3A%22%23eff4f9%22%2C%22sapPageHeader_BorderColor%22%3A%22%23d1e0ee%22%2C%22sapPageHeader_TextColor%22%3A%22%23666666%22%2C%22sapPageFooter_Background%22%3A%22%23ffffff%22%2C%22sapPageFooter_TextColor%22%3A%22%23333333%22%2C%22sapInfobar_Background%22%3A%22%23168282%22%2C%22sapObjectHeader_Background%22%3A%22%23eff4f9%22%2C%22sapBlockLayer_Background%22%3A%22%23000000%22%2C%22sapTile_Background%22%3A%22%23ffffff%22%2C%22sapTile_BorderColor%22%3A%22transparent%22%2C%22sapTile_TitleTextColor%22%3A%22%23333333%22%2C%22sapTile_TextColor%22%3A%22%23666666%22%2C%22sapTile_IconColor%22%3A%22%2393b7d6%22%2C%22sapChart_OrderedColor_1%22%3A%22%235899da%22%2C%22sapChart_OrderedColor_2%22%3A%22%23e8743b%22%2C%22sapChart_OrderedColor_3%22%3A%22%2319a979%22%2C%22sapChart_OrderedColor_4%22%3A%22%23ed4a7b%22%2C%22sapChart_OrderedColor_5%22%3A%22%23945ecf%22%2C%22sapChart_OrderedColor_6%22%3A%22%2313a4b4%22%2C%22sapChart_OrderedColor_7%22%3A%22%23525df4%22%2C%22sapChart_OrderedColor_8%22%3A%22%23bf399e%22%2C%22sapChart_OrderedColor_9%22%3A%22%236c8893%22%2C%22sapChart_OrderedColor_10%22%3A%22%23ee6868%22%2C%22sapChart_OrderedColor_11%22%3A%22%232f6497%22%2C%22sapChart_Bad%22%3A%22%23dc0d0e%22%2C%22sapChart_Critical%22%3A%22%23de890d%22%2C%22sapChart_Good%22%3A%22%233fa45b%22%2C%22sapChart_Neutral%22%3A%22%23848f94%22%2C%22sapChart_Sequence_1%22%3A%22%235899da%22%2C%22sapChart_Sequence_2%22%3A%22%23e8743b%22%2C%22sapChart_Sequence_3%22%3A%22%2319a979%22%2C%22sapChart_Sequence_4%22%3A%22%23ed4a7b%22%2C%22sapChart_Sequence_5%22%3A%22%23945ecf%22%2C%22sapChart_Sequence_6%22%3A%22%2313a4b4%22%2C%22sapChart_Sequence_7%22%3A%22%23525df4%22%2C%22sapChart_Sequence_8%22%3A%22%23bf399e%22%2C%22sapChart_Sequence_9%22%3A%22%236c8893%22%2C%22sapChart_Sequence_10%22%3A%22%23ee6868%22%2C%22sapChart_Sequence_11%22%3A%22%232f6497%22%2C%22sapChart_Sequence_Neutral%22%3A%22%23848f94%22%2C%22sapUiBrand%22%3A%22%23427cac%22%2C%22sapUiHighlight%22%3A%22%23427cac%22%2C%22sapUiBaseColor%22%3A%22%23eff4f9%22%2C%22sapUiShellColor%22%3A%22transparent%22%2C%22sapUiBaseBG%22%3A%22%23fafafa%22%2C%22sapUiGlobalBackgroundColor%22%3A%22%23fafafa%22%2C%22sapUiBaseText%22%3A%22%23333333%22%2C%22sapUiLink%22%3A%22%230070b1%22%2C%22sapUiGlobalLogo%22%3A%22none%22%2C%22sapUiGlobalBackgroundImage%22%3A%22none%22%2C%22sapUiBackgroundImage%22%3A%22none%22%2C%22sapUiUx3ShellBackgroundImageURL%22%3A%22none%22%2C%22sapUiGlobalBackgroundImageOpacity%22%3A%221%22%2C%22sapUiGlobalBackgroundRepeat%22%3A%22false%22%2C%22sapUiSelected%22%3A%22%23427cac%22%2C%22sapUiActive%22%3A%22%23427cac%22%2C%22sapUiHighlightTextColor%22%3A%22%23ffffff%22%2C%22sapUiTextTitle%22%3A%22%23333333%22%2C%22sapUiContentIconColor%22%3A%22%23346187%22%2C%22sapUiContentContrastIconColor%22%3A%22%23ffffff%22%2C%22sapUiContentNonInteractiveIconColor%22%3A%22%23878787%22%2C%22sapUiContentMarkerIconColor%22%3A%22%23678bc7%22%2C%22sapUiContentMarkerTextColor%22%3A%22%23147575%22%2C%22sapUiContentImagePlaceholderBackground%22%3A%22%23ceddec%22%2C%22sapUiContentImagePlaceholderForegroundColor%22%3A%22%23ffffff%22%2C%22sapUiContentFocusColor%22%3A%22%23000000%22%2C%22sapUiContentContrastFocusColor%22%3A%22%23ffffff%22%2C%22sapUiContentShadowColor%22%3A%22%23000000%22%2C%22sapUiContentContrastShadowColor%22%3A%22%23ffffff%22%2C%22sapUiContentSearchHighlightColor%22%3A%22%23d4f7db%22%2C%22sapUiContentHelpColor%22%3A%22%233f8600%22%2C%22sapUiContentLabelColor%22%3A%22%23666666%22%2C%22sapUiContentDisabledTextColor%22%3A%22rgba(51%2C%2051%2C%2051%2C%200.5)%22%2C%22sapUiContentDisabledOpacity%22%3A%220.5%22%2C%22sapUiContentContrastTextThreshold%22%3A%220.65%22%2C%22sapUiContentContrastTextColor%22%3A%22%23ffffff%22%2C%22sapUiContentForegroundColor%22%3A%22%23e5e5e5%22%2C%22sapUiContentForegroundBorderColor%22%3A%22%23bfbfbf%22%2C%22sapUiContentForegroundTextColor%22%3A%22%23333333%22%2C%22sapUiShellBackground%22%3A%22%23c9d8e7%22%2C%22sapUiShellBackgroundImage%22%3A%22linear-gradient(to%20bottom%2C%20%23a9c4df%2C%20%23e7ecf0)%22%2C%22sapUiShellBackgroundImageOpacity%22%3A%221%22%2C%22sapUiShellBackgroundImageRepeat%22%3A%22false%22%2C%22sapUiShellBackgroundGradient%22%3A%22linear-gradient(to%20bottom%2C%20%23a9c4df%2C%20%23e7ecf0)%22%2C%22sapUiShellBorderColor%22%3A%22transparent%22%2C%22sapUiShellTextColor%22%3A%22%23346187%22%2C%22sapUiShellFavicon%22%3A%22none%22%2C%22sapUiButtonBackground%22%3A%22%23f7f7f7%22%2C%22sapUiButtonBorderColor%22%3A%22%23ababab%22%2C%22sapUiButtonTextColor%22%3A%22%23346187%22%2C%22sapUiButtonDisabledBackground%22%3A%22%23ffffff%22%2C%22sapUiButtonDisabledBorderColor%22%3A%22%23666666%22%2C%22sapUiButtonDisabledTextColor%22%3A%22%23666666%22%2C%22sapUiButtonHoverBackground%22%3A%22%23ebebeb%22%2C%22sapUiButtonHoverBorderColor%22%3A%22%23ababab%22%2C%22sapUiButtonHoverTextColor%22%3A%22%23346187%22%2C%22sapUiButtonEmphasizedBackground%22%3A%22%235496cd%22%2C%22sapUiButtonEmphasizedBorderColor%22%3A%22%23418ac7%22%2C%22sapUiButtonEmphasizedTextColor%22%3A%22%23ffffff%22%2C%22sapUiButtonRejectBackground%22%3A%22%23f7f7f7%22%2C%22sapUiButtonAcceptBackground%22%3A%22%23f7f7f7%22%2C%22sapUiFieldBackground%22%3A%22%23ffffff%22%2C%22sapUiFieldBorderColor%22%3A%22%23bfbfbf%22%2C%22sapUiFieldTextColor%22%3A%22%23000000%22%2C%22sapUiFieldHelpBackground%22%3A%22%23ffffff%22%2C%22sapUiFieldHoverBackground%22%3A%22%23ffffff%22%2C%22sapUiFieldHoverBorderColor%22%3A%22%23427cac%22%2C%22sapUiFieldHoverHelpBackground%22%3A%22%23427cac%22%2C%22sapUiFieldFocusBackground%22%3A%22%23ffffff%22%2C%22sapUiFieldFocusBorderColor%22%3A%22%23bfbfbf%22%2C%22sapUiFieldFocusHelpBackground%22%3A%22%23ffffff%22%2C%22sapUiFieldReadOnlyBackground%22%3A%22rgba(242%2C%20242%2C%20242%2C%200.5)%22%2C%22sapUiFieldReadOnlyBorderColor%22%3A%22%23cccccc%22%2C%22sapUiFieldReadOnlyHelpBackground%22%3A%22rgba(242%2C%20242%2C%20242%2C%200.5)%22%2C%22sapUiFieldDisabledBackground%22%3A%22%23959595%22%2C%22sapUiFieldDisabledBorderColor%22%3A%22%234f4f4f%22%2C%22sapUiFieldDisabledTextColor%22%3A%22rgba(51%2C%2051%2C%2051%2C%200.5)%22%2C%22sapUiFieldDisabledHelpBackground%22%3A%22%23959595%22%2C%22sapUiFieldRequiredColor%22%3A%22%23c14646%22%2C%22sapUiFieldInvalidColor%22%3A%22%23ee0000%22%2C%22sapUiFieldInvalidBackground%22%3A%22%23ffffff%22%2C%22sapUiFieldWarningColor%22%3A%22%23f9a429%22%2C%22sapUiFieldWarningBackground%22%3A%22%23ffffff%22%2C%22sapUiFieldSuccessColor%22%3A%22%2338a238%22%2C%22sapUiFieldSuccessBackground%22%3A%22%23ffffff%22%2C%22sapUiGroupTitleBackground%22%3A%22transparent%22%2C%22sapUiGroupTitleBorderColor%22%3A%22%23cccccc%22%2C%22sapUiGroupTitleTextColor%22%3A%22%23333333%22%2C%22sapUiGroupContentBackground%22%3A%22%23ffffff%22%2C%22sapUiGroupContentBorderColor%22%3A%22%23ebebeb%22%2C%22sapUiGroupFooterBackground%22%3A%22transparent%22%2C%22sapUiToolbarBackground%22%3A%22transparent%22%2C%22sapUiToolbarSeparatorColor%22%3A%22rgba(63%2C%2081%2C%2097%2C%200.2)%22%2C%22sapUiListHeaderBackground%22%3A%22%23f7f7f7%22%2C%22sapUiListHeaderBorderColor%22%3A%22%23e5e5e5%22%2C%22sapUiListHeaderTextColor%22%3A%22%23333333%22%2C%22sapUiListBorderColor%22%3A%22%23e5e5e5%22%2C%22sapUiListHighlightColor%22%3A%22%23427cac%22%2C%22sapUiListSelectionBackgroundColor%22%3A%22%23e8eff6%22%2C%22sapUiListBackground%22%3A%22%23ffffff%22%2C%22sapUiListHoverBackground%22%3A%22%23f0f0f0%22%2C%22sapUiScrollBarFaceColor%22%3A%22%23b2b2b2%22%2C%22sapUiScrollBarTrackColor%22%3A%22%23ffffff%22%2C%22sapUiScrollBarBorderColor%22%3A%22%23b2b2b2%22%2C%22sapUiScrollBarSymbolColor%22%3A%22%23346187%22%2C%22sapUiScrollBarHoverFaceColor%22%3A%22%23ababab%22%2C%22sapUiPageHeaderBackground%22%3A%22%23eff4f9%22%2C%22sapUiPageHeaderBorderColor%22%3A%22%23d1e0ee%22%2C%22sapUiPageHeaderTextColor%22%3A%22%23666666%22%2C%22sapUiPageFooterBackground%22%3A%22%23ffffff%22%2C%22sapUiPageFooterTextColor%22%3A%22%23333333%22%2C%22sapUiInfobarBackground%22%3A%22%23168282%22%2C%22sapUiObjectHeaderBackground%22%3A%22%23eff4f9%22%2C%22sapUiBlockLayerBackground%22%3A%22%23000000%22%2C%22sapUiTileBackground%22%3A%22%23ffffff%22%2C%22sapUiTileBorderColor%22%3A%22transparent%22%2C%22sapUiTileTitleTextColor%22%3A%22%23333333%22%2C%22sapUiTileTextColor%22%3A%22%23666666%22%2C%22sapUiTileIconColor%22%3A%22%2393b7d6%22%2C%22sapUiChart1%22%3A%22%235899da%22%2C%22sapUiChart2%22%3A%22%23e8743b%22%2C%22sapUiChart3%22%3A%22%2319a979%22%2C%22sapUiChart4%22%3A%22%23ed4a7b%22%2C%22sapUiChart5%22%3A%22%23945ecf%22%2C%22sapUiChart6%22%3A%22%2313a4b4%22%2C%22sapUiChart7%22%3A%22%23525df4%22%2C%22sapUiChart8%22%3A%22%23bf399e%22%2C%22sapUiChart9%22%3A%22%236c8893%22%2C%22sapUiChart10%22%3A%22%23ee6868%22%2C%22sapUiChart11%22%3A%22%232f6497%22%2C%22sapUiChartBad%22%3A%22%23dc0d0e%22%2C%22sapUiChartCritical%22%3A%22%23de890d%22%2C%22sapUiChartGood%22%3A%22%233fa45b%22%2C%22sapUiChartNeutral%22%3A%22%23848f94%22%2C%22sapUiChartSequence1%22%3A%22%235899da%22%2C%22sapUiChartSequence2%22%3A%22%23e8743b%22%2C%22sapUiChartSequence3%22%3A%22%2319a979%22%2C%22sapUiChartSequence4%22%3A%22%23ed4a7b%22%2C%22sapUiChartSequence5%22%3A%22%23945ecf%22%2C%22sapUiChartSequence6%22%3A%22%2313a4b4%22%2C%22sapUiChartSequence7%22%3A%22%23525df4%22%2C%22sapUiChartSequence8%22%3A%22%23bf399e%22%2C%22sapUiChartSequence9%22%3A%22%236c8893%22%2C%22sapUiChartSequence10%22%3A%22%23ee6868%22%2C%22sapUiChartSequence11%22%3A%22%232f6497%22%2C%22sapUiChartSequenceNeutral%22%3A%22%23848f94%22%2C%22sapUiAccent1%22%3A%22%23e09d00%22%2C%22sapUiAccent2%22%3A%22%23e6600d%22%2C%22sapUiAccent3%22%3A%22%23c14646%22%2C%22sapUiAccent4%22%3A%22%23ab218e%22%2C%22sapUiAccent5%22%3A%22%23678bc7%22%2C%22sapUiAccent6%22%3A%22%230092d1%22%2C%22sapUiAccent7%22%3A%22%231a9898%22%2C%22sapUiAccent8%22%3A%22%23759421%22%2C%22sapUiErrorBG%22%3A%22%23ffe4e4%22%2C%22sapUiWarningBG%22%3A%22%23fef0db%22%2C%22sapUiSuccessBG%22%3A%22%23e4f5e4%22%2C%22sapUiNeutralBG%22%3A%22%23f4f5f6%22%2C%22sapUiErrorBorder%22%3A%22%23ee0000%22%2C%22sapUiWarningBorder%22%3A%22%23f9a429%22%2C%22sapUiSuccessBorder%22%3A%22%2338a238%22%2C%22sapUiNeutralBorder%22%3A%22%235e696e%22%2C%22sapUiNegativeElement%22%3A%22%23bb0000%22%2C%22sapUiCriticalElement%22%3A%22%23e78c07%22%2C%22sapUiPositiveElement%22%3A%22%232b7c2b%22%2C%22sapUiNeutralElement%22%3A%22%235e696e%22%2C%22sapUiNegativeText%22%3A%22%23bb0000%22%2C%22sapUiCriticalText%22%3A%22%23e78c07%22%2C%22sapUiPositiveText%22%3A%22%232b7c2b%22%2C%22sapUiNeutralText%22%3A%22%235e696e%22%2C%22sapUiNegative%22%3A%22%23bb0000%22%2C%22sapUiCritical%22%3A%22%23e78c07%22%2C%22sapUiPositive%22%3A%22%232b7c2b%22%2C%22sapUiNeutral%22%3A%22%235e696e%22%2C%22sapUiErrorColor%22%3A%22%23ee0000%22%2C%22sapUiWarningColor%22%3A%22%23f9a429%22%2C%22sapUiSuccessColor%22%3A%22%2338a238%22%2C%22sapUiFontFamily%22%3A%22%5C%2272%5C%22%2C%20Arial%2C%20Helvetica%2C%20sans-serif%22%2C%22sapUiFontSize%22%3A%2216px%22%2C%22sapUiFontCondensedFamily%22%3A%22%27Arial%20Narrow%27%2C%20HelveticaNeue-CondensedBold%2C%20Arial%2C%20sans-serif%22%2C%22sapUiFontHeaderFamily%22%3A%22%5C%2272%5C%22%2C%20Arial%2C%20Helvetica%2C%20sans-serif%22%2C%22sapUiFontHeaderWeight%22%3A%22normal%22%2C%22sapMFontHeader1Size%22%3A%221.625rem%22%2C%22sapMFontHeader2Size%22%3A%221.375rem%22%2C%22sapMFontHeader3Size%22%3A%221.25rem%22%2C%22sapMFontHeader4Size%22%3A%221.125rem%22%2C%22sapMFontHeader5Size%22%3A%221rem%22%2C%22sapMFontHeader6Size%22%3A%220.875rem%22%2C%22sapMFontSmallSize%22%3A%220.75rem%22%2C%22sapMFontMediumSize%22%3A%220.875rem%22%2C%22sapMFontLargeSize%22%3A%221rem%22%2C%22sapUiTranslucentBGOpacity%22%3A%220%22%2C%22sapMPlatformDependent%22%3A%22false%22%2C%22sapUiDesktopFontFamily%22%3A%22%5C%2272%5C%22%2C%20Arial%2C%20Helvetica%2C%20sans-serif%22%2C%22sapUiDesktopFontSize%22%3A%2212px%22%2C%22sapUiFontLargeSize%22%3A%2213px%22%2C%22sapUiFontSmallSize%22%3A%2211px%22%2C%22sapUiFontHeader1Size%22%3A%2226px%22%2C%22sapUiFontHeader2Size%22%3A%2220px%22%2C%22sapUiFontHeader3Size%22%3A%2218px%22%2C%22sapUiFontHeader4Size%22%3A%2216px%22%2C%22sapUiFontHeader5Size%22%3A%2214px%22%2C%22sapUiFontHeader6Size%22%3A%2213px%22%2C%22sapUiLineHeight%22%3A%2218px%22%2C%22sapUiChartLabelHoverColor%22%3A%22%23ebebeb%22%2C%22sapUiChartLabelPressedColor%22%3A%22%23cccccc%22%2C%22sapUiChartCategoryAxisLabelFontColor%22%3A%22%23333333%22%2C%22sapUiChartValueAxisLabelFontColor%22%3A%22%23707070%22%2C%22sapUiChartCategoryAxisLabelFontSize%22%3A%220.75rem%22%2C%22sapUiChartValueAxisLabelFontSize%22%3A%220.75rem%22%2C%22sapUiChartCategoryAxisLineColor%22%3A%22%23cccccc%22%2C%22sapUiChartValueAxisLineColor%22%3A%22%23cccccc%22%2C%22sapUiChartCategoryAxisTickColor%22%3A%22%23cccccc%22%2C%22sapUiChartValueAxisTickColor%22%3A%22%23cccccc%22%2C%22sapUiChartBackgroundColor%22%3A%22transparent%22%2C%22sapUiChartLabelFontWeight%22%3A%22normal%22%2C%22sapUiChartLegendLabelFontColor%22%3A%22%23333333%22%2C%22sapUiChartLegendTitleFontColor%22%3A%22%23333333%22%2C%22sapUiChartLegendTitleFontSize%22%3A%220.875rem%22%2C%22sapUiChartLegendLabelFontSize%22%3A%220.75rem%22%2C%22sapUiChartPaletteUndefinedColor%22%3A%22%23000000%22%2C%22sapUiChartGridlineColor%22%3A%22%23e5e5e5%22%2C%22sapUiChartReferenceLineColor%22%3A%22%23333333%22%2C%22sapUiChartDataLabelFontColor%22%3A%22%23000000%22%2C%22sapUiChartReferenceLineLabelColor%22%3A%22%23ffffff%22%2C%22sapUiChartDataLabelFontSize%22%3A%220.75rem%22%2C%22sapUiChartPopoverDataItemFontColor%22%3A%22%23000000%22%2C%22sapUiChartPopoverGroupFontColor%22%3A%22%23333333%22%2C%22sapUiChartPopoverDataItemFontSize%22%3A%220.875rem%22%2C%22sapUiChartPopoverGroupFontSize%22%3A%220.875rem%22%2C%22sapUiChartPopoverGroupFontWeight%22%3A%22bold%22%2C%22sapUiChartScrollBarThumbColor%22%3A%22%23b2b2b2%22%2C%22sapUiChartScrollBarTrackColor%22%3A%22%23ffffff%22%2C%22sapUiChartScrollBarThumbHoverColor%22%3A%22%23ababab%22%2C%22sapUiChartMainTitleFontColor%22%3A%22%23333333%22%2C%22sapUiChartAxisTitleFontColor%22%3A%22%23333333%22%2C%22sapUiChartMainTitleFontSize%22%3A%221rem%22%2C%22sapUiChartAxisTitleFontSize%22%3A%220.75rem%22%2C%22sapUiChartTitleFontWeight%22%3A%22bold%22%2C%22sapUiChartAxisTitleFontWeight%22%3A%22regular%22%2C%22sapUiChartLightText%22%3A%22%23707070%22%2C%22sapUiChartZeroAxisColor%22%3A%22%23666666%22%2C%22sapUiChartDataPointBorderColor%22%3A%22%23ffffff%22%2C%22sapUiChartDataPointBorderHoverSelectedColor%22%3A%22%23666666%22%2C%22sapUiChartDataPointNotSelectedBackgroundOpacity%22%3A%220.6%22%2C%22sapUiChartValueAxisLineOpacity%22%3A%220%22%2C%22sapUiChartCategoryAxisLabelFontHoverColor%22%3A%22%23333333%22%2C%22sapUiChartCategoryAxisLabelFontPressedColor%22%3A%22%23333333%22%2C%22sapUiChartTargetColor%22%3A%22%23333333%22%2C%22sapUiChartTargetShadowColor%22%3A%22%23ffffff%22%2C%22sapUiChartBubbleBGOpacity%22%3A%220.8%22%2C%22sapUiChartScrollbarBorderColor%22%3A%22%23f2f2f2%22%2C%22sapUiChartScrollbarBorderSize%22%3A%220%22%2C%22sapUiChartScrollbarThumbPadding%22%3A%220%22%2C%22sapUiChartNegativeLargeText%22%3A%22%23dc0d0e%22%2C%22sapUiChartCriticalLargeText%22%3A%22%23de890d%22%2C%22sapUiChartPositiveLargeText%22%3A%22%233fa45b%22%2C%22sapUiChartNeutralLargeText%22%3A%22%2369767c%22%2C%22sapUiChartDataPointBG%22%3A%22%23d5dadc%22%2C%22sapUiChartDataPointBGBorderColor%22%3A%22%23d5dadc%22%2C%22sapUiChartDataLineColorWithBG%22%3A%22%23333333%22%2C%22sapUiChartDataLineColor%22%3A%22%23333333%22%2C%22sapUiChartRadialRemainingCircle%22%3A%22%23e3e6e7%22%2C%22sapUiChartRadialRemainingCircleBorderColor%22%3A%22%23e3e6e7%22%2C%22sapUiChartRadialBG%22%3A%22%23ffffff%22%2C%22sapUiChartLegendHoverBackground%22%3A%22%23f0f0f0%22%2C%22sapUiChartLegendSelectionBackground%22%3A%22%23e8eff6%22%2C%22sapUiChartLegendSelectionHoverBackground%22%3A%22%23dde8f1%22%2C%22sapUiChartPaletteQualitativeHue1%22%3A%22%235899da%22%2C%22sapUiChartPaletteQualitativeHue2%22%3A%22%23e8743b%22%2C%22sapUiChartPaletteQualitativeHue3%22%3A%22%2319a979%22%2C%22sapUiChartPaletteQualitativeHue4%22%3A%22%23ed4a7b%22%2C%22sapUiChartPaletteQualitativeHue5%22%3A%22%23945ecf%22%2C%22sapUiChartPaletteQualitativeHue6%22%3A%22%2313a4b4%22%2C%22sapUiChartPaletteQualitativeHue7%22%3A%22%23525df4%22%2C%22sapUiChartPaletteQualitativeHue8%22%3A%22%23bf399e%22%2C%22sapUiChartPaletteQualitativeHue9%22%3A%22%236c8893%22%2C%22sapUiChartPaletteQualitativeHue10%22%3A%22%23ee6868%22%2C%22sapUiChartPaletteQualitativeHue11%22%3A%22%232f6497%22%2C%22sapUiChartPaletteQualitativeHue12%22%3A%22%231866b4%22%2C%22sapUiChartPaletteQualitativeHue13%22%3A%22%23cc4300%22%2C%22sapUiChartPaletteQualitativeHue14%22%3A%22%2303734d%22%2C%22sapUiChartPaletteQualitativeHue15%22%3A%22%23d70947%22%2C%22sapUiChartPaletteQualitativeHue16%22%3A%22%23772acb%22%2C%22sapUiChartPaletteQualitativeHue17%22%3A%22%23087682%22%2C%22sapUiChartPaletteQualitativeHue18%22%3A%22%232531d4%22%2C%22sapUiChartPaletteQualitativeHue19%22%3A%22%23921473%22%2C%22sapUiChartPaletteQualitativeHue20%22%3A%22%233c6372%22%2C%22sapUiChartPaletteQualitativeHue21%22%3A%22%23d62f2f%22%2C%22sapUiChartPaletteQualitativeHue22%22%3A%22%23144b7f%22%2C%22sapUiChartPaletteSemanticBadLight3%22%3A%22%23f99494%22%2C%22sapUiChartPaletteSemanticBadLight2%22%3A%22%23f66364%22%2C%22sapUiChartPaletteSemanticBadLight1%22%3A%22%23f33334%22%2C%22sapUiChartPaletteSemanticBad%22%3A%22%23dc0d0e%22%2C%22sapUiChartPaletteSemanticBadDark1%22%3A%22%23b90c0d%22%2C%22sapUiChartPaletteSemanticBadDark2%22%3A%22%23930a0a%22%2C%22sapUiChartPaletteSemanticCriticalLight3%22%3A%22%23f8cc8c%22%2C%22sapUiChartPaletteSemanticCriticalLight2%22%3A%22%23f5b04d%22%2C%22sapUiChartPaletteSemanticCriticalLight1%22%3A%22%23f29b1d%22%2C%22sapUiChartPaletteSemanticCritical%22%3A%22%23de890d%22%2C%22sapUiChartPaletteSemanticCriticalDark1%22%3A%22%23c67a0c%22%2C%22sapUiChartPaletteSemanticCriticalDark2%22%3A%22%23a4650a%22%2C%22sapUiChartPaletteSemanticGoodLight3%22%3A%22%23a1dbb1%22%2C%22sapUiChartPaletteSemanticGoodLight2%22%3A%22%2371c989%22%2C%22sapUiChartPaletteSemanticGoodLight1%22%3A%22%234cba6b%22%2C%22sapUiChartPaletteSemanticGood%22%3A%22%233fa45b%22%2C%22sapUiChartPaletteSemanticGoodDark1%22%3A%22%23358a4d%22%2C%22sapUiChartPaletteSemanticGoodDark2%22%3A%22%232a6d3c%22%2C%22sapUiChartPaletteSemanticNeutralLight3%22%3A%22%23d5dadc%22%2C%22sapUiChartPaletteSemanticNeutralLight2%22%3A%22%23bac1c4%22%2C%22sapUiChartPaletteSemanticNeutralLight1%22%3A%22%239ea8ad%22%2C%22sapUiChartPaletteSemanticNeutral%22%3A%22%23848f94%22%2C%22sapUiChartPaletteSemanticNeutralDark1%22%3A%22%2369767c%22%2C%22sapUiChartPaletteSemanticNeutralDark2%22%3A%22%23596468%22%2C%22sapUiChartPaletteSequentialHue1Light3%22%3A%22%23b2d4f5%22%2C%22sapUiChartPaletteSequentialHue1Light2%22%3A%22%2393bfeb%22%2C%22sapUiChartPaletteSequentialHue1Light1%22%3A%22%2374abe2%22%2C%22sapUiChartPaletteSequentialHue1%22%3A%22%235899da%22%2C%22sapUiChartPaletteSequentialHue1Dark1%22%3A%22%23367dc4%22%2C%22sapUiChartPaletteSequentialHue1Dark2%22%3A%22%231866b4%22%2C%22sapUiChartPaletteSequentialHue2Light3%22%3A%22%23ffb18a%22%2C%22sapUiChartPaletteSequentialHue2Light2%22%3A%22%23f3b89b%22%2C%22sapUiChartPaletteSequentialHue2Light1%22%3A%22%23f08956%22%2C%22sapUiChartPaletteSequentialHue2%22%3A%22%23e8743b%22%2C%22sapUiChartPaletteSequentialHue2Dark1%22%3A%22%23da5a1b%22%2C%22sapUiChartPaletteSequentialHue2Dark2%22%3A%22%23cc4300%22%2C%22sapUiChartPaletteSequentialHue3Light3%22%3A%22%238fd1bb%22%2C%22sapUiChartPaletteSequentialHue3Light2%22%3A%22%2366c2a3%22%2C%22sapUiChartPaletteSequentialHue3Light1%22%3A%22%233fb68e%22%2C%22sapUiChartPaletteSequentialHue3%22%3A%22%2319a979%22%2C%22sapUiChartPaletteSequentialHue3Dark1%22%3A%22%230e8c62%22%2C%22sapUiChartPaletteSequentialHue3Dark2%22%3A%22%2303734d%22%2C%22sapUiChartPaletteSequentialHue4Light3%22%3A%22%23f8b4c9%22%2C%22sapUiChartPaletteSequentialHue4Light2%22%3A%22%23f490ae%22%2C%22sapUiChartPaletteSequentialHue4Light1%22%3A%22%23f06a93%22%2C%22sapUiChartPaletteSequentialHue4%22%3A%22%23ed4a7b%22%2C%22sapUiChartPaletteSequentialHue4Dark1%22%3A%22%23e32b62%22%2C%22sapUiChartPaletteSequentialHue4Dark2%22%3A%22%23d70947%22%2C%22sapUiChartPaletteSequentialHue5Light3%22%3A%22%23d3bdeb%22%2C%22sapUiChartPaletteSequentialHue5Light2%22%3A%22%23be9de2%22%2C%22sapUiChartPaletteSequentialHue5Light1%22%3A%22%23a97dd8%22%2C%22sapUiChartPaletteSequentialHue5%22%3A%22%23945ecf%22%2C%22sapUiChartPaletteSequentialHue5Dark1%22%3A%22%238746ce%22%2C%22sapUiChartPaletteSequentialHue5Dark2%22%3A%22%23772acb%22%2C%22sapUiChartPaletteSequentialHue6Light3%22%3A%22%2381d1da%22%2C%22sapUiChartPaletteSequentialHue6Light2%22%3A%22%235ac2ce%22%2C%22sapUiChartPaletteSequentialHue6Light1%22%3A%22%2338b4c2%22%2C%22sapUiChartPaletteSequentialHue6%22%3A%22%2313a4b4%22%2C%22sapUiChartPaletteSequentialHue6Dark1%22%3A%22%230d8d9c%22%2C%22sapUiChartPaletteSequentialHue6Dark2%22%3A%22%23087682%22%2C%22sapUiChartPaletteSequentialHue7Light3%22%3A%22%2399a0f9%22%2C%22sapUiChartPaletteSequentialHue7Light2%22%3A%22%23828af7%22%2C%22sapUiChartPaletteSequentialHue7Light1%22%3A%22%236973f6%22%2C%22sapUiChartPaletteSequentialHue7%22%3A%22%23525df4%22%2C%22sapUiChartPaletteSequentialHue7Dark1%22%3A%22%233945e4%22%2C%22sapUiChartPaletteSequentialHue7Dark2%22%3A%22%232531d4%22%2C%22sapUiChartPaletteSequentialHue8Light3%22%3A%22%23e597d2%22%2C%22sapUiChartPaletteSequentialHue8Light2%22%3A%22%23d876c0%22%2C%22sapUiChartPaletteSequentialHue8Light1%22%3A%22%23cd59b1%22%2C%22sapUiChartPaletteSequentialHue8%22%3A%22%23bf399e%22%2C%22sapUiChartPaletteSequentialHue8Dark1%22%3A%22%23a92689%22%2C%22sapUiChartPaletteSequentialHue8Dark2%22%3A%22%23921473%22%2C%22sapUiChartPaletteSequentialHue9Light3%22%3A%22%23d1d9dc%22%2C%22sapUiChartPaletteSequentialHue9Light2%22%3A%22%23adbcc3%22%2C%22sapUiChartPaletteSequentialHue9Light1%22%3A%22%238ca2ab%22%2C%22sapUiChartPaletteSequentialHue9%22%3A%22%236c8893%22%2C%22sapUiChartPaletteSequentialHue9Dark1%22%3A%22%23547582%22%2C%22sapUiChartPaletteSequentialHue9Dark2%22%3A%22%233c6372%22%2C%22sapUiChartPaletteSequentialHue10Light3%22%3A%22%23fccaca%22%2C%22sapUiChartPaletteSequentialHue10Light2%22%3A%22%23f8a6a6%22%2C%22sapUiChartPaletteSequentialHue10Light1%22%3A%22%23f38787%22%2C%22sapUiChartPaletteSequentialHue10%22%3A%22%23ee6868%22%2C%22sapUiChartPaletteSequentialHue10Dark1%22%3A%22%23e24c4c%22%2C%22sapUiChartPaletteSequentialHue10Dark2%22%3A%22%23d62f2f%22%2C%22sapUiChartPaletteSequentialHue11Light3%22%3A%22%2385a1bb%22%2C%22sapUiChartPaletteSequentialHue11Light2%22%3A%22%23698caf%22%2C%22sapUiChartPaletteSequentialHue11Light1%22%3A%22%234d78a2%22%2C%22sapUiChartPaletteSequentialHue11%22%3A%22%232f6497%22%2C%22sapUiChartPaletteSequentialHue11Dark1%22%3A%22%23245a8e%22%2C%22sapUiChartPaletteSequentialHue11Dark2%22%3A%22%23144b7f%22%2C%22sapUiChartPaletteSequentialNeutralLight3%22%3A%22%23d5dadc%22%2C%22sapUiChartPaletteSequentialNeutralLight2%22%3A%22%23bac1c4%22%2C%22sapUiChartPaletteSequentialNeutralLight1%22%3A%22%239ea8ad%22%2C%22sapUiChartPaletteSequentialNeutral%22%3A%22%23848f94%22%2C%22sapUiChartPaletteSequentialNeutralDark1%22%3A%22%2369767c%22%2C%22sapUiChartPaletteSequentialNeutralDark2%22%3A%22%23596468%22%2C%22sapUiChartPaletteNoSemDiv1Light3%22%3A%22%23f3dec9%22%2C%22sapUiChartPaletteNoSemDiv1Light2%22%3A%22%23e3cbb3%22%2C%22sapUiChartPaletteNoSemDiv1Light1%22%3A%22%23c8ab8e%22%2C%22sapUiChartPaletteNoSemDiv1%22%3A%22%23b08e6d%22%2C%22sapUiChartPaletteNoSemDiv1Dark1%22%3A%22%238e6c4b%22%2C%22sapUiChartPaletteNoSemDiv1Dark2%22%3A%22%23754f2a%22%2C%22sapUiChartPaletteMidArea%22%3A%22%23f2f2f2%22%2C%22sapUiChoroplethBG%22%3A%22%23f7f7f8%22%2C%22sapUiChoroplethRegionBorder%22%3A%22%23ffffff%22%2C%22sapUiChoroplethRegionBG%22%3A%22%23bac1c4%22%2C%22sapUiMapLegendBG%22%3A%22%23ffffff%22%2C%22sapUiMapLegendBorderColor%22%3A%22%23cccccc%22%2C%22sapUiShellHoverBackground%22%3A%22%23346187%22%2C%22sapUiShellActiveBackground%22%3A%22%232a4f6d%22%2C%22sapUiShellActiveTextColor%22%3A%22%23ffffff%22%2C%22sapUiShellHoverToggleBackground%22%3A%22%23152736%22%2C%22sapUiShellContainerBackground%22%3A%22%23ffffff%22%2C%22sapUiShellAltContainerBackground%22%3A%22%235e91c3%22%2C%22sapUiShellGroupTextColor%22%3A%22%23333333%22%2C%22sapUiUx3ShellHeaderColor%22%3A%22transparent%22%2C%22sapUiUx3ShellBackgroundColor%22%3A%22%23eff4f9%22%2C%22sapUiUx3ShellHoverColor%22%3A%22%23787878%22%2C%22sapUiUx3ShellGradientBottom%22%3A%22rgba(44%2C%2044%2C%2044%2C%200)%22%2C%22sapUiUx3ShellGradientTop%22%3A%22rgba(66%2C%20108%2C%20172%2C%200.03)%22%2C%22sapUiUx3ShellToolPaletteIconFontColor%22%3A%22%23889eb1%22%2C%22sapUiUx3ExactLstExpandOffset%22%3A%22-1%20-2%22%2C%22sapUiUx3ExactLstRootExpandOffset%22%3A%220%203%22%2C%22sapUiUx3ExactLstContentTop%22%3A%2225px%22%2C%22sapUiLinkActive%22%3A%22%230070b1%22%2C%22sapUiLinkVisited%22%3A%22%230070b1%22%2C%22sapUiLinkHover%22%3A%22%230070b1%22%2C%22sapUiLinkInverted%22%3A%22%237ed0ff%22%2C%22sapUiNotificationBarBG%22%3A%22rgba(51%2C%2051%2C%2051%2C%200.98)%22%2C%22sapUiNotifierSeparator%22%3A%22%23000000%22%2C%22sapUiNotifierSeparatorWidth%22%3A%221px%22%2C%22sapUiNotificationBarBorder%22%3A%22%23666666%22%2C%22sapUiUx3ToolPopupInverted%22%3A%22false%22%2C%22sapUiUx3ToolPopupArrowRightMarginCorrection%22%3A%22-1px%22%2C%22sapUiUx3ToolPopupShadow%22%3A%220px%206px%2012px%200px%20rgba(0%2C%200%2C%200%2C%200.3)%22%2C%22sapUiCalloutShadow%22%3A%220px%206px%2012px%200px%20rgba(0%2C%200%2C%200%2C%200.3)%22%2C%22sapUiButtonIconColor%22%3A%22%23346187%22%2C%22sapUiButtonActiveBackground%22%3A%22%23427cac%22%2C%22sapUiButtonActiveBorderColor%22%3A%22%23427cac%22%2C%22sapUiButtonActiveTextColor%22%3A%22%23ffffff%22%2C%22sapUiButtonEmphasizedHoverBackground%22%3A%22%23418ac7%22%2C%22sapUiButtonEmphasizedHoverBorderColor%22%3A%22%23418ac7%22%2C%22sapUiButtonEmphasizedActiveBackground%22%3A%22%23427cac%22%2C%22sapUiButtonEmphasizedActiveBorderColor%22%3A%22%23427cac%22%2C%22sapUiButtonEmphasizedTextShadow%22%3A%22%23000000%22%2C%22sapUiButtonAcceptBorderColor%22%3A%22%232b7c2b%22%2C%22sapUiButtonAcceptHoverBackground%22%3A%22%23ebebeb%22%2C%22sapUiButtonAcceptHoverBorderColor%22%3A%22%232b7c2b%22%2C%22sapUiButtonAcceptActiveBackground%22%3A%22%232b7c2b%22%2C%22sapUiButtonAcceptActiveBorderColor%22%3A%22%232b7c2b%22%2C%22sapUiButtonAcceptTextColor%22%3A%22%232b7c2b%22%2C%22sapUiButtonRejectBorderColor%22%3A%22%23bb0000%22%2C%22sapUiButtonRejectHoverBackground%22%3A%22%23ebebeb%22%2C%22sapUiButtonRejectHoverBorderColor%22%3A%22%23bb0000%22%2C%22sapUiButtonRejectActiveBackground%22%3A%22%23bb0000%22%2C%22sapUiButtonRejectActiveBorderColor%22%3A%22%23bb0000%22%2C%22sapUiButtonRejectTextColor%22%3A%22%23bb0000%22%2C%22sapUiButtonLiteBackground%22%3A%22transparent%22%2C%22sapUiButtonLiteBorderColor%22%3A%22transparent%22%2C%22sapUiButtonLiteTextColor%22%3A%22%23346187%22%2C%22sapUiButtonLiteHoverBackground%22%3A%22rgba(179%2C%20179%2C%20179%2C%200.5)%22%2C%22sapUiButtonLiteHoverBorderColor%22%3A%22rgba(179%2C%20179%2C%20179%2C%200.5)%22%2C%22sapUiButtonLiteActiveBackground%22%3A%22%23427cac%22%2C%22sapUiButtonLiteActiveBorderColor%22%3A%22%23427cac%22%2C%22sapUiButtonHeaderTextColor%22%3A%22%23346187%22%2C%22sapUiButtonHeaderDisabledTextColor%22%3A%22%23346187%22%2C%22sapUiButtonFooterTextColor%22%3A%22%23346187%22%2C%22sapUiButtonFooterHoverBackground%22%3A%22rgba(179%2C%20179%2C%20179%2C%200.5)%22%2C%22sapUiButtonActionSelectBackground%22%3A%22%23ffffff%22%2C%22sapUiButtonActionSelectBorderColor%22%3A%22%23e5e5e5%22%2C%22sapUiButtonLiteActionSelectHoverBackground%22%3A%22%23f0f0f0%22%2C%22sapUiToggleButtonPressedBackground%22%3A%22%23346187%22%2C%22sapUiToggleButtonPressedBorderColor%22%3A%22%232d5475%22%2C%22sapUiToggleButtonPressedTextColor%22%3A%22%23ffffff%22%2C%22sapUiToggleButtonPressedHoverBackground%22%3A%22%23427cac%22%2C%22sapUiToggleButtonPressedHoverBorderColor%22%3A%22%23427cac%22%2C%22sapUiSegmentedButtonBackground%22%3A%22%23ffffff%22%2C%22sapUiSegmentedButtonBorderColor%22%3A%22%23bfbfbf%22%2C%22sapUiSegmentedButtonTextColor%22%3A%22%23346187%22%2C%22sapUiSegmentedButtonHoverBackground%22%3A%22%23ebebeb%22%2C%22sapUiSegmentedButtonActiveBackground%22%3A%22%23427cac%22%2C%22sapUiSegmentedButtonActiveTextColor%22%3A%22%23ffffff%22%2C%22sapUiSegmentedButtonSelectedBackground%22%3A%22%23346187%22%2C%22sapUiSegmentedButtonSelectedTextColor%22%3A%22%23ffffff%22%2C%22sapUiSegmentedButtonSelectedHoverBackground%22%3A%22%23427cac%22%2C%22sapUiSegmentedButtonSelectedHoverBorderColor%22%3A%22%23427cac%22%2C%22sapUiSegmentedButtonIconColor%22%3A%22%23346187%22%2C%22sapUiSegmentedButtonActiveIconColor%22%3A%22%23ffffff%22%2C%22sapUiSegmentedButtonSelectedIconColor%22%3A%22%23ffffff%22%2C%22sapUiSegmentedButtonFooterBorderColor%22%3A%22%23bfbfbf%22%2C%22sapUiSegmentedButtonFooterHoverBackground%22%3A%22%23ebebeb%22%2C%22sapUiFieldActiveBackground%22%3A%22%23427cac%22%2C%22sapUiFieldActiveBorderColor%22%3A%22%23427cac%22%2C%22sapUiFieldActiveTextColor%22%3A%22%23ffffff%22%2C%22sapUiFieldPlaceholderTextColor%22%3A%22%23757575%22%2C%22sapUiListTextColor%22%3A%22%23333333%22%2C%22sapUiListVerticalBorderColor%22%3A%22%23dddddd%22%2C%22sapUiListActiveBackground%22%3A%22%23427cac%22%2C%22sapUiListActiveTextColor%22%3A%22%23ffffff%22%2C%22sapUiListSelectionHoverBackground%22%3A%22%23dde8f1%22%2C%22sapUiListFooterBackground%22%3A%22%23ceddec%22%2C%22sapUiListFooterTextColor%22%3A%22%23333333%22%2C%22sapUiListGroupHeaderBackground%22%3A%22%23ffffff%22%2C%22sapUiListTableGroupHeaderBackground%22%3A%22%23f2f2f2%22%2C%22sapUiListTableGroupHeaderBorderColor%22%3A%22%23cccccc%22%2C%22sapUiListTableGroupHeaderTextColor%22%3A%22%23147575%22%2C%22sapUiListTableFooterBorder%22%3A%22%23cccccc%22%2C%22sapUiListTableFixedBorder%22%3A%22%23999999%22%2C%22sapUiListTableTextSize%22%3A%220.875rem%22%2C%22sapUiListTableIconSize%22%3A%221rem%22%2C%22sapUiPageFooterBorderColor%22%3A%22%23ebebeb%22%2C%22sapUiInfobarHoverBackground%22%3A%22%23147575%22%2C%22sapUiInfobarActiveBackground%22%3A%22%23427cac%22%2C%22sapUiObjectHeaderBorderColor%22%3A%22%23d1e0ee%22%2C%22sapUiCalendarColorToday%22%3A%22%23ab218e%22%2C%22sapUiDragAndDropColor%22%3A%22%23878787%22%2C%22sapUiDragAndDropBackground%22%3A%22%23ffffff%22%2C%22sapUiDragAndDropBorderColor%22%3A%22%23bfbfbf%22%2C%22sapUiDragAndDropActiveColor%22%3A%22%230070b1%22%2C%22sapUiDragAndDropActiveBackground%22%3A%22rgba(0%2C%20112%2C%20177%2C%200.05)%22%2C%22sapUiDragAndDropActiveBorderColor%22%3A%22%230070b1%22%2C%22sapUiShadowLevel0%22%3A%220%200%200%201px%20rgba(0%2C%200%2C%200%2C%200.15)%22%2C%22sapUiShadowLevel1%22%3A%220%200.125rem%200.5rem%200%20rgba(0%2C%200%2C%200%2C%200.15)%2C%200%200%200%201px%20rgba(0%2C%200%2C%200%2C%200.15)%22%2C%22sapUiShadowLevel2%22%3A%220%200.625rem%201.875rem%200%20rgba(0%2C%200%2C%200%2C%200.15)%2C%200%200%200%201px%20rgba(0%2C%200%2C%200%2C%200.15)%22%2C%22sapUiShadowLevel3%22%3A%220%201.25rem%205rem%200%20rgba(0%2C%200%2C%200%2C%200.15)%2C%200%200%200%201px%20rgba(0%2C%200%2C%200%2C%200.15)%22%2C%22sapUiShadowText%22%3A%220%200%200.125rem%20%23ffffff%22%2C%22sapUiShadowHeader%22%3A%220%200.125rem%200%200%20%23eff4f9%2C%20inset%200%20-0.125rem%200%200%20%23d1e0ee%22%2C%22sapUiUx3ShellHeaderImageURL%22%3A%22%22%2C%22sapUiUx3ShellApplicationImageURL%22%3A%22none%22%2C%22sapUiPurple%22%3A%22%23800080%22%2C%22sapUiOrange%22%3A%22%23ffa500%22%2C%22sapUiGreen%22%3A%22%23008000%22%2C%22sapUiBlue%22%3A%22%230000ff%22%2C%22sapUiRed%22%3A%22%23ff0000%22%2C%22sapUiYellow%22%3A%22%23ffff00%22%2C%22sapUiBase%22%3A%22%23000000%22%2C%22sapUiBaseBorder%22%3A%22%23000000%22%2C%22sapUiBaseLine%22%3A%22%23000000%22%2C%22sapUiWhite%22%3A%22%23ffffff%22%2C%22sapUiWhiteBG%22%3A%22%23ffffff%22%2C%22sapUiExtraLightBG%22%3A%22%23fafafa%22%2C%22sapUiLightBG%22%3A%22%23d3d3d3%22%2C%22sapUiMediumBG%22%3A%22%23808080%22%2C%22sapUiDarkBG%22%3A%22%23a9a9a9%22%2C%22sapUiDeepBG%22%3A%22%23000000%22%2C%22sapUiBlackBG%22%3A%22%23000000%22%2C%22sapUiHoverBG%22%3A%22%23808080%22%2C%22sapUiMediumAltBG%22%3A%22%23808080%22%2C%22sapUiDarkAltBG%22%3A%22%23a9a9a9%22%2C%22sapUiButtonStandardBG%22%3A%22%23fafafa%22%2C%22sapUiButtonEmphasizedBG%22%3A%22%23ffff00%22%2C%22sapUiButtonNegativeBG%22%3A%22%23ff0000%22%2C%22sapUiButtonPositiveBG%22%3A%22%23008000%22%2C%22sapUiReadOnlyBG%22%3A%22%23808080%22%2C%22sapUiExtraLightText%22%3A%22%23d3d3d3%22%2C%22sapUiLightText%22%3A%22%23d3d3d3%22%2C%22sapUiMediumText%22%3A%22%23808080%22%2C%22sapUiDarkText%22%3A%22%23a9a9a9%22%2C%22sapUiDeepText%22%3A%22%23000000%22%2C%22sapUiText%22%3A%22%23333333%22%2C%22sapUiTextInverted%22%3A%22%23ffffff%22%2C%22sapUiWhiteBorder%22%3A%22%23ffffff%22%2C%22sapUiExtraLightBorder%22%3A%22%23d3d3d3%22%2C%22sapUiLightBorder%22%3A%22%23808080%22%2C%22sapUiMediumBorder%22%3A%22%23000000%22%2C%22sapUiDarkBorder%22%3A%22%23000000%22%2C%22sapUiBlackBorder%22%3A%22%23000000%22%2C%22sapUiElement%22%3A%22%23d3d3d3%22%2C%22sapUiInvertedElement%22%3A%22%23ffffff%22%2C%22sapUiLightLine%22%3A%22%23d3d3d3%22%2C%22sapUiMediumLine%22%3A%22%23808080%22%2C%22sapUiEmphasizedLine%22%3A%22%23427cac%22%2C%22sapUiDarkLine%22%3A%22%23a9a9a9%22%2C%22sapUiLightShadowTint%22%3A%22%23ffffff%22%2C%22sapUiDarkShadowTint%22%3A%22%23000000%22%2C%22sapUiFocus%22%3A%22%23000000%22%2C%22sapUiInvertedFocus%22%3A%22%23ffffff%22%2C%22sapUiTableRowBG%22%3A%22%23ffffff%22%2C%22sapUiTableRowAlternatingBG%22%3A%22%23ffffff%22%2C%22sapUiTableRowSelectionBG%22%3A%22%23427cac%22%2C%22sapUiTableRowSelectionReadOnlyBG%22%3A%22%23427cac%22%2C%22sapUiTableRowHoverBG%22%3A%22%23808080%22%2C%22sapUiListBG%22%3A%22%23f7f7f7%22%2C%22sapUiTextColor%22%3A%22%23008000%22%2C%22sapUiTextTitleColor%22%3A%22%23008000%22%2C%22sapUiTextSelectionColor%22%3A%22%23008000%22%2C%22sapUiTextDisabled%22%3A%22%23cccccc%22%2C%22sapUiTextSelection%22%3A%22%23ffffff%22%2C%22sapUiTextfieldBackground%22%3A%22%23ffffff%22%2C%22sapUiFontMonospaceFamily%22%3A%22Lucida%20Console%22%2C%22sapUiUx3ShellSideBarBaseWidth%22%3A%2240px%22%2C%22sapUiUx3ShellPaneOverflowButtonHeight%22%3A%22120px%22%2C%22sapUiUx3ExactLstCollapseWidth%22%3A%2224px%22%2C%22sapUiUx3ExactLstHeaderHeight%22%3A%2225px%22%2C%22sapUiNotificationBarBG_IE%22%3A%22%23808080%22%2C%22sapUiNotifierHoverColor%22%3A%22%23427cac%22%2C%22sapUiNotificationText%22%3A%22%23ffffff%22%2C%22sapUiNotificationTimestamp%22%3A%22%23ababab%22%2C%22sapUiNotificationBarCalloutBorder%22%3A%22rgba(128%2C%20128%2C%20128%2C%200)%22%2C%22sapUiNotificationBarCalloutBorder_IE%22%3A%22%23808080%22%2C%22sapUiNotificationBarCalloutArr%22%3A%22rgba(51%2C%2051%2C%2051%2C%200.98)%22%2C%22sapUiNotificationBarHeight%22%3A%2240px%22%2C%22sapUiNotificationBarHeightMinimized%22%3A%220px%22%2C%22sapUiNotificationBarHeightMaximized%22%3A%2240%25%22%2C%22sapUiNotifierWidth%22%3A%2240px%22%2C%22sapUiRIIconPaddingXS%22%3A%221px%22%2C%22sapUiRIIconPaddingS%22%3A%220.125rem%22%2C%22sapUiRIIconPaddingM%22%3A%220.1875rem%22%2C%22sapUiRIIconPaddingL%22%3A%220.25rem%22%2C%22sapUiRIIconPaddingCozy%22%3A%220.1875rem%22%2C%22sapUiRIIconPaddingCompact%22%3A%220.125rem%22%2C%22sapUiRIIconPaddingCondensed%22%3A%220.125rem%22%2C%22sapUiRIIconPaddingDisplayOnly%22%3A%220.125rem%22%2C%22sapUiRIIconSizeCozy%22%3A%221.375rem%22%2C%22sapUiRIIconSizeCompact%22%3A%221rem%22%2C%22sapUiRIIconSizeCondensed%22%3A%221rem%22%2C%22sapUiRIIconSizeDisplayOnly%22%3A%221rem%22%2C%22sapUiUx3ToolPopupArrowWidth%22%3A%2213px%22%2C%22sapUiUx3ToolPopupArrowHeight%22%3A%2224px%22%2C%22sapUiUx3ToolPopupArrowRightMarginCorrectionInverted%22%3A%22-7px%22%2C%22sapUiUx3TPPaddingBottom%22%3A%2250px%22%2C%22sapUiButtonEmphasizedDisabledBorderColor%22%3A%22%23418ac7%22%2C%22sapUiButtonEmphasizedDisabledBackground%22%3A%22%235496cd%22%2C%22sapUiButtonAcceptDisabledBorderColor%22%3A%22%232b7c2b%22%2C%22sapUiButtonAcceptDisabledBackground%22%3A%22%23f7f7f7%22%2C%22sapUiButtonRejectDisabledBorderColor%22%3A%22%23bb0000%22%2C%22sapUiButtonRejectDisabledBackground%22%3A%22%23f7f7f7%22%2C%22sapUiToggleButtonPressedDisabledBackground%22%3A%22%23346187%22%2C%22sapUiToggleButtonPressedDisabledBorderColor%22%3A%22%232d5475%22%2C%22sapUiToggleButtonPressedDisabledTextColor%22%3A%22%23ccd8e1%22%2C%22sapUiPositiveBG%22%3A%22%232b7c2b%22%2C%22sapUiShadowTint%22%3A%22%23000000%22%2C%22sapUiShadow%22%3A%225px%205px%2010px%20rgba(0%2C%200%2C%200%2C%200.5)%22%2C%22sapUiThemeDesignerCustomCss%22%3A%22false%22%2C%22sapUiMarginTiny%22%3A%220.5rem%22%2C%22sapUiMarginSmall%22%3A%221rem%22%2C%22sapUiMarginMedium%22%3A%222rem%22%2C%22sapUiMarginLarge%22%3A%223rem%22%2C%22sapUiEscapedEmptyString%22%3A%22%22%2C%22sapUiLightBoxMagnifyingGlassBorder%22%3A%22none%22%2C%22sapUiLightBoxMagnifyingGlassBackgroundColor%22%3A%22%230070b1%22%2C%22_sap_ui_core_LocalBusyIndicator_Background%22%3A%22rgba(250%2C%20250%2C%20250%2C%200.72)%22%2C%22_sap_ui_core_LocalBusyIndicator_BackgroundIE%22%3A%22%23fafafa%22%2C%22_sap_ui_core_LocalBusyIndicator_Color%22%3A%22%23427cac%22%2C%22_sap_ui_core_LocalBusyIndicator_BorderRadius%22%3A%22100%25%22%2C%22_sap_ui_core_LocalBusyIndicator_SizeMedium%22%3A%221rem%22%2C%22_sap_ui_core_LocalBusyIndicator_SizeBig%22%3A%222rem%22%2C%22_sap_ui_core_media_StdDesktop%22%3A%22screen%20and%20(min-width%20%3A%201024px)%22%2C%22_sap_ui_core_media_StdTablet%22%3A%22screen%20and%20(min-width%20%3A%20600px)%20and%20(max-width%20%3A%201023px)%22%2C%22_sap_ui_core_media_StdPhone%22%3A%22screen%20and%20(max-width%20%3A%20599px)%22%2C%22_sap_ui_core_media_3StepL%22%3A%22screen%20and%20(min-width%20%3A%20960px)%22%2C%22_sap_ui_core_media_3StepM%22%3A%22screen%20and%20(min-width%20%3A%20520px)%20and%20(max-width%20%3A%20959px)%22%2C%22_sap_ui_core_media_3StepS%22%3A%22screen%20and%20(max-width%20%3A%20519px)%22%2C%22_sap_ui_core_media_4StepXL%22%3A%22screen%20and%20(min-width%20%3A%20960px)%22%2C%22_sap_ui_core_media_4StepL%22%3A%22screen%20and%20(min-width%20%3A%20760px)%20and%20(max-width%20%3A%20959px)%22%2C%22_sap_ui_core_media_4StepM%22%3A%22screen%20and%20(min-width%20%3A%20520px)%20and%20(max-width%20%3A%20759px)%22%2C%22_sap_ui_core_media_4StepS%22%3A%22screen%20and%20(max-width%20%3A%20519px)%22%2C%22_sap_ui_core_media_6StepXXL%22%3A%22screen%20and%20(min-width%20%3A%20960px)%22%2C%22_sap_ui_core_media_6StepXL%22%3A%22screen%20and%20(min-width%20%3A%20768px)%20and%20(max-width%20%3A%20959px)%22%2C%22_sap_ui_core_media_6StepL%22%3A%22screen%20and%20(min-width%20%3A%20541px)%20and%20(max-width%20%3A%20767px)%22%2C%22_sap_ui_core_media_6StepM%22%3A%22screen%20and%20(min-width%20%3A%20400px)%20and%20(max-width%20%3A%20540px)%22%2C%22_sap_ui_core_media_6StepS%22%3A%22screen%20and%20(min-width%20%3A%20241px)%20and%20(max-width%20%3A%20399px)%22%2C%22_sap_ui_core_media_6StepXS%22%3A%22screen%20and%20(max-width%20%3A%20240px)%22%2C%22sapBackgroundColorDefault%22%3A%22%23fafafa%22%2C%22sapPrimary1%22%3A%22%233f5161%22%2C%22sapPrimary2%22%3A%22%23427cac%22%2C%22sapPrimary3%22%3A%22%23eff4f9%22%2C%22sapPrimary4%22%3A%22%23ffffff%22%2C%22sapPrimary5%22%3A%22%23fafafa%22%2C%22sapPrimary6%22%3A%22%23bfbfbf%22%2C%22sapPrimary7%22%3A%22%23333333%22%2C%22sapAccentColor1%22%3A%22%23e09d00%22%2C%22sapAccentColor2%22%3A%22%23e6600d%22%2C%22sapAccentColor3%22%3A%22%23c14646%22%2C%22sapAccentColor4%22%3A%22%23ab218e%22%2C%22sapAccentColor5%22%3A%22%23678bc7%22%2C%22sapAccentColor6%22%3A%22%230092d1%22%2C%22sapAccentColor7%22%3A%22%231a9898%22%2C%22sapAccentColor8%22%3A%22%23759421%22%2C%22sapErrorBackground%22%3A%22%23ffe4e4%22%2C%22sapWarningBackground%22%3A%22%23fef0db%22%2C%22sapSuccessBackground%22%3A%22%23e4f5e4%22%2C%22sapNeutralBackground%22%3A%22%23f4f5f6%22%2C%22sapErrorBorderColor%22%3A%22%23ee0000%22%2C%22sapWarningBorderColor%22%3A%22%23f9a429%22%2C%22sapSuccessBorderColor%22%3A%22%2338a238%22%2C%22sapNegativeTextColor%22%3A%22%23bb0000%22%2C%22sapCriticalTextColor%22%3A%22%23e78c07%22%2C%22sapPositiveTextColor%22%3A%22%232b7c2b%22%2C%22sapNeutralTextColor%22%3A%22%235e696e%22%2C%22sapErrorColor%22%3A%22%23ee0000%22%2C%22sapWarningColor%22%3A%22%23f9a429%22%2C%22sapSuccessColor%22%3A%22%2338a238%22%2C%22sapShell_BackgroundPatternColor%22%3A%22rgba(255%2C%20255%2C%20255%2C%200.08)%22%2C%22sapUiShellBackgroundPatternColor%22%3A%22rgba(255%2C%20255%2C%20255%2C%200.08)%22%2C%22sapUiPrimary1%22%3A%22%233f5161%22%2C%22sapUiPrimary2%22%3A%22%23427cac%22%2C%22sapUiPrimary3%22%3A%22%23eff4f9%22%2C%22sapUiPrimary4%22%3A%22%23ffffff%22%2C%22sapUiPrimary5%22%3A%22%23fafafa%22%2C%22sapUiPrimary6%22%3A%22%23bfbfbf%22%2C%22sapUiPrimary7%22%3A%22%23333333%22%7D%2C%22scopes%22%3A%7B%22sapContrast%22%3A%7B%22sapHighlightColor%22%3A%22%2391c8f6%22%2C%22sapBaseColor%22%3A%22%233f5161%22%2C%22sapBackgroundColor%22%3A%22%233f5161%22%2C%22sapTextColor%22%3A%22%23fafafa%22%2C%22sapLinkColor%22%3A%22%237ed0ff%22%2C%22sapSelectedColor%22%3A%22%2391c8f6%22%2C%22sapActiveColor%22%3A%22%2391c8f6%22%2C%22sapHighlightTextColor%22%3A%22%232f3c48%22%2C%22sapTitleColor%22%3A%22%23fafafa%22%2C%22sapNegativeColor%22%3A%22%23ff8888%22%2C%22sapCriticalColor%22%3A%22%23fabd64%22%2C%22sapPositiveColor%22%3A%22%23abe2ab%22%2C%22sapNeutralColor%22%3A%22%23d3d7d9%22%2C%22sapNegativeElementColor%22%3A%22%23ff8888%22%2C%22sapCriticalElementColor%22%3A%22%23fabd64%22%2C%22sapPositiveElementColor%22%3A%22%23abe2ab%22%2C%22sapNeutralElementColor%22%3A%22%23d3d7d9%22%2C%22sapContent_IconColor%22%3A%22%23cae4fb%22%2C%22sapContent_ContrastIconColor%22%3A%22%232f3c48%22%2C%22sapContent_NonInteractiveIconColor%22%3A%22%2397aabb%22%2C%22sapContent_MarkerIconColor%22%3A%22%238ca7d5%22%2C%22sapContent_MarkerTextColor%22%3A%22%23b7cfe4%22%2C%22sapContent_ImagePlaceholderBackground%22%3A%22%2369859d%22%2C%22sapContent_ImagePlaceholderForegroundColor%22%3A%22%23495e70%22%2C%22sapContent_FocusColor%22%3A%22%23ffffff%22%2C%22sapContent_ContrastFocusColor%22%3A%22%23000000%22%2C%22sapContent_SearchHighlightColor%22%3A%22%23058088%22%2C%22sapContent_LabelColor%22%3A%22%23dddddd%22%2C%22sapContent_DisabledTextColor%22%3A%22rgba(250%2C%20250%2C%20250%2C%200.5)%22%2C%22sapContent_ContrastTextThreshold%22%3A%220.5%22%2C%22sapContent_ContrastTextColor%22%3A%22%232f3c48%22%2C%22sapContent_ForegroundColor%22%3A%22%234d6377%22%2C%22sapContent_ForegroundBorderColor%22%3A%22%23889eb1%22%2C%22sapContent_ForegroundTextColor%22%3A%22%23fafafa%22%2C%22sapShell_Background%22%3A%22%236586a3%22%2C%22sapShell_BackgroundImage%22%3A%22linear-gradient(to%20bottom%2C%20%232a4863%2C%20%239dc0de)%22%2C%22sapShell_BackgroundGradient%22%3A%22linear-gradient(to%20bottom%2C%20%232a4863%2C%20%239dc0de)%22%2C%22sapShell_TextColor%22%3A%22%23ffffff%22%2C%22sapButton_Background%22%3A%22%23435667%22%2C%22sapButton_BorderColor%22%3A%22%23a0b2c1%22%2C%22sapButton_TextColor%22%3A%22%23cae4fb%22%2C%22sapButton_Disabled_TextColor%22%3A%22%232f3c48%22%2C%22sapButton_Hover_Background%22%3A%22%234f667a%22%2C%22sapButton_Hover_BorderColor%22%3A%22%23a0b2c1%22%2C%22sapButton_Hover_TextColor%22%3A%22%2362b1f2%22%2C%22sapButton_Reject_Background%22%3A%22%23435667%22%2C%22sapButton_Accept_Background%22%3A%22%23435667%22%2C%22sapField_Background%22%3A%22%23495e70%22%2C%22sapField_BorderColor%22%3A%22%237891a7%22%2C%22sapField_TextColor%22%3A%22%23ffffff%22%2C%22sapField_HelpBackground%22%3A%22%23495e70%22%2C%22sapField_Hover_Background%22%3A%22%23495e70%22%2C%22sapField_Hover_BorderColor%22%3A%22%2391c8f6%22%2C%22sapField_Hover_HelpBackground%22%3A%22%2391c8f6%22%2C%22sapField_Focus_Background%22%3A%22%23495e70%22%2C%22sapField_Focus_BorderColor%22%3A%22%237891a7%22%2C%22sapField_Focus_HelpBackground%22%3A%22%23495e70%22%2C%22sapField_Disabled_TextColor%22%3A%22rgba(250%2C%20250%2C%20250%2C%200.5)%22%2C%22sapField_ReadOnly_Background%22%3A%22transparent%22%2C%22sapField_ReadOnly_BorderColor%22%3A%22%237891a7%22%2C%22sapField_ReadOnly_HelpBackground%22%3A%22transparent%22%2C%22sapField_RequiredColor%22%3A%22%23d88b8b%22%2C%22sapField_InvalidColor%22%3A%22%23ff8888%22%2C%22sapField_InvalidBackground%22%3A%22%23495e70%22%2C%22sapField_WarningColor%22%3A%22%23fabd64%22%2C%22sapField_WarningBackground%22%3A%22%23495e70%22%2C%22sapField_SuccessColor%22%3A%22%23abe2ab%22%2C%22sapField_SuccessBackground%22%3A%22%23495e70%22%2C%22sapGroup_TitleBorderColor%22%3A%22%2369859d%22%2C%22sapGroup_TitleTextColor%22%3A%22%23fafafa%22%2C%22sapGroup_ContentBackground%22%3A%22%233f5161%22%2C%22sapGroup_ContentBorderColor%22%3A%22%234f667a%22%2C%22sapToolbar_SeparatorColor%22%3A%22rgba(239%2C%20244%2C%20249%2C%200.2)%22%2C%22sapList_HeaderBackground%22%3A%22%233c4d5c%22%2C%22sapList_HeaderBorderColor%22%3A%22%234d6377%22%2C%22sapList_HeaderTextColor%22%3A%22%23fafafa%22%2C%22sapList_BorderColor%22%3A%22%234d6377%22%2C%22sapList_SelectionBackgroundColor%22%3A%22%23496b8a%22%2C%22sapList_Background%22%3A%22%233f5161%22%2C%22sapList_Hover_Background%22%3A%22%2345596a%22%2C%22sapScrollBar_FaceColor%22%3A%22%230099db%22%2C%22sapScrollBar_TrackColor%22%3A%22%233f5161%22%2C%22sapScrollBar_BorderColor%22%3A%22%230099db%22%2C%22sapScrollBar_SymbolColor%22%3A%22%23cae4fb%22%2C%22sapScrollBar_Hover_FaceColor%22%3A%22%2300a4eb%22%2C%22sapPageHeader_Background%22%3A%22%233f5161%22%2C%22sapPageHeader_BorderColor%22%3A%22%234f667a%22%2C%22sapPageHeader_TextColor%22%3A%22%23fafafa%22%2C%22sapPageFooter_Background%22%3A%22%232f3c48%22%2C%22sapPageFooter_TextColor%22%3A%22%23fafafa%22%2C%22sapObjectHeader_Background%22%3A%22%233f5161%22%2C%22sapTile_Background%22%3A%22%233f5161%22%2C%22sapTile_TitleTextColor%22%3A%22%23fafafa%22%2C%22sapTile_TextColor%22%3A%22%23dddddd%22%2C%22sapTile_IconColor%22%3A%22%2383c1f5%22%2C%22sapChart_Bad%22%3A%22%23f55556%22%2C%22sapChart_Critical%22%3A%22%23f4ac44%22%2C%22sapChart_Good%22%3A%22%2369c683%22%2C%22sapChart_Neutral%22%3A%22%239ea8ad%22%2C%22sapChart_Sequence_Neutral%22%3A%22%239ea8ad%22%2C%22sapUiHighlight%22%3A%22%2391c8f6%22%2C%22sapUiBaseColor%22%3A%22%233f5161%22%2C%22sapUiBaseBG%22%3A%22%233f5161%22%2C%22sapUiGlobalBackgroundColor%22%3A%22%233f5161%22%2C%22sapUiBaseText%22%3A%22%23fafafa%22%2C%22sapUiLink%22%3A%22%237ed0ff%22%2C%22sapUiSelected%22%3A%22%2391c8f6%22%2C%22sapUiActive%22%3A%22%2391c8f6%22%2C%22sapUiHighlightTextColor%22%3A%22%232f3c48%22%2C%22sapUiTextTitle%22%3A%22%23fafafa%22%2C%22sapUiContentIconColor%22%3A%22%23cae4fb%22%2C%22sapUiContentContrastIconColor%22%3A%22%232f3c48%22%2C%22sapUiContentNonInteractiveIconColor%22%3A%22%2397aabb%22%2C%22sapUiContentMarkerIconColor%22%3A%22%238ca7d5%22%2C%22sapUiContentMarkerTextColor%22%3A%22%23b7cfe4%22%2C%22sapUiContentImagePlaceholderBackground%22%3A%22%2369859d%22%2C%22sapUiContentImagePlaceholderForegroundColor%22%3A%22%23495e70%22%2C%22sapUiContentFocusColor%22%3A%22%23ffffff%22%2C%22sapUiContentContrastFocusColor%22%3A%22%23000000%22%2C%22sapUiContentSearchHighlightColor%22%3A%22%23058088%22%2C%22sapUiContentLabelColor%22%3A%22%23dddddd%22%2C%22sapUiContentDisabledTextColor%22%3A%22rgba(250%2C%20250%2C%20250%2C%200.5)%22%2C%22sapUiContentContrastTextThreshold%22%3A%220.5%22%2C%22sapUiContentContrastTextColor%22%3A%22%232f3c48%22%2C%22sapUiContentForegroundColor%22%3A%22%234d6377%22%2C%22sapUiContentForegroundBorderColor%22%3A%22%23889eb1%22%2C%22sapUiContentForegroundTextColor%22%3A%22%23fafafa%22%2C%22sapUiShellBackground%22%3A%22%236586a3%22%2C%22sapUiShellBackgroundImage%22%3A%22linear-gradient(to%20bottom%2C%20%232a4863%2C%20%239dc0de)%22%2C%22sapUiShellBackgroundGradient%22%3A%22linear-gradient(to%20bottom%2C%20%232a4863%2C%20%239dc0de)%22%2C%22sapUiShellTextColor%22%3A%22%23ffffff%22%2C%22sapUiButtonBackground%22%3A%22%23435667%22%2C%22sapUiButtonBorderColor%22%3A%22%23a0b2c1%22%2C%22sapUiButtonTextColor%22%3A%22%23cae4fb%22%2C%22sapUiButtonDisabledTextColor%22%3A%22%232f3c48%22%2C%22sapUiButtonHoverBackground%22%3A%22%234f667a%22%2C%22sapUiButtonHoverBorderColor%22%3A%22%23a0b2c1%22%2C%22sapUiButtonHoverTextColor%22%3A%22%2362b1f2%22%2C%22sapUiButtonRejectBackground%22%3A%22%23435667%22%2C%22sapUiButtonAcceptBackground%22%3A%22%23435667%22%2C%22sapUiFieldBackground%22%3A%22%23495e70%22%2C%22sapUiFieldBorderColor%22%3A%22%237891a7%22%2C%22sapUiFieldTextColor%22%3A%22%23ffffff%22%2C%22sapUiFieldHelpBackground%22%3A%22%23495e70%22%2C%22sapUiFieldHoverBackground%22%3A%22%23495e70%22%2C%22sapUiFieldHoverBorderColor%22%3A%22%2391c8f6%22%2C%22sapUiFieldHoverHelpBackground%22%3A%22%2391c8f6%22%2C%22sapUiFieldFocusBackground%22%3A%22%23495e70%22%2C%22sapUiFieldFocusBorderColor%22%3A%22%237891a7%22%2C%22sapUiFieldFocusHelpBackground%22%3A%22%23495e70%22%2C%22sapUiFieldReadOnlyBackground%22%3A%22transparent%22%2C%22sapUiFieldReadOnlyBorderColor%22%3A%22%237891a7%22%2C%22sapUiFieldReadOnlyHelpBackground%22%3A%22transparent%22%2C%22sapUiFieldDisabledTextColor%22%3A%22rgba(250%2C%20250%2C%20250%2C%200.5)%22%2C%22sapUiFieldRequiredColor%22%3A%22%23d88b8b%22%2C%22sapUiFieldInvalidColor%22%3A%22%23ff8888%22%2C%22sapUiFieldInvalidBackground%22%3A%22%23495e70%22%2C%22sapUiFieldWarningColor%22%3A%22%23fabd64%22%2C%22sapUiFieldWarningBackground%22%3A%22%23495e70%22%2C%22sapUiFieldSuccessColor%22%3A%22%23abe2ab%22%2C%22sapUiFieldSuccessBackground%22%3A%22%23495e70%22%2C%22sapUiGroupTitleBorderColor%22%3A%22%2369859d%22%2C%22sapUiGroupTitleTextColor%22%3A%22%23fafafa%22%2C%22sapUiGroupContentBackground%22%3A%22%233f5161%22%2C%22sapUiGroupContentBorderColor%22%3A%22%234f667a%22%2C%22sapUiToolbarSeparatorColor%22%3A%22rgba(239%2C%20244%2C%20249%2C%200.2)%22%2C%22sapUiListHeaderBackground%22%3A%22%233c4d5c%22%2C%22sapUiListHeaderBorderColor%22%3A%22%234d6377%22%2C%22sapUiListHeaderTextColor%22%3A%22%23fafafa%22%2C%22sapUiListBorderColor%22%3A%22%234d6377%22%2C%22sapUiListSelectionBackgroundColor%22%3A%22%23496b8a%22%2C%22sapUiListBackground%22%3A%22%233f5161%22%2C%22sapUiListHoverBackground%22%3A%22%2345596a%22%2C%22sapUiScrollBarFaceColor%22%3A%22%230099db%22%2C%22sapUiScrollBarTrackColor%22%3A%22%233f5161%22%2C%22sapUiScrollBarBorderColor%22%3A%22%230099db%22%2C%22sapUiScrollBarSymbolColor%22%3A%22%23cae4fb%22%2C%22sapUiScrollBarHoverFaceColor%22%3A%22%2300a4eb%22%2C%22sapUiPageHeaderBackground%22%3A%22%233f5161%22%2C%22sapUiPageHeaderBorderColor%22%3A%22%234f667a%22%2C%22sapUiPageHeaderTextColor%22%3A%22%23fafafa%22%2C%22sapUiPageFooterBackground%22%3A%22%232f3c48%22%2C%22sapUiPageFooterTextColor%22%3A%22%23fafafa%22%2C%22sapUiObjectHeaderBackground%22%3A%22%233f5161%22%2C%22sapUiTileBackground%22%3A%22%233f5161%22%2C%22sapUiTileTitleTextColor%22%3A%22%23fafafa%22%2C%22sapUiTileTextColor%22%3A%22%23dddddd%22%2C%22sapUiTileIconColor%22%3A%22%2383c1f5%22%2C%22sapUiChartBad%22%3A%22%23f55556%22%2C%22sapUiChartCritical%22%3A%22%23f4ac44%22%2C%22sapUiChartGood%22%3A%22%2369c683%22%2C%22sapUiChartNeutral%22%3A%22%239ea8ad%22%2C%22sapUiChartSequenceNeutral%22%3A%22%239ea8ad%22%2C%22sapUiErrorBG%22%3A%22%23550000%22%2C%22sapUiWarningBG%22%3A%22%235c3803%22%2C%22sapUiSuccessBG%22%3A%22%23174417%22%2C%22sapUiNeutralBG%22%3A%22%23393e41%22%2C%22sapUiErrorBorder%22%3A%22%23ff8888%22%2C%22sapUiWarningBorder%22%3A%22%23fabd64%22%2C%22sapUiSuccessBorder%22%3A%22%23abe2ab%22%2C%22sapUiNeutralBorder%22%3A%22%23d3d7d9%22%2C%22sapUiNegativeElement%22%3A%22%23ff8888%22%2C%22sapUiCriticalElement%22%3A%22%23fabd64%22%2C%22sapUiPositiveElement%22%3A%22%23abe2ab%22%2C%22sapUiNeutralElement%22%3A%22%23d3d7d9%22%2C%22sapUiNegativeText%22%3A%22%23ff8888%22%2C%22sapUiCriticalText%22%3A%22%23fabd64%22%2C%22sapUiPositiveText%22%3A%22%23abe2ab%22%2C%22sapUiNeutralText%22%3A%22%23d3d7d9%22%2C%22sapUiNegative%22%3A%22%23ff8888%22%2C%22sapUiCritical%22%3A%22%23fabd64%22%2C%22sapUiPositive%22%3A%22%23abe2ab%22%2C%22sapUiNeutral%22%3A%22%23d3d7d9%22%2C%22sapUiErrorColor%22%3A%22%23ffbbbb%22%2C%22sapUiWarningColor%22%3A%22%23fcd295%22%2C%22sapUiSuccessColor%22%3A%22%23d1efd1%22%2C%22sapUiChartLabelHoverColor%22%3A%22%234f667a%22%2C%22sapUiChartLabelPressedColor%22%3A%22%23427cac%22%2C%22sapUiChartCategoryAxisLabelFontColor%22%3A%22%23fafafa%22%2C%22sapUiChartValueAxisLabelFontColor%22%3A%22%23fafafa%22%2C%22sapUiChartLegendLabelFontColor%22%3A%22%23fafafa%22%2C%22sapUiChartLegendTitleFontColor%22%3A%22%23fafafa%22%2C%22sapUiChartPaletteUndefinedColor%22%3A%22%23fafafa%22%2C%22sapUiChartGridlineColor%22%3A%22%23999999%22%2C%22sapUiChartReferenceLineColor%22%3A%22%23ffffff%22%2C%22sapUiChartDataLabelFontColor%22%3A%22%23fafafa%22%2C%22sapUiChartReferenceLineLabelColor%22%3A%22%232f3c48%22%2C%22sapUiChartPopoverDataItemFontColor%22%3A%22%23fafafa%22%2C%22sapUiChartPopoverGroupFontColor%22%3A%22%23fafafa%22%2C%22sapUiChartScrollBarThumbColor%22%3A%22%230099db%22%2C%22sapUiChartScrollBarTrackColor%22%3A%22%233f5161%22%2C%22sapUiChartScrollBarThumbHoverColor%22%3A%22%2300a4eb%22%2C%22sapUiChartMainTitleFontColor%22%3A%22%23fafafa%22%2C%22sapUiChartAxisTitleFontColor%22%3A%22%23fafafa%22%2C%22sapUiChartLightText%22%3A%22%23fafafa%22%2C%22sapUiChartZeroAxisColor%22%3A%22%23ffffff%22%2C%22sapUiChartDataPointBorderColor%22%3A%22%233f5161%22%2C%22sapUiChartDataPointBorderHoverSelectedColor%22%3A%22%23ffffff%22%2C%22sapUiChartDataPointNotSelectedBackgroundOpacity%22%3A%220.7%22%2C%22sapUiChartCategoryAxisLabelFontHoverColor%22%3A%22%23fafafa%22%2C%22sapUiChartCategoryAxisLabelFontPressedColor%22%3A%22%23fafafa%22%2C%22sapUiChartTargetColor%22%3A%22%23ffffff%22%2C%22sapUiChartTargetShadowColor%22%3A%22%23000000%22%2C%22sapUiChartBubbleBGOpacity%22%3A%220.9%22%2C%22sapUiChartScrollbarBorderColor%22%3A%22%230099db%22%2C%22sapUiChartNegativeLargeText%22%3A%22%23f77c7c%22%2C%22sapUiChartCriticalLargeText%22%3A%22%23f7c174%22%2C%22sapUiChartPositiveLargeText%22%3A%22%23a0dbb1%22%2C%22sapUiChartNeutralLargeText%22%3A%22%23f1f2f3%22%2C%22sapUiChartDataPointBG%22%3A%22%23848f94%22%2C%22sapUiChartDataPointBGBorderColor%22%3A%22%23848f94%22%2C%22sapUiChartDataLineColor%22%3A%22%23ffffff%22%2C%22sapUiChartRadialRemainingCircle%22%3A%22%23848f94%22%2C%22sapUiChartRadialRemainingCircleBorderColor%22%3A%22%23848f94%22%2C%22sapUiChartRadialBG%22%3A%22transparent%22%2C%22sapUiChartLegendHoverBackground%22%3A%22%2345596a%22%2C%22sapUiChartLegendSelectionBackground%22%3A%22%23496b8a%22%2C%22sapUiChartLegendSelectionHoverBackground%22%3A%22%234e7395%22%2C%22sapUiChartPaletteSemanticBadLight3%22%3A%22%23fbc4c4%22%2C%22sapUiChartPaletteSemanticBadLight2%22%3A%22%23f99d9e%22%2C%22sapUiChartPaletteSemanticBadLight1%22%3A%22%23f77c7c%22%2C%22sapUiChartPaletteSemanticBad%22%3A%22%23f55556%22%2C%22sapUiChartPaletteSemanticBadDark1%22%3A%22%23f33334%22%2C%22sapUiChartPaletteSemanticBadDark2%22%3A%22%23ef0e0f%22%2C%22sapUiChartPaletteSemanticCriticalLight3%22%3A%22%23fdecd5%22%2C%22sapUiChartPaletteSemanticCriticalLight2%22%3A%22%23fad7a4%22%2C%22sapUiChartPaletteSemanticCriticalLight1%22%3A%22%23f7c174%22%2C%22sapUiChartPaletteSemanticCritical%22%3A%22%23f4ac44%22%2C%22sapUiChartPaletteSemanticCriticalDark1%22%3A%22%23f19714%22%2C%22sapUiChartPaletteSemanticCriticalDark2%22%3A%22%23de890d%22%2C%22sapUiChartPaletteSemanticGoodLight3%22%3A%22%23d8f0df%22%2C%22sapUiChartPaletteSemanticGoodLight2%22%3A%22%23b3e2c0%22%2C%22sapUiChartPaletteSemanticGoodLight1%22%3A%22%238ed4a2%22%2C%22sapUiChartPaletteSemanticGood%22%3A%22%2369c683%22%2C%22sapUiChartPaletteSemanticGoodDark1%22%3A%22%2345b765%22%2C%22sapUiChartPaletteSemanticGoodDark2%22%3A%22%233fa45b%22%2C%22sapUiChartPaletteSemanticNeutralLight3%22%3A%22%23f1f2f3%22%2C%22sapUiChartPaletteSemanticNeutralLight2%22%3A%22%23d5dadc%22%2C%22sapUiChartPaletteSemanticNeutralLight1%22%3A%22%23bac1c4%22%2C%22sapUiChartPaletteSemanticNeutral%22%3A%22%239ea8ad%22%2C%22sapUiChartPaletteSemanticNeutralDark1%22%3A%22%23848f94%22%2C%22sapUiChartPaletteSemanticNeutralDark2%22%3A%22%2369767c%22%2C%22sapUiChartPaletteSequentialNeutralLight3%22%3A%22%23f1f2f3%22%2C%22sapUiChartPaletteSequentialNeutralLight2%22%3A%22%23d5dadc%22%2C%22sapUiChartPaletteSequentialNeutralLight1%22%3A%22%23bac1c4%22%2C%22sapUiChartPaletteSequentialNeutral%22%3A%22%239ea8ad%22%2C%22sapUiChartPaletteSequentialNeutralDark1%22%3A%22%23848f94%22%2C%22sapUiChartPaletteSequentialNeutralDark2%22%3A%22%2369767c%22%2C%22sapUiChartPaletteMidArea%22%3A%22%23ffffff%22%2C%22sapUiChoroplethBG%22%3A%22%237a99a9%22%2C%22sapUiChoroplethRegionBG%22%3A%22%23d5dadc%22%2C%22sapUiMapLegendBG%22%3A%22%233f5161%22%2C%22sapUiMapLegendBorderColor%22%3A%22%23ffffff%22%2C%22sapUiShellHoverBackground%22%3A%22%23eff4f9%22%2C%22sapUiShellActiveBackground%22%3A%22%23eff4f9%22%2C%22sapUiShellActiveTextColor%22%3A%22%232e5778%22%2C%22sapUiShellHoverToggleBackground%22%3A%22%23ffffff%22%2C%22sapUiShellContainerBackground%22%3A%22%23c4d9eb%22%2C%22sapUiShellAltContainerBackground%22%3A%22%231a2e40%22%2C%22sapUiShellGroupTextColor%22%3A%22%23ffffff%22%2C%22sapUiUx3ShellGradientTop%22%3A%22rgba(145%2C%20185%2C%20246%2C%200.03)%22%2C%22sapUiLinkActive%22%3A%22%237ed0ff%22%2C%22sapUiLinkVisited%22%3A%22%237ed0ff%22%2C%22sapUiLinkHover%22%3A%22%237ed0ff%22%2C%22sapUiLinkInverted%22%3A%22%23ffffff%22%2C%22sapUiButtonIconColor%22%3A%22%23cae4fb%22%2C%22sapUiButtonActiveBackground%22%3A%22%2391c8f6%22%2C%22sapUiButtonActiveBorderColor%22%3A%22%2391c8f6%22%2C%22sapUiButtonActiveTextColor%22%3A%22%232f3c48%22%2C%22sapUiButtonEmphasizedActiveBackground%22%3A%22%2391c8f6%22%2C%22sapUiButtonEmphasizedActiveBorderColor%22%3A%22%2391c8f6%22%2C%22sapUiButtonAcceptBorderColor%22%3A%22%23abe2ab%22%2C%22sapUiButtonAcceptHoverBackground%22%3A%22%234f667a%22%2C%22sapUiButtonAcceptHoverBorderColor%22%3A%22%23abe2ab%22%2C%22sapUiButtonAcceptActiveBackground%22%3A%22%23abe2ab%22%2C%22sapUiButtonAcceptActiveBorderColor%22%3A%22%23abe2ab%22%2C%22sapUiButtonAcceptTextColor%22%3A%22%23abe2ab%22%2C%22sapUiButtonRejectBorderColor%22%3A%22%23ff8888%22%2C%22sapUiButtonRejectHoverBackground%22%3A%22%234f667a%22%2C%22sapUiButtonRejectHoverBorderColor%22%3A%22%23ff8888%22%2C%22sapUiButtonRejectActiveBackground%22%3A%22%23ff8888%22%2C%22sapUiButtonRejectActiveBorderColor%22%3A%22%23ff8888%22%2C%22sapUiButtonRejectTextColor%22%3A%22%23ff8888%22%2C%22sapUiButtonLiteTextColor%22%3A%22%23cae4fb%22%2C%22sapUiButtonLiteHoverBackground%22%3A%22rgba(99%2C%20127%2C%20153%2C%200.5)%22%2C%22sapUiButtonLiteHoverBorderColor%22%3A%22rgba(99%2C%20127%2C%20153%2C%200.5)%22%2C%22sapUiButtonLiteActiveBackground%22%3A%22%2391c8f6%22%2C%22sapUiButtonLiteActiveBorderColor%22%3A%22%2391c8f6%22%2C%22sapUiButtonHeaderTextColor%22%3A%22%23cae4fb%22%2C%22sapUiButtonHeaderDisabledTextColor%22%3A%22%23cae4fb%22%2C%22sapUiButtonFooterTextColor%22%3A%22%23cae4fb%22%2C%22sapUiButtonFooterHoverBackground%22%3A%22rgba(99%2C%20127%2C%20153%2C%200.5)%22%2C%22sapUiButtonActionSelectBackground%22%3A%22%232f3c48%22%2C%22sapUiButtonActionSelectBorderColor%22%3A%22%234d6377%22%2C%22sapUiButtonLiteActionSelectHoverBackground%22%3A%22%23354452%22%2C%22sapUiToggleButtonPressedBackground%22%3A%22%2362b1f2%22%2C%22sapUiToggleButtonPressedBorderColor%22%3A%22%234ba5f0%22%2C%22sapUiToggleButtonPressedTextColor%22%3A%22%232f3c48%22%2C%22sapUiToggleButtonPressedHoverBackground%22%3A%22%2391c8f6%22%2C%22sapUiToggleButtonPressedHoverBorderColor%22%3A%22%2391c8f6%22%2C%22sapUiSegmentedButtonBackground%22%3A%22%23435667%22%2C%22sapUiSegmentedButtonBorderColor%22%3A%22%238199ad%22%2C%22sapUiSegmentedButtonTextColor%22%3A%22%23cae4fb%22%2C%22sapUiSegmentedButtonHoverBackground%22%3A%22%234f667a%22%2C%22sapUiSegmentedButtonActiveBackground%22%3A%22%2391c8f6%22%2C%22sapUiSegmentedButtonActiveTextColor%22%3A%22%232f3c48%22%2C%22sapUiSegmentedButtonSelectedBackground%22%3A%22%2362b1f2%22%2C%22sapUiSegmentedButtonSelectedTextColor%22%3A%22%232f3c48%22%2C%22sapUiSegmentedButtonSelectedHoverBackground%22%3A%22%2391c8f6%22%2C%22sapUiSegmentedButtonSelectedHoverBorderColor%22%3A%22%2391c8f6%22%2C%22sapUiSegmentedButtonIconColor%22%3A%22%23cae4fb%22%2C%22sapUiSegmentedButtonActiveIconColor%22%3A%22%232f3c48%22%2C%22sapUiSegmentedButtonSelectedIconColor%22%3A%22%232f3c48%22%2C%22sapUiSegmentedButtonFooterBorderColor%22%3A%22%23a0b2c1%22%2C%22sapUiSegmentedButtonFooterHoverBackground%22%3A%22%234f667a%22%2C%22sapUiFieldActiveBackground%22%3A%22%2391c8f6%22%2C%22sapUiFieldActiveBorderColor%22%3A%22%2391c8f6%22%2C%22sapUiFieldActiveTextColor%22%3A%22%232f3c48%22%2C%22sapUiFieldPlaceholderTextColor%22%3A%22%23c3d7e8%22%2C%22sapUiListTextColor%22%3A%22%23fafafa%22%2C%22sapUiListVerticalBorderColor%22%3A%22%23536b80%22%2C%22sapUiListSelectionHoverBackground%22%3A%22%234e7395%22%2C%22sapUiListFooterBackground%22%3A%22%232f3c48%22%2C%22sapUiListFooterTextColor%22%3A%22%23fafafa%22%2C%22sapUiListGroupHeaderBackground%22%3A%22%233f5161%22%2C%22sapUiListTableGroupHeaderBackground%22%3A%22%233b4c5b%22%2C%22sapUiListTableGroupHeaderBorderColor%22%3A%22%2369859e%22%2C%22sapUiListTableGroupHeaderTextColor%22%3A%22%23b7cfe4%22%2C%22sapUiListTableFooterBorder%22%3A%22%2369859e%22%2C%22sapUiListTableFixedBorder%22%3A%22%239dafbf%22%2C%22sapUiPageFooterBorderColor%22%3A%22%23475b6d%22%2C%22sapUiObjectHeaderBorderColor%22%3A%22%234f667a%22%2C%22sapUiCalendarColorToday%22%3A%22%23e57acf%22%2C%22sapUiDragAndDropColor%22%3A%22%2397aabb%22%2C%22sapUiDragAndDropBackground%22%3A%22%233f5161%22%2C%22sapUiDragAndDropBorderColor%22%3A%22%23889eb1%22%2C%22sapUiDragAndDropActiveColor%22%3A%22%237ed0ff%22%2C%22sapUiDragAndDropActiveBackground%22%3A%22rgba(126%2C%20208%2C%20255%2C%200.1)%22%2C%22sapUiDragAndDropActiveBorderColor%22%3A%22%237ed0ff%22%2C%22sapUiShadowLevel0%22%3A%220%200%200%201px%20rgba(255%2C%20255%2C%20255%2C%200.2)%22%2C%22sapUiShadowLevel1%22%3A%220%200.125rem%200.5rem%200%20rgba(0%2C%200%2C%200%2C%200.2)%2C%200%200%200%201px%20rgba(255%2C%20255%2C%20255%2C%200.2)%22%2C%22sapUiShadowLevel2%22%3A%220%200.625rem%201.875rem%200%20rgba(0%2C%200%2C%200%2C%200.2)%2C%200%200%200%201px%20rgba(255%2C%20255%2C%20255%2C%200.2)%22%2C%22sapUiShadowLevel3%22%3A%220%201.25rem%205rem%200%20rgba(0%2C%200%2C%200%2C%200.2)%2C%200%200%200%201px%20rgba(255%2C%20255%2C%20255%2C%200.2)%22%2C%22sapUiShadowText%22%3A%220%200%200.125rem%20%23000000%22%2C%22sapUiShadowHeader%22%3A%220%200.125rem%200%200%20%233f5161%2C%20inset%200%20-0.125rem%200%200%20%234f667a%22%2C%22sapUiExtraLightBG%22%3A%22%233f5161%22%2C%22sapUiButtonStandardBG%22%3A%22%233f5161%22%2C%22sapUiText%22%3A%22%23fafafa%22%2C%22sapUiEmphasizedLine%22%3A%22%2391c8f6%22%2C%22sapUiTableRowSelectionBG%22%3A%22%2391c8f6%22%2C%22sapUiTableRowSelectionReadOnlyBG%22%3A%22%2391c8f6%22%2C%22sapUiTextDisabled%22%3A%22%23ffffff%22%2C%22sapUiNotifierHoverColor%22%3A%22%2391c8f6%22%2C%22sapUiNotificationTimestamp%22%3A%22%23ffffff%22%2C%22sapUiButtonAcceptDisabledBorderColor%22%3A%22%23abe2ab%22%2C%22sapUiButtonAcceptDisabledBackground%22%3A%22%23435667%22%2C%22sapUiButtonRejectDisabledBorderColor%22%3A%22%23ff8888%22%2C%22sapUiButtonRejectDisabledBackground%22%3A%22%23435667%22%2C%22sapUiToggleButtonPressedDisabledBackground%22%3A%22%2362b1f2%22%2C%22sapUiToggleButtonPressedDisabledBorderColor%22%3A%22%234ba5f0%22%2C%22sapUiToggleButtonPressedDisabledTextColor%22%3A%22%23f2f8fe%22%2C%22sapUiPositiveBG%22%3A%22%23abe2ab%22%2C%22sapUiLightBoxMagnifyingGlassBackgroundColor%22%3A%22%237ed0ff%22%2C%22_sap_ui_core_LocalBusyIndicator_Background%22%3A%22rgba(63%2C%2081%2C%2097%2C%200.72)%22%2C%22_sap_ui_core_LocalBusyIndicator_BackgroundIE%22%3A%22%233f5161%22%2C%22sapErrorBackground%22%3A%22%23550000%22%2C%22sapWarningBackground%22%3A%22%235c3803%22%2C%22sapSuccessBackground%22%3A%22%23174417%22%2C%22sapNeutralBackground%22%3A%22%23393e41%22%2C%22sapErrorBorderColor%22%3A%22%23ff8888%22%2C%22sapWarningBorderColor%22%3A%22%23fabd64%22%2C%22sapSuccessBorderColor%22%3A%22%23abe2ab%22%2C%22sapNegativeTextColor%22%3A%22%23ff8888%22%2C%22sapCriticalTextColor%22%3A%22%23fabd64%22%2C%22sapPositiveTextColor%22%3A%22%23abe2ab%22%2C%22sapNeutralTextColor%22%3A%22%23d3d7d9%22%2C%22sapErrorColor%22%3A%22%23ff8888%22%2C%22sapWarningColor%22%3A%22%23fabd64%22%2C%22sapSuccessColor%22%3A%22%23abe2ab%22%7D%7D%7D')
+}
+
+pre.prettyprint {
+	box-sizing: border-box;
+	margin: 0 0 3rem 0;
+	width: 100%;
+	padding: 1rem;
+	overflow: auto;
+	border-top: none;
+	border-radius: 0.375rem 0.375rem;
+	border: 0.0625rem solid #C1C1C1;
+	background-color: #394958;
+}
+
+pre.prettyprint > xmp {
+	margin: 0;
+	font-family: Menlo, "Lucida Console", Monaco, "Courier New", monospace !important;
+	font-size: 14px !important;
+	line-height: 1.3rem !important;
+}
