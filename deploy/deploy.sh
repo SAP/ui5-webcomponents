@@ -80,6 +80,8 @@ if [ "$TRAVIS_BRANCH" == "$TRAVIS_LATEST_RELEASE_WEBSITE_BRANCH" ]; then
 
   # Clean gh-pages existing contents
   rm -rf gh-pages/master|| exit 0
+  
+  mkdir gh-pages/master
 
   # Run the build again so rollup can generate the correct public path urls
   cd $TRAVIS_BUILD_DIR
