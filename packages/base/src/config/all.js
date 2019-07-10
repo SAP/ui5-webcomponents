@@ -6,4 +6,4 @@ export {
 	setTheme,
 	getNoConflict,
 	setNoConflict,
-}
+};
