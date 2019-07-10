@@ -1,5 +1,5 @@
-commit d0dcacf8b9eac8a820e5ebfe1a3ddb35648a81ce
+commit d6b1c48d989e249edacc17d149c13857cc3504f8
 Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Wed Jul 10 12:36:04 2019 +0300
+Date:   Wed Jul 10 13:53:42 2019 +0300
 
-    fix: deploying of master branch (#637)
+    chore: deploy on necessary branches only (#639)
