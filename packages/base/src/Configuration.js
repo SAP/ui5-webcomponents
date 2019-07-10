@@ -44,10 +44,6 @@ const getWCNoConflict = () => {
 	return CONFIGURATION["xx-wc-no-conflict"];
 };
 
-const _setWCNoConflict = value => {
-	CONFIGURATION["xx-wc-no-conflict"] = value;
-};
-
 /* Calendar stuff */
 const getCalendarType = () => {
 	initConfiguration();
@@ -140,5 +136,4 @@ export {
 	getLocale,
 	getSupportedLanguages,
 	getOriginInfo,
-	_setWCNoConflict,
 };

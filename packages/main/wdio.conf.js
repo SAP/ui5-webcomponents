@@ -277,7 +277,7 @@ exports.config = {
         if (waitFor.includes(commandName)) {
             browser.executeAsync(function (done) {
                 // run all the tests in no conflict mode
-                window["sap-ui-webcomponents-main-bundle"].configuration._setWCNoConflict(true);
+                window["sap-ui-webcomponents-main-bundle"].config.setNoConflict(true);
                 RenderScheduler.whenFinished().then(done);
             });
         }
