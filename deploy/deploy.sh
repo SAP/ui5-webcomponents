@@ -51,7 +51,7 @@ if [ "$TRAVIS_BRANCH" == "$TRAVIS_LATEST_RELEASE_WEBSITE_BRANCH" ]; then
 
   # Remove all folders and files from gh-pages, but folder master
   cd gh-pages
-  rm -v !("master")|| exit 0
+  find . -maxdepth 1 ! -name master -delete|| exit 0
   cd ..
 
   # Run the build again so rollup can generate the correct public path urls
@@ -80,6 +80,8 @@ if [ "$TRAVIS_BRANCH" == "$TRAVIS_LATEST_RELEASE_WEBSITE_BRANCH" ]; then
 
   # Clean gh-pages existing contents
   rm -rf gh-pages/master|| exit 0
+  
+  mkdir gh-pages/master
 
   # Run the build again so rollup can generate the correct public path urls
   cd $TRAVIS_BUILD_DIR
