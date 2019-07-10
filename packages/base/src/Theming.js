@@ -1,13 +1,11 @@
-import { getTheme, _setTheme } from "./Configuration.js";
+import { _getTheme as getConfiguredTheme } from "./Configuration.js";
 import { addCustomCSS, getCustomCSS } from "./theming/CustomStyle.js";
 import { getThemeProperties } from "./theming/ThemeProperties.js";
 import { injectThemeProperties } from "./theming/StyleInjection.js";
 
+const defaultTheme = "sap_fiori_3";
+let theme = getConfiguredTheme();
 const themeChangeCallbacks = [];
-
-const getDefaultTheme = () => {
-	return "sap_fiori_3";
-};
 
 const attachThemeChange = function attachThemeChange(callback) {
 	if (themeChangeCallbacks.indexOf(callback) === -1) {
@@ -15,27 +13,28 @@ const attachThemeChange = function attachThemeChange(callback) {
 	}
 };
 
-const applyTheme = async () => {
+const _applyTheme = async () => {
 	let cssText = "";
-	const theme = getTheme();
 
-	const defaultTheme = getDefaultTheme();
 	if (theme !== defaultTheme) {
 		cssText = await getThemeProperties("@ui5/webcomponents", theme);
 	}
 	injectThemeProperties(cssText);
 };
 
-const setTheme = async theme => {
-	if (theme === getTheme()) {
+const getTheme = () => {
+	return theme;
+};
+
+const setTheme = async newTheme => {
+	if (theme === newTheme) {
 		return;
 	}
 
-	// Update configuration
-	_setTheme(theme);
+	theme = newTheme;
 
 	// Update CSS Custom Properties
-	await applyTheme();
+	await _applyTheme();
 
 	themeChangeCallbacks.forEach(callback => callback(theme));
 };
@@ -52,9 +51,9 @@ const getEffectiveStyle = ElementClass => {
 };
 
 export {
-	getDefaultTheme,
 	attachThemeChange,
-	applyTheme,
+	_applyTheme,
+	getTheme,
 	setTheme,
 	getEffectiveStyle,
 	addCustomCSS,

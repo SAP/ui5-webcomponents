@@ -6,10 +6,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	var Configuration = window["sap-ui-webcomponents-main-bundle"].configuration;
 	var Theming = window["sap-ui-webcomponents-main-bundle"].Theming;
 	var COMPACT = Configuration.getCompactSize();
-	var RTL = Configuration.getRTL();
+	var RTL = Theming.getRTL();
 	var THEME = Configuration.getTheme();
 	var HCB = "sap_belize_hcb";
-	var FIORI3 = "sap_fiori_3"
+	var FIORI3 = "sap_fiori_3";
 	var btnRTL = document.getElementById("btnRTL");
 	var btnCompact = document.getElementById("btnCompact");
 	var btnTheme = document.getElementById("btnTheme");

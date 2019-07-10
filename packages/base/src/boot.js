@@ -2,7 +2,7 @@ import whenDOMReady from "./util/whenDOMReady.js";
 import EventEnrichment from "./events/EventEnrichment.js";
 import { insertIconFontFace } from "./IconFonts.js";
 import DOMEventHandler from "./DOMEventHandler.js";
-import { applyTheme } from "./Theming.js";
+import { _applyTheme } from "./Theming.js";
 import whenPolyfillLoaded from "./compatibility/whenPolyfillLoaded.js";
 
 EventEnrichment.run();
@@ -16,7 +16,7 @@ const boot = () => {
 
 	bootPromise = new Promise(async resolve => {
 		await whenDOMReady();
-		applyTheme();
+		await _applyTheme();
 		insertIconFontFace();
 		DOMEventHandler.start();
 		await whenPolyfillLoaded();

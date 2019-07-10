@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getTheme } from "@ui5/webcomponents-base/dist/Configuration.js";
+import { getTheme } from "@ui5/webcomponents-base/dist/Theming.js";
 import {
 	isBackSpace,
 	isEnter,

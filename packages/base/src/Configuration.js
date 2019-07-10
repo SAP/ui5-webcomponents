@@ -15,7 +15,7 @@ const CONFIGURATION = {
 };
 
 /* General settings */
-const getTheme = () => {
+const _getTheme = () => {
 	initConfiguration();
 	return CONFIGURATION.theme;
 };
@@ -69,10 +69,6 @@ const getLocale = () => {
 	return CONFIGURATION.language;
 };
 
-const _setTheme = themeName => {
-	CONFIGURATION.theme = themeName;
-};
-
 const booleanMapping = new Map();
 booleanMapping.set("true", true);
 booleanMapping.set("false", false);
@@ -86,7 +82,7 @@ const parseConfigurationScript = () => {
 	if (configScript) {
 		try {
 			configJSON = JSON.parse(configScript.innerHTML);
-		} catch (е) {
+		} catch (err) {
 			console.warn("Incorrect data-sap-ui-config format. Please use JSON"); /* eslint-disable-line */
 		}
 
@@ -135,15 +131,14 @@ const initConfiguration = () => {
 };
 
 export {
-	getTheme,
+	_getTheme,
 	getRTL,
 	getLanguage,
 	getCompactSize,
 	getWCNoConflict,
 	getCalendarType,
 	getLocale,
-	_setTheme,
-	_setWCNoConflict,
 	getSupportedLanguages,
 	getOriginInfo,
+	_setWCNoConflict,
 };
