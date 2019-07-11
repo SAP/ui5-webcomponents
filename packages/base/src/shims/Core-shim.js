@@ -1,5 +1,5 @@
 import { inject as injectCore } from "@ui5/webcomponents-core/dist/sap/ui/core/Core.js";
-import * as Configuration from "../Configuration.js";
+import * as Configuration from "../InitialConfiguration.js";
 import * as FormatSettings from "../FormatSettings.js";
 
 /**

@@ -3,7 +3,7 @@ import getDesigntimePropertyAsArray from "./util/getDesigntimePropertyAsArray.js
 
 let initialized = false;
 
-const CONFIGURATION = {
+const InitialConfiguration = {
 	theme: "sap_fiori_3",
 	rtl: null,
 	language: null,
@@ -17,22 +17,22 @@ const CONFIGURATION = {
 /* General settings */
 const _getTheme = () => {
 	initConfiguration();
-	return CONFIGURATION.theme;
+	return InitialConfiguration.theme;
 };
 
 const getRTL = () => {
 	initConfiguration();
-	return CONFIGURATION.rtl;
+	return InitialConfiguration.rtl;
 };
 
 const getLanguage = () => {
 	initConfiguration();
-	return CONFIGURATION.language;
+	return InitialConfiguration.language;
 };
 
 const _getCompactSize = () => {
 	initConfiguration();
-	return CONFIGURATION.compactSize;
+	return InitialConfiguration.compactSize;
 };
 
 const getSupportedLanguages = () => {
@@ -41,14 +41,14 @@ const getSupportedLanguages = () => {
 
 const _getWCNoConflict = () => {
 	initConfiguration();
-	return CONFIGURATION["xx-wc-no-conflict"];
+	return InitialConfiguration["xx-wc-no-conflict"];
 };
 
 /* Calendar stuff */
 const getCalendarType = () => {
 	initConfiguration();
-	if (CONFIGURATION.calendarType) {
-		const type = Object.keys(CalendarType).filter(calType => calType === CONFIGURATION.calendarType)[0];
+	if (InitialConfiguration.calendarType) {
+		const type = Object.keys(CalendarType).filter(calType => calType === InitialConfiguration.calendarType)[0];
 
 		if (type) {
 			return type;
@@ -62,7 +62,7 @@ const getOriginInfo = () => {};
 
 const getLocale = () => {
 	initConfiguration();
-	return CONFIGURATION.language;
+	return InitialConfiguration.language;
 };
 
 const booleanMapping = new Map();
@@ -110,7 +110,7 @@ const parseURLParameters = () => {
 
 const applyConfigurations = () => {
 	Object.keys(runtimeConfig).forEach(key => {
-		CONFIGURATION[key] = runtimeConfig[key];
+		InitialConfiguration[key] = runtimeConfig[key];
 	});
 };
 

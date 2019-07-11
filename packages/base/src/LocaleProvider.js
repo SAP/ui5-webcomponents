@@ -1,6 +1,6 @@
 import Locale from "./Locale.js";
 import detectNavigatorLanguage from "./util/detectNavigatorLanguage.js";
-import { getLanguage as getConfigLanguage } from "./Configuration.js";
+import { getLanguage as getConfigLanguage } from "./InitialConfiguration.js";
 
 const convertToLocaleOrNull = lang => {
 	try {

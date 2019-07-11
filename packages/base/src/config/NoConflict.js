@@ -1,4 +1,4 @@
-import { _getWCNoConflict } from "../Configuration.js";
+import { _getWCNoConflict } from "../InitialConfiguration.js";
 
 let noConflict = _getWCNoConflict();
 

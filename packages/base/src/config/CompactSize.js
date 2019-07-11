@@ -1,4 +1,4 @@
-import { _getCompactSize } from "../Configuration.js";
+import { _getCompactSize } from "../InitialConfiguration.js";
 
 const compactSize = _getCompactSize();
 
