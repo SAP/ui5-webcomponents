@@ -9,7 +9,7 @@ There are several configuration settings that affect all UI5 Web Components glob
 ------------ | ----------------------------------------------- | ------------- | -------------------------------------------------------------
 theme        | sap_fiori_3, sap_belize, sap_belize_hcb         | sap_fiori_3   | Visual theme
 language     | en, de, es, etc...                              | en            | Language to be used for translatable texts
-rtl*         | true, false                                     | false         | When true, sets global text direction to right-to-left
+RTL*         | true, false                                     | false         | When true, sets global text direction to right-to-left
 compactSize  | true, false                                     | false         | When set, enforces compact density (smaller margins/paddings)
 calendarType | Gregorian, Islamic, Buddhist, Japanese, Persian | Gregorian     | Default calendar type for date-related web components
 noConflict** | true, false | Object                            | false         | When set to true, all events will be fired with a "ui5-" prefix only
@@ -59,3 +59,27 @@ In order to provide configuration settings, include the following ```<script>```
 ```
 
 and provide the desired options in the JSON object inside, as shown in the example.
+
+## Configuration Module Import
+
+The configuration script is used to set the initial configuration in a declarative manner.
+However, reading/modifying the configuration reliably can only be done programmatically.
+
+To do so, please import the desired functionality from the `"@ui5/webcomponents-base/dist/Configuration.js"` module.
+
+For example:
+```js
+import { getTheme, setTheme, getCompactSize } from "@ui5/webcomponents-base/dist/Configuration.js";
+``` 
+
+Here is a full list of the public functions, exported by `Configuration.js`
+
+Setting | Getter | Setter
+--------|--------|-------
+theme   | getTheme() | setTheme(theme)
+RTL   | getRTL() | *N/A*
+language   | getLanguage() | *N/A*
+compactSize   | getCompactSize() | *N/A*
+calendarType   | getCalendarType() | *N/A*
+noConflict | getNoConflict() | SetNoConflict(noConflictData)
+
