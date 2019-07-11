@@ -1,11 +1,7 @@
-commit 9985634faf21d472ebf24927df8488416a0c5b60
-Author: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
-Date:   Thu Jul 11 09:53:26 2019 +0300
+commit 86ad25b6ec9ce6c8a9dc20df5fc11e0bfa1cb0f7
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Thu Jul 11 15:07:08 2019 +0300
 
-    chore(deps): bump lodash from 4.17.11 to 4.17.14 (#642)
+    refactor: make configuration initial only (#638)
     
-    Bumps [lodash](https://github.com/lodash/lodash) from 4.17.11 to 4.17.14.
-    - [Release notes](https://github.com/lodash/lodash/releases)
-    - [Commits](https://github.com/lodash/lodash/compare/4.17.11...4.17.14)
-    
-    Signed-off-by: dependabot[bot] <support@github.com>
+    BREAKING CHANGE: Theming.js no longer has getTheme and setTheme methods. Use Configuration.js instead.

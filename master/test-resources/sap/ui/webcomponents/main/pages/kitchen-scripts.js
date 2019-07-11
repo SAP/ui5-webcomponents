@@ -4,12 +4,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	var sideNav = document.getElementById("side-nav");
 	var mainContent = document.getElementById("main-content");
 	var Configuration = window["sap-ui-webcomponents-main-bundle"].configuration;
-	var Theming = window["sap-ui-webcomponents-main-bundle"].Theming;
 	var COMPACT = Configuration.getCompactSize();
 	var RTL = Configuration.getRTL();
 	var THEME = Configuration.getTheme();
 	var HCB = "sap_belize_hcb";
-	var FIORI3 = "sap_fiori_3"
+	var FIORI3 = "sap_fiori_3";
 	var btnRTL = document.getElementById("btnRTL");
 	var btnCompact = document.getElementById("btnCompact");
 	var btnTheme = document.getElementById("btnTheme");
@@ -70,7 +69,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 	btnTheme.addEventListener('press', function(e) {
 		var theme = e.target.pressed ? HCB : FIORI3;
-		Theming.setTheme(theme);
+		Configuration.setTheme(theme);
 
 		if (theme === HCB) {
 			document.body.style="background: #333";
