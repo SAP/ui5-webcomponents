@@ -1,4 +1,4 @@
-import { _getRTL as getConfiguredRTL } from "../InitialConfiguration.js";
+import { getRTL as getConfiguredRTL } from "../InitialConfiguration.js";
 import { getLanguage } from "./Language.js";
 import getDesigntimePropertyAsArray from "../util/getDesigntimePropertyAsArray.js";
 import detectNavigatorLanguage from "../util/detectNavigatorLanguage.js";

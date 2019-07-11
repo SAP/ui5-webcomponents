@@ -10,32 +10,32 @@ const initialConfig = {
 };
 
 /* General settings */
-const _getTheme = () => {
+const getTheme = () => {
 	initConfiguration();
 	return initialConfig.theme;
 };
 
-const _getRTL = () => {
+const getRTL = () => {
 	initConfiguration();
 	return initialConfig.rtl;
 };
 
-const _getLanguage = () => {
+const getLanguage = () => {
 	initConfiguration();
 	return initialConfig.language;
 };
 
-const _getCompactSize = () => {
+const getCompactSize = () => {
 	initConfiguration();
 	return initialConfig.compactSize;
 };
 
-const _getWCNoConflict = () => {
+const getNoConflict = () => {
 	initConfiguration();
 	return initialConfig["xx-wc-no-conflict"];
 };
 
-const _getCalendarType = () => {
+const getCalendarType = () => {
 	initConfiguration();
 	return initialConfig.calendarType;
 };
@@ -102,10 +102,10 @@ const initConfiguration = () => {
 };
 
 export {
-	_getTheme,
-	_getRTL,
-	_getLanguage,
-	_getCompactSize,
-	_getWCNoConflict,
-	_getCalendarType,
+	getTheme,
+	getRTL,
+	getLanguage,
+	getCompactSize,
+	getNoConflict,
+	getCalendarType,
 };

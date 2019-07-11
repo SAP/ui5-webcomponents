@@ -1,6 +1,6 @@
-import { _getCompactSize } from "../InitialConfiguration.js";
+import { getCompactSize as getConfiguredCompactSize } from "../InitialConfiguration.js";
 
-const compactSize = _getCompactSize();
+const compactSize = getConfiguredCompactSize();
 
 const getCompactSize = () => {
 	return compactSize;

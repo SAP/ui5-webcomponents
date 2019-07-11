@@ -1,7 +1,7 @@
-import { _getLanguage } from "../InitialConfiguration.js";
+import { getLanguage as getConfiguredLanguage } from "../InitialConfiguration.js";
 import getDesigntimePropertyAsArray from "../util/getDesigntimePropertyAsArray.js";
 
-const language = _getLanguage();
+const language = getConfiguredLanguage();
 
 const getLanguage = () => {
 	return language;

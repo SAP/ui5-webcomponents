@@ -1,4 +1,4 @@
-import { _getTheme as getConfiguredTheme } from "../InitialConfiguration.js";
+import { getTheme as getConfiguredTheme } from "../InitialConfiguration.js";
 import { _applyTheme } from "../Theming.js";
 
 let theme = getConfiguredTheme();
