@@ -1,11 +1,11 @@
-commit cb462119e0972cbc4b928602401dddf5520608de
+commit 9985634faf21d472ebf24927df8488416a0c5b60
 Author: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
-Date:   Thu Jul 11 06:03:27 2019 +0300
+Date:   Thu Jul 11 09:53:26 2019 +0300
 
-    chore(deps): bump lodash.merge from 4.6.1 to 4.6.2 (#641)
+    chore(deps): bump lodash from 4.17.11 to 4.17.14 (#642)
     
-    Bumps [lodash.merge](https://github.com/lodash/lodash) from 4.6.1 to 4.6.2.
+    Bumps [lodash](https://github.com/lodash/lodash) from 4.17.11 to 4.17.14.
     - [Release notes](https://github.com/lodash/lodash/releases)
-    - [Commits](https://github.com/lodash/lodash/commits)
+    - [Commits](https://github.com/lodash/lodash/compare/4.17.11...4.17.14)
     
     Signed-off-by: dependabot[bot] <support@github.com>
