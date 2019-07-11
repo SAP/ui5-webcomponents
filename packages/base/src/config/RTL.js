@@ -1,6 +1,6 @@
-import { getRTL, getLanguage } from "../InitialConfiguration.js";
-import getDesigntimePropertyAsArray from "./getDesigntimePropertyAsArray.js";
-import detectNavigatorLanguage from "./detectNavigatorLanguage.js";
+import { _getRTL as getConfiguredRTL, getLanguage } from "../InitialConfiguration.js";
+import getDesigntimePropertyAsArray from "../util/getDesigntimePropertyAsArray.js";
+import detectNavigatorLanguage from "../util/detectNavigatorLanguage.js";
 
 const M_ISO639_OLD_TO_NEW = {
 	"iw": "he",
@@ -17,8 +17,8 @@ const impliesRTL = language => {
 	return A_RTL_LOCALES.indexOf(language) >= 0;
 };
 
-const getEffectiveRTL = () => {
-	const configurationRTL = getRTL();
+const getRTL = () => {
+	const configurationRTL = getConfiguredRTL();
 
 	if (configurationRTL !== null) {
 		return !!configurationRTL;
@@ -27,4 +27,4 @@ const getEffectiveRTL = () => {
 	return impliesRTL(getLanguage() || detectNavigatorLanguage());
 };
 
-export default getEffectiveRTL;
+export { getRTL }; // eslint-disable-line

@@ -20,7 +20,7 @@ const _getTheme = () => {
 	return InitialConfiguration.theme;
 };
 
-const getRTL = () => {
+const _getRTL = () => {
 	initConfiguration();
 	return InitialConfiguration.rtl;
 };
@@ -128,7 +128,7 @@ const initConfiguration = () => {
 
 export {
 	_getTheme,
-	getRTL,
+	_getRTL,
 	getLanguage,
 	_getCompactSize,
 	_getWCNoConflict,

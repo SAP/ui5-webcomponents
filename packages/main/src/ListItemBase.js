@@ -3,7 +3,7 @@ import FocusHelper from "@ui5/webcomponents-base/dist/FocusHelper.js";
 import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import { isDesktop, isPhone } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 import { getCompactSize } from "@ui5/webcomponents-base/dist/config/CompactSize.js";
-import getEffectiveRTL from "@ui5/webcomponents-base/dist/util/getEffectiveRTL.js";
+import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 
 // Styles
 import styles from "./generated/themes/ListItemBase.css.js";
@@ -121,7 +121,7 @@ class ListItemBase extends UI5Element {
 	}
 
 	get rtl() {
-		return getEffectiveRTL() ? "rtl" : undefined;
+		return getRTL() ? "rtl" : undefined;
 	}
 }
 
