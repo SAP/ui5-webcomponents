@@ -1,6 +1,6 @@
 import boot from "./boot.js";
 import { getNoConflict } from "./config/NoConflict.js";
-import { getCompactSize } from "./Configuration.js";
+import { getCompactSize } from "./config/CompactSize.js";
 import DOMObserver from "./compatibility/DOMObserver.js";
 import UI5ElementMetadata from "./UI5ElementMetadata.js";
 import Integer from "./types/Integer.js";

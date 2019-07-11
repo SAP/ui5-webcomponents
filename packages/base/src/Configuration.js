@@ -30,7 +30,7 @@ const getLanguage = () => {
 	return CONFIGURATION.language;
 };
 
-const getCompactSize = () => {
+const _getCompactSize = () => {
 	initConfiguration();
 	return CONFIGURATION.compactSize;
 };
@@ -130,7 +130,7 @@ export {
 	_getTheme,
 	getRTL,
 	getLanguage,
-	getCompactSize,
+	_getCompactSize,
 	getWCNoConflict,
 	getCalendarType,
 	getLocale,
