@@ -61,6 +61,7 @@ Table of contents:
 - [Form Support](#formsupport)
 - [Input Suggestions](#inputsuggestions)
 - [Advanced Calendar Types](#advancedcalendartypes)
+- [Configuration](#conf)
 
 <a name="preface"></a>
 ### Preface
@@ -264,5 +265,11 @@ The <code>ui5-datepicker</code> web component supports Gregorian Calendar by def
 In order to to be able to use Buddhist, Islamic, Japanese or Persian calendar with this web component
 (by setting its <code>primaryCalendarType</code> property), you should import one or more of the modules above.
 
+<a name="config"></a>
+### 7. Configuration
 
+```js
+import Configuration from "@ui5/webcomponents-base/dist/Configuration.js";
+```
 
+For the functions, exported by this module and general configuration information, please check [Configuration](Configuration.md)
