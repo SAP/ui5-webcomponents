@@ -143,7 +143,7 @@
 			}
 
 			// theme change sample
-			var Theming = window["sap-ui-webcomponents-main-bundle"].Theming;
+			var Conf = window["sap-ui-webcomponents-main-bundle"].Configuration;
             Theming.addCustomCSS('ui5-input', inputCSS);
             Theming.addCustomCSS('ui5-icon', iconCSS);
 
@@ -156,7 +156,7 @@
 					} else {
 						document.body.style.backgroundColor = "white";
 					}
-                    Theming.setTheme(theme);
+                    Conf.setTheme(theme);
 				}
 			});
 		});
