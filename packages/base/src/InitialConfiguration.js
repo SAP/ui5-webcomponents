@@ -1,68 +1,43 @@
-import CalendarType from "@ui5/webcomponents-core/dist/sap/ui/core/CalendarType.js";
-import getDesigntimePropertyAsArray from "./util/getDesigntimePropertyAsArray.js";
-
 let initialized = false;
 
-const InitialConfiguration = {
+const initialConfig = {
 	theme: "sap_fiori_3",
 	rtl: null,
 	language: null,
 	compactSize: false,
-	supportedLanguages: null,
 	calendarType: null,
-	derivedRTL: null,
 	"xx-wc-no-conflict": false, // no URL
 };
 
 /* General settings */
 const _getTheme = () => {
 	initConfiguration();
-	return InitialConfiguration.theme;
+	return initialConfig.theme;
 };
 
 const _getRTL = () => {
 	initConfiguration();
-	return InitialConfiguration.rtl;
+	return initialConfig.rtl;
 };
 
-const getLanguage = () => {
+const _getLanguage = () => {
 	initConfiguration();
-	return InitialConfiguration.language;
+	return initialConfig.language;
 };
 
 const _getCompactSize = () => {
 	initConfiguration();
-	return InitialConfiguration.compactSize;
-};
-
-const getSupportedLanguages = () => {
-	return getDesigntimePropertyAsArray("$core-i18n-locales:,ar,bg,ca,cs,da,de,el,en,es,et,fi,fr,hi,hr,hu,it,iw,ja,ko,lt,lv,nl,no,pl,pt,ro,ru,sh,sk,sl,sv,th,tr,uk,vi,zh_CN,zh_TW$");
+	return initialConfig.compactSize;
 };
 
 const _getWCNoConflict = () => {
 	initConfiguration();
-	return InitialConfiguration["xx-wc-no-conflict"];
+	return initialConfig["xx-wc-no-conflict"];
 };
 
-/* Calendar stuff */
-const getCalendarType = () => {
+const _getCalendarType = () => {
 	initConfiguration();
-	if (InitialConfiguration.calendarType) {
-		const type = Object.keys(CalendarType).filter(calType => calType === InitialConfiguration.calendarType)[0];
-
-		if (type) {
-			return type;
-		}
-	}
-
-	return CalendarType.Gregorian;
-};
-
-const getOriginInfo = () => {};
-
-const getLocale = () => {
-	initConfiguration();
-	return InitialConfiguration.language;
+	return initialConfig.calendarType;
 };
 
 const booleanMapping = new Map();
@@ -110,7 +85,7 @@ const parseURLParameters = () => {
 
 const applyConfigurations = () => {
 	Object.keys(runtimeConfig).forEach(key => {
-		InitialConfiguration[key] = runtimeConfig[key];
+		initialConfig[key] = runtimeConfig[key];
 	});
 };
 
@@ -129,11 +104,8 @@ const initConfiguration = () => {
 export {
 	_getTheme,
 	_getRTL,
-	getLanguage,
+	_getLanguage,
 	_getCompactSize,
 	_getWCNoConflict,
-	getCalendarType,
-	getLocale,
-	getSupportedLanguages,
-	getOriginInfo,
+	_getCalendarType,
 };
