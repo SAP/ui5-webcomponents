@@ -18,8 +18,8 @@ noConflict** | true, false | Object                            | false         |
 However, you should also set the HTML attribute `dir` to `rtl` on the `body` or `html` or any other relevant region of your application
 so that the rest of your application is also affected. 
 
-`**` By default UI5 Web Components fire all custom events twice - once with the documented name (f.e. `click`), and once more with a `ui5-` prefix (f.e. `ui5-click`).
-For example, when the `ui5-checkbox` is ticked, it fires a `change` event, but also a `ui5-change` event.
+`**` By default UI5 Web Components fire all custom events twice - once with the documented name (f.e. `change`), and once more with a `ui5-` prefix (f.e. `ui5-change`).
+For example, when the `ui5-switch` is toggled, it fires a `change` event, but also a `ui5-change` event.
 
 The `noConflict` configuration setting allows certain control over this behavior:
  - When `false` (default value) all custom events are fired with and without the `ui5-` prefix.
@@ -52,7 +52,7 @@ In order to provide configuration settings, include the following ```<script>```
 	"calendarType": "Japanese",
 	"theme": "sap_belize_hcb",
 	"noConflict": {
-		"events": ["click"]
+		"events": ["selectionChange", "headerClick"]
 	}
 }
 </script>
