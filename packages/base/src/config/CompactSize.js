@@ -6,6 +6,7 @@ const getCompactSize = () => {
 	return compactSize;
 };
 
+// eslint-ignore-next-line
 export {
 	getCompactSize,
 };
