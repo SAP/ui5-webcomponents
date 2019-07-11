@@ -1,6 +1,6 @@
-import { getWCNoConflict } from "../Configuration.js";
+import { _getWCNoConflict } from "../Configuration.js";
 
-let noConflict = getWCNoConflict();
+let noConflict = _getWCNoConflict();
 
 const getNoConflict = () => {
 	return noConflict;
