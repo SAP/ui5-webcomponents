@@ -83,3 +83,5 @@ compactSize   | getCompactSize() | *N/A*
 calendarType   | getCalendarType() | *N/A*
 noConflict | getNoConflict() | SetNoConflict(noConflictData)
 
+**Important: The getter functions, listed in the table above, return the default values for settings that are not given explicitly.**
+
