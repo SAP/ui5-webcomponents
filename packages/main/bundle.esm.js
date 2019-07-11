@@ -56,8 +56,6 @@ window.isIE = isIE; // attached to the window object for testing purposes
 
 // Note: keep in sync with rollup.config value for IIFE
 import * as configuration from "@ui5/webcomponents-base/dist/Configuration.js";
-import * as Theming from "@ui5/webcomponents-base/dist/Theming.js";
 window["sap-ui-webcomponents-main-bundle"] = {
 	configuration,
-	Theming,
 };

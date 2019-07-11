@@ -4,7 +4,7 @@ import { getIconURI } from "@ui5/webcomponents-base/dist/IconPool.js";
 import slideDown from "@ui5/webcomponents-base/dist/animations/slideDown.js";
 import slideUp from "@ui5/webcomponents-base/dist/animations/slideUp.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-import { getCompactSize } from "@ui5/webcomponents-base/dist/Configuration.js";
+import { getCompactSize } from "@ui5/webcomponents-base/dist/config/CompactSize.js";
 import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
 import Icon from "./Icon.js";
 import PanelAccessibleRole from "./types/PanelAccessibleRole.js";
