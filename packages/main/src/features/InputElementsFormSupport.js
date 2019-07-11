@@ -8,11 +8,11 @@ class FormSupport {
 	 */
 	static syncNativeHiddenInput(element, nativeInputUpdateCallback) {
 		const needsNativeInput = !!element.name;
-		let nativeInput = element.querySelector("input[type=hidden][data-ui5-webcomponents-form-support]");
+		let nativeInput = element.querySelector("input[type=hidden][data-ui5-form-support]");
 		if (needsNativeInput && !nativeInput) {
 			nativeInput = document.createElement("input");
 			nativeInput.type = "hidden";
-			nativeInput.setAttribute("data-ui5-webcomponents-form-support", "");
+			nativeInput.setAttribute("data-ui5-form-support", "");
 			nativeInput.slot = "formSupport"; // Needed for IE - otherwise input elements are not part of the real DOM tree and are not detected by forms
 			element.appendChild(nativeInput);
 		}

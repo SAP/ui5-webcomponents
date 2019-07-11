@@ -6,7 +6,7 @@ const initialConfig = {
 	language: null,
 	compactSize: false,
 	calendarType: null,
-	"xx-wc-no-conflict": false, // no URL
+	noConflict: false, // no URL
 };
 
 /* General settings */
@@ -32,7 +32,7 @@ const getCompactSize = () => {
 
 const getNoConflict = () => {
 	initConfiguration();
-	return initialConfig["xx-wc-no-conflict"];
+	return initialConfig.noConflict;
 };
 
 const getCalendarType = () => {
@@ -47,7 +47,8 @@ booleanMapping.set("false", false);
 let runtimeConfig = {};
 
 const parseConfigurationScript = () => {
-	const configScript = document.querySelector("[data-id='sap-ui-config']");
+	const configScript = document.querySelector("[data-ui5-config]") || document.querySelector("[data-id='sap-ui-config']"); // for backward compatibility
+
 	let configJSON;
 
 	if (configScript) {
