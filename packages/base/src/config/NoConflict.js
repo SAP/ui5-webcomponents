@@ -6,8 +6,8 @@ const getNoConflict = () => {
 	return noConflict;
 };
 
-const setNoConflict = value => {
-	noConflict = value;
+const setNoConflict = noConflictData => {
+	noConflict = noConflictData;
 };
 
 export {
