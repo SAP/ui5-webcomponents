@@ -117,7 +117,7 @@ import "@ui5/webcomponents/dist/ThemePropertiesProvider.js";
 
 and
 ```js
-import { setTheme } from "@ui5/webcomponents-base/dist/Configuration.js";
+import { setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 ```
 (for changing the theme at runtime)
 
@@ -146,7 +146,7 @@ By importing the second module, you get the:
 method that allows you to change the theme during runtime, if necessary.
 Example:
 ```js
-import { setTheme } from "@ui5/webcomponents-base/dist/Configuration.js";
+import { setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 setTheme("sap_belize_hcb");
 ```
 
@@ -269,7 +269,12 @@ In order to to be able to use Buddhist, Islamic, Japanese or Persian calendar wi
 ### 7. Configuration
 
 ```js
-import Configuration from "@ui5/webcomponents-base/dist/Configuration.js";
+import { getTheme, setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
+import { getNoConflict, setNoConflict } from "@ui5/webcomponents-base/dist/config/NoConflict.js";
+import { getCompactSize } from "@ui5/webcomponents-base/dist/config/CompactSize.js";
+import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
+import { getLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
+import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
 ```
 
-For the functions, exported by this module and general configuration information, please check [Configuration](Configuration.md)
+For more details, please check [Configuration](Configuration.md)

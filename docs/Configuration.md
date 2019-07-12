@@ -60,28 +60,18 @@ In order to provide configuration settings, include the following ```<script>```
 
 and provide the desired options in the JSON object inside, as shown in the example.
 
-## Configuration Module Import
+## Configuration Module Imports
 
 The configuration script is used to set the initial configuration in a declarative manner.
 However, reading/modifying the configuration reliably can only be done programmatically.
 
-To do so, please import the desired functionality from the `"@ui5/webcomponents-base/dist/Configuration.js"` module.
+To do so, please import the desired functionality from the respective `"@ui5/webcomponents-base/dist/config/"` module.
 
-For example:
 ```js
-import { getTheme, setTheme, getCompactSize } from "@ui5/webcomponents-base/dist/Configuration.js";
-``` 
-
-Here is a full list of the public functions, exported by `Configuration.js`
-
-Setting | Getter | Setter
---------|--------|-------
-theme   | getTheme() | setTheme(theme)
-RTL   | getRTL() | *N/A*
-language   | getLanguage() | *N/A*
-compactSize   | getCompactSize() | *N/A*
-calendarType   | getCalendarType() | *N/A*
-noConflict | getNoConflict() | SetNoConflict(noConflictData)
-
-**Important: The getter functions, listed in the table above, return the default values for settings that are not given explicitly.**
-
+import { getTheme, setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
+import { getNoConflict, setNoConflict } from "@ui5/webcomponents-base/dist/config/NoConflict.js";
+import { getCompactSize } from "@ui5/webcomponents-base/dist/config/CompactSize.js";
+import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
+import { getLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
+import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
+```
