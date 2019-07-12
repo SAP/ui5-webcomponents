@@ -1,5 +1,5 @@
-commit c2a3cd0718334f940404a1c36a9bd24ae1b72de5
+commit 0e976f8bd7ca0c51deb1b7fc472ca5666c8a9b75
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Jul 12 15:02:03 2019 +0300
+Date:   Fri Jul 12 15:31:26 2019 +0300
 
-    refactor: only provide separate config modules (#644)
+    fix: parent elements properly await for children upgrade (#645)
