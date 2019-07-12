@@ -195,7 +195,7 @@ class UI5Element extends HTMLElement {
 			this._state[propertyName].push(child);
 		});
 
-		await allChildrenUpgraded;
+		await Promise.all(allChildrenUpgraded);
 		this._invalidate();
 	}
 
