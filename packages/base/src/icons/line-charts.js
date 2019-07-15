@@ -1,9 +1,9 @@
 import { registerIcon } from "../SVGIconRegistry";
 
 const name = "sap-icon://line-charts";
-const transform = "translate(48.5,35)";
-const d = "M513 416v-63l-110 -156l-110 147l-100 -97l-109 58l-83 -73v52l78 68l106 -55l108 107l109 -145zM403 81l110 110v-52l-110 -110l-112 112l-107 -71l-111 74l-72 -36v41l75 37l108 -72l112 74z";
+const viewBox = "0 29 512 512";
+const d = "M512.5 477v-63l-110-156-110 147-100-97-109 58-83-73v52l78 68 106-55 108 107 109-145zm-110-335l110 110v-52l-110-110-112 112-107-71-111 74-72-36v41l75 37 108-72 112 74z";
 
-registerIcon(name, transform, d);
+registerIcon(name, viewBox, d);
 
-export default {name, transform, d};
+export default { name, viewBox, d };

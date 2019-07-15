@@ -1,9 +1,9 @@
 import { registerIcon } from "../SVGIconRegistry";
 
 const name = "sap-icon://horizontal-waterfall-chart";
-const transform = "translate(48.5,35)";
-const d = "M0 480h32v-512h-32v512v0zM240 64v-64h-160v64h160v0zM352 128h-112v64h112v-64v0zM512 256h-160v64h160v-64v0zM512 384h-432v64h432v-64v0z";
+const viewBox = "0 -32 512 512";
+const d = "M0 480h32V-32H0v512zM240 64V0H80v64h160zm112 64H240v64h112v-64zm160 128H352v64h160v-64zm0 128H80v64h432v-64z";
 
-registerIcon(name, transform, d);
+registerIcon(name, viewBox, d);
 
-export default {name, transform, d};
+export default { name, viewBox, d };

@@ -1,9 +1,9 @@
 import { registerIcon } from "../SVGIconRegistry";
 
 const name = "sap-icon://strikethrough";
-const transform = "translate(80.5,35)";
-const d = "M192 416h-160v32h384v-32h-160v-160h-64v160zM192 160h64v-160h-64v160zM432 224q16 0 16 -16t-16 -16h-416q-16 0 -16 16t16 16h416z";
+const viewBox = "0 0 512 512";
+const d = "M224 448H64v32h384v-32H288V288h-64v160zm0-256h64V32h-64v160zm240 64q16 0 16-16t-16-16H48q-16 0-16 16t16 16h416z";
 
-registerIcon(name, transform, d);
+registerIcon(name, viewBox, d);
 
-export default {name, transform, d};
+export default { name, viewBox, d };

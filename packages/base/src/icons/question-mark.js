@@ -1,9 +1,9 @@
 import { registerIcon } from "../SVGIconRegistry";
 
 const name = "sap-icon://question-mark";
-const transform = "translate(80.5,35)";
-const d = "M416 448q14 0 23 -9t9 -23v-384q0 -13 -9 -22.5t-23 -9.5h-384q-14 0 -23 9.5t-9 22.5v384q0 14 9 23t23 9h384zM416 416h-384v-384h384v384zM224 345q-23 0 -38 -14.5t-20 -37.5h-48q0 14 7.5 29t21 27t32.5 19.5t42 7.5q43 0 68.5 -21.5t25.5 -55.5q0 -22 -13 -36.5 t-25 -27.5q-8 -9 -15 -15.5t-11.5 -14t-6.5 -17.5t0 -28h-50q0 16 1 27.5t4.5 21t11.5 18.5t23 21l20 17q8 5 15 16t7 21q0 15 -14.5 29t-37.5 14zM224 128q14 0 23 -9t9 -23q0 -13 -9 -22.5t-23 -9.5t-23 9.5t-9 22.5q0 14 9 23t23 9z";
+const viewBox = "0 0 512 512";
+const d = "M448 480q14 0 23-9t9-23V64q0-13-9-22.5T448 32H64q-14 0-23 9.5T32 64v384q0 14 9 23t23 9h384zm0-32H64V64h384v384zm-192-71q-23 0-38-14.5T198 325h-48q0 14 7.5 29t21 27 32.5 19.5 42 7.5q43 0 68.5-21.5T347 331q0-22-13-36.5T309 267q-8-9-15-15.5t-11.5-14T276 220t0-28h-50q0 16 1 27.5t4.5 21T243 259t23 21l20 17q8 5 15 16t7 21q0 15-14.5 29T256 377zm0-217q14 0 23-9t9-23q0-13-9-22.5T256 96t-23 9.5-9 22.5q0 14 9 23t23 9z";
 
-registerIcon(name, transform, d);
+registerIcon(name, viewBox, d);
 
-export default {name, transform, d};
+export default { name, viewBox, d };

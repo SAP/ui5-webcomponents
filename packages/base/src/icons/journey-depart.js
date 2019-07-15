@@ -1,9 +1,9 @@
 import { registerIcon } from "../SVGIconRegistry";
 
 const name = "sap-icon://journey-depart";
-const transform = "translate(48.5,35)";
-const d = "M503 248q9 -10 9 -23t-9 -23l-92 -86q-5 -5 -11 -5t-11 5t-5 11.5t5 11.5l75 69h-256q-16 0 -16 16t16 16h256l-75 68q-5 5 -5 11.5t5 11.5t11 5t11 -5zM192 64q53 0 95 31h47q-26 -29 -63 -46t-79 -17q-40 0 -75 15t-61 41t-41 61t-15 75t15 75t41 61t61 41t75 15 q42 0 79 -17.5t63 -46.5h-48q-20 14 -44 23t-50 9q-33 0 -62.5 -12.5t-51 -34.5t-34 -51t-12.5 -62t12.5 -62t34 -51t51 -34.5t62.5 -12.5z";
+const viewBox = "0 32 512 512";
+const d = "M503 312q9-10 9-23t-9-23l-92-86q-5-5-11-5t-11 5-5 11.5 5 11.5l75 69H208q-16 0-16 16t16 16h256l-75 68q-5 5-5 11.5t5 11.5 11 5 11-5zM192 128q53 0 95 31h47q-26-29-63-46t-79-17q-40 0-75 15t-61 41-41 61-15 75 15 75 41 61 61 41 75 15q42 0 79-17.5t63-46.5h-48q-20 14-44 23t-50 9q-33 0-62.5-12.5t-51-34.5-34-51T32 288t12.5-62 34-51 51-34.5T192 128z";
 
-registerIcon(name, transform, d);
+registerIcon(name, viewBox, d);
 
-export default {name, transform, d};
+export default { name, viewBox, d };

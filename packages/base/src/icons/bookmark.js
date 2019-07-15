@@ -1,9 +1,9 @@
 import { registerIcon } from "../SVGIconRegistry";
 
 const name = "sap-icon://bookmark";
-const transform = "translate(157,35)";
-const d = "M148 189l-74 -63v282h146v-282zM293 480v-512l-145 124l-147 -124v512h292zM256 443h-218v-396l110 93l108 -93v396z";
+const viewBox = "0 -32 512 512";
+const d = "M257.5 189l-74-63v282h146V126zm145 291V-32l-145 124-147-124v512h292zm-37-37h-218V47l110 93 108-93v396z";
 
-registerIcon(name, transform, d);
+registerIcon(name, viewBox, d);
 
-export default {name, transform, d};
+export default { name, viewBox, d };

@@ -1,9 +1,9 @@
 import { registerIcon } from "../SVGIconRegistry";
 
 const name = "sap-icon://sap-logo-shape";
-const transform = "translate(1,35)";
-const d = "M320 64h-320v320h606z";
+const viewBox = "0 64 606 606";
+const d = "M320 160H0v320h606z";
 
-registerIcon(name, transform, d);
+registerIcon(name, viewBox, d);
 
-export default {name, transform, d};
+export default { name, viewBox, d };

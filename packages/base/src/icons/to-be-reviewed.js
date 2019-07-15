@@ -1,9 +1,9 @@
 import { registerIcon } from "../SVGIconRegistry";
 
 const name = "sap-icon://to-be-reviewed";
-const transform = "translate(49,35)";
-const d = "M511 224l-256 -254l-254 254l254 255zM255 25l200 199l-200 200l-199 -200z";
+const viewBox = "0 -30 512 512";
+const d = "M511.5 226l-256-254-254 254 254 255zm-256-199l200 199-200 200-199-200z";
 
-registerIcon(name, transform, d);
+registerIcon(name, viewBox, d);
 
-export default {name, transform, d};
+export default { name, viewBox, d };

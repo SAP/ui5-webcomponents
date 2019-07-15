@@ -1,9 +1,9 @@
 import { registerIcon } from "../SVGIconRegistry";
 
 const name = "sap-icon://screen-split-three";
-const transform = "translate(80.5,35)";
-const d = "M416 448q13 0 22.5 -9t9.5 -23v-384q0 -13 -9.5 -22.5t-22.5 -9.5h-384q-14 0 -23 9.5t-9 22.5v384q0 14 9 23t23 9h384zM128 416h-96v-384h96v384zM288 416h-128v-384h128v384zM416 416h-96v-384h96v384z";
+const viewBox = "0 0 512 512";
+const d = "M448 480q13 0 22.5-9t9.5-23V64q0-13-9.5-22.5T448 32H64q-14 0-23 9.5T32 64v384q0 14 9 23t23 9h384zm-288-32H64V64h96v384zm160 0H192V64h128v384zm128 0h-96V64h96v384z";
 
-registerIcon(name, transform, d);
+registerIcon(name, viewBox, d);
 
-export default {name, transform, d};
+export default { name, viewBox, d };

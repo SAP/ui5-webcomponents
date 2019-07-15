@@ -1,9 +1,9 @@
 import { registerIcon } from "../SVGIconRegistry";
 
 const name = "sap-icon://retail-store-manager";
-const transform = "translate(108,35)";
-const d = "M392 16q0 -8 -4.5 -14t-13.5 -7l-319 -26q-8 0 -14.5 4.5t-7.5 13.5l-31 372l358 30zM152 199h-63v-94h63v94zM236 230h-63v-125h63v125zM319 262h-63v-157h63v157zM170 456q-25 -2 -38.5 -17t-14.5 -38l-36 -3q0 19 7.5 36t20.5 29.5t30 19.5t36 7q35 0 60 -21t32 -55 l-34 -3q-5 24 -22 34.5t-41 10.5z";
+const viewBox = "0 -31 512 512";
+const d = "M452 17q0-8-4.5-14T434-4L115-30q-8 0-14.5 4.5T93-12L62 360l358 30zM212 200h-63v-94h63v94zm84 31h-63V106h63v125zm83 32h-63V106h63v157zM230 457q-25-2-38.5-17T177 402l-36-3q0 19 7.5 36t20.5 29.5 30 19.5 36 7q35 0 60-21t32-55l-34-3q-5 24-22 34.5T230 457z";
 
-registerIcon(name, transform, d);
+registerIcon(name, viewBox, d);
 
-export default {name, transform, d};
+export default { name, viewBox, d };

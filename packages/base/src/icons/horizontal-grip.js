@@ -1,9 +1,9 @@
 import { registerIcon } from "../SVGIconRegistry";
 
 const name = "sap-icon://horizontal-grip";
-const transform = "translate(80.5,35)";
-const d = "M0 192v64h64v-64h-64zM128 192v64h64v-64h-64zM256 192v64h64v-64h-64zM384 192v64h64v-64h-64z";
+const viewBox = "0 192 512 512";
+const d = "M32 416v64h64v-64H32zm128 0v64h64v-64h-64zm128 0v64h64v-64h-64zm128 0v64h64v-64h-64z";
 
-registerIcon(name, transform, d);
+registerIcon(name, viewBox, d);
 
-export default {name, transform, d};
+export default { name, viewBox, d };

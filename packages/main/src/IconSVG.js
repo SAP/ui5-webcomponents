@@ -1,9 +1,8 @@
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-import { getIconInfo } from "@ui5/webcomponents-base/src/IconPool.js";
-import { getIconData } from "@ui5/webcomponents-base/src/SVGIconRegistry.js";
-import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { getIconInfo } from "@ui5/webcomponents-base/dist/IconPool.js";
+import { getIconData } from "@ui5/webcomponents-base/dist/SVGIconRegistry.js";
+import getEffectiveRTL from "@ui5/webcomponents-base/dist/util/getEffectiveRTL.js";
 import IconTemplate from "./generated/templates/IconSVGTemplate.lit.js";
 
 // Styles
@@ -86,8 +85,8 @@ class Icon extends UI5Element {
 		return getIconData(this.src).d;
 	}
 
-	get transform() {
-		return getIconData(this.src).transform;
+	get viewBox() {
+		return getIconData(this.src).viewBox;
 	}
 
 	focus() {
@@ -95,23 +94,23 @@ class Icon extends UI5Element {
 	}
 
 	onclick() {
-		this.fireEvent("press");
+		// this.fireEvent("press");
 	}
 
 	onkeydown(event) {
-		if (isSpace(event)) {
-			event.preventDefault();
-			this.__spaceDown = true;
-		} else if (isEnter(event)) {
-			this.onclick(event);
-		}
+		// if (isSpace(event)) {
+		// 	event.preventDefault();
+		// 	this.__spaceDown = true;
+		// } else if (isEnter(event)) {
+		// 	this.onclick(event);
+		// }
 	}
 
 	onkeyup(event) {
-		if (isSpace(event) && this.__spaceDown) {
-			this.fireEvent("press");
-			this.__spaceDown = false;
-		}
+		// if (isSpace(event) && this.__spaceDown) {
+		// 	this.fireEvent("press");
+		// 	this.__spaceDown = false;
+		// }
 	}
 
 	get classes() {

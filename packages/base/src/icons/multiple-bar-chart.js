@@ -1,9 +1,9 @@
 import { registerIcon } from "../SVGIconRegistry";
 
 const name = "sap-icon://multiple-bar-chart";
-const transform = "translate(49,35)";
-const d = "M39 329h-38v76h38v-76zM113 329h-36v151h36v-151zM151 442h38v-113h-38v113zM39 29h-38v75h38v-75zM113 179v-150h-36v150h36zM151 142h38v-113h-38v113zM361 29h-38v75h38v-75zM435 179v-150h-36v150h36zM473 142h38v-113h-38v113zM1 288h188v-31h-188v31zM323 0h188 v-32h-188v32zM1 0h188v-32h-188v32zM361 329h-38v76h38v-76zM435 329h-36v151h36v-151zM473 442h38v-113h-38v113zM323 288h188v-31h-188v31z";
+const viewBox = "0 -32 512 512";
+const d = "M39.5 329h-38v76h38v-76zm74 0h-36v151h36V329zm38 113h38V329h-38v113zM39.5 29h-38v75h38V29zm74 150V29h-36v150h36zm38-37h38V29h-38v113zm210-113h-38v75h38V29zm74 150V29h-36v150h36zm38-37h38V29h-38v113zM1.5 288h188v-31H1.5v31zm322-288h188v-32h-188V0zM1.5 0h188v-32H1.5V0zm360 329h-38v76h38v-76zm74 0h-36v151h36V329zm38 113h38V329h-38v113zm-150-154h188v-31h-188v31z";
 
-registerIcon(name, transform, d);
+registerIcon(name, viewBox, d);
 
-export default {name, transform, d};
+export default { name, viewBox, d };

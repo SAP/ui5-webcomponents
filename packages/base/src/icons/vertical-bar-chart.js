@@ -1,9 +1,9 @@
 import { registerIcon } from "../SVGIconRegistry";
 
 const name = "sap-icon://vertical-bar-chart";
-const transform = "translate(80.5,35)";
-const d = "M200 64q-8 0 -8 8v240q0 8 8 8h48q8 0 8 -8v-240q0 -8 -8 -8h-48zM72 64q-8 0 -8 8v176q0 8 8 8h48q8 0 8 -8v-176q0 -8 -8 -8h-48zM328 64q-8 0 -8 8v368q0 8 8 8h48q8 0 8 -8v-368q0 -8 -8 -8h-48zM0 32h448v-32h-448v32z";
+const viewBox = "0 0 512 512";
+const d = "M232 96q-8 0-8 8v240q0 8 8 8h48q8 0 8-8V104q0-8-8-8h-48zm-128 0q-8 0-8 8v176q0 8 8 8h48q8 0 8-8V104q0-8-8-8h-48zm256 0q-8 0-8 8v368q0 8 8 8h48q8 0 8-8V104q0-8-8-8h-48zM32 64h448V32H32v32z";
 
-registerIcon(name, transform, d);
+registerIcon(name, viewBox, d);
 
-export default {name, transform, d};
+export default { name, viewBox, d };

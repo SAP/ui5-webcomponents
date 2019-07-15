@@ -1,9 +1,9 @@
 import { registerIcon } from "../SVGIconRegistry";
 
 const name = "sap-icon://employee";
-const transform = "translate(112.5,35)";
-const d = "M320 352q0 -27 -10 -50t-27.5 -40.5t-41 -27.5t-49.5 -10q-27 0 -50 10t-40.5 27.5t-27.5 40.5t-10 50q0 26 10 49.5t27.5 41t40.5 27.5t50 10q26 0 49.5 -10t41 -27.5t27.5 -41t10 -49.5zM192 256q40 0 68 28t28 68t-28 68t-68 28t-68 -28t-28 -68t28 -68t68 -28z M256 224q26 0 49.5 -10t41 -27.5t27.5 -41t10 -49.5v-128h-384v128q0 26 10 49.5t27.5 41t40.5 27.5t50 10h64h64zM352 96q0 40 -28 68t-68 28h-128q-40 0 -68 -28t-28 -68v-96h320v96zM224 96h96v-32h-96v32z";
+const viewBox = "0 -32 512 512";
+const d = "M384 352q0-27-10-50t-27.5-40.5-41-27.5-49.5-10q-27 0-50 10t-40.5 27.5T138 302t-10 50q0 26 10 49.5t27.5 41T206 470t50 10q26 0 49.5-10t41-27.5 27.5-41 10-49.5zm-128-96q40 0 68 28t28 68-28 68-68 28-68-28-28-68 28-68 68-28zm64-32q26 0 49.5-10t41-27.5 27.5-41T448 96V-32H64V96q0 26 10 49.5t27.5 41T142 214t50 10h128zm96-128q0 40-28 68t-68 28H192q-40 0-68-28T96 96V0h320v96zm-128 0h96V64h-96v32z";
 
-registerIcon(name, transform, d);
+registerIcon(name, viewBox, d);
 
-export default {name, transform, d};
+export default { name, viewBox, d };

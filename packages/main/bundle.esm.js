@@ -11,10 +11,7 @@ import "./dist/MessageBundleAssets.js";
 import "./dist/features/InputElementsFormSupport.js";
 import "./dist/features/InputSuggestions.js";
 
-
-import "@ui5/webcomponents-base/src/icons/add-employee.js";
-import "@ui5/webcomponents-base/src/icons/factory.js";
-import "@ui5/webcomponents-base/src/Icons.js";
+import "@ui5/webcomponents-base/dist/Icons.js";
 
 import Badge from "./dist/Badge.js";
 import BusyIndicator from "./dist/BusyIndicator.js";
@@ -62,7 +59,9 @@ window.isIE = isIE; // attached to the window object for testing purposes
 // Note: keep in sync with rollup.config value for IIFE
 import * as configuration from "@ui5/webcomponents-base/dist/Configuration.js";
 import * as Theming from "@ui5/webcomponents-base/dist/Theming.js";
+import { getRegsiteredNames as getIconNames } from  "@ui5/webcomponents-base/dist/SVGIconRegistry.js"
 window["sap-ui-webcomponents-main-bundle"] = {
 	configuration,
 	Theming,
+	getIconNames
 };

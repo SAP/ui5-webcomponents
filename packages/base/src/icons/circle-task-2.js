@@ -1,9 +1,9 @@
 import { registerIcon } from "../SVGIconRegistry";
 
 const name = "sap-icon://circle-task-2";
-const transform = "translate(80.5,35)";
-const d = "M224 448q46 0 87 -17.5t71.5 -48t48 -71.5t17.5 -87t-17.5 -87t-48 -71.5t-71.5 -48t-87 -17.5q-47 0 -87.5 17.5t-71 48t-48 71.5t-17.5 87t17.5 87t48 71.5t71 48t87.5 17.5z";
+const viewBox = "0 0 512 512";
+const d = "M256 480q46 0 87-17.5t71.5-48 48-71.5 17.5-87-17.5-87-48-71.5-71.5-48T256 32q-47 0-87.5 17.5t-71 48-48 71.5T32 256t17.5 87 48 71.5 71 48T256 480z";
 
-registerIcon(name, transform, d);
+registerIcon(name, viewBox, d);
 
-export default {name, transform, d};
+export default { name, viewBox, d };

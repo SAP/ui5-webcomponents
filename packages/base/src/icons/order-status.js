@@ -1,9 +1,9 @@
 import { registerIcon } from "../SVGIconRegistry";
 
 const name = "sap-icon://order-status";
-const transform = "translate(112.5,35)";
-const d = "M95 179l-30 33l16 15l14 -14l46 47l15 -16zM156 136l-31 -30l31 -31l-16 -15l-30 30l-31 -30l-15 15l30 31l-30 30l15 15l31 -30l30 30zM304 224q16 0 16 -16q0 -6 -4.5 -11t-11.5 -5h-96q-6 0 -11 5t-5 11q0 7 5 11.5t11 4.5h96zM304 128q16 0 16 -16q0 -6 -4.5 -11 t-11.5 -5h-96q-6 0 -11 5t-5 11q0 7 5 11.5t11 4.5h96zM352 480q14 0 23 -9.5t9 -22.5v-448q0 -14 -9 -23t-22 -9h-320q-14 0 -23.5 9t-9.5 23v352l128 128h224zM353 0l-1 448h-192v-96q0 -14 -9.5 -23t-22.5 -9h-96v-320h321z";
+const viewBox = "0 -32 512 512";
+const d = "M159 179l-30 33 16 15 14-14 46 47 15-16zm61-43l-31-30 31-31-16-15-30 30-31-30-15 15 30 31-30 30 15 15 31-30 30 30zm148 88q16 0 16-16 0-6-4.5-11t-11.5-5h-96q-6 0-11 5t-5 11q0 7 5 11.5t11 4.5h96zm0-96q16 0 16-16 0-6-4.5-11T368 96h-96q-6 0-11 5t-5 11q0 7 5 11.5t11 4.5h96zm48 352q14 0 23-9.5t9-22.5V0q0-14-9-23t-22-9H97q-14 0-23.5 9T64 0v352l128 128h224zm1-480l-1 448H224v-96q0-14-9.5-23t-22.5-9H96V0h321z";
 
-registerIcon(name, transform, d);
+registerIcon(name, viewBox, d);
 
-export default {name, transform, d};
+export default { name, viewBox, d };

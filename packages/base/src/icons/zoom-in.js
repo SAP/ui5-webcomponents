@@ -1,9 +1,9 @@
 import { registerIcon } from "../SVGIconRegistry";
 
 const name = "sap-icon://zoom-in";
-const transform = "translate(80.5,35)";
-const d = "M193 288h80v-32h-80v-81h-33v81h-80v32h80v80h33v-80zM438 54q10 -9 10 -22.5t-10 -22.5q-9 -9 -22 -9t-23 9l-117 118q-45 -31 -100 -31q-36 0 -68 13.5t-56 37.5t-38 56t-14 69q0 36 14 68t38 56t56 38t68 14t68 -14t56 -38t38 -56t14 -68q0 -28 -8.5 -53t-22.5 -47z M176 128q30 0 56 11t45.5 30.5t31 46t11.5 56.5t-11.5 56t-31 45.5t-45.5 31t-56 11.5t-56.5 -11.5t-46 -31t-30.5 -45.5t-11 -56t11 -56.5t30.5 -46t46 -30.5t56.5 -11z";
+const viewBox = "0 0 512 512";
+const d = "M225 320h80v-32h-80v-81h-33v81h-80v32h80v80h33v-80zM470 86q10-9 10-22.5T470 41q-9-9-22-9t-23 9L308 159q-45-31-100-31-36 0-68 13.5T84 179t-38 56-14 69q0 36 14 68t38 56 56 38 68 14 68-14 56-38 38-56 14-68q0-28-8.5-53T353 204zm-262 74q30 0 56 11t45.5 30.5 31 46T352 304t-11.5 56-31 45.5-45.5 31-56 11.5-56.5-11.5-46-31T75 360t-11-56 11-56.5 30.5-46 46-30.5 56.5-11z";
 
-registerIcon(name, transform, d);
+registerIcon(name, viewBox, d);
 
-export default {name, transform, d};
+export default { name, viewBox, d };

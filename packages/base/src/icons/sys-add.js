@@ -1,9 +1,9 @@
 import { registerIcon } from "../SVGIconRegistry";
 
 const name = "sap-icon://sys-add";
-const transform = "translate(48.5,35)";
-const d = "M256 480q53 0 100 -20t81.5 -54.5t54.5 -81.5t20 -100t-20 -99.5t-54.5 -81.5t-81.5 -55t-100 -20t-99.5 20t-81.5 55t-55 81.5t-20 99.5t20 100t55 81.5t81.5 54.5t99.5 20zM256 0q46 0 87 17.5t71.5 48t48 71.5t17.5 87t-17.5 87t-48 71.5t-71.5 48t-87 17.5t-87 -17.5 t-71.5 -48t-48 -71.5t-17.5 -87t17.5 -87t48 -71.5t71.5 -48t87 -17.5zM240 208h-112v32h112v112h32v-112h112v-32h-112v-112h-32v112z";
+const viewBox = "0 -32 512 512";
+const d = "M256 480q53 0 100-20t81.5-54.5T492 324t20-100-20-99.5T437.5 43 356-12 256-32t-99.5 20T75 43t-55 81.5T0 224t20 100 55 81.5 81.5 54.5 99.5 20zm0-480q46 0 87 17.5t71.5 48 48 71.5 17.5 87-17.5 87-48 71.5-71.5 48-87 17.5-87-17.5-71.5-48-48-71.5T32 224t17.5-87 48-71.5 71.5-48T256 0zm-16 208H128v32h112v112h32V240h112v-32H272V96h-32v112z";
 
-registerIcon(name, transform, d);
+registerIcon(name, viewBox, d);
 
-export default {name, transform, d};
+export default { name, viewBox, d };

@@ -1,11 +1,15 @@
 const registry = new Map();
 
-const registerIcon = (name, transform, d) => {
-    registry.set(name, {name, transform, d});
+const registerIcon = (name, viewBox, d) => {
+	registry.set(name, { name, viewBox, d });
 };
 
-const getIconData = (name) => {
-    return registry.get(name);
+const getIconData = name => {
+	return registry.get(name);
 };
 
-export { getIconData, registerIcon };
+const getRegsiteredNames = () => {
+	return Array.from(registry.keys());
+};
+
+export { getIconData, registerIcon, getRegsiteredNames };

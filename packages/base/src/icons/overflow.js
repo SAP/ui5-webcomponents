@@ -1,9 +1,9 @@
 import { registerIcon } from "../SVGIconRegistry";
 
 const name = "sap-icon://overflow";
-const transform = "translate(48.5,35)";
-const d = "M448 128q26 0 45 -19t19 -45t-19 -45t-45 -19t-45 19t-19 45t19 45t45 19zM448 32q14 0 23 9t9 23t-9 23t-23 9t-23 -9t-9 -23t9 -23t23 -9zM256 128q26 0 45 -19t19 -45t-19 -45t-45 -19t-45 19t-19 45t19 45t45 19zM256 32q14 0 23 9t9 23t-9 23t-23 9t-23 -9t-9 -23 t9 -23t23 -9zM64 128q26 0 45 -19t19 -45t-19 -45t-45 -19t-45 19t-19 45t19 45t45 19zM64 32q14 0 23 9t9 23t-9 23t-23 9t-23 -9t-9 -23t9 -23t23 -9z";
+const viewBox = "0 0 512 512";
+const d = "M448 160q26 0 45-19t19-45-19-45-45-19-45 19-19 45 19 45 45 19zm0-96q14 0 23 9t9 23-9 23-23 9-23-9-9-23 9-23 23-9zm-192 96q26 0 45-19t19-45-19-45-45-19-45 19-19 45 19 45 45 19zm0-96q14 0 23 9t9 23-9 23-23 9-23-9-9-23 9-23 23-9zM64 160q26 0 45-19t19-45-19-45-45-19-45 19T0 96t19 45 45 19zm0-96q14 0 23 9t9 23-9 23-23 9-23-9-9-23 9-23 23-9z";
 
-registerIcon(name, transform, d);
+registerIcon(name, viewBox, d);
 
-export default {name, transform, d};
+export default { name, viewBox, d };

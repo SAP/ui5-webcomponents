@@ -1,9 +1,9 @@
 import { registerIcon } from "../SVGIconRegistry";
 
 const name = "sap-icon://full-stacked-chart";
-const transform = "translate(80.5,35)";
-const d = "M32 32h416v-32h-416h-32v32v416h32v-416zM96 320h-32v64h32v-64zM136 320q-8 0 -8 8v48q0 8 8 8h80q8 0 8 -8v-48q0 -8 -8 -8h-80zM440 384q8 0 8 -8v-48q0 -8 -8 -8h-176q-8 0 -8 8v48q0 8 8 8h176zM72 192q-8 0 -8 8v48q0 8 8 8h80q8 0 8 -8v-48q0 -8 -8 -8h-80z M440 256q8 0 8 -8v-48q0 -8 -8 -8h-48q-8 0 -8 8v48q0 8 8 8h48zM352 200q0 -8 -8 -8h-144q-8 0 -8 8v48q0 8 8 8h144q8 0 8 -8v-48zM72 64q-8 0 -8 8v48q0 8 8 8h48q8 0 8 -8v-48q0 -8 -8 -8h-48zM440 128q8 0 8 -8v-48q0 -8 -8 -8h-80q-8 0 -8 8v48q0 8 8 8h80zM312 128 q8 0 8 -8v-48q0 -8 -8 -8h-144q-8 0 -8 8v48q0 8 8 8h144z";
+const viewBox = "0 0 512 512";
+const d = "M64 64h416V32H32v448h32V64zm64 288H96v64h32v-64zm40 0q-8 0-8 8v48q0 8 8 8h80q8 0 8-8v-48q0-8-8-8h-80zm304 64q8 0 8-8v-48q0-8-8-8H296q-8 0-8 8v48q0 8 8 8h176zM104 224q-8 0-8 8v48q0 8 8 8h80q8 0 8-8v-48q0-8-8-8h-80zm368 64q8 0 8-8v-48q0-8-8-8h-48q-8 0-8 8v48q0 8 8 8h48zm-88-56q0-8-8-8H232q-8 0-8 8v48q0 8 8 8h144q8 0 8-8v-48zM104 96q-8 0-8 8v48q0 8 8 8h48q8 0 8-8v-48q0-8-8-8h-48zm368 64q8 0 8-8v-48q0-8-8-8h-80q-8 0-8 8v48q0 8 8 8h80zm-128 0q8 0 8-8v-48q0-8-8-8H200q-8 0-8 8v48q0 8 8 8h144z";
 
-registerIcon(name, transform, d);
+registerIcon(name, viewBox, d);
 
-export default {name, transform, d};
+export default { name, viewBox, d };

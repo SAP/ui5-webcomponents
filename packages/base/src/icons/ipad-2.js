@@ -1,9 +1,9 @@
 import { registerIcon } from "../SVGIconRegistry";
 
 const name = "sap-icon://ipad-2";
-const transform = "translate(48.5,35)";
-const d = "M32 32q-13 0 -22.5 9.5t-9.5 22.5v320q0 14 9.5 23t22.5 9h448q14 0 23 -9t9 -23v-320q0 -13 -9 -22.5t-23 -9.5h-448zM96 64h352v320h-352v-320zM56 248q-10 0 -17 -7t-7 -17t7 -17t17 -7q11 0 17.5 7t6.5 17t-6.5 17t-17.5 7z";
+const viewBox = "0 32 512 512";
+const d = "M32 96q-13 0-22.5 9.5T0 128v320q0 14 9.5 23t22.5 9h448q14 0 23-9t9-23V128q0-13-9-22.5T480 96H32zm64 32h352v320H96V128zM56 312q-10 0-17-7t-7-17 7-17 17-7q11 0 17.5 7t6.5 17-6.5 17-17.5 7z";
 
-registerIcon(name, transform, d);
+registerIcon(name, viewBox, d);
 
-export default {name, transform, d};
+export default { name, viewBox, d };

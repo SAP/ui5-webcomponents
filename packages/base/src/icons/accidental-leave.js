@@ -1,9 +1,9 @@
 import { registerIcon } from "../SVGIconRegistry";
 
 const name = "sap-icon://accidental-leave";
-const transform = "translate(80.5,35)";
-const d = "M159 160h-95v128h95v96h129v-96h96v-128h-96v-96h-129v96zM192 192v-96h64v96h95v64h-95v96h-64v-96h-96v-64h96zM416 448q14 0 23 -8.5t9 -22.5v-385q0 -13 -9 -23t-23 -10h-384q-13 0 -22.5 10t-9.5 23v385q0 14 9.5 22.5t22.5 8.5h384zM415 416h-383v-384h383v384z ";
+const viewBox = "0 -1 512 512";
+const d = "M191 191H96v128h95v96h129v-96h96V191h-96V95H191v96zm33 32v-96h64v96h95v64h-95v96h-64v-96h-96v-64h96zm224 256q14 0 23-8.5t9-22.5V63q0-13-9-23t-23-10H64q-13 0-22.5 10T32 63v385q0 14 9.5 22.5T64 479h384zm-1-32H64V63h383v384z";
 
-registerIcon(name, transform, d);
+registerIcon(name, viewBox, d);
 
-export default {name, transform, d};
+export default { name, viewBox, d };

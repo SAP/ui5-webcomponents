@@ -1,9 +1,9 @@
 import { registerIcon } from "../SVGIconRegistry";
 
 const name = "sap-icon://area-chart";
-const transform = "translate(64.5,35)";
-const d = "M480 33v-33h-479v449h33v-416h446zM221 265l-146 -65v11l146 129l110 -19l149 159v-110l-149 -142zM221 191l-146 -28v11l146 64l110 -37l149 139v-122l-149 -64zM480 65h-405v72l146 28l110 -37l149 65v-128z";
+const viewBox = "0 0 512 512";
+const d = "M496 65V32H17v449h33V65h446zM237 297L91 232v11l146 129 110-19 149 159V402L347 260zm0-74L91 195v11l146 64 110-37 149 139V250l-149-64zM496 97H91v72l146 28 110-37 149 65V97z";
 
-registerIcon(name, transform, d);
+registerIcon(name, viewBox, d);
 
-export default {name, transform, d};
+export default { name, viewBox, d };

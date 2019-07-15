@@ -1,9 +1,9 @@
 import { registerIcon } from "../SVGIconRegistry";
 
 const name = "sap-icon://switch-classes";
-const transform = "translate(48.5,35)";
-const d = "M192 160q27 0 50 -10t40.5 -27.5t27.5 -40.5t10 -50v-64h-320v64q0 27 10 50t27.5 40.5t41 27.5t49.5 10h32h32zM288 32q0 40 -28 68t-68 28h-64q-20 0 -37 -7.5t-30.5 -20.5t-21 -30.5t-7.5 -37.5v-32h256v32zM256 256q0 -40 -28 -68t-68 -28t-68 28t-28 68t28 68t68 28 t68 -28t28 -68zM160 192q27 0 45.5 19t18.5 45q0 27 -18.5 45.5t-45.5 18.5q-26 0 -45 -18.5t-19 -45.5q0 -26 19 -45t45 -19zM416 416q14 0 23 -9t9 -23v-320q0 -13 -9 -22.5t-23 -9.5h-64v32h64v320h-224v32h224zM480 480q14 0 23 -9t9 -23v-352h-32v320v32h-224v32h224z ";
+const viewBox = "0 -32 512 512";
+const d = "M192 160q27 0 50-10t40.5-27.5T310 82t10-50v-64H0v64q0 27 10 50t27.5 40.5 41 27.5 49.5 10h64zm96-128q0 40-28 68t-68 28h-64q-20 0-37-7.5T60.5 100t-21-30.5T32 32V0h256v32zm-32 224q0-40-28-68t-68-28-68 28-28 68 28 68 68 28 68-28 28-68zm-96-64q27 0 45.5 19t18.5 45q0 27-18.5 45.5T160 320q-26 0-45-18.5T96 256q0-26 19-45t45-19zm256 224q14 0 23-9t9-23V64q0-13-9-22.5T416 32h-64v32h64v320H192v32h224zm64 64q14 0 23-9t9-23V96h-32v352H256v32h224z";
 
-registerIcon(name, transform, d);
+registerIcon(name, viewBox, d);
 
-export default {name, transform, d};
+export default { name, viewBox, d };

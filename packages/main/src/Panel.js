@@ -216,10 +216,8 @@ class Panel extends UI5Element {
 		const customContent = this.header.length;
 		if (customContent) {
 			return node.hasAttribute("data-ui5-panel-icon");
-		} else {
-			return true;
 		}
-
+		return true;
 	}
 
 	_headerClick(event) {

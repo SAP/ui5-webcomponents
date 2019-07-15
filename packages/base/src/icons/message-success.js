@@ -1,9 +1,9 @@
 import { registerIcon } from "../SVGIconRegistry";
 
 const name = "sap-icon://message-success";
-const transform = "translate(80.5,35)";
-const d = "M416 448q13 0 22.5 -9t9.5 -23v-384q0 -13 -9.5 -22.5t-22.5 -9.5h-384q-14 0 -23 9.5t-9 22.5v384q0 14 9 23t23 9h384zM416 416h-384v-384h384v384zM212 96l-113 95l33 47l74 -56l103 170l41 -42z";
+const viewBox = "0 0 512 512";
+const d = "M448 480q13 0 22.5-9t9.5-23V64q0-13-9.5-22.5T448 32H64q-14 0-23 9.5T32 64v384q0 14 9 23t23 9h384zm0-32H64V64h384v384zM244 128l-113 95 33 47 74-56 103 170 41-42z";
 
-registerIcon(name, transform, d);
+registerIcon(name, viewBox, d);
 
-export default {name, transform, d};
+export default { name, viewBox, d };

@@ -19,6 +19,7 @@
 	<script src="../../../../../../resources/sap/ui/webcomponents/main/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../../../../../resources/sap/ui/webcomponents/main/bundle.es5.js">
 	</script>
+	<script src="http://veui5infra.dhcp.wdf.sap.corp:8080/demokit/resources/sap-ui-core.js"></script>
 </head>
 
 <body style="padding: 20px;">
@@ -36,7 +37,21 @@
 	<br>
 
 	<ui5-button icon="sap-icon://add-equipment"></ui5-button>
+	<div id="content"></div>
+	<ui5-icon src="sap-icon://appointment-2"></ui5-icon>
+	<ui5-icon-svg src="sap-icon://appointment-2"></ui5-icon-svg>
+		<!-- <ui5-icon src="sap-icon://appointment-2"></ui5-icon>
+	<ui5-icon-svg src="sap-icon://appointment-2"></ui5-icon-svg> -->
 
+	<script type="module">
+		const icon = new sap.ui.core.Icon({src: "sap-icon://appointment-2"})
+		icon.placeAt("content");
+			window["sap-ui-webcomponents-main-bundle"].getIconNames().forEach(iconName => {
+				const icon = document.createElement("ui5-icon-svg");
+				icon.src = iconName;
+				document.body.appendChild(icon);
+			});
+	</script>
 	<br />
 
 	<ui5-datepicker style="margin-top: 10px" placeholder="test" value="Value State None">
