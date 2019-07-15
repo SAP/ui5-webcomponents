@@ -173,6 +173,14 @@ class Card extends UI5Element {
 		return this.headerInteractive ? "0" : undefined;
 	}
 
+	get hasHeader() {
+		return !!(this.heading || this.subtitle ||  this.status || this.avatar);
+	}
+
+	get rtl() {
+		return getRTL() ? "rtl" : undefined;
+	}
+
 	static async define(...params) {
 		await Icon.define();
 
@@ -217,10 +225,6 @@ class Card extends UI5Element {
 		if (space) {
 			this.fireEvent("headerClick");
 		}
-	}
-
-	get rtl() {
-		return getRTL() ? "rtl" : undefined;
 	}
 }
 
