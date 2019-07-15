@@ -174,7 +174,7 @@ class Card extends UI5Element {
 	}
 
 	get hasHeader() {
-		return !!(this.heading || this.subtitle ||  this.status || this.avatar);
+		return !!(this.heading || this.subtitle || this.status || this.avatar);
 	}
 
 	get rtl() {
