@@ -5,6 +5,7 @@
 :host(:not([hidden])[active]) {
 	opacity: 1;
 	background-color: var(--sapBackgroundColorFade72);
+	color: var(--ui5-busyindicator-color);
 	pointer-events: none;
 }
 
@@ -15,6 +16,7 @@ ui5-busyindicator:not([hidden]) {
 ui5-busyindicator:not([hidden])[active] {
 	opacity: 1;
 	background-color: var(--sapBackgroundColorFade72);
+	color: var(--ui5-busyindicator-color);
 	pointer-events: none;
 }
 
@@ -28,7 +30,7 @@ ui5-busyindicator:not([hidden])[active] {
 
 .ui5-busyindicator-circle {
 	display: inline-block;
-	background-color: var(--ui5-busyindicator-color);
+	background-color: currentColor;
 	border-radius: 50%;
 }
 
