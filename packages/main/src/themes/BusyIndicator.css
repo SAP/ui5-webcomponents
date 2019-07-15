@@ -1,8 +1,8 @@
-:host(ui5-busyindicator:not([hidden])) {
+:host(:not([hidden])) {
 	display: inline-block;
 }
 
-:host(ui5-busyindicator:not([hidden])[active]) {
+:host(:not([hidden])[active]) {
 	opacity: 1;
 	background-color: var(--sapBackgroundColorFade72);
 	pointer-events: none;
@@ -18,7 +18,7 @@ ui5-busyindicator:not([hidden])[active] {
 	pointer-events: none;
 }
 
-.ui5-busyindicator-wrapper {	
+.ui5-busyindicator-root {	
 	display: flex;
 	justify-content: center;
 	align-items: center;
