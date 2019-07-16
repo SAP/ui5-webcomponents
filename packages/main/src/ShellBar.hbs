@@ -50,7 +50,7 @@
 		<div class="sapWCShellBarOverflowContainerRightChild">
 			{{#each _itemsInfo}}
 				{{#if this.src}}
-					<ui5-icon
+					<ui5-icon-svg
 						tabindex="{{this._tabIndex}}"
 						data-ui5-notification-count="{{../notificationCount}}"
 						data-ui5-external-action-item-id="{{this.refItemid}}"
@@ -58,8 +58,8 @@
 						src="{{this.src}}"
 						id="{{this.id}}"
 						style="{{this.style}}"
-						@ui5-press={{this.press}}>
-					</ui5-icon>
+						@click={{this.press}}>
+					</ui5-svg-icon>
 				{{else}}
 					<div
 						tabindex="{{this._tabIndex}}"
