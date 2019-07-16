@@ -186,7 +186,7 @@ ui5-input ui5-icon-svg {
 :host(ui5-input[data-ui5-compact-size]) ::slotted(ui5-icon-svg) {
 	width: 2rem;
 	height: 100%;
-	padding: 0.1875rem 0.4375rem;
+	padding: 0.25rem 0.5rem;
 }
 
 ui5-input[data-ui5-compact-size] ui5-icon {
@@ -195,5 +195,5 @@ ui5-input[data-ui5-compact-size] ui5-icon {
 ui5-input[data-ui5-compact-size] ui5-icon-svg {
 	width: 2rem;
 	height: 100%;
-	padding: 0.1875rem 0.4375rem;
+	padding: 0.25rem 0.5rem;
 }
