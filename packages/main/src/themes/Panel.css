@@ -22,8 +22,8 @@ ui5-panel:not([hidden]) {
 }
 
 .sapMPanel > header ui5-icon-svg.sapMPanelIcon {
-	width: 1.1875rem;
-	height: 1.1875rem;
+	width: 1rem;
+	height: 1rem;
 	padding: 0.125rem;
 	margin-left: 0.75rem;
 	margin-right: 0.75rem;
