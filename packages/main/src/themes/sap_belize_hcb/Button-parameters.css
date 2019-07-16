@@ -2,12 +2,8 @@
 
 :root {
 	--_ui5_button_border_radius: 0.375rem;
-	--_ui5_button_focus_after_bottom: -1px;
-	--_ui5_button_focus_after_right: -1px;
-	--_ui5_button_focus_after_left: -1px;
-	--_ui5_button_focus_after_top: -1px;
-	--_ui5_button_focus_after_border: 0.125rem dotted var(--sapUiContentFocusColor);
-	--_ui5_button_focussed_border_color: transparent;
+	--_ui5_button_outline_offset: -0.125rem;
+	--_ui5_button_outline: 0.125rem dotted var(--sapUiContentFocusColor);
 	--_ui5_button_positive_border_active_color: transparent;
 	--_ui5_button_active_border_color: transparent;
 	--_ui5_button_positive_focus_border_color: transparent;

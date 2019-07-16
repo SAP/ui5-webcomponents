@@ -248,13 +248,13 @@ html.sap-desktop .sapContrast .sapMLnk:focus:not(.sapMLnkDsbl) {
 	padding-bottom: 0 !important;
 }
 
-.switch-container .sapMBtnDefault.sapMBtnInner.sapMBtnText.sapMFocusable {
+.switch-container .sapMBtnDefault.sapMBtnInner.ui5-button-text.sapMFocusable {
 	border: 2px solid #fff !important;
 	background-color: transparent;
     border: none;
 }
 
-.switch-container .sapMBtnDefault.sapMBtnInner.sapMBtnText.sapMFocusable:hover {
+.switch-container .sapMBtnDefault.sapMBtnInner.ui5-button-text.sapMFocusable:hover {
 	background-color: rgba(179, 179, 179, 0.5);
     border-color: rgba(179, 179, 179, 0.5);
 }

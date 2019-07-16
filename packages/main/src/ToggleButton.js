@@ -70,12 +70,6 @@ class ToggleButton extends Button {
 		this.pressed = !this.pressed;
 		this.fireEvent("press", { pressed: this.pressed });
 	}
-
-	get classes() {
-		const result = super.classes;
-		result.main.sapMToggleBtnPressed = this.pressed;
-		return result;
-	}
 }
 
 ToggleButton.define();
