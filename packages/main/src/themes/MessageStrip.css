@@ -24,25 +24,16 @@ ui5-messagestrip:not([hidden]) {
 }
 
 .ui5-messagestrip-root .ui5-messagestrip-icon {
-	width: 1rem;
-	box-sizing: border-box;
 	position: absolute;
 	top: var(--_ui5_messagestrip_icon_top);
 	left: 0.75rem;
+	box-sizing: border-box;
 }
 
-.ui5-messagestrip -root.ui5-messagestrip-text {
-	width: 100%;
+.ui5-messagestrip-root .ui5-messagestrip-text {
+	width: 100%;	
 	color: var(--sapTextColor);
 	line-height: 1.2;
-}
-
-.ui5-messagestrip-root ui5-button {
-	height: var(--_ui5_messagestrip_button_height);
-	border-width: var(--_ui5_messagestrip_button_border_width);
-	border-style: var(--_ui5_messagestrip_button_border_style);
-	border-color: var(--_ui5_messagestrip_button_border_color);
-	border-radius: var(--_ui5_messagestrip_button_border_radius);
 }
 
 .ui5-messagestrip-icon--hidden {
@@ -102,15 +93,14 @@ ui5-messagestrip:not([hidden]) {
 	width: var(--_ui5_messagestrip_close_button_size);
 	height: var(--_ui5_messagestrip_close_button_size);
 	border-radius: 0.2rem;
-	font-size: 0.75rem;
 	background: transparent;
 	color: var(--sapUiBaseText);
-	outline: 0;
 	cursor: pointer;
 	position: absolute;
 	right: 0.125rem;
 	top: 0.125rem;
-	border: var(--_ui5_messagestrip_close_button_border);
+	outline: none;
+	border: none;
 	-webkit-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
@@ -125,17 +115,26 @@ ui5-messagestrip:not([hidden]) {
 	color: var(--sapUiButtonActiveTextColor);
 }
 
-.ui5-messagestrip-close-icon-wrapper:focus::after {
-	content: "";
-	position: absolute;
-	top: 1px;
-	bottom: 1px;
-	left: 1px;
-	right: 1px;
-	border: var(--_ui5_messagestrip_focus_width) dotted var(--sapUiContentFocusColor);
+.ui5-messagestrip-close-icon {
+	width: 0.75rem;
+	height: 0.75rem;
 	pointer-events: none;
 }
 
-.ui5-messagestrip-close-icon-wrapper:active:focus::after {
-	border: var(--_ui5_messagestrip_focus_width) dotted var(--sapUiContentContrastFocusColor);
+.ui5-messagestrip-close-icon-wrapper:active .ui5-messagestrip-close-icon {
+	color: currentColor;
+}
+
+.ui5-messagestrip-close-icon-wrapper:focus {
+	outline-offset: -2px;
+	outline: var(--_ui5_messagestrip_focus_width) dotted var(--sapUiContentFocusColor);
+}
+
+.ui5-messagestrip-close-icon-wrapper:active:focus {
+	outline: var(--_ui5_messagestrip_focus_width) dotted var(--sapUiContentContrastFocusColor);
+}
+
+/* FF renders outine around element content, causing double outline - around the button and the icon */
+.ui5-messagestrip-close-icon-wrapper::-moz-focus-inner {
+	border: none;
 }
