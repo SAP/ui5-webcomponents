@@ -1,9 +1,6 @@
 import { registerIcon } from "../SVGIconRegistry";
 
 const name = "sap-icon://vertical-waterfall-chart";
-const viewBox = "0 -32 512 512";
-const d = "M0-32V0h512v-32H0zm416 240h64V48h-64v160zm-64 112V208h-64v112h64zM224 480V320h-64v160h64zm-128 0V48H32v432h64z";
+const d = "M0 512v-32h512v32H0zm416-240h64v160h-64V272zm-64-112v112h-64V160h64zM224 0v160h-64V0h64zM96 0v432H32V0h64z";
 
-registerIcon(name, viewBox, d);
-
-export default { name, viewBox, d };
+registerIcon(name, d);

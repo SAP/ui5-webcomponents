@@ -11,7 +11,7 @@ import "./dist/MessageBundleAssets.js";
 import "./dist/features/InputElementsFormSupport.js";
 import "./dist/features/InputSuggestions.js";
 
-import "@ui5/webcomponents-base/dist/Icons.js";
+import "@ui5/webcomponents-base/dist/AllIcons.js";
 
 import Badge from "./dist/Badge.js";
 import BusyIndicator from "./dist/BusyIndicator.js";

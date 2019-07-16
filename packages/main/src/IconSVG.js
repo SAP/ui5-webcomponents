@@ -85,10 +85,6 @@ class Icon extends UI5Element {
 		return getIconData(this.src).d;
 	}
 
-	get viewBox() {
-		return getIconData(this.src).viewBox;
-	}
-
 	focus() {
 		HTMLElement.prototype.focus.call(this);
 	}

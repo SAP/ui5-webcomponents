@@ -1,7 +1,7 @@
 const registry = new Map();
 
-const registerIcon = (name, viewBox, d) => {
-	registry.set(name, { name, viewBox, d });
+const registerIcon = (name, d) => {
+	registry.set(name, { name, d });
 };
 
 const getIconData = name => {

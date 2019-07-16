@@ -1,9 +1,6 @@
 import { registerIcon } from "../SVGIconRegistry";
 
 const name = "sap-icon://draw-rectangle";
-const viewBox = "0 -32 512 512";
-const d = "M474.5 407V260h37v-72h-37V42h37v-74h-74V5h-145v-37h-72V5h-145v-37h-74v74h37v146h-37v72h37v147h-37v73h74v-37h145v37h72v-37h145v37h74v-73h-37zm-37 0h-362V42h362v365z";
+const d = "M474.5 73v147h37v72h-37v146h37v74h-74v-37h-145v37h-72v-37h-145v37h-74v-74h37V292h-37v-72h37V73h-37V0h74v37h145V0h72v37h145V0h74v73h-37zm-37 0h-362v365h362V73z";
 
-registerIcon(name, viewBox, d);
-
-export default { name, viewBox, d };
+registerIcon(name, d);

@@ -1,9 +1,6 @@
 import { registerIcon } from "../SVGIconRegistry";
 
 const name = "sap-icon://text";
-const viewBox = "0 0 512 512";
-const d = "M224 448H64v32h384v-32H288V32h-64v416z";
+const d = "M224 64H64V32h384v32H288v416h-64V64z";
 
-registerIcon(name, viewBox, d);
-
-export default { name, viewBox, d };
+registerIcon(name, d);
