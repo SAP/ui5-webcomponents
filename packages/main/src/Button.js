@@ -93,6 +93,7 @@ const metadata = {
 
 		/**
 		 * Used to switch the active state (pressed or not) of the <code>ui5-button</code>.
+		 * @private
 		 */
 		active: {
 			type: Boolean,
