@@ -21,32 +21,42 @@ ui5-panel:not([hidden]) {
 	height: 2.75rem;
 }
 
-.sapMPanel > header ui5-icon-svg.sapMPanelIcon {
-	width: 1rem;
-	height: 1rem;
-	padding: 0.125rem;
-	margin-left: 0.75rem;
-	margin-right: 0.75rem;
-	align-self: center;
-	color: var(--sapUiContentIconColor);
-	transition: transform 0.4s ease-out;
-	cursor: pointer;
+.sapMPanel .sapMPanelIconOuter {
+	display: flex;
 	position: relative;
+	width: 1.5rem;
+	height: 1.5rem;
+	min-width: 1.5rem;
+	min-height: 1.5rem;
+	margin: 0 0.75rem;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+	outline: none;
+	box-sizing: border-box;
 }
 
-.sapMPanel > header ui5-icon-svg.sapMPanelIcon.sapMPanelIconExpanded {
-	transform: rotate(90deg);
-}
 
-.sapMPanel > header ui5-icon-svg.sapMPanelIcon:focus:after {
+.sapMPanel .sapMPanelIconOuter:focus:after {
 	content: "";
 	position: absolute;
-	border: 1px dashed var(--sapUiContentFocusColor);
+	top: 0;
+	left: 0;
 	width: 100%;
 	height: 100%;
-	left: -1px;
-	top: -1px;
+	border: 1px dashed var(--sapUiContentFocusColor);
+	box-sizing: border-box;
 	pointer-events: none;
+}
+
+.sapMPanel .sapMPanelIcon {
+	color: var(--sapUiContentIconColor);
+	transition: transform 0.4s ease-out;
+	pointer-events: none;
+}
+
+.sapMPanel .sapMPanelIcon.sapMPanelIconExpanded {
+	transform: rotate(90deg);
 }
 
 .sapMPanelHdr {

@@ -215,7 +215,7 @@ class Panel extends UI5Element {
 	shouldToggle(node) {
 		const customContent = this.header.length;
 		if (customContent) {
-			return node.hasAttribute("data-ui5-panel-icon");
+			return node.classList.contains("sapMPanelIconOuter");
 		}
 		return true;
 	}

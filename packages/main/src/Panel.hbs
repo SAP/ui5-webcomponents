@@ -8,21 +8,23 @@
 		{{> header}}
 	{{else}}
 		<header
-            @click="{{_headerClick}}"
-            @keydown="{{_headerKeyDown}}"
-            @keyup="{{_headerKeyUp}}"
-            class="{{classes.header}}"
-            tabindex="{{headerTabIndex}}"
+			@click="{{_headerClick}}"
+			@keydown="{{_headerKeyDown}}"
+			@keyup="{{_headerKeyUp}}"
+			class="{{classes.header}}"
+			tabindex="{{headerTabIndex}}"
 		>
-			<ui5-icon-svg
-				class="{{classes.icon}}"
-				src="{{_icon.src}}"
-				title="{{_icon.title}}"
+			<div class="sapMPanelIconOuter"
 				tabindex="{{iconTabIndex}}"
 				aria-expanded="{{expanded}}"
 				aria-labelledby="{{ariaLabelledBy}}"
-				data-ui5-panel-icon
-			></ui5-icon-svg>
+				title="{{_icon.title}}"
+				>
+				<ui5-icon-svg
+					class="{{classes.icon}}"
+					src="{{_icon.src}}"
+				></ui5-icon-svg>
+			</div>
 			{{> header}}
 		</header>
 	{{/if}}
