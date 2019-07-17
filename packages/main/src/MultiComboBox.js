@@ -393,7 +393,7 @@ class MultiComboBox extends UI5Element {
 				"sapUiSizeCompact": getCompactSize(),
 			},
 			icon: {
-				[`ui5-multi-combobox-icon-pressed`]: this._iconPressed,
+				[`ui5-multi-combobox-icon-root-pressed`]: this._iconPressed,
 				[`ui5-multi-combobox--icon`]: true,
 			},
 		};
