@@ -37,12 +37,12 @@ class DatePickerTestPage {
 
 	hasIcon() {
 		return browser.execute(function(id) {
-			return !!document.querySelector(id).shadowRoot.querySelector("ui5-icon");
+			return !!document.querySelector(id).shadowRoot.querySelector("ui5-icon-svg");
 		}, this._sut);
 	}
 
 	get valueHelpIcon() {
-		return browser.findElementDeep(this._sut + " >>> ui5-icon");
+		return browser.findElementDeep(this._sut + " >>> ui5-icon-svg");
 	}
 
 	get btnPrev() {
