@@ -1,4 +1,4 @@
-:host(:not[hidden]) {
+:host(ui5-icon:not([hidden])) {
 	display: inline-block;
 }
 
@@ -10,7 +10,7 @@
 	outline: none;
 }
 
-ui5-icon {
+ui5-icon:not([hidden]) {
 	display: inline-block;
 	width: 1rem;
 	height: 1rem;
