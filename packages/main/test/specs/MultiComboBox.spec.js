@@ -6,7 +6,7 @@ describe("MultiComboBox general interaction", () => {
 	describe("selection and filtering", () => {
 
 		it("Opens all items popover, selects and deselects the first item", () => {
-			const icon = browser.findElementDeep("#mcb >>> #ui5-multi-combobox--input ui5-icon-svg");
+			const icon = browser.findElementDeep("#mcb >>> #ui5-multi-combobox--input ui5-icon");
 			const popover = browser.findElementDeep("#mcb >>> .ui5-multi-combobox-all-items--popover");
 			const firstItem = browser.findElementDeep("#first-item");
 			const firstItemCheckbox = browser.findElementDeep("#mcb >>> .ui5-multi-combobox-all-items-list > ui5-li >>> ui5-checkbox");

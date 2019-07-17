@@ -4,7 +4,7 @@
 	aria-labelledby="{{_id}}">
 
 	{{#unless noIcon}}
-		<ui5-icon-svg class="ui5-messagestrip-icon" src="{{messageStripIcon}}"></ui5-icon-svg>
+		<ui5-icon class="ui5-messagestrip-icon" src="{{messageStripIcon}}"></ui5-icon>
 	{{/unless}}
 
 	<span class="ui5-hidden-text">{{hiddenText}}</span>
@@ -16,11 +16,11 @@
 			title="{{_closeButtonText}}"
 			@click={{_closeClick}}
 		>
-			<ui5-icon-svg
+			<ui5-icon
 				class="ui5-messagestrip-close-icon"
 				src="sap-icon://decline"
 			>
-			</ui5-icon-svg>
+			</ui5-icon>
 		</button>
 	{{/unless}}
 </div>

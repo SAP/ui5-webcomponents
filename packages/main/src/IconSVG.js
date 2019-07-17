@@ -12,7 +12,7 @@ import iconCss from "./generated/themes/IconSVG.css.js";
  * @public
  */
 const metadata = {
-	tag: "ui5-icon-svg",
+	tag: "ui5-icon",
 	properties: /** @lends sap.ui.webcomponents.main.Icon.prototype */ {
 
 		/**

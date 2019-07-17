@@ -32,22 +32,22 @@
 	<br>
 	<ui5-icon src="sap-icon://add-employee"></ui5-icon>
 	<br>
-	<ui5-icon-svg style="width: 1rem; height: 1rem;" src="sap-icon://add-employee"></ui5-icon-svg>
-	<ui5-icon-svg style="width: 2rem; height: 2rem;" src="sap-icon://factory"></ui5-icon-svg>
+	<ui5-icon style="width: 1rem; height: 1rem;" src="sap-icon://add-employee"></ui5-icon>
+	<ui5-icon style="width: 2rem; height: 2rem;" src="sap-icon://factory"></ui5-icon>
 	<br>
 
 	<ui5-button icon="sap-icon://add-equipment"></ui5-button>
 	<div id="content"></div>
 	<ui5-icon src="sap-icon://appointment-2"></ui5-icon>
-	<ui5-icon-svg src="sap-icon://appointment-2"></ui5-icon-svg>
+	<ui5-icon src="sap-icon://appointment-2"></ui5-icon>
 		<!-- <ui5-icon src="sap-icon://appointment-2"></ui5-icon>
-	<ui5-icon-svg src="sap-icon://appointment-2"></ui5-icon-svg> -->
+	<ui5-icon src="sap-icon://appointment-2"></ui5-icon> -->
 
 	<script type="module">
 		const icon = new sap.ui.core.Icon({src: "sap-icon://appointment-2"})
 		icon.placeAt("content");
 			window["sap-ui-webcomponents-main-bundle"].getIconNames().forEach(iconName => {
-				const icon = document.createElement("ui5-icon-svg");
+				const icon = document.createElement("ui5-icon");
 				icon.src = iconName;
 				document.body.appendChild(icon);
 			});

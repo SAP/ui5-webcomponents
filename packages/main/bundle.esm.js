@@ -21,7 +21,6 @@ import Card from "./dist/Card.js";
 import DatePicker from "./dist/DatePicker.js";
 import Dialog from "./dist/Dialog.js";
 import Icon from "./dist/Icon.js";
-import IconSVG from "./dist/IconSVG.js";
 import Input from "./dist/Input.js";
 import Label from "./dist/Label.js";
 import Link from "./dist/Link.js";
