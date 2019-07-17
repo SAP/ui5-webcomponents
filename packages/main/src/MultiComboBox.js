@@ -3,6 +3,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { isShow, isDown } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import { getCompactSize } from "@ui5/webcomponents-base/dist/Configuration.js";
+import "@ui5/webcomponents-base/dist/icons/slim-arrow-down.js";
 import MultiComboBoxTemplate from "./generated/templates/MultiComboBoxTemplate.lit.js";
 import Input from "./Input.js";
 import Tokenizer from "./Tokenizer.js";

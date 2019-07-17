@@ -2,6 +2,12 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
 import { isEnter, isSpace } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import "@ui5/webcomponents-base/dist/icons/decline.js";
+import "@ui5/webcomponents-base/dist/icons/message-information.js";
+import "@ui5/webcomponents-base/dist/icons/message-success.js";
+import "@ui5/webcomponents-base/dist/icons/message-error.js";
+import "@ui5/webcomponents-base/dist/icons/message-warning.js";
+
 import MessageStripType from "./types/MessageStripType.js";
 import MessageStripTemplate from "./generated/templates/MessageStripTemplate.lit.js";
 import Icon from "./Icon.js";
