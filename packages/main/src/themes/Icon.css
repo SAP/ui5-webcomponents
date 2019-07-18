@@ -1,5 +1,8 @@
 :host(ui5-icon:not([hidden])) {
 	display: inline-block;
+}
+
+:host {
 	width: 1rem;
 	height: 1rem;
 	color: var(--sapUiContentNonInteractiveIconColor);
@@ -9,13 +12,15 @@
 
 ui5-icon:not([hidden]) {
 	display: inline-block;
+}
+
+ui5-icon {
 	width: 1rem;
 	height: 1rem;
 	color: var(--sapUiContentNonInteractiveIconColor);
 	fill: currentColor;
 	outline: none;
 }
-
 
 .ui5-icon-root {
 	display:flex;

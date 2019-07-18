@@ -71,10 +71,6 @@ ui5-checkbox:not([hidden]) {
 	border-color: var(--sapUiFieldInvalidColor);
 }
 
-.ui5-checkbox--error .ui5-checkbox-inner--checked::before {
-	color: var(--sapUiFieldInvalidColor);
-}
-
 .ui5-checkbox--warning .ui5-checkbox-inner {
 	background: var(--sapUiFieldWarningBackground);
 	border: var(--_ui5_checkbox_inner_warning_border);
@@ -85,10 +81,6 @@ ui5-checkbox:not([hidden]) {
 	background: var(--sapUiFieldWarningBackground);
 	color: var(--sapUiFieldWarningColor);
 	border-color: var(--sapUiFieldWarningColor);
-}
-
-.ui5-checkbox--warning .ui5-checkbox-inner--checked::before {
-	color: var(--_ui5_checkbox_checkmark_warning_color);
 }
 
 .ui5-checkbox--hoverable:hover .ui5-checkbox-inner {

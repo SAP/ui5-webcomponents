@@ -176,10 +176,7 @@ ui5-input:not([hidden]) {
 }
 
 :host ::slotted(ui5-icon) {
-	padding: .5625rem .6875rem;
-	width: 100%;
-	height: 100%;
-	box-sizing: border-box;
+	padding: var(--_ui5_input_icon_padding);
 }
 
 :host([data-ui5-compact-size]) ::slotted(ui5-icon) {
@@ -194,10 +191,7 @@ ui5-input[data-ui5-compact-size] .sapWCInputIconRoot {
 }
 
 ui5-input ui5-icon {
-	padding: .5625rem .6875rem;
-	width: 100%;
-	height: 100%;
-	box-sizing: border-box;
+	padding: var(--_ui5_input_icon_padding);
 }
 
 ui5-input[data-ui5-compact-size] ui5-icon {

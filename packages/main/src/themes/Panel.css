@@ -106,9 +106,12 @@ ui5-panel:not([hidden]) {
 .sapMPanelWrappingDiv.sapMPanelWrappingDivClickable {
 	cursor: pointer;
 }
-
 .sapMPanelWrappingDiv.sapMPanelWrappingDivClickable:focus {
 	outline: none;
+}
+
+.sapMPanelWrappingDiv.sapMPanelWrappingDivClickable .sapMPanelIconOuter {
+	pointer-events: none;
 }
 
 .sapMPanelWrappingDiv.sapMPanelWrappingDivClickable:focus::after {

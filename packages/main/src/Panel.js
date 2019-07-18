@@ -300,11 +300,11 @@ class Panel extends UI5Element {
 	}
 
 	get headerTabIndex() {
-		return !this.header.length ? "0" : "";
+		return !this.header.length ? "0" : undefined;
 	}
 
 	get iconTabIndex() {
-		return this.header.length ? "0" : "";
+		return this.header.length ? "0" : undefined;
 	}
 
 	get shouldRenderH1() {
