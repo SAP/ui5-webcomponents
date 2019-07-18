@@ -22,7 +22,7 @@ const metadata = {
 		 * <br><br>
 		 * Example:
 		 * <br>
-		 * <code>src='sap-icons://add'</code>, <code>src='sap-icons://delete'</code>, <code>src='sap-icons://employee'</code>.
+		 * <code>src='sap-icon://add'</code>, <code>src='sap-icon://delete'</code>, <code>src='sap-icon://employee'</code>.
 		 *
 		 * @type {string}
 		 * @public

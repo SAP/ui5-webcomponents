@@ -133,22 +133,8 @@ ui5-checkbox:not([hidden]) {
 	pointer-events: none;
 }
 
-.ui5-checkbox-inner--checked::before {
-	content: "\e05b";
-	display: flex;
-	position: absolute;
-	justify-content: center;
-	align-items: center;
-	font-size: var(--sapUiFontSize);
-	font-family: "SAP-icons";
+.ui5-checkbox-icon {
 	color: var(--_ui5_checkbox_checkmark_color);
-	width: 100%;
-	height: 100%;
-	left: 0;
-	top: 0;
-	user-select: none;
-	-ms-user-select: none;
-	-webkit-user-select: none;
 	cursor: default;
 }
 
