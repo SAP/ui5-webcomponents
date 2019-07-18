@@ -127,6 +127,7 @@ ui5-checkbox:not([hidden]) {
 	border: var(--_ui5_checkbox_inner_border);
 	border-radius: var(--_ui5_checkbox_inner_border_radius);
 	background: var(--sapUiFieldBackground);
+	color: var(--_ui5_checkbox_checkmark_color);
 	box-sizing: border-box;
 	position: relative;
 	cursor: default;
@@ -134,7 +135,7 @@ ui5-checkbox:not([hidden]) {
 }
 
 .ui5-checkbox-icon {
-	color: var(--_ui5_checkbox_checkmark_color);
+	color: inherit;
 	cursor: default;
 }
 
