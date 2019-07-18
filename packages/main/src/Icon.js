@@ -33,7 +33,6 @@ const metadata = {
 		},
 	},
 	events: {
-		press: {},
 	},
 };
 
@@ -87,26 +86,6 @@ class Icon extends UI5Element {
 
 	focus() {
 		HTMLElement.prototype.focus.call(this);
-	}
-
-	onclick() {
-		// this.fireEvent("press");
-	}
-
-	onkeydown(event) {
-		// if (isSpace(event)) {
-		// 	event.preventDefault();
-		// 	this.__spaceDown = true;
-		// } else if (isEnter(event)) {
-		// 	this.onclick(event);
-		// }
-	}
-
-	onkeyup(event) {
-		// if (isSpace(event) && this.__spaceDown) {
-		// 	this.fireEvent("press");
-		// 	this.__spaceDown = false;
-		// }
 	}
 
 	get classes() {
