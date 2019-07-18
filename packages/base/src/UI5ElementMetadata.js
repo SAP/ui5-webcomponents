@@ -80,7 +80,7 @@ const validateSingleSlot = (value, slotData) => {
 
 	const getSlottedNodes = el => {
 		const isTag = el instanceof HTMLElement;
-		const isSlot = isTag && el.tagName.toUpperCase() === "SLOT";
+		const isSlot = isTag && el.localName === "slot";
 
 		if (isSlot) {
 			return el.assignedNodes({ flatten: true }).filter(item => item instanceof HTMLElement);
@@ -93,16 +93,7 @@ const validateSingleSlot = (value, slotData) => {
 	const slottedNodes = getSlottedNodes(value);
 	slottedNodes.forEach(el => {
 		if (!(el instanceof propertyType)) {
-			const isHTMLElement = el instanceof HTMLElement;
-			const tagName = isHTMLElement && el.tagName.toLowerCase();
-			const isCustomElement = isHTMLElement && tagName.includes("-");
-			if (isCustomElement) {
-				window.customElements.whenDefined(tagName).then(() => {
-					if (!(el instanceof propertyType)) {
-						throw new Error(`${el} is not of type ${propertyType}`);
-					}
-				});
-			}
+			throw new Error(`${el} is not of type ${propertyType}`);
 		}
 	});
 

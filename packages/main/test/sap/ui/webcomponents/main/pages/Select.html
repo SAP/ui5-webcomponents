@@ -72,6 +72,10 @@
 		inputResult.value = counter;
 	});
 
+	select.addEventListener("change", function(e) {
+		console.log("Select change event fired", e);
+	});
+
 	select2.addEventListener("ui5-change", function(e) {
 		++counter;
 		inputResult.value = counter;
@@ -108,8 +112,8 @@
 		const theme = hcb ? "sap_belize_hcb" : "sap_fiori_3";
 
 		document.body.setAttribute("style", styles);
-		var Theming = window["sap-ui-webcomponents-main-bundle"].Theming;
-		Theming.setTheme(theme);
+		var Conf = window["sap-ui-webcomponents-main-bundle"].configuration;
+		Conf.setTheme(theme);
 	});
 
 	countries.forEach(function(item, idx) {
@@ -126,7 +130,7 @@
 
 	var initialItemsHTML = "";
 
-	addItemsBtn.addEventListener("ui5-press", event => {
+	addItemsBtn.addEventListener("ui5-press", function(event) {
 		initialItemsHTML = select.innerHTML;
 
 		var li = document.createElement('ui5-option');
@@ -137,10 +141,9 @@
 		select.appendChild(li);
 	});
 
-	restoreItemsBtn.addEventListener("ui5-press", event => {
+	restoreItemsBtn.addEventListener("ui5-press", function(event) {
 		select.innerHTML = initialItemsHTML;
 	});
 </script>
 </body>
-</html>
 </html>

@@ -4,8 +4,8 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-import { getCompactSize } from "@ui5/webcomponents-base/dist/Configuration.js";
-import getEffectiveRTL from "@ui5/webcomponents-base/dist/util/getEffectiveRTL.js";
+import { getCompactSize } from "@ui5/webcomponents-base/dist/config/CompactSize.js";
+import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import "@ui5/webcomponents-base/dist/icons/slim-arrow-down.js";
 import "@ui5/webcomponents-base/dist/icons/slim-arrow-left.js";
 import "@ui5/webcomponents-base/dist/icons/slim-arrow-right.js";
@@ -396,7 +396,7 @@ class TabContainer extends UI5Element {
 	}
 
 	get rtl() {
-		return getEffectiveRTL() ? "rtl" : undefined;
+		return getRTL() ? "rtl" : undefined;
 	}
 
 	static async define(...params) {

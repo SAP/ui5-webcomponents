@@ -77,6 +77,10 @@ class TableRow extends UI5Element {
 		this.visibleCells = [];
 		this.popinCells = [];
 
+		if (this.cells.length === 0) {
+			return;
+		}
+
 		this._columnsInfo.forEach((info, index) => {
 			if (info.visible) {
 				this.visibleCells.push(this.cells[index]);

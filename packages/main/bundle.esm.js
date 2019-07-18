@@ -56,11 +56,18 @@ window.isIE = isIE; // attached to the window object for testing purposes
 
 
 // Note: keep in sync with rollup.config value for IIFE
-import * as configuration from "@ui5/webcomponents-base/dist/Configuration.js";
-import * as Theming from "@ui5/webcomponents-base/dist/Theming.js";
+import { getTheme, setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
+import { setNoConflict } from "@ui5/webcomponents-base/dist/config/NoConflict.js";
+import { getCompactSize } from "@ui5/webcomponents-base/dist/config/CompactSize.js";
+import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getRegsiteredNames as getIconNames } from  "@ui5/webcomponents-base/dist/SVGIconRegistry.js"
 window["sap-ui-webcomponents-main-bundle"] = {
-	configuration,
-	Theming,
-	getIconNames
+	configuration : {
+		getTheme,
+		setTheme,
+		setNoConflict,
+		getCompactSize,
+		getRTL,
+		getIconNames
+	}
 };

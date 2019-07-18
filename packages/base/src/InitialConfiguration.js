@@ -1,76 +1,43 @@
-import CalendarType from "@ui5/webcomponents-core/dist/sap/ui/core/CalendarType.js";
-import getDesigntimePropertyAsArray from "./util/getDesigntimePropertyAsArray.js";
-
 let initialized = false;
 
-const CONFIGURATION = {
+const initialConfig = {
 	theme: "sap_fiori_3",
 	rtl: null,
 	language: null,
 	compactSize: false,
-	supportedLanguages: null,
 	calendarType: null,
-	derivedRTL: null,
-	"xx-wc-no-conflict": false, // no URL
+	noConflict: false, // no URL
 };
 
 /* General settings */
 const getTheme = () => {
 	initConfiguration();
-	return CONFIGURATION.theme;
+	return initialConfig.theme;
 };
 
 const getRTL = () => {
 	initConfiguration();
-	return CONFIGURATION.rtl;
+	return initialConfig.rtl;
 };
 
 const getLanguage = () => {
 	initConfiguration();
-	return CONFIGURATION.language;
+	return initialConfig.language;
 };
 
 const getCompactSize = () => {
 	initConfiguration();
-	return CONFIGURATION.compactSize;
+	return initialConfig.compactSize;
 };
 
-const getSupportedLanguages = () => {
-	return getDesigntimePropertyAsArray("$core-i18n-locales:,ar,bg,ca,cs,da,de,el,en,es,et,fi,fr,hi,hr,hu,it,iw,ja,ko,lt,lv,nl,no,pl,pt,ro,ru,sh,sk,sl,sv,th,tr,uk,vi,zh_CN,zh_TW$");
-};
-
-const getWCNoConflict = () => {
+const getNoConflict = () => {
 	initConfiguration();
-	return CONFIGURATION["xx-wc-no-conflict"];
+	return initialConfig.noConflict;
 };
 
-const _setWCNoConflict = value => {
-	CONFIGURATION["xx-wc-no-conflict"] = value;
-};
-
-/* Calendar stuff */
 const getCalendarType = () => {
 	initConfiguration();
-	if (CONFIGURATION.calendarType) {
-		const type = Object.keys(CalendarType).filter(calType => calType === CONFIGURATION.calendarType)[0];
-
-		if (type) {
-			return type;
-		}
-	}
-
-	return CalendarType.Gregorian;
-};
-
-const getOriginInfo = () => {};
-
-const getLocale = () => {
-	initConfiguration();
-	return CONFIGURATION.language;
-};
-
-const _setTheme = themeName => {
-	CONFIGURATION.theme = themeName;
+	return initialConfig.calendarType;
 };
 
 const booleanMapping = new Map();
@@ -80,13 +47,14 @@ booleanMapping.set("false", false);
 let runtimeConfig = {};
 
 const parseConfigurationScript = () => {
-	const configScript = document.querySelector("[data-id='sap-ui-config']");
+	const configScript = document.querySelector("[data-ui5-config]") || document.querySelector("[data-id='sap-ui-config']"); // for backward compatibility
+
 	let configJSON;
 
 	if (configScript) {
 		try {
 			configJSON = JSON.parse(configScript.innerHTML);
-		} catch (е) {
+		} catch (err) {
 			console.warn("Incorrect data-sap-ui-config format. Please use JSON"); /* eslint-disable-line */
 		}
 
@@ -118,7 +86,7 @@ const parseURLParameters = () => {
 
 const applyConfigurations = () => {
 	Object.keys(runtimeConfig).forEach(key => {
-		CONFIGURATION[key] = runtimeConfig[key];
+		initialConfig[key] = runtimeConfig[key];
 	});
 };
 
@@ -139,11 +107,6 @@ export {
 	getRTL,
 	getLanguage,
 	getCompactSize,
-	getWCNoConflict,
+	getNoConflict,
 	getCalendarType,
-	getLocale,
-	_setTheme,
-	_setWCNoConflict,
-	getSupportedLanguages,
-	getOriginInfo,
 };

@@ -38,7 +38,8 @@
   },
   "resolutions": {
     "abstract-syntax-tree": "1.0.3",
-    "dir-glob": "2.0.0"
+    "dir-glob": "2.0.0",
+    "js-yaml" : "^3.13.1"
   },
   "workspaces": [
     "packages/core",

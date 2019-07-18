@@ -3,7 +3,7 @@ import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
 /**
  * Different types of BusyIndicator.
  */
-const BusyIndicatorTypes = {
+const BusyIndicatorSizes = {
 	/**
 	 * small size
 	 */
@@ -20,12 +20,12 @@ const BusyIndicatorTypes = {
 	Large: "Large",
 };
 
-class BusyIndicatorType extends DataType {
+class BusyIndicatorSize extends DataType {
 	static isValid(value) {
-		return !!BusyIndicatorTypes[value];
+		return !!BusyIndicatorSizes[value];
 	}
 }
 
-BusyIndicatorType.generataTypeAcessors(BusyIndicatorTypes);
+BusyIndicatorSize.generataTypeAcessors(BusyIndicatorSizes);
 
-export default BusyIndicatorType;
+export default BusyIndicatorSize;
