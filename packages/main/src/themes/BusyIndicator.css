@@ -34,8 +34,6 @@ ui5-busyindicator:not([hidden])[active] {
 	border-radius: 50%;
 }
 
-/* Belize specific */
-
 .ui5-busyindicator-circle::before {
 	content: "";
 	width: 100%;
