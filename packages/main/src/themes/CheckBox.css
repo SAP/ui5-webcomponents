@@ -202,6 +202,10 @@ ui5-checkbox:not([hidden]) {
 	width: calc(100% - .8125rem - var(--_ui5_checkbox_compact_inner_size));
 }
 
+.sapUiSizeCompact .ui5-checkbox-icon {
+	height: 0.875rem;
+}
+
 /* RTL */
 [dir="rtl"].ui5-checkbox-wrapper.ui5-checkbox-with-label {
 	padding-left: 0;
