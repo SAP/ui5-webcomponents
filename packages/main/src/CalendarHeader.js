@@ -129,15 +129,15 @@ class CalendarHeader extends UI5Element {
 	get classes() {
 		return {
 			main: {
-				sapWCCalHead: true,
-				sapUiSizeCompact: getCompactSize(),
+				"ui5-calheader-root": true,
+				"sapUiSizeCompact": getCompactSize(),
 			},
 			buttons: {
-				sapWCCalHeadArrowButton: true,
+				"ui5-calheader-arrowbtn": true,
 			},
 			middleButtons: {
-				sapWCCalHeadMiddleButton: true,
-				sapWCCalHeadArrowButton: true,
+				"ui5-calheader-middlebtn": true,
+				"ui5-calheader-arrowbtn": true,
 			},
 		};
 	}
