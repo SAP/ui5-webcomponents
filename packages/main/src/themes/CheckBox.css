@@ -135,7 +135,7 @@ ui5-checkbox:not([hidden]) {
 }
 
 .ui5-checkbox-icon {
-	color: inherit;
+	color: currentColor;
 	cursor: default;
 }
 
