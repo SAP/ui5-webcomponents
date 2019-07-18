@@ -5,7 +5,7 @@ import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEven
 import { getCompactSize } from "@ui5/webcomponents-base/dist/config/CompactSize.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import "@ui5/webcomponents-base/dist/icons/slim-arrow-left.js";
-import "@ui5/webcomponents-base/dist/icons/slim-arrow-right.js"
+import "@ui5/webcomponents-base/dist/icons/slim-arrow-right.js";
 import Button from "./Button.js";
 import Icon from "./Icon.js";
 import ButtonDesign from "./types/ButtonDesign.js";
