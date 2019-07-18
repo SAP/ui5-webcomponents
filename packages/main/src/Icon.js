@@ -1,6 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getIconInfo } from "@ui5/webcomponents-base/dist/IconPool.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getIconData } from "@ui5/webcomponents-base/dist/SVGIconRegistry.js";
 import IconTemplate from "./generated/templates/IconTemplate.lit.js";
@@ -80,36 +79,27 @@ class Icon extends UI5Element {
 		return iconCss;
 	}
 
+	_normalizeIconURI(iconURI) {
+		return this._hasIconPrefix(iconURI) ? iconURI : `sap-icon://${iconURI}`;
+	}
+
+	_hasIconPrefix(uri) {
+		return /sap-icon:\/\//.test(uri);
+	}
+
 	get d() {
-		return getIconData(this.src).d;
-	}
+		const icon = getIconData(this._normalizeIconURI(this.src));
 
-	focus() {
-		HTMLElement.prototype.focus.call(this);
-	}
+		if (!icon) {
+			/* eslint-disable-next-line */
+			return console.warn(`Required icon is not imported. You have to import the icon as a module in order to use it e.g. "@ui5/webcomponents-base/dist/icons/${this._normalizeIconURI(this.src).split("sap-icon://")[1]}.js"`);
+		}
 
-	get classes() {
-		const iconInfo = getIconInfo(this.src) || {};
-		return {
-			main: {
-				sapWCIcon: true,
-				sapWCIconMirrorInRTL: !iconInfo.suppressMirroring,
-			},
-		};
-	}
-
-	get iconContent() {
-		const iconInfo = getIconInfo(this.src) || {};
-		return iconInfo.content;
+		return icon.d;
 	}
 
 	get dir() {
 		return getRTL() ? "rtl" : "ltr";
-	}
-
-	get fontStyle() {
-		const iconInfo = getIconInfo(this.src) || {};
-		return `font-family: '${iconInfo.fontFamily}'`;
 	}
 }
 
