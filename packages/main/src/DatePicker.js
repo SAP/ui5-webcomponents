@@ -303,16 +303,6 @@ class DatePicker extends UI5Element {
 		}
 	}
 
-	onclick(event) {
-		const eventTarget = getShadowDOMTarget(event);
-		const icon = this.shadowRoot.querySelector("ui5-icon");
-		const isIconTab = (eventTarget === icon);
-
-		if (icon && (isIconTab || eventTarget.contains(icon.getDomRef()))) {
-			this.togglePicker();
-		}
-	}
-
 	onkeydown(event) {
 		if (isShow(event)) {
 			this.togglePicker();
@@ -405,10 +395,6 @@ class DatePicker extends UI5Element {
 
 	_getPopover() {
 		return this.shadowRoot.querySelector("ui5-popover");
-	}
-
-	_iconPress() {
-		this.togglePicker();
 	}
 
 	_canOpenPicker() {
