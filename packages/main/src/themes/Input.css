@@ -179,6 +179,7 @@ ui5-input:not([hidden]) {
 	padding: .5625rem .6875rem;
 	width: 100%;
 	height: 100%;
+	box-sizing: border-box;
 }
 
 :host([data-ui5-compact-size]) ::slotted(ui5-icon) {

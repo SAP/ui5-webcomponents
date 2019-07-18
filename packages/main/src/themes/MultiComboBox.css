@@ -21,7 +21,6 @@ ui5-multi-combobox:not([hidden]) {
 	color: var(--sapUiContentIconColor);
 	cursor: pointer;
 	outline: none;
-	box-sizing: border-box;
 }
 
 .ui5-multi-combobox--icon:active {
