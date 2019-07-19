@@ -16,7 +16,6 @@ import InputTemplate from "./generated/templates/InputTemplate.lit.js";
 
 // Styles
 import styles from "./generated/themes/Input.css.js";
-import shellbarInput from "./generated/themes/ShellBarInput.css.js";
 
 /**
  * @public
@@ -288,7 +287,7 @@ class Input extends UI5Element {
 	}
 
 	static get styles() {
-		return [styles, shellbarInput];
+		return [styles];
 	}
 
 	constructor() {
