@@ -506,7 +506,7 @@ class DatePicker extends UI5Element {
 		const oDomTarget = getDomTarget(event);
 		let isInput = false;
 
-		if (oDomTarget && oDomTarget.className.indexOf("sapWCInputBaseInner") > -1) {
+		if (oDomTarget && oDomTarget.className.indexOf("ui5-input-inner") > -1) {
 			isInput = true;
 		}
 
