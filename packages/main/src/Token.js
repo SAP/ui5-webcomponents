@@ -7,6 +7,8 @@ import {
 	isSpace,
 	isDelete,
 } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import "@ui5/webcomponents-base/dist/icons/decline.js";
+import "@ui5/webcomponents-base/dist/icons/cancel.js";
 
 import Icon from "./Icon.js";
 import TokenTemplate from "./generated/templates/TokenTemplate.lit.js";

@@ -13,7 +13,6 @@ ui5-datepicker:not([hidden]) {
 	cursor: pointer;
 	outline: none;
 	border: var(--_ui5_datepicker_icon_border);
-	box-sizing: border-box;
 }
 
 .sapWCDPIcon:hover,
