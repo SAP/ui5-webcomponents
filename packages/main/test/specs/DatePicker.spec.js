@@ -331,6 +331,7 @@ describe("Date Picker Tests", () => {
 		browser.findElementDeep("#downThere").moveTo(0, 0);
 
 		browser.pause(1000);
+
 		assert.ok(datepicker.isPickerOpen(), "picker is open");
 	});
 

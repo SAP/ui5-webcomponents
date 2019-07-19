@@ -204,6 +204,7 @@ ui5-shellbar:not([hidden]) {
 .sapWCShellBarIconButton {
 	min-width: 2.25rem;
 	font-size: 1rem;
+	padding: .625rem;
 }
 
 .sapWCShellBarImageButtonImage {
@@ -221,6 +222,7 @@ ui5-shellbar:not([hidden]) {
 	min-width: 2.25rem;
 	height: 2.25rem;
 	display: inline-flex;
+	padding: 0;
 }
 
 .sapWCShellBarOverflowContainerLeft {

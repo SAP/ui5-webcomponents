@@ -12,6 +12,7 @@ import { getCompactSize } from "@ui5/webcomponents-base/dist/config/CompactSize.
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import "@ui5/webcomponents-base/dist/icons/slim-arrow-down.js";
 import Option from "./Option.js";
 import Label from "./Label.js";
 import Popover from "./Popover.js";

@@ -26,16 +26,16 @@ ui5-select:not([hidden]) {
 /* Hovered */
 .sapWCSelect:hover:not(.sapWCSelectDisabled):not(.sapWCSelectState):not(.sapWCSelectOpened) {
 	background-color: var(--sapUiFieldHoverBackground);
-	border: 1px solid var(--sapUiFieldHoverBorderColor); 
+	border: 1px solid var(--sapUiFieldHoverBorderColor);
 }
 
 /* Hovered Icon */
-.sapWCSelect:hover:not(.sapWCSelectDisabled):not(.sapWCSelectOpened) .sapWCSelectDropDownIcon {
+.sapWCSelect:hover:not(.sapWCSelectDisabled):not(.sapWCSelectOpened) .sapWCSelectDropDownIconOuter {
 	background: var(--sapUiButtonLiteHoverBackground);
 }
 
 /* Opened */
-.sapWCSelect.sapWCSelectOpened .sapWCSelectDropDownIcon {
+.sapWCSelect.sapWCSelectOpened .sapWCSelectDropDownIconOuter {
 	background: var(--sapUiToggleButtonPressedBackground);
 	color: var(--sapUiToggleButtonPressedTextColor);
 }
@@ -79,15 +79,22 @@ ui5-select:not([hidden]) {
 }
 
 /* Icon */
-.sapWCSelect .sapWCSelectDropDownIcon {
+.sapWCSelect .sapWCSelectDropDownIconOuter {
+	display:flex;
+	justify-content: center;
+	align-items: center;
 	width: 2.5rem;
 	height: 100%;
-	flex-shrink: 0;
-	color: var(--sapUiContentIconColor);
+	box-sizing: border-box;
 }
 
-.sapWCSelect:hover:not(.sapWCSelectDisabled) .sapWCSelectDropDownIcon {
+.sapWCSelect:hover:not(.sapWCSelectDisabled) .sapWCSelectDropDownIconOuter {
 	border-left: var(--_ui5_select_hover_icon_left_border);
+}
+
+.sapWCSelectDropDownIcon {
+	color: var(--sapUiContentIconColor);
+	pointer-events: none;
 }
 
  /* States */
@@ -116,7 +123,7 @@ ui5-select:not([hidden]) {
 	height: 1.625rem;
 }
 
-.sapUiSizeCompact.sapWCSelect  .sapWCSelectDropDownIcon {
+.sapUiSizeCompact.sapWCSelect  .sapWCSelectDropDownIconOuter {
 	width: 2rem;
 }
 
@@ -126,7 +133,7 @@ ui5-select:not([hidden]) {
 	padding-right: 0.5rem;
 }
 
-:host(ui5-select) [dir="rtl"].sapWCSelect:hover:not(.sapWCSelectDisabled) .sapWCSelectDropDownIcon {
+:host(ui5-select) [dir="rtl"].sapWCSelect:hover:not(.sapWCSelectDisabled) .sapWCSelectDropDownIconOuter {
 	border-left: var(--_ui5_select_rtl_hover_icon_left_border);
 	border-right: var(--_ui5_select_rtl_hover_icon_right_border);
 }
@@ -136,7 +143,7 @@ ui5-select [dir="rtl"].sapWCSelect .sapWCSelectLabel {
 	padding-right: 0.5rem;
 }
 
-ui5-select [dir="rtl"].sapWCSelect:hover:not(.sapWCSelectDisabled) .sapWCSelectDropDownIcon {
+ui5-select [dir="rtl"].sapWCSelect:hover:not(.sapWCSelectDisabled) .sapWCSelectDropDownIconOuter {
 	border-left: var(--_ui5_select_rtl_hover_icon_left_border);
 	border-right: var(--_ui5_select_rtl_hover_icon_right_border);
 }

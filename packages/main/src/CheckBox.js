@@ -6,8 +6,12 @@ import { getCompactSize } from "@ui5/webcomponents-base/dist/config/CompactSize.
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-import CheckBoxTemplate from "./generated/templates/CheckBoxTemplate.lit.js";
+import "@ui5/webcomponents-base/dist/icons/accept.js";
+import Icon from "./Icon.js";
 import Label from "./Label.js";
+
+// Template
+import CheckBoxTemplate from "./generated/templates/CheckBoxTemplate.lit.js";
 
 // Styles
 import checkboxCss from "./generated/themes/CheckBox.css.js";
@@ -288,6 +292,7 @@ class CheckBox extends UI5Element {
 
 	static async define(...params) {
 		await Label.define();
+		await Icon.define();
 
 		super.define(...params);
 	}

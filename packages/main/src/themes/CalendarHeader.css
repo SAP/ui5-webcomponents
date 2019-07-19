@@ -19,6 +19,20 @@ ui5-calendar-header {
 	height: 100%;
 }
 
+.sapWCCalHeadArrowIcon {
+	color: var(--sapUiButtonTextColor);
+	width: 1rem;
+	pointer-events: none;	/* enable IE11 to receive :active state on above elements */
+}
+
+.sapWCCalHeadArrowButton:active .sapWCCalHeadArrowIcon {
+	color: var(--sapUiButtonActiveTextColor);
+}
+
+.sapWCCalHeadArrowButton:hover:not(:active) .sapWCCalHeadArrowIcon {
+	color: var(--sapUiButtonHoverTextColor);
+}
+
 .sapWCCalHeadArrowButton {
 	display: flex;
 	justify-content: center;
