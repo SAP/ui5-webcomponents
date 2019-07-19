@@ -53,14 +53,22 @@ ui5-timeline-item:not([hidden]) {
 }
 
 ui5-timeline-item:last-child .sapWCTimelineIndicator::before {
-    display: none;
+	display: none;
+}
+
+.sapWCTimelineItemIconOuter {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: .25rem;
+	height: 1.625rem;
+	width: 2rem;
 }
 
 .sapWCTimelineItemIcon {
 	color: var(--sapContent_NonInteractiveIconColor);
-	font-size: 1.375rem;
-	margin-top: .25rem;
-	width: 100%;
+	height: 1.375rem;
+	width: 1.375rem;
 }
 
 .sapWCTimelineBubble {

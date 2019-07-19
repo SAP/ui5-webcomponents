@@ -199,6 +199,7 @@
 .sapWCShellBarIconButton {
 	min-width: 2.25rem;
 	font-size: 1rem;
+	padding: .625rem;
 }
 
 .sapWCShellBarImageButtonImage {
@@ -216,6 +217,7 @@
 	min-width: 2.25rem;
 	height: 2.25rem;
 	display: inline-flex;
+	padding: 0;
 }
 
 .sapWCShellBarOverflowContainerLeft {
