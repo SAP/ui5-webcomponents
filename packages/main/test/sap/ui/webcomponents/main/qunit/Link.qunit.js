@@ -7,7 +7,7 @@ TestHelper.ready(function() {
 	QUnit.module("Rendering", function (hooks) {
 		hooks.before(function() {
 			this.getLinkRoot = function() {
-				return this.link.shadowRoot.querySelector(".sapMLnk");
+				return this.link.shadowRoot.querySelector(".ui5-link-root");
 			};
 		});
 		hooks.beforeEach(function () {
@@ -32,12 +32,7 @@ TestHelper.ready(function() {
 		QUnit.test("Default settings", function (assert) {
 			assert.expect(6);
 
-			var link = this.getLinkRoot(),
-				classes = ["sapMLnkEmphasized", "sapMLnkSubtle", "sapMLnkWrapping", "sapMLnkDsbl"];
-
-			classes.forEach(function(className) {
-				assert.notOk(link.classList.contains(className), "root element does not contain " + className);
-			});
+			var link = this.getLinkRoot();
 
 			assert.notOk(link.getAttribute('href'), "Rendered without 'href' by default");
 			assert.notOk(link.getAttribute('target'), "Rendered without 'target' by default");
@@ -51,7 +46,7 @@ TestHelper.ready(function() {
 			};
 
 			this.getLinkRoot = function() {
-				return this.link.shadowRoot.querySelector(".sapMLnk");
+				return this.link.shadowRoot.querySelector(".ui5-link-root");
 			};
 
 			this.getLinkInternalControl = function() {
@@ -71,29 +66,6 @@ TestHelper.ready(function() {
 			this.link = null;
 		});
 
-		QUnit.test("set boolean props", function (assert) {
-			assert.expect(2);
-
-			var done = assert.async(),
-				link = this.getLink(),
-				linkRoot = this.getLinkRoot(),
-				expectedClassеs = ["sapMLnkWrapping", "sapMLnkDsbl"],
-				props = ["wrap", "disabled"];
-
-			// act
-			props.forEach(function(prop) {
-				link[prop] = true;
-			});
-
-			RenderScheduler.whenFinished().then(function () {
-				expectedClassеs.forEach(function(className) {
-					// assert
-					assert.ok(linkRoot.classList.contains(className), "root element contain " + className);
-				});
-
-				done();
-			});
-		});
 
 		QUnit.test("set string props", function (assert) {
 			assert.expect(3);
@@ -111,9 +83,6 @@ TestHelper.ready(function() {
 				}, {
 					prop: 'target',
 					value: expectedTarget
-				}, {
-					prop: 'design',
-					value: type1
 				}];
 
 			props.forEach(function(propInfo) {
@@ -125,7 +94,6 @@ TestHelper.ready(function() {
 				// assert
 				assert.equal(linkRoot.getAttribute("href"), expectedHref, "'href' has been set");
 				assert.equal(linkRoot.getAttribute("target"), expectedTarget, "'target' has been set");
-				assert.ok(linkRoot.classList.contains("sapMLnkEmphasized"), "root element contain sapMLnkSubtle");
 				done();
 			});
 		});
