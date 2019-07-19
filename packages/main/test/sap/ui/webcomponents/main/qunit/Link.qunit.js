@@ -30,7 +30,7 @@ TestHelper.ready(function() {
 		});
 
 		QUnit.test("Default settings", function (assert) {
-			assert.expect(6);
+			assert.expect(2);
 
 			var link = this.getLinkRoot();
 
@@ -48,10 +48,6 @@ TestHelper.ready(function() {
 			this.getLinkRoot = function() {
 				return this.link.shadowRoot.querySelector(".ui5-link-root");
 			};
-
-			this.getLinkInternalControl = function() {
-				return this.link.internalControl;
-			};
 		});
 		hooks.beforeEach(function () {
 			var html = '<ui5-link id="myLink"></ui5-link>';
@@ -66,16 +62,14 @@ TestHelper.ready(function() {
 			this.link = null;
 		});
 
-
 		QUnit.test("set string props", function (assert) {
-			assert.expect(3);
+			assert.expect(2);
 
 			var done = assert.async(),
 				link = this.getLink(),
 				linkRoot = this.getLinkRoot(),
 				expectedHref = "https://sap.com",
-				expectedTarget = '_blank',
-				type1 = "Emphasized";
+				expectedTarget = '_blank';
 
 			var props = [{
 					prop: 'href',
