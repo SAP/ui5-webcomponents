@@ -207,12 +207,7 @@ class Link extends UI5Element {
 	get classes() {
 		return {
 			main: {
-				sapMLnk: true,
-				sapMLnkSubtle: this.design === LinkDesign.Subtle,
-				sapMLnkEmphasized: this.design === LinkDesign.Emphasized,
-				sapMLnkWrapping: this.wrap,
-				sapMLnkDsbl: this.disabled,
-				sapMLnkMaxWidth: true,
+				"ui5-link-root": true,
 			},
 		};
 	}
