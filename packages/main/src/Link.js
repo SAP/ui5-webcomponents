@@ -204,14 +204,6 @@ class Link extends UI5Element {
 		return this.disabled ? "true" : undefined;
 	}
 
-	get classes() {
-		return {
-			main: {
-				"ui5-link-root": true,
-			},
-		};
-	}
-
 	get parsedRef() {
 		return this.href.length > 0 ? this.href : undefined;
 	}
