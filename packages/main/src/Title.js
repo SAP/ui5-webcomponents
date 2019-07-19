@@ -115,17 +115,6 @@ class Title extends UI5Element {
 	get h6() {
 		return this.normalizedLevel === "h6";
 	}
-
-	get classes() {
-		return {
-			main: {
-				sapMTitle: true,
-				sapMTitleWrap: this.wrap,
-				sapUiSelectable: true,
-				[`sapMTitleStyle${this.level}`]: true,
-			},
-		};
-	}
 }
 
 Title.define();
