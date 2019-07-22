@@ -20,7 +20,7 @@ import styles from "./generated/themes/MonthPicker.css.js";
  * @public
  */
 const metadata = {
-	tag: "ui5-month-picker",
+	tag: "ui5-monthpicker",
 	properties: /** @lends  sap.ui.webcomponents.main.MonthPicker.prototype */ {
 		/**
 		 * A UNIX timestamp - seconds since 00:00:00 UTC on Jan 1, 1970.
@@ -68,7 +68,7 @@ const metadata = {
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.MonthPicker
  * @extends sap.ui.webcomponents.base.UI5Element
- * @tagname ui5-month-picker
+ * @tagname ui5-monthpicker
  * @public
  */
 class MonthPicker extends UI5Element {
@@ -117,11 +117,11 @@ class MonthPicker extends UI5Element {
 				timestamp: timestamp.toString(),
 				id: `${this._state._id}-m${i}`,
 				name: this._oLocaleData.getMonths("wide", this._primaryCalendarType)[i],
-				classes: "sapWCMonthPickerItem",
+				classes: "ui5-mp-item",
 			};
 
 			if (this._month === i) {
-				month.classes += " sapWCMonthPickerItemSel";
+				month.classes += " ui5-mp-item--selected";
 			}
 
 			const quarterIndex = parseInt(i / 3);
@@ -164,7 +164,7 @@ class MonthPicker extends UI5Element {
 
 	onclick(event) {
 		const eventTarget = getShadowDOMTarget(event);
-		if (eventTarget.className.indexOf("sapWCMonthPickerItem") > -1) {
+		if (eventTarget.className.indexOf("ui5-mp-item") > -1) {
 			const timestamp = this.getTimestampFromDOM(eventTarget);
 			this.timestamp = timestamp;
 			this._itemNav.current = this._month;
@@ -181,7 +181,7 @@ class MonthPicker extends UI5Element {
 	_activateMonth(event) {
 		const eventTarget = getShadowDOMTarget(event);
 		event.preventDefault();
-		if (eventTarget.className.indexOf("sapWCMonthPickerItem") > -1) {
+		if (eventTarget.className.indexOf("ui5-mp-item") > -1) {
 			const timestamp = this.getTimestampFromDOM(eventTarget);
 			this.timestamp = timestamp;
 			this.fireEvent("selectedMonthChange", { timestamp });
@@ -196,11 +196,8 @@ class MonthPicker extends UI5Element {
 	get classes() {
 		return {
 			main: {
-				"sapWCMonthPicker": true,
-				"sapUiSizeCompact": getCompactSize(),
-			},
-			quarter: {
-				"sapWCMonthPickerQuarter": true,
+				"ui5-mp-root": true,
+				"ui5-size-compact": getCompactSize(),
 			},
 		};
 	}
