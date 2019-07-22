@@ -8,10 +8,11 @@ import {
 	isEscape,
 	isShow,
 } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-import { getCompactSize } from "@ui5/webcomponents-base/dist/Configuration.js";
+import { getCompactSize } from "@ui5/webcomponents-base/dist/config/CompactSize.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import getEffectiveRTL from "@ui5/webcomponents-base/dist/util/getEffectiveRTL.js";
+import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import "@ui5/webcomponents-base/dist/icons/slim-arrow-down.js";
 import Option from "./Option.js";
 import Label from "./Label.js";
 import Popover from "./Popover.js";
@@ -381,7 +382,7 @@ class Select extends UI5Element {
 	}
 
 	get rtl() {
-		return getEffectiveRTL() ? "rtl" : undefined;
+		return getRTL() ? "rtl" : undefined;
 	}
 
 	static async define(...params) {

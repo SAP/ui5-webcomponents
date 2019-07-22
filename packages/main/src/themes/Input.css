@@ -162,18 +162,40 @@ ui5-input:not([hidden]) {
 }
 
 /* Input Icon */
-:host(ui5-input) ::slotted(ui5-icon) {
+
+.sapWCInputIconRoot {
 	min-width: var(--sap_wc_input_icon_min_width);
+	width: var(--sap_wc_input_icon_min_width);
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+:host([data-ui5-compact-size]) .sapWCInputIconRoot {
+	min-width: var(--sap_wc_input_compact_min_width);
+	width: var(--sap_wc_input_compact_min_width);
+}
+
+:host ::slotted(ui5-icon) {
+	padding: var(--_ui5_input_icon_padding);
+}
+
+:host([data-ui5-compact-size]) ::slotted(ui5-icon) {
+	padding: .25rem .5rem;
+}
+
+/* Remove that after ShadyCSS adoption */
+
+ui5-input[data-ui5-compact-size] .sapWCInputIconRoot {
+	min-width: var(--sap_wc_input_compact_min_width);
+	width: var(--sap_wc_input_compact_min_width);
 }
 
 ui5-input ui5-icon {
-	min-width: var(--sap_wc_input_icon_min_width);
-}
-
-:host(ui5-input[data-ui5-compact-size]) ::slotted(ui5-icon) {
-	min-width: var(--sap_wc_input_compact_min_width);
+	padding: var(--_ui5_input_icon_padding);
 }
 
 ui5-input[data-ui5-compact-size] ui5-icon {
-	min-width: var(--sap_wc_input_compact_min_width);
+	padding: .25rem .5rem;
 }

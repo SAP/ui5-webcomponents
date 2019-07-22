@@ -82,7 +82,8 @@ ui5-card:not([hidden]) {
 }
 
 .sapFCardHeader .sapFCardAvatar .sapFCardHeaderIcon {
-	font-size: 1.5rem;
+	width: 1.5rem;
+	height: 1.5rem;
 	color: var(--sapUiTileIconColor);
 }
 
@@ -145,4 +146,4 @@ ui5-card:not([hidden]) {
 
 [dir="rtl"] .sapFCardHeader .sapFCardHeaderText .sapFCardSubtitle {
 	text-align: right;
-} 
+}

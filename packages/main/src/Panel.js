@@ -4,7 +4,8 @@ import { getIconURI } from "@ui5/webcomponents-base/dist/IconPool.js";
 import slideDown from "@ui5/webcomponents-base/dist/animations/slideDown.js";
 import slideUp from "@ui5/webcomponents-base/dist/animations/slideUp.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-import { getCompactSize } from "@ui5/webcomponents-base/dist/Configuration.js";
+import { getCompactSize } from "@ui5/webcomponents-base/dist/config/CompactSize.js";
+import "@ui5/webcomponents-base/dist/icons/navigation-right-arrow.js";
 import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
 import Icon from "./Icon.js";
 import PanelAccessibleRole from "./types/PanelAccessibleRole.js";
@@ -200,11 +201,7 @@ class Panel extends UI5Element {
 		this._icon = {};
 		this._icon.id = `${this.id}-CollapsedImg`;
 		this._icon.src = getIconURI("navigation-right-arrow");
-		this._icon.functional = true;
 		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
-
-		this._toggle = event => { event.preventDefault(); this._toggleOpen(); };
-		this._noOp = () => {};
 	}
 
 	onBeforeRendering() {
@@ -213,14 +210,27 @@ class Panel extends UI5Element {
 			this._contentExpanded = !this.collapsed;
 		}
 
-		const toggleWithInternalHeader = !this.header.length;
 		this._icon.title = this.resourceBundle.getText(PANEL_ICON);
-		this._header.press = toggleWithInternalHeader ? this._toggle : this._noOp;
-		this._icon.press = !toggleWithInternalHeader ? this._toggle : this._noOp;
 	}
 
-	onHeaderKeyDown(event) {
-		if (!this._headerOnTarget(event.target)) {
+	shouldToggle(node) {
+		const customContent = this.header.length;
+		if (customContent) {
+			return node.classList.contains("sapMPanelIconOuter");
+		}
+		return true;
+	}
+
+	_headerClick(event) {
+		if (!this.shouldToggle(event.target)) {
+			return;
+		}
+
+		this._toggleOpen();
+	}
+
+	_headerKeyDown(event) {
+		if (!this.shouldToggle(event.target)) {
 			return;
 		}
 
@@ -233,8 +243,8 @@ class Panel extends UI5Element {
 		}
 	}
 
-	onHeaderKeyUp(event) {
-		if (!this._headerOnTarget(event.target)) {
+	_headerKeyUp(event) {
+		if (!this.shouldToggle(event.target)) {
 			return;
 		}
 
@@ -290,11 +300,11 @@ class Panel extends UI5Element {
 	}
 
 	get headerTabIndex() {
-		return !this.header.length ? "0" : "";
+		return !this.header.length ? "0" : undefined;
 	}
 
 	get iconTabIndex() {
-		return this.header.length ? "0" : "";
+		return this.header.length ? "0" : undefined;
 	}
 
 	get shouldRenderH1() {

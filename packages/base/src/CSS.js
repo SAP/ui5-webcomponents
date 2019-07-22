@@ -1,5 +1,5 @@
-import { getTheme } from "./Configuration.js";
 import { getEffectiveStyle } from "./Theming.js";
+import { getTheme } from "./config/Theme.js";
 import { injectWebComponentStyle } from "./theming/StyleInjection.js";
 
 const styleMap = new Map();

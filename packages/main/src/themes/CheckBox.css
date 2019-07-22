@@ -73,10 +73,6 @@ ui5-checkbox:not([hidden]) {
 	border-color: var(--sapUiFieldInvalidColor);
 }
 
-.ui5-checkbox--error .ui5-checkbox-inner--checked::before {
-	color: var(--sapUiFieldInvalidColor);
-}
-
 .ui5-checkbox--warning .ui5-checkbox-inner {
 	background: var(--sapUiFieldWarningBackground);
 	border: var(--_ui5_checkbox_inner_warning_border);
@@ -87,10 +83,6 @@ ui5-checkbox:not([hidden]) {
 	background: var(--sapUiFieldWarningBackground);
 	color: var(--sapUiFieldWarningColor);
 	border-color: var(--sapUiFieldWarningColor);
-}
-
-.ui5-checkbox--warning .ui5-checkbox-inner--checked::before {
-	color: var(--_ui5_checkbox_checkmark_warning_color);
 }
 
 .ui5-checkbox--hoverable:hover .ui5-checkbox-inner {
@@ -129,28 +121,15 @@ ui5-checkbox:not([hidden]) {
 	border: var(--_ui5_checkbox_inner_border);
 	border-radius: var(--_ui5_checkbox_inner_border_radius);
 	background: var(--sapUiFieldBackground);
+	color: var(--_ui5_checkbox_checkmark_color);
 	box-sizing: border-box;
 	position: relative;
 	cursor: default;
 	pointer-events: none;
 }
 
-.ui5-checkbox-inner--checked::before {
-	content: "\e05b";
-	display: flex;
-	position: absolute;
-	justify-content: center;
-	align-items: center;
-	font-size: var(--sapUiFontSize);
-	font-family: "SAP-icons";
-	color: var(--_ui5_checkbox_checkmark_color);
-	width: 100%;
-	height: 100%;
-	left: 0;
-	top: 0;
-	user-select: none;
-	-ms-user-select: none;
-	-webkit-user-select: none;
+.ui5-checkbox-icon {
+	color: currentColor;
 	cursor: default;
 }
 
@@ -215,6 +194,10 @@ ui5-checkbox:not([hidden]) {
 .sapUiSizeCompact.ui5-checkbox-wrapper .ui5-checkbox-label {
 	margin-left: var(--_ui5_checkbox_compact_wrapper_padding);
 	width: calc(100% - .8125rem - var(--_ui5_checkbox_compact_inner_size));
+}
+
+.sapUiSizeCompact .ui5-checkbox-icon {
+	height: 0.875rem;
 }
 
 /* RTL */

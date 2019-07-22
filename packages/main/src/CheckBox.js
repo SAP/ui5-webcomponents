@@ -2,14 +2,17 @@ import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { getCompactSize } from "@ui5/webcomponents-base/dist/Configuration.js";
+import { getCompactSize } from "@ui5/webcomponents-base/dist/config/CompactSize.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import getEffectiveRTL from "@ui5/webcomponents-base/dist/util/getEffectiveRTL.js";
+import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-import CheckBoxTemplate from "./generated/templates/CheckBoxTemplate.lit.js";
+import "@ui5/webcomponents-base/dist/icons/accept.js";
+import Icon from "./Icon.js";
 import Label from "./Label.js";
-
 import { VALUE_STATE_ERROR, VALUE_STATE_WARNING } from "./i18n/defaults.js";
+
+// Template
+import CheckBoxTemplate from "./generated/templates/CheckBoxTemplate.lit.js";
 
 // Styles
 import checkboxCss from "./generated/themes/CheckBox.css.js";
@@ -314,11 +317,12 @@ class CheckBox extends UI5Element {
 	}
 
 	get rtl() {
-		return getEffectiveRTL() ? "rtl" : undefined;
+		return getRTL() ? "rtl" : undefined;
 	}
 
 	static async define(...params) {
 		await Label.define();
+		await Icon.define();
 
 		super.define(...params);
 	}
