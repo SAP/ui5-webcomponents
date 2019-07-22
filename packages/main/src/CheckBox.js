@@ -256,20 +256,10 @@ class CheckBox extends UI5Element {
 	get classes() {
 		return {
 			main: {
-				"ui5-checkbox-wrapper": true,
+				"ui5-checkbox-root": true,
 				"ui5-checkbox-with-label": !!this.text,
-				"ui5-checkbox--disabled": this.disabled,
-				"ui5-checkbox--readonly": this.readonly,
-				"ui5-checkbox--error": this.valueState === "Error",
-				"ui5-checkbox--warning": this.valueState === "Warning",
-				"ui5-checkbox--wrap": this.wrap,
 				"ui5-checkbox--hoverable": !this.disabled && !this.readonly && isDesktop(),
 				"sapUiSizeCompact": getCompactSize(),
-			},
-			inner: {
-				"ui5-checkbox-inner": true,
-				"ui5-checkbox-inner-mark": true,
-				"ui5-checkbox-inner--checked": !!this.checked,
 			},
 		};
 	}
