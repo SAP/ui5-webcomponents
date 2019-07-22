@@ -155,6 +155,13 @@ const metadata = {
 			type: String,
 		},
 
+		/**
+		 * @private
+		 */
+		focused: {
+			type: Boolean,
+		},
+
 		_height: {
 			type: CSSSize,
 			defaultValue: null,
@@ -172,9 +179,6 @@ const metadata = {
 		},
 		_maxHeight: {
 			type: String,
-		},
-		_focussed: {
-			type: Boolean,
 		},
 		_listeners: {
 			type: Object,
@@ -280,11 +284,11 @@ class TextArea extends UI5Element {
 	}
 
 	onfocusin() {
-		this._focussed = true;
+		this.focused = true;
 	}
 
 	onfocusout() {
-		this._focussed = false;
+		this.focused = false;
 	}
 
 	_handleChange() {
@@ -362,7 +366,7 @@ class TextArea extends UI5Element {
 			},
 			focusDiv: {
 				sapWCTextAreaFocusDiv: true,
-				sapWCTextAreaHasFocus: this._focussed,
+				sapWCTextAreaHasFocus: this.focused,
 			},
 		};
 	}

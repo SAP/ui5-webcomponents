@@ -1,44 +1,77 @@
-:host(ui5-textarea:not([hidden])) {
+:host(:not([hidden])) {
 	display: inline-block;
 }
 
-ui5-textarea:not([hidden]) {
-	display: inline-block;
+:host {
+	width: 100%;
+	color: var(--sapUiFieldTextColor);
+	font-size: var(--sapMFontMediumSize);
+	font-family: var(--sapUiFontFamily);
+	background-color: var(--sapUiFieldBackground);
+	border: 1px solid var(--sapUiFieldBorderColor);
+	border-radius: var(--_ui5_input_wrapper_border_radius);
+	box-sizing: border-box;
 }
 
-.sapWCTextArea {
-	height: 3rem;
-	background: transparent;
-	position: relative;
+:host([disabled]) {
+	opacity: var(--sap_wc_input_disabled_opacity);
+	cursor: default;
+	pointer-events: none;
+	background: var(--sapUiFieldReadOnlyBackground);
+	border-color: var(--sapUiFieldReadOnlyBorderColor);
+	-webkit-text-fill-color: var(--sapUiContentDisabledTextColor);
+	color: var(--sapUiContentDisabledTextColor);
+}
+
+:host([focused]) .ui5-textarea-inner {
+	outline: var(--_ui5_textarea_focus_after_width) dotted var(--sapUiContentFocusColor);
+	outline-offset: -2px;
+}
+
+:host([value-state]:not([value-state="None"])[focused]) {
+	outline: var(--_ui5_input_focus_border_width) dotted var(--sapUiContentFocusColor);
+	outline-offset: -4px;
+}
+
+.ui5-textarea-root {
+	height: 100%;
 	display: inline-flex;
 	vertical-align: top;
 	outline: none;
-	position: relative;
 	overflow: hidden;
 	box-sizing: border-box;
 }
 
-.sapWCTextArea:not(.sapWCTextAreaDisabled):not(.sapWCTextAreaWarning):hover .sapWCTextAreaInner {
-	border: 1px solid var(--sapUiFieldHoverBorderColor);
-}
-
-.sapWCTextArea.sapWCTextAreaReadonly .sapWCTextAreaInner {
-	background: var(--sapUiFieldReadOnlyBackground);
-}
-
-.sapWCTextAreaMirror~.sapWCTextAreaFocusDiv {
-	height: 100%;
+.ui5-textarea-inner {
 	width: 100%;
-	top: 0;
+	height: 100%;
+	margin: 0;
+	padding: 0.5625rem 0.6875rem;
+	line-height: 1.4;
+	box-sizing: border-box;
+	color: inherit;
+	background: inherit;
+	font-size: inherit;
+	font-family: inherit;
+	-webkit-appearance: none;
+	-moz-appearance: textfield;
+	overflow: auto;
+	resize: none;
+	border: none;
+}
+
+:host([growing]) .ui5-textarea-root {
+	position: relative;
+}
+
+:host([growing]) .ui5-textarea-inner {
 	position: absolute;
+	top: 0;
+	left: 0;
 }
 
-.sapWCTextAreaGrowing.sapWCTextAreaNoMaxLines .sapWCTextAreaFocusDiv,
-.sapWCTextAreaGrowing.sapWCTextAreaNoMaxLines .sapWCTextAreaMirror {
-	overflow: hidden;
-}
 
-.sapWCTextAreaMirror {
+.ui5-textarea-mirror {
 	line-height: 1.4;
 	visibility: hidden;
 	width: 100%;
@@ -50,106 +83,97 @@ ui5-textarea:not([hidden]) {
 	box-sizing: border-box;
 }
 
-.sapWCTextAreaInner {
-	width: 100%;
-	margin: 0;
-	padding: 0.5625rem 0.6875rem;
-	line-height: 1.4;
-	box-sizing: border-box;
-	color: var(--sapUiFieldTextColor);
-	background: var(--sapUiFieldBackground);
-	border: 1px solid var(--sapUiFieldBorderColor);
-	outline: none;
-	font-size: var(--sapMFontMediumSize);
-	font-family: var(--sapUiFontFamily);
-	-webkit-appearance: none;
-	-moz-appearance: textfield;
-	overflow: auto;
-	resize: none;
+:host([readonly]) {
+	border-color: var(--sapUiFieldReadOnlyBorderColor);
+	background: var(--sapUiFieldReadOnlyBackground);
 }
 
-.sapWCTextAreaHasFocus::after {
-	content: "";
-	border: var(--_ui5_textarea_focus_after_width) dotted var(--sapUiContentFocusColor);
-	position: absolute;
-	top: 2px;
-	left: 2px;
-	right: 2px;
-	bottom: 2px;
-	pointer-events: none;
-}
+/* show-exceeded-text */
 
-.sapWCTextAreaWarning .sapWCTextAreaHasFocus::after {
-	top: 3px;
-	left: 3px;
-	right: 3px;
-	bottom: 3px;
-}
-
-.sapWCTextAreaGrowing.sapWCTextAreaNoCols .sapWCTextAreaFocusDiv {
-	overflow: hidden;
-	width: 100%;
-}
-
-.sapWCTextAreaInner::-webkit-input-placeholder {
-	font-size: var(--sapMFontMediumSize);
-	font-style: italic;
-}
-
-.sapWCTextAreaInner::-moz-placeholder {
-	font-size: var(--sapMFontMediumSize);
-	font-style: italic;
-}
-
-.sapWCTextAreaInner:-ms-input-placeholder {
-	font-size: var(--sapMFontMediumSize);
-	font-style: italic;
-}
-
-.sapWCTextAreaWithCounter {
+:host([show-exceeded-text]) .ui5-textarea-root {
 	flex-direction: column;
-	display: flex;
+	border-radius: inherit;
+	border-color: inherit;
 }
 
-.sapWCTextAreaWithCounter .sapWCTextAreaExceededText {
-	overflow: hidden;
-	align-self: flex-end;
-	padding: 0.125rem 0.125rem 0.5rem;
-	color: var(--sapUiContentLabelColor);
-	font-family: var(--sapUiFontFamily);
-	font-size: var(--sapMFontSmallSize);
+:host([show-exceeded-text]) {
+	border: none;
+	background: transparent;
 }
 
-.sapWCTextAreaCounter {
-	text-align: right;
-	font-size: var(--sapMFontMediumSize);
-	font-family: var(--sapUiFontFamily);
+:host([show-exceeded-text]) .ui5-textarea-inner {
+	border: 1px solid var(--sapUiFieldBorderColor);
 }
 
-.sapWCTextAreaWarningInner {
-	border-width: var(--_ui5_textarea_warning_border_width);
-	border-style: var(--_ui5_textarea_warning_border_style);
-	background: var(--sapUiFieldWarningBackground);
+:host([show-exceeded-text]:hover) {
+	background-color: transparent;
+}
+
+:host([show-exceeded-text]) .ui5-textarea-inner {
+	background-color: var(--sapUiFieldHoverBackground);
+	border-radius: inherit;
+}
+
+:host([show-exceeded-text]) .ui5-textarea-inner:hover {
+	border-color: inherit;
+}
+
+/* ------------------- */
+
+.ui5-textarea-inner::-webkit-input-placeholder {
+	/* Chrome/Opera/Safari */
+	color: var(--sapUiFieldPlaceholderTextColor);
+}
+
+.ui5-textarea-inner::-moz-placeholder {
+	/* Firefox 19+ */
+	color: var(--sapUiFieldPlaceholderTextColor);
+}
+
+.ui5-textarea-inner:-ms-input-placeholder {
+	/* IE 10+ */
+	color: var(--sapUiFieldPlaceholderTextColor);
+}
+
+.ui5-textarea-inner:-moz-placeholder {
+	/* Firefox 18- */
+	color: var(--sapUiFieldPlaceholderTextColor);
+}
+
+:host(:not([value-state]):not([show-exceeded-text]):hover) {
+	background-color: var(--sapUiFieldHoverBackground);
+	border-color: var(--sapUiFieldHoverBorderColor);
+}
+
+:host([value-state]:not([value-state="None"])) {
+	border-width: var(--_ui5_input_state_border_width);
+}
+
+:host([value-state="Error"]) .ui5-textarea-inner,
+:host([value-state="Warning"]) .ui5-textarea-inner {
+	font-style: var(--_ui5_input_error_warning_font_style);
+}
+
+:host([value-state="Error"]) .ui5-textarea-inner {
+	font-weight: var(--_ui5_input_error_font_weight);
+}
+
+:host([value-state="Error"]:not([readonly])) {
+	background-color: var(--sapUiFieldInvalidBackground);
+	border-color: var(--sapUiFieldInvalidColor);
+}
+
+:host([value-state="Error"]:not([readonly]):not([disabled])),
+:host([value-state="Warning"]:not([readonly]):not([disabled])) {
+	border-style: var(--_ui5_input_error_warning_border_style);
+}
+
+:host([value-state="Warning"]:not([readonly])) {
+	background-color: var(--sapUiFieldWarningBackground);
 	border-color: var(--sapUiFieldWarningColor);
 }
 
-.sapWCTextAreaContent {
-	display: flex;
-	flex-direction: column;
-	height: 100%;
-}
-
-.sapWCTextAreaDisabled {
-	opacity: 0.5;
-	user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	-webkit-user-select: none;
-}
-
-.sapWCTextAreaFocusDiv {
-	display: flex;
-	width: 100%;
-	height: 100%;
-	position: relative;
+:host([value-state="Success"]:not([readonly])) {
+	background-color: var(--sapUiFieldSuccessBackground);
+	border-color: var(--sapUiFieldSuccessColor);
 }
