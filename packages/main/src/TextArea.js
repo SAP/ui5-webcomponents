@@ -162,13 +162,15 @@ const metadata = {
 			type: Boolean,
 		},
 
-		_height: {
-			type: CSSSize,
-			defaultValue: null,
+		/**
+		 * @private
+		 */
+		exceeding: {
+			type: Boolean,
 		},
 
-		_exceededTextProps: {
-			type: Object,
+		_height: {
+			type: CSSSize,
 			defaultValue: null,
 		},
 
@@ -249,6 +251,8 @@ class TextArea extends UI5Element {
 	onBeforeRendering() {
 		this._exceededTextProps = this._calcExceededText();
 		this._mirrorText = this._tokenizeText(this.value);
+
+		this.exceeding = this._exceededTextProps.leftCharactersCount < 0;
 
 		if (this.growingMaxLines) {
 			// this should be complex calc between line height and paddings - TODO: make it stable
@@ -339,35 +343,6 @@ class TextArea extends UI5Element {
 
 		return {
 			exceededText, leftCharactersCount, calcedMaxLength,
-		};
-	}
-
-	get classes() {
-		return {
-			main: {
-				sapWCTextArea: true,
-				sapWCTextAreaWarning: (this._exceededTextProps.leftCharactersCount < 0),
-				sapWCTextAreaGrowing: this.growing,
-				sapWCTextAreaNoMaxLines: !this.growingMaxLines,
-				sapWCTextAreaWithCounter: this.showExceededText,
-				sapWCTextAreaDisabled: this.disabled,
-				sapWCTextAreaReadonly: this.readonly,
-			},
-			inner: {
-				sapWCTextAreaInner: true,
-				sapWCTextAreaStateInner: (this._exceededTextProps.leftCharactersCount < 0),
-				sapWCTextAreaWarningInner: (this._exceededTextProps.leftCharactersCount < 0),
-			},
-			exceededText: {
-				sapWCTextAreaExceededText: true,
-			},
-			mirror: {
-				sapWCTextAreaMirror: true,
-			},
-			focusDiv: {
-				sapWCTextAreaFocusDiv: true,
-				sapWCTextAreaHasFocus: this.focused,
-			},
 		};
 	}
 
