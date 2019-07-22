@@ -1,5 +1,5 @@
-commit b6352d89afffa6b2db33862253dedfbeafab39de
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Fri Jul 19 10:58:59 2019 +0200
+commit 7548ed03adeb59673075a937f403bc34aea66855
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Mon Jul 22 13:35:37 2019 +0300
 
-    feat(ui5-icon): use SVG icons instead of icon font (#649)
+    refactor: fix icon imports and typo in function name (#663)
