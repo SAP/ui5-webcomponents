@@ -259,7 +259,7 @@ class CheckBox extends UI5Element {
 				"ui5-checkbox-root": true,
 				"ui5-checkbox-with-label": !!this.text,
 				"ui5-checkbox--hoverable": !this.disabled && !this.readonly && isDesktop(),
-				"sapUiSizeCompact": getCompactSize(),
+				"ui5-size-compact": getCompactSize(),
 			},
 		};
 	}
