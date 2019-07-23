@@ -204,19 +204,6 @@ class Link extends UI5Element {
 		return this.disabled ? "true" : undefined;
 	}
 
-	get classes() {
-		return {
-			main: {
-				sapMLnk: true,
-				sapMLnkSubtle: this.design === LinkDesign.Subtle,
-				sapMLnkEmphasized: this.design === LinkDesign.Emphasized,
-				sapMLnkWrapping: this.wrap,
-				sapMLnkDsbl: this.disabled,
-				sapMLnkMaxWidth: true,
-			},
-		};
-	}
-
 	get parsedRef() {
 		return this.href.length > 0 ? this.href : undefined;
 	}

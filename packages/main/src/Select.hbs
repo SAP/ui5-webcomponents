@@ -31,11 +31,10 @@
 		</ui5-popover>
 	{{/if}}
 
-	<ui5-icon
-		src="sap-icon://slim-arrow-down"
-		class="sapWCSelectDropDownIcon"
-		@ui5-press="{{_togglePopover}}"
-	></ui5-icon>
+	<div class="sapWCSelectDropDownIconOuter" @click="{{_togglePopover}}">
+		<ui5-icon src="sap-icon://slim-arrow-down" class="sapWCSelectDropDownIcon"
+		></ui5-icon>
+	</div>
 
-    <slot name="formSupport"></slot>
+	<slot name="formSupport"></slot>
 </div>

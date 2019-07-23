@@ -20,7 +20,7 @@ describe("Panel general interaction", () => {
 	});
 
 	it("tests toggle event upon icon click with custom header", () => {
-		const icon = browser.findElementDeep("#panel2 >>> ui5-icon");
+		const icon = browser.findElementDeep("#panel2 >>> .sapMPanelIconOuter");
 		const field = browser.$("#field2");
 
 		icon.click();
