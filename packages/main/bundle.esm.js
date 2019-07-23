@@ -11,6 +11,7 @@ import "./dist/MessageBundleAssets.js";
 import "./dist/features/InputElementsFormSupport.js";
 import "./dist/features/InputSuggestions.js";
 
+import "@ui5/webcomponents-base/dist/AllIcons.js";
 
 import Badge from "./dist/Badge.js";
 import BusyIndicator from "./dist/BusyIndicator.js";
@@ -59,6 +60,7 @@ import { getTheme, setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js
 import { setNoConflict } from "@ui5/webcomponents-base/dist/config/NoConflict.js";
 import { getCompactSize } from "@ui5/webcomponents-base/dist/config/CompactSize.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
+import { getRegisteredNames as getIconNames } from  "@ui5/webcomponents-base/dist/SVGIconRegistry.js"
 window["sap-ui-webcomponents-main-bundle"] = {
 	configuration : {
 		getTheme,
@@ -66,5 +68,6 @@ window["sap-ui-webcomponents-main-bundle"] = {
 		setNoConflict,
 		getCompactSize,
 		getRTL,
+		getIconNames
 	}
 };

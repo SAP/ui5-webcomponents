@@ -206,20 +206,16 @@ ui5-switch:not([hidden]) {
 	font-size: var(--sapMFontSmallSize);
 }
 
-.ui5-switch-wrapper.ui5-switch--semantic .ui5-switch-text::before {
-	font-family: 'SAP-icons';
-	speak: none;
+.ui5-switch-wrapper.ui5-switch--semantic .ui5-switch-icon-on,
+.ui5-switch-wrapper.ui5-switch--semantic .ui5-switch-icon-off {
 	width: 0.75rem;
 	height: 0.75rem;
-	line-height: 0.75rem;
 }
-.ui5-switch-wrapper.ui5-switch--semantic .ui5-switch-text--on::before {
-	content: "\e05b";
+.ui5-switch-wrapper.ui5-switch--semantic .ui5-switch-icon-on {
 	color: var(--sapUiPositiveElement);
 }
 
-.ui5-switch-wrapper.ui5-switch--semantic .ui5-switch-text--off::before {
-	content: "\e03e";
+.ui5-switch-wrapper.ui5-switch--semantic .ui5-switch-icon-off {
 	color: var(--sapUiNegativeElement);
 }
 
@@ -280,13 +276,13 @@ ui5-switch:not([hidden]) {
 	border-color: var(--_ui5_switch_handle_semantic_checked_hover_border_color);
 }
 
-.ui5-switch-wrapper.ui5-switch--semantic.ui5-switch--disabled .ui5-switch-text--on::before,
-.ui5-switch-wrapper.ui5-switch--semantic:hover .ui5-switch-text--on::before {
+.ui5-switch-wrapper.ui5-switch--semantic.ui5-switch--disabled .ui5-switch-icon--on,
+.ui5-switch-wrapper.ui5-switch--semantic:hover .ui5-switch-icon--on {
 	color: var(--_ui5_switch_text_on_semantic_color);
 }
 
-.ui5-switch-wrapper.ui5-switch--semantic.ui5-switch--disabled .ui5-switch-text--off::before,
-.ui5-switch-wrapper.ui5-switch--semantic:hover .ui5-switch-text--off::before {
+.ui5-switch-wrapper.ui5-switch--semantic.ui5-switch--disabled .ui5-switch-icon--off,
+.ui5-switch-wrapper.ui5-switch--semantic:hover .ui5-switch-icon--off {
 	color: var(--_ui5_switch_text_off_semantic_color);
 }
 

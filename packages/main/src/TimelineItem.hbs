@@ -4,7 +4,9 @@
 >
 	<div class="{{classes.indicator}}">
 		{{#if icon}}
-			<ui5-icon class="sapWCTimelineItemIcon" src="{{icon}}"></ui5-icon>
+			<div class="sapWCTimelineItemIconOuter">
+				<ui5-icon class="sapWCTimelineItemIcon" src="{{icon}}"></ui5-icon>
+			</div>
 		{{/if}}
 	</div>
 	<div class="sapWCTimelineBubble" tabindex="{{_tabIndex}}" data-sap-focus-ref>
