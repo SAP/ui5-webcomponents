@@ -15,10 +15,12 @@ import CalendarHeader from "./CalendarHeader.js";
 import DayPicker from "./DayPicker.js";
 import MonthPicker from "./MonthPicker.js";
 import YearPicker from "./YearPicker.js";
-import CalendarTemplate from "./generated/templates/CalendarTemplate.lit.js";
 
-// default calendar for bundling
+// Default calendar for bundling
 import "@ui5/webcomponents-core/dist/sap/ui/core/date/Gregorian.js";
+
+// Template
+import CalendarTemplate from "./generated/templates/CalendarTemplate.lit.js";
 
 // Styles
 import calendarCSS from "./generated/themes/Calendar.css.js";
@@ -30,7 +32,7 @@ const metadata = {
 	tag: "ui5-calendar",
 	properties: /** @lends  sap.ui.webcomponents.main.Calendar.prototype */ {
 		/**
-		 * It's a UNIX timestamp - seconds since 00:00:00 UTC on Jan 1, 1970.
+		 * Defines the UNIX timestamp - seconds since 00:00:00 UTC on Jan 1, 1970.
 		 * @type {Integer}
 		 * @public
 		*/
@@ -39,8 +41,8 @@ const metadata = {
 		},
 
 		/**
-		 * Sets a calendar type used for display.
-		 * If not set, the calendar type of the global configuration is used.
+		 * Defines the calendar type used for display.
+		 * If not defined, the calendar type of the global configuration is used.
 		 * Available options are: "Gregorian", "Islamic", "Japanese", "Buddhist" and "Persian".
 		 * @type {string}
 		 * @public
@@ -50,7 +52,7 @@ const metadata = {
 		},
 
 		/**
-		 * Sets the selected dates as UTC timestamps.
+		 * Defines the selected dates as UTC timestamps.
 		 * @type {Array}
 		 * @public
 		 */
@@ -72,11 +74,9 @@ const metadata = {
 		_yearPicker: {
 			type: Object,
 		},
-
 		_calendarWidth: {
 			type: String,
 		},
-
 		_calendarHeight: {
 			type: String,
 		},
@@ -98,7 +98,8 @@ const metadata = {
 /**
  * @class
  *
- * It can be used for a date picker.
+ * The <code>ui5-calendar</code> can be used standale to display the years, months, weeks and days,
+ * but the main purpose of the <code>ui5-calendar</code> is to be used within a <code>ui5-datepicker</code>.
  *
  * @constructor
  * @author SAP SE
@@ -434,7 +435,7 @@ class Calendar extends UI5Element {
 		this._monthPicker._hidden = false;
 		this._oMonth._hidden = true;
 
-		const calendarRect = this.shadowRoot.querySelector(".sapUiCal").getBoundingClientRect();
+		const calendarRect = this.shadowRoot.querySelector(".ui5-cal-root").getBoundingClientRect();
 
 		this._calendarWidth = calendarRect.width.toString();
 		this._calendarHeight = calendarRect.height.toString();
@@ -449,7 +450,7 @@ class Calendar extends UI5Element {
 		this._yearPicker._hidden = false;
 		this._oMonth._hidden = true;
 
-		const calendarRect = this.shadowRoot.querySelector(".sapUiCal").getBoundingClientRect();
+		const calendarRect = this.shadowRoot.querySelector(".ui5-cal-root").getBoundingClientRect();
 
 		this._calendarWidth = calendarRect.width.toString();
 		this._calendarHeight = calendarRect.height.toString();
@@ -484,17 +485,16 @@ class Calendar extends UI5Element {
 	get classes() {
 		return {
 			main: {
-				sapUiCal: true,
-				sapUiCalIslamic: this.primaryCalendarType === CalendarType.Islamic,
+				"ui5-cal-root": true,
 			},
 			dayPicker: {
-				"sapWCDayPickerHidden": !this._yearPicker._hidden || !this._monthPicker._hidden,
+				".ui5-daypicker--hidden": !this._yearPicker._hidden || !this._monthPicker._hidden,
 			},
 			yearPicker: {
-				"sapWCYearPickerHidden": this._yearPicker._hidden,
+				"ui5-yearpicker--hidden": this._yearPicker._hidden,
 			},
 			monthPicker: {
-				"sapWCMonthPickerHidden": this._monthPicker._hidden,
+				"ui5-monthpicker--hidden": this._monthPicker._hidden,
 			},
 		};
 	}
