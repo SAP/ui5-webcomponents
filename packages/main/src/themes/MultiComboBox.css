@@ -5,11 +5,6 @@
 	--_ui5_popover_content_padding: 0;
 }
 
-ui5-multi-combobox:not([hidden]) {
-	display: inline-block;
-	width: 100%;
-}
-
 .ui5-multi-combobox-root {
 	display: flex;
 	overflow: hidden;
@@ -50,5 +45,16 @@ ui5-multi-combobox:not([hidden]) {
 	border: none;
 	width: auto;
 	min-width: 0px;
+	height: 100%;
+}
+
+/* Remove this once ShadyCSS is adopted */
+
+ui5-multi-combobox:not([hidden]) {
+	display: inline-block;
+	width: 100%;
+}
+
+ui5-multi-combobox[data-ui5-compact-size] .ui5-multi-combobox-token {
 	height: 100%;
 }
