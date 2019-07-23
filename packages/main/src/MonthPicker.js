@@ -193,15 +193,6 @@ class MonthPicker extends UI5Element {
 		return parseInt(oMonthDomRef);
 	}
 
-	get classes() {
-		return {
-			main: {
-				"ui5-mp-root": true,
-				"ui5-size-compact": getCompactSize(),
-			},
-		};
-	}
-
 	get styles() {
 		return {
 			main: {
