@@ -3,11 +3,6 @@
 	width: 100%;
 }
 
-ui5-shellbar:not([hidden]) {
-	display: inline-block;
-	width: 100%;
-}
-
 .sapWCShellBarWrapper {
 	position: relative;
 	display: flex;
@@ -366,6 +361,23 @@ ui5-shellbar:not([hidden]) {
 	position: absolute;
 	width: 240px;
 	top: 0.25rem;
+	height: 2.25rem;
+}
+
+:host ::slotted(ui5-input) {
+	background-color: var(--sapUiShellColor);
+	border: 1px solid var(--sapUiShellBorderColorLighten30);
+	color: var(--sapUiShellTextColor);
+	height: 100%;
+}
+
+:host ::slotted(ui5-input:hover) {
+	background: var(--sapUiShellHoverBackground);
+	border: 1px solid var(--sapUiShellBorderColorLighten30);
+}
+
+:host ::slotted(ui5-input[focused]) {
+	outline: 1px dotted var(--sapUiContentContrastFocusColor);
 }
 
 .sapWCShellBarBlockLayerShown .sapWCShellBarSearchIcon {
@@ -445,4 +457,27 @@ ui5-shellbar:not([hidden]) {
 	left: 2px;
 	top: 2px;
 	z-index: 1;
+}
+
+/* Remove that once ShadyCSS is adopted */
+
+ui5-shellbar:not([hidden]) {
+	display: inline-block;
+	width: 100%;
+}
+
+ui5-shellbar ui5-input {
+	background-color: var(--sapUiShellColor);
+	border: 1px solid var(--sapUiShellBorderColorLighten30);
+	color: var(--sapUiShellTextColor);
+	height: 100%;
+}
+
+ui5-shellbar ui5-input:hover {
+	background: var(--sapUiShellHoverBackground);
+	border: 1px solid var(--sapUiShellBorderColorLighten30);
+}
+
+ui5-shellbar ui5-input[focused] {
+	outline: 1px dotted var(--sapUiContentContrastFocusColor);
 }
