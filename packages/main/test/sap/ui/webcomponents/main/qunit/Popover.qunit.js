@@ -52,7 +52,7 @@ TestHelper.ready(function () {
 		this.popover.addEventListener('afterOpen', function (event) {
 			var shadowRoot = this.shadowRoot;
 
-			assert.ok(this.popover.hasAttribute('opened'), "Popover is opened");
+			assert.ok(this.hasAttribute('opened'), "Popover is opened");
 
 			// header
 			var header = shadowRoot.host.children[0];
