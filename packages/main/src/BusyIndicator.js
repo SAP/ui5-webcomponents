@@ -90,15 +90,6 @@ class BusyIndicator extends UI5Element {
 	static get template() {
 		return BusyIndicatorTemplate;
 	}
-
-	get classes() {
-		return {
-			main: {
-				"ui5-busyindicator-root": true,
-				[`ui5-busyindicator-${this.size.toLowerCase()}`]: true,
-			},
-		};
-	}
 }
 
 BusyIndicator.define();
