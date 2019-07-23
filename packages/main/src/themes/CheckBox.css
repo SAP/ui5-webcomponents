@@ -53,6 +53,10 @@
 	color: var(--sapUiFieldWarningColor);
 }
 
+:host([value-state="Warning"]) .ui5-checkbox-icon {
+	color: var(--_ui5_checkbox_checkmark_warning_color);
+}
+
 .ui5-checkbox-root {
 	position: relative;
 	display: inline-flex;
@@ -258,6 +262,10 @@ ui5-checkbox[value-state="Warning"] .ui5-checkbox--hoverable:hover .ui5-checkbox
 	background: var(--sapUiFieldWarningBackground);
 	border: var(--_ui5_checkbox_inner_warning_border);
 	color: var(--sapUiFieldWarningColor);
+}
+
+ui5-checkbox[value-state="Warning"] .ui5-checkbox-icon {
+	color: var(--_ui5_checkbox_checkmark_warning_color);
 }
 
 ui5-checkbox[wrap][data-ui5-compact-size] .ui5-checkbox-root.ui5-checkbox-with-label {
