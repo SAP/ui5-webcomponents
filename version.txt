@@ -1,5 +1,5 @@
-commit 57adb0458a5d058f8a914970758b8afa2bc2a4e6
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Tue Jul 23 10:49:32 2019 +0300
+commit 8e4eb6dd86c74c9617654d12cbe2b207a1fb75c2
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Jul 23 10:19:03 2019 +0200
 
-    fix: enable form support for nested input elements (#656)
+    refactor(ui5-label): clean up styles (#660)
