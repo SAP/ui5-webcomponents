@@ -5,7 +5,7 @@ describe("General API", () => {
 	
 	it("should show required star", () => {
 		const requiredLabelContent = browser.execute(`
-			return window.getComputedStyle(document.querySelector('#required-label').shadowRoot.querySelector(".sapMLabel"), ':before').content;
+			return window.getComputedStyle(document.querySelector('#required-label').shadowRoot.querySelector(".ui5-label-root"), ':before').content;
 		`);
 
 		assert.strictEqual(requiredLabelContent, '"*"', "before's content should be *");
