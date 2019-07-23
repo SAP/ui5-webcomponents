@@ -1,5 +1,5 @@
-commit 7548ed03adeb59673075a937f403bc34aea66855
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Mon Jul 22 13:35:37 2019 +0300
+commit 57adb0458a5d058f8a914970758b8afa2bc2a4e6
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Tue Jul 23 10:49:32 2019 +0300
 
-    refactor: fix icon imports and typo in function name (#663)
+    fix: enable form support for nested input elements (#656)
