@@ -3,7 +3,7 @@
 	"collections": [{
 		"collectionName": "UI5 Web Components",
 		"folders": [{
-			"startingFolderPath": "./packages/main/src/i18n/",
+			"startingFolderPath": "./packages/",
 			"sourceFilters": [
 				"*/src/**/messagebundle.properties"
 			],
