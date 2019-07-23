@@ -70,13 +70,13 @@ class DatePickerTestPage {
 	}
 
 	getFirstDisplayedYear() {
-		return browser.findElementDeep(`${this._sut} >>> ui5-calendar >>> ui5-yearpicker >>> .sapWCYearPickerItem`);
+		return browser.findElementDeep(`${this._sut} >>> ui5-calendar >>> ui5-yearpicker >>> .ui5-yp-item`);
 	}
 
 	getDisplayedYear(index) {
 		return browser
-			.findElementDeep(`${this._sut} >>> ui5-calendar >>> ui5-yearpicker >>> .sapWCYearPicker`)
-			.$$(".sapWCYearPickerItem")[index];
+			.findElementDeep(`${this._sut} >>> ui5-calendar >>> ui5-yearpicker >>> .ui5-yp-root`)
+			.$$(".ui5-yp-item")[index];
 	}
 
 	isValid(value) {

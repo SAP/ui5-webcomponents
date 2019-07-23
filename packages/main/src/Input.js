@@ -2,7 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isIE } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { getCompactSize } from "@ui5/webcomponents-base/dist/config/CompactSize.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import {
 	isUp,
@@ -17,7 +16,6 @@ import InputTemplate from "./generated/templates/InputTemplate.lit.js";
 
 // Styles
 import styles from "./generated/themes/Input.css.js";
-import shellbarInput from "./generated/themes/ShellBarInput.css.js";
 
 /**
  * @public
@@ -182,7 +180,10 @@ const metadata = {
 			type: Boolean,
 		},
 
-		_focused: {
+		/**
+		 * @private
+		 */
+		focused: {
 			type: Boolean,
 		},
 
@@ -286,7 +287,7 @@ class Input extends UI5Element {
 	}
 
 	static get styles() {
-		return [styles, shellbarInput];
+		return [styles];
 	}
 
 	constructor() {
@@ -381,12 +382,12 @@ class Input extends UI5Element {
 	}
 
 	onfocusin() {
-		this._focused = true; // invalidating property
+		this.focused = true; // invalidating property
 		this.previousValue = this.value;
 	}
 
 	onfocusout() {
-		this._focused = false; // invalidating property
+		this.focused = false; // invalidating property
 		this.previousValue = "";
 	}
 
@@ -424,7 +425,7 @@ class Input extends UI5Element {
 	shouldOpenSuggestions() {
 		return !!(this.suggestionItems.length
 			&& this.showSuggestions
-			&& this._focused
+			&& this.focused
 			&& !this.hasSuggestionItemSelected);
 	}
 
@@ -512,30 +513,6 @@ class Input extends UI5Element {
 	onOpen() {}
 
 	onClose() {}
-
-	get classes() {
-		const hasState = this.valueState !== "None";
-
-		return {
-			main: {
-				sapWCInputBase: true,
-				sapWCInputBaseWidthPadding: true,
-				sapWCInputBaseDisabled: this.disabled,
-				sapWCInputBaseReadonly: this.readonly,
-				sapWCInput: true,
-				sapWCInputFocused: this._focused,
-				sapWCFocus: this._focused,
-				sapUiSizeCompact: getCompactSize(),
-			},
-			wrapper: {
-				sapWCInputBaseContentWrapper: true,
-				sapWCInputBaseDisabledWrapper: this.disabled,
-				sapWCInputBaseReadonlyWrapper: this.readonly && !this.disabled,
-				sapWCInputBaseContentWrapperState: hasState,
-				[`sapWCInputBaseContentWrapper${this.valueState}`]: hasState,
-			},
-		};
-	}
 
 	get inputPlaceholder() {
 		// We don`t support placeholder for IE,
