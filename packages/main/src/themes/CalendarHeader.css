@@ -50,6 +50,7 @@
 
 .ui5-calheader-arrowicon {
 	color: currentColor;
+	pointer-events: none;
 }
 
 .ui5-calheader-midcontainer {
