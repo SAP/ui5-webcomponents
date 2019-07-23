@@ -1,5 +1,5 @@
-commit 7b950deceb6446236e0acde9cf64cdada26fd20e
+commit fc2b81a9948103116002164107838e7cbc37a888
 Author: Martin <martin.r.hristov@gmail.com>
-Date:   Tue Jul 23 13:17:49 2019 +0300
+Date:   Tue Jul 23 13:31:54 2019 +0300
 
-    refactor(ui5-input): styles refactoring (#658)
+    refactor(ui5-textarea): clean up styles (#667)
