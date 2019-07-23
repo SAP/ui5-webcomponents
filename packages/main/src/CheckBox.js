@@ -2,7 +2,6 @@ import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { getCompactSize } from "@ui5/webcomponents-base/dist/config/CompactSize.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
@@ -259,7 +258,6 @@ class CheckBox extends UI5Element {
 				"ui5-checkbox-root": true,
 				"ui5-checkbox-with-label": !!this.text,
 				"ui5-checkbox--hoverable": !this.disabled && !this.readonly && isDesktop(),
-				"ui5-size-compact": getCompactSize(),
 			},
 		};
 	}
