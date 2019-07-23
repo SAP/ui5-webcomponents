@@ -61,7 +61,7 @@ const metadata = {
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
-		 * @since 1.0.0-rc.2
+		 * @since 1.0.0
 		 */
 		required: {
 			type: Boolean,
@@ -401,7 +401,7 @@ class TextArea extends UI5Element {
 		return this.disabled ? undefined : "0";
 	}
 
-	get ariaDescribedBy() {
+	get ariaLabelledBy() {
 		return this.showExceededText ? `${this._id}-exceededText` : undefined;
 	}
 

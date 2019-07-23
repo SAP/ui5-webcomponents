@@ -118,7 +118,7 @@ const metadata = {
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
-		 * @since 1.0.0-rc.2
+		 * @since 1.0.0
 		 */
 		required: {
 			type: Boolean,
@@ -575,17 +575,7 @@ class Input extends UI5Element {
 	}
 
 	get ariaDescribedBy() {
-		let ariaDescribedBy = "";
-
-		if (this.showSuggestions) {
-			ariaDescribedBy = `${this._id}-suggestionsText`;
-		}
-
-		if (this.hasValueState) {
-			ariaDescribedBy += ` ${this._id}-descr`;
-		}
-
-		return ariaDescribedBy.length ? ariaDescribedBy : undefined;
+		return this.showSuggestions ? `${this._id}-suggestionsText` : undefined;
 	}
 
 	get ariaHasPopup() {
