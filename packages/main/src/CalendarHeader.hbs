@@ -1,24 +1,24 @@
 <div
-	class="{{classes.main}}"
+	class="ui5-calheader-root"
 	dir="{{rtl}}"
 >
 	<div
 		id="{{_id}}-btnPrev"
-		class="{{classes.buttons}}"
+		class="ui5-calheader-arrowbtn"
 		@click={{_handlePrevPress}}
 		data-sap-cal-head-button="Prev"
 	>
 		<ui5-icon
-			class="sapWCCalHeadArrowIcon"
+			class="ui5-calheader-arrowicon"
 			src="{{_btnPrev.icon}}"
 		>
 		</ui5-icon>
 	</div>
 
-	<div class="sapWCCalHeadMidButtonContainer">
+	<div class="ui5-calheader-midcontainer">
 		<div
 			id="{{_id}}-btn1"
-			class="{{classes.middleButtons}}"
+			class="ui5-calheader-arrowbtn ui5-calheader-middlebtn"
 			type="{{_btn1.type}}"
 			tabindex="0"
 			@click={{_showMonthPicker}}
@@ -29,7 +29,7 @@
 
 		<div
 			id="{{_id}}-btn2"
-			class="{{classes.middleButtons}}"
+			class="ui5-calheader-arrowbtn ui5-calheader-middlebtn"
 			type="{{_btn2.type}}"
 			tabindex="0"
 			@click={{_showYearPicker}}
@@ -40,13 +40,13 @@
 	</div>
 
 	<div
-		class="{{classes.buttons}}"
+		class="ui5-calheader-arrowbtn"
 		@click={{_handleNextPress}}
 		id="{{_id}}-btnNext"
 		data-sap-cal-head-button="Next"
 	>
 		<ui5-icon
-			class="sapWCCalHeadArrowIcon"
+			class="ui5-calheader-arrowicon"
 			src="{{_btnNext.icon}}"
 		>
 		</ui5-icon>

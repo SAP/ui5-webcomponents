@@ -1,18 +1,15 @@
 <div
-	class="{{classes.main}}"
-	style="width: 100%;"
+	class="ui5-input-root"
 	@focusin="{{onfocusin}}"
 	@focusout="{{onfocusout}}"
 >
-<div id="{{_id}}-wrapper"
-	class="{{classes.wrapper}}"
->
-	{{#if _beginContent.length}}
-		<slot name="_beginContent"></slot>
-	{{/if}}
+	<div class="ui5-input-content">
+		{{#if _beginContent.length}}
+			<slot name="_beginContent"></slot>
+		{{/if}}
 
-	<input id="{{_id}}-inner"
-			class="sapWCInputBaseInner"
+		<input id="{{_id}}-inner"
+			class="ui5-input-inner"
 			type="{{inputType}}"
 			?disabled="{{disabled}}"
 			?readonly="{{_readonly}}"
@@ -27,9 +24,9 @@
 			@change="{{_handleChange}}"
 			data-sap-no-tab-ref
 			data-sap-focus-ref
-	/>
+		/>
 		{{#if icon.length}}
-			<div class="sapWCInputIconRoot">
+			<div class="ui5-input-icon-root">
 				<slot name="icon"></slot>
 			</div>
 		{{/if}}
@@ -50,7 +47,7 @@
 				horizontal-align="Stretch"
 				initial-focus="{{_id}}-inner">
 					<ui5-list separators="Inner">
-                        <slot></slot>
+						<slot></slot>
 					</ui5-list>
 			</ui5-popover>
 	{{/if}}
