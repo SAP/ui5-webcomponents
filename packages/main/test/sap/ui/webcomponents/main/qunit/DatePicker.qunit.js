@@ -87,7 +87,7 @@ TestHelper.ready(function () {
 		this.datePicker.setAttribute("value-state", "Error");
 
 		RenderScheduler.whenFinished().then(function () {
-			var errorStateContentWrapper = this.getInput().shadowRoot.querySelector(".sapWCInputBaseContentWrapperError");
+			var errorStateContentWrapper = this.getInput().shadowRoot.querySelector(".ui5-input-content");
 
 			assert.equal(this.getInput().valueState, "Error");
 			assert.ok(!!errorStateContentWrapper, "content wrapper has error styles");
@@ -163,7 +163,7 @@ TestHelper.ready(function () {
 
 		RenderScheduler.whenFinished().then(function () {
 			assert.equal(this.datePicker.shadowRoot.activeElement, this.getInput(), "input is focused after open");
-			assert.equal(this.getInput().shadowRoot.activeElement, this.getInput().shadowRoot.querySelector(".sapWCInputBaseInner"), "inner input is focused");
+			assert.equal(this.getInput().shadowRoot.activeElement, this.getInput().shadowRoot.querySelector(".ui5-input-inner"), "inner input is focused");
 
 			done();
 		}.bind(this));

@@ -1,12 +1,12 @@
 <div
-	class="{{classes.main}}"
+	class="ui5-yp-root"
 	role="grid"
 	aria-readonly="false"
 	aria-multiselectable="false"
 	style="{{styles.main}}"
 >
 	{{#each _yearIntervals}}
-		<div class="{{../classes.yearInterval}}">
+		<div class="ui5-yp-interval-container">
 			{{#each this}}
 				<div id="{{this.id}}"
 					tabindex="{{this._tabIndex}}"

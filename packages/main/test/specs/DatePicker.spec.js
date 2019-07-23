@@ -40,8 +40,7 @@ describe("Date Picker Tests", () => {
 
 		assert.equal(datepicker.input.getProperty("valueState"), "Error", "value state of the input is valid");
 
-		const contentWrapper = browser.findElementDeep("#dp3 >>> ui5-input >>> .sapWCInputBaseContentWrapper");
-		assert.ok(contentWrapper.hasClass("sapWCInputBaseContentWrapperError"), "has error wrapper class");
+		const contentWrapper = browser.findElementDeep("#dp3 >>> ui5-input >>> .ui5-input-content");
 		assert.ok(contentWrapper.isDisplayedInViewport(), "content wrapper has error styles");
 	});
 
@@ -331,6 +330,7 @@ describe("Date Picker Tests", () => {
 		browser.findElementDeep("#downThere").moveTo(0, 0);
 
 		browser.pause(1000);
+
 		assert.ok(datepicker.isPickerOpen(), "picker is open");
 	});
 

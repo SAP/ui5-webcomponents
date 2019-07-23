@@ -2,9 +2,11 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import getShadowDOMTarget from "@ui5/webcomponents-base/dist/events/getShadowDOMTarget.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-import { getCompactSize } from "@ui5/webcomponents-base/dist/config/CompactSize.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
+import "@ui5/webcomponents-base/dist/icons/slim-arrow-left.js";
+import "@ui5/webcomponents-base/dist/icons/slim-arrow-right.js";
 import Button from "./Button.js";
+import Icon from "./Icon.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 import CalendarHeaderTemplate from "./generated/templates/CalendarHeaderTemplate.lit.js";
 
@@ -95,26 +97,6 @@ class CalendarHeader extends UI5Element {
 		this.fireEvent("btn2Press", event);
 	}
 
-	onclick(event) {
-		const composedPath = event.composedPath();
-		const eventTarget = getShadowDOMTarget(event);
-
-		for (let index = 0; index < composedPath.length; index++) {
-			const sAttributeValue = composedPath[index].getAttribute && composedPath[index].getAttribute("data-sap-cal-head-button");
-			const showPickerButton = eventTarget.getAttribute("data-sap-show-picker");
-
-			if (showPickerButton) {
-				this[`_show${showPickerButton}Picker`]();
-				return;
-			}
-
-			if (sAttributeValue) {
-				this[`_handle${sAttributeValue}Press`]();
-				return;
-			}
-		}
-	}
-
 	onkeydown(event) {
 		const eventTarget = getShadowDOMTarget(event);
 		if (isSpace(event) || isEnter(event)) {
@@ -126,28 +108,15 @@ class CalendarHeader extends UI5Element {
 		}
 	}
 
-	get classes() {
-		return {
-			main: {
-				sapWCCalHead: true,
-				sapUiSizeCompact: getCompactSize(),
-			},
-			buttons: {
-				sapWCCalHeadArrowButton: true,
-			},
-			middleButtons: {
-				sapWCCalHeadMiddleButton: true,
-				sapWCCalHeadArrowButton: true,
-			},
-		};
-	}
-
 	get rtl() {
 		return getRTL() ? "rtl" : undefined;
 	}
 
 	static async define(...params) {
-		await Button.define();
+		await Promise.all([
+			await Button.define(),
+			await Icon.define(),
+		]);
 
 		super.define(...params);
 	}
