@@ -192,7 +192,7 @@ describe("Date Picker Tests", () => {
 
 		const calendarDate_3_Feb_2019 = datepicker.getPickerDate(1549152000);
 
-		assert.ok(calendarDate_3_Feb_2019.hasClass("sapWCDayPickerWDay6"), "3 Feb 2019 is displayed as last day of the week");
+		assert.ok(calendarDate_3_Feb_2019.hasClass("ui5-dp-wday6"), "3 Feb 2019 is displayed as last day of the week");
 	});
 
 	it("if today is 30 jan, clicking next month does not skip feb", () => {
