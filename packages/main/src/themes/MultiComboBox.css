@@ -10,38 +10,38 @@ ui5-multi-combobox:not([hidden]) {
 	width: 100%;
 }
 
-.ui5-multi-combobox--wrapper {
+.ui5-multi-combobox-root {
 	display: flex;
 	overflow: hidden;
 	width: 100%;
 	height: 100%;
 }
 
-.ui5-multi-combobox--icon {
+.ui5-multi-combobox-icon {
 	color: var(--sapUiContentIconColor);
 	cursor: pointer;
 	outline: none;
 }
 
-.ui5-multi-combobox--icon:active {
+.ui5-multi-combobox-icon:active {
 	background-color: var(--sapUiButtonLiteActiveBackground);
 	color: var(--sapUiButtonActiveTextColor);
 }
 
-.ui5-multi-combobox--icon.ui5-multi-combobox-icon-root-pressed {
+.ui5-multi-combobox-icon.ui5-multi-combobox-icon-root-pressed {
 	background: var(--sapUiToggleButtonPressedBackground);
 	color: var(--sapUiButtonActiveTextColor);
 }
 
-.ui5-multi-combobox--icon:not(.ui5-multi-combobox-icon-root-pressed):not(:active):hover {
+.ui5-multi-combobox-icon:not(.ui5-multi-combobox-icon-root-pressed):not(:active):hover {
 	background: var(--sapUiButtonLiteHoverBackground);
 }
 
-.ui5-multi-combobox--token {
+.ui5-multi-combobox-token {
 	height: 80%;
 }
 
-.sapUiSizeCompact .ui5-multi-combobox--token {
+:host([data-ui5-compact-size]) .ui5-multi-combobox-token {
 	height: 100%;
 }
 
