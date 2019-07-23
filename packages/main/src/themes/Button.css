@@ -20,17 +20,17 @@
 	pointer-events: none;
 }
 
-button[dir="rtl"].ui5-button-inner.ui5-button--with-icon .ui5-button-text {
+:host([has-icon]) button[dir="rtl"].ui5-button-inner .ui5-button-text {
 	margin-right: var(--_ui5_button_base_icon_margin);
 	margin-left: 0;
 }
 
-button[dir="rtl"].ui5-button-inner.ui5-button-innerIconEnd .ui5-button-icon {
+:host([has-icon][icon-end]) button[dir="rtl"].ui5-button-inner .ui5-button-icon {
 	margin-right: var(--_ui5_button_base_icon_margin);
 	margin-left: 0;
 }
 
-button.sapUiSizeCompact .ui5-button-icon {
+:host([data-ui5-compact-size]) .ui5-button-icon {
 	font-size: 1rem;
 }
 
@@ -91,7 +91,7 @@ button.sapUiSizeCompact .ui5-button-icon {
 	position: relative;
 }
 
-.ui5-button-inner.ui5-button--with-icon .ui5-button-text {
+:host([has-icon]) .ui5-button-text {
 	margin-left: var(--_ui5_button_base_icon_margin);
 }
 
@@ -396,4 +396,18 @@ ui5-button[icon-end] .ui5-button-icon {
 
 ui5-button[icon-end] .ui5-button-inner {
 	flex-direction: row-reverse;
+}
+
+ui5-button[has-icon] button[dir="rtl"].ui5-button-inner .ui5-button-text {
+	margin-right: var(--_ui5_button_base_icon_margin);
+	margin-left: 0;
+}
+
+ui5-button[has-icon][icon-end] button[dir="rtl"].ui5-button-inner .ui5-button-icon {
+	margin-right: var(--_ui5_button_base_icon_margin);
+	margin-left: 0;
+}
+
+ui5-button[data-ui5-compact-size] .ui5-button-icon {
+	font-size: 1rem;
 }

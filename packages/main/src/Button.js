@@ -1,7 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-import { getCompactSize } from "@ui5/webcomponents-base/dist/config/CompactSize.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import ButtonDesign from "./types/ButtonDesign.js";
@@ -115,6 +114,14 @@ const metadata = {
 			type: Boolean,
 		},
 
+		/**
+		 * Indicates if the elements has a slotted icon
+		 * @private
+		 */
+		hasIcon: {
+			type: Boolean,
+		},
+
 		_iconSettings: {
 			type: Object,
 		},
@@ -216,6 +223,7 @@ class Button extends UI5Element {
 		}
 
 		this.iconOnly = !this.childNodes.length;
+		this.hasIcon = !!this.icon;
 	}
 
 	onEnterDOM() {
@@ -263,22 +271,6 @@ class Button extends UI5Element {
 
 	_onfocusin() {
 		this.focused = true;
-	}
-
-	get classes() {
-		return {
-			main: {
-				"ui5-button-inner": true,
-				"ui5-button--with-icon": this.icon,
-				"sapUiSizeCompact": getCompactSize(),
-			},
-			icon: {
-				"ui5-button-icon": true,
-			},
-			text: {
-				"ui5-button-text": true,
-			},
-		};
 	}
 
 	get rtl() {
