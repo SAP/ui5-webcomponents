@@ -376,21 +376,15 @@ class RadioButton extends UI5Element {
 		return this.valueState !== ValueState.None;
 	}
 
+	static valueStateTextMappings() {
+		return {
+			"Error": VALUE_STATE_ERROR.defaultText,
+			"Warning": VALUE_STATE_WARNING.defaultText,
+		};
+	}
+
 	get valueStateText() {
-		let valueStateText;
-
-		switch (this.valueState) {
-		case ValueState.Error:
-			valueStateText = VALUE_STATE_ERROR.defaultText;
-			break;
-		case ValueState.Warning:
-			valueStateText = VALUE_STATE_WARNING.defaultText;
-			break;
-		default:
-			valueStateText = "";
-		}
-
-		return valueStateText;
+		return RadioButton.valueStateTextMappings()[this.valueState];
 	}
 
 	get tabIndex() {

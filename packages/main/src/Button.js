@@ -275,23 +275,16 @@ class Button extends UI5Element {
 		return this.design !== ButtonDesign.Default && this.design !== ButtonDesign.Transparent;
 	}
 
-	get buttonTypeText() {
-		let buttonTypeText;
+	static typeTextMappings() {
+		return {
+			"Positive": BUTTON_ARIA_TYPE_ACCEPT,
+			"Negative": BUTTON_ARIA_TYPE_REJECT,
+			"Emphasized": BUTTON_ARIA_TYPE_EMPHASIZED,
+		};
+	}
 
-		switch (this.design) {
-		case ButtonDesign.Positive:
-			buttonTypeText = this.resourceBundle.getText(BUTTON_ARIA_TYPE_ACCEPT);
-			break;
-		case ButtonDesign.Negative:
-			buttonTypeText = this.resourceBundle.getText(BUTTON_ARIA_TYPE_REJECT);
-			break;
-		case ButtonDesign.Emphasized:
-			buttonTypeText = this.resourceBundle.getText(BUTTON_ARIA_TYPE_EMPHASIZED);
-			break;
-		default:
-			buttonTypeText = "";
-		}
-		return buttonTypeText;
+	get buttonTypeText() {
+		return this.resourceBundle.getText(Button.typeTextMappings()[this.design]);
 	}
 
 	static async define(...params) {

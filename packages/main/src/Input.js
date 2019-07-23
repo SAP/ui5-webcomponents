@@ -567,23 +567,16 @@ class Input extends UI5Element {
 		return this.valueState !== ValueState.None;
 	}
 
-	get valueStateText() {
-		let valueStateText;
+	static valueStateTextMappings() {
+		return {
+			"Success": VALUE_STATE_SUCCESS.defaultText,
+			"Error": VALUE_STATE_ERROR.defaultText,
+			"Warning": VALUE_STATE_WARNING.defaultText,
+		};
+	}
 
-		switch (this.valueState) {
-		case ValueState.Success:
-			valueStateText = VALUE_STATE_SUCCESS.defaultText;
-			break;
-		case ValueState.Error:
-			valueStateText = VALUE_STATE_ERROR.defaultText;
-			break;
-		case ValueState.Warning:
-			valueStateText = VALUE_STATE_WARNING.defaultText;
-			break;
-		default:
-			valueStateText = "";
-		}
-		return valueStateText;
+	get valueStateText() {
+		return Input.valueStateTextMappings()[this.valueState];
 	}
 
 	get suggestionsText() {

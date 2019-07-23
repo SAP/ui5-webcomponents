@@ -212,20 +212,15 @@ class Link extends UI5Element {
 		return this.design !== LinkDesign.Default;
 	}
 
-	get linkTypeText() {
-		let linkTypeText;
+	static typeTextMappings() {
+		return {
+			"Subtle": LINK_SUBTLE,
+			"Emphasized": LINK_EMPHASIZED,
+		};
+	}
 
-		switch (this.design) {
-		case LinkDesign.Subtle:
-			linkTypeText = this.resourceBundle.getText(LINK_SUBTLE);
-			break;
-		case LinkDesign.Emphasized:
-			linkTypeText = this.resourceBundle.getText(LINK_EMPHASIZED);
-			break;
-		default:
-			linkTypeText = "";
-		}
-		return linkTypeText;
+	get linkTypeText() {
+		return this.resourceBundle.getText(Link.typeTextMappings()[this.design]);
 	}
 
 	get parsedRef() {
