@@ -85,7 +85,7 @@ class Dialog extends Popup {
 	* @public
 	*/
 	open() {
-		if (this._isOpen) {
+		if (this.opened) {
 			return;
 		}
 
@@ -96,7 +96,7 @@ class Dialog extends Popup {
 
 		this.storeCurrentFocus();
 
-		this._isOpen = true;
+		this.opened = true;
 	}
 
 	/**
@@ -104,7 +104,7 @@ class Dialog extends Popup {
 	* @public
 	*/
 	close() {
-		if (!this._isOpen) {
+		if (!this.opened) {
 			return;
 		}
 
@@ -113,7 +113,7 @@ class Dialog extends Popup {
 			return;
 		}
 
-		this._isOpen = false;
+		this.opened = false;
 
 		this.resetFocus();
 
@@ -122,23 +122,13 @@ class Dialog extends Popup {
 
 	get classes() {
 		return {
-			frame: {
-				"ui5-popup-wrapper-frame": true,
-				"ui5-popup-wrapper-frame--open": this._isOpen,
-			},
 			dialogParent: {
-				"ui5-dialog-wrapper-parent": true,
-				"ui5-dialog-wrapper--stretched": this.stretch,
 				"ui5-phone": isPhone(),
 			},
-			main: {
-				"ui5-popup-wrapper": true,
-				"ui5-dialog-wrapper": true,
-			},
 			blockLayer: {
-				sapUiBLy: true,
-				"ui5-popup-wrapper-blockLayer": true,
-				"ui5-popup-wrapper-blockLayer--hidden": this._hideBlockLayer,
+				"ui5-popup-BLy": true,
+				"ui5-popup-blockLayer": true,
+				"ui5-popup-blockLayer--hidden": this._hideBlockLayer,
 			},
 		};
 	}
