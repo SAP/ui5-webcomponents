@@ -132,7 +132,7 @@ describe("Date Picker Tests", () => {
 		const calendarDate_6_Jan_2015 = datepicker.getPickerDate(timestamp_6_Jan_2015); //Jan 6, 2015
 		const calendarDate_8_Jan_2015 = datepicker.getPickerDate(timestamp_8_Jan_2015); //Jan 6, 2015
 
-		assert.ok(calendarDate_6_Jan_2015.hasClass('sapWCDayPickerItemSel'), "calendar selected date is ok");
+		assert.ok(calendarDate_6_Jan_2015.hasClass('.ui5-dp-item--selected'), "calendar selected date is ok");
 
 		//select a date
 		calendarDate_8_Jan_2015.click();
@@ -154,8 +154,8 @@ describe("Date Picker Tests", () => {
 
 		//check if the picker is open and the selected date in the calendar is correct
 		assert.ok(datepicker.isPickerOpen(), "picker is open");
-		assert.ok(!calendarDate_6_Jan_2015.hasClass("sapWCDayPickerItemSel"), "calendar selected dates is ok");
-		assert.ok(!calendarDate_8_Jan_2015.hasClass("sapWCDayPickerItemSel"), "calendar selected dates is ok");
+		assert.ok(!calendarDate_6_Jan_2015.hasClass(".ui5-dp-item--selected"), "calendar selected dates is ok");
+		assert.ok(!calendarDate_8_Jan_2015.hasClass(".ui5-dp-item--selected"), "calendar selected dates is ok");
 
 		datepicker.valueHelpIcon.click();
 	});
@@ -278,7 +278,7 @@ describe("Date Picker Tests", () => {
 		assert.equal(datepicker.calendar.getProperty('timestamp'), timestampToday, "calendar selected dates is ok");
 
 		const calendarDateToday = datepicker.getPickerDate(timestampToday);
-		assert.ok(calendarDateToday.hasClass('sapWCDayPickerItemSel'), "calendar selected date is ok");
+		assert.ok(calendarDateToday.hasClass('.ui5-dp-item--selected'), "calendar selected date is ok");
 	});
 
 	it("does not open, if disabled", () => {
