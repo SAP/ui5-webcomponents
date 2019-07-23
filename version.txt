@@ -1,5 +1,5 @@
-commit 8e4eb6dd86c74c9617654d12cbe2b207a1fb75c2
+commit dc61308d8f72a49f918f3f5a539ad37dc7147771
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Jul 23 10:19:03 2019 +0200
+Date:   Tue Jul 23 10:26:43 2019 +0200
 
-    refactor(ui5-label): clean up styles (#660)
+    refactor(ui5-yearpicker): clean up styles (#668)
