@@ -1,71 +1,64 @@
-:host(ui5-select:not([hidden])) {
+:host(:not([hidden])) {
 	display: inline-block;
 	width: 100%;
 }
 
-ui5-select:not([hidden]) {
-	display: inline-block;
-	width: 100%;
-}
-
-.sapWCSelect {
+:host {
 	height: 2.25rem;
 	max-width: 100%;
 	min-width: 5rem;
+	background-color: var(--sapUiFieldBackground);
+	border: 1px solid var(--sapUiFieldBorderColor);
+	box-sizing: border-box;
+}
+
+:host(:not([disabled]):not([value-state]):not([opened]):hover) {
+	background-color: var(--sapUiFieldHoverBackground);
+	border: 1px solid var(--sapUiFieldHoverBorderColor);
+}
+
+.ui5-select-root {
+	width: 100%;
+	height: 100%;
 	position: relative;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	background-color: var(--sapUiFieldBackground);
-	border: 1px solid var(--sapUiFieldBorderColor);
 	box-sizing: border-box;
 	cursor: pointer;
 	outline: none;
 }
 
-/* Hovered */
-.sapWCSelect:hover:not(.sapWCSelectDisabled):not(.sapWCSelectState):not(.sapWCSelectOpened) {
-	background-color: var(--sapUiFieldHoverBackground);
-	border: 1px solid var(--sapUiFieldHoverBorderColor);
-}
-
 /* Hovered Icon */
-.sapWCSelect:hover:not(.sapWCSelectDisabled):not(.sapWCSelectOpened) .sapWCSelectDropDownIconOuter {
+
+:host(:not([disabled]):not([opened]):hover) .ui5-select-icon-root {
 	background: var(--sapUiButtonLiteHoverBackground);
 }
 
 /* Opened */
-.sapWCSelect.sapWCSelectOpened .sapWCSelectDropDownIconOuter {
+
+:host([opened]) .ui5-select-icon-root {
 	background: var(--sapUiToggleButtonPressedBackground);
 	color: var(--sapUiToggleButtonPressedTextColor);
 }
 
-/* Disabled */
-.sapWCSelect.sapWCSelectDisabled {
+:host([disabled]) {
 	background: var(--_ui5_select_disabled_background);
 	border-color: var(--_ui5_select_disabled_border_color);
 	cursor: default;
 	opacity: 0.5;
 }
 
-/* Focused */
-.sapWCSelect:not(.sapWCSelectOpened):not(.sapWCSelectDisabled):focus {
-	outline: none;
+:host(:not([disabled]):not([opened])[focused]) {
+	outline: var(--_ui5_select_focus_width) dotted var(--sapUiContentFocusColor);
+	outline-offset: -3px;
 }
 
-.sapWCSelect:not(.sapWCSelectOpened):not(.sapWCSelectDisabled):focus:before {
-	content: "";
-	position: absolute;
-	border: var(--_ui5_select_focus_width) dotted var(--sapUiContentFocusColor);
-	top: 1px;
-	right: 1px;
-	bottom: 1px;
-	left: 1px;
-	pointer-events: none;
+:host(:not([disabled])[value-state]:not([value-state="Default"])[focused]) {
+	outline-offset: -4px;
 }
 
-/* Text */
-.sapWCSelect .sapWCSelectLabel {
+.ui5-select-label-root {
 	display: inline-flex;
 	align-items: center;
 	width: 100%;
@@ -74,76 +67,151 @@ ui5-select:not([hidden]) {
 	padding-left: 0.5rem;
 }
 
-.sapWCSelect .sapWCSelectLabel ui5-label {
+.ui5-select-label-root ui5-label {
 	cursor: pointer;
 }
 
-/* Icon */
-.sapWCSelect .sapWCSelectDropDownIconOuter {
-	display:flex;
+.ui5-select-icon-root {
+	display: flex;
 	justify-content: center;
 	align-items: center;
 	width: 2.5rem;
 	height: 100%;
 	box-sizing: border-box;
+	color: var(--sapUiContentIconColor);
 }
 
-.sapWCSelect:hover:not(.sapWCSelectDisabled) .sapWCSelectDropDownIconOuter {
+:host(:hover:not([disabled])) .ui5-select-icon-root {
 	border-left: var(--_ui5_select_hover_icon_left_border);
 }
 
-.sapWCSelectDropDownIcon {
-	color: var(--sapUiContentIconColor);
+.ui5-select-icon {
+	color: inherit;
 	pointer-events: none;
 }
 
- /* States */
-.sapWCSelectState {
+:host([value-state]:not([value-state="Default"])) {
 	border-style: solid;
 	border-width: 0.125rem;
 }
 
-.sapWCSelectError {
+:host([value-state="Error"]) {
 	border: var(--_ui5_select_state_error_warning_border_width) var(--_ui5_select_state_error_warning_border_style) var(--sapUiFieldInvalidColor);
 	background-color: var(--sapUiFieldInvalidBackground);
 }
 
-.sapWCSelectWarning {
+:host([value-state="Warning"]) {
 	border: var(--_ui5_select_state_error_warning_border_width) var(--_ui5_select_state_error_warning_border_style) var(--sapUiFieldWarningColor);
 	background-color: var(--sapUiFieldWarningBackground);
 }
 
-.sapWCSelectSuccess {
+:host([value-state="Success"]) {
 	background-color: var(--sapUiFieldSuccessBackground);
 	border-color: var(--sapUiFieldSuccessColor);
 }
 
-/* Compact */
-.sapUiSizeCompact.sapWCSelect {
+:host([data-ui5-compact-size]) {
 	height: 1.625rem;
 }
 
-.sapUiSizeCompact.sapWCSelect  .sapWCSelectDropDownIconOuter {
+:host([data-ui5-compact-size]) .ui5-select-icon-root {
 	width: 2rem;
 }
 
-/* RTL */
-:host(ui5-select) [dir="rtl"].sapWCSelect .sapWCSelectLabel {
+:host [dir="rtl"].ui5-select-root .ui5-select-label-root {
 	padding-left: 0;
 	padding-right: 0.5rem;
 }
 
-:host(ui5-select) [dir="rtl"].sapWCSelect:hover:not(.sapWCSelectDisabled) .sapWCSelectDropDownIconOuter {
+:host(:hover:not([disabled])) [dir="rtl"].ui5-select-root .ui5-select-icon-root {
 	border-left: var(--_ui5_select_rtl_hover_icon_left_border);
 	border-right: var(--_ui5_select_rtl_hover_icon_right_border);
 }
 
-ui5-select [dir="rtl"].sapWCSelect .sapWCSelectLabel {
+/* Remove that once Shady CSS is apploed */
+
+ui5-select:not([hidden]) {
+	display: inline-block;
+	width: 100%;
+}
+
+ui5-select {
+	height: 2.25rem;
+	max-width: 100%;
+	min-width: 5rem;
+	background-color: var(--sapUiFieldBackground);
+	border: 1px solid var(--sapUiFieldBorderColor);
+	box-sizing: border-box;
+}
+
+ui5-select:not([disabled]):not([value-state]):not([opened]):hover {
+	background-color: var(--sapUiFieldHoverBackground);
+	border: 1px solid var(--sapUiFieldHoverBorderColor);
+}
+
+ui5-select:not([disabled]):not([opened]):hover .ui5-select-icon-root {
+	background: var(--sapUiButtonLiteHoverBackground);
+}
+
+ui5-select[opened] .ui5-select-icon-root {
+	background: var(--sapUiToggleButtonPressedBackground);
+	color: var(--sapUiToggleButtonPressedTextColor);
+}
+
+ui5-select[disabled] {
+	background: var(--_ui5_select_disabled_background);
+	border-color: var(--_ui5_select_disabled_border_color);
+	cursor: default;
+	opacity: 0.5;
+}
+
+ui5-select:not([disabled]):not([opened])[focused] {
+	outline: var(--_ui5_select_focus_width) dotted var(--sapUiContentFocusColor);
+	outline-offset: -3px;
+}
+
+ui5-select:not([disabled])[value-state]:not([value-state="Default"])[focused] {
+	outline-offset: -4px;
+}
+
+ui5-select:hover:not([disabled]) .ui5-select-icon-root {
+	border-left: var(--_ui5_select_hover_icon_left_border);
+}
+
+ui5-select[value-state]:not([value-state="Default"]) {
+	border-style: solid;
+	border-width: 0.125rem;
+}
+
+ui5-select[value-state="Error"] {
+	border: var(--_ui5_select_state_error_warning_border_width) var(--_ui5_select_state_error_warning_border_style) var(--sapUiFieldInvalidColor);
+	background-color: var(--sapUiFieldInvalidBackground);
+}
+
+ui5-select[value-state="Warning"] {
+	border: var(--_ui5_select_state_error_warning_border_width) var(--_ui5_select_state_error_warning_border_style) var(--sapUiFieldWarningColor);
+	background-color: var(--sapUiFieldWarningBackground);
+}
+
+ui5-select[value-state="Success"] {
+	background-color: var(--sapUiFieldSuccessBackground);
+	border-color: var(--sapUiFieldSuccessColor);
+}
+
+ui5-select[data-ui5-compact-size] {
+	height: 1.625rem;
+}
+
+ui5-select[data-ui5-compact-size] .ui5-select-icon-root {
+	width: 2rem;
+}
+
+ui5-select [dir="rtl"].ui5-select-root .ui5-select-label-root {
 	padding-left: 0;
 	padding-right: 0.5rem;
 }
 
-ui5-select [dir="rtl"].sapWCSelect:hover:not(.sapWCSelectDisabled) .sapWCSelectDropDownIconOuter {
+ui5-select:hover:not([disabled]) [dir="rtl"].ui5-select-root .ui5-select-icon-root {
 	border-left: var(--_ui5_select_rtl_hover_icon_left_border);
 	border-right: var(--_ui5_select_rtl_hover_icon_right_border);
 }
