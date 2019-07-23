@@ -1,5 +1,5 @@
-commit fc2b81a9948103116002164107838e7cbc37a888
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Tue Jul 23 13:31:54 2019 +0300
+commit 05c4f0947e09df883d6490239eb8a8d3fe34cdca
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Jul 23 12:39:41 2019 +0200
 
-    refactor(ui5-textarea): clean up styles (#667)
+    refactor(ui5-calendar): clean up styles (#657)
