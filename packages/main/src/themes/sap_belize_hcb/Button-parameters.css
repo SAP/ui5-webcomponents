@@ -9,4 +9,7 @@
 	--_ui5_button_positive_focus_border_color: transparent;
 	--_ui5_button_negative_focus_border_color: transparent;
 	--_ui5_button_negative_active_border_color: transparent;
+	--_ui5_button_focus_width: 1px;
+	--_ui5_button_focus_color: var(--sapUiContentFocusColor);
+	--_ui5_button_focussed_border_color: transparent;
 }

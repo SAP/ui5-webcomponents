@@ -224,6 +224,52 @@
 	border-color: transparent;
 }
 
+/* IE Specific CSS */
+
+ui5-button[focused] {
+	outline: none;
+}
+
+ui5-button[focused] .ui5-button-inner {
+	position: relative;
+}
+
+ui5-button[focused] .ui5-button-inner::after {
+	content: "";
+	position: absolute;
+	border-width: 1px;
+	border-style: dotted;
+	border-color: var(--_ui5_button_focus_color);
+	top: var(--_ui5_button_focus_offset);
+	bottom: var(--_ui5_button_focus_offset);
+	left: var(--_ui5_button_focus_offset);
+	right: var(--_ui5_button_focus_offset);
+}
+
+ui5-button[active] .ui5-button-inner::after {
+	border-color: var(--sapUiContentContrastFocusColor);
+}
+
+ui5-button[design="Positive"][focused] .ui5-button-inner::after {
+	border-color: var(--_ui5_button_positive_border_focus_hover_color);
+}
+
+ui5-button[design="Positive"][active][focused] .ui5-button-inner::after {
+	border-color: var(--sapUiContentContrastFocusColor);
+}
+
+ui5-button[design="Negative"][focused] .ui5-button-inner::after {
+	border-color: var(--_ui5_button_positive_border_focus_hover_color);
+}
+
+ui5-button[design="Negative"][active][focused] .ui5-button-inner::after {
+	border-color: var(--sapUiContentContrastFocusColor);
+}
+
+ui5-button[design="Emphasized"][focused] .ui5-button-inner::after {
+	border-color: var(--sapUiContentContrastFocusColor);
+}
+
 /* Remove this after ShadyCSS adoption has been done */
 
 ui5-button:not([hidden]) {
@@ -270,21 +316,12 @@ ui5-button[disabled] {
 	pointer-events: none;
 }
 
-ui5-button[focused] {
-	outline: var(--_ui5_button_outline);
-	outline-offset: var(--_ui5_button_outline_offset);
-}
-
 ui5-button[active]:not([disabled]) {
 	background-image: none;
 	background-color: var(--sapUiButtonActiveBackground);
 	border-color: var(--_ui5_button_active_border_color);
 	color: var(--sapUiButtonActiveTextColor);
 	text-shadow: none;
-}
-
-ui5-button[active] {
-	outline-color: var(--sapUiContentContrastFocusColor);
 }
 
 ui5-button[design="Positive"] {
@@ -307,12 +344,7 @@ ui5-button[design="Positive"][active] {
 }
 
 ui5-button[design="Positive"][focused] {
-	outline-color: var(--_ui5_button_positive_border_focus_hover_color);
 	border-color: var(--_ui5_button_positive_focus_border_color);
-}
-
-ui5-button[design="Positive"][active][focused] {
-	outline-color: var(--sapUiContentContrastFocusColor);
 }
 
 ui5-button[design="Negative"] {
@@ -329,7 +361,6 @@ ui5-button[design="Negative"]:hover {
 
 ui5-button[design="Negative"][focused] {
 	border-color: var(--_ui5_button_negative_focus_border_color);
-	outline-color: var(--_ui5_button_positive_border_focus_hover_color);
 }
 
 ui5-button[design="Negative"][active] {
@@ -337,10 +368,6 @@ ui5-button[design="Negative"][active] {
 	border-color: var(--_ui5_button_negative_active_border_color);
 	color: var(--sapUiButtonActiveTextColor);
 	text-shadow: none;
-}
-
-ui5-button[design="Negative"][active][focused] {
-	outline-color: var(--sapUiContentContrastFocusColor);
 }
 
 ui5-button[design="Emphasized"] {
@@ -364,7 +391,6 @@ ui5-button[design="Empasized"][active] {
 }
 
 ui5-button[design="Emphasized"][focused] {
-	outline-color: var(--sapUiContentContrastFocusColor);
 	border-color: var(--_ui5_button_emphasized_focused_border_color);
 }
 

@@ -60,6 +60,68 @@ ui5-togglebutton .sapMBtn::before { /* this is a hack for a bug in IE https:/* g
 	background: var(--sapUiToggleButtonPressedHoverBackground);
 }
 
+/* IE Specific CSS */
+
+ui5-togglebutton {
+	outline: none;
+}
+
+ui5-togglebutton[focused] .ui5-button-inner {
+	position: relative;
+}
+
+ui5-togglebutton[focused] .ui5-button-inner::after {
+	content: "";
+	position: absolute;
+	border-width: 1px;
+	border-style: dotted;
+	border-color: var(--_ui5_button_focus_color);
+	top: var(--_ui5_button_focus_offset);
+	bottom: var(--_ui5_button_focus_offset);
+	left: var(--_ui5_button_focus_offset);
+	right: var(--_ui5_button_focus_offset);
+}
+
+ui5-togglebutton[active] .ui5-button-inner::after {
+	border-color: var(--sapUiContentContrastFocusColor);
+}
+
+ui5-togglebutton[design="Positive"][focused] .ui5-button-inner::after {
+	border-color: var(--_ui5_button_positive_border_focus_hover_color);
+}
+
+ui5-togglebutton[design="Positive"][active][focused] .ui5-button-inner::after {
+	border-color: var(--sapUiContentContrastFocusColor);
+}
+
+ui5-togglebutton[design="Negative"][focused] .ui5-button-inner::after {
+	border-color: var(--_ui5_button_positive_border_focus_hover_color);
+}
+
+ui5-togglebutton[design="Negative"][active][focused] .ui5-button-inner::after {
+	border-color: var(--sapUiContentContrastFocusColor);
+}
+
+ui5-togglebutton[design="Emphasized"][focused] .ui5-button-inner::after {
+	border-color: var(--sapUiContentContrastFocusColor);
+}
+
+ui5-togglebutton[design="Positive"][pressed] .ui5-button-inner::after {
+	border-color: var(--sapUiContentContrastFocusColor);
+}
+
+ui5-togglebutton[design="Negative"][pressed] .ui5-button-inner::after {
+	border-color: var(--sapUiButtonRejectActiveBorderColor);
+}
+
+ui5-togglebutton[design="Emphasized"][pressed] .ui5-button-inner::after {
+	border-color: var(--sapUiButtonEmphasizedBorderColor);
+}
+
+ui5-togglebutton[design="Transparent"][pressed] .ui5-button-inner::after {
+	border-color: var(--sapUiButtonLiteBorderColor);
+}
+
 /* Remove this after ShadyCSS adoption has been done */
 
 ui5-togglebutton:not([hidden]) {
@@ -106,21 +168,12 @@ ui5-togglebutton[disabled] {
 	pointer-events: none;
 }
 
-ui5-togglebutton[focused] {
-	outline: var(--_ui5_button_outline);
-	outline-offset: var(--_ui5_button_outline_offset);
-}
-
 ui5-togglebutton[active]:not([disabled]) {
 	background-image: none;
 	background-color: var(--sapUiButtonActiveBackground);
 	border-color: var(--_ui5_button_active_border_color);
 	color: var(--sapUiButtonActiveTextColor);
 	text-shadow: none;
-}
-
-ui5-togglebutton[active] {
-	outline-color: var(--sapUiContentContrastFocusColor);
 }
 
 ui5-togglebutton[design="Positive"] {
@@ -143,12 +196,7 @@ ui5-togglebutton[design="Positive"][active] {
 }
 
 ui5-togglebutton[design="Positive"][focused] {
-	outline-color: var(--_ui5_button_positive_border_focus_hover_color);
 	border-color: var(--_ui5_button_positive_focus_border_color);
-}
-
-ui5-togglebutton[design="Positive"][active][focused] {
-	outline-color: var(--sapUiContentContrastFocusColor);
 }
 
 ui5-togglebutton[design="Negative"] {
@@ -165,7 +213,6 @@ ui5-togglebutton[design="Negative"]:hover {
 
 ui5-togglebutton[design="Negative"][focused] {
 	border-color: var(--_ui5_button_negative_focus_border_color);
-	outline-color: var(--_ui5_button_positive_border_focus_hover_color);
 }
 
 ui5-togglebutton[design="Negative"][active] {
@@ -173,10 +220,6 @@ ui5-togglebutton[design="Negative"][active] {
 	border-color: var(--_ui5_button_negative_active_border_color);
 	color: var(--sapUiButtonActiveTextColor);
 	text-shadow: none;
-}
-
-ui5-togglebutton[design="Negative"][active][focused] {
-	outline-color: var(--sapUiContentContrastFocusColor);
 }
 
 ui5-togglebutton[design="Emphasized"] {
@@ -200,7 +243,6 @@ ui5-togglebutton[design="Empasized"][active] {
 }
 
 ui5-togglebutton[design="Emphasized"][focused] {
-	outline-color: var(--sapUiContentContrastFocusColor);
 	border-color: var(--_ui5_button_emphasized_focused_border_color);
 }
 
@@ -240,7 +282,6 @@ ui5-togglebutton[design="Positive"][pressed]:hover {
 	background: var(--sapUiButtonAcceptActiveBackground);
 	border-color: var(--sapUiButtonAcceptActiveBorderColor);
 	color: var(--sapUiToggleButtonPressedTextColor);
-	outline-color: var(--sapUiContentContrastFocusColor);
 }
 
 ui5-togglebutton[design="Positive"][pressed][active],
@@ -254,7 +295,6 @@ ui5-togglebutton[design="Negative"][pressed]:hover {
 	background: var(--sapUiButtonRejectActiveBackground);
 	border-color: var(--sapUiButtonRejectActiveBorderColor);
 	color: var(--sapUiToggleButtonPressedTextColor);
-	outline-color: var(--sapUiContentContrastFocusColor);
 }
 
 ui5-togglebutton[design="Negative"][pressed][active],
@@ -272,7 +312,6 @@ ui5-togglebutton[design="Emphasized"][pressed]:hover {
 	background: var(--sapUiToggleButtonPressedBackground);
 	border-color: var(--sapUiToggleButtonPressedBorderColor);
 	color: var(--sapUiToggleButtonPressedTextColor);
-	outline-color: var(--sapUiContentContrastFocusColor);
 }
 
 ui5-togglebutton[pressed][active],
