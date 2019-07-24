@@ -8,7 +8,6 @@ import {
 	isEscape,
 	isShow,
 } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-import { getCompactSize } from "@ui5/webcomponents-base/dist/config/CompactSize.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
@@ -101,11 +100,17 @@ const metadata = {
 			type: String,
 		},
 
-		_opened: {
+		/**
+		 * @private
+		 */
+		opened: {
 			type: Boolean,
 		},
 
-		_focused: {
+		/**
+		 * @private
+		 */
+		focused: {
 			type: Boolean,
 		},
 	},
@@ -183,6 +188,14 @@ class Select extends UI5Element {
 		this._enableFormSupport();
 	}
 
+	onfocusin() {
+		this.focused = true;
+	}
+
+	onfocusout() {
+		this.focused = false;
+	}
+
 	get _isPickerOpen() {
 		const popover = this.shadowRoot.querySelector("#ui5-select--popover");
 
@@ -198,7 +211,9 @@ class Select extends UI5Element {
 
 		if (this._isPickerOpen) {
 			popover.close();
+			this.opened = false;
 		} else {
+			this.opened = true;
 			popover.openBy(this);
 		}
 	}
@@ -361,20 +376,6 @@ class Select extends UI5Element {
 
 	get selectedOption() {
 		return this.options[this._selectedIndex];
-	}
-
-	get classes() {
-		return {
-			main: {
-				"sapWCSelect": true,
-				"sapWCSelectFocused": this._focused,
-				"sapWCSelectDisabled": this.disabled,
-				"sapWCSelectOpened": this._opened,
-				"sapWCSelectState": this.valueState !== "None",
-				[`sapWCSelect${this.valueState}`]: true,
-				"sapUiSizeCompact": getCompactSize(),
-			},
-		};
 	}
 
 	get tabIndex() {
