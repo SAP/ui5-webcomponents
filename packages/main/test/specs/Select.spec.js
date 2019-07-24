@@ -71,7 +71,7 @@ describe("Select general interaction", () => {
 	it("opens upon space", () => {
 		const btn = $("#myBtn2");
 		const select = $("#mySelect");
-		const popover = browser.findElementDeep("#mySelect >>> ui5-popover >>> .ui5-popover-wrapper");
+		const popover = browser.findElementDeep("#mySelect >>> ui5-popover >>> .ui5-popup-root");
 
 		btn.click();
 		btn.keys("Tab");
@@ -83,7 +83,7 @@ describe("Select general interaction", () => {
 	it("toggles upon F4", () => {
 		const btn = $("#myBtn2");
 		const select = $("#mySelect");
-		const popover = browser.findElementDeep("#mySelect >>> ui5-popover >>> .ui5-popover-wrapper");
+		const popover = browser.findElementDeep("#mySelect >>> ui5-popover >>> .ui5-popup-root");
 
 		btn.click();
 		btn.keys("Tab");
@@ -98,7 +98,7 @@ describe("Select general interaction", () => {
 	it("toggles upon ALT + UP", () => {
 		const btn = $("#myBtn2");
 		const select = $("#mySelect");
-		const popover = browser.findElementDeep("#mySelect >>> ui5-popover >>> .ui5-popover-wrapper");
+		const popover = browser.findElementDeep("#mySelect >>> ui5-popover >>> .ui5-popup-root");
 
 		btn.click();
 		btn.keys("Tab");
@@ -112,7 +112,7 @@ describe("Select general interaction", () => {
 
 	it("toggles upon ALT + DOWN", () => {
 		const btn = $("#myBtn2");
-		const popover = browser.findElementDeep("#mySelect >>> ui5-popover >>> .ui5-popover-wrapper");
+		const popover = browser.findElementDeep("#mySelect >>> ui5-popover >>> .ui5-popup-root");
 
 		btn.click();
 		btn.keys("Tab");

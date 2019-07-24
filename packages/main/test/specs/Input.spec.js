@@ -59,7 +59,7 @@ describe("Input general interaction", () => {
 		let item;
 		const suggestionsInput = browser.findElementDeep("#myInput >>> input");
 		const inputResult = browser.findElementDeep("#inputResult >>> input");
-		const popover = browser.findElementDeep("#myInput >>> ui5-popover >>> .ui5-popover-wrapper");
+		const popover = browser.findElementDeep("#myInput >>> ui5-popover >>> .ui5-popover-root");
 
 		suggestionsInput.click();
 		suggestionsInput.keys("p");
