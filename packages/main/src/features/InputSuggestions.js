@@ -162,7 +162,7 @@ class Suggestions {
 
 	isOpened() {
 		const popover = this._getPopover();
-		return !!(popover && popover._isOpen);
+		return !!(popover && popover.opened);
 	}
 
 	_handleItemNavigation(forward) {
