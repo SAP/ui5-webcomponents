@@ -1,58 +1,71 @@
 
-:host(ui5-li:not([hidden])) {
+:host(:not([hidden])) {
 	display: block;
 }
 
-:host(ui5-li) .sap-phone.sapMLIB {
-	outline: none;
-}
-
-ui5-li:not([hidden]) {
-	display: block;
-}
-
-ui5-li .sap-phone.sapMLIB {
-	outline: none;
-}
-
-.sapMLIB {
-	position: relative;
-	display: flex;
-	align-items: center;
+:host {
 	height: 3rem;
-	width: 100%;
-	padding: 0 1rem 0 1rem;
 	background: var(--ui5-listitem-background-color);
 	box-sizing: border-box;
 }
 
-.sapMLIBHoverable:hover {
-	background : var(--sapUiListHoverBackground);
+/* actionable (type="Active" + desktop) */
+:host([actionable]) {
+	cursor: pointer;
 }
 
-.sapMLIB.sapMLIBSelected {
+/* selected */
+:host([selected]) {
 	background: var(--sapUiListSelectionBackgroundColor);
 }
 
-.sapMLIB.sapMLIBActive {
-	color: var(--sapUiListActiveTextColor);
-	background: var(--sapUiListActiveBackground);
-}
-
-.sapMLIB.sapMLIBHoverable.sapMLIBSelected:hover {
+/* selected and hovered */
+:host([selected][actionable]:not([active]):hover) {
 	background : var(--sapUiListSelectionHoverBackground);
 }
 
-.sapMLIB.sapMLIBHoverable.sapMLIBSelected.sapMLIBActive:hover {
+/* selected and active */
+:host([active][actionable]),
+:host([selected][active][actionable]) {
 	background: var(--sapUiListActiveBackground);
 }
 
-.sapMLIB.sapMLIBFocusable:focus {
+/* hovered */
+:host([actionable]:not([active]):not([selected]):hover) {
+	background : var(--sapUiListHoverBackground);
+}
+
+/* focused */
+:host([active][actionable]) .ui5-li-root.ui5-li--focusable:focus,
+:host([active][actionable]) .ui5-li-root.ui5-li--focusable .ui5-li-content:focus {
+	outline-color: var(--sapUiContentContrastFocusColor);
+}
+
+/* active */
+:host([active][actionable]) .ui5-li-root .ui5-li-icon {
+	color: var(--sapUiListActiveTextColor);
+}
+
+:host([has-border]) {
+	border-bottom: var(--ui5-listitem-border-bottom);
+}
+
+.ui5-li-root {
+	position: relative;
+	display: flex;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	padding: 0 1rem 0 1rem;
+	box-sizing: border-box;
+}
+
+.ui5-li-root.ui5-li--focusable:focus {
 	outline: none;
 }
 
-.sapMLIB.sapMLIBFocusable:focus:after,
-.sapMLIB.sapMLIBFocusable .sapMLIBContent:focus:after {
+.ui5-li-root.ui5-li--focusable:focus:after,
+.ui5-li-root.ui5-li--focusable .ui5-li-content:focus:after {
 	content: "";
 	border: var(--_ui5_listitembase_focus_width) dotted var(--sapUiContentFocusColor);
 	position: absolute;
@@ -63,54 +76,32 @@ ui5-li .sap-phone.sapMLIB {
 	pointer-events: none;
 }
 
-.sapMLIB.sapMLIBActive.sapMLIBFocusable:focus,
-.sapMLIB.sapMLIBActive.sapMLIBFocusable .sapMLIBContent:focus {
-	outline-color: var(--sapUiContentContrastFocusColor);
-}
-
-.sapMLIB.sapMLIBBorder {
-	border-bottom: var(--ui5-listitem-border-bottom);
-}
-
-.sapMLIB.sapMLIBActive .sapMLIBIcon {
-	color: var(--sapUiListActiveTextColor);
-}
-
-.sapMLIBIcon {
+.ui5-li-icon {
 	color: var(--sapUiContentNonInteractiveIconColor);
 	padding-right: 0.5rem;
 }
 
-.sapMLIBContent {
+.ui5-li-content {
 	max-width: 100%;
 	min-height: 100%;
 	font-family: var(--sapUiFontFamily);
 }
 
-.sapMLIBActionable,
-.sapMLIBActionable > .sapMLIBIcon {
-	cursor: pointer;
-}
-
-.sapMLIBFocusable.sapMLIBLegacyOutline:focus {
+.ui5-li--focusable.sapMLIBLegacyOutline:focus {
 	outline: none;
 }
 
 /* RTL */
-:host(ui5-li) [dir="rtl"] .sapMLIBIcon {
+:host [dir="rtl"] .ui5-li-icon {
 	padding-left: 0.5rem;
 	padding-right: 0;
 }
 
-:host(ui5-li) [dir="rtl"] .sapMSLIImg {
+:host [dir="rtl"] .ui5-li-img {
 	margin: .5rem 0 .5rem 0.75rem;
 }
 
-ui5-li [dir="rtl"] .sapMLIBIcon {
-	padding-left: 0.5rem;
-	padding-right: 0;
-}
-
-ui5-li [dir="rtl"] .sapMSLIImg {
-	margin: .5rem 0 .5rem 0.75rem;
-}
+/*
+ * IE pair of styles
+ * to be removed later on
+ */

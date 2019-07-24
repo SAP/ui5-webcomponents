@@ -58,21 +58,6 @@ class GroupHeaderListItem extends ListItemBase {
 	static get styles() {
 		return [ListItemBase.styles, groupheaderListItemCss];
 	}
-
-	get classes() {
-		const result = super.classes;
-
-		// Modify main classes
-		result.main.sapMGHLI = true;
-		result.main.sapMLIBTypeInactive = true;
-
-		// Define span classes
-		result.span = {
-			sapMGHLITitle: true,
-		};
-
-		return result;
-	}
 }
 
 GroupHeaderListItem.define();

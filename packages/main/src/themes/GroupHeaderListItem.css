@@ -1,22 +1,26 @@
-.sapMLIB.sapMGHLI {
-	height: 3rem;
-	color: var(--sapUiListTableGroupHeaderTextColor);
-	background: var(--ui5-group-header-listitem-background-color);
-	padding-top: 1rem;
-	font-size: var(--sapMFontHeader6Size);
-	font-weight: var(--sapUiFontHeaderWeight);
-	line-height: 2rem;
-	border-bottom: 1px solid var(--sapUiListTableGroupHeaderBorderColor);
+:host(:not([hidden])) {
+	display: block;
 }
 
-.sapMGHLI > .sapMLIBContent {
-	display: -webkit-box;
+:host {
+	height: 3rem;
+}
+
+.ui5-li-root.ui5-ghli-root {
+	padding-top: 1rem;
+	color: var(--sapUiListTableGroupHeaderTextColor);
+	background: var(--ui5-group-header-listitem-background-color);
+	border-bottom: 1px solid var(--sapUiListTableGroupHeaderBorderColor);
+	font-size: var(--sapMFontHeader6Size);
+	font-weight: var(--sapUiFontHeaderWeight);
+}
+
+.ui5-ghli-root .ui5-li-content {
 	display: flex;
-	-webkit-box-align: center;
 	align-items: center;
 }
 
-.sapMGHLITitle {
+.ui5-ghli-title {
 	display: block;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -24,6 +28,22 @@
 } 
 
 /* Compact size */
-.sapUiSizeCompact.sapMGHLI {
+:host([data-ui5-compact-size]) {
+	height: 2rem;
+}
+
+/*
+ * IE pair of styles
+ * to be removed later on
+ */
+ui5-li-groupheader:not([hidden]) {
+	display: block;
+}
+
+ui5-li-groupheader {
+	height: 3rem;
+}
+
+ui5-li-groupheader[data-ui5-compact-size] {
 	height: 2rem;
 }

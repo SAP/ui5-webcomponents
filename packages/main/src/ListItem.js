@@ -43,7 +43,23 @@ const metadata = {
 			defaultValue: ListItemType.Active,
 		},
 
-		_active: {
+		/**
+		 * Indicates if the list item is active, e.g pressed down with the mouse or the keyboard keys.
+		 *
+		 * @type {boolean}
+		 * @private
+		*/
+		active: {
+			type: Boolean,
+		},
+
+		/**
+		 * Indicates if the list item is actionable, e.g has hover and pressed effects.
+		 *
+		 * @type {boolean}
+		 * @private
+		*/
+		actionable: {
 			type: Boolean,
 		},
 
@@ -90,13 +106,18 @@ class ListItem extends ListItemBase {
 		};
 
 		this.deactivate = () => {
-			if (this._active) {
-				this._active = false;
+			if (this.active) {
+				this.active = false;
 			}
 		};
 	}
 
-	onBeforeRendering() {}
+	onBeforeRendering(...params) {
+		const desktop = isDesktop();
+		const isActionable = (this.type === ListItemType.Active) && (this._mode !== ListMode.Delete);
+
+		this.actionable = desktop && isActionable;
+	}
 
 	onEnterDOM() {
 		document.addEventListener("mouseup", this.deactivate);
@@ -163,10 +184,9 @@ class ListItem extends ListItemBase {
 
 	activate() {
 		if (this.type === ListItemType.Active) {
-			this._active = true;
+			this.active = true;
 		}
 	}
-
 
 	_onDelete(event) {
 		this.fireEvent("_selectionRequested", { item: this, selected: event.selected });
@@ -174,23 +194,6 @@ class ListItem extends ListItemBase {
 
 	fireItemPress() {
 		this.fireEvent("_press", { item: this, selected: this.selected });
-	}
-
-	get classes() {
-		const result = super.classes;
-
-		const desktop = isDesktop();
-		const isActionable = (this.type === ListItemType.Active) && (this._mode !== ListMode.Delete);
-
-		// Modify main classes
-		result.main[`sapMLIBType${this.type}`] = true;
-		result.main.sapMSLI = true;
-		result.main.sapMLIBActionable = desktop && isActionable;
-		result.main.sapMLIBHoverable = desktop && isActionable;
-		result.main.sapMLIBSelected = this.selected;
-		result.main.sapMLIBActive = this._active;
-
-		return result;
 	}
 
 	get placeSelectionElementBefore() {

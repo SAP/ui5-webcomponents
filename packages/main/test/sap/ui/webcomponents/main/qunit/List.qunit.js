@@ -9,15 +9,12 @@ TestHelper.ready(function() {
 			this.getListRoot = function() {
 				return this.list.shadowRoot.querySelector(".ui5-list-root");
 			};
-			this.getListUl = function() {
-				return this.list.shadowRoot.querySelector(".ui5-list-root .ui5-list-ul");
-			};
 		});
 		hooks.beforeEach(function () {
 			var html = "<ui5-list id='myList'>"
-				+ "<ui5-li id='key1' type='Active'>First</ui5-li>"
-				+ "<ui5-li id='key2' type='Active'>Second</ui5-li>"
-				+ "<ui5-li id='key3' type='Active'>Third</ui5-li>"
+				+ "<ui5-li id='key1'>First</ui5-li>"
+				+ "<ui5-li id='key2'>Second</ui5-li>"
+				+ "<ui5-li id='key3'>Third</ui5-li>"
 				+ "</ui5-list>";
 			fixture.innerHTML = html;
 
@@ -114,9 +111,9 @@ TestHelper.ready(function() {
 		hooks.beforeEach(function () {
 			var html = "<ui5-list id='myList'>"
 				+ "<div id='header' active slot='header'><div>Header</div></div>"
-				+ "<ui5-li id='key1' type='Active'>First</ui5-li>"
-				+ "<ui5-li id='key2' type='Active'>Second</ui5-li>"
-				+ "<ui5-li id='key3' type='Active'>Third</ui5-li>"
+				+ "<ui5-li id='key1'>First</ui5-li>"
+				+ "<ui5-li id='key2'>Second</ui5-li>"
+				+ "<ui5-li id='key3'>Third</ui5-li>"
 				+ "</ui5-list>";
 			fixture.innerHTML = html;
 
