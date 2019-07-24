@@ -8,6 +8,7 @@ import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEven
 import "@ui5/webcomponents-base/dist/icons/accept.js";
 import Icon from "./Icon.js";
 import Label from "./Label.js";
+import { VALUE_STATE_ERROR, VALUE_STATE_WARNING } from "./i18n/defaults.js";
 
 // Template
 import CheckBoxTemplate from "./generated/templates/CheckBoxTemplate.lit.js";
@@ -268,6 +269,29 @@ class CheckBox extends UI5Element {
 
 	get ariaDisabled() {
 		return this.disabled ? "true" : undefined;
+	}
+
+	get ariaLabelledBy() {
+		return this.text ? `${this._id}-label` : undefined;
+	}
+
+	get ariaDescribedBy() {
+		return this.hasValueState ? `${this._id}-descr` : undefined;
+	}
+
+	get hasValueState() {
+		return this.valueState !== ValueState.None;
+	}
+
+	static valueStateTextMappings() {
+		return {
+			"Error": VALUE_STATE_ERROR.defaultText,
+			"Warning": VALUE_STATE_WARNING.defaultText,
+		};
+	}
+
+	get valueStateText() {
+		return CheckBox.valueStateTextMappings()[this.valueState];
 	}
 
 	get tabIndex() {

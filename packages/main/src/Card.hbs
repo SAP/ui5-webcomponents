@@ -9,27 +9,27 @@
 		tabindex="{{tabindex}}"
 		role="{{role}}">
 		{{#if image}}
-			<img src="{{avatar}}" aria-label="Avatar" class="sapFCardAvatar sapFCardHeaderImg">
+			<img src="{{avatar}}" aria-label="Avatar" class="ui5-card-avatar ui5-card-header-img">
 		{{/if}}
 
 		{{#if icon}}
-			<span role="img" aria-label="Avatar" class="sapFCardAvatar">
-				<ui5-icon class="sapFCardHeaderIcon" src="{{avatar}}"></ui5-icon>
+			<span role="img" aria-label="Avatar" class="ui5-card-avatar">
+				<ui5-icon class="ui5-card-header-icon" src="{{avatar}}"></ui5-icon>
 			</span>
 		{{/if}}
 
-		<div class="sapFCardHeaderText">
+		<div class="ui5-card-header-text">
 			{{#if heading}}
-				<div class="sapFCardTitle">{{heading}}</div>
+				<div class="ui5-card-heading">{{heading}}</div>
 			{{/if}}
 
 			{{#if subtitle}}
-				<div class="sapFCardSubtitle ">{{subtitle}}</div>
+				<div class="ui5-card-subtitle ">{{subtitle}}</div>
 			{{/if}}
 		</div>
-		<span part="status" class="sapFCardStatus">{{status}}</span>
+		<span part="status" class="ui5-card-status">{{status}}</span>
 	</header>
-	<section class="sapFCardContent">
-        <slot></slot>
+	<section>
+		<slot></slot>
 	</section>
 </div>

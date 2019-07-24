@@ -186,7 +186,7 @@ class Select extends UI5Element {
 	get _isPickerOpen() {
 		const popover = this.shadowRoot.querySelector("#ui5-select--popover");
 
-		return popover && popover._isOpen;
+		return popover && popover.opened;
 	}
 
 	_togglePopover() {

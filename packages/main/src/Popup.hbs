@@ -2,11 +2,11 @@
 	{{#if hasHeader}}
 		<header>
 			{{#if header.length}}
-				<div role="{{role}}" class="ui5-popup-wrapper-header">
+				<div role="{{role}}" class="ui5-popup-header">
 					<slot name="header"></slot>
 				</div>
 			{{else}}
-				<h2 role="{{role}}" class="ui5-popup-wrapper-header ui5-popup-wrapper-headerText">{{headerText}}</h2>
+				<h2 role="{{role}}" class="ui5-popup-header ui5-popup-headerText">{{headerText}}</h2>
 			{{/if}}
 		</header>
 	{{/if}}
@@ -15,7 +15,7 @@
 {{#*inline "footer"}}
 	{{#if hasFooter}}
 		<footer>
-			<div class="ui5-popup-wrapper-footer">
+			<div class="ui5-popup-footer">
 				<slot name="footer"></slot>
 			</div>
 		</footer>

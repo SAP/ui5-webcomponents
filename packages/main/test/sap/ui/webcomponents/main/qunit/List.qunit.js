@@ -7,10 +7,10 @@ TestHelper.ready(function() {
 	QUnit.module("Rendering", function (hooks) {
 		hooks.before(function() {
 			this.getListRoot = function() {
-				return this.list.shadowRoot.querySelector(".sapMList");
+				return this.list.shadowRoot.querySelector(".ui5-list-root");
 			};
 			this.getListUl = function() {
-				return this.list.shadowRoot.querySelector(".sapMList .sapMListUl");
+				return this.list.shadowRoot.querySelector(".ui5-list-root .ui5-list-ul");
 			};
 		});
 		hooks.beforeEach(function () {
@@ -40,10 +40,10 @@ TestHelper.ready(function() {
 	QUnit.module("API", function (hooks) {
 		hooks.before(function() {
 			this.getListRoot = function() {
-				return this.list.shadowRoot.querySelector(".sapMList");
+				return this.list.shadowRoot.querySelector(".ui5-list-root");
 			};
 			this.getListUl = function() {
-				return this.list.shadowRoot.querySelector(".sapMList .sapMListUl");
+				return this.list.shadowRoot.querySelector(".ui5-list-root .ui5-list-ul");
 			};
 		});
 		hooks.beforeEach(function () {
@@ -59,42 +59,17 @@ TestHelper.ready(function() {
 			this.list = null;
 		});
 
-		QUnit.test("set boolean props", function (assert) {
-			assert.expect(2);
-
-			var done = assert.async(),
-				list = this.list,
-				listRoot = this.getListRoot(),
-				listUL = this.getListUl(),
-				expectedClass = "sapMListInsetBG",
-				expectedClassOnUl = "sapMListInset";
-
-			// act
-			list["inset"] = true;
-
-			RenderScheduler.whenFinished().then(function () {
-				// assert
-				assert.ok(listRoot.classList.contains(expectedClass), "root element contain " + expectedClass);
-				assert.ok(listUL.classList.contains(expectedClassOnUl), "ul element contain " + expectedClassOnUl);
-
-				done();
-			});
-		});
-
 		QUnit.test("set string props", function (assert) {
-			assert.expect(5);
+			assert.expect(3);
 
 			var done = assert.async(),
 				list = this.list,
-				listUL = this.getListUl(),
 				listFooter,
 				listHeader,
 				listNoDataEl,
 				headerText = "header",
 				footerText = "footer",
-				noDataText = "no data",
-				separators = "Inner",	
-				mode = "Delete";
+				noDataText = "no data";
 
 			var props = [{
 					prop: "headerText",
@@ -105,12 +80,6 @@ TestHelper.ready(function() {
 				},{
 					prop: "noDataText",
 					value: noDataText
-				},{
-					prop: "separators",
-					value: separators
-				},{
-					prop: "mode",
-					value: mode
 				}];
 
 			props.forEach(function(propInfo) {
@@ -119,13 +88,11 @@ TestHelper.ready(function() {
 			});
 
 			RenderScheduler.whenFinished().then(function () {
-				listFooter = list.shadowRoot.querySelector(".sapMListFtr");
-				listHeader = list.shadowRoot.querySelector(".sapMListHdr");
-				listNoDataEl = list.shadowRoot.querySelector(".sapMListNoDataText");
+				listFooter = list.shadowRoot.querySelector(".ui5-list-footer");
+				listHeader = list.shadowRoot.querySelector(".ui5-list-header");
+				listNoDataEl = list.shadowRoot.querySelector(".ui5-list-nodata-text");
 
 				// assert
-				assert.ok(listUL.classList.contains("sapMListShowSeparatorsInner"), "list separators styling has been correctly set");
-				assert.ok(listUL.classList.contains("sapMListModeDelete"), "list mode styling has been correctly set");
 				assert.ok(listFooter, "list footer has been rendered");
 				assert.ok(listHeader, "list header has been rendered");
 				assert.ok(listNoDataEl, "list noData has been rendered");
@@ -138,10 +105,10 @@ TestHelper.ready(function() {
 	QUnit.module("API Children", function (hooks) {
 		hooks.before(function() {
 			this.getListRoot = function() {
-				return this.list.shadowRoot.querySelector(".sapMList");
+				return this.list.shadowRoot.querySelector(".ui5-list-root");
 			};
 			this.getListUl = function() {
-				return this.list.shadowRoot.querySelector(".sapMList .sapMListUl");
+				return this.list.shadowRoot.querySelector(".ui5-list-root .ui5-list-ul");
 			};
 		});
 		hooks.beforeEach(function () {

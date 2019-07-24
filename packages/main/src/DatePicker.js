@@ -262,8 +262,8 @@ class DatePicker extends UI5Element {
 				const calendar = popover.querySelector(`#${this._id}-calendar`);
 				const dayPicker = calendar.shadowRoot.querySelector(`#${calendar._id}-daypicker`);
 
-				const selectedDay = dayPicker.shadowRoot.querySelector(".sapWCDayPickerItemSel");
-				const today = dayPicker.shadowRoot.querySelector(".sapWCDayPickerItemNow");
+				const selectedDay = dayPicker.shadowRoot.querySelector(".ui5-dp-item--selected");
+				const today = dayPicker.shadowRoot.querySelector(".ui5-dp-item--now");
 				const focusableDay = selectedDay || today;
 
 				if (this._focusInputAfterOpen) {
@@ -492,7 +492,7 @@ class DatePicker extends UI5Element {
 		const oDomTarget = getDomTarget(event);
 		let isInput = false;
 
-		if (oDomTarget && oDomTarget.className.indexOf("sapWCInputBaseInner") > -1) {
+		if (oDomTarget && oDomTarget.className.indexOf("ui5-input-inner") > -1) {
 			isInput = true;
 		}
 
@@ -501,12 +501,8 @@ class DatePicker extends UI5Element {
 
 	get classes() {
 		return {
-			main: {
-				sapMDP: true,
-			},
 			icon: {
-				sapWCDPIcon: true,
-				sapWCDPIconPressed: this._isPickerOpen,
+				"ui5-datepicker-icon--pressed": this._isPickerOpen,
 			},
 		};
 	}

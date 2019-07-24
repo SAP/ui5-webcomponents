@@ -1,23 +1,23 @@
+:host {
+	display: inline-block;
+}
+
 ui5-calendar {
 	display: inline-block;
 }
 
-:host(ui5-calendar) {
-	display: inline-block;
-}
-
-.sapWCYearPickerHidden,
-.sapWCMonthPickerHidden,
-.sapWCDayPickerHidden {
+.ui5-yearpicker--hidden,
+.ui5-monthpicker--hidden,
+.ui5-daypicker--hidden {
 	display: none;
 }
 
-.sapUiCal {
+.ui5-cal-root {
 	background: var(--sapUiListBackground);
 }
 
-.sapUiCal ui5-daypicker,
-.sapUiCal ui5-month-picker,
-.sapUiCal ui5-yearpicker {
+.ui5-cal-root ui5-daypicker,
+.ui5-cal-root ui5-month-picker,
+.ui5-cal-root ui5-yearpicker {
 	vertical-align: top;
 }
