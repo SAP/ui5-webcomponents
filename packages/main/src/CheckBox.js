@@ -256,8 +256,6 @@ class CheckBox extends UI5Element {
 	get classes() {
 		return {
 			main: {
-				"ui5-checkbox-root": true,
-				"ui5-checkbox-with-label": !!this.text,
 				"ui5-checkbox--hoverable": !this.disabled && !this.readonly && isDesktop(),
 			},
 		};
