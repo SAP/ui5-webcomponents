@@ -2,7 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { isShow, isDown } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-import { getCompactSize } from "@ui5/webcomponents-base/dist/config/CompactSize.js";
 import "@ui5/webcomponents-base/dist/icons/slim-arrow-down.js";
 import MultiComboBoxTemplate from "./generated/templates/MultiComboBoxTemplate.lit.js";
 import Input from "./Input.js";
@@ -341,7 +340,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_getPopover(isMorePopover) {
-		return this.shadowRoot.querySelector(`.ui5-multi-combobox-${isMorePopover ? "selected" : "all"}-items--popover`);
+		return this.shadowRoot.querySelector(`.ui5-multi-combobox-${isMorePopover ? "selected" : "all"}-items-popover`);
 	}
 
 	_togglePopover(isMorePopover) {
@@ -363,7 +362,7 @@ class MultiComboBox extends UI5Element {
 		const hasSelectedItem = this.items.some(item => item.selected);
 
 		if (!hasSelectedItem) {
-			const morePopover = this.shadowRoot.querySelector(`.ui5-multi-combobox-selected-items--popover`);
+			const morePopover = this.shadowRoot.querySelector(`.ui5-multi-combobox-selected-items-popover`);
 
 			morePopover && morePopover.close();
 		}
@@ -389,13 +388,9 @@ class MultiComboBox extends UI5Element {
 
 	get classes() {
 		return {
-			main: {
-				"ui5-multi-combobox--wrapper": true,
-				"sapUiSizeCompact": getCompactSize(),
-			},
 			icon: {
 				[`ui5-multi-combobox-icon-root-pressed`]: this._iconPressed,
-				[`ui5-multi-combobox--icon`]: true,
+				[`ui5-multi-combobox-icon`]: true,
 			},
 		};
 	}
