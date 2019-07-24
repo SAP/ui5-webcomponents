@@ -204,7 +204,7 @@ class MessageStrip extends UI5Element {
 	}
 
 	get hiddenText() {
-		return `Message Strip ${this.type} ${this.noCloseButton ? "" : "closable"}.`;
+		return `Message Strip ${this.type} ${this.noCloseButton ? "" : "closable"}`;
 	}
 
 	get _closeButtonText() {
