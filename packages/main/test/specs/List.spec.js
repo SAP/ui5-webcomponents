@@ -31,8 +31,7 @@ describe("Date Picker Tests", () => {
 	it("header text", () => {
 		list.id = "#list1";
 
-		assert.ok(list.header.hasClass("sapMListHdr"), "header has the right classes");
-		assert.ok(list.header.hasClass("sapMListHdrText"), "header has the right classes");
+		assert.ok(list.header.hasClass("ui5-list-header"), "header has the right classes");
 		assert.ok(list.header.getHTML(false), "API: GroupHeaderListItem");
 	});
 
