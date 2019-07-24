@@ -105,3 +105,118 @@
  * IE pair of styles
  * to be removed later on
  */
+
+/* standard li */
+ui5-li:not([hidden]) {
+	display: block;
+}
+
+ui5-li {
+	height: 3rem;
+	background: var(--ui5-listitem-background-color);
+	box-sizing: border-box;
+}
+
+ui5-li[actionable] {
+	cursor: pointer;
+}
+
+ui5-li[selected] {
+	background: var(--sapUiListSelectionBackgroundColor);
+}
+
+ui5-li[selected][actionable]:not([active]):hover {
+	background : var(--sapUiListSelectionHoverBackground);
+}
+
+ui5-li[active][actionable],
+ui5-li[selected][active][actionable] {
+	background: var(--sapUiListActiveBackground);
+}
+
+ui5-li[actionable]:not([active]):not([selected]):hover {
+	background : var(--sapUiListHoverBackground);
+}
+
+ui5-li[active][actionable] .ui5-li-root.ui5-li--focusable:focus,
+ui5-li[active][actionable] .ui5-li-root.ui5-li--focusable .ui5-li-content:focus {
+	outline-color: var(--sapUiContentContrastFocusColor);
+}
+
+ui5-li[active][actionable] .ui5-li-root .ui5-li-icon {
+	color: var(--sapUiListActiveTextColor);
+}
+
+ui5-li[has-border] {
+	border-bottom: var(--ui5-listitem-border-bottom);
+}
+
+/* custom li */
+
+ui5-li-custom:not([hidden]) {
+	display: block;
+}
+
+ui5-li-custom {
+	height: 3rem;
+	background: var(--ui5-listitem-background-color);
+	box-sizing: border-box;
+}
+
+ui5-li-custom[actionable] {
+	cursor: pointer;
+}
+
+ui5-li-custom[selected] {
+	background: var(--sapUiListSelectionBackgroundColor);
+}
+
+ui5-li-custom[selected][actionable]:not([active]):hover {
+	background : var(--sapUiListSelectionHoverBackground);
+}
+
+ui5-li-custom[active][actionable],
+ui5-li-custom[selected][active][actionable] {
+	background: var(--sapUiListActiveBackground);
+}
+
+ui5-li-custom[actionable]:not([active]):not([selected]):hover {
+	background : var(--sapUiListHoverBackground);
+}
+
+ui5-li-custom[active][actionable] .ui5-li-root.ui5-li--focusable:focus,
+ui5-li-custom[active][actionable] .ui5-li-root.ui5-li--focusable .ui5-li-content:focus {
+	outline-color: var(--sapUiContentContrastFocusColor);
+}
+
+ui5-li-custom[active][actionable] .ui5-li-root .ui5-li-icon {
+	color: var(--sapUiListActiveTextColor);
+}
+
+ui5-li-custom[has-border] {
+	border-bottom: var(--ui5-listitem-border-bottom);
+}
+
+/* groupheader li */
+ui5-li-groupheader[has-border] {
+	border-bottom: var(--ui5-listitem-border-bottom);
+}
+
+/* RTL */
+ui5-li [dir="rtl"] .ui5-li-icon {
+	padding-left: 0.5rem;
+	padding-right: 0;
+}
+
+ui5-li [dir="rtl"] .ui5-li-img {
+	margin: .5rem 0 .5rem 0.75rem;
+}
+
+ui5-li-custom [dir="rtl"] .ui5-li-icon {
+	padding-left: 0.5rem;
+	padding-right: 0;
+}
+
+ui5-li-custom [dir="rtl"] .ui5-li-img {
+	margin: .5rem 0 .5rem 0.75rem;
+}
