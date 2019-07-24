@@ -1,5 +1,5 @@
-commit 288e060ef223e0ef409c232c560b454c301e29e1
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Jul 24 13:41:28 2019 +0300
+commit 8dc6c1d5eb356ae029e95b51497cfa8d7e316c0c
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Wed Jul 24 13:57:01 2019 +0300
 
-    refactor(ui5-card): render header if not empty (#646)
+    refactor(ui5-button): styles cleanup (#675)
