@@ -56,6 +56,18 @@ const metadata = {
 		},
 
 		/**
+		 * Defines whether the <code>ui5-textarea</code> is required.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 * @since 1.0.0
+		 */
+		required: {
+			type: Boolean,
+		},
+
+		/**
 		 * Defines a short hint intended to aid the user with data entry when the component has no value.
 		 *
 		 * @type {string}
@@ -155,13 +167,22 @@ const metadata = {
 			type: String,
 		},
 
-		_height: {
-			type: CSSSize,
-			defaultValue: null,
+		/**
+		 * @private
+		 */
+		focused: {
+			type: Boolean,
 		},
 
-		_exceededTextProps: {
-			type: Object,
+		/**
+		 * @private
+		 */
+		exceeding: {
+			type: Boolean,
+		},
+
+		_height: {
+			type: CSSSize,
 			defaultValue: null,
 		},
 
@@ -172,9 +193,6 @@ const metadata = {
 		},
 		_maxHeight: {
 			type: String,
-		},
-		_focussed: {
-			type: Boolean,
 		},
 		_listeners: {
 			type: Object,
@@ -246,6 +264,8 @@ class TextArea extends UI5Element {
 		this._exceededTextProps = this._calcExceededText();
 		this._mirrorText = this._tokenizeText(this.value);
 
+		this.exceeding = this._exceededTextProps.leftCharactersCount < 0;
+
 		if (this.growingMaxLines) {
 			// this should be complex calc between line height and paddings - TODO: make it stable
 			this._maxHeight = `${this.growingMaxLines * 1.4 * 14 + 9}px`;
@@ -280,11 +300,11 @@ class TextArea extends UI5Element {
 	}
 
 	onfocusin() {
-		this._focussed = true;
+		this.focused = true;
 	}
 
 	onfocusout() {
-		this._focussed = false;
+		this.focused = false;
 	}
 
 	_handleChange() {
@@ -338,35 +358,6 @@ class TextArea extends UI5Element {
 		};
 	}
 
-	get classes() {
-		return {
-			main: {
-				sapWCTextArea: true,
-				sapWCTextAreaWarning: (this._exceededTextProps.leftCharactersCount < 0),
-				sapWCTextAreaGrowing: this.growing,
-				sapWCTextAreaNoMaxLines: !this.growingMaxLines,
-				sapWCTextAreaWithCounter: this.showExceededText,
-				sapWCTextAreaDisabled: this.disabled,
-				sapWCTextAreaReadonly: this.readonly,
-			},
-			inner: {
-				sapWCTextAreaInner: true,
-				sapWCTextAreaStateInner: (this._exceededTextProps.leftCharactersCount < 0),
-				sapWCTextAreaWarningInner: (this._exceededTextProps.leftCharactersCount < 0),
-			},
-			exceededText: {
-				sapWCTextAreaExceededText: true,
-			},
-			mirror: {
-				sapWCTextAreaMirror: true,
-			},
-			focusDiv: {
-				sapWCTextAreaFocusDiv: true,
-				sapWCTextAreaHasFocus: this._focussed,
-			},
-		};
-	}
-
 	get styles() {
 		const lineHeight = 1.4 * 16;
 
@@ -387,6 +378,10 @@ class TextArea extends UI5Element {
 
 	get tabIndex() {
 		return this.disabled ? undefined : "0";
+	}
+
+	get ariaLabelledBy() {
+		return this.showExceededText ? `${this._id}-exceededText` : undefined;
 	}
 
 	get ariaInvalid() {

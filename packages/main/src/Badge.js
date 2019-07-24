@@ -6,6 +6,8 @@ import Icon from "./Icon.js";
 // Template
 import BadgeTemplate from "./generated/templates/BadgeTemplate.lit.js";
 
+import { BADGE_DESCRIPTION } from "./i18n/defaults.js";
+
 // Styles
 import badgeCss from "./generated/themes/Badge.css.js";
 
@@ -47,7 +49,7 @@ const metadata = {
 		/**
 		 * Defines the <code>ui5-icon</code> to be displayed in the <code>ui5-badge</code>.
 		 *
-		 * @type {Icon[]}
+		 * @type {Icon}
 		 * @slot
 		 * @public
 		 */
@@ -119,6 +121,10 @@ class Badge extends UI5Element {
 
 	get rtl() {
 		return getRTL() ? "rtl" : undefined;
+	}
+
+	get badgeDescription() {
+		return BADGE_DESCRIPTION.defaultText;
 	}
 }
 

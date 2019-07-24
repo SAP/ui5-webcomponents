@@ -49,7 +49,7 @@ TestHelper.ready(function () {
 		this.dialog.addEventListener('afterOpen', function (event) {
 			var shadowRoot = this.dialog.shadowRoot;
 
-			assert.ok(shadowRoot.querySelector('.ui5-popup-wrapper-frame--open'), "Dialog is opened");
+			assert.ok(this.dialog.hasAttribute('opened'), "Dialog is opened");
 
 			// header
 			var header = shadowRoot.host.children[0];
@@ -68,7 +68,7 @@ TestHelper.ready(function () {
 
 		this.dialog.addEventListener('afterClose', function (event) {
 			RenderScheduler.whenFinished().then(function() {
-				assert.notOk(this.dialog.shadowRoot.querySelector('.ui5-popup-wrapper-frame--open'), "Dialog is closed");
+				assert.notOk(this.dialog.hasAttribute('opened'), "Dialog is closed");
 				done();
 			}.bind(this));
 		}.bind(this));

@@ -30,12 +30,14 @@ class FormSupport {
 		if (!element.submits) {
 			return;
 		}
-		let parentElement;
-		do {
-			parentElement = element.parentElement;
-		} while (parentElement && parentElement.tagName.toLowerCase() !== "form");
-		if (parentElement) {
-			parentElement.submit();
+		let currentElement = element.parentElement;
+		while (currentElement && currentElement.tagName.toLowerCase() !== "form") {
+			currentElement = currentElement.parentElement;
+		}
+		if (currentElement) {
+			currentElement.submit();
+		} else {
+			console.error(`${element} is not within a form. Please add it in a form.`); // eslint-disable-line
 		}
 	}
 }

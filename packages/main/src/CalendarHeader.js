@@ -2,7 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import getShadowDOMTarget from "@ui5/webcomponents-base/dist/events/getShadowDOMTarget.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-import { getCompactSize } from "@ui5/webcomponents-base/dist/config/CompactSize.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import "@ui5/webcomponents-base/dist/icons/slim-arrow-left.js";
 import "@ui5/webcomponents-base/dist/icons/slim-arrow-right.js";
@@ -107,22 +106,6 @@ class CalendarHeader extends UI5Element {
 				this[`_show${showPickerButton}Picker`]();
 			}
 		}
-	}
-
-	get classes() {
-		return {
-			main: {
-				sapWCCalHead: true,
-				sapUiSizeCompact: getCompactSize(),
-			},
-			buttons: {
-				sapWCCalHeadArrowButton: true,
-			},
-			middleButtons: {
-				sapWCCalHeadMiddleButton: true,
-				sapWCCalHeadArrowButton: true,
-			},
-		};
 	}
 
 	get rtl() {
