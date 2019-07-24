@@ -1,7 +1,5 @@
-commit c20c85c673fd6dff67afbf00c5c51bc037b5ae41
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Wed Jul 24 11:07:29 2019 +0300
+commit 288e060ef223e0ef409c232c560b454c301e29e1
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Jul 24 13:41:28 2019 +0300
 
-    fix(ui5-table): call resize handler on initial rendering (#625)
-    
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/568
+    refactor(ui5-card): render header if not empty (#646)
