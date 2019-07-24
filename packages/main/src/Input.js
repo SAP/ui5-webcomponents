@@ -14,6 +14,13 @@ import InputType from "./types/InputType.js";
 // Template
 import InputTemplate from "./generated/templates/InputTemplate.lit.js";
 
+import {
+	VALUE_STATE_SUCCESS,
+	VALUE_STATE_ERROR,
+	VALUE_STATE_WARNING,
+	INPUT_SUGGESTIONS,
+} from "./i18n/defaults.js";
+
 // Styles
 import styles from "./generated/themes/Input.css.js";
 
@@ -100,6 +107,18 @@ const metadata = {
 		 * @public
 		 */
 		readonly: {
+			type: Boolean,
+		},
+
+		/**
+		 * Defines whether the <code>ui5-input</code> is required.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 * @since 1.0.0
+		 */
+		required: {
 			type: Boolean,
 		},
 
@@ -529,7 +548,39 @@ class Input extends UI5Element {
 	}
 
 	get ariaInvalid() {
-		return this.valueState === "Error" ? "true" : undefined;
+		return this.valueState === ValueState.Error ? "true" : undefined;
+	}
+
+	get ariaDescribedBy() {
+		return this.showSuggestions ? `${this._id}-suggestionsText` : undefined;
+	}
+
+	get ariaHasPopup() {
+		return this.showSuggestions ? "true" : undefined;
+	}
+
+	get ariaAutoComplete() {
+		return this.showSuggestions ? "list" : undefined;
+	}
+
+	get hasValueState() {
+		return this.valueState !== ValueState.None;
+	}
+
+	static valueStateTextMappings() {
+		return {
+			"Success": VALUE_STATE_SUCCESS.defaultText,
+			"Error": VALUE_STATE_ERROR.defaultText,
+			"Warning": VALUE_STATE_WARNING.defaultText,
+		};
+	}
+
+	get valueStateText() {
+		return Input.valueStateTextMappings()[this.valueState];
+	}
+
+	get suggestionsText() {
+		return INPUT_SUGGESTIONS.defaultText;
 	}
 }
 

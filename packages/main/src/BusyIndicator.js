@@ -5,6 +5,8 @@ import BusyIndicatorSize from "./types/BusyIndicatorSize.js";
 // Template
 import BusyIndicatorTemplate from "./generated/templates/BusyIndicatorTemplate.lit.js";
 
+import { BUSY_INDICATOR_TITLE } from "./i18n/defaults.js";
+
 // Styles
 import busyIndicatorCss from "./generated/themes/BusyIndicator.css.js";
 
@@ -89,6 +91,10 @@ class BusyIndicator extends UI5Element {
 
 	static get template() {
 		return BusyIndicatorTemplate;
+	}
+
+	get ariaTitle() {
+		return BUSY_INDICATOR_TITLE.defaultText;
 	}
 }
 
