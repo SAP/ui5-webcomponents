@@ -131,7 +131,7 @@ describe("Date Picker Tests", () => {
 		const calendarDate_6_Jan_2015 = datepicker.getPickerDate(timestamp_6_Jan_2015); //Jan 6, 2015
 		const calendarDate_8_Jan_2015 = datepicker.getPickerDate(timestamp_8_Jan_2015); //Jan 6, 2015
 
-		assert.ok(calendarDate_6_Jan_2015.hasClass('sapWCDayPickerItemSel'), "calendar selected date is ok");
+		assert.ok(calendarDate_6_Jan_2015.hasClass('ui5-dp-item--selected'), "calendar selected date is ok");
 
 		//select a date
 		calendarDate_8_Jan_2015.click();
@@ -153,8 +153,8 @@ describe("Date Picker Tests", () => {
 
 		//check if the picker is open and the selected date in the calendar is correct
 		assert.ok(datepicker.isPickerOpen(), "picker is open");
-		assert.ok(!calendarDate_6_Jan_2015.hasClass("sapWCDayPickerItemSel"), "calendar selected dates is ok");
-		assert.ok(!calendarDate_8_Jan_2015.hasClass("sapWCDayPickerItemSel"), "calendar selected dates is ok");
+		assert.ok(!calendarDate_6_Jan_2015.hasClass("ui5-dp-item--selected"), "calendar selected dates is ok");
+		assert.ok(!calendarDate_8_Jan_2015.hasClass("ui5-dp-item--selected"), "calendar selected dates is ok");
 
 		datepicker.valueHelpIcon.click();
 	});
@@ -192,7 +192,7 @@ describe("Date Picker Tests", () => {
 
 		const calendarDate_3_Feb_2019 = datepicker.getPickerDate(1549152000);
 
-		assert.ok(calendarDate_3_Feb_2019.hasClass("sapWCDayPickerWDay6"), "3 Feb 2019 is displayed as last day of the week");
+		assert.ok(calendarDate_3_Feb_2019.hasClass("ui5-dp-wday6"), "3 Feb 2019 is displayed as last day of the week");
 	});
 
 	it("if today is 30 jan, clicking next month does not skip feb", () => {
@@ -277,7 +277,7 @@ describe("Date Picker Tests", () => {
 		assert.equal(datepicker.calendar.getProperty('timestamp'), timestampToday, "calendar selected dates is ok");
 
 		const calendarDateToday = datepicker.getPickerDate(timestampToday);
-		assert.ok(calendarDateToday.hasClass('sapWCDayPickerItemSel'), "calendar selected date is ok");
+		assert.ok(calendarDateToday.hasClass('ui5-dp-item--selected'), "calendar selected date is ok");
 	});
 
 	it("does not open, if disabled", () => {

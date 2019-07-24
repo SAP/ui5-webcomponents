@@ -66,7 +66,7 @@ class DatePickerTestPage {
 	}
 
 	getFirstDisplayedDate() {
-		return browser.findElementDeep(`${this._sut} >>> ui5-calendar >>> ui5-daypicker >>> .sapWCDayPickerItem`);
+		return browser.findElementDeep(`${this._sut} >>> ui5-calendar >>> ui5-daypicker >>> .ui5-dp-item`);
 	}
 
 	getFirstDisplayedYear() {
