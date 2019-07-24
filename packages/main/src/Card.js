@@ -146,13 +146,13 @@ class Card extends UI5Element {
 	get classes() {
 		return {
 			main: {
-				"sapFCard": true,
-				"sapFCardNoContent": !this.content.length,
+				"ui5-card-root": true,
+				"ui5-card--nocontent": !this.content.length,
 			},
 			header: {
-				"sapFCardHeader": true,
-				"sapFCardHeaderInteractive": this.headerInteractive,
-				"sapFCardHeaderActive": this.headerInteractive && this._headerActive,
+				"ui5-card-header": true,
+				"ui5-card-header--interactive": this.headerInteractive,
+				"ui5-card-header--active": this.headerInteractive && this._headerActive,
 			},
 		};
 	}
@@ -171,6 +171,14 @@ class Card extends UI5Element {
 
 	get tabindex() {
 		return this.headerInteractive ? "0" : undefined;
+	}
+
+	get hasHeader() {
+		return !!(this.heading || this.subtitle || this.status || this.avatar);
+	}
+
+	get rtl() {
+		return getRTL() ? "rtl" : undefined;
 	}
 
 	static async define(...params) {
@@ -217,10 +225,6 @@ class Card extends UI5Element {
 		if (space) {
 			this.fireEvent("headerClick");
 		}
-	}
-
-	get rtl() {
-		return getRTL() ? "rtl" : undefined;
 	}
 }
 

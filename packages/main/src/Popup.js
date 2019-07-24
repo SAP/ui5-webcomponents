@@ -70,9 +70,14 @@ const metadata = {
 			type: String,
 		},
 
-		_isOpen: {
+		/**
+		 * Indicates if the elements is on focus
+		 * @private
+		 */
+		opened: {
 			type: Boolean,
 		},
+
 		_zIndex: {
 			type: Integer,
 		},
@@ -143,7 +148,7 @@ function createBLyBackStyle() {
 	const bodyStyleSheet = document.createElement("style");
 	bodyStyleSheet.type = "text/css";
 	bodyStyleSheet.innerHTML = `
-		.sapUiBLyBack {
+		.ui5-popup-BLy--back {
 			width: 100%;
 			height: 100%;
 			position: fixed;
@@ -190,11 +195,11 @@ function updateBodyScrolling(hasModal) {
 
 function addBodyStyles() {
 	document.body.style.top = `-${window.pageYOffset}px`;
-	document.body.classList.add("sapUiBLyBack");
+	document.body.classList.add("ui5-popup-BLy--back");
 }
 
 function removeBodyStyles() {
-	document.body.classList.remove("sapUiBLyBack");
+	document.body.classList.remove("ui5-popup-BLy--back");
 	window.scrollTo(0, -parseFloat(document.body.style.top));
 	document.body.style.top = "";
 }
@@ -271,7 +276,7 @@ class Popup extends UI5Element {
 
 	getPopupDomRef() {
 		const domRef = this.getDomRef();
-		return domRef && domRef.querySelector(".ui5-popup-wrapper");
+		return domRef && domRef.querySelector(".ui5-popup-root");
 	}
 
 	hitTest(_event) {
@@ -334,7 +339,7 @@ class Popup extends UI5Element {
 	}
 
 	onAfterRendering() {
-		if (!this._isOpen) {
+		if (!this.opened) {
 			return;
 		}
 

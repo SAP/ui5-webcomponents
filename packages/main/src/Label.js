@@ -113,17 +113,6 @@ class Label extends UI5Element {
 		return labelCss;
 	}
 
-	get classes() {
-		return {
-			main: {
-				sapMLabel: true,
-				sapMLabelNoText: !this.textContent.length,
-				sapMLabelWrapped: this.wrap,
-				sapMLabelRequired: this.required,
-			},
-		};
-	}
-
 	onclick() {
 		const elementToFocus = document.getElementById(this.for);
 

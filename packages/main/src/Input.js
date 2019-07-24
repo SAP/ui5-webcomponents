@@ -2,7 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isIE } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { getCompactSize } from "@ui5/webcomponents-base/dist/config/CompactSize.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import {
 	isUp,
@@ -15,9 +14,15 @@ import InputType from "./types/InputType.js";
 // Template
 import InputTemplate from "./generated/templates/InputTemplate.lit.js";
 
+import {
+	VALUE_STATE_SUCCESS,
+	VALUE_STATE_ERROR,
+	VALUE_STATE_WARNING,
+	INPUT_SUGGESTIONS,
+} from "./i18n/defaults.js";
+
 // Styles
 import styles from "./generated/themes/Input.css.js";
-import shellbarInput from "./generated/themes/ShellBarInput.css.js";
 
 /**
  * @public
@@ -106,6 +111,18 @@ const metadata = {
 		},
 
 		/**
+		 * Defines whether the <code>ui5-input</code> is required.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 * @since 1.0.0
+		 */
+		required: {
+			type: Boolean,
+		},
+
+		/**
 		 * Defines the HTML type of the <code>ui5-input</code>.
 		 * Available options are: <code>Text</code>, <code>Email</code>,
 		 * <code>Number</code>, <code>Password</code>, <code>Tel</code>, and <code>URL</code>.
@@ -182,7 +199,10 @@ const metadata = {
 			type: Boolean,
 		},
 
-		_focused: {
+		/**
+		 * @private
+		 */
+		focused: {
 			type: Boolean,
 		},
 
@@ -286,7 +306,7 @@ class Input extends UI5Element {
 	}
 
 	static get styles() {
-		return [styles, shellbarInput];
+		return [styles];
 	}
 
 	constructor() {
@@ -381,12 +401,12 @@ class Input extends UI5Element {
 	}
 
 	onfocusin() {
-		this._focused = true; // invalidating property
+		this.focused = true; // invalidating property
 		this.previousValue = this.value;
 	}
 
 	onfocusout() {
-		this._focused = false; // invalidating property
+		this.focused = false; // invalidating property
 		this.previousValue = "";
 	}
 
@@ -424,7 +444,7 @@ class Input extends UI5Element {
 	shouldOpenSuggestions() {
 		return !!(this.suggestionItems.length
 			&& this.showSuggestions
-			&& this._focused
+			&& this.focused
 			&& !this.hasSuggestionItemSelected);
 	}
 
@@ -513,30 +533,6 @@ class Input extends UI5Element {
 
 	onClose() {}
 
-	get classes() {
-		const hasState = this.valueState !== "None";
-
-		return {
-			main: {
-				sapWCInputBase: true,
-				sapWCInputBaseWidthPadding: true,
-				sapWCInputBaseDisabled: this.disabled,
-				sapWCInputBaseReadonly: this.readonly,
-				sapWCInput: true,
-				sapWCInputFocused: this._focused,
-				sapWCFocus: this._focused,
-				sapUiSizeCompact: getCompactSize(),
-			},
-			wrapper: {
-				sapWCInputBaseContentWrapper: true,
-				sapWCInputBaseDisabledWrapper: this.disabled,
-				sapWCInputBaseReadonlyWrapper: this.readonly && !this.disabled,
-				sapWCInputBaseContentWrapperState: hasState,
-				[`sapWCInputBaseContentWrapper${this.valueState}`]: hasState,
-			},
-		};
-	}
-
 	get inputPlaceholder() {
 		// We don`t support placeholder for IE,
 		// because IE fires input events, when placeholder exists, leading to functional degredations.
@@ -552,7 +548,39 @@ class Input extends UI5Element {
 	}
 
 	get ariaInvalid() {
-		return this.valueState === "Error" ? "true" : undefined;
+		return this.valueState === ValueState.Error ? "true" : undefined;
+	}
+
+	get ariaDescribedBy() {
+		return this.showSuggestions ? `${this._id}-suggestionsText` : undefined;
+	}
+
+	get ariaHasPopup() {
+		return this.showSuggestions ? "true" : undefined;
+	}
+
+	get ariaAutoComplete() {
+		return this.showSuggestions ? "list" : undefined;
+	}
+
+	get hasValueState() {
+		return this.valueState !== ValueState.None;
+	}
+
+	static valueStateTextMappings() {
+		return {
+			"Success": VALUE_STATE_SUCCESS.defaultText,
+			"Error": VALUE_STATE_ERROR.defaultText,
+			"Warning": VALUE_STATE_WARNING.defaultText,
+		};
+	}
+
+	get valueStateText() {
+		return Input.valueStateTextMappings()[this.valueState];
+	}
+
+	get suggestionsText() {
+		return INPUT_SUGGESTIONS.defaultText;
 	}
 }
 

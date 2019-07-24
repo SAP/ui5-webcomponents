@@ -71,7 +71,7 @@ describe("when enabled", () => {
 
 			it("Shows counter", () => {
 				const textAreaInner = browser.findElementDeep("#show-max-length >>> textarea");
-				const counter = browser.findElementDeep("#show-max-length >>> .sapWCTextAreaExceededText");
+				const counter = browser.findElementDeep("#show-max-length >>> .ui5-textarea-exceeded-text");
 
 				textAreaInner.setValue(`123456789123456789121111`);
 

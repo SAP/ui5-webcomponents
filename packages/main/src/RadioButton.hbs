@@ -3,12 +3,14 @@
 	aria-checked="{{selected}}"
 	aria-readonly="{{ariaReadonly}}"
 	aria-disabled="{{ariaDisabled}}"
+	aria-labelledby="{{ariaLabelledBy}}"
+	aria-describedby="{{ariaDescribedBy}}"
 	tabindex="{{tabIndex}}"
 	dir="{{rtl}}"
 >
 
 	<div class='{{classes.inner}}'>
-		<svg class="sapMRbSvg" focusable="false">
+		<svg class="sapMRbSvg" focusable="false" aria-hidden="true">
 			<circle class="sapMRbSvgOuter" cx="{{circle.x}}" cy="{{circle.y}}" r="{{circle.rOuter}}" stroke-width="{{strokeWidth}}" fill="none" />
 			<circle class="sapMRbSvgInner" cx="{{circle.x}}" cy="{{circle.y}}" r="{{circle.rInner}}" stroke-width="10" />
 		</svg>
@@ -16,6 +18,10 @@
 	</div>
 
 	{{#if _label.text}}
-		<ui5-label class="labelInRadioButton">{{_label.text}}</ui5-label>
+		<ui5-label id="{{_id}}-label" class="labelInRadioButton" for="{{_id}}">{{_label.text}}</ui5-label>
+	{{/if}}
+
+	{{#if hasValueState}}
+		<span id="{{_id}}-descr" class="ui5-hidden-text">{{valueStateText}}</span>
 	{{/if}}
 </div>
