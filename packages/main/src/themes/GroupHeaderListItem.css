@@ -4,13 +4,14 @@
 
 :host {
 	height: 3rem;
+	background: var(--ui5-group-header-listitem-background-color);
+	border-bottom: 1px solid var(--sapUiListTableGroupHeaderBorderColor);
+	color: var(--sapUiListTableGroupHeaderTextColor);
 }
 
 .ui5-li-root.ui5-ghli-root {
 	padding-top: 1rem;
-	color: var(--sapUiListTableGroupHeaderTextColor);
-	background: var(--ui5-group-header-listitem-background-color);
-	border-bottom: 1px solid var(--sapUiListTableGroupHeaderBorderColor);
+	color: currentColor;
 	font-size: var(--sapMFontHeader6Size);
 	font-weight: var(--sapUiFontHeaderWeight);
 }
