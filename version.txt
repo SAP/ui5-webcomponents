@@ -1,5 +1,7 @@
-commit 16568c26098fddb8f533c2edc5e1482cf2746b9f
-Author: myordanov <mihail.yordanov@sap.com>
-Date:   Wed Jul 24 08:24:58 2019 +0300
+commit c20c85c673fd6dff67afbf00c5c51bc037b5ae41
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Wed Jul 24 11:07:29 2019 +0300
 
-    feat: Improve accessibility of components (#613)
+    fix(ui5-table): call resize handler on initial rendering (#625)
+    
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/568
