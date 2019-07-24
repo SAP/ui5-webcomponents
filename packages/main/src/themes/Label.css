@@ -65,7 +65,7 @@ ui5-label[required] .ui5-label-root:before {
 	height: 100%;
 	display: inline-flex;
 	align-items: flex-start;
-	content:"*";
+	content: "*";
 	color: var(--sapUiFieldRequiredColor);
 	font-size: 1.25rem;
 	font-weight: bold;

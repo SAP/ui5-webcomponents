@@ -23,6 +23,10 @@
 				</bdi>
 			</span>
 		{{/if}}
+
+		{{#if hasButtonType}}
+			<span class="ui5-hidden-text">{{buttonTypeText}}</span>
+		{{/if}}
 </button>
 
 {{#*inline "ariaPressed"}}{{/inline}}
