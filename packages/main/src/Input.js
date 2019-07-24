@@ -552,7 +552,12 @@ class Input extends UI5Element {
 	}
 
 	get ariaDescribedBy() {
-		return this.showSuggestions ? `${this._id}-suggestionsText` : undefined;
+		const ariaDescribedBy = [];
+
+		this.showSuggestions && ariaDescribedBy.push(`${this._id}-suggestionsText`);
+		this.hasValueState && ariaDescribedBy.push(`${this._id}-descr`);
+
+		return ariaDescribedBy.join(" ");
 	}
 
 	get ariaHasPopup() {
