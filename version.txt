@@ -1,5 +1,5 @@
-commit 9bd8ca738c789e422c3049f06169bb39428ae4f5
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Jul 23 14:34:05 2019 +0200
+commit 16568c26098fddb8f533c2edc5e1482cf2746b9f
+Author: myordanov <mihail.yordanov@sap.com>
+Date:   Wed Jul 24 08:24:58 2019 +0300
 
-    refactor(ui5-card): clean up styles (#650)
+    feat: Improve accessibility of components (#613)

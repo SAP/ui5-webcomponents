@@ -199,16 +199,16 @@
 		<div class="snippet">
 			<div class="flex-column samples-margin">
 				<ui5-label class="samples-big-margin-right" for="myInput" required>Name</ui5-label>
-				<ui5-input class="input-width" id="myInput" placeholder="Enter your Name"></ui5-input>
+				<ui5-input class="input-width" id="myInput" placeholder="Enter your Name" required></ui5-input>
 			</div>
 			<div class="flex-column">
 				<ui5-label class="samples-big-margin-right" for="myPassword" required>Secret Code</ui5-label>
-				<ui5-input class="input-width" id="myPassword" type="Password" value-state="Error" placeholder="Enter your Secret Code"></ui5-input>
+				<ui5-input class="input-width" id="myPassword" type="Password" value-state="Error" placeholder="Enter your Secret Code" required></ui5-input>
 			</div>
 		</div>
 		<pre class="prettyprint lang-html"><xmp>
 <ui5-label class="samples-big-margin-right" for="myInput" required>Name</ui5-label>
-<ui5-input class="input-width" id="myInput" placeholder="Enter your Name"></ui5-input>
+<ui5-input class="input-width" id="myInput" placeholder="Enter your Name" required></ui5-input>
 		</xmp></pre>
 	</section>
 
@@ -285,6 +285,15 @@ The <code>ui5-input</code> component allows the user to enter and edit text or n
                         </div>
                       </div>
                       <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">required <br> <code></code></div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell">false</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines whether the <code>ui5-input</code> is required.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">showSuggestions <br> <code>show-suggestions</code></div>
                         <div class="cell api-table-content-cell">Boolean</div>
                         <div class="cell api-table-content-cell">false</div>
@@ -292,7 +301,7 @@ The <code>ui5-input</code> component allows the user to enter and edit text or n
                             Defines whether the <code>ui5-input</code> should show suggestions, if such are present.
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">type <br> <code></code></div>
                         <div class="cell api-table-content-cell">string</div>
                         <div class="cell api-table-content-cell">&quot;Text&quot;</div>
@@ -300,7 +309,7 @@ The <code>ui5-input</code> component allows the user to enter and edit text or n
                             Defines the HTML type of the <code>ui5-input</code>. Available options are: <code>Text</code>, <code>Email</code>, <code>Number</code>, <code>Password</code>, <code>Tel</code>, and <code>URL</code>. <br><br> <b>Notes:</b> <ul> <li>The particular effect of this property differs depending on the browser and the current language settings, especially for type <code>Number</code>.</li> <li>The property is mostly intended to be used with touch devices that use different soft keyboard layouts depending on the given input type.</li> </ul>
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">value <br> <code></code></div>
                         <div class="cell api-table-content-cell">string</div>
                         <div class="cell api-table-content-cell">&quot;&quot;</div>
@@ -308,7 +317,7 @@ The <code>ui5-input</code> component allows the user to enter and edit text or n
                             Defines the value of the <code>ui5-input</code>. <br><br> <b>Note:</b> The property is updated upon typing.
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">valueState <br> <code>value-state</code></div>
                         <div class="cell api-table-content-cell">string</div>
                         <div class="cell api-table-content-cell">&quot;None&quot;</div>
