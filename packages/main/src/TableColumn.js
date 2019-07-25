@@ -30,7 +30,7 @@ const metadata = {
 		 * <br><br>
 		 * The responsive behavior of the <code>ui5-table</code> is determined by this property. As an example, by setting
 		 * <code>minWidth</code> property to <code>40em</code> shows this column on tablet (and desktop) but hides it on mobile.
-		 * </br>
+		 * <br>
 		 * For further responsive design options, see <code>demandPopin</code> property.
 		 *
 		 * @type {number}

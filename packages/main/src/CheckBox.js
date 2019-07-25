@@ -143,12 +143,12 @@ const metadata = {
  * <h3 class="comment-api-title">Overview</h3>
  *
  * Allows the user to set a binary value, such as true/false or yes/no for an item.
- * <br><br/>
+ * <br><br>
  * The <code>ui5-checkbox</code> component consists of a box and a label that describes its purpose.
  * If it's checked, an indicator is displayed inside the box.
  * To check/uncheck the <code>ui5-checkbox</code>, the user has to click or tap the square
  * box or its label.
- * <br/><br/>
+ * <br><br>
  * Clicking or tapping toggles the <code>ui5-checkbox</code> between checked and unchecked state.
  * The <code>ui5-checkbox</code> component only has 2 states - checked and unchecked.
  *
