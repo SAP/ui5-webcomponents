@@ -1,6 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getCompactSize } from "@ui5/webcomponents-base/dist/config/CompactSize.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import Icon from "./Icon.js";
 import Link from "./Link.js";
@@ -143,19 +142,6 @@ class TimelineItem extends UI5Element {
 
 	onItemNamePress() {
 		this.fireEvent("itemNameClick", {});
-	}
-
-	get classes() {
-		return {
-			main: {
-				sapWCTimelineItem: true,
-				sapUiSizeCompact: getCompactSize(),
-			},
-			indicator: {
-				sapWCTimelineIndicator: true,
-				sapWCTimelineIndicatorNoIcon: !this.icon,
-			},
-		};
 	}
 
 	get rtl() {
