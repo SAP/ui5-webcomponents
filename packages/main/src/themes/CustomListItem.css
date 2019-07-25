@@ -3,8 +3,12 @@
 	display: block;
 }
 
+:host {
+	height: 3rem;
+	box-sizing: border-box;
+}
+
 .ui5-li-root.ui5-custom-li-root {
-	height: 100%;
 	padding: 0;
 }
 
@@ -21,6 +25,10 @@ ui5-radiobutton.ui5-li-singlesel-radiobtn {
 }
 
 /* Compact size */
+:host([data-ui5-compact-size]) {
+	height: 2rem;
+}
+
 :host([data-ui5-compact-size]) .ui5-li-root.ui5-custom-li-root,
 :host([data-ui5-compact-size]) ui5-checkbox.ui5-li-singlesel-radiobtn,
 :host([data-ui5-compact-size]) ui5-radiobutton.ui5-li-singlesel-radiobtn {
@@ -33,6 +41,16 @@ ui5-radiobutton.ui5-li-singlesel-radiobtn {
  */
 ui5-li-custom:not([hidden]) {
 	display: block;
+}
+
+ui5-li-custom {
+	height: 3rem;
+	box-sizing: border-box;
+}
+
+/* Compact size */
+ui5-li-custom[data-ui5-compact-size]  {
+	height: 2rem;
 }
 
 ui5-li-custom[data-ui5-compact-size] .ui5-li-root.ui5-custom-li-root,
