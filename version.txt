@@ -1,5 +1,5 @@
-commit 85bc1b0e82eb4d562748c636842868366843b14c
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Jul 24 20:41:10 2019 +0300
+commit 51e5f0e436db992e93605fb9ba0c0a02afee3ebf
+Author: Elena Stoyanova <elena.stoyanova@sap.com>
+Date:   Thu Jul 25 09:21:36 2019 +0300
 
-    refactor(ui5-monthpicker): rename tag and clean styles (#665)
+    chore(ui5-input): improve VoiceOver speech output (#677)
