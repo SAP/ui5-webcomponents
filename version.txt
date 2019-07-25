@@ -1,5 +1,5 @@
-commit f884643a26b26b790655997d084410fa1900c1e3
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu Jul 25 14:23:49 2019 +0300
+commit 035302637c88353aab8d88bf7649588b97153bc9
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu Jul 25 17:04:53 2019 +0300
 
-    fix: fix typos in docs (#680)
+    refactor(ui5-li, ui5-li-custom, ui5-li-gh): styles cleanup (#678)
