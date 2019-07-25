@@ -17,7 +17,8 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.GroupHeaderListItem.prototype */ {
 		/**
 		 * Defines the text of the <code>ui5-li-groupheader</code>.
-		 * <br><b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+		 * <br>
+		 * <b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 		 *
 		 * @type {Node[]}
 		 * @slot

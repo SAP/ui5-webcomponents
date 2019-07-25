@@ -26,7 +26,7 @@ const metadata = {
 
 		/**
 		 * Defines the <code>ui5-messagestrip</code> type.
-		 * <br></br>
+		 * <br><br>
 		 * <b>Note:</b> Available options are <code>Information"</code>, <code>"Positive"</code>, <code>"Negative"</code>,
 		 * and "Warning".
 		 *
@@ -41,10 +41,10 @@ const metadata = {
 
 		/**
 		 * Defines the icon src URI to be displayed as graphical element within the <code>ui5-messagestrip</code>.
-		 * <br></br>
+		 * <br><br>
 		 * <b>Note:</b> If no icon is given, the default icon for the <code>ui5-messagestrip</code> type will be added.
 		 * The SAP-icons font provides numerous options.
-		 * <br></br>
+		 * <br><br>
 		 * Example:
 		 * <br>
 		 * <pre>ui5-messagestrip icon="sap-icon://palette"</pre>

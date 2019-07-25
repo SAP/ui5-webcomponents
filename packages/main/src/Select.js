@@ -34,10 +34,10 @@ const metadata = {
 
 		/**
 		 * Defines the <code>ui5-select</code> options.
-		 * <br/><br/>
+		 * <br><br>
 		 * <b>Note:</b> Only one selected option is allowed.
 		 * If more than one option is defined as selected, the last one would be considered as the selected one.
-		 * <br/><br/>
+		 * <br><br>
 		 * <b>Note:</b> Use the <code>ui5-option</code> component to define the desired options.
 		 * @type {Option[]}
 		 * @slot
@@ -53,7 +53,7 @@ const metadata = {
 
 		/**
 		 * Defines whether <code>ui5-select</code> is in disabled state.
-		 * </br></br>
+		 * <br><br>
 		 * <b>Note:</b> A disabled <code>ui5-select</code> is noninteractive.
 		 *
 		 * @type {boolean}

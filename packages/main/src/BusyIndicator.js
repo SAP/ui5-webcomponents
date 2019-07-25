@@ -31,7 +31,7 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.BusyIndicator.prototype */ {
 		/**
 		 * Defines the size of the <code>ui5-busyindicator</code>.
-		 * </br></br>
+		 * <br><br>
 		 * <b>Note:</b> Available options are "Small", "Medium" and "Large"
 		 *
 		 * @type {BusyIndicatorSize}
