@@ -339,19 +339,8 @@ class RadioButton extends UI5Element {
 
 	get classes() {
 		return {
-			main: {
-				sapMRb: true,
-				sapMRbHasLabel: this.text && this.text.length > 0,
-				sapMRbSel: this.selected,
-				sapMRbDis: this.disabled,
-				sapMRbRo: this.readonly,
-				sapMRbErr: this.valueState === "Error",
-				sapMRbWarn: this.valueState === "Warning",
-				sapUiSizeCompact: getCompactSize(),
-			},
 			inner: {
-				sapMRbInner: true,
-				sapMRbHoverable: !this.disabled && !this.readonly && isDesktop(),
+				"ui5-radio-inner--hoverable": !this.disabled && !this.readonly && isDesktop(),
 			},
 		};
 	}
