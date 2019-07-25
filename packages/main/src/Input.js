@@ -551,8 +551,16 @@ class Input extends UI5Element {
 		return this.valueState === ValueState.Error ? "true" : undefined;
 	}
 
+	get suggestionsTextId() {
+		return this.showSuggestions ? `${this._id}-suggestionsText` : "";
+	  }
+
+	get valueStateTextId() {
+		return this.hasValueState ? `${this._id}-descr` : "";
+	}
+
 	get ariaDescribedBy() {
-		return this.showSuggestions ? `${this._id}-suggestionsText` : undefined;
+		return `${this.suggestionsTextId} ${this.valueStateTextId}`.trim();
 	}
 
 	get ariaHasPopup() {
