@@ -85,6 +85,7 @@ const metadata = {
 
 		_headerActive: {
 			type: Boolean,
+			noAttribute: true,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Card.prototype */ {

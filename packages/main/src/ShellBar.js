@@ -109,6 +109,7 @@ const metadata = {
 
 		_breakpointSize: {
 			type: String,
+			noAttribute: true,
 		},
 
 		_itemsInfo: {
@@ -122,6 +123,7 @@ const metadata = {
 
 		_showBlockLayer: {
 			type: Boolean,
+			noAttribute: true,
 		},
 		_searchField: {
 			type: Object,

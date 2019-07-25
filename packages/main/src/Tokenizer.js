@@ -26,7 +26,7 @@ const metadata = {
 		showMore: { type: Boolean },
 		disabled: { type: Boolean },
 
-		_nMoreText: { type: String },
+		_nMoreText: { type: String, noAttribute: true },
 		_hiddenTokens: { type: Object, multiple: true },
 	},
 	events: /** @lends sap.ui.webcomponents.main.Tokenizer.prototype */ {

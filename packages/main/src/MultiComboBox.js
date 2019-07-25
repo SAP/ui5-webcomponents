@@ -121,8 +121,14 @@ const metadata = {
 			type: Boolean,
 		},
 
-		_filteredItems: { type: Object },
-		_iconPressed: { type: Boolean },
+		_filteredItems: {
+			type: Object,
+		},
+
+		_iconPressed: {
+			type: Boolean,
+			noAttribute: true,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.MultiComboBox.prototype */ {
 		/**

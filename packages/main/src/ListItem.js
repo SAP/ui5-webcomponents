@@ -45,11 +45,13 @@ const metadata = {
 
 		_active: {
 			type: Boolean,
+			noAttribute: true,
 		},
 
 		_mode: {
 			type: ListMode,
 			defaultValue: ListMode.None,
+			noAttribute: true,
 		},
 	},
 	events: {

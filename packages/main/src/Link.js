@@ -92,6 +92,7 @@ const metadata = {
 
 		_rel: {
 			type: String,
+			noAttribute: true,
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.Link.prototype */ {

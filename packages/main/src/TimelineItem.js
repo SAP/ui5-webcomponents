@@ -88,6 +88,7 @@ const metadata = {
 		_tabIndex: {
 			type: String,
 			defaultValue: "-1",
+			noAttribute: true,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.TimelineItem.prototype */ {

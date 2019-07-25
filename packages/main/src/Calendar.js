@@ -76,9 +76,11 @@ const metadata = {
 		},
 		_calendarWidth: {
 			type: String,
+			noAttribute: true,
 		},
 		_calendarHeight: {
 			type: String,
+			noAttribute: true,
 		},
 		formatPattern: {
 			type: String,
