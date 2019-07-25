@@ -189,7 +189,7 @@ ui5-label.labelInRadioButton {
 }
 
 /* ListItem Context */
-:host(.singleSelectionRadioButton) .ui5-radio-root .ui5-radio-inner .ui5-radio-svg-outer {
+:host(.ui5-li-singlesel-radiobtn) .ui5-radio-root .ui5-radio-inner .ui5-radio-svg-outer {
 	fill: var(--sapUiListBackground);
 }
 
@@ -328,7 +328,6 @@ ui5-radiobutton[data-ui5-compact-size][text] [dir="rtl"].ui5-radio-root:focus:be
 	right: 0.375rem;
 }
 
-
-ui5-radiobutton.singleSelectionRadioButton .ui5-radio-root .ui5-radio-inner .ui5-radio-svg-outer {
+ui5-radiobutton.ui5-li-singlesel-radiobtn .ui5-radio-root .ui5-radio-inner .ui5-radio-svg-outer {
 	fill: var(--sapUiListBackground);
 }

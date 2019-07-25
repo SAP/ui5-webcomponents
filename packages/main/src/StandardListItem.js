@@ -83,6 +83,15 @@ const metadata = {
 			type: ValueState,
 			defaultValue: ValueState.None,
 		},
+
+		/**
+		 * Indicates if the list item has text content.
+		 * @type {boolean}
+		 * @private
+		 */
+		hasTitle: {
+			type: Boolean,
+		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.StandardListItem.prototype */ {
 		/**
@@ -131,6 +140,11 @@ class StandardListItem extends ListItem {
 		return metadata;
 	}
 
+	onBeforeRendering(...params) {
+		super.onBeforeRendering(...params);
+		this.hasTitle = !!this.textContent;
+	}
+
 	get displayImage() {
 		return !!this.image;
 	}
@@ -141,24 +155,6 @@ class StandardListItem extends ListItem {
 
 	get displayIconEnd() {
 		return (this.icon && this.iconEnd);
-	}
-
-	get classes() {
-		const result = super.classes;
-		const hasDesc = this.description && !!this.description.length;
-		const hasTitle = this.textContent;
-		const infoState = this.infoState.toLowerCase();
-
-		// Modify main classes
-		result.main.sapMSLIWithTitleAndDescription = hasDesc && hasTitle;
-
-		// Add "info" classes
-		result.info = {
-			"sapMSLI-info": true,
-			[`sapMSLI-info--${infoState}`]: true,
-		};
-
-		return result;
 	}
 
 	static async define(...params) {

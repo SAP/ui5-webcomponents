@@ -1,8 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import FocusHelper from "@ui5/webcomponents-base/dist/FocusHelper.js";
 import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-import { isDesktop, isPhone } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
-import { getCompactSize } from "@ui5/webcomponents-base/dist/config/CompactSize.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 
 // Styles
@@ -15,7 +13,11 @@ const metadata = {
 	"abstract": true,
 	properties: /** @lends  sap.ui.webcomponents.main.ListItemBase.prototype */  {
 
-		_hideBorder: {
+		/**
+		* Defines if the list item should display its bottom border.
+		* @private
+		*/
+		hasBorder: {
 			type: Boolean,
 			noAttribute: true,
 		},
@@ -108,16 +110,8 @@ class ListItemBase extends UI5Element {
 	get classes() {
 		return {
 			main: {
-				sapMLIBBorder: !this._hideBorder,
-				sapMLIB: true,
-				"sapMLIB-CTX": true,
-				sapMLIBShowSeparator: true,
-				sapMLIBFocusable: isDesktop(),
-				"sap-phone": isPhone(),
-				"sapUiSizeCompact": getCompactSize(),
-			},
-			inner: {
-				sapMLIBContent: true,
+				"ui5-li-root": true,
+				"ui5-li--focusable": true,
 			},
 		};
 	}
