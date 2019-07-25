@@ -2,7 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
-import { getCompactSize } from "@ui5/webcomponents-base/dist/config/CompactSize.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import "@ui5/webcomponents-base/dist/icons/accept.js";
 import "@ui5/webcomponents-base/dist/icons/decline.js";
@@ -191,13 +190,11 @@ class Switch extends UI5Element {
 
 		return {
 			main: {
-				"ui5-switch-wrapper": true,
 				"ui5-switch-desktop": isDesktop(),
 				"ui5-switch--disabled": this.disabled,
 				"ui5-switch--checked": this.checked,
 				"ui5-switch--semantic": this.graphical,
 				"ui5-switch--no-label": !hasLabel,
-				"sapUiSizeCompact": getCompactSize(),
 			},
 		};
 	}
