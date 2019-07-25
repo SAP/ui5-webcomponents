@@ -26,12 +26,15 @@ const metadata = {
 
 		_firstInRow: {
 			type: Boolean,
+			noAttribute: true,
 		},
 		_lastInRow: {
 			type: Boolean,
+			noAttribute: true,
 		},
 		_hasBorder: {
 			type: Boolean,
+			noAttribute: true,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.TableCell.prototype */ {

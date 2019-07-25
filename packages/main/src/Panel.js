@@ -108,9 +108,11 @@ const metadata = {
 		},
 		_contentExpanded: {
 			type: Boolean,
+			noAttribute: true,
 		},
 		_animationRunning: {
 			type: Boolean,
+			noAttribute: true,
 		},
 	},
 	events: {

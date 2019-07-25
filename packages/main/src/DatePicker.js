@@ -137,6 +137,7 @@ const metadata = {
 
 		_isPickerOpen: {
 			type: Boolean,
+			noAttribute: true,
 		},
 		_popover: {
 			type: Object,

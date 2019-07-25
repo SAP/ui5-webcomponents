@@ -220,8 +220,8 @@ class UI5Element extends HTMLElement {
 	}
 
 	static get observedAttributes() {
-		const observedProps = this.getMetadata().getPublicPropsList();
-		return observedProps.map(camelToKebabCase);
+		const observedAttributes = this.getMetadata().getAttributesList();
+		return observedAttributes.map(camelToKebabCase);
 	}
 
 	attributeChangedCallback(name, oldValue, newValue) {
@@ -241,7 +241,7 @@ class UI5Element extends HTMLElement {
 	}
 
 	_updateAttribute(name, newValue) {
-		if (!UI5ElementMetadata.isPublicProperty(name)) {
+		if (!this.constructor.getMetadata().hasAttribute(name)) {
 			return;
 		}
 
