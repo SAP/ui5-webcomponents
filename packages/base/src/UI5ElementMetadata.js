@@ -10,12 +10,17 @@ class UI5ElementMetadata {
 		return this.metadata.tag;
 	}
 
+	hasAttribute(propName) {
+		const propData = this.getProperties()[propName];
+		return propData.type !== Object && !propData.noAttribute;
+	}
+
 	getPropsList() {
 		return Object.keys(this.getProperties());
 	}
 
-	getPublicPropsList() {
-		return this.getPropsList().filter(UI5ElementMetadata.isPublicProperty);
+	getAttributesList() {
+		return this.getPropsList().filter(this.hasAttribute, this);
 	}
 
 	getSlots() {
@@ -32,10 +37,6 @@ class UI5ElementMetadata {
 
 	getEvents() {
 		return this.metadata.events || {};
-	}
-
-	static isPublicProperty(prop) {
-		return prop.charAt(0) !== "_";
 	}
 
 	static validatePropertyValue(value, propData) {
