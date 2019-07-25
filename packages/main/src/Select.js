@@ -98,6 +98,7 @@ const metadata = {
 
 		_text: {
 			type: String,
+			noAttribute: true,
 		},
 
 		/**

@@ -80,9 +80,11 @@ const metadata = {
 
 		_zIndex: {
 			type: Integer,
+			noAttribute: true,
 		},
 		_hideBlockLayer: {
 			type: Boolean,
+			noAttribute: true,
 		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.Popup.prototype */ {

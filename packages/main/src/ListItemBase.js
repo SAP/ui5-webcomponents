@@ -17,11 +17,13 @@ const metadata = {
 
 		_hideBorder: {
 			type: Boolean,
+			noAttribute: true,
 		},
 
 		_tabIndex: {
 			type: String,
 			defaultValue: "-1",
+			noAttribute: true,
 		},
 	},
 	events: {

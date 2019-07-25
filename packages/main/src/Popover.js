@@ -106,34 +106,42 @@ const metadata = {
 
 		_left: {
 			type: Integer,
+			noAttribute: true,
 		},
 		_top: {
 			type: Integer,
+			noAttribute: true,
 		},
 
 		_width: {
 			type: String,
+			noAttribute: true,
 		},
 		_height: {
 			type: String,
+			noAttribute: true,
 		},
 
 		_maxContentHeight: {
 			type: Integer,
+			noAttribute: true,
 		},
 
 		_arrowTranslateX: {
 			type: Integer,
 			defaultValue: 0,
+			noAttribute: true,
 		},
 
 		_arrowTranslateY: {
 			type: Integer,
 			defaultValue: 0,
+			noAttribute: true,
 		},
 		_actualPlacementType: {
 			type: PopoverPlacementType,
 			defaultValue: PopoverPlacementType.Right,
+			noAttribute: true,
 		},
 		_focusElementsHandlers: {
 			type: Object,

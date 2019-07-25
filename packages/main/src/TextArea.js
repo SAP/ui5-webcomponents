@@ -184,6 +184,7 @@ const metadata = {
 		_height: {
 			type: CSSSize,
 			defaultValue: null,
+			noAttribute: true,
 		},
 
 		_mirrorText: {
@@ -193,6 +194,7 @@ const metadata = {
 		},
 		_maxHeight: {
 			type: String,
+			noAttribute: true,
 		},
 		_listeners: {
 			type: Object,

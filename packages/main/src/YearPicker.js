@@ -41,6 +41,7 @@ const metadata = {
 		},
 		_selectedYear: {
 			type: Integer,
+			noAttribute: true,
 		},
 		_yearIntervals: {
 			type: Object,
@@ -48,6 +49,7 @@ const metadata = {
 		},
 		_hidden: {
 			type: Boolean,
+			noAttribute: true,
 		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.YearPicker.prototype */ {

@@ -90,14 +90,17 @@ const metadata = {
 
 		_scrollable: {
 			type: Boolean,
+			noAttribute: true,
 		},
 
 		_scrollableBack: {
 			type: Boolean,
+			noAttribute: true,
 		},
 
 		_scrollableForward: {
 			type: Boolean,
+			noAttribute: true,
 		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.TabContainer.prototype */ {
