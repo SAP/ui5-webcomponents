@@ -30,7 +30,7 @@ const metadata = {
 		/**
 		 * Defines the icon to be displayed as graphical element within the <code>ui5-timeline-item</code>.
 		 * SAP-icons font provides numerous options.
-		 * </br></br>
+		 * <br><br>
 		 *
 		 * See all the available icons in the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
 		 *
@@ -88,13 +88,14 @@ const metadata = {
 		_tabIndex: {
 			type: String,
 			defaultValue: "-1",
+			noAttribute: true,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.TimelineItem.prototype */ {
 		/**
 		 * Fired when the item name is pressed either with a
 		 * click/tap or by using the Enter or Space key.
-		 * </br></br>
+		 * <br><br>
 		 * <b>Note:</b> The event will not be fired if the <code>item-name-clickable</code>
 		 * attribute is not set.
 		 *

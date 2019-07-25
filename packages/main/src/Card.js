@@ -72,7 +72,7 @@ const metadata = {
 
 		/**
 		 * Defines image source URI or built-in icon font URI.
-		 * </br></br>
+		 * <br><br>
 		 * <b>Note:</b>
 		 * SAP-icons font provides numerous options. To find all the available icons, see the
 		 * <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
@@ -85,6 +85,7 @@ const metadata = {
 
 		_headerActive: {
 			type: Boolean,
+			noAttribute: true,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Card.prototype */ {
@@ -113,7 +114,7 @@ const metadata = {
  * <code>heading</code>, <code>subtitle</code>, <code>status</code> and <code>avatar</code>.
  *
  * <h3>Keyboard handling</h3>
- * In case you enable <code>headerInteractive</cdoe> property, you can press the <code>ui5-card</code> header by Space and Enter keys.
+ * In case you enable <code>headerInteractive</code> property, you can press the <code>ui5-card</code> header by Space and Enter keys.
  *
  * <h3>ES6 Module Import</h3>
  *

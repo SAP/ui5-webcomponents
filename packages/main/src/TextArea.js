@@ -43,7 +43,7 @@ const metadata = {
 
 		/**
 		 * Defines whether the <code>ui5-textarea</code> is readonly.
-		 * </br></br>
+		 * <br><br>
 		 * <b>Note:</b> A readonly <code>ui5-textarea</code> is not editable,
 		 * but still provides visual feedback upon user interaction.
 		 *
@@ -184,6 +184,7 @@ const metadata = {
 		_height: {
 			type: CSSSize,
 			defaultValue: null,
+			noAttribute: true,
 		},
 
 		_mirrorText: {
@@ -193,6 +194,7 @@ const metadata = {
 		},
 		_maxHeight: {
 			type: String,
+			noAttribute: true,
 		},
 		_listeners: {
 			type: Object,

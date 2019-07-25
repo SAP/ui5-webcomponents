@@ -23,11 +23,11 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.MultiComboBox.prototype */ {
 		/**
 		 * Defines the <code>ui5-multi-combobox</code> items.
-		 * </br></br>
-		 * Example: </br>
-		 * &lt;ui5-multi-combobox></br>
-		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li>Item #1&lt;/ui5-li></br>
-		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li>Item #2&lt;/ui5-li></br>
+		 * <br><br>
+		 * Example: <br>
+		 * &lt;ui5-multi-combobox><br>
+		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li>Item #1&lt;/ui5-li><br>
+		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li>Item #2&lt;/ui5-li><br>
 		 * &lt;/ui5-multi-combobox>
 		 * <br> <br>
 		 *
@@ -121,8 +121,14 @@ const metadata = {
 			type: Boolean,
 		},
 
-		_filteredItems: { type: Object },
-		_iconPressed: { type: Boolean },
+		_filteredItems: {
+			type: Object,
+		},
+
+		_iconPressed: {
+			type: Boolean,
+			noAttribute: true,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.MultiComboBox.prototype */ {
 		/**
@@ -180,14 +186,14 @@ const metadata = {
  *
  * The <code>ui5-multi-combobox</code> provides advanced keyboard handling.
  *
- * <h4>Picker</h3>
+ * <h2>Picker</h2>
  * If the <code>ui5-multi-combobox</code> is focused,
  * you can open or close the drop-down by pressing <code>F4</code>, <code>ALT+UP</code> or <code>ALT+DOWN</code> keys.
  * Once the drop-down is opened, you can use the <code>UP</code> and <code>DOWN</code> arrow keys
  * to navigate through the available options and select one by pressing the <code>Space</code> or <code>Enter</code> keys.
  * <br>
  *
- * <h4>Tokens</h2>
+ * <h2>Tokens</h2>
  * <ul>
  * <li> Left/Right arrow keys - moves the focus selection form the currently focues token to the previous/next one (if available). </li>
  * <li> Delete -  deletes the token and focuses the previous token. </li>

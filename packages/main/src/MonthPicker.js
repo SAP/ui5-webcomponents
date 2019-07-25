@@ -44,6 +44,7 @@ const metadata = {
 		},
 		_hidden: {
 			type: Boolean,
+			noAttribute: true,
 		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.MonthPicker.prototype */ {

@@ -36,7 +36,7 @@ const metadata = {
  * The <code>ui5-dialog</code> component is used to temporarily display some information in a
  * size-limited window in front of the regular app screen.
  * It is used to prompt the user for an action or a confirmation.
- * The code>ui5-dialog</code> interrupts the current app processing as it is the only focused UI element and
+ * The <code>ui5-dialog</code> interrupts the current app processing as it is the only focused UI element and
  * the main screen is dimmed/blocked.
  * The dialog combines concepts known from other technologies where the windows have
  * names such as dialog box, dialog window, pop-up, pop-up window, alert box, or message box.

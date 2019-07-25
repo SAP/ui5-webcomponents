@@ -137,6 +137,7 @@ const metadata = {
 
 		_isPickerOpen: {
 			type: Boolean,
+			noAttribute: true,
 		},
 		_popover: {
 			type: Object,
@@ -179,8 +180,10 @@ const metadata = {
  * <h3>Usage</h3>
  *
  * The user can enter a date by:
- * <ul><li>Using the calendar that opens in a popup</li>
- * <li>Typing it in directly in the input field</li></ul>
+ * <ul>
+ * <li>Using the calendar that opens in a popup</li>
+ * <li>Typing it in directly in the input field</li>
+ * </ul>
  * <br><br>
  * When the user makes an entry and chooses the enter key, the calendar shows the corresponding date.
  * When the user directly triggers the calendar display, the actual date is displayed.

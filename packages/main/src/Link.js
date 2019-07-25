@@ -21,7 +21,7 @@ const metadata = {
 		/**
 		 * Defines whether the <code>ui5-link</code> is disabled.
 		 * <br><br>
-		 * <b>Note:</b> When disabled, the <code>ui5-link</code cannot be triggered by the user.
+		 * <b>Note:</b> When disabled, the <code>ui5-link</code> cannot be triggered by the user.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -48,9 +48,11 @@ const metadata = {
 		 * Defines the <code>ui5-link</code> target.
 		 * <br><br>
 		 * <b>Notes:</b>
-		 * <ul><li>Available options are the standard values: <code>_self</code>, <code>_top</code>,
+		 * <ul>
+		 * <li>Available options are the standard values: <code>_self</code>, <code>_top</code>,
 		 * <code>_blank</code>, <code>_parent</code>, and <code>_search</code>.</li>
-		 * <li>This property must only be used when the <code>href</code> property is set.</li></ul>
+		 * <li>This property must only be used when the <code>href</code> property is set.</li>
+		 * </ul>
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
@@ -90,6 +92,7 @@ const metadata = {
 
 		_rel: {
 			type: String,
+			noAttribute: true,
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.Link.prototype */ {

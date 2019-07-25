@@ -112,6 +112,7 @@ const metadata = {
 		 */
 		breakpointSize: {
 			type: String,
+			noAttribute: true,
 		},
 
 		/**
@@ -142,7 +143,7 @@ const metadata = {
 	slots: /** @lends  sap.ui.webcomponents.main.ShellBar.prototype */ {
 		/**
 		 * Defines the <code>ui5-shellbar</code> aditional items.
-		 * </br></br>
+		 * <br><br>
 		 * <b>Note:</b>
 		 * You can use the &nbsp;&lt;ui5-shellbar-item>&lt;/ui5-shellbar-item>.
 		 *
@@ -157,7 +158,7 @@ const metadata = {
 
 		/**
 		 * Defines the items displayed in menu after a click on the primary title.
-		 * </br></br>
+		 * <br><br>
 		 * <b>Note:</b>
 		 * You can use the &nbsp;&lt;ui5-li>&lt;/ui5-li> and its ancestors.
 		 *
