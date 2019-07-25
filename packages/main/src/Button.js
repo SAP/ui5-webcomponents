@@ -22,7 +22,7 @@ const metadata = {
 
 		/**
 		 * Defines the <code>ui5-button</code> design.
-		 * </br></br>
+		 * <br><br>
 		 * <b>Note:</b> Available options are "Default", "Emphasized", "Positive",
 		 * "Negative", and "Transparent".
 		 *

@@ -75,7 +75,7 @@ const metadata = {
 		 * <li>the tab selection line</li>
 		 * </ul>
 		 * <br>
-		 * Available semantic colors are: <code>"Default"</code>, <code>"Neutral", <code>"Positive"</code>, <code>"Critical"</code> and <code>"Negative"</code>.
+		 * Available semantic colors are: <code>"Default"</code>, <code>"Neutral"</code>, <code>"Positive"</code>, <code>"Critical"</code> and <code>"Negative"</code>.
 		 * <br><br>
 		 * <b>Note:</b> The color value depends on the current theme.
 		 * @type {string}

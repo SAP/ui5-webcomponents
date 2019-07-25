@@ -80,13 +80,15 @@ const metadata = {
 		 * <li>Internet Explorer</li>
 		 * <li>Microsoft Edge lower than version 41 (EdgeHTML 16)</li>
 		 * <li>Mozilla Firefox lower than version 59</li>
-		 * </ul></li>
+		 * </ul>
+		 * </li>
 		 * <li>Scrolling behavior:
 		 * <ul>
 		 * <li>If the Web Component is placed in layout containers that have the <code>overflow: hidden</code>
 		 * or <code>overflow: auto</code> style definition, this can
 		 * prevent the sticky elements of the Web Component from becoming fixed at the top of the viewport.</li>
-		 * </ul></li>
+		 * </ul>
+		 * </li>
 		 * </ul>
 		 *
 		 * @type {boolean}
