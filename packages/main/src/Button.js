@@ -1,7 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-import { getCompactSize } from "@ui5/webcomponents-base/dist/config/CompactSize.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
@@ -23,7 +22,7 @@ const metadata = {
 
 		/**
 		 * Defines the <code>ui5-button</code> design.
-		 * </br></br>
+		 * <br><br>
 		 * <b>Note:</b> Available options are "Default", "Emphasized", "Positive",
 		 * "Negative", and "Transparent".
 		 *
@@ -96,8 +95,33 @@ const metadata = {
 
 		/**
 		 * Used to switch the active state (pressed or not) of the <code>ui5-button</code>.
+		 * @private
 		 */
-		_active: {
+		active: {
+			type: Boolean,
+		},
+
+		/**
+		 * Defines if a content has been added to the default slot
+		 * @private
+		 */
+		iconOnly: {
+			type: Boolean,
+		},
+
+		/**
+		 * Indicates if the elements is on focus
+		 * @private
+		 */
+		focused: {
+			type: Boolean,
+		},
+
+		/**
+		 * Indicates if the elements has a slotted icon
+		 * @private
+		 */
+		hasIcon: {
 			type: Boolean,
 		},
 
@@ -189,8 +213,8 @@ class Button extends UI5Element {
 		super();
 
 		this._deactivate = () => {
-			if (this._active) {
-				this._active = false;
+			if (this.active) {
+				this.active = false;
 			}
 		};
 
@@ -202,6 +226,9 @@ class Button extends UI5Element {
 		if (this.submits && !FormSupport) {
 			console.warn(`In order for the "submits" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
 		}
+
+		this.iconOnly = !this.childNodes.length;
+		this.hasIcon = !!this.icon;
 	}
 
 	onEnterDOM() {
@@ -223,7 +250,7 @@ class Button extends UI5Element {
 
 	_onmousedown(event) {
 		event.isMarked = "button";
-		this._active = true;
+		this.active = true;
 	}
 
 	onmouseup(event) {
@@ -232,39 +259,23 @@ class Button extends UI5Element {
 
 	onkeydown(event) {
 		if (isSpace(event) || isEnter(event)) {
-			this._active = true;
+			this.active = true;
 		}
 	}
 
 	onkeyup(event) {
 		if (isSpace(event) || isEnter(event)) {
-			this._active = false;
+			this.active = false;
 		}
 	}
 
 	_onfocusout(_event) {
-		this._active = false;
+		this.active = false;
+		this.focused = false;
 	}
 
-	get classes() {
-		return {
-			main: {
-				sapMBtn: true,
-				sapMBtnActive: this._active,
-				sapMBtnWithIcon: this.icon,
-				sapMBtnNoText: !this.textContent.length,
-				sapMBtnDisabled: this.disabled,
-				sapMBtnIconEnd: this.iconEnd,
-				[`sapMBtn${this.design}`]: true,
-				sapUiSizeCompact: getCompactSize(),
-			},
-			icon: {
-				sapWCIconInButton: true,
-			},
-			text: {
-				sapMBtnText: true,
-			},
-		};
+	_onfocusin() {
+		this.focused = true;
 	}
 
 	get rtl() {

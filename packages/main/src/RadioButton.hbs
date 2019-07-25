@@ -1,4 +1,4 @@
-<div class="{{classes.main}}"
+<div class="ui5-radio-root {{classes.main}}"
 	role="radio"
 	aria-checked="{{selected}}"
 	aria-readonly="{{ariaReadonly}}"
@@ -9,10 +9,10 @@
 	dir="{{rtl}}"
 >
 
-	<div class='{{classes.inner}}'>
+	<div class='ui5-radio-inner {{classes.inner}}'>
 		<svg class="sapMRbSvg" focusable="false" aria-hidden="true">
-			<circle class="sapMRbSvgOuter" cx="{{circle.x}}" cy="{{circle.y}}" r="{{circle.rOuter}}" stroke-width="{{strokeWidth}}" fill="none" />
-			<circle class="sapMRbSvgInner" cx="{{circle.x}}" cy="{{circle.y}}" r="{{circle.rInner}}" stroke-width="10" />
+			<circle class="ui5-radio-svg-outer" cx="{{circle.x}}" cy="{{circle.y}}" r="{{circle.rOuter}}" stroke-width="{{strokeWidth}}" fill="none" />
+			<circle class="ui5-radio-svg-inner" cx="{{circle.x}}" cy="{{circle.y}}" r="{{circle.rInner}}" stroke-width="10" />
 		</svg>
  		<input type='radio' ?checked="{{selected}}" ?readonly="{{readonly}}" ?disabled="{{disabled}}" name="{{name}}" data-sap-no-tab-ref/>
 	</div>

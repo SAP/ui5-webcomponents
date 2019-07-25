@@ -44,14 +44,14 @@ const metadata = {
 
 		/**
 		 * Defines the <code>ui5-input</code> suggestion items.
-		 * </br></br>
-		 * Example: </br>
-		 * &lt;ui5-input show-suggestions></br>
-		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li>Item #1&lt;/ui5-li></br>
-		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li>Item #2&lt;/ui5-li></br>
+		 * <br><br>
+		 * Example: <br>
+		 * &lt;ui5-input show-suggestions><br>
+		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li>Item #1&lt;/ui5-li><br>
+		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li>Item #2&lt;/ui5-li><br>
 		 * &lt;/ui5-input>
 		 * <ui5-input show-suggestions><ui5-li>Item #1</ui5-li><ui5-li>Item #2</ui5-li></ui5-input>
-		 * </br></br>
+		 * <br><br>
 		 * <b>Note:</b> The suggestion would be displayed only if the <code>showSuggestions</code>
 		 * property is set to <code>true</code>.
 		 *
@@ -551,8 +551,16 @@ class Input extends UI5Element {
 		return this.valueState === ValueState.Error ? "true" : undefined;
 	}
 
+	get suggestionsTextId() {
+		return this.showSuggestions ? `${this._id}-suggestionsText` : "";
+	  }
+
+	get valueStateTextId() {
+		return this.hasValueState ? `${this._id}-descr` : "";
+	}
+
 	get ariaDescribedBy() {
-		return this.showSuggestions ? `${this._id}-suggestionsText` : undefined;
+		return `${this.suggestionsTextId} ${this.valueStateTextId}`.trim();
 	}
 
 	get ariaHasPopup() {
