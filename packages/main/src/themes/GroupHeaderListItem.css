@@ -4,16 +4,12 @@
 	color: var(--sapUiListTableGroupHeaderTextColor);
 }
 
-.ui5-ghli-root {
+.ui5-li-root.ui5-ghli-root {
 	padding-top: 1rem;
 	color: currentColor;
 	font-size: var(--sapMFontHeader6Size);
 	font-weight: var(--sapUiFontHeaderWeight);
-}
-
-.ui5-ghli-root .ui5-li-content {
-	display: flex;
-	align-items: center;
+	line-height: 2rem;
 }
 
 .ui5-ghli-title {

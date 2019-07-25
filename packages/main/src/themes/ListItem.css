@@ -108,6 +108,8 @@
 }
 
 .ui5-li-icon {
+	min-width: 1rem;
+	min-height: 1rem;
 	color: var(--sapUiContentNonInteractiveIconColor);
 	padding-right: 0.5rem;
 }
@@ -116,10 +118,10 @@
 	display: flex;
 	align-items: center;
 	flex: auto;
-	-webkit-box-flex: 1;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	pointer-events: none; /* IE specific */
 }
 
 .ui5-li-deletebtn {
@@ -194,6 +196,34 @@ ui5-li[active][actionable] .ui5-li-root.ui5-li--focusable .ui5-li-content:focus 
 /* active */
 ui5-li[active][actionable] .ui5-li-root .ui5-li-icon {
 	color: var(--sapUiListActiveTextColor);
+}
+
+ui5-li[active][actionable] .ui5-li-title,
+ui5-li[active][actionable] .ui5-li-desc,
+ui5-li[active][actionable] .ui5-li-info {
+	color: var(--sapUiListActiveTextColor);
+}
+
+ui5-li[info-state="Warning"] .ui5-li-info {
+	color: var(--sapUiCriticalText);
+}
+
+ui5-li[info-state="Success"] .ui5-li-info {
+	color: var(--sapUiPositiveText);
+}
+
+ui5-li[info-state="Error"] .ui5-li-info {
+	color: var(--sapUiNegativeText);
+}
+
+ui5-li[data-ui5-compact-size][has-title][description],
+ui5-li[has-title][description] {
+	height: 5rem;
+}
+
+ui5-li[data-ui5-compact-size][has-title][description] .ui5-li-title,
+ui5-li[has-title][description] .ui5-li-title {
+	padding-bottom: 0.375rem;
 }
 
 
