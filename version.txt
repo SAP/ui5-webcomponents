@@ -1,5 +1,5 @@
-commit 51e5f0e436db992e93605fb9ba0c0a02afee3ebf
-Author: Elena Stoyanova <elena.stoyanova@sap.com>
-Date:   Thu Jul 25 09:21:36 2019 +0300
+commit 62ba96a8c51f5a274a77660f2366d2a74147c971
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu Jul 25 10:21:34 2019 +0300
 
-    chore(ui5-input): improve VoiceOver speech output (#677)
+    refactor(ui5-checkbox): clean up styles and classes (#664)
