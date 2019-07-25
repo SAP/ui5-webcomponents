@@ -2,9 +2,9 @@
 	style="display: grid; place-items: center;">
 
 	<!-- columns -->
-	<div class="{{classes.main}}" style="{{styles.main}}">
+	<div class="ui5-table-header" style="{{styles.main}}">
 		{{#each visibleColumns}}
-			<div class="sapWCTableColumnWrapper">
+			<div class="ui5-table-column-root">
 				<slot name="{{this._individualSlot}}"></slot>
 			</div>
 		{{/each}}
@@ -19,7 +19,7 @@
 
 	{{#unless rows.length}}
 		{{#if showNoData}}
-			<div id="noData" class="sapWCTableNoDataRow">
+			<div id="noData" class="ui5-table-no-data-row">
 				<span>{{noDataText}}</span>
 		</div>
 		{{/if}}

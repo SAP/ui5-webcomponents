@@ -1,21 +1,16 @@
-:host(ui5-table:not([hidden])) {
+:host(:not([hidden])) {
 	display: inline-block;
 	width: 100%;
 }
 
-ui5-table:not([hidden]) {
-	display: inline-block;
-	width: 100%;
-}
-
-.sapWCTableHeader {
+.ui5-table-header {
 	width: 100%;
 	display: grid;
 	border-bottom: 1px solid var(--sapUiListTableGroupHeaderBorderColor);
 	height: 3rem;
 }
 
-.sapWCTableColumnWrapper {
+.ui5-table-column-root {
 	background: var(--sapUiListHeaderBackground);
 	border-bottom: 1px solid var(--sapUiListBorderColor);
 	height: 100%;
@@ -25,11 +20,11 @@ ui5-table:not([hidden]) {
 	color: var(--sapUiListTextColor)
 }
 
-.sapUiSizeCompact.sapWCTableHeader {
+:host([data-ui5-compact-size]) .ui5-table-header {
 	height: 2rem;
 }
 
-.sapWCTableNoDataRow {
+.ui5-table-no-data-row {
 	display: flex;
 	align-items: center;
 	width: 100%;
@@ -43,4 +38,15 @@ ui5-table:not([hidden]) {
 	color: var(--sapUiListTextColor);
 	min-height: 3rem;
 	border-bottom: 1px solid var(--sapUiListTableGroupHeaderBorderColor);
+}
+
+/* Remove that once ShadyCSS is adopted */
+
+ui5-table:not([hidden]) {
+	display: inline-block;
+	width: 100%;
+}
+
+ui5-table[data-ui5-compact-size] .ui5-table-header {
+	height: 2rem;
 }

@@ -77,11 +77,17 @@ const metadata = {
 			defaultValue: "",
 		},
 
-		_first: {
+		/**
+		 * @protected
+		 */
+		first: {
 			type: Boolean,
 		},
 
-		_last: {
+		/**
+		 * @protected
+		 */
+		last: {
 			type: Boolean,
 		},
 	},
@@ -117,16 +123,6 @@ class TableColumn extends UI5Element {
 
 	static get template() {
 		return TableColumnTemplate;
-	}
-
-	get classes() {
-		return {
-			main: {
-				sapWCTableColumn: true,
-				sapWCTableColumnFirst: this._first,
-				sapWCTableColumnLast: this._last,
-			},
-		};
 	}
 }
 

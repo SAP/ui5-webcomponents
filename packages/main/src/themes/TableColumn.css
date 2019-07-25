@@ -4,13 +4,7 @@
 	height: 100%;
 }
 
-ui5-table-column {
-	display: inline-block;
-	width: 100%;
-	height: 100%;
-}
-
-.sapWCTableColumn {
+.ui5-table-column-root {
 	padding: 0.25rem;
 	font-family: var(--sapUiFontFamily);
 	font-size: 0.875rem;
@@ -18,10 +12,11 @@ ui5-table-column {
 	box-sizing: border-box;
 }
 
-.sapWCTableColumnFirst {
+
+:host([first]) .ui5-table-column-root {
 	padding-left: 1rem;
 }
 
-.sapWCTableColumnLast {
+:host([last]) .ui5-table-column-root {
 	padding-right: 1rem;
 }
