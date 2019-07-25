@@ -85,7 +85,6 @@ const metadata = {
 
 		_selectedTab: {
 			type: TabBase,
-			association: true,
 		},
 
 		_scrollable: {

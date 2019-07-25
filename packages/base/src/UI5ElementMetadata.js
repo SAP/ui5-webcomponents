@@ -55,11 +55,6 @@ class UI5ElementMetadata {
 const validateSingleProperty = (value, propData) => {
 	const propertyType = propData.type;
 
-	// Association handling
-	if (propData.association) {
-		return value;
-	}
-
 	if (propertyType === Boolean) {
 		return typeof value === "boolean" ? value : false;
 	}

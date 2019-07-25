@@ -55,7 +55,6 @@ const metadata = {
 		 */
 		initialFocus: {
 			type: String,
-			association: true,
 		},
 
 		/**

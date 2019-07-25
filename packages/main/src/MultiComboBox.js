@@ -122,7 +122,7 @@ const metadata = {
 		},
 
 		_filteredItems: {
-			type: Object
+			type: Object,
 		},
 
 		_iconPressed: {
