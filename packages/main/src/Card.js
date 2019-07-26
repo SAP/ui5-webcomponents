@@ -6,6 +6,8 @@ import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import CardTemplate from "./generated/templates/CardTemplate.lit.js";
 import Icon from "./Icon.js";
 
+import { ARIA_ROLEDESCRIPTION_CARD, AVATAR_TOOLTIP, ARIA_LABEL_CARD_CONTENT } from "./i18n/defaults.js";
+
 // Styles
 import cardCss from "./generated/themes/Card.css.js";
 
@@ -176,6 +178,18 @@ class Card extends UI5Element {
 
 	get rtl() {
 		return getRTL() ? "rtl" : undefined;
+	}
+
+	get ariaCardRoleDescription() {
+		return ARIA_ROLEDESCRIPTION_CARD.defaultText;
+	}
+
+	get ariaCardAvatarLabel() {
+		return AVATAR_TOOLTIP.defaultText;
+	}
+
+	get ariaCardContentLabel() {
+		return ARIA_LABEL_CARD_CONTENT.defaultText;
 	}
 
 	static async define(...params) {

@@ -3,6 +3,7 @@
 	dir="{{rtl}}"
 	role="region"
 	aria-labelledby="{{_id}}-heading"
+	aria-roledescription="{{ariaCardRoleDescription}}"
 >
 	{{#if hasHeader}}
 		<header class="{{classes.header}}"
@@ -17,7 +18,7 @@
 			{{/if}}
 
 			{{#if icon}}
-				<span role="img" aria-label="Avatar" class="ui5-card-avatar">
+				<span role="img" aria-label="{ariaCardAvatarLabel}" class="ui5-card-avatar">
 					<ui5-icon class="ui5-card-header-icon" src="{{avatar}}"></ui5-icon>
 				</span>
 			{{/if}}
@@ -35,7 +36,7 @@
 		</header>
 	{{/if}}
 
-	<section>
+	<section role="group" aria-label="{{ariaCardContentLabel}}">
 		<slot></slot>
 	</section>
 </div>
