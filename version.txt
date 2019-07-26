@@ -1,5 +1,5 @@
-commit 7304a319d2f6554366018e3159ae058c9ae59ad0
-Author: Elena Stoyanova <elena.stoyanova@sap.com>
-Date:   Fri Jul 26 08:38:45 2019 +0300
+commit d90e137ddeabc48fcbe4ab52fecc126db478d76f
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Fri Jul 26 10:16:07 2019 +0300
 
-    feat(ui5-switch): accessibility implementation (#692)
+    refactor(ui5-table, ui5-table-row, ui5-table-cell, ui5-table-column): clean up styles (#688)
