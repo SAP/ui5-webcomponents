@@ -104,7 +104,7 @@ TestHelper.ready(function () {
 				assert.strictEqual(rollDom.style["grid-template-columns"], "minmax(0px, 1fr)", "Only 1 cell should be rendered in a row");
 				assert.strictEqual(columnGridStyles, "minmax(0px, 1fr)", "Only one column should be rendered");
 				assert.strictEqual(rollDom.children.length, 2, "two children should be rendered in the row");
-				assert.ok(rollDom.children[1].classList.contains("sapWCTablePopinRow"), "Second child should be popin container");
+				assert.ok(rollDom.children[1].classList.contains("ui5-table-row-popin-root"), "Second child should be popin container");
 				done();
 			}.bind(this), 200); // Needed for ResizeHandler.js
 		});

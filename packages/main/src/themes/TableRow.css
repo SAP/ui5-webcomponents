@@ -1,27 +1,23 @@
-:host(ui5-table-row:not([hidden])) {
+:host(:not([hidden])) {
 	display: inline-block;
 	width: 100%;
 }
 
-ui5-table-row:not([hidden]) {
-	display: inline-block;
-	width: 100%;
-}
-
-.sapWCTableRow {
+.ui5-table-row-root {
 	display: grid;
 	align-items: center;
-	background-color: var(--sapUiListBackground);
 	box-sizing: border-box;
+	background-color: var(--sapUiListBackground);
+	border-bottom: 1px solid var(--sapUiListBorderColor);
 }
 
-.sapWCTableRow:focus {
+.ui5-table-row-root:focus {
 	outline: 1px solid var(--sapUiContentFocusColor);
 	outline-offset: -3px;
 	outline-style: dotted;
 }
 
-.sapWCTablePopinRow {
+.ui5-table-row-popin-root {
 	padding: 0.25rem 1rem;
 	grid-column-start: 1;
 	display: flex;
@@ -29,16 +25,12 @@ ui5-table-row:not([hidden]) {
 	align-items: flex-start;
 }
 
-.sapWCTablePopinTitle {
+.ui5-table-row-popin-title {
 	color: var(--sapUiListTextColor);
 }
 
-.sapMWCTableRowCellContainer {
+.ui5-table-row-cells-container {
 	height: 100%;
 	padding: 0.25rem;
 	box-sizing: border-box;
-}
-
-.sapWCTableRowWithBorder {
-	border-bottom: 1px solid var(--sapUiListBorderColor);
 }

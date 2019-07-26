@@ -24,17 +24,18 @@ const metadata = {
 	},
 	properties: /** @lends sap.ui.webcomponents.main.TableCell.prototype */ {
 
-		_firstInRow: {
+		/**
+		 * @protected
+		 */
+		firstInRow: {
 			type: Boolean,
-			noAttribute: true,
 		},
-		_lastInRow: {
+
+		/**
+		 * @protected
+		 */
+		lastInRow: {
 			type: Boolean,
-			noAttribute: true,
-		},
-		_hasBorder: {
-			type: Boolean,
-			noAttribute: true,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.TableCell.prototype */ {
@@ -70,17 +71,6 @@ class TableCell extends UI5Element {
 
 	static get template() {
 		return TableCellTemplate;
-	}
-
-	get classes() {
-		return {
-			main: {
-				sapWCTableCell: true,
-				sapWCTableCellFirst: this._firstInRow,
-				sapWCTableCellLast: this._lastInRow,
-				sapWCTableCellWithBorder: this._hasBorder,
-			},
-		};
 	}
 }
 
