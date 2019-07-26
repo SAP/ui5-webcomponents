@@ -1,5 +1,5 @@
-commit d90e137ddeabc48fcbe4ab52fecc126db478d76f
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Fri Jul 26 10:16:07 2019 +0300
+commit 3d21458bb232401b4b4306ce0e659d782a047206
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Fri Jul 26 11:21:12 2019 +0300
 
-    refactor(ui5-table, ui5-table-row, ui5-table-cell, ui5-table-column): clean up styles (#688)
+    chore(ui5-li): remove noAttribute (#689)
