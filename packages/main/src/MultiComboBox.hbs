@@ -1,5 +1,5 @@
-<div class="{{classes.main}}">
-	<ui5-input id="ui5-multi-combobox--input"
+<div class="ui5-multi-combobox-root">
+	<ui5-input id="ui5-multi-combobox-input"
 		value="{{value}}"
 		placeholder="{{placeholder}}"
 		?disabled={{disabled}}
@@ -19,24 +19,23 @@
 		>
 			{{#each items}}
 				{{#if this.selected}}
-					<ui5-token ?readonly="{{../readonly}}" class="ui5-multi-combobox--token" data-ui5-id="{{this._id}}" >{{this.textContent}}</ui5-token>
+					<ui5-token ?readonly="{{../readonly}}" class="ui5-multi-combobox-token" data-ui5-id="{{this._id}}" >{{this.textContent}}</ui5-token>
 				{{/if}}
 			{{/each}}
 		</ui5-tokenizer>
 
 		{{#unless readonly}}
-			<ui5-icon src="sap-icon://slim-arrow-down" 
+			<ui5-icon src="sap-icon://slim-arrow-down"
 				slot="icon"
-				@ui5-press={{_showAllItemsPopover}}
+				@click={{_showAllItemsPopover}}
 				class="{{classes.icon}}"
 			></ui5-icon>
 		{{/unless}}
 	</ui5-input>
 
-	<ui5-popover 
-		class="ui5-multi-combobox-selected-items--popover"
+	<ui5-popover
+		class="ui5-multi-combobox-selected-items-popover"
 		horizontal-align="Stretch"
-		no-header
 		?no-arrow={{editable}}
 		placement-type="Bottom">
 		<ui5-list separators="None" mode="{{selectedItemsListMode}}"
@@ -49,11 +48,10 @@
 		</ui5-list>
 	</ui5-popover>
 
-	<ui5-popover class="ui5-multi-combobox-all-items--popover"
+	<ui5-popover class="ui5-multi-combobox-all-items-popover"
 		no-arrow
-		no-header
 		horizontal-align="Stretch"
-		initial-focus="ui5-multi-combobox--input"
+		initial-focus="ui5-multi-combobox-input"
 		horizontal-align="Left"
 		placement-type="Bottom"
 		@ui5-selectionChange={{_listSelectionChange}}

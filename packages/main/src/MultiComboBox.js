@@ -1,9 +1,9 @@
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
-import { isShow, isDown } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
-import MultiComboBoxTemplate from "./build/compiled/MultiComboBoxTemplate.lit.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import { isShow, isDown } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import "@ui5/webcomponents-base/dist/icons/slim-arrow-down.js";
+import MultiComboBoxTemplate from "./generated/templates/MultiComboBoxTemplate.lit.js";
 import Input from "./Input.js";
 import Tokenizer from "./Tokenizer.js";
 import Token from "./Token.js";
@@ -13,7 +13,7 @@ import List from "./List.js";
 import StandardListItem from "./StandardListItem.js";
 
 // Styles
-import styles from "./themes/MultiComboBox.css.js";
+import styles from "./generated/themes/MultiComboBox.css.js";
 
 /**
  * @public
@@ -23,11 +23,11 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.MultiComboBox.prototype */ {
 		/**
 		 * Defines the <code>ui5-multi-combobox</code> items.
-		 * </br></br>
-		 * Example: </br>
-		 * &lt;ui5-multi-combobox></br>
-		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li>Item #1&lt;/ui5-li></br>
-		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li>Item #2&lt;/ui5-li></br>
+		 * <br><br>
+		 * Example: <br>
+		 * &lt;ui5-multi-combobox><br>
+		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li>Item #1&lt;/ui5-li><br>
+		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li>Item #2&lt;/ui5-li><br>
 		 * &lt;/ui5-multi-combobox>
 		 * <br> <br>
 		 *
@@ -121,8 +121,14 @@ const metadata = {
 			type: Boolean,
 		},
 
-		_filteredItems: { type: Object },
-		_iconPressed: { type: Boolean },
+		_filteredItems: {
+			type: Object,
+		},
+
+		_iconPressed: {
+			type: Boolean,
+			noAttribute: true,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.MultiComboBox.prototype */ {
 		/**
@@ -180,14 +186,14 @@ const metadata = {
  *
  * The <code>ui5-multi-combobox</code> provides advanced keyboard handling.
  *
- * <h4>Picker</h3>
+ * <h2>Picker</h2>
  * If the <code>ui5-multi-combobox</code> is focused,
  * you can open or close the drop-down by pressing <code>F4</code>, <code>ALT+UP</code> or <code>ALT+DOWN</code> keys.
  * Once the drop-down is opened, you can use the <code>UP</code> and <code>DOWN</code> arrow keys
  * to navigate through the available options and select one by pressing the <code>Space</code> or <code>Enter</code> keys.
  * <br>
  *
- * <h4>Tokens</h2>
+ * <h2>Tokens</h2>
  * <ul>
  * <li> Left/Right arrow keys - moves the focus selection form the currently focues token to the previous/next one (if available). </li>
  * <li> Delete -  deletes the token and focuses the previous token. </li>
@@ -340,7 +346,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_getPopover(isMorePopover) {
-		return this.shadowRoot.querySelector(`.ui5-multi-combobox-${isMorePopover ? "selected" : "all"}-items--popover`);
+		return this.shadowRoot.querySelector(`.ui5-multi-combobox-${isMorePopover ? "selected" : "all"}-items-popover`);
 	}
 
 	_togglePopover(isMorePopover) {
@@ -362,7 +368,7 @@ class MultiComboBox extends UI5Element {
 		const hasSelectedItem = this.items.some(item => item.selected);
 
 		if (!hasSelectedItem) {
-			const morePopover = this.shadowRoot.querySelector(`.ui5-multi-combobox-selected-items--popover`);
+			const morePopover = this.shadowRoot.querySelector(`.ui5-multi-combobox-selected-items-popover`);
 
 			morePopover && morePopover.close();
 		}
@@ -388,13 +394,9 @@ class MultiComboBox extends UI5Element {
 
 	get classes() {
 		return {
-			main: {
-				"ui5-multi-combobox--wrapper": true,
-				"sapUiSizeCompact": getCompactSize(),
-			},
 			icon: {
-				[`ui5-multi-combobox-icon-pressed`]: this._iconPressed,
-				[`ui5-multi-combobox--icon`]: true,
+				[`ui5-multi-combobox-icon-root-pressed`]: this._iconPressed,
+				[`ui5-multi-combobox-icon`]: true,
 			},
 		};
 	}

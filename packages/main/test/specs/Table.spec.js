@@ -5,7 +5,7 @@ describe("Table general interaction", () => {
 
 	it("tests width propagation to from column to cell", () => {
 		const tableColumn = browser.findElementDeep("#column-1");
-		const tableFirstColumnCellWrapper = browser.findElementDeep("#roll-0 >>> div div.sapMWCTableRowCellContainer");
+		const tableFirstColumnCellWrapper = browser.findElementDeep("#roll-0 >>> div div.ui5-table-row-cells-container");
 
 		assert.equal(tableColumn.getProperty("width"), `${tableFirstColumnCellWrapper.getSize().width}px`, "Width of the cell should be equal to width of the corresponding column");
 	});
@@ -18,7 +18,7 @@ describe("Table general interaction", () => {
 
 		const rowHTML = tableFirstColumnCellWrapper.getHTML(false);
 
-		assert.strictEqual((rowHTML.split("sapMWCTableRowCellContainer").length - 1), 4, "Columns should be 4");
+		assert.strictEqual((rowHTML.split("ui5-table-row-cells-container").length - 1), 4, "Columns should be 4");
 	});
 
 	it("tests if column popins when min-width is reacted (500px)", () => {
@@ -29,12 +29,12 @@ describe("Table general interaction", () => {
 
 		const rowHTML = tableFirstColumnCellWrapper.getHTML(false);
 
-		assert.strictEqual((rowHTML.split("sapMWCTableRowCellContainer").length - 1), 2, "columns should be 2");
-		assert.strictEqual((rowHTML.split("sapWCTablePopinRow").length - 1), 2, "popin rows should be 2");
+		assert.strictEqual((rowHTML.split("ui5-table-row-cells-container").length - 1), 2, "columns should be 2");
+		assert.strictEqual((rowHTML.split("ui5-table-row-popin-root").length - 1), 2, "popin rows should be 2");
 	});
 
 	it("tests if noData div is displayed for empty table", () => {
-		const noDataRow = browser.findElementDeep("#tableNoData >>> div div.sapWCTableNoDataRow");
+		const noDataRow = browser.findElementDeep("#tableNoData >>> div div.ui5-table-no-data-row");
 
 		assert.strictEqual(noDataRow.isExisting(), true, 'noData div is present');
 	});

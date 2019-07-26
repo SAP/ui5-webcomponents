@@ -1,19 +1,17 @@
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
-import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper.js";
-import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
-import { isTabNext } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import FocusHelper from "@ui5/webcomponents-base/dist/FocusHelper.js";
+import { isTabNext } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import ListItemBase from "./ListItemBase.js";
 import ListMode from "./types/ListMode.js";
 import ListSeparators from "./types/ListSeparators.js";
 import ListItemType from "./types/ListItemType.js";
 // Template
-import ListTemplate from "./build/compiled/ListTemplate.lit.js";
+import ListTemplate from "./generated/templates/ListTemplate.lit.js";
 
 // Styles
-import listCss from "./themes/List.css.js";
+import listCss from "./generated/themes/List.css.js";
 
 /**
  * @public
@@ -276,7 +274,7 @@ class List extends UI5Element {
 				|| (this.separators === ListSeparators.Inner && !isLastChild);
 
 			item._mode = this.mode;
-			item._hideBorder = !showBottomBorder;
+			item.hasBorder = showBottomBorder;
 		});
 
 		this._previouslySelectedItem = null;
@@ -563,29 +561,6 @@ class List extends UI5Element {
 
 	get showNoDataText() {
 		return this.items.length === 0 && this.noDataText;
-	}
-
-	get classes() {
-		return {
-			main: {
-				sapMList: true,
-				sapMListInsetBG: this.inset,
-				sapUiSizeCompact: getCompactSize(),
-			},
-			ul: {
-				sapMListItems: true,
-				sapMListUl: true,
-				[`sapMListShowSeparators${this.separators}`]: true,
-				[`sapMListMode${this.mode}`]: true,
-				sapMListInset: this.inset,
-			},
-			noData: {
-				sapMLIB: true,
-				sapMListNoData: true,
-				sapMLIBTypeInactive: true,
-				sapMLIBFocusable: isDesktop(),
-			},
-		};
 	}
 }
 

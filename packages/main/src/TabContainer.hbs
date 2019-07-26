@@ -3,7 +3,7 @@
 	dir="{{rtl}}"
 >
 	<div class="{{classes.header}}" id="{{_id}}-header">
-		<ui5-icon @ui5-press="{{_onHeaderBackArrowClick}}" class="{{classes.headerBackArrow}}" src="sap-icon://slim-arrow-left" tabindex="-1"></ui5-icon>
+		<ui5-icon @click="{{_onHeaderBackArrowClick}}" class="{{classes.headerBackArrow}}" src="sap-icon://slim-arrow-left" tabindex="-1"></ui5-icon>
 
 		<!-- tab items -->
 		<div class="{{classes.headerScrollContainer}}" id="{{_id}}-headerScrollContainer">
@@ -45,7 +45,7 @@
 			</ul>
 		</div>
 
-		<ui5-icon @ui5-press="{{_onHeaderForwardArrowClick}}" class="{{classes.headerForwardArrow}}" src="sap-icon://slim-arrow-right" tabindex="-1"></ui5-icon>
+		<ui5-icon @click="{{_onHeaderForwardArrowClick}}" class="{{classes.headerForwardArrow}}" src="sap-icon://slim-arrow-right" tabindex="-1"></ui5-icon>
 
 		<!-- overflow button -->
 		{{#if showOverflow}}
@@ -73,7 +73,6 @@
 	<ui5-popover
 		id="{{_id}}-overflowMenu"
 		no-arrow
-		no-header
 		placement-type="Bottom"
 		horizontal-align="Right">
 		<ui5-list @ui5-itemPress="{{_onOverflowListItemSelect}}">
@@ -117,7 +116,9 @@
 {{/inline}}
 
 {{#*inline "iconTab"}}
-	<ui5-icon src="{{this.item.icon}}" class="{{this.headerItemIconClasses}}"></ui5-icon>
+	<div id="{{this.item._id}}" class="ui5-tc-headerItemIcon-outer">
+		<ui5-icon src="{{this.item.icon}}" class="{{this.headerItemIconClasses}}"></ui5-icon>
+	</div>
 
 	<div class="{{this.headerItemContentClasses}}">
 		{{#if this.item.additionalText}}

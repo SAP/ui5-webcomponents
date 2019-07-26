@@ -1,11 +1,10 @@
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 
 /**
 * @public
 */
 const metadata = {
 	tag: "ui5-option",
-	noShadowDOM: true,
 	properties: /** @lends  sap.ui.webcomponents.main.Option.prototype */ {
 
 		/**
@@ -20,7 +19,7 @@ const metadata = {
 
 		/**
 		 * Defines the <code>icon</code> source URI.
-		 * </br></br>
+		 * <br><br>
 		 * <b>Note:</b>
 		 * SAP-icons font provides numerous buil-in icons. To find all the available icons, see the
 		 * <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.

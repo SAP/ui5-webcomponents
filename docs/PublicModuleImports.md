@@ -61,6 +61,7 @@ Table of contents:
 - [Form Support](#formsupport)
 - [Input Suggestions](#inputsuggestions)
 - [Advanced Calendar Types](#advancedcalendartypes)
+- [Configuration](#conf)
 
 <a name="preface"></a>
 ### Preface
@@ -80,13 +81,13 @@ Most modern browsers (**Chrome, Firefox, Safari**) support Web Components native
 If your app needs to be able to run additionally on **Edge**, you should import the following module:
 
 ```js
-import "@ui5/webcomponents-base/src/browsersupport/Edge.js";
+import "@ui5/webcomponents-base/dist/features/browsersupport/Edge.js";
 ```
 
 and if your app needs to run on both **Edge** and **IE11**, you should instead import:
 
 ```js
-import "@ui5/webcomponents-base/src/browsersupport/IE11.js";
+import "@ui5/webcomponents-base/dist/features/browsersupport/IE11.js";
 ```
 (this also includes Edge support).
 
@@ -116,7 +117,7 @@ import "@ui5/webcomponents/dist/ThemePropertiesProvider.js";
 
 and
 ```js
-import { setTheme } from "@ui5/webcomponents-base/Theming.js";
+import { setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 ```
 (for changing the theme at runtime)
 
@@ -145,7 +146,7 @@ By importing the second module, you get the:
 method that allows you to change the theme during runtime, if necessary.
 Example:
 ```js
-import { setTheme } from "@ui5/webcomponents-base/Theming.js";
+import { setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 setTheme("sap_belize_hcb");
 ```
 
@@ -209,7 +210,7 @@ rollup configuration file and will not work on its own.
 ### 4. Form Support
 
 ```js
-import "@ui5/webcomponents/dist/InputElementsFormSupport.js";
+import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";
 ```
 
 HTML ```<form>``` only submits a couple of standard HTML elements such as ```<input>``` and ```<textarea>``` to name a few.
@@ -239,7 +240,7 @@ element will be able to submit the closest ```form``` it's placed in, provided y
 ### 5. Input Suggestions
 
 ```js
-import "@ui5/webcomponents/dist/InputSuggestions";
+import "@ui5/webcomponents/dist/features/InputSuggestions.js";
 ```
 
 The ```<ui5-input>``` element acts as an ```<input>``` with the Fiori design and added functionality, such as for example value state.
@@ -253,10 +254,10 @@ To enable the functionality, import the above module into your app.
 ### 6. Advanced calendar types
 
 ```js
-import "@ui5/webcomponents-core/dist/sap/ui/core/date/Buddhist.js";
-import "@ui5/webcomponents-core/dist/sap/ui/core/date/Islamic.js";
-import "@ui5/webcomponents-core/dist/sap/ui/core/date/Japanese.js";
-import "@ui5/webcomponents-core/dist/sap/ui/core/date/Persian.js";
+import "@ui5/webcomponents-base/dist/features/calendar/Buddhist.js";
+import "@ui5/webcomponents-base/dist/features/calendar/Islamic.js";
+import "@ui5/webcomponents-base/dist/features/calendar/Japanese.js";
+import "@ui5/webcomponents-base/dist/features/calendar/Persian.js";
 ```
 
 The <code>ui5-datepicker</code> web component supports Gregorian Calendar by default.
@@ -264,5 +265,16 @@ The <code>ui5-datepicker</code> web component supports Gregorian Calendar by def
 In order to to be able to use Buddhist, Islamic, Japanese or Persian calendar with this web component
 (by setting its <code>primaryCalendarType</code> property), you should import one or more of the modules above.
 
+<a name="config"></a>
+### 7. Configuration
 
+```js
+import { getTheme, setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
+import { getNoConflict, setNoConflict } from "@ui5/webcomponents-base/dist/config/NoConflict.js";
+import { getCompactSize } from "@ui5/webcomponents-base/dist/config/CompactSize.js";
+import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
+import { getLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
+import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
+```
 
+For more details, please check [Configuration](Configuration.md)

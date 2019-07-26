@@ -1,10 +1,10 @@
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import TableCell from "./TableCell.js";
-import TableRowTemplate from "./build/compiled/TableRowTemplate.lit.js";
+import TableRowTemplate from "./generated/templates/TableRowTemplate.lit.js";
 
 // Styles
-import styles from "./themes/TableRow.css.js";
+import styles from "./generated/themes/TableRow.css.js";
 
 /**
  * @public
@@ -77,10 +77,14 @@ class TableRow extends UI5Element {
 		this.visibleCells = [];
 		this.popinCells = [];
 
+		if (this.cells.length === 0) {
+			return;
+		}
+
 		this._columnsInfo.forEach((info, index) => {
 			if (info.visible) {
 				this.visibleCells.push(this.cells[index]);
-				this.cells[index]._firstInRow = (index === 0);
+				this.cells[index].firstInRow = (index === 0);
 			} else if (info.demandPopin) {
 				this.popinCells.push({
 					cell: this.cells[index],
@@ -94,26 +98,8 @@ class TableRow extends UI5Element {
 		const lastVisibleCell = this.visibleCells[this.visibleCells.length - 1];
 
 		if (lastVisibleCell) {
-			lastVisibleCell._lastInRow = true;
+			lastVisibleCell.lastInRow = true;
 		}
-	}
-
-	get classes() {
-		return {
-			main: {
-				sapWCTableRow: true,
-				sapWCTableRowWithBorder: true,
-			},
-			popin: {
-				sapWCTablePopinRow: true,
-			},
-			popinTitle: {
-				sapWCTablePopinTitle: true,
-			},
-			cellWrapper: {
-				sapMWCTableRowCellContainer: true,
-			},
-		};
 	}
 
 	get styles() {

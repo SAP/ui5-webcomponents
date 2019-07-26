@@ -1,9 +1,9 @@
-import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Button from "./Button.js";
-import ToggleButtonTemplate from "./build/compiled/ToggleButtonTemplate.lit.js";
+import ToggleButtonTemplate from "./generated/templates/ToggleButtonTemplate.lit.js";
 
 // Styles
-import toggleBtnCss from "./themes/ToggleButton.css.js";
+import toggleBtnCss from "./generated/themes/ToggleButton.css.js";
 
 /**
  * @public
@@ -69,12 +69,6 @@ class ToggleButton extends Button {
 	_onclick(e) {
 		this.pressed = !this.pressed;
 		this.fireEvent("press", { pressed: this.pressed });
-	}
-
-	get classes() {
-		const result = super.classes;
-		result.main.sapMToggleBtnPressed = this.pressed;
-		return result;
 	}
 }
 

@@ -1,11 +1,11 @@
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 
 // Template
-import LabelTemplate from "./build/compiled/LabelTemplate.lit.js";
+import LabelTemplate from "./generated/templates/LabelTemplate.lit.js";
 
 // Styles
-import labelCss from "./themes/Label.css.js";
+import labelCss from "./generated/themes/Label.css.js";
 
 /**
  * @public
@@ -77,8 +77,6 @@ const metadata = {
  * providing valuable information to the user.
  * Usually it is placed next to a value holder, such as a text field.
  * It informs the user about what data is displayed or expected in the value holder.
- * The <code>ui5-label</code> is associated with its value holder by setting the
- * <code>labelFor</code> association.
  * <br><br>
  * The <code>ui5-label</code> appearance can be influenced by properties,
  * such as <code>required</code> and <code>wrap</code>.
@@ -111,17 +109,6 @@ class Label extends UI5Element {
 
 	static get styles() {
 		return labelCss;
-	}
-
-	get classes() {
-		return {
-			main: {
-				sapMLabel: true,
-				sapMLabelNoText: !this.textContent.length,
-				sapMLabelWrapped: this.wrap,
-				sapMLabelRequired: this.required,
-			},
-		};
 	}
 
 	onclick() {

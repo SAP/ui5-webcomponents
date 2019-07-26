@@ -1,20 +1,23 @@
-import { getRTL } from "@ui5/webcomponents-base/src/Configuration.js";
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler.js";
-import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
-import { isSpace, isEscape } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import { isSpace, isEscape } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
+import "@ui5/webcomponents-base/dist/icons/search.js";
+import "@ui5/webcomponents-base/dist/icons/bell.js";
+import "@ui5/webcomponents-base/dist/icons/overflow.js";
+import "@ui5/webcomponents-base/dist/icons/grid.js";
 import StandardListItem from "./StandardListItem.js";
 import List from "./List.js";
 import Icon from "./Icon.js";
 import Popover from "./Popover.js";
 
 // Template
-import ShellBarTemplate from "./build/compiled/ShellBarTemplate.lit.js";
+import ShellBarTemplate from "./generated/templates/ShellBarTemplate.lit.js";
 
 // Styles
-import styles from "./themes/ShellBar.css.js";
+import styles from "./generated/themes/ShellBar.css.js";
 
 /**
  * @public
@@ -106,6 +109,7 @@ const metadata = {
 
 		_breakpointSize: {
 			type: String,
+			noAttribute: true,
 		},
 
 		_itemsInfo: {
@@ -119,6 +123,7 @@ const metadata = {
 
 		_showBlockLayer: {
 			type: Boolean,
+			noAttribute: true,
 		},
 		_searchField: {
 			type: Object,
@@ -132,7 +137,7 @@ const metadata = {
 	slots: /** @lends  sap.ui.webcomponents.main.ShellBar.prototype */ {
 		/**
 		 * Defines the <code>ui5-shellbar</code> aditional items.
-		 * </br></br>
+		 * <br><br>
 		 * <b>Note:</b>
 		 * You can use the &nbsp;&lt;ui5-shellbar-item>&lt;/ui5-shellbar-item>.
 		 *
@@ -147,7 +152,7 @@ const metadata = {
 
 		/**
 		 * Defines the items displayed in menu after a click on the primary title.
-		 * </br></br>
+		 * <br><br>
 		 * <b>Note:</b>
 		 * You can use the &nbsp;&lt;ui5-li>&lt;/ui5-li> and its ancestors.
 		 *
@@ -680,7 +685,7 @@ class ShellBar extends UI5Element {
 				return item.shadowRoot.querySelector(`#${refItemId}`);
 			})[0];
 
-			const prevented = !shellbarItem.fireEvent("press", { targetRef: event.target }, true);
+			const prevented = !shellbarItem.fireEvent("itemClick", { targetRef: event.target }, true);
 
 			this._defaultItemPressPrevented = prevented;
 		}
@@ -861,7 +866,7 @@ class ShellBar extends UI5Element {
 	}
 
 	get rtl() {
-		return getEffectiveRTL() ? "rtl" : undefined;
+		return getRTL() ? "rtl" : undefined;
 	}
 
 	static async define(...params) {

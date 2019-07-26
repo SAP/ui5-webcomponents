@@ -1,20 +1,20 @@
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import { getLocale } from "@ui5/webcomponents-base/src/LocaleProvider.js";
-import { getCalendarType, getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
-import { getFormatLocale } from "@ui5/webcomponents-base/src/FormatSettings.js";
-import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { getLocale } from "@ui5/webcomponents-base/dist/LocaleProvider.js";
+import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
+import { getFormatLocale } from "@ui5/webcomponents-base/dist/FormatSettings.js";
+import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData.js";
-import CalendarDate from "@ui5/webcomponents-base/src/dates/CalendarDate.js";
-import { calculateWeekNumber } from "@ui5/webcomponents-base/src/dates/CalendarUtils.js";
-import getShadowDOMTarget from "@ui5/webcomponents-base/src/events/getShadowDOMTarget.js";
-import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType.js";
-import DayPickerTemplate from "./build/compiled/DayPickerTemplate.lit.js";
+import CalendarDate from "@ui5/webcomponents-base/dist/dates/CalendarDate.js";
+import { calculateWeekNumber } from "@ui5/webcomponents-base/dist/dates/CalendarUtils.js";
+import getShadowDOMTarget from "@ui5/webcomponents-base/dist/events/getShadowDOMTarget.js";
+import CalendarType from "@ui5/webcomponents-base/dist/dates/CalendarType.js";
+import DayPickerTemplate from "./generated/templates/DayPickerTemplate.lit.js";
 
 // Styles
-import dayPickerCSS from "./themes/DayPicker.css.js";
+import dayPickerCSS from "./generated/themes/DayPicker.css.js";
 
 /**
  * @public
@@ -69,6 +69,7 @@ const metadata = {
 		},
 		_hidden: {
 			type: Boolean,
+			noAttribute: true,
 		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.DayPicker.prototype */ {
@@ -169,7 +170,7 @@ class DayPicker extends UI5Element {
 				}),
 				iDay: oCalDate.getDate(),
 				_index: i.toString(),
-				classes: `sapWCDayPickerItem sapWCDayPickerWDay${weekday}`,
+				classes: `ui5-dp-item ui5-dp-wday${weekday}`,
 			};
 
 			const weekNumber = calculateWeekNumber(oCalDate.toUTCJSDate(), oCalDate.getYear(), this._oLocale, this._oLocaleData);
@@ -187,30 +188,30 @@ class DayPicker extends UI5Element {
 			week.push(day);
 
 			if (oCalDate.getDay() === this._getFirstDayOfWeek()) {
-				day.classes += " sapWCDayPickerFirstWDay";
+				day.classes += " ui5-dp-firstday";
 			}
 
 			if (day.selected) {
-				day.classes += " sapWCDayPickerItemSel";
+				day.classes += " ui5-dp-item--selected";
 				isDaySelected = true;
 			}
 
 			if (isToday) {
-				day.classes += " sapWCDayPickerItemNow";
+				day.classes += " ui5-dp-item--now";
 				todayIndex = i;
 			}
 
 			if (oCalDate.getMonth() !== this._month) {
-				day.classes += " sapWCDayPickerItemOtherMonth";
+				day.classes += " ui5-dp-item--othermonth";
 			}
 
 			day.id = `${this._id}-${timestamp}`;
 
 			if (this._isWeekend(oCalDate)) {
-				day.classes += " sapWCDayPickerItemWeekEnd";
+				day.classes += " ui5-dp-item--weeekend";
 			}
 
-			if (day.classes.indexOf("sapWCDayPickerWDay6") !== -1
+			if (day.classes.indexOf("ui5-dp-wday6") !== -1
 				|| _aVisibleDays.length - 1 === i) {
 				this._weeks.push(week);
 				week = [];
@@ -243,21 +244,17 @@ class DayPicker extends UI5Element {
 				id: `${this._id}-WH${i.toString()}`,
 				name: aDayNamesWide[weekday],
 				ultraShortName: aUltraShortNames[weekday],
-				classes: "sapWCDayPickerDayName",
+				classes: "ui5-dp-dayname",
 			};
 
 			this._dayNames.push(dayName);
 		}
 
-		this._dayNames[0].classes += " sapWCDayPickerFirstWDay";
+		this._dayNames[0].classes += " ui5-dp-firstday";
 	}
 
 	onclick(event) {
 		const target = getShadowDOMTarget(event);
-
-		if (target.className.indexOf("sapWCDayPickerItem") === -1) {
-			return;
-		}
 
 		const dayPressed = this._isDayPressed(target);
 
@@ -293,7 +290,7 @@ class DayPicker extends UI5Element {
 	_handleEnter(event) {
 		const eventTarget = getShadowDOMTarget(event);
 		event.preventDefault();
-		if (eventTarget.className.indexOf("sapWCDayPickerItem") > -1) {
+		if (eventTarget.className.indexOf("ui5-dp-item") > -1) {
 			const targetDate = parseInt(eventTarget.getAttribute("data-sap-timestamp"));
 			this._modifySelectionAndNotifySubscribers(targetDate, event.ctrlKey);
 		}
@@ -302,7 +299,7 @@ class DayPicker extends UI5Element {
 	_handleSpace(event) {
 		const eventTarget = getShadowDOMTarget(event);
 		event.preventDefault();
-		if (eventTarget.className.indexOf("sapWCDayPickerItem") > -1) {
+		if (eventTarget.className.indexOf("ui5-dp-item") > -1) {
 			const targetDate = parseInt(eventTarget.getAttribute("data-sap-timestamp"));
 			this._modifySelectionAndNotifySubscribers(targetDate, event.ctrlKey);
 		}
@@ -386,7 +383,7 @@ class DayPicker extends UI5Element {
 
 	_isDayPressed(target) {
 		const targetParent = target.parentNode;
-		return (target.className.indexOf("sapWCDayPickerItem") > -1) || (targetParent && targetParent.className.indexOf("sapWCDayPickerItem") > -1);
+		return (target.className.indexOf("ui5-dp-item") > -1) || (targetParent && target.parentNode.classList.contains("ui5-dp-item"));
 	}
 
 	_getVisibleDays(oStartDate, bIncludeBCDates) {
@@ -437,25 +434,6 @@ class DayPicker extends UI5Element {
 
 	_getFirstDayOfWeek() {
 		return this._oLocaleData.getFirstDayOfWeek();
-	}
-
-	get classes() {
-		return {
-			wrapper: {
-				"sapWCDayPicker": true,
-				"sapUiSizeCompact": getCompactSize(),
-			},
-			weekNumberContainer: {
-				"sapWCDayPickerWeekNumberContainer": true,
-				"sapWCDayPickerHideWeekNumbers": this.primaryCalendarType === "Islamic",
-			},
-			weekDaysContainer: {
-				"sapWCDayPickerDaysNamesContainer": true,
-			},
-			content: {
-				"sapWCDayPickerContent": true,
-			},
-		};
 	}
 
 	get styles() {

@@ -1,36 +1,45 @@
-:host(ui5-datepicker:not([hidden])) {
+:host(:not([hidden])) {
 	display: inline-block;
+}
+
+:host {
 	width: 100%;
 }
 
-ui5-datepicker:not([hidden]) {
-	display: inline-block;
-	width: 100%;
-}
-
-.sapWCDPIcon {
+.ui5-datepicker-icon {
 	color: var(--sapUiContentIconColor);
 	cursor: pointer;
 	outline: none;
 	border: var(--_ui5_datepicker_icon_border);
-	box-sizing: border-box;
 }
 
-.sapWCDPIcon:hover,
-.sapWCDPIcon.sapWCDPIconPressed {
+.ui5-datepicker-icon:hover,
+.ui5-datepicker-icon.ui5-datepicker-icon--pressed {
 	border-left-color: white;
 }
 
-.sapWCDPIcon:active {
+.ui5-datepicker-icon:active {
 	background-color: var(--sapUiButtonLiteActiveBackground);
 	color: var(--sapUiButtonActiveTextColor);
 }
 
-.sapWCDPIcon.sapWCDPIconPressed {
+.ui5-datepicker-icon.ui5-datepicker-icon--pressed {
 	background: var(--sapUiToggleButtonPressedBackground);
 	color: var(--sapUiButtonActiveTextColor);
 }
 
-.sapWCDPIcon:not(.sapWCDPIconPressed):not(:active):hover {
+.ui5-datepicker-icon:not(.ui5-datepicker-icon--pressed):not(:active):hover {
 	background: var(--sapUiButtonLiteHoverBackground);
+}
+
+/* 
+ * IE pair of styles
+ * to be removed later on
+ */
+ ui5-datepicker:not([hidden]) {
+	display: inline-block;
+}
+
+ui5-datepicker {
+	width: 100%;
 }

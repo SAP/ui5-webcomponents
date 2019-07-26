@@ -1,5 +1,5 @@
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import {
 	isSpace,
 	isUp,
@@ -7,11 +7,11 @@ import {
 	isEnter,
 	isEscape,
 	isShow,
-} from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
-import { getFeature } from "@ui5/webcomponents-base/src/FeaturesRegistry.js";
-import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
-import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
+} from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
+import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
+import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import "@ui5/webcomponents-base/dist/icons/slim-arrow-down.js";
 import Option from "./Option.js";
 import Label from "./Label.js";
 import Popover from "./Popover.js";
@@ -20,10 +20,10 @@ import StandardListItem from "./StandardListItem.js";
 import Icon from "./Icon.js";
 
 // Template
-import SelectTemplate from "./build/compiled/SelectTemplate.lit.js";
+import SelectTemplate from "./generated/templates/SelectTemplate.lit.js";
 
 // Styles
-import selectCss from "./themes/Select.css.js";
+import selectCss from "./generated/themes/Select.css.js";
 
 /**
  * @public
@@ -34,10 +34,10 @@ const metadata = {
 
 		/**
 		 * Defines the <code>ui5-select</code> options.
-		 * <br/><br/>
+		 * <br><br>
 		 * <b>Note:</b> Only one selected option is allowed.
 		 * If more than one option is defined as selected, the last one would be considered as the selected one.
-		 * <br/><br/>
+		 * <br><br>
 		 * <b>Note:</b> Use the <code>ui5-option</code> component to define the desired options.
 		 * @type {Option[]}
 		 * @slot
@@ -53,7 +53,7 @@ const metadata = {
 
 		/**
 		 * Defines whether <code>ui5-select</code> is in disabled state.
-		 * </br></br>
+		 * <br><br>
 		 * <b>Note:</b> A disabled <code>ui5-select</code> is noninteractive.
 		 *
 		 * @type {boolean}
@@ -69,7 +69,7 @@ const metadata = {
 		 * The value of the <code>ui5-select</code> will be the value of the currently selected <code>ui5-option</code>.
 		 *
 		 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
-		 * <code>import "@ui5/webcomponents/dist/InputElementsFormSupport.js";</code>
+		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
 		 *
 		 * <b>Note:</b> When set, a native <code>input</code> HTML element
 		 * will be created inside the <code>ui5-select</code> so that it can be submitted as
@@ -98,13 +98,20 @@ const metadata = {
 
 		_text: {
 			type: String,
+			noAttribute: true,
 		},
 
-		_opened: {
+		/**
+		 * @private
+		 */
+		opened: {
 			type: Boolean,
 		},
 
-		_focused: {
+		/**
+		 * @private
+		 */
+		focused: {
 			type: Boolean,
 		},
 	},
@@ -182,10 +189,18 @@ class Select extends UI5Element {
 		this._enableFormSupport();
 	}
 
+	onfocusin() {
+		this.focused = true;
+	}
+
+	onfocusout() {
+		this.focused = false;
+	}
+
 	get _isPickerOpen() {
 		const popover = this.shadowRoot.querySelector("#ui5-select--popover");
 
-		return popover && popover._isOpen;
+		return popover && popover.opened;
 	}
 
 	_togglePopover() {
@@ -197,7 +212,9 @@ class Select extends UI5Element {
 
 		if (this._isPickerOpen) {
 			popover.close();
+			this.opened = false;
 		} else {
+			this.opened = true;
 			popover.openBy(this);
 		}
 	}
@@ -248,7 +265,7 @@ class Select extends UI5Element {
 				nativeInput.value = element.selectedOption.value;
 			});
 		} else if (this.name) {
-			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/InputElementsFormSupport.js";`); // eslint-disable-line
+			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
 		}
 	}
 
@@ -362,26 +379,12 @@ class Select extends UI5Element {
 		return this.options[this._selectedIndex];
 	}
 
-	get classes() {
-		return {
-			main: {
-				"sapWCSelect": true,
-				"sapWCSelectFocused": this._focused,
-				"sapWCSelectDisabled": this.disabled,
-				"sapWCSelectOpened": this._opened,
-				"sapWCSelectState": this.valueState !== "None",
-				[`sapWCSelect${this.valueState}`]: true,
-				"sapUiSizeCompact": getCompactSize(),
-			},
-		};
-	}
-
 	get tabIndex() {
 		return this.disabled ? "-1" : "0";
 	}
 
 	get rtl() {
-		return getEffectiveRTL() ? "rtl" : undefined;
+		return getRTL() ? "rtl" : undefined;
 	}
 
 	static async define(...params) {

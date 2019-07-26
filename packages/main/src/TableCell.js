@@ -1,9 +1,9 @@
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import TableCellTemplate from "./build/compiled/TableCellTemplate.lit.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import TableCellTemplate from "./generated/templates/TableCellTemplate.lit.js";
 
 // Styles
-import styles from "./themes/TableCell.css.js";
+import styles from "./generated/themes/TableCell.css.js";
 
 /**
  * @public
@@ -24,13 +24,17 @@ const metadata = {
 	},
 	properties: /** @lends sap.ui.webcomponents.main.TableCell.prototype */ {
 
-		_firstInRow: {
+		/**
+		 * @protected
+		 */
+		firstInRow: {
 			type: Boolean,
 		},
-		_lastInRow: {
-			type: Boolean,
-		},
-		_hasBorder: {
+
+		/**
+		 * @protected
+		 */
+		lastInRow: {
 			type: Boolean,
 		},
 	},
@@ -67,17 +71,6 @@ class TableCell extends UI5Element {
 
 	static get template() {
 		return TableCellTemplate;
-	}
-
-	get classes() {
-		return {
-			main: {
-				sapWCTableCell: true,
-				sapWCTableCellFirst: this._firstInRow,
-				sapWCTableCellLast: this._lastInRow,
-				sapWCTableCellWithBorder: this._hasBorder,
-			},
-		};
 	}
 }
 

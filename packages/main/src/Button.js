@@ -1,15 +1,17 @@
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
-import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
-import { getFeature } from "@ui5/webcomponents-base/src/FeaturesRegistry.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
+import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
+import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
 import ButtonDesign from "./types/ButtonDesign.js";
-import ButtonTemplate from "./build/compiled/ButtonTemplate.lit.js";
+import ButtonTemplate from "./generated/templates/ButtonTemplate.lit.js";
 import Icon from "./Icon.js";
 
+import { BUTTON_ARIA_TYPE_ACCEPT, BUTTON_ARIA_TYPE_REJECT, BUTTON_ARIA_TYPE_EMPHASIZED } from "./i18n/defaults.js";
+
 // Styles
-import buttonCss from "./themes/Button.css.js";
+import buttonCss from "./generated/themes/Button.css.js";
 
 /**
  * @public
@@ -20,7 +22,7 @@ const metadata = {
 
 		/**
 		 * Defines the <code>ui5-button</code> design.
-		 * </br></br>
+		 * <br><br>
 		 * <b>Note:</b> Available options are "Default", "Emphasized", "Positive",
 		 * "Negative", and "Transparent".
 		 *
@@ -81,7 +83,7 @@ const metadata = {
 		 * automatically submit the nearest form element upon <code>press</code>.
 		 *
 		 * <b>Important:</b> For the <code>submits</code> property to have effect, you must add the following import to your project:
-		 * <code>import "@ui5/webcomponents/dist/InputElementsFormSupport.js";</code>
+		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -93,8 +95,33 @@ const metadata = {
 
 		/**
 		 * Used to switch the active state (pressed or not) of the <code>ui5-button</code>.
+		 * @private
 		 */
-		_active: {
+		active: {
+			type: Boolean,
+		},
+
+		/**
+		 * Defines if a content has been added to the default slot
+		 * @private
+		 */
+		iconOnly: {
+			type: Boolean,
+		},
+
+		/**
+		 * Indicates if the elements is on focus
+		 * @private
+		 */
+		focused: {
+			type: Boolean,
+		},
+
+		/**
+		 * Indicates if the elements has a slotted icon
+		 * @private
+		 */
+		hasIcon: {
 			type: Boolean,
 		},
 
@@ -182,11 +209,26 @@ class Button extends UI5Element {
 		return ButtonTemplate;
 	}
 
+	constructor() {
+		super();
+
+		this._deactivate = () => {
+			if (this.active) {
+				this.active = false;
+			}
+		};
+
+		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
+	}
+
 	onBeforeRendering() {
 		const FormSupport = getFeature("FormSupport");
 		if (this.submits && !FormSupport) {
-			console.warn(`In order for the "submits" property to have effect, you should also: import "@ui5/webcomponents/dist/InputElementsFormSupport.js";`); // eslint-disable-line
+			console.warn(`In order for the "submits" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
 		}
+
+		this.iconOnly = !this.childNodes.length;
+		this.hasIcon = !!this.icon;
 	}
 
 	onEnterDOM() {
@@ -195,12 +237,6 @@ class Button extends UI5Element {
 
 	onExitDOM() {
 		document.removeEventListener("mouseup", this._deactivate);
-	}
-
-	_deactivate() {
-		if (this._active) {
-			this._active = false;
-		}
 	}
 
 	_onclick(event) {
@@ -214,7 +250,7 @@ class Button extends UI5Element {
 
 	_onmousedown(event) {
 		event.isMarked = "button";
-		this._active = true;
+		this.active = true;
 	}
 
 	onmouseup(event) {
@@ -223,47 +259,50 @@ class Button extends UI5Element {
 
 	onkeydown(event) {
 		if (isSpace(event) || isEnter(event)) {
-			this._active = true;
+			this.active = true;
 		}
 	}
 
 	onkeyup(event) {
 		if (isSpace(event) || isEnter(event)) {
-			this._active = false;
+			this.active = false;
 		}
 	}
 
 	_onfocusout(_event) {
-		this._active = false;
+		this.active = false;
+		this.focused = false;
 	}
 
-	get classes() {
-		return {
-			main: {
-				sapMBtn: true,
-				sapMBtnActive: this._active,
-				sapMBtnWithIcon: this.icon,
-				sapMBtnNoText: !this.textContent.length,
-				sapMBtnDisabled: this.disabled,
-				sapMBtnIconEnd: this.iconEnd,
-				[`sapMBtn${this.design}`]: true,
-				sapUiSizeCompact: getCompactSize(),
-			},
-			icon: {
-				sapWCIconInButton: true,
-			},
-			text: {
-				sapMBtnText: true,
-			},
-		};
+	_onfocusin() {
+		this.focused = true;
 	}
 
 	get rtl() {
-		return getEffectiveRTL() ? "rtl" : undefined;
+		return getRTL() ? "rtl" : undefined;
+	}
+
+	get hasButtonType() {
+		return this.design !== ButtonDesign.Default && this.design !== ButtonDesign.Transparent;
+	}
+
+	static typeTextMappings() {
+		return {
+			"Positive": BUTTON_ARIA_TYPE_ACCEPT,
+			"Negative": BUTTON_ARIA_TYPE_REJECT,
+			"Emphasized": BUTTON_ARIA_TYPE_EMPHASIZED,
+		};
+	}
+
+	get buttonTypeText() {
+		return this.resourceBundle.getText(Button.typeTextMappings()[this.design]);
 	}
 
 	static async define(...params) {
-		await Icon.define();
+		await Promise.all([
+			Icon.define(),
+			fetchResourceBundle("@ui5/webcomponents"),
+		]);
 
 		super.define(...params);
 	}

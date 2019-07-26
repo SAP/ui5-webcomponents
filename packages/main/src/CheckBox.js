@@ -1,16 +1,20 @@
 import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
-import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
-import { getFeature } from "@ui5/webcomponents-base/src/FeaturesRegistry.js";
-import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-import CheckBoxTemplate from "./build/compiled/CheckBoxTemplate.lit.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
+import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import "@ui5/webcomponents-base/dist/icons/accept.js";
+import Icon from "./Icon.js";
 import Label from "./Label.js";
+import { VALUE_STATE_ERROR, VALUE_STATE_WARNING } from "./i18n/defaults.js";
+
+// Template
+import CheckBoxTemplate from "./generated/templates/CheckBoxTemplate.lit.js";
 
 // Styles
-import checkboxCss from "./themes/CheckBox.css.js";
+import checkboxCss from "./generated/themes/CheckBox.css.js";
 
 /**
  * @public
@@ -103,7 +107,7 @@ const metadata = {
 		 * Determines the name with which the <code>ui5-checkbox</code> will be submitted in an HTML form.
 		 *
 		 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
-		 * <code>import "@ui5/webcomponents/dist/InputElementsFormSupport.js";</code>
+		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
 		 *
 		 * <b>Note:</b> When set, a native <code>input</code> HTML element
 		 * will be created inside the <code>ui5-checkbox</code> so that it can be submitted as
@@ -139,12 +143,12 @@ const metadata = {
  * <h3 class="comment-api-title">Overview</h3>
  *
  * Allows the user to set a binary value, such as true/false or yes/no for an item.
- * <br/><br/>
+ * <br><br>
  * The <code>ui5-checkbox</code> component consists of a box and a label that describes its purpose.
  * If it's checked, an indicator is displayed inside the box.
  * To check/uncheck the <code>ui5-checkbox</code>, the user has to click or tap the square
  * box or its label.
- * <br/><br/>
+ * <br><br>
  * Clicking or tapping toggles the <code>ui5-checkbox</code> between checked and unchecked state.
  * The <code>ui5-checkbox</code> component only has 2 states - checked and unchecked.
  *
@@ -213,7 +217,7 @@ class CheckBox extends UI5Element {
 				nativeInput.value = element.checked ? "on" : "";
 			});
 		} else if (this.name) {
-			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/InputElementsFormSupport.js";`); // eslint-disable-line
+			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
 		}
 	}
 
@@ -252,20 +256,7 @@ class CheckBox extends UI5Element {
 	get classes() {
 		return {
 			main: {
-				"ui5-checkbox-wrapper": true,
-				"ui5-checkbox-with-label": !!this.text,
-				"ui5-checkbox--disabled": this.disabled,
-				"ui5-checkbox--readonly": this.readonly,
-				"ui5-checkbox--error": this.valueState === "Error",
-				"ui5-checkbox--warning": this.valueState === "Warning",
-				"ui5-checkbox--wrap": this.wrap,
 				"ui5-checkbox--hoverable": !this.disabled && !this.readonly && isDesktop(),
-				"sapUiSizeCompact": getCompactSize(),
-			},
-			inner: {
-				"ui5-checkbox-inner": true,
-				"ui5-checkbox-inner-mark": true,
-				"ui5-checkbox-inner--checked": !!this.checked,
 			},
 		};
 	}
@@ -278,16 +269,40 @@ class CheckBox extends UI5Element {
 		return this.disabled ? "true" : undefined;
 	}
 
+	get ariaLabelledBy() {
+		return this.text ? `${this._id}-label` : undefined;
+	}
+
+	get ariaDescribedBy() {
+		return this.hasValueState ? `${this._id}-descr` : undefined;
+	}
+
+	get hasValueState() {
+		return this.valueState !== ValueState.None;
+	}
+
+	static valueStateTextMappings() {
+		return {
+			"Error": VALUE_STATE_ERROR.defaultText,
+			"Warning": VALUE_STATE_WARNING.defaultText,
+		};
+	}
+
+	get valueStateText() {
+		return CheckBox.valueStateTextMappings()[this.valueState];
+	}
+
 	get tabIndex() {
 		return this.disabled ? undefined : "0";
 	}
 
 	get rtl() {
-		return getEffectiveRTL() ? "rtl" : undefined;
+		return getRTL() ? "rtl" : undefined;
 	}
 
 	static async define(...params) {
 		await Label.define();
+		await Icon.define();
 
 		super.define(...params);
 	}

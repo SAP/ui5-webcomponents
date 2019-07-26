@@ -1,12 +1,15 @@
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler.js";
-import ScrollEnablement from "@ui5/webcomponents-base/src/delegate/ScrollEnablement.js";
-import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
-import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
-import TabContainerTemplate from "./build/compiled/TabContainerTemplate.lit.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
+import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import { getCompactSize } from "@ui5/webcomponents-base/dist/config/CompactSize.js";
+import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
+import "@ui5/webcomponents-base/dist/icons/slim-arrow-down.js";
+import "@ui5/webcomponents-base/dist/icons/slim-arrow-left.js";
+import "@ui5/webcomponents-base/dist/icons/slim-arrow-right.js";
+import TabContainerTemplate from "./generated/templates/TabContainerTemplate.lit.js";
 import Button from "./Button.js";
 import CustomListItem from "./CustomListItem.js";
 import Icon from "./Icon.js";
@@ -16,7 +19,7 @@ import TabBase from "./TabBase.js";
 import SemanticColor from "./types/SemanticColor.js";
 
 // Styles
-import tabContainerCss from "./themes/TabContainer.css.js";
+import tabContainerCss from "./generated/themes/TabContainer.css.js";
 
 
 const SCROLL_STEP = 128;
@@ -82,19 +85,21 @@ const metadata = {
 
 		_selectedTab: {
 			type: TabBase,
-			association: true,
 		},
 
 		_scrollable: {
 			type: Boolean,
+			noAttribute: true,
 		},
 
 		_scrollableBack: {
 			type: Boolean,
+			noAttribute: true,
 		},
 
 		_scrollableForward: {
 			type: Boolean,
+			noAttribute: true,
 		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.TabContainer.prototype */ {
@@ -393,7 +398,7 @@ class TabContainer extends UI5Element {
 	}
 
 	get rtl() {
-		return getEffectiveRTL() ? "rtl" : undefined;
+		return getRTL() ? "rtl" : undefined;
 	}
 
 	static async define(...params) {
