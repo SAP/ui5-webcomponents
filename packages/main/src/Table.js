@@ -42,7 +42,7 @@ const metadata = {
 		columns: {
 			type: TableColumn,
 			individualSlots: true,
-			listenFor: { exclude: ["header"] },
+			listenFor: { include: ["*"] },
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.Table.prototype */ {

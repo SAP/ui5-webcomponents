@@ -13,7 +13,7 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.TableColumn.prototype */ {
 
 		/**
-		 * Defines the HTML Element to be displayed in the column header.
+		 * Defines the content of the column header.
 		 *
 		 * @type {Node[]}
 		 * @slot
