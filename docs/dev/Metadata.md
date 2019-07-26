@@ -10,7 +10,7 @@ Defines the HTML tag for the Web Component.
 
 ```json
 {
-	tag: "ui5-my-element",
+	"tag": "ui5-my-element",
 }
 ``` 
 
@@ -25,30 +25,30 @@ Properties of type `Object` and properties with `noAttribute` set to `true` do n
 
 ```json
 {
-	properties: {
-		message: {
-			type: String,
-			defaultValue: "Hello",
+	"properties": {
+		"message": {
+			"type": String,
+			"defaultValue": "Hello",
 		},
-		shown: {
-			type: Boolean,
-			noAttribute: true,
+		"shown": {
+			"type": Boolean,
+			"noAttribute": true,
 		},
-		settings: {
-			type: Object,
-			deepEqual: true,
+		"settings": {
+			"type": Object,
+			"deepEqual": true,
 		},
-		nums: {
-			type: Integer,
-			multiple: true,
+		"nums": {
+			"type": Integer,
+			"multiple": true,
 		},
-		animationDuration: {
-			type: Integer,
-			nonVisual: true,
+		"animationDuration": {
+			"type": Integer,
+			"nonVisual": true,
 		},
-		width: {
-			type: CSSSize,
-			defaultValue: "",
+		"width": {
+			"type": CSSSize,
+			"defaultValue": "",
 		},
 	},
 }
@@ -90,16 +90,16 @@ Defines the `slots` that will be provided by this UI5 Web Component.
 
 ```json
 {
-	slots: {
-		default: {
-			type: Node,
+	"slots": {
+		"default": {
+			"type": Node,
 		},
-		footer: {
-			type: HTMLElement,
+		"footer": {
+			"type": HTMLElement,
 		},
-		rows: {
-			type: MyRow,
-			individualSlots: true,
+		"rows": {
+			"type": MyRow,
+			"individualSlots": true,
 		}
 	}
 }
