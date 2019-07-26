@@ -1,5 +1,5 @@
-commit 3d21458bb232401b4b4306ce0e659d782a047206
+commit 001cff53028b531668db45ed517de51d32011c83
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Jul 26 11:21:12 2019 +0300
+Date:   Fri Jul 26 13:02:08 2019 +0300
 
-    chore(ui5-li): remove noAttribute (#689)
+     chore: prepare i18n setup (#672)
