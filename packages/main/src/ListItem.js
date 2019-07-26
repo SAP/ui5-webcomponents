@@ -61,7 +61,6 @@ const metadata = {
 		*/
 		actionable: {
 			type: Boolean,
-			noAttribute: true,
 		},
 
 		_mode: {

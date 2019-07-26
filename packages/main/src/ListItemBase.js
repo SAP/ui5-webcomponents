@@ -19,7 +19,6 @@ const metadata = {
 		*/
 		hasBorder: {
 			type: Boolean,
-			noAttribute: true,
 		},
 
 		_tabIndex: {
