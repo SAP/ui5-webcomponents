@@ -1,5 +1,5 @@
-commit 035302637c88353aab8d88bf7649588b97153bc9
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Jul 25 17:04:53 2019 +0300
+commit 7304a319d2f6554366018e3159ae058c9ae59ad0
+Author: Elena Stoyanova <elena.stoyanova@sap.com>
+Date:   Fri Jul 26 08:38:45 2019 +0300
 
-    refactor(ui5-li, ui5-li-custom, ui5-li-gh): styles cleanup (#678)
+    feat(ui5-switch): accessibility implementation (#692)
