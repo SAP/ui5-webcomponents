@@ -7,12 +7,6 @@
 	pointer-events: none;
 }
 
-ui5-togglebutton .sapMBtn::before { /* this is a hack for a bug in IE https:/* github.com/philipwalton/flexbugs/issues/231 */
-	content: '';
-	min-height: inherit;
-	font-size: 0;
-}
-
 :host([design="Positive"][pressed]),
 :host([design="Positive"][pressed][focused]),
 :host([design="Positive"][pressed]:hover) {
@@ -140,6 +134,12 @@ ui5-togglebutton {
 	border: 1px solid var(--sapUiButtonBorderColor);
 	color: var(--sapUiButtonTextColor);
 	box-sizing: border-box;
+}
+
+ui5-togglebutton .ui5-button-root::before { /* this is a hack for a bug in IE https:/* github.com/philipwalton/flexbugs/issues/231 */
+	content: '';
+	min-height: inherit;
+	font-size: 0;
 }
 
 ui5-togglebutton[disabled] {
