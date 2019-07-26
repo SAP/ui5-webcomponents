@@ -6,7 +6,7 @@
 	width: 100%;
 }
 
-.ui5-tab-container {
+.ui5-tc-root {
 	font-family: var(--sapUiFontFamily);
 	font-size: 1rem;
 }
