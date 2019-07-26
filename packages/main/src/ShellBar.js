@@ -112,7 +112,6 @@ const metadata = {
 		 */
 		breakpointSize: {
 			type: String,
-			noAttribute: true,
 		},
 
 		/**
