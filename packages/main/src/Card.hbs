@@ -1,6 +1,9 @@
 <div
 	class="{{classes.main}}"
 	dir="{{rtl}}"
+	role="region"
+	aria-labelledby="{{_id}}-heading"
+	aria-roledescription="{{ariaCardRoleDescription}}"
 >
 	{{#if hasHeader}}
 		<header class="{{classes.header}}"
@@ -8,31 +11,32 @@
 			@keydown="{{_headerKeydown}}"
 			@keyup="{{_headerKeyup}}"
 			tabindex="{{tabindex}}"
-			role="{{role}}">
+			role="group"
+			aria-labelledby="{{_id}}-heading {{_id}}-subtitle">
 			{{#if image}}
 				<img src="{{avatar}}" aria-label="Avatar" class="ui5-card-avatar ui5-card-header-img">
 			{{/if}}
 
 			{{#if icon}}
-				<span role="img" aria-label="Avatar" class="ui5-card-avatar">
+				<span role="img" aria-label="{{ariaCardAvatarLabel}}" class="ui5-card-avatar">
 					<ui5-icon class="ui5-card-header-icon" src="{{avatar}}"></ui5-icon>
 				</span>
 			{{/if}}
 
 			<div class="ui5-card-header-text">
 				{{#if heading}}
-					<div class="ui5-card-heading">{{heading}}</div>
+					<div id="{{_id}}-heading" class="ui5-card-heading">{{heading}}</div>
 				{{/if}}
 
 				{{#if subtitle}}
-					<div class="ui5-card-subtitle ">{{subtitle}}</div>
+					<div id="{{_id}}-subtitle" class="ui5-card-subtitle ">{{subtitle}}</div>
 				{{/if}}
 			</div>
 			<span part="status" class="ui5-card-status">{{status}}</span>
 		</header>
 	{{/if}}
 
-	<section>
+	<section role="group" aria-label="{{ariaCardContentLabel}}">
 		<slot></slot>
 	</section>
 </div>
