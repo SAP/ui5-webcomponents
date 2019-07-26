@@ -9,22 +9,22 @@
 			</div>
 		{{/if}}
 	</div>
-	<div class="sapWCTimelineBubble" tabindex="{{_tabIndex}}" data-sap-focus-ref>
-		<div class="sapWCTimelineItemTitle">
+	<div class="ui5-tli-bubble" tabindex="{{_tabIndex}}" data-sap-focus-ref>
+		<div class="ui5-tli-title">
 			{{#if itemName}}
 				{{> itemName}}
 			{{/if}}
 
 			<span>{{titleText}}</span>
 		</div>
-		<div class="sapWCTimelineItemSubtitle">{{subtitleText}}</div>
+		<div class="ui5-tli-subtitle">{{subtitleText}}</div>
 
 		{{#if textContent}}
-			<div class="sapWCTimelineItemDesc">
+			<div class="ui5-tli-desc">
 				<slot></slot>
 			</div>
 		{{/if}}
-		<span class="sapWCTimelineBubbleArrow sapWCTimelineBubbleArrowLeft"></span>
+		<span class="ui5-tli-bubble-arrow ui5-tli-bubble-arrow--left"></span>
 	</div>
 </div>
 
