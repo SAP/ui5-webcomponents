@@ -91,7 +91,7 @@ if [ "$TRAVIS_BRANCH" == "$TRAVIS_LATEST_RELEASE_WEBSITE_BRANCH" ]; then
   cp -Rf $TRAVIS_BUILD_DIR/packages/playground/dist/* gh-pages/master
 
   # put the commit id as version
-  echo "$(git log -1 HEAD)" > gh-pages/version.txt
+  echo "$(git log -1 HEAD)" > gh-pages/master/version.txt
 
   echo "After update master version on gh-pages"
   ls -a gh-pages
