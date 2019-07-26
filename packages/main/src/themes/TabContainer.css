@@ -1,12 +1,8 @@
 /* ============================= */
 /* Global Base parameters        */
 /* ============================= */
-:host(ui5-tabcontainer:not([hidden])) {
+:host(:not([hidden])) {
 	display: inline-block;
-	width: 100%;
-}
-
-ui5-tabcontainer:not([hidden]) {
 	width: 100%;
 }
 
@@ -373,27 +369,54 @@ ui5-tabcontainer:not([hidden]) {
 }
 
 /*** Compact ***/
-.sapUiSizeCompact .ui5-tc__headerItem--textOnly,
-.sapUiSizeCompact .ui5-tc__overflowItemContent {
+:host([data-ui5-compact-size]) .ui5-tc__headerItem--textOnly,
+:host([data-ui5-compact-size]) .ui5-tc__overflowItemContent {
 	height: 2rem;
 }
 
-.sapUiSizeCompact .ui5-tc__headerItem--textOnly {
+:host([data-ui5-compact-size]) .ui5-tc__headerItem--textOnly {
 	line-height: 1.325rem;
 }
 
-.sapUiSizeCompact .ui5-tc-headerItemIcon-outer {
+:host([data-ui5-compact-size]) .ui5-tc-headerItemIcon-outer {
 	height: 2rem;
 	width: 2rem;
 }
 
-.sapUiSizeCompact .ui5-tc-headerItemIcon{
+:host([data-ui5-compact-size]) .ui5-tc-headerItemIcon {
 	height: 1rem;
 	width: 1rem;
 }
 
-.sapUiSizeCompact .ui5-tc__headerItem--withIcon  .ui5-tc__headerItemAdditionalText + .ui5-tc__headerItemText {
+:host([data-ui5-compact-size]) .ui5-tc__headerItem--withIcon  .ui5-tc__headerItemAdditionalText + .ui5-tc__headerItemText {
 	margin-top: 0.3125rem;
 }
 
+/* IE pair of styles */
+ui5-tabcontainer:not([hidden]) {
+	display: inline-block;
+	width: 100%;
+}
 
+ui5-tabcontainer[data-ui5-compact-size] .ui5-tc__headerItem--textOnly,
+ui5-tabcontainer[data-ui5-compact-size] .ui5-tc__overflowItemContent {
+	height: 2rem;
+}
+
+ui5-tabcontainer[data-ui5-compact-size] .ui5-tc__headerItem--textOnly {
+	line-height: 1.325rem;
+}
+
+ui5-tabcontainer[data-ui5-compact-size] .ui5-tc-headerItemIcon-outer {
+	height: 2rem;
+	width: 2rem;
+}
+
+ui5-tabcontainer[data-ui5-compact-size] .ui5-tc-headerItemIcon {
+	height: 1rem;
+	width: 1rem;
+}
+
+ui5-tabcontainer[data-ui5-compact-size] .ui5-tc__headerItem--withIcon  .ui5-tc__headerItemAdditionalText + .ui5-tc__headerItemText {
+	margin-top: 0.3125rem;
+}
