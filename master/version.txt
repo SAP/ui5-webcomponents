@@ -1,5 +1,5 @@
-commit 7ce8573bab5c9cf054a1ee87f6c3b6ab84d4e701
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Fri Jul 26 14:31:01 2019 +0300
+commit 1a5e23c5a4435950a53a37fa5715f08f49821535
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Fri Jul 26 17:22:38 2019 +0300
 
-    chore(ui5-card): improve accessibility (#607)
+    refactor(ui5-shellbar): cleanup styles (#686)
