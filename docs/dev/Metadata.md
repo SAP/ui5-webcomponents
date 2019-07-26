@@ -2,6 +2,8 @@
 
 Metadata is a JavaScript object, containing information about the public interface of a UI5 Web Component (tag name, properties, etc...)
 
+*Disclaimer: The information below is for UI5 Web Components development only. It is experimental and may change*
+
 ## Tag
 
 Defines the HTML tag for the Web Component.
@@ -19,7 +21,7 @@ Defines the HTML tag for the Web Component.
 Defines the HTML properties for the Web Component. 
 
 *Note about attributes:* By default, for each property an equivalent attribute is supported. Attributes have the same names as properties, but in `kebab-case` rather than `camelCase`.
-Properties of type `Object` and properties with `noAttribute` set to `true` do not have an attribute equivalent. 
+Properties of type `Object`, properties with `multiple` set to`true` and properties with `noAttribute` set to `true` do not have an attribute equivalent. 
 
 #### Example
 
