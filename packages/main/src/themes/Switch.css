@@ -1,4 +1,4 @@
-
+@import "./InvisibleTextStyles.css";
 
 :host(:not([hidden])) {
 	display: inline-block;

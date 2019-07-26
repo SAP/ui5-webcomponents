@@ -78,6 +78,16 @@ const BUSY_INDICATOR_TITLE = {
 	defaultText: "Please wait",
 };
 
+const SWITCH_ON = {
+	key: "SWITCH_ON",
+	defaultText: "On",
+};
+
+const SWITCH_OFF = {
+	key: "SWITCH_OFF",
+	defaultText: "Off",
+};
+
 export {
 	MULTIINPUT_SHOW_MORE_TOKENS,
 	TEXTAREA_CHARACTERS_LEFT,
@@ -95,4 +105,6 @@ export {
 	VALUE_STATE_ERROR,
 	VALUE_STATE_WARNING,
 	BUSY_INDICATOR_TITLE,
+	SWITCH_ON,
+	SWITCH_OFF,
 };
