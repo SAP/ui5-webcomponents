@@ -1,0 +1,5 @@
+commit 7ce8573bab5c9cf054a1ee87f6c3b6ab84d4e701
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Fri Jul 26 14:31:01 2019 +0300
+
+    chore(ui5-card): improve accessibility (#607)
