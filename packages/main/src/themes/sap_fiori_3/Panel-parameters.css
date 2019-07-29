@@ -1,1 +1,14 @@
 @import "../base/Panel-parameters.css";
+
+:root {
+	--_ui5_panel_header_height: 2.75rem;
+	--_ui5_panel_header_title_size: var(--sapMFontHeader5Size);
+	--_ui5_panel_header_button_outline_style: dotted;
+	--_ui5_panel_header_button_hover_background_color: var(--sapUiButtonLiteHoverBackground);
+	--_ui5_panel_header_button_active_background_color: var(--sapUiButtonLiteActiveBackground);;
+	--_ui5_panel_header_button_hover_color: var(--sapUiButtonLiteTextColor);
+	--_ui5_panel_header_button_active_color: var(--sapUiButtonActiveTextColor);
+	--_ui5_panel_header_button_hover_border_color: var(--sapUiButtonHoverBorderColor);;
+	--_ui5_panel_header_button_active_border_color: var(--sapUiButtonLiteActiveBorderColor);;
+	--_ui5_panel_button_root_width: 2.75rem;
+}
