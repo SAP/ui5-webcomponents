@@ -15,7 +15,7 @@
 :host([selected]) {
 	color: var(--_ui5_radiobutton_selected_fill);
 }
-:host([selected]) .sapMRbSvg .ui5-radio-svg-inner {
+:host([selected]) .ui5-radio-svg .ui5-radio-svg-inner {
 	fill: currentColor;
 }
 
@@ -126,17 +126,17 @@ ui5-label.labelInRadioButton {
 }
 
 /* SVG */
-.sapMRbSvg {
+.ui5-radio-svg {
 	height: 2.75rem;
 	width: 2.75rem;
 	pointer-events: none;
 }
 
-.sapMRbSvg .ui5-radio-svg-outer {
+.ui5-radio-svg .ui5-radio-svg-outer {
 	stroke: currentColor;
 }
 
-.sapMRbSvg .ui5-radio-svg-inner {
+.ui5-radio-svg .ui5-radio-svg-inner {
 	fill: none;
 }
 
@@ -164,7 +164,7 @@ ui5-label.labelInRadioButton {
 	justify-content: center;
 }
 
-:host([data-ui5-compact-size]) .ui5-radio-root .ui5-radio-inner .sapMRbSvg {
+:host([data-ui5-compact-size]) .ui5-radio-root .ui5-radio-inner .ui5-radio-svg {
 	height: 2rem;
 	width: 2rem;
 	line-height: 2rem;
@@ -213,7 +213,7 @@ ui5-radiobutton[selected] {
 	color: var(--_ui5_radiobutton_selected_fill);
 }
 
-ui5-radiobutton[selected] .sapMRbSvg .ui5-radio-svg-inner {
+ui5-radiobutton[selected] .ui5-radio-svg .ui5-radio-svg-inner {
 	fill: currentColor;
 }
 
@@ -304,7 +304,7 @@ ui5-radiobutton[data-ui5-compact-size] .ui5-radio-root .ui5-radio-inner {
 	justify-content: center;
 }
 
-ui5-radiobutton[data-ui5-compact-size] .ui5-radio-root .ui5-radio-inner .sapMRbSvg {
+ui5-radiobutton[data-ui5-compact-size] .ui5-radio-root .ui5-radio-inner .ui5-radio-svg {
 	height: 2rem;
 	width: 2rem;
 	line-height: 2rem;

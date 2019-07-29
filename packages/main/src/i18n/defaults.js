@@ -88,7 +88,25 @@ const SWITCH_OFF = {
 	defaultText: "Off",
 };
 
+const ARIA_ROLEDESCRIPTION_CARD = {
+	key: "ARIA_ROLEDESCRIPTION_CARD",
+	defaultText: "Card",
+};
+
+const ARIA_LABEL_CARD_CONTENT = {
+	key: "ARIA_LABEL_CARD_CONTENT",
+	defaultText: "Card Content",
+};
+
+const AVATAR_TOOLTIP = {
+	key: "AVATAR_TOOLTIP",
+	defaultText: "Avatar",
+};
+
 export {
+	ARIA_LABEL_CARD_CONTENT,
+	ARIA_ROLEDESCRIPTION_CARD,
+	AVATAR_TOOLTIP,
 	MULTIINPUT_SHOW_MORE_TOKENS,
 	TEXTAREA_CHARACTERS_LEFT,
 	TEXTAREA_CHARACTERS_EXCEEDED,
