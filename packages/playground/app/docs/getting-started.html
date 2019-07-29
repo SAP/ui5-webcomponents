@@ -1,0 +1,100 @@
+---
+layout: default
+title: Getting Started
+nav_order: 1
+permalink: /playground
+---
+
+<style>
+	@font-face {
+		font-family: "72-Bold";
+		src: url(../assets/fonts/72-Bold.woff2) format("woff2"),
+				url(../assets/fonts/72-Bold.woff) format("woff");
+	}
+
+	@font-face {
+		font-family: "72-Regular";
+		src: url(../assets/fonts/72-Regular.woff2) format("woff2"),
+				url(../assets/fonts/72-Regular.woff) format("woff");
+	}
+
+	body {
+		font-family: '72-Regular';
+	}
+
+	.wrapper {
+		width: 100%;
+		max-width: 1000px;
+		margin-top: 3rem;
+		box-sizing: border-box;
+	}
+
+	.wrapper > h1 {
+		margin: 3rem 0;
+		font-size: 1.7rem;
+		font-family: "72-Bold";
+	}
+
+	.setup-wrapper {
+		margin-top: 4rem;
+	}
+
+	.setup-wrapper > h2 {
+		font-family: "72-Bold";
+	}
+
+	.step {
+		margin-bottom: 2rem;
+	}
+
+	.align-vertically {
+		display: flex;
+		align-items: center;
+	}
+
+	pre.highlight {
+		padding-bottom: 0;
+	}
+
+	@media screen and (max-width: 600px) {
+		.wrapper {
+			padding: 0 1.5rem;
+		}
+	}
+</style>
+<section class="wrapper">
+	<h1>Getting Started</h1>
+	<p>The UI5 Web Components share fundamental UI5 qualities with others to provide enterprise-grade features, Fiori UX and themeability. The goal is to achieve an easy consumption of UI5 controls to lower the entry barrier to use UI5 controls for own applications and to avoid complexity of UI5 rendering-stack by making the consumption of the full-stack UI5 optional. In general, the UI5 Web Components are targeting for Web Developers who want to have more flexibility to use just HTML tags or arbitrary JS frameworks.</p>
+
+	<div class="setup-wrapper">
+		<h2>Installation</h2>
+		<div class="step">
+			<p>Install @ui5/webcomponents</p>
+			<pre class="highlight">{% highlight bash %}npm install @ui5/webcomponents{% endhighlight %}</pre>
+		</div>
+	</div>
+
+	<div class="setup-wrapper">
+		<h2>Read the Docs</h2>
+		<div class="step align-vertically">
+			<p>Documentation and tutorials about UI5 Web Components can be found
+			<a target="_blank" href="https://github.com/SAP/ui5-webcomponents/tree/master/docs">here</a>
+			</p>
+		</div>
+	</div>
+
+	<div class="setup-wrapper">
+		<h2>Usage</h2>
+		<div class="step">
+			<p>1.Import the needed Web Component</p>
+			<pre class="highlight">{% highlight js %}import "@ui5/webcomponents/dist/Button";{% endhighlight %}</pre>
+		</div>
+		<div class="step">
+			<p>2.Instantiate Web Component</p>
+			<pre class="highlight">{% highlight html %}<ui5-button>Hello world!</ui5-button>{% endhighlight %}</pre>
+		</div>
+		<div class="step">
+			<p>3.Enjoy UI5 Web Components</p>
+		</div>
+	</div>
+</section>

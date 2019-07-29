@@ -7,13 +7,6 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta charset="utf-8">
 
-	<link rel="stylesheet" href="../../../../../../www/home/core.css">
-
-	<script src="../../../../../../test-resources/playground/libs/google-code-prettify/prettify.js"></script>
-	<link href="../../../../../../test-resources/playground/libs/google-code-prettify/sunburst.css" type="text/css" rel="stylesheet">
-
-	<link href="../../../../../../test-resources/playground/css/api.css" type="text/css" rel="stylesheet">
-
 	<script data-id="sap-ui-config" type="application/json">
 		{
 			"theme": "sap_fiori_3",
@@ -21,20 +14,14 @@
 		}
 	</script>
 
-	<script src="../../../../../../webcomponentsjs/webcomponents-loader.js"></script>
-	<script src="../../../../../../resources/sap/ui/webcomponents/main/bundle.esm.js"
-	        type="module"
-	>
-	</script>
+	<script>delete Document.prototype.adoptedStyleSheets;</script>
 
-	<script nomodule src="../../../../../../resources/sap/ui/webcomponents/main/bundle.es5.js">
-	</script>
 	<style>
-		.hcb-background .inputIcon {
+		.hcb .inputIcon {
 			color: #fafafa;
 			background: transparent;
 		}
-		.hcb-background .inputIcon:hover{
+		.hcb .inputIcon:hover{
 			background: #7a5100;
 		}
 
@@ -220,10 +207,7 @@
 		searchInput.addEventListener("input", function(e){
 			searchCriteria = e.target.value;
 		});
-		window.prettyPrint();
 	</script>
-
-	<script defer src="../../../../../../www/samples/settings.js"></script>
 </body>
 
 </html>
