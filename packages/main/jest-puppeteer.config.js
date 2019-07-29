@@ -6,7 +6,7 @@ module.exports = {
 		// headless: false
 	},
 	server: {
-		command: 'cd ../playground/ && serve',
+		command: 'cd ../playground && npx ui5 serve',
 		port: 8080,
 		launchTimeout: 10000,
 		debug: true,
