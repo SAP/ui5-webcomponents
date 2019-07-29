@@ -17,17 +17,17 @@
     "rimraf": "^2.6.3"
   },
   "scripts": {
-    "test": "stylelint '**/*.scss'",
     "build": "npm-run-all --parallel prepare:** && jekyll build --source ./ --destination ../dist",
     "build:samples": "cd ../../main && npm run build:samples",
     "clean:samples": "rimraf ./docs/components/*sample.html",
     "clean:assets": "rimraf ./assets/js/ui5-webcomponents/*",
-    "start": "npm-run-all --parallel prepare:** && jekyll serve",
     "copy:assets": "cp ../../main/dist/resources/sap/ui/webcomponents/main/* ./assets/js/ui5-webcomponents",
     "copy:samples": "node ./samples-copy.js \"../../main/dist/test-resources/sap/ui/webcomponents/main/api\"",
     "prepare:assets": "npm run clean:assets && rollup -c rollup.config.js --environment ES5_BUILD",
     "prepare:docs": "node ./docs-prepare.js \"../../../docs/\"",
     "prepare:samples": "npm run clean:samples && npm run build:samples && npm run copy:samples",
-    "prepare:tutorials": "node ./tutorials-prepare.js \"../../../docs/\""
+    "prepare:tutorials": "node ./tutorials-prepare.js \"../../../docs/\"",
+    "start": "npm-run-all --parallel prepare:** && jekyll serve",
+    "test": "stylelint '**/*.scss'"
   }
 }
