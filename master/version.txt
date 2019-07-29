@@ -1,5 +1,9 @@
-commit 1a5e23c5a4435950a53a37fa5715f08f49821535
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Fri Jul 26 17:22:38 2019 +0300
+commit bf76ef11f09b563b906c5ed842d7e7c221c8b250
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Jul 29 09:47:45 2019 +0300
 
-    refactor(ui5-shellbar): cleanup styles (#686)
+    chore: replace sapUiCompactSize class (#696)
+    
+    * chore(ui5-tabcontainer): replace sapUiCompactSize class
+    
+    * more sapUiCompactSize usage
