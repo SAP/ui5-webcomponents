@@ -4,7 +4,6 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-import { getCompactSize } from "@ui5/webcomponents-base/dist/config/CompactSize.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import "@ui5/webcomponents-base/dist/icons/slim-arrow-down.js";
 import "@ui5/webcomponents-base/dist/icons/slim-arrow-left.js";
@@ -355,10 +354,6 @@ class TabContainer extends UI5Element {
 
 	get classes() {
 		return {
-			main: {
-				"ui5-tab-container": true,
-				"sapUiSizeCompact": getCompactSize(),
-			},
 			header: {
 				"ui5-tc__header": true,
 				"ui5-tc__header--scrollable": this._scrollable,
