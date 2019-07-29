@@ -39,6 +39,9 @@ git clone --quiet --branch=gh-pages $REPO gh-pages || git checkout --orphan gh-p
 echo "Before remove gh-pages"
 ls -a gh-pages
 
+# Install Jekyll for the deployment of the playground
+gem install jekyll
+
 if [ "$TRAVIS_BRANCH" == "$TRAVIS_LATEST_RELEASE_WEBSITE_BRANCH" ]; then
   ###
   ### Publish docs on commit in latest-release-website branch
