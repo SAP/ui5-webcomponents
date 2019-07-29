@@ -6,7 +6,7 @@ module.exports = {
 		// headless: false
 	},
 	server: {
-		command: 'cd ../playground/app && jekyll serve',
+		command: 'cd ../playground/ && serve',
 		port: 8080,
 		launchTimeout: 10000,
 		debug: true,
