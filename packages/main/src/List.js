@@ -3,7 +3,6 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import FocusHelper from "@ui5/webcomponents-base/dist/FocusHelper.js";
 import { isTabNext } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-import ListItemBase from "./ListItemBase.js";
 import ListMode from "./types/ListMode.js";
 import ListSeparators from "./types/ListSeparators.js";
 import ListItemType from "./types/ListItemType.js";
@@ -43,7 +42,7 @@ const metadata = {
 		 */
 		"default": {
 			propertyName: "items",
-			type: ListItemBase,
+			"interface": "IListItem",
 		},
 	},
 	properties: /** @lends  sap.ui.webcomponents.main.List.prototype */ {
@@ -201,13 +200,13 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/List";</code>
+ * <code>import "@ui5/webcomponents/dist/List.js";</code>
  * <br>
- * <code>import "@ui5/webcomponents/dist/StandardListItem";</code> (for <code>ui5-li</code>)
+ * <code>import "@ui5/webcomponents/dist/StandardListItem.js";</code> (for <code>ui5-li</code>)
  * <br>
- * <code>import "@ui5/webcomponents/dist/CustomListItem";</code> (for <code>ui5-li-custom</code>)
+ * <code>import "@ui5/webcomponents/dist/CustomListItem.js";</code> (for <code>ui5-li-custom</code>)
  * <br>
- * <code>import "@ui5/webcomponents/dist/GroupHeaderListItem";</code> (for <code>ui5-li-group-header</code>)
+ * <code>import "@ui5/webcomponents/dist/GroupHeaderListItem.js";</code> (for <code>ui5-li-group-header</code>)
  *
  * @constructor
  * @author SAP SE

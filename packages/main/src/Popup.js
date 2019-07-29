@@ -10,7 +10,6 @@ import styles from "./generated/themes/Popup.css.js";
  * @public
  */
 const metadata = {
-	"abstract": true,
 	slots: /** @lends  sap.ui.webcomponents.main.Popup.prototype */ {
 
 		/**

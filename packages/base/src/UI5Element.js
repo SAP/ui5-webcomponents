@@ -186,7 +186,7 @@ class UI5Element extends HTMLElement {
 
 			child = this.constructor.getMetadata().constructor.validateSlotValue(child, slotData);
 
-			if (child._isUI5Element) {
+			if (child.isUI5Element) {
 				this._attachChildPropertyUpdated(child, slotData);
 			}
 
@@ -210,7 +210,7 @@ class UI5Element extends HTMLElement {
 		}
 
 		children.forEach(child => {
-			if (child && child._isUI5Element) {
+			if (child && child.isUI5Element) {
 				this._detachChildPropertyUpdated(child);
 			}
 		});
@@ -321,22 +321,33 @@ class UI5Element extends HTMLElement {
 
 		const result = metadatas[0];
 
+		// merge interfaces
+		result.interfaces = metadatas.reduce((allInterfaces, current) => {
+			let interfaces = [];
+			if (typeof current.interfaces === "string") {
+				interfaces = [current.interfaces];
+			} else if (Array.isArray(current.interfaces)) {
+				interfaces = current.interfaces;
+			}
+
+			interfaces.forEach(name => {
+				if (!allInterfaces.includes(name)) {
+					allInterfaces.push(name);
+				}
+			});
+			return allInterfaces;
+		}, []);
+
 		// merge properties
-		result.properties = metadatas.reverse().reduce((result, current) => { // eslint-disable-line
-			Object.assign(result, current.properties);
-			return result;
+		result.properties = metadatas.reverse().reduce((allProperties, current) => { // eslint-disable-line
+			Object.assign(allProperties, current.properties || {});
+			return allProperties;
 		}, {});
 
 		// merge slots
-		result.slots = metadatas.reverse().reduce((result, current) => { // eslint-disable-line
-			Object.assign(result, current.slots);
-			return result;
-		}, {});
-
-		// merge events
-		result.events = metadatas.reverse().reduce((result, current) => { // eslint-disable-line
-			Object.assign(result, current.events);
-			return result;
+		result.slots = metadatas.reverse().reduce((allSlots, current) => { // eslint-disable-line
+			Object.assign(allSlots, current.slots || {});
+			return allSlots;
 		}, {});
 
 		this._metadata = new UI5ElementMetadata(result);
@@ -566,10 +577,15 @@ class UI5Element extends HTMLElement {
 	/**
 	 * Used to duck-type UI5 elements without using instanceof
 	 * @returns {boolean}
-	 * @private
+	 * @public
 	 */
-	get _isUI5Element() {
+	get isUI5Element() {
 		return true;
+	}
+
+	static implementsInterface(name) {
+		const interfaces = this.getMetadata().getImplementedInterfaces();
+		return interfaces.includes(name);
 	}
 
 	/**

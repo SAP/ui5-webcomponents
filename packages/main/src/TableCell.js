@@ -10,6 +10,7 @@ import styles from "./generated/themes/TableCell.css.js";
  */
 const metadata = {
 	tag: "ui5-table-cell",
+	interfaces: ["ITableCell"],
 	slots: /** @lends sap.ui.webcomponents.main.TableCell.prototype */ {
 		/**
 		 * Specifies the content of the <code>ui5-table-cell</code>.

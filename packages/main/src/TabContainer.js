@@ -14,7 +14,6 @@ import CustomListItem from "./CustomListItem.js";
 import Icon from "./Icon.js";
 import List from "./List.js";
 import Popover from "./Popover.js";
-import TabBase from "./TabBase.js";
 import SemanticColor from "./types/SemanticColor.js";
 
 // Styles
@@ -33,13 +32,13 @@ const metadata = {
 		 * Defines the tabs.
 		 * <br><b>Note:</b> Only <code>ui5-tab</code> and <code>ui5-tab-separator</code> are allowed.
 		 *
-		 * @type {TabBase[]}
+		 * @interface {ITab}
 		 * @public
 		 * @slot
 		 */
 		"default": {
 			propertyName: "items",
-			type: TabBase,
+			"interface": "ITab",
 			individualSlots: true,
 			listenFor: { include: ["*"] },
 		},
@@ -83,7 +82,7 @@ const metadata = {
 		},
 
 		_selectedTab: {
-			type: TabBase,
+			type: Object,
 		},
 
 		_scrollable: {

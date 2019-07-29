@@ -10,7 +10,7 @@ import styles from "./generated/themes/ListItemBase.css.js";
  * @public
  */
 const metadata = {
-	"abstract": true,
+	interfaces: ["IListItem"],
 	properties: /** @lends  sap.ui.webcomponents.main.ListItemBase.prototype */  {
 
 		/**

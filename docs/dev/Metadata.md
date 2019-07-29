@@ -16,6 +16,31 @@ Defines the HTML tag for the Web Component.
 }
 ``` 
 
+## Interfaces
+
+Defines the list of interfaces this this web component implements.
+
+Interfaces are used for the purpose of determining whether a web
+component may slot other certain web components.
+
+#### Example
+
+```json
+{
+	"interfaces": ["IMyInterface", "IMyOtherInterface"],
+}
+```
+
+or, if just one:
+
+```json
+{
+	"interfaces": "IMyInterface",
+}
+```
+
+
+
 ## Properties / Attributes
 
 Defines the HTML properties for the Web Component. 
@@ -58,14 +83,16 @@ Properties of type `Object`, properties with `multiple` set to`true` and propert
 
 #### Property configuration settings
 
-Setting | Type | Default | Required | Description
---------|------|--------| ----------- | -----------
-`type`    | Property type | N/A | YES | The type of the property. For more information on types see the table below. 
-`defaultValue` | Any valid value for the type | undefined | NO | Default value of the property. Cannot be set for type "Boolean". Booleans are always false by default in HTML
-`multiple` | Boolean | false | NO | Indicates whether the property represents a single value or is an array of values of the given type
-`noAttribute` | Boolean | false | NO | No attribute equivalent will be created for that property. Always false for properties of type Object.
-`deepEqual` | Boolean | false | NO | Deep equal object comparison, rather than reference comparison, will be used to determine if the value of the property changed.
-`nonVisual` | Boolean | false | NO | Changes to this property will not lead to invalidation of the Web Component. Use for properties, not related to rendering.
+Setting | Type | Default | Description
+--------|------|--------| -----------
+`type`    | Property type | N/A | The type of the property. For more information on types see the table below. 
+`defaultValue` | Any valid value for the type | undefined | Default value of the property. Cannot be set for type "Boolean". Booleans are always false by default in HTML
+`multiple` | Boolean | false | Indicates whether the property represents a single value or is an array of values of the given type
+`noAttribute` | Boolean | false | No attribute equivalent will be created for that property. Always false for properties of type Object.
+`deepEqual` | Boolean | false | Deep equal object comparison, rather than reference comparison, will be used to determine if the value of the property changed.
+`nonVisual` | Boolean | false | Changes to this property will not lead to invalidation of the Web Component. Use for properties, not related to rendering.
+
+The `type` setting is required.
 
 #### Types
 
@@ -100,7 +127,7 @@ Defines the `slots` that will be provided by this UI5 Web Component.
 			"type": HTMLElement,
 		},
 		"rows": {
-			"type": MyRow,
+			"interface": "IMyRow",
 			"individualSlots": true,
 		}
 	}
@@ -109,12 +136,15 @@ Defines the `slots` that will be provided by this UI5 Web Component.
 
 #### Slot configuration settings
 
-Setting | Type | Default | Required | Description
---------|------|--------| ----------- | -----------
-type    | Javascript Class | N/A | YES | The type of the elements that can go into that slot
-individualSlots | Boolean | false | NO | If set to `true`, each child will have its own slot, allowing you to arrange/wrap the children arbitrarily.
-propertyName | String | N/A | NO | Allows to set the name of the property on the Web Component, where the children belonging to this slot will be stored.
-listenFor | Object | N/A | NO | **Experimental, do not use.** If set, whenever the children, belonging to this slot have their properties changed, the Web Component will be invalidated. 
+Setting | Type | Default | Description
+--------|------|--------|-----------
+type    | Javascript Class | N/A | The type of the elements that can go into that slot
+interface | String | N/A |  The name of the interface a UI5 Web Component has to implement in order to go into that slot 
+individualSlots | Boolean | false | If set to `true`, each child will have its own slot, allowing you to arrange/wrap the children arbitrarily.
+propertyName | String | N/A | Allows to set the name of the property on the Web Component, where the children belonging to this slot will be stored.
+listenFor | Object | N/A | **Experimental, do not use.** If set, whenever the children, belonging to this slot have their properties changed, the Web Component will be invalidated. 
+
+You are required to provide either the `type` or the `interface` setting, but not both.
 
 Notes:
  - Children without a `slot` attribute will be assigned to the `default` slot. 

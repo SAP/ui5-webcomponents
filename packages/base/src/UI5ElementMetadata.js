@@ -10,6 +10,10 @@ class UI5ElementMetadata {
 		return this.metadata.tag;
 	}
 
+	getImplementedInterfaces() {
+		return this.metadata.interfaces;
+	}
+
 	hasAttribute(propName) {
 		const propData = this.getProperties()[propName];
 		return propData.type !== Object && !propData.noAttribute;
@@ -33,10 +37,6 @@ class UI5ElementMetadata {
 
 	getProperties() {
 		return this.metadata.properties || {};
-	}
-
-	getEvents() {
-		return this.metadata.events || {};
 	}
 
 	static validatePropertyValue(value, propData) {
@@ -84,12 +84,21 @@ const validateSingleSlot = (value, slotData) => {
 
 		return [el];
 	};
-	const propertyType = slotData.type;
+	const requiredType = slotData.type;
+	const requiredInterface = slotData.interface;
 
 	const slottedNodes = getSlottedNodes(value);
 	slottedNodes.forEach(el => {
-		if (!(el instanceof propertyType)) {
-			throw new Error(`${el} is not of type ${propertyType}`);
+		if (requiredType) { // Check for class compatibility
+			const isInstanceOfClass = el instanceof requiredType;
+			if (!isInstanceOfClass) {
+				throw new Error(`${el} is not of type ${requiredType}`);
+			}
+		} else { // Check for interface compatibility
+			const implementsInterface = el.isUI5Element && el.constructor.implementsInterface(requiredInterface);
+			if (!implementsInterface) {
+				throw new Error(`${el} does not implement interface ${requiredInterface}`);
+			}
 		}
 	});
 

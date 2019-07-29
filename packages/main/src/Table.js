@@ -3,8 +3,6 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { isSpace } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-import TableColumn from "./TableColumn.js";
-import TableRow from "./TableRow.js";
 import TableTemplate from "./generated/templates/TableTemplate.lit.js";
 
 // Styles
@@ -27,7 +25,7 @@ const metadata = {
 		 */
 		"default": {
 			propertyName: "rows",
-			type: TableRow,
+			"interface": "ITableRow",
 			individualSlots: true,
 		},
 
@@ -40,7 +38,7 @@ const metadata = {
 		 * @public
 		 */
 		columns: {
-			type: TableColumn,
+			"interface": "ITableColumn",
 			individualSlots: true,
 			listenFor: { include: ["*"] },
 		},
@@ -124,9 +122,13 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/Table";</code>
+ * <code>import "@ui5/webcomponents/dist/Table.js";</code>
  * <br>
- * <b>Note:</b> This also includes the <code>ui5-table-column</code>, <code>ui5-table-row</code> and <code>ui5-table-cell</code> Web Components.
+ * <code>import "@ui5/webcomponents/dist/TableColumn.js";</code> (for <code>ui5-table-column</code>)
+ * <br>
+ * <code>import "@ui5/webcomponents/dist/TableRow.js";</code> (for <code>ui5-table-row</code>)
+ * <br>
+ * <code>import "@ui5/webcomponents/dist/TableCell.js";</code> (for <code>ui5-table-cell</code>)
  *
  * @constructor
  * @author SAP SE
