@@ -1,57 +1,33 @@
-
-:host(ui5-li:not([hidden])) {
+:host(:not([hidden])) {
 	display: block;
 }
 
-:host(ui5-li) .sap-phone.sapMLIB {
-	outline: none;
-}
-
-ui5-li:not([hidden]) {
-	display: block;
-}
-
-ui5-li .sap-phone.sapMLIB {
-	outline: none;
-}
-
-.sapMLIB {
-	position: relative;
-	display: flex;
+:host {
 	height: 3rem;
-	width: 100%;
-	padding: 0 1rem 0 1rem;
 	background: var(--ui5-listitem-background-color);
 	box-sizing: border-box;
 }
 
-.sapMLIBHoverable:hover {
-	background : var(--sapUiListHoverBackground);
+:host([has-border]) {
+	border-bottom: var(--ui5-listitem-border-bottom);
 }
 
-.sapMLIB.sapMLIBSelected {
-	background: var(--sapUiListSelectionBackgroundColor);
+.ui5-li-root {
+	position: relative;
+	display: flex;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	padding: 0 1rem 0 1rem;
+	box-sizing: border-box;
 }
 
-.sapMLIB.sapMLIBActive {
-	color: var(--sapUiListActiveTextColor);
-	background: var(--sapUiListActiveBackground);
-}
-
-.sapMLIB.sapMLIBHoverable.sapMLIBSelected:hover {
-	background : var(--sapUiListSelectionHoverBackground);
-}
-
-.sapMLIB.sapMLIBHoverable.sapMLIBSelected.sapMLIBActive:hover {
-	background: var(--sapUiListActiveBackground);
-}
-
-.sapMLIB.sapMLIBFocusable:focus {
+.ui5-li-root.ui5-li--focusable:focus {
 	outline: none;
 }
 
-.sapMLIB.sapMLIBFocusable:focus:after,
-.sapMLIB.sapMLIBFocusable .sapMLIBContent:focus:after {
+.ui5-li-root.ui5-li--focusable:focus:after,
+.ui5-li-root.ui5-li--focusable .ui5-li-content:focus:after {
 	content: "";
 	border: var(--_ui5_listitembase_focus_width) dotted var(--sapUiContentFocusColor);
 	position: absolute;
@@ -62,54 +38,76 @@ ui5-li .sap-phone.sapMLIB {
 	pointer-events: none;
 }
 
-.sapMLIB.sapMLIBActive.sapMLIBFocusable:focus,
-.sapMLIB.sapMLIBActive.sapMLIBFocusable .sapMLIBContent:focus {
-	outline-color: var(--sapUiContentContrastFocusColor);
+.ui5-li-content {
+	max-width: 100%;
+	min-height: 1px; /* IE specific: fixes vertical centering with flex  */
+	font-family: var(--sapUiFontFamily);
+	pointer-events: none;  /* IE specific: fixes focus crrectly applied*/
 }
 
-.sapMLIB.sapMLIBBorder {
+/* Compact size */
+:host([data-ui5-compact-size]) {
+	height: 2rem;
+}
+
+/*
+ * IE pair of styles
+ * to be removed later on
+ */
+
+/* ui5-li */
+ui5-li:not([hidden]) {
+	display: block;
+}
+
+ui5-li {
+	height: 3rem;
+	background: var(--ui5-listitem-background-color);
+	box-sizing: border-box;
+}
+
+ui5-li[has-border] {
 	border-bottom: var(--ui5-listitem-border-bottom);
 }
 
-.sapMLIB.sapMLIBActive .sapMLIBIcon {
-	color: var(--sapUiListActiveTextColor);
+ui5-li[data-ui5-compact-size] {
+	height: 2rem;
 }
 
-.sapMLIBIcon {
-	color: var(--sapUiContentNonInteractiveIconColor);
-	padding-right: 1rem;
+/* ui5-li-custom */
+ui5-li-custom:not([hidden]) {
+	display: block;
 }
 
-.sapMLIBContent {
-	max-width: 100%;
-	min-height: 100%;
-	font-family: var(--sapUiFontFamily);
+ui5-li-custom {
+	height: 3rem;
+	background: var(--ui5-listitem-background-color);
+	box-sizing: border-box;
 }
 
-.sapMLIBActionable,
-.sapMLIBActionable > .sapMLIBIcon {
-	cursor: pointer;
+ui5-li-custom[has-border] {
+	border-bottom: var(--ui5-listitem-border-bottom);
 }
 
-.sapMLIBFocusable.sapMLIBLegacyOutline:focus {
-	outline: none;
+ui5-li-custom[data-ui5-compact-size] {
+	height: 2rem;
 }
 
-/* RTL */
-:host(ui5-li) [dir="rtl"] .sapMLIBIcon {
-	padding-left: 1rem;
-	padding-right: 0;
+/* ui5-li-groupheader */
+ui5-li-groupheader:not([hidden]) {
+	display: block;
 }
 
-:host(ui5-li) [dir="rtl"] .sapMSLIImg {
-	margin: .5rem 0 .5rem 0.75rem;
+ui5-li-groupheader {
+	height: 3rem;
+	background: var(--ui5-listitem-background-color);
+	box-sizing: border-box;
 }
 
-ui5-li [dir="rtl"] .sapMLIBIcon {
-	padding-left: 1rem;
-	padding-right: 0;
+ui5-li-groupheader[has-border] {
+	border-bottom: var(--ui5-listitem-border-bottom);
 }
 
-ui5-li [dir="rtl"] .sapMSLIImg {
-	margin: .5rem 0 .5rem 0.75rem;
+ui5-li-groupheader[data-ui5-compact-size] {
+	height: 2rem;
 }

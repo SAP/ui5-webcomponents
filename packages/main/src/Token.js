@@ -1,12 +1,14 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getTheme } from "@ui5/webcomponents-base/dist/Configuration.js";
+import { getTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 import {
 	isBackSpace,
 	isEnter,
 	isSpace,
 	isDelete,
 } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import "@ui5/webcomponents-base/dist/icons/decline.js";
+import "@ui5/webcomponents-base/dist/icons/cancel.js";
 
 import Icon from "./Icon.js";
 import TokenTemplate from "./generated/templates/TokenTemplate.lit.js";
@@ -53,7 +55,7 @@ const metadata = {
 		 */
 		readonly: { type: Boolean },
 
-		_tabIndex: { type: String, defaultValue: "-1" },
+		_tabIndex: { type: String, defaultValue: "-1", noAttribute: true },
 	},
 
 	events: /** @lends sap.ui.webcomponents.main.Token.prototype */ {

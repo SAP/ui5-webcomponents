@@ -1,10 +1,12 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import getEffectiveRTL from "@ui5/webcomponents-base/dist/util/getEffectiveRTL.js";
+import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import Icon from "./Icon.js";
 
 // Template
 import BadgeTemplate from "./generated/templates/BadgeTemplate.lit.js";
+
+import { BADGE_DESCRIPTION } from "./i18n/defaults.js";
 
 // Styles
 import badgeCss from "./generated/themes/Badge.css.js";
@@ -47,7 +49,7 @@ const metadata = {
 		/**
 		 * Defines the <code>ui5-icon</code> to be displayed in the <code>ui5-badge</code>.
 		 *
-		 * @type {Icon[]}
+		 * @type {Icon}
 		 * @slot
 		 * @public
 		 */
@@ -118,7 +120,11 @@ class Badge extends UI5Element {
 	}
 
 	get rtl() {
-		return getEffectiveRTL() ? "rtl" : undefined;
+		return getRTL() ? "rtl" : undefined;
+	}
+
+	get badgeDescription() {
+		return BADGE_DESCRIPTION.defaultText;
 	}
 }
 

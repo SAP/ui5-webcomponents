@@ -2,8 +2,16 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
-import { getCompactSize } from "@ui5/webcomponents-base/dist/Configuration.js";
-import getEffectiveRTL from "@ui5/webcomponents-base/dist/util/getEffectiveRTL.js";
+import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
+import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
+import "@ui5/webcomponents-base/dist/icons/accept.js";
+import "@ui5/webcomponents-base/dist/icons/decline.js";
+import Icon from "./Icon.js";
+
+import {
+	SWITCH_ON,
+	SWITCH_OFF,
+} from "./i18n/defaults.js";
 
 // Template
 import SwitchTemplate from "./generated/templates/SwitchTemplate.lit.js";
@@ -104,12 +112,12 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  * The <code>ui5-switch</code> component is used for changing between binary states.
- * </br>
+ * <br>
  * The component can display texts, that will be switched, based on the component state, via the <code>textOn</code> and <code>textOff</code> properties,
  * but texts longer than 3 letters will be cuttted off.
- * </br>
+ * <br>
  * However, users are able to customize the width of <code>ui5-switch</code> with pure CSS (&lt;ui5-switch style="width: 200px">), and set widths, depending on the texts they would use.
- * </br>
+ * <br>
  * Note: the component would not automatically stretch to fit the whole text width.
  *
  * <h3>Keyboard Handling</h3>
@@ -142,6 +150,12 @@ class Switch extends UI5Element {
 
 	static get template() {
 		return SwitchTemplate;
+	}
+
+	constructor() {
+		super();
+
+		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
 	}
 
 	onclick(event) {
@@ -188,19 +202,42 @@ class Switch extends UI5Element {
 
 		return {
 			main: {
-				"ui5-switch-wrapper": true,
 				"ui5-switch-desktop": isDesktop(),
 				"ui5-switch--disabled": this.disabled,
 				"ui5-switch--checked": this.checked,
 				"ui5-switch--semantic": this.graphical,
 				"ui5-switch--no-label": !hasLabel,
-				"sapUiSizeCompact": getCompactSize(),
 			},
 		};
 	}
 
+	get ariaDisabled() {
+		return this.disabled ? "true" : undefined;
+	}
+
 	get rtl() {
-		return getEffectiveRTL() ? "rtl" : undefined;
+		return getRTL() ? "rtl" : undefined;
+	}
+
+	get accessibilityOnText() {
+		return this._textOn || this.resourceBundle.getText(SWITCH_ON);
+	}
+
+	get accessibilityOffText() {
+		return this._textOff || this.resourceBundle.getText(SWITCH_OFF);
+	}
+
+	get hiddenText() {
+		return this.checked ? this.accessibilityOnText : this.accessibilityOffText;
+	}
+
+	static async define(...params) {
+		await Promise.all([
+			Icon.define(),
+			fetchResourceBundle("@ui5/webcomponents"),
+		]);
+
+		super.define(...params);
 	}
 }
 

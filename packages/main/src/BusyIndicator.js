@@ -1,22 +1,37 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import BusyIndicatorSize from "./types/BusyIndicatorSize.js";
+
+// Template
 import BusyIndicatorTemplate from "./generated/templates/BusyIndicatorTemplate.lit.js";
+
+import { BUSY_INDICATOR_TITLE } from "./i18n/defaults.js";
 
 // Styles
 import busyIndicatorCss from "./generated/themes/BusyIndicator.css.js";
-
-
-import BusyIndicatorSize from "./types/BusyIndicatorSize.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-busyindicator",
+	slots: /** @lends sap.ui.webcomponents.main.BusyIndicator.prototype */ {
+
+		/**
+		 * Determines the content over which the <code>ui5-busyindicator</code> will appear.
+		 *
+		 * @type {Node[]}
+		 * @slot
+		 * @public
+		 */
+		"default": {
+			type: Node,
+		},
+	},
 	properties: /** @lends sap.ui.webcomponents.main.BusyIndicator.prototype */ {
 		/**
 		 * Defines the size of the <code>ui5-busyindicator</code>.
-		 * </br></br>
+		 * <br><br>
 		 * <b>Note:</b> Available options are "Small", "Medium" and "Large"
 		 *
 		 * @type {BusyIndicatorSize}
@@ -78,13 +93,8 @@ class BusyIndicator extends UI5Element {
 		return BusyIndicatorTemplate;
 	}
 
-	get classes() {
-		return {
-			main: {
-				"ui5-busyindicator-wrapper": true,
-				[`ui5-busyindicator-${this.size.toLowerCase()}`]: true,
-			},
-		};
+	get ariaTitle() {
+		return BUSY_INDICATOR_TITLE.defaultText;
 	}
 }
 

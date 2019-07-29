@@ -2,7 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isIE } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { getCompactSize } from "@ui5/webcomponents-base/dist/Configuration.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import {
 	isUp,
@@ -10,14 +9,20 @@ import {
 	isSpace,
 	isEnter,
 } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-import Icon from "./Icon.js";
+// import Icon from "./Icon.js";
 import InputType from "./types/InputType.js";
 // Template
 import InputTemplate from "./generated/templates/InputTemplate.lit.js";
 
+import {
+	VALUE_STATE_SUCCESS,
+	VALUE_STATE_ERROR,
+	VALUE_STATE_WARNING,
+	INPUT_SUGGESTIONS,
+} from "./i18n/defaults.js";
+
 // Styles
 import styles from "./generated/themes/Input.css.js";
-import shellbarInput from "./generated/themes/ShellBarInput.css.js";
 
 /**
  * @public
@@ -34,19 +39,19 @@ const metadata = {
 		 * @public
 		 */
 		icon: {
-			type: Icon,
+			type: HTMLElement,
 		},
 
 		/**
 		 * Defines the <code>ui5-input</code> suggestion items.
-		 * </br></br>
-		 * Example: </br>
-		 * &lt;ui5-input show-suggestions></br>
-		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li>Item #1&lt;/ui5-li></br>
-		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li>Item #2&lt;/ui5-li></br>
+		 * <br><br>
+		 * Example: <br>
+		 * &lt;ui5-input show-suggestions><br>
+		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li>Item #1&lt;/ui5-li><br>
+		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li>Item #2&lt;/ui5-li><br>
 		 * &lt;/ui5-input>
 		 * <ui5-input show-suggestions><ui5-li>Item #1</ui5-li><ui5-li>Item #2</ui5-li></ui5-input>
-		 * </br></br>
+		 * <br><br>
 		 * <b>Note:</b> The suggestion would be displayed only if the <code>showSuggestions</code>
 		 * property is set to <code>true</code>.
 		 *
@@ -102,6 +107,18 @@ const metadata = {
 		 * @public
 		 */
 		readonly: {
+			type: Boolean,
+		},
+
+		/**
+		 * Defines whether the <code>ui5-input</code> is required.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 * @since 1.0.0
+		 */
+		required: {
 			type: Boolean,
 		},
 
@@ -182,7 +199,10 @@ const metadata = {
 			type: Boolean,
 		},
 
-		_focused: {
+		/**
+		 * @private
+		 */
+		focused: {
 			type: Boolean,
 		},
 
@@ -286,7 +306,7 @@ class Input extends UI5Element {
 	}
 
 	static get styles() {
-		return [styles, shellbarInput];
+		return [styles];
 	}
 
 	constructor() {
@@ -381,12 +401,12 @@ class Input extends UI5Element {
 	}
 
 	onfocusin() {
-		this._focused = true; // invalidating property
+		this.focused = true; // invalidating property
 		this.previousValue = this.value;
 	}
 
 	onfocusout() {
-		this._focused = false; // invalidating property
+		this.focused = false; // invalidating property
 		this.previousValue = "";
 	}
 
@@ -424,7 +444,7 @@ class Input extends UI5Element {
 	shouldOpenSuggestions() {
 		return !!(this.suggestionItems.length
 			&& this.showSuggestions
-			&& this._focused
+			&& this.focused
 			&& !this.hasSuggestionItemSelected);
 	}
 
@@ -513,30 +533,6 @@ class Input extends UI5Element {
 
 	onClose() {}
 
-	get classes() {
-		const hasState = this.valueState !== "None";
-
-		return {
-			main: {
-				sapWCInputBase: true,
-				sapWCInputBaseWidthPadding: true,
-				sapWCInputBaseDisabled: this.disabled,
-				sapWCInputBaseReadonly: this.readonly,
-				sapWCInput: true,
-				sapWCInputFocused: this._focused,
-				sapWCFocus: this._focused,
-				sapUiSizeCompact: getCompactSize(),
-			},
-			wrapper: {
-				sapWCInputBaseContentWrapper: true,
-				sapWCInputBaseDisabledWrapper: this.disabled,
-				sapWCInputBaseReadonlyWrapper: this.readonly && !this.disabled,
-				sapWCInputBaseContentWrapperState: hasState,
-				[`sapWCInputBaseContentWrapper${this.valueState}`]: hasState,
-			},
-		};
-	}
-
 	get inputPlaceholder() {
 		// We don`t support placeholder for IE,
 		// because IE fires input events, when placeholder exists, leading to functional degredations.
@@ -552,7 +548,47 @@ class Input extends UI5Element {
 	}
 
 	get ariaInvalid() {
-		return this.valueState === "Error" ? "true" : undefined;
+		return this.valueState === ValueState.Error ? "true" : undefined;
+	}
+
+	get suggestionsTextId() {
+		return this.showSuggestions ? `${this._id}-suggestionsText` : "";
+	  }
+
+	get valueStateTextId() {
+		return this.hasValueState ? `${this._id}-descr` : "";
+	}
+
+	get ariaDescribedBy() {
+		return `${this.suggestionsTextId} ${this.valueStateTextId}`.trim();
+	}
+
+	get ariaHasPopup() {
+		return this.showSuggestions ? "true" : undefined;
+	}
+
+	get ariaAutoComplete() {
+		return this.showSuggestions ? "list" : undefined;
+	}
+
+	get hasValueState() {
+		return this.valueState !== ValueState.None;
+	}
+
+	static valueStateTextMappings() {
+		return {
+			"Success": VALUE_STATE_SUCCESS.defaultText,
+			"Error": VALUE_STATE_ERROR.defaultText,
+			"Warning": VALUE_STATE_WARNING.defaultText,
+		};
+	}
+
+	get valueStateText() {
+		return Input.valueStateTextMappings()[this.valueState];
+	}
+
+	get suggestionsText() {
+		return INPUT_SUGGESTIONS.defaultText;
 	}
 }
 

@@ -1,5 +1,6 @@
 import boot from "./boot.js";
-import { getWCNoConflict, getCompactSize } from "./Configuration.js";
+import { getNoConflict } from "./config/NoConflict.js";
+import { getCompactSize } from "./config/CompactSize.js";
 import DOMObserver from "./compatibility/DOMObserver.js";
 import UI5ElementMetadata from "./UI5ElementMetadata.js";
 import Integer from "./types/Integer.js";
@@ -194,7 +195,7 @@ class UI5Element extends HTMLElement {
 			this._state[propertyName].push(child);
 		});
 
-		await allChildrenUpgraded;
+		await Promise.all(allChildrenUpgraded);
 		this._invalidate();
 	}
 
@@ -219,8 +220,8 @@ class UI5Element extends HTMLElement {
 	}
 
 	static get observedAttributes() {
-		const observedProps = this.getMetadata().getPublicPropsList();
-		return observedProps.map(camelToKebabCase);
+		const observedAttributes = this.getMetadata().getAttributesList();
+		return observedAttributes.map(camelToKebabCase);
 	}
 
 	attributeChangedCallback(name, oldValue, newValue) {
@@ -240,7 +241,7 @@ class UI5Element extends HTMLElement {
 	}
 
 	_updateAttribute(name, newValue) {
-		if (!UI5ElementMetadata.isPublicProperty(name)) {
+		if (!this.constructor.getMetadata().hasAttribute(name)) {
 			return;
 		}
 
@@ -521,7 +522,7 @@ class UI5Element extends HTMLElement {
 	 */
 	fireEvent(name, data, cancelable) {
 		let compatEventResult = true; // Initialized to true, because if the event is not fired at all, it should be considered "not-prevented"
-		const noConflict = getWCNoConflict();
+		const noConflict = getNoConflict();
 
 		const noConflictEvent = new CustomEvent(`ui5-${name}`, {
 			detail: data,

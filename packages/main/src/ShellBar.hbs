@@ -2,14 +2,14 @@
 	class="{{classes.wrapper}}"
 	dir="{{rtl}}"
 >
-	<div class="{{classes.leftContainer}}">
+	<div class="ui5-shellbar-overflow-container ui5-shellbar-overflow-container-left">
 
 		{{#if icon.length}}
 			<slot name="icon"></slot>
 		{{/if}}
 
 		{{#unless interactiveLogo}}
-			<img class="{{classes.logo}}" src="{{logo}}" @click="{{_logoPress}}" />
+			<img class="ui5-shellbar-logo" src="{{logo}}" @click="{{_logoPress}}" />
 		{{/unless}}
 
 		{{#if showArrowDown}}
@@ -19,35 +19,35 @@
 				{{/if}}
 
 				{{#if primaryTitle}}
-					<h1 class="{{classes.buttonTitle}}">
+					<h1 class="ui5-shellbar-menu-button-title">
 						<bdi class="{{classes.title}}">{{primaryTitle}}</bdi>
 					</h1>
 				{{/if}}
 
-				<span class="{{classes.arrow}}"></span>
+				<span class="ui5-shellbar-menu-button-arrow"></span>
 			</button>
 		{{/if}}
 
-		<ui5-popover class="sapWCShellBarMenuPopover" placement-type="Bottom">
+		<ui5-popover class="ui5-shellbar-menu-popover" placement-type="Bottom">
 			<ui5-list separators="None" mode="SingleSelect" @ui5-itemPress={{_menuItemPress}}>
 				<slot name="menuItems"></slot>
 			</ui5-list>
 		</ui5-popover>
 
-		<h2 class="{{classes.secondaryTitle}}">{{secondaryTitle}}</h2>
+		<h2 class="ui5-shellbar-secondary-title">{{secondaryTitle}}</h2>
 	</div>
 
-	<div class="sapWCShellBarOverflowContainer sapWCShellBarOverflowContainerMiddle">
+	<div class="ui5-shellbar-overflow-container ui5-shellbar-overflow-container-middle">
 		{{#if showCoPilot}}
 			{{> coPilot}}
 		{{else}}
-			<span class="sapWCShellBarCoPilotPlaceholder"></span>
+			<span class="ui5-shellbar-co-pilot-placeholder"></span>
 		{{/if}}
 	</div>
 
-	<div class="sapWCShellBarOverflowContainer sapWCShellBarOverflowContainerRight">
+	<div class="ui5-shellbar-overflow-container ui5-shellbar-overflow-container-right">
 
-		<div class="sapWCShellBarOverflowContainerRightChild">
+		<div class="ui5-shellbar-overflow-container-right-child">
 			{{#each _itemsInfo}}
 				{{#if this.src}}
 					<ui5-icon
@@ -58,7 +58,7 @@
 						src="{{this.src}}"
 						id="{{this.id}}"
 						style="{{this.style}}"
-						@ui5-press={{this.press}}>
+						@click={{this.press}}>
 					</ui5-icon>
 				{{else}}
 					<div
@@ -75,7 +75,7 @@
 		</div>
 	</div>
 
-	<ui5-popover class="sapWCShellBarOverflowPopover" placement-type="Bottom" horizontal-align="{{popoverHorizontalAlign}}" no-arrow>
+	<ui5-popover class="ui5-shellbar-overflow-popover" placement-type="Bottom" horizontal-align="{{popoverHorizontalAlign}}" no-arrow>
 		<ui5-list separators="None" @ui5-itemPress="{{_actionList.itemPress}}">
 			{{#each _hiddenIcons}}
 				<ui5-li
@@ -89,11 +89,11 @@
 		</ui5-list>
 	</ui5-popover>
 
-	<div class="{{classes.blockLayer}}">
+	<div class="ui5-shellbar-block-layer">
 	</div>
 
 	<div id="{{_id}}-searchfield-wrapper"
-		class="{{classes.searchField}}"
+		class="ui5-shellbar-search-field"
 		style="{{styles.searchField}}"
 		@focusout={{_searchField.focusout}}
 	>
@@ -150,6 +150,6 @@
 					begin="shell_avatar.mousedown" repeatCount="1" additive="sum"></animateTransform>
 			</path>
 		</g>
-		<circle cx="0" cy="0" r="76" class="sapWCShellBarCoPilotMiddle" id="shell_avatar"></circle>
+		<circle cx="0" cy="0" r="76" class="ui5-shellbar-co-pilot-circle" id="shell_avatar"></circle>
 	</svg>
 {{/inline}}

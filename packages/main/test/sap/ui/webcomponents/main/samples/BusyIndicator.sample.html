@@ -1,43 +1,4 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-	<title>&lt;ui5-busyindicator&gt;</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta charset="utf-8">
-
-	<script data-id="sap-ui-config" type="application/json">
-		{
-			"theme": "sap_fiori_3",
-			"language": "EN"
-		}
-	</script>
-
-	<script>delete Document.prototype.adoptedStyleSheets;</script>
-
-	<style>
-		.center {
-			justify-content: center;
-			align-items: center;
-		}
-		
-		.flex {
-			display: flex;
-			flex-direction: column;
-		}
-
-		#busy-container {
-			margin-top: 2rem;
-			flex: 1;
-		}
-
-		#fetch-list {
-			width: 100%;
-		}
-	</style>
-</head>
-<body class="sapUiBody example-wrapper">
+<section>
 
 	<header class="component-heading">
 		<h2 class="control-header">BusyIndicator</h2>
@@ -122,6 +83,25 @@
 			}, 2000);
 		});
 	</script>
-</body>
 
-</html>
+<style>
+	.center {
+		justify-content: center;
+		align-items: center;
+	}
+	
+	.flex {
+		display: flex;
+		flex-direction: column;
+	}
+
+	#busy-container {
+		margin-top: 2rem;
+		flex: 1;
+	}
+
+	#fetch-list {
+		width: 100%;
+	}
+</style>
+</section>

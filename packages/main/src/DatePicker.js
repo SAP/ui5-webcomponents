@@ -3,7 +3,7 @@ import "@ui5/webcomponents-base/dist/shims/Core-shim.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchCldrData } from "@ui5/webcomponents-base/dist/CLDR.js";
-import { getCalendarType } from "@ui5/webcomponents-base/dist/Configuration.js";
+import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
 import { getLocale } from "@ui5/webcomponents-base/dist/LocaleProvider.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData.js";
@@ -12,7 +12,7 @@ import CalendarType from "@ui5/webcomponents-base/dist/dates/CalendarType.js";
 import CalendarDate from "@ui5/webcomponents-base/dist/dates/CalendarDate.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { isShow } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-import getShadowDOMTarget from "@ui5/webcomponents-base/dist/events/getShadowDOMTarget.js";
+import "@ui5/webcomponents-base/dist/icons/appointment-2.js";
 import Icon from "./Icon.js";
 import Popover from "./Popover.js";
 import Calendar from "./Calendar.js";
@@ -137,6 +137,7 @@ const metadata = {
 
 		_isPickerOpen: {
 			type: Boolean,
+			noAttribute: true,
 		},
 		_popover: {
 			type: Object,
@@ -179,8 +180,10 @@ const metadata = {
  * <h3>Usage</h3>
  *
  * The user can enter a date by:
- * <ul><li>Using the calendar that opens in a popup</li>
- * <li>Typing it in directly in the input field</li></ul>
+ * <ul>
+ * <li>Using the calendar that opens in a popup</li>
+ * <li>Typing it in directly in the input field</li>
+ * </ul>
  * <br><br>
  * When the user makes an entry and chooses the enter key, the calendar shows the corresponding date.
  * When the user directly triggers the calendar display, the actual date is displayed.
@@ -262,8 +265,8 @@ class DatePicker extends UI5Element {
 				const calendar = popover.querySelector(`#${this._id}-calendar`);
 				const dayPicker = calendar.shadowRoot.querySelector(`#${calendar._id}-daypicker`);
 
-				const selectedDay = dayPicker.shadowRoot.querySelector(".sapWCDayPickerItemSel");
-				const today = dayPicker.shadowRoot.querySelector(".sapWCDayPickerItemNow");
+				const selectedDay = dayPicker.shadowRoot.querySelector(".ui5-dp-item--selected");
+				const today = dayPicker.shadowRoot.querySelector(".ui5-dp-item--now");
 				const focusableDay = selectedDay || today;
 
 				if (this._focusInputAfterOpen) {
@@ -299,16 +302,6 @@ class DatePicker extends UI5Element {
 			FormSupport.syncNativeHiddenInput(this);
 		} else if (this.name) {
 			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
-		}
-	}
-
-	onclick(event) {
-		const eventTarget = getShadowDOMTarget(event);
-		const icon = this.shadowRoot.querySelector("ui5-icon");
-		const isIconTab = (eventTarget === icon);
-
-		if (icon && (isIconTab || eventTarget.contains(icon.getDomRef()))) {
-			this.togglePicker();
 		}
 	}
 
@@ -404,10 +397,6 @@ class DatePicker extends UI5Element {
 
 	_getPopover() {
 		return this.shadowRoot.querySelector("ui5-popover");
-	}
-
-	_iconPress() {
-		this.togglePicker();
 	}
 
 	_canOpenPicker() {
@@ -506,7 +495,7 @@ class DatePicker extends UI5Element {
 		const oDomTarget = getDomTarget(event);
 		let isInput = false;
 
-		if (oDomTarget && oDomTarget.className.indexOf("sapWCInputBaseInner") > -1) {
+		if (oDomTarget && oDomTarget.className.indexOf("ui5-input-inner") > -1) {
 			isInput = true;
 		}
 
@@ -515,12 +504,8 @@ class DatePicker extends UI5Element {
 
 	get classes() {
 		return {
-			main: {
-				sapMDP: true,
-			},
 			icon: {
-				sapWCDPIcon: true,
-				sapWCDPIconPressed: this._isPickerOpen,
+				"ui5-datepicker-icon--pressed": this._isPickerOpen,
 			},
 		};
 	}

@@ -1,82 +1,4 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-	<title>&lt;ui5-card&gt;</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta charset="utf-8">
-
-	<script data-id="sap-ui-config" type="application/json">
-		{
-			"theme": "sap_fiori_3",
-			"language": "EN"
-		}
-	</script>
-
-	<style>
-		.card-container {
-			display: flex;
-			flex-direction: row;
-			flex-wrap: wrap;
-			justify-content: center;
-			min-width: 16rem;
-		}
-
-		ui5-card {
-			margin: 1rem;
-			min-width: 18rem;
-		}
-		ui5-card.small {
-			width: 20rem;
-		}
-		ui5-card.medium {
-			width: 30rem;
-		}
-		ui5-li-custom {
-			margin-bottom: 1rem;
-		}
-
-		.card-content {
-			display: flex;
-			justify-content: space-around;
-			flex-wrap: wrap;
-			width: 100%;
-		}
-
-		.item {
-			display: flex;
-			width: 100%;
-			justify-content: space-between;
-		}
-
-		.content,
-		.content-group,
-		.item-content-begin {
-			display: flex;
-			flex-direction: column;
-		}
-
-		.item-content-begin-title {
-			padding-bottom: 0.25rem;
-		}
-
-		.status-error {color: #b00;}
-		.status-warning {color: #e9730c;}
-		.status-success {color: #107e3e;}
-
-		.content-group {
-			padding-bottom: 1rem;
-		}
-
-		.content-padding {
-			padding: 0.5rem 1rem 0 1rem;
-		}
-
-
-	</style>
-</head>
-<body class="sapUiBody example-wrapper">
+<section>
 
 	<header>
 		<h2 class="control-header">Card</h2>
@@ -430,6 +352,66 @@
 </ui5-card>
 </xmp></pre>
 	</section>
-</body>
 
-</html>
+	<style>
+			.card-container {
+				display: flex;
+				flex-direction: row;
+				flex-wrap: wrap;
+				justify-content: center;
+				min-width: 16rem;
+			}
+	
+			ui5-card {
+				margin: 1rem;
+				min-width: 18rem;
+			}
+			ui5-card.small {
+				width: 20rem;
+			}
+			ui5-card.medium {
+				width: 30rem;
+			}
+			ui5-li-custom {
+				margin-bottom: 1rem;
+			}
+	
+			.card-content {
+				display: flex;
+				justify-content: space-around;
+				flex-wrap: wrap;
+				width: 100%;
+			}
+	
+			.item {
+				display: flex;
+				width: 100%;
+				justify-content: space-between;
+			}
+	
+			.content,
+			.content-group,
+			.item-content-begin {
+				display: flex;
+				flex-direction: column;
+			}
+	
+			.item-content-begin-title {
+				padding-bottom: 0.25rem;
+			}
+	
+			.status-error {color: #b00;}
+			.status-warning {color: #e9730c;}
+			.status-success {color: #107e3e;}
+	
+			.content-group {
+				padding-bottom: 1rem;
+			}
+	
+			.content-padding {
+				padding: 0.5rem 1rem 0 1rem;
+			}
+	
+	
+		</style>
+</section>

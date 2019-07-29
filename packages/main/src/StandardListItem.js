@@ -24,7 +24,7 @@ const metadata = {
 
 		/**
 		 * Defines the <code>icon</code> source URI.
-		 * </br></br>
+		 * <br><br>
 		 * <b>Note:</b>
 		 * SAP-icons font provides numerous buil-in icons. To find all the available icons, see the
 		 * <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
@@ -38,7 +38,7 @@ const metadata = {
 
 		/**
 		 * Defines whether the <code>icon</code> should be displayed in the beginning of the list item or in the end.
-		 * </br></br>
+		 * <br><br>
 		 * <b>Note:</b> If <code>image</code> is set, the <code>icon</code> would be displayed after the <code>image</code>.
 		 *
 		 * @type {boolean}
@@ -51,7 +51,7 @@ const metadata = {
 
 		/**
 		 * Defines the <code>image</code> source URI.
-		 * </br></br>
+		 * <br><br>
 		 * <b>Note:</b> The <code>image</code> would be displayed in the beginning of the list item.
 		 *
 		 * @type {string}
@@ -74,7 +74,7 @@ const metadata = {
 		/**
 		 * Defines the state of the <code>info</code>.
 		 * <br>
-		 * Available options are: <code>"None"</code< (by default), <code>"Success"</code>, <code>"Warning"</code> and <code>"Erorr"</code>.
+		 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code> and <code>"Erorr"</code>.
 		 * @type {string}
 		 * @public
 		 * @since 0.13.0
@@ -82,6 +82,15 @@ const metadata = {
 		infoState: {
 			type: ValueState,
 			defaultValue: ValueState.None,
+		},
+
+		/**
+		 * Indicates if the list item has text content.
+		 * @type {boolean}
+		 * @private
+		 */
+		hasTitle: {
+			type: Boolean,
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.StandardListItem.prototype */ {
@@ -131,6 +140,11 @@ class StandardListItem extends ListItem {
 		return metadata;
 	}
 
+	onBeforeRendering(...params) {
+		super.onBeforeRendering(...params);
+		this.hasTitle = !!this.textContent;
+	}
+
 	get displayImage() {
 		return !!this.image;
 	}
@@ -141,24 +155,6 @@ class StandardListItem extends ListItem {
 
 	get displayIconEnd() {
 		return (this.icon && this.iconEnd);
-	}
-
-	get classes() {
-		const result = super.classes;
-		const hasDesc = this.description && !!this.description.length;
-		const hasTitle = this.textContent;
-		const infoState = this.infoState.toLowerCase();
-
-		// Modify main classes
-		result.main.sapMSLIWithTitleAndDescription = hasDesc && hasTitle;
-
-		// Add "info" classes
-		result.info = {
-			"sapMSLI-info": true,
-			[`sapMSLI-info--${infoState}`]: true,
-		};
-
-		return result;
 	}
 
 	static async define(...params) {

@@ -106,34 +106,42 @@ const metadata = {
 
 		_left: {
 			type: Integer,
+			noAttribute: true,
 		},
 		_top: {
 			type: Integer,
+			noAttribute: true,
 		},
 
 		_width: {
 			type: String,
+			noAttribute: true,
 		},
 		_height: {
 			type: String,
+			noAttribute: true,
 		},
 
 		_maxContentHeight: {
 			type: Integer,
+			noAttribute: true,
 		},
 
 		_arrowTranslateX: {
 			type: Integer,
 			defaultValue: 0,
+			noAttribute: true,
 		},
 
 		_arrowTranslateY: {
 			type: Integer,
 			defaultValue: 0,
+			noAttribute: true,
 		},
 		_actualPlacementType: {
 			type: PopoverPlacementType,
 			defaultValue: PopoverPlacementType.Right,
+			noAttribute: true,
 		},
 		_focusElementsHandlers: {
 			type: Object,
@@ -468,7 +476,7 @@ class Popover extends Popup {
 		let maxContentHeight = Math.round(maxHeight);
 
 		if (this.hasHeader) {
-			const headerDomRef = this.getPopupDomRef().querySelector(".ui5-popup-wrapper-header");
+			const headerDomRef = this.getPopupDomRef().querySelector(".ui5-popup-header");
 			if (headerDomRef) {
 				maxContentHeight = Math.round(maxHeight - headerDomRef.offsetHeight);
 			}
@@ -502,7 +510,7 @@ class Popover extends Popup {
 	 * @public
 	 */
 	openBy(element) {
-		if (this._isOpen) {
+		if (this.opened) {
 			return;
 		}
 
@@ -523,16 +531,16 @@ class Popover extends Popup {
 
 		this.setLocation(targetRect, popoverSize);
 
-		this._isOpen = true;
+		this.opened = true;
 
 		setTimeout(_ => {
-			if (this._isOpen) {
+			if (this.opened) {
 				this._dockInterval = setInterval(this.checkDocking.bind(this), dockInterval);
 			}
 		}, 0);
 
 		setTimeout(_ => {
-			if (this._isOpen) {
+			if (this.opened) {
 				document.addEventListener("mousedown", this._documentMouseDownHandler, true);
 				document.addEventListener("touchstart", this._documentMouseDownHandler, true);
 			}
@@ -544,7 +552,7 @@ class Popover extends Popup {
 	 * @public
 	 */
 	close() {
-		if (!this._isOpen) {
+		if (!this.opened) {
 			return;
 		}
 
@@ -553,7 +561,7 @@ class Popover extends Popup {
 			return;
 		}
 
-		this._isOpen = false;
+		this.opened = false;
 
 		clearInterval(this._dockInterval);
 
@@ -569,8 +577,8 @@ class Popover extends Popup {
 	}
 
 	getPopoverSize() {
-		const popoverFrameDomRef = this.shadowRoot.querySelector(".ui5-popup-wrapper-frame"); // this.getDomRef();
-		const popoverDomRef = popoverFrameDomRef.querySelector(".ui5-popover-wrapper");
+		const popoverFrameDomRef = this.shadowRoot.querySelector(".ui5-popup-frame"); // this.getDomRef();
+		const popoverDomRef = popoverFrameDomRef.querySelector(".ui5-popover-root");
 
 		popoverFrameDomRef.style.visibility = "hidden";
 		popoverFrameDomRef.style.display = "block";
@@ -596,29 +604,11 @@ class Popover extends Popup {
 	}
 
 	get classes() {
-		const placementType = this._actualPlacementType;
-
 		return {
-			frame: {
-				"ui5-popup-wrapper-frame": true,
-				"ui5-popup-wrapper-frame--open": this._isOpen,
-			},
-			main: {
-				"ui5-popup-wrapper": true,
-				"ui5-popover-wrapper": true,
-			},
 			blockLayer: {
-				sapUiBLy: true,
-				"ui5-popup-wrapper-blockLayer": true,
-				"ui5-popup-wrapper-blockLayer--hidden": !this.modal || this._hideBlockLayer,
-			},
-			arrow: {
-				"ui5-popover-wrapper-arr": true,
-				"ui5-popover-wrapper-arr--hidden": this.noArrow,
-				"ui5-popover-wrapper-arrLeft": placementType === PopoverPlacementType.Right,
-				"ui5-popover-wrapper-arrRight": placementType === PopoverPlacementType.Left,
-				"ui5-popover-wrapper-arrUp": placementType === PopoverPlacementType.Bottom,
-				"ui5-popover-wrapper-arrDown": placementType === PopoverPlacementType.Top,
+				"ui5-popup-BLy": true,
+				"ui5-popup-blockLayer": true,
+				"ui5-popup-blockLayer--hidden": !this.modal || this._hideBlockLayer,
 			},
 		};
 	}

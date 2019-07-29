@@ -51,7 +51,7 @@ if [ "$TRAVIS_BRANCH" == "$TRAVIS_LATEST_RELEASE_WEBSITE_BRANCH" ]; then
 
   # Remove all folders and files from gh-pages, but folder master
   cd gh-pages
-  rm -v !("master")|| exit 0
+  find . -maxdepth 1 ! -name master -delete|| exit 0
   cd ..
 
   # Run the build again so rollup can generate the correct public path urls
@@ -80,6 +80,8 @@ if [ "$TRAVIS_BRANCH" == "$TRAVIS_LATEST_RELEASE_WEBSITE_BRANCH" ]; then
 
   # Clean gh-pages existing contents
   rm -rf gh-pages/master|| exit 0
+  
+  mkdir gh-pages/master
 
   # Run the build again so rollup can generate the correct public path urls
   cd $TRAVIS_BUILD_DIR
@@ -89,7 +91,7 @@ if [ "$TRAVIS_BRANCH" == "$TRAVIS_LATEST_RELEASE_WEBSITE_BRANCH" ]; then
   cp -Rf $TRAVIS_BUILD_DIR/packages/playground/dist/* gh-pages/master
 
   # put the commit id as version
-  echo "$(git log -1 HEAD)" > gh-pages/version.txt
+  echo "$(git log -1 HEAD)" > gh-pages/master/version.txt
 
   echo "After update master version on gh-pages"
   ls -a gh-pages

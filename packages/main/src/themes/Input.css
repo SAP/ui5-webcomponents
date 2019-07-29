@@ -1,49 +1,67 @@
-:host(ui5-input:not([hidden])) {
+@import "./InvisibleTextStyles.css";
+
+:host(:not([hidden])) {
 	display: inline-block;
-	width: 100%;
 }
 
-ui5-input:not([hidden]) {
-	display: inline-block;
+:host {
 	width: 100%;
-}
-
-.sapWCInputBase {
 	height: var(--_ui5_input_height);
+	color: var(--sapUiFieldTextColor);
+	font-size: var(--sapMFontMediumSize);
+	font-family: var(--sapUiFontFamily);
+	background-color: var(--sapUiFieldBackground);
+	border: 1px solid var(--sapUiFieldBorderColor);
+	border-radius: var(--_ui5_input_wrapper_border_radius);
+	box-sizing: border-box;
+}
+
+:host([data-ui5-compact-size]) {
+	height: var(--_ui5_input_compact_height);
+}
+
+:host([data-ui5-compact-size]) .ui5-input-inner {
+	padding: 0 0.5rem;
+}
+
+:host([focused]) {
+	outline: var(--_ui5_input_focus_border_width) dotted var(--sapUiContentFocusColor);
+	outline-offset: -3px;
+}
+
+:host([value-state]:not([value-state="None"])[focused]) {
+	outline: var(--_ui5_input_focus_border_width) dotted var(--sapUiContentFocusColor);
+	outline-offset: -4px;
+}
+
+.ui5-input-root {
+	width: 100%;
+	height: 100%;
 	background: transparent;
-	position: relative;
 	display: inline-block;
 	vertical-align: top;
 	outline: none;
 	box-sizing: border-box;
-	line-height: 0;
+	color: inherit;
 }
 
-.sapWCInputBase.sapWCFocus .sapWCInputBaseContentWrapper::after {
-	content: "";
-	position: absolute;
-	border: var(--_ui5_input_focus_border_width) dotted var(--sapUiContentFocusColor);
-	pointer-events: none;
-	top: 1px;
-	left: 1px;
-	right: 1px;
-	bottom: 1px;
-}
-
-.sapWCInputBase.sapWCInputBaseDisabled {
+:host([disabled]) {
 	opacity: var(--sap_wc_input_disabled_opacity);
 	cursor: default;
+	pointer-events: none;
+	background: var(--sapUiFieldReadOnlyBackground);
+	border-color: var(--sapUiFieldReadOnlyBorderColor);
+	-webkit-text-fill-color: var(--sapUiContentDisabledTextColor);
+	color: var(--sapUiContentDisabledTextColor);
 }
 
-.sapWCInputBaseInner {
+.ui5-input-inner {
 	background: transparent;
+	color: inherit;
 	border: none;
 	font-style: normal;
 	-webkit-appearance: none;
 	-moz-appearance: textfield;
-	font-size: var(--sapMFontMediumSize);
-	font-family: var(--sapUiFontFamily);
-	color: var(--sapUiFieldTextColor);
 	line-height: normal;
 	padding: 0 0.75rem;
 	box-sizing: border-box;
@@ -51,127 +69,213 @@ ui5-input:not([hidden]) {
 	text-overflow: ellipsis;
 	flex: 1;
 	outline: none;
+	font-size: inherit;
+	font-family: inherit;
 }
 
-.sapWCInputBaseInner::-webkit-input-placeholder {
+.ui5-input-inner::-webkit-input-placeholder {
 	/* Chrome/Opera/Safari */
 	color: var(--sapUiFieldPlaceholderTextColor);
 }
 
-.sapWCInputBaseInner::-moz-placeholder {
+.ui5-input-inner::-moz-placeholder {
 	/* Firefox 19+ */
 	color: var(--sapUiFieldPlaceholderTextColor);
 }
 
-.sapWCInputBaseInner:-ms-input-placeholder {
+.ui5-input-inner:-ms-input-placeholder {
 	/* IE 10+ */
 	color: var(--sapUiFieldPlaceholderTextColor);
 }
 
-.sapWCInputBaseInner:-moz-placeholder {
+.ui5-input-inner:-moz-placeholder {
 	/* Firefox 18- */
 	color: var(--sapUiFieldPlaceholderTextColor);
 }
 
-.sapWCInputBaseContentWrapper {
+.ui5-input-content {
 	height: 100%;
 	box-sizing: border-box;
 	display: flex;
 	flex-direction: row;
 	justify-content: flex-end;
-	position: relative;
 	overflow: hidden;
 	outline: none;
-	background-color: var(--sapUiFieldBackground);
-	border: 1px solid var(--sapUiFieldBorderColor);
-	border-radius: var(--_ui5_input_wrapper_border_radius);
+	background: transparent;
+	color: inherit;
 }
 
-.sapWCInputBaseContentWrapper.sapWCInputBaseDisabledWrapper {
-	pointer-events: none;
-}
-
-.sapWCInputBaseContentWrapper.sapWCInputBaseReadonlyWrapper {
+:host([readonly]) {
 	border-color: var(--sapUiFieldReadOnlyBorderColor);
 	background: var(--sapUiFieldReadOnlyBackground);
 }
 
-.sapWCInputBaseContentWrapper:hover:not(.sapWCInputBaseContentWrapperError):not(.sapWCInputBaseContentWrapperWarning):not(.sapWCInputBaseContentWrapperSuccess):not(.sapWCInputBaseDisabledWrapper):not(.sapWCInputBaseReadonlyWrapper) {
+:host(:not([value-state]):hover) {
 	background-color: var(--sapUiFieldHoverBackground);
 	border: 1px solid var(--sapUiFieldHoverBorderColor);
 }
 
-.sapWCInputBaseDisabledWrapper {
-	background: var(--sapUiFieldReadOnlyBackground);
-	border-color: var(--sapUiFieldReadOnlyBorderColor);
-	-webkit-text-fill-color: var(--sapUiContentDisabledTextColor);
-
-}
-
-.sapWCInputBaseDisabledWrapper .sapWCInputBaseInner {
-	color: var(--sapUiContentDisabledTextColor);
-}
-
-.sapWCInputBaseContentWrapperState {
+:host([value-state]:not([value-state="None"])) {
 	border-width: var(--_ui5_input_state_border_width);
 }
 
-.sapWCInputBaseContentWrapperError .sapWCInputBaseInner,
-.sapWCInputBaseContentWrapperWarning .sapWCInputBaseInner {
+:host([value-state="Error"]) .ui5-input-inner,
+:host([value-state="Warning"]) .ui5-input-inner {
 	font-style: var(--_ui5_input_error_warning_font_style);
 }
 
-.sapWCInputBaseContentWrapperError .sapWCInputBaseInner {
+:host([value-state="Error"]) .ui5-input-inner {
 	font-weight: var(--_ui5_input_error_font_weight);
 }
 
-.sapWCInputBaseContentWrapperError:not(.sapWCInputBaseReadonlyWrapper) {
+:host([value-state="Error"]:not([readonly])) {
 	background-color: var(--sapUiFieldInvalidBackground);
 	border-color: var(--sapUiFieldInvalidColor);
 }
 
-.sapWCInputBaseContentWrapperError:not(.sapWCInputBaseReadonlyWrapper):not(.sapWCInputBaseDisabledWrapper),
-.sapWCInputBaseContentWrapperWarning:not(.sapWCInputBaseReadonlyWrapper):not(.sapWCInputBaseDisabledWrapper) {
+:host([value-state="Error"]:not([readonly]):not([disabled])),
+:host([value-state="Warning"]:not([readonly]):not([disabled])) {
 	border-style: var(--_ui5_input_error_warning_border_style);
 }
 
-.sapWCInputBaseContentWrapperWarning:not(.sapWCInputBaseReadonlyWrapper) {
+:host([value-state="Warning"]:not([readonly])) {
 	background-color: var(--sapUiFieldWarningBackground);
 	border-color: var(--sapUiFieldWarningColor);
 }
 
-.sapWCInputBaseContentWrapperSuccess:not(.sapWCInputBaseReadonlyWrapper) {
+:host([value-state="Success"]:not([readonly])) {
 	background-color: var(--sapUiFieldSuccessBackground);
 	border-color: var(--sapUiFieldSuccessColor);
 }
 
 /* Remove IE's defaut clear button */
-.sapWCInputBaseInner::-ms-clear {
+.ui5-input-inner::-ms-clear {
 	height: 0;
 	width: 0;
 }
 
-.sapUiSizeCompact.sapWCInputBase {
+/* Input Icon */
+
+.ui5-input-icon-root {
+	min-width: var(--sap_wc_input_icon_min_width);
+	width: var(--sap_wc_input_icon_min_width);
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+:host([data-ui5-compact-size]) .ui5-input-icon-root {
+	min-width: var(--sap_wc_input_compact_min_width);
+	width: var(--sap_wc_input_compact_min_width);
+}
+
+:host ::slotted(ui5-icon) {
+	padding: var(--_ui5_input_icon_padding);
+}
+
+:host([data-ui5-compact-size]) ::slotted(ui5-icon) {
+	padding: .25rem .5rem;
+}
+
+/* Remove that once ShadyCSS is adopted */
+
+ui5-input:not([hidden]) {
+	display: inline-block;
+}
+
+ui5-input {
+	width: 100%;
+	height: var(--_ui5_input_height);
+	color: var(--sapUiFieldTextColor);
+	font-size: var(--sapMFontMediumSize);
+	font-family: var(--sapUiFontFamily);
+	background-color: var(--sapUiFieldBackground);
+	border: 1px solid var(--sapUiFieldBorderColor);
+	border-radius: var(--_ui5_input_wrapper_border_radius);
+	box-sizing: border-box;
+}
+
+ui5-input[focused] {
+	outline: var(--_ui5_input_focus_border_width) dotted var(--sapUiContentFocusColor);
+	outline-offset: -3px;
+}
+
+ui5-input[value-state]:not([value-state="None"])[focused] {
+	outline: var(--_ui5_input_focus_border_width) dotted var(--sapUiContentFocusColor);
+	outline-offset: -4px;
+}
+
+ui5-input[disabled] {
+	opacity: var(--sap_wc_input_disabled_opacity);
+	cursor: default;
+	pointer-events: none;
+	background: var(--sapUiFieldReadOnlyBackground);
+	border-color: var(--sapUiFieldReadOnlyBorderColor);
+	-webkit-text-fill-color: var(--sapUiContentDisabledTextColor);
+	color: var(--sapUiContentDisabledTextColor);
+}
+
+ui5-input[readonly] {
+	border-color: var(--sapUiFieldReadOnlyBorderColor);
+	background: var(--sapUiFieldReadOnlyBackground);
+}
+
+ui5-input:not([value-state]):hover {
+	background-color: var(--sapUiFieldHoverBackground);
+	border: 1px solid var(--sapUiFieldHoverBorderColor);
+}
+
+ui5-input[value-state]:not([value-state="None"]) {
+	border-width: var(--_ui5_input_state_border_width);
+}
+
+ui5-input[value-state="Error"] .ui5-input-inner,
+ui5-input[value-state="Warning"] .ui5-input-inner {
+	font-style: var(--_ui5_input_error_warning_font_style);
+}
+
+ui5-input[value-state="Error"] .ui5-input-inner {
+	font-weight: var(--_ui5_input_error_font_weight);
+}
+
+ui5-input[value-state="Error"]:not([readonly]) {
+	background-color: var(--sapUiFieldInvalidBackground);
+	border-color: var(--sapUiFieldInvalidColor);
+}
+
+ui5-input[value-state="Error"]:not([readonly]):not([disabled]),
+ui5-input[value-state="Warning"]:not([readonly]):not([disabled]) {
+	border-style: var(--_ui5_input_error_warning_border_style);
+}
+
+ui5-input[value-state="Warning"]:not([readonly]) {
+	background-color: var(--sapUiFieldWarningBackground);
+	border-color: var(--sapUiFieldWarningColor);
+}
+
+ui5-input[value-state="Success"]:not([readonly]) {
+	background-color: var(--sapUiFieldSuccessBackground);
+	border-color: var(--sapUiFieldSuccessColor);
+}
+
+ui5-input[data-ui5-compact-size] {
 	height: var(--_ui5_input_compact_height);
 }
 
-.sapUiSizeCompact .sapWCInputBaseInner {
+ui5-input[data-ui5-compact-size] .ui5-input-inner {
 	padding: 0 0.5rem;
 }
 
-/* Input Icon */
-:host(ui5-input) ::slotted(ui5-icon) {
-	min-width: var(--sap_wc_input_icon_min_width);
+ui5-input[data-ui5-compact-size] .ui5-input-icon-root {
+	min-width: var(--sap_wc_input_compact_min_width);
+	width: var(--sap_wc_input_compact_min_width);
 }
 
 ui5-input ui5-icon {
-	min-width: var(--sap_wc_input_icon_min_width);
-}
-
-:host(ui5-input[data-ui5-compact-size]) ::slotted(ui5-icon) {
-	min-width: var(--sap_wc_input_compact_min_width);
+	padding: var(--_ui5_input_icon_padding);
 }
 
 ui5-input[data-ui5-compact-size] ui5-icon {
-	min-width: var(--sap_wc_input_compact_min_width);
+	padding: .25rem .5rem;
 }

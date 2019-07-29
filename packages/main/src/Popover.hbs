@@ -1,16 +1,16 @@
 {{>include "./Popup.hbs"}}
 
-<span class="{{classes.frame}}" @focusin="{{onfocusin}}">
+<span class="ui5-popup-frame" @focusin="{{onfocusin}}">
 	<span id="{{_id}}-firstfe" tabindex="0" @focusin={{focusHelper.forwardToLast}}></span>	
-	<div style="{{styles.main}}" role="dialog" aria-labelledby="{{headerId}}" tabindex="-1" class="{{classes.main}}">
+	<div style="{{styles.main}}" role="dialog" aria-modal="true" aria-labelledby="{{headerId}}" tabindex="-1" class="ui5-popup-root ui5-popover-root">
 			{{> header}}
-			<div id="{{_id}}-content" role="application" style="{{styles.content}}" class="ui5-popup-wrapper-content">
-				<div class="ui5-popup-wrapper-scroll">
+			<div id="{{_id}}-content" style="{{styles.content}}" class="ui5-popup-content">
+				<div class="ui5-popup-scroll">
 					<slot></slot>
 				</div>
 			</div>
 			{{> footer}}
-			<span id="{{_id}}-arrow" style="{{styles.arrow}}" class="{{classes.arrow}}"></span>
+			<span id="{{_id}}-arrow" style="{{styles.arrow}}" class="ui5-popover-arr"></span>
 		</div>
 	<span id="{{_id}}-lastfe" tabindex="0" @focusin={{focusHelper.forwardToFirst}}></span>
 	<div tabindex="0" id="{{_id}}-blocklayer" style="{{styles.blockLayer}}" class="{{classes.blockLayer}}"></div>

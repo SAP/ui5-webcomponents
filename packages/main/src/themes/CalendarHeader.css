@@ -1,25 +1,20 @@
-:host(ui5-calendar-header) {
+:host {
 	display: inline-block;
 	width: 100%;
 }
 
-ui5-calendar-header {
-	display: inline-block;
-	width: 100%;
-}
-
-.sapWCCalHead {
+.ui5-calheader-root {
 	display: flex;
 	height: 3rem;
 	padding: 0.25rem 0;
 	box-sizing: border-box;
 }
 
-.sapWCCalHead ui5-button {
+.ui5-calheader-root ui5-button {
 	height: 100%;
 }
 
-.sapWCCalHeadArrowButton {
+.ui5-calheader-arrowbtn {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -33,38 +28,43 @@ ui5-calendar-header {
 	font-size: var(--sapMFontMediumSize);
 }
 
-.sapWCCalHeadArrowButton:focus {
+.ui5-calheader-arrowbtn:focus {
 	outline: none;
 }
 
-.sapWCCalHeadArrowButton:hover {
+.ui5-calheader-arrowbtn:hover {
 	background-color: var(--sapUiButtonHoverBackground);
 	color: var(--sapUiButtonHoverTextColor);
 }
 
-.sapWCCalHeadArrowButton:active {
+.ui5-calheader-arrowbtn:active {
 	background-color: var(--sapUiButtonActiveBackground);
 	color: var(--sapUiButtonActiveTextColor);
 }
 
-.sapWCCalHeadArrowButton,
-.sapWCCalHeadMiddleButton {
+.ui5-calheader-arrowbtn,
+.ui5-calheader-middlebtn {
 	border: var(--_ui5_calendar_header_arrow_button_border);
 	border-radius: var(--_ui5_calendar_header_arrow_button_border_radius);
 }
 
-.sapWCCalHeadMidButtonContainer {
+.ui5-calheader-arrowicon {
+	color: currentColor;
+	pointer-events: none;
+}
+
+.ui5-calheader-midcontainer {
 	display: flex;
 	justify-content: space-around;
 	flex: 1;
 	padding: 0 0.5rem;
 }
 
-.sapWCCalHeadMidButtonContainer .sapWCCalHeadMiddleButton:first-child {
+.ui5-calheader-midcontainer .ui5-calheader-middlebtn:first-child {
 	margin-right: 0.5rem;
 }
 
-.sapWCCalHeadMiddleButton {
+.ui5-calheader-middlebtn {
 	font-family: var(--sapUiFontFamily);
 	width: var(--_ui5_calendar_header_middle_button_width);
 	flex: var(--_ui5_calendar_header_middle_button_flex);
@@ -76,12 +76,12 @@ ui5-calendar-header {
 	user-select: none;
 }
 
-.sapWCCalHeadMiddleButton:focus {
+.ui5-calheader-middlebtn:focus {
 	border: var(--_ui5_calendar_header_middle_button_focus_border);
 	border-radius: var(--_ui5_calendar_header_middle_button_focus_border_radius);
 }
 
-.sapWCCalHeadMiddleButton:focus::after {
+.ui5-calheader-middlebtn:focus::after {
 	content: "";
 	display: var(--_ui5_calendar_header_middle_button_focus_after_display);
 	width: var(--_ui5_calendar_header_middle_button_focus_after_width);
@@ -92,20 +92,38 @@ ui5-calendar-header {
 	left: var(--_ui5_calendar_header_middle_button_focus_after_left_offset);
 }
 
-.sapWCCalHeadMiddleButton:focus:active::after {
+.ui5-calheader-middlebtn:focus:active::after {
 	border-color: var(--sapUiContentContrastFocusColor);
 }
 
-.sapUiSizeCompact.sapWCCalHead {
+:host([data-ui5-compact-size]) .ui5-calheader-root {
 	height: 2rem;
 	padding: 0;
 }
 
-.sapUiSizeCompact.sapWCCalHeadArrowButton {
+:host([data-ui5-compact-size]) .ui5-calheader-arrowbtn {
 	width: 2rem;
 }
 
-[dir=rtl] .sapWCCalHeadMidButtonContainer .sapWCCalHeadMiddleButton:first-child {
+[dir=rtl] .ui5-calheader-root-midcontainer .ui5-calheader-middlebtn:first-child {
 	margin-left: 0.5rem;
 	margin-right: 0;
+}
+
+/* 
+ * IE pair of styles
+ * to be removed later on
+ */
+ui5-calendar-header {
+	display: inline-block;
+	width: 100%;
+}
+
+ui5-calendar-header[data-ui5-compact-size] .ui5-calheader-root {
+	height: 2rem;
+	padding: 0;
+}
+
+ui5-calendar-header[data-ui5-compact-size] .ui5-calheader-arrowbtn {
+	width: 2rem;
 }

@@ -7,7 +7,7 @@ TestHelper.ready(function() {
 	QUnit.module("ui-li Rendering", function (hooks) {
 		hooks.before(function() {
 			this.getListItemRoot = function() {
-				return this.listItem.shadowRoot.querySelector(".sapMLIB");
+				return this.listItem.shadowRoot.querySelector(".ui5-li-root");
 			};
 		});
 		hooks.beforeEach(function () {
@@ -31,20 +31,14 @@ TestHelper.ready(function() {
 		});
 
 		QUnit.test("Default settings", function (assert) {
-			assert.expect(9);
+			assert.expect(1);
 
 			var listItemRoot = this.getListItemRoot(),
-				existingClasses = ["sapMLIB", "sapMSLI", "sapMLIB-CTX", "sapMLIBBorder", "sapMLIBHoverable", "sapMLIBActionable", "sapMLIBTypeActive"],
-				nonExistingClasses = ["sapMLIBSelected",  "sapMLIBActive"];
+				existingClasses = ["ui5-li-root"];
 
 			// assert
 			existingClasses.forEach(function(className) {
 				assert.ok(listItemRoot.classList.contains(className), "root element does contains " + className);
-			});
-
-			// assert
-			nonExistingClasses.forEach(function(className) {
-				assert.notOk(listItemRoot.classList.contains(className), "root element does not contains " + className);
 			});
 		});
 	});
@@ -52,7 +46,7 @@ TestHelper.ready(function() {
 	QUnit.module("ui-li API", function (hooks) {
 		hooks.before(function() {
 			this.getListItemRoot = function() {
-				return this.listItem.shadowRoot.querySelector(".sapMLIB");
+				return this.listItem.shadowRoot.querySelector(".ui5-li-root");
 			};
 		});
 		hooks.beforeEach(function () {
@@ -67,32 +61,6 @@ TestHelper.ready(function() {
 		hooks.afterEach(function () {
 			fixture.innerHTML = "";
 			this.listItem = null;
-		});
-
-		QUnit.test("set boolean props", function (assert) {
-			assert.expect(3);
-
-			var done = assert.async(),
-				listItem = this.listItem,
-				listRoot = this.getListItemRoot(),
-				expectedClass1 = "sapMLIBSelected",
-				expectedClass2 = "sapMLIBActive",
-				notExpectedClass = "sapMLIBBorder",
-				props = ["_hideBorder", "selected", "_active"];
-
-			// act
-			props.forEach(function(prop){
-				listItem[prop] = true;
-			});
-
-			RenderScheduler.whenFinished().then(function () {
-				// assert
-				assert.ok(listRoot.classList.contains(expectedClass1), "root element contains " + expectedClass1);
-				assert.ok(listRoot.classList.contains(expectedClass2), "root element contains " + expectedClass2);
-				assert.notOk(listRoot.classList.contains(notExpectedClass), "root element does not contain " + notExpectedClass);
-
-				done();
-			});
 		});
 
 		QUnit.test("set string props", function (assert) {
@@ -132,7 +100,7 @@ TestHelper.ready(function() {
 	QUnit.module("ui5-li-groupheader Rendering", function (hooks) {
 		hooks.before(function() {
 			this.getListItemRoot = function() {
-				return this.listItem.shadowRoot.querySelector(".sapMGHLI");
+				return this.listItem.shadowRoot.querySelector(".ui5-ghli-root");
 			};
 		});
 		hooks.beforeEach(function () {
@@ -156,10 +124,10 @@ TestHelper.ready(function() {
 		});
 
 		QUnit.test("Default settings", function (assert) {
-			assert.expect(2);
+			assert.expect(1);
 
 			var listItemRoot = this.getListItemRoot(),
-				existingClasses = ["sapMGHLI", "sapMLIBTypeInactive"];
+				existingClasses = ["ui5-ghli-root"];
 
 			// assert
 			existingClasses.forEach(function(className) {

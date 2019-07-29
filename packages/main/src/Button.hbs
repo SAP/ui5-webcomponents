@@ -1,27 +1,32 @@
 <button
 		type="button"
-		class="{{classes.main}}"
+		class="ui5-button-root"
 		?disabled="{{disabled}}"
 		data-sap-focus-ref
 		{{> ariaPressed}}
 		dir="{{rtl}}"
 		@focusout={{_onfocusout}}
+		@focusin={{_onfocusin}}
 		@click={{_onclick}}
 		@mousedown={{_onmousedown}}
 	>
 		{{#if icon}}
 			<ui5-icon
-				class="{{classes.icon}}"
+				class="ui5-button-icon"
 				src="{{icon}}"
 			></ui5-icon>
 		{{/if}}
 
 		{{#if textContent}}
-			<span id="{{_id}}-content" class="{{classes.text}}">
+			<span id="{{_id}}-content" class="ui5-button-text">
 				<bdi>
 					<slot></slot>
 				</bdi>
 			</span>
+		{{/if}}
+
+		{{#if hasButtonType}}
+			<span class="ui5-hidden-text">{{buttonTypeText}}</span>
 		{{/if}}
 </button>
 

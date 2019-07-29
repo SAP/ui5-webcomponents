@@ -1,4 +1,5 @@
 <div class="{{classes.main}}"
+	id="{{_id}}"
 	role="alert"
 	aria-live="assertive"
 	aria-labelledby="{{_id}}">
@@ -11,13 +12,16 @@
 	<span class="{{classes.label}}"><slot></slot></span>
 
 	{{#unless noCloseButton}}
-		<ui5-icon
-			class="{{classes.closeIcon}}"
-			src="sap-icon://decline"
-			tabindex="0"
-			role="button"
+		<button
+			class="ui5-messagestrip-close-icon-wrapper"
 			title="{{_closeButtonText}}"
-			@ui5-press="{{_handleCloseIconPress}}">
-		</ui5-icon>
+			@click={{_closeClick}}
+		>
+			<ui5-icon
+			class="ui5-messagestrip-close-icon"
+				src="sap-icon://decline"
+			>
+			</ui5-icon>
+		</button>
 	{{/unless}}
 </div>

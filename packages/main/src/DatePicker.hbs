@@ -1,5 +1,5 @@
 <div
-		class="{{classes.main}}"
+		class="ui5-datepicker-root"
 		style="{{styles.main}}"
 >
 	<!-- INPUT -->
@@ -19,8 +19,9 @@
 			<ui5-icon
 				slot="icon"
 				src="sap-icon://appointment-2"
-				class="{{classes.icon}}"
+				class="{{classes.icon}} ui5-datepicker-icon"
 				tabindex="-1"
+				@click="{{togglePicker}}"
 			></ui5-icon>
 		{{/unless}}
 	</ui5-input>

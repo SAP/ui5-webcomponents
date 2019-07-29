@@ -1,27 +1,4 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-	<title>&lt;ui5-shellbar&gt;</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta charset="utf-8">
-
-	<script data-id="sap-ui-config" type="application/json">
-		{
-			"theme": "sap_fiori_3",
-			"language": "EN"
-		}
-	</script>
-
-	<script>delete Document.prototype.adoptedStyleSheets;</script>
-	<style>
-		.hcb .snippet {
-			background-color: #fff !important;
-		}
-	</style>
-</head>
-<body class="sapUiBody example-wrapper" role="application">
+<section>
 
 	<header class="component-heading">
 		<h2 class="control-header">ShellBar</h2>
@@ -48,7 +25,7 @@
 	show-co-pilot
 >
 
-	<ui5-icon src="nav-back" slot="icon"></ui5-icon>
+	<ui5-icon src="sap-icon://nav-back" slot="icon"></ui5-icon>
 
 	<ui5-shellbar-item id="disc" src="sap-icon://disconnected" text="Disconnect"></ui5-shellbar-item>
 	<ui5-shellbar-item id="call" src="sap-icon://incoming-call" text="Incoming Calls"></ui5-shellbar-item>
@@ -228,5 +205,4 @@ notification-count="22"
 </ui5-shellbar>
 	</xmp></pre>
 	</section>
-</body>
-</html>
+</section>
