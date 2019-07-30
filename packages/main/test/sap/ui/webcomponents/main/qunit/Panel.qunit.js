@@ -97,7 +97,7 @@ TestHelper.ready(function () {
 		});
 
 		QUnit.test("adding the 'header' is reflected in the DOM and disables the 'headerText'", function (assert) {
-			assert.expect(2);
+			assert.expect(1);
 
 			var done = assert.async(),
 				panel = this.getPanelRoot();
