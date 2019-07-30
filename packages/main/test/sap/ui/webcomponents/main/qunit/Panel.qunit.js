@@ -7,7 +7,7 @@ TestHelper.ready(function () {
 	QUnit.module("Rendering", function (hooks) {
 		hooks.before(function () {
 			this.getPanelRoot = function () {
-				return this.panel.shadowRoot.querySelector(".sapMPanel");
+				return this.panel.shadowRoot.querySelector(".ui5-panel-root");
 			};
 		});
 		hooks.beforeEach(function () {
@@ -33,20 +33,20 @@ TestHelper.ready(function () {
 			var panel = this.getPanelRoot(),
 				sExpected = "";
 				
-			assert.equal(panel.querySelector(".sapMPanelHdr").innerText.trim(), sExpected, "headerText is empty string");
+			assert.equal(panel.querySelector(".ui5-panel-header-title").innerText.trim(), sExpected, "headerText is empty string");
 		});
 
 		QUnit.test("The 'fixed' is not set by default", function (assert) {
 			var panel = this.getPanelRoot();
 
-			assert.ok(panel.querySelector(".sapMPanelWrappingDiv"), "header wrapping div exists");
+			assert.ok(panel.querySelector(".ui5-panel-header-content"), "header wrapping div exists");
 			assert.ok(panel.querySelector("ui5-icon"), "expandable icon exists");
 		});
 
 		QUnit.test("The 'collapsed' is not set by default", function (assert) {
 			var panel = this.getPanelRoot();
 
-			assert.equal(panel.querySelector(".sapMPanelContent").style.display, "block", "the content div is shown");
+			assert.equal(panel.querySelector(".ui5-panel-header-content").style.display, "block", "the content div is shown");
 		});
 
 		QUnit.test("The default 'accessibleRole' is 'Form'", function (assert) {
@@ -66,23 +66,7 @@ TestHelper.ready(function () {
 			this.panel.setAttribute("header-text", expectedText);
 
 			RenderScheduler.whenFinished().then(function () {
-				assert.equal(panel.querySelector(".sapMPanelHdr").innerText.trim(), expectedText, "header text is updated");
-				done();
-			});
-		});
-
-		QUnit.test("changing the 'fixed' is reflected in the DOM", function (assert) {
-			assert.expect(2);
-
-			var done = assert.async(),
-				panel = this.getPanelRoot();
-
-			this.panel.setAttribute("fixed", "");
-
-			RenderScheduler.whenFinished().then(function () {
-				assert.notOk(panel.querySelector(".sapMPanelWrappingDiv"), "header wrapping div does not exists");
-				assert.notOk(panel.querySelector(".sapMPanelExpandableIcon"), "expandable icon does not exists");
-
+				assert.equal(panel.querySelector(".ui5-panel-header-title").innerText.trim(), expectedText, "header text is updated");
 				done();
 			});
 		});
@@ -96,7 +80,7 @@ TestHelper.ready(function () {
 			this.panel.setAttribute("collapsed", "");
 
 			RenderScheduler.whenFinished().then(function () {
-				assert.equal(panel.querySelector(".sapMPanelContent").style.display, "none", "the content div is hidden");
+				assert.equal(panel.querySelector(".ui5-panel-content").style.display, "none", "the content div is hidden");
 
 				done();
 			});
@@ -128,25 +112,7 @@ TestHelper.ready(function () {
 			this.panel.innerHTML = "<div slot='header'></div>";
 
 			RenderScheduler.whenFinished().then(function () {
-				assert.ok(panel.querySelector(".sapMPanelWrappingDivTb"), "header is added in the DOM");
-				assert.notOk(panel.querySelector(".sapMPanelHdr"), "header text is ignored");
-
-				done();
-			});
-		});
-
-		QUnit.test("adding the 'infoToolbar' is reflected in the DOM and disables the 'headerText'", function (assert) {
-			assert.expect(2);
-
-			var done = assert.async(),
-				panel = this.getPanelRoot();
-
-			this.panel.setAttribute("header-text", "New Header Text");
-			this.panel.innerHTML = "<div slot='header'></div>";
-
-			RenderScheduler.whenFinished().then(function () {
-				assert.ok(panel.querySelector(".sapMPanelWrappingDivTb"), "header is added in the DOM");
-				assert.notOk(panel.querySelector(".sapMPanelHdr"), "header text is ignored");
+				assert.notOk(panel.querySelector("ui5-panel-header-content"), "header text is ignored");
 
 				done();
 			});
