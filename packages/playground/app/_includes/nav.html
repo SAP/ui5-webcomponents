@@ -18,7 +18,12 @@
                       {% if page.url == child.url or page.parent == child.title %}
                         {% assign second_level_url = child.url | absolute_url %}
                       {% endif %}
-                      <a href="{{ child.url | absolute_url }}" class="navigation-list-link{% if page.url == child.url %} active{% endif %}">{{ child.title }}</a>
+                      <a href="{{ child.url | absolute_url }}" class="navigation-list-link{% if page.url == child.url %} active{% endif %}">
+                        <div>{{ child.title }}</div>
+                        {% if child.newComponent %}
+                          <div class="new-tag">NEW</div>
+                        {% endif %}
+                      </a>
                       {% if child.has_children %}
                         {% assign grand_children_list = site.html_pages | sort:"nav_order" %}
                         <ul class="navigation-list-child-list">

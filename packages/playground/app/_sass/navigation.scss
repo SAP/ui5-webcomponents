@@ -26,6 +26,7 @@
 }
 
 .navigation-list > .navigation-list-item > .navigation-list-link {
+  position: relative;
   font-family: "72-Bold";
   font-size: 1rem;
 }
@@ -72,14 +73,17 @@
 
 .navigation-list-link.active::after{
   content: "";
-  width: 0.44rem;
-  height: 0.44rem;
-  border-radius: 50%;
-  background-color: #4A90E2;
-  position: absolute;
-  left: -0.95rem;
-  top: 0.6rem;
-  border: none !important;
+    width: .9rem;
+    height: 10%;
+    position: absolute;
+    left: -1.2rem;
+    top: .7rem;
+    border-radius: 1rem;
+    background-color: #FF6216;
+}
+
+.navigation-list > .navigation-list-item > a.navigation-list-link::after {
+  top: .8rem;
 }
 
 @media only screen and (max-width: 740px) {
@@ -92,16 +96,19 @@
 }
 
 .navigation-list-link {  
-  display: block;
+  display: flex;
+  justify-content: space-between;
   padding-top: $sp-1;
   padding-bottom: $sp-1;
   color: #2b2b2b;
+  font-family: "72-Regular";
+}
 
-  &.active {
-    font-weight: 600;
-    color: #4A90E2 !important;
-    text-decoration: none;
-  }
+.new-tag {
+  display: flex;
+  align-items: center;
+  color: #4A90E2;
+  font-size: 12px;
 }
 
 // Small screen nav
