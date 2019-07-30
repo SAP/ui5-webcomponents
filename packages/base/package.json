@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "@ui5/webcomponents-core": "0.15.0",
-    "lit-html": "^1.0.0",
+    "lit-html": "^1.1.1",
     "regenerator-runtime": "0.12.1",
     "url-search-params-polyfill": "^5.0.0"
   },
