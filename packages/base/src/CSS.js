@@ -44,7 +44,7 @@ const getConstructableStyle = ElementClass => {
  * @returns {string}
  */
 const getShadowRootStyle = ElementClass => {
-	if (document.adoptedStyleSheets || window.ShadyDOM) {
+	if (document.adoptedStyleSheets) {
 		return;
 	}
 

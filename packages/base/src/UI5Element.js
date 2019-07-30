@@ -5,7 +5,7 @@ import DOMObserver from "./compatibility/DOMObserver.js";
 import UI5ElementMetadata from "./UI5ElementMetadata.js";
 import Integer from "./types/Integer.js";
 import RenderScheduler from "./RenderScheduler.js";
-import { getConstructableStyle, createHeadStyle, getShadowRootStyle } from "./CSS.js";
+import { getConstructableStyle, getShadowRootStyle } from "./CSS.js";
 import { attachThemeChange } from "./Theming.js";
 import { kebabToCamelCase, camelToKebabCase } from "./util/StringHelper.js";
 import isValidPropertyName from "./util/isValidPropertyName.js";
@@ -63,11 +63,6 @@ class UI5Element extends HTMLElement {
 
 		this.attachShadow({ mode: "open" });
 
-		// IE11, Edge
-		if (window.ShadyDOM) {
-			createHeadStyle(this.constructor);
-		}
-
 		// Chrome
 		if (document.adoptedStyleSheets) {
 			const style = getConstructableStyle(this.constructor);
@@ -87,6 +82,7 @@ class UI5Element extends HTMLElement {
 
 		await this._processChildren();
 		await RenderScheduler.renderImmediately(this);
+		window.ShadyCSS && window.ShadyCSS.styleElement(this);
 		this._domRefReadyPromise._deferredResolve();
 		this._startObservingDOMChildren();
 		if (typeof this.onEnterDOM === "function") {
@@ -423,6 +419,7 @@ class UI5Element extends HTMLElement {
 		// console.log(this.getDomRef() ? "RE-RENDER" : "FIRST RENDER", this);
 		delete this._invalidated;
 		this._updateShadowRoot();
+		window.ShadyCSS && window.ShadyCSS.styleSubtree(this);
 
 		// Safari requires that children get the slot attribute only after the slot tags have been rendered in the shadow DOM
 		this._assignIndividualSlotsToChildren();
@@ -437,7 +434,11 @@ class UI5Element extends HTMLElement {
 		const renderResult = this.constructor.template(this);
 		// For browsers that do not support constructable style sheets (and not using the polyfill)
 		const styleToPrepend = getShadowRootStyle(this.constructor);
-		this.constructor.render(renderResult, this.shadowRoot, styleToPrepend, { eventContext: this });
+		const options = {
+			eventContext: this,
+			scopeName: this.constructor.getMetadata().getTag(),
+		};
+		this.constructor.render(renderResult, this.shadowRoot, styleToPrepend, options);
 	}
 
 	_assignIndividualSlotsToChildren() {
