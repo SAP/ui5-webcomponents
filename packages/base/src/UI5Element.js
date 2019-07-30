@@ -82,7 +82,6 @@ class UI5Element extends HTMLElement {
 
 		await this._processChildren();
 		await RenderScheduler.renderImmediately(this);
-		window.ShadyCSS && window.ShadyCSS.styleElement(this);
 		this._domRefReadyPromise._deferredResolve();
 		this._startObservingDOMChildren();
 		if (typeof this.onEnterDOM === "function") {
@@ -419,7 +418,7 @@ class UI5Element extends HTMLElement {
 		// console.log(this.getDomRef() ? "RE-RENDER" : "FIRST RENDER", this);
 		delete this._invalidated;
 		this._updateShadowRoot();
-		window.ShadyCSS && window.ShadyCSS.styleSubtree(this);
+		// window.ShadyCSS && window.ShadyCSS.styleSubtree(this);
 
 		// Safari requires that children get the slot attribute only after the slot tags have been rendered in the shadow DOM
 		this._assignIndividualSlotsToChildren();
