@@ -43,12 +43,6 @@ TestHelper.ready(function () {
 			assert.ok(panel.querySelector("ui5-icon"), "expandable icon exists");
 		});
 
-		QUnit.test("The 'collapsed' is not set by default", function (assert) {
-			var panel = this.getPanelRoot();
-
-			assert.equal(panel.querySelector(".ui5-panel-header-content").style.display, "block", "the content div is shown");
-		});
-
 		QUnit.test("The default 'accessibleRole' is 'Form'", function (assert) {
 			var panel = this.getPanelRoot(),
 				expectedRole = "form";
