@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getIconData } from "@ui5/webcomponents-base/dist/SVGIconRegistry.js";
-import IconTemplate from "./generated/templates/IconTemplate.lit.js";
+import IconTemplate from "./IconTemplate.lit.js";
 
 // Styles
 import iconCss from "./generated/themes/Icon.css.js";
