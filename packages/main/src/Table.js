@@ -102,6 +102,10 @@ const metadata = {
 			type: Object,
 			multiple: true,
 		},
+
+		_noDataDisplayed: {
+			type: Boolean,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Table.prototype */ {
 	},
@@ -183,6 +187,9 @@ class Table extends UI5Element {
 		this.visibleColumns = this.columns.filter((column, index) => {
 			return !this._hiddenColumns[index];
 		});
+
+		this._noDataDisplayed = !this.rows.length && this.showNoData;
+		this.visibleColumnsCount = this.visibleColumns.length;
 	}
 
 	onEnterDOM() {

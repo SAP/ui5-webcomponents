@@ -74,7 +74,7 @@ const metadata = {
 		 */
 		width: {
 			type: CSSSize,
-			defaultValue: "",
+			defaultValue: "auto",
 		},
 
 		/**
