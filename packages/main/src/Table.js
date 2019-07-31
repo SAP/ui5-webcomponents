@@ -185,6 +185,7 @@ class Table extends UI5Element {
 		});
 
 		this.visibleColumns = this.columns.filter((column, index) => {
+			column.sticky = this.stickyColumnHeader;
 			return !this._hiddenColumns[index];
 		});
 

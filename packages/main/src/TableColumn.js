@@ -90,6 +90,13 @@ const metadata = {
 		last: {
 			type: Boolean,
 		},
+
+		/**
+		 * @protected
+		 */
+		sticky: {
+			type: Boolean,
+		},
 	},
 };
 

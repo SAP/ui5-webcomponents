@@ -12,8 +12,6 @@ table {
 .ui5-table-header-row {
 	color: var(--sapUiListTextColor);
 	height: 3rem;
-	background: var(--sapUiListHeaderBackground);
-	border-bottom: 1px solid var(--sapUiListBorderColor);
 	font-family: var(--sapUiFontFamily);
 	font-size: var(--sapMFontMediumSize);
 }
