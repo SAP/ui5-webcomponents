@@ -182,6 +182,8 @@ class Switch extends UI5Element {
 		if (!this.disabled) {
 			this.checked = !this.checked;
 			this.fireEvent("change");
+			// Two way data binding;
+			this.fireEvent("value-changed");
 		}
 	}
 
