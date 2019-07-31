@@ -95,39 +95,3 @@ ui5-link {
 	font-size: var(--sapMFontMediumSize);
 	cursor: pointer;
 }
-
-ui5-link[disabled] {
-	pointer-events: none;
-}
-
-ui5-link[design="Subtle"]:not([disabled]) .ui5-link-root:hover,
-ui5-link[design="Subtle"]:not([disabled]) .ui5-link-root:hover {
-	text-decoration: underline;
-	color: var(--sapUiLinkHover);
-}
-
-ui5-link[disabled] .ui5-link-root {
-	text-shadow: none;
-	outline: none;
-	cursor: default;
-	pointer-events: none;
-	opacity: var(--_ui5_link_opacity);
-}
-
-ui5-link[design="Emphasized"] .ui5-link-root {
-	font-weight: bold;
-}
-
-ui5-link[design="Subtle"] .ui5-link-root,
-ui5-link[design="Subtle"] .ui5-link-root:visited {
-	color: var(--_ui5_link_subtle_color);
-}
-
-ui5-link[design="Subtle"] .ui5-link-root:focus {
-	color: var(--sapUiLink);
-}
-
-ui5-link[wrap] .ui5-link-root {
-	white-space: normal;
-	word-wrap: break-word;
-}

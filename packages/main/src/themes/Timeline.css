@@ -35,21 +35,3 @@
 :host([data-ui5-compact-size]) .ui5-timeline-list-item :last-child {
 	margin-bottom: 0;
 }
-
-/* IE pair of stlyes */
-ui5-timeline:not([hidden]) {
-	display: block;
-}
-
-/* Compact size */
-ui5-timeline[data-ui5-compact-size] .ui5-timeline-root {
-	padding: .5rem;
-}
-
-ui5-timeline[data-ui5-compact-size] .ui5-timeline-list-item {
-	margin-bottom: .5rem;
-}
-
-ui5-timeline[data-ui5-compact-size] .ui5-timeline-list-item :last-child {
-	margin-bottom: 0;
-}

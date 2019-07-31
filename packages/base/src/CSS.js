@@ -45,7 +45,13 @@ const getConstructableStyle = ElementClass => {
  */
 const getShadowRootStyle = ElementClass => {
 	if (document.adoptedStyleSheets) {
-		return;
+		return "";
+	}
+
+	const tagName = ElementClass.getMetadata().getTag();
+	const shadyCSSTag = document.querySelector(`head>style[scope|=${tagName}-]`);
+	if (shadyCSSTag) {
+		return "";
 	}
 
 	const styleContent = getEffectiveStyle(ElementClass);

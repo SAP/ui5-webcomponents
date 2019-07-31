@@ -39,14 +39,3 @@
 	min-height: 3rem;
 	border-bottom: 1px solid var(--sapUiListTableGroupHeaderBorderColor);
 }
-
-/* Remove that once ShadyCSS is adopted */
-
-ui5-table:not([hidden]) {
-	display: inline-block;
-	width: 100%;
-}
-
-ui5-table[data-ui5-compact-size] .ui5-table-header {
-	height: 2rem;
-}

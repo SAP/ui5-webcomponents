@@ -47,14 +47,3 @@
 	min-width: 0px;
 	height: 100%;
 }
-
-/* Remove this once ShadyCSS is adopted */
-
-ui5-multi-combobox:not([hidden]) {
-	display: inline-block;
-	width: 100%;
-}
-
-ui5-multi-combobox[data-ui5-compact-size] .ui5-multi-combobox-token {
-	height: 100%;
-}

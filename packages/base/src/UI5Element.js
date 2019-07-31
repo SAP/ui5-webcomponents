@@ -431,13 +431,15 @@ class UI5Element extends HTMLElement {
 
 	_updateShadowRoot() {
 		const renderResult = this.constructor.template(this);
-		// For browsers that do not support constructable style sheets (and not using the polyfill)
-		const styleToPrepend = getShadowRootStyle(this.constructor);
 		const options = {
 			eventContext: this,
 			scopeName: this.constructor.getMetadata().getTag(),
 		};
-		this.constructor.render(renderResult, this.shadowRoot, styleToPrepend, options);
+		this.constructor.render(renderResult, this.shadowRoot, options);
+	}
+
+	get _effectiveStyles() {
+		return getShadowRootStyle(this.constructor);
 	}
 
 	_assignIndividualSlotsToChildren() {

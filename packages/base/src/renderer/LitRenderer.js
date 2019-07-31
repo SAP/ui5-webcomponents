@@ -1,13 +1,6 @@
-import { html } from "lit-html";
 import { render } from "lit-html/lib/shady-render";
 
-const prependedStylesSet = new Set();
-
-const litRender = (templateResult, domNode, styles, options) => {
-	if (styles && !prependedStylesSet.has(options.scopeName)) {
-		templateResult = html`<style>${styles}</style>${templateResult}`;
-		prependedStylesSet.add(options.scopeName);
-	}
+const litRender = (templateResult, domNode, options) => {
 	render(templateResult, domNode, options);
 };
 
