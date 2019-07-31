@@ -4,7 +4,6 @@ import { getIconURI } from "@ui5/webcomponents-base/dist/IconPool.js";
 import slideDown from "@ui5/webcomponents-base/dist/animations/slideDown.js";
 import slideUp from "@ui5/webcomponents-base/dist/animations/slideUp.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-import { getCompactSize } from "@ui5/webcomponents-base/dist/config/CompactSize.js";
 import "@ui5/webcomponents-base/dist/icons/navigation-right-arrow.js";
 import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
 import Icon from "./Icon.js";
@@ -98,6 +97,13 @@ const metadata = {
 		accessibleRole: {
 			type: PanelAccessibleRole,
 			defaultValue: PanelAccessibleRole.Form,
+		},
+
+		/**
+		 * @private
+		 */
+		_hasHeader: {
+			type: Boolean,
 		},
 
 		_icon: {
@@ -213,12 +219,13 @@ class Panel extends UI5Element {
 		}
 
 		this._icon.title = this.resourceBundle.getText(PANEL_ICON);
+		this._hasHeader = !!this.header.length;
 	}
 
 	shouldToggle(node) {
 		const customContent = this.header.length;
 		if (customContent) {
-			return node.classList.contains("sapMPanelIconOuter");
+			return node.classList.contains("ui5-panel-header-button");
 		}
 		return true;
 	}
@@ -231,10 +238,17 @@ class Panel extends UI5Element {
 		this._toggleOpen();
 	}
 
+	_toggleButtonClick(event) {
+		if (event.x === 0 && event.y === 0) {
+			event.stopImmediatePropagation();
+		}
+	}
+
 	_headerKeyDown(event) {
 		if (!this.shouldToggle(event.target)) {
 			return;
 		}
+
 
 		if (isEnter(event)) {
 			this._toggleOpen();
@@ -263,7 +277,7 @@ class Panel extends UI5Element {
 		this.collapsed = !this.collapsed;
 		this._animationRunning = true;
 
-		const elements = this.getDomRef().querySelectorAll(".sapMPanelExpandablePart");
+		const elements = this.getDomRef().querySelectorAll(".ui5-panel-content");
 		const animations = [];
 
 		[].forEach.call(elements, oElement => {
@@ -302,40 +316,15 @@ class Panel extends UI5Element {
 	}
 
 	get headerTabIndex() {
-		return !this.header.length ? "0" : undefined;
+		return (this.header.length || this.fixed) ? "-1" : "0";
 	}
 
-	get iconTabIndex() {
-		return this.header.length ? "0" : undefined;
+	get nonFocusableButton() {
+		return !this.header.length;
 	}
 
 	get shouldRenderH1() {
 		return !this.header.length && (this.headerText || !this.fixed);
-	}
-
-	get classes() {
-		return {
-			main: {
-				sapMPanel: true,
-				sapUiSizeCompact: getCompactSize(),
-			},
-			header: {
-				sapMPanelWrappingDivTb: this.header.length,
-				sapMPanelWrappingDivTbExpanded: this.header.length && this.collapsed,
-				sapMPanelWrappingDiv: !this.header.length,
-				sapMPanelWrappingDivClickable: !this.header.length,
-				sapMPanelWrappingDivExpanded: !this.header.length && !this.collapsed,
-			},
-			icon: {
-				sapMPanelIconExpanded: !this.collapsed,
-				sapMPanelIcon: true,
-			},
-			content: {
-				sapMPanelContent: true,
-				sapMPanelExpandablePart: !this.fixed,
-				[`sapMPanelBG${this.backgroundDesign}`]: true,
-			},
-		};
 	}
 
 	get styles() {
