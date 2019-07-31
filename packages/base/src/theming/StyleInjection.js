@@ -11,7 +11,7 @@ const runPonyfill = () => {
 	window.CSSVarsPonyfill.resetCssVars();
 	window.CSSVarsPonyfill.cssVars({
 		rootElement: document.head,
-		include: "style[data-ui5-theme-properties],style[data-ui5-element-styles]",
+		include: "style[data-ui5-theme-properties]",
 		silent: true,
 	});
 };
@@ -35,9 +35,15 @@ const injectThemeProperties = cssText => {
 		createStyleInHead(cssText, { "data-ui5-theme-properties": "" });
 	}
 
-	// When changing the theme, run the ponyfill immediately
-	if (ponyfillNeeded()) {
-		runPonyfill();
+	if (window.ShadyCSS && cssText) {
+		const noRoot = cssText.match(/:root{(.*?)}/)[1];
+		const pairs = noRoot.split(";");
+		const vars = {};
+		pairs.forEach(pair => {
+			const [varName, varValue] = pair.split(/:\s*/);
+			vars[varName] = varValue;
+		});
+		window.ShadyCSS.styleDocument(vars);
 	}
 };
 
