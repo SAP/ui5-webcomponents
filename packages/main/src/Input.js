@@ -483,6 +483,8 @@ class Input extends UI5Element {
 
 		if (isUserInput) { // input
 			this.fireEvent(this.EVENT_INPUT);
+			// Two way data binding
+			this.fireEvent("value-changed");
 			return;
 		}
 
