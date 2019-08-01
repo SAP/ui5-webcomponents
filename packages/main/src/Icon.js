@@ -30,6 +30,31 @@ const metadata = {
 		src: {
 			type: String,
 		},
+
+		/**
+		 * Defines the text alternative of the <code>ui5-icon</code>.
+		 * If not provided a default text alternative will be set, if present.
+		 * <br><br>
+		 * <b>Note:</b> Every icon should have a text alternative in order to
+		 * calculate its accessible name.
+		 *
+		 * @type {string}
+		 * @public
+		 */
+		accessibleName: {
+			type: String,
+		},
+
+		/**
+		 * Defines whether the <code>ui5-icon</code> should have a tooltip.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 */
+		showIconTooltip: {
+			type: Boolean,
+		},
 	},
 	events: {
 	},
@@ -96,6 +121,16 @@ class Icon extends UI5Element {
 		}
 
 		return icon.d;
+	}
+
+	get hasIconTooltip() {
+		return this.showIconTooltip && this.accessibleNameText;
+	}
+
+	get accessibleNameText() {
+		const icon = getIconData(this._normalizeIconURI(this.src));
+
+		return this.accessibleName || icon.acc;
 	}
 
 	get dir() {
