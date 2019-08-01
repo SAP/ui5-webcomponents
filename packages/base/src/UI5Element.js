@@ -10,8 +10,7 @@ import { getConstructableStyle, getShadowRootStyle } from "./CSS.js";
 import { attachThemeChange } from "./Theming.js";
 import { kebabToCamelCase, camelToKebabCase } from "./util/StringHelper.js";
 import isValidPropertyName from "./util/isValidPropertyName.js";
-import { getThemeProperties } from "./theming/ThemeProperties.js";
-import extractCSSVars from "./theming/extractCSSVars.js";
+import { getThemePropertiesObject } from "./theming/ThemeProperties.js";
 
 const metadata = {
 	events: {
@@ -41,11 +40,17 @@ class UI5Element extends HTMLElement {
 		this._monitoredChildProps = new Map();
 	}
 
-	onThemeChanged(theme, themeVars) {
-		if (window.ShadyCSS || !this.constructor.needsShadowDOM()) {
-			window.ShadyCSS.styleSubtree(this, themeVars);
+	async onThemeChanged() {
+		if (!this.constructor.needsShadowDOM()) {
 			return;
 		}
+
+		// Apply CSS Vars
+		if (window.ShadyCSS) {
+			await this._runShady();
+			return;
+		}
+
 		const newStyle = getConstructableStyle(this.constructor);
 		if (document.adoptedStyleSheets) {
 			this.shadowRoot.adoptedStyleSheets = [newStyle];
@@ -53,6 +58,15 @@ class UI5Element extends HTMLElement {
 			const oldStyle = this.shadowRoot.querySelector("style");
 			oldStyle.textContent = newStyle.textContent;
 		}
+	}
+
+	async _runShady() {
+		if (!window.ShadyCSS) {
+			return;
+		}
+
+		const cssVars = await getThemePropertiesObject("@ui5/webcomponents", getTheme());
+		window.ShadyCSS.styleSubtree(this, cssVars);
 	}
 
 	_generateId() {
@@ -83,16 +97,10 @@ class UI5Element extends HTMLElement {
 			return;
 		}
 
+		await this._runShady();
 		await this._processChildren();
 		await RenderScheduler.renderImmediately(this);
-
-		if (window.ShadyCSS) {
-			const theme = getTheme();
-			const cssText = await getThemeProperties("@ui5/webcomponents", theme);
-			const cssVars = extractCSSVars(cssText);
-			window.ShadyCSS.styleSubtree(this, cssVars);
-		}
-
+		
 		this._domRefReadyPromise._deferredResolve();
 		this._startObservingDOMChildren();
 		if (typeof this.onEnterDOM === "function") {

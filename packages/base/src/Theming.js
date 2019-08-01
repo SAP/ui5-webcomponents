@@ -12,12 +12,12 @@ const attachThemeChange = function attachThemeChange(callback) {
 
 const _applyTheme = async theme => {
 	const cssText = await getThemeProperties("@ui5/webcomponents", theme);
-	const vars = injectThemeProperties(cssText);
-	_executeThemeChangeCallbacks(theme, vars);
+	injectThemeProperties(cssText);
+	_executeThemeChangeCallbacks(theme);
 };
 
-const _executeThemeChangeCallbacks = (theme, vars) => {
-	themeChangeCallbacks.forEach(callback => callback(theme, vars));
+const _executeThemeChangeCallbacks = theme => {
+	themeChangeCallbacks.forEach(callback => callback(theme));
 };
 
 const getEffectiveStyle = ElementClass => {

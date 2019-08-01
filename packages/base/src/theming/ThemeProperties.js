@@ -1,7 +1,9 @@
 import { fetchTextOnce } from "../util/FetchHelper.js";
+import extractCSSVars from "./extractCSSVars.js";
 
 const themeURLs = new Map();
 const propertiesStyles = new Map();
+const vars = new Map();
 
 const registerThemeProperties = (packageName, themeName, data) => {
 	if (data.includes(":root")) {
@@ -24,6 +26,16 @@ const getThemeProperties = async (packageName, themeName) => {
 	return data;
 };
 
+const getThemePropertiesObject = async (packageName, themeName) => {
+	let cssVars = vars.get(`${packageName}_${themeName}`);
+	if (!cssVars) {
+		const cssText = await getThemeProperties(packageName, themeName);
+		cssVars = extractCSSVars(cssText);
+		vars.set(`${packageName}_${themeName}`, cssVars);
+	}
+	return cssVars;
+};
+
 const fetchThemeProperties = async (packageName, themeName) => {
 	const url = themeURLs.get(`${packageName}_${themeName}`);
 
@@ -33,4 +45,4 @@ const fetchThemeProperties = async (packageName, themeName) => {
 	return fetchTextOnce(url);
 };
 
-export { registerThemeProperties, getThemeProperties };
+export { registerThemeProperties, getThemeProperties, getThemePropertiesObject };
