@@ -428,7 +428,7 @@ class DatePicker extends UI5Element {
 
 		this.fireEvent("change", { value: this.value, valid: true });
 		// Two way data binding
-		this.fireEvent("value-changed", { value: this.value, valid: isValid });
+		this.fireEvent("value-changed", { value: this.value, valid: true });
 	}
 
 	/**
