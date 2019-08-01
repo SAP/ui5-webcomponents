@@ -24,13 +24,13 @@ describe("TabContainer general interaction", () => {
 		assert.ok(arrowRight.isDisplayed(), "'Right Arrow' should be initially shown");
 
 		arrowRight.click();
-		browser.pause(300); // TODO: wait for animation finish. Remove when solved on framework level
+		browser.pause(500); // TODO: wait for animation finish. Remove when solved on framework level
 
 		assert.ok(arrowLeft.isDisplayed(), "'Left Arrow' should be shown after 'Right Arrow' click");
 		assert.ok(!arrowRight.isDisplayed(), "'Right Arrow' should be hidden after 'Right Arrow' click");
 
 		arrowLeft.click();
-		browser.pause(300); // TODO: wait for animation finish. Remove when solved on framework level
+		browser.pause(500); // TODO: wait for animation finish. Remove when solved on framework level
 
 		assert.ok(!arrowLeft.isDisplayed(), "'Left Arrow' should be hidden after 'Left Arrow' click");
 		assert.ok(arrowRight.isDisplayed(), "'Right Arrow' should be shown after 'Left Arrow' click");
@@ -47,13 +47,13 @@ describe("TabContainer general interaction", () => {
 		assert.ok(arrowRight.isDisplayed(), "'Right Arrow' should be initially shown");
 
 		arrowRight.click();
-		browser.pause(300); // TODO: wait for animation finish. Remove when solved on framework level
+		browser.pause(500); // TODO: wait for animation finish. Remove when solved on framework level
 
 		assert.ok(arrowLeft.isDisplayed(), "'Left Arrow' should be shown after 'Right Arrow' click");
 		assert.ok(!arrowRight.isDisplayed(), "'Right Arrow' should be hidden after 'Right Arrow' click");
 
 		arrowLeft.click();
-		browser.pause(300); // TODO: wait for animation finish. Remove when solved on framework level
+		browser.pause(500); // TODO: wait for animation finish. Remove when solved on framework level
 
 		assert.ok(!arrowLeft.isDisplayed(), "'Left Arrow' should be hidden after 'Left Arrow' click");
 		assert.ok(arrowRight.isDisplayed(), "'Right Arrow' should be shown after 'Left Arrow' click");

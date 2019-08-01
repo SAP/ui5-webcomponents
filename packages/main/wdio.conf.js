@@ -52,8 +52,8 @@ exports.config = {
         // 5 instances get started at a time.
         maxInstances: process.env.TRAVIS ? 1 : 5,
         //
-			browserName: 'chrome',
-        chromeOptions: {
+        browserName: 'chrome',
+        'goog:chromeOptions': {
             args: ['headless']
         }
     }],
