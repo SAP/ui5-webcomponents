@@ -4,7 +4,7 @@ node_js:
 - '8'
 
 addons:
-  chrome: stable
+  chrome: "75"
 
 before_install:
   - curl -o- -L https://yarnpkg.com/install.sh | bash
