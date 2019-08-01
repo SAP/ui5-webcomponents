@@ -1,4 +1,5 @@
 import createStyleInHead from "../util/createStyleInHead.js";
+import extractCSSVars from "./extractCSSVars.js";
 
 /**
  * Creates/updates a style element holding all CSS Custom Properties
@@ -14,15 +15,7 @@ const injectThemeProperties = cssText => {
 	}
 
 	if (window.ShadyCSS && cssText) {
-		const noRoot = cssText.match(/:root{(.*?)}/)[1];
-		const pairs = noRoot.split(";");
-		const vars = {};
-		pairs.forEach(pair => {
-			const [varName, varValue] = pair.split(/:\s*/);
-			vars[varName] = varValue;
-		});
-		// window.ShadyCSS.styleDocument(vars);
-		return vars;
+		return extractCSSVars(cssText);
 	}
 };
 

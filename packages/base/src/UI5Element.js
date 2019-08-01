@@ -1,6 +1,7 @@
 import boot from "./boot.js";
 import { getNoConflict } from "./config/NoConflict.js";
 import { getCompactSize } from "./config/CompactSize.js";
+import { getTheme } from "./config/Theme.js";
 import DOMObserver from "./compatibility/DOMObserver.js";
 import UI5ElementMetadata from "./UI5ElementMetadata.js";
 import Integer from "./types/Integer.js";
@@ -9,6 +10,8 @@ import { getConstructableStyle, getShadowRootStyle } from "./CSS.js";
 import { attachThemeChange } from "./Theming.js";
 import { kebabToCamelCase, camelToKebabCase } from "./util/StringHelper.js";
 import isValidPropertyName from "./util/isValidPropertyName.js";
+import { getThemeProperties } from "./theming/ThemeProperties.js";
+import extractCSSVars from "./theming/extractCSSVars.js";
 
 const metadata = {
 	events: {
@@ -82,6 +85,14 @@ class UI5Element extends HTMLElement {
 
 		await this._processChildren();
 		await RenderScheduler.renderImmediately(this);
+
+		if (window.ShadyCSS) {
+			const theme = getTheme();
+			const cssText = await getThemeProperties("@ui5/webcomponents", theme);
+			const cssVars = extractCSSVars(cssText);
+			window.ShadyCSS.styleSubtree(this, cssVars);
+		}
+
 		this._domRefReadyPromise._deferredResolve();
 		this._startObservingDOMChildren();
 		if (typeof this.onEnterDOM === "function") {
