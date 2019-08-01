@@ -12,7 +12,9 @@ const attachThemeChange = function attachThemeChange(callback) {
 
 const _applyTheme = async theme => {
 	const cssText = await getThemeProperties("@ui5/webcomponents", theme);
-	injectThemeProperties(cssText);
+	if (!window.ShadyCSS) {
+		injectThemeProperties(cssText);
+	}
 	_executeThemeChangeCallbacks(theme);
 };
 
