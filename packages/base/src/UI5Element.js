@@ -38,9 +38,9 @@ class UI5Element extends HTMLElement {
 		this._monitoredChildProps = new Map();
 	}
 
-	onThemeChanged() {
-		if (window.ShadyDOM || !this.constructor.needsShadowDOM()) {
-			// polyfill theme handling is in head styles directly
+	onThemeChanged(theme, themeVars) {
+		if (window.ShadyCSS || !this.constructor.needsShadowDOM()) {
+			window.ShadyCSS.styleSubtree(this, themeVars);
 			return;
 		}
 		const newStyle = getConstructableStyle(this.constructor);

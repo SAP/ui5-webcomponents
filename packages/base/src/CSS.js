@@ -1,19 +1,7 @@
 import { getEffectiveStyle } from "./Theming.js";
 import { getTheme } from "./config/Theme.js";
-import { injectWebComponentStyle } from "./theming/StyleInjection.js";
 
 const styleMap = new Map();
-
-/**
- * Creates the needed CSS for a web component class in the head tag
- * Note: IE11, Edge
- * @param ElementClass
- */
-const createHeadStyle = ElementClass => {
-	const tag = ElementClass.getMetadata().getTag();
-	const cssContent = getEffectiveStyle(ElementClass);
-	injectWebComponentStyle(tag, cssContent);
-};
 
 /**
  * Returns (and caches) a constructable style sheet for a web component class
@@ -49,7 +37,9 @@ const getShadowRootStyle = ElementClass => {
 	}
 
 	const tagName = ElementClass.getMetadata().getTag();
-	const shadyCSSTag = document.querySelector(`head>style[scope|=${tagName}-]`);
+	const shadyCSSTag = document.querySelectorAll(`head>style[scope]`).some(styleTag => {
+		return styleTag.getAttribute("scope").match(new RegExp(`^${tagName}-\\d+$`));
+	});
 	if (shadyCSSTag) {
 		return "";
 	}
@@ -59,4 +49,4 @@ const getShadowRootStyle = ElementClass => {
 };
 
 // eslint-disable-next-line
-export { createHeadStyle, getConstructableStyle, getShadowRootStyle};
+export { getConstructableStyle, getShadowRootStyle};
