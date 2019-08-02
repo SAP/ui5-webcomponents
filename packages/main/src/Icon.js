@@ -52,7 +52,7 @@ const metadata = {
 		 * @defaultvalue false
 		 * @public
 		 */
-		showIconTooltip: {
+		showTooltip: {
 			type: Boolean,
 		},
 	},
@@ -124,7 +124,7 @@ class Icon extends UI5Element {
 	}
 
 	get hasIconTooltip() {
-		return this.showIconTooltip && this.accessibleNameText;
+		return this.showTooltip && this.accessibleNameText;
 	}
 
 	get accessibleNameText() {
