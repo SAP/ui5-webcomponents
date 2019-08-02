@@ -1,9 +1,5 @@
-commit bf76ef11f09b563b906c5ed842d7e7c221c8b250
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Jul 29 09:47:45 2019 +0300
+commit b73530b6fa4016c293ca91c84a95e08a7b675d21
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Fri Aug 2 10:51:50 2019 +0300
 
-    chore: replace sapUiCompactSize class (#696)
-    
-    * chore(ui5-tabcontainer): replace sapUiCompactSize class
-    
-    * more sapUiCompactSize usage
+    chore: correct target chrome version (#711)
