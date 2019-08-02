@@ -130,7 +130,7 @@ class Icon extends UI5Element {
 	get accessibleNameText() {
 		const icon = getIconData(this._normalizeIconURI(this.src));
 
-		return this.accessibleName || icon.acc;
+		return this.accessibleName || icon.accText;
 	}
 
 	get dir() {
