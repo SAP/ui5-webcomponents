@@ -97,9 +97,9 @@ class UI5Element extends HTMLElement {
 			return;
 		}
 
-		await this._runShady();
 		await this._processChildren();
 		await RenderScheduler.renderImmediately(this);
+		await this._runShady();
 
 		this._domRefReadyPromise._deferredResolve();
 		this._startObservingDOMChildren();
