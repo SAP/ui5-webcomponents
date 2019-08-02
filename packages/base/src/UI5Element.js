@@ -47,20 +47,11 @@ class UI5Element extends HTMLElement {
 
 		// Apply CSS Vars
 		if (window.ShadyCSS) {
-			await this._runShady();
-			return;
-		}
-
-		const newStyle = getConstructableStyle(this.constructor);
-		if (document.adoptedStyleSheets) {
-			this.shadowRoot.adoptedStyleSheets = [newStyle];
-		} else {
-			const oldStyle = this.shadowRoot.querySelector("style");
-			oldStyle.textContent = newStyle.textContent;
+			await this._applyShadyCSS();
 		}
 	}
 
-	async _runShady() {
+	async _applyShadyCSS() {
 		if (!window.ShadyCSS) {
 			return;
 		}
@@ -99,7 +90,7 @@ class UI5Element extends HTMLElement {
 
 		await this._processChildren();
 		await RenderScheduler.renderImmediately(this);
-		await this._runShady();
+		await this._applyShadyCSS();
 
 		this._domRefReadyPromise._deferredResolve();
 		this._startObservingDOMChildren();
