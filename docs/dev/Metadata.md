@@ -16,7 +16,7 @@ Defines the HTML tag for the Web Component.
 }
 ``` 
 
-## Interfaces
+## Implements
 
 Defines the list of interfaces this this web component implements.
 
@@ -27,7 +27,7 @@ component may slot other certain web components.
 
 ```json
 {
-	"interfaces": ["IMyInterface", "IMyOtherInterface"],
+	"implements": [IMyInterface, IMyOtherInterface],
 }
 ```
 
@@ -35,7 +35,7 @@ or, if just one:
 
 ```json
 {
-	"interfaces": "IMyInterface",
+	"implements": IMyInterface,
 }
 ```
 
@@ -127,7 +127,7 @@ Defines the `slots` that will be provided by this UI5 Web Component.
 			"type": HTMLElement,
 		},
 		"rows": {
-			"interface": "IMyRow",
+			"type": IMyRow,
 			"individualSlots": true,
 		}
 	}
@@ -138,13 +138,12 @@ Defines the `slots` that will be provided by this UI5 Web Component.
 
 Setting | Type | Default | Description
 --------|------|--------|-----------
-type    | Javascript Class | N/A | The type of the elements that can go into that slot
-interface | String | N/A |  The name of the interface a UI5 Web Component has to implement in order to go into that slot 
+type    | Javascript Class | N/A | The type/interface of the elements that can go into that slot 
 individualSlots | Boolean | false | If set to `true`, each child will have its own slot, allowing you to arrange/wrap the children arbitrarily.
 propertyName | String | N/A | Allows to set the name of the property on the Web Component, where the children belonging to this slot will be stored.
 listenFor | Object | N/A | **Experimental, do not use.** If set, whenever the children, belonging to this slot have their properties changed, the Web Component will be invalidated. 
 
-You are required to provide either the `type` or the `interface` setting, but not both.
+The `type` setting is required.
 
 Notes:
  - Children without a `slot` attribute will be assigned to the `default` slot. 
@@ -161,3 +160,4 @@ Notes:
  Node | Accepts both Text nodes and HTML Elements
  HTMLElement | Accepts HTML Elements only
  Specific class | Accepts only HTML Elements of this class
+ Interface | Accepts only Custom elements that implement this interface
