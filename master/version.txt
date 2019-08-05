@@ -1,5 +1,9 @@
-commit b73530b6fa4016c293ca91c84a95e08a7b675d21
+commit fcdc9e6f5fcf03627fc8b0fdf6302aa132c8d243
 Author: Martin <martin.r.hristov@gmail.com>
-Date:   Fri Aug 2 10:51:50 2019 +0300
+Date:   Mon Aug 5 11:19:18 2019 +0300
 
-    chore: correct target chrome version (#711)
+    refactor(ui5-table): make it work on IE 11 (#704)
+    
+    - now uses html table tag
+    - popin rows are rendered as tr
+    - API remains the same
