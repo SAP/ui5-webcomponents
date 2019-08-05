@@ -12,6 +12,10 @@
 	height: 100%;
 }
 
+.ui5-multi-combobox-token {
+	margin-top: var(--_ui5-multi_combobox_token_margin_top);
+}
+
 .ui5-multi-combobox-icon {
 	color: var(--sapUiContentIconColor);
 	cursor: pointer;
@@ -32,12 +36,9 @@
 	background: var(--sapUiButtonLiteHoverBackground);
 }
 
-.ui5-multi-combobox-token {
-	height: 80%;
-}
-
 :host([data-ui5-compact-size]) .ui5-multi-combobox-token {
 	height: 100%;
+	margin-top: 0;
 }
 
 .ui5-multi-combobox-tokenizer {
@@ -57,4 +58,5 @@ ui5-multi-combobox:not([hidden]) {
 
 ui5-multi-combobox[data-ui5-compact-size] .ui5-multi-combobox-token {
 	height: 100%;
+	margin-top: 0;
 }
