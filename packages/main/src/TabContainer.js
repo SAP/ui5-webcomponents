@@ -33,7 +33,7 @@ const metadata = {
 		 * Defines the tabs.
 		 * <br><b>Note:</b> Only <code>ui5-tab</code> and <code>ui5-tab-separator</code> are allowed.
 		 *
-		 * @interface {ITab}
+		 * @type {ITab[]}
 		 * @public
 		 * @slot
 		 */

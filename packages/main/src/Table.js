@@ -21,7 +21,7 @@ const metadata = {
 		 * Defines the <code>ui5-table</code> rows.
 		 * <br><b>Note:</b> Only <code>ui5-table-row</code> is allowed.
 		 *
-		 * @type {TableRow[]}
+		 * @type {ITableRow[]}
 		 * @slot
 		 * @public
 		 */
@@ -35,7 +35,7 @@ const metadata = {
 		 * Defines the configuration for the columns of the <code>ui5-table</code>.
 		 * <br><b>Note:</b> Only <code>ui5-table-column</code> is allowed.
 		 *
-		 * @type {TableColumn[]}
+		 * @type {ITableColumn[]}
 		 * @slot
 		 * @public
 		 */

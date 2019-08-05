@@ -18,7 +18,7 @@ const metadata = {
 		 * Defines the cells of the <code>ui5-table-row</code>.
 		 * <br><b>Note:</b> Only <code>ui5-table-cell</code> is allowed.
 		 *
-		 * @type {TableCell[]}
+		 * @type {ITableCell[]}
 		 * @slot
 		 * @public
 		 */
