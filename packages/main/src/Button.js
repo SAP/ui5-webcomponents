@@ -125,6 +125,14 @@ const metadata = {
 			type: Boolean,
 		},
 
+		/**
+		 * Indicates if the element if focusable
+		 * @private
+		 */
+		nonFocusable: {
+			type: Boolean,
+		},
+
 		_iconSettings: {
 			type: Object,
 		},
@@ -296,6 +304,10 @@ class Button extends UI5Element {
 
 	get buttonTypeText() {
 		return this.resourceBundle.getText(Button.typeTextMappings()[this.design]);
+	}
+
+	get tabIndexValue() {
+		return this.nonFocusable ? "-1" : "0";
 	}
 
 	static async define(...params) {

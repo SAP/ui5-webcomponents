@@ -1,49 +1,46 @@
 <div
 	data-sap-ui-fastnavgroup="true"
-	class="{{classes.main}}"
+	class="ui5-panel-root"
 	role="{{accRole}}"
 >
 	<!-- header: either header or h1 with header text -->
-	{{#if fixed}}
-		{{> header}}
-	{{else}}
-		<header
-			@click="{{_headerClick}}"
-			@keydown="{{_headerKeyDown}}"
-			@keyup="{{_headerKeyUp}}"
-			class="{{classes.header}}"
-			tabindex="{{headerTabIndex}}"
+	<header
+		@click="{{_headerClick}}"
+		@keydown="{{_headerKeyDown}}"
+		@keyup="{{_headerKeyUp}}"
+		class="ui5-panel-header"
+		tabindex="{{headerTabIndex}}"
+	>
+		<div
+			class="ui5-panel-header-button-root"
 		>
-			<div class="sapMPanelIconOuter"
-				tabindex="{{iconTabIndex}}"
+			<ui5-button
+				design="Transparent"
+				class="ui5-panel-header-button"
 				aria-expanded="{{expanded}}"
-				aria-labelledby="{{ariaLabelledBy}}"
-				title="{{_icon.title}}"
-				>
+				?non-focusable="{{nonFocusableButton}}"
+				@click="{{_toggleButtonClick}}"
+			>
+
 				<ui5-icon
-					class="{{classes.icon}}"
-					src="{{_icon.src}}"
-				></ui5-icon>
+					src="sap-icon://navigation-right-arrow"
+					class="ui5-panel-header-button-icon"
+				>
+				</ui5-icon>
+			</ui5-button>
+		</div>
+
+		{{#if _hasHeader}}
+			<slot name="header"></slot>
+		{{else}}
+			<div class="ui5-panel-header-content">
+				<h1 class="ui5-panel-header-title">{{headerText}}</h1>
 			</div>
-			{{> header}}
-		</header>
-	{{/if}}
+		{{/if}}
+	</header>
 
 	<!-- content area -->
-	<div class="{{classes.content}}" tabindex="-1" style="{{styles.content}}">
+	<div class="ui5-panel-content" tabindex="-1" style="{{styles.content}}">
 		<slot></slot>
 	</div>
 </div>
-
-{{#*inline "header"}}
-	{{#if header.length}}
-		<div class="sapMPanelHdrToolbar">
-			<slot name="header"></slot>
-		</div>
-	{{/if}}
-	{{#if shouldRenderH1}}
-		<h1 id="{{_id}}-header" class="sapMPanelHdr">
-			{{headerText}}
-		</h1>
-	{{/if}}
-{{/inline}}
