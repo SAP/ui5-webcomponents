@@ -11,7 +11,7 @@ if (!messageBundle || !outputFile) {
 const properties = PropertiesReader(messageBundle)._properties;
 
 /*
- * Returns the single text funtion to enable single export.
+ * Returns the single text object to enable single export.
  *
  * Example:
  * const ARIA_LABEL_CARD_CONTENT = {
@@ -19,13 +19,13 @@ const properties = PropertiesReader(messageBundle)._properties;
  *	defaultText: "Card Content",
  * };
  */
-const getTextMethods = (properties) => {
+const getTextInfo = (properties) => {
 	return Object.keys(properties).map(prop => `const ${prop} = {key: "${prop}", defaultText: "${properties[prop]}"};`).join('');
 }
 
 /*
  * Returns the content of i18n-defaults.js,
- * combining the single text methods and the export statement at the end of the file.
+ * combining the single text objects and the export statement at the end of the file.
  *
  * Example:
  * export {
@@ -33,7 +33,7 @@ const getTextMethods = (properties) => {
  * }
  */
 const getOutputFileContent = (properties) => {
-	return `${getTextMethods(properties)} export {${Object.keys(properties).join()}}; //eslint-disable-line`;
+	return `${getTextInfo(properties)} export {${Object.keys(properties).join()}}; //eslint-disable-line`;
 }
 
 // Writes the i18n-defaults.js
