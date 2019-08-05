@@ -87,15 +87,18 @@ class TableRow extends UI5Element {
 			if (info.visible) {
 				this.visibleCells.push(this.cells[index]);
 				this.cells[index].firstInRow = (index === 0);
+				this.cells[index].popined = false;
 			} else if (info.demandPopin) {
 				this.popinCells.push({
 					cell: this.cells[index],
 					popinText: info.popinText,
 				});
+
+				this.cells[index].popined = true;
+			} else {
+				this.cells[index].popined = false;
 			}
 		}, this);
-
-		this.visibleColumnLength = this.visibleCells.length + 1;
 
 		const lastVisibleCell = this.visibleCells[this.visibleCells.length - 1];
 
@@ -117,6 +120,10 @@ class TableRow extends UI5Element {
 				"grid-column-end": 6,
 			},
 		};
+	}
+
+	get visibleCellsCount() {
+		return this.visibleCells.length;
 	}
 
 	onfocusin(event) {

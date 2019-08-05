@@ -76,7 +76,7 @@ const metadata = {
 		 */
 		width: {
 			type: CSSSize,
-			defaultValue: "",
+			defaultValue: "auto",
 		},
 
 		/**
@@ -90,6 +90,13 @@ const metadata = {
 		 * @protected
 		 */
 		last: {
+			type: Boolean,
+		},
+
+		/**
+		 * @protected
+		 */
+		sticky: {
 			type: Boolean,
 		},
 	},

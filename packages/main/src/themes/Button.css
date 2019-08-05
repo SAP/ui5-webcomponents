@@ -49,6 +49,7 @@
 	min-width: inherit;
 	cursor: inherit;
 	height: 100%;
+	width: 100%;
 	font-weight: normal;
 	box-sizing: border-box;
 	display: flex;
@@ -88,6 +89,10 @@
 	min-width: auto;
 }
 
+:host([icon-only]) .ui5-button-text {
+	display: none;
+}
+
 .ui5-button-text {
 	outline: none;
 	position: relative;
@@ -109,6 +114,12 @@
 
 .ui5-button-root::-moz-focus-inner {
 	border: 0;
+}
+
+bdi {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
 }
 
 :host([active]:not([disabled])) {
