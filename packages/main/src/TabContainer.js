@@ -15,6 +15,7 @@ import Icon from "./Icon.js";
 import List from "./List.js";
 import Popover from "./Popover.js";
 import SemanticColor from "./types/SemanticColor.js";
+import ITab from "./ITab.js";
 
 // Styles
 import tabContainerCss from "./generated/themes/TabContainer.css.js";
@@ -38,7 +39,7 @@ const metadata = {
 		 */
 		"default": {
 			propertyName: "items",
-			"interface": "ITab",
+			type: ITab,
 			individualSlots: true,
 			listenFor: { include: ["*"] },
 		},

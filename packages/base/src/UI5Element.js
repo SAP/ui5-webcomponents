@@ -322,12 +322,13 @@ class UI5Element extends HTMLElement {
 		const result = metadatas[0];
 
 		// merge interfaces
-		result.interfaces = metadatas.reduce((allInterfaces, current) => {
-			let interfaces = [];
-			if (typeof current.interfaces === "string") {
-				interfaces = [current.interfaces];
-			} else if (Array.isArray(current.interfaces)) {
-				interfaces = current.interfaces;
+		result.implements = metadatas.reduce((allInterfaces, current) => {
+			let interfaces;
+
+			if (Array.isArray(current.implements)) {
+				interfaces = current.implements;
+			} else {
+				interfaces = [current.implements];
 			}
 
 			interfaces.forEach(name => {
@@ -583,9 +584,9 @@ class UI5Element extends HTMLElement {
 		return true;
 	}
 
-	static implementsInterface(name) {
+	static implementsInterface(interfaceClass) {
 		const interfaces = this.getMetadata().getImplementedInterfaces();
-		return interfaces.includes(name);
+		return interfaces.includes(interfaceClass);
 	}
 
 	/**

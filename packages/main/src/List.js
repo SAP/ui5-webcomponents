@@ -6,6 +6,8 @@ import { isTabNext } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import ListMode from "./types/ListMode.js";
 import ListSeparators from "./types/ListSeparators.js";
 import ListItemType from "./types/ListItemType.js";
+import IListItem from "./IListItem.js";
+
 // Template
 import ListTemplate from "./generated/templates/ListTemplate.lit.js";
 
@@ -42,7 +44,7 @@ const metadata = {
 		 */
 		"default": {
 			propertyName: "items",
-			"interface": "IListItem",
+			type: IListItem,
 		},
 	},
 	properties: /** @lends  sap.ui.webcomponents.main.List.prototype */ {

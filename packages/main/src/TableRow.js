@@ -1,5 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import ITableRow from "./ITableRow.js";
+import ITableCell from "./ITableCell.js";
 import TableRowTemplate from "./generated/templates/TableRowTemplate.lit.js";
 
 // Styles
@@ -10,7 +12,7 @@ import styles from "./generated/themes/TableRow.css.js";
  */
 const metadata = {
 	tag: "ui5-table-row",
-	interfaces: ["ITableRow"],
+	"implements": [ITableRow],
 	slots: /** @lends sap.ui.webcomponents.main.TableRow.prototype */ {
 		/**
 		 * Defines the cells of the <code>ui5-table-row</code>.
@@ -22,7 +24,7 @@ const metadata = {
 		 */
 		"default": {
 			propertyName: "cells",
-			"interface": "ITableCell",
+			type: ITableCell,
 			individualSlots: true,
 		},
 	},

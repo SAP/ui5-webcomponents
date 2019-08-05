@@ -3,6 +3,8 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { isSpace } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import ITableRow from "./ITableRow.js";
+import ITableColumn from "./ITableColumn.js";
 import TableTemplate from "./generated/templates/TableTemplate.lit.js";
 
 // Styles
@@ -25,7 +27,7 @@ const metadata = {
 		 */
 		"default": {
 			propertyName: "rows",
-			"interface": "ITableRow",
+			type: ITableRow,
 			individualSlots: true,
 		},
 
@@ -38,7 +40,7 @@ const metadata = {
 		 * @public
 		 */
 		columns: {
-			"interface": "ITableColumn",
+			type: ITableColumn,
 			individualSlots: true,
 			listenFor: { include: ["*"] },
 		},

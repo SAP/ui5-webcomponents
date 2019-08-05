@@ -1,5 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import ITableCell from "./ITableCell.js";
 import TableCellTemplate from "./generated/templates/TableCellTemplate.lit.js";
 
 // Styles
@@ -10,7 +11,7 @@ import styles from "./generated/themes/TableCell.css.js";
  */
 const metadata = {
 	tag: "ui5-table-cell",
-	interfaces: ["ITableCell"],
+	"implements": [ITableCell],
 	slots: /** @lends sap.ui.webcomponents.main.TableCell.prototype */ {
 		/**
 		 * Specifies the content of the <code>ui5-table-cell</code>.
