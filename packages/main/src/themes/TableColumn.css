@@ -1,22 +1,52 @@
-:host(ui5-table-column) {
-	display: inline-block;
-	width: 100%;
-	height: 100%;
+:host {
+	display: contents;
 }
 
-.ui5-table-column-root {
+:host .ui5-table-column-root {
 	padding: 0.25rem;
-	font-family: var(--sapUiFontFamily);
-	font-size: 0.875rem;
-	height: 100%;
 	box-sizing: border-box;
 }
 
+th {
+	background: var(--sapUiListHeaderBackground);
+	border-bottom: 1px solid var(--sapUiListBorderColor);
+	border: none;
+}
+
+.ui5-table-column-root {
+	display: flex;
+	height: 3rem;
+	justify-content: flex-start;
+	align-items: center;
+}
 
 :host([first]) .ui5-table-column-root {
 	padding-left: 1rem;
 }
 
-:host([last]) .ui5-table-column-root {
-	padding-right: 1rem;
+:host([sticky]) th {
+	position: sticky;
+	top: 0;
+	z-index: 999;
+}
+
+/* Remove that after ShadyCSS adoption */
+
+ui5-table-column {
+	display: contents;
+}
+
+ui5-table-column .ui5-table-column-root {
+	padding: 0.25rem;
+	box-sizing: border-box;
+}
+
+ui5-table-column[first] .ui5-table-column-root {
+	padding-left: 1rem;
+}
+
+ui5-table-column[sticky] th {
+	position: sticky;
+	top: 0;
+	z-index: 999;
 }
