@@ -19,7 +19,7 @@ const metadata = {
 
 		/**
 		 * Defines the <code>ui5-table</code> rows.
-		 * <br><b>Note:</b> Only <code>ui5-table-row</code> is allowed.
+		 * <br><b>Note:</b> Currently only <code>ui5-table-row</code> implements the <code>ITableRow</code> interface.
 		 *
 		 * @type {ITableRow[]}
 		 * @slot

@@ -16,7 +16,7 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.TableRow.prototype */ {
 		/**
 		 * Defines the cells of the <code>ui5-table-row</code>.
-		 * <br><b>Note:</b> Only <code>ui5-table-cell</code> is allowed.
+		 * <br><b>Note:</b> Currently only <code>ui5-table-cell</code> implements the <code>ITableCell</code> interface.
 		 *
 		 * @type {ITableCell[]}
 		 * @slot

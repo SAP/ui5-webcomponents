@@ -36,7 +36,7 @@ const metadata = {
 
 		/**
 		 * Defines the items of the <code>ui5-list</code>.
-		 * <br><b>Note:</b> Only <code>ui5-li</code>, <code>ui5-li-custom</code> and <code>ui5-li-groupheader</code> are allowed.
+		 * <br><b>Note:</b> Currently only <code>ui5-li</code>, <code>ui5-li-custom</code> and <code>ui5-li-groupheader</code> implement the <code>IListItem</code> interface.
 		 *
 		 * @type {IListItem[]}
 		 * @slot

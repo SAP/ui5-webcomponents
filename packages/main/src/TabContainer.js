@@ -31,7 +31,7 @@ const metadata = {
 	slots: /** @lends  sap.ui.webcomponents.main.TabContainer.prototype */ {
 		/**
 		 * Defines the tabs.
-		 * <br><b>Note:</b> Only <code>ui5-tab</code> and <code>ui5-tab-separator</code> are allowed.
+		 * <br><b>Note:</b> Currently only <code>ui5-tab</code> and <code>ui5-tab-separator</code> implement the <code>ITab</code> interface.
 		 *
 		 * @type {ITab[]}
 		 * @public
