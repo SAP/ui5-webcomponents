@@ -8,7 +8,7 @@ import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEven
 import "@ui5/webcomponents-base/dist/icons/accept.js";
 import Icon from "./Icon.js";
 import Label from "./Label.js";
-import { VALUE_STATE_ERROR, VALUE_STATE_WARNING } from "./i18n/defaults.js";
+import { VALUE_STATE_ERROR, VALUE_STATE_WARNING } from "./generated/i18n/i18n-defaults.js";
 
 // Template
 import CheckBoxTemplate from "./generated/templates/CheckBoxTemplate.lit.js";
