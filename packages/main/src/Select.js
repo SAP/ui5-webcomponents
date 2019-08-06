@@ -207,7 +207,6 @@ class Select extends UI5Element {
 	 * Currently selected option
 	 * @readonly
 	 * @type { ui5-option }
-	 * @multiple
 	 * @public
 	 */
 	get selectedOption() {
