@@ -47,9 +47,6 @@ describe("MultiComboBox general interaction", () => {
 			assert.strictEqual(paramsInput.getValue(), "0", "no parameter should be passed if no items are selected");
 			assert.strictEqual(callCountInput.getValue(), "2", "Event should be called once");
 
-			icon.click();
-			assert.ok(popover.isDisplayedInViewport(), "Popover should close");
-
 			resetBtn.click();
 		});
 
