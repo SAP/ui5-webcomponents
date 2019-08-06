@@ -5,14 +5,14 @@ describe("MultiComboBox general interaction", () => {
 
 	describe("toggling", () => {
 		it("opens/closes", () => {
-			const icon = browser.findElementDeep("#mcb >>> #ui5-multi-combobox-input ui5-icon");
-			const popover = browser.findElementDeep("#mcb >>> .ui5-multi-combobox-all-items-popover");
+			const icon = browser.findElementDeep("#multi1 >>> #ui5-multi-combobox-input ui5-icon");
+			const popover = browser.findElementDeep("#multi1 >>> .ui5-multi-combobox-all-items-popover >>> .ui5-popup-root");
 
 			icon.click();
 			assert.ok(popover.isDisplayedInViewport(), "Popover should be displayed in the viewport");
 
 			icon.click();
-			assert.ok(popover.isDisplayedInViewport(), "Popover should close");
+			assert.ok(!popover.isDisplayedInViewport(), "Popover should close");
 		});
 	});
 
