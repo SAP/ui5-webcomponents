@@ -3,25 +3,21 @@
 	width: 100%;
 }
 
-.ui5-table-header {
+table {
 	width: 100%;
-	display: grid;
-	border-bottom: 1px solid var(--sapUiListTableGroupHeaderBorderColor);
-	height: 3rem;
+	border-spacing: 0;
+	border-collapse: collapse;
 }
 
-.ui5-table-column-root {
-	background: var(--sapUiListHeaderBackground);
-	border-bottom: 1px solid var(--sapUiListBorderColor);
-	height: 100%;
+.ui5-table-header-row {
+	color: var(--sapUiListTextColor);
+	height: 3rem;
 	font-family: var(--sapUiFontFamily);
 	font-size: var(--sapMFontMediumSize);
-	font-weight: normal;
-	color: var(--sapUiListTextColor)
 }
 
-:host([data-ui5-compact-size]) .ui5-table-header {
-	height: 2rem;
+tr {
+	height: 3rem;
 }
 
 .ui5-table-no-data-row {
@@ -37,16 +33,19 @@
 	box-sizing: border-box;
 	color: var(--sapUiListTextColor);
 	min-height: 3rem;
+}
+
+:host([_no-data-displayed]) {
 	border-bottom: 1px solid var(--sapUiListTableGroupHeaderBorderColor);
 }
 
-/* Remove that once ShadyCSS is adopted */
+/* Remove that after ShadyCSS adoption */
 
-ui5-table:not([hidden]) {
+ui5-table {
 	display: inline-block;
 	width: 100%;
 }
 
-ui5-table[data-ui5-compact-size] .ui5-table-header {
-	height: 2rem;
+ui5-table[_no-data-displayed] {
+	border-bottom: 1px solid var(--sapUiListTableGroupHeaderBorderColor);
 }

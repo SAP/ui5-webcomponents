@@ -37,6 +37,13 @@ const metadata = {
 		lastInRow: {
 			type: Boolean,
 		},
+
+		/**
+		 * @protected
+		 */
+		popined: {
+			type: Boolean,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.TableCell.prototype */ {
 	},
