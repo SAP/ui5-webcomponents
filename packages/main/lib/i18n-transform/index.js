@@ -19,13 +19,12 @@ const properties = PropertiesReader(messageBundle)._properties;
  *	defaultText: "Card Content",
  * };
  */
-const getTextInfo = (properties) => {
-	return Object.keys(properties).map(prop => `const ${prop} = {key: "${prop}", defaultText: "${properties[prop]}"};`).join('');
-}
+const getTextInfo = (key, value) => `const ${key} = {key: "${key}", defaultText: "${value}"};`;
 
 /*
- * Returns the content of i18n-defaults.js,
- * combining the single text objects and the export statement at the end of the file.
+ * Returns the complete content of i18n-defaults.js file:
+ * (1) the single text objects
+ * (2) the export statement at the end of the file
  *
  * Example:
  * export {
@@ -33,14 +32,23 @@ const getTextInfo = (properties) => {
  * }
  */
 const getOutputFileContent = (properties) => {
-	return `${getTextInfo(properties)} export {${Object.keys(properties).join()}}; //eslint-disable-line`;
+	const textKeys = Object.keys(properties);
+	const texts = textKeys.map(prop => getTextInfo(prop, properties[prop])).join('');
+
+	return `${texts} export {${textKeys.join()}};`;
 }
 
-// Writes the i18n-defaults.js
-fs.writeFile(outputFile, getOutputFileContent(properties), function (err) {
-	if (err) {
-		return console.log(err);
-	}
+/*
+ * Writes the i18n-defaults.js.
+ */
+const writeI18nDefaultsFile = (file, content) => {
+	fs.writeFile(file, content, (err) => {
+		if (err) {
+			return console.log(err);
+		}
 
-	console.log(`The ${outputFile} file has been created`);
-});
+		console.log(`The ${file} file has been created`);
+	});
+}
+
+writeI18nDefaultsFile(outputFile, getOutputFileContent(properties));
