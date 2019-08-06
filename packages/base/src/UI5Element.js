@@ -444,11 +444,7 @@ class UI5Element extends HTMLElement {
 			eventContext: this,
 			scopeName: this.constructor.getMetadata().getTag(),
 		};
-		this.constructor.render(renderResult, this.shadowRoot, options);
-	}
-
-	get _effectiveStyles() {
-		return getShadowRootStyle(this.constructor);
+		this.constructor.render(renderResult, this.shadowRoot, getShadowRootStyle(this.constructor), options);
 	}
 
 	_assignIndividualSlotsToChildren() {

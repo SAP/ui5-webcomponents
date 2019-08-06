@@ -1,6 +1,5 @@
 {{>include "./Popup.hbs"}}
 
-{{#if _effectiveStyles}}<style>{{_effectiveStyles}}</style>{{/if}}
 <span class="ui5-popup-frame" @focusin="{{onfocusin}}">
 	<span id="{{_id}}-firstfe" tabindex="0" @focusin={{focusHelper.forwardToLast}}></span>	
 	<div style="{{styles.main}}" role="dialog" aria-modal="true" aria-labelledby="{{headerId}}" tabindex="-1" class="ui5-popup-root ui5-popover-root">

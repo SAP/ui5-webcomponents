@@ -37,17 +37,6 @@ const getShadowRootStyle = ElementClass => {
 		return "";
 	}
 
-	// IE when ShadyCSS was run already - empty
-	if (window.ShadyCSS) {
-		const tagName = ElementClass.getMetadata().getTag();
-		const shadyCSSTag = [...document.querySelectorAll(`head>style[scope]`)].some(styleTag => {
-			return styleTag.getAttribute("scope").match(new RegExp(`^${tagName}-\\d+$`));
-		});
-		if (shadyCSSTag) {
-			return "";
-		}
-	}
-
 	// IE when ShadyCSS was not run, and FF/Safari
 	const styleContent = getEffectiveStyle(ElementClass);
 	return styleContent;
