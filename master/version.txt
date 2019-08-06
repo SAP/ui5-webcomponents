@@ -1,9 +1,7 @@
-commit fcdc9e6f5fcf03627fc8b0fdf6302aa132c8d243
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Mon Aug 5 11:19:18 2019 +0300
+commit f2ff64a106b6673d2717feab91a4c405542bec7f
+Author: Peter Muessig <petermuessig@users.noreply.github.com>
+Date:   Tue Aug 6 10:42:39 2019 +0200
 
-    refactor(ui5-table): make it work on IE 11 (#704)
+    docs: enable support for @readonly tags for properties (#701)
     
-    - now uses html table tag
-    - popin rows are rendered as tr
-    - API remains the same
+    - getters documented as `@readonly` are now visible in `properties` section of `api.json`
