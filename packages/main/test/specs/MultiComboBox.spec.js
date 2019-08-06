@@ -3,6 +3,19 @@ const assert = require("assert");
 describe("MultiComboBox general interaction", () => {
 	browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/MultiComboBox.html");
 
+	describe("toggling", () => {
+		it("opens/closes", () => {
+			const icon = browser.findElementDeep("#mcb >>> #ui5-multi-combobox-input ui5-icon");
+			const popover = browser.findElementDeep("#mcb >>> .ui5-multi-combobox-all-items-popover");
+
+			icon.click();
+			assert.ok(popover.isDisplayedInViewport(), "Popover should be displayed in the viewport");
+
+			icon.click();
+			assert.ok(popover.isDisplayedInViewport(), "Popover should close");
+		});
+	});
+
 	describe("selection and filtering", () => {
 
 		it("Opens all items popover, selects and deselects the first item", () => {
@@ -33,6 +46,9 @@ describe("MultiComboBox general interaction", () => {
 			assert.strictEqual(eventInput.getValue(), "selectionChange", "selectionChange should be called");
 			assert.strictEqual(paramsInput.getValue(), "0", "no parameter should be passed if no items are selected");
 			assert.strictEqual(callCountInput.getValue(), "2", "Event should be called once");
+
+			icon.click();
+			assert.ok(popover.isDisplayedInViewport(), "Popover should close");
 
 			resetBtn.click();
 		});
