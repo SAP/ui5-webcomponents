@@ -27,19 +27,17 @@ const getConstructableStyle = ElementClass => {
 
 /**
  * Returns the CSS to be injected inside a web component shadow root, or undefined if not needed
- * Note: FF, Safari
  * @param ElementClass
- * @returns {string}
+ * @returns {string|undefined}
  */
 const getShadowRootStyle = ElementClass => {
 	// Chrome - empty
 	if (document.adoptedStyleSheets) {
-		return "";
+		return;
 	}
 
-	// IE when ShadyCSS was not run, and FF/Safari
-	const styleContent = getEffectiveStyle(ElementClass);
-	return styleContent;
+	// IE, and FF/Safari
+	return getEffectiveStyle(ElementClass);
 };
 
 // eslint-disable-next-line
