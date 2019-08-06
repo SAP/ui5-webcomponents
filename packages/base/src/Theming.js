@@ -14,13 +14,11 @@ const attachThemeChange = function attachThemeChange(callback) {
 const _applyTheme = async theme => {
 	if (window.ShadyCSS) { // IE - just fetch CSS vars, they will be used later by ShadyCSS
 		await getThemeProperties("@ui5/webcomponents", theme);
-	} else { // Modern browsers
-		if (theme === defaultTheme) { // Reset CCS vars for default theme
-			injectThemeProperties("");
-		} else { // Inject new CSS vars for every other theme
-			const cssText = await getThemeProperties("@ui5/webcomponents", theme);
-			injectThemeProperties(cssText);
-		}
+	} else if (theme === defaultTheme) { // Reset CCS vars for default theme
+		injectThemeProperties("");
+	} else { // Inject new CSS vars for every other theme
+		const cssText = await getThemeProperties("@ui5/webcomponents", theme);
+		injectThemeProperties(cssText);
 	}
 
 	_executeThemeChangeCallbacks(theme); // This will trigger ShadyCSS for IE
