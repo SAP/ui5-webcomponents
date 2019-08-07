@@ -79,14 +79,14 @@ properties and attributes.
 An example of such web component is the `ui5-icon`:
 
 ```html
-<ui5-icon src="sap-icons://add"></ui5-icon>
+<ui5-icon src="sap-icon://add"></ui5-icon>
 ```
 
 The icon accepts no text or other HTML elements inside its opening and closing tags.
 Therefore, in the next example, the text inside the `<ui5-icon>` will be ignored.
 
 ```html
-<ui5-icon src="sap-icons://add">This is an icon</ui5-icon>
+<ui5-icon src="sap-icon://add">This is an icon</ui5-icon>
 ```
 
 Other UI5 Web Components, such as `<ui5-button>` accept text (and in addition HTML elements that make sense when writing text)

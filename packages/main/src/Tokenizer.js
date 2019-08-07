@@ -2,7 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import { getCompactSize } from "@ui5/webcomponents-base/dist/Configuration.js";
 import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
 import TokenizerTemplate from "./generated/templates/TokenizerTemplate.lit.js";
 import { MULTIINPUT_SHOW_MORE_TOKENS } from "./i18n/defaults.js";
@@ -26,7 +25,7 @@ const metadata = {
 		showMore: { type: Boolean },
 		disabled: { type: Boolean },
 
-		_nMoreText: { type: String },
+		_nMoreText: { type: String, noAttribute: true },
 		_hiddenTokens: { type: Object, multiple: true },
 	},
 	events: /** @lends sap.ui.webcomponents.main.Tokenizer.prototype */ {
@@ -200,10 +199,9 @@ class Tokenizer extends UI5Element {
 	get classes() {
 		return {
 			wrapper: {
+				"ui5-tokenizer-root": true,
 				"ui5-tokenizer-nmore--wrapper": this.showMore,
-				"ui5-tokenizer--wrapper": true,
 				"ui5-tokenizer-no-padding": !this.tokens.length,
-				"sapUiSizeCompact": getCompactSize(),
 			},
 			content: {
 				"ui5-tokenizer--content": true,

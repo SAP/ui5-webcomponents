@@ -8,11 +8,11 @@ class FormSupport {
 	 */
 	static syncNativeHiddenInput(element, nativeInputUpdateCallback) {
 		const needsNativeInput = !!element.name;
-		let nativeInput = element.querySelector("input[type=hidden][data-ui5-webcomponents-form-support]");
+		let nativeInput = element.querySelector("input[type=hidden][data-ui5-form-support]");
 		if (needsNativeInput && !nativeInput) {
 			nativeInput = document.createElement("input");
 			nativeInput.type = "hidden";
-			nativeInput.setAttribute("data-ui5-webcomponents-form-support", "");
+			nativeInput.setAttribute("data-ui5-form-support", "");
 			nativeInput.slot = "formSupport"; // Needed for IE - otherwise input elements are not part of the real DOM tree and are not detected by forms
 			element.appendChild(nativeInput);
 		}
@@ -30,12 +30,14 @@ class FormSupport {
 		if (!element.submits) {
 			return;
 		}
-		let parentElement;
-		do {
-			parentElement = element.parentElement;
-		} while (parentElement && parentElement.tagName.toLowerCase() !== "form");
-		if (parentElement) {
-			parentElement.submit();
+		let currentElement = element.parentElement;
+		while (currentElement && currentElement.tagName.toLowerCase() !== "form") {
+			currentElement = currentElement.parentElement;
+		}
+		if (currentElement) {
+			currentElement.submit();
+		} else {
+			console.error(`${element} is not within a form. Please add it in a form.`); // eslint-disable-line
 		}
 	}
 }

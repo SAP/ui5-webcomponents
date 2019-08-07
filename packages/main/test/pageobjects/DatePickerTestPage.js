@@ -20,7 +20,7 @@ class DatePickerTestPage {
 	}
 
 	get popoverContent() {
-		return browser.findElementDeep(this._sut + " >>> ui5-popover >>> .ui5-popup-wrapper");
+		return browser.findElementDeep(this._sut + " >>> ui5-popover >>> .ui5-popup-root");
 	}
 
 	get calendar() {
@@ -66,17 +66,17 @@ class DatePickerTestPage {
 	}
 
 	getFirstDisplayedDate() {
-		return browser.findElementDeep(`${this._sut} >>> ui5-calendar >>> ui5-daypicker >>> .sapWCDayPickerItem`);
+		return browser.findElementDeep(`${this._sut} >>> ui5-calendar >>> ui5-daypicker >>> .ui5-dp-item`);
 	}
 
 	getFirstDisplayedYear() {
-		return browser.findElementDeep(`${this._sut} >>> ui5-calendar >>> ui5-yearpicker >>> .sapWCYearPickerItem`);
+		return browser.findElementDeep(`${this._sut} >>> ui5-calendar >>> ui5-yearpicker >>> .ui5-yp-item`);
 	}
 
 	getDisplayedYear(index) {
 		return browser
-			.findElementDeep(`${this._sut} >>> ui5-calendar >>> ui5-yearpicker >>> .sapWCYearPicker`)
-			.$$(".sapWCYearPickerItem")[index];
+			.findElementDeep(`${this._sut} >>> ui5-calendar >>> ui5-yearpicker >>> .ui5-yp-root`)
+			.$$(".ui5-yp-item")[index];
 	}
 
 	isValid(value) {

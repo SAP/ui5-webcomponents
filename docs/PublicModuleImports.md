@@ -61,6 +61,7 @@ Table of contents:
 - [Form Support](#formsupport)
 - [Input Suggestions](#inputsuggestions)
 - [Advanced Calendar Types](#advancedcalendartypes)
+- [Configuration](#conf)
 
 <a name="preface"></a>
 ### Preface
@@ -116,7 +117,7 @@ import "@ui5/webcomponents/dist/ThemePropertiesProvider.js";
 
 and
 ```js
-import { setTheme } from "@ui5/webcomponents-base/dist/Theming.js";
+import { setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 ```
 (for changing the theme at runtime)
 
@@ -145,7 +146,7 @@ By importing the second module, you get the:
 method that allows you to change the theme during runtime, if necessary.
 Example:
 ```js
-import { setTheme } from "@ui5/webcomponents-base/dist/Theming.js";
+import { setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 setTheme("sap_belize_hcb");
 ```
 
@@ -264,5 +265,16 @@ The <code>ui5-datepicker</code> web component supports Gregorian Calendar by def
 In order to to be able to use Buddhist, Islamic, Japanese or Persian calendar with this web component
 (by setting its <code>primaryCalendarType</code> property), you should import one or more of the modules above.
 
+<a name="config"></a>
+### 7. Configuration
 
+```js
+import { getTheme, setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
+import { getNoConflict, setNoConflict } from "@ui5/webcomponents-base/dist/config/NoConflict.js";
+import { getCompactSize } from "@ui5/webcomponents-base/dist/config/CompactSize.js";
+import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
+import { getLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
+import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
+```
 
+For more details, please check [Configuration](Configuration.md)

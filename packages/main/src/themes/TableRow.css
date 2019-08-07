@@ -1,44 +1,30 @@
-:host(ui5-table-row:not([hidden])) {
-	display: inline-block;
-	width: 100%;
+:host {
+	display: contents;
 }
 
-ui5-table-row:not([hidden]) {
-	display: inline-block;
-	width: 100%;
-}
-
-.sapWCTableRow {
-	display: grid;
-	align-items: center;
+:host(:not(:first-of-type)) .ui5-table-row-root {
 	background-color: var(--sapUiListBackground);
-	box-sizing: border-box;
+	border-top: 1px solid var(--sapUiListBorderColor);
 }
 
-.sapWCTableRow:focus {
-	outline: 1px solid var(--sapUiContentFocusColor);
-	outline-offset: -3px;
-	outline-style: dotted;
+.ui5-table-popin-row td {
+	padding: .25rem;
+	padding-left: 1rem;
 }
 
-.sapWCTablePopinRow {
-	padding: 0.25rem 1rem;
-	grid-column-start: 1;
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
+.ui5-table-row-popin-title {
+	color: var(--sapUiContentLabelColor);
+	font-family: var(--sapUiFontHeaderFamily);
+	font-size: var(--sapMFontMediumSize);
 }
 
-.sapWCTablePopinTitle {
-	color: var(--sapUiListTextColor);
+/* Remove that once shadycss is adopted */
+
+ui5-table-row {
+	display: contents;
 }
 
-.sapMWCTableRowCellContainer {
-	height: 100%;
-	padding: 0.25rem;
-	box-sizing: border-box;
-}
-
-.sapWCTableRowWithBorder {
-	border-bottom: 1px solid var(--sapUiListBorderColor);
+ui5-table-row:not(:first-of-type) .ui5-table-row-root {
+	background-color: var(--sapUiListBackground);
+	border-top: 1px solid var(--sapUiListBorderColor);
 }

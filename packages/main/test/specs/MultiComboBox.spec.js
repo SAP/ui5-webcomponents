@@ -6,8 +6,8 @@ describe("MultiComboBox general interaction", () => {
 	describe("selection and filtering", () => {
 
 		it("Opens all items popover, selects and deselects the first item", () => {
-			const icon = browser.findElementDeep("#mcb >>> #ui5-multi-combobox--input ui5-icon");
-			const popover = browser.findElementDeep("#mcb >>> .ui5-multi-combobox-all-items--popover");
+			const icon = browser.findElementDeep("#mcb >>> #ui5-multi-combobox-input ui5-icon");
+			const popover = browser.findElementDeep("#mcb >>> .ui5-multi-combobox-all-items-popover");
 			const firstItem = browser.findElementDeep("#first-item");
 			const firstItemCheckbox = browser.findElementDeep("#mcb >>> .ui5-multi-combobox-all-items-list > ui5-li >>> ui5-checkbox");
 			const eventInput = $("#events-input");
@@ -38,8 +38,8 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("Opens all items popover when start typing and filters items", () => {
-			const input = browser.findElementDeep("#mcb >>> #ui5-multi-combobox--input >>> input");
-			const popover = browser.findElementDeep("#mcb >>> .ui5-multi-combobox-all-items--popover");
+			const input = browser.findElementDeep("#mcb >>> #ui5-multi-combobox-input >>> input");
+			const popover = browser.findElementDeep("#mcb >>> .ui5-multi-combobox-all-items-popover");
 
 			input.click();
 			input.keys("c");
@@ -66,8 +66,8 @@ describe("MultiComboBox general interaction", () => {
 
 		it("tests validate-input by typing a non existing option", () => {
 			const mcb = $("#mcb-validation");
-			const input = browser.findElementDeep("#mcb-validation >>> #ui5-multi-combobox--input");
-			const innerInput = browser.findElementDeep("#mcb-validation >>> #ui5-multi-combobox--input >>> input");
+			const input = browser.findElementDeep("#mcb-validation >>> #ui5-multi-combobox-input");
+			const innerInput = browser.findElementDeep("#mcb-validation >>> #ui5-multi-combobox-input >>> input");
 
 			innerInput.click();
 			innerInput.keys("c");

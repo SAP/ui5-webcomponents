@@ -60,10 +60,7 @@ class CustomListItem extends ListItem {
 
 	get classes() {
 		const result = super.classes;
-
-		// Modify main classes
-		result.main.sapMCustomLI = true;
-
+		result.main["ui5-custom-li-root"] = true;
 		return result;
 	}
 }

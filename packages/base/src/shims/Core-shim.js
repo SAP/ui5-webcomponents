@@ -1,11 +1,24 @@
 import { inject as injectCore } from "@ui5/webcomponents-core/dist/sap/ui/core/Core.js";
-import * as Configuration from "../Configuration.js";
 import * as FormatSettings from "../FormatSettings.js";
+import { getLanguage } from "../config/Language.js";
+import { getCalendarType } from "../config/CalendarType.js";
+import { getFirstDayOfTheWeek } from "../config/FirstDayOfTheWeek.js";
+import getDesigntimePropertyAsArray from "../util/getDesigntimePropertyAsArray.js";
 
 /**
  * Shim for the OpenUI5 core
  * @deprecated - do not add new functionality
  */
+
+const Configuration = {
+	getLanguage,
+	getCalendarType,
+	getFirstDayOfTheWeek,
+	getSupportedLanguages: () => {
+		return getDesigntimePropertyAsArray("$core-i18n-locales:,ar,bg,ca,cs,da,de,el,en,es,et,fi,fr,hi,hr,hu,it,iw,ja,ko,lt,lv,nl,no,pl,pt,ro,ru,sh,sk,sl,sv,th,tr,uk,vi,zh_CN,zh_TW$");
+	},
+	getOriginInfo: () => {},
+};
 
 const Core = {
 	/**

@@ -27,10 +27,10 @@ const metadata = {
 
 		/**
 		 * Defines the minimum screen width required to display this column. By default it is always displayed.
-		 * </br></br>
+		 * <br><br>
 		 * The responsive behavior of the <code>ui5-table</code> is determined by this property. As an example, by setting
 		 * <code>minWidth</code> property to <code>40em</code> shows this column on tablet (and desktop) but hides it on mobile.
-		 * </br>
+		 * <br>
 		 * For further responsive design options, see <code>demandPopin</code> property.
 		 *
 		 * @type {number}
@@ -55,7 +55,7 @@ const metadata = {
 		/**
 		 * According to your <code>minWidth</code> settings, the <code>ui5-table-column</code> can be hidden
 		 * in different screen sizes.
-		 * </br></br>
+		 * <br><br>
 		 * Setting this property to <code>true</code>, shows this column as pop-in instead of hiding it.
 		 *
 		 * @type {boolean}
@@ -74,14 +74,27 @@ const metadata = {
 		 */
 		width: {
 			type: CSSSize,
-			defaultValue: "",
+			defaultValue: "auto",
 		},
 
-		_first: {
+		/**
+		 * @protected
+		 */
+		first: {
 			type: Boolean,
 		},
 
-		_last: {
+		/**
+		 * @protected
+		 */
+		last: {
+			type: Boolean,
+		},
+
+		/**
+		 * @protected
+		 */
+		sticky: {
 			type: Boolean,
 		},
 	},
@@ -117,16 +130,6 @@ class TableColumn extends UI5Element {
 
 	static get template() {
 		return TableColumnTemplate;
-	}
-
-	get classes() {
-		return {
-			main: {
-				sapWCTableColumn: true,
-				sapWCTableColumnFirst: this._first,
-				sapWCTableColumnLast: this._last,
-			},
-		};
 	}
 }
 

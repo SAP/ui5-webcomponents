@@ -1,8 +1,4 @@
-:host(ui5-togglebutton:not([hidden])) {
-	display: inline-block;
-}
-
-ui5-togglebutton:not([hidden]) {
+:host(:not([hidden])) {
 	display: inline-block;
 }
 
@@ -11,79 +7,314 @@ ui5-togglebutton:not([hidden]) {
 	pointer-events: none;
 }
 
-ui5-togglebutton[disabled] {
-	pointer-events: none;
+:host([design="Positive"][pressed]),
+:host([design="Positive"][pressed][focused]),
+:host([design="Positive"][pressed]:hover) {
+	background: var(--sapUiButtonAcceptActiveBackground);
+	border-color: var(--sapUiButtonAcceptActiveBorderColor);
+	color: var(--sapUiToggleButtonPressedTextColor);
+	outline-color: var(--sapUiContentContrastFocusColor);
 }
 
-ui5-togglebutton .sapMBtn::before { /* this is a hack for a bug in IE https:/* github.com/philipwalton/flexbugs/issues/231 */
+:host([design="Positive"][pressed][active]),
+:host([design="Positive"][pressed]:hover) {
+	background: var(--_ui5_toggle_button_pressed_positive_hover);
+}
+
+:host([design="Negative"][pressed]),
+:host([design="Negative"][pressed][focused]),
+:host([design="Negative"][pressed]:hover) {
+	background: var(--sapUiButtonRejectActiveBackground);
+	border-color: var(--sapUiButtonRejectActiveBorderColor);
+	color: var(--sapUiToggleButtonPressedTextColor);
+	outline-color: var(--sapUiContentContrastFocusColor);
+}
+
+:host([design="Negative"][pressed][active]),
+:host([design="Negative"][pressed]:hover) {
+	background: var(--_ui5_toggle_button_pressed_negative_hover);
+}
+
+
+:host([pressed]),
+:host([pressed]:hover),
+:host([pressed][focused]),
+:host([design="Transparent"][pressed]),
+:host([design="Transparent"][pressed]:hover),
+:host([design="Emphasized"][pressed]),
+:host([design="Emphasized"][pressed]:hover) {
+	background: var(--sapUiToggleButtonPressedBackground);
+	border-color: var(--sapUiToggleButtonPressedBorderColor);
+	color: var(--sapUiToggleButtonPressedTextColor);
+	outline-color: var(--sapUiContentContrastFocusColor);
+}
+
+:host([pressed][active]),
+:host([pressed]:hover) {
+	background: var(--sapUiToggleButtonPressedHoverBackground);
+}
+
+/* IE Specific CSS */
+
+ui5-togglebutton {
+	outline: none;
+}
+
+ui5-togglebutton[focused] .ui5-button-inner {
+	position: relative;
+}
+
+ui5-togglebutton[focused] .ui5-button-inner::after {
+	content: "";
+	position: absolute;
+	border-width: 1px;
+	border-style: dotted;
+	border-color: var(--_ui5_button_focus_color);
+	top: var(--_ui5_button_focus_offset);
+	bottom: var(--_ui5_button_focus_offset);
+	left: var(--_ui5_button_focus_offset);
+	right: var(--_ui5_button_focus_offset);
+}
+
+ui5-togglebutton[active] .ui5-button-inner::after {
+	border-color: var(--sapUiContentContrastFocusColor);
+}
+
+ui5-togglebutton[design="Positive"][focused] .ui5-button-inner::after {
+	border-color: var(--_ui5_button_positive_border_focus_hover_color);
+}
+
+ui5-togglebutton[design="Positive"][active][focused] .ui5-button-inner::after {
+	border-color: var(--sapUiContentContrastFocusColor);
+}
+
+ui5-togglebutton[design="Negative"][focused] .ui5-button-inner::after {
+	border-color: var(--_ui5_button_positive_border_focus_hover_color);
+}
+
+ui5-togglebutton[design="Negative"][active][focused] .ui5-button-inner::after {
+	border-color: var(--sapUiContentContrastFocusColor);
+}
+
+ui5-togglebutton[design="Emphasized"][focused] .ui5-button-inner::after {
+	border-color: var(--sapUiContentContrastFocusColor);
+}
+
+ui5-togglebutton[design="Positive"][pressed] .ui5-button-inner::after {
+	border-color: var(--sapUiContentContrastFocusColor);
+}
+
+ui5-togglebutton[design="Negative"][pressed] .ui5-button-inner::after {
+	border-color: var(--sapUiButtonRejectActiveBorderColor);
+}
+
+ui5-togglebutton[design="Emphasized"][pressed] .ui5-button-inner::after {
+	border-color: var(--sapUiButtonEmphasizedBorderColor);
+}
+
+ui5-togglebutton[design="Transparent"][pressed] .ui5-button-inner::after {
+	border-color: var(--sapUiButtonLiteBorderColor);
+}
+
+/* Remove this after ShadyCSS adoption has been done */
+
+ui5-togglebutton:not([hidden]) {
+	display: inline-block;
+}
+
+ui5-togglebutton {
+	min-width: var(--_ui5_button_base_min_width);
+	height: var(--_ui5_button_base_height);
+	font-family: var(--sapUiFontFamily);
+	font-size: var(--sapMFontMediumSize);
+	border-radius: var(--_ui5_button_border_radius);
+	border-width: 0.0625rem;
+	cursor: pointer;
+	background-color: var(--sapUiButtonBackground);
+	border: 1px solid var(--sapUiButtonBorderColor);
+	color: var(--sapUiButtonTextColor);
+	box-sizing: border-box;
+}
+
+ui5-togglebutton .ui5-button-root::before { /* this is a hack for a bug in IE https:/* github.com/philipwalton/flexbugs/issues/231 */
 	content: '';
 	min-height: inherit;
 	font-size: 0;
 }
 
-.sapMBtn.sapMToggleBtnPressed {
-	color: var(--sapUiToggleButtonPressedTextColor);
+ui5-togglebutton[disabled] {
+	pointer-events: none;
+}
+
+ui5-togglebutton[data-ui5-compact-size] {
+	height: var(--_ui5_button_compact_height);
+	min-width: var(--_ui5_button_base_min_compact_width);
+}
+
+ui5-togglebutton[data-ui5-compact-size] .ui5-button-inner {
+	padding: 0 var(--_ui5_button_compact_padding);
+}
+
+ui5-togglebutton:not([active]):hover {
+	background: var(--sapUiButtonHoverBackground);
+}
+
+ui5-togglebutton[icon-only] .ui5-button-inner {
+	min-width: auto;
+}
+
+ui5-togglebutton[disabled] {
+	opacity: 0.5;
+	pointer-events: none;
+}
+
+ui5-togglebutton[active]:not([disabled]) {
+	background-image: none;
+	background-color: var(--sapUiButtonActiveBackground);
+	border-color: var(--_ui5_button_active_border_color);
+	color: var(--sapUiButtonActiveTextColor);
 	text-shadow: none;
 }
 
-.sapMBtn.sapMToggleBtnPressed.sapMBtnNegative {
-	background-color: var(--sapUiButtonRejectActiveBackground);
-	border-color: var(--sapUiButtonRejectActiveBorderColor);
-	color: var(--sapUiToggleButtonPressedTextColor);
+ui5-togglebutton[design="Positive"] {
+	background-color: var(--sapUiButtonAcceptBackground);
+	border-color: var(--_ui5_button_positive_border_color);
+	color: var(--sapUiButtonAcceptTextColor);
+	text-shadow: var(--_ui5_button_text_shadow);
 }
 
-.sapMBtn.sapMToggleBtnPressed.sapMBtnNegative:active,
-.sapMBtn.sapMToggleBtnPressed.sapMBtnNegative:hover {
-	background-color: var(--_ui5_toggle_button_pressed_negative_hover);
-	border-color: var(--sapUiButtonRejectActiveBorderColor);
+ui5-togglebutton[design="Positive"]:hover {
+	background-color: var(--sapUiButtonAcceptHoverBackground);
+	border-color: var(--_ui5_button_positive_border_hover_color);
 }
 
-.sapMBtn.sapMToggleBtnPressed.sapMBtnPositive {
+ui5-togglebutton[design="Positive"][active] {
 	background-color: var(--sapUiButtonAcceptActiveBackground);
+	border-color: var(--_ui5_button_positive_border_active_color);
+	color: var(--sapUiButtonActiveTextColor);
+	text-shadow: none;
+}
+
+ui5-togglebutton[design="Positive"][focused] {
+	border-color: var(--_ui5_button_positive_focus_border_color);
+}
+
+ui5-togglebutton[design="Negative"] {
+	background-color: var(--sapUiButtonRejectBackground);
+	border-color: var(--sapUiButtonRejectBorderColor);
+	color: var(--sapUiButtonRejectTextColor);
+	text-shadow: var(--_ui5_button_text_shadow);
+}
+
+ui5-togglebutton[design="Negative"]:hover {
+	background-color: var(--sapUiButtonRejectHoverBackground);
+	border-color: var(--sapUiButtonRejectHoverBorderColor);
+}
+
+ui5-togglebutton[design="Negative"][focused] {
+	border-color: var(--_ui5_button_negative_focus_border_color);
+}
+
+ui5-togglebutton[design="Negative"][active] {
+	background-color: var(--sapUiButtonRejectActiveBackground);
+	border-color: var(--_ui5_button_negative_active_border_color);
+	color: var(--sapUiButtonActiveTextColor);
+	text-shadow: none;
+}
+
+ui5-togglebutton[design="Emphasized"] {
+	background-color: var(--sapUiButtonEmphasizedBackground);
+	border-color: var(--sapUiButtonEmphasizedBorderColor);
+	color: var(--sapUiButtonEmphasizedTextColor);
+	text-shadow: 0 0 0.125rem var(--sapUiButtonEmphasizedTextShadow);
+	font-weight: var(--_ui5_button_emphasized_font_weight);
+}
+
+ui5-togglebutton[design="Emphasized"]:not([active]):hover {
+	background-color: var(--sapUiButtonEmphasizedHoverBackground);
+	border-color: var(--sapUiButtonEmphasizedHoverBorderColor);
+}
+
+ui5-togglebutton[design="Empasized"][active] {
+	background-color: var(--sapUiButtonEmphasizedActiveBackground);
+	border-color: var(--sapUiButtonEmphasizedActiveBorderColor);
+	color: var(--sapUiButtonActiveTextColor);
+	text-shadow: none;
+}
+
+ui5-togglebutton[design="Emphasized"][focused] {
+	border-color: var(--_ui5_button_emphasized_focused_border_color);
+}
+
+ui5-togglebutton[design="Transparent"] {
+	background-color: var(--sapUiButtonLiteBackground);
+	border-color: var(--sapUiButtonLiteBorderColor);
+	color: var(--sapUiButtonLiteTextColor);
+	text-shadow: var(--_ui5_button_text_shadow);
+	border-color: transparent;
+}
+
+ui5-togglebutton[design="Transparent"]:hover {
+	background-color: var(--sapUiButtonLiteHoverBackground);
+}
+
+ui5-togglebutton[design="Transparent"][active] {
+	background-color: var(--sapUiButtonLiteActiveBackground);
+	color: var(--sapUiButtonActiveTextColor);
+	text-shadow: none;
+}
+
+ui5-togglebutton[design="Transparent"]:not([active]):hover {
+	border-color: transparent;
+}
+
+ui5-togglebutton[icon-end] .ui5-button-icon {
+	margin-left: var(--_ui5_button_base_icon_margin);
+}
+
+ui5-togglebutton[icon-end] .ui5-button-inner {
+	flex-direction: row-reverse;
+}
+
+ui5-togglebutton[design="Positive"][pressed],
+ui5-togglebutton[design="Positive"][pressed][focused],
+ui5-togglebutton[design="Positive"][pressed]:hover {
+	background: var(--sapUiButtonAcceptActiveBackground);
 	border-color: var(--sapUiButtonAcceptActiveBorderColor);
 	color: var(--sapUiToggleButtonPressedTextColor);
 }
 
-.sapMBtn.sapMToggleBtnPressed.sapMBtnPositive:active,
-.sapMBtn.sapMToggleBtnPressed.sapMBtnPositive:hover {
-	background-color: var(--_ui5_toggle_button_pressed_positive_hover);
-	border-color: var(--sapUiButtonAcceptActiveBorderColor);
+ui5-togglebutton[design="Positive"][pressed][active],
+ui5-togglebutton[design="Positive"][pressed]:hover {
+	background: var(--_ui5_toggle_button_pressed_positive_hover);
 }
 
-.sapMBtn.sapMToggleBtnPressed.sapMBtnDefault:not(:active):not(:hover),
-.sapMBtn.sapMToggleBtnPressed.sapMBtnEmphasized:not(:active):not(:hover),
-.sapMBtn.sapMToggleBtnPressed.sapMBtnTransparent:not(:active):not(:hover) {
-	background-color: var(--sapUiToggleButtonPressedBackground);
+ui5-togglebutton[design="Negative"][pressed],
+ui5-togglebutton[design="Negative"][pressed][focused],
+ui5-togglebutton[design="Negative"][pressed]:hover {
+	background: var(--sapUiButtonRejectActiveBackground);
+	border-color: var(--sapUiButtonRejectActiveBorderColor);
+	color: var(--sapUiToggleButtonPressedTextColor);
+}
+
+ui5-togglebutton[design="Negative"][pressed][active],
+ui5-togglebutton[design="Negative"][pressed]:hover {
+	background: var(--_ui5_toggle_button_pressed_negative_hover);
+}
+
+ui5-togglebutton[pressed],
+ui5-togglebutton[pressed]:hover,
+ui5-togglebutton[pressed][focused],
+ui5-togglebutton[design="Transparent"][pressed],
+ui5-togglebutton[design="Transparent"][pressed]:hover,
+ui5-togglebutton[design="Emphasized"][pressed],
+ui5-togglebutton[design="Emphasized"][pressed]:hover {
+	background: var(--sapUiToggleButtonPressedBackground);
 	border-color: var(--sapUiToggleButtonPressedBorderColor);
+	color: var(--sapUiToggleButtonPressedTextColor);
 }
 
-.sapMBtn.sapMToggleBtnPressed:not(.sapMBtnNegative):not(.sapMBtnPositive):focus,
-.sapMBtn.sapMToggleBtnPressed.sapMBtnEmphasized:focus,
-.sapMBtn.sapMToggleBtnPressed.sapMBtnTransparent:focus {
-	border-color: var(--_ui5_toggle_button_pressed_focussed);
-}
-
-.sapMBtn.sapMToggleBtnPressed:focus:after,
-.sapMBtn.sapMToggleBtnPressed.sapMBtnEmphasized:focus:after,
-.sapMBtn.sapMToggleBtnPressed.sapMBtnTransparent:focus:after {
-	border-color: var(--sapUiContentContrastFocusColor);
-}
-
-.sapMBtn.sapMToggleBtnPressed:active,
-.sapMBtn.sapMToggleBtnPressed:hover,
-.sapMBtn.sapMToggleBtnPressed.sapMBtnEmphasized:active,
-.sapMBtn.sapMToggleBtnPressed.sapMBtnEmphasized:hover,
-.sapMBtn.sapMToggleBtnPressed.sapMBtnTransparent:active,
-.sapMBtn.sapMToggleBtnPressed.sapMBtnTransparent:hover {
-	background-color: var(--sapUiToggleButtonPressedHoverBackground);
-	border-color: var(--sapUiToggleButtonPressedHoverBorderColor);
-}
-
-.sapMBtn.sapMToggleBtnPressed:active:focus
-.sapMBtn.sapMToggleBtnPressed:hover:focus,
-.sapMBtn.sapMToggleBtnPressed.sapMBtnEmphasized:active:focus,
-.sapMBtn.sapMToggleBtnPressed.sapMBtnEmphasized:hover:focus,
-.sapMBtn.sapMToggleBtnPressed.sapMBtnTransparent:active:focus,
-.sapMBtn.sapMToggleBtnPressed.sapMBtnTransparent:hover:focus {
-	border-color: var(--_ui5_toggle_button_pressed_focussed_hovered);
+ui5-togglebutton[pressed][active],
+ui5-togglebutton[pressed]:hover {
+	background: var(--sapUiToggleButtonPressedHoverBackground);
 }

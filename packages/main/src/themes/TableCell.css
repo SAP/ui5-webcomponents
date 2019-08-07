@@ -1,34 +1,48 @@
-:host(ui5-table-cell) {
-	display: inline-block;
-	width: 100%;
-	height: 100%;
-	color: var(--sapUiContentLabelColor);
+:host {
+	display: contents;
 }
+
+:host td {
+	padding: 0.25rem;
+	vertical-align: middle;
+}
+
+:host([first-in-row]) td,
+.ui5-table-popin-row td {
+	padding-left: 1rem;
+}
+
+:host([first-in-row]) td {
+	padding-left: 1rem;
+}
+
+:host([popined]) td {
+	padding-left: 0;
+}
+
+/* Remove that once shadyCSS is adopted */
 
 ui5-table-cell {
-	display: inline-block;
-	width: 100%;
-	height: 100%;
-	color: var(--sapUiContentLabelColor);
+	display: contents;
 }
 
-.sapWCTableCell {
-	overflow: hidden;
-	padding: .25rem .0625rem;
-	font-family: var(--sapUiFontFamily);
-	font-size: 0.875rem;
-	height: 100%;
-	box-sizing: border-box;
+ui5-table-cell td {
+	padding: 0.25rem;
+	vertical-align: middle;
 }
 
-.sapWCTableCellWithBorder {
-	border-bottom: 1px solid #E5E5E5;
+ui5-table-cell[first-in-row] td {
+	padding-left: 1rem;
 }
 
-.sapWCTableCellFirst {
-	padding-left: 0.75rem;
+.ui5-table-popin-row td {
+	padding-left: 1rem;
 }
 
-.sapWCTableCellLast {
-	padding-right: 0.75rem;
+ui5-table-cell[first-in-row] td {
+	padding-left: 1rem;
+}
+
+ui5-table-cell[popined] td {
+	padding-left: 0;
 }

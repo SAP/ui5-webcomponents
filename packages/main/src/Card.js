@@ -2,9 +2,11 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isIconURI } from "@ui5/webcomponents-base/dist/IconPool.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-import getEffectiveRTL from "@ui5/webcomponents-base/dist/util/getEffectiveRTL.js";
+import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import CardTemplate from "./generated/templates/CardTemplate.lit.js";
 import Icon from "./Icon.js";
+
+import { ARIA_ROLEDESCRIPTION_CARD, AVATAR_TOOLTIP, ARIA_LABEL_CARD_CONTENT } from "./i18n/defaults.js";
 
 // Styles
 import cardCss from "./generated/themes/Card.css.js";
@@ -72,7 +74,7 @@ const metadata = {
 
 		/**
 		 * Defines image source URI or built-in icon font URI.
-		 * </br></br>
+		 * <br><br>
 		 * <b>Note:</b>
 		 * SAP-icons font provides numerous options. To find all the available icons, see the
 		 * <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
@@ -85,6 +87,7 @@ const metadata = {
 
 		_headerActive: {
 			type: Boolean,
+			noAttribute: true,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Card.prototype */ {
@@ -113,7 +116,7 @@ const metadata = {
  * <code>heading</code>, <code>subtitle</code>, <code>status</code> and <code>avatar</code>.
  *
  * <h3>Keyboard handling</h3>
- * In case you enable <code>headerInteractive</cdoe> property, you can press the <code>ui5-card</code> header by Space and Enter keys.
+ * In case you enable <code>headerInteractive</code> property, you can press the <code>ui5-card</code> header by Space and Enter keys.
  *
  * <h3>ES6 Module Import</h3>
  *
@@ -146,13 +149,13 @@ class Card extends UI5Element {
 	get classes() {
 		return {
 			main: {
-				"sapFCard": true,
-				"sapFCardNoContent": !this.content.length,
+				"ui5-card-root": true,
+				"ui5-card--nocontent": !this.content.length,
 			},
 			header: {
-				"sapFCardHeader": true,
-				"sapFCardHeaderInteractive": this.headerInteractive,
-				"sapFCardHeaderActive": this.headerInteractive && this._headerActive,
+				"ui5-card-header": true,
+				"ui5-card-header--interactive": this.headerInteractive,
+				"ui5-card-header--active": this.headerInteractive && this._headerActive,
 			},
 		};
 	}
@@ -165,12 +168,28 @@ class Card extends UI5Element {
 		return !!this.avatar && !this.icon;
 	}
 
-	get role() {
-		return this.headerInteractive ? "button" : undefined;
-	}
-
 	get tabindex() {
 		return this.headerInteractive ? "0" : undefined;
+	}
+
+	get hasHeader() {
+		return !!(this.heading || this.subtitle || this.status || this.avatar);
+	}
+
+	get rtl() {
+		return getRTL() ? "rtl" : undefined;
+	}
+
+	get ariaCardRoleDescription() {
+		return ARIA_ROLEDESCRIPTION_CARD.defaultText;
+	}
+
+	get ariaCardAvatarLabel() {
+		return AVATAR_TOOLTIP.defaultText;
+	}
+
+	get ariaCardContentLabel() {
+		return ARIA_LABEL_CARD_CONTENT.defaultText;
 	}
 
 	static async define(...params) {
@@ -217,10 +236,6 @@ class Card extends UI5Element {
 		if (space) {
 			this.fireEvent("headerClick");
 		}
-	}
-
-	get rtl() {
-		return getEffectiveRTL() ? "rtl" : undefined;
 	}
 }
 

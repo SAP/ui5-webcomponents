@@ -1,6 +1,13 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
+import { isEnter, isSpace } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import "@ui5/webcomponents-base/dist/icons/decline.js";
+import "@ui5/webcomponents-base/dist/icons/message-information.js";
+import "@ui5/webcomponents-base/dist/icons/message-success.js";
+import "@ui5/webcomponents-base/dist/icons/message-error.js";
+import "@ui5/webcomponents-base/dist/icons/message-warning.js";
+
 import MessageStripType from "./types/MessageStripType.js";
 import MessageStripTemplate from "./generated/templates/MessageStripTemplate.lit.js";
 import Icon from "./Icon.js";
@@ -19,7 +26,7 @@ const metadata = {
 
 		/**
 		 * Defines the <code>ui5-messagestrip</code> type.
-		 * <br></br>
+		 * <br><br>
 		 * <b>Note:</b> Available options are <code>Information"</code>, <code>"Positive"</code>, <code>"Negative"</code>,
 		 * and "Warning".
 		 *
@@ -34,10 +41,10 @@ const metadata = {
 
 		/**
 		 * Defines the icon src URI to be displayed as graphical element within the <code>ui5-messagestrip</code>.
-		 * <br></br>
+		 * <br><br>
 		 * <b>Note:</b> If no icon is given, the default icon for the <code>ui5-messagestrip</code> type will be added.
 		 * The SAP-icons font provides numerous options.
-		 * <br></br>
+		 * <br><br>
 		 * Example:
 		 * <br>
 		 * <pre>ui5-messagestrip icon="sap-icon://palette"</pre>
@@ -150,8 +157,24 @@ class MessageStrip extends UI5Element {
 		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
 	}
 
-	_handleCloseIconPress() {
+	_closeClick() {
 		this.fireEvent("close", {});
+	}
+
+	_closeKeyDown(event) {
+		if (isEnter(event)) {
+			this.fireEvent("close");
+		}
+
+		if (isSpace(event)) {
+			event.preventDefault();
+		}
+	}
+
+	_closeKeyUp(event) {
+		if (isSpace(event)) {
+			this.fireEvent("close");
+		}
 	}
 
 	static async define(...params) {
@@ -181,7 +204,7 @@ class MessageStrip extends UI5Element {
 	}
 
 	get hiddenText() {
-		return `Message Strip ${this.type} ${this.noCloseButton ? "" : "closable"}.`;
+		return `Message Strip ${this.type} ${this.noCloseButton ? "" : "closable"}`;
 	}
 
 	get _closeButtonText() {
@@ -193,9 +216,6 @@ class MessageStrip extends UI5Element {
 			label: {
 				"ui5-messagestrip-text": true,
 				"ui5-messagestripNoCloseButton": this.noCloseButton,
-			},
-			closeIcon: {
-				"ui5-messagestrip-close-icon": true,
 			},
 			main: {
 				"ui5-messagestrip-root": true,

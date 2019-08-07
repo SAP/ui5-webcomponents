@@ -4,8 +4,10 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-import { getCompactSize } from "@ui5/webcomponents-base/dist/Configuration.js";
-import getEffectiveRTL from "@ui5/webcomponents-base/dist/util/getEffectiveRTL.js";
+import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
+import "@ui5/webcomponents-base/dist/icons/slim-arrow-down.js";
+import "@ui5/webcomponents-base/dist/icons/slim-arrow-left.js";
+import "@ui5/webcomponents-base/dist/icons/slim-arrow-right.js";
 import TabContainerTemplate from "./generated/templates/TabContainerTemplate.lit.js";
 import Button from "./Button.js";
 import CustomListItem from "./CustomListItem.js";
@@ -82,19 +84,21 @@ const metadata = {
 
 		_selectedTab: {
 			type: TabBase,
-			association: true,
 		},
 
 		_scrollable: {
 			type: Boolean,
+			noAttribute: true,
 		},
 
 		_scrollableBack: {
 			type: Boolean,
+			noAttribute: true,
 		},
 
 		_scrollableForward: {
 			type: Boolean,
+			noAttribute: true,
 		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.TabContainer.prototype */ {
@@ -350,10 +354,6 @@ class TabContainer extends UI5Element {
 
 	get classes() {
 		return {
-			main: {
-				"ui5-tab-container": true,
-				"sapUiSizeCompact": getCompactSize(),
-			},
 			header: {
 				"ui5-tc__header": true,
 				"ui5-tc__header--scrollable": this._scrollable,
@@ -393,7 +393,7 @@ class TabContainer extends UI5Element {
 	}
 
 	get rtl() {
-		return getEffectiveRTL() ? "rtl" : undefined;
+		return getRTL() ? "rtl" : undefined;
 	}
 
 	static async define(...params) {

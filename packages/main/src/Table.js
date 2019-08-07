@@ -3,7 +3,6 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { isSpace } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-import { getCompactSize } from "@ui5/webcomponents-base/dist/Configuration.js";
 import TableColumn from "./TableColumn.js";
 import TableRow from "./TableRow.js";
 import TableTemplate from "./generated/templates/TableTemplate.lit.js";
@@ -80,13 +79,15 @@ const metadata = {
 		 * <li>Internet Explorer</li>
 		 * <li>Microsoft Edge lower than version 41 (EdgeHTML 16)</li>
 		 * <li>Mozilla Firefox lower than version 59</li>
-		 * </ul></li>
+		 * </ul>
+		 * </li>
 		 * <li>Scrolling behavior:
 		 * <ul>
 		 * <li>If the Web Component is placed in layout containers that have the <code>overflow: hidden</code>
 		 * or <code>overflow: auto</code> style definition, this can
 		 * prevent the sticky elements of the Web Component from becoming fixed at the top of the viewport.</li>
-		 * </ul></li>
+		 * </ul>
+		 * </li>
 		 * </ul>
 		 *
 		 * @type {boolean}
@@ -100,6 +101,10 @@ const metadata = {
 		_hiddenColumns: {
 			type: Object,
 			multiple: true,
+		},
+
+		_noDataDisplayed: {
+			type: Boolean,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Table.prototype */ {
@@ -164,6 +169,8 @@ class Table extends UI5Element {
 		this._delegates.push(this._itemNavigation);
 
 		this.fnOnRowFocused = this.onRowFocused.bind(this);
+
+		this._handleResize = this.popinContent.bind(this);
 	}
 
 	onBeforeRendering() {
@@ -178,16 +185,20 @@ class Table extends UI5Element {
 		});
 
 		this.visibleColumns = this.columns.filter((column, index) => {
+			column.sticky = this.stickyColumnHeader;
 			return !this._hiddenColumns[index];
 		});
+
+		this._noDataDisplayed = !this.rows.length && this.showNoData;
+		this.visibleColumnsCount = this.visibleColumns.length;
 	}
 
 	onEnterDOM() {
-		ResizeHandler.register(this.getDomRef(), this.popinContent.bind(this));
+		ResizeHandler.register(this.getDomRef(), this._handleResize);
 	}
 
 	onExitDOM() {
-		ResizeHandler.deregister(this.getDomRef(), this.popinContent.bind(this));
+		ResizeHandler.deregister(this.getDomRef(), this._handleResize);
 	}
 
 	onRowFocused(event) {
@@ -220,8 +231,8 @@ class Table extends UI5Element {
 		});
 
 		if (visibleColumnsIndexes.length) {
-			this.columns[visibleColumnsIndexes[0]]._first = true;
-			this.columns[visibleColumnsIndexes[visibleColumnsIndexes.length - 1]]._last = true;
+			this.columns[visibleColumnsIndexes[0]].first = true;
+			this.columns[visibleColumnsIndexes[visibleColumnsIndexes.length - 1]].last = true;
 		}
 
 		// invalidate only if hidden columns count has changed
@@ -247,18 +258,6 @@ class Table extends UI5Element {
 				visible: !this._hiddenColumns[index],
 			};
 		}, this);
-	}
-
-	get classes() {
-		return {
-			main: {
-				sapWCTableHeader: true,
-				sapUiSizeCompact: getCompactSize(),
-			},
-			columns: {
-				sapWCTableColumnWrapper: true,
-			},
-		};
 	}
 
 	get styles() {

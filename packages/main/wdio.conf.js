@@ -52,10 +52,12 @@ exports.config = {
         // 5 instances get started at a time.
         maxInstances: process.env.TRAVIS ? 1 : 5,
         //
-			browserName: 'chrome',
-        chromeOptions: {
-            args: ['headless']
-        }
+        browserName: 'chrome',
+        'goog:chromeOptions': {
+            // to run chrome headless the following flags are required
+            // (see https://developers.google.com/web/updates/2017/04/headless-chrome)
+                args: ['--headless', '--disable-gpu'],
+            }
     }],
     //
     // port to find chromedriver
@@ -277,7 +279,7 @@ exports.config = {
         if (waitFor.includes(commandName)) {
             browser.executeAsync(function (done) {
                 // run all the tests in no conflict mode
-                window["sap-ui-webcomponents-main-bundle"].configuration._setWCNoConflict(true);
+                window["sap-ui-webcomponents-main-bundle"].configuration.setNoConflict(true);
                 RenderScheduler.whenFinished().then(done);
             });
         }
