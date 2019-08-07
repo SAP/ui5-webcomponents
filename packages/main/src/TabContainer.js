@@ -197,7 +197,7 @@ class TabContainer extends UI5Element {
 
 	calculateRenderItems() {
 		this.renderItems = this.items.map((item, index) => {
-			const isSeparator = item.isSeparator();
+			const isSeparator = item.isSeparator;
 
 			if (isSeparator) {
 				return { isSeparator, _tabIndex: item._tabIndex, _id: item._id };
@@ -283,7 +283,7 @@ class TabContainer extends UI5Element {
 
 		// update selected items
 		this.items.forEach((item, index) => {
-			if (!item.isSeparator()) {
+			if (!item.isSeparator) {
 				const selected = selectedIndex === index;
 				item.selected = selected;
 
@@ -340,7 +340,7 @@ class TabContainer extends UI5Element {
 	}
 
 	_getTabs() {
-		return this.items.filter(item => !item.isSeparator());
+		return this.items.filter(item => !item.isSeparator);
 	}
 
 	_getHeaderScrollContainer() {

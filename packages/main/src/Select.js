@@ -388,7 +388,6 @@ class Select extends UI5Element {
 
 	static async define(...params) {
 		await Promise.all([
-			Option.define(),
 			Label.define(),
 			Popover.define(),
 			List.define(),

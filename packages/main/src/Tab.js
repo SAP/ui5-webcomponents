@@ -141,7 +141,7 @@ class Tab extends UI5Element {
 		super.define(...params);
 	}
 
-	isSeparator() {
+	get isSeparator() {
 		return false;
 	}
 

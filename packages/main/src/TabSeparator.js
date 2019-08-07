@@ -33,7 +33,7 @@ class TabSeparator extends UI5Element {
 		return TabSeparatorTemplate;
 	}
 
-	isSeparator() {
+	get isSeparator() {
 		return true;
 	}
 }
