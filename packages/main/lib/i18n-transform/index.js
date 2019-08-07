@@ -1,14 +1,9 @@
 const fs = require('fs');
 const path = require('path');
+const glob = require("glob");
 const PropertiesReader = require('properties-reader');
-const messageBundle = path.normalize(process.argv[2]);
-const outputFile = path.normalize(`${process.argv[3]}/i18n-defaults.js`);
-
-if (!messageBundle || !outputFile) {
-	return;
-}
-
-const properties = PropertiesReader(messageBundle)._properties;
+const messagesBundles = path.normalize(`${process.argv[2]}/messagebundle_*.properties`);
+const messagesJSONDist = path.normalize(`${process.argv[3]}`);
 
 /*
  * Returns the single text object to enable single export.
@@ -31,17 +26,14 @@ const getTextInfo = (key, value) => `const ${key} = {key: "${key}", defaultText:
  *	ARIA_LABEL_CARD_CONTENT,
  * }
  */
-const getOutputFileContent = (properties) => {
+const getMessageBundleContentAsExports = (properties) => {
 	const textKeys = Object.keys(properties);
 	const texts = textKeys.map(prop => getTextInfo(prop, properties[prop])).join('');
 
 	return `${texts} export {${textKeys.join()}};`;
 }
 
-/*
- * Writes the i18n-defaults.js.
- */
-const writeI18nDefaultsFile = (file, content) => {
+const writeFile = (file, content) => {
 	fs.writeFile(file, content, (err) => {
 		if (err) {
 			return console.log(err);
@@ -51,4 +43,15 @@ const writeI18nDefaultsFile = (file, content) => {
 	});
 }
 
-writeI18nDefaultsFile(outputFile, getOutputFileContent(properties));
+glob(messagesBundles, {}, (err, files) => {
+	if (err) {
+		return console.log("No messagebundle files found!");
+	}
+	files.forEach(file => {
+		const properties = PropertiesReader(file)._properties;
+		const filename = path.basename(file, path.extname(file));
+		const outputFile = path.normalize(`${messagesJSONDist}/${filename}.js`);
+
+		writeFile(outputFile, getMessageBundleContentAsExports(properties))
+	});
+});
