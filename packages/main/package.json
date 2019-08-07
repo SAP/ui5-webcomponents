@@ -45,10 +45,10 @@
     }
   },
   "scripts": {
-    "build": "npm-run-all --sequential clean lint build:templates build:i18n-exports build:samples build:styles copy:src build:bundle copy:i18n copy:webcomponents-polyfill ",
+    "build": "npm-run-all --sequential clean lint build:templates build:i18n-defaults build:samples build:styles copy:src build:bundle copy:i18n copy:webcomponents-polyfill ",
     "build:bundle": "rollup -c --environment ES5_BUILD",
     "build:templates": "mkdirp dist/generated/templates && node ./lib/hbs2ui5/index.js -d src/ -o dist/generated/templates",
-    "build:i18n-exports": "mkdirp dist/generated/i18n && node ./lib/i18n-transform/index.js src/i18n dist/generated/i18n",
+	"build:i18n-defaults": "mkdirp dist/generated/i18n && node ./lib/i18n-transform/index.js src/i18n dist/generated/i18n",
     "build:samples": "npm run copy:test --scripts-prepend-node-path && npm run build:api --scripts-prepend-node-path && npm run build:docs --scripts-prepend-node-path && node lib/playground/index.js",
     "build:pages": "npm run copy:pages",
     "build:qunit": "npm run copy:qunit",
@@ -66,7 +66,7 @@
     "copy:pages": "cpx \"test/**/pages/*.*\" dist/test-resources",
     "copy:qunit": "cpx \"test/**/qunit/*.*\" dist/test-resources",
     "copy:webcomponents-polyfill": "cpx \"../../node_modules/@webcomponents/webcomponentsjs/**/*.*\" dist/webcomponentsjs/",
-    "dev": "npm-run-all --parallel watch:templates watch:samples watch:pages watch:qunit watch:src watch:bundle watch:styles-bundles watch:styles-components copy:webcomponents-polyfill",
+    "dev": "npm-run-all --parallel watch:templates watch:samples watch:pages watch:qunit watch:src watch:bundle watch:styles-bundles watch:styles-components copy:webcomponents-polyfill build:i18n-defaults",
     "start": "npm-run-all --parallel serve:static dev",
     "lint": "eslint .",
     "test:wdio": "npm-run-all --parallel --race serve:static test:wdio-run",
