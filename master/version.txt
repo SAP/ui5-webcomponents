@@ -1,7 +1,7 @@
-commit f2ff64a106b6673d2717feab91a4c405542bec7f
-Author: Peter Muessig <petermuessig@users.noreply.github.com>
-Date:   Tue Aug 6 10:42:39 2019 +0200
+commit 5d9a1acfb75892d49a79fc95b0c9575205500ed6
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Wed Aug 7 10:01:33 2019 +0300
 
-    docs: enable support for @readonly tags for properties (#701)
+    feat(ui5-select): adds readonly property selectedOption (#718)
     
-    - getters documented as `@readonly` are now visible in `properties` section of `api.json`
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/457
