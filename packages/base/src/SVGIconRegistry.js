@@ -1,7 +1,7 @@
 const registry = new Map();
 
-const registerIcon = (name, d, accText) => {
-	registry.set(name, { d, accText });
+const registerIcon = (name, d, accData) => {
+	registry.set(name, { d, accData });
 };
 
 const getIconData = name => {
