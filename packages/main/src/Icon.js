@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getIconData } from "@ui5/webcomponents-base/dist/SVGIconRegistry.js";
+import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
 import IconTemplate from "./generated/templates/IconTemplate.lit.js";
 
 // Styles
@@ -88,6 +89,11 @@ const metadata = {
  * @public
  */
 class Icon extends UI5Element {
+	constructor() {
+		super();
+		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
+	}
+
 	static get metadata() {
 		return metadata;
 	}
@@ -102,6 +108,12 @@ class Icon extends UI5Element {
 
 	static get styles() {
 		return iconCss;
+	}
+
+	static async define(...params) {
+		await fetchResourceBundle("@ui5/webcomponents");
+
+		super.define(...params);
 	}
 
 	_normalizeIconURI(iconURI) {
@@ -130,7 +142,7 @@ class Icon extends UI5Element {
 	get accessibleNameText() {
 		const icon = getIconData(this._normalizeIconURI(this.src));
 
-		return this.accessibleName || icon.accText;
+		return this.accessibleName || (icon.accData && this.resourceBundle.getText(icon.accData));
 	}
 
 	get dir() {
