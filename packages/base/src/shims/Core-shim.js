@@ -2,7 +2,7 @@ import { inject as injectCore } from "@ui5/webcomponents-core/dist/sap/ui/core/C
 import * as FormatSettings from "../FormatSettings.js";
 import { getLanguage } from "../config/Language.js";
 import { getCalendarType } from "../config/CalendarType.js";
-import { getFirstDayOfTheWeek } from "../config/FirstDayOfTheWeek.js";
+import { getFirstDayOfWeek } from "../config/FirstDayOfWeek.js";
 import getDesigntimePropertyAsArray from "../util/getDesigntimePropertyAsArray.js";
 
 /**
@@ -13,7 +13,7 @@ import getDesigntimePropertyAsArray from "../util/getDesigntimePropertyAsArray.j
 const Configuration = {
 	getLanguage,
 	getCalendarType,
-	getFirstDayOfTheWeek,
+	getFirstDayOfWeek,
 	getSupportedLanguages: () => {
 		return getDesigntimePropertyAsArray("$core-i18n-locales:,ar,bg,ca,cs,da,de,el,en,es,et,fi,fr,hi,hr,hu,it,iw,ja,ko,lt,lv,nl,no,pl,pt,ro,ru,sh,sk,sl,sv,th,tr,uk,vi,zh_CN,zh_TW$");
 	},

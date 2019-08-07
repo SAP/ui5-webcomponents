@@ -12,6 +12,7 @@ language     | en, de, es, etc...                              | en            |
 RTL*         | true, false                                     | false         | When true, sets global text direction to right-to-left
 compactSize  | true, false                                     | false         | When set, enforces compact density (smaller margins/paddings)
 calendarType | Gregorian, Islamic, Buddhist, Japanese, Persian | Gregorian     | Default calendar type for date-related web components
+firstDayOfWeek | 0 (Sunday) through 6 (Saturday) | *depends on locale*     | When set, overrides the locale's default value
 noConflict** | true, false | Object                            | false         | When set to true, all events will be fired with a "ui5-" prefix only
 
 `*` When the `rtl` setting is set to `true`, UI5 Web Components will adjust their styling accordingly.
@@ -50,6 +51,7 @@ In order to provide configuration settings, include the following ```<script>```
 	"compactSize": true,
 	"language": "ja",
 	"calendarType": "Japanese",
+	"firstDayOfWeek": 0,
 	"theme": "sap_belize_hcb",
 	"noConflict": {
 		"events": ["selectionChange", "headerClick"]
@@ -74,4 +76,5 @@ import { getCompactSize } from "@ui5/webcomponents-base/dist/config/CompactSize.
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
 import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
+import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FirstDayOfWeek.js";
 ```
