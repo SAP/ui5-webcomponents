@@ -3,8 +3,6 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { isSpace } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-import ITableRow from "./ITableRow.js";
-import ITableColumn from "./ITableColumn.js";
 import TableTemplate from "./generated/templates/TableTemplate.lit.js";
 
 // Styles
@@ -19,28 +17,28 @@ const metadata = {
 
 		/**
 		 * Defines the <code>ui5-table</code> rows.
-		 * <br><b>Note:</b> Currently only <code>ui5-table-row</code> implements the <code>ITableRow</code> interface.
+		 * <br><b>Note:</b> Use <code>ui5-table-row</code> for the intended design.
 		 *
-		 * @type {ITableRow[]}
+		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
 		 */
 		"default": {
 			propertyName: "rows",
-			type: ITableRow,
+			type: HTMLElement,
 			individualSlots: true,
 		},
 
 		/**
 		 * Defines the configuration for the columns of the <code>ui5-table</code>.
-		 * <br><b>Note:</b> Only <code>ui5-table-column</code> is allowed.
+		 * <br><b>Note:</b> Use <code>ui5-table-column</code> for the intended design.
 		 *
-		 * @type {ITableColumn[]}
+		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
 		 */
 		columns: {
-			type: ITableColumn,
+			type: HTMLElement,
 			individualSlots: true,
 			listenFor: { include: ["*"] },
 		},

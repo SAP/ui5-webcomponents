@@ -1,6 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import ITab from "./ITab.js";
 import TabSeparatorTemplate from "./generated/templates/TabSeparatorTemplate.lit.js";
 
 /**
@@ -8,7 +7,6 @@ import TabSeparatorTemplate from "./generated/templates/TabSeparatorTemplate.lit
  */
 const metadata = {
 	tag: "ui5-tab-separator",
-	"implements": [ITab],
 };
 
 /**

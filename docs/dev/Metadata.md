@@ -16,31 +16,6 @@ Defines the HTML tag for the Web Component.
 }
 ``` 
 
-## Implements
-
-Defines the list of interfaces this this web component implements.
-
-Interfaces are used for the purpose of determining whether a web
-component may slot other certain web components.
-
-#### Example
-
-```json
-{
-	"implements": [IMyInterface, IMyOtherInterface],
-}
-```
-
-or, if just one:
-
-```json
-{
-	"implements": IMyInterface,
-}
-```
-
-
-
 ## Properties / Attributes
 
 Defines the HTML properties for the Web Component. 
@@ -127,7 +102,7 @@ Defines the `slots` that will be provided by this UI5 Web Component.
 			"type": HTMLElement,
 		},
 		"rows": {
-			"type": IMyRow,
+			"type": HTMLElement,
 			"individualSlots": true,
 		}
 	}
@@ -138,10 +113,10 @@ Defines the `slots` that will be provided by this UI5 Web Component.
 
 Setting | Type | Default | Description
 --------|------|--------|-----------
-type    | Javascript Class | N/A | The type/interface of the elements that can go into that slot 
-individualSlots | Boolean | false | If set to `true`, each child will have its own slot, allowing you to arrange/wrap the children arbitrarily.
-propertyName | String | N/A | Allows to set the name of the property on the Web Component, where the children belonging to this slot will be stored.
-listenFor | Object | N/A | **Experimental, do not use.** If set, whenever the children, belonging to this slot have their properties changed, the Web Component will be invalidated. 
+type    | `HTMLElement` or `Node` | N/A | The type of the children that can go into that slot 
+individualSlots | `Boolean` | false | If set to `true`, each child will have its own slot, allowing you to arrange/wrap the children arbitrarily.
+propertyName | `String` | N/A | Allows to set the name of the property on the Web Component, where the children belonging to this slot will be stored.
+listenFor | `Object` | N/A | **Experimental, do not use.** If set, whenever the children, belonging to this slot have their properties changed, the Web Component will be invalidated. 
 
 The `type` setting is required.
 
@@ -153,11 +128,9 @@ Notes:
  - For the `default` slot you can provide a `propertyName` setting. 
  For example, if your default slot has a `propertyName: "items"`, then "this.items" will hold all children that were assigned to the default slot.
  
- #### Some common slot types
+ #### Allowed slot types
  
  Type | Description
  -----|-------------
  Node | Accepts both Text nodes and HTML Elements
  HTMLElement | Accepts HTML Elements only
- Specific class | Accepts only HTML Elements of this class
- Interface | Accepts only Custom elements that implement this interface

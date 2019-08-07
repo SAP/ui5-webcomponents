@@ -1,6 +1,5 @@
 import DataType from "./types/DataType.js";
 import isDescendantOf from "./util/isDescendantOf.js";
-import Interface from "./Interface.js";
 
 class UI5ElementMetadata {
 	constructor(metadata) {
@@ -9,10 +8,6 @@ class UI5ElementMetadata {
 
 	getTag() {
 		return this.metadata.tag;
-	}
-
-	getImplementedInterfaces() {
-		return this.metadata.implements;
 	}
 
 	hasAttribute(propName) {
@@ -85,20 +80,11 @@ const validateSingleSlot = (value, slotData) => {
 
 		return [el];
 	};
-	const requiredType = slotData.type;
 
 	const slottedNodes = getSlottedNodes(value);
 	slottedNodes.forEach(el => {
-		if (isDescendantOf(requiredType, Interface)) { // Check for interface compatibility
-			const implementsInterface = el.isUI5Element && el.constructor.implementsInterface(requiredType);
-			if (!implementsInterface) {
-				throw new Error(`${el} does not implement interface ${requiredType}`);
-			}
-		} else { // Check for class compatibility
-			const isInstanceOfClass = el instanceof requiredType;
-			if (!isInstanceOfClass) {
-				throw new Error(`${el} is not of type ${requiredType}`);
-			}
+		if (!(el instanceof slotData.type)) {
+			throw new Error(`${el} is not of type ${slotData.type}`);
 		}
 	});
 

@@ -321,24 +321,6 @@ class UI5Element extends HTMLElement {
 
 		const result = metadatas[0];
 
-		// merge interfaces
-		result.implements = metadatas.reduce((allInterfaces, current) => {
-			let interfaces;
-
-			if (Array.isArray(current.implements)) {
-				interfaces = current.implements;
-			} else {
-				interfaces = [current.implements];
-			}
-
-			interfaces.forEach(name => {
-				if (!allInterfaces.includes(name)) {
-					allInterfaces.push(name);
-				}
-			});
-			return allInterfaces;
-		}, []);
-
 		// merge properties
 		result.properties = metadatas.reverse().reduce((allProperties, current) => { // eslint-disable-line
 			Object.assign(allProperties, current.properties || {});
@@ -582,11 +564,6 @@ class UI5Element extends HTMLElement {
 	 */
 	get isUI5Element() {
 		return true;
-	}
-
-	static implementsInterface(interfaceClass) {
-		const interfaces = this.getMetadata().getImplementedInterfaces();
-		return interfaces.includes(interfaceClass);
 	}
 
 	/**

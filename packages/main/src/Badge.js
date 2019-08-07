@@ -1,7 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
-import Icon from "./Icon.js";
 
 // Template
 import BadgeTemplate from "./generated/templates/BadgeTemplate.lit.js";
@@ -49,12 +48,12 @@ const metadata = {
 		/**
 		 * Defines the <code>ui5-icon</code> to be displayed in the <code>ui5-badge</code>.
 		 *
-		 * @type {Icon}
+		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
 		 */
 		icon: {
-			type: Icon,
+			type: HTMLElement,
 		},
 
 	},

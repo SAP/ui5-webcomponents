@@ -15,7 +15,6 @@ import Icon from "./Icon.js";
 import List from "./List.js";
 import Popover from "./Popover.js";
 import SemanticColor from "./types/SemanticColor.js";
-import ITab from "./ITab.js";
 
 // Styles
 import tabContainerCss from "./generated/themes/TabContainer.css.js";
@@ -31,15 +30,15 @@ const metadata = {
 	slots: /** @lends  sap.ui.webcomponents.main.TabContainer.prototype */ {
 		/**
 		 * Defines the tabs.
-		 * <br><b>Note:</b> Currently only <code>ui5-tab</code> and <code>ui5-tab-separator</code> implement the <code>ITab</code> interface.
+		 * <br><b>Note:</b> Use <code>ui5-tab</code> and <code>ui5-tab-separator</code> for the intended design.
 		 *
-		 * @type {ITab[]}
+		 * @type {HTMLElement[]}
 		 * @public
 		 * @slot
 		 */
 		"default": {
 			propertyName: "items",
-			type: ITab,
+			type: HTMLElement,
 			individualSlots: true,
 			listenFor: { include: ["*"] },
 		},

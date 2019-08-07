@@ -6,7 +6,6 @@ import { isTabNext } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import ListMode from "./types/ListMode.js";
 import ListSeparators from "./types/ListSeparators.js";
 import ListItemType from "./types/ListItemType.js";
-import IListItem from "./IListItem.js";
 
 // Template
 import ListTemplate from "./generated/templates/ListTemplate.lit.js";
@@ -36,15 +35,15 @@ const metadata = {
 
 		/**
 		 * Defines the items of the <code>ui5-list</code>.
-		 * <br><b>Note:</b> Currently only <code>ui5-li</code>, <code>ui5-li-custom</code> and <code>ui5-li-groupheader</code> implement the <code>IListItem</code> interface.
+		 * <br><b>Note:</b> Use <code>ui5-li</code>, <code>ui5-li-custom</code> and <code>ui5-li-groupheader</code> for the intended design.
 		 *
-		 * @type {IListItem[]}
+		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
 		 */
 		"default": {
 			propertyName: "items",
-			type: IListItem,
+			type: HTMLElement,
 		},
 	},
 	properties: /** @lends  sap.ui.webcomponents.main.List.prototype */ {

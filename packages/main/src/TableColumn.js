@@ -2,7 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import CSSSize from "@ui5/webcomponents-base/dist/types/CSSSize.js";
-import ITableColumn from "./ITableColumn.js";
 import TableColumnTemplate from "./generated/templates/TableColumnTemplate.lit.js";
 
 // Styles
@@ -11,7 +10,6 @@ import styles from "./generated/themes/TableColumn.css.js";
 
 const metadata = {
 	tag: "ui5-table-column",
-	"implements": [ITableColumn],
 	slots: /** @lends sap.ui.webcomponents.main.TableColumn.prototype */ {
 
 		/**

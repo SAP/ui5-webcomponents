@@ -2,7 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import FocusHelper from "@ui5/webcomponents-base/dist/FocusHelper.js";
 import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
-import IListItem from "./IListItem.js";
 
 // Styles
 import styles from "./generated/themes/ListItemBase.css.js";
@@ -11,7 +10,6 @@ import styles from "./generated/themes/ListItemBase.css.js";
  * @public
  */
 const metadata = {
-	"implements": [IListItem],
 	properties: /** @lends  sap.ui.webcomponents.main.ListItemBase.prototype */  {
 
 		/**

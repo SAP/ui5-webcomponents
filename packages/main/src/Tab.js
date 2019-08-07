@@ -2,7 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import SemanticColor from "./types/SemanticColor.js";
 import Icon from "./Icon.js";
-import ITab from "./ITab.js";
 import TabTemplate from "./generated/templates/TabTemplate.lit.js";
 
 /**
@@ -10,7 +9,6 @@ import TabTemplate from "./generated/templates/TabTemplate.lit.js";
  */
 const metadata = {
 	tag: "ui5-tab",
-	"implements": [ITab],
 	slots: /** @lends sap.ui.webcomponents.main.Tab.prototype */ {
 
 		/**
