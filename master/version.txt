@@ -1,5 +1,5 @@
-commit 9c6df48c1b7705cd92a396f79b50611d48be027d
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Wed Aug 7 14:14:09 2019 +0300
+commit 1357c1602c3d1b7025c409886cb443daaa4bfcc6
+Author: Elena Stoyanova <elena.stoyanova@sap.com>
+Date:   Wed Aug 7 23:57:02 2019 +0300
 
-    feat: add configuration for first day of the week (#627)
+    feat(ui5-icon): accessibility implementation (#709)
