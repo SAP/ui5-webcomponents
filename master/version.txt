@@ -1,7 +1,5 @@
-commit 5d9a1acfb75892d49a79fc95b0c9575205500ed6
+commit 9c6df48c1b7705cd92a396f79b50611d48be027d
 Author: Martin <martin.r.hristov@gmail.com>
-Date:   Wed Aug 7 10:01:33 2019 +0300
+Date:   Wed Aug 7 14:14:09 2019 +0300
 
-    feat(ui5-select): adds readonly property selectedOption (#718)
-    
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/457
+    feat: add configuration for first day of the week (#627)
