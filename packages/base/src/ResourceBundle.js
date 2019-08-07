@@ -67,6 +67,10 @@ class ResourceBundleWrapper {
 	}
 
 	getText(textObj, ...params) {
+		if (!this._resourceBundle.hasText(textObj.key)) {
+			return textObj.defaultText;
+		}
+
 		return this._resourceBundle.getText(textObj.key, ...params);
 	}
 }
