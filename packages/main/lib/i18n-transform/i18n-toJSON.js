@@ -18,7 +18,7 @@ const messagesJSONDist = path.normalize(`${process.argv[3]}`);
 	const filename = path.basename(file, path.extname(file));
 	const outputFile = path.normalize(`${messagesJSONDist}/${filename}.json`);
 	const outputFileContent = {
-		'_': fs.readFileSync(file).toString().replace(/#.*?\n{1,}/g, "")
+		'_': fs.readFileSync(file).toString().replace(/#.*?\n+/g, "")
 	};
 
  	fs.writeFileSync(outputFile, JSON.stringify(outputFileContent));
