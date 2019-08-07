@@ -434,7 +434,8 @@ class DayPicker extends UI5Element {
 	}
 
 	_getFirstDayOfWeek() {
-		return getFirstDayOfWeek() || this._oLocaleData.getFirstDayOfWeek();
+		const confFirstDayOfWeek = getFirstDayOfWeek();
+		return Number.isInteger(confFirstDayOfWeek) ? confFirstDayOfWeek : this._oLocaleData.getFirstDayOfWeek();
 	}
 
 	get styles() {
