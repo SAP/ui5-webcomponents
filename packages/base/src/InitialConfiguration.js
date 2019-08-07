@@ -7,7 +7,7 @@ const initialConfig = {
 	compactSize: false,
 	calendarType: null,
 	noConflict: false, // no URL
-	firstDayOfWeek: undefined,
+	formatSettings: {},
 };
 
 /* General settings */
@@ -41,9 +41,9 @@ const getCalendarType = () => {
 	return initialConfig.calendarType;
 };
 
-const getFirstDayOfWeek = () => {
+const getFormatSettings = () => {
 	initConfiguration();
-	return initialConfig.firstDayOfWeek;
+	return initialConfig.formatSettings;
 };
 
 const booleanMapping = new Map();
@@ -115,5 +115,5 @@ export {
 	getCompactSize,
 	getNoConflict,
 	getCalendarType,
-	getFirstDayOfWeek,
+	getFormatSettings,
 };

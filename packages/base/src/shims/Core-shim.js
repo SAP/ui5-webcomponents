@@ -2,7 +2,7 @@ import { inject as injectCore } from "@ui5/webcomponents-core/dist/sap/ui/core/C
 import * as FormatSettings from "../FormatSettings.js";
 import { getLanguage } from "../config/Language.js";
 import { getCalendarType } from "../config/CalendarType.js";
-import { getFirstDayOfWeek } from "../config/FirstDayOfWeek.js";
+import { getFirstDayOfWeek } from "../config/FormatSettings.js";
 import getDesigntimePropertyAsArray from "../util/getDesigntimePropertyAsArray.js";
 
 /**
