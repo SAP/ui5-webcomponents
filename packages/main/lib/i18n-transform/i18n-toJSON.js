@@ -10,18 +10,18 @@
  */
 const path = require("path");
 const glob = require("glob");
+const PropertiesReader = require('properties-reader');
 const fs = require('fs');
 const messagesBundles = path.normalize(`${process.argv[2]}/messagebundle_*.properties`);
 const messagesJSONDist = path.normalize(`${process.argv[3]}`);
 
  const convertToJSON = (file) => {
+	const properties = PropertiesReader(file)._properties;
 	const filename = path.basename(file, path.extname(file));
 	const outputFile = path.normalize(`${messagesJSONDist}/${filename}.json`);
-	const outputFileContent = {
-		'_': fs.readFileSync(file).toString().replace(/#.*?\n+/g, "")
-	};
 
- 	fs.writeFileSync(outputFile, JSON.stringify(outputFileContent));
+	fs.writeFileSync(outputFile, JSON.stringify(properties));
+	console.log(`[i18n]: "${filename}.json" has been generated!`);
 }
 
  glob(messagesBundles, {}, (err, files) => {
