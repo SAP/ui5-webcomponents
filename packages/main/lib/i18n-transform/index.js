@@ -47,7 +47,7 @@ const writeI18nDefaultsFile = (file, content) => {
 			return console.log(err);
 		}
 
-		console.log(`The ${file} file has been created`);
+		console.log(`[i18n]: "${file}" file has been created`);
 	});
 }
 

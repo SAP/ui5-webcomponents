@@ -4,9 +4,13 @@
 	viewBox="0 0 512 512"
 	role="img"
 	preserveAspectRatio="xMidYMid meet"
+	aria-label="{{accessibleNameText}}"
 	xmlns="http://www.w3.org/2000/svg"
 >
-	<g role="presentation" aria-hidden="true">
+	{{#if hasIconTooltip}}
+		<title id="{{_id}}-tooltip">{{accessibleNameText}}</title>
+	{{/if}}
+	<g role="presentation">
 		<path transform="translate(0, 512) scale(1, -1)" d={{d}} />
 	</g>
 </svg>

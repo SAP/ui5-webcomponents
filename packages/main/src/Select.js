@@ -203,6 +203,16 @@ class Select extends UI5Element {
 		return popover && popover.opened;
 	}
 
+	/**
+	 * Currently selected option
+	 * @readonly
+	 * @type { ui5-option }
+	 * @public
+	 */
+	get selectedOption() {
+		return this.options.find(option => option.selected);
+	}
+
 	_togglePopover() {
 		const popover = this.shadowRoot.querySelector("#ui5-select--popover");
 
@@ -262,7 +272,7 @@ class Select extends UI5Element {
 		if (FormSupport) {
 			FormSupport.syncNativeHiddenInput(this, (element, nativeInput) => {
 				nativeInput.disabled = element.disabled;
-				nativeInput.value = element.selectedOption.value;
+				nativeInput.value = element._currentlySelectedOption.value;
 			});
 		} else if (this.name) {
 			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
@@ -303,11 +313,11 @@ class Select extends UI5Element {
 	}
 
 	_applyFocusAfterOpen() {
-		if (!this.selectedOption) {
+		if (!this._currentlySelectedOption) {
 			return;
 		}
 
-		const li = this.shadowRoot.querySelector(`#${this.selectedOption._id}-li`);
+		const li = this.shadowRoot.querySelector(`#${this._currentlySelectedOption._id}-li`);
 
 		li.parentElement._itemNavigation.currentIndex = this._selectedIndex;
 		li && li.focus();
@@ -375,7 +385,7 @@ class Select extends UI5Element {
 		return this.shadowRoot.querySelector(`#${this.options[this._selectedIndex]._id}-li`);
 	}
 
-	get selectedOption() {
+	get _currentlySelectedOption() {
 		return this.options[this._selectedIndex];
 	}
 
