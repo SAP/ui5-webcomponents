@@ -421,7 +421,7 @@ class Popup extends UI5Element {
 			element = element.shadowRoot.activeElement;
 		}
 
-		this._lastFocusableElement = element;
+		this._lastFocusableElement = typeof element.focus === "function" ? element : null;
 	}
 
 	resetFocus() {
@@ -430,7 +430,7 @@ class Popup extends UI5Element {
 		}
 
 		const lastFocusableElement = this._lastFocusableElement;
-		if (lastFocusableElement && typeof lastFocusableElement.focus === "function") { // SVGElement.prototype.focus doesn't exist on IE
+		if (lastFocusableElement) {
 			lastFocusableElement.focus();
 		}
 

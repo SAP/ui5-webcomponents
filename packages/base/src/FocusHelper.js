@@ -65,12 +65,12 @@ class FocusHelper {
 
 			if (child.nodeType === 1 && !FocusHelper.isHidden(child)) {
 				if (FocusHelper.hasTabIndex(child)) {
-					return child;
+					return typeof child.focus === "function" ? child : null;
 				}
 
 				focusableDescendant = FocusHelper.findFocusableElement(child, forward);
 				if (focusableDescendant) {
-					return focusableDescendant;
+					return focusableDescendant.focus === "function" ? focusableDescendant : null;
 				}
 			}
 
