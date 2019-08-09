@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getIconData } from "@ui5/webcomponents-base/dist/SVGIconRegistry.js";
+import createStyleInHead from "@ui5/webcomponents-base/dist/util/createStyleInHead.js";
 import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
 import IconTemplate from "./generated/templates/IconTemplate.lit.js";
 
@@ -111,9 +112,20 @@ class Icon extends UI5Element {
 	}
 
 	static async define(...params) {
+		this.createGlobalStyle();
 		await fetchResourceBundle("@ui5/webcomponents");
 
 		super.define(...params);
+	}
+
+	static createGlobalStyle() {
+		if (!window.ShadyDOM) {
+			return;
+		}
+		const styleElement = document.head.querySelector(`style[data-ui5-icon-global]`);
+		if (!styleElement) {
+			createStyleInHead(`ui5-icon:not([data-ui5-defined]) { display: none !important; }`, { "data-ui5-icon-global": "" });
+		}
 	}
 
 	_normalizeIconURI(iconURI) {
@@ -147,6 +159,13 @@ class Icon extends UI5Element {
 
 	get dir() {
 		return getRTL() ? "rtl" : "ltr";
+	}
+
+	onEnterDOM() {
+		if (!window.ShadyDOM) {
+			return;
+		}
+		this.setAttribute("data-ui5-defined", "");
 	}
 }
 
