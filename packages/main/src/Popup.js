@@ -421,7 +421,7 @@ class Popup extends UI5Element {
 			element = element.shadowRoot.activeElement;
 		}
 
-		this._lastFocusableElement = typeof element.focus === "function" ? element : null;
+		this._lastFocusableElement = (element && typeof element.focus === "function") ? element : null;
 	}
 
 	resetFocus() {
