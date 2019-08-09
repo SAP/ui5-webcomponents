@@ -258,7 +258,7 @@ sap.ui.define(['sap/ui/base/Object', 'sap/ui/core/LocaleData', 'sap/ui/core/date
 		var oLocale = sap.ui.getCore().getFormatSettings().getFormatLocale(),
 			oLocaleData = LocaleData.getInstance(oLocale),
 			iMinDays = oLocaleData.getMinimalDaysInFirstWeek(),
-			iFirstDayOfWeek = oLocaleData.getFirstDayOfWeek(),
+			iFirstDayOfWeek = sap.ui.getConfiguration().getFirstDateOfWeek() || oLocaleData.getFirstDayOfWeek(),
 			oFirstDay = new clDate(clDate.UTC(iYear, 0, 1)),
 			iDayCount = 7;
 		// Find the first day of the first week of the year

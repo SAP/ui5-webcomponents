@@ -1,24 +1,18 @@
-<div
-	class="ui5-table-row-root "
-	style="{{styles.main}}"
-	tabindex="{{_tabIndex}}"
-	@focusin="{{onfocusin}}"
->
+<tr class="ui5-table-row-root">
 	{{#each visibleCells}}
-		<div class="ui5-table-row-cells-container">
-			<slot name="{{this._individualSlot}}"></slot>
-		</div>
+		<slot name="{{this._individualSlot}}"></slot>
 	{{/each}}
+</tr>
 
-	{{#each popinCells}}
-		<div class="ui5-table-row-popin-root"
-			style="grid-column-end: {{../visibleColumnLength}}" >
 
-			<span class="ui5-table-row-popin-title">{{this.popinText}}</span>
+{{#each popinCells}}
+	<tr class="ui5-table-popin-row">
+		<td colspan="{{../visibleCellsCount}}">
+
+			<span class="ui5-table-row-popin-title">{{this.popinText}}:</span>
 			<div>
 				<slot name="{{this.cell._individualSlot}}"></slot>
 			</div>
-		</div>
-	{{/each}}
-
-</div>
+		</td>
+	</tr>
+{{/each}}
