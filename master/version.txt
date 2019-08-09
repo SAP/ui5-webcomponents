@@ -1,5 +1,5 @@
-commit 964af6768f0164cd6d552df5101951dcbab64f0e
+commit 80c4f3243a6b1e834ebe11142d9ddddc502e5481
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Aug 9 15:23:02 2019 +0300
+Date:   Fri Aug 9 16:29:03 2019 +0300
 
-    fix: icon no longer flickers on IE (#722)
+    fix: icon from datepicker no longer flickers on IE (#723)
