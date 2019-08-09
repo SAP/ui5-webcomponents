@@ -2,6 +2,8 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getIconData } from "@ui5/webcomponents-base/dist/SVGIconRegistry.js";
+import createStyleInHead from "@ui5/webcomponents-base/dist/util/createStyleInHead.js";
+import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
 import IconTemplate from "./generated/templates/IconTemplate.lit.js";
 
 // Styles
@@ -29,6 +31,31 @@ const metadata = {
 		*/
 		src: {
 			type: String,
+		},
+
+		/**
+		 * Defines the text alternative of the <code>ui5-icon</code>.
+		 * If not provided a default text alternative will be set, if present.
+		 * <br><br>
+		 * <b>Note:</b> Every icon should have a text alternative in order to
+		 * calculate its accessible name.
+		 *
+		 * @type {string}
+		 * @public
+		 */
+		accessibleName: {
+			type: String,
+		},
+
+		/**
+		 * Defines whether the <code>ui5-icon</code> should have a tooltip.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 */
+		showTooltip: {
+			type: Boolean,
 		},
 	},
 	events: {
@@ -63,6 +90,11 @@ const metadata = {
  * @public
  */
 class Icon extends UI5Element {
+	constructor() {
+		super();
+		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
+	}
+
 	static get metadata() {
 		return metadata;
 	}
@@ -77,6 +109,23 @@ class Icon extends UI5Element {
 
 	static get styles() {
 		return iconCss;
+	}
+
+	static async define(...params) {
+		this.createGlobalStyle();
+		await fetchResourceBundle("@ui5/webcomponents");
+
+		super.define(...params);
+	}
+
+	static createGlobalStyle() {
+		if (!window.ShadyDOM) {
+			return;
+		}
+		const styleElement = document.head.querySelector(`style[data-ui5-icon-global]`);
+		if (!styleElement) {
+			createStyleInHead(`ui5-icon:not([data-ui5-defined]) { display: none !important; }`, { "data-ui5-icon-global": "" });
+		}
 	}
 
 	_normalizeIconURI(iconURI) {
@@ -98,8 +147,27 @@ class Icon extends UI5Element {
 		return icon.d;
 	}
 
+	get hasIconTooltip() {
+		return this.showTooltip && this.accessibleNameText;
+	}
+
+	get accessibleNameText() {
+		const icon = getIconData(this._normalizeIconURI(this.src));
+
+		return this.accessibleName || (icon.accData && this.resourceBundle.getText(icon.accData));
+	}
+
 	get dir() {
 		return getRTL() ? "rtl" : "ltr";
+	}
+
+	onEnterDOM() {
+		if (!window.ShadyDOM) {
+			return;
+		}
+		setTimeout(_ => {
+			this.setAttribute("data-ui5-defined", "");
+		}, 0);
 	}
 }
 

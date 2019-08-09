@@ -2,7 +2,5 @@
 
 :root {
 	--_ui5_card_border_color: var(--sapUiTileBorderColor);
-	--_ui5_card_header_hover_bg: var(--sapUiHighlight);
-	--_ui5_card_header_active_bg: var(--sapUiHighlight);
 	--_ui5_card_header_focus_border:  0.125rem dotted var(--sapUiContentFocusColor);
 }
