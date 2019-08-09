@@ -1,5 +1,5 @@
-commit 1357c1602c3d1b7025c409886cb443daaa4bfcc6
-Author: Elena Stoyanova <elena.stoyanova@sap.com>
-Date:   Wed Aug 7 23:57:02 2019 +0300
+commit 964af6768f0164cd6d552df5101951dcbab64f0e
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Fri Aug 9 15:23:02 2019 +0300
 
-    feat(ui5-icon): accessibility implementation (#709)
+    fix: icon no longer flickers on IE (#722)
