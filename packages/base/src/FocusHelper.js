@@ -70,7 +70,7 @@ class FocusHelper {
 
 				focusableDescendant = FocusHelper.findFocusableElement(child, forward);
 				if (focusableDescendant) {
-					return (focusableDescendant && focusableDescendant.focus === "function") ? focusableDescendant : null;
+					return (focusableDescendant && typeof focusableDescendant.focus === "function") ? focusableDescendant : null;
 				}
 			}
 
