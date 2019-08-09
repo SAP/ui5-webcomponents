@@ -216,14 +216,14 @@ class Popover extends Popup {
 			forwardToFirst: event => {
 				const firstFocusable = FocusHelper.findFirstFocusableElement(that);
 
-				if (firstFocusable) {
+				if (firstFocusable && typeof firstFocusable.focus === "function") {
 					firstFocusable.focus();
 				}
 			},
 			forwardToLast: event => {
 				const lastFocusable = FocusHelper.findLastFocusableElement(that);
 
-				if (lastFocusable) {
+				if (lastFocusable && typeof lastFocusable.focus === "function") {
 					lastFocusable.focus();
 				}
 			},
