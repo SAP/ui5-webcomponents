@@ -1,5 +1,5 @@
-commit 80c4f3243a6b1e834ebe11142d9ddddc502e5481
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Aug 9 16:29:03 2019 +0300
+commit b7f1c96894c95811e69647a8a61563e3c508dca6
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Mon Aug 12 10:19:07 2019 +0300
 
-    fix: icon from datepicker no longer flickers on IE (#723)
+    add info for two way data binding in vuejs (#724)
