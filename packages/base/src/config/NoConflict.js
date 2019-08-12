@@ -1,9 +1,13 @@
 import { getNoConflict as getConfiguredNoConflict } from "../InitialConfiguration.js";
 
+const twoWayDataBindingEvents = [
+	'value-changed'
+];
+
 let noConflict = getConfiguredNoConflict();
 
-const getNoConflict = () => {
-	return noConflict;
+const getNoConflict = eventName => {
+	return twoWayDataBindingEvents.includes(eventName) ? false : noConflict;
 };
 
 const setNoConflict = noConflictData => {
