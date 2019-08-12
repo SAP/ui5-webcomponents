@@ -1,7 +1,7 @@
 import { getNoConflict as getConfiguredNoConflict } from "../InitialConfiguration.js";
 
 const twoWayDataBindingEvents = [
-	'value-changed'
+	"value-changed",
 ];
 
 let noConflict = getConfiguredNoConflict();
