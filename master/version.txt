@@ -1,5 +1,5 @@
-commit b7f1c96894c95811e69647a8a61563e3c508dca6
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Mon Aug 12 10:19:07 2019 +0300
+commit 15320179ee01ec64b1ed9cf641dd4025ba98ee87
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Aug 12 14:13:05 2019 +0300
 
-    add info for two way data binding in vuejs (#724)
+    chore: enable translations step #2 (#715)
