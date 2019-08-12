@@ -1,5 +1,5 @@
 import boot from "./boot.js";
-import { getNoConflict } from "./config/NoConflict.js";
+import { getNoConflict, isTwoWayDataBindingEvent } from "./config/NoConflict.js";
 import { getCompactSize } from "./config/CompactSize.js";
 import DOMObserver from "./compatibility/DOMObserver.js";
 import UI5ElementMetadata from "./UI5ElementMetadata.js";
@@ -531,8 +531,11 @@ class UI5Element extends HTMLElement {
 			cancelable,
 		});
 
-		// This will be false if the compat event is prevented
-		compatEventResult = this.dispatchEvent(noConflictEvent);
+		// Don't dispatch noConflictEvent for Angular two way data binding events
+		if (!isTwoWayDataBindingEvent(name)) {
+			// This will be false if the compat event is prevented
+			compatEventResult = this.dispatchEvent(noConflictEvent);
+		}
 
 		if (noConflict === true || (noConflict.events && noConflict.events.includes && noConflict.events.includes(name))) {
 			return compatEventResult;

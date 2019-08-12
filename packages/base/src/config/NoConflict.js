@@ -4,10 +4,14 @@ const twoWayDataBindingEvents = [
 	"value-changed",
 ];
 
+const isTwoWayDataBindingEvent = eventName => {
+	return twoWayDataBindingEvents.includes(eventName);
+};
+
 let noConflict = getConfiguredNoConflict();
 
 const getNoConflict = eventName => {
-	return twoWayDataBindingEvents.includes(eventName) ? false : noConflict;
+	return isTwoWayDataBindingEvent(eventName) ? false : noConflict;
 };
 
 const setNoConflict = noConflictData => {
@@ -17,4 +21,5 @@ const setNoConflict = noConflictData => {
 export {
 	getNoConflict,
 	setNoConflict,
+	isTwoWayDataBindingEvent,
 };
