@@ -4,9 +4,9 @@ import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEven
 import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
+import Icon from "./Icon.js";
 import "./icons/accept.js";
 import "./icons/decline.js";
-import Icon from "./Icon.js";
 
 import {
 	SWITCH_ON,

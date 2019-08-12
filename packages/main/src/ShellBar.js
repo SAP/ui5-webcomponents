@@ -4,14 +4,14 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { isSpace, isEscape } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
+import StandardListItem from "./StandardListItem.js";
+import List from "./List.js";
+import Popover from "./Popover.js";
+import Icon from "./Icon.js";
 import "./icons/search.js";
 import "./icons/bell.js";
 import "./icons/overflow.js";
 import "./icons/grid.js";
-import StandardListItem from "./StandardListItem.js";
-import List from "./List.js";
-import Icon from "./Icon.js";
-import Popover from "./Popover.js";
 
 // Template
 import ShellBarTemplate from "./generated/templates/ShellBarTemplate.lit.js";
