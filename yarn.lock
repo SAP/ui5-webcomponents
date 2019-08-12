@@ -7422,6 +7422,13 @@ prompts@^0.1.9:
     kleur "^2.0.1"
     sisteransi "^0.1.1"
 
+properties-reader@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/properties-reader/-/properties-reader-0.3.1.tgz#ced4b1dc689bd0698f880a106877041cbca319e3"
+  integrity sha512-ltBypWdJunkozeLZTQc7hhifymwnHK2bvGnGjI7NB092fuNY91tb7lnZOhPDKs9W9yfDAqjkQ8B0ZUdQkm1M6Q==
+  dependencies:
+    mkdirp "~0.5.1"
+
 proxy-addr@~2.0.4:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/proxy-addr/-/proxy-addr-2.0.4.tgz#ecfc733bf22ff8c6f407fa275327b9ab67e48b93"

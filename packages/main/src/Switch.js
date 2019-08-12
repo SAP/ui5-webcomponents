@@ -11,7 +11,7 @@ import Icon from "./Icon.js";
 import {
 	SWITCH_ON,
 	SWITCH_OFF,
-} from "./i18n/defaults.js";
+} from "./generated/i18n/i18n-defaults.js";
 
 // Template
 import SwitchTemplate from "./generated/templates/SwitchTemplate.lit.js";
