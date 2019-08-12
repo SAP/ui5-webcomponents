@@ -4,10 +4,10 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { isSpace, isEscape } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
-import "@ui5/webcomponents-base/dist/icons/search.js";
-import "@ui5/webcomponents-base/dist/icons/bell.js";
-import "@ui5/webcomponents-base/dist/icons/overflow.js";
-import "@ui5/webcomponents-base/dist/icons/grid.js";
+import "@ui5/webcomponents/dist/icons/search.js";
+import "@ui5/webcomponents/dist/icons/bell.js";
+import "@ui5/webcomponents/dist/icons/overflow.js";
+import "@ui5/webcomponents/dist/icons/grid.js";
 import StandardListItem from "./StandardListItem.js";
 import List from "./List.js";
 import Icon from "./Icon.js";
