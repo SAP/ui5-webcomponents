@@ -10,8 +10,7 @@ import "./dist/ThemePropertiesProvider.js";
 import "./dist/MessageBundleAssets.js";
 import "./dist/features/InputElementsFormSupport.js";
 import "./dist/features/InputSuggestions.js";
-
-import "@ui5/webcomponents/dist/AllIcons.js";
+import "./dist/AllIcons.js";
 
 import Badge from "./dist/Badge.js";
 import BusyIndicator from "./dist/BusyIndicator.js";
