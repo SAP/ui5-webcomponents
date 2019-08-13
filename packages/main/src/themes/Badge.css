@@ -11,7 +11,7 @@
 	border: solid 1px var(--ui5-badge-border-color-scheme-1);
 	border-radius: 1.125em;
 	box-sizing: border-box;
-	font-size: var(--ui5-badge-font-size);
+	font-size: var(--ui5-badge-font-size); /* origin from --sapMFontSmallSize (0.75rem) */
 	font-family: var(--sapUiFontFamily);
 	text-align: center;
 }

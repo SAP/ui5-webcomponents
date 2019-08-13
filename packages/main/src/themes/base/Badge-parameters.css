@@ -1,5 +1,5 @@
 :root {
-	--ui5-badge-font-size: 0.75em;
+	--ui5-badge-font-size: 0.75em; /* origin from --sapMFontSmallSize (0.75rem) */
 	--ui5-badge-bg-color-scheme-1: var(--sapUiAccent1Lighten50);
 	--ui5-badge-border-color-scheme-1: var(--sapUiAccent1);
 	--ui5-badge-bg-color-scheme-2: var(--sapUiAccent2Lighten40);
