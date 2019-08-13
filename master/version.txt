@@ -1,5 +1,5 @@
-commit 15320179ee01ec64b1ed9cf641dd4025ba98ee87
+commit 8d98defdfdba2c0a13bd90cae3b2c8b0e7c11f80
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Aug 12 14:13:05 2019 +0300
+Date:   Tue Aug 13 09:46:38 2019 +0300
 
-    chore: enable translations step #2 (#715)
+    fix(ui5-multicombobox): enable closing on icon click (#719)
