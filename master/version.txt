@@ -1,5 +1,5 @@
-commit 8d98defdfdba2c0a13bd90cae3b2c8b0e7c11f80
+commit f1e134379cfd2782e7331464d67fab9e2be5f9c4
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Aug 13 09:46:38 2019 +0300
+Date:   Tue Aug 13 15:43:48 2019 +0300
 
-    fix(ui5-multicombobox): enable closing on icon click (#719)
+    fix(ui5-badge): fix icon size (#729)
