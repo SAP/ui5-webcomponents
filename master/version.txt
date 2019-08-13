@@ -1,5 +1,5 @@
-commit f1e134379cfd2782e7331464d67fab9e2be5f9c4
+commit 851cf0db461fc67f03e998c30f05132e2223769e
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Aug 13 15:43:48 2019 +0300
+Date:   Tue Aug 13 16:15:13 2019 +0300
 
-    fix(ui5-badge): fix icon size (#729)
+    chore: move icons to  'main' package (#725)
