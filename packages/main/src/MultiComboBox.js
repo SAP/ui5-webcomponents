@@ -353,7 +353,7 @@ class MultiComboBox extends UI5Element {
 		const popover = this._getPopover(isMorePopover);
 		const otherPopover = this._getPopover(!isMorePopover);
 
-		if (popover && popover._isOpen) {
+		if (popover && popover.opened) {
 			return popover.close();
 		}
 
