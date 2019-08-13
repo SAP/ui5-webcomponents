@@ -136,6 +136,13 @@ ui5-badge[__has-icon] {
 	padding: 0 0.3125rem;
 }
 
+ui5-badge ui5-icon {
+	width: .75rem;
+	height: .75rem;
+	min-width: .75rem;
+	min-height: .75rem;
+}
+
 ui5-badge[__has-icon] .ui5-badge-text {
 	padding-left: 0.1875rem;
 }
