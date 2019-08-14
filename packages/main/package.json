@@ -107,7 +107,7 @@
     "@wdio/sync": "^5.4.13",
     "@webcomponents/webcomponentsjs": "^2.2.7",
     "chai": "^4.2.0",
-    "chromedriver": "^2.45.0",
+    "chromedriver": "^76.0.0",
     "clean-css": "^4.2.1",
     "copy-and-watch": "^0.1.2",
     "cpx": "^1.5.0",
@@ -147,10 +147,11 @@
     "rollup-plugin-visualizer": "^0.9.2",
     "serve": "^10.1.1",
     "wait-on": "^3.2.0",
-    "wdio-chromedriver-service": "^5.0.0"
+    "wdio-chromedriver-service": "^5.0.2"
   },
   "resolutions": {
     "abstract-syntax-tree": "1.0.3",
-    "dir-glob": "2.0.0"
+    "dir-glob": "2.0.0",
+    "wdio-chromedriver-service/chromedriver": "^76.0.0"
   }
 }
