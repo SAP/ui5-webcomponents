@@ -1,7 +1,5 @@
-commit 1ba3e2512cbb4dc1d23811f0eedba490fb7afaeb
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Wed Aug 14 11:06:31 2019 +0300
+commit 0dd1451cc62c3f7efd55f9589e35372c321d8454
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Wed Aug 14 11:38:12 2019 +0300
 
-    feat(ui5-datepicker): adds public getter dateValue (#726)
-    
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/85
+    docs: add missing step in angular tutorial (#730)
