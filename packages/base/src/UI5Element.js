@@ -1,5 +1,5 @@
 import boot from "./boot.js";
-import { getNoConflict } from "./config/NoConflict.js";
+import { skipOriginalEvent } from "./config/NoConflict.js";
 import { getCompactSize } from "./config/CompactSize.js";
 import DOMObserver from "./compatibility/DOMObserver.js";
 import UI5ElementMetadata from "./UI5ElementMetadata.js";
@@ -522,7 +522,6 @@ class UI5Element extends HTMLElement {
 	 */
 	fireEvent(name, data, cancelable) {
 		let compatEventResult = true; // Initialized to true, because if the event is not fired at all, it should be considered "not-prevented"
-		const shouldFireOriginalEvent = getNoConflict(name);
 
 		const noConflictEvent = new CustomEvent(`ui5-${name}`, {
 			detail: data,
@@ -534,7 +533,7 @@ class UI5Element extends HTMLElement {
 		// This will be false if the compat event is prevented
 		compatEventResult = this.dispatchEvent(noConflictEvent);
 
-		if (shouldFireOriginalEvent) {
+		if (skipOriginalEvent(name)) {
 			return compatEventResult;
 		}
 

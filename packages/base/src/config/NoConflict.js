@@ -15,12 +15,11 @@ const shouldNotFireOriginalEvent = eventName => {
 	return !(noConflict.events && noConflict.events.includes && noConflict.events.includes(eventName));
 };
 
-const getNoConflict = eventName => {
-	// When method is called as public API, it will be called with no arguments
-	if (eventName === undefined) {
-		return !!noConflict;
-	}
+const getNoConflict = () => {
+	return noConflict;;
+};
 
+const skipOriginalEvent = eventName => {
 	// Always fire these events
 	if (shouldFireOriginalEvent(eventName)) {
 		return false;
@@ -41,4 +40,5 @@ const setNoConflict = noConflictData => {
 export {
 	getNoConflict,
 	setNoConflict,
+	skipOriginalEvent,
 };
