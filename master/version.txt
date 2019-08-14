@@ -1,5 +1,7 @@
-commit 851cf0db461fc67f03e998c30f05132e2223769e
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Aug 13 16:15:13 2019 +0300
+commit 1ba3e2512cbb4dc1d23811f0eedba490fb7afaeb
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Wed Aug 14 11:06:31 2019 +0300
 
-    chore: move icons to  'main' package (#725)
+    feat(ui5-datepicker): adds public getter dateValue (#726)
+    
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/85
