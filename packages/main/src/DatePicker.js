@@ -502,6 +502,17 @@ class DatePicker extends UI5Element {
 		return { isInput };
 	}
 
+	/**
+	 * Currently selected date represented as JavaScript Date instance
+	 *
+	 * @readonly
+	 * @type { Date }
+	 * @public
+	 */
+	get dateValue() {
+		return this.getFormat().parse(this.value);
+	}
+
 	get classes() {
 		return {
 			icon: {
