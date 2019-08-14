@@ -55,7 +55,6 @@ const fetchResourceBundle = async packageId => {
 	const bundleURL = bundlesForPackage[localeId];
 
 	if (typeof bundleURL === "object") {
-		debugger; // eslint-disable-line
 		// inlined from build
 		// registerModuleContent(`${packageId}_${localeId}.properties`, bundleURL._);
 		return bundleURL;
