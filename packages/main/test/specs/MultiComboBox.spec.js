@@ -3,6 +3,19 @@ const assert = require("assert");
 describe("MultiComboBox general interaction", () => {
 	browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/MultiComboBox.html");
 
+	describe("toggling", () => {
+		it("opens/closes", () => {
+			const icon = browser.findElementDeep("#multi1 >>> #ui5-multi-combobox-input ui5-icon");
+			const popover = browser.findElementDeep("#multi1 >>> .ui5-multi-combobox-all-items-popover >>> .ui5-popup-root");
+
+			icon.click();
+			assert.ok(popover.isDisplayedInViewport(), "Popover should be displayed in the viewport");
+
+			icon.click();
+			assert.ok(!popover.isDisplayedInViewport(), "Popover should close");
+		});
+	});
+
 	describe("selection and filtering", () => {
 
 		it("Opens all items popover, selects and deselects the first item", () => {

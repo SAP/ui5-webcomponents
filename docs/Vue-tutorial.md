@@ -39,3 +39,15 @@ import "@ui5/webcomponents/dist/Button";
 ```
 yarn serve
 ```
+
+## Additional:
+
+### Two-Way Data Binding:
+
+`v-model` binding doesn't work as expected for custom elements. In order to use two way data binding, you should bind and update the value yourself like this:
+```html
+<ui5-input
+    :value="inputValue"
+    @input="inputValue = $event.target.value">
+</ui5-input>
+```
