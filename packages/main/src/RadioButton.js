@@ -17,7 +17,7 @@ import RadioButtonGroup from "./RadioButtonGroup.js";
 // Template
 import RadioButtonTemplate from "./generated/templates/RadioButtonTemplate.lit.js";
 
-import { VALUE_STATE_ERROR, VALUE_STATE_WARNING } from "./i18n/defaults.js";
+import { VALUE_STATE_ERROR, VALUE_STATE_WARNING } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import radioButtonCss from "./generated/themes/RadioButton.css.js";

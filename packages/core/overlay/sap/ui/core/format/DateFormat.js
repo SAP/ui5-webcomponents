@@ -2180,7 +2180,7 @@ sap.ui.define([
 	DateFormat.prototype._adaptDayOfWeek = function(iDayOfWeek) {
 		// day of week depends on the format locale
 		// the DateFormat's locale is independent
-		var iFirstDayOfWeek = LocaleData.getInstance(sap.ui.getCore().getFormatSettings().getFormatLocale()).getFirstDayOfWeek();
+		var iFirstDayOfWeek =  sap.ui.getCore().getConfiguration().getFirstDayOfWeek() || LocaleData.getInstance(sap.ui.getCore().getFormatSettings().getFormatLocale()).getFirstDayOfWeek();
 		var iDayNumberOfWeek = iDayOfWeek - (iFirstDayOfWeek - 1);
 
 		if (iDayNumberOfWeek <= 0) {

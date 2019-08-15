@@ -6,7 +6,7 @@ import Icon from "./Icon.js";
 // Template
 import BadgeTemplate from "./generated/templates/BadgeTemplate.lit.js";
 
-import { BADGE_DESCRIPTION } from "./i18n/defaults.js";
+import { BADGE_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import badgeCss from "./generated/themes/Badge.css.js";

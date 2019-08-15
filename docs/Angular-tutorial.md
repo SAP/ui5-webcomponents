@@ -54,14 +54,30 @@ ng serve -o
 ### Two-Way Data Binding:
 
 You can use two-way data binding with the following components: CheckBox, RadioButton, Input, DatePicker, Switch, TextArea.
-In order to use it, you have to use a library called Origami, that provides advanced support for two-way data binding of custom elements.
+In order to use it, you have to use a library called [Origami](https://github.com/hotforfeature/origami), that provides advanced support for two-way data binding of custom elements.
 
 Example:
 1. Install Origami: 
 ```
 npm install @codebakery/origami
 ```
-2. Use Origami in your template:
+2. Import the OrigamiFormsModule from Origami
+```
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { OrigamiFormsModule } from '@codebakery/origami/forms';
+import { AppComponent } from './app.component';
+
+@NgModule({
+  imports: [BrowserModule, OrigamiFormsModule],
+  declarations: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  bootstrap: [AppComponent]
+})
+export class AppModule {}
+```
+
+3. Use Origami in your template:
 ```html
 <ui5-input [(ngModel)]="value" origami></ui5-input>
 ```
