@@ -10,8 +10,8 @@ const bundleURLs = new Map();
 
 /**
  * Registers a map of locale/url information to be used by the <code>fetchResourceBundle</code> method.
- * @param {string} packageId the node project id of the prohject that provides text resources
- * @param {Object} bundlesMap an object with string locales as keys and the URLs of where the corresponding locale can be fetched from.
+ * @param {string} packageId the node project id of the project that provides text resources
+ * @param {Object} bundlesMap an object with string locales as keys and the URLs of where the corresponding locale can be fetched from
  * @public
  */
 const registerMessageBundles = (packageId, bundlesMap) => {
@@ -20,7 +20,7 @@ const registerMessageBundles = (packageId, bundlesMap) => {
 
 /**
  * Registers a map of loaded messages key/value.
- * @param {Object} the loaded messagebundle_*.json
+ * @param {Object} messageBundleData the loaded messagebundle_*.json file
  * @public
  */
 const registerMessagesKeys = messageBundleData => {
@@ -54,15 +54,12 @@ const fetchResourceBundle = async packageId => {
 
 	const bundleURL = bundlesForPackage[localeId];
 
-	if (typeof bundleURL === "object") {
-		// inlined from build
-		// registerModuleContent(`${packageId}_${localeId}.properties`, bundleURL._);
+	if (typeof bundleURL === "object") { // inlined from build
 		return bundleURL;
 	}
 
 	const data = await fetchJsonOnce(bundleURL);
 	registerMessagesKeys(data);
-	// registerModuleContent(`${packageId}_${localeId}.properties`, data._);
 };
 
 class ResourceBundleWrapper {

@@ -1,9 +1,8 @@
 /*
- * NOTE: The script is not running currently, once we got the message.bundles_*,properties file we will enable it.
  * The script converts all messebindle_*.properties files to messagebundle_*.json files.
  *
  * Execution (note: the paths depends on the the execution context)
- * node i18n-toJSON.js ../../src/i18n ../../dist/generated/i18n
+ * node toJSON.js ../../src/i18n ../../dist/generated/i18n
  * 
  * The 1st param '../../src/i18n' is the location of messagebundle_*.properties files
  * The 2nd param './../dist/generated/i18n' is where the JSON files would be written to.
