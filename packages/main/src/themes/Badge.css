@@ -26,9 +26,6 @@
 	flex-shrink: 0;
 }
 
-.ui5-badge-text {
-	font-size: var(--ui5-badge-font-size); /* origin from --sapMFontSmallSize (0.75rem) */
-}
 
 :host([__has-icon]) .ui5-badge-text {
 	padding-left: 0.1875em;
@@ -113,6 +110,7 @@
 	text-overflow: ellipsis;
 	text-transform: uppercase;
 	letter-spacing: 0.0125em;
+	font-size: var(--ui5-badge-font-size); /* origin from --sapMFontSmallSize (0.75rem) */
 }
 
 /* ================================== */
