@@ -16,7 +16,7 @@ const shouldNotFireOriginalEvent = eventName => {
 };
 
 const getNoConflict = () => {
-	return noConflict;;
+	return noConflict;
 };
 
 const skipOriginalEvent = eventName => {
