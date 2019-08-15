@@ -11,7 +11,6 @@
 	border: solid 1px var(--ui5-badge-border-color-scheme-1);
 	border-radius: 1.125em;
 	box-sizing: border-box;
-	font-size: var(--ui5-badge-font-size); /* origin from --sapMFontSmallSize (0.75rem) */
 	font-family: var(--sapUiFontFamily);
 	text-align: center;
 }
@@ -28,7 +27,7 @@
 }
 
 .ui5-badge-text {
-	font-size: .75em;
+	font-size: var(--ui5-badge-font-size); /* origin from --sapMFontSmallSize (0.75rem) */
 }
 
 :host([__has-icon]) .ui5-badge-text {
@@ -130,7 +129,6 @@ ui5-badge:not([hidden]) {
 	border: solid 1px var(--ui5-badge-border-color-scheme-1);
 	border-radius: 1.125em;
 	box-sizing: border-box;
-	font-size: var(--ui5-badge-font-size);
 	font-family: var(--sapUiFontFamily);
 	text-align: center;
 }
