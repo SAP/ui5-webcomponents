@@ -1,5 +1,5 @@
-commit 5fa3eaed95bf38fad5ac9fd98052bba27c993331
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu Aug 15 13:09:52 2019 +0300
+commit f5a4798d4dfd2d7f8c241eea13e1af64a112a7e3
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu Aug 15 13:21:16 2019 +0300
 
-    chore: update table sample for ie & edge (#732)
+    fix(ui5-badge): correct component sizing (#733)
