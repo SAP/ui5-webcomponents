@@ -2,32 +2,38 @@
 
 :host(:not([hidden])) {
 	display: inline-flex;
-	height: 1.125rem;
-	min-width: 1.125rem;
+	height: 1.125em;
+	min-width: 1.125em;
 	max-width: 100%;
-	padding: 0 0.625rem;
+	padding: 0 0.625em;
 	color: var(--sapUiBaseText);
 	background: var(--ui5-badge-bg-color-scheme-1);
 	border: solid 1px var(--ui5-badge-border-color-scheme-1);
-	border-radius: 1.125rem;
+	border-radius: 1.125em;
 	box-sizing: border-box;
-	font-size: var(--sapMFontSmallSize);
 	font-family: var(--sapUiFontFamily);
 	text-align: center;
 }
 
 /* Bagde with Icon */
 :host([__has-icon]) {
-	padding: 0 0.3125rem;
+	padding: 0 0.3125em;
 }
 
+::slotted(ui5-icon) {
+	width: 0.75em;
+	height: 0.75em;
+	flex-shrink: 0;
+}
+
+
 :host([__has-icon]) .ui5-badge-text {
-	padding-left: 0.1875rem;
+	padding-left: 0.1875em;
 }
 
 /* RTL */
 :host([__has-icon]) .ui5-badge-root[rtl] .ui5-badge-text {
-	padding-right: 0.1875rem;
+	padding-right: 0.1875em;
 }
 
 /* Scheme 1 */
@@ -103,7 +109,8 @@
 	white-space: nowrap;
 	text-overflow: ellipsis;
 	text-transform: uppercase;
-	letter-spacing: 0.0125rem;
+	letter-spacing: 0.0125em;
+	font-size: var(--ui5-badge-font-size); /* origin from --sapMFontSmallSize (0.75rem) */
 }
 
 /* ================================== */
@@ -111,30 +118,35 @@
 /* ================================== */
 ui5-badge:not([hidden]) {
 	display: inline-flex;
-	height: 1.125rem;
-	min-width: 1.125rem;
+	height: 1.125em;
+	min-width: 1.125em;
 	max-width: 100%;
-	padding: 0 0.625rem;
+	padding: 0 0.625em;
 	color: var(--sapUiBaseText);
 	background: var(--ui5-badge-bg-color-scheme-1);
 	border: solid 1px var(--ui5-badge-border-color-scheme-1);
-	border-radius: 1.125rem;
+	border-radius: 1.125em;
 	box-sizing: border-box;
-	font-size: var(--sapMFontSmallSize);
 	font-family: var(--sapUiFontFamily);
 	text-align: center;
 }
 
 ui5-badge[__has-icon] {
-	padding: 0 0.3125rem;
+	padding: 0 0.3125em;
+}
+
+ui5-badge ui5-icon {
+	width: .75em;
+	height: .75em;
+	flex-shrink: 0;
 }
 
 ui5-badge[__has-icon] .ui5-badge-text {
-	padding-left: 0.1875rem;
+	padding-left: 0.1875em;
 }
 
 ui5-badge[__has-icon] .ui5-badge-root[rtl] .ui5-badge-text {
-	padding-right: 0.1875rem;
+	padding-right: 0.1875em;
 }
 
 /* Scheme 1 */

@@ -7,10 +7,10 @@ import {
 	isSpace,
 	isDelete,
 } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-import "@ui5/webcomponents-base/dist/icons/decline.js";
-import "@ui5/webcomponents-base/dist/icons/cancel.js";
+import "./icons/decline.js";
+import "./icons/cancel.js";
 import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
-import { TOKEN_ARIA_DELETABLE } from "./i18n/defaults.js";
+import { TOKEN_ARIA_DELETABLE } from "./generated/i18n/i18n-defaults.js";
 
 import Icon from "./Icon.js";
 import TokenTemplate from "./generated/templates/TokenTemplate.lit.js";

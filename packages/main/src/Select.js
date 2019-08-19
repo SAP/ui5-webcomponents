@@ -17,6 +17,7 @@ import Popover from "./Popover.js";
 import List from "./List.js";
 import StandardListItem from "./StandardListItem.js";
 import Icon from "./Icon.js";
+import "./icons/slim-arrow-down.js";
 
 // Template
 import SelectTemplate from "./generated/templates/SelectTemplate.lit.js";
