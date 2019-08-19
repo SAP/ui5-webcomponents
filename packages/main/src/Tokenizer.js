@@ -73,7 +73,13 @@ class Tokenizer extends UI5Element {
 		return styles;
 	}
 
-	_handleResize() {}
+	_handleResize() {
+		/*
+		 * Overflow happens with a pure CSS, but we
+		 * have to update the "n more" label when tokenizer is resized
+		 */
+		this._invalidate();
+	}
 
 	constructor() {
 		super();
