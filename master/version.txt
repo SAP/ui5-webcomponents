@@ -1,5 +1,5 @@
-commit f5a4798d4dfd2d7f8c241eea13e1af64a112a7e3
+commit 754dfa678ba2e22956cc8ac27e77c86ca3f2adbc
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Aug 15 13:21:16 2019 +0300
+Date:   Tue Aug 20 14:51:24 2019 +0300
 
-    fix(ui5-badge): correct component sizing (#733)
+    docs: fix typo (#736)
