@@ -1,5 +1,5 @@
-commit c479a1393857aba638924396a479fcf6344ab579
+commit dd6c2a72d671066c4b95a0711db3617f41ab5873
 Author: service-tip-git <36747703+service-tip-git@users.noreply.github.com>
-Date:   Tue Aug 20 07:00:58 2019 -0700
+Date:   Tue Aug 20 10:31:30 2019 -0700
 
-    chore: translation delivery (#737)
+    chore: translation delivery (#738)
