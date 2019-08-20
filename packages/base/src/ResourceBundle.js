@@ -65,7 +65,7 @@ const fetchResourceBundle = async packageId => {
 class ResourceBundleWrapper {
 	getText(textObj, ...params) {
 		if (!messagesKeys.has(textObj.key)) {
-			this.getTextFormatted(textObj.defaultText, params);
+			return this.getTextFormatted(textObj.defaultText, params);
 		}
 
 		return this.getTextFormatted(messagesKeys.get(textObj.key), params);
