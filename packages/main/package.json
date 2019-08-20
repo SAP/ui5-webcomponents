@@ -45,7 +45,7 @@
     }
   },
   "scripts": {
-    "build": "npm-run-all --sequential clean lint build:templates build:i18n build:samples build:styles copy:src build:bundle copy:i18n copy:webcomponents-polyfill ",
+    "build": "npm-run-all --sequential clean lint build:templates build:samples build:styles build:i18n copy:src build:bundle copy:webcomponents-polyfill",
     "build:bundle": "rollup -c --environment ES5_BUILD",
     "build:templates": "mkdirp dist/generated/templates && node ./lib/hbs2ui5/index.js -d src/ -o dist/generated/templates",
     "build:i18n": "npm-run-all --sequential build:i18n-defaults build:i18n-JSON",
@@ -64,7 +64,6 @@
     "watch:all": "npm-run-all --parallel watch:templates watch:samples watch:pages watch:qunit watch:src watch:bundle watch:styles-bundles watch:styles-components copy:webcomponents-polyfill",
     "clean": "rimraf dist",
     "copy:src": "copy-and-watch \"src/**/*.js\" \"src/**/i18n/*.json\" dist/",
-    "copy:i18n": "cpx \"src/i18n/*.json\" dist/i18n",
     "copy:test": "cpx \"test/**/*.*\" dist/test-resources",
     "copy:pages": "cpx \"test/**/pages/*.*\" dist/test-resources",
     "copy:qunit": "cpx \"test/**/qunit/*.*\" dist/test-resources",
