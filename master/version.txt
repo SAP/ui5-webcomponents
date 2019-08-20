@@ -1,5 +1,5 @@
-commit 754dfa678ba2e22956cc8ac27e77c86ca3f2adbc
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Aug 20 14:51:24 2019 +0300
+commit c479a1393857aba638924396a479fcf6344ab579
+Author: service-tip-git <36747703+service-tip-git@users.noreply.github.com>
+Date:   Tue Aug 20 07:00:58 2019 -0700
 
-    docs: fix typo (#736)
+    chore: translation delivery (#737)
