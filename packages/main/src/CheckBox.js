@@ -1,6 +1,7 @@
 import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
@@ -193,7 +194,9 @@ class CheckBox extends UI5Element {
 
 	constructor() {
 		super();
+
 		this._label = {};
+		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
@@ -253,6 +256,15 @@ class CheckBox extends UI5Element {
 		return !(this.disabled || this.readonly);
 	}
 
+	valueStateTextMappings() {
+		const resourceBundle = this.resourceBundle;
+
+		return {
+			"Error": resourceBundle.getText(VALUE_STATE_ERROR),
+			"Warning": resourceBundle.getText(VALUE_STATE_WARNING),
+		};
+	}
+
 	get classes() {
 		return {
 			main: {
@@ -281,15 +293,8 @@ class CheckBox extends UI5Element {
 		return this.valueState !== ValueState.None;
 	}
 
-	static valueStateTextMappings() {
-		return {
-			"Error": VALUE_STATE_ERROR.defaultText,
-			"Warning": VALUE_STATE_WARNING.defaultText,
-		};
-	}
-
 	get valueStateText() {
-		return CheckBox.valueStateTextMappings()[this.valueState];
+		return this.valueStateTextMappings()[this.valueState];
 	}
 
 	get tabIndex() {
@@ -301,8 +306,11 @@ class CheckBox extends UI5Element {
 	}
 
 	static async define(...params) {
-		await Label.define();
-		await Icon.define();
+		await Promise.all([
+			Label.define(),
+			Icon.define(),
+			fetchResourceBundle("@ui5/webcomponents"),
+		]);
 
 		super.define(...params);
 	}

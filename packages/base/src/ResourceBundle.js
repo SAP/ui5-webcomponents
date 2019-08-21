@@ -24,9 +24,7 @@ const registerMessageBundles = (packageId, bundlesMap) => {
  * @public
  */
 const registerBundleData = (packageId, data) => {
-	if (!bundleData.size) {
-		bundleData.set(packageId, data);
-	}
+	bundleData.set(packageId, data);
 };
 
 /**
@@ -66,23 +64,17 @@ const fetchResourceBundle = async packageId => {
 
 class ResourceBundle {
 	constructor(packageId) {
-		this.messages = new Map();
-
-		const data = bundleData.get(packageId);
-		if (!data) {
-			console.warn(`Resource bundle is empty - falling back to english texts. Check if resource bundle for ${packageId} is registered.`); /* eslint-disable-line */
-			return;
-		}
-
-		Object.entries(data).forEach(([key, value]) => this.messages.set(key, value));
+		this.packageId = packageId;
 	}
 
 	getText(textObj, ...params) {
-		if (!this.messages.has(textObj.key)) {
+		const messages = bundleData.get(this.packageId);
+
+		if (!messages || !messages[textObj.key]) {
 			return formatMessage(textObj.defaultText, params);
 		}
 
-		return formatMessage(this.messages.get(textObj.key), params);
+		return formatMessage(messages[textObj.key], params);
 	}
 }
 
