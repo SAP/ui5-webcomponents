@@ -245,6 +245,8 @@ class CheckBox extends UI5Element {
 		if (this.canToggle()) {
 			this.checked = !this.checked;
 			this.fireEvent("change");
+			// Angular two way data binding
+			this.fireEvent("value-changed");
 		}
 		return this;
 	}
