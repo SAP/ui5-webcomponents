@@ -320,19 +320,19 @@ describe("Date Picker Tests", () => {
 		assert.ok(datepicker.isPickerOpen(), "datepicker is open");
 	});
 
-	it("Scrolling does not close the picker", () => {
-		datepicker.id = "#dp9";
+	// it("Scrolling does not close the picker", () => {
+	// 	datepicker.id = "#dp9";
 
-		datepicker.valueHelpIcon.click();
-		assert.ok(datepicker.isPickerOpen(), "picker is open");
+	// 	datepicker.valueHelpIcon.click();
+	// 	assert.ok(datepicker.isPickerOpen(), "picker is open");
 
-		// scroll down
-		browser.findElementDeep("#downThere").moveTo(0, 0);
+	// 	// scroll down
+	// 	browser.findElementDeep("#downThere").moveTo(0, 0);
 
-		browser.pause(1000);
+	// 	browser.pause(1000);
 
-		assert.ok(datepicker.isPickerOpen(), "picker is open");
-	});
+	// 	assert.ok(datepicker.isPickerOpen(), "picker is open");
+	// });
 
 	it("daypicker extreme values max", () => {
 		var _28Nov9999 = "253399363200";

@@ -33,8 +33,8 @@ describe("Select general interaction", () => {
 
 	it("fires change on selection with keyboard handling", () => {
 		const select = $("#mySelect2");
-		const selectText = browser.findElementDeep("#mySelect2 >>> ui5-label");
-		const inputResult = browser.findElementDeep("#inputResult >>> input");
+		const selectText = browser.$("#mySelect2").shadow$("ui5-label");
+		const inputResult = browser.$("#inputResult").shadow$("input");
 		const EXPECTED_SELECTION_TEXT1 = "Compact";
 		const EXPECTED_SELECTION_TEXT2 = "Condensed";
 

@@ -25,8 +25,8 @@ describe("Input general interaction", () => {
 	});
 
 	it("fires input", () => {
-		const input2 = browser.findElementDeep("#input2 >>> input");
-		const inputLiveChangeResult = browser.findElementDeep("#inputLiveChangeResult >>> input");
+		const input2 = browser.$("#input2").shadow$("input");
+		const inputLiveChangeResult = browser.$("#inputLiveChangeResult").shadow$("input");
 
 		input2.click();
 		input2.setValue("abc");

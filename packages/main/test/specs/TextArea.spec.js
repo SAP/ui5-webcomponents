@@ -21,8 +21,8 @@ describe("when enabled", () => {
 
 	describe("when growing", () => {
 		it("Should have 8 rows and grow", () => {
-			const textArea = browser.findElementDeep("#eight-rows-textarea");
-			const textAreaInner = browser.findElementDeep("#eight-rows-textarea >>> textarea");
+			const textArea = browser.$("#eight-rows-textarea");
+			const textAreaInner = browser.$("#eight-rows-textarea").shadow$("textarea");
 	
 			const initialSize = textArea.getSize();
 			textAreaInner.setValue(`1\n2\n3\n4\n5\n6\n7\n8`);
@@ -37,8 +37,8 @@ describe("when enabled", () => {
 		});
 
 		it("Should grow up to 4 lines", () => {
-			const textArea = browser.findElementDeep("#growing-ta-to-four");
-			const textAreaInner = browser.findElementDeep("#growing-ta-to-four >>> textarea");
+			const textArea = browser.$("#growing-ta-to-four");
+			const textAreaInner = browser.$("#growing-ta-to-four").shadow$("textarea");
 
 			const initialSize = textArea.getSize();
 
