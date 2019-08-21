@@ -3,7 +3,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import { fetchResourceBundle, getText } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
+import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonTemplate from "./generated/templates/ButtonTemplate.lit.js";
 import Icon from "./Icon.js";
@@ -225,6 +225,8 @@ class Button extends UI5Element {
 				this.active = false;
 			}
 		};
+
+		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
@@ -301,7 +303,7 @@ class Button extends UI5Element {
 	}
 
 	get buttonTypeText() {
-		return getText(Button.typeTextMappings()[this.design]);
+		return this.resourceBundle.getText(Button.typeTextMappings()[this.design]);
 	}
 
 	get tabIndexValue() {

@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { fetchResourceBundle, getText } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
+import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
 import LinkDesign from "./types/LinkDesign.js";
 
 // Template
@@ -131,7 +131,6 @@ const metadata = {
  * from the standard text.
  * On hover, it changes its style to an underlined text to provide additional feedback to the user.
  *
-
  *
  * <h3>Usage</h3>
  *
@@ -166,6 +165,7 @@ class Link extends UI5Element {
 	constructor() {
 		super();
 		this._dummyAnchor = document.createElement("a");
+		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
 	}
 
 	static get metadata() {
@@ -222,7 +222,7 @@ class Link extends UI5Element {
 	}
 
 	get linkTypeText() {
-		return getText(Link.typeTextMappings()[this.design]);
+		return this.resourceBundle.getText(Link.typeTextMappings()[this.design]);
 	}
 
 	get parsedRef() {

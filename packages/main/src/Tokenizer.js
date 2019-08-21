@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import { fetchResourceBundle, getText } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
+import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
 import TokenizerTemplate from "./generated/templates/TokenizerTemplate.lit.js";
 import { MULTIINPUT_SHOW_MORE_TOKENS } from "./generated/i18n/i18n-defaults.js";
 
@@ -93,6 +93,7 @@ class Tokenizer extends UI5Element {
 			return this._getTokens();
 		};
 
+		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
 
 		this._delegates.push(this._itemNav);
 	}
@@ -105,7 +106,7 @@ class Tokenizer extends UI5Element {
 		}
 
 		this._lastTokenCount = this.tokens.length;
-		this._nMoreText = getText(MULTIINPUT_SHOW_MORE_TOKENS, [this._hiddenTokens.length]);
+		this._nMoreText = this.resourceBundle.getText(MULTIINPUT_SHOW_MORE_TOKENS, [this._hiddenTokens.length]);
 	}
 
 	onAfterRendering() {

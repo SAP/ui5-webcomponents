@@ -5,7 +5,7 @@ import { fetchJsonOnce } from "./util/FetchHelper.js";
 import { normalizeLocale, nextFallbackLocale } from "./util/normalizeLocale.js";
 import formatMessage from "./util/formatMessage";
 
-const messages = new Map();
+const bundleData = new Map();
 const bundleURLs = new Map();
 
 /**
@@ -20,12 +20,12 @@ const registerMessageBundles = (packageId, bundlesMap) => {
 
 /**
  * Registers a map with the loaded messages.
- * @param {Object} messageBundleData the loaded messagebundle_*.json file
+ * @param {Object} data the loaded messagebundle_*.json file
  * @public
  */
-const registerMessages = messageBundleData => {
-	if (!messages.size) {
-		Object.entries(messageBundleData).forEach(([key, value]) => messages.set(key, value)); // shorhand syntax is not transpiled properly: new Map(Object.entries(obj));
+const registerBundleData = (packageId, data) => {
+	if (!bundleData.size) {
+		bundleData.set(packageId, data);
 	}
 };
 
@@ -60,16 +60,34 @@ const fetchResourceBundle = async packageId => {
 		return bundleURL;
 	}
 
-	const jsonData = await fetchJsonOnce(bundleURL);
-	registerMessages(jsonData);
+	const data = await fetchJsonOnce(bundleURL);
+	registerBundleData(packageId, data);
 };
 
-const getText = (textObj, ...params) => {
-	if (!messages.has(textObj.key)) {
-		return formatMessage(textObj.defaultText, params);
+class ResourceBundle {
+	constructor(packageId) {
+		this.messages = new Map();
+
+		const data = bundleData.get(packageId);
+		if (!data) {
+			console.warn(`Resource bundle is empty - falling back to english texts. Check if resource bundle for ${packageId} is registered.`); /* eslint-disable-line */
+			return;
+		}
+
+		Object.entries(data).forEach(([key, value]) => this.messages.set(key, value));
 	}
 
-	return formatMessage(messages.get(textObj.key), params);
+	getText(textObj, ...params) {
+		if (!this.messages.has(textObj.key)) {
+			return formatMessage(textObj.defaultText, params);
+		}
+
+		return formatMessage(this.messages.get(textObj.key), params);
+	}
+}
+
+const getResourceBundle = packageId => {
+	return new ResourceBundle(packageId);
 };
 
-export { fetchResourceBundle, registerMessageBundles, getText };
+export { fetchResourceBundle, registerMessageBundles, getResourceBundle };
