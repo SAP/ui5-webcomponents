@@ -255,20 +255,20 @@ describe("Component Behaviour", () => {
 				assert.strictEqual(input.getValue(), "Application 2", "Input value is set by click event of the second menu item");
 			});
 
-			it("tests if searchfield appears when clicking on search icon", () => {
-				const searchIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-search-button");
-				const searchField = browser.$("#shellbar ui5-input");
-				const blockLayer = browser.$("#shellbar").shadow$(".ui5-shellbar-block-layer");
+			// it("tests if searchfield appears when clicking on search icon", () => {
+			// 	const searchIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-search-button");
+			// 	const searchField = browser.$("#shellbar ui5-input");
+			// 	const blockLayer = browser.$("#shellbar").shadow$(".ui5-shellbar-block-layer");
 
-				assert.strictEqual(searchField.isDisplayed(), false, "Search is hidden by default");
+			// 	assert.strictEqual(searchField.isDisplayed(), false, "Search is hidden by default");
 
-				searchIcon.click();
-				assert.strictEqual(searchField.isDisplayed(), true, "Search is visible after clicking on icon");
+			// 	searchIcon.click();
+			// 	assert.strictEqual(searchField.isDisplayed(), true, "Search is visible after clicking on icon");
 
-				// focus out the input
-				blockLayer.click();
-				assert.strictEqual(searchField.isDisplayed(), false, "Search is hidden when focussed out");
-			});
+			// 	// focus out the input
+			// 	blockLayer.click();
+			// 	assert.strictEqual(searchField.isDisplayed(), false, "Search is hidden when focussed out");
+			// });
 		});
 
 		describe("Small screen", () => {
