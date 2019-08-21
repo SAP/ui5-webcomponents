@@ -5,7 +5,7 @@ import { fetchJsonOnce } from "./util/FetchHelper.js";
 import { normalizeLocale, nextFallbackLocale } from "./util/normalizeLocale.js";
 import formatMessage from "./util/formatMessage";
 
-let messagesKeys;
+const messages = new Map();
 const bundleURLs = new Map();
 
 /**
@@ -19,12 +19,14 @@ const registerMessageBundles = (packageId, bundlesMap) => {
 };
 
 /**
- * Registers a map of loaded messages key/value.
+ * Registers a map with the loaded messages.
  * @param {Object} messageBundleData the loaded messagebundle_*.json file
  * @public
  */
-const registerMessagesKeys = messageBundleData => {
-	messagesKeys = new Map(Object.entries(messageBundleData));
+const registerMessages = messageBundleData => {
+	if (!messages.size) {
+		Object.entries(messageBundleData).forEach(([key, value]) => messages.set(key, value)); // shorhand syntax is not transpiled properly: new Map(Object.entries(obj));
+	}
 };
 
 /**
@@ -58,17 +60,17 @@ const fetchResourceBundle = async packageId => {
 		return bundleURL;
 	}
 
-	const data = await fetchJsonOnce(bundleURL);
-	registerMessagesKeys(data);
+	const jsonData = await fetchJsonOnce(bundleURL);
+	registerMessages(jsonData);
 };
 
 class ResourceBundleWrapper {
 	getText(textObj, ...params) {
-		if (!messagesKeys.has(textObj.key)) {
+		if (!messages.has(textObj.key)) {
 			return this.getTextFormatted(textObj.defaultText, params);
 		}
 
-		return this.getTextFormatted(messagesKeys.get(textObj.key), params);
+		return this.getTextFormatted(messages.get(textObj.key), params);
 	}
 
 	getTextFormatted(text, values) {

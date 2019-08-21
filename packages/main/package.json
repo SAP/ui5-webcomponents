@@ -63,7 +63,7 @@
     "watch:styles-components": "postcss src/themes/*.css --config config/postcss.components --base src --dir dist/css/ -w",
     "watch:all": "npm-run-all --parallel watch:templates watch:samples watch:pages watch:qunit watch:src watch:bundle watch:styles-bundles watch:styles-components copy:webcomponents-polyfill",
     "clean": "rimraf dist",
-    "copy:src": "copy-and-watch \"src/**/*.js\" \"src/**/i18n/*.properties\" dist/",
+    "copy:src": "copy-and-watch \"src/**/*.js\" dist/",
     "copy:test": "cpx \"test/**/*.*\" dist/test-resources",
     "copy:pages": "cpx \"test/**/pages/*.*\" dist/test-resources",
     "copy:qunit": "cpx \"test/**/qunit/*.*\" dist/test-resources",
