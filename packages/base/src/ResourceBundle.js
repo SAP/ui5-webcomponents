@@ -64,22 +64,12 @@ const fetchResourceBundle = async packageId => {
 	registerMessages(jsonData);
 };
 
-class ResourceBundle {
-	getText(textObj, ...params) {
-		if (!messages.has(textObj.key)) {
-			return this.getTextFormatted(textObj.defaultText, params);
-		}
-
-		return this.getTextFormatted(messages.get(textObj.key), params);
+const getText = (textObj, ...params) => {
+	if (!messages.has(textObj.key)) {
+		return formatMessage(textObj.defaultText, params);
 	}
 
-	getTextFormatted(text, values) {
-		return formatMessage(text, values);
-	}
-}
-
-const getResourceBundle = () => {
-	return new ResourceBundle();
+	return formatMessage(messages.get(textObj.key), params);
 };
 
-export { fetchResourceBundle, registerMessageBundles, getResourceBundle };
+export { fetchResourceBundle, registerMessageBundles, getText };

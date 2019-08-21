@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
+import { fetchResourceBundle, getText } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
 import { isEnter, isSpace } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import MessageStripType from "./types/MessageStripType.js";
 import MessageStripTemplate from "./generated/templates/MessageStripTemplate.lit.js";
@@ -149,12 +149,6 @@ class MessageStrip extends UI5Element {
 		return messageStripCss;
 	}
 
-	constructor() {
-		super();
-
-		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
-	}
-
 	_closeClick() {
 		this.fireEvent("close", {});
 	}
@@ -206,7 +200,7 @@ class MessageStrip extends UI5Element {
 	}
 
 	get _closeButtonText() {
-		return this.resourceBundle.getText(MESSAGE_STRIP_CLOSE_BUTTON);
+		return getText(MESSAGE_STRIP_CLOSE_BUTTON);
 	}
 
 	get classes() {

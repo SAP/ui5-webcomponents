@@ -9,7 +9,7 @@ import {
 } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import "./icons/decline.js";
 import "./icons/cancel.js";
-import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
+import { fetchResourceBundle, getText } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
 import { TOKEN_ARIA_DELETABLE } from "./generated/i18n/i18n-defaults.js";
 
 import Icon from "./Icon.js";
@@ -119,11 +119,6 @@ class Token extends UI5Element {
 		return styles;
 	}
 
-	constructor() {
-		super();
-
-		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
-	}
 
 	_select() {
 		this.fireEvent("select");
@@ -152,7 +147,7 @@ class Token extends UI5Element {
 	}
 
 	get tokenDeletableText() {
-		return this.resourceBundle.getText(TOKEN_ARIA_DELETABLE);
+		return getText(TOKEN_ARIA_DELETABLE);
 	}
 
 	get iconURI() {

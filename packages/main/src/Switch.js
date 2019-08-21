@@ -3,7 +3,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
-import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
+import { fetchResourceBundle, getText } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
 import Icon from "./Icon.js";
 import "./icons/accept.js";
 import "./icons/decline.js";
@@ -152,12 +152,6 @@ class Switch extends UI5Element {
 		return SwitchTemplate;
 	}
 
-	constructor() {
-		super();
-
-		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
-	}
-
 	onclick(event) {
 		this.toggle();
 	}
@@ -220,11 +214,11 @@ class Switch extends UI5Element {
 	}
 
 	get accessibilityOnText() {
-		return this._textOn || this.resourceBundle.getText(SWITCH_ON);
+		return this._textOn || getText(SWITCH_ON);
 	}
 
 	get accessibilityOffText() {
-		return this._textOff || this.resourceBundle.getText(SWITCH_OFF);
+		return this._textOff || getText(SWITCH_OFF);
 	}
 
 	get hiddenText() {
