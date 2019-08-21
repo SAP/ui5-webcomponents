@@ -64,7 +64,7 @@ const fetchResourceBundle = async packageId => {
 	registerMessages(jsonData);
 };
 
-class ResourceBundleWrapper {
+class ResourceBundle {
 	getText(textObj, ...params) {
 		if (!messages.has(textObj.key)) {
 			return this.getTextFormatted(textObj.defaultText, params);
@@ -79,7 +79,7 @@ class ResourceBundleWrapper {
 }
 
 const getResourceBundle = () => {
-	return new ResourceBundleWrapper();
+	return new ResourceBundle();
 };
 
 export { fetchResourceBundle, registerMessageBundles, getResourceBundle };
