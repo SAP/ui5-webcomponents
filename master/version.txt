@@ -1,5 +1,13 @@
-commit dd6c2a72d671066c4b95a0711db3617f41ab5873
-Author: service-tip-git <36747703+service-tip-git@users.noreply.github.com>
-Date:   Tue Aug 20 10:31:30 2019 -0700
+commit 16820e4dc1cdaa84acb354621668e035055f4883
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Wed Aug 21 15:09:21 2019 +0300
 
-    chore: translation delivery (#738)
+    feat: add support for angular two way data binding (#706)
+    
+    The current commit enables components to implement the interface for Angular two way data binding & form support.
+    
+    Components that implement the interface:
+     - Input
+     - Checkbox
+     - Datepicker
+     - Switch
