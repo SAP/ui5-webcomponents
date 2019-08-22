@@ -275,7 +275,7 @@ exports.config = {
      * @param {Object} error error object if any
      */
     afterCommand: function (commandName, args, result, error) {
-        const waitFor = ["$", "$$", "click", "elementClick", "keys", "sendKeys", "findElement", "elementClear", "elementSendKeys", "setValue", "addValue", "getHTML", "getProperty", "setAttribute"];
+        const waitFor = ["$", "$$", "shadow$", "click", "elementClick", "keys", "sendKeys", "findElement", "elementClear", "elementSendKeys", "setValue", "addValue", "getHTML", "getProperty", "setAttribute"];
         if (waitFor.includes(commandName)) {
             browser.executeAsync(function (done) {
                 // run all the tests in no conflict mode
