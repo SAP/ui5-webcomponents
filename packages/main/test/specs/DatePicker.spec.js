@@ -1,3 +1,4 @@
+
 const datepicker = require("../pageobjects/DatePickerTestPage");
 const assert = require("assert");
 
@@ -327,7 +328,7 @@ describe("Date Picker Tests", () => {
 		assert.ok(datepicker.isPickerOpen(), "picker is open");
 
 		// scroll down
-		browser.findElementDeep("#downThere").moveTo(0, 0);
+		browser.$("#downThere").scrollIntoView();
 
 		browser.pause(1000);
 
