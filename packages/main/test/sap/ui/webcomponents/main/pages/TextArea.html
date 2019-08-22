@@ -10,11 +10,15 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta charset="utf-8">
 
-	<script data-id="sap-ui-config" type="application/json">
+	<script data-ui5-config type="application/json">
 		{
 			"language": "EN"
 		}
 	</script>
+
+	<script>
+			delete Document.prototype.adoptedStyleSheets
+		</script>
 
 	<script src="../../../../../../webcomponentsjs/webcomponents-loader.js"></script>
 	<script src="../../../../../../resources/sap/ui/webcomponents/main/bundle.esm.js"
@@ -85,7 +89,20 @@
 
 	<section class="group">
 			<h2>Simple TextArea</h2>
-			<ui5-textarea id="basic-textarea" value="Test"></ui5-textarea>
+
+			<br>
+			<br>
+			<ui5-textarea id="basic-textarea" value="Test" value-state="Error"></ui5-textarea>
+
+			<br>
+			<br>
+			<ui5-textarea id="basic-textarea" value="Test" value-state="Warning"></ui5-textarea>
+			<br>
+			<br>
+
+			<ui5-textarea id="basic-textarea" value="Test" value-state="Success"></ui5-textarea>
+			<br>
+			<br>
 		</section>
 
 	<section class="group">

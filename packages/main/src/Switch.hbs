@@ -1,16 +1,31 @@
-<div {{> controlData}}
-	class="{{classes.main}}"
+<div
+	class="ui5-switch-root {{classes.main}}"
 	role="checkbox"
-	aria-checked="{{ctr.checked}}"
-	tabindex="{{tabIndex}}">
+	aria-checked="{{checked}}"
+	aria-disabled="{{ariaDisabled}}"
+	aria-labelledby="{{_id}}-hiddenText"
+	tabindex="{{tabIndex}}"
+	dir="{{rtl}}"
+>
 	<div class="ui5-switch-inner">
 		<div class="ui5-switch-track">
 			<div class="ui5-switch-slider">
-				<span class="ui5-switch-text ui5-switch-text--on">{{textOn}}</span>
-				<span class="ui5-switch-text ui5-switch-text--off">{{textOff}}</span>
+				{{#if graphical}}
+					<span class="ui5-switch-text ui5-switch-text--on">
+						<ui5-icon src="sap-icon://accept" class="ui5-switch-icon-on"></ui5-icon>
+					</span>
+					<span class="ui5-switch-text ui5-switch-text--off">
+						<ui5-icon src="sap-icon://decline" class="ui5-switch-icon-off"></ui5-icon>
+					</span>
+				{{else}}
+					<span class="ui5-switch-text ui5-switch-text--on">{{_textOn}}</span>
+					<span class="ui5-switch-text ui5-switch-text--off">{{_textOff}}</span>
+				{{/if}}
+
 				<span class="ui5-switch-handle"></span>
 			</div>
 		</div>
 	</div>
-	<input type='checkbox' ?checked="{{ctr.checked}}" class="ui5-switch-input" data-sap-no-tab-ref/>
+	<input type='checkbox' ?checked="{{checked}}" class="ui5-switch-input" data-sap-no-tab-ref/>
+	<span id="{{_id}}-hiddenText" class="ui5-hidden-text">{{hiddenText}}</span>
 </div>

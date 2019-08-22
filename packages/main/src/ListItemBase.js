@@ -1,11 +1,10 @@
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper.js";
-import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-import ListItemBaseTemplateContext from "./ListItemBaseTemplateContext.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import FocusHelper from "@ui5/webcomponents-base/dist/FocusHelper.js";
+import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 
 // Styles
-import styles from "./themes/ListItemBase.css.js";
-
+import styles from "./generated/themes/ListItemBase.css.js";
 
 /**
  * @public
@@ -14,17 +13,18 @@ const metadata = {
 	"abstract": true,
 	properties: /** @lends  sap.ui.webcomponents.main.ListItemBase.prototype */  {
 
-		_hideBorder: {
+		/**
+		* Defines if the list item should display its bottom border.
+		* @private
+		*/
+		hasBorder: {
 			type: Boolean,
-		},
-
-		_background: {
-			type: String,
 		},
 
 		_tabIndex: {
 			type: String,
 			defaultValue: "-1",
+			noAttribute: true,
 		},
 	},
 	events: {
@@ -47,10 +47,6 @@ const metadata = {
 class ListItemBase extends UI5Element {
 	static get metadata() {
 		return metadata;
-	}
-
-	static get calculateTemplateContext() {
-		return ListItemBaseTemplateContext.calculate;
 	}
 
 	static get styles() {
@@ -108,6 +104,19 @@ class ListItemBase extends UI5Element {
 	*/
 	shouldForwardTabBefore(target) {
 		return this.getDomRef() === target;
+	}
+
+	get classes() {
+		return {
+			main: {
+				"ui5-li-root": true,
+				"ui5-li--focusable": true,
+			},
+		};
+	}
+
+	get rtl() {
+		return getRTL() ? "rtl" : undefined;
 	}
 }
 

@@ -1,30 +1,23 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
-import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper.js";
-
-import { isTabNext } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import FocusHelper from "@ui5/webcomponents-base/dist/FocusHelper.js";
+import { isTabNext } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import ListItemBase from "./ListItemBase.js";
 import ListMode from "./types/ListMode.js";
-import BackgroundDesign from "./types/BackgroundDesign.js";
 import ListSeparators from "./types/ListSeparators.js";
 import ListItemType from "./types/ListItemType.js";
 // Template
-import ListRenderer from "./build/compiled/ListRenderer.lit.js";
-import ListTemplateContext from "./ListTemplateContext.js";
+import ListTemplate from "./generated/templates/ListTemplate.lit.js";
 
 // Styles
-import listCss from "./themes/List.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
+import listCss from "./generated/themes/List.css.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-list",
-	defaultSlot: "items",
 	slots: /** @lends sap.ui.webcomponents.main.List.prototype */ {
 
 		/**
@@ -32,7 +25,7 @@ const metadata = {
 		 * <b>Note:</b> When <code>header</code> is set, the
 		 * <code>headerText</code> property is ignored.
 		 *
-		 * @type {HTMLElement}
+		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
 		 */
@@ -48,25 +41,12 @@ const metadata = {
 		 * @slot
 		 * @public
 		 */
-		items: {
+		"default": {
+			propertyName: "items",
 			type: ListItemBase,
-			multiple: true,
 		},
 	},
 	properties: /** @lends  sap.ui.webcomponents.main.List.prototype */ {
-
-		/**
-		 * Defines the background design of the <code>ui5-list</code>.
-		 * <br><br>
-		 * <b>Note:</b> Available options are <code>Solid</code> and <code>Transparent</code>.
-		 *
-		 * @type {string}
-		 * @public
-		 */
-		backgroundDesign: {
-			type: BackgroundDesign,
-			defaultValue: BackgroundDesign.Solid,
-		},
 
 		/**
 		 * Defines the <code>ui5-list</code> header text.
@@ -74,28 +54,29 @@ const metadata = {
 		 * <b>Note:</b> If <code>header</code> is set this property is ignored.
 		 *
 		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		headerText: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
 		 * Defines the footer text.
 		 *
 		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		footerText: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
 		 * Determines whether the list items are indented.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		inset: {
@@ -109,6 +90,7 @@ const metadata = {
 		 * <code>MultiSelect</code>, and <code>Delete</code>.
 		 *
 		 * @type {string}
+		 * @defaultvalue "None"
 		 * @public
 		 */
 		mode: {
@@ -120,11 +102,11 @@ const metadata = {
 		 * Defines the text that is displayed when the <code>ui5-list</code> contains no items.
 		 *
 		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		noDataText: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
@@ -139,6 +121,7 @@ const metadata = {
 		 * </ul>
 		 *
 		 * @type {string}
+		 * @defaultvalue "All"
 		 * @public
 		 */
 		separators: {
@@ -149,14 +132,14 @@ const metadata = {
 	events: /** @lends  sap.ui.webcomponents.main.List.prototype */ {
 
 		/**
-		 * Fired when an item is pressed, unless the item's <code>type</code> property
+		 * Fired when an item is activated, unless the item's <code>type</code> property
 		 * is set to <code>Inactive</code>.
 		 *
 		 * @event
-		 * @param {HTMLElement} item the pressed item.
+		 * @param {HTMLElement} item the clicked item.
 		 * @public
 		 */
-		itemPress: {
+		itemClick: {
 			detail: {
 				item: { type: HTMLElement },
 			},
@@ -182,12 +165,14 @@ const metadata = {
 		 * in <code>SingleSelect</code> and <code>MultiSelect</code> modes.
 		 *
 		 * @event
-		 * @param {Array} items an array of the selected items.
+		 * @param {Array} selectedItems an array of the selected items.
+		 * @param {Array} previouslySelectedItems an array of the previously selected items.
 		 * @public
 		 */
 		selectionChange: {
 			detail: {
-				items: { type: Array },
+				selectedItems: { type: Array },
+				previouslySelectedItems: { type: Array },
 			},
 		},
 	},
@@ -237,8 +222,12 @@ class List extends UI5Element {
 		return metadata;
 	}
 
-	static get renderer() {
-		return ListRenderer;
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return ListTemplate;
 	}
 
 	static get styles() {
@@ -257,11 +246,11 @@ class List extends UI5Element {
 
 		this._previouslySelectedItem = null;
 
-		this.addEventListener("_press", this.onItemPress.bind(this));
-		this.addEventListener("_focused", this.onItemFocused.bind(this));
-		this.addEventListener("_forwardAfter", this.onForwardAfter.bind(this));
-		this.addEventListener("_forwardBefore", this.onForwardBefore.bind(this));
-		this.addEventListener("_selectionRequested", this.onSelectionRequested.bind(this));
+		this.addEventListener("ui5-_press", this.onItemPress.bind(this));
+		this.addEventListener("ui5-_focused", this.onItemFocused.bind(this));
+		this.addEventListener("ui5-_forwardAfter", this.onForwardAfter.bind(this));
+		this.addEventListener("ui5-_forwardBefore", this.onForwardBefore.bind(this));
+		this.addEventListener("ui5-_selectionRequested", this.onSelectionRequested.bind(this));
 	}
 
 	onBeforeRendering() {
@@ -285,8 +274,7 @@ class List extends UI5Element {
 				|| (this.separators === ListSeparators.Inner && !isLastChild);
 
 			item._mode = this.mode;
-			item._background = this.backgroundDesign;
-			item._hideBorder = !showBottomBorder;
+			item.hasBorder = showBottomBorder;
 		});
 
 		this._previouslySelectedItem = null;
@@ -296,6 +284,7 @@ class List extends UI5Element {
 	* ITEM SELECTION BASED ON THE CURRENT MODE
 	*/
 	onSelectionRequested(event) {
+		const previouslySelectedItems = this.getSelectedItems();
 		let selectionChange = false;
 		this._selectionRequested = true;
 
@@ -304,7 +293,7 @@ class List extends UI5Element {
 		}
 
 		if (selectionChange) {
-			this.fireEvent("selectionChange", { items: this.getSelectedItems() });
+			this.fireEvent("selectionChange", { selectedItems: this.getSelectedItems(), previouslySelectedItems });
 		}
 	}
 
@@ -451,6 +440,7 @@ class List extends UI5Element {
 
 		if (pressedItem.type === ListItemType.Active) {
 			this.fireEvent("itemPress", { item: pressedItem });
+			this.fireEvent("itemClick", { item: pressedItem });
 		}
 
 		if (!this._selectionRequested && this.mode !== ListMode.Delete) {
@@ -565,13 +555,15 @@ class List extends UI5Element {
 		return focused;
 	}
 
-	static get calculateTemplateContext() {
-		return ListTemplateContext.calculate;
+	get shouldRenderH1() {
+		return !this.header.length && this.headerText;
+	}
+
+	get showNoDataText() {
+		return this.items.length === 0 && this.noDataText;
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	List.define();
-});
+List.define();
 
 export default List;

@@ -1,11 +1,14 @@
-<a {{> controlData}}
-	class="{{classes.main}}"
+<a
+	class="ui5-link-root"
 	role="link"
-	href="{{ctr.href}}"
-	target="{{ctr.target}}"
-	rel="{{ctr._rel}}"
+	href="{{parsedRef}}"
+	target="{{target}}"
+	rel="{{_rel}}"
 	tabindex="{{tabIndex}}"
-	?disabled="{{ctr.disabled}}"
+	?disabled="{{disabled}}"
 	aria-disabled="{{ariaDisabled}}">
-	{{ctr._nodeText}}
+	<slot></slot>
+	{{#if hasLinkType}}
+		<span class="ui5-hidden-text">{{linkTypeText}}</span>
+	{{/if}}
 </a>

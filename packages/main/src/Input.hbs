@@ -1,40 +1,53 @@
-<div {{> controlData}}
-	class="{{classes.main}}"
-	style="{{styles.main}}"
-	aria-invalid="{{ariaInvalid}}"
-	aria-labelledBy="{{ariaLabelledBy}}"
+<div
+	class="ui5-input-root"
+	@focusin="{{onfocusin}}"
+	@focusout="{{onfocusout}}"
 >
-<div id="{{ctr._id}}-wrapper"
-	class="{{classes.wrapper}}"
->
-	<input id="{{ctr._id}}-inner"
-			class="sapWCInputBaseInner"
-			type="{{type}}"
-			?disabled="{{ctr.disabled}}"
+	<div class="ui5-input-content">
+		{{#if _beginContent.length}}
+			<slot name="_beginContent"></slot>
+		{{/if}}
+
+		<input id="{{_id}}-inner"
+			class="ui5-input-inner"
+			type="{{inputType}}"
+			?disabled="{{disabled}}"
 			?readonly="{{_readonly}}"
-			.value="{{ctr.value}}"
-			placeholder="{{ctr.placeholder}}"
-			@input="{{ctr._input.onInput}}"
-			@change="{{ctr._input.change}}"
+			?required="{{required}}"
+			.value="{{value}}"
+			placeholder="{{inputPlaceholder}}"
+			aria-invalid="{{ariaInvalid}}"
+			aria-haspopup="{{ariaHasPopup}}"
+			aria-describedby="{{ariaDescribedBy}}"
+			aria-autocomplete="{{ariaAutoComplete}}"
+			@input="{{_handleInput}}"
+			@change="{{_handleChange}}"
 			data-sap-no-tab-ref
 			data-sap-focus-ref
-	/>
-		{{#if ctr.icon}}
-			<slot name="{{ctr.icon._slot}}"></slot>
+		/>
+		{{#if icon.length}}
+			<div class="ui5-input-icon-root">
+				<slot name="icon"></slot>
+			</div>
+		{{/if}}
+
+		{{#if showSuggestions}}
+			<span id="{{_id}}-suggestionsText" class="ui5-hidden-text">{{suggestionsText}}</span>
+		{{/if}}
+
+		{{#if hasValueState}}
+			<span id="{{_id}}-descr" class="ui5-hidden-text">{{valueStateText}}</span>
 		{{/if}}
 	</div>
 
-	{{#if ctr.showSuggestions}}
+	{{#if showSuggestions}}
 			<ui5-popover
 				placement-type="Bottom"
-				hide-header="true"
-				hide-arrow="true"
+				no-arrow
 				horizontal-align="Stretch"
-				initial-focus="{{ctr._id}}-inner">
+				initial-focus="{{_id}}-inner">
 					<ui5-list separators="Inner">
-						{{#each ctr.suggestionItems}}
-							<slot name="{{this._slot}}"></slot>
-						{{/each}}
+						<slot></slot>
 					</ui5-list>
 			</ui5-popover>
 	{{/if}}

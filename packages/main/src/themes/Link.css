@@ -1,49 +1,28 @@
-:host(ui5-link) {
-	display: inline-block;
+@import "./InvisibleTextStyles.css";
+
+:host(:not([hidden])) {
+	display: inline-flex;
+}
+
+:host {
 	max-width: 100%;
-}
-
-:host(ui5-link) span[data-sap-ui-wc-root] {
-	display: flex;
-}
-
-ui5-link {
-	display: inline-block;
-	max-width: 100%;
-}
-
-ui5-link span[data-sap-ui-wc-root] {
-	display: flex;
-}
-
-.sapMLnk {
 	color: var(--sapUiLink);
-	text-decoration: none;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	word-wrap: normal;
 	font-family: var(--sapUiFontFamily);
 	font-size: var(--sapMFontMediumSize);
 	cursor: pointer;
-	display: inline-block;
-	justify-content: center;
-	align-items: center;
-	position: relative;
-	outline: none;
 }
 
-.sapMLnk:not(.sapMLnkDsbl):hover,
-.sapMLnk.sapMLnkSubtle:not(.sapMLnkDsbl):hover {
+:host([disabled]) {
+	pointer-events: none;
+}
+
+:host([design="Subtle"]):not([disabled]) .ui5-link-root:hover,
+:host([design="Subtle"]):not([disabled]) .ui5-link-root:hover {
 	text-decoration: underline;
 	color: var(--sapUiLinkHover);
 }
 
-.sapMLnk:visited {
-	color: var(--sapUiLinkVisited);
-}
-
-.sapMLnk.sapMLnkDsbl {
+:host([disabled]) .ui5-link-root {
 	text-shadow: none;
 	outline: none;
 	cursor: default;
@@ -51,29 +30,46 @@ ui5-link span[data-sap-ui-wc-root] {
 	opacity: var(--_ui5_link_opacity);
 }
 
-.sapMLnk.sapMLnkEmphasized {
+:host([design="Emphasized"]) .ui5-link-root {
 	font-weight: bold;
 }
 
-.sapMLnk.sapMLnkSubtle,
-.sapMLnk.sapMLnkSubtle:visited {
+:host([design="Subtle"]) .ui5-link-root,
+:host([design="Subtle"]) .ui5-link-root:visited {
 	color: var(--_ui5_link_subtle_color);
 }
 
-.sapMLnk.sapMLnkSubtle:focus {
+:host([design="Subtle"]) .ui5-link-root:focus {
 	color: var(--sapUiLink);
 }
 
-.sapMLnk.sapMLnkWrapping {
+:host([wrap]) .ui5-link-root {
 	white-space: normal;
 	word-wrap: break-word;
 }
 
-.sapMLnk:focus {
+.ui5-link-root {
+	display: inline-block;
+	position: relative;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	word-wrap: normal;
+	text-decoration: none;
+	outline: none;
+}
+
+.ui5-link-root,
+.ui5-link-root:visited,
+.ui5-link-root:active {
+	color: currentColor;
+}
+
+.ui5-link-root:focus {
 	text-decoration: underline;
 }
 
-.sapMLnk:focus::after {
+.ui5-link-root:focus::after {
 	content: "";
 	width: var(--_ui5_link_outline_element_size);
 	height: var(--_ui5_link_outline_element_size);
@@ -82,4 +78,56 @@ ui5-link span[data-sap-ui-wc-root] {
 	border: 1px dotted var(--sapUiContentFocusColor);
 	top: 0;
 	outline: none;
+}
+
+/* 
+ * IE pair of styles,
+ * to be removed later on
+ */
+ui5-link:not([hidden]) {
+	display: inline-flex;
+}
+
+ui5-link {
+	max-width: 100%;
+	color: var(--sapUiLink);
+	font-family: var(--sapUiFontFamily);
+	font-size: var(--sapMFontMediumSize);
+	cursor: pointer;
+}
+
+ui5-link[disabled] {
+	pointer-events: none;
+}
+
+ui5-link[design="Subtle"]:not([disabled]) .ui5-link-root:hover,
+ui5-link[design="Subtle"]:not([disabled]) .ui5-link-root:hover {
+	text-decoration: underline;
+	color: var(--sapUiLinkHover);
+}
+
+ui5-link[disabled] .ui5-link-root {
+	text-shadow: none;
+	outline: none;
+	cursor: default;
+	pointer-events: none;
+	opacity: var(--_ui5_link_opacity);
+}
+
+ui5-link[design="Emphasized"] .ui5-link-root {
+	font-weight: bold;
+}
+
+ui5-link[design="Subtle"] .ui5-link-root,
+ui5-link[design="Subtle"] .ui5-link-root:visited {
+	color: var(--_ui5_link_subtle_color);
+}
+
+ui5-link[design="Subtle"] .ui5-link-root:focus {
+	color: var(--sapUiLink);
+}
+
+ui5-link[wrap] .ui5-link-root {
+	white-space: normal;
+	word-wrap: break-word;
 }

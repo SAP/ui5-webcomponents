@@ -1,27 +1,25 @@
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import { getIconURI } from "@ui5/webcomponents-base/src/IconPool.js";
-import slideDown from "@ui5/webcomponents-base/src/animations/slideDown.js";
-import slideUp from "@ui5/webcomponents-base/src/animations/slideUp.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-import PanelTemplateContext from "./PanelTemplateContext.js";
-import BackgroundDesign from "./types/BackgroundDesign.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { getIconURI } from "@ui5/webcomponents-base/dist/IconPool.js";
+import slideDown from "@ui5/webcomponents-base/dist/animations/slideDown.js";
+import slideUp from "@ui5/webcomponents-base/dist/animations/slideUp.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
+import Icon from "./Icon.js";
+import "./icons/navigation-right-arrow.js";
 import PanelAccessibleRole from "./types/PanelAccessibleRole.js";
-import PanelRenderer from "./build/compiled/PanelRenderer.lit.js";
-import { fetchResourceBundle, getResourceBundle } from "./ResourceBundleProvider.js";
+import PanelTemplate from "./generated/templates/PanelTemplate.lit.js";
+
+import { PANEL_ICON } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
-import panelCss from "./themes/Panel.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
+import panelCss from "./generated/themes/Panel.css.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-panel",
-	defaultSlot: "content",
 	slots: /** @lends sap.ui.webcomponents.main.Panel.prototype */ {
 
 		/**
@@ -29,7 +27,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> When a header is provided, the <code>headerText</code> property is ignored.
 		 *
-		 * @type {HTMLElement}
+		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
 		 */
@@ -41,13 +39,12 @@ const metadata = {
 		 * Determines the content of the <code>ui5-panel</code>.
 		 * The content is visible only when the <code>ui5-panel</code> is expanded.
 		 *
-		 * @type {HTMLElement[]}
+		 * @type {Node[]}
 		 * @slot
 		 * @public
 		 */
-		content: {
-			type: HTMLElement,
-			multiple: true,
+		"default": {
+			type: Node,
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.Panel.prototype */ {
@@ -59,11 +56,11 @@ const metadata = {
 		 * <b>Note:</b> This property is overridden by the <code>header</code> slot.
 		 *
 		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		headerText: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
@@ -71,6 +68,7 @@ const metadata = {
 		 * expandable/collapsible by user interaction.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		fixed: {
@@ -81,22 +79,11 @@ const metadata = {
 		 * Indicates whether the <code>ui5-panel</code> is collapsed and only the header is displayed.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		collapsed: {
 			type: Boolean,
-		},
-
-		/**
-		 * Determines the background color of the <code>ui5-panel</code>.
-		 * Available options are <code>Solid</code> and <code>Transparent</code>.
-		 *
-		 * @type {BackgroundDesign}
-		 * @public
-		 */
-		backgroundDesign: {
-			type: BackgroundDesign,
-			defaultValue: BackgroundDesign.Solid,
 		},
 
 		/**
@@ -112,6 +99,13 @@ const metadata = {
 			defaultValue: PanelAccessibleRole.Form,
 		},
 
+		/**
+		 * @private
+		 */
+		_hasHeader: {
+			type: Boolean,
+		},
+
 		_icon: {
 			type: Object,
 		},
@@ -120,9 +114,11 @@ const metadata = {
 		},
 		_contentExpanded: {
 			type: Boolean,
+			noAttribute: true,
 		},
 		_animationRunning: {
 			type: Boolean,
+			noAttribute: true,
 		},
 	},
 	events: {
@@ -193,12 +189,12 @@ class Panel extends UI5Element {
 		return metadata;
 	}
 
-	static get renderer() {
-		return PanelRenderer;
+	static get render() {
+		return litRender;
 	}
 
-	static get calculateTemplateContext() {
-		return PanelTemplateContext.calculate;
+	static get template() {
+		return PanelTemplate;
 	}
 
 	static get styles() {
@@ -208,18 +204,12 @@ class Panel extends UI5Element {
 	constructor() {
 		super();
 
-		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
-
 		this._header = {};
 
 		this._icon = {};
 		this._icon.id = `${this.id}-CollapsedImg`;
 		this._icon.src = getIconURI("navigation-right-arrow");
-		this._icon.title = this.resourceBundle.getText("PANEL_ICON");
-		this._icon.functional = true;
-
-		this._toggle = event => { event.preventDefault(); this._toggleOpen(); };
-		this._noOp = () => {};
+		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
@@ -228,27 +218,53 @@ class Panel extends UI5Element {
 			this._contentExpanded = !this.collapsed;
 		}
 
-		const toggleWithInternalHeader = !this.header;
-		this._header.press = toggleWithInternalHeader ? this._toggle : this._noOp;
-		this._icon.press = !toggleWithInternalHeader ? this._toggle : this._noOp;
+		this._icon.title = this.resourceBundle.getText(PANEL_ICON);
+		this._hasHeader = !!this.header.length;
 	}
 
-	onkeydown(event) {
-		const headerUsed = this._headerOnTarget(event.ui5target);
+	shouldToggle(node) {
+		const customContent = this.header.length;
+		if (customContent) {
+			return node.classList.contains("ui5-panel-header-button");
+		}
+		return true;
+	}
 
-		if (isEnter(event) && headerUsed) {
+	_headerClick(event) {
+		if (!this.shouldToggle(event.target)) {
+			return;
+		}
+
+		this._toggleOpen();
+	}
+
+	_toggleButtonClick(event) {
+		if (event.x === 0 && event.y === 0) {
+			event.stopImmediatePropagation();
+		}
+	}
+
+	_headerKeyDown(event) {
+		if (!this.shouldToggle(event.target)) {
+			return;
+		}
+
+
+		if (isEnter(event)) {
 			this._toggleOpen();
 		}
 
-		if (isSpace(event) && headerUsed) {
+		if (isSpace(event)) {
 			event.preventDefault();
 		}
 	}
 
-	onkeyup(event) {
-		const headerUsed = this._headerOnTarget(event.ui5target);
+	_headerKeyUp(event) {
+		if (!this.shouldToggle(event.target)) {
+			return;
+		}
 
-		if (isSpace(event) && headerUsed) {
+		if (isSpace(event)) {
 			this._toggleOpen();
 		}
 	}
@@ -261,7 +277,7 @@ class Panel extends UI5Element {
 		this.collapsed = !this.collapsed;
 		this._animationRunning = true;
 
-		const elements = this.getDomRef().querySelectorAll(".sapMPanelExpandablePart");
+		const elements = this.getDomRef().querySelectorAll(".ui5-panel-content");
 		const animations = [];
 
 		[].forEach.call(elements, oElement => {
@@ -287,15 +303,48 @@ class Panel extends UI5Element {
 		return target.classList.contains("sapMPanelWrappingDiv");
 	}
 
+	get expanded() {
+		return !this.collapsed;
+	}
+
+	get ariaLabelledBy() {
+		return this.header.length ? "" : `${this._id}-header`;
+	}
+
+	get accRole() {
+		return this.accessibleRole.toLowerCase();
+	}
+
+	get headerTabIndex() {
+		return (this.header.length || this.fixed) ? "-1" : "0";
+	}
+
+	get nonFocusableButton() {
+		return !this.header.length;
+	}
+
+	get shouldRenderH1() {
+		return !this.header.length && (this.headerText || !this.fixed);
+	}
+
+	get styles() {
+		return {
+			content: {
+				display: this._contentExpanded ? "block" : "none",
+			},
+		};
+	}
+
 	static async define(...params) {
-		await fetchResourceBundle("@ui5/webcomponents");
+		await Promise.all([
+			fetchResourceBundle("@ui5/webcomponents"),
+			Icon.define(),
+		]);
 
 		super.define(...params);
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	Panel.define();
-});
+Panel.define();
 
 export default Panel;

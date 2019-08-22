@@ -1,16 +1,13 @@
-:host(ui5-month-picker) {
+:host(:not([hidden])) {
 	display: inline-block;
+}
+
+:host {
 	width: 100%;
 	height: 100%;
 }
 
-ui5-month-picker {
-	display: inline-block;
-	width: 100%;
-	height: 100%;
-}
-
-.sapWCMonthPicker {
+.ui5-mp-root {
 	padding: 2rem 0 1rem 0;
 	display: flex;
 	flex-direction: column;
@@ -20,7 +17,7 @@ ui5-month-picker {
 	align-items: center;
 }
 
-.sapWCMonthPickerItem {
+.ui5-mp-item {
 	display: flex;
 	width: calc(33.333% - 0.125rem);
 	height: 3rem;
@@ -41,32 +38,32 @@ ui5-month-picker {
 	border-radius: var(--_ui5_monthpicker_item_border_radius);
 }
 
-.sapWCMonthPickerItem:hover {
+.ui5-mp-item:hover {
 	background-color: var(--_ui5_monthpicker_item_hover_background_color);
 }
 
-.sapWCMonthPickerItem.sapWCMonthPickerItemSel {
+.ui5-mp-item.ui5-mp-item--selected {
 	background-color: var(--sapUiSelected);
 	color: var(--sapUiContentContrastTextColor);
 }
 
-.sapWCMonthPickerItem.sapWCMonthPickerItemSel:focus {
+.ui5-mp-item.ui5-mp-item--selected:focus {
 	background-color: var(--_ui5_monthpicker_item_selected_focus);
 }
 
-.sapWCMonthPickerItem.sapWCMonthPickerItemSel:focus::after {
+.ui5-mp-item.ui5-mp-item--selected:focus::after {
 	border-color: var(--sapUiContentContrastFocusColor);
 }
 
-.sapWCMonthPickerItem.sapWCMonthPickerItemSel:hover {
+.ui5-mp-item.ui5-mp-item--selected:hover {
 	background-color: var(--_ui5_monthpicker_item_selected_focus);
 }
 
-.sapWCMonthPickerItem:focus {
+.ui5-mp-item:focus {
 	background-color: var(--_ui5_monthpicker_item_focus_background_color);
 }
 
-.sapWCMonthPickerItem:focus::after {
+.ui5-mp-item:focus::after {
 	content: "";
 	position: absolute;
 	width: var(--_ui5_monthpicker_item_focus_after_width);
@@ -76,13 +73,31 @@ ui5-month-picker {
 	left: var(--_ui5_monthpicker_item_focus_after_offset);
 }
 
-.sapWCMonthPickerQuarter {
+.ui5-mp-quarter {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	width: 100%;
 }
 
-.sapUiSizeCompact .sapWCMonthPickerItem {
+/* Compact size */
+:host([data-ui5-compact-size]) .ui5-mp-item {
+	height: 2rem;
+}
+
+/* 
+ * IE pair of styles
+ * to be removed later on
+ */
+ ui5-monthpicker:not([hidden]) {
+	display: inline-block;
+}
+
+ui5-monthpicker {
+	width: 100%;
+	height: 100%;
+}
+
+ui5-monthpicker[data-ui5-compact-size] .ui5-mp-item {
 	height: 2rem;
 }

@@ -1,12 +1,9 @@
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import TableCellRenderer from "./build/compiled/TableCellRenderer.lit.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import TableCellTemplate from "./generated/templates/TableCellTemplate.lit.js";
 
 // Styles
-import styles from "./themes/TableCell.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
+import styles from "./generated/themes/TableCell.css.js";
 
 /**
  * @public
@@ -17,28 +14,35 @@ const metadata = {
 		/**
 		 * Specifies the content of the <code>ui5-table-cell</code>.
 		 *
-		 * @type {HTMLElement[]}
+		 * @type {Node[]}
 		 * @slot
 		 * @public
 		 */
-		content: {
-			type: HTMLElement,
-			multiple: true,
+		"default": {
+			type: Node,
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.TableCell.prototype */ {
 
-		_firstInRow: {
+		/**
+		 * @protected
+		 */
+		firstInRow: {
 			type: Boolean,
-			defaultValue: false,
 		},
-		_lastInRow: {
+
+		/**
+		 * @protected
+		 */
+		lastInRow: {
 			type: Boolean,
-			defaultValue: false,
 		},
-		_hasBorder: {
+
+		/**
+		 * @protected
+		 */
+		popined: {
 			type: Boolean,
-			defaultValue: false,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.TableCell.prototype */ {
@@ -68,33 +72,15 @@ class TableCell extends UI5Element {
 		return styles;
 	}
 
-	static get renderer() {
-		return TableCellRenderer;
+	static get render() {
+		return litRender;
 	}
 
-	static calculateTemplateContext(state) {
-		const context = {
-			ctr: state,
-			classes: {
-				main: {
-					sapWCTableCell: true,
-					sapWCTableCellFirst: state._firstInRow,
-					sapWCTableCellLast: state._lastInRow,
-					sapWCTableCellWithBorder: state._hasBorder,
-				},
-			},
-			styles: {
-				main: {
-				},
-			},
-		};
-
-		return context;
+	static get template() {
+		return TableCellTemplate;
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	TableCell.define();
-});
+TableCell.define();
 
 export default TableCell;

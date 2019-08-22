@@ -7,7 +7,7 @@
 
 	<title>Card</title>
 
-	<script data-id="sap-ui-config" type="application/json">
+	<script data-ui5-config type="application/json">
 		{
 			"compactSize": false
 		}
@@ -23,28 +23,44 @@
 		}
 	</style>
 </head>
-<body>
+
+<body role="application">
 
 <ui5-card
 	id="card"
+	status="4 of 10"
+	heading="Quick Links"
+	header-interactive
+	class="myCard">
+	<ui5-list id="myList3" separators="Inner">
+		<ui5-li icon="sap-icon://horizontal-bullet-chart" >Template Based Segmentation</ui5-li>
+		<ui5-li icon="sap-icon://opportunity" >Segmentation Models</ui5-li>
+		<ui5-li icon="sap-icon://line-charts" >Marketing plans</ui5-li>
+	</ui5-list>
+
+	<ui5-input id="field" value="0"></ui5-input>
+</ui5-card>
+
+<ui5-card
+	id="card2"
 	status="4 of 10"
 	heading="Quick Links"
 	class="myCard">
 	<ui5-list id="myList3" separators="Inner">
 		<ui5-li icon="sap-icon://horizontal-bullet-chart" >Template Based Segmentation</ui5-li>
 		<ui5-li icon="sap-icon://opportunity" >Segmentation Models</ui5-li>
-		<ui5-li icon="sap-icon://line-charts" >Marketing plans</ui5-li>
-		<ui5-li icon="sap-icon://horizontal-bar-chart" >Target Groups</ui5-li>
-		<ui5-li icon="sap-icon://org-chart" >Program Structure</ui5-li>
-		<ui5-li icon="sap-icon://bar-chart" >AdWords Campaigns</ui5-li>
-		<ui5-li icon="sap-icon://tools-opportunity" >Winter Campaign Results</ui5-li>
 	</ui5-list>
+</ui5-card>
 
-	<ui5-input id="field" value="0"></ui5-input>
+<ui5-card>
+	<ui5-list id="myList3" separators="Inner">
+		<ui5-li icon="sap-icon://horizontal-bullet-chart" >Template Based Segmentation</ui5-li>
+		<ui5-li icon="sap-icon://opportunity" >Segmentation Models</ui5-li>
+	</ui5-list>
 </ui5-card>
 
 <script>
-	card.addEventListener("headerPress", function (event) {
+	card.addEventListener("ui5-headerClick", function (event) {
 		console.log(event);
 		field.value = parseInt(field.value) + 1;
 	});

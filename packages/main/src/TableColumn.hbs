@@ -1,5 +1,5 @@
-<div {{> controlData}} style="{{styles.main}}" class="{{classes.main}}" >
-	{{#if ctr.header}}
-		<slot name="{{ctr.header._slot}}"></slot>
-	{{/if}}
-</div>
+<th scope="col" style="width: {{width}}">
+	<div class="ui5-table-column-root">
+		<slot></slot>
+	</div>
+</th>

@@ -1,22 +1,17 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
-import TimelineTemplateContext from "./TimelineTemplateContext.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import TimelineItem from "./TimelineItem.js";
-import TimelineRenderer from "./build/compiled/TimelineRenderer.lit.js";
+import TimelineTemplate from "./generated/templates/TimelineTemplate.lit.js";
 
 // Styles
-import styles from "./themes/Timeline.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
+import styles from "./generated/themes/Timeline.css.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-timeline",
-	defaultSlot: "items",
 	slots: /** @lends sap.ui.webcomponents.main.Timeline.prototype */ {
 		/**
 		 * Determines the content of the <code>ui5-timeline</code>.
@@ -25,14 +20,11 @@ const metadata = {
 		 * @slot
 		 * @public
 		 */
-		items: {
+		"default": {
+			propertyName: "items",
 			type: TimelineItem,
-			multiple: true,
+			individualSlots: true,
 		},
-	},
-	properties: /** @lends sap.ui.webcomponents.main.Timeline.prototype */ {
-	},
-	events: /** @lends sap.ui.webcomponents.main.Timeline.prototype */ {
 	},
 };
 
@@ -65,12 +57,12 @@ class Timeline extends UI5Element {
 		return styles;
 	}
 
-	static get renderer() {
-		return TimelineRenderer;
+	static get render() {
+		return litRender;
 	}
 
-	static get calculateTemplateContext() {
-		return TimelineTemplateContext.calculate;
+	static get template() {
+		return TimelineTemplate;
 	}
 
 	constructor() {
@@ -80,7 +72,6 @@ class Timeline extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		this.addItemsCustomClass();
 		this._itemNavigation.init();
 	}
 
@@ -90,20 +81,8 @@ class Timeline extends UI5Element {
 
 		this._delegates.push(this._itemNavigation);
 	}
-
-	addItemsCustomClass() {
-		this.items[this.items.length - 1]._customClasses = ["sapWCTimelineItemLast"];
-	}
-
-	static async define(...params) {
-		await TimelineItem.define();
-
-		super.define(...params);
-	}
 }
 
-Bootstrap.boot().then(_ => {
-	Timeline.define();
-});
+Timeline.define();
 
 export default Timeline;

@@ -1,80 +1,296 @@
+/* actionable (type="Active" + desktop) */
+:host([actionable]) {
+	cursor: pointer;
+}
 
-.sapMSLI.sapMLIBActive .sapMSLITitle,
-.sapMSLI.sapMLIBActive .sapMSLIDescription {
+/* selected */
+:host([selected]) {
+	background: var(--sapUiListSelectionBackgroundColor);
+}
+
+/* selected and hovered */
+:host([selected][actionable]:not([active]):hover) {
+	background : var(--sapUiListSelectionHoverBackground);
+}
+
+/* selected and active */
+:host([active][actionable]),
+:host([selected][active][actionable]) {
+	background: var(--sapUiListActiveBackground);
+}
+
+/* hovered */
+:host([actionable]:not([active]):not([selected]):hover) {
+	background : var(--sapUiListHoverBackground);
+}
+
+/* focused */
+:host([active][actionable]) .ui5-li-root.ui5-li--focusable:focus,
+:host([active][actionable]) .ui5-li-root.ui5-li--focusable .ui5-li-content:focus {
+	outline-color: var(--sapUiContentContrastFocusColor);
+}
+
+/* active */
+:host([active][actionable]) .ui5-li-root .ui5-li-icon {
 	color: var(--sapUiListActiveTextColor);
 }
 
-.sapMSLI .sapMSLITextWrapper {
+/* ui5-li: title, description, info state */
+:host([active][actionable]) .ui5-li-title,
+:host([active][actionable]) .ui5-li-desc,
+:host([active][actionable]) .ui5-li-info {
+	color: var(--sapUiListActiveTextColor);
+}
+
+/* ui5-li: infoState */
+:host([info-state="Warning"]) .ui5-li-info {
+	color: var(--sapUiCriticalText);
+}
+
+:host([info-state="Success"]) .ui5-li-info {
+	color: var(--sapUiPositiveText);
+}
+
+:host([info-state="Error"]) .ui5-li-info {
+	color: var(--sapUiNegativeText);
+}
+
+/* ui5-li: item with title and description */
+:host([data-ui5-compact-size][has-title][description]),
+:host([has-title][description]) {
+	height: 5rem;
+}
+
+:host([data-ui5-compact-size][has-title][description]) .ui5-li-title,
+:host([has-title][description]) .ui5-li-title {
+	padding-bottom: 0.375rem;
+}
+
+.ui5-li-title-wrapper {
 	display: flex;
 	flex-direction: column;
+	flex: auto;
 	min-width: 1px;
 	line-height: normal;
 }
 
-.sapMSLI .sapMSLITitle {
-	font-size: var(--sapMFontLargeSize);
+.ui5-li-title {
 	color: var(--sapUiListTextColor);
+	font-size: var(--sapMFontLargeSize);
 }
 
-.sapMSLI .sapMSLITitle,
-.sapMSLI .sapMSLIDescription {
+.ui5-li-title,
+.ui5-li-desc {
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
 
-.sapMSLI .sapMSLIDescription {
-	font-size: var(--sapMFontMediumSize);
+.ui5-li-desc {
 	color: var(--sapUiContentLabelColor);
+	font-size: var(--sapMFontMediumSize);
 }
 
-.sapMSLI .sapMSLIImg {
+.ui5-li-info {
+	margin: 0 0.25rem;
+	color: var(--sapUiNeutralText);
+	font-size: 0.875rem;
+	flex-shrink: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.ui5-li-img {
+	width: 2rem;
 	margin: 0.5rem 0.75rem 0.5rem 0rem;
 	height: 2rem;
-	width: 2rem;
 }
 
-.sapMSLI .sapMLIBContent {
+.ui5-li-icon {
+	min-width: 1rem;
+	min-height: 1rem;
+	color: var(--sapUiContentNonInteractiveIconColor);
+	padding-right: 0.5rem;
+}
+
+.ui5-li-content {
+	display: flex;
+	align-items: center;
+	flex: auto;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	-webkit-box-flex: 1;
-	flex: auto;
-	display: -webkit-box;
-	display: flex;
-	-webkit-box-align: center;
-	align-items: center;
+	pointer-events: none; /* IE specific */
 }
 
-.sapMSLI .sapMDeleteListItemButton {
+.ui5-li-deletebtn {
 	display: flex;
 	align-items: center;
-}
-
-/* ListItem with title and description (should be 5rem in height in both compact and cozy) */
-.sapUiSizeCompact .sapMSLI.sapMSLIWithTitleAndDescription,
-.sapMSLI.sapMSLIWithTitleAndDescription {
-	height: 5rem;
-	padding: 1rem;
-}
-
-.sapUiSizeCompact .sapMSLI.sapMSLIWithTitleAndDescription .sapMSLITitle,
-.sapMSLI.sapMSLIWithTitleAndDescription .sapMSLITitle{
-	padding-bottom: 0.375rem;
 }
 
 /* Compact size */
-.sapUiSizeCompact .sapMSLI:not(.sapMSLIWithTitleAndDescription) {
-		height: 2rem;
-}
-.sapUiSizeCompact .sapMSLI:not(.sapMSLIWithTitleAndDescription) .sapMSLITitle {
+:host([data-ui5-compact-size]) .ui5-li-title {
 	height: 2rem;
 	line-height: 2rem;
 	font-size: var(--sapMFontMediumSize);
 }
 
-.sapUiSizeCompact .sapMSLI:not(.sapMSLIWithTitleAndDescription) .sapMSLIImg {
-	margin-top: 0.55rem;
-	height: 1.75rem;
+:host([data-ui5-compact-size]:not([has-title]):not([description])) .ui5-li-img {
 	width: 1.75rem;
+	height: 1.75rem;
+	margin-top: 0.55rem;
+}
+
+:host([data-ui5-compact-size]) ui5-checkbox.ui5-li-singlesel-radiobtn {
+	margin-right: 0.5rem;
+}
+
+/* RTL */
+:host [dir="rtl"] .ui5-li-icon {
+	padding-left: 0.5rem;
+	padding-right: 0;
+}
+
+:host [dir="rtl"] .ui5-li-img {
+	margin: .5rem 0 .5rem 0.75rem;
+}
+
+/*
+ * IE pair of styles
+ * to be removed later on
+ */
+
+/* actionable (type="Active" + desktop) */
+ui5-li[actionable] {
+	cursor: pointer;
+}
+
+/* selected */
+ui5-li[selected] {
+	background: var(--sapUiListSelectionBackgroundColor);
+}
+
+/* selected and hovered */
+ui5-li[selected][actionable]:not([active]):hover {
+	background : var(--sapUiListSelectionHoverBackground);
+}
+
+/* selected and active */
+ui5-li[active][actionable],
+ui5-li[selected][active][actionable] {
+	background: var(--sapUiListActiveBackground);
+}
+
+/* hovered */
+ui5-li[actionable]:not([active]):not([selected]):hover {
+	background : var(--sapUiListHoverBackground);
+}
+
+/* focused */
+ui5-li[active][actionable] .ui5-li-root.ui5-li--focusable:focus,
+ui5-li[active][actionable] .ui5-li-root.ui5-li--focusable .ui5-li-content:focus {
+	outline-color: var(--sapUiContentContrastFocusColor);
+}
+
+/* active */
+ui5-li[active][actionable] .ui5-li-root .ui5-li-icon {
+	color: var(--sapUiListActiveTextColor);
+}
+
+ui5-li[active][actionable] .ui5-li-title,
+ui5-li[active][actionable] .ui5-li-desc,
+ui5-li[active][actionable] .ui5-li-info {
+	color: var(--sapUiListActiveTextColor);
+}
+
+ui5-li[info-state="Warning"] .ui5-li-info {
+	color: var(--sapUiCriticalText);
+}
+
+ui5-li[info-state="Success"] .ui5-li-info {
+	color: var(--sapUiPositiveText);
+}
+
+ui5-li[info-state="Error"] .ui5-li-info {
+	color: var(--sapUiNegativeText);
+}
+
+ui5-li[data-ui5-compact-size][has-title][description],
+ui5-li[has-title][description] {
+	height: 5rem;
+}
+
+ui5-li[data-ui5-compact-size][has-title][description] .ui5-li-title,
+ui5-li[has-title][description] .ui5-li-title {
+	padding-bottom: 0.375rem;
+}
+
+
+/* actionable (type="Active" + desktop) */
+ui5-li-custom[actionable] {
+	cursor: pointer;
+}
+
+/* selected */
+ui5-li-custom[selected] {
+	background: var(--sapUiListSelectionBackgroundColor);
+}
+
+/* selected and hovered */
+ui5-li-custom[selected][actionable]:not([active]):hover {
+	background : var(--sapUiListSelectionHoverBackground);
+}
+
+/* selected and active */
+ui5-li-custom[active][actionable],
+ui5-li-custom[selected][active][actionable] {
+	background: var(--sapUiListActiveBackground);
+}
+
+/* hovered */
+ui5-li-custom[actionable]:not([active]):not([selected]):hover {
+	background : var(--sapUiListHoverBackground);
+}
+
+/* focused */
+ui5-li-custom[active][actionable] .ui5-li-root.ui5-li--focusable:focus,
+ui5-li-custom[active][actionable] .ui5-li-root.ui5-li--focusable .ui5-li-content:focus {
+	outline-color: var(--sapUiContentContrastFocusColor);
+}
+
+/* active */
+ui5-li-custom[active][actionable] .ui5-li-root .ui5-li-icon {
+	color: var(--sapUiListActiveTextColor);
+}
+
+/* Compact size */
+ui5-li[data-ui5-compact-size] .ui5-li-title {
+	height: 2rem;
+	line-height: 2rem;
+	font-size: var(--sapMFontMediumSize);
+}
+
+ui5-li[data-ui5-compact-size]:not([has-title]):not([description]) .ui5-li-img {
+	width: 1.75rem;
+	height: 1.75rem;
+	margin-top: 0.55rem;
+}
+
+ui5-li[data-ui5-compact-size] ui5-checkbox.ui5-li-singlesel-radiobtn {
+	margin-right: 0.5rem;
+}
+
+ui5-li-custom[data-ui5-compact-size] ui5-checkbox.ui5-li-singlesel-radiobtn {
+	margin-right: 0.5rem;
+}
+
+/* RTL */
+ui5-li [dir="rtl"] .ui5-li-icon {
+	padding-left: 0.5rem;
+	padding-right: 0;
+}
+
+ui5-li [dir="rtl"] .ui5-li-img {
+	margin: .5rem 0 .5rem 0.75rem;
 }

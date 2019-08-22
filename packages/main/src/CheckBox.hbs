@@ -1,20 +1,29 @@
-<div {{> controlData}}
-	class="{{classes.main}}"
-	style="{{styles.main}}"
+<div
+	class="ui5-checkbox-root {{classes.main}}"
 	role="checkbox"
-	aria-checked="{{ctr.checked}}"
+	aria-checked="{{checked}}"
 	aria-readonly="{{ariaReadonly}}"
-	tabindex="{{tabIndex}}">
-		<div id="{{ctr._id}}-CbBg" class="{{classes.inner}}">
-			<input id="{{ctr._id}}-CB" type='checkbox' ?checked="{{ctr.checked}}" ?readonly="{{ctr.readOnly}}" data-sap-no-tab-ref/>
+	aria-disabled="{{ariaDisabled}}"
+	aria-labelledby="{{ariaLabelledBy}}"
+	aria-describedby="{{ariaDescribedBy}}"
+	tabindex="{{tabIndex}}"
+	dir="{{rtl}}"
+>
+		<div id="{{_id}}-CbBg" class="ui5-checkbox-inner">
+			{{#if checked}}
+				<ui5-icon src="sap-icon://accept" class="ui5-checkbox-icon" dir="ltr"></ui5-icon>
+			{{/if}}
+				
+			<input id="{{_id}}-CB" type='checkbox' ?checked="{{checked}}" ?readonly="{{readonly}}" ?disabled="{{disabled}}" data-sap-no-tab-ref/>
 		</div>
 
-		{{#if ctr._label.text}}
-		<ui5-label
-				class="ui5-checkbox-label"
-				?wrap="{{ctr._label.wrap}}"
-		>{{ctr._label.text}}</ui5-label>
+		{{#if _label.text}}
+			<ui5-label id="{{_id}}-label" class="ui5-checkbox-label" ?wrap="{{_label.wrap}}">{{_label.text}}</ui5-label>
 		{{/if}}
 
-	<slot name="formSupport"></slot>
+		{{#if hasValueState}}
+			<span id="{{_id}}-descr" class="ui5-hidden-text">{{valueStateText}}</span>
+		{{/if}}
+
+		<slot name="formSupport"></slot>
 </div>

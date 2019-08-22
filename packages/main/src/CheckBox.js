@@ -1,17 +1,20 @@
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes.js";
-import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
-
-import CheckBoxRenderer from "./build/compiled/CheckBoxRenderer.lit.js";
-import CheckBoxTemplateContext from "./CheckBoxTemplateContext.js";
+import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
+import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import "./icons/accept.js";
+import Icon from "./Icon.js";
 import Label from "./Label.js";
+import { VALUE_STATE_ERROR, VALUE_STATE_WARNING } from "./generated/i18n/i18n-defaults.js";
+
+// Template
+import CheckBoxTemplate from "./generated/templates/CheckBoxTemplate.lit.js";
 
 // Styles
-import checkboxCss from "./themes/CheckBox.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
+import checkboxCss from "./generated/themes/CheckBox.css.js";
 
 /**
  * @public
@@ -26,6 +29,7 @@ const metadata = {
 		 * <b>Note:</b> A disabled <code>ui5-checkbox</code> is completely uninteractive.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		disabled: {
@@ -39,9 +43,10 @@ const metadata = {
 		 * but still provides visual feedback upon user interaction.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
-		readOnly: {
+		readonly: {
 			type: Boolean,
 		},
 
@@ -53,6 +58,7 @@ const metadata = {
 		 * pressing the Enter or Space key.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		checked: {
@@ -63,10 +69,10 @@ const metadata = {
 		 * Defines the text of the <code>ui5-checkbox</code>.
 		 *
 		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		text: {
-			defaultValue: "",
 			type: String,
 		},
 
@@ -76,11 +82,12 @@ const metadata = {
 		 * <b>Note:</b> Available options are <code>Warning</code>, <code>Error</code>, and <code>None</code> (default).
 		 *
 		 * @type {string}
+		 * @defaultvalue "None"
 		 * @public
 		 */
 		valueState: {
-			defaultValue: ValueState.None,
 			type: ValueState,
+			defaultValue: ValueState.None,
 		},
 
 		/**
@@ -89,6 +96,7 @@ const metadata = {
 		 * <b>Note:</b> By default, the text truncates when there is not enough space.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		wrap: {
@@ -99,13 +107,14 @@ const metadata = {
 		 * Determines the name with which the <code>ui5-checkbox</code> will be submitted in an HTML form.
 		 *
 		 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
-		 * <code>import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";</code>
+		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
 		 *
 		 * <b>Note:</b> When set, a native <code>input</code> HTML element
 		 * will be created inside the <code>ui5-checkbox</code> so that it can be submitted as
 		 * part of an HTML form. Do not use this property unless you need to submit a form.
 		 *
-		 * @type {String}
+		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		name: {
@@ -134,12 +143,12 @@ const metadata = {
  * <h3 class="comment-api-title">Overview</h3>
  *
  * Allows the user to set a binary value, such as true/false or yes/no for an item.
- * <br/><br/>
+ * <br><br>
  * The <code>ui5-checkbox</code> component consists of a box and a label that describes its purpose.
  * If it's checked, an indicator is displayed inside the box.
  * To check/uncheck the <code>ui5-checkbox</code>, the user has to click or tap the square
  * box or its label.
- * <br/><br/>
+ * <br><br>
  * Clicking or tapping toggles the <code>ui5-checkbox</code> between checked and unchecked state.
  * The <code>ui5-checkbox</code> component only has 2 states - checked and unchecked.
  *
@@ -151,7 +160,7 @@ const metadata = {
  * <br><br>
  * You can disable the <code>ui5-checkbox</code> by setting the <code>disabled</code> property to
  * <code>true</code>,
- * or use the <code>ui5-checkbox</code> in read-only mode by setting the <code>readOnly</code>
+ * or use the <code>ui5-checkbox</code> in read-only mode by setting the <code>readonly</code>
  * property to <code>true</code>.
  *
  * <h3>ES6 Module Import</h3>
@@ -170,8 +179,12 @@ class CheckBox extends UI5Element {
 		return metadata;
 	}
 
-	static get renderer() {
-		return CheckBoxRenderer;
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return CheckBoxTemplate;
 	}
 
 	static get styles() {
@@ -197,13 +210,14 @@ class CheckBox extends UI5Element {
 	}
 
 	_enableFormSupport() {
-		if (CheckBox.FormSupport) {
-			CheckBox.FormSupport.syncNativeHiddenInput(this, (element, nativeInput) => {
+		const FormSupport = getFeature("FormSupport");
+		if (FormSupport) {
+			FormSupport.syncNativeHiddenInput(this, (element, nativeInput) => {
 				nativeInput.disabled = element.disabled || !element.checked;
 				nativeInput.value = element.checked ? "on" : "";
 			});
 		} else if (this.name) {
-			console.warn(`In order for the "name" property to have effect, you should also: import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";`); // eslint-disable-line
+			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
 		}
 	}
 
@@ -212,17 +226,17 @@ class CheckBox extends UI5Element {
 	}
 
 	onkeydown(event) {
-		if (event.keyCode === KeyCodes.SPACE) {
+		if (isSpace(event)) {
 			event.preventDefault();
 		}
 
-		if (event.keyCode === KeyCodes.ENTER) {
+		if (isEnter(event)) {
 			this.toggle();
 		}
 	}
 
 	onkeyup(event) {
-		if (event.keyCode === KeyCodes.SPACE) {
+		if (isSpace(event)) {
 			this.toggle();
 		}
 	}
@@ -231,28 +245,71 @@ class CheckBox extends UI5Element {
 		if (this.canToggle()) {
 			this.checked = !this.checked;
 			this.fireEvent("change");
+			// Angular two way data binding
+			this.fireEvent("value-changed");
 		}
 		return this;
 	}
 
 	canToggle() {
-		return !(this.disabled || this.readOnly);
+		return !(this.disabled || this.readonly);
 	}
 
-	static get calculateTemplateContext() {
-		return CheckBoxTemplateContext.calculate;
+	get classes() {
+		return {
+			main: {
+				"ui5-checkbox--hoverable": !this.disabled && !this.readonly && isDesktop(),
+			},
+		};
+	}
+
+	get ariaReadonly() {
+		return this.readonly ? "true" : undefined;
+	}
+
+	get ariaDisabled() {
+		return this.disabled ? "true" : undefined;
+	}
+
+	get ariaLabelledBy() {
+		return this.text ? `${this._id}-label` : undefined;
+	}
+
+	get ariaDescribedBy() {
+		return this.hasValueState ? `${this._id}-descr` : undefined;
+	}
+
+	get hasValueState() {
+		return this.valueState !== ValueState.None;
+	}
+
+	static valueStateTextMappings() {
+		return {
+			"Error": VALUE_STATE_ERROR.defaultText,
+			"Warning": VALUE_STATE_WARNING.defaultText,
+		};
+	}
+
+	get valueStateText() {
+		return CheckBox.valueStateTextMappings()[this.valueState];
+	}
+
+	get tabIndex() {
+		return this.disabled ? undefined : "0";
+	}
+
+	get rtl() {
+		return getRTL() ? "rtl" : undefined;
 	}
 
 	static async define(...params) {
 		await Label.define();
+		await Icon.define();
 
 		super.define(...params);
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	CheckBox.define();
-});
-
+CheckBox.define();
 
 export default CheckBox;

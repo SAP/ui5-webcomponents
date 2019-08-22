@@ -72,7 +72,7 @@ module.exports = {
 		"no-script-url": 2,
 		"no-self-compare": 2,
 		"no-sequences": 2,
-		"no-unused-expressions": 1,
+		"no-unused-expressions": [1, { allowShortCircuit: true }],
 		"no-void": 2,
 		"no-warning-comments": 0,
 		"no-with": 2,

@@ -1,39 +1,68 @@
-:host(ui5-list) {
+:host(:not([hidden])) {
 	display: block;
 	max-width: 100%;
 }
 
-ui5-list {
-	display: block;
-	max-width: 100%;
+:host([inset]) .ui5-list-root {
+	padding: 2rem;
 }
 
-.sapMList {
+:host([separators="None"]) .ui5-list-nodata {
+	border-bottom: 0;
+}
+
+.ui5-list-root {
 	width: 100%;
 	height: 100%;
 	position: relative;
 	box-sizing: border-box;
 }
 
-.sapMList.sapMListInsetBG {
-	padding: 2rem;
-}
-
-.sapMList .sapMListUl {
+.ui5-list-root .ui5-list-ul {
 	list-style-type: none;
 	padding: 0;
 	margin: 0;
 }
 
-.sapMList .sapMListUl:focus {
+.ui5-list-root .ui5-list-ul:focus {
 	outline: none;
 }
 
-.sapMList .sapMListDummyArea {
+.ui5-list-root .ui5-list-focusarea {
 	position: fixed; /* keep it in the visible viewport, so that IE does not scroll on focus */
 }
 
-.sapMList .sapMListNoData {
+.ui5-list-root .ui5-list-header {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	box-sizing: border-box;
+	font-size: var(--sapMFontHeader4Size);
+	font-family: var(--sapUiFontHeaderFamily);
+	color: var(--sapUiGroupTitleTextColor);
+	height: 3rem;
+	line-height: 3rem;
+	padding: 0 1rem;
+	background-color: var(--sapUiGroupTitleBackground);
+	border-bottom: 1px solid var(--sapUiGroupTitleBorderColor);
+}
+
+.ui5-list-root .ui5-list-footer {
+	height: 2rem;
+	box-sizing: border-box;
+	-webkit-text-size-adjust: none;	/* To improve readability Mobile Safari automatically increases the size of small text so let's disable this */
+	font-size: var(--sapMFontMediumSize);
+	font-family: var(--sapUiFontFamily,var(--sapFontFamily,"72","72full",Arial,Helvetica,sans-serif));
+	line-height: 2rem;
+	background-color: var(--sapUiListFooterBackground);
+	color: var(--sapUiListFooterTextColor);
+	padding: 0 1rem;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.ui5-list-root .ui5-list-nodata {
 	list-style-type: none;
 	display: -webkit-box;
 	display: flex;
@@ -49,46 +78,36 @@ ui5-list {
 }
 
 
-.sapMList .sapMListHdrText {
-	overflow: hidden;
-	white-space: nowrap;
-	text-overflow: ellipsis;
-	box-sizing: border-box;
-	font-size: var(--sapMFontHeader4Size);
-	font-family: var(--sapUiFontHeaderFamily);
-	color: var(--sapUiGroupTitleTextColor);
-	height: 3rem;
-	line-height: 3rem;
-	padding: 0 1rem;
-	background-color: var(--sapUiGroupTitleBackground);
-	border-bottom: 1px solid var(--sapUiGroupTitleBorderColor);
-}
-.sapMList .sapMListFtr {
-	height: 2rem;
-	box-sizing: border-box;
-	-webkit-text-size-adjust: none;	/* To improve readability Mobile Safari automatically increases the size of small text so let's disable this */
-	font-size: var(--sapMFontMediumSize);
-	line-height: 2rem;
-	background-color: var(--sapUiListFooterBackground);
-	color: var(--sapUiListFooterTextColor);
-	padding: 0 1rem;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
-
-.sapMList .sapMListShowSeparatorsNone .sapMListNoData {
-	border-bottom: 0px;
-}
-
-.sapMList .sapMListNoDataText {
+.ui5-list-root .ui5-list-nodata-text {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
 
 /* Compact size */
-.sapUiSizeCompact .sapMList .sapMListNoData {
+:host([data-ui5-compact-size]) .ui5-list-root .ui5-list-nodata {
 	height: 2rem;
 	font-size: var(--sapMFontMediumSize);
+}
+
+/* 
+ * IE pair of styles
+ * to be removed later on
+ */
+ui5-list:not([hidden]) {
+	display: block;
+	max-width: 100%;
+}
+
+ui5-list[inset] .ui5-list-root {
+	padding: 2rem;
+}
+
+ui5-list[data-ui5-compact-size] .ui5-list-root .ui5-list-nodata {
+	height: 2rem;
+	font-size: var(--sapMFontMediumSize);
+}
+
+ui5-list[separators="None"] .ui5-list-nodata {
+	border-bottom: 0;
 }

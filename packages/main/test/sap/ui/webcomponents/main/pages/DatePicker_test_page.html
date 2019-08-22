@@ -5,7 +5,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta charset="utf-8">
 
-	<script data-id="sap-ui-config" type="application/json">
+	<script data-ui5-config type="application/json">
 		{
 			"language": "EN"
 		}
@@ -31,6 +31,7 @@
 	<ui5-datepicker id="dp11"></ui5-datepicker>
 	<ui5-datepicker id="dp12"></ui5-datepicker>
 	<ui5-datepicker id="dp13"></ui5-datepicker>
+
 	<label id='lbl'>0</label>
 	<label for="inputTimezone">Timezone:</label>
 	<input id="inputTimezone" type="number"/>
@@ -61,9 +62,9 @@
 			document.querySelector('#lbl').innerHTML = ++counter;
 		}
 
-		document.querySelector("#dp5").addEventListener("change", increaseCounter);
-		document.querySelector("#dp8").addEventListener("change", increaseCounter);
-		document.querySelector("#dp13").addEventListener("change", function(e) {
+		document.querySelector("#dp5").addEventListener("ui5-change", increaseCounter);
+		document.querySelector("#dp8").addEventListener("ui5-change", increaseCounter);
+		document.querySelector("#dp13").addEventListener("ui5-change", function(e) {
 			document.querySelector('#lblTomorrow').innerHTML = ++counterTomorrow;
 			document.querySelector('#lblTomorrowDate').innerHTML = e.target.value;
 		});

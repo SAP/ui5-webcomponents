@@ -10,7 +10,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta charset="utf-8">
 
-	<script data-id="sap-ui-config" type="application/json">
+	<script data-ui5-config type="application/json">
 		{
 			"theme": "sap_fiori_3",
 			"language": "EN"
@@ -27,6 +27,7 @@
 	<script nomodule src="../../../../../../resources/sap/ui/webcomponents/main/bundle.es5.js">
 	</script>
 
+<script>delete Document.prototype.adoptedStyleSheets;</script>
 	<style>
 		html,
 		body {
@@ -78,13 +79,13 @@
 				<ui5-tab text="Products" additional-text="125">
 				</ui5-tab>
 				<ui5-tab-separator></ui5-tab-separator>
-				<ui5-tab icon="sap-icon://menu2" text="Laptops" icon-color="Positive" additional-text="25">
+				<ui5-tab icon="sap-icon://menu2" text="Laptops" semantic-color="Positive" additional-text="25">
 				</ui5-tab>
-				<ui5-tab icon="sap-icon://menu" text="Monitors" selected icon-color="Critical" additional-text="45">
+				<ui5-tab icon="sap-icon://menu" text="Monitors" selected semantic-color="Critical" additional-text="45">
 				</ui5-tab>
-				<ui5-tab icon="sap-icon://menu2" text="Keyboards"  icon-color="Negative" additional-text="15">
+				<ui5-tab icon="sap-icon://menu2" text="Keyboards"  semantic-color="Negative" additional-text="15">
 				</ui5-tab>
-				<ui5-tab icon="sap-icon://menu2" disabled="true" text="Disabled"  icon-color="Negative" additional-text="40">
+				<ui5-tab icon="sap-icon://menu2" disabled="true" text="Disabled"  semantic-color="Negative" additional-text="40">
 				</ui5-tab>
 			</ui5-tabcontainer>
 		</div>
@@ -161,7 +162,7 @@
 		</div>
 
 		<div class="sample">
-			<h4>Tabs with input controls</h4>
+			<h4>Tabs with input elements</h4>
 
 			<ui5-tabcontainer show-overflow="true">
 				<ui5-tab text="Tab 1" selected>
@@ -184,7 +185,7 @@
 <script>
 	var result = document.getElementById("result");
 
-	document.getElementById("tabContainer1").addEventListener("itemSelect", function (event) {
+	document.getElementById("tabContainer1").addEventListener("ui5-itemSelect", function (event) {
 		document.getElementById("result").innerHTML = event.detail.item.text;
 	});
 </script>

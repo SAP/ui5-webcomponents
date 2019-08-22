@@ -1,17 +1,24 @@
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes.js";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
+import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
+import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
+import Icon from "./Icon.js";
+import "./icons/accept.js";
+import "./icons/decline.js";
+
+import {
+	SWITCH_ON,
+	SWITCH_OFF,
+} from "./generated/i18n/i18n-defaults.js";
 
 // Template
-import SwitchRenderer from "./build/compiled/SwitchRenderer.lit.js";
-import SwitchTemplateContext from "./SwitchTemplateContext.js";
-import SwitchType from "./types/SwitchType.js";
+import SwitchTemplate from "./generated/templates/SwitchTemplate.lit.js";
+
 
 // Styles
-import switchCss from "./themes/Switch.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
+import switchCss from "./generated/themes/Switch.css.js";
 
 /**
  * @public
@@ -28,7 +35,7 @@ const metadata = {
 		 * pressing the <code>Enter</code> or <code>Space</code> key.
 		 *
 		 * @type {boolean}
-		 * @default false
+		 * @defaultvalue false
 		 * @public
 		 */
 		checked: {
@@ -41,7 +48,7 @@ const metadata = {
 		 * <b>Note:</b> A disabled <code>ui5-switch</code> is noninteractive.
 		 *
 		 * @type {boolean}
-		 * @default false
+		 * @defaultvalue false
 		 * @public
 		 */
 		disabled: {
@@ -52,43 +59,40 @@ const metadata = {
 		 * Defines the text of the <code>ui5-switch</code> when switched on.
 		 *
 		 * <br><br>
-		 * <b>Note:</b> We recommend using short texts (up to 3 letters, because larger texts might be cut off.
+		 * <b>Note:</b> We recommend using short texts, up to 3 letters (larger texts would be cut off).
 		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		textOn: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
 		 * Defines the text of the <code>ui5-switch</code> when switched off.
 		 *
 		 * <br><br>
-		 * <b>Note:</b> We recommend using short texts (up to 3 letters, because larger texts might be cut off.
+		 * <b>Note:</b> We recommend using short texts, up to 3 letters (larger texts would be cut off).
 		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		textOff: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
 		 * Defines the <code>ui5-switch</code> type.
 		 * <br>
-		 * Available options are <code>Textual</code> and <code>Graphical</code>.
 		 *
-		 * <br><br>
-		 * <b>Note:</b> If <code>Graphical</code> type is set,
+		 * <b>Note:</b> If <code>graphical</code> type is set,
 		 * positive and negative icons will replace the <code>textOn</code> and <code>textOff</code>.
 		 * @type {string}
-		 * @default Textual
+		 * @defaultvalue false
 		 * @public
 		 */
-		type: {
-			type: String,
-			defaultValue: SwitchType.Textual,
+		graphical: {
+			type: Boolean,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Switch.prototype */ {
@@ -108,6 +112,16 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  * The <code>ui5-switch</code> component is used for changing between binary states.
+ * <br>
+ * The component can display texts, that will be switched, based on the component state, via the <code>textOn</code> and <code>textOff</code> properties,
+ * but texts longer than 3 letters will be cuttted off.
+ * <br>
+ * However, users are able to customize the width of <code>ui5-switch</code> with pure CSS (&lt;ui5-switch style="width: 200px">), and set widths, depending on the texts they would use.
+ * <br>
+ * Note: the component would not automatically stretch to fit the whole text width.
+ *
+ * <h3>Keyboard Handling</h3>
+ * The state can be changed by pressing the Space and Enter keys.
  *
  * <h3>ES6 Module Import</h3>
  *
@@ -130,8 +144,18 @@ class Switch extends UI5Element {
 		return switchCss;
 	}
 
-	static get renderer() {
-		return SwitchRenderer;
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return SwitchTemplate;
+	}
+
+	constructor() {
+		super();
+
+		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
 	}
 
 	onclick(event) {
@@ -139,17 +163,17 @@ class Switch extends UI5Element {
 	}
 
 	onkeydown(event) {
-		if (event.keyCode === KeyCodes.SPACE) {
+		if (isSpace(event)) {
 			event.preventDefault();
 		}
 
-		if (event.keyCode === KeyCodes.ENTER) {
+		if (isEnter(event)) {
 			this.toggle();
 		}
 	}
 
 	onkeyup(event) {
-		if (event.keyCode === KeyCodes.SPACE) {
+		if (isSpace(event)) {
 			this.toggle();
 		}
 	}
@@ -158,17 +182,67 @@ class Switch extends UI5Element {
 		if (!this.disabled) {
 			this.checked = !this.checked;
 			this.fireEvent("change");
+			// Angular two way data binding;
+			this.fireEvent("value-changed");
 		}
 	}
 
-	static get calculateTemplateContext() {
-		return SwitchTemplateContext.calculate;
+	get _textOn() {
+		return this.graphical ? "" : this.textOn;
+	}
+
+	get _textOff() {
+		return this.graphical ? "" : this.textOff;
+	}
+
+	get tabIndex() {
+		return this.disabled ? undefined : "0";
+	}
+
+	get classes() {
+		const hasLabel = this.graphical || this.textOn || this.textOff;
+
+		return {
+			main: {
+				"ui5-switch-desktop": isDesktop(),
+				"ui5-switch--disabled": this.disabled,
+				"ui5-switch--checked": this.checked,
+				"ui5-switch--semantic": this.graphical,
+				"ui5-switch--no-label": !hasLabel,
+			},
+		};
+	}
+
+	get ariaDisabled() {
+		return this.disabled ? "true" : undefined;
+	}
+
+	get rtl() {
+		return getRTL() ? "rtl" : undefined;
+	}
+
+	get accessibilityOnText() {
+		return this._textOn || this.resourceBundle.getText(SWITCH_ON);
+	}
+
+	get accessibilityOffText() {
+		return this._textOff || this.resourceBundle.getText(SWITCH_OFF);
+	}
+
+	get hiddenText() {
+		return this.checked ? this.accessibilityOnText : this.accessibilityOffText;
+	}
+
+	static async define(...params) {
+		await Promise.all([
+			Icon.define(),
+			fetchResourceBundle("@ui5/webcomponents"),
+		]);
+
+		super.define(...params);
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	Switch.define();
-});
-
+Switch.define();
 
 export default Switch;

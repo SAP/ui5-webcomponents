@@ -1,37 +1,30 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import URI from "@ui5/webcomponents-base/src/types/URI.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import ListItem from "./ListItem.js";
 import Icon from "./Icon.js";
-import StandardListItemTemplateContext from "./StandardListItemTemplateContext.js";
-import StandardListItemRenderer from "./build/compiled/StandardListItemRenderer.lit.js";
-
-// Styles
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
+import StandardListItemTemplate from "./generated/templates/StandardListItemTemplate.lit.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-li",
-	usesNodeText: true,
 	properties: /** @lends sap.ui.webcomponents.main.StandardListItem.prototype */ {
 
 		/**
 		 * Defines the description displayed right under the item text, if such is present.
-		 * @type {String}
+		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 * @since 0.8.0
 		 */
 		description: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
 		 * Defines the <code>icon</code> source URI.
-		 * </br></br>
+		 * <br><br>
 		 * <b>Note:</b>
 		 * SAP-icons font provides numerous buil-in icons. To find all the available icons, see the
 		 * <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
@@ -40,16 +33,16 @@ const metadata = {
 		 * @public
 		 */
 		icon: {
-			type: URI,
-			defaultValue: null,
+			type: String,
 		},
 
 		/**
 		 * Defines whether the <code>icon</code> should be displayed in the beginning of the list item or in the end.
-		 * </br></br>
+		 * <br><br>
 		 * <b>Note:</b> If <code>image</code> is set, the <code>icon</code> would be displayed after the <code>image</code>.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		iconEnd: {
@@ -58,15 +51,59 @@ const metadata = {
 
 		/**
 		 * Defines the <code>image</code> source URI.
-		 * </br></br>
+		 * <br><br>
 		 * <b>Note:</b> The <code>image</code> would be displayed in the beginning of the list item.
 		 *
 		 * @type {string}
 		 * @public
 		 */
 		image: {
-			type: URI,
-			defaultValue: null,
+			type: String,
+		},
+
+		/**
+		 * Defines the <code>info</code>, displayed in the end of the list item.
+		 * @type {string}
+		 * @public
+		 * @since 0.13.0
+		 */
+		info: {
+			type: String,
+		},
+
+		/**
+		 * Defines the state of the <code>info</code>.
+		 * <br>
+		 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code> and <code>"Erorr"</code>.
+		 * @type {string}
+		 * @public
+		 * @since 0.13.0
+		 */
+		infoState: {
+			type: ValueState,
+			defaultValue: ValueState.None,
+		},
+
+		/**
+		 * Indicates if the list item has text content.
+		 * @type {boolean}
+		 * @private
+		 */
+		hasTitle: {
+			type: Boolean,
+		},
+	},
+	slots: /** @lends sap.ui.webcomponents.main.StandardListItem.prototype */ {
+		/**
+		 * Defines the text of the <code>ui5-li</code>.
+		 * <br><b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+		 *
+		 * @type {Node[]}
+		 * @slot
+		 * @public
+		 */
+		"default": {
+			type: Node,
 		},
 	},
 };
@@ -84,12 +121,15 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.StandardListItem
  * @extends ListItem
  * @tagname ui5-li
- * @usestextcontent
  * @public
  */
 class StandardListItem extends ListItem {
-	static get renderer() {
-		return StandardListItemRenderer;
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return StandardListItemTemplate;
 	}
 
 	static get styles() {
@@ -100,8 +140,21 @@ class StandardListItem extends ListItem {
 		return metadata;
 	}
 
-	static get calculateTemplateContext() {
-		return StandardListItemTemplateContext.calculate;
+	onBeforeRendering(...params) {
+		super.onBeforeRendering(...params);
+		this.hasTitle = !!this.textContent;
+	}
+
+	get displayImage() {
+		return !!this.image;
+	}
+
+	get displayIconBegin() {
+		return (this.icon && !this.iconEnd);
+	}
+
+	get displayIconEnd() {
+		return (this.icon && this.iconEnd);
 	}
 
 	static async define(...params) {
@@ -111,8 +164,6 @@ class StandardListItem extends ListItem {
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	StandardListItem.define();
-});
+StandardListItem.define();
 
 export default StandardListItem;

@@ -1,55 +1,57 @@
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isIE } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
-import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
+import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import {
 	isUp,
 	isDown,
 	isSpace,
 	isEnter,
-} from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-import Icon from "./Icon.js";
+} from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+// import Icon from "./Icon.js";
 import InputType from "./types/InputType.js";
 // Template
-import InputRenderer from "./build/compiled/InputRenderer.lit.js";
-import InputTemplateContext from "./InputTemplateContext.js";
+import InputTemplate from "./generated/templates/InputTemplate.lit.js";
+
+import {
+	VALUE_STATE_SUCCESS,
+	VALUE_STATE_ERROR,
+	VALUE_STATE_WARNING,
+	INPUT_SUGGESTIONS,
+} from "./generated/i18n/i18n-defaults.js";
 
 // Styles
-import styles from "./themes/Input.css.js";
-import shellbarInput from "./themes/ShellBarInput.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
+import styles from "./generated/themes/Input.css.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-input",
-	defaultSlot: "suggestionItems",
 	slots: /** @lends sap.ui.webcomponents.main.Input.prototype */ {
 
 		/**
 		 * Defines the icon to be displayed in the <code>ui5-input</code>.
 		 *
-		 * @type {Icon}
+		 * @type {Icon[]}
 		 * @slot
 		 * @public
 		 */
 		icon: {
-			type: Icon,
+			type: HTMLElement,
 		},
 
 		/**
 		 * Defines the <code>ui5-input</code> suggestion items.
-		 * </br></br>
-		 * Example: </br>
-		 * &lt;ui5-input show-suggestions></br>
-		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li type="Active">Item #1&lt;/ui5-li></br>
-		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li type="Active">Item #2&lt;/ui5-li></br>
+		 * <br><br>
+		 * Example: <br>
+		 * &lt;ui5-input show-suggestions><br>
+		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li>Item #1&lt;/ui5-li><br>
+		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li>Item #2&lt;/ui5-li><br>
 		 * &lt;/ui5-input>
-		 * <ui5-input show-suggestions><ui5-li type="Active">Item #1</ui5-li><ui5-li type="Active">Item #2</ui5-li></ui5-input>
-		 * </br></br>
+		 * <ui5-input show-suggestions><ui5-li>Item #1</ui5-li><ui5-li>Item #2</ui5-li></ui5-input>
+		 * <br><br>
 		 * <b>Note:</b> The suggestion would be displayed only if the <code>showSuggestions</code>
 		 * property is set to <code>true</code>.
 		 *
@@ -57,9 +59,13 @@ const metadata = {
 		 * @slot
 		 * @public
 		 */
-		suggestionItems: {
+		"default": {
+			propertyName: "suggestionItems",
 			type: HTMLElement,
-			multiple: true,
+		},
+
+		_beginContent: {
+			type: HTMLElement,
 		},
 	},
 	properties: /** @lends  sap.ui.webcomponents.main.Input.prototype */  {
@@ -70,6 +76,7 @@ const metadata = {
 		 * <b>Note:</b> A disabled <code>ui5-input</code> is completely uninteractive.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		disabled: {
@@ -82,10 +89,10 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> The placeholder is not supported in IE. If the placeholder is provided, it won`t be displayed in IE.
 		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		placeholder: {
-			defaultValue: null,
 			type: String,
 		},
 
@@ -96,9 +103,22 @@ const metadata = {
 		 * but still provides visual feedback upon user interaction.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		readonly: {
+			type: Boolean,
+		},
+
+		/**
+		 * Defines whether the <code>ui5-input</code> is required.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 * @since 1.0.0
+		 */
+		required: {
 			type: Boolean,
 		},
 
@@ -116,11 +136,12 @@ const metadata = {
 		 * </ul>
 		 *
 		 * @type {string}
+		 * @defaultvalue "Text"
 		 * @public
 		 */
 		type: {
-			defaultValue: InputType.Text,
 			type: InputType,
+			defaultValue: InputType.Text,
 		},
 
 		/**
@@ -129,10 +150,10 @@ const metadata = {
 		 * <b>Note:</b> The property is updated upon typing.
 		 *
 		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		value: {
-			defaultValue: "",
 			type: String,
 		},
 
@@ -141,6 +162,7 @@ const metadata = {
 		 * Available options are: <code>None</code>, <code>Success</code>, <code>Warning</code>, and <code>Error</code>.
 		 *
 		 * @type {string}
+		 * @defaultvalue "None"
 		 * @public
 		 */
 		valueState: {
@@ -152,13 +174,14 @@ const metadata = {
 		 * Determines the name with which the <code>ui5-input</code> will be submitted in an HTML form.
 		 *
 		 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
-		 * <code>import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";</code>
+		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
 		 *
 		 * <b>Note:</b> When set, a native <code>input</code> HTML element
 		 * will be created inside the <code>ui5-input</code> so that it can be submitted as
 		 * part of an HTML form. Do not use this property unless you need to submit a form.
 		 *
-		 * @type {String}
+		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		name: {
@@ -169,13 +192,17 @@ const metadata = {
 		 * Defines whether the <code>ui5-input</code> should show suggestions, if such are present.
 		 *
 		 * @type {Boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		showSuggestions: {
 			type: Boolean,
 		},
 
-		_focused: {
+		/**
+		 * @private
+		 */
+		focused: {
 			type: Boolean,
 		},
 
@@ -248,15 +275,15 @@ const metadata = {
  * which enables you to react on any text change.
  * <br><br>
  * <b>Note:</b> If you are using the <code>ui5-input</code> as a single npm module,
- * don"t forget to import the <code>Suggestions</code> module from
- * "@ui5/webcomponents/dist/Suggestions"
+ * don"t forget to import the <code>InputSuggestions</code> module from
+ * "@ui5/webcomponents/dist/features/InputSuggestions.js"
  * to enable the suggestions functionality.
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/Input";</code>
+ * <code>import "@ui5/webcomponents/dist/Input.js";</code>
  * <br>
- * <code>import "@ui5/webcomponents/dist/InputSuggestions";</code> (optional - for input suggestions support)
+ * <code>import "@ui5/webcomponents/dist/features/InputSuggestions.js";</code> (optional - for input suggestions support)
  *
  * @constructor
  * @author SAP SE
@@ -270,16 +297,16 @@ class Input extends UI5Element {
 		return metadata;
 	}
 
-	static get renderer() {
-		return InputRenderer;
+	static get render() {
+		return litRender;
 	}
 
-	static get calculateTemplateContext() {
-		return InputTemplateContext.calculate;
+	static get template() {
+		return InputTemplate;
 	}
 
 	static get styles() {
-		return [styles, shellbarInput];
+		return [styles];
 	}
 
 	constructor() {
@@ -307,15 +334,6 @@ class Input extends UI5Element {
 		// all user interactions
 		this.ACTION_ENTER = "enter";
 		this.ACTION_USER_INPUT = "input";
-
-		this._input = {
-			onInput: this._onInput.bind(this),
-			change: event => {
-				this.fireEvent(this.EVENT_CHANGE);
-			},
-		};
-
-		this._whenShadowRootReady().then(this.attachFocusHandlers.bind(this));
 	}
 
 	onBeforeRendering() {
@@ -323,10 +341,11 @@ class Input extends UI5Element {
 			this.enableSuggestions();
 		}
 
-		if (Input.FormSupport) {
-			Input.FormSupport.syncNativeHiddenInput(this);
+		const FormSupport = getFeature("FormSupport");
+		if (FormSupport) {
+			FormSupport.syncNativeHiddenInput(this);
 		} else if (this.name) {
-			console.warn(`In order for the "name" property to have effect, you should also: import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";`); // eslint-disable-line
+			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
 		}
 	}
 
@@ -382,16 +401,20 @@ class Input extends UI5Element {
 	}
 
 	onfocusin() {
-		this._focused = true; // invalidating property
+		this.focused = true; // invalidating property
 		this.previousValue = this.value;
 	}
 
 	onfocusout() {
-		this._focused = false; // invalidating property
+		this.focused = false; // invalidating property
 		this.previousValue = "";
 	}
 
-	_onInput(event) {
+	_handleChange(event) {
+		this.fireEvent(this.EVENT_CHANGE);
+	}
+
+	_handleInput(event) {
 		if (event.target === this.getInputDOMRef()) {
 			// stop the native event, as the semantic "input" would be fired.
 			event.stopImmediatePropagation();
@@ -405,34 +428,28 @@ class Input extends UI5Element {
 		}
 	}
 
-	/* Private Methods */
-	attachFocusHandlers() {
-		this.shadowRoot.addEventListener("focusout", this.onfocusout.bind(this));
-		this.shadowRoot.addEventListener("focusin", this.onfocusin.bind(this));
-	}
-
 	enableSuggestions() {
 		if (this.Suggestions) {
 			return;
 		}
 
-		try {
-			const Suggestions = Input.getSuggestions();
+		const Suggestions = getFeature("InputSuggestions");
+		if (Suggestions) {
 			this.Suggestions = new Suggestions(this, "suggestionItems");
-		} catch (err) {
-			throw new Error(`You have to import @ui5/webcomponents/dist/InputSuggestions module to use ui5-input suggestions:: ${err}`);
+		} else {
+			throw new Error(`You have to import "@ui5/webcomponents/dist/features/InputSuggestions.js" module to use ui5-input suggestions`);
 		}
 	}
 
 	shouldOpenSuggestions() {
 		return !!(this.suggestionItems.length
 			&& this.showSuggestions
-			&& this._focused
+			&& this.focused
 			&& !this.hasSuggestionItemSelected);
 	}
 
 	selectSuggestion(item, keyboardUsed) {
-		const itemText = item._nodeText;
+		const itemText = item.textContent;
 		const fireInput = keyboardUsed
 			? this.valueBeforeItemSelection !== itemText : this.value !== itemText;
 
@@ -466,6 +483,8 @@ class Input extends UI5Element {
 
 		if (isUserInput) { // input
 			this.fireEvent(this.EVENT_INPUT);
+			// Angular two way data binding
+			this.fireEvent("value-changed");
 			return;
 		}
 
@@ -515,10 +534,66 @@ class Input extends UI5Element {
 	onOpen() {}
 
 	onClose() {}
+
+	get inputPlaceholder() {
+		// We don`t support placeholder for IE,
+		// because IE fires input events, when placeholder exists, leading to functional degredations.
+		return isIE() ? "" : this.placeholder;
+	}
+
+	get _readonly() {
+		return this.readonly && !this.disabled;
+	}
+
+	get inputType() {
+		return this.type.toLowerCase();
+	}
+
+	get ariaInvalid() {
+		return this.valueState === ValueState.Error ? "true" : undefined;
+	}
+
+	get suggestionsTextId() {
+		return this.showSuggestions ? `${this._id}-suggestionsText` : "";
+	  }
+
+	get valueStateTextId() {
+		return this.hasValueState ? `${this._id}-descr` : "";
+	}
+
+	get ariaDescribedBy() {
+		return `${this.suggestionsTextId} ${this.valueStateTextId}`.trim();
+	}
+
+	get ariaHasPopup() {
+		return this.showSuggestions ? "true" : undefined;
+	}
+
+	get ariaAutoComplete() {
+		return this.showSuggestions ? "list" : undefined;
+	}
+
+	get hasValueState() {
+		return this.valueState !== ValueState.None;
+	}
+
+	static valueStateTextMappings() {
+		return {
+			"Success": VALUE_STATE_SUCCESS.defaultText,
+			"Error": VALUE_STATE_ERROR.defaultText,
+			"Warning": VALUE_STATE_WARNING.defaultText,
+		};
+	}
+
+	get valueStateText() {
+		return Input.valueStateTextMappings()[this.valueState];
+	}
+
+	get suggestionsText() {
+		return INPUT_SUGGESTIONS.defaultText;
+	}
 }
 
-Bootstrap.boot().then(_ => {
-	Input.define();
-});
+Input.define();
 
 export default Input;

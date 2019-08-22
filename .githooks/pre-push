@@ -1,0 +1,7 @@
+#!/bin/sh
+#
+# To enable this hook, run this command from the root folder of the project
+#   $ git config core.hooksPath .githooks
+
+# git runs hooks in the root dir
+yarn lint

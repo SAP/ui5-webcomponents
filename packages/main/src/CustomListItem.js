@@ -1,31 +1,25 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ListItem from "./ListItem.js";
-import CustomListItemTemplateContext from "./CustomListItemTemplateContext.js";
-import CustomListItemRenderer from "./build/compiled/CustomListItemRenderer.lit.js";
+import CustomListItemTemplate from "./generated/templates/CustomListItemTemplate.lit.js";
 
 // Styles
-import columnListItemCss from "./themes/CustomListItem.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
+import columnListItemCss from "./generated/themes/CustomListItem.css.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-li-custom",
-	defaultSlot: "content",
 	slots: /** @lends sap.ui.webcomponents.main.CustomListItem.prototype */ {
 
 		/**
 		 * Defines the content of the <code>ui5-li-custom</code>.
-		 * @type {HTMLElement[]}
+		 * @type {Node[]}
 		 * @slot
 		 * @public
 		 */
-		content: {
-			type: HTMLElement,
-			multiple: true,
+		"default": {
+			type: Node,
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.CustomListItem.prototype */ {
@@ -52,21 +46,25 @@ class CustomListItem extends ListItem {
 		return metadata;
 	}
 
-	static get renderer() {
-		return CustomListItemRenderer;
+	static get render() {
+		return litRender;
 	}
 
-	static get calculateTemplateContext() {
-		return CustomListItemTemplateContext.calculate;
+	static get template() {
+		return CustomListItemTemplate;
 	}
 
 	static get styles() {
 		return [ListItem.styles, columnListItemCss];
 	}
+
+	get classes() {
+		const result = super.classes;
+		result.main["ui5-custom-li-root"] = true;
+		return result;
+	}
 }
 
-Bootstrap.boot().then(_ => {
-	CustomListItem.define();
-});
+CustomListItem.define();
 
 export default CustomListItem;

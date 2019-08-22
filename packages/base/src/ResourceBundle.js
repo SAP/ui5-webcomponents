@@ -1,35 +1,12 @@
 import "./shims/jquery-shim.js";
+import "./shims/Core-shim.js";
 import ResourceBundle from "@ui5/webcomponents-core/dist/sap/base/i18n/ResourceBundle.js";
+import formatMessage from "@ui5/webcomponents-core/dist/sap/base/strings/formatMessage.js";
 import { getLanguage } from "./LocaleProvider.js";
 import { registerModuleContent } from "./ResourceLoaderOverrides.js";
 import { fetchJsonOnce } from "./util/FetchHelper.js";
 
 const bundleURLs = new Map();
-const singletonPromises = new Map();
-
-/**
- * Creates a new promise for the specified key (or returns a new one and stores it for next calls).
- * The same promise is always returned for multiple calls to this method for the same key.
- * This promise can also be resolved so that all usages that await its resolution can continue.
- * @param {key} key the unique key identifying the promise
- * @private
- */
-const _getSingletonPromise = key => {
-	const prevPromise = singletonPromises.get(key);
-	if (prevPromise) {
-		return prevPromise;
-	}
-
-	let resolveFn;
-	const newPromise = new Promise(resolve => {
-		resolveFn = resolve;
-	});
-	// private usage for making a deferred-like API to avoid storing resolve functions in a second map
-	newPromise._deferredResolve = resolveFn;
-
-	singletonPromises.set(key, newPromise);
-	return newPromise;
-};
 
 /**
  * This method preforms the asyncronous task of fething the actual text resources. It will fetch
@@ -41,9 +18,13 @@ const _getSingletonPromise = key => {
  * @public
  */
 const fetchResourceBundle = async packageId => {
-	// depending on the module resolution order, the fetch might run before the bundle URLs are registered - sync them here
-	await _getSingletonPromise(packageId);
 	const bundlesForPackage = bundleURLs.get(packageId);
+
+	if (!bundlesForPackage) {
+		console.warn(`Message bundle assets are not configured. Falling back to english texts.`, /* eslint-disable-line */
+		` You need to import @ui5/webcomponents/dist/MessageBundleAssets.js with a build tool that supports JSON imports.`); /* eslint-disable-line */
+		return;
+	}
 
 	const language = getLanguage();
 
@@ -72,13 +53,38 @@ const fetchResourceBundle = async packageId => {
  */
 const registerMessageBundles = (packageId, bundlesMap) => {
 	bundleURLs.set(packageId, bundlesMap);
-	_getSingletonPromise(packageId)._deferredResolve();
 };
 
-const getResourceBundle = library => {
-	return ResourceBundle.create({
-		url: `${library}.properties`,
-	});
+class ResourceBundleFallback {
+	getText(textObj, ...params) {
+		return formatMessage(textObj.defaultText, params);
+	}
+}
+
+class ResourceBundleWrapper {
+	constructor(resouceBundle) {
+		this._resourceBundle = resouceBundle;
+	}
+
+	getText(textObj, ...params) {
+		if (!this._resourceBundle.hasText(textObj.key)) {
+			return textObj.defaultText;
+		}
+
+		return this._resourceBundle.getText(textObj.key, ...params);
+	}
+}
+
+const getResourceBundle = packageId => {
+	const bundleLoaded = bundleURLs.has(packageId);
+
+	if (bundleLoaded) {
+		return new ResourceBundleWrapper(ResourceBundle.create({
+			url: `${packageId}.properties`,
+		}));
+	}
+
+	return new ResourceBundleFallback();
 };
 
 export { fetchResourceBundle, registerMessageBundles, getResourceBundle };

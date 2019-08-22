@@ -6,7 +6,7 @@
 
 	<title>Popover</title>
 
-	<script data-id="sap-ui-config" type="application/json">
+	<script data-ui5-config type="application/json">
 		{
 			"language": "EN",
 			"libs": "sap.ui.webcomponents.main"
@@ -23,8 +23,11 @@
 	</script>
 </head>
 
-<body>
-	<ui5-button id="btnOpenPopover" type="Emphasized" icon="sap-icon://employee">Open Popover</ui5-button>
+<body style="display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;">
+	<ui5-button id="btnOpenPopover" design="Emphasized" icon="sap-icon://employee">Open Popover</ui5-button>
 
 	<ui5-popover id="popoverToOpen" header-text="Popover">
 		<div style="padding: 1rem;text-align: center;">
@@ -35,7 +38,7 @@
 			max-length="2"
 			show-exceeded-text>
 		</ui5-textarea>
-		<div data-ui5-slot="footer" style="display: flex; align-items: center;padding: 0.25rem 0.5rem">
+		<div slot="footer" style="display: flex; align-items: center;padding: 0.25rem 0.5rem">
 			<div style="flex: 1;"></div>
 			<ui5-button id="btnInPopover">Close</ui5-button>
 		</div>
@@ -44,7 +47,7 @@
 	<ui5-input id="field"></ui5-input>
 
 	<script>
-		btnOpenPopover.addEventListener("press", function() {
+		btnOpenPopover.addEventListener("ui5-press", function() {
 			popoverToOpen.openBy(btnOpenPopover);
 		});
 	</script>

@@ -1,38 +1,65 @@
-:host(ui5-li-custom) .sap-phone .sapMLIB {
-	outline: none;
-}
 
-:host(ui5-li-custom) {
+:host(:not([hidden])) {
 	display: block;
 }
 
-ui5-li-custom {
-	display: block;
+:host {
+	height: 3rem;
+	box-sizing: border-box;
 }
 
-ui5-li-custom .sap-phone .sapMLIB {
-	outline: none;
-}
-
-.sapMLIB.sapMCustomLI {
-	height: 100%;
+.ui5-li-root.ui5-custom-li-root {
 	padding: 0;
+	pointer-events: auto;
 }
 
-ui5-checkbox.multiSelectionCheckBox,
-ui5-radiobutton.singleSelectionRadioButton {
+.ui5-li-root.ui5-custom-li-root .ui5-li-content {
+	pointer-events: auto;
+}
+
+ui5-checkbox.ui5-li-singlesel-radiobtn,
+ui5-radiobutton.ui5-li-singlesel-radiobtn {
 	display: flex;
 	align-items: center;
 }
 
-.sapMLIB.sapMCustomLI,
-ui5-checkbox.multiSelectionCheckBox,
-ui5-radiobutton.singleSelectionRadioButton {
+.ui5-li-root.ui5-custom-li-root,
+ui5-checkbox.ui5-li-singlesel-radiobtn,
+ui5-radiobutton.ui5-li-singlesel-radiobtn {
 	min-width: 3rem;
 }
 
-.sapUiSizeCompact .sapMLIB.sapMCustomLI,
-.sapUiSizeCompact ui5-checkbox.multiSelectionCheckBox,
-.sapUiSizeCompact ui5-radiobutton.singleSelectionRadioButton {
+/* Compact size */
+:host([data-ui5-compact-size]) {
+	height: 2rem;
+}
+
+:host([data-ui5-compact-size]) .ui5-li-root.ui5-custom-li-root,
+:host([data-ui5-compact-size]) ui5-checkbox.ui5-li-singlesel-radiobtn,
+:host([data-ui5-compact-size]) ui5-radiobutton.ui5-li-singlesel-radiobtn {
+	min-width: 2rem;
+}
+
+/*
+ * IE pair of styles
+ * to be removed later on
+ */
+ui5-li-custom:not([hidden]) {
+	display: block;
+}
+
+ui5-li-custom {
+	height: 3rem;
+	box-sizing: border-box;
+}
+
+/* Compact size */
+ui5-li-custom[data-ui5-compact-size]  {
+	height: 2rem;
+}
+
+ui5-li-custom[data-ui5-compact-size] .ui5-li-root.ui5-custom-li-root,
+ui5-li-custom[data-ui5-compact-size] ui5-checkbox.ui5-li-singlesel-radiobtn,
+ui5-li-custom[data-ui5-compact-size] ui5-radiobutton.ui5-li-singlesel-radiobtn {
 	min-width: 2rem;
 }

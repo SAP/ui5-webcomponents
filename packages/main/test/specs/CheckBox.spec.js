@@ -3,6 +3,12 @@ const assert = require('assert');
 describe("CheckBox general interaction", () => {
 	browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/CheckBox.html");
 
+	it("tests checked default value is false", () => {
+		const checkBox = browser.findElementDeep("#cb1");
+
+		assert.strictEqual(checkBox.getProperty("checked"), false, "Check if default value for checked is false");
+	});
+
 	it("tests change event", () => {
 		const checkBox = browser.findElementDeep("#cb1");
 		const field = browser.findElementDeep("#field");
@@ -27,7 +33,7 @@ describe("CheckBox general interaction", () => {
 
 	it("tests truncating and wrapping", () => {
 		const CHECKBOX_DEFAULT_HEIGHT = 44;
-		const truncatingCb = browser.findElementDeep("#truncatingCb >>> .ui5-checkbox-wrapper");
+		const truncatingCb = browser.findElementDeep("#truncatingCb >>> .ui5-checkbox-root");
 		const wrappingCb = browser.findElementDeep("#wrappingCb");
 
 		const truncatingCbHeight = truncatingCb.getSize("height");

@@ -1,5 +1,5 @@
 import DataType from "./types/DataType.js";
-import Function from "./types/Function.js";
+import isDescendantOf from "./util/isDescendantOf.js";
 
 class UI5ElementMetadata {
 	constructor(metadata) {
@@ -10,23 +10,17 @@ class UI5ElementMetadata {
 		return this.metadata.tag;
 	}
 
-	getNoShadowDOM() {
-		return this.metadata.noShadowDOM;
+	hasAttribute(propName) {
+		const propData = this.getProperties()[propName];
+		return propData.type !== Object && !propData.noAttribute;
 	}
 
-	usesNodeText() {
-		return !!this.metadata.usesNodeText;
+	getPropsList() {
+		return Object.keys(this.getProperties());
 	}
 
-	getDefaultSlot() {
-		return this.metadata.defaultSlot || "content";
-	}
-
-	getObservedProps() {
-		const properties = this.getProperties();
-		const allProps = Object.keys(properties);
-		const observedProps = allProps.filter(UI5ElementMetadata.isPublicProperty);
-		return observedProps;
+	getAttributesList() {
+		return this.getPropsList().filter(this.hasAttribute, this);
 	}
 
 	getSlots() {
@@ -45,10 +39,6 @@ class UI5ElementMetadata {
 		return this.metadata.events || {};
 	}
 
-	static isPublicProperty(prop) {
-		return prop.charAt(0) !== "_";
-	}
-
 	static validatePropertyValue(value, propData) {
 		const isMultiple = propData.multiple;
 		if (isMultiple) {
@@ -58,21 +48,12 @@ class UI5ElementMetadata {
 	}
 
 	static validateSlotValue(value, slotData) {
-		const isMultiple = slotData.multiple;
-		if (isMultiple) {
-			return value.map(propValue => validateSingleSlot(propValue, slotData));
-		}
 		return validateSingleSlot(value, slotData);
 	}
 }
 
 const validateSingleProperty = (value, propData) => {
 	const propertyType = propData.type;
-
-	// Association handling
-	if (propData.association) {
-		return value;
-	}
 
 	if (propertyType === Boolean) {
 		return typeof value === "boolean" ? value : false;
@@ -83,39 +64,36 @@ const validateSingleProperty = (value, propData) => {
 	if (propertyType === Object) {
 		return typeof value === "object" ? value : propData.defaultValue;
 	}
-	if (propertyType === Function) {
-		return typeof value === "function" ? value : undefined;
-	}
 	if (isDescendantOf(propertyType, DataType)) {
 		return propertyType.isValid(value) ? value : propData.defaultValue;
 	}
 };
 
-const validateSingleSlot = (value, propData) => {
-	const getSlottedElement = el => {
-		return el.tagName.toUpperCase() !== "SLOT" ? el : getSlottedElement(el.assignedNodes()[0]);
-	};
-	const propertyType = propData.type;
-
-	if (value !== null && !(getSlottedElement(value) instanceof propertyType)) {
-		throw new Error(`${value} is not of type ${propertyType}`);
+const validateSingleSlot = (value, slotData) => {
+	if (value === null) {
+		return value;
 	}
+
+	const getSlottedNodes = el => {
+		const isTag = el instanceof HTMLElement;
+		const isSlot = isTag && el.localName === "slot";
+
+		if (isSlot) {
+			return el.assignedNodes({ flatten: true }).filter(item => item instanceof HTMLElement);
+		}
+
+		return [el];
+	};
+	const propertyType = slotData.type;
+
+	const slottedNodes = getSlottedNodes(value);
+	slottedNodes.forEach(el => {
+		if (!(el instanceof propertyType)) {
+			throw new Error(`${el} is not of type ${propertyType}`);
+		}
+	});
 
 	return value;
-};
-
-const isDescendantOf = (klass, baseKlass, inclusive = false) => {
-	if (typeof klass !== "function" || typeof baseKlass !== "function") {
-		return false;
-	}
-	if (inclusive && klass === baseKlass) {
-		return true;
-	}
-	let parent = klass;
-	do {
-		parent = Object.getPrototypeOf(parent);
-	} while (parent !== null && parent !== baseKlass);
-	return parent === baseKlass;
 };
 
 export default UI5ElementMetadata;

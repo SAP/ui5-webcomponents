@@ -55,7 +55,7 @@ describe("RadioButton general interaction", () => {
 		assert.strictEqual(field.getProperty("value"), "3", "Select event should not be called any more, as radio is disabled.");
 	});
 
-	it("tests radio buttons selection within group with AROW-RIGHT key", () => {
+	it("tests radio buttons selection within group with ARROW-RIGHT key", () => {
 		const field = browser.$("#field");
 		const radioButtonPreviouslySelected = browser.$("#groupRb1");
 		const radioButtonToBeSelected = browser.$("#groupRb3");
@@ -71,7 +71,7 @@ describe("RadioButton general interaction", () => {
 		radioButtonToBeSelected.keys("Tab");
 	});
 
-	it("tests radio buttons selection within group with AROW-LEFT key", () => {
+	it("tests radio buttons selection within group with ARROW-LEFT key", () => {
 		const radioButtonPreviouslySelected = browser.$("#groupRb4");
 		const radioButtonToBeSelected = browser.$("#groupRb6");
 
@@ -93,15 +93,15 @@ describe("RadioButton general interaction", () => {
 	
 	it("tests single selection within group, even if multiple radios are set as selected", () => {
 		// radios with property selected=true, but not selected
-		const radioButtonNotSelected1 = browser.findElementDeep("#groupRb8 >>> .sapMRb");
-		const radioButtonNotSelected2 = browser.findElementDeep("#groupRb9 >>> .sapMRb");
+		const radioButtonNotSelected1 = browser.findElementDeep("#groupRb8");
+		const radioButtonNotSelected2 = browser.findElementDeep("#groupRb9");
 
 		// radio with property selected=true and actually selected as subsequent
-		const radioButtonActuallySelected = browser.findElementDeep("#groupRb10 >>> .sapMRb");
+		const radioButtonActuallySelected = browser.findElementDeep("#groupRb10");
 
-		assert.ok(!radioButtonNotSelected1.hasClass("sapMRbSel"), "The radio is not selected as the last one is selected");
-		assert.ok(!radioButtonNotSelected2.hasClass("sapMRbSel"), "The radio is not selected as the last one is selected");
-		assert.ok(radioButtonActuallySelected.hasClass("sapMRbSel"), 'The correct radio is selected');
+		assert.ok(!radioButtonNotSelected1.getAttribute("selected"), "The radio is not selected as the last one is selected");
+		assert.ok(!radioButtonNotSelected2.getAttribute("selected"), "The radio is not selected as the last one is selected");
+		assert.ok(radioButtonActuallySelected.getAttribute("selected"), 'The correct radio is selected');
 	});
 
 	it("tests select event from radio buttons within group", () => {

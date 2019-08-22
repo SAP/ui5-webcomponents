@@ -1,33 +1,42 @@
-<div {{> controlData}} class="{{classes.main}}">
-	<header class="{{classes.header}}"
-		@click="{{ctr._headerClick}}"
-		@keydown="{{ctr._headerKeydown}}"
-		@keyup="{{ctr._headerKeyup}}"
-		tabindex="0">
-		{{#if image}}
-			<img src="{{ctr.avatar}}" aria-label="Avatar" class="sapFCardAvatar sapFCardHeaderImg">
-		{{/if}}
-		
-		{{#if icon}}
-			<span role="img" aria-label="Avatar" class="sapFCardAvatar">
-				<ui5-icon class="sapFCardHeaderIcon" src="{{ctr.avatar}}"></ui5-icon>
-			</span>
-		{{/if}}
-
-		<div class="sapFCardHeaderText">
-			{{#if ctr.heading}}
-				<div class="sapFCardTitle">{{ctr.heading}}</div>
+<div
+	class="{{classes.main}}"
+	dir="{{rtl}}"
+	role="region"
+	aria-labelledby="{{_id}}-heading"
+	aria-roledescription="{{ariaCardRoleDescription}}"
+>
+	{{#if hasHeader}}
+		<header class="{{classes.header}}"
+			@click="{{_headerClick}}"
+			@keydown="{{_headerKeydown}}"
+			@keyup="{{_headerKeyup}}"
+			tabindex="{{tabindex}}"
+			role="group"
+			aria-labelledby="{{_id}}-heading {{_id}}-subtitle">
+			{{#if image}}
+				<img src="{{avatar}}" aria-label="Avatar" class="ui5-card-avatar ui5-card-header-img">
 			{{/if}}
 
-			{{#if ctr.subtitle}}
-				<div class="sapFCardSubtitle ">{{ctr.subtitle}}</div>
+			{{#if icon}}
+				<span role="img" aria-label="{{ariaCardAvatarLabel}}" class="ui5-card-avatar">
+					<ui5-icon class="ui5-card-header-icon" src="{{avatar}}"></ui5-icon>
+				</span>
 			{{/if}}
-		</div>
-		<span class="sapFCardStatus">{{ctr.status}}</span>
-	</header>
-	<section class="sapFCardContent">
-		{{#each ctr.content}}
-			<slot name="{{this._slot}}"></slot>
-		{{/each}}
+
+			<div class="ui5-card-header-text">
+				{{#if heading}}
+					<div id="{{_id}}-heading" class="ui5-card-heading">{{heading}}</div>
+				{{/if}}
+
+				{{#if subtitle}}
+					<div id="{{_id}}-subtitle" class="ui5-card-subtitle ">{{subtitle}}</div>
+				{{/if}}
+			</div>
+			<span part="status" class="ui5-card-status">{{status}}</span>
+		</header>
+	{{/if}}
+
+	<section role="group" aria-label="{{ariaCardContentLabel}}">
+		<slot></slot>
 	</section>
 </div>
