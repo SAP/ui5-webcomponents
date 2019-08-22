@@ -4,6 +4,7 @@ import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import {
 	isSpace,
@@ -13,10 +14,13 @@ import {
 	isUp,
 	isRight,
 } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import Label from "./Label.js";
 import RadioButtonGroup from "./RadioButtonGroup.js";
+
 // Template
 import RadioButtonTemplate from "./generated/templates/RadioButtonTemplate.lit.js";
 
+// i18n
 import { VALUE_STATE_ERROR, VALUE_STATE_WARNING } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -202,6 +206,13 @@ const SVGConfig = {
  * @public
  */
 class RadioButton extends UI5Element {
+	constructor() {
+		super();
+
+		this._label = {};
+		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
+	}
+
 	static get metadata() {
 		return metadata;
 	}
@@ -218,9 +229,13 @@ class RadioButton extends UI5Element {
 		return radioButtonCss;
 	}
 
-	constructor() {
-		super();
-		this._label = {};
+	static async define(...params) {
+		await Promise.all([
+			Label.define(),
+			fetchResourceBundle("@ui5/webcomponents"),
+		]);
+
+		super.define(...params);
 	}
 
 	onBeforeRendering() {
@@ -337,6 +352,15 @@ class RadioButton extends UI5Element {
 		return !(this.disabled || this.readonly || this.selected);
 	}
 
+	valueStateTextMappings() {
+		const resourceBundle = this.resourceBundle;
+
+		return {
+			"Error": resourceBundle.getText(VALUE_STATE_ERROR),
+			"Warning": resourceBundle.getText(VALUE_STATE_WARNING),
+		};
+	}
+
 	get classes() {
 		return {
 			inner: {
@@ -365,15 +389,8 @@ class RadioButton extends UI5Element {
 		return this.valueState !== ValueState.None;
 	}
 
-	static valueStateTextMappings() {
-		return {
-			"Error": VALUE_STATE_ERROR.defaultText,
-			"Warning": VALUE_STATE_WARNING.defaultText,
-		};
-	}
-
 	get valueStateText() {
-		return RadioButton.valueStateTextMappings()[this.valueState];
+		return this.valueStateTextMappings()[this.valueState];
 	}
 
 	get tabIndex() {
@@ -387,7 +404,6 @@ class RadioButton extends UI5Element {
 	get circle() {
 		return getCompactSize() ? SVGConfig.compact : SVGConfig.default;
 	}
-
 
 	get rtl() {
 		return getRTL() ? "rtl" : undefined;
