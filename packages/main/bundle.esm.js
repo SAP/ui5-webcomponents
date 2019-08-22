@@ -41,6 +41,7 @@ import TableRow from "./dist/TableRow.js";
 import TableCell from "./dist/TableCell.js";
 import TextArea from "./dist/TextArea.js";
 import Timeline from "./dist/Timeline.js";
+import TimelineItem from "./dist/TimelineItem.js";
 import Title from "./dist/Title.js";
 import ToggleButton from "./dist/ToggleButton.js";
 
