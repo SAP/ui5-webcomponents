@@ -1,3 +1,4 @@
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import SemanticColor from "./types/SemanticColor.js";
 import Icon from "./Icon.js";
@@ -117,11 +118,11 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Tab
- * @extends HTMLElement
+ * @extends UI5Element
  * @tagname ui5-tab
  * @public
  */
-class Tab extends HTMLElement {
+class Tab extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
