@@ -11,7 +11,6 @@ import {
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import Option from "./Option.js";
 import Label from "./Label.js";
 import Popover from "./Popover.js";
 import List from "./List.js";
@@ -39,13 +38,13 @@ const metadata = {
 		 * If more than one option is defined as selected, the last one would be considered as the selected one.
 		 * <br><br>
 		 * <b>Note:</b> Use the <code>ui5-option</code> component to define the desired options.
-		 * @type {Option[]}
+		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
 		 */
 		"default": {
 			propertyName: "options",
-			type: Option,
+			type: HTMLElement,
 			listenFor: { include: ["*"] },
 		},
 	},
@@ -399,7 +398,6 @@ class Select extends UI5Element {
 
 	static async define(...params) {
 		await Promise.all([
-			Option.define(),
 			Label.define(),
 			Popover.define(),
 			List.define(),

@@ -49,7 +49,7 @@ const metadata = {
 		/**
 		 * Defines the <code>ui5-icon</code> to be displayed in the <code>ui5-badge</code>.
 		 *
-		 * @type {Icon}
+		 * @type {HTMLElement}
 		 * @slot
 		 * @public
 		 */

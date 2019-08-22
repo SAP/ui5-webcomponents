@@ -3,7 +3,6 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import FocusHelper from "@ui5/webcomponents-base/dist/FocusHelper.js";
 import { isTabNext } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-import ListItemBase from "./ListItemBase.js";
 import ListMode from "./types/ListMode.js";
 import ListSeparators from "./types/ListSeparators.js";
 import ListItemType from "./types/ListItemType.js";
@@ -37,13 +36,13 @@ const metadata = {
 		 * Defines the items of the <code>ui5-list</code>.
 		 * <br><b>Note:</b> Only <code>ui5-li</code>, <code>ui5-li-custom</code> and <code>ui5-li-groupheader</code> are allowed.
 		 *
-		 * @type {ListItemBase[]}
+		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
 		 */
 		"default": {
 			propertyName: "items",
-			type: ListItemBase,
+			type: HTMLElement,
 		},
 	},
 	properties: /** @lends  sap.ui.webcomponents.main.List.prototype */ {

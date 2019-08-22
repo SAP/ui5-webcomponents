@@ -322,21 +322,14 @@ class UI5Element extends HTMLElement {
 		const result = metadatas[0];
 
 		// merge properties
-		result.properties = metadatas.reverse().reduce((result, current) => { // eslint-disable-line
-			Object.assign(result, current.properties);
-			return result;
+		result.properties = metadatas.reverse().reduce((allProperties, current) => { // eslint-disable-line
+			Object.assign(allProperties, current.properties || {});
+			return allProperties;
 		}, {});
 
-		// merge slots
-		result.slots = metadatas.reverse().reduce((result, current) => { // eslint-disable-line
-			Object.assign(result, current.slots);
-			return result;
-		}, {});
-
-		// merge events
-		result.events = metadatas.reverse().reduce((result, current) => { // eslint-disable-line
-			Object.assign(result, current.events);
-			return result;
+		result.slots = metadatas.reverse().reduce((allSlots, current) => { // eslint-disable-line
+			Object.assign(allSlots, current.slots || {});
+			return allSlots;
 		}, {});
 
 		this._metadata = new UI5ElementMetadata(result);

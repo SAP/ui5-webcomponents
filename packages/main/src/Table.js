@@ -3,8 +3,6 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { isSpace } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-import TableColumn from "./TableColumn.js";
-import TableRow from "./TableRow.js";
 import TableTemplate from "./generated/templates/TableTemplate.lit.js";
 
 // Styles
@@ -21,13 +19,13 @@ const metadata = {
 		 * Defines the <code>ui5-table</code> rows.
 		 * <br><b>Note:</b> Only <code>ui5-table-row</code> is allowed.
 		 *
-		 * @type {TableRow[]}
+		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
 		 */
 		"default": {
 			propertyName: "rows",
-			type: TableRow,
+			type: HTMLElement,
 			individualSlots: true,
 		},
 
@@ -35,14 +33,14 @@ const metadata = {
 		 * Defines the configuration for the columns of the <code>ui5-table</code>.
 		 * <br><b>Note:</b> Only <code>ui5-table-column</code> is allowed.
 		 *
-		 * @type {TableColumn[]}
+		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
 		 */
 		columns: {
-			type: TableColumn,
+			type: HTMLElement,
 			individualSlots: true,
-			listenFor: { exclude: ["header"] },
+			listenFor: { include: ["*"] },
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.Table.prototype */ {
