@@ -314,23 +314,23 @@ describe("Component Behaviour", () => {
 				assert.strictEqual(input.getValue(), "Product Switch", "Input value is set by click event of Product Switch icon");
 			});
 
-			it("tests if searchfield appears when clicking on search icon", () => {
-				const searchListItem = browser.$("#shellbar").shadow$("ui5-list ui5-li:nth-child(1)");
-				const searchField = browser.$("#shellbar ui5-input");
-				const blockLayer = browser.$("#shellbar").shadow$(".ui5-shellbar-block-layer");
-				const overflowButton = browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
+			// it("tests if searchfield appears when clicking on search icon", () => {
+			// 	const searchListItem = browser.$("#shellbar").shadow$("ui5-list ui5-li:nth-child(1)");
+			// 	const searchField = browser.$("#shellbar ui5-input");
+			// 	const blockLayer = browser.$("#shellbar").shadow$(".ui5-shellbar-block-layer");
+			// 	const overflowButton = browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
 
-				assert.strictEqual(searchField.isDisplayed(), false, "Search is hidden by default");
+			// 	assert.strictEqual(searchField.isDisplayed(), false, "Search is hidden by default");
 
-				overflowButton.click();
-				searchListItem.click();
+			// 	overflowButton.click();
+			// 	searchListItem.click();
 
-				assert.strictEqual(searchField.isDisplayed(), true, "Search is visible after clicking on icon");
+			// 	assert.strictEqual(searchField.isDisplayed(), true, "Search is visible after clicking on icon");
 
-				// focus out the input
-				blockLayer.click();
-				assert.strictEqual(searchField.isDisplayed(), false, "Search is hidden when focussed out");
-			});
+			// 	// focus out the input
+			// 	blockLayer.click();
+			// 	assert.strictEqual(searchField.isDisplayed(), false, "Search is hidden when focussed out");
+			// });
 		});
 	});
 });
