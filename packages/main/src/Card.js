@@ -1,5 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
 import { isIconURI } from "@ui5/webcomponents-base/dist/IconPool.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
@@ -130,6 +131,12 @@ const metadata = {
  * @public
  */
 class Card extends UI5Element {
+	constructor() {
+		super();
+
+		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
+	}
+
 	static get metadata() {
 		return metadata;
 	}
@@ -181,19 +188,22 @@ class Card extends UI5Element {
 	}
 
 	get ariaCardRoleDescription() {
-		return ARIA_ROLEDESCRIPTION_CARD.defaultText;
+		return this.resourceBundle.getText(ARIA_ROLEDESCRIPTION_CARD);
 	}
 
 	get ariaCardAvatarLabel() {
-		return AVATAR_TOOLTIP.defaultText;
+		return this.resourceBundle.getText(AVATAR_TOOLTIP);
 	}
 
 	get ariaCardContentLabel() {
-		return ARIA_LABEL_CARD_CONTENT.defaultText;
+		return this.resourceBundle.getText(ARIA_LABEL_CARD_CONTENT);
 	}
 
 	static async define(...params) {
-		await Icon.define();
+		await Promise.all([
+			Icon.define(),
+			fetchResourceBundle("@ui5/webcomponents"),
+		]);
 
 		super.define(...params);
 	}

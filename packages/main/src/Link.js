@@ -131,7 +131,6 @@ const metadata = {
  * from the standard text.
  * On hover, it changes its style to an underlined text to provide additional feedback to the user.
  *
-
  *
  * <h3>Usage</h3>
  *
