@@ -50,7 +50,7 @@ const getPlugins = ({ transpile }) => {
 		include: [
 			/.*cldr\/.*\.json/,
 			/.*i18n\/.*\.json/,
-			/.*sap.ui.core.*\/SAP-icons.*/,
+			/.*themes\/.*.css.json/,
 		],
 		emitFiles: true,
 		fileName: "[name].[hash][extname]",

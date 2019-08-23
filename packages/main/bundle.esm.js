@@ -6,8 +6,11 @@ import "@ui5/webcomponents-base/dist/features/calendar/Persian.js";
 // ESM bundle targets Edge + browsers with native support
 import "@ui5/webcomponents-base/dist/features/browsersupport/Edge.js";
 
-import "./dist/ThemePropertiesProvider.js";
-import "./dist/MessageBundleAssets.js";
+// asset helpers (needs correct json as url in rollup.config.js)
+import "./dist/json-imports/Themes.js";
+import "./dist/json-imports/i18n.js";
+import "./dist/json-imports/LocaleData.js"
+
 import "./dist/features/InputElementsFormSupport.js";
 import "./dist/features/InputSuggestions.js";
 import "./AllIcons.js";
