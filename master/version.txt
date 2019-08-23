@@ -1,15 +1,5 @@
-commit 4ec2eb2d38e7b5061a2d8cf2df9df9a52af459e4
+commit ad2609d2d410cc987f922d40668eabc98b359d30
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Aug 22 15:26:50 2019 +0300
+Date:   Fri Aug 23 09:39:27 2019 +0300
 
-    refactor: i18n build and ResourceBundle  (#720)
-    
-    * remove USED_KEYS.txt as we have the i18n-defaults.js auto generated.
-    * remove i18n-transform.sh script as we get the translations process setup and will receive translations regularly.
-    * remove all src/messagebundle_*.json files, before produced with i18n-transform.sh
-    * new i18n build, based on the messagebundle_en.properties files, generating JSON files for all languages
-    Example:
-    messagebundle_en.json => {CARD_LABEL: "card", SWITCH_ON: "On", SWITCH_OFF: "Off"}
-    * refactor greatly the base/ResourceBundle, which does not import core/ResourceBundle anymore
-    * reuse only the following methods: formatMessage, normalize, nextFallbackLocale
-    update the MessageBundleAssets.js to import the generated jsons.
+    fix(ui5-switch): don`t mirror checkmark icon in RTL (#742)
