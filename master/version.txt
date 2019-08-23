@@ -1,5 +1,5 @@
-commit ad2609d2d410cc987f922d40668eabc98b359d30
+commit 9a6db1fd4928b00f5032fdb28cf46f5e26556f67
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Aug 23 09:39:27 2019 +0300
+Date:   Fri Aug 23 14:03:38 2019 +0300
 
-    fix(ui5-switch): don`t mirror checkmark icon in RTL (#742)
+    chore: fix build dev mode (#743)
