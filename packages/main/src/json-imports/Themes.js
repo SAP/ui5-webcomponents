@@ -1,4 +1,4 @@
-import { registerThemeProperties } from "@ui5/webcomponents-base/dist/theming/ThemeProperties.js";
+import { registerThemeProperties } from "@ui5/webcomponents-base/dist/asset-registries/Themes.js";
 
 import fiori3 from "../themes/sap_fiori_3/parameters-bundle.css.json";
 import belize from "../themes/sap_belize/parameters-bundle.css.json";

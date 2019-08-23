@@ -1,4 +1,4 @@
-import { fetchTextOnce } from "../util/FetchHelper.js";
+import { fetchJsonOnce } from "../util/FetchHelper.js";
 
 const themeURLs = new Map();
 const propertiesStyles = new Map();
@@ -20,8 +20,8 @@ const getThemeProperties = async (packageName, themeName) => {
 	}
 
 	const data = await fetchThemeProperties(packageName, themeName);
-	propertiesStyles.set(`${packageName}_${themeName}`, data);
-	return data;
+	propertiesStyles.set(`${packageName}_${themeName}`, data._);
+	return data._;
 };
 
 const fetchThemeProperties = async (packageName, themeName) => {
@@ -30,7 +30,7 @@ const fetchThemeProperties = async (packageName, themeName) => {
 	if (!url) {
 		throw new Error(`You have to import @ui5/webcomponents/dist/ThemePropertiesProvider module to use theme switching`);
 	}
-	return fetchTextOnce(url);
+	return fetchJsonOnce(url);
 };
 
 export { registerThemeProperties, getThemeProperties };
