@@ -20,7 +20,7 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 | Label                    | `ui5-label`          | `import "@ui5/webcomponents/dist/Label.js";`               |
 | Link                     | `ui5-link`           | `import "@ui5/webcomponents/dist/Link.js";`                |
 | List                     | `ui5-list`           | `import "@ui5/webcomponents/dist/List.js";`                |
-| List - Standard Item     | `ui5-li`             | `import S"@ui5/webcomponents/dist/StandardListItem.js";`   |
+| List - Standard Item     | `ui5-li`             | `import "@ui5/webcomponents/dist/StandardListItem.js";`   |
 | List - Custom Item       | `ui5-li-custom`      | `import "@ui5/webcomponents/dist/CustomListItem.js";`      |
 | List - Group Header Item | `ui5-li-groupheader` | `import "@ui5/webcomponents/dist/GroupHeaderListItem.js";` |
 | Message Strip            | `ui5-messagestrip`   | `import "@ui5/webcomponents/dist/MessageStrip.js";`        |
