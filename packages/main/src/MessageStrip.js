@@ -10,7 +10,7 @@ import "./icons/message-information.js";
 import "./icons/message-success.js";
 import "./icons/message-error.js";
 import "./icons/message-warning.js";
-import { MESSAGE_STRIP_CLOSE_BUTTON } from "./generated/i18n/i18n-defaults.js";
+import { MESSAGE_STRIP_CLOSE_BUTTON } from "./generated/assets/i18n/i18n-defaults.js";
 
 // Styles
 import messageStripCss from "./generated/themes/MessageStrip.css.js";

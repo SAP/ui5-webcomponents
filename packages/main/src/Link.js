@@ -6,7 +6,7 @@ import LinkDesign from "./types/LinkDesign.js";
 // Template
 import LinkRederer from "./generated/templates/LinkTemplate.lit.js";
 
-import { LINK_SUBTLE, LINK_EMPHASIZED } from "./generated/i18n/i18n-defaults.js";
+import { LINK_SUBTLE, LINK_EMPHASIZED } from "./generated/assets/i18n/i18n-defaults.js";
 
 // Styles
 import linkCss from "./generated/themes/Link.css.js";

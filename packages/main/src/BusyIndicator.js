@@ -6,7 +6,7 @@ import BusyIndicatorSize from "./types/BusyIndicatorSize.js";
 // Template
 import BusyIndicatorTemplate from "./generated/templates/BusyIndicatorTemplate.lit.js";
 
-import { BUSY_INDICATOR_TITLE } from "./generated/i18n/i18n-defaults.js";
+import { BUSY_INDICATOR_TITLE } from "./generated/assets/i18n/i18n-defaults.js";
 
 // Styles
 import busyIndicatorCss from "./generated/themes/BusyIndicator.css.js";

@@ -11,7 +11,7 @@ import "./icons/decline.js";
 import {
 	SWITCH_ON,
 	SWITCH_OFF,
-} from "./generated/i18n/i18n-defaults.js";
+} from "./generated/assets/i18n/i18n-defaults.js";
 
 // Template
 import SwitchTemplate from "./generated/templates/SwitchTemplate.lit.js";

@@ -6,7 +6,7 @@ import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import TextAreaTemplate from "./generated/templates/TextAreaTemplate.lit.js";
 
-import { TEXTAREA_CHARACTERS_LEFT, TEXTAREA_CHARACTERS_EXCEEDED } from "./generated/i18n/i18n-defaults.js";
+import { TEXTAREA_CHARACTERS_LEFT, TEXTAREA_CHARACTERS_EXCEEDED } from "./generated/assets/i18n/i18n-defaults.js";
 
 // Styles
 import styles from "./generated/themes/TextArea.css.js";
