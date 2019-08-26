@@ -44,7 +44,7 @@ const fetchResourceBundle = async packageId => {
 
 	if (!bundlesForPackage) {
 		console.warn(`Message bundle assets are not configured. Falling back to english texts.`, /* eslint-disable-line */
-		` You need to import @ui5/webcomponents/dist/MessageBundleAssets.js with a build tool that supports JSON imports.`); /* eslint-disable-line */
+		` You need to import @ui5/webcomponents/dist/json-imports/i18n.js with a build tool that supports JSON imports.`); /* eslint-disable-line */
 		return;
 	}
 

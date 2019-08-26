@@ -111,7 +111,7 @@ As shown in the example above, it's recommended to load the webcomponents polyfi
 ### 2. Theming
 
 ```js
-import "@ui5/webcomponents/dist/ThemePropertiesProvider.js";
+import "@ui5/webcomponents/dist/json-imports/Themes.js";
 ```
 (for additional themes support)
 
@@ -154,7 +154,7 @@ setTheme("sap_belize_hcb");
 ### 3. Internationalization
 
 ```js
-import "@ui5/webcomponents/dist/MessageBundleAssets.js";
+import "@ui5/webcomponents/dist/json-imports/i18n.js";
 ```
 
 Some UI5 Web Components contain texts (such as placeholders, tooltips, messages) that need translation.
