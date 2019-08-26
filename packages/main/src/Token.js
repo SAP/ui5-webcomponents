@@ -10,7 +10,7 @@ import {
 import "./icons/decline.js";
 import "./icons/cancel.js";
 import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
-import { TOKEN_ARIA_DELETABLE } from "./generated/assets/i18n/i18n-defaults.js";
+import { TOKEN_ARIA_DELETABLE } from "./generated/i18n/i18n-defaults.js";
 
 import Icon from "./Icon.js";
 import TokenTemplate from "./generated/templates/TokenTemplate.lit.js";

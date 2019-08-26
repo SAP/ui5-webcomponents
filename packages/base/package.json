@@ -16,11 +16,12 @@
     "directory": "packages/base"
   },
   "scripts": {
-    "build": "npm-run-all --sequential clean lint copy:src",
+    "build": "npm-run-all --sequential clean lint copy:cldr copy:src",
     "dev": "yarn watch:src",
     "clean": "rimraf dist",
     "lint": "eslint .",
     "copy:src": "copy-and-watch \"src/**/*.js\" dist/",
+    "copy:cldr": "copy-and-watch \"../../node_modules/@ui5/webcomponents-core/dist/**/cldr/*.json\" dist/assets/",
     "watch:src": "copy-and-watch --watch \"src/**/*.js\" dist/"
   },
   "dependencies": {
