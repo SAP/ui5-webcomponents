@@ -37,9 +37,9 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 | Tab                      | `ui5-tab`            | `import "@ui5/webcomponents/dist/Tab.js";`                 |
 | Tab Separator            | `ui5-tab-separator`  | `import "@ui5/webcomponents/dist/TabSeparator.js";`        |
 | Table                    | `ui5-table`          | `import "@ui5/webcomponents/dist/Table.js";`               |
-| Table Column             | `ui5-table-column`   | comes with ui5-table                                       |
-| Table Row                | `ui5-table-row`      | comes with ui5-table                                       |
-| Table Cell               | `ui5-table-cell`     | comes with ui5-table                                       |
+| Table Column             | `ui5-table-column`   | `import "@ui5/webcomponents/dist/TableColumn.js";`               |
+| Table Row                | `ui5-table-row`      | `import "@ui5/webcomponents/dist/TableRow.js";`               |
+| Table Cell               | `ui5-table-cell`     | `import "@ui5/webcomponents/dist/TableCell.js";`               |
 | Textarea                 | `ui5-textarea`       | `import "@ui5/webcomponents/dist/TextArea.js";`            |
 | Timeline                 | `ui5-timeline`       | `import "@ui5/webcomponents/dist/Timeline.js";`            |
 | Timeline Item            | `ui5-timeline-item`  | comes with ui5-timeline                                    |

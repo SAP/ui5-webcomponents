@@ -10,7 +10,6 @@ import {
 	isEnter,
 } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
-// import Icon from "./Icon.js";
 import InputType from "./types/InputType.js";
 // Template
 import InputTemplate from "./generated/templates/InputTemplate.lit.js";
@@ -35,7 +34,7 @@ const metadata = {
 		/**
 		 * Defines the icon to be displayed in the <code>ui5-input</code>.
 		 *
-		 * @type {Icon[]}
+		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
 		 */
