@@ -51,7 +51,6 @@ describe("TabContainer general interaction", () => {
 	// 	arrowLeft = browser.$("#tabContainerIconOnly").shadow$("ui5-icon.ui5-tc__headerArrowLeft");
 	// 	arrowRight = browser.$("#tabContainerIconOnly").shadow$("ui5-icon.ui5-tc__headerArrowRight");
 
-	// 	browser.debug();
 	// 	assert.ok(arrowLeft.shadow$("svg").isDisplayed(), "'Left Arrow' should be shown after 'Right Arrow' click");
 	// 	assert.ok(!arrowRight.shadow$("svg").isDisplayed(), "'Right Arrow' should be hidden after 'Right Arrow' click");
 

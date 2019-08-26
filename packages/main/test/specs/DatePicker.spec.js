@@ -145,7 +145,6 @@ describe("Date Picker Tests", () => {
 		datepicker.innerInput.click();
 		browser.keys("\b\b\b\b\b\b\b\b\b\b\b");
 
-		// browser.debug();
 		//then open the picker
 		datepicker.valueHelpIcon.click();
 
