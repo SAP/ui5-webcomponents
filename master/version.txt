@@ -1,8 +1,5 @@
-commit 484b89d677dfbe579edfcaf2e0323a1bf4c7f786
+commit 0e86aa800fd07e72565d4dfaf79dfc739bd62d22
 Author: Martin <martin.r.hristov@gmail.com>
-Date:   Mon Aug 26 10:35:42 2019 +0300
+Date:   Mon Aug 26 11:08:51 2019 +0300
 
-    chore: update chromedriver and wdio (#739)
-    
-    - adopt some tests with new shadow$ API
-    - add some actions like addValue, setValue, setAttribute, etc to async list
+    chore: adopt all specs to shadow$ syntax (#745)
