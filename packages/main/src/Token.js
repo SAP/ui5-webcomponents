@@ -9,7 +9,7 @@ import {
 } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import "./icons/decline.js";
 import "./icons/cancel.js";
-import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
 import { TOKEN_ARIA_DELETABLE } from "./generated/i18n/i18n-defaults.js";
 
 import Icon from "./Icon.js";
@@ -122,7 +122,7 @@ class Token extends UI5Element {
 	constructor() {
 		super();
 
-		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
+		this.resourceBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	_select() {
@@ -162,7 +162,7 @@ class Token extends UI5Element {
 	static async define(...params) {
 		await Promise.all([
 			Icon.define(),
-			fetchResourceBundle("@ui5/webcomponents"),
+			fetchI18nBundle("@ui5/webcomponents"),
 		]);
 
 		super.define(...params);

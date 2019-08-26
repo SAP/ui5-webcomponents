@@ -4,7 +4,7 @@ import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import {
 	isSpace,
@@ -210,7 +210,7 @@ class RadioButton extends UI5Element {
 		super();
 
 		this._label = {};
-		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
+		this.resourceBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	static get metadata() {
@@ -232,7 +232,7 @@ class RadioButton extends UI5Element {
 	static async define(...params) {
 		await Promise.all([
 			Label.define(),
-			fetchResourceBundle("@ui5/webcomponents"),
+			fetchI18nBundle("@ui5/webcomponents"),
 		]);
 
 		super.define(...params);

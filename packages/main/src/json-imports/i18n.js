@@ -1,4 +1,4 @@
-import { registerMessageBundles } from "@ui5/webcomponents-base/dist/asset-registries/i18n.js";
+import { registerI18nBundle } from "@ui5/webcomponents-base/dist/asset-registries/i18n.js";
 
 import ar from "../assets/i18n/messagebundle_ar.json";
 import bg from "../assets/i18n/messagebundle_bg.json";
@@ -92,4 +92,4 @@ Suggested pattern: "assets\\\/.*\\\.json"`);
 }
 /* eslint-enable */
 
-registerMessageBundles("@ui5/webcomponents", bundleMap);
+registerI18nBundle("@ui5/webcomponents", bundleMap);

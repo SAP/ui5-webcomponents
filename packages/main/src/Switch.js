@@ -3,7 +3,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
-import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
 import Icon from "./Icon.js";
 import "./icons/accept.js";
 import "./icons/decline.js";
@@ -155,7 +155,7 @@ class Switch extends UI5Element {
 	constructor() {
 		super();
 
-		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
+		this.resourceBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onclick(event) {
@@ -236,7 +236,7 @@ class Switch extends UI5Element {
 	static async define(...params) {
 		await Promise.all([
 			Icon.define(),
-			fetchResourceBundle("@ui5/webcomponents"),
+			fetchI18nBundle("@ui5/webcomponents"),
 		]);
 
 		super.define(...params);

@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import CSSSize from "@ui5/webcomponents-base/dist/types/CSSSize.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import TextAreaTemplate from "./generated/templates/TextAreaTemplate.lit.js";
 
@@ -255,7 +255,7 @@ class TextArea extends UI5Element {
 	constructor() {
 		super();
 
-		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
+		this.resourceBundle = getI18nBundle("@ui5/webcomponents");
 
 		this._listeners = {
 			change: this._handleChange.bind(this),
@@ -391,7 +391,7 @@ class TextArea extends UI5Element {
 	}
 
 	static async define(...params) {
-		await fetchResourceBundle("@ui5/webcomponents");
+		await fetchI18nBundle("@ui5/webcomponents");
 
 		super.define(...params);
 	}

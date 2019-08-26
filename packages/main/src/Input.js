@@ -9,7 +9,7 @@ import {
 	isSpace,
 	isEnter,
 } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
 // import Icon from "./Icon.js";
 import InputType from "./types/InputType.js";
 // Template
@@ -336,7 +336,7 @@ class Input extends UI5Element {
 		this.ACTION_ENTER = "enter";
 		this.ACTION_USER_INPUT = "input";
 
-		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
+		this.resourceBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
@@ -599,7 +599,7 @@ class Input extends UI5Element {
 	}
 
 	static async define(...params) {
-		await fetchResourceBundle("@ui5/webcomponents");
+		await fetchI18nBundle("@ui5/webcomponents");
 
 		super.define(...params);
 	}

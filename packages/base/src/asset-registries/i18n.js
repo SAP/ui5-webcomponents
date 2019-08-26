@@ -8,12 +8,12 @@ const bundleData = new Map();
 const bundleURLs = new Map();
 
 /**
- * Registers a map of locale/url information to be used by the <code>fetchResourceBundle</code> method.
+ * Registers a map of locale/url information to be used by the <code>fetchI18nBundle</code> method.
  * @param {string} packageId the node project id of the project that provides text resources
  * @param {Object} bundlesMap an object with string locales as keys and the URLs of where the corresponding locale can be fetched from
  * @public
  */
-const registerMessageBundles = (packageId, bundlesMap) => {
+const registerI18nBundle = (packageId, bundlesMap) => {
 	bundleURLs.set(packageId, bundlesMap);
 };
 
@@ -26,7 +26,7 @@ const registerBundleData = (packageId, data) => {
 	bundleData.set(packageId, data);
 };
 
-const getBundleData = packageId => {
+const getI18nBundleData = packageId => {
 	return bundleData.get(packageId);
 };
 
@@ -34,12 +34,12 @@ const getBundleData = packageId => {
  * This method preforms the asyncronous task of fething the actual text resources. It will fetch
  * each text resource over the network once (even for multiple calls to the same method).
  * It should be fully finished before the ResourceBundle class is created in the webcomponents.
- * This method uses the bundle URLs that are populated by the <code>registerMessageBundles</code> method.
+ * This method uses the bundle URLs that are populated by the <code>registerI18nBundle</code> method.
  * To simplify the usage, the synchronization of both methods happens internally for the same <code>packageId</code>
  * @param {packageId} packageId the node project package id
  * @public
  */
-const fetchResourceBundle = async packageId => {
+const fetchI18nBundle = async packageId => {
 	const bundlesForPackage = bundleURLs.get(packageId);
 
 	if (!bundlesForPackage) {
@@ -65,4 +65,4 @@ const fetchResourceBundle = async packageId => {
 	registerBundleData(packageId, data);
 };
 
-export { fetchResourceBundle, registerMessageBundles, getBundleData };
+export { fetchI18nBundle, registerI18nBundle, getI18nBundleData };

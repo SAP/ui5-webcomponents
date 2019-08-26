@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import Icon from "./Icon.js";
 
@@ -91,7 +91,7 @@ class Badge extends UI5Element {
 	constructor() {
 		super();
 
-		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
+		this.resourceBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	static get metadata() {
@@ -111,7 +111,7 @@ class Badge extends UI5Element {
 	}
 
 	static async define(...params) {
-		await fetchResourceBundle("@ui5/webcomponents");
+		await fetchI18nBundle("@ui5/webcomponents");
 
 		super.define(...params);
 	}
