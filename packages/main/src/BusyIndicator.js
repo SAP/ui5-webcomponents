@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import BusyIndicatorSize from "./types/BusyIndicatorSize.js";
 
 // Template
@@ -81,7 +81,7 @@ class BusyIndicator extends UI5Element {
 	constructor() {
 		super();
 
-		this.resourceBundle = getI18nBundle("@ui5/webcomponents");
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	static get metadata() {
@@ -107,7 +107,7 @@ class BusyIndicator extends UI5Element {
 	}
 
 	get ariaTitle() {
-		return this.resourceBundle.getText(BUSY_INDICATOR_TITLE);
+		return this.i18nBundle.getText(BUSY_INDICATOR_TITLE);
 	}
 }
 

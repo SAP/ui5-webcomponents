@@ -35,10 +35,6 @@ class UI5ElementMetadata {
 		return this.metadata.properties || {};
 	}
 
-	getEvents() {
-		return this.metadata.events || {};
-	}
-
 	static validatePropertyValue(value, propData) {
 		const isMultiple = propData.multiple;
 		if (isMultiple) {
@@ -84,12 +80,11 @@ const validateSingleSlot = (value, slotData) => {
 
 		return [el];
 	};
-	const propertyType = slotData.type;
 
 	const slottedNodes = getSlottedNodes(value);
 	slottedNodes.forEach(el => {
-		if (!(el instanceof propertyType)) {
-			throw new Error(`${el} is not of type ${propertyType}`);
+		if (!(el instanceof slotData.type)) {
+			throw new Error(`${el} is not of type ${slotData.type}`);
 		}
 	});
 

@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import LinkDesign from "./types/LinkDesign.js";
 
 // Template
@@ -165,7 +165,7 @@ class Link extends UI5Element {
 	constructor() {
 		super();
 		this._dummyAnchor = document.createElement("a");
-		this.resourceBundle = getI18nBundle("@ui5/webcomponents");
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	static get metadata() {
@@ -222,7 +222,7 @@ class Link extends UI5Element {
 	}
 
 	get linkTypeText() {
-		return this.resourceBundle.getText(Link.typeTextMappings()[this.design]);
+		return this.i18nBundle.getText(Link.typeTextMappings()[this.design]);
 	}
 
 	get parsedRef() {

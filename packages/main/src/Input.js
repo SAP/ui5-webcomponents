@@ -9,7 +9,7 @@ import {
 	isSpace,
 	isEnter,
 } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 // import Icon from "./Icon.js";
 import InputType from "./types/InputType.js";
 // Template
@@ -35,7 +35,7 @@ const metadata = {
 		/**
 		 * Defines the icon to be displayed in the <code>ui5-input</code>.
 		 *
-		 * @type {Icon[]}
+		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
 		 */
@@ -336,7 +336,7 @@ class Input extends UI5Element {
 		this.ACTION_ENTER = "enter";
 		this.ACTION_USER_INPUT = "input";
 
-		this.resourceBundle = getI18nBundle("@ui5/webcomponents");
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
@@ -539,12 +539,12 @@ class Input extends UI5Element {
 	onClose() {}
 
 	valueStateTextMappings() {
-		const resourceBundle = this.resourceBundle;
+		const i18nBundle = this.i18nBundle;
 
 		return {
-			"Success": resourceBundle.getText(VALUE_STATE_SUCCESS),
-			"Error": resourceBundle.getText(VALUE_STATE_ERROR),
-			"Warning": resourceBundle.getText(VALUE_STATE_WARNING),
+			"Success": i18nBundle.getText(VALUE_STATE_SUCCESS),
+			"Error": i18nBundle.getText(VALUE_STATE_ERROR),
+			"Warning": i18nBundle.getText(VALUE_STATE_WARNING),
 		};
 	}
 

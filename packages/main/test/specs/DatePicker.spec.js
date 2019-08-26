@@ -41,7 +41,7 @@ describe("Date Picker Tests", () => {
 
 		assert.equal(datepicker.input.getProperty("valueState"), "Error", "value state of the input is valid");
 
-		const contentWrapper = browser.findElementDeep("#dp3 >>> ui5-input >>> .ui5-input-content");
+		const contentWrapper = browser.$("#dp3").shadow$("ui5-input").shadow$(".ui5-input-content");
 		assert.ok(contentWrapper.isDisplayedInViewport(), "content wrapper has error styles");
 	});
 
@@ -112,9 +112,9 @@ describe("Date Picker Tests", () => {
 
 		datepicker.root.click();
 		datepicker.innerInput.setValue("Jan 6, 2015");
-		browser.findElementDeep("#dp1 >>> ui5-input >>> input").click(); //click elsewhere to focusout
+		browser.$("#dp1").shadow$("ui5-input").shadow$("input").click(); //click elsewhere to focusout
 
-		assert.equal(browser.findElementDeep("#lbl").getHTML(false), "1", 'change has fired once');
+		assert.equal(browser.$("#lbl").getHTML(false), "1", 'change has fired once');
 	});
 
 	it("delete input value then open picker keeps the empty value", () => {
@@ -162,8 +162,8 @@ describe("Date Picker Tests", () => {
 	it("Calendar selection works on different timezones", () => {
 		datepicker.id = "#dp7";
 
-		browser.findElementDeep("#inputTimezone").setValue(-6); //CST
-		browser.findElementDeep("#btnApplyTimezone").click();
+		browser.$("#inputTimezone").setValue(-6); //CST
+		browser.$("#btnApplyTimezone").click();
 
 		datepicker.valueHelpIcon.click();
 
@@ -173,7 +173,7 @@ describe("Date Picker Tests", () => {
 		assert.equal(datepicker.innerInput.getProperty("value"), "Jan 4, 2019", "dp value is correct");
 
 		//restore timezone
-		browser.findElementDeep('#btnRestoreTimezone').click();
+		browser.$('#btnRestoreTimezone').click();
 
 		// test needs to end with an assert, otherwise the next test seems to start before the click is finished and it hangs from time to time
 		assert.equal($("#inputTimezone").getValue(), "", "timezone is reset");
@@ -228,16 +228,16 @@ describe("Date Picker Tests", () => {
 		datepicker.innerInput.click();
 		browser.keys("\b\b\b\b\b\b\b\b\b\b\b");
 		datepicker.innerInput.keys("Jan 8, 2015");
-		browser.findElementDeep("#dp1 >>> ui5-input >>> input").click(); //click elsewhere to focusout
+		browser.$("#dp1").shadow$("ui5-input").shadow$("input").click(); //click elsewhere to focusout
 
-		assert.equal(browser.findElementDeep("#lbl").getHTML(false), "1", 'change has fired once');
+		assert.equal(browser.$("#lbl").getHTML(false), "1", 'change has fired once');
 
 		datepicker.innerInput.click();
 		browser.keys("\b\b\b\b\b\b\b\b\b\b\b");
 		datepicker.innerInput.keys("Jan 6, 2015");
-		browser.findElementDeep("#dp1 >>> ui5-input >>> input").click(); //click elsewhere to focusout
+		browser.$("#dp1").shadow$("ui5-input").shadow$("input").click(); //click elsewhere to focusout
 
-		assert.equal(browser.findElementDeep("#lbl").getHTML(false), "2", 'change has fired once');
+		assert.equal(browser.$("#lbl").getHTML(false), "2", 'change has fired once');
 	});
 
 	it("change fires every time tomorrow is typed and normalized", () => {

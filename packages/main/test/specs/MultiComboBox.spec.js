@@ -5,8 +5,8 @@ describe("MultiComboBox general interaction", () => {
 
 	describe("toggling", () => {
 		it("opens/closes", () => {
-			const icon = browser.findElementDeep("#multi1 >>> #ui5-multi-combobox-input ui5-icon");
-			const popover = browser.findElementDeep("#multi1 >>> .ui5-multi-combobox-all-items-popover >>> .ui5-popup-root");
+			const icon = browser.$("#multi1").shadow$("#ui5-multi-combobox-input ui5-icon");
+			const popover = browser.$("#multi1").shadow$(".ui5-multi-combobox-all-items-popover").shadow$(".ui5-popup-root");
 
 			icon.click();
 			assert.ok(popover.isDisplayedInViewport(), "Popover should be displayed in the viewport");
@@ -19,10 +19,10 @@ describe("MultiComboBox general interaction", () => {
 	describe("selection and filtering", () => {
 
 		it("Opens all items popover, selects and deselects the first item", () => {
-			const icon = browser.findElementDeep("#mcb >>> #ui5-multi-combobox-input ui5-icon");
-			const popover = browser.findElementDeep("#mcb >>> .ui5-multi-combobox-all-items-popover");
-			const firstItem = browser.findElementDeep("#first-item");
-			const firstItemCheckbox = browser.findElementDeep("#mcb >>> .ui5-multi-combobox-all-items-list > ui5-li >>> ui5-checkbox");
+			const icon = browser.$("#mcb").shadow$("#ui5-multi-combobox-input ui5-icon");
+			const popover = browser.$("#mcb").shadow$(".ui5-multi-combobox-all-items-popover");
+			const firstItem = browser.$("#first-item");
+			const firstItemCheckbox = browser.$("#mcb").shadow$(".ui5-multi-combobox-all-items-list > ui5-li").shadow$("ui5-checkbox");
 			const eventInput = $("#events-input");
 			const paramsInput = $("#events-parameters");
 			const callCountInput = $("#events-call-count");
@@ -51,13 +51,13 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("Opens all items popover when start typing and filters items", () => {
-			const input = browser.findElementDeep("#mcb >>> #ui5-multi-combobox-input >>> input");
-			const popover = browser.findElementDeep("#mcb >>> .ui5-multi-combobox-all-items-popover");
+			const input = browser.$("#mcb").shadow$("#ui5-multi-combobox-input").shadow$("input");
+			const popover = browser.$("#mcb").shadow$(".ui5-multi-combobox-all-items-popover");
 
 			input.click();
 			input.keys("c");
 
-			const list = browser.findElementDeep("#mcb >>> .ui5-multi-combobox-all-items-list");
+			const list = browser.$("#mcb").shadow$(".ui5-multi-combobox-all-items-list");
 
 			assert.ok(popover.isDisplayedInViewport(), "Popover should be displayed in the viewport");
 
@@ -79,8 +79,8 @@ describe("MultiComboBox general interaction", () => {
 
 		it("tests validate-input by typing a non existing option", () => {
 			const mcb = $("#mcb-validation");
-			const input = browser.findElementDeep("#mcb-validation >>> #ui5-multi-combobox-input");
-			const innerInput = browser.findElementDeep("#mcb-validation >>> #ui5-multi-combobox-input >>> input");
+			const input = browser.$("#mcb-validation").shadow$("#ui5-multi-combobox-input");
+			const innerInput = browser.$("#mcb-validation").shadow$("#ui5-multi-combobox-input").shadow$("input");
 
 			innerInput.click();
 			innerInput.keys("c");
@@ -100,7 +100,7 @@ describe("MultiComboBox general interaction", () => {
 		it("tests if n more is applied and corresponding popover", () => {
 			$("#more-mcb").scrollIntoView();
 
-			const nMoreText = browser.findElementDeep("#more-mcb >>> ui5-tokenizer >>> .ui5-tokenizer-more-text");
+			const nMoreText = browser.$("#more-mcb").shadow$("ui5-tokenizer").shadow$(".ui5-tokenizer-more-text");
 
 			assert.ok(nMoreText.getText(), "1 More", "token 1 should be visible");
 		});

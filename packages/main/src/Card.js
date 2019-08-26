@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isIconURI } from "@ui5/webcomponents-base/dist/IconPool.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
@@ -134,7 +134,7 @@ class Card extends UI5Element {
 	constructor() {
 		super();
 
-		this.resourceBundle = getI18nBundle("@ui5/webcomponents");
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	static get metadata() {
@@ -188,15 +188,15 @@ class Card extends UI5Element {
 	}
 
 	get ariaCardRoleDescription() {
-		return this.resourceBundle.getText(ARIA_ROLEDESCRIPTION_CARD);
+		return this.i18nBundle.getText(ARIA_ROLEDESCRIPTION_CARD);
 	}
 
 	get ariaCardAvatarLabel() {
-		return this.resourceBundle.getText(AVATAR_TOOLTIP);
+		return this.i18nBundle.getText(AVATAR_TOOLTIP);
 	}
 
 	get ariaCardContentLabel() {
-		return this.resourceBundle.getText(ARIA_LABEL_CARD_CONTENT);
+		return this.i18nBundle.getText(ARIA_LABEL_CARD_CONTENT);
 	}
 
 	static async define(...params) {

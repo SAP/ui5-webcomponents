@@ -33,7 +33,7 @@ const getI18nBundleData = packageId => {
 /**
  * This method preforms the asyncronous task of fething the actual text resources. It will fetch
  * each text resource over the network once (even for multiple calls to the same method).
- * It should be fully finished before the ResourceBundle class is created in the webcomponents.
+ * It should be fully finished before the i18nBundle class is created in the webcomponents.
  * This method uses the bundle URLs that are populated by the <code>registerI18nBundle</code> method.
  * To simplify the usage, the synchronization of both methods happens internally for the same <code>packageId</code>
  * @param {packageId} packageId the node project package id

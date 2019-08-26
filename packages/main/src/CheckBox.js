@@ -1,7 +1,7 @@
 import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
@@ -196,7 +196,7 @@ class CheckBox extends UI5Element {
 		super();
 
 		this._label = {};
-		this.resourceBundle = getI18nBundle("@ui5/webcomponents");
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
@@ -259,11 +259,11 @@ class CheckBox extends UI5Element {
 	}
 
 	valueStateTextMappings() {
-		const resourceBundle = this.resourceBundle;
+		const i18nBundle = this.i18nBundle;
 
 		return {
-			"Error": resourceBundle.getText(VALUE_STATE_ERROR),
-			"Warning": resourceBundle.getText(VALUE_STATE_WARNING),
+			"Error": i18nBundle.getText(VALUE_STATE_ERROR),
+			"Warning": i18nBundle.getText(VALUE_STATE_WARNING),
 		};
 	}
 
