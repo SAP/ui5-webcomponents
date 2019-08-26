@@ -32,7 +32,7 @@
     "copy:qunit": "cpx \"test/**/qunit/*.*\" dist/test-resources",
     "copy:webcomponents-polyfill": "cpx \"../../node_modules/@webcomponents/webcomponentsjs/**/*.*\" dist/webcomponentsjs/",
     "dev": "npm-run-all --sequential build:i18n watch:all",
-    "generate-new-component" : "node ./lib/create-new-component/create-new-component.js",
+    "generate-new-component" : "node ./lib/create-new-component/index.js",
     "start": "npm-run-all --parallel serve:static dev",
     "lint": "eslint .",
     "test:wdio": "npm-run-all --parallel --race serve:static test:wdio-run",

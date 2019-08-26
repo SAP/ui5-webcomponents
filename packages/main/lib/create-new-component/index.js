@@ -48,17 +48,21 @@ export default ${sComponentName};
 `;
 };
 
-const fs = require("fs");
-
-
 const aArgs = process.argv.slice(2);
 const sComponentName = aArgs[0];
+
+if (!sComponentName){
+	return;
+}
+
 const oPaths = {
 	"js": `./src/${sComponentName}.js`,
 	"css": `./src/themes/${sComponentName}.css`,
 	"hbs": `./src/${sComponentName}.hbs`,
 };
 const sJsFileContentTemplate = jsFileContentTemplate(sComponentName);
+
+const fs = require("fs");
 
 fs.writeFileSync(oPaths.js, sJsFileContentTemplate, { flag: "wx+" });
 fs.writeFileSync(oPaths.css, "", { flag: "wx+" });
