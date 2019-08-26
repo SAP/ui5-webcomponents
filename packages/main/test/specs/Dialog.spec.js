@@ -9,7 +9,7 @@ describe("Dialog general interaction", () => {
 
 		btnOpenDialog.click();
 
-		const dialog = browser.findElementDeep("ui5-dialog >>> .ui5-dialog-root");
+		const dialog = browser.$("ui5-dialog").shadow$(".ui5-dialog-root");
 		assert.ok(dialog.isDisplayedInViewport(), "Dialog is opened.");
 
 		btnCloseDialog.click();
