@@ -167,7 +167,6 @@ describe("Select general interaction", () => {
 
 		// focus out select
 		btn.click();
-		browser.pause(100);
 
 		assert.strictEqual(inputResult.getProperty("value"), "6", "Change event should be fired");
 	});
