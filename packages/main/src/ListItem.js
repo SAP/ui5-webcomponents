@@ -14,7 +14,6 @@ import styles from "./generated/themes/ListItem.css.js";
  * @public
  */
 const metadata = {
-	"abstract": true,
 	properties: /** @lends  sap.ui.webcomponents.main.ListItem.prototype */ {
 
 		/**
