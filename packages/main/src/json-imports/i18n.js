@@ -88,7 +88,7 @@ const allEntriesInlined = Object.entries(bundleMap).every(([_key, value]) => typ
 if (allEntriesInlined) {
 	console.warn(`Inefficient bundling detected: consider bundling i18n imports as URLs instead of inlining them.
 See rollup-plugin-url or webpack file-loader for more information.
-Suggested pattern: "i18n\\\/.*\\\.json"`);
+Suggested pattern: "assets\\\/.*\\\.json"`);
 }
 /* eslint-enable */
 

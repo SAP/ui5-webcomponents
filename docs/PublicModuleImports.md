@@ -171,17 +171,15 @@ Example:
 </script>
 ```
 
-Note: importing the module above will produce the following warning message in the browser's console:
-> Inefficient bundling detected: consider bundling i18n imports as URLs instead of inlining them.
+### Note: importing `import "@ui5/webcomponents/dist/json-imports/i18n.js"` or `import "@ui5/webcomponents/dist/json-imports/Themes.js"` will produce the following warning message in the browser's console:
+> Inefficient bundling detected: consider bundling i18n/theme proeprties imports as URLs instead of inlining them.
 > See rollup-plugin-url or webpack file-loader for more information.
-> Suggested pattern: "i18n\/.*\.json"
+> Suggested pattern: "assets\/.*\.json"
 
 What this means is that it's recommended to instruct your source code bundling software
-(some of the most popular being Webpack and Rollup) not to include all the internationalization files
-(files that match the <code>i18n\/.*\.json</code> pattern) in your applications's javascript bundle,
+(some of the most popular being Webpack and Rollup) not to include all the internationalization files or themimg related files
+(files that match the <code>assets\/.*\.json</code> pattern) in your applications's javascript bundle,
 but rather to leave them out. At runtime, they will be fetched on demand, if ever requested.
-Currently there are very few texts that need translation in UI5 Web Components, but these may grow over time
-so it's always a good idea to implement the optimization, suggested above.
 
 [How to do it with Webpack](https://github.com/webpack-contrib/file-loader)
 
@@ -195,7 +193,7 @@ import url from "rollup-plugin-url";
 plugins.push(url({
 	limit: 0,
 	include: [
-		/.*i18n\/.*\.json/,
+		/.*assets\/.*\.json/,
 	],
 	emitFiles: true,
 	fileName: "[name].[hash][extname]",
