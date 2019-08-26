@@ -1,14 +1,12 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import URI from "@ui5/webcomponents-base/src/types/URI.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler.js";
-import OverflowToolbarTemplateContext from "./OverflowToolbarTemplateContext.js";
-import OverflowToolbarRenderer from "./build/compiled/OverflowToolbarRenderer.lit.js";
+import OverflowToolbarTemplate from "./generated/templates/OverflowToolbarTemplate.lit.js";
 import Button from "./Button.js";
 import Popover from "./Popover.js";
 
 // Styles
-import overflowToolbarCss from "./themes/OverflowToolbar.css";
+import overflowToolbarCss from "./generated/themes/OverflowToolbar.css.js";
 
 
 // all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
@@ -19,10 +17,6 @@ import "./ThemePropertiesProvider.js";
  */
 const metadata = {
 	tag: "ui5-overflow-toolbar",
-	styleUrl: [
-		"OverflowToolbar.css",
-	],
-	defaultSlot: "items",
 	slots: /** @lends sap.ui.webcomponents.main.OverflowToolbar.prototype */ {
 
 		/**
@@ -32,47 +26,11 @@ const metadata = {
 		 * @public
 		 */
 		items: {
-			type: HTMLElement,
-			multiple: true,
+			type: Node,
+			individualSlots: true,
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.OverflowToolbar.prototype */ {
-
-		/**
-		 * Defines the icon to be displayed as graphical element within the <code>ui5-overflow-toolbar</code>.
-		 * If no icon is given, the default icon for the Overflow Toolbar type will be added.
-		 * The SAP-icons font provides numerous options.
-		 * <br></br>
-		 * Example:
-		 * <br>
-		 * <pre>ui5-overflow-toolbar icon="sap-icon://palette"</pre>
-		 *
-		 * See all the available icons in the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
-		 *
-		 * @type {URI}
-		 * @defaultvalue ""
-		 * @public
-		 */
-		icon: { type: URI, defaultValue: null },
-
-		/**
-		 * Defines whether the Overflow Toolbar renders icon in the beginning.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		hideIcon: { type: Boolean, defaultValue: false },
-
-		/**
-		 * Defines whether the Overflow Toolbar renders close icon.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		hideCloseButton: { type: Boolean, defaultValue: false },
-
 		_overflowButton: { type: Object },
 
 		_overflowPopover: { type: Object },
@@ -81,9 +39,15 @@ const metadata = {
 
 		_widthOfElements: { type: Array, defaultValue: [] },
 
-		_initialRendering: { type: Boolean, defaultValue: true },
+		_notInitialRendering: {
+			type: Boolean,
+			noAttribute: true,
+		},
 
-		_overflowing: { type: Boolean, defaultValue: true },
+		_showOverflowButton: {
+			type: Boolean,
+			noAttribute: true,
+		},
 
 	},
 	events: /** @lends sap.ui.webcomponents.main.OverflowToolbar.prototype */ {
@@ -124,12 +88,12 @@ class OverflowToolbar extends UI5Element {
 		return overflowToolbarCss;
 	}
 
-	static get renderer() {
-		return OverflowToolbarRenderer;
+	static get template() {
+		return OverflowToolbarTemplate;
 	}
 
-	static get calculateTemplateContext() {
-		return OverflowToolbarTemplateContext.calculate;
+	static get render() {
+		return litRender;
 	}
 
 	constructor() {
@@ -138,11 +102,7 @@ class OverflowToolbar extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		if (this._initialRendering) {
-			this._overflowButton = {
-				press: this._handleToggleOverflowMenu.bind(this),
-			};
-
+		if (!this._notInitialRendering) {
 			this.overflowingIndex = -1;
 
 			this._items = this.items.map(item => {
@@ -155,12 +115,12 @@ class OverflowToolbar extends UI5Element {
 	}
 
 	onAfterRendering() {
-		if (this._initialRendering) {
+		if (!this._notInitialRendering) {
 			this._items.forEach(item => {
 				this._widthOfElements.push(item.ref.offsetWidth);
 			});
 			this._handleResize();
-			this._initialRendering = false;
+			this._notInitialRendering = true;
 		}
 	}
 
@@ -197,12 +157,12 @@ class OverflowToolbar extends UI5Element {
 		});
 
 		// Set the visibility of the button that opens the popover
-		this._overflowing = this._items[this._items.length - 1].overflowed;
+		this._showOverflowButton = this._items[this._items.length - 1].overflowed;
 	}
 
 	_handleToggleOverflowMenu(event) {
 		const popover = this._getPopover();
-		if (popover._isOpen) {
+		if (popover.opened) {
 			popover.close();
 		} else {
 			popover.openBy(event.target);
@@ -227,8 +187,6 @@ class OverflowToolbar extends UI5Element {
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	OverflowToolbar.define();
-});
+OverflowToolbar.define();
 
 export default OverflowToolbar;

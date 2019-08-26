@@ -1,0 +1,4 @@
+:root {
+    --_ui5_overflowtoolbar_background_color: var(--sapUiGroupContentBackground);
+    --ui5-overflowtoolbar_border_bottom: var(--sapUiListBackgroundDarken15);
+}

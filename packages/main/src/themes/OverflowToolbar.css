@@ -8,17 +8,20 @@ ui5-overflow-toolbar {
 	display: inline-block;
 }
 
-span[data-sap-ui-wc-root] {
-	width: 100%;
+.ui5-overflow-toolbar-root {
+	padding-left: .1rem;
+	background: var(--_ui5_overflowtoolbar_background_color);
 }
 
-.ui5-overflow-toolbar {
+.ui5-overflow-toolbar-content-wrapper {
 	height: 2.75rem;
-	padding: 0 0.5rem 0 1rem;
 	display: flex;
 	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
 	flex-wrap: nowrap;
-	background-color: var(--sapUiToolbarBackground);
+	border-bottom: 1px solid var(--ui5-overflowtoolbar_border_bottom);
+	background-color: inherit;
 }
 
 .ui5-overflow-toolbar-items {
@@ -30,20 +33,22 @@ span[data-sap-ui-wc-root] {
     flex-wrap: nowrap;
 }
 
-.ui5-overflow-toolbar-items > ::slotted(*) {
-	margin-right: 0.5rem;
+.ui5-overflow-toolbar-overflowed-item {
+	width: initial;
 }
 
-.ui5-overflow-toolbar-items > * {
-	margin-right: 0.5rem;
+.ui5-overflow-toolbar-item {
+	margin-right: .5rem;
+	display: flex;
 }
 
 .ui5-overflow-toolbar-popover-content {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
 	width: 130px;
 }
 
 .ui5-overflow-toolbar .ui5-overflow-toolbar-popover-content > ::slotted(*) {
-	width: 100% !important;
-	--sapUiButtonBorderColor: transparent;
-	--sapUiButtonHorizontalTextAlign: flex-start;
+	flex-grow: 1;
 }
