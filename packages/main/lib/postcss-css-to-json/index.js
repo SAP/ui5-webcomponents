@@ -8,7 +8,7 @@ module.exports = postcss.plugin('add css to JSON transform plugin', function (op
 
 	return function (root) {
 		const css = root.toString();
-		const targetFile = root.source.input.from.replace("/src/", "/dist/").replace("\\src\\", "\\dist\\");
+		const targetFile = root.source.input.from.replace("/src/", "/dist/generated/assets/").replace("\\src\\", "\\dist\\generated\\assets\\");
 
 		mkdirp.sync(path.dirname(targetFile));
 
