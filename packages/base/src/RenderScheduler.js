@@ -132,7 +132,7 @@ class RenderScheduler {
 		const stillUndefined = this.getNotDefinedComponents();
 		if (stillUndefined.length) {
 			// eslint-disable-next-line
-			console.warn("undefined elements after 5 seconds: ", [...stillUndefined].map(el => el.localName));
+			console.warn("undefined elements after 5 seconds are: " + [...stillUndefined].map(el => el.localName).join(" ; "));
 		}
 
 		return Promise.resolve();

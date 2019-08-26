@@ -27,6 +27,7 @@ import Popover from "./dist/Popover.js";
 import Panel from "./dist/Panel.js";
 import RadioButton from "./dist/RadioButton.js";
 import Select from "./dist/Select.js";
+import Option from "./dist/Option.js";
 import ShellBar from "./dist/ShellBar.js";
 import ShellBarItem from "./dist/ShellBarItem.js";
 import Switch from "./dist/Switch.js";
@@ -41,6 +42,7 @@ import TableRow from "./dist/TableRow.js";
 import TableCell from "./dist/TableCell.js";
 import TextArea from "./dist/TextArea.js";
 import Timeline from "./dist/Timeline.js";
+import TimelineItem from "./dist/TimelineItem.js";
 import Title from "./dist/Title.js";
 import ToggleButton from "./dist/ToggleButton.js";
 
