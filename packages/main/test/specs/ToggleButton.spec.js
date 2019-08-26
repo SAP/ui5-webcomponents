@@ -18,7 +18,7 @@ describe("ToggleButton general interaction", () => {
 	});
 
 	it("should not fire press event on a disabled togglebutton", () => {
-		const toggleButton = browser.findElementDeep("#disabled-toggle-button >>> button");
+		const toggleButton = browser.$("#disabled-toggle-button").shadow$("button");
 		const result = $("#press-result");
 
 		assert.throws(() => {
@@ -50,7 +50,7 @@ describe("ToggleButton general interaction", () => {
 	});
 
 	it("should not fire click event on a disabled togglebutton", () => {
-		const toggleButton = browser.findElementDeep("#disabled-toggle-button >>> button");
+		const toggleButton = browser.$("#disabled-toggle-button").shadow$("button");
 		const result = $("#click-result");
 
 		assert.throws(() => {

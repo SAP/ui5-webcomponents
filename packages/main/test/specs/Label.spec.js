@@ -12,8 +12,8 @@ describe("General API", () => {
 	});
 
 	it("should wrap the text of the label", () => {
-		const wrappingLabel = browser.findElementDeep("#wrapping-label");
-		const truncatingLabel = browser.findElementDeep("#truncated-label");
+		const wrappingLabel = browser.$("#wrapping-label");
+		const truncatingLabel = browser.$("#truncated-label");
 
 		assert.ok(wrappingLabel.getSize().height > truncatingLabel.getSize().height);
 		assert.strictEqual(truncatingLabel.getSize().height, 16, "truncated label should be single line");
@@ -21,8 +21,8 @@ describe("General API", () => {
 
 	describe("linked element with 'for' property", () => {
 		it("should focus ui5-input on click", () => {
-			const label = browser.findElementDeep("#label-for-ui5-input");
-			const field = browser.findElementDeep("#form-ui5-input");
+			const label = browser.$("#label-for-ui5-input");
+			const field = browser.$("#form-ui5-input");
 
 			label.click();
 
@@ -30,8 +30,8 @@ describe("General API", () => {
 		});
 
 		it("should focus native input on click", () => {
-			const label = browser.findElementDeep("#label-for-native-input");
-			const field = browser.findElementDeep("#native-input");
+			const label = browser.$("#label-for-native-input");
+			const field = browser.$("#native-input");
 
 			label.click();
 
@@ -39,8 +39,8 @@ describe("General API", () => {
 		});
 
 		it("should focus ui5-textarea on click", () => {
-			const label = browser.findElementDeep("#label-for-ui5-textarea");
-			const field = browser.findElementDeep("#ui5-textarea");
+			const label = browser.$("#label-for-ui5-textarea");
+			const field = browser.$("#ui5-textarea");
 
 			label.click();
 
@@ -48,8 +48,8 @@ describe("General API", () => {
 		});
 
 		it("should focus native textarea on click", () => {
-			const label = browser.findElementDeep("#label-for-native-textarea");
-			const field = browser.findElementDeep("#native-textarea");
+			const label = browser.$("#label-for-native-textarea");
+			const field = browser.$("#native-textarea");
 
 			label.click();
 
@@ -57,8 +57,8 @@ describe("General API", () => {
 		});
 
 		it("should focus ui5-datepicker on click", () => {
-			const label = browser.findElementDeep("#label-for-ui5-datepicker");
-			const field = browser.findElementDeep("#ui5-datepicker");
+			const label = browser.$("#label-for-ui5-datepicker");
+			const field = browser.$("#ui5-datepicker");
 
 			label.click();
 

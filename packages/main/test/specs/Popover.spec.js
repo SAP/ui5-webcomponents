@@ -9,7 +9,7 @@ describe("Popover general interaction", () => {
 
 		btnOpenPopover.click();
 
-		const popover = browser.findElementDeep("ui5-popover >>> .ui5-popover-root");
+		const popover = browser.$("ui5-popover").shadow$(".ui5-popover-root");
 		assert.ok(popover.isDisplayedInViewport(), "Popover is opened.");
 
 		field.click();
@@ -22,7 +22,7 @@ describe("Popover general interaction", () => {
 
 		btnOpenPopover.click();
 
-		const popover = browser.findElementDeep("ui5-popover >>> .ui5-popover-root");
+		const popover = browser.$("ui5-popover").shadow$(".ui5-popover-root");
 		assert.ok(popover.isDisplayedInViewport(), "Popover is opened.");
 
 		btnInPopover.click();

@@ -4,16 +4,16 @@ describe("General API", () => {
 	browser.url('http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/Link.html');
 
 	it("should wrap the text of the link", () => {
-		const wrappingLabel = browser.findElementDeep("#wrapping-link");
-		const truncatingLabel = browser.findElementDeep("#non-wrapping-link");
+		const wrappingLabel = browser.$("#wrapping-link");
+		const truncatingLabel = browser.$("#non-wrapping-link");
 
 		assert.ok(wrappingLabel.getSize().height > truncatingLabel.getSize().height);
 		assert.strictEqual(truncatingLabel.getSize().height, 16, "truncated label should be single line");
 	});
 
 	it("should prevent clicking on disabled link", () => {
-		const disLink = browser.findElementDeep("#disabled-link");
-		const input = browser.findElementDeep("#helper-input");
+		const disLink = browser.$("#disabled-link");
+		const input = browser.$("#helper-input");
 
 		assert.throws(() => {
 			disLink.click();
@@ -24,9 +24,9 @@ describe("General API", () => {
 	});
 
 	it("should trigger click event onclick / enter / space", () => {
-		const link = browser.findElementDeep("#link >>> a");
-		const input = browser.findElementDeep("#helper-input");
-		const inputClick = browser.findElementDeep("#helper-input-click");
+		const link = browser.$("#link").shadow$("a");
+		const input = browser.$("#helper-input");
+		const inputClick = browser.$("#helper-input-click");
 
 		// same as in Timeline.spec.js
 		// disable the click test temporarily, wdio click simulation does not trigger the ui5-link click handler

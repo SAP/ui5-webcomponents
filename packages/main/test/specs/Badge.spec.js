@@ -5,7 +5,7 @@ describe("Badge rendering", () => {
 
 	it("tests label not rendered if not text content", () => {
 
-		const badgeLabel = browser.findElementDeep("#badgeIconOnly >>> .ui5-badge-text");
+		const badgeLabel = browser.$("#badgeIconOnly").shadow$(".ui5-badge-text");
 
 		assert.ok(badgeLabel, "bagde label tag not rendered.");
 	});

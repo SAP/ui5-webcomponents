@@ -4,7 +4,7 @@ describe("Timeline general interaction", () => {
 	browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/Timeline.html");
 
 	it("should fire itemNameClick event on a normal item name", () => {
-		const timelineItemName = browser.findElementDeep("#test-item >>> ui5-link");
+		const timelineItemName = browser.$("#test-item").shadow$("ui5-link");
 		const result = $("#result");
 
 		// disable the click test temporarily, wdio click simulation does not trigger the ui5-link click handler
