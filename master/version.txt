@@ -1,5 +1,5 @@
-commit 0e86aa800fd07e72565d4dfaf79dfc739bd62d22
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Mon Aug 26 11:08:51 2019 +0300
+commit 171a36f7c8dbf0936f2d450891210ed5ed9fc2a0
+Author: Tsanislav Gatev <tseko95@gmail.com>
+Date:   Mon Aug 26 14:48:31 2019 +0300
 
-    chore: adopt all specs to shadow$ syntax (#745)
+    feat: implement create control script (#747)
