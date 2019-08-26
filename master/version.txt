@@ -1,5 +1,5 @@
-commit 171a36f7c8dbf0936f2d450891210ed5ed9fc2a0
-Author: Tsanislav Gatev <tseko95@gmail.com>
-Date:   Mon Aug 26 14:48:31 2019 +0300
+commit b610aebb27e1ecc05af6fbdf6a56496668b6bdf3
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Mon Aug 26 15:02:12 2019 +0300
 
-    feat: implement create control script (#747)
+    Enhance metadata (#735)
