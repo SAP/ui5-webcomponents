@@ -1,5 +1,8 @@
-commit 9a6db1fd4928b00f5032fdb28cf46f5e26556f67
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Aug 23 14:03:38 2019 +0300
+commit 484b89d677dfbe579edfcaf2e0323a1bf4c7f786
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Mon Aug 26 10:35:42 2019 +0300
 
-    chore: fix build dev mode (#743)
+    chore: update chromedriver and wdio (#739)
+    
+    - adopt some tests with new shadow$ API
+    - add some actions like addValue, setValue, setAttribute, etc to async list
