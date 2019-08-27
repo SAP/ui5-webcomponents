@@ -59,7 +59,7 @@ const resolveMissingMappings = () => {
 	});
 };
 
-const fetchCldrData = async (language, region, script) => {
+const fetchCldr = async (language, region, script) => {
 	resolveMissingMappings();
 	const localeId = calcLocale(language, region, script);
 
@@ -76,12 +76,16 @@ const fetchCldrData = async (language, region, script) => {
 	}
 };
 
-const registerCldrUrl = (locale, url) => {
+const registerCldr = (locale, url) => {
 	cldrUrls[locale] = url;
 };
 
-const registerCldrData = (locale, data) => {
+const setCldrData = (locale, data) => {
 	cldrData[locale] = data;
+};
+
+const getCldrData = (locale) => {
+	return cldrData[locale];
 };
 
 const _registerMappingFunction = mappingFn => {
@@ -89,5 +93,9 @@ const _registerMappingFunction = mappingFn => {
 };
 
 export {
-	fetchCldrData, registerCldrUrl, registerCldrData, _registerMappingFunction,
+	fetchCldr,
+	registerCldr,
+	setCldrData,
+	getCldrData,
+	_registerMappingFunction,
 };

@@ -73,7 +73,7 @@ import zh_HK from "../assets/cldr/sap/ui/core/cldr/zh_HK.json";
 import zh_SG from "../assets/cldr/sap/ui/core/cldr/zh_SG.json";
 import zh_TW from "../assets/cldr/sap/ui/core/cldr/zh_TW.json";
 
-import { registerCldrUrl, registerCldrData } from "../asset-registries/LocaleData.js";
+import { registerCldr, setCldrData } from "../asset-registries/LocaleData.js";
 
 const cldrData = {
 	ar,
@@ -162,9 +162,9 @@ Suggested pattern: "assets\\\/.*\\\.json"`);
 
 Object.entries(cldrData).forEach(([key, value]) => {
 	if (typeof (value) === "object") {
-		registerCldrData(key, value);
+		setCldrData(key, value);
 	} else {
-		registerCldrUrl(key, value);
+		registerCldr(key, value);
 	}
 });
 

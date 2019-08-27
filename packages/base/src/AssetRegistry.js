@@ -1,11 +1,12 @@
-// import * as i18n from "./asset-registries/i18n.js";
-// import * as LocaleData from "./asset-registries/LocaleData.js";
-import * as Themes from "./asset-registries/Themes.js";
+import { registerI18nBundle } from "./asset-registries/i18n.js";
+import { registerCldr } from "./asset-registries/LocaleData.js";
+import { registerThemeProperties } from "./asset-registries/Themes.js";
 
-const registerThemeProperties = Themes.registerThemeProperties;
-const getThemeProperties = Themes.getThemeProperties;
-
-export { registerThemeProperties, getThemeProperties };
+export {
+	registerCldr,
+	registerThemeProperties,
+	registerI18nBundle,
+};
 
 /*
 discuss name
