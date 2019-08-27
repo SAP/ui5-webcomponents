@@ -4,9 +4,7 @@
 			<div style="display: inline-block"></div>
 		</div>
 		{{#each tokens}}
-			<div class="ui5-tokenizer--token--wrapper">
-				<slot name="{{this._individualSlot}}"></slot>
-			</div>
+			<slot name="{{this._individualSlot}}"></slot>
 		{{/each}}
 	</div>
 
