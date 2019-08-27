@@ -22,7 +22,7 @@ const registerI18nBundle = (packageId, bundlesMap) => {
  * @param {Object} data the loaded messagebundle_*.json file
  * @public
  */
-const registerBundleData = (packageId, data) => {
+const registerI18nBundleData = (packageId, data) => {
 	bundleData.set(packageId, data);
 };
 
@@ -62,7 +62,7 @@ const fetchI18nBundle = async packageId => {
 	}
 
 	const data = await fetchJsonOnce(bundleURL);
-	registerBundleData(packageId, data);
+	registerI18nBundleData(packageId, data);
 };
 
 export { fetchI18nBundle, registerI18nBundle, getI18nBundleData };

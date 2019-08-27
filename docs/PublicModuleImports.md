@@ -177,7 +177,7 @@ Example:
 > Suggested pattern: "assets\/.*\.json"
 
 What this means is that it's recommended to instruct your source code bundling software
-(some of the most popular being Webpack and Rollup) not to include all the internationalization files or themimg related files
+(some of the most popular being Webpack and Rollup) not to include all the internationalization files or theming related files
 (files that match the <code>assets\/.*\.json</code> pattern) in your applications's javascript bundle,
 but rather to leave them out. At runtime, they will be fetched on demand, if ever requested.
 
