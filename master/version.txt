@@ -1,5 +1,7 @@
-commit b610aebb27e1ecc05af6fbdf6a56496668b6bdf3
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Mon Aug 26 15:02:12 2019 +0300
+commit c67fe0a373da204c03e068a7239524e929857320
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Tue Aug 27 10:05:03 2019 +0300
 
-    Enhance metadata (#735)
+    fix(ui5-multi-combobox): overflow tokens correctly when not enough space (#714)
+    
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/712
