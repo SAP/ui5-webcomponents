@@ -8,14 +8,42 @@ export {
 	registerI18nBundle,
 };
 
-// registerThemeProperties = (packageName, themeName, data)
-// registerCldr = (locale, url) => {
-// registerI18nBundle = (bundleId, bundlesMap)
+/**
+ * Theme Registry
+ *
+ * (public) [sync] registerThemeProperties = (packageName, themeName, styles)
+ * #For Example (data): registerThemeProperties("main", "sap_fiori3", ":root{ --sapBackground: black;}")
+ * #For Example (URL): registerThemeProperties("main", "sap_fiori3", "path/myprops.css.json")
+ *
+ * (public?) [async] getThemeProperties = (packageName, themeName) (internally performs async fetchThemeProperties)
+*/
+
+/**
+ * I18n Registry
+ *
+ * (public) [sync] registerI18nBundle = (packageName, bundle)
+ * #For Example (URL): registerI18nBundle("main", {"en" : url, "de" : url})
+ * #For Example (data): registerI18nBundle("main", {"en" : {EMPHASIZED: "Emphasized", ...}, "de" : {EMPHASIZED: "Hervorgehoben", ...}})
+ *
+ * (public?) [async] fetchI18nBundle = (packageName)
+ * (private) [sync] setI18nBundleData = (packageName, data)
+ * (private) [sync] getI18nBundleData = (packageName)
+*/
+
+/**
+ * LocalData Registry
+ *
+ * (public) [sync] registerCldr = (locale, url)
+ * #For Example (URL): registerCldr("de", "path/de.json");
+ *
+ * (public?) [async] fetchCldr = (language, region, script)
+ * (private) [sync] setCldrData = (locale, data)
+ * (private) [sync] getCldrData = (locale)
+*/
 
 /*
-discuss name
+API
 
-API high level
 data (sync) (private)
     set [PRIVATE, called by components]
     get [PRIVATE, called by components]

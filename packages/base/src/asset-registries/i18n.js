@@ -8,27 +8,27 @@ const bundleData = new Map();
 const bundleURLs = new Map();
 
 /**
- * Registers a map of locale/url information to be used by the <code>fetchI18nBundle</code> method.
- * @param {string} bundleId the i18n bundle ID that the texts will be related to
- * @param {Object} bundlesMap an object with string locales as keys and the URLs of where the corresponding locale can be fetched from
+ * Sets a map with texts and ID the are related to.
+ * @param {string} packageName package ID that the i18n bundle will be related to
+ * @param {Object} data an object with string locales as keys and text translataions as values
  * @public
  */
-const registerI18nBundle = (bundleId, bundlesMap) => {
-	bundleURLs.set(bundleId, bundlesMap);
+const setI18nBundleData = (packageName, data) => {
+	bundleData.set(packageName, data);
+};
+
+const getI18nBundleData = packageName => {
+	return bundleData.get(packageName);
 };
 
 /**
- * Sets a map with texts and ID the are related to.
- * @param {string} bundleId the i18n bundle ID that the texts will be related to
- * @param {Object} data an object holding the text keys and the text translataions
+ * Registers a map of locale/url information, to be used by the <code>fetchI18nBundle</code> method.
+ * @param {string} packageName package ID that the i18n bundle will be related to
+ * @param {Object} bundle an object with string locales as keys and the URLs of where the corresponding locale can be fetched from, f.e {"en": "path/en.json", ...}
  * @public
  */
-const setI18nBundleData = (bundleId, data) => {
-	bundleData.set(bundleId, data);
-};
-
-const getI18nBundleData = bundleId => {
-	return bundleData.get(bundleId);
+const registerI18nBundle = (packageName, bundle) => {
+	bundleURLs.set(packageName, bundle);
 };
 
 /**
@@ -37,11 +37,11 @@ const getI18nBundleData = bundleId => {
  * It should be fully finished before the i18nBundle class is created in the webcomponents.
  * This method uses the bundle URLs that are populated by the <code>registerI18nBundle</code> method.
  * To simplify the usage, the synchronization of both methods happens internally for the same <code>bundleId</code>
- * @param {bundleId} bundleId the node project package id
+ * @param {packageName} packageName the node project package id
  * @public
  */
-const fetchI18nBundle = async bundleId => {
-	const bundlesForPackage = bundleURLs.get(bundleId);
+const fetchI18nBundle = async packageName => {
+	const bundlesForPackage = bundleURLs.get(packageName);
 
 	if (!bundlesForPackage) {
 		console.warn(`Message bundle assets are not configured. Falling back to english texts.`, /* eslint-disable-line */
@@ -59,11 +59,12 @@ const fetchI18nBundle = async bundleId => {
 	const bundleURL = bundlesForPackage[localeId];
 
 	if (typeof bundleURL === "object") { // inlined from build
+		setI18nBundleData(packageName, data);
 		return bundleURL;
 	}
 
 	const data = await fetchJsonOnce(bundleURL);
-	setI18nBundleData(bundleId, data);
+	setI18nBundleData(packageName, data);
 };
 
 export {
