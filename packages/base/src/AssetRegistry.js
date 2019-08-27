@@ -8,6 +8,10 @@ export {
 	registerI18nBundle,
 };
 
+// registerThemeProperties = (packageName, themeName, data)
+// registerCldr = (locale, url) => {
+// registerI18nBundle = (bundleId, bundlesMap)
+
 /*
 discuss name
 
