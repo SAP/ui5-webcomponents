@@ -1,7 +1,7 @@
 import { fetchI18nBundle, getI18nBundleData } from "./asset-registries/i18n.js";
 import formatMessage from "./util/formatMessage";
 
-class i18nBundle {
+class I18nBundle {
 	constructor(packageId) {
 		this.packageId = packageId;
 	}
@@ -18,7 +18,7 @@ class i18nBundle {
 }
 
 const getI18nBundle = packageId => {
-	return new i18nBundle(packageId);
+	return new I18nBundle(packageId);
 };
 
 export { fetchI18nBundle, getI18nBundle };
