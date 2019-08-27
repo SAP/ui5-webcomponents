@@ -6,7 +6,7 @@ module.exports = {
 		// headless: false
 	},
 	server: {
-		command: 'cd ../playground && npx ui5 serve',
+		command: 'cd ./test/sap/ui/webcomponents/main/ && serve -l 8080',
 		port: 8080,
 		launchTimeout: 10000,
 		debug: true,

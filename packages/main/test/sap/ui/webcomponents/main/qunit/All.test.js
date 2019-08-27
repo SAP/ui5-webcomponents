@@ -20,7 +20,7 @@ describe('All Components', () => {
 
 	for (const testName of URLs) {
 		it(`${testName} should pass all qunit tests`, async () => {
-			let url = `http://localhost:8080/test-resources/sap/ui/webcomponents/main/qunit/runner.html?testName=${testName}`;
+			let url = `http://localhost:8080/qunit/runner.html?testName=${testName}`;
 			await page.goto(url);
 			await checkQUnit(page, url);
 		});
