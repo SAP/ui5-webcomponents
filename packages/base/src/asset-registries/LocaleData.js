@@ -84,7 +84,7 @@ const setCldrData = (locale, data) => {
 	cldrData[locale] = data;
 };
 
-const getCldrData = (locale) => {
+const getCldrData = locale => {
 	return cldrData[locale];
 };
 
