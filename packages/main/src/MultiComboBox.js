@@ -77,7 +77,7 @@ const metadata = {
 		 * @defaultvalue false
 		 * @public
 		 */
-		validateInput: {
+		allowCustomValues: {
 			type: Boolean,
 		},
 
@@ -256,7 +256,7 @@ class MultiComboBox extends UI5Element {
 		const filteredItems = this._filterItems(value);
 		const oldValueState = this.valueState;
 
-		if (!filteredItems.length && value && this.validateInput) {
+		if (!filteredItems.length && value && !this.allowCustomValues) {
 			input.value = this._inputLastValue;
 			input.valueState = "Error";
 
