@@ -17,7 +17,7 @@ const handleEvent = function handleEvent(event) {
 
 
 const processDOMNode = function processDOMNode(node, event) {
-	if (node && node._isUI5Element) {
+	if (node && node.isUI5Element) {
 		return dispatchEvent(node, event);
 	}
 	return true;

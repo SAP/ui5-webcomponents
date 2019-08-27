@@ -11,13 +11,12 @@ import {
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import "@ui5/webcomponents-base/dist/icons/slim-arrow-down.js";
-import Option from "./Option.js";
 import Label from "./Label.js";
 import Popover from "./Popover.js";
 import List from "./List.js";
 import StandardListItem from "./StandardListItem.js";
 import Icon from "./Icon.js";
+import "./icons/slim-arrow-down.js";
 
 // Template
 import SelectTemplate from "./generated/templates/SelectTemplate.lit.js";
@@ -39,13 +38,13 @@ const metadata = {
 		 * If more than one option is defined as selected, the last one would be considered as the selected one.
 		 * <br><br>
 		 * <b>Note:</b> Use the <code>ui5-option</code> component to define the desired options.
-		 * @type {Option[]}
+		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
 		 */
 		"default": {
 			propertyName: "options",
-			type: Option,
+			type: HTMLElement,
 			listenFor: { include: ["*"] },
 		},
 	},
@@ -203,6 +202,16 @@ class Select extends UI5Element {
 		return popover && popover.opened;
 	}
 
+	/**
+	 * Currently selected option
+	 * @readonly
+	 * @type { ui5-option }
+	 * @public
+	 */
+	get selectedOption() {
+		return this.options.find(option => option.selected);
+	}
+
 	_togglePopover() {
 		const popover = this.shadowRoot.querySelector("#ui5-select--popover");
 
@@ -262,7 +271,7 @@ class Select extends UI5Element {
 		if (FormSupport) {
 			FormSupport.syncNativeHiddenInput(this, (element, nativeInput) => {
 				nativeInput.disabled = element.disabled;
-				nativeInput.value = element.selectedOption.value;
+				nativeInput.value = element._currentlySelectedOption.value;
 			});
 		} else if (this.name) {
 			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
@@ -303,11 +312,11 @@ class Select extends UI5Element {
 	}
 
 	_applyFocusAfterOpen() {
-		if (!this.selectedOption) {
+		if (!this._currentlySelectedOption) {
 			return;
 		}
 
-		const li = this.shadowRoot.querySelector(`#${this.selectedOption._id}-li`);
+		const li = this.shadowRoot.querySelector(`#${this._currentlySelectedOption._id}-li`);
 
 		li.parentElement._itemNavigation.currentIndex = this._selectedIndex;
 		li && li.focus();
@@ -375,7 +384,7 @@ class Select extends UI5Element {
 		return this.shadowRoot.querySelector(`#${this.options[this._selectedIndex]._id}-li`);
 	}
 
-	get selectedOption() {
+	get _currentlySelectedOption() {
 		return this.options[this._selectedIndex];
 	}
 
@@ -389,7 +398,6 @@ class Select extends UI5Element {
 
 	static async define(...params) {
 		await Promise.all([
-			Option.define(),
 			Label.define(),
 			Popover.define(),
 			List.define(),

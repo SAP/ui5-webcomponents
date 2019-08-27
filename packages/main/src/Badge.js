@@ -1,12 +1,12 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
-import Icon from "./Icon.js";
 
 // Template
 import BadgeTemplate from "./generated/templates/BadgeTemplate.lit.js";
 
-import { BADGE_DESCRIPTION } from "./i18n/defaults.js";
+import { BADGE_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import badgeCss from "./generated/themes/Badge.css.js";
@@ -49,12 +49,12 @@ const metadata = {
 		/**
 		 * Defines the <code>ui5-icon</code> to be displayed in the <code>ui5-badge</code>.
 		 *
-		 * @type {Icon}
+		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
 		 */
 		icon: {
-			type: Icon,
+			type: HTMLElement,
 		},
 
 	},
@@ -87,6 +87,12 @@ const metadata = {
  * @public
  */
 class Badge extends UI5Element {
+	constructor() {
+		super();
+
+		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
+	}
+
 	static get metadata() {
 		return metadata;
 	}
@@ -101,6 +107,12 @@ class Badge extends UI5Element {
 
 	static get styles() {
 		return badgeCss;
+	}
+
+	static async define(...params) {
+		await fetchResourceBundle("@ui5/webcomponents");
+
+		super.define(...params);
 	}
 
 	onBeforeRendering() {
@@ -124,7 +136,7 @@ class Badge extends UI5Element {
 	}
 
 	get badgeDescription() {
-		return BADGE_DESCRIPTION.defaultText;
+		return this.resourceBundle.getText(BADGE_DESCRIPTION);
 	}
 }
 

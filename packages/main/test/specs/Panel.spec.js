@@ -4,7 +4,7 @@ describe("Panel general interaction", () => {
 	browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/Panel.html");
 
 	it("tests toggle event upon header click", () => {
-		const header = browser.findElementDeep("#panel1 >>> .sapMPanelWrappingDiv");
+		const header = browser.$("#panel1").shadow$(".ui5-panel-header");
 		const field = browser.$("#field1");
 
 		header.click();
@@ -20,7 +20,7 @@ describe("Panel general interaction", () => {
 	});
 
 	it("tests toggle event upon icon click with custom header", () => {
-		const icon = browser.findElementDeep("#panel2 >>> .sapMPanelIconOuter");
+		const icon = browser.$("#panel2").shadow$(".ui5-panel-header-button");
 		const field = browser.$("#field2");
 
 		icon.click();

@@ -1,12 +1,31 @@
 import "./shims/jquery-shim.js";
 import "./shims/Core-shim.js";
-import ResourceBundle from "@ui5/webcomponents-core/dist/sap/base/i18n/ResourceBundle.js";
-import formatMessage from "@ui5/webcomponents-core/dist/sap/base/strings/formatMessage.js";
 import { getLanguage } from "./LocaleProvider.js";
-import { registerModuleContent } from "./ResourceLoaderOverrides.js";
 import { fetchJsonOnce } from "./util/FetchHelper.js";
+import { normalizeLocale, nextFallbackLocale } from "./util/normalizeLocale.js";
+import formatMessage from "./util/formatMessage";
 
+const bundleData = new Map();
 const bundleURLs = new Map();
+
+/**
+ * Registers a map of locale/url information to be used by the <code>fetchResourceBundle</code> method.
+ * @param {string} packageId the node project id of the project that provides text resources
+ * @param {Object} bundlesMap an object with string locales as keys and the URLs of where the corresponding locale can be fetched from
+ * @public
+ */
+const registerMessageBundles = (packageId, bundlesMap) => {
+	bundleURLs.set(packageId, bundlesMap);
+};
+
+/**
+ * Registers a map with the loaded messages.
+ * @param {Object} data the loaded messagebundle_*.json file
+ * @public
+ */
+const registerBundleData = (packageId, data) => {
+	bundleData.set(packageId, data);
+};
 
 /**
  * This method preforms the asyncronous task of fething the actual text resources. It will fetch
@@ -28,59 +47,39 @@ const fetchResourceBundle = async packageId => {
 
 	const language = getLanguage();
 
-	let localeId = ResourceBundle.__normalize(language);
+	let localeId = normalizeLocale(language);
 	while (!bundlesForPackage[localeId]) {
-		localeId = ResourceBundle.__nextFallbackLocale(localeId);
+		localeId = nextFallbackLocale(localeId);
 	}
 
 	const bundleURL = bundlesForPackage[localeId];
 
-	if (typeof bundleURL === "object") {
-		// inlined from build
-		registerModuleContent(`${packageId}_${localeId}.properties`, bundleURL._);
+	if (typeof bundleURL === "object") { // inlined from build
 		return bundleURL;
 	}
 
 	const data = await fetchJsonOnce(bundleURL);
-	registerModuleContent(`${packageId}_${localeId}.properties`, data._);
+	registerBundleData(packageId, data);
 };
 
-/**
- * Registers a map of locale/url information to be used by the <code>fetchResourceBundle</code> method.
- * @param {string} packageId the node project id of the prohject that provides text resources
- * @param {Object} bundlesMap an object with string locales as keys and the URLs of where the corresponding locale can be fetched from.
- * @public
- */
-const registerMessageBundles = (packageId, bundlesMap) => {
-	bundleURLs.set(packageId, bundlesMap);
-};
-
-class ResourceBundleFallback {
-	getText(textObj, ...params) {
-		return formatMessage(textObj.defaultText, params);
-	}
-}
-
-class ResourceBundleWrapper {
-	constructor(resouceBundle) {
-		this._resourceBundle = resouceBundle;
+class ResourceBundle {
+	constructor(packageId) {
+		this.packageId = packageId;
 	}
 
 	getText(textObj, ...params) {
-		return this._resourceBundle.getText(textObj.key, ...params);
+		const messages = bundleData.get(this.packageId);
+
+		if (!messages || !messages[textObj.key]) {
+			return formatMessage(textObj.defaultText, params);
+		}
+
+		return formatMessage(messages[textObj.key], params);
 	}
 }
 
 const getResourceBundle = packageId => {
-	const bundleLoaded = bundleURLs.has(packageId);
-
-	if (bundleLoaded) {
-		return new ResourceBundleWrapper(ResourceBundle.create({
-			url: `${packageId}.properties`,
-		}));
-	}
-
-	return new ResourceBundleFallback();
+	return new ResourceBundle(packageId);
 };
 
 export { fetchResourceBundle, registerMessageBundles, getResourceBundle };

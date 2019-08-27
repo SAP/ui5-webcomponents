@@ -8,7 +8,7 @@ import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonTemplate from "./generated/templates/ButtonTemplate.lit.js";
 import Icon from "./Icon.js";
 
-import { BUTTON_ARIA_TYPE_ACCEPT, BUTTON_ARIA_TYPE_REJECT, BUTTON_ARIA_TYPE_EMPHASIZED } from "./i18n/defaults.js";
+import { BUTTON_ARIA_TYPE_ACCEPT, BUTTON_ARIA_TYPE_REJECT, BUTTON_ARIA_TYPE_EMPHASIZED } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import buttonCss from "./generated/themes/Button.css.js";
@@ -122,6 +122,14 @@ const metadata = {
 		 * @private
 		 */
 		hasIcon: {
+			type: Boolean,
+		},
+
+		/**
+		 * Indicates if the element if focusable
+		 * @private
+		 */
+		nonFocusable: {
 			type: Boolean,
 		},
 
@@ -296,6 +304,10 @@ class Button extends UI5Element {
 
 	get buttonTypeText() {
 		return this.resourceBundle.getText(Button.typeTextMappings()[this.design]);
+	}
+
+	get tabIndexValue() {
+		return this.nonFocusable ? "-1" : "0";
 	}
 
 	static async define(...params) {

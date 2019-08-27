@@ -5,8 +5,8 @@ describe("Button general interaction", () => {
 	browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/Button.html");
 
 	it("tests press event", () => {
-		const button = browser.findElementDeep("#button1");
-		const field = browser.findElementDeep("#press-counter");
+		const button = browser.$("#button1");
+		const field = browser.$("#press-counter");
 
 		button.click();
 		button.keys("Space");
@@ -16,7 +16,7 @@ describe("Button general interaction", () => {
 	});
 
 	it("tests pressing on disabled button", () => {
-		const button = browser.findElementDeep("#button-disabled >>> button");
+		const button = browser.$("#button-disabled").shadow$("button");
 
 		assert.throws(() => {
 			button.click();
@@ -25,14 +25,14 @@ describe("Button general interaction", () => {
 		// don't test space and enter, as wdio always fires a click but the browser not.
 		// button.keys("Space");
 		// button.keys("Enter");
-		const field = browser.findElementDeep("#press-counter");
+		const field = browser.$("#press-counter");
 		assert.strictEqual(field.getProperty("value"), "3", "Press should be called 3 times");
 	});
 
 	it("click should call handler", () => {
 
-		const button = browser.findElementDeep("#button1");
-		const field = browser.findElementDeep("#click-counter");
+		const button = browser.$("#button1");
+		const field = browser.$("#click-counter");
 
 		button.click();
 		button.keys("Space");
@@ -42,8 +42,8 @@ describe("Button general interaction", () => {
 	});
 
 	it("click on disabled button should not call handler", () => {
-		const button = browser.findElementDeep("#button-disabled >>> button");
-		const field = browser.findElementDeep("#click-counter");
+		const button = browser.$("#button-disabled").shadow$("button");
+		const field = browser.$("#click-counter");
 
 		assert.throws(() => {
 			button.click();

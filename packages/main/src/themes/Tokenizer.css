@@ -52,7 +52,7 @@
 
 .ui5-tokenizer-token-placeholder {
 	display: inline-block;
-	height: 1px;
+	height: 100%;
 	width: 1px;
 	margin-top: auto;
 }

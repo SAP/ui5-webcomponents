@@ -4,14 +4,14 @@ import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEven
 import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
-import "@ui5/webcomponents-base/dist/icons/accept.js";
-import "@ui5/webcomponents-base/dist/icons/decline.js";
 import Icon from "./Icon.js";
+import "./icons/accept.js";
+import "./icons/decline.js";
 
 import {
 	SWITCH_ON,
 	SWITCH_OFF,
-} from "./i18n/defaults.js";
+} from "./generated/i18n/i18n-defaults.js";
 
 // Template
 import SwitchTemplate from "./generated/templates/SwitchTemplate.lit.js";
@@ -182,6 +182,8 @@ class Switch extends UI5Element {
 		if (!this.disabled) {
 			this.checked = !this.checked;
 			this.fireEvent("change");
+			// Angular two way data binding;
+			this.fireEvent("value-changed");
 		}
 	}
 

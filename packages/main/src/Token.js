@@ -7,8 +7,10 @@ import {
 	isSpace,
 	isDelete,
 } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-import "@ui5/webcomponents-base/dist/icons/decline.js";
-import "@ui5/webcomponents-base/dist/icons/cancel.js";
+import "./icons/decline.js";
+import "./icons/cancel.js";
+import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
+import { TOKEN_ARIA_DELETABLE } from "./generated/i18n/i18n-defaults.js";
 
 import Icon from "./Icon.js";
 import TokenTemplate from "./generated/templates/TokenTemplate.lit.js";
@@ -117,6 +119,12 @@ class Token extends UI5Element {
 		return styles;
 	}
 
+	constructor() {
+		super();
+
+		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
+	}
+
 	_select() {
 		this.fireEvent("select");
 	 }
@@ -143,12 +151,19 @@ class Token extends UI5Element {
 		}
 	}
 
+	get tokenDeletableText() {
+		return this.resourceBundle.getText(TOKEN_ARIA_DELETABLE);
+	}
+
 	get iconURI() {
 		return getTheme() === "sap_fiori_3" ? "sap-icon://decline" : "sap-icon://sys-cancel";
 	}
 
 	static async define(...params) {
-		await Icon.define();
+		await Promise.all([
+			Icon.define(),
+			fetchResourceBundle("@ui5/webcomponents"),
+		]);
 
 		super.define(...params);
 	}
