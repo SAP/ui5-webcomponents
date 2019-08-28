@@ -27,9 +27,7 @@ const getPlugins = ({ transpile }) => {
 	plugins.push(url({
 		limit: 0,
 		include: [
-			/.*cldr\/.*\.json/,
-			/.*i18n\/.*\.json/,
-			/.*sap.ui.core.*\/SAP-icons.*/,
+			/.*assets\/.*\.json/
 		],
 		emitFiles: true,
 		fileName: "[name].[hash][extname]",
