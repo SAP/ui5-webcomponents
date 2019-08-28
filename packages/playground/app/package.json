@@ -23,11 +23,11 @@
     "clean:samples": "rimraf ./docs/components/*sample.html",
     "clean:assets": "rimraf ./assets/js/ui5-webcomponents/*",
     "start": "npm-run-all --parallel prepare:** && jekyll serve",
-    "copy:assets": "cp ../../main/dist/resources/sap/ui/webcomponents/main/* ./assets/js/ui5-webcomponents",
-    "copy:samples": "node ./samples-copy.js \"../../main/dist/test-resources/sap/ui/webcomponents/main/api\"",
+    "copy:assets": "cpx ../../main/dist/resources/sap/ui/webcomponents/main/* ./assets/js/ui5-webcomponents",
+    "copy:samples": "node ./build-scripts/samples-copy.js \"../../main/dist/test-resources/sap/ui/webcomponents/main/api\"",
     "prepare:assets": "npm run clean:assets && rollup -c rollup.config.js --environment ES5_BUILD",
-    "prepare:docs": "node ./docs-prepare.js \"../../../docs/\"",
+    "prepare:docs": "node ./build-scripts/docs-prepare.js \"../../../docs/\"",
     "prepare:samples": "npm run clean:samples && npm run build:samples && npm run copy:samples",
-    "prepare:tutorials": "node ./tutorials-prepare.js \"../../../docs/\""
+    "prepare:tutorials": "node ./build-scripts/tutorials-prepare.js \"../../../docs/\""
   }
 }

@@ -69,6 +69,7 @@
 
 .main-content {
   padding-top: $gutter-spacing-sm;
+  font-family: "72-Regular";
   @include container;
 
   @include mq(md) {

@@ -17,7 +17,7 @@
   "scripts": {
     "clean": "rimraf ./dist",
     "build": " npm run clean && cd ./app && npm run build",
-    "start": "cd ./app & npm run start"
+    "start": "cd ./app && npm run start"
   },
   "dependencies": {
     "@ui5/webcomponents": "1.0.0-rc.2",

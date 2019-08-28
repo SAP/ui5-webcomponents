@@ -4,7 +4,12 @@ const cpx = require('cpx');
 const prependFile = require('prepend-file');
 const replace = require('replace-in-file');
 
-var samplesPath = path.resolve(process.argv[2]);
+const samplesPath = path.resolve(process.argv[2]);
+
+ // Add new components here
+const newComponents = [
+
+];
 
 fs.readdir(samplesPath, (err, files) => {
     //handling error
@@ -30,6 +35,7 @@ layout: sample
 title: ${currentSampleName}
 parent: Components
 permalink: /playground/components/${currentSampleName}
+newComponent: ${newComponents.indexOf(currentSampleName) > -1}
 nav_order: ${index}
 ---
 `,

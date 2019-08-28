@@ -34,3 +34,18 @@ yarn-debug.log*
 
 # Ignore default target directory for the npm package 'ui5-schemas'
 .tmp
+
+
+# Playground 
+packages/playground/app/_site/
+packages/playground/app/.sass-cache/
+packages/playground/app/assets/js/ui5-webcomponents/
+
+packages/playground/app/docs/components
+!packages/playground/app/docs/components/component.md
+
+packages/playground/app/docs/documentation
+!packages/playground/app/docs/documentation/documentation.md
+
+packages/playground/app/docs/tutorials
+!packages/playground/app/docs/tutorials/tutorials.md
