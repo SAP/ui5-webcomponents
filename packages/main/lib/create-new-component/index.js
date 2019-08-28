@@ -1,14 +1,14 @@
-const jsFileContentTemplate = sComponentName => {
+const jsFileContentTemplate = componentName => {
 	return `import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import ${sComponentName}Template from "./generated/templates/${sComponentName}Template.lit.js";
+import ${componentName}Template from "./generated/templates/${componentName}Template.lit.js";
 
 // Styles
-import ${sComponentName}Css from "./generated/themes/${sComponentName}.css.js";
+import ${componentName}Css from "./generated/themes/${componentName}.css.js";
 
 
 const metadata = {
-	tag: "ui5-${sComponentName.toLowerCase()}",
+	tag: "ui5-${componentName.toLowerCase()}",
 	properties: {
 		//
 	},
@@ -20,7 +20,7 @@ const metadata = {
 	},
 };
 
-class ${sComponentName} extends UI5Element {
+class ${componentName} extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
@@ -30,11 +30,11 @@ class ${sComponentName} extends UI5Element {
 	}
 
 	static get styles() {
-		return ${sComponentName}Css;
+		return ${componentName}Css;
 	}
 
 	static get template() {
-		return ${sComponentName}Template;
+		return ${componentName}Template;
 	}
 
 	static async define(...params) {
@@ -42,26 +42,26 @@ class ${sComponentName} extends UI5Element {
 	}
 }
 
-${sComponentName}.define();
+${componentName}.define();
 
-export default ${sComponentName};
+export default ${componentName};
 `;
 };
 
-const aArgs = process.argv.slice(2);
-const sComponentName = aArgs[0];
+const consoleArguments = process.argv.slice(2);
+const componentName = consoleArguments[0];
 
-if (!sComponentName){
+if (!componentName){
 	console.error("Please enter component name.")
 	return;
 }
 
 const oPaths = {
-	"js": `./src/${sComponentName}.js`,
-	"css": `./src/themes/${sComponentName}.css`,
-	"hbs": `./src/${sComponentName}.hbs`,
+	"js": `./src/${componentName}.js`,
+	"css": `./src/themes/${componentName}.css`,
+	"hbs": `./src/${componentName}.hbs`,
 };
-const sJsFileContentTemplate = jsFileContentTemplate(sComponentName);
+const sJsFileContentTemplate = jsFileContentTemplate(componentName);
 
 const fs = require("fs");
 
