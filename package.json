@@ -9,26 +9,21 @@
     "ui5"
   ],
   "scripts": {
-    "build": "npm-run-all --sequential build:core build:base build:main build:playground",
+    "build": "npm-run-all --sequential build:core build:base build:main",
     "build:core": "cd packages/core && yarn build",
     "build:base": "cd packages/base && yarn build",
     "build:main": "cd packages/main && yarn build",
-    "build:playground": "cd packages/playground && yarn build",
-    "clean": "npm-run-all --sequential clean:core clean:base clean:main clean:playground",
+    "clean": "npm-run-all --sequential clean:core clean:base clean:main",
     "clean:core": "cd packages/core && yarn clean",
     "clean:base": "cd packages/base && yarn clean",
     "clean:main": "cd packages/main && yarn clean",
-    "clean:playground": "cd packages/playground && yarn clean",
-    "start": "cross-env DEV=true yarn build:core && cross-env DEV=true yarn build:base && cross-env DEV=true yarn build:main && npm-run-all --parallel dev:base dev:main serve:playground",
-    "dev": "npm-run-all --parallel dev:base start:main",
-    "dev:base": "cd packages/base && yarn dev",
-    "dev:main": "cd packages/main && yarn dev",
+    "start": "npm-run-all --parallel start:base start:main",
+    "start:base": "cd packages/base && yarn start",
     "start:main": "cd packages/main && yarn start",
-    "serve:playground": "cd packages/playground && yarn serve",
     "test": "cd packages/main && yarn test",
+    "lint": "wsrun --exclude-missing lint",
     "link-all": "wsrun link",
-    "unlink-all": "wsrun unlink",
-    "lint": "wsrun --exclude-missing lint"
+    "unlink-all": "wsrun unlink"
   },
   "devDependencies": {
     "cross-env": "^5.2.0",
