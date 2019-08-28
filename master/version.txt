@@ -1,5 +1,22 @@
-commit c4d33858458694b4b9bcdfd644136e3fa7bdb13d
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Aug 28 11:08:35 2019 +0300
+commit 64f7d142d9eeec6abf8a3835ed6af52bffdf235d
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Wed Aug 28 12:43:06 2019 +0300
 
-    refactor: remove nonVisual from metadata (#750)
+    refactor: unify asset handling (#744)
+    
+    - naming of location for LocaleData, i18n and Themes
+    - naming of JSON import helpers for all assets
+    - naming of registries that hold the registered locations of all assets
+    
+    Tasks:
+    - [x] all non-standard helper import files under `/json-imports/`
+    - [x] all actual data under `/assets/`
+      - [x] themes
+      - [x] i18n
+      - [x] cldr*.json from core -> base/dist/assets
+    - [ ] registries
+      - [x] all registries under `/registries/`
+      - [ ] base/src/AssetRegistry with reexports
+      - [x] unify export names
+    - [x] adjust error messages for missing configuration
+    - [x] adjust public documentation
