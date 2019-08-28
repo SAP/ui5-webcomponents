@@ -56,7 +56,7 @@ if (!componentName){
 	return;
 }
 
-const oPaths = {
+const filePaths = {
 	"js": `./src/${componentName}.js`,
 	"css": `./src/themes/${componentName}.css`,
 	"hbs": `./src/${componentName}.hbs`,
@@ -65,6 +65,6 @@ const sJsFileContentTemplate = jsFileContentTemplate(componentName);
 
 const fs = require("fs");
 
-fs.writeFileSync(oPaths.js, sJsFileContentTemplate, { flag: "wx+" });
-fs.writeFileSync(oPaths.css, "", { flag: "wx+" });
-fs.writeFileSync(oPaths.hbs, "<div>Hello World</div>", { flag: "wx+" });
+fs.writeFileSync(filePaths.js, sJsFileContentTemplate, { flag: "wx+" });
+fs.writeFileSync(filePaths.css, "", { flag: "wx+" });
+fs.writeFileSync(filePaths.hbs, "<div>Hello World</div>", { flag: "wx+" });
