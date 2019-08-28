@@ -2,7 +2,7 @@ import "@ui5/webcomponents-base/dist/shims/jquery-shim.js";
 import "@ui5/webcomponents-base/dist/shims/Core-shim.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { fetchCldrData } from "@ui5/webcomponents-base/dist/CLDR.js";
+import { fetchCldr } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
 import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
 import { getLocale } from "@ui5/webcomponents-base/dist/LocaleProvider.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
@@ -12,7 +12,7 @@ import CalendarType from "@ui5/webcomponents-base/dist/dates/CalendarType.js";
 import CalendarDate from "@ui5/webcomponents-base/dist/dates/CalendarDate.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { isShow } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-import "@ui5/webcomponents-base/dist/icons/appointment-2.js";
+import "./icons/appointment-2.js";
 import Icon from "./Icon.js";
 import Popover from "./Popover.js";
 import Calendar from "./Calendar.js";
@@ -327,6 +327,8 @@ class DatePicker extends UI5Element {
 
 		this.value = nextValue;
 		this.fireEvent("change", { value: nextValue, valid: isValid });
+		// Angular two way data binding
+		this.fireEvent("value-changed", { value: nextValue, valid: isValid });
 	}
 
 	_handleInputLiveChange() {
@@ -425,6 +427,8 @@ class DatePicker extends UI5Element {
 		this.closePicker();
 
 		this.fireEvent("change", { value: this.value, valid: true });
+		// Angular two way data binding
+		this.fireEvent("value-changed", { value: this.value, valid: true });
 	}
 
 	/**
@@ -502,6 +506,17 @@ class DatePicker extends UI5Element {
 		return { isInput };
 	}
 
+	/**
+	 * Currently selected date represented as JavaScript Date instance
+	 *
+	 * @readonly
+	 * @type { Date }
+	 * @public
+	 */
+	get dateValue() {
+		return this.getFormat().parse(this.value);
+	}
+
 	get classes() {
 		return {
 			icon: {
@@ -524,7 +539,7 @@ class DatePicker extends UI5Element {
 
 	static async define(...params) {
 		await Promise.all([
-			fetchCldrData(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
+			fetchCldr(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
 			Icon.define(),
 			Popover.define(),
 			Calendar.define(),

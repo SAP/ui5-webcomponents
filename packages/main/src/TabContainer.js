@@ -5,16 +5,15 @@ import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnable
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
-import "@ui5/webcomponents-base/dist/icons/slim-arrow-down.js";
-import "@ui5/webcomponents-base/dist/icons/slim-arrow-left.js";
-import "@ui5/webcomponents-base/dist/icons/slim-arrow-right.js";
 import TabContainerTemplate from "./generated/templates/TabContainerTemplate.lit.js";
 import Button from "./Button.js";
 import CustomListItem from "./CustomListItem.js";
 import Icon from "./Icon.js";
+import "./icons/slim-arrow-down.js";
+import "./icons/slim-arrow-left.js";
+import "./icons/slim-arrow-right.js";
 import List from "./List.js";
 import Popover from "./Popover.js";
-import TabBase from "./TabBase.js";
 import SemanticColor from "./types/SemanticColor.js";
 
 // Styles
@@ -31,15 +30,15 @@ const metadata = {
 	slots: /** @lends  sap.ui.webcomponents.main.TabContainer.prototype */ {
 		/**
 		 * Defines the tabs.
-		 * <br><b>Note:</b> Only <code>ui5-tab</code> and <code>ui5-tab-separator</code> are allowed.
+		 * <br><b>Note:</b> Use <code>ui5-tab</code> and <code>ui5-tab-separator</code> for the intended design.
 		 *
-		 * @type {TabBase[]}
+		 * @type {HTMLElement[]}
 		 * @public
 		 * @slot
 		 */
 		"default": {
 			propertyName: "items",
-			type: TabBase,
+			type: HTMLElement,
 			individualSlots: true,
 			listenFor: { include: ["*"] },
 		},
@@ -83,7 +82,7 @@ const metadata = {
 		},
 
 		_selectedTab: {
-			type: TabBase,
+			type: Object,
 		},
 
 		_scrollable: {
@@ -198,7 +197,7 @@ class TabContainer extends UI5Element {
 
 	calculateRenderItems() {
 		this.renderItems = this.items.map((item, index) => {
-			const isSeparator = item.isSeparator();
+			const isSeparator = item.isSeparator;
 
 			if (isSeparator) {
 				return { isSeparator, _tabIndex: item._tabIndex, _id: item._id };
@@ -284,7 +283,7 @@ class TabContainer extends UI5Element {
 
 		// update selected items
 		this.items.forEach((item, index) => {
-			if (!item.isSeparator()) {
+			if (!item.isSeparator) {
 				const selected = selectedIndex === index;
 				item.selected = selected;
 
@@ -341,7 +340,7 @@ class TabContainer extends UI5Element {
 	}
 
 	_getTabs() {
-		return this.items.filter(item => !item.isSeparator());
+		return this.items.filter(item => !item.isSeparator);
 	}
 
 	_getHeaderScrollContainer() {

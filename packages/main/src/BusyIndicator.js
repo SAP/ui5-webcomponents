@@ -1,11 +1,12 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import BusyIndicatorSize from "./types/BusyIndicatorSize.js";
 
 // Template
 import BusyIndicatorTemplate from "./generated/templates/BusyIndicatorTemplate.lit.js";
 
-import { BUSY_INDICATOR_TITLE } from "./i18n/defaults.js";
+import { BUSY_INDICATOR_TITLE } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import busyIndicatorCss from "./generated/themes/BusyIndicator.css.js";
@@ -77,6 +78,12 @@ const metadata = {
  * @since 0.12.0
  */
 class BusyIndicator extends UI5Element {
+	constructor() {
+		super();
+
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+	}
+
 	static get metadata() {
 		return metadata;
 	}
@@ -93,8 +100,14 @@ class BusyIndicator extends UI5Element {
 		return BusyIndicatorTemplate;
 	}
 
+	static async define(...params) {
+		await fetchI18nBundle("@ui5/webcomponents");
+
+		super.define(...params);
+	}
+
 	get ariaTitle() {
-		return BUSY_INDICATOR_TITLE.defaultText;
+		return this.i18nBundle.getText(BUSY_INDICATOR_TITLE);
 	}
 }
 

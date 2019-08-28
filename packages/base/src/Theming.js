@@ -1,5 +1,5 @@
 import { addCustomCSS, getCustomCSS } from "./theming/CustomStyle.js";
-import { getThemeProperties } from "./theming/ThemeProperties.js";
+import { getThemeProperties } from "./asset-registries/Themes.js";
 import { injectThemeProperties } from "./theming/StyleInjection.js";
 
 const defaultTheme = "sap_fiori_3";

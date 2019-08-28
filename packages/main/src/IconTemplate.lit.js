@@ -10,10 +10,10 @@ const mainBlock = context => {
 		preserveAspectRatio="xMidYMid meet"
 		xmlns="http://www.w3.org/2000/svg"
 	>
-		${context.title
-		? svg`<title>${context.title}</title>`
+		${context.hasIconTooltip
+		? svg`<title id="${context._id}-tooltip">${context.accessibleNameText}</title>`
 		: undefined}
-		<g role="presentation" aria-hidden="true">
+		<g role="presentation">
 			<path transform="translate(0, 512) scale(1, -1)"
 				d=${ifDefined(context.d)}
 			/>

@@ -2,9 +2,9 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import TokenizerTemplate from "./generated/templates/TokenizerTemplate.lit.js";
-import { MULTIINPUT_SHOW_MORE_TOKENS } from "./i18n/defaults.js";
+import { MULTIINPUT_SHOW_MORE_TOKENS } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import styles from "./generated/themes/Tokenizer.css.js";
@@ -24,9 +24,7 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.Tokenizer.prototype */ {
 		showMore: { type: Boolean },
 		disabled: { type: Boolean },
-
-		_nMoreText: { type: String, noAttribute: true },
-		_hiddenTokens: { type: Object, multiple: true },
+		_nMoreText: { type: String },
 	},
 	events: /** @lends sap.ui.webcomponents.main.Tokenizer.prototype */ {
 		tokenDelete: {
@@ -75,13 +73,18 @@ class Tokenizer extends UI5Element {
 		return styles;
 	}
 
+	_handleResize() {
+		/*
+		 * Overflow happens with a pure CSS, but we
+		 * have to update the "n more" label when tokenizer is resized
+		 */
+		this._invalidate();
+	}
+
 	constructor() {
 		super();
 
-		this._itemsCount = 0;
-		this._lastIndex = 0;
-		this._lastTokenCount = 0;
-		this._recalculateLayouting = false;
+		this._tokensCount = 0;
 		this._resizeHandler = this._handleResize.bind(this);
 		this._itemNav = new ItemNavigation(this);
 
@@ -93,7 +96,7 @@ class Tokenizer extends UI5Element {
 			return this._getTokens();
 		};
 
-		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 
 		this._delegates.push(this._itemNav);
 	}
@@ -101,20 +104,12 @@ class Tokenizer extends UI5Element {
 	onBeforeRendering() {
 		this._itemNav.init();
 
-		if (this._lastTokenCount !== this.tokens.length) {
-			this._recalculateLayouting = true;
-		}
-
-		this._lastTokenCount = this.tokens.length;
-		this._nMoreText = this.resourceBundle.getText(MULTIINPUT_SHOW_MORE_TOKENS, [this._hiddenTokens.length]);
+		setTimeout(() => {
+			// wait for the layouting and update the text
+			this._nMoreText = this.resourceBundle.getText(MULTIINPUT_SHOW_MORE_TOKENS, [this.overflownTokensCount]);
+		}, 0);
 	}
 
-	onAfterRendering() {
-		if (this._recalculateLayouting) {
-			this._handleResize();
-			this._recalculateLayouting = false;
-		}
-	}
 
 	onEnterDOM() {
 		ResizeHandler.register(this.shadowRoot.querySelector(".ui5-tokenizer--content"), this._resizeHandler);
@@ -128,37 +123,19 @@ class Tokenizer extends UI5Element {
 		this.fireEvent("showMoreItemsPress");
 	}
 
-	_handleResize() {
-		const overflowTokens = this._getTokens(true);
-
-		if (!overflowTokens.length) {
-			this._hiddenTokens = [];
-		}
-
-		this._hiddenTokens = overflowTokens;
+	_getTokens() {
+		return this.tokens;
 	}
 
-	_getTokens(overflow) {
-		const firstToken = this.shadowRoot.querySelector(".ui5-tokenizer-token-placeholder");
-
-		if (!firstToken) {
-			return [];
+	onAfterRendering() {
+		/*
+			We schedule an invalidation as we have the tokens count
+			changed and we need them rendered for the nmore count
+		*/
+		if (this._tokensCount !== this.tokens.length) {
+			this._invalidate();
+			this._tokensCount = this.tokens.length;
 		}
-
-		const firstTokenTop = firstToken.getBoundingClientRect().top;
-		const tokens = [];
-
-		if (firstToken && this.tokens.length) {
-			this.tokens.forEach(token => {
-				const tokenTop = token.getBoundingClientRect().top;
-				const tokenOverflows = overflow && tokenTop > firstTokenTop;
-				const tokenVisible = !overflow && tokenTop <= firstTokenTop;
-
-				(tokenVisible || tokenOverflows) && tokens.push(token);
-			});
-		}
-
-		return tokens;
 	}
 
 	_tokenDelete(event) {
@@ -193,7 +170,22 @@ class Tokenizer extends UI5Element {
 	}
 
 	get showNMore() {
-		return this.showMore && this._hiddenTokens.length;
+		return this.showMore && this.overflownTokensCount;
+	}
+
+	get overflownTokensCount() {
+		const placeholderToken = this.shadowRoot.querySelector(".ui5-tokenizer-token-placeholder");
+
+		if (!placeholderToken) {
+			return;
+		}
+
+		const placeholderTokenRect = placeholderToken.getBoundingClientRect();
+		const tokens = this.tokens.filter(token => {
+			return placeholderTokenRect.top < token.getBoundingClientRect().top;
+		});
+
+		return tokens.length;
 	}
 
 	get classes() {
@@ -211,7 +203,7 @@ class Tokenizer extends UI5Element {
 	}
 
 	static async define(...params) {
-		await fetchResourceBundle("@ui5/webcomponents");
+		await fetchI18nBundle("@ui5/webcomponents");
 
 		super.define(...params);
 	}

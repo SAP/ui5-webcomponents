@@ -9,6 +9,7 @@ import {
 	isSpace,
 	isEnter,
 } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 // import Icon from "./Icon.js";
 import InputType from "./types/InputType.js";
 // Template
@@ -19,7 +20,7 @@ import {
 	VALUE_STATE_ERROR,
 	VALUE_STATE_WARNING,
 	INPUT_SUGGESTIONS,
-} from "./i18n/defaults.js";
+} from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import styles from "./generated/themes/Input.css.js";
@@ -34,7 +35,7 @@ const metadata = {
 		/**
 		 * Defines the icon to be displayed in the <code>ui5-input</code>.
 		 *
-		 * @type {Icon[]}
+		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
 		 */
@@ -334,6 +335,8 @@ class Input extends UI5Element {
 		// all user interactions
 		this.ACTION_ENTER = "enter";
 		this.ACTION_USER_INPUT = "input";
+
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
@@ -483,6 +486,8 @@ class Input extends UI5Element {
 
 		if (isUserInput) { // input
 			this.fireEvent(this.EVENT_INPUT);
+			// Angular two way data binding
+			this.fireEvent("value-changed");
 			return;
 		}
 
@@ -533,6 +538,16 @@ class Input extends UI5Element {
 
 	onClose() {}
 
+	valueStateTextMappings() {
+		const i18nBundle = this.i18nBundle;
+
+		return {
+			"Success": i18nBundle.getText(VALUE_STATE_SUCCESS),
+			"Error": i18nBundle.getText(VALUE_STATE_ERROR),
+			"Warning": i18nBundle.getText(VALUE_STATE_WARNING),
+		};
+	}
+
 	get inputPlaceholder() {
 		// We don`t support placeholder for IE,
 		// because IE fires input events, when placeholder exists, leading to functional degredations.
@@ -575,20 +590,18 @@ class Input extends UI5Element {
 		return this.valueState !== ValueState.None;
 	}
 
-	static valueStateTextMappings() {
-		return {
-			"Success": VALUE_STATE_SUCCESS.defaultText,
-			"Error": VALUE_STATE_ERROR.defaultText,
-			"Warning": VALUE_STATE_WARNING.defaultText,
-		};
-	}
-
 	get valueStateText() {
-		return Input.valueStateTextMappings()[this.valueState];
+		return this.valueStateTextMappings()[this.valueState];
 	}
 
 	get suggestionsText() {
 		return INPUT_SUGGESTIONS.defaultText;
+	}
+
+	static async define(...params) {
+		await fetchI18nBundle("@ui5/webcomponents");
+
+		super.define(...params);
 	}
 }
 

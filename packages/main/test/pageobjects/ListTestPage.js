@@ -8,7 +8,7 @@ class ListTestPage {
 	}
 
 	get header() {
-		return browser.findElementDeep(`${this._sut} >>> header`);
+		return browser.$(`${this._sut}`).shadow$(`header`);
 	}
 
 	getItem(index) {

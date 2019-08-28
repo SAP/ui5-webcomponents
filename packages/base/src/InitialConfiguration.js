@@ -7,6 +7,7 @@ const initialConfig = {
 	compactSize: false,
 	calendarType: null,
 	noConflict: false, // no URL
+	formatSettings: {},
 };
 
 /* General settings */
@@ -38,6 +39,11 @@ const getNoConflict = () => {
 const getCalendarType = () => {
 	initConfiguration();
 	return initialConfig.calendarType;
+};
+
+const getFormatSettings = () => {
+	initConfiguration();
+	return initialConfig.formatSettings;
 };
 
 const booleanMapping = new Map();
@@ -109,4 +115,5 @@ export {
 	getCompactSize,
 	getNoConflict,
 	getCalendarType,
+	getFormatSettings,
 };

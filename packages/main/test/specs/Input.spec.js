@@ -4,8 +4,8 @@ describe("Input general interaction", () => {
 	browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/Input.html");
 
 	it("fires change", () => {
-		const input1 = browser.findElementDeep("#input1 >>> input");
-		const inputResult = browser.findElementDeep("#inputResult >>> input");
+		const input1 = browser.$("#input1").shadow$("input");
+		const inputResult = browser.$("#inputResult").shadow$("input");
 
 		// Start typing.
 		input1.click();
@@ -25,8 +25,8 @@ describe("Input general interaction", () => {
 	});
 
 	it("fires input", () => {
-		const input2 = browser.findElementDeep("#input2 >>> input");
-		const inputLiveChangeResult = browser.findElementDeep("#inputLiveChangeResult >>> input");
+		const input2 = browser.$("#input2").shadow$("input");
+		const inputLiveChangeResult = browser.$("#inputLiveChangeResult").shadow$("input");
 
 		input2.click();
 		input2.setValue("abc");
@@ -35,8 +35,8 @@ describe("Input general interaction", () => {
 	});
 
 	it("fires change when same value typed, but value is mutated via API in between", () => {
-		const inputChange = browser.findElementDeep("#inputChange >>> input");
-		const inputChangeResult = browser.findElementDeep("#inputChangeResult >>> input");
+		const inputChange = browser.$("#inputChange").shadow$("input");
+		const inputChangeResult = browser.$("#inputChangeResult").shadow$("input");
 
 		inputChange.click();
 		inputChange.keys("abc");
@@ -57,9 +57,9 @@ describe("Input general interaction", () => {
 
 	it("handles suggestions", () => {
 		let item;
-		const suggestionsInput = browser.findElementDeep("#myInput >>> input");
-		const inputResult = browser.findElementDeep("#inputResult >>> input");
-		const popover = browser.findElementDeep("#myInput >>> ui5-popover >>> .ui5-popover-root");
+		const suggestionsInput = browser.$("#myInput").shadow$("input");
+		const inputResult = browser.$("#inputResult").shadow$("input");
+		const popover = browser.$("#myInput").shadow$("ui5-popover").shadow$(".ui5-popover-root");
 
 		suggestionsInput.click();
 		suggestionsInput.keys("p");
@@ -82,8 +82,8 @@ describe("Input general interaction", () => {
 	});
 
 	it("handles suggestions via keyboard", () => {
-		const suggestionsInput = browser.findElementDeep("#myInput2 >>> input");
-		const inputResult = browser.findElementDeep("#inputResult >>> input");
+		const suggestionsInput = browser.$("#myInput2").shadow$("input");
+		const inputResult = browser.$("#inputResult").shadow$("input");
 
 		suggestionsInput.click();
 		suggestionsInput.keys("c");
@@ -103,8 +103,8 @@ describe("Input general interaction", () => {
 
 	/*
 	it("sets empty value to an input", () => {
-		const input1 = browser.findElementDeep("#input1");
-		const innerInput = browser.findElementDeep("#input1 >>> input");
+		const input1 = browser.$("#input1");
+		const innerInput = browser.$("#input1").shadow$("input");
 
 		input1.setProperty("value", "");
 

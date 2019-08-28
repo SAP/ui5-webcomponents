@@ -1,18 +1,16 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isEnter, isSpace } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-import "@ui5/webcomponents-base/dist/icons/decline.js";
-import "@ui5/webcomponents-base/dist/icons/message-information.js";
-import "@ui5/webcomponents-base/dist/icons/message-success.js";
-import "@ui5/webcomponents-base/dist/icons/message-error.js";
-import "@ui5/webcomponents-base/dist/icons/message-warning.js";
-
 import MessageStripType from "./types/MessageStripType.js";
 import MessageStripTemplate from "./generated/templates/MessageStripTemplate.lit.js";
 import Icon from "./Icon.js";
-
-import { MESSAGE_STRIP_CLOSE_BUTTON } from "./i18n/defaults.js";
+import "./icons/decline.js";
+import "./icons/message-information.js";
+import "./icons/message-success.js";
+import "./icons/message-error.js";
+import "./icons/message-warning.js";
+import { MESSAGE_STRIP_CLOSE_BUTTON } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import messageStripCss from "./generated/themes/MessageStrip.css.js";
@@ -154,7 +152,7 @@ class MessageStrip extends UI5Element {
 	constructor() {
 		super();
 
-		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	_closeClick() {
@@ -178,7 +176,7 @@ class MessageStrip extends UI5Element {
 	}
 
 	static async define(...params) {
-		await fetchResourceBundle("@ui5/webcomponents");
+		await fetchI18nBundle("@ui5/webcomponents");
 
 		await Icon.define();
 
@@ -208,7 +206,7 @@ class MessageStrip extends UI5Element {
 	}
 
 	get _closeButtonText() {
-		return this.resourceBundle.getText(MESSAGE_STRIP_CLOSE_BUTTON);
+		return this.i18nBundle.getText(MESSAGE_STRIP_CLOSE_BUTTON);
 	}
 
 	get classes() {

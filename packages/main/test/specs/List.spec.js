@@ -90,7 +90,7 @@ describe("Date Picker Tests", () => {
 
 		assert.ok(!firstItem.getAttribute("selected"), "item is selected");
 
-		const itemDeleteButton = firstItem.findElementDeep('ui5-button');
+		const itemDeleteButton = firstItem.shadow$('ui5-button');
 		assert.ok(itemDeleteButton.isExisting(), "there is a delete button");
 
 		itemDeleteButton.click();

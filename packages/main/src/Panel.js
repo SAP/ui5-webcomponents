@@ -4,13 +4,13 @@ import { getIconURI } from "@ui5/webcomponents-base/dist/IconPool.js";
 import slideDown from "@ui5/webcomponents-base/dist/animations/slideDown.js";
 import slideUp from "@ui5/webcomponents-base/dist/animations/slideUp.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-import "@ui5/webcomponents-base/dist/icons/navigation-right-arrow.js";
-import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Icon from "./Icon.js";
+import "./icons/navigation-right-arrow.js";
 import PanelAccessibleRole from "./types/PanelAccessibleRole.js";
 import PanelTemplate from "./generated/templates/PanelTemplate.lit.js";
 
-import { PANEL_ICON } from "./i18n/defaults.js";
+import { PANEL_ICON } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import panelCss from "./generated/themes/Panel.css.js";
@@ -209,7 +209,7 @@ class Panel extends UI5Element {
 		this._icon = {};
 		this._icon.id = `${this.id}-CollapsedImg`;
 		this._icon.src = getIconURI("navigation-right-arrow");
-		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
@@ -218,7 +218,7 @@ class Panel extends UI5Element {
 			this._contentExpanded = !this.collapsed;
 		}
 
-		this._icon.title = this.resourceBundle.getText(PANEL_ICON);
+		this._icon.title = this.i18nBundle.getText(PANEL_ICON);
 		this._hasHeader = !!this.header.length;
 	}
 
@@ -337,7 +337,7 @@ class Panel extends UI5Element {
 
 	static async define(...params) {
 		await Promise.all([
-			fetchResourceBundle("@ui5/webcomponents"),
+			fetchI18nBundle("@ui5/webcomponents"),
 			Icon.define(),
 		]);
 

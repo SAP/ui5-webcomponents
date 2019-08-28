@@ -3,12 +3,12 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonTemplate from "./generated/templates/ButtonTemplate.lit.js";
 import Icon from "./Icon.js";
 
-import { BUTTON_ARIA_TYPE_ACCEPT, BUTTON_ARIA_TYPE_REJECT, BUTTON_ARIA_TYPE_EMPHASIZED } from "./i18n/defaults.js";
+import { BUTTON_ARIA_TYPE_ACCEPT, BUTTON_ARIA_TYPE_REJECT, BUTTON_ARIA_TYPE_EMPHASIZED } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import buttonCss from "./generated/themes/Button.css.js";
@@ -226,7 +226,7 @@ class Button extends UI5Element {
 			}
 		};
 
-		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
@@ -303,7 +303,7 @@ class Button extends UI5Element {
 	}
 
 	get buttonTypeText() {
-		return this.resourceBundle.getText(Button.typeTextMappings()[this.design]);
+		return this.i18nBundle.getText(Button.typeTextMappings()[this.design]);
 	}
 
 	get tabIndexValue() {
@@ -313,7 +313,7 @@ class Button extends UI5Element {
 	static async define(...params) {
 		await Promise.all([
 			Icon.define(),
-			fetchResourceBundle("@ui5/webcomponents"),
+			fetchI18nBundle("@ui5/webcomponents"),
 		]);
 
 		super.define(...params);

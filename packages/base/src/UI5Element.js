@@ -1,5 +1,5 @@
 import boot from "./boot.js";
-import { getNoConflict } from "./config/NoConflict.js";
+import { skipOriginalEvent } from "./config/NoConflict.js";
 import { getCompactSize } from "./config/CompactSize.js";
 import DOMObserver from "./compatibility/DOMObserver.js";
 import UI5ElementMetadata from "./UI5ElementMetadata.js";
@@ -186,7 +186,7 @@ class UI5Element extends HTMLElement {
 
 			child = this.constructor.getMetadata().constructor.validateSlotValue(child, slotData);
 
-			if (child._isUI5Element) {
+			if (child.isUI5Element) {
 				this._attachChildPropertyUpdated(child, slotData);
 			}
 
@@ -210,7 +210,7 @@ class UI5Element extends HTMLElement {
 		}
 
 		children.forEach(child => {
-			if (child && child._isUI5Element) {
+			if (child && child.isUI5Element) {
 				this._detachChildPropertyUpdated(child);
 			}
 		});
@@ -322,21 +322,15 @@ class UI5Element extends HTMLElement {
 		const result = metadatas[0];
 
 		// merge properties
-		result.properties = metadatas.reverse().reduce((result, current) => { // eslint-disable-line
-			Object.assign(result, current.properties);
-			return result;
+		result.properties = metadatas.reverse().reduce((allProperties, current) => { // eslint-disable-line
+			Object.assign(allProperties, current.properties || {});
+			return allProperties;
 		}, {});
 
 		// merge slots
-		result.slots = metadatas.reverse().reduce((result, current) => { // eslint-disable-line
-			Object.assign(result, current.slots);
-			return result;
-		}, {});
-
-		// merge events
-		result.events = metadatas.reverse().reduce((result, current) => { // eslint-disable-line
-			Object.assign(result, current.events);
-			return result;
+		result.slots = metadatas.reverse().reduce((allSlots, current) => { // eslint-disable-line
+			Object.assign(allSlots, current.slots || {});
+			return allSlots;
 		}, {});
 
 		this._metadata = new UI5ElementMetadata(result);
@@ -522,7 +516,6 @@ class UI5Element extends HTMLElement {
 	 */
 	fireEvent(name, data, cancelable) {
 		let compatEventResult = true; // Initialized to true, because if the event is not fired at all, it should be considered "not-prevented"
-		const noConflict = getNoConflict();
 
 		const noConflictEvent = new CustomEvent(`ui5-${name}`, {
 			detail: data,
@@ -534,7 +527,7 @@ class UI5Element extends HTMLElement {
 		// This will be false if the compat event is prevented
 		compatEventResult = this.dispatchEvent(noConflictEvent);
 
-		if (noConflict === true || (noConflict.events && noConflict.events.includes && noConflict.events.includes(name))) {
+		if (skipOriginalEvent(name)) {
 			return compatEventResult;
 		}
 
@@ -566,9 +559,9 @@ class UI5Element extends HTMLElement {
 	/**
 	 * Used to duck-type UI5 elements without using instanceof
 	 * @returns {boolean}
-	 * @private
+	 * @public
 	 */
-	get _isUI5Element() {
+	get isUI5Element() {
 		return true;
 	}
 
@@ -694,9 +687,6 @@ class UI5Element extends HTMLElement {
 
 					if (isDifferent) {
 						this._state[prop] = value;
-						if (propData.nonVisual) {
-							return;
-						}
 						this._invalidate(prop, value);
 						this._propertyChange(prop, value);
 					}

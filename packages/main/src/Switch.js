@@ -3,15 +3,15 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
-import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
-import "@ui5/webcomponents-base/dist/icons/accept.js";
-import "@ui5/webcomponents-base/dist/icons/decline.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Icon from "./Icon.js";
+import "./icons/accept.js";
+import "./icons/decline.js";
 
 import {
 	SWITCH_ON,
 	SWITCH_OFF,
-} from "./i18n/defaults.js";
+} from "./generated/i18n/i18n-defaults.js";
 
 // Template
 import SwitchTemplate from "./generated/templates/SwitchTemplate.lit.js";
@@ -155,7 +155,7 @@ class Switch extends UI5Element {
 	constructor() {
 		super();
 
-		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onclick(event) {
@@ -182,6 +182,8 @@ class Switch extends UI5Element {
 		if (!this.disabled) {
 			this.checked = !this.checked;
 			this.fireEvent("change");
+			// Angular two way data binding;
+			this.fireEvent("value-changed");
 		}
 	}
 
@@ -220,11 +222,11 @@ class Switch extends UI5Element {
 	}
 
 	get accessibilityOnText() {
-		return this._textOn || this.resourceBundle.getText(SWITCH_ON);
+		return this._textOn || this.i18nBundle.getText(SWITCH_ON);
 	}
 
 	get accessibilityOffText() {
-		return this._textOff || this.resourceBundle.getText(SWITCH_OFF);
+		return this._textOff || this.i18nBundle.getText(SWITCH_OFF);
 	}
 
 	get hiddenText() {
@@ -234,7 +236,7 @@ class Switch extends UI5Element {
 	static async define(...params) {
 		await Promise.all([
 			Icon.define(),
-			fetchResourceBundle("@ui5/webcomponents"),
+			fetchI18nBundle("@ui5/webcomponents"),
 		]);
 
 		super.define(...params);

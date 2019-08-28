@@ -10,7 +10,6 @@ import styles from "./generated/themes/Popup.css.js";
  * @public
  */
 const metadata = {
-	"abstract": true,
 	slots: /** @lends  sap.ui.webcomponents.main.Popup.prototype */ {
 
 		/**
@@ -421,7 +420,7 @@ class Popup extends UI5Element {
 			element = element.shadowRoot.activeElement;
 		}
 
-		this._lastFocusableElement = element;
+		this._lastFocusableElement = (element && typeof element.focus === "function") ? element : null;
 	}
 
 	resetFocus() {

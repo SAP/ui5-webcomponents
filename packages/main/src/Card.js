@@ -1,12 +1,13 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isIconURI } from "@ui5/webcomponents-base/dist/IconPool.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import CardTemplate from "./generated/templates/CardTemplate.lit.js";
 import Icon from "./Icon.js";
 
-import { ARIA_ROLEDESCRIPTION_CARD, AVATAR_TOOLTIP, ARIA_LABEL_CARD_CONTENT } from "./i18n/defaults.js";
+import { ARIA_ROLEDESCRIPTION_CARD, AVATAR_TOOLTIP, ARIA_LABEL_CARD_CONTENT } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import cardCss from "./generated/themes/Card.css.js";
@@ -130,6 +131,12 @@ const metadata = {
  * @public
  */
 class Card extends UI5Element {
+	constructor() {
+		super();
+
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+	}
+
 	static get metadata() {
 		return metadata;
 	}
@@ -181,19 +188,22 @@ class Card extends UI5Element {
 	}
 
 	get ariaCardRoleDescription() {
-		return ARIA_ROLEDESCRIPTION_CARD.defaultText;
+		return this.i18nBundle.getText(ARIA_ROLEDESCRIPTION_CARD);
 	}
 
 	get ariaCardAvatarLabel() {
-		return AVATAR_TOOLTIP.defaultText;
+		return this.i18nBundle.getText(AVATAR_TOOLTIP);
 	}
 
 	get ariaCardContentLabel() {
-		return ARIA_LABEL_CARD_CONTENT.defaultText;
+		return this.i18nBundle.getText(ARIA_LABEL_CARD_CONTENT);
 	}
 
 	static async define(...params) {
-		await Icon.define();
+		await Promise.all([
+			Icon.define(),
+			fetchI18nBundle("@ui5/webcomponents"),
+		]);
 
 		super.define(...params);
 	}
