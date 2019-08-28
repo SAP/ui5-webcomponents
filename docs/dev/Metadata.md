@@ -65,7 +65,6 @@ Setting | Type | Default | Description
 `multiple` | Boolean | false | Indicates whether the property represents a single value or is an array of values of the given type
 `noAttribute` | Boolean | false | No attribute equivalent will be created for that property. Always false for properties of type Object.
 `deepEqual` | Boolean | false | Deep equal object comparison, rather than reference comparison, will be used to determine if the value of the property changed.
-`nonVisual` | Boolean | false | Changes to this property will not lead to invalidation of the Web Component. Use for properties, not related to rendering.
 
 The `type` setting is required.
 
