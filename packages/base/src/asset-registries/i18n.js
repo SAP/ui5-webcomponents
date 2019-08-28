@@ -59,7 +59,7 @@ const fetchI18nBundle = async packageName => {
 	const bundleURL = bundlesForPackage[localeId];
 
 	if (typeof bundleURL === "object") { // inlined from build
-		setI18nBundleData(packageName, data);
+		setI18nBundleData(packageName, bundleURL);
 		return bundleURL;
 	}
 
