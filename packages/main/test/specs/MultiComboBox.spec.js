@@ -97,12 +97,12 @@ describe("MultiComboBox general interaction", () => {
 			}, 2500, "expect value state to be different after 2.5 seconds");
 		});
 
-		it("tests if n more is applied and corresponding popover", () => {
-			$("#more-mcb").scrollIntoView();
+		// it("tests if n more is applied and corresponding popover", () => {
+		// 	$("#more-mcb").scrollIntoView();
 
-			const nMoreText = browser.$("#more-mcb").shadow$("ui5-tokenizer").shadow$(".ui5-tokenizer-more-text");
+		// 	const nMoreText = browser.$("#more-mcb").shadow$("ui5-tokenizer").shadow$(".ui5-tokenizer-more-text");
 
-			assert.ok(nMoreText.getText(), "1 More", "token 1 should be visible");
-		});
+		// 	assert.ok(nMoreText.getText(), "1 More", "token 1 should be visible");
+		// });
 	});
 });
