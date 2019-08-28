@@ -18,7 +18,7 @@
   },
   "scripts": {
     "test": "stylelint '**/*.scss'",
-    "build": "npm-run-all --parallel prepare:** && jekyll build --source ./ --destination ../dist",
+    "build": "npm-run-all --parallel prepare:** && bundle exec jekyll build --source ./ --destination ../dist",
     "build:samples": "cd ../../main && npm run build:samples",
     "clean:samples": "rimraf ./docs/components/*sample.html",
     "clean:assets": "rimraf ./assets/js/ui5-webcomponents/*",
