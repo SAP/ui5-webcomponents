@@ -1,11 +1,5 @@
-commit 532ba2e446762428d84762b733e209824a65b314
-Author: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
-Date:   Tue Aug 27 11:25:53 2019 +0300
+commit c4d33858458694b4b9bcdfd644136e3fa7bdb13d
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Wed Aug 28 11:08:35 2019 +0300
 
-    chore(deps): bump eslint-utils from 1.3.1 to 1.4.2 (#748)
-    
-    Bumps [eslint-utils](https://github.com/mysticatea/eslint-utils) from 1.3.1 to 1.4.2.
-    - [Release notes](https://github.com/mysticatea/eslint-utils/releases)
-    - [Commits](https://github.com/mysticatea/eslint-utils/compare/v1.3.1...v1.4.2)
-    
-    Signed-off-by: dependabot[bot] <support@github.com>
+    refactor: remove nonVisual from metadata (#750)
