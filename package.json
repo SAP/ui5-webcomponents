@@ -20,12 +20,11 @@
     "start": "npm-run-all --parallel start:base start:main",
     "start:base": "cd packages/base && yarn start",
     "start:main": "cd packages/main && yarn start",
-    "serve": "cross-env DEV=true yarn build:core && cross-env DEV=true yarn build:base && cross-env DEV=true yarn build:main && yarn serve:pages",
-    "serve:pages": "cd packages/main && yarn serve:pages",
     "test": "cd packages/main && yarn test",
+    "lint": "wsrun --exclude-missing lint",
     "link-all": "wsrun link",
-    "unlink-all": "wsrun unlink",
-    "lint": "wsrun --exclude-missing lint"
+    "unlink-all": "wsrun unlink"
+    
   },
   "devDependencies": {
     "cross-env": "^5.2.0",
