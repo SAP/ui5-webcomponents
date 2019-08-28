@@ -16,7 +16,7 @@
     "build:templates": "mkdirp dist/generated/templates && node ./lib/hbs2ui5/index.js -d src/ -o dist/generated/templates",
     "build:i18n": "npm-run-all --sequential build:i18n-defaults build:i18n-JSON",
     "build:i18n-defaults": "mkdirp dist/generated/i18n && node ./lib/i18n/defaults.js src/i18n dist/generated/i18n",
-    "build:i18n-JSON": "mkdirp dist/generated/i18n && node ./lib/i18n/toJSON.js src/i18n dist/generated/i18n",
+    "build:i18n-JSON": "mkdirp dist/assets/i18n && node ./lib/i18n/toJSON.js src/i18n dist/assets/i18n",
     "build:samples": "npm run copy:test --scripts-prepend-node-path && npm run build:api --scripts-prepend-node-path && npm run build:docs --scripts-prepend-node-path && node lib/playground/index.js",
     "build:pages": "npm run copy:pages",
     "build:qunit": "npm run copy:qunit",
