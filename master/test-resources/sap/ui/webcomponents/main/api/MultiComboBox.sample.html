@@ -114,9 +114,9 @@
 	</section>
 
 	<section>
-		<h3>MultiComboBox with items and build-in user input validation</h3>
+		<h3>MultiComboBox with free text input</h3>
 		<div class="snippet">
-			<ui5-multi-combobox style="width: 100%" validate-input placeholder="Choose your countries">
+			<ui5-multi-combobox style="width: 100%" placeholder="Choose your countries" allow-custom-values>
 				<ui5-li>Argentina</ui5-li>
 				<ui5-li selected>Bulgaria</ui5-li>
 				<ui5-li>Denmark</ui5-li>
@@ -131,7 +131,7 @@
 		</div>
 	<div class="snippet">
 <pre class="prettyprint lang-html"><xmp>
-<ui5-multi-combobox validate-input placeholder="Choose your countries">
+<ui5-multi-combobox placeholder="Choose your countries">
 	<ui5-li>Argentina</ui5-li>
 	<ui5-li selected>Bulgaria</ui5-li>
 	<ui5-li>Denmark</ui5-li>
@@ -227,6 +227,14 @@ The <code>ui5-multi-combobox</code> provides advanced keyboard handling.
                     </div>
             
                       <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">allowCustomValues  <br> <code>allow-custom-values </code></div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell">false</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines if the user input will be prevented if no matching item has been found
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">disabled  <br> <code> </code></div>
                         <div class="cell api-table-content-cell">boolean</div>
                         <div class="cell api-table-content-cell">false</div>
@@ -234,7 +242,7 @@ The <code>ui5-multi-combobox</code> provides advanced keyboard handling.
                             Defines whether <code>ui5-multi-combobox</code> is in disabled state. <br><br> <b>Note:</b> A disabled <code>ui5-multi-combobox</code> is completely uninteractive.
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">placeholder  <br> <code> </code></div>
                         <div class="cell api-table-content-cell">string</div>
                         <div class="cell api-table-content-cell">&quot;&quot;</div>
@@ -242,20 +250,12 @@ The <code>ui5-multi-combobox</code> provides advanced keyboard handling.
                             Defines a short hint intended to aid the user with data entry when the <code>ui5-multi-combobox</code> has no value. <br><br> <b>Note:</b> The placeholder is not supported in IE. If the placeholder is provided, it won`t be displayed in IE.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">readonly  <br> <code> </code></div>
                         <div class="cell api-table-content-cell">boolean</div>
                         <div class="cell api-table-content-cell">false</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                             Defines whether the <code>ui5-multi-combobox</code> is readonly. <br><br> <b>Note:</b> A read-only <code>ui5-multi-combobox</code> is not editable, but still provides visual feedback upon user interaction.
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">validateInput  <br> <code>validate-input </code></div>
-                        <div class="cell api-table-content-cell">boolean</div>
-                        <div class="cell api-table-content-cell">false</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines if the user input will be prevented if no matching item has been found
                         </div>
                       </div>
                       <div class="row api-table-roll-even">

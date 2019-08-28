@@ -1,5 +1,10 @@
-commit 43dceffa239e07973c86dc666ed32671cb06ca5f
-Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Wed Aug 28 13:36:02 2019 +0300
+commit f501df49cf5cdb1e02fcf139202319be71f03e82
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Wed Aug 28 14:58:57 2019 +0300
 
-    Fixing notes from previous pull request (#753)
+    refactor(ui5-multi-combobox): Replace validate-input with allow-custom-values (#749)
+    
+    BREAKING CHANGE:
+    
+    - validate-input property is removed
+    - allow-custom-values not replaces validate-input and built in validation is enabled by default
