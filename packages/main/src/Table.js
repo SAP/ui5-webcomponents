@@ -3,8 +3,6 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { isSpace } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-import TableColumn from "./TableColumn.js";
-import TableRow from "./TableRow.js";
 import TableTemplate from "./generated/templates/TableTemplate.lit.js";
 
 // Styles
@@ -19,30 +17,30 @@ const metadata = {
 
 		/**
 		 * Defines the <code>ui5-table</code> rows.
-		 * <br><b>Note:</b> Only <code>ui5-table-row</code> is allowed.
+		 * <br><b>Note:</b> Use <code>ui5-table-row</code> for the intended design.
 		 *
-		 * @type {TableRow[]}
+		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
 		 */
 		"default": {
 			propertyName: "rows",
-			type: TableRow,
+			type: HTMLElement,
 			individualSlots: true,
 		},
 
 		/**
 		 * Defines the configuration for the columns of the <code>ui5-table</code>.
-		 * <br><b>Note:</b> Only <code>ui5-table-column</code> is allowed.
+		 * <br><b>Note:</b> Use <code>ui5-table-column</code> for the intended design.
 		 *
-		 * @type {TableColumn[]}
+		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
 		 */
 		columns: {
-			type: TableColumn,
+			type: HTMLElement,
 			individualSlots: true,
-			listenFor: { exclude: ["header"] },
+			listenFor: { include: ["*"] },
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.Table.prototype */ {
@@ -128,9 +126,13 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/Table";</code>
+ * <code>import "@ui5/webcomponents/dist/Table.js";</code>
  * <br>
- * <b>Note:</b> This also includes the <code>ui5-table-column</code>, <code>ui5-table-row</code> and <code>ui5-table-cell</code> Web Components.
+ * <code>import "@ui5/webcomponents/dist/TableColumn.js";</code> (for <code>ui5-table-column</code>)
+ * <br>
+ * <code>import "@ui5/webcomponents/dist/TableRow.js";</code> (for <code>ui5-table-row</code>)
+ * <br>
+ * <code>import "@ui5/webcomponents/dist/TableCell.js";</code> (for <code>ui5-table-cell</code>)
  *
  * @constructor
  * @author SAP SE

@@ -1,6 +1,5 @@
 const postcssImport = require('postcss-import');
 const combineSelectors = require('postcss-combine-duplicated-selectors');
-const postcssCSStoESM = require('../../lib/postcss-css-to-esm/index.js');
 const postcssCSStoJSON = require('../../lib/postcss-css-to-json/index.js');
 const postcssDerivedColors = require('../../lib/postcss-process-derived-colors/index');
 const cssnano = require('cssnano');
@@ -19,7 +18,6 @@ module.exports = {
                 mergeLonghand: false, // https://github.com/cssnano/cssnano/issues/675
             },
         ]}, ),
-        postcssCSStoESM(),
         postcssCSStoJSON(),
     ]
 };

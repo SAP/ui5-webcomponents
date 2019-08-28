@@ -62,12 +62,6 @@ const metadata = {
 			type: Object,
 			multiple: true,
 		},
-
-		_dayNames: {
-			type: Object,
-			multiple: true,
-			nonVisual: true,
-		},
 		_hidden: {
 			type: Boolean,
 			noAttribute: true,
