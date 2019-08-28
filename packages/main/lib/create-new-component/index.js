@@ -52,6 +52,7 @@ const aArgs = process.argv.slice(2);
 const sComponentName = aArgs[0];
 
 if (!sComponentName){
+	console.error("Please enter component name.")
 	return;
 }
 
