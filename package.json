@@ -24,7 +24,6 @@
     "lint": "wsrun --exclude-missing lint",
     "link-all": "wsrun link",
     "unlink-all": "wsrun unlink"
-    
   },
   "devDependencies": {
     "cross-env": "^5.2.0",
