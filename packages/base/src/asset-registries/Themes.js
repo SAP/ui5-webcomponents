@@ -4,8 +4,11 @@ const themeURLs = new Map();
 const themeStyles = new Map();
 
 const registerThemeProperties = (packageName, themeName, style) => {
-	if (style.includes(":root")) {
-		// inlined content
+	if (style._) {
+		// JSON object like ({"_": ":root"})
+		themeStyles.set(`${packageName}_${themeName}`, style._);
+	} else if (style.includes(":root")) {
+		// pure string
 		themeStyles.set(`${packageName}_${themeName}`, style);
 	} else {
 		// url for fetching
