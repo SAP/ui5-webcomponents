@@ -6,10 +6,8 @@ import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import "@ui5/webcomponents-icons/dist/icons/slim-arrow-down.js";
-import "@ui5/webcomponents-icons/dist/icons/slim-arrow-left.js";
-import "@ui5/webcomponents-icons/dist/icons/slim-arrow-right.js";
-import { TABCONTAINER_PREVIOUS_ICON_ACC_NAME, TABCONTAINER_NEXT_ICON_ACC_NAME, TABCONTAINER_OVERFLOW_MENU_TITLE } from "./generated/i18n/i18n-defaults.js";
+import { TABCONTAINER_PREVIOUS_ACC_NAME, TABCONTAINER_NEXT_ICON_ACC_NAME, TABCONTAINER_OVERFLOW_MENU_TITLE } from "./generated/i18n/i18n-defaults.js";
+import TabContainerTemplate from "./generated/templates/TabContainerTemplate.lit.js";
 import Button from "./Button.js";
 import CustomListItem from "./CustomListItem.js";
 import Icon from "./Icon.js";
@@ -451,7 +449,7 @@ class TabContainer extends UI5Element {
 	}
 
 	get previousIconACCName() {
-		return this.i18nBundle.getText(TABCONTAINER_PREVIOUS_ICON_ACC_NAME);
+		return this.i18nBundle.getText(TABCONTAINER_PREVIOUS_ACC_NAME);
 	}
 
 	get nextIconACCName() {
@@ -472,7 +470,7 @@ class TabContainer extends UI5Element {
 			CustomListItem.define(),
 			Icon.define(),
 			List.define(),
-			ResponsivePopover.define(),
+			Popover.define(),
 			fetchI18nBundle("@ui5/webcomponents"),
 		]);
 	}
