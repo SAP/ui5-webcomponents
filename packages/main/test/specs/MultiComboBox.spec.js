@@ -77,7 +77,7 @@ describe("MultiComboBox general interaction", () => {
 			assert.strictEqual(list.getProperty("items").length, 3, "1 items should be shown");
 		});
 
-		it("tests validate-input by typing a non existing option", () => {
+		it("tests built in validation by typing a non existing option", () => {
 			const mcb = $("#mcb-validation");
 			const input = browser.$("#mcb-validation").shadow$("#ui5-multi-combobox-input");
 			const innerInput = browser.$("#mcb-validation").shadow$("#ui5-multi-combobox-input").shadow$("input");

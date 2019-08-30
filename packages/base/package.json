@@ -17,7 +17,7 @@
   },
   "scripts": {
     "build": "npm-run-all --sequential clean lint copy:cldr copy:src",
-    "dev": "yarn watch:src",
+    "start": "yarn watch:src",
     "clean": "rimraf dist",
     "lint": "eslint .",
     "copy:src": "copy-and-watch \"src/**/*.js\" dist/",
