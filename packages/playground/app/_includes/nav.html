@@ -19,9 +19,9 @@
                         {% assign second_level_url = child.url | absolute_url %}
                       {% endif %}
                       <a href="{{ child.url | absolute_url }}" class="navigation-list-link{% if page.url == child.url %} active{% endif %}">
-                        <div>{{ child.title }}</div>
+                        <div class="component-name">{{ child.title }}</div>
                         {% if child.newComponent %}
-                          <div class="new-tag">NEW</div>
+                          <span class="new-tag">NEW</span>
                         {% endif %}
                       </a>
                       {% if child.has_children %}

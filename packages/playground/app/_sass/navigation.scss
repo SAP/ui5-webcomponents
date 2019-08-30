@@ -160,3 +160,20 @@
     }
   }
 }
+
+@media(max-width: 740px) {
+  .navigation-list-link {
+    display: flex;
+    justify-content: center;
+  }
+
+  .navigation-list-link, .component-name {
+    width: 100%;
+  }
+
+  .new-tag {
+    position: absolute;
+    line-height: 1.5rem;
+    right: 0rem;
+  }
+}
