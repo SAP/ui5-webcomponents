@@ -16,7 +16,7 @@
 title: UI5 Web Components
 description: Enterprise-flavored sugar on top of native APIs!
 # baseurl: "" # the subpath of your site, e.g. /blog
-url: "http://localhost" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://sap.github.io/ui5-webcomponents" # the base hostname & protocol for your site, e.g. http://example.com
 
 # permalink: /playground
 exclude: ["node_modules/", "*.gemspec", "*.gem", "Gemfile", "Gemfile.lock", "package.json", "package-lock.json",  "script/", "LICENSE.txt", "lib/", "bin/", "README.md", "Rakefile"]
