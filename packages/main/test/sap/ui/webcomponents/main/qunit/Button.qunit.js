@@ -24,7 +24,7 @@ TestHelper.ready(function () {
 	});
 
 	QUnit.test("rendering", function (assert) {
-		assert.strictEqual(getActualText(this.button), 'Button', "Button text is correct");
+		assert.strictEqual(getActualText(this.button), 'TextArea', "Button text is correct");
 	});
 
 	QUnit.test("icon", function (assert) {
@@ -35,7 +35,7 @@ TestHelper.ready(function () {
 		RenderScheduler.whenFinished().then(function () {
 			var sIcon = this.button.shadowRoot.querySelector("ui5-icon").src;
 
-			assert.strictEqual(sIcon, "sap-icon://employee", 'icon is correct');
+			assert.strictEqual(sIcon, "sap-icon://approve", 'icon is correct');
 			done();
 		}.bind(this));
 	});

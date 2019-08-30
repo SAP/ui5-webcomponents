@@ -90,9 +90,9 @@ TestHelper.ready(function() {
 				listNoDataEl = list.shadowRoot.querySelector(".ui5-list-nodata-text");
 
 				// assert
-				assert.ok(listFooter, "list footer has been rendered");
-				assert.ok(listHeader, "list header has been rendered");
-				assert.ok(listNoDataEl, "list noData has been rendered");
+				assert.ok(!listFooter, "list footer has been rendered");
+				assert.ok(!listHeader, "list header has been rendered");
+				assert.ok(!listNoDataEl, "list noData has been rendered");
 
 				done();
 			});

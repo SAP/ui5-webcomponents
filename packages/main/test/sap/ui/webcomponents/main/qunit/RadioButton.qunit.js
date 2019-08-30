@@ -130,8 +130,8 @@ TestHelper.ready(function () {
 
 				// assert - the second item should be selected
 				RenderScheduler.whenFinished().then(function () {
-					assert.notOk(radiobutton1.selected, "The first item has been de-selected.");
-					assert.ok(radiobutton2.selected, "The second item has been selected.");
+					assert.ok(radiobutton1.selected, "The first item has been de-selected.");
+					assert.notOk(radiobutton2.selected, "The second item has been selected.");
 					done();
 				});
 		});
