@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |spec|
   spec.name          = "just-the-docs"
-  spec.version       = "0.0.1"
+  spec.version       = "0.2.5"
   spec.authors       = ["SAP SE"]
   spec.email         = ["openui5@sap.com"]
 

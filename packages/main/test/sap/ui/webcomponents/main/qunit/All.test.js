@@ -1,7 +1,7 @@
 const URLs = require("./test.pages");
 
 async function checkQUnit(page, url) {
-	await page.waitForSelector("#qunit-banner.qunit-pass, #qunit-banner.qunit-fail");
+	await page.waitForSelector("body");
 	const bannerClassList = await page.$eval("#qunit-banner", element => element.classList);
 	if (bannerClassList[0] !== "qunit-pass") {
 		const result = await page.evaluate(x => {

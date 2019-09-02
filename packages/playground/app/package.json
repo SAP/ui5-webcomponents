@@ -22,7 +22,7 @@
     "build:samples": "cd ../../main && npm run build:samples",
     "clean:samples": "rimraf ./docs/components/*sample.html",
     "clean:assets": "rimraf ./assets/js/ui5-webcomponents/*",
-    "start": "npm-run-all --parallel prepare:** && jekyll serve",
+    "start": "npm-run-all --parallel prepare:** && bundle exec jekyll serve",
     "copy:assets": "cpx ../../main/dist/resources/sap/ui/webcomponents/main/* ./assets/js/ui5-webcomponents",
     "copy:samples": "node ./build-scripts/samples-copy.js \"../../main/dist/test-resources/sap/ui/webcomponents/main/api\"",
     "prepare:assets": "npm run clean:assets && rollup -c rollup.config.js --environment ES5_BUILD",

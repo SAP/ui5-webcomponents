@@ -6,7 +6,7 @@ module.exports = {
 		// headless: false
 	},
 	server: {
-		command: 'cd ./test/sap/ui/webcomponents/main/ && serve -l 8080',
+		command: 'cd ./dist/ && serve -l 8080',
 		port: 8080,
 		launchTimeout: 10000,
 		debug: true,
