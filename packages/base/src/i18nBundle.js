@@ -1,32 +1,30 @@
-import { fetchI18nBundle, getI18nBundleData } from "./asset-registries/i18n.js";
-import formatMessage from "./util/formatMessage";
+import { fetchI18nBundle, getI18nBundle } from "./asset-registries/i18n.js";
+import formatI18nText from "./util/formatI18nText";
 
 const I18nBundleInstances = new Map();
 
 class I18nBundle {
-	constructor(packageName) {
-		this.packageName = packageName;
+	constructor() {
+		this.data = null;
 	}
 
 	getText(textObj, ...params) {
-		const bundle = getI18nBundleData(this.packageName);
-
-		if (!bundle || !bundle[textObj.key]) {
-			return formatMessage(textObj.defaultText, params); // Fallback to "en"
+		if (!this.data || !this.data[textObj.key]) {
+			return formatI18nText(textObj.defaultText, params);
 		}
 
-		return formatMessage(bundle[textObj.key], params);
+		return formatI18nText(this.data[textObj.key], params);
 	}
 }
 
-const getI18nBundle = packageName => {
-	if (I18nBundleInstances.has(packageName)) {
-		return I18nBundleInstances.get(packageName);
+const getI18nProvider = async packageName => {
+	if (!I18nBundleInstances.has(packageName)) {
+		const i18nBunle = new I18nBundle();
+		i18nBunle.data = await getI18nBundle(packageName);
+		I18nBundleInstances.set(packageName, i18nBunle);
 	}
 
-	const i18nBunle = new I18nBundle(packageName);
-	I18nBundleInstances.set(packageName, i18nBunle);
-	return i18nBunle;
+	return I18nBundleInstances.get(packageName);
 };
 
-export { fetchI18nBundle, getI18nBundle };
+export { fetchI18nBundle, getI18nBundle, getI18nProvider };

@@ -8,6 +8,7 @@ import RenderScheduler from "./RenderScheduler.js";
 import { getConstructableStyle, createHeadStyle, getShadowRootStyle } from "./CSS.js";
 import { attachThemeChange } from "./Theming.js";
 import { kebabToCamelCase, camelToKebabCase } from "./util/StringHelper.js";
+import { getI18nProvider } from "./i18nBundle";
 import isValidPropertyName from "./util/isValidPropertyName.js";
 
 const metadata = {
@@ -277,7 +278,14 @@ class UI5Element extends HTMLElement {
 
 	static async define() {
 		await boot();
-		const tag = this.getMetadata().getTag();
+
+		const md = this.getMetadata();
+		const tag = md.getTag();
+		const i18nPackage = md.getI18nPackage();
+
+		if (i18nPackage) {
+			this.getI18nText = (await getI18nProvider(i18nPackage)).getText;
+		}
 
 		const definedLocally = DefinitionsSet.has(tag);
 		const definedGlobally = customElements.get(tag);

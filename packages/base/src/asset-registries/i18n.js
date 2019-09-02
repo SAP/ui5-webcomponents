@@ -27,15 +27,26 @@ const getI18nBundleData = packageName => {
  * @param {Object} bundle an object with string locales as keys and the URLs of where the corresponding locale can be fetched from, f.e {"en": "path/en.json", ...}
  * @public
  */
-const registerI18nBundle = (packageName, bundle) => {
+const setI18nBundle = (packageName, bundle) => {
 	bundleURLs.set(packageName, bundle);
+};
+
+const getI18nBundle = async packageName => {
+	let data = getI18nBundleData(packageName);
+	if (data) {
+		return data;
+	}
+
+	data = await fetchI18nBundle(packageName);
+	setI18nBundleData(packageName, data);
+	return data;
 };
 
 /**
  * This method preforms the asyncronous task of fething the actual text resources. It will fetch
  * each text resource over the network once (even for multiple calls to the same method).
  * It should be fully finished before the i18nBundle class is created in the webcomponents.
- * This method uses the bundle URLs that are populated by the <code>registerI18nBundle</code> method.
+ * This method uses the bundle URLs that are populated by the <code>setI18nBundle</code> method.
  * To simplify the usage, the synchronization of both methods happens internally for the same <code>bundleId</code>
  * @param {packageName} packageName the node project package id
  * @public
@@ -59,17 +70,14 @@ const fetchI18nBundle = async packageName => {
 	const bundleURL = bundlesForPackage[localeId];
 
 	if (typeof bundleURL === "object") { // inlined from build
-		setI18nBundleData(packageName, bundleURL);
 		return bundleURL;
 	}
 
-	const data = await fetchJsonOnce(bundleURL);
-	setI18nBundleData(packageName, data);
+	return fetchJsonOnce(bundleURL);
 };
 
 export {
-	fetchI18nBundle,
-	registerI18nBundle,
-	setI18nBundleData,
-	getI18nBundleData,
+	fetchI18nBundle, // kept not to break unrefcatored components
+	setI18nBundle,
+	getI18nBundle,
 };

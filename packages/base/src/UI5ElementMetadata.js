@@ -35,6 +35,10 @@ class UI5ElementMetadata {
 		return this.metadata.properties || {};
 	}
 
+	getI18nPackage() {
+		return this.metadata.i18n;
+	}
+
 	static validatePropertyValue(value, propData) {
 		const isMultiple = propData.multiple;
 		if (isMultiple) {
