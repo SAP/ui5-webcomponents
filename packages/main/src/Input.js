@@ -55,6 +55,10 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> The suggestion would be displayed only if the <code>showSuggestions</code>
 		 * property is set to <code>true</code>.
+		 * <br><br>
+		 * <b>Note:</b> The &lt;ui5-li> and  &lt;ui5-li-custom> are recommended to be used as suggestion items.
+		 * <br>
+		 * In order to use them, you need to import either <code>"@ui5/webcomponents/dist/StandardListItem"</code>, or  <code>"@ui5/webcomponents/dist/CustomListItem"</code> module.
 		 *
 		 * @type {HTMLElement[]}
 		 * @slot
@@ -191,7 +195,9 @@ const metadata = {
 
 		/**
 		 * Defines whether the <code>ui5-input</code> should show suggestions, if such are present.
-		 *
+		 * <br><br>
+		 * <b>Note:</b>
+		 * Don`t forget to import the <code>InputSuggestions</code> module from "@ui5/webcomponents/dist/features/InputSuggestions.js" to enable this functionality.
 		 * @type {Boolean}
 		 * @defaultvalue false
 		 * @public
