@@ -12,7 +12,7 @@ import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { isShow } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import "./icons/appointment-2.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { DATEPICKER_OPEN_ICON_TITLE, DATEPICKER_DATE_TYPE } from "./generated/i18n/i18n-defaults.js";
+import { DATEPICKER_OPEN_ICON_TITLE, DATEPICKER_DATE_ACC_TEXT } from "./generated/i18n/i18n-defaults.js";
 import Icon from "./Icon.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import Calendar from "./Calendar.js";
@@ -560,7 +560,7 @@ class DatePicker extends UI5Element {
 			"ariaDescribedBy": `${this._id}-date`,
 			"ariaHasPopup": "true",
 			"ariaAutoComplete": "none",
-			"roleAttribute": "combobox",
+			"role": "combobox",
 			"ariaOwns": `${this._id}-popover`,
 			"ariaExpanded": this.isOpen(),
 		};
@@ -570,8 +570,8 @@ class DatePicker extends UI5Element {
 		return this.i18nBundle.getText(DATEPICKER_OPEN_ICON_TITLE);
 	}
 
-	get dateAriaDescriber() {
-		return this.i18nBundle.getText(DATEPICKER_DATE_TYPE);
+	get dateAriaDescription() {
+		return this.i18nBundle.getText(DATEPICKER_DATE_ACC_TEXT);
 	}
 
 	_getPopover() {

@@ -824,25 +824,16 @@ class Input extends UI5Element {
 		return this.showSuggestions ? "list" : undefined;
 	}
 
-	get roleAttribute() {
-		if (this._accInfo && this._accInfo.roleAttribute) {
-			return this._accInfo.roleAttribute;
-		}
-		return "";
+	get role() {
+		return this._accInfo && this._accInfo.role;
 	}
 
 	get ariaOwns() {
-		if (this._accInfo && this._accInfo.ariaOwns) {
-			return this._accInfo.ariaOwns;
-		}
-		return "";
+		return this._accInfo && this._accInfo.ariaOwns;
 	}
 
 	get ariaExpanded() {
-		if (this._accInfo && this._accInfo.ariaExpanded !== undefined) {
-			return this._accInfo.ariaExpanded;
-		}
-		return "";
+		return this._accInfo && this._accInfo.ariaExpanded;
 	}
 
 	get hasValueState() {
