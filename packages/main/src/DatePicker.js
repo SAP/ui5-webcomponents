@@ -9,13 +9,10 @@ import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { isShow } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
-import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import { isShow } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import "./icons/appointment-2.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import "@ui5/webcomponents-icons/dist/icons/appointment-2.js";
-import "@ui5/webcomponents-icons/dist/icons/decline.js";
-import { DATEPICKER_OPEN_ICON_TITLE, DATEPICKER_DATE_ACC_TEXT, INPUT_SUGGESTIONS_TITLE } from "./generated/i18n/i18n-defaults.js";
+import { DATEPICKER_OPEN_ICON_TITLE, DATEPICKER_DATE_TYPE } from "./generated/i18n/i18n-defaults.js";
 import Icon from "./Icon.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import Calendar from "./Calendar.js";
@@ -358,14 +355,6 @@ class DatePicker extends UI5Element {
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
-	findFirstFocusableDay(daypicker) {
-		const today = new Date();
-		if (!this.isInValidRange(today.getTime())) {
-			const focusableItems = Array.from(daypicker.shadowRoot.querySelectorAll(".ui5-dp-item"));
-			return focusableItems.filter(x => !x.classList.contains("ui5-dp-item--disabled"))[0];
-		}
-	}
-
 	onBeforeRendering() {
 		this._calendar.primaryCalendarType = this._primaryCalendarType;
 		this._calendar.formatPattern = this._formatPattern;
@@ -571,46 +560,22 @@ class DatePicker extends UI5Element {
 			"ariaDescribedBy": `${this._id}-date`,
 			"ariaHasPopup": "true",
 			"ariaAutoComplete": "none",
-			"role": "combobox",
-			"ariaOwns": `${this._id}-responsive-popover`,
+			"roleAttribute": "combobox",
+			"ariaOwns": `${this._id}-popover`,
 			"ariaExpanded": this.isOpen(),
-			"ariaDescription": this.dateAriaDescription,
 		};
-	}
-
-	get _maxDate() {
-		if (this.maxDate) {
-			return this._getTimeStampFromString(this.maxDate);
-		}
-		return this.maxDate;
-	}
-
-	get _minDate() {
-		if (this.minDate) {
-			return this._getTimeStampFromString(this.minDate);
-		}
-		return this.minDate;
 	}
 
 	get openIconTitle() {
 		return this.i18nBundle.getText(DATEPICKER_OPEN_ICON_TITLE);
 	}
 
-	get openIconName() {
-		return "appointment-2";
+	get dateAriaDescriber() {
+		return this.i18nBundle.getText(DATEPICKER_DATE_TYPE);
 	}
 
-	get dateAriaDescription() {
-		return this.i18nBundle.getText(DATEPICKER_DATE_ACC_TEXT);
-	}
-
-	get dir() {
-		return getRTL() ? "rtl" : "ltr";
-	}
-
-	async _respPopover() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem.querySelector("ui5-responsive-popover");
+	_getPopover() {
+		return this.shadowRoot.querySelector("ui5-popover");
 	}
 
 	_canOpenPicker() {

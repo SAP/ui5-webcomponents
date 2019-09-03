@@ -1,5 +1,8 @@
 @import "./InvisibleTextStyles.css";
-@import "./InputIcon.css";
+
+:host(:not([hidden])) {
+	display: inline-block;
+}
 
 :host(:not([hidden])) {
 	display: inline-block;

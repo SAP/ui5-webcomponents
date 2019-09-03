@@ -284,17 +284,8 @@ const metadata = {
 			type: Object,
 		},
 
-		_inputWidth: {
-			type: Integer,
-		},
-
-		_listWidth: {
-			type: Integer,
-		},
-
-		_isPopoverOpen: {
-			type: Boolean,
-			noAttribute: true,
+		_accInfo: {
+			type: Object,
 		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.Input.prototype */ {
@@ -812,43 +803,46 @@ class Input extends UI5Element {
 		};
 	}
 
-	get classes() {
-		return {
-			popoverValueState: {
-				"ui5-valuestatemessage-root": true,
-				"ui5-valuestatemessage--success": this.valueState === ValueState.Success,
-				"ui5-valuestatemessage--error": this.valueState === ValueState.Error,
-				"ui5-valuestatemessage--warning": this.valueState === ValueState.Warning,
-				"ui5-valuestatemessage--information": this.valueState === ValueState.Information,
-			},
-		};
+	get ariaDescribedBy() {
+		if (this._accInfo && this._accInfo.ariaDescribedBy) {
+			return `${this.suggestionsTextId} ${this.valueStateTextId} ${this._accInfo.ariaDescribedBy}`.trim();
+		}
+		return `${this.suggestionsTextId} ${this.valueStateTextId}`.trim();
 	}
 
-	get styles() {
-		return {
-			popoverHeader: {
-				"width": `${this._inputWidth}px`,
-			},
-			suggestionPopoverHeader: {
-				"display": this._listWidth === 0 ? "none" : "inline-block",
-				"width": `${this._listWidth}px`,
-				"padding": "0.5625rem 1rem",
-			},
-		};
+	get ariaHasPopup() {
+		if (this._accInfo && this._accInfo.ariaHasPopup) {
+			return this._accInfo.ariaHasPopup;
+		}
+		return this.showSuggestions ? "true" : undefined;
 	}
 
-	get valueStateMessageText() {
-		const valueStateMessage = this.valueStateMessage.map(x => x.cloneNode(true));
-
-		return valueStateMessage;
+	get ariaAutoComplete() {
+		if (this._accInfo && this._accInfo.ariaAutoComplete) {
+			return this._accInfo.ariaAutoComplete;
+		}
+		return this.showSuggestions ? "list" : undefined;
 	}
 
-	get shouldDisplayOnlyValueStateMessage() {
-		return this.hasValueStateMessage && !this.shouldOpenSuggestions() && this.focused;
+	get roleAttribute() {
+		if (this._accInfo && this._accInfo.roleAttribute) {
+			return this._accInfo.roleAttribute;
+		}
+		return "";
 	}
 
-	get shouldDisplayDefaultValueStateMessage() {
-		return !this.valueStateMessage.length && this.hasValueStateMessage;
+	get ariaOwns() {
+		if (this._accInfo && this._accInfo.ariaOwns) {
+			return this._accInfo.ariaOwns;
+		}
+		return "";
+	}
+
+	get ariaExpanded() {
+		if (this._accInfo && this._accInfo.ariaExpanded !== undefined) {
+			return this._accInfo.ariaExpanded;
+		}
+		return "";
 	}
 
 	get hasValueState() {
