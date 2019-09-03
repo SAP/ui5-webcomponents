@@ -214,6 +214,10 @@ const metadata = {
 		_popover: {
 			type: Object,
 		},
+
+		_accInfo: {
+			type: Object,
+		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.Input.prototype */ {
 		/**
@@ -575,15 +579,45 @@ class Input extends UI5Element {
 	}
 
 	get ariaDescribedBy() {
+		if (this._accInfo && this._accInfo.ariaDescribedBy) {
+			return `${this.suggestionsTextId} ${this.valueStateTextId} ${this._accInfo.ariaDescribedBy}`.trim();
+		}
 		return `${this.suggestionsTextId} ${this.valueStateTextId}`.trim();
 	}
 
 	get ariaHasPopup() {
+		if (this._accInfo && this._accInfo.ariaHasPopup) {
+			return this._accInfo.ariaHasPopup;
+		}
 		return this.showSuggestions ? "true" : undefined;
 	}
 
 	get ariaAutoComplete() {
+		if (this._accInfo && this._accInfo.ariaAutoComplete) {
+			return this._accInfo.ariaAutoComplete;
+		}
 		return this.showSuggestions ? "list" : undefined;
+	}
+
+	get roleAttribute() {
+		if (this._accInfo && this._accInfo.roleAttribute) {
+			return this._accInfo.roleAttribute;
+		}
+		return "";
+	}
+
+	get ariaOwns() {
+		if (this._accInfo && this._accInfo.ariaOwns) {
+			return this._accInfo.ariaOwns;
+		}
+		return "";
+	}
+
+	get ariaExpanded() {
+		if (this._accInfo && this._accInfo.ariaExpanded !== undefined) {
+			return this._accInfo.ariaExpanded;
+		}
+		return "";
 	}
 
 	get hasValueState() {

@@ -13,6 +13,8 @@ import CalendarDate from "@ui5/webcomponents-base/dist/dates/CalendarDate.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { isShow } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import "./icons/appointment-2.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { DATEPICKER_OPEN_ICON_TITLE, DATEPICKER_DATE_TYPE } from "./generated/i18n/i18n-defaults.js";
 import Icon from "./Icon.js";
 import Popover from "./Popover.js";
 import Calendar from "./Calendar.js";
@@ -285,6 +287,8 @@ class DatePicker extends UI5Element {
 			onSelectedDatesChange: this._handleCalendarSelectedDatesChange.bind(this),
 			selectedDates: [],
 		};
+
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
@@ -395,6 +399,25 @@ class DatePicker extends UI5Element {
 			});
 		}
 		return this._oDateFormat;
+	}
+
+	get accInfo() {
+		return {
+			"ariaDescribedBy": `${this._id}-date`,
+			"ariaHasPopup": "true",
+			"ariaAutoComplete": "none",
+			"roleAttribute": "combobox",
+			"ariaOwns": `${this._id}-popover`,
+			"ariaExpanded": this.isOpen(),
+		};
+	}
+
+	get openIconTitle() {
+		return this.i18nBundle.getText(DATEPICKER_OPEN_ICON_TITLE);
+	}
+
+	get dateAriaDescriber() {
+		return this.i18nBundle.getText(DATEPICKER_DATE_TYPE);
 	}
 
 	_getPopover() {
@@ -544,6 +567,7 @@ class DatePicker extends UI5Element {
 			Popover.define(),
 			Calendar.define(),
 			Input.define(),
+			fetchI18nBundle("@ui5/webcomponents"),
 		]);
 
 		super.define(...params);
