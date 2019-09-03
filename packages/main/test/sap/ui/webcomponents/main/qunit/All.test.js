@@ -1,7 +1,7 @@
 const URLs = require("./test.pages");
 
 async function checkQUnit(page, url) {
-	await page.waitForSelector("body");
+	await page.waitForSelector("#qunit-banner.qunit-pass, #qunit-banner.qunit-fail");
 	const bannerClassList = await page.$eval("#qunit-banner", element => element.classList);
 	if (bannerClassList[0] !== "qunit-pass") {
 		const result = await page.evaluate(x => {
@@ -20,7 +20,7 @@ describe('All Components', () => {
 
 	for (const testName of URLs) {
 		it(`${testName} should pass all qunit tests`, async () => {
-			let url = `http://localhost:8080/qunit/runner.html?testName=${testName}`;
+			let url = `http://localhost:8080/test-resources/sap/ui/webcomponents/main/qunit/runner.html?testName=${testName}`;
 			await page.goto(url);
 			await checkQUnit(page, url);
 		});
