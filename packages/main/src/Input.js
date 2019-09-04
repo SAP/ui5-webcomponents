@@ -811,14 +811,14 @@ class Input extends UI5Element {
 	}
 
 	get ariaHasPopup() {
-		if (this._accInfo && this._accInfo.ariaHasPopup) {
+		if (this._accInfo) {
 			return this._accInfo.ariaHasPopup;
 		}
 		return this.showSuggestions ? "true" : undefined;
 	}
 
 	get ariaAutoComplete() {
-		if (this._accInfo && this._accInfo.ariaAutoComplete) {
+		if (this._accInfo) {
 			return this._accInfo.ariaAutoComplete;
 		}
 		return this.showSuggestions ? "list" : undefined;
