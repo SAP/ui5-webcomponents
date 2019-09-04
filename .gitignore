@@ -49,3 +49,5 @@ packages/playground/app/docs/documentation
 
 packages/playground/app/docs/tutorials
 !packages/playground/app/docs/tutorials/tutorials.md
+
+Gemfile.lock

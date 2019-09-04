@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
     toggleSettings();
     setTheme();
+    scrollSelectedMenuItemIntoView();
 });
 
 function toggleSettings() {
@@ -229,4 +230,10 @@ function toggleNav() {
         nav.classList.toggle('nav-open');
         navTrigger.classList.toggle('nav-open');
     })
+}
+
+function scrollSelectedMenuItemIntoView() {
+  document.querySelector(".navigation-list-link.active").scrollIntoView({
+    behavior: "smooth",
+  });
 }

@@ -23,7 +23,7 @@
     padding-left: 1.5em;
   }
 
-  ol {
+  ol:not(.style-scope) {
     list-style-type: none;
     counter-reset: step-counter;
 
@@ -57,7 +57,7 @@
     }
   }
 
-  ul {
+  ul:not(.style-scope) {
     list-style: none;
 
     > li {

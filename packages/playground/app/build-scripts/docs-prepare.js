@@ -41,7 +41,7 @@ fs.readdir(documentationPath, (err, files) => {
 
         prependFile(path.join(process.cwd(), '/docs/documentation', file),
 `---
-layout: default
+layout: docs
 title: ${currentDocName}
 parent: Documentation
 permalink: /playground/docs/${currentDocName.toLowerCase()}
