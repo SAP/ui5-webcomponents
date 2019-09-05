@@ -804,14 +804,16 @@ class Input extends UI5Element {
 	}
 
 	get accInfo() {
+		const ariaHasPopupDefault = this.showSuggestions ? "true" : undefined;
+		const ariaAutoCompleteDefault = this.showSuggestions ? "list" : undefined;
 		return {
-			"wrapperAccInfo": {
+			"wrapper": {
 			},
-			"inputAccInfo": {
+			"input": {
 				"ariaDescribedBy": this._inputAccInfo ? `${this.suggestionsTextId} ${this.valueStateTextId} ${this._inputAccInfo.ariaDescribedBy}`.trim() : `${this.suggestionsTextId} ${this.valueStateTextId}`.trim(),
 				"ariaInvalid": this.valueState === ValueState.Error ? "true" : undefined,
-				"ariaHasPopup": this._inputAccInfo ? this._inputAccInfo.ariaHasPopup : () => { return this.showSuggestions ? "true" : undefined; },
-				"ariaAutoComplete": this._inputAccInfo ? this._inputAccInfo.ariaAutoComplete : () => { return this.showSuggestions ? "list" : undefined; },
+				"ariaHasPopup": this._inputAccInfo ? this._inputAccInfo.ariaHasPopup : ariaHasPopupDefault,
+				"ariaAutoComplete": this._inputAccInfo ? this._inputAccInfo.ariaAutoComplete : ariaAutoCompleteDefault,
 				"role": this._inputAccInfo && this._inputAccInfo.role,
 				"ariaOwns": this._inputAccInfo && this._inputAccInfo.ariaOwns,
 				"ariaExpanded": this._inputAccInfo && this._inputAccInfo.ariaExpanded,
