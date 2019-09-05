@@ -221,7 +221,11 @@ const metadata = {
 			type: Object,
 		},
 
-		_accInfo: {
+		_inputAccInfo: {
+			type: Object,
+		},
+
+		_wrapperAccInfo: {
 			type: Object,
 		},
 	},
@@ -572,49 +576,28 @@ class Input extends UI5Element {
 		return this.type.toLowerCase();
 	}
 
-	get ariaInvalid() {
-		return this.valueState === ValueState.Error ? "true" : undefined;
-	}
-
 	get suggestionsTextId() {
 		return this.showSuggestions ? `${this._id}-suggestionsText` : "";
-	  }
+	}
 
 	get valueStateTextId() {
 		return this.hasValueState ? `${this._id}-descr` : "";
 	}
 
-	get ariaDescribedBy() {
-		if (this._accInfo && this._accInfo.ariaDescribedBy) {
-			return `${this.suggestionsTextId} ${this.valueStateTextId} ${this._accInfo.ariaDescribedBy}`.trim();
-		}
-		return `${this.suggestionsTextId} ${this.valueStateTextId}`.trim();
-	}
-
-	get ariaHasPopup() {
-		if (this._accInfo) {
-			return this._accInfo.ariaHasPopup;
-		}
-		return this.showSuggestions ? "true" : undefined;
-	}
-
-	get ariaAutoComplete() {
-		if (this._accInfo) {
-			return this._accInfo.ariaAutoComplete;
-		}
-		return this.showSuggestions ? "list" : undefined;
-	}
-
-	get role() {
-		return this._accInfo && this._accInfo.role;
-	}
-
-	get ariaOwns() {
-		return this._accInfo && this._accInfo.ariaOwns;
-	}
-
-	get ariaExpanded() {
-		return this._accInfo && this._accInfo.ariaExpanded;
+	get accInfo() {
+		return {
+			"wrapperAccInfo": {
+			},
+			"inputAccInfo": {
+				"ariaDescribedBy": this._inputAccInfo ? `${this.suggestionsTextId} ${this.valueStateTextId} ${this._inputAccInfo.ariaDescribedBy}`.trim() : `${this.suggestionsTextId} ${this.valueStateTextId}`.trim(),
+				"ariaInvalid": this.valueState === ValueState.Error ? "true" : undefined,
+				"ariaHasPopup": this._inputAccInfo ? this._inputAccInfo.ariaHasPopup : () => { return this.showSuggestions ? "true" : undefined; },
+				"ariaAutoComplete": this._inputAccInfo ? this._inputAccInfo.ariaAutoComplete : () => { return this.showSuggestions ? "list" : undefined; },
+				"role": this._inputAccInfo && this._inputAccInfo.role,
+				"ariaOwns": this._inputAccInfo && this._inputAccInfo.ariaOwns,
+				"ariaExpanded": this._inputAccInfo && this._inputAccInfo.ariaExpanded,
+			},
+		};
 	}
 
 	get hasValueState() {
