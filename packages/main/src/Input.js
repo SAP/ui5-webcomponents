@@ -220,6 +220,14 @@ const metadata = {
 		_popover: {
 			type: Object,
 		},
+
+		_inputAccInfo: {
+			type: Object,
+		},
+
+		_wrapperAccInfo: {
+			type: Object,
+		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.Input.prototype */ {
 		/**
@@ -568,28 +576,31 @@ class Input extends UI5Element {
 		return this.type.toLowerCase();
 	}
 
-	get ariaInvalid() {
-		return this.valueState === ValueState.Error ? "true" : undefined;
-	}
-
 	get suggestionsTextId() {
 		return this.showSuggestions ? `${this._id}-suggestionsText` : "";
-	  }
+	}
 
 	get valueStateTextId() {
 		return this.hasValueState ? `${this._id}-descr` : "";
 	}
 
-	get ariaDescribedBy() {
-		return `${this.suggestionsTextId} ${this.valueStateTextId}`.trim();
-	}
-
-	get ariaHasPopup() {
-		return this.showSuggestions ? "true" : undefined;
-	}
-
-	get ariaAutoComplete() {
-		return this.showSuggestions ? "list" : undefined;
+	get accInfo() {
+		const ariaHasPopupDefault = this.showSuggestions ? "true" : undefined;
+		const ariaAutoCompleteDefault = this.showSuggestions ? "list" : undefined;
+		return {
+			"wrapper": {
+			},
+			"input": {
+				"ariaDescribedBy": this._inputAccInfo ? `${this.suggestionsTextId} ${this.valueStateTextId} ${this._inputAccInfo.ariaDescribedBy}`.trim() : `${this.suggestionsTextId} ${this.valueStateTextId}`.trim(),
+				"ariaInvalid": this.valueState === ValueState.Error ? "true" : undefined,
+				"ariaHasPopup": this._inputAccInfo ? this._inputAccInfo.ariaHasPopup : ariaHasPopupDefault,
+				"ariaAutoComplete": this._inputAccInfo ? this._inputAccInfo.ariaAutoComplete : ariaAutoCompleteDefault,
+				"role": this._inputAccInfo && this._inputAccInfo.role,
+				"ariaOwns": this._inputAccInfo && this._inputAccInfo.ariaOwns,
+				"ariaExpanded": this._inputAccInfo && this._inputAccInfo.ariaExpanded,
+				"ariaDescription": this._inputAccInfo && this._inputAccInfo.ariaDescription,
+			},
+		};
 	}
 
 	get hasValueState() {

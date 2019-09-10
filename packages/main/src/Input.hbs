@@ -16,10 +16,13 @@
 			?required="{{required}}"
 			.value="{{value}}"
 			placeholder="{{inputPlaceholder}}"
-			aria-invalid="{{ariaInvalid}}"
-			aria-haspopup="{{ariaHasPopup}}"
-			aria-describedby="{{ariaDescribedBy}}"
-			aria-autocomplete="{{ariaAutoComplete}}"
+			role="{{accInfo.input.role}}"
+			aria-owns="{{accInfo.input.ariaOwns}}"
+			aria-invalid="{{accInfo.input.ariaInvalid}}"
+			aria-haspopup="{{accInfo.input.ariaHasPopup}}"
+			aria-describedby="{{accInfo.input.ariaDescribedBy}}"
+			aria-autocomplete="{{accInfo.input.ariaAutoComplete}}"
+			aria-expanded="{{accInfo.input.ariaExpanded}}"
 			@input="{{_handleInput}}"
 			@change="{{_handleChange}}"
 			data-sap-no-tab-ref
@@ -33,6 +36,10 @@
 
 		{{#if showSuggestions}}
 			<span id="{{_id}}-suggestionsText" class="ui5-hidden-text">{{suggestionsText}}</span>
+		{{/if}}
+
+		{{#if accInfo.input.ariaDescribedBy}}
+			<span id="{{accInfo.input.ariaDescribedBy}}" class="ui5-hidden-text">{{accInfo.input.ariaDescription}}</span>
 		{{/if}}
 
 		{{#if hasValueState}}
