@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
     toggleNav();
     pageFocus();
-    if (typeof lunr !== 'undefined') {
+    if (typeof lunr !== "undefined") {
         initSearch();
     }
     toggleSettings();
@@ -85,12 +85,12 @@ function setTheme() {
 
 function getParams(url) {
   const params = {};
-  const parser = document.createElement('a');
+  const parser = document.createElement("a");
   parser.href = url;
   const query = parser.search.substring(1);
-  const vars = query.split('&');
+  const vars = query.split("&");
   for (let i = 0; i < vars.length; i++) {
-    const pair = vars[i].split('=');
+    const pair = vars[i].split("=");
     params[pair[0]] = decodeURIComponent(pair[1]);
   }
   return params;
@@ -99,31 +99,31 @@ function getParams(url) {
 // Site search
 function initSearch() {
     var index = lunr(function () {
-      this.ref('id');
-      this.field('title', { boost: 20 });
-      this.field('content', { boost: 10 });
-      this.field('url');
+      this.ref("id");
+      this.field("title", { boost: 20 });
+      this.field("content", { boost: 10 });
+      this.field("url");
     });
   
     // Get the generated search_data.json file so lunr.js can search it locally.
   
-    sc = document.getElementsByTagName("script");
-    source = '';
+    var sc = document.getElementsByTagName("script"),
+    source = "";
   
-    for(idx = 0; idx < sc.length; idx++)
+    for(var idx = 0; idx < sc.length; idx++)
     {
-      s = sc.item(idx);
+      var s = sc.item(idx);
   
       if(s.src && s.src.match(/playground\.js$/))
       { source = s.src; }
     }
 
-    jsPath = source.replace('playground.js', '');
+    var jsPath = source.replace("playground.js", "");
   
-    jsonPath = jsPath + 'search-data.json';
+    var jsonPath = jsPath + "search-data.json";
   
     var request = new XMLHttpRequest();
-    request.open('GET', jsonPath, true);
+    request.open("GET", jsonPath, true);
   
     request.onload = function() {
       if (request.status >= 200 && request.status < 400) {
@@ -142,59 +142,59 @@ function initSearch() {
         searchResults(data);
       } else {
         // We reached our target server, but it returned an error
-        console.log('Error loading ajax request. Request status:' + request.status);
+        console.log("Error loading ajax request. Request status:" + request.status);
       }
     };
   
     request.onerror = function() {
       // There was a connection error of some sort
-      console.log('There was a connection error');
+      console.log("There was a connection error");
     };
   
     request.send();
   
     function searchResults(dataStore) {
-      var searchInput = document.querySelector('.js-search-input');
-      var searchResults = document.querySelector('.js-search-results');
+      var searchInput = document.querySelector(".js-search-input");
+      var searchResults = document.querySelector(".js-search-results");
       var store = dataStore;
   
       function hideResults() {
-        searchResults.innerHTML = '';
-        searchResults.classList.remove('active');
+        searchResults.innerHTML = "";
+        searchResults.classList.remove("active");
       }
   
-      searchInput.addEventListener('keyup', function(e){
+      searchInput.addEventListener("keyup", function(e){
         var query = this.value;
   
-        searchResults.innerHTML = '';
-        searchResults.classList.remove('active');
+        searchResults.innerHTML = "";
+        searchResults.classList.remove("active");
   
-        if (query === '') {
+        if (query === "") {
           hideResults();
         } else {
           var results = index.search(query);
   
           if (results.length > 0) {
-            searchResults.classList.add('active');
-            var resultsList = document.createElement('ul');
+            searchResults.classList.add("active");
+            var resultsList = document.createElement("ul");
             searchResults.appendChild(resultsList);
   
             for (var i in results) {
-              var resultsListItem = document.createElement('li');
-              var resultsLink = document.createElement('a');
-              var resultsUrlDesc = document.createElement('span');
+              var resultsListItem = document.createElement("li");
+              var resultsLink = document.createElement("a");
+              var resultsUrlDesc = document.createElement("span");
               var resultsUrl = store[results[i].ref].url;
               var resultsRelUrl = store[results[i].ref].relUrl;
               var resultsTitle = store[results[i].ref].title;
   
-              resultsLink.setAttribute('href', resultsUrl);
+              resultsLink.setAttribute("href", resultsUrl);
               resultsLink.innerText = resultsTitle;
               resultsUrlDesc.innerText = resultsRelUrl;
   
-              resultsList.classList.add('search-results-list');
-              resultsListItem.classList.add('search-results-list-item');
-              resultsLink.classList.add('search-results-link');
-              resultsUrlDesc.classList.add('fs-2','text-grey-dk-000','d-block');
+              resultsList.classList.add("search-results-list");
+              resultsListItem.classList.add("search-results-list-item");
+              resultsLink.classList.add("search-results-link");
+              resultsUrlDesc.classList.add("fs-2","text-grey-dk-000","d-block");
   
               resultsList.appendChild(resultsListItem);
               resultsListItem.appendChild(resultsLink);
@@ -205,30 +205,30 @@ function initSearch() {
           // When esc key is pressed, hide the results and clear the field
           if (e.keyCode == 27) {
             hideResults();
-            searchInput.value = '';
+            searchInput.value = "";
           }
         }
       });
 
-      searchInput.addEventListener('blur', function(){
+      searchInput.addEventListener("blur", function(){
         setTimeout(function(){ hideResults() }, 300);
       });
     }
 }
 
 function pageFocus() {
-    var mainContent = document.querySelector('.js-main-content');
+    var mainContent = document.querySelector(".js-main-content");
     mainContent.focus();
 }
 
 // Show/hide mobile menu
 function toggleNav() {
-    const nav = document.querySelector('.js-main-nav');
-    const navTrigger = document.querySelector('.js-main-nav-trigger');
+    const nav = document.querySelector(".js-main-nav");
+    const navTrigger = document.querySelector(".js-main-nav-trigger");
 
     navTrigger.addEventListener("click", function(event) {
-        nav.classList.toggle('nav-open');
-        navTrigger.classList.toggle('nav-open');
+        nav.classList.toggle("nav-open");
+        navTrigger.classList.toggle("nav-open");
     })
 }
 
