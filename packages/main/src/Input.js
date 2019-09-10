@@ -817,6 +817,7 @@ class Input extends UI5Element {
 				"role": this._inputAccInfo && this._inputAccInfo.role,
 				"ariaOwns": this._inputAccInfo && this._inputAccInfo.ariaOwns,
 				"ariaExpanded": this._inputAccInfo && this._inputAccInfo.ariaExpanded,
+				"parentInfo": this._inputAccInfo && this._inputAccInfo.parentInfo,
 			},
 		};
 	}

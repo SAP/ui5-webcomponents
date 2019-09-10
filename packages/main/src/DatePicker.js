@@ -563,6 +563,10 @@ class DatePicker extends UI5Element {
 			"role": "combobox",
 			"ariaOwns": `${this._id}-popover`,
 			"ariaExpanded": this.isOpen(),
+			"parentInfo": {
+				"id": this._id,
+				"ariaDescription": this.dateAriaDescription,
+			},
 		};
 	}
 

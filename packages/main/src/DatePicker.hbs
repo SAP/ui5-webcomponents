@@ -13,8 +13,6 @@
 			?disabled="{{disabled}}"
 			?readonly="{{readonly}}"
 			value-state="{{valueState}}"
-			aria-autocomplete="none"
-			aria-haspopup
 			@ui5-change="{{_handleInputChange}}"
 			@ui5-input="{{_handleInputLiveChange}}"
 			data-sap-focus-ref
@@ -55,6 +53,5 @@
 				@ui5-selectedDatesChange="{{_calendar.onSelectedDatesChange}}"
 		></ui5-calendar>
 	</ui5-popover>
-	<span id="{{_id}}-date" class="ui5-hidden-text">{{dateAriaDescription}}</span>
 	<slot name="formSupport"></slot>
 </div>
