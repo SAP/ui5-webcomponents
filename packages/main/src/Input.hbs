@@ -38,8 +38,8 @@
 			<span id="{{_id}}-suggestionsText" class="ui5-hidden-text">{{suggestionsText}}</span>
 		{{/if}}
 
-		{{#if accInfo.input.parentInfo}}
-			<span id="{{accInfo.input.parentInfo.id}}-date" class="ui5-hidden-text">{{accInfo.input.parentInfo.ariaDescription}}</span>
+		{{#if accInfo.input.ariaDescribedBy}}
+			<span id="{{accInfo.input.ariaDescribedBy}}" class="ui5-hidden-text">{{accInfo.input.ariaDescription}}</span>
 		{{/if}}
 
 		{{#if hasValueState}}
