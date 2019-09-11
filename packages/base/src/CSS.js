@@ -11,7 +11,8 @@ const styleMap = new Map();
  */
 const createHeadStyle = ElementClass => {
 	const tag = ElementClass.getMetadata().getTag();
-	const cssContent = getEffectiveStyle(ElementClass);
+	let cssContent = getEffectiveStyle(ElementClass);
+	cssContent = adaptCSSForIE(cssContent, tag);
 	injectWebComponentStyle(tag, cssContent);
 };
 
@@ -50,6 +51,13 @@ const getShadowRootStyle = ElementClass => {
 
 	const styleContent = getEffectiveStyle(ElementClass);
 	return styleContent;
+};
+
+const adaptCSSForIE = (css, tag) => {
+	css = css.replace(/^:host\((.*)\)(.*)?{/g, `${tag}$1$2`);
+	css = css.replace(/:host/g, tag);
+	css = css.replace(/::slotted/g, '');
+	return css;
 };
 
 // eslint-disable-next-line
