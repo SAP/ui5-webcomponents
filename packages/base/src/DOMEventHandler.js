@@ -42,7 +42,7 @@ const dispatchEvent = function dispatchEvent(element, event) {
 const getParentDOMNode = function getParentDOMNode(node) {
 	const parentNode = node.parentNode;
 
-	if (parentNode && parentNode.host) {
+	if (parentNode && (parentNode instanceof window.ShadowRoot) && parentNode.host) {
 		return parentNode.host;
 	}
 
