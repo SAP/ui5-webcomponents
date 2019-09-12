@@ -54,7 +54,9 @@ const getShadowRootStyle = ElementClass => {
 };
 
 const adaptCSSForIE = (css, tag) => {
-	css = css.replace(/^:host\((.*)\)(.*)?{/g, `${tag}$1$2`);
+	css = css.replace(/([{])/g, `$1\n`);
+	css = css.replace(/:host/g, `\n:host`);
+	css = css.replace(/:host\((.*)\)(.*)([{,])/g, `${tag}$1$2$3`);
 	css = css.replace(/:host/g, tag);
 	css = css.replace(/::slotted/g, '');
 	return css;
