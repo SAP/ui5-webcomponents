@@ -6,10 +6,10 @@
   "license": "MIT",
   "bugs": "https://github.com/pmarsceill/just-the-docs/issues",
   "devDependencies": {
-    "rollup": "^1.1.2",
     "stylelint": "^10.0.1",
     "stylelint-config-primer": "^7.0.0",
-    "stylelint-selector-no-utility": "^4.0.0"
+    "stylelint-selector-no-utility": "^4.0.0",
+    "cpx": "^1.5.0"
   },
   "dependencies": {
     "@primer/css": "^12.3.1",
@@ -19,14 +19,14 @@
   },
   "scripts": {
     "test": "stylelint '**/*.scss'",
-    "build": "npm-run-all --parallel prepare:** && jekyll build --source ./ --destination ../dist",
+    "build": "npm-run-all --parallel prepare:** && bundle exec jekyll build --source ./ --destination ../dist",
     "build:samples": "cd ../../main && npm run build:samples",
     "clean:samples": "rimraf ./docs/components/*sample.html",
     "clean:assets": "rimraf ./assets/js/ui5-webcomponents/*",
     "start": "npm-run-all --parallel prepare:** && bundle exec jekyll serve",
-    "copy:assets": "cpx ../../main/dist/resources/sap/ui/webcomponents/main/* ./assets/js/ui5-webcomponents",
+    "copy:assets": "cpx \"../../main/dist/resources/sap/ui/webcomponents/main/*\" \"./assets/js/ui5-webcomponents\"",
     "copy:samples": "node ./build-scripts/samples-copy.js \"../../main/dist/test-resources/sap/ui/webcomponents/main/api\"",
-    "prepare:assets": "npm run clean:assets && rollup -c rollup.config.js --environment ES5_BUILD",
+    "prepare:assets": "npm run clean:assets && cd ../../main && DEPLOY_PUBLIC_PATH=\"/assets/js/ui5-webcomponents/\" npm run build:bundle && cd ../playground/app && npm run copy:assets",
     "prepare:docs": "node ./build-scripts/docs-prepare.js \"../../../docs/\"",
     "prepare:samples": "npm run clean:samples && npm run build:samples && npm run copy:samples",
     "prepare:tutorials": "node ./build-scripts/tutorials-prepare.js \"../../../docs/\""

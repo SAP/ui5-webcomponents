@@ -52,7 +52,7 @@ const getPlugins = ({ transpile }) => {
 		],
 		emitFiles: true,
 		fileName: "[name].[hash][extname]",
-		publicPath: DEPLOY_PUBLIC_PATH + "/resources/sap/ui/webcomponents/main/",
+		publicPath: DEPLOY_PUBLIC_PATH || "/resources/sap/ui/webcomponents/main/",
 	}));
 
 
