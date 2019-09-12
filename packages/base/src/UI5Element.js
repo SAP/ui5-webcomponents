@@ -64,9 +64,9 @@ class UI5Element extends HTMLElement {
 		this.attachShadow({ mode: "open" });
 
 		// IE11, Edge
-		//if (window.ShadyDOM) {
+		if (window.ShadyDOM) {
 			createHeadStyle(this.constructor);
-		//}
+		}
 
 		// Chrome
 		if (document.adoptedStyleSheets) {

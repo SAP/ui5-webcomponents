@@ -30,5 +30,149 @@
 	<ui5-button design="Positive">Accept</ui5-button>
 	<ui5-button design="Negative">Decline</ui5-button>
 
+	<br />
+	<br />
+
+	<ui5-input id="press-counter"></ui5-input>
+	<ui5-input id="click-counter"></ui5-input>
+
+	<ui5-button style="height: auto" design="Emphasized">Action<br> Bar<br> Button</ui5-button>
+	<ui5-button>Primary button</ui5-button>
+	<ui5-button design="Transparent">Secondary button</ui5-button>
+	<ui5-button disabled>Inactive</ui5-button>
+	<ui5-button design="Positive">Agree</ui5-button>
+	<ui5-button design="Negative">Decline</ui5-button>
+
+	<br/>
+	<br/>
+	<br/>
+
+	<ui5-button icon="sap-icon://employee">Action Bar Button</ui5-button>
+	<ui5-button icon="sap-icon://download"></ui5-button>
+	<ui5-button icon="sap-icon://download"></ui5-button>
+
+	<br />
+	<br />
+
+	<ui5-button icon="sap-icon://employee">Action Bar Button</ui5-button>
+	<ui5-button icon="sap-icon://download"></ui5-button>
+	<ui5-button icon="sap-icon://download"></ui5-button>
+
+
+	<br/>
+	<br/>
+	<br/>
+
+	<ui5-button design="Default" icon="sap-icon://employee">Default</ui5-button>
+	<ui5-button disabled design="Default" icon="sap-icon://employee">Default</ui5-button>
+	<br/>
+	<br/>
+
+	<ui5-button design="Positive" icon="sap-icon://employee">Agree</ui5-button>
+	<ui5-button disabled design="Positive" icon="sap-icon://employee">Agree</ui5-button>
+	<br/>
+	<br/>
+
+	<ui5-button design="Negative" icon="sap-icon://employee">Decline</ui5-button>
+	<ui5-button disabled design="Negative" icon="sap-icon://employee">Decline</ui5-button>
+	<br/>
+	<br/>
+
+	<ui5-button design="Transparent" icon="sap-icon://employee">Transparent</ui5-button>
+	<ui5-button disabled design="Transparent" icon="sap-icon://employee">Transparent</ui5-button>
+	<br/>
+	<br/>
+
+	<ui5-button design="Emphasized" icon="sap-icon://employee">Emphasized</ui5-button>
+	<ui5-button disabled design="Emphasized" icon="sap-icon://employee">Emphasized</ui5-button>
+
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+
+	<ui5-button icon-end icon="sap-icon://employee">Icon last</ui5-button>
+
+
+
+	<ui5-checkbox text="Option A"></ui5-checkbox>
+	<ui5-checkbox disabled text="Option A"></ui5-checkbox>
+	<br/>
+	<ui5-label>"This is a label, this is a label"</ui5-label>
+
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+
+	<ui5-togglebutton design="Emphasized">Action Bar Button</ui5-togglebutton>
+	<ui5-togglebutton>Primary button</ui5-togglebutton>
+	<ui5-togglebutton design="Transparent">Secondary button</ui5-togglebutton>
+	<ui5-togglebutton disabled>Inactive</ui5-togglebutton>
+	<ui5-togglebutton design="Positive">Agree</ui5-togglebutton>
+	<ui5-togglebutton design="Negative">Decline</ui5-togglebutton>
+
+	<br/>
+	<br/>
+	<br/>
+
+	<ui5-togglebutton icon="sap-icon://employee">Action Bar Button</ui5-togglebutton>
+	<ui5-togglebutton icon="sap-icon://download"></ui5-togglebutton>
+	<ui5-togglebutton icon="sap-icon://download"></ui5-togglebutton>
+
+	<br/>
+	<br/>
+	<br/>
+
+	<ui5-togglebutton design="Default" icon="sap-icon://employee">Default</ui5-togglebutton>
+	<ui5-togglebutton disabled design="Default" icon="sap-icon://employee">Default</ui5-togglebutton>
+	<br/>
+	<br/>
+
+	<ui5-togglebutton design="Positive" icon="sap-icon://employee">Agree</ui5-togglebutton>
+	<ui5-togglebutton disabled design="Positive" icon="sap-icon://employee">Agree</ui5-togglebutton>
+	<br/>
+	<br/>
+
+	<ui5-togglebutton design="Negative" icon="sap-icon://employee">Decline</ui5-togglebutton>
+	<ui5-togglebutton disabled design="Negative" icon="sap-icon://employee">Decline</ui5-togglebutton>
+	<br/>
+	<br/>
+
+	<ui5-togglebutton design="Transparent" icon="sap-icon://employee">Transparent</ui5-togglebutton>
+	<ui5-togglebutton disabled design="Transparent" icon="sap-icon://employee">Transparent</ui5-togglebutton>
+	<br/>
+	<br/>
+
+	<ui5-togglebutton design="Emphasized" icon="sap-icon://employee">Emphasized</ui5-togglebutton>
+	<ui5-togglebutton disabled design="Emphasized" icon="sap-icon://employee">Emphasized</ui5-togglebutton>
+
+
+	<script>
+		var pressCounter = document.querySelector("#press-counter");
+		var clickCounter = document.querySelector("#click-counter");
+		var button = document.querySelector("#button1");
+		var disabledButton = document.querySelector("#button-disabled");
+		var pressCount = 0;
+		var clickCount = 0;
+
+		[button, disabledButton].forEach(function (el) {
+			el.addEventListener("ui5-press", function(event) {
+				pressCount += 1;
+				pressCounter.value = pressCount;
+			});
+		});
+
+		[button, disabledButton].forEach(function (el) {
+			el.addEventListener("click", function(event) {
+				clickCount += 1;
+				clickCounter.value = clickCount;
+			});
+		});
+
+
+	</script>
 </body>
 </html>

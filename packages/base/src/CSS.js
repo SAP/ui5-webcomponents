@@ -1,6 +1,7 @@
 import { getEffectiveStyle } from "./Theming.js";
 import { getTheme } from "./config/Theme.js";
 import { injectWebComponentStyle } from "./theming/StyleInjection.js";
+import replaceAllHostOccurrences from "./util/replaceAllHostOccurrences.js";
 
 const styleMap = new Map();
 
@@ -54,13 +55,13 @@ const getShadowRootStyle = ElementClass => {
 };
 
 const adaptCSSForIE = (css, tag) => {
-	css = css.replace(/([{])/g, `$1\n`);
+	css = css.replace(/{/g, `{\n`);
 	css = css.replace(/:host/g, `\n:host`);
-	css = css.replace(/:host\((.*)\)(.*)([{,])/g, `${tag}$1$2$3`);
-	css = css.replace(/:host/g, tag);
-	css = css.replace(/::slotted/g, '');
+	css = replaceAllHostOccurrences(css, tag);
+	css = css.replace(/::slotted/g, ``);
 	return css;
 };
+
 
 // eslint-disable-next-line
 export { createHeadStyle, getConstructableStyle, getShadowRootStyle};
