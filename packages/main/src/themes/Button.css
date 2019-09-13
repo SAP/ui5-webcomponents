@@ -116,7 +116,7 @@
 	border: 0;
 }
 
-bdi {
+:host bdi {
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;

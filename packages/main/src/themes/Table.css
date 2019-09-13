@@ -3,7 +3,7 @@
 	width: 100%;
 }
 
-table {
+:host table {
 	width: 100%;
 	border-spacing: 0;
 	border-collapse: collapse;
@@ -16,7 +16,7 @@ table {
 	font-size: var(--sapMFontMediumSize);
 }
 
-tr {
+:host tr {
 	height: 3rem;
 }
 
