@@ -59,7 +59,6 @@ const adaptCSSForIE = (css, tag) => {
 	css = css.replace(/(:host|::slotted)/g, `\n$1`);
 	css = replaceAllPseudoSelectorOccurrences(css, ":host", tag);
 	css = replaceAllPseudoSelectorOccurrences(css, "::slotted", ``);
-	css = css.replace(/::slotted/g, ``);
 	return css;
 };
 

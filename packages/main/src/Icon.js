@@ -165,9 +165,8 @@ class Icon extends UI5Element {
 		if (!window.ShadyDOM) {
 			return;
 		}
-		setTimeout(_ => {
-			this.setAttribute("data-ui5-defined", "");
-		}, 0);
+
+		this.setAttribute("data-ui5-defined", "");
 	}
 }
 
