@@ -106,7 +106,7 @@ class Tokenizer extends UI5Element {
 
 		setTimeout(() => {
 			// wait for the layouting and update the text
-			this._nMoreText = this.getI18nBundle.getText(MULTIINPUT_SHOW_MORE_TOKENS, [this.overflownTokensCount]);
+			this._nMoreText = this.i18nBundle.getText(MULTIINPUT_SHOW_MORE_TOKENS, [this.overflownTokensCount]);
 		}, 0);
 	}
 

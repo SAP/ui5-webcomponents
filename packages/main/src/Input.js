@@ -55,6 +55,10 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> The suggestion would be displayed only if the <code>showSuggestions</code>
 		 * property is set to <code>true</code>.
+		 * <br><br>
+		 * <b>Note:</b> The &lt;ui5-li> and  &lt;ui5-li-custom> are recommended to be used as suggestion items.
+		 * <br>
+		 * In order to use them, you need to import either <code>"@ui5/webcomponents/dist/StandardListItem"</code>, or  <code>"@ui5/webcomponents/dist/CustomListItem"</code> module.
 		 *
 		 * @type {HTMLElement[]}
 		 * @slot
@@ -191,7 +195,9 @@ const metadata = {
 
 		/**
 		 * Defines whether the <code>ui5-input</code> should show suggestions, if such are present.
-		 *
+		 * <br><br>
+		 * <b>Note:</b>
+		 * Don`t forget to import the <code>InputSuggestions</code> module from "@ui5/webcomponents/dist/features/InputSuggestions.js" to enable this functionality.
 		 * @type {Boolean}
 		 * @defaultvalue false
 		 * @public
@@ -212,6 +218,14 @@ const metadata = {
 		},
 
 		_popover: {
+			type: Object,
+		},
+
+		_inputAccInfo: {
+			type: Object,
+		},
+
+		_wrapperAccInfo: {
 			type: Object,
 		},
 	},
@@ -562,28 +576,31 @@ class Input extends UI5Element {
 		return this.type.toLowerCase();
 	}
 
-	get ariaInvalid() {
-		return this.valueState === ValueState.Error ? "true" : undefined;
-	}
-
 	get suggestionsTextId() {
 		return this.showSuggestions ? `${this._id}-suggestionsText` : "";
-	  }
+	}
 
 	get valueStateTextId() {
 		return this.hasValueState ? `${this._id}-descr` : "";
 	}
 
-	get ariaDescribedBy() {
-		return `${this.suggestionsTextId} ${this.valueStateTextId}`.trim();
-	}
-
-	get ariaHasPopup() {
-		return this.showSuggestions ? "true" : undefined;
-	}
-
-	get ariaAutoComplete() {
-		return this.showSuggestions ? "list" : undefined;
+	get accInfo() {
+		const ariaHasPopupDefault = this.showSuggestions ? "true" : undefined;
+		const ariaAutoCompleteDefault = this.showSuggestions ? "list" : undefined;
+		return {
+			"wrapper": {
+			},
+			"input": {
+				"ariaDescribedBy": this._inputAccInfo ? `${this.suggestionsTextId} ${this.valueStateTextId} ${this._inputAccInfo.ariaDescribedBy}`.trim() : `${this.suggestionsTextId} ${this.valueStateTextId}`.trim(),
+				"ariaInvalid": this.valueState === ValueState.Error ? "true" : undefined,
+				"ariaHasPopup": this._inputAccInfo ? this._inputAccInfo.ariaHasPopup : ariaHasPopupDefault,
+				"ariaAutoComplete": this._inputAccInfo ? this._inputAccInfo.ariaAutoComplete : ariaAutoCompleteDefault,
+				"role": this._inputAccInfo && this._inputAccInfo.role,
+				"ariaOwns": this._inputAccInfo && this._inputAccInfo.ariaOwns,
+				"ariaExpanded": this._inputAccInfo && this._inputAccInfo.ariaExpanded,
+				"ariaDescription": this._inputAccInfo && this._inputAccInfo.ariaDescription,
+			},
+		};
 	}
 
 	get hasValueState() {

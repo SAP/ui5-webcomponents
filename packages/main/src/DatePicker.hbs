@@ -14,6 +14,7 @@
 			@ui5-change="{{_handleInputChange}}"
 			@ui5-input="{{_handleInputLiveChange}}"
 			data-sap-focus-ref
+			._inputAccInfo ="{{accInfo}}"
 	>
 		{{#unless readonly}}
 			<ui5-icon
@@ -21,6 +22,8 @@
 				src="sap-icon://appointment-2"
 				class="{{classes.icon}} ui5-datepicker-icon"
 				tabindex="-1"
+				accessible-name="{{openIconTitle}}"
+				show-tooltip
 				@click="{{togglePicker}}"
 			></ui5-icon>
 		{{/unless}}
@@ -46,6 +49,5 @@
 				@ui5-selectedDatesChange="{{_calendar.onSelectedDatesChange}}"
 		></ui5-calendar>
 	</ui5-popover>
-
 	<slot name="formSupport"></slot>
 </div>
