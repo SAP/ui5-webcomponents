@@ -9,10 +9,11 @@
     "ui5"
   ],
   "scripts": {
-    "build": "npm-run-all --sequential build:core build:base build:main",
+    "build": "npm-run-all --sequential build:core build:base build:main build:playground",
     "build:core": "cd packages/core && yarn build",
     "build:base": "cd packages/base && yarn build",
     "build:main": "cd packages/main && yarn build",
+    "build:playground": "mkdir packages/playground/dist",
     "clean": "npm-run-all --sequential clean:core clean:base clean:main",
     "clean:core": "cd packages/core && yarn clean",
     "clean:base": "cd packages/base && yarn clean",
