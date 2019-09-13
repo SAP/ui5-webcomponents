@@ -109,21 +109,3 @@
 	margin-left: 0.5rem;
 	margin-right: 0;
 }
-
-/* 
- * IE pair of styles
- * to be removed later on
- */
-ui5-calendar-header {
-	display: inline-block;
-	width: 100%;
-}
-
-ui5-calendar-header[data-ui5-compact-size] .ui5-calheader-root {
-	height: 2rem;
-	padding: 0;
-}
-
-ui5-calendar-header[data-ui5-compact-size] .ui5-calheader-arrowbtn {
-	width: 2rem;
-}

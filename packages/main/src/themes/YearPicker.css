@@ -83,20 +83,3 @@
 	top: var(--_ui5_yearpicker_item_focus_after_offset);
 	left: var(--_ui5_yearpicker_item_focus_after_offset);
 }
-
-/*
- * IE pair of styles
- * to be removed later on
- */
-ui5-yearpicker:not([hidden]) {
-	display: inline-block;
-}
-
-ui5-yearpicker {
-	width: 100%;
-	height: 100%;
-}
-
-ui5-yearpicker[data-ui5-compact-size] .ui5-yp-item {
-	height: 2rem;
-}

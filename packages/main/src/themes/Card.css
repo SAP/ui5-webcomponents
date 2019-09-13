@@ -3,11 +3,6 @@
 	width: 100%;
 }
 
-ui5-card:not([hidden]) {
-	display: inline-block;
-	width: 100%;
-}
-
 .ui5-card-root {
 	width: 100%;
 	height: 100%;

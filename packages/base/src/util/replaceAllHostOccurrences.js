@@ -1,4 +1,4 @@
-const findClosingParenthesis = (str, openingParenthesisPos) => {
+const findClosingParenthesisPos = (str, openingParenthesisPos) => {
 	let opened = 0;
 	for (let pos = openingParenthesisPos; pos < str.length; pos++) {
 		const char = str.charAt(pos);
@@ -17,13 +17,13 @@ const replaceHost = (str, hostStartPos, tag) => {
 	const charAfterHostPos = hostStartPos + ":host".length;
 	const charAfterHost = str.charAt(charAfterHostPos);
 
+	const upToHost = str.substring(0, hostStartPos) + tag;
 	if (charAfterHost === "(") {
-		const openingParenthesisPos = charAfterHostPos;
-		const closingParenthesisPos = findClosingParenthesis(str, openingParenthesisPos);
-		return str.substring(0, hostStartPos) + tag + str.substring(openingParenthesisPos + 1, closingParenthesisPos) + str.substring(closingParenthesisPos + 1);
+		const closingParenthesisPos = findClosingParenthesisPos(str, charAfterHostPos);
+		return upToHost + str.substring(charAfterHostPos + 1, closingParenthesisPos) + str.substring(closingParenthesisPos + 1);
 	}
 
-	return str.substring(0, hostStartPos) + tag + str.substring(charAfterHostPos);
+	return upToHost + str.substring(charAfterHostPos);
 };
 
 const replaceAllHostOccurrences = (str, tag) => {
