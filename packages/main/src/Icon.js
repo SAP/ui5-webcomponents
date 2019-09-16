@@ -167,6 +167,7 @@ class Icon extends UI5Element {
 		}
 
 		this.setAttribute("data-ui5-defined", "");
+		this._invalidate();
 	}
 }
 
