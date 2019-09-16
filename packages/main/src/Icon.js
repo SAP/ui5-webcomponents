@@ -112,7 +112,7 @@ class Icon extends UI5Element {
 	}
 
 	static async define(...params) {
-		this.createGlobalStyle();
+		this.createGlobalStyle(); // hide all icons until the first icon has rendered (and added the Icon.css)
 		await fetchI18nBundle("@ui5/webcomponents");
 
 		super.define(...params);
@@ -124,7 +124,17 @@ class Icon extends UI5Element {
 		}
 		const styleElement = document.head.querySelector(`style[data-ui5-icon-global]`);
 		if (!styleElement) {
-			createStyleInHead(`ui5-icon:not([data-ui5-defined]) { display: none !important; }`, { "data-ui5-icon-global": "" });
+			createStyleInHead(`ui5-icon { display: none !important; }`, { "data-ui5-icon-global": "" });
+		}
+	}
+
+	static removeGlobalStyle() {
+		if (!window.ShadyDOM) {
+			return;
+		}
+		const styleElement = document.head.querySelector(`style[data-ui5-icon-global]`);
+		if (styleElement) {
+			document.head.removeChild(styleElement);
 		}
 	}
 
@@ -162,12 +172,9 @@ class Icon extends UI5Element {
 	}
 
 	onEnterDOM() {
-		if (!window.ShadyDOM) {
-			return;
-		}
-
-		this.setAttribute("data-ui5-defined", "");
-		this._invalidate(); // fix for IE bug (icon does not render until hovered)
+		setTimeout(() => {
+			this.constructor.removeGlobalStyle(); // remove the global style as Icon.css is already in place
+		}, 0);
 	}
 }
 
