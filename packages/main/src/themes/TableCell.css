@@ -2,7 +2,7 @@
 	display: contents;
 }
 
-:host td {
+td {
 	padding: 0.25rem;
 	vertical-align: middle;
 }

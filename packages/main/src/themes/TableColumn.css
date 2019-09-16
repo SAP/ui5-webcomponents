@@ -7,7 +7,7 @@
 	box-sizing: border-box;
 }
 
-:host th {
+th {
 	background: var(--sapUiListHeaderBackground);
 	border-bottom: 1px solid var(--sapUiListBorderColor);
 	border: none;
