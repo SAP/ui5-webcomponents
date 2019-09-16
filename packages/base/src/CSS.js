@@ -55,7 +55,6 @@ const getShadowRootStyle = ElementClass => {
 };
 
 const adaptCSSForIE = (css, tag) => {
-	css = css.replace(/([{}])/g, `$1\n`);
 	css = replaceSelectors(css, ":host", tag);
 	css = replaceSelectors(css, "::slotted", ``);
 	return css;
