@@ -1,6 +1,7 @@
 import { getEffectiveStyle } from "./Theming.js";
 import { getTheme } from "./config/Theme.js";
 import { injectWebComponentStyle } from "./theming/StyleInjection.js";
+import replaceSelectors from "./util/CSSTransformUtils.js";
 
 const styleMap = new Map();
 
@@ -11,7 +12,8 @@ const styleMap = new Map();
  */
 const createHeadStyle = ElementClass => {
 	const tag = ElementClass.getMetadata().getTag();
-	const cssContent = getEffectiveStyle(ElementClass);
+	let cssContent = getEffectiveStyle(ElementClass);
+	cssContent = adaptCSSForIE(cssContent, tag);
 	injectWebComponentStyle(tag, cssContent);
 };
 
@@ -51,6 +53,13 @@ const getShadowRootStyle = ElementClass => {
 	const styleContent = getEffectiveStyle(ElementClass);
 	return styleContent;
 };
+
+const adaptCSSForIE = (css, tag) => {
+	css = replaceSelectors(css, ":host", tag);
+	css = replaceSelectors(css, "::slotted", ``);
+	return css;
+};
+
 
 // eslint-disable-next-line
 export { createHeadStyle, getConstructableStyle, getShadowRootStyle};

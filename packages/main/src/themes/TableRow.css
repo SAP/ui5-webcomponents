@@ -17,14 +17,3 @@
 	font-family: var(--sapUiFontHeaderFamily);
 	font-size: var(--sapMFontMediumSize);
 }
-
-/* Remove that once shadycss is adopted */
-
-ui5-table-row {
-	display: contents;
-}
-
-ui5-table-row:not(:first-of-type) .ui5-table-row-root {
-	background-color: var(--sapUiListBackground);
-	border-top: 1px solid var(--sapUiListBorderColor);
-}
