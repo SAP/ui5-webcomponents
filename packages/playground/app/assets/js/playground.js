@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 function toggleSettings() {
-  const settingsButton = document.getElementById("settings-button"),
+  var settingsButton = document.getElementById("settings-button"),
     dialog = document.getElementById("settings-dialog"),
     cancelButton = document.getElementById("cancelButton"),
     applyButton = document.getElementById("applyButton"),
@@ -20,7 +20,7 @@ function toggleSettings() {
 
   if (settingsButton) {
     settingsButton.addEventListener("click", function(event) {
-      const urlParameters = getParams(window.location.href);
+      var urlParameters = getParams(window.location.href);
 
       // Casts to array because of IE11
 
@@ -55,12 +55,12 @@ function toggleSettings() {
     });
 
     applyButton.addEventListener("click", function(event) {
-      const theme = themeSwitch.selectedOption.value,
+      var theme = themeSwitch.selectedOption.value,
         contentDensity = contentDensitySwitch.selectedOption.textContent,
         textDirection = textDirectionSwitch.selectedOption.textContent;
 
         // Not implemented with string literals, beacause of IE11
-        let newLocation = location.origin + location.pathname + "?sap-ui-theme=";
+        var newLocation = location.origin + location.pathname + "?sap-ui-theme=";
         newLocation += theme;
         newLocation += "&sap-ui-compactSize=";
         newLocation += contentDensity === "Compact";
@@ -75,7 +75,7 @@ function toggleSettings() {
 }
 
 function setTheme() {
-  const currentTheme = getParams(window.location.href)["sap-ui-theme"];
+  var currentTheme = getParams(window.location.href)["sap-ui-theme"];
   if (currentTheme === "sap_belize_hcb") {
     document.body.classList.add("hcb");
   } else {
@@ -84,13 +84,13 @@ function setTheme() {
 }
 
 function getParams(url) {
-  const params = {};
-  const parser = document.createElement("a");
+  var params = {};
+  var parser = document.createElement("a");
   parser.href = url;
-  const query = parser.search.substring(1);
-  const vars = query.split("&");
-  for (let i = 0; i < vars.length; i++) {
-    const pair = vars[i].split("=");
+  var query = parser.search.substring(1);
+  var vars = query.split("&");
+  for (var i = 0; i < vars.length; i++) {
+    var pair = vars[i].split("=");
     params[pair[0]] = decodeURIComponent(pair[1]);
   }
   return params;
@@ -223,8 +223,8 @@ function pageFocus() {
 
 // Show/hide mobile menu
 function toggleNav() {
-    const nav = document.querySelector(".js-main-nav");
-    const navTrigger = document.querySelector(".js-main-nav-trigger");
+    var nav = document.querySelector(".js-main-nav");
+    var navTrigger = document.querySelector(".js-main-nav-trigger");
 
     navTrigger.addEventListener("click", function(event) {
         nav.classList.toggle("nav-open");
@@ -233,7 +233,9 @@ function toggleNav() {
 }
 
 function scrollSelectedMenuItemIntoView() {
-  document.querySelector(".navigation-list-link.active").scrollIntoView({
-    behavior: "smooth",
-  });
+  setTimeout(function() {
+    document.querySelector(".navigation-list-link.active").scrollIntoView({
+      behavior: "smooth",
+    });
+  }, 500);
 }

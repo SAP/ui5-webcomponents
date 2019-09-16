@@ -57,9 +57,10 @@
   display: flex;
   padding: 0 0.4rem;
   background-color: #000;
-  border: 1px solid;
+  border: 1px solid #fff;
   border-radius: 4px;
 }
+
 
 .search-input {
   width: 100%;
@@ -80,6 +81,14 @@
     + .search-icon {
       fill: #fff;
     }
+  }
+
+  &:focus::-webkit-input-placeholder { /* Edge */
+    color: #fff
+  }
+  
+  &:focus::placeholder {
+    color: #fff
   }
 
   @include fs-5;
