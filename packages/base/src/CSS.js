@@ -3,7 +3,8 @@ import { getTheme } from "./config/Theme.js";
 import { injectWebComponentStyle } from "./theming/StyleInjection.js";
 import adaptCSSForIE from "./util/CSSTransformUtils.js";
 
-const styleMap = new Map();
+const constructableStyleMap = new Map();
+const IEStyleSet = new Set();
 
 /**
  * Creates the needed CSS for a web component class in the head tag
@@ -12,9 +13,14 @@ const styleMap = new Map();
  */
 const createHeadStyle = ElementClass => {
 	const tag = ElementClass.getMetadata().getTag();
+	if (IEStyleSet.has(tag)) {
+		return;
+	}
+
 	let cssContent = getEffectiveStyle(ElementClass);
 	cssContent = adaptCSSForIE(cssContent, tag);
 	injectWebComponentStyle(tag, cssContent);
+	IEStyleSet.add(tag);
 };
 
 /**
@@ -28,14 +34,14 @@ const getConstructableStyle = ElementClass => {
 	const styleContent = getEffectiveStyle(ElementClass);
 	const theme = getTheme();
 	const key = theme + tagName;
-	if (styleMap.has(key)) {
-		return styleMap.get(key);
+	if (constructableStyleMap.has(key)) {
+		return constructableStyleMap.get(key);
 	}
 
 	const style = new CSSStyleSheet();
 	style.replaceSync(styleContent);
 
-	styleMap.set(key, style);
+	constructableStyleMap.set(key, style);
 	return style;
 };
 

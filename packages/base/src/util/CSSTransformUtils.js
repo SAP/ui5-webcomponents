@@ -45,7 +45,7 @@ const replaceSelectors = (str, selector, replacement) => {
 };
 
 const adaptLinePart = (line, tag) => {
-	line = replaceSelectors(line, "::slotted", tag); // first remove all ::slotted() occurrences
+	line = replaceSelectors(line, "::slotted", ``); // first remove all ::slotted() occurrences
 
 	// Host selector - replace it
 	if (line.startsWith(":host")) {
@@ -53,7 +53,13 @@ const adaptLinePart = (line, tag) => {
 	}
 
 	// IE specific selector (directly written with the tag) - keep it
-	if (line.startsWith(tag)) {
+	// Note: a space must be matched after the tag, otherwise f.e. for ui5-timeline, selectors such as ui5-timeline-item won't be adapted
+	if (line.startsWith(`${tag} `)) {
+		return line;
+	}
+
+	// Leave out @keyframes and keyframe values (0%, 100%, etc...)
+	if (line.match(/^[@0-9]/)) {
 		return line;
 	}
 
