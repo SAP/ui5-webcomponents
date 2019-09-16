@@ -1,7 +1,7 @@
 import { getEffectiveStyle } from "./Theming.js";
 import { getTheme } from "./config/Theme.js";
 import { injectWebComponentStyle } from "./theming/StyleInjection.js";
-import replaceAllPseudoSelectorOccurrences from "./util/replaceAllPseudoSelectorOccurrences.js";
+import replaceSelectors from "./util/CSSTransformUtils.js";
 
 const styleMap = new Map();
 
@@ -55,10 +55,9 @@ const getShadowRootStyle = ElementClass => {
 };
 
 const adaptCSSForIE = (css, tag) => {
-	css = css.replace(/{/g, `{\n`);
-	css = css.replace(/(:host|::slotted)/g, `\n$1`);
-	css = replaceAllPseudoSelectorOccurrences(css, ":host", tag);
-	css = replaceAllPseudoSelectorOccurrences(css, "::slotted", ``);
+	css = css.replace(/([{}])/g, `$1\n`);
+	css = replaceSelectors(css, ":host", tag);
+	css = replaceSelectors(css, "::slotted", ``);
 	return css;
 };
 

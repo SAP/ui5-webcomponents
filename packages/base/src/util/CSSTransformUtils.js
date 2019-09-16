@@ -26,7 +26,16 @@ const replaceSelector = (str, selector, selectorStartPos, replacement) => {
 	return upToSelector + str.substring(charAfterSelectorPos);
 };
 
-const replaceAllPseudoSelectorOccurrences = (str, selector, replacement) => {
+/**
+ * :host => ui5-button
+ * :host([expr]) => ui5-button[expr]
+ * ::slotted(expr) => expr
+ * @param str - source string
+ * @param selector - :host or ::slotted
+ * @param replacement - normally tag name
+ * @returns {*}
+ */
+const replaceSelectors = (str, selector, replacement) => {
 	let selectorStartPos = str.indexOf(selector);
 	while (selectorStartPos !== -1) {
 		str = replaceSelector(str, selector, selectorStartPos, replacement);
@@ -35,4 +44,4 @@ const replaceAllPseudoSelectorOccurrences = (str, selector, replacement) => {
 	return str;
 };
 
-export default replaceAllPseudoSelectorOccurrences;
+export default replaceSelectors;
