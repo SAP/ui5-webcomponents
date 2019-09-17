@@ -53,8 +53,7 @@ const adaptLinePart = (line, tag) => {
 	}
 
 	// IE specific selector (directly written with the tag) - keep it
-	// Note: a space must be matched after the tag, otherwise f.e. for ui5-timeline, selectors such as ui5-timeline-item won't be adapted
-	if (line.startsWith(`${tag} `)) {
+	if (line.match(new RegExp(`^${tag}[^a-zA-Z0-9-]`))) {
 		return line;
 	}
 
@@ -68,6 +67,7 @@ const adaptLinePart = (line, tag) => {
 };
 
 const adaptCSSForIE = (str, tag) => {
+	str = str.replace(/\n/g, ` `);
 	str = str.replace(/([{}])/g, `$1\n`);
 	let result = ``;
 	const lines = str.split(`\n`);
