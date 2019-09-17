@@ -29,24 +29,3 @@ th {
 	top: 0;
 	z-index: 999;
 }
-
-/* Remove that after ShadyCSS adoption */
-
-ui5-table-column {
-	display: contents;
-}
-
-ui5-table-column .ui5-table-column-root {
-	padding: 0.25rem;
-	box-sizing: border-box;
-}
-
-ui5-table-column[first] .ui5-table-column-root {
-	padding-left: 1rem;
-}
-
-ui5-table-column[sticky] th {
-	position: sticky;
-	top: 0;
-	z-index: 999;
-}

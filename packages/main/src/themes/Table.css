@@ -38,14 +38,3 @@ tr {
 :host([_no-data-displayed]) {
 	border-bottom: 1px solid var(--sapUiListTableGroupHeaderBorderColor);
 }
-
-/* Remove that after ShadyCSS adoption */
-
-ui5-table {
-	display: inline-block;
-	width: 100%;
-}
-
-ui5-table[_no-data-displayed] {
-	border-bottom: 1px solid var(--sapUiListTableGroupHeaderBorderColor);
-}

@@ -2,10 +2,6 @@
 	display: inline-block;
 }
 
-ui5-calendar {
-	display: inline-block;
-}
-
 .ui5-yearpicker--hidden,
 .ui5-monthpicker--hidden,
 .ui5-daypicker--hidden {
