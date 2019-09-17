@@ -54,7 +54,7 @@
 
 	<ui5-button id="btn">Click me !</ui5-button>
 
-	<ui5-popover header-text="Hello World" id="pop" style="width: 300px" placement-type="Top">
+	<ui5-popover header-text="Hello World" id="pop" style="height: 200px;" placement-type="Top">
 
 		<!-- <div slot="header">
 			Hello World
@@ -71,7 +71,7 @@
 
 		<ui5-button id='popbtn'>Open Popover</ui5-button>
 
-		<ui5-popover placement-type="Bottom" no-arrow id='danger'>
+		<ui5-popover id='danger'>
 			<ui5-list>
 				<ui5-li>Hello</ui5-li>
 				<ui5-li>World</ui5-li>
@@ -103,7 +103,7 @@
 		<br>
 		<br>
 
-		<!-- <ui5-datepicker></ui5-datepicker> -->
+		<ui5-datepicker></ui5-datepicker>
 
 		<div slot="footer">
 			Hello World Footer
@@ -123,7 +123,7 @@
 	<br>
 	<br>
 
-	<ui5-datepicker id="field"></ui5-datepicker>
+	<ui5-datepicker></ui5-datepicker>
 
 	<br>
 	<br>
@@ -140,15 +140,15 @@
 
 	<script>
 
-		btn.addEventListener('click', function (event) {
+		btn.addEventListener('click', (event) => {
 			pop.openBy(btn);
 		});
 
-		popbtn.addEventListener('click', function (event) {
+		popbtn.addEventListener('click', (event) => {
 			danger.openBy(popbtn);
 		});
 
-		bigDanger.addEventListener('click', function (event) {
+		bigDanger.addEventListener('click', (event) => {
 			bigDangerPop.open();
 		});
 

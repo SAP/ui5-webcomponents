@@ -20,7 +20,7 @@ class DatePickerTestPage {
 	}
 
 	get popoverContent() {
-		return browser.$(this._sut).shadow$("ui5-popover").shadow$(".ui5-popup-root");
+		return browser.$(this._sut).shadow$("ui5-popover").shadow$(".ui5-popover-root");
 	}
 
 	get calendar() {
@@ -87,7 +87,7 @@ class DatePickerTestPage {
 
 	isPickerOpen() {
 		return browser.execute((id) => {
-			return document.querySelector(id).isOpen();
+			return document.querySelector(id).opened;
 		}, this._sut);
 	}
 

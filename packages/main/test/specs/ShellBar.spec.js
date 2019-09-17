@@ -105,7 +105,7 @@ describe("Component Behaviour", () => {
 			assert.strictEqual(notificationsIcon.isDisplayed(), true, "Notifications icon should be visible");
 			assert.strictEqual(profileIcon.isDisplayed(), true, "Profile icon should be visible");
 			assert.strictEqual(productSwitchIcon.isDisplayed(), true, "Product switch should be visible");
-			assert.strictEqual(overflowPopover.isDisplayed(), true, "Overflow popover should be visible");
+			assert.strictEqual(overflowPopover.isDisplayedInViewport(), true, "Overflow popover should be visible");
 			assert.strictEqual(listItemsCount, 2, "2 actions should overflow");
 			assert.strictEqual(overflowPopoverItem1.getProperty("icon"), customActionIcon1.getProperty("src"), "Popover items have same sources as corresponding icons");
 			assert.strictEqual(overflowPopoverItem2.getProperty("icon"), customActionIcon2.getProperty("src"), "Popover items have same sources as corresponding icons");

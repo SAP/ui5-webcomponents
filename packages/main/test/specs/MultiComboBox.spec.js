@@ -6,7 +6,7 @@ describe("MultiComboBox general interaction", () => {
 	describe("toggling", () => {
 		it("opens/closes", () => {
 			const icon = browser.$("#multi1").shadow$("#ui5-multi-combobox-input ui5-icon");
-			const popover = browser.$("#multi1").shadow$(".ui5-multi-combobox-all-items-popover").shadow$(".ui5-popup-root");
+			const popover = browser.$("#multi1").shadow$(".ui5-multi-combobox-all-items-popover");
 
 			icon.click();
 			assert.ok(popover.isDisplayedInViewport(), "Popover should be displayed in the viewport");

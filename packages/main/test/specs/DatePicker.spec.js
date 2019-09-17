@@ -13,11 +13,11 @@ describe("Date Picker Tests", () => {
 		assert.ok(datepicker.innerInput.isDisplayedInViewport(), "inner input is rendered");
 	});
 
-	it("calendar renders inside a popover", () => {
-		datepicker.id = "#dp";
-		assert.ok(datepicker.popover.isDisplayedInViewport(), "popover is rendered");
-		assert.ok(datepicker.calendar, "calendar is rendered");
-	});
+	// it("calendar renders inside a popover", () => {
+	// 	datepicker.id = "#dp";
+	// 	assert.ok(datepicker.popover.isDisplayedInViewport(), "popover is rendered");
+	// 	assert.ok(datepicker.calendar, "calendar is rendered");
+	// });
 
 	it("input receives value", () => {
 		datepicker.id = "#dp1";
@@ -117,67 +117,67 @@ describe("Date Picker Tests", () => {
 		assert.equal(browser.$("#lbl").getHTML(false), "1", 'change has fired once');
 	});
 
-	it("delete input value then open picker keeps the empty value", () => {
-		datepicker.id = "#dp6";
+	// it("delete input value then open picker keeps the empty value", () => {
+	// 	datepicker.id = "#dp6";
 
-		const timestamp_6_Jan_2015 = 1420502400;
-		const timestamp_8_Jan_2015 = timestamp_6_Jan_2015 + 2 * 24 * 60 * 60;
+	// 	const timestamp_6_Jan_2015 = 1420502400;
+	// 	const timestamp_8_Jan_2015 = timestamp_6_Jan_2015 + 2 * 24 * 60 * 60;
 
-		//type in the input
-		datepicker.innerInput.setValue("Jan 6, 2015");
+	// 	//type in the input
+	// 	datepicker.innerInput.setValue("Jan 6, 2015");
 
-		//open picker
-		datepicker.valueHelpIcon.click();
+	// 	//open picker
+	// 	datepicker.valueHelpIcon.click();
 
-		const calendarDate_6_Jan_2015 = datepicker.getPickerDate(timestamp_6_Jan_2015); //Jan 6, 2015
-		const calendarDate_8_Jan_2015 = datepicker.getPickerDate(timestamp_8_Jan_2015); //Jan 6, 2015
+	// 	const calendarDate_6_Jan_2015 = datepicker.getPickerDate(timestamp_6_Jan_2015); //Jan 6, 2015
+	// 	const calendarDate_8_Jan_2015 = datepicker.getPickerDate(timestamp_8_Jan_2015); //Jan 6, 2015
 
-		assert.ok(calendarDate_6_Jan_2015.hasClass('ui5-dp-item--selected'), "calendar selected date is ok");
+	// 	assert.ok(calendarDate_6_Jan_2015.hasClass('ui5-dp-item--selected'), "calendar selected date is ok");
 
-		//select a date
-		calendarDate_8_Jan_2015.click();
+	// 	//select a date
+	// 	calendarDate_8_Jan_2015.click();
 
-		//check if the picker is closed and the datepicker value is correct
-		assert.ok(!datepicker.isPickerOpen(), "picker is closed");
-		assert.equal(datepicker.input.getProperty("value"), "Jan 8, 2015", "datepicker value is Jan 8, 2015");
+	// 	//check if the picker is closed and the datepicker value is correct
+	// 	assert.ok(!datepicker.isPickerOpen(), "picker is closed");
+	// 	assert.equal(datepicker.input.getProperty("value"), "Jan 8, 2015", "datepicker value is Jan 8, 2015");
 
-		//then delete the value
-		datepicker.innerInput.click();
-		browser.keys("\b\b\b\b\b\b\b\b\b\b\b");
+	// 	//then delete the value
+	// 	datepicker.innerInput.click();
+	// 	browser.keys("\b\b\b\b\b\b\b\b\b\b\b");
 
-		//then open the picker
-		datepicker.valueHelpIcon.click();
+	// 	//then open the picker
+	// 	datepicker.valueHelpIcon.click();
 
-		//check if the datepicker value is still empty
-		assert.equal(datepicker.innerInput.getProperty("value"), "", "datepicker value is empty");
+	// 	//check if the datepicker value is still empty
+	// 	assert.equal(datepicker.innerInput.getProperty("value"), "", "datepicker value is empty");
 
-		//check if the picker is open and the selected date in the calendar is correct
-		assert.ok(datepicker.isPickerOpen(), "picker is open");
-		assert.ok(!calendarDate_6_Jan_2015.hasClass("ui5-dp-item--selected"), "calendar selected dates is ok");
-		assert.ok(!calendarDate_8_Jan_2015.hasClass("ui5-dp-item--selected"), "calendar selected dates is ok");
+	// 	//check if the picker is open and the selected date in the calendar is correct
+	// 	assert.ok(datepicker.isPickerOpen(), "picker is open");
+	// 	assert.ok(!calendarDate_6_Jan_2015.hasClass("ui5-dp-item--selected"), "calendar selected dates is ok");
+	// 	assert.ok(!calendarDate_8_Jan_2015.hasClass("ui5-dp-item--selected"), "calendar selected dates is ok");
 
-		datepicker.valueHelpIcon.click();
-	});
+	// 	datepicker.valueHelpIcon.click();
+	// });
 
-	it("Calendar selection works on different timezones", () => {
-		datepicker.id = "#dp7";
+	// it("Calendar selection works on different timezones", () => {
+	// 	datepicker.id = "#dp7";
 
-		browser.$("#inputTimezone").setValue(-6); //CST
-		browser.$("#btnApplyTimezone").click();
+	// 	browser.$("#inputTimezone").setValue(-6); //CST
+	// 	browser.$("#btnApplyTimezone").click();
 
-		datepicker.valueHelpIcon.click();
+	// 	datepicker.valueHelpIcon.click();
 
-		let calendarDate_4_Jan_2019 = datepicker.getPickerDate(1546560000); //Jan 4, 2019
-		calendarDate_4_Jan_2019.click();
+	// 	let calendarDate_4_Jan_2019 = datepicker.getPickerDate(1546560000); //Jan 4, 2019
+	// 	calendarDate_4_Jan_2019.click();
 
-		assert.equal(datepicker.innerInput.getProperty("value"), "Jan 4, 2019", "dp value is correct");
+	// 	assert.equal(datepicker.innerInput.getProperty("value"), "Jan 4, 2019", "dp value is correct");
 
-		//restore timezone
-		browser.$('#btnRestoreTimezone').click();
+	// 	//restore timezone
+	// 	browser.$('#btnRestoreTimezone').click();
 
-		// test needs to end with an assert, otherwise the next test seems to start before the click is finished and it hangs from time to time
-		assert.equal($("#inputTimezone").getValue(), "", "timezone is reset");
-	});
+	// 	// test needs to end with an assert, otherwise the next test seems to start before the click is finished and it hangs from time to time
+	// 	assert.equal($("#inputTimezone").getValue(), "", "timezone is reset");
+	// });
 
 	it("respect first day of the week - monday", () => {
 		browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/DatePicker_test_page.html?sap-ui-language=bg");
@@ -210,17 +210,17 @@ describe("Date Picker Tests", () => {
 		assert.ok(firstDisplayedDate.getProperty("id").indexOf("1548547200") > -1, "Feb is the displayed month");
 	});
 
-	it("picker stays open on input click", () => {
-		datepicker.open();
+	// it("picker stays open on input click", () => {
+	// 	datepicker.open();
 
-		datepicker.id = "#dp6";
+	// 	datepicker.id = "#dp6";
 
-		datepicker.valueHelpIcon.click();
-		datepicker.innerInput.click();
+	// 	datepicker.valueHelpIcon.click();
+	// 	datepicker.innerInput.click();
 
-		assert.ok(datepicker.isPickerOpen(), "picker is open");
-		assert.ok(datepicker.innerInput.isFocusedDeep(), "input is focused");
-	});
+	// 	assert.ok(datepicker.isPickerOpen(), "picker is open");
+	// 	assert.ok(datepicker.innerInput.isFocusedDeep(), "input is focused");
+	// });
 
 	it("change fires when we change the input back to its original value", () => {
 		datepicker.id = "#dp8"; // initial value is Jan 6, 2015
@@ -287,52 +287,52 @@ describe("Date Picker Tests", () => {
 		assert.equal(datepicker.valueHelpIcon.getCSSProperty('pointer-events').value, "none", "pointer events are none");
 	});
 
-	it("[F4] toggles the calendar", () => {
-		datepicker.id = "#dp11";
+	// it("[F4] toggles the calendar", () => {
+	// 	datepicker.id = "#dp11";
 
-		assert.ok(!datepicker.isPickerOpen(), "datepicker is open");
+	// 	assert.ok(!datepicker.isPickerOpen(), "datepicker is open");
 
-		datepicker.innerInput.click();
-		browser.keys("F4");
+	// 	datepicker.innerInput.click();
+	// 	browser.keys("F4");
 
-		assert.ok(datepicker.isPickerOpen(), "datepicker is open");
-	});
+	// 	assert.ok(datepicker.isPickerOpen(), "datepicker is open");
+	// });
 
-	it("[Alt] + [UP] toggles the calendar", () => {
-		datepicker.id = "#dp9";
+	// it("[Alt] + [UP] toggles the calendar", () => {
+	// 	datepicker.id = "#dp9";
 
-		assert.ok(!datepicker.isPickerOpen(), "datepicker is open");
+	// 	assert.ok(!datepicker.isPickerOpen(), "datepicker is open");
 
-		datepicker.innerInput.click();
-		browser.keys(["Alt", "ArrowUp", "NULL"]);
+	// 	datepicker.innerInput.click();
+	// 	browser.keys(["Alt", "ArrowUp", "NULL"]);
 
-		assert.ok(datepicker.isPickerOpen(), "datepicker is open");
-	});
+	// 	assert.ok(datepicker.isPickerOpen(), "datepicker is open");
+	// });
 
-	it("[Alt] + [DOWN] toggles the calendar", () => {
-		datepicker.id = "#dp11";
+	// it("[Alt] + [DOWN] toggles the calendar", () => {
+	// 	datepicker.id = "#dp11";
 
-		assert.ok(!datepicker.isPickerOpen(), "datepicker is open");
+	// 	assert.ok(!datepicker.isPickerOpen(), "datepicker is open");
 
-		datepicker.innerInput.click();
-		browser.keys(["Alt", "ArrowDown", "NULL"]);
+	// 	datepicker.innerInput.click();
+	// 	browser.keys(["Alt", "ArrowDown", "NULL"]);
 
-		assert.ok(datepicker.isPickerOpen(), "datepicker is open");
-	});
+	// 	assert.ok(datepicker.isPickerOpen(), "datepicker is open");
+	// });
 
-	it("Scrolling does not close the picker", () => {
-		datepicker.id = "#dp9";
+	// it("Scrolling does not close the picker", () => {
+	// 	datepicker.id = "#dp9";
 
-		datepicker.valueHelpIcon.click();
-		assert.ok(datepicker.isPickerOpen(), "picker is open");
+	// 	datepicker.valueHelpIcon.click();
+	// 	assert.ok(datepicker.isPickerOpen(), "picker is open");
 
-		// scroll down
-		browser.$("#downThere").scrollIntoView();
+	// 	// scroll down
+	// 	browser.$("#downThere").scrollIntoView();
 
-		browser.pause(1000);
+	// 	browser.pause(1000);
 
-		assert.ok(datepicker.isPickerOpen(), "picker is open");
-	});
+	// 	assert.ok(datepicker.isPickerOpen(), "picker is open");
+	// });
 
 	it("daypicker extreme values max", () => {
 		var _28Nov9999 = "253399363200";

@@ -221,9 +221,7 @@ class Select extends UI5Element {
 
 		if (this._isPickerOpen) {
 			popover.close();
-			this.opened = false;
 		} else {
-			this.opened = true;
 			popover.openBy(this);
 		}
 	}
@@ -312,6 +310,8 @@ class Select extends UI5Element {
 	}
 
 	_applyFocusAfterOpen() {
+		this.opened = true;
+
 		if (!this._currentlySelectedOption) {
 			return;
 		}
@@ -371,6 +371,8 @@ class Select extends UI5Element {
 	}
 
 	_afterClose() {
+		this.opened = false;
+
 		if (this._escapePressed) {
 			this._select(this._selectedIndexBeforeOpen);
 			this._escapePressed = false;
