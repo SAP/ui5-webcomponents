@@ -45,6 +45,7 @@ const replaceSelectors = (str, selector, replacement) => {
 };
 
 const adaptLinePart = (line, tag) => {
+	line = line.trim();
 	line = replaceSelectors(line, "::slotted", ``); // first remove all ::slotted() occurrences
 
 	// Host selector - replace it
