@@ -1,7 +1,5 @@
-commit e5063383899a04e5f6aeb073930c7615dc058ee0
-Author: service-tip-git <36747703+service-tip-git@users.noreply.github.com>
-Date:   Wed Aug 28 06:23:41 2019 -0700
+commit 53c122ef3c4cb5073b698b9603753f6d05862331
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Tue Sep 17 10:58:42 2019 +0300
 
-    chore: translation delivery (#755)
-    
-    Change-Id: I48cd811778b1e8566dca6e31040f48839d09983c
+    chore: build playground from root build (#778)

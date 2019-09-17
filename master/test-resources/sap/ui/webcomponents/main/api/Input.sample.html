@@ -72,7 +72,7 @@
 	<section>
 		<h3>Input With Suggestions (Note: the usage depends on the framework you are using)</h3>
 		<div class="snippet">
-			<ui5-input id="suggestions-input" class="samples-padding samples-responsive-padding-bottom input-width" placeholder="Start typing country name" show-suggestions>
+			<ui5-input id="suggestions-input" class="samples-responsive-padding-bottom input-width" placeholder="Start typing country name" show-suggestions>
 			</ui5-input>
 
 			<script>
@@ -298,7 +298,7 @@ The <code>ui5-input</code> component allows the user to enter and edit text or n
                         <div class="cell api-table-content-cell">Boolean</div>
                         <div class="cell api-table-content-cell">false</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines whether the <code>ui5-input</code> should show suggestions, if such are present.
+                            Defines whether the <code>ui5-input</code> should show suggestions, if such are present. <br><br> <b>Note:</b> Don`t forget to import the <code>InputSuggestions</code> module from "@ui5/webcomponents/dist/features/InputSuggestions.js" to enable this functionality.
                         </div>
                       </div>
                       <div class="row api-table-roll-even">
@@ -345,7 +345,7 @@ The <code>ui5-input</code> component allows the user to enter and edit text or n
                     <div class="row api-table-roll-even">
                       <div class="cell api-table-content-cell api-table-content-cell-bold">default</div>
                       <div class="cell api-table-content-cell">HTMLElement [0..n]</div>
-                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the <code>ui5-input</code> suggestion items. <br><br> Example: <br> &lt;ui5-input show-suggestions><br> &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li>Item #1&lt;/ui5-li><br> &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li>Item #2&lt;/ui5-li><br> &lt;/ui5-input> <ui5-input show-suggestions><ui5-li>Item #1</ui5-li><ui5-li>Item #2</ui5-li></ui5-input> <br><br> <b>Note:</b> The suggestion would be displayed only if the <code>showSuggestions</code> property is set to <code>true</code>.</div>
+                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the <code>ui5-input</code> suggestion items. <br><br> Example: <br> &lt;ui5-input show-suggestions><br> &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li>Item #1&lt;/ui5-li><br> &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li>Item #2&lt;/ui5-li><br> &lt;/ui5-input> <ui5-input show-suggestions><ui5-li>Item #1</ui5-li><ui5-li>Item #2</ui5-li></ui5-input> <br><br> <b>Note:</b> The suggestion would be displayed only if the <code>showSuggestions</code> property is set to <code>true</code>. <br><br> <b>Note:</b> The &lt;ui5-li> and &lt;ui5-li-custom> are recommended to be used as suggestion items. <br> In order to use them, you need to import either <code>"@ui5/webcomponents/dist/StandardListItem"</code>, or <code>"@ui5/webcomponents/dist/CustomListItem"</code> module.</div>
                     </div>
                     <div class="row api-table-roll-odd">
                       <div class="cell api-table-content-cell api-table-content-cell-bold">icon</div>
