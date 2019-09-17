@@ -1,5 +1,5 @@
-commit 53c122ef3c4cb5073b698b9603753f6d05862331
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Tue Sep 17 10:58:42 2019 +0300
+commit 0d7baa16e34b24c68dc1aa38f6cf7af34aef33fa
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Tue Sep 17 11:31:25 2019 +0300
 
-    chore: build playground from root build (#778)
+    refactor: provide better CSS encapsulation for IE (#777)
