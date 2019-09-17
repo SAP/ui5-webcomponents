@@ -20,7 +20,7 @@
 	padding: 0 0.3125em;
 }
 
-:host ::slotted(ui5-icon) {
+::slotted(ui5-icon) {
 	width: 0.75em;
 	height: 0.75em;
 	flex-shrink: 0;

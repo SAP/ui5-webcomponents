@@ -170,7 +170,7 @@
 	width: var(--sap_wc_input_compact_min_width);
 }
 
-:host ::slotted(ui5-icon) {
+::slotted(ui5-icon) {
 	padding: var(--_ui5_input_icon_padding);
 }
 

@@ -1,6 +1,5 @@
 import createStyleInHead from "../util/createStyleInHead.js";
 
-const injectedForTags = [];
 let ponyfillTimer;
 
 const ponyfillNeeded = () => !!window.CSSVarsPonyfill;
@@ -48,14 +47,10 @@ const injectThemeProperties = cssText => {
  */
 const injectWebComponentStyle = (tagName, cssText) => {
 	// Edge and IE
-	if (injectedForTags.indexOf(tagName) !== -1) {
-		return;
-	}
 	createStyleInHead(cssText, {
 		"data-ui5-element-styles": tagName,
 		"disabled": "disabled",
 	});
-	injectedForTags.push(tagName);
 
 	// When injecting component styles, more might come in the same tick, so run the ponyfill async (to avoid double work)
 	if (ponyfillNeeded()) {
