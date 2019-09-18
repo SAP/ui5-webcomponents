@@ -1,5 +1,5 @@
-commit b5d8fdea22714e1e05d6b5f5e6faa4089cef1dd8
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Tue Sep 17 15:08:26 2019 +0300
+commit 559109dc140bf1739e0b6b3d9c48afdbfb13073e
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Wed Sep 18 10:04:27 2019 +0300
 
-    fix: host selector not removed when there is trailing whitespace (#780)
+    fix(ui5-input): inputs now support placeholder on IE (#781)
