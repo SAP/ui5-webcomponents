@@ -20,7 +20,9 @@ const getOpenedPopups = () => {
 
 document.addEventListener("keydown", event => {
 	if (isEscape(event)) {
-		registry[registry.length - 1].close();
+		const topPopup = registry[registry.length - 1];
+
+		topPopup && topPopup.close();
 	}
 });
 

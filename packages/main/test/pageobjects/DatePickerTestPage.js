@@ -86,8 +86,9 @@ class DatePickerTestPage {
 	}
 
 	isPickerOpen() {
+
 		return browser.execute((id) => {
-			return document.querySelector(id).opened;
+			return document.querySelector(id).isOpen();
 		}, this._sut);
 	}
 
