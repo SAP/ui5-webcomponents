@@ -5,7 +5,7 @@ import { isEscape } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 
 // Styles
 import styles from "./generated/themes/Popup.css.js";
-import { addOpenedPopup, removeOpenedPopup } from "./OpenedPopupsRegistry.js";
+import { addOpenedPopup, removeOpenedPopup } from "./popup-utils/OpenedPopupsRegistry.js";
 
 /**
  * @public
@@ -295,8 +295,6 @@ class Popup extends UI5Element {
 
 
 		updateBlockLayers();
-
-		// document.addEventListener("keydown", this._documentKeyDownHandler, true);
 	}
 
 	close() {
@@ -305,8 +303,6 @@ class Popup extends UI5Element {
 		}, true);
 
 		this.escPressed = false;
-
-		// document.removeEventListener("keydown", this._documentKeyDownHandler, true);
 
 		const index = openedPopups.indexOf(this);
 		openedPopups.splice(index, 1);

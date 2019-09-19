@@ -1,9 +1,8 @@
 import { isClickInRect } from "./PopupUtils.js";
-
 import { getOpenedPopups, addOpenedPopup, removeOpenedPopup } from "./OpenedPopupsRegistry.js";
 
+let updateInterval = null;
 const intervalTimeout = 300;
-const updateInterval = null;
 const openedRegistry = [];
 
 const repositionPopovers = event => {
@@ -21,7 +20,7 @@ const detachGlobalScrollHandler = () => {
 };
 
 const runUpdateInterval = () => {
-	return setInterval(() => {
+	updateInterval = setInterval(() => {
 		repositionPopovers();
 	}, intervalTimeout);
 };

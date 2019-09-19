@@ -11,7 +11,7 @@ describe("Select general interaction", () => {
 
 		select.click();
 
-		const firstItem = browser.$("#mySelect").shadow$("ui5-li:first-child");
+		const firstItem = browser.$("#mySelect").shadow$$("ui5-li")[0];
 
 		firstItem.click();
 
