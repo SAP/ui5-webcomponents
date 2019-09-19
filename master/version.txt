@@ -1,5 +1,5 @@
-commit 559109dc140bf1739e0b6b3d9c48afdbfb13073e
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Wed Sep 18 10:04:27 2019 +0300
+commit 3af76de0d04b7d24fe062324a8818d5c72228102
+Author: service-tip-git <36747703+service-tip-git@users.noreply.github.com>
+Date:   Thu Sep 19 01:16:41 2019 -0700
 
-    fix(ui5-input): inputs now support placeholder on IE (#781)
+    chore: translation delivery (#782)
