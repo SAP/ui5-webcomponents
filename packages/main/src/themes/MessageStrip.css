@@ -14,11 +14,12 @@ ui5-messagestrip:not([hidden]) {
 	width: 100%;
 	height: 100%;
 	display: flex;
-	border-radius: var(--_ui5_messagestrip_border_radius);
+	background-color: var(--sapUiNeutralBG);
 	padding: var(--_ui5_messagestrip_padding);
+	border-radius: var(--_ui5_messagestrip_border_radius);
 	border-width: var(--_ui5_messagestrip_border_width);
-	color: var(--sapUiBaseText);
 	border-style: solid;
+	border-color: var(--sapUiNeutralBorder);
 	box-sizing: border-box;
 	padding: 0.4375rem 2rem 0.4375rem 2.5rem;
 	position: relative;
@@ -29,6 +30,7 @@ ui5-messagestrip:not([hidden]) {
 	top: var(--_ui5_messagestrip_icon_top);
 	left: 0.75rem;
 	box-sizing: border-box;
+	color: var(--sapUiNeutralElement);
 }
 
 .ui5-messagestrip-root .ui5-messagestrip-text {
@@ -50,39 +52,30 @@ ui5-messagestrip:not([hidden]) {
 	font-size: var(--sapMFontMediumSize);
 }
 
-.ui5-messagestrip--info {
-	background-color: var(--sapUiNeutralBG);
-	border-color: var(--sapUiNeutralBorder);
-}
-
-.ui5-messagestrip--info .ui5-messagestrip-icon {
-	color: var(--sapUiNeutralElement);
-}
-
-.ui5-messagestrip--positive {
+:host(ui5-messagestrip[type="Positive"]) .ui5-messagestrip-root {
 	background-color: var(--sapUiSuccessBG);
 	border-color: var(--sapUiSuccessBorder);
 }
 
-.ui5-messagestrip--positive .ui5-messagestrip-icon {
+:host(ui5-messagestrip[type="Positive"]) .ui5-messagestrip-icon {
 	color: var(--sapUiPositiveElement);
 }
 
-.ui5-messagestrip--negative {
+:host(ui5-messagestrip[type="Negative"]) .ui5-messagestrip-root {
 	background-color: var(--sapUiErrorBG);
 	border-color: var(--sapUiErrorBorder);
 }
 
-.ui5-messagestrip--negative .ui5-messagestrip-icon {
+:host(ui5-messagestrip[type="Negative"]) .ui5-messagestrip-icon {
 	color: var(--sapUiNegativeElement);
 }
 
-.ui5-messagestrip--warning {
+:host(ui5-messagestrip[type="Warning"]) .ui5-messagestrip-root {
 	background-color: var(--sapUiWarningBG);
 	border-color: var(--sapUiWarningBorder);
 }
 
-.ui5-messagestrip--warning .ui5-messagestrip-icon {
+:host(ui5-messagestrip[type="Warning"]) .ui5-messagestrip-icon {
 	color: var(--sapUiCriticalElement);
 }
 
