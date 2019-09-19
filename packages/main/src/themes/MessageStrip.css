@@ -17,6 +17,7 @@ ui5-messagestrip:not([hidden]) {
 	border-radius: var(--_ui5_messagestrip_border_radius);
 	padding: var(--_ui5_messagestrip_padding);
 	border-width: var(--_ui5_messagestrip_border_width);
+	color: var(--sapUiBaseText);
 	border-style: solid;
 	box-sizing: border-box;
 	padding: 0.4375rem 2rem 0.4375rem 2.5rem;
@@ -52,7 +53,6 @@ ui5-messagestrip:not([hidden]) {
 .ui5-messagestrip--info {
 	background-color: var(--sapUiNeutralBG);
 	border-color: var(--sapUiNeutralBorder);
-	color: var(--sapUiBaseText);
 }
 
 .ui5-messagestrip--info .ui5-messagestrip-icon {
