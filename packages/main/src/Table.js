@@ -253,28 +253,12 @@ class Table extends UI5Element {
 		return this.columns.map((column, index) => {
 			return {
 				index,
-				width: column.width,
 				minWidth: column.minWidth,
 				demandPopin: column.demandPopin,
 				popinText: column.popinText,
 				visible: !this._hiddenColumns[index],
 			};
 		}, this);
-	}
-
-	get styles() {
-		const gridTemplateColumns = this.visibleColumns.reduce((acc, column) => {
-			return `${acc}minmax(0, ${column.width || "1fr"}) `;
-		}, "");
-
-		return {
-			main: {
-				"grid-template-columns": gridTemplateColumns,
-				position: this.stickyColumnHeader ? "sticky" : "",
-				top: this.stickyColumnHeader ? "0px" : "",
-				"z-index": this.stickyColumnHeader ? "1" : "",
-			},
-		};
 	}
 }
 
