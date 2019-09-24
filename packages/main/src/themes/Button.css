@@ -219,7 +219,7 @@ bdi {
 	background-color: var(--sapUiButtonLiteBackground);
 	color: var(--sapUiButtonLiteTextColor);
 	text-shadow: var(--_ui5_button_text_shadow);
-	border-color: var(--_ui5_button_tansparent_border_color);
+	border-color: var(--_ui5_button_transparent_border_color);
 }
 
 :host([design="Transparent"]):hover {

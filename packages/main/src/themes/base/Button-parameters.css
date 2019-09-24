@@ -17,7 +17,7 @@
 	--_ui5_button_focus_width: 1px;
 	--_ui5_button_focus_color: var(--sapUiContentFocusColor);
 
-	--_ui5_button_tansparent_border_color: transparent;
+	--_ui5_button_transparent_border_color: transparent;
 	--_ui5_button_transparent_hover_border_color: var(--sapUiButtonBorderColor);
 	--_ui5_button_active_border_color: var(--sapUiButtonActiveBorderColor);
 	--_ui5_button_positive_border_color: var(--sapUiButtonAcceptBorderColor);
