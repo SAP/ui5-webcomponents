@@ -1,37 +1,37 @@
 {
 	"name": "playground",
 	"version": "1.0.0-rc.2",
-	"buildTimestamp": 1569393675040,
+	"buildTimestamp": 1569395028008,
 	"scmRevision": "",
 	"libraries": [
 		{
-			"name": "sap.tnt",
+			"name": "sap.ui.unified",
 			"version": "1.63.0",
-			"buildTimestamp": 1569393675040,
+			"buildTimestamp": 1569395028008,
 			"scmRevision": ""
 		},
 		{
 			"name": "sap.ui.core",
 			"version": "1.63.0",
-			"buildTimestamp": 1569393675040,
-			"scmRevision": ""
-		},
-		{
-			"name": "sap.ui.unified",
-			"version": "1.63.0",
-			"buildTimestamp": 1569393675040,
+			"buildTimestamp": 1569395028008,
 			"scmRevision": ""
 		},
 		{
 			"name": "sap.m",
 			"version": "1.63.0",
-			"buildTimestamp": 1569393675040,
+			"buildTimestamp": 1569395028008,
+			"scmRevision": ""
+		},
+		{
+			"name": "sap.tnt",
+			"version": "1.63.0",
+			"buildTimestamp": 1569395028008,
 			"scmRevision": ""
 		},
 		{
 			"name": "sap.ui.layout",
 			"version": "1.63.0",
-			"buildTimestamp": 1569393675040,
+			"buildTimestamp": 1569395028008,
 			"scmRevision": ""
 		}
 	]

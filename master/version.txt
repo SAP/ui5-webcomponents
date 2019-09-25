@@ -1,5 +1,5 @@
-commit bc00f1fb7792a4bb841e9526ab2cb5665d0c8a17
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Sep 25 09:31:37 2019 +0300
+commit 1e9a4e67819540f1d67a994034d5ae659b8ca6ff
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Tue Sep 24 23:55:02 2019 -0700
 
-    fix(ui5-button): fix Transparent button border in Fiori 3 & HCB (#789)
+    fix(ui5-input): use translated text (#783)
