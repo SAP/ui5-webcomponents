@@ -619,7 +619,7 @@ class Input extends UI5Element {
 	}
 
 	get suggestionsText() {
-		return INPUT_SUGGESTIONS.defaultText;
+		return this.i18nBundle.getText(INPUT_SUGGESTIONS);
 	}
 
 	static async define(...params) {
