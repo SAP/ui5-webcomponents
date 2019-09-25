@@ -1,5 +1,5 @@
-commit 1e9a4e67819540f1d67a994034d5ae659b8ca6ff
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Tue Sep 24 23:55:02 2019 -0700
+commit 95332a71b76e755a627e6139e752c04df64cbeab
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Sep 25 10:02:57 2019 +0300
 
-    fix(ui5-input): use translated text (#783)
+    docs: update placeholder API doc as it is supported in IE (#790)
