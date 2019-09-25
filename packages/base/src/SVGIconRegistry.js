@@ -8,8 +8,12 @@ const getIconData = name => {
 	return registry.get(name);
 };
 
+const hasIcon = name => {
+	return registry.has(name);
+};
+
 const getRegisteredNames = () => {
 	return Array.from(registry.keys());
 };
 
-export { getIconData, registerIcon, getRegisteredNames };
+export { getIconData, registerIcon, getRegisteredNames, hasIcon };
