@@ -16,4 +16,9 @@ const getRegisteredNames = () => {
 	return Array.from(registry.keys());
 };
 
-export { getIconData, registerIcon, getRegisteredNames, hasIcon };
+export {
+	getIconData,
+	registerIcon,
+	getRegisteredNames,
+	hasIcon,
+};
