@@ -1,5 +1,5 @@
-commit 3af76de0d04b7d24fe062324a8818d5c72228102
-Author: service-tip-git <36747703+service-tip-git@users.noreply.github.com>
-Date:   Thu Sep 19 01:16:41 2019 -0700
+commit bc00f1fb7792a4bb841e9526ab2cb5665d0c8a17
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Sep 25 09:31:37 2019 +0300
 
-    chore: translation delivery (#782)
+    fix(ui5-button): fix Transparent button border in Fiori 3 & HCB (#789)
