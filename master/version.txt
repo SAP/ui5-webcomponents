@@ -1,5 +1,5 @@
-commit 95332a71b76e755a627e6139e752c04df64cbeab
+commit 2f8a3ea8e60ac6a69df5779d98ba50ae164ee877
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Sep 25 10:02:57 2019 +0300
+Date:   Wed Sep 25 11:33:23 2019 +0300
 
-    docs: update placeholder API doc as it is supported in IE (#790)
+    docs: update datepicker sample (#787)
