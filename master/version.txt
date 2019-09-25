@@ -1,5 +1,9 @@
-commit 2f8a3ea8e60ac6a69df5779d98ba50ae164ee877
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Sep 25 11:33:23 2019 +0300
+commit dedb51e2ee25afd27087d1abbf70d34e84f8d67a
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Wed Sep 25 13:34:31 2019 +0300
 
-    docs: update datepicker sample (#787)
+    refactor(ui5-table): width property of column is removed (#784)
+    
+    BREAKING CHANGE: width property of the ui5-table-column has been removed. Use CSS to give width to the columns.
+    
+    E.g. `<ui5-table-column style="width: 100px">...`
