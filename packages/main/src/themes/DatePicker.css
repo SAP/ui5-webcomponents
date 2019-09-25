@@ -1,4 +1,5 @@
 @import "./InvisibleTextStyles.css";
+@import "./InputIcon.css";
 
 :host(:not([hidden])) {
 	display: inline-block;
@@ -6,30 +7,4 @@
 
 :host {
 	width: 100%;
-}
-
-.ui5-datepicker-icon {
-	color: var(--sapUiContentIconColor);
-	cursor: pointer;
-	outline: none;
-	border: var(--_ui5_datepicker_icon_border);
-}
-
-.ui5-datepicker-icon:hover,
-.ui5-datepicker-icon.ui5-datepicker-icon--pressed {
-	border-left-color: white;
-}
-
-.ui5-datepicker-icon:active {
-	background-color: var(--sapUiButtonLiteActiveBackground);
-	color: var(--sapUiButtonActiveTextColor);
-}
-
-.ui5-datepicker-icon.ui5-datepicker-icon--pressed {
-	background: var(--sapUiToggleButtonPressedBackground);
-	color: var(--sapUiButtonActiveTextColor);
-}
-
-.ui5-datepicker-icon:not(.ui5-datepicker-icon--pressed):not(:active):hover {
-	background: var(--sapUiButtonLiteHoverBackground);
 }

@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { isShow, isDown } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import { isShow, isDown, isBackSpace } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import "./icons/slim-arrow-down.js";
 import MultiComboBoxTemplate from "./generated/templates/MultiComboBoxTemplate.lit.js";
 import Input from "./Input.js";
@@ -121,6 +121,14 @@ const metadata = {
 			type: Boolean,
 		},
 
+		/**
+		 * Indicates whether the input is focssed
+		 * @private
+		 */
+		focused: {
+			type: Boolean,
+		},
+
 		_filteredItems: {
 			type: Object,
 		},
@@ -128,6 +136,14 @@ const metadata = {
 		_iconPressed: {
 			type: Boolean,
 			noAttribute: true,
+		},
+
+		/**
+		 * Indicates whether the tokenizer is expanded or collapsed(shows the n more label)
+		 * @private
+		 */
+		expandedTokenizer: {
+			type: Boolean,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.MultiComboBox.prototype */ {
@@ -236,6 +252,7 @@ class MultiComboBox extends UI5Element {
 		this._filteredItems = [];
 		this._inputLastValue = "";
 		this._deleting = false;
+		this._validationTimeout = null;
 	}
 
 	_inputChange() {
@@ -248,6 +265,12 @@ class MultiComboBox extends UI5Element {
 
 	_showAllItemsPopover() {
 		this._togglePopover(false);
+
+		this._inputDom.focus();
+	}
+
+	get _inputDom() {
+		return this.shadowRoot.querySelector("#ui5-multi-combobox-input");
 	}
 
 	_inputLiveChange(event) {
@@ -256,12 +279,17 @@ class MultiComboBox extends UI5Element {
 		const filteredItems = this._filterItems(value);
 		const oldValueState = this.valueState;
 
+		if (this._validationTimeout) {
+			return;
+		}
+
 		if (!filteredItems.length && value && !this.allowCustomValues) {
 			input.value = this._inputLastValue;
-			input.valueState = "Error";
+			this.valueState = "Error";
 
-			setTimeout(() => {
-				input.valueState = oldValueState;
+			this._validationTimeout = setTimeout(() => {
+				this.valueState = oldValueState;
+				this._validationTimeout = null;
 			}, 2000);
 			return;
 		}
@@ -298,11 +326,10 @@ class MultiComboBox extends UI5Element {
 
 		if (tokensCount === 0 && this._deleting) {
 			setTimeout(() => {
-				this.shadowRoot.querySelector("ui5-input").focus();
+				this.shadowRoot.querySelector("input").focus();
+				this._deleting = false;
 			}, 0);
 		}
-
-		this._deleting = false;
 	}
 
 	_keydown(event) {
@@ -316,6 +343,17 @@ class MultiComboBox extends UI5Element {
 			const list = this.shadowRoot.querySelector(".ui5-multi-combobox-all-items-list");
 			list._itemNavigation.current = 0;
 			list.items[0].focus();
+		}
+
+		if (isBackSpace(event) && event.target.value === "") {
+			const lastTokenIndex = this._tokenizer.tokens.length - 1;
+
+			if (lastTokenIndex < 0) {
+				return;
+			}
+
+			this._tokenizer.tokens[lastTokenIndex].focus();
+			this._tokenizer._itemNav.currentIndex = lastTokenIndex;
 		}
 	}
 
@@ -362,6 +400,14 @@ class MultiComboBox extends UI5Element {
 		popover && popover.openBy(this);
 	}
 
+	_focusin() {
+		this.focused = true;
+	}
+
+	_focusout() {
+		this.focused = false;
+	}
+
 	onBeforeRendering() {
 		this._inputLastValue = this.value;
 
@@ -373,7 +419,7 @@ class MultiComboBox extends UI5Element {
 			morePopover && morePopover.close();
 		}
 
-		const input = this.shadowRoot.querySelector("ui5-input");
+		const input = this.shadowRoot.querySelector("input");
 
 		if (input && !input.value) {
 			this._filteredItems = this.items;
@@ -383,6 +429,19 @@ class MultiComboBox extends UI5Element {
 		this._filteredItems = filteredItems;
 	}
 
+	get _tokenizer() {
+		return this.shadowRoot.querySelector("ui5-tokenizer");
+	}
+
+	rootFocusIn() {
+		this.expandedTokenizer = true;
+	}
+
+	rootFocusOut(event) {
+		if (!this.shadowRoot.contains(event.relatedTarget) && !this._deleting) {
+			this.expandedTokenizer = false;
+		}
+	}
 
 	get editable() {
 		return !this.readonly;
@@ -390,15 +449,6 @@ class MultiComboBox extends UI5Element {
 
 	get selectedItemsListMode() {
 		return this.readonly ? "None" : "MultiSelect";
-	}
-
-	get classes() {
-		return {
-			icon: {
-				[`ui5-multi-combobox-icon-root-pressed`]: this._iconPressed,
-				[`ui5-multi-combobox-icon`]: true,
-			},
-		};
 	}
 
 	static async define(...params) {

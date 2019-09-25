@@ -541,14 +541,6 @@ class DatePicker extends UI5Element {
 		return this.getFormat().parse(this.value);
 	}
 
-	get classes() {
-		return {
-			icon: {
-				"ui5-datepicker-icon--pressed": this._isPickerOpen,
-			},
-		};
-	}
-
 	get styles() {
 		return {
 			main: {

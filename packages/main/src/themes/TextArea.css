@@ -45,6 +45,7 @@
 	outline: none;
 	overflow: hidden;
 	box-sizing: border-box;
+	border-radius: inherit;
 }
 
 .ui5-textarea-inner {

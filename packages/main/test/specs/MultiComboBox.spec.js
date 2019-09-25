@@ -5,7 +5,7 @@ describe("MultiComboBox general interaction", () => {
 
 	describe("toggling", () => {
 		it("opens/closes", () => {
-			const icon = browser.$("#multi1").shadow$("#ui5-multi-combobox-input ui5-icon");
+			const icon = browser.$("#multi1").shadow$("[input-icon]");
 			const popover = browser.$("#multi1").shadow$(".ui5-multi-combobox-all-items-popover").shadow$(".ui5-popup-root");
 
 			icon.click();
@@ -19,7 +19,7 @@ describe("MultiComboBox general interaction", () => {
 	describe("selection and filtering", () => {
 
 		it("Opens all items popover, selects and deselects the first item", () => {
-			const icon = browser.$("#mcb").shadow$("#ui5-multi-combobox-input ui5-icon");
+			const icon = browser.$("#mcb").shadow$("[input-icon]");
 			const popover = browser.$("#mcb").shadow$(".ui5-multi-combobox-all-items-popover");
 			const firstItem = browser.$("#first-item");
 			const firstItemCheckbox = browser.$("#mcb").shadow$(".ui5-multi-combobox-all-items-list > ui5-li").shadow$("ui5-checkbox");
@@ -51,7 +51,7 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("Opens all items popover when start typing and filters items", () => {
-			const input = browser.$("#mcb").shadow$("#ui5-multi-combobox-input").shadow$("input");
+			const input = browser.$("#mcb").shadow$("#ui5-multi-combobox-input");
 			const popover = browser.$("#mcb").shadow$(".ui5-multi-combobox-all-items-popover");
 
 			input.click();
@@ -80,7 +80,7 @@ describe("MultiComboBox general interaction", () => {
 		it("tests built in validation by typing a non existing option", () => {
 			const mcb = $("#mcb-validation");
 			const input = browser.$("#mcb-validation").shadow$("#ui5-multi-combobox-input");
-			const innerInput = browser.$("#mcb-validation").shadow$("#ui5-multi-combobox-input").shadow$("input");
+			const innerInput = browser.$("#mcb-validation").shadow$("#ui5-multi-combobox-input");
 
 			innerInput.click();
 			innerInput.keys("c");
