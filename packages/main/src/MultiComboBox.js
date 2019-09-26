@@ -346,6 +346,8 @@ class MultiComboBox extends UI5Element {
 		}
 
 		if (isBackSpace(event) && event.target.value === "") {
+			event.preventDefault();
+
 			const lastTokenIndex = this._tokenizer.tokens.length - 1;
 
 			if (lastTokenIndex < 0) {
