@@ -38,15 +38,10 @@
 }
 
 .ui5-panel-header-button {
-	cursor: pointer;
-	color: var(--sapUiContentIconColor);
-	border: none;
-	background: none;
 	min-width: 2rem;
 	width: 2rem;
 	height: 2rem;
 	transition: transform 0.4s ease-out;
-	border: 1px solid transparent;
 }
 
 .ui5-panel-header-button-icon {
@@ -54,28 +49,8 @@
 	color: inherit;
 }
 
-.ui5-panel-header-button[focused] {
-	outline-style: var(--_ui5_panel_header_button_outline_style);
-	outline-offset: -.25rem;
-}
-
-.ui5-panel-header-button:hover {
-	background: var(--_ui5_panel_header_button_hover_background_color);
-	border: 1px solid var(--_ui5_panel_header_button_hover_border_color);
-}
-
-.ui5-panel-header-button[active] {
-	background: var(--_ui5_panel_header_button_active_background_color);
-	border: 1px solid var(--_ui5_panel_header_button_active_border_color);
-	outline-color: var(--sapUiContentFocusColor);
-}
-
 :host(:not([_has-header])) .ui5-panel-header-button {
 	pointer-events: none;
-}
-
-:host(:not([_has-header])) .ui5-panel-header-button:focus {
-	outline: none;
 }
 
 :host(:not([_has-header]):not([fixed])) {
@@ -109,10 +84,4 @@
 	align-items: center;
 	width: var(--_ui5_panel_button_root_width);
 	margin-right: .25rem;
-}
-
-/* IE specific CSS */
-
-ui5-panel .ui5-panel-header-button[focused] {
-	outline: none;
 }
