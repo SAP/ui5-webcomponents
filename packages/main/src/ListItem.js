@@ -182,6 +182,14 @@ class ListItem extends ListItemBase {
 		this.fireItemPress();
 	}
 
+	/*
+	 * Called when selection components in Single (ui5-radiobutton)
+	 * and Multi (ui5-checkbox) selection modes are used.
+	 */
+	onSelectionComponentPress(event) {
+		this.fireEvent("_selectionRequested", { item: this, selected: event.target.selected, selectionComponentPressed: true });
+	}
+
 	activate() {
 		if (this.type === ListItemType.Active) {
 			this.active = true;

@@ -33,7 +33,8 @@
 		<ui5-radiobutton
 				id="{{_id}}-singleSelectionElement"
 				class="ui5-li-singlesel-radiobtn"
-				?selected="{{selected}}">
+				?selected="{{selected}}"
+				@click="{{onSelectionComponentPress}}">
 		</ui5-radiobutton>
 	{{/if}}
 
@@ -41,7 +42,8 @@
 		<ui5-checkbox
 				id="{{_id}}-multiSelectionElement"
 				class="ui5-li-multisel-cb"
-				?checked="{{selected}}">
+				?checked="{{selected}}"
+				@click="{{onSelectionComponentPress}}">
 		</ui5-checkbox>
 	{{/if}}
 

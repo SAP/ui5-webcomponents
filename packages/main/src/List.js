@@ -167,12 +167,15 @@ const metadata = {
 		 * @event
 		 * @param {Array} selectedItems an array of the selected items.
 		 * @param {Array} previouslySelectedItems an array of the previously selected items.
+		 * @param {Boolean} selectionComponentPressed a boolean indicating if the user used the selection components
+		 * in SingleSelection(ui5-radiobutton) and MultiSelection(ui5-checkbox) modes to change the selection.
 		 * @public
 		 */
 		selectionChange: {
 			detail: {
 				selectedItems: { type: Array },
 				previouslySelectedItems: { type: Array },
+				selectionComponentPressed: { type: Boolean },
 			},
 		},
 	},
@@ -293,7 +296,11 @@ class List extends UI5Element {
 		}
 
 		if (selectionChange) {
-			this.fireEvent("selectionChange", { selectedItems: this.getSelectedItems(), previouslySelectedItems });
+			this.fireEvent("selectionChange", {
+				selectedItems: this.getSelectedItems(),
+				previouslySelectedItems,
+				selectionComponentPressed: event.detail.selectionComponentPressed,
+			});
 		}
 	}
 
@@ -448,6 +455,7 @@ class List extends UI5Element {
 			this.onSelectionRequested({
 				detail: {
 					item: pressedItem,
+					selectionComponentPressed: false,
 				},
 				selected: !pressedItem.selected,
 			});
