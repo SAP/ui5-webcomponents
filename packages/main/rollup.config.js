@@ -36,6 +36,11 @@ function ui5DevImportCheckerPlugin() {
 
 const getPlugins = ({ transpile }) => {
 	const plugins = [];
+	let publicPath = DEPLOY_PUBLIC_PATH || "/resources/sap/ui/webcomponents/main/";
+
+	if (IS_TRAVIS_DEPLOYMENT) {
+		publicPath += "/assets/js/ui5-webcomponents";
+	}
 
 	plugins.push(filesize({
 		render : function (options, bundle, { minSize, gzipSize, brotliSize, bundleSize }){
@@ -44,7 +49,7 @@ const getPlugins = ({ transpile }) => {
 	}));
 
 	plugins.push(ui5DevImportCheckerPlugin());
-
+ 
 	plugins.push(url({
 		limit: 0,
 		include: [
@@ -52,7 +57,7 @@ const getPlugins = ({ transpile }) => {
 		],
 		emitFiles: true,
 		fileName: "[name].[hash][extname]",
-		publicPath: DEPLOY_PUBLIC_PATH || "/resources/sap/ui/webcomponents/main/",
+		publicPath,
 	}));
 
 
