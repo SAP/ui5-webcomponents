@@ -1,9 +1,5 @@
-commit dedb51e2ee25afd27087d1abbf70d34e84f8d67a
+commit 685b44533e17c4d3d5799146acac3ffdcb9afa53
 Author: Martin <martin.r.hristov@gmail.com>
-Date:   Wed Sep 25 13:34:31 2019 +0300
+Date:   Thu Sep 26 11:42:30 2019 +0300
 
-    refactor(ui5-table): width property of column is removed (#784)
-    
-    BREAKING CHANGE: width property of the ui5-table-column has been removed. Use CSS to give width to the columns.
-    
-    E.g. `<ui5-table-column style="width: 100px">...`
+    chore: remove limitation for ui5-table as it works on IE (#727)
