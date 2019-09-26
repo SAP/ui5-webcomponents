@@ -292,7 +292,7 @@ class List extends UI5Element {
 		this._selectionRequested = true;
 
 		if (this[`handle${this.mode}`]) {
-			selectionChange = this[`handle${this.mode}`](event.detail.item, event.selected);
+			selectionChange = this[`handle${this.mode}`](event.detail.item, event.detail.selected);
 		}
 
 		if (selectionChange) {
@@ -456,8 +456,8 @@ class List extends UI5Element {
 				detail: {
 					item: pressedItem,
 					selectionComponentPressed: false,
+					selected: !pressedItem.selected,
 				},
-				selected: !pressedItem.selected,
 			});
 		}
 
