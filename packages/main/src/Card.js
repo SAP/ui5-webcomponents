@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { hasIcon } from "@ui5/webcomponents-base/dist/SVGIconRegistry.js";
+import { isIconURI } from "@ui5/webcomponents-base/dist/SVGIconRegistry.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import CardTemplate from "./generated/templates/CardTemplate.lit.js";
@@ -168,7 +168,7 @@ class Card extends UI5Element {
 	}
 
 	get icon() {
-		return !!this.avatar && hasIcon(this.avatar);
+		return !!this.avatar && isIconURI(this.avatar);
 	}
 
 	get image() {
