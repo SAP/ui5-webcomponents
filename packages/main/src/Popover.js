@@ -7,7 +7,7 @@ import PopoverPlacementType from "./types/PopoverPlacementType.js";
 import PopoverVerticalAlign from "./types/PopoverVerticalAlign.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 
-import { addOpenedPopover, removeOpenedPopover, getRegistry } from "./popup-utils/PopoverRegistry.js";
+import { addOpenedPopover, removeOpenedPopover } from "./popup-utils/PopoverRegistry.js";
 
 import { getFocusedElement, getClosedPopupParent } from "./popup-utils/PopupUtils.js";
 
@@ -241,10 +241,6 @@ class Popover extends UI5Element {
 		return PopoverTemplate;
 	}
 
-	static async define(...params) {
-		super.define(...params);
-	}
-
 	forwardToFirst() {
 		const firstFocusable = FocusHelper.findFirstFocusableElement(this.contentDOM);
 
@@ -268,11 +264,6 @@ class Popover extends UI5Element {
 	openBy(opener) {
 		if (!opener || this.opened) {
 			return;
-		}
-
-		// close all popovers untill we find that target is contained in some of them
-		while (getRegistry().length && (!getRegistry()[getRegistry().length - 1].contains(opener))) {
-			getRegistry()[getRegistry().length - 1].close();
 		}
 
 		this._opener = opener;
