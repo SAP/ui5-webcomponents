@@ -33,7 +33,8 @@
 		<ui5-radiobutton
 				id="{{_id}}-singleSelectionElement"
 				class="ui5-li-singlesel-radiobtn"
-				?selected="{{selected}}">
+				?selected="{{selected}}"
+				@click="{{onSingleSelectionComponentPress}}">
 		</ui5-radiobutton>
 	{{/if}}
 
@@ -41,7 +42,8 @@
 		<ui5-checkbox
 				id="{{_id}}-multiSelectionElement"
 				class="ui5-li-multisel-cb"
-				?checked="{{selected}}">
+				?checked="{{selected}}"
+				@click="{{onMultiSelectionComponentPress}}">
 		</ui5-checkbox>
 	{{/if}}
 
@@ -51,7 +53,7 @@
 				id="{{_id}}-deleteSelectionElement"
 				design="Transparent"
 				icon="sap-icon://decline"
-				@ui5-press="{{_onDelete}}"
+				@ui5-press="{{onDelete}}"
 			></ui5-button>
 		</div>
 	{{/if}}
