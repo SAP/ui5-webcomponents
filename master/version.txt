@@ -1,5 +1,7 @@
-commit 28c418123fabc2050ce46970bf7a4f9683163a4f
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Sep 27 14:34:43 2019 +0300
+commit 4b325f48d1d57448d8178bdfc5d077b3405d2563
+Author: Ludo Noens <lnoenssap@users.noreply.github.com>
+Date:   Fri Sep 27 19:43:38 2019 +0800
 
-    feat(ui5-list): added new param for selectionChange event (#798)
+    docs: update Label sample (#800)
+    
+    Updated sample html file (doc) for Label to display the code used for the example implementation.
