@@ -1,5 +1,7 @@
-commit 6d34b506d7c9399bc55cf04a176b09e90c15bc59
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Sep 27 10:38:50 2019 +0300
+commit 842049248e96db61a53239df4beca22ac9a7f821
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Fri Sep 27 11:05:54 2019 +0300
 
-    refactor(ui5-panel): align toggle button visual design (#794)
+    fix(ui5-button): align buttons with and without icons on same line (#796)
+    
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/795
