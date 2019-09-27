@@ -1,7 +1,5 @@
-commit 842049248e96db61a53239df4beca22ac9a7f821
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Fri Sep 27 11:05:54 2019 +0300
+commit 28c418123fabc2050ce46970bf7a4f9683163a4f
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Fri Sep 27 14:34:43 2019 +0300
 
-    fix(ui5-button): align buttons with and without icons on same line (#796)
-    
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/795
+    feat(ui5-list): added new param for selectionChange event (#798)
