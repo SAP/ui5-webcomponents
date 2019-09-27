@@ -12,4 +12,13 @@ const getRegisteredNames = () => {
 	return Array.from(registry.keys());
 };
 
-export { getIconData, registerIcon, getRegisteredNames };
+const isIconURI = uri => {
+	return /sap-icon:\/\//.test(uri);
+};
+
+export {
+	getIconData,
+	registerIcon,
+	getRegisteredNames,
+	isIconURI,
+};

@@ -91,8 +91,6 @@ const metadata = {
 		/**
 		 * Defines a short hint intended to aid the user with data entry when the
 		 * <code>ui5-input</code> has no value.
-		 * <br><br>
-		 * <b>Note:</b> The placeholder is not supported in IE. If the placeholder is provided, it won`t be displayed in IE.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
@@ -619,7 +617,7 @@ class Input extends UI5Element {
 	}
 
 	get suggestionsText() {
-		return INPUT_SUGGESTIONS.defaultText;
+		return this.i18nBundle.getText(INPUT_SUGGESTIONS);
 	}
 
 	static async define(...params) {

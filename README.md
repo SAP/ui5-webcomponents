@@ -167,7 +167,6 @@ Keep in mind that linking the same module with npm and Yarn may cause issues. Al
 - [UI5 Web Components Core](https://www.npmjs.com/package/@ui5/webcomponents-core)
 
 ## Limitations
-- The ```ui5-table``` web component does not work on Internet Explorer 11
 - All input web components (ui5-input, ui5-datepicker and ui5-textarea) do not support the ```placeholder``` attribute on Internet Explorer 11
 
 ## Known Issues

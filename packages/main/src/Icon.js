@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
-import { getIconData } from "@ui5/webcomponents-base/dist/SVGIconRegistry.js";
+import { getIconData, isIconURI } from "@ui5/webcomponents-base/dist/SVGIconRegistry.js";
 import createStyleInHead from "@ui5/webcomponents-base/dist/util/createStyleInHead.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import IconTemplate from "./IconTemplate.lit.js";
@@ -139,14 +139,10 @@ class Icon extends UI5Element {
 	}
 
 	_normalizeIconURI(iconURI) {
-		return this._hasIconPrefix(iconURI) ? iconURI : `sap-icon://${iconURI}`;
+		return isIconURI(iconURI) ? iconURI : `sap-icon://${iconURI}`;
 	}
 
-	_hasIconPrefix(uri) {
-		return /sap-icon:\/\//.test(uri);
-	}
-
-	get d() {
+	get iconData() {
 		const icon = getIconData(this._normalizeIconURI(this.src));
 
 		if (!icon) {
@@ -154,7 +150,11 @@ class Icon extends UI5Element {
 			return console.warn(`Required icon is not imported. You have to import the icon as a module in order to use it e.g. "@ui5/webcomponents/dist/icons/${this._normalizeIconURI(this.src).split("sap-icon://")[1]}.js"`);
 		}
 
-		return icon.d;
+		return icon;
+	}
+
+	get d() {
+		return this.iconData && this.iconData.d;
 	}
 
 	get hasIconTooltip() {
@@ -162,9 +162,11 @@ class Icon extends UI5Element {
 	}
 
 	get accessibleNameText() {
-		const icon = getIconData(this._normalizeIconURI(this.src));
+		if (this.accessibleName) {
+			return this.accessibleName;
+		}
 
-		return this.accessibleName || (icon.accData && this.i18nBundle.getText(icon.accData));
+		return this.iconData && this.iconData.accData && this.i18nBundle.getText(this.iconData.accData);
 	}
 
 	get dir() {

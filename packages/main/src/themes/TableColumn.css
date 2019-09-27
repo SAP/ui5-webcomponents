@@ -11,6 +11,8 @@ th {
 	background: var(--sapUiListHeaderBackground);
 	border-bottom: 1px solid var(--sapUiListBorderColor);
 	border: none;
+	width: inherit;
+	font-weight: normal;
 }
 
 .ui5-table-column-root {
