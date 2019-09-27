@@ -2,12 +2,5 @@
 	--_ui5_panel_focus_border: 1px dotted var(--sapUiContentFocusColor);
 	--_ui5_panel_header_height: 3rem;
 	--_ui5_panel_header_title_size: var(--sapMFontHeader4Size);
-	--_ui5_panel_header_button_outline_style: dashed;
-	--_ui5_panel_header_button_hover_background_color: white;
-	--_ui5_panel_header_button_active_background_color: white;
-	--_ui5_panel_header_button_hover_color: var(--sapUiContentIconColor);
-	--_ui5_panel_header_button_active_color: var(--sapUiContentIconColor);
-	--_ui5_panel_header_button_hover_border_color: transparent;
-	--_ui5_panel_header_button_active_border_color: transparent;
 	--_ui5_panel_button_root_width: 3rem;
 }
