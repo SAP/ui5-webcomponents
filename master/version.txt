@@ -1,5 +1,5 @@
-commit 685b44533e17c4d3d5799146acac3ffdcb9afa53
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Thu Sep 26 11:42:30 2019 +0300
+commit 855e069e3829c48f67af9c43a0db34033e3071ac
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Fri Sep 27 10:03:05 2019 +0300
 
-    chore: remove limitation for ui5-table as it works on IE (#727)
+    chore: remove IconPool (#792)
