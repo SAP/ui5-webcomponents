@@ -9,7 +9,7 @@
 	color: var(--sapUiContentIconColor);
 	cursor: pointer;
 	outline: none;
-	padding: .56275rem .6875rem
+	padding: var(--_ui5-input-icon-padding);
 }
 
 [input-icon][data-ui5-compact-size] {
