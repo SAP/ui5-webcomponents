@@ -1,5 +1,5 @@
-commit 46bfaf1c64518edb24ef659a8d0bfaffa40a015b
+commit 2a4bbd9340b63dfe6684fb09318a7303400f8eb3
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Sep 30 13:15:17 2019 +0300
+Date:   Mon Sep 30 13:20:43 2019 +0300
 
-    fix(ui5-link): fix link hover effect (#803)
+    chore(ui5-list): make selectionComponentPressed protected (#801)
