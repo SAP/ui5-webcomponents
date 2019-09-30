@@ -1,6 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getIconURI } from "@ui5/webcomponents-base/dist/IconPool.js";
 import slideDown from "@ui5/webcomponents-base/dist/animations/slideDown.js";
 import slideUp from "@ui5/webcomponents-base/dist/animations/slideUp.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
@@ -106,9 +105,6 @@ const metadata = {
 			type: Boolean,
 		},
 
-		_icon: {
-			type: Object,
-		},
 		_header: {
 			type: Object,
 		},
@@ -205,10 +201,6 @@ class Panel extends UI5Element {
 		super();
 
 		this._header = {};
-
-		this._icon = {};
-		this._icon.id = `${this.id}-CollapsedImg`;
-		this._icon.src = getIconURI("navigation-right-arrow");
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
@@ -218,7 +210,6 @@ class Panel extends UI5Element {
 			this._contentExpanded = !this.collapsed;
 		}
 
-		this._icon.title = this.i18nBundle.getText(PANEL_ICON);
 		this._hasHeader = !!this.header.length;
 	}
 
@@ -301,6 +292,10 @@ class Panel extends UI5Element {
 
 	_headerOnTarget(target) {
 		return target.classList.contains("sapMPanelWrappingDiv");
+	}
+
+	get toggleIconTitle() {
+		return this.i18nBundle.getText(PANEL_ICON);
 	}
 
 	get expanded() {

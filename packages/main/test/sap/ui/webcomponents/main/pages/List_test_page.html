@@ -42,6 +42,14 @@
 		<ui5-li image="./img/HT-2002.jpg"  description="2GB RAM, Intel i7 4.5 GHz">DVD set</ui5-li>
 	</ui5-list>
 
+	<ui5-list id="listMultiSel" mode="MultiSelect">
+		<ui5-li id="option1">Option #1</ui5-li>
+		<ui5-li>Option #2</ui5-li>
+		<ui5-li>Option #3</ui5-li>
+	</ui5-list>
+
+	<ui5-input id="fieldMultiSelResult"></ui5-input>
+
 	<script>
 		'use strict';
 
@@ -67,6 +75,10 @@
 
 		listEvents.addEventListener("ui5-selectionChange", function(event) {
 			selectionChangeResultPreviousItemsParameter.value = event.detail.previouslySelectedItems[0].id;
+		})
+
+		listMultiSel.addEventListener("ui5-selectionChange", function(event) {
+			fieldMultiSelResult.value = event.detail.selectionComponentPressed;
 		})
 	</script>
 </body>

@@ -91,8 +91,6 @@ const metadata = {
 		/**
 		 * Defines a short hint intended to aid the user with data entry when the
 		 * <code>ui5-input</code> has no value.
-		 * <br><br>
-		 * <b>Note:</b> The placeholder is not supported in IE. If the placeholder is provided, it won`t be displayed in IE.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
@@ -389,6 +387,12 @@ class Input extends UI5Element {
 		if (isEnter(event)) {
 			return this._handleEnter(event);
 		}
+
+		this._keyDown = true;
+	}
+
+	onkeyup() {
+		this._keyDown = false;
 	}
 
 	/* Event handling */
@@ -417,7 +421,7 @@ class Input extends UI5Element {
 		}
 	}
 
-	onfocusin() {
+	onfocusin(event) {
 		this.focused = true; // invalidating property
 		this.previousValue = this.value;
 	}
@@ -437,7 +441,14 @@ class Input extends UI5Element {
 			event.stopImmediatePropagation();
 		}
 
-		this.fireEventByAction(this.ACTION_USER_INPUT);
+		/* skip calling change event when an input with a placeholder is focused on IE
+			- value of the host and the internal input should be differnt in case of actual input
+			- input is called when a key is pressed => keyup should not be called yet
+		*/
+		const skipFiring = (this.getInputDOMRef().value === this.value) && isIE() && !this._keyDown && this.placeholder;
+
+		!skipFiring && this.fireEventByAction(this.ACTION_USER_INPUT);
+
 		this.hasSuggestionItemSelected = false;
 
 		if (this.Suggestions) {
@@ -562,12 +573,6 @@ class Input extends UI5Element {
 		};
 	}
 
-	get inputPlaceholder() {
-		// We don`t support placeholder for IE,
-		// because IE fires input events, when placeholder exists, leading to functional degredations.
-		return isIE() ? "" : this.placeholder;
-	}
-
 	get _readonly() {
 		return this.readonly && !this.disabled;
 	}
@@ -612,7 +617,7 @@ class Input extends UI5Element {
 	}
 
 	get suggestionsText() {
-		return INPUT_SUGGESTIONS.defaultText;
+		return this.i18nBundle.getText(INPUT_SUGGESTIONS);
 	}
 
 	static async define(...params) {
