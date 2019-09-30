@@ -10,15 +10,8 @@
 	box-sizing: border-box;
 }
 
-:host([data-ui5-compact-size]) {
-	font-size: 0.75rem;
-	height: 1.25rem;
-}
-
-:host([data-ui5-compact-size]) .ui5-token--icon {
-	padding: 0 0.25rem;
-	width: 0.75rem;
-	height: 0.75rem;
+:host([overflows]) {
+	visibility: hidden;
 }
 
 :host(:not([readonly]):hover) {
@@ -49,26 +42,13 @@
 	outline: 1px dotted var(--sapUiContentContrastFocusColor);
 }
 
-:host([overflows]) {
-	visibility: hidden;
-}
-
-.ui5-token--icon {
-	padding: 0.25rem 0.5rem;
-	color: inherit;
-	cursor: pointer;
-	width: 1rem;
-	height: 1rem;
-	color: var(--_ui5_token_icon_color);
-}
-
 .ui5-token--wrapper {
 	display: flex;
 	align-items: center;
 	height: 100%;
 	width: 100%;
 	cursor: default;
-	padding-left: 0.375rem;
+	padding-left: 0.3125rem;
 	padding-top: 0.25rem;
 	padding-bottom: 0.25rem;
 	box-sizing: border-box;
@@ -84,4 +64,48 @@
 
 .ui5-token--text {
 	white-space: nowrap;
+}
+
+.ui5-token--icon {
+	padding: 0.25rem 0.5rem;
+	color: inherit;
+	cursor: pointer;
+	width: 1rem;
+	height: 1rem;
+	color: var(--_ui5_token_icon_color);
+}
+
+/* Compact */
+:host([data-ui5-compact-size]) {
+	font-size: 0.75rem;
+	height: 1.125rem; /* Note: by design should be 1.25rem, but the token gets cut in Erron/Warning state */
+}
+
+:host([data-ui5-compact-size]) .ui5-token--wrapper {
+	padding-left: 0.25rem; 
+	padding-top: 0.1rem; 
+	padding-bottom: 0.1rem; 
+}
+
+:host([data-ui5-compact-size]) .ui5-token--icon {
+	padding: 0.1rem 0.25rem;
+	width: 0.75rem;
+	height: 0.75rem;
+}
+
+/* RTL */
+:host .ui5-token--wrapper[dir="rtl"] {
+	padding-right: 0.3125rem;
+	padding-left: 0;
+}
+
+:host([readonly]) .ui5-token--wrapper[dir="rtl"] {
+	padding-right: 0;
+	padding-left: 0.375rem;
+}
+
+/* RTL + Compact */
+:host([data-ui5-compact-size]) .ui5-token--wrapper[dir="rtl"] {
+	padding-right: 0.25rem;
+	padding-left: 0;
 }
