@@ -78,7 +78,7 @@
 /* Compact */
 :host([data-ui5-compact-size]) {
 	font-size: 0.75rem;
-	height: 1.25rem;
+	height: 1.125rem; /* Note: by design should be 1.25rem, but the token gets cut in Erron/Warning state */
 }
 
 :host([data-ui5-compact-size]) .ui5-token--wrapper {
