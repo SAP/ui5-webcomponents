@@ -1,8 +1,5 @@
 <div class="{{classes.wrapper}}">
 	<div class="{{classes.content}}" @ui5-delete={{_tokenDelete}}>
-		<div class="ui5-tokenizer-token-placeholder">
-			<div style="display: inline-block"></div>
-		</div>
 		{{#each tokens}}
 			<slot name="{{this._individualSlot}}"></slot>
 		{{/each}}

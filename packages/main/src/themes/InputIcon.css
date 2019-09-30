@@ -1,0 +1,46 @@
+/* 
+	This CSS file enables visual alignment of all icons within input elements.
+	API:
+	- add input-icon attribute to an icon
+	- [Optional] pressed attribute set to the icon will enable additional styling (check MultiComboBox, Select, etc.)
+*/
+
+[input-icon] {
+	color: var(--sapUiContentIconColor);
+	cursor: pointer;
+	outline: none;
+	padding: var(--_ui5-input-icon-padding);
+	border-left: 1px solid transparent;
+}
+
+[input-icon][data-ui5-compact-size] {
+	padding: .25rem .5rem;
+}
+
+[input-icon][pressed] {
+	background: var(--sapUiToggleButtonPressedBackground);
+	color: var(--sapUiButtonActiveTextColor);
+}
+
+[input-icon]:active {
+	background-color: var(--sapUiButtonLiteActiveBackground);
+	color: var(--sapUiButtonActiveTextColor);
+}
+
+[input-icon]:not([pressed]):not(:active):hover {
+	background: var(--sapUiButtonLiteHoverBackground);
+}
+
+[input-icon]:hover {
+	border-left: var(--_ui5_select_hover_icon_left_border);
+}
+
+[input-icon][dir="rtl"]:hover {
+	border-left: none;
+	border-right: var(--_ui5_select_hover_icon_left_border);
+}
+
+[input-icon][dir="rtl"] {
+	border-left: none;
+	border-right: 1px solid transparent;
+}

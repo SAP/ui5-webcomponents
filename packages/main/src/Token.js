@@ -59,6 +59,8 @@ const metadata = {
 		readonly: { type: Boolean },
 
 		_tabIndex: { type: String, defaultValue: "-1", noAttribute: true },
+
+		overflows: { type: Boolean },
 	},
 
 	events: /** @lends sap.ui.webcomponents.main.Token.prototype */ {
