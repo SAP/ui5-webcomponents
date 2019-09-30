@@ -14,6 +14,7 @@ const DIST_PLAYGROUND = path.normalize("dist/resources/sap/ui/webcomponents/main
 
 
 const DEPLOY_PUBLIC_PATH = process.env.DEPLOY_PUBLIC_PATH || "";
+const IS_TRAVIS_DEPLOYMENT = process.env.IS_TRAVIS_DEPLOYMENT || false;
 
 function ui5DevImportCheckerPlugin() {
 	return {
