@@ -49,10 +49,6 @@
 	outline: 1px dotted var(--sapUiContentContrastFocusColor);
 }
 
-:host([overflows]) {
-	visibility: hidden;
-}
-
 .ui5-token--wrapper {
 	display: flex;
 	align-items: center;
