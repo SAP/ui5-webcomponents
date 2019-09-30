@@ -300,7 +300,7 @@ class DayPicker extends UI5Element {
 		}
 	}
 
-	get showWeekNumbers () {
+	get showWeekNumbers() {
 		return this.primaryCalendarType === CalendarType.Gregorian;
 	}
 
