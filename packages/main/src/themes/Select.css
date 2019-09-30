@@ -6,7 +6,6 @@
 	height: 100%;
 	display: flex;
 	outline: none;
-	overflow: hidden;
 	cursor: pointer;
 }
 
@@ -30,4 +29,10 @@
 
 :host(:not([disabled])) {
 	cursor: pointer;
+}
+
+:host([value-state="Error"]),
+:host([value-state="Warning"]),
+:host([value-state="Success"]) {
+	overflow: hidden;
 }
