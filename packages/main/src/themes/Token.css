@@ -10,7 +10,6 @@
 	box-sizing: border-box;
 }
 
-<<<<<<< Updated upstream
 :host(ui5-token[data-ui5-compact-size]) {
 	font-size: 0.75rem;
 	height: 1.25rem;
@@ -22,10 +21,7 @@
 	height: 0.75rem;
 }
 
-:host(ui5-token:not([readonly]):hover) {
-=======
 :host(:not([readonly]):hover) {
->>>>>>> Stashed changes
 	background: var(--sapUiButtonHoverBackground);
 	border-color: var(--_ui5_token_hover_border_color);
 }
@@ -53,18 +49,8 @@
 	outline: 1px dotted var(--sapUiContentContrastFocusColor);
 }
 
-<<<<<<< Updated upstream
-.ui5-token--icon {
-	padding: 0.25rem 0.5rem;
-	color: inherit;
-	cursor: pointer;
-	width: 1rem;
-	height: 1rem;
-	color: var(--_ui5_token_icon_color);
-=======
 :host([overflows]) {
 	visibility: hidden;
->>>>>>> Stashed changes
 }
 
 .ui5-token--wrapper {
