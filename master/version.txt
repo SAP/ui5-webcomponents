@@ -1,5 +1,13 @@
-commit 2a4bbd9340b63dfe6684fb09318a7303400f8eb3
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Sep 30 13:20:43 2019 +0300
+commit 3f26f2c66eb91bb177ba05fbfeef16eb36358366
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Mon Sep 30 14:10:50 2019 +0300
 
-    chore(ui5-list): make selectionComponentPressed protected (#801)
+    refactor: align all inputs to use same CSS for styling (#793)
+    
+    - all input like elements such as Input, MultiComboBox, Select use the same CSS for styling host
+    - all icons than needs to be styled as input icons have a common CSS - InputIcon.css
+    - users can now overstyle all input elements by setting styles to host
+    - fixes tiny bug in Select when Picker is open - icon background color should be pressed
+    - adds a better keyboard handling for MultiComboBox
+    
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/766
