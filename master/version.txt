@@ -1,5 +1,5 @@
-commit b85662c1325c21fe49f155f42194a5d815cbaad1
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Mon Sep 30 11:41:14 2019 +0300
+commit 46bfaf1c64518edb24ef659a8d0bfaffa40a015b
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Sep 30 13:15:17 2019 +0300
 
-    chore: update contact info (#791)
+    fix(ui5-link): fix link hover effect (#803)
