@@ -16,8 +16,8 @@
 	pointer-events: none;
 }
 
-:host([design="Subtle"]):not([disabled]) .ui5-link-root:hover,
-:host([design="Subtle"]):not([disabled]) .ui5-link-root:hover {
+:host(:not([disabled])) .ui5-link-root:hover,
+:host(:not([disabled])) .ui5-link-root:hover {
 	text-decoration: underline;
 	color: var(--sapUiLinkHover);
 }
