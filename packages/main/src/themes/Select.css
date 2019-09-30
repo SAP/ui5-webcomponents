@@ -6,6 +6,8 @@
 	height: 100%;
 	display: flex;
 	outline: none;
+	overflow: hidden;
+	cursor: pointer;
 }
 
 .ui5-select-label-root {
@@ -24,4 +26,8 @@
 :host [dir="rtl"].ui5-select-root .ui5-select-label-root {
 	padding-left: 0;
 	padding-right: 0.5rem;
+}
+
+:host(:not([disabled])) {
+	cursor: pointer;
 }
