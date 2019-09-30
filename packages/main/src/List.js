@@ -173,7 +173,7 @@ const metadata = {
 			detail: {
 				selectedItems: { type: Array },
 				previouslySelectedItems: { type: Array },
-				selectionComponentPressed: { type: Boolean }, // protected, indicates if the user used the selection components (ui5-radiobutton, ui5-checkbox) modes to change the selection
+				selectionComponentPressed: { type: Boolean }, // protected, indicates if the user used the selection components to change the selection
 			},
 		},
 	},
