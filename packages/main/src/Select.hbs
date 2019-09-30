@@ -1,7 +1,7 @@
 <div
 	class="ui5-select-root"
 	tabindex="{{tabIndex}}"
-	dir="{{rtl}}"
+	dir="{{dir}}"
 	@keydown="{{_keydown}}"
 	@keyup="{{_keyup}}"
 	@focusin="{{onfocusin}}"
@@ -33,10 +33,13 @@
 		</ui5-popover>
 	{{/if}}
 
-	<div class="ui5-select-icon-root" @click="{{_togglePopover}}">
-		<ui5-icon src="sap-icon://slim-arrow-down" class="ui5-select-icon"
+		<ui5-icon 
+			@click="{{_togglePopover}}"
+			src="sap-icon://slim-arrow-down"
+			input-icon
+			?pressed="{{_iconPressed}}"
+			dir="{{dir}}"
 		></ui5-icon>
-	</div>
 
 	<slot name="formSupport"></slot>
 </div>

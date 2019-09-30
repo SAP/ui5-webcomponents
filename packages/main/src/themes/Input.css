@@ -20,7 +20,7 @@
 	height: var(--_ui5_input_compact_height);
 }
 
-:host([data-ui5-compact-size]) .ui5-input-inner {
+:host([data-ui5-compact-size]) input {
 	padding: 0 0.5rem;
 }
 
@@ -55,7 +55,7 @@
 	color: var(--sapUiContentDisabledTextColor);
 }
 
-.ui5-input-inner {
+input {
 	background: transparent;
 	color: inherit;
 	border: none;
@@ -73,22 +73,22 @@
 	font-family: inherit;
 }
 
-.ui5-input-inner::-webkit-input-placeholder {
+input::-webkit-input-placeholder {
 	/* Chrome/Opera/Safari */
 	color: var(--sapUiFieldPlaceholderTextColor);
 }
 
-.ui5-input-inner::-moz-placeholder {
+input::-moz-placeholder {
 	/* Firefox 19+ */
 	color: var(--sapUiFieldPlaceholderTextColor);
 }
 
-.ui5-input-inner:-ms-input-placeholder {
+input:-ms-input-placeholder {
 	/* IE 10+ */
 	color: var(--sapUiFieldPlaceholderTextColor);
 }
 
-.ui5-input-inner:-moz-placeholder {
+input:-moz-placeholder {
 	/* Firefox 18- */
 	color: var(--sapUiFieldPlaceholderTextColor);
 }
@@ -119,12 +119,12 @@
 	border-width: var(--_ui5_input_state_border_width);
 }
 
-:host([value-state="Error"]) .ui5-input-inner,
-:host([value-state="Warning"]) .ui5-input-inner {
+:host([value-state="Error"]) input,
+:host([value-state="Warning"]) input {
 	font-style: var(--_ui5_input_error_warning_font_style);
 }
 
-:host([value-state="Error"]) .ui5-input-inner {
+:host([value-state="Error"]) input {
 	font-weight: var(--_ui5_input_error_font_weight);
 }
 
@@ -149,7 +149,7 @@
 }
 
 /* Remove IE's defaut clear button */
-.ui5-input-inner::-ms-clear {
+input::-ms-clear {
 	height: 0;
 	width: 0;
 }

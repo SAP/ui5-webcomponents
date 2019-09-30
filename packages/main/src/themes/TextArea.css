@@ -11,12 +11,6 @@
 	box-sizing: border-box;
 }
 
-:host .ui5-textarea-inner {
-	background-color: var(--sapUiFieldBackground);
-	border: 1px solid var(--sapUiFieldBorderColor);
-	border-radius: inherit;
-}
-
 :host([disabled]) {
 	opacity: var(--sap_wc_input_disabled_opacity);
 	cursor: default;
@@ -45,6 +39,7 @@
 	outline: none;
 	overflow: hidden;
 	box-sizing: border-box;
+	border-radius: inherit;
 }
 
 .ui5-textarea-inner {
@@ -62,7 +57,9 @@
 	-moz-appearance: textfield;
 	overflow: auto;
 	resize: none;
-	border: none;
+    background-color: var(--sapUiFieldBackground);
+    border: 1px solid var(--sapUiFieldBorderColor);
+    border-radius: inherit;
 }
 
 :host([growing]) .ui5-textarea-root {
