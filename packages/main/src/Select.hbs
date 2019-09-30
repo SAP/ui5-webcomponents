@@ -1,7 +1,7 @@
 <div
 	class="ui5-select-root"
 	tabindex="{{tabIndex}}"
-	dir="{{rtl}}"
+	dir="{{dir}}"
 	@keydown="{{_keydown}}"
 	@keyup="{{_keyup}}"
 	@focusin="{{onfocusin}}"
@@ -38,6 +38,7 @@
 			src="sap-icon://slim-arrow-down"
 			input-icon
 			?pressed="{{_iconPressed}}"
+			dir="{{dir}}"
 		></ui5-icon>
 
 	<slot name="formSupport"></slot>

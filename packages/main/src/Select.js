@@ -405,8 +405,8 @@ class Select extends UI5Element {
 		return this.disabled ? "-1" : "0";
 	}
 
-	get rtl() {
-		return getRTL() ? "rtl" : undefined;
+	get dir() {
+		return getRTL() ? "rtl" : "ltr";
 	}
 
 	static async define(...params) {
