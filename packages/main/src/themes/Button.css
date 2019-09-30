@@ -73,6 +73,8 @@
 
 .ui5-button-root .ui5-button-icon {
 	font-size: var(--_ui5_button_base_icon_only_font_size);
+	height: 0;
+	top: -.5rem;
 	position: relative;
 	color: inherit;
 }
@@ -217,10 +219,9 @@ bdi {
 
 :host([design="Transparent"]) {
 	background-color: var(--sapUiButtonLiteBackground);
-	border-color: var(--sapUiButtonLiteBorderColor);
 	color: var(--sapUiButtonLiteTextColor);
 	text-shadow: var(--_ui5_button_text_shadow);
-	border-color: transparent;
+	border-color: var(--_ui5_button_transparent_border_color);
 }
 
 :host([design="Transparent"]):hover {
@@ -234,7 +235,7 @@ bdi {
 }
 
 :host([design="Transparent"]:not([active]):hover) {
-	border-color: transparent;
+	border-color: var(--_ui5_button_transparent_hover_border_color);
 }
 
 /* IE Specific CSS */

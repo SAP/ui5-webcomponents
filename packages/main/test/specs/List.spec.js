@@ -28,6 +28,15 @@ describe("Date Picker Tests", () => {
 		assert.strictEqual(secondItem.getProperty("id"), selectionChangeResultPreviousItemsParameter.getProperty("value"));
 	});
 
+	it("selectionChange using selection component", () => {
+		const fieldResult = $("#fieldMultiSelResult");
+		const firstItemSelectionComponent = $("#listMultiSel #option1").shadow$(".ui5-li-multisel-cb");
+
+		firstItemSelectionComponent.click();
+
+		assert.strictEqual(fieldResult.getProperty("value"), "true");
+	});
+
 	it("header text", () => {
 		list.id = "#list1";
 
