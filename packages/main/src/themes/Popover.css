@@ -26,7 +26,6 @@
 	position: fixed;
 	background-color: #000000;
 	opacity: 0.6;
-	filter: alpha(opacity=60);
 	top: 0;
 	left: 0;
 	right: 0;
@@ -135,7 +134,6 @@
 
 .ui5-popover-content {
 	overflow: auto;
-	/* flex: 1; */
 
 	/* Consider how to make this top level */
 	padding: var(--_ui5_popover_content_padding);
