@@ -38,9 +38,6 @@
 }
 
 .ui5-panel-header-button {
-	min-width: 2rem;
-	width: 2rem;
-	height: 2rem;
 	transition: transform 0.4s ease-out;
 }
 
