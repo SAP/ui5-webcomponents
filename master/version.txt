@@ -1,5 +1,10 @@
-commit 3ccf80ee77ff7691468af09d1aedcc5dbae59f25
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Oct 1 16:32:22 2019 +0300
+commit 1d377ba956da1a544acf6ab9656c33b87b5435c5
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Tue Oct 1 16:38:25 2019 +0300
 
-    fix(ui5-tabcontainer): fix selected tab text color in HCB (#805)
+    refactor(ui5-popover): improve layouting, styling and positioning (#779)
+    
+    BREAKING CHANGE: stayOpenOnScroll is now removed
+    
+    - Popover will no longer close when the browser is scrolled
+    and its parent (opener) is visible in the viewport.

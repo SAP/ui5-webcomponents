@@ -176,7 +176,7 @@
 
 	<div class="demo-section">
 			<span>MultiComboBox n more</span> </br>
-	
+
 			<ui5-multi-combobox style="width: 320px" placeholder="Some initial text" id="more-mcb">
 				<ui5-li type="Active" selected>Cosy</ui5-li>
 				<ui5-li type="Active" selected>Compact</ui5-li>
@@ -187,7 +187,7 @@
 
 		<div class="demo-section">
 				<span>MultiComboBox with validation</span>
-		
+
 				<br>
 				<ui5-multi-combobox style="width: 560px" placeholder="Some initial text" id="mcb-validation">
 					<ui5-li type="Active">Cosy</ui5-li>
@@ -230,13 +230,13 @@
 		const callCountInput = document.getElementById("events-call-count");
 		const resetBtn = document.getElementById("reset-btn");
 
-		document.getElementById("mcb").addEventListener("ui5-selectionChange", event => {
+		document.getElementById("mcb").addEventListener("ui5-selectionChange", function(event) {
 			eventNameInput.value = "selectionChange";
 			eventParamsInput.value = event.detail.items.length;
 			callCountInput.value = parseInt(callCountInput.value) + 1;
 		});
 
-		resetBtn.addEventListener("click", event => {
+		resetBtn.addEventListener("click", function(event) {
 			eventNameInput.value = "";
 			eventParamsInput.value = "";
 			callCountInput.value = "";

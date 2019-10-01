@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<html style="height: 100%">
+
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta charset="utf-8">
@@ -14,20 +15,19 @@
 	</script>
 
 	<script src="../../../../../../webcomponentsjs/webcomponents-loader.js"></script>
-	<script src="../../../../../../resources/sap/ui/webcomponents/main/bundle.esm.js"
-		type="module"
-	>
+	<script src="../../../../../../resources/sap/ui/webcomponents/main/bundle.esm.js" type="module">
+	</script>
+
+	<script>
+		delete Document.prototype.adoptedStyleSheets
 	</script>
 
 	<script nomodule src="../../../../../../resources/sap/ui/webcomponents/main/bundle.es5.js">
 	</script>
 </head>
 
-<body style="display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;">
-	<ui5-button id="btnOpenPopover" design="Emphasized" icon="sap-icon://employee">Open Popover</ui5-button>
+<body>
+	<!-- <ui5-button id="btnOpenPopover" design="Emphasized" icon="sap-icon://employee">Open Popover</ui5-button>
 
 	<ui5-popover id="popoverToOpen" header-text="Popover">
 		<div style="padding: 1rem;text-align: center;">
@@ -41,15 +41,118 @@ align-items: center;">
 		<div slot="footer" style="display: flex; align-items: center;padding: 0.25rem 0.5rem">
 			<div style="flex: 1;"></div>
 			<ui5-button id="btnInPopover">Close</ui5-button>
+
+
+			<ui5-select id="test">
+				<ui5-option>Hello</ui5-option>
+				<ui5-option>World</ui5-option>
+			</ui5-select>
 		</div>
 	</ui5-popover>
 
-	<ui5-input id="field"></ui5-input>
+	<ui5-input id="field"></ui5-input> -->
+
+	<ui5-button id="btn">Click me !</ui5-button>
+
+	<ui5-popover header-text="My Heading" id="pop" style="width: 300px" placement-type="Top">
+
+		<!-- <div slot="header">
+			Hello World
+		</div> -->
+
+		<ui5-list>
+			<ui5-li>Hello</ui5-li>
+			<ui5-li>World</ui5-li>
+			<ui5-li>Again</ui5-li>
+		</ui5-list>
+
+		<br>
+		<br>
+
+		<ui5-button id='popbtn'>Open Popover</ui5-button>
+
+		<ui5-popover placement-type="Bottom" no-arrow id='danger'>
+			<ui5-list>
+				<ui5-li>Hello</ui5-li>
+				<ui5-li>World</ui5-li>
+				<ui5-li>Again</ui5-li>
+			</ui5-list>
+
+			<br>
+			<br>
+
+			<ui5-button id='bigDanger'>Super Danger !</ui5-button>
+
+			<ui5-popover id='bigDangerPop'>
+				<ui5-list>
+					<ui5-li>Hello</ui5-li>
+					<ui5-li>World</ui5-li>
+					<ui5-li>Again</ui5-li>
+				</ui5-list>
+			</ui5-popover>
+		</ui5-popover>
+
+		<br>
+		<br>
+
+		<ui5-select>
+			<ui5-option>Hello</ui5-option>
+			<ui5-option>World</ui5-option>
+		</ui5-select>
+
+		<br>
+		<br>
+
+		<!-- <ui5-datepicker></ui5-datepicker> -->
+
+		<div slot="footer">
+			Hello World Footer
+		</div>
+	</ui5-popover>
+
+
+	<br>
+
+	<br>
+
+	<ui5-select>
+		<ui5-option>Hello</ui5-option>
+		<ui5-option>World</ui5-option>
+	</ui5-select>
+
+	<br>
+	<br>
+
+	<ui5-datepicker id="field"></ui5-datepicker>
+
+	<br>
+	<br>
+
+
+	<ui5-multi-combobox>
+		<ui5-li>Hello</ui5-li>
+		<ui5-li>World</ui5-li>
+	</ui5-multi-combobox>
+
+	<br>
+	<br>
+
 
 	<script>
-		btnOpenPopover.addEventListener("ui5-press", function() {
-			popoverToOpen.openBy(btnOpenPopover);
+
+		btn.addEventListener('click', function (event) {
+			pop.openBy(btn);
 		});
+
+		popbtn.addEventListener('click', function (event) {
+			danger.openBy(popbtn);
+		});
+
+		bigDanger.addEventListener('click', function (event) {
+			bigDangerPop.openBy(bigDanger);
+		});
+
 	</script>
 </body>
+
 </html>
