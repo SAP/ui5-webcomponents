@@ -5,7 +5,6 @@ import { isShow, isDown, isBackSpace } from "@ui5/webcomponents-base/dist/events
 import "./icons/slim-arrow-down.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import MultiComboBoxTemplate from "./generated/templates/MultiComboBoxTemplate.lit.js";
-import Input from "./Input.js";
 import Tokenizer from "./Tokenizer.js";
 import Token from "./Token.js";
 import Icon from "./Icon.js";
@@ -458,7 +457,6 @@ class MultiComboBox extends UI5Element {
 
 	static async define(...params) {
 		await Promise.all([
-			Input.define(),
 			Tokenizer.define(),
 			Token.define(),
 			Icon.define(),
