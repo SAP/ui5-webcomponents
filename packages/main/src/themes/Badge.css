@@ -22,6 +22,7 @@
 
 ::slotted(ui5-icon) {
 	width: 0.75em;
+	height: auto;
 	flex-shrink: 0;
 }
 
