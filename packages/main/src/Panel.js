@@ -4,6 +4,7 @@ import slideDown from "@ui5/webcomponents-base/dist/animations/slideDown.js";
 import slideUp from "@ui5/webcomponents-base/dist/animations/slideUp.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import Button from "./Button.js";
 import Icon from "./Icon.js";
 import "./icons/navigation-right-arrow.js";
 import PanelAccessibleRole from "./types/PanelAccessibleRole.js";
@@ -333,6 +334,7 @@ class Panel extends UI5Element {
 	static async define(...params) {
 		await Promise.all([
 			fetchI18nBundle("@ui5/webcomponents"),
+			Button.define(),
 			Icon.define(),
 		]);
 
