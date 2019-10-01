@@ -1,5 +1,5 @@
-commit 71c9caa6bfec414e4249702995c3afe2a7b5cd1c
+commit a5ccb80054fb8f29c075e0dedccd3df8dbe0d91a
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Sep 30 14:52:25 2019 +0300
+Date:   Tue Oct 1 09:26:16 2019 +0300
 
-    fix(ui5-token): correct visual in RTL/Compact (#804)
+    fix: hide week number in Islamic, Buddhist Japanese calendars (#806)
