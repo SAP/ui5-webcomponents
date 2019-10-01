@@ -300,6 +300,10 @@ class DayPicker extends UI5Element {
 		}
 	}
 
+	get showWeekNumbers() {
+		return this.primaryCalendarType === CalendarType.Gregorian;
+	}
+
 	get _timestamp() {
 		return this.timestamp !== undefined ? this.timestamp : Math.floor(new Date().getTime() / 1000);
 	}
