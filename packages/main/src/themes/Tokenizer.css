@@ -69,7 +69,7 @@
 	overflow: auto;
 }
 
-:host ::slotted(ui5-token) {
+::slotted(ui5-token) {
 	margin-left: .25rem;
 }
 

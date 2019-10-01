@@ -8,7 +8,6 @@ import PopoverVerticalAlign from "./types/PopoverVerticalAlign.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 
 import { addOpenedPopover, removeOpenedPopover } from "./popup-utils/PopoverRegistry.js";
-
 import { getFocusedElement, getClosedPopupParent } from "./popup-utils/PopupUtils.js";
 
 // Styles
