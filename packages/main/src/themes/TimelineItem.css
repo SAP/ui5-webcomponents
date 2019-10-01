@@ -44,11 +44,7 @@
 	transform: translateX(-50%);
 }
 
-:host(ui5-timeline-item:last-child) .ui5-tli-indicator::before {
-	display: none;
-}
-
-ui5-timeline-item:last-child .ui5-tli-indicator::before {
+:host(:last-child) .ui5-tli-indicator::before {
 	display: none;
 }
 

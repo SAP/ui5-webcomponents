@@ -20,11 +20,13 @@
 			<ui5-icon
 				slot="icon"
 				src="sap-icon://appointment-2"
-				class="{{classes.icon}} ui5-datepicker-icon"
 				tabindex="-1"
 				accessible-name="{{openIconTitle}}"
 				show-tooltip
 				@click="{{togglePicker}}"
+				input-icon
+				?pressed="{{_isPickerOpen}}"
+				dir="{{dir}}"
 			></ui5-icon>
 		{{/unless}}
 	</ui5-input>
