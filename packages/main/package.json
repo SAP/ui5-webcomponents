@@ -109,7 +109,7 @@
     "@wdio/sync": "^5.12.1",
     "@webcomponents/webcomponentsjs": "^2.2.7",
     "chai": "^4.2.0",
-    "chromedriver": "^76.0.0",
+    "chromedriver": "^77.0.0",
     "clean-css": "^4.2.1",
     "copy-and-watch": "^0.1.2",
     "cpx": "^1.5.0",
@@ -153,6 +153,6 @@
   "resolutions": {
     "abstract-syntax-tree": "1.0.3",
     "dir-glob": "2.0.0",
-    "wdio-chromedriver-service/chromedriver": "^76.0.0"
+    "wdio-chromedriver-service/chromedriver": "^77.0.0"
   }
 }

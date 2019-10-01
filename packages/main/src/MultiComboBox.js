@@ -4,6 +4,7 @@ import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { isShow, isDown, isBackSpace } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import "./icons/slim-arrow-down.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
+import { isIE } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 import MultiComboBoxTemplate from "./generated/templates/MultiComboBoxTemplate.lit.js";
 import Tokenizer from "./Tokenizer.js";
 import Token from "./Token.js";
@@ -277,7 +278,20 @@ class MultiComboBox extends UI5Element {
 		const filteredItems = this._filterItems(value);
 		const oldValueState = this.valueState;
 
+		/* skip calling change event when an input with a placeholder is focused on IE
+			- value of the host and the internal input should be differnt in case of actual input
+			- input is called when a key is pressed => keyup should not be called yet
+		*/
+		const skipFiring = (this._inputDom.value === this.value) && isIE && !this._keyDown && !!this.placeholder;
+
+		if (skipFiring) {
+			event.preventDefault();
+
+			return;
+		}
+
 		if (this._validationTimeout) {
+			input.value = this._inputLastValue;
 			return;
 		}
 
@@ -289,6 +303,7 @@ class MultiComboBox extends UI5Element {
 				this.valueState = oldValueState;
 				this._validationTimeout = null;
 			}, 2000);
+
 			return;
 		}
 
@@ -330,7 +345,11 @@ class MultiComboBox extends UI5Element {
 		}
 	}
 
-	_keydown(event) {
+	_onkeyup() {
+		this._keyDown = false;
+	}
+
+	_onkeydown(event) {
 		if (isShow(event) && !this.readonly && !this.disabled) {
 			event.preventDefault();
 			this._togglePopover();
@@ -355,6 +374,8 @@ class MultiComboBox extends UI5Element {
 			this._tokenizer.tokens[lastTokenIndex].focus();
 			this._tokenizer._itemNav.currentIndex = lastTokenIndex;
 		}
+
+		this._keyDown = true;
 	}
 
 	_filterItems(value) {

@@ -470,7 +470,7 @@ class UI5Element extends HTMLElement {
 
 		const focusDomRef = this.getFocusDomRef();
 
-		if (focusDomRef) {
+		if (focusDomRef && typeof focusDomRef.focus === "function") {
 			focusDomRef.focus();
 		}
 	}

@@ -11,6 +11,8 @@
 	outline: none;
 	padding: var(--_ui5-input-icon-padding);
 	border-left: 1px solid transparent;
+	min-width: 1rem;
+	min-height: 1rem;
 }
 
 [input-icon][data-ui5-compact-size] {

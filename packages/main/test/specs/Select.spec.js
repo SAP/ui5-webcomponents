@@ -11,7 +11,7 @@ describe("Select general interaction", () => {
 
 		select.click();
 
-		const firstItem = browser.$("#mySelect").shadow$("ui5-li:first-child");
+		const firstItem = browser.$("#mySelect").shadow$$("ui5-li")[0];
 
 		firstItem.click();
 
@@ -71,7 +71,7 @@ describe("Select general interaction", () => {
 	it("opens upon space", () => {
 		const btn = $("#myBtn2");
 		const select = $("#mySelect");
-		const popover = browser.$("#mySelect").shadow$("ui5-popover").shadow$(".ui5-popup-root");
+		const popover = browser.$("#mySelect").shadow$("ui5-popover");
 
 		btn.click();
 		btn.keys("Tab");
@@ -83,7 +83,7 @@ describe("Select general interaction", () => {
 	it("toggles upon F4", () => {
 		const btn = $("#myBtn2");
 		const select = $("#mySelect");
-		const popover = browser.$("#mySelect").shadow$("ui5-popover").shadow$(".ui5-popup-root");
+		const popover = browser.$("#mySelect").shadow$("ui5-popover");
 
 		btn.click();
 		btn.keys("Tab");
@@ -98,7 +98,7 @@ describe("Select general interaction", () => {
 	it("toggles upon ALT + UP", () => {
 		const btn = $("#myBtn2");
 		const select = $("#mySelect");
-		const popover = browser.$("#mySelect").shadow$("ui5-popover").shadow$(".ui5-popup-root");
+		const popover = browser.$("#mySelect").shadow$("ui5-popover");
 
 		btn.click();
 		btn.keys("Tab");
@@ -112,7 +112,7 @@ describe("Select general interaction", () => {
 
 	it("toggles upon ALT + DOWN", () => {
 		const btn = $("#myBtn2");
-		const popover = browser.$("#mySelect").shadow$("ui5-popover").shadow$(".ui5-popup-root");
+		const popover = browser.$("#mySelect").shadow$("ui5-popover");
 
 		btn.click();
 		btn.keys("Tab");

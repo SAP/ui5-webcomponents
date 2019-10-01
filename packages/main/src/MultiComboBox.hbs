@@ -20,13 +20,15 @@
 
 	<input id="ui5-multi-combobox-input"
 		value="{{value}}"
+		inner-input
 		placeholder="{{placeholder}}"
 		?disabled={{disabled}}
 		?readonly={{readonly}}
 		value-state="{{valueState}}"
 		@input="{{_inputLiveChange}}"
 		@change={{_inputChange}}
-		@keydown="{{_keydown}}"
+		@keydown="{{_onkeydown}}"
+		@keyup="{{_onkeyup}}"
 		@focusin="{{_focusin}}"
 		@focusout="{{_focusout}}">
 	</input>
