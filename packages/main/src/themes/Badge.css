@@ -26,7 +26,7 @@
 }
 
 /* IE 11 specific selector */
-::slotted(.style-scope ui5-icon) {
+ui5-badge ui5-icon[slot="icon"] {
 	display: flex;
 }
 
