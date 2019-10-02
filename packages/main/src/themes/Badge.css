@@ -1,7 +1,7 @@
 @import "./InvisibleTextStyles.css";
 
 :host(:not([hidden])) {
-	display: inline-flex;
+	display: inline-block;
 	height: 1.125em;
 	min-width: 1.125em;
 	max-width: 100%;
@@ -21,9 +21,13 @@
 }
 
 ::slotted(ui5-icon) {
-	width: 0.75em;
-	height: auto;
-	flex-shrink: 0;
+	max-width: .75rem;
+	height: .75rem;
+}
+
+/* IE 11 specific selector */
+::slotted(.style-scope ui5-icon) {
+	display: flex;
 }
 
 :host([__has-icon]) .ui5-badge-text {
@@ -96,9 +100,10 @@
 }
 
 .ui5-badge-root {
-	display: inline-flex;
+	display: flex;
 	align-items: center;
 	width: 100%;
+	height: 100%;
 	box-sizing: border-box;
 }
 
