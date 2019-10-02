@@ -1,6 +1,6 @@
 {
   "name": "@ui5/webcomponents",
-  "version": "1.0.0-rc.2",
+  "version": "1.0.0-rc.3",
   "description": "UI5 Web Components: webcomponents.main",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
@@ -65,7 +65,7 @@
     "copy:pages": "cpx \"test/**/pages/*.*\" dist/test-resources",
     "copy:qunit": "cpx \"test/**/qunit/*.*\" dist/test-resources",
     "copy:webcomponents-polyfill": "cpx \"../../node_modules/@webcomponents/webcomponentsjs/**/*.*\" dist/webcomponentsjs/",
-    "generate-new-component" : "node ./lib/create-new-component/index.js",
+    "generate-new-component": "node ./lib/create-new-component/index.js",
     "lint": "eslint .",
     "start": "npm-run-all --parallel serve:static start:prepare",
     "start:prepare": "npm-run-all --sequential build:i18n watch:all",
@@ -93,8 +93,8 @@
     "directory": "packages/main"
   },
   "dependencies": {
-    "@ui5/webcomponents-base": "0.15.0",
-    "@ui5/webcomponents-core": "0.15.0"
+    "@ui5/webcomponents-base": "0.16.0",
+    "@ui5/webcomponents-core": "0.16.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.2",
