@@ -5,7 +5,6 @@ import slideUp from "@ui5/webcomponents-base/dist/animations/slideUp.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Button from "./Button.js";
-import Icon from "./Icon.js";
 import "./icons/navigation-right-arrow.js";
 import PanelAccessibleRole from "./types/PanelAccessibleRole.js";
 import PanelTemplate from "./generated/templates/PanelTemplate.lit.js";
@@ -295,7 +294,7 @@ class Panel extends UI5Element {
 		return target.classList.contains("sapMPanelWrappingDiv");
 	}
 
-	get toggleIconTitle() {
+	get toggleButtonTitle() {
 		return this.i18nBundle.getText(PANEL_ICON);
 	}
 
@@ -335,7 +334,6 @@ class Panel extends UI5Element {
 		await Promise.all([
 			fetchI18nBundle("@ui5/webcomponents"),
 			Button.define(),
-			Icon.define(),
 		]);
 
 		super.define(...params);
