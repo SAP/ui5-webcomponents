@@ -1,10 +1,5 @@
-commit 1d377ba956da1a544acf6ab9656c33b87b5435c5
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Tue Oct 1 16:38:25 2019 +0300
+commit 4f69de854ce32b31e21fdf33d594a445461364ac
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Oct 2 14:04:13 2019 +0300
 
-    refactor(ui5-popover): improve layouting, styling and positioning (#779)
-    
-    BREAKING CHANGE: stayOpenOnScroll is now removed
-    
-    - Popover will no longer close when the browser is scrolled
-    and its parent (opener) is visible in the viewport.
+    refactor(ui5-panel): remove ui5-icon from hbs template (#810)
