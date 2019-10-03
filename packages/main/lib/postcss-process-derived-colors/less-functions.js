@@ -13,7 +13,7 @@ const lessSpin = registryData.spin;
 
 const factory = (getColorValue) => {
     const getColorInstance = colorValue => {
-        return less.color(colorValue);
+        return less.color(colorValue.replace("#", ""));
     };
 
     const darken = async (col, value) => {
