@@ -89,7 +89,7 @@
 }
 
 @keyframes grow {
-	0%, 50%, 100% {
+	0%, 50%, 99.9% {
 		-webkit-transform: scale(1.0);
 		-moz-transform: scale(1.0);
 		-ms-transform: scale(1.0);
