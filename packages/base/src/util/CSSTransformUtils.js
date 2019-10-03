@@ -53,13 +53,14 @@ const adaptLinePart = (line, tag) => {
 		return replaceSelector(line, ":host", 0, tag);
 	}
 
-	// IE specific selector (directly written with the tag) - keep it
-	if (line.match(new RegExp(`^${tag}[^a-zA-Z0-9-]`))) {
+	// Leave out @keyframes and keyframe values (0%, 100%, etc...)
+	// csso shortens '100%' -> 'to', make sure to leave it untouched
+	if (line.match(/^[@0-9]/) || line === "to" || line === "to{") {
 		return line;
 	}
 
-	// Leave out @keyframes and keyframe values (0%, 100%, etc...)
-	if (line.match(/^[@0-9]/)) {
+	// IE specific selector (directly written with the tag) - keep it
+	if (line.match(new RegExp(`^${tag}[^a-zA-Z0-9-]`))) {
 		return line;
 	}
 
