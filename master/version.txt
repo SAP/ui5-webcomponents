@@ -1,5 +1,11 @@
-commit 4f69de854ce32b31e21fdf33d594a445461364ac
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Oct 2 14:04:13 2019 +0300
+commit d20da88e4f2890e716021487ca038a4b5bd20741
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Thu Oct 3 12:33:37 2019 +0300
 
-    refactor(ui5-panel): remove ui5-icon from hbs template (#810)
+    fix(ui5-busyindicator): remove incorrect CSS transformation in IE (#816)
+    
+    keyframes gets optimised by csso
+    '100%' --> 'to' which doesn't match the
+    runtime CSS transformation rules
+    and incorrectly prepends the tag name,
+    making the CSS invalid and braking on IE
