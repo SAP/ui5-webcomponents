@@ -17,7 +17,8 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.GroupHeaderListItem.prototype */ {
 		/**
 		 * Defines the text of the <code>ui5-li-groupheader</code>.
-		 * <br><b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+		 * <br>
+		 * <b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 		 *
 		 * @type {Node[]}
 		 * @slot
@@ -57,21 +58,6 @@ class GroupHeaderListItem extends ListItemBase {
 
 	static get styles() {
 		return [ListItemBase.styles, groupheaderListItemCss];
-	}
-
-	get classes() {
-		const result = super.classes;
-
-		// Modify main classes
-		result.main.sapMGHLI = true;
-		result.main.sapMLIBTypeInactive = true;
-
-		// Define span classes
-		result.span = {
-			sapMGHLITitle: true,
-		};
-
-		return result;
 	}
 }
 

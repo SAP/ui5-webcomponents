@@ -1,6 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import TableCell from "./TableCell.js";
 import TableRowTemplate from "./generated/templates/TableRowTemplate.lit.js";
 
 // Styles
@@ -14,15 +13,15 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.TableRow.prototype */ {
 		/**
 		 * Defines the cells of the <code>ui5-table-row</code>.
-		 * <br><b>Note:</b> Only <code>ui5-table-cell</code> is allowed.
+		 * <br><b>Note:</b> Use <code>ui5-table-cell</code> for the intended design.
 		 *
-		 * @type {TableCell[]}
+		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
 		 */
 		"default": {
 			propertyName: "cells",
-			type: TableCell,
+			type: HTMLElement,
 			individualSlots: true,
 		},
 	},
@@ -77,43 +76,32 @@ class TableRow extends UI5Element {
 		this.visibleCells = [];
 		this.popinCells = [];
 
+		if (this.cells.length === 0) {
+			return;
+		}
+
 		this._columnsInfo.forEach((info, index) => {
 			if (info.visible) {
 				this.visibleCells.push(this.cells[index]);
-				this.cells[index]._firstInRow = (index === 0);
+				this.cells[index].firstInRow = (index === 0);
+				this.cells[index].popined = false;
 			} else if (info.demandPopin) {
 				this.popinCells.push({
 					cell: this.cells[index],
 					popinText: info.popinText,
 				});
+
+				this.cells[index].popined = true;
+			} else {
+				this.cells[index].popined = false;
 			}
 		}, this);
-
-		this.visibleColumnLength = this.visibleCells.length + 1;
 
 		const lastVisibleCell = this.visibleCells[this.visibleCells.length - 1];
 
 		if (lastVisibleCell) {
-			lastVisibleCell._lastInRow = true;
+			lastVisibleCell.lastInRow = true;
 		}
-	}
-
-	get classes() {
-		return {
-			main: {
-				sapWCTableRow: true,
-				sapWCTableRowWithBorder: true,
-			},
-			popin: {
-				sapWCTablePopinRow: true,
-			},
-			popinTitle: {
-				sapWCTablePopinTitle: true,
-			},
-			cellWrapper: {
-				sapMWCTableRowCellContainer: true,
-			},
-		};
 	}
 
 	get styles() {
@@ -129,6 +117,10 @@ class TableRow extends UI5Element {
 				"grid-column-end": 6,
 			},
 		};
+	}
+
+	get visibleCellsCount() {
+		return this.visibleCells.length;
 	}
 
 	onfocusin(event) {

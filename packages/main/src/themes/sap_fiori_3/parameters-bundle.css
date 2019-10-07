@@ -10,6 +10,7 @@
 @import "./DayPicker-parameters.css";
 @import "./GroupHeaderListItem-parameters.css";
 @import "./Input-parameters.css";
+@import "./InputIcon-parameters.css";
 @import "./Link-parameters.css";
 @import "./ListItemBase-parameters.css";
 @import "./MonthPicker-parameters.css";
@@ -27,3 +28,4 @@
 @import "./CalendarHeader-parameters.css";
 @import "./Table-parameters.css";
 @import "./Token-parameters.css";
+@import "./MultiComboBox-parameters.css";

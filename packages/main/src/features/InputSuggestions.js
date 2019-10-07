@@ -2,12 +2,6 @@ import { registerFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.j
 
 import List from "../List.js";
 import Popover from "../Popover.js";
-import StandardListItem from "../StandardListItem.js"; // ensure <ui5-li> is loaded
-import CustomListItem from "../CustomListItem.js"; // ensure <ui5-li-custom> is loaded
-
-(function noTreeShaked() {
-	`${StandardListItem}${CustomListItem}`; //eslint-disable-line
-}());
 
 /**
  * A class to manage the <code>Input</code suggestion items.
@@ -162,7 +156,7 @@ class Suggestions {
 
 	isOpened() {
 		const popover = this._getPopover();
-		return !!(popover && popover._isOpen);
+		return !!(popover && popover.opened);
 	}
 
 	_handleItemNavigation(forward) {
@@ -239,7 +233,7 @@ class Suggestions {
 	_getScrollContainer() {
 		if (!this._scrollContainer) {
 			const popover = this._getPopover();
-			this._scrollContainer = popover.getDomRef().querySelector(".ui5-popup-wrapper-content");
+			this._scrollContainer = popover.getDomRef().querySelector(".ui5-popover-content");
 		}
 
 		return this._scrollContainer;

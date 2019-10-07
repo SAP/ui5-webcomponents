@@ -6,11 +6,11 @@
 
     <title>Button</title>
 
-    <script data-id="sap-ui-config" type="application/json">
+    <script data-ui5-config type="application/json">
         {
             "language": "EN",
-            "xx-wc-no-conflict": {
-                "events": "press"
+            "noConflict": {
+                "events": ["click"]
             },
             "compactSize": true,
             "calendarType": "Islamic"
@@ -29,7 +29,7 @@
 
 <body>
 
-    <ui5-button>ivan</ui5-button>
+<ui5-button icon="sap-icon://download"></ui5-button>
 
 </body>
 </html>

@@ -20,7 +20,7 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 | Label                    | `ui5-label`          | `import "@ui5/webcomponents/dist/Label.js";`               |
 | Link                     | `ui5-link`           | `import "@ui5/webcomponents/dist/Link.js";`                |
 | List                     | `ui5-list`           | `import "@ui5/webcomponents/dist/List.js";`                |
-| List - Standard Item     | `ui5-li`             | `import S"@ui5/webcomponents/dist/StandardListItem.js";`   |
+| List - Standard Item     | `ui5-li`             | `import "@ui5/webcomponents/dist/StandardListItem.js";`   |
 | List - Custom Item       | `ui5-li-custom`      | `import "@ui5/webcomponents/dist/CustomListItem.js";`      |
 | List - Group Header Item | `ui5-li-groupheader` | `import "@ui5/webcomponents/dist/GroupHeaderListItem.js";` |
 | Message Strip            | `ui5-messagestrip`   | `import "@ui5/webcomponents/dist/MessageStrip.js";`        |
@@ -37,9 +37,9 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 | Tab                      | `ui5-tab`            | `import "@ui5/webcomponents/dist/Tab.js";`                 |
 | Tab Separator            | `ui5-tab-separator`  | `import "@ui5/webcomponents/dist/TabSeparator.js";`        |
 | Table                    | `ui5-table`          | `import "@ui5/webcomponents/dist/Table.js";`               |
-| Table Column             | `ui5-table-column`   | comes with ui5-table                                       |
-| Table Row                | `ui5-table-row`      | comes with ui5-table                                       |
-| Table Cell               | `ui5-table-cell`     | comes with ui5-table                                       |
+| Table Column             | `ui5-table-column`   | `import "@ui5/webcomponents/dist/TableColumn.js";`               |
+| Table Row                | `ui5-table-row`      | `import "@ui5/webcomponents/dist/TableRow.js";`               |
+| Table Cell               | `ui5-table-cell`     | `import "@ui5/webcomponents/dist/TableCell.js";`               |
 | Textarea                 | `ui5-textarea`       | `import "@ui5/webcomponents/dist/TextArea.js";`            |
 | Timeline                 | `ui5-timeline`       | `import "@ui5/webcomponents/dist/Timeline.js";`            |
 | Timeline Item            | `ui5-timeline-item`  | comes with ui5-timeline                                    |
@@ -61,6 +61,7 @@ Table of contents:
 - [Form Support](#formsupport)
 - [Input Suggestions](#inputsuggestions)
 - [Advanced Calendar Types](#advancedcalendartypes)
+- [Configuration](#conf)
 
 <a name="preface"></a>
 ### Preface
@@ -110,13 +111,13 @@ As shown in the example above, it's recommended to load the webcomponents polyfi
 ### 2. Theming
 
 ```js
-import "@ui5/webcomponents/dist/ThemePropertiesProvider.js";
+import "@ui5/webcomponents/dist/json-imports/Themes.js";
 ```
 (for additional themes support)
 
 and
 ```js
-import { setTheme } from "@ui5/webcomponents-base/dist/Theming.js";
+import { setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 ```
 (for changing the theme at runtime)
 
@@ -145,7 +146,7 @@ By importing the second module, you get the:
 method that allows you to change the theme during runtime, if necessary.
 Example:
 ```js
-import { setTheme } from "@ui5/webcomponents-base/dist/Theming.js";
+import { setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 setTheme("sap_belize_hcb");
 ```
 
@@ -153,7 +154,7 @@ setTheme("sap_belize_hcb");
 ### 3. Internationalization
 
 ```js
-import "@ui5/webcomponents/dist/MessageBundleAssets.js";
+import "@ui5/webcomponents/dist/json-imports/i18n.js";
 ```
 
 Some UI5 Web Components contain texts (such as placeholders, tooltips, messages) that need translation.
@@ -170,17 +171,15 @@ Example:
 </script>
 ```
 
-Note: importing the module above will produce the following warning message in the browser's console:
-> Inefficient bundling detected: consider bundling i18n imports as URLs instead of inlining them.
+### Note: importing `import "@ui5/webcomponents/dist/json-imports/i18n.js"` or `import "@ui5/webcomponents/dist/json-imports/Themes.js"` will produce the following warning message in the browser's console:
+> Inefficient bundling detected: consider bundling i18n/theme proeprties imports as URLs instead of inlining them.
 > See rollup-plugin-url or webpack file-loader for more information.
-> Suggested pattern: "i18n\/.*\.json"
+> Suggested pattern: "assets\/.*\.json"
 
 What this means is that it's recommended to instruct your source code bundling software
-(some of the most popular being Webpack and Rollup) not to include all the internationalization files
-(files that match the <code>i18n\/.*\.json</code> pattern) in your applications's javascript bundle,
+(some of the most popular being Webpack and Rollup) not to include all the internationalization files or theming related files
+(files that match the <code>assets\/.*\.json</code> pattern) in your applications's javascript bundle,
 but rather to leave them out. At runtime, they will be fetched on demand, if ever requested.
-Currently there are very few texts that need translation in UI5 Web Components, but these may grow over time
-so it's always a good idea to implement the optimization, suggested above.
 
 [How to do it with Webpack](https://github.com/webpack-contrib/file-loader)
 
@@ -194,7 +193,7 @@ import url from "rollup-plugin-url";
 plugins.push(url({
 	limit: 0,
 	include: [
-		/.*i18n\/.*\.json/,
+		/.*assets\/.*\.json/,
 	],
 	emitFiles: true,
 	fileName: "[name].[hash][extname]",
@@ -264,5 +263,16 @@ The <code>ui5-datepicker</code> web component supports Gregorian Calendar by def
 In order to to be able to use Buddhist, Islamic, Japanese or Persian calendar with this web component
 (by setting its <code>primaryCalendarType</code> property), you should import one or more of the modules above.
 
+<a name="config"></a>
+### 7. Configuration
 
+```js
+import { getTheme, setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
+import { getNoConflict, setNoConflict } from "@ui5/webcomponents-base/dist/config/NoConflict.js";
+import { getCompactSize } from "@ui5/webcomponents-base/dist/config/CompactSize.js";
+import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
+import { getLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
+import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
+```
 
+For more details, please check [Configuration](Configuration.md)

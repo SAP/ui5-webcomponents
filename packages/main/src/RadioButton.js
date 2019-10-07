@@ -1,9 +1,10 @@
 import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
-import { getCompactSize } from "@ui5/webcomponents-base/dist/Configuration.js";
-import getEffectiveRTL from "@ui5/webcomponents-base/dist/util/getEffectiveRTL.js";
+import { getCompactSize } from "@ui5/webcomponents-base/dist/config/CompactSize.js";
+import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import {
 	isSpace,
@@ -13,9 +14,14 @@ import {
 	isUp,
 	isRight,
 } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import Label from "./Label.js";
 import RadioButtonGroup from "./RadioButtonGroup.js";
+
 // Template
 import RadioButtonTemplate from "./generated/templates/RadioButtonTemplate.lit.js";
+
+// i18n
+import { VALUE_STATE_ERROR, VALUE_STATE_WARNING } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import radioButtonCss from "./generated/themes/RadioButton.css.js";
@@ -99,11 +105,11 @@ const metadata = {
 		/**
 		 * Defines the name of the <code>ui5-radiobutton</code>.
 		 * Radio buttons with the same <code>name</code> will form a radio button group.
-		 * <br/><b>Note:</b>
+		 * <br><b>Note:</b>
 		 * The selection can be changed with <code>ARROW_UP/DOWN</code> and <code>ARROW_LEFT/RIGHT</code> keys between radios in same group.
-		 * <br/><b>Note:</b>
+		 * <br><b>Note:</b>
 		 * Only one radio button can be selected per group.
-		 * <br/>
+		 * <br>
 		 * <b>Important:</b> For the <code>name</code> property to have effect when submitting forms, you must add the following import to your project:
 		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
 		 *
@@ -123,7 +129,7 @@ const metadata = {
 		 * Defines the form value of the <code>ui5-radiobutton</code>.
 		 * When a form with a radio button group is submitted, the group's value
 		 * will be the value of the currently selected radio button.
-		 * <br/>
+		 * <br>
 		 * <b>Important:</b> For the <code>value</code> property to have effect, you must add the following import to your project:
 		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
 		 *
@@ -176,16 +182,16 @@ const SVGConfig = {
  * <code>select</code> event is fired.
  * When a <code>ui5-radiobutton</code> that is within a group is selected, the one
  * that was previously selected gets automatically deselected. You can group radio buttons by using the <code>name</code> property.
- * <br/>
+ * <br>
  * Note: if <code>ui5-radiobutton</code> is not part of a group, it can be selected once, but can not be deselected back.
  *
  * <h3>Keyboard Handling</h3>
  *
  * Once the <code>ui5-radiobutton</code> is on focus, it might be selected by pressing the Space and Enter keys.
- * <br/>
+ * <br>
  * The Arrow Down/Arrow Up and Arrow Left/Arrow Right keys can be used to change selection between next/previous radio buttons in one group,
  * while TAB and SHIFT + TAB can be used to enter or leave the radio button group.
- * <br/>
+ * <br>
  * Note: On entering radio button group, the focus goes to the currently selected radio button.
  *
  * <h3>ES6 Module Import</h3>
@@ -200,6 +206,13 @@ const SVGConfig = {
  * @public
  */
 class RadioButton extends UI5Element {
+	constructor() {
+		super();
+
+		this._label = {};
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+	}
+
 	static get metadata() {
 		return metadata;
 	}
@@ -216,9 +229,13 @@ class RadioButton extends UI5Element {
 		return radioButtonCss;
 	}
 
-	constructor() {
-		super();
-		this._label = {};
+	static async define(...params) {
+		await Promise.all([
+			Label.define(),
+			fetchI18nBundle("@ui5/webcomponents"),
+		]);
+
+		super.define(...params);
 	}
 
 	onBeforeRendering() {
@@ -335,21 +352,19 @@ class RadioButton extends UI5Element {
 		return !(this.disabled || this.readonly || this.selected);
 	}
 
+	valueStateTextMappings() {
+		const i18nBundle = this.i18nBundle;
+
+		return {
+			"Error": i18nBundle.getText(VALUE_STATE_ERROR),
+			"Warning": i18nBundle.getText(VALUE_STATE_WARNING),
+		};
+	}
+
 	get classes() {
 		return {
-			main: {
-				sapMRb: true,
-				sapMRbHasLabel: this.text && this.text.length > 0,
-				sapMRbSel: this.selected,
-				sapMRbDis: this.disabled,
-				sapMRbRo: this.readonly,
-				sapMRbErr: this.valueState === "Error",
-				sapMRbWarn: this.valueState === "Warning",
-				sapUiSizeCompact: getCompactSize(),
-			},
 			inner: {
-				sapMRbInner: true,
-				sapMRbHoverable: !this.disabled && !this.readonly && isDesktop(),
+				"ui5-radio-inner--hoverable": !this.disabled && !this.readonly && isDesktop(),
 			},
 		};
 	}
@@ -360,6 +375,22 @@ class RadioButton extends UI5Element {
 
 	get ariaDisabled() {
 		return this.disabled ? "true" : undefined;
+	}
+
+	get ariaLabelledBy() {
+		return this.text ? `${this._id}-label` : undefined;
+	}
+
+	get ariaDescribedBy() {
+		return this.hasValueState ? `${this._id}-descr` : undefined;
+	}
+
+	get hasValueState() {
+		return this.valueState !== ValueState.None;
+	}
+
+	get valueStateText() {
+		return this.valueStateTextMappings()[this.valueState];
 	}
 
 	get tabIndex() {
@@ -374,9 +405,8 @@ class RadioButton extends UI5Element {
 		return getCompactSize() ? SVGConfig.compact : SVGConfig.default;
 	}
 
-
 	get rtl() {
-		return getEffectiveRTL() ? "rtl" : undefined;
+		return getRTL() ? "rtl" : undefined;
 	}
 }
 

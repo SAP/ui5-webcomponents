@@ -1,12 +1,14 @@
 <div
-	class="{{classes.main}}"
+	class="ui5-select-root"
 	tabindex="{{tabIndex}}"
-	dir="{{rtl}}"
+	dir="{{dir}}"
 	@keydown="{{_keydown}}"
 	@keyup="{{_keyup}}"
+	@focusin="{{onfocusin}}"
+	@focusout="{{onfocusout}}"
 >
 	<div
-		class="sapWCSelectLabel"
+		class="ui5-select-label-root"
 		@click="{{_togglePopover}}">
 		<ui5-label>{{_text}}</ui5-label>
 	</div>
@@ -31,11 +33,13 @@
 		</ui5-popover>
 	{{/if}}
 
-	<ui5-icon
-		src="sap-icon://slim-arrow-down"
-		class="sapWCSelectDropDownIcon"
-		@ui5-press="{{_togglePopover}}"
-	></ui5-icon>
+		<ui5-icon 
+			@click="{{_togglePopover}}"
+			src="sap-icon://slim-arrow-down"
+			input-icon
+			?pressed="{{_iconPressed}}"
+			dir="{{dir}}"
+		></ui5-icon>
 
-    <slot name="formSupport"></slot>
+	<slot name="formSupport"></slot>
 </div>

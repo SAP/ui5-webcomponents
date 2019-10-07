@@ -1,5 +1,6 @@
 import boot from "./boot.js";
-import { getWCNoConflict, getCompactSize } from "./Configuration.js";
+import { skipOriginalEvent } from "./config/NoConflict.js";
+import { getCompactSize } from "./config/CompactSize.js";
 import DOMObserver from "./compatibility/DOMObserver.js";
 import UI5ElementMetadata from "./UI5ElementMetadata.js";
 import Integer from "./types/Integer.js";
@@ -24,7 +25,7 @@ class UI5Element extends HTMLElement {
 		this._generateId();
 		this._initializeState();
 		this._upgradeAllProperties();
-		this._shadowRootReadyPromise = this._initializeShadowRoot();
+		this._initializeShadowRoot();
 
 		attachThemeChange(this.onThemeChanged.bind(this));
 
@@ -35,10 +36,6 @@ class UI5Element extends HTMLElement {
 		this._domRefReadyPromise._deferredResolve = deferredResolve;
 
 		this._monitoredChildProps = new Map();
-	}
-
-	_whenShadowRootReady() {
-		return this._shadowRootReadyPromise;
 	}
 
 	onThemeChanged() {
@@ -59,9 +56,9 @@ class UI5Element extends HTMLElement {
 		this._id = this.constructor._nextID();
 	}
 
-	async _initializeShadowRoot() {
+	_initializeShadowRoot() {
 		if (!this.constructor.needsShadowDOM()) {
-			return Promise.resolve();
+			return;
 		}
 
 		this.attachShadow({ mode: "open" });
@@ -88,8 +85,7 @@ class UI5Element extends HTMLElement {
 			return;
 		}
 
-		await this._whenShadowRootReady();
-		this._processChildren();
+		await this._processChildren();
 		await RenderScheduler.renderImmediately(this);
 		this._domRefReadyPromise._deferredResolve();
 		this._startObservingDOMChildren();
@@ -129,15 +125,15 @@ class UI5Element extends HTMLElement {
 	onChildrenChanged(mutations) {
 	}
 
-	_processChildren(mutations) {
+	async _processChildren(mutations) {
 		const hasSlots = this.constructor.getMetadata().hasSlots();
 		if (hasSlots) {
-			this._updateSlots();
+			await this._updateSlots();
 		}
 		this.onChildrenChanged(mutations);
 	}
 
-	_updateSlots() {
+	async _updateSlots() {
 		const slotsMap = this.constructor.getMetadata().getSlots();
 		const canSlotText = slotsMap.default && slotsMap.default.type === Node;
 
@@ -154,7 +150,7 @@ class UI5Element extends HTMLElement {
 		}
 
 		const autoIncrementMap = new Map();
-		domChildren.forEach(child => {
+		const allChildrenUpgraded = domChildren.map(async child => {
 			// Determine the type of the child (mainly by the slot attribute)
 			const slotName = this.constructor._getSlotName(child);
 			const slotData = slotsMap[slotName];
@@ -173,9 +169,24 @@ class UI5Element extends HTMLElement {
 				child._individualSlot = `${slotName}-${nextId}`;
 			}
 
+			// Await for not-yet-defined custom elements
+			if (child instanceof HTMLElement) {
+				const localName = child.localName;
+				const isCustomElement = localName.includes("-");
+				if (isCustomElement) {
+					const isDefined = window.customElements.get(localName);
+					if (!isDefined) {
+						const whenDefinedPromise = window.customElements.whenDefined(localName); // Class registered, but instances not upgraded yet
+						const timeoutPromise = new Promise(resolve => setTimeout(resolve, 1000));
+						await Promise.race([whenDefinedPromise, timeoutPromise]);
+					}
+					window.customElements.upgrade(child);
+				}
+			}
+
 			child = this.constructor.getMetadata().constructor.validateSlotValue(child, slotData);
 
-			if (child._isUI5Element) {
+			if (child.isUI5Element) {
 				this._attachChildPropertyUpdated(child, slotData);
 			}
 
@@ -184,6 +195,7 @@ class UI5Element extends HTMLElement {
 			this._state[propertyName].push(child);
 		});
 
+		await Promise.all(allChildrenUpgraded);
 		this._invalidate();
 	}
 
@@ -198,17 +210,18 @@ class UI5Element extends HTMLElement {
 		}
 
 		children.forEach(child => {
-			if (child && child._isUI5Element) {
+			if (child && child.isUI5Element) {
 				this._detachChildPropertyUpdated(child);
 			}
 		});
 
 		this._state[propertyName] = [];
+		this._invalidate(propertyName, []);
 	}
 
 	static get observedAttributes() {
-		const observedProps = this.getMetadata().getPublicPropsList();
-		return observedProps.map(camelToKebabCase);
+		const observedAttributes = this.getMetadata().getAttributesList();
+		return observedAttributes.map(camelToKebabCase);
 	}
 
 	attributeChangedCallback(name, oldValue, newValue) {
@@ -228,7 +241,7 @@ class UI5Element extends HTMLElement {
 	}
 
 	_updateAttribute(name, newValue) {
-		if (!UI5ElementMetadata.isPublicProperty(name)) {
+		if (!this.constructor.getMetadata().hasAttribute(name)) {
 			return;
 		}
 
@@ -309,21 +322,15 @@ class UI5Element extends HTMLElement {
 		const result = metadatas[0];
 
 		// merge properties
-		result.properties = metadatas.reverse().reduce((result, current) => { // eslint-disable-line
-			Object.assign(result, current.properties);
-			return result;
+		result.properties = metadatas.reverse().reduce((allProperties, current) => { // eslint-disable-line
+			Object.assign(allProperties, current.properties || {});
+			return allProperties;
 		}, {});
 
 		// merge slots
-		result.slots = metadatas.reverse().reduce((result, current) => { // eslint-disable-line
-			Object.assign(result, current.slots);
-			return result;
-		}, {});
-
-		// merge events
-		result.events = metadatas.reverse().reduce((result, current) => { // eslint-disable-line
-			Object.assign(result, current.events);
-			return result;
+		result.slots = metadatas.reverse().reduce((allSlots, current) => { // eslint-disable-line
+			Object.assign(allSlots, current.slots || {});
+			return allSlots;
 		}, {});
 
 		this._metadata = new UI5ElementMetadata(result);
@@ -387,6 +394,7 @@ class UI5Element extends HTMLElement {
 	 */
 	_invalidate() {
 		if (this._invalidated) {
+			// console.log("already invalidated", this, ...arguments);
 			return;
 		}
 
@@ -462,7 +470,7 @@ class UI5Element extends HTMLElement {
 
 		const focusDomRef = this.getFocusDomRef();
 
-		if (focusDomRef) {
+		if (focusDomRef && typeof focusDomRef.focus === "function") {
 			focusDomRef.focus();
 		}
 	}
@@ -508,7 +516,6 @@ class UI5Element extends HTMLElement {
 	 */
 	fireEvent(name, data, cancelable) {
 		let compatEventResult = true; // Initialized to true, because if the event is not fired at all, it should be considered "not-prevented"
-		const noConflict = getWCNoConflict();
 
 		const noConflictEvent = new CustomEvent(`ui5-${name}`, {
 			detail: data,
@@ -520,7 +527,7 @@ class UI5Element extends HTMLElement {
 		// This will be false if the compat event is prevented
 		compatEventResult = this.dispatchEvent(noConflictEvent);
 
-		if (noConflict === true || (noConflict.events && noConflict.events.includes && noConflict.events.includes(name))) {
+		if (skipOriginalEvent(name)) {
 			return compatEventResult;
 		}
 
@@ -540,7 +547,7 @@ class UI5Element extends HTMLElement {
 
 	getSlottedNodes(slotName) {
 		const reducer = (acc, curr) => {
-			if (curr.tagName.toUpperCase() !== "SLOT") {
+			if (curr.localName !== "slot") {
 				return acc.concat([curr]);
 			}
 			return acc.concat(curr.assignedNodes({ flatten: true }).filter(item => item instanceof HTMLElement));
@@ -552,9 +559,9 @@ class UI5Element extends HTMLElement {
 	/**
 	 * Used to duck-type UI5 elements without using instanceof
 	 * @returns {boolean}
-	 * @private
+	 * @public
 	 */
-	get _isUI5Element() {
+	get isUI5Element() {
 		return true;
 	}
 
@@ -680,9 +687,6 @@ class UI5Element extends HTMLElement {
 
 					if (isDifferent) {
 						this._state[prop] = value;
-						if (propData.nonVisual) {
-							return;
-						}
 						this._invalidate(prop, value);
 						this._propertyChange(prop, value);
 					}

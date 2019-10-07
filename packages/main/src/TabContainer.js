@@ -4,15 +4,18 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-import { getCompactSize } from "@ui5/webcomponents-base/dist/Configuration.js";
-import getEffectiveRTL from "@ui5/webcomponents-base/dist/util/getEffectiveRTL.js";
+import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { TABCONTAINER_PREVIOUS_ICON_ACC_NAME, TABCONTAINER_NEXT_ICON_ACC_NAME, TABCONTAINER_OVERFLOW_MENU_TITLE } from "./generated/i18n/i18n-defaults.js";
 import TabContainerTemplate from "./generated/templates/TabContainerTemplate.lit.js";
 import Button from "./Button.js";
 import CustomListItem from "./CustomListItem.js";
 import Icon from "./Icon.js";
+import "./icons/slim-arrow-down.js";
+import "./icons/slim-arrow-left.js";
+import "./icons/slim-arrow-right.js";
 import List from "./List.js";
 import Popover from "./Popover.js";
-import TabBase from "./TabBase.js";
 import SemanticColor from "./types/SemanticColor.js";
 
 // Styles
@@ -29,15 +32,15 @@ const metadata = {
 	slots: /** @lends  sap.ui.webcomponents.main.TabContainer.prototype */ {
 		/**
 		 * Defines the tabs.
-		 * <br><b>Note:</b> Only <code>ui5-tab</code> and <code>ui5-tab-separator</code> are allowed.
+		 * <br><b>Note:</b> Use <code>ui5-tab</code> and <code>ui5-tab-separator</code> for the intended design.
 		 *
-		 * @type {TabBase[]}
+		 * @type {HTMLElement[]}
 		 * @public
 		 * @slot
 		 */
 		"default": {
 			propertyName: "items",
-			type: TabBase,
+			type: HTMLElement,
 			individualSlots: true,
 			listenFor: { include: ["*"] },
 		},
@@ -81,20 +84,22 @@ const metadata = {
 		},
 
 		_selectedTab: {
-			type: TabBase,
-			association: true,
+			type: Object,
 		},
 
 		_scrollable: {
 			type: Boolean,
+			noAttribute: true,
 		},
 
 		_scrollableBack: {
 			type: Boolean,
+			noAttribute: true,
 		},
 
 		_scrollableForward: {
 			type: Boolean,
+			noAttribute: true,
 		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.TabContainer.prototype */ {
@@ -173,6 +178,8 @@ class TabContainer extends UI5Element {
 
 		// Init ItemNavigation
 		this._initItemNavigation();
+
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
@@ -194,7 +201,7 @@ class TabContainer extends UI5Element {
 
 	calculateRenderItems() {
 		this.renderItems = this.items.map((item, index) => {
-			const isSeparator = item.isSeparator();
+			const isSeparator = item.isSeparator;
 
 			if (isSeparator) {
 				return { isSeparator, _tabIndex: item._tabIndex, _id: item._id };
@@ -280,7 +287,7 @@ class TabContainer extends UI5Element {
 
 		// update selected items
 		this.items.forEach((item, index) => {
-			if (!item.isSeparator()) {
+			if (!item.isSeparator) {
 				const selected = selectedIndex === index;
 				item.selected = selected;
 
@@ -337,7 +344,7 @@ class TabContainer extends UI5Element {
 	}
 
 	_getTabs() {
-		return this.items.filter(item => !item.isSeparator());
+		return this.items.filter(item => !item.isSeparator);
 	}
 
 	_getHeaderScrollContainer() {
@@ -350,10 +357,6 @@ class TabContainer extends UI5Element {
 
 	get classes() {
 		return {
-			main: {
-				"ui5-tab-container": true,
-				"sapUiSizeCompact": getCompactSize(),
-			},
 			header: {
 				"ui5-tc__header": true,
 				"ui5-tc__header--scrollable": this._scrollable,
@@ -392,8 +395,20 @@ class TabContainer extends UI5Element {
 		return this.items.some(item => item.icon) && this.items.some(item => item.text);
 	}
 
+	get previousIconACCName() {
+		return this.i18nBundle.getText(TABCONTAINER_PREVIOUS_ICON_ACC_NAME);
+	}
+
+	get nextIconACCName() {
+		return this.i18nBundle.getText(TABCONTAINER_NEXT_ICON_ACC_NAME);
+	}
+
+	get overflowMenuTitle() {
+		return this.i18nBundle.getText(TABCONTAINER_OVERFLOW_MENU_TITLE);
+	}
+
 	get rtl() {
-		return getEffectiveRTL() ? "rtl" : undefined;
+		return getRTL() ? "rtl" : undefined;
 	}
 
 	static async define(...params) {
@@ -403,6 +418,7 @@ class TabContainer extends UI5Element {
 			Icon.define(),
 			List.define(),
 			Popover.define(),
+			fetchI18nBundle("@ui5/webcomponents"),
 		]);
 
 		super.define(...params);

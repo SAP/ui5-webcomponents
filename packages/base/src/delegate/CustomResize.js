@@ -30,9 +30,10 @@ class CustomResize {
 		CustomResize.resizeListeners.forEach((entry, ref) => {
 			const changed = CustomResize.checkSizes(entry, ref);
 
-			if (changed) {
+			if (changed || (entry && !entry._hasBeenRendered)) {
 				CustomResize.updateSizes(entry, ref.offsetWidth, ref.offsetHeight);
 				entry.callbacks.forEach(el => el());
+				entry._hasBeenRendered = true;
 			}
 		});
 	}

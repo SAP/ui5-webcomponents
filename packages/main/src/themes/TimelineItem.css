@@ -1,21 +1,17 @@
-:host(ui5-timeline-item:not([hidden])) {
+:host(:not([hidden])) {
 	display: block;
 }
 
-ui5-timeline-item:not([hidden]) {
-	display: block;
-}
-
-.sapWCTimelineItem {
+.ui5-tli-root {
 	display: flex;
 }
 
-.sapWCTimelineIndicator {
+.ui5-tli-indicator {
 	position: relative;
 	width: 2rem;
 }
 
-.sapWCTimelineIndicator::before {
+.ui5-tli-indicator::before {
 	content: "";
 	display: inline-block;
 	background-color: var(--sapUiContentForegroundBorderColor);
@@ -27,13 +23,13 @@ ui5-timeline-item:not([hidden]) {
 }
 
 /* Line when no Icon is provided */
-.sapWCTimelineIndicatorNoIcon::before {
+:host(:not([icon])) .ui5-tli-indicator::before {
 	bottom: -2.125rem;
 	top: 1.875rem;
 }
 
 /* No Icon Dot */
-.sapWCTimelineIndicatorNoIcon::after {
+:host(:not([icon])) .ui5-tli-indicator::after {
 	content: "";
 	display: inline-block;
 	box-sizing: border-box;
@@ -48,22 +44,26 @@ ui5-timeline-item:not([hidden]) {
 	transform: translateX(-50%);
 }
 
-:host(ui5-timeline-item:last-child) .sapWCTimelineIndicator::before {
+:host(:last-child) .ui5-tli-indicator::before {
 	display: none;
 }
 
-ui5-timeline-item:last-child .sapWCTimelineIndicator::before {
-    display: none;
-}
-
-.sapWCTimelineItemIcon {
-	color: var(--sapContent_NonInteractiveIconColor);
-	font-size: 1.375rem;
+.ui5-tli-icon-outer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	margin-top: .25rem;
-	width: 100%;
+	height: 1.625rem;
+	width: 2rem;
 }
 
-.sapWCTimelineBubble {
+.ui5-tli-icon {
+	color: var(--sapContent_NonInteractiveIconColor);
+	height: 1.375rem;
+	width: 1.375rem;
+}
+
+.ui5-tli-bubble {
 	background: var(--sapUiGroupContentBackground);
 	border: 1px solid var(--sapUiListBorderColor);
 	box-sizing: border-box;
@@ -74,11 +74,11 @@ ui5-timeline-item:last-child .sapWCTimelineIndicator::before {
 	padding: 1rem;
 }
 
-.sapWCTimelineBubble:focus {
+.ui5-tli-bubble:focus {
 	outline: none;
 }
 
-.sapWCTimelineBubble:focus::after {
+.ui5-tli-bubble:focus::after {
 	content: "";
 	border: var(--_ui5_TimelineItem_bubble_outline_width) dotted var(--sapUiContentFocusColor);
 	position: absolute;
@@ -89,7 +89,7 @@ ui5-timeline-item:last-child .sapWCTimelineIndicator::before {
 	pointer-events: none;
 }
 
-.sapWCTimelineBubbleArrow {
+.ui5-tli-bubble-arrow {
 	width: var(--_ui5_TimelineItem_arrow_size);
 	padding-bottom: var(--_ui5_TimelineItem_arrow_size);
 	position: absolute;
@@ -99,7 +99,7 @@ ui5-timeline-item:last-child .sapWCTimelineIndicator::before {
 	overflow: hidden;
 }
 
-.sapWCTimelineBubbleArrow::before {
+.ui5-tli-bubble-arrow::before {
 	content: "";
 	background: var(--sapUiGroupContentBackground);
 	border: 1px solid var(--sapUiListBorderColor);
@@ -112,40 +112,30 @@ ui5-timeline-item:last-child .sapWCTimelineIndicator::before {
 	transform: rotate(45deg);
 }
 
-.sapWCTimelineBubbleArrowLeft {
+.ui5-tli-bubble-arrow--left {
 	left: calc(-1 * var(--_ui5_TimelineItem_arrow_size));
 }
 
-.sapWCTimelineBubbleArrowLeft::before {
+.ui5-tli-bubble-arrow--left::before {
 	left: 50%;
 	width: 50%;
 	transform-origin: 100% 100%;
 }
 
-.sapWCTimelineBubbleArrowRight {
-	right: calc(-1 * var(--_ui5_TimelineItem_arrow_size));
-	left: auto;
-}
-
-.sapWCTimelineBubbleArrowRight::before {
-	width: 50%;
-	transform-origin: 0 0;
-}
-
-.sapWCTimelineItemTitle,
-.sapWCTimelineItemDesc {
+.ui5-tli-title,
+.ui5-tli-desc {
 	color: var(--sapUiListTextColor);
 	font-family: var(--sapUiFontFamily);
 	font-weight: 400;
 	font-size: var(--sapMFontMediumSize);
 }
 
-.sapWCTimelineItemTitle span {
+.ui5-tli-title span {
 	display: inline-block;
 	vertical-align: top;
 }
 
-.sapWCTimelineItemSubtitle {
+.ui5-tli-subtitle {
 	color: var(--sapUiContentLabelColor);
 	font-family: var(--sapUiFontFamily);
 	font-weight: 400;
@@ -156,35 +146,30 @@ ui5-timeline-item:last-child .sapWCTimelineIndicator::before {
 	text-overflow: ellipsis;
 }
 
-.sapWCTimelineItemDesc {
+.ui5-tli-desc {
 	padding-top: .75rem;
 }
 
-.sapUiSizeCompact .sapWCTimelineBubble {
+:host([data-ui5-compact-size]) .ui5-tli-bubble {
 	padding: .5rem;
 }
 
-.sapUiSizeCompact .sapWCTimelineIndicator::before {
+:host([data-ui5-compact-size]) .ui5-tli-indicator::before {
 	bottom: -.5rem;
 }
 
-[dir=rtl] .sapWCTimelineBubbleArrowLeft {
+[dir=rtl] .ui5-tli-bubble-arrow--left {
 	right: calc(-1 * var(--_ui5_TimelineItem_arrow_size));
 	left: auto;
 	transform: scale(-1, 1);
 }
 
-[dir=rtl] .sapWCTimelineBubbleArrowRight {
-	right: calc(-1 * var(--_ui5_TimelineItem_arrow_size));
-	left: auto;
-}
-
-[dir=rtl] .sapWCTimelineBubble {
+[dir=rtl] .ui5-tli-bubble {
 	margin-left: auto;
 	margin-right: .5rem;
 }
 
-[dir=rtl] .sapWCTimelineBubble:focus::after {
+[dir=rtl] .ui5-tli-bubble:focus::after {
 	left: var(--_ui5_TimelineItem_bubble_rtl_left_offset);
 	right: var(--_ui5_TimelineItem_bubble_rtl_right_offset);
 }

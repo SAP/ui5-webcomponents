@@ -9,7 +9,7 @@
 			{{> selectionElement}}
 		{{/if}}
 
-		<div id="{{_id}}-content" class="{{classes.inner}}">
+		<div id="{{_id}}-content" class="ui5-li-content">
 			{{> imageBegin}}
 			{{> iconBegin}}
 			{{> listItemContent}}
@@ -32,26 +32,28 @@
 	{{#if modeSingleSelect}}
 		<ui5-radiobutton
 				id="{{_id}}-singleSelectionElement"
-				class="singleSelectionRadioButton"
-				?selected="{{selected}}">
+				class="ui5-li-singlesel-radiobtn"
+				?selected="{{selected}}"
+				@click="{{onSingleSelectionComponentPress}}">
 		</ui5-radiobutton>
 	{{/if}}
 
 	{{#if modeMultiSelect}}
 		<ui5-checkbox
 				id="{{_id}}-multiSelectionElement"
-				class="multiSelectionCheckBox"
-				?checked="{{selected}}">
+				class="ui5-li-multisel-cb"
+				?checked="{{selected}}"
+				@click="{{onMultiSelectionComponentPress}}">
 		</ui5-checkbox>
 	{{/if}}
 
 	{{#if modeDelete}}
-		<div class="sapMDeleteListItemButton">
+		<div class="ui5-li-deletebtn">
 			<ui5-button
 				id="{{_id}}-deleteSelectionElement"
 				design="Transparent"
 				icon="sap-icon://decline"
-				@ui5-press="{{_onDelete}}"
+				@ui5-press="{{onDelete}}"
 			></ui5-button>
 		</div>
 	{{/if}}

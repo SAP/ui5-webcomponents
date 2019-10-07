@@ -1,12 +1,17 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getTheme } from "@ui5/webcomponents-base/dist/Configuration.js";
+import { getTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
+import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import {
 	isBackSpace,
 	isEnter,
 	isSpace,
 	isDelete,
 } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import "./icons/decline.js";
+import "./icons/cancel.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { TOKEN_ARIA_DELETABLE } from "./generated/i18n/i18n-defaults.js";
 
 import Icon from "./Icon.js";
 import TokenTemplate from "./generated/templates/TokenTemplate.lit.js";
@@ -53,7 +58,9 @@ const metadata = {
 		 */
 		readonly: { type: Boolean },
 
-		_tabIndex: { type: String, defaultValue: "-1" },
+		_tabIndex: { type: String, defaultValue: "-1", noAttribute: true },
+
+		overflows: { type: Boolean },
 	},
 
 	events: /** @lends sap.ui.webcomponents.main.Token.prototype */ {
@@ -115,6 +122,12 @@ class Token extends UI5Element {
 		return styles;
 	}
 
+	constructor() {
+		super();
+
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+	}
+
 	_select() {
 		this.fireEvent("select");
 	 }
@@ -141,12 +154,23 @@ class Token extends UI5Element {
 		}
 	}
 
+	get tokenDeletableText() {
+		return this.i18nBundle.getText(TOKEN_ARIA_DELETABLE);
+	}
+
+	get dir() {
+		return getRTL() ? "rtl" : "ltr";
+	}
+
 	get iconURI() {
 		return getTheme() === "sap_fiori_3" ? "sap-icon://decline" : "sap-icon://sys-cancel";
 	}
 
 	static async define(...params) {
-		await Icon.define();
+		await Promise.all([
+			Icon.define(),
+			fetchI18nBundle("@ui5/webcomponents"),
+		]);
 
 		super.define(...params);
 	}

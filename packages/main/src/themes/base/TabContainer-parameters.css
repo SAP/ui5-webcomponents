@@ -4,6 +4,7 @@
 
 	/* Header Item */
 	--_ui5_tc_headerItem_color: var(--sapUiGroupTitleTextColor);
+	--_ui5_tc_headeritem_text_selected_color: var(--sapUiSelected); 
 	--_ui5_tc_headerItem_positive_selected_border_color: var(--sapUiPositive);
 	--_ui5_tc_headerItem_negative_selected_border_color: var(--sapUiNegative);
 	--_ui5_tc_headerItem_critical_selected_border_color: var(--sapUiCritical);

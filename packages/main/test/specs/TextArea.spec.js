@@ -4,8 +4,8 @@ describe("when enabled", () => {
 	browser.url('http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/TextArea.html');
 
 	it("can type inside", () => {
-		const textarea = browser.findElementDeep("#basic-textarea");
-		const textareaInner = browser.findElementDeep("#basic-textarea >>> textarea");
+		const textarea = browser.$("#basic-textarea");
+		const textareaInner = browser.$("#basic-textarea").shadow$("textarea");
 
 		assert.strictEqual(textarea.getProperty("value"), "Test", "Initial value is correct");
 
@@ -14,15 +14,15 @@ describe("when enabled", () => {
 	});
 
 	it("can not be edittable when disabled", () => {
-		const textAreaInnerDisabled = browser.findElementDeep("#disabled-textarea >>> textarea");
+		const textAreaInnerDisabled = browser.$("#disabled-textarea").shadow$("textarea");
 
 		assert.strictEqual(textAreaInnerDisabled.isEnabled(), false, "Should not be enabled");
 	});
 
 	describe("when growing", () => {
 		it("Should have 8 rows and grow", () => {
-			const textArea = browser.findElementDeep("#eight-rows-textarea");
-			const textAreaInner = browser.findElementDeep("#eight-rows-textarea >>> textarea");
+			const textArea = browser.$("#eight-rows-textarea");
+			const textAreaInner = browser.$("#eight-rows-textarea").shadow$("textarea");
 	
 			const initialSize = textArea.getSize();
 			textAreaInner.setValue(`1\n2\n3\n4\n5\n6\n7\n8`);
@@ -37,8 +37,8 @@ describe("when enabled", () => {
 		});
 
 		it("Should grow up to 4 lines", () => {
-			const textArea = browser.findElementDeep("#growing-ta-to-four");
-			const textAreaInner = browser.findElementDeep("#growing-ta-to-four >>> textarea");
+			const textArea = browser.$("#growing-ta-to-four");
+			const textAreaInner = browser.$("#growing-ta-to-four").shadow$("textarea");
 
 			const initialSize = textArea.getSize();
 
@@ -60,7 +60,7 @@ describe("when enabled", () => {
 	describe("When having max length set", () => {
 
 		it("prevents input when max is reached", () => {
-			const textAreaInner = browser.findElementDeep("#ta-max-length >>> textarea");
+			const textAreaInner = browser.$("#ta-max-length").shadow$("textarea");
 
 			textAreaInner.setValue(`123456789123456789121111`);
 
@@ -70,8 +70,8 @@ describe("when enabled", () => {
 		describe("Show exceeded text", () => {
 
 			it("Shows counter", () => {
-				const textAreaInner = browser.findElementDeep("#show-max-length >>> textarea");
-				const counter = browser.findElementDeep("#show-max-length >>> .sapWCTextAreaExceededText");
+				const textAreaInner = browser.$("#show-max-length").shadow$("textarea");
+				const counter = browser.$("#show-max-length").shadow$(".ui5-textarea-exceeded-text");
 
 				textAreaInner.setValue(`123456789123456789121111`);
 

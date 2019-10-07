@@ -4,14 +4,14 @@ describe("CheckBox general interaction", () => {
 	browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/CheckBox.html");
 
 	it("tests checked default value is false", () => {
-		const checkBox = browser.findElementDeep("#cb1");
+		const checkBox = browser.$("#cb1");
 
 		assert.strictEqual(checkBox.getProperty("checked"), false, "Check if default value for checked is false");
 	});
 
 	it("tests change event", () => {
-		const checkBox = browser.findElementDeep("#cb1");
-		const field = browser.findElementDeep("#field");
+		const checkBox = browser.$("#cb1");
+		const field = browser.$("#field");
 
 		checkBox.click();
 		checkBox.keys("Space");
@@ -21,8 +21,8 @@ describe("CheckBox general interaction", () => {
 	});
 
 	it("tests change event not fired, when disabled", () => {
-		const checkBox = browser.findElementDeep("#cb2");
-		const field = browser.findElementDeep("#field");
+		const checkBox = browser.$("#cb2");
+		const field = browser.$("#field");
 
 		checkBox.click();
 		checkBox.keys("Space");
@@ -33,8 +33,8 @@ describe("CheckBox general interaction", () => {
 
 	it("tests truncating and wrapping", () => {
 		const CHECKBOX_DEFAULT_HEIGHT = 44;
-		const truncatingCb = browser.findElementDeep("#truncatingCb >>> .ui5-checkbox-wrapper");
-		const wrappingCb = browser.findElementDeep("#wrappingCb");
+		const truncatingCb = browser.$("#truncatingCb").shadow$(".ui5-checkbox-root");
+		const wrappingCb = browser.$("#wrappingCb");
 
 		const truncatingCbHeight = truncatingCb.getSize("height");
 		const wrappingCbHeight = wrappingCb.getSize("height");

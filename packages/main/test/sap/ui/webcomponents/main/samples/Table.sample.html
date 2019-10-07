@@ -15,7 +15,7 @@
 
 	<link href="../../../../../../test-resources/playground/css/api.css" type="text/css" rel="stylesheet">
 
-	<script data-id="sap-ui-config" type="application/json">
+	<script data-ui5-config type="application/json">
 		{
 			"theme": "sap_fiori_3",
 			"language": "EN"
@@ -39,12 +39,6 @@
 			padding: 0.5rem;
 		}
 
-		html[data-sap-ui-browser=ie11] .table-example,
-		html[data-sap-ui-browser=ed15] .table-example,
-		html:not([data-sap-ui-browser^=ie]):not([data-sap-ui-browser^=ed]) .table-unsupported {
-			display: none;
-		}
-
 		.hcb-background .header {
 			color: #fff;
 		}
@@ -56,11 +50,6 @@
 		<h2 class="control-header">Table</h2>
 		<div style="margin-bottom: 2rem; font-weight: 300; font-size: 1.1rem; color: #666666;">&lt;ui5-table&gt;</div>
 	</header>
-
-	<div class="table-unsupported">
-		<div>The table is currently not supported in IE11 and Edge. If you need this feature, do not hesitate to open an issue in</div>
-		<a href=\"https://github.com/SAP/ui5-webcomponents/issues/new/choose\" target=\"_blank\">Github</a>
-	</div>
 
 	<section class="table-example">
 		<h3>Basic Table</h3>
@@ -74,7 +63,7 @@
 
 			<ui5-table class="demo-table" id="tbl">
 				<!-- Columns -->
-				<ui5-table-column slot="columns" width="12em">
+				<ui5-table-column slot="columns" style="width: 12rem">
 					<span style="line-height: 1.4rem">Product</span>
 				</ui5-table-column>
 
@@ -106,7 +95,7 @@
 
 <ui5-table class="demo-table" id="table">
 	<!-- Columns -->
-	<ui5-table-column slot="columns" width="12em">
+	<ui5-table-column slot="columns" style="width: 12rem">
 		<span style="line-height: 1.4rem">Product</span>
 	</ui5-table-column>
 
@@ -135,7 +124,7 @@
 		<div class="snippet flex-column">
 			<ui5-table class="demo-table" no-data-text="No Data" show-no-data>
 				<!-- Columns -->
-				<ui5-table-column slot="columns" width="12em">
+				<ui5-table-column slot="columns" style="width: 12rem">
 					<span style="line-height: 1.4rem">Product</span>
 				</ui5-table-column>
 
@@ -159,7 +148,7 @@
 
 		<pre class="prettyprint lang-html"><xmp>
 <ui5-table class="demo-table" no-data-text="No Data" show-no-data>
-	<ui5-table-column slot="columns" width="12em">
+	<ui5-table-column slot="columns" style="width: 12rem">
 		<span style="line-height: 1.4rem">Product</span>
 	</ui5-table-column>
 

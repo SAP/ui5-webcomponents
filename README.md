@@ -85,10 +85,10 @@ import "@ui5/webcomponents/dist/Label.js"; // loads ui5-label
 ## Configure
 UI5 Web Components have built-in internationalization and globalization support. Language, compact/cozy switch, date/time settings and theme can be changed with parameters.
 
-To provide configuration settings, create a ```script``` tag having ```data-id="sap-ui-config"``` and ```type="application/json"```:
+To provide configuration settings, create a ```script``` tag having ```data-ui5-config``` and ```type="application/json"```:
 
 ```html
-<script data-id="sap-ui-config" type="application/json">
+<script data-ui5-config type="application/json">
 {
   "theme": "sap_belize",
   "language": "EN"
@@ -101,7 +101,7 @@ To provide configuration settings, create a ```script``` tag having ```data-id="
 UI5 Web Components support right-to-left text direction (RTL). To enable RTL globally, provide the option ```rtl: true``` in the configuration ```script``` tag:
 
 ```html
-<script data-id="sap-ui-config" type="application/json">
+<script data-ui5-config type="application/json">
 {
   "language": "en",
   "rtl": true
@@ -113,7 +113,7 @@ UI5 Web Components support right-to-left text direction (RTL). To enable RTL glo
 UI5 Web Components supports ```Compact``` and ```Cozy``` mode. It is set to ```Cozy``` by default. To enable ```Compact``` globally, provide the option ```compactSize: true``` in the configuration ```script``` tag:
 
 ```html
-<script data-id="sap-ui-config" type="application/json">
+<script data-ui5-config type="application/json">
 {
   "compactSize": true
 }
@@ -124,7 +124,7 @@ UI5 Web Components supports ```Compact``` and ```Cozy``` mode. It is set to ```C
 UI5 Web Components support different calendar types (Gregorian, Islamic, Japanese, Buddhist and Persian). To change them, provide the option ```calendarType: "Islamic"``` in the configuration ```script``` tag:
 
 ```html
-<script data-id="sap-ui-config" type="application/json">
+<script data-ui5-config type="application/json">
 {
   "calendarType": "Islamic"
 }
@@ -167,7 +167,6 @@ Keep in mind that linking the same module with npm and Yarn may cause issues. Al
 - [UI5 Web Components Core](https://www.npmjs.com/package/@ui5/webcomponents-core)
 
 ## Limitations
-- The ```ui5-table``` web component does not work on Internet Explorer 11
 - All input web components (ui5-input, ui5-datepicker and ui5-textarea) do not support the ```placeholder``` attribute on Internet Explorer 11
 
 ## Known Issues

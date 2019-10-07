@@ -2,7 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isIE } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { getCompactSize } from "@ui5/webcomponents-base/dist/Configuration.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import {
 	isUp,
@@ -10,14 +9,21 @@ import {
 	isSpace,
 	isEnter,
 } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-import Icon from "./Icon.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+// import Icon from "./Icon.js";
 import InputType from "./types/InputType.js";
 // Template
 import InputTemplate from "./generated/templates/InputTemplate.lit.js";
 
+import {
+	VALUE_STATE_SUCCESS,
+	VALUE_STATE_ERROR,
+	VALUE_STATE_WARNING,
+	INPUT_SUGGESTIONS,
+} from "./generated/i18n/i18n-defaults.js";
+
 // Styles
 import styles from "./generated/themes/Input.css.js";
-import shellbarInput from "./generated/themes/ShellBarInput.css.js";
 
 /**
  * @public
@@ -29,26 +35,30 @@ const metadata = {
 		/**
 		 * Defines the icon to be displayed in the <code>ui5-input</code>.
 		 *
-		 * @type {Icon[]}
+		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
 		 */
 		icon: {
-			type: Icon,
+			type: HTMLElement,
 		},
 
 		/**
 		 * Defines the <code>ui5-input</code> suggestion items.
-		 * </br></br>
-		 * Example: </br>
-		 * &lt;ui5-input show-suggestions></br>
-		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li>Item #1&lt;/ui5-li></br>
-		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li>Item #2&lt;/ui5-li></br>
+		 * <br><br>
+		 * Example: <br>
+		 * &lt;ui5-input show-suggestions><br>
+		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li>Item #1&lt;/ui5-li><br>
+		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li>Item #2&lt;/ui5-li><br>
 		 * &lt;/ui5-input>
 		 * <ui5-input show-suggestions><ui5-li>Item #1</ui5-li><ui5-li>Item #2</ui5-li></ui5-input>
-		 * </br></br>
+		 * <br><br>
 		 * <b>Note:</b> The suggestion would be displayed only if the <code>showSuggestions</code>
 		 * property is set to <code>true</code>.
+		 * <br><br>
+		 * <b>Note:</b> The &lt;ui5-li> and  &lt;ui5-li-custom> are recommended to be used as suggestion items.
+		 * <br>
+		 * In order to use them, you need to import either <code>"@ui5/webcomponents/dist/StandardListItem"</code>, or  <code>"@ui5/webcomponents/dist/CustomListItem"</code> module.
 		 *
 		 * @type {HTMLElement[]}
 		 * @slot
@@ -81,8 +91,6 @@ const metadata = {
 		/**
 		 * Defines a short hint intended to aid the user with data entry when the
 		 * <code>ui5-input</code> has no value.
-		 * <br><br>
-		 * <b>Note:</b> The placeholder is not supported in IE. If the placeholder is provided, it won`t be displayed in IE.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
@@ -102,6 +110,18 @@ const metadata = {
 		 * @public
 		 */
 		readonly: {
+			type: Boolean,
+		},
+
+		/**
+		 * Defines whether the <code>ui5-input</code> is required.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 * @since 1.0.0
+		 */
+		required: {
 			type: Boolean,
 		},
 
@@ -173,7 +193,9 @@ const metadata = {
 
 		/**
 		 * Defines whether the <code>ui5-input</code> should show suggestions, if such are present.
-		 *
+		 * <br><br>
+		 * <b>Note:</b>
+		 * Don`t forget to import the <code>InputSuggestions</code> module from "@ui5/webcomponents/dist/features/InputSuggestions.js" to enable this functionality.
 		 * @type {Boolean}
 		 * @defaultvalue false
 		 * @public
@@ -182,7 +204,10 @@ const metadata = {
 			type: Boolean,
 		},
 
-		_focused: {
+		/**
+		 * @private
+		 */
+		focused: {
 			type: Boolean,
 		},
 
@@ -191,6 +216,14 @@ const metadata = {
 		},
 
 		_popover: {
+			type: Object,
+		},
+
+		_inputAccInfo: {
+			type: Object,
+		},
+
+		_wrapperAccInfo: {
 			type: Object,
 		},
 	},
@@ -286,7 +319,7 @@ class Input extends UI5Element {
 	}
 
 	static get styles() {
-		return [styles, shellbarInput];
+		return [styles];
 	}
 
 	constructor() {
@@ -314,6 +347,8 @@ class Input extends UI5Element {
 		// all user interactions
 		this.ACTION_ENTER = "enter";
 		this.ACTION_USER_INPUT = "input";
+
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
@@ -352,6 +387,12 @@ class Input extends UI5Element {
 		if (isEnter(event)) {
 			return this._handleEnter(event);
 		}
+
+		this._keyDown = true;
+	}
+
+	onkeyup() {
+		this._keyDown = false;
 	}
 
 	/* Event handling */
@@ -380,13 +421,13 @@ class Input extends UI5Element {
 		}
 	}
 
-	onfocusin() {
-		this._focused = true; // invalidating property
+	onfocusin(event) {
+		this.focused = true; // invalidating property
 		this.previousValue = this.value;
 	}
 
 	onfocusout() {
-		this._focused = false; // invalidating property
+		this.focused = false; // invalidating property
 		this.previousValue = "";
 	}
 
@@ -400,7 +441,14 @@ class Input extends UI5Element {
 			event.stopImmediatePropagation();
 		}
 
-		this.fireEventByAction(this.ACTION_USER_INPUT);
+		/* skip calling change event when an input with a placeholder is focused on IE
+			- value of the host and the internal input should be differnt in case of actual input
+			- input is called when a key is pressed => keyup should not be called yet
+		*/
+		const skipFiring = (this.getInputDOMRef().value === this.value) && isIE() && !this._keyDown && !!this.placeholder;
+
+		!skipFiring && this.fireEventByAction(this.ACTION_USER_INPUT);
+
 		this.hasSuggestionItemSelected = false;
 
 		if (this.Suggestions) {
@@ -424,7 +472,7 @@ class Input extends UI5Element {
 	shouldOpenSuggestions() {
 		return !!(this.suggestionItems.length
 			&& this.showSuggestions
-			&& this._focused
+			&& this.focused
 			&& !this.hasSuggestionItemSelected);
 	}
 
@@ -463,6 +511,8 @@ class Input extends UI5Element {
 
 		if (isUserInput) { // input
 			this.fireEvent(this.EVENT_INPUT);
+			// Angular two way data binding
+			this.fireEvent("value-changed");
 			return;
 		}
 
@@ -513,34 +563,14 @@ class Input extends UI5Element {
 
 	onClose() {}
 
-	get classes() {
-		const hasState = this.valueState !== "None";
+	valueStateTextMappings() {
+		const i18nBundle = this.i18nBundle;
 
 		return {
-			main: {
-				sapWCInputBase: true,
-				sapWCInputBaseWidthPadding: true,
-				sapWCInputBaseDisabled: this.disabled,
-				sapWCInputBaseReadonly: this.readonly,
-				sapWCInput: true,
-				sapWCInputFocused: this._focused,
-				sapWCFocus: this._focused,
-				sapUiSizeCompact: getCompactSize(),
-			},
-			wrapper: {
-				sapWCInputBaseContentWrapper: true,
-				sapWCInputBaseDisabledWrapper: this.disabled,
-				sapWCInputBaseReadonlyWrapper: this.readonly && !this.disabled,
-				sapWCInputBaseContentWrapperState: hasState,
-				[`sapWCInputBaseContentWrapper${this.valueState}`]: hasState,
-			},
+			"Success": i18nBundle.getText(VALUE_STATE_SUCCESS),
+			"Error": i18nBundle.getText(VALUE_STATE_ERROR),
+			"Warning": i18nBundle.getText(VALUE_STATE_WARNING),
 		};
-	}
-
-	get inputPlaceholder() {
-		// We don`t support placeholder for IE,
-		// because IE fires input events, when placeholder exists, leading to functional degredations.
-		return isIE() ? "" : this.placeholder;
 	}
 
 	get _readonly() {
@@ -551,8 +581,49 @@ class Input extends UI5Element {
 		return this.type.toLowerCase();
 	}
 
-	get ariaInvalid() {
-		return this.valueState === "Error" ? "true" : undefined;
+	get suggestionsTextId() {
+		return this.showSuggestions ? `${this._id}-suggestionsText` : "";
+	}
+
+	get valueStateTextId() {
+		return this.hasValueState ? `${this._id}-descr` : "";
+	}
+
+	get accInfo() {
+		const ariaHasPopupDefault = this.showSuggestions ? "true" : undefined;
+		const ariaAutoCompleteDefault = this.showSuggestions ? "list" : undefined;
+		return {
+			"wrapper": {
+			},
+			"input": {
+				"ariaDescribedBy": this._inputAccInfo ? `${this.suggestionsTextId} ${this.valueStateTextId} ${this._inputAccInfo.ariaDescribedBy}`.trim() : `${this.suggestionsTextId} ${this.valueStateTextId}`.trim(),
+				"ariaInvalid": this.valueState === ValueState.Error ? "true" : undefined,
+				"ariaHasPopup": this._inputAccInfo ? this._inputAccInfo.ariaHasPopup : ariaHasPopupDefault,
+				"ariaAutoComplete": this._inputAccInfo ? this._inputAccInfo.ariaAutoComplete : ariaAutoCompleteDefault,
+				"role": this._inputAccInfo && this._inputAccInfo.role,
+				"ariaOwns": this._inputAccInfo && this._inputAccInfo.ariaOwns,
+				"ariaExpanded": this._inputAccInfo && this._inputAccInfo.ariaExpanded,
+				"ariaDescription": this._inputAccInfo && this._inputAccInfo.ariaDescription,
+			},
+		};
+	}
+
+	get hasValueState() {
+		return this.valueState !== ValueState.None;
+	}
+
+	get valueStateText() {
+		return this.valueStateTextMappings()[this.valueState];
+	}
+
+	get suggestionsText() {
+		return this.i18nBundle.getText(INPUT_SUGGESTIONS);
+	}
+
+	static async define(...params) {
+		await fetchI18nBundle("@ui5/webcomponents");
+
+		super.define(...params);
 	}
 }
 

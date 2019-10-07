@@ -1,14 +1,9 @@
-:host(ui5-card:not([hidden])) {
+:host(:not([hidden])) {
 	display: inline-block;
 	width: 100%;
 }
 
-ui5-card:not([hidden]) {
-	display: inline-block;
-	width: 100%;
-}
-
-.sapFCard {
+.ui5-card-root {
 	width: 100%;
 	height: 100%;
 	color: var(--sapUiGroupTitleTextColor);
@@ -21,7 +16,7 @@ ui5-card:not([hidden]) {
 	font-size: var(--sapUiFontSize);
 }
 
-.sapFCardHeader {
+.ui5-card-header {
 	position: relative;
 	display: flex;
 	align-items: flex-start;
@@ -31,19 +26,19 @@ ui5-card:not([hidden]) {
 }
 
 /* Card with no content */
-.sapFCard.sapFCardNoContent {
+.ui5-card-root.ui5-card--nocontent {
 	height: auto;
 }
 
-.sapFCard.sapFCardNoContent .sapFCardHeader {
+.ui5-card-root.ui5-card--nocontent .ui5-card-header {
 	border-bottom: none;
 }
 
-.sapFCardHeader:focus {
+.ui5-card-header:focus {
 	outline: none;
 }
 
-.sapFCardHeader.sapFCardHeaderInteractive:focus:before {
+.ui5-card-header.ui5-card-header--interactive:focus:before {
 	content: "";
 	position: absolute;
 	border: var(--_ui5_card_header_focus_border);
@@ -54,21 +49,21 @@ ui5-card:not([hidden]) {
 	bottom: 1px;
 }
 
-.sapFCardHeader.sapFCardHeaderInteractive:hover {
+.ui5-card-header.ui5-card-header--interactive:hover {
 	cursor: pointer;
 	background: var(--_ui5_card_header_hover_bg);
 }
 
-.sapFCardHeader.sapFCardHeaderActive,
-.sapFCardHeader.sapFCardHeaderInteractive:active {
+.ui5-card-header.ui5-card-header--active,
+.ui5-card-header.ui5-card-header--interactive:active {
 	background: var(--_ui5_card_header_active_bg);
 }
 
-.sapFCardHeader .sapFCardHeaderText {
+.ui5-card-header .ui5-card-header-text {
 	flex: 1;
 }
 
-.sapFCardHeader .sapFCardAvatar {
+.ui5-card-header .ui5-card-avatar {
 	height: 3rem;
 	width: 3rem;
 	display: flex;
@@ -77,16 +72,18 @@ ui5-card:not([hidden]) {
 	margin-right: 0.75rem;
 }
 
-.sapFCardHeader .sapFCardAvatar.sapFCardHeaderImg {
+.ui5-card-header .ui5-card-avatar.ui5-card-header-img {
 	border-radius: 50%;
 }
 
-.sapFCardHeader .sapFCardAvatar .sapFCardHeaderIcon {
-	font-size: 1.5rem;
+.ui5-card-header .ui5-card-avatar .ui5-card-header-icon {
+	width: 1.5rem;
+	height: 1.5rem;
 	color: var(--sapUiTileIconColor);
 }
 
-.sapFCardHeader .sapFCardStatus {
+.ui5-card-header .ui5-card-status {
+	display: inline-block;
 	font-family: var(--sapUiFontFamily);
 	font-size: var(--sapMFontSmallSize);
 	color: var(--sapUiTileTextColor);
@@ -94,11 +91,12 @@ ui5-card:not([hidden]) {
 	line-height: 1.125rem;
 	padding-left: 1rem;
 	margin-left: auto;
-	text-wrap: avoid;
-	display: inline-block;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
 }
 
-.sapFCardHeader .sapFCardHeaderText .sapFCardTitle {
+.ui5-card-header .ui5-card-header-text .ui5-card-heading {
 	font-family: var(--sapUiFontHeaderFamily);
 	font-size: var(--sapMFontHeader5Size);
 	font-weight: var(--sapUiFontHeaderWeight);
@@ -106,7 +104,7 @@ ui5-card:not([hidden]) {
 	max-height: 3.5rem;
 }
 
-.sapFCardHeader .sapFCardHeaderText .sapFCardSubtitle {
+.ui5-card-header .ui5-card-header-text .ui5-card-subtitle {
 	font-family: var(--sapUiFontFamily);
 	font-size: var(--sapMFontMediumSize);
 	font-weight: normal;
@@ -115,8 +113,8 @@ ui5-card:not([hidden]) {
 	max-height: 2.1rem;
 }
 
-.sapFCardHeader .sapFCardHeaderText .sapFCardTitle,
-.sapFCardHeader .sapFCardHeaderText .sapFCardSubtitle {
+.ui5-card-header .ui5-card-header-text .ui5-card-heading,
+.ui5-card-header .ui5-card-header-text .ui5-card-subtitle {
 	text-align: left;
 	text-overflow: ellipsis;
 	white-space: normal;
@@ -128,21 +126,21 @@ ui5-card:not([hidden]) {
 	max-width: 100%;
 }
 
-[dir="rtl"] .sapFCardHeader .sapFCardAvatar {
+[dir="rtl"] .ui5-card-header .ui5-card-avatar {
 	margin-left: 0.75rem;
 	margin-right: 0;
 }
 
-[dir="rtl"] .sapFCardHeader .sapFCardStatus {
+[dir="rtl"] .ui5-card-header .ui5-card-status {
 	padding-right: 1rem;
 	padding-left: 0rem;
 	margin-right: auto;
 }
 
-[dir="rtl"] .sapFCardHeader .sapFCardHeaderText .sapFCardTitle {
+[dir="rtl"] .ui5-card-header .ui5-card-header-text .ui5-card-heading {
 	text-align: right;
 }
 
-[dir="rtl"] .sapFCardHeader .sapFCardHeaderText .sapFCardSubtitle {
+[dir="rtl"] .ui5-card-header .ui5-card-header-text .ui5-card-subtitle {
 	text-align: right;
-} 
+}

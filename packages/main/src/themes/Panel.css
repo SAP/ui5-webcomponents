@@ -1,143 +1,80 @@
-:host(ui5-panel:not([hidden])) {
+:host(:not([hidden])) {
 	display: block;
 }
 
-ui5-panel:not([hidden]) {
-	display: block;
+:host([data-ui5-compact-size]) .ui5-panel-header {
+	height: 2rem;
 }
 
-.sapMPanel {
-	width: 100%;
-	height: 100%;
-	overflow: hidden;
-	box-sizing: border-box;
-	position: relative;
-	background-color: var(--ui5-panel-background-color);
-}
-
-.sapMPanel > header {
-	display: flex;
-	align-items: center;
-	height: 2.75rem;
-}
-
-.sapMPanel > header ui5-icon.sapMPanelIcon {
-	width: 1.5rem;
-	height: 1.5rem;
-	min-width: 1.5rem;
-	min-height: 1.5rem;
-	margin-left: 0.75rem;
-	margin-right: 0.75rem;
-	align-self: center;
-	color: var(--sapUiContentIconColor);
-	transition: transform 0.4s ease-out;
-	cursor: pointer;
-	position: relative;
-}
-
-.sapMPanel > header ui5-icon.sapMPanelIcon.sapMPanelIconExpanded {
-	transform: rotate(90deg);
-}
-
-.sapMPanel > header ui5-icon.sapMPanelIcon:focus::after {
-	content: "";
-	position: absolute;
-	border: 1px dashed var(--sapUiContentFocusColor);
-	width: 100%;
-	height: 100%;
-	left: -1px;
-	top: -1px;
-	pointer-events: none;
-}
-
-.sapMPanelHdr {
-	box-sizing: border-box;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	text-transform: none;
-	padding: 0 1rem;
-	margin: 0;
-
-	/*
-	* To improve readability Mobile Safari automatically increases
-	* the size of small text so let's disable this
-	*/
-	-webkit-text-size-adjust: none;
-
-	font-weight: var(--sapUiFontHeaderWeight);
-	font-size: var(--sapMFontHeader4Size);
+:host {
 	font-family: var(--sapUiFontHeaderFamily);
-	color: var(--sapUiGroupTitleTextColor);
-	background-color: var(--sapUiGroupTitleBackground);
+	background-color: var(--sapUiGroupContentBackground);
 }
 
-.sapMPanelContent {
-	padding: 0.625rem 1rem 1.375rem 1rem;
-	box-sizing: border-box;
-	overflow: auto;
-	white-space: normal;
-	border-bottom: 1px solid var(--ui5-panel-bottom-border-color);
-}
-
-.sapMPanelContent:focus {
-	outline: none;
-}
-
-.sapMPanelWrappingDiv,
-.sapMPanelWrappingDivTb {
-	position: relative;
-	background-color: var(--ui5-panel-background-color);
-}
-
-.sapMPanelWrappingDiv {
-	box-sizing: border-box;
-}
-
-.sapMPanelWrappingDiv.sapMPanelWrappingDivClickable {
-	cursor: pointer;
-}
-
-.sapMPanelWrappingDiv.sapMPanelWrappingDivClickable:focus {
-	outline: none;
-}
-
-.sapMPanelWrappingDiv.sapMPanelWrappingDivClickable:focus::after {
-	content: "";
-	position: absolute;
-	border: var(--_ui5_panel_focus_border);
-	pointer-events: none;
-	top: 1px;
-	left: 1px;
-	right: 1px;
-	bottom: 1px;
-}
-
-.sapMPanelWrappingDivTb .sapMPanelHdrToolbar {
-	width: 100%;
-}
-
-.sapMPanelWrappingDiv.sapMPanelWrappingDivExpanded {
-	border-bottom-width: 0;
-}
-
-.sapMPanel .sapMPanelWrappingDiv .sapMPanelHdr {
-	padding-left: 0;
-}
-
-.sapMPanel .sapMPanelWrappingDiv .sapMPanelHdr > :first-child {
-	margin-left: 0;
-}
-
-/* if Panel is not expandable, we do wish header to come with own border */
-.sapMPanel > .sapMPanelHdr,
-/* notice: sapMPanelWrappingDiv is available if Panel is expandable */
-.sapMPanelWrappingDiv,
-/* do not want border if expanded and if only header text */
-.sapMPanelWrappingDivTb {
+:host([collapsed]) .ui5-panel-header,
+:host([fixed]) .ui5-panel-header {
 	border-bottom: 1px solid var(--sapUiGroupTitleBorderColor);
 }
 
-.sapUiSizeCompact.sapMPanel > header {
-	height: 2rem;
+:host([fixed]) .ui5-panel-header-button-root {
+	display: none;
+}
+
+:host([fixed]) .ui5-panel-header {
+	padding-left: 1rem;
+}
+
+.ui5-panel-header {
+	height: var(--_ui5_panel_header_height);
+	width: 100%;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	outline: none;
+	box-sizing: border-box;
+	padding-right: 1rem;
+	padding-left: .25rem;
+	border-bottom: 1px solid transparent;
+}
+
+.ui5-panel-header-button {
+	transition: transform 0.4s ease-out;
+}
+
+:host(:not([_has-header])) .ui5-panel-header-button {
+	pointer-events: none;
+}
+
+:host(:not([_has-header]):not([fixed])) {
+	cursor: pointer;
+}
+
+:host(:not([_has-header]):not([fixed])) .ui5-panel-header:focus {
+	outline: var(--_ui5_panel_focus_border);
+	outline-offset: -3px;
+}
+
+:host(:not([collapsed])) .ui5-panel-header-button {
+	transform: rotate(90deg);
+}
+
+.ui5-panel-header-title {
+	font-family: var(--sapUiFontHeaderFamily);
+	font-size: var(--_ui5_panel_header_title_size);
+	font-weight: var(--sapUiFontHeaderWeight);
+	color: var(--sapUiGroupTitleTextColor);
+}
+
+.ui5-panel-content {
+	padding: 0.625rem 1rem 1.375rem 1rem;
+	outline: none;
+}
+
+.ui5-panel-header-button-root {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-shrink: 0;
+	width: var(--_ui5_panel_button_root_width);
+	margin-right: .25rem;
 }

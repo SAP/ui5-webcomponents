@@ -1,9 +1,12 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import LinkDesign from "./types/LinkDesign.js";
 
 // Template
 import LinkRederer from "./generated/templates/LinkTemplate.lit.js";
+
+import { LINK_SUBTLE, LINK_EMPHASIZED } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import linkCss from "./generated/themes/Link.css.js";
@@ -18,7 +21,7 @@ const metadata = {
 		/**
 		 * Defines whether the <code>ui5-link</code> is disabled.
 		 * <br><br>
-		 * <b>Note:</b> When disabled, the <code>ui5-link</code cannot be triggered by the user.
+		 * <b>Note:</b> When disabled, the <code>ui5-link</code> cannot be triggered by the user.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -45,9 +48,11 @@ const metadata = {
 		 * Defines the <code>ui5-link</code> target.
 		 * <br><br>
 		 * <b>Notes:</b>
-		 * <ul><li>Available options are the standard values: <code>_self</code>, <code>_top</code>,
+		 * <ul>
+		 * <li>Available options are the standard values: <code>_self</code>, <code>_top</code>,
 		 * <code>_blank</code>, <code>_parent</code>, and <code>_search</code>.</li>
-		 * <li>This property must only be used when the <code>href</code> property is set.</li></ul>
+		 * <li>This property must only be used when the <code>href</code> property is set.</li>
+		 * </ul>
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
@@ -87,6 +92,7 @@ const metadata = {
 
 		_rel: {
 			type: String,
+			noAttribute: true,
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.Link.prototype */ {
@@ -125,7 +131,6 @@ const metadata = {
  * from the standard text.
  * On hover, it changes its style to an underlined text to provide additional feedback to the user.
  *
-
  *
  * <h3>Usage</h3>
  *
@@ -160,6 +165,7 @@ class Link extends UI5Element {
 	constructor() {
 		super();
 		this._dummyAnchor = document.createElement("a");
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	static get metadata() {
@@ -204,21 +210,29 @@ class Link extends UI5Element {
 		return this.disabled ? "true" : undefined;
 	}
 
-	get classes() {
+	get hasLinkType() {
+		return this.design !== LinkDesign.Default;
+	}
+
+	static typeTextMappings() {
 		return {
-			main: {
-				sapMLnk: true,
-				sapMLnkSubtle: this.design === LinkDesign.Subtle,
-				sapMLnkEmphasized: this.design === LinkDesign.Emphasized,
-				sapMLnkWrapping: this.wrap,
-				sapMLnkDsbl: this.disabled,
-				sapMLnkMaxWidth: true,
-			},
+			"Subtle": LINK_SUBTLE,
+			"Emphasized": LINK_EMPHASIZED,
 		};
+	}
+
+	get linkTypeText() {
+		return this.i18nBundle.getText(Link.typeTextMappings()[this.design]);
 	}
 
 	get parsedRef() {
 		return this.href.length > 0 ? this.href : undefined;
+	}
+
+	static async define(...params) {
+		await fetchI18nBundle("@ui5/webcomponents");
+
+		super.define(...params);
 	}
 }
 

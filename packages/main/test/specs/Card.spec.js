@@ -3,8 +3,8 @@ describe("Card general interaction", () => {
 	browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/Card.html");
 
 	it("fires headerPress upon click, Enter and Space", () => {
-		const cardHeader = browser.findElementDeep("#card >>> .sapFCardHeader");
-		const cardHeader2 = browser.findElementDeep("#card2 >>> .sapFCardHeader");
+		const cardHeader = browser.$("#card").shadow$(".ui5-card-header");
+		const cardHeader2 = browser.$("#card2").shadow$(".ui5-card-header");
 		const field = browser.$("#field");
 
 		cardHeader.click();

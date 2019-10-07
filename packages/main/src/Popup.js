@@ -5,12 +5,12 @@ import { isEscape } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 
 // Styles
 import styles from "./generated/themes/Popup.css.js";
+import { addOpenedPopup, removeOpenedPopup } from "./popup-utils/OpenedPopupsRegistry.js";
 
 /**
  * @public
  */
 const metadata = {
-	"abstract": true,
 	slots: /** @lends  sap.ui.webcomponents.main.Popup.prototype */ {
 
 		/**
@@ -55,7 +55,6 @@ const metadata = {
 		 */
 		initialFocus: {
 			type: String,
-			association: true,
 		},
 
 		/**
@@ -70,14 +69,21 @@ const metadata = {
 			type: String,
 		},
 
-		_isOpen: {
+		/**
+		 * Indicates if the elements is on focus
+		 * @private
+		 */
+		opened: {
 			type: Boolean,
 		},
+
 		_zIndex: {
 			type: Integer,
+			noAttribute: true,
 		},
 		_hideBlockLayer: {
 			type: Boolean,
+			noAttribute: true,
 		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.Popup.prototype */ {
@@ -143,7 +149,7 @@ function createBLyBackStyle() {
 	const bodyStyleSheet = document.createElement("style");
 	bodyStyleSheet.type = "text/css";
 	bodyStyleSheet.innerHTML = `
-		.sapUiBLyBack {
+		.ui5-popup-BLy--back {
 			width: 100%;
 			height: 100%;
 			position: fixed;
@@ -190,11 +196,11 @@ function updateBodyScrolling(hasModal) {
 
 function addBodyStyles() {
 	document.body.style.top = `-${window.pageYOffset}px`;
-	document.body.classList.add("sapUiBLyBack");
+	document.body.classList.add("ui5-popup-BLy--back");
 }
 
 function removeBodyStyles() {
-	document.body.classList.remove("sapUiBLyBack");
+	document.body.classList.remove("ui5-popup-BLy--back");
 	window.scrollTo(0, -parseFloat(document.body.style.top));
 	document.body.style.top = "";
 }
@@ -271,7 +277,7 @@ class Popup extends UI5Element {
 
 	getPopupDomRef() {
 		const domRef = this.getDomRef();
-		return domRef && domRef.querySelector(".ui5-popup-wrapper");
+		return domRef && domRef.querySelector(".ui5-popup-root");
 	}
 
 	hitTest(_event) {
@@ -285,10 +291,10 @@ class Popup extends UI5Element {
 
 		this._zIndex = Popup.getNextZIndex();
 		openedPopups.push(this);
+		addOpenedPopup(this);
+
 
 		updateBlockLayers();
-
-		document.addEventListener("keydown", this._documentKeyDownHandler, true);
 	}
 
 	close() {
@@ -298,10 +304,12 @@ class Popup extends UI5Element {
 
 		this.escPressed = false;
 
-		document.removeEventListener("keydown", this._documentKeyDownHandler, true);
-
 		const index = openedPopups.indexOf(this);
 		openedPopups.splice(index, 1);
+
+		if (this.opened) {
+			removeOpenedPopup(this);
+		}
 
 		updateBlockLayers();
 	}
@@ -334,7 +342,7 @@ class Popup extends UI5Element {
 	}
 
 	onAfterRendering() {
-		if (!this._isOpen) {
+		if (!this.opened) {
 			return;
 		}
 
@@ -415,7 +423,7 @@ class Popup extends UI5Element {
 			element = element.shadowRoot.activeElement;
 		}
 
-		this._lastFocusableElement = element;
+		this._lastFocusableElement = (element && typeof element.focus === "function") ? element : null;
 	}
 
 	resetFocus() {

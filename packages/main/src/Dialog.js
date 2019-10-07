@@ -36,7 +36,7 @@ const metadata = {
  * The <code>ui5-dialog</code> component is used to temporarily display some information in a
  * size-limited window in front of the regular app screen.
  * It is used to prompt the user for an action or a confirmation.
- * The code>ui5-dialog</code> interrupts the current app processing as it is the only focused UI element and
+ * The <code>ui5-dialog</code> interrupts the current app processing as it is the only focused UI element and
  * the main screen is dimmed/blocked.
  * The dialog combines concepts known from other technologies where the windows have
  * names such as dialog box, dialog window, pop-up, pop-up window, alert box, or message box.
@@ -85,7 +85,7 @@ class Dialog extends Popup {
 	* @public
 	*/
 	open() {
-		if (this._isOpen) {
+		if (this.opened) {
 			return;
 		}
 
@@ -96,7 +96,7 @@ class Dialog extends Popup {
 
 		this.storeCurrentFocus();
 
-		this._isOpen = true;
+		this.opened = true;
 	}
 
 	/**
@@ -104,7 +104,7 @@ class Dialog extends Popup {
 	* @public
 	*/
 	close() {
-		if (!this._isOpen) {
+		if (!this.opened) {
 			return;
 		}
 
@@ -113,7 +113,7 @@ class Dialog extends Popup {
 			return;
 		}
 
-		this._isOpen = false;
+		this.opened = false;
 
 		this.resetFocus();
 
@@ -122,23 +122,13 @@ class Dialog extends Popup {
 
 	get classes() {
 		return {
-			frame: {
-				"ui5-popup-wrapper-frame": true,
-				"ui5-popup-wrapper-frame--open": this._isOpen,
-			},
 			dialogParent: {
-				"ui5-dialog-wrapper-parent": true,
-				"ui5-dialog-wrapper--stretched": this.stretch,
 				"ui5-phone": isPhone(),
 			},
-			main: {
-				"ui5-popup-wrapper": true,
-				"ui5-dialog-wrapper": true,
-			},
 			blockLayer: {
-				sapUiBLy: true,
-				"ui5-popup-wrapper-blockLayer": true,
-				"ui5-popup-wrapper-blockLayer--hidden": this._hideBlockLayer,
+				"ui5-popup-BLy": true,
+				"ui5-popup-blockLayer": true,
+				"ui5-popup-blockLayer--hidden": this._hideBlockLayer,
 			},
 		};
 	}

@@ -1,12 +1,11 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import CSSSize from "@ui5/webcomponents-base/dist/types/CSSSize.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import TextAreaTemplate from "./generated/templates/TextAreaTemplate.lit.js";
 
-import { TEXTAREA_CHARACTERS_LEFT, TEXTAREA_CHARACTERS_EXCEEDED } from "./i18n/defaults.js";
+import { TEXTAREA_CHARACTERS_LEFT, TEXTAREA_CHARACTERS_EXCEEDED } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import styles from "./generated/themes/TextArea.css.js";
@@ -43,7 +42,7 @@ const metadata = {
 
 		/**
 		 * Defines whether the <code>ui5-textarea</code> is readonly.
-		 * </br></br>
+		 * <br><br>
 		 * <b>Note:</b> A readonly <code>ui5-textarea</code> is not editable,
 		 * but still provides visual feedback upon user interaction.
 		 *
@@ -52,6 +51,18 @@ const metadata = {
 		 * @public
 		 */
 		readonly: {
+			type: Boolean,
+		},
+
+		/**
+		 * Defines whether the <code>ui5-textarea</code> is required.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 * @since 1.0.0
+		 */
+		required: {
 			type: Boolean,
 		},
 
@@ -155,14 +166,18 @@ const metadata = {
 			type: String,
 		},
 
-		_height: {
-			type: CSSSize,
-			defaultValue: null,
+		/**
+		 * @private
+		 */
+		focused: {
+			type: Boolean,
 		},
 
-		_exceededTextProps: {
-			type: Object,
-			defaultValue: null,
+		/**
+		 * @private
+		 */
+		exceeding: {
+			type: Boolean,
 		},
 
 		_mirrorText: {
@@ -172,9 +187,7 @@ const metadata = {
 		},
 		_maxHeight: {
 			type: String,
-		},
-		_focussed: {
-			type: Boolean,
+			noAttribute: true,
 		},
 		_listeners: {
 			type: Object,
@@ -235,7 +248,7 @@ class TextArea extends UI5Element {
 	constructor() {
 		super();
 
-		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 
 		this._listeners = {
 			change: this._handleChange.bind(this),
@@ -245,6 +258,8 @@ class TextArea extends UI5Element {
 	onBeforeRendering() {
 		this._exceededTextProps = this._calcExceededText();
 		this._mirrorText = this._tokenizeText(this.value);
+
+		this.exceeding = this._exceededTextProps.leftCharactersCount < 0;
 
 		if (this.growingMaxLines) {
 			// this should be complex calc between line height and paddings - TODO: make it stable
@@ -280,11 +295,11 @@ class TextArea extends UI5Element {
 	}
 
 	onfocusin() {
-		this._focussed = true;
+		this.focused = true;
 	}
 
 	onfocusout() {
-		this._focussed = false;
+		this.focused = false;
 	}
 
 	_handleChange() {
@@ -324,9 +339,9 @@ class TextArea extends UI5Element {
 				leftCharactersCount = maxLength - this.value.length;
 
 				if (leftCharactersCount >= 0) {
-					exceededText = this.resourceBundle.getText(TEXTAREA_CHARACTERS_LEFT, [leftCharactersCount]);
+					exceededText = this.i18nBundle.getText(TEXTAREA_CHARACTERS_LEFT, [leftCharactersCount]);
 				} else {
-					exceededText = this.resourceBundle.getText(TEXTAREA_CHARACTERS_EXCEEDED, [Math.abs(leftCharactersCount)]);
+					exceededText = this.i18nBundle.getText(TEXTAREA_CHARACTERS_EXCEEDED, [Math.abs(leftCharactersCount)]);
 				}
 			}
 		} else {
@@ -335,35 +350,6 @@ class TextArea extends UI5Element {
 
 		return {
 			exceededText, leftCharactersCount, calcedMaxLength,
-		};
-	}
-
-	get classes() {
-		return {
-			main: {
-				sapWCTextArea: true,
-				sapWCTextAreaWarning: (this._exceededTextProps.leftCharactersCount < 0),
-				sapWCTextAreaGrowing: this.growing,
-				sapWCTextAreaNoMaxLines: !this.growingMaxLines,
-				sapWCTextAreaWithCounter: this.showExceededText,
-				sapWCTextAreaDisabled: this.disabled,
-				sapWCTextAreaReadonly: this.readonly,
-			},
-			inner: {
-				sapWCTextAreaInner: true,
-				sapWCTextAreaStateInner: (this._exceededTextProps.leftCharactersCount < 0),
-				sapWCTextAreaWarningInner: (this._exceededTextProps.leftCharactersCount < 0),
-			},
-			exceededText: {
-				sapWCTextAreaExceededText: true,
-			},
-			mirror: {
-				sapWCTextAreaMirror: true,
-			},
-			focusDiv: {
-				sapWCTextAreaFocusDiv: true,
-				sapWCTextAreaHasFocus: this._focussed,
-			},
 		};
 	}
 
@@ -389,12 +375,16 @@ class TextArea extends UI5Element {
 		return this.disabled ? undefined : "0";
 	}
 
+	get ariaLabelledBy() {
+		return this.showExceededText ? `${this._id}-exceededText` : undefined;
+	}
+
 	get ariaInvalid() {
 		return this.valueState === "Error" ? "true" : undefined;
 	}
 
 	static async define(...params) {
-		await fetchResourceBundle("@ui5/webcomponents");
+		await fetchI18nBundle("@ui5/webcomponents");
 
 		super.define(...params);
 	}

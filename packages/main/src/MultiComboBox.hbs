@@ -1,40 +1,51 @@
-<div class="{{classes.main}}">
-	<ui5-input id="ui5-multi-combobox--input"
+<div class="ui5-multi-combobox-root"
+	@focusin={{rootFocusIn}}
+	@focusout={{rootFocusOut}}
+	>
+	<ui5-tokenizer slot="_beginContent"
+		show-more
+		class="ui5-multi-combobox-tokenizer"
+		?disabled="{{disabled}}"
+		@ui5-showMoreItemsPress="{{_showMorePopover}}"
+		@ui5-tokenDelete="{{_tokenDelete}}"
+		@focusout="{{_tokenizerFocusOut}}"
+		?expanded="{{expandedTokenizer}}"
+	>
+		{{#each items}}
+			{{#if this.selected}}
+				<ui5-token ?readonly="{{../readonly}}" class="ui5-multi-combobox-token" data-ui5-id="{{this._id}}" >{{this.textContent}}</ui5-token>
+			{{/if}}
+		{{/each}}
+	</ui5-tokenizer>
+
+	<input id="ui5-multi-combobox-input"
 		value="{{value}}"
+		inner-input
 		placeholder="{{placeholder}}"
 		?disabled={{disabled}}
 		?readonly={{readonly}}
 		value-state="{{valueState}}"
-		@ui5-input="{{_inputLiveChange}}"
-		@ui5-change={{_inputChange}}
-		@keydown="{{_keydown}}">
+		@input="{{_inputLiveChange}}"
+		@change={{_inputChange}}
+		@keydown="{{_onkeydown}}"
+		@keyup="{{_onkeyup}}"
+		@focusin="{{_focusin}}"
+		@focusout="{{_focusout}}">
+	</input>
 
-		<ui5-tokenizer slot="_beginContent"
-			show-more
-			class="ui5-multi-combobox-tokenizer"
-			?disabled="{{disabled}}"
-			@ui5-showMoreItemsPress="{{_showMorePopover}}"
-			@ui5-tokenDelete="{{_tokenDelete}}"
-			@focusout="{{_tokenizerFocusOut}}"
-		>
-			{{#each items}}
-				{{#if this.selected}}
-					<ui5-token ?readonly="{{../readonly}}" class="ui5-multi-combobox--token" data-ui5-id="{{this._id}}" >{{this.textContent}}</ui5-token>
-				{{/if}}
-			{{/each}}
-		</ui5-tokenizer>
+	{{#unless readonly}}
+		<ui5-icon src="sap-icon://slim-arrow-down"
+			input-icon
+			slot="icon"
+			tabindex="-1"
+			@click={{_showAllItemsPopover}}
+			?pressed="{{_iconPressed}}"
+			dir="{{dir}}"
+		></ui5-icon>
+	{{/unless}}
 
-		{{#unless readonly}}
-			<ui5-icon src="sap-icon://slim-arrow-down" 
-				slot="icon"
-				@ui5-press={{_showAllItemsPopover}}
-				class="{{classes.icon}}"
-			></ui5-icon>
-		{{/unless}}
-	</ui5-input>
-
-	<ui5-popover 
-		class="ui5-multi-combobox-selected-items--popover"
+	<ui5-popover
+		class="ui5-multi-combobox-selected-items-popover"
 		horizontal-align="Stretch"
 		?no-arrow={{editable}}
 		placement-type="Bottom">
@@ -48,10 +59,10 @@
 		</ui5-list>
 	</ui5-popover>
 
-	<ui5-popover class="ui5-multi-combobox-all-items--popover"
+	<ui5-popover class="ui5-multi-combobox-all-items-popover"
 		no-arrow
 		horizontal-align="Stretch"
-		initial-focus="ui5-multi-combobox--input"
+		initial-focus="ui5-multi-combobox-input"
 		horizontal-align="Left"
 		placement-type="Bottom"
 		@ui5-selectionChange={{_listSelectionChange}}

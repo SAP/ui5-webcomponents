@@ -15,6 +15,7 @@
 	--_ui5_tc_headerItemIcon_color: var(--sapUiObjectHeaderBorderColor);
 	--_ui5_tc_headerItemIcon_selected_background: var(--sapUiSelected);
 	--_ui5_tc_headerItemIcon_selected_color: var(--sapUiContentIconColor);
+	--_ui5_tc_headeritem_text_selected_color: var(--sapUiObjectHeaderBorderColor);
 	--_ui5_tc_headerItemIcon_positive_selected_background: var(--sapUiSelected);
 	--_ui5_tc_headerItemIcon_negative_selected_background: var(--sapUiSelected);
 	--_ui5_tc_headerItemIcon_critical_selected_background: var(--sapUiSelected);

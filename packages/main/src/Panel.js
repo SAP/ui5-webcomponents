@@ -1,16 +1,15 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getIconURI } from "@ui5/webcomponents-base/dist/IconPool.js";
 import slideDown from "@ui5/webcomponents-base/dist/animations/slideDown.js";
 import slideUp from "@ui5/webcomponents-base/dist/animations/slideUp.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-import { getCompactSize } from "@ui5/webcomponents-base/dist/Configuration.js";
-import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
-import Icon from "./Icon.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import Button from "./Button.js";
+import "./icons/navigation-right-arrow.js";
 import PanelAccessibleRole from "./types/PanelAccessibleRole.js";
 import PanelTemplate from "./generated/templates/PanelTemplate.lit.js";
 
-import { PANEL_ICON } from "./i18n/defaults.js";
+import { PANEL_ICON } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import panelCss from "./generated/themes/Panel.css.js";
@@ -99,17 +98,23 @@ const metadata = {
 			defaultValue: PanelAccessibleRole.Form,
 		},
 
-		_icon: {
-			type: Object,
+		/**
+		 * @private
+		 */
+		_hasHeader: {
+			type: Boolean,
 		},
+
 		_header: {
 			type: Object,
 		},
 		_contentExpanded: {
 			type: Boolean,
+			noAttribute: true,
 		},
 		_animationRunning: {
 			type: Boolean,
+			noAttribute: true,
 		},
 	},
 	events: {
@@ -196,15 +201,7 @@ class Panel extends UI5Element {
 		super();
 
 		this._header = {};
-
-		this._icon = {};
-		this._icon.id = `${this.id}-CollapsedImg`;
-		this._icon.src = getIconURI("navigation-right-arrow");
-		this._icon.functional = true;
-		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
-
-		this._toggle = event => { event.preventDefault(); this._toggleOpen(); };
-		this._noOp = () => {};
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
@@ -213,16 +210,36 @@ class Panel extends UI5Element {
 			this._contentExpanded = !this.collapsed;
 		}
 
-		const toggleWithInternalHeader = !this.header.length;
-		this._icon.title = this.resourceBundle.getText(PANEL_ICON);
-		this._header.press = toggleWithInternalHeader ? this._toggle : this._noOp;
-		this._icon.press = !toggleWithInternalHeader ? this._toggle : this._noOp;
+		this._hasHeader = !!this.header.length;
 	}
 
-	onHeaderKeyDown(event) {
-		if (!this._headerOnTarget(event.target)) {
+	shouldToggle(node) {
+		const customContent = this.header.length;
+		if (customContent) {
+			return node.classList.contains("ui5-panel-header-button");
+		}
+		return true;
+	}
+
+	_headerClick(event) {
+		if (!this.shouldToggle(event.target)) {
 			return;
 		}
+
+		this._toggleOpen();
+	}
+
+	_toggleButtonClick(event) {
+		if (event.x === 0 && event.y === 0) {
+			event.stopImmediatePropagation();
+		}
+	}
+
+	_headerKeyDown(event) {
+		if (!this.shouldToggle(event.target)) {
+			return;
+		}
+
 
 		if (isEnter(event)) {
 			this._toggleOpen();
@@ -233,8 +250,8 @@ class Panel extends UI5Element {
 		}
 	}
 
-	onHeaderKeyUp(event) {
-		if (!this._headerOnTarget(event.target)) {
+	_headerKeyUp(event) {
+		if (!this.shouldToggle(event.target)) {
 			return;
 		}
 
@@ -251,7 +268,7 @@ class Panel extends UI5Element {
 		this.collapsed = !this.collapsed;
 		this._animationRunning = true;
 
-		const elements = this.getDomRef().querySelectorAll(".sapMPanelExpandablePart");
+		const elements = this.getDomRef().querySelectorAll(".ui5-panel-content");
 		const animations = [];
 
 		[].forEach.call(elements, oElement => {
@@ -277,6 +294,10 @@ class Panel extends UI5Element {
 		return target.classList.contains("sapMPanelWrappingDiv");
 	}
 
+	get toggleButtonTitle() {
+		return this.i18nBundle.getText(PANEL_ICON);
+	}
+
 	get expanded() {
 		return !this.collapsed;
 	}
@@ -290,40 +311,15 @@ class Panel extends UI5Element {
 	}
 
 	get headerTabIndex() {
-		return !this.header.length ? "0" : "";
+		return (this.header.length || this.fixed) ? "-1" : "0";
 	}
 
-	get iconTabIndex() {
-		return this.header.length ? "0" : "";
+	get nonFocusableButton() {
+		return !this.header.length;
 	}
 
 	get shouldRenderH1() {
 		return !this.header.length && (this.headerText || !this.fixed);
-	}
-
-	get classes() {
-		return {
-			main: {
-				sapMPanel: true,
-				sapUiSizeCompact: getCompactSize(),
-			},
-			header: {
-				sapMPanelWrappingDivTb: this.header.length,
-				sapMPanelWrappingDivTbExpanded: this.header.length && this.collapsed,
-				sapMPanelWrappingDiv: !this.header.length,
-				sapMPanelWrappingDivClickable: !this.header.length,
-				sapMPanelWrappingDivExpanded: !this.header.length && !this.collapsed,
-			},
-			icon: {
-				sapMPanelIconExpanded: !this.collapsed,
-				sapMPanelIcon: true,
-			},
-			content: {
-				sapMPanelContent: true,
-				sapMPanelExpandablePart: !this.fixed,
-				[`sapMPanelBG${this.backgroundDesign}`]: true,
-			},
-		};
 	}
 
 	get styles() {
@@ -336,8 +332,8 @@ class Panel extends UI5Element {
 
 	static async define(...params) {
 		await Promise.all([
-			fetchResourceBundle("@ui5/webcomponents"),
-			Icon.define(),
+			fetchI18nBundle("@ui5/webcomponents"),
+			Button.define(),
 		]);
 
 		super.define(...params);

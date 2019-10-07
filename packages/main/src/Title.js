@@ -1,6 +1,8 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import TitleLevel from "./types/TitleLevel.js";
+
+// Template
 import TitleTemplate from "./generated/templates/TitleTemplate.lit.js";
 
 // Styles
@@ -114,17 +116,6 @@ class Title extends UI5Element {
 
 	get h6() {
 		return this.normalizedLevel === "h6";
-	}
-
-	get classes() {
-		return {
-			main: {
-				sapMTitle: true,
-				sapMTitleWrap: this.wrap,
-				sapUiSelectable: true,
-				[`sapMTitleStyle${this.level}`]: true,
-			},
-		};
 	}
 }
 

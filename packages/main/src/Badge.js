@@ -1,10 +1,12 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import getEffectiveRTL from "@ui5/webcomponents-base/dist/util/getEffectiveRTL.js";
-import Icon from "./Icon.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 
 // Template
 import BadgeTemplate from "./generated/templates/BadgeTemplate.lit.js";
+
+import { BADGE_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import badgeCss from "./generated/themes/Badge.css.js";
@@ -18,7 +20,7 @@ const metadata = {
 
 		/**
 		 * Defines the color scheme of the <code>ui5-badge</code>.
-		 * There are 10 predefined schemes. Each scheme applies different values for the <code>background-color> and <code>border-color</code>.
+		 * There are 10 predefined schemes. Each scheme applies different values for the <code>background-color</code> and <code>border-color</code>.
 		 * To use one you can set a number from <code>"1"</code> to <code>"10"</code>. The <code>colorScheme</code> <code>"1"</code> will be set by default.
 		 * <br><br>
 		 * <b>Note:</b> color schemes have no visual representation in High Contrast Black (sap_belize_hcb) theme.
@@ -47,12 +49,12 @@ const metadata = {
 		/**
 		 * Defines the <code>ui5-icon</code> to be displayed in the <code>ui5-badge</code>.
 		 *
-		 * @type {Icon[]}
+		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
 		 */
 		icon: {
-			type: Icon,
+			type: HTMLElement,
 		},
 
 	},
@@ -85,6 +87,12 @@ const metadata = {
  * @public
  */
 class Badge extends UI5Element {
+	constructor() {
+		super();
+
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+	}
+
 	static get metadata() {
 		return metadata;
 	}
@@ -99,6 +107,12 @@ class Badge extends UI5Element {
 
 	static get styles() {
 		return badgeCss;
+	}
+
+	static async define(...params) {
+		await fetchI18nBundle("@ui5/webcomponents");
+
+		super.define(...params);
 	}
 
 	onBeforeRendering() {
@@ -118,7 +132,11 @@ class Badge extends UI5Element {
 	}
 
 	get rtl() {
-		return getEffectiveRTL() ? "rtl" : undefined;
+		return getRTL() ? "rtl" : undefined;
+	}
+
+	get badgeDescription() {
+		return this.i18nBundle.getText(BADGE_DESCRIPTION);
 	}
 }
 

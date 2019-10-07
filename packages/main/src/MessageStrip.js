@@ -1,11 +1,16 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { isEnter, isSpace } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import MessageStripType from "./types/MessageStripType.js";
 import MessageStripTemplate from "./generated/templates/MessageStripTemplate.lit.js";
 import Icon from "./Icon.js";
-
-import { MESSAGE_STRIP_CLOSE_BUTTON } from "./i18n/defaults.js";
+import "./icons/decline.js";
+import "./icons/message-information.js";
+import "./icons/message-success.js";
+import "./icons/message-error.js";
+import "./icons/message-warning.js";
+import { MESSAGE_STRIP_CLOSE_BUTTON } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import messageStripCss from "./generated/themes/MessageStrip.css.js";
@@ -19,7 +24,7 @@ const metadata = {
 
 		/**
 		 * Defines the <code>ui5-messagestrip</code> type.
-		 * <br></br>
+		 * <br><br>
 		 * <b>Note:</b> Available options are <code>Information"</code>, <code>"Positive"</code>, <code>"Negative"</code>,
 		 * and "Warning".
 		 *
@@ -34,10 +39,10 @@ const metadata = {
 
 		/**
 		 * Defines the icon src URI to be displayed as graphical element within the <code>ui5-messagestrip</code>.
-		 * <br></br>
+		 * <br><br>
 		 * <b>Note:</b> If no icon is given, the default icon for the <code>ui5-messagestrip</code> type will be added.
 		 * The SAP-icons font provides numerous options.
-		 * <br></br>
+		 * <br><br>
 		 * Example:
 		 * <br>
 		 * <pre>ui5-messagestrip icon="sap-icon://palette"</pre>
@@ -147,15 +152,31 @@ class MessageStrip extends UI5Element {
 	constructor() {
 		super();
 
-		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
-	_handleCloseIconPress() {
+	_closeClick() {
 		this.fireEvent("close", {});
 	}
 
+	_closeKeyDown(event) {
+		if (isEnter(event)) {
+			this.fireEvent("close");
+		}
+
+		if (isSpace(event)) {
+			event.preventDefault();
+		}
+	}
+
+	_closeKeyUp(event) {
+		if (isSpace(event)) {
+			this.fireEvent("close");
+		}
+	}
+
 	static async define(...params) {
-		await fetchResourceBundle("@ui5/webcomponents");
+		await fetchI18nBundle("@ui5/webcomponents");
 
 		await Icon.define();
 
@@ -181,11 +202,11 @@ class MessageStrip extends UI5Element {
 	}
 
 	get hiddenText() {
-		return `Message Strip ${this.type} ${this.noCloseButton ? "" : "closable"}.`;
+		return `Message Strip ${this.type} ${this.noCloseButton ? "" : "closable"}`;
 	}
 
 	get _closeButtonText() {
-		return this.resourceBundle.getText(MESSAGE_STRIP_CLOSE_BUTTON);
+		return this.i18nBundle.getText(MESSAGE_STRIP_CLOSE_BUTTON);
 	}
 
 	get classes() {
@@ -193,9 +214,6 @@ class MessageStrip extends UI5Element {
 			label: {
 				"ui5-messagestrip-text": true,
 				"ui5-messagestripNoCloseButton": this.noCloseButton,
-			},
-			closeIcon: {
-				"ui5-messagestrip-close-icon": true,
 			},
 			main: {
 				"ui5-messagestrip-root": true,

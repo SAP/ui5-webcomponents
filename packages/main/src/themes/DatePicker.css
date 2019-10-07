@@ -1,36 +1,10 @@
-:host(ui5-datepicker:not([hidden])) {
+@import "./InvisibleTextStyles.css";
+@import "./InputIcon.css";
+
+:host(:not([hidden])) {
 	display: inline-block;
+}
+
+:host {
 	width: 100%;
-}
-
-ui5-datepicker:not([hidden]) {
-	display: inline-block;
-	width: 100%;
-}
-
-.sapWCDPIcon {
-	color: var(--sapUiContentIconColor);
-	cursor: pointer;
-	outline: none;
-	border: var(--_ui5_datepicker_icon_border);
-	box-sizing: border-box;
-}
-
-.sapWCDPIcon:hover,
-.sapWCDPIcon.sapWCDPIconPressed {
-	border-left-color: white;
-}
-
-.sapWCDPIcon:active {
-	background-color: var(--sapUiButtonLiteActiveBackground);
-	color: var(--sapUiButtonActiveTextColor);
-}
-
-.sapWCDPIcon.sapWCDPIconPressed {
-	background: var(--sapUiToggleButtonPressedBackground);
-	color: var(--sapUiButtonActiveTextColor);
-}
-
-.sapWCDPIcon:not(.sapWCDPIconPressed):not(:active):hover {
-	background: var(--sapUiButtonLiteHoverBackground);
 }

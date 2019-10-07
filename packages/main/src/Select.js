@@ -8,16 +8,15 @@ import {
 	isEscape,
 	isShow,
 } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-import { getCompactSize } from "@ui5/webcomponents-base/dist/Configuration.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import getEffectiveRTL from "@ui5/webcomponents-base/dist/util/getEffectiveRTL.js";
+import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import Option from "./Option.js";
 import Label from "./Label.js";
 import Popover from "./Popover.js";
 import List from "./List.js";
 import StandardListItem from "./StandardListItem.js";
 import Icon from "./Icon.js";
+import "./icons/slim-arrow-down.js";
 
 // Template
 import SelectTemplate from "./generated/templates/SelectTemplate.lit.js";
@@ -34,18 +33,18 @@ const metadata = {
 
 		/**
 		 * Defines the <code>ui5-select</code> options.
-		 * <br/><br/>
+		 * <br><br>
 		 * <b>Note:</b> Only one selected option is allowed.
 		 * If more than one option is defined as selected, the last one would be considered as the selected one.
-		 * <br/><br/>
+		 * <br><br>
 		 * <b>Note:</b> Use the <code>ui5-option</code> component to define the desired options.
-		 * @type {Option[]}
+		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
 		 */
 		"default": {
 			propertyName: "options",
-			type: Option,
+			type: HTMLElement,
 			listenFor: { include: ["*"] },
 		},
 	},
@@ -53,7 +52,7 @@ const metadata = {
 
 		/**
 		 * Defines whether <code>ui5-select</code> is in disabled state.
-		 * </br></br>
+		 * <br><br>
 		 * <b>Note:</b> A disabled <code>ui5-select</code> is noninteractive.
 		 *
 		 * @type {boolean}
@@ -98,13 +97,25 @@ const metadata = {
 
 		_text: {
 			type: String,
+			noAttribute: true,
 		},
 
-		_opened: {
+		_iconPressed: {
+			type: Boolean,
+			noAttribute: true,
+		},
+
+		/**
+		 * @private
+		 */
+		opened: {
 			type: Boolean,
 		},
 
-		_focused: {
+		/**
+		 * @private
+		 */
+		focused: {
 			type: Boolean,
 		},
 	},
@@ -182,10 +193,28 @@ class Select extends UI5Element {
 		this._enableFormSupport();
 	}
 
+	onfocusin() {
+		this.focused = true;
+	}
+
+	onfocusout() {
+		this.focused = false;
+	}
+
 	get _isPickerOpen() {
 		const popover = this.shadowRoot.querySelector("#ui5-select--popover");
 
-		return popover && popover._isOpen;
+		return popover && popover.opened;
+	}
+
+	/**
+	 * Currently selected option
+	 * @readonly
+	 * @type { ui5-option }
+	 * @public
+	 */
+	get selectedOption() {
+		return this.options.find(option => option.selected);
 	}
 
 	_togglePopover() {
@@ -245,7 +274,7 @@ class Select extends UI5Element {
 		if (FormSupport) {
 			FormSupport.syncNativeHiddenInput(this, (element, nativeInput) => {
 				nativeInput.disabled = element.disabled;
-				nativeInput.value = element.selectedOption.value;
+				nativeInput.value = element._currentlySelectedOption.value;
 			});
 		} else if (this.name) {
 			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
@@ -286,11 +315,13 @@ class Select extends UI5Element {
 	}
 
 	_applyFocusAfterOpen() {
-		if (!this.selectedOption) {
+		this._toggleIcon();
+
+		if (!this._currentlySelectedOption) {
 			return;
 		}
 
-		const li = this.shadowRoot.querySelector(`#${this.selectedOption._id}-li`);
+		const li = this.shadowRoot.querySelector(`#${this._currentlySelectedOption._id}-li`);
 
 		li.parentElement._itemNavigation.currentIndex = this._selectedIndex;
 		li && li.focus();
@@ -345,6 +376,8 @@ class Select extends UI5Element {
 	}
 
 	_afterClose() {
+		this._toggleIcon();
+
 		if (this._escapePressed) {
 			this._select(this._selectedIndexBeforeOpen);
 			this._escapePressed = false;
@@ -354,39 +387,28 @@ class Select extends UI5Element {
 		}
 	}
 
+	_toggleIcon() {
+		this._iconPressed = !this._iconPressed;
+	}
+
 	get _currentSelectedItem() {
 		return this.shadowRoot.querySelector(`#${this.options[this._selectedIndex]._id}-li`);
 	}
 
-	get selectedOption() {
+	get _currentlySelectedOption() {
 		return this.options[this._selectedIndex];
-	}
-
-	get classes() {
-		return {
-			main: {
-				"sapWCSelect": true,
-				"sapWCSelectFocused": this._focused,
-				"sapWCSelectDisabled": this.disabled,
-				"sapWCSelectOpened": this._opened,
-				"sapWCSelectState": this.valueState !== "None",
-				[`sapWCSelect${this.valueState}`]: true,
-				"sapUiSizeCompact": getCompactSize(),
-			},
-		};
 	}
 
 	get tabIndex() {
 		return this.disabled ? "-1" : "0";
 	}
 
-	get rtl() {
-		return getEffectiveRTL() ? "rtl" : undefined;
+	get dir() {
+		return getRTL() ? "rtl" : "ltr";
 	}
 
 	static async define(...params) {
 		await Promise.all([
-			Option.define(),
 			Label.define(),
 			Popover.define(),
 			List.define(),

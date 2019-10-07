@@ -1,40 +1,37 @@
-:host(ui5-timeline:not([hidden])) {
+:host(:not([hidden])) {
 	display: block;
 }
 
-ui5-timeline:not([hidden]) {
-	display: block;
-}
-
-.sapWCTimeline {
+.ui5-timeline-root {
 	background-color: var(--sapUiBaseBG);
 	padding: 1rem 1rem 1rem .5rem;
 	box-sizing: border-box;
 	overflow: hidden;
 }
 
-.sapWCTimelineList {
+.ui5-timeline-list {
 	list-style: none;
 	margin: 0;
 	padding: 0;
 }
 
-.sapWCTimelineListItem {
+.ui5-timeline-list-item {
 	margin-bottom: 1.625rem;
 }
 
-.sapWCTimelineListItem:last-child {
+.ui5-timeline-list-item:last-child {
 	margin-bottom: 0;
 }
 
-.sapUiSizeCompact.sapWCTimeline {
+/* Compact size */
+:host([data-ui5-compact-size]) .ui5-timeline-root {
 	padding: .5rem;
 }
 
-.sapUiSizeCompact .sapWCTimelineListItem {
+:host([data-ui5-compact-size]) .ui5-timeline-list-item {
 	margin-bottom: .5rem;
 }
 
-.sapUiSizeCompact .sapWCTimelineListItem :last-child {
+:host([data-ui5-compact-size]) .ui5-timeline-list-item :last-child {
 	margin-bottom: 0;
 }

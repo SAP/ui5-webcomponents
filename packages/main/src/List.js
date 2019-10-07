@@ -2,13 +2,11 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import FocusHelper from "@ui5/webcomponents-base/dist/FocusHelper.js";
-import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 import { isTabNext } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-import { getCompactSize } from "@ui5/webcomponents-base/dist/Configuration.js";
-import ListItemBase from "./ListItemBase.js";
 import ListMode from "./types/ListMode.js";
 import ListSeparators from "./types/ListSeparators.js";
 import ListItemType from "./types/ListItemType.js";
+
 // Template
 import ListTemplate from "./generated/templates/ListTemplate.lit.js";
 
@@ -37,15 +35,15 @@ const metadata = {
 
 		/**
 		 * Defines the items of the <code>ui5-list</code>.
-		 * <br><b>Note:</b> Only <code>ui5-li</code>, <code>ui5-li-custom</code> and <code>ui5-li-groupheader</code> are allowed.
+		 * <br><b>Note:</b> Use <code>ui5-li</code>, <code>ui5-li-custom</code> and <code>ui5-li-groupheader</code> for the intended design.
 		 *
-		 * @type {ListItemBase[]}
+		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
 		 */
 		"default": {
 			propertyName: "items",
-			type: ListItemBase,
+			type: HTMLElement,
 		},
 	},
 	properties: /** @lends  sap.ui.webcomponents.main.List.prototype */ {
@@ -175,6 +173,7 @@ const metadata = {
 			detail: {
 				selectedItems: { type: Array },
 				previouslySelectedItems: { type: Array },
+				selectionComponentPressed: { type: Boolean }, // protected, indicates if the user used the selection components to change the selection
 			},
 		},
 	},
@@ -203,13 +202,13 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/List";</code>
+ * <code>import "@ui5/webcomponents/dist/List.js";</code>
  * <br>
- * <code>import "@ui5/webcomponents/dist/StandardListItem";</code> (for <code>ui5-li</code>)
+ * <code>import "@ui5/webcomponents/dist/StandardListItem.js";</code> (for <code>ui5-li</code>)
  * <br>
- * <code>import "@ui5/webcomponents/dist/CustomListItem";</code> (for <code>ui5-li-custom</code>)
+ * <code>import "@ui5/webcomponents/dist/CustomListItem.js";</code> (for <code>ui5-li-custom</code>)
  * <br>
- * <code>import "@ui5/webcomponents/dist/GroupHeaderListItem";</code> (for <code>ui5-li-group-header</code>)
+ * <code>import "@ui5/webcomponents/dist/GroupHeaderListItem.js";</code> (for <code>ui5-li-group-header</code>)
  *
  * @constructor
  * @author SAP SE
@@ -276,7 +275,7 @@ class List extends UI5Element {
 				|| (this.separators === ListSeparators.Inner && !isLastChild);
 
 			item._mode = this.mode;
-			item._hideBorder = !showBottomBorder;
+			item.hasBorder = showBottomBorder;
 		});
 
 		this._previouslySelectedItem = null;
@@ -291,11 +290,15 @@ class List extends UI5Element {
 		this._selectionRequested = true;
 
 		if (this[`handle${this.mode}`]) {
-			selectionChange = this[`handle${this.mode}`](event.detail.item, event.selected);
+			selectionChange = this[`handle${this.mode}`](event.detail.item, event.detail.selected);
 		}
 
 		if (selectionChange) {
-			this.fireEvent("selectionChange", { selectedItems: this.getSelectedItems(), previouslySelectedItems });
+			this.fireEvent("selectionChange", {
+				selectedItems: this.getSelectedItems(),
+				previouslySelectedItems,
+				selectionComponentPressed: event.detail.selectionComponentPressed,
+			});
 		}
 	}
 
@@ -450,8 +453,9 @@ class List extends UI5Element {
 			this.onSelectionRequested({
 				detail: {
 					item: pressedItem,
+					selectionComponentPressed: false,
+					selected: !pressedItem.selected,
 				},
-				selected: !pressedItem.selected,
 			});
 		}
 
@@ -563,29 +567,6 @@ class List extends UI5Element {
 
 	get showNoDataText() {
 		return this.items.length === 0 && this.noDataText;
-	}
-
-	get classes() {
-		return {
-			main: {
-				sapMList: true,
-				sapMListInsetBG: this.inset,
-				sapUiSizeCompact: getCompactSize(),
-			},
-			ul: {
-				sapMListItems: true,
-				sapMListUl: true,
-				[`sapMListShowSeparators${this.separators}`]: true,
-				[`sapMListMode${this.mode}`]: true,
-				sapMListInset: this.inset,
-			},
-			noData: {
-				sapMLIB: true,
-				sapMListNoData: true,
-				sapMLIBTypeInactive: true,
-				sapMLIBFocusable: isDesktop(),
-			},
-		};
 	}
 }
 

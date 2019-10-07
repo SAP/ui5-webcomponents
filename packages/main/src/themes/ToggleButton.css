@@ -1,8 +1,4 @@
-:host(ui5-togglebutton:not([hidden])) {
-	display: inline-block;
-}
-
-ui5-togglebutton:not([hidden]) {
+:host(:not([hidden])) {
 	display: inline-block;
 }
 
@@ -11,79 +7,49 @@ ui5-togglebutton:not([hidden]) {
 	pointer-events: none;
 }
 
-ui5-togglebutton[disabled] {
-	pointer-events: none;
-}
-
-ui5-togglebutton .sapMBtn::before { /* this is a hack for a bug in IE https:/* github.com/philipwalton/flexbugs/issues/231 */
-	content: '';
-	min-height: inherit;
-	font-size: 0;
-}
-
-.sapMBtn.sapMToggleBtnPressed {
-	color: var(--sapUiToggleButtonPressedTextColor);
-	text-shadow: none;
-}
-
-.sapMBtn.sapMToggleBtnPressed.sapMBtnNegative {
-	background-color: var(--sapUiButtonRejectActiveBackground);
-	border-color: var(--sapUiButtonRejectActiveBorderColor);
-	color: var(--sapUiToggleButtonPressedTextColor);
-}
-
-.sapMBtn.sapMToggleBtnPressed.sapMBtnNegative:active,
-.sapMBtn.sapMToggleBtnPressed.sapMBtnNegative:hover {
-	background-color: var(--_ui5_toggle_button_pressed_negative_hover);
-	border-color: var(--sapUiButtonRejectActiveBorderColor);
-}
-
-.sapMBtn.sapMToggleBtnPressed.sapMBtnPositive {
-	background-color: var(--sapUiButtonAcceptActiveBackground);
+:host([design="Positive"][pressed]),
+:host([design="Positive"][pressed][focused]),
+:host([design="Positive"][pressed]:hover) {
+	background: var(--sapUiButtonAcceptActiveBackground);
 	border-color: var(--sapUiButtonAcceptActiveBorderColor);
 	color: var(--sapUiToggleButtonPressedTextColor);
+	outline-color: var(--sapUiContentContrastFocusColor);
 }
 
-.sapMBtn.sapMToggleBtnPressed.sapMBtnPositive:active,
-.sapMBtn.sapMToggleBtnPressed.sapMBtnPositive:hover {
-	background-color: var(--_ui5_toggle_button_pressed_positive_hover);
-	border-color: var(--sapUiButtonAcceptActiveBorderColor);
+:host([design="Positive"][pressed][active]),
+:host([design="Positive"][pressed]:hover) {
+	background: var(--_ui5_toggle_button_pressed_positive_hover);
 }
 
-.sapMBtn.sapMToggleBtnPressed.sapMBtnDefault:not(:active):not(:hover),
-.sapMBtn.sapMToggleBtnPressed.sapMBtnEmphasized:not(:active):not(:hover),
-.sapMBtn.sapMToggleBtnPressed.sapMBtnTransparent:not(:active):not(:hover) {
-	background-color: var(--sapUiToggleButtonPressedBackground);
+:host([design="Negative"][pressed]),
+:host([design="Negative"][pressed][focused]),
+:host([design="Negative"][pressed]:hover) {
+	background: var(--sapUiButtonRejectActiveBackground);
+	border-color: var(--sapUiButtonRejectActiveBorderColor);
+	color: var(--sapUiToggleButtonPressedTextColor);
+	outline-color: var(--sapUiContentContrastFocusColor);
+}
+
+:host([design="Negative"][pressed][active]),
+:host([design="Negative"][pressed]:hover) {
+	background: var(--_ui5_toggle_button_pressed_negative_hover);
+}
+
+
+:host([pressed]),
+:host([pressed]:hover),
+:host([pressed][focused]),
+:host([design="Transparent"][pressed]),
+:host([design="Transparent"][pressed]:hover),
+:host([design="Emphasized"][pressed]),
+:host([design="Emphasized"][pressed]:hover) {
+	background: var(--sapUiToggleButtonPressedBackground);
 	border-color: var(--sapUiToggleButtonPressedBorderColor);
+	color: var(--sapUiToggleButtonPressedTextColor);
+	outline-color: var(--sapUiContentContrastFocusColor);
 }
 
-.sapMBtn.sapMToggleBtnPressed:not(.sapMBtnNegative):not(.sapMBtnPositive):focus,
-.sapMBtn.sapMToggleBtnPressed.sapMBtnEmphasized:focus,
-.sapMBtn.sapMToggleBtnPressed.sapMBtnTransparent:focus {
-	border-color: var(--_ui5_toggle_button_pressed_focussed);
-}
-
-.sapMBtn.sapMToggleBtnPressed:focus:after,
-.sapMBtn.sapMToggleBtnPressed.sapMBtnEmphasized:focus:after,
-.sapMBtn.sapMToggleBtnPressed.sapMBtnTransparent:focus:after {
-	border-color: var(--sapUiContentContrastFocusColor);
-}
-
-.sapMBtn.sapMToggleBtnPressed:active,
-.sapMBtn.sapMToggleBtnPressed:hover,
-.sapMBtn.sapMToggleBtnPressed.sapMBtnEmphasized:active,
-.sapMBtn.sapMToggleBtnPressed.sapMBtnEmphasized:hover,
-.sapMBtn.sapMToggleBtnPressed.sapMBtnTransparent:active,
-.sapMBtn.sapMToggleBtnPressed.sapMBtnTransparent:hover {
-	background-color: var(--sapUiToggleButtonPressedHoverBackground);
-	border-color: var(--sapUiToggleButtonPressedHoverBorderColor);
-}
-
-.sapMBtn.sapMToggleBtnPressed:active:focus
-.sapMBtn.sapMToggleBtnPressed:hover:focus,
-.sapMBtn.sapMToggleBtnPressed.sapMBtnEmphasized:active:focus,
-.sapMBtn.sapMToggleBtnPressed.sapMBtnEmphasized:hover:focus,
-.sapMBtn.sapMToggleBtnPressed.sapMBtnTransparent:active:focus,
-.sapMBtn.sapMToggleBtnPressed.sapMBtnTransparent:hover:focus {
-	border-color: var(--_ui5_toggle_button_pressed_focussed_hovered);
+:host([pressed][active]),
+:host([pressed]:hover) {
+	background: var(--sapUiToggleButtonPressedHoverBackground);
 }

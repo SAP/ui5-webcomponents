@@ -1,7 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import CSSSize from "@ui5/webcomponents-base/dist/types/CSSSize.js";
 import TableColumnTemplate from "./generated/templates/TableColumnTemplate.lit.js";
 
 // Styles
@@ -13,7 +12,7 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.TableColumn.prototype */ {
 
 		/**
-		 * Defines the HTML Element to be displayed in the column header.
+		 * Defines the content of the column header.
 		 *
 		 * @type {Node[]}
 		 * @slot
@@ -27,10 +26,10 @@ const metadata = {
 
 		/**
 		 * Defines the minimum screen width required to display this column. By default it is always displayed.
-		 * </br></br>
+		 * <br><br>
 		 * The responsive behavior of the <code>ui5-table</code> is determined by this property. As an example, by setting
 		 * <code>minWidth</code> property to <code>40em</code> shows this column on tablet (and desktop) but hides it on mobile.
-		 * </br>
+		 * <br>
 		 * For further responsive design options, see <code>demandPopin</code> property.
 		 *
 		 * @type {number}
@@ -55,7 +54,7 @@ const metadata = {
 		/**
 		 * According to your <code>minWidth</code> settings, the <code>ui5-table-column</code> can be hidden
 		 * in different screen sizes.
-		 * </br></br>
+		 * <br><br>
 		 * Setting this property to <code>true</code>, shows this column as pop-in instead of hiding it.
 		 *
 		 * @type {boolean}
@@ -67,21 +66,23 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the width of the column. If you leave it empty, then this column covers the remaining space.
-		 *
-		 * @type {CSSSize}
-		 * @public
+		 * @protected
 		 */
-		width: {
-			type: CSSSize,
-			defaultValue: "",
-		},
-
-		_first: {
+		first: {
 			type: Boolean,
 		},
 
-		_last: {
+		/**
+		 * @protected
+		 */
+		last: {
+			type: Boolean,
+		},
+
+		/**
+		 * @protected
+		 */
+		sticky: {
 			type: Boolean,
 		},
 	},
@@ -117,16 +118,6 @@ class TableColumn extends UI5Element {
 
 	static get template() {
 		return TableColumnTemplate;
-	}
-
-	get classes() {
-		return {
-			main: {
-				sapWCTableColumn: true,
-				sapWCTableColumnFirst: this._first,
-				sapWCTableColumnLast: this._last,
-			},
-		};
 	}
 }
 
