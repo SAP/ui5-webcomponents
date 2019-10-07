@@ -1,11 +1,5 @@
-commit d20da88e4f2890e716021487ca038a4b5bd20741
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Thu Oct 3 12:33:37 2019 +0300
+commit 6152d78f303f164b8fcb21e8d46d3ca4302a5dfc
+Author: Julian Dax <julian.dax@posteo.de>
+Date:   Mon Oct 7 16:41:44 2019 +0200
 
-    fix(ui5-busyindicator): remove incorrect CSS transformation in IE (#816)
-    
-    keyframes gets optimised by csso
-    '100%' --> 'to' which doesn't match the
-    runtime CSS transformation rules
-    and incorrectly prepends the tag name,
-    making the CSS invalid and braking on IE
+    docs: update version to 1.0.0-rc3 in playground (#819)
