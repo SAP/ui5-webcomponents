@@ -18,7 +18,7 @@
 
 				<ToolbarSpacer></ToolbarSpacer>
 
-				<Label class="version-label" text="v1.0.0-rc.2">
+				<Label class="version-label" text="v1.0.0-rc.3">
 					<layoutData>
 						<OverflowToolbarLayoutData priority="NeverOverflow" />
 					</layoutData>
@@ -78,7 +78,7 @@
 				</FlexBox>
 
 				<HBox width="100%" justifyContent="SpaceBetween" alignItems="Center">
-					<Label class="version-label-in-settings" text="v1.0.0-rc.2" />
+					<Label class="version-label-in-settings" text="v1.0.0-rc.3" />
 					<HBox class="settings-buttons-wrapper" width="100%" justifyContent="End">
 						<Button type="Transparent" text="Close" press="closeSettingsMenu" class="margin-end custom-button-height" />
 						<Button text="Apply" press="applyChangeSettings" class="custom-button-height" />
