@@ -1,5 +1,5 @@
-commit 6152d78f303f164b8fcb21e8d46d3ca4302a5dfc
-Author: Julian Dax <julian.dax@posteo.de>
-Date:   Mon Oct 7 16:41:44 2019 +0200
+commit 7a619f888dfe9dbb75c01ffae556ef2d02bae63e
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Tue Oct 8 14:04:15 2019 +0300
 
-    docs: update version to 1.0.0-rc3 in playground (#819)
+    fix: fix find operator in deploy script (#824)
