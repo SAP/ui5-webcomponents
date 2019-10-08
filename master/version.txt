@@ -1,5 +1,5 @@
-commit 7a619f888dfe9dbb75c01ffae556ef2d02bae63e
+commit 150a10001cd9fb2d8e0c61038db22720d96c95e7
 Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Tue Oct 8 14:04:15 2019 +0300
+Date:   Tue Oct 8 14:13:05 2019 +0300
 
-    fix: fix find operator in deploy script (#824)
+    fix(ui5-badge): fix icon visual issue in ie (#809)
