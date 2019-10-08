@@ -1,5 +1,5 @@
-commit 0241140a7bdf9de50ebcc2af6cf04e0cbfa00d97
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Tue Oct 8 14:40:45 2019 +0300
+commit 274ea423104431cf11eaa9a1bf0ed600bec2e127
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Oct 8 16:01:24 2019 +0300
 
-    fix: update output of create new component script (#826)
+    chore: remove icon fonts loading (#827)
