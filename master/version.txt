@@ -1,5 +1,5 @@
-commit 150a10001cd9fb2d8e0c61038db22720d96c95e7
+commit 0241140a7bdf9de50ebcc2af6cf04e0cbfa00d97
 Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Tue Oct 8 14:13:05 2019 +0300
+Date:   Tue Oct 8 14:40:45 2019 +0300
 
-    fix(ui5-badge): fix icon visual issue in ie (#809)
+    fix: update output of create new component script (#826)
