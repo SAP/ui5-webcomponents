@@ -9,6 +9,7 @@
 	height: var(--_ui5_button_base_height);
 	font-family: var(--sapUiFontFamily);
 	font-size: var(--sapMFontMediumSize);
+	font-weight: normal;
 	text-shadow: var(--_ui5_button_text_shadow);
 	border-radius: var(--_ui5_button_border_radius);
 	border-width: 0.0625rem;
