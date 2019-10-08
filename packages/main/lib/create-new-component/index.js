@@ -68,3 +68,14 @@ const fs = require("fs");
 fs.writeFileSync(filePaths.js, sJsFileContentTemplate, { flag: "wx+" });
 fs.writeFileSync(filePaths.css, "", { flag: "wx+" });
 fs.writeFileSync(filePaths.hbs, "<div>Hello World</div>", { flag: "wx+" });
+
+
+console.log(`Successfully generated ${componentName}.js`);
+console.log(`Successfully generated ${componentName}.css`);
+console.log(`Successfully generated ${componentName}.hbs`);
+
+// Change the color of the output
+console.warn('\x1b[33m%s\x1b[0m', `
+Please import the generated component in bundle.esm.js:
+import ${componentName} from "./dist/${componentName}.js";
+`);
