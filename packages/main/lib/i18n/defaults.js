@@ -35,7 +35,8 @@ const getOutputFileContent = (properties) => {
 	const textKeys = Object.keys(properties);
 	const texts = textKeys.map(prop => getTextInfo(prop, properties[prop])).join('');
 
-	return `${texts} export {${textKeys.join()}};`;
+	return `${texts}
+export {${textKeys.join()}};`;
 }
 
 /*
