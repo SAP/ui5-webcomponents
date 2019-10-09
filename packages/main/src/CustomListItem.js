@@ -1,7 +1,7 @@
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { isSpace } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import ListItem from "./ListItem.js";
 import CustomListItemTemplate from "./generated/templates/CustomListItemTemplate.lit.js";
-import { isSpace } from "@ui5/webcomponents-base/dist/events/PseudoEvents";
 
 // Styles
 import columnListItemCss from "./generated/themes/CustomListItem.css.js";
