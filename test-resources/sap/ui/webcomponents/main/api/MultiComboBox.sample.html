@@ -15,7 +15,7 @@
 
 	<link href="../../../../../../test-resources/playground/css/api.css" type="text/css" rel="stylesheet">
 
-	<script data-id="sap-ui-config" type="application/json">
+	<script data-ui5-config type="application/json">
 		{
 			"theme": "sap_fiori_3",
 			"language": "EN"
@@ -114,9 +114,9 @@
 	</section>
 
 	<section>
-		<h3>MultiComboBox with items and build-in user input validation</h3>
+		<h3>MultiComboBox with free text input</h3>
 		<div class="snippet">
-			<ui5-multi-combobox style="width: 100%" validate-input placeholder="Choose your countries">
+			<ui5-multi-combobox style="width: 100%" placeholder="Choose your countries" allow-custom-values>
 				<ui5-li>Argentina</ui5-li>
 				<ui5-li selected>Bulgaria</ui5-li>
 				<ui5-li>Denmark</ui5-li>
@@ -131,7 +131,7 @@
 		</div>
 	<div class="snippet">
 <pre class="prettyprint lang-html"><xmp>
-<ui5-multi-combobox validate-input placeholder="Choose your countries">
+<ui5-multi-combobox placeholder="Choose your countries">
 	<ui5-li>Argentina</ui5-li>
 	<ui5-li selected>Bulgaria</ui5-li>
 	<ui5-li>Denmark</ui5-li>
@@ -206,9 +206,9 @@ A drop-down list for selecting and filtering values. <h3>Description</h3> The <c
 
 The <code>ui5-multi-combobox</code> provides advanced keyboard handling.
 
-<h4>Picker</h3> If the <code>ui5-multi-combobox</code> is focused, you can open or close the drop-down by pressing <code>F4</code>, <code>ALT+UP</code> or <code>ALT+DOWN</code> keys. Once the drop-down is opened, you can use the <code>UP</code> and <code>DOWN</code> arrow keys to navigate through the available options and select one by pressing the <code>Space</code> or <code>Enter</code> keys. <br>
+<h2>Picker</h2> If the <code>ui5-multi-combobox</code> is focused, you can open or close the drop-down by pressing <code>F4</code>, <code>ALT+UP</code> or <code>ALT+DOWN</code> keys. Once the drop-down is opened, you can use the <code>UP</code> and <code>DOWN</code> arrow keys to navigate through the available options and select one by pressing the <code>Space</code> or <code>Enter</code> keys. <br>
 
-<h4>Tokens</h2> <ul> <li> Left/Right arrow keys - moves the focus selection form the currently focues token to the previous/next one (if available). </li> <li> Delete - deletes the token and focuses the previous token. </li> <li> Backspace - deletes the token and focus the next token. </li> </ul>
+<h2>Tokens</h2> <ul> <li> Left/Right arrow keys - moves the focus selection form the currently focues token to the previous/next one (if available). </li> <li> Delete - deletes the token and focuses the previous token. </li> <li> Backspace - deletes the token and focus the next token. </li> </ul>
 
 <h3>ES6 Module Import</h3>
 
@@ -227,39 +227,39 @@ The <code>ui5-multi-combobox</code> provides advanced keyboard handling.
                     </div>
             
                       <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">disabled <br> <code></code></div>
-                        <div class="cell api-table-content-cell">boolean</div>
-                        <div class="cell api-table-content-cell">false</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines whether <code>ui5-multi-combobox</code> is in disabled state. <br><br> <b>Note:</b> A disabled <code>ui5-multi-combobox</code> is completely uninteractive.
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">placeholder <br> <code></code></div>
-                        <div class="cell api-table-content-cell">string</div>
-                        <div class="cell api-table-content-cell">&quot;&quot;</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines a short hint intended to aid the user with data entry when the <code>ui5-multi-combobox</code> has no value. <br><br> <b>Note:</b> The placeholder is not supported in IE. If the placeholder is provided, it won`t be displayed in IE.
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">readonly <br> <code></code></div>
-                        <div class="cell api-table-content-cell">boolean</div>
-                        <div class="cell api-table-content-cell">false</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines whether the <code>ui5-multi-combobox</code> is readonly. <br><br> <b>Note:</b> A read-only <code>ui5-multi-combobox</code> is not editable, but still provides visual feedback upon user interaction.
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">validateInput <br> <code>validate-input</code></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">allowCustomValues  <br> <code>allow-custom-values </code></div>
                         <div class="cell api-table-content-cell">boolean</div>
                         <div class="cell api-table-content-cell">false</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                             Defines if the user input will be prevented if no matching item has been found
                         </div>
                       </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">disabled  <br> <code> </code></div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell">false</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines whether <code>ui5-multi-combobox</code> is in disabled state. <br><br> <b>Note:</b> A disabled <code>ui5-multi-combobox</code> is completely uninteractive.
+                        </div>
+                      </div>
                       <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">value <br> <code></code></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">placeholder  <br> <code> </code></div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell">&quot;&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines a short hint intended to aid the user with data entry when the <code>ui5-multi-combobox</code> has no value.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">readonly  <br> <code> </code></div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell">false</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines whether the <code>ui5-multi-combobox</code> is readonly. <br><br> <b>Note:</b> A read-only <code>ui5-multi-combobox</code> is not editable, but still provides visual feedback upon user interaction.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">value  <br> <code> </code></div>
                         <div class="cell api-table-content-cell">string</div>
                         <div class="cell api-table-content-cell">&quot;&quot;</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
@@ -267,7 +267,7 @@ The <code>ui5-multi-combobox</code> provides advanced keyboard handling.
                         </div>
                       </div>
                       <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">valueState <br> <code>value-state</code></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">valueState  <br> <code>value-state </code></div>
                         <div class="cell api-table-content-cell">string</div>
                         <div class="cell api-table-content-cell">&quot;None&quot;</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
@@ -294,7 +294,7 @@ The <code>ui5-multi-combobox</code> provides advanced keyboard handling.
                     <div class="row api-table-roll-even">
                       <div class="cell api-table-content-cell api-table-content-cell-bold">default</div>
                       <div class="cell api-table-content-cell">HTMLElement [0..n]</div>
-                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the <code>ui5-multi-combobox</code> items. </br></br> Example: </br> &lt;ui5-multi-combobox></br> &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li>Item #1&lt;/ui5-li></br> &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li>Item #2&lt;/ui5-li></br> &lt;/ui5-multi-combobox> <br> <br></div>
+                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the <code>ui5-multi-combobox</code> items. <br><br> Example: <br> &lt;ui5-multi-combobox><br> &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li>Item #1&lt;/ui5-li><br> &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li>Item #2&lt;/ui5-li><br> &lt;/ui5-multi-combobox> <br> <br></div>
                     </div>
             
                 </div>

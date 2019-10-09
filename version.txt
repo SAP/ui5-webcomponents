@@ -1,5 +1,6 @@
-commit 6416ad082c4ed3c9e532aebc5c16f1cafc620ca2
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Jul 26 14:12:41 2019 +0300
+commit 3c3f85267272284c821c06a715907da00da311ad
+Merge: 76408c2 3c4a10a
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Wed Oct 9 10:44:51 2019 +0300
 
-    refactor: remaining old classes renamed (#694)
+    Merge branch 'master' into latest-release-website

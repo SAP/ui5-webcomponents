@@ -10,7 +10,9 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta charset="utf-8">
 
-	<script data-id="sap-ui-config" type="application/json">
+	<script>delete Document.prototype.adoptedStyleSheets;</script>
+	
+	<script data-ui5-config type="application/json">
 		{
 			"language": "EN"
 		}
@@ -34,6 +36,13 @@
 </head>
 
 <body>
+	<div class="group">
+		<ui5-link class="samples-big-margin-right" href="https://www.sap.com" target="_blank">Standard Link</ui5-link>
+		<ui5-link class="samples-big-margin-right" href="https://www.sap.com" target="_blank" design="Subtle">Subtle link</ui5-link>
+		<ui5-link class="samples-big-margin-right" href="https://www.sap.com" target="_blank" disabled>Disabled</ui5-link>
+		<ui5-link class="samples-big-margin-right" href="https://www.sap.com" target="_blank" design="Emphasized">Emphasized</ui5-link>
+	</div>
+
 	<section class="group">
 		<h2>cross-origin</h2>
 		<ui5-link href="https://www.google.com" target="_blank" id="link">link</ui5-link><span>native span</span>

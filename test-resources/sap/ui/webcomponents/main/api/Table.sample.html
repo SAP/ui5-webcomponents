@@ -15,7 +15,7 @@
 
 	<link href="../../../../../../test-resources/playground/css/api.css" type="text/css" rel="stylesheet">
 
-	<script data-id="sap-ui-config" type="application/json">
+	<script data-ui5-config type="application/json">
 		{
 			"theme": "sap_fiori_3",
 			"language": "EN"
@@ -39,12 +39,6 @@
 			padding: 0.5rem;
 		}
 
-		html[data-sap-ui-browser=ie11] .table-example,
-		html[data-sap-ui-browser=ed15] .table-example,
-		html:not([data-sap-ui-browser^=ie]):not([data-sap-ui-browser^=ed]) .table-unsupported {
-			display: none;
-		}
-
 		.hcb-background .header {
 			color: #fff;
 		}
@@ -56,11 +50,6 @@
 		<h2 class="control-header">Table</h2>
 		<div style="margin-bottom: 2rem; font-weight: 300; font-size: 1.1rem; color: #666666;">&lt;ui5-table&gt;</div>
 	</header>
-
-	<div class="table-unsupported">
-		<div>The table is currently not supported in IE11 and Edge. If you need this feature, do not hesitate to open an issue in</div>
-		<a href=\"https://github.com/SAP/ui5-webcomponents/issues/new/choose\" target=\"_blank\">Github</a>
-	</div>
 
 	<section class="table-example">
 		<h3>Basic Table</h3>
@@ -74,7 +63,7 @@
 
 			<ui5-table class="demo-table" id="tbl">
 				<!-- Columns -->
-				<ui5-table-column slot="columns" width="12em">
+				<ui5-table-column slot="columns" style="width: 12rem">
 					<span style="line-height: 1.4rem">Product</span>
 				</ui5-table-column>
 
@@ -106,7 +95,7 @@
 
 <ui5-table class="demo-table" id="table">
 	<!-- Columns -->
-	<ui5-table-column slot="columns" width="12em">
+	<ui5-table-column slot="columns" style="width: 12rem">
 		<span style="line-height: 1.4rem">Product</span>
 	</ui5-table-column>
 
@@ -135,7 +124,7 @@
 		<div class="snippet flex-column">
 			<ui5-table class="demo-table" no-data-text="No Data" show-no-data>
 				<!-- Columns -->
-				<ui5-table-column slot="columns" width="12em">
+				<ui5-table-column slot="columns" style="width: 12rem">
 					<span style="line-height: 1.4rem">Product</span>
 				</ui5-table-column>
 
@@ -159,7 +148,7 @@
 
 		<pre class="prettyprint lang-html"><xmp>
 <ui5-table class="demo-table" no-data-text="No Data" show-no-data>
-	<ui5-table-column slot="columns" width="12em">
+	<ui5-table-column slot="columns" style="width: 12rem">
 		<span style="line-height: 1.4rem">Product</span>
 	</ui5-table-column>
 
@@ -483,7 +472,7 @@ The <code>ui5-table</code> component provides a set of sophisticated and conveni
 
 <h3>ES6 Module Import</h3>
 
-<code>import "@ui5/webcomponents/dist/Table";</code> <br> <b>Note:</b> This also includes the <code>ui5-table-column</code>, <code>ui5-table-row</code> and <code>ui5-table-cell</code> Web Components.
+<code>import "@ui5/webcomponents/dist/Table.js";</code> <br> <code>import "@ui5/webcomponents/dist/TableColumn.js";</code> (for <code>ui5-table-column</code>) <br> <code>import "@ui5/webcomponents/dist/TableRow.js";</code> (for <code>ui5-table-row</code>) <br> <code>import "@ui5/webcomponents/dist/TableCell.js";</code> (for <code>ui5-table-cell</code>)
           <section class="component-api space-top">
             
                   <h3 class="comment-api-title" >Properties/Attributes</h3>
@@ -498,7 +487,7 @@ The <code>ui5-table</code> component provides a set of sophisticated and conveni
                     </div>
             
                       <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">noDataText <br> <code>no-data-text</code></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">noDataText  <br> <code>no-data-text </code></div>
                         <div class="cell api-table-content-cell">string</div>
                         <div class="cell api-table-content-cell"></div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
@@ -506,7 +495,7 @@ The <code>ui5-table</code> component provides a set of sophisticated and conveni
                         </div>
                       </div>
                       <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">showNoData <br> <code>show-no-data</code></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">showNoData  <br> <code>show-no-data </code></div>
                         <div class="cell api-table-content-cell">boolean</div>
                         <div class="cell api-table-content-cell">false</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
@@ -514,11 +503,11 @@ The <code>ui5-table</code> component provides a set of sophisticated and conveni
                         </div>
                       </div>
                       <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">stickyColumnHeader <br> <code>sticky-column-header</code></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">stickyColumnHeader  <br> <code>sticky-column-header </code></div>
                         <div class="cell api-table-content-cell">boolean</div>
                         <div class="cell api-table-content-cell">false</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Determines whether the column headers remain fixed at the top of the page during vertical scrolling as long as the Web Component is in the viewport. <br><br> <b>Limitations:</b> <ul> <li>Browsers that do not support this feature: <ul> <li>Internet Explorer</li> <li>Microsoft Edge lower than version 41 (EdgeHTML 16)</li> <li>Mozilla Firefox lower than version 59</li> </ul></li> <li>Scrolling behavior: <ul> <li>If the Web Component is placed in layout containers that have the <code>overflow: hidden</code> or <code>overflow: auto</code> style definition, this can prevent the sticky elements of the Web Component from becoming fixed at the top of the viewport.</li> </ul></li> </ul>
+                            Determines whether the column headers remain fixed at the top of the page during vertical scrolling as long as the Web Component is in the viewport. <br><br> <b>Limitations:</b> <ul> <li>Browsers that do not support this feature: <ul> <li>Internet Explorer</li> <li>Microsoft Edge lower than version 41 (EdgeHTML 16)</li> <li>Mozilla Firefox lower than version 59</li> </ul> </li> <li>Scrolling behavior: <ul> <li>If the Web Component is placed in layout containers that have the <code>overflow: hidden</code> or <code>overflow: auto</code> style definition, this can prevent the sticky elements of the Web Component from becoming fixed at the top of the viewport.</li> </ul> </li> </ul>
                         </div>
                       </div>
             
@@ -540,13 +529,13 @@ The <code>ui5-table</code> component provides a set of sophisticated and conveni
             
                     <div class="row api-table-roll-even">
                       <div class="cell api-table-content-cell api-table-content-cell-bold">columns</div>
-                      <div class="cell api-table-content-cell">TableColumn [0..n]</div>
-                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the configuration for the columns of the <code>ui5-table</code>. <br><b>Note:</b> Only <code>ui5-table-column</code> is allowed.</div>
+                      <div class="cell api-table-content-cell">HTMLElement [0..n]</div>
+                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the configuration for the columns of the <code>ui5-table</code>. <br><b>Note:</b> Use <code>ui5-table-column</code> for the intended design.</div>
                     </div>
                     <div class="row api-table-roll-odd">
                       <div class="cell api-table-content-cell api-table-content-cell-bold">default</div>
-                      <div class="cell api-table-content-cell">TableRow [0..n]</div>
-                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the <code>ui5-table</code> rows. <br><b>Note:</b> Only <code>ui5-table-row</code> is allowed.</div>
+                      <div class="cell api-table-content-cell">HTMLElement [0..n]</div>
+                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the <code>ui5-table</code> rows. <br><b>Note:</b> Use <code>ui5-table-row</code> for the intended design.</div>
                     </div>
             
                 </div>
@@ -577,23 +566,39 @@ The <code>ui5-table-column</code> component allows to define column specific pro
                     </div>
             
                       <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">demandPopin <br> <code>demand-popin</code></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">demandPopin  <br> <code>demand-popin </code></div>
                         <div class="cell api-table-content-cell">boolean</div>
                         <div class="cell api-table-content-cell">false</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            According to your <code>minWidth</code> settings, the <code>ui5-table-column</code> can be hidden in different screen sizes. </br></br> Setting this property to <code>true</code>, shows this column as pop-in instead of hiding it.
+                            According to your <code>minWidth</code> settings, the <code>ui5-table-column</code> can be hidden in different screen sizes. <br><br> Setting this property to <code>true</code>, shows this column as pop-in instead of hiding it.
                         </div>
                       </div>
                       <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">minWidth <br> <code>min-width</code></div>
-                        <div class="cell api-table-content-cell">number</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">first  <br> <code> </code></div>
+                        <div class="cell api-table-content-cell">undefined</div>
                         <div class="cell api-table-content-cell"></div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the minimum screen width required to display this column. By default it is always displayed. </br></br> The responsive behavior of the <code>ui5-table</code> is determined by this property. As an example, by setting <code>minWidth</code> property to <code>40em</code> shows this column on tablet (and desktop) but hides it on mobile. </br> For further responsive design options, see <code>demandPopin</code> property.
+                            
                         </div>
                       </div>
                       <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">popinText <br> <code>popin-text</code></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">last  <br> <code> </code></div>
+                        <div class="cell api-table-content-cell">undefined</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">minWidth  <br> <code>min-width </code></div>
+                        <div class="cell api-table-content-cell">number</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the minimum screen width required to display this column. By default it is always displayed. <br><br> The responsive behavior of the <code>ui5-table</code> is determined by this property. As an example, by setting <code>minWidth</code> property to <code>40em</code> shows this column on tablet (and desktop) but hides it on mobile. <br> For further responsive design options, see <code>demandPopin</code> property.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">popinText  <br> <code>popin-text </code></div>
                         <div class="cell api-table-content-cell">string</div>
                         <div class="cell api-table-content-cell"></div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
@@ -601,11 +606,11 @@ The <code>ui5-table-column</code> component allows to define column specific pro
                         </div>
                       </div>
                       <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">width <br> <code></code></div>
-                        <div class="cell api-table-content-cell">CSSSize</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">sticky  <br> <code> </code></div>
+                        <div class="cell api-table-content-cell">undefined</div>
                         <div class="cell api-table-content-cell"></div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the width of the column. If you leave it empty, then this column covers the remaining space.
+                            
                         </div>
                       </div>
             
@@ -628,7 +633,7 @@ The <code>ui5-table-column</code> component allows to define column specific pro
                     <div class="row api-table-roll-even">
                       <div class="cell api-table-content-cell api-table-content-cell-bold">default</div>
                       <div class="cell api-table-content-cell">Node [0..n]</div>
-                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the HTML Element to be displayed in the column header.</div>
+                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the content of the column header.</div>
                     </div>
             
                 </div>
@@ -662,8 +667,8 @@ The <code>ui5-table-row</code> component represents a row in the <code>ui5-table
             
                     <div class="row api-table-roll-even">
                       <div class="cell api-table-content-cell api-table-content-cell-bold">default</div>
-                      <div class="cell api-table-content-cell">TableCell [0..n]</div>
-                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the cells of the <code>ui5-table-row</code>. <br><b>Note:</b> Only <code>ui5-table-cell</code> is allowed.</div>
+                      <div class="cell api-table-content-cell">HTMLElement [0..n]</div>
+                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the cells of the <code>ui5-table-row</code>. <br><b>Note:</b> Use <code>ui5-table-cell</code> for the intended design.</div>
                     </div>
             
                 </div>
@@ -680,6 +685,43 @@ The <code>ui5-table-row</code> component represents a row in the <code>ui5-table
 The <code>ui5-table-cell</code> component defines the structure of the data in a single <code>ui5-table</code> cell.
           <section class="component-api space-top">
             
+                  <h3 class="comment-api-title" >Properties/Attributes</h3>
+                  <p class="small-space-top" >You can use both properties and attributes with the same effect. The name of each attribute is listed below the name of the property, if different.</p>
+            
+                  <div class="small-space-top api-table">
+                    <div class="head api-table-header-roll">
+                      <div class="cell api-table-header-cell">Name</div>
+                      <div class="cell api-table-header-cell">Type</div>
+                      <div class="cell api-table-header-cell">Default Value</div>
+                      <div class="cell api-table-header-cell">Description</div>
+                    </div>
+            
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">firstInRow  <br> <code>first-in-row </code></div>
+                        <div class="cell api-table-content-cell">undefined</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">lastInRow  <br> <code>last-in-row </code></div>
+                        <div class="cell api-table-content-cell">undefined</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">popined  <br> <code> </code></div>
+                        <div class="cell api-table-content-cell">undefined</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            
+                        </div>
+                      </div>
+            
+                  </div>
             
                 <h3 class="comment-api-title space-top" >Slots</h3>
             	<p class="small-space-top" >

@@ -14,7 +14,7 @@
 
 	<link href="../../../../../../test-resources/playground/css/api.css" type="text/css" rel="stylesheet">
 
-	<script data-id="sap-ui-config" type="application/json">
+	<script data-ui5-config type="application/json">
 		{
 			"theme": "sap_fiori_3",
 			"language": "EN"
@@ -167,7 +167,7 @@ The <code>ui5-busyindicator</code> signals that some operation is going on and t
                     </div>
             
                       <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">active <br> <code></code></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">active  <br> <code> </code></div>
                         <div class="cell api-table-content-cell">boolean</div>
                         <div class="cell api-table-content-cell">false</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
@@ -175,16 +175,37 @@ The <code>ui5-busyindicator</code> signals that some operation is going on and t
                         </div>
                       </div>
                       <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">size <br> <code></code></div>
-                        <div class="cell api-table-content-cell">BusyIndicatorType</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">size  <br> <code> </code></div>
+                        <div class="cell api-table-content-cell">BusyIndicatorSize</div>
                         <div class="cell api-table-content-cell">&quot;Large&quot;</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the size of the <code>ui5-busyindicator</code>. </br></br> <b>Note:</b> Available options are "Small", "Medium", "Large"
+                            Defines the size of the <code>ui5-busyindicator</code>. <br><br> <b>Note:</b> Available options are "Small", "Medium" and "Large"
                         </div>
                       </div>
             
                   </div>
             
+                <h3 class="comment-api-title space-top" >Slots</h3>
+            	<p class="small-space-top" >
+            	  This Element provides slot(s). This means it can display its child nodes.<br>
+            	  Unless targeting the default slot, use the <code>slot</code> attribute to define the destination slot for each child.<br>
+            	  Text, along with HTML Elements with no <code>slot</code> attribute, goes the the <code>default</code> slot.
+            	</p>
+            
+                <div class="small-space-top api-table">
+                  <div class="head api-table-header-roll">
+                    <div class="cell api-table-header-cell">Slot</div>
+                    <div class="cell api-table-header-cell">Type</div>
+                    <div class="cell api-table-header-cell">Description</div>
+                  </div>
+            
+                    <div class="row api-table-roll-even">
+                      <div class="cell api-table-content-cell api-table-content-cell-bold">default</div>
+                      <div class="cell api-table-content-cell">Node [0..n]</div>
+                      <div class="cell api-table-content-cell api-table-content-cell-description">Determines the content over which the <code>ui5-busyindicator</code> will appear.</div>
+                    </div>
+            
+                </div>
             
             
             
