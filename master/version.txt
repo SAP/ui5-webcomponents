@@ -1,5 +1,5 @@
-commit 274ea423104431cf11eaa9a1bf0ed600bec2e127
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Oct 8 16:01:24 2019 +0300
+commit 3c4a10aadd3aab45209b79737a2d7c61afc25c08
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Wed Oct 9 10:45:06 2019 +0300
 
-    chore: remove icon fonts loading (#827)
+    fix: skip deletion of .git folder (#830)
