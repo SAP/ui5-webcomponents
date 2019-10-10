@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import {
-	isShow, isDown, isBackSpace, isEnter,
+	isShow, isDown, isBackSpace, isEnter, isSpace,
 } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import "./icons/slim-arrow-down.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
@@ -405,7 +405,7 @@ class MultiComboBox extends UI5Element {
 
 		this.fireEvent("selectionChange", { items: this._getSelectedItems() });
 
-		if (isEnter(event) || !event.detail.selectionComponentPressed) {
+		if (isEnter(event.detail) || (!event.detail.selectionComponentPressed && !isSpace(event.detail))) {
 			this._getPopover().close();
 			this.value = "";
 			this.fireEvent("input");
