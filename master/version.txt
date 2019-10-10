@@ -1,5 +1,5 @@
-commit 3c4a10aadd3aab45209b79737a2d7c61afc25c08
+commit d9ea302ef9ecd08662f7c629a2493007009576e0
 Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Wed Oct 9 10:45:06 2019 +0300
+Date:   Thu Oct 10 13:29:51 2019 +0300
 
-    fix: skip deletion of .git folder (#830)
+    fix(ui5-li-custom): propagate spacebar input to input field (#831)
