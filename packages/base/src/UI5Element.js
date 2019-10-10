@@ -323,7 +323,7 @@ class UI5Element extends HTMLElement {
 
 		result.properties = this._mergeMetadataEntry(metadatas, "properties"); // merge properties
 		result.slots = this._mergeMetadataEntry(metadatas, "slots"); // merge slots
-		result.events = this._mergeMetadataEntry(metadatas, "events"); // merge events	
+		result.events = this._mergeMetadataEntry(metadatas, "events"); // merge events
 
 		this._metadata = new UI5ElementMetadata(result);
 		return this._metadata;

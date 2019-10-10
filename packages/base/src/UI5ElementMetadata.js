@@ -35,8 +35,8 @@ class UI5ElementMetadata {
 		return this.metadata.properties || {};
 	}
 
-	getEvents() {	
-		return this.metadata.events || {};	
+	getEvents() {
+		return this.metadata.events || {};
 	}
 
 	static validatePropertyValue(value, propData) {
