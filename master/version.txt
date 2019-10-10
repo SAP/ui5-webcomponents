@@ -1,5 +1,5 @@
-commit d9ea302ef9ecd08662f7c629a2493007009576e0
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu Oct 10 13:29:51 2019 +0300
+commit e163d17af5e89cd9ef5978d2dae4fe21d6c03e52
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu Oct 10 15:15:25 2019 +0300
 
-    fix(ui5-li-custom): propagate spacebar input to input field (#831)
+    chore: add events info to UI5ElementMetadata (#837)
