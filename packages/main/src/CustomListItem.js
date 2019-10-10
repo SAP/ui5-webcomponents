@@ -1,4 +1,5 @@
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { isSpace } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import ListItem from "./ListItem.js";
 import CustomListItemTemplate from "./generated/templates/CustomListItemTemplate.lit.js";
 
@@ -56,6 +57,41 @@ class CustomListItem extends ListItem {
 
 	static get styles() {
 		return [ListItem.styles, columnListItemCss];
+	}
+
+	onkeydown(event) {
+		if (isSpace(event) && event.target !== this) {
+			return;
+		}
+		super.onkeydown(event);
+	}
+
+	onkeyup(event) {
+		if (isSpace(event) && event.target !== this) {
+			return;
+		}
+		super.onkeyup(event);
+	}
+
+	onmousedown(event) {
+		if (event.target !== this) {
+			return;
+		}
+		super.onmousedown(event);
+	}
+
+	onmouseup(event) {
+		if (event.target !== this) {
+			return;
+		}
+		super.onmouseup(event);
+	}
+
+	onclick(event) {
+		if (event.target !== this) {
+			return;
+		}
+		super.onclick();
 	}
 
 	get classes() {
