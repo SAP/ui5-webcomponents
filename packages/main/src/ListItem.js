@@ -135,8 +135,6 @@ class ListItem extends ListItemBase {
 		const itemActive = this.type === ListItemType.Active;
 
 		if (isSpace(event)) {
-
-			if (event.target !== this)
 			event.preventDefault();
 		}
 
