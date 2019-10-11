@@ -1,5 +1,5 @@
-commit e163d17af5e89cd9ef5978d2dae4fe21d6c03e52
+commit 3f10b37328efad08c995740934809fc7645750a1
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Oct 10 15:15:25 2019 +0300
+Date:   Fri Oct 11 11:42:45 2019 +0300
 
-    chore: add events info to UI5ElementMetadata (#837)
+    chore(release): publish v1.0.0-rc.4 (#842)
