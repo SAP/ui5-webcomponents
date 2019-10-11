@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.3...v1.0.0-rc.4) (2019-10-11)
+
+
+### Bug Fixes
+
+* **ui5-button:** apply correct "font-family: 72" ([#825](https://github.com/SAP/ui5-webcomponents/issues/825)) ([21ec559](https://github.com/SAP/ui5-webcomponents/commit/21ec559))
+* **ui5-badge:** fix icon visual issue on IE ([#809](https://github.com/SAP/ui5-webcomponents/issues/809)) ([150a100](https://github.com/SAP/ui5-webcomponents/commit/150a100))
+
+### Code Refactoring
+
+* **framework:** stop icon fonts loading ([#827](https://github.com/SAP/ui5-webcomponents/pull/827))([21ec559](https://github.com/SAP/ui5-webcomponents/commit/21ec559))
+* **framework:** add components' events info to UI5ElementMetadata([#833](https://github.com/SAP/ui5-webcomponents/issues/833))([68c30f4](https://github.com/SAP/ui5-webcomponents/pull/837/commits/68c30f4))
+
+
 # [1.0.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.2...v1.0.0-rc.3) (2019-10-03)
 
 
