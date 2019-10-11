@@ -11,8 +11,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * **ui5-badge:** fix icon visual issue in ie ([#809](https://github.com/SAP/ui5-webcomponents/issues/809)) ([150a100](https://github.com/SAP/ui5-webcomponents/commit/150a100))
 * update output of create new component script ([#826](https://github.com/SAP/ui5-webcomponents/issues/826)) ([0241140](https://github.com/SAP/ui5-webcomponents/commit/0241140))
 * **ui5-button:** apply correct font-family: 72 ([#825](https://github.com/SAP/ui5-webcomponents/issues/825)) ([21ec559](https://github.com/SAP/ui5-webcomponents/commit/21ec559))
-* **ui5-li-custom:** propagate spacebar input to input field ([#831](https://github.com/SAP/ui5-webcomponents/issues/831)) ([d9ea302](https://github.com/SAP/ui5-webcomponents/commit/d9ea302))
-
 
 
 
