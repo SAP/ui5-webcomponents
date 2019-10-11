@@ -29,4 +29,9 @@ describe("Table general interaction", () => {
 
 		assert.strictEqual(noDataRow.isExisting(), true, 'noData div is present');
 	});
+
+	it("tests if table with more columns than cells is rendered", () => {
+		const tblLessCells = browser.$("#tblLessCells");
+		assert.equal(tblLessCells.isExisting(), true, 'table with more columns is rendered without JS errors.');
+	});
 });
