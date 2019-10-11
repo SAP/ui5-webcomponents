@@ -1,5 +1,8 @@
-commit 3f10b37328efad08c995740934809fc7645750a1
+commit fd3b6908710f026e4696267173e77ce4bf2115c4
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Oct 11 11:42:45 2019 +0300
+Date:   Fri Oct 11 14:27:28 2019 +0300
 
-    chore(release): publish v1.0.0-rc.4 (#842)
+    fix(ui5-table): fix JS error when there are less cells than columns (#841)
+    
+    In case we have more columns declared, but less cells provided,
+    a JS error is present and the ui5-table is not displayed at all.
