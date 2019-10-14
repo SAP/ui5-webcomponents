@@ -9,6 +9,7 @@ import { getConstructableStyle, createHeadStyle, getShadowRootStyle } from "./CS
 import { attachThemeChange } from "./Theming.js";
 import { kebabToCamelCase, camelToKebabCase } from "./util/StringHelper.js";
 import isValidPropertyName from "./util/isValidPropertyName.js";
+import deepEqual from "./util/deepEqual.js";
 
 const metadata = {
 	events: {
@@ -678,8 +679,8 @@ class UI5Element extends HTMLElement {
 
 					const oldState = this._state[prop];
 
-					if (propData.deepEqual) {
-						isDifferent = JSON.stringify(oldState) !== JSON.stringify(value);
+					if (propData.type === Object) {
+						!deepEqual(oldState, value);
 					} else {
 						isDifferent = oldState !== value;
 					}
