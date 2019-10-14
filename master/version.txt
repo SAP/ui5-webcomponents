@@ -1,8 +1,5 @@
-commit fd3b6908710f026e4696267173e77ce4bf2115c4
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Oct 11 14:27:28 2019 +0300
+commit e1de47c27ef3e59ab436c0be0208c4b55bfad098
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Mon Oct 14 15:10:25 2019 +0300
 
-    fix(ui5-table): fix JS error when there are less cells than columns (#841)
-    
-    In case we have more columns declared, but less cells provided,
-    a JS error is present and the ui5-table is not displayed at all.
+    chore: ucomment select tests (#746)
