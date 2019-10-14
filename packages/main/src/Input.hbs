@@ -39,12 +39,12 @@
 			<span id="{{_id}}-suggestionsText" class="ui5-hidden-text">{{suggestionsText}}</span>
 		{{/if}}
 
-		{{#if accInfo.input.ariaDescribedBy}}
-			<span id="{{accInfo.input.ariaDescribedBy}}" class="ui5-hidden-text">{{accInfo.input.ariaDescription}}</span>
+		{{#if accInfo.input.ariaDescription}}
+			<span id="{{_id}}-descr" class="ui5-hidden-text">{{accInfo.input.ariaDescription}}</span>
 		{{/if}}
 
 		{{#if hasValueState}}
-			<span id="{{_id}}-descr" class="ui5-hidden-text">{{valueStateText}}</span>
+			<span id="{{_id}}-valueStateDesc" class="ui5-hidden-text">{{valueStateText}}</span>
 		{{/if}}
 	</div>
 
