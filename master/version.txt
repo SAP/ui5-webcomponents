@@ -1,10 +1,12 @@
-commit 49d9a97d51903178bb4406703256934c566eecc0
+commit 003868cd0c9a35ff6afbd327c800685141a0cafc
 Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Mon Oct 14 15:09:31 2019 +0300
+Date:   Mon Oct 14 17:15:09 2019 +0300
 
-    chore: upgrade dependencies for nodejs v12 (#838)
+    chore: upgrade all packages to the latest version (#814)
     
-    - replace cpx with copy-and-watch
-    - update jsdoc and postcss-cli
+    - upgrade travis nodejs version
     
-    fixes: #828
+    - adopt LESS functions to newest used version
+    LESS has switched to ES6 modules, use the CJS format to extract the color functions
+    
+    - fix color transformations
