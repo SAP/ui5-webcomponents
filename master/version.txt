@@ -1,5 +1,10 @@
-commit e1de47c27ef3e59ab436c0be0208c4b55bfad098
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Mon Oct 14 15:10:25 2019 +0300
+commit 49d9a97d51903178bb4406703256934c566eecc0
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Mon Oct 14 15:09:31 2019 +0300
 
-    chore: ucomment select tests (#746)
+    chore: upgrade dependencies for nodejs v12 (#838)
+    
+    - replace cpx with copy-and-watch
+    - update jsdoc and postcss-cli
+    
+    fixes: #828
