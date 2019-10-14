@@ -1,39 +1,28 @@
-import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
-import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
-import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
-import TableCell from "./TableCell";
-import TableRowRenderer from "./build/compiled/TableRowRenderer.lit";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import TableRowTemplate from "./generated/templates/TableRowTemplate.lit.js";
 
 // Styles
-import belize from "./themes/sap_belize/TableRow.less";
-import belizeHcb from "./themes/sap_belize_hcb/TableRow.less";
-import fiori3 from "./themes/sap_fiori_3/TableRow.less";
-
-ShadowDOM.registerStyle("sap_belize", "TableRow.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "TableRow.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "TableRow.css", fiori3);
+import styles from "./generated/themes/TableRow.css.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-table-row",
-	styleUrl: [
-		"TableRow.css",
-	],
-	defaultSlot: "cells",
 	slots: /** @lends sap.ui.webcomponents.main.TableRow.prototype */ {
 		/**
 		 * Defines the cells of the <code>ui5-table-row</code>.
-		 * <br><b>Note:</b> Only <code>ui5-table-cell</code> is allowed.
+		 * <br><b>Note:</b> Use <code>ui5-table-cell</code> for the intended design.
 		 *
-		 * @type {TableCell[]}
+		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
 		 */
-		cells: {
-			type: TableCell,
-			multiple: true,
+		"default": {
+			propertyName: "cells",
+			type: HTMLElement,
+			individualSlots: true,
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.TableRow.prototype */ {
@@ -61,82 +50,82 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.TableRow
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-table-row
  * @public
  */
-class TableRow extends WebComponent {
+class TableRow extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
 
-	static get renderer() {
-		return TableRowRenderer;
+	static get styles() {
+		return styles;
 	}
 
-	static get calculateTemplateContext() {
-		return state => {
-			const context = {
-				ctr: state,
-				visibleCells: [],
-				popinCells: [],
-				columnInfo: state._columnsInfo,
-				classes: {
-					main: {
-						sapWCTableRow: true,
-						sapWCTableRowWithBorder: true,
-					},
-					popin: {
-						sapWCTablePopinRow: true,
-					},
-					popinTitle: {
-						sapWCTablePopinTitle: true,
-					},
-					cellWrapper: {
-						sapMWCTableRowCellContainer: true,
-					},
-				},
-				styles: {
-					main: {
-						"grid-template-columns": "",
-					},
-					popin: {
-						"grid-column-end": 6,
-					},
-				},
-			};
-
-			this.calculateCellsStyles(context);
-
-			context.visibleColumnLength = context.visibleCells.length + 1;
-
-
-			return context;
-		};
+	static get render() {
+		return litRender;
 	}
 
-	static calculateCellsStyles(context) {
-		context.columnInfo.forEach((info, index) => {
+	static get template() {
+		return TableRowTemplate;
+	}
+
+	onBeforeRendering() {
+		this.visibleCells = [];
+		this.popinCells = [];
+
+		if (this.cells.length === 0) {
+			return;
+		}
+
+		this._columnsInfo.forEach((info, index) => {
+			const cell = this.cells[index];
+
+			if (!cell) {
+				return;
+			}
+
 			if (info.visible) {
-				// width of cells
-				context.styles.main["grid-template-columns"] += `minmax(0, ${info.width || "1fr"}) `;
-
-				context.visibleCells.push(context.ctr.cells[index]);
-
-				context.ctr.cells[index]._firstInRow = (index === 0);
+				this.visibleCells.push(cell);
+				cell.firstInRow = (index === 0);
+				cell.popined = false;
 			} else if (info.demandPopin) {
-				context.popinCells.push({
-					cell: context.ctr.cells[index],
+				this.popinCells.push({
+					cell,
 					popinText: info.popinText,
 				});
+
+				cell.popined = true;
+			} else {
+				cell.popined = false;
 			}
 		}, this);
 
-		const lastVisibleCell = context.visibleCells[context.visibleCells.length - 1];
+		const lastVisibleCell = this.visibleCells[this.visibleCells.length - 1];
 
 		if (lastVisibleCell) {
-			lastVisibleCell._lastInRow = true;
+			lastVisibleCell.lastInRow = true;
 		}
+	}
+
+	get styles() {
+		const gridTemplateColumns = this._columnsInfo.reduce((acc, info) => {
+			return info.visible ? `${acc}minmax(0, ${info.width || "1fr"}) ` : acc;
+		}, "");
+
+		return {
+			main: {
+				"grid-template-columns": gridTemplateColumns,
+			},
+			popin: {
+				"grid-column-end": 6,
+			},
+		};
+	}
+
+	get visibleCellsCount() {
+		return this.visibleCells.length;
 	}
 
 	onfocusin(event) {
@@ -144,8 +133,6 @@ class TableRow extends WebComponent {
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	TableRow.define();
-});
+TableRow.define();
 
 export default TableRow;

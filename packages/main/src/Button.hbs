@@ -1,25 +1,32 @@
-<button {{> controlData}}
+<button
 		type="button"
-		class="{{classes.main}}"
-		style="{{styles.main}}"
-		disabled="{{ctr.disabled}}"
-		aria-disabled="{{ariaDisabled}}"
-		title="{{ctr.tooltip}}"
-		tabindex="{{tabindex}}"
+		class="ui5-button-root"
+		?disabled="{{disabled}}"
 		data-sap-focus-ref
 		{{> ariaPressed}}
+		dir="{{rtl}}"
+		@focusout={{_onfocusout}}
+		@focusin={{_onfocusin}}
+		@click={{_onclick}}
+		@mousedown={{_onmousedown}}
+		tabindex={{tabIndexValue}}
 	>
-		{{#if ctr._iconSettings}}
+		{{#if icon}}
 			<ui5-icon
-				class="{{classes.icon}}"
-				src="{{ctr._iconSettings.src}}"
+				class="ui5-button-icon"
+				src="{{icon}}"
+				show-tooltip={{iconOnly}}
 			></ui5-icon>
 		{{/if}}
 
-		{{#if ctr._nodeText}}
-			<span id="{{ctr._id}}-content" dir="{{dir}}" class="{{classes.text}}">
-				<bdi>{{ctr._nodeText}}</bdi>
-			</span>
+		<span id="{{_id}}-content" class="ui5-button-text">
+			<bdi>
+				<slot></slot>
+			</bdi>
+		</span>
+
+		{{#if hasButtonType}}
+			<span class="ui5-hidden-text">{{buttonTypeText}}</span>
 		{{/if}}
 </button>
 

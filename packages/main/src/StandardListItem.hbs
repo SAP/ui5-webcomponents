@@ -1,30 +1,33 @@
 {{>include "./ListItem.hbs"}}
 
 {{#*inline "listItemContent"}}
-	<div class="sapMSLITextWrapper">
-		{{#if ctr._nodeText}}
-			<span class="sapMSLITitle">{{ctr._nodeText}}</span>
+	<div class="ui5-li-title-wrapper">
+		{{#if textContent.length}}
+			<span part="title" class="ui5-li-title"><slot></slot></span>
 		{{/if}}
-		{{#if ctr.description}}
-			<span class="sapMSLIDescription">{{ctr.description}}</span>
+		{{#if description}}
+			<span part="description" class="ui5-li-desc">{{description}}</span>
 		{{/if}}
 	</div>
+	{{#if info}}
+		<span part="info" class="ui5-li-info">{{info}}</span>
+	{{/if}}
 {{/inline}}
 
 {{#*inline "imageBegin"}}
 	{{#if displayImage}}
-		<img src="{{ctr.image}}" class="sapMSLIImg">
+		<img part="img" src="{{image}}" class="ui5-li-img">
 	{{/if}}
 {{/inline}}
 
 {{#*inline "iconBegin"}}
 	{{#if displayIconBegin}}
-		<ui5-icon src="{{ctr.icon}}" class="sapMLIBIcon"></ui5-icon>
+		<ui5-icon part="icon" src="{{icon}}" class="ui5-li-icon"></ui5-icon>
 	{{/if}}
 {{/inline}}
 
 {{#*inline "iconEnd"}}
 	{{#if displayIconEnd}}
-		<ui5-icon src="{{ctr.icon}}" class="sapMLIBIcon"></ui5-icon>
+		<ui5-icon part="icon" src="{{icon}}" class="ui5-li-icon"></ui5-icon>
 	{{/if}}
 {{/inline}}

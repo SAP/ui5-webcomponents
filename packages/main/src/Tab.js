@@ -1,48 +1,42 @@
-import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
-import URI from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/URI";
-import Integer from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/Integer";
-import TabBase from "./TabBase";
-import TabTemplateContext from "./TabTemplateContext";
-import TabDesignMode from "./types/TabDesignMode";
-import IconColor from "./types/IconColor";
-import Icon from "./Icon";
-import TabRenderer from "./build/compiled/TabRenderer.lit";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import SemanticColor from "./types/SemanticColor.js";
+import Icon from "./Icon.js";
+import TabTemplate from "./generated/templates/TabTemplate.lit.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-tab",
-	styleUrl: [],
-	defaultSlot: "content",
 	slots: /** @lends sap.ui.webcomponents.main.Tab.prototype */ {
 
 		/**
 		 * Defines the tab content.
-		 * @type {HTMLElement[]}
+		 * @type {Node[]}
 		 * @slot
 		 * @public
 		 */
-		content: {
-			type: HTMLElement,
-			multiple: true,
+		"default": {
+			type: Node,
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.Tab.prototype */ {
 
 		/**
 		 * The text to be displayed for the item.
-		 * @type {String}
+		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		text: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
 		 * Enabled items can be selected.
 		 * @type {Boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		disabled: {
@@ -50,62 +44,65 @@ const metadata = {
 		},
 
 		/**
-		 * Represents the "count" text, which is displayed in the tab filter.
-		 * @type {String}
+		 * Represents the "additionalText" text, which is displayed in the tab filter.
+		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
-		count: {
+		additionalText: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
-		 * Specifies the icon to be displayed for the tab filter.
-		 * @type {URI}
+		 * Defines the icon source URI to be displayed as graphical element within the <code>ui5-tab</code>.
+		 * The SAP-icons font provides numerous built-in icons.
+		 * See all the available icons in the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
+		 *
+		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		icon: {
-			type: URI,
-			defaultValue: "",
+			type: String,
 		},
 
 		/**
-		 * Specifies the icon color.
+		 * Defines the <code>ui5-tab</code> semantic color.
+		 * The color is applied to:
+		 * <ul>
+		 * <li>the <code>ui5-tab</code> icon</li>
+		 * <li>the <code>text</code> when <code>ui5-tab</code> overflows</li>
+		 * <li>the tab selection line</li>
+		 * </ul>
+		 * <br>
+		 * Available semantic colors are: <code>"Default"</code>, <code>"Neutral"</code>, <code>"Positive"</code>, <code>"Critical"</code> and <code>"Negative"</code>.
+		 * <br><br>
+		 * <b>Note:</b> The color value depends on the current theme.
+		 * @type {string}
+		 * @defaultvalue "Default"
+		 * @public
+		 */
+		semanticColor: {
+			type: SemanticColor,
+			defaultValue: SemanticColor.Default,
+		},
+
+		/**
+		 * Specifies if the <code>ui5-tab</code> is selected.
 		 *
-		 * If an icon font is used, the color can be chosen from the icon colors
-		 * (sap.ui.core.IconColor).
-		 * Possible semantic colors are: Neutral, Positive, Critical, Negative.
-		 * Instead of the semantic icon color the brand color can be used, this is named Default.
-		 * Semantic colors and brand colors should not be mixed up inside one IconTabBar.
-		 * @type {IconColor}
+		 * @type {Boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
-		iconColor: {
-			type: IconColor,
-			defaultValue: IconColor.Default,
+		selected: {
+			type: Boolean,
 		},
 
-		/**
-		 * Specifies whether the icon and the texts are placed vertically or horizontally.
-		 * @type {TabDesignMode}
-		 * @public
-		 */
-		design: {
-			type: TabDesignMode,
-			defaultValue: TabDesignMode.Vertical,
+		_tabIndex: {
+			type: String,
+			defaultValue: "-1",
+			noAttribute: true,
 		},
-
-		_showAll: { type: Boolean },
-		_isSelected: { type: Boolean, defaultValue: false },
-		_isInline: { type: Boolean },
-		_isNoIcon: { type: Boolean },
-		_isNoText: { type: Boolean },
-		_tabIndex: { type: String, defaultValue: "-1" },
-		_posinset: { type: Integer },
-		_setsize: { type: Integer },
-		_contentId: { type: String, defaultValue: " " },
-		_labelledbyControls: { type: String, defaultValue: " " },
-		_isIconColorRead: { type: Boolean },
 	},
 	events: /** @lends sap.ui.webcomponents.main.Tab.prototype */ {
 
@@ -125,17 +122,17 @@ const metadata = {
  * @tagname ui5-tab
  * @public
  */
-class Tab extends TabBase {
+class Tab extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
 
-	static get renderer() {
-		return TabRenderer;
+	static get render() {
+		return litRender;
 	}
 
-	static get calculateTemplateContext() {
-		return TabTemplateContext.calculate;
+	static get template() {
+		return TabTemplate;
 	}
 
 	static async define(...params) {
@@ -143,10 +140,22 @@ class Tab extends TabBase {
 
 		super.define(...params);
 	}
+
+	get isSeparator() {
+		return false;
+	}
+
+	getFocusDomRef() {
+		let focusedDomRef = super.getFocusDomRef();
+
+		if (this._getTabContainerHeaderItemCallback) {
+			focusedDomRef = this._getTabContainerHeaderItemCallback();
+		}
+
+		return focusedDomRef;
+	}
 }
 
-Bootstrap.boot().then(_ => {
-	Tab.define();
-});
+Tab.define();
 
 export default Tab;

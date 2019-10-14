@@ -1,9 +1,10 @@
 {
   "name": "@ui5/webcomponents-base",
-  "version": "0.9.0",
+  "version": "0.17.0",
   "description": "UI5 Web Components: webcomponents.base",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
+  "module": "index.js",
   "keywords": [
     "openui5",
     "sapui5",
@@ -11,22 +12,30 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/SAP/ui5-webcomponents.git"
+    "url": "https://github.com/SAP/ui5-webcomponents.git",
+    "directory": "packages/base"
   },
   "scripts": {
-    "build": "npm run lint --scripts-prepend-node-path ",
+    "build": "npm-run-all --sequential clean lint copy:cldr copy:src",
+    "start": "yarn watch:src",
     "clean": "rimraf dist",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "copy:src": "copy-and-watch \"src/**/*.js\" dist/",
+    "copy:cldr": "copy-and-watch \"../../node_modules/@ui5/webcomponents-core/dist/**/cldr/*.json\" dist/assets/cldr/",
+    "watch:src": "copy-and-watch --watch \"src/**/*.js\" dist/"
   },
   "dependencies": {
-    "@ui5/webcomponents-core": "0.9.0",
+    "@ui5/webcomponents-core": "0.17.0",
     "lit-html": "^1.0.0",
     "regenerator-runtime": "0.12.1",
     "url-search-params-polyfill": "^5.0.0"
   },
   "devDependencies": {
+    "array-uniq": "^2.0.0",
+    "copy-and-watch": "^0.1.4",
     "eslint": "^5.13.0",
-    "eslint-config-airbnb-base": "^13.1.0"
+    "eslint-config-airbnb-base": "^13.1.0",
+    "npm-run-all": "^4.1.5"
   },
   "resolutions": {
     "abstract-syntax-tree": "1.0.3",

@@ -1,28 +1,19 @@
-import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
-import URI from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/URI";
-import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
-import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/events/PseudoEvents";
-import IconTemplateContext from "./IconTemplateContext";
-import IconRenderer from "./build/compiled/IconRenderer.lit";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
+import { getIconData, isIconURI } from "@ui5/webcomponents-base/dist/SVGIconRegistry.js";
+import createStyleInHead from "@ui5/webcomponents-base/dist/util/createStyleInHead.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import IconTemplate from "./IconTemplate.lit.js";
 
 // Styles
-import belize from "./themes/sap_belize/Icon.less";
-import belizeHcb from "./themes/sap_belize_hcb/Icon.less";
-import fiori3 from "./themes/sap_fiori_3/Icon.less";
-
-ShadowDOM.registerStyle("sap_belize", "Icon.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "Icon.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "Icon.css", fiori3);
+import iconCss from "./generated/themes/Icon.css.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-icon",
-	styleUrl: [
-		"Icon.css",
-	],
 	properties: /** @lends sap.ui.webcomponents.main.Icon.prototype */ {
 
 		/**
@@ -33,17 +24,42 @@ const metadata = {
 		 * <br><br>
 		 * Example:
 		 * <br>
-		 * <code>src='sap-icons://add'</code>, <code>src='sap-icons://delete'</code>, <code>src='sap-icons://employee'</code>.
+		 * <code>src='sap-icon://add'</code>, <code>src='sap-icon://delete'</code>, <code>src='sap-icon://employee'</code>.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @public
 		*/
-		src: { type: URI, defaultValue: null },
+		src: {
+			type: String,
+		},
+
+		/**
+		 * Defines the text alternative of the <code>ui5-icon</code>.
+		 * If not provided a default text alternative will be set, if present.
+		 * <br><br>
+		 * <b>Note:</b> Every icon should have a text alternative in order to
+		 * calculate its accessible name.
+		 *
+		 * @type {string}
+		 * @public
+		 */
+		accessibleName: {
+			type: String,
+		},
+
+		/**
+		 * Defines whether the <code>ui5-icon</code> should have a tooltip.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 */
+		showTooltip: {
+			type: Boolean,
+		},
 	},
 	events: {
-		press: {},
 	},
-	renderer: IconRenderer,
 };
 
 /**
@@ -69,50 +85,101 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Icon
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-icon
  * @public
  */
-class Icon extends WebComponent {
+class Icon extends UI5Element {
+	constructor() {
+		super();
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+	}
+
 	static get metadata() {
 		return metadata;
 	}
 
-	static get renderer() {
-		return IconRenderer;
+	static get render() {
+		return litRender;
 	}
 
-	static get calculateTemplateContext() {
-		return IconTemplateContext.calculate;
+	static get template() {
+		return IconTemplate;
 	}
 
-	focus() {
-		HTMLElement.prototype.focus.call(this);
+	static get styles() {
+		return iconCss;
 	}
 
-	onclick() {
-		this.fireEvent("press");
+	static async define(...params) {
+		this.createGlobalStyle(); // hide all icons until the first icon has rendered (and added the Icon.css)
+		await fetchI18nBundle("@ui5/webcomponents");
+
+		super.define(...params);
 	}
 
-	onkeydown(event) {
-		if (isSpace(event)) {
-			event.preventDefault();
-			this.__spaceDown = true;
-		} else if (isEnter(event)) {
-			this.onclick(event);
+	static createGlobalStyle() {
+		if (!window.ShadyDOM) {
+			return;
+		}
+		const styleElement = document.head.querySelector(`style[data-ui5-icon-global]`);
+		if (!styleElement) {
+			createStyleInHead(`ui5-icon { display: none !important; }`, { "data-ui5-icon-global": "" });
 		}
 	}
 
-	onkeyup(event) {
-		if (isSpace(event) && this.__spaceDown) {
-			this.fireEvent("press");
-			this.__spaceDown = false;
+	static removeGlobalStyle() {
+		if (!window.ShadyDOM) {
+			return;
 		}
+		const styleElement = document.head.querySelector(`style[data-ui5-icon-global]`);
+		if (styleElement) {
+			document.head.removeChild(styleElement);
+		}
+	}
+
+	_normalizeIconURI(iconURI) {
+		return isIconURI(iconURI) ? iconURI : `sap-icon://${iconURI}`;
+	}
+
+	get iconData() {
+		const icon = getIconData(this._normalizeIconURI(this.src));
+
+		if (!icon) {
+			/* eslint-disable-next-line */
+			return console.warn(`Required icon is not imported. You have to import the icon as a module in order to use it e.g. "@ui5/webcomponents/dist/icons/${this._normalizeIconURI(this.src).split("sap-icon://")[1]}.js"`);
+		}
+
+		return icon;
+	}
+
+	get d() {
+		return this.iconData && this.iconData.d;
+	}
+
+	get hasIconTooltip() {
+		return this.showTooltip && this.accessibleNameText;
+	}
+
+	get accessibleNameText() {
+		if (this.accessibleName) {
+			return this.accessibleName;
+		}
+
+		return this.iconData && this.iconData.accData && this.i18nBundle.getText(this.iconData.accData);
+	}
+
+	get dir() {
+		return getRTL() ? "rtl" : "ltr";
+	}
+
+	onEnterDOM() {
+		setTimeout(() => {
+			this.constructor.removeGlobalStyle(); // remove the global style as Icon.css is already in place
+		}, 0);
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	Icon.define();
-});
+Icon.define();
 
 export default Icon;

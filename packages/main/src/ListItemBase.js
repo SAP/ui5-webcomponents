@@ -1,36 +1,29 @@
-import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
-import FocusHelper from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/FocusHelper";
-import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
-import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/events/PseudoEvents";
-import ListItemBaseTemplateContext from "./ListItemBaseTemplateContext";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import FocusHelper from "@ui5/webcomponents-base/dist/FocusHelper.js";
+import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 
 // Styles
-import belize from "./themes/sap_belize/ListItemBase.less";
-import belizeHcb from "./themes/sap_belize_hcb/ListItemBase.less";
-import fiori3 from "./themes/sap_fiori_3/ListItemBase.less";
-
-ShadowDOM.registerStyle("sap_belize", "ListItemBase.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "ListItemBase.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "ListItemBase.css", fiori3);
+import styles from "./generated/themes/ListItemBase.css.js";
 
 /**
  * @public
  */
 const metadata = {
-	"abstract": true,
 	properties: /** @lends  sap.ui.webcomponents.main.ListItemBase.prototype */  {
 
-		_hideBorder: {
+		/**
+		* Defines if the list item should display its bottom border.
+		* @private
+		*/
+		hasBorder: {
 			type: Boolean,
-		},
-
-		_background: {
-			type: String,
 		},
 
 		_tabIndex: {
 			type: String,
 			defaultValue: "-1",
+			noAttribute: true,
 		},
 	},
 	events: {
@@ -47,16 +40,16 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.ListItemBase
- * @extends WebComponent
+ * @extends UI5Element
  * @public
  */
-class ListItemBase extends WebComponent {
+class ListItemBase extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
 
-	static get calculateTemplateContext() {
-		return ListItemBaseTemplateContext.calculate;
+	static get styles() {
+		return styles;
 	}
 
 	onfocusin(event) {
@@ -110,6 +103,19 @@ class ListItemBase extends WebComponent {
 	*/
 	shouldForwardTabBefore(target) {
 		return this.getDomRef() === target;
+	}
+
+	get classes() {
+		return {
+			main: {
+				"ui5-li-root": true,
+				"ui5-li--focusable": true,
+			},
+		};
+	}
+
+	get rtl() {
+		return getRTL() ? "rtl" : undefined;
 	}
 }
 

@@ -1,39 +1,32 @@
-import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
-import FocusHelper from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/FocusHelper";
-import Integer from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/Integer";
-import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import FocusHelper from "@ui5/webcomponents-base/dist/FocusHelper.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import { isEscape } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 
 // Styles
-import belize from "./themes/sap_belize/Popup.less";
-import belizeHcb from "./themes/sap_belize_hcb/Popup.less";
-import fiori3 from "./themes/sap_fiori_3/Popup.less";
-
-ShadowDOM.registerStyle("sap_belize", "Popup.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "Popup.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "Popup.css", fiori3);
+import styles from "./generated/themes/Popup.css.js";
+import { addOpenedPopup, removeOpenedPopup } from "./popup-utils/OpenedPopupsRegistry.js";
 
 /**
  * @public
  */
 const metadata = {
-	"abstract": true,
 	slots: /** @lends  sap.ui.webcomponents.main.Popup.prototype */ {
 
 		/**
 		 * Defines the content of the Web Component.
-		 * @type {HTMLElement[]}
+		 * @type {Node[]}
 		 * @slot
 		 * @public
 		 */
-		content: {
-			type: HTMLElement,
-			multiple: true,
+		"default": {
+			type: Node,
 		},
 
 		/**
 		 * Defines the header HTML Element.
 		 *
-		 * @type {HTMLElement}
+		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
 		 */
@@ -44,7 +37,7 @@ const metadata = {
 		/**
 		 * Defines the footer HTML Element.
 		 *
-		 * @type {HTMLElement}
+		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
 		 */
@@ -57,70 +50,74 @@ const metadata = {
 		 * Defines the ID of the HTML Element, which will get the initial focus.
 		 *
 		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		initialFocus: {
 			type: String,
-			defaultValue: null,
-			association: true,
 		},
-		/**
-		 * Defines whether the header is hidden.
-		 *
-		 * @type {Boolean}
-		 * @public
-		 */
-		hideHeader: {
-			type: Boolean,
-		},
+
 		/**
 		 * Defines the header text.
+		 * <br><b>Note:</b> If <code>header</code> slot is provided, the <code>headerText</code> is ignored.
 		 *
 		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		headerText: {
 			type: String,
-			defaultValue: "",
 		},
 
-		_isOpen: {
+		/**
+		 * Indicates if the elements is on focus
+		 * @private
+		 */
+		opened: {
 			type: Boolean,
 		},
+
 		_zIndex: {
 			type: Integer,
+			noAttribute: true,
 		},
 		_hideBlockLayer: {
 			type: Boolean,
+			noAttribute: true,
 		},
 	},
-	events: {
+	events: /** @lends  sap.ui.webcomponents.main.Popup.prototype */ {
+
 		/**
-		 * Fired before the Web Component is opened.
+		 * Fired before the component is opened.
 		 *
 		 * @public
 		 * @event
 		 */
+
 		beforeOpen: {},
 		/**
-		 * Fired after the Web Component is opened.
+		 * Fired after the component is opened.
 		 *
 		 * @public
 		 * @event
 		 */
+
 		afterOpen: {},
 		/**
-		 * Fired before the Web Component is closed.
+		 * Fired before the component is closed.
 		 *
 		 * @public
 		 * @event
-		 * @param {Boolean} escPressed Indicate that ESC key triggered the event.
+		 * @param {Boolean} escPressed Indicates that <code>ESC</code> key has triggered the event.
 		 */
+
 		beforeClose: {
 			escPressed: { type: Boolean },
 		},
+
 		/**
-		 * Fired after the Web Component is closed.
+		 * Fired after the component is closed.
 		 *
 		 * @public
 		 * @event
@@ -149,8 +146,17 @@ function createBLyBackStyle() {
 
 	customBLyBackStyleInserted = true;
 
-	const stylesheet = document.styleSheets[0];
-	stylesheet.insertRule(".sapUiBLyBack {overflow: hidden;position: fixed;width:100%;height: 100%;}", 0);
+	const bodyStyleSheet = document.createElement("style");
+	bodyStyleSheet.type = "text/css";
+	bodyStyleSheet.innerHTML = `
+		.ui5-popup-BLy--back {
+			width: 100%;
+			height: 100%;
+			position: fixed;
+			overflow: hidden;
+		}
+	`;
+	document.head.appendChild(bodyStyleSheet);
 }
 
 function updateBlockLayers() {
@@ -181,15 +187,22 @@ function updateBodyScrolling(hasModal) {
 	createBLyBackStyle();
 
 	if (hasModal) {
-		document.body.style.top = `-${window.pageYOffset}px`;
-		document.body.classList.add("sapUiBLyBack");
+		addBodyStyles();
 	} else {
-		document.body.classList.remove("sapUiBLyBack");
-		window.scrollTo(0, -parseFloat(document.body.style.top));
-		document.body.style.top = "";
+		removeBodyStyles();
 	}
-
 	isBodyScrollingDisabled = hasModal;
+}
+
+function addBodyStyles() {
+	document.body.style.top = `-${window.pageYOffset}px`;
+	document.body.classList.add("ui5-popup-BLy--back");
+}
+
+function removeBodyStyles() {
+	document.body.classList.remove("ui5-popup-BLy--back");
+	window.scrollTo(0, -parseFloat(document.body.style.top));
+	document.body.style.top = "";
 }
 
 /**
@@ -200,12 +213,16 @@ function updateBodyScrolling(hasModal) {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Popup
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @public
  */
-class Popup extends WebComponent {
+class Popup extends UI5Element {
 	static get metadata() {
 		return metadata;
+	}
+
+	static get styles() {
+		return styles;
 	}
 
 	static getNextZIndex() {
@@ -252,8 +269,7 @@ class Popup extends WebComponent {
 	}
 
 	documentKeyDown(event) {
-		// escape key
-		if (event.keyCode === 27 && this.isTopPopup()) {
+		if (isEscape(event) && this.isTopPopup()) {
 			this.escPressed = true;
 			this.close();
 		}
@@ -261,7 +277,7 @@ class Popup extends WebComponent {
 
 	getPopupDomRef() {
 		const domRef = this.getDomRef();
-		return domRef && domRef.querySelector(".sapMPopup");
+		return domRef && domRef.querySelector(".ui5-popup-root");
 	}
 
 	hitTest(_event) {
@@ -275,10 +291,10 @@ class Popup extends WebComponent {
 
 		this._zIndex = Popup.getNextZIndex();
 		openedPopups.push(this);
+		addOpenedPopup(this);
+
 
 		updateBlockLayers();
-
-		document.addEventListener("keydown", this._documentKeyDownHandler, true);
 	}
 
 	close() {
@@ -288,10 +304,12 @@ class Popup extends WebComponent {
 
 		this.escPressed = false;
 
-		document.removeEventListener("keydown", this._documentKeyDownHandler, true);
-
 		const index = openedPopups.indexOf(this);
 		openedPopups.splice(index, 1);
+
+		if (this.opened) {
+			removeOpenedPopup(this);
+		}
 
 		updateBlockLayers();
 	}
@@ -300,7 +318,7 @@ class Popup extends WebComponent {
 		const initialFocus = this.initialFocus;
 		let initialFocusDomRef = this.initialFocus;
 
-		if (typeof initialFocus === "string") {
+		if (initialFocus && typeof initialFocus === "string") {
 			initialFocusDomRef = document.getElementById(initialFocus);
 
 			if (!initialFocusDomRef) {
@@ -324,7 +342,7 @@ class Popup extends WebComponent {
 	}
 
 	onAfterRendering() {
-		if (!this._isOpen) {
+		if (!this.opened) {
 			return;
 		}
 
@@ -405,7 +423,7 @@ class Popup extends WebComponent {
 			element = element.shadowRoot.activeElement;
 		}
 
-		this._lastFocusableElement = element;
+		this._lastFocusableElement = (element && typeof element.focus === "function") ? element : null;
 	}
 
 	resetFocus() {
@@ -419,6 +437,22 @@ class Popup extends WebComponent {
 		}
 
 		this._lastFocusableElement = null;
+	}
+
+	onExitDOM() {
+		removeBodyStyles();
+	}
+
+	get hasHeader() {
+		return !!(this.headerText.length || this.header.length);
+	}
+
+	get hasFooter() {
+		return !!this.footer.length;
+	}
+
+	get role() {
+		return "heading";
 	}
 }
 

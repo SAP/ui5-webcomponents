@@ -1,7 +1,23 @@
 const postcssImport = require('postcss-import');
-module.exports = {
-  plugins: [
-    postcssImport()
-  ]
-}
+const combineSelectors = require('postcss-combine-duplicated-selectors');
+const postcssCSStoJSON = require('../../lib/postcss-css-to-json/index.js');
+const postcssDerivedColors = require('../../lib/postcss-process-derived-colors/index');
+const cssnano = require('cssnano');
+const postcssAddFallback = require('../../lib/postcss-add-fallback/index.js');
 
+module.exports = {
+    plugins: [
+        postcssImport(),
+        combineSelectors({
+            removeDuplicatedProperties: true
+        }),
+        postcssDerivedColors(),
+        postcssAddFallback(),
+        cssnano({preset: [
+            'default', {
+                mergeLonghand: false, // https://github.com/cssnano/cssnano/issues/675
+            },
+        ]}, ),
+        postcssCSStoJSON(),
+    ]
+};

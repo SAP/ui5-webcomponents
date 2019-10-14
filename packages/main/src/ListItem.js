@@ -1,32 +1,25 @@
-import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes";
-import Function from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/Function";
-import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
-import ListItemType from "./types/ListItemType";
-import ListMode from "./types/ListMode";
-import ListItemBase from "./ListItemBase";
-import "./RadioButton";
-import "./CheckBox";
-import "./Button";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
+import ListItemType from "./types/ListItemType.js";
+import ListMode from "./types/ListMode.js";
+import ListItemBase from "./ListItemBase.js";
+import "./RadioButton.js";
+import "./CheckBox.js";
+import "./Button.js";
 
 // Styles
-import belize from "./themes/sap_belize/ListItem.less";
-import belizeHcb from "./themes/sap_belize_hcb/ListItem.less";
-import fiori3 from "./themes/sap_fiori_3/ListItem.less";
-
-ShadowDOM.registerStyle("sap_belize", "ListItem.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "ListItem.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "ListItem.css", fiori3);
+import styles from "./generated/themes/ListItem.css.js";
 
 /**
  * @public
  */
 const metadata = {
-	"abstract": true,
 	properties: /** @lends  sap.ui.webcomponents.main.ListItem.prototype */ {
 
 		/**
 		 * Defines the selected state of the <code>ListItem</code>.
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		selected: {
@@ -35,30 +28,44 @@ const metadata = {
 
 		/**
 		 * Defines the visual indication and behavior of the list items.
-		 * Available options are <code>Active</code> and <code>Inactive</code>.
+		 * Available options are <code>Active</code> (by default) and <code>Inactive</code>.
+		 * <br><br>
+		 * <b>Note:</b> When set to <code>Active</code>, the item will provide visual response upon press and hover,
+		 * while with type <code>Inactive</code> - will not.
+		 *
 		 * @type {string}
+		 * @defaultvalue "Active"
 		 * @public
 		*/
 		type: {
 			type: ListItemType,
-			defaultValue: ListItemType.Inactive,
+			defaultValue: ListItemType.Active,
 		},
 
-		_active: {
+		/**
+		 * Indicates if the list item is active, e.g pressed down with the mouse or the keyboard keys.
+		 *
+		 * @type {boolean}
+		 * @private
+		*/
+		active: {
+			type: Boolean,
+		},
+
+		/**
+		 * Indicates if the list item is actionable, e.g has hover and pressed effects.
+		 *
+		 * @type {boolean}
+		 * @private
+		*/
+		actionable: {
 			type: Boolean,
 		},
 
 		_mode: {
 			type: ListMode,
 			defaultValue: ListMode.None,
-		},
-
-		_selectionControl: {
-			type: Object,
-		},
-
-		_fnOnDelete: {
-			type: Function,
+			noAttribute: true,
 		},
 	},
 	events: {
@@ -85,42 +92,67 @@ class ListItem extends ListItemBase {
 		return metadata;
 	}
 
-	constructor() {
-		super();
-		this._fnOnDelete = this.onDelete.bind(this);
+	static get styles() {
+		return [styles, ListItemBase.styles];
 	}
 
-	onBeforeRendering() {}
+	constructor(props) {
+		super(props);
+
+		this.deactivateByKey = event => {
+			if (isEnter(event)) {
+				this.deactivate();
+			}
+		};
+
+		this.deactivate = () => {
+			if (this.active) {
+				this.active = false;
+			}
+		};
+	}
+
+	onBeforeRendering(...params) {
+		const desktop = isDesktop();
+		const isActionable = (this.type === ListItemType.Active) && (this._mode !== ListMode.Delete);
+
+		this.actionable = desktop && isActionable;
+	}
+
+	onEnterDOM() {
+		document.addEventListener("mouseup", this.deactivate);
+		document.addEventListener("keyup", this.deactivateByKey);
+	}
+
+	onExitDOM() {
+		document.removeEventListener("mouseup", this.deactivate);
+		document.removeEventListener("keyup", this.deactivateByKey);
+	}
 
 	onkeydown(event) {
 		super.onkeydown(event);
 
-		const spaceUsed = event.which === KeyCodes.SPACE;
-		const enterUsed = event.which === KeyCodes.ENTER;
 		const itemActive = this.type === ListItemType.Active;
 
-		if (spaceUsed) {
+		if (isSpace(event)) {
 			event.preventDefault();
 		}
 
-		if ((spaceUsed || enterUsed) && itemActive) {
+		if ((isSpace(event) || isEnter(event)) && itemActive) {
 			this.activate();
 		}
 
-		if (enterUsed) {
+		if (isEnter(event)) {
 			this.fireItemPress();
 		}
 	}
 
 	onkeyup(event) {
-		const spaceUsed = event.which === KeyCodes.SPACE;
-		const enterUsed = event.which === KeyCodes.ENTER;
-
-		if (spaceUsed || enterUsed) {
+		if (isSpace(event) || isEnter(event)) {
 			this.deactivate();
 		}
 
-		if (spaceUsed) {
+		if (isSpace(event)) {
 			this.fireItemPress();
 		}
 	}
@@ -150,22 +182,56 @@ class ListItem extends ListItemBase {
 		this.fireItemPress();
 	}
 
+	/*
+	 * Called when selection components in Single (ui5-radiobutton)
+	 * and Multi (ui5-checkbox) selection modes are used.
+	 */
+	onMultiSelectionComponentPress(event) {
+		this.fireEvent("_selectionRequested", { item: this, selected: !event.target.checked, selectionComponentPressed: true });
+	}
+
+	onSingleSelectionComponentPress(event) {
+		this.fireEvent("_selectionRequested", { item: this, selected: !event.target.selected, selectionComponentPressed: true });
+	}
+
 	activate() {
 		if (this.type === ListItemType.Active) {
-			this._active = true;
+			this.active = true;
 		}
 	}
 
-	deactivate() {
-		this._active = false;
-	}
-
 	onDelete(event) {
-		this.fireEvent("_selectionRequested", { item: this, selected: event.selected });
+		this.fireEvent("_selectionRequested", { item: this, selectionComponentPressed: false });
 	}
 
 	fireItemPress() {
 		this.fireEvent("_press", { item: this, selected: this.selected });
+	}
+
+	get placeSelectionElementBefore() {
+		return this._mode === ListMode.MultiSelect
+			|| this._mode === ListMode.SingleSelectBegin;
+	}
+
+	get placeSelectionElementAfter() {
+		return !this.placeSelectionElementBefore
+			&& (this._mode === ListMode.SingleSelectEnd || this._mode === ListMode.Delete);
+	}
+
+	get modeSingleSelect() {
+		return [
+			ListMode.SingleSelectBegin,
+			ListMode.SingleSelectEnd,
+			ListMode.SingleSelect,
+		].includes(this._mode);
+	}
+
+	get modeMultiSelect() {
+		return this._mode === ListMode.MultiSelect;
+	}
+
+	get modeDelete() {
+		return this._mode === ListMode.Delete;
 	}
 }
 

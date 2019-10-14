@@ -1,6 +1,4 @@
 {
-  "name": "@ui5/webcomponents-root",
-  "version": "0.7.0",
   "description": "UI5 Web Components",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
@@ -10,27 +8,23 @@
     "sapui5",
     "ui5"
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/SAP/ui5-webcomponents.git"
-  },
   "scripts": {
     "build": "npm-run-all --sequential build:core build:base build:main build:playground",
     "build:core": "cd packages/core && yarn build",
     "build:base": "cd packages/base && yarn build",
     "build:main": "cd packages/main && yarn build",
     "build:playground": "cd packages/playground && yarn build",
-    "clean": "npm-run-all --sequential clean:core clean:main clean:playground",
+    "clean": "npm-run-all --sequential clean:core clean:base clean:main",
     "clean:core": "cd packages/core && yarn clean",
+    "clean:base": "cd packages/base && yarn clean",
     "clean:main": "cd packages/main && yarn clean",
-    "clean:playground": "cd packages/playground && yarn clean",
-    "start": "cross-env DEV=true yarn build:core && cross-env DEV=true yarn build:base && cross-env DEV=true yarn build:main && npm-run-all --parallel dev:webcomponents serve:playground",
-    "dev:webcomponents": "cd packages/main && yarn dev",
-    "serve:playground": "cd packages/playground && yarn serve",
+    "start": "npm-run-all --parallel start:base start:main",
+    "start:base": "cd packages/base && yarn start",
+    "start:main": "cd packages/main && yarn start",
     "test": "cd packages/main && yarn test",
+    "lint": "wsrun --exclude-missing lint",
     "link-all": "wsrun link",
-    "unlink-all": "wsrun unlink",
-    "lint": "wsrun --exclude-missing lint"
+    "unlink-all": "wsrun unlink"
   },
   "devDependencies": {
     "cross-env": "^5.2.0",
@@ -40,7 +34,8 @@
   },
   "resolutions": {
     "abstract-syntax-tree": "1.0.3",
-    "dir-glob": "2.0.0"
+    "dir-glob": "2.0.0",
+    "js-yaml": "^3.13.1"
   },
   "workspaces": [
     "packages/core",

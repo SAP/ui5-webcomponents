@@ -1,0 +1,283 @@
+@import "./InvisibleTextStyles.css";
+
+:host(:not([hidden])) {
+	display: inline-block;
+}
+
+:host {
+	min-width: var(--_ui5_button_base_min_width);
+	height: var(--_ui5_button_base_height);
+	font-family: var(--sapUiFontFamily);
+	font-size: var(--sapMFontMediumSize);
+	text-shadow: var(--_ui5_button_text_shadow);
+	border-radius: var(--_ui5_button_border_radius);
+	border-width: 0.0625rem;
+	cursor: pointer;
+	background-color: var(--sapUiButtonBackground);
+	border: 1px solid var(--sapUiButtonBorderColor);
+	color: var(--sapUiButtonTextColor);
+	box-sizing: border-box;
+}
+
+:host([disabled]) {
+	pointer-events: none;
+}
+
+:host([has-icon]) button[dir="rtl"].ui5-button-root .ui5-button-text {
+	margin-right: var(--_ui5_button_base_icon_margin);
+	margin-left: 0;
+}
+
+:host([has-icon][icon-end]) button[dir="rtl"].ui5-button-root .ui5-button-icon {
+	margin-right: var(--_ui5_button_base_icon_margin);
+	margin-left: 0;
+}
+
+:host([data-ui5-compact-size]) .ui5-button-icon {
+	font-size: 1rem;
+}
+
+:host([data-ui5-compact-size]) {
+	height: var(--_ui5_button_compact_height);
+	min-width: var(--_ui5_button_base_min_compact_width);
+}
+
+:host([data-ui5-compact-size]) .ui5-button-root {
+	padding: 0 var(--_ui5_button_compact_padding);
+}
+
+.ui5-button-root {
+	min-width: inherit;
+	cursor: inherit;
+	height: 100%;
+	width: 100%;
+	box-sizing: border-box;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	outline: none;
+	padding: 0 var(--_ui5_button_base_padding);
+	position: relative;
+	background: transparent;
+	border: none;
+	color: inherit;
+	text-shadow: inherit;
+	font: inherit;
+}
+
+:host(:not([active]):hover) {
+	background: var(--sapUiButtonHoverBackground);
+}
+
+.ui5-button-root .ui5-button-icon {
+	font-size: var(--_ui5_button_base_icon_only_font_size);
+	height: 0;
+	top: -.5rem;
+	position: relative;
+	color: inherit;
+}
+
+:host([icon-end]) .ui5-button-root {
+	flex-direction: row-reverse;
+}
+
+:host([icon-end]) .ui5-button-icon {
+	margin-left: var(--_ui5_button_base_icon_margin);
+}
+
+:host([icon-only]) .ui5-button-root {
+	min-width: auto;
+}
+
+:host([icon-only]) .ui5-button-text {
+	display: none;
+}
+
+.ui5-button-text {
+	outline: none;
+	position: relative;
+}
+
+:host([has-icon]) .ui5-button-text {
+	margin-left: var(--_ui5_button_base_icon_margin);
+}
+
+:host([disabled]) {
+	opacity: 0.5;
+	pointer-events: none;
+}
+
+:host([focused]) {
+	outline: var(--_ui5_button_outline);
+	outline-offset: var(--_ui5_button_outline_offset);
+}
+
+.ui5-button-root::-moz-focus-inner {
+	border: 0;
+}
+
+bdi {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+}
+
+:host([active]:not([disabled])) {
+	background-image: none;
+	background-color: var(--sapUiButtonActiveBackground);
+	border-color: var(--_ui5_button_active_border_color);
+	color: var(--sapUiButtonActiveTextColor);
+	text-shadow: none;
+}
+
+:host([active]) {
+	outline-color: var(--sapUiContentContrastFocusColor);
+}
+
+:host([design="Positive"]) {
+	background-color: var(--sapUiButtonAcceptBackground);
+	border-color: var(--_ui5_button_positive_border_color);
+	color: var(--sapUiButtonAcceptTextColor);
+	text-shadow: var(--_ui5_button_text_shadow);
+}
+
+:host([design="Positive"]:hover) {
+	background-color: var(--sapUiButtonAcceptHoverBackground);
+	border-color: var(--_ui5_button_positive_border_hover_color);
+}
+
+:host([design="Positive"][active]) {
+	background-color: var(--sapUiButtonAcceptActiveBackground);
+	border-color: var(--_ui5_button_positive_border_active_color);
+	color: var(--sapUiButtonActiveTextColor);
+	text-shadow: none;
+}
+
+:host([design="Positive"][focused]) {
+	outline-color: var(--_ui5_button_positive_border_focus_hover_color);
+	border-color: var(--_ui5_button_positive_focus_border_color);
+}
+
+:host([design="Positive"][active][focused]) {
+	outline-color: var(--sapUiContentContrastFocusColor);
+}
+
+:host([design="Negative"]) {
+	background-color: var(--sapUiButtonRejectBackground);
+	border-color: var(--sapUiButtonRejectBorderColor);
+	color: var(--sapUiButtonRejectTextColor);
+	text-shadow: var(--_ui5_button_text_shadow);
+}
+
+:host([design="Negative"]:hover) {
+	background-color: var(--sapUiButtonRejectHoverBackground);
+	border-color: var(--sapUiButtonRejectHoverBorderColor);
+}
+
+:host([design="Negative"][focused]) {
+	border-color: var(--_ui5_button_negative_focus_border_color);
+	outline-color: var(--_ui5_button_positive_border_focus_hover_color);
+}
+
+:host([design="Negative"][active]) {
+	background-color: var(--sapUiButtonRejectActiveBackground);
+	border-color: var(--_ui5_button_negative_active_border_color);
+	color: var(--sapUiButtonActiveTextColor);
+	text-shadow: none;
+}
+
+:host([design="Negative"][active][focused]) {
+	outline-color: var(--sapUiContentContrastFocusColor);
+}
+
+:host([design="Emphasized"]) {
+	background-color: var(--sapUiButtonEmphasizedBackground);
+	border-color: var(--sapUiButtonEmphasizedBorderColor);
+	color: var(--sapUiButtonEmphasizedTextColor);
+	text-shadow: 0 0 0.125rem var(--sapUiButtonEmphasizedTextShadow);
+	font-weight: var(--_ui5_button_emphasized_font_weight);
+}
+
+:host([design="Emphasized"]:not([active]):hover) {
+	background-color: var(--sapUiButtonEmphasizedHoverBackground);
+	border-color: var(--sapUiButtonEmphasizedHoverBorderColor);
+}
+
+:host([design="Empasized"][active]) {
+	background-color: var(--sapUiButtonEmphasizedActiveBackground);
+	border-color: var(--sapUiButtonEmphasizedActiveBorderColor);
+	color: var(--sapUiButtonActiveTextColor);
+	text-shadow: none;
+}
+
+:host([design="Emphasized"][focused]) {
+	outline-color: var(--sapUiContentContrastFocusColor);
+	border-color: var(--_ui5_button_emphasized_focused_border_color);
+}
+
+:host([design="Transparent"]) {
+	background-color: var(--sapUiButtonLiteBackground);
+	color: var(--sapUiButtonLiteTextColor);
+	text-shadow: var(--_ui5_button_text_shadow);
+	border-color: var(--_ui5_button_transparent_border_color);
+}
+
+:host([design="Transparent"]):hover {
+	background-color: var(--sapUiButtonLiteHoverBackground);
+}
+
+:host([design="Transparent"][active]) {
+	background-color: var(--sapUiButtonLiteActiveBackground);
+	color: var(--sapUiButtonActiveTextColor);
+	text-shadow: none;
+}
+
+:host([design="Transparent"]:not([active]):hover) {
+	border-color: var(--_ui5_button_transparent_hover_border_color);
+}
+
+/* IE Specific CSS */
+
+ui5-button[focused] {
+	outline: none;
+}
+
+ui5-button[focused] .ui5-button-root {
+	position: relative;
+}
+
+ui5-button[focused] .ui5-button-root::after {
+	content: "";
+	position: absolute;
+	border-width: 1px;
+	border-style: dotted;
+	border-color: var(--_ui5_button_focus_color);
+	top: var(--_ui5_button_focus_offset);
+	bottom: var(--_ui5_button_focus_offset);
+	left: var(--_ui5_button_focus_offset);
+	right: var(--_ui5_button_focus_offset);
+}
+
+ui5-button[active] .ui5-button-root::after {
+	border-color: var(--sapUiContentContrastFocusColor);
+}
+
+ui5-button[design="Positive"][focused] .ui5-button-root::after {
+	border-color: var(--_ui5_button_positive_border_focus_hover_color);
+}
+
+ui5-button[design="Positive"][active][focused] .ui5-button-root::after {
+	border-color: var(--sapUiContentContrastFocusColor);
+}
+
+ui5-button[design="Negative"][focused] .ui5-button-root::after {
+	border-color: var(--_ui5_button_positive_border_focus_hover_color);
+}
+
+ui5-button[design="Negative"][active][focused] .ui5-button-root::after {
+	border-color: var(--sapUiContentContrastFocusColor);
+}
+
+ui5-button[design="Emphasized"][focused] .ui5-button-root::after {
+	border-color: var(--sapUiContentContrastFocusColor);
+}

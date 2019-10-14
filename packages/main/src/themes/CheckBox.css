@@ -1,0 +1,212 @@
+@import "./InvisibleTextStyles.css";
+
+:host(:not([hidden])) {
+	display: inline-block;
+}
+
+:host {
+	overflow: hidden;
+	max-width: 100%;
+}
+
+/* disabled */
+:host([disabled]) .ui5-checkbox-root {
+	opacity: .5;
+}
+
+/* readonly */
+:host([readonly]:not([value-state="Warning"]):not([value-state="Error"])) .ui5-checkbox-inner {
+	background: var(--sapUiFieldReadOnlyBackground);
+	border: var(--_ui5_checkbox_inner_readonly_border);
+	color: var(--sapUiContentNonInteractiveIconColor);
+}
+
+/* wrap */
+:host([wrap][text]) .ui5-checkbox-root {
+	min-height: auto;
+	padding-top: .6875rem;
+	box-sizing: border-box;
+	padding-bottom: .6875rem;
+	align-items: flex-start;
+}
+
+:host([wrap][text]) .ui5-checkbox-root .ui5-checkbox-inner,
+:host([wrap][text]) .ui5-checkbox-root .ui5-checkbox-label {
+	margin-top: var(--_ui5_checkbox_wrapped_content_margin_top);
+}
+
+:host([wrap]) .ui5-checkbox-root:focus::before {
+	bottom: var(--_ui5_checkbox_wrapped_focus_left_top_bottom_position);
+}
+
+/* value states */
+:host([value-state="Error"]) .ui5-checkbox-inner,
+:host([value-state="Error"]) .ui5-checkbox--hoverable:hover .ui5-checkbox-inner {
+	background: var(--sapUiFieldInvalidBackground);
+	border: var(--_ui5_checkbox_inner_error_border);
+	color: var(--sapUiFieldInvalidColor);
+}
+
+:host([value-state="Warning"]) .ui5-checkbox-inner,
+:host([value-state="Warning"]) .ui5-checkbox--hoverable:hover .ui5-checkbox-inner {
+	background: var(--sapUiFieldWarningBackground);
+	border: var(--_ui5_checkbox_inner_warning_border);
+	color: var(--sapUiFieldWarningColor);
+}
+
+:host([value-state="Warning"]) .ui5-checkbox-icon {
+	color: var(--_ui5_checkbox_checkmark_warning_color);
+}
+
+:host([text]) .ui5-checkbox-root {
+	padding-right: 0;
+}
+
+:host([text]) .ui5-checkbox-root:focus::before {
+	right: 0;
+}
+
+.ui5-checkbox-root {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	min-height: var(--_ui5_checkbox_width_height);
+	min-width: var(--_ui5_checkbox_width_height);
+	padding: 0 var(--_ui5_checkbox_wrapper_padding);
+	box-sizing: border-box;
+	outline: none;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+.ui5-checkbox-root:focus::before {
+	content: "";
+	position: absolute;
+	top: var(--_ui5_checkbox_focus_position);
+	left: var(--_ui5_checkbox_focus_position);
+	right: var(--_ui5_checkbox_focus_position);
+	bottom: var(--_ui5_checkbox_focus_position);
+	border: var(--_ui5_checkbox_focus_outline);
+}
+
+.ui5-checkbox--hoverable:hover .ui5-checkbox-inner {
+	background: var(--_ui5_checkbox_hover_background);
+	border-color: var(--sapUiFieldHoverBorderColor);
+}
+
+.ui5-checkbox-inner {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-width: var(--_ui5_checkbox_inner_width_height);
+	max-width: var(--_ui5_checkbox_inner_width_height);
+	height: var(--_ui5_checkbox_inner_width_height);
+	max-height: var(--_ui5_checkbox_inner_width_height);
+	border: var(--_ui5_checkbox_inner_border);
+	border-radius: var(--_ui5_checkbox_inner_border_radius);
+	background: var(--sapUiFieldBackground);
+	color: var(--_ui5_checkbox_checkmark_color);
+	box-sizing: border-box;
+	position: relative;
+	cursor: default;
+	pointer-events: none;
+}
+
+.ui5-checkbox-icon {
+	color: currentColor;
+	cursor: default;
+}
+
+.ui5-checkbox-inner input {
+	-webkit-appearance: none;
+	visibility: hidden;
+	width: 0;
+	left: 0;
+	position: absolute;
+	font-size: inherit;
+}
+
+.ui5-checkbox-root .ui5-checkbox-label {
+	margin-left: var(--_ui5_checkbox_wrapper_padding);
+	cursor: default;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+	pointer-events: none;
+	user-select: none;
+	-ms-user-select: none;
+	-webkit-user-select: none;
+}
+
+/* Compact */
+:host([wrap][text][data-ui5-compact-size]) .ui5-checkbox-root {
+	min-height: auto;
+	padding-top: var(--_ui5_checkbox_wrapped_focus_padding);
+	padding-bottom: var(--_ui5_checkbox_wrapped_focus_padding);
+}
+
+:host([wrap][text][data-ui5-compact-size]) .ui5-checkbox-root .ui5-checkbox-label {
+	margin-top: var(--_ui5_checkbox_compact_wrapped_label_margin_top);
+}
+
+:host([wrap][data-ui5-compact-size]) .ui5-checkbox-root:focus::before {
+	bottom: var(--_ui5_checkbox_compact_focus_position);
+}
+
+:host([data-ui5-compact-size]) .ui5-checkbox-root {
+	min-height: var(--_ui5_checkbox_compact_width_height);
+	min-width: var(--_ui5_checkbox_compact_width_height);
+	padding: 0 var(--_ui5_checkbox_compact_wrapper_padding);
+}
+
+:host([data-ui5-compact-size]) .ui5-checkbox-root:focus::before {
+	top: var(--_ui5_checkbox_compact_focus_position);
+	left: var(--_ui5_checkbox_compact_focus_position);
+	right: var(--_ui5_checkbox_compact_focus_position);
+	bottom: var(--_ui5_checkbox_compact_focus_position);
+	border: var(--_ui5_checkbox_focus_outline);
+}
+
+:host([data-ui5-compact-size]) .ui5-checkbox-inner {
+	max-height: var(--_ui5_checkbox_compact_inner_size);
+	height: var(--_ui5_checkbox_compact_inner_size);
+	max-width: var(--_ui5_checkbox_compact_inner_size);
+	min-width: var(--_ui5_checkbox_compact_inner_size);
+	font-size: .625rem;
+}
+
+:host([data-ui5-compact-size]) .ui5-checkbox-root .ui5-checkbox-label {
+	margin-left: var(--_ui5_checkbox_compact_wrapper_padding);
+	width: calc(100% - .8125rem - var(--_ui5_checkbox_compact_inner_size));
+}
+
+:host([data-ui5-compact-size]) .ui5-checkbox-icon {
+	width: 0.75rem;
+	height: 0.75rem;
+}
+
+/* RTL */
+:host([text]) [dir="rtl"].ui5-checkbox-root {
+	padding-left: 0;
+	padding-right: var(--_ui5_checkbox_wrapper_padding);
+}
+
+:host([text]) [dir="rtl"].ui5-checkbox-root:focus::before {
+	left: 0;
+	right: var(--_ui5_checkbox_focus_position);
+}
+
+:host([text]) [dir="rtl"].ui5-checkbox-root .ui5-checkbox-label {
+	margin-left: 0;
+	margin-right: var(--_ui5_checkbox_compact_wrapper_padding);
+}
+
+/* RTL + Compact */
+:host([data-ui5-compact-size][text]) [dir="rtl"].ui5-checkbox-root {
+	padding-right: var(--_ui5_checkbox_compact_wrapper_padding);
+}
+
+:host([data-ui5-compact-size][text]) [dir="rtl"].ui5-checkbox-root:focus::before {
+	right: var(--_ui5_checkbox_compact_focus_position);
+}

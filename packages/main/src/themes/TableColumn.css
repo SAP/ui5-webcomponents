@@ -1,0 +1,33 @@
+:host {
+	display: contents;
+}
+
+:host .ui5-table-column-root {
+	padding: 0.25rem;
+	box-sizing: border-box;
+}
+
+th {
+	background: var(--sapUiListHeaderBackground);
+	border-bottom: 1px solid var(--sapUiListBorderColor);
+	border: none;
+	width: inherit;
+	font-weight: normal;
+}
+
+.ui5-table-column-root {
+	display: flex;
+	height: 3rem;
+	justify-content: flex-start;
+	align-items: center;
+}
+
+:host([first]) .ui5-table-column-root {
+	padding-left: 1rem;
+}
+
+:host([sticky]) th {
+	position: sticky;
+	top: 0;
+	z-index: 999;
+}

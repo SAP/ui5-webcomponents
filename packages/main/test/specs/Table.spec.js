@@ -3,33 +3,35 @@ const assert = require("assert");
 describe("Table general interaction", () => {
 	browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/Table.html");
 
-	it("tests width propagation to from column to cell", () => {
-		const tableColumn = browser.findElementDeep("#column-1");
-		const tableFirstColumnCellWrapper = browser.findElementDeep("#roll-0 >>> div div.sapMWCTableRowCellContainer");
-
-		assert.equal(tableColumn.getProperty("width"), `${tableFirstColumnCellWrapper.getSize().width}px`, "Width of the cell should be equal to width of the corresponding column");
-	});
-
 	it("tests if column disapears when min-width is reacted (650px)", () => {
-		const btn = browser.findElementDeep("#size-btn-650");
-		const tableFirstColumnCellWrapper = browser.findElementDeep("#roll-0 >>> div");
+		const btn = browser.$("#size-btn-650");
+		const headerTableRow = browser.$("#tbl").shadow$("thead tr");
 
 		btn.click();
+		browser.pause(300);
 
-		const rowHTML = tableFirstColumnCellWrapper.getHTML(false);
-
-		assert.strictEqual((rowHTML.split("sapMWCTableRowCellContainer").length - 1), 4, "Columns should be 4");
+		assert.strictEqual((headerTableRow.getHTML(false).split("</slot>").length - 1), 4, "Columns should be 4");
 	});
 
 	it("tests if column popins when min-width is reacted (500px)", () => {
-		const btn = browser.findElementDeep("#size-btn-500");
-		const tableFirstColumnCellWrapper = browser.findElementDeep("#roll-0 >>> div");
+		const btn = browser.$("#size-btn-500");
+		const headerTableRow = browser.$("#tbl").shadow$("thead tr");
+		const popinRows = browser.$("#roll-0").shadow$$(".ui5-table-popin-row");
 
 		btn.click();
+		browser.pause(300);
+		assert.strictEqual((headerTableRow.getHTML(false).split("</slot>").length - 1), 2, "Columns should be 4");
+		assert.strictEqual($("#roll-0").shadow$$(".ui5-table-popin-row").length, 2, "popin rows should be 2");
+	});
 
-		const rowHTML = tableFirstColumnCellWrapper.getHTML(false);
+	it("tests if noData div is displayed for empty table", () => {
+		const noDataRow = browser.$("#tableNoData").shadow$("div.ui5-table-no-data-row");
 
-		assert.strictEqual((rowHTML.split("sapMWCTableRowCellContainer").length - 1), 2, "columns should be 2");
-		assert.strictEqual((rowHTML.split("sapWCTablePopinRow").length - 1), 2, "popin rows should be 2");
+		assert.strictEqual(noDataRow.isExisting(), true, 'noData div is present');
+	});
+
+	it("tests if table with more columns than cells is rendered", () => {
+		const tblLessCells = browser.$("#tblLessCells");
+		assert.equal(tblLessCells.isExisting(), true, 'table with more columns is rendered without JS errors.');
 	});
 });

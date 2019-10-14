@@ -1,0 +1,19 @@
+:host {
+	display: contents;
+}
+
+:host(:not(:first-of-type)) .ui5-table-row-root {
+	background-color: var(--sapUiListBackground);
+	border-top: 1px solid var(--sapUiListBorderColor);
+}
+
+.ui5-table-popin-row td {
+	padding: .25rem;
+	padding-left: 1rem;
+}
+
+.ui5-table-row-popin-title {
+	color: var(--sapUiContentLabelColor);
+	font-family: var(--sapUiFontHeaderFamily);
+	font-size: var(--sapMFontMediumSize);
+}

@@ -1,35 +1,26 @@
-import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
-import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
-import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData";
-import { getCalendarType } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Configuration";
-import { getFormatLocale } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/FormatSettings";
-import { isEnter, isSpace } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/events/PseudoEvents";
-import ItemNavigation from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/delegate/ItemNavigation";
-import { getLocale } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/LocaleProvider";
-import Integer from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/Integer";
-import DateFormat from "@ui5/webcomponents-core/dist/sap/ui/core/format/DateFormat";
-import CalendarType from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/dates/CalendarType";
-import CalendarDate from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/dates/CalendarDate";
-import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
-import YearPickerTemplateContext from "./YearPickerTemplateContext";
-import YearPickerRenderer from "./build/compiled/YearPickerRenderer.lit";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData.js";
+import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
+import { getFormatLocale } from "@ui5/webcomponents-base/dist/FormatSettings.js";
+import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import { getLocale } from "@ui5/webcomponents-base/dist/LocaleProvider.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import getShadowDOMTarget from "@ui5/webcomponents-base/dist/events/getShadowDOMTarget.js";
+import DateFormat from "@ui5/webcomponents-core/dist/sap/ui/core/format/DateFormat.js";
+import CalendarType from "@ui5/webcomponents-base/dist/dates/CalendarType.js";
+import CalendarDate from "@ui5/webcomponents-base/dist/dates/CalendarDate.js";
+import YearPickerTemplate from "./generated/templates/YearPickerTemplate.lit.js";
 
-import belize from "./themes/sap_belize/YearPicker.less";
-import belizeHcb from "./themes/sap_belize_hcb/YearPicker.less";
-import fiori3 from "./themes/sap_fiori_3/YearPicker.less";
-
-ShadowDOM.registerStyle("sap_belize", "YearPicker.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "YearPicker.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "YearPicker.css", fiori3);
+// Styles
+import styles from "./generated/themes/YearPicker.css.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-yearpicker",
-	styleUrl: [
-		"YearPicker.css",
-	],
 	properties: /** @lends  sap.ui.webcomponents.main.YearPicker.prototype */ {
 		/**
 		 * A UNIX timestamp - seconds since 00:00:00 UTC on Jan 1, 1970.
@@ -42,7 +33,7 @@ const metadata = {
 		/**
 		 * Sets a calendar type used for display.
 		 * If not set, the calendar type of the global configuration is used.
-		 * @type {String}
+		 * @type {string}
 		 * @public
 		 */
 		primaryCalendarType: {
@@ -50,6 +41,7 @@ const metadata = {
 		},
 		_selectedYear: {
 			type: Integer,
+			noAttribute: true,
 		},
 		_yearIntervals: {
 			type: Object,
@@ -57,6 +49,7 @@ const metadata = {
 		},
 		_hidden: {
 			type: Boolean,
+			noAttribute: true,
 		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.YearPicker.prototype */ {
@@ -77,17 +70,25 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.YearPicker
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-yearpicker
  * @public
  */
-class YearPicker extends WebComponent {
+class YearPicker extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
 
-	static get renderer() {
-		return YearPickerRenderer;
+	static get styles() {
+		return styles;
+	}
+
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return YearPickerTemplate;
 	}
 
 	constructor() {
@@ -147,11 +148,11 @@ class YearPicker extends WebComponent {
 				timestamp: timestamp.toString(),
 				id: `${this._state._id}-y${timestamp}`,
 				year: oYearFormat.format(oCalDate.toLocalJSDate()),
-				classes: "sapWCYearPickerItem",
+				classes: "ui5-yp-item",
 			};
 
 			if (oCalDate.getYear() === this._selectedYear) {
-				year.classes += " sapWCYearPickerItemSel";
+				year.classes += " ui5-yp-item--selected";
 			}
 
 			if (intervals[intervalIndex]) {
@@ -189,8 +190,9 @@ class YearPicker extends WebComponent {
 	}
 
 	onclick(event) {
-		if (event.ui5target.className.indexOf("sapWCYearPickerItem") > -1) {
-			const timestamp = this.getTimestampFromDom(event.ui5target);
+		const eventTarget = getShadowDOMTarget(event);
+		if (eventTarget.className.indexOf("ui5-yp-item") > -1) {
+			const timestamp = this.getTimestampFromDom(eventTarget);
 			this.timestamp = timestamp;
 			this._selectedYear = this._year;
 			this._itemNav.current = YearPicker._MIDDLE_ITEM_INDEX;
@@ -201,10 +203,6 @@ class YearPicker extends WebComponent {
 	getTimestampFromDom(domNode) {
 		const sTimestamp = domNode.getAttribute("data-sap-timestamp");
 		return parseInt(sTimestamp);
-	}
-
-	static get calculateTemplateContext() {
-		return YearPickerTemplateContext.calculate;
 	}
 
 	onkeydown(event) {
@@ -218,9 +216,10 @@ class YearPicker extends WebComponent {
 	}
 
 	_handleEnter(event) {
+		const eventTarget = getShadowDOMTarget(event);
 		event.preventDefault();
-		if (event.ui5target.className.indexOf("sapWCYearPickerItem") > -1) {
-			const timestamp = this.getTimestampFromDom(event.ui5target);
+		if (eventTarget.className.indexOf("ui5-yp-item") > -1) {
+			const timestamp = this.getTimestampFromDom(eventTarget);
 
 			this.timestamp = timestamp;
 			this._selectedYear = this._year;
@@ -230,9 +229,10 @@ class YearPicker extends WebComponent {
 	}
 
 	_handleSpace(event) {
+		const eventTarget = getShadowDOMTarget(event);
 		event.preventDefault();
-		if (event.ui5target.className.indexOf("sapWCYearPickerItem") > -1) {
-			const timestamp = this.getTimestampFromDom(event.ui5target);
+		if (eventTarget.className.indexOf("ui5-yp-item") > -1) {
+			const timestamp = this.getTimestampFromDom(eventTarget);
 
 			this._selectedYear = CalendarDate.fromTimestamp(
 				timestamp * 1000,
@@ -261,6 +261,14 @@ class YearPicker extends WebComponent {
 
 		this.timestamp = oCalDate.valueOf() / 1000;
 	}
+
+	get styles() {
+		return {
+			main: {
+				display: this._hidden ? "none" : "",
+			},
+		};
+	}
 }
 
 YearPicker._ITEMS_COUNT = 20;
@@ -268,8 +276,6 @@ YearPicker._MIDDLE_ITEM_INDEX = 7;
 YearPicker._MAX_YEAR = 9999;
 YearPicker._MIN_YEAR = 1;
 
-Bootstrap.boot().then(_ => {
-	YearPicker.define();
-});
+YearPicker.define();
 
 export default YearPicker;

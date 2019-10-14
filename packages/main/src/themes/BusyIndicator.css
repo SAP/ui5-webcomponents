@@ -1,0 +1,104 @@
+:host(:not([hidden])) {
+	display: inline-block;
+}
+
+:host([active]) {
+	opacity: 1;
+	background-color: var(--sapBackgroundColorFade72);
+	color: var(--ui5-busyindicator-color);
+	pointer-events: none;
+}
+
+:host([size="Small"]) .ui5-busyindicator-root {
+	min-width: 3rem;
+	min-height: 1rem;
+}
+
+:host([size="Small"]) .ui5-busyindicator-circle {
+	width: 0.125rem;
+	height: 0.125rem;
+	margin: 0 0.2rem;
+}
+
+:host([size="Medium"]) .ui5-busyindicator-root {
+	min-width: 5rem;
+	min-height: 2rem;
+}
+
+:host([size="Medium"])  .ui5-busyindicator-circle {
+	width: 0.5rem;
+	height: 0.5rem;
+	margin: 0 0.4rem;
+}
+
+:host([size="Large"]) .ui5-busyindicator-root {
+	min-width: 8rem;
+	min-height: 3rem;
+}
+
+:host([size="Large"]) .ui5-busyindicator-circle {
+	width: 1rem;
+	height: 1rem;
+	margin: 0 .75rem;
+}
+
+.ui5-busyindicator-root {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	background-color: inherit;
+}
+
+.ui5-busyindicator-circle {
+	display: inline-block;
+	background-color: currentColor;
+	border-radius: 50%;
+}
+
+.ui5-busyindicator-circle::before {
+	content: "";
+	width: 100%;
+	height: 100%;
+	border-radius: 100%;
+}
+
+.ui5-busyindicator-dynamic-content {
+	position: absolute;
+	z-index: 99;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: inherit;
+}
+
+.circle-animation-0 {
+	animation: grow 1.6s infinite cubic-bezier(0.32, 0.06, 0.85, 1.11);
+}
+
+.circle-animation-1 {
+	animation: grow 1.6s infinite cubic-bezier(0.32, 0.06, 0.85, 1.11);
+	animation-delay: 200ms;
+}
+
+.circle-animation-2 {
+	animation: grow 1.6s infinite cubic-bezier(0.32, 0.06, 0.85, 1.11);
+	animation-delay: 400ms;
+}
+
+@keyframes grow {
+	0%, 50%, 100% {
+		-webkit-transform: scale(1.0);
+		-moz-transform: scale(1.0);
+		-ms-transform: scale(1.0);
+		transform: scale(1.0);
+	}
+	25% {
+		-webkit-transform: scale(2.5);
+		-moz-transform: scale(2.5);
+		-ms-transform: scale(2.5);
+		transform: scale(2.5);
+	}
+}

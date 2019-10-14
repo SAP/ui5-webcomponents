@@ -5,8 +5,9 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta charset="utf-8">
 
-	<script src="diffable-html.js"></script>
-
+	<script>
+		delete Document.prototype.adoptedStyleSheets;
+	</script>
 	<script src="../../../../../../webcomponentsjs/webcomponents-loader.js"></script>
 	<script src="../../../../../../resources/sap/ui/webcomponents/main/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../../../../../resources/sap/ui/webcomponents/main/bundle.es5.js">
@@ -16,6 +17,16 @@
 	src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
 	integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
 	crossorigin="anonymous"></script>
+
+	<script data-id="sap-ui-config" type="application/json">
+		{
+			"rtl": false,
+			"compactSize": false,
+			"formatSettings": {
+                "firstDayOfWeek": 0
+            }
+		}
+	</script>
 
 	<style>
 		.sapUiTheme-sap_fiori3 body {
@@ -36,7 +47,7 @@
 			title='Delivery Date!'>
 		</ui5-datepicker>
 		<ui5-label id="lblChange">change: N/A</ui5-label><br/>
-		<ui5-label id="lblLiveChange">liveChange: N/A</ui5-label><br/>
+		<ui5-label id="lblLiveChange">input: N/A</ui5-label><br/>
 
 		<h3>format-pattern - 'short', value - 'tomorrow'</h3>
 		<ui5-datepicker id='dp6'
@@ -70,7 +81,7 @@
 		<ui5-datepicker id='dp2' value='11/11/2018' disabled></ui5-datepicker>
 
 		<h3>readonly</h3>
-		<ui5-datepicker id='dp3' value='11/11/2018' read-only></ui5-datepicker>
+		<ui5-datepicker id='dp3' value='11/11/2018' readonly></ui5-datepicker>
 
 		<h3>islamic calendar type</h3>
 		<ui5-datepicker primary-calendar-type='Islamic'></ui5-datepicker>
@@ -92,16 +103,16 @@
 		dp.addEventListener('keydown', function() { console.log('keydown')});
 		dp.addEventListener('blur', function() { console.log('blur')});
 
-		dp.addEventListener('change', function(e) {
+		dp.addEventListener('ui5-change', function(e) {
 			console.log('change: ', e.detail);
 			labelChange.innerHTML = 'change: ' + JSON.stringify(e.detail);
 		});
-		dp.addEventListener('liveChange', function(e) {
-			console.log('liveChange: ', e.detail);
-			labelLiveChange.innerHTML = 'liveChange: ' + JSON.stringify(e.detail);
+		dp.addEventListener('ui5-input', function(e) {
+			console.log('input: ', e.detail);
+			labelLiveChange.innerHTML = 'input: ' + JSON.stringify(e.detail);
 		});
 
-		$('#ui5-datepicker--startDate').on('liveChange change', (function(e) {
+		$('#ui5-datepicker--startDate').on('ui5-input change', (function(e) {
 			var dp = $('#ui5-datepicker--startDate')[0];
 			dp.setAttribute('value-state', e.detail.valid ? 'None' : 'Error');
 			$('#startDate').val($('#ui5-datepicker--startDate').val());

@@ -1,28 +1,18 @@
-import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
-import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
-import DialogTemplateContext from "./DialogTemplateContext";
-import Popup from "./Popup";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+
+import { isPhone } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
+import Popup from "./Popup.js";
 // Template
-import DialogRenderer from "./build/compiled/DialogRenderer.lit";
+import DialogTemplate from "./generated/templates/DialogTemplate.lit.js";
 
 // Styles
-import belize from "./themes/sap_belize/Dialog.less";
-import belizeHcb from "./themes/sap_belize_hcb/Dialog.less";
-import fiori3 from "./themes/sap_fiori_3/Dialog.less";
-
-ShadowDOM.registerStyle("sap_belize", "Dialog.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "Dialog.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "Dialog.css", fiori3);
+import dialogCss from "./generated/themes/Dialog.css.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-dialog",
-	styleUrl: [
-		"Popup.css",
-		"Dialog.css",
-	],
 	properties: /** @lends  sap.ui.webcomponents.main.Dialog.prototype */ {
 		/**
 		 * Determines whether the <code>ui5-dialog</code> should be stretched to fullscreen.
@@ -31,6 +21,7 @@ const metadata = {
 		 * 90% of the viewport.
 		 *
 		 * @type {Boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		stretch: {
@@ -45,7 +36,7 @@ const metadata = {
  * The <code>ui5-dialog</code> component is used to temporarily display some information in a
  * size-limited window in front of the regular app screen.
  * It is used to prompt the user for an action or a confirmation.
- * The code>ui5-dialog</code> interrupts the current app processing as it is the only focused UI element and
+ * The <code>ui5-dialog</code> interrupts the current app processing as it is the only focused UI element and
  * the main screen is dimmed/blocked.
  * The dialog combines concepts known from other technologies where the windows have
  * names such as dialog box, dialog window, pop-up, pop-up window, alert box, or message box.
@@ -77,8 +68,16 @@ class Dialog extends Popup {
 		return metadata;
 	}
 
-	static get renderer() {
-		return DialogRenderer;
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return DialogTemplate;
+	}
+
+	static get styles() {
+		return [Popup.styles, dialogCss];
 	}
 
 	/**
@@ -86,7 +85,7 @@ class Dialog extends Popup {
 	* @public
 	*/
 	open() {
-		if (this._isOpen) {
+		if (this.opened) {
 			return;
 		}
 
@@ -97,7 +96,7 @@ class Dialog extends Popup {
 
 		this.storeCurrentFocus();
 
-		this._isOpen = true;
+		this.opened = true;
 	}
 
 	/**
@@ -105,7 +104,7 @@ class Dialog extends Popup {
 	* @public
 	*/
 	close() {
-		if (!this._isOpen) {
+		if (!this.opened) {
 			return;
 		}
 
@@ -114,20 +113,35 @@ class Dialog extends Popup {
 			return;
 		}
 
-		this._isOpen = false;
+		this.opened = false;
 
 		this.resetFocus();
 
 		this.fireEvent("afterClose", { });
 	}
 
-	static get calculateTemplateContext() {
-		return DialogTemplateContext.calculate;
+	get classes() {
+		return {
+			dialogParent: {
+				"ui5-phone": isPhone(),
+			},
+			blockLayer: {
+				"ui5-popup-BLy": true,
+				"ui5-popup-blockLayer": true,
+				"ui5-popup-blockLayer--hidden": this._hideBlockLayer,
+			},
+		};
+	}
+
+	get zindex() {
+		return `z-index: ${this._zIndex + 1};`;
+	}
+
+	get blockLayer() {
+		return `z-index: ${this._zIndex};`;
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	Dialog.define();
-});
+Dialog.define();
 
 export default Dialog;

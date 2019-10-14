@@ -1,50 +1,39 @@
-import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
-import URI from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/URI";
-import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
-import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
+import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import ButtonDesign from "./types/ButtonDesign.js";
+import ButtonTemplate from "./generated/templates/ButtonTemplate.lit.js";
+import Icon from "./Icon.js";
 
-// import { addCustomCSS } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/theming/CustomStyle";
-import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
-
-import ButtonTemplateContext from "./ButtonTemplateContext";
-import ButtonType from "./types/ButtonType";
-import ButtonRenderer from "./build/compiled/ButtonRenderer.lit";
-import Icon from "./Icon";
+import { BUTTON_ARIA_TYPE_ACCEPT, BUTTON_ARIA_TYPE_REJECT, BUTTON_ARIA_TYPE_EMPHASIZED } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
-// import buttonCss from "./themes-next/Button.css";
-import belize from "./themes/sap_belize/Button.less";
-import belizeHcb from "./themes/sap_belize_hcb/Button.less";
-import fiori3 from "./themes/sap_fiori_3/Button.less";
-
-// addCustomCSS("ui5-button", "sap_fiori_3", buttonCss);
-// addCustomCSS("ui5-button", "sap_belize_hcb", buttonCss);
-ShadowDOM.registerStyle("sap_belize", "Button.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "Button.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "Button.css", fiori3);
+import buttonCss from "./generated/themes/Button.css.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-button",
-	styleUrl: [
-		"Button.css",
-	],
-	usesNodeText: true,
 	properties: /** @lends sap.ui.webcomponents.main.Button.prototype */ {
 
 		/**
-		 * Defines the <code>ui5-button</code> type.
-		 * </br></br>
+		 * Defines the <code>ui5-button</code> design.
+		 * <br><br>
 		 * <b>Note:</b> Available options are "Default", "Emphasized", "Positive",
 		 * "Negative", and "Transparent".
 		 *
-		 * @type {ButtonType}
+		 * @type {ButtonDesign}
 		 * @defaultvalue "Default"
 		 * @public
 		 */
-		type: { type: ButtonType, defaultValue: ButtonType.Default },
+		design: {
+			type: ButtonDesign,
+			defaultValue: ButtonDesign.Default,
+		},
 
 		/**
 		 * Defines whether the <code>ui5-button</code> is disabled
@@ -56,7 +45,9 @@ const metadata = {
 		 * @defaultvalue false
 		 * @public
 		 */
-		disabled: { type: Boolean },
+		disabled: {
+			type: Boolean,
+		},
 
 		/**
 		 * Defines the icon to be displayed as graphical element within the <code>ui5-button</code>.
@@ -68,11 +59,13 @@ const metadata = {
 		 *
 		 * See all the available icons in the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
 		 *
-		 * @type {URI}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 */
-		icon: { type: URI, defaultValue: null },
+		icon: {
+			type: String,
+		},
 
 		/**
 		 * Defines whether the icon should be displayed after the <code>ui5-button</code> text.
@@ -81,33 +74,87 @@ const metadata = {
 		 * @defaultvalue false
 		 * @public
 		 */
-		iconEnd: { type: Boolean },
+		iconEnd: {
+			type: Boolean,
+		},
 
 		/**
-		 * Defines an alternative icon for the active (depressed) state of the <code>ui5-button</code>.
-		 * <br><br>
-		 * <b>Note:</b> Both <code>icon</code> and <code>activeIcon</code>
-		 * properties should be defined and have the type
-		 * icon font.
+		 * When set to <code>true</code>, the <code>ui5-button</code> will
+		 * automatically submit the nearest form element upon <code>press</code>.
+		 *
+		 * <b>Important:</b> For the <code>submits</code> property to have effect, you must add the following import to your project:
+		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 */
-		activeIcon: { type: URI, defaultValue: null },
+		submits: {
+			type: Boolean,
+		},
 
 		/**
 		 * Used to switch the active state (pressed or not) of the <code>ui5-button</code>.
+		 * @private
 		 */
-		_active: { type: Boolean },
+		active: {
+			type: Boolean,
+		},
 
-		_iconSettings: { type: Object },
+		/**
+		 * Defines if a content has been added to the default slot
+		 * @private
+		 */
+		iconOnly: {
+			type: Boolean,
+		},
+
+		/**
+		 * Indicates if the elements is on focus
+		 * @private
+		 */
+		focused: {
+			type: Boolean,
+		},
+
+		/**
+		 * Indicates if the elements has a slotted icon
+		 * @private
+		 */
+		hasIcon: {
+			type: Boolean,
+		},
+
+		/**
+		 * Indicates if the element if focusable
+		 * @private
+		 */
+		nonFocusable: {
+			type: Boolean,
+		},
+
+		_iconSettings: {
+			type: Object,
+		},
+	},
+	slots: /** @lends sap.ui.webcomponents.main.Button.prototype */ {
+		/**
+		 * Defines the text of the <code>ui5-button</code>.
+		 * <br><b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+		 *
+		 * @type {Node[]}
+		 * @slot
+		 * @public
+		 */
+		"default": {
+			type: Node,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Button.prototype */ {
 
 		/**
-		 * Fired when the <code>ui5-button</code> is pressed either with a
-		 * click/tap or by using the Enter or Space key.
+		 * Fired when the <code>ui5-button</code> is activated either with a
+		 * mouse/tap or by using the Enter or Space key.
 		 * <br><br>
 		 * <b>Note:</b> The event will not be fired if the <code>disabled</code>
 		 * property is set to <code>true</code>.
@@ -115,7 +162,7 @@ const metadata = {
 		 * @event
 		 * @public
 		 */
-		press: {},
+		click: {},
 	},
 };
 
@@ -149,80 +196,130 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Button
- * @extends WebComponent
+ * @extends UI5Element
  * @tagname ui5-button
- * @usestextcontent
  * @public
  */
-class Button extends WebComponent {
+class Button extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
 
-	static get renderer() {
-		return ButtonRenderer;
+	static get styles() {
+		return buttonCss;
 	}
 
-	static get calculateTemplateContext() {
-		return ButtonTemplateContext.calculate;
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return ButtonTemplate;
+	}
+
+	constructor() {
+		super();
+
+		this._deactivate = () => {
+			if (this.active) {
+				this.active = false;
+			}
+		};
+
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
-		if (this.icon) {
-			this._iconSettings = {
-				src: this._active && this.activeIcon ? this.activeIcon : this.icon,
-			};
-		} else {
-			this._iconSettings = null;
+		const FormSupport = getFeature("FormSupport");
+		if (this.submits && !FormSupport) {
+			console.warn(`In order for the "submits" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
+		}
+
+		this.iconOnly = !this.childNodes.length;
+		this.hasIcon = !!this.icon;
+	}
+
+	onEnterDOM() {
+		document.addEventListener("mouseup", this._deactivate);
+	}
+
+	onExitDOM() {
+		document.removeEventListener("mouseup", this._deactivate);
+	}
+
+	_onclick(event) {
+		event.isMarked = "button";
+		this.fireEvent("press", {});
+		const FormSupport = getFeature("FormSupport");
+		if (FormSupport) {
+			FormSupport.triggerFormSubmit(this);
 		}
 	}
 
-	onclick(event) {
+	_onmousedown(event) {
 		event.isMarked = "button";
-		if (!this.disabled) {
-			this.fireEvent("press", {});
-		}
-	}
-
-	onmousedown(event) {
-		event.isMarked = "button";
-		if (this.activeIcon) {
-			this._active = true;
-		}
+		this.active = true;
 	}
 
 	onmouseup(event) {
 		event.isMarked = "button";
-		if (this.activeIcon) {
-			this._active = false;
-		}
 	}
 
 	onkeydown(event) {
-		if (event.which === KeyCodes.SPACE || event.which === KeyCodes.ENTER) {
-			this._active = true;
+		if (isSpace(event) || isEnter(event)) {
+			this.active = true;
 		}
 	}
 
 	onkeyup(event) {
-		if (event.which === KeyCodes.SPACE || event.which === KeyCodes.ENTER) {
-			this._active = false;
+		if (isSpace(event) || isEnter(event)) {
+			this.active = false;
 		}
 	}
 
-	onfocusout(_event) {
-		this._active = false;
+	_onfocusout(_event) {
+		this.active = false;
+		this.focused = false;
+	}
+
+	_onfocusin() {
+		this.focused = true;
+	}
+
+	get rtl() {
+		return getRTL() ? "rtl" : undefined;
+	}
+
+	get hasButtonType() {
+		return this.design !== ButtonDesign.Default && this.design !== ButtonDesign.Transparent;
+	}
+
+	static typeTextMappings() {
+		return {
+			"Positive": BUTTON_ARIA_TYPE_ACCEPT,
+			"Negative": BUTTON_ARIA_TYPE_REJECT,
+			"Emphasized": BUTTON_ARIA_TYPE_EMPHASIZED,
+		};
+	}
+
+	get buttonTypeText() {
+		return this.i18nBundle.getText(Button.typeTextMappings()[this.design]);
+	}
+
+	get tabIndexValue() {
+		return this.nonFocusable ? "-1" : "0";
 	}
 
 	static async define(...params) {
-		await Icon.define();
+		await Promise.all([
+			Icon.define(),
+			fetchI18nBundle("@ui5/webcomponents"),
+		]);
 
 		super.define(...params);
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	Button.define();
-});
+Button.define();
 
 export default Button;

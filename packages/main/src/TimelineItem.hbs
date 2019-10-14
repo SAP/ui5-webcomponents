@@ -1,34 +1,39 @@
-<div class="sapWCTimelineItem {{ctr._customClasses}}" {{> controlData}}>
-	<div class="{{classes.indicator}}">
-		{{#if ctr.icon}}
-			<ui5-icon class="sapWCTimelineItemIcon" src="{{ctr.icon}}"></ui5-icon>
+<div
+	class="ui5-tli-root"
+	dir="{{rtl}}"
+>
+	<div class="ui5-tli-indicator">
+		{{#if icon}}
+			<div class="ui5-tli-icon-outer">
+				<ui5-icon class="ui5-tli-icon" src="{{icon}}"></ui5-icon>
+			</div>
 		{{/if}}
 	</div>
-	<div class="sapWCTimelineBubble" tabindex="{{ctr._tabIndex}}" data-sap-focus-ref>
-		<div class="sapWCTimelineItemTitle">
-			{{#if ctr.itemName}}
+	<div class="ui5-tli-bubble" tabindex="{{_tabIndex}}" data-sap-focus-ref>
+		<div class="ui5-tli-title">
+			{{#if itemName}}
 				{{> itemName}}
 			{{/if}}
 
-			<span>{{ctr.titleText}}</span>
+			<span>{{titleText}}</span>
 		</div>
-		<div class="sapWCTimelineItemTime">{{dateTime}}</div>
+		<div class="ui5-tli-subtitle">{{subtitleText}}</div>
 
-		{{#if ctr.description}}
-			<div class="sapWCTimelineItemDesc">
-				<slot name="{{ctr.description._slot}}"></slot>
+		{{#if textContent}}
+			<div class="ui5-tli-desc">
+				<slot></slot>
 			</div>
 		{{/if}}
-		<span class="sapWCTimelineBubbleArrow sapWCTimelineBubbleArrowLeft"></span>
+		<span class="ui5-tli-bubble-arrow ui5-tli-bubble-arrow--left"></span>
 	</div>
 </div>
 
 {{#*inline "itemName"}}
-	{{#if ctr.itemNameClickable}}
-		<ui5-link @press="{{ctr._onItemNamePress}}">{{ctr.itemName}}</ui5-link>
+	{{#if itemNameClickable}}
+		<ui5-link @click="{{onItemNamePress}}">{{itemName}}</ui5-link>
 	{{/if}}
 
-	{{#unless ctr.itemNameClickable}}
-		<span>{{ctr.itemName}}</span>
+	{{#unless itemNameClickable}}
+		<span>{{itemName}}</span>
 	{{/unless}}
 {{/inline}}

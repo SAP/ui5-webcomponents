@@ -213,6 +213,10 @@ This project includes the following subcomponents that are subject to separate l
 Your use of these subcomponents is subject to the separate license terms applicable to
 each subcomponent.
 
+NOTE: any license mentioned or quoted below is the license of the respective subcomponent(s)
+and is not an additional license for the ui5-webcomponents code itself.
+
+
 Component: deploy.sh
 Licensor: Domenic Denicola
 Website: https://gist.github.com/domenic/ec8b0fc8ab45f39403dd/e445116166c79d7ac35eb38a5d348d546f3d1620

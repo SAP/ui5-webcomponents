@@ -10,7 +10,9 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta charset="utf-8">
 
-	<script data-id="sap-ui-config" type="application/json">
+	<script>delete Document.prototype.adoptedStyleSheets;</script>
+	
+	<script data-ui5-config type="application/json">
 		{
 			"language": "EN"
 		}
@@ -34,14 +36,27 @@
 </head>
 
 <body>
+	<div class="group">
+		<ui5-link class="samples-big-margin-right" href="https://www.sap.com" target="_blank">Standard Link</ui5-link>
+		<ui5-link class="samples-big-margin-right" href="https://www.sap.com" target="_blank" design="Subtle">Subtle link</ui5-link>
+		<ui5-link class="samples-big-margin-right" href="https://www.sap.com" target="_blank" disabled>Disabled</ui5-link>
+		<ui5-link class="samples-big-margin-right" href="https://www.sap.com" target="_blank" design="Emphasized">Emphasized</ui5-link>
+	</div>
+
 	<section class="group">
-		<h2>link</h2>
-		<ui5-link href="#" id="link">link</ui5-link><span>native span</span>
+		<h2>cross-origin</h2>
+		<ui5-link href="https://www.google.com" target="_blank" id="link">link</ui5-link><span>native span</span>
+	</section>
+
+	<section class="group">
+		<h2>prevent-default</h2>
+		<ui5-link href="https://www.google.com" target="_blank" id="link-click-prevent-default">link click default prevented</ui5-link><span>native span</span>
+		<ui5-link href="https://www.google.com" target="_blank" id="link-press-prevent-default">link press default prevented</ui5-link><span>native span</span>
 	</section>
 
 	<section class="group">
 		<h2>Disabled link</h2>
-		<ui5-link id="disabled-link" disabled>Disabled link</ui5-link>
+		<ui5-link href="/a.html" id="disabled-link" disabled>Disabled link</ui5-link>
 	</section>
 
 	<section class="group">
@@ -51,25 +66,41 @@
 	</section>
 
 	<section class="group">
-		<h2>Link types</h2>
-		<ui5-link type="Default">Eu enim consectetur do amet elit.</ui5-link><br>
-		<ui5-link type="Subtle">Eu enim consectetur do amet elit.</ui5-link><br>
-		<ui5-link type="Emphasized">Eu enim consectetur do amet elit.</ui5-link>
+		<h2>Link designs</h2>
+		<ui5-link design="Default">Eu enim consectetur do amet elit.</ui5-link><br>
+		<ui5-link design="Subtle">Eu enim consectetur do amet elit.</ui5-link><br>
+		<ui5-link design="Emphasized">Eu enim consectetur do amet elit.</ui5-link>
 	</section>
 
 	<section class="group">
 		<ui5-input id="helper-input" value="0"></ui5-input>
+		<ui5-input id="helper-input-click" value="0"></ui5-input>
 	</section>
 
 	<script>
 		var disLink = document.querySelector("#disabled-link");
 		var link = document.querySelector("#link");
+		var linkClickPreventDefault = document.querySelector("#link-click-prevent-default");
+		var linkPressPreventDefault = document.querySelector("#link-press-prevent-default");
 		var input = document.querySelector("#helper-input");
+		var inputClick = document.querySelector("#helper-input-click");
 
 		[link, disLink].forEach(function(element) {
-			element.addEventListener("press", function(event) {
+			element.addEventListener("ui5-press", function(event) {
 				input.value = parseInt(input.value) + 1;
 			});
+		});
+		[link, disLink].forEach(function(element) {
+			element.addEventListener("click", function(event) {
+				inputClick.value = parseInt(inputClick.value) + 1;
+			});
+		});
+
+		linkClickPreventDefault.addEventListener("click", function (event) {
+			event.preventDefault();
+		});
+		linkPressPreventDefault.addEventListener("ui5-press", function (event) {
+			event.preventDefault();
 		});
 	</script>
 </body>

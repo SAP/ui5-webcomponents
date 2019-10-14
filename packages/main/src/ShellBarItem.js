@@ -1,9 +1,8 @@
-import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
-import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
-import URI from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/URI";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 
 // Template
-import ShellBarItemRenderer from "./build/compiled/ShellBarItemRenderer.lit";
+import ShellBarItemTemplate from "./generated/templates/ShellBarItemTemplate.lit.js";
 
 /**
  * @public
@@ -13,22 +12,21 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.ShellBarItem.prototype */ {
 		/**
 		 * Defines the item source URI.
-		 * @type {URI}
+		 * @type {string}
 		 * @public
 		 */
 		src: {
-			type: URI,
-			defaultValue: null,
+			type: String,
 		},
 
 		/**
 		 * Defines the item text.
-		 * @type {String}
+		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		text: {
 			type: String,
-			defaultValue: null,
 		},
 
 		_icon: { type: HTMLElement },
@@ -39,9 +37,14 @@ const metadata = {
 		 * Fired, when the item is pressed.
 		 *
 		 * @event
+		 * @param {HTMLElement} targetRef dom ref of the clicked element
 		 * @public
 		 */
-		press: {},
+		itemClick: {
+			detail: {
+				targetRef: { type: HTMLElement },
+			},
+		},
 	},
 };
 
@@ -55,26 +58,24 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.ShellBarItem
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-shellbar-item
  * @public
  */
-class ShellBarItem extends WebComponent {
+class ShellBarItem extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
 
-	static get renderer() {
-		return ShellBarItemRenderer;
+	static get render() {
+		return litRender;
 	}
 
-	static get calculateTemplateContext() {
-		return state => { return { ctr: state }; };
+	static get template() {
+		return ShellBarItemTemplate;
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	ShellBarItem.define();
-});
+ShellBarItem.define();
 
 export default ShellBarItem;

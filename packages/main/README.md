@@ -66,13 +66,13 @@ If your application should run on browsers without native Web Components support
 ### Edge only
 
 ```js
-import "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/browsersupport/Edge";
+import "@ui5/webcomponents-base/dist/browsersupport/Edge";
 ```
 
 ### Edge and IE11
 
 ```js
-import "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/browsersupport/IE11";
+import "@ui5/webcomponents-base/dist/browsersupport/IE11";
 ```
 
 *Note:* Importing the module for IE11 support automatically enables Edge support as well, so there is no need to import them both explicitly.
@@ -80,7 +80,7 @@ import "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/browsersupport/IE1
 Example:
 
 ```js
-import "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/browsersupport/IE11"; // This will enable Edge and IE11 support for all Web Components below
+import "@ui5/webcomponents-base/dist/browsersupport/IE11"; // This will enable Edge and IE11 support for all Web Components below
 import "@ui5/webcomponents/dist/Button"; // loads ui5-button
 import "@ui5/webcomponents/dist/Label"; // loads ui5-label
 ```
@@ -88,10 +88,10 @@ import "@ui5/webcomponents/dist/Label"; // loads ui5-label
 ## Configure
 UI5 Web Components have built-in internalization and globalization support. Language, compact/cozy switch, date/time settings and theme can be changed with parameters.
 
-To provide configuration settings, create a ```script``` tag having ```data-id="sap-ui-config"``` and ```type="application/json"```:
+To provide configuration settings, create a ```script``` tag having ```data-ui5-config``` and ```type="application/json"```:
 
 ```html
-<script data-id="sap-ui-config" type="application/json">
+<script data-ui5-config type="application/json">
 {
   "theme": "sap_belize",
   "language": "EN"
@@ -104,7 +104,7 @@ To provide configuration settings, create a ```script``` tag having ```data-id="
 UI5 Web Components support right-to-left text direction (RTL). To enable RTL globally, provide the option ```rtl: true``` in the configuration ```script``` tag:
 
 ```html
-<script data-id="sap-ui-config" type="application/json">
+<script data-ui5-config type="application/json">
 {
   "language": "EN",
   "rtl": true
@@ -116,7 +116,7 @@ UI5 Web Components support right-to-left text direction (RTL). To enable RTL glo
 UI5 Web Components supports ```Compact``` and ```Cozy``` mode. It is set to ```Cozy``` by default. To enable ```Compact``` globally, provide the option ```compactSize: true``` in the configuration ```script``` tag:
 
 ```html
-<script data-id="sap-ui-config" type="application/json">
+<script data-ui5-config type="application/json">
 {
   "compactSize": true
 }
@@ -127,7 +127,7 @@ UI5 Web Components supports ```Compact``` and ```Cozy``` mode. It is set to ```C
 UI5 Web Components support different calendar types (Gregorian, Islamic, Japanese, Buddhist and Persian). To change them, provide the option ```calendarType: "Islamic"``` in the configuration ```script``` tag:
 
 ```html
-<script data-id="sap-ui-config" type="application/json">
+<script data-ui5-config type="application/json">
 {
   "calendarType": "Islamic"
 }

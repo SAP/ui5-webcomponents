@@ -1,51 +1,48 @@
-import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
-import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
-import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
-import TableCellRenderer from "./build/compiled/TableCellRenderer.lit";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import TableCellTemplate from "./generated/templates/TableCellTemplate.lit.js";
 
 // Styles
-import belize from "./themes/sap_belize/TableCell.less";
-import belizeHcb from "./themes/sap_belize_hcb/TableCell.less";
-import fiori3 from "./themes/sap_fiori_3/TableCell.less";
-
-ShadowDOM.registerStyle("sap_belize", "TableCell.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "TableCell.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "TableCell.css", fiori3);
+import styles from "./generated/themes/TableCell.css.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-table-cell",
-	styleUrl: [
-		"TableCell.css",
-	],
 	slots: /** @lends sap.ui.webcomponents.main.TableCell.prototype */ {
 		/**
 		 * Specifies the content of the <code>ui5-table-cell</code>.
 		 *
-		 * @type {HTMLElement[]}
+		 * @type {Node[]}
 		 * @slot
 		 * @public
 		 */
-		content: {
-			type: HTMLElement,
-			multiple: true,
+		"default": {
+			type: Node,
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.TableCell.prototype */ {
 
-		_firstInRow: {
+		/**
+		 * @protected
+		 */
+		firstInRow: {
 			type: Boolean,
-			defaultValue: false,
 		},
-		_lastInRow: {
+
+		/**
+		 * @protected
+		 */
+		lastInRow: {
 			type: Boolean,
-			defaultValue: false,
 		},
-		_hasBorder: {
+
+		/**
+		 * @protected
+		 */
+		popined: {
 			type: Boolean,
-			defaultValue: false,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.TableCell.prototype */ {
@@ -62,42 +59,28 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.TableCell
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-table-cell
  * @public
  */
-class TableCell extends WebComponent {
+class TableCell extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
 
-	static get renderer() {
-		return TableCellRenderer;
+	static get styles() {
+		return styles;
 	}
 
-	static calculateTemplateContext(state) {
-		const context = {
-			ctr: state,
-			classes: {
-				main: {
-					sapWCTableCell: true,
-					sapWCTableCellFirst: state._firstInRow,
-					sapWCTableCellLast: state._lastInRow,
-					sapWCTableCellWithBorder: state._hasBorder,
-				},
-			},
-			styles: {
-				main: {
-				},
-			},
-		};
+	static get render() {
+		return litRender;
+	}
 
-		return context;
+	static get template() {
+		return TableCellTemplate;
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	TableCell.define();
-});
+TableCell.define();
 
 export default TableCell;

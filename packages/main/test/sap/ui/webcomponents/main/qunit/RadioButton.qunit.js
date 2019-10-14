@@ -7,7 +7,7 @@ TestHelper.ready(function () {
 	QUnit.module("Rendering", function (hooks) {
 		hooks.before(function () {
 			this.getRadioButtonRoot = function () {
-				return this.radiobutton.shadowRoot.querySelector(".sapMRb");
+				return this.radiobutton.shadowRoot.querySelector(".ui5-radio-root");
 			};
 		});
 		hooks.beforeEach(function () {
@@ -29,34 +29,13 @@ TestHelper.ready(function () {
 			assert.ok(radiobutton, "root element is in the DOM");
 		});
 
-		QUnit.test("The 'disabled' is not set by default", function (assert) {
-			var expectedClass = "sapMRbDis",
-				radiobutton = this.getRadioButtonRoot();
-
-			assert.notOk(radiobutton.classList.contains(expectedClass), "root element does not have ." + expectedClass);
-		});
-
-		QUnit.test("The 'read-only' is not set by default", function (assert) {
-			var expectedClass = "sapMRbRo",
-				radiobutton = this.getRadioButtonRoot();
-
-			assert.notOk(radiobutton.classList.contains(expectedClass), "root element does not have ." + expectedClass);
-		});
-
-		QUnit.test("The 'selected' is not set by default", function (assert) {
-			var expectedClass = "sapMRbSel",
-				radiobutton = this.getRadioButtonRoot();
-
-			assert.notOk(radiobutton.classList.contains(expectedClass), "root element does not have ." + expectedClass);
-		});
-
 		QUnit.test("The 'text' is empty by default", function (assert) {
 			var radiobutton = this.getRadioButtonRoot();
 
 			assert.notOk(radiobutton.querySelector("ui5-label"), "the default text is empty and ui5-label is not rendered.");
 		});
 
-		QUnit.test("The 'group' is not set by default", function (assert) {
+		QUnit.test("The 'name' is not set by default", function (assert) {
 			var radiobutton = this.getRadioButtonRoot();
 
 			assert.notOk(radiobutton.querySelector("input").getAttribute("name"), "there is no name attribute");
@@ -66,7 +45,7 @@ TestHelper.ready(function () {
 	QUnit.module("API", function (hooks) {
 		hooks.before(function () {
 			this.getRadioButtonRoot = function () {
-				return this.radiobutton.shadowRoot.querySelector(".sapMRb");
+				return this.radiobutton.shadowRoot.querySelector(".ui5-radio-root");
 			};
 		});
 		hooks.beforeEach(function () {
@@ -80,51 +59,6 @@ TestHelper.ready(function () {
 		hooks.afterEach(function () {
 			fixture.innerHTML = "";
 			this.radiobutton = null;
-		});
-
-		QUnit.test("changing the 'disabled' is reflected in the DOM", function (assert) {
-			assert.expect(1);
-
-			var done = assert.async(),
-				expectedClass = "sapMRbDis",
-				radiobutton = this.getRadioButtonRoot();
-
-			this.radiobutton.setAttribute("disabled", "");
-
-			RenderScheduler.whenFinished().then(function () {
-				assert.ok(radiobutton.classList.contains(expectedClass), "root element has ." + expectedClass);
-				done();
-			});
-		});
-
-		QUnit.test("changing the 'read-only' is reflected in the DOM", function (assert) {
-			assert.expect(1);
-
-			var done = assert.async(),
-				expectedClass = "sapMRbRo",
-				radiobutton = this.getRadioButtonRoot();
-
-			this.radiobutton.setAttribute("read-only", "");
-
-			RenderScheduler.whenFinished().then(function () {
-				assert.ok(radiobutton.classList.contains(expectedClass), "root element has ." + expectedClass);
-				done();
-			});
-		});
-
-		QUnit.test("changing the 'selected' is reflected in the DOM", function (assert) {
-			assert.expect(1);
-
-			var done = assert.async(),
-				expectedClass = "sapMRbSel",
-				radiobutton = this.getRadioButtonRoot();
-
-			this.radiobutton.setAttribute("selected", "");
-
-			RenderScheduler.whenFinished().then(function () {
-				assert.ok(radiobutton.classList.contains(expectedClass), "root element has ." + expectedClass);
-				done();
-			});
 		});
 
 		QUnit.test("changing the 'text' is reflected in the DOM", function (assert) {
@@ -142,42 +76,27 @@ TestHelper.ready(function () {
 			});
 		});
 
-		QUnit.test("changing the 'value-state' is reflected in the DOM", function (assert) {
+		QUnit.test("changing the 'name' is reflected in the DOM", function (assert) {
 			assert.expect(1);
 
 			var done = assert.async(),
-				expectedClass = "sapMRbErr",
+				expectedName = "test",
 				radiobutton = this.getRadioButtonRoot();
 
-			this.radiobutton.setAttribute("value-state", "Error");
+			this.radiobutton.setAttribute("name", expectedName);
 
 			RenderScheduler.whenFinished().then(function () {
-				assert.ok(radiobutton.classList.contains(expectedClass), "root element has ." + expectedClass);
-				done();
-			});
-		});
-
-		QUnit.test("changing the 'group' is reflected in the DOM", function (assert) {
-			assert.expect(1);
-
-			var done = assert.async(),
-				expectedGroup = "test",
-				radiobutton = this.getRadioButtonRoot();
-
-			this.radiobutton.setAttribute("group", expectedGroup);
-
-			RenderScheduler.whenFinished().then(function () {
-				assert.equal(radiobutton.querySelector("input").getAttribute("name"), expectedGroup,  "the name is set to " + expectedGroup);
+				assert.equal(radiobutton.querySelector("input").getAttribute("name"), expectedName,  "the name is set to " + expectedName);
 				done();
 			});
 		});
 	});
 
-	QUnit.module("Group", function (hooks) {
+	QUnit.module("Name", function (hooks) {
 		hooks.beforeEach(function () {
-			var html = '<ui5-radiobutton id="myRb11" group="a" text="first" selected></ui5-radiobutton>'
-			+ '<ui5-radiobutton id="myRb12" group="a" text="second"></ui5-radiobutton>'
-			+ '<ui5-radiobutton id="myRb13" group="a" text="third"></ui5-radiobutton>';
+			var html = '<ui5-radiobutton id="myRb11" name="a" text="first" selected></ui5-radiobutton>'
+			+ '<ui5-radiobutton id="myRb12" name="a" text="second"></ui5-radiobutton>'
+			+ '<ui5-radiobutton id="myRb13" name="a" text="third"></ui5-radiobutton>';
 
 			fixture.innerHTML = html;
 

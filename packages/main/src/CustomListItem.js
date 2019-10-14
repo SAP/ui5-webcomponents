@@ -1,39 +1,25 @@
-import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
-import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
-import ListItem from "./ListItem";
-import CustomListItemTemplateContext from "./CustomListItemTemplateContext";
-import CustomListItemRenderer from "./build/compiled/CustomListItemRenderer.lit";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import ListItem from "./ListItem.js";
+import CustomListItemTemplate from "./generated/templates/CustomListItemTemplate.lit.js";
 
-import belize from "./themes/sap_belize/CustomListItem.less";
-import belizeHcb from "./themes/sap_belize_hcb/CustomListItem.less";
-import fiori3 from "./themes/sap_fiori_3/CustomListItem.less";
-
-ShadowDOM.registerStyle("sap_belize", "CustomListItem.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "CustomListItem.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "CustomListItem.css", fiori3);
+// Styles
+import columnListItemCss from "./generated/themes/CustomListItem.css.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-li-custom",
-	styleUrl: [
-		"ListItemBase.css",
-		"ListItem.css",
-		"CustomListItem.css",
-	],
-	defaultSlot: "content",
 	slots: /** @lends sap.ui.webcomponents.main.CustomListItem.prototype */ {
 
 		/**
 		 * Defines the content of the <code>ui5-li-custom</code>.
-		 * @type {HTMLElement[]}
+		 * @type {Node[]}
 		 * @slot
 		 * @public
 		 */
-		content: {
-			type: HTMLElement,
-			multiple: true,
+		"default": {
+			type: Node,
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.CustomListItem.prototype */ {
@@ -60,17 +46,25 @@ class CustomListItem extends ListItem {
 		return metadata;
 	}
 
-	static get renderer() {
-		return CustomListItemRenderer;
+	static get render() {
+		return litRender;
 	}
 
-	static get calculateTemplateContext() {
-		return CustomListItemTemplateContext.calculate;
+	static get template() {
+		return CustomListItemTemplate;
+	}
+
+	static get styles() {
+		return [ListItem.styles, columnListItemCss];
+	}
+
+	get classes() {
+		const result = super.classes;
+		result.main["ui5-custom-li-root"] = true;
+		return result;
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	CustomListItem.define();
-});
+CustomListItem.define();
 
 export default CustomListItem;

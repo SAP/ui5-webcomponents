@@ -1,18 +1,12 @@
-import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
-import TabSeparatorTemplateContext from "./TabSeparatorTemplateContext";
-import TabBase from "./TabBase";
-import TabSeparatorRenderer from "./build/compiled/TabSeparatorRenderer.lit";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import TabSeparatorTemplate from "./generated/templates/TabSeparatorTemplate.lit.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-tab-separator",
-	styleUrl: [],
-	properties: /** @lends sap.ui.webcomponents.main.TabSeparator.prototype */{
-	},
-	events: /** @lends sap.ui.webcomponents.main.TabSeparator.prototype */{
-	},
 };
 
 /**
@@ -26,22 +20,24 @@ const metadata = {
  * @tagname ui5-tab-separator
  * @public
  */
-class TabSeparator extends TabBase {
+class TabSeparator extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
 
-	static get renderer() {
-		return TabSeparatorRenderer;
+	static get render() {
+		return litRender;
 	}
 
-	static get calculateTemplateContext() {
-		return TabSeparatorTemplateContext.calculate;
+	static get template() {
+		return TabSeparatorTemplate;
+	}
+
+	get isSeparator() {
+		return true;
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	TabSeparator.define();
-});
+TabSeparator.define();
 
 export default TabSeparator;

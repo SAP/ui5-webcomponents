@@ -1,34 +1,24 @@
-import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
-import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
-import { getIconURI } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/IconPool";
-import slideDown from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/animations/slideDown";
-import slideUp from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/animations/slideUp";
-import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/events/PseudoEvents";
-import PanelTemplateContext from "./PanelTemplateContext";
-import BackgroundDesign from "./types/BackgroundDesign";
-import PanelAccessibleRole from "./types/PanelAccessibleRole";
-import PanelRenderer from "./build/compiled/PanelRenderer.lit";
-import { fetchResourceBundle, getResourceBundle } from "./ResourceBundleProvider";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import slideDown from "@ui5/webcomponents-base/dist/animations/slideDown.js";
+import slideUp from "@ui5/webcomponents-base/dist/animations/slideUp.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import Button from "./Button.js";
+import "./icons/navigation-right-arrow.js";
+import PanelAccessibleRole from "./types/PanelAccessibleRole.js";
+import PanelTemplate from "./generated/templates/PanelTemplate.lit.js";
+
+import { PANEL_ICON } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
-import belize from "./themes/sap_belize/Panel.less";
-import belizeHcb from "./themes/sap_belize_hcb/Panel.less";
-import fiori3 from "./themes/sap_fiori_3/Panel.less";
-
-ShadowDOM.registerStyle("sap_belize", "Panel.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "Panel.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "Panel.css", fiori3);
+import panelCss from "./generated/themes/Panel.css.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-panel",
-	styleUrl: [
-		"Panel.css",
-	],
-	defaultSlot: "content",
 	slots: /** @lends sap.ui.webcomponents.main.Panel.prototype */ {
 
 		/**
@@ -36,7 +26,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> When a header is provided, the <code>headerText</code> property is ignored.
 		 *
-		 * @type {HTMLElement}
+		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
 		 */
@@ -48,13 +38,12 @@ const metadata = {
 		 * Determines the content of the <code>ui5-panel</code>.
 		 * The content is visible only when the <code>ui5-panel</code> is expanded.
 		 *
-		 * @type {HTMLElement[]}
+		 * @type {Node[]}
 		 * @slot
 		 * @public
 		 */
-		content: {
-			type: HTMLElement,
-			multiple: true,
+		"default": {
+			type: Node,
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.Panel.prototype */ {
@@ -66,11 +55,11 @@ const metadata = {
 		 * <b>Note:</b> This property is overridden by the <code>header</code> slot.
 		 *
 		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		headerText: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
@@ -78,6 +67,7 @@ const metadata = {
 		 * expandable/collapsible by user interaction.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		fixed: {
@@ -88,22 +78,11 @@ const metadata = {
 		 * Indicates whether the <code>ui5-panel</code> is collapsed and only the header is displayed.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		collapsed: {
 			type: Boolean,
-		},
-
-		/**
-		 * Determines the background color of the <code>ui5-panel</code>.
-		 * Available options are <code>Solid</code> and <code>Transparent</code>.
-		 *
-		 * @type {BackgroundDesign}
-		 * @public
-		 */
-		backgroundDesign: {
-			type: BackgroundDesign,
-			defaultValue: BackgroundDesign.Solid,
 		},
 
 		/**
@@ -119,17 +98,23 @@ const metadata = {
 			defaultValue: PanelAccessibleRole.Form,
 		},
 
-		_icon: {
-			type: Object,
+		/**
+		 * @private
+		 */
+		_hasHeader: {
+			type: Boolean,
 		},
+
 		_header: {
 			type: Object,
 		},
 		_contentExpanded: {
 			type: Boolean,
+			noAttribute: true,
 		},
 		_animationRunning: {
 			type: Boolean,
+			noAttribute: true,
 		},
 	},
 	events: {
@@ -191,38 +176,32 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Panel
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-panel
  * @public
  */
-class Panel extends WebComponent {
+class Panel extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
 
-	static get renderer() {
-		return PanelRenderer;
+	static get render() {
+		return litRender;
 	}
 
-	static get calculateTemplateContext() {
-		return PanelTemplateContext.calculate;
+	static get template() {
+		return PanelTemplate;
+	}
+
+	static get styles() {
+		return panelCss;
 	}
 
 	constructor() {
 		super();
 
-		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
-
 		this._header = {};
-
-		this._icon = {};
-		this._icon.id = `${this.id}-CollapsedImg`;
-		this._icon.src = getIconURI("navigation-right-arrow");
-		this._icon.title = this.resourceBundle.getText("PANEL_ICON");
-		this._icon.functional = true;
-
-		this._toggle = event => { event.preventDefault(); this._toggleOpen(); };
-		this._noOp = () => {};
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
@@ -231,27 +210,52 @@ class Panel extends WebComponent {
 			this._contentExpanded = !this.collapsed;
 		}
 
-		const toggleWithInternalHeader = !this.header;
-		this._header.press = toggleWithInternalHeader ? this._toggle : this._noOp;
-		this._icon.press = !toggleWithInternalHeader ? this._toggle : this._noOp;
+		this._hasHeader = !!this.header.length;
 	}
 
-	onkeydown(event) {
-		const headerUsed = this._headerOnTarget(event.ui5target);
+	shouldToggle(node) {
+		const customContent = this.header.length;
+		if (customContent) {
+			return node.classList.contains("ui5-panel-header-button");
+		}
+		return true;
+	}
 
-		if (isEnter(event) && headerUsed) {
+	_headerClick(event) {
+		if (!this.shouldToggle(event.target)) {
+			return;
+		}
+
+		this._toggleOpen();
+	}
+
+	_toggleButtonClick(event) {
+		if (event.x === 0 && event.y === 0) {
+			event.stopImmediatePropagation();
+		}
+	}
+
+	_headerKeyDown(event) {
+		if (!this.shouldToggle(event.target)) {
+			return;
+		}
+
+
+		if (isEnter(event)) {
 			this._toggleOpen();
 		}
 
-		if (isSpace(event) && headerUsed) {
+		if (isSpace(event)) {
 			event.preventDefault();
 		}
 	}
 
-	onkeyup(event) {
-		const headerUsed = this._headerOnTarget(event.ui5target);
+	_headerKeyUp(event) {
+		if (!this.shouldToggle(event.target)) {
+			return;
+		}
 
-		if (isSpace(event) && headerUsed) {
+		if (isSpace(event)) {
 			this._toggleOpen();
 		}
 	}
@@ -264,7 +268,7 @@ class Panel extends WebComponent {
 		this.collapsed = !this.collapsed;
 		this._animationRunning = true;
 
-		const elements = this.getDomRef().querySelectorAll(".sapMPanelExpandablePart");
+		const elements = this.getDomRef().querySelectorAll(".ui5-panel-content");
 		const animations = [];
 
 		[].forEach.call(elements, oElement => {
@@ -290,15 +294,52 @@ class Panel extends WebComponent {
 		return target.classList.contains("sapMPanelWrappingDiv");
 	}
 
+	get toggleButtonTitle() {
+		return this.i18nBundle.getText(PANEL_ICON);
+	}
+
+	get expanded() {
+		return !this.collapsed;
+	}
+
+	get ariaLabelledBy() {
+		return this.header.length ? "" : `${this._id}-header`;
+	}
+
+	get accRole() {
+		return this.accessibleRole.toLowerCase();
+	}
+
+	get headerTabIndex() {
+		return (this.header.length || this.fixed) ? "-1" : "0";
+	}
+
+	get nonFocusableButton() {
+		return !this.header.length;
+	}
+
+	get shouldRenderH1() {
+		return !this.header.length && (this.headerText || !this.fixed);
+	}
+
+	get styles() {
+		return {
+			content: {
+				display: this._contentExpanded ? "block" : "none",
+			},
+		};
+	}
+
 	static async define(...params) {
-		await fetchResourceBundle("@ui5/webcomponents");
+		await Promise.all([
+			fetchI18nBundle("@ui5/webcomponents"),
+			Button.define(),
+		]);
 
 		super.define(...params);
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	Panel.define();
-});
+Panel.define();
 
 export default Panel;

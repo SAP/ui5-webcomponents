@@ -13,6 +13,9 @@ Steps to reproduce the behavior:
 2. ...
 3. ...
 
+**Isolated example**
+Please provide an isolated example if possibile, by forking [CodeSandbox](https://codesandbox.io/s/71r1x5o51q?fontsize=14&module=%2Findex.html)
+
 **Expected behavior**
 A clear and concise description of what you expected to happen.
 

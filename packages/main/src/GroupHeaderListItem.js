@@ -1,30 +1,32 @@
-import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
-import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
-import ListItemBase from "./ListItemBase";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import ListItemBase from "./ListItemBase.js";
+
 // Template
-import GroupHeaderListItemRenderer from "./build/compiled/GroupHeaderListItemRenderer.lit";
-import GroupHeaderListItemTemplateContext from "./GroupHeaderListItemTemplateContext";
+import GroupHeaderListItemTemplate from "./generated/templates/GroupHeaderListItemTemplate.lit.js";
 
 // Styles
-import belize from "./themes/sap_belize/GroupHeaderListItem.less";
-import belizeHcb from "./themes/sap_belize_hcb/GroupHeaderListItem.less";
-import fiori3 from "./themes/sap_fiori_3/GroupHeaderListItem.less";
-
-ShadowDOM.registerStyle("sap_belize", "GroupHeaderListItem.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "GroupHeaderListItem.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "GroupHeaderListItem.css", fiori3);
+import groupheaderListItemCss from "./generated/themes/GroupHeaderListItem.css.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-li-groupheader",
-	styleUrl: [
-		"ListItemBase.css",
-		"GroupHeaderListItem.css",
-	],
-	usesNodeText: true,
 	properties: /** @lends  sap.ui.webcomponents.main.GroupHeaderListItem.prototype */ {
+	},
+	slots: /** @lends sap.ui.webcomponents.main.GroupHeaderListItem.prototype */ {
+		/**
+		 * Defines the text of the <code>ui5-li-groupheader</code>.
+		 * <br>
+		 * <b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+		 *
+		 * @type {Node[]}
+		 * @slot
+		 * @public
+		 */
+		"default": {
+			type: Node,
+		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.GroupHeaderListItem.prototype */ {
 	},
@@ -39,25 +41,26 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.GroupHeaderListItem
  * @extends ListItemBase
  * @tagname ui5-li-groupheader
- * @usestextcontent
  * @public
  */
 class GroupHeaderListItem extends ListItemBase {
-	static get renderer() {
-		return GroupHeaderListItemRenderer;
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return GroupHeaderListItemTemplate;
 	}
 
 	static get metadata() {
 		return metadata;
 	}
 
-	static get calculateTemplateContext() {
-		return GroupHeaderListItemTemplateContext.calculate;
+	static get styles() {
+		return [ListItemBase.styles, groupheaderListItemCss];
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	GroupHeaderListItem.define();
-});
+GroupHeaderListItem.define();
 
 export default GroupHeaderListItem;

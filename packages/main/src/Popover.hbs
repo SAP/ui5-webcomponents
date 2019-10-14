@@ -1,41 +1,27 @@
-<span {{> controlData}} class="{{classes.frame}}">
-	<span id="{{ctr._id}}-firstfe" tabindex="0" @focusin={{focusHelper.forwardToLast}}></span>	
-	<div style="{{styles.main}}" role="dialog" aria-labelledby="{{headerId}}" tabindex="-1" class="{{classes.main}}">
-			{{> header}}
-			<div id="{{ctr._id}}-content" role="application" style="{{styles.content}}" class="sapMPopupContent">
-				<div class="sapMPopupScroll">
-					{{#each ctr.content}}
-						<slot name="{{this._slot}}"></slot>
-					{{/each}}
-				</div>
-			</div>
-			{{> footer}}
-			<span id="{{ctr._id}}-arrow" style="{{styles.arrow}}" class="{{classes.arrow}}"></span>
+<div class="ui5-popover-root" role="dialog" aria-modal="true" aria-labelledby="ui5-popover-header">
+
+	<span class="ui5-popover-arr" style="{{styles.arrow}}"></span>
+
+	{{#if header.length }}
+		<div class="ui5-popover-header-root"  id="ui5-popover-header" role="toolbar">
+			<slot name="header"></slot>
 		</div>
-	<span id="{{ctr._id}}-lastfe" tabindex="0" @focusin={{focusHelper.forwardToFirst}}></span>
-	<div tabindex="0" id="{{ctr._id}}-blocklayer" style="{{styles.blockLayer}}" class="{{classes.blockLayer}}"></div>
-</span>
-
-{{#*inline "header"}}
-	{{#unless ctr.hideHeader}}
-		<header>
-			{{#if ctr.header}}
-				<div role="toolbar" class="sapMPopupHeader">
-					<slot name="{{ctr.header._slot}}"></slot>
-				</div>
-			{{else}}
-				<h2 role="toolbar" class="sapMPopupHeader sapMPopupHeaderText">{{ctr.headerText}}</h2>
-			{{/if}}
-		</header>
-	{{/unless}}
-{{/inline}}
-
-{{#*inline "footer"}}
-	{{#if ctr.footer}}
-		<footer>
-			<div class="sapMPopupFooter">
-				<slot name="{{ctr.footer._slot}}"></slot>
-			</div>
-		</footer>
+	{{else}}
+		<h2 class="ui5-popup-header-text" id="ui5-popover-header">{{headerText}}</h2>
 	{{/if}}
-{{/inline}}
+
+	<span class="first-fe" tabindex="0" @focusin={{forwardToLast}}></span>	
+
+	<div class="ui5-popover-content">
+		<slot></slot>
+	</div>
+
+	<span class="last-fe" tabindex="0" @focusin={{forwardToFirst}}></span>
+
+	{{#if footer.length }}
+		<div class="ui5-popover-footer-root" role="toolbar">
+			<slot name="footer"></slot>
+		</div>
+	{{/if}}
+
+</div>

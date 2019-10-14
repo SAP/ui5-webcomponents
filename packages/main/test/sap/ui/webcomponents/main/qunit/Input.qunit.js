@@ -7,11 +7,11 @@ TestHelper.ready(function() {
 	QUnit.module("Rendering", function (hooks) {
 		hooks.before(function() {
 			this.getInputRoot = function() {
-				return this.input.shadowRoot.querySelector(".sapWCInputBase");
+				return this.input.shadowRoot.querySelector(".ui5-input-root");
 			};
 
 			this.getInputInner = function() {
-				return this.input.shadowRoot.querySelector(".sapWCInputBaseInner");
+				return this.input.shadowRoot.querySelector(".ui5-input-inner");
 			};
 		});
 		hooks.beforeEach(function () {
@@ -32,29 +32,6 @@ TestHelper.ready(function() {
 
 			assert.ok(inputRoot, "root element is in the DOM");
 		});
-
-		QUnit.test("Default settings", function (assert) {
-			assert.expect(9);
-
-			var inputRoot = this.getInputRoot(),
-				inputInner = this.getInputInner(),
-				existingClasses = ["sapWCInputBase", "sapWCInputBaseWidthPadding", "sapWCInput"],
-				nonExistingClasses = ["sapWCInputBaseDisabled", "sapWCInputBaseReadonly", "sapWCInputFocused", "sapWCFocus"];
-
-			// assert
-			existingClasses.forEach(function(className) {
-				assert.ok(inputRoot.classList.contains(className), "root element contains " + className);
-			});
-
-			// assert
-			nonExistingClasses.forEach(function(className) {
-				assert.notOk(inputRoot.classList.contains(className), "root element does not contain " + className);
-			});
-
-			// assert
-			assert.ok(inputInner.classList.contains("sapWCInputBaseInner"), "input element contains sapWCInputBaseInner");
-			assert.equal(inputInner.getAttribute("type"), "text", "input has type 'text'");
-		});
 	});
 
 	QUnit.module("API", function (hooks) {
@@ -64,11 +41,11 @@ TestHelper.ready(function() {
 			};
 
 			this.getInputRoot = function() {
-				return this.input.shadowRoot.querySelector(".sapWCInputBase");
+				return this.input.shadowRoot.querySelector(".ui5-input-root");
 			};
 
 			this.getInputInner = function() {
-				return this.input.shadowRoot.querySelector(".sapWCInputBaseInner");
+				return this.input.shadowRoot.querySelector(".ui5-input-inner");
 			};
 		});
 
@@ -83,41 +60,6 @@ TestHelper.ready(function() {
 		hooks.afterEach(function () {
 			fixture.innerHTML = "";
 			this.input = null;
-		});
-
-		QUnit.test("set boolean props", function (assert) {
-			assert.expect(4);
-
-			var done = assert.async(),
-				input = this.getInput(),
-				inputRoot = this.getInputRoot(),
-				inputInner = this.getInputInner(),
-				expectedClassеs = ["sapWCInputBaseDisabled", "sapWCInputBaseReadonly"],
-				props = [ 'disabled', 'readonly'];
-
-			// act
-			props.forEach(function(prop) {
-				input[prop] = true;
-			});
-
-			RenderScheduler.whenFinished().then(function () {
-				expectedClassеs.forEach(function(className) {
-					// assert
-					assert.ok(inputRoot.classList.contains(className), "root element contains " + className);
-				});
-
-				assert.ok(inputInner.hasAttribute("disabled"), "input has 'disabled' attr set");
-
-				// act (2)
-				input.disabled = false;
-
-				RenderScheduler.whenFinished().then(function () {
-					// assert
-					assert.ok(inputInner.hasAttribute("readonly"), "input has 'readonly' attr set");
-
-					done();
-				});
-			});
 		});
 
 		QUnit.test("set string props", function(assert) {
@@ -187,7 +129,7 @@ TestHelper.ready(function() {
 		});
 		hooks.beforeEach(function () {
 			var html = '<ui5-input id="myInput">'
-				+ '<ui5-icon id="icon" data-ui5-slot="icon" src="sap-icon://message-success"></ui5-icon>'
+				+ '<ui5-icon id="icon" slot="icon" src="sap-icon://message-success"></ui5-icon>'
 				+ '</ui5-input>';
 
 			fixture.innerHTML = html;
@@ -249,11 +191,11 @@ TestHelper.ready(function() {
 			};
 
 			this.getInputRoot = function() {
-				return this.input.shadowRoot.querySelector(".sapWCInputBase");
+				return this.input.shadowRoot.querySelector(".ui5-input-root");
 			};
 
 			this.getInputInner = function() {
-				return this.input.shadowRoot.querySelector(".sapWCInputBaseInner");
+				return this.input.shadowRoot.querySelector(".ui5-input-inner");
 			};
 		});
 

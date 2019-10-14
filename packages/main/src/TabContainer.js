@@ -1,90 +1,57 @@
-import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
-import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
-import ScrollEnablement from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/delegate/ScrollEnablement";
-import ItemNavigation from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/delegate/ItemNavigation";
-import ResizeHandler from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/delegate/ResizeHandler";
-import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/events/PseudoEvents";
-import TabContainerTemplateContext from "./TabContainerTemplateContext";
-import TabBase from "./TabBase";
-import Tab from "./Tab";
-import TabSeparator from "./TabSeparator";
-import Popover from "./Popover";
-import List from "./List";
-import CustomListItem from "./CustomListItem";
-import Icon from "./Icon";
-import Button from "./Button";
-
-import TabDesignMode from "./types/TabDesignMode";
-import IconColor from "./types/IconColor";
-import BackgroundDesign from "./types/BackgroundDesign";
-import TabContainerHeaderMode from "./types/TabContainerHeaderMode";
-import ListItemType from "./types/ListItemType";
-import TabContainerRenderer from "./build/compiled/TabContainerRenderer.lit";
-
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
+import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { TABCONTAINER_PREVIOUS_ICON_ACC_NAME, TABCONTAINER_NEXT_ICON_ACC_NAME, TABCONTAINER_OVERFLOW_MENU_TITLE } from "./generated/i18n/i18n-defaults.js";
+import TabContainerTemplate from "./generated/templates/TabContainerTemplate.lit.js";
+import Button from "./Button.js";
+import CustomListItem from "./CustomListItem.js";
+import Icon from "./Icon.js";
+import "./icons/slim-arrow-down.js";
+import "./icons/slim-arrow-left.js";
+import "./icons/slim-arrow-right.js";
+import List from "./List.js";
+import Popover from "./Popover.js";
+import SemanticColor from "./types/SemanticColor.js";
 
 // Styles
-import belize from "./themes/sap_belize/TabContainer.less";
-import belizeHcb from "./themes/sap_belize_hcb/TabContainer.less";
-import fiori3 from "./themes/sap_fiori_3/TabContainer.less";
+import tabContainerCss from "./generated/themes/TabContainer.css.js";
 
-ShadowDOM.registerStyle("sap_belize", "TabContainer.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "TabContainer.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "TabContainer.css", fiori3);
 
-const _convertSingleClass = (oClass, customStyleClasses) => {
-	// Push all custom classes first, if any
-	if (Array.isArray(customStyleClasses)) {
-		customStyleClasses.forEach(sClassName => {
-			oClass[sClassName] = true;
-		});
-	}
-
-	return Object.keys(oClass).filter(className => oClass[className]).join(" ");
-};
+const SCROLL_STEP = 128;
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-tabcontainer",
-	defaultSlot: "items",
 	slots: /** @lends  sap.ui.webcomponents.main.TabContainer.prototype */ {
 		/**
 		 * Defines the tabs.
-		 * <br><b>Note:</b> Only <code>ui5-tab</code> and <code>ui5-tab-separator</code> are allowed.
-		 *
-		 * @type {TabBase[]}
-		 * @public
-		 * @slot
-		 */
-		items: {
-			type: TabBase,
-			multiple: true,
-			listenFor: { exclude: ["content"] },
-		},
-
-		/**
-		 * Defines the default container content.
+		 * <br><b>Note:</b> Use <code>ui5-tab</code> and <code>ui5-tab-separator</code> for the intended design.
 		 *
 		 * @type {HTMLElement[]}
 		 * @public
 		 * @slot
 		 */
-		content: {
+		"default": {
+			propertyName: "items",
 			type: HTMLElement,
-			multiple: true,
+			individualSlots: true,
+			listenFor: { include: ["*"] },
 		},
 	},
-	styleUrl: [
-		"TabContainer.css",
-	],
 	properties: /** @lends  sap.ui.webcomponents.main.TabContainer.prototype */ {
 		/**
 		 * Determines whether the tabs are in a fixed state that is not
 		 * expandable/collapsible by user interaction.
 		 *
 		 * @type {Boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		fixed: {
@@ -95,55 +62,11 @@ const metadata = {
 		 * Determines whether the tab content is collapsed.
 		 *
 		 * @type {Boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		collapsed: {
 			type: Boolean,
-		},
-
-		/**
-		 * Defines the selected tab item by refering its index, following the zero based numbering.
-		 * For example, the first item is under <code>index="0"</code>.
-		 *
-		 * @type {String}
-		 * @public
-		 */
-		selectedIndex: {
-			type: String,
-			defaultValue: null,
-		},
-
-		/**
-		 * Specifies the background color of the IconTabBar.
-		 * <br><br>
-		 * Depending on the theme, you can change the state of
-		 * the background color to <code>Solid</code> (default), <code>Translucent</code>, or <code>Transparent</code>.
-		 *
-		 * @type {BackgroundDesign}
-		 * @public
-		 * @defaultvalue BackgroundDesign.Solid
-		 */
-		backgroundDesign: {
-			type: BackgroundDesign,
-			defaultValue: BackgroundDesign.Solid,
-		},
-
-		/**
-		 * Specifies the header mode. Available options are: <code>Standard</code> and <code>Inline</code>.
-		 * <br><br>
-		 * In <code>Standard</code> mode the <code>count</code> and the <code>text</code>
-		 * are displayed in two separate lines.
-		 * In <code>Inline</code> mode the <code>count</code> and the <code>text</code>
-		 * are displayed in single line.
-		 * <br><br>
-		 * <b>Note:</b> The <code>Inline</code> mode works only when no icons are set.
-		 *
-		 * @type {TabContainerHeaderMode}
-		 * @public
-		 */
-		headerMode: {
-			type: TabContainerHeaderMode,
-			defaultValue: TabContainerHeaderMode.Standard,
 		},
 
 		/**
@@ -153,56 +76,31 @@ const metadata = {
 		 * so that it's easier for the user to select a specific tab filter.
 		 *
 		 * @type {Boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		showOverflow: {
 			type: Boolean,
-		 },
-
-		/**
-		 * Specifies the background color of the header.
-		 * <br><br>
-		 * Depending on the theme, you can change the state of
-		 * the background color to <code>Solid</code> (default), <code>Translucent</code>, or <code>Transparent</code>.
-		 *
-		 * @type {BackgroundDesign}
-		 * @public
-		 */
-		headerBackgroundDesign: {
-			type: BackgroundDesign,
-			defaultValue: BackgroundDesign.Solid,
-		},
-
-		_selectedContent: {
-			type: HTMLElement,
-			multiple: true,
-			association: true,
 		},
 
 		_selectedTab: {
-			type: Tab,
-			association: true,
+			type: Object,
 		},
 
-		_scrollable: { type: Boolean },
-		_scrollForward: { type: Boolean },
-		_scrollBack: { type: Boolean },
+		_scrollable: {
+			type: Boolean,
+			noAttribute: true,
+		},
 
-		_isNoIcon: { type: Boolean },
-		_isNoText: { type: Boolean },
-		_isNoIconAndCount: { type: Boolean },
+		_scrollableBack: {
+			type: Boolean,
+			noAttribute: true,
+		},
 
-		_isInline: { type: Boolean },
-
-		_leftArrow: { type: Object },
-		_rightArrow: { type: Object },
-
-		_overflowButton: { type: Object },
-		_overflowList: { type: Object },
-
-		_headerItems: { type: Object, multiple: true },
-
-		_navigationItems: { type: Object, multiple: true },
+		_scrollableForward: {
+			type: Boolean,
+			noAttribute: true,
+		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.TabContainer.prototype */ {
 		/**
@@ -217,8 +115,6 @@ const metadata = {
 		},
 	},
 };
-
-const scrollStep = 128;
 
 /**
  * @class
@@ -241,548 +137,420 @@ const scrollStep = 128;
  *
  * <code>import "@ui5/webcomponents/dist/TabContainer";</code>
  * <br>
- * <b>Note:</b> This also includes the <code>ui5-tab</code> and <code>ui5-tab-separator</code> Web Components.
+ * <code>import "@ui5/webcomponents/dist/Tab";</code> (for <code>ui5-tab</code>)
+ * <br>
+ * <code>import "@ui5/webcomponents/dist/TabSeparator";</code> (for <code>ui5-tab-separator</code>)
  *
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.TabContainer
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @appenddocs Tab TabSeparator
  * @tagname ui5-tabcontainer
  * @public
  */
-class TabContainer extends WebComponent {
+class TabContainer extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
 
-	static get renderer() {
-		return TabContainerRenderer;
+	static get styles() {
+		return tabContainerCss;
 	}
 
-	static _checkIfNoIcon(tabs) {
-		for (let i = 0; i < tabs.length; i++) {
-			if (tabs[i].icon) {
-				return false;
-			}
-		}
-
-		return true;
+	static get render() {
+		return litRender;
 	}
 
-	static _checkIfNoText(tabs) {
-		for (let i = 0; i < tabs.length; i++) {
-			if (tabs[i].text) {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	static _checkIfNoIconAndCount(tabs) {
-		let tab;
-
-		for (let i = 0; i < tabs.length; i++) {
-			tab = tabs[i];
-			if (tab.icon || tab.count) {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	static _findClosestTab(target) {
-		let maxLevel = 4;
-
-		while (target && maxLevel) {
-			if (target.classList.contains("sapMITBItem")) {
-				return target;
-			}
-
-			target = target.parentElement;
-			maxLevel--;
-		}
+	static get template() {
+		return TabContainerTemplate;
 	}
 
 	constructor() {
 		super();
 
-		this._updateScrollingHandler = this._updateScrolling.bind(this);
+		this._handleHeaderResize = this._handleHeaderResize.bind(this);
 
+		// Init ScrollEnablement
 		this._scrollEnablement = new ScrollEnablement();
-		this._scrollEnablement.attachEvent("scroll", this._updateScrollingHandler);
+		this._scrollEnablement.attachEvent("scroll", this._updateScrolling.bind(this));
 		this._delegates.push(this._scrollEnablement);
 
-		this._leftArrow = {
-			onPress: this._scrollLeft.bind(this),
-			classes: "sapMITBArrowScroll sapMITHVerticallyCenteredArrow sapMITBArrowScrollLeft",
-		};
+		// Init ItemNavigation
+		this._initItemNavigation();
 
-		this._rightArrow = {
-			onPress: this._scrollRight.bind(this),
-			classes: "sapMITBArrowScroll sapMITHVerticallyCenteredArrow sapMITBArrowScrollRight",
-		};
-
-		this._overflowButton = {
-			_customAttributes: {
-				tabindex: -1,
-			},
-			onPress: this._openOverflowList.bind(this),
-			classes: "",
-		};
-
-		this._overflowList = {
-			onItemPress: this._overflowItemSelected.bind(this),
-			items: [],
-		};
-
-		this._itemNavigation = new ItemNavigation(this, {
-			cyclic: false,
-		});
-		this._delegates.push(this._itemNavigation);
-
-		this._itemNavigation.getItemsCallback = function getItemsCallback() {
-			return this._navigationItems;
-		}.bind(this);
-
-		this._itemNavigation.setItemsCallback = function setItemsCallback(items) {
-			this._navigationItems = items;
-		}.bind(this);
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
-
 	onBeforeRendering() {
-		const tabs = this.getTabs();
+		const hasSelected = this.items.some(item => item.selected);
+		this.items.forEach(item => {
+			item._getTabContainerHeaderItemCallback = _ => {
+				return this.getDomRef().querySelector(`#${item._id}`);
+			};
+		});
 
-		if (!tabs.length) {
-			return;
+		if (this.items.length && !hasSelected) {
+			this.items[0].selected = true;
 		}
 
-		this._initSelectedTab();
-
-		this._isNoIcon = TabContainer._checkIfNoIcon(tabs);
-		this._isNoText = TabContainer._checkIfNoText(tabs);
-		this._isNoIconAndCount = TabContainer._checkIfNoIconAndCount(tabs);
-		this._isInline = this._isNoIconAndCount
-			|| (this._isNoIcon && this.headerMode === TabContainerHeaderMode.Inline);
-
-		const suffix = this._isNoIcon ? "TextOnly" : "";
-
-		this._leftArrow.classes = `sapMITBArrowScroll sapMITHVerticallyCenteredArrow sapMITBArrowScrollLeft${suffix}`;
-		this._rightArrow.classes = `sapMITBArrowScroll sapMITHVerticallyCenteredArrow sapMITBArrowScrollRight${suffix}`;
-
-		if (this.showOverflow) {
-			let buttonCustomClass = "";
-
-			if (this._isInline) {
-				buttonCustomClass = "sapMBtnInline";
-			} else if (this._isNoIconAndCount) {
-				buttonCustomClass = "sapMBtnTextOnly";
-			} else if (this._isNoText) {
-				buttonCustomClass = "sapMBtnNoText";
-			}
-
-			this._overflowButton.classes = `sapMITHBtn sapMITHVerticallyCenteredArrow ${buttonCustomClass}`;
-		}
-
-		this._prepareHeaderTabs();
-		this._prepareOverflowList();
+		this.calculateRenderItems();
 
 		this._itemNavigation.init();
 	}
 
+	calculateRenderItems() {
+		this.renderItems = this.items.map((item, index) => {
+			const isSeparator = item.isSeparator;
+
+			if (isSeparator) {
+				return { isSeparator, _tabIndex: item._tabIndex, _id: item._id };
+			}
+
+			return {
+				item,
+				isMixedModeTab: !item.icon && this.mixedMode,
+				isTextOnlyTab: !item.icon && !this.mixedMode,
+				isIconTab: item.icon,
+				position: index + 1,
+				disabled: item.disabled || undefined,
+				selected: item.selected || false,
+				hidden: !item.selected,
+				ariaLabelledBy: calculateAriaLabelledBy(item),
+				contentItemClasses: calculateContentItemClasses(item),
+				headerItemClasses: calculateHeaderItemClasses(item, this.mixedMode),
+				headerItemContentClasses: calculateHeaderItemContentClasses(item),
+				headerItemIconClasses: calculateHeaderItemIconClasses(item),
+				headerItemSemanticIconClasses: calculateHeaderItemSemanticIconClasses(item),
+				headerItemTextClasses: calculateHeaderItemTextClasses(item),
+				headerItemAdditionalTextClasses: calculateHeaderItemAdditionalTextClasses(item),
+				overflowItemClasses: calculateOverflowItemClasses(item),
+				overflowItemContentClasses: calculateOverflowItemContentClasses(item),
+				overflowItemState: calculateOverflowItemState(item),
+			};
+		}, this);
+	}
+
 	onAfterRendering() {
-		this._scrollEnablement.scrollContainer = this._getScrollContainer();
-
-		if (!this._isFirstAfterRendering) {
-			this._updateScrolling();
-			this._scrollIntoView();
-			this._isFirstAfterRendering = true;
-		}
-	}
-
-	onEnterDOM() {
-		ResizeHandler.register(this._getScrollContainer(), this._updateScrollingHandler);
-	}
-
-	onExitDOM() {
-		ResizeHandler.deregister(this._getScrollContainer(), this._updateScrollingHandler);
-	}
-
-	_initSelectedTab() {
-		const tabs = this.getTabs();
-		const selectedTab = tabs[this._normalizeSelectedIndex(this.selectedIndex)];
-		this.setSelectedTab(selectedTab);
-	}
-
-	_normalizeSelectedIndex(index) {
-		const tabs = this.getTabs();
-		const parsedIndex = Number.parseInt(index);
-
-		if (Number.isNaN(parsedIndex)) {
-			return 0;
-		}
-		if (parsedIndex < 0 || parsedIndex > tabs.length - 1) {
-			return 0;
-		}
-
-		return parsedIndex;
-	}
-
-	_prepareHeaderTabs() {
-		const items = this.items;
-		const tabs = this.getTabs();
-
-		let ariaIndex = 1;
-		const length = tabs.length;
-		const contentId = `${this._id}-content`;
-
-		const headerItems = [];
-		const navigationItems = [];
-
-		items.forEach(tab => {
-			if (tab instanceof TabSeparator) {
-				headerItems.push({
-					isSeparator: true,
-				});
-
-				return;
-			}
-
-			const isIconColorRead = tab.iconColor === IconColor.Positive
-				|| tab.iconColor === IconColor.Critical
-				|| tab.iconColor === IconColor.Negative;
-
-			const isHorizontalDesign = tab.design === TabDesignMode.Horizontal;
-
-			let displayText = tab.text;
-			if (this._isInline && tab.count) {
-				displayText += ` (${tab.count})`;
-			}
-
-			const ids = [];
-
-			if (tab.text) {
-				ids.push(`${tab._id}-text`);
-			}
-			if (tab.count) {
-				ids.push(`${tab._id}-count`);
-			}
-			if (tab.icon) {
-				ids.push(`${tab._id}-icon`);
-			}
-			if (isIconColorRead) {
-				ids.push(`${tab._id}-iconColor`);
-			}
-
-			const labelledbyControls = ids.join(" ");
-			const showAll = !this._isNoIcon && !tab.icon;
-
-			const mainClasses = {
-				sapMITBItem: true,
-				sapMITBSelected: tab._isSelected,
-				sapMITBItemNoCount: !tab.count,
-				sapMITBHorizontal: isHorizontalDesign,
-				sapMITBVertical: !isHorizontalDesign,
-				sapMITBAll: showAll,
-				sapMITBFilter: !showAll,
-				sapMITBDisabled: !!tab.disabled,
-			};
-
-			if (isIconColorRead) {
-				mainClasses[`sapMITBFilter${tab.iconColor}`] = true;
-			}
-
-			const headerItem = {
-
-				id: `${tab._id}-header`,
-				_tabIndex: this._navigationItems[ariaIndex - 1]
-					? this._navigationItems[ariaIndex - 1]._tabIndex : -1,
-
-				isIconColorRead,
-				labelledbyControls,
-				displayText,
-				isDisabled: tab.disabled ? true : undefined,
-				isHorizontalDesign,
-
-				text: tab.text,
-				count: tab.count,
-				icon: tab.icon,
-				iconColor: tab.iconColor,
-
-				isInline: this._isInline,
-				isNoIcon: this._isNoIcon,
-				isNoText: this._isNoText,
-				isInlineOrTextOnly: this._isInline || this._isNoIcon,
-
-				showAll,
-
-				posinset: ariaIndex++,
-				setsize: length,
-				contentId,
-				classes: {
-					main: _convertSingleClass(mainClasses),
-				},
-			};
-
-			headerItems.push(headerItem);
-			navigationItems.push(headerItem);
-		});
-
-		this._headerItems = headerItems;
-		this._navigationItems = navigationItems;
-	}
-
-	_prepareOverflowList() {
-		if (!this.showOverflow) {
-			return;
-		}
-
-		const tabs = this.getTabs();
-		const listItems = [];
-
-		tabs.forEach(tab => {
-			const isIconColorRead = tab.iconColor === IconColor.Positive
-				|| tab.iconColor === IconColor.Critical
-				|| tab.iconColor === IconColor.Negative;
-
-			let displayText = tab.text;
-			if (tab.count) {
-				displayText += ` (${tab.count})`;
-			}
-
-			const overflowTab = {
-				id: `${tab._id}-overflow`,
-
-				isIconColorRead,
-				displayText,
-
-				text: tab.text,
-				count: tab.count,
-				icon: tab.icon,
-				iconColor: tab.iconColor,
-
-				_isInline: this._isInline,
-				_isNoIcon: this._isNoIcon,
-				_isNoText: this._isNoText,
-			};
-
-			const listItem = {
-				id: tab._id,
-				type: tab.disabled ? ListItemType.Inactive : ListItemType.Active,
-				selected: tab._isSelected,
-				content: overflowTab,
-				classes: `sapMITBFilter${tab.iconColor}`,
-				innerClasses: tab.disabled ? "sapMITBOverflowItem sapMITBDisabled" : "sapMITBOverflowItem",
-			};
-
-			listItems.push(listItem);
-		});
-
-		this._overflowList.items = listItems;
-	}
-
-	_getScrollContainer() {
-		const domRef = this.getDomRef();
-		return domRef && domRef.querySelector(".sapMITBScrollContainer");
-	}
-
-	_openOverflowList() {
-		const popover = this.getDomRef().querySelector("ui5-popover");
-		const overflowButton = this.getDomRef().querySelector("ui5-button");
-
-		popover.openBy(overflowButton);
-	}
-
-	_overflowItemSelected(event) {
-		const pressedItem = event.detail.item;
-		const tabs = this.getTabs();
-		const selectedTab = tabs.filter(item => item._id === pressedItem.id)[0];
-
-		this.setSelectedTab(selectedTab, true /* user interaction */);
-
-		const popover = this.getDomRef().querySelector("ui5-popover");
-		popover.close();
-
-		const headerTab = this.getDomRef().querySelector(`#${pressedItem.id}-header`);
-		if (headerTab) {
-			headerTab.focus();
-		}
-	}
-
-	_scrollIntoView() {
-		if (!this._scrollable) {
-			return;
-		}
-
-		const selectedTab = this.getSelectedTab();
-		if (!selectedTab) {
-			return;
-		}
-
-		const scrollContainer = this._getScrollContainer();
-		const scrollContainerWidth = scrollContainer.offsetWidth;
-
-		const tabContainerDomRef = this.getDomRef();
-		const headerTabDomRef = tabContainerDomRef.querySelector(`#${selectedTab._id}-header`);
-
-		const itemLeft = headerTabDomRef.offsetLeft - scrollContainer.scrollLeft;
-		const itemRight = itemLeft + headerTabDomRef.offsetWidth;
-
-		if (itemLeft < 0) {
-			scrollContainer.scrollLeft += itemLeft;
-		} else if (itemRight > scrollContainerWidth) {
-			scrollContainer.scrollLeft += itemRight - scrollContainerWidth;
-		}
-
+		this._scrollEnablement.scrollContainer = this._getHeaderScrollContainer();
 		this._updateScrolling();
 	}
 
-	_updateScrolling() {
-		const scrollContainer = this._getScrollContainer();
-		if (!scrollContainer) {
-			return;
-		}
-
-		const scrollContainerContent = scrollContainer.querySelector(".sapMITBHead");
-
-		const scrollContainerWidth = scrollContainer.offsetWidth;
-		const scrollContainerContentWidth = scrollContainerContent.offsetWidth;
-
-		if (scrollContainerWidth >= scrollContainerContentWidth) {
-			this._scrollable = false;
-			this._scrollForward = false;
-			this._scrollBack = false;
-		} else {
-			this._scrollable = true;
-			this._scrollForward = scrollContainer.scrollLeft
-				+ scrollContainerWidth < scrollContainerContentWidth;
-			this._scrollBack = scrollContainer.scrollLeft > 0;
-		}
+	onEnterDOM() {
+		ResizeHandler.register(this._getHeader(), this._handleHeaderResize);
 	}
 
-	_scrollLeft() {
-		this._scrollEnablement.move(-scrollStep, 0).promise()
-			.then(_ => this._updateScrolling());
+	onExitDOM() {
+		ResizeHandler.deregister(this._getHeader(), this._handleHeaderResize);
 	}
 
-	_scrollRight() {
-		this._scrollEnablement.move(scrollStep, 0).promise()
-			.then(_ => this._updateScrolling());
-	}
-
-	_findSelectedTab(event) {
-		const tabElement = TabContainer._findClosestTab(event.ui5target);
-		if (!tabElement) {
-			return;
+	_onHeaderItemKeyDown(event) {
+		if (isEnter(event)) {
+			this._onHeaderItemSelect(event);
 		}
 
-		const tabs = this.getTabs();
-		return tabs.filter(item => `${item._id}-header` === tabElement.id)[0];
-	}
-
-	setSelectedTab(tab, userInteraction) {
-		if (!tab || tab.disabled) {
-			return;
-		}
-
-		const tabs = this.getTabs();
-
-		if (!tabs.length) {
-			return;
-		}
-
-		this._selectedContent = tab._state.content.length ? [tab] : this._state.content;
-
-		if (this._selectedTab === tab) {
-			if (userInteraction && !this.fixed) {
-				this.collapsed = !this.collapsed;
-			}
-			return;
-		}
-
-		if (!this.fixed) {
-			this.collapsed = false;
-		}
-
-		this.selectedIndex = tabs.indexOf(tab);
-		this._itemNavigation.currentIndex = tabs.indexOf(this.selectedIndex);
-
-		this._selectedTab = tab;
-
-		tabs.forEach(item => {
-			item._isSelected = item === tab;
-		});
-
-		if (userInteraction) {
-			this.fireEvent("itemSelect", {
-				item: this._selectedTab,
-			});
-		}
-
-		this._scrollIntoView();
-	}
-
-	getSelectedTab() {
-		return this._selectedTab;
-	}
-
-	getTabs() {
-		const items = this.items || [];
-
-		return items.filter(item => item instanceof Tab);
-	}
-
-	onkeydown(event) {
-		if (isSpace(event) || isEnter(event)) {
-			const selectedTab = this._findSelectedTab(event);
-			this.setSelectedTab(selectedTab, true);
+		// Prevent Scrolling
+		if (isSpace(event)) {
 			event.preventDefault();
 		}
 	}
 
-	onclick(event) {
-		const icon = event.composedPath().filter(element => {
-			return element.classList && element.classList.contains("sapMITBArrowScroll");
-		})[0];
-
-		if (icon) {
-			this._navigationIconPress(icon);
-		}
-
-		const selectedTab = this._findSelectedTab(event);
-		this.setSelectedTab(selectedTab, true);
-	}
-
-	_navigationIconPress(icon) {
-		if (icon.classList.contains("sapMITBArrowScrollLeft") || icon.classList.contains("sapMITBArrowScrollLeftTextOnly")) {
-			this._leftArrow.onPress();
-		} else {
-			this._rightArrow.onPress();
+	_onHeaderItemKeyUp(event) {
+		if (isSpace(event)) {
+			this._onHeaderItemSelect(event);
 		}
 	}
 
-	static get calculateTemplateContext() {
-		return TabContainerTemplateContext.calculate;
+	_initItemNavigation() {
+		this._itemNavigation = new ItemNavigation(this);
+		this._itemNavigation.getItemsCallback = () => this._getTabs();
+
+		this._delegates.push(this._itemNavigation);
+	}
+
+	_onHeaderItemSelect(event) {
+		if (!event.target.hasAttribute("disabled")) {
+			this._onItemSelect(event.target);
+		}
+	}
+
+	_onOverflowListItemSelect(event) {
+		this._onItemSelect(event.detail.item);
+		this._getPopover().close();
+		this.shadowRoot.querySelector(`#${event.detail.item.id}`).focus();
+	}
+
+	_onItemSelect(target) {
+		const selectedIndex = findIndex(this.items, item => item._id === target.id);
+		const selectedTabIndex = findIndex(this._getTabs(), item => item._id === target.id);
+		const currentSelectedTab = this.items[selectedIndex];
+
+		// update selected items
+		this.items.forEach((item, index) => {
+			if (!item.isSeparator) {
+				const selected = selectedIndex === index;
+				item.selected = selected;
+
+				if (selected) {
+					this._itemNavigation.current = selectedTabIndex;
+				}
+			}
+		}, this);
+
+		// update collapsed state
+		if (!this.fixed) {
+			if (currentSelectedTab === this._selectedTab) {
+				this.collapsed = !this.collapsed;
+			} else {
+				this.collapsed = false;
+			}
+		}
+
+		// select the tab
+		this._selectedTab = currentSelectedTab;
+		this.fireEvent("itemSelect", {
+			item: currentSelectedTab,
+		});
+	}
+
+	_onOverflowButtonClick(event) {
+		this._getPopover().openBy(event.target);
+	}
+
+	_onHeaderBackArrowClick() {
+		this._scrollEnablement.move(-SCROLL_STEP, 0).promise()
+			.then(_ => this._updateScrolling());
+	}
+
+	_onHeaderForwardArrowClick() {
+		this._scrollEnablement.move(SCROLL_STEP, 0).promise()
+			.then(_ => this._updateScrolling());
+	}
+
+	_handleHeaderResize() {
+		this._updateScrolling();
+	}
+
+	_updateScrolling() {
+		const headerScrollContainer = this._getHeaderScrollContainer();
+
+		this._scrollable = headerScrollContainer.offsetWidth < headerScrollContainer.scrollWidth;
+		this._scrollableBack = headerScrollContainer.scrollLeft > 0;
+		this._scrollableForward = Math.ceil(headerScrollContainer.scrollLeft) < headerScrollContainer.scrollWidth - headerScrollContainer.offsetWidth;
+	}
+
+	_getHeader() {
+		return this.shadowRoot.querySelector(`#${this._id}-header`);
+	}
+
+	_getTabs() {
+		return this.items.filter(item => !item.isSeparator);
+	}
+
+	_getHeaderScrollContainer() {
+		return this.shadowRoot.querySelector(`#${this._id}-headerScrollContainer`);
+	}
+
+	_getPopover() {
+		return this.shadowRoot.querySelector(`#${this._id}-overflowMenu`);
+	}
+
+	get classes() {
+		return {
+			header: {
+				"ui5-tc__header": true,
+				"ui5-tc__header--scrollable": this._scrollable,
+			},
+			headerScrollContainer: {
+				"ui-tc__headerScrollContainer": true,
+			},
+			headerList: {
+				"ui5-tc__headerList": true,
+			},
+			separator: {
+				"ui5-tc__separator": true,
+			},
+			headerBackArrow: {
+				"ui5-tc__headerArrow": true,
+				"ui5-tc__headerArrowLeft": true,
+				"ui5-tc__headerArrow--visible": this._scrollableBack,
+			},
+			headerForwardArrow: {
+				"ui5-tc__headerArrow": true,
+				"ui5-tc__headerArrowRight": true,
+				"ui5-tc__headerArrow--visible": this._scrollableForward,
+			},
+			overflowButton: {
+				"ui-tc__overflowButton": true,
+				"ui-tc__overflowButton--visible": this._scrollable,
+			},
+			content: {
+				"ui5-tc__content": true,
+				"ui5-tc__content--collapsed": this.collapsed,
+			},
+		};
+	}
+
+	get mixedMode() {
+		return this.items.some(item => item.icon) && this.items.some(item => item.text);
+	}
+
+	get previousIconACCName() {
+		return this.i18nBundle.getText(TABCONTAINER_PREVIOUS_ICON_ACC_NAME);
+	}
+
+	get nextIconACCName() {
+		return this.i18nBundle.getText(TABCONTAINER_NEXT_ICON_ACC_NAME);
+	}
+
+	get overflowMenuTitle() {
+		return this.i18nBundle.getText(TABCONTAINER_OVERFLOW_MENU_TITLE);
+	}
+
+	get rtl() {
+		return getRTL() ? "rtl" : undefined;
 	}
 
 	static async define(...params) {
 		await Promise.all([
-			Icon.define(),
 			Button.define(),
 			CustomListItem.define(),
+			Icon.define(),
 			List.define(),
 			Popover.define(),
+			fetchI18nBundle("@ui5/webcomponents"),
 		]);
 
 		super.define(...params);
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	TabContainer.define();
-});
+const findIndex = (arr, predicate) => {
+	for (let i = 0; i < arr.length; i++) {
+		const result = predicate(arr[i]);
+
+		if (result) {
+			return i;
+		}
+	}
+
+	return -1;
+};
+
+/* CSS classes calculation helpers */
+
+const calculateAriaLabelledBy = item => {
+	const labels = [];
+
+	if (item.text) {
+		labels.push(`${item._id}-text`);
+	}
+
+	if (item.additionalText) {
+		labels.push(`${item._id}-additionalText`);
+	}
+
+	if (item.icon) {
+		labels.push(`${item._id}-icon`);
+	}
+
+	return labels.join(" ");
+};
+
+const calculateHeaderItemClasses = (item, mixedMode) => {
+	const classes = ["ui5-tc__headerItem"];
+
+	if (item.selected) {
+		classes.push("ui5-tc__headerItem--selected");
+	}
+
+	if (item.disabled) {
+		classes.push("ui5-tc__headerItem--disabled");
+	}
+
+	if (!item.icon && !mixedMode) {
+		classes.push("ui5-tc__headerItem--textOnly");
+	}
+
+	if (item.icon) {
+		classes.push("ui5-tc__headerItem--withIcon");
+	}
+
+	if (!item.icon && mixedMode) {
+		classes.push("ui5-tc__headerItem--mixedMode");
+	}
+
+	if (item.semanticColor !== SemanticColor.Default) {
+		classes.push(`ui5-tc__headerItem--${item.semanticColor.toLowerCase()}`);
+	}
+
+	return classes.join(" ");
+};
+
+const calculateHeaderItemContentClasses = item => {
+	const classes = ["ui5-tc__headerItemContent"];
+
+	return classes.join(" ");
+};
+
+const calculateHeaderItemIconClasses = item => {
+	const classes = ["ui5-tc-headerItemIcon"];
+
+	return classes.join(" ");
+};
+
+const calculateHeaderItemSemanticIconClasses = item => {
+	const classes = ["ui5-tc-headerItemSemanticIcon"];
+
+	if (item.semanticColor !== SemanticColor.Default) {
+		classes.push(`ui5-tc-headerItemSemanticIcon--${item.semanticColor.toLowerCase()}`);
+	}
+
+	return classes.join(" ");
+};
+
+const calculateHeaderItemTextClasses = item => {
+	const classes = ["ui5-tc__headerItemText"];
+
+	return classes.join(" ");
+};
+
+const calculateHeaderItemAdditionalTextClasses = item => {
+	const classes = ["ui5-tc__headerItemAdditionalText"];
+
+	return classes.join(" ");
+};
+
+const calculateOverflowItemClasses = item => {
+	const classes = ["ui5-tc__overflowItem"];
+
+	if (item.semanticColor !== SemanticColor.Default) {
+		classes.push(`ui5-tc__overflowItem--${item.semanticColor.toLowerCase()}`);
+	}
+
+	if (item.disabled) {
+		classes.push("ui5-tc__overflowItem--disabled");
+	}
+
+	return classes.join(" ");
+};
+
+const calculateOverflowItemContentClasses = item => {
+	const classes = ["ui5-tc__overflowItemContent"];
+
+	return classes.join(" ");
+};
+
+const calculateOverflowItemState = item => {
+	return item.disabled ? "Inactive" : "Active";
+};
+
+const calculateContentItemClasses = item => {
+	const classes = ["ui5-tc__contentItem"];
+
+	return classes.join(" ");
+};
+
+TabContainer.define();
 
 export default TabContainer;

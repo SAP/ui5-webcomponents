@@ -1,20 +1,29 @@
-<div {{> controlData}}
-	style="display: grid; place-items: center;">
+<table border="0" cellspacing="0" cellpadding="0">
 
-	<!-- columns -->
-	<div class="{{classes.main}}" style="{{styles.main}}">
-		{{#each visibleColumns}}
-			<div class="sapWCTableColumnWrapper">
-				<slot name="{{this._slot}}"></slot>
-			</div>
+	<thead>
+		<tr class="ui5-table-header-row" style="height: 48px">
+			{{#each visibleColumns}}
+				<slot name="{{this._individualSlot}}"></slot>
+			{{/each}}
+		</tr>
+	</thead>
+
+	<tbody>
+		{{#each rows}}
+			<slot name="{{this._individualSlot}}"></slot>
 		{{/each}}
-	</div>
 
-	<!-- rows -->
-	{{#each ctr.rows}}
-		<div style="width: 100%"
-		>
-			<slot name="{{this._slot}}"></slot>
-		</div>
-	{{/each}}
-</div>
+		{{#unless rows.length}}
+			{{#if showNoData}}
+				<tr class="ui5-table-no-data-row-root">
+					<td colspan="{{visibleColumnsCount}}">
+
+						<div class="ui5-table-no-data-row">
+							<span>{{noDataText}}</span>
+						</div>
+					</td>
+				</tr>
+			{{/if}}
+		{{/unless}}
+	</tbody>
+</table>

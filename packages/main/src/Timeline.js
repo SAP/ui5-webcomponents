@@ -1,45 +1,29 @@
-import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
-import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
-import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
-import ItemNavigation from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/delegate/ItemNavigation";
-import TimelineTemplateContext from "./TimelineTemplateContext";
-import TimelineItem from "./TimelineItem";
-import TimelineRenderer from "./build/compiled/TimelineRenderer.lit";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import TimelineTemplate from "./generated/templates/TimelineTemplate.lit.js";
 
 // Styles
-import belize from "./themes/sap_belize/Timeline.less";
-import belizeHcb from "./themes/sap_belize_hcb/Timeline.less";
-import fiori3 from "./themes/sap_fiori_3/Timeline.less";
-
-ShadowDOM.registerStyle("sap_belize", "Timeline.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "Timeline.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "Timeline.css", fiori3);
+import styles from "./generated/themes/Timeline.css.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-timeline",
-	styleUrl: [
-		"Timeline.css",
-	],
-	defaultSlot: "items",
 	slots: /** @lends sap.ui.webcomponents.main.Timeline.prototype */ {
 		/**
 		 * Determines the content of the <code>ui5-timeline</code>.
 		 *
-		 * @type {TimelineItem[]}
+		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
 		 */
-		items: {
-			type: TimelineItem,
-			multiple: true,
+		"default": {
+			propertyName: "items",
+			type: HTMLElement,
+			individualSlots: true,
 		},
-	},
-	properties: /** @lends sap.ui.webcomponents.main.Timeline.prototype */ {
-	},
-	events: /** @lends sap.ui.webcomponents.main.Timeline.prototype */ {
 	},
 };
 
@@ -57,23 +41,27 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Timeline
- * @extends WebComponent
+ * @extends UI5Element
  * @tagname ui5-timeline
  * @appenddocs TimelineItem
  * @public
  * @since 0.8.0
  */
-class Timeline extends WebComponent {
+class Timeline extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
 
-	static get renderer() {
-		return TimelineRenderer;
+	static get styles() {
+		return styles;
 	}
 
-	static get calculateTemplateContext() {
-		return TimelineTemplateContext.calculate;
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return TimelineTemplate;
 	}
 
 	constructor() {
@@ -83,7 +71,6 @@ class Timeline extends WebComponent {
 	}
 
 	onBeforeRendering() {
-		this.addItemsCustomClass();
 		this._itemNavigation.init();
 	}
 
@@ -93,20 +80,8 @@ class Timeline extends WebComponent {
 
 		this._delegates.push(this._itemNavigation);
 	}
-
-	addItemsCustomClass() {
-		this.items[this.items.length - 1]._customClasses = ["sapWCTimelineItemLast"];
-	}
-
-	static async define(...params) {
-		await TimelineItem.define();
-
-		super.define(...params);
-	}
 }
 
-Bootstrap.boot().then(_ => {
-	Timeline.define();
-});
+Timeline.define();
 
 export default Timeline;

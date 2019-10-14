@@ -1,29 +1,20 @@
-import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
-import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
-import CSSSize from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/CSSSize";
-import Integer from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/Integer";
-import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
-import TextAreaTemplateContext from "./TextAreaTemplateContext";
-import TextAreaRenderer from "./build/compiled/TextAreaRenderer.lit";
-import { fetchResourceBundle, getResourceBundle } from "./ResourceBundleProvider";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
+import TextAreaTemplate from "./generated/templates/TextAreaTemplate.lit.js";
+
+import { TEXTAREA_CHARACTERS_LEFT, TEXTAREA_CHARACTERS_EXCEEDED } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
-import belize from "./themes/sap_belize/TextArea.less";
-import belizeHcb from "./themes/sap_belize_hcb/TextArea.less";
-import fiori3 from "./themes/sap_fiori_3/TextArea.less";
-
-ShadowDOM.registerStyle("sap_belize", "TextArea.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "TextArea.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "TextArea.css", fiori3);
+import styles from "./generated/themes/TextArea.css.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-textarea",
-	styleUrl: [
-		"TextArea.css",
-	],
 	properties: /** @lends sap.ui.webcomponents.main.TextArea.prototype */ {
 		/**
 		 * Defines the value of the Web Component.
@@ -33,7 +24,6 @@ const metadata = {
 		 * @public
 		 */
 		value: {
-			defaultValue: "",
 			type: String,
 		},
 
@@ -52,7 +42,7 @@ const metadata = {
 
 		/**
 		 * Defines whether the <code>ui5-textarea</code> is readonly.
-		 * </br></br>
+		 * <br><br>
 		 * <b>Note:</b> A readonly <code>ui5-textarea</code> is not editable,
 		 * but still provides visual feedback upon user interaction.
 		 *
@@ -65,6 +55,18 @@ const metadata = {
 		},
 
 		/**
+		 * Defines whether the <code>ui5-textarea</code> is required.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 * @since 1.0.0
+		 */
+		required: {
+			type: Boolean,
+		},
+
+		/**
 		 * Defines a short hint intended to aid the user with data entry when the component has no value.
 		 *
 		 * @type {string}
@@ -72,7 +74,6 @@ const metadata = {
 		 * @public
 		 */
 		placeholder: {
-			defaultValue: "",
 			type: String,
 		},
 
@@ -121,7 +122,6 @@ const metadata = {
 		 */
 		showExceededText: {
 			type: Boolean,
-			defaultValue: false,
 		},
 
 		/**
@@ -134,7 +134,6 @@ const metadata = {
 		 */
 		growing: {
 			type: Boolean,
-			defaultValue: false,
 		},
 
 		/**
@@ -149,14 +148,36 @@ const metadata = {
 			defaultValue: 0,
 		},
 
-		_height: {
-			type: CSSSize,
-			defaultValue: null,
+		/**
+		 * Determines the name with which the <code>ui5-textarea</code> will be submitted in an HTML form.
+		 *
+		 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
+		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
+		 *
+		 * <b>Note:</b> When set, a native <code>input</code> HTML element
+		 * will be created inside the <code>ui5-textarea</code> so that it can be submitted as
+		 * part of an HTML form. Do not use this property unless you need to submit a form.
+		 *
+		 * @type {string}
+		 * @defaultvalue: ""
+		 * @public
+		 */
+		name: {
+			type: String,
 		},
 
-		_exceededTextProps: {
-			type: Object,
-			defaultValue: null,
+		/**
+		 * @private
+		 */
+		focused: {
+			type: Boolean,
+		},
+
+		/**
+		 * @private
+		 */
+		exceeding: {
+			type: Boolean,
 		},
 
 		_mirrorText: {
@@ -166,11 +187,7 @@ const metadata = {
 		},
 		_maxHeight: {
 			type: String,
-			defaultValue: "",
-		},
-		_focussed: {
-			type: Boolean,
-			defaultValue: false,
+			noAttribute: true,
 		},
 		_listeners: {
 			type: Object,
@@ -207,40 +224,53 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.TextArea
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-textarea
  * @public
  */
-class TextArea extends WebComponent {
+class TextArea extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
 
-	static get renderer() {
-		return TextAreaRenderer;
+	static get styles() {
+		return styles;
 	}
 
-	static get calculateTemplateContext() {
-		return TextAreaTemplateContext.calculate;
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return TextAreaTemplate;
 	}
 
 	constructor() {
 		super();
 
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+
 		this._listeners = {
 			change: this._handleChange.bind(this),
 		};
-
-		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
 		this._exceededTextProps = this._calcExceededText();
 		this._mirrorText = this._tokenizeText(this.value);
 
+		this.exceeding = this._exceededTextProps.leftCharactersCount < 0;
+
 		if (this.growingMaxLines) {
 			// this should be complex calc between line height and paddings - TODO: make it stable
 			this._maxHeight = `${this.growingMaxLines * 1.4 * 14 + 9}px`;
+		}
+
+		const FormSupport = getFeature("FormSupport");
+		if (FormSupport) {
+			FormSupport.syncNativeHiddenInput(this);
+		} else if (this.name) {
+			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
 		}
 	}
 
@@ -265,11 +295,11 @@ class TextArea extends WebComponent {
 	}
 
 	onfocusin() {
-		this._focussed = true;
+		this.focused = true;
 	}
 
 	onfocusout() {
-		this._focussed = false;
+		this.focused = false;
 	}
 
 	_handleChange() {
@@ -309,9 +339,9 @@ class TextArea extends WebComponent {
 				leftCharactersCount = maxLength - this.value.length;
 
 				if (leftCharactersCount >= 0) {
-					exceededText = this.resourceBundle.getText("TEXTAREA_CHARACTERS_LEFT", [leftCharactersCount]);
+					exceededText = this.i18nBundle.getText(TEXTAREA_CHARACTERS_LEFT, [leftCharactersCount]);
 				} else {
-					exceededText = this.resourceBundle.getText("TEXTAREA_CHARACTERS_EXCEEDED", [Math.abs(leftCharactersCount)]);
+					exceededText = this.i18nBundle.getText(TEXTAREA_CHARACTERS_EXCEEDED, [Math.abs(leftCharactersCount)]);
 				}
 			}
 		} else {
@@ -323,15 +353,43 @@ class TextArea extends WebComponent {
 		};
 	}
 
+	get styles() {
+		const lineHeight = 1.4 * 16;
+
+		return {
+			mirror: {
+				"max-height": this._maxHeight,
+			},
+			main: {
+				width: "100%",
+				height: (this.rows && !this.growing) ? `${this.rows * lineHeight}px` : "100%",
+			},
+			focusDiv: {
+				"height": (this.showExceededText ? "calc(100% - 26px)" : "100%"),
+				"max-height": (this._maxHeight),
+			},
+		};
+	}
+
+	get tabIndex() {
+		return this.disabled ? undefined : "0";
+	}
+
+	get ariaLabelledBy() {
+		return this.showExceededText ? `${this._id}-exceededText` : undefined;
+	}
+
+	get ariaInvalid() {
+		return this.valueState === "Error" ? "true" : undefined;
+	}
+
 	static async define(...params) {
-		await fetchResourceBundle("@ui5/webcomponents");
+		await fetchI18nBundle("@ui5/webcomponents");
 
 		super.define(...params);
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	TextArea.define();
-});
+TextArea.define();
 
 export default TextArea;

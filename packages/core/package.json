@@ -1,6 +1,6 @@
 {
   "name": "@ui5/webcomponents-core",
-  "version": "0.9.0",
+  "version": "0.17.0",
   "description": "UI5 Web Components: webcomponents.core",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
@@ -11,13 +11,14 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/SAP/ui5-webcomponents.git"
+    "url": "https://github.com/SAP/ui5-webcomponents.git",
+    "directory": "packages/core"
   },
   "scripts": {
-    "build:copy-node-module": "cpx \"../../node_modules/@openui5/sap.ui.core/src/**/*\" temp/",
-    "build:copy-resources": "cpx \"temp/**/*.js\" dist/ && cpx \"temp/**/*.json\" dist/",
+    "build:copy-node-module": "copy-and-watch \"../../node_modules/@openui5/sap.ui.core/src/**/*\" temp/",
+    "build:copy-resources": "copy-and-watch \"temp/**/*.js\" dist/ && copy-and-watch \"temp/**/*.json\" dist/",
     "build:cleanup": "rimraf dist/sap/ui/core/library.support.js dist/sap/ui/core/RenderManager.js dist/sap/ui/core/XMLCompositeMetadata.js dist/sap/ui/core/Core.js dist/sap/ui/core/cache dist/sap/ui/core/rules dist/sap/ui/core/support dist/sap/ui/core/util dist/sap/ui/model dist/sap/ui/qunit dist/sap/ui/test dist/sap/ui/thirdparty",
-    "build:copy-overlay": "cpx \"overlay/**/*.js\" dist/",
+    "build:copy-overlay": "copy-and-watch \"overlay/**/*.js\" dist/",
     "build:replace-amd": "replace-in-file sap.ui.define define dist/**/*.js",
     "build:replace-export-true": "replace-in-file \", /* bExport= */ true\" \"\" dist/**/*.js",
     "build:replace-export-false": "replace-in-file \", /* bExport= */ false\" \"\" dist/**/*.js",
@@ -25,9 +26,9 @@
     "build:uri-js": "prepend dist/sap/ui/thirdparty/URI.js \"define([], function () {\" && node -e \"console.log('return window.URI;});')\" >> dist/sap/ui/thirdparty/URI.js",
     "build:amd-to-es6": "amdtoes6 --src=dist --replace --glob=**/*.js",
     "build:esm-abs-to-rel": "node ./lib/esm-abs-to-rel/index.js dist/",
-    "build:esm-stubs": "cpx esm/Core.js dist/sap/ui/core && cpx esm/jquery.js dist/sap/ui/thirdparty && cpx esm/URI.js dist/sap/ui/thirdparty",
-    "build:copy-icon-font-assets": "cpx \"temp/sap/ui/core/themes/base/fonts/*.{ttf,woff,woff2}\" dist/sap/ui/core/themes/base/fonts",
-    "build:copy-belize-fonts": "cpx \"../../node_modules/@openui5/themelib_sap_belize/src/sap/ui/core/themes/sap_belize/fonts/*.{ttf,woff,woff2}\" dist/sap/ui/core/themes/sap_belize/fonts",
+    "build:esm-stubs": "copy-and-watch esm/Core.js dist/sap/ui/core && copy-and-watch esm/jquery.js dist/sap/ui/thirdparty && copy-and-watch esm/URI.js dist/sap/ui/thirdparty",
+    "build:copy-icon-font-assets": "copy-and-watch \"temp/sap/ui/core/themes/base/fonts/*.{ttf,woff,woff2}\" dist/sap/ui/core/themes/base/fonts",
+    "build:copy-belize-fonts": "copy-and-watch \"../../node_modules/@openui5/themelib_sap_belize/src/sap/ui/core/themes/sap_belize/fonts/*.{ttf,woff,woff2}\" dist/sap/ui/core/themes/sap_belize/fonts",
     "build": "npm-run-all --sequential clean build:copy-node-module build:copy-resources build:cleanup build:copy-overlay build:replace-amd build:replace-export-true build:replace-export-false build:replace-global-core-usage build:uri-js build:amd-to-es6 build:esm-abs-to-rel build:esm-stubs build:copy-icon-font-assets build:copy-belize-fonts",
     "clean": "rimraf temp && rimraf dist",
     "prepublishOnly": "npm run clean && npm run build"
@@ -36,7 +37,7 @@
     "@buxlabs/amd-to-es6": "^0.13.2",
     "@openui5/sap.ui.core": "1.60.2",
     "abstract-syntax-tree": "1.0.3",
-    "cpx": "^1.5.0",
+    "copy-and-watch": "^0.1.4",
     "escodegen": "^1.11.0",
     "esprima": "^4.0.1",
     "glob": "^7.1.3",

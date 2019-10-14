@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	var RTL = Configuration.getRTL();
 	var THEME = Configuration.getTheme();
 	var HCB = "sap_belize_hcb";
-	var FIORI3 = "sap_fiori_3"
+	var FIORI3 = "sap_fiori_3";
 	var btnRTL = document.getElementById("btnRTL");
 	var btnCompact = document.getElementById("btnCompact");
 	var btnTheme = document.getElementById("btnTheme");
@@ -17,6 +17,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		document.body.style="background: #333";
 	} else {
 		document.body.style="background: #fff";
+	}
+
+	if (RTL) {
+		document.body.setAttribute("dir", "rtl");
+	} else {
+		document.body.removeAttribute("dir");
 	}
 
 	/* SideNav */
@@ -63,11 +69,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 	btnTheme.addEventListener('press', function(e) {
 		var theme = e.target.pressed ? HCB : FIORI3;
-		var param = buildParam(btnCompact.pressed, btnRTL.pressed, theme);
-		var currentURL = window.location.href;
-		var newURL = currentURL.slice(0, currentURL.indexOf("kitchen")) + param;
+		Configuration.setTheme(theme);
 
-		window.location.href = newURL;
+		if (theme === HCB) {
+			document.body.style="background: #333";
+		} else {
+			document.body.style="background: #fff";
+		}
 	}, false);
 
 	menuBtn.addEventListener('press', function(event) {

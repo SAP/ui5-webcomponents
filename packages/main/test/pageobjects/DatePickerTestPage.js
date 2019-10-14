@@ -16,23 +16,23 @@ class DatePickerTestPage {
 	}
 
 	get popover() {
-		return browser.findElementDeep(this._sut + " >>> ui5-popover");
+		return browser.$(this._sut).shadow$("ui5-popover");
 	}
 
 	get popoverContent() {
-		return browser.findElementDeep(this._sut + " >>> ui5-popover >>> .sapMPopup");
+		return browser.$(this._sut).shadow$("ui5-popover").shadow$(".ui5-popover-root");
 	}
 
 	get calendar() {
-		return browser.findElementDeep(this._sut + " >>> ui5-calendar");
+		return browser.$(this._sut).shadow$("ui5-calendar");
 	}
 
 	get input() {
-		return browser.findElementDeep(this._sut + " >>> ui5-input");
+		return browser.$(this._sut).shadow$("ui5-input");
 	}
 
 	get innerInput() {
-		return browser.findElementDeep(this._sut + " >>> ui5-input >>> input");
+		return browser.$(this._sut).shadow$("ui5-input").shadow$("input");
 	}
 
 	hasIcon() {
@@ -42,41 +42,41 @@ class DatePickerTestPage {
 	}
 
 	get valueHelpIcon() {
-		return browser.findElementDeep(this._sut + " >>> ui5-icon");
+		return browser.$(this._sut).shadow$("ui5-icon");
 	}
 
 	get btnPrev() {
-		return browser.findElementDeep(this._sut + " >>> ui5-calendar >>> ui5-calendar-header >>> [data-sap-cal-head-button='Prev']");
+		return browser.$(this._sut).shadow$("ui5-calendar").shadow$(`ui5-calendar-header`).shadow$(`div[data-sap-cal-head-button="Prev"]`);
 	}
 
 	get btnNext() {
-		return browser.findElementDeep(this._sut + " >>> ui5-calendar >>> ui5-calendar-header >>> [data-sap-cal-head-button='Next']");
+		return browser.$(this._sut).shadow$("ui5-calendar").shadow$(`ui5-calendar-header`).shadow$(`div[data-sap-cal-head-button="Next"]`);
 	}
 
 	get btnYear() {
-		return browser.findElementDeep(this._sut + " >>> ui5-calendar >>> ui5-calendar-header >>> [data-sap-show-picker='Year']");
+		return browser.$(this._sut).shadow$("ui5-calendar").shadow$(`ui5-calendar-header`).shadow$(`div[data-sap-show-picker="Year"]`);
 	}
 
 	get btnMonth() {
-		return browser.findElementDeep(this._sut + " >>> ui5-calendar >>> ui5-calendar-header >>> [data-sap-show-picker='Month']");
+		return browser.$(this._sut).shadow$("ui5-calendar").shadow$(`ui5-calendar-header`).shadow$(`div[data-sap-show-picker="Month"]`);
 	}
 
 	getPickerDate(timestamp) {
-		return browser.findElementDeep(`${this._sut} >>> ui5-calendar >>> ui5-daypicker >>> [data-sap-timestamp='${timestamp}']`);
+		return browser.$(`${this._sut}`).shadow$(`ui5-calendar`).shadow$(`ui5-daypicker`).shadow$(`div[data-sap-timestamp="${timestamp}"]`);
 	}
 
 	getFirstDisplayedDate() {
-		return browser.findElementDeep(`${this._sut} >>> ui5-calendar >>> ui5-daypicker >>> .sapWCDayPickerItem`);
+		return browser.$(`${this._sut}`).shadow$(`ui5-calendar`).shadow$(`ui5-daypicker`).shadow$(`div.ui5-dp-item`);
 	}
 
 	getFirstDisplayedYear() {
-		return browser.findElementDeep(`${this._sut} >>> ui5-calendar >>> ui5-yearpicker >>> .sapWCYearPickerItem`);
+		return browser.$(`${this._sut}`).shadow$(`ui5-calendar`).shadow$(`ui5-yearpicker`).shadow$(`div.ui5-yp-item`);
 	}
 
 	getDisplayedYear(index) {
 		return browser
-			.findElementDeep(`${this._sut} >>> ui5-calendar >>> ui5-yearpicker >>> .sapWCYearPicker`)
-			.$$(".sapWCYearPickerItem")[index];
+			.$(`${this._sut}`).shadow$(`ui5-calendar`).shadow$(`ui5-yearpicker`).shadow$(`.ui5-yp-root`)
+			.$$(".ui5-yp-item")[index];
 	}
 
 	isValid(value) {
@@ -86,6 +86,7 @@ class DatePickerTestPage {
 	}
 
 	isPickerOpen() {
+
 		return browser.execute((id) => {
 			return document.querySelector(id).isOpen();
 		}, this._sut);

@@ -1,12 +1,15 @@
-<li {{> controlData}}
-	tabindex="{{ctr._tabIndex}}"
-	style="{{styles.main}}"
-	class="{{classes.main}}">
-		{{#if placeSelectionControlBefore}}
-			{{> modeControl}}
+<li
+	tabindex="{{_tabIndex}}"
+	class="{{classes.main}}"
+	dir="{{rtl}}"
+	@focusin="{{onfocusin}}"
+	@focusout="{{onfocusout}}"
+>
+		{{#if placeSelectionElementBefore}}
+			{{> selectionElement}}
 		{{/if}}
 
-		<div id="{{ctr._id}}-content" class="{{classes.inner}}">
+		<div id="{{_id}}-content" class="ui5-li-content">
 			{{> imageBegin}}
 			{{> iconBegin}}
 			{{> listItemContent}}
@@ -14,8 +17,8 @@
 
 		{{> iconEnd}}
 
-		{{#if placeSelectionControlAfter}}
-			{{> modeControl}}
+		{{#if placeSelectionElementAfter}}
+			{{> selectionElement}}
 		{{/if}}
 </li>
 
@@ -25,30 +28,32 @@
 {{#*inline "iconBegin"}}{{/inline}}
 {{#*inline "iconEnd"}}{{/inline}}
 
-{{#*inline "modeControl"}}
+{{#*inline "selectionElement"}}
 	{{#if modeSingleSelect}}
 		<ui5-radiobutton
-				id="{{ctr._id}}-singleSelectionControl"
-				class="singleSelectionRadioButton"
-				selected="{{ctr.selected}}">
+				id="{{_id}}-singleSelectionElement"
+				class="ui5-li-singlesel-radiobtn"
+				?selected="{{selected}}"
+				@click="{{onSingleSelectionComponentPress}}">
 		</ui5-radiobutton>
 	{{/if}}
 
 	{{#if modeMultiSelect}}
 		<ui5-checkbox
-				id="{{ctr._id}}-multiSelectionControl"
-				class="multiSelectionCheckBox"
-				checked="{{ctr.selected}}">
+				id="{{_id}}-multiSelectionElement"
+				class="ui5-li-multisel-cb"
+				?checked="{{selected}}"
+				@click="{{onMultiSelectionComponentPress}}">
 		</ui5-checkbox>
 	{{/if}}
 
 	{{#if modeDelete}}
-		<div class="sapMDeleteListItemButton">
+		<div class="ui5-li-deletebtn">
 			<ui5-button
-				id="{{ctr._id}}-deleteSelectionControl"
-				type="Transparent"
+				id="{{_id}}-deleteSelectionElement"
+				design="Transparent"
 				icon="sap-icon://decline"
-				@press="{{ctr._fnOnDelete}}"
+				@ui5-press="{{onDelete}}"
 			></ui5-button>
 		</div>
 	{{/if}}

@@ -1,26 +1,21 @@
-import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
-import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
-import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes";
-import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
-import CalendarHeaderTemplateContext from "./CalendarHeaderTemplateContext";
-import Button from "./Button";
-import ButtonType from "./types/ButtonType";
-import CalendarHeaderRenderer from "./build/compiled/CalendarHeaderRenderer.lit";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import getShadowDOMTarget from "@ui5/webcomponents-base/dist/events/getShadowDOMTarget.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
+import "./icons/slim-arrow-left.js";
+import "./icons/slim-arrow-right.js";
+import Button from "./Button.js";
+import Icon from "./Icon.js";
+import ButtonDesign from "./types/ButtonDesign.js";
+import CalendarHeaderTemplate from "./generated/templates/CalendarHeaderTemplate.lit.js";
 
 // Styles
-import belize from "./themes/sap_belize/CalendarHeader.less";
-import belizeHcb from "./themes/sap_belize_hcb/CalendarHeader.less";
-import fiori3 from "./themes/sap_fiori_3/CalendarHeader.less";
+import styles from "./generated/themes/CalendarHeader.css.js";
 
-ShadowDOM.registerStyle("sap_belize", "CalendarHeader.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "CalendarHeader.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "CalendarHeader.css", fiori3);
 
 const metadata = {
 	tag: "ui5-calendar-header",
-	styleUrl: [
-		"CalendarHeader.css",
-	],
 	properties: {
 		monthText: {
 			type: String,
@@ -49,13 +44,21 @@ const metadata = {
 	},
 };
 
-class CalendarHeader extends WebComponent {
+class CalendarHeader extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
 
-	static get renderer() {
-		return CalendarHeaderRenderer;
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return CalendarHeaderTemplate;
+	}
+
+	static get styles() {
+		return styles;
 	}
 
 	constructor() {
@@ -67,10 +70,10 @@ class CalendarHeader extends WebComponent {
 		this._btnNext.icon = "sap-icon://slim-arrow-right";
 
 		this._btn1 = {};
-		this._btn1.type = ButtonType.Transparent;
+		this._btn1.type = ButtonDesign.Transparent;
 
 		this._btn2 = {};
-		this._btn2.type = ButtonType.Transparent;
+		this._btn2.type = ButtonDesign.Transparent;
 	}
 
 	onBeforeRendering() {
@@ -94,28 +97,10 @@ class CalendarHeader extends WebComponent {
 		this.fireEvent("btn2Press", event);
 	}
 
-	onclick(event) {
-		const composedPath = event.composedPath();
-
-		for (let index = 0; index < composedPath.length; index++) {
-			const sAttributeValue = composedPath[index].getAttribute && composedPath[index].getAttribute("data-sap-cal-head-button");
-			const showPickerButton = event.ui5target.getAttribute("data-sap-show-picker");
-
-			if (showPickerButton) {
-				this[`_show${showPickerButton}Picker`]();
-				return;
-			}
-
-			if (sAttributeValue) {
-				this[`_handle${sAttributeValue}Press`]();
-				return;
-			}
-		}
-	}
-
 	onkeydown(event) {
-		if (event.which === KeyCodes.SPACE || event.which === KeyCodes.ENTER) {
-			const showPickerButton = event.ui5target.getAttribute("data-sap-show-picker");
+		const eventTarget = getShadowDOMTarget(event);
+		if (isSpace(event) || isEnter(event)) {
+			const showPickerButton = eventTarget.getAttribute("data-sap-show-picker");
 
 			if (showPickerButton) {
 				this[`_show${showPickerButton}Picker`]();
@@ -123,19 +108,20 @@ class CalendarHeader extends WebComponent {
 		}
 	}
 
-	static get calculateTemplateContext() {
-		return CalendarHeaderTemplateContext.calculate;
+	get rtl() {
+		return getRTL() ? "rtl" : undefined;
 	}
 
 	static async define(...params) {
-		await Button.define();
+		await Promise.all([
+			await Button.define(),
+			await Icon.define(),
+		]);
 
 		super.define(...params);
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	CalendarHeader.define();
-});
+CalendarHeader.define();
 
 export default CalendarHeader;

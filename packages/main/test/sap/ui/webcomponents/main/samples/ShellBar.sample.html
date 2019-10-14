@@ -14,7 +14,7 @@
 
 	<link href="../../../../../../test-resources/playground/css/api.css" type="text/css" rel="stylesheet">
 
-	<script data-id="sap-ui-config" type="application/json">
+	<script data-ui5-config type="application/json">
 		{
 			"theme": "sap_fiori_3",
 			"language": "EN"
@@ -34,7 +34,7 @@
 	<style>
 	</style>
 </head>
-<body class="sapUiBody example-wrapper">
+<body class="sapUiBody example-wrapper" role="application">
 
 	<header class="component-heading">
 		<h2 class="control-header">ShellBar</h2>
@@ -61,48 +61,41 @@
 	show-co-pilot
 >
 
-	<ui5-icon src="nav-back" data-ui5-slot="icon"></ui5-icon>
+	<ui5-icon src="sap-icon://nav-back" slot="icon"></ui5-icon>
 
-	<ui5-shellbar-item data-ui5-slot="items" id="disc" src="sap-icon://disconnected" text="Disconnect"></ui5-shellbar-item>
-	<ui5-shellbar-item data-ui5-slot="items" id="call" src="sap-icon://incoming-call" text="Incoming Calls"></ui5-shellbar-item>
+	<ui5-shellbar-item id="disc" src="sap-icon://disconnected" text="Disconnect"></ui5-shellbar-item>
+	<ui5-shellbar-item id="call" src="sap-icon://incoming-call" text="Incoming Calls"></ui5-shellbar-item>
 
-	<ui5-input data-ui5-slot="searchField"></ui5-input>
+	<ui5-input slot="searchField"></ui5-input>
+
+	<ui5-li slot="menuItems">Application 1</ui5-li>
+	<ui5-li slot="menuItems">Application 2</ui5-li>
+	<ui5-li slot="menuItems">Application 3</ui5-li>
+	<ui5-li slot="menuItems">Application 4</ui5-li>
+	<ui5-li slot="menuItems">Application 5</ui5-li>
 </ui5-shellbar>
 
-<ui5-popover id="action-popover" hide-header placement-type="Bottom">
+<ui5-popover id="action-popover" placement-type="Bottom">
 	<div class="action-popover-header">
 		<ui5-title style="padding: 0.25rem 1rem 0rem 1rem">An Kimura</ui5-title>
 	</div>
 
 	<div class="action-popover-content" style="margin-top: 1rem;">
 		<ui5-list separators="None" >
-			<ui5-li type="Active"icon="sap-icon://sys-find">App Finder</ui5-li>
-			<ui5-li type="Active"icon="sap-icon://settings">Settings</ui5-li>
-			<ui5-li type="Active"icon="sap-icon://edit">Edit Home Page</ui5-li>
-			<ui5-li type="Active"icon="sap-icon://sys-help">Help</ui5-li>
-			<ui5-li type="Active"icon="sap-icon://log">Sign out</ui5-li>
+			<ui5-li icon="sap-icon://sys-find">App Finder</ui5-li>
+			<ui5-li icon="sap-icon://settings">Settings</ui5-li>
+			<ui5-li icon="sap-icon://edit">Edit Home Page</ui5-li>
+			<ui5-li icon="sap-icon://sys-help">Help</ui5-li>
+			<ui5-li icon="sap-icon://log">Sign out</ui5-li>
 		</ui5-list>
 	</div>
 </ui5-popover>
 
-<ui5-popover id="app-list-popover" hide-header placement-type="Bottom">
-	<ui5-list separators="None">
-		<ui5-li type="Active">Application 1</ui5-li>
-		<ui5-li type="Active">Application 2</ui5-li>
-		<ui5-li type="Active">Application 3</ui5-li>
-		<ui5-li type="Active">Application 4</ui5-li>
-		<ui5-li type="Active">Application 5</ui5-li>
-	</ui5-list>
-</ui5-popover>
-
 <script>
-	shellbar.addEventListener("profilePress", function(event) {
-		window["action-popover"].openBy(event.detail.iconRef);
+	shellbar.addEventListener("profileClick", function(event) {
+		window["action-popover"].openBy(event.detail.targetRef);
 	});
 
-	shellbar.addEventListener("titlePress", function(event) {
-		window["app-list-popover"].openBy(event.detail.iconRef);
-	});
 </script>
 				</div>
 
@@ -120,48 +113,42 @@
 	show-co-pilot
 >
 
-	<ui5-icon src="nav-back" data-ui5-slot="icon"></ui5-icon>
+	<ui5-icon src="nav-back" slot="icon"></ui5-icon>
 
-	<ui5-shellbar-item data-ui5-slot="items" id="disc" src="sap-icon://disconnected" text="Disconnect"></ui5-shellbar-item>
-	<ui5-shellbar-item data-ui5-slot="items" id="call" src="sap-icon://incoming-call" text="Incoming Calls"></ui5-shellbar-item>
+	<ui5-shellbar-item id="disc" src="sap-icon://disconnected" text="Disconnect"></ui5-shellbar-item>
+	<ui5-shellbar-item id="call" src="sap-icon://incoming-call" text="Incoming Calls"></ui5-shellbar-item>
 
-	<ui5-input data-ui5-slot="searchField"></ui5-input>
+	<ui5-input slot="searchField"></ui5-input>
+
+	<ui5-li slot="menuItems">Application 1</ui5-li>
+	<ui5-li slot="menuItems">Application 2</ui5-li>
+	<ui5-li slot="menuItems">Application 3</ui5-li>
+	<ui5-li slot="menuItems">Application 4</ui5-li>
+	<ui5-li slot="menuItems">Application 5</ui5-li>
+
 </ui5-shellbar>
 
-<ui5-popover id="popover" hide-header placement-type="Bottom">
+<ui5-popover id="popover" placement-type="Bottom">
 	<div class="popover-header">
 		<ui5-title style="padding: 0.25rem 1rem 0rem 1rem">An Kimura</ui5-title>
 	</div>
 
 	<div class="popover-content">
 		<ui5-list separators="None" >
-			<ui5-li type="Active"icon="sap-icon://sys-find">App Finder</ui5-li>
-			<ui5-li type="Active"icon="sap-icon://settings">Settings</ui5-li>
-			<ui5-li type="Active"icon="sap-icon://edit">Edit Home Page</ui5-li>
-			<ui5-li type="Active"icon="sap-icon://sys-help">Help</ui5-li>
-			<ui5-li type="Active"icon="sap-icon://log">Sign out</ui5-li>
+			<ui5-li icon="sap-icon://sys-find">App Finder</ui5-li>
+			<ui5-li icon="sap-icon://settings">Settings</ui5-li>
+			<ui5-li icon="sap-icon://edit">Edit Home Page</ui5-li>
+			<ui5-li icon="sap-icon://sys-help">Help</ui5-li>
+			<ui5-li icon="sap-icon://log">Sign out</ui5-li>
 		</ui5-list>
 	</div>
 </ui5-popover>
 
-<ui5-popover id="app-list-popover" hide-header placement-type="Bottom">
-	<ui5-list separators="None">
-		<ui5-li type="Active">Application 1</ui5-li>
-		<ui5-li type="Active">Application 2</ui5-li>
-		<ui5-li type="Active">Application 3</ui5-li>
-		<ui5-li type="Active">Application 4</ui5-li>
-		<ui5-li type="Active">Application 5</ui5-li>
-	</ui5-list>
-</ui5-popover>
-
 <script>
-	shellbar.addEventListener("profilePress", function(event) {
-		popover.openBy(event.detail.iconRef);
+	shellbar.addEventListener("profileClick", function(event) {
+		popover.openBy(event.detail.targetRef);
 	});
 
-	shellbar.addEventListener("titlePress", function(event) {
-		window["app-list-popover"].openBy(event.detail.iconRef);
-	});
 </script>
 		</xmp>
 				</pre>
@@ -206,7 +193,7 @@
 					notification-count="22"
 				>
 
-					<ui5-input data-ui5-slot="searchField" placeholer="Enter service..."></ui5-input>
+					<ui5-input slot="searchField" placeholer="Enter service..."></ui5-input>
 				</ui5-shellbar>
 			</div>
 
@@ -221,7 +208,7 @@
 	notification-count="22"
 	>
 
-	<ui5-input data-ui5-slot="searchField" placeholer="Enter service..."></ui5-input>
+	<ui5-input slot="searchField" placeholer="Enter service..."></ui5-input>
 </ui5-shellbar>
 	</xmp>
 			</pre>

@@ -1,0 +1,170 @@
+
+:host(:not([hidden])) {
+	display: inline-block;
+}
+
+:host {
+	height: 100%;
+	width: 100%;
+}
+
+.ui5-dp-weekname,
+.ui5-dp-dayname,
+.ui5-dp-item {
+	width: 2.25rem;
+	height: 2.875rem;
+	margin-top: var(--_ui5_daypicker_item_margin);
+	margin-right: var(--_ui5_daypicker_item_margin);
+	font-family: var(--sapUiFontFamily);
+	border-radius: var(--_ui5_daypicker_item_border_radius);
+}
+
+.ui5-dp-weekname {
+	color: var(--_ui5_daypicker_weekname_color);
+}
+
+.ui5-dp-content {
+	display: flex;
+	flex-direction: column;
+	font-family: var(--sapUiFontFamily);
+}
+
+.ui5-dp-days-names-container {
+	display: flex;
+	height: var(--_ui5_daypicker_daynames_container_height);
+}
+
+.ui5-dp-weeknumber-container {
+	padding-top: var(--_ui5_daypicker_weeknumbers_container_padding_top);
+}
+
+.ui5-dp-weekname,
+.ui5-dp-dayname,
+.ui5-dp-weekname-container,
+.ui5-dp-item {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: var(--sapMFontSmallSize);
+	outline: none;
+	box-sizing: border-box;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.ui5-dp-item {
+	position: relative;
+	color: var(--sapUiBaseText);
+	background: var(--_ui5_daypicker_item_background_color);
+	font-size: var(--sapMFontMediumSize);
+	border: var(--_ui5_daypicker_item_border);
+}
+
+.ui5-dp-item:hover {
+	background: var(--_ui5_daypicker_item_hover_background_color);
+}
+
+.ui5-dp-daytext {
+	display: flex;
+	width: 100%;
+	height: 100%;
+	justify-content: center;
+	align-items: center;
+	box-sizing: border-box;
+}
+
+.ui5-dp-dayname {
+	color: var(--_ui5_daypicker_dayname_color);
+	height: 100%;
+}
+
+.ui5-dp-item.ui5-dp-item--weeekend {
+	background: var(--_ui5_daypicker_item_weekend_background_color);
+}
+
+.ui5-dp-item.ui5-dp-item--weeekend:hover {
+	background: var(--_ui5_daypicker_item_weekend_hover_background_color);
+}
+
+.ui5-dp-item.ui5-dp-item--othermonth {
+	color: var(--_ui5_daypicker_item_othermonth_color);
+	background: var(--_ui5_daypicker_item_othermonth_background_color);
+	border-color: transparent;
+}
+
+.ui5-dp-item.ui5-dp-item--othermonth:hover,
+.ui5-dp-item.ui5-dp-item--weeekend.ui5-dp-item--othermonth:hover {
+	color: var(--_ui5_daypicker_item_othermonth_hover_color);
+	background: var(--_ui5_daypicker_item_othermonth_hover_background_color);
+}
+
+.ui5-dp-item:focus::after {
+	content: "";
+	width: calc(100% - 0.25rem);
+	height: calc(100% - 0.25rem);
+	border: var(--_ui5_daypicker_item_outline_width) dotted var(--sapUiContentFocusColor);
+	position: absolute;
+	top: var(--_ui5_daypicker_item_outline_offset);
+	left: var(--_ui5_daypicker_item_outline_offset);
+}
+
+.ui5-dp-item.ui5-dp-item--now {
+	border: 0.125rem solid var(--sapUiCalendarColorToday);
+}
+
+.ui5-dp-item.ui5-dp-item--selected .ui5-dp-daytext {
+	background: var(--_ui5_daypicker_item_selected_background_color);
+	color: var(--sapUiContentContrastTextColor);
+}
+
+.ui5-dp-item.ui5-dp-item--selected.ui5-dp-item--now .ui5-dp-daytext {
+	border: 1px solid var(--_ui5_daypicker_item_now_selected_text_border_color);
+	border-radius: var(--_ui5_daypicker_item_now_inner_border_radius);
+}
+
+.ui5-dp-item.ui5-dp-item--selected.ui5-dp-item--now:focus::after {
+	width: var(--_ui5_daypicker_item_now_selected_focus_after_width);
+	height: var(--_ui5_daypicker_item_now_selected_focus_after_height);
+	border-color: var(--sapUiContentFocusColor);
+	top: 0px;
+	left: 0px;
+}
+
+.ui5-dp-item.ui5-dp-item--selected:hover {
+	background: var(--_ui5_daypicker_item_selected_hover_background_color);
+	color: var(--sapUiContentContrastTextColor);
+}
+
+.ui5-dp-item.ui5-dp-item--selected:focus::after {
+	border-color: var(--sapUiContentContrastFocusColor);
+}
+
+.ui5-dp-items-container {
+	outline: none;
+}
+
+.ui5-dp-items-container > :first-child {
+	justify-content: flex-end;
+}
+
+.ui5-dp-emptyweek {
+	height: 3rem;
+}
+
+/* Compact size */
+:host([data-ui5-compact-size]) .ui5-dp-weeknumber-container {
+	padding-top: 2rem;
+}
+
+:host([data-ui5-compact-size]) .ui5-dp-weekname,
+:host([data-ui5-compact-size]) .ui5-dp-dayname,
+:host([data-ui5-compact-size]) .ui5-dp-item {
+	width: 2rem;
+	height: 2rem;
+}
+
+:host([data-ui5-compact-size]) .ui5-dp-emptyweek {
+	height: 2.125rem;
+}

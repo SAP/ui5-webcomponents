@@ -1,0 +1,28 @@
+:host {
+	display: contents;
+	font-family: var(--sapUiFontFamily,var(--sapFontFamily,"72","72full",Arial,Helvetica,sans-serif));
+	font-size: 0.875rem;
+	height: 100%;
+	box-sizing: border-box;
+	overflow: hidden;
+	color: var(--sapUiContentLabelColor);
+}
+
+td {
+	padding: .5rem .25rem;
+	box-sizing: border-box;
+}
+
+:host([first-in-row]) td,
+.ui5-table-popin-row td {
+	padding-left: 1rem;
+
+}
+
+:host([first-in-row]) td {
+	padding-left: 1rem;
+}
+
+:host([popined]) td {
+	padding-left: 0;
+}

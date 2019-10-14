@@ -1,0 +1,55 @@
+:host(:not([hidden])) {
+	display: inline-block;
+}
+
+/* this line is also included from the Button.css, but keep it here in case we start using it for automatic IE11 compilation */
+:host([disabled]) {
+	pointer-events: none;
+}
+
+:host([design="Positive"][pressed]),
+:host([design="Positive"][pressed][focused]),
+:host([design="Positive"][pressed]:hover) {
+	background: var(--sapUiButtonAcceptActiveBackground);
+	border-color: var(--sapUiButtonAcceptActiveBorderColor);
+	color: var(--sapUiToggleButtonPressedTextColor);
+	outline-color: var(--sapUiContentContrastFocusColor);
+}
+
+:host([design="Positive"][pressed][active]),
+:host([design="Positive"][pressed]:hover) {
+	background: var(--_ui5_toggle_button_pressed_positive_hover);
+}
+
+:host([design="Negative"][pressed]),
+:host([design="Negative"][pressed][focused]),
+:host([design="Negative"][pressed]:hover) {
+	background: var(--sapUiButtonRejectActiveBackground);
+	border-color: var(--sapUiButtonRejectActiveBorderColor);
+	color: var(--sapUiToggleButtonPressedTextColor);
+	outline-color: var(--sapUiContentContrastFocusColor);
+}
+
+:host([design="Negative"][pressed][active]),
+:host([design="Negative"][pressed]:hover) {
+	background: var(--_ui5_toggle_button_pressed_negative_hover);
+}
+
+
+:host([pressed]),
+:host([pressed]:hover),
+:host([pressed][focused]),
+:host([design="Transparent"][pressed]),
+:host([design="Transparent"][pressed]:hover),
+:host([design="Emphasized"][pressed]),
+:host([design="Emphasized"][pressed]:hover) {
+	background: var(--sapUiToggleButtonPressedBackground);
+	border-color: var(--sapUiToggleButtonPressedBorderColor);
+	color: var(--sapUiToggleButtonPressedTextColor);
+	outline-color: var(--sapUiContentContrastFocusColor);
+}
+
+:host([pressed][active]),
+:host([pressed]:hover) {
+	background: var(--sapUiToggleButtonPressedHoverBackground);
+}

@@ -1,33 +1,21 @@
-import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
-import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
-import Button from "./Button";
-import ToggleButtonTemplateContext from "./ToggleButtonTemplateContext";
-import ToggleButtonRenderer from "./build/compiled/ToggleButtonRenderer.lit";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import Button from "./Button.js";
+import ToggleButtonTemplate from "./generated/templates/ToggleButtonTemplate.lit.js";
 
 // Styles
-import belize from "./themes/sap_belize/ToggleButton.less";
-import belizeHcb from "./themes/sap_belize_hcb/ToggleButton.less";
-import fiori3 from "./themes/sap_fiori_3/ToggleButton.less";
-
-ShadowDOM.registerStyle("sap_belize", "ToggleButton.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "ToggleButton.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "ToggleButton.css", fiori3);
+import toggleBtnCss from "./generated/themes/ToggleButton.css.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-togglebutton",
-	styleUrl: [
-		"Button.css",
-		"ToggleButton.css",
-	],
-	usesNodeText: true,
 	properties: /** @lends  sap.ui.webcomponents.main.ToggleButton.prototype */ {
 		/**
 		 * Determines whether the <code>ui5-togglebutton</code> is displayed as pressed.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		pressed: {
@@ -59,7 +47,6 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.ToggleButton
  * @extends Button
  * @tagname ui5-togglebutton
- * @usestextcontent
  * @public
  */
 class ToggleButton extends Button {
@@ -67,34 +54,24 @@ class ToggleButton extends Button {
 		return metadata;
 	}
 
-	static get renderer() {
-		return ToggleButtonRenderer;
+	static get render() {
+		return litRender;
 	}
 
-	onclick() {
-		if (!this.disabled) {
-			this.pressed = !this.pressed;
-			this.fireEvent("press", { pressed: this.pressed });
-		}
+	static get template() {
+		return ToggleButtonTemplate;
 	}
 
-	/*
-	* @override
-	*/
-	onkeydown() {}
+	static get styles() {
+		return [Button.styles, toggleBtnCss];
+	}
 
-	/*
-	* @override
-	*/
-	onkeyup() {}
-
-	static get calculateTemplateContext() {
-		return ToggleButtonTemplateContext.calculate;
+	_onclick(e) {
+		this.pressed = !this.pressed;
+		this.fireEvent("press", { pressed: this.pressed });
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	ToggleButton.define();
-});
+ToggleButton.define();
 
 export default ToggleButton;

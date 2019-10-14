@@ -1,59 +1,71 @@
-import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
-import ResizeHandler from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/delegate/ResizeHandler";
-import ItemNavigation from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/delegate/ItemNavigation";
-import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
-import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
-import TableColumn from "./TableColumn";
-import TableRow from "./TableRow";
-import TableRenderer from "./build/compiled/TableRenderer.lit";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import { isSpace } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import TableTemplate from "./generated/templates/TableTemplate.lit.js";
 
 // Styles
-import belize from "./themes/sap_belize/Table.less";
-import belizeHcb from "./themes/sap_belize_hcb/Table.less";
-import fiori3 from "./themes/sap_fiori_3/Table.less";
-
-ShadowDOM.registerStyle("sap_belize", "Table.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "Table.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "Table.css", fiori3);
+import styles from "./generated/themes/Table.css.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-table",
-	styleUrl: [
-		"Table.css",
-	],
 	slots: /** @lends sap.ui.webcomponents.main.Table.prototype */ {
 
 		/**
 		 * Defines the <code>ui5-table</code> rows.
-		 * <br><b>Note:</b> Only <code>ui5-table-row</code> is allowed.
+		 * <br><b>Note:</b> Use <code>ui5-table-row</code> for the intended design.
 		 *
-		 * @type {TableRow[]}
+		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
 		 */
-		rows: {
-			type: TableRow,
-			multiple: true,
+		"default": {
+			propertyName: "rows",
+			type: HTMLElement,
+			individualSlots: true,
 		},
 
 		/**
 		 * Defines the configuration for the columns of the <code>ui5-table</code>.
-		 * <br><b>Note:</b> Only <code>ui5-table-column</code> is allowed.
+		 * <br><b>Note:</b> Use <code>ui5-table-column</code> for the intended design.
 		 *
-		 * @type {TableColumn[]}
+		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
 		 */
 		columns: {
-			type: TableColumn,
-			multiple: true,
-			listenFor: { exclude: ["header"] },
+			type: HTMLElement,
+			individualSlots: true,
+			listenFor: { include: ["*"] },
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.Table.prototype */ {
+
+		/**
+		 * Defines the text that will be displayed when there is no data and <code>showNoData</code> is present.
+		 *
+		 * @type {string}
+		 * @defaultvalue: ""
+		 * @public
+		 */
+		noDataText: {
+			type: String,
+		},
+
+		/**
+		 * Defines if the value of <code>noDataText</code> will be diplayed when there is no rows present in the table.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 */
+		showNoData: {
+			type: Boolean,
+		},
 		/**
 		 * Determines whether the column headers remain fixed at the top of the page during
 		 * vertical scrolling as long as the Web Component is in the viewport.
@@ -65,16 +77,19 @@ const metadata = {
 		 * <li>Internet Explorer</li>
 		 * <li>Microsoft Edge lower than version 41 (EdgeHTML 16)</li>
 		 * <li>Mozilla Firefox lower than version 59</li>
-		 * </ul></li>
+		 * </ul>
+		 * </li>
 		 * <li>Scrolling behavior:
 		 * <ul>
 		 * <li>If the Web Component is placed in layout containers that have the <code>overflow: hidden</code>
 		 * or <code>overflow: auto</code> style definition, this can
 		 * prevent the sticky elements of the Web Component from becoming fixed at the top of the viewport.</li>
-		 * </ul></li>
+		 * </ul>
+		 * </li>
 		 * </ul>
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		stickyColumnHeader: {
@@ -84,6 +99,10 @@ const metadata = {
 		_hiddenColumns: {
 			type: Object,
 			multiple: true,
+		},
+
+		_noDataDisplayed: {
+			type: Boolean,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Table.prototype */ {
@@ -107,60 +126,37 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/Table";</code>
+ * <code>import "@ui5/webcomponents/dist/Table.js";</code>
  * <br>
- * <b>Note:</b> This also includes the <code>ui5-table-column</code>, <code>ui5-table-row</code> and <code>ui5-table-cell</code> Web Components.
+ * <code>import "@ui5/webcomponents/dist/TableColumn.js";</code> (for <code>ui5-table-column</code>)
+ * <br>
+ * <code>import "@ui5/webcomponents/dist/TableRow.js";</code> (for <code>ui5-table-row</code>)
+ * <br>
+ * <code>import "@ui5/webcomponents/dist/TableCell.js";</code> (for <code>ui5-table-cell</code>)
  *
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Table
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-table
  * @appenddocs TableColumn TableRow TableCell
  * @public
  */
-class Table extends WebComponent {
+class Table extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
 
-	static get renderer() {
-		return TableRenderer;
+	static get styles() {
+		return styles;
 	}
 
-	static get calculateTemplateContext() {
-		return state => {
-			const context = {
-				ctr: state,
-				visibleColumns: [],
-				classes: {
-					main: {
-						sapWCTableHeader: true,
-					},
-					columns: {
-						sapWCTableColumnWrapper: true,
-					},
-				},
-				styles: {
-					main: {
-						"grid-template-columns": "",
-						position: state.stickyColumnHeader ? "sticky" : "",
-						top: state.stickyColumnHeader ? "0px" : "",
-					},
-				},
-			};
+	static get render() {
+		return litRender;
+	}
 
-			context.ctr.columns.forEach((column, index) => {
-				if (!context.ctr._hiddenColumns[index]) {
-					context.visibleColumns.push(column);
-
-					// width of columns
-					context.styles.main["grid-template-columns"] += `minmax(0, ${column.width || "1fr"}) `;
-				}
-			}, this);
-
-			return context;
-		};
+	static get template() {
+		return TableTemplate;
 	}
 
 	constructor() {
@@ -175,6 +171,8 @@ class Table extends WebComponent {
 		this._delegates.push(this._itemNavigation);
 
 		this.fnOnRowFocused = this.onRowFocused.bind(this);
+
+		this._handleResize = this.popinContent.bind(this);
 	}
 
 	onBeforeRendering() {
@@ -184,21 +182,35 @@ class Table extends WebComponent {
 
 		this.rows.forEach(row => {
 			row._columnsInfo = columnSettings;
-			row.removeEventListener("_focused", this.fnOnRowFocused);
-			row.addEventListener("_focused", this.fnOnRowFocused);
+			row.removeEventListener("ui5-_focused", this.fnOnRowFocused);
+			row.addEventListener("ui5-_focused", this.fnOnRowFocused);
 		});
+
+		this.visibleColumns = this.columns.filter((column, index) => {
+			column.sticky = this.stickyColumnHeader;
+			return !this._hiddenColumns[index];
+		});
+
+		this._noDataDisplayed = !this.rows.length && this.showNoData;
+		this.visibleColumnsCount = this.visibleColumns.length;
 	}
 
 	onEnterDOM() {
-		ResizeHandler.register(this.getDomRef(), this.popinContent.bind(this));
+		ResizeHandler.register(this.getDomRef(), this._handleResize);
 	}
 
 	onExitDOM() {
-		ResizeHandler.deregister(this.getDomRef(), this.popinContent.bind(this));
+		ResizeHandler.deregister(this.getDomRef(), this._handleResize);
 	}
 
 	onRowFocused(event) {
 		this._itemNavigation.update(event.target);
+	}
+
+	onkeydown(event) {
+		if (isSpace(event)) {
+			event.preventDefault();
+		}
 	}
 
 	popinContent(_event) {
@@ -221,8 +233,8 @@ class Table extends WebComponent {
 		});
 
 		if (visibleColumnsIndexes.length) {
-			this.columns[visibleColumnsIndexes[0]]._first = true;
-			this.columns[visibleColumnsIndexes[visibleColumnsIndexes.length - 1]]._last = true;
+			this.columns[visibleColumnsIndexes[0]].first = true;
+			this.columns[visibleColumnsIndexes[visibleColumnsIndexes.length - 1]].last = true;
 		}
 
 		// invalidate only if hidden columns count has changed
@@ -241,7 +253,6 @@ class Table extends WebComponent {
 		return this.columns.map((column, index) => {
 			return {
 				index,
-				width: column.width,
 				minWidth: column.minWidth,
 				demandPopin: column.demandPopin,
 				popinText: column.popinText,
@@ -251,8 +262,6 @@ class Table extends WebComponent {
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	Table.define();
-});
+Table.define();
 
 export default Table;

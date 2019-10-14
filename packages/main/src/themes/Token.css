@@ -1,0 +1,111 @@
+:host {
+	display: inline-block;
+	background: var(--sapUiButtonBackground);
+	border-width: 1px;
+	border-style: solid;
+	border-color: var(--_ui5_token_border_color);
+	border-radius: var(--_ui5_token_border_radius);
+	color: var(--_ui5_token_text_color);
+	height: 1.625rem;
+	box-sizing: border-box;
+}
+
+:host([overflows]) {
+	visibility: hidden;
+}
+
+:host(:not([readonly]):hover) {
+	background: var(--sapUiButtonHoverBackground);
+	border-color: var(--_ui5_token_hover_border_color);
+}
+
+:host([selected]:not([readonly])) {
+	color: var(--sapUiToggleButtonPressedTextColor);
+	background: var(--sapUiToggleButtonPressedBackground);
+	border: 1px solid var(--sapUiToggleButtonPressedBorderColor);
+}
+
+:host([selected]:not([readonly]):hover) {
+	background: var(--sapUiToggleButtonPressedHoverBackground);
+	border: 1px solid var(--sapUiToggleButtonPressedHoverBorderColor);
+}
+
+:host([readonly]) {
+	color: var(--sapUiContentForegroundTextColor);
+}
+
+:host([readonly]) .ui5-token--wrapper {
+	padding-right: 0.375rem;
+}
+
+:host([selected]) .ui5-token--wrapper:focus {
+	outline: 1px dotted var(--sapUiContentContrastFocusColor);
+}
+
+.ui5-token--wrapper {
+	display: flex;
+	align-items: center;
+	height: 100%;
+	width: 100%;
+	cursor: default;
+	padding-left: 0.3125rem;
+	padding-top: 0.25rem;
+	padding-bottom: 0.25rem;
+	box-sizing: border-box;
+	font-size: var(--sapMFontMediumSize);
+	font-family: var(--sapUiFontFamily);
+	user-select: none;
+}
+
+.ui5-token--wrapper:focus {
+	outline-offset: -2px;
+	outline: 1px dotted var(--sapUiContentFocusColor);
+}
+
+.ui5-token--text {
+	white-space: nowrap;
+}
+
+.ui5-token--icon {
+	padding: 0.25rem 0.5rem;
+	color: inherit;
+	cursor: pointer;
+	width: 1rem;
+	height: 1rem;
+	color: var(--_ui5_token_icon_color);
+}
+
+/* Compact */
+:host([data-ui5-compact-size]) {
+	font-size: 0.75rem;
+	height: 1.125rem; /* Note: by design should be 1.25rem, but the token gets cut in Erron/Warning state */
+}
+
+:host([data-ui5-compact-size]) .ui5-token--wrapper {
+	padding-left: 0.25rem; 
+	padding-top: 0.1rem; 
+	padding-bottom: 0.1rem; 
+}
+
+:host([data-ui5-compact-size]) .ui5-token--icon {
+	padding: 0.1rem 0.25rem;
+	width: 0.75rem;
+	height: 0.75rem;
+}
+
+/* RTL */
+:host .ui5-token--wrapper[dir="rtl"] {
+	padding-right: 0.3125rem;
+	padding-left: 0;
+}
+
+:host([readonly]) .ui5-token--wrapper[dir="rtl"] {
+	padding-right: 0;
+	padding-left: 0.375rem;
+}
+
+/* RTL + Compact */
+:host([data-ui5-compact-size]) .ui5-token--wrapper[dir="rtl"] {
+	padding-right: 0.25rem;
+	padding-left: 0;
+}

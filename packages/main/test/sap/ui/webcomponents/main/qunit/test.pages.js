@@ -27,6 +27,5 @@
 		"Table",
 		"TextArea",
 		"Title",
-		"ToggleButton",
 	];
 }));

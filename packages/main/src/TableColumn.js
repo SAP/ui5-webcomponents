@@ -1,45 +1,35 @@
-import WebComponent from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/WebComponent";
-import Integer from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/Integer";
-import Bootstrap from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/Bootstrap";
-import CSSSize from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/types/CSSSize";
-import ShadowDOM from "@ui5/webcomponents-base/src/sap/ui/webcomponents/base/compatibility/ShadowDOM";
-import TableColumnRenderer from "./build/compiled/TableColumnRenderer.lit";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import TableColumnTemplate from "./generated/templates/TableColumnTemplate.lit.js";
 
 // Styles
-import belize from "./themes/sap_belize/TableColumn.less";
-import belizeHcb from "./themes/sap_belize_hcb/TableColumn.less";
-import fiori3 from "./themes/sap_fiori_3/TableColumn.less";
+import styles from "./generated/themes/TableColumn.css.js";
 
-ShadowDOM.registerStyle("sap_belize", "TableColumn.css", belize);
-ShadowDOM.registerStyle("sap_belize_hcb", "TableColumn.css", belizeHcb);
-ShadowDOM.registerStyle("sap_fiori_3", "TableColumn.css", fiori3);
 
 const metadata = {
 	tag: "ui5-table-column",
-	styleUrl: [
-		"TableColumn.css",
-	],
 	slots: /** @lends sap.ui.webcomponents.main.TableColumn.prototype */ {
 
 		/**
-		 * Defines the HTML Element to be displayed in the column header.
+		 * Defines the content of the column header.
 		 *
-		 * @type {HTMLElement}
+		 * @type {Node[]}
 		 * @slot
 		 * @public
 		 */
-		header: {
-			type: HTMLElement,
+		"default": {
+			type: Node,
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.TableColumn.prototype */ {
 
 		/**
 		 * Defines the minimum screen width required to display this column. By default it is always displayed.
-		 * </br></br>
+		 * <br><br>
 		 * The responsive behavior of the <code>ui5-table</code> is determined by this property. As an example, by setting
 		 * <code>minWidth</code> property to <code>40em</code> shows this column on tablet (and desktop) but hides it on mobile.
-		 * </br>
+		 * <br>
 		 * For further responsive design options, see <code>demandPopin</code> property.
 		 *
 		 * @type {number}
@@ -54,20 +44,21 @@ const metadata = {
 		 * The text for the column when it pops in.
 		 *
 		 * @type {string}
+		 * @defaultvalue: ""
 		 * @public
 		 */
 		popinText: {
 			type: String,
-			defaultValue: "",
 		},
 
 		/**
 		 * According to your <code>minWidth</code> settings, the <code>ui5-table-column</code> can be hidden
 		 * in different screen sizes.
-		 * </br></br>
+		 * <br><br>
 		 * Setting this property to <code>true</code>, shows this column as pop-in instead of hiding it.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		demandPopin: {
@@ -75,23 +66,24 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the width of the column. If you leave it empty, then this column covers the remaining space.
-		 *
-		 * @type {CSSSize}
-		 * @public
+		 * @protected
 		 */
-		width: {
-			type: CSSSize,
-			defaultValue: "",
+		first: {
+			type: Boolean,
 		},
 
-		_first: {
+		/**
+		 * @protected
+		 */
+		last: {
 			type: Boolean,
-			defaultValue: false,
 		},
-		_last: {
+
+		/**
+		 * @protected
+		 */
+		sticky: {
 			type: Boolean,
-			defaultValue: false,
 		},
 	},
 };
@@ -107,41 +99,28 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.TableColumn
- * @extends sap.ui.webcomponents.base.WebComponent
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-table-column
  * @public
  */
-class TableColumn extends WebComponent {
+class TableColumn extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
 
-	static get renderer() {
-		return TableColumnRenderer;
+	static get styles() {
+		return styles;
 	}
 
-	static calculateTemplateContext(state) {
-		const context = {
-			ctr: state,
-			classes: {
-				main: {
-					sapWCTableColumn: true,
-					sapWCTableColumnFirst: state._first,
-					sapWCTableColumnLast: state._last,
-				},
-			},
-			styles: {
-				main: {
-				},
-			},
-		};
+	static get render() {
+		return litRender;
+	}
 
-		return context;
+	static get template() {
+		return TableColumnTemplate;
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	TableColumn.define();
-});
+TableColumn.define();
 
 export default TableColumn;

@@ -1,0 +1,194 @@
+@import "./InvisibleTextStyles.css";
+
+:host(:not([hidden])) {
+	display: inline-block;
+}
+
+:host {
+	max-width: 100%;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	color: var(--sapUiFieldBorderColor);
+}
+
+/* Selected */
+:host([selected]) {
+	color: var(--_ui5_radiobutton_selected_fill);
+}
+:host([selected]) .ui5-radio-svg .ui5-radio-svg-inner {
+	fill: currentColor;
+}
+
+/* Disabled */
+:host([disabled]) .ui5-radio-root {
+	opacity: var(--sapUiContentDisabledOpacity);
+}
+
+/* Focused */
+:host(:not([disabled])) .ui5-radio-root:focus:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0.5rem;
+	bottom: 0.5rem;
+	left: 0.5rem;
+	right: 0.5rem;
+	pointer-events: none;
+	border: var(--_ui5_radiobutton_border_width) dotted var(--sapUiContentFocusColor);
+}
+
+/* Hovered */
+:host(:not([value-state="Error"]):not([value-state="Warning"])) .ui5-radio-root:hover .ui5-radio-inner--hoverable .ui5-radio-svg-outer {
+	fill: var(--_ui5_radiobutton_hover_fill);
+	stroke: var(--sapUiFieldHoverBorderColor);
+}
+
+/* with label */
+:host([text]) .ui5-radio-root:focus:before {
+	right: 0;
+}
+
+/* Read only */
+:host([selected][readonly]) .ui5-radio-svg-inner {
+	fill: var(--sapUiContentNonInteractiveIconColor);
+}
+
+:host([readonly]) .ui5-radio-root .ui5-radio-svg-outer {
+	fill: var(--sapUiFieldReadOnlyBackground);
+	stroke: var(--sapUiFieldReadOnlyBorderColor);
+}
+
+/* Error state */
+:host([value-state="Error"][selected]) .ui5-radio-root .ui5-radio-svg-inner {
+	fill: var(--_ui5_radiobutton_selected_error_fill);
+}
+:host([value-state="Error"]) .ui5-radio-root .ui5-radio-svg-outer,
+:host([value-state="Error"]) .ui5-radio-root:hover .ui5-radio-inner.ui5-radio-inner--hoverable:hover .ui5-radio-svg-outer {
+	stroke: var(--sapUiFieldInvalidColor);
+	fill: var(--sapUiFieldInvalidBackground);
+}
+
+/* Warning state */
+:host([value-state="Warning"][selected]) .ui5-radio-root .ui5-radio-svg-inner {
+	fill: var(--_ui5_radiobutton_selected_warning_fill);
+}
+:host([value-state="Warning"]) .ui5-radio-root .ui5-radio-svg-outer,
+:host([value-state="Warning"]) .ui5-radio-root:hover .ui5-radio-inner.ui5-radio-inner--hoverable:hover .ui5-radio-svg-outer {
+	stroke: var(--sapUiFieldWarningColor);
+	fill: var(--sapUiFieldWarningBackground);
+}
+
+:host([value-state="Error"]) .ui5-radio-root,
+:host([value-state="Warning"]) .ui5-radio-root {
+	stroke-dasharray: var(--_ui5_radiobutton_warning_error_border_dash);
+}
+
+.ui5-radio-root {
+	position: relative;
+	display: flex;
+	flex-wrap: nowrap;
+	outline: none;
+	max-width: 100%;
+}
+
+/* Inner */
+.ui5-radio-inner {
+	width: 2.75rem;
+	height: 2.75rem;
+	font-size: 1rem; /* override font size of the message dialog */
+	pointer-events: none;
+	vertical-align: top;
+	display: inline-block;
+}
+
+.ui5-radio-inner:focus {
+	outline: none;
+}
+
+.ui5-radio-inner input {
+	margin: 0; /* FF puts margin */
+	visibility: hidden;
+	width: 0;
+}
+
+/* Label */
+ui5-label.labelInRadioButton {
+	width: calc(100% - 2.75rem);
+	padding-right: 1px;
+	vertical-align: top;
+	height: 2.75rem;
+	line-height: 2.75rem;
+	cursor: default;
+	max-width: 100%;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	pointer-events: none;
+}
+
+/* SVG */
+.ui5-radio-svg {
+	height: 2.75rem;
+	width: 2.75rem;
+	pointer-events: none;
+}
+
+.ui5-radio-svg .ui5-radio-svg-outer {
+	stroke: currentColor;
+}
+
+.ui5-radio-svg .ui5-radio-svg-inner {
+	fill: none;
+}
+
+/* Compact size */
+:host([data-ui5-compact-size]) .ui5-radio-root {
+	height : 2rem;
+}
+
+:host([data-ui5-compact-size]) .ui5-radio-root:focus:before {
+	top: .375rem;
+	bottom: .375rem;
+	left: .375rem;
+	right: .325rem;
+}
+
+:host([data-ui5-compact-size][text]) .ui5-radio-root:focus:before {
+	right: 0;
+}
+
+:host([data-ui5-compact-size]) .ui5-radio-root .ui5-radio-inner {
+	width: 2rem;
+	height: 2rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+:host([data-ui5-compact-size]) .ui5-radio-root .ui5-radio-inner .ui5-radio-svg {
+	height: 2rem;
+	width: 2rem;
+	line-height: 2rem;
+}
+
+:host([data-ui5-compact-size]) .ui5-radio-root ui5-label.labelInRadioButton {
+	line-height: 2rem;
+	height: 2rem;
+	width: calc(100% - 2rem + 1px);
+}
+
+/* RTL */
+:host([text]) [dir="rtl"].ui5-radio-root:focus:before {
+	left: 0;
+	right: 0.5rem;
+}
+
+/* RTL in Compact */
+:host([data-ui5-compact-size][text]) [dir="rtl"].ui5-radio-root:focus:before {
+	left: 0;
+	right: 0.375rem;
+}
+
+/* ListItem Context */
+:host(.ui5-li-singlesel-radiobtn) .ui5-radio-root .ui5-radio-inner .ui5-radio-svg-outer {
+	fill: var(--sapUiListBackground);
+}

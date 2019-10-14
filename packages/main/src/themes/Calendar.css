@@ -1,0 +1,19 @@
+:host {
+	display: inline-block;
+}
+
+.ui5-yearpicker--hidden,
+.ui5-monthpicker--hidden,
+.ui5-daypicker--hidden {
+	display: none;
+}
+
+.ui5-cal-root {
+	background: var(--sapUiListBackground);
+}
+
+.ui5-cal-root ui5-daypicker,
+.ui5-cal-root ui5-month-picker,
+.ui5-cal-root ui5-yearpicker {
+	vertical-align: top;
+}
