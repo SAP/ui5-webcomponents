@@ -9,6 +9,7 @@
 	height: var(--_ui5_button_base_height);
 	font-family: var(--sapUiFontFamily);
 	font-size: var(--sapMFontMediumSize);
+	text-shadow: var(--_ui5_button_text_shadow);
 	border-radius: var(--_ui5_button_border_radius);
 	border-width: 0.0625rem;
 	cursor: pointer;
@@ -50,21 +51,18 @@
 	cursor: inherit;
 	height: 100%;
 	width: 100%;
-	font-weight: normal;
 	box-sizing: border-box;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	text-shadow: var(--_ui5_button_text_shadow);
 	outline: none;
 	padding: 0 var(--_ui5_button_base_padding);
 	position: relative;
 	background: transparent;
 	border: none;
-	font-size: inherit;
 	color: inherit;
 	text-shadow: inherit;
-	font-weight: inherit;
+	font: inherit;
 }
 
 :host(:not([active]):hover) {
