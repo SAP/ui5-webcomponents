@@ -1,7 +1,11 @@
-commit d5e19f681f5df808d24a7e6a49ebfac32e97284c
-Author: clementlemarc-certua <50454150+clementlemarc-certua@users.noreply.github.com>
-Date:   Tue Oct 15 11:24:22 2019 +0100
+commit d7d96ec4b955a51f66850f751fd0b0fb57eb1d60
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Tue Oct 15 16:33:44 2019 +0300
 
-    fix: skip waiting for polyfill in case already loaded (#851)
+    fix: trigger dom mutation observer independent of insertion order (#847)
     
-    Check that polyfill are not already loaded
+    DOM insertion order was leading to situations where the mutation
+    observer was not registered
+    leaving empty rendered rows
+    
+    fixes: #839
