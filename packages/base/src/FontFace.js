@@ -27,7 +27,7 @@ const fontFaceCSS = `
 	}
 	
 	@font-face {
-		font-family: '72full';
+		font-family: "72full";
 		font-style: normal;
 		font-weight: 400;
 		src: url(${font72RegularFullWoff2}) format("woff2"),
@@ -36,7 +36,7 @@ const fontFaceCSS = `
 	}
 	
 	@font-face {
-		font-family: '72';
+		font-family: "72";
 		font-style: normal;
 		font-weight: 700;
 		src: url(${font72BoldWoff2}) format("woff2"),
@@ -45,7 +45,7 @@ const fontFaceCSS = `
 	}
 	
 	@font-face {
-		font-family: '72full';
+		font-family: "72full";
 		font-style: normal;
 		font-weight: 700;
 		src: url(${font72BoldFullWoff2}) format("woff2"),
