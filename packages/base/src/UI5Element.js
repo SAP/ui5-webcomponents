@@ -85,10 +85,12 @@ class UI5Element extends HTMLElement {
 			return;
 		}
 
+		// always register the observer before yielding control to the main thread (await)
+		this._startObservingDOMChildren();
+
 		await this._processChildren();
 		await RenderScheduler.renderImmediately(this);
 		this._domRefReadyPromise._deferredResolve();
-		this._startObservingDOMChildren();
 		if (typeof this.onEnterDOM === "function") {
 			this.onEnterDOM();
 		}
