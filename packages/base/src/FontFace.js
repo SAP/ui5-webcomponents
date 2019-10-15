@@ -21,36 +21,37 @@ const fontFaceCSS = `
 		font-family: "72";
 		font-style: normal;
 		font-weight: 400;
-		src: url(${font72RegularWoff2}) format("woff2"),
-			url(${font72RegularWoff}) format("woff"),
-			local("72");
+		src: local("72"),
+			url(${font72RegularWoff2}) format("woff2"),
+			url(${font72RegularWoff}) format("woff");
 	}
 	
 	@font-face {
 		font-family: "72full";
 		font-style: normal;
 		font-weight: 400;
-		src: url(${font72RegularFullWoff2}) format("woff2"),
-			url(${font72RegularFullWoff}) format("woff"),
-			local('72-full');
+		src: local('72-full'),
+			url(${font72RegularFullWoff2}) format("woff2"),
+			url(${font72RegularFullWoff}) format("woff");
+		
 	}
 	
 	@font-face {
 		font-family: "72";
 		font-style: normal;
 		font-weight: 700;
-		src: url(${font72BoldWoff2}) format("woff2"),
-			url(${font72BoldWoff}) format("woff"),
-			local('72-Bold');
+		src: local('72-Bold'),
+			url(${font72BoldWoff2}) format("woff2"),
+			url(${font72BoldWoff}) format("woff");
 	}
 	
 	@font-face {
 		font-family: "72full";
 		font-style: normal;
 		font-weight: 700;
-		src: url(${font72BoldFullWoff2}) format("woff2"),
-			url(${font72BoldFullWoff}) format("woff"),
-			local('72-Bold-full');
+		src: local('72-Bold-full'),
+			url(${font72BoldFullWoff2}) format("woff2"),
+			url(${font72BoldFullWoff}) format("woff");
 	}
 `;
 
