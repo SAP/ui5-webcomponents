@@ -1,12 +1,7 @@
-commit 003868cd0c9a35ff6afbd327c800685141a0cafc
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Mon Oct 14 17:15:09 2019 +0300
+commit d5e19f681f5df808d24a7e6a49ebfac32e97284c
+Author: clementlemarc-certua <50454150+clementlemarc-certua@users.noreply.github.com>
+Date:   Tue Oct 15 11:24:22 2019 +0100
 
-    chore: upgrade all packages to the latest version (#814)
+    fix: skip waiting for polyfill in case already loaded (#851)
     
-    - upgrade travis nodejs version
-    
-    - adopt LESS functions to newest used version
-    LESS has switched to ES6 modules, use the CJS format to extract the color functions
-    
-    - fix color transformations
+    Check that polyfill are not already loaded
