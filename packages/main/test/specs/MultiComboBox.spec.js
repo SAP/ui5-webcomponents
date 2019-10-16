@@ -98,7 +98,6 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("When item is clicked, the popover should be closed and the value in the input should be removed", () => {
-			const mcb = $("#mcb");
 			const input = browser.$("#mcb").shadow$("#ui5-multi-combobox-input");
 			const popover = browser.$("#mcb").shadow$(".ui5-multi-combobox-all-items-popover");
 			const firstItem = browser.$("#mcb").shadow$(".ui5-multi-combobox-all-items-list > ui5-li");
@@ -118,7 +117,6 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("When item's checkbox is clicked, the popover should not be closed and the value in the input should be kept", () => {
-			const mcb = $("#mcb");
 			const input = browser.$("#mcb").shadow$("#ui5-multi-combobox-input");
 			const popover = browser.$("#mcb").shadow$(".ui5-multi-combobox-all-items-popover");
 			const firstItemCheckbox = browser.$("#mcb").shadow$(".ui5-multi-combobox-all-items-list > ui5-li").shadow$("ui5-checkbox");

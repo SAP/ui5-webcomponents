@@ -405,7 +405,7 @@ class MultiComboBox extends UI5Element {
 
 		this.fireEvent("selectionChange", { items: this._getSelectedItems() });
 
-		if (isEnter(event.detail) || (!event.detail.selectionComponentPressed && !isSpace(event.detail))) {
+		if (!event.detail.selectionComponentPressed && !isSpace(event.detail)) {
 			this._getPopover().close();
 			this.value = "";
 			this.fireEvent("input");
