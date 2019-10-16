@@ -63,13 +63,9 @@ const deepEqual = (a, b, maxDepth, contains, depth) => {
 			return a.valueOf() === b.valueOf();
 		}
 
-		for (var i in a) {
-			if (!deepEqual(a[i], b[i], maxDepth, contains, depth + 1)) {
-				return false;
-			}
-		}
-
-		return true;
+		return !Object.keys(a).some(i => {
+			return !deepEqual(a[i], b[i], maxDepth, contains, depth + 1);
+		});
 	}
 
 	return false;
