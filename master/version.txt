@@ -1,11 +1,5 @@
-commit d7d96ec4b955a51f66850f751fd0b0fb57eb1d60
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Tue Oct 15 16:33:44 2019 +0300
+commit c27b2d84d20ff13004a76b87e827419c524bb44a
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Oct 16 14:11:44 2019 +0300
 
-    fix: trigger dom mutation observer independent of insertion order (#847)
-    
-    DOM insertion order was leading to situations where the mutation
-    observer was not registered
-    leaving empty rendered rows
-    
-    fixes: #839
+    refactor: load font-face on bootstrap (#852)
