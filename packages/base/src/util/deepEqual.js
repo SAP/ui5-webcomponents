@@ -24,7 +24,8 @@ const deepEqual = (a, b, ignoreFunctions, maxDepth, contains, depth) => {
 		return true;
 	}
 
-	const bIsReallyNaN = typeof a === "number" && typeof b === "number" && isNaN(a) && isNaN(b);
+	const realIsNan = Number.isNaN || window.isNaN; // eslint-disable-line
+	const bIsReallyNaN = typeof a === "number" && typeof b === "number" && realIsNan(a) && realIsNan(b);
 	if (bIsReallyNaN) {
 		return true;
 	}
@@ -75,8 +76,5 @@ const deepEqual = (a, b, ignoreFunctions, maxDepth, contains, depth) => {
 	return false;
 };
 
-const isNaN = () => {
-	return Number.isNaN || window.isNaN; // eslint-disable-line
-};
 
 export default deepEqual;
