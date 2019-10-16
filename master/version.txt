@@ -1,5 +1,5 @@
-commit c1c1f2639c98dc763e209372f5732789c4ff8870
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Oct 16 14:14:21 2019 +0300
+commit d71e65291fe4f82dfef4fdf9457eaaf31c9fcdfb
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Wed Oct 16 14:10:45 2019 +0300
 
-    docs(ui5-shellbar): describe when title and subtitle hide (#854)
+    chore: remove unused theming files (#856)
