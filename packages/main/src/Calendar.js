@@ -429,12 +429,13 @@ class Calendar extends UI5Element {
 	}
 
 	_showMonthPicker() {
-		this._monthPicker = Object.assign({}, this._monthPicker);
-		this._oMonth = Object.assign({}, this._oMonth);
-
-		this._monthPicker.timestamp = this._timestamp;
-		this._monthPicker._hidden = false;
-		this._oMonth._hidden = true;
+		this._monthPicker = Object.assign({}, this._monthPicker, {
+			timestamp: this._timestamp,
+			_hidden: false,
+		});
+		this._oMonth = Object.assign({}, this._oMonth, {
+			_hidden: true,
+		});
 
 		const calendarRect = this.shadowRoot.querySelector(".ui5-cal-root").getBoundingClientRect();
 
@@ -443,13 +444,14 @@ class Calendar extends UI5Element {
 	}
 
 	_showYearPicker() {
-		this._yearPicker = Object.assign({}, this._yearPicker);
-		this._oMonth = Object.assign({}, this._oMonth);
-
-		this._yearPicker.timestamp = this._timestamp;
-		this._yearPicker._selectedYear = this._calendarDate.getYear();
-		this._yearPicker._hidden = false;
-		this._oMonth._hidden = true;
+		this._yearPicker = Object.assign({}, this._yearPicker, {
+			timestamp: this._timestamp,
+			_selectedYear: this._calendarDate.getYear(),
+			_hidden: false,
+		});
+		this._oMonth = Object.assign({}, this._oMonth, {
+			_hidden: true,
+		});
 
 		const calendarRect = this.shadowRoot.querySelector(".ui5-cal-root").getBoundingClientRect();
 
@@ -458,19 +460,21 @@ class Calendar extends UI5Element {
 	}
 
 	_hideMonthPicker() {
-		this._monthPicker = Object.assign({}, this._monthPicker);
-		this._oMonth = Object.assign({}, this._oMonth);
-
-		this._monthPicker._hidden = true;
-		this._oMonth._hidden = false;
+		this._monthPicker = Object.assign({}, this._monthPicker, {
+			_hidden: true,
+		});
+		this._oMonth = Object.assign({}, this._oMonth, {
+			_hidden: false,
+		});
 	}
 
 	_hideYearPicker() {
-		this._yearPicker = Object.assign({}, this._yearPicker);
-		this._oMonth = Object.assign({}, this._oMonth);
-
-		this._yearPicker._hidden = true;
-		this._oMonth._hidden = false;
+		this._yearPicker = Object.assign({}, this._yearPicker, {
+			_hidden: true,
+		});
+		this._oMonth = Object.assign({}, this._oMonth, {
+			_hidden: false,
+		});
 	}
 
 	_isYearInRange(timestamp, yearsoffset, min, max) {
