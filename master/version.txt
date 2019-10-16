@@ -1,5 +1,5 @@
-commit c27b2d84d20ff13004a76b87e827419c524bb44a
+commit c1c1f2639c98dc763e209372f5732789c4ff8870
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Oct 16 14:11:44 2019 +0300
+Date:   Wed Oct 16 14:14:21 2019 +0300
 
-    refactor: load font-face on bootstrap (#852)
+    docs(ui5-shellbar): describe when title and subtitle hide (#854)
