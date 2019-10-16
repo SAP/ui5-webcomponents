@@ -9,10 +9,10 @@ describe("MultiComboBox general interaction", () => {
 			const popover = browser.$("#multi1").shadow$(".ui5-multi-combobox-all-items-popover");
 
 			icon.click();
-			assert.ok(popover.isDisplayedInViewport(), "Popover should be displayed in the viewport");
+			assert.ok(popover.getProperty("opened"), "Popover should be displayed in the viewport");
 
 			icon.click();
-			assert.ok(!popover.isDisplayedInViewport(), "Popover should close");
+			assert.ok(!popover.getProperty("opened"), "Popover should close");
 		});
 	});
 
@@ -30,7 +30,7 @@ describe("MultiComboBox general interaction", () => {
 			
 			icon.click();
 
-			assert.ok(popover.isDisplayedInViewport(), "Popover should be displayed in the viewport");
+			assert.ok(popover.getProperty("opened"), "Popover should be displayed in the viewport");
 			assert.equal(firstItem.getAttribute("selected"), null, "First item should not be selected");
 
 			firstItemCheckbox.click();
@@ -59,7 +59,7 @@ describe("MultiComboBox general interaction", () => {
 
 			const list = browser.$("#mcb").shadow$(".ui5-multi-combobox-all-items-list");
 
-			assert.ok(popover.isDisplayedInViewport(), "Popover should be displayed in the viewport");
+			assert.ok(popover.getProperty("opened"), "Popover should be displayed in the viewport");
 
 
 			assert.strictEqual(list.getProperty("items").length, 3, "3 items should be shown");
@@ -98,38 +98,36 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("When item is clicked, the popover should be closed and the value in the input should be removed", () => {
-			const input = browser.$("#mcb").shadow$("#ui5-multi-combobox-input");
-			const popover = browser.$("#mcb").shadow$(".ui5-multi-combobox-all-items-popover");
-			const firstItem = browser.$("#mcb").shadow$(".ui5-multi-combobox-all-items-list > ui5-li");
+			const input = browser.$("#another-mcb").shadow$("#ui5-multi-combobox-input");
+			const popover = browser.$("#another-mcb").shadow$(".ui5-multi-combobox-all-items-popover");
+			const firstItem = browser.$("#another-mcb").shadow$(".ui5-multi-combobox-all-items-list > ui5-li");
 
 			input.click();
-			input.keys("\uE003");
-			input.keys("\uE003");
 			input.keys("c");
 
-			assert.strictEqual(popover.isDisplayedInViewport(), true, "The popover should be opened");
+			assert.strictEqual(popover.getProperty("opened"), true, "The popover should be opened");
 			assert.strictEqual(input.getValue(), "c", "Value is c (as typed)");
 
 			firstItem.click();
 
-			assert.strictEqual(popover.isDisplayedInViewport(), false, "When the content is clicked, the popover should close");
+			assert.strictEqual(popover.getProperty("opened"), false, "When the content is clicked, the popover should close");
 			assert.strictEqual(input.getValue(), "", "When the content is clicked, the value should be removed");
 		});
 
 		it("When item's checkbox is clicked, the popover should not be closed and the value in the input should be kept", () => {
-			const input = browser.$("#mcb").shadow$("#ui5-multi-combobox-input");
-			const popover = browser.$("#mcb").shadow$(".ui5-multi-combobox-all-items-popover");
-			const firstItemCheckbox = browser.$("#mcb").shadow$(".ui5-multi-combobox-all-items-list > ui5-li").shadow$("ui5-checkbox");
+			const input = browser.$("#another-mcb").shadow$("#ui5-multi-combobox-input");
+			const popover = browser.$("#another-mcb").shadow$(".ui5-multi-combobox-all-items-popover");
+			const firstItemCheckbox = browser.$("#another-mcb").shadow$(".ui5-multi-combobox-all-items-list > ui5-li").shadow$("ui5-checkbox");
 
 			input.click();
 			input.keys("c");
 
-			assert.strictEqual(popover.isDisplayedInViewport(), true, "The popover should be opened");
+			assert.strictEqual(popover.getProperty("opened"), true, "The popover should be opened");
 			assert.strictEqual(input.getValue(), "c", "Value is c (as typed)");
 
 			firstItemCheckbox.click();
 
-			assert.strictEqual(popover.isDisplayedInViewport(), true, "When the content is clicked, the popover should close");
+			assert.strictEqual(popover.getProperty("opened"), true, "When the content is clicked, the popover should close");
 			assert.strictEqual(input.getValue(), "c", "When the content is clicked, the value should be removed");
 		});
 
