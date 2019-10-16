@@ -680,7 +680,7 @@ class UI5Element extends HTMLElement {
 					const oldState = this._state[prop];
 
 					if (propData.type === Object) {
-						isDifferent = !deepEqual(oldState, value);
+						isDifferent = !deepEqual(oldState, value, true);
 					} else {
 						isDifferent = oldState !== value;
 					}

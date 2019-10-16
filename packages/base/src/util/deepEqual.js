@@ -1,4 +1,4 @@
-const deepEqual = (a, b, maxDepth, contains, depth) => {
+const deepEqual = (a, b, ignoreFunctions, maxDepth, contains, depth) => {
 	if (typeof maxDepth === "boolean") {
 		contains = maxDepth;
 		maxDepth = undefined;
@@ -20,6 +20,10 @@ const deepEqual = (a, b, maxDepth, contains, depth) => {
 		return true;
 	}
 
+	if (ignoreFunctions && typeof a === "function" && typeof b === "function") {
+		return true;
+	}
+
 	const bIsReallyNaN = typeof a === "number" && typeof b === "number" && isNaN(a) && isNaN(b);
 	if (bIsReallyNaN) {
 		return true;
@@ -35,7 +39,7 @@ const deepEqual = (a, b, maxDepth, contains, depth) => {
 		}
 
 		for (let i = 0; i < a.length; i++) {
-			if (!deepEqual(a[i], b[i], maxDepth, contains, depth + 1)) {
+			if (!deepEqual(a[i], b[i], ignoreFunctions, maxDepth, contains, depth + 1)) {
 				return false;
 			}
 		}
@@ -64,7 +68,7 @@ const deepEqual = (a, b, maxDepth, contains, depth) => {
 		}
 
 		return !Object.keys(a).some(i => {
-			return !deepEqual(a[i], b[i], maxDepth, contains, depth + 1);
+			return !deepEqual(a[i], b[i], ignoreFunctions, maxDepth, contains, depth + 1);
 		});
 	}
 
