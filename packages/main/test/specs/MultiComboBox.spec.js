@@ -97,13 +97,51 @@ describe("MultiComboBox general interaction", () => {
 			}, 2500, "expect value state to be different after 2.5 seconds");
 		});
 
-		// it("tests if n more is applied and corresponding popover", () => {
-		// 	$("#more-mcb").scrollIntoView();
+		it("When item is clicked, the popover should be closed and the value in the input should be removed", () => {
+			const mcb = $("#mcb");
+			const input = browser.$("#mcb").shadow$("#ui5-multi-combobox-input");
+			const popover = browser.$("#mcb").shadow$(".ui5-multi-combobox-all-items-popover");
+			const firstItem = browser.$("#mcb").shadow$(".ui5-multi-combobox-all-items-list > ui5-li");
 
-		// 	const nMoreText = browser.$("#more-mcb").shadow$("ui5-tokenizer").shadow$(".ui5-tokenizer-more-text");
+			input.click();
+			input.keys("\uE003");
+			input.keys("\uE003");
+			input.keys("c");
 
-		// 	assert.ok(nMoreText.getText(), "1 More", "token 1 should be visible");
-		// });
+			assert.strictEqual(popover.isDisplayedInViewport(), true, "The popover should be opened");
+			assert.strictEqual(input.getValue(), "c", "Value is c (as typed)");
+
+			firstItem.click();
+
+			assert.strictEqual(popover.isDisplayedInViewport(), false, "When the content is clicked, the popover should close");
+			assert.strictEqual(input.getValue(), "", "When the content is clicked, the value should be removed");
+		});
+
+		it("When item's checkbox is clicked, the popover should not be closed and the value in the input should be kept", () => {
+			const mcb = $("#mcb");
+			const input = browser.$("#mcb").shadow$("#ui5-multi-combobox-input");
+			const popover = browser.$("#mcb").shadow$(".ui5-multi-combobox-all-items-popover");
+			const firstItemCheckbox = browser.$("#mcb").shadow$(".ui5-multi-combobox-all-items-list > ui5-li").shadow$("ui5-checkbox");
+
+			input.click();
+			input.keys("c");
+
+			assert.strictEqual(popover.isDisplayedInViewport(), true, "The popover should be opened");
+			assert.strictEqual(input.getValue(), "c", "Value is c (as typed)");
+
+			firstItemCheckbox.click();
+
+			assert.strictEqual(popover.isDisplayedInViewport(), true, "When the content is clicked, the popover should close");
+			assert.strictEqual(input.getValue(), "c", "When the content is clicked, the value should be removed");
+		});
+
+		it("tests if n more is applied and corresponding popover", () => {
+			$("#more-mcb").scrollIntoView();
+
+			const nMoreText = browser.$("#more-mcb").shadow$("ui5-tokenizer").shadow$(".ui5-tokenizer-more-text");
+
+			assert.ok(nMoreText.getText(), "1 More", "token 1 should be visible");
+		});
 	});
 
 	describe("keyboard handling", () => {
