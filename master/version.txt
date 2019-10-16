@@ -1,5 +1,5 @@
-commit d71e65291fe4f82dfef4fdf9457eaaf31c9fcdfb
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Wed Oct 16 14:10:45 2019 +0300
+commit 1b3e40d17e64a8c297a7ba8c9df779f6962b140c
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Wed Oct 16 14:57:05 2019 +0300
 
-    chore: remove unused theming files (#856)
+    fix(ui5-multi-combobox): close popover & empty value on selection (#832)
