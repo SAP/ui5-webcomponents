@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<script>delete Document.prototype.adoptedStyleSheets;</script>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta charset="utf-8">
 	<title>ui5-input</title>
 	<script src="../../../../../../webcomponentsjs/webcomponents-loader.js"></script>
 	<script src="../../../../../../resources/sap/ui/webcomponents/main/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../../../../../resources/sap/ui/webcomponents/main/bundle.es5.js"></script>
+
+	<script>delete Document.prototype.adoptedStyleSheets;</script>
+	
 </head>
 
 <body>
@@ -41,7 +45,7 @@
 
 	<h3> Test 'change' event</h3>
 	<ui5-input id="input1" style="width:100%" value-state="Warning" placeholder="Warning state ...">
-		<ui5-icon slot="icon" src="sap-icon://message-warning" functional></ui5-icon>
+		<ui5-icon slot="icon" src="sap-icon://message-warning"></ui5-icon>
 	</ui5-input>
 	<h3> 'change' event result</h3>
 	<ui5-input id="inputResult" style="width:100%"></ui5-input>

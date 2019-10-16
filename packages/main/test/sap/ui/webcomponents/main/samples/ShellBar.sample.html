@@ -14,7 +14,7 @@
 
 	<link href="../../../../../../test-resources/playground/css/api.css" type="text/css" rel="stylesheet">
 
-	<script data-id="sap-ui-config" type="application/json">
+	<script data-ui5-config type="application/json">
 		{
 			"theme": "sap_fiori_3",
 			"language": "EN"
@@ -61,7 +61,7 @@
 	show-co-pilot
 >
 
-	<ui5-icon src="nav-back" slot="icon"></ui5-icon>
+	<ui5-icon src="sap-icon://nav-back" slot="icon"></ui5-icon>
 
 	<ui5-shellbar-item id="disc" src="sap-icon://disconnected" text="Disconnect"></ui5-shellbar-item>
 	<ui5-shellbar-item id="call" src="sap-icon://incoming-call" text="Incoming Calls"></ui5-shellbar-item>
@@ -75,7 +75,7 @@
 	<ui5-li slot="menuItems">Application 5</ui5-li>
 </ui5-shellbar>
 
-<ui5-popover id="action-popover" hide-header placement-type="Bottom">
+<ui5-popover id="action-popover" placement-type="Bottom">
 	<div class="action-popover-header">
 		<ui5-title style="padding: 0.25rem 1rem 0rem 1rem">An Kimura</ui5-title>
 	</div>
@@ -92,7 +92,7 @@
 </ui5-popover>
 
 <script>
-	shellbar.addEventListener("profilePress", function(event) {
+	shellbar.addEventListener("profileClick", function(event) {
 		window["action-popover"].openBy(event.detail.targetRef);
 	});
 
@@ -128,7 +128,7 @@
 
 </ui5-shellbar>
 
-<ui5-popover id="popover" hide-header placement-type="Bottom">
+<ui5-popover id="popover" placement-type="Bottom">
 	<div class="popover-header">
 		<ui5-title style="padding: 0.25rem 1rem 0rem 1rem">An Kimura</ui5-title>
 	</div>
@@ -145,7 +145,7 @@
 </ui5-popover>
 
 <script>
-	shellbar.addEventListener("profilePress", function(event) {
+	shellbar.addEventListener("profileClick", function(event) {
 		popover.openBy(event.detail.targetRef);
 	});
 

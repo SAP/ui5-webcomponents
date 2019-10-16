@@ -1,4 +1,5 @@
 import DataType from "./types/DataType.js";
+import isDescendantOf from "./util/isDescendantOf.js";
 
 class UI5ElementMetadata {
 	constructor(metadata) {
@@ -9,20 +10,17 @@ class UI5ElementMetadata {
 		return this.metadata.tag;
 	}
 
-	getNoShadowDOM() {
-		return this.metadata.noShadowDOM;
-	}
-
-	getDefaultSlot() {
-		return this.metadata.defaultSlot || "content";
+	hasAttribute(propName) {
+		const propData = this.getProperties()[propName];
+		return propData.type !== Object && !propData.noAttribute;
 	}
 
 	getPropsList() {
 		return Object.keys(this.getProperties());
 	}
 
-	getPublicPropsList() {
-		return this.getPropsList().filter(UI5ElementMetadata.isPublicProperty);
+	getAttributesList() {
+		return this.getPropsList().filter(this.hasAttribute, this);
 	}
 
 	getSlots() {
@@ -41,10 +39,6 @@ class UI5ElementMetadata {
 		return this.metadata.events || {};
 	}
 
-	static isPublicProperty(prop) {
-		return prop.charAt(0) !== "_";
-	}
-
 	static validatePropertyValue(value, propData) {
 		const isMultiple = propData.multiple;
 		if (isMultiple) {
@@ -60,11 +54,6 @@ class UI5ElementMetadata {
 
 const validateSingleProperty = (value, propData) => {
 	const propertyType = propData.type;
-
-	// Association handling
-	if (propData.association) {
-		return value;
-	}
 
 	if (propertyType === Boolean) {
 		return typeof value === "boolean" ? value : false;
@@ -87,7 +76,7 @@ const validateSingleSlot = (value, slotData) => {
 
 	const getSlottedNodes = el => {
 		const isTag = el instanceof HTMLElement;
-		const isSlot = isTag && el.tagName.toUpperCase() === "SLOT";
+		const isSlot = isTag && el.localName === "slot";
 
 		if (isSlot) {
 			return el.assignedNodes({ flatten: true }).filter(item => item instanceof HTMLElement);
@@ -95,39 +84,15 @@ const validateSingleSlot = (value, slotData) => {
 
 		return [el];
 	};
-	const propertyType = slotData.type;
 
 	const slottedNodes = getSlottedNodes(value);
 	slottedNodes.forEach(el => {
-		if (!(el instanceof propertyType)) {
-			const isHTMLElement = el instanceof HTMLElement;
-			const tagName = isHTMLElement && el.tagName.toLowerCase();
-			const isCustomElement = isHTMLElement && tagName.includes("-");
-			if (isCustomElement) {
-				window.customElements.whenDefined(tagName).then(() => {
-					if (!(el instanceof propertyType)) {
-						throw new Error(`${el} is not of type ${propertyType}`);
-					}
-				});
-			}
+		if (!(el instanceof slotData.type)) {
+			throw new Error(`${el} is not of type ${slotData.type}`);
 		}
 	});
 
 	return value;
-};
-
-const isDescendantOf = (klass, baseKlass, inclusive = false) => {
-	if (typeof klass !== "function" || typeof baseKlass !== "function") {
-		return false;
-	}
-	if (inclusive && klass === baseKlass) {
-		return true;
-	}
-	let parent = klass;
-	do {
-		parent = Object.getPrototypeOf(parent);
-	} while (parent !== null && parent !== baseKlass);
-	return parent === baseKlass;
 };
 
 export default UI5ElementMetadata;

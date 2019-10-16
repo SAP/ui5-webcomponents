@@ -41,7 +41,7 @@ const derivationsFactory = ({ darken, lighten, contrast, fade, saturate, desatur
 		"--sapUiAccent7Lighten64": () => lighten("--sapUiAccent7", 64),
 		"--sapUiAccent8Lighten61": () => lighten("--sapUiAccent8", 61),
 		"--sapUiAccent9Lighten37": () => lighten("--sapUiAccent9", 37),
-		"--sapUiAccent10Lighten37": () => lighten("--sapUiAccent10", 37),
+		"--sapUiAccent10Lighten49": () => lighten("--sapUiAccent10", 49),
 	};
 
 	return derivations;

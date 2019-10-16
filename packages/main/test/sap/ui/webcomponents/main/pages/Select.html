@@ -4,6 +4,9 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta charset="utf-8">
 	<title>ui5-select</title>
+	<script>
+		delete Document.prototype.adoptedStyleSheets;
+	</script>
 	<script src="../../../../../../webcomponentsjs/webcomponents-loader.js"></script>
 	<script src="../../../../../../resources/sap/ui/webcomponents/main/bundle.esm.js"
 		type="module"
@@ -23,16 +26,16 @@
 	<h2>Content size</h2>
 	<ui5-label id="lblResult"></ui5-label>
 	<ui5-select id="mySelect">
-		<ui5-li selected>Cozy</ui5-li>
-		<ui5-li selected>Compact</ui5-li>
-		<ui5-li selected>Condensed</ui5-li>
+		<ui5-option selected>Cozy</ui5-option>
+		<ui5-option selected>Compact</ui5-option>
+		<ui5-option selected>Condensed</ui5-option>
 	</ui5-select>
 
 	<h2>Error Select</h2>
 	<ui5-select id="mySelect2" value-state="Error">
-		<ui5-li selected>Cozy</ui5-li>
-		<ui5-li selected>Compact</ui5-li>
-		<ui5-li selected>Condensed</ui5-li>
+		<ui5-option selected>Cozy</ui5-option>
+		<ui5-option selected>Compact</ui5-option>
+		<ui5-option selected>Condensed</ui5-option>
 	</ui5-select>
 
 	<h2>Warning Select</h2>
@@ -65,8 +68,12 @@
 
 	// Select
 	select.addEventListener("ui5-change", function(e) {
-		lbl.innerHTML = "selected item :: " + e.detail.selectedItem.textContent + " :: " + (++counter);
+		lbl.innerHTML = "selected item :: " + e.detail.selectedOption.textContent + " :: " + (++counter);
 		inputResult.value = counter;
+	});
+
+	select.addEventListener("change", function(e) {
+		console.log("Select change event fired", e);
 	});
 
 	select2.addEventListener("ui5-change", function(e) {
@@ -105,12 +112,12 @@
 		const theme = hcb ? "sap_belize_hcb" : "sap_fiori_3";
 
 		document.body.setAttribute("style", styles);
-		var Theming = window["sap-ui-webcomponents-main-bundle"].Theming;
-		Theming.setTheme(theme);
+		var Conf = window["sap-ui-webcomponents-main-bundle"].configuration;
+		Conf.setTheme(theme);
 	});
 
 	countries.forEach(function(item, idx) {
-		var li = document.createElement("ui5-li");
+		var li = document.createElement("ui5-option");
 		li.id = item.key;
 
 		if (idx === 0) {
@@ -123,10 +130,10 @@
 
 	var initialItemsHTML = "";
 
-	addItemsBtn.addEventListener("ui5-press", event => {
+	addItemsBtn.addEventListener("ui5-press", function(event) {
 		initialItemsHTML = select.innerHTML;
 
-		var li = document.createElement('ui5-li');
+		var li = document.createElement('ui5-option');
 
 		li.textContent = "New";
 
@@ -134,10 +141,9 @@
 		select.appendChild(li);
 	});
 
-	restoreItemsBtn.addEventListener("ui5-press", event => {
+	restoreItemsBtn.addEventListener("ui5-press", function(event) {
 		select.innerHTML = initialItemsHTML;
 	});
 </script>
 </body>
-</html>
 </html>

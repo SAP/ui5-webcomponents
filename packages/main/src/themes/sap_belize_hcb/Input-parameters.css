@@ -10,4 +10,5 @@
 	--_ui5_input_disabled_font_weight: normal;
 	--_ui5_input_disabled_border_color: var(--sapUiFieldReadOnlyBorderColor);
 	--_ui5_input_disabled_background: var(--sapUiFieldReadOnlyBackground);
+	--_ui5_input_icon_padding: 0.65rem 0.75rem;
 }

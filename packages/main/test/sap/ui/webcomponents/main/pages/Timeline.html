@@ -10,7 +10,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta charset="utf-8">
 
-	<script data-id="sap-ui-config" type="application/json">
+	<script data-ui5-config type="application/json">
 		{
 			"theme": "sap_fiori_3",
 			"language": "EN"
@@ -89,7 +89,7 @@
 						<ui5-label>MR SOF02 2.43</ui5-label>
 					</ui5-timeline-item>
 					<ui5-timeline-item title-text="Video Converence Call - UI5" subtitle-text="31.01.2018 (12:00 - 13:00)" icon="sap-icon://calendar" item-name="Stanislava Baltova">
-						<div>Online meeting</div>
+						Online meeting
 					</ui5-timeline-item>
 				</ui5-timeline>
 			</ui5-card>
@@ -104,7 +104,7 @@
 <script>
 	var result = document.getElementById("result");
 
-	document.getElementById("test-item").addEventListener("ui5-itemNamePress", function (event) {
+	document.getElementById("test-item").addEventListener("ui5-itemNameClick", function (event) {
 		result.innerHTML = event.target.getAttribute("item-name");
 	});
 </script>

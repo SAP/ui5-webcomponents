@@ -1,5 +1,6 @@
 :root {
-	--ui5-panel-background-color: var(--sapUiGroupContentBackground);
-	--ui5-panel-bottom-border-color: var(--sapUiGroupTitleBorderColor);
 	--_ui5_panel_focus_border: 1px dotted var(--sapUiContentFocusColor);
+	--_ui5_panel_header_height: 3rem;
+	--_ui5_panel_header_title_size: var(--sapMFontHeader4Size);
+	--_ui5_panel_button_root_width: 3rem;
 }

@@ -1,19 +1,19 @@
-const registry = require("less/lib/less/functions/function-registry");
-require("less/lib/less/functions/color");
-const Color = require("less/lib/less/tree/color");
-const Dimension = require("less/lib/less/tree/dimension");
-const lessDarken = registry.get("darken");
-const lessLighten = registry.get("lighten");
-const lessContrast = registry.get("contrast");
-const lessFade = registry.get("fade");
-const lessSaturate = registry.get("saturate");
-const lessDesaturate = registry.get("desaturate");
-const lessMix = registry.get("mix");
-const lessSpin = registry.get("spin");
+const less = require("less");
+const lessInst = less.createFromEnvironment();
+
+const registryData = lessInst.functions.functionRegistry._data;
+const lessDarken = registryData.darken;
+const lessLighten = registryData.lighten;
+const lessContrast = registryData.contrast;
+const lessFade = registryData.fade;
+const lessSaturate = registryData.saturate;
+const lessDesaturate = registryData.desaturate;
+const lessMix = registryData.mix;
+const lessSpin = registryData.spin;
 
 const factory = (getColorValue) => {
     const getColorInstance = colorValue => {
-        return new Color(colorValue.replace("#", ""));
+        return less.color(colorValue.replace("#", ""));
     };
 
     const darken = async (col, value) => {
@@ -38,7 +38,7 @@ const factory = (getColorValue) => {
 
         if (threshold) {
             thresholdValue = await getColorValue(threshold);
-            thresholdValue = new Dimension(thresholdValue)
+            thresholdValue = less.dimension(thresholdValue)
         }
 
 

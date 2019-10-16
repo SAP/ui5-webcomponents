@@ -1,4 +1,5 @@
 :root {
+	--ui5-badge-font-size: 0.75em; /* origin from --sapMFontSmallSize (0.75rem) */
 	--ui5-badge-bg-color-scheme-1: var(--sapUiAccent1Lighten50);
 	--ui5-badge-border-color-scheme-1: var(--sapUiAccent1);
 	--ui5-badge-bg-color-scheme-2: var(--sapUiAccent2Lighten40);
@@ -17,6 +18,6 @@
 	--ui5-badge-border-color-scheme-8: var(--sapUiAccent8);
 	--ui5-badge-bg-color-scheme-9: var(--sapUiAccent9Lighten37);
 	--ui5-badge-border-color-scheme-9: var(--sapUiAccent9);
-	--ui5-badge-bg-color-scheme-10: var(--sapUiAccent10Lighten37);
+	--ui5-badge-bg-color-scheme-10: var(--sapUiAccent10Lighten49);
 	--ui5-badge-border-color-scheme-10: var(--sapUiAccent10);
 }

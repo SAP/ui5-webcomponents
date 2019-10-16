@@ -1,17 +1,15 @@
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
-import Icon from "./Icon.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 
 // Template
-import BadgeTemplate from "./build/compiled/BadgeTemplate.lit.js";
+import BadgeTemplate from "./generated/templates/BadgeTemplate.lit.js";
+
+import { BADGE_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
-import badgeCss from "./themes/Badge.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
+import badgeCss from "./generated/themes/Badge.css.js";
 
 /**
  * @public
@@ -22,8 +20,8 @@ const metadata = {
 
 		/**
 		 * Defines the color scheme of the <code>ui5-badge</code>.
-		 * There are 10 predefined schemes. Each scheme applies different values for the <code>background-color> and <code>border-color</code>.
-		 * To use one you can set a number from <code>"1"</code> to <code>"10"</code>.
+		 * There are 10 predefined schemes. Each scheme applies different values for the <code>background-color</code> and <code>border-color</code>.
+		 * To use one you can set a number from <code>"1"</code> to <code>"10"</code>. The <code>colorScheme</code> <code>"1"</code> will be set by default.
 		 * <br><br>
 		 * <b>Note:</b> color schemes have no visual representation in High Contrast Black (sap_belize_hcb) theme.
 		 * @type {string}
@@ -32,6 +30,7 @@ const metadata = {
 		 */
 		colorScheme: {
 			type: String,
+			defaultValue: "1",
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.Badge.prototype */ {
@@ -43,24 +42,22 @@ const metadata = {
 		 * @slot
 		 * @public
 		 */
-		text: {
+		"default": {
 			type: Node,
-			multiple: true,
 		},
 
 		/**
 		 * Defines the <code>ui5-icon</code> to be displayed in the <code>ui5-badge</code>.
 		 *
-		 * @type {Icon}
+		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
 		 */
 		icon: {
-			type: Icon,
+			type: HTMLElement,
 		},
 
 	},
-	defaultSlot: "text",
 };
 
 /**
@@ -90,6 +87,12 @@ const metadata = {
  * @public
  */
 class Badge extends UI5Element {
+	constructor() {
+		super();
+
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+	}
+
 	static get metadata() {
 		return metadata;
 	}
@@ -106,6 +109,12 @@ class Badge extends UI5Element {
 		return badgeCss;
 	}
 
+	static async define(...params) {
+		await fetchI18nBundle("@ui5/webcomponents");
+
+		super.define(...params);
+	}
+
 	onBeforeRendering() {
 		if (this.hasIcon) {
 			this.setAttribute("__has-icon", "");
@@ -119,16 +128,18 @@ class Badge extends UI5Element {
 	}
 
 	get hasIcon() {
-		return !!this.icon;
+		return !!this.icon.length;
 	}
 
 	get rtl() {
-		return getEffectiveRTL() ? "rtl" : undefined;
+		return getRTL() ? "rtl" : undefined;
+	}
+
+	get badgeDescription() {
+		return this.i18nBundle.getText(BADGE_DESCRIPTION);
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	Badge.define();
-});
+Badge.define();
 
 export default Badge;

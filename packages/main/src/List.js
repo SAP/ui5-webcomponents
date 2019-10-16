@@ -1,30 +1,23 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
-import FocusHelper from "@ui5/webcomponents-base/src/FocusHelper.js";
-import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
-import { isTabNext } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
-import ListItemBase from "./ListItemBase.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import FocusHelper from "@ui5/webcomponents-base/dist/FocusHelper.js";
+import { isTabNext } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import ListMode from "./types/ListMode.js";
 import ListSeparators from "./types/ListSeparators.js";
 import ListItemType from "./types/ListItemType.js";
+
 // Template
-import ListTemplate from "./build/compiled/ListTemplate.lit.js";
+import ListTemplate from "./generated/templates/ListTemplate.lit.js";
 
 // Styles
-import listCss from "./themes/List.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
+import listCss from "./generated/themes/List.css.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-list",
-	defaultSlot: "items",
 	slots: /** @lends sap.ui.webcomponents.main.List.prototype */ {
 
 		/**
@@ -32,7 +25,7 @@ const metadata = {
 		 * <b>Note:</b> When <code>header</code> is set, the
 		 * <code>headerText</code> property is ignored.
 		 *
-		 * @type {HTMLElement}
+		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
 		 */
@@ -42,15 +35,15 @@ const metadata = {
 
 		/**
 		 * Defines the items of the <code>ui5-list</code>.
-		 * <br><b>Note:</b> Only <code>ui5-li</code>, <code>ui5-li-custom</code> and <code>ui5-li-groupheader</code> are allowed.
+		 * <br><b>Note:</b> Use <code>ui5-li</code>, <code>ui5-li-custom</code> and <code>ui5-li-groupheader</code> for the intended design.
 		 *
-		 * @type {ListItemBase[]}
+		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
 		 */
-		items: {
-			type: ListItemBase,
-			multiple: true,
+		"default": {
+			propertyName: "items",
+			type: HTMLElement,
 		},
 	},
 	properties: /** @lends  sap.ui.webcomponents.main.List.prototype */ {
@@ -139,14 +132,14 @@ const metadata = {
 	events: /** @lends  sap.ui.webcomponents.main.List.prototype */ {
 
 		/**
-		 * Fired when an item is pressed, unless the item's <code>type</code> property
+		 * Fired when an item is activated, unless the item's <code>type</code> property
 		 * is set to <code>Inactive</code>.
 		 *
 		 * @event
-		 * @param {HTMLElement} item the pressed item.
+		 * @param {HTMLElement} item the clicked item.
 		 * @public
 		 */
-		itemPress: {
+		itemClick: {
 			detail: {
 				item: { type: HTMLElement },
 			},
@@ -180,6 +173,7 @@ const metadata = {
 			detail: {
 				selectedItems: { type: Array },
 				previouslySelectedItems: { type: Array },
+				selectionComponentPressed: { type: Boolean }, // protected, indicates if the user used the selection components to change the selection
 			},
 		},
 	},
@@ -208,13 +202,13 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/List";</code>
+ * <code>import "@ui5/webcomponents/dist/List.js";</code>
  * <br>
- * <code>import "@ui5/webcomponents/dist/StandardListItem";</code> (for <code>ui5-li</code>)
+ * <code>import "@ui5/webcomponents/dist/StandardListItem.js";</code> (for <code>ui5-li</code>)
  * <br>
- * <code>import "@ui5/webcomponents/dist/CustomListItem";</code> (for <code>ui5-li-custom</code>)
+ * <code>import "@ui5/webcomponents/dist/CustomListItem.js";</code> (for <code>ui5-li-custom</code>)
  * <br>
- * <code>import "@ui5/webcomponents/dist/GroupHeaderListItem";</code> (for <code>ui5-li-group-header</code>)
+ * <code>import "@ui5/webcomponents/dist/GroupHeaderListItem.js";</code> (for <code>ui5-li-group-header</code>)
  *
  * @constructor
  * @author SAP SE
@@ -281,7 +275,7 @@ class List extends UI5Element {
 				|| (this.separators === ListSeparators.Inner && !isLastChild);
 
 			item._mode = this.mode;
-			item._hideBorder = !showBottomBorder;
+			item.hasBorder = showBottomBorder;
 		});
 
 		this._previouslySelectedItem = null;
@@ -296,11 +290,15 @@ class List extends UI5Element {
 		this._selectionRequested = true;
 
 		if (this[`handle${this.mode}`]) {
-			selectionChange = this[`handle${this.mode}`](event.detail.item, event.selected);
+			selectionChange = this[`handle${this.mode}`](event.detail.item, event.detail.selected);
 		}
 
 		if (selectionChange) {
-			this.fireEvent("selectionChange", { selectedItems: this.getSelectedItems(), previouslySelectedItems });
+			this.fireEvent("selectionChange", {
+				selectedItems: this.getSelectedItems(),
+				previouslySelectedItems,
+				selectionComponentPressed: event.detail.selectionComponentPressed,
+			});
 		}
 	}
 
@@ -447,6 +445,7 @@ class List extends UI5Element {
 
 		if (pressedItem.type === ListItemType.Active) {
 			this.fireEvent("itemPress", { item: pressedItem });
+			this.fireEvent("itemClick", { item: pressedItem });
 		}
 
 		if (!this._selectionRequested && this.mode !== ListMode.Delete) {
@@ -454,8 +453,9 @@ class List extends UI5Element {
 			this.onSelectionRequested({
 				detail: {
 					item: pressedItem,
+					selectionComponentPressed: false,
+					selected: !pressedItem.selected,
 				},
-				selected: !pressedItem.selected,
 			});
 		}
 
@@ -562,39 +562,14 @@ class List extends UI5Element {
 	}
 
 	get shouldRenderH1() {
-		return !this.header && this.headerText;
+		return !this.header.length && this.headerText;
 	}
 
 	get showNoDataText() {
 		return this.items.length === 0 && this.noDataText;
 	}
-
-	get classes() {
-		return {
-			main: {
-				sapMList: true,
-				sapMListInsetBG: this.inset,
-				sapUiSizeCompact: getCompactSize(),
-			},
-			ul: {
-				sapMListItems: true,
-				sapMListUl: true,
-				[`sapMListShowSeparators${this.separators}`]: true,
-				[`sapMListMode${this.mode}`]: true,
-				sapMListInset: this.inset,
-			},
-			noData: {
-				sapMLIB: true,
-				sapMListNoData: true,
-				sapMLIBTypeInactive: true,
-				sapMLIBFocusable: isDesktop(),
-			},
-		};
-	}
 }
 
-Bootstrap.boot().then(_ => {
-	List.define();
-});
+List.define();
 
 export default List;

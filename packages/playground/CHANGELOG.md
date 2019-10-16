@@ -3,6 +3,45 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-rc.4](https://github.com/SAP/openui5/compare/v1.0.0-rc.3...v1.0.0-rc.4) (2019-10-11)
+
+**Note:** Version bump only for package @ui5/webcomponents-playground
+
+
+
+
+
+# [1.0.0-rc.3](https://github.com/SAP/openui5/compare/v1.0.0-rc.2...v1.0.0-rc.3) (2019-10-03)
+
+**Note:** Version bump only for package @ui5/webcomponents-playground
+
+
+# [1.0.0-rc.2](https://github.com/SAP/openui5/compare/v1.0.0-rc.1...v1.0.0-rc.2) (2019-07-04)
+
+**Note:** Version bump only for package @ui5/webcomponents-playground
+
+
+## [0.14.0](https://github.com/SAP/ui5-webcomponents/compare/v0.13.1...v1.0.0-rc.1) (2019-06-28)
+
+**Note:** Version bump only for package @ui5/webcomponents-playground
+
+
+## [0.13.1](https://github.com/SAP/openui5/compare/v0.13.0...v0.13.1) (2019-06-22)
+
+**Note:** Version bump only for package @ui5/webcomponents-playground
+
+
+
+
+
+# [0.13.0](https://github.com/SAP/openui5/compare/v0.12.0...v0.13.0) (2019-06-21)
+
+**Note:** Version bump only for package @ui5/webcomponents-playground
+
+
+
+
+
 # [0.12.0](https://github.com/SAP/openui5/compare/v0.11.0...v0.12.0) (2019-06-10)
 
 **Note:** Version bump only for package @ui5/webcomponents-playground

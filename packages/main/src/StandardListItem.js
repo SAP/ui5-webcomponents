@@ -1,12 +1,8 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import ListItem from "./ListItem.js";
 import Icon from "./Icon.js";
-import StandardListItemTemplate from "./build/compiled/StandardListItemTemplate.lit.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
+import StandardListItemTemplate from "./generated/templates/StandardListItemTemplate.lit.js";
 
 /**
  * @public
@@ -28,7 +24,7 @@ const metadata = {
 
 		/**
 		 * Defines the <code>icon</code> source URI.
-		 * </br></br>
+		 * <br><br>
 		 * <b>Note:</b>
 		 * SAP-icons font provides numerous buil-in icons. To find all the available icons, see the
 		 * <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
@@ -42,7 +38,7 @@ const metadata = {
 
 		/**
 		 * Defines whether the <code>icon</code> should be displayed in the beginning of the list item or in the end.
-		 * </br></br>
+		 * <br><br>
 		 * <b>Note:</b> If <code>image</code> is set, the <code>icon</code> would be displayed after the <code>image</code>.
 		 *
 		 * @type {boolean}
@@ -55,7 +51,7 @@ const metadata = {
 
 		/**
 		 * Defines the <code>image</code> source URI.
-		 * </br></br>
+		 * <br><br>
 		 * <b>Note:</b> The <code>image</code> would be displayed in the beginning of the list item.
 		 *
 		 * @type {string}
@@ -78,7 +74,7 @@ const metadata = {
 		/**
 		 * Defines the state of the <code>info</code>.
 		 * <br>
-		 * Available options are: <code>"None"</code< (by default), <code>"Success"</code>, <code>"Warning"</code> and <code>"Erorr"</code>.
+		 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code> and <code>"Erorr"</code>.
 		 * @type {string}
 		 * @public
 		 * @since 0.13.0
@@ -86,6 +82,15 @@ const metadata = {
 		infoState: {
 			type: ValueState,
 			defaultValue: ValueState.None,
+		},
+
+		/**
+		 * Indicates if the list item has text content.
+		 * @type {boolean}
+		 * @private
+		 */
+		hasTitle: {
+			type: Boolean,
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.StandardListItem.prototype */ {
@@ -97,12 +102,10 @@ const metadata = {
 		 * @slot
 		 * @public
 		 */
-		text: {
+		"default": {
 			type: Node,
-			multiple: true,
 		},
 	},
-	defaultSlot: "text",
 };
 
 /**
@@ -137,6 +140,11 @@ class StandardListItem extends ListItem {
 		return metadata;
 	}
 
+	onBeforeRendering(...params) {
+		super.onBeforeRendering(...params);
+		this.hasTitle = !!this.textContent;
+	}
+
 	get displayImage() {
 		return !!this.image;
 	}
@@ -149,24 +157,6 @@ class StandardListItem extends ListItem {
 		return (this.icon && this.iconEnd);
 	}
 
-	get classes() {
-		const result = super.classes;
-		const hasDesc = this.description && !!this.description.length;
-		const hasTitle = this.textContent;
-		const infoState = this.infoState.toLowerCase();
-
-		// Modify main classes
-		result.main.sapMSLIWithTitleAndDescription = hasDesc && hasTitle;
-
-		// Add "info" classes
-		result.info = {
-			"sapMSLI-info": true,
-			[`sapMSLI-info--${infoState}`]: true,
-		};
-
-		return result;
-	}
-
 	static async define(...params) {
 		await Icon.define();
 
@@ -174,8 +164,6 @@ class StandardListItem extends ListItem {
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	StandardListItem.define();
-});
+StandardListItem.define();
 
 export default StandardListItem;

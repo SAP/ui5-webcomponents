@@ -1,18 +1,18 @@
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
-import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import getShadowDOMTarget from "@ui5/webcomponents-base/dist/events/getShadowDOMTarget.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
+import "./icons/slim-arrow-left.js";
+import "./icons/slim-arrow-right.js";
 import Button from "./Button.js";
-import ButtonType from "./types/ButtonType.js";
-import CalendarHeaderTemplate from "./build/compiled/CalendarHeaderTemplate.lit.js";
+import Icon from "./Icon.js";
+import ButtonDesign from "./types/ButtonDesign.js";
+import CalendarHeaderTemplate from "./generated/templates/CalendarHeaderTemplate.lit.js";
 
 // Styles
-import styles from "./themes/CalendarHeader.css.js";
+import styles from "./generated/themes/CalendarHeader.css.js";
 
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
 
 const metadata = {
 	tag: "ui5-calendar-header",
@@ -70,10 +70,10 @@ class CalendarHeader extends UI5Element {
 		this._btnNext.icon = "sap-icon://slim-arrow-right";
 
 		this._btn1 = {};
-		this._btn1.type = ButtonType.Transparent;
+		this._btn1.type = ButtonDesign.Transparent;
 
 		this._btn2 = {};
-		this._btn2.type = ButtonType.Transparent;
+		this._btn2.type = ButtonDesign.Transparent;
 	}
 
 	onBeforeRendering() {
@@ -97,64 +97,31 @@ class CalendarHeader extends UI5Element {
 		this.fireEvent("btn2Press", event);
 	}
 
-	onclick(event) {
-		const composedPath = event.composedPath();
-
-		for (let index = 0; index < composedPath.length; index++) {
-			const sAttributeValue = composedPath[index].getAttribute && composedPath[index].getAttribute("data-sap-cal-head-button");
-			const showPickerButton = event.ui5target.getAttribute("data-sap-show-picker");
-
-			if (showPickerButton) {
-				this[`_show${showPickerButton}Picker`]();
-				return;
-			}
-
-			if (sAttributeValue) {
-				this[`_handle${sAttributeValue}Press`]();
-				return;
-			}
-		}
-	}
-
 	onkeydown(event) {
+		const eventTarget = getShadowDOMTarget(event);
 		if (isSpace(event) || isEnter(event)) {
-			const showPickerButton = event.ui5target.getAttribute("data-sap-show-picker");
+			const showPickerButton = eventTarget.getAttribute("data-sap-show-picker");
 
 			if (showPickerButton) {
 				this[`_show${showPickerButton}Picker`]();
 			}
 		}
-	}
-
-	get classes() {
-		return {
-			main: {
-				sapWCCalHead: true,
-				sapUiSizeCompact: getCompactSize(),
-			},
-			buttons: {
-				sapWCCalHeadArrowButton: true,
-			},
-			middleButtons: {
-				sapWCCalHeadMiddleButton: true,
-				sapWCCalHeadArrowButton: true,
-			},
-		};
 	}
 
 	get rtl() {
-		return getEffectiveRTL() ? "rtl" : undefined;
+		return getRTL() ? "rtl" : undefined;
 	}
 
 	static async define(...params) {
-		await Button.define();
+		await Promise.all([
+			await Button.define(),
+			await Icon.define(),
+		]);
 
 		super.define(...params);
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	CalendarHeader.define();
-});
+CalendarHeader.define();
 
 export default CalendarHeader;

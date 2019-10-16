@@ -1,26 +1,32 @@
 <div
-		class="{{classes.main}}"
+		class="ui5-datepicker-root"
 		style="{{styles.main}}"
 >
 	<!-- INPUT -->
 	<ui5-input
 			id="{{_id}}-inner"
-			placeholder="{{_input.placeholder}}"
-			type="{{_input.type}}"
+			placeholder="{{placeholder}}"
+			type="{{type}}"
 			value="{{value}}"
 			?disabled="{{disabled}}"
 			?readonly="{{readonly}}"
 			value-state="{{valueState}}"
-			@ui5-change="{{_input.onChange}}"
-			@ui5-input="{{_input.onLiveChange}}"
+			@ui5-change="{{_handleInputChange}}"
+			@ui5-input="{{_handleInputLiveChange}}"
 			data-sap-focus-ref
+			._inputAccInfo ="{{accInfo}}"
 	>
 		{{#unless readonly}}
 			<ui5-icon
 				slot="icon"
-				src="{{_input.icon.src}}"
-				class="{{classes.icon}}"
+				src="sap-icon://appointment-2"
 				tabindex="-1"
+				accessible-name="{{openIconTitle}}"
+				show-tooltip
+				@click="{{togglePicker}}"
+				input-icon
+				?pressed="{{_isPickerOpen}}"
+				dir="{{dir}}"
 			></ui5-icon>
 		{{/unless}}
 	</ui5-input>
@@ -30,8 +36,7 @@
 			id="{{_id}}-popover"
 			allow-target-overlap="{{_popover.allowTargetOverlap}}"
 			placement-type="{{_popover.placementType}}"
-			hide-header="{{_popover.hideHeader}}"
-			hide-arrow="{{_popover.hideArrow}}"
+			no-arrow
 			horizontal-align="{{_popover.horizontalAlign}}"
 			stay-open-on-scroll="{{_popover.stayOpenOnScroll}}"
 			@ui5-afterClose="{{_popover.afterClose}}"
@@ -46,6 +51,5 @@
 				@ui5-selectedDatesChange="{{_calendar.onSelectedDatesChange}}"
 		></ui5-calendar>
 	</ui5-popover>
-
 	<slot name="formSupport"></slot>
 </div>

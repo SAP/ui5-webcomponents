@@ -11,11 +11,14 @@
 
 	<title>Panel</title>
 
-	<script data-id="sap-ui-config" type="application/json">
+	<script data-ui5-config type="application/json">
 		{
 			"language": "EN",
 			"libs": "sap.ui.webcomponents.main"
 		}
+	</script>
+	<script>
+		delete Document.prototype.adoptedStyleSheets;
 	</script>
 
 	<script src="../../../../../../webcomponentsjs/webcomponents-loader.js"></script>
@@ -73,8 +76,8 @@
 			<ui5-title>Expandable but not expanded</ui5-title>
 			<ui5-button id="b1">Add child </ui5-button>
 			<ui5-label id="l1">No new children added yet.</ui5-label>
-			<ui5-button type="Reject" icon="sap-icon://cancel">Cancel</ui5-button>
-			<ui5-button type="Accept" icon="sap-icon://accept">Done</ui5-button>
+			<ui5-button design="Reject" icon="sap-icon://cancel">Cancel</ui5-button>
+			<ui5-button design="Accept" icon="sap-icon://accept">Done</ui5-button>
 		</div>
 
 		<!-- Content -->

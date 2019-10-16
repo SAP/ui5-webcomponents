@@ -114,7 +114,7 @@ class RenderScheduler {
 	}
 
 	static getNotDefinedComponents() {
-		return Array.from(document.querySelectorAll(":not(:defined)")).filter(el => el.localName.startsWith("ui5-"));
+		return Array.from(document.querySelectorAll("*")).filter(el => el.localName.startsWith("ui5-") && !el.isUI5Element);
 	}
 
 	/**
@@ -132,13 +132,10 @@ class RenderScheduler {
 		const stillUndefined = this.getNotDefinedComponents();
 		if (stillUndefined.length) {
 			// eslint-disable-next-line
-			console.warn("undefined elements after 5 seconds: ", [...stillUndefined].map(el => el.localName));
+			console.warn("undefined elements after 5 seconds are: " + [...stillUndefined].map(el => el.localName).join(" ; "));
 		}
 
-		// TODO: track promises internally, the dom traversal is a POC only
-		const ui5Components = Array.from(document.querySelectorAll("*")).filter(_ => _._shadowRootReadyPromise);
-		return Promise.all(ui5Components.map(comp => comp._whenShadowRootReady()))
-			.then(() => Promise.resolve());	// qunit has a boolean cheack for the promise value and the array from the Promise all is considered truthy
+		return Promise.resolve();
 	}
 
 	static async whenFinished() {

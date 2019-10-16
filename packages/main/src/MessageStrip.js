@@ -1,18 +1,19 @@
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/src/ResourceBundle.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { isEnter, isSpace } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
 import MessageStripType from "./types/MessageStripType.js";
-import MessageStripTemplate from "./build/compiled/MessageStripTemplate.lit.js";
+import MessageStripTemplate from "./generated/templates/MessageStripTemplate.lit.js";
 import Icon from "./Icon.js";
-
-import { MESSAGE_STRIP_CLOSE_BUTTON } from "./i18n/defaults.js";
+import "./icons/decline.js";
+import "./icons/message-information.js";
+import "./icons/message-success.js";
+import "./icons/message-error.js";
+import "./icons/message-warning.js";
+import { MESSAGE_STRIP_CLOSE_BUTTON } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
-import messageStripCss from "./themes/MessageStrip.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
+import messageStripCss from "./generated/themes/MessageStrip.css.js";
 
 /**
  * @public
@@ -23,7 +24,7 @@ const metadata = {
 
 		/**
 		 * Defines the <code>ui5-messagestrip</code> type.
-		 * <br></br>
+		 * <br><br>
 		 * <b>Note:</b> Available options are <code>Information"</code>, <code>"Positive"</code>, <code>"Negative"</code>,
 		 * and "Warning".
 		 *
@@ -38,10 +39,10 @@ const metadata = {
 
 		/**
 		 * Defines the icon src URI to be displayed as graphical element within the <code>ui5-messagestrip</code>.
-		 * <br></br>
+		 * <br><br>
 		 * <b>Note:</b> If no icon is given, the default icon for the <code>ui5-messagestrip</code> type will be added.
 		 * The SAP-icons font provides numerous options.
-		 * <br></br>
+		 * <br><br>
 		 * Example:
 		 * <br>
 		 * <pre>ui5-messagestrip icon="sap-icon://palette"</pre>
@@ -63,7 +64,7 @@ const metadata = {
 		 * @defaultvalue false
 		 * @public
 		 */
-		hideIcon: {
+		noIcon: {
 			type: Boolean,
 		},
 
@@ -74,12 +75,8 @@ const metadata = {
 		 * @defaultvalue false
 		 * @public
 		 */
-		hideCloseButton: {
+		noCloseButton: {
 			type: Boolean,
-		},
-
-		_closeButton: {
-			type: Object,
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.MessageStrip.prototype */ {
@@ -91,12 +88,10 @@ const metadata = {
 		 * @slot
 		 * @public
 		 */
-		text: {
+		"default": {
 			type: Node,
-			multiple: true,
 		},
 	},
-	defaultSlot: "text",
 	events: /** @lends sap.ui.webcomponents.main.MessageStrip.prototype */ {
 
 		/**
@@ -157,23 +152,33 @@ class MessageStrip extends UI5Element {
 	constructor() {
 		super();
 
-		this._closeButton = {
-			press: this._handleCloseIconPress.bind(this),
-		};
-
-		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
-	_handleCloseIconPress() {
+	_closeClick() {
 		this.fireEvent("close", {});
 	}
 
-	static async define(...params) {
-		await fetchResourceBundle("@ui5/webcomponents");
+	_closeKeyDown(event) {
+		if (isEnter(event)) {
+			this.fireEvent("close");
+		}
 
-		await Promise.all([
-			Icon.define(),
-		]);
+		if (isSpace(event)) {
+			event.preventDefault();
+		}
+	}
+
+	_closeKeyUp(event) {
+		if (isSpace(event)) {
+			this.fireEvent("close");
+		}
+	}
+
+	static async define(...params) {
+		await fetchI18nBundle("@ui5/webcomponents");
+
+		await Icon.define();
 
 		super.define(...params);
 	}
@@ -197,26 +202,23 @@ class MessageStrip extends UI5Element {
 	}
 
 	get hiddenText() {
-		return `Message Strip ${this.type} ${this.hideCloseButton ? "" : "closable"}.`;
+		return `Message Strip ${this.type} ${this.noCloseButton ? "" : "closable"}`;
 	}
 
 	get _closeButtonText() {
-		return this.resourceBundle.getText(MESSAGE_STRIP_CLOSE_BUTTON);
+		return this.i18nBundle.getText(MESSAGE_STRIP_CLOSE_BUTTON);
 	}
 
 	get classes() {
 		return {
 			label: {
 				"ui5-messagestrip-text": true,
-				"ui5-messagestripNoCloseButton": this.hideCloseButton,
-			},
-			closeIcon: {
-				"ui5-messagestrip-close-icon": true,
+				"ui5-messagestripNoCloseButton": this.noCloseButton,
 			},
 			main: {
 				"ui5-messagestrip-root": true,
-				"ui5-messagestrip-icon--hidden": this.hideIcon,
-				"ui5-messagestrip-close-icon--hidden": this.hideCloseButton,
+				"ui5-messagestrip-icon--hidden": this.noIcon,
+				"ui5-messagestrip-close-icon--hidden": this.noCloseButton,
 				[this.typeClasses]: true,
 			},
 		};
@@ -231,8 +233,6 @@ class MessageStrip extends UI5Element {
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	MessageStrip.define();
-});
+MessageStrip.define();
 
 export default MessageStrip;

@@ -52,7 +52,7 @@ TestHelper.ready(function () {
 		this.popover.addEventListener('afterOpen', function (event) {
 			var shadowRoot = this.shadowRoot;
 
-			assert.ok(shadowRoot.querySelector('.sapMPopupFrameOpen'), "Popover is opened");
+			assert.ok(this.hasAttribute('opened'), "Popover is opened");
 
 			// header
 			var header = shadowRoot.host.children[0];
@@ -71,7 +71,7 @@ TestHelper.ready(function () {
 
 		this.popover.addEventListener('afterClose', function (event) {
 			RenderScheduler.whenFinished().then(function () {
-				assert.notOk(this.popover.shadowRoot.querySelector('.sapMPopupFrameOpen'), "Popover is closed");
+				assert.notOk(this.popover.hasAttribute('opened'), "Popover is closed");
 				done();
 			}.bind(this));
 		}.bind(this));

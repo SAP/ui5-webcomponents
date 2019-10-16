@@ -1,42 +1,35 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
-import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import Icon from "./Icon.js";
 import Link from "./Link.js";
-import TimelineItemTemplate from "./build/compiled/TimelineItemTemplate.lit.js";
+import TimelineItemTemplate from "./generated/templates/TimelineItemTemplate.lit.js";
 
 // Styles
-import styles from "./themes/TimelineItem.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
+import styles from "./generated/themes/TimelineItem.css.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-timeline-item",
-	defaultSlot: "description",
 	slots: /** @lends sap.ui.webcomponents.main.TimelineItem.prototype */ {
 		/**
 		 * Determines the description of the <code>ui5-timeline-item</code>.
 		 *
-		 * @type {HTMLElement}
+		 * @type {Node[]}
 		 * @slot
 		 * @public
 		 */
-		description: {
-			type: HTMLElement,
-			multiple: false,
+		"default": {
+			type: Node,
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.TimelineItem.prototype */ {
 		/**
 		 * Defines the icon to be displayed as graphical element within the <code>ui5-timeline-item</code>.
 		 * SAP-icons font provides numerous options.
-		 * </br></br>
+		 * <br><br>
 		 *
 		 * See all the available icons in the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
 		 *
@@ -94,20 +87,21 @@ const metadata = {
 		_tabIndex: {
 			type: String,
 			defaultValue: "-1",
+			noAttribute: true,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.TimelineItem.prototype */ {
 		/**
 		 * Fired when the item name is pressed either with a
 		 * click/tap or by using the Enter or Space key.
-		 * </br></br>
+		 * <br><br>
 		 * <b>Note:</b> The event will not be fired if the <code>item-name-clickable</code>
 		 * attribute is not set.
 		 *
 		 * @event
 		 * @public
 		 */
-		itemNamePress: {},
+		itemNameClick: {},
 	},
 };
 
@@ -147,24 +141,11 @@ class TimelineItem extends UI5Element {
 	}
 
 	onItemNamePress() {
-		this.fireEvent("itemNamePress", {});
-	}
-
-	get classes() {
-		return {
-			main: {
-				sapWCTimelineItem: true,
-				sapUiSizeCompact: getCompactSize(),
-			},
-			indicator: {
-				sapWCTimelineIndicator: true,
-				sapWCTimelineIndicatorNoIcon: !this.icon,
-			},
-		};
+		this.fireEvent("itemNameClick", {});
 	}
 
 	get rtl() {
-		return getEffectiveRTL() ? "rtl" : undefined;
+		return getRTL() ? "rtl" : undefined;
 	}
 
 	static async define(...params) {
@@ -177,8 +158,6 @@ class TimelineItem extends UI5Element {
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	TimelineItem.define();
-});
+TimelineItem.define();
 
 export default TimelineItem;

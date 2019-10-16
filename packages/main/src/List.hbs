@@ -1,24 +1,25 @@
 <div
-	class="{{classes.main}}"
+	class="ui5-list-root"
+	@focusin="{{onfocusin}}"
 >
 	<!-- header -->
-	{{#if header}}
+	{{#if header.length}}
 		<slot name="header" />
 	{{/if}}
 	{{#if shouldRenderH1}}
-		<header id="{{_id}}-header" class="sapMListHdr sapMListHdrText">
+		<header id="{{_id}}-header" class="ui5-list-header">
 			{{headerText}}
 		</header>
 	{{/if}}
 
-	<div id="{{_id}}-before" tabindex="0" class="sapMListDummyArea"></div>
+	<div id="{{_id}}-before" tabindex="0" class="ui5-list-focusarea"></div>
 
-	<ul id="{{_id}}-listUl" class="{{classes.ul}}">
-        <slot></slot>
+	<ul id="{{_id}}-listUl" class="ui5-list-ul">
+		<slot></slot>
 
 		{{#if showNoDataText}}
-			<li id="{{_id}}-nodata" class="{{classes.noData}}" tabindex="{{noDataTabIndex}}">
-				<div id="{{_id}}-nodata-text" class="sapMListNoDataText">
+			<li id="{{_id}}-nodata" class="ui5-list-nodata" tabindex="{{noDataTabIndex}}">
+				<div id="{{_id}}-nodata-text" class="ui5-list-nodata-text">
 					{{noDataText}}
 				</div>
 			</li>
@@ -26,10 +27,10 @@
 	</ul>
 
 	{{#if footerText}}
-		<footer id="{{_id}}-footer" class="sapMListFtr">
+		<footer id="{{_id}}-footer" class="ui5-list-footer">
 			{{footerText}}
 		</footer>
 	{{/if}}
 
-	<div id="{{_id}}-after" tabindex="0" class="sapMListDummyArea"></div>
+	<div id="{{_id}}-after" tabindex="0" class="ui5-list-focusarea"></div>
 </div>

@@ -1,28 +1,25 @@
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import { getCalendarType, getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
-import { getFormatLocale } from "@ui5/webcomponents-base/src/FormatSettings.js";
-import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
-import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
+import { getFormatLocale } from "@ui5/webcomponents-base/dist/FormatSettings.js";
+import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData.js";
-import { getLocale } from "@ui5/webcomponents-base/src/LocaleProvider.js";
-import CalendarType from "@ui5/webcomponents-base/src/dates/CalendarType.js";
-import CalendarDate from "@ui5/webcomponents-base/src/dates/CalendarDate.js";
-import MonthPickerTemplate from "./build/compiled/MonthPickerTemplate.lit.js";
+import { getLocale } from "@ui5/webcomponents-base/dist/LocaleProvider.js";
+import CalendarType from "@ui5/webcomponents-base/dist/dates/CalendarType.js";
+import CalendarDate from "@ui5/webcomponents-base/dist/dates/CalendarDate.js";
+import getShadowDOMTarget from "@ui5/webcomponents-base/dist/events/getShadowDOMTarget.js";
+import MonthPickerTemplate from "./generated/templates/MonthPickerTemplate.lit.js";
 
 // Styles
-import styles from "./themes/MonthPicker.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
+import styles from "./generated/themes/MonthPicker.css.js";
 
 /**
  * @public
  */
 const metadata = {
-	tag: "ui5-month-picker",
+	tag: "ui5-monthpicker",
 	properties: /** @lends  sap.ui.webcomponents.main.MonthPicker.prototype */ {
 		/**
 		 * A UNIX timestamp - seconds since 00:00:00 UTC on Jan 1, 1970.
@@ -47,6 +44,7 @@ const metadata = {
 		},
 		_hidden: {
 			type: Boolean,
+			noAttribute: true,
 		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.MonthPicker.prototype */ {
@@ -70,7 +68,7 @@ const metadata = {
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.MonthPicker
  * @extends sap.ui.webcomponents.base.UI5Element
- * @tagname ui5-month-picker
+ * @tagname ui5-monthpicker
  * @public
  */
 class MonthPicker extends UI5Element {
@@ -119,11 +117,11 @@ class MonthPicker extends UI5Element {
 				timestamp: timestamp.toString(),
 				id: `${this._state._id}-m${i}`,
 				name: this._oLocaleData.getMonths("wide", this._primaryCalendarType)[i],
-				classes: "sapWCMonthPickerItem",
+				classes: "ui5-mp-item",
 			};
 
 			if (this._month === i) {
-				month.classes += " sapWCMonthPickerItemSel";
+				month.classes += " ui5-mp-item--selected";
 			}
 
 			const quarterIndex = parseInt(i / 3);
@@ -165,8 +163,9 @@ class MonthPicker extends UI5Element {
 	}
 
 	onclick(event) {
-		if (event.ui5target.className.indexOf("sapWCMonthPickerItem") > -1) {
-			const timestamp = this.getTimestampFromDOM(event.ui5target);
+		const eventTarget = getShadowDOMTarget(event);
+		if (eventTarget.className.indexOf("ui5-mp-item") > -1) {
+			const timestamp = this.getTimestampFromDOM(eventTarget);
 			this.timestamp = timestamp;
 			this._itemNav.current = this._month;
 			this.fireEvent("selectedMonthChange", { timestamp });
@@ -180,9 +179,10 @@ class MonthPicker extends UI5Element {
 	}
 
 	_activateMonth(event) {
+		const eventTarget = getShadowDOMTarget(event);
 		event.preventDefault();
-		if (event.ui5target.className.indexOf("sapWCMonthPickerItem") > -1) {
-			const timestamp = this.getTimestampFromDOM(event.ui5target);
+		if (eventTarget.className.indexOf("ui5-mp-item") > -1) {
+			const timestamp = this.getTimestampFromDOM(eventTarget);
 			this.timestamp = timestamp;
 			this.fireEvent("selectedMonthChange", { timestamp });
 		}
@@ -191,18 +191,6 @@ class MonthPicker extends UI5Element {
 	getTimestampFromDOM(domNode) {
 		const oMonthDomRef = domNode.getAttribute("data-sap-timestamp");
 		return parseInt(oMonthDomRef);
-	}
-
-	get classes() {
-		return {
-			main: {
-				"sapWCMonthPicker": true,
-				"sapUiSizeCompact": getCompactSize(),
-			},
-			quarter: {
-				"sapWCMonthPickerQuarter": true,
-			},
-		};
 	}
 
 	get styles() {
@@ -214,8 +202,6 @@ class MonthPicker extends UI5Element {
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	MonthPicker.define();
-});
+MonthPicker.define();
 
 export default MonthPicker;

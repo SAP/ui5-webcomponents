@@ -1,20 +1,21 @@
 import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
-import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
-import { getFeature } from "@ui5/webcomponents-base/src/FeaturesRegistry.js";
-import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-import CheckBoxTemplate from "./build/compiled/CheckBoxTemplate.lit.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
+import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import "./icons/accept.js";
+import Icon from "./Icon.js";
 import Label from "./Label.js";
+import { VALUE_STATE_ERROR, VALUE_STATE_WARNING } from "./generated/i18n/i18n-defaults.js";
+
+// Template
+import CheckBoxTemplate from "./generated/templates/CheckBoxTemplate.lit.js";
 
 // Styles
-import checkboxCss from "./themes/CheckBox.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
+import checkboxCss from "./generated/themes/CheckBox.css.js";
 
 /**
  * @public
@@ -107,7 +108,7 @@ const metadata = {
 		 * Determines the name with which the <code>ui5-checkbox</code> will be submitted in an HTML form.
 		 *
 		 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
-		 * <code>import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";</code>
+		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
 		 *
 		 * <b>Note:</b> When set, a native <code>input</code> HTML element
 		 * will be created inside the <code>ui5-checkbox</code> so that it can be submitted as
@@ -143,12 +144,12 @@ const metadata = {
  * <h3 class="comment-api-title">Overview</h3>
  *
  * Allows the user to set a binary value, such as true/false or yes/no for an item.
- * <br/><br/>
+ * <br><br>
  * The <code>ui5-checkbox</code> component consists of a box and a label that describes its purpose.
  * If it's checked, an indicator is displayed inside the box.
  * To check/uncheck the <code>ui5-checkbox</code>, the user has to click or tap the square
  * box or its label.
- * <br/><br/>
+ * <br><br>
  * Clicking or tapping toggles the <code>ui5-checkbox</code> between checked and unchecked state.
  * The <code>ui5-checkbox</code> component only has 2 states - checked and unchecked.
  *
@@ -193,7 +194,9 @@ class CheckBox extends UI5Element {
 
 	constructor() {
 		super();
+
 		this._label = {};
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
@@ -217,7 +220,7 @@ class CheckBox extends UI5Element {
 				nativeInput.value = element.checked ? "on" : "";
 			});
 		} else if (this.name) {
-			console.warn(`In order for the "name" property to have effect, you should also: import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";`); // eslint-disable-line
+			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
 		}
 	}
 
@@ -245,6 +248,8 @@ class CheckBox extends UI5Element {
 		if (this.canToggle()) {
 			this.checked = !this.checked;
 			this.fireEvent("change");
+			// Angular two way data binding
+			this.fireEvent("value-changed");
 		}
 		return this;
 	}
@@ -253,23 +258,19 @@ class CheckBox extends UI5Element {
 		return !(this.disabled || this.readonly);
 	}
 
+	valueStateTextMappings() {
+		const i18nBundle = this.i18nBundle;
+
+		return {
+			"Error": i18nBundle.getText(VALUE_STATE_ERROR),
+			"Warning": i18nBundle.getText(VALUE_STATE_WARNING),
+		};
+	}
+
 	get classes() {
 		return {
 			main: {
-				"ui5-checkbox-wrapper": true,
-				"ui5-checkbox-with-label": !!this.text,
-				"ui5-checkbox--disabled": this.disabled,
-				"ui5-checkbox--readonly": this.readonly,
-				"ui5-checkbox--error": this.valueState === "Error",
-				"ui5-checkbox--warning": this.valueState === "Warning",
-				"ui5-checkbox--wrap": this.wrap,
 				"ui5-checkbox--hoverable": !this.disabled && !this.readonly && isDesktop(),
-				"sapUiSizeCompact": getCompactSize(),
-			},
-			inner: {
-				"ui5-checkbox-inner": true,
-				"ui5-checkbox-inner-mark": true,
-				"ui5-checkbox-inner--checked": !!this.checked,
 			},
 		};
 	}
@@ -282,24 +283,41 @@ class CheckBox extends UI5Element {
 		return this.disabled ? "true" : undefined;
 	}
 
+	get ariaLabelledBy() {
+		return this.text ? `${this._id}-label` : undefined;
+	}
+
+	get ariaDescribedBy() {
+		return this.hasValueState ? `${this._id}-descr` : undefined;
+	}
+
+	get hasValueState() {
+		return this.valueState !== ValueState.None;
+	}
+
+	get valueStateText() {
+		return this.valueStateTextMappings()[this.valueState];
+	}
+
 	get tabIndex() {
 		return this.disabled ? undefined : "0";
 	}
 
 	get rtl() {
-		return getEffectiveRTL() ? "rtl" : undefined;
+		return getRTL() ? "rtl" : undefined;
 	}
 
 	static async define(...params) {
-		await Label.define();
+		await Promise.all([
+			Label.define(),
+			Icon.define(),
+			fetchI18nBundle("@ui5/webcomponents"),
+		]);
 
 		super.define(...params);
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	CheckBox.define();
-});
-
+CheckBox.define();
 
 export default CheckBox;

@@ -1,33 +1,27 @@
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import TableCell from "./TableCell.js";
-import TableRowTemplate from "./build/compiled/TableRowTemplate.lit.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import TableRowTemplate from "./generated/templates/TableRowTemplate.lit.js";
 
 // Styles
-import styles from "./themes/TableRow.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
+import styles from "./generated/themes/TableRow.css.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-table-row",
-	defaultSlot: "cells",
 	slots: /** @lends sap.ui.webcomponents.main.TableRow.prototype */ {
 		/**
 		 * Defines the cells of the <code>ui5-table-row</code>.
-		 * <br><b>Note:</b> Only <code>ui5-table-cell</code> is allowed.
+		 * <br><b>Note:</b> Use <code>ui5-table-cell</code> for the intended design.
 		 *
-		 * @type {TableCell[]}
+		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
 		 */
-		cells: {
-			type: TableCell,
-			multiple: true,
+		"default": {
+			propertyName: "cells",
+			type: HTMLElement,
 			individualSlots: true,
 		},
 	},
@@ -82,43 +76,38 @@ class TableRow extends UI5Element {
 		this.visibleCells = [];
 		this.popinCells = [];
 
+		if (this.cells.length === 0) {
+			return;
+		}
+
 		this._columnsInfo.forEach((info, index) => {
+			const cell = this.cells[index];
+
+			if (!cell) {
+				return;
+			}
+
 			if (info.visible) {
-				this.visibleCells.push(this.cells[index]);
-				this.cells[index]._firstInRow = (index === 0);
+				this.visibleCells.push(cell);
+				cell.firstInRow = (index === 0);
+				cell.popined = false;
 			} else if (info.demandPopin) {
 				this.popinCells.push({
-					cell: this.cells[index],
+					cell,
 					popinText: info.popinText,
 				});
+
+				cell.popined = true;
+			} else {
+				cell.popined = false;
 			}
 		}, this);
-
-		this.visibleColumnLength = this.visibleCells.length + 1;
 
 		const lastVisibleCell = this.visibleCells[this.visibleCells.length - 1];
 
 		if (lastVisibleCell) {
-			lastVisibleCell._lastInRow = true;
+			lastVisibleCell.lastInRow = true;
 		}
-	}
-
-	get classes() {
-		return {
-			main: {
-				sapWCTableRow: true,
-				sapWCTableRowWithBorder: true,
-			},
-			popin: {
-				sapWCTablePopinRow: true,
-			},
-			popinTitle: {
-				sapWCTablePopinTitle: true,
-			},
-			cellWrapper: {
-				sapMWCTableRowCellContainer: true,
-			},
-		};
 	}
 
 	get styles() {
@@ -136,13 +125,15 @@ class TableRow extends UI5Element {
 		};
 	}
 
+	get visibleCellsCount() {
+		return this.visibleCells.length;
+	}
+
 	onfocusin(event) {
 		this.fireEvent("_focused", event);
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	TableRow.define();
-});
+TableRow.define();
 
 export default TableRow;

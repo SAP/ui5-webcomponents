@@ -3,6 +3,87 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.17.0](https://github.com/SAP/ui5-webcomponents/compare/v0.16.0...v0.17.0) (2019-10-11)
+
+**Note:** Version bump only for package @ui5/webcomponents-base
+
+
+
+
+
+# [0.16.0](https://github.com/SAP/ui5-webcomponents/compare/v0.15.0...v0.16.0) (2019-10-03)
+
+
+### Bug Fixes
+
+* **DOMEventHandler:** does not crash in edge cases ([#774](https://github.com/SAP/ui5-webcomponents/issues/774)) ([2576883](https://github.com/SAP/ui5-webcomponents/commit/2576883))
+* **FocusHelper:** handles SVG's focus method on IE ([#721](https://github.com/SAP/ui5-webcomponents/issues/721)) ([52517c4](https://github.com/SAP/ui5-webcomponents/commit/52517c4))
+* **CSS Transform:** host selector not removed when there is trailing whitespace ([#780](https://github.com/SAP/ui5-webcomponents/issues/780)) ([b5d8fde](https://github.com/SAP/ui5-webcomponents/commit/b5d8fde))
+* **UI5Element:** parent elements properly await for children upgrade ([#645](https://github.com/SAP/ui5-webcomponents/issues/645)) ([0e976f8](https://github.com/SAP/ui5-webcomponents/commit/0e976f8))
+
+
+### Code Refactoring
+
+* **Configuration:** make configuration initial only ([#638](https://github.com/SAP/ui5-webcomponents/issues/638)) ([86ad25b](https://github.com/SAP/ui5-webcomponents/commit/86ad25b)))
+
+
+### Features
+
+* **Configuration:** add configuration for calendar first day of the week ([#627](https://github.com/SAP/ui5-webcomponents/issues/627)) ([9c6df48](https://github.com/SAP/ui5-webcomponents/commit/9c6df48))
+* add support for angular two way data binding ([#706](https://github.com/SAP/ui5-webcomponents/issues/706)) ([16820e4](https://github.com/SAP/ui5-webcomponents/commit/16820e4))
+* **Tooling:** add new component script ([#747](https://github.com/SAP/ui5-webcomponents/issues/747)) ([171a36f](https://github.com/SAP/ui5-webcomponents/commit/171a36f))
+
+
+### BREAKING CHANGES
+
+* **Theming:** Theming.js no longer has getTheme and setTheme methods, use the Configuration.js instead.
+
+
+# [0.15.0](https://github.com/SAP/ui5-webcomponents/compare/v0.14.0...v0.15.0) (2019-07-04)
+
+
+### Bug Fixes
+
+* **framework:** fix redundant event dispatch ([#599](https://github.com/SAP/ui5-webcomponents/issues/599)) ([dc0cda2](https://github.com/SAP/ui5-webcomponents/commit/dc0cda2))
+
+
+
+
+
+## [0.14.0](https://github.com/SAP/ui5-webcomponents/compare/v0.13.1...v0.14.0) (2019-06-28)
+
+**Note:** Version bump only for package @ui5/webcomponents-base
+
+## [0.13.1](https://github.com/SAP/ui5-webcomponents/compare/v0.13.0...v0.13.1) (2019-06-22)
+
+**Note:** Version bump only for package @ui5/webcomponents-base
+
+
+
+
+
+# [0.13.0](https://github.com/SAP/ui5-webcomponents/compare/v0.12.0...v0.13.0) (2019-06-21)
+
+
+### Bug Fixes
+
+* fix broken translations ([#548](https://github.com/SAP/ui5-webcomponents/issues/548)) ([37b2b07](https://github.com/SAP/ui5-webcomponents/commit/37b2b07))
+* remove custom "falsy" checks from ifDefined ([#544](https://github.com/SAP/ui5-webcomponents/issues/544)) ([92a85fa](https://github.com/SAP/ui5-webcomponents/commit/92a85fa))
+
+
+### Code Refactoring
+
+* **ui5-select:** change default slot from list items to options ([#532](https://github.com/SAP/ui5-webcomponents/issues/532)) ([2e4486b](https://github.com/SAP/ui5-webcomponents/commit/2e4486b))
+
+
+### BREAKING CHANGES
+
+* **ui5-select:** Use ui5-option instead of ui5-li in ui5-select
+
+
+
+
+
 # [0.12.0](https://github.com/SAP/ui5-webcomponents/compare/v0.11.0...v0.12.0) (2019-06-10)
 
 

@@ -5,7 +5,7 @@ TestHelper.ready(function () {
 	var fixture = window.document.querySelector("#qunit-fixture");
 
 	var getActualText = function(el) {
-		return el.shadowRoot.querySelector('.sapMBtnText>bdi>slot').assignedNodes()[0].textContent;
+		return el.shadowRoot.querySelector('.ui5-button-text>bdi>slot').assignedNodes()[0].textContent;
 	};
 
 	QUnit.module("Web Components", {
@@ -49,16 +49,5 @@ TestHelper.ready(function () {
 			assert.strictEqual(getActualText(this.button), 'New Text', "New text is correct");
 			done();
 		}.bind(this));
-	});
-
-	QUnit.test("events", function (assert) {
-		var done = assert.async();
-
-		this.button.addEventListener('press', function (event) {
-			assert.ok(true, 'press event is fired');
-			done();
-		});
-
-		this.button.click();
 	});
 });

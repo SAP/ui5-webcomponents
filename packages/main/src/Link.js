@@ -1,17 +1,15 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import { isSpace } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-import LinkType from "./types/LinkType.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import LinkDesign from "./types/LinkDesign.js";
 
 // Template
-import LinkRederer from "./build/compiled/LinkTemplate.lit.js";
+import LinkRederer from "./generated/templates/LinkTemplate.lit.js";
+
+import { LINK_SUBTLE, LINK_EMPHASIZED } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
-import linkCss from "./themes/Link.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
+import linkCss from "./generated/themes/Link.css.js";
 
 /**
  * @public
@@ -23,7 +21,7 @@ const metadata = {
 		/**
 		 * Defines whether the <code>ui5-link</code> is disabled.
 		 * <br><br>
-		 * <b>Note:</b> When disabled, the <code>ui5-link</code cannot be triggered by the user.
+		 * <b>Note:</b> When disabled, the <code>ui5-link</code> cannot be triggered by the user.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -50,9 +48,11 @@ const metadata = {
 		 * Defines the <code>ui5-link</code> target.
 		 * <br><br>
 		 * <b>Notes:</b>
-		 * <ul><li>Available options are the standard values: <code>_self</code>, <code>_top</code>,
+		 * <ul>
+		 * <li>Available options are the standard values: <code>_self</code>, <code>_top</code>,
 		 * <code>_blank</code>, <code>_parent</code>, and <code>_search</code>.</li>
-		 * <li>This property must only be used when the <code>href</code> property is set.</li></ul>
+		 * <li>This property must only be used when the <code>href</code> property is set.</li>
+		 * </ul>
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
@@ -63,7 +63,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the <code>ui5-link</code> type.
+		 * Defines the <code>ui5-link</code> design.
 		 * <br><br>
 		 * <b>Note:</b> Avaialble options are <code>Default</code>, <code>Subtle</code>, and <code>Emphasized</code>.
 		 *
@@ -71,9 +71,9 @@ const metadata = {
 		 * @defaultvalue "Default"
 		 * @public
 		 */
-		type: {
-			type: LinkType,
-			defaultValue: LinkType.Default,
+		design: {
+			type: LinkDesign,
+			defaultValue: LinkDesign.Default,
 		},
 
 		/**
@@ -92,6 +92,7 @@ const metadata = {
 
 		_rel: {
 			type: String,
+			noAttribute: true,
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.Link.prototype */ {
@@ -103,22 +104,20 @@ const metadata = {
 		 * @slot
 		 * @public
 		 */
-		text: {
+		"default": {
 			type: Node,
-			multiple: true,
 		},
 	},
-	defaultSlot: "text",
 	events: /** @lends sap.ui.webcomponents.main.Link.prototype */ {
 
 		/**
-		 * Fired when the <code>ui5-link</code> is triggered either with a click/tap
-		 * or by using the Space or Enter key.
+		 * Fired when the <code>ui5-link</code> is triggered either with a mouse/tap
+		 * or by using the Enter key.
 		 *
 		 * @event
 		 * @public
 		 */
-		press: {},
+		click: {},
 	},
 };
 
@@ -132,7 +131,6 @@ const metadata = {
  * from the standard text.
  * On hover, it changes its style to an underlined text to provide additional feedback to the user.
  *
-
  *
  * <h3>Usage</h3>
  *
@@ -140,7 +138,7 @@ const metadata = {
  * <br><br>
  * To create a visual hierarchy in large lists of links, you can set the less important links as
  * <code>Subtle</code> or the more important ones as <code>Emphasized</code>
- * by using the <code>type</code> property.
+ * by using the <code>design</code> property.
  * <br><br>
  * If the <code>href</code> property is set, the link behaves as the basic HTML
  * anchor tag (<code><a></code>) and opens the specified URL in the given target frame (<code>target</code> property).
@@ -167,6 +165,7 @@ class Link extends UI5Element {
 	constructor() {
 		super();
 		this._dummyAnchor = document.createElement("a");
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	static get metadata() {
@@ -185,52 +184,12 @@ class Link extends UI5Element {
 		return linkCss;
 	}
 
-
 	onBeforeRendering() {
 		const needsNoReferrer = this.target === "_blank"
 			&& this.href
 			&& this._isCrossOrigin();
 
 		this._rel = needsNoReferrer ? "noreferrer" : undefined;
-	}
-
-	onclick(event) {
-		if (this.disabled) {
-			return;
-		}
-
-		const defaultPrevented = !this.fireEvent("press", {}, true);
-		if (defaultPrevented) {
-			event.preventDefault();
-		}
-	}
-
-	onkeydown(event) {
-		if (this.disabled) {
-			return;
-		}
-
-		if (isSpace(event)) {
-			event.preventDefault();
-		}
-	}
-
-	onkeyup(event) {
-		if (this.disabled) {
-			return;
-		}
-
-		if (isSpace(event)) {
-			const defaultPrevented = !this.fireEvent("press", {}, true);
-			if (defaultPrevented) {
-				return;
-			}
-
-			// Simulate click event
-			const oClickEvent = document.createEvent("MouseEvents");
-			oClickEvent.initEvent("click" /* event type */, false/* no-bubbling */, true /* cancelable */);
-			this.getDomRef().dispatchEvent(oClickEvent);
-		}
 	}
 
 	_isCrossOrigin() {
@@ -244,29 +203,39 @@ class Link extends UI5Element {
 	}
 
 	get tabIndex() {
-		return (this.disabled || !this.text.length) ? "-1" : "0";
+		return (this.disabled || !this.textContent.length) ? "-1" : "0";
 	}
 
 	get ariaDisabled() {
 		return this.disabled ? "true" : undefined;
 	}
 
-	get classes() {
+	get hasLinkType() {
+		return this.design !== LinkDesign.Default;
+	}
+
+	static typeTextMappings() {
 		return {
-			main: {
-				sapMLnk: true,
-				sapMLnkSubtle: this.type === LinkType.Subtle,
-				sapMLnkEmphasized: this.type === LinkType.Emphasized,
-				sapMLnkWrapping: this.wrap,
-				sapMLnkDsbl: this.disabled,
-				sapMLnkMaxWidth: true,
-			},
+			"Subtle": LINK_SUBTLE,
+			"Emphasized": LINK_EMPHASIZED,
 		};
+	}
+
+	get linkTypeText() {
+		return this.i18nBundle.getText(Link.typeTextMappings()[this.design]);
+	}
+
+	get parsedRef() {
+		return this.href.length > 0 ? this.href : undefined;
+	}
+
+	static async define(...params) {
+		await fetchI18nBundle("@ui5/webcomponents");
+
+		super.define(...params);
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	Link.define();
-});
+Link.define();
 
 export default Link;

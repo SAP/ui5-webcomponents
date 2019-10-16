@@ -1,7 +1,10 @@
 <li
 	tabindex="{{_tabIndex}}"
-	class="{{classes.main}}">
-		<div id="{{_id}}-content" class="{{classes.inner}}">
-				<span class="{{classes.span}}"><slot></slot></span>
-		</div>
+	class="ui5-ghli-root {{classes.main}}"
+	@focusin="{{onfocusin}}"
+	@focusout="{{onfocusout}}"
+>
+	<div id="{{_id}}-content" class="ui5-li-content">
+		<span class="ui5-ghli-title"><slot></slot></span>
+	</div>
 </li>

@@ -1,21 +1,15 @@
-:host(ui5-title:not([hidden])) {
+:host(:not([hidden])) {
 	display: block;
+}
+
+:host {
 	max-width: 100%;
 	color: var(--sapUiGroupTitleTextColor);
 	font-family: var(--sapUiFontHeaderFamily);
 	text-shadow: var(--sapUiShadowText);
 }
 
-ui5-title:not([hidden]) {
-	display: block;
-	overflow: hidden;
-	color: var(--sapUiGroupTitleTextColor);
-	font-family: var(--sapUiFontHeaderFamily);
-	text-shadow: var(--sapUiShadowText);
-	max-width: 100%;
-}
-
-.sapMTitle {
+.ui5-title-root {
 	display: inline-block;
 	position: relative;
 	font-weight: var(--sapUiFontHeaderWeight);
@@ -33,36 +27,36 @@ ui5-title:not([hidden]) {
 	cursor: text;
 }
 
-.sapMTitle.sapMTitleWrap {
+:host([wrap]) .ui5-title-root {
 	white-space: pre-line;
 }
 
 /* Level H1 */
-.sapMTitleStyleH1 {
+:host([level="H1"]) .ui5-title-root {
 	font-size: var(--sapMFontHeader1Size);
 }
 
 /* Level H2 */
-.sapMTitleStyleH2 {
+:host([level="H2"]) .ui5-title-root {
 	font-size: var(--sapMFontHeader2Size);
 }
 
 /* Level H3 */
-.sapMTitleStyleH3 {
+:host([level="H3"]) .ui5-title-root {
 	font-size: var(--sapMFontHeader3Size);
 }
 
 /* Level H4 */
-.sapMTitleStyleH4 {
+:host([level="H4"]) .ui5-title-root {
 	font-size: var(--sapMFontHeader4Size);
 }
 
 /* Level H5 */
-.sapMTitleStyleH5 {
+:host([level="H5"]) .ui5-title-root {
 	font-size: var(--sapMFontHeader5Size);
 }
 
 /* Level H6 */
-.sapMTitleStyleH6 {
+:host([level="H6"]) .ui5-title-root {
 	font-size: var(--sapMFontHeader6Size);
 }

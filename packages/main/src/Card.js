@@ -1,24 +1,22 @@
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import { isIconURI } from "@ui5/webcomponents-base/src/IconPool.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-import getEffectiveRTL from "@ui5/webcomponents-base/src/util/getEffectiveRTL.js";
-import CardTemplate from "./build/compiled/CardTemplate.lit.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { isIconURI } from "@ui5/webcomponents-base/dist/SVGIconRegistry.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
+import CardTemplate from "./generated/templates/CardTemplate.lit.js";
 import Icon from "./Icon.js";
 
-// Styles
-import cardCss from "./themes/Card.css.js";
+import { ARIA_ROLEDESCRIPTION_CARD, AVATAR_TOOLTIP, ARIA_LABEL_CARD_CONTENT } from "./generated/i18n/i18n-defaults.js";
 
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
+// Styles
+import cardCss from "./generated/themes/Card.css.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-card",
-	defaultSlot: "content",
 	slots: /** @lends sap.ui.webcomponents.main.Card.prototype */ {
 
 		/**
@@ -27,9 +25,9 @@ const metadata = {
 		 * @slot
 		 * @public
 		 */
-		content: {
+		"default": {
+			propertyName: "content",
 			type: HTMLElement,
-			multiple: true,
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.Card.prototype */ {
@@ -65,8 +63,19 @@ const metadata = {
 		},
 
 		/**
+		 * Defines if the <code>ui5-card</code> header would be interactive,
+		 * e.g gets hover effect, gets focused and <code>headerPress</code> event is fired, when it is pressed.
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 */
+		headerInteractive: {
+			type: Boolean,
+		},
+
+		/**
 		 * Defines image source URI or built-in icon font URI.
-		 * </br></br>
+		 * <br><br>
 		 * <b>Note:</b>
 		 * SAP-icons font provides numerous options. To find all the available icons, see the
 		 * <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
@@ -75,24 +84,25 @@ const metadata = {
 		 */
 		avatar: {
 			type: String,
-			defaultValue: null,
 		},
 
 		_headerActive: {
 			type: Boolean,
+			noAttribute: true,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Card.prototype */ {
 
 		/**
-		 * Fired when the <code>ui5-card</code> header is pressed
-		 * by click/tap or by using the Enter or Space key.
-		 *
+		 * Fired when the <code>ui5-card</code> header is activated
+		 * by mouse/tap or by using the Enter or Space key.
+		 * <br><br>
+		 * <b>Note:</b> The event would be fired only if the <code>headerInteractive</code> property is set to true.
 		 * @event
 		 * @public
 		 * @since 0.10.0
 		 */
-		headerPress: {},
+		headerClick: {},
 	},
 };
 
@@ -106,6 +116,9 @@ const metadata = {
  * The header can be used through several properties, such as:
  * <code>heading</code>, <code>subtitle</code>, <code>status</code> and <code>avatar</code>.
  *
+ * <h3>Keyboard handling</h3>
+ * In case you enable <code>headerInteractive</code> property, you can press the <code>ui5-card</code> header by Space and Enter keys.
+ *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/Card";</code>
@@ -118,6 +131,12 @@ const metadata = {
  * @public
  */
 class Card extends UI5Element {
+	constructor() {
+		super();
+
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+	}
+
 	static get metadata() {
 		return metadata;
 	}
@@ -137,12 +156,13 @@ class Card extends UI5Element {
 	get classes() {
 		return {
 			main: {
-				"sapFCard": true,
-				"sapFCardNoContent": !this.content.length,
+				"ui5-card-root": true,
+				"ui5-card--nocontent": !this.content.length,
 			},
 			header: {
-				"sapFCardHeader": true,
-				"sapFCardHeaderActive": this._headerActive,
+				"ui5-card-header": true,
+				"ui5-card-header--interactive": this.headerInteractive,
+				"ui5-card-header--active": this.headerInteractive && this._headerActive,
 			},
 		};
 	}
@@ -155,24 +175,57 @@ class Card extends UI5Element {
 		return !!this.avatar && !this.icon;
 	}
 
+	get tabindex() {
+		return this.headerInteractive ? "0" : undefined;
+	}
+
+	get hasHeader() {
+		return !!(this.heading || this.subtitle || this.status || this.avatar);
+	}
+
+	get rtl() {
+		return getRTL() ? "rtl" : undefined;
+	}
+
+	get ariaCardRoleDescription() {
+		return this.i18nBundle.getText(ARIA_ROLEDESCRIPTION_CARD);
+	}
+
+	get ariaCardAvatarLabel() {
+		return this.i18nBundle.getText(AVATAR_TOOLTIP);
+	}
+
+	get ariaCardContentLabel() {
+		return this.i18nBundle.getText(ARIA_LABEL_CARD_CONTENT);
+	}
+
 	static async define(...params) {
-		await Icon.define();
+		await Promise.all([
+			Icon.define(),
+			fetchI18nBundle("@ui5/webcomponents"),
+		]);
 
 		super.define(...params);
 	}
 
 	_headerClick() {
-		this.fireEvent("headerPress");
+		if (this.headerInteractive) {
+			this.fireEvent("headerClick");
+		}
 	}
 
 	_headerKeydown(event) {
+		if (!this.headerInteractive) {
+			return;
+		}
+
 		const enter = isEnter(event);
 		const space = isSpace(event);
 
 		this._headerActive = enter || space;
 
 		if (enter) {
-			this.fireEvent("headerPress");
+			this.fireEvent("headerClick");
 			return;
 		}
 
@@ -182,22 +235,20 @@ class Card extends UI5Element {
 	}
 
 	_headerKeyup(event) {
+		if (!this.headerInteractive) {
+			return;
+		}
+
 		const space = isSpace(event);
 
 		this._headerActive = false;
 
 		if (space) {
-			this.fireEvent("headerPress");
+			this.fireEvent("headerClick");
 		}
-	}
-
-	get rtl() {
-		return getEffectiveRTL() ? "rtl" : undefined;
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	Card.define();
-});
+Card.define();
 
 export default Card;

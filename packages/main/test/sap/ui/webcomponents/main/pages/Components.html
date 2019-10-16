@@ -7,7 +7,7 @@
 	<title>Default values test page</title>
 	<script>delete Document.prototype.adoptedStyleSheets</script>
 
-	<script data-id="sap-ui-config" type="application/json">
+	<script data-ui5-config type="application/json">
 		{
 			"rtl": false,
 			"compactSize": false
@@ -50,7 +50,7 @@
 	<ui5-list id="list2" header-text="API: GroupHeaderListItem" hidden>
 		<ui5-li-groupheader>New Items</ui5-li-groupheader>
 		<ui5-li icon="sap-icon://navigation-right-arrow" >Laptop HP</ui5-li>
-		<ui5-li-custom><span>Discounted Items</span></ui5-li-custom>
+		<ui5-li-custom>Discounted Items</ui5-li-custom>
 	</ui5-list>
 
 	<ui5-messagestrip id="ms2" hidden>Hello world</ui5-messagestrip>
@@ -66,12 +66,12 @@
 	<ui5-radiobutton id="radioBtn2" text="Option A" hidden></ui5-radiobutton>
 
 	<ui5-select id="select2" hidden>
-		<ui5-li selected>UI5</ui5-li>
+		<ui5-option selected>UI5</ui5-option>
 	</ui5-select>
 
 	<ui5-switch id="sw2" hidden></ui5-switch>
 
-	<ui5-shellbar id="shellbar2" hidden><ui5-icon src="nav-back" slot="icon"></ui5-icon></ui5-shellbar>
+	<ui5-shellbar id="shellbar2" hidden><ui5-icon src="sap-icon://nav-back" slot="icon"></ui5-icon></ui5-shellbar>
 
 	<ui5-textarea id="txtarea2" hidden></ui5-textarea>
 	<ui5-timeline id="timeline2" hidden>
@@ -83,11 +83,11 @@
 
 	<ui5-table id="tbl2" hidden>
 		<ui5-table-column slot="columns">
-			<span slot="header">Product</span>
+			Product
 		</ui5-table-column>
 
 		<ui5-table-column slot="columns">
-			<span slot="header">Supplier</span>
+			Supplier
 		</ui5-table-column>
 	</ui5-table>
 

@@ -1,20 +1,12 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import TabBase from "./TabBase.js";
-import TabSeparatorTemplate from "./build/compiled/TabSeparatorTemplate.lit.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import TabSeparatorTemplate from "./generated/templates/TabSeparatorTemplate.lit.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-tab-separator",
-	properties: /** @lends sap.ui.webcomponents.main.TabSeparator.prototype */{
-	},
-	events: /** @lends sap.ui.webcomponents.main.TabSeparator.prototype */{
-	},
 };
 
 /**
@@ -28,7 +20,7 @@ const metadata = {
  * @tagname ui5-tab-separator
  * @public
  */
-class TabSeparator extends TabBase {
+class TabSeparator extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
@@ -41,13 +33,11 @@ class TabSeparator extends TabBase {
 		return TabSeparatorTemplate;
 	}
 
-	isSeparator() {
+	get isSeparator() {
 		return true;
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	TabSeparator.define();
-});
+TabSeparator.define();
 
 export default TabSeparator;

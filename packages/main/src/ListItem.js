@@ -1,4 +1,4 @@
-import { isSpace, isEnter } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 import ListItemType from "./types/ListItemType.js";
 import ListMode from "./types/ListMode.js";
@@ -8,13 +8,12 @@ import "./CheckBox.js";
 import "./Button.js";
 
 // Styles
-import styles from "./themes/ListItem.css.js";
+import styles from "./generated/themes/ListItem.css.js";
 
 /**
  * @public
  */
 const metadata = {
-	"abstract": true,
 	properties: /** @lends  sap.ui.webcomponents.main.ListItem.prototype */ {
 
 		/**
@@ -30,7 +29,7 @@ const metadata = {
 		/**
 		 * Defines the visual indication and behavior of the list items.
 		 * Available options are <code>Active</code> (by default) and <code>Inactive</code>.
-		 * </br></br>
+		 * <br><br>
 		 * <b>Note:</b> When set to <code>Active</code>, the item will provide visual response upon press and hover,
 		 * while with type <code>Inactive</code> - will not.
 		 *
@@ -43,13 +42,30 @@ const metadata = {
 			defaultValue: ListItemType.Active,
 		},
 
-		_active: {
+		/**
+		 * Indicates if the list item is active, e.g pressed down with the mouse or the keyboard keys.
+		 *
+		 * @type {boolean}
+		 * @private
+		*/
+		active: {
+			type: Boolean,
+		},
+
+		/**
+		 * Indicates if the list item is actionable, e.g has hover and pressed effects.
+		 *
+		 * @type {boolean}
+		 * @private
+		*/
+		actionable: {
 			type: Boolean,
 		},
 
 		_mode: {
 			type: ListMode,
 			defaultValue: ListMode.None,
+			noAttribute: true,
 		},
 	},
 	events: {
@@ -80,24 +96,37 @@ class ListItem extends ListItemBase {
 		return [styles, ListItemBase.styles];
 	}
 
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
+
+		this.deactivateByKey = event => {
+			if (isEnter(event)) {
+				this.deactivate();
+			}
+		};
 
 		this.deactivate = () => {
-			if (this._active) {
-				this._active = false;
+			if (this.active) {
+				this.active = false;
 			}
 		};
 	}
 
-	onBeforeRendering() {}
+	onBeforeRendering(...params) {
+		const desktop = isDesktop();
+		const isActionable = (this.type === ListItemType.Active) && (this._mode !== ListMode.Delete);
+
+		this.actionable = desktop && isActionable;
+	}
 
 	onEnterDOM() {
 		document.addEventListener("mouseup", this.deactivate);
+		document.addEventListener("keyup", this.deactivateByKey);
 	}
 
 	onExitDOM() {
 		document.removeEventListener("mouseup", this.deactivate);
+		document.removeEventListener("keyup", this.deactivateByKey);
 	}
 
 	onkeydown(event) {
@@ -153,36 +182,30 @@ class ListItem extends ListItemBase {
 		this.fireItemPress();
 	}
 
+	/*
+	 * Called when selection components in Single (ui5-radiobutton)
+	 * and Multi (ui5-checkbox) selection modes are used.
+	 */
+	onMultiSelectionComponentPress(event) {
+		this.fireEvent("_selectionRequested", { item: this, selected: !event.target.checked, selectionComponentPressed: true });
+	}
+
+	onSingleSelectionComponentPress(event) {
+		this.fireEvent("_selectionRequested", { item: this, selected: !event.target.selected, selectionComponentPressed: true });
+	}
+
 	activate() {
 		if (this.type === ListItemType.Active) {
-			this._active = true;
+			this.active = true;
 		}
 	}
 
-
-	_onDelete(event) {
-		this.fireEvent("_selectionRequested", { item: this, selected: event.selected });
+	onDelete(event) {
+		this.fireEvent("_selectionRequested", { item: this, selectionComponentPressed: false });
 	}
 
 	fireItemPress() {
 		this.fireEvent("_press", { item: this, selected: this.selected });
-	}
-
-	get classes() {
-		const result = super.classes;
-
-		const desktop = isDesktop();
-		const isActionable = (this.type === ListItemType.Active) && (this._mode !== ListMode.Delete);
-
-		// Modify main classes
-		result.main[`sapMLIBType${this.type}`] = true;
-		result.main.sapMSLI = true;
-		result.main.sapMLIBActionable = desktop && isActionable;
-		result.main.sapMLIBHoverable = desktop && isActionable;
-		result.main.sapMLIBSelected = this.selected;
-		result.main.sapMLIBActive = this._active;
-
-		return result;
 	}
 
 	get placeSelectionElementBefore() {

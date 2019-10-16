@@ -1,30 +1,24 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import TabBase from "./TabBase.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import SemanticColor from "./types/SemanticColor.js";
 import Icon from "./Icon.js";
-import TabTemplate from "./build/compiled/TabTemplate.lit.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
+import TabTemplate from "./generated/templates/TabTemplate.lit.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-tab",
-	defaultSlot: "content",
 	slots: /** @lends sap.ui.webcomponents.main.Tab.prototype */ {
 
 		/**
 		 * Defines the tab content.
-		 * @type {HTMLElement[]}
+		 * @type {Node[]}
 		 * @slot
 		 * @public
 		 */
-		content: {
-			type: HTMLElement,
-			multiple: true,
+		"default": {
+			type: Node,
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.Tab.prototype */ {
@@ -81,7 +75,7 @@ const metadata = {
 		 * <li>the tab selection line</li>
 		 * </ul>
 		 * <br>
-		 * Available semantic colors are: <code>"Default"</code>, <code>"Neutral", <code>"Positive"</code>, <code>"Critical"</code> and <code>"Negative"</code>.
+		 * Available semantic colors are: <code>"Default"</code>, <code>"Neutral"</code>, <code>"Positive"</code>, <code>"Critical"</code> and <code>"Negative"</code>.
 		 * <br><br>
 		 * <b>Note:</b> The color value depends on the current theme.
 		 * @type {string}
@@ -107,6 +101,7 @@ const metadata = {
 		_tabIndex: {
 			type: String,
 			defaultValue: "-1",
+			noAttribute: true,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Tab.prototype */ {
@@ -127,7 +122,7 @@ const metadata = {
  * @tagname ui5-tab
  * @public
  */
-class Tab extends TabBase {
+class Tab extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
@@ -146,6 +141,10 @@ class Tab extends TabBase {
 		super.define(...params);
 	}
 
+	get isSeparator() {
+		return false;
+	}
+
 	getFocusDomRef() {
 		let focusedDomRef = super.getFocusDomRef();
 
@@ -157,8 +156,6 @@ class Tab extends TabBase {
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	Tab.define();
-});
+Tab.define();
 
 export default Tab;

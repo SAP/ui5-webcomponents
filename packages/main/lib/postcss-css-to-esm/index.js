@@ -8,7 +8,7 @@ module.exports = postcss.plugin('add css to esm transform plugin', function (opt
 
 	return function (root) {
 		const css = JSON.stringify(root.toString());
-		const targetFile = root.source.input.from.replace("/src/", "/dist/").replace("\\src\\", "\\dist\\");
+		const targetFile = root.source.input.from.replace("/src/", "/dist/generated/").replace("\\src\\", "\\dist\\generated\\");
 
 		mkdirp.sync(path.dirname(targetFile));
 

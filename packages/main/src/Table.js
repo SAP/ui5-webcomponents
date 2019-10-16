@@ -1,19 +1,12 @@
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler.js";
-import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import { isSpace } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
-import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
-import TableColumn from "./TableColumn.js";
-import TableRow from "./TableRow.js";
-import TableTemplate from "./build/compiled/TableTemplate.lit.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import { isSpace } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import TableTemplate from "./generated/templates/TableTemplate.lit.js";
 
 // Styles
-import styles from "./themes/Table.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
+import styles from "./generated/themes/Table.css.js";
 
 /**
  * @public
@@ -24,31 +17,30 @@ const metadata = {
 
 		/**
 		 * Defines the <code>ui5-table</code> rows.
-		 * <br><b>Note:</b> Only <code>ui5-table-row</code> is allowed.
+		 * <br><b>Note:</b> Use <code>ui5-table-row</code> for the intended design.
 		 *
-		 * @type {TableRow[]}
+		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
 		 */
-		rows: {
-			type: TableRow,
-			multiple: true,
+		"default": {
+			propertyName: "rows",
+			type: HTMLElement,
 			individualSlots: true,
 		},
 
 		/**
 		 * Defines the configuration for the columns of the <code>ui5-table</code>.
-		 * <br><b>Note:</b> Only <code>ui5-table-column</code> is allowed.
+		 * <br><b>Note:</b> Use <code>ui5-table-column</code> for the intended design.
 		 *
-		 * @type {TableColumn[]}
+		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
 		 */
 		columns: {
-			type: TableColumn,
-			multiple: true,
+			type: HTMLElement,
 			individualSlots: true,
-			listenFor: { exclude: ["header"] },
+			listenFor: { include: ["*"] },
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.Table.prototype */ {
@@ -85,13 +77,15 @@ const metadata = {
 		 * <li>Internet Explorer</li>
 		 * <li>Microsoft Edge lower than version 41 (EdgeHTML 16)</li>
 		 * <li>Mozilla Firefox lower than version 59</li>
-		 * </ul></li>
+		 * </ul>
+		 * </li>
 		 * <li>Scrolling behavior:
 		 * <ul>
 		 * <li>If the Web Component is placed in layout containers that have the <code>overflow: hidden</code>
 		 * or <code>overflow: auto</code> style definition, this can
 		 * prevent the sticky elements of the Web Component from becoming fixed at the top of the viewport.</li>
-		 * </ul></li>
+		 * </ul>
+		 * </li>
 		 * </ul>
 		 *
 		 * @type {boolean}
@@ -105,6 +99,10 @@ const metadata = {
 		_hiddenColumns: {
 			type: Object,
 			multiple: true,
+		},
+
+		_noDataDisplayed: {
+			type: Boolean,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Table.prototype */ {
@@ -128,9 +126,13 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/Table";</code>
+ * <code>import "@ui5/webcomponents/dist/Table.js";</code>
  * <br>
- * <b>Note:</b> This also includes the <code>ui5-table-column</code>, <code>ui5-table-row</code> and <code>ui5-table-cell</code> Web Components.
+ * <code>import "@ui5/webcomponents/dist/TableColumn.js";</code> (for <code>ui5-table-column</code>)
+ * <br>
+ * <code>import "@ui5/webcomponents/dist/TableRow.js";</code> (for <code>ui5-table-row</code>)
+ * <br>
+ * <code>import "@ui5/webcomponents/dist/TableCell.js";</code> (for <code>ui5-table-cell</code>)
  *
  * @constructor
  * @author SAP SE
@@ -169,6 +171,8 @@ class Table extends UI5Element {
 		this._delegates.push(this._itemNavigation);
 
 		this.fnOnRowFocused = this.onRowFocused.bind(this);
+
+		this._handleResize = this.popinContent.bind(this);
 	}
 
 	onBeforeRendering() {
@@ -183,16 +187,20 @@ class Table extends UI5Element {
 		});
 
 		this.visibleColumns = this.columns.filter((column, index) => {
+			column.sticky = this.stickyColumnHeader;
 			return !this._hiddenColumns[index];
 		});
+
+		this._noDataDisplayed = !this.rows.length && this.showNoData;
+		this.visibleColumnsCount = this.visibleColumns.length;
 	}
 
 	onEnterDOM() {
-		ResizeHandler.register(this.getDomRef(), this.popinContent.bind(this));
+		ResizeHandler.register(this.getDomRef(), this._handleResize);
 	}
 
 	onExitDOM() {
-		ResizeHandler.deregister(this.getDomRef(), this.popinContent.bind(this));
+		ResizeHandler.deregister(this.getDomRef(), this._handleResize);
 	}
 
 	onRowFocused(event) {
@@ -225,8 +233,8 @@ class Table extends UI5Element {
 		});
 
 		if (visibleColumnsIndexes.length) {
-			this.columns[visibleColumnsIndexes[0]]._first = true;
-			this.columns[visibleColumnsIndexes[visibleColumnsIndexes.length - 1]]._last = true;
+			this.columns[visibleColumnsIndexes[0]].first = true;
+			this.columns[visibleColumnsIndexes[visibleColumnsIndexes.length - 1]].last = true;
 		}
 
 		// invalidate only if hidden columns count has changed
@@ -245,7 +253,6 @@ class Table extends UI5Element {
 		return this.columns.map((column, index) => {
 			return {
 				index,
-				width: column.width,
 				minWidth: column.minWidth,
 				demandPopin: column.demandPopin,
 				popinText: column.popinText,
@@ -253,37 +260,8 @@ class Table extends UI5Element {
 			};
 		}, this);
 	}
-
-	get classes() {
-		return {
-			main: {
-				sapWCTableHeader: true,
-				sapUiSizeCompact: getCompactSize(),
-			},
-			columns: {
-				sapWCTableColumnWrapper: true,
-			},
-		};
-	}
-
-	get styles() {
-		const gridTemplateColumns = this.visibleColumns.reduce((acc, column) => {
-			return `${acc}minmax(0, ${column.width || "1fr"}) `;
-		}, "");
-
-		return {
-			main: {
-				"grid-template-columns": gridTemplateColumns,
-				position: this.stickyColumnHeader ? "sticky" : "",
-				top: this.stickyColumnHeader ? "0px" : "",
-				"z-index": this.stickyColumnHeader ? "1" : "",
-			},
-		};
-	}
 }
 
-Bootstrap.boot().then(_ => {
-	Table.define();
-});
+Table.define();
 
 export default Table;

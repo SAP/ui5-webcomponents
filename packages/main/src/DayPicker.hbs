@@ -1,15 +1,17 @@
-<div class="{{classes.wrapper}}" style="{{styles.wrapper}}">
+<div class="ui5-dp-root" style="{{styles.wrapper}}">
 
-	<div class="{{classes.weekNumberContainer}}">
-		{{#each _weekNumbers}}
-			<div class="sapWCDayPickerWeekNameContainer">
-				<span class="sapWCDayPickerWeekName">{{this}}</span>
-			</div>
-		{{/each}}
-	</div>
+	{{#if showWeekNumbers}}
+		<div class="ui5-dp-weeknumber-container">
+			{{#each _weekNumbers}}
+				<div class="ui5-dp-weekname-container">
+					<span class="ui5-dp-weekname">{{this}}</span>
+				</div>
+			{{/each}}
+		</div>
+	{{/if}}
 
-	<div id="{{_id}}-content" class="{{classes.content}}">
-		<div role="row" class="{{classes.weekDaysContainer}}">
+	<div id="{{_id}}-content" class="ui5-dp-content">
+		<div role="row" class="ui5-dp-days-names-container">
 			{{#each _dayNames}}
 				<div
 					id={{this._id}}
@@ -20,7 +22,7 @@
 				</div>
 			{{/each}}
 		</div>
-		<div id="{{_id}}-days" class="sapWCDayPickerItemsContainer" tabindex="-1">
+		<div id="{{_id}}-days" class="ui5-dp-items-container" tabindex="-1">
 			{{#each _weeks}}
 				{{#if this.length}}
 					<div style="display: flex;">
@@ -34,7 +36,7 @@
 								aria-selected="{{this.selected}}"
 								class="{{this.classes}}">
 									<span 
-										class="sapWCDayPickerDayText"
+										class="ui5-dp-daytext"
 										data-sap-timestamp="{{this.timestamp}}"
 										data-sap-index="{{this._index}}">
 											{{this.iDay}}

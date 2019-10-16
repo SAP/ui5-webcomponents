@@ -1,11 +1,9 @@
 import ManagedEvents from "./events/ManagedEvents.js";
-import getOriginalEventTarget from "./events/getOriginalEventTarget.js";
-import UI5Element from "./UI5Element.js";
+import getShadowDOMTarget from "./events/getShadowDOMTarget.js";
 
 const handleEvent = function handleEvent(event) {
 	// Get the DOM node where the original event occurred
-	let target = getOriginalEventTarget(event);
-	event.ui5target = target;
+	let target = getShadowDOMTarget(event);
 
 	// Traverse the DOM
 	let shouldPropagate = true;
@@ -19,7 +17,7 @@ const handleEvent = function handleEvent(event) {
 
 
 const processDOMNode = function processDOMNode(node, event) {
-	if (node && node instanceof UI5Element) {
+	if (node && node.isUI5Element) {
 		return dispatchEvent(node, event);
 	}
 	return true;
@@ -44,13 +42,20 @@ const dispatchEvent = function dispatchEvent(element, event) {
 const getParentDOMNode = function getParentDOMNode(node) {
 	const parentNode = node.parentNode;
 
-	if (parentNode && parentNode.host) {
+	if (parentNode && (parentNode instanceof window.ShadowRoot) && parentNode.host) {
 		return parentNode.host;
 	}
 
 	return parentNode;
 };
 
+const isOtherInstanceRegistered = () => {
+	return window["@ui5/webcomponents-base/DOMEventHandler"];
+};
+
+const registerInstance = () => {
+	window["@ui5/webcomponents-base/DOMEventHandler"] = true;
+};
 
 class DOMEventHandler {
 	constructor() {
@@ -58,7 +63,11 @@ class DOMEventHandler {
 	}
 
 	static start() {
-		ManagedEvents.bindAllEvents(handleEvent);
+		// register the handlers just once in case other bundles include and call this method multiple times
+		if (!isOtherInstanceRegistered()) {
+			ManagedEvents.bindAllEvents(handleEvent);
+			registerInstance();
+		}
 	}
 
 	static stop() {

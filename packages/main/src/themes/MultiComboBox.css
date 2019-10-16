@@ -1,55 +1,17 @@
-:host(ui5-multi-combobox:not([hidden])) {
+@import "./Input.css";
+@import "./InputIcon.css";
+
+:host(:not([hidden])) {
 	display: inline-block;
 	width: 100%;
 
 	--_ui5_popover_content_padding: 0;
 }
 
-ui5-multi-combobox:not([hidden]) {
-	display: inline-block;
-	width: 100%;
-}
-
-.ui5-multi-combobox--wrapper {
+.ui5-multi-combobox-root {
 	display: flex;
 	overflow: hidden;
 	width: 100%;
-	height: 100%;
-}
-
-
-
-.ui5-multi-combobox--icon {
-	color: var(--sapUiContentIconColor);
-	cursor: pointer;
-	outline: none;
-	box-sizing: border-box;
-	width: 2.375rem;
-}
-
-.ui5-multi-combobox--icon[data-ui5-compact-size] {
-	width: 2rem;
-}
-
-.ui5-multi-combobox--icon:active {
-	background-color: var(--sapUiButtonLiteActiveBackground);
-	color: var(--sapUiButtonActiveTextColor);
-}
-
-.ui5-multi-combobox--icon.ui5-multi-combobox-icon-pressed {
-	background: var(--sapUiToggleButtonPressedBackground);
-	color: var(--sapUiButtonActiveTextColor);
-}
-
-.ui5-multi-combobox--icon:not(.ui5-multi-combobox-icon-pressed):not(:active):hover {
-	background: var(--sapUiButtonLiteHoverBackground);
-}
-
-.ui5-multi-combobox--token {
-	height: 80%;
-}
-
-.sapUiSizeCompact .ui5-multi-combobox--token {
 	height: 100%;
 }
 
@@ -59,4 +21,10 @@ ui5-multi-combobox:not([hidden]) {
 	width: auto;
 	min-width: 0px;
 	height: 100%;
+}
+
+/* Workaround for IE */
+
+ui5-multi-combobox ui5-tokenizer {
+	flex: 3;
 }

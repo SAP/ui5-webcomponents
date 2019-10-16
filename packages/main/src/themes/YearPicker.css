@@ -1,16 +1,17 @@
-:host(ui5-yearpicker) {
+:host(:not([hidden])) {
 	display: inline-block;
+}
+
+:host {
 	width: 100%;
 	height: 100%;
 }
 
-ui5-yearpicker {
-	display: inline-block;
-	width: 100%;
-	height: 100%;
+:host([data-ui5-compact-size]) .ui5-yp-item {
+	height: 2rem;
 }
 
-.sapWCYearPicker {
+.ui5-yp-root {
 	padding: 2rem 0 1rem 0;
 	display: flex;
 	flex-direction: column;
@@ -20,14 +21,14 @@ ui5-yearpicker {
 	align-items: center;
 }
 
-.sapWCYearPickerIntervalContainer {
+.ui5-yp-interval-container {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	width: 100%;
 }
 
-.sapWCYearPickerItem {
+.ui5-yp-item {
 	display: flex;
 	margin: var(--_ui5_yearpicker_item_margin);
 	width: calc(25% - 0.125rem);
@@ -48,32 +49,32 @@ ui5-yearpicker {
 	border-radius: var(--_ui5_yearpicker_item_border_radius);
 }
 
-.sapWCYearPickerItem:hover {
+.ui5-yp-item:hover {
 	background-color: var(--_ui5_yearpicker_item_hover_background_color);
 }
 
-.sapWCYearPickerItem:focus {
+.ui5-yp-item:focus {
 	background-color: var(--_ui5_yearpicker_item_focus_background_color);
 }
 
-.sapWCYearPickerItem.sapWCYearPickerItemSel {
+.ui5-yp-item.ui5-yp-item--selected {
 	background-color: var(--sapUiSelected);
 	color: var(--sapUiContentContrastTextColor);
 }
 
-.sapWCYearPickerItem.sapWCYearPickerItemSel:focus {
-    background-color: var(--_ui5_yearpicker_item_selected_focus);
+.ui5-yp-item.ui5-yp-item--selected:focus {
+	background-color: var(--_ui5_yearpicker_item_selected_focus);
 }
 
-.sapWCYearPickerItem.sapWCYearPickerItemSel:focus::after {
+.ui5-yp-item.ui5-yp-item--selected:focus::after {
 	border-color: var(--sapUiContentContrastFocusColor);
 }
 
-.sapWCYearPickerItem.sapWCYearPickerItemSel:hover {
-    background-color: var(--_ui5_yearpicker_item_selected_focus);
+.ui5-yp-item.ui5-yp-item--selected:hover {
+	background-color: var(--_ui5_yearpicker_item_selected_focus);
 }
 
-.sapWCYearPickerItem:focus::after {
+.ui5-yp-item:focus::after {
 	content: "";
 	position: absolute;
 	width: var(--_ui5_yearpicker_item_focus_after_width);
@@ -81,8 +82,4 @@ ui5-yearpicker {
 	border: var(--_ui5_yearpicker_item_focus_after_border);
 	top: var(--_ui5_yearpicker_item_focus_after_offset);
 	left: var(--_ui5_yearpicker_item_focus_after_offset);
-}
-
-.sapUiSizeCompact .sapWCYearPickerItem {
-	height: 2rem;
 }

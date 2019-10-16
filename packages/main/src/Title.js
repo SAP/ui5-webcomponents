@@ -1,14 +1,12 @@
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import TitleLevel from "./types/TitleLevel.js";
-import TitleTemplate from "./build/compiled/TitleTemplate.lit.js";
+
+// Template
+import TitleTemplate from "./generated/templates/TitleTemplate.lit.js";
 
 // Styles
-import titleCss from "./themes/Title.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
+import titleCss from "./generated/themes/Title.css.js";
 
 /**
  * @public
@@ -50,12 +48,10 @@ const metadata = {
 		 * @slot
 		 * @public
 		 */
-		text: {
+		"default": {
 			type: Node,
-			multiple: true,
 		},
 	},
-	defaultSlot: "text",
 };
 
 /**
@@ -121,21 +117,8 @@ class Title extends UI5Element {
 	get h6() {
 		return this.normalizedLevel === "h6";
 	}
-
-	get classes() {
-		return {
-			main: {
-				sapMTitle: true,
-				sapMTitleWrap: this.wrap,
-				sapUiSelectable: true,
-				[`sapMTitleStyle${this.level}`]: true,
-			},
-		};
-	}
 }
 
-Bootstrap.boot().then(_ => {
-	Title.define();
-});
+Title.define();
 
 export default Title;

@@ -1,12 +1,8 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 
 // Template
-import ShellBarItemTemplate from "./build/compiled/ShellBarItemTemplate.lit.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
+import ShellBarItemTemplate from "./generated/templates/ShellBarItemTemplate.lit.js";
 
 /**
  * @public
@@ -44,7 +40,7 @@ const metadata = {
 		 * @param {HTMLElement} targetRef dom ref of the clicked element
 		 * @public
 		 */
-		press: {
+		itemClick: {
 			detail: {
 				targetRef: { type: HTMLElement },
 			},
@@ -80,8 +76,6 @@ class ShellBarItem extends UI5Element {
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	ShellBarItem.define();
-});
+ShellBarItem.define();
 
 export default ShellBarItem;

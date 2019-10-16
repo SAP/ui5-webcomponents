@@ -1,40 +1,29 @@
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import ItemNavigation from "@ui5/webcomponents-base/src/delegate/ItemNavigation.js";
-import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
-import TimelineItem from "./TimelineItem.js";
-import TimelineTemplate from "./build/compiled/TimelineTemplate.lit.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import TimelineTemplate from "./generated/templates/TimelineTemplate.lit.js";
 
 // Styles
-import styles from "./themes/Timeline.css.js";
-
-// all themes should work via the convenience import (inlined now, switch to json when elements can be imported individyally)
-import "./ThemePropertiesProvider.js";
+import styles from "./generated/themes/Timeline.css.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-timeline",
-	defaultSlot: "items",
 	slots: /** @lends sap.ui.webcomponents.main.Timeline.prototype */ {
 		/**
 		 * Determines the content of the <code>ui5-timeline</code>.
 		 *
-		 * @type {TimelineItem[]}
+		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
 		 */
-		items: {
-			type: TimelineItem,
-			multiple: true,
+		"default": {
+			propertyName: "items",
+			type: HTMLElement,
 			individualSlots: true,
 		},
-	},
-	properties: /** @lends sap.ui.webcomponents.main.Timeline.prototype */ {
-	},
-	events: /** @lends sap.ui.webcomponents.main.Timeline.prototype */ {
 	},
 };
 
@@ -91,25 +80,8 @@ class Timeline extends UI5Element {
 
 		this._delegates.push(this._itemNavigation);
 	}
-
-	get classes() {
-		return {
-			main: {
-				sapWCTimeline: true,
-				sapUiSizeCompact: getCompactSize(),
-			},
-		};
-	}
-
-	static async define(...params) {
-		await TimelineItem.define();
-
-		super.define(...params);
-	}
 }
 
-Bootstrap.boot().then(_ => {
-	Timeline.define();
-});
+Timeline.define();
 
 export default Timeline;
