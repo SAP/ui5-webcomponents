@@ -226,9 +226,7 @@ class Select extends UI5Element {
 
 		if (this._isPickerOpen) {
 			popover.close();
-			this.opened = false;
 		} else {
-			this.opened = true;
 			popover.openBy(this);
 		}
 	}

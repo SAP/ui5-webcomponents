@@ -13,12 +13,6 @@ describe("Date Picker Tests", () => {
 		assert.ok(datepicker.innerInput.isDisplayedInViewport(), "inner input is rendered");
 	});
 
-	it("calendar renders inside a popover", () => {
-		datepicker.id = "#dp";
-		assert.ok(datepicker.popover.isDisplayedInViewport(), "popover is rendered");
-		assert.ok(datepicker.calendar, "calendar is rendered");
-	});
-
 	it("input receives value", () => {
 		datepicker.id = "#dp1";
 
@@ -152,6 +146,7 @@ describe("Date Picker Tests", () => {
 		assert.equal(datepicker.innerInput.getProperty("value"), "", "datepicker value is empty");
 
 		//check if the picker is open and the selected date in the calendar is correct
+
 		assert.ok(datepicker.isPickerOpen(), "picker is open");
 		assert.ok(!calendarDate_6_Jan_2015.hasClass("ui5-dp-item--selected"), "calendar selected dates is ok");
 		assert.ok(!calendarDate_8_Jan_2015.hasClass("ui5-dp-item--selected"), "calendar selected dates is ok");
@@ -318,20 +313,6 @@ describe("Date Picker Tests", () => {
 		browser.keys(["Alt", "ArrowDown", "NULL"]);
 
 		assert.ok(datepicker.isPickerOpen(), "datepicker is open");
-	});
-
-	it("Scrolling does not close the picker", () => {
-		datepicker.id = "#dp9";
-
-		datepicker.valueHelpIcon.click();
-		assert.ok(datepicker.isPickerOpen(), "picker is open");
-
-		// scroll down
-		browser.$("#downThere").scrollIntoView();
-
-		browser.pause(1000);
-
-		assert.ok(datepicker.isPickerOpen(), "picker is open");
 	});
 
 	it("daypicker extreme values max", () => {

@@ -20,7 +20,7 @@
 	height: var(--_ui5_input_compact_height);
 }
 
-:host([data-ui5-compact-size]) input {
+:host([data-ui5-compact-size]) [inner-input] {
 	padding: 0 0.5rem;
 }
 
@@ -55,7 +55,7 @@
 	color: var(--sapUiContentDisabledTextColor);
 }
 
-input {
+[inner-input] {
 	background: transparent;
 	color: inherit;
 	border: none;
@@ -73,22 +73,22 @@ input {
 	font-family: inherit;
 }
 
-input::-webkit-input-placeholder {
+[inner-input]::-webkit-input-placeholder {
 	/* Chrome/Opera/Safari */
 	color: var(--sapUiFieldPlaceholderTextColor);
 }
 
-input::-moz-placeholder {
+[inner-input]::-moz-placeholder {
 	/* Firefox 19+ */
 	color: var(--sapUiFieldPlaceholderTextColor);
 }
 
-input:-ms-input-placeholder {
+[inner-input]:-ms-input-placeholder {
 	/* IE 10+ */
 	color: var(--sapUiFieldPlaceholderTextColor);
 }
 
-input:-moz-placeholder {
+[inner-input]:-moz-placeholder {
 	/* Firefox 18- */
 	color: var(--sapUiFieldPlaceholderTextColor);
 }
@@ -119,12 +119,12 @@ input:-moz-placeholder {
 	border-width: var(--_ui5_input_state_border_width);
 }
 
-:host([value-state="Error"]) input,
-:host([value-state="Warning"]) input {
+:host([value-state="Error"]) [inner-input],
+:host([value-state="Warning"]) [inner-input] {
 	font-style: var(--_ui5_input_error_warning_font_style);
 }
 
-:host([value-state="Error"]) input {
+:host([value-state="Error"]) [inner-input] {
 	font-weight: var(--_ui5_input_error_font_weight);
 }
 
@@ -149,7 +149,7 @@ input:-moz-placeholder {
 }
 
 /* Remove IE's defaut clear button */
-input::-ms-clear {
+[inner-input]::-ms-clear {
 	height: 0;
 	width: 0;
 }
@@ -170,10 +170,14 @@ input::-ms-clear {
 	width: var(--sap_wc_input_compact_min_width);
 }
 
-::slotted(ui5-icon) {
+/* TODO: Remove this after parser is fixed
+	-	this statement is transformed to "ui5-multi-combobox ui5-icon" which 
+	affects all icons in the combobox incuding these in the list items
+*/
+::slotted(ui5-icon[slot="icon"]) {
 	padding: var(--_ui5_input_icon_padding);
 }
 
-:host([data-ui5-compact-size]) ::slotted(ui5-icon) {
+:host([data-ui5-compact-size]) ::slotted(ui5-icon[slot="icon"]) {
 	padding: .25rem .5rem;
 }

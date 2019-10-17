@@ -445,7 +445,7 @@ class Input extends UI5Element {
 			- value of the host and the internal input should be differnt in case of actual input
 			- input is called when a key is pressed => keyup should not be called yet
 		*/
-		const skipFiring = (this.getInputDOMRef().value === this.value) && isIE() && !this._keyDown && this.placeholder;
+		const skipFiring = (this.getInputDOMRef().value === this.value) && isIE() && !this._keyDown && !!this.placeholder;
 
 		!skipFiring && this.fireEventByAction(this.ACTION_USER_INPUT);
 
@@ -586,7 +586,7 @@ class Input extends UI5Element {
 	}
 
 	get valueStateTextId() {
-		return this.hasValueState ? `${this._id}-descr` : "";
+		return this.hasValueState ? `${this._id}-valueStateDesc` : "";
 	}
 
 	get accInfo() {
@@ -596,10 +596,10 @@ class Input extends UI5Element {
 			"wrapper": {
 			},
 			"input": {
-				"ariaDescribedBy": this._inputAccInfo ? `${this.suggestionsTextId} ${this.valueStateTextId} ${this._inputAccInfo.ariaDescribedBy}`.trim() : `${this.suggestionsTextId} ${this.valueStateTextId}`.trim(),
+				"ariaDescribedBy": this._inputAccInfo.ariaDescribedBy ? `${this.suggestionsTextId} ${this.valueStateTextId} ${this._inputAccInfo.ariaDescribedBy}`.trim() : `${this.suggestionsTextId} ${this.valueStateTextId}`.trim(),
 				"ariaInvalid": this.valueState === ValueState.Error ? "true" : undefined,
-				"ariaHasPopup": this._inputAccInfo ? this._inputAccInfo.ariaHasPopup : ariaHasPopupDefault,
-				"ariaAutoComplete": this._inputAccInfo ? this._inputAccInfo.ariaAutoComplete : ariaAutoCompleteDefault,
+				"ariaHasPopup": this._inputAccInfo.ariaHasPopup ? this._inputAccInfo.ariaHasPopup : ariaHasPopupDefault,
+				"ariaAutoComplete": this._inputAccInfo.ariaAutoComplete ? this._inputAccInfo.ariaAutoComplete : ariaAutoCompleteDefault,
 				"role": this._inputAccInfo && this._inputAccInfo.role,
 				"ariaOwns": this._inputAccInfo && this._inputAccInfo.ariaOwns,
 				"ariaExpanded": this._inputAccInfo && this._inputAccInfo.ariaExpanded,

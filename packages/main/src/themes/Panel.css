@@ -38,15 +38,7 @@
 }
 
 .ui5-panel-header-button {
-	min-width: 2rem;
-	width: 2rem;
-	height: 2rem;
 	transition: transform 0.4s ease-out;
-}
-
-.ui5-panel-header-button-icon {
-	pointer-events: none;
-	color: inherit;
 }
 
 :host(:not([_has-header])) .ui5-panel-header-button {
@@ -82,6 +74,7 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	flex-shrink: 0;
 	width: var(--_ui5_panel_button_root_width);
 	margin-right: .25rem;
 }

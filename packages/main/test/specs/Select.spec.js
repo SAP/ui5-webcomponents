@@ -11,7 +11,7 @@ describe("Select general interaction", () => {
 
 		select.click();
 
-		const firstItem = browser.$("#mySelect").shadow$("ui5-li:first-child");
+		const firstItem = browser.$("#mySelect").shadow$$("ui5-li")[0];
 
 		firstItem.click();
 
@@ -71,7 +71,7 @@ describe("Select general interaction", () => {
 	it("opens upon space", () => {
 		const btn = $("#myBtn2");
 		const select = $("#mySelect");
-		const popover = browser.$("#mySelect").shadow$("ui5-popover").shadow$(".ui5-popup-root");
+		const popover = browser.$("#mySelect").shadow$("ui5-popover");
 
 		btn.click();
 		btn.keys("Tab");
@@ -83,7 +83,7 @@ describe("Select general interaction", () => {
 	it("toggles upon F4", () => {
 		const btn = $("#myBtn2");
 		const select = $("#mySelect");
-		const popover = browser.$("#mySelect").shadow$("ui5-popover").shadow$(".ui5-popup-root");
+		const popover = browser.$("#mySelect").shadow$("ui5-popover");
 
 		btn.click();
 		btn.keys("Tab");
@@ -98,7 +98,7 @@ describe("Select general interaction", () => {
 	it("toggles upon ALT + UP", () => {
 		const btn = $("#myBtn2");
 		const select = $("#mySelect");
-		const popover = browser.$("#mySelect").shadow$("ui5-popover").shadow$(".ui5-popup-root");
+		const popover = browser.$("#mySelect").shadow$("ui5-popover");
 
 		btn.click();
 		btn.keys("Tab");
@@ -112,7 +112,7 @@ describe("Select general interaction", () => {
 
 	it("toggles upon ALT + DOWN", () => {
 		const btn = $("#myBtn2");
-		const popover = browser.$("#mySelect").shadow$("ui5-popover").shadow$(".ui5-popup-root");
+		const popover = browser.$("#mySelect").shadow$("ui5-popover");
 
 		btn.click();
 		btn.keys("Tab");
@@ -156,36 +156,35 @@ describe("Select general interaction", () => {
 		assert.strictEqual(selectTextAfterEscape, selectText, "Initially selected item should remain selected");
 	});
 
-	// it("fires change event after selection is change and picker if focussed out", () => {
-	// 	const select = $("#mySelect");
-	// 	const inputResult = browser.$("#inputResult").shadow$("input");
-	// 	const btn = $("#myBtn2");
+	it("fires change event after selection is change and picker if focussed out", () => {
+		const select = $("#mySelect");
+		const inputResult = browser.$("#inputResult").shadow$("input");
+		const btn = $("#myBtn2");
 
-	// 	select.click();
-	// 	select.keys("ArrowDown");
-	// 	select.keys("ArrowDown");
-		
-	// 	// focus out select
-	// 	btn.click();
+		select.click();
+		select.keys("ArrowDown");
+		select.keys("ArrowDown");
 
-	// 	assert.strictEqual(inputResult.getProperty("value"), "6", "Change event should be fired");
-	// });
+		// focus out select
+		btn.click();
 
-	// it("fires change event after selecting a previewed item", () => {
-	// 	const select = $("#mySelect");
-	// 	const inputResult = browser.$("#inputResult").shadow$("input");
+		assert.strictEqual(inputResult.getProperty("value"), "6", "Change event should be fired");
+	});
 
-	// 	select.click();
-	// 	select.keys("ArrowDown");
+	it("fires change event after selecting a previewed item", () => {
+		const select = $("#mySelect");
+		const inputResult = browser.$("#inputResult").shadow$("input");
 
-	// 	select.keys("Escape");
+		select.click();
+		select.keys("ArrowDown");
 
-	// 	select.click();
-	// 	const firstItem = browser.$("#mySelect").shadow$("ui5-li:first-child");
+		select.keys("Escape");
 
-	// 	firstItem.click();
+		select.click();
+		const firstItem = browser.$("#mySelect").shadow$("ui5-li:first-child");
+	
+		firstItem.click();
 
-	// 	// Untill we fix the test assert.strictEqual(inputResult.getProperty("value"), "7", "Change event should be fired");
-	// 	assert.strictEqual(inputResult.getProperty("value"), "8", "Change event should be fired");
-	// });
+		assert.strictEqual(inputResult.getProperty("value"), "7", "Change event should be fired");
+	});
 });

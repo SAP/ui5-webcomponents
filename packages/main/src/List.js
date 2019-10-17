@@ -298,6 +298,7 @@ class List extends UI5Element {
 				selectedItems: this.getSelectedItems(),
 				previouslySelectedItems,
 				selectionComponentPressed: event.detail.selectionComponentPressed,
+				key: event.detail.key,
 			});
 		}
 	}
@@ -455,6 +456,7 @@ class List extends UI5Element {
 					item: pressedItem,
 					selectionComponentPressed: false,
 					selected: !pressedItem.selected,
+					key: event.detail.key,
 				},
 			});
 		}

@@ -143,7 +143,7 @@ class ListItem extends ListItemBase {
 		}
 
 		if (isEnter(event)) {
-			this.fireItemPress();
+			this.fireItemPress(event);
 		}
 	}
 
@@ -153,7 +153,7 @@ class ListItem extends ListItemBase {
 		}
 
 		if (isSpace(event)) {
-			this.fireItemPress();
+			this.fireItemPress(event);
 		}
 	}
 
@@ -179,7 +179,7 @@ class ListItem extends ListItemBase {
 		if (event.isMarked === "button") {
 			return;
 		}
-		this.fireItemPress();
+		this.fireItemPress(event);
 	}
 
 	/*
@@ -204,8 +204,8 @@ class ListItem extends ListItemBase {
 		this.fireEvent("_selectionRequested", { item: this, selectionComponentPressed: false });
 	}
 
-	fireItemPress() {
-		this.fireEvent("_press", { item: this, selected: this.selected });
+	fireItemPress(event) {
+		this.fireEvent("_press", { item: this, selected: this.selected, key: event.key });
 	}
 
 	get placeSelectionElementBefore() {

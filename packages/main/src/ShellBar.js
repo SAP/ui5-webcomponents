@@ -37,6 +37,8 @@ const metadata = {
 
 		/**
 		 * Defines the <code>primaryTitle</code>.
+		 * <br><br>
+		 * <b>Note:</b> The <code>primaryTitle</code> would be hidden on S screen size (less than approx. 700px).
 		 * @type {string}
 		 * @defaultvalue: ""
 		 * @public
@@ -48,7 +50,7 @@ const metadata = {
 		/**
 		 * Defines the <code>secondaryTitle</code>.
 		 * <br><br>
-		 * <b>Note:</b> On smaller screen width, the <code>secondaryTitle</code> would be hidden.
+		 * <b>Note:</b> The <code>secondaryTitle</code> would be hidden on S and M screen sizes (less than approx. 1300px).
 		 * @type {string}
 		 * @defaultvalue: ""
 		 * @public

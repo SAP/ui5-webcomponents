@@ -40,7 +40,7 @@ TestHelper.ready(function () {
 			var panel = this.getPanelRoot();
 
 			assert.ok(panel.querySelector(".ui5-panel-header-content"), "header wrapping div exists");
-			assert.ok(panel.querySelector("ui5-icon"), "expandable icon exists");
+			assert.ok(panel.querySelector("ui5-button"), "expandable icon exists");
 		});
 
 		QUnit.test("The default 'accessibleRole' is 'Form'", function (assert) {

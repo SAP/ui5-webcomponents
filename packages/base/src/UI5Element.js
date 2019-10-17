@@ -85,10 +85,12 @@ class UI5Element extends HTMLElement {
 			return;
 		}
 
+		// always register the observer before yielding control to the main thread (await)
+		this._startObservingDOMChildren();
+
 		await this._processChildren();
 		await RenderScheduler.renderImmediately(this);
 		this._domRefReadyPromise._deferredResolve();
-		this._startObservingDOMChildren();
 		if (typeof this.onEnterDOM === "function") {
 			this.onEnterDOM();
 		}
@@ -321,20 +323,19 @@ class UI5Element extends HTMLElement {
 
 		const result = metadatas[0];
 
-		// merge properties
-		result.properties = metadatas.reverse().reduce((allProperties, current) => { // eslint-disable-line
-			Object.assign(allProperties, current.properties || {});
-			return allProperties;
-		}, {});
-
-		// merge slots
-		result.slots = metadatas.reverse().reduce((allSlots, current) => { // eslint-disable-line
-			Object.assign(allSlots, current.slots || {});
-			return allSlots;
-		}, {});
+		result.properties = this._mergeMetadataEntry(metadatas, "properties"); // merge properties
+		result.slots = this._mergeMetadataEntry(metadatas, "slots"); // merge slots
+		result.events = this._mergeMetadataEntry(metadatas, "events"); // merge events
 
 		this._metadata = new UI5ElementMetadata(result);
 		return this._metadata;
+	}
+
+	static _mergeMetadataEntry(metadatas, prop) {
+		return metadatas.reverse().reduce((result, current) => { // eslint-disable-line
+			Object.assign(result, current[prop] || {});
+			return result;
+		}, {});
 	}
 
 	_attachChildPropertyUpdated(child, propData) {
@@ -470,7 +471,7 @@ class UI5Element extends HTMLElement {
 
 		const focusDomRef = this.getFocusDomRef();
 
-		if (focusDomRef) {
+		if (focusDomRef && typeof focusDomRef.focus === "function") {
 			focusDomRef.focus();
 		}
 	}
