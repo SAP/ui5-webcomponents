@@ -205,6 +205,7 @@ const metadata = {
 		 * something is pasted.
 		 *
 		 * @event
+		 * @since 1.0.0-rc.5
 		 * @public
 		 */
 		input: {},
@@ -321,8 +322,8 @@ class TextArea extends UI5Element {
 		const nativeTextarea = this.getInputDomRef();
 
 		/* skip calling change event when an textarea with a placeholder is focused on IE
-			- value of the host and the internal textarea should be differnt in case of actual textarea
-			- textarea is called when a key is pressed => keyup should not be called yet
+			- value of the host and the internal textarea should be different in case of actual input
+			- input is called when a key is pressed => keyup should not be called yet
 		*/
 		const skipFiring = (this.getInputDomRef().value === this.value) && isIE() && !this._keyDown && !!this.placeholder;
 		if (event.target === nativeTextarea) {
