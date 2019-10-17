@@ -3,8 +3,8 @@ import isNodeTabbable from "./isNodeTabbable.js";
 
 const getTabbableElements = node => {
 	const res = getTabbables(node.children);
-	// eslint-next-line
-	console.log(res); // remove afterwards
+	// remove afterwards
+	console.log(res); // eslint-disable-line
 	return res;
 };
 
