@@ -1,5 +1,9 @@
-commit 1b3e40d17e64a8c297a7ba8c9df779f6962b140c
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Wed Oct 16 14:57:05 2019 +0300
+commit 1ed0bd310c302b7e38d39fae213a61e0478525ce
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Thu Oct 17 10:24:42 2019 +0300
 
-    fix(ui5-multi-combobox): close popover & empty value on selection (#832)
+    chore: refactor build scripts (#855)
+    
+    extract scripts from package.json to nps (package-scripts.js)
+    
+    this will enable easier reuse of build scripts across packages in the future
