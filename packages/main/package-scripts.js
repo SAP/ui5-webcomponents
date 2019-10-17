@@ -30,13 +30,13 @@ module.exports = {
         },
         watch: {
             default: 'concurrently "nps watch.templates" "nps watch.samples" "nps watch.test" "nps watch.src" "nps watch.bundle" "nps watch.styles" "nps copy.webcomponents-polyfill"',
-            src: "nps 'copy.src --watch'",
-            test: "nps 'copy.test --watch'",
+            src: 'nps "copy.src --watch"',
+            test: 'nps "copy.test --watch"',
             bundle: "rollup -c -w --environment ES5_BUILD,DEV",
             styles: {
                 default: 'concurrently "nps watch.styles.bundles" "nps watch.styles.components"',
-                bundles: "nps 'build.styles.bundles -w'",
-                components: "nps 'build.styles.components -w'",
+                bundles: 'nps "build.styles.bundles -w"',
+                components: 'nps "build.styles.components -w"',
             },
             templates: "chokidar \"src/**/*.hbs\" -c \"nps build.templates\"",
             samples: "chokidar \"test/**/*.sample.html\" -c \"nps build.samples\"",
