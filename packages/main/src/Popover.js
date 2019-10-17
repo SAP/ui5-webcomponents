@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import FocusHelper from "@ui5/webcomponents-base/dist/FocusHelper.js";
+import { getFirstFocusableElement, getLastFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import PopoverTemplate from "./generated/templates/PopoverTemplate.lit.js";
 import PopoverPlacementType from "./types/PopoverPlacementType.js";
@@ -241,7 +241,7 @@ class Popover extends UI5Element {
 	}
 
 	forwardToFirst() {
-		const firstFocusable = FocusHelper.findFirstFocusableElement(this.contentDOM);
+		const firstFocusable = getFirstFocusableElement(this.contentDOM);
 
 		if (firstFocusable) {
 			firstFocusable.focus();
@@ -249,7 +249,7 @@ class Popover extends UI5Element {
 	}
 
 	forwardToLast() {
-		const lastFocusable = FocusHelper.findLastFocusableElement(this.contentDOM);
+		const lastFocusable = getLastFocusableElement(this.contentDOM);
 
 		if (lastFocusable) {
 			lastFocusable.focus();
@@ -317,7 +317,7 @@ class Popover extends UI5Element {
 	}
 
 	applyInitialFocus() {
-		const element = this.getRootNode().getElementById(this.initialFocus) || document.getElementById(this.initialFocus) || FocusHelper.findFirstFocusableElement(this.contentDOM);
+		const element = this.getRootNode().getElementById(this.initialFocus) || document.getElementById(this.initialFocus) || getFirstFocusableElement(this.contentDOM);
 
 		if (element) {
 			element.focus();

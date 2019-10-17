@@ -1,5 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import FocusHelper from "@ui5/webcomponents-base/dist/FocusHelper.js";
+import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
 import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 
@@ -89,7 +89,7 @@ class ListItemBase extends UI5Element {
 	* [TAB] is performed onto the last tabbale content item.
 	*/
 	shouldForwardTabAfter(target) {
-		const aContent = FocusHelper.getTabbableContent(this.getDomRef());
+		const aContent = getTabbableElements(this.getDomRef());
 
 		if (target.getFocusDomRef) {
 			target = target.getFocusDomRef();
