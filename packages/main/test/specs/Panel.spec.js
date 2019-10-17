@@ -34,4 +34,22 @@ describe("Panel general interaction", () => {
 
 		assert.strictEqual(field.getProperty("value"), "3", "Press should be called 3 times");
 	});
+
+	describe("Accessibility", () => {
+
+		it("tests whether aria attributes are set correctly without custom header", () => {
+			const header = browser.$("#panel1").shadow$(".ui5-panel-header");
+
+			assert.ok(header.getAttribute("aria-expanded"), "Aria-expanded should be set on the header");
+			assert.ok(header.getAttribute("aria-controls"), "Aria-controls should be set on the header");
+		});
+
+		it("tests whether aria attributes are set correctly in case of custom header", () => {
+			const button = browser.$("#panel2").shadow$(".ui5-panel-header-button").shadow$(".ui5-button-root");
+
+			assert.ok(button.getAttribute("aria-expanded"), "Aria-expanded should be set on the button");
+			assert.ok(button.getAttribute("aria-controls"), "Aria-controls should be set on the button");
+			assert.ok(button.getAttribute("title"), "Title should be set on the button");
+		});
+	});
 });
