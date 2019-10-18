@@ -41,6 +41,7 @@
     "packages/core",
     "packages/base",
     "packages/main",
-    "packages/playground"
+    "packages/playground",
+    "packages/dev"
   ]
 }
