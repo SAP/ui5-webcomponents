@@ -50,7 +50,6 @@ const metadata = {
 		selectedDates: {
 			type: Integer,
 			multiple: true,
-			deepEqual: true,
 		},
 
 		_weeks: {
@@ -81,6 +80,7 @@ const metadata = {
 		 */
 		navigate: {},
 	},
+	_eventHandlersByConvention: true,
 };
 
 const MAX_YEAR = 9999;
@@ -129,8 +129,6 @@ class DayPicker extends UI5Element {
 			ItemNavigation.BORDER_REACH,
 			this._handleItemNavigationBorderReach.bind(this)
 		);
-
-		this._delegates.push(this._itemNav);
 	}
 
 	onBeforeRendering() {

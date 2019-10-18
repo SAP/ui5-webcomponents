@@ -305,7 +305,6 @@ class UI5Element extends HTMLElement {
 	_initializeState() {
 		const defaultState = this.constructor._getDefaultState();
 		this._state = Object.assign({}, defaultState);
-		this._delegates = [];
 	}
 
 	static getMetadata() {
@@ -484,12 +483,6 @@ class UI5Element extends HTMLElement {
 	 */
 	_handleEvent(event) {
 		const sHandlerName = `on${event.type}`;
-
-		this._delegates.forEach(delegate => {
-			if (delegate[sHandlerName]) {
-				delegate[sHandlerName](event);
-			}
-		});
 
 		if (this[sHandlerName]) {
 			this[sHandlerName](event);
@@ -675,18 +668,11 @@ class UI5Element extends HTMLElement {
 					}
 				},
 				set(value) {
-					let isDifferent = false;
 					value = this.constructor.getMetadata().constructor.validatePropertyValue(value, propData);
 
 					const oldState = this._state[prop];
 
-					if (propData.deepEqual) {
-						isDifferent = JSON.stringify(oldState) !== JSON.stringify(value);
-					} else {
-						isDifferent = oldState !== value;
-					}
-
-					if (isDifferent) {
+					if (oldState !== value) {
 						this._state[prop] = value;
 						this._invalidate(prop, value);
 						this._propertyChange(prop, value);

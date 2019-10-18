@@ -270,6 +270,7 @@ const metadata = {
 			},
 		},
 	},
+	_eventHandlersByConvention: true,
 };
 
 /**

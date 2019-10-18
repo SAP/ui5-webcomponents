@@ -125,7 +125,6 @@ const metadata = {
 
 		_itemsInfo: {
 			type: Object,
-			deepEqual: true,
 		},
 
 		_actionList: {
@@ -278,6 +277,7 @@ const metadata = {
 			},
 		},
 	},
+	_eventHandlersByConvention: true,
 };
 
 /**
@@ -341,7 +341,7 @@ class ShellBar extends UI5Element {
 
 		this._itemsInfo = [];
 		this._isInitialRendering = true;
-		this._focussedItem = null;
+		this._focusedItem = null;
 
 		// marks if preventDefault() is called in item's press handler
 		this._defaultItemPressPrevented = false;
@@ -376,12 +376,7 @@ class ShellBar extends UI5Element {
 			const items = that._itemsInfo.filter(info => {
 				const isVisible = info.classes.indexOf("ui5-shellbar-hidden-button") === -1;
 				const isSet = info.classes.indexOf("ui5-shellbar-invisible-button") === -1;
-
-				if (isVisible && isSet) {
-					return true;
-				}
-
-				return false;
+				return isVisible && isSet;
 			}).sort((item1, item2) => {
 				if (item1.domOrder < item2.domOrder) {
 					return -1;
@@ -417,10 +412,8 @@ class ShellBar extends UI5Element {
 				return clone;
 			});
 
-			that._itemsInfo = newItems;
+			that._updateItemsInfo(newItems);
 		};
-
-		this._delegates.push(this._itemNav);
 
 		this._searchField = {
 			left: 0,
@@ -471,8 +464,8 @@ class ShellBar extends UI5Element {
 	onAfterRendering() {
 		this._overflowActions();
 
-		if (this._focussedItem) {
-			this._focussedItem._tabIndex = "0";
+		if (this._focusedItem) {
+			this._focusedItem._tabIndex = "0";
 		}
 	}
 
@@ -506,7 +499,7 @@ class ShellBar extends UI5Element {
 	_handleSizeS() {
 		const hasIcons = this.showNotifications || this.showProductSwitch || this.searchField.length || this.items.length;
 
-		this._itemsInfo = this._getAllItems(hasIcons).map(info => {
+		const newItems = this._getAllItems(hasIcons).map(info => {
 			const isOverflowIcon = info.classes.indexOf("ui5-shellbar-overflow-button") !== -1;
 			const isImageIcon = info.classes.indexOf("ui5-shellbar-image-button") !== -1;
 			const shouldStayOnScreen = isOverflowIcon || (isImageIcon && this.profile);
@@ -516,6 +509,8 @@ class ShellBar extends UI5Element {
 				style: `order: ${shouldStayOnScreen ? 1 : -1}`,
 			});
 		});
+
+		this._updateItemsInfo(newItems);
 	}
 
 	_handleActionsOverflow() {
@@ -570,12 +565,12 @@ class ShellBar extends UI5Element {
 			}
 		}
 
-		this._focussedItem = this._findInitiallyFocussedItem(focusableItems);
+		this._focusedItem = this._findInitiallyFocusedItem(focusableItems);
 
 		return itemsByPriority;
 	}
 
-	_findInitiallyFocussedItem(items) {
+	_findInitiallyFocusedItem(items) {
 		items.sort((item1, item2) => {
 			const order1 = parseInt(item1.style.split("order: ")[1]);
 			const order2 = parseInt(item2.style.split("order: ")[1]);
@@ -607,8 +602,8 @@ class ShellBar extends UI5Element {
 			return this._handleSizeS();
 		}
 
-		const items = this._handleActionsOverflow();
-		this._itemsInfo = items;
+		const newItems = this._handleActionsOverflow();
+		this._updateItemsInfo(newItems);
 	}
 
 	_toggleActionPopover() {
@@ -806,6 +801,13 @@ class ShellBar extends UI5Element {
 			},
 		];
 		return items;
+	}
+
+	_updateItemsInfo(newItems) {
+		const isDifferent = JSON.stringify(this._itemsInfo) !== JSON.stringify(newItems);
+		if (isDifferent) {
+			this._itemsInfo = newItems;
+		}
 	}
 
 	get classes() {

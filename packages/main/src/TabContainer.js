@@ -172,9 +172,8 @@ class TabContainer extends UI5Element {
 		this._handleHeaderResize = this._handleHeaderResize.bind(this);
 
 		// Init ScrollEnablement
-		this._scrollEnablement = new ScrollEnablement();
+		this._scrollEnablement = new ScrollEnablement(this);
 		this._scrollEnablement.attachEvent("scroll", this._updateScrolling.bind(this));
-		this._delegates.push(this._scrollEnablement);
 
 		// Init ItemNavigation
 		this._initItemNavigation();
@@ -264,8 +263,6 @@ class TabContainer extends UI5Element {
 	_initItemNavigation() {
 		this._itemNavigation = new ItemNavigation(this);
 		this._itemNavigation.getItemsCallback = () => this._getTabs();
-
-		this._delegates.push(this._itemNavigation);
 	}
 
 	_onHeaderItemSelect(event) {

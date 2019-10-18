@@ -106,8 +106,6 @@ class Tokenizer extends UI5Element {
 		};
 
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
-
-		this._delegates.push(this._itemNav);
 	}
 
 	onBeforeRendering() {

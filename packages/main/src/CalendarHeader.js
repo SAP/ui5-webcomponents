@@ -42,6 +42,7 @@ const metadata = {
 		btn1Press: {},
 		btn2Press: {},
 	},
+	_eventHandlersByConvention: true,
 };
 
 class CalendarHeader extends UI5Element {

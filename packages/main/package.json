@@ -10,81 +10,13 @@
     "sapui5",
     "ui5"
   ],
-  "watch": {
-    "build:templates": {
-      "extensions": "hbs",
-      "patterns": [
-        "src/*"
-      ],
-      "legacyWatch": true,
-      "delay": 0
-    },
-    "build:samples": {
-      "extensions": "sample.html",
-      "patterns": [
-        "test/*"
-      ],
-      "legacyWatch": true,
-      "delay": 0
-    },
-    "build:pages": {
-      "extensions": "*",
-      "patterns": [
-        "test/**/pages/*"
-      ],
-      "legacyWatch": true,
-      "delay": 0
-    },
-    "build:qunit": {
-      "extensions": "*",
-      "patterns": [
-        "test/**/qunit/*"
-      ],
-      "legacyWatch": true,
-      "delay": 0
-    }
-  },
   "scripts": {
-    "build": "npm-run-all --sequential clean lint build:templates build:samples build:styles build:i18n copy:src build:bundle copy:webcomponents-polyfill",
-    "build:bundle": "rollup -c --environment ES5_BUILD",
-    "build:templates": "mkdirp dist/generated/templates && node ./lib/hbs2ui5/index.js -d src/ -o dist/generated/templates",
-    "build:i18n": "npm-run-all --sequential build:i18n-defaults build:i18n-JSON",
-    "build:i18n-defaults": "mkdirp dist/generated/i18n && node ./lib/i18n/defaults.js src/i18n dist/generated/i18n",
-    "build:i18n-JSON": "mkdirp dist/assets/i18n && node ./lib/i18n/toJSON.js src/i18n dist/assets/i18n",
-    "build:samples": "npm run copy:test --scripts-prepend-node-path && npm run build:api --scripts-prepend-node-path && npm run build:docs --scripts-prepend-node-path && node lib/playground/index.js",
-    "build:pages": "npm run copy:pages",
-    "build:qunit": "npm run copy:qunit",
-    "build:api": "jsdoc -c ../../lib/jsdoc/config.json",
-    "build:docs": "node ../../lib/documentation/index.js",
-    "build:styles": "npm-run-all --sequential build:styles-bundles build:styles-components",
-    "build:styles-bundles": "postcss src/**/parameters-bundle.css --config config/postcss.bundles --base src --dir dist/css/",
-    "build:styles-components": "postcss src/themes/*.css --config config/postcss.components --base src --dir dist/css/",
-    "clean": "rimraf dist",
-    "copy:src": "copy-and-watch \"src/**/*.js\" dist/",
-    "copy:test": "copy-and-watch \"test/**/*.*\" dist/test-resources",
-    "copy:pages": "copy-and-watch \"test/**/pages/*.*\" dist/test-resources",
-    "copy:qunit": "copy-and-watch \"test/**/qunit/*.*\" dist/test-resources",
-    "copy:webcomponents-polyfill": "copy-and-watch \"../../node_modules/@webcomponents/webcomponentsjs/**/*.*\" dist/webcomponentsjs/",
+    "clean": "nps clean",
+    "lint": "nps lint",
+    "start": "nps start",
+    "build": "nps build",
+    "test": "nps test",
     "generate-new-component": "node ./lib/create-new-component/index.js",
-    "lint": "eslint .",
-    "start": "npm-run-all --parallel serve:static start:prepare",
-    "start:prepare": "npm-run-all --sequential build:i18n watch:all",
-    "serve:static-prepare": "copy-and-watch \"serve.json\" dist/",
-    "serve:static-run": "serve --no-clipboard -l 8080 dist",
-    "serve:static": "npm-run-all --sequential serve:static-prepare serve:static-run",
-    "test:wdio": "npm-run-all --parallel --race serve:static test:wdio-run",
-    "test:wdio-run": "cross-env WDIO_LOG_LEVEL=error FORCE_COLOR=0 wdio wdio.conf.js",
-    "test:jest": "jest",
-    "test": "npm run test:jest && npm run test:wdio",
-    "watch:src": "copy-and-watch --watch \"src/**/*.js\" dist/",
-    "watch:bundle": "rollup -c -w --environment ES5_BUILD,DEV",
-    "watch:templates": "npm-watch build:templates",
-    "watch:styles-bundles": "postcss src/**/parameters-bundle.css --config config/postcss.bundles --base src --dir dist/css/ -w",
-    "watch:styles-components": "postcss src/themes/*.css --config config/postcss.components --base src --dir dist/css/ -w",
-    "watch:all": "npm-run-all --parallel watch:templates watch:samples watch:pages watch:qunit watch:src watch:bundle watch:styles-bundles watch:styles-components copy:webcomponents-polyfill",
-    "watch:samples": "npm-watch build:samples",
-    "watch:pages": "npm-watch build:pages",
-    "watch:qunit": "npm-watch build:qunit",
     "prepublishOnly": "npm run build"
   },
   "repository": {
@@ -109,8 +41,10 @@
     "@wdio/sync": "^5.12.1",
     "@webcomponents/webcomponentsjs": "^2.2.7",
     "chai": "^4.2.0",
+    "chokidar-cli": "^2.0.0",
     "chromedriver": "^77.0.0",
     "clean-css": "^4.2.1",
+    "concurrently": "^5.0.0",
     "copy-and-watch": "^0.1.4",
     "cross-env": "^5.2.0",
     "cssnano": "^4.1.10",
@@ -127,7 +61,7 @@
     "jsdoc": "^3.6.3",
     "mkdirp": "^0.5.1",
     "npm-run-all": "^4.1.3",
-    "npm-watch": "^0.4.0",
+    "nps": "^5.9.8",
     "postcss": "^7.0.18",
     "postcss-cli": "^6.1.3",
     "postcss-combine-duplicated-selectors": "^7.0.0",

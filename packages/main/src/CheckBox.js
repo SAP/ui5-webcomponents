@@ -136,6 +136,7 @@ const metadata = {
 		 */
 		change: {},
 	},
+	_eventHandlersByConvention: true,
 };
 
 /**

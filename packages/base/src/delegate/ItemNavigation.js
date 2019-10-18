@@ -20,6 +20,7 @@ class ItemNavigation extends EventProvider {
 		this.cyclic = options.cyclic || false;
 
 		this.rootWebComponent = rootWebComponent;
+		this.rootWebComponent.addEventListener("keydown", this.onkeydown.bind(this));
 	}
 
 	init() {
@@ -49,8 +50,6 @@ class ItemNavigation extends EventProvider {
 		this.focusCurrent();
 
 		// stops browser scrolling with up/down keys
-		event.stopPropagation();
-		event.stopImmediatePropagation();
 		event.preventDefault();
 	}
 

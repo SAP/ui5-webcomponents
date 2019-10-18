@@ -104,7 +104,6 @@ const metadata = {
 		_hasHeader: {
 			type: Boolean,
 		},
-
 		_header: {
 			type: Object,
 		},
@@ -115,6 +114,9 @@ const metadata = {
 		_animationRunning: {
 			type: Boolean,
 			noAttribute: true,
+		},
+		_buttonAccInfo: {
+			type: Object,
 		},
 	},
 	events: {
@@ -308,6 +310,19 @@ class Panel extends UI5Element {
 
 	get accRole() {
 		return this.accessibleRole.toLowerCase();
+	}
+
+	get accInfo() {
+		return {
+			"button": {
+				"ariaExpanded": this._hasHeader ? this.expanded : undefined,
+				"ariaControls": this._hasHeader ? `${this._id}-content` : undefined,
+				"title": this.toggleButtonTitle,
+			},
+			"ariaExpanded": !this._hasHeader ? this.expanded : undefined,
+			"ariaControls": !this._hasHeader ? `${this._id}-content` : undefined,
+			"role": !this._hasHeader ? "button" : undefined,
+		};
 	}
 
 	get headerTabIndex() {
