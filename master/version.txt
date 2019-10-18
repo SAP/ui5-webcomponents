@@ -1,5 +1,9 @@
-commit 961d6bb072397848cdcf1309ad17225937da0ecd
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Oct 18 10:32:18 2019 +0300
+commit 07a44cff4d69561fc6beab5e3af13e48226fa14c
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Fri Oct 18 10:47:06 2019 +0300
 
-    refactor: remove deepEqual from metadata (#867)
+    chore: prepare DOM handlers removal (#866)
+    
+    - add metadata entry for opt-in name-based event handlers
+    - remove event delages concept
+    - rework item navigation and scoll enablement with direct event registration
