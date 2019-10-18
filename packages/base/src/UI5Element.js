@@ -305,7 +305,6 @@ class UI5Element extends HTMLElement {
 	_initializeState() {
 		const defaultState = this.constructor._getDefaultState();
 		this._state = Object.assign({}, defaultState);
-		this._delegates = [];
 	}
 
 	static getMetadata() {
@@ -484,12 +483,6 @@ class UI5Element extends HTMLElement {
 	 */
 	_handleEvent(event) {
 		const sHandlerName = `on${event.type}`;
-
-		this._delegates.forEach(delegate => {
-			if (delegate[sHandlerName]) {
-				delegate[sHandlerName](event);
-			}
-		});
 
 		if (this[sHandlerName]) {
 			this[sHandlerName](event);

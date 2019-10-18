@@ -24,6 +24,9 @@ const processDOMNode = function processDOMNode(node, event) {
 };
 
 const dispatchEvent = function dispatchEvent(element, event) {
+	if (!element.constructor.getMetadata().getEventHandlersByConvention()) {
+		return true;
+	}
 	// Handle the original event (such as "keydown")
 	element._handleEvent(event);
 	if (event.isImmediatePropagationStopped()) {

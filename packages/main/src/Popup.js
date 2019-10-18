@@ -124,6 +124,7 @@ const metadata = {
 		 */
 		afterClose: {},
 	},
+	_eventHandlersByConvention: true,
 };
 
 const openedPopups = [];

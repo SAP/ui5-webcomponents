@@ -107,6 +107,7 @@ const metadata = {
 	},
 	events: /** @lends sap.ui.webcomponents.main.Table.prototype */ {
 	},
+	_eventHandlersByConvention: true,
 };
 
 /**
@@ -167,8 +168,6 @@ class Table extends UI5Element {
 		this._itemNavigation.getItemsCallback = function getItemsCallback() {
 			return this.rows;
 		}.bind(this);
-
-		this._delegates.push(this._itemNavigation);
 
 		this.fnOnRowFocused = this.onRowFocused.bind(this);
 

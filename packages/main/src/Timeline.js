@@ -25,6 +25,7 @@ const metadata = {
 			individualSlots: true,
 		},
 	},
+	_eventHandlersByConvention: true,
 };
 
 /**
@@ -77,8 +78,6 @@ class Timeline extends UI5Element {
 	initItemNavigation() {
 		this._itemNavigation = new ItemNavigation(this);
 		this._itemNavigation.getItemsCallback = () => this.items;
-
-		this._delegates.push(this._itemNavigation);
 	}
 }
 
