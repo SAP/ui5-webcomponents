@@ -1,9 +1,5 @@
-commit 1ed0bd310c302b7e38d39fae213a61e0478525ce
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Thu Oct 17 10:24:42 2019 +0300
+commit 961d6bb072397848cdcf1309ad17225937da0ecd
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Fri Oct 18 10:32:18 2019 +0300
 
-    chore: refactor build scripts (#855)
-    
-    extract scripts from package.json to nps (package-scripts.js)
-    
-    this will enable easier reuse of build scripts across packages in the future
+    refactor: remove deepEqual from metadata (#867)
