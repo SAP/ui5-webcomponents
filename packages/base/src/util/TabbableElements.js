@@ -44,7 +44,6 @@ const getTabbables = (nodes, tabbables) => {
 	return tabbablesNodes;
 };
 
-
 export {
 	getTabbableElements,
 	getLastTabbableElement,

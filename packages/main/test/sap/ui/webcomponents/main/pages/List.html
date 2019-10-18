@@ -14,32 +14,6 @@
 <body>
 	<h2>ui5-list</h2>
 
-	<div clas="parent">
-			<div clas="parent-2.1">
-						<div clas="parent-3.1">
-								<span class="child-4.1">dasdasd</span>
-								<button>Press</button>
-						</div>
-			</div>
-
-			<div clas="parent-2.2">
-					<ui5-button>Press</ui5-button>
-					<div clas="parent-3.2.1">
-							<span class="child-4.2.1">dasdas</span>
-							<a href="dsada">CLick me</a>
-					</div>
-
-					<div clas="parent-3.2.2">
-							<ui5-radiobutton text="adsa"></ui5-radiobutton>
-							<span class="child-4.2.2">dasdas</span>
-							<input type="redio" />
-					</div>
-			</div>
-	</div>
-
-
-
-
 	<ui5-list header-text="API: GroupHeaderListItem" mode="MultiSelect">
 		<ui5-li-groupheader>New Items</ui5-li-groupheader>
 		<ui5-li image="./img/HT-1000.jpg" icon="sap-icon://navigation-right-arrow" info="Available">Laptop HP</ui5-li>
@@ -182,6 +156,31 @@
 			<ui5-li >Option 1</ui5-li>
 			<ui5-li >Option 2</ui5-li>
 			<ui5-li >Option 3</ui5-li>
+	</ui5-list>
+
+	<ui5-list
+		id="keyboardTestList"
+		mode="MultiSelect"
+		header-text="Text when no header provided"
+		footer-text="Copyright"
+		no-data-text="No data">
+
+		<div slot="header" class="header">
+			<ui5-button id="headerBtn" design="Accept">Export</ui5-button>
+		</div>
+
+		<!-- Items -->
+		<ui5-li>Argentina</ui5-li>
+		<ui5-li-custom selected>
+				<ui5-button>Click me</ui5-button>
+				<ui5-link href="https://www.google.bg" target="_blank">UI5 link</ui5-link>
+				<ui5-radiobutton text="Option B" disabled="disabled"></ui5-radiobutton>
+				<ui5-button>Click me</ui5-button>
+		</ui5-li-custom>
+		<ui5-li>China</ui5-li>
+		<ui5-li-custom selected>
+				<ui5-radiobutton text="Option C" disabled="disabled"></ui5-radiobutton>
+		</ui5-li-custom>
 	</ui5-list>
 
 	<script>
