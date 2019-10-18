@@ -1,8 +1,8 @@
 const assert = require('assert');
 
 describe("Rendering", () => {
-	browser.url('http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/Title.html');
-	
+	browser.url('http://localhost:8080/test-resources/pages/Title.html');
+
 	it("h{n} tags rendered correctly", () => {
 		const titleH1Tag = browser.$("#titleH1").shadow$("h1.sapMTitle");
 		const titleH2Tag = browser.$("#titleH2").shadow$("h2.sapMTitle");

@@ -1,7 +1,7 @@
 const assert = require('assert');
 
 describe("Dialog general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/Dialog.html");
+	browser.url("http://localhost:8080/test-resources/pages/Dialog.html");
 
 	it("tests dialog toggling", () => {
 		const btnOpenDialog = $("#btnOpenDialog");

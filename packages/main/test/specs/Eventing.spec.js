@@ -3,7 +3,7 @@ const assert = require("assert");
 describe("Eventing", () => {
 
 	it("Default prevented", () => {
-		browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/Eventing.html");
+		browser.url("http://localhost:8080/test-resources/pages/Eventing.html");
 
 		const innerLink = browser.$("#defaultPreventedLink");
 		innerLink.click();
@@ -15,7 +15,7 @@ describe("Eventing", () => {
 	});
 
 	it("Default not prevented", () => {
-		browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/Eventing.html");
+		browser.url("http://localhost:8080/test-resources/pages/Eventing.html");
 
 		const innerLink = browser.$("#normalLink");
 		innerLink.click();
