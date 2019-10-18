@@ -29,7 +29,6 @@ const metadata = {
 		_columnsInfo: {
 			type: Object,
 			multiple: true,
-			deepEqual: true,
 		},
 		_tabIndex: {
 			type: String,

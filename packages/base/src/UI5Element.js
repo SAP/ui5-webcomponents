@@ -675,18 +675,11 @@ class UI5Element extends HTMLElement {
 					}
 				},
 				set(value) {
-					let isDifferent = false;
 					value = this.constructor.getMetadata().constructor.validatePropertyValue(value, propData);
 
 					const oldState = this._state[prop];
 
-					if (propData.deepEqual) {
-						isDifferent = JSON.stringify(oldState) !== JSON.stringify(value);
-					} else {
-						isDifferent = oldState !== value;
-					}
-
-					if (isDifferent) {
+					if (oldState !== value) {
 						this._state[prop] = value;
 						this._invalidate(prop, value);
 						this._propertyChange(prop, value);
