@@ -164,6 +164,7 @@ const metadata = {
 		 */
 		click: {},
 	},
+	_eventHandlersByConvention: true,
 };
 
 /**

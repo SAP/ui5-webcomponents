@@ -39,6 +39,10 @@ class UI5ElementMetadata {
 		return this.metadata.events || {};
 	}
 
+	getEventHandlersByConvention() {
+		return this.metadata._eventHandlersByConvention;
+	}
+
 	static validatePropertyValue(value, propData) {
 		const isMultiple = propData.multiple;
 		if (isMultiple) {

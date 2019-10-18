@@ -55,6 +55,7 @@ const metadata = {
 		 */
 		selectedMonthChange: {},
 	},
+	_eventHandlersByConvention: true,
 };
 
 /**
@@ -100,8 +101,6 @@ class MonthPicker extends UI5Element {
 		this._itemNav.setItemsCallback = function setItemsCallback(items) {
 			this._quarters = items;
 		}.bind(this);
-
-		this._delegates.push(this._itemNav);
 	}
 
 	onBeforeRendering() {

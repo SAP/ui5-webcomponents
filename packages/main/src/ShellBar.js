@@ -278,6 +278,7 @@ const metadata = {
 			},
 		},
 	},
+	_eventHandlersByConvention: true,
 };
 
 /**
@@ -419,8 +420,6 @@ class ShellBar extends UI5Element {
 
 			that._itemsInfo = newItems;
 		};
-
-		this._delegates.push(this._itemNav);
 
 		this._searchField = {
 			left: 0,

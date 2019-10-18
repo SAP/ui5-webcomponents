@@ -166,6 +166,7 @@ const metadata = {
 		*/
 		input: {},
 	},
+	_eventHandlersByConvention: true,
 };
 
 /**
