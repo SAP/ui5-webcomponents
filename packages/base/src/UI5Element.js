@@ -197,9 +197,9 @@ class UI5Element extends HTMLElement {
 			const propertyName = slotData.propertyName || slotName;
 
 			if (slottedChildrenMap.has(propertyName)) {
-				slottedChildrenMap.get(propertyName).push({child, idx});
+				slottedChildrenMap.get(propertyName).push({ child, idx });
 			} else {
-				slottedChildrenMap.set(propertyName, [{child, idx}]);
+				slottedChildrenMap.set(propertyName, [{ child, idx }]);
 			}
 		});
 
