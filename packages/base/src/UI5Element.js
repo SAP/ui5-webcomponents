@@ -152,10 +152,14 @@ class UI5Element extends HTMLElement {
 		}
 
 		const autoIncrementMap = new Map();
-		const allChildrenUpgraded = domChildren.map(async child => {
+		let slottedChildren = [];
+		let propertyName = null;
+
+		const allChildrenUpgraded = domChildren.map(async (child, idx) => {
 			// Determine the type of the child (mainly by the slot attribute)
 			const slotName = this.constructor._getSlotName(child);
 			const slotData = slotsMap[slotName];
+			propertyName = slotData.propertyName || slotName;
 
 			// Check if the slotName is supported
 			if (slotData === undefined) {
@@ -192,12 +196,16 @@ class UI5Element extends HTMLElement {
 				this._attachChildPropertyUpdated(child, slotData);
 			}
 
-			// Distribute the child in the _state object
-			const propertyName = slotData.propertyName || slotName;
-			this._state[propertyName].push(child);
+			slottedChildren.push({child, idx});
 		});
 
 		await Promise.all(allChildrenUpgraded);
+
+		// Distribute the child in the _state object, keeping the Light DOM order,
+		// not the order elements are defined.
+		this._state[propertyName] = slottedChildren.sort((a, b) => (a.idx > b.idx) ? 1 : -1).map(_ => _.child);
+		slottedChildren = null;
+
 		this._invalidate();
 	}
 
