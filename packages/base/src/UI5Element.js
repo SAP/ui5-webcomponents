@@ -196,14 +196,14 @@ class UI5Element extends HTMLElement {
 				this._attachChildPropertyUpdated(child, slotData);
 			}
 
-			slottedChildren.push({child, idx});
+			slottedChildren.push({ child, idx });
 		});
 
 		await Promise.all(allChildrenUpgraded);
 
 		// Distribute the child in the _state object, keeping the Light DOM order,
 		// not the order elements are defined.
-		this._state[propertyName] = slottedChildren.sort((a, b) => (a.idx > b.idx) ? 1 : -1).map(_ => _.child);
+		this._state[propertyName] = slottedChildren.sort((a, b) => a.idx - b.idx).map(_ => _.child);
 		slottedChildren = null;
 
 		this._invalidate();
