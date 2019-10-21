@@ -1,9 +1,7 @@
-commit 07a44cff4d69561fc6beab5e3af13e48226fa14c
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Fri Oct 18 10:47:06 2019 +0300
+commit 62d533e30583a44297fce8c98aa5731fefae7dec
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Oct 21 14:04:23 2019 +0300
 
-    chore: prepare DOM handlers removal (#866)
+    refactor: update Fiori 3 theme parameters (#871)
     
-    - add metadata entry for opt-in name-based event handlers
-    - remove event delages concept
-    - rework item navigation and scoll enablement with direct event registration
+    FIXES: #849
