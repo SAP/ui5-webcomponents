@@ -1,7 +1,5 @@
-commit 62d533e30583a44297fce8c98aa5731fefae7dec
+commit 66691bd49bf0eae565d5ad18bdf535e395d18133
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Oct 21 14:04:23 2019 +0300
+Date:   Tue Oct 22 13:32:02 2019 +0300
 
-    refactor: update Fiori 3 theme parameters (#871)
-    
-    FIXES: #849
+    chore(ui5-input): clear warnings when name property is set (#875)
