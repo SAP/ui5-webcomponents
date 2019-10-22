@@ -1,7 +1,7 @@
 const assert = require("assert");
 
 describe("Panel general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/Panel.html");
+	browser.url("http://localhost:8080/test-resources/pages/Panel.html");
 
 	it("tests toggle event upon header click", () => {
 		const header = browser.$("#panel1").shadow$(".ui5-panel-header");

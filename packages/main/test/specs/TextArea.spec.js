@@ -1,7 +1,7 @@
 const assert = require('assert');
 
 describe("when enabled", () => {
-	browser.url('http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/TextArea.html');
+	browser.url('http://localhost:8080/test-resources/pages/TextArea.html');
 
 	it("can type inside", () => {
 		const textarea = browser.$("#basic-textarea");

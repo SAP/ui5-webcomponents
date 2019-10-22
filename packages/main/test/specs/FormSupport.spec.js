@@ -3,7 +3,7 @@ const assert = require("assert");
 describe("Form support", () => {
 
 	it("Normal button does not submit forms", () => {
-		browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/FormSupport.html");
+		browser.url("http://localhost:8080/test-resources/pages/FormSupport.html");
 
 		const noSubmitButton = browser.$("#b1");
 		noSubmitButton.click();
@@ -15,7 +15,7 @@ describe("Form support", () => {
 	});
 
 	it("Submit button does submit forms", () => {
-		browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/FormSupport.html");
+		browser.url("http://localhost:8080/test-resources/pages/FormSupport.html");
 
 		const submitButton = browser.$("#b2");
 		submitButton.click();

@@ -1,7 +1,7 @@
 const assert = require('chai').assert;
 
 describe("General API", () => {
-	browser.url('http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/Link.html');
+	browser.url('http://localhost:8080/test-resources/pages/Link.html');
 
 	it("should wrap the text of the link", () => {
 		const wrappingLabel = browser.$("#wrapping-link");

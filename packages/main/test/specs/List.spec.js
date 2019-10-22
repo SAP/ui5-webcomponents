@@ -3,7 +3,7 @@ const assert = require("assert");
 
 describe("Date Picker Tests", () => {
 	before(() => {
-		browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/List_test_page.html");
+		browser.url("http://localhost:8080/test-resources/pages/List_test_page.html");
 	});
 
 	it("itemPress and selectionChange events are fired", () => {
@@ -73,7 +73,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("mode: multiselect. clicking every item selects it independently from the other items", () => {
-		browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/List_test_page.html");
+		browser.url("http://localhost:8080/test-resources/pages/List_test_page.html");
 		list.root.setProperty("mode", "MultiSelect");
 
 		const firstItem = list.getItem(0);
@@ -91,7 +91,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("mode: delete. items have x buttons which delete them", () => {
-		browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/List_test_page.html");
+		browser.url("http://localhost:8080/test-resources/pages/List_test_page.html");
 		list.root.setProperty("mode", "Delete");
 
 		const firstItem = list.getItem(0);

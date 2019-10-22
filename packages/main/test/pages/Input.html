@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script>delete Document.prototype.adoptedStyleSheets;</script>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+	<title>ui5-input</title>
+	<script src="../../../../../../webcomponentsjs/webcomponents-loader.js"></script>
+	<script src="../../../../../../resources/bundle.esm.js" type="module"></script>
+	<script nomodule src="../../../../../../resources/bundle.es5.js"></script>
+
+	<script>delete Document.prototype.adoptedStyleSheets;</script>
+
+</head>
+
+<body>
+	<h3> Input with suggestions: type 'a'</h3>
+	<ui5-label id="myLabel">Event [suggestionItemSelect] :: N/A</ui5-label><br/>
+	<ui5-label id="myLabelChange">Event [change] :: N/A</ui5-label><br/>
+	<ui5-label id="myLabelSubmit">Event [submit] :: N/A</ui5-label><br/>
+	<ui5-label id="myLabelLiveChange">Event [input] :: N/A</ui5-label><br/>
+
+	<ui5-input id="myInput"
+		style="width:100%"
+		show-suggestions
+		placeholder="Search for a country ...">
+	</ui5-input>
+
+	<h3> Input with suggestions</h3>
+	<ui5-input id="myInput2" show-suggestions>
+		<ui5-li>Cozy</ui5-li>
+		<ui5-li>Compact</ui5-li>
+		<ui5-li>Condensed</ui5-li>
+	</ui5-input>
+
+	<h3> Input disabled</h3>
+	<ui5-input style="width:100%" disabled placeholder="Disabled one ...">
+		<ui5-icon slot="icon" src="sap-icon://appointment-2"></ui5-icon>
+	</ui5-input>
+
+	<h3> Input valueState Success</h3>
+	<ui5-input id="input3" style="width:100%" value-state="Success" placeholder="Success state ...">
+		<ui5-icon slot="icon" src="sap-icon://message-success"></ui5-icon>
+	</ui5-input>
+
+	<h3> Test 'change' event</h3>
+	<ui5-input id="input1" style="width:100%" value-state="Warning" placeholder="Warning state ...">
+		<ui5-icon slot="icon" src="sap-icon://message-warning"></ui5-icon>
+	</ui5-input>
+	<h3> 'change' event result</h3>
+	<ui5-input id="inputResult" style="width:100%"></ui5-input>
+
+	<h3> Test 'input' event</h3>
+	<ui5-input id="input2" style="width:100%" value-state="Error" placeholder="Error state ...">
+		<ui5-icon slot="icon" src="sap-icon://message-error"></ui5-icon>
+	</ui5-input>
+	<h3> 'input' test result</h3>
+	<ui5-input id="inputLiveChangeResult" style="width:100%"></ui5-input>
+
+
+
+	<h3> Input test change</h3>
+	<ui5-input id="inputChange" style="width:100%">	</ui5-input>
+	<h3> Input test change result</h3>
+	<ui5-input id="inputChangeResult" style="width:100%"></ui5-input>
+
+	<h3> Input readonly</h3>
+	<ui5-input style="width:100%" value="Value can`t be changed" readonly></ui5-input>
+
+	<h3> Input type 'Number'</h3>
+	<ui5-input id="myInput2" style="width:100%" type="Number" placeholder="Numbers are allowed only ..."></ui5-input>
+
+	<h3> Input type 'Password'</h3>
+	<ui5-input id="myInput3" style="width:100%" type="Password" placeholder="Typing in private ..."></ui5-input>
+
+	<h3> Input type 'Email'</h3>
+	<ui5-input id="myInput4" style="width:100%" type="Email" name="my-input-email"></ui5-input>
+
+	<h3> Input type 'Tel'</h3>
+	<ui5-input id="myInput5" style="width:100%" type="Tel"  name="my-input-tel"></ui5-input>
+
+	<h3> Input type 'URL'</h3>
+	<ui5-input id="myInput6" style="width:100%" type="URL"></ui5-input>
+
+	<script>
+		var sap_database_entries = [{ key: "Afg", text: "Afghanistan" }, { key: "Arg", text: "Argentina" }, { key: "Alb", text: "Albania" }, { key: "Arm", text: "Armenia" }, { key: "Alg", text: "Algeria" }, { key: "And", text: "Andorra" }, { key: "Ang", text: "Angola" }, { key: "Ast", text: "Austria" }, { key: "Aus", text: "Australia" }, { key: "Aze", text: "Azerbaijan" }, { key: "Aruba", text: "Aruba" }, { key: "Antigua", text: "Antigua and Barbuda" }, { key: "Bel", text: "Belarus" }, { key: "Bel", text: "Belgium" }, { key: "Bg", text: "Bulgaria" }, { key: "Bra", text: "Brazil" }, { key: "Ch", text: "China" }, { key: "Cub", text: "Cuba" }, { key: "Chil", text: "Chili" }, { key: "Lat", text: "Latvia" }, { key: "Lit", text: "Litva" }, { key: "Prt", text: "Portugal" }, { key: "Sen", text: "Senegal" }, { key: "Ser", text: "Serbia" }, { key: "Afg", text: "Seychelles" }, { key: "Sierra", text: "Sierra Leone" }, { key: "Sgp", text: "Singapore" }, { key: "Sint", text: "Sint Maarten" }, { key: "Slv", text: "Slovakia" }, { key: "Slo", text: "Slovenia" }];
+
+		var input = document.getElementById('myInput');
+		var myInput2 = document.getElementById('myInput2');
+		var input1 = document.getElementById('input1');
+		var input2 = document.getElementById('input2');
+		var input3 = document.getElementById('input3');
+		var inputResult = document.getElementById('inputResult');
+		var label = document.getElementById('myLabel');
+		var labelChange = document.getElementById('myLabelChange');
+		var labelLiveChange = document.getElementById('myLabelLiveChange');
+		var labelSubmit = document.getElementById('myLabelSubmit');
+
+		input.addEventListener("ui5-input", function (event) {
+			var value = event.target.value;
+			var suggestionItems = [];
+
+			if (value) {
+				suggestionItems = sap_database_entries.filter(function (item) {
+					return item.text.toUpperCase().indexOf(value.toUpperCase()) === 0;
+				});
+			}
+
+			while (input.firstChild) {
+				input.removeChild(input.firstChild);
+			}
+
+			suggestionItems.forEach(function(item) {
+				var li = document.createElement("ui5-li");
+				li.id = item.key;
+				li.textContent = item.text;
+				input.appendChild(li);
+			});
+
+			labelLiveChange.innerHTML = "Event [input] :: " + value;
+		});
+
+		input.addEventListener("ui5-suggestionItemSelect", function (event) {
+			var item = event.detail.item;
+			label.innerHTML = "Event [suggestionSelectEvent] :: " + item.id;
+			suggestionSelectedCounter += 1;
+			inputResult.value = suggestionSelectedCounter;
+		});
+
+		input.addEventListener("ui5-change", function (event) {
+			labelChange.innerHTML = "Event [change] :: " + event.target.value;
+		});
+
+		input.addEventListener("ui5-submit", function (event) {
+			labelSubmit.innerHTML = "Event [submit] :: " + event.target.value;
+		});
+
+		var changeCounter = 0;
+		var inputCounter = 0;
+		var suggestionSelectedCounter = 0;
+
+		input1.addEventListener("ui5-change", function (event) {
+			changeCounter += 1;
+			inputResult.value = changeCounter;
+		});
+
+		input2.addEventListener("ui5-input", function (event) {
+			inputCounter += 1;
+			inputLiveChangeResult.value = inputCounter;
+		});
+
+		myInput2.addEventListener("ui5-suggestionItemSelect", function (event) {
+			var item = event.detail.item;
+			suggestionSelectedCounter += 1;
+			inputResult.value = suggestionSelectedCounter;
+		});
+
+		var inputChangeResultCounter = 0;
+
+		inputChange.addEventListener("ui5-submit", function (event) {
+			inputChange.value = "Changed via API";
+		});
+		inputChange.addEventListener("ui5-change", function (event) {
+			inputChangeResult.value = ++inputChangeResultCounter;
+		});
+	</script>
+</body>
+</html>

@@ -1,7 +1,7 @@
 const assert = require("assert");
 
 describe("Table general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/Table.html");
+	browser.url("http://localhost:8080/test-resources/pages/Table.html");
 
 	it("tests if column disapears when min-width is reacted (650px)", () => {
 		const btn = browser.$("#size-btn-650");
