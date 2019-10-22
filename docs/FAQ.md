@@ -22,7 +22,7 @@
 
 **Q: Are UI5 Web Components APIs stable?**
 
-**A:** Not yet, but a 1.0.0 RC is nearing around the end of June 2019
+**A:** Mostly yes since the project is in Release Candidate state, but minor changes may still be expected until the official release.
 
 
 **Q: Can I create my own UI5 Web Components?**
@@ -45,3 +45,15 @@ Additional features, settings and old browser support will increase bundle size 
 
 **Q: ?** Can I use UI5 Web Components in a OpenUI5 application?
 **A:** This is not necessary as OpenUI5 already provides equivalents in the form of UI5 Controls. 
+
+
+**Q: ?** How can I hide not-yet-upgraded Web Components to avoid flicker?
+**A:** You can place, for example, the following CSS in your application:
+
+```CSS
+*:not(:defined) {
+	display: none;
+}
+``` 
+
+This will make all web components that haven't been defined yet, hidden. Please note that it only works on modern browsers.
