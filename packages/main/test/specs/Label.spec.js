@@ -1,7 +1,7 @@
 const assert = require('assert');
 
 describe("General API", () => {
-	browser.url('http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/Label.html');
+	browser.url('http://localhost:8080/test-resources/pages/Label.html');
 	
 	it("should show required star", () => {
 		const requiredLabelContent = browser.execute(`

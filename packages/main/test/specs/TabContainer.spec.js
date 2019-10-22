@@ -1,7 +1,7 @@
 const assert = require('assert');
 
 describe("TabContainer general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/TabContainer.html");
+	browser.url("http://localhost:8080/test-resources/pages/TabContainer.html");
 
 	it("tests itemSelect event", () => {
 		const item = browser.$("#tabContainer1").shadow$(".ui5-tc__headerItem:nth-child(3)");
@@ -18,7 +18,7 @@ describe("TabContainer general interaction", () => {
 	// 	browser.setWindowSize(520, 1080);
 
 	// 	browser.pause(1000);
-		
+
 	// 	const arrowLeft = $("#tabContainerIconOnly").shadow$(".ui5-tc__headerArrowLeft");
 	// 	const arrowRight = $("#tabContainerIconOnly").shadow$(".ui5-tc__headerArrowRight");
 

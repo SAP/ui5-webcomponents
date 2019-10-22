@@ -175,7 +175,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("respect first day of the week - monday", () => {
-		browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/DatePicker_test_page.html?sap-ui-language=bg");
+		browser.url("http://localhost:8080/test-resources/pages/DatePicker_test_page.html?sap-ui-language=bg");
 		datepicker.id = "#dp7_1";
 
 		datepicker.innerInput.setValue("фев 6, 2019");

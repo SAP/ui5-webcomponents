@@ -10,7 +10,7 @@ import filesize from 'rollup-plugin-filesize';
 import commonjs from 'rollup-plugin-commonjs';
 
 const DIST = path.normalize("dist");
-const DIST_PLAYGROUND = path.normalize("dist/resources/sap/ui/webcomponents/main");
+const DIST_PLAYGROUND = path.normalize("dist/resources/");
 
 
 const DEPLOY_PUBLIC_PATH = process.env.DEPLOY_PUBLIC_PATH || "";
@@ -37,11 +37,7 @@ function ui5DevImportCheckerPlugin() {
 
 const getPlugins = ({ transpile }) => {
 	const plugins = [];
-	let publicPath = DEPLOY_PUBLIC_PATH || "/resources/sap/ui/webcomponents/main/";
-
-	if (IS_TRAVIS_DEPLOYMENT) {
-		publicPath += "/assets/js/ui5-webcomponents";
-	}
+	let publicPath = DEPLOY_PUBLIC_PATH || "/resources/";
 
 	plugins.push(filesize({
 		render : function (options, bundle, { minSize, gzipSize, brotliSize, bundleSize }){
@@ -89,7 +85,7 @@ const getES6Config = () => {
 	return [{
 		input: "bundle.esm.js",
 		output: {
-			dir: "dist/resources/sap/ui/webcomponents/main",
+			dir: "dist/resources",
 			format: "esm",
 			sourcemap: true
 		},
@@ -110,7 +106,7 @@ const getES5Config = () => {
 	return [ {
 		input: "bundle.es5.js",
 		output: {
-			dir: "dist/resources/sap/ui/webcomponents/main",
+			dir: "dist/resources",
 			format: "iife",
 			name: "sap-ui-webcomponents-main-bundle",
 			extend: "true",	// Whether or not to extend the global variable defined by the name option in umd or iife formats.
