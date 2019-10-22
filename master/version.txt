@@ -1,5 +1,5 @@
-commit b612d8d965cdffee09384e88a013d3aae162d9e7
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Tue Oct 22 15:05:47 2019 +0300
+commit e5b71df5603a68cb892b3d430917ca2c4b1d3d7f
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Oct 22 15:49:07 2019 +0300
 
-    chore: fix paths (#878)
+    chore(ui5-input): remove obsolete _beginContent slot (#877)
