@@ -4,10 +4,6 @@
 	@focusout="{{onfocusout}}"
 >
 	<div class="ui5-input-content">
-		{{#if _beginContent.length}}
-			<slot name="_beginContent"></slot>
-		{{/if}}
-
 		<input id="{{_id}}-inner"
 			class="ui5-input-inner"
 			type="{{inputType}}"
