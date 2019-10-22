@@ -24,6 +24,7 @@ const metadata = {
 	},
 	properties: /** @lends sap.ui.webcomponents.main.CustomListItem.prototype */ {
 	},
+	_eventHandlersByConvention: true,
 };
 
 /**

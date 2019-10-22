@@ -152,7 +152,9 @@ class UI5Element extends HTMLElement {
 		}
 
 		const autoIncrementMap = new Map();
-		const allChildrenUpgraded = domChildren.map(async child => {
+		const slottedChildrenMap = new Map();
+
+		const allChildrenUpgraded = domChildren.map(async (child, idx) => {
 			// Determine the type of the child (mainly by the slot attribute)
 			const slotName = this.constructor._getSlotName(child);
 			const slotData = slotsMap[slotName];
@@ -192,12 +194,22 @@ class UI5Element extends HTMLElement {
 				this._attachChildPropertyUpdated(child, slotData);
 			}
 
-			// Distribute the child in the _state object
 			const propertyName = slotData.propertyName || slotName;
-			this._state[propertyName].push(child);
+
+			if (slottedChildrenMap.has(propertyName)) {
+				slottedChildrenMap.get(propertyName).push({ child, idx });
+			} else {
+				slottedChildrenMap.set(propertyName, [{ child, idx }]);
+			}
 		});
 
 		await Promise.all(allChildrenUpgraded);
+
+		// Distribute the child in the _state object, keeping the Light DOM order,
+		// not the order elements are defined.
+		slottedChildrenMap.forEach((children, slot) => {
+			this._state[slot] = children.sort((a, b) => a.idx - b.idx).map(_ => _.child);
+		});
 		this._invalidate();
 	}
 
@@ -305,7 +317,6 @@ class UI5Element extends HTMLElement {
 	_initializeState() {
 		const defaultState = this.constructor._getDefaultState();
 		this._state = Object.assign({}, defaultState);
-		this._delegates = [];
 	}
 
 	static getMetadata() {
@@ -484,12 +495,6 @@ class UI5Element extends HTMLElement {
 	 */
 	_handleEvent(event) {
 		const sHandlerName = `on${event.type}`;
-
-		this._delegates.forEach(delegate => {
-			if (delegate[sHandlerName]) {
-				delegate[sHandlerName](event);
-			}
-		});
 
 		if (this[sHandlerName]) {
 			this[sHandlerName](event);
@@ -675,18 +680,11 @@ class UI5Element extends HTMLElement {
 					}
 				},
 				set(value) {
-					let isDifferent = false;
 					value = this.constructor.getMetadata().constructor.validatePropertyValue(value, propData);
 
 					const oldState = this._state[prop];
 
-					if (propData.deepEqual) {
-						isDifferent = JSON.stringify(oldState) !== JSON.stringify(value);
-					} else {
-						isDifferent = oldState !== value;
-					}
-
-					if (isDifferent) {
+					if (oldState !== value) {
 						this._state[prop] = value;
 						this._invalidate(prop, value);
 						this._propertyChange(prop, value);

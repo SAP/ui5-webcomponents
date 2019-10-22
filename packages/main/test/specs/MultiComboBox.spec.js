@@ -1,7 +1,7 @@
 const assert = require("assert");
 
 describe("MultiComboBox general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/MultiComboBox.html");
+	browser.url("http://localhost:8080/test-resources/pages/MultiComboBox.html");
 
 	describe("toggling", () => {
 		it("opens/closes", () => {
@@ -141,7 +141,7 @@ describe("MultiComboBox general interaction", () => {
 	});
 
 	describe("keyboard handling", () => {
-		browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/MultiComboBox.html");
+		browser.url("http://localhost:8080/test-resources/pages/MultiComboBox.html");
 
 		it ("tests backspace when combobox has an empty value", () => {
 			let tokens = $("#multi1").shadow$$(".ui5-multi-combobox-token");

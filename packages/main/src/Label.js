@@ -66,6 +66,7 @@ const metadata = {
 			type: Node,
 		},
 	},
+	_eventHandlersByConvention: true,
 };
 
 /**

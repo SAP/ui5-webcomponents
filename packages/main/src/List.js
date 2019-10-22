@@ -177,6 +177,7 @@ const metadata = {
 			},
 		},
 	},
+	_eventHandlersByConvention: true,
 };
 
 /**
@@ -262,8 +263,6 @@ class List extends UI5Element {
 	initItemNavigation() {
 		this._itemNavigation = new ItemNavigation(this);
 		this._itemNavigation.getItemsCallback = () => this.getSlottedNodes("items");
-
-		this._delegates.push(this._itemNavigation);
 	}
 
 	prepareListItems() {

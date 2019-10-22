@@ -30,6 +30,7 @@ const metadata = {
 		_focused: {},
 		_focusForward: {},
 	},
+	_eventHandlersByConvention: true,
 };
 
 /**

@@ -145,7 +145,6 @@ const metadata = {
 		},
 		_calendar: {
 			type: Object,
-			deepEqual: true,
 		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.DatePicker.prototype */ {
@@ -166,6 +165,7 @@ const metadata = {
 		*/
 		input: {},
 	},
+	_eventHandlersByConvention: true,
 };
 
 /**

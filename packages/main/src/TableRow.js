@@ -29,7 +29,6 @@ const metadata = {
 		_columnsInfo: {
 			type: Object,
 			multiple: true,
-			deepEqual: true,
 		},
 		_tabIndex: {
 			type: String,
@@ -39,6 +38,7 @@ const metadata = {
 	events: /** @lends sap.ui.webcomponents.main.TableRow.prototype */ {
 		_focused: {},
 	},
+	_eventHandlersByConvention: true,
 };
 
 /**

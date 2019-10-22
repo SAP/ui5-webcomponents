@@ -60,6 +60,7 @@ const metadata = {
 		 */
 		selectedYearChange: {},
 	},
+	_eventHandlersByConvention: true,
 };
 
 /**
@@ -110,8 +111,6 @@ class YearPicker extends UI5Element {
 		);
 
 		this._yearIntervals = [];
-
-		this._delegates.push(this._itemNav);
 	}
 
 	onBeforeRendering() {

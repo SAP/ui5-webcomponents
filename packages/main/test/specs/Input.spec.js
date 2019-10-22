@@ -1,7 +1,7 @@
 const assert = require("assert");
 
 describe("Input general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/Input.html");
+	browser.url("http://localhost:8080/test-resources/pages/Input.html");
 
 	it("fires change", () => {
 		const input1 = $("#input1").shadow$("input");
@@ -66,7 +66,7 @@ describe("Input general interaction", () => {
 	});
 
 	it("handles suggestions", () => {
-		browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/Input.html");
+		browser.url("http://localhost:8080/test-resources/pages/Input.html");
 
 		let item;
 		const suggestionsInput = $("#myInput").shadow$("input");
@@ -77,7 +77,7 @@ describe("Input general interaction", () => {
 		suggestionsInput.keys("p");
 
 		assert.ok(popover.getProperty("opened"), "suggestions are opened.");
-		
+
 		// item = $("#myInput").$$("ui5-li")[0];
 
 
@@ -96,7 +96,7 @@ describe("Input general interaction", () => {
 	});
 
 	it("handles suggestions via keyboard", () => {
-		browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/Input.html");
+		browser.url("http://localhost:8080/test-resources/pages/Input.html");
 
 		const suggestionsInput = $("#myInput2").shadow$("input");
 		const inputResult = $("#inputResult").shadow$("input");

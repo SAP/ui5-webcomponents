@@ -1,7 +1,7 @@
 const assert = require('assert');
 
 describe("Component Behaviour", () => {
-	browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/ShellBar.html");
+	browser.url("http://localhost:8080/test-resources/pages/ShellBar.html");
 
 	describe("Responsiveness", () => {
 
