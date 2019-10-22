@@ -1,7 +1,7 @@
 const assert = require('assert');
 
 describe("Popover general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/Popover.html");
+	browser.url("http://localhost:8080/test-resources/pages/Popover.html");
 
 	it("tests popover toggling", () => {
 		const btnOpenPopover = $("#btn");

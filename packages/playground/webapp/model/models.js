@@ -86,13 +86,13 @@ sap.ui.define([
 				// Add new components here
 			];
 			return jQuery.ajax({
-				url: getRealBaseURI() + "/resources/sap/ui/webcomponents/main/playground.json"
+				url: getRealBaseURI() + "/resources/playground.json"
 			}).then(function (jsonData) {
 				var parsedData = jsonData.map(function (value, index) {
 					return {
 						key: /(.*)\.sample\.html$/.exec(value)[1],
 						title: /(.*)\.sample\.html$/.exec(value)[1],
-						url: "test-resources/sap/ui/webcomponents/main/api/" + value,
+						url: "test-resources/api/" + value,
 						new: newComponents.indexOf(/(.*)\.sample\.html$/.exec(value)[1]) > -1
 					};
 				}).sort(function (a, b) {

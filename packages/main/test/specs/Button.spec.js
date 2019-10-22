@@ -2,7 +2,7 @@ const assert = require("chai").assert;
 
 
 describe("Button general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/Button.html");
+	browser.url("http://localhost:8080/test-resources/pages/Button.html");
 
 	it("tests press event", () => {
 		const button = browser.$("#button1");
