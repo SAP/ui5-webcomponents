@@ -447,11 +447,6 @@ class ShellBar extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		const size = this._handleBarBreakpoints();
-		if (size !== "S") {
-			this._itemNav.init();
-		}
-
 		this._hiddenIcons = this._itemsInfo.filter(info => {
 			const isHidden = (info.classes.indexOf("ui5-shellbar-hidden-button") !== -1);
 			const isSet = info.classes.indexOf("ui5-shellbar-invisible-button") === -1;

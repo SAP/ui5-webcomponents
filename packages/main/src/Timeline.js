@@ -71,10 +71,6 @@ class Timeline extends UI5Element {
 		this.initItemNavigation();
 	}
 
-	onBeforeRendering() {
-		this._itemNavigation.init();
-	}
-
 	initItemNavigation() {
 		this._itemNavigation = new ItemNavigation(this);
 		this._itemNavigation.getItemsCallback = () => this.items;
