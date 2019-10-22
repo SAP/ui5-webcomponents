@@ -1,6 +1,5 @@
 const fs = require('fs');
 const path = require('path');
-const cpx = require('cpx');
 const prependFile = require('prepend-file');
 const replace = require('replace-in-file');
 
@@ -18,7 +17,7 @@ fs.readdir(samplesPath, (err, files) => {
     }
     files.forEach((file, index) => {
         //Copy samples
-        cpx.copySync(path.join(samplesPath, file), path.join(process.cwd(), '/docs/components'));
+        fs.copyFileSync(path.join(samplesPath, file), path.join(process.cwd(), `/docs/components/${file}`));
 
         var results = replace({
             files: `./docs/components/${file}`,

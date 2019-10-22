@@ -1,6 +1,5 @@
 const fs = require('fs');
 const path = require('path');
-const cpx = require('cpx');
 var rimraf = require('rimraf');
 const prependFile = require('prepend-file');
 
@@ -34,7 +33,7 @@ fs.readdir(documentationPath, (err, files) => {
         }
 
         //Copy documentation
-        cpx.copySync(path.join(documentationPath, file), path.join(process.cwd(), '/docs/documentation'));
+        fs.copyFileSync(path.join(documentationPath, file), path.join(process.cwd(), `/docs/documentation/${file}`));
 
         //Get current component name
         const currentDocName = file.slice(0, file.indexOf('.'));
