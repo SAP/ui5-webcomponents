@@ -1,5 +1,5 @@
-commit 66691bd49bf0eae565d5ad18bdf535e395d18133
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Oct 22 13:32:02 2019 +0300
+commit 344340cf3e4558ce7313bfe96804140882cee040
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Tue Oct 22 13:56:09 2019 +0300
 
-    chore(ui5-input): clear warnings when name property is set (#875)
+    chore: flatten test directory structure (#869)

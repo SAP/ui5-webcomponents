@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<title>Badge</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<script data-ui5-config type="application/json">
+		{
+			"language": "EN"
+		}
+	</script>
+
+	<script src="../../../../../../webcomponentsjs/webcomponents-loader.js"></script>
+	<script src="../../../../../../resources/bundle.esm.js" type="module"></script>
+	<script nomodule src="../../../../../../resources/bundle.es5.js"></script>
+
+	<style>
+		html,
+		body {
+			margin: 0;
+		}
+
+		.group {
+			padding: 1rem;
+		}
+	</style>
+</head>
+
+<body>
+	<section class="group">
+		<h2>Badges</h2>
+		<ui5-badge color-scheme="1">This is a info label</ui5-badge><br>
+		<ui5-badge color-scheme="2">Required Required Required</ui5-badge><br>
+		<ui5-badge color-scheme="3">Hello world</ui5-badge><br>
+		<ui5-badge color-scheme="4">Damn you are right</ui5-badge><br>
+		<ui5-badge color-scheme="5">Solution provided</ui5-badge><br>
+		<ui5-badge color-scheme="6">Available</ui5-badge><br>
+		<ui5-badge color-scheme="7">Required</ui5-badge><br>
+		<ui5-badge color-scheme="8">Required</ui5-badge><br>
+		<ui5-badge color-scheme="9">Required</ui5-badge><br>
+		<ui5-badge color-scheme="10">IN WAREHOUSE</ui5-badge><br>
+
+		<ui5-badge color-scheme="1">
+			<ui5-icon src="sap-icon://accept" slot="icon"></ui5-icon>done
+		</ui5-badge>
+		<ui5-badge id="badgeIconOnly" color-scheme="2">
+			<ui5-icon src="sap-icon://sap-ui5" slot="icon"></ui5-icon>
+		</ui5-badge>
+		<ui5-badge color-scheme="3">
+			<ui5-icon src="sap-icon://add-equipment" slot="icon"></ui5-icon>in process
+		</ui5-badge>
+		<ui5-badge color-scheme="4">
+			<ui5-icon src="sap-icon://lab" slot="icon"></ui5-icon>
+		</ui5-badge>
+		<ui5-badge color-scheme="5">
+			<ui5-icon src="sap-icon://email-read" slot="icon"></ui5-icon>
+		</ui5-badge>
+		<ui5-badge color-scheme="6">
+			<ui5-icon src="sap-icon://pending" slot="icon"></ui5-icon>pending
+		</ui5-badge>
+		<ui5-badge color-scheme="7">
+			<ui5-icon src="sap-icon://lightbulb" slot="icon"></ui5-icon>
+		</ui5-badge>
+		<ui5-badge color-scheme="8">
+			<ui5-icon src="sap-icon://locked" slot="icon"></ui5-icon>
+		</ui5-badge>
+	</section>
+</body>
+
+</html>
