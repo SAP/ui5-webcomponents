@@ -72,6 +72,16 @@ const metadata = {
 		_beginContent: {
 			type: HTMLElement,
 		},
+
+		/**
+		 * The slot is used for native <code>input</code> HTML element to enable form sumbit,
+		 * when <code>name</code> property is set. 
+		 * @type {HTMLElement[]}
+		 * @private
+		 */
+		formSupport: {
+			type: HTMLElement,
+		},
 	},
 	properties: /** @lends  sap.ui.webcomponents.main.Input.prototype */  {
 
