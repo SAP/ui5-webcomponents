@@ -2,10 +2,7 @@
 import isNodeTabbable from "./isNodeTabbable.js";
 
 const getTabbableElements = node => {
-	const res = getTabbables(node.children);
-	// remove afterwards
-	console.log(res); // eslint-disable-line
-	return res;
+	return getTabbables(node.children);
 };
 
 const getLastTabbableElement = node => {
@@ -22,12 +19,10 @@ const getTabbables = (nodes, tabbables) => {
 		}
 
 		if (currentNode.shadowRoot) {
-			// If the current node has more than 1 child, the 1st child is the style tag,
-			// and the 2nd - the root node of the shadow DOM.
-			// If the current node has one child (adopted stylesheets in use),
-			// this has to be the root node of the shadow DOM.
+			// get the root node of the ShadowDom (1st none style tag)
 			const children = currentNode.shadowRoot.children;
-			currentNode = children.length > 1 ? children[1] : children[0];
+			const nonStyleTags = Array.from(children).filter(node => node.tagName !== "STYLE");
+			currentNode = nonStyleTags.length ? nonStyleTags[0] : null;
 		}
 
 		if (isNodeTabbable(currentNode)) {
