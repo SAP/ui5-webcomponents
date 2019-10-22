@@ -1,5 +1,5 @@
-commit 344340cf3e4558ce7313bfe96804140882cee040
+commit b612d8d965cdffee09384e88a013d3aae162d9e7
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Tue Oct 22 13:56:09 2019 +0300
+Date:   Tue Oct 22 15:05:47 2019 +0300
 
-    chore: flatten test directory structure (#869)
+    chore: fix paths (#878)
