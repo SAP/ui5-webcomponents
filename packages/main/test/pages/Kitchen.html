@@ -24,7 +24,7 @@
 
 <body>
 	<div id="nav" class="navbar">
-		<ui5-togglebutton id="menu-btn" icon="sap-icon://menu" type="Transparent"></ui5-togglebutton>
+		<ui5-togglebutton id="menu-btn" icon="sap-icon://menu" design="Transparent"></ui5-togglebutton>
 		<ui5-title level="H5">UI5 webcomponents</ui5-title>
 		<ui5-togglebutton id="btnCompact">Compact</ui5-togglebutton>
 		<ui5-togglebutton id="btnRTL">RTL</ui5-togglebutton>
@@ -62,7 +62,7 @@
 		</section>
 
 		<section class="row heading-row-centered">
-			<ui5-button type="Emphasized">Getting started</ui5-button>
+			<ui5-button design="Emphasized">Getting started</ui5-button>
 			<ui5-button>Download</ui5-button>
 		</section>
 
@@ -141,15 +141,15 @@
 		</section>
 
 		<section class="row row-centered">
-			<ui5-button type="Emphasized">Submit</ui5-button>
+			<ui5-button design="Emphasized">Submit</ui5-button>
 			<ui5-button disabled>Not available</ui5-button>
 			<ui5-button>Edit</ui5-button>
-			<ui5-button type="Transparent">Apply</ui5-button>
-			<ui5-button type="Transparent">Cancel</ui5-button>
+			<ui5-button design="Transparent">Apply</ui5-button>
+			<ui5-button design="Transparent">Cancel</ui5-button>
 			<ui5-button icon="sap-icon://nav-back">Back</ui5-button>
 			<ui5-button icon="sap-icon://feeder-arrow">Next</ui5-button>
-			<ui5-button type="Positive">Approve</ui5-button>
-			<ui5-button type="Negative">Decline</ui5-button>
+			<ui5-button design="Positive">Approve</ui5-button>
+			<ui5-button design="Negative">Decline</ui5-button>
 			<ui5-button icon="sap-icon://download" icon-end>Download</ui5-button>
 			<ui5-button icon="sap-icon://download">Activate</ui5-button>
 		</section>
@@ -158,8 +158,8 @@
 			<ui5-togglebutton>Yes/No</ui5-togglebutton>
 			<ui5-togglebutton>I/O</ui5-togglebutton>
 			<ui5-togglebutton pressed>Toggle Button pressed</ui5-togglebutton>
-			<ui5-togglebutton type="Positive">On/Off</ui5-togglebutton>
-			<ui5-togglebutton pressed type="Negative" icon="sap-icon://menu">Menu</ui5-togglebutton>
+			<ui5-togglebutton design="Positive">On/Off</ui5-togglebutton>
+			<ui5-togglebutton pressed design="Negative" icon="sap-icon://menu">Menu</ui5-togglebutton>
 			<ui5-button id="openPopoverButton">Open Popover</ui5-button>
 			<ui5-popover header-text="Popover" id="hello-popover">
 				<div style="padding: 1rem;text-align: center;">
@@ -207,7 +207,7 @@
 				</div>
 			</ui5-dialog>
 
-			<ui5-togglebutton pressed type="Negative">Euro/BGN</ui5-togglebutton>
+			<ui5-togglebutton pressed design="Negative">Euro/BGN</ui5-togglebutton>
 			<ui5-togglebutton>Light/Dark</ui5-togglebutton>
 			<ui5-togglebutton pressed>BG/EN</ui5-togglebutton>
 		</section>
@@ -256,7 +256,7 @@
 				<div slot="header" class="panel-header">
 					<ui5-title level="H5">Countries</ui5-title>
 					<ui5-button id="button1" icon="sap-icon://refresh">Reset</ui5-button>
-					<ui5-button type="Negative">Cencel</ui5-button>
+					<ui5-button design="Negative">Cencel</ui5-button>
 				</div>
 				<ui5-list id="myList" mode="Delete">
 					<ui5-li id="arg1">Argentina</ui5-li>
@@ -268,7 +268,7 @@
 				<div slot="header" class="panel-header">
 					<ui5-title level="H5">Quarks</ui5-title>
 					<ui5-button id="button2" icon="sap-icon://add">Add</ui5-button>
-					<ui5-button type="Negative" icon="sap-icon://delete">Remove</ui5-button>
+					<ui5-button design="Negative" icon="sap-icon://delete">Remove</ui5-button>
 				</div>
 				<ui5-list id="myList2" mode="SingleSelectBegin">
 					<ui5-li id="arg2">Up</ui5-li>
@@ -280,7 +280,7 @@
 					<div slot="header" class="panel-header">
 						<ui5-title level="H5">Employees</ui5-title>
 						<ui5-button id="button3" icon="sap-icon://add">Add</ui5-button>
-						<ui5-button type="Negative" icon="sap-icon://delete">Remove</ui5-button>
+						<ui5-button design="Negative" icon="sap-icon://delete">Remove</ui5-button>
 					</div>
 					<ui5-list id="myList3" mode="MultiSelect">
 						<ui5-li id="arg3">Manager</ui5-li>
@@ -313,9 +313,9 @@
 		<section class="row">
 			<ui5-tabcontainer style="width:80%" show-overflow selected-key="item1">
 				<ui5-tab key="item1" text="Products" icon="sap-icon://product" icon-color="Negative">
-					<ui5-togglebutton pressed type="Positive">Cucumber</ui5-togglebutton>
+					<ui5-togglebutton pressed design="Positive">Cucumber</ui5-togglebutton>
 					<ui5-button>Banana</ui5-button>
-					<ui5-togglebutton pressed type="Negative">Tomato</ui5-togglebutton>
+					<ui5-togglebutton pressed design="Negative">Tomato</ui5-togglebutton>
 				</ui5-tab>
 
                 <ui5-tab-separator></ui5-tab-separator>
@@ -339,9 +339,9 @@
 
 			<ui5-tabcontainer style="width:80%" show-overflow selected-key="item2">
 					<ui5-tab key="item1" text="Products">
-						<ui5-togglebutton pressed type="Positive">Cucumber</ui5-togglebutton>
+						<ui5-togglebutton pressed design="Positive">Cucumber</ui5-togglebutton>
 						<ui5-button>Banana</ui5-button>
-						<ui5-togglebutton pressed type="Negative">Tomato</ui5-togglebutton>
+						<ui5-togglebutton pressed design="Negative">Tomato</ui5-togglebutton>
 					</ui5-tab>
 
 					<ui5-tab key="item2" text="Drinks">
