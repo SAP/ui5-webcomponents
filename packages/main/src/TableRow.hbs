@@ -1,14 +1,17 @@
-<tr class="ui5-table-row-root">
-	{{#each visibleCells}}
-		<slot name="{{this._individualSlot}}"></slot>
-	{{/each}}
+<tr
+	class="ui5-table-row-root"
+	tabindex="{{_tabIndex}}"
+	@focusin="{{_onfocusin}}"
+	data-sap-focus-ref>
+		{{#each visibleCells}}
+			<slot name="{{this._individualSlot}}"></slot>
+		{{/each}}
 </tr>
 
 
 {{#each popinCells}}
 	<tr class="ui5-table-popin-row">
 		<td colspan="{{../visibleCellsCount}}">
-
 			<span class="ui5-table-row-popin-title">{{this.popinText}}:</span>
 			<div>
 				<slot name="{{this.cell._individualSlot}}"></slot>

@@ -1,7 +1,7 @@
 const assert = require("assert");
 
 describe("Select general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/Select.html");
+	browser.url("http://localhost:8080/test-resources/pages/Select.html");
 
 	it("fires change on selection", () => {
 		const select = $("#mySelect");
@@ -182,7 +182,7 @@ describe("Select general interaction", () => {
 
 		select.click();
 		const firstItem = browser.$("#mySelect").shadow$("ui5-li:first-child");
-	
+
 		firstItem.click();
 
 		assert.strictEqual(inputResult.getProperty("value"), "7", "Change event should be fired");

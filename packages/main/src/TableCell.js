@@ -79,6 +79,12 @@ class TableCell extends UI5Element {
 	static get template() {
 		return TableCellTemplate;
 	}
+
+	handlefocusin() {
+	}
+
+	handlemousedown() {
+	}
 }
 
 TableCell.define();

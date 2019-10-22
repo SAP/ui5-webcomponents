@@ -21,9 +21,12 @@ class ItemNavigation extends EventProvider {
 
 		this.rootWebComponent = rootWebComponent;
 		this.rootWebComponent.addEventListener("keydown", this.onkeydown.bind(this));
+		this.rootWebComponent.addEventListener("_componentStateFinalized", () => {
+			this._init();
+		});
 	}
 
-	init() {
+	_init() {
 		this._getItems().forEach((item, idx) => {
 			item._tabIndex = (idx === this.currentIndex) ? "0" : "-1";
 		});
@@ -141,9 +144,8 @@ class ItemNavigation extends EventProvider {
 			items[i]._tabIndex = (i === this.currentIndex ? "0" : "-1");
 		}
 
-		if (this._setItems) {
-			this._setItems(items);
-		}
+
+		this.rootWebComponent._invalidate();
 	}
 
 	focusCurrent() {
@@ -192,10 +194,6 @@ class ItemNavigation extends EventProvider {
 		}
 
 		return this.rootWebComponent.getDomRef().querySelector(`#${currentItem.id}`);
-	}
-
-	set setItemsCallback(fn) {
-		this._setItems = fn;
 	}
 
 	set getItemsCallback(fn) {

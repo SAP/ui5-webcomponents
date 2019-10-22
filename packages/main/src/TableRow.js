@@ -56,6 +56,11 @@ const metadata = {
  * @public
  */
 class TableRow extends UI5Element {
+	constructor() {
+		super();
+		this.fnOnCellClick = this._oncellclick.bind(this);
+	}
+
 	static get metadata() {
 		return metadata;
 	}
@@ -72,6 +77,28 @@ class TableRow extends UI5Element {
 		return TableRowTemplate;
 	}
 
+	_onfocusin(event, forceSelfFocus = false) {
+		if (forceSelfFocus || this._getActiveElementTagName() === "ui5-table-cell") {
+			this.getDomRef().focus();
+		}
+
+		this.fireEvent("_focused", event);
+	}
+
+	_oncellclick(event) {
+		if (this._getActiveElementTagName() === "body") {
+			// If the user clickes on non-focusable element within the ui5-table-cell,
+			// the focus goes to the body, se we have to bring it back to the row.
+			// If the uset clicks on input, button or similar clickable element,
+			// the focus remains on that element.
+			this._onfocusin(event, true /* force row focus */);
+		}
+	}
+
+	_getActiveElementTagName() {
+		return document.activeElement.localName.toLocaleLowerCase();
+	}
+
 	onBeforeRendering() {
 		this.visibleCells = [];
 		this.popinCells = [];
@@ -79,6 +106,11 @@ class TableRow extends UI5Element {
 		if (this.cells.length === 0) {
 			return;
 		}
+
+		this.cells.forEach(cell => {
+			cell.removeEventListener("click", this.fnOnCellClick);
+			cell.addEventListener("click", this.fnOnCellClick);
+		});
 
 		this._columnsInfo.forEach((info, index) => {
 			const cell = this.cells[index];
@@ -127,10 +159,6 @@ class TableRow extends UI5Element {
 
 	get visibleCellsCount() {
 		return this.visibleCells.length;
-	}
-
-	onfocusin(event) {
-		this.fireEvent("_focused", event);
 	}
 }
 

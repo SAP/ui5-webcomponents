@@ -220,8 +220,6 @@ class DayPicker extends UI5Element {
 			this._itemNav.current = todayIndex;
 		}
 
-		this._itemNav.init();
-
 		const aDayNamesWide = this._oLocaleData.getDays("wide", this._primaryCalendarType);
 		const aDayNamesAbbreviated = this._oLocaleData.getDays("abbreviated", this._primaryCalendarType);
 		const aUltraShortNames = aDayNamesAbbreviated.map(n => n);
@@ -246,7 +244,7 @@ class DayPicker extends UI5Element {
 		this._dayNames[0].classes += " ui5-dp-firstday";
 	}
 
-	onclick(event) {
+	onmousedown(event) {
 		const target = getShadowDOMTarget(event);
 
 		const dayPressed = this._isDayPressed(target);
@@ -266,7 +264,14 @@ class DayPicker extends UI5Element {
 				}
 			}
 
-			this._modifySelectionAndNotifySubscribers(targetDate, event.ctrlKey);
+			this.targetDate = targetDate;
+		}
+	}
+
+	onmouseup(event) {
+		if (this.targetDate) {
+			this._modifySelectionAndNotifySubscribers(this.targetDate, event.ctrlKey);
+			this.targetDate = null;
 		}
 	}
 

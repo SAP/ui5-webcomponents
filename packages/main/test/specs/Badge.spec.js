@@ -1,7 +1,7 @@
 const assert = require("assert");
 
 describe("Badge rendering", () => {
-	browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/Badge.html");
+	browser.url("http://localhost:8080/test-resources/pages/Badge.html");
 
 	it("tests label not rendered if not text content", () => {
 

@@ -177,8 +177,6 @@ class Table extends UI5Element {
 	onBeforeRendering() {
 		const columnSettings = this.getColumnPropagationSettings();
 
-		this._itemNavigation.init();
-
 		this.rows.forEach(row => {
 			row._columnsInfo = columnSettings;
 			row.removeEventListener("ui5-_focused", this.fnOnRowFocused);
@@ -210,6 +208,10 @@ class Table extends UI5Element {
 		if (isSpace(event)) {
 			event.preventDefault();
 		}
+	}
+
+	onColumnHeaderClick() {
+		this.getDomRef().querySelector(`#${this._id}-columnHeader`).focus();
 	}
 
 	popinContent(_event) {

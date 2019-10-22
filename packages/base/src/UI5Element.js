@@ -152,7 +152,9 @@ class UI5Element extends HTMLElement {
 		}
 
 		const autoIncrementMap = new Map();
-		const allChildrenUpgraded = domChildren.map(async child => {
+		const slottedChildrenMap = new Map();
+
+		const allChildrenUpgraded = domChildren.map(async (child, idx) => {
 			// Determine the type of the child (mainly by the slot attribute)
 			const slotName = this.constructor._getSlotName(child);
 			const slotData = slotsMap[slotName];
@@ -192,12 +194,22 @@ class UI5Element extends HTMLElement {
 				this._attachChildPropertyUpdated(child, slotData);
 			}
 
-			// Distribute the child in the _state object
 			const propertyName = slotData.propertyName || slotName;
-			this._state[propertyName].push(child);
+
+			if (slottedChildrenMap.has(propertyName)) {
+				slottedChildrenMap.get(propertyName).push({ child, idx });
+			} else {
+				slottedChildrenMap.set(propertyName, [{ child, idx }]);
+			}
 		});
 
 		await Promise.all(allChildrenUpgraded);
+
+		// Distribute the child in the _state object, keeping the Light DOM order,
+		// not the order elements are defined.
+		slottedChildrenMap.forEach((children, slot) => {
+			this._state[slot] = children.sort((a, b) => a.idx - b.idx).map(_ => _.child);
+		});
 		this._invalidate();
 	}
 
@@ -406,12 +418,18 @@ class UI5Element extends HTMLElement {
 	}
 
 	_render() {
-		// Call the onBeforeRendering hook
+		// suppress invalidation to prevent state changes scheduling another rendering
+		this._suppressInvalidation = true;
+
 		if (typeof this.onBeforeRendering === "function") {
-			this._suppressInvalidation = true;
 			this.onBeforeRendering();
-			delete this._suppressInvalidation;
 		}
+
+		// Intended for framework usage only. Currently ItemNavigation updates tab indexes after the component has updated its state but before the template is rendered
+		this.dispatchEvent(new CustomEvent("_componentStateFinalized"));
+
+		// resume normal invalidation handling
+		delete this._suppressInvalidation;
 
 		// Update the shadow root with the render result
 		// console.log(this.getDomRef() ? "RE-RENDER" : "FIRST RENDER", this);

@@ -7,6 +7,11 @@
 	border-top: 1px solid var(--sapUiListBorderColor);
 }
 
+.ui5-table-row-root:focus {
+	outline: var(--ui5_table_row_outline_width) dotted var(--sapUiContentFocusColor);
+	outline-offset: -2px;
+}
+
 .ui5-table-popin-row td {
 	padding: .25rem;
 	padding-left: 1rem;
