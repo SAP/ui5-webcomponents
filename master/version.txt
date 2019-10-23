@@ -1,5 +1,13 @@
-commit 938201895e51552d0a98926e8409602e80b219c5
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Oct 23 09:08:48 2019 +0300
+commit d3059591bed93a271865895f7f5256c3447edec7
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Wed Oct 23 09:57:04 2019 +0300
 
-    docs: explain how to hide not-yet-defined elements (#879)
+    refactor: item navigation simplification (#880)
+    
+    - ItemNavigation invalidates the component when it
+    changes the tabIndex, this is simpler than the removed setItemsCallback
+    - UI5Element fires a private event after onBeforeRendering, but before the
+    actual rendering so the item navigation
+    can automatically apply tab indexes
+    in case the component changed the state and wipted the tab indexes
+    - adapt all components to new behaviour
