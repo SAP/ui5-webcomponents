@@ -220,8 +220,6 @@ class DayPicker extends UI5Element {
 			this._itemNav.current = todayIndex;
 		}
 
-		this._itemNav.init();
-
 		const aDayNamesWide = this._oLocaleData.getDays("wide", this._primaryCalendarType);
 		const aDayNamesAbbreviated = this._oLocaleData.getDays("abbreviated", this._primaryCalendarType);
 		const aUltraShortNames = aDayNamesAbbreviated.map(n => n);

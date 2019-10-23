@@ -257,7 +257,6 @@ class List extends UI5Element {
 
 	onBeforeRendering() {
 		this.prepareListItems();
-		this._itemNavigation.init();
 	}
 
 	initItemNavigation() {
