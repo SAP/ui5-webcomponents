@@ -1,20 +1,5 @@
-commit 366a0b3b910ddd98c7a5d55ddfcc743a6d35e254
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Oct 23 10:27:39 2019 +0300
+commit 7c5647eb843b1ea0ff4469278859d236ee9b63b2
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Wed Oct 23 16:24:37 2019 +0300
 
-    refactor: improve tabbable elements detection (#865)
-    
-    FIXES: #858
-    
-    Refactor FocusHelper.js (used to export a class previously) as follows:
-    (1) All logic, related to finding focusable elements is just split (without changes) to:
-    
-    util/FocusableElements.js
-    util/isNodeClickable.js
-    util/isNodeHidden.js
-    (2) The logic, related to finding tabbable elements is refactored, considering the issues we have
-    that not all child elements have been traversed and slotted nodes have not been traversed via the shadow DOM order:
-    
-    util/TabbableElements.js
-    util/isNodeTabbable.js
-    Add test for tab handling in the ListItem
+    feat(ui5-textarea): implement input event (#543)
