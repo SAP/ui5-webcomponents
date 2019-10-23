@@ -1,5 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import FocusHelper from "@ui5/webcomponents-base/dist/FocusHelper.js";
+import { getFirstFocusableElement, getLastFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { isEscape } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 
@@ -365,7 +365,7 @@ class Popup extends UI5Element {
 			return;
 		}
 
-		const focusableElement = FocusHelper.findFirstFocusableElement(container);
+		const focusableElement = getFirstFocusableElement(container);
 
 		if (focusableElement) {
 			focusableElement.focus();
@@ -394,16 +394,16 @@ class Popup extends UI5Element {
 
 		switch (target.id) {
 		case `${this._id}-firstfe`:
-			focusableElement = FocusHelper.findLastFocusableElement(container);
+			focusableElement = getLastFocusableElement(container);
 			isSpecialCase = true;
 			break;
 		case `${this._id}-lastfe`:
-			focusableElement = FocusHelper.findFirstFocusableElement(container);
+			focusableElement = getFirstFocusableElement(container);
 			isSpecialCase = true;
 			break;
 		case `${this._id}-blocklayer`:
 			focusableElement = this._currentFocusedElement
-				|| FocusHelper.findFirstFocusableElement(container);
+				|| getFirstFocusableElement(container);
 			isSpecialCase = true;
 			break;
 		}

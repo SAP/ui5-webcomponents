@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import FocusHelper from "@ui5/webcomponents-base/dist/FocusHelper.js";
+import { getLastTabbableElement } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
 import { isTabNext } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import ListMode from "./types/ListMode.js";
 import ListSeparators from "./types/ListSeparators.js";
@@ -542,13 +542,7 @@ class List extends UI5Element {
 	}
 
 	getHeaderToolbarLastTabbableElement() {
-		return this.getLastTabbableELement(
-			this.headerToolbar.getDomRef()
-		) || this.headerToolbar.getDomRef();
-	}
-
-	getLastTabbableELement(node) {
-		return FocusHelper.getLastTabbableElement(node);
+		return getLastTabbableElement(this.headerToolbar.getDomRef()) || this.headerToolbar.getDomRef();
 	}
 
 	getNormalizedTarget(target) {

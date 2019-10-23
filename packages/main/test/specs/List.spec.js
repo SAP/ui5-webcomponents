@@ -113,4 +113,32 @@ describe("Date Picker Tests", () => {
 
 		assert.strictEqual(firstItemHeight, ITEM_WITH_DESCRIPTION_AND_TITLE_HEIGHT, "The size of the item is : " + firstItemHeight);
 	});
+
+	it("keyboard handling on TAB", () => {
+		const headerBtn = $("#headerBtn");
+		const item = $("ui5-li-custom.item");
+		const itemBtn = $("ui5-button.itemBtn");
+		const itemLink = $("ui5-link.itemLink");
+		const itemRadioBtn = $("ui5-radiobutton.itemRadio");
+
+		headerBtn.click();
+		assert.strictEqual(headerBtn.isFocused(), true, "header btn is focused");
+
+		// act: TAB from headerButton -> the focus should go to the 1st selected item
+		headerBtn.keys("Tab");
+		assert.strictEqual(item.isFocused(), true, "selected item is focused");
+
+		// act: TAB from item -> the focus should go to "Click me" button
+		item.keys("Tab");
+		assert.strictEqual(itemBtn.isFocused(), true, "the 1st tabbable element (button) is focused");
+
+		// act: TAB from the "Click me" button - the the focus should go to "UI5 Link" anchor
+		itemBtn.keys("Tab");
+		assert.strictEqual(itemLink.isFocused(), true, "the 2nd tabbable element (link) is focused");
+
+		// act: TAB from the "UI5 Link" anchor - the the focus should skip the "Disabled" button
+		// and go to the "Option B" radio button
+		itemLink.keys("Tab");
+		assert.strictEqual(itemRadioBtn.isFocused(), true, "the last tabbable element (radio) is focused");
+	});
 });
