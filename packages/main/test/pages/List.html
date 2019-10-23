@@ -5,9 +5,9 @@
 	<meta charset="utf-8">
 	<title>ui5-list / ui5-li</title>
 
-	<script src="../../../../../../webcomponentsjs/webcomponents-loader.js"></script>
-	<script src="../../../../../../resources/bundle.esm.js" type="module"></script>
-	<script nomodule src="../../../../../../resources/bundle.es5.js"></script>
+	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+	<script nomodule src="../../resources/bundle.es5.js"></script>
 	<script>delete Document.prototype.adoptedStyleSheets;</script>
 </head>
 
@@ -156,6 +156,31 @@
 			<ui5-li >Option 1</ui5-li>
 			<ui5-li >Option 2</ui5-li>
 			<ui5-li >Option 3</ui5-li>
+	</ui5-list>
+
+	<ui5-list
+		id="keyboardTestList"
+		mode="MultiSelect"
+		header-text="Text when no header provided"
+		footer-text="Copyright"
+		no-data-text="No data">
+
+		<div slot="header" class="header">
+			<ui5-button id="headerBtn" design="Accept">Export</ui5-button>
+		</div>
+
+		<!-- Items -->
+		<ui5-li>Argentina</ui5-li>
+		<ui5-li-custom selected>
+				<ui5-button>Click me</ui5-button>
+				<ui5-link href="https://www.google.bg" target="_blank">UI5 link</ui5-link>
+				<ui5-radiobutton text="Option B" disabled="disabled"></ui5-radiobutton>
+				<ui5-button>Click me</ui5-button>
+		</ui5-li-custom>
+		<ui5-li>China</ui5-li>
+		<ui5-li-custom selected>
+				<ui5-radiobutton text="Option C" disabled="disabled"></ui5-radiobutton>
+		</ui5-li-custom>
 	</ui5-list>
 
 	<script>

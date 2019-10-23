@@ -5,10 +5,10 @@
 	<meta charset="utf-8">
 	<title>ui5-list / ui5-li</title>
 
-	<script src="../../../../../../webcomponentsjs/webcomponents-loader.js"></script>
-	<script src="../../../../../../resources/bundle.esm.js" type="module"></script>
+	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
 
-	<script nomodule src="../../../../../../resources/bundle.es5.js"></script>
+	<script nomodule src="../../resources/bundle.es5.js"></script>
 </head>
 
 <body>
@@ -49,6 +49,22 @@
 	</ui5-list>
 
 	<ui5-input id="fieldMultiSelResult"></ui5-input>
+
+	<ui5-list id="keyboardTestList">
+		<div slot="header" class="header"><ui5-button id="headerBtn" design="Accept">Export</ui5-button></div>
+
+		<ui5-li>Argentina</ui5-li>
+		<ui5-li-custom selected class="item">
+				<ui5-button class="itemBtn">Click me</ui5-button>
+				<ui5-link href="https://www.google.bg" target="_blank" class="itemLink">UI5 link</ui5-link>
+				<ui5-button class="itemBtn" disabled>Disabled</ui5-button>
+				<ui5-radiobutton text="Option B" class="itemRadio"></ui5-radiobutton>
+		</ui5-li-custom>
+		<ui5-li>China</ui5-li>
+		<ui5-li-custom selected>
+				<ui5-radiobutton text="Option C" disabled="disabled"></ui5-radiobutton>
+		</ui5-li-custom>
+	</ui5-list>
 
 	<script>
 		'use strict';

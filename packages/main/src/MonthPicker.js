@@ -133,8 +133,6 @@ class MonthPicker extends UI5Element {
 		}
 
 		this._quarters = quarters;
-
-		this._itemNav.init();
 	}
 
 	onAfterRendering() {

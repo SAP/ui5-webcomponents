@@ -31,7 +31,7 @@
 				</div>
 			</section>
 
-			<div slot="footer"	style="display: flex; align-items: center;padding: .5rem">
+			<div slot="footer" style="display: flex; align-items: center;padding: .5rem">
 				<div style="flex: 1;"></div>
 				<ui5-button id="closeDialogButton" design="Emphasized">Register</ui5-button>
 			</div>
@@ -42,11 +42,11 @@
 			var dialog = document.getElementById("hello-dialog");
 			var dialogCloser = document.getElementById("closeDialogButton");
 
-			dialogOpener.addEventListener("press", function() {
+			dialogOpener.addEventListener("press", function () {
 				dialog.open();
 			});
 
-			dialogCloser.addEventListener("press", function() {
+			dialogCloser.addEventListener("press", function () {
 				dialog.close();
 			});
 		</script>

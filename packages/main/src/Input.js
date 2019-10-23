@@ -69,10 +69,6 @@ const metadata = {
 			type: HTMLElement,
 		},
 
-		_beginContent: {
-			type: HTMLElement,
-		},
-
 		/**
 		 * The slot is used for native <code>input</code> HTML element to enable form sumbit,
 		 * when <code>name</code> property is set.

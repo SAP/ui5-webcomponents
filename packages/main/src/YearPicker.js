@@ -101,9 +101,6 @@ class YearPicker extends UI5Element {
 		this._itemNav.getItemsCallback = function getItemsCallback() {
 			return [].concat(...this._yearIntervals);
 		}.bind(this);
-		this._itemNav.setItemsCallback = function setItemsCallback(items) {
-			this._yearIntervals = items;
-		}.bind(this);
 
 		this._itemNav.attachEvent(
 			ItemNavigation.BORDER_REACH,
@@ -160,8 +157,6 @@ class YearPicker extends UI5Element {
 		}
 
 		this._yearIntervals = intervals;
-
-		this._itemNav.init();
 	}
 
 	onAfterRendering() {
