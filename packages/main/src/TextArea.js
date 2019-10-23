@@ -3,6 +3,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
+import { isIE } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 import TextAreaTemplate from "./generated/templates/TextAreaTemplate.lit.js";
 
 import { TEXTAREA_CHARACTERS_LEFT, TEXTAREA_CHARACTERS_EXCEEDED } from "./generated/i18n/i18n-defaults.js";
@@ -189,9 +190,6 @@ const metadata = {
 			type: String,
 			noAttribute: true,
 		},
-		_listeners: {
-			type: Object,
-		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.TextArea.prototype */ {
 		/**
@@ -201,6 +199,16 @@ const metadata = {
 		 * @public
 		 */
 		change: {},
+
+		/**
+		 * Fired when the value of the <code>ui5-textarea</code> changes at each keystroke or when
+		 * something is pasted.
+		 *
+		 * @event
+		 * @since 1.0.0-rc.5
+		 * @public
+		 */
+		input: {},
 	},
 	_eventHandlersByConvention: true,
 };
@@ -250,10 +258,6 @@ class TextArea extends UI5Element {
 		super();
 
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
-
-		this._listeners = {
-			change: this._handleChange.bind(this),
-		};
 	}
 
 	onBeforeRendering() {
@@ -295,6 +299,14 @@ class TextArea extends UI5Element {
 		this.value = inputValue;
 	}
 
+	onkeydown() {
+		this._keyDown = true;
+	}
+
+	onkeyup() {
+		this._keyDown = false;
+	}
+
 	onfocusin() {
 		this.focused = true;
 	}
@@ -305,6 +317,30 @@ class TextArea extends UI5Element {
 
 	_handleChange() {
 		this.fireEvent("change", {});
+	}
+
+	_handleInput(event) {
+		const nativeTextarea = this.getInputDomRef();
+
+		/* skip calling change event when an textarea with a placeholder is focused on IE
+			- value of the host and the internal textarea should be different in case of actual input
+			- input is called when a key is pressed => keyup should not be called yet
+		*/
+		const skipFiring = (this.getInputDomRef().value === this.value) && isIE() && !this._keyDown && !!this.placeholder;
+		if (event.target === nativeTextarea) {
+			// stop the native event, as the semantic "input" would be fired.
+			event.stopImmediatePropagation();
+		}
+
+		if (skipFiring) {
+			return;
+		}
+
+		this.value = nativeTextarea.value;
+		this.fireEvent("input", {});
+
+		// Angular two way data binding
+		this.fireEvent("value-changed");
 	}
 
 	_tokenizeText(value) {
