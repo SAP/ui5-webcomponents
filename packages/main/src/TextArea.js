@@ -337,6 +337,9 @@ class TextArea extends UI5Element {
 
 		this.value = nativeTextarea.value;
 		this.fireEvent("input", {});
+
+		// Angular two way data binding
+		this.fireEvent("value-changed");
 	}
 
 	_tokenizeText(value) {
