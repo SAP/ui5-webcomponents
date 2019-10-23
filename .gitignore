@@ -37,15 +37,15 @@ yarn-debug.log*
 
 
 # Playground 
-packages/playground/app/_site/
-packages/playground/app/.sass-cache/
-packages/playground/app/assets/js/ui5-webcomponents/
+packages/playground/src/_site/
+packages/playground/src/.sass-cache/
+packages/playground/src/assets/js/ui5-webcomponents/
 
-packages/playground/app/docs/components
-!packages/playground/app/docs/components/component.md
+packages/playground/src/docs/components
+!packages/playground/src/docs/components/component.md
 
-packages/playground/app/docs/documentation
-!packages/playground/app/docs/documentation/documentation.md
+packages/playground/src/docs/documentation
+!packages/playground/src/docs/documentation/documentation.md
 
-packages/playground/app/docs/tutorials
-!packages/playground/app/docs/tutorials/tutorials.md
+packages/playground/src/docs/tutorials
+!packages/playground/src/docs/tutorials/tutorials.md

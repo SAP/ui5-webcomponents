@@ -15,8 +15,8 @@
     "url": "https://github.com/SAP/ui5-webcomponents.git"
   },
   "scripts": {
-    "start": "cd ./app && yarn start",
-    "build": "cd ./app && build"
+    "start": "cd ./src && yarn start",
+    "build": "cd ./src && build"
   },
   "dependencies": {
     "@ui5/webcomponents": "1.0.0-rc.4"

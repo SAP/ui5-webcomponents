@@ -26,7 +26,7 @@
     "start": "npm-run-all --parallel prepare:** && bundle exec jekyll serve",
     "copy:assets": "copy-and-watch \"../../main/dist/resources/*\" \"./assets/js/ui5-webcomponents\"",
     "copy:samples": "node ./build-scripts/samples-prepare.js \"../../main/dist/test-resources/sap/ui/webcomponents/main/api\"",
-    "prepare:assets": "npm run clean:assets && cd ../../main && cross-env DEPLOY_PUBLIC_PATH=/assets/js/ui5-webcomponents/ nps build.bundle && cd ../playground/app && npm run copy:assets",
+    "prepare:assets": "npm run clean:assets && cd ../../main && cross-env DEPLOY_PUBLIC_PATH=/assets/js/ui5-webcomponents/ nps build.bundle && cd ../playground/src && npm run copy:assets",
     "prepare:docs": "node ./build-scripts/docs-prepare.js \"../../../docs/\"",
     "prepare:samples": "npm run clean:samples && npm run build:samples && npm run copy:samples",
     "prepare:tutorials": "node ./build-scripts/tutorials-prepare.js \"../../../docs/\""
