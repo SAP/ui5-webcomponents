@@ -16,7 +16,7 @@
   },
   "scripts": {
     "start": "cd ./src && yarn start",
-    "build": "cd ./src && build"
+    "build": "cd ./src && yarn build"
   },
   "dependencies": {
     "@ui5/webcomponents": "1.0.0-rc.4"
