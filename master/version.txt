@@ -1,5 +1,10 @@
-commit 7c5647eb843b1ea0ff4469278859d236ee9b63b2
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Wed Oct 23 16:24:37 2019 +0300
+commit 668418f34a4894677013347b77daabd0ba2518f3
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Thu Oct 24 09:57:51 2019 +0300
 
-    feat(ui5-textarea): implement input event (#543)
+    chore: simplify ui5 core reuse (#883)
+    
+    - copy only the used modules in the dist
+    - remove unused overlay and ESM modules
+    - simplify build scripts
+    - remove LoaderExtensions by using a direct JSON return for LocaleData
