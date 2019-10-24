@@ -1,10 +1,10 @@
-commit 668418f34a4894677013347b77daabd0ba2518f3
+commit 4018dd14d0141adfc858003fa2549b42a0e7ff57
 Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Thu Oct 24 09:57:51 2019 +0300
+Date:   Thu Oct 24 11:04:16 2019 +0300
 
-    chore: simplify ui5 core reuse (#883)
+    chore: use passive touch listeners (#882)
     
-    - copy only the used modules in the dist
-    - remove unused overlay and ESM modules
-    - simplify build scripts
-    - remove LoaderExtensions by using a direct JSON return for LocaleData
+    - since the ScrollEnablement does not use preventDefault, it is ok
+    to switch to passive event listeneres
+    for the touch events (and get rid of
+    the console warnings)
