@@ -8,7 +8,7 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	background: var(--sapUiShellColor);
+	background: var(--_ui5_shell_bar_test_color); /**--sapUiShellColor**/
 	height: 2.75rem;
 	font-family: var(--sapUiFontFamily);
 	font-size: var(--sapMFontMediumSize);

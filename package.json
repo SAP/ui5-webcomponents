@@ -9,18 +9,21 @@
     "ui5"
   ],
   "scripts": {
-    "build": "npm-run-all --sequential build:core build:base build:main build:playground",
+    "build": "npm-run-all --sequential build:core build:base build:main build:fiori build:playground",
     "build:core": "cd packages/core && yarn build",
     "build:base": "cd packages/base && yarn build",
     "build:main": "cd packages/main && yarn build",
+    "build:fiori": "cd packages/fiori && yarn build",
     "build:playground": "cd packages/playground && yarn build",
-    "clean": "npm-run-all --sequential clean:core clean:base clean:main",
+    "clean": "npm-run-all --sequential clean:core clean:base clean:main clean:fiori",
     "clean:core": "cd packages/core && yarn clean",
     "clean:base": "cd packages/base && yarn clean",
     "clean:main": "cd packages/main && yarn clean",
-    "start": "npm-run-all --parallel start:base start:main",
+    "clean:fiori": "cd packages/fiori && yarn clean",
+    "start": "npm-run-all --parallel start:base start:main start:fiori",
     "start:base": "cd packages/base && yarn start",
     "start:main": "cd packages/main && yarn start",
+    "start:fiori": "cd packages/fiori && yarn start",
     "test": "cd packages/main && yarn test",
     "lint": "wsrun --exclude-missing lint",
     "link-all": "wsrun link",
@@ -41,6 +44,7 @@
     "packages/core",
     "packages/base",
     "packages/main",
+    "packages/fiori",
     "packages/playground"
   ]
 }
