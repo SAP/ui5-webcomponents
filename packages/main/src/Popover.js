@@ -17,7 +17,7 @@ const arrowSize = 8;
 
 const metadata = {
 	tag: "ui5-popover",
-	properties: {
+	properties: /** @lends  sap.ui.webcomponents.main.Popover.prototype */ {
 		/**
 		 * Defines the ID of the HTML Element, which will get the initial focus.
 		 *
@@ -223,6 +223,41 @@ const metadata = {
 	},
 };
 
+/**
+ * @class
+ *
+ * <h3 class="comment-api-title">Overview</h3>
+ *
+ * The <code>ui5-popover</code> component displays additional information for an object
+ * in a compact way and without leaving the page.
+ * The Popover can contain various UI elements, such as fields, tables, images, and charts.
+ * It can also include actions in the footer.
+ *
+ * <h3>Structure</h3>
+ *
+ * The popover has three main areas:
+ * <ul>
+ * <li>Header (optional)</li>
+ * <li>Content</li>
+ * <li>Footer (optional)</li>
+ * </ul>
+ *
+ * <b>Note:</b> The <code>ui5-popover</code> is closed when the user clicks
+ * or taps outside the popover
+ * or selects an action within the popover. You can prevent this with the
+ * <code>modal</code> property.
+ *
+ * <h3>ES6 Module Import</h3>
+ *
+ * <code>import "@ui5/webcomponents/dist/Popover.js";</code>
+ *
+ * @constructor
+ * @author SAP SE
+ * @alias sap.ui.webcomponents.main.Popover
+ * @extends UI5Element
+ * @tagname ui5-popover
+ * @public
+ */
 class Popover extends UI5Element {
 	static get metadata() {
 		return metadata;
