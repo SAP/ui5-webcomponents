@@ -49,7 +49,7 @@ module.exports = {
         serve: {
             default: "nps serve.prepare serve.run",
             prepare: "copy-and-watch \"serve.json\" dist/",
-            run: "serve --no-clipboard -l 8080 dist",
+            run: "serve --no-clipboard -l 8081 dist",
         },
         test: {
             default: "nps test.jest test.wdio",
