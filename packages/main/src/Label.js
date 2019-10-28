@@ -112,7 +112,7 @@ class Label extends UI5Element {
 		return labelCss;
 	}
 
-	_onClick() {
+	_onclick() {
 		const elementToFocus = document.getElementById(this.for);
 		if (elementToFocus) {
 			elementToFocus.focus();
