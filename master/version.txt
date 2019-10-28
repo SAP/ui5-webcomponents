@@ -1,5 +1,7 @@
-commit 04fc103e228e7bbc4e9609ea38cbed5a889185c6
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Oct 28 17:00:20 2019 +0200
+commit f4d0bd0f2bf167af57c54a93d508e6bb6de59d34
+Author: kskondov <konstantin.kondov@sap.com>
+Date:   Mon Oct 28 18:13:07 2019 +0200
 
-    chore: add Fiori dark parameters (#888)
+    refactor(ui5-radiobutton): subscribe event handlers within HBS template (#893)
+    
+    Part of issue #834
