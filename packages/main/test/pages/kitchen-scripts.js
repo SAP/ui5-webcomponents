@@ -9,9 +9,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	var THEME = Configuration.getTheme();
 	var HCB = "sap_belize_hcb";
 	var FIORI3 = "sap_fiori_3";
+	var FIORI3_DARK = "sap_fiori_3_dark";
 	var btnRTL = document.getElementById("btnRTL");
 	var btnCompact = document.getElementById("btnCompact");
 	var btnTheme = document.getElementById("btnTheme");
+	var btnLightDark = document.getElementById("btnLightDark");
+	
 
 	if (THEME === HCB) {
 		document.body.style="background: #333";
@@ -50,6 +53,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	btnRTL.pressed = !!RTL;
 	btnCompact.pressed = !!COMPACT;
 	btnTheme.pressed = !!(THEME === HCB);
+	btnLightDark.pressed = !!(THEME === FIORI3_DARK);
 
 	btnRTL.addEventListener('press', function(e) {
 		var param = buildParam(btnCompact.pressed, e.target.pressed, THEME);
@@ -72,6 +76,17 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		Configuration.setTheme(theme);
 
 		if (theme === HCB) {
+			document.body.style="background: #333";
+		} else {
+			document.body.style="background: #fff";
+		}
+	}, false);
+
+	btnLightDark.addEventListener('press', function(e) {
+		var theme = e.target.pressed ? FIORI3_DARK : FIORI3;
+		Configuration.setTheme(theme);
+
+		if (theme === FIORI3_DARK) {
 			document.body.style="background: #333";
 		} else {
 			document.body.style="background: #fff";

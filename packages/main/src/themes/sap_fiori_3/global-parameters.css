@@ -12,9 +12,7 @@
 	--sapUiGlobalLogo: var(--sapCompanyLogo);
 	--sapUiGlobalBackgroundImage: var(--sapBackgroundImage);
 	--sapUiBackgroundImage: var(--sapBackgroundImage);
-	--sapUiUx3ShellBackgroundImageURL: var(--sapBackgroundImage);
 	--sapUiGlobalBackgroundImageOpacity: var(--sapBackgroundImageOpacity);
-	--sapUiGlobalBackgroundRepeat: var(--sapBackgroundImageRepeat);
 	--sapUiSelected: var(--sapSelectedColor);
 	--sapUiActive: var(--sapActiveColor);
 	--sapUiHighlightTextColor: var(--sapHighlightTextColor);
@@ -56,7 +54,6 @@
 	--sapUiShellBackgroundImageOpacity: var(--sapShell_BackgroundImageOpacity);
 	--sapUiShellBackgroundImageRepeat: var(--sapShell_BackgroundImageRepeat);
 	--sapUiShellBackgroundPatternColor: var(--sapShell_BackgroundPatternColor);
-	--sapUiShellBackgroundGradient: var(--sapShell_BackgroundGradient);
 	--sapUiShellBorderColor: var(--sapShell_BorderColor);
 	--sapUiShellTextColor: var(--sapShell_TextColor);
 	--sapUiShellInteractiveTextColor: var(--sapShell_InteractiveTextColor);
@@ -82,7 +79,6 @@
 	--sapUiButtonRejectTextColor: var(--sapButton_Reject_TextColor);
 	--sapUiButtonAcceptTextColor: var(--sapButton_Accept_TextColor);
 	--sapUiButtonRejectActiveBackground: var(--sapButton_Reject_Active_Background);
-
 	--sapUiFieldPlaceholderTextColor: var(--sapField_PlaceholderTextColor);
 	--sapUiFieldBorderWidth: var(--sapField_BorderWidth);
 	--sapUiFieldBorderCornerRadius: var(--sapField_BorderCornerRadius);
@@ -123,14 +119,12 @@
 	--sapUiListTableGroupHeaderBackground: var(--sapList_TableGroupHeaderBackground);
 	--sapUiListTableGroupHeaderBorderColor: var(--sapList_TableGroupHeaderBorderColor);
 	--sapUiListTableGroupHeaderTextColor: var(--sapList_TableGroupHeaderTextColor);
-
 	--sapUiListBorderColor: var(--sapList_BorderColor);
 	--sapUiListBorderWidth: var(--sapList_BorderWidth);
 	--sapUiListHighlightColor: var(--sapList_HighlightColor);
 	--sapUiListSelectionBackgroundColor: var(--sapList_SelectionBackgroundColor);
 	--sapUiListBackground: var(--sapList_Background);
 	--sapUiListHoverBackground: var(--sapList_Hover_Background);
-
 	--sapUiScrollBarFaceColor: var(--sapScrollBar_FaceColor);
 	--sapUiScrollBarTrackColor: var(--sapScrollBar_TrackColor);
 	--sapUiScrollBarBorderColor: var(--sapScrollBar_BorderColor);
@@ -153,7 +147,6 @@
 	--sapUiTileTitleTextColor: var(--sapTile_TitleTextColor);
 	--sapUiTileTextColor: var(--sapTile_TextColor);
 	--sapUiTileIconColor: var(--sapTile_IconColor);
-
 	--sapUiContentGridSize: var(--sapContent_GridSize);
 	--sapUiPrimary1: var(--sapPrimary1);
 	--sapUiPrimary2: var(--sapPrimary2);
@@ -227,18 +220,13 @@
 	--sapUiFontHeader5Size: 14px;
 	--sapUiFontHeader6Size: var(--sapUiFontLargeSize);
 	--sapUiLineHeight: 18px;
-	
 	--sapUiShellContainerBackground: var(--sapUiGroupContentBackground);
 	--sapUiShellAltContainerBackground: var(--sapUiShellContainerBackground);
 	--sapUiShellGroupTextColor: var(--sapUiTextTitle);
 	--sapUiLinkActive: var(--sapUiLink);
 	--sapUiLinkVisited: var(--sapUiLink);
-
-	--sapUiNotifierSeparatorWidth: 1px;
-
 	--sapUiButtonActiveBackground: var(--sapUiActive);
 	--sapUiButtonActiveBorderColor: var(--sapUiButtonActiveBackground);
-
 	--sapUiButtonEmphasizedHoverBorderColor: var(--sapUiButtonEmphasizedHoverBackground);
 	--sapUiButtonEmphasizedActiveBorderColor: var(--sapUiButtonEmphasizedActiveBackground);
 	--sapUiButtonEmphasizedTextShadow: transparent;
@@ -268,7 +256,6 @@
 	--sapUiToggleButtonPressedHoverBorderColor: var(--sapUiToggleButtonPressedHoverBackground);
 	--sapUiSegmentedButtonBackground: var(--sapUiButtonBackground);
 	--sapUiSegmentedButtonBorderColor: var(--sapUiButtonBorderColor);
-
 	--sapUiSegmentedButtonHoverBackground: var(--sapUiButtonHoverBackground);
 	--sapUiSegmentedButtonActiveBackground: var(--sapUiButtonActiveBackground);
 	--sapUiSegmentedButtonSelectedBackground: var(--sapUiToggleButtonPressedBackground);
@@ -285,11 +272,9 @@
 	--sapUiListActiveBackground: var(--sapUiListHighlightColor);
 	--sapUiListFooterTextColor: var(--sapUiListTextColor);
 	--sapUiListGroupHeaderBackground: var(--sapUiListBackground);
-
 	--sapUiListTableFooterBorder: var(--sapUiListBorderColor);
 	--sapUiListTableTextSize: 0.875rem;
 	--sapUiListTableIconSize: 1rem;
-
 	--sapUiInfobarActiveBackground: var(--sapUiListActiveBackground);
 	--sapUiCalendarColorToday: var(--sapUiAccent4);
 	--sapUiDragAndDropColor: var(--sapUiContentNonInteractiveIconColor);
@@ -297,4 +282,5 @@
 	--sapUiDragAndDropBorderColor: var(--sapUiContentForegroundBorderColor);
 	--sapUiDragAndDropActiveColor: var(--sapUiLink);
 	--sapUiDragAndDropActiveBorderColor: var(--sapUiLink);
+	--sapUiShadowText: 0 0 0.125rem var(--sapUiContentContrastShadowColor);
 }
