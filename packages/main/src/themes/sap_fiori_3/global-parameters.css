@@ -49,6 +49,9 @@
 	--sapUiContentForegroundTextColor: var(--sapContent_ForegroundTextColor);
 	--sapUiContentBadgeBackground: var(--sapContent_BadgeBackground);
 	--sapUiShellBackground: var(--sapShell_Background);
+	--sapUiShellHoverBackground: var(--sapShell_Hover_Background);
+	--sapUiShellActiveBackground: var(--sapShell_Active_Background);
+	--sapUiShellActiveTextColor: var(--sapShell_Active_TextColor);
 	--sapUiShellBackgroundImage: var(--sapShell_BackgroundImage);
 	--sapUiShellBackgroundImageOpacity: var(--sapShell_BackgroundImageOpacity);
 	--sapUiShellBackgroundImageRepeat: var(--sapShell_BackgroundImageRepeat);
@@ -63,14 +66,24 @@
 	--sapUiButtonBackground: var(--sapButton_Background);
 	--sapUiButtonBorderColor: var(--sapButton_BorderColor);
 	--sapUiButtonTextColor: var(--sapButton_TextColor);
+	--sapUiButtonIconColor: var(--sapButton_IconColor);
 	--sapUiButtonHoverBackground: var(--sapButton_Hover_Background);
 	--sapUiButtonHoverBorderColor: var(--sapButton_Hover_BorderColor);
+	--sapUiButtonActiveTextColor: var(--sapButton_Active_TextColor);
 	--sapUiButtonHoverTextColor: var(--sapButton_Hover_TextColor);
+	--sapUiButtonEmphasizedHoverBackground: var(--sapButton_Emphasized_Hover_Background);
+	--sapUiButtonEmphasizedActiveBackground: var(--sapButton_Emphasized_Active_Background);
 	--sapUiButtonEmphasizedBackground: var(--sapButton_Emphasized_Background);
 	--sapUiButtonEmphasizedBorderColor: var(--sapButton_Emphasized_BorderColor);
 	--sapUiButtonEmphasizedTextColor: var(--sapButton_Emphasized_TextColor);
 	--sapUiButtonRejectBackground: var(--sapButton_Reject_Background);
 	--sapUiButtonAcceptBackground: var(--sapButton_Accept_Background);
+	--sapUiButtonAcceptActiveBackground: var(--sapButton_Accept_Active_Background);
+	--sapUiButtonRejectTextColor: var(--sapButton_Reject_TextColor);
+	--sapUiButtonAcceptTextColor: var(--sapButton_Accept_TextColor);
+	--sapUiButtonRejectActiveBackground: var(--sapButton_Reject_Active_Background);
+
+	--sapUiFieldPlaceholderTextColor: var(--sapField_PlaceholderTextColor);
 	--sapUiFieldBorderWidth: var(--sapField_BorderWidth);
 	--sapUiFieldBorderCornerRadius: var(--sapField_BorderCornerRadius);
 	--sapUiFieldBackground: var(--sapField_Background);
@@ -105,12 +118,19 @@
 	--sapUiListHeaderBackground: var(--sapList_HeaderBackground);
 	--sapUiListHeaderBorderColor: var(--sapList_HeaderBorderColor);
 	--sapUiListHeaderTextColor: var(--sapList_HeaderTextColor);
+	--sapUiListActiveTextColor: var(--sapList_Active_TextColor);
+	--sapUiListFooterBackground: var(--sapList_FooterBackground);
+	--sapUiListTableGroupHeaderBackground: var(--sapList_TableGroupHeaderBackground);
+	--sapUiListTableGroupHeaderBorderColor: var(--sapList_TableGroupHeaderBorderColor);
+	--sapUiListTableGroupHeaderTextColor: var(--sapList_TableGroupHeaderTextColor);
+
 	--sapUiListBorderColor: var(--sapList_BorderColor);
 	--sapUiListBorderWidth: var(--sapList_BorderWidth);
 	--sapUiListHighlightColor: var(--sapList_HighlightColor);
 	--sapUiListSelectionBackgroundColor: var(--sapList_SelectionBackgroundColor);
 	--sapUiListBackground: var(--sapList_Background);
 	--sapUiListHoverBackground: var(--sapList_Hover_Background);
+
 	--sapUiScrollBarFaceColor: var(--sapScrollBar_FaceColor);
 	--sapUiScrollBarTrackColor: var(--sapScrollBar_TrackColor);
 	--sapUiScrollBarBorderColor: var(--sapScrollBar_BorderColor);
@@ -122,11 +142,14 @@
 	--sapUiPageHeaderTextColor: var(--sapPageHeader_TextColor);
 	--sapUiPageFooterBackground: var(--sapPageFooter_Background);
 	--sapUiPageFooterTextColor: var(--sapPageFooter_TextColor);
+	--sapUiPageFooterBorderColor: var(--sapPageFooter_BorderColor);
 	--sapUiInfobarBackground: var(--sapInfobar_Background);
+	--sapUiInfobarHoverBackground: var(--sapInfobar_Hover_Background);
+	--sapUiObjectHeaderBorderColor: var(--sapObjectHeader_BorderColor);
 	--sapUiObjectHeaderBackground: var(--sapObjectHeader_Background);
 	--sapUiBlockLayerBackground: var(--sapBlockLayer_Background);
 	--sapUiTileBackground: var(--sapTile_Background);
-	--sapUiTileBorderColor: var(--sapTile_BorderColor);
+	--sapUiTileBorderColor: var(--sapTile_BorderColor);     
 	--sapUiTileTitleTextColor: var(--sapTile_TitleTextColor);
 	--sapUiTileTextColor: var(--sapTile_TextColor);
 	--sapUiTileIconColor: var(--sapTile_IconColor);

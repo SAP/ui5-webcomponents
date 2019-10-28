@@ -6,7 +6,7 @@
 }
 
 :host([data-ui5-compact-size]) .ui5-tokenizer-root {
-	padding: 0.1875rem 0.125rem;
+	padding: 0.125rem;
 }
 
 .ui5-tokenizer-root {
@@ -19,6 +19,7 @@
 	font-family: var(--sapUiFontFamily);
 }
 
+:host([data-ui5-compact-size]) .ui5-tokenizer-root.ui5-tokenizer-no-padding,
 .ui5-tokenizer-no-padding {
 	padding: 0;
 }
@@ -36,6 +37,9 @@
 
 .ui5-tokenizer--content {
 	height: 100%;
+	display: flex;
+	flex-wrap: nowrap;
+	align-items: center;
 }
 
 .ui5-tokenizer--content.ui5-tokenizer-nmore--content {
@@ -44,7 +48,7 @@
 
 .ui5-tokenizer-more-text {
 	display: inline-block;
-	margin-left: 3px;
+	margin-left: .25rem;
 	cursor: pointer;
 	white-space: nowrap;
 	font-size: var(--sapMFontMediumSize);
@@ -52,19 +56,23 @@
 
 .ui5-tokenizer-token-placeholder {
 	display: inline-block;
-	height: 100%;
+	height: 1.625rem;
 	width: 1px;
 	margin-top: auto;
 }
 
-/* IE specific styles */
-ui5-tokenizer {
-	display: inline-block;
-	box-sizing: border-box;
-	border: 1px solid black;
-	height: 2.25rem;
+:host([data-ui5-compact-size]) .ui5-tokenizer-token-placeholder {
+	height: 1.25rem;
 }
 
-ui5-tokenizer[data-ui5-compact-size] .ui5-tokenizer-root {
-	padding: 0.1875rem 0.125rem;
+:host([expanded]) .ui5-tokenizer--content {
+	overflow: auto;
+}
+
+::slotted(ui5-token) {
+	margin-left: .25rem;
+}
+
+:host([data-ui5-compact-size]) :slotted(ui5-token) {
+	height: 100%;
 }

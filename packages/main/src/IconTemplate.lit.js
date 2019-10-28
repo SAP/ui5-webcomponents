@@ -8,6 +8,7 @@ const mainBlock = context => {
 		viewBox="0 0 512 512"
 		role="img"
 		preserveAspectRatio="xMidYMid meet"
+		aria-label="${ifDefined(context.accessibleNameText)}"
 		xmlns="http://www.w3.org/2000/svg"
 	>
 		${context.hasIconTooltip

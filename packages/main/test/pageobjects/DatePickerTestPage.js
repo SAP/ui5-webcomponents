@@ -1,6 +1,6 @@
 class DatePickerTestPage {
 	constructor() {
-		this.page = 'http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/DatePicker_test_page.html';
+		this.page = 'http://localhost:8080/test-resources/pages/DatePicker_test_page.html';
 	}
 
 	set id(id) {
@@ -20,7 +20,7 @@ class DatePickerTestPage {
 	}
 
 	get popoverContent() {
-		return browser.$(this._sut).shadow$("ui5-popover").shadow$(".ui5-popup-root");
+		return browser.$(this._sut).shadow$("ui5-popover").shadow$(".ui5-popover-root");
 	}
 
 	get calendar() {
@@ -86,6 +86,7 @@ class DatePickerTestPage {
 	}
 
 	isPickerOpen() {
+
 		return browser.execute((id) => {
 			return document.querySelector(id).isOpen();
 		}, this._sut);

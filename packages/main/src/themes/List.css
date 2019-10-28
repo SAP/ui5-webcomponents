@@ -89,25 +89,3 @@
 	height: 2rem;
 	font-size: var(--sapMFontMediumSize);
 }
-
-/* 
- * IE pair of styles
- * to be removed later on
- */
-ui5-list:not([hidden]) {
-	display: block;
-	max-width: 100%;
-}
-
-ui5-list[inset] .ui5-list-root {
-	padding: 2rem;
-}
-
-ui5-list[data-ui5-compact-size] .ui5-list-root .ui5-list-nodata {
-	height: 2rem;
-	font-size: var(--sapMFontMediumSize);
-}
-
-ui5-list[separators="None"] .ui5-list-nodata {
-	border-bottom: 0;
-}

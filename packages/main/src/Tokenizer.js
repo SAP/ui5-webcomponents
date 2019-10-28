@@ -24,6 +24,13 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.Tokenizer.prototype */ {
 		showMore: { type: Boolean },
 		disabled: { type: Boolean },
+
+		/**
+		 * Indicates if the tokenizer should show all tokens or n more label instead
+		 *
+		 * @private
+		 */
+		expanded: { type: Boolean },
 		_nMoreText: { type: String },
 	},
 	events: /** @lends sap.ui.webcomponents.main.Tokenizer.prototype */ {
@@ -93,20 +100,18 @@ class Tokenizer extends UI5Element {
 				return [];
 			}
 
-			return this._getTokens();
+			return this._getTokens().filter((token, index) => {
+				return index < (this._getTokens().length - this.overflownTokens.length);
+			});
 		};
 
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
-
-		this._delegates.push(this._itemNav);
 	}
 
 	onBeforeRendering() {
-		this._itemNav.init();
-
 		setTimeout(() => {
 			// wait for the layouting and update the text
-			this._nMoreText = this.getI18nBundle.getText(MULTIINPUT_SHOW_MORE_TOKENS, [this.overflownTokensCount]);
+			this._nMoreText = this.i18nBundle.getText(MULTIINPUT_SHOW_MORE_TOKENS, [this.overflownTokens.length]);
 		}, 0);
 	}
 
@@ -170,22 +175,28 @@ class Tokenizer extends UI5Element {
 	}
 
 	get showNMore() {
-		return this.showMore && this.overflownTokensCount;
+		return !this.expanded && this.showMore && this.overflownTokens.length;
 	}
 
-	get overflownTokensCount() {
-		const placeholderToken = this.shadowRoot.querySelector(".ui5-tokenizer-token-placeholder");
+	get contentDom() {
+		return this.shadowRoot.querySelector(".ui5-tokenizer--content");
+	}
 
-		if (!placeholderToken) {
-			return;
+	get overflownTokens() {
+		if (!this.contentDom) {
+			return [];
 		}
 
-		const placeholderTokenRect = placeholderToken.getBoundingClientRect();
-		const tokens = this.tokens.filter(token => {
-			return placeholderTokenRect.top < token.getBoundingClientRect().top;
-		});
+		return this.tokens.filter(token => {
+			const parentRect = this.contentDom.getBoundingClientRect();
+			const tokenRect = token.getBoundingClientRect();
+			const tokenLeft = tokenRect.left + tokenRect.width;
+			const parentLeft = parentRect.left + parentRect.width;
 
-		return tokens.length;
+			token.overflows = (tokenLeft > parentLeft) && !this.expanded;
+
+			return token.overflows;
+		});
 	}
 
 	get classes() {

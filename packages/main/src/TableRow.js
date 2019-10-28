@@ -29,7 +29,6 @@ const metadata = {
 		_columnsInfo: {
 			type: Object,
 			multiple: true,
-			deepEqual: true,
 		},
 		_tabIndex: {
 			type: String,
@@ -39,6 +38,7 @@ const metadata = {
 	events: /** @lends sap.ui.webcomponents.main.TableRow.prototype */ {
 		_focused: {},
 	},
+	_eventHandlersByConvention: true,
 };
 
 /**
@@ -81,19 +81,25 @@ class TableRow extends UI5Element {
 		}
 
 		this._columnsInfo.forEach((info, index) => {
+			const cell = this.cells[index];
+
+			if (!cell) {
+				return;
+			}
+
 			if (info.visible) {
-				this.visibleCells.push(this.cells[index]);
-				this.cells[index].firstInRow = (index === 0);
-				this.cells[index].popined = false;
+				this.visibleCells.push(cell);
+				cell.firstInRow = (index === 0);
+				cell.popined = false;
 			} else if (info.demandPopin) {
 				this.popinCells.push({
-					cell: this.cells[index],
+					cell,
 					popinText: info.popinText,
 				});
 
-				this.cells[index].popined = true;
+				cell.popined = true;
 			} else {
-				this.cells[index].popined = false;
+				cell.popined = false;
 			}
 		}, this);
 

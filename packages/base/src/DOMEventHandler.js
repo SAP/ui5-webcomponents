@@ -24,6 +24,9 @@ const processDOMNode = function processDOMNode(node, event) {
 };
 
 const dispatchEvent = function dispatchEvent(element, event) {
+	if (!element.constructor.getMetadata().getEventHandlersByConvention()) {
+		return true;
+	}
 	// Handle the original event (such as "keydown")
 	element._handleEvent(event);
 	if (event.isImmediatePropagationStopped()) {
@@ -42,7 +45,7 @@ const dispatchEvent = function dispatchEvent(element, event) {
 const getParentDOMNode = function getParentDOMNode(node) {
 	const parentNode = node.parentNode;
 
-	if (parentNode && parentNode.host) {
+	if (parentNode && (parentNode instanceof window.ShadowRoot) && parentNode.host) {
 		return parentNode.host;
 	}
 

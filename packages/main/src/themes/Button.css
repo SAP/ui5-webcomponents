@@ -9,6 +9,7 @@
 	height: var(--_ui5_button_base_height);
 	font-family: var(--sapUiFontFamily);
 	font-size: var(--sapMFontMediumSize);
+	text-shadow: var(--_ui5_button_text_shadow);
 	border-radius: var(--_ui5_button_border_radius);
 	border-width: 0.0625rem;
 	cursor: pointer;
@@ -50,21 +51,18 @@
 	cursor: inherit;
 	height: 100%;
 	width: 100%;
-	font-weight: normal;
 	box-sizing: border-box;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	text-shadow: var(--_ui5_button_text_shadow);
 	outline: none;
 	padding: 0 var(--_ui5_button_base_padding);
 	position: relative;
 	background: transparent;
 	border: none;
-	font-size: inherit;
 	color: inherit;
 	text-shadow: inherit;
-	font-weight: inherit;
+	font: inherit;
 }
 
 :host(:not([active]):hover) {
@@ -73,6 +71,8 @@
 
 .ui5-button-root .ui5-button-icon {
 	font-size: var(--_ui5_button_base_icon_only_font_size);
+	height: 0;
+	top: -.5rem;
 	position: relative;
 	color: inherit;
 }
@@ -217,10 +217,9 @@ bdi {
 
 :host([design="Transparent"]) {
 	background-color: var(--sapUiButtonLiteBackground);
-	border-color: var(--sapUiButtonLiteBorderColor);
 	color: var(--sapUiButtonLiteTextColor);
 	text-shadow: var(--_ui5_button_text_shadow);
-	border-color: transparent;
+	border-color: var(--_ui5_button_transparent_border_color);
 }
 
 :host([design="Transparent"]):hover {
@@ -234,7 +233,7 @@ bdi {
 }
 
 :host([design="Transparent"]:not([active]):hover) {
-	border-color: transparent;
+	border-color: var(--_ui5_button_transparent_hover_border_color);
 }
 
 /* IE Specific CSS */
@@ -281,172 +280,4 @@ ui5-button[design="Negative"][active][focused] .ui5-button-root::after {
 
 ui5-button[design="Emphasized"][focused] .ui5-button-root::after {
 	border-color: var(--sapUiContentContrastFocusColor);
-}
-
-/* Remove this after ShadyCSS adoption has been done */
-
-ui5-button:not([hidden]) {
-	display: inline-block;
-}
-
-ui5-button {
-	min-width: var(--_ui5_button_base_min_width);
-	height: var(--_ui5_button_base_height);
-	font-family: var(--sapUiFontFamily);
-	font-size: var(--sapMFontMediumSize);
-	border-radius: var(--_ui5_button_border_radius);
-	border-width: 0.0625rem;
-	cursor: pointer;
-	background-color: var(--sapUiButtonBackground);
-	border: 1px solid var(--sapUiButtonBorderColor);
-	color: var(--sapUiButtonTextColor);
-	box-sizing: border-box;
-}
-
-ui5-button[disabled] {
-	pointer-events: none;
-}
-
-ui5-button[data-ui5-compact-size] {
-	height: var(--_ui5_button_compact_height);
-	min-width: var(--_ui5_button_base_min_compact_width);
-}
-
-ui5-button[data-ui5-compact-size] .ui5-button-root {
-	padding: 0 var(--_ui5_button_compact_padding);
-}
-
-ui5-button:not([active]):hover {
-	background: var(--sapUiButtonHoverBackground);
-}
-
-ui5-button[icon-only] .ui5-button-root {
-	min-width: auto;
-}
-
-ui5-button[disabled] {
-	opacity: 0.5;
-	pointer-events: none;
-}
-
-ui5-button[active]:not([disabled]) {
-	background-image: none;
-	background-color: var(--sapUiButtonActiveBackground);
-	border-color: var(--_ui5_button_active_border_color);
-	color: var(--sapUiButtonActiveTextColor);
-	text-shadow: none;
-}
-
-ui5-button[design="Positive"] {
-	background-color: var(--sapUiButtonAcceptBackground);
-	border-color: var(--_ui5_button_positive_border_color);
-	color: var(--sapUiButtonAcceptTextColor);
-	text-shadow: var(--_ui5_button_text_shadow);
-}
-
-ui5-button[design="Positive"]:hover {
-	background-color: var(--sapUiButtonAcceptHoverBackground);
-	border-color: var(--_ui5_button_positive_border_hover_color);
-}
-
-ui5-button[design="Positive"][active] {
-	background-color: var(--sapUiButtonAcceptActiveBackground);
-	border-color: var(--_ui5_button_positive_border_active_color);
-	color: var(--sapUiButtonActiveTextColor);
-	text-shadow: none;
-}
-
-ui5-button[design="Positive"][focused] {
-	border-color: var(--_ui5_button_positive_focus_border_color);
-}
-
-ui5-button[design="Negative"] {
-	background-color: var(--sapUiButtonRejectBackground);
-	border-color: var(--sapUiButtonRejectBorderColor);
-	color: var(--sapUiButtonRejectTextColor);
-	text-shadow: var(--_ui5_button_text_shadow);
-}
-
-ui5-button[design="Negative"]:hover {
-	background-color: var(--sapUiButtonRejectHoverBackground);
-	border-color: var(--sapUiButtonRejectHoverBorderColor);
-}
-
-ui5-button[design="Negative"][focused] {
-	border-color: var(--_ui5_button_negative_focus_border_color);
-}
-
-ui5-button[design="Negative"][active] {
-	background-color: var(--sapUiButtonRejectActiveBackground);
-	border-color: var(--_ui5_button_negative_active_border_color);
-	color: var(--sapUiButtonActiveTextColor);
-	text-shadow: none;
-}
-
-ui5-button[design="Emphasized"] {
-	background-color: var(--sapUiButtonEmphasizedBackground);
-	border-color: var(--sapUiButtonEmphasizedBorderColor);
-	color: var(--sapUiButtonEmphasizedTextColor);
-	text-shadow: 0 0 0.125rem var(--sapUiButtonEmphasizedTextShadow);
-	font-weight: var(--_ui5_button_emphasized_font_weight);
-}
-
-ui5-button[design="Emphasized"]:not([active]):hover {
-	background-color: var(--sapUiButtonEmphasizedHoverBackground);
-	border-color: var(--sapUiButtonEmphasizedHoverBorderColor);
-}
-
-ui5-button[design="Empasized"][active] {
-	background-color: var(--sapUiButtonEmphasizedActiveBackground);
-	border-color: var(--sapUiButtonEmphasizedActiveBorderColor);
-	color: var(--sapUiButtonActiveTextColor);
-	text-shadow: none;
-}
-
-ui5-button[design="Emphasized"][focused] {
-	border-color: var(--_ui5_button_emphasized_focused_border_color);
-}
-
-ui5-button[design="Transparent"] {
-	background-color: var(--sapUiButtonLiteBackground);
-	border-color: var(--sapUiButtonLiteBorderColor);
-	color: var(--sapUiButtonLiteTextColor);
-	text-shadow: var(--_ui5_button_text_shadow);
-	border-color: transparent;
-}
-
-ui5-button[design="Transparent"]:hover {
-	background-color: var(--sapUiButtonLiteHoverBackground);
-}
-
-ui5-button[design="Transparent"][active] {
-	background-color: var(--sapUiButtonLiteActiveBackground);
-	color: var(--sapUiButtonActiveTextColor);
-	text-shadow: none;
-}
-
-ui5-button[design="Transparent"]:not([active]):hover {
-	border-color: transparent;
-}
-
-ui5-button[icon-end] .ui5-button-icon {
-	margin-left: var(--_ui5_button_base_icon_margin);
-}
-
-ui5-button[icon-end] .ui5-button-root {
-	flex-direction: row-reverse;
-}
-
-ui5-button[has-icon] button[dir="rtl"].ui5-button-root .ui5-button-text {
-	margin-right: var(--_ui5_button_base_icon_margin);
-	margin-left: 0;
-}
-
-ui5-button[has-icon][icon-end] button[dir="rtl"].ui5-button-root .ui5-button-icon {
-	margin-right: var(--_ui5_button_base_icon_margin);
-	margin-left: 0;
-}
-
-ui5-button[data-ui5-compact-size] .ui5-button-icon {
-	font-size: 1rem;
 }

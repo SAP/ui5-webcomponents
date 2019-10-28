@@ -85,10 +85,12 @@ class UI5Element extends HTMLElement {
 			return;
 		}
 
+		// always register the observer before yielding control to the main thread (await)
+		this._startObservingDOMChildren();
+
 		await this._processChildren();
 		await RenderScheduler.renderImmediately(this);
 		this._domRefReadyPromise._deferredResolve();
-		this._startObservingDOMChildren();
 		if (typeof this.onEnterDOM === "function") {
 			this.onEnterDOM();
 		}
@@ -150,7 +152,9 @@ class UI5Element extends HTMLElement {
 		}
 
 		const autoIncrementMap = new Map();
-		const allChildrenUpgraded = domChildren.map(async child => {
+		const slottedChildrenMap = new Map();
+
+		const allChildrenUpgraded = domChildren.map(async (child, idx) => {
 			// Determine the type of the child (mainly by the slot attribute)
 			const slotName = this.constructor._getSlotName(child);
 			const slotData = slotsMap[slotName];
@@ -190,12 +194,22 @@ class UI5Element extends HTMLElement {
 				this._attachChildPropertyUpdated(child, slotData);
 			}
 
-			// Distribute the child in the _state object
 			const propertyName = slotData.propertyName || slotName;
-			this._state[propertyName].push(child);
+
+			if (slottedChildrenMap.has(propertyName)) {
+				slottedChildrenMap.get(propertyName).push({ child, idx });
+			} else {
+				slottedChildrenMap.set(propertyName, [{ child, idx }]);
+			}
 		});
 
 		await Promise.all(allChildrenUpgraded);
+
+		// Distribute the child in the _state object, keeping the Light DOM order,
+		// not the order elements are defined.
+		slottedChildrenMap.forEach((children, slot) => {
+			this._state[slot] = children.sort((a, b) => a.idx - b.idx).map(_ => _.child);
+		});
 		this._invalidate();
 	}
 
@@ -303,7 +317,6 @@ class UI5Element extends HTMLElement {
 	_initializeState() {
 		const defaultState = this.constructor._getDefaultState();
 		this._state = Object.assign({}, defaultState);
-		this._delegates = [];
 	}
 
 	static getMetadata() {
@@ -321,20 +334,19 @@ class UI5Element extends HTMLElement {
 
 		const result = metadatas[0];
 
-		// merge properties
-		result.properties = metadatas.reverse().reduce((allProperties, current) => { // eslint-disable-line
-			Object.assign(allProperties, current.properties || {});
-			return allProperties;
-		}, {});
-
-		// merge slots
-		result.slots = metadatas.reverse().reduce((allSlots, current) => { // eslint-disable-line
-			Object.assign(allSlots, current.slots || {});
-			return allSlots;
-		}, {});
+		result.properties = this._mergeMetadataEntry(metadatas, "properties"); // merge properties
+		result.slots = this._mergeMetadataEntry(metadatas, "slots"); // merge slots
+		result.events = this._mergeMetadataEntry(metadatas, "events"); // merge events
 
 		this._metadata = new UI5ElementMetadata(result);
 		return this._metadata;
+	}
+
+	static _mergeMetadataEntry(metadatas, prop) {
+		return metadatas.reverse().reduce((result, current) => { // eslint-disable-line
+			Object.assign(result, current[prop] || {});
+			return result;
+		}, {});
 	}
 
 	_attachChildPropertyUpdated(child, propData) {
@@ -406,12 +418,18 @@ class UI5Element extends HTMLElement {
 	}
 
 	_render() {
-		// Call the onBeforeRendering hook
+		// suppress invalidation to prevent state changes scheduling another rendering
+		this._suppressInvalidation = true;
+
 		if (typeof this.onBeforeRendering === "function") {
-			this._suppressInvalidation = true;
 			this.onBeforeRendering();
-			delete this._suppressInvalidation;
 		}
+
+		// Intended for framework usage only. Currently ItemNavigation updates tab indexes after the component has updated its state but before the template is rendered
+		this.dispatchEvent(new CustomEvent("_componentStateFinalized"));
+
+		// resume normal invalidation handling
+		delete this._suppressInvalidation;
 
 		// Update the shadow root with the render result
 		// console.log(this.getDomRef() ? "RE-RENDER" : "FIRST RENDER", this);
@@ -470,7 +488,7 @@ class UI5Element extends HTMLElement {
 
 		const focusDomRef = this.getFocusDomRef();
 
-		if (focusDomRef) {
+		if (focusDomRef && typeof focusDomRef.focus === "function") {
 			focusDomRef.focus();
 		}
 	}
@@ -483,12 +501,6 @@ class UI5Element extends HTMLElement {
 	 */
 	_handleEvent(event) {
 		const sHandlerName = `on${event.type}`;
-
-		this._delegates.forEach(delegate => {
-			if (delegate[sHandlerName]) {
-				delegate[sHandlerName](event);
-			}
-		});
 
 		if (this[sHandlerName]) {
 			this[sHandlerName](event);
@@ -674,18 +686,11 @@ class UI5Element extends HTMLElement {
 					}
 				},
 				set(value) {
-					let isDifferent = false;
 					value = this.constructor.getMetadata().constructor.validatePropertyValue(value, propData);
 
 					const oldState = this._state[prop];
 
-					if (propData.deepEqual) {
-						isDifferent = JSON.stringify(oldState) !== JSON.stringify(value);
-					} else {
-						isDifferent = oldState !== value;
-					}
-
-					if (isDifferent) {
+					if (oldState !== value) {
 						this._state[prop] = value;
 						this._invalidate(prop, value);
 						this._propertyChange(prop, value);

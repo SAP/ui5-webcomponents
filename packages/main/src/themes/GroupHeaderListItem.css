@@ -17,14 +17,4 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-} 
-
-/*
- * IE pair of styles
- * to be removed later on
- */
-ui5-li-groupheader {
-	background: var(--ui5-group-header-listitem-background-color);
-	border-bottom: 1px solid var(--sapUiListTableGroupHeaderBorderColor);
-	color: var(--sapUiListTableGroupHeaderTextColor);
 }

@@ -50,7 +50,6 @@ const metadata = {
 		selectedDates: {
 			type: Integer,
 			multiple: true,
-			deepEqual: true,
 		},
 
 		_weeks: {
@@ -81,6 +80,7 @@ const metadata = {
 		 */
 		navigate: {},
 	},
+	_eventHandlersByConvention: true,
 };
 
 const MAX_YEAR = 9999;
@@ -129,8 +129,6 @@ class DayPicker extends UI5Element {
 			ItemNavigation.BORDER_REACH,
 			this._handleItemNavigationBorderReach.bind(this)
 		);
-
-		this._delegates.push(this._itemNav);
 	}
 
 	onBeforeRendering() {
@@ -222,8 +220,6 @@ class DayPicker extends UI5Element {
 			this._itemNav.current = todayIndex;
 		}
 
-		this._itemNav.init();
-
 		const aDayNamesWide = this._oLocaleData.getDays("wide", this._primaryCalendarType);
 		const aDayNamesAbbreviated = this._oLocaleData.getDays("abbreviated", this._primaryCalendarType);
 		const aUltraShortNames = aDayNamesAbbreviated.map(n => n);
@@ -298,6 +294,10 @@ class DayPicker extends UI5Element {
 			const targetDate = parseInt(eventTarget.getAttribute("data-sap-timestamp"));
 			this._modifySelectionAndNotifySubscribers(targetDate, event.ctrlKey);
 		}
+	}
+
+	get showWeekNumbers() {
+		return this.primaryCalendarType === CalendarType.Gregorian;
 	}
 
 	get _timestamp() {

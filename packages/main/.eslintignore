@@ -10,3 +10,4 @@ wdio.conf.js
 postcss.config.js
 global-derived-colors.js
 component-derived-colors.js
+package-scripts.js

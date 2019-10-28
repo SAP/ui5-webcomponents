@@ -1,17 +1,27 @@
-{{>include "./Popup.hbs"}}
+<div class="ui5-popover-root" role="dialog" aria-modal="true" aria-labelledby="ui5-popover-header">
 
-<span class="ui5-popup-frame" @focusin="{{onfocusin}}">
-	<span id="{{_id}}-firstfe" tabindex="0" @focusin={{focusHelper.forwardToLast}}></span>	
-	<div style="{{styles.main}}" role="dialog" aria-modal="true" aria-labelledby="{{headerId}}" tabindex="-1" class="ui5-popup-root ui5-popover-root">
-			{{> header}}
-			<div id="{{_id}}-content" style="{{styles.content}}" class="ui5-popup-content">
-				<div class="ui5-popup-scroll">
-					<slot></slot>
-				</div>
-			</div>
-			{{> footer}}
-			<span id="{{_id}}-arrow" style="{{styles.arrow}}" class="ui5-popover-arr"></span>
+	<span class="ui5-popover-arr" style="{{styles.arrow}}"></span>
+
+	{{#if header.length }}
+		<div class="ui5-popover-header-root"  id="ui5-popover-header" role="toolbar">
+			<slot name="header"></slot>
 		</div>
-	<span id="{{_id}}-lastfe" tabindex="0" @focusin={{focusHelper.forwardToFirst}}></span>
-	<div tabindex="0" id="{{_id}}-blocklayer" style="{{styles.blockLayer}}" class="{{classes.blockLayer}}"></div>
-</span>
+	{{else}}
+		<h2 class="ui5-popup-header-text" id="ui5-popover-header">{{headerText}}</h2>
+	{{/if}}
+
+	<span class="first-fe" tabindex="0" @focusin={{forwardToLast}}></span>	
+
+	<div class="ui5-popover-content">
+		<slot></slot>
+	</div>
+
+	<span class="last-fe" tabindex="0" @focusin={{forwardToFirst}}></span>
+
+	{{#if footer.length }}
+		<div class="ui5-popover-footer-root" role="toolbar">
+			<slot name="footer"></slot>
+		</div>
+	{{/if}}
+
+</div>

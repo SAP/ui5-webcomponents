@@ -12,6 +12,7 @@ import CalendarType from "@ui5/webcomponents-base/dist/dates/CalendarType.js";
 import CalendarDate from "@ui5/webcomponents-base/dist/dates/CalendarDate.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { isShow } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import "./icons/appointment-2.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { DATEPICKER_OPEN_ICON_TITLE, DATEPICKER_DATE_ACC_TEXT } from "./generated/i18n/i18n-defaults.js";
@@ -109,8 +110,6 @@ const metadata = {
 		/**
 		 * Defines a short hint, intended to aid the user with data entry when the
 		 * <code>ui5-datepicker</code> has no value.
-		 * <br><br>
-		 * <b>Note:</b> The placeholder is not supported in IE. If the placeholder is provided, it won`t be displayed in IE.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
@@ -146,7 +145,6 @@ const metadata = {
 		},
 		_calendar: {
 			type: Object,
-			deepEqual: true,
 		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.DatePicker.prototype */ {
@@ -167,6 +165,7 @@ const metadata = {
 		*/
 		input: {},
 	},
+	_eventHandlersByConvention: true,
 };
 
 /**
@@ -421,6 +420,10 @@ class DatePicker extends UI5Element {
 		return this.i18nBundle.getText(DATEPICKER_DATE_ACC_TEXT);
 	}
 
+	get dir() {
+		return getRTL() ? "rtl" : "ltr";
+	}
+
 	_getPopover() {
 		return this.shadowRoot.querySelector("ui5-popover");
 	}
@@ -539,14 +542,6 @@ class DatePicker extends UI5Element {
 	 */
 	get dateValue() {
 		return this.getFormat().parse(this.value);
-	}
-
-	get classes() {
-		return {
-			icon: {
-				"ui5-datepicker-icon--pressed": this._isPickerOpen,
-			},
-		};
 	}
 
 	get styles() {

@@ -1,15 +1,22 @@
 :host {
 	display: contents;
+	font-family: var(--sapUiFontFamily,var(--sapFontFamily,"72","72full",Arial,Helvetica,sans-serif));
+	font-size: 0.875rem;
+	height: 100%;
+	box-sizing: border-box;
+	overflow: hidden;
+	color: var(--sapUiContentLabelColor);
 }
 
-:host td {
-	padding: 0.25rem;
-	vertical-align: middle;
+td {
+	padding: .5rem .25rem;
+	box-sizing: border-box;
 }
 
 :host([first-in-row]) td,
 .ui5-table-popin-row td {
 	padding-left: 1rem;
+
 }
 
 :host([first-in-row]) td {
@@ -17,32 +24,5 @@
 }
 
 :host([popined]) td {
-	padding-left: 0;
-}
-
-/* Remove that once shadyCSS is adopted */
-
-ui5-table-cell {
-	display: contents;
-}
-
-ui5-table-cell td {
-	padding: 0.25rem;
-	vertical-align: middle;
-}
-
-ui5-table-cell[first-in-row] td {
-	padding-left: 1rem;
-}
-
-.ui5-table-popin-row td {
-	padding-left: 1rem;
-}
-
-ui5-table-cell[first-in-row] td {
-	padding-left: 1rem;
-}
-
-ui5-table-cell[popined] td {
 	padding-left: 0;
 }

@@ -1,7 +1,7 @@
 const assert = require("assert");
 
 describe("Table general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/Table.html");
+	browser.url("http://localhost:8080/test-resources/pages/Table.html");
 
 	it("tests if column disapears when min-width is reacted (650px)", () => {
 		const btn = browser.$("#size-btn-650");
@@ -28,5 +28,10 @@ describe("Table general interaction", () => {
 		const noDataRow = browser.$("#tableNoData").shadow$("div.ui5-table-no-data-row");
 
 		assert.strictEqual(noDataRow.isExisting(), true, 'noData div is present');
+	});
+
+	it("tests if table with more columns than cells is rendered", () => {
+		const tblLessCells = browser.$("#tblLessCells");
+		assert.equal(tblLessCells.isExisting(), true, 'table with more columns is rendered without JS errors.');
 	});
 });

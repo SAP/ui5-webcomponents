@@ -74,6 +74,7 @@ const metadata = {
 		_focused: {},
 		_focusForward: {},
 	},
+	_eventHandlersByConvention: true,
 };
 
 /**
@@ -143,7 +144,7 @@ class ListItem extends ListItemBase {
 		}
 
 		if (isEnter(event)) {
-			this.fireItemPress();
+			this.fireItemPress(event);
 		}
 	}
 
@@ -153,7 +154,7 @@ class ListItem extends ListItemBase {
 		}
 
 		if (isSpace(event)) {
-			this.fireItemPress();
+			this.fireItemPress(event);
 		}
 	}
 
@@ -179,7 +180,19 @@ class ListItem extends ListItemBase {
 		if (event.isMarked === "button") {
 			return;
 		}
-		this.fireItemPress();
+		this.fireItemPress(event);
+	}
+
+	/*
+	 * Called when selection components in Single (ui5-radiobutton)
+	 * and Multi (ui5-checkbox) selection modes are used.
+	 */
+	onMultiSelectionComponentPress(event) {
+		this.fireEvent("_selectionRequested", { item: this, selected: !event.target.checked, selectionComponentPressed: true });
+	}
+
+	onSingleSelectionComponentPress(event) {
+		this.fireEvent("_selectionRequested", { item: this, selected: !event.target.selected, selectionComponentPressed: true });
 	}
 
 	activate() {
@@ -188,12 +201,12 @@ class ListItem extends ListItemBase {
 		}
 	}
 
-	_onDelete(event) {
-		this.fireEvent("_selectionRequested", { item: this, selected: event.selected });
+	onDelete(event) {
+		this.fireEvent("_selectionRequested", { item: this, selectionComponentPressed: false });
 	}
 
-	fireItemPress() {
-		this.fireEvent("_press", { item: this, selected: this.selected });
+	fireItemPress(event) {
+		this.fireEvent("_press", { item: this, selected: this.selected, key: event.key });
 	}
 
 	get placeSelectionElementBefore() {

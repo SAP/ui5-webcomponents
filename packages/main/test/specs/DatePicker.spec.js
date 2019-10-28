@@ -13,12 +13,6 @@ describe("Date Picker Tests", () => {
 		assert.ok(datepicker.innerInput.isDisplayedInViewport(), "inner input is rendered");
 	});
 
-	it("calendar renders inside a popover", () => {
-		datepicker.id = "#dp";
-		assert.ok(datepicker.popover.isDisplayedInViewport(), "popover is rendered");
-		assert.ok(datepicker.calendar, "calendar is rendered");
-	});
-
 	it("input receives value", () => {
 		datepicker.id = "#dp1";
 
@@ -152,6 +146,7 @@ describe("Date Picker Tests", () => {
 		assert.equal(datepicker.innerInput.getProperty("value"), "", "datepicker value is empty");
 
 		//check if the picker is open and the selected date in the calendar is correct
+
 		assert.ok(datepicker.isPickerOpen(), "picker is open");
 		assert.ok(!calendarDate_6_Jan_2015.hasClass("ui5-dp-item--selected"), "calendar selected dates is ok");
 		assert.ok(!calendarDate_8_Jan_2015.hasClass("ui5-dp-item--selected"), "calendar selected dates is ok");
@@ -180,7 +175,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("respect first day of the week - monday", () => {
-		browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/DatePicker_test_page.html?sap-ui-language=bg");
+		browser.url("http://localhost:8080/test-resources/pages/DatePicker_test_page.html?sap-ui-language=bg");
 		datepicker.id = "#dp7_1";
 
 		datepicker.innerInput.setValue("фев 6, 2019");
@@ -318,20 +313,6 @@ describe("Date Picker Tests", () => {
 		browser.keys(["Alt", "ArrowDown", "NULL"]);
 
 		assert.ok(datepicker.isPickerOpen(), "datepicker is open");
-	});
-
-	it("Scrolling does not close the picker", () => {
-		datepicker.id = "#dp9";
-
-		datepicker.valueHelpIcon.click();
-		assert.ok(datepicker.isPickerOpen(), "picker is open");
-
-		// scroll down
-		browser.$("#downThere").scrollIntoView();
-
-		browser.pause(1000);
-
-		assert.ok(datepicker.isPickerOpen(), "picker is open");
 	});
 
 	it("daypicker extreme values max", () => {

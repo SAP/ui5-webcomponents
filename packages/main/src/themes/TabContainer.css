@@ -59,7 +59,7 @@
 }
 
 .ui5-tc__headerItem--selected.ui5-tc__headerItem--textOnly {
-	color: var(--sapUiSelected);
+	color: var(--_ui5_tc_headeritem_text_selected_color);
 }
 
 .ui5-tc__headerItem--selected.ui5-tc__headerItem--textOnly .ui5-tc__headerItemContent::after,
@@ -389,34 +389,5 @@
 }
 
 :host([data-ui5-compact-size]) .ui5-tc__headerItem--withIcon  .ui5-tc__headerItemAdditionalText + .ui5-tc__headerItemText {
-	margin-top: 0.3125rem;
-}
-
-/* IE pair of styles */
-ui5-tabcontainer:not([hidden]) {
-	display: inline-block;
-	width: 100%;
-}
-
-ui5-tabcontainer[data-ui5-compact-size] .ui5-tc__headerItem--textOnly,
-ui5-tabcontainer[data-ui5-compact-size] .ui5-tc__overflowItemContent {
-	height: 2rem;
-}
-
-ui5-tabcontainer[data-ui5-compact-size] .ui5-tc__headerItem--textOnly {
-	line-height: 1.325rem;
-}
-
-ui5-tabcontainer[data-ui5-compact-size] .ui5-tc-headerItemIcon-outer {
-	height: 2rem;
-	width: 2rem;
-}
-
-ui5-tabcontainer[data-ui5-compact-size] .ui5-tc-headerItemIcon {
-	height: 1rem;
-	width: 1rem;
-}
-
-ui5-tabcontainer[data-ui5-compact-size] .ui5-tc__headerItem--withIcon  .ui5-tc__headerItemAdditionalText + .ui5-tc__headerItemText {
 	margin-top: 0.3125rem;
 }

@@ -84,20 +84,3 @@
 :host([data-ui5-compact-size]) .ui5-mp-item {
 	height: 2rem;
 }
-
-/* 
- * IE pair of styles
- * to be removed later on
- */
- ui5-monthpicker:not([hidden]) {
-	display: inline-block;
-}
-
-ui5-monthpicker {
-	width: 100%;
-	height: 100%;
-}
-
-ui5-monthpicker[data-ui5-compact-size] .ui5-mp-item {
-	height: 2rem;
-}

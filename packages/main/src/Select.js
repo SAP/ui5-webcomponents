@@ -100,6 +100,11 @@ const metadata = {
 			noAttribute: true,
 		},
 
+		_iconPressed: {
+			type: Boolean,
+			noAttribute: true,
+		},
+
 		/**
 		 * @private
 		 */
@@ -128,6 +133,7 @@ const metadata = {
 			},
 		},
 	},
+	_eventHandlersByConvention: true,
 };
 
 /**
@@ -221,9 +227,7 @@ class Select extends UI5Element {
 
 		if (this._isPickerOpen) {
 			popover.close();
-			this.opened = false;
 		} else {
-			this.opened = true;
 			popover.openBy(this);
 		}
 	}
@@ -312,6 +316,8 @@ class Select extends UI5Element {
 	}
 
 	_applyFocusAfterOpen() {
+		this._toggleIcon();
+
 		if (!this._currentlySelectedOption) {
 			return;
 		}
@@ -371,6 +377,8 @@ class Select extends UI5Element {
 	}
 
 	_afterClose() {
+		this._toggleIcon();
+
 		if (this._escapePressed) {
 			this._select(this._selectedIndexBeforeOpen);
 			this._escapePressed = false;
@@ -378,6 +386,10 @@ class Select extends UI5Element {
 			this.fireEvent("change", { selectedOption: this.options[this._selectedIndex] });
 			this._lastSelectedOption = this.options[this._selectedIndex];
 		}
+	}
+
+	_toggleIcon() {
+		this._iconPressed = !this._iconPressed;
 	}
 
 	get _currentSelectedItem() {
@@ -392,8 +404,8 @@ class Select extends UI5Element {
 		return this.disabled ? "-1" : "0";
 	}
 
-	get rtl() {
-		return getRTL() ? "rtl" : undefined;
+	get dir() {
+		return getRTL() ? "rtl" : "ltr";
 	}
 
 	static async define(...params) {

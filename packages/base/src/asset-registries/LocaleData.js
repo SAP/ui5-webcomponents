@@ -1,5 +1,5 @@
 import { registerModuleContent } from "../ResourceLoaderOverrides.js";
-import { fetchTextOnce } from "../util/FetchHelper.js";
+import { fetchJsonOnce } from "../util/FetchHelper.js";
 
 const supportedLocales = ["ar", "ar_EG", "ar_SA", "bg", "ca", "cs", "da", "de", "de_AT", "de_CH", "el", "el_CY", "en", "en_AU", "en_GB", "en_HK", "en_IE", "en_IN", "en_NZ", "en_PG", "en_SG", "en_ZA", "es", "es_AR", "es_BO", "es_CL", "es_CO", "es_MX", "es_PE", "es_UY", "es_VE", "et", "fa", "fi", "fr", "fr_BE", "fr_CA", "fr_CH", "fr_LU", "he", "hi", "hr", "hu", "id", "it", "it_CH", "ja", "kk", "ko", "lt", "lv", "ms", "nb", "nl", "nl_BE", "pl", "pt", "pt_PT", "ro", "ru", "ru_UA", "sk", "sl", "sr", "sv", "th", "tr", "uk", "vi", "zh_CN", "zh_HK", "zh_SG", "zh_TW"];
 
@@ -68,11 +68,11 @@ const fetchCldr = async (language, region, script) => {
 
 	if (cldrObj) {
 		// inlined from build or fetched independently
-		registerModuleContent(`sap/ui/core/cldr/${localeId}.json`, JSON.stringify(cldrObj));
+		registerModuleContent(`sap/ui/core/cldr/${localeId}.json`, cldrObj);
 	} else if (url) {
 		// fetch it
-		const cldrText = await fetchTextOnce(url);
-		registerModuleContent(`sap/ui/core/cldr/${localeId}.json`, cldrText);
+		const cldrContent = await fetchJsonOnce(url);
+		registerModuleContent(`sap/ui/core/cldr/${localeId}.json`, cldrContent);
 	}
 };
 
