@@ -309,8 +309,9 @@ class DayPicker extends UI5Element {
 		this._dayNames[0].classes += " ui5-dp-firstday";
 	}
 
-	_onmousedown(event) {
-		const target = event.target;
+	onmousedown(event) {
+		const target = getShadowDOMTarget(event);
+
 		const dayPressed = this._isDayPressed(target);
 
 		if (dayPressed) {
@@ -334,6 +335,12 @@ class DayPicker extends UI5Element {
 			}
 
 			this.targetDate = targetDate;
+		}
+	}
+
+	onmouseup(event) {
+		if (this.targetDate) {
+			this._modifySelectionAndNotifySubscribers(this.targetDate, event.ctrlKey);
 		}
 	}
 
