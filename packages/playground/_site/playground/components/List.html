@@ -1,0 +1,174 @@
+<header>
+	<h2 class="control-header">List</h2>
+	<div style="margin-bottom: 2rem; font-weight: 300; font-size: 1.1rem; color: #666666;">&lt;ui5-list&gt;</div>
+</header>
+
+<section>
+	<h3>Basic List</h3>
+	<div class="snippet">
+		<ui5-list id="myList" class="full-width">
+			<ui5-li icon="sap-icon://nutrition-activity" description="Tropical plant with an edible fruit" info="In-stock" info-state="Success">Pineapple</ui5-li>
+			<ui5-li icon="sap-icon://nutrition-activity" description="Occurs between red and yellow" info="Expires" info-state="Warning">Orange</ui5-li>
+			<ui5-li icon="sap-icon://nutrition-activity" description="The yellow lengthy fruit" info="Re-stock" info-state="Error">Banana</ui5-li>
+			<ui5-li icon="sap-icon://nutrition-activity" description="The tropical stone fruit" info="Re-stock" info-state="Error">Mango</ui5-li>
+		</ui5-list>
+	</div>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-list</span> <span class="na">id=</span><span class="s">"myList"</span> <span class="na">class=</span><span class="s">"full-width"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-li</span> <span class="na">icon=</span><span class="s">"sap-icon://nutrition-activity"</span> <span class="na">description=</span><span class="s">"Tropical plant with an edible fruit"</span> <span class="na">info=</span><span class="s">"In-stock"</span> <span class="na">info-state=</span><span class="s">"Success"</span><span class="nt">&gt;</span>Pineapple<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li</span> <span class="na">icon=</span><span class="s">"sap-icon://nutrition-activity"</span> <span class="na">description=</span><span class="s">"Occurs between red and yellow"</span> <span class="na">info=</span><span class="s">"Expires"</span> <span class="na">info-state=</span><span class="s">"Warning"</span><span class="nt">&gt;</span>Orange<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li</span> <span class="na">icon=</span><span class="s">"sap-icon://nutrition-activity"</span> <span class="na">description=</span><span class="s">"The yellow lengthy fruit"</span> <span class="na">info=</span><span class="s">"Re-stock"</span> <span class="na">info-state=</span><span class="s">"Error"</span><span class="nt">&gt;</span>Banana<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li</span> <span class="na">icon=</span><span class="s">"sap-icon://nutrition-activity"</span> <span class="na">description=</span><span class="s">"The tropical stone fruit"</span> <span class="na">info=</span><span class="s">"Re-stock"</span> <span class="na">info-state=</span><span class="s">"Error"</span><span class="nt">&gt;</span>Mango<span class="nt">&lt;/ui5-li&gt;</span>
+<span class="nt">&lt;/ui5-list&gt;</span>
+	</code></pre></figure></pre>
+</section>
+
+<section>
+	<h3>List in Single-selection Mode</h3>
+	<div class="snippet">
+		<ui5-list id="country-selector" class="full-width" mode="SingleSelect" header-text="Select a country:">
+			<ui5-li selected icon="sap-icon://map" icon-end>Argentina</ui5-li>
+			<ui5-li icon="sap-icon://map" icon-end>Bulgaria</ui5-li>
+			<ui5-li icon="sap-icon://map" icon-end>China</ui5-li>
+			<ui5-li type="Inactive"  icon="sap-icon://map" icon-end>Denmark (ui5-li type='Inactive')</ui5-li>
+		</ui5-list>
+
+		<script>
+			document.getElementById('country-selector').addEventListener("selectionChange", function (event) {
+				var selectedItems = event.detail.selectedItems;
+
+				alert("The selected item:  " + selectedItems[0].textContent);
+			});
+		</script>
+	</div>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-list</span> <span class="na">id=</span><span class="s">"country-selector"</span> <span class="na">mode=</span><span class="s">"SingleSelect"</span> <span class="na">header-text=</span><span class="s">"Select a country:"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-li</span> <span class="na">selected</span> <span class="na">icon=</span><span class="s">"sap-icon://map"</span> <span class="na">icon-end</span><span class="nt">&gt;</span>Argentina<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li</span> <span class="na">icon=</span><span class="s">"sap-icon://map"</span> <span class="na">icon-end</span><span class="nt">&gt;</span>Bulgaria<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li</span> <span class="na">icon=</span><span class="s">"sap-icon://map"</span> <span class="na">icon-end</span><span class="nt">&gt;</span>China<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li</span> <span class="na">type=</span><span class="s">"Inactive"</span> <span class="na">icon=</span><span class="s">"sap-icon://map"</span> <span class="na">icon-end</span><span class="nt">&gt;</span>Denmark (ui5-li type='Inactive')<span class="nt">&lt;/ui5-li&gt;</span>
+<span class="nt">&lt;/ui5-list&gt;</span>
+
+<span class="nt">&lt;script&gt;</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">country-selector</span><span class="dl">'</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">selectionChange</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+		<span class="kd">var</span> <span class="nx">selectedItems</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">detail</span><span class="p">.</span><span class="nx">selectedItems</span><span class="p">;</span>
+
+		<span class="nx">alert</span><span class="p">(</span><span class="dl">"</span><span class="s2">The selected item:  </span><span class="dl">"</span> <span class="o">+</span> <span class="nx">selectedItems</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">textContent</span><span class="p">);</span>
+	<span class="p">});</span>
+<span class="nt">&lt;/script&gt;</span>
+	</code></pre></figure></pre>
+</section>
+
+<!-- MultiSelection List Example -->
+<section>
+	<h3>List in Multi-selection Mode</h3>
+	<div class="snippet">
+		<ui5-list id="myList1" class="samples-margin-bottom full-width" mode='MultiSelect' header-text="Multiple selection is possible">
+				<ui5-li >Pineapple</ui5-li>
+				<ui5-li selected>Orange</ui5-li>
+				<ui5-li>Banana</ui5-li>
+				<ui5-li>Mango</ui5-li>
+		</ui5-list>
+	</div>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-list</span> <span class="na">id=</span><span class="s">"myList1"</span> <span class="na">mode=</span><span class="s">'MultiSelect'</span> <span class="na">header-text=</span><span class="s">"Multiple selection is possible"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-li&gt;</span>Pineapple<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li</span> <span class="na">selected</span><span class="nt">&gt;</span>Orange<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li&gt;</span>Banana<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li&gt;</span>Mango<span class="nt">&lt;/ui5-li&gt;</span>
+<span class="nt">&lt;/ui5-list&gt;</span>
+	</code></pre></figure></pre>
+</section>
+
+	<!-- GroupHeaders List Example -->
+<section>
+	<h3>List With GroupHeaders</h3>
+	<div class="snippet">
+		<ui5-list header-text="Community" mode="MultiSelect">
+			<ui5-li-groupheader>Front End Developers</ui5-li-groupheader>
+			<ui5-li image="../../assets/images/avatars/woman_avatar_3.png" icon="sap-icon://navigation-right-arrow" icon-end>Jennifer</ui5-li>
+			<ui5-li image="../../assets/images/avatars/woman_avatar_4.png" icon="sap-icon://navigation-right-arrow" icon-end>Lora</ui5-li>
+			<ui5-li image="../../assets/images/avatars/woman_avatar_5.png" icon="sap-icon://navigation-right-arrow" icon-end>Carlotta</ui5-li>
+
+			<ui5-li-groupheader>Back End Developers</ui5-li-groupheader>
+			<ui5-li image="../../assets/images/avatars/man_avatar_1.png"  icon="sap-icon://navigation-right-arrow" icon-end>Clark</ui5-li>
+			<ui5-li image="../../assets/images/avatars/woman_avatar_1.png" icon="sap-icon://navigation-right-arrow" icon-end>Ellen</ui5-li>
+			<ui5-li image="../../assets/images/avatars/man_avatar_2.png" icon="sap-icon://navigation-right-arrow" icon-end>Adam</ui5-li>
+
+			<ui5-li-groupheader>FullStack Developers</ui5-li-groupheader>
+			<ui5-li image="../../assets/images/avatars/woman_avatar_2.png" icon="sap-icon://navigation-right-arrow" icon-end>Susan</ui5-li>
+			<ui5-li image="../../assets/images/avatars/man_avatar_3.png" icon="sap-icon://navigation-right-arrow" icon-end>David</ui5-li>
+			<ui5-li image="../../assets/images/avatars/woman_avatar_3.png" icon="sap-icon://navigation-right-arrow" icon-end>Natalie</ui5-li>
+		</ui5-list>
+	</div>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-list</span> <span class="na">header-text=</span><span class="s">"Team Members"</span> <span class="na">mode=</span><span class="s">"MultiSelect"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-li-groupheader&gt;</span>Front End Developers<span class="nt">&lt;/ui5-li-groupheader&gt;</span>
+	<span class="nt">&lt;ui5-li</span> <span class="na">image=</span><span class="s">"../../assets/images/avatars/woman_avatar_3.png"</span> <span class="na">icon=</span><span class="s">"sap-icon://navigation-right-arrow"</span> <span class="na">icon-end</span><span class="nt">&gt;</span>Jennifer<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li</span> <span class="na">image=</span><span class="s">"../../assets/images/avatars/woman_avatar_4.png"</span> <span class="na">icon=</span><span class="s">"sap-icon://navigation-right-arrow"</span> <span class="na">icon-end</span><span class="nt">&gt;</span>Lora<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li</span> <span class="na">image=</span><span class="s">"../../assets/images/avatars/woman_avatar_5.png"</span> <span class="na">icon=</span><span class="s">"sap-icon://navigation-right-arrow"</span> <span class="na">icon-end</span><span class="nt">&gt;</span>Carlotta<span class="nt">&lt;/ui5-li&gt;</span>
+
+	<span class="nt">&lt;ui5-li-groupheader&gt;</span>Back End Developers<span class="nt">&lt;/ui5-li-groupheader&gt;</span>
+	<span class="nt">&lt;ui5-li</span> <span class="na">image=</span><span class="s">"../../assets/images/avatars/man_avatar_1.png"</span>  <span class="na">icon=</span><span class="s">"sap-icon://navigation-right-arrow"</span> <span class="na">icon-end</span><span class="nt">&gt;</span>Clark<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li</span> <span class="na">image=</span><span class="s">"../../assets/images/avatars/woman_avatar_1.png"</span> <span class="na">icon=</span><span class="s">"sap-icon://navigation-right-arrow"</span> <span class="na">icon-end</span><span class="nt">&gt;</span>Ellen<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li</span> <span class="na">image=</span><span class="s">"../../assets/images/avatars/man_avatar_2.png"</span> <span class="na">icon=</span><span class="s">"sap-icon://navigation-right-arrow"</span> <span class="na">icon-end</span><span class="nt">&gt;</span>Adam<span class="nt">&lt;/ui5-li&gt;</span>
+
+	<span class="nt">&lt;ui5-li-groupheader&gt;</span>FullStack Developers<span class="nt">&lt;/ui5-li-groupheader&gt;</span>
+	<span class="nt">&lt;ui5-li</span> <span class="na">image=</span><span class="s">"../../assets/images/avatars/woman_avatar_2.png"</span> <span class="na">icon=</span><span class="s">"sap-icon://navigation-right-arrow"</span> <span class="na">icon-end</span><span class="nt">&gt;</span>Susan<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li</span> <span class="na">image=</span><span class="s">"../../assets/images/avatars/man_avatar_3.png"</span> <span class="na">icon=</span><span class="s">"sap-icon://navigation-right-arrow"</span> <span class="na">icon-end</span><span class="nt">&gt;</span>David<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li</span> <span class="na">image=</span><span class="s">"../../assets/images/avatars/woman_avatar_3.png"</span> <span class="na">icon=</span><span class="s">"sap-icon://navigation-right-arrow"</span> <span class="na">icon-end</span><span class="nt">&gt;</span>Natalie<span class="nt">&lt;/ui5-li&gt;</span>
+<span class="nt">&lt;/ui5-list&gt;</span>
+	</code></pre></figure></pre>
+</section>
+
+<!-- Delete List Example -->
+<section>
+	<h3>List in Delete Mode</h3>
+	<div class="snippet">
+		<ui5-list id="myList5" class="full-width" mode="Delete" header-text="Note: The list items removal is up to application developers">
+			<ui5-li>Argentina</ui5-li>
+			<ui5-li>Bulgaria</ui5-li>
+			<ui5-li>China</ui5-li>
+		</ui5-list>
+	</div>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-list</span> <span class="na">id=</span><span class="s">"myList5"</span> <span class="na">mode=</span><span class="s">"Delete"</span> <span class="na">header-text=</span><span class="s">"Note: The list items removal is up to application developers"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-li&gt;</span>Argentina<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li&gt;</span>Bulgaria<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li&gt;</span>China<span class="nt">&lt;/ui5-li&gt;</span>
+<span class="nt">&lt;/ui5-list&gt;</span>
+	</code></pre></figure></pre>
+</section>
+
+<section>
+	<h3>List with No Data</h3>
+	<div class="snippet">
+		<ui5-list class="full-width" header-text="Products" no-data-text="No Data Available" separators="None"></ui5-list>
+	</div>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-list</span> <span class="na">class=</span><span class="s">"full-width"</span> <span class="na">header-text=</span><span class="s">"Products"</span> <span class="na">no-data-text=</span><span class="s">"No Data Available separators="</span><span class="na">None</span><span class="err">"</span><span class="nt">&gt;&lt;/ui5-list&gt;</span>
+	</code></pre></figure></pre>
+</section>
+
+<section>
+	<h3>List Item Separation Types</h3>
+	<div class="snippet">
+		<ui5-list header-text="No separators" separators="None" class="full-width">
+			<ui5-li icon="sap-icon://product">Item #1</ui5-li>
+			<ui5-li icon="sap-icon://product">Item #2</ui5-li>
+			<ui5-li icon="sap-icon://product">Item #3</ui5-li>
+		</ui5-list>
+		<ui5-list header-text="Inner separators" separators="Inner" class="full-width">
+			<ui5-li icon="sap-icon://shipping-status">Devilered</ui5-li>
+			<ui5-li icon="sap-icon://shipping-status">Pending</ui5-li>
+			<ui5-li icon="sap-icon://shipping-status">Declined</ui5-li>
+		</ui5-list>
+	</div>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-list</span> <span class="na">header-text=</span><span class="s">"No separators"</span> <span class="na">separators=</span><span class="s">"None"</span> <span class="na">class=</span><span class="s">"full-width"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-li</span> <span class="na">icon=</span><span class="s">"sap-icon://product"</span><span class="nt">&gt;</span>Item #1<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li</span> <span class="na">icon=</span><span class="s">"sap-icon://product"</span><span class="nt">&gt;</span>Item #2<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li</span> <span class="na">icon=</span><span class="s">"sap-icon://product"</span><span class="nt">&gt;</span>Item #3<span class="nt">&lt;/ui5-li&gt;</span>
+<span class="nt">&lt;/ui5-list&gt;</span>
+<span class="nt">&lt;ui5-list</span> <span class="na">header-text=</span><span class="s">"Inner separators"</span> <span class="na">separators=</span><span class="s">"Inner"</span> <span class="na">class=</span><span class="s">"full-width"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-li</span> <span class="na">icon=</span><span class="s">"sap-icon://shipping-status"</span><span class="nt">&gt;</span>Devilered<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li</span> <span class="na">icon=</span><span class="s">"sap-icon://shipping-status"</span><span class="nt">&gt;</span>Pending<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li</span> <span class="na">icon=</span><span class="s">"sap-icon://shipping-status"</span><span class="nt">&gt;</span>Declined<span class="nt">&lt;/ui5-li&gt;</span>
+<span class="nt">&lt;/ui5-list&gt;</span>
+	</code></pre></figure></pre>
+</section>
+
+<!-- JSDoc marker -->

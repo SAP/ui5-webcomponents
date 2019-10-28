@@ -1,0 +1,200 @@
+<header class="component-heading">
+	<h2 class="control-header">ShellBar</h2>
+	<div class="component-heading-since">
+		<span><!--since_tag_marker--></span>
+	</div>
+</header>
+
+<div style="margin-bottom: 2rem; font-weight: 300; font-size: 1.1rem; color: #666666;">&lt;ui5-shellbar&gt;</div>
+
+	<!-- ShellBar -->
+<section>
+	<h3>ShellBar</h3>
+	<div class="snippet">
+	<ui5-shellbar
+		id="shellbar"
+		primary-title="Corporate Portal"
+		secondary-title="secondary title"
+		logo="../../assets/images/sap-logo-svg.svg"
+		profile="../../assets/images/avatars/woman_avatar_5.png"
+		notification-count="99+"
+		show-notifications
+		show-product-switch
+		show-co-pilot
+	>
+
+		<ui5-icon src="sap-icon://nav-back" slot="icon"></ui5-icon>
+
+		<ui5-shellbar-item id="disc" src="sap-icon://disconnected" text="Disconnect"></ui5-shellbar-item>
+		<ui5-shellbar-item id="call" src="sap-icon://incoming-call" text="Incoming Calls"></ui5-shellbar-item>
+
+		<ui5-input slot="searchField"></ui5-input>
+
+		<ui5-li slot="menuItems">Application 1</ui5-li>
+		<ui5-li slot="menuItems">Application 2</ui5-li>
+		<ui5-li slot="menuItems">Application 3</ui5-li>
+		<ui5-li slot="menuItems">Application 4</ui5-li>
+		<ui5-li slot="menuItems">Application 5</ui5-li>
+	</ui5-shellbar>
+
+	<ui5-popover id="action-popover" placement-type="Bottom">
+		<div class="action-popover-header">
+			<ui5-title style="padding: 0.25rem 1rem 0rem 1rem">An Kimura</ui5-title>
+		</div>
+
+		<div class="action-popover-content" style="margin-top: 1rem;">
+			<ui5-list separators="None" >
+				<ui5-li icon="sap-icon://sys-find">App Finder</ui5-li>
+				<ui5-li icon="sap-icon://settings">Settings</ui5-li>
+				<ui5-li icon="sap-icon://edit">Edit Home Page</ui5-li>
+				<ui5-li icon="sap-icon://sys-help">Help</ui5-li>
+				<ui5-li icon="sap-icon://log">Sign out</ui5-li>
+			</ui5-list>
+		</div>
+	</ui5-popover>
+
+	<script>
+		shellbar.addEventListener("profileClick", function(event) {
+			window["action-popover"].openBy(event.detail.targetRef);
+		});
+	</script>
+	</div>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-shellbar</span>
+	<span class="na">id=</span><span class="s">"shellbar"</span>
+	<span class="na">primary-title=</span><span class="s">"Corporate Portal"</span>
+	<span class="na">secondary-title=</span><span class="s">"secondary title"</span>
+	<span class="na">logo=</span><span class="s">"../../assets/images/sap-logo-svg.svg"</span>
+	<span class="na">profile=</span><span class="s">"../../assets/images/avatars/woman_avatar_5.png"</span>
+	<span class="na">notification-count=</span><span class="s">"99+"</span>
+	<span class="na">show-notifications</span>
+	<span class="na">show-product-switch</span>
+	<span class="na">show-co-pilot</span>
+<span class="nt">&gt;</span>
+
+	<span class="nt">&lt;ui5-icon</span> <span class="na">src=</span><span class="s">"nav-back"</span> <span class="na">slot=</span><span class="s">"icon"</span><span class="nt">&gt;&lt;/ui5-icon&gt;</span>
+
+	<span class="nt">&lt;ui5-shellbar-item</span> <span class="na">id=</span><span class="s">"disc"</span> <span class="na">src=</span><span class="s">"sap-icon://disconnected"</span> <span class="na">text=</span><span class="s">"Disconnect"</span><span class="nt">&gt;&lt;/ui5-shellbar-item&gt;</span>
+	<span class="nt">&lt;ui5-shellbar-item</span> <span class="na">id=</span><span class="s">"call"</span> <span class="na">src=</span><span class="s">"sap-icon://incoming-call"</span> <span class="na">text=</span><span class="s">"Incoming Calls"</span><span class="nt">&gt;&lt;/ui5-shellbar-item&gt;</span>
+
+	<span class="nt">&lt;ui5-input</span> <span class="na">slot=</span><span class="s">"searchField"</span><span class="nt">&gt;&lt;/ui5-input&gt;</span>
+
+	<span class="nt">&lt;ui5-li</span> <span class="na">slot=</span><span class="s">"menuItems"</span><span class="nt">&gt;</span>Application 1<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li</span> <span class="na">slot=</span><span class="s">"menuItems"</span><span class="nt">&gt;</span>Application 2<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li</span> <span class="na">slot=</span><span class="s">"menuItems"</span><span class="nt">&gt;</span>Application 3<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li</span> <span class="na">slot=</span><span class="s">"menuItems"</span><span class="nt">&gt;</span>Application 4<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li</span> <span class="na">slot=</span><span class="s">"menuItems"</span><span class="nt">&gt;</span>Application 5<span class="nt">&lt;/ui5-li&gt;</span>
+
+<span class="nt">&lt;/ui5-shellbar&gt;</span>
+
+<span class="nt">&lt;ui5-popover</span> <span class="na">id=</span><span class="s">"popover"</span> <span class="na">placement-type=</span><span class="s">"Bottom"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"popover-header"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;ui5-title</span> <span class="na">style=</span><span class="s">"padding: 0.25rem 1rem 0rem 1rem"</span><span class="nt">&gt;</span>An Kimura<span class="nt">&lt;/ui5-title&gt;</span>
+	<span class="nt">&lt;/div&gt;</span>
+
+	<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"popover-content"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;ui5-list</span> <span class="na">separators=</span><span class="s">"None"</span> <span class="nt">&gt;</span>
+			<span class="nt">&lt;ui5-li</span> <span class="na">icon=</span><span class="s">"sap-icon://sys-find"</span><span class="nt">&gt;</span>App Finder<span class="nt">&lt;/ui5-li&gt;</span>
+			<span class="nt">&lt;ui5-li</span> <span class="na">icon=</span><span class="s">"sap-icon://settings"</span><span class="nt">&gt;</span>Settings<span class="nt">&lt;/ui5-li&gt;</span>
+			<span class="nt">&lt;ui5-li</span> <span class="na">icon=</span><span class="s">"sap-icon://edit"</span><span class="nt">&gt;</span>Edit Home Page<span class="nt">&lt;/ui5-li&gt;</span>
+			<span class="nt">&lt;ui5-li</span> <span class="na">icon=</span><span class="s">"sap-icon://sys-help"</span><span class="nt">&gt;</span>Help<span class="nt">&lt;/ui5-li&gt;</span>
+			<span class="nt">&lt;ui5-li</span> <span class="na">icon=</span><span class="s">"sap-icon://log"</span><span class="nt">&gt;</span>Sign out<span class="nt">&lt;/ui5-li&gt;</span>
+		<span class="nt">&lt;/ui5-list&gt;</span>
+	<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/ui5-popover&gt;</span>
+
+<span class="nt">&lt;script&gt;</span>
+	<span class="nx">shellbar</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">profileClick</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+		<span class="nx">popover</span><span class="p">.</span><span class="nx">openBy</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">detail</span><span class="p">.</span><span class="nx">targetRef</span><span class="p">);</span>
+	<span class="p">});</span>
+<span class="nt">&lt;/script&gt;</span>
+	</code></pre></figure></pre>
+</section>
+
+<!-- Basic ShellBar -->
+<section>
+	<h3>Basic ShellBar</h3>
+	<div class="snippet">
+		<ui5-shellbar
+			profile="../../assets/images/avatars/woman_avatar_5.png"
+			primary-title="Corporate Portal"
+			secondary-title="secondary title"
+			logo="../../assets/images/sap-logo-svg.svg"
+		>
+		</ui5-shellbar>
+	</div>
+
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-shellbar</span>
+	<span class="na">profile=</span><span class="s">"../../assets/images/avatars/woman_avatar_5.png"</span>
+	<span class="na">primary-title=</span><span class="s">"Corporate Portal"</span>
+	<span class="na">secondary-title=</span><span class="s">"secondary title"</span>
+	<span class="na">logo=</span><span class="s">"../../assets/images/sap-logo-svg.svg"</span>
+<span class="nt">&gt;</span>
+<span class="nt">&lt;/ui5-shellbar&gt;</span>
+	</code></pre></figure></pre>
+</section>
+
+<!-- ShellBar with searhc and notifications -->
+<section>
+	<h3>ShellBar with search and notifications</h3>
+	<div class="snippet">
+		<ui5-shellbar
+			profile="../../assets/images/avatars/woman_avatar_5.png"
+			primary-title="Corporate Portal"
+			secondary-title="secondary title"
+			logo="../../assets/images/sap-logo-svg.svg"
+			show-notifications
+			notification-count="22"
+		>
+
+			<ui5-input slot="searchField" placeholer="Enter service..."></ui5-input>
+		</ui5-shellbar>
+	</div>
+
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-shellbar</span>
+	<span class="na">profile=</span><span class="s">"../../assets/images/avatars/woman_avatar_5.png"</span>
+	<span class="na">primary-title=</span><span class="s">"Corporate Portal"</span>
+	<span class="na">secondary-title=</span><span class="s">"secondary title"</span>
+	<span class="na">logo=</span><span class="s">"../../images/sap-logo-svg.svg"</span>
+	<span class="na">show-notifications</span>
+	<span class="na">notification-count=</span><span class="s">"22"</span>
+	<span class="nt">&gt;</span>
+
+	<span class="nt">&lt;ui5-input</span> <span class="na">slot=</span><span class="s">"searchField"</span> <span class="na">placeholer=</span><span class="s">"Enter service..."</span><span class="nt">&gt;&lt;/ui5-input&gt;</span>
+<span class="nt">&lt;/ui5-shellbar&gt;</span>
+	</code></pre></figure></pre>
+</section>
+
+<!-- ShellBar with product switch and CoPilot -->
+<section>
+	<h3>ShellBar with product switch and CoPilot</h3>
+	<div class="snippet">
+		<ui5-shellbar
+			profile="../../assets/images/avatars/woman_avatar_5.png"
+			primary-title="Corporate Portal"
+			secondary-title="secondary title"
+			logo="../../assets/images/sap-logo-svg.svg"
+			show-co-pilot
+			show-product-switch
+			show-notifications
+			notification-count="22"
+		>
+
+		</ui5-shellbar>
+	</div>
+
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-shellbar</span>
+<span class="na">profile=</span><span class="s">"../../assets/images/avatars/woman_avatar_5.png"</span>
+<span class="na">primary-title=</span><span class="s">"Corporate Portal"</span>
+<span class="na">secondary-title=</span><span class="s">"secondary title"</span>
+<span class="na">logo=</span><span class="s">"../../assets/images/sap-logo-svg.svg"</span>
+<span class="na">show-co-pilot</span>
+<span class="na">show-product-switch</span>
+<span class="na">show-notifications</span>
+<span class="na">notification-count=</span><span class="s">"22"</span>
+<span class="nt">&gt;</span>
+
+<span class="nt">&lt;/ui5-shellbar&gt;</span>
+	</code></pre></figure></pre>
+</section>
+
+<!-- JSDoc marker -->

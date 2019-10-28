@@ -1,0 +1,82 @@
+<h1 id="development-conventions-and-guidelines">Development Conventions and Guidelines</h1>
+<h2 id="javascript-coding-guidelines">JavaScript Coding Guidelines</h2>
+<p>We enforce code style rules using <a href="https://eslint.org">ESLint</a>. Execute <code class="highlighter-rouge">npm run lint</code> to check your code for style issues.<br />
+You may also find an ESLint integration for your favorite IDE <a href="https://eslint.org/docs/user-guide/integrations">here</a>.</p>
+
+<h2 id="testing">Testing</h2>
+<p>Unit testing is based on <a href="https://github.com/qunitjs/qunit">QUnit</a> and <a href="https://github.com/facebook/jest">Jest</a>. You can run all tests using <code class="highlighter-rouge">npm run test:jest</code>.
+Integration testing is based on <a href="https://webdriver.io/">Webdriver.io</a>. You can run all tests using <code class="highlighter-rouge">npm run test:wdio</code>.</p>
+
+<h2 id="git-guidelines">Git Guidelines</h2>
+
+<p>We adhere to the <a href="https://conventionalcommits.org">Conventional Commits</a> specification.</p>
+
+<h3 id="commit-message-style">Commit Message Style</h3>
+<p>The commit message consists of three parts:</p>
+<ul>
+  <li>header</li>
+  <li>body (optional)</li>
+  <li>footer (optional)</li>
+</ul>
+
+<h4 id="commit-header">Commit Header</h4>
+<p>The commit header is the first line of the commit message. It consists of three parts: type, scope and description.</p>
+
+<h5 id="commit-type">Commit Type</h5>
+<ul>
+  <li>It must be one of the following:
+    <ul>
+      <li><code class="highlighter-rouge">fix</code> - a bug fix (note: this will indicate a release)</li>
+      <li><code class="highlighter-rouge">feat</code> - a new feature (note: this will indicate a release)</li>
+      <li><code class="highlighter-rouge">docs</code> - documentation only changes</li>
+      <li><code class="highlighter-rouge">style</code> - changes that do not affect the meaning of the code</li>
+      <li><code class="highlighter-rouge">refactor</code> - a code change that neither fixes a bug nor adds a feature</li>
+      <li><code class="highlighter-rouge">perf</code> - a code change that improves performance</li>
+      <li><code class="highlighter-rouge">test</code> - adding missing tests</li>
+      <li><code class="highlighter-rouge">chore</code> - changes to the build process or auxiliary tools and libraries such as documentation generation</li>
+      <li><code class="highlighter-rouge">revert</code> - revert to a commit</li>
+      <li><code class="highlighter-rouge">WIP</code> - work in progress</li>
+    </ul>
+  </li>
+</ul>
+
+<h5 id="commit-scope-optional">Commit Scope (optional)</h5>
+<ul>
+  <li>It points to a specific component which is affected by the change. For example, ui5-button, ui5-card and ui5-table.</li>
+</ul>
+
+<h5 id="commit-description">Commit Description</h5>
+<ul>
+  <li>Use the <strong>imperative present tense</strong>. Instead of “I added feature xy” or “Adding tests for” use “Add feature xy” or “Add tests for”.</li>
+  <li>It should be no more than <strong>100 characters</strong> long.</li>
+</ul>
+
+<h4 id="commit-body-optional">Commit Body (optional)</h4>
+<p>After the commit header, there should be an empty line followed by the optional commit body.</p>
+<ul>
+  <li>Describe the intention and reasoning of the change.</li>
+</ul>
+
+<h4 id="commit-footer-optional">Commit Footer (optional)</h4>
+<p>After the optional commit body, there should be an empty line followed by the optional footer.</p>
+<ul>
+  <li>If the change introduces a breaking change, it should start with <strong>BREAKING CHANGE:</strong> followed by a description of the change.
+    <ul>
+      <li><code class="highlighter-rouge">BREAKING CHANGE: remove press event</code></li>
+    </ul>
+  </li>
+  <li>If the change fixes an issue reported on GitHub, add the following line to the commit message:
+    <ul>
+      <li><code class="highlighter-rouge">Fixes #&lt;issueNumber&gt;</code> (e.g. <code class="highlighter-rouge">Fixes #42</code>)</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="example">Example</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fix(ui5-button): correct focus with 'tab' key
+
+The button should receive a correct focus outline
+when the 'tab' key is pressed.
+
+Fixes #42
+</code></pre></div></div>

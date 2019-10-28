@@ -1,0 +1,101 @@
+<header>
+	<h2 class="control-header">Dialog</h2>
+	<div style="margin-bottom: 2rem; font-weight: 300; font-size: 1.1rem; color: #666666;">&lt;ui5-dialog&gt;</div>
+</header>
+
+<section>
+	<h3>Basic Dialog</h3>
+	<div class="snippet">
+		<ui5-button id="openDialogButton" design="Emphasized">Open Dialog</ui5-button>
+
+		<ui5-dialog id="hello-dialog" header-text="Register Form">
+			<section class="login-form">
+				<div>
+					<ui5-label for="username" required>Username: </ui5-label>
+					<ui5-input id="username"></ui5-input>
+				</div>
+
+				<div>
+					<ui5-label for="password" required>Password: </ui5-label>
+					<ui5-input id="password" type="Password" value-state="Error"></ui5-input>
+				</div>
+
+				<div>
+					<ui5-label for="email" type="Email" required>Email: </ui5-label>
+					<ui5-input id="email"></ui5-input>
+				</div>
+
+				<div>
+					<ui5-label for="address">Address: </ui5-label>
+					<ui5-input id="address"></ui5-input>
+				</div>
+			</section>
+
+			<div slot="footer" style="display: flex; align-items: center;padding: .5rem">
+				<div style="flex: 1;"></div>
+				<ui5-button id="closeDialogButton" design="Emphasized">Register</ui5-button>
+			</div>
+		</ui5-dialog>
+
+		<script>
+			var dialogOpener = document.getElementById("openDialogButton");
+			var dialog = document.getElementById("hello-dialog");
+			var dialogCloser = document.getElementById("closeDialogButton");
+
+			dialogOpener.addEventListener("press", function () {
+				dialog.open();
+			});
+
+			dialogCloser.addEventListener("press", function () {
+				dialog.close();
+			});
+		</script>
+	</div>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-button</span> <span class="na">id=</span><span class="s">"openDialogButton"</span> <span class="na">design=</span><span class="s">"Emphasized"</span><span class="nt">&gt;</span>Open Dialog<span class="nt">&lt;/ui5-button&gt;</span>
+
+<span class="nt">&lt;ui5-dialog</span> <span class="na">id=</span><span class="s">"hello-dialog"</span> <span class="na">header-text=</span><span class="s">"Register Form"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;section</span> <span class="na">class=</span><span class="s">"login-form"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;div&gt;</span>
+			<span class="nt">&lt;ui5-label</span> <span class="na">for=</span><span class="s">"username"</span> <span class="na">required</span><span class="nt">&gt;</span>Username: <span class="nt">&lt;/ui5-label&gt;</span>
+			<span class="nt">&lt;ui5-input</span> <span class="na">id=</span><span class="s">"username"</span><span class="nt">&gt;&lt;/ui5-input&gt;</span>
+		<span class="nt">&lt;/div&gt;</span>
+
+		<span class="nt">&lt;div&gt;</span>
+			<span class="nt">&lt;ui5-label</span> <span class="na">for=</span><span class="s">"password"</span> <span class="na">required</span><span class="nt">&gt;</span>Password: <span class="nt">&lt;/ui5-label&gt;</span>
+			<span class="nt">&lt;ui5-input</span> <span class="na">id=</span><span class="s">"password"</span> <span class="na">type=</span><span class="s">"Password"</span> <span class="na">value-state=</span><span class="s">"Error"</span><span class="nt">&gt;&lt;/ui5-input&gt;</span>
+		<span class="nt">&lt;/div&gt;</span>
+
+		<span class="nt">&lt;div&gt;</span>
+			<span class="nt">&lt;ui5-label</span> <span class="na">for=</span><span class="s">"email"</span> <span class="na">type=</span><span class="s">"Email"</span> <span class="na">required</span><span class="nt">&gt;</span>Email: <span class="nt">&lt;/ui5-label&gt;</span>
+			<span class="nt">&lt;ui5-input</span> <span class="na">id=</span><span class="s">"email"</span><span class="nt">&gt;&lt;/ui5-input&gt;</span>
+		<span class="nt">&lt;/div&gt;</span>
+
+		<span class="nt">&lt;div&gt;</span>
+			<span class="nt">&lt;ui5-label</span> <span class="na">for=</span><span class="s">"address"</span><span class="nt">&gt;</span>Address: <span class="nt">&lt;/ui5-label&gt;</span>
+			<span class="nt">&lt;ui5-input</span> <span class="na">id=</span><span class="s">"address"</span><span class="nt">&gt;&lt;/ui5-input&gt;</span>
+		<span class="nt">&lt;/div&gt;</span>
+	<span class="nt">&lt;/section&gt;</span>
+
+	<span class="nt">&lt;div</span> <span class="na">slot=</span><span class="s">"footer"</span>	<span class="na">class=</span><span class="s">"dialog-footer"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">"flex: 1;"</span><span class="nt">&gt;&lt;/div&gt;</span>
+		<span class="nt">&lt;ui5-button</span> <span class="na">id=</span><span class="s">"closeDialogButton"</span> <span class="na">design=</span><span class="s">"Emphasized"</span><span class="nt">&gt;</span>Register<span class="nt">&lt;/ui5-button&gt;</span>
+	<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/ui5-dialog&gt;</span>
+
+<span class="nt">&lt;script&gt;</span>
+	<span class="kd">var</span> <span class="nx">dialogOpener</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">openDialogButton</span><span class="dl">"</span><span class="p">);</span>
+	<span class="kd">var</span> <span class="nx">dialog</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">hello-dialog</span><span class="dl">"</span><span class="p">);</span>
+	<span class="kd">var</span> <span class="nx">dialogCloser</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">closeDialogButton</span><span class="dl">"</span><span class="p">);</span>
+
+	<span class="nx">dialogOpener</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">press</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+		<span class="nx">dialog</span><span class="p">.</span><span class="nx">open</span><span class="p">();</span>
+	<span class="p">});</span>
+
+	<span class="nx">dialogCloser</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">press</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+		<span class="nx">dialog</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span>
+	<span class="p">});</span>
+<span class="nt">&lt;/script&gt;</span>
+	</code></pre></figure></pre>
+</section>
+
+<!-- JSDoc marker -->

@@ -1,4 +1,3 @@
-@import "./base-parameters.css";
-@import "./global-parameters.css";
+@import "@ui5/webcomponents-theme-base/src/themes/sap_fiori_3/parameters-bundle.css";
 
 @import "./ShellBar-parameters.css";

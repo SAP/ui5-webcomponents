@@ -1,5 +1,4 @@
-@import "./base-parameters.css";
-@import "./global-parameters.css";
+@import "@ui5/webcomponents-theme-base/src/themes/sap_belize_hcb/parameters-bundle.css";
 
 @import "./Badge-parameters.css";
 @import "./Button-parameters.css";

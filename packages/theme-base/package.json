@@ -1,0 +1,25 @@
+{
+  "name": "@ui5/webcomponents-theme-base",
+  "version": "1.0.0-rc.4",
+  "description": "UI5 Web Components: webcomponents.theme-base",
+  "author": "SAP SE (https://www.sap.com)",
+  "license": "Apache-2.0",
+  "keywords": [
+    "openui5",
+    "sapui5",
+    "ui5"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SAP/ui5-webcomponents.git",
+    "directory": "packages/theme-base"
+  },
+  "scripts": {
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+  },
+  "resolutions": {
+  }
+}

@@ -1,0 +1,152 @@
+<style>
+	.snippet ui5-multi-combobox {
+		flex: 1;
+		min-width: 240px;
+		margin: 0 8px 8px 0;
+	}
+
+	ui5-multi-combobox:not(:defined) {
+		display: none;
+	}
+</style>
+
+<header class="component-heading">
+	<h2 class="control-header">MultiComboBox</h2>
+	<div class="component-heading-since">
+		<span><!--since_tag_marker--></span>
+	</div>
+</header>
+
+<div style="margin-bottom: 2rem; font-weight: 300; font-size: 1.1rem; color: #666666;">&lt;ui5-multi-combobox&gt;</div>
+
+<section>
+	<h3>Basic MultiComboBox</h3>
+	<div class="snippet" style="display: flex; flex-wrap: wrap;">
+		<ui5-multi-combobox placeholder="Type your value">
+			<ui5-li selected>UI5</ui5-li>
+		</ui5-multi-combobox>
+		<ui5-multi-combobox readonly value="Readonly combo">
+			<ui5-li selected>UI5</ui5-li>
+		</ui5-multi-combobox>
+		<ui5-multi-combobox disabled value="Disabled combo">
+			<ui5-li selected>UI5</ui5-li>
+		</ui5-multi-combobox>
+	</div>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-multi-combobox</span> <span class="na">placeholder=</span><span class="s">"Type your value"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-li</span> <span class="na">selected</span><span class="nt">&gt;</span>UI5<span class="nt">&lt;/ui5-li&gt;</span>
+<span class="nt">&lt;/ui5-multi-combobox&gt;</span>
+
+<span class="nt">&lt;ui5-multi-combobox</span> <span class="na">readonly</span> <span class="na">value=</span><span class="s">"Readonly combo"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-li</span> <span class="na">selected</span><span class="nt">&gt;</span>UI5<span class="nt">&lt;/ui5-li&gt;</span>
+<span class="nt">&lt;/ui5-multi-combobox&gt;</span>
+
+<span class="nt">&lt;ui5-multi-combobox</span> <span class="na">disabled</span> <span class="na">value=</span><span class="s">"Disabled combo"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-li</span> <span class="na">selected</span><span class="nt">&gt;</span>UI5<span class="nt">&lt;/ui5-li&gt;</span>
+<span class="nt">&lt;/ui5-multi-combobox&gt;</span>
+	</code></pre></figure></pre>
+</section>
+
+<section>
+	<h3>MultiComboBox with items</h3>
+	<div class="snippet">
+		<ui5-multi-combobox style="width: 100%" placeholder="Choose your countries">
+			<ui5-li selected>Argentina</ui5-li>
+			<ui5-li>Bulgaria</ui5-li>
+			<ui5-li>Denmark</ui5-li>
+			<ui5-li>England</ui5-li>
+			<ui5-li>Albania</ui5-li>
+			<ui5-li>Morocco</ui5-li>
+			<ui5-li>Portugal</ui5-li>
+			<ui5-li>Germany</ui5-li>
+			<ui5-li>Philippines</ui5-li>
+			<ui5-li>Paraguay</ui5-li>
+		</ui5-multi-combobox>
+	</div>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-multi-combobox</span> <span class="na">placeholder=</span><span class="s">"Choose your countries"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-li</span> <span class="na">selected</span><span class="nt">&gt;</span>Argentina<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li&gt;</span>Bulgaria<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li&gt;</span>Denmark<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li&gt;</span>England<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li&gt;</span>Albania<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li&gt;</span>Morocco<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li&gt;</span>Portugal<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li&gt;</span>Germany<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li&gt;</span>Philippines<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li&gt;</span>Paraguay<span class="nt">&lt;/ui5-li&gt;</span>
+<span class="nt">&lt;/ui5-multi-combobox&gt;</span>
+	</code></pre></figure></pre>
+</section>
+
+<section>
+	<h3>MultiComboBox with free text input</h3>
+	<div class="snippet">
+		<ui5-multi-combobox style="width: 100%" placeholder="Choose your countries" allow-custom-values>
+			<ui5-li>Argentina</ui5-li>
+			<ui5-li selected>Bulgaria</ui5-li>
+			<ui5-li>Denmark</ui5-li>
+			<ui5-li selected>England</ui5-li>
+			<ui5-li>Albania</ui5-li>
+			<ui5-li>Morocco</ui5-li>
+			<ui5-li>Portugal</ui5-li>
+			<ui5-li selected>Germany</ui5-li>
+			<ui5-li>Philippines</ui5-li>
+			<ui5-li>Paraguay</ui5-li>
+		</ui5-multi-combobox>
+	</div>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-multi-combobox</span> <span class="na">placeholder=</span><span class="s">"Choose your countries"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-li&gt;</span>Argentina<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li</span> <span class="na">selected</span><span class="nt">&gt;</span>Bulgaria<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li&gt;</span>Denmark<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li</span> <span class="na">selected</span><span class="nt">&gt;</span>England<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li&gt;</span>Albania<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li&gt;</span>Morocco<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li&gt;</span>Portugal<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li</span> <span class="na">selected</span><span class="nt">&gt;</span>Germany<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li&gt;</span>Philippines<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li&gt;</span>Paraguay<span class="nt">&lt;/ui5-li&gt;</span>
+<span class="nt">&lt;/ui5-multi-combobox&gt;</span>
+	</code></pre></figure></pre>
+</section>
+
+<section>
+	<h3>MultiComboBox with Value State</h3>
+	<div class="snippet" style="display: flex; flex-wrap: wrap;">
+		<ui5-multi-combobox value-state="Success">
+			<ui5-li>Fortune</ui5-li>
+			<ui5-li>Luck</ui5-li>
+			<ui5-li selected>Success</ui5-li>
+		</ui5-multi-combobox>
+		
+		<ui5-multi-combobox value-state="Warning">
+			<ui5-li>Attention</ui5-li>
+			<ui5-li>Caution</ui5-li>
+			<ui5-li selected>Warning</ui5-li>
+		</ui5-multi-combobox>
+		
+		<ui5-multi-combobox value-state="Error">
+			<ui5-li>Fault</ui5-li>
+			<ui5-li selected>Error</ui5-li>
+			<ui5-li>Mistake</ui5-li>
+		</ui5-multi-combobox>
+	</div>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-multi-combobox</span> <span class="na">value-state=</span><span class="s">"Success"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-li&gt;</span>Fortune<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li&gt;</span>Luck<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li</span> <span class="na">selected</span><span class="nt">&gt;</span>Success<span class="nt">&lt;/ui5-li&gt;</span>
+<span class="nt">&lt;/ui5-multi-combobox&gt;</span>
+
+<span class="nt">&lt;ui5-multi-combobox</span> <span class="na">value-state=</span><span class="s">"Warning"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-li&gt;</span>Attention<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li&gt;</span>Caution<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li</span> <span class="na">selected</span><span class="nt">&gt;</span>Warning<span class="nt">&lt;/ui5-li&gt;</span>
+<span class="nt">&lt;/ui5-multi-combobox&gt;</span>
+
+<span class="nt">&lt;ui5-multi-combobox</span> <span class="na">value-state=</span><span class="s">"Error"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-li&gt;</span>Fault<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li</span> <span class="na">selected</span><span class="nt">&gt;</span>Error<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li&gt;</span>Mistake<span class="nt">&lt;/ui5-li&gt;</span>
+<span class="nt">&lt;/ui5-multi-combobox&gt;</span>
+	</code></pre></figure></pre>
+</section>
+
+<!-- JSDoc marker -->

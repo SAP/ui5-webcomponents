@@ -1,0 +1,98 @@
+---
+layout: sample
+title: Select
+parent: Components
+permalink: /playground/components/Select
+newComponent: false
+nav_order: 17
+---
+<style>
+	.select {
+		width:300px;
+		max-width: 100%;
+		margin: 0.5rem;
+	}
+
+	@media (max-width:599px) {
+		.select {
+			margin-left: 0;
+			margin-right: 0;
+		}
+	}
+</style>
+
+<header class="component-heading">
+	<h2 class="control-header">Select</h2>
+	<div class="component-heading-since">
+		<span><!--since_tag_marker--></span>
+	</div>
+</header>
+
+<div style="margin-bottom: 2rem; font-weight: 300; font-size: 1.1rem; color: #666666;">&lt;ui5-select&gt;</div>
+<section>
+	<h3>Basic Select</h3>
+	<div class="snippet">
+		<ui5-select class="select">
+			<ui5-option icon="sap-icon://iphone">Phone</ui5-option>
+			<ui5-option icon="sap-icon://ipad">Tablet</ui5-option>
+			<ui5-option icon="sap-icon://laptop" selected>Desktop</ui5-option>
+		</ui5-select>
+		<ui5-select disabled class="select">
+				<ui5-option icon="sap-icon://iphone" selected>Phone</ui5-option>
+				<ui5-option icon="sap-icon://ipad">Tablet</ui5-option>
+				<ui5-option icon="sap-icon://laptop">Desktop</ui5-option>
+		</ui5-select>
+	</div>
+	<pre class="highlight">{% highlight html %}
+<ui5-select class="select">
+	<ui5-option icon="sap-icon://iphone">Phone</ui5-option>
+	<ui5-option icon="sap-icon://ipad">Tablet</ui5-option>
+	<ui5-option icon="sap-icon://laptop" selected>Desktop</ui5-option>
+</ui5-select>
+<ui5-select disabled class="select">
+	<ui5-option icon="sap-icon://iphone" selected>Phone</ui5-option>
+	<ui5-option icon="sap-icon://ipad">Tablet</ui5-option>
+	<ui5-option icon="sap-icon://laptop">Desktop</ui5-option>
+</ui5-select>
+	{% endhighlight %}</pre>
+</section>
+
+<section>
+	<h3>Select with Value State</h3>
+	<div class="snippet">
+		<ui5-select value-state="Success" class="select">
+				<ui5-option icon="sap-icon://meal" selected>Apple</ui5-option>
+				<ui5-option icon="sap-icon://meal">Avocado</ui5-option>
+				<ui5-option icon="sap-icon://meal">Mango</ui5-option>
+		</ui5-select>
+		<ui5-select value-state="Warning" class="select">
+				<ui5-option icon="sap-icon://meal">Orange</ui5-option>
+				<ui5-option icon="sap-icon://meal" selected>Pumpkin</ui5-option>
+				<ui5-option icon="sap-icon://meal">Carrot</ui5-option>
+		</ui5-select>
+		<ui5-select value-state="Error" class="select">
+				<ui5-option icon="sap-icon://meal">Strawberry</ui5-option>
+				<ui5-option icon="sap-icon://meal">Tomato</ui5-option>
+				<ui5-option icon="sap-icon://meal" selected>Red Chili Pepper</ui5-option>
+		</ui5-select>
+	</div>
+	<pre class="highlight">{% highlight html %}
+<ui5-select value-state="Success" class="select">
+	<ui5-option icon="sap-icon://meal" selected>Apple</ui5-option>
+	<ui5-option icon="sap-icon://meal">Avocado</ui5-option>
+	<ui5-option icon="sap-icon://meal">Mango</ui5-option>
+</ui5-select>
+<ui5-select value-state="Warning" class="select">
+	<ui5-option icon="sap-icon://meal">Orange</ui5-option>
+	<ui5-option icon="sap-icon://meal" selected>Pumpkin</ui5-option>
+	<ui5-option icon="sap-icon://meal">Carrot</ui5-option>
+</ui5-select>
+<ui5-select value-state="Error" class="select">
+	<ui5-option icon="sap-icon://meal">Strawberry</ui5-option>
+	<ui5-option icon="sap-icon://meal">Tomato</ui5-option>
+	<ui5-option icon="sap-icon://meal" selected>Red Chili Pepper</ui5-option>
+</ui5-select>
+	{% endhighlight %}</pre>
+</section>
+
+<!-- JSDoc marker -->

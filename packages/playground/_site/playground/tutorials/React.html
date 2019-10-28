@@ -1,0 +1,65 @@
+<h1 id="get-started-with-ui5-web-components--react">Get started with UI5 Web Components &amp; React</h1>
+
+<p>In this tutorial you will learn how to add UI5 Web Components to your application. The UI5 Web Components can be added both to new React applications, as well as already existing ones.</p>
+
+<h2 id="step-1-start-new-application-for-example-with-create-react-app">Step 1. Start New Application. For Example with create-react-app</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npx create-react-app ui5-web-components-application
+<span class="nb">cd </span>ui5-web-components-application
+</code></pre></div></div>
+
+<h2 id="step-2-add-ui5-web-components">Step 2. Add UI5 Web Components</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm <span class="nb">install</span> @ui5/webcomponents <span class="nt">--save</span>
+</code></pre></div></div>
+
+<h2 id="step-3-import-the-components-that-you-are-going-to-use">Step 3. Import the Components That You Are Going to Use</h2>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents/dist/Button</span><span class="dl">"</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="step-4-use-the-imported-elements-in-your-application">Step 4. Use the Imported Elements in Your Application</h2>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;ui5-button&gt;</span>Hello world!<span class="nt">&lt;/ui5-button&gt;</span>
+</code></pre></div></div>
+
+<h2 id="step-5-launch-the-application">Step 5. Launch the Application</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yarn start
+</code></pre></div></div>
+
+<h2 id="additional">Additional</h2>
+
+<h3 id="event-binding">Event Binding</h3>
+
+<p>In order to use the events, provided by UI5 Web Components, currently you need to get a ref to the component, because React doesn’t support custom events. Here is an example of what you need to do in order to use the events provided by UI5 Web Components:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nx">Home</span> <span class="kd">extends</span> <span class="nx">Component</span> <span class="p">{</span>
+
+    <span class="kd">constructor</span> <span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="k">switch</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createRef</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="nx">componentDidMount</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="k">switch</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">change</span><span class="dl">'</span><span class="p">,</span> <span class="nx">event</span> <span class="o">=&gt;</span> <span class="p">{</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">switch is toggled</span><span class="dl">'</span><span class="p">);</span>
+        <span class="p">})</span>
+    <span class="p">}</span>
+
+    <span class="nx">render</span><span class="p">(){</span>
+        <span class="k">return</span><span class="p">(</span>
+            <span class="o">&lt;</span><span class="nx">ui5</span><span class="o">-</span><span class="k">switch</span> <span class="nx">ref</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="k">switch</span><span class="p">}</span><span class="o">&gt;&lt;</span><span class="sr">/ui5-buttswitchon</span><span class="err">&gt;
+</span>        <span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="bolean-properties-binding">Bolean Properties Binding</h3>
+
+<p>For boolean properties like <code class="highlighter-rouge">collapsed</code>  in <code class="highlighter-rouge">ui5-panel</code>, instead of setting true or false, you have to take care of the presence of the property. Here is an example:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;ui5-panel</span> <span class="na">header-text=</span><span class="s">"Achievements"</span> <span class="na">collapsed=</span><span class="s">{!this.state.achievements.length</span> <span class="err">||</span> <span class="na">undefined</span><span class="err">}</span><span class="nt">&gt;</span>
+    <span class="c">&lt;!-- Content of ui5-panel --&gt;</span>
+<span class="nt">&lt;/ui5-panel&gt;</span>
+</code></pre></div></div>

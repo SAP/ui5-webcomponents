@@ -41,6 +41,7 @@
     "js-yaml": "^3.13.1"
   },
   "workspaces": [
+    "packages/theme-base",
     "packages/core",
     "packages/base",
     "packages/main",
