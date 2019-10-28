@@ -280,7 +280,7 @@ exports.config = {
         if (waitFor.includes(commandName)) {
             browser.executeAsync(function (done) {
                 // run all the tests in no conflict mode
-                window["sap-ui-webcomponents-main-bundle"].configuration.setNoConflict(true);
+                window["sap-ui-webcomponents-fiori-bundle"].configuration.setNoConflict(true);
                 window.RenderScheduler.whenFinished().then(done);
             });
         }

@@ -24,7 +24,7 @@ import styles from "./generated/themes/ShellBar.css.js";
  */
 const metadata = {
 	tag: "ui5-shellbar",
-	properties: /** @lends  sap.ui.webcomponents.main.ShellBar.prototype */ {
+	properties: /** @lends  sap.ui.webcomponents.fiori.ShellBar.prototype */ {
 
 		/**
 		 * Defines the <code>logo</code> source URI.

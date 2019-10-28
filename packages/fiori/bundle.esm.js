@@ -1,8 +1,3 @@
-import "@ui5/webcomponents-base/dist/features/calendar/Buddhist.js";
-import "@ui5/webcomponents-base/dist/features/calendar/Islamic.js";
-import "@ui5/webcomponents-base/dist/features/calendar/Japanese.js";
-import "@ui5/webcomponents-base/dist/features/calendar/Persian.js";
-
 // ESM bundle targets Edge + browsers with native support
 import "@ui5/webcomponents-base/dist/features/browsersupport/Edge.js";
 
@@ -13,6 +8,14 @@ import "./dist/json-imports/LocaleData.js"
 
 import ShellBar from "./dist/ShellBar.js";
 import ShellBarItem from "./dist/ShellBarItem.js";
+import "@ui5/webcomponents/AllIcons.js";
+
+import "@ui5/webcomponents/dist/Popover.js";
+import "@ui5/webcomponents/dist/Input.js";
+import "@ui5/webcomponents/dist/Icon.js";
+import "@ui5/webcomponents/dist/List.js";
+import "@ui5/webcomponents/dist/StandardListItem.js";
+import "@ui5/webcomponents/dist/Title.js";
 
 // used in test pages
 import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";

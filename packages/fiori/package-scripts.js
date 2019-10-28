@@ -52,8 +52,7 @@ module.exports = {
             run: "serve --no-clipboard -l 8081 dist",
         },
         test: {
-            default: "nps test.jest test.wdio",
-            jest: "jest",
+            default: "nps test.wdio",
             wdio: {
                 // --success first - report the exit code of the test run (first command to finish), as serve is always terminated and has a non-0 exit code
                 default: 'concurrently "nps serve" "nps test.wdio.run" --kill-others --success first',

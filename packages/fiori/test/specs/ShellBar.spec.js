@@ -1,7 +1,7 @@
 const assert = require('assert');
 
 describe("Component Behaviour", () => {
-	browser.url("http://localhost:8080/test-resources/pages/ShellBar.html");
+	browser.url("http://localhost:8081/test-resources/pages/ShellBar.html");
 
 	describe("Responsiveness", () => {
 
@@ -46,7 +46,7 @@ describe("Component Behaviour", () => {
 		it("tests L Breakpoint 1400px", () => {
 			browser.setWindowSize(1400, 1080);
 
-			const shellbar = browser.$("#shellbar");			
+			const shellbar = browser.$("#shellbar");
 			const overflowButton = browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
 			const backButton = browser.$("#shellbar ui5-icon");
 			const primaryTitle = browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button-title");
@@ -192,7 +192,7 @@ describe("Component Behaviour", () => {
 			it("tests opening of menu", () => {
 				const primaryTitle = browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button");
 				const menuPopover = browser.$("#shellbar").shadow$(".ui5-shellbar-menu-popover");
-	
+
 				primaryTitle.click();
 				assert.ok(menuPopover.isDisplayedInViewport(), "Menu should be shown");
 			});
@@ -244,7 +244,7 @@ describe("Component Behaviour", () => {
 				const firstMenuItem = browser.$("#shellbar #menu-item-1");
 				const secondMenuItem = browser.$("#shellbar #menu-item-2");
 				const input = browser.$("#press-input");
-	
+
 				primaryTitle.click();
 				firstMenuItem.click();
 
@@ -279,7 +279,7 @@ describe("Component Behaviour", () => {
 			it("tests opening of menu", () => {
 				const primaryTitle = browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button");
 				const menuPopover = browser.$("#shellbar").shadow$(".ui5-shellbar-menu-popover");
-	
+
 				primaryTitle.click();
 				assert.ok(menuPopover.isDisplayedInViewport(), "Menu should be shown");
 			});
