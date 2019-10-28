@@ -1,8 +1,5 @@
 @import "./InvisibleTextStyles.css";
-<<<<<<< HEAD
-=======
 @import "./InputIcon.css";
->>>>>>> upstream/master
 
 :host(:not([hidden])) {
 	display: inline-block;
