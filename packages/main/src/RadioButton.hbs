@@ -7,6 +7,9 @@
 	aria-describedby="{{ariaDescribedBy}}"
 	tabindex="{{tabIndex}}"
 	dir="{{rtl}}"
+	@click="{{_onclick}}"
+	@keydown="{{_onkeydown}}"
+	@keyup="{{_onkeyup}}"
 >
 
 	<div class='ui5-radio-inner {{classes.inner}}'>
