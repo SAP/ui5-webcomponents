@@ -1,10 +1,5 @@
-commit 4018dd14d0141adfc858003fa2549b42a0e7ff57
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Thu Oct 24 11:04:16 2019 +0300
+commit 04fc103e228e7bbc4e9609ea38cbed5a889185c6
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Oct 28 17:00:20 2019 +0200
 
-    chore: use passive touch listeners (#882)
-    
-    - since the ScrollEnablement does not use preventDefault, it is ok
-    to switch to passive event listeneres
-    for the touch events (and get rid of
-    the console warnings)
+    chore: add Fiori dark parameters (#888)
