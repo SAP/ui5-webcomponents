@@ -780,10 +780,6 @@ class Input extends UI5Element {
 		return this.showSuggestions ? `${this._id}-suggestionsText` : "";
 	}
 
-	get valueStateTextId() {
-		return this.hasValueState ? `${this._id}-valueStateDesc` : "";
-	}
-
 	get accInfo() {
 		const ariaHasPopupDefault = this.showSuggestions ? "true" : undefined;
 		const ariaAutoCompleteDefault = this.showSuggestions ? "list" : undefined;
@@ -810,10 +806,10 @@ class Input extends UI5Element {
 			"wrapper": {
 			},
 			"input": {
-				"ariaDescribedBy": this._inputAccInfo ? `${this.suggestionsTextId} ${this.valueStateTextId} ${this._inputAccInfo.ariaDescribedBy}`.trim() : `${this.suggestionsTextId} ${this.valueStateTextId}`.trim(),
+				"ariaDescribedBy": this._inputAccInfo.ariaDescribedBy ? `${this.suggestionsTextId} ${this.valueStateTextId} ${this._inputAccInfo.ariaDescribedBy}`.trim() : `${this.suggestionsTextId} ${this.valueStateTextId}`.trim(),
 				"ariaInvalid": this.valueState === ValueState.Error ? "true" : undefined,
-				"ariaHasPopup": this._inputAccInfo ? this._inputAccInfo.ariaHasPopup : ariaHasPopupDefault,
-				"ariaAutoComplete": this._inputAccInfo ? this._inputAccInfo.ariaAutoComplete : ariaAutoCompleteDefault,
+				"ariaHasPopup": this._inputAccInfo.ariaHasPopup ? this._inputAccInfo.ariaHasPopup : ariaHasPopupDefault,
+				"ariaAutoComplete": this._inputAccInfo.ariaAutoComplete ? this._inputAccInfo.ariaAutoComplete : ariaAutoCompleteDefault,
 				"role": this._inputAccInfo && this._inputAccInfo.role,
 				"ariaOwns": this._inputAccInfo && this._inputAccInfo.ariaOwns,
 				"ariaExpanded": this._inputAccInfo && this._inputAccInfo.ariaExpanded,
