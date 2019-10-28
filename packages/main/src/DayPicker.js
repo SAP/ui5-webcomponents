@@ -341,6 +341,7 @@ class DayPicker extends UI5Element {
 	onmouseup(event) {
 		if (this.targetDate) {
 			this._modifySelectionAndNotifySubscribers(this.targetDate, event.ctrlKey);
+			this.targetDate = null;
 		}
 	}
 
