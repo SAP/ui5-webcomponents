@@ -1,5 +1,9 @@
-<label class="ui5-label-root" for="{{for}}">
-	<bdi id="{{_id}}-bdi">
-		<slot></slot>
-	</bdi>
+<label
+		class="ui5-label-root"
+		@click={{_onClick}} 
+		for="{{for}}"
+	>
+		<bdi id="{{_id}}-bdi">
+			<slot></slot>
+		</bdi>
 </label>
