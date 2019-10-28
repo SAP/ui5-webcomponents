@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    just-the-docs (0.2.5)
+    UI5-Web-Components-Playground (1.0.0.pre.rc.4)
       jekyll (~> 3.8.5)
       jekyll-seo-tag (~> 2.0)
       rake (~> 12.3.1)
@@ -51,7 +51,7 @@ GEM
     pathutil (0.16.2)
       forwardable-extended (~> 2.6)
     public_suffix (4.0.1)
-    rake (12.3.2)
+    rake (12.3.3)
     rb-fsevent (0.10.3)
     rb-inotify (0.10.0)
       ffi (~> 1.0)
@@ -68,8 +68,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  UI5-Web-Components-Playground!
   bundler (~> 2.0.1)
-  just-the-docs!
 
 BUNDLED WITH
    2.0.2
