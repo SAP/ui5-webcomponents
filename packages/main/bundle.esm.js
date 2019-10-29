@@ -66,7 +66,7 @@ import { setNoConflict } from "@ui5/webcomponents-base/dist/config/NoConflict.js
 import { getCompactSize } from "@ui5/webcomponents-base/dist/config/CompactSize.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getRegisteredNames as getIconNames } from  "@ui5/webcomponents-base/dist/SVGIconRegistry.js"
-window["sap-ui-webcomponents-main-bundle"] = {
+window["sap-ui-webcomponents-bundle"] = {
 	configuration : {
 		getTheme,
 		setTheme,

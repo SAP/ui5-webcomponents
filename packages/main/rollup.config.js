@@ -106,7 +106,7 @@ const getES5Config = () => {
 		output: {
 			dir: "dist/resources",
 			format: "iife",
-			name: "sap-ui-webcomponents-main-bundle",
+			name: "sap-ui-webcomponents-bundle",
 			extend: "true",	// Whether or not to extend the global variable defined by the name option in umd or iife formats.
 			sourcemap: true
 		},

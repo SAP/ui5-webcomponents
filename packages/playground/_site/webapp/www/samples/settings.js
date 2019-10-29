@@ -1,6 +1,6 @@
 (function() {
     var HCB = "sap_belize_hcb";
-    var theme = window["sap-ui-webcomponents-main-bundle"].configuration.getTheme();
+    var theme = window["sap-ui-webcomponents-bundle"].configuration.getTheme();
     var documentBody = document.body;
     if(theme === HCB) {
         documentBody.classList.add("hcb-background");
