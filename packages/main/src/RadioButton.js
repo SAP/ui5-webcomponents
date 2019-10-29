@@ -155,7 +155,6 @@ const metadata = {
 		 */
 		select: {},
 	},
-	_eventHandlersByConvention: true,
 };
 
 const SVGConfig = {
