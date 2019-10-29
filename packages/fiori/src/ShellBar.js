@@ -3,6 +3,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { isSpace, isEscape } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
 import List from "@ui5/webcomponents/dist/List.js";
@@ -12,6 +13,8 @@ import "@ui5/webcomponents/dist/icons/search.js";
 import "@ui5/webcomponents/dist/icons/bell.js";
 import "@ui5/webcomponents/dist/icons/overflow.js";
 import "@ui5/webcomponents/dist/icons/grid.js";
+
+import { TEXTAREA_CHARACTERS_LEFT } from "./generated/i18n/i18n-defaults.js";
 
 // Template
 import ShellBarTemplate from "./generated/templates/ShellBarTemplate.lit.js";
@@ -338,6 +341,8 @@ class ShellBar extends UI5Element {
 
 	constructor() {
 		super();
+
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 
 		this._itemsInfo = [];
 		this._isInitialRendering = true;
@@ -843,8 +848,13 @@ class ShellBar extends UI5Element {
 		return getRTL() ? "rtl" : undefined;
 	}
 
+	get _dummyText() {
+		return this.i18nBundle.getText(TEXTAREA_CHARACTERS_LEFT, [10]);
+	}
+
 	static async define(...params) {
 		await Promise.all([
+			fetchI18nBundle("@ui5/webcomponents"),
 			Icon.define(),
 			List.define(),
 			Popover.define(),

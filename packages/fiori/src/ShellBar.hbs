@@ -34,7 +34,7 @@
 			</ui5-list>
 		</ui5-popover>
 
-		<h2 class="ui5-shellbar-secondary-title">{{secondaryTitle}}</h2>
+		<h2 class="ui5-shellbar-secondary-title">{{secondaryTitle}}{{_dummyText}}</h2>
 	</div>
 
 	<div class="ui5-shellbar-overflow-container ui5-shellbar-overflow-container-middle">
@@ -79,7 +79,7 @@
 		<ui5-list separators="None" @ui5-itemPress="{{_actionList.itemPress}}">
 			{{#each _hiddenIcons}}
 				<ui5-li
-					data-ui5-external-action-item-id="{{this.refItemid}}" 
+					data-ui5-external-action-item-id="{{this.refItemid}}"
 					icon="{{this.src}}"
 					type="Active"
 					@ui5-_press="{{this.press}}"
