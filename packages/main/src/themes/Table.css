@@ -18,7 +18,7 @@ table {
 
 .ui5-table-header-row:focus {
 	outline: var(--ui5_table_header_row_outline_width) dotted var(--sapUiContentFocusColor);
-	outline-offset: -2px;
+	outline-offset: -0.125rem;
 }
 
 tr {
