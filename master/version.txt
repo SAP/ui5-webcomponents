@@ -1,5 +1,5 @@
-commit de69cc6cbe2351e6d9e4c55949535b1e6b0c8ae3
+commit 80d5c02c885b1b68113d6ee284d27ace318648c9
 Author: kskondov <konstantin.kondov@sap.com>
-Date:   Tue Oct 29 11:47:16 2019 +0200
+Date:   Tue Oct 29 11:48:58 2019 +0200
 
-    Radio button (#896)
+    refactor(ui5-label): remove _eventHandlersByConvention from metadata (#898)
