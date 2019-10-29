@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	btnTheme.pressed = !!(THEME === HCB);
 	btnLightDark.pressed = !!(THEME === FIORI3_DARK);
 
-	btnRTL.addEventListener('press', function(e) {
+	btnRTL.addEventListener('click', function(e) {
 		var param = buildParam(btnCompact.pressed, e.target.pressed, THEME);
 		var currentURL = window.location.href;
 		var newURL = currentURL.slice(0, currentURL.indexOf("kitchen")) + param;
@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		window.location.href = newURL;
 	}, false);
 
-	btnCompact.addEventListener('press', function(e) {
+	btnCompact.addEventListener('click', function(e) {
 		var param = buildParam(e.target.pressed, btnRTL.pressed, THEME);
 		var currentURL = window.location.href;
 		var newURL = currentURL.slice(0, currentURL.indexOf("kitchen")) + param;
@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		window.location.href = newURL;
 	}, false);
 
-	btnTheme.addEventListener('press', function(e) {
+	btnTheme.addEventListener('click', function(e) {
 		var theme = e.target.pressed ? HCB : FIORI3;
 		Configuration.setTheme(theme);
 
@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		}
 	}, false);
 
-	btnLightDark.addEventListener('press', function(e) {
+	btnLightDark.addEventListener('click', function(e) {
 		var theme = e.target.pressed ? FIORI3_DARK : FIORI3;
 		Configuration.setTheme(theme);
 
@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		}
 	}, false);
 
-	menuBtn.addEventListener('press', function(event) {
+	menuBtn.addEventListener('click', function(event) {
 		toggleSideNav(event.detail.pressed);
 	});
 
@@ -102,10 +102,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	var popoverOpener = document.getElementById("openPopoverButton");
 	var popoverCloser = document.getElementById("closePopoverButton");
 
-	popoverOpener.addEventListener("press", function() {
+	popoverOpener.addEventListener("click", function() {
 		popover.openBy(popoverOpener);
 	});
-	popoverCloser.addEventListener("press", function() {
+	popoverCloser.addEventListener("click", function() {
 		popover.close();
 	});
 

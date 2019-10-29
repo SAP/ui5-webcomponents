@@ -90,7 +90,7 @@ describe("Date Picker Tests", () => {
 		assert.ok(!secondItem.getAttribute("selected"), "item is not selected");
 	});
 
-	it("mode: delete. items have x buttons which delete them", () => {
+	it("mode: delete. items have X buttons which delete them", () => {
 		browser.url("http://localhost:8080/test-resources/pages/List_test_page.html");
 		list.root.setProperty("mode", "Delete");
 
