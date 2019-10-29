@@ -1,7 +1,5 @@
-commit f4d0bd0f2bf167af57c54a93d508e6bb6de59d34
+commit de69cc6cbe2351e6d9e4c55949535b1e6b0c8ae3
 Author: kskondov <konstantin.kondov@sap.com>
-Date:   Mon Oct 28 18:13:07 2019 +0200
+Date:   Tue Oct 29 11:47:16 2019 +0200
 
-    refactor(ui5-radiobutton): subscribe event handlers within HBS template (#893)
-    
-    Part of issue #834
+    Radio button (#896)
