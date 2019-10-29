@@ -1,4 +1,3 @@
-
 const derivationsFactory = ({ darken, lighten, contrast, fade, saturate, desaturate, mix, spin, concat }) => {
 	const derivations = {
 		"--sapUiFieldWarningColorDarken100": () => darken("--sapUiFieldWarningColor", 100), // #000000;
