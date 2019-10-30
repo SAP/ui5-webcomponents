@@ -23,12 +23,6 @@
 	align-items: center;
 }
 
-::slotted(ui5-tab) {
-	display: inline-block;
-	width: 100%;
-	height: 100%;
-}
-
 .ui-tc__headerScrollContainer {
 	box-sizing: border-box;
 	overflow: hidden;

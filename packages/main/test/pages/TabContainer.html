@@ -177,8 +177,8 @@
 			</div>
 
 			<div class="sample" style="height: 300px">
-				<ui5-tabcontainer fixed showOverflow style="height: 100%;">
-					<ui5-tab text="Tab 1" selected>
+				<ui5-tabcontainer fixed showOverflow style="height: 100%;" id="tc-scrollable-child">
+					<ui5-tab text="Tab 1" selected id="scrollable-tab">
 						<ui5-button>Toggle style</ui5-button>
 
 
@@ -232,8 +232,6 @@
 	</section>
 
 	<script>
-		var result = document.getElementById("result");
-
 		document.getElementById("tabContainer1").addEventListener("ui5-itemSelect", function (event) {
 			document.getElementById("result").innerHTML = event.detail.item.text;
 		});

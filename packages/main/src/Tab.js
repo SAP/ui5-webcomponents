@@ -4,6 +4,9 @@ import SemanticColor from "./types/SemanticColor.js";
 import Icon from "./Icon.js";
 import TabTemplate from "./generated/templates/TabTemplate.lit.js";
 
+// Styles
+import css from "./generated/themes/Tab.css.js";
+
 /**
  * @public
  */
@@ -133,6 +136,10 @@ class Tab extends UI5Element {
 
 	static get template() {
 		return TabTemplate;
+	}
+
+	static get styles() {
+		return css;
 	}
 
 	static async define(...params) {
