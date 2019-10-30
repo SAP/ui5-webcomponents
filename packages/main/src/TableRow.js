@@ -89,7 +89,7 @@ class TableRow extends UI5Element {
 		if (this._getActiveElementTagName() === "body") {
 			// If the user clickes on non-focusable element within the ui5-table-cell,
 			// the focus goes to the body, se we have to bring it back to the row.
-			// If the uset clicks on input, button or similar clickable element,
+			// If the user clicks on input, button or similar clickable element,
 			// the focus remains on that element.
 			this._onfocusin(event, true /* force row focus */);
 		}
@@ -106,11 +106,6 @@ class TableRow extends UI5Element {
 		if (this.cells.length === 0) {
 			return;
 		}
-
-		this.cells.forEach(cell => {
-			cell.removeEventListener("click", this.fnOnCellClick);
-			cell.addEventListener("click", this.fnOnCellClick);
-		});
 
 		this._columnsInfo.forEach((info, index) => {
 			const cell = this.cells[index];
