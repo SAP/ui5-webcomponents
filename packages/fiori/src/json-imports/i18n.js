@@ -92,4 +92,4 @@ Suggested pattern: "assets\\\/.*\\\.json"`);
 }
 /* eslint-enable */
 
-registerI18nBundle("@ui5/webcomponents", bundleMap);
+registerI18nBundle("@ui5/webcomponents-fiori", bundleMap);
