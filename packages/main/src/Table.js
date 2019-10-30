@@ -166,7 +166,7 @@ class Table extends UI5Element {
 		this._itemNavigation = new ItemNavigation(this);
 
 		this._itemNavigation.getItemsCallback = function getItemsCallback() {
-			return this.rows;
+			return [this.getColumnHeader(), ...this.rows];
 		}.bind(this);
 
 		this.fnOnRowFocused = this.onRowFocused.bind(this);
@@ -210,8 +210,13 @@ class Table extends UI5Element {
 		}
 	}
 
-	onColumnHeaderClick() {
-		this.getDomRef().querySelector(`#${this._id}-columnHeader`).focus();
+	onColumnHeaderClick(event) {
+		this.getColumnHeader().focus();
+		this._itemNavigation.update(event.target);
+	}
+
+	getColumnHeader() {
+		return this.getDomRef() && this.getDomRef().querySelector(`#${this._id}-columnHeader`);
 	}
 
 	popinContent(_event) {
