@@ -183,13 +183,15 @@ const metadata = {
 		},
 
 		/**
-		 * Defines a <code>ui5-icon</code> in the bar that will be placed in the beginning.
+		 * Defines a <code>ui5-button</code> in the bar that will be placed in the beginning.
+		 * We encourage this slot to be used for a back or home button.
+		 * It gets overstyled to match ShellBar's styling.
 		 *
 		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
 		 */
-		icon: {
+		startButton: {
 			type: HTMLElement,
 		},
 	},
