@@ -102,6 +102,8 @@ const metadata = {
 
 		/**
 		 * Defines, if the product CoPilot icon would be displayed.
+		 * <br><b>Note:</b> By default the co-pilot is displayed as static SVG.
+		 * If you need an animated co-pilot, you can import the <code>"@ui5/webcomponents/dist/features/ShellBarAnimatedCoPilot.js"</code> module as add-on feature.
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
