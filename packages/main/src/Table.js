@@ -167,10 +167,7 @@ class Table extends UI5Element {
 
 		this._itemNavigation.getItemsCallback = function getItemsCallback() {
 			const columnHeader = this.getColumnHeader();
-			if (columnHeader) {
-				return [columnHeader, ...this.rows];
-			}
-			return this.rows;
+			return columnHeader ? [columnHeader, ...this.rows] : this.rows;
 		}.bind(this);
 
 		this.fnOnRowFocused = this.onRowFocused.bind(this);
