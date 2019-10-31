@@ -103,7 +103,7 @@ const metadata = {
 		/**
 		 * Defines, if the product CoPilot icon would be displayed.
 		 * <br><b>Note:</b> By default the co-pilot is displayed as static SVG.
-		 * If you need an animated co-pilot, you can import the <code>"@ui5/webcomponents/dist/features/ShellBarAnimatedCoPilot.js"</code> module as add-on feature.
+		 * If you need an animated co-pilot, you can import the <code>"@ui5/webcomponents/dist/features/CoPilotAnimation.js"</code> module as add-on feature.
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
@@ -452,7 +452,7 @@ class ShellBar extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		this.coPilot = getFeature("ShellBarAnimatedCoPilot") || { animated: false };
+		this.coPilot = getFeature("CoPilotAnimation") || { animated: false };
 		this._hiddenIcons = this._itemsInfo.filter(info => {
 			const isHidden = (info.classes.indexOf("ui5-shellbar-hidden-button") !== -1);
 			const isSet = info.classes.indexOf("ui5-shellbar-invisible-button") === -1;
