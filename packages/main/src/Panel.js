@@ -3,6 +3,8 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import slideDown from "@ui5/webcomponents-base/dist/animations/slideDown.js";
 import slideUp from "@ui5/webcomponents-base/dist/animations/slideUp.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import AnimationModes from "@ui5/webcomponents-base/dist/types/AnimationModes.js";
+import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Button from "./Button.js";
 import "./icons/navigation-right-arrow.js";
@@ -223,6 +225,10 @@ class Panel extends UI5Element {
 		return true;
 	}
 
+	shouldAnimate() {
+		return getAnimationMode() !== AnimationModes.None;
+	}
+
 	_headerClick(event) {
 		if (!this.shouldToggle(event.target)) {
 			return;
@@ -268,6 +274,12 @@ class Panel extends UI5Element {
 		}
 
 		this.collapsed = !this.collapsed;
+
+		if (!this.shouldAnimate()) {
+			this.fireEvent("toggle");
+			return;
+		}
+
 		this._animationRunning = true;
 
 		const elements = this.getDomRef().querySelectorAll(".ui5-panel-content");
@@ -294,6 +306,14 @@ class Panel extends UI5Element {
 
 	_headerOnTarget(target) {
 		return target.classList.contains("sapMPanelWrappingDiv");
+	}
+
+	get classes() {
+		return {
+			headerBtn: {
+				"ui5-panel-header-button-animated": this.shouldAnimate(),
+			},
+		};
 	}
 
 	get toggleButtonTitle() {
