@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { isSpace, isEscape } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import StandardListItem from "./StandardListItem.js";
@@ -449,6 +450,7 @@ class ShellBar extends UI5Element {
 	}
 
 	onBeforeRendering() {
+		this.coPilot = getFeature("ShellBarAnimatedCoPilot") || { animated: false };
 		this._hiddenIcons = this._itemsInfo.filter(info => {
 			const isHidden = (info.classes.indexOf("ui5-shellbar-hidden-button") !== -1);
 			const isSet = info.classes.indexOf("ui5-shellbar-invisible-button") === -1;
