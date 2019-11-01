@@ -66,7 +66,6 @@ const metadata = {
 			type: Node,
 		},
 	},
-	_eventHandlersByConvention: true,
 };
 
 /**
@@ -112,9 +111,8 @@ class Label extends UI5Element {
 		return labelCss;
 	}
 
-	onclick() {
+	_onclick() {
 		const elementToFocus = document.getElementById(this.for);
-
 		if (elementToFocus) {
 			elementToFocus.focus();
 		}

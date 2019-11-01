@@ -9,9 +9,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	var THEME = Configuration.getTheme();
 	var HCB = "sap_belize_hcb";
 	var FIORI3 = "sap_fiori_3";
+	var FIORI3_DARK = "sap_fiori_3_dark";
 	var btnRTL = document.getElementById("btnRTL");
 	var btnCompact = document.getElementById("btnCompact");
 	var btnTheme = document.getElementById("btnTheme");
+	var btnLightDark = document.getElementById("btnLightDark");
+	
 
 	if (THEME === HCB) {
 		document.body.style="background: #333";
@@ -50,8 +53,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	btnRTL.pressed = !!RTL;
 	btnCompact.pressed = !!COMPACT;
 	btnTheme.pressed = !!(THEME === HCB);
+	btnLightDark.pressed = !!(THEME === FIORI3_DARK);
 
-	btnRTL.addEventListener('press', function(e) {
+	btnRTL.addEventListener('click', function(e) {
 		var param = buildParam(btnCompact.pressed, e.target.pressed, THEME);
 		var currentURL = window.location.href;
 		var newURL = currentURL.slice(0, currentURL.indexOf("kitchen")) + param;
@@ -59,7 +63,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		window.location.href = newURL;
 	}, false);
 
-	btnCompact.addEventListener('press', function(e) {
+	btnCompact.addEventListener('click', function(e) {
 		var param = buildParam(e.target.pressed, btnRTL.pressed, THEME);
 		var currentURL = window.location.href;
 		var newURL = currentURL.slice(0, currentURL.indexOf("kitchen")) + param;
@@ -67,7 +71,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		window.location.href = newURL;
 	}, false);
 
-	btnTheme.addEventListener('press', function(e) {
+	btnTheme.addEventListener('click', function(e) {
 		var theme = e.target.pressed ? HCB : FIORI3;
 		Configuration.setTheme(theme);
 
@@ -78,7 +82,18 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		}
 	}, false);
 
-	menuBtn.addEventListener('press', function(event) {
+	btnLightDark.addEventListener('click', function(e) {
+		var theme = e.target.pressed ? FIORI3_DARK : FIORI3;
+		Configuration.setTheme(theme);
+
+		if (theme === FIORI3_DARK) {
+			document.body.style="background: #333";
+		} else {
+			document.body.style="background: #fff";
+		}
+	}, false);
+
+	menuBtn.addEventListener('click', function(event) {
 		toggleSideNav(event.detail.pressed);
 	});
 
@@ -87,10 +102,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	var popoverOpener = document.getElementById("openPopoverButton");
 	var popoverCloser = document.getElementById("closePopoverButton");
 
-	popoverOpener.addEventListener("press", function() {
+	popoverOpener.addEventListener("click", function() {
 		popover.openBy(popoverOpener);
 	});
-	popoverCloser.addEventListener("press", function() {
+	popoverCloser.addEventListener("click", function() {
 		popover.close();
 	});
 

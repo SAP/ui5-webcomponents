@@ -39,7 +39,6 @@
 	height: 100%;
 	background: transparent;
 	display: inline-block;
-	vertical-align: top;
 	outline: none;
 	box-sizing: border-box;
 	color: inherit;
@@ -74,22 +73,18 @@
 }
 
 [inner-input]::-webkit-input-placeholder {
-	/* Chrome/Opera/Safari */
 	color: var(--sapUiFieldPlaceholderTextColor);
 }
 
 [inner-input]::-moz-placeholder {
-	/* Firefox 19+ */
 	color: var(--sapUiFieldPlaceholderTextColor);
 }
 
 [inner-input]:-ms-input-placeholder {
-	/* IE 10+ */
 	color: var(--sapUiFieldPlaceholderTextColor);
 }
 
 [inner-input]:-moz-placeholder {
-	/* Firefox 18- */
 	color: var(--sapUiFieldPlaceholderTextColor);
 }
 

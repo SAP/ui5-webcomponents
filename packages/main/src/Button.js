@@ -250,7 +250,6 @@ class Button extends UI5Element {
 
 	_onclick(event) {
 		event.isMarked = "button";
-		this.fireEvent("press", {});
 		const FormSupport = getFeature("FormSupport");
 		if (FormSupport) {
 			FormSupport.triggerFormSubmit(this);
