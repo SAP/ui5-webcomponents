@@ -1,3 +1,4 @@
+import "@ui5/webcomponents/dist/json-imports/i18n.js";
 import { registerI18nBundle } from "@ui5/webcomponents-base/dist/asset-registries/i18n.js";
 
 import ar from "../assets/i18n/messagebundle_ar.json";

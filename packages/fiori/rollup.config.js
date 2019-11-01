@@ -23,7 +23,7 @@ function ui5DevImportCheckerPlugin() {
 			if (/TemplateHelper/.test(file)) {
 				return;
 			}
-			if (/^import.*"@ui5\/webcomponents\//.test(code)) {
+			if (/^import.*"@ui5\/webcomponents-fiori\//.test(code)) {
 				throw new Error(`illegal import in ${file}`);
 			}
 

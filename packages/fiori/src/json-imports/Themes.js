@@ -1,3 +1,5 @@
+import "@ui5/webcomponents/dist/json-imports/Themes.js";
+
 import { registerThemeProperties } from "@ui5/webcomponents-base/dist/asset-registries/Themes.js";
 
 import fiori3 from "../assets/themes/sap_fiori_3/parameters-bundle.css.json";
@@ -14,6 +16,6 @@ Suggested pattern: "assets\\\/.*\\\.json"`);
 }
 /* eslint-enable */
 
-registerThemeProperties("@ui5/webcomponents", "sap_fiori_3", fiori3);
-registerThemeProperties("@ui5/webcomponents", "sap_belize", belize);
-registerThemeProperties("@ui5/webcomponents", "sap_belize_hcb", belizeHcb);
+registerThemeProperties("@ui5/webcomponents-fiori", "sap_fiori_3", fiori3);
+registerThemeProperties("@ui5/webcomponents-fiori", "sap_belize", belize);
+registerThemeProperties("@ui5/webcomponents-fiori", "sap_belize_hcb", belizeHcb);

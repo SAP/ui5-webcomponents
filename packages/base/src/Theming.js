@@ -1,5 +1,5 @@
 import { addCustomCSS, getCustomCSS } from "./theming/CustomStyle.js";
-import { getThemeProperties } from "./asset-registries/Themes.js";
+import { getThemeProperties, getRegisteredPackages } from "./asset-registries/Themes.js";
 import { injectThemeProperties } from "./theming/StyleInjection.js";
 
 const defaultTheme = "sap_fiori_3";
@@ -14,10 +14,14 @@ const attachThemeChange = function attachThemeChange(callback) {
 const _applyTheme = async theme => {
 	let cssText = "";
 
-	if (theme !== defaultTheme) {
-		cssText = await getThemeProperties("@ui5/webcomponents", theme);
-	}
-	injectThemeProperties(cssText);
+	const registeredPackages = getRegisteredPackages();
+	registeredPackages.forEach(async packageName => {
+		if (theme !== defaultTheme) {
+			cssText = await getThemeProperties(packageName, theme);
+		}
+		injectThemeProperties(cssText, packageName);
+	});
+
 	_executeThemeChangeCallbacks(theme);
 };
 
