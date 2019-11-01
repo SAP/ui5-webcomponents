@@ -19,7 +19,6 @@
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js">
 	</script>
-	<script src="http://veui5infra.dhcp.wdf.sap.corp:8080/demokit/resources/sap-ui-core.js"></script>
 </head>
 
 <body style="padding: 20px;">
@@ -45,13 +44,14 @@
 	<ui5-icon src="sap-icon://appointment-2"></ui5-icon> -->
 
 	<script type="module">
-		const icon = new sap.ui.core.Icon({src: "sap-icon://appointment-2"})
-		icon.placeAt("content");
-			window["sap-ui-webcomponents-main-bundle"].getIconNames().forEach(iconName => {
+		(async () => {
+			const iconNames = await window["sap-ui-webcomponents-main-bundle"].getIconNames();
+			iconNames.forEach(iconName => {
 				const icon = document.createElement("ui5-icon");
 				icon.src = iconName;
 				document.body.appendChild(icon);
 			});
+		})();
 	</script>
 	<br />
 

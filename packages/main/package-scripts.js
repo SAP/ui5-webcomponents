@@ -3,7 +3,7 @@ module.exports = {
         clean: "rimraf dist",
         lint: "eslint .",
         build: {
-            default: "nps clean lint build.templates build.samples build.styles build.i18n copy.src build.bundle copy.webcomponents-polyfill",
+            default: "nps clean lint build.templates build.samples build.styles build.i18n copy.src build.icons build.bundle copy.webcomponents-polyfill",
             templates: "mkdirp dist/generated/templates && node ./lib/hbs2ui5/index.js -d src/ -o dist/generated/templates",
             styles: {
                 default: "nps build.styles.bundles build.styles.components",
@@ -15,6 +15,7 @@ module.exports = {
                 defaultsjs: "mkdirp dist/generated/i18n && node ./lib/i18n/defaults.js src/i18n dist/generated/i18n",
                 json: "mkdirp dist/assets/i18n && node ./lib/i18n/toJSON.js src/i18n dist/assets/i18n",
             },
+            icons: "cd lib/icon-collection-bundler && npx rollup -c",
             bundle: "rollup -c --environment ES5_BUILD",
             samples: {
                 default: "nps copy.test build.samples.api build.samples.docs build.samples.playground-index",
@@ -29,9 +30,9 @@ module.exports = {
             "webcomponents-polyfill": "copy-and-watch \"../../node_modules/@webcomponents/webcomponentsjs/**/*.*\" dist/webcomponentsjs/",
         },
         watch: {
-            default: 'concurrently "nps watch.templates" "nps watch.samples" "nps watch.test" "nps watch.src" "nps watch.bundle" "nps watch.styles" "nps copy.webcomponents-polyfill"',
-            src: 'nps "copy.src --watch"',
-            test: 'nps "copy.test --watch"',
+            default: 'concurrently "nps watch.templates" "nps watch.samples" "nps watch.test" "nps watch.src" "nps watch.bundle" "nps watch.styles"',
+            src: 'nps "copy.src --watch --skip-initial-copy"',
+            test: 'nps "copy.test --watch --skip-initial-copy"',
             bundle: "rollup -c -w --environment ES5_BUILD,DEV",
             styles: {
                 default: 'concurrently "nps watch.styles.bundles" "nps watch.styles.components"',
@@ -43,7 +44,8 @@ module.exports = {
         },
         start: {
             default: "nps start.prepare start.run",
-            prepare: "nps build.i18n",
+            // same as build, but without lint (no need for dev mode) and without build.bundle (rollup watch will create a new one at start)
+            prepare: "nps clean build.templates build.samples build.styles build.i18n copy.src build.icons copy.webcomponents-polyfill",
             run: 'concurrently "nps serve" "nps watch"',
         },
         serve: {
