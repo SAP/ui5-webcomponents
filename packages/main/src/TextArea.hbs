@@ -28,7 +28,8 @@
 		maxlength="{{_exceededTextProps.calcedMaxLength}}"
 		aria-labelledby={{ariaLabelledBy}}
 		.value="{{value}}"
-		@change="{{_listeners.change}}"
+		@input="{{_handleInput}}"
+		@change="{{_handleChange}}"
 		data-sap-focus-ref>
 	</textarea>
 

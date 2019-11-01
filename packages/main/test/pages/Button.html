@@ -41,7 +41,6 @@
 	<br />
 	<br />
 
-	<ui5-input id="press-counter"></ui5-input>
 	<ui5-input id="click-counter"></ui5-input>
 
 	<ui5-button style="height: auto" design="Emphasized">Action<br> Bar<br> Button</ui5-button>
@@ -159,19 +158,10 @@
 
 
 	<script>
-		var pressCounter = document.querySelector("#press-counter");
 		var clickCounter = document.querySelector("#click-counter");
 		var button = document.querySelector("#button1");
 		var disabledButton = document.querySelector("#button-disabled");
-		var pressCount = 0;
 		var clickCount = 0;
-
-		[button, disabledButton].forEach(function (el) {
-			el.addEventListener("ui5-press", function(event) {
-				pressCount += 1;
-				pressCounter.value = pressCount;
-			});
-		});
 
 		[button, disabledButton].forEach(function (el) {
 			el.addEventListener("click", function(event) {
@@ -179,8 +169,6 @@
 				clickCounter.value = clickCount;
 			});
 		});
-
-
 	</script>
 </body>
 </html>

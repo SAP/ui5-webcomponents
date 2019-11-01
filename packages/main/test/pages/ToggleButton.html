@@ -77,7 +77,7 @@
 	<div class="samples">
 		<h2>ToggleButton states</h2>
 		<div class="sample" id="main-sample">
-			<ui5-togglebutton class="toggleButton" id="toggle-button">ToggleButton</ui5-togglebutton>
+			<ui5-togglebutton class="toggleButton" id="toggle-button" pressed>ToggleButton</ui5-togglebutton>
 			<ui5-togglebutton class="toggleButton" pressed>Pressed ToggleButton</ui5-togglebutton>
 			<ui5-togglebutton class="toggleButton" disabled id="disabled-toggle-button">Disabled ToggleButton</ui5-togglebutton>
 			<ui5-togglebutton class="toggleButton" disabled pressed>Disabled ToggleButton</ui5-togglebutton>
@@ -91,30 +91,16 @@
 	</div>
 	<div class="result">
 		<h2>Result</h2>
-		<span id="press-result"></span>
 		<span id="click-result"></span>
 	</div>
 </section>
 
 <script>
-	var pressResult = document.getElementById("press-result");
 	var clickResult = document.getElementById("click-result");
 
-	document.getElementById("main-sample").addEventListener("ui5-press", function (event) {
-		var target = event.target;
-
-		if (target.classList.contains("toggleButton")) {
-			pressResult.innerHTML = target.textContent + ": " + event.detail.pressed;
-		}
-	});
-
-	Array.prototype.slice.call(document.querySelectorAll("#main-sample .toggleButton")).forEach(function (el) {
+	Array.prototype.slice.call(document.querySelectorAll(".toggleButton")).forEach(function (el) {
 		el.addEventListener("click", function (event) {
-			var target = event.target;
-
-			if (target.classList.contains("toggleButton")) {
-				clickResult.innerHTML = target.textContent + ": " + (target.pressed);
-			}
+			clickResult.innerHTML = event.target.textContent + ": " + (event.target.pressed);
 		});
 	});
 

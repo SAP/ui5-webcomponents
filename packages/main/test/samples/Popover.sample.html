@@ -14,28 +14,23 @@
 					<ui5-label for="emailInput" required>Email: </ui5-label>
 					<ui5-input id="emailInput" class="samples-margin-top" placeholder="Enter Email"></ui5-input>
 				</div>
-			</div>
-			<div slot="footer"	class="popover-footer">
-				<div style="flex: 1;"></div>
-				<ui5-button id="closePopoverButton" design="Emphasized">Subscribe</ui5-button>
-			</div>
-		</ui5-popover>
+			</ui5-popover>
 
-		<script>
-			var popoverOpener = document.getElementById("openPopoverButton");
-			var popover = document.getElementById("hello-popover");
-			var popoverCloser = document.getElementById("closePopoverButton");
+			<script>
+				var popoverOpener = document.getElementById("openPopoverButton");
+				var popover = document.getElementById("hello-popover");
+				var popoverCloser = document.getElementById("closePopoverButton");
 
-			popoverOpener.addEventListener("press", function() {
-				popover.openBy(popoverOpener);
-			});
+				popoverOpener.addEventListener("click", function() {
+					popover.openBy(popoverOpener);
+				});
 
-			popoverCloser.addEventListener("press", function() {
-				popover.close();
-			});
-		</script>
-	</div>
-	<pre class="prettyprint lang-html"><xmp>
+				popoverCloser.addEventListener("click", function() {
+					popover.close();
+				});
+			</script>
+		</div>
+		<pre class="prettyprint lang-html"><xmp>
 <ui5-button id="openPopoverButton" design="Emphasized">Open Popover</ui5-button>
 
 <ui5-popover id="hello-popover" header-text="Newsletter subscription">
@@ -56,11 +51,11 @@
 	var popover = document.getElementById("hello-popover");
 	var popoverCloser = document.getElementById("closePopoverButton");
 
-	popoverOpener.addEventListener("press", function() {
+	popoverOpener.addEventListener("click", function() {
 		popover.openBy(popoverOpener);
 	});
 
-	popoverCloser.addEventListener("press", function() {
+	popoverCloser.addEventListener("click", function() {
 		popover.close();
 	});
 </script>

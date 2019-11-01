@@ -11,7 +11,7 @@ describe("Component Behaviour", () => {
 
 			const shellbar = browser.$("#shellbar");
 			const overflowButton = browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
-			const backButton = browser.$("#shellbar ui5-icon");
+			const backButton = browser.$("#shellbar ui5-button[slot='startButton'");
 			const primaryTitle = browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button-title");
 			const secondaryTitle = browser.$("#shellbar").shadow$(".ui5-shellbar-secondary-title");
 			const searchIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-search-button");
@@ -48,7 +48,7 @@ describe("Component Behaviour", () => {
 
 			const shellbar = browser.$("#shellbar");			
 			const overflowButton = browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
-			const backButton = browser.$("#shellbar ui5-icon");
+			const backButton = browser.$("#shellbar ui5-button[slot='startButton'");
 			const primaryTitle = browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button-title");
 			const secondaryTitle = browser.$("#shellbar").shadow$(".ui5-shellbar-secondary-title");
 			const searchIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-search-button");
@@ -77,7 +77,7 @@ describe("Component Behaviour", () => {
 			const shellbar = browser.$("#shellbar");
 			const shellbarWrapper = browser.$("#shellbar").shadow$("div");
 			const overflowButton = browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
-			const backButton = browser.$("#shellbar ui5-icon");
+			const backButton = browser.$("#shellbar ui5-button[slot='startButton'");
 			const primaryTitle = browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button-title");
 			const secondaryTitle = browser.$("#shellbar").shadow$(".ui5-shellbar-secondary-title");
 			const searchIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-search-button");
@@ -159,7 +159,7 @@ describe("Component Behaviour", () => {
 
 			const shellbar = browser.$("#shellbar");
 			const overflowButton = browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
-			const backButton = browser.$("#shellbar ui5-icon");
+			const backButton = browser.$("#shellbar ui5-button[slot='startButton'");
 			const primaryTitle = browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button-title");
 			const secondaryTitle = browser.$("#shellbar").shadow$(".ui5-shellbar-secondary-title");
 			const searchIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-search-button");
