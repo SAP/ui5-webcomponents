@@ -27,7 +27,6 @@ set -e # Exit with nonzero exit code if anything fails
 # Determine if the current commit is release
 TRAVIS_MASTER_BRANCH="master"
 TRAVIS_LATEST_RELEASE_WEBSITE_BRANCH="latest-release-website"
-NEW_PLAYGROUND_BRANCH="build-new-playground"
 
 # Config variables
 REPO=`git config remote.origin.url`
@@ -100,39 +99,6 @@ if [ "$TRAVIS_BRANCH" == "$TRAVIS_LATEST_RELEASE_WEBSITE_BRANCH" ]; then
   ###
   ### End of publish master on every commit in master branch
   ###
-
-  elif [ "$TRAVIS_BRANCH" == "$NEW_PLAYGROUND_BRANCH" ]; then
-  ###
-  ### Test deloyment of new playground
-  ###
-
-  echo "Before deploy new playground"
-
-  # Enable use of extended pattern matching operators(*, ?, @, !)
-  shopt -s extglob
-
-  # Clean gh-pages existing contents
-  rm -rf gh-pages/new-playground
-  
-  mkdir gh-pages/new-playground
-
-  # Run the build again so rollup can generate the correct public path urls
-  cd $TRAVIS_BUILD_DIR
-  DEPLOY_PUBLIC_PATH=https://sap.github.io/ui5-webcomponents/new-playground/assets/js/ui5-webcomponents/ yarn build:playground
-
-  # Move master build folder to gh-pages folder
-  cp -Rf $TRAVIS_BUILD_DIR/packages/playground/dist/* gh-pages/new-playground
-
-  # put the commit id as version
-  echo "$(git log -1 HEAD)" > gh-pages/new-playground/version.txt
-
-  echo "After deploy new playground"
-  ls -a gh-pages
-
-  ###
-  ### End of publish docs on commit in latest-release-website branch
-  ###
-
 fi
 
 
