@@ -24,4 +24,4 @@ deploy:
   script: bash deploy/deploy.sh
   on:
     all_branches: true
-    condition: $TRAVIS_BRANCH =~ ^(master|latest-release-website|build-new-playground)$
+    condition: $TRAVIS_BRANCH =~ ^(master|latest-release-website)$
