@@ -11,7 +11,6 @@ before_install:
   - export PATH="$HOME/.yarn/bin:$PATH"
 
   # Playground dependecies:
-  - gem install bundler -v 2.0.2
   - gem install jekyll -v 3.8.6
   - gem install jekyll-seo-tag
 
