@@ -91,7 +91,6 @@ describe("General assertions", () => {
 			browser.$("#p2"),
 			browser.$("#radioBtn2"),
 			browser.$("#select2"),
-			browser.$("#shellbar2"),
 			browser.$("#sw2"),
 			browser.$("#txtarea2"),
 			browser.$("#timeline2"),
