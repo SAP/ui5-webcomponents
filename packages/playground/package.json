@@ -27,7 +27,7 @@
   },
   "scripts": {
     "test": "stylelint '**/*.scss'",
-    "build": "yarn install:dependencies && npm-run-all --parallel prepare:** && bundle exec jekyll build --source ./ --destination ../dist",
+    "build": "yarn install:dependencies && npm-run-all --parallel prepare:** && bundle exec jekyll build --source ./ --destination ./dist",
     "clean:samples": "rimraf ./docs/components/*sample.html",
     "clean:assets": "rimraf ./assets/js/ui5-webcomponents/*",
     "start": "npm-run-all --parallel prepare:** && bundle exec jekyll serve",
