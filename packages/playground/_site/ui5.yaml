@@ -1,7 +1,0 @@
-specVersion: "0.1"
-kind: extension
-type: task
-metadata:
-    name: RewriteBootstrap
-task:
-    path: lib/rewritebootstrap/index.js
