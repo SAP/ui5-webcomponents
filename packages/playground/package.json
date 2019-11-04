@@ -27,11 +27,11 @@
   },
   "scripts": {
     "test": "stylelint '**/*.scss'",
-    "build": "npm-run-all --parallel prepare:** && bundle exec jekyll build --source ./ --destination ../dist",
-    "build:bundle": "rollup -c --environment ES5_BUILD",
+    "build": "yarn install:dependencies && npm-run-all --parallel prepare:** && bundle exec jekyll build --source ./ --destination ../dist",
     "clean:samples": "rimraf ./docs/components/*sample.html",
     "clean:assets": "rimraf ./assets/js/ui5-webcomponents/*",
     "start": "npm-run-all --parallel prepare:** && bundle exec jekyll serve",
+    "install:dependencies": "bundle install",
     "copy:assets": "copy-and-watch \"../main/dist/resources/*\" \"./assets/js/ui5-webcomponents\"",
     "copy:samples": "node ./build-scripts/samples-prepare.js \"../main/dist/test-resources/samples\"",
     "prepare:assets": "npm run clean:assets && npm run copy:assets",
