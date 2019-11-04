@@ -1,0 +1,5 @@
+commit 1934b8ddf42512e1eae5c1cb4738f8a0072486fd
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Mon Nov 4 12:58:29 2019 +0200
+
+    fix dist folder
