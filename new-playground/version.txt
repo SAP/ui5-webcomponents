@@ -1,5 +1,5 @@
-commit 1934b8ddf42512e1eae5c1cb4738f8a0072486fd
+commit c529a0a1b7df85025236e91f032c97bae002854e
 Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Mon Nov 4 12:58:29 2019 +0200
+Date:   Mon Nov 4 13:26:30 2019 +0200
 
-    fix dist folder
+    move bundler install to package.json
