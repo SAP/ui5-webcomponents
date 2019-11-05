@@ -547,8 +547,11 @@ class Popover extends UI5Element {
 
 		let maxContentHeight = Math.round(maxHeight);
 
-		if (this.header.length) {
-			const headerDomRef = this.getPopupDomRef().querySelector(".ui5-popover-header-root");
+		const hasHeader = this.header.length || this.headerText;
+
+		if (hasHeader) {
+			const headerDomRef = this.shadowRoot.querySelector(".ui5-popover-header-root")
+				|| this.shadowRoot.querySelector(".ui5-popup-header-text");
 
 			if (headerDomRef) {
 				maxContentHeight = Math.round(maxHeight - headerDomRef.offsetHeight);
