@@ -1,0 +1,24 @@
+<div
+	class="ui5-productswitchitem-root"
+	data-sap-focus-ref
+	@focusout="{{_onfocusout}}"
+	@focusin="{{_onfocusin}}"
+	@mousedown="{{_onmousedown}}"
+	@keydown="{{_onkeydown}}"
+	@keyup="{{_onkeyup}}"
+	tabindex={{_tabIndex}}>
+	{{#if icon}}
+		<ui5-icon
+			class="ui5-productswitchitem-icon"
+			src="{{icon}}"
+		></ui5-icon>
+	{{/if}}
+	<div class="ui5-productswitchitem-text-content">
+		{{#if maintitle}}
+			<div class="ui5-productswitchitem-maintitle">{{maintitle}}</div>
+		{{/if}}
+		{{#if subtitle}}
+			<div class="ui5-productswitchitem-subtitle">{{subtitle}}</div>
+		{{/if}}
+	</div>
+</div>

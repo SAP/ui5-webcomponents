@@ -1,0 +1,31 @@
+:host {
+	font-family: var(--sapUiFontFamily);
+	font-size: var(--sapMFontMediumSize);
+}
+
+.ui5-productswitch-root {
+	display: flex;
+	flex-wrap: wrap;
+	width: 778px;
+	padding: 1.25rem 0.75rem;
+	box-sizing: border-box;
+}
+
+:host([desktop-columns="3"]) .ui5-productswitch-root {
+	width: 588px;
+}
+
+@media only screen and (max-width: 900px) {
+	.ui5-productswitch-root {
+		width: 588px;
+	}
+}
+
+@media only screen and (max-width: 600px) {
+	.ui5-productswitch-root,
+	:host([desktop-columns="3"]) .ui5-productswitch-root {
+		flex-direction: column;
+		padding: 0;
+		width: 100%;
+	}
+}

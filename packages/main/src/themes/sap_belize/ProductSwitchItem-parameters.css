@@ -1,0 +1,9 @@
+@import "../base/ProductSwitchItem-parameters.css";
+
+:root {
+	--_ui5_product-switch-item_hover_background_color: #f0f0f0;
+	--_ui5_product-switch-item_active_background_color: #427cac;
+	--_ui5_product-switch-item_icon_color: #346187;
+	--_ui5_product-switch-item_title_color: #333333;
+	--_ui5_product-switch-item_subtitle_color: #666666;
+}
