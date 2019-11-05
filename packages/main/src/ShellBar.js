@@ -1,8 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import { isSpace, isEscape } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import StandardListItem from "./StandardListItem.js";
 import List from "./List.js";
@@ -116,27 +114,16 @@ const metadata = {
 			type: String,
 		},
 
-		/**
-		 * @private
-		 */
-		showBlockLayer: {
+		_hiddenIcons: {
+			type: Object,
+		},
+
+		activeSearchIcon: {
 			type: Boolean,
 		},
 
-		_itemsInfo: {
-			type: Object,
-		},
-
-		_actionList: {
-			type: Object,
-		},
-
-		_searchField: {
-			type: Object,
-		},
-
-		_header: {
-			type: Object,
+		hasMenuItems: {
+			type: Boolean,
 		},
 	},
 
@@ -154,6 +141,7 @@ const metadata = {
 		"default": {
 			propertyName: "items",
 			type: HTMLElement,
+			listenFor: { include: ["*"] },
 		},
 
 		/**
@@ -341,93 +329,53 @@ class ShellBar extends UI5Element {
 	constructor() {
 		super();
 
-		this._itemsInfo = [];
+		this.overflowItems = [];
+
+		this._hiddenIcons = [];
 		this._isInitialRendering = true;
 		this._focusedItem = null;
 
-		// marks if preventDefault() is called in item's press handler
-		this._defaultItemPressPrevented = false;
-
-		const that = this;
-
-		this._actionList = {
-			itemPress: event => {
-				const popover = this.shadowRoot.querySelector(".ui5-shellbar-overflow-popover");
-
-				if (!this._defaultItemPressPrevented) {
-					popover.close();
-				}
-
-				this._defaultItemPressPrevented = false;
-			},
-		};
-
-		this._header = {
-			press: event => {
-				const menuPopover = this.shadowRoot.querySelector(".ui5-shellbar-menu-popover");
-
-				if (this.menuItems.length) {
-					menuPopover.openBy(this.shadowRoot.querySelector(".ui5-shellbar-menu-button"));
-				}
-			},
-		};
-
-		this._itemNav = new ItemNavigation(this);
-
-		this._itemNav.getItemsCallback = () => {
-			const items = that._itemsInfo.filter(info => {
-				const isVisible = info.classes.indexOf("ui5-shellbar-hidden-button") === -1;
-				const isSet = info.classes.indexOf("ui5-shellbar-invisible-button") === -1;
-				return isVisible && isSet;
-			}).sort((item1, item2) => {
-				if (item1.domOrder < item2.domOrder) {
-					return -1;
-				}
-
-				if (item1.domOrder > item2.domOrder) {
-					return 1;
-				}
-
-				return 0;
-			});
-
-			this._itemNav.rowSize = items.length;
-
-			return items.map(item => {
-				const clone = JSON.parse(JSON.stringify(item));
-				clone.press = item.press;
-
-				return clone;
-			});
-		};
-
-		this._itemNav.setItemsCallback = items => {
-			const newItems = that._itemsInfo.map(stateItem => {
-				const mappingItem = items.filter(item => {
-					return item.id === stateItem.id;
-				})[0];
-
-				const clone = JSON.parse(JSON.stringify(stateItem));
-				clone._tabIndex = mappingItem ? mappingItem._tabIndex : "-1";
-				clone.press = stateItem.press;
-
-				return clone;
-			});
-
-			that._updateItemsInfo(newItems);
-		};
-
-		this._searchField = {
-			left: 0,
-			focusout: event => {
-				this.showBlockLayer = false;
-			},
-		};
-
 		this._handleResize = event => {
-			this.shadowRoot.querySelector(".ui5-shellbar-overflow-popover").close();
+			this.overflowPopover.close();
+			this._handleBarBreakpoints();
+		};
+
+		this._handleRightContainerResize = event => {
+			if (this.breakpointSize === "S") {
+				return this._handleSizeS();
+			}
+
 			this._overflowActions();
 		};
+	}
+
+	onBeforeRendering() {
+		this.hasMenuItems = !!this.menuItems.length;
+	}
+
+	_actionPress(event) {
+		const popover = this.overflowPopover;
+		const button = event.detail.item.relatedButton;
+		let prevented;
+
+		if (button.relatedItem) {
+			prevented = button.relatedItem.fireEvent("itemClick", {
+				targetRef: event.detail.item,
+			}, true);
+		}
+
+		if (button.handler) {
+			prevented = button.handler.call(this);
+		}
+
+
+		if (!prevented) {
+			popover.close();
+		}
+	}
+
+	_titlePress(event) {
+		this.menuPopover.openBy(event.target);
 	}
 
 	_menuItemPress(event) {
@@ -436,34 +384,16 @@ class ShellBar extends UI5Element {
 		});
 	}
 
-	_logoPress(event) {
+	_logoPress() {
 		this.fireEvent("logoClick", {
 			targetRef: this.shadowRoot.querySelector(".ui5-shellbar-logo"),
 		});
 	}
 
-	_coPilotPress(event) {
+	_coPilotPress() {
 		this.fireEvent("coPilotClick", {
 			targetRef: this.shadowRoot.querySelector(".ui5-shellbar-coPilot"),
 		});
-	}
-
-	onBeforeRendering() {
-		this._hiddenIcons = this._itemsInfo.filter(info => {
-			const isHidden = (info.classes.indexOf("ui5-shellbar-hidden-button") !== -1);
-			const isSet = info.classes.indexOf("ui5-shellbar-invisible-button") === -1;
-			const isOverflowIcon = info.classes.indexOf("ui5-shellbar-overflow-button") !== -1;
-
-			return isHidden && isSet && !isOverflowIcon;
-		});
-	}
-
-	onAfterRendering() {
-		this._overflowActions();
-
-		if (this._focusedItem) {
-			this._focusedItem._tabIndex = "0";
-		}
 	}
 
 	/**
@@ -472,7 +402,7 @@ class ShellBar extends UI5Element {
 	 * @public
 	 */
 	closeOverflow() {
-		const popover = this.shadowRoot.querySelector(".ui5-shellbar-overflow-popover");
+		const popover = this.overflowPopover;
 
 		if (popover) {
 			popover.close();
@@ -494,347 +424,195 @@ class ShellBar extends UI5Element {
 	}
 
 	_handleSizeS() {
-		const hasIcons = this.showNotifications || this.showProductSwitch || this.searchField.length || this.items.length;
+		const children = this.overflowItemsParent.children;
+		const showProfile = this.profile;
+		const showOverflow = children.length > 2;
 
-		const newItems = this._getAllItems(hasIcons).map(info => {
-			const isOverflowIcon = info.classes.indexOf("ui5-shellbar-overflow-button") !== -1;
-			const isImageIcon = info.classes.indexOf("ui5-shellbar-image-button") !== -1;
-			const shouldStayOnScreen = isOverflowIcon || (isImageIcon && this.profile);
-
-			return Object.assign({}, info, {
-				classes: `${info.classes} ${shouldStayOnScreen ? "" : "ui5-shellbar-hidden-button"} ui5-shellbar-button`,
-				style: `order: ${shouldStayOnScreen ? 1 : -1}`,
-			});
+		[].forEach.call(children, child => {
+			child.hidden = true;
 		});
 
-		this._updateItemsInfo(newItems);
-	}
+		showProfile && (this.profileButton.hidden = false);
+		showOverflow && (this.overflowButton.hidden = false);
 
-	_handleActionsOverflow() {
-		const rightContainerRect = this.shadowRoot.querySelector(".ui5-shellbar-overflow-container-right").getBoundingClientRect();
-		const icons = this.shadowRoot.querySelectorAll(".ui5-shellbar-button:not(.ui5-shellbar-overflow-button):not(.ui5-shellbar-invisible-button)");
-		const isRTL = getRTL();
-
-		let overflowCount = [].filter.call(icons, icon => {
-			const iconRect = icon.getBoundingClientRect();
-
-			if (isRTL) {
-				return (iconRect.left + iconRect.width) > (rightContainerRect.left + rightContainerRect.width);
-			}
-
-			return iconRect.left < rightContainerRect.left;
+		this._hiddenIcons = [].filter.call(children, child => {
+			return child.hidden;
+		}).map(item => {
+			return {
+				item,
+				icon: item.relatedItem ? item.relatedItem.src : item.getAttribute("icon"),
+				text: item.relatedItem ? item.relatedItem.text : item.getAttribute("data-ui5-text"),
+			};
 		});
-
-		overflowCount = overflowCount.length;
-
-		const items = this._getAllItems(!!overflowCount);
-
-		items.map(item => {
-			this._itemsInfo.forEach(stateItem => {
-				if (stateItem.id === item.id) {
-					item._tabIndex = stateItem._tabIndex;
-				}
-			});
-
-			return item;
-		});
-
-		const itemsByPriority = items.sort((item1, item2) => {
-			if (item1.priority > item2.priority) {
-				return 1;
-			}
-
-			if (item1.priority < item2.priority) {
-				return -1;
-			}
-
-			return 0;
-		});
-
-		const focusableItems = [];
-
-		for (let i = 0; i < itemsByPriority.length; i++) {
-			if (i < overflowCount) {
-				itemsByPriority[i].classes = `${itemsByPriority[i].classes} ui5-shellbar-hidden-button`;
-				itemsByPriority[i].style = `order: -1`;
-			} else {
-				focusableItems.push(itemsByPriority[i]);
-			}
-		}
-
-		this._focusedItem = this._findInitiallyFocusedItem(focusableItems);
-
-		return itemsByPriority;
-	}
-
-	_findInitiallyFocusedItem(items) {
-		items.sort((item1, item2) => {
-			const order1 = parseInt(item1.style.split("order: ")[1]);
-			const order2 = parseInt(item2.style.split("order: ")[1]);
-
-			if (order1 === order2) {
-				return 0;
-			}
-
-			if (order1 < order2) {
-				return -1;
-			}
-
-			return 1;
-		});
-
-		const focusedItem = items.filter(item => {
-			return (item.classes.indexOf("ui5-shellbar-invisible-button") === -1)
-				&& (item.classes.indexOf("ui5-shellbar-overflow-button") === -1)
-				&& (item.classes.indexOf("ui5-shellbar-hidden-button") === -1);
-		})[0];
-
-		return focusedItem;
-	}
-
-	_overflowActions() {
-		const size = this._handleBarBreakpoints();
-
-		if (size === "S") {
-			return this._handleSizeS();
-		}
-
-		const newItems = this._handleActionsOverflow();
-		this._updateItemsInfo(newItems);
 	}
 
 	_toggleActionPopover() {
-		const popover = this.shadowRoot.querySelector(".ui5-shellbar-overflow-popover");
-		const overflowButton = this.shadowRoot.querySelector(".ui5-shellbar-overflow-button");
-		popover.openBy(overflowButton);
+		this.overflowPopover.openBy(this.overflowButton);
 	}
 
-	onkeydown(event) {
-		if (isEscape(event)) {
-			return this._handleEscape(event);
-		}
-
-		if (isSpace(event)) {
-			event.preventDefault();
-		}
-	}
-
-	_handleEscape() {
-		const searchButton = this.shadowRoot.querySelector(".ui5-shellbar-search-button");
-
-		if (this.showBlockLayer) {
-			this.showBlockLayer = false;
-
-			setTimeout(() => {
-				searchButton.focus();
-			}, 0);
-		}
+	_toggleSearchIconActiveState() {
+		this.activeSearchIcon = !this.activeSearchIcon;
 	}
 
 	onEnterDOM() {
 		ResizeHandler.register(this, this._handleResize);
+		ResizeHandler.register(this.overflowContainerRight, this._handleRightContainerResize);
 	}
 
 	onExitDOM() {
 		ResizeHandler.deregister(this, this._handleResize);
+		ResizeHandler.deregister(this.overflowContainerRight, this._handleRightContainerResize);
 	}
 
-	_handleSearchIconPress(event) {
-		const searchField = this.shadowRoot.querySelector(`#${this._id}-searchfield-wrapper`);
-		const triggeredByOverflow = event.target.tagName.toLowerCase() === "ui5-li";
-		const overflowButton = this.shadowRoot.querySelector(".ui5-shellbar-overflow-button");
-		const overflowButtonRect = overflowButton.getBoundingClientRect();
-		const isRTL = getRTL();
-		let right = "";
+	_handleSearchActionClick(event) {
+		const popover = this.shadowRoot.querySelector(".ui5-shellbar-search-popover");
+		const opener = this.search.hidden ? this.overflowButton : this.search;
 
-		if (isRTL) {
-			right = `${(triggeredByOverflow ? overflowButton.offsetLeft : event.target.offsetLeft) + overflowButtonRect.width}px`;
-		} else {
-			right = `calc(100% - ${triggeredByOverflow ? overflowButton.offsetLeft : event.target.offsetLeft}px)`;
+		if (this.overflowPopover.opened) {
+			this.overflowPopover.close();
 		}
 
-		this._searchField = Object.assign({}, this._searchField, {
-			"right": right,
-		});
-
-		this.showBlockLayer = true;
-
-		setTimeout(() => {
-			const inputSlot = searchField.children[0];
-
-			if (inputSlot) {
-				inputSlot.assignedNodes()[0].focus();
-			}
-		}, 100);
+		this.searchOpened = true;
+		popover.openBy(opener);
 	}
 
 	_handleCustomActionPress(event) {
-		const refItemId = event.target.getAttribute("data-ui5-external-action-item-id");
-		const actions = this.shadowRoot.querySelectorAll(".ui5-shellbar-custom-item");
-		let elementIndex = [].indexOf.apply(actions, [event.target]);
-
-		if (this.searchField.length) {
-			elementIndex += 1;
-		}
-
-		this._itemNav.currentIndex = elementIndex;
-
-		if (refItemId) {
-			const shellbarItem = this.items.filter(item => {
-				return item.shadowRoot.querySelector(`#${refItemId}`);
-			})[0];
-
-			const prevented = !shellbarItem.fireEvent("itemClick", { targetRef: event.target }, true);
-
-			this._defaultItemPressPrevented = prevented;
-		}
+		event.target.relatedItem.fireEvent("itemClick", {
+			targetRef: event.target.hidden ? event.detail.dom : event.target,
+		}, true);
 	}
 
-	_handleOverflowPress(event) {
+	_handleOverflowPress() {
 		this._toggleActionPopover();
 	}
 
-	_handleNotificationsPress(event) {
-		this.fireEvent("notificationsClick", {
-			targetRef: this.shadowRoot.querySelector(".ui5-shellbar-bell-button"),
+	_handleNotificationsPress() {
+		return this.fireEvent("notificationsClick", { targetRef: this.notifications });
+	}
+
+	_handleProfilePress() {
+		return this.fireEvent("profileClick", { targetRef: this.profileButton });
+	}
+
+	_handleProductSwitchPress() {
+		return this.fireEvent("productSwitchClick", { targetRef: this.productSwitch });
+	}
+
+	_overflowActions() {
+		const actualOverflowingChildren = [];
+		const children = this.overflowItemsParent.children;
+
+		// show all items
+		[].filter.call(children, child => {
+			child.hidden = false;
 		});
-	}
 
-	_handleProfilePress(event) {
-		this.fireEvent("profileClick", {
-			targetRef: this.shadowRoot.querySelector(".ui5-shellbar-image-button"),
+		// check HOW MUCH items overflow
+		const overflowChildren = [].filter.call(children, child => {
+			const childRect = child.getBoundingClientRect();
+			const parentRect = this.overflowContainerRight.getBoundingClientRect();
+
+			if (getRTL()) {
+				return (childRect.left + childRect.width) >= (parentRect.left + parentRect.width);
+			}
+
+			return childRect.left <= parentRect.left;
 		});
-	}
 
-	_handleProductSwitchPress(event) {
-		this.fireEvent("productSwitchClick", {
-			targetRef: this.shadowRoot.querySelector(".ui5-shellbar-button-product-switch"),
+		// hide the additional actions initially
+		overflowChildren.forEach((_, index) => {
+			if (this.itemsAsButtons[index]) {
+				this.itemsAsButtons[index].hidden = true;
+
+				actualOverflowingChildren.push(this.itemsAsButtons[index]);
+			}
 		});
-	}
 
-	/**
-	 * Returns all items that will be placed in the right of the bar as icons / dom elements.
-	 * @param {Boolean} showOverflowButton Determines if overflow button should be visible (not overflowing)
-	 */
-	_getAllItems(showOverflowButton) {
-		let domOrder = -1;
+		const actionsByPriority = [
+			this.productSwitch,
+			this.notifications,
+			this.search,
+		].filter(item => item);
 
-		const items = [
-			{
-				src: "sap-icon://search",
-				text: "Search",
-				classes: `${this.searchField.length ? "" : "ui5-shellbar-invisible-button"} ui5-shellbar-search-button ui5-shellbar-button`,
-				priority: 4,
-				domOrder: this.searchField.length ? (++domOrder) : -1,
-				style: `order: ${this.searchField.length ? 1 : -10}`,
-				id: `${this._id}-item-${1}`,
-				press: this._handleSearchIconPress.bind(this),
-				_tabIndex: "-1",
-			},
-			...this.items.map((item, index) => {
-				return {
-					src: item.src,
-					id: item._id,
-					refItemid: item._id,
-					text: item.text,
-					classes: "ui5-shellbar-custom-item ui5-shellbar-button",
-					priority: 1,
-					domOrder: (++domOrder),
-					style: `order: ${2}`,
-					show: true,
-					press: this._handleCustomActionPress.bind(this),
-					_tabIndex: "-1",
-				};
-			}),
-			{
-				src: "sap-icon://bell",
-				text: "Notifications",
-				classes: `${this.showNotifications ? "" : "ui5-shellbar-invisible-button"} ui5-shellbar-bell-button ui5-shellbar-button`,
-				priority: 3,
-				style: `order: ${this.showNotifications ? 3 : -10}`,
-				id: `${this._id}-item-${2}`,
-				show: this.showNotifications,
-				domOrder: this.showNotifications ? (++domOrder) : -1,
-				press: this._handleNotificationsPress.bind(this),
-				_tabIndex: "-1",
-			},
-			{
-				src: "sap-icon://overflow",
-				text: "Overflow",
-				classes: `${showOverflowButton ? "" : "ui5-shellbar-hidden-button"} ui5-shellbar-overflow-button-shown ui5-shellbar-overflow-button ui5-shellbar-button`,
-				priority: 5,
-				order: 4,
-				style: `order: ${showOverflowButton ? 4 : -1}`,
-				domOrder: showOverflowButton ? (++domOrder) : -1,
-				id: `${this.id}-item-${5}`,
-				press: this._handleOverflowPress.bind(this),
-				_tabIndex: "-1",
-				show: true,
-			},
-			{
-				text: "Person",
-				classes: `${this.profile ? "" : "ui5-shellbar-invisible-button"} ui5-shellbar-image-button ui5-shellbar-button`,
-				priority: 4,
-				subclasses: "ui5-shellbar-image-buttonImage",
-				style: `order: ${this.profile ? 5 : -10};`,
-				subStyles: `${this.profile ? `background-image: url(${this.profile})` : ""}`,
-				id: `${this._id}-item-${3}`,
-				domOrder: this.profile ? (++domOrder) : -1,
-				show: this.profile,
-				press: this._handleProfilePress.bind(this),
-				_tabIndex: "-1",
-			},
-			{
-				src: "sap-icon://grid",
-				text: "Product Switch",
-				classes: `${this.showProductSwitch ? "" : "ui5-shellbar-invisible-button"} ui5-shellbar-button ui5-shellbar-button-product-switch`,
-				priority: 2,
-				style: `order: ${this.showProductSwitch ? 6 : -10}`,
-				id: `${this._id}-item-${4}`,
-				show: this.showProductSwitch,
-				domOrder: this.showProductSwitch ? (++domOrder) : -1,
-				press: this._handleProductSwitchPress.bind(this),
-				_tabIndex: "-1",
-			},
-		];
-		return items;
-	}
+		const itemsCountToPop = overflowChildren.length - actualOverflowingChildren.length;
 
-	_updateItemsInfo(newItems) {
-		const isDifferent = JSON.stringify(this._itemsInfo) !== JSON.stringify(newItems);
-		if (isDifferent) {
-			this._itemsInfo = newItems;
+		for (let i = 0; i < itemsCountToPop; i++) {
+			if (actionsByPriority[i]) {
+				actionsByPriority[i].hidden = true;
+				actualOverflowingChildren.push(actionsByPriority[i]);
+			}
 		}
+
+		this.overflowButton.hidden = !actualOverflowingChildren.length;
+
+		this._hiddenIcons = actualOverflowingChildren.map(item => {
+			return {
+				item,
+				icon: item.relatedItem ? item.relatedItem.src : item.getAttribute("icon"),
+				text: item.relatedItem ? item.relatedItem.text : item.getAttribute("data-ui5-text"),
+			};
+		});
 	}
 
-	get classes() {
-		return {
-			wrapper: {
-				"ui5-shellbar-root": true,
-				"ui5-shellbar-with-searchfield": this.searchField.length,
-			},
-			button: {
-				"ui5-shellbar-menu-button--interactive": !!this.menuItems.length,
-				"ui5-shellbar-menu-button": true,
-			},
-		};
+	get profileButton() {
+		return this.shadowRoot.querySelector(".ui5-shellbar-image-button");
+	}
+
+	get itemsAsButtons() {
+		return this.shadowRoot.querySelectorAll("[data-ui5-shellbar-item-button]");
+	}
+
+	get overflowButton() {
+		return this.shadowRoot.querySelector("ui5-button[icon='sap-icon://overflow'");
+	}
+
+	get productSwitch() {
+		return this.shadowRoot.querySelector("ui5-button[icon='sap-icon://grid'");
+	}
+
+	get notifications() {
+		return this.shadowRoot.querySelector("ui5-button[icon='sap-icon://bell'");
+	}
+
+	get search() {
+		return this.shadowRoot.querySelector("ui5-button[icon='sap-icon://search'");
+	}
+
+	get overflowItemsParent() {
+		return this.shadowRoot.querySelector(".ui5-shellbar-overflow-container-right-child");
+	}
+
+	get overflowContainerRight() {
+		return this.shadowRoot.querySelector(".ui5-shellbar-overflow-container-right");
+	}
+
+	get overflowPopover() {
+		return this.shadowRoot.querySelector(".ui5-shellbar-overflow-popover");
+	}
+
+	get menuPopover() {
+		return this.shadowRoot.querySelector(".ui5-shellbar-menu-popover");
 	}
 
 	get styles() {
 		return {
-			searchField: {
-				[getRTL() ? "left" : "right"]: this._searchField.right,
-				"top": `${parseInt(this._searchField.top)}px`,
+			profile: {
+				"background-image": `url(${this.profile})`,
 			},
 		};
 	}
 
-	get interactiveLogo() {
-		return this.breakpointSize === "S";
+	get showStandaloneLogo() {
+		// if the size is S and you dont have items
+		const sizeSnoItems = this.logo && ((this.breakpointSize === "S") && !this.hasMenuItems);
+		// always let the logo standalone if the size is not S
+		const notSizeS = this.logo && (this.breakpointSize !== "S");
+
+		return sizeSnoItems || notSizeS;
 	}
 
-	get showArrowDown() {
-		return this.primaryTitle || (this.logo && this.interactiveLogo);
+	get combineLogo() {
+		return this.breakpointSize === "S" && this.logo && this.hasMenuItems;
 	}
 
 	get popoverHorizontalAlign() {

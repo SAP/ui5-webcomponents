@@ -139,6 +139,11 @@
 	padding: var(--_ui5_popover_content_padding);
 }
 
+/* Remove this after marking padding top level */
+:host([no-content-padding]) .ui5-popover-content {
+	padding: 0;
+}
+
 :host([header-text]) .ui5-popup-header-text {
 	padding: 0 0.25rem;
 	text-align: center;

@@ -1,32 +1,31 @@
-<div
-	class="{{classes.wrapper}}"
-	dir="{{rtl}}"
->
+<div class="ui5-shellbar-root" dir="{{rtl}}">
 	<div class="ui5-shellbar-overflow-container ui5-shellbar-overflow-container-left">
 
 		{{#if startButton.length}}
-				<slot name="startButton"></slot>
+			<slot name="startButton"></slot>
 		{{/if}}
 
-		{{#unless interactiveLogo}}
+		{{#if showStandaloneLogo}}
 			<img class="ui5-shellbar-logo" src="{{logo}}" @click="{{_logoPress}}" />
-		{{/unless}}
+		{{/if}}
 
-		{{#if showArrowDown}}
-			<button tabindex="0" class="{{classes.button}}" @click="{{_header.press}}">
-				{{#if interactiveLogo}}
+		{{#if hasMenuItems}}
+			<ui5-button class="ui5-shellbar-logo-button ui5-shellbar-button" @click="{{_titlePress}}">
+
+				{{#if combineLogo}}
 					<img class="ui5-shellbar-logo" src="{{logo}}" />
 				{{/if}}
 
-				{{#if primaryTitle}}
-					<h1 class="ui5-shellbar-menu-button-title">
-						<bdi class="{{classes.title}}">{{primaryTitle}}</bdi>
-					</h1>
-				{{/if}}
+				{{> title}}
 
 				<span class="ui5-shellbar-menu-button-arrow"></span>
-			</button>
+			</ui5-button>
+
+		{{else}}
+			{{> title}}
 		{{/if}}
+
+		<h2 class="ui5-shellbar-secondary-title">{{secondaryTitle}}</h2>
 
 		<ui5-popover class="ui5-shellbar-menu-popover" placement-type="Bottom">
 			<ui5-list separators="None" mode="SingleSelect" @ui5-itemPress={{_menuItemPress}}>
@@ -34,7 +33,6 @@
 			</ui5-list>
 		</ui5-popover>
 
-		<h2 class="ui5-shellbar-secondary-title">{{secondaryTitle}}</h2>
 	</div>
 
 	<div class="ui5-shellbar-overflow-container ui5-shellbar-overflow-container-middle">
@@ -48,60 +46,104 @@
 	<div class="ui5-shellbar-overflow-container ui5-shellbar-overflow-container-right">
 
 		<div class="ui5-shellbar-overflow-container-right-child">
-			{{#each _itemsInfo}}
-				{{#if this.src}}
-					<ui5-icon
-						tabindex="{{this._tabIndex}}"
-						data-ui5-notification-count="{{../notificationCount}}"
-						data-ui5-external-action-item-id="{{this.refItemid}}"
-						class="{{this.classes}}"
-						src="{{this.src}}"
-						id="{{this.id}}"
-						style="{{this.style}}"
-						@click={{this.press}}>
-					</ui5-icon>
-				{{else}}
-					<div
-						tabindex="{{this._tabIndex}}"
-						id="{{this.id}}"
-						style="{{this.style}}"
-						class="{{this.classes}}"
-						@click="{{this.press}}"
-					>
-						<span style="{{this.subStyles}}" class="{{this.subclasses}}"></span>
-					</div>
-				{{/if}}
+
+			{{#if searchField.length}}
+				<ui5-button 
+					class="ui5-shellbar-button ui5-shellbar-search-button"
+					icon="sap-icon://search"
+					data-ui5-text="Search"
+					.handler={{_handleSearchActionClick}}
+					@click={{_handleSearchActionClick}}
+				>
+				</ui5-button>
+			{{/if}}
+
+			{{#each items}}
+				<ui5-button
+					class="ui5-shellbar-button ui5-shellbar-custom-item"
+					icon={{this.src}}
+					data-ui5-shellbar-item-button
+					.relatedItem={{this}}
+					@click={{../_handleCustomActionPress}}
+				>
+				</ui5-button>
 			{{/each}}
+
+			{{#if showNotifications}}
+				<ui5-button 
+					class="ui5-shellbar-button ui5-shellbar-notifications-button"
+					icon="sap-icon://bell"
+					data-ui5-text="Notifications"
+					data-ui5-notification-count="{{notificationCount}}"
+					@click={{_handleNotificationsPress}}
+					.handler={{_handleNotificationsPress}}
+				>
+				</ui5-button>
+			{{/if}}
+
+			<ui5-button 
+				class="ui5-shellbar-button ui5-shellbar-overflow-button"
+				icon="sap-icon://overflow"
+				@click="{{_toggleActionPopover}}"
+			>
+			</ui5-button>
+
+			{{#if profile}}
+			<ui5-button @click={{_handleProfilePress}} class="ui5-shellbar-button ui5-shellbar-image-button">
+				<span style="{{styles.profile}}" class="ui5-shellbar-image-button-inner"></span>
+			</ui5-button>
+			{{/if}}
+
+			{{#if showProductSwitch}}
+				<ui5-button
+					class="ui5-shellbar-button ui5-shellbar-button-product-switch"
+					icon="sap-icon://grid"
+					data-ui5-text="Product Switch"
+					@click={{_handleProductSwitchPress}}
+					.handler={{_handleProductSwitchPress}}
+				>
+				</ui5-button>
+			{{/if}}
+
 		</div>
 	</div>
 
-	<ui5-popover class="ui5-shellbar-overflow-popover" placement-type="Bottom" horizontal-align="{{popoverHorizontalAlign}}" no-arrow>
-		<ui5-list separators="None" @ui5-itemPress="{{_actionList.itemPress}}">
+	<ui5-popover class="ui5-shellbar-overflow-popover" placement-type="Bottom"
+		horizontal-align="{{popoverHorizontalAlign}}" no-arrow>
+		<ui5-list separators="None" @ui5-itemPress="{{_actionPress}}">
+
 			{{#each _hiddenIcons}}
-				<ui5-li
-					data-ui5-external-action-item-id="{{this.refItemid}}" 
-					icon="{{this.src}}"
-					type="Active"
-					@ui5-_press="{{this.press}}"
-				>{{this.text}}
+				<ui5-li icon="{{this.icon}}" type="Active" .relatedButton={{this.item}} class="ui5-shellbar-overflow-list-item">
+					{{this.text}}
 				</ui5-li>
 			{{/each}}
+
 		</ui5-list>
 	</ui5-popover>
 
-	<div class="ui5-shellbar-block-layer">
-	</div>
 
-	<div id="{{_id}}-searchfield-wrapper"
-		class="ui5-shellbar-search-field"
-		style="{{styles.searchField}}"
-		@focusout={{_searchField.focusout}}
+	<ui5-popover 
+		class="ui5-shellbar-search-popover"
+		@ui5-afterOpen={{_toggleSearchIconActiveState}}
+		@ui5-afterClose={{_toggleSearchIconActiveState}}
+		placement-type="Left"
+		no-content-padding
+		no-arrow
 	>
 		{{#if searchField.length}}
 			<slot name="searchField"></slot>
 		{{/if}}
-	</div>
+	</ui5-popover>
 </div>
+
+
+{{#*inline "title"}}
+	{{#if primaryTitle}}
+		<h1 class="ui5-shellbar-menu-button-title">
+			<bdi>{{primaryTitle}}</bdi>
+		</h1>
+	{{/if}}
+{{/inline}}
 
 {{#*inline "coPilot"}}
 	<svg @click="{{_coPilotPress}}" version="1.1" width="44" height="44" viewBox="-150 -150 300 300" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"

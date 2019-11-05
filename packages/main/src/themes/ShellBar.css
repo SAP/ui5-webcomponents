@@ -16,11 +16,10 @@
 	box-sizing: border-box;
 }
 
-.ui5-shellbar-menu-button,
 .ui5-shellbar-button,
-.ui5-shellbar-image-button,
 ::slotted(ui5-button[slot="startButton"]) {
 	height: 2.25rem;
+	width: 2.25rem;
 	padding: 0;
 	margin-left: 0.5rem;
 	border: none;
@@ -35,25 +34,19 @@
 	font-weight: bold;
 }
 
-::slotted(ui5-button[slot="startButton"]:hover),
-.ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:hover,
 .ui5-shellbar-button:hover,
-.ui5-shellbar-image-button:hover {
+::slotted(ui5-button[slot="startButton"]:hover) {
 	background: var(--sapUiShellHoverBackground);
 }
 
-::slotted(ui5-button[slot="startButton"][active]),
-.ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:active,
-.ui5-shellbar-button:active,
-.ui5-shellbar-image-button:active {
+.ui5-shellbar-button[active],
+::slotted(ui5-button[slot="startButton"][active]) {
 	background: var(--sapUiShellActiveBackground);
 	color: var(--sapUiShellActiveTextColor);
 }
 
-::slotted(ui5-button[slot="startButton"][focused])::after,
-.ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:focus::after,
-.ui5-shellbar-button:focus::after,
-.ui5-shellbar-image-button:focus::after {
+.ui5-shellbar-button[focused]::after,
+::slotted(ui5-button[slot="startButton"][focused])::after {
 	content: "";
 	position: absolute;
 	width: calc(100% - 0.375rem);
@@ -65,8 +58,8 @@
 	z-index: 1;
 }
 
-.ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive::-moz-focus-inner {
-	border: none;
+.ui5-shellbar-button.ui5-shellbar-logo-button {
+	width: auto;
 }
 
 .ui5-shellbar-menu-button-title {
@@ -77,7 +70,32 @@
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	flex: auto;
+	background: transparent;
+	color: var(--sapUiShellTextColor);
+	box-sizing: border-box;
+	position: relative;
+	font-weight: bold;
+}
+
+:host([breakpoint-size="L"][logo]:not([has-menu-items])) .ui5-shellbar-menu-button-title,
+:host([breakpoint-size="XL"][logo]:not([has-menu-items])) .ui5-shellbar-menu-button-title,
+:host([breakpoint-size="XXL"][logo]:not([has-menu-items])) .ui5-shellbar-menu-button-title {
+	margin-left: 1rem;
+	margin-right: 1rem;
+}
+
+:host([breakpoint-size="L"]:not([logo]):not([has-menu-items])) .ui5-shellbar-menu-button-title,
+:host([breakpoint-size="XL"]:not([logo]):not([has-menu-items])) .ui5-shellbar-menu-button-title,
+:host([breakpoint-size="XXL"]:not([logo]):not([has-menu-items])) .ui5-shellbar-menu-button-title {
+	margin-right: 1rem;
+}
+
+:host([primary-title][has-menu-items]) .ui5-shellbar-secondary-title {
+	margin: 0 .5rem;
+}
+
+.ui5-shellbar-button .ui5-shellbar-menu-button-title {
+	margin-left: 0;
 }
 
 :host(:not([primary-title])) .ui5-shellbar-menu-button {
@@ -93,9 +111,12 @@
 	margin-left: .5rem;
 }
 
+:host([breakpoint-size="M"][logo]:not([has-menu-items])) .ui5-shellbar-menu-button-title {
+	margin-left: 1rem;
+}
+
 .ui5-shellbar-secondary-title {
 	display: inline-block;
-	margin: 0 0.5rem;
 	font-size: var(--sapMFontSmallSize);
 	color: var(--sapUiShellTextColor);
 	line-height: 1rem;
@@ -105,7 +126,7 @@
 	overflow: hidden;
 }
 
-.ui5-shellbar-menu-button--interactive .ui5-shellbar-menu-button-arrow {
+:host([has-menu-items]) .ui5-shellbar-menu-button-arrow {
 	display: inline-block;
 	margin-left: 0.5rem;
 	width: 10px;
@@ -116,6 +137,13 @@
 	border-left: 5px solid transparent;
 	border-right: 5px solid transparent;
 	border-top: 5px solid var(--sapUiShellTextColor);
+}
+
+:host([active-search-icon]) .ui5-shellbar-search-button {
+	background: var(--sapUiHighlight);
+	color: var(--sapUiShellActiveTextColor);
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
 }
 
 .ui5-shellbar-overflow-container {
@@ -153,10 +181,6 @@
 	margin-right: 0;
 }
 
-:host([breakpoint-size="S"]) .ui5-shellbar-search-field {
-	width: 200px;
-}
-
 :host([breakpoint-size="M"]) .ui5-shellbar-root {
 	padding: 0.25rem 2rem;
 }
@@ -182,30 +206,6 @@
 	display: none;
 }
 
-.ui5-shellbar-button {
-	min-width: 2.25rem;
-	font-size: 1rem;
-	padding: .625rem;
-}
-
-.ui5-shellbar-image-buttonImage {
-	border-radius: 50%;
-	width: 1.75rem;
-	height: 1.75rem;
-	display: flex;
-	background-size: cover;
-}
-
-.ui5-shellbar-image-button {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	min-width: 2.25rem;
-	height: 2.25rem;
-	display: inline-flex;
-	padding: 0;
-}
-
 .ui5-shellbar-overflow-container-left {
 	flex-basis: 50%;
 	max-width: calc(50% - 1.5rem);
@@ -221,15 +221,15 @@
 	padding: 0.25rem 0.5rem;
 	cursor: text;
 	-webkit-user-select: text;
-  -moz-user-select: text;
-  -ms-user-select: text;
+	-moz-user-select: text;
+	-ms-user-select: text;
 	user-select: text;
 }
 
 .ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive {
 	-webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
 	user-select: none;
 	cursor: pointer;
 }
@@ -239,21 +239,16 @@
 }
 
 .ui5-shellbar-overflow-container-right {
-	display: block;
-	overflow: hidden;
-	box-sizing: border-box;
-	white-space: nowrap;
 	margin-left: 8rem;
 	flex: 1;
+	display: flex;
+	justify-content: flex-end;
+	box-sizing: border-box;
 }
 
 .ui5-shellbar-overflow-container-right .ui5-shellbar-overflow-container-right-child {
 	display: flex;
-	float: right;
-}
-
-.ui5-shellbar-overflow-button {
-	display: none;
+	box-sizing: border-box;
 }
 
 :host([breakpoint-size="M"]) .ui5-shellbar-secondary-title {
@@ -272,38 +267,11 @@
 	margin-left: 0;
 }
 
-.ui5-shellbar-overflow-button-shown {
-	display: inline-block;
-}
-
-.ui5-shellbar-hidden-button,
-.ui5-shellbar-invisible-button {
-	visibility: hidden;
-}
-
-.svg-box-content {
-	width: 40px;
-	height: 30px;
-}
-
-:host(:not([show-block-layer])) .ui5-shellbar-search-field {
-	display: none;
-}
-
-
-:host([breakpoint-size="L"]) .ui5-shellbar-with-searchfield .ui5-shellbar-overflow-container-right {
-	margin-left: 1rem;
-}
-
-:host([breakpoint-size="XL"]) .ui5-shellbar-with-searchfield .ui5-shellbar-overflow-container-right {
-	margin-left: 1rem;
-}
-
-:host(:not([notification-count])) .ui5-shellbar-bell-button {
+:host(:not([notification-count])) .ui5-shellbar-notifications-button {
 	position: relative;
 }
 
-:host([notification-count]) .ui5-shellbar-bell-button::before {
+:host([notification-count]) .ui5-shellbar-notifications-button::before {
 	content: attr(data-ui5-notification-count);
 	position: absolute;
 	width: auto;
@@ -324,37 +292,11 @@
 	box-sizing: border-box;
 }
 
-.ui5-shellbar-menu-button {
-	margin-left: 0.5rem;
-}
-
-.ui5-shellbar-block-layer {
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	position: fixed;
-	outline: 0 none;
-	z-index: 100;
-}
-
-:host(:not([show-block-layer])) .ui5-shellbar-block-layer {
-	display: none;
-}
-
-.ui5-shellbar-search-field {
-	z-index: 101;
-	position: absolute;
-	width: 240px;
-	top: 0.25rem;
-	height: 2.25rem;
-}
-
 ::slotted(ui5-input) {
 	background-color: var(--sapUiShellColor);
 	border: 1px solid var(--sapUiShellBorderColorLighten30);
 	color: var(--sapUiShellTextColor);
-	height: 100%;
+	height: 2.25rem;
 }
 
 ::slotted(ui5-input:hover) {
@@ -364,13 +306,6 @@
 
 ::slotted(ui5-input[focused]) {
 	outline: 1px dotted var(--sapUiContentContrastFocusColor);
-}
-
-:host([show-block-layer]) .ui5-shellbar-search-button {
-	background: var(--sapUiHighlight);
-	color: var(--sapUiShellActiveTextColor);
-	border-top-left-radius: 0;
-	border-bottom-left-radius: 0;
 }
 
 .ui5-shellbar-co-pilot-placeholder {
@@ -410,9 +345,26 @@
 	margin-right: 0;
 }
 
+:host([breakpoint-size="M"][logo]:not([has-menu-items])) [dir="rtl"] .ui5-shellbar-menu-button-title {
+	margin-right: 1rem;
+}
+
+:host([has-menu-items]) [dir="rtl"] .ui5-shellbar-logo-button {
+	margin-right: .5rem;
+}
+
 ::slotted(ui5-button[slot="startButton"]) {
 	margin-right: 0.5rem;
 	margin-left: 0;
 	justify-content: center;
 	align-items: center;
+}
+
+.ui5-shellbar-image-button-inner {
+	width: 1.75rem;
+	height: 1.75rem;
+	display: flex;
+	background-size: cover;
+	border-radius: 50%;
+	pointer-events: none;
 }
