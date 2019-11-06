@@ -18,6 +18,7 @@ class ItemNavigation extends EventProvider {
 		this.currentIndex = options.currentIndex || 0;
 		this.rowSize = options.rowSize || 1;
 		this.cyclic = options.cyclic || false;
+		this.preventHorizontalNavigation = options.preventHorizontal;
 
 		this.rootWebComponent = rootWebComponent;
 		this.rootWebComponent.addEventListener("keydown", this.onkeydown.bind(this));
@@ -65,11 +66,11 @@ class ItemNavigation extends EventProvider {
 			return this._handleDown(event);
 		}
 
-		if (isLeft(event)) {
+		if (isLeft(event) && !this.preventHorizontalNavigation) {
 			return this._handleLeft(event);
 		}
 
-		if (isRight(event)) {
+		if (isRight(event) && !this.preventHorizontalNavigation) {
 			return this._handleRight(event);
 		}
 
