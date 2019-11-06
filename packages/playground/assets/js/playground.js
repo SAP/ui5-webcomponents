@@ -233,9 +233,13 @@ function toggleNav() {
 }
 
 function scrollSelectedMenuItemIntoView() {
-  setTimeout(function() {
-    document.querySelector(".navigation-list-link.active").scrollIntoView({
-      behavior: "smooth",
-    });
-  }, 500);
+  const selectedElement = document.querySelector(".navigation-list-link.active");
+  const selectedElementBounding = selectedElement.getBoundingClientRect();
+  if (selectedElementBounding.bottom >= (window.innerHeight || document.documentElement.clientHeight)) {
+    setTimeout(function() {
+      selectedElement.scrollIntoView({
+        behavior: "smooth",
+      });
+    }, 500);
+  }
 }
