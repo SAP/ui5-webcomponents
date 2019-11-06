@@ -53,7 +53,6 @@ class ProductSwitch extends UI5Element {
 		super();
 		this.initItemNavigation();
 
-		this.addEventListener("ui5-_press", this._onItemPress.bind(this));
 		this.addEventListener("ui5-_focused", this._onItemFocused.bind(this));
 	}
 

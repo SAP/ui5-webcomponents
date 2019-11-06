@@ -16,7 +16,7 @@ const metadata = {
 		  * @defaultvalue ""
 		  * @public
 		  */
-		maintitle: {
+		primaryTitle: {
 			type: String,
 		},
 		/**
@@ -43,25 +43,6 @@ const metadata = {
 		 * @public
 		 */
 		icon: {
-			type: String,
-		},
-		/**
-		 * Specifies a target where the targetSrc content must be open.
-		 * Options are the standard values for window.open() supported by browsers: _self, _top, _blank, _parent, _search. Alternatively, a frame name can be entered.
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @public
-		 */
-		target: {
-			type: String,
-		},
-		/**
-		 *Defines the ProductSwitchItem target URI. Supports standard hyperlink behavior.
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @public
-		 */
-		targetSrc: {
 			type: String,
 		},
 		/**
