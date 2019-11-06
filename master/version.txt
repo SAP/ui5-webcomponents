@@ -1,10 +1,5 @@
-commit 5ca3280ca166934ab02de92a04eccc8f53e38149
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Wed Oct 30 14:58:43 2019 +0200
+commit fdcddaa241cd14b182010f7815a26833655f95c4
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Wed Nov 6 16:45:21 2019 +0200
 
-    refactor(ui5-shellbar): rename icon slot to startButton (#901)
-    
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/884
-    
-    BREAKING CHANGE: icon aggregation has been renamed to startButton.
-    It accepts a ui5-button and overstyles it to match ShellBar's styling.
+    Build new playground (#751)
