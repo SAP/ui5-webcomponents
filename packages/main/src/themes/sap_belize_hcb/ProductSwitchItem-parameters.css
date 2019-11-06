@@ -1,12 +1,12 @@
 @import "../base/ProductSwitchItem-parameters.css";
 
 :root {
-	--_ui5_product-switch-item_background_color: #000000;
-	--_ui5_product-switch-item_hover_background_color: #7a5100;
-	--_ui5_product-switch-item_active_background_color: #7a5100;
-	--_ui5_product-switch-item_active_color: #ffffff;
-	--_ui5_product-switch-item_icon_color: #ffffff;
-	--_ui5_product-switch-item_title_color: #ffffff;
-	--_ui5_product-switch-item_subtitle_color: #ffffff;
-	--_ui5_product-switch-item_outline: .125rem #ffffff dotted;
+	--_ui5_product_switch_item_background_color: #000000;
+	--_ui5_product_switch_item_hover_background_color: #7a5100;
+	--_ui5_product_switch_item_active_background_color: #7a5100;
+	--_ui5_product_switch_item_active_color: #ffffff;
+	--_ui5_product_switch_item_icon_color: #ffffff;
+	--_ui5_product_switch_item_title_color: #ffffff;
+	--_ui5_product_switch_item_subtitle_color: #ffffff;
+	--_ui5_product_switch_item_outline: .125rem #ffffff dotted;
 }

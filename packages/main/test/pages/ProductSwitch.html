@@ -29,27 +29,27 @@
 
 <body>
 	<ui5-productswitch id="productSwitchThreeColumn">
-		<ui5-productswitchitem id="firstItem" maintitle="Home" subtitle="Central Home" icon="sap-icon://home"></ui5-productswitchitem>
-		<ui5-productswitchitem maintitle="Analytics Cloud" subtitle="Analytics Cloud" icon="sap-icon://business-objects-experience"></ui5-productswitchitem>
-		<ui5-productswitchitem maintitle="Catalog" subtitle="Ariba" icon="sap-icon://contacts"></ui5-productswitchitem>
-		<ui5-productswitchitem maintitle="Guided Buying" icon="sap-icon://credit-card"></ui5-productswitchitem>
+		<ui5-productswitchitem id="firstItem" primary-title="Home" subtitle="Central Home" icon="sap-icon://home"></ui5-productswitchitem>
+		<ui5-productswitchitem primary-title="Analytics Cloud" subtitle="Analytics Cloud" icon="sap-icon://business-objects-experience"></ui5-productswitchitem>
+		<ui5-productswitchitem primary-title="Catalog" subtitle="Ariba" icon="sap-icon://contacts"></ui5-productswitchitem>
+		<ui5-productswitchitem primary-title="Guided Buying" icon="sap-icon://credit-card"></ui5-productswitchitem>
 	</ui5-productswitch>
 
 	<ui5-productswitch id="productSwitchFourColumn">
-		<ui5-productswitchitem id="firstItem" maintitle="Home" subtitle="Central Home" icon="sap-icon://home"></ui5-productswitchitem>
-		<ui5-productswitchitem maintitle="Analytics Cloud" subtitle="Analytics Cloud" icon="sap-icon://business-objects-experience"></ui5-productswitchitem>
-		<ui5-productswitchitem maintitle="Catalog" subtitle="Ariba" icon="sap-icon://contacts"></ui5-productswitchitem>
-		<ui5-productswitchitem maintitle="Guided Buying" icon="sap-icon://credit-card"></ui5-productswitchitem>
-		<ui5-productswitchitem maintitle="Strategic Procurement" icon="sap-icon://cart-3"></ui5-productswitchitem>
-		<ui5-productswitchitem maintitle="Travel & Expense" subtitle="Concur" icon="sap-icon://flight"></ui5-productswitchitem>
-		<ui5-productswitchitem maintitle="Vendor Management" subtitle="Fieldglass" icon="sap-icon://shipping-status"></ui5-productswitchitem>
-		<ui5-productswitchitem maintitle="Human Capital Management" icon="sap-icon://customer"></ui5-productswitchitem>
-		<ui5-productswitchitem maintitle="Sales Cloud" subtitle="Sales Cloud" icon="sap-icon://sales-notification"></ui5-productswitchitem>
-		<ui5-productswitchitem maintitle="Commerce Cloud" subtitle="Commerce Cloud" icon="sap-icon://retail-store"></ui5-productswitchitem>
-		<ui5-productswitchitem maintitle="Marketing Cloud" subtitle="Marketing Cloud" icon="sap-icon://marketing-campaign"></ui5-productswitchitem>
-		<ui5-productswitchitem maintitle="Service Cloud" icon="sap-icon://family-care"></ui5-productswitchitem>
-		<ui5-productswitchitem maintitle="Customer Data Cloud" icon="sap-icon://customer-briefing"></ui5-productswitchitem>
-		<ui5-productswitchitem maintitle="S/4HANA" icon="sap-icon://batch-payments"></ui5-productswitchitem>
+		<ui5-productswitchitem id="firstItem" primary-title="Home" subtitle="Central Home" icon="sap-icon://home"></ui5-productswitchitem>
+		<ui5-productswitchitem primary-title="Analytics Cloud" subtitle="Analytics Cloud" icon="sap-icon://business-objects-experience"></ui5-productswitchitem>
+		<ui5-productswitchitem primary-title="Catalog" subtitle="Ariba" icon="sap-icon://contacts"></ui5-productswitchitem>
+		<ui5-productswitchitem primary-title="Guided Buying" icon="sap-icon://credit-card"></ui5-productswitchitem>
+		<ui5-productswitchitem primary-title="Strategic Procurement" icon="sap-icon://cart-3"></ui5-productswitchitem>
+		<ui5-productswitchitem primary-title="Travel & Expense" subtitle="Concur" icon="sap-icon://flight"></ui5-productswitchitem>
+		<ui5-productswitchitem primary-title="Vendor Management" subtitle="Fieldglass" icon="sap-icon://shipping-status"></ui5-productswitchitem>
+		<ui5-productswitchitem primary-title="Human Capital Management" icon="sap-icon://customer"></ui5-productswitchitem>
+		<ui5-productswitchitem primary-title="Sales Cloud" subtitle="Sales Cloud" icon="sap-icon://sales-notification"></ui5-productswitchitem>
+		<ui5-productswitchitem primary-title="Commerce Cloud" subtitle="Commerce Cloud" icon="sap-icon://retail-store"></ui5-productswitchitem>
+		<ui5-productswitchitem primary-title="Marketing Cloud" subtitle="Marketing Cloud" icon="sap-icon://marketing-campaign"></ui5-productswitchitem>
+		<ui5-productswitchitem primary-title="Service Cloud" icon="sap-icon://family-care"></ui5-productswitchitem>
+		<ui5-productswitchitem primary-title="Customer Data Cloud" icon="sap-icon://customer-briefing"></ui5-productswitchitem>
+		<ui5-productswitchitem primary-title="S/4HANA" icon="sap-icon://batch-payments"></ui5-productswitchitem>
 	</ui5-productswitch>
 
 	<ui5-input id="eventTest" />
@@ -59,7 +59,7 @@
 		var oInput = document.getElementById("eventTest");
 		var pressCount = 0;
 
-		oProductSwitch.addEventListener("ui5-itemClick", function (oEvent) {
+		oProductSwitch.addEventListener("itemClick", function (oEvent) {
 			pressCount += 1;
 			oInput.value = pressCount;
 		});

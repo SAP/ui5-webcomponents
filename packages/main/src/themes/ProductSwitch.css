@@ -6,18 +6,17 @@
 .ui5-productswitch-root {
 	display: flex;
 	flex-wrap: wrap;
-	width: 778px;
+	width: 752px; /* 4 * item size */
 	padding: 1.25rem 0.75rem;
-	box-sizing: border-box;
 }
 
 :host([desktop-columns="3"]) .ui5-productswitch-root {
-	width: 588px;
+	width: 564px; /* 3 * item size */
 }
 
 @media only screen and (max-width: 900px) {
 	.ui5-productswitch-root {
-		width: 588px;
+		width: 564px; /* 3 * item size */
 	}
 }
 
