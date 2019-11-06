@@ -31,7 +31,7 @@ fs.readdir(samplesPath, (err, files) => {
                 prependFile(path.join(process.cwd(), '/docs/components', file),
 `---
 layout: sample
-title: ${currentSampleName}
+title: ${currentSampleName.replace(/([A-Z])/g, " $1").trim()}
 parent: Components
 permalink: /playground/components/${currentSampleName}
 newComponent: ${newComponents.indexOf(currentSampleName) > -1}
