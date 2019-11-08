@@ -1,5 +1,5 @@
-commit a141cb93033fb42b2158ded424efb7e24b962277
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu Nov 7 15:23:23 2019 +0200
+commit 46e4125215c04ac61ec3d39218e043053959b775
+Author: Julian Breuksch <julian.breuksch@gmail.com>
+Date:   Fri Nov 8 15:36:27 2019 +0100
 
-    Start deploying playground on master branch (#912)
+    fix(ui5-button): remove on* handlers  The button should not override on* handlers and instead use internal functions.  Part of https://github.com/SAP/ui5-webcomponents/issues/834 (#915)
