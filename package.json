@@ -14,6 +14,7 @@
     "build:base": "cd packages/base && yarn build",
     "build:main": "cd packages/main && yarn build",
     "build:playground": "yarn build:main && cd packages/playground && yarn build",
+    "build:playground:master": "yarn build:main && cd packages/playground && yarn build:master",
     "clean": "npm-run-all --sequential clean:core clean:base clean:main",
     "clean:core": "cd packages/core && yarn clean",
     "clean:base": "cd packages/base && yarn clean",
