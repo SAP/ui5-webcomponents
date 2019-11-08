@@ -276,7 +276,6 @@ const metadata = {
 			},
 		},
 	},
-	_eventHandlersByConvention: true,
 };
 
 /**
@@ -378,7 +377,7 @@ class Input extends UI5Element {
 		this.firstRendering = false;
 	}
 
-	onkeydown(event) {
+	_onkeydown(event) {
 		if (isUp(event)) {
 			return this._handleUp(event);
 		}
@@ -398,7 +397,7 @@ class Input extends UI5Element {
 		this._keyDown = true;
 	}
 
-	onkeyup() {
+	_onkeyup() {
 		this._keyDown = false;
 	}
 
@@ -428,21 +427,21 @@ class Input extends UI5Element {
 		}
 	}
 
-	onfocusin(event) {
+	_onfocusin(event) {
 		this.focused = true; // invalidating property
 		this.previousValue = this.value;
 	}
 
-	onfocusout() {
+	_onfocusout() {
 		this.focused = false; // invalidating property
 		this.previousValue = "";
 	}
 
-	_handleChange(event) {
+	_onchange(event) {
 		this.fireEvent(this.EVENT_CHANGE);
 	}
 
-	_handleInput(event) {
+	_oninput(event) {
 		if (event.target === this.getInputDOMRef()) {
 			// stop the native event, as the semantic "input" would be fired.
 			event.stopImmediatePropagation();

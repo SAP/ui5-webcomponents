@@ -20,8 +20,12 @@
 			aria-describedby="{{accInfo.input.ariaDescribedBy}}"
 			aria-autocomplete="{{accInfo.input.ariaAutoComplete}}"
 			aria-expanded="{{accInfo.input.ariaExpanded}}"
-			@input="{{_handleInput}}"
-			@change="{{_handleChange}}"
+			@input="{{_oninput}}"
+			@change="{{_onchange}}"
+			@focusin="{{_onfocusin}}"
+			@focusout="{{_onfocusout}}"
+			@keydown="{{_onkeydown}}"
+			@keyup="{{_onkeyup}}"
 			data-sap-no-tab-ref
 			data-sap-focus-ref
 		/>
