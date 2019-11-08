@@ -1,7 +1,9 @@
 <div
 	class="ui5-input-root"
-	@focusin="{{onfocusin}}"
-	@focusout="{{onfocusout}}"
+	@focusin="{{_onfocusin}}"
+	@focusout="{{_onfocusout}}"
+	@onkeyup="{{_onkeyup}}"
+	@onkeydown="{{_onkeydown}}"
 >
 	<div class="ui5-input-content">
 		<input id="{{_id}}-inner"
