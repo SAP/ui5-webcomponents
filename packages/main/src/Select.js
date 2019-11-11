@@ -215,7 +215,7 @@ class Select extends UI5Element {
 	 * @public
 	 */
 	get selectedOption() {
-		return this.options.filter(option => option.selected)[0];
+		return this.options.find(option => option.selected);
 	}
 
 	_togglePopover() {
