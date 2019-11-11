@@ -107,7 +107,6 @@ const metadata = {
 	},
 	events: /** @lends sap.ui.webcomponents.main.Table.prototype */ {
 	},
-	_eventHandlersByConvention: true,
 };
 
 /**
