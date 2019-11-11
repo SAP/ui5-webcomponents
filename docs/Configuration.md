@@ -16,7 +16,7 @@ calendarType | Gregorian, Islamic, Buddhist, Japanese, Persian | Gregorian     |
 [formatSettings](#formatSettings)| See the [Format settings](#formatSettings) section below		| Empty object | Allows to override locale-specific configuration
 
 <a name="rtl"></a>
-###RTL
+### RTL
  
 When the `rtl` setting is set to `true`, UI5 Web Components will adjust their styling accordingly.
 However, you should also set the HTML attribute `dir` to `rtl` on the `body` or `html` or any other relevant region of your application
