@@ -1,5 +1,5 @@
-commit 46e4125215c04ac61ec3d39218e043053959b775
-Author: Julian Breuksch <julian.breuksch@gmail.com>
-Date:   Fri Nov 8 15:36:27 2019 +0100
+commit 638a8a7798c0dccf61fc0282e6a6a20d42bb1c22
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Mon Nov 11 15:26:05 2019 +0200
 
-    fix(ui5-button): remove on* handlers  The button should not override on* handlers and instead use internal functions.  Part of https://github.com/SAP/ui5-webcomponents/issues/834 (#915)
+    Add script for building the master branch (#914)
