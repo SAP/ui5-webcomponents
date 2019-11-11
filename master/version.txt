@@ -1,9 +1,5 @@
-commit c90e3b09be5aeb5f35184dde96cce2fab167aca9
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Nov 11 16:59:36 2019 +0200
+commit e8cff86c0df556d9e8c66427bcca7157a6f7300f
+Author: Martotko <16964129+Martotko@users.noreply.github.com>
+Date:   Mon Nov 11 17:21:07 2019 +0200
 
-    feat: add animationMode configuration (#905)
-    
-    - Add animationMode to configure the degree of components animations.
-    Available options are: 'full' (by default), 'basic', 'minimal', 'none'.
-    - Switch on/off the ui5-panel toggle animation based on the 'animationMode'
+    refactor(ui5-table): subscribe event handlers within HBS template (#924)
