@@ -1,7 +1,7 @@
-const AnimationModes = {
+const AnimationMode = {
 	Full: "full",
 	Basic: "basic",
 	Minimal: "minimal",
 	None: "none",
 };
-export default AnimationModes;
+export default AnimationMode;

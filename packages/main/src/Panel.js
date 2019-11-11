@@ -3,7 +3,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import slideDown from "@ui5/webcomponents-base/dist/animations/slideDown.js";
 import slideUp from "@ui5/webcomponents-base/dist/animations/slideUp.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-import AnimationModes from "@ui5/webcomponents-base/dist/types/AnimationModes.js";
+import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Button from "./Button.js";
@@ -226,7 +226,7 @@ class Panel extends UI5Element {
 	}
 
 	shouldAnimate() {
-		return getAnimationMode() !== AnimationModes.None;
+		return getAnimationMode() !== AnimationMode.None;
 	}
 
 	_headerClick(event) {
