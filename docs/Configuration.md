@@ -11,7 +11,7 @@ theme        | sap_fiori_3, sap_belize, sap_belize_hcb         | sap_fiori_3   |
 language     | en, de, es, etc...                              | en            | Language to be used for translatable texts
 [RTL](#rtl)          | true, false                                     | false         | When true, sets global text direction to right-to-left
 compactSize  | true, false                                     | false         | When set, enforces compact density (smaller margins/paddings)
-[animationMode](#animationMode)  | full, basic, minimal, none  | false         | Defines different animation scenarios or levels
+[animationMode](#animationMode)  | full, basic, minimal, none  | full          | Defines different animation scenarios or levels
 calendarType | Gregorian, Islamic, Buddhist, Japanese, Persian | Gregorian     | Default calendar type for date-related web components
 [noConflict](#noConflict)  | true, false | Object                            | false         | When set to true, all events will be fired with a "ui5-" prefix only
 [formatSettings](#formatSettings)| See the [Format settings](#formatSettings) section below		| Empty object | Allows to override locale-specific configuration
