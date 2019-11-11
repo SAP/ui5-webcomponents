@@ -107,7 +107,6 @@ const metadata = {
 	},
 	events: /** @lends sap.ui.webcomponents.main.Table.prototype */ {
 	},
-	_eventHandlersByConvention: true,
 };
 
 /**
@@ -205,13 +204,13 @@ class Table extends UI5Element {
 		this._itemNavigation.update(event.target);
 	}
 
-	onkeydown(event) {
+	_onkeydown(event) {
 		if (isSpace(event)) {
 			event.preventDefault();
 		}
 	}
 
-	onColumnHeaderClick(event) {
+	_onColumnHeaderClick(event) {
 		this.getColumnHeader().focus();
 		this._itemNavigation.update(event.target);
 	}
