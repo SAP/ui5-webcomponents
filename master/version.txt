@@ -1,5 +1,9 @@
-commit 638a8a7798c0dccf61fc0282e6a6a20d42bb1c22
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Mon Nov 11 15:26:05 2019 +0200
+commit c90e3b09be5aeb5f35184dde96cce2fab167aca9
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Nov 11 16:59:36 2019 +0200
 
-    Add script for building the master branch (#914)
+    feat: add animationMode configuration (#905)
+    
+    - Add animationMode to configure the degree of components animations.
+    Available options are: 'full' (by default), 'basic', 'minimal', 'none'.
+    - Switch on/off the ui5-panel toggle animation based on the 'animationMode'
