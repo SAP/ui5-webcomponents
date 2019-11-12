@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", function() {
     toggleSettings();
     setTheme();
     scrollSelectedMenuItemIntoView();
+    createMetaTags();
 });
 
 function toggleSettings() {
@@ -242,4 +243,13 @@ function scrollSelectedMenuItemIntoView() {
       });
     }, 500);
   }
+}
+
+function createMetaTags() {
+  var metaTag = document.createElement("meta");
+  var controlName = document.querySelector(".control-header").innerText;
+  var controlTag = document.querySelector(".control-tag").innerText;
+  metaTag.name = "description";
+  metaTag.content = controlName.replace(/([A-Z])/g, " $1").trim() + ", " + controlTag.replace(/[<>]/g, "") + ": UI5  Web Components usage and API docs";
+  document.head.appendChild(metaTag);
 }

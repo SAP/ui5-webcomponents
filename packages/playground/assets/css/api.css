@@ -21,6 +21,13 @@ body {
 	padding-right: 0.5rem;
 }
 
+.control-tag {
+	margin-bottom: 2rem;
+	font-size: 1.1rem;
+	font-weight: 300;
+	color: #666666;
+}
+
 .snippet {
 	padding: 1rem 1.5rem;
 	border: 0.0625rem solid #C1C1C1;
