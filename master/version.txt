@@ -1,5 +1,5 @@
-commit e8cff86c0df556d9e8c66427bcca7157a6f7300f
-Author: Martotko <16964129+Martotko@users.noreply.github.com>
-Date:   Mon Nov 11 17:21:07 2019 +0200
+commit f1bceeaa646ba25829c9290bef1a929c72a754d5
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Tue Nov 12 13:44:27 2019 +0200
 
-    refactor(ui5-table): subscribe event handlers within HBS template (#924)
+    fix(ui5-select): remove unsupported method in ie (#919)
