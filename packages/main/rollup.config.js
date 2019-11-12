@@ -10,10 +10,11 @@ import filesize from 'rollup-plugin-filesize';
 import commonjs from 'rollup-plugin-commonjs';
 
 const DIST = path.normalize("dist");
-const DIST_PLAYGROUND = path.normalize("dist/resources");
+const DIST_PLAYGROUND = path.normalize("dist/resources/");
 
 
 const DEPLOY_PUBLIC_PATH = process.env.DEPLOY_PUBLIC_PATH || "";
+const IS_TRAVIS_DEPLOYMENT = process.env.IS_TRAVIS_DEPLOYMENT || false;
 
 function ui5DevImportCheckerPlugin() {
 	return {
@@ -36,6 +37,7 @@ function ui5DevImportCheckerPlugin() {
 
 const getPlugins = ({ transpile }) => {
 	const plugins = [];
+	let publicPath = DEPLOY_PUBLIC_PATH || "/resources/";
 
 	plugins.push(filesize({
 		render : function (options, bundle, { minSize, gzipSize, brotliSize, bundleSize }){
@@ -44,7 +46,7 @@ const getPlugins = ({ transpile }) => {
 	}));
 
 	plugins.push(ui5DevImportCheckerPlugin());
-
+ 
 	plugins.push(url({
 		limit: 0,
 		include: [
@@ -52,7 +54,7 @@ const getPlugins = ({ transpile }) => {
 		],
 		emitFiles: true,
 		fileName: "[name].[hash][extname]",
-		publicPath: DEPLOY_PUBLIC_PATH + "/resources/",
+		publicPath,
 	}));
 
 

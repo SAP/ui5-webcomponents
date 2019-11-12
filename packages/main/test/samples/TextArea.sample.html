@@ -1,67 +1,26 @@
-<!DOCTYPE html>
-<html>
+<header>
+	<h2 class="control-header">TextArea</h2>
+	<div class="control-tag">&lt;ui5-textarea&gt;</div>
+</header>
 
-<head>
-	<title>&lt;ui5-textarea&gt;</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta charset="utf-8">
-
-	<link rel="stylesheet" href="../../www/home/core.css">
-
-	<script src="../../test-resources/playground/libs/google-code-prettify/prettify.js"></script>
-	<link href="../../test-resources/playground/libs/google-code-prettify/sunburst.css" type="text/css" rel="stylesheet">
-
-	<link href="../../test-resources/playground/css/api.css" type="text/css" rel="stylesheet">
-
-	<script data-ui5-config type="application/json">
-		{
-			"theme": "sap_fiori_3",
-			"language": "EN"
-		}
-	</script>
-
-	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
-	<script src="../../resources/bundle.esm.js"
-	        type="module"
-	>
-	</script>
-
-	<script nomodule src="../../resources/bundle.es5.js">
-	</script>
-</head>
-<body class="sapUiBody example-wrapper" role="application">
-
-	<header>
-		<h2 class="control-header">TextArea</h2>
-		<div style="margin-bottom: 2rem; font-weight: 300; font-size: 1.1rem; color: #666666;">&lt;ui5-textarea&gt;</div>
-	</header>
-
-	<section>
-		<h3>Basic TextArea</h3>
-		<div class="snippet">
-			<ui5-textarea class="textarea-width" placeholder="Type as much text as you wish"></ui5-textarea>
-		</div>
-		<pre class="prettyprint lang-html"><xmp>
+<section>
+	<h3>Basic TextArea</h3>
+	<div class="snippet">
+		<ui5-textarea class="textarea-width" placeholder="Type as much text as you wish"></ui5-textarea>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
 <ui5-textarea placeholder="Type as much text as you wish"></ui5-textarea>
-		</xmp></pre>
-	</section>
+	</xmp></pre>
+</section>
 
-	<section>
-		<h3>TextArea with Maximum Length</h3>
-		<div class="snippet">
-			<ui5-textarea class="textarea-width" placeholder="Type no more than 10 symbols" max-length="10" show-exceeded-text></ui5-textarea>
-		</div>
-		<pre class="prettyprint lang-html"><xmp>
+<section>
+	<h3>TextArea with Maximum Length</h3>
+	<div class="snippet">
+		<ui5-textarea class="textarea-width" placeholder="Type no more than 10 symbols" max-length="10" show-exceeded-text></ui5-textarea>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
 <ui5-textarea placeholder="Type some text" max-length="10" show-exceeded-text></ui5-textarea>
-		</xmp></pre>
-	</section>
+	</xmp></pre>
+</section>
 
-	<script>
-		window.prettyPrint();
-	</script>
-
-	<script defer src="../../www/samples/settings.js"></script>
-</body>
-
-</html>
+<!-- JSDoc marker -->
