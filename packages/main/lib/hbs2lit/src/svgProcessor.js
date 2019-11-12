@@ -1,5 +1,5 @@
 
-const svgrx = new RegExp(/<svg [\s\S]*?>([\s\S]*?)<\/svg>/, 'g');
+const svgrx = new RegExp(/<svg[\s\S]*?>([\s\S]*?)<\/svg>/, 'g');
 const blockrx = /block[0-9]+/g;
 
 function process(input) {
