@@ -30,9 +30,7 @@ const compileString = async (sInput, config) => {
 		result += lv.blocks[key] + "\n";
 	}
 
-	const svgProcessInfo = svgProcessor.process(result);
-	result = svgProcessInfo.template;
-	result += svgProcessInfo.block;
+	result = svgProcessor.process(result);
 	return result;
 };
 

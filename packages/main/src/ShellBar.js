@@ -454,7 +454,8 @@ class ShellBar extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		this.coPilot = getFeature("CoPilotAnimation") || { animated: false };
+		this.coPilot = (getAnimationMode() === AnimationMode.Full) ? getFeature("CoPilotAnimation") : { animated: false };
+
 		this._hiddenIcons = this._itemsInfo.filter(info => {
 			const isHidden = (info.classes.indexOf("ui5-shellbar-hidden-button") !== -1);
 			const isSet = info.classes.indexOf("ui5-shellbar-invisible-button") === -1;
