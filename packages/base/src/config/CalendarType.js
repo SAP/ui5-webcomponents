@@ -5,7 +5,7 @@ const calendarType = getConfiguredCalendarType();
 
 const getCalendarType = () => {
 	if (calendarType) {
-		const type = Object.keys(CalendarType).filter(calType => calType === calendarType)[0];
+		const type = Object.keys(CalendarType).find(calType => calType === calendarType);
 
 		if (type) {
 			return type;
