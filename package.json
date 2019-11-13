@@ -10,6 +10,7 @@
   ],
   "scripts": {
     "build": "npm-run-all --sequential build:core build:base build:theme-base build:main build:fiori",
+    "build:fast": "npm-run-all --sequential build:theme-base build:main build:fiori",
     "build:core": "cd packages/core && yarn build",
     "build:base": "cd packages/base && yarn build",
     "build:theme-base": "cd packages/theme-base && yarn build",
@@ -24,6 +25,7 @@
     "clean:main": "cd packages/main && yarn clean",
     "clean:fiori": "cd packages/fiori && yarn clean",
     "start": "npm-run-all --parallel start:base start:theme-base start:main start:fiori",
+    "start:fast": "npm-run-all --parallel start:theme-base start:main start:fiori",
     "start:base": "cd packages/base && yarn start",
     "start:theme-base": "cd packages/theme-base && yarn start",
     "start:main": "cd packages/main && yarn start",

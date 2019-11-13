@@ -127,28 +127,6 @@ let config = [];
 
 config = config.concat(getES6Config());
 
-
-const getDerivedColorsConfig = (theme) => {
-	return {
-		input: `src/themes/${theme}/derived-colors.js`,
-		output: {
-			dir: `dist/generated/themes/${theme}/`,
-			format: "esm",
-			sourcemap: true
-		},
-		plugins: [commonjs()],
-	}
-}
-
-if (!process.env.DEV) {
-	// only in PROD, not used for development
-	config = config.concat([
-		getDerivedColorsConfig("sap_belize"),
-		getDerivedColorsConfig("sap_belize_hcb"),
-		getDerivedColorsConfig("sap_fiori_3"),
-	]);
-}
-
 if (process.env.ES5_BUILD) {
 	config = config.concat(getES5Config());
 } else {
