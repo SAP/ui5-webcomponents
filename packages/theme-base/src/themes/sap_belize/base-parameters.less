@@ -31,14 +31,14 @@
 @sapBackgroundColorDefault: @sapPrimary5;
 @sapBackgroundColor: @sapPrimary5;
 @sapFontFamily: "72", "72full", Arial, Helvetica, sans-serif;
-@sapFontSize: ~"calc(0.875 * @sapContent_GridSize)"; /*  0.75em; */
+@sapContent_GridSize: 1rem;
+@sapFontSize: ~"calc(0.875 * @{sapContent_GridSize})"; /*  0.75em; */
 @sapTextColor: @sapPrimary7;
 @sapLinkColor: #0070b1;
 @sapCompanyLogo: none;
 @sapBackgroundImage: none;
 @sapBackgroundImageOpacity: 1.0;
 @sapBackgroundImageRepeat: false;
-@sapContent_GridSize: 1rem;
 
 /* Semantic Border Colors */
 @sapErrorBorderColor: @sapErrorColor;
@@ -91,9 +91,9 @@
 @sapSelectedColor: @sapHighlightColor;
 @sapActiveColor: @sapHighlightColor;
 @sapTitleColor: @sapTextColor;
-@sapElement_LineHeight: ~"calc(3 * @sapContent_GridSize)";
-@sapElement_Height: ~"calc(2.5 * @sapContent_GridSize)";
-@sapElement_BorderWidth: ~"calc(0.0625 * @sapContent_GridSize)";
+@sapElement_LineHeight: ~"calc(3 * @{sapContent_GridSize})";
+@sapElement_Height: ~"calc(2.5 * @{sapContent_GridSize})";
+@sapElement_BorderWidth: ~"calc(0.0625 * @{sapContent_GridSize})";
 @sapContent_LineHeight: 1.4;
 /*  1.3; */
 @sapContent_ElementHeight: 1.37em;
@@ -115,7 +115,7 @@
 @sapContent_ForegroundBorderColor: @sapPrimary6;
 @sapContent_BadgeBackground: @sapAccentColor3;
 @sapButton_BorderWidth: @sapElement_BorderWidth;
-@sapButton_BorderCornerRadius: ~"calc(0.2 * @sapContent_GridSize)";
+@sapButton_BorderCornerRadius: ~"calc(0.2 * @{sapContent_GridSize})";
 @sapButton_Hover_BorderColor: @sapButton_BorderColor;
 @sapButton_Reject_Background: @sapButton_Background;
 @sapButton_Accept_Background: @sapButton_Background;
@@ -154,7 +154,7 @@
 @sapList_Background: @sapPrimary4;
 @sapScrollBar_BorderColor: @sapScrollBar_FaceColor;
 @sapScrollBar_SymbolColor: @sapContent_IconColor;
-@sapScrollBar_Dimension: ~"calc(0.7 * @sapContent_GridSize)";
+@sapScrollBar_Dimension: ~"calc(0.7 * @{sapContent_GridSize})";
 /*  16px; */
 @sapPageHeader_Background: @sapBaseColor;
 @sapPageFooter_Background: @sapPrimary4;
