@@ -22,14 +22,14 @@
   },
   "dependencies": {},
   "devDependencies": {
+    "cssnano": "^4.1.10",
     "less": "^3.10.3",
     "mkdirp": "^0.5.1",
     "npm-run-all": "^4.1.3",
     "nps": "^5.9.8",
     "postcss": "^7.0.18",
     "postcss-cli": "^6.1.3",
-    "postcss-combine-duplicated-selectors": "^7.0.0",
-    "postcss-import": "^12.0.1"
+    "postcss-combine-duplicated-selectors": "^7.0.0"
   },
   "resolutions": {}
 }
