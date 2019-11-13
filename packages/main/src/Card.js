@@ -29,6 +29,20 @@ const metadata = {
 			propertyName: "content",
 			type: HTMLElement,
 		},
+
+		/**
+		 * Defines the visual representation in the header of the card.
+		 * Supports images and icons.
+		 * <b>Note:</b>
+		 * SAP-icons font provides numerous options. To find all the available icons, see the
+		 * <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
+		 * @type {HTMLElement[]}
+		 * @slot
+		 * @public
+		 */
+		avatar: {
+			type: HTMLElement
+		}
 	},
 	properties: /** @lends sap.ui.webcomponents.main.Card.prototype */ {
 
@@ -73,19 +87,6 @@ const metadata = {
 			type: Boolean,
 		},
 
-		/**
-		 * Defines image source URI or built-in icon font URI.
-		 * <br><br>
-		 * <b>Note:</b>
-		 * SAP-icons font provides numerous options. To find all the available icons, see the
-		 * <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
-		 * @type {string}
-		 * @public
-		 */
-		avatar: {
-			type: String,
-		},
-
 		_headerActive: {
 			type: Boolean,
 			noAttribute: true,
@@ -114,7 +115,9 @@ const metadata = {
  * tile with separate header and content areas.
  * The content area of a <code>ui5-card</code> can be arbitrary HTML content.
  * The header can be used through several properties, such as:
- * <code>heading</code>, <code>subtitle</code>, <code>status</code> and <code>avatar</code>.
+ * <code>heading</code>, <code>subtitle</code>, <code>status</code>
+ * and a slot:
+ * <code>avatar</code>.
  *
  * <h3>Keyboard handling</h3>
  * In case you enable <code>headerInteractive</code> property, you can press the <code>ui5-card</code> header by Space and Enter keys.
@@ -189,10 +192,6 @@ class Card extends UI5Element {
 
 	get ariaCardRoleDescription() {
 		return this.i18nBundle.getText(ARIA_ROLEDESCRIPTION_CARD);
-	}
-
-	get ariaCardAvatarLabel() {
-		return this.i18nBundle.getText(AVATAR_TOOLTIP);
 	}
 
 	get ariaCardContentLabel() {

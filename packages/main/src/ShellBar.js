@@ -721,7 +721,7 @@ class ShellBar extends UI5Element {
 
 		const items = [
 			{
-				src: "sap-icon://search",
+				src: "search",
 				text: "Search",
 				classes: `${this.searchField.length ? "" : "ui5-shellbar-invisible-button"} ui5-shellbar-search-button ui5-shellbar-button`,
 				priority: 4,
@@ -733,7 +733,7 @@ class ShellBar extends UI5Element {
 			},
 			...this.items.map((item, index) => {
 				return {
-					src: item.src,
+					src: item.icon,
 					id: item._id,
 					refItemid: item._id,
 					text: item.text,
@@ -747,7 +747,7 @@ class ShellBar extends UI5Element {
 				};
 			}),
 			{
-				src: "sap-icon://bell",
+				src: "bell",
 				text: "Notifications",
 				classes: `${this.showNotifications ? "" : "ui5-shellbar-invisible-button"} ui5-shellbar-bell-button ui5-shellbar-button`,
 				priority: 3,
@@ -759,7 +759,7 @@ class ShellBar extends UI5Element {
 				_tabIndex: "-1",
 			},
 			{
-				src: "sap-icon://overflow",
+				src: "overflow",
 				text: "Overflow",
 				classes: `${showOverflowButton ? "" : "ui5-shellbar-hidden-button"} ui5-shellbar-overflow-button-shown ui5-shellbar-overflow-button ui5-shellbar-button`,
 				priority: 5,
@@ -785,7 +785,7 @@ class ShellBar extends UI5Element {
 				_tabIndex: "-1",
 			},
 			{
-				src: "sap-icon://grid",
+				src: "grid",
 				text: "Product Switch",
 				classes: `${this.showProductSwitch ? "" : "ui5-shellbar-invisible-button"} ui5-shellbar-button ui5-shellbar-button-product-switch`,
 				priority: 2,

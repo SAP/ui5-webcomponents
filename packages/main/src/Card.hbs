@@ -13,15 +13,10 @@
 			tabindex="{{tabindex}}"
 			role="group"
 			aria-labelledby="{{_id}}-heading {{_id}}-subtitle">
-			{{#if image}}
-				<img src="{{avatar}}" aria-label="Avatar" class="ui5-card-avatar ui5-card-header-img">
-			{{/if}}
 
-			{{#if icon}}
-				<span role="img" aria-label="{{ariaCardAvatarLabel}}" class="ui5-card-avatar">
-					<ui5-icon class="ui5-card-header-icon" src="{{avatar}}"></ui5-icon>
-				</span>
-			{{/if}}
+			<div class="ui5-card-avatar">
+				<slot name="avatar"></slot>
+			</div>
 
 			<div class="ui5-card-header-text">
 				{{#if heading}}

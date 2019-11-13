@@ -15,7 +15,7 @@ const metadata = {
 		 * @type {string}
 		 * @public
 		 */
-		src: {
+		icon: {
 			type: String,
 		},
 
@@ -28,8 +28,6 @@ const metadata = {
 		text: {
 			type: String,
 		},
-
-		_icon: { type: HTMLElement },
 	},
 
 	events: /** @lends sap.ui.webcomponents.main.ShellBarItem.prototype */ {

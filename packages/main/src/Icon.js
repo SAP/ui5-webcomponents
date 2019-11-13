@@ -24,12 +24,30 @@ const metadata = {
 		 * <br><br>
 		 * Example:
 		 * <br>
-		 * <code>src='sap-icon://add'</code>, <code>src='sap-icon://delete'</code>, <code>src='sap-icon://employee'</code>.
+		 * <code>src='add'</code>, <code>src='delete'</code>, <code>src='employee'</code>.
+		 *<b> NOTE: This property is about to be depricated in the next version! Pleae use the <code>name</code></b>
 		 *
 		 * @type {string}
 		 * @public
 		*/
 		src: {
+			type: String,
+		},
+
+		/**
+		 * Defines the source URI of the <code>ui5-icon</code>.
+		 * <br><br>
+		 * SAP-icons font provides numerous options. To find all the available icons, see the
+		 * <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
+		 * <br><br>
+		 * Example:
+		 * <br>
+		 * <code>name='add'</code>, <code>src='delete'</code>, <code>src='employee'</code>.
+		 *
+		 * @type {string}
+		 * @public
+		*/
+		name: {
 			type: String,
 		},
 
@@ -143,7 +161,12 @@ class Icon extends UI5Element {
 	}
 
 	get iconData() {
-		const icon = getIconData(this._normalizeIconURI(this.src));
+		const icon = getIconData(this._normalizeIconURI(this.name || this.src));
+
+		if (this.src) {
+			/* eslint-disable-next-line */
+			console.warn(`The src property is about to be depricated in the next version of UI5 Web Components. Please use the name property!`);
+		}
 
 		if (!icon) {
 			/* eslint-disable-next-line */

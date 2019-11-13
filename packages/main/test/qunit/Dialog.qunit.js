@@ -9,7 +9,7 @@ TestHelper.ready(function () {
 			var html = '<ui5-dialog id="myDialog" header-text="Web Component Dialog">'
 				+ '<div slot="header">'
 					+ '<div  class="customHeaderText">Custom Header</div>'
-					+ '<ui5-button icon="sap-icon://decline"></ui5-button>'
+					+ '<ui5-button icon="decline"></ui5-button>'
 				+ '</div>'
 				+ '<div slot="footer">'
 					+ '<div class="customFooterText" >Custom Footer</div>'
