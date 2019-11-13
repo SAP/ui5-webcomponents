@@ -16,6 +16,6 @@ module.exports = {
 			},
         },
 		start: 'nps watch',
-        watch: 'nps "build.styles -w"',
+        watch: 'nps "build.styles.bundles -w"', // TODO: watch mode for the less files
     },
 };
