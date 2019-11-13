@@ -1,4 +1,4 @@
-@import "@ui5/webcomponents-theme-base/src/themes/sap_fiori_3_dark/parameters-bundle.css";
+@import "@ui5/webcomponents-theme-base/dist/themes/sap_fiori_3_dark/parameters-bundle.css";
 
 @import "./Badge-parameters.css";
 @import "./Button-parameters.css";

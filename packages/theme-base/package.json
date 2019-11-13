@@ -12,7 +12,8 @@
   ],
   "scripts": {
     "clean": "nps clean",
-    "build": "nps build"
+    "build": "nps build",
+    "start": "nps start"
   },
   "repository": {
     "type": "git",
