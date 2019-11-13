@@ -2,7 +2,6 @@ import { addCustomCSS, getCustomCSS } from "./theming/CustomStyle.js";
 import { getThemeProperties, getRegisteredPackages } from "./asset-registries/Themes.js";
 import { injectThemeProperties } from "./theming/StyleInjection.js";
 
-const defaultTheme = "sap_fiori_3";
 const themeChangeCallbacks = [];
 
 const attachThemeChange = function attachThemeChange(callback) {
@@ -16,9 +15,7 @@ const _applyTheme = async theme => {
 
 	const registeredPackages = getRegisteredPackages();
 	registeredPackages.forEach(async packageName => {
-		if (theme !== defaultTheme) {
-			cssText = await getThemeProperties(packageName, theme);
-		}
+		cssText = await getThemeProperties(packageName, theme);
 		injectThemeProperties(cssText, packageName);
 	});
 
