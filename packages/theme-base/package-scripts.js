@@ -12,7 +12,7 @@ module.exports = {
 					fiori_3: "lessc src/themes/sap_fiori_3/parameters-bundle.less dist/themes/sap_fiori_3/parameters-bundle.css",
 					fiori_3_dark: "lessc src/themes/sap_fiori_3_dark/parameters-bundle.less dist/themes/sap_fiori_3_dark/parameters-bundle.css"
 				},
-				bundles: "postcss dist/**/parameters-bundle.css --config config/postcss.bundles --base dist/ --dir dist/assets/",
+				bundles: "postcss dist/**/parameters-bundle.css --config config/postcss.bundles --base dist/ --dir dist/css/",
 			},
         },
 		start: 'nps watch',
