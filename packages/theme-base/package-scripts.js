@@ -5,7 +5,7 @@ module.exports = {
             default: "nps clean build.styles",
             styles: {
                 default: "nps build.styles.bundles",
-                bundles: "postcss src/**/parameters-bundle.css --config config/postcss.bundles --base src --dir dist/css/",
+                bundles: "lessc src/**/parameters-bundle.less dist/",
             },
         },
 		start: 'nps watch',
