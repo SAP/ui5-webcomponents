@@ -41,8 +41,8 @@ const metadata = {
 		 * @public
 		 */
 		avatar: {
-			type: HTMLElement
-		}
+			type: HTMLElement,
+		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.Card.prototype */ {
 
@@ -192,6 +192,10 @@ class Card extends UI5Element {
 
 	get ariaCardRoleDescription() {
 		return this.i18nBundle.getText(ARIA_ROLEDESCRIPTION_CARD);
+	}
+
+	get ariaCardAvatarLabel() {
+		return this.i18nBundle.getText(AVATAR_TOOLTIP);
 	}
 
 	get ariaCardContentLabel() {
