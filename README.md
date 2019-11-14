@@ -40,6 +40,15 @@ To consume UI5 Web Components, first you need to install the NPM module:
 npm install @ui5/webcomponents
 ```
 
+...and optionally:
+
+```sh
+npm install @ui5/webcomponents-fiori
+```
+
+for some more specific Fiori UX components such as `ui5-shellbar`.
+
+
 Import the desired component(s) in your app to define the UI5 Web Component.
 
 For example, to use ```ui5-button``` you need to import it:
@@ -48,11 +57,19 @@ For example, to use ```ui5-button``` you need to import it:
 import "@ui5/webcomponents/dist/Button.js"; // loads ui5-button
 ```
 
+...similarly to use ```ui5-shellbar```:
+
+```js
+import "@ui5/webcomponents-fiori/dist/ShellBar.js"; // loads ui5-shellbar
+```
+
 Then, you can use the custom element in an HTML page:
 
 ```html
 <ui5-button>Hello world!</ui5-button>
 ```
+
+*Note*: For a full list of the UI5 Web Components (and the respective NPM modules that ship them), click [here](https://github.com/SAP/ui5-webcomponents/blob/master/docs/Public%20Module%20Imports.md) 
 
 ## Browser support
 
@@ -163,7 +180,9 @@ Keep in mind that linking the same module with npm and Yarn may cause issues. Al
 
 ### Where are the npm packages?
 - [UI5 Web Components](https://www.npmjs.com/package/@ui5/webcomponents)
+- [UI5 Web Components Fiori](https://www.npmjs.com/package/@ui5/webcomponents-fiori)
 - [UI5 Web Components Base](https://www.npmjs.com/package/@ui5/webcomponents-base)
+- [UI5 Web Components Theme Base](https://www.npmjs.com/package/@ui5/webcomponents-theme-base)
 - [UI5 Web Components Core](https://www.npmjs.com/package/@ui5/webcomponents-core)
 
 ## Limitations

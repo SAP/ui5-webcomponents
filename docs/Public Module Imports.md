@@ -6,6 +6,8 @@ Here's a comprehensive list of all UI5 Web Components, their tags, and their res
 
 For API documentation and samples, please check the [UI5 Web Components Playground](https://sap.github.io/ui5-webcomponents/playground/)
 
+### Main package (```@ui5/webcomponents```)
+
 |      Web Component       |       Tag name       |                       Module import                        |
 | ------------------------ | -------------------- | ---------------------------------------------------------- |
 | Badge                    | `ui5-badge`          | `import "@ui5/webcomponents/dist/Badge.js";`               |
@@ -30,8 +32,6 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 | Radio Button             | `ui5-radiobutton`    | `import "@ui5/webcomponents/dist/RadioButton.js";`         |
 | Select                   | `ui5-select`         | `import "@ui5/webcomponents/dist/Select.js";`              |
 | Select Option            | `ui5-option`         | comes with ui5-select              |
-| Shell Bar (Fiori 3)      | `ui5-shellbar`       | `import "@ui5/webcomponents/dist/ShellBar.js";`            |
-| Shell Bar Item           | `ui5-shellbar-item`  | `import "@ui5/webcomponents/dist/ShellBarItem.js";`        |
 | Switch                   | `ui5-switch`         | `import "@ui5/webcomponents/dist/Switch.js";`              |
 | Tab Container            | `ui5-tabcontainer`   | `import "@ui5/webcomponents/dist/TabContainer.js";`        |
 | Tab                      | `ui5-tab`            | `import "@ui5/webcomponents/dist/Tab.js";`                 |
@@ -46,6 +46,12 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 | Title                    | `ui5-title`          | `import "@ui5/webcomponents/dist/Title.js";`               |
 | Toggle Button            | `ui5-togglebutton`   | `import "@ui5/webcomponents/dist/ToggleButton.js";`        |
 
+### Fiori package (```@ui5/webcomponents-fiori```)
+
+|      Web Component       |       Tag name       |                       Module import                        |
+| ------------------------ | -------------------- | ---------------------------------------------------------- |
+| Shell Bar                | `ui5-shellbar`       | `import "@ui5/webcomponents-fiori/dist/ShellBar.js";`      |
+| Shell Bar Item           | `ui5-shellbar-item`  | `import "@ui5/webcomponents/dist/ShellBarItem.js";`        |
 
 ## Additional public modules
 
@@ -112,6 +118,7 @@ As shown in the example above, it's recommended to load the webcomponents polyfi
 
 ```js
 import "@ui5/webcomponents/dist/json-imports/Themes.js";
+import "@ui5/webcomponents-fiori/dist/json-imports/Themes.js"; // Only if using the @ui5/webcomponents-fiori package
 ```
 (for additional themes support)
 
@@ -155,6 +162,7 @@ setTheme("sap_belize_hcb");
 
 ```js
 import "@ui5/webcomponents/dist/json-imports/i18n.js";
+import "@ui5/webcomponents-fiori/dist/json-imports/i18n.js"; // Only if using the @ui5/webcomponents-fiori package
 ```
 
 Some UI5 Web Components contain texts (such as placeholders, tooltips, messages) that need translation.
