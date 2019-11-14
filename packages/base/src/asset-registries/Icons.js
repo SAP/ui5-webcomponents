@@ -9,7 +9,6 @@ const registerIconBundle = async (collectionName, bundleData) => {
 	registerCollectionPromise(collectionName, collectionFetched);
 
 	if (typeof bundleData !== "object") { // not inlined from build -> fetch it
-		await new Promise(resolve => setTimeout(resolve, 2000));
 		bundleData = await fetchJsonOnce(bundleData);
 	}
 	fillRegistry(bundleData);

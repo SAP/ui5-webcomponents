@@ -15,7 +15,7 @@ module.exports = {
                 defaultsjs: "mkdirp dist/generated/i18n && node ./lib/i18n/defaults.js src/i18n dist/generated/i18n",
                 json: "mkdirp dist/assets/i18n && node ./lib/i18n/toJSON.js src/i18n dist/assets/i18n",
             },
-            icons: "cd lib/icon-collection-bundler && npx rollup -c",
+            icons: "cd lib/icon-collection-bundler && node --experimental-modules index.js",
             bundle: "rollup -c --environment ES5_BUILD",
             samples: {
                 default: "nps copy.test build.samples.api build.samples.docs build.samples.playground-index",
