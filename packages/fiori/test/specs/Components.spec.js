@@ -9,7 +9,7 @@ const assertHidden = component => {
 }
 
 describe("General assertions", () => {
-	browser.url("http://localhost:8080/test-resources/pages/Components.html");
+	browser.url("http://localhost:8081/test-resources/pages/Components.html");
 
 	it("tests components with 'hidden' property are not visible", () => {
 		[
