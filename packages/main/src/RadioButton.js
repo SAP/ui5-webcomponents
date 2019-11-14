@@ -155,7 +155,6 @@ const metadata = {
 		 */
 		select: {},
 	},
-	_eventHandlersByConvention: true,
 };
 
 const SVGConfig = {
@@ -284,7 +283,7 @@ class RadioButton extends UI5Element {
 		}
 	}
 
-	onclick() {
+	_onclick() {
 		return this.toggle();
 	}
 
@@ -310,7 +309,7 @@ class RadioButton extends UI5Element {
 		RadioButtonGroup.selectPreviousItem(this, currentGroup);
 	}
 
-	onkeydown(event) {
+	_onkeydown(event) {
 		if (isSpace(event)) {
 			return event.preventDefault();
 		}
@@ -328,7 +327,7 @@ class RadioButton extends UI5Element {
 		}
 	}
 
-	onkeyup(event) {
+	_onkeyup(event) {
 		if (isSpace(event)) {
 			this.toggle();
 		}

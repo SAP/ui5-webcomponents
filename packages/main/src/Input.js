@@ -276,7 +276,6 @@ const metadata = {
 			},
 		},
 	},
-	_eventHandlersByConvention: true,
 };
 
 /**
@@ -378,7 +377,7 @@ class Input extends UI5Element {
 		this.firstRendering = false;
 	}
 
-	onkeydown(event) {
+	_onkeydown(event) {
 		if (isUp(event)) {
 			return this._handleUp(event);
 		}
@@ -398,7 +397,7 @@ class Input extends UI5Element {
 		this._keyDown = true;
 	}
 
-	onkeyup() {
+	_onkeyup(event) {
 		this._keyDown = false;
 	}
 
@@ -428,12 +427,12 @@ class Input extends UI5Element {
 		}
 	}
 
-	onfocusin(event) {
+	_onfocusin(event) {
 		this.focused = true; // invalidating property
 		this.previousValue = this.value;
 	}
 
-	onfocusout() {
+	_onfocusout(event) {
 		this.focused = false; // invalidating property
 		this.previousValue = "";
 	}

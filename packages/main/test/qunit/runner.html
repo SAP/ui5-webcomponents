@@ -5,7 +5,6 @@
 	<title>QUnit Page for ui5-checkbox</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-	<script src="../shared-config.js"></script>
 	<script src="./TestHelper.js"></script>
 	<script type="module" id="sap-ui-bootstrap" src="../../resources/bundle.esm.js">
 	</script>
@@ -13,48 +12,39 @@
 	<script nomodule src="../../resources/bundle.es5.js">
 	</script>
 
-	<script src="../../resources/sap/ui/thirdparty/jquery.js"></script>
-	<link rel="stylesheet" type="text/css" media="screen" href="../../resources/sap/ui/thirdparty/qunit-2.css"/>
-	<script src="../../resources/sap/ui/thirdparty/qunit-2.js"></script>
-	<script src="../../resources/sap/ui/qunit/qunit-coverage.js"></script>
-	<script src="../../resources/sap/ui/thirdparty/sinon.js"></script>
-	<script src="../../resources/sap/ui/thirdparty/sinon-qunit.js"></script>
+	<!-- Patch all of the dependencies -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<link rel="stylesheet" type="text/css" media="screen" href="./util/qunit-2.css"/>
+	<script src="./util/qunit-2.js"></script>
+	<script src="./util/sinon.js"></script>
+	<script src="./util/sinon-qunit.js"></script>
+	<script src="./util/jquery.min.js"></script>
 	<script>
 		function getUrlQueryParams() {
 			var params = {};
 			var queryString = window.location.search;
-
 			if (queryString) {
 				var hashes = queryString.slice(1).split('&');
-
 				params = hashes.reduce(function (acc, hash) {
 					var parts = hash.split("=");
-
 					acc[parts[0]] = parts[1];
-
 					return acc;
 				}, params);
-
 				return params;
 			}
-
 			return params;
 		}
-
 		function insertScript (src) {
 			var script = document.createElement("script");
 			script.src = src;
 			document.head.appendChild(script);
 		}
-
 		$(function () {
 			window.QUnitReport = [];
 			QUnit.log(function (detail) {
 				QUnitReport.push(detail);
 			});
-
 			var params = getUrlQueryParams();
-
 			insertScript(params.testName + ".qunit.js");
 		});
 	</script>

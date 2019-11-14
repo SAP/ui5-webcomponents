@@ -9,11 +9,12 @@
     "ui5"
   ],
   "scripts": {
-    "build": "npm-run-all --sequential build:core build:base build:main build:playground",
+    "build": "npm-run-all --sequential build:core build:base build:main",
     "build:core": "cd packages/core && yarn build",
     "build:base": "cd packages/base && yarn build",
     "build:main": "cd packages/main && yarn build",
-    "build:playground": "cd packages/playground && yarn build",
+    "build:playground": "yarn build:main && cd packages/playground && yarn build",
+    "build:playground:master": "yarn build:main && cd packages/playground && yarn build:master",
     "clean": "npm-run-all --sequential clean:core clean:base clean:main",
     "clean:core": "cd packages/core && yarn clean",
     "clean:base": "cd packages/base && yarn clean",
@@ -21,6 +22,7 @@
     "start": "npm-run-all --parallel start:base start:main",
     "start:base": "cd packages/base && yarn start",
     "start:main": "cd packages/main && yarn start",
+    "start:playground": "cross-env DEPLOY_PUBLIC_PATH=/assets/js/ui5-webcomponents/ yarn build:main && cd packages/playground && yarn start",
     "test": "cd packages/main && yarn test",
     "lint": "wsrun --exclude-missing lint",
     "link-all": "wsrun link",
