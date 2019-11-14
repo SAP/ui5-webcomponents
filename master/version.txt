@@ -1,5 +1,5 @@
-commit f1bceeaa646ba25829c9290bef1a929c72a754d5
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Tue Nov 12 13:44:27 2019 +0200
+commit 23deedd7747519439982066ac3f22192e8ac496e
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu Nov 14 09:45:25 2019 +0200
 
-    fix(ui5-select): remove unsupported method in ie (#919)
+    chore: remove media prefers dark (#927)
