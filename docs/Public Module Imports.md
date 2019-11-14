@@ -51,7 +51,7 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 |      Web Component       |       Tag name       |                       Module import                        |
 | ------------------------ | -------------------- | ---------------------------------------------------------- |
 | Shell Bar                | `ui5-shellbar`       | `import "@ui5/webcomponents-fiori/dist/ShellBar.js";`      |
-| Shell Bar Item           | `ui5-shellbar-item`  | `import "@ui5/webcomponents/dist/ShellBarItem.js";`        |
+| Shell Bar Item           | `ui5-shellbar-item`  | `import "@ui5/webcomponents-fiori/dist/ShellBarItem.js";`  |
 
 ## Additional public modules
 

@@ -10,7 +10,6 @@
   ],
   "scripts": {
     "build": "npm-run-all --sequential build:core build:base build:theme-base build:main build:fiori",
-    "build:fast": "npm-run-all --sequential build:theme-base build:main build:fiori",
     "build:core": "cd packages/core && yarn build",
     "build:base": "cd packages/base && yarn build",
     "build:theme-base": "cd packages/theme-base && yarn build",
