@@ -17,7 +17,7 @@
     "build:main": "cd packages/main && yarn build",
     "build:fiori": "cd packages/fiori && yarn build",
     "build:playground": "yarn build:main && yarn build:fiori && cd packages/playground && yarn build",
-    "build:playground:master": "yarn build:main && cd packages/playground && yarn build:master",
+    "build:playground:master": "yarn build:main && yarn build:fiori && cd packages/playground && yarn build:master",
     "clean": "npm-run-all --sequential clean:core clean:base clean:theme-base clean:main clean:fiori",
     "clean:core": "cd packages/core && yarn clean",
     "clean:base": "cd packages/base && yarn clean",
@@ -32,7 +32,7 @@
     "start:playground": "cross-env DEPLOY_PUBLIC_PATH=/assets/js/ui5-webcomponents/ yarn build:main && yarn build:fiori && cd packages/playground && yarn start",
     "test:main": "cd packages/main && yarn test",
     "test:fiori": "cd packages/fiori && yarn test",
-    "test": "npm-run-all --parallel test:main test:fiori",
+    "test": "npm-run-all --sequential test:main test:fiori",
     "lint": "wsrun --exclude-missing lint",
     "link-all": "wsrun link",
     "unlink-all": "wsrun unlink"
