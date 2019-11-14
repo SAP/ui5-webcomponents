@@ -17,9 +17,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 
 	if (THEME === HCB) {
-		document.body.style="background: #333";
+		document.body.style.backgroundColor = "#333";
 	} else {
-		document.body.style="background: #fff";
+		document.body.style.backgroundColor = "#fff";
 	}
 
 	if (RTL) {
@@ -76,9 +76,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		Configuration.setTheme(theme);
 
 		if (theme === HCB) {
-			document.body.style="background: #333";
+			document.body.style.backgroundColor = "#333";
 		} else {
-			document.body.style="background: #fff";
+			document.body.style.backgroundColor = "#fff";
 		}
 	}, false);
 
@@ -87,9 +87,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		Configuration.setTheme(theme);
 
 		if (theme === FIORI3_DARK) {
-			document.body.style="background: #333";
+			document.body.style.backgroundColor = "#333";
 		} else {
-			document.body.style="background: #fff";
+			document.body.style.backgroundColor = "#fff";
 		}
 	}, false);
 
