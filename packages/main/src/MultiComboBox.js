@@ -123,6 +123,18 @@ const metadata = {
 		},
 
 		/**
+		 * Indicates whether the dropdown is open. True if the dropdown is open, false otherwise.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 */
+		opened: {
+			type: Boolean,
+			defaultValue: false,
+		},
+
+		/**
 		 * Indicates whether the input is focssed
 		 * @private
 		 */
@@ -163,6 +175,14 @@ const metadata = {
 		 * @public
 		 */
 		input: {},
+
+		/**
+		 * Fired when the dropdown is opened or closed.
+		 *
+		 * @event
+		 * @public
+		 */
+		openedChange: {},
 
 		/**
 		 * Fired when selection is changed by user interaction
@@ -388,6 +408,9 @@ class MultiComboBox extends UI5Element {
 
 	_toggleIcon() {
 		this._iconPressed = !this._iconPressed;
+		this.opened = this._iconPressed;
+
+		this.fireEvent("openedChange");
 	}
 
 	_getSelectedItems() {
@@ -456,6 +479,10 @@ class MultiComboBox extends UI5Element {
 
 		const filteredItems = this._filterItems(this.value);
 		this._filteredItems = filteredItems;
+	}
+
+	onAfterRendering() {
+		this.opened && this._getPopover().openBy(this);
 	}
 
 	get _tokenizer() {

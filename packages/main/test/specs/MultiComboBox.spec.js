@@ -14,6 +14,28 @@ describe("MultiComboBox general interaction", () => {
 			icon.click();
 			assert.ok(!popover.getProperty("opened"), "Popover should close");
 		});
+
+		it("MultiComboBox opened property is set correctly", () => {
+			const mcb = browser.$("#multi1");
+			const icon = browser.$("#multi1").shadow$("[input-icon]");
+			const eventInput = $("#events-input");
+			const callCountInput = $("#events-call-count");
+			const resetBtn = $("#reset-btn");
+
+			resetBtn.click();
+			icon.click();
+			assert.ok(mcb.getProperty("opened"), "MultiComboBox should be opened");
+			assert.strictEqual(eventInput.getValue(), "openedChange", "selectionChange should be called");
+			assert.strictEqual(callCountInput.getValue(), "1", "Event should be called once");
+
+			icon.click();
+			assert.ok(!mcb.getProperty("opened"), "MultiComboBox should be closed");
+
+			assert.strictEqual(eventInput.getValue(), "openedChange", "selectionChange should be called");
+			assert.strictEqual(callCountInput.getValue(), "2", "Event should be called once");
+
+			resetBtn.click();
+		});
 	});
 
 	describe("selection and filtering", () => {
