@@ -15,7 +15,7 @@ import belizeHcb from "../assets/themes/sap_belize_hcb/parameters-bundle.css.jso
 const isInlined = obj => typeof (obj) === "object";
 
 /* eslint-disable */
-if (isInlined(fiori3) || isInlined(belize) || isInlined(belizeHcb)) {
+if (isInlined(fiori3) || isInlined(fiori3Dark) || isInlined(belize) || isInlined(belizeHcb)) {
 	console.warn(`Inefficient bundling detected: consider bundling theme properties imports as URLs instead of inlining them.
 See rollup-plugin-url or webpack file-loader for more information.
 Suggested pattern: "assets\\\/.*\\\.json"`);
