@@ -408,9 +408,9 @@ class ShellBar extends UI5Element {
 
 		this._itemNav.setItemsCallback = items => {
 			const newItems = that._itemsInfo.map(stateItem => {
-				const mappingItem = items.filter(item => {
+				const mappingItem = items.find(item => {
 					return item.id === stateItem.id;
-				})[0];
+				});
 
 				const clone = JSON.parse(JSON.stringify(stateItem));
 				clone._tabIndex = mappingItem ? mappingItem._tabIndex : "-1";
@@ -488,7 +488,7 @@ class ShellBar extends UI5Element {
 		const width = this.getBoundingClientRect().width;
 		const breakpoints = ShellBar.FIORI_3_BREAKPOINTS;
 
-		const size = breakpoints.filter(bp1 => width < bp1)[0] || ShellBar.FIORI_3_BREAKPOINTS[ShellBar.FIORI_3_BREAKPOINTS.length - 1];
+		const size = breakpoints.find(bp1 => width < bp1) || ShellBar.FIORI_3_BREAKPOINTS[ShellBar.FIORI_3_BREAKPOINTS.length - 1];
 		const mappedSize = ShellBar.FIORI_3_BREAKPOINTS_MAP[size];
 
 		if (this.breakpointSize !== mappedSize) {
@@ -588,11 +588,11 @@ class ShellBar extends UI5Element {
 			return 1;
 		});
 
-		const focusedItem = items.filter(item => {
+		const focusedItem = items.find(item => {
 			return (item.classes.indexOf("ui5-shellbar-invisible-button") === -1)
 				&& (item.classes.indexOf("ui5-shellbar-overflow-button") === -1)
 				&& (item.classes.indexOf("ui5-shellbar-hidden-button") === -1);
-		})[0];
+		});
 
 		return focusedItem;
 	}
@@ -685,9 +685,9 @@ class ShellBar extends UI5Element {
 		this._itemNav.currentIndex = elementIndex;
 
 		if (refItemId) {
-			const shellbarItem = this.items.filter(item => {
+			const shellbarItem = this.items.find(item => {
 				return item.shadowRoot.querySelector(`#${refItemId}`);
-			})[0];
+			});
 
 			const prevented = !shellbarItem.fireEvent("itemClick", { targetRef: event.target }, true);
 
