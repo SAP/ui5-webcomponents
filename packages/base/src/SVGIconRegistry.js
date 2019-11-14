@@ -13,9 +13,9 @@ const calcKey = (name, collection) => {
 	return `${collection}:${name}`;
 };
 
-const registerIcon = (name, d, accData, collection) => {
+const registerIcon = (name, { pathData, accData, collection } = {}) => {
 	const key = calcKey(name, collection);
-	registry.set(key, { d, accData });
+	registry.set(key, { pathData, accData });
 };
 
 const getIconDataSync = (name, collection = DEFAULT_COLLECTION) => {
@@ -41,10 +41,6 @@ const getRegisteredNames = async () => {
 	return Array.from(registry.keys()).map(k => k.split(":")[1]);
 };
 
-const isIconURI = uri => {
-	return /sap-icon:\/\//.test(uri);
-};
-
 const registerCollectionPromise = (collection, promise) => {
 	iconCollectionPromises.set(collection, promise);
 };
@@ -54,6 +50,5 @@ export {
 	getIconDataSync,
 	registerIcon,
 	getRegisteredNames,
-	isIconURI,
 	registerCollectionPromise,
 };

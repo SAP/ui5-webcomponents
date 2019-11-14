@@ -14,7 +14,7 @@ const main = async () => {
     names.forEach(name => {
         const iconData = getIconDataSync(name);
 
-        data[name] = iconData.d;
+        data[name] = iconData.pathData;
         if (iconData.accData) {
             accData[name] = iconData.accData;
         }
