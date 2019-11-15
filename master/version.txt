@@ -1,9 +1,5 @@
-commit 46344287c63b5fa04a92c1955d256a0de079550a
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Fri Nov 15 14:35:17 2019 +0200
+commit 58e2170af59bcd91f87964a78bd646fcd435f6cf
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Fri Nov 15 15:00:10 2019 +0200
 
-    feat: create Icon bundle (#929)
-    
-    Since JSON imports are expected for productive usage,
-    the icons can be included as assets instead of inlied
-    in the JS bundle (~100 KB)
+    chore: introduce svg parser in fiori package (#938)
