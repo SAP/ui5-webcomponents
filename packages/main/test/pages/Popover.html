@@ -54,7 +54,7 @@
 
 	<ui5-button id="btn">Click me !</ui5-button>
 
-	<ui5-popover header-text="My Heading" id="pop" style="width: 300px" placement-type="Top">
+	<ui5-popover modal header-text="My Heading" id="pop" style="width: 300px" placement-type="Top">
 		<!-- <div slot="header">
 			Hello World
 		</div> -->
@@ -70,7 +70,7 @@
 
 		<ui5-button id='popbtn'>Open Popover</ui5-button>
 
-		<ui5-popover placement-type="Bottom" no-arrow id='danger'>
+		<ui5-dialog modal placement-type="Bottom" no-arrow id='danger'>
 			<ui5-list>
 				<ui5-li>Hello</ui5-li>
 				<ui5-li>World</ui5-li>
@@ -89,7 +89,7 @@
 					<ui5-li>Again</ui5-li>
 				</ui5-list>
 			</ui5-popover>
-		</ui5-popover>
+		</ui5-dialog>
 
 		<br>
 		<br>
@@ -144,7 +144,7 @@
 		});
 
 		popbtn.addEventListener('click', function (event) {
-			danger.openBy(popbtn);
+			danger.open();
 		});
 
 		bigDanger.addEventListener('click', function (event) {

@@ -233,7 +233,7 @@ class Suggestions {
 	_getScrollContainer() {
 		if (!this._scrollContainer) {
 			const popover = this._getPopover();
-			this._scrollContainer = popover.getDomRef().querySelector(".ui5-popover-content");
+			this._scrollContainer = popover.getDomRef().querySelector(".ui5-popup-content");
 		}
 
 		return this._scrollContainer;

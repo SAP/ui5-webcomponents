@@ -1,11 +1,10 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import { getFirstFocusableElement, getLastFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import { isEscape } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-
 // Styles
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import styles from "./generated/themes/Popup.css.js";
+
 import { addOpenedPopup, removeOpenedPopup } from "./popup-utils/OpenedPopupsRegistry.js";
+import { getFocusedElement, forwardToFirst, forwardToLast } from "./popup-utils/PopupUtils.js";
 
 /**
  * @public
@@ -77,13 +76,12 @@ const metadata = {
 			type: Boolean,
 		},
 
-		_zIndex: {
-			type: Integer,
-			noAttribute: true,
-		},
-		_hideBlockLayer: {
+		/**
+		 * Indicates if the element can show a block layer (be modal)
+		 * @private
+		 */
+		showBlockLayer: {
 			type: Boolean,
-			noAttribute: true,
 		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.Popup.prototype */ {
@@ -124,87 +122,7 @@ const metadata = {
 		 */
 		afterClose: {},
 	},
-	_eventHandlersByConvention: true,
 };
-
-const openedPopups = [];
-let currentZIndex = 100;
-let isBodyScrollingDisabled = false;
-let customBLyBackStyleInserted = false;
-
-function getParentHost(node) {
-	while (node && !node.host) {
-		node = node.parentNode;
-	}
-
-	return node && node.host;
-}
-
-function createBLyBackStyle() {
-	if (customBLyBackStyleInserted) {
-		return;
-	}
-
-	customBLyBackStyleInserted = true;
-
-	const bodyStyleSheet = document.createElement("style");
-	bodyStyleSheet.type = "text/css";
-	bodyStyleSheet.innerHTML = `
-		.ui5-popup-BLy--back {
-			width: 100%;
-			height: 100%;
-			position: fixed;
-			overflow: hidden;
-		}
-	`;
-	document.head.appendChild(bodyStyleSheet);
-}
-
-function updateBlockLayers() {
-	let popup,
-		i,
-		hasModal = false;
-
-	for (i = openedPopups.length - 1; i >= 0; i--) {
-		popup = openedPopups[i];
-		if (hasModal) {
-			popup._hideBlockLayer = true;
-		} else {
-			if (popup.isModal()) { // eslint-disable-line
-				popup._hideBlockLayer = false;
-				hasModal = true;
-			}
-		}
-	}
-
-	updateBodyScrolling(hasModal);
-}
-
-function updateBodyScrolling(hasModal) {
-	if (isBodyScrollingDisabled === hasModal) {
-		return;
-	}
-
-	createBLyBackStyle();
-
-	if (hasModal) {
-		addBodyStyles();
-	} else {
-		removeBodyStyles();
-	}
-	isBodyScrollingDisabled = hasModal;
-}
-
-function addBodyStyles() {
-	document.body.style.top = `-${window.pageYOffset}px`;
-	document.body.classList.add("ui5-popup-BLy--back");
-}
-
-function removeBodyStyles() {
-	document.body.classList.remove("ui5-popup-BLy--back");
-	window.scrollTo(0, -parseFloat(document.body.style.top));
-	document.body.style.top = "";
-}
 
 /**
  * @class
@@ -226,234 +144,102 @@ class Popup extends UI5Element {
 		return styles;
 	}
 
-	static getNextZIndex() {
-		currentZIndex += 2;
-		return currentZIndex;
+	forwardToFirst() {
+		forwardToFirst(this.headerDOM)
+			|| forwardToFirst(this.contentDOM)
+			|| forwardToFirst(this.footerDOM);
 	}
 
-	static hitTest(popup, event) {
-		const indexOf = openedPopups.indexOf(popup);
-		let openedPopup;
+	forwardToLast() {
+		forwardToLast(this.footerDOM)
+			|| forwardToLast(this.contentDOM)
+			|| forwardToLast(this.headerDOM);
+	}
 
-		for (let i = indexOf; i < openedPopups.length; i++) {
-			openedPopup = openedPopups[i];
-			if (openedPopup.hitTest(event)) {
-				return true;
-			}
+	resetFocus() {
+		if (!this._focusedElementBeforeOpen) {
+			return;
 		}
 
-		return false;
+		this._focusedElementBeforeOpen.focus();
+		this._focusedElementBeforeOpen = null;
 	}
 
-	static hasModalPopup() {
-		for (let i = 0; i < openedPopups.length; i++) {
-			if (openedPopups[i].isModal()) {
-				return true;
-			}
-		}
+	applyInitialFocus() {
+		const element = this.getRootNode().getElementById(this.initialFocus)
+			|| document.getElementById(this.initialFocus)
+			|| getFirstFocusableElement(this.rootDom);
 
-		return false;
-	}
-
-	constructor() {
-		super();
-
-		this._documentKeyDownHandler = this.documentKeyDown.bind(this);
-	}
-
-	isTopPopup() {
-		return openedPopups.indexOf(this) === openedPopups.length - 1;
-	}
-
-	isModal() {
-		return true;
-	}
-
-	documentKeyDown(event) {
-		if (isEscape(event) && this.isTopPopup()) {
-			this.escPressed = true;
-			this.close();
+		if (element) {
+			element.focus();
 		}
 	}
 
-	getPopupDomRef() {
-		const domRef = this.getDomRef();
-		return domRef && domRef.querySelector(".ui5-popup-root");
+	_open() {
+		this.beforeReposition();
+		this.reposition();
+		this.afterReposition();
 	}
 
-	hitTest(_event) {
-		return true;
-	}
-
-	open() {
-		this.fireEvent("beforeOpen", { });
-
-		this._isFirstTimeRendered = false;
-
-		this._zIndex = Popup.getNextZIndex();
-		openedPopups.push(this);
-		addOpenedPopup(this);
-
-
-		updateBlockLayers();
-	}
-
-	close() {
-		this.fireEvent("beforeClose", {
-			escPressed: this.escPressed,
-		}, true);
-
-		this.escPressed = false;
-
-		const index = openedPopups.indexOf(this);
-		openedPopups.splice(index, 1);
-
-		if (this.opened) {
-			removeOpenedPopup(this);
-		}
-
-		updateBlockLayers();
-	}
-
-	initInitialFocus() {
-		const initialFocus = this.initialFocus;
-		let initialFocusDomRef = this.initialFocus;
-
-		if (initialFocus && typeof initialFocus === "string") {
-			initialFocusDomRef = document.getElementById(initialFocus);
-
-			if (!initialFocusDomRef) {
-				const parentHost = getParentHost(this);
-				if (parentHost) {
-					initialFocusDomRef = parentHost.shadowRoot.querySelector(`#${initialFocus}`);
-				}
-			}
-		}
-
-		this._initialFocusDomRef = initialFocusDomRef;
-	}
-
-	onFirstTimeAfterRendering() {
-		if (this.isTopPopup()) {
-			this.initInitialFocus();
-			this.setInitialFocus(this.getPopupDomRef());
-		}
-
-		this.fireEvent("afterOpen", {});
-	}
-
-	onAfterRendering() {
+	/**
+	* Closes the <code>ui5-dialog</code>.
+	* @protected
+	*/
+	_close(escPressed = false, preventRegitryUpdate = false) {
 		if (!this.opened) {
 			return;
 		}
 
-		if (!this._isFirstTimeRendered) {
-			this.onFirstTimeAfterRendering();
-			this._isFirstTimeRendered = true;
-		}
-	}
+		const prevented = !this.fireEvent("beforeClose", { escPressed }, true);
 
-	setInitialFocus(container) {
-		if (this._initialFocusDomRef) {
-			if (this._initialFocusDomRef !== document.activeElement) {
-				this._initialFocusDomRef.focus();
-			}
+		if (prevented) {
 			return;
 		}
 
-		if (!container) {
+		if (!preventRegitryUpdate) {
+			removeOpenedPopup(this);
+		}
+
+		this.opened = false;
+
+		this.resetFocus();
+	}
+
+	reposition() {}
+
+	afterReposition() {
+		this.applyInitialFocus();
+
+		addOpenedPopup(this);
+
+		this.opened = true;
+		this.fireEvent("afterOpen", {});
+	}
+
+	beforeReposition() {
+		if (this.opened) {
 			return;
 		}
 
-		const focusableElement = getFirstFocusableElement(container);
+		this._focusedElementBeforeOpen = getFocusedElement();
 
-		if (focusableElement) {
-			focusableElement.focus();
-		} else {
-			container.focus();
-		}
+		this.fireEvent("beforeOpen", {});
 	}
 
-	onfocusin(event) {
-		this.preserveFocus(event, this.getPopupDomRef());
+	get rootDom() {
+		return this.shadowRoot.querySelector(".ui5-popup-root");
 	}
 
-	preserveFocus(event, container) {
-		if (!this.isTopPopup()) {
-			return;
-		}
-
-		let target = event.target;
-
-		while (target.shadowRoot && target.shadowRoot.activeElement) {
-			target = target.shadowRoot.activeElement;
-		}
-
-		let focusableElement;
-		let isSpecialCase = false;
-
-		switch (target.id) {
-		case `${this._id}-firstfe`:
-			focusableElement = getLastFocusableElement(container);
-			isSpecialCase = true;
-			break;
-		case `${this._id}-lastfe`:
-			focusableElement = getFirstFocusableElement(container);
-			isSpecialCase = true;
-			break;
-		case `${this._id}-blocklayer`:
-			focusableElement = this._currentFocusedElement
-				|| getFirstFocusableElement(container);
-			isSpecialCase = true;
-			break;
-		}
-
-		if (focusableElement) {
-			focusableElement.focus();
-		} else if (isSpecialCase) {
-			container.focus();
-		}
-
-		this._currentFocusedElement = focusableElement || document.activeElement;
+	get headerDOM() {
+		return this.shadowRoot.querySelector(".ui5-popup-header-root");
 	}
 
-	storeCurrentFocus() {
-		let element = document.activeElement;
-
-		while (element.shadowRoot && element.shadowRoot.activeElement) {
-			element = element.shadowRoot.activeElement;
-		}
-
-		this._lastFocusableElement = (element && typeof element.focus === "function") ? element : null;
+	get contentDOM() {
+		return this.shadowRoot.querySelector(".ui5-popup-content");
 	}
 
-	resetFocus() {
-		if (!this._lastFocusableElement) {
-			return;
-		}
-
-		const lastFocusableElement = this._lastFocusableElement;
-		if (lastFocusableElement) {
-			lastFocusableElement.focus();
-		}
-
-		this._lastFocusableElement = null;
-	}
-
-	onExitDOM() {
-		removeBodyStyles();
-	}
-
-	get hasHeader() {
-		return !!(this.headerText.length || this.header.length);
-	}
-
-	get hasFooter() {
-		return !!this.footer.length;
-	}
-
-	get role() {
-		return "heading";
+	get footerDOM() {
+		return this.shadowRoot.querySelector(".ui5-popup-footer-root");
 	}
 }
 

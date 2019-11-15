@@ -20,7 +20,7 @@ class DatePickerTestPage {
 	}
 
 	get popoverContent() {
-		return browser.$(this._sut).shadow$("ui5-popover").shadow$(".ui5-popover-root");
+		return browser.$(this._sut).shadow$("ui5-popover").shadow$(".ui5-popup-root");
 	}
 
 	get calendar() {

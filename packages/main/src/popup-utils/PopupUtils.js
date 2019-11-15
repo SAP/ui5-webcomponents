@@ -1,3 +1,5 @@
+import { getFirstFocusableElement, getLastFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
+
 const getFocusedElement = () => {
 	let element = document.activeElement;
 
@@ -29,14 +31,36 @@ const isClickInRect = (event, rect) => {
 	return isPointInRect(x, y, rect);
 };
 
-const getClosedPopupParent = el => {
+const getClosestPopupParent = el => {
 	const parent = el.parentElement || (el.getRootNode && el.getRootNode().host);
 
-	if ((parent.openBy && parent.isUI5Element) || parent === document.documentElement) {
+	if (((parent.openBy || parent.open) && parent.isUI5Element) || parent === document.documentElement) {
 		return parent;
 	}
 
-	return getClosedPopupParent(parent);
+	return getClosestPopupParent(parent);
 };
 
-export { getFocusedElement, isClickInRect, getClosedPopupParent };
+const forwardToFirst = element => {
+	const firstFocusable = getFirstFocusableElement(element);
+
+	if (firstFocusable) {
+		firstFocusable.focus();
+	}
+
+	return !!firstFocusable;
+};
+
+const forwardToLast = element => {
+	const lastFocusable = getLastFocusableElement(element);
+
+	if (lastFocusable) {
+		lastFocusable.focus();
+	}
+
+	return !!lastFocusable;
+};
+
+export {
+	getFocusedElement, isClickInRect, getClosestPopupParent, forwardToFirst, forwardToLast,
+};

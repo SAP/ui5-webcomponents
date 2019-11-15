@@ -1,12 +1,12 @@
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-
-import { isPhone } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 import Popup from "./Popup.js";
+
 // Template
 import DialogTemplate from "./generated/templates/DialogTemplate.lit.js";
 
 // Styles
 import dialogCss from "./generated/themes/Dialog.css.js";
+import popupCss from "./generated/themes/Popup.css.js";
 
 /**
  * @public
@@ -77,7 +77,17 @@ class Dialog extends Popup {
 	}
 
 	static get styles() {
-		return [Popup.styles, dialogCss];
+		return [popupCss, dialogCss];
+	}
+
+	constructor(props) {
+		super(props);
+
+		this.addEventListener("transitionend", _ => {
+			if (!this.opened) {
+				this.style.display = "none";
+			}
+		});
 	}
 
 	/**
@@ -85,60 +95,20 @@ class Dialog extends Popup {
 	* @public
 	*/
 	open() {
-		if (this.opened) {
-			return;
-		}
-
-		const cancelled = super.open();
-		if (cancelled) {
-			return true;
-		}
-
-		this.storeCurrentFocus();
-
-		this.opened = true;
+		this._open();
 	}
 
 	/**
 	* Closes the <code>ui5-dialog</code>.
 	* @public
 	*/
-	close() {
-		if (!this.opened) {
-			return;
-		}
-
-		const cancelled = super.close();
-		if (cancelled) {
-			return;
-		}
-
-		this.opened = false;
-
-		this.resetFocus();
-
-		this.fireEvent("afterClose", { });
+	close(escPressed = false, preventRegitryUpdate = false) {
+		this._close(escPressed, preventRegitryUpdate);
 	}
 
-	get classes() {
-		return {
-			dialogParent: {
-				"ui5-phone": isPhone(),
-			},
-			blockLayer: {
-				"ui5-popup-BLy": true,
-				"ui5-popup-blockLayer": true,
-				"ui5-popup-blockLayer--hidden": this._hideBlockLayer,
-			},
-		};
-	}
-
-	get zindex() {
-		return `z-index: ${this._zIndex + 1};`;
-	}
-
-	get blockLayer() {
-		return `z-index: ${this._zIndex};`;
+	reposition() {
+		this.style.display = "inline-block";
+		this.modal = true;
 	}
 }
 

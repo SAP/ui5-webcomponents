@@ -1,23 +1,28 @@
-{{#*inline "header"}}
-	{{#if hasHeader}}
-		<header>
-			{{#if header.length}}
-				<div role="{{role}}" class="ui5-popup-header">
-					<slot name="header"></slot>
-				</div>
-			{{else}}
-				<h2 role="{{role}}" class="ui5-popup-header ui5-popup-headerText">{{headerText}}</h2>
-			{{/if}}
-		</header>
-	{{/if}}
-{{/inline}}
+<div class="ui5-popup-root" role="dialog" aria-modal="true" aria-labelledby="ui5-popup-header">
 
-{{#*inline "footer"}}
-	{{#if hasFooter}}
-		<footer>
-			<div class="ui5-popup-footer">
-				<slot name="footer"></slot>
-			</div>
-		</footer>
+	<span class="first-fe" tabindex="0" @focusin={{forwardToLast}}></span>
+
+	{{> beginStaticContent}}
+
+	{{#if header.length }}
+		<div class="ui5-popup-header-root"  id="ui5-popup-header" role="toolbar">
+			<slot name="header"></slot>
+		</div>
+	{{else}}
+		<h2 class="ui5-popup-header-text" id="ui5-popup-header">{{headerText}}</h2>
 	{{/if}}
-{{/inline}}
+
+	<div class="ui5-popup-content">
+		<slot></slot>
+	</div>
+
+	{{#if footer.length }}
+		<div class="ui5-popup-footer-root" role="toolbar">
+			<slot name="footer"></slot>
+		</div>
+	{{/if}}
+
+	<span class="last-fe" tabindex="0" @focusin={{forwardToFirst}}></span>
+</div>
+
+{{#*inline "beginStaticContent"}}{{/inline}}
