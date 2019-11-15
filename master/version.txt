@@ -1,5 +1,9 @@
-commit 23deedd7747519439982066ac3f22192e8ac496e
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Nov 14 09:45:25 2019 +0200
+commit 5aeb99bda7eadb0d6b47db575e0707d56ad0a8a0
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Fri Nov 15 10:44:54 2019 +0200
 
-    chore: remove media prefers dark (#927)
+    chore: map dist to src for VSCode navigation (#933)
+    
+    VS code reads the jsconfig.json file and the paths mapping.
+    
+    This enables CMD-click on a module in @ui5/webcomponents-base/dist/ to navigate to the src folder of the monorepo instead of the dist folder where any edits would be lost.
