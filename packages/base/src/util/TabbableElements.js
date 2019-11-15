@@ -21,7 +21,7 @@ const getTabbables = (nodes, tabbables) => {
 		if (currentNode.shadowRoot) {
 			// get the root node of the ShadowDom (1st none style tag)
 			const children = currentNode.shadowRoot.children;
-			currentNode = Array.from(children).filter(node => node.tagName !== "STYLE")[0];
+			currentNode = Array.from(children).find(node => node.tagName !== "STYLE");
 		}
 
 		if (isNodeTabbable(currentNode)) {
