@@ -2,6 +2,9 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
+import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
+import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import { isSpace, isEscape } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
@@ -101,6 +104,8 @@ const metadata = {
 
 		/**
 		 * Defines, if the product CoPilot icon would be displayed.
+		 * <br><b>Note:</b> By default the co-pilot is displayed as static SVG.
+		 * If you need an animated co-pilot, you can import the <code>"@ui5/webcomponents/dist/features/CoPilotAnimation.js"</code> module as add-on feature.
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
@@ -449,6 +454,8 @@ class ShellBar extends UI5Element {
 	}
 
 	onBeforeRendering() {
+		this.coPilot = (getAnimationMode() === AnimationMode.Full) ? getFeature("CoPilotAnimation") : { animated: false };
+
 		this._hiddenIcons = this._itemsInfo.filter(info => {
 			const isHidden = (info.classes.indexOf("ui5-shellbar-hidden-button") !== -1);
 			const isSet = info.classes.indexOf("ui5-shellbar-invisible-button") === -1;
