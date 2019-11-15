@@ -8,13 +8,12 @@ import "@ui5/webcomponents-base/dist/features/browsersupport/Edge.js";
 
 // asset helpers (needs correct json as url in rollup.config.js)
 import "./dist/json-imports/Themes.js";
+import "./dist/json-imports/Icons.js";
 import "./dist/json-imports/i18n.js";
 import "./dist/json-imports/LocaleData.js"
 
 import "./dist/features/InputElementsFormSupport.js";
 import "./dist/features/InputSuggestions.js";
-import "./dist/features/CoPilotAnimation.js";
-import "./AllIcons.js";
 
 import Badge from "./dist/Badge.js";
 import BusyIndicator from "./dist/BusyIndicator.js";
@@ -76,6 +75,6 @@ window["sap-ui-webcomponents-bundle"] = {
 		setNoConflict,
 		getCompactSize,
 		getRTL,
-		getIconNames
-	}
+	},
+	getIconNames,
 };

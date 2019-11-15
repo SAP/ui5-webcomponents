@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
-import { getIconData, isIconURI } from "@ui5/webcomponents-base/dist/SVGIconRegistry.js";
+import { getIconData, getIconDataSync } from "@ui5/webcomponents-base/dist/SVGIconRegistry.js";
 import createStyleInHead from "@ui5/webcomponents-base/dist/util/createStyleInHead.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import IconTemplate from "./generated/templates/IconTemplate.lit.js";
@@ -56,6 +56,22 @@ const metadata = {
 		 */
 		showTooltip: {
 			type: Boolean,
+		},
+
+		/**
+		 * @private
+		 */
+		pathData: {
+			type: String,
+			noAttribute: true,
+		},
+
+		/**
+		 * @private
+		 */
+		accData: {
+			type: Object,
+			noAttribute: true,
 		},
 	},
 	events: {
@@ -138,23 +154,18 @@ class Icon extends UI5Element {
 		}
 	}
 
-	_normalizeIconURI(iconURI) {
-		return isIconURI(iconURI) ? iconURI : `sap-icon://${iconURI}`;
-	}
-
-	get iconData() {
-		const icon = getIconData(this._normalizeIconURI(this.src));
-
-		if (!icon) {
-			/* eslint-disable-next-line */
-			return console.warn(`Required icon is not imported. You have to import the icon as a module in order to use it e.g. "@ui5/webcomponents/dist/icons/${this._normalizeIconURI(this.src).split("sap-icon://")[1]}.js"`);
+	async onBeforeRendering() {
+		let iconData = getIconDataSync(this.src);
+		if (!iconData) {
+			try {
+				iconData = await getIconData(this.src);
+			} catch (e) {
+				/* eslint-disable-next-line */
+				return console.warn(`Required icon is not registered. You can either import the icon as a module in order to use it e.g. "@ui5/webcomponents/dist/icons/${this.src.replace("sap-icon://", "")}.js", or setup a JSON build step and import "@ui5/webcomponents/dist/json-imports/Icons.js".`);
+			}
 		}
-
-		return icon;
-	}
-
-	get d() {
-		return this.iconData && this.iconData.d;
+		this.pathData = iconData.pathData;
+		this.accData = iconData.accData;
 	}
 
 	get hasIconTooltip() {
@@ -166,14 +177,14 @@ class Icon extends UI5Element {
 			return this.accessibleName;
 		}
 
-		return this.iconData && this.iconData.accData && this.i18nBundle.getText(this.iconData.accData);
+		return this.i18nBundle.getText(this.accData);
 	}
 
 	get dir() {
 		return getRTL() ? "rtl" : "ltr";
 	}
 
-	onEnterDOM() {
+	async onEnterDOM() {
 		setTimeout(() => {
 			this.constructor.removeGlobalStyle(); // remove the global style as Icon.css is already in place
 		}, 0);

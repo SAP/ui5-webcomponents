@@ -9,6 +9,9 @@ class I18nBundle {
 	}
 
 	getText(textObj, ...params) {
+		if (!textObj || !textObj.key || !textObj.defaultText) {
+			return "";
+		}
 		const bundle = getI18nBundleData(this.packageName);
 
 		if (!bundle || !bundle[textObj.key]) {

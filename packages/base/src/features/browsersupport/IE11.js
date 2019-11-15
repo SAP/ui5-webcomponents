@@ -9,6 +9,9 @@ import "../../thirdparty/Array.prototype.fill.js";
 import "../../thirdparty/Array.prototype.find.js";
 import "../../thirdparty/Array.prototype.includes.js";
 
+// Map
+import "../../thirdparty/Map.prototype.keys.js";
+
 // Number
 import "../../thirdparty/Number.isInteger.js";
 import "../../thirdparty/Number.isNaN.js";
