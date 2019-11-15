@@ -4,7 +4,7 @@ import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getIconData, getIconDataSync } from "@ui5/webcomponents-base/dist/SVGIconRegistry.js";
 import createStyleInHead from "@ui5/webcomponents-base/dist/util/createStyleInHead.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import IconTemplate from "./IconTemplate.lit.js";
+import IconTemplate from "./generated/templates/IconTemplate.lit.js";
 
 // Styles
 import iconCss from "./generated/themes/Icon.css.js";

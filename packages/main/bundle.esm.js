@@ -14,7 +14,7 @@ import "./dist/json-imports/LocaleData.js"
 
 import "./dist/features/InputElementsFormSupport.js";
 import "./dist/features/InputSuggestions.js";
-// import "./AllIcons.js";
+import "./dist/features/CoPilotAnimation.js";
 
 import Badge from "./dist/Badge.js";
 import BusyIndicator from "./dist/BusyIndicator.js";
