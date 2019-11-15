@@ -86,7 +86,7 @@
 			const iconNames = await window["sap-ui-webcomponents-bundle"].getIconNames();
 			iconNames.forEach(iconName => {
 				const icon = document.createElement("ui5-icon");
-				icon.src = iconName;
+				icon.name = iconName;
 				document.body.appendChild(icon);
 			});
 		})();
@@ -96,7 +96,7 @@
 		window["sap-ui-webcomponents-bundle"].getIconNames().then(function(iconNames) {
 			iconNames.forEach(function(iconName) {
 				const icon = document.createElement("ui5-icon");
-				icon.src = iconName;
+				icon.name = iconName;
 				document.body.appendChild(icon);
 			});
 		});
