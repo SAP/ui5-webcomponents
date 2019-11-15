@@ -123,6 +123,18 @@ const metadata = {
 		},
 
 		/**
+		 * Defines whether the <code>ui5-input</code> is required.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 * @since 1.0.0
+		 */
+		required: {
+			type: Boolean,
+		},
+
+		/**
 		 * Indicates whether the input is focssed
 		 * @private
 		 */
