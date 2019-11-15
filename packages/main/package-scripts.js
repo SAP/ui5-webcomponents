@@ -3,7 +3,7 @@ module.exports = {
         clean: "rimraf dist",
         lint: "eslint .",
         build: {
-            default: "nps clean lint build.templates build.samples build.styles build.i18n copy.src build.icons build.bundle copy.webcomponents-polyfill",
+            default: "nps clean lint build.templates build.samples build.styles build.i18n copy.src build.bundle copy.webcomponents-polyfill",
             templates: "mkdirp dist/generated/templates && node ./lib/hbs2ui5/index.js -d src/ -o dist/generated/templates",
             styles: {
                 default: "nps build.styles.bundles build.styles.components",
@@ -15,7 +15,6 @@ module.exports = {
                 defaultsjs: "mkdirp dist/generated/i18n && node ./lib/i18n/defaults.js src/i18n dist/generated/i18n",
                 json: "mkdirp dist/assets/i18n && node ./lib/i18n/toJSON.js src/i18n dist/assets/i18n",
             },
-            icons: "cd lib/icon-collection-bundler && node --experimental-modules index.js",
             bundle: "rollup -c --environment ES5_BUILD",
             samples: {
                 default: "nps copy.test build.samples.api build.samples.docs build.samples.playground-index",
@@ -45,7 +44,7 @@ module.exports = {
         start: {
             default: "nps start.prepare start.run",
             // same as build, but without lint (no need for dev mode) and without build.bundle (rollup watch will create a new one at start)
-            prepare: "nps clean build.templates build.samples build.styles build.i18n copy.src build.icons copy.webcomponents-polyfill",
+            prepare: "nps clean build.templates build.samples build.styles build.i18n copy.src copy.webcomponents-polyfill",
             run: 'concurrently "nps serve" "nps watch"',
         },
         serve: {
