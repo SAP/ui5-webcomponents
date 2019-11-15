@@ -25,7 +25,7 @@ const metadata = {
 		 * Example:
 		 * <br>
 		 * <code>src='add'</code>, <code>src='delete'</code>, <code>src='employee'</code>.
-		 *<b> NOTE: This property is about to be depricated in the next version! Pleae use the <code>name</code></b>
+		 *<b> NOTE: This property is about to be removed in the next version! Please use the <code>name</code> property instead.</b>
 		 *
 		 * @type {string}
 		 * @public
@@ -36,14 +36,14 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the source URI of the <code>ui5-icon</code>.
+		 * Defines the unique identifier (icon name) of each <code>ui5-icon</code>.
 		 * <br><br>
-		 * SAP-icons font provides numerous options. To find all the available icons, see the
+		 * To browse all available icons, see the
 		 * <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
 		 * <br><br>
 		 * Example:
 		 * <br>
-		 * <code>name='add'</code>, <code>src='delete'</code>, <code>src='employee'</code>.
+		 * <code>name='add'</code>, <code>name='delete'</code>, <code>name='employee'</code>.
 		 *
 		 * @type {string}
 		 * @public
