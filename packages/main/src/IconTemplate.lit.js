@@ -16,7 +16,7 @@ const mainBlock = context => {
 		: undefined}
 		<g role="presentation">
 			<path transform="translate(0, 512) scale(1, -1)"
-				d=${ifDefined(context.d)}
+				d=${ifDefined(context.pathData)}
 			/>
 		</g>
 	</svg>`;
