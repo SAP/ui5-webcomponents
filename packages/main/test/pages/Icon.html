@@ -45,7 +45,7 @@
 
 	<script type="module">
 		(async () => {
-			const iconNames = await window["sap-ui-webcomponents-main-bundle"].getIconNames();
+			const iconNames = await window["sap-ui-webcomponents-bundle"].getIconNames();
 			iconNames.forEach(iconName => {
 				const icon = document.createElement("ui5-icon");
 				icon.src = iconName;
