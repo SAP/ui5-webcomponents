@@ -1,7 +1,5 @@
-commit 667179349495ac3fe6a92f9516b81c90004390e6
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Fri Nov 15 15:24:10 2019 +0200
+commit 0c995b607961cff267fa33aadfc854c6c47cdfe3
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Fri Nov 15 18:24:59 2019 +0200
 
-    fix(ui5-popover): restrict max content height when overflowing the screen (#908)
-    
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/853
+    chore: update chromedriver to 78 (#942)
