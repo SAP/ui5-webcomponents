@@ -35,9 +35,10 @@ const injectThemeProperties = (cssText, packageName) => {
 	if (styleElement) {
 		styleElement.textContent = cssText || "";	// in case of undefined
 	} else {
-		const attributes = {};
-		attributes[`data-ui5-theme-properties`] = "";
-		attributes[identifier] = "";
+		const attributes = {
+			"data-ui5-theme-properties": "",
+			[identifier]: "",
+		};
 		createStyleInHead(cssText, attributes);
 	}
 
