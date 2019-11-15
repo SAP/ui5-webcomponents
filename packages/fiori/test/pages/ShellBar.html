@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Shell Bar</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+
+    <script data-ui5-config type="application/json">
+        {
+            "rtl": false,
+            "compactSize": false
+        }
+    </script>
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="../../resources/bundle.esm.js"
+            type="module"
+            id="sap-ui-bootstrap"
+    >
+    </script>
+
+    <script nomodule src="../../resources/bundle.es5.js">
+    </script>
+
+    <style>
+        body, html {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+
+        .popover-content {
+            margin-top: 1rem;
+        }
+
+        .shellbar-example {
+            margin-top: 1px;
+        }
+    </style>
+</head>
+
+<body>
+<ui5-shellbar
+        class="shellbar-example"
+        primary-title="Product Title"
+        logo="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg"
+        secondary-title="Second Title"
+></ui5-shellbar>
+
+<ui5-shellbar
+        class="shellbar-example"
+        primary-title="Product Title"
+        logo="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg"
+        secondary-title="Second Title"
+        show-co-pilot
+></ui5-shellbar>
+
+<ui5-shellbar
+        class="shellbar-example"
+        primary-title="Product Title"
+        logo="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg"
+        secondary-title="Second Title"
+        show-notifications
+        show-product-switch
+></ui5-shellbar>
+
+<ui5-shellbar
+        class="shellbar-example"
+        primary-title="Custom Actions"
+        secondary-title="Second Title"
+>
+    <ui5-shellbar-item src="sap-icon://accelerated" text="Hello World!"></ui5-shellbar-item>
+    <ui5-shellbar-item src="sap-icon://accept" text="Hello World!"></ui5-shellbar-item>
+    <ui5-shellbar-item src="sap-icon://alert" text="Hello World!"></ui5-shellbar-item>
+    <ui5-shellbar-item src="sap-icon://discussion" text="Hello World!"></ui5-shellbar-item>
+    <ui5-shellbar-item src="sap-icon://error" text="Hello World!"></ui5-shellbar-item>
+    <ui5-shellbar-item src="sap-icon://hello-world" text="UI5 Webcomponents"></ui5-shellbar-item>
+    <ui5-shellbar-item src="sap-icon://laptop" text="UI5 Webcomponents"></ui5-shellbar-item>
+    <ui5-shellbar-item src="sap-icon://nutrition-activity" text="UI5 Webcomponents"></ui5-shellbar-item>
+    <ui5-shellbar-item src="sap-icon://sound-loud" text="UI5 Webcomponents"></ui5-shellbar-item>
+</ui5-shellbar>
+
+<ui5-shellbar
+        class="shellbar-example"
+        secondary-title="No primary title"
+></ui5-shellbar>
+
+<ui5-shellbar
+        class="shellbar-example"
+        logo="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg"
+        primary-title="SAP Labs Bulgaria"
+        profile="https://openui5nightly.hana.ondemand.com/test-resources/sap/f/images/Woman_avatar_01.png"
+        show-notifications
+        show-product-switch
+>
+    <ui5-shellbar-item src="sap-icon://activities" text="Tasks"></ui5-shellbar-item>
+    <ui5-shellbar-item src="sap-icon://thing-type" text="Messages"></ui5-shellbar-item>
+    <ui5-shellbar-item src="sap-icon://action-settings" text="Settings"></ui5-shellbar-item>
+    <ui5-shellbar-item src="sap-icon://sys-help" text="Help"></ui5-shellbar-item>
+
+    <ui5-input slot="searchField"></ui5-input>
+
+</ui5-shellbar>
+
+<ui5-shellbar
+        class="shellbar-example"
+        id="shellbar"
+        primary-title="Product Title"
+        secondary-title="Second title"
+        logo="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg"
+        profile="https://openui5nightly.hana.ondemand.com/test-resources/sap/f/images/Woman_avatar_01.png"
+        second-title="Second Title"
+        notification-count="99+"
+        show-notifications
+        show-product-switch
+        show-co-pilot
+>
+
+    <ui5-button icon="sap-icon://nav-back" slot="startButton" id="start-button"></ui5-button>
+
+    <ui5-shellbar-item id="disc" src="sap-icon://disconnected" text="Disconnect"></ui5-shellbar-item>
+    <ui5-shellbar-item id="call" src="sap-icon://incoming-call" text="Incoming Calls"></ui5-shellbar-item>
+
+    <ui5-input slot="searchField"></ui5-input>
+
+    <ui5-li id="menu-item-1" slot="menuItems">Application 1</ui5-li>
+    <ui5-li id="menu-item-2" slot="menuItems">Application 2</ui5-li>
+    <ui5-li slot="menuItems">Application 3</ui5-li>
+    <ui5-li slot="menuItems">Application 4</ui5-li>
+    <ui5-li slot="menuItems">Application 5</ui5-li>
+</ui5-shellbar>
+
+<ui5-popover id="popover" placement-type="Bottom">
+    <div class="popover-header">
+        <ui5-title style="padding: 0.25rem 1rem 0rem 1rem">John Doe</ui5-title>
+    </div>
+
+    <div class="popover-content">
+        <ui5-list separators="None" >
+            <ui5-li icon="sap-icon://sys-find">App Finder</ui5-li>
+            <ui5-li icon="sap-icon://settings">Settings</ui5-li>
+            <ui5-li icon="sap-icon://edit">Edit Home Page</ui5-li>
+            <ui5-li icon="sap-icon://sys-help">Help</ui5-li>
+            <ui5-li icon="sap-icon://log">Sign out</ui5-li>
+        </ui5-list>
+    </div>
+</ui5-popover>
+
+<ui5-popover id="app-list-popover" placement-type="Bottom">
+    <ui5-list separators="None">
+        <ui5-li>Application 1</ui5-li>
+        <ui5-li>Application 2</ui5-li>
+        <ui5-li>Application 3</ui5-li>
+        <ui5-li>Application 4</ui5-li>
+        <ui5-li>Application 5</ui5-li>
+    </ui5-list>
+</ui5-popover>
+
+<ui5-popover id="custom-item-popover" placement-type="Bottom">
+    <ui5-list separators="None">
+        <ui5-li id="custom-item-1" type="Active">Custom Popover Item 1</ui5-li>
+        <ui5-li type="Active">Custom Popover Item 2</ui5-li>
+    </ui5-list>
+</ui5-popover>
+
+<ui5-input id="press-input" style="margin-top: 2rem; width: 240px;">
+
+</ui5-input>
+
+<script>
+	shellbar.addEventListener("ui5-profileClick", function(event) {
+		popover.openBy(event.detail.targetRef);
+		window["press-input"].value = "Profile";
+	});
+
+	shellbar.addEventListener("ui5-notificationsClick", function(event) {
+		window["press-input"].value = "Notifications"
+	});
+
+	shellbar.addEventListener("ui5-productSwitchClick", function(event) {
+		window["press-input"].value = "Product Switch"
+	});
+
+	shellbar.addEventListener("ui5-logoClick", function(event) {
+		window["press-input"].value = "Logo"
+	});
+
+	shellbar.addEventListener("ui5-coPilotClick", function(event) {
+		window["press-input"].value = "CoPilot"
+	});
+
+	shellbar.addEventListener("ui5-menuItemClick", function(event) {
+		window["press-input"].value = event.detail.item.textContent;
+	});
+
+	["disc", "call"].forEach(function(id) {
+		window[id].addEventListener("ui5-itemClick", function(event) {
+			event.preventDefault();
+			window["press-input"].value = event.target.id;
+			window["custom-item-popover"].openBy(event.detail.targetRef);
+		});
+	});
+</script>
+</body>
+</html>

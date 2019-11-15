@@ -31,8 +31,6 @@ import Panel from "./dist/Panel.js";
 import RadioButton from "./dist/RadioButton.js";
 import Select from "./dist/Select.js";
 import Option from "./dist/Option.js";
-import ShellBar from "./dist/ShellBar.js";
-import ShellBarItem from "./dist/ShellBarItem.js";
 import Switch from "./dist/Switch.js";
 import MessageStrip from "./dist/MessageStrip.js";
 import MultiComboBox from "./dist/MultiComboBox.js";
@@ -69,7 +67,7 @@ import { setNoConflict } from "@ui5/webcomponents-base/dist/config/NoConflict.js
 import { getCompactSize } from "@ui5/webcomponents-base/dist/config/CompactSize.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getRegisteredNames as getIconNames } from  "@ui5/webcomponents-base/dist/SVGIconRegistry.js"
-window["sap-ui-webcomponents-main-bundle"] = {
+window["sap-ui-webcomponents-bundle"] = {
 	configuration : {
 		getAnimationMode,
 		getTheme,

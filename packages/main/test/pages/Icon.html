@@ -47,7 +47,7 @@
 	<script type="module">
 		const icon = new sap.ui.core.Icon({src: "sap-icon://appointment-2"})
 		icon.placeAt("content");
-			window["sap-ui-webcomponents-main-bundle"].getIconNames().forEach(iconName => {
+			window["sap-ui-webcomponents-bundle"].getIconNames().forEach(iconName => {
 				const icon = document.createElement("ui5-icon");
 				icon.src = iconName;
 				document.body.appendChild(icon);
