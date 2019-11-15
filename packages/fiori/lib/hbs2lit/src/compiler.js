@@ -2,6 +2,7 @@ const HTMLLitVisitor = require("./litVisitor2");
 const PartialsVisitor = require("./partialsVisitor");
 const Handlebars = require("handlebars/dist/handlebars.min.js");
 const includesReplacer = require("./includesReplacer");
+const svgProcessor = require("./svgProcessor");
 
 const removeWhiteSpaces = (source) => {
 	return source.replace(/\n+/g, "").replace(/\s+</g, "<").replace(/}}\s+{{/g, "}}{{");
@@ -29,6 +30,7 @@ const compileString = async (sInput, config) => {
 		result += lv.blocks[key] + "\n";
 	}
 
+	result = svgProcessor.process(result);
 	return result;
 };
 
