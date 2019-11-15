@@ -11,7 +11,7 @@ const metadata = {
 	tag: "ui5-shellbar-item",
 	properties: /** @lends sap.ui.webcomponents.fiori.ShellBarItem.prototype */ {
 		/**
-		 * Defines the item source URI.
+		 * Defines the name of the item's icon.
 		 * @type {string}
 		 * @public
 		 */
