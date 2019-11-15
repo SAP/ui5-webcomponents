@@ -131,7 +131,6 @@ const metadata = {
 		 */
 		opened: {
 			type: Boolean,
-			defaultValue: false,
 		},
 
 		/**

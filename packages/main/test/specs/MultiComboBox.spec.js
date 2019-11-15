@@ -25,13 +25,13 @@ describe("MultiComboBox general interaction", () => {
 			resetBtn.click();
 			icon.click();
 			assert.ok(mcb.getProperty("opened"), "MultiComboBox should be opened");
-			assert.strictEqual(eventInput.getValue(), "openedChange", "selectionChange should be called");
+			assert.strictEqual(eventInput.getValue(), "openedChange", "openedChange should be called");
 			assert.strictEqual(callCountInput.getValue(), "1", "Event should be called once");
 
 			icon.click();
 			assert.ok(!mcb.getProperty("opened"), "MultiComboBox should be closed");
 
-			assert.strictEqual(eventInput.getValue(), "openedChange", "selectionChange should be called");
+			assert.strictEqual(eventInput.getValue(), "openedChange", "openedChange should be called");
 			assert.strictEqual(callCountInput.getValue(), "2", "Event should be called once");
 
 			resetBtn.click();
