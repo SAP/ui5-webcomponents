@@ -1,5 +1,7 @@
-commit 58e2170af59bcd91f87964a78bd646fcd435f6cf
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Nov 15 15:00:10 2019 +0200
+commit 667179349495ac3fe6a92f9516b81c90004390e6
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Fri Nov 15 15:24:10 2019 +0200
 
-    chore: introduce svg parser in fiori package (#938)
+    fix(ui5-popover): restrict max content height when overflowing the screen (#908)
+    
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/853
