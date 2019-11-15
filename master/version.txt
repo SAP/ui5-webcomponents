@@ -1,25 +1,9 @@
-commit 59fead49d7a3222d55270584bb048190dc25e0a7
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Nov 15 13:26:19 2019 +0200
+commit 46344287c63b5fa04a92c1955d256a0de079550a
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Fri Nov 15 14:35:17 2019 +0200
 
-    feat: render SVG content with lit svg` (#904)
+    feat: create Icon bundle (#929)
     
-    ### **Background**
-    The SVG tag itself should be rendered with the html function, but its content must be rendered with the svg function of lit-html. Otherwise dynamic updates inside the svg do not work.
-    
-    ### **Othe changes**
-    
-    **ui5-icon**
-    - Create Icon HBS template and remove the IconLitTemplate as it will be generated properly
-    
-    **ui5-shellbar**
-    
-    - Update ShellBar`s CoPilot animates (taken from latest openui5)
-    - Make ShellBar`s animated CoPilot add-on feature, by default the CoPilot is displayed as static SVG .
-    To make it animated you have the following public import:
-    ```js
-    import "@ui5/webcomponents/dist/features/CoPilotAnimation.js":
-    ```
-    - Start considering the global `animationMode` config regarding the CoPilot animation
-    
-    BREAKING CHANGE: to get the ShellBar's coPilot animated you have to import the `@ui5/webcomponents/dist/features/CoPilotAnimation.js` module
+    Since JSON imports are expected for productive usage,
+    the icons can be included as assets instead of inlied
+    in the JS bundle (~100 KB)
