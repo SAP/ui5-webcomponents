@@ -123,7 +123,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether the <code>ui5-input</code> is required.
+		 * Defines whether the <code>ui5-multi-combobox</code> is required.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
