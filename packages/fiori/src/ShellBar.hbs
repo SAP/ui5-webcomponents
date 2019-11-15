@@ -49,13 +49,13 @@
 
 		<div class="ui5-shellbar-overflow-container-right-child">
 			{{#each _itemsInfo}}
-				{{#if this.name}}
+				{{#if this.icon}}
 					<ui5-icon
 						tabindex="{{this._tabIndex}}"
 						data-ui5-notification-count="{{../notificationCount}}"
 						data-ui5-external-action-item-id="{{this.refItemid}}"
 						class="{{this.classes}}"
-						name="{{this.name}}"
+						name="{{this.icon}}"
 						id="{{this.id}}"
 						style="{{this.style}}"
 						@click={{this.press}}>
@@ -80,7 +80,7 @@
 			{{#each _hiddenIcons}}
 				<ui5-li
 					data-ui5-external-action-item-id="{{this.refItemid}}"
-					icon="{{this.name}}"
+					icon="{{this.icon}}"
 					type="Active"
 					@ui5-_press="{{this.press}}"
 				>{{this.text}}

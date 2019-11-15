@@ -728,7 +728,7 @@ class ShellBar extends UI5Element {
 
 		const items = [
 			{
-				name: "search",
+				icon: "search",
 				text: "Search",
 				classes: `${this.searchField.length ? "" : "ui5-shellbar-invisible-button"} ui5-shellbar-search-button ui5-shellbar-button`,
 				priority: 4,
@@ -740,7 +740,7 @@ class ShellBar extends UI5Element {
 			},
 			...this.items.map((item, index) => {
 				return {
-					name: item.icon,
+					icon: item.icon,
 					id: item._id,
 					refItemid: item._id,
 					text: item.text,
@@ -754,7 +754,7 @@ class ShellBar extends UI5Element {
 				};
 			}),
 			{
-				name: "bell",
+				icon: "bell",
 				text: "Notifications",
 				classes: `${this.showNotifications ? "" : "ui5-shellbar-invisible-button"} ui5-shellbar-bell-button ui5-shellbar-button`,
 				priority: 3,
@@ -766,7 +766,7 @@ class ShellBar extends UI5Element {
 				_tabIndex: "-1",
 			},
 			{
-				name: "overflow",
+				icon: "overflow",
 				text: "Overflow",
 				classes: `${showOverflowButton ? "" : "ui5-shellbar-hidden-button"} ui5-shellbar-overflow-button-shown ui5-shellbar-overflow-button ui5-shellbar-button`,
 				priority: 5,
@@ -792,7 +792,7 @@ class ShellBar extends UI5Element {
 				_tabIndex: "-1",
 			},
 			{
-				name: "grid",
+				icon: "grid",
 				text: "Product Switch",
 				classes: `${this.showProductSwitch ? "" : "ui5-shellbar-invisible-button"} ui5-shellbar-button ui5-shellbar-button-product-switch`,
 				priority: 2,
