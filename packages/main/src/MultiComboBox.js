@@ -15,7 +15,7 @@ import Icon from "./Icon.js";
 import Popover from "./Popover.js";
 import List from "./List.js";
 import StandardListItem from "./StandardListItem.js";
-import {TOKENIZER_ARIA_CONTAIN_SEVERAL_TOKENS} from "../dist/generated/i18n/i18n-defaults.js";
+import { TOKENIZER_ARIA_CONTAIN_SEVERAL_TOKENS } from "../dist/generated/i18n/i18n-defaults.js";
 
 // Styles
 import styles from "./generated/themes/MultiComboBox.css.js";
