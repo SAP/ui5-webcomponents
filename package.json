@@ -23,7 +23,7 @@
     "clean:theme-base": "cd packages/theme-base && yarn clean",
     "clean:main": "cd packages/main && yarn clean",
     "clean:fiori": "cd packages/fiori && yarn clean",
-    "start": "npm-run-all --parallel start:base build:theme-base start:main start:fiori",
+    "start": "npm-run-all --parallel start:base start:theme-base start:main start:fiori",
     "start:base": "cd packages/base && yarn start",
     "start:theme-base": "cd packages/theme-base && yarn start",
     "start:main": "cd packages/main && yarn start",
