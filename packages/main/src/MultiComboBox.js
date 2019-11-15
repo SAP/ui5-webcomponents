@@ -128,7 +128,7 @@ const metadata = {
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
-		 * @since 1.0.0
+		 * @since 1.0.0-rc.5
 		 */
 		required: {
 			type: Boolean,
