@@ -230,8 +230,6 @@
                 
                   
                 
-                  
-                
               </ul>
             
           </li>
@@ -326,8 +324,6 @@
                       </a>
                       
                     </li>
-                  
-                
                   
                 
                   
@@ -614,17 +610,6 @@
                   
                     <li class="navigation-list-item ">
                       
-                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/ShellBar" class="navigation-list-link">
-                        <div class="component-name">Shell Bar</div>
-                        
-                      </a>
-                      
-                    </li>
-                  
-                
-                  
-                    <li class="navigation-list-item ">
-                      
                       <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/Switch" class="navigation-list-link">
                         <div class="component-name">Switch</div>
                         
@@ -799,10 +784,6 @@
         
       
     
-      
-        
-      
-    
   </ul>
 </nav>
 
@@ -830,6 +811,8 @@
 <p>Here’s a comprehensive list of all UI5 Web Components, their tags, and their respective module imports:</p>
 
 <p>For API documentation and samples, please check the <a href="https://sap.github.io/ui5-webcomponents/playground/">UI5 Web Components Playground</a></p>
+
+<h3 id="main-package-ui5webcomponents">Main package (<code class="highlighter-rouge">@ui5/webcomponents</code>)</h3>
 
 <table>
   <thead>
@@ -951,16 +934,6 @@
       <td>comes with ui5-select</td>
     </tr>
     <tr>
-      <td>Shell Bar (Fiori 3)</td>
-      <td><code class="highlighter-rouge">ui5-shellbar</code></td>
-      <td><code class="highlighter-rouge">import "@ui5/webcomponents/dist/ShellBar.js";</code></td>
-    </tr>
-    <tr>
-      <td>Shell Bar Item</td>
-      <td><code class="highlighter-rouge">ui5-shellbar-item</code></td>
-      <td><code class="highlighter-rouge">import "@ui5/webcomponents/dist/ShellBarItem.js";</code></td>
-    </tr>
-    <tr>
       <td>Switch</td>
       <td><code class="highlighter-rouge">ui5-switch</code></td>
       <td><code class="highlighter-rouge">import "@ui5/webcomponents/dist/Switch.js";</code></td>
@@ -1028,6 +1001,30 @@
   </tbody>
 </table>
 
+<h3 id="fiori-package-ui5webcomponents-fiori">Fiori package (<code class="highlighter-rouge">@ui5/webcomponents-fiori</code>)</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Web Component</th>
+      <th>Tag name</th>
+      <th>Module import</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Shell Bar</td>
+      <td><code class="highlighter-rouge">ui5-shellbar</code></td>
+      <td><code class="highlighter-rouge">import "@ui5/webcomponents-fiori/dist/ShellBar.js";</code></td>
+    </tr>
+    <tr>
+      <td>Shell Bar Item</td>
+      <td><code class="highlighter-rouge">ui5-shellbar-item</code></td>
+      <td><code class="highlighter-rouge">import "@ui5/webcomponents-fiori/dist/ShellBarItem.js";</code></td>
+    </tr>
+  </tbody>
+</table>
+
 <h2 id="additional-public-modules">Additional public modules</h2>
 
 <p>Apart from the Web Components themselves, there are a number of additional modules that can
@@ -1091,6 +1088,7 @@ but should be imported separately.</p>
 <h3 id="2-theming">2. Theming</h3>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents/dist/json-imports/Themes.js</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-fiori/dist/json-imports/Themes.js</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// Only if using the @ui5/webcomponents-fiori package</span>
 </code></pre></div></div>
 <p>(for additional themes support)</p>
 
@@ -1132,6 +1130,7 @@ Example:</p>
 <h3 id="3-internationalization">3. Internationalization</h3>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents/dist/json-imports/i18n.js</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-fiori/dist/json-imports/i18n.js</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// Only if using the @ui5/webcomponents-fiori package</span>
 </code></pre></div></div>
 
 <p>Some UI5 Web Components contain texts (such as placeholders, tooltips, messages) that need translation.
