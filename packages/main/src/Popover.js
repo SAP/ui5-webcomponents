@@ -122,6 +122,8 @@ const metadata = {
 			type: PopoverPlacementType,
 			defaultValue: PopoverPlacementType.Right,
 		},
+
+		_maxContentHeight: { type: Integer },
 	},
 };
 
@@ -402,8 +404,12 @@ class Popover extends Popup {
 
 		let maxContentHeight = Math.round(maxHeight);
 
-		if (this.hasHeader) {
-			const headerDomRef = this.getPopupDomRef().querySelector(".ui5-popup-header");
+		const hasHeader = this.header.length || this.headerText;
+
+		if (hasHeader) {
+			const headerDomRef = this.shadowRoot.querySelector(".ui5-popover-header-root")
+				|| this.shadowRoot.querySelector(".ui5-popup-header-text");
+
 			if (headerDomRef) {
 				maxContentHeight = Math.round(maxHeight - headerDomRef.offsetHeight);
 			}
@@ -508,6 +514,9 @@ class Popover extends Popup {
 
 	get styles() {
 		return {
+			content: {
+				"max-height": `${this._maxContentHeight}px`,
+			},
 			arrow: {
 				transform: `translate(${this.arrowTranslateX}px, ${this.arrowTranslateY}px)`,
 			},

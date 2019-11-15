@@ -226,6 +226,12 @@ class Popup extends UI5Element {
 		this.fireEvent("beforeOpen", {});
 	}
 
+	get styles() {
+		return {
+			content: {},
+		};
+	}
+
 	get rootDom() {
 		return this.shadowRoot.querySelector(".ui5-popup-root");
 	}

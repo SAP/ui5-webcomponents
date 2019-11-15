@@ -28,4 +28,37 @@ describe("Popover general interaction", () => {
 		btnInPopover.click();
 		assert.ok(popover.isDisplayedInViewport(), "Popover remains opened.");
 	});
+
+	it("tests if overflown content can be reached by scrolling", () => {
+		const manyItemsSelect = $("#many-items");
+		const items = manyItemsSelect.shadow$$("ui5-li");
+
+		manyItemsSelect.click();
+
+		const lastListItem = items[items.length - 1];
+		
+		assert.strictEqual(lastListItem.isDisplayedInViewport(), false, "Last item is not displayed after openining");
+
+		lastListItem.scrollIntoView();
+
+		assert.strictEqual(lastListItem.isDisplayedInViewport(), true, "Last item is displayed after scrolling");
+
+		manyItemsSelect.click();
+	});
+
+	it("tests if overflown content can be reached by scrolling (with header and arrow)", () => {
+		const bigPopover = $("#big-popover");
+		const items = bigPopover.$$("ui5-li");
+		const openBigPopoverButton = $("#big-popover-button")
+
+		openBigPopoverButton.click();
+
+		const lastListItem = items[items.length - 1];
+
+		assert.strictEqual(lastListItem.isDisplayedInViewport(), false, "Last item is not displayed after openining");
+
+		lastListItem.scrollIntoView();
+
+		assert.strictEqual(lastListItem.isDisplayedInViewport(), true, "Last item is displayed after scrolling");
+	});
 });

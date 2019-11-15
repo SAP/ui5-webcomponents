@@ -69,4 +69,57 @@
 
 :host([no-arrow]) .ui5-popup-arr {
 	display: none;
+<<<<<<< HEAD
 }
+=======
+}
+
+.ui5-popover-header-root,
+.ui5-popup-header-text {
+	border-bottom: 1px solid var(--sapUiPageFooterBorderColor);
+}
+
+.ui5-popover-footer-root {
+	background: var(--sapUiPageFooterBackground);
+	border-top: 1px solid var(--sapUiPageFooterBorderColor);
+	color: var(--sapUiPageFooterTextColor);
+}
+
+.ui5-popover-header-root,
+.ui5-popover-footer-root,
+:host([header-text]) .ui5-popup-header-text {
+	margin: 0;
+	color: var(--sapUiPageHeaderTextColor);
+	font-size: 1rem;
+	font-weight: 400;
+	font-family: var(--sapUiFontFamily);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.ui5-popover-content {
+	overflow: auto;
+
+	/* Consider how to make this top level */
+	padding: var(--_ui5_popover_content_padding);
+	box-sizing: border-box;
+}
+
+:host([header-text]) .ui5-popup-header-text {
+	padding: 0 0.25rem;
+	text-align: center;
+	min-height: 3rem;
+	max-height: 3rem;
+	line-height: 3rem;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+	max-width: 100%;
+	display: inline-block;  
+}
+
+:host(:not([header-text])) .ui5-popup-header-text {
+	display: none;
+}
+>>>>>>> origin/master
