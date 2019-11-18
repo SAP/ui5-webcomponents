@@ -646,3 +646,5 @@ import "./dist/icons/write-new.js";
 import "./dist/icons/x-ray.js";
 import "./dist/icons/zoom-in.js";
 import "./dist/icons/zoom-out.js";
+
+export const collectionName = "SAP-icons"; // eslint-disable-line

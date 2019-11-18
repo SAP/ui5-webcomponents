@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+      "target": "es2017",
+      "allowSyntheticDefaultImports": false,
+      "baseUrl": "./",
+      "paths": {
+        "@ui5/webcomponents-base/dist/*": ["../base/src/*"]
+      }
+    },
+    "exclude": ["node_modules", "dist"]
+  }

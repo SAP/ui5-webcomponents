@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	var mutated = false;
 	var sideNav = document.getElementById("side-nav");
 	var mainContent = document.getElementById("main-content");
-	var Configuration = window["sap-ui-webcomponents-main-bundle"].configuration;
+	var Configuration = window["sap-ui-webcomponents-bundle"].configuration;
 	var COMPACT = Configuration.getCompactSize();
 	var RTL = Configuration.getRTL();
 	var THEME = Configuration.getTheme();
@@ -14,12 +14,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	var btnCompact = document.getElementById("btnCompact");
 	var btnTheme = document.getElementById("btnTheme");
 	var btnLightDark = document.getElementById("btnLightDark");
-	
+
 
 	if (THEME === HCB) {
-		document.body.style="background: #333";
+		document.body.style.backgroundColor = "#333";
 	} else {
-		document.body.style="background: #fff";
+		document.body.style.backgroundColor = "#fff";
 	}
 
 	if (RTL) {
@@ -76,9 +76,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		Configuration.setTheme(theme);
 
 		if (theme === HCB) {
-			document.body.style="background: #333";
+			document.body.style.backgroundColor = "#333";
 		} else {
-			document.body.style="background: #fff";
+			document.body.style.backgroundColor = "#fff";
 		}
 	}, false);
 
@@ -87,9 +87,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		Configuration.setTheme(theme);
 
 		if (theme === FIORI3_DARK) {
-			document.body.style="background: #333";
+			document.body.style.backgroundColor = "#333";
 		} else {
-			document.body.style="background: #fff";
+			document.body.style.backgroundColor = "#fff";
 		}
 	}, false);
 
@@ -118,16 +118,16 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	var dialogCloser2 = document.getElementById("closeDialogStretched");
 
 
-	dialogOpener.addEventListener("press", function() {
+	dialogOpener.addEventListener("click", function() {
 		dialog.open();
 	});
-	dialogOpener2.addEventListener("press", function() {
+	dialogOpener2.addEventListener("click", function() {
 		dialog2.open();
 	});
-	dialogCloser.addEventListener("press", function() {
+	dialogCloser.addEventListener("click", function() {
 		dialog.close();
 	});
-	dialogCloser2.addEventListener("press", function() {
+	dialogCloser2.addEventListener("click", function() {
 		dialog2.close();
 	});
 
@@ -173,7 +173,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		mutated = true;
 	});
 
-	resetBtn.addEventListener("press", resetList);
+	resetBtn.addEventListener("click", resetList);
 	/* Suggestions */
 	var sap_database_entries = [{ key: "Afg", text: "Anna" }, { key: "Arg", text: "Anelia" }, { key: "Alex", text: "Ally" }, { key: "Arm", text: "Boris" }, { key: "Alg", text: "Borg" }, { key: "And", text: "Cindy" }, { key: "Ang", text: "Sara" }, { key: "Ast", text: "Sally" }, { key: "Aus", text: "Daniel" }, { key: "Aze", text: "Don" }, { key: "Aruba", text: "Ema" }, { key: "Antigua", text: "Fred" }, { key: "Bel", text: "John" }, { key: "Bel", text: "Jonathan" }, { key: "Bg", text: "Zack" }, { key: "Bra", text: "Zara" }, { key: "Bra", text: "Wolly"}, { key: "Bra", text: "Will"}, { key: "Bra", text: "Quentin"}];
 	var input = document.getElementById('user');

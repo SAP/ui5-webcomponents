@@ -136,6 +136,18 @@
 	<br>
 	<br>
 
+	<ui5-select id="many-items"></ui5-select>
+
+	<br>
+	<br>
+
+	<ui5-button id="big-popover-button">
+		Open Big Popover
+	</ui5-button>
+
+	<ui5-popover placement-type="Bottom" id="big-popover" header-text="hello world">
+		<ui5-list id="bigList"></ui5-list>
+	</ui5-popover>
 
 	<script>
 
@@ -149,6 +161,18 @@
 
 		bigDanger.addEventListener('click', function (event) {
 			bigDangerPop.openBy(bigDanger);
+		});
+
+		document.getElementById("many-items").innerHTML = [].map.call("Ullamco ea ad fugiat enim elit dolore ullamco ad magna excepteur cupidatat.", function (item, index) {
+			return "<ui5-option>" + item + "</ui5-option>";
+		}).join("");
+
+		document.getElementById("bigList").innerHTML = [].map.call("Ullamco ea ad fugiat enim elit dolore ullamco ad magna excepteur cupidatat.", function (item, index) {
+			return "<ui5-li>" + item + "</ui5-li>";
+		}).join("");
+
+		document.getElementById("big-popover-button").addEventListener("click", function (event) {
+			document.getElementById("big-popover").openBy(event.target);
 		});
 
 	</script>

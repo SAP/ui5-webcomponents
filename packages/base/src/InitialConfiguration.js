@@ -1,6 +1,7 @@
 let initialized = false;
 
 const initialConfig = {
+	animationMode: "full",
 	theme: "sap_fiori_3",
 	rtl: null,
 	language: null,
@@ -11,6 +12,11 @@ const initialConfig = {
 };
 
 /* General settings */
+const getAnimationMode = () => {
+	initConfiguration();
+	return initialConfig.animationMode;
+};
+
 const getTheme = () => {
 	initConfiguration();
 	return initialConfig.theme;
@@ -109,6 +115,7 @@ const initConfiguration = () => {
 };
 
 export {
+	getAnimationMode,
 	getTheme,
 	getRTL,
 	getLanguage,

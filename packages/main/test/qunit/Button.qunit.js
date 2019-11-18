@@ -1,7 +1,6 @@
 /* global QUnit,window,TestHelper,RenderScheduler */
 
 TestHelper.ready(function () {
-
 	var fixture = window.document.querySelector("#qunit-fixture");
 
 	var getActualText = function(el) {
