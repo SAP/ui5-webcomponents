@@ -1,9 +1,9 @@
 module.exports = {
-    scripts: {
-        clean: "rimraf dist",
+	scripts: {
+		clean: "rimraf dist",
 		copy: 'copy-and-watch "src/**/*.js" dist/',
 		build: {
-        	default: "nps clean copy build.i18n build.icons",
+			default: "nps clean copy build.i18n build.icons",
 			i18n: {
 				default: "nps build.i18n.defaultsjs build.i18n.json",
 				defaultsjs: "mkdirp dist/generated/i18n && node ./lib/i18n/defaults.js src/i18n dist/generated/i18n",
@@ -11,5 +11,5 @@ module.exports = {
 			},
 			icons: "cd lib/icon-collection-bundler && node --experimental-modules index.js",
 		}
-    },
+	},
 };

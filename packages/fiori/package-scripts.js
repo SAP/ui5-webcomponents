@@ -1,4 +1,4 @@
- module.exports = {
+module.exports = {
     scripts: {
         clean: "rimraf dist",
         lint: "eslint .",

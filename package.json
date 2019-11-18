@@ -13,7 +13,7 @@
     "build:core": "cd packages/core && yarn build",
     "build:base": "cd packages/base && yarn build",
     "build:theme-base": "cd packages/theme-base && yarn build",
-    "build:icons": "cd packages/SAP-icons && yarn build",
+    "build:icons": "cd packages/icons && yarn build",
     "build:main": "cd packages/main && yarn build",
     "build:fiori": "cd packages/fiori && yarn build",
     "build:playground": "yarn build:main && yarn build:fiori && cd packages/playground && yarn build",
@@ -22,7 +22,7 @@
     "clean:core": "cd packages/core && yarn clean",
     "clean:base": "cd packages/base && yarn clean",
     "clean:theme-base": "cd packages/theme-base && yarn clean",
-    "clean:icons": "cd packages/SAP-icons && yarn clean",
+    "clean:icons": "cd packages/icons && yarn clean",
     "clean:main": "cd packages/main && yarn clean",
     "clean:fiori": "cd packages/fiori && yarn clean",
     "start": "npm-run-all --sequential build:icons start:all",
@@ -56,7 +56,7 @@
     "packages/base",
     "packages/main",
     "packages/fiori",
-    "packages/SAP-icons",
+    "packages/icons",
     "packages/playground"
   ]
 }

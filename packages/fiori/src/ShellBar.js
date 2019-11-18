@@ -11,10 +11,10 @@ import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import Popover from "@ui5/webcomponents/dist/Popover.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
-import "@ui5/webcomponents-SAP-icons/dist/icons/search.js";
-import "@ui5/webcomponents-SAP-icons/dist/icons/bell.js";
-import "@ui5/webcomponents-SAP-icons/dist/icons/overflow.js";
-import "@ui5/webcomponents-SAP-icons/dist/icons/grid.js";
+import "@ui5/webcomponents-icons/dist/icons/search.js";
+import "@ui5/webcomponents-icons/dist/icons/bell.js";
+import "@ui5/webcomponents-icons/dist/icons/overflow.js";
+import "@ui5/webcomponents-icons/dist/icons/grid.js";
 
 // Template
 import ShellBarTemplate from "./generated/templates/ShellBarTemplate.lit.js";

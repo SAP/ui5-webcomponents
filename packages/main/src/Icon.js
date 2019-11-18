@@ -181,7 +181,7 @@ class Icon extends UI5Element {
 				iconData = await getIconData(name);
 			} catch (e) {
 				/* eslint-disable-next-line */
-				return console.warn(`Required icon is not registered. You can either import the icon as a module in order to use it e.g. "@ui5/webcomponents/dist/icons/${name.replace("sap-icon://", "")}.js", or setup a JSON build step and import "@ui5/webcomponents-SAP-icons/dist/json-imports/Icons.js".`);
+				return console.warn(`Required icon is not registered. You can either import the icon as a module in order to use it e.g. "@ui5/webcomponents/dist/icons/${name.replace("sap-icon://", "")}.js", or setup a JSON build step and import "@ui5/webcomponents-icons/dist/json-imports/Icons.js".`);
 			}
 		}
 		this.pathData = iconData.pathData;
