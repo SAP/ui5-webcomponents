@@ -251,7 +251,7 @@
 		const callCountInput = document.getElementById("events-call-count");
 		const resetBtn = document.getElementById("reset-btn");
 		var selectionChangeCounter = 0;
-		var openedChangeCounter = 0;
+		var openChangeCounter = 0;
 
 		document.getElementById("mcb").addEventListener("ui5-selectionChange", function (event) {
 			selectionChangeCounter += 1;
@@ -260,10 +260,10 @@
 			callCountInput.value = selectionChangeCounter;
 		});
 
-		document.getElementById("multi1").addEventListener("ui5-openedChange", function (event) {
-			openedChangeCounter += 1;
-			eventNameInput.value = "openedChange";
-			callCountInput.value = openedChangeCounter;
+		document.getElementById("multi1").addEventListener("ui5-openChange", function (event) {
+			openChangeCounter += 1;
+			eventNameInput.value = "openChange";
+			callCountInput.value = openChangeCounter;
 		});
 
 		resetBtn.addEventListener("click", function (event) {
@@ -271,7 +271,7 @@
 			eventParamsInput.value = "";
 			callCountInput.value = "";
 			selectionChangeCounter = 0;
-			openedChangeCounter = 0;
+			openChangeCounter = 0;
 		});
 	</script>
 

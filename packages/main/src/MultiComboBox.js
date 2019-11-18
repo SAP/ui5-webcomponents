@@ -127,9 +127,10 @@ const metadata = {
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
+		 * @since 1.0.0-rc.5
 		 * @public
 		 */
-		opened: {
+		open: {
 			type: Boolean,
 		},
 
@@ -179,9 +180,10 @@ const metadata = {
 		 * Fired when the dropdown is opened or closed.
 		 *
 		 * @event
+		 * @since 1.0.0-rc.5
 		 * @public
 		 */
-		openedChange: {},
+		openChange: {},
 
 		/**
 		 * Fired when selection is changed by user interaction
@@ -407,9 +409,9 @@ class MultiComboBox extends UI5Element {
 
 	_toggleIcon() {
 		this._iconPressed = !this._iconPressed;
-		this.opened = this._iconPressed;
+		this.open = this._iconPressed;
 
-		this.fireEvent("openedChange");
+		this.fireEvent("openChange");
 	}
 
 	_getSelectedItems() {
@@ -481,7 +483,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	onAfterRendering() {
-		this.opened && this._getPopover().openBy(this);
+		this.open && this._getPopover().openBy(this);
 	}
 
 	get _tokenizer() {

@@ -15,7 +15,7 @@ describe("MultiComboBox general interaction", () => {
 			assert.ok(!popover.getProperty("opened"), "Popover should close");
 		});
 
-		it("MultiComboBox opened property is set correctly", () => {
+		it("MultiComboBox open property is set correctly", () => {
 			const mcb = browser.$("#multi1");
 			const icon = browser.$("#multi1").shadow$("[input-icon]");
 			const eventInput = $("#events-input");
@@ -24,14 +24,14 @@ describe("MultiComboBox general interaction", () => {
 
 			resetBtn.click();
 			icon.click();
-			assert.ok(mcb.getProperty("opened"), "MultiComboBox should be opened");
-			assert.strictEqual(eventInput.getValue(), "openedChange", "openedChange should be called");
+			assert.ok(mcb.getProperty("open"), "MultiComboBox should be opened");
+			assert.strictEqual(eventInput.getValue(), "openChange", "openChange should be called");
 			assert.strictEqual(callCountInput.getValue(), "1", "Event should be called once");
 
 			icon.click();
-			assert.ok(!mcb.getProperty("opened"), "MultiComboBox should be closed");
+			assert.ok(!mcb.getProperty("open"), "MultiComboBox should be closed");
 
-			assert.strictEqual(eventInput.getValue(), "openedChange", "openedChange should be called");
+			assert.strictEqual(eventInput.getValue(), "openChange", "openChange should be called");
 			assert.strictEqual(callCountInput.getValue(), "2", "Event should be called once");
 
 			resetBtn.click();
