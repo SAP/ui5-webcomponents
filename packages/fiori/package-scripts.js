@@ -19,7 +19,7 @@
             samples: {
                 default: "nps copy.test build.samples.api build.samples.docs build.samples.playground-index",
                 api: "jsdoc -c ../../lib/jsdoc/config.json",
-                docs: "node ../../lib/documentation/index.js",
+                docs: "node ../../lib/documentation/index.js fiori",
                 "playground-index": "node lib/playground/index.js",
             }
         },
