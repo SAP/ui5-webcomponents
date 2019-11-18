@@ -133,10 +133,10 @@ const metadata = {
 		 * @since 1.0.0-rc.5
 		 */
 		required: {
-      type: Boolean,
+			type: Boolean,
 		},
 
-    /**
+		/**
 		 * Indicates whether the dropdown is open. True if the dropdown is open, false otherwise.
 		 *
 		 * @type {boolean}
