@@ -1,5 +1,5 @@
-commit 3f9478c5bff2a5208f24d37b918a912de0338e02
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Mon Nov 18 15:59:13 2019 +0200
+commit 4af89efe706a486a789dda42d26a478d4099b15a
+Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
+Date:   Mon Nov 18 16:14:59 2019 +0200
 
-    refactor: move icons to a separate package (#943)
+     feat(ui5-multicombobox): introduce required property (#935)
