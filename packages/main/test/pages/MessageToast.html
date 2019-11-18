@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+	<title>ui5-MessageToast</title>
+
+	<script src="../../../../../../webcomponentsjs/webcomponents-loader.js"></script>
+	<script src="../../../../../../resources/sap/ui/webcomponents/main/bundle.esm.js" type="module"></script>
+	<script nomodule src="../../../../../../resources/sap/ui/webcomponents/main/bundle.es5.js"></script>
+	<script>delete Document.prototype.adoptedStyleSheets;</script>
+	<script src="modules/MessageToast.js"></script>
+
+	<style>
+		ui5-button {
+			margin: 1rem 0;
+		}
+	</style>
+</head>
+
+<body onload="onload()">
+
+	<h2>MessageToast</h2>
+
+	<!--TopLeft-->
+	<ui5-button class="wcBtnOpenMessageToastTL">Open TopLeft MessageToast</ui5-button>
+	<ui5-message-toast class="wcMessageToastTL" placement="TopLeft">TopLeft</ui5-message-toast>
+
+	<br>
+
+	<!--TopCenter-->
+	<ui5-button class="wcBtnOpenMessageToastTC">Open TopCenter MessageToast</ui5-button>
+	<ui5-message-toast class="wcMessageToastTC" placement="TopCenter" duration="1000">TopCenter</ui5-message-toast>
+
+	<br>
+
+	<!--TopRight-->
+	<ui5-button class="wcBtnOpenMessageToastTR">Open TopRight MessageToast</ui5-button>
+	<ui5-message-toast class="wcMessageToastTR" placement="TopRight">TopRight</ui5-message-toast>
+
+	<br>
+
+	<!--MiddleLeft-->
+	<ui5-button class="wcBtnOpenMessageToastML">Open MiddleLeft MessageToast</ui5-button>
+	<ui5-message-toast class="wcMessageToastML" placement="MiddleLeft">MiddleLeft</ui5-message-toast>
+
+	<br>
+
+	<!--MiddleCenter-->
+	<ui5-button class="wcBtnOpenMessageToastMC">Open MiddleCenter MessageToast</ui5-button>
+	<ui5-message-toast class="wcMessageToastMC" placement="MiddleCenter">MiddleCenter</ui5-message-toast>
+
+	<br>
+
+	<!--MiddleRight-->
+	<ui5-button class="wcBtnOpenMessageToastMR">Open MiddleRight MessageToast</ui5-button>
+	<ui5-message-toast class="wcMessageToastMR" placement="MiddleRight">MiddleRight</ui5-message-toast>
+
+	<br>
+
+	<!--BottomLeft-->
+	<ui5-button class="wcBtnOpenMessageToastBL">Open BottomLeft MessageToast</ui5-button>
+	<ui5-message-toast class="wcMessageToastBL" placement="BottomLeft">BottomLeft</ui5-message-toast>
+
+	<br>
+
+	<!--BottomCenter-->
+	<ui5-button class="wcBtnOpenMessageToastBC">Open BottomCenter MessageToast</ui5-button>
+	<ui5-message-toast class="wcMessageToastBC" placement="BottomCenter">BottomCenter</ui5-message-toast>
+
+	<br>
+
+	<!--BottomRight-->
+	<ui5-button class="wcBtnOpenMessageToastBR">Open BottomRight MessageToast</ui5-button>
+	<ui5-message-toast class="wcMessageToastBR" placement="BottomRight">BottomRight</ui5-message-toast>
+
+</body>
+</html>
