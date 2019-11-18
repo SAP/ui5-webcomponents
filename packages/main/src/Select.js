@@ -11,7 +11,7 @@ import {
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import "@ui5/webcomponents-icons/dist/icons/slim-arrow-down.js";
+import "@ui5/webcomponents-SAP-icons/dist/icons/slim-arrow-down.js";
 import Label from "./Label.js";
 import Popover from "./Popover.js";
 import List from "./List.js";

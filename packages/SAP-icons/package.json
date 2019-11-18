@@ -1,7 +1,7 @@
 {
-  "name": "@ui5/webcomponents-icons",
+  "name": "@ui5/webcomponents-SAP-icons",
   "version": "1.0.0-rc.4",
-  "description": "UI5 Web Components: webcomponents.icons",
+  "description": "UI5 Web Components: webcomponents.SAP-icons",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
   "private": false,
@@ -18,7 +18,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/SAP/ui5-webcomponents.git",
-    "directory": "packages/icons"
+    "directory": "packages/SAP-icons"
   },
   "dependencies": {
     "@ui5/webcomponents-base": "0.17.0"

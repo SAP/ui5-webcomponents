@@ -7,7 +7,7 @@ import "@ui5/webcomponents-base/dist/features/calendar/Persian.js";
 import "@ui5/webcomponents-base/dist/features/browsersupport/Edge.js";
 
 // Icons
-import "@ui5/webcomponents-icons/dist/json-imports/Icons.js";
+import "@ui5/webcomponents-SAP-icons/dist/json-imports/Icons.js";
 
 // asset helpers (needs correct json as url in rollup.config.js)
 import "./dist/json-imports/Themes.js";
