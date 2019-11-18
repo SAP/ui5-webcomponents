@@ -10,6 +10,7 @@
     "sapui5",
     "ui5"
   ],
+  "type": "module",
   "scripts": {
     "clean": "nps clean",
     "lint": "nps lint",
@@ -25,6 +26,7 @@
     "directory": "packages/main"
   },
   "dependencies": {
+    "@ui5/webcomponents-theme-base": "1.0.0-rc.4",
     "@ui5/webcomponents-base": "0.17.0",
     "@ui5/webcomponents-core": "0.17.0"
   },
@@ -42,7 +44,7 @@
     "@webcomponents/webcomponentsjs": "^2.2.7",
     "chai": "^4.2.0",
     "chokidar-cli": "^2.0.0",
-    "chromedriver": "^77.0.0",
+    "chromedriver": "^78.0.0",
     "clean-css": "^4.2.1",
     "concurrently": "^5.0.0",
     "copy-and-watch": "^0.1.4",
@@ -71,7 +73,6 @@
     "rimraf": "^2.6.2",
     "rollup": "^1.1.2",
     "rollup-plugin-babel": "^4.0.3",
-    "rollup-plugin-commonjs": "^9.3.4",
     "rollup-plugin-filesize": "^6.0.1",
     "rollup-plugin-less": "^1.1.2",
     "rollup-plugin-node-resolve": "^4.0.0",
@@ -86,6 +87,6 @@
   "resolutions": {
     "abstract-syntax-tree": "1.0.3",
     "dir-glob": "2.0.0",
-    "wdio-chromedriver-service/chromedriver": "^77.0.0"
+    "wdio-chromedriver-service/chromedriver": "^78.0.0"
   }
 }

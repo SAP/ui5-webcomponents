@@ -42,6 +42,7 @@ const metadata = {
 		btn1Press: {},
 		btn2Press: {},
 	},
+	_eventHandlersByConvention: true,
 };
 
 class CalendarHeader extends UI5Element {
@@ -64,10 +65,10 @@ class CalendarHeader extends UI5Element {
 	constructor() {
 		super();
 		this._btnPrev = {};
-		this._btnPrev.icon = "sap-icon://slim-arrow-left";
+		this._btnPrev.icon = "slim-arrow-left";
 
 		this._btnNext = {};
-		this._btnNext.icon = "sap-icon://slim-arrow-right";
+		this._btnNext.icon = "slim-arrow-right";
 
 		this._btn1 = {};
 		this._btn1.type = ButtonDesign.Transparent;

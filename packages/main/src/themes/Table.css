@@ -16,6 +16,11 @@ table {
 	font-size: var(--sapMFontMediumSize);
 }
 
+.ui5-table-header-row:focus {
+	outline: var(--ui5_table_header_row_outline_width) dotted var(--sapUiContentFocusColor);
+	outline-offset: -0.125rem;
+}
+
 tr {
 	height: 3rem;
 }

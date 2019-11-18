@@ -1,7 +1,7 @@
 const assert = require("assert");
 
 describe("MultiComboBox general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/MultiComboBox.html");
+	browser.url("http://localhost:8080/test-resources/pages/MultiComboBox.html");
 
 	describe("toggling", () => {
 		it("opens/closes", () => {
@@ -13,6 +13,28 @@ describe("MultiComboBox general interaction", () => {
 
 			icon.click();
 			assert.ok(!popover.getProperty("opened"), "Popover should close");
+		});
+
+		it("MultiComboBox open property is set correctly", () => {
+			const mcb = browser.$("#multi1");
+			const icon = browser.$("#multi1").shadow$("[input-icon]");
+			const eventInput = $("#events-input");
+			const callCountInput = $("#events-call-count");
+			const resetBtn = $("#reset-btn");
+
+			resetBtn.click();
+			icon.click();
+			assert.ok(mcb.getProperty("open"), "MultiComboBox should be opened");
+			assert.strictEqual(eventInput.getValue(), "openChange", "openChange should be called");
+			assert.strictEqual(callCountInput.getValue(), "1", "Event should be called once");
+
+			icon.click();
+			assert.ok(!mcb.getProperty("open"), "MultiComboBox should be closed");
+
+			assert.strictEqual(eventInput.getValue(), "openChange", "openChange should be called");
+			assert.strictEqual(callCountInput.getValue(), "2", "Event should be called once");
+
+			resetBtn.click();
 		});
 	});
 
@@ -141,7 +163,7 @@ describe("MultiComboBox general interaction", () => {
 	});
 
 	describe("keyboard handling", () => {
-		browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/MultiComboBox.html");
+		browser.url("http://localhost:8080/test-resources/pages/MultiComboBox.html");
 
 		it ("tests backspace when combobox has an empty value", () => {
 			let tokens = $("#multi1").shadow$$(".ui5-multi-combobox-token");

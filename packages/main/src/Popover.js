@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import FocusHelper from "@ui5/webcomponents-base/dist/FocusHelper.js";
+import { getFirstFocusableElement, getLastFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import PopoverTemplate from "./generated/templates/PopoverTemplate.lit.js";
 import PopoverPlacementType from "./types/PopoverPlacementType.js";
@@ -17,7 +17,7 @@ const arrowSize = 8;
 
 const metadata = {
 	tag: "ui5-popover",
-	properties: {
+	properties: /** @lends  sap.ui.webcomponents.main.Popover.prototype */ {
 		/**
 		 * Defines the ID of the HTML Element, which will get the initial focus.
 		 *
@@ -151,6 +151,8 @@ const metadata = {
 		 * @private
 		 */
 		opened: { type: Boolean },
+
+		_maxContentHeight: { type: Integer },
 	},
 	slots: {
 		/**
@@ -223,6 +225,41 @@ const metadata = {
 	},
 };
 
+/**
+ * @class
+ *
+ * <h3 class="comment-api-title">Overview</h3>
+ *
+ * The <code>ui5-popover</code> component displays additional information for an object
+ * in a compact way and without leaving the page.
+ * The Popover can contain various UI elements, such as fields, tables, images, and charts.
+ * It can also include actions in the footer.
+ *
+ * <h3>Structure</h3>
+ *
+ * The popover has three main areas:
+ * <ul>
+ * <li>Header (optional)</li>
+ * <li>Content</li>
+ * <li>Footer (optional)</li>
+ * </ul>
+ *
+ * <b>Note:</b> The <code>ui5-popover</code> is closed when the user clicks
+ * or taps outside the popover
+ * or selects an action within the popover. You can prevent this with the
+ * <code>modal</code> property.
+ *
+ * <h3>ES6 Module Import</h3>
+ *
+ * <code>import "@ui5/webcomponents/dist/Popover.js";</code>
+ *
+ * @constructor
+ * @author SAP SE
+ * @alias sap.ui.webcomponents.main.Popover
+ * @extends UI5Element
+ * @tagname ui5-popover
+ * @public
+ */
 class Popover extends UI5Element {
 	static get metadata() {
 		return metadata;
@@ -241,7 +278,7 @@ class Popover extends UI5Element {
 	}
 
 	forwardToFirst() {
-		const firstFocusable = FocusHelper.findFirstFocusableElement(this.contentDOM);
+		const firstFocusable = getFirstFocusableElement(this.contentDOM);
 
 		if (firstFocusable) {
 			firstFocusable.focus();
@@ -249,7 +286,7 @@ class Popover extends UI5Element {
 	}
 
 	forwardToLast() {
-		const lastFocusable = FocusHelper.findLastFocusableElement(this.contentDOM);
+		const lastFocusable = getLastFocusableElement(this.contentDOM);
 
 		if (lastFocusable) {
 			lastFocusable.focus();
@@ -317,7 +354,7 @@ class Popover extends UI5Element {
 	}
 
 	applyInitialFocus() {
-		const element = this.getRootNode().getElementById(this.initialFocus) || document.getElementById(this.initialFocus) || FocusHelper.findFirstFocusableElement(this.contentDOM);
+		const element = this.getRootNode().getElementById(this.initialFocus) || document.getElementById(this.initialFocus) || getFirstFocusableElement(this.contentDOM);
 
 		if (element) {
 			element.focus();
@@ -510,8 +547,12 @@ class Popover extends UI5Element {
 
 		let maxContentHeight = Math.round(maxHeight);
 
-		if (this.hasHeader) {
-			const headerDomRef = this.getPopupDomRef().querySelector(".ui5-popup-header");
+		const hasHeader = this.header.length || this.headerText;
+
+		if (hasHeader) {
+			const headerDomRef = this.shadowRoot.querySelector(".ui5-popover-header-root")
+				|| this.shadowRoot.querySelector(".ui5-popup-header-text");
+
 			if (headerDomRef) {
 				maxContentHeight = Math.round(maxHeight - headerDomRef.offsetHeight);
 			}
@@ -616,6 +657,9 @@ class Popover extends UI5Element {
 
 	get styles() {
 		return {
+			content: {
+				"max-height": `${this._maxContentHeight}px`,
+			},
 			arrow: {
 				transform: `translate(${this.arrowTranslateX}px, ${this.arrowTranslateY}px)`,
 			},

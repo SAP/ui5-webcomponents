@@ -79,6 +79,10 @@ class TableCell extends UI5Element {
 	static get template() {
 		return TableCellTemplate;
 	}
+
+	_onclick(event) {
+		this.fireEvent("_cellclick", event);
+	}
 }
 
 TableCell.define();

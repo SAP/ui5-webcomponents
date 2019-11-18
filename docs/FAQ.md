@@ -22,7 +22,7 @@
 
 **Q: Are UI5 Web Components APIs stable?**
 
-**A:** Not yet, but a 1.0.0 RC is nearing around the end of June 2019
+**A:** Mostly yes since the project is in Release Candidate state, but minor changes may still be expected until the official release.
 
 
 **Q: Can I create my own UI5 Web Components?**
@@ -45,3 +45,35 @@ Additional features, settings and old browser support will increase bundle size 
 
 **Q: ?** Can I use UI5 Web Components in a OpenUI5 application?
 **A:** This is not necessary as OpenUI5 already provides equivalents in the form of UI5 Controls. 
+
+
+**Q: ?** How can I hide not yet upgraded Web Components so that users don't see them until styled?
+**A:** You can place a CSS rule such as:
+
+```CSS
+*:not(:defined) {
+	display: none;
+}
+``` 
+
+or: 
+
+```CSS
+*:not(:defined) {
+	visibility: hidden;
+}
+``` 
+
+in your application, depending on your preference.
+
+The selector `*:not(:defined)` will match all web components that haven't been defined yet. 
+
+Alternatively, you could only apply this rule for selected web components:
+
+```CSS
+ui5-button:not(:defined), ui5-label:not(:defined) {
+	display: none;
+}
+``` 
+
+Please note that the `:defined` CSS pseudo-selector is not supported by the Edge and Internet Explorer 11 browsers.

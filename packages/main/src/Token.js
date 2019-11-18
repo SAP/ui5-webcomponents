@@ -163,7 +163,7 @@ class Token extends UI5Element {
 	}
 
 	get iconURI() {
-		return getTheme() === "sap_fiori_3" ? "sap-icon://decline" : "sap-icon://sys-cancel";
+		return getTheme() === "sap_fiori_3" ? "decline" : "sys-cancel";
 	}
 
 	static async define(...params) {

@@ -7,6 +7,7 @@ import {
 import "./icons/slim-arrow-down.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { isIE } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import MultiComboBoxTemplate from "./generated/templates/MultiComboBoxTemplate.lit.js";
 import Tokenizer from "./Tokenizer.js";
 import Token from "./Token.js";
@@ -14,6 +15,7 @@ import Icon from "./Icon.js";
 import Popover from "./Popover.js";
 import List from "./List.js";
 import StandardListItem from "./StandardListItem.js";
+import { TOKENIZER_ARIA_CONTAIN_SEVERAL_TOKENS } from "../dist/generated/i18n/i18n-defaults.js";
 
 // Styles
 import styles from "./generated/themes/MultiComboBox.css.js";
@@ -131,6 +133,18 @@ const metadata = {
 		 * @since 1.0.0-rc.5
 		 */
 		required: {
+      type: Boolean,
+		},
+
+    /**
+		 * Indicates whether the dropdown is open. True if the dropdown is open, false otherwise.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @since 1.0.0-rc.5
+		 * @public
+		 */
+		open: {
 			type: Boolean,
 		},
 
@@ -175,6 +189,15 @@ const metadata = {
 		 * @public
 		 */
 		input: {},
+
+		/**
+		 * Fired when the dropdown is opened or closed.
+		 *
+		 * @event
+		 * @since 1.0.0-rc.5
+		 * @public
+		 */
+		openChange: {},
 
 		/**
 		 * Fired when selection is changed by user interaction
@@ -266,6 +289,7 @@ class MultiComboBox extends UI5Element {
 		this._inputLastValue = "";
 		this._deleting = false;
 		this._validationTimeout = null;
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	_inputChange() {
@@ -337,7 +361,7 @@ class MultiComboBox extends UI5Element {
 
 	_tokenDelete(event) {
 		const token = event.detail.ref;
-		const deletingItem = this.items.filter(item => item._id === token.getAttribute("data-ui5-id"))[0];
+		const deletingItem = this.items.find(item => item._id === token.getAttribute("data-ui5-id"));
 
 		deletingItem.selected = false;
 		this._deleting = true;
@@ -400,6 +424,9 @@ class MultiComboBox extends UI5Element {
 
 	_toggleIcon() {
 		this._iconPressed = !this._iconPressed;
+		this.open = this._iconPressed;
+
+		this.fireEvent("openChange");
 	}
 
 	_getSelectedItems() {
@@ -470,8 +497,16 @@ class MultiComboBox extends UI5Element {
 		this._filteredItems = filteredItems;
 	}
 
+	onAfterRendering() {
+		this.open && this._getPopover().openBy(this);
+	}
+
 	get _tokenizer() {
 		return this.shadowRoot.querySelector("ui5-tokenizer");
+	}
+
+	get nMoreCountText() {
+		return this.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_SEVERAL_TOKENS, this._getSelectedItems().length);
 	}
 
 	rootFocusIn() {
@@ -504,6 +539,7 @@ class MultiComboBox extends UI5Element {
 			Popover.define(),
 			List.define(),
 			StandardListItem.define(),
+			fetchI18nBundle("@ui5/webcomponents"),
 		]);
 
 		super.define(...params);

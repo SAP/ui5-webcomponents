@@ -1,6 +1,3 @@
-@import "./base-parameters.css";
-@import "./global-parameters.css";
-
 @import "./Badge-parameters.css";
 @import "./Button-parameters.css";
 @import "./BusyIndicator-parameters.css";
@@ -27,5 +24,6 @@
 @import "./YearPicker-parameters.css";
 @import "./CalendarHeader-parameters.css";
 @import "./Table-parameters.css";
+@import "./TableRow-parameters.css";
 @import "./Token-parameters.css";
 @import "./MultiComboBox-parameters.css";

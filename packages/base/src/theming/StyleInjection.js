@@ -24,14 +24,22 @@ const schedulePonyfill = () => {
 /**
  * Creates/updates a style element holding all CSS Custom Properties
  * @param cssText
+ * @param packageName
  */
-const injectThemeProperties = cssText => {
+const injectThemeProperties = (cssText, packageName) => {
+	packageName = packageName.replace(/[@/]/g, "-");
+	const identifier = `data-ui5-theme-properties-${packageName}`;
+
 	// Needed for all browsers
-	const styleElement = document.head.querySelector(`style[data-ui5-theme-properties]`);
+	const styleElement = document.head.querySelector(`style[${identifier}]`);
 	if (styleElement) {
 		styleElement.textContent = cssText || "";	// in case of undefined
 	} else {
-		createStyleInHead(cssText, { "data-ui5-theme-properties": "" });
+		const attributes = {
+			"data-ui5-theme-properties": "",
+			[identifier]: "",
+		};
+		createStyleInHead(cssText, attributes);
 	}
 
 	// When changing the theme, run the ponyfill immediately

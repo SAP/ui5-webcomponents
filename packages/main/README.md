@@ -1,4 +1,4 @@
-![UI5 icon](https://raw.githubusercontent.com/SAP/ui5-webcomponents/master/docs/images/UI5_logo_wide.png)
+![UI5 icon](/docs/images/UI5_logo_wide.png)
 
 # UI5 Web Components
 
@@ -33,9 +33,6 @@ UI5 remains what it is: the best choice for…
 - [UI5 Web Components](https://sap.github.io/ui5-webcomponents)
 - [UI5 Web Components - Playground and API Reference](https://sap.github.io/ui5-webcomponents/playground/)
 
-## Requirements
-- [Node.js](https://nodejs.org/) (**version 8.5 or higher** ⚠️)
-
 ## Download and Installation
 To consume UI5 Web Components, first you need to install the NPM module:
 
@@ -43,12 +40,27 @@ To consume UI5 Web Components, first you need to install the NPM module:
 npm install @ui5/webcomponents
 ```
 
+...and optionally:
+
+```sh
+npm install @ui5/webcomponents-fiori
+```
+
+for some more specific Fiori UX components such as `ui5-shellbar`.
+
+
 Import the desired component(s) in your app to define the UI5 Web Component.
 
 For example, to use ```ui5-button``` you need to import it:
 
 ```js
-import "@ui5/webcomponents/dist/Button"; // loads ui5-button
+import "@ui5/webcomponents/dist/Button.js"; // loads ui5-button
+```
+
+...similarly to use ```ui5-shellbar```:
+
+```js
+import "@ui5/webcomponents-fiori/dist/ShellBar.js"; // loads ui5-shellbar
 ```
 
 Then, you can use the custom element in an HTML page:
@@ -56,6 +68,8 @@ Then, you can use the custom element in an HTML page:
 ```html
 <ui5-button>Hello world!</ui5-button>
 ```
+
+*Note*: For a full list of the UI5 Web Components (and the respective NPM modules that ship them), click [here](https://github.com/SAP/ui5-webcomponents/blob/master/docs/Public%20Module%20Imports.md) 
 
 ## Browser support
 
@@ -66,13 +80,13 @@ If your application should run on browsers without native Web Components support
 ### Edge only
 
 ```js
-import "@ui5/webcomponents-base/dist/browsersupport/Edge";
+import "@ui5/webcomponents-base/dist/features/browsersupport/Edge.js";
 ```
 
 ### Edge and IE11
 
 ```js
-import "@ui5/webcomponents-base/dist/browsersupport/IE11";
+import "@ui5/webcomponents-base/dist/features/browsersupport/IE11.js";
 ```
 
 *Note:* Importing the module for IE11 support automatically enables Edge support as well, so there is no need to import them both explicitly.
@@ -80,13 +94,13 @@ import "@ui5/webcomponents-base/dist/browsersupport/IE11";
 Example:
 
 ```js
-import "@ui5/webcomponents-base/dist/browsersupport/IE11"; // This will enable Edge and IE11 support for all Web Components below
-import "@ui5/webcomponents/dist/Button"; // loads ui5-button
-import "@ui5/webcomponents/dist/Label"; // loads ui5-label
+import "@ui5/webcomponents-base/dist/features/browsersupport/IE11.js"; // This will enable Edge and IE11 support for all Web Components below
+import "@ui5/webcomponents/dist/Button.js"; // loads ui5-button
+import "@ui5/webcomponents/dist/Label.js"; // loads ui5-label
 ```
 
 ## Configure
-UI5 Web Components have built-in internalization and globalization support. Language, compact/cozy switch, date/time settings and theme can be changed with parameters.
+UI5 Web Components have built-in internationalization and globalization support. Language, compact/cozy switch, date/time settings and theme can be changed with parameters.
 
 To provide configuration settings, create a ```script``` tag having ```data-ui5-config``` and ```type="application/json"```:
 
@@ -106,7 +120,7 @@ UI5 Web Components support right-to-left text direction (RTL). To enable RTL glo
 ```html
 <script data-ui5-config type="application/json">
 {
-  "language": "EN",
+  "language": "en",
   "rtl": true
 }
 </script>
@@ -138,6 +152,7 @@ UI5 Web Components support different calendar types (Gregorian, Islamic, Japanes
 
 ### Requirements
 - [Yarn](https://yarnpkg.com/en)
+- [Node.js](https://nodejs.org/) (**version 8.5 or higher**)
 
 You can clone the UI5 Web Components repository and start the Playground app with the following commands:
 
@@ -165,22 +180,23 @@ Keep in mind that linking the same module with npm and Yarn may cause issues. Al
 
 ### Where are the npm packages?
 - [UI5 Web Components](https://www.npmjs.com/package/@ui5/webcomponents)
+- [UI5 Web Components Fiori](https://www.npmjs.com/package/@ui5/webcomponents-fiori)
 - [UI5 Web Components Base](https://www.npmjs.com/package/@ui5/webcomponents-base)
+- [UI5 Web Components Theme Base](https://www.npmjs.com/package/@ui5/webcomponents-theme-base)
 - [UI5 Web Components Core](https://www.npmjs.com/package/@ui5/webcomponents-core)
 
 ## Limitations
-- The ```ui5-table``` web component does not work on Internet Explorer 11
 - All input web components (ui5-input, ui5-datepicker and ui5-textarea) do not support the ```placeholder``` attribute on Internet Explorer 11
 
 ## Known Issues
 No major bugs known.
 
 ## Support
-We welcome all comments, suggestions, questions, and bug reports. Please follow our [Support Guidelines](https://github.com/SAP/ui5-webcomponents/blob/master/SUPPORT.md#-content) on how to report an issue, or chat with us in the `#webcomponents` channel of the [OpenUI5 Community Slack](https://join-ui5-slack.herokuapp.com/).
+We welcome all comments, suggestions, questions, and bug reports. Please follow our [Support Guidelines](/SUPPORT.md#-content) on how to report an issue, or chat with us in the `#webcomponents` channel of the [OpenUI5 Community Slack](https://ui5-slack-invite.cfapps.eu10.hana.ondemand.com/).
 
 ## Contribute
-Please check our [Contribution Guidelines](https://github.com/SAP/ui5-webcomponents/blob/master/CONTRIBUTING.md).
+Please check our [Contribution Guidelines](/CONTRIBUTING.md).
 
 ## License
 Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
-This file is licensed under the Apache Software License, Version 2.0 except as noted otherwise in the [LICENSE](https://github.com/SAP/ui5-webcomponents/blob/master/LICENSE.txt) file.
+This file is licensed under the Apache Software License, Version 2.0 except as noted otherwise in the [LICENSE](/LICENSE.txt) file.

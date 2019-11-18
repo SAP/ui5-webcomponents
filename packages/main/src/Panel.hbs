@@ -4,24 +4,26 @@
 	role="{{accRole}}"
 >
 	<!-- header: either header or h1 with header text -->
-	<header
+	<div
 		@click="{{_headerClick}}"
 		@keydown="{{_headerKeyDown}}"
 		@keyup="{{_headerKeyUp}}"
 		class="ui5-panel-header"
 		tabindex="{{headerTabIndex}}"
+		role="{{accInfo.role}}"
+		aria-expanded="{{accInfo.ariaExpanded}}"
+		aria-controls="{{accInfo.ariaControls}}"
 	>
 		<div
 			class="ui5-panel-header-button-root"
 		>
 			<ui5-button
 				design="Transparent"
-				class="ui5-panel-header-button"
-				aria-expanded="{{expanded}}"
+				class="ui5-panel-header-button {{classes.headerBtn}}"
+				icon="navigation-right-arrow"
 				?non-focusable="{{nonFocusableButton}}"
 				@click="{{_toggleButtonClick}}"
-				icon="sap-icon://navigation-right-arrow"
-				title="{{toggleButtonTitle}}"
+				._buttonAccInfo="{{accInfo.button}}"
 			></ui5-button>
 		</div>
 
@@ -32,10 +34,10 @@
 				<h1 class="ui5-panel-header-title">{{headerText}}</h1>
 			</div>
 		{{/if}}
-	</header>
+	</div>
 
 	<!-- content area -->
-	<div class="ui5-panel-content" tabindex="-1" style="{{styles.content}}">
+	<div class="ui5-panel-content" id="{{_id}}-content" tabindex="-1" style="{{styles.content}}">
 		<slot></slot>
 	</div>
 </div>
