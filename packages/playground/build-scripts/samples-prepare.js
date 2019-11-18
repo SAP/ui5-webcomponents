@@ -17,7 +17,7 @@ fs.readdir(samplesPath, (err, files) => {
     }
     files.forEach((file, index) => {
         //Copy samples
-        fs.copyFileSync(path.join(samplesPath, file), path.join(process.cwd(), `/docs/components/${file}`));
+        fs.copyFileSync(path.join(samplesPath, file), path.join(process.cwd(), `/docs/main-components/${file}`));
 
         var results = replace({
             files: `./docs/components/${file}`,
