@@ -1,25 +1,5 @@
-commit 0489673610ce2fd0e96d0a3a1f4e0465d8e060d1
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Mon Nov 18 13:10:22 2019 +0200
+commit c0b51f582f43fb777b66797208d09f0a6a1478e6
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Mon Nov 18 13:55:38 2019 +0200
 
-    feat(ui5-icon): change src property to name (#928)
-    
-    BREAKING CHANGE:
-    @ui5/webcomponents/dist/Icon.js
-    The src property was renamed to name and accepts icon name (such as "add") instead of icon src (such as "sap-icon://add").
-    Note: the src property will continue to work until the next release due to the impact of the change, but will produce a warning in the console.
-    
-    @ui5/webcomponents/dist/Card.js
-    The avatar property was removed.
-    Use the avatar slot instead - pass an icon(<ui5-icon) or an image(<img).
-    Before:
-    <ui5-card avatar="sap-icon://add"></ui5-card>
-    After:
-    <ui5-card><ui5-icon name="add" slot="avatar"></ui5-icon></ui5-card>
-    and respectively:
-    <ui5-card avatar="http://url/to/my/image"></ui5-card>
-    becomes:
-    <ui5-card><img src="http://url/to/my/image" slot="avatar"/></ui5-card>
-    
-    @ui5/webcomponents-fiori/dist/ShellBarItem.js
-    The src property was renamed to icon and accepts icon name (such as "add") instead of icon src (such as "sap-icon://add")
+    feat(ui5-multicombobox): introduce open property and openChange event (#930)
