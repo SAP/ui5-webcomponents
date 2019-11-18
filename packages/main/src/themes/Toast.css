@@ -1,0 +1,20 @@
+.ui5-toast-root {
+	visibility: hidden;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 200px;
+	padding: 2rem;
+	background: var(--sapUiGroupContentBackground);
+	box-shadow: var(--sapUiShadowLevel2);
+	border-radius: 0.25rem;
+	box-sizing: border-box;
+}
+
+:host([opened]) .ui5-toast-root {
+	opacity: 0;
+	visibility: visible;
+	transition: opacity 1s linear; /* configurable */
+	/* transition-delay: 2s; configurable */
+}
