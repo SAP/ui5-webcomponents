@@ -107,15 +107,12 @@ class Tokenizer extends UI5Element {
 		};
 
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
-
-		this._delegates.push(this._itemNav);
 	}
 
 	onBeforeRendering() {
 		setTimeout(() => {
 			// wait for the layouting and update the text
 			this._nMoreText = this.i18nBundle.getText(MULTIINPUT_SHOW_MORE_TOKENS, [this.overflownTokens.length]);
-			this._itemNav.init();
 		}, 0);
 	}
 

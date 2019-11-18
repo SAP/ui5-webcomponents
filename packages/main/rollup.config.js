@@ -7,13 +7,13 @@ import url from "rollup-plugin-url";
 import { terser } from "rollup-plugin-terser";
 import notify from 'rollup-plugin-notify';
 import filesize from 'rollup-plugin-filesize';
-import commonjs from 'rollup-plugin-commonjs';
 
 const DIST = path.normalize("dist");
-const DIST_PLAYGROUND = path.normalize("dist/resources/sap/ui/webcomponents/main");
+const DIST_PLAYGROUND = path.normalize("dist/resources/");
 
 
 const DEPLOY_PUBLIC_PATH = process.env.DEPLOY_PUBLIC_PATH || "";
+const IS_TRAVIS_DEPLOYMENT = process.env.IS_TRAVIS_DEPLOYMENT || false;
 
 function ui5DevImportCheckerPlugin() {
 	return {
@@ -36,6 +36,7 @@ function ui5DevImportCheckerPlugin() {
 
 const getPlugins = ({ transpile }) => {
 	const plugins = [];
+	let publicPath = DEPLOY_PUBLIC_PATH || "/resources/";
 
 	plugins.push(filesize({
 		render : function (options, bundle, { minSize, gzipSize, brotliSize, bundleSize }){
@@ -52,7 +53,7 @@ const getPlugins = ({ transpile }) => {
 		],
 		emitFiles: true,
 		fileName: "[name].[hash][extname]",
-		publicPath: DEPLOY_PUBLIC_PATH + "/resources/sap/ui/webcomponents/main/",
+		publicPath,
 	}));
 
 
@@ -83,7 +84,7 @@ const getES6Config = () => {
 	return [{
 		input: "bundle.esm.js",
 		output: {
-			dir: "dist/resources/sap/ui/webcomponents/main",
+			dir: "dist/resources",
 			format: "esm",
 			sourcemap: true
 		},
@@ -104,9 +105,9 @@ const getES5Config = () => {
 	return [ {
 		input: "bundle.es5.js",
 		output: {
-			dir: "dist/resources/sap/ui/webcomponents/main",
+			dir: "dist/resources",
 			format: "iife",
-			name: "sap-ui-webcomponents-main-bundle",
+			name: "sap-ui-webcomponents-bundle",
 			extend: "true",	// Whether or not to extend the global variable defined by the name option in umd or iife formats.
 			sourcemap: true
 		},
@@ -126,28 +127,6 @@ const getES5Config = () => {
 let config = [];
 
 config = config.concat(getES6Config());
-
-
-const getDerivedColorsConfig = (theme) => {
-	return {
-		input: `src/themes/${theme}/derived-colors.js`,
-		output: {
-			dir: `dist/generated/themes/${theme}/`,
-			format: "esm",
-			sourcemap: true
-		},
-		plugins: [commonjs()],
-	}
-}
-
-if (!process.env.DEV) {
-	// only in PROD, not used for development
-	config = config.concat([
-		getDerivedColorsConfig("sap_belize"),
-		getDerivedColorsConfig("sap_belize_hcb"),
-		getDerivedColorsConfig("sap_fiori_3"),
-	]);
-}
 
 if (process.env.ES5_BUILD) {
 	config = config.concat(getES5Config());

@@ -4,8 +4,10 @@ import scroll from "../animations/scroll.js";
 const scrollEventName = "scroll";
 
 class ScrollEnablement extends EventProvider {
-	constructor() {
+	constructor(containerComponent) {
 		super();
+		containerComponent.addEventListener("touchstart", this.ontouchstart.bind(this), { passive: true });
+		containerComponent.addEventListener("touchmove", this.ontouchmove.bind(this), { passive: true });
 	}
 
 	set scrollContainer(container) {

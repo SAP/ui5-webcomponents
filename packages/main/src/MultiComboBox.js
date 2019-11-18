@@ -328,7 +328,7 @@ class MultiComboBox extends UI5Element {
 
 	_tokenDelete(event) {
 		const token = event.detail.ref;
-		const deletingItem = this.items.filter(item => item._id === token.getAttribute("data-ui5-id"))[0];
+		const deletingItem = this.items.find(item => item._id === token.getAttribute("data-ui5-id"));
 
 		deletingItem.selected = false;
 		this._deleting = true;

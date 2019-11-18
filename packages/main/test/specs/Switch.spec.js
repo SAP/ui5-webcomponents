@@ -1,7 +1,7 @@
 const assert = require('assert');
 
 describe("Switch general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/Switch.html");
+	browser.url("http://localhost:8080/test-resources/pages/Switch.html");
 
 	it("tests change event", () => {
 		const switchEl = browser.$("#sw");

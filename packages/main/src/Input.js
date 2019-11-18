@@ -69,7 +69,13 @@ const metadata = {
 			type: HTMLElement,
 		},
 
-		_beginContent: {
+		/**
+		 * The slot is used for native <code>input</code> HTML element to enable form sumbit,
+		 * when <code>name</code> property is set.
+		 * @type {HTMLElement[]}
+		 * @private
+		 */
+		formSupport: {
 			type: HTMLElement,
 		},
 	},
@@ -371,7 +377,7 @@ class Input extends UI5Element {
 		this.firstRendering = false;
 	}
 
-	onkeydown(event) {
+	_onkeydown(event) {
 		if (isUp(event)) {
 			return this._handleUp(event);
 		}
@@ -391,7 +397,7 @@ class Input extends UI5Element {
 		this._keyDown = true;
 	}
 
-	onkeyup() {
+	_onkeyup(event) {
 		this._keyDown = false;
 	}
 
@@ -421,12 +427,12 @@ class Input extends UI5Element {
 		}
 	}
 
-	onfocusin(event) {
+	_onfocusin(event) {
 		this.focused = true; // invalidating property
 		this.previousValue = this.value;
 	}
 
-	onfocusout() {
+	_onfocusout(event) {
 		this.focused = false; // invalidating property
 		this.previousValue = "";
 	}

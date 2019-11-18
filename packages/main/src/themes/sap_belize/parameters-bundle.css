@@ -1,6 +1,3 @@
-@import "./base-parameters.css";
-@import "./global-parameters.css";
-
 @import "./Badge-parameters.css";
 @import "./Button-parameters.css";
 @import "./BusyIndicator-parameters.css";
@@ -24,6 +21,7 @@
 @import "./Switch-parameters.css";
 @import "./TabContainer-parameters.css";
 @import "./Table-parameters.css";
+@import "./TableRow-parameters.css";
 @import "./TextArea-parameters.css";
 @import "./TimelineItem-parameters.css";
 @import "./ToggleButton-parameters.css";

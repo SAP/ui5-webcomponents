@@ -30,6 +30,7 @@ const metadata = {
 	},
 	events: /** @lends  sap.ui.webcomponents.main.GroupHeaderListItem.prototype */ {
 	},
+	_eventHandlersByConvention: true,
 };
 
 /**

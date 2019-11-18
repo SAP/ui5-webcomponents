@@ -9,12 +9,18 @@
 		@focusin={{_onfocusin}}
 		@click={{_onclick}}
 		@mousedown={{_onmousedown}}
+		@mouseup={{_onmouseup}}
+		@keydown={{_onkeydown}}
+		@keyup={{_onkeyup}}
 		tabindex={{tabIndexValue}}
+		aria-expanded="{{accInfo.ariaExpanded}}"
+		aria-controls="{{accInfo.ariaControls}}"
+		title="{{accInfo.title}}"
 	>
 		{{#if icon}}
 			<ui5-icon
 				class="ui5-button-icon"
-				src="{{icon}}"
+				name="{{icon}}"
 				show-tooltip={{iconOnly}}
 			></ui5-icon>
 		{{/if}}

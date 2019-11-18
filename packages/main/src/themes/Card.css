@@ -9,7 +9,7 @@
 	color: var(--sapUiGroupTitleTextColor);
 	background: var(--sapUiTileBackground);
 	box-shadow: var(--sapUiShadowLevel0);
-	border-radius: 0.25rem;
+	border-radius: .25rem;
 	border: 1px solid var(--_ui5_card_border_color);
 	overflow: hidden;
 	font-family: var(--sapUiFontFamily);
@@ -69,17 +69,19 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	margin-right: 0.75rem;
+	margin-right: .75rem;
 }
 
-.ui5-card-header .ui5-card-avatar.ui5-card-header-img {
-	border-radius: 50%;
-}
-
-.ui5-card-header .ui5-card-avatar .ui5-card-header-icon {
+::slotted(ui5-icon) {
 	width: 1.5rem;
 	height: 1.5rem;
 	color: var(--sapUiTileIconColor);
+}
+
+::slotted(img) {
+	width: 100%;
+    height: 100%;
+	border-radius: 50%;
 }
 
 .ui5-card-header .ui5-card-status {
@@ -109,7 +111,7 @@
 	font-size: var(--sapMFontMediumSize);
 	font-weight: normal;
 	color: var(--sapUiTileTextColor);
-	margin-top: 0.5rem;
+	margin-top: .5rem;
 	max-height: 2.1rem;
 }
 
@@ -127,7 +129,7 @@
 }
 
 [dir="rtl"] .ui5-card-header .ui5-card-avatar {
-	margin-left: 0.75rem;
+	margin-left: .75rem;
 	margin-right: 0;
 }
 

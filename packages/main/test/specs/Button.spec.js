@@ -2,20 +2,20 @@ const assert = require("chai").assert;
 
 
 describe("Button general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/Button.html");
+	browser.url("http://localhost:8080/test-resources/pages/Button.html");
 
-	it("tests press event", () => {
+	it("tests click event", () => {
 		const button = browser.$("#button1");
-		const field = browser.$("#press-counter");
+		const field = browser.$("#click-counter");
 
 		button.click();
 		button.keys("Space");
 		button.keys("Enter");
 
-		assert.strictEqual(field.getProperty("value"), "3", "Press should be called 3 times");
+		assert.strictEqual(field.getProperty("value"), "3", "Click should be called 3 times");
 	});
 
-	it("tests pressing on disabled button", () => {
+	it("tests clicking on disabled button", () => {
 		const button = browser.$("#button-disabled").shadow$("button");
 
 		assert.throws(() => {
@@ -25,8 +25,8 @@ describe("Button general interaction", () => {
 		// don't test space and enter, as wdio always fires a click but the browser not.
 		// button.keys("Space");
 		// button.keys("Enter");
-		const field = browser.$("#press-counter");
-		assert.strictEqual(field.getProperty("value"), "3", "Press should be called 3 times");
+		const field = browser.$("#click-counter");
+		assert.strictEqual(field.getProperty("value"), "3", "Click should be called 3 times");
 	});
 
 	it("click should call handler", () => {

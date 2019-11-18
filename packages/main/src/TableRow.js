@@ -29,7 +29,6 @@ const metadata = {
 		_columnsInfo: {
 			type: Object,
 			multiple: true,
-			deepEqual: true,
 		},
 		_tabIndex: {
 			type: String,
@@ -39,6 +38,7 @@ const metadata = {
 	events: /** @lends sap.ui.webcomponents.main.TableRow.prototype */ {
 		_focused: {},
 	},
+	_eventHandlersByConvention: true,
 };
 
 /**
@@ -56,6 +56,11 @@ const metadata = {
  * @public
  */
 class TableRow extends UI5Element {
+	constructor() {
+		super();
+		this.fnOnCellClick = this._oncellclick.bind(this);
+	}
+
 	static get metadata() {
 		return metadata;
 	}
@@ -70,6 +75,28 @@ class TableRow extends UI5Element {
 
 	static get template() {
 		return TableRowTemplate;
+	}
+
+	_onfocusin(event, forceSelfFocus = false) {
+		if (forceSelfFocus || this._getActiveElementTagName() === "ui5-table-cell") {
+			this.getDomRef().focus();
+		}
+
+		this.fireEvent("_focused", event);
+	}
+
+	_oncellclick(event) {
+		if (this._getActiveElementTagName() === "body") {
+			// If the user clickes on non-focusable element within the ui5-table-cell,
+			// the focus goes to the body, se we have to bring it back to the row.
+			// If the user clicks on input, button or similar clickable element,
+			// the focus remains on that element.
+			this._onfocusin(event, true /* force row focus */);
+		}
+	}
+
+	_getActiveElementTagName() {
+		return document.activeElement.localName.toLocaleLowerCase();
 	}
 
 	onBeforeRendering() {
@@ -127,10 +154,6 @@ class TableRow extends UI5Element {
 
 	get visibleCellsCount() {
 		return this.visibleCells.length;
-	}
-
-	onfocusin(event) {
-		this.fireEvent("_focused", event);
 	}
 }
 

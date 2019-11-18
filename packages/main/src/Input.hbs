@@ -1,13 +1,9 @@
 <div
 	class="ui5-input-root"
-	@focusin="{{onfocusin}}"
-	@focusout="{{onfocusout}}"
+	@focusin="{{_onfocusin}}"
+	@focusout="{{_onfocusout}}"
 >
 	<div class="ui5-input-content">
-		{{#if _beginContent.length}}
-			<slot name="_beginContent"></slot>
-		{{/if}}
-
 		<input id="{{_id}}-inner"
 			class="ui5-input-inner"
 			type="{{inputType}}"
@@ -26,6 +22,8 @@
 			aria-expanded="{{accInfo.input.ariaExpanded}}"
 			@input="{{_handleInput}}"
 			@change="{{_handleChange}}"
+			@keydown="{{_onkeydown}}"
+			@keyup="{{_onkeyup}}"
 			data-sap-no-tab-ref
 			data-sap-focus-ref
 		/>

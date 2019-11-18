@@ -1,7 +1,7 @@
 const assert = require('assert');
 
 describe("RadioButton general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/RadioButton.html");
+	browser.url("http://localhost:8080/test-resources/pages/RadioButton.html");
 
 	it("tests select event", () => {
 		const radioButton = browser.$("#rb1");
@@ -90,7 +90,7 @@ describe("RadioButton general interaction", () => {
 		assert.ok(!radioButtonPreviouslySelected.getProperty("selected"), "Previously selected item has been de-selected.");
 		assert.ok(radioButtonToBeSelected.getProperty("selected"), "Pressing ArrowRight selects the next (not disabled) radio in the group.");
 	});
-	
+
 	it("tests single selection within group, even if multiple radios are set as selected", () => {
 		// radios with property selected=true, but not selected
 		const radioButtonNotSelected1 = browser.$("#groupRb8");

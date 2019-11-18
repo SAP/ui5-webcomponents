@@ -1,7 +1,7 @@
 const assert = require("chai").assert;
 
 describe("DOMObserver", () => {
-	browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/base/DOMObserver.html");
+	browser.url("http://localhost:8080/test-resources/pages/base/DOMObserver.html");
 
 	it("insertion order still fires DOMObserver", () => {
 
