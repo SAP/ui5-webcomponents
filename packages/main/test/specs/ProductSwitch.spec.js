@@ -3,17 +3,6 @@ const assert = require("assert");
 describe("ProductSwitch general interaction", () => {
 	browser.url("http://localhost:8080/test-resources/pages/ProductSwitch.html");
 
-	it("tests event itemClick", () => {
-		const productSwitch = browser.$("#productSwitchFourColumn");
-		const input = browser.$("#eventTest");
-
-		productSwitch.click();
-		productSwitch.keys("Space");
-		productSwitch.keys("Enter");
-
-		assert.strictEqual(input.getProperty("value"), "3", "click should be called 3 times");
-	});
-
 	it("tests desktopColumns attribute", () => {
 		const productSwitchFourColumn = browser.$("#productSwitchFourColumn");
 		const productSwitchThreeColumn = browser.$("#productSwitchThreeColumn");
