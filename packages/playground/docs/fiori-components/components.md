@@ -1,7 +1,7 @@
 ---
 layout: default
-title: Components
-nav_order: 4
+title: Fiori Components
+nav_order: 5
 has_children: true
 permalink: /playground/fiori-components
 accordion: false
