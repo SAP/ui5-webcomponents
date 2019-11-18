@@ -35,6 +35,7 @@ import Select from "./dist/Select.js";
 import Option from "./dist/Option.js";
 import Switch from "./dist/Switch.js";
 import MessageStrip from "./dist/MessageStrip.js";
+import MessageToast from "./dist/MessageToast.js";
 import MultiComboBox from "./dist/MultiComboBox.js";
 import TabContainer from "./dist/TabContainer.js";
 import Tab from "./dist/Tab.js";
