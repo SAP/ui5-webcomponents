@@ -46,6 +46,9 @@ packages/playground/assets/js/ui5-webcomponents/
 packages/playground/docs/main-components
 !packages/playground/docs/main-components/components.md
 
+packages/playground/docs/fiori-components
+!packages/playground/docs/fiori-components/components.md
+
 packages/playground/docs/documentation
 !packages/playground/docs/documentation/documentation.md
 
