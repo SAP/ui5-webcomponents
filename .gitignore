@@ -44,7 +44,7 @@ packages/playground/.sass-cache/
 packages/playground/assets/js/ui5-webcomponents/
 
 packages/playground/docs/main-components
-!packages/playground/docs/main-components/component.md
+!packages/playground/docs/main-components/components.md
 
 packages/playground/docs/documentation
 !packages/playground/docs/documentation/documentation.md
