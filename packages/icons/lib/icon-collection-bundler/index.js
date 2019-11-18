@@ -2,7 +2,7 @@ import fs from "fs";
 import mkdirp from "mkdirp";
 import path from "path";
 
-import { collectionName } from "../../AllIcons.js";
+import { collectionName } from "./AllIcons.js";
 import { getRegisteredNames, getIconDataSync } from "@ui5/webcomponents-base/dist/SVGIconRegistry.js";
 
 
