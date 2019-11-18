@@ -125,6 +125,18 @@ const metadata = {
 		},
 
 		/**
+		 * Defines whether the <code>ui5-multi-combobox</code> is required.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 * @since 1.0.0-rc.5
+		 */
+		required: {
+			type: Boolean,
+		},
+
+		/**
 		 * Indicates whether the dropdown is open. True if the dropdown is open, false otherwise.
 		 *
 		 * @type {boolean}
