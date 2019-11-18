@@ -45,7 +45,7 @@ const metadata = {
 		 * <br><br>
 		 * Example:
 		 * <br>
-		 * <pre>ui5-messagestrip icon="sap-icon://palette"</pre>
+		 * <pre>ui5-messagestrip icon="palette"</pre>
 		 *
 		 * See all the available icons in the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
 		 *
@@ -194,10 +194,10 @@ class MessageStrip extends UI5Element {
 
 	static iconMappings() {
 		return {
-			"Information": "sap-icon://message-information",
-			"Positive": "sap-icon://message-success",
-			"Negative": "sap-icon://message-error",
-			"Warning": "sap-icon://message-warning",
+			"Information": "message-information",
+			"Positive": "message-success",
+			"Negative": "message-error",
+			"Warning": "message-warning",
 		};
 	}
 

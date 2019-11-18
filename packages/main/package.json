@@ -45,7 +45,7 @@
     "@webcomponents/webcomponentsjs": "^2.2.7",
     "chai": "^4.2.0",
     "chokidar-cli": "^2.0.0",
-    "chromedriver": "^77.0.0",
+    "chromedriver": "^78.0.0",
     "clean-css": "^4.2.1",
     "concurrently": "^5.0.0",
     "copy-and-watch": "^0.1.4",
@@ -88,6 +88,6 @@
   "resolutions": {
     "abstract-syntax-tree": "1.0.3",
     "dir-glob": "2.0.0",
-    "wdio-chromedriver-service/chromedriver": "^77.0.0"
+    "wdio-chromedriver-service/chromedriver": "^78.0.0"
   }
 }

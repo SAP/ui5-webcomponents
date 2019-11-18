@@ -29,12 +29,12 @@ TestHelper.ready(function () {
 	QUnit.test("icon", function (assert) {
 		var done = assert.async();
 
-		this.button.setAttribute("icon", "sap-icon://employee");
+		this.button.setAttribute("icon", "employee");
 
 		RenderScheduler.whenFinished().then(function () {
-			var sIcon = this.button.shadowRoot.querySelector("ui5-icon").src;
+			var sIcon = this.button.shadowRoot.querySelector("ui5-icon").name;
 
-			assert.strictEqual(sIcon, "sap-icon://employee", 'icon is correct');
+			assert.strictEqual(sIcon, "employee", 'icon is correct');
 			done();
 		}.bind(this));
 	});
