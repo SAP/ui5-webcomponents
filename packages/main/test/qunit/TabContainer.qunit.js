@@ -11,14 +11,14 @@ TestHelper.ready(function () {
 						+ '<ui5-button>Button 11</ui5-button>'
 					+ '</ui5-tab>'
 					+ '<ui5-tab-separator></ui5-tab-separator>'
-					+ '<ui5-tab icon="sap-icon://employee" text="Tab 2" icon-color="Positive" additional-content="12343455" selected>'
+					+ '<ui5-tab icon="employee" text="Tab 2" icon-color="Positive" additional-content="12343455" selected>'
 						+ '<ui5-button>Button 3</ui5-button>'
 					+ '</ui5-tab>'
-					+ '<ui5-tab icon="sap-icon://menu" text="Tab 3" icon-color="Critical" additional-content="12343455">'
+					+ '<ui5-tab icon="menu" text="Tab 3" icon-color="Critical" additional-content="12343455">'
 					+ '</ui5-tab>'
-					+ '<ui5-tab icon="sap-icon://menu2" text="Tab 4"  icon-color="Negative" additional-content="12343455">'
+					+ '<ui5-tab icon="menu2" text="Tab 4"  icon-color="Negative" additional-content="12343455">'
 					+ '</ui5-tab>'
-					+ '<ui5-tab icon="sap-icon://menu2" disabled="true" text="Disabled"  icon-color="Negative" additional-content="12343455">'
+					+ '<ui5-tab icon="menu2" disabled="true" text="Disabled"  icon-color="Negative" additional-content="12343455">'
 					+ '</ui5-tab>'
 				+ ' </ui5-tabcontainer>';
 			fixture.innerHTML = html;
