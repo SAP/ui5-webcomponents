@@ -184,9 +184,16 @@ class ItemNavigation extends EventProvider {
 		}
 
 		const currentItem = items[this.currentIndex];
+		let ref = currentItem;
+		let checked = false;
 
-		if (currentItem instanceof UI5Element) {
-			return currentItem.getFocusDomRef();
+		while (ref instanceof UI5Element) {
+			ref = ref.getFocusDomRef();
+			checked = true;
+		}
+
+		if (checked) {
+			return ref;
 		}
 
 		if (!this.rootWebComponent.getDomRef()) {

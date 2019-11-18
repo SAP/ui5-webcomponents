@@ -1,5 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ProductSwitchTemplate from "./generated/templates/ProductSwitchTemplate.lit.js";
@@ -9,7 +10,7 @@ import ProductSwitchCss from "./generated/themes/ProductSwitch.css.js";
 
 
 const metadata = {
-	tag: "ui5-productswitch",
+	tag: "ui5-product-switch",
 	properties: {
 		/**
 		 * Indicates how much columns should be displayed.
@@ -21,7 +22,7 @@ const metadata = {
 	},
 	slots: {
 		/**
-		 * Defines the items of the <code>ui5-productswitch</code>.
+		 * Defines the items of the <code>ui5-product-switch</code>.
 		 *
 		 * @type {HTMLElement[]}
 		 * @slot
@@ -32,32 +33,16 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	events: {
-		/**
-		 * Fired when an item is activated.
-		 *
-		 * @event
-		 * @param {HTMLElement} item the clicked item.
-		 * @public
-		 */
-		itemClick: {
-			detail: {
-				item: { type: HTMLElement },
-			},
-		},
-	},
 };
 
 class ProductSwitch extends UI5Element {
 	constructor() {
 		super();
 		this.initItemNavigation();
-
-		this.addEventListener("ui5-_focused", this._onItemFocused.bind(this));
 	}
 
 	initItemNavigation() {
-		this._itemNavigation = new ItemNavigation(this);
+		this._itemNavigation = new ItemNavigation(this, { rowSize: 4 });
 		this._itemNavigation.getItemsCallback = () => this.items;
 	}
 
@@ -77,19 +62,36 @@ class ProductSwitch extends UI5Element {
 		return ProductSwitchTemplate;
 	}
 
-	static async define(...params) {
-		super.define(...params);
+	onEnterDOM() {
+		ResizeHandler.register(document.body, this._handleResize.bind(this));
 	}
+
+	onExitDOM() {
+		ResizeHandler.deregister(document.body, this._handleResize);
+	}
+
 
 	onBeforeRendering() {
 		this.desktopColumns = this.items.length > 6 ? 4 : 3;
 	}
 
-	_onItemPress(event) {
-		this.fireEvent("itemClick", { item: event.detail.item });
+	_handleResize() {
+		if (!this._itemNavigation) {
+			return;
+		}
+
+		const iWidth = document.body.clientWidth;
+
+		if (iWidth <= 600) {
+			this._itemNavigation.rowSize = 1;
+		} else if (iWidth <= 900 || this.items.length <= 6) {
+			this._itemNavigation.rowSize = 3;
+		} else {
+			this._itemNavigation.rowSize = 4;
+		}
 	}
 
-	_onItemFocused(event) {
+	_onfocusin(event) {
 		const target = event.target;
 
 		this._itemNavigation.update(target);

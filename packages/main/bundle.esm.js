@@ -33,6 +33,11 @@ import Panel from "./dist/Panel.js";
 import RadioButton from "./dist/RadioButton.js";
 import Select from "./dist/Select.js";
 import Option from "./dist/Option.js";
+<<<<<<< HEAD
+=======
+import ProductSwitch from "./dist/ProductSwitch.js";
+import ProductSwitchItem from "./dist/ProductSwitchItem.js";
+>>>>>>> feat(ui5-productswitch): ui5-button internal usage
 import Switch from "./dist/Switch.js";
 import MessageStrip from "./dist/MessageStrip.js";
 import MultiComboBox from "./dist/MultiComboBox.js";

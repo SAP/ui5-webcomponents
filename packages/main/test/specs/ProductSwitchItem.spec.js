@@ -6,8 +6,8 @@ describe("ProductSwitchItem general interaction", () => {
 	it("tests rendering", () => {
 		const productSwitchItem = browser.$("#productSwitchItem");
 
-		assert.ok(productSwitchItem.shadow$(".ui5-productswitchitem-icon"), "Icon is rendered.");
-		assert.ok(productSwitchItem.shadow$(".ui5-productswitchitem-primary-title"), "Title is rendered.");
-		assert.ok(productSwitchItem.shadow$(".ui5-productswitchitem-subtitle"), "SubTitle is rendered.");
+		assert.ok(productSwitchItem.shadow$(".ui5-product-switch-item-icon"), "Icon is rendered.");
+		assert.ok(productSwitchItem.shadow$(".ui5-product-switch-item-heading"), "Title is rendered.");
+		assert.ok(productSwitchItem.shadow$(".ui5-product-switch-item-subtitle"), "SubTitle is rendered.");
 	});
 });
