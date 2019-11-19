@@ -26,16 +26,17 @@
     "directory": "packages/main"
   },
   "dependencies": {
-    "@ui5/webcomponents-theme-base": "1.0.0-rc.4",
-    "@ui5/webcomponents-icons": "1.0.0-rc.4",
     "@ui5/webcomponents-base": "0.17.0",
-    "@ui5/webcomponents-core": "0.17.0"
+    "@ui5/webcomponents-core": "0.17.0",
+    "@ui5/webcomponents-icons": "1.0.0-rc.4",
+    "@ui5/webcomponents-theme-base": "1.0.0-rc.4"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.2",
     "@babel/core": "^7.1.2",
     "@babel/plugin-proposal-object-rest-spread": "^7.3.2",
     "@babel/preset-env": "^7.1.0",
+    "@ui5/cli": "^1.12.0",
     "@wdio/cli": "^5.12.1",
     "@wdio/dot-reporter": "^5.12.1",
     "@wdio/local-runner": "^5.12.1",

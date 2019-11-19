@@ -1,0 +1,17 @@
+specVersion: "1.0"
+type: library
+metadata:
+  name: ui5-webcomp
+builder:
+  customTasks:
+    - name: hbs2ui5
+      afterTask: uglify
+---
+# Task extension
+specVersion: "1.0"
+kind: extension
+type: task
+metadata:
+  name: hbs2ui5
+task:
+  path: ./lib/hbs2ui5/task.js
