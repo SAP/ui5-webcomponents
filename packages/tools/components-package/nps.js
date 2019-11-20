@@ -1,3 +1,7 @@
+const path = require("path");
+
+const LIB = path.join(__dirname, `../lib/`);
+
 const getScripts = (options) => {
 
 	const jestTask = options.hasJest ? `test.jest` : ``;
@@ -8,7 +12,7 @@ const getScripts = (options) => {
 		lint: "eslint . --config config/.eslintrc.js",
 		build: {
 			default: "nps clean lint build.templates build.samples build.styles build.i18n copy.src build.bundle copy.webcomponents-polyfill",
-			templates: "mkdirp dist/generated/templates && node ./lib/hbs2ui5/index.js -d src/ -o dist/generated/templates",
+			templates: `mkdirp dist/generated/templates && node ${LIB}/hbs2ui5/index.js -d src/ -o dist/generated/templates`,
 			styles: {
 				default: "nps build.styles.bundles build.styles.components",
 				bundles: "postcss src/**/parameters-bundle.css --config config/postcss.bundles --base src --dir dist/css/",
@@ -16,15 +20,14 @@ const getScripts = (options) => {
 			},
 			i18n: {
 				default: "nps build.i18n.defaultsjs build.i18n.json",
-				defaultsjs: "mkdirp dist/generated/i18n && node ./lib/i18n/defaults.js src/i18n dist/generated/i18n",
-				json: "mkdirp dist/assets/i18n && node ./lib/i18n/toJSON.js src/i18n dist/assets/i18n",
+				defaultsjs: `mkdirp dist/generated/i18n && node ${LIB}/i18n/defaults.js src/i18n dist/generated/i18n`,
+				json: `mkdirp dist/assets/i18n && node ${LIB}/i18n/toJSON.js src/i18n dist/assets/i18n`,
 			},
 			bundle: "rollup --config config/rollup.config.js --environment ES5_BUILD",
 			samples: {
-				default: "nps copy.test build.samples.api build.samples.docs build.samples.playground-index",
-				api: "jsdoc -c  ../../lib/jsdoc/config.json",
-				docs: "node ../../lib/documentation/index.js",
-				"playground-index": "node lib/playground/index.js",
+				default: "nps copy.test build.samples.api build.samples.docs",
+				api: `jsdoc -c  ${LIB}/jsdoc/config.json`,
+				docs: `node ${LIB}/documentation/index.js dist/api.json`,
 			}
 		},
 		copy: {

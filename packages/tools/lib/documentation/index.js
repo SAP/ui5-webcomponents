@@ -1,4 +1,3 @@
-const api = require('../../packages/main/dist/api.json');
 const cssVariables = {};
 const template = require('./templates/template').template;
 const sinceTemplate = require('./templates/api-component-since').template;
@@ -9,7 +8,10 @@ const methodsTemplate = require('./templates/api-methods-section').template;
 const cssVariablesTemplate = require('./templates/api-css-variables-section').template;
 const Handlebars = require('handlebars/dist/handlebars.min.js');
 const fs = require('fs');
+const path = require('path');
 const mkdirp = require('mkdirp');
+
+const api = JSON.parse(fs.readFileSync(path.normalize(process.argv[2])));
 
 const entries = api['symbols'];
 const compiledHandlebars = Handlebars.compile(template);
