@@ -1,0 +1,6 @@
+@import "../base/ProductSwitchItem-parameters.css";
+
+:root {
+	--_ui5_product_switch_item_outline: .125rem var(--sapUiContentContrastFocusColor) dotted;
+	--_ui5_product_switch_item_outline_offset: -.25rem;
+}

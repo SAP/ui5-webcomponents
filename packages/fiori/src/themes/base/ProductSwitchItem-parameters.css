@@ -1,0 +1,7 @@
+:root {
+	--_ui5_product_switch_item_width: 11.25rem;
+	--_ui5_product_switch_item_height: 7rem;
+	--_ui5_product_switch_item_outline: .0625rem var(--sapUiContentFocusColor) dotted;
+	--_ui5_product_switch_item_active_outline_color: var(--sapUiContentContrastFocusColor);
+	--_ui5_product_switch_item_outline_offset: -.1875rem;
+}

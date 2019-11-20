@@ -7,7 +7,7 @@
 	display: flex;
 	flex-wrap: wrap;
 	width: 752px; /* 4 * item size */
-	padding: 1.25rem 0.75rem;
+	padding: 1.25rem .75rem;
 }
 
 :host([desktop-columns="3"]) .ui5-product-switch-root {

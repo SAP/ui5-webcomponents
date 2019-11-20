@@ -1,5 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import ProductSwitchItemTemplate from "./generated/templates/ProductSwitchItemTemplate.lit.js";
 
 // Styles
@@ -63,11 +64,42 @@ const metadata = {
 		targetSrc: {
 			type: String,
 		},
+		/**
+		 * Used to switch the active state (pressed or not) of the <code>ui5-product-switch-item</code>.
+		 * @private
+		 */
+		active: {
+			type: Boolean,
+		},
+		/**
+		 * Indicates if the elements is on focus
+		 * @private
+		 */
+		focused: {
+			type: Boolean,
+		},
 		_tabIndex: {
 			type: String,
 			defaultValue: "-1",
 			noAttribute: true,
 		},
+	},
+	slots: {
+		//
+	},
+	events: {
+		/**
+		 * Fired when the <code>ui5-product-switch-item</code> is activated either with a
+		 * mouse/tap or by using the Enter or Space key.
+		 * <br><br>
+		 * <b>Note:</b> The event will not be fired if the <code>disabled</code>
+		 * property is set to <code>true</code>.
+		 *
+		 * @event
+		 * @public
+		 */
+		click: {},
+		_focused: {},
 	},
 };
 
@@ -88,8 +120,61 @@ class ProductSwitchItem extends UI5Element {
 		return ProductSwitchItemTemplate;
 	}
 
-	get _check() {
-		return this._tabIndex !== "0";
+	onEnterDOM() {
+		document.addEventListener("mouseup", this._deactivate.bind(this));
+	}
+
+	onExitDOM() {
+		document.removeEventListener("mouseup", this._deactivate.bind(this));
+	}
+
+	_deactivate() {
+		if (this.active) {
+			this.active = false;
+		}
+	}
+
+	_onmousedown() {
+		this.active = true;
+	}
+
+	_onkeydown(event) {
+		if (isSpace(event) || isEnter(event)) {
+			this.active = true;
+		}
+
+		if (isSpace(event)) {
+			event.preventDefault();
+		}
+
+		if (isEnter(event)) {
+			this._fireItemClick();
+		}
+	}
+
+	_onkeyup(event) {
+		if (isSpace(event) || isEnter(event)) {
+			this.active = false;
+		}
+
+		if (isSpace(event)) {
+			this._fireItemClick();
+		}
+	}
+
+	_onfocusout() {
+		this.active = false;
+		this.focused = false;
+	}
+
+	_onfocusin(event) {
+		this.focused = true;
+
+		this.fireEvent("_focused", event);
+	}
+
+	_fireItemClick() {
+		this.fireEvent("click", { item: this });
 	}
 }
 
