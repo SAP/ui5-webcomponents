@@ -101,7 +101,36 @@ const metadata = {
 	},
 };
 
+/**
+ * @class
+ * <h3 class="comment-api-title">Overview</h3>
+ *
+ * The <code>ui5-product-switch-item</code> is used as a child of <code>ui5-product-switch</code>
+ * <b>Note:</b> <code>ui5-product-switch-item</code> is not supported when used outside of <code>ui5-product-switch</code>.
+ * <br><br>
+ * <h3>ES6 Module Import</h3>
+ * <code>import "@ui5/webcomponents-fiori/dist/ProductSwitchItem";</code>
+ *
+ * @constructor
+ * @author SAP SE
+ * @alias sap.ui.webcomponents.main.ProductSwitchItem
+ * @extends sap.ui.webcomponents.base.UI5Element
+ * @tagname ui5-product-switch-item
+ * @appenddocs ProductSwitchItem
+ * @public
+ * @since 1.0.0-rc.5
+ */
 class ProductSwitchItem extends UI5Element {
+	constructor() {
+		super();
+
+		this._deactivate = () => {
+			if (this.active) {
+				this.active = false;
+			}
+		};
+	}
+
 	static get metadata() {
 		return metadata;
 	}
@@ -119,23 +148,11 @@ class ProductSwitchItem extends UI5Element {
 	}
 
 	onEnterDOM() {
-		this._deactivate = () => {
-			if (this.active) {
-				this.active = false;
-			}
-		};
-
 		document.addEventListener("mouseup", this._deactivate);
 	}
 
 	onExitDOM() {
 		document.removeEventListener("mouseup", this._deactivate);
-	}
-
-	_deactivate() {
-		if (this.active) {
-			this.active = false;
-		}
 	}
 
 	_onmousedown() {
