@@ -17,7 +17,7 @@
     "start": "nps start",
     "build": "nps build",
     "test": "nps test",
-    "generate-new-component": "node ./lib/create-new-component/index.js",
+    "generate-new-component": "node ../../node_modules/@ui5/webcomponents-tools/lib/create-new-component/index.js",
     "prepublishOnly": "npm run build"
   },
   "repository": {
