@@ -91,9 +91,6 @@ const metadata = {
 		/**
 		 * Fired when the <code>ui5-product-switch-item</code> is activated either with a
 		 * mouse/tap or by using the Enter or Space key.
-		 * <br><br>
-		 * <b>Note:</b> The event will not be fired if the <code>disabled</code>
-		 * property is set to <code>true</code>.
 		 *
 		 * @event
 		 * @public

@@ -7,7 +7,6 @@ const mainBlock = context => {
 		dir="${ifDefined(context.dir)}"
 		viewBox="0 0 512 512"
 		role="img"
-		focusable="false"
 		preserveAspectRatio="xMidYMid meet"
 		aria-label="${ifDefined(context.accessibleNameText)}"
 		xmlns="http://www.w3.org/2000/svg"
