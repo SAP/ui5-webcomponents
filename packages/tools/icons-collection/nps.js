@@ -1,12 +1,16 @@
 const path = require("path");
 
 const LIB = path.join(__dirname, `../lib/`);
-console.log(LIB)
+
 const getScripts = () => {
 
 	const scripts = {
 		clean: "rimraf dist",
-		copy: 'copy-and-watch "src/**/*.js" dist/',
+		copy: {
+			default: "nps copy.json-imports copy.icon-collections",
+			"json-imports": 'copy-and-watch "src/**/*.js" dist/',
+			"icon-collections": 'copy-and-watch "src/icon-collections/**/*.json" dist/assets/icon-collections/'
+		},
 		build: {
 			default: "nps clean copy build.i18n build.icons",
 			i18n: {
@@ -14,7 +18,7 @@ const getScripts = () => {
 				defaultsjs: `mkdirp dist/generated/i18n && node ${LIB}/i18n/defaults.js src/i18n dist/generated/i18n`,
 				json: `mkdirp dist/assets/i18n && node ${LIB}/i18n/toJSON.js src/i18n dist/assets/i18n`,
 			},
-			icons: "cd lib/icon-collection-bundler && node --experimental-modules index.js",
+			icons: `node ${LIB}/create-icons/index.js`,
 		}
 	};
 
