@@ -1,4 +1,8 @@
-const getScripts = (port) => {
+const getScripts = (conf) => {
+
+	const jestTask = conf.hasJest ? `test.jest` : ``;
+	const port = conf.port;
+
 	const scripts = {
 		clean: "rimraf dist",
 		lint: "eslint .",
@@ -53,7 +57,7 @@ const getScripts = (port) => {
 			run: `serve --no-clipboard -l ${port} dist`,
 		},
 		test: {
-			default: "nps test.jest test.wdio",
+			default: `nps ${jestTask} test.wdio`,
 			jest: "jest",
 			wdio: {
 				// --success first - report the exit code of the test run (first command to finish), as serve is always terminated and has a non-0 exit code

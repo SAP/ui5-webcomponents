@@ -7,7 +7,6 @@ import url from "rollup-plugin-url";
 import { terser } from "rollup-plugin-terser";
 import notify from 'rollup-plugin-notify';
 import filesize from 'rollup-plugin-filesize';
-import commonjs from 'rollup-plugin-commonjs';
 
 const DIST = path.normalize("dist");
 const DIST_PLAYGROUND = path.normalize("dist/resources");
