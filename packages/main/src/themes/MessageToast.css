@@ -1,0 +1,92 @@
+.ui5-message-toast-root-parent {
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	display: none;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+	overflow: hidden;
+	z-index: 999;
+}
+
+:host([opened]) .ui5-message-toast-root-parent {
+	display: flex;
+}
+
+.ui5-message-toast-text {
+	font-family: var(--sapUiFontFamily);
+	color: var(--sapUiListTextColor);
+	font-weight: normal;
+	font-size: var(--sapMFontMediumSize);
+	word-wrap: break-word;
+	text-align: center;
+	text-decoration: none;
+	text-overflow: ellipsis;
+	white-space: pre-line;
+}
+
+.ui5-message-toast-root {
+	box-sizing: border-box;
+	max-width: 15rem;
+	overflow: hidden;
+	padding: 1rem;
+	background: var(--sapUiListBackground);
+	box-shadow: var(--sapUiShadowLevel2);
+	border-radius: .25rem;
+	transition: none;
+	opacity: 1;
+	margin: 2rem;
+}
+
+.ui5-message-toast-root.opacityTranslate {
+	transition-property: opacity;
+	opacity: 0;
+}
+
+:host([placement="TopLeft"]) .ui5-message-toast-root-parent {
+	justify-content: flex-start;
+	align-items: flex-start;
+}
+
+:host([placement="TopCenter"]) .ui5-message-toast-root-parent {
+	justify-content: center;
+	align-items: flex-start;
+}
+
+:host([placement="TopRight"]) .ui5-message-toast-root-parent {
+	justify-content: flex-end;
+	align-items: flex-start;
+}
+
+:host([placement="MiddleLeft"]) .ui5-message-toast-root-parent {
+	justify-content: flex-start;
+	align-items: center;
+}
+
+:host([placement="MiddleCenter"]) .ui5-message-toast-root-parent {
+	justify-content: center;
+	align-items: center;
+}
+
+:host([placement="MiddleRight"]) .ui5-message-toast-root-parent {
+	justify-content: flex-end;
+	align-items: center;
+}
+
+:host([placement="BottomLeft"]) .ui5-message-toast-root-parent {
+	justify-content: flex-start;
+	align-items: flex-end;
+}
+
+:host([placement="BottomCenter"]) .ui5-message-toast-root-parent {
+	justify-content: center;
+	align-items: flex-end;
+}
+
+:host([placement="BottomRight"]) .ui5-message-toast-root-parent {
+	justify-content: flex-end;
+	align-items: flex-end;
+}
