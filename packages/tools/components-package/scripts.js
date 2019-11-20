@@ -5,7 +5,7 @@ const getScripts = (options) => {
 
 	const scripts = {
 		clean: "rimraf dist",
-		lint: "eslint .",
+		lint: "eslint . --config config/.eslintrc.js",
 		build: {
 			default: "nps clean lint build.templates build.samples build.styles build.i18n copy.src build.bundle copy.webcomponents-polyfill",
 			templates: "mkdirp dist/generated/templates && node ./lib/hbs2ui5/index.js -d src/ -o dist/generated/templates",
@@ -19,10 +19,10 @@ const getScripts = (options) => {
 				defaultsjs: "mkdirp dist/generated/i18n && node ./lib/i18n/defaults.js src/i18n dist/generated/i18n",
 				json: "mkdirp dist/assets/i18n && node ./lib/i18n/toJSON.js src/i18n dist/assets/i18n",
 			},
-			bundle: "rollup -c --environment ES5_BUILD",
+			bundle: "rollup --config config/rollup.config.js --environment ES5_BUILD",
 			samples: {
 				default: "nps copy.test build.samples.api build.samples.docs build.samples.playground-index",
-				api: "jsdoc -c ../../lib/jsdoc/config.json",
+				api: "jsdoc -c  ../../lib/jsdoc/config.json",
 				docs: "node ../../lib/documentation/index.js",
 				"playground-index": "node lib/playground/index.js",
 			}
@@ -36,7 +36,7 @@ const getScripts = (options) => {
 			default: 'concurrently "nps watch.templates" "nps watch.samples" "nps watch.test" "nps watch.src" "nps watch.bundle" "nps watch.styles"',
 			src: 'nps "copy.src --watch --skip-initial-copy"',
 			test: 'nps "copy.test --watch --skip-initial-copy"',
-			bundle: "rollup -c -w --environment ES5_BUILD,DEV",
+			bundle: "rollup --config config/rollup.config.js -w --environment ES5_BUILD,DEV",
 			styles: {
 				default: 'concurrently "nps watch.styles.bundles" "nps watch.styles.components"',
 				bundles: 'nps "build.styles.bundles -w"',
@@ -62,7 +62,7 @@ const getScripts = (options) => {
 			wdio: {
 				// --success first - report the exit code of the test run (first command to finish), as serve is always terminated and has a non-0 exit code
 				default: 'concurrently "nps serve" "nps test.wdio.run" --kill-others --success first',
-				run: "cross-env WDIO_LOG_LEVEL=error FORCE_COLOR=0 wdio wdio.conf.js",
+				run: "cross-env WDIO_LOG_LEVEL=error FORCE_COLOR=0 wdio config/wdio.conf.js",
 			},
 		},
 	};

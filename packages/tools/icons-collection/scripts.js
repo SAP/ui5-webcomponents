@@ -1,4 +1,4 @@
-const getScripts = (conf) => {
+const getScripts = () => {
 
 	const scripts = {
 		clean: "rimraf dist",
