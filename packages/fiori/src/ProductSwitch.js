@@ -36,12 +36,6 @@ const metadata = {
 };
 
 class ProductSwitch extends UI5Element {
-	constructor() {
-		super();
-
-		this.initItemNavigation();
-	}
-
 	initItemNavigation() {
 		this._itemNavigation = new ItemNavigation(this, { rowSize: 4 });
 		this._itemNavigation.getItemsCallback = () => this.items;
@@ -64,28 +58,27 @@ class ProductSwitch extends UI5Element {
 	}
 
 	onEnterDOM() {
-		ResizeHandler.register(document.body, this._handleResize.bind(this));
+		this._handleResizeBound = this._handleResize.bind(this);
+
+		this.initItemNavigation();
+
+		ResizeHandler.register(document.body, this._handleResizeBound);
 	}
 
 	onExitDOM() {
-		ResizeHandler.deregister(document.body, this._handleResize);
+		ResizeHandler.deregister(document.body, this._handleResizeBound);
 	}
-
 
 	onBeforeRendering() {
 		this.desktopColumns = this.items.length > 6 ? 4 : 3;
 	}
 
 	_handleResize() {
-		if (!this._itemNavigation) {
-			return;
-		}
+		const documentWidth = document.body.clientWidth;
 
-		const iWidth = document.body.clientWidth;
-
-		if (iWidth <= 600) {
+		if (documentWidth <= 600) {
 			this._itemNavigation.rowSize = 1;
-		} else if (iWidth <= 900 || this.items.length <= 6) {
+		} else if (documentWidth <= 900 || this.items.length <= 6) {
 			this._itemNavigation.rowSize = 3;
 		} else {
 			this._itemNavigation.rowSize = 4;

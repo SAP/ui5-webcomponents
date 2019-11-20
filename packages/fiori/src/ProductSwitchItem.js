@@ -49,11 +49,12 @@ const metadata = {
 		 * Specifies a target where the targetSrc content must be open.
 		 * Options are the standard values for window.open() supported by browsers: _self, _top, _blank, _parent, _search. Alternatively, a frame name can be entered.
 		 * @type {string}
-		 * @defaultvalue ""
+		 * @defaultvalue "_self"
 		 * @public
 		 */
 		target: {
 			type: String,
+			defaultValue: "_self",
 		},
 		/**
 		 *Defines the ProductSwitchItem target URI. Supports standard hyperlink behavior.
@@ -118,11 +119,17 @@ class ProductSwitchItem extends UI5Element {
 	}
 
 	onEnterDOM() {
-		document.addEventListener("mouseup", this._deactivate.bind(this));
+		this._deactivate = () => {
+			if (this.active) {
+				this.active = false;
+			}
+		};
+
+		document.addEventListener("mouseup", this._deactivate);
 	}
 
 	onExitDOM() {
-		document.removeEventListener("mouseup", this._deactivate.bind(this));
+		document.removeEventListener("mouseup", this._deactivate);
 	}
 
 	_deactivate() {
