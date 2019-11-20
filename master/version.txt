@@ -1,5 +1,5 @@
-commit 4af89efe706a486a789dda42d26a478d4099b15a
-Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
-Date:   Mon Nov 18 16:14:59 2019 +0200
+commit 717f0f54dfb0dc32f8a1a10519f812792a9725bd
+Author: service-tip-git <36747703+service-tip-git@users.noreply.github.com>
+Date:   Wed Nov 20 10:30:12 2019 -0800
 
-     feat(ui5-multicombobox): introduce required property (#935)
+    chore: translation delivery (#951)
