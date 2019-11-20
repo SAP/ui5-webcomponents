@@ -1,4 +1,4 @@
-const getScripts = require("@ui5/webcomponents-tools/icons-collection/scripts.js");
+const getScripts = require("@ui5/webcomponents-tools/icons-collection/nps.js");
 
 const scripts = getScripts();
 
