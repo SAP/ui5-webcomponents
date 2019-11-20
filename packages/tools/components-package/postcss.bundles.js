@@ -14,6 +14,6 @@ module.exports = {
 					mergeLonghand: false, // https://github.com/cssnano/cssnano/issues/675
 				},
 			]}, ),
-		postcssCSStoJSON(),
+		postcssCSStoJSON({toReplace: 'src'}),
 	]
 };
