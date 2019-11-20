@@ -35,7 +35,31 @@ const metadata = {
 	},
 };
 
+/**
+ * @class
+ * <h3 class="comment-api-title">Overview</h3>
+ *
+ * The <code>ui5-product-switch</code> is a Fiori specific control that is used in <code>ui5-shellbar</code>
+ * <br><br>
+ * <h3>ES6 Module Import</h3>
+ * <code>import "@ui5/webcomponents-fiori/dist/ProductSwitch";</code>
+ *
+ * @constructor
+ * @author SAP SE
+ * @alias sap.ui.webcomponents.main.ProductSwitch
+ * @extends sap.ui.webcomponents.base.UI5Element
+ * @tagname ui5-product-switch
+ * @appenddocs ProductSwitch
+ * @public
+ * @since 1.0.0-rc.5
+ */
 class ProductSwitch extends UI5Element {
+	constructor() {
+		super();
+
+		this.initItemNavigation();
+	}
+
 	initItemNavigation() {
 		this._itemNavigation = new ItemNavigation(this, { rowSize: 4 });
 		this._itemNavigation.getItemsCallback = () => this.items;
@@ -59,8 +83,6 @@ class ProductSwitch extends UI5Element {
 
 	onEnterDOM() {
 		this._handleResizeBound = this._handleResize.bind(this);
-
-		this.initItemNavigation();
 
 		ResizeHandler.register(document.body, this._handleResizeBound);
 	}
