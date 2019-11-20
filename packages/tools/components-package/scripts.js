@@ -1,7 +1,7 @@
-const getScripts = (conf) => {
+const getScripts = (options) => {
 
-	const jestTask = conf.hasJest ? `test.jest` : ``;
-	const port = conf.port;
+	const jestTask = options.hasJest ? `test.jest` : ``;
+	const port = options.port;
 
 	const scripts = {
 		clean: "rimraf dist",

@@ -1,5 +1,5 @@
-import { registerIcon, registerCollectionPromise } from "../SVGIconRegistry";
-import { fetchJsonOnce } from "../util/FetchHelper";
+import { registerIcon, registerCollectionPromise } from "../SVGIconRegistry.js";
+import { fetchJsonOnce } from "../util/FetchHelper.js";
 
 const registerIconBundle = async (collectionName, bundleData) => {
 	let resolveFn;
