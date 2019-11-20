@@ -9,5 +9,7 @@ import "./dist/json-imports/LocaleData.js" // same as above
 import "./dist/features/CoPilotAnimation.js";
 
 // FIORI components
+import ProductSwitch from "./dist/ProductSwitch.js";
+import ProductSwitchItem from "./dist/ProductSwitchItem.js";
 import ShellBar from "./dist/ShellBar.js";
 import ShellBarItem from "./dist/ShellBarItem.js";

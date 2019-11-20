@@ -255,10 +255,6 @@ class Button extends UI5Element {
 		}
 	}
 
-	getFocusDomRef() {
-		return this.shadowRoot.querySelector("button");
-	}
-
 	_onmousedown(event) {
 		event.isMarked = "button";
 		this.active = true;

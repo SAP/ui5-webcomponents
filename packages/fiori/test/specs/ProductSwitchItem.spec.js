@@ -1,7 +1,7 @@
 const assert = require("assert");
 
 describe("ProductSwitchItem general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/pages/ProductSwitchItem.html");
+	browser.url("http://localhost:8081/test-resources/pages/ProductSwitchItem.html");
 
 	it("tests rendering", () => {
 		const productSwitchItem = browser.$("#productSwitchItem");

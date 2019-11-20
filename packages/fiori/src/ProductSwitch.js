@@ -38,6 +38,7 @@ const metadata = {
 class ProductSwitch extends UI5Element {
 	constructor() {
 		super();
+
 		this.initItemNavigation();
 	}
 

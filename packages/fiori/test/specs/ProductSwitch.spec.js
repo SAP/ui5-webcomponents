@@ -1,7 +1,7 @@
 const assert = require("assert");
 
 describe("ProductSwitch general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/pages/ProductSwitch.html");
+	browser.url("http://localhost:8081/test-resources/pages/ProductSwitch.html");
 
 	it("tests desktopColumns attribute", () => {
 		const productSwitchFourColumn = browser.$("#productSwitchFourColumn");
