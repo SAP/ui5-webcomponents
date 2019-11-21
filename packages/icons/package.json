@@ -12,8 +12,8 @@
     "ui5"
   ],
   "scripts": {
-    "clean": "nps clean",
-    "build": "nps build"
+    "clean": "wc-dev clean",
+    "build": "wc-dev build"
   },
   "repository": {
     "type": "git",

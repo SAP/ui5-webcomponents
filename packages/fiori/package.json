@@ -12,12 +12,12 @@
   ],
   "type": "module",
   "scripts": {
-    "clean": "nps clean",
-    "lint": "nps lint",
-    "start": "nps start",
-    "build": "nps build",
-    "test": "nps test",
-    "generate-new-component": "node ../../node_modules/@ui5/webcomponents-tools/lib/create-new-component/index.js",
+    "clean": "wc-dev clean",
+    "lint": "wc-dev lint",
+    "start": "wc-dev start",
+    "build": "wc-dev build",
+    "test": "wc-dev test",
+    "create-ui5-element": "wc-create-ui5-element",
     "prepublishOnly": "npm run build"
   },
   "repository": {
