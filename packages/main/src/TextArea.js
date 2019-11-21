@@ -282,22 +282,6 @@ class TextArea extends UI5Element {
 		return this.getDomRef().querySelector("textarea");
 	}
 
-	getInputValue() {
-		const inputDOM = this.getDomRef();
-
-		if (inputDOM) {
-			return this.getInputDomRef().value;
-		}
-
-		return "";
-	}
-
-	_oninput() {
-		const inputValue = this.getInputValue();
-
-		this.value = inputValue;
-	}
-
 	_onkeydown() {
 		this._keyDown = true;
 	}
