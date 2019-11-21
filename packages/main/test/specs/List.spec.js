@@ -35,7 +35,7 @@ describe("Date Picker Tests", () => {
 
 		firstItemSelectionComponent.click();
 
-		assert.strictEqual(firstItem.getProperty("selected"), "", "item is selected");
+		assert.ok(firstItem.getProperty("selected"), "item is selected");
 		assert.strictEqual(fieldResult.getProperty("value"), "true");
 	});
 
