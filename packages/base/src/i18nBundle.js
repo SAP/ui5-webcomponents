@@ -1,5 +1,5 @@
 import { fetchI18nBundle, getI18nBundleData } from "./asset-registries/i18n.js";
-import formatMessage from "./util/formatMessage";
+import formatMessage from "./util/formatMessage.js";
 
 const I18nBundleInstances = new Map();
 
