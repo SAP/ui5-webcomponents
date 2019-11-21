@@ -1,6 +1,7 @@
 const path = require("path");
 
 const LIB = path.join(__dirname, `../lib/`);
+const serveConfig = path.join(__dirname, `serve.json`);
 
 const getScripts = (options) => {
 
@@ -56,7 +57,7 @@ const getScripts = (options) => {
 		},
 		serve: {
 			default: "nps serve.prepare serve.run",
-			prepare: "copy-and-watch \"serve.json\" dist/",
+			prepare: `copy-and-watch "${serveConfig}" dist/`,
 			run: `serve --no-clipboard -l ${port} dist`,
 		},
 		test: {
