@@ -5,7 +5,6 @@
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
   "module": "index.js",
-  "type": "module",
   "keywords": [
     "openui5",
     "sapui5",
@@ -32,6 +31,7 @@
     "url-search-params-polyfill": "^5.0.0"
   },
   "devDependencies": {
+    "@ui5/webcomponents-tools": "1.0.0-rc.4",
     "array-uniq": "^2.0.0",
     "copy-and-watch": "^0.1.4",
     "eslint": "^5.13.0",
