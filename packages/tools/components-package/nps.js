@@ -11,8 +11,9 @@ const getScripts = (options) => {
 	const scripts = {
 		clean: "rimraf dist",
 		lint: "eslint . --config config/.eslintrc.js",
+		prepare: "nps clean build.templates build.samples build.styles build.i18n copy.src copy.webcomponents-polyfill",
 		build: {
-			default: "nps clean lint build.templates build.samples build.styles build.i18n copy.src build.bundle copy.webcomponents-polyfill",
+			default: "nps lint prepare build.bundle",
 			templates: `mkdirp dist/generated/templates && node ${LIB}/hbs2ui5/index.js -d src/ -o dist/generated/templates`,
 			styles: {
 				default: "nps build.styles.bundles build.styles.components",
@@ -49,12 +50,8 @@ const getScripts = (options) => {
 			templates: "chokidar \"src/**/*.hbs\" -c \"nps build.templates\"",
 			samples: "chokidar \"test/**/*.sample.html\" -c \"nps build.samples\"",
 		},
-		start: {
-			default: "nps start.prepare start.run",
-			// same as build, but without lint (no need for dev mode) and without build.bundle (rollup watch will create a new one at start)
-			prepare: "nps clean build.templates build.samples build.styles build.i18n copy.src copy.webcomponents-polyfill",
-			run: 'concurrently "nps serve" "nps watch"',
-		},
+		dev: 'concurrently "nps serve" "nps watch"',
+		start: "nps prepare dev",
 		serve: {
 			default: "nps serve.prepare serve.run",
 			prepare: `copy-and-watch "${serveConfig}" dist/`,

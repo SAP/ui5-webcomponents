@@ -14,6 +14,8 @@
   "scripts": {
     "clean": "nps clean",
     "lint": "nps lint",
+    "prepare": "nps prepare",
+    "dev": "nps dev",
     "start": "nps start",
     "build": "nps build",
     "test": "nps test",

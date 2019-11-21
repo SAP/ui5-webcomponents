@@ -13,6 +13,7 @@
   "scripts": {
     "clean": "nps clean",
     "build": "nps build",
+    "watch": "nps watch",
     "start": "nps start"
   },
   "repository": {

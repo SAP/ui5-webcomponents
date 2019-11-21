@@ -7,7 +7,8 @@ const options = {
 const scripts = getScripts(options);
 
 // Fiori overrides
-scripts.start.prepare = "nps build.i18n";
+//"nps clean build.templates build.samples build.styles build.i18n copy.src copy.webcomponents-polyfill",
+//scripts.start.prepare = "nps build.i18n";
 
 module.exports = {
 	scripts
