@@ -10,7 +10,6 @@
     "sapui5",
     "ui5"
   ],
-  "type": "module",
   "scripts": {
   },
   "bin": {
