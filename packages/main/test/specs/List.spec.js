@@ -30,10 +30,12 @@ describe("Date Picker Tests", () => {
 
 	it("selectionChange using selection component", () => {
 		const fieldResult = $("#fieldMultiSelResult");
+		const firstItem = $("#listEvents #option1");
 		const firstItemSelectionComponent = $("#listMultiSel #option1").shadow$(".ui5-li-multisel-cb");
 
 		firstItemSelectionComponent.click();
 
+		assert.strictEqual(firstItem.getProperty("selected"), "", "item is selected");
 		assert.strictEqual(fieldResult.getProperty("value"), "true");
 	});
 

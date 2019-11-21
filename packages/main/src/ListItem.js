@@ -189,7 +189,7 @@ class ListItem extends ListItemBase {
 	 * and Multi (ui5-checkbox) selection modes are used.
 	 */
 	onMultiSelectionComponentPress(event) {
-		this.fireEvent("_selectionRequested", { item: this, selected: !event.target.checked, selectionComponentPressed: true });
+		this.fireEvent("_selectionRequested", { item: this, selected: event.target.checked, selectionComponentPressed: true });
 	}
 
 	onSingleSelectionComponentPress(event) {
