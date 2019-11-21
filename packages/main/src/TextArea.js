@@ -210,7 +210,6 @@ const metadata = {
 		 */
 		input: {},
 	},
-	_eventHandlersByConvention: true,
 };
 
 /**
@@ -293,25 +292,25 @@ class TextArea extends UI5Element {
 		return "";
 	}
 
-	oninput() {
+	_oninput() {
 		const inputValue = this.getInputValue();
 
 		this.value = inputValue;
 	}
 
-	onkeydown() {
+	_onkeydown() {
 		this._keyDown = true;
 	}
 
-	onkeyup() {
+	_onkeyup() {
 		this._keyDown = false;
 	}
 
-	onfocusin() {
+	_onfocusin() {
 		this.focused = true;
 	}
 
-	onfocusout() {
+	_onfocusout() {
 		this.focused = false;
 	}
 
