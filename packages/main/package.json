@@ -10,7 +10,6 @@
     "sapui5",
     "ui5"
   ],
-  "type": "module",
   "scripts": {
     "clean": "wc-dev clean",
     "lint": "wc-dev lint",
