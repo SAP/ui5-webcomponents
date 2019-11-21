@@ -29,7 +29,7 @@ const metadata = {
 			type: String,
 		},
 		/**
-		 * Defines the icon to be displayed as graphical element within the <code>ui5-product-switch-item</code>.
+		 * Defines the icon to be displayed as a graphical element within the <code>ui5-product-switch-item</code>.
 		 * The SAP-icons font provides numerous options.
 		 * <br><br>
 		 * Example:
@@ -46,7 +46,7 @@ const metadata = {
 			type: String,
 		},
 		/**
-		 * Specifies a target where the targetSrc content must be open.
+		 * Specifies a target where the <code>targetSrc</code> content must be open.
 		 * Options are the standard values for window.open() supported by browsers: _self, _top, _blank, _parent, _search. Alternatively, a frame name can be entered.
 		 * @type {string}
 		 * @defaultvalue "_self"
@@ -57,7 +57,7 @@ const metadata = {
 			defaultValue: "_self",
 		},
 		/**
-		 *Defines the ProductSwitchItem target URI. Supports standard hyperlink behavior.
+		 *Defines the <code>ui5-product-switch-item</code> target URI. Supports standard hyperlink behavior.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
@@ -73,7 +73,7 @@ const metadata = {
 			type: Boolean,
 		},
 		/**
-		 * Indicates if the elements is on focus
+		 * Indicates whether the element is focused.
 		 * @private
 		 */
 		focused: {
@@ -91,7 +91,7 @@ const metadata = {
 	events: {
 		/**
 		 * Fired when the <code>ui5-product-switch-item</code> is activated either with a
-		 * mouse/tap or by using the Enter or Space key.
+		 * click/tap or by using the Enter or Space key.
 		 *
 		 * @event
 		 * @public
@@ -104,8 +104,7 @@ const metadata = {
 /**
  * @class
  * <h3 class="comment-api-title">Overview</h3>
- *
- * The <code>ui5-product-switch-item</code> is used as a child of <code>ui5-product-switch</code>
+ * The <code>ui5-product-switch-item</code> represents the items displayed in the <code>ui5-product-switch</code> web component
  * <b>Note:</b> <code>ui5-product-switch-item</code> is not supported when used outside of <code>ui5-product-switch</code>.
  * <br><br>
  * <h3>ES6 Module Import</h3>
@@ -116,7 +115,6 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.ProductSwitchItem
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-product-switch-item
- * @appenddocs ProductSwitchItem
  * @public
  * @since 1.0.0-rc.5
  */
