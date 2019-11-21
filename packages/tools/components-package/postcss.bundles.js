@@ -9,11 +9,13 @@ module.exports = {
 		combineSelectors({
 			removeDuplicatedProperties: true
 		}),
-		cssnano({preset: [
+		cssnano({
+			preset: [
 				'default', {
 					mergeLonghand: false, // https://github.com/cssnano/cssnano/issues/675
 				},
-			]}, ),
+			]
+		},),
 		postcssCSStoJSON({toReplace: 'src'}),
 	]
 };
