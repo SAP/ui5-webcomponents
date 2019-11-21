@@ -1,7 +1,0 @@
-import { registerIcon } from "@ui5/webcomponents-base/dist/SVGIconRegistry.js";
-
-const name = "broken-link";
-const pathData = "M235 368h45l-86 87q-13 13-29.5 19t-33.5 6-33-6-29-19l-11-12q-26-26-26-62t26-62l70-71v46l-47 47q-17 17-17 40t17 40l11 11q16 16 39 16 24 0 40-16zM442 69q13 13 19.5 29t6.5 33-6.5 33.5T442 194l-74 74q-25 25-62 25t-62-25l-12-12q-2-2-4-5l-4-6 21-21 21 21q16 16 40 16t40-16l74-74q16-17 16-39.5T420 92l-12-12q-16-16-39-16-22 0-40 16l-41 41V76l18-18q28-26 63-26 17 0 33 6.5T431 58zm-258 59h-16V0h16v128zm-56 56H0v-16h128v16zm200 200h16v128h-16V384zm184-56v16H384v-16h128z";
-
-
-registerIcon(name, { pathData });

@@ -22,6 +22,7 @@
   },
   "dependencies": {},
   "devDependencies": {
+    "@ui5/webcomponents-tools": "1.0.0-rc.4",
     "chokidar-cli": "^2.0.0",
     "cssnano": "^4.1.10",
     "less": "^3.10.3",

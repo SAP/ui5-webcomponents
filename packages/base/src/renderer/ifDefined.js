@@ -2,7 +2,7 @@ import {
 	AttributePart,
 	directive,
 	noChange,
-} from "lit-html";
+} from "lit-html/lit-html.js";
 
 /*
 	lit-html directive that removes and attribute if it is undefined
