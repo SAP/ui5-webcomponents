@@ -136,7 +136,6 @@ const metadata = {
 		 */
 		change: {},
 	},
-	_eventHandlersByConvention: true,
 };
 
 /**
@@ -225,11 +224,11 @@ class CheckBox extends UI5Element {
 		}
 	}
 
-	onclick() {
+	_onclick() {
 		this.toggle();
 	}
 
-	onkeydown(event) {
+	_onkeydown(event) {
 		if (isSpace(event)) {
 			event.preventDefault();
 		}
@@ -239,7 +238,7 @@ class CheckBox extends UI5Element {
 		}
 	}
 
-	onkeyup(event) {
+	_onkeyup(event) {
 		if (isSpace(event)) {
 			this.toggle();
 		}
