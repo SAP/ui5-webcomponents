@@ -1,6 +1,6 @@
 module.exports = {
     scripts: {
-        hbs2ui5: "ui5 build --exclude-task * --include-task hbs2ui5",
+        hbs2ui5: "ui5 build --verbose --exclude-task * --include-task hbs2ui5",
         clean: "rimraf dist",
         lint: "eslint .",
         build: {

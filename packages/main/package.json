@@ -18,7 +18,8 @@
     "build": "nps build",
     "test": "nps test",
     "generate-new-component": "node ./lib/create-new-component/index.js",
-    "prepublishOnly": "npm run build"
+	"prepublishOnly": "npm run build",
+	"debug": "node --inspect-brk /usr/local/bin/ui5 build \"--exclude-task=*\" \"--include-task=hbs2ui5\""
   },
   "repository": {
     "type": "git",

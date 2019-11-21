@@ -6,6 +6,11 @@ builder:
   customTasks:
     - name: hbs2ui5
       afterTask: uglify
+  # resources:
+  #   excludes:
+  #     - "**"
+  #     - "!**/*.hbs"
+  #     - "!*.hbs"
 ---
 # Task extension
 specVersion: "1.0"

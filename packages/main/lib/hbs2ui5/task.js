@@ -1,20 +1,29 @@
 const hbs2lit = require('../hbs2lit');
 const litRenderer = require('./RenderTemplates/LitRenderer');
-const Resource = require("@ui5/fs").Resource;
+const resourceFactory = require("@ui5/fs").resourceFactory;
 
 module.exports = async function({workspace, dependencies, options}) {
-	const handlebars = await workspace.byGlob("**/*.hbs");
+	const handlebars = await workspace.byGlob("/resources/*.hbs");
 
-	handlebars.forEach(async hbs =>  {
+	const resources = handlebars.map(async hbs =>  {
 		const hbsCode = await hbs.getString();
 		const litCode = await hbs2lit.compileString(hbsCode, {readers: [workspace]});
 		const componentNameMatcher = /(\w+)(\.hbs)/gim;
-		const componentName = componentNameMatcher.exec(hbs.getPath())[1];
-		const litTemplate = litRenderer.generateTemplate(componentName, litCode);
-		const resource = new Resource({string: litTemplate, path: `${componentName}.lit.js`});
+		const result = componentNameMatcher.exec(hbs.getPath());
 
-		// console.log(litTemplate);
+		if (!result) {
+			return Promise.resolve();
+		}
+
+		const componentName = result[1];
+		const litTemplate = litRenderer.generateTemplate(componentName, litCode);
+		const resource = resourceFactory.createResource({
+			string: litTemplate,
+			path: `/generated/templates/${componentName}.lit.js`
+		});
+
 		return workspace.write(resource);
 	});
-	return true;
+	
+	return Promise.all(resources);
 };
