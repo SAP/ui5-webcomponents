@@ -1,18 +1,3 @@
-const postcssImport = require('postcss-import');
-const postcssCSStoESM = require('../../lib/postcss-css-to-esm/index.js');
-const cssnano = require('cssnano');
+const config = require("@ui5/webcomponents-tools/components-package/postcss.components.js");
 
-module.exports = {
-	plugins: [
-		postcssImport(),
-		cssnano({
-			preset: [
-				'default', {
-					mergeLonghand: false, // https://github.com/cssnano/cssnano/issues/675
-					mergeRules: false, // https://github.com/cssnano/cssnano/issues/730
-				},
-			]
-		}),
-		postcssCSStoESM(),
-	]
-};
+module.exports = config;

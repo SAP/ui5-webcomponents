@@ -5,15 +5,14 @@
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
   "private": false,
-  "type": "module",
   "keywords": [
     "openui5",
     "sapui5",
     "ui5"
   ],
   "scripts": {
-    "clean": "nps clean",
-    "build": "nps build"
+    "clean": "wc-dev clean",
+    "build": "wc-dev build"
   },
   "repository": {
     "type": "git",
@@ -24,9 +23,6 @@
     "@ui5/webcomponents-base": "0.17.0"
   },
   "devDependencies": {
-    "chokidar-cli": "^2.0.0",
-    "npm-run-all": "^4.1.3",
-    "copy-and-watch": "^0.1.4"
-  },
-  "resolutions": {}
+    "@ui5/webcomponents-tools": "1.0.0-rc.4"
+  }
 }

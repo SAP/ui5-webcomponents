@@ -1,7 +1,0 @@
-import { registerIcon } from "@ui5/webcomponents-base/dist/SVGIconRegistry.js";
-
-const name = "microphone";
-const pathData = "M256 352q-40 0-68-28t-28-68V96q0-40 28-68t68-28 68 28 28 68v160q0 40-28 68t-68 28zm-64-96q0 26 19 45t45 19q27 0 45.5-19t18.5-45V96q0-26-18.5-45T256 32q-26 0-45 19t-19 45v160zm240-64q16 0 16 16t-16 16h-16v32q0 29-9.5 55t-27 47-41 35-50.5 20v67h112q16 0 16 16t-16 16H112q-16 0-16-16t16-16h112v-67q-27-6-50.5-20t-41-35-27-47-9.5-55v-32H80q-16 0-16-16t16-16h48v64q0 27 10 50t27.5 40.5 41 27.5 49.5 10q27 0 50-10t40.5-27.5T374 306t10-50v-64h48z";
-
-
-registerIcon(name, { pathData });

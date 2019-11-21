@@ -1,4 +1,4 @@
-import isNodeHidden from "./isNodeHidden";
+import isNodeHidden from "./isNodeHidden.js";
 
 const isNodeTabbable = node => {
 	if (!node) {
