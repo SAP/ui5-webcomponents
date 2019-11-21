@@ -13,7 +13,7 @@ const metadata = {
 	tag: "ui5-product-switch",
 	properties: {
 		/**
-		 * Indicates how much columns should be displayed.
+		 * Indicates how many columns are displayed.
 		 * @private
 		 */
 		desktopColumns: {
@@ -49,7 +49,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.ProductSwitch
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-product-switch
- * @appenddocs ProductSwitch
+ * @appenddocs ProductSwitchItem
  * @public
  * @since 1.0.0-rc.5
  */
