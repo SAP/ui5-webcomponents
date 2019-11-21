@@ -28,7 +28,7 @@ import "../../thirdparty/WeakSet.js";
 import "../../thirdparty/fetch.js";
 
 // async - await
-import "regenerator-runtime/runtime";
+import "regenerator-runtime/runtime.js";
 
 // CSS Custom Properties polyfill
 import { cssVars, resetCssVars } from "../../thirdparty/css-vars-ponyfill.js";
