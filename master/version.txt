@@ -1,7 +1,5 @@
-commit 7cafa78837308fb6c4cd42be731a2b5121023b51
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Nov 21 19:52:42 2019 +0200
+commit 1a5903ec9458e13b9d69ee9601892573888cfe2b
+Author: Julian Breuksch <julian.breuksch@sap.com>
+Date:   Thu Nov 21 19:17:39 2019 +0100
 
-    refactor(ui5-icon): ensure SVG not gaining focus on tab in IE (#945)
-    
-    It turns out that in IE, the SVG is always getting focused upon TAB. By setting focusable="false", the SVG is no longer focusable.
+    refactor(ui5-switch): subscribe event handlers within HBS template (#955)
