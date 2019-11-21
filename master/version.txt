@@ -1,5 +1,7 @@
-commit a6f7c18d8247224e8b8daa06fa2b132be817915c
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu Nov 21 16:46:33 2019 +0200
+commit 7cafa78837308fb6c4cd42be731a2b5121023b51
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu Nov 21 19:52:42 2019 +0200
 
-    refactor: centralize build logic in a tools package (#948)
+    refactor(ui5-icon): ensure SVG not gaining focus on tab in IE (#945)
+    
+    It turns out that in IE, the SVG is always getting focused upon TAB. By setting focusable="false", the SVG is no longer focusable.
