@@ -1,5 +1,5 @@
-commit c25a025bf64b47428c0bc558b8df09125b230edc
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Nov 21 16:43:20 2019 +0200
+commit a6f7c18d8247224e8b8daa06fa2b132be817915c
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Thu Nov 21 16:46:33 2019 +0200
 
-    docs: update Configuration.md (#952)
+    refactor: centralize build logic in a tools package (#948)
