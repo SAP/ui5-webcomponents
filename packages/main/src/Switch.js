@@ -105,7 +105,6 @@ const metadata = {
 		 */
 		change: {},
 	},
-	_eventHandlersByConvention: true,
 };
 
 /**
@@ -159,11 +158,11 @@ class Switch extends UI5Element {
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
-	onclick(event) {
+	_onclick(event) {
 		this.toggle();
 	}
 
-	onkeydown(event) {
+	_onkeydown(event) {
 		if (isSpace(event)) {
 			event.preventDefault();
 		}
@@ -173,7 +172,7 @@ class Switch extends UI5Element {
 		}
 	}
 
-	onkeyup(event) {
+	_onkeyup(event) {
 		if (isSpace(event)) {
 			this.toggle();
 		}
