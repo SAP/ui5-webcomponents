@@ -1,5 +1,5 @@
-commit 1a5903ec9458e13b9d69ee9601892573888cfe2b
+commit c5f57e6e5e651e244434df35f1d2f55585ba14a1
 Author: Julian Breuksch <julian.breuksch@sap.com>
-Date:   Thu Nov 21 19:17:39 2019 +0100
+Date:   Thu Nov 21 21:49:36 2019 +0100
 
-    refactor(ui5-switch): subscribe event handlers within HBS template (#955)
+    refactor(ui5-checkbox): subscribe event handlers within HBS template (#953)
