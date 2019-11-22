@@ -16,7 +16,8 @@
     "directory": "packages/base"
   },
   "scripts": {
-    "build": "npm-run-all --sequential clean lint copy:cldr copy:src",
+    "build": "path-exists dist/ || yarn build:all",
+    "build:all": "npm-run-all --sequential clean lint copy:cldr copy:src",
     "start": "yarn watch:src",
     "clean": "rimraf dist",
     "lint": "eslint .",
@@ -36,7 +37,8 @@
     "copy-and-watch": "^0.1.4",
     "eslint": "^5.13.0",
     "eslint-config-airbnb-base": "^13.1.0",
-    "npm-run-all": "^4.1.5"
+    "npm-run-all": "^4.1.5",
+    "path-exists-cli": "^1.0.0"
   },
   "resolutions": {
     "abstract-syntax-tree": "1.0.3",
