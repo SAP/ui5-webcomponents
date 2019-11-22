@@ -1,5 +1,5 @@
-commit 3e161c1f040bc38d39c9bf18322b6f4436428b5c
-Author: Julian Breuksch <julian.breuksch@sap.com>
-Date:   Fri Nov 22 09:47:59 2019 +0100
+commit bb0672b10bd921be0f58a82c698f3d5369270499
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Fri Nov 22 11:38:42 2019 +0200
 
-    refactor(ui5-textarea): subscribe event handlers within HBS template
+    refactor: make the start task self-sufficient (#956)
