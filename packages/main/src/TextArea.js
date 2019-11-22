@@ -298,11 +298,11 @@ class TextArea extends UI5Element {
 		this.focused = false;
 	}
 
-	_handleChange() {
+	_onchange() {
 		this.fireEvent("change", {});
 	}
 
-	_handleInput(event) {
+	_oninput(event) {
 		const nativeTextarea = this.getInputDomRef();
 
 		/* skip calling change event when an textarea with a placeholder is focused on IE

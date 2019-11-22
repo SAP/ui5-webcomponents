@@ -28,8 +28,8 @@
 		maxlength="{{_exceededTextProps.calcedMaxLength}}"
 		aria-labelledby={{ariaLabelledBy}}
 		.value="{{value}}"
-		@input="{{_handleInput}}"
-		@change="{{_handleChange}}"
+		@input="{{_oninput}}"
+		@change="{{_onchange}}"
 		@keyup="{{_onkeyup}}"
 		@keydown="{{_onkeydown}}"
 		data-sap-focus-ref>
