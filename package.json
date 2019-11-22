@@ -30,7 +30,7 @@
     "dev:theme-base": "cd packages/theme-base && nps watch",
     "dev:main": "cd packages/main && nps dev",
     "dev:fiori": "cd packages/fiori && nps dev",
-    "start": "npm-run-all --sequential build:icons build:theme-base prepare:main prepare:fiori start:all",
+    "start": "npm-run-all --sequential build:core build:base build:theme-base build:icons prepare:main prepare:fiori start:all",
     "start:all": "npm-run-all --parallel start:base dev:theme-base dev:main dev:fiori",
     "start:base": "cd packages/base && yarn start",
     "start:theme-base": "cd packages/theme-base && yarn start",
