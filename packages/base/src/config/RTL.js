@@ -20,12 +20,9 @@ const impliesRTL = language => {
 
 const getRTL = () => {
 	const configurationRTL = getConfiguredRTL();
+	const languageRTL = impliesRTL(getLanguage() || detectNavigatorLanguage());
 
-	if (configurationRTL !== null) {
-		return !!configurationRTL;
-	}
-
-	return impliesRTL(getLanguage() || detectNavigatorLanguage());
+	return languageRTL || configurationRTL;
 };
 
 export { getRTL }; // eslint-disable-line
