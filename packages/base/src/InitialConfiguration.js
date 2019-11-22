@@ -3,7 +3,7 @@ let initialized = false;
 const initialConfig = {
 	animationMode: "full",
 	theme: "sap_fiori_3",
-	rtl: false,
+	rtl: null,
 	language: null,
 	compactSize: false,
 	calendarType: null,

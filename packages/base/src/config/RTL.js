@@ -22,7 +22,11 @@ const getRTL = () => {
 	const configurationRTL = getConfiguredRTL();
 	const languageRTL = impliesRTL(getLanguage() || detectNavigatorLanguage());
 
-	return languageRTL || configurationRTL;
+	if (configurationRTL !== null) {
+		return configurationRTL;
+	}
+	
+	return languageRTL;
 };
 
 export { getRTL }; // eslint-disable-line
