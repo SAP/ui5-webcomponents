@@ -6,6 +6,6 @@ describe("RTL", () => {
 
 	it("language forces RTL", () => {
 		const buttonRoot = browser.$("#button1").shadow$(".ui5-button-root");
-		assert.strictEqual(buttonRoot.getProperty("rtl"), "true", "dir is correctly set");
+		assert.strictEqual(buttonRoot.getProperty("dir"), "rtl", "dir is correctly set");
 	});
 });
