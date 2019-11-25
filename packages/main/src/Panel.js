@@ -6,8 +6,8 @@ import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEven
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import "@ui5/webcomponents-icons/dist/icons/navigation-right-arrow.js";
 import Button from "./Button.js";
-import "./icons/navigation-right-arrow.js";
 import PanelAccessibleRole from "./types/PanelAccessibleRole.js";
 import PanelTemplate from "./generated/templates/PanelTemplate.lit.js";
 

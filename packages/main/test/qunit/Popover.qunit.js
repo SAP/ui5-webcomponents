@@ -9,7 +9,7 @@ TestHelper.ready(function () {
 				+ '<ui5-popover id="myPopover">'
 					+ '<div slot="header">'
 						+ '<div  class="customHeaderText">Custom Header</div>'
-						+ '<ui5-button icon="sap-icon://decline"></ui5-button>'
+						+ '<ui5-button icon="decline"></ui5-button>'
 					+ '</div>'
 					+ '<div slot="footer">'
 						+ '<div class="customFooterText" >Custom Footer</div>'

@@ -1,15 +1,34 @@
-@import "./Badge-parameters.css";
+@import "../base/Badge-parameters.css";
 @import "./Button-parameters.css";
 @import "./BusyIndicator-parameters.css";
-@import "./Popover-parameters.css";
-@import "./DatePicker-parameters.css";
-@import "./DayPicker-parameters.css";
-@import "./CalendarHeader-parameters.css";
-@import "./Card-parameters.css";
-@import "./CheckBox-parameters.css";
-@import "./GroupHeaderListItem-parameters.css";
+@import "../base/DatePicker-parameters.css";
+@import "../base/DayPicker-parameters.css";
+@import "../base/CalendarHeader-parameters.css";
+@import "../base/Card-parameters.css";
+@import "../base/CheckBox-parameters.css";
+@import "../base/GroupHeaderListItem-parameters.css";
 @import "./Input-parameters.css";
 @import "./InputIcon-parameters.css";
+<<<<<<< HEAD
+@import "../base/Link-parameters.css";
+@import "../base/ListItemBase-parameters.css";
+@import "../base/MessageStrip-parameters.css";
+@import "../base/MonthPicker-parameters.css";
+@import "../base/Panel-parameters.css";
+@import "../base/Popover-parameters.css";
+@import "../base/RadioButton-parameters.css";
+@import "../base/Select-parameters.css";
+@import "../base/Switch-parameters.css";
+@import "../base/TabContainer-parameters.css";
+@import "../base/Table-parameters.css";
+@import "../base/TableRow-parameters.css";
+@import "../base/TextArea-parameters.css";
+@import "../base/TimelineItem-parameters.css";
+@import "../base/ToggleButton-parameters.css";
+@import "../base/YearPicker-parameters.css";
+@import "../base/Token-parameters.css";
+@import "../base/MultiComboBox-parameters.css";
+=======
 @import "./Link-parameters.css";
 @import "./ListItemBase-parameters.css";
 @import "./MessageStrip-parameters.css";
@@ -28,3 +47,4 @@
 @import "./YearPicker-parameters.css";
 @import "./Token-parameters.css";
 @import "./MultiComboBox-parameters.css";
+>>>>>>> feat(ui5-product-switch): stand alone component

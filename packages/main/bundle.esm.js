@@ -6,9 +6,11 @@ import "@ui5/webcomponents-base/dist/features/calendar/Persian.js";
 // ESM bundle targets Edge + browsers with native support
 import "@ui5/webcomponents-base/dist/features/browsersupport/Edge.js";
 
+// Icons
+import "@ui5/webcomponents-icons/dist/json-imports/Icons.js";
+
 // asset helpers (needs correct json as url in rollup.config.js)
 import "./dist/json-imports/Themes.js";
-import "./dist/json-imports/Icons.js";
 import "./dist/json-imports/i18n.js";
 import "./dist/json-imports/LocaleData.js"
 
@@ -31,6 +33,14 @@ import Panel from "./dist/Panel.js";
 import RadioButton from "./dist/RadioButton.js";
 import Select from "./dist/Select.js";
 import Option from "./dist/Option.js";
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+import ProductSwitch from "./dist/ProductSwitch.js";
+import ProductSwitchItem from "./dist/ProductSwitchItem.js";
+>>>>>>> feat(ui5-productswitch): ui5-button internal usage
+=======
+>>>>>>> feat(ui5-product-switch): stand alone component
 import Switch from "./dist/Switch.js";
 import MessageStrip from "./dist/MessageStrip.js";
 import MultiComboBox from "./dist/MultiComboBox.js";

@@ -1,3 +1,6 @@
+// CSS Custom Properties
+import cssVars from "css-vars-ponyfill/dist/css-vars-ponyfill.esm.js";
+
 // String
 import "@ui5/webcomponents-core/dist/sap/ui/thirdparty/es6-string-methods.js";
 
@@ -28,15 +31,11 @@ import "../../thirdparty/WeakSet.js";
 import "../../thirdparty/fetch.js";
 
 // async - await
-import "regenerator-runtime/runtime";
-
-// CSS Custom Properties polyfill
-import { cssVars, resetCssVars } from "../../thirdparty/css-vars-ponyfill.js";
+import "regenerator-runtime/runtime.js";
 
 // Plus all polyfills needed for Edge are also needed for IE11
 import "./Edge.js";
 
 window.CSSVarsPonyfill = {
 	cssVars,
-	resetCssVars,
 };

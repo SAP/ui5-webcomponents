@@ -2,7 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import { isSpace } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import TableTemplate from "./generated/templates/TableTemplate.lit.js";
 
 // Styles
@@ -202,12 +201,6 @@ class Table extends UI5Element {
 
 	onRowFocused(event) {
 		this._itemNavigation.update(event.target);
-	}
-
-	_onkeydown(event) {
-		if (isSpace(event)) {
-			event.preventDefault();
-		}
 	}
 
 	_onColumnHeaderClick(event) {

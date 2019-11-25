@@ -29,7 +29,6 @@ class NativeResize {
 		const callbacks = NativeResize.observedObjects.get(ref) || [];
 		const filteredCallbacks = callbacks.filter(fn => fn !== callback);
 
-		// TODO: think for a validation mechanism
 		if (!callbacks.length || (callbacks.length === filteredCallbacks.length && callbacks.length !== 0)) {
 			return;
 		}

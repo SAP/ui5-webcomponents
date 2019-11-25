@@ -24,7 +24,7 @@ However, you should also set the HTML attribute `dir` to `rtl` on the `body` or 
 so that the rest of your application is also affected. 
 
 <a name="animationMode"></a>
-###Animation Mode
+### Animation Mode
 
 Animation modes allow to specify different animation scenarios or levels.
  - When `full` all animations run unrestricted.

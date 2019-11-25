@@ -1,7 +1,0 @@
-import { registerIcon } from "@ui5/webcomponents-base/dist/SVGIconRegistry.js";
-
-const name = "print";
-const pathData = "M368 191q-16 0-16-16 0-6 4.5-11t11.5-5h64q7 0 11.5 5t4.5 11q0 16-16 16h-64zm112-96q13 0 22.5 9.5T512 127v160q0 14-9.5 23t-22.5 9h-64v160q0 14-9.5 23t-22.5 9H128q-14 0-23-9t-9-23V319H32q-14 0-23-9t-9-23V127q0-13 9-22.5T32 95h64V31q0-13 9-22.5T128-1h256q13 0 22.5 9.5T416 31v64h64zm-352 0h256V31H128v64zm256 224v-64H128v224h256V319zm96-192H32v160h64v-32q0-13 9-22.5t23-9.5h256q13 0 22.5 9.5T416 255v32h64V127zM192 383h128v32H192v-32zm0-64h128v32H192v-32z";
-
-
-registerIcon(name, { pathData });

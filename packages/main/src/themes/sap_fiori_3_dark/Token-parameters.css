@@ -5,6 +5,6 @@
 	--_ui5_token_border_color: var(--sapUiButtonBackgroundDarken24);
 	--_ui5_token_border_radius: 0.25rem;
 	--_ui5_token_text_color: var(--sapUiBaseText);
-  --_ui5_token_icon_color: var(--sapUiContentIconColor);
-  --_ui5_token_hover_border_color: var(--sapUiButtonHoverBorderColorLighten30);
+	--_ui5_token_icon_color: var(--sapUiContentIconColor);
+	--_ui5_token_hover_border_color: var(--sapUiButtonHoverBorderColorLighten30);
 }

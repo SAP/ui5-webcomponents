@@ -9,11 +9,11 @@
 
 	<link rel="stylesheet" type="text/css" href="./kitchen-styles.css">
 
-    <style>
-        *:not(:defined) {
-            visibility: hidden;
-        }
-    </style>
+	<style>
+		*:not(:defined) {
+			visibility: hidden;
+		}
+	</style>
 
 	<script id="sap-ui-config" type="application/json">
 		{
@@ -30,7 +30,7 @@
 
 <body>
 	<div id="nav" class="navbar">
-		<ui5-togglebutton id="menu-btn" icon="sap-icon://menu" design="Transparent"></ui5-togglebutton>
+		<ui5-togglebutton id="menu-btn" icon="menu" design="Transparent"></ui5-togglebutton>
 		<ui5-title level="H5">UI5 webcomponents</ui5-title>
 		<ui5-togglebutton id="btnCompact">Compact</ui5-togglebutton>
 		<ui5-togglebutton id="btnRTL">RTL</ui5-togglebutton>
@@ -40,22 +40,22 @@
 
 	<div id="side-nav" class="sidenav">
 		<ui5-list id="side-nav-list" mode="SingleSelect" separators="Inner">
-			<ui5-li id="arg1" icon="sap-icon://developer-settings">ui5-button</ui5-li>
-			<ui5-li id="bg1" icon="sap-icon://developer-settings">ui5-card</ui5-li>
-			<ui5-li id="bg1" icon="sap-icon://developer-settings">ui5-checkbox</ui5-li>
-			<ui5-li id="ch1" icon="sap-icon://developer-settings">ui5-datepicker</ui5-li>
-			<ui5-li id="arg1" icon="sap-icon://developer-settings" selected>ui5-dialog</ui5-li>
-			<ui5-li id="bg1" icon="sap-icon://developer-settings">ui5-icon</ui5-li>
-			<ui5-li id="arg1" icon="sap-icon://developer-settings">ui5-label</ui5-li>
-			<ui5-li id="bg1" icon="sap-icon://developer-settings">ui5-link</ui5-li>
-			<ui5-li id="bg1" icon="sap-icon://developer-settings">ui5-list</ui5-li>
-			<ui5-li id="ch1" icon="sap-icon://developer-settings">ui5-li</ui5-li>
-			<ui5-li id="arg1" icon="sap-icon://developer-settings">ui5-panel</ui5-li>
-			<ui5-li id="arg1" icon="sap-icon://developer-settings">ui5-popover</ui5-li>
-			<ui5-li id="bg1" icon="sap-icon://developer-settings">ui5-radiobutton</ui5-li>
-			<ui5-li id="bg1" icon="sap-icon://developer-settings">ui5-tabcontainer</ui5-li>
-			<ui5-li id="bg1" icon="sap-icon://developer-settings">ui5-table</ui5-li>
-			<ui5-li id="bg1" icon="sap-icon://developer-settings">ui5-textarea</ui5-li>
+			<ui5-li id="arg1" icon="developer-settings">ui5-button</ui5-li>
+			<ui5-li id="bg1" icon="developer-settings">ui5-card</ui5-li>
+			<ui5-li id="bg1" icon="developer-settings">ui5-checkbox</ui5-li>
+			<ui5-li id="ch1" icon="developer-settings">ui5-datepicker</ui5-li>
+			<ui5-li id="arg1" icon="developer-settings" selected>ui5-dialog</ui5-li>
+			<ui5-li id="bg1" icon="developer-settings">ui5-icon</ui5-li>
+			<ui5-li id="arg1" icon="developer-settings">ui5-label</ui5-li>
+			<ui5-li id="bg1" icon="developer-settings">ui5-link</ui5-li>
+			<ui5-li id="bg1" icon="developer-settings">ui5-list</ui5-li>
+			<ui5-li id="ch1" icon="developer-settings">ui5-li</ui5-li>
+			<ui5-li id="arg1" icon="developer-settings">ui5-panel</ui5-li>
+			<ui5-li id="arg1" icon="developer-settings">ui5-popover</ui5-li>
+			<ui5-li id="bg1" icon="developer-settings">ui5-radiobutton</ui5-li>
+			<ui5-li id="bg1" icon="developer-settings">ui5-tabcontainer</ui5-li>
+			<ui5-li id="bg1" icon="developer-settings">ui5-table</ui5-li>
+			<ui5-li id="bg1" icon="developer-settings">ui5-textarea</ui5-li>
 		</ui5-list>
 	</div>
 
@@ -76,75 +76,78 @@
 		<section class="row">
 			<ui5-card
 				style="flex-basis:20%;"
-				avatar="sap-icon://employee"
 				heading="Wolly King"
 				subtitle="Back-end developer"
 				status="1 of 3">
+				<ui5-icon name="employee" slot="avatar"></ui5-icon>
+
 				<ui5-list id="myList12" separators="Inner">
-					<ui5-li image="./img/HT-1030.jpg" icon="sap-icon://source-code" icon-end>Java EE</ui5-li>
-					<ui5-li image="./img/HT-1030.jpg" icon="sap-icon://source-code" icon-end>Maven</ui5-li>
-					<ui5-li image="./img/HT-1030.jpg" icon="sap-icon://source-code" icon-end>Cloud computing</ui5-li>
+					<ui5-li image="./img/HT-1030.jpg" icon="source-code" icon-end>Java EE</ui5-li>
+					<ui5-li image="./img/HT-1030.jpg" icon="source-code" icon-end>Maven</ui5-li>
+					<ui5-li image="./img/HT-1030.jpg" icon="source-code" icon-end>Cloud computing</ui5-li>
 				</ui5-list>
 			</ui5-card>
 			<ui5-card
 				style="flex-basis:20%;"
 				heading="Lee, Y.Song"
-				avatar="sap-icon://employee"
 				subtitle="Full-stack developer"
 				status="2 of 3">
+				<ui5-icon name="employee" slot="avatar"></ui5-icon>
+
 				<ui5-list id="myList12" separators="Inner">
-					<ui5-li image="./img/HT-1030.jpg" icon="sap-icon://source-code">C/C++</ui5-li>
-					<ui5-li image="./img/HT-1030.jpg" icon="sap-icon://source-code">Phyton</ui5-li>
-					<ui5-li image="./img/HT-1030.jpg" icon="sap-icon://source-code">Node JS</ui5-li>
+					<ui5-li image="./img/HT-1030.jpg" icon="source-code">C/C++</ui5-li>
+					<ui5-li image="./img/HT-1030.jpg" icon="source-code">Phyton</ui5-li>
+					<ui5-li image="./img/HT-1030.jpg" icon="source-code">Node JS</ui5-li>
 				</ui5-list>
 			</ui5-card>
 			<ui5-card
 				style="flex-basis:20%;"
-				avatar="sap-icon://employee"
 				heading="Anna P."
 				subtitle="Visioner">
+				<ui5-icon name="employee" slot="avatar"></ui5-icon>
 				<ui5-list id="myList13" separators="Inner">
-					<ui5-li icon="sap-icon://camera" icon-end>Photoshop</ui5-li>
-					<ui5-li icon="sap-icon://camera" icon-end>CorelDRAW</ui5-li>
-					<ui5-li icon="sap-icon://camera" icon-end>GIMP</ui5-li>
+					<ui5-li icon="camera" icon-end>Photoshop</ui5-li>
+					<ui5-li icon="camera" icon-end>CorelDRAW</ui5-li>
+					<ui5-li icon="camera" icon-end>GIMP</ui5-li>
 				</ui5-list>
 			</ui5-card>
 			<ui5-card
 				style="flex-basis:20%;"
-				avatar="sap-icon://employee"
 				heading="Medved I."
 				subtitle="Enthusiast"
 				status="3 of 3">
+				<ui5-icon name="employee" slot="avatar"></ui5-icon>
+
 				<ui5-list id="myList13" separators="Inner">
-					<ui5-li icon="sap-icon://syntax">JavaScript</ui5-li>
-					<ui5-li icon="sap-icon://syntax">React</ui5-li>
-					<ui5-li icon="sap-icon://syntax">Algorithms</ui5-li>
+					<ui5-li icon="syntax">JavaScript</ui5-li>
+					<ui5-li icon="syntax">React</ui5-li>
+					<ui5-li icon="syntax">Algorithms</ui5-li>
 				</ui5-list>
 			</ui5-card>
 
 			<ui5-card
 				style="flex-basis:20%;"
-				avatar="sap-icon://employee"
 				heading="Goerge M."
 				subtitle="Visioner">
+				<ui5-icon name="employee" slot="avatar"></ui5-icon>
 			</ui5-card>
 
 			<ui5-card
 				style="flex-basis:20%;"
-				avatar="sap-icon://employee"
 				heading="Linda M."
 				subtitle="Enthusiast"
 				status="1 of 3">
+				<ui5-icon name="employee" slot="avatar"></ui5-icon>
 			</ui5-card>
 		</section>
 
 		<section class="row row-centered">
-			<ui5-icon id="myIcon" src="sap-icon://add-equipment" class="icon-blue" ></ui5-icon>
-			<ui5-icon src="sap-icon://add-equipment" class="icon-blue icon-medium"></ui5-icon>
-			<ui5-icon src="sap-icon://add-equipment" class="icon-blue icon-small"></ui5-icon>
-			<ui5-icon src="sap-icon://add-employee" class="icon-red"></ui5-icon>
-			<ui5-icon src="sap-icon://add-employee" class="icon-red icon-medium"></ui5-icon>
-			<ui5-icon src="sap-icon://add-employee" class="icon-red icon-small"></ui5-icon>
+			<ui5-icon id="myIcon" name="add-equipment" class="icon-blue" ></ui5-icon>
+			<ui5-icon name="add-equipment" class="icon-blue icon-medium"></ui5-icon>
+			<ui5-icon name="add-equipment" class="icon-blue icon-small"></ui5-icon>
+			<ui5-icon name="add-employee" class="icon-red"></ui5-icon>
+			<ui5-icon name="add-employee" class="icon-red icon-medium"></ui5-icon>
+			<ui5-icon name="add-employee" class="icon-red icon-small"></ui5-icon>
 		</section>
 
 		<section class="row row-centered">
@@ -153,12 +156,12 @@
 			<ui5-button>Edit</ui5-button>
 			<ui5-button design="Transparent">Apply</ui5-button>
 			<ui5-button design="Transparent">Cancel</ui5-button>
-			<ui5-button icon="sap-icon://nav-back">Back</ui5-button>
-			<ui5-button icon="sap-icon://feeder-arrow">Next</ui5-button>
+			<ui5-button icon="nav-back">Back</ui5-button>
+			<ui5-button icon="feeder-arrow">Next</ui5-button>
 			<ui5-button design="Positive">Approve</ui5-button>
 			<ui5-button design="Negative">Decline</ui5-button>
-			<ui5-button icon="sap-icon://download" icon-end>Download</ui5-button>
-			<ui5-button icon="sap-icon://download">Activate</ui5-button>
+			<ui5-button icon="download" icon-end>Download</ui5-button>
+			<ui5-button icon="download">Activate</ui5-button>
 		</section>
 
 		<section class="row row-centered">
@@ -166,7 +169,7 @@
 			<ui5-togglebutton>I/O</ui5-togglebutton>
 			<ui5-togglebutton pressed>Toggle Button pressed</ui5-togglebutton>
 			<ui5-togglebutton design="Positive">On/Off</ui5-togglebutton>
-			<ui5-togglebutton pressed design="Negative" icon="sap-icon://menu">Menu</ui5-togglebutton>
+			<ui5-togglebutton pressed design="Negative" icon="menu">Menu</ui5-togglebutton>
 			<ui5-button id="openPopoverButton">Open Popover</ui5-button>
 			<ui5-popover header-text="Popover" id="hello-popover">
 				<div style="padding: 1rem;text-align: center;">
@@ -262,7 +265,7 @@
 			<ui5-panel header-text="Panel">
 				<div slot="header" class="panel-header">
 					<ui5-title level="H5">Countries</ui5-title>
-					<ui5-button id="button1" icon="sap-icon://refresh">Reset</ui5-button>
+					<ui5-button id="button1" icon="refresh">Reset</ui5-button>
 					<ui5-button design="Negative">Cencel</ui5-button>
 				</div>
 				<ui5-list id="myList" mode="Delete">
@@ -274,8 +277,8 @@
 			<ui5-panel header-text="Panel">
 				<div slot="header" class="panel-header">
 					<ui5-title level="H5">Quarks</ui5-title>
-					<ui5-button id="button2" icon="sap-icon://add">Add</ui5-button>
-					<ui5-button design="Negative" icon="sap-icon://delete">Remove</ui5-button>
+					<ui5-button id="button2" icon="add">Add</ui5-button>
+					<ui5-button design="Negative" icon="delete">Remove</ui5-button>
 				</div>
 				<ui5-list id="myList2" mode="SingleSelectBegin">
 					<ui5-li id="arg2">Up</ui5-li>
@@ -286,8 +289,8 @@
 			<ui5-panel header-text="Panel">
 					<div slot="header" class="panel-header">
 						<ui5-title level="H5">Employees</ui5-title>
-						<ui5-button id="button3" icon="sap-icon://add">Add</ui5-button>
-						<ui5-button design="Negative" icon="sap-icon://delete">Remove</ui5-button>
+						<ui5-button id="button3" icon="add">Add</ui5-button>
+						<ui5-button design="Negative" icon="delete">Remove</ui5-button>
 					</div>
 					<ui5-list id="myList3" mode="MultiSelect">
 						<ui5-li id="arg3">Manager</ui5-li>
@@ -301,13 +304,13 @@
 			<div style="display:flex;flex-direction:column;width:40%;">
 				<ui5-label required for="user">user:</ui5-label>
 				<ui5-input id="user" value-state="Warning" show-suggestions placeholder="username ...">
-					<ui5-icon id="user-icon" slot="icon" src="sap-icon://message-warning"></ui5-icon>
+					<ui5-icon id="user-icon" slot="icon" name="message-warning"></ui5-icon>
 				</ui5-input>
 			</div>
 			<div style="display:flex;flex-direction:column;width:40%;">
 				<ui5-label required for="pass">pass:</ui5-label>
 				<ui5-input id="pass" value-state="Error" type="Password" placeholder="pwd ...">
-						<ui5-icon slot="icon" src="sap-icon://message-error"></ui5-icon>
+						<ui5-icon slot="icon" name="message-error"></ui5-icon>
 				</ui5-input>
 			</div>
 		</section>
@@ -319,27 +322,27 @@
 
 		<section class="row">
 			<ui5-tabcontainer style="width:80%" show-overflow selected-key="item1">
-				<ui5-tab key="item1" text="Products" icon="sap-icon://product" icon-color="Negative">
+				<ui5-tab key="item1" text="Products" icon="product" icon-color="Negative">
 					<ui5-togglebutton pressed design="Positive">Cucumber</ui5-togglebutton>
 					<ui5-button>Banana</ui5-button>
 					<ui5-togglebutton pressed design="Negative">Tomato</ui5-togglebutton>
 				</ui5-tab>
 
-                <ui5-tab-separator></ui5-tab-separator>
+				<ui5-tab-separator></ui5-tab-separator>
 
-				<ui5-tab key="item2" text="Drinks" icon="sap-icon://pharmacy" icon-color="Critical">
+				<ui5-tab key="item2" text="Drinks" icon="pharmacy" icon-color="Critical">
 					<ui5-button>Wine</ui5-button>
 				</ui5-tab>
 
-				<ui5-tab key="item3" text="Music" icon="sap-icon://widgets" icon-color="Positive">
+				<ui5-tab key="item3" text="Music" icon="widgets" icon-color="Positive">
 					<ui5-button>Pop</ui5-button>
 				</ui5-tab>
 
-				<ui5-tab key="item4" text="Clothes" icon="sap-icon://basket">
+				<ui5-tab key="item4" text="Clothes" icon="basket">
 					<ui5-button>Dress</ui5-button>
 				</ui5-tab>
 
-				<ui5-tab key="item5" text="Team" icon="sap-icon://group"  icon-color="Neutral">
+				<ui5-tab key="item5" text="Team" icon="group"  icon-color="Neutral">
 					<ui5-button>Gravity</ui5-button>
 				</ui5-tab>
 			</ui5-tabcontainer>
@@ -391,7 +394,7 @@
 				style="flex: 0 0 400px"
 				show-exceeded-text
 			>
-            </ui5-textarea>
+			</ui5-textarea>
 		</section>
 
 		<section class="row">
