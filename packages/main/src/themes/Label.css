@@ -8,7 +8,6 @@
 	font-size: var(--sapMFontMediumSize);
 	font-weight: normal;
 	cursor: text;
-	direction: ltr;
 }	
 :host(:not([wrap])) .ui5-label-root {
 	font-weight: inherit;
