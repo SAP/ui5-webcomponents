@@ -36,7 +36,7 @@
     "start:theme-base": "cd packages/theme-base && yarn start",
     "start:main": "cd packages/main && yarn start",
     "start:fiori": "cd packages/fiori && yarn start",
-    "start:playground": "cross-env DEPLOY_PUBLIC_PATH=/assets/js/ui5-webcomponents/ yarn build:main && yarn build:fiori && cd packages/playground && yarn start",
+    "start:playground": "cross-env DEPLOY_PUBLIC_PATH=/assets/js/ui5-webcomponents/ yarn build:main && cross-env DEPLOY_PUBLIC_PATH=/assets/js/ui5-webcomponents/ yarn build:fiori && cd packages/playground && yarn start",
     "test:main": "cd packages/main && yarn test",
     "test:fiori": "cd packages/fiori && yarn test",
     "test": "npm-run-all --sequential test:main test:fiori",

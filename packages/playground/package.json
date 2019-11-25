@@ -33,7 +33,7 @@
     "clean:assets": "rimraf ./assets/js/ui5-webcomponents/*",
     "start": "npm-run-all --parallel prepare:** && bundle exec jekyll serve",
     "install:dependencies": "gem install bundler -v 2.0.2 && bundle install",
-    "copy:assets": "copy-and-watch \"../main/dist/resources/*\" \"./assets/js/ui5-webcomponents\"",
+    "copy:assets": "copy-and-watch \"../fiori/dist/resources/*\" \"./assets/js/ui5-webcomponents\"",
     "copy:samples": "node ./build-scripts/samples-prepare.js",
     "prepare:assets": "npm run clean:assets && npm run copy:assets",
     "prepare:docs": "node ./build-scripts/docs-prepare.js \"../../docs/\"",
