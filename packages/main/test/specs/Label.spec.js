@@ -5,7 +5,7 @@ describe("General API", () => {
 	
 	it("should show required star", () => {
 		const requiredLabelContent = browser.execute(`
-			return window.getComputedStyle(document.querySelector('#required-label').shadowRoot.querySelector(".label-required-colon"), ':after').content;
+			return window.getComputedStyle(document.querySelector('#required-label').shadowRoot.querySelector(".ui5-label-required-colon"), ':after').content;
 		`);
 
 		assert.strictEqual(requiredLabelContent, '"*"', "after's content should be *");
