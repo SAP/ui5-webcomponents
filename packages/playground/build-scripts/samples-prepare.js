@@ -8,7 +8,7 @@ const packages = [
     "main",
 ];
 
-const components = ["MessageToast.sample.html"];
+const components = [];
 
  // Add new components here
 const newComponents = [
