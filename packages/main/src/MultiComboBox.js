@@ -19,6 +19,8 @@ import {
 	VALUE_STATE_SUCCESS,
 	VALUE_STATE_ERROR,
 	VALUE_STATE_WARNING,
+	TOKENIZER_ARIA_CONTAIN_TOKEN,
+	TOKENIZER_ARIA_CONTAIN_ONE_TOKEN,
 	TOKENIZER_ARIA_CONTAIN_SEVERAL_TOKENS,
 } from "../dist/generated/i18n/i18n-defaults.js";
 
@@ -511,7 +513,24 @@ class MultiComboBox extends UI5Element {
 	}
 
 	get nMoreCountText() {
-		return this.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_SEVERAL_TOKENS, this._getSelectedItems().length);
+		const iTokenCount = this._getSelectedItems().length;
+		let sTokenizerAria = "";
+
+
+		debugger;
+		switch (iTokenCount) {
+			case 0:
+				sTokenizerAria = this.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_TOKEN);
+				break;
+			case 1:
+				sTokenizerAria = this.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_ONE_TOKEN);
+				break;
+			default:
+				sTokenizerAria = this.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_SEVERAL_TOKENS, iTokenCount);
+				break;
+		}
+
+		return sTokenizerAria;
 	}
 
 	rootFocusIn() {
@@ -537,12 +556,10 @@ class MultiComboBox extends UI5Element {
 	}
 
 	valueStateTextMappings() {
-		const i18nBundle = this.i18nBundle;
-
 		return {
-			"Success": i18nBundle.getText(VALUE_STATE_SUCCESS),
-			"Error": i18nBundle.getText(VALUE_STATE_ERROR),
-			"Warning": i18nBundle.getText(VALUE_STATE_WARNING),
+			"Success": this.i18nBundle.getText(VALUE_STATE_SUCCESS),
+			"Error": this.i18nBundle.getText(VALUE_STATE_ERROR),
+			"Warning": this.i18nBundle.getText(VALUE_STATE_WARNING),
 		};
 	}
 
