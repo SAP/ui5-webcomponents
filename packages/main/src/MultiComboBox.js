@@ -517,15 +517,15 @@ class MultiComboBox extends UI5Element {
 		let sTokenizerAria = "";
 
 		switch (iTokenCount) {
-			case 0:
-				sTokenizerAria = this.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_TOKEN);
-				break;
-			case 1:
-				sTokenizerAria = this.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_ONE_TOKEN);
-				break;
-			default:
-				sTokenizerAria = this.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_SEVERAL_TOKENS, iTokenCount);
-				break;
+		case 0:
+			sTokenizerAria = this.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_TOKEN);
+			break;
+		case 1:
+			sTokenizerAria = this.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_ONE_TOKEN);
+			break;
+		default:
+			sTokenizerAria = this.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_SEVERAL_TOKENS, iTokenCount);
+			break;
 		}
 
 		return sTokenizerAria;
