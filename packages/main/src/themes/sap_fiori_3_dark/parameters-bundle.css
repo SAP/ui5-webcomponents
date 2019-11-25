@@ -24,5 +24,6 @@
 @import "./YearPicker-parameters.css";
 @import "./CalendarHeader-parameters.css";
 @import "../base/Table-parameters.css";
+@import "../base/TableRow-parameters.css";
 @import "./Token-parameters.css";
 @import "./MultiComboBox-parameters.css";
