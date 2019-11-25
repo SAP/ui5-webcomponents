@@ -1,0 +1,94 @@
+<header class="component-heading">
+	<h2 class="control-header">ProductSwitch</h2>
+	<div class="component-heading-since">
+		<span><!--since_tag_marker--></span>
+	</div>
+</header>
+
+<div class="control-tag">&lt;ui5-product-switch&gt;</div>
+
+<section>
+	<h3>Basic ProductSwitch</h3>
+	<div class="snippet">
+		<ui5-shellbar
+			id="shellbar"
+			heading="Corporate Portal"
+			secondary-title="secondary title"
+			logo="../../images/sap-logo-svg.svg"
+			show-product-switch
+			show-co-pilot>
+		</ui5-shellbar>
+		<ui5-popover id="productswitch-popover" placement-type="Bottom">
+			<ui5-product-switch>
+					<ui5-product-switch-item heading="Home" subtitle="Central Home" icon="sap-icon://home"></ui5-product-switch-item>
+					<ui5-product-switch-item heading="Analytics Cloud" subtitle="Analytics Cloud" icon="sap-icon://business-objects-experience"></ui5-product-switch-item>
+					<ui5-product-switch-item heading="Catalog" subtitle="Ariba" icon="sap-icon://contacts"></ui5-product-switch-item>
+					<ui5-product-switch-item heading="Guided Buying" icon="sap-icon://credit-card"></ui5-product-switch-item>
+					<ui5-product-switch-item heading="Strategic Procurement" icon="sap-icon://cart-3"></ui5-product-switch-item>
+					<ui5-product-switch-item heading="Travel & Expense" subtitle="Concur" icon="sap-icon://flight"></ui5-product-switch-item>
+					<ui5-product-switch-item heading="Vendor Management" subtitle="Fieldglass" icon="sap-icon://shipping-status"></ui5-product-switch-item>
+					<ui5-product-switch-item heading="Human Capital Management" icon="sap-icon://customer"></ui5-product-switch-item>
+					<ui5-product-switch-item heading="Sales Cloud" subtitle="Sales Cloud" icon="sap-icon://sales-notification"></ui5-product-switch-item>
+					<ui5-product-switch-item heading="Commerce Cloud" subtitle="Commerce Cloud" icon="sap-icon://retail-store"></ui5-product-switch-item>
+					<ui5-product-switch-item heading="Marketing Cloud" subtitle="Marketing Cloud" icon="sap-icon://marketing-campaign"></ui5-product-switch-item>
+					<ui5-product-switch-item heading="Service Cloud" icon="sap-icon://family-care"></ui5-product-switch-item>
+					<ui5-product-switch-item heading="Customer Data Cloud" icon="sap-icon://customer-briefing"></ui5-product-switch-item>
+					<ui5-product-switch-item heading="S/4HANA" icon="sap-icon://batch-payments"></ui5-product-switch-item>
+			</ui5-product-switch>
+		</ui5-popover>
+
+		<script>
+			var shellBar = document.getElementById("shellbar");
+			var popover = document.getElementById("productswitch-popover");
+
+			shellbar.addEventListener("productSwitchClick", function(event) {
+				if (popover.opened) {
+					popover.close();
+				} else {
+					popover.openBy(event.detail.targetRef);
+				}
+			});
+		</script>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-shellbar
+	id="shellbar"
+	heading="Corporate Portal"
+	secondary-title="secondary title"
+	logo="../../images/sap-logo-svg.svg"
+	show-product-switch
+	show-co-pilot>
+</ui5-shellbar>
+<ui5-popover id="productswitch-popover" placement-type="Bottom">
+	<ui5-product-switch>
+			<ui5-product-switch-item heading="Home" subtitle="Central Home" icon="sap-icon://home"></ui5-product-switch-item>
+			<ui5-product-switch-item heading="Analytics Cloud" subtitle="Analytics Cloud" icon="sap-icon://business-objects-experience"></ui5-product-switch-item>
+			<ui5-product-switch-item heading="Catalog" subtitle="Ariba" icon="sap-icon://contacts"></ui5-product-switch-item>
+			<ui5-product-switch-item heading="Guided Buying" icon="sap-icon://credit-card"></ui5-product-switch-item>
+			<ui5-product-switch-item heading="Strategic Procurement" icon="sap-icon://cart-3"></ui5-product-switch-item>
+			<ui5-product-switch-item heading="Travel & Expense" subtitle="Concur" icon="sap-icon://flight"></ui5-product-switch-item>
+			<ui5-product-switch-item heading="Vendor Management" subtitle="Fieldglass" icon="sap-icon://shipping-status"></ui5-product-switch-item>
+			<ui5-product-switch-item heading="Human Capital Management" icon="sap-icon://customer"></ui5-product-switch-item>
+			<ui5-product-switch-item heading="Sales Cloud" subtitle="Sales Cloud" icon="sap-icon://sales-notification"></ui5-product-switch-item>
+			<ui5-product-switch-item heading="Commerce Cloud" subtitle="Commerce Cloud" icon="sap-icon://retail-store"></ui5-product-switch-item>
+			<ui5-product-switch-item heading="Marketing Cloud" subtitle="Marketing Cloud" icon="sap-icon://marketing-campaign"></ui5-product-switch-item>
+			<ui5-product-switch-item heading="Service Cloud" icon="sap-icon://family-care"></ui5-product-switch-item>
+			<ui5-product-switch-item heading="Customer Data Cloud" icon="sap-icon://customer-briefing"></ui5-product-switch-item>
+			<ui5-product-switch-item heading="S/4HANA" icon="sap-icon://batch-payments"></ui5-product-switch-item>
+	</ui5-product-switch>
+</ui5-popover>
+
+<script>
+	var shellBar = document.getElementById("shellbar");
+	var popover = document.getElementById("productswitch-popover");
+
+	shellbar.addEventListener("productSwitchClick", function(event) {
+		if (popover.opened) {
+			popover.close();
+		} else {
+			popover.openBy(event.detail.targetRef);
+		}
+	});
+</script>
+	</xmp></pre>
+</section>

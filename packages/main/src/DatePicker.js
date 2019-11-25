@@ -165,7 +165,6 @@ const metadata = {
 		*/
 		input: {},
 	},
-	_eventHandlersByConvention: true,
 };
 
 /**
@@ -308,7 +307,7 @@ class DatePicker extends UI5Element {
 		}
 	}
 
-	onkeydown(event) {
+	_onkeydown(event) {
 		if (isShow(event)) {
 			this.togglePicker();
 			this._getInput().focus();

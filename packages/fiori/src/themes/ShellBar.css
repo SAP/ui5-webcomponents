@@ -281,9 +281,9 @@
 	visibility: hidden;
 }
 
-.svg-box-content {
-	width: 40px;
-	height: 30px;
+.ui5-shellbar-coPilot {
+	background-color: transparent;
+	cursor: pointer;
 }
 
 :host(:not([show-block-layer])) .ui5-shellbar-search-field {

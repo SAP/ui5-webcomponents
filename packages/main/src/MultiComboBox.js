@@ -514,21 +514,16 @@ class MultiComboBox extends UI5Element {
 
 	get nMoreCountText() {
 		const iTokenCount = this._getSelectedItems().length;
-		let sTokenizerAria = "";
 
-		switch (iTokenCount) {
-		case 0:
-			sTokenizerAria = this.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_TOKEN);
-			break;
-		case 1:
-			sTokenizerAria = this.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_ONE_TOKEN);
-			break;
-		default:
-			sTokenizerAria = this.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_SEVERAL_TOKENS, iTokenCount);
-			break;
+		if (iTokenCount === 0) {
+			return this.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_TOKEN);
 		}
 
-		return sTokenizerAria;
+		if (iTokenCount === 1) {
+			return this.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_ONE_TOKEN);
+		}
+
+		return this.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_SEVERAL_TOKENS, iTokenCount);
 	}
 
 	rootFocusIn() {
@@ -553,7 +548,7 @@ class MultiComboBox extends UI5Element {
 		return this.readonly ? "None" : "MultiSelect";
 	}
 
-	valueStateTextMappings() {
+	get valueStateTextMappings() {
 		return {
 			"Success": this.i18nBundle.getText(VALUE_STATE_SUCCESS),
 			"Error": this.i18nBundle.getText(VALUE_STATE_ERROR),

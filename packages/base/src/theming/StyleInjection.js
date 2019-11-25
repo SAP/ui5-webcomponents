@@ -7,7 +7,6 @@ const ponyfillNeeded = () => !!window.CSSVarsPonyfill;
 const runPonyfill = () => {
 	ponyfillTimer = undefined;
 
-	window.CSSVarsPonyfill.resetCssVars();
 	window.CSSVarsPonyfill.cssVars({
 		rootElement: document.head,
 		include: "style[data-ui5-theme-properties],style[data-ui5-element-styles]",
