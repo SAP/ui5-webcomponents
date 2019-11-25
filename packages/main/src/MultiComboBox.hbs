@@ -1,10 +1,10 @@
 <div class="ui5-multi-combobox-root"
 	@focusin={{rootFocusIn}}
 	@focusout={{rootFocusOut}}
-	 role="combobox"
-	 aria-haspopup="listbox"
-     aria-expanded="{{open}}"
-	>
+	role="combobox"
+	aria-haspopup="listbox"
+	aria-expanded="{{open}}"
+>
 	<span id="{{_id}}-hiddenText-nMore" class="ui5-hidden-text">{{nMoreCountText}}</span>
 	
 	{{#if hasValueState}}
@@ -44,7 +44,7 @@
 		aria-autocomplete="both"
 		aria-labelledby="{{_id}}-hiddenText-nMore"
 		aria-describedby="{{_id}}-valueStateDesc"
-	>
+	> 
 
 	{{#unless readonly}}
 		<ui5-icon name="slim-arrow-down"
