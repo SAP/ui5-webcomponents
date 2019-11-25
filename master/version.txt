@@ -1,5 +1,5 @@
-commit e53e6be13c8dfda6511a0df91c526b8dc63c93de
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Mon Nov 25 11:29:53 2019 +0200
+commit 4ef63f2f07adc0be2b9a6aee452a408759e0d6e0
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Mon Nov 25 13:30:48 2019 +0200
 
-    refactor: simplify CSS Vars Ponyfill usage (#963)
+    feat: use fiori bundle for the playground (#967)
