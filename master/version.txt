@@ -1,5 +1,5 @@
-commit 2148b94ad8e0772e1caa4a73d130b8f2aa80fb8c
-Author: Smux <pascal.reiffert@googlemail.com>
-Date:   Mon Nov 25 13:43:52 2019 +0100
+commit 70d44b1ebf4b47c7e99ebf96feb19e5c04646fcd
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Mon Nov 25 15:02:53 2019 +0200
 
-    refactor(ui5-datepicker): subscribe event handlers within HBS template (#972)
+     feat(ui5-product-switch): initial implementation (#971)
