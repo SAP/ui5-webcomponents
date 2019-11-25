@@ -1,9 +1,5 @@
-commit 66d8c62658648cfeb7392607e9b66548c42bd7cd
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Nov 25 09:14:50 2019 +0200
+commit 2384236ecb592906297682c6666b12f84d14fa75
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Mon Nov 25 10:56:36 2019 +0200
 
-    refactor(ui5-shellbar): optimize coPilot SVG (#960)
-    
-    - compress the size of animated coPilot SVG from more than 18k to 8.1k
-    - unused CSS class `svg-box-content` removed
-    - correctly fallback to non-animated SVG if the feature is not imported (there use to be a bug - throws JS error)
+    fix: spacebar works for HTML elements inside a ui5-table (#964)
