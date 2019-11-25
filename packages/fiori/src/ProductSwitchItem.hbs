@@ -1,0 +1,43 @@
+{{#if targetSrc}}
+	<a class="ui5-product-switch-item-root"
+		data-sap-focus-ref
+		@focusout="{{_onfocusout}}"
+		@focusin="{{_onfocusin}}"
+		@mousedown="{{_onmousedown}}"
+		@keydown="{{_onkeydown}}"
+		@keyup="{{_onkeyup}}"
+		tabindex={{_tabIndex}}
+		href="{{targetSrc}}"
+		target="{{target}}">
+		{{> item}}
+	</a>
+{{else}}
+	<div
+		class="ui5-product-switch-item-root"
+		data-sap-focus-ref
+		@focusout="{{_onfocusout}}"
+		@focusin="{{_onfocusin}}"
+		@mousedown="{{_onmousedown}}"
+		@keydown="{{_onkeydown}}"
+		@keyup="{{_onkeyup}}"
+		tabindex={{_tabIndex}}>
+		{{> item}}
+	</div>
+{{/if}}
+
+{{#*inline "item"}}
+	{{#if icon}}
+		<ui5-icon
+			class="ui5-product-switch-item-icon"
+			name="{{icon}}"
+		></ui5-icon>
+	{{/if}}
+	<span class="ui5-product-switch-item-text-content">
+		{{#if heading}}
+			<span class="ui5-product-switch-item-heading">{{heading}}</span>
+		{{/if}}
+		{{#if subtitle}}
+			<span class="ui5-product-switch-item-subtitle">{{subtitle}}</span>
+		{{/if}}
+	</span>
+{{/inline}}
