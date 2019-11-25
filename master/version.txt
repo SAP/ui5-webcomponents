@@ -1,5 +1,5 @@
-commit 8b604194ff4687e7c57862916dc8a07830938a7d
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Mon Nov 25 11:01:01 2019 +0200
+commit e53e6be13c8dfda6511a0df91c526b8dc63c93de
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Mon Nov 25 11:29:53 2019 +0200
 
-    feat: deploy all components to the playground (#962)
+    refactor: simplify CSS Vars Ponyfill usage (#963)
