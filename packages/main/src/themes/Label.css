@@ -8,12 +8,13 @@
 	font-size: var(--sapMFontMediumSize);
 	font-weight: normal;
 	cursor: text;
+	direction: ltr;
 }	
 :host(:not([wrap])) .ui5-label-root {
-	font-weight: normal;
+	font-weight: inherit;
 	display: inline-block;
 	white-space: nowrap;
-	cursor: text;
+	cursor: inherit;
 	overflow: hidden;
 }
 :host(:not([wrap])) .label-text-wrapper {
@@ -22,16 +23,6 @@
 	display: inline-block;
 	vertical-align: top;
 	max-width: 100%;
-}
-
-:host([show-colon][required]) .label-required-colon {
-	display: inline-block;
-	line-height: 1rem;
-	vertical-align: top;
-}
-:host([show-colon][required]) .label-required-colon:before {
-	line-height: 1rem;
-	vertical-align: top;
 }
 
 :host(:not([wrap])[required][show-colon]) .label-text-wrapper {
