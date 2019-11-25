@@ -2,18 +2,24 @@ import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
+import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
+import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import MessageToastTemplate from "./generated/templates/MessageToastTemplate.lit.js";
 import MessageToastPlacement from "./types/MessageToastPlacement.js";
 
 // Styles
 import MessageToastCss from "./generated/themes/MessageToast.css.js";
 
+/**
+ * @public
+ */
 const metadata = {
 	tag: "ui5-message-toast",
-	properties: {
+	properties: /** @lends sap.ui.webcomponents.main.MessageToast.prototype */ {
 
 		/**
-		 * Defines the duration which MessageToast will stay on screen before closing in milliseconds.
+		 * Defines the duration which the <code>ui5-message-toast</code> will stay on screen before closing in milliseconds.
 		 *
 		 * @type {number}
 		 * @defaultvalue 3000
@@ -42,17 +48,31 @@ const metadata = {
 		},
 
 		/**
-		 * Indicates if the elements is on focus
+		 * Indicates if the <code>ui5-message-toast</code> is opened/visible.
+		 * @type {boolean}
 		 * @private
 		 */
 		opened: {
 			type: Boolean,
 		},
 	},
-	events: {
+	slots: /** @lends sap.ui.webcomponents.main.MessageToast.prototype */ {
+		/**
+		 * Defines the text of the <code>ui5-message-toast</code>.
+		 * <br><b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+		 *
+		 * @type {Node[]}
+		 * @slot
+		 * @public
+		 */
+		"default": {
+			type: Node,
+		},
+	},
+	events: /** @lends sap.ui.webcomponents.main.MessageToast.prototype */ {
 
 		/**
-		 * Fired after the component is opened.
+		 * Fired after the <code>ui5-message-toast</code> is opened.
 		 *
 		 * @public
 		 * @event
@@ -60,7 +80,7 @@ const metadata = {
 		afterOpen: {},
 
 		/**
-		 * Fired after the MessageToast is closed.
+		 * Fired after the <code>ui5-message-toast</code> is closed.
 		 *
 		 * @public
 		 * @event
@@ -69,6 +89,42 @@ const metadata = {
 	},
 };
 
+/**
+ * @class
+ *
+ * <h3 class="comment-api-title">Overview</h3>
+ *
+ * The <code>ui5-message-toast</code> is a small, non-disruptive popup for success or information messages that
+ * disappears automatically after a few seconds.
+ *
+ *
+ * <h3>Usage</h3>
+ *
+ * <h4>When to use:</h4>
+ * <ul>
+ * <li>You want to display a short success of information message.</li>
+ * <li>You do not want to interrupt users while they are performing an action.</li>
+ * <li>You want to confirm a successful action.</li>
+ * </ul>
+ * <h4>When not to use:</h4>
+ * <ul>
+ * <li>You want to display an error or warning message.</li>
+ * <li>You want to interrupt users while they are performing an action.</li>
+ * <li>You want to make sure that users read the message before they leave the page.</li>
+ * <li>You want users to be able to copy some part of the message text.</li>
+ * </ul>
+ *
+ * <h3>ES6 Module Import</h3>
+ *
+ * <code>import "@ui5/webcomponents/dist/MessageToast";</code>
+ *
+ * @constructor
+ * @author SAP SE
+ * @alias sap.ui.webcomponents.main.MessageToast
+ * @extends UI5Element
+ * @tagname ui5-message-toast
+ * @public
+ */
 class MessageToast extends UI5Element {
 	static get metadata() {
 		return metadata;
@@ -88,21 +144,21 @@ class MessageToast extends UI5Element {
 
 	constructor() {
 		super();
-		this._bIsInitialRendering = true;
-		this._iClassAdditionDelay = 50;
+		this._isInitialRendering = true;
+		this._classAdditionDelay = 50;
 	}
 
 	onAfterRendering() {
-		if (this._bIsInitialRendering) {
-			this._oRootDomRef = this.getDomRef().querySelector(".ui5-message-toast-root");
+		if (this._isInitialRendering && this._shouldAnimate()) {
+			this._rootDomRef = this.getDomRef().querySelector(".ui5-message-toast-root");
 			// The transition should be a third of the duration
-			this._oRootDomRef.style["transition-duration"] = `${this.duration / 3}ms`;
+			this._rootDomRef.style["transition-duration"] = `${this.duration / 3}ms`;
 			// The delay should be two thirds of the duration
-			this._oRootDomRef.style["transition-delay"] = `${(this.duration * 2) / 3}ms`;
-			this._bIsInitialRendering = false;
+			this._rootDomRef.style["transition-delay"] = `${(this.duration * 2) / 3}ms`;
 			this._addTransitionCSSClass();
 		}
 
+		this._isInitialRendering = false;
 		this.fireEvent("afterOpen", { });
 	}
 
@@ -111,22 +167,30 @@ class MessageToast extends UI5Element {
 		this._stopCloseTimeout();
 		this._startCloseTimeout();
 
-		if (!this._bIsInitialRendering) {
+		if (!this._isInitialRendering && this._shouldAnimate()) {
 			this._removeTransitionCSSClass();
 			this._addTransitionCSSClass();
 		}
 	}
 
+	get rtl() {
+		return getRTL() ? "rtl" : undefined;
+	}
+
+	_shouldAnimate() {
+		return getAnimationMode() !== AnimationMode.None;
+	}
+
 	_startCloseTimeout() {
-		this._oCloseTimout = setTimeout(() => {
+		this._closeTimout = setTimeout(() => {
 			this._close();
 		}, this.duration);
 	}
 
 	_stopCloseTimeout() {
-		if (this._oCloseTimout) {
-			clearInterval(this._oCloseTimout);
-			this._oCloseTimout = null;
+		if (this._closeTimout) {
+			clearInterval(this._closeTimout);
+			this._closeTimout = null;
 		}
 	}
 
@@ -134,12 +198,12 @@ class MessageToast extends UI5Element {
 		// We add the opacity (animating) class after a delay, in
 		// order to give time for the browser to remove the class first
 		setTimeout(() => {
-			this._oRootDomRef.classList.add("opacityTranslate");
-		}, this._iClassAdditionDelay);
+			this._rootDomRef.classList.add("opacityTranslate");
+		}, this._classAdditionDelay);
 	}
 
 	_removeTransitionCSSClass() {
-		this._oRootDomRef.classList.remove("opacityTranslate");
+		this._rootDomRef.classList.remove("opacityTranslate");
 	}
 
 	_close() {
@@ -150,7 +214,10 @@ class MessageToast extends UI5Element {
 		this.opened = false;
 
 		this._stopCloseTimeout();
-		this._removeTransitionCSSClass();
+
+		if (this._shouldAnimate()) {
+			this._removeTransitionCSSClass();
+		}
 
 		RenderScheduler.whenFinished().then(_ => {
 			this.fireEvent("afterClose", { });

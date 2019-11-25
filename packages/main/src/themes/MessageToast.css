@@ -46,7 +46,7 @@
 	opacity: 0;
 }
 
-:host([placement="TopLeft"]) .ui5-message-toast-root-parent {
+:host([placement="TopStart"]) .ui5-message-toast-root-parent {
 	justify-content: flex-start;
 	align-items: flex-start;
 }
@@ -56,12 +56,12 @@
 	align-items: flex-start;
 }
 
-:host([placement="TopRight"]) .ui5-message-toast-root-parent {
+:host([placement="TopEnd"]) .ui5-message-toast-root-parent {
 	justify-content: flex-end;
 	align-items: flex-start;
 }
 
-:host([placement="MiddleLeft"]) .ui5-message-toast-root-parent {
+:host([placement="MiddleStart"]) .ui5-message-toast-root-parent {
 	justify-content: flex-start;
 	align-items: center;
 }
@@ -71,12 +71,12 @@
 	align-items: center;
 }
 
-:host([placement="MiddleRight"]) .ui5-message-toast-root-parent {
+:host([placement="MiddleEnd"]) .ui5-message-toast-root-parent {
 	justify-content: flex-end;
 	align-items: center;
 }
 
-:host([placement="BottomLeft"]) .ui5-message-toast-root-parent {
+:host([placement="BottomStart"]) .ui5-message-toast-root-parent {
 	justify-content: flex-start;
 	align-items: flex-end;
 }
@@ -86,7 +86,7 @@
 	align-items: flex-end;
 }
 
-:host([placement="BottomRight"]) .ui5-message-toast-root-parent {
+:host([placement="BottomEnd"]) .ui5-message-toast-root-parent {
 	justify-content: flex-end;
 	align-items: flex-end;
 }

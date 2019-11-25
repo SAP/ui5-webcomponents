@@ -1,9 +1,9 @@
 function onload() {
 
-	// Attaching press listener to the Button which opens the TL MessageToast
-	document.querySelector('.wcBtnOpenMessageToastTL')
+	// Attaching press listener to the Button which opens the TS MessageToast
+	document.querySelector('.wcBtnOpenMessageToastTS')
 			.addEventListener('click', function () {
-				document.querySelector('.wcMessageToastTL').open();
+				document.querySelector('.wcMessageToastTS').open();
 			});
 
 	// Attaching press listener to the Button which opens the TC MessageToast
@@ -12,16 +12,16 @@ function onload() {
 				document.querySelector('.wcMessageToastTC').open();
 			});
 
-	// Attaching press listener to the Button which opens the TR MessageToast
-	document.querySelector('.wcBtnOpenMessageToastTR')
+	// Attaching press listener to the Button which opens the TE MessageToast
+	document.querySelector('.wcBtnOpenMessageToastTE')
 			.addEventListener('click', function () {
-				document.querySelector('.wcMessageToastTR').open();
+				document.querySelector('.wcMessageToastTE').open();
 			});
 
-	// Attaching press listener to the Button which opens the ML MessageToast
-	document.querySelector('.wcBtnOpenMessageToastML')
+	// Attaching press listener to the Button which opens the MS MessageToast
+	document.querySelector('.wcBtnOpenMessageToastMS')
 			.addEventListener('click', function () {
-				document.querySelector('.wcMessageToastML').open();
+				document.querySelector('.wcMessageToastMS').open();
 			});
 
 	// Attaching press listener to the Button which opens the MC MessageToast
@@ -30,16 +30,16 @@ function onload() {
 				document.querySelector('.wcMessageToastMC').open();
 			});
 
-	// Attaching press listener to the Button which opens the MR MessageToast
-	document.querySelector('.wcBtnOpenMessageToastMR')
+	// Attaching press listener to the Button which opens the ME MessageToast
+	document.querySelector('.wcBtnOpenMessageToastME')
 			.addEventListener('click', function () {
-				document.querySelector('.wcMessageToastMR').open();
+				document.querySelector('.wcMessageToastME').open();
 			});
 
-	// Attaching press listener to the Button which opens the BL MessageToast
-	document.querySelector('.wcBtnOpenMessageToastBL')
+	// Attaching press listener to the Button which opens the BS MessageToast
+	document.querySelector('.wcBtnOpenMessageToastBS')
 			.addEventListener('click', function () {
-				document.querySelector('.wcMessageToastBL').open();
+				document.querySelector('.wcMessageToastBS').open();
 			});
 
 	// Attaching press listener to the Button which opens the BC MessageToast
@@ -48,9 +48,9 @@ function onload() {
 				document.querySelector('.wcMessageToastBC').open();
 			});
 
-	// Attaching press listener to the Button which opens the BR MessageToast
-	document.querySelector('.wcBtnOpenMessageToastBR')
+	// Attaching press listener to the Button which opens the BE MessageToast
+	document.querySelector('.wcBtnOpenMessageToastBE')
 			.addEventListener('click', function () {
-				document.querySelector('.wcMessageToastBR').open();
+				document.querySelector('.wcMessageToastBE').open();
 			});
 }
