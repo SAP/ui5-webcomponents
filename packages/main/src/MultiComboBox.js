@@ -15,7 +15,12 @@ import Icon from "./Icon.js";
 import Popover from "./Popover.js";
 import List from "./List.js";
 import StandardListItem from "./StandardListItem.js";
-import { TOKENIZER_ARIA_CONTAIN_SEVERAL_TOKENS } from "../dist/generated/i18n/i18n-defaults.js";
+import {
+	VALUE_STATE_SUCCESS,
+	VALUE_STATE_ERROR,
+	VALUE_STATE_WARNING,
+	TOKENIZER_ARIA_CONTAIN_SEVERAL_TOKENS,
+} from "../dist/generated/i18n/i18n-defaults.js";
 
 // Styles
 import styles from "./generated/themes/MultiComboBox.css.js";
@@ -529,6 +534,24 @@ class MultiComboBox extends UI5Element {
 
 	get selectedItemsListMode() {
 		return this.readonly ? "None" : "MultiSelect";
+	}
+
+	valueStateTextMappings() {
+		const i18nBundle = this.i18nBundle;
+
+		return {
+			"Success": i18nBundle.getText(VALUE_STATE_SUCCESS),
+			"Error": i18nBundle.getText(VALUE_STATE_ERROR),
+			"Warning": i18nBundle.getText(VALUE_STATE_WARNING),
+		};
+	}
+
+	get hasValueState() {
+		return this.valueState !== ValueState.None;
+	}
+
+	get valueStateText() {
+		return this.valueStateTextMappings()[this.valueState];
 	}
 
 	static async define(...params) {
