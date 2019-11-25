@@ -6,10 +6,12 @@ import ProductSwitchItemTemplate from "./generated/templates/ProductSwitchItemTe
 // Styles
 import ProductSwitchItemCss from "./generated/themes/ProductSwitchItem.css.js";
 
-
+/**
+ * @public
+ */
 const metadata = {
 	tag: "ui5-product-switch-item",
-	properties: {
+	properties: /** @lends  sap.ui.webcomponents.fiori.ProductSwitchItem.prototype */ {
 		/**
 		  * Defines the title of the <code>ui5-product-switch-item</code>.
 		  * @type {string}
@@ -84,10 +86,9 @@ const metadata = {
 			noAttribute: true,
 		},
 	},
-	slots: {
-		//
+	slots: /** @lends  sap.ui.webcomponents.fiori.ProductSwitchItem.prototype */ {
 	},
-	events: {
+	events: /** @lends  sap.ui.webcomponents.fiori.ProductSwitchItem.prototype */ {
 		/**
 		 * Fired when the <code>ui5-product-switch-item</code> is activated either with a
 		 * click/tap or by using the Enter or Space key.
