@@ -57,6 +57,11 @@ class ProductSwitch extends UI5Element {
 	constructor() {
 		super();
 
+		this.ROW_MIN_WIDTH = {
+			ONE_COLUMN: 600,
+			THREE_COLUMN: 900,
+		};
+
 		this.initItemNavigation();
 	}
 
@@ -98,9 +103,9 @@ class ProductSwitch extends UI5Element {
 	_handleResize() {
 		const documentWidth = document.body.clientWidth;
 
-		if (documentWidth <= 600) {
+		if (documentWidth <= this.ROW_MIN_WIDTH.ONE_COLUMN) {
 			this._itemNavigation.rowSize = 1;
-		} else if (documentWidth <= 900 || this.items.length <= 6) {
+		} else if (documentWidth <= this.ROW_MIN_WIDTH.THREE_COLUMN || this.items.length <= 6) {
 			this._itemNavigation.rowSize = 3;
 		} else {
 			this._itemNavigation.rowSize = 4;

@@ -57,7 +57,7 @@ const metadata = {
 			defaultValue: "_self",
 		},
 		/**
-		 *Defines the <code>ui5-product-switch-item</code> target URI. Supports standard hyperlink behavior.
+		 * Defines the <code>ui5-product-switch-item</code> target URI. Supports standard hyperlink behavior.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
