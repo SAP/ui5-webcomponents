@@ -508,7 +508,7 @@ class MultiComboBox extends UI5Element {
 		this.open && this._getPopover().openBy(this);
 	}
 
-	valueStateTextMappings() {
+	get valueStateTextMappings() {
 		return {
 			"Success": this.i18nBundle.getText(VALUE_STATE_SUCCESS),
 			"Error": this.i18nBundle.getText(VALUE_STATE_ERROR),
@@ -561,7 +561,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	get valueStateText() {
-		return this.valueStateTextMappings()[this.valueState];
+		return this.valueStateTextMappings[this.valueState];
 	}
 
 	static async define(...params) {

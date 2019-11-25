@@ -219,7 +219,10 @@ rollup configuration file and will not work on its own.
 import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";
 ```
 
-HTML ```<form>``` only submits a couple of standard HTML elements such as ```<input>``` and ```<textarea>``` to name a few.
+HTML ```<form>``` only submits a couple of standard HTML elements such as ```
+
+
+<input>``` and ```<textarea>``` to name a few.
 
 Web Components that function as inputs, such as UI5's ```<ui5-input>```, ```<ui5-checkbox>```, ```<ui5-textarea>``` are therefore
 not submitted by the form out of the box.
