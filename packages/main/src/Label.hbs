@@ -3,7 +3,10 @@
 		@click={{_onClick}} 
 		for="{{for}}"
 	>
+	<span class="label-text-wrapper">
 		<bdi id="{{_id}}-bdi">
 			<slot></slot>
 		</bdi>
+	</span>
+	<span class="label-required-colon"></span>
 </label>
