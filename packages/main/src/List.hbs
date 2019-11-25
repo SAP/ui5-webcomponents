@@ -1,6 +1,7 @@
 <div
 	class="ui5-list-root"
-	@focusin="{{onfocusin}}"
+	@focusin="{{_onfocusin}}"
+	@keydown="{{_onkeydown}}"
 >
 	<!-- header -->
 	{{#if header.length}}
