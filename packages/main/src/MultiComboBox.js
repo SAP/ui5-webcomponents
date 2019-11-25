@@ -516,8 +516,6 @@ class MultiComboBox extends UI5Element {
 		const iTokenCount = this._getSelectedItems().length;
 		let sTokenizerAria = "";
 
-
-		debugger;
 		switch (iTokenCount) {
 			case 0:
 				sTokenizerAria = this.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_TOKEN);
