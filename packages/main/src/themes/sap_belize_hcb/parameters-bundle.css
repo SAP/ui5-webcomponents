@@ -1,12 +1,12 @@
 @import "./Badge-parameters.css";
 @import "./Button-parameters.css";
-@import "./BusyIndicator-parameters.css";
+@import "../base/BusyIndicator-parameters.css";
 @import "./CalendarHeader-parameters.css";
 @import "./Card-parameters.css";
 @import "./CheckBox-parameters.css";
 @import "./DatePicker-parameters.css";
 @import "./DayPicker-parameters.css";
-@import "./GroupHeaderListItem-parameters.css";
+@import "../base/GroupHeaderListItem-parameters.css";
 @import "./Input-parameters.css";
 @import "./InputIcon-parameters.css";
 @import "./Link-parameters.css";
@@ -26,4 +26,4 @@
 @import "./ToggleButton-parameters.css";
 @import "./YearPicker-parameters.css";
 @import "./Token-parameters.css";
-@import "./MultiComboBox-parameters.css";
+@import "../base/MultiComboBox-parameters.css";
