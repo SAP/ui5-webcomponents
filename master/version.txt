@@ -1,5 +1,9 @@
-commit b0d362ab9632f896d6c8a3bf6c913d93f844a112
+commit 66d8c62658648cfeb7392607e9b66548c42bd7cd
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Nov 22 13:43:22 2019 +0200
+Date:   Mon Nov 25 09:14:50 2019 +0200
 
-    chore: change binaries permissions (#958)
+    refactor(ui5-shellbar): optimize coPilot SVG (#960)
+    
+    - compress the size of animated coPilot SVG from more than 18k to 8.1k
+    - unused CSS class `svg-box-content` removed
+    - correctly fallback to non-animated SVG if the feature is not imported (there use to be a bug - throws JS error)
