@@ -1,5 +1,5 @@
-commit 70d44b1ebf4b47c7e99ebf96feb19e5c04646fcd
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Mon Nov 25 15:02:53 2019 +0200
+commit e53a76d2f6132e848d3f954f976efd0c0ae45ee5
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Nov 25 16:04:54 2019 +0200
 
-     feat(ui5-product-switch): initial implementation (#971)
+    chore(ui5-product-switch): show API in playground
