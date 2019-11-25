@@ -1,5 +1,5 @@
-commit 2384236ecb592906297682c6666b12f84d14fa75
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Mon Nov 25 10:56:36 2019 +0200
+commit 8b604194ff4687e7c57862916dc8a07830938a7d
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Mon Nov 25 11:01:01 2019 +0200
 
-    fix: spacebar works for HTML elements inside a ui5-table (#964)
+    feat: deploy all components to the playground (#962)
