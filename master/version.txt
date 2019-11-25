@@ -1,5 +1,5 @@
-commit 4ef63f2f07adc0be2b9a6aee452a408759e0d6e0
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Mon Nov 25 13:30:48 2019 +0200
+commit ead9ca90236f9b9ec2f93c2527ac368ba0da5afe
+Author: Julian Breuksch <julian.breuksch@sap.com>
+Date:   Mon Nov 25 13:23:22 2019 +0100
 
-    feat: use fiori bundle for the playground (#967)
+    refactor(ui5-select): subscribe event handlers within HBS template (#969)
