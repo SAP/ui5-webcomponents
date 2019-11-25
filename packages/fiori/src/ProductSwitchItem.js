@@ -30,11 +30,10 @@ const metadata = {
 		},
 		/**
 		 * Defines the icon to be displayed as a graphical element within the <code>ui5-product-switch-item</code>.
-		 * The SAP-icons font provides numerous options.
 		 * <br><br>
 		 * Example:
 		 * <br>
-		 * <pre>ui5-product-switch-item icon="sap-icon://palette"</pre>
+		 * <pre>ui5-product-switch-item icon="palette"</pre>
 		 *
 		 * See all the available icons in the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
 		 *
@@ -108,11 +107,11 @@ const metadata = {
  * <b>Note:</b> <code>ui5-product-switch-item</code> is not supported when used outside of <code>ui5-product-switch</code>.
  * <br><br>
  * <h3>ES6 Module Import</h3>
- * <code>import "@ui5/webcomponents-fiori/dist/ProductSwitchItem";</code>
+ * <code>import "@ui5/webcomponents-fiori/dist/ProductSwitchItem.js";</code>
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.ProductSwitchItem
+ * @alias sap.ui.webcomponents.fiori.ProductSwitchItem
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-product-switch-item
  * @public

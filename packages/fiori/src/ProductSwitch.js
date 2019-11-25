@@ -39,14 +39,14 @@ const metadata = {
  * @class
  * <h3 class="comment-api-title">Overview</h3>
  *
- * The <code>ui5-product-switch</code> is a Fiori specific control that is used in <code>ui5-shellbar</code>
+ * The <code>ui5-product-switch</code> is a Fiori specific web component that is used in <code>ui5-shellbar</code> and allows the user easy switching between products.
  * <br><br>
  * <h3>ES6 Module Import</h3>
- * <code>import "@ui5/webcomponents-fiori/dist/ProductSwitch";</code>
+ * <code>import "@ui5/webcomponents-fiori/dist/ProductSwitch.js";</code>
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.ProductSwitch
+ * @alias sap.ui.webcomponents.fiori.ProductSwitch
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-product-switch
  * @appenddocs ProductSwitchItem
@@ -56,11 +56,6 @@ const metadata = {
 class ProductSwitch extends UI5Element {
 	constructor() {
 		super();
-
-		this.ROW_MIN_WIDTH = {
-			ONE_COLUMN: 600,
-			THREE_COLUMN: 900,
-		};
 
 		this.initItemNavigation();
 	}
@@ -86,6 +81,13 @@ class ProductSwitch extends UI5Element {
 		return ProductSwitchTemplate;
 	}
 
+	static get ROW_MIN_WIDTH() {
+		return {
+			ONE_COLUMN: 600,
+			THREE_COLUMN: 900,
+		};
+	}
+
 	onEnterDOM() {
 		this._handleResizeBound = this._handleResize.bind(this);
 
@@ -103,9 +105,9 @@ class ProductSwitch extends UI5Element {
 	_handleResize() {
 		const documentWidth = document.body.clientWidth;
 
-		if (documentWidth <= this.ROW_MIN_WIDTH.ONE_COLUMN) {
+		if (documentWidth <= this.constructor.ROW_MIN_WIDTH.ONE_COLUMN) {
 			this._itemNavigation.rowSize = 1;
-		} else if (documentWidth <= this.ROW_MIN_WIDTH.THREE_COLUMN || this.items.length <= 6) {
+		} else if (documentWidth <= this.constructor.ROW_MIN_WIDTH.THREE_COLUMN || this.items.length <= 6) {
 			this._itemNavigation.rowSize = 3;
 		} else {
 			this._itemNavigation.rowSize = 4;
