@@ -1,5 +1,5 @@
-commit d49d2a17fafb809c06507874427740f4c8c1af69
-Author: Julian Breuksch <julian.breuksch@sap.com>
-Date:   Mon Nov 25 13:31:00 2019 +0100
+commit 2148b94ad8e0772e1caa4a73d130b8f2aa80fb8c
+Author: Smux <pascal.reiffert@googlemail.com>
+Date:   Mon Nov 25 13:43:52 2019 +0100
 
-    refactor(ui5-list): subscribe event handlers within HBS template (#968)
+    refactor(ui5-datepicker): subscribe event handlers within HBS template (#972)
