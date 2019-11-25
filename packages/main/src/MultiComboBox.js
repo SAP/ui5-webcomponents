@@ -508,6 +508,14 @@ class MultiComboBox extends UI5Element {
 		this.open && this._getPopover().openBy(this);
 	}
 
+	valueStateTextMappings() {
+		return {
+			"Success": this.i18nBundle.getText(VALUE_STATE_SUCCESS),
+			"Error": this.i18nBundle.getText(VALUE_STATE_ERROR),
+			"Warning": this.i18nBundle.getText(VALUE_STATE_WARNING),
+		};
+	}
+
 	get _tokenizer() {
 		return this.shadowRoot.querySelector("ui5-tokenizer");
 	}
@@ -546,14 +554,6 @@ class MultiComboBox extends UI5Element {
 
 	get selectedItemsListMode() {
 		return this.readonly ? "None" : "MultiSelect";
-	}
-
-	get valueStateTextMappings() {
-		return {
-			"Success": this.i18nBundle.getText(VALUE_STATE_SUCCESS),
-			"Error": this.i18nBundle.getText(VALUE_STATE_ERROR),
-			"Warning": this.i18nBundle.getText(VALUE_STATE_WARNING),
-		};
 	}
 
 	get hasValueState() {
