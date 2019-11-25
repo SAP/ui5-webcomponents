@@ -43,6 +43,7 @@
 	box-sizing: border-box;
 	padding: .5rem;
 	padding-top: 4rem;
+	cursor: pointer;
 }
 
 :host([icon]) .ui5-product-switch-item-root {
