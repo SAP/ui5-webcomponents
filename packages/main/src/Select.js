@@ -133,7 +133,6 @@ const metadata = {
 			},
 		},
 	},
-	_eventHandlersByConvention: true,
 };
 
 /**
@@ -194,11 +193,11 @@ class Select extends UI5Element {
 		this._enableFormSupport();
 	}
 
-	onfocusin() {
+	_onfocusin() {
 		this.focused = true;
 	}
 
-	onfocusout() {
+	_onfocusout() {
 		this.focused = false;
 	}
 
@@ -282,7 +281,7 @@ class Select extends UI5Element {
 		}
 	}
 
-	_keydown(event) {
+	_onkeydown(event) {
 		if (isShow(event)) {
 			this._togglePopover();
 		}
@@ -292,7 +291,7 @@ class Select extends UI5Element {
 		}
 	}
 
-	_keyup(event) {
+	_onkeyup(event) {
 		if (isSpace(event) && !this._isPickerOpen) {
 			this._togglePopover();
 		}
