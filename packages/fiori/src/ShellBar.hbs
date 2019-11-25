@@ -104,50 +104,22 @@
 </div>
 
 {{#*inline "coPilot"}}
-	<svg @click="{{_coPilotPress}}" version="1.1" width="44" height="44" viewBox="-150 -150 300 300" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-		style="background-color: transparent; cursor: pointer;" class="ui5-shellbar-coPilot">
+	<svg @click="{{_coPilotPress}}" width="44" height="44" viewBox="-150 -150 300 300" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="ui5-shellbar-coPilot">
 		<defs>
-			<linearGradient id="grad1" x1="0%" x2="100%" y1="100%" y2="0%">
-				<stop offset="0%" style="stop-color:#C0D9F2;stop-opacity:0.87"></stop>
-				<stop offset="80%" style="stop-color:#FFFFFF;stop-opacity:0.87"></stop>
-			</linearGradient>
-			<linearGradient id="grad2" x1="0%" x2="100%" y1="100%" y2="0%">
-				<stop offset="0%" style="stop-color:rgb(180,210,255);stop-opacity:0.16"></stop>
-				<stop offset="80%" style="stop-color:#FFFFFF;stop-opacity:0.16"></stop>
-			</linearGradient>
-			<linearGradient id="grad3" x1="0%" x2="100%" y1="100%" y2="0%">
-				<stop offset="0%" style="stop-color:rgb(180,210,255);stop-opacity:0.1"></stop>
-				<stop offset="80%" style="stop-color:#FFFFFF;stop-opacity:0.1"></stop>
-			</linearGradient>
-			<mask id="innerCircle">
-				<circle cx="0" cy="0" r="120" fill="white" />
-				<circle cx="0" cy="0" r="76" fill="black" />
-			</mask>
-			<path id="path" d="M 98.1584 0 C 98.3156 17.3952 89.0511 31.3348 79.5494 45.9279 C 70.339 60.0814 60.6163 71.2177 46.1724 79.9729 C 31.4266 88.9178 17.2493 94.3909 5.77261e-15 94.2739 C -17.1547 94.1581 -30.8225 87.6907 -45.7979 79.3244 C -61.0143 70.8266 -73.5583 62.554 -83.0507 47.9493 C -92.6677 33.1579 -98.4872 17.5705 -97.1793 1.19010e-14 C -95.9465 -16.9777 -84.488 -29.0862 -76.1351 -43.9566 C -67.6795 -59.0155 -63.8629 -76.1085 -49.262 -85.3243 C -34.502 -94.6464 -17.4328 -93.0037 -1.69174e-14 -92.0939 C 16.8967 -91.214 31.8608 -89.0341 46.4198 -80.4014 C 60.872 -71.8326 69.6003 -59.5351 78.6792 -45.4254 C 88.0511 -30.9104 98.015 -17.2766 98.1584 0 Z">
-				<animate id="animate0" attributeName="d" values="{{coPilot.animationValues}}" dur="30s" repeatCount="indefinite" />
-				<animateTransform attributeName="transform" type="scale" values="1;1.05;1.05;1.02;1" dur="0.15s"
-					begin="click_area.mousedown" repeatCount="1" additive="sum" />
-			</path>
+			<linearGradient id="f" x1="0%" x2="100%" y1="100%" y2="0%"><stop offset="0%" stop-color="#c0d9f2" stop-opacity=".87"/><stop offset="80%" stop-color="#fff" stop-opacity=".87"/></linearGradient>
+			<linearGradient id="e" x1="0%" x2="100%" y1="100%" y2="0%"><stop offset="0%" stop-color="#b4d2ff" stop-opacity=".16"/><stop offset="80%" stop-color="#fff" stop-opacity=".16"/></linearGradient>
+			<linearGradient id="c" x1="0%" x2="100%" y1="100%" y2="0%"><stop offset="0%" stop-color="#b4d2ff" stop-opacity=".1"/><stop offset="80%" stop-color="#fff" stop-opacity=".1"/></linearGradient>
+			<path id="d" d="M98.158 0c.158 17.395-9.107 31.335-18.609 45.928-9.21 14.153-18.933 25.29-33.377 34.045C31.427 88.918 17.25 94.39 0 94.273c-17.155-.115-30.823-6.582-45.798-14.949-15.216-8.497-27.76-16.77-37.253-31.375C-92.668 33.158-98.487 17.571-97.179 0c1.233-16.978 12.691-29.086 21.044-43.957 8.456-15.059 12.272-32.152 26.873-41.367 14.76-9.322 31.83-7.68 49.262-6.77 16.897.88 31.86 3.06 46.42 11.693 14.452 8.568 23.18 20.866 32.26 34.976C88.05-30.91 98.014-17.277 98.157 0z">
+				<animate attributeName="d" values="{{coPilot.animationValues}}" dur="30s" repeatCount="indefinite"/>
+				<animateTransform attributeName="transform" type="scale" values="1;1.05;1.05;1.02;1" dur="0.15s" begin="a.mousedown" repeatCount="1" additive="sum"/>
+			</path><mask id="b"><circle r="120" fill="#fff"/><circle r="76"/></mask>
 		</defs>
-		<g style="mask: url(#innerCircle)">
-			<g fill="url(#grad3)" transform="rotate(54)">
-				<use xlink:href="#path">
-					{{#if coPilot.animated}}
-						<animateTransform id="animate1" attributeName="transform" type="rotate" from="54" to="416" dur="15s" repeatCount="indefinite" />
-					{{/if}}
-				</use>
-			</g>
-			<g fill="url(#grad2)" transform="rotate(74)">
-				<use xlink:href="#path" />
-			</g>
-			<g fill="url(#grad1)" transform="rotate(90)">
-				<use xlink:href="#path">
-					{{#if coPilot.animated}}
-						<animateTransform id="animate2" attributeName="transform" type="rotate" from="90" to="450" dur="30s" repeatCount="indefinite" />
-					{{/if}}
-				</use>
-			</g>
-		</g>
-		<circle cx="0" cy="0" r="76" class="ui5-shellbar-co-pilot-circle" id="click_area"></circle>
+		<g mask="url(#b)">
+			<g transform="rotate(54)"><use xlink:href="#d" fill="url(#c)">
+			{{#if coPilot.animated}}<animateTransform attributeName="transform" type="rotate" from="54" to="416" dur="15s" repeatCount="indefinite"/>{{/if}}</use></g>
+			<use xlink:href="#d" fill="url(#e)" transform="rotate(74)"/>
+			<g transform="rotate(90)"><use xlink:href="#d" fill="url(#f)">
+			{{#if coPilot.animated}}<animateTransform attributeName="transform" type="rotate" from="90" to="450" dur="30s" repeatCount="indefinite"/>{{/if}}</use></g>
+		</g><circle cx="0" cy="0" r="76" class="ui5-shellbar-co-pilot-circle" id="a"/>
 	</svg>
 {{/inline}}
