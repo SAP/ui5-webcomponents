@@ -42,7 +42,7 @@ const metadata = {
  * <h3 class="comment-api-title">Overview</h3>
  *
  * The <code>ui5-product-switch</code> is an SAP Fiori specific web component that is used in <code>ui5-shellbar</code>
-  * and allows the user to easily switch between products.
+ * and allows the user to easily switch between products.
  * <br><br>
  * <h3>ES6 Module Import</h3>
  * <code>import "@ui5/webcomponents-fiori/dist/ProductSwitch.js";</code>
