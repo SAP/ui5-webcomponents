@@ -72,7 +72,7 @@ or
  
 `import "@ui5/webcomponents/dist/json-imports/Themes.js"` 
  
- will produce the following warning message in the browser's console:
+ will produce warning messages in the browser's console, such as for example:
 > Inefficient bundling detected: consider bundling i18n/theme proeprties imports as URLs instead of inlining them.
 > See rollup-plugin-url or webpack file-loader for more information.
 > Suggested pattern: "assets\/.*\.json"

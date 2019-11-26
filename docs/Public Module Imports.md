@@ -8,6 +8,8 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 
 ### Main package (```@ui5/webcomponents```)
 
+The `main` package provides general purpose UI building blocks such as buttons, labels, inputs and popups.
+
 |      Web Component       |       Tag name       |                       Module import                        |
 | ------------------------ | -------------------- | ---------------------------------------------------------- |
 | Badge                    | `ui5-badge`          | `import "@ui5/webcomponents/dist/Badge.js";`               |
@@ -48,6 +50,9 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 
 ### Fiori package (```@ui5/webcomponents-fiori```)
 
+The `fiori` package provide essential building blocks, necessary to implement the Fiori UX concept, 
+such as a common header (ShellBar).
+
 |      Web Component       |       Tag name       |                       Module import                        |
 | ------------------------ | -------------------- | ---------------------------------------------------------- |
 | Shell Bar                | `ui5-shellbar`       | `import "@ui5/webcomponents-fiori/dist/ShellBar.js";`      |
@@ -57,6 +62,8 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 
 ### Icons package (```@ui5/webcomponents-icons```)
 
+The `icons` package provides the rich `SAP-icons` icon collection.
+
 |      Icon asset       |                           Module import                        |
 | ------------------------ |  ---------------------------------------------------------- |
 | All icons (~115KB zipped)       |  `import "@ui5/webcomponents-icons/dist/json-imports/Icons.js";`      |
@@ -65,6 +72,11 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 | ...           |  ...  |
 | Zoom out icon           |  `import "@ui5/webcomponents-fiori/dist/icons/zoom-out.js";`  |
 
+*Note:* The `@ui5/webcomponents-icons` package does not provide any web components per se, but rather icon assets,
+usable by other web components such as `ui5-icon`. You could import all icons, but it's recommended to import 
+just the ones that your app will actually use.
+
+For a full list of the icons in the `SAP-icons` collection, click [here](https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/SAP-icons).
 
 ## Additional public modules
 
