@@ -132,9 +132,16 @@ describe("Input general interaction", () => {
 
 	it("Input's maxlength property is set correctly", () => {
 		const input5 = $("#myInput5");
-		const inputShadowRed = $("#myInput5").shadow$("input");
+		const inputShadowRef = $("#myInput5").shadow$("input");
 
-		assert.ok(input5.getProperty("maxlength"), "Input's max length property should be applied.");
-		assert.ok(inputShadowRed.getAttribute("maxlength"), "Input's max length attribute should be applied.");
+		inputShadowRef.click();
+
+		for (let i = 0; i <15 ; i++) {
+			inputShadowRef.keys("c");
+		}
+
+		assert.strictEqual(inputShadowRef.getProperty("value").length, 10, "Input's value should not exceed 10 characters.");
+		assert.ok(input5.getProperty("maxlength"), "Input's maxlength property should be applied.");
+		assert.strictEqual(inputShadowRef.getAttribute("maxlength"), "10", "Input's maxlength attribute should be applied.");
 	});
 });
