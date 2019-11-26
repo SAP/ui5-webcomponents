@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+	<title>ui5-toast</title>
+
+	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+	<script nomodule src="../../resources/bundle.es5.js"></script>
+	<script>delete Document.prototype.adoptedStyleSheets;</script>
+	<script src="modules/Toast.js"></script>
+
+	<style>
+		ui5-button, h2 {
+			margin: 1rem;
+		}
+	</style>
+</head>
+
+<body onload="onload()">
+
+	<h2>Toast ( ui5-toast )</h2>
+
+	<!--TopStart-->
+	<ui5-button class="wcBtnOpenToastTS">Show TopStart Toast</ui5-button>
+	<ui5-toast class="wcToastTS" placement="TopStart">TopStart</ui5-toast>
+
+	<br>
+
+	<!--TopCenter-->
+	<ui5-button class="wcBtnOpenToastTC">Show TopCenter Toast</ui5-button>
+	<ui5-toast class="wcToastTC" placement="TopCenter">TopCenter</ui5-toast>
+
+	<br>
+
+	<!--TopEnd-->
+	<ui5-button class="wcBtnOpenToastTE">Show TopEnd Toast</ui5-button>
+	<ui5-toast class="wcToastTE" placement="TopEnd">TopEnd</ui5-toast>
+
+	<br>
+
+	<!--MiddleStart-->
+	<ui5-button class="wcBtnOpenToastMS">Show MiddleStart Toast</ui5-button>
+	<ui5-toast class="wcToastMS" placement="MiddleStart">MiddleStart</ui5-toast>
+
+	<br>
+
+	<!--MiddleCenter-->
+	<ui5-button class="wcBtnOpenToastMC">Show MiddleCenter Toast</ui5-button>
+	<ui5-toast class="wcToastMC" placement="MiddleCenter">MiddleCenter</ui5-toast>
+
+	<br>
+
+	<!--MiddleEnd-->
+	<ui5-button class="wcBtnOpenToastME">Show MiddleEnd Toast</ui5-button>
+	<ui5-toast class="wcToastME" placement="MiddleEnd">MiddleEnd</ui5-toast>
+
+	<br>
+
+	<!--BottomStart-->
+	<ui5-button class="wcBtnOpenToastBS">Show BottomStart Toast</ui5-button>
+	<ui5-toast class="wcToastBS" placement="BottomStart">BottomStart</ui5-toast>
+
+	<br>
+
+	<!--BottomCenter-->
+	<ui5-button class="wcBtnOpenToastBC">Show BottomCenter Toast</ui5-button>
+	<ui5-toast class="wcToastBC" placement="BottomCenter">BottomCenter</ui5-toast>
+
+	<br>
+
+	<!--BottomEnd-->
+	<ui5-button class="wcBtnOpenToastBE">Show BottomEnd Toast</ui5-button>
+	<ui5-toast class="wcToastBE" placement="BottomEnd">BottomEnd</ui5-toast>
+
+</body>
+</html>

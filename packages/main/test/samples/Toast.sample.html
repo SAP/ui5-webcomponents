@@ -1,0 +1,208 @@
+<header class="component-heading">
+	<div class="control-header">Toast</div>
+	<div class="component-heading-since">
+		<span><!--since_tag_marker--></span>
+	</div>
+</header>
+<div class="control-tag">&lt;ui5-toast&gt;</div>
+
+<section>
+	<h3>Toast</h3>
+	<div class="snippet">
+
+		<!--TopStart-->
+		<ui5-button class="wcBtnShowToastTS samples-margin">Show TopStart Toast</ui5-button>
+		<ui5-toast class="wcToastTS" placement="TopStart">TopStart</ui5-toast>
+
+		<!--TopCenter-->
+		<ui5-button class="wcBtnShowToastTC samples-margin">Show TopCenter Toast</ui5-button>
+		<ui5-toast class="wcToastTC" placement="TopCenter">TopCenter</ui5-toast>
+
+		<!--TopEnd-->
+		<ui5-button class="wcBtnShowToastTE samples-margin">Show TopEnd Toast</ui5-button>
+		<ui5-toast class="wcToastTE" placement="TopEnd">TopEnd</ui5-toast>
+
+		<br>
+
+		<!--MiddleStart-->
+		<ui5-button class="wcBtnShowToastMS samples-margin">Show MiddleStart Toast</ui5-button>
+		<ui5-toast class="wcToastMS" placement="MiddleStart">MiddleStart</ui5-toast>
+
+		<!--MiddleCenter-->
+		<ui5-button class="wcBtnShowToastMC samples-margin">Show MiddleCenter Toast</ui5-button>
+		<ui5-toast class="wcToastMC" placement="MiddleCenter">MiddleCenter</ui5-toast>
+
+		<!--MiddleEnd-->
+		<ui5-button class="wcBtnShowToastME samples-margin">Show MiddleEnd Toast</ui5-button>
+		<ui5-toast class="wcToastME" placement="MiddleEnd">MiddleEnd</ui5-toast>
+
+		<br>
+
+		<!--BottomStart-->
+		<ui5-button class="wcBtnShowToastBS samples-margin">Show BottomStart Toast</ui5-button>
+		<ui5-toast class="wcToastBS" placement="BottomStart">BottomStart</ui5-toast>
+
+		<!--BottomCenter-->
+		<ui5-button class="wcBtnShowToastBC samples-margin">Show BottomCenter Toast</ui5-button>
+		<ui5-toast class="wcToastBC" placement="BottomCenter">BottomCenter</ui5-toast>
+
+		<!--BottomEnd-->
+		<ui5-button class="wcBtnShowToastBE samples-margin">Show BottomEnd Toast</ui5-button>
+		<ui5-toast class="wcToastBE" placement="BottomEnd">BottomEnd</ui5-toast>
+
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
+
+<!--TopStart-->
+<ui5-button class="wcBtnShowToastTS">Show TopStart Toast</ui5-button>
+<ui5-toast class="wcToastTS" placement="TopStart">TopStart</ui5-toast>
+
+<!--TopCenter-->
+<ui5-button class="wcBtnShowToastTC">Show TopCenter Toast</ui5-button>
+<ui5-toast class="wcToastTC" placement="TopCenter">TopCenter</ui5-toast>
+
+<!--TopEnd-->
+<ui5-button class="wcBtnShowToastTE">Show TopEnd Toast</ui5-button>
+<ui5-toast class="wcToastTE" placement="TopEnd">TopEnd</ui5-toast>
+
+<!--MiddleStart-->
+<ui5-button class="wcBtnShowToastMS">Show MiddleStart Toast</ui5-button>
+<ui5-toast class="wcToastMS" placement="MiddleStart">MiddleStart</ui5-toast>
+
+<!--MiddleCenter-->
+<ui5-button class="wcBtnShowToastMC">Show MiddleCenter Toast</ui5-button>
+<ui5-toast class="wcToastMC" placement="MiddleCenter">MiddleCenter</ui5-toast>
+
+<!--MiddleEnd-->
+<ui5-button class="wcBtnShowToastME">Show MiddleEnd Toast</ui5-button>
+<ui5-toast class="wcToastME" placement="MiddleEnd">MiddleEnd</ui5-toast>
+
+<!--BottomStart-->
+<ui5-button class="wcBtnShowToastBS">Show BottomStart Toast</ui5-button>
+<ui5-toast class="wcToastBS" placement="BottomStart">BottomStart</ui5-toast>
+
+<!--BottomCenter-->
+<ui5-button class="wcBtnShowToastBC">Show BottomCenter Toast</ui5-button>
+<ui5-toast class="wcToastBC" placement="BottomCenter">BottomCenter</ui5-toast>
+
+<!--BottomEnd-->
+<ui5-button class="wcBtnShowToastBE">Show BottomEnd Toast</ui5-button>
+<ui5-toast class="wcToastBE" placement="BottomEnd">BottomEnd</ui5-toast>
+
+<script>
+
+	// Attaching click listener to the Button which shows the TopStart Toast
+	document.querySelector('.wcBtnShowToastTS')
+			.addEventListener('click', function () {
+				document.querySelector('.wcToastTS').show();
+			});
+
+	// Attaching click listener to the Button which shows the TopCenter Toast
+	document.querySelector('.wcBtnShowToastTC')
+			.addEventListener('click', function () {
+				document.querySelector('.wcToastTC').show();
+			});
+
+	// Attaching click listener to the Button which shows the TopEnd Toast
+	document.querySelector('.wcBtnShowToastTE')
+			.addEventListener('click', function () {
+				document.querySelector('.wcToastTE').show();
+			});
+
+	// Attaching click listener to the Button which shows the MiddleStart Toast
+	document.querySelector('.wcBtnShowToastMS')
+			.addEventListener('click', function () {
+				document.querySelector('.wcToastMS').show();
+			});
+
+	// Attaching click listener to the Button which shows the MiddleCenter Toast
+	document.querySelector('.wcBtnShowToastMC')
+			.addEventListener('click', function () {
+				document.querySelector('.wcToastMC').show();
+			});
+
+	// Attaching click listener to the Button which shows the MiddleEnd Toast
+	document.querySelector('.wcBtnShowToastME')
+			.addEventListener('click', function () {
+				document.querySelector('.wcToastME').show();
+			});
+
+	// Attaching click listener to the Button which shows the BottomStart Toast
+	document.querySelector('.wcBtnShowToastBS')
+			.addEventListener('click', function () {
+				document.querySelector('.wcToastBS').show();
+			});
+
+	// Attaching click listener to the Button which shows the BottomCenter Toast
+	document.querySelector('.wcBtnShowToastBC')
+			.addEventListener('click', function () {
+				document.querySelector('.wcToastBC').show();
+			});
+
+	// Attaching click listener to the Button which shows the BottomEnd Toast
+	document.querySelector('.wcBtnShowToastBE')
+			.addEventListener('click', function () {
+				document.querySelector('.wcToastBE').show();
+			});
+</script>
+	</xmp></pre>
+</section>
+
+<script>
+
+	// Attaching click listener to the Button which shows the TopStart Toast
+	document.querySelector('.wcBtnShowToastTS')
+			.addEventListener('click', function () {
+				document.querySelector('.wcToastTS').show();
+			});
+
+	// Attaching click listener to the Button which shows the TopCenter Toast
+	document.querySelector('.wcBtnShowToastTC')
+			.addEventListener('click', function () {
+				document.querySelector('.wcToastTC').show();
+			});
+
+	// Attaching click listener to the Button which shows the TopEnd Toast
+	document.querySelector('.wcBtnShowToastTE')
+			.addEventListener('click', function () {
+				document.querySelector('.wcToastTE').show();
+			});
+
+	// Attaching click listener to the Button which shows the MiddleStart Toast
+	document.querySelector('.wcBtnShowToastMS')
+			.addEventListener('click', function () {
+				document.querySelector('.wcToastMS').show();
+			});
+
+	// Attaching click listener to the Button which shows the MiddleCenter Toast
+	document.querySelector('.wcBtnShowToastMC')
+			.addEventListener('click', function () {
+				document.querySelector('.wcToastMC').show();
+			});
+
+	// Attaching click listener to the Button which shows the MiddleEnd Toast
+	document.querySelector('.wcBtnShowToastME')
+			.addEventListener('click', function () {
+				document.querySelector('.wcToastME').show();
+			});
+
+	// Attaching click listener to the Button which shows the BottomStart Toast
+	document.querySelector('.wcBtnShowToastBS')
+			.addEventListener('click', function () {
+				document.querySelector('.wcToastBS').show();
+			});
+
+	// Attaching click listener to the Button which shows the BottomCenter Toast
+	document.querySelector('.wcBtnShowToastBC')
+			.addEventListener('click', function () {
+				document.querySelector('.wcToastBC').show();
+			});
+
+	// Attaching click listener to the Button which shows the BottomEnd Toast
+	document.querySelector('.wcBtnShowToastBE')
+			.addEventListener('click', function () {
+				document.querySelector('.wcToastBE').show();
+			});
+</script>
+
+<!-- JSDoc marker -->
