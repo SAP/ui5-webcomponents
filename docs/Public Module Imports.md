@@ -170,7 +170,9 @@ import { setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 setTheme("sap_belize_hcb");
 ```
 
-For more information on assets and JSON imports, click [here](Assets.md).
+For more general information on assets and JSON imports, click [here](Assets.md).
+
+Find out how you can bundle your themes more efficiently [here](Assets.md#bundling).
 
 <a name="internationalization"></a>
 ### 3. Internationalization
@@ -195,7 +197,9 @@ Example:
 </script>
 ```
 
-For more information on assets and JSON imports, click [here](Assets.md).
+For more general information on assets and JSON imports, click [here](Assets.md).
+
+Find out how you can bundle your i18n texts more efficiently [here](Assets.md#bundling).
 
 <a name="formsupport"></a>
 ### 4. Form Support

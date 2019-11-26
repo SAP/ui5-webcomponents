@@ -13,6 +13,7 @@ Currently our npm packages follow the scheme:
 `@ui5/<PACKAGE_NAME>/dist/json-imports/*`
 (for the modules that provide the assets)
 
+<a name="packages"></a>
 ## Packages
 
 ### `base` package
@@ -60,6 +61,7 @@ However, sometimes it makes sense to import all icons, hence the `@ui5/webcompon
 
 Since some icons have translatable tooltips, you might need the `i18n` JSON import as well.
 
+<a name="bundling"></a>
 ## Efficient asset bundling
 
 You may notice that JSON imports, for example:
