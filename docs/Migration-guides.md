@@ -2,9 +2,46 @@
 
 ## Migrating from `1.0.0-rc.4` to `1.0.0-rc.5`
 
-### `ui5-shellbar` and `ui5-shellbar-item`
+### New npm package: `@ui5/webcomponents-icons`
 
-The `ui5-shellbar` web component and its item were moved to a new NPM package called `@ui5/webcomponents-fiori`
+All individual icons were moved to a new npm package called `@ui5/webcomponents-icons`.
+
+If you are using icons in your project:
+
+1. Add the new package as a dependency to your project
+
+	`npm i @ui5/webcomponents-icons`
+	
+	or
+	
+	`yarn add @ui5/webcomponents-icons`
+	
+	depending on your package manager.
+	
+2. Change the imports for the individual icons (if you were importing them one by one):
+
+	Current code | Change to
+	-----|----
+	`@ui5/webcomponents/dist/icons/add.js` | `@ui5/webcomponents-icons/dist/icons/add.js`
+	`@ui5/webcomponents/dist/icons/search.js` | `@ui5/webcomponents-icons/dist/icons/search.js`
+	etc... | etc...
+	
+	or 
+	
+	Change the import for all icons (if you were importing the whole icon collection):
+	
+	Current code | Change to
+	-----|----
+	`@ui5/webcomponents/dist/json-imports/Icons.js` | `@ui5/webcomponents-icons/dist/json-imports/Icons.js`
+	
+	*Note:* The `ui5-icon` web component is not affected by this change, it is still in the `@ui5/webcomponents` package. Only the icons themselves (the icon assets) have been moved.
+
+
+### New npm package: `@ui5/webcomponents-fiori` 
+
+The `ui5-shellbar` and `ui5-shellbar-item` web components were moved to a new npm package called `@ui5/webcomponents-fiori`.
+
+If you are using `ui5-shellbar` in your project:
 
 1. Add the new package as a dependency to your project
 
@@ -30,12 +67,12 @@ Note: the `src` property will continue to work until the next release due to the
 
 Current code | Change to
 -----|----
-`<ui5-icon src="sap-icon://add">` | `<ui5-icon name="add>`
+`<ui5-icon src="sap-icon://add">` | `<ui5-icon name="add">`
 
 ### `ui5-card`
 
 The `avatar` property was removed.
-Use the `avatar` slot instead - pass an icon(`<ui5-icon`) or an image(`<img`).
+Use the `avatar` slot instead - pass an icon(`<ui5-icon>`) or an image(`<img>`).
 Example:
 
 Current code | Change to
@@ -46,6 +83,12 @@ Current code | Change to
 ### `ui5-shellbar`
 
 In addition to the fact that `ui5-shellbar` was moved to `@ui5/webcomponents-fiori`, the `icon` slot was renamed to `startButton`.
+
+The `ui5-shellbar` CoPilot is now a static SVG by default. In order to have the animated SVG again, you need to manually import the following feature:
+```js
+import "@ui5/webcomponents-fiori/dist/features/CoPilotAnimation.js";
+``` 
+
 
 ### `ui5-shellbar-item`
 
