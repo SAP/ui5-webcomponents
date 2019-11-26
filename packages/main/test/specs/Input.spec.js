@@ -129,4 +129,12 @@ describe("Input general interaction", () => {
 		assert.strictEqual(innerInput.getValue(), "", "Inner's property value should be empty");
 	});
 	*/
+
+	it("Input's maxlength property is set correctly", () => {
+		const input5 = $("#myInput5");
+		const inputShadowRed = $("#myInput5").shadow$("input");
+
+		assert.ok(input5.getProperty("maxlength"), "Input's max length property should be applied.");
+		assert.ok(inputShadowRed.getAttribute("maxlength"), "Input's max length attribute should be applied.");
+	});
 });
