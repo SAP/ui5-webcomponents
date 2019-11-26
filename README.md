@@ -181,12 +181,13 @@ Keep in mind that linking the same module with npm and Yarn may cause issues. Al
 ### Where are the npm packages?
 - [UI5 Web Components](https://www.npmjs.com/package/@ui5/webcomponents)
 - [UI5 Web Components Fiori](https://www.npmjs.com/package/@ui5/webcomponents-fiori)
+- [UI5 Web Components Icons](https://www.npmjs.com/package/@ui5/webcomponents-icons)
 - [UI5 Web Components Base](https://www.npmjs.com/package/@ui5/webcomponents-base)
 - [UI5 Web Components Theme Base](https://www.npmjs.com/package/@ui5/webcomponents-theme-base)
 - [UI5 Web Components Core](https://www.npmjs.com/package/@ui5/webcomponents-core)
 
 ## Limitations
-- All input web components (ui5-input, ui5-datepicker and ui5-textarea) do not support the ```placeholder``` attribute on Internet Explorer 11
+None as of 1.0.0-rc.5 
 
 ## Known Issues
 No major bugs known.
