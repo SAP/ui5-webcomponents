@@ -52,6 +52,19 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 | ------------------------ | -------------------- | ---------------------------------------------------------- |
 | Shell Bar                | `ui5-shellbar`       | `import "@ui5/webcomponents-fiori/dist/ShellBar.js";`      |
 | Shell Bar Item           | `ui5-shellbar-item`  | `import "@ui5/webcomponents-fiori/dist/ShellBarItem.js";`  |
+| Product Switch           | `ui5-product-switch`       | `import "@ui5/webcomponents-fiori/dist/ProductSwitch.js";`      |
+| Product Switch Item      | `ui5-product-switch-item`  | `import "@ui5/webcomponents-fiori/dist/ProductSwitchItem.js";`  |
+
+### Icons package (```@ui5/webcomponents-icons```)
+
+|      Icon asset       |                           Module import                        |
+| ------------------------ |  ---------------------------------------------------------- |
+| All icons (~115KB zipped)       |  `import "@ui5/webcomponents-icons/dist/json-imports/Icons.js";`      |
+| Accelerated icon           |  `import "@ui5/webcomponents-fiori/dist/icons/accelerated.js";`  |
+| Accept icon           |  `import "@ui5/webcomponents-fiori/dist/icons/accept.js";`  |
+| ...           |  ...  |
+| Zoom out icon           |  `import "@ui5/webcomponents-fiori/dist/icons/zoom-out.js";`  |
+
 
 ## Additional public modules
 
@@ -163,10 +176,11 @@ setTheme("sap_belize_hcb");
 ```js
 import "@ui5/webcomponents/dist/json-imports/i18n.js";
 import "@ui5/webcomponents-fiori/dist/json-imports/i18n.js"; // Only if using the @ui5/webcomponents-fiori package
+import "@ui5/webcomponents-icons/dist/json-imports/i18n.js"; // Only if using the @ui5/webcomponents-icons package
 ```
 
 Some UI5 Web Components contain texts (such as placeholders, tooltips, messages) that need translation.
-All texts are in English by default. In order to get support for other languages, you should import the module above.
+All texts are in English by default. In order to get support for other languages, you should import the module(s) above.
 
 You can configure the language by setting the <code>language</code> key in the configuration object.
 
@@ -281,6 +295,8 @@ import { getCompactSize } from "@ui5/webcomponents-base/dist/config/CompactSize.
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
 import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
+import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
+import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSettings.js";
 ```
 
 For more details, please check [Configuration](Configuration.md)
