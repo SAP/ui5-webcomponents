@@ -1010,7 +1010,7 @@ function publishClasses(symbols, aRootNamespaces, hierarchyRoots) {
 
 // ---- helper functions for the templates ----
 
-var rSinceVersion = /^([0-9]+(?:\.[0-9]+(?:\.[0-9]+)?)?([-.][0-9A-Z]+)?)(?:\s|$)/i;
+var rSinceVersion = /^([0-9]+(?:\.[0-9]+(?:\.[0-9]+)?)?([-.][0-9A-Z\.]+)?)(?:\s|$)/i;
 
 function extractVersion(value) {
 
@@ -1026,7 +1026,6 @@ function extractVersion(value) {
 
 	var m = rSinceVersion.exec(value);
 	return m ? m[1] : undefined;
-
 }
 
 var rSince = /^(?:as\s+of|since)(?:\s+version)?\s*([0-9]+(?:\.[0-9]+(?:\.[0-9]+)?)?([-.][0-9A-Z]+)?)(?:\.$|\.\s+|[,:]\s*|\s-\s*|\s|$)/i;
