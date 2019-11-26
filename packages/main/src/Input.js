@@ -9,12 +9,12 @@ import {
 	isSpace,
 	isEnter,
 } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 // import Icon from "./Icon.js";
 import InputType from "./types/InputType.js";
 // Template
 import InputTemplate from "./generated/templates/InputTemplate.lit.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer";
 
 import {
 	VALUE_STATE_SUCCESS,
