@@ -1,5 +1,5 @@
-commit c149f5faab2ff6fed3d669e3e6284b543a5af07d
-Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
-Date:   Tue Nov 26 15:31:54 2019 +0200
+commit 866fcca380dee10997e3c482d02db884c74043a3
+Author: Tanya Kostadinova <tanya.kostadinova@sap.com>
+Date:   Tue Nov 26 16:50:23 2019 +0200
 
-    feat(ui5-input): introduce maxlength property (#976)
+    docs: adjust ProductSwitch documentation (#984)
