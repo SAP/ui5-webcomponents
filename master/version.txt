@@ -1,5 +1,5 @@
-commit e53a76d2f6132e848d3f954f976efd0c0ae45ee5
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Nov 25 16:04:54 2019 +0200
+commit c149f5faab2ff6fed3d669e3e6284b543a5af07d
+Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
+Date:   Tue Nov 26 15:31:54 2019 +0200
 
-    chore(ui5-product-switch): show API in playground
+    feat(ui5-input): introduce maxlength property (#976)
