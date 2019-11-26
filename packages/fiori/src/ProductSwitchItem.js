@@ -6,10 +6,12 @@ import ProductSwitchItemTemplate from "./generated/templates/ProductSwitchItemTe
 // Styles
 import ProductSwitchItemCss from "./generated/themes/ProductSwitchItem.css.js";
 
-
+/**
+ * @public
+ */
 const metadata = {
 	tag: "ui5-product-switch-item",
-	properties: {
+	properties: /** @lends sap.ui.webcomponents.fiori.ProductSwitchItem.prototype */ {
 		/**
 		  * Defines the title of the <code>ui5-product-switch-item</code>.
 		  * @type {string}
@@ -87,7 +89,7 @@ const metadata = {
 	slots: {
 		//
 	},
-	events: {
+	events: /** @lends sap.ui.webcomponents.fiori.ProductSwitchItem.prototype */ {
 		/**
 		 * Fired when the <code>ui5-product-switch-item</code> is activated either with a
 		 * click/tap or by using the Enter or Space key.
@@ -103,7 +105,8 @@ const metadata = {
 /**
  * @class
  * <h3 class="comment-api-title">Overview</h3>
- * The <code>ui5-product-switch-item</code> represents the items displayed in the <code>ui5-product-switch</code> web component
+ * The <code>ui5-product-switch-item</code> represents the items displayed in the <code>ui5-product-switch</code> web component.
+ * <br>
  * <b>Note:</b> <code>ui5-product-switch-item</code> is not supported when used outside of <code>ui5-product-switch</code>.
  * <br><br>
  * <h3>ES6 Module Import</h3>
