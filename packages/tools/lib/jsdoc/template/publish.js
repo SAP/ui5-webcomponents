@@ -1023,7 +1023,7 @@ function extractVersion(value) {
 	} else {
 		value = String(value);
 	}
-
+ 
 	var m = rSinceVersion.exec(value);
 	return m ? m[1] : undefined;
 }
