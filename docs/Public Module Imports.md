@@ -170,6 +170,8 @@ import { setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 setTheme("sap_belize_hcb");
 ```
 
+For more information on assets and JSON imports, click [here](Assets.md).
+
 <a name="internationalization"></a>
 ### 3. Internationalization
 
@@ -193,38 +195,7 @@ Example:
 </script>
 ```
 
-### Note: importing `import "@ui5/webcomponents/dist/json-imports/i18n.js"` or `import "@ui5/webcomponents/dist/json-imports/Themes.js"` will produce the following warning message in the browser's console:
-> Inefficient bundling detected: consider bundling i18n/theme proeprties imports as URLs instead of inlining them.
-> See rollup-plugin-url or webpack file-loader for more information.
-> Suggested pattern: "assets\/.*\.json"
-
-What this means is that it's recommended to instruct your source code bundling software
-(some of the most popular being Webpack and Rollup) not to include all the internationalization files or theming related files
-(files that match the <code>assets\/.*\.json</code> pattern) in your applications's javascript bundle,
-but rather to leave them out. At runtime, they will be fetched on demand, if ever requested.
-
-[How to do it with Webpack](https://github.com/webpack-contrib/file-loader)
-
-[How to do it with Rollup](https://github.com/rollup/rollup-plugin-url)
-
-Rollup example:
-
-```js
-import url from "rollup-plugin-url";
-...
-plugins.push(url({
-	limit: 0,
-	include: [
-		/.*assets\/.*\.json/,
-	],
-	emitFiles: true,
-	fileName: "[name].[hash][extname]",
-	publicPath: DEPLOY_PUBLIC_PATH + "/resources/",
-}));
-```
-
-Please note that the code above is just sample snippet, taken from the UI5 Web Components playground app
-rollup configuration file and will not work on its own.
+For more information on assets and JSON imports, click [here](Assets.md).
 
 <a name="formsupport"></a>
 ### 4. Form Support
