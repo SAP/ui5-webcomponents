@@ -96,5 +96,5 @@ In addition to the fact that `ui5-shellbar-item` was moved to `@ui5/webcomponent
 
 Current code | Change to
 -----|----
-`<ui5-shellbar-item src="sap-icon://add">` | `<ui5-shellbar-item icon="add>`
+`<ui5-shellbar-item src="sap-icon://add">` | `<ui5-shellbar-item icon="add">`
 
