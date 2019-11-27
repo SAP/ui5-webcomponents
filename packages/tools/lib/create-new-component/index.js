@@ -1,3 +1,5 @@
+const path = require("path");
+
 const jsFileContentTemplate = componentName => {
 	return `import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -6,20 +8,43 @@ import ${componentName}Template from "./generated/templates/${componentName}Temp
 // Styles
 import ${componentName}Css from "./generated/themes/${componentName}.css.js";
 
-
+/**
+ * @public
+ */
 const metadata = {
 	tag: "ui5-${componentName.toLowerCase()}",
-	properties: {
+	properties: /** @lends sap.ui.webcomponents.${library}.${componentName}.prototype */ {
 		//
 	},
-	slots: {
+	slots: /** @lends sap.ui.webcomponents.${library}.${componentName}.prototype */ {
 		//
 	},
-	events: {
+	events: /** @lends sap.ui.webcomponents.${library}.${componentName}.prototype */ {
 		//
 	},
 };
 
+/**
+ * @class
+ *
+ * <h3 class="comment-api-title">Overview</h3>
+ *
+ *
+ * <h3>Usage</h3>
+ *
+ * For the <code>ui5-${componentName.toLowerCase()}</code>
+ * <h3>ES6 Module Import</h3>
+ *
+ * <code>import "@ui5/webcomponents${library === "main" ? "" : "-" + library}/dist/${componentName}";</code>
+ *
+ * @constructor
+ * @author SAP SE
+ * @alias sap.ui.webcomponents.${library}.${componentName}
+ * @extends UI5Element
+ * @appenddocs
+ * @tagname ui5-${componentName.toLowerCase()}
+ * @public
+ */
 class ${componentName} extends UI5Element {
 	static get metadata() {
 		return metadata;
@@ -48,6 +73,7 @@ export default ${componentName};
 `;
 };
 
+const library = process.env.INIT_CWD.split("/").pop();
 const consoleArguments = process.argv.slice(2);
 const componentName = consoleArguments[0];
 
