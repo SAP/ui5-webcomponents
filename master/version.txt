@@ -1,5 +1,12 @@
-commit 6e0077d72ef6d5825fbe72cb41a6b6ad316915ef
-Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
-Date:   Wed Nov 27 09:13:16 2019 +0200
+commit 3d46e2d9d321e2f88bb35615c84b06c44b3ed4c1
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Nov 27 09:43:54 2019 +0200
 
-    refactor(ui5-multi-combobox): update ACC support with valueState description (#961)
+    fix: fix Item Navigation cycling (#985)
+    
+    **Background**
+    By default the focus (managed by ItemNavigation) does not cycle trough the items, which turned out that has not been working.
+    **Root Cause**
+    We check for the `cycle` config when border cases are reached (first or last item), but the only thing we do is to fire a private event ("_borderReach"), but updating the index, so it actually makes a whole loop (cycle).
+    **Fix**
+    In these border cases we just update the internal index to `0` (when "top" border is reached) and `items.length-1` (when "bottom" border is reached).
