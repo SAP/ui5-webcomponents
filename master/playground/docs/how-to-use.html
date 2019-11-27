@@ -108,6 +108,21 @@
                   
                 
                   
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/docs/assets" class="navigation-list-link">
+                        <div class="component-name">Assets</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
                 
                   
                     <li class="navigation-list-item ">
@@ -155,6 +170,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item  active">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/master/playground/docs/how-to-use" class="navigation-list-link active">
@@ -168,6 +185,15 @@
                   
                 
                   
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/docs/migration-guides" class="navigation-list-link">
+                        <div class="component-name">Migration-guides</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
                 
                   
                 
@@ -180,10 +206,6 @@
                       </a>
                       
                     </li>
-                  
-                
-                  
-                
                   
                 
                   
@@ -299,6 +321,14 @@
                   
                 
                   
+                
+                  
+                
+                  
+                
+                  
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/master/playground/tutorials/react" class="navigation-list-link">
@@ -322,10 +352,6 @@
                       </a>
                       
                     </li>
-                  
-                
-                  
-                
                   
                 
                   
@@ -390,6 +416,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/Badge" class="navigation-list-link">
@@ -398,8 +426,6 @@
                       </a>
                       
                     </li>
-                  
-                
                   
                 
                   
@@ -489,6 +515,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/Icon" class="navigation-list-link">
@@ -521,6 +549,8 @@
                       </a>
                       
                     </li>
+                  
+                
                   
                 
                   
@@ -822,6 +852,14 @@
         
       
     
+      
+        
+      
+    
+      
+        
+      
+    
   </ul>
 </nav>
 
@@ -945,8 +983,7 @@ Therefore, in the next example, the text inside the <code class="highlighter-rou
 <p>Usually you’ll never have to do this manually either, as you’ll bind the content of the button via the means
 provided by the framework you’re using, and the framework will be the one updating it for you.</p>
 
-<p>Finally, there are UI5 Web Components that only accept other HTML elements (of any kind or specific ones - check the
-documentation for each individual Web Component’s requirements).</p>
+<p>Finally, there are UI5 Web Components that only accept other HTML elements.</p>
 
 <p>For example <code class="highlighter-rouge">&lt;ui5-popover&gt;</code> may contain any HTML element - standard elements and other custom elements alike.</p>
 
@@ -968,7 +1005,7 @@ documentation for each individual Web Component’s requirements).</p>
 
 <p>Again, normally you won’t need to do this manually, but your framework will do it for you.</p>
 
-<p>Now let’s have a look at a Web Component that only accepts certain children:</p>
+<p>Now let’s have a look at a Web Component that is intended to have only certain children:</p>
 
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;ui5-tabcontainer</span> <span class="na">id=</span><span class="s">"tc1"</span> <span class="na">fixed</span> <span class="na">collapsed</span> <span class="na">show-overflow</span><span class="nt">&gt;</span>
 	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Laptops"</span> <span class="na">additional-text=</span><span class="s">"125"</span><span class="nt">&gt;&lt;/ui5-tab&gt;</span>
@@ -978,7 +1015,7 @@ documentation for each individual Web Component’s requirements).</p>
 <span class="nt">&lt;/ui5-tabcontainer&gt;</span>
 </code></pre></div></div>
 
-<p>The <code class="highlighter-rouge">&lt;ui5-tabcontainer&gt;</code> may only contain <code class="highlighter-rouge">&lt;ui5-tab&gt;</code> and <code class="highlighter-rouge">&lt;ui5-tab-separator&gt;</code>.</p>
+<p>The <code class="highlighter-rouge">&lt;ui5-tabcontainer&gt;</code> should only contain <code class="highlighter-rouge">&lt;ui5-tab&gt;</code> and <code class="highlighter-rouge">&lt;ui5-tab-separator&gt;</code>.</p>
 
 <p>The manipulation is exactly the same as with the other Web Components. For example to add a new tab:</p>
 
@@ -1038,16 +1075,6 @@ has at least a default slot.</p>
       <td><code class="highlighter-rouge">HTMLElement</code></td>
       <td>HTML Elements only (no text)</td>
       <td><code class="highlighter-rouge">ui5-popover</code> <code class="highlighter-rouge">header</code> slot</td>
-    </tr>
-    <tr>
-      <td>Base Class f.e. <code class="highlighter-rouge">TabBase</code></td>
-      <td>Only HTML Elements of this class’ descendents</td>
-      <td><code class="highlighter-rouge">ui5-tabcontainer</code> <code class="highlighter-rouge">default</code> slot - accepts <code class="highlighter-rouge">ui5-tab</code>, <code class="highlighter-rouge">ui5-tabseparator</code> only</td>
-    </tr>
-    <tr>
-      <td>Specific Class f.e. <code class="highlighter-rouge">TableRow</code></td>
-      <td>Only HTML Elements of this class</td>
-      <td><code class="highlighter-rouge">ui5-table</code> <code class="highlighter-rouge">default</code> slot only accepts <code class="highlighter-rouge">ui5-table-row</code></td>
     </tr>
   </tbody>
 </table>

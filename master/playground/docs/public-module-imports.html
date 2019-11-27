@@ -108,6 +108,21 @@
                   
                 
                   
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/docs/assets" class="navigation-list-link">
+                        <div class="component-name">Assets</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
                 
                   
                     <li class="navigation-list-item ">
@@ -155,6 +170,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/master/playground/docs/how-to-use" class="navigation-list-link">
@@ -168,6 +185,15 @@
                   
                 
                   
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/docs/migration-guides" class="navigation-list-link">
+                        <div class="component-name">Migration-guides</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
                 
                   
                 
@@ -180,10 +206,6 @@
                       </a>
                       
                     </li>
-                  
-                
-                  
-                
                   
                 
                   
@@ -299,6 +321,14 @@
                   
                 
                   
+                
+                  
+                
+                  
+                
+                  
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/master/playground/tutorials/react" class="navigation-list-link">
@@ -322,10 +352,6 @@
                       </a>
                       
                     </li>
-                  
-                
-                  
-                
                   
                 
                   
@@ -390,6 +416,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/Badge" class="navigation-list-link">
@@ -398,8 +426,6 @@
                       </a>
                       
                     </li>
-                  
-                
                   
                 
                   
@@ -489,6 +515,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/Icon" class="navigation-list-link">
@@ -521,6 +549,8 @@
                       </a>
                       
                     </li>
+                  
+                
                   
                 
                   
@@ -822,6 +852,14 @@
         
       
     
+      
+        
+      
+    
+      
+        
+      
+    
   </ul>
 </nav>
 
@@ -851,6 +889,8 @@
 <p>For API documentation and samples, please check the <a href="https://sap.github.io/ui5-webcomponents/playground/">UI5 Web Components Playground</a></p>
 
 <h3 id="main-package-ui5webcomponents">Main package (<code class="highlighter-rouge">@ui5/webcomponents</code>)</h3>
+
+<p>The <code class="highlighter-rouge">main</code> package provides general purpose UI building blocks such as buttons, labels, inputs and popups.</p>
 
 <table>
   <thead>
@@ -1041,6 +1081,9 @@
 
 <h3 id="fiori-package-ui5webcomponents-fiori">Fiori package (<code class="highlighter-rouge">@ui5/webcomponents-fiori</code>)</h3>
 
+<p>The <code class="highlighter-rouge">fiori</code> package provide essential building blocks, necessary to implement the Fiori UX concept, 
+such as a common header (ShellBar).</p>
+
 <table>
   <thead>
     <tr>
@@ -1060,8 +1103,59 @@
       <td><code class="highlighter-rouge">ui5-shellbar-item</code></td>
       <td><code class="highlighter-rouge">import "@ui5/webcomponents-fiori/dist/ShellBarItem.js";</code></td>
     </tr>
+    <tr>
+      <td>Product Switch</td>
+      <td><code class="highlighter-rouge">ui5-product-switch</code></td>
+      <td><code class="highlighter-rouge">import "@ui5/webcomponents-fiori/dist/ProductSwitch.js";</code></td>
+    </tr>
+    <tr>
+      <td>Product Switch Item</td>
+      <td><code class="highlighter-rouge">ui5-product-switch-item</code></td>
+      <td><code class="highlighter-rouge">import "@ui5/webcomponents-fiori/dist/ProductSwitchItem.js";</code></td>
+    </tr>
   </tbody>
 </table>
+
+<h3 id="icons-package-ui5webcomponents-icons">Icons package (<code class="highlighter-rouge">@ui5/webcomponents-icons</code>)</h3>
+
+<p>The <code class="highlighter-rouge">icons</code> package provides assets for the rich <code class="highlighter-rouge">SAP-icons</code> icon collection.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Icon asset</th>
+      <th>Module import</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>All icons (~115KB zipped)</td>
+      <td><code class="highlighter-rouge">import "@ui5/webcomponents-icons/dist/json-imports/Icons.js";</code></td>
+    </tr>
+    <tr>
+      <td>Accelerated icon</td>
+      <td><code class="highlighter-rouge">import "@ui5/webcomponents-fiori/dist/icons/accelerated.js";</code></td>
+    </tr>
+    <tr>
+      <td>Accept icon</td>
+      <td><code class="highlighter-rouge">import "@ui5/webcomponents-fiori/dist/icons/accept.js";</code></td>
+    </tr>
+    <tr>
+      <td>…</td>
+      <td>…</td>
+    </tr>
+    <tr>
+      <td>Zoom out icon</td>
+      <td><code class="highlighter-rouge">import "@ui5/webcomponents-fiori/dist/icons/zoom-out.js";</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><em>Note:</em> The <code class="highlighter-rouge">@ui5/webcomponents-icons</code> package does not provide any web components per se, but rather icon assets,
+usable by other web components such as <code class="highlighter-rouge">ui5-icon</code>. You could import all icons, but it’s recommended to import 
+just the ones that your app will actually use.</p>
+
+<p>For a full list of the icons in the <code class="highlighter-rouge">SAP-icons</code> collection, click <a href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/SAP-icons">here</a>.</p>
 
 <h2 id="additional-public-modules">Additional public modules</h2>
 
@@ -1164,15 +1258,20 @@ Example:</p>
 <span class="nx">setTheme</span><span class="p">(</span><span class="dl">"</span><span class="s2">sap_belize_hcb</span><span class="dl">"</span><span class="p">);</span>
 </code></pre></div></div>
 
+<p>For more general information on assets and JSON imports, click <a href="Assets.md">here</a>.</p>
+
+<p>Find out how you can bundle your themes more efficiently <a href="Assets.md#bundling">here</a>.</p>
+
 <p><a name="internationalization"></a></p>
 <h3 id="3-internationalization">3. Internationalization</h3>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents/dist/json-imports/i18n.js</span><span class="dl">"</span><span class="p">;</span>
 <span class="k">import</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-fiori/dist/json-imports/i18n.js</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// Only if using the @ui5/webcomponents-fiori package</span>
+<span class="k">import</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-icons/dist/json-imports/i18n.js</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// Only if using the @ui5/webcomponents-icons package</span>
 </code></pre></div></div>
 
 <p>Some UI5 Web Components contain texts (such as placeholders, tooltips, messages) that need translation.
-All texts are in English by default. In order to get support for other languages, you should import the module above.</p>
+All texts are in English by default. In order to get support for other languages, you should import the module(s) above.</p>
 
 <p>You can configure the language by setting the <code>language</code> key in the configuration object.</p>
 
@@ -1184,39 +1283,9 @@ All texts are in English by default. In order to get support for other languages
 <span class="nt">&lt;/script&gt;</span>
 </code></pre></div></div>
 
-<h3 id="note-importing-import-ui5webcomponentsdistjson-importsi18njs-or-import-ui5webcomponentsdistjson-importsthemesjs-will-produce-the-following-warning-message-in-the-browsers-console">Note: importing <code class="highlighter-rouge">import "@ui5/webcomponents/dist/json-imports/i18n.js"</code> or <code class="highlighter-rouge">import "@ui5/webcomponents/dist/json-imports/Themes.js"</code> will produce the following warning message in the browser’s console:</h3>
-<blockquote>
-  <p>Inefficient bundling detected: consider bundling i18n/theme proeprties imports as URLs instead of inlining them.
-See rollup-plugin-url or webpack file-loader for more information.
-Suggested pattern: “assets\/.*.json”</p>
-</blockquote>
+<p>For more general information on assets and JSON imports, click <a href="Assets.md">here</a>.</p>
 
-<p>What this means is that it’s recommended to instruct your source code bundling software
-(some of the most popular being Webpack and Rollup) not to include all the internationalization files or theming related files
-(files that match the <code>assets\/.*\.json</code> pattern) in your applications’s javascript bundle,
-but rather to leave them out. At runtime, they will be fetched on demand, if ever requested.</p>
-
-<p><a href="https://github.com/webpack-contrib/file-loader">How to do it with Webpack</a></p>
-
-<p><a href="https://github.com/rollup/rollup-plugin-url">How to do it with Rollup</a></p>
-
-<p>Rollup example:</p>
-
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">url</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">rollup-plugin-url</span><span class="dl">"</span><span class="p">;</span>
-<span class="p">...</span>
-<span class="nx">plugins</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">url</span><span class="p">({</span>
-	<span class="na">limit</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-	<span class="na">include</span><span class="p">:</span> <span class="p">[</span>
-		<span class="sr">/.*assets</span><span class="se">\/</span><span class="sr">.*</span><span class="se">\.</span><span class="sr">json/</span><span class="p">,</span>
-	<span class="p">],</span>
-	<span class="na">emitFiles</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
-	<span class="na">fileName</span><span class="p">:</span> <span class="dl">"</span><span class="s2">[name].[hash][extname]</span><span class="dl">"</span><span class="p">,</span>
-	<span class="na">publicPath</span><span class="p">:</span> <span class="nx">DEPLOY_PUBLIC_PATH</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">/resources/</span><span class="dl">"</span><span class="p">,</span>
-<span class="p">}));</span>
-</code></pre></div></div>
-
-<p>Please note that the code above is just sample snippet, taken from the UI5 Web Components playground app
-rollup configuration file and will not work on its own.</p>
+<p>Find out how you can bundle your i18n texts more efficiently <a href="Assets.md#bundling">here</a>.</p>
 
 <p><a name="formsupport"></a></p>
 <h3 id="4-form-support">4. Form Support</h3>
@@ -1287,6 +1356,8 @@ Since input suggestions may not always be needed, they do not come as part of th
 <span class="k">import</span> <span class="p">{</span> <span class="nx">getRTL</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/config/RTL.js</span><span class="dl">"</span><span class="p">;</span>
 <span class="k">import</span> <span class="p">{</span> <span class="nx">getLanguage</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/config/Language.js</span><span class="dl">"</span><span class="p">;</span>
 <span class="k">import</span> <span class="p">{</span> <span class="nx">getCalendarType</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/config/CalendarType.js</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">getAnimationMode</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/config/AnimationMode.js</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">getFirstDayOfWeek</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/config/FormatSettings.js</span><span class="dl">"</span><span class="p">;</span>
 </code></pre></div></div>
 
 <p>For more details, please check <a href="Configuration.md">Configuration</a></p>

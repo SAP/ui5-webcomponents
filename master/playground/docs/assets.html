@@ -7,7 +7,7 @@
   <meta name="keywords" content="ui5-webcomponents,ui5 webcomponents,ui5 web components,webcomponents,web components,ui5,api,docs,documentation,sample,usage,examples,demo,Fiori 3">
 
   
-    <title>Message Strip - UI5 Web Components</title>
+    <title>Assets - UI5 Web Components</title>
 
     
   
@@ -24,17 +24,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Message Strip | UI5 Web Components</title>
+<title>Assets | UI5 Web Components</title>
 <meta name="generator" content="Jekyll v3.8.6" />
-<meta property="og:title" content="Message Strip" />
+<meta property="og:title" content="Assets" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Enterprise-flavored sugar on top of native APIs!" />
 <meta property="og:description" content="Enterprise-flavored sugar on top of native APIs!" />
-<link rel="canonical" href="https://sap.github.io/ui5-webcomponents/master/playground/components/MessageStrip" />
-<meta property="og:url" content="https://sap.github.io/ui5-webcomponents/master/playground/components/MessageStrip" />
+<link rel="canonical" href="https://sap.github.io/ui5-webcomponents/master/playground/docs/assets" />
+<meta property="og:url" content="https://sap.github.io/ui5-webcomponents/master/playground/docs/assets" />
 <meta property="og:site_name" content="UI5 Web Components" />
 <script type="application/ld+json">
-{"description":"Enterprise-flavored sugar on top of native APIs!","@type":"WebPage","url":"https://sap.github.io/ui5-webcomponents/master/playground/components/MessageStrip","headline":"Message Strip","@context":"https://schema.org"}</script>
+{"description":"Enterprise-flavored sugar on top of native APIs!","@type":"WebPage","url":"https://sap.github.io/ui5-webcomponents/master/playground/docs/assets","headline":"Assets","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -96,7 +96,7 @@
     
       
         
-          <li class="navigation-list-item">
+          <li class="navigation-list-item active">
             
             <a href="https://sap.github.io/ui5-webcomponents/master/playground/docs" class="navigation-list-link">Documentation</a>
             
@@ -108,9 +108,9 @@
                   
                 
                   
-                    <li class="navigation-list-item ">
+                    <li class="navigation-list-item  active">
                       
-                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/docs/assets" class="navigation-list-link">
+                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/docs/assets" class="navigation-list-link active">
                         <div class="component-name">Assets</div>
                         
                       </a>
@@ -404,7 +404,7 @@
     
       
         
-          <li class="navigation-list-item active">
+          <li class="navigation-list-item">
             
             <a href="https://sap.github.io/ui5-webcomponents/master/playground/components" class="navigation-list-link">Components</a>
             
@@ -576,9 +576,9 @@
                   
                 
                   
-                    <li class="navigation-list-item  active">
+                    <li class="navigation-list-item ">
                       
-                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/MessageStrip" class="navigation-list-link active">
+                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/MessageStrip" class="navigation-list-link">
                         <div class="component-name">Message Strip</div>
                         
                       </a>
@@ -872,311 +872,229 @@
             <nav class="breadcrumb-nav">
               <ol class="breadcrumb-nav-list">
                 
-                  <li class="breadcrumb-nav-list-item"><a href="https://sap.github.io/ui5-webcomponents/master/playground/components">Components</a></li>
+                  <li class="breadcrumb-nav-list-item"><a href="https://sap.github.io/ui5-webcomponents/master/playground/docs">Documentation</a></li>
                 
-                <li class="breadcrumb-nav-list-item"><span>Message Strip</span></li>
+                <li class="breadcrumb-nav-list-item"><span>Assets</span></li>
               </ol>
             </nav>
           
         
         <div id="main-content" class="page-content" role="main">
-          <header class="component-heading">
-	<div class="control-header">MessageStrip</div>
-	<div class="component-heading-since">
-		<span>v0.9.0</span>
-	</div>
-</header>
+          <h1 id="assets-and-json-module-imports">Assets and JSON module imports</h1>
 
-<div class="component-package">@ui5/webcomponents</div>
+<p>UI5 Web Components aim to be feature rich and with a minimal code footprint at the same time. In order to achieve this, 
+most UI5 Web Components packages ship their assets as <code class="highlighter-rouge">.json</code> files while also providing respective public module imports for them.</p>
 
-<div class="control-tag">&lt;ui5-messagestrip&gt;</div>
+<p>The assets in question could be i18n texts, icons, additional themes parameters, CLDR, etc…</p>
 
-<section>
-	<h3>MessageStrip</h3>
-	<div class="snippet">
-		<ui5-messagestrip class="samples-margin-bottom" type="Information">Information MessageStrip</ui5-messagestrip>
-		<ui5-messagestrip class="samples-margin-bottom" type="Positive">Positive MessageStrip</ui5-messagestrip>
-		<ui5-messagestrip class="samples-margin-bottom" type="Negative">Negative MessageStrip</ui5-messagestrip>
-		<ui5-messagestrip class="samples-margin-bottom" type="Warning">Warning MessageStrip</ui5-messagestrip>
-	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-messagestrip</span> <span class="na">type=</span><span class="s">"Information"</span><span class="nt">&gt;</span>Information MessageStrip<span class="nt">&lt;/ui5-messagestrip&gt;</span>
-<span class="nt">&lt;ui5-messagestrip</span> <span class="na">type=</span><span class="s">"Positive"</span><span class="nt">&gt;</span>Positive MessageStrip<span class="nt">&lt;/ui5-messagestrip&gt;</span>
-<span class="nt">&lt;ui5-messagestrip</span> <span class="na">type=</span><span class="s">"Negative"</span><span class="nt">&gt;</span>Negative MessageStrip<span class="nt">&lt;/ui5-messagestrip&gt;</span>
-<span class="nt">&lt;ui5-messagestrip</span> <span class="na">type=</span><span class="s">"Warning"</span><span class="nt">&gt;</span>Warning MessageStrip<span class="nt">&lt;/ui5-messagestrip&gt;</span>
-<span class="nt">&lt;script&gt;</span>
-	<span class="nb">document</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="dl">"</span><span class="s2">ui5-messagestrip</span><span class="dl">"</span><span class="p">).</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">messageStrip</span><span class="p">)</span> <span class="p">{</span>
-		<span class="nx">messageStrip</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">close</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-			<span class="nx">messageStrip</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">.</span><span class="nx">removeChild</span><span class="p">(</span><span class="nx">messageStrip</span><span class="p">);</span>
-		<span class="p">});</span>
-	<span class="p">});</span>
-<span class="nt">&lt;/script&gt;</span>
-	</code></pre></figure></pre>
-</section>
+<p>Currently our npm packages follow the scheme:</p>
 
-<section>
-	<h3>MessageStrip With No Close Button</h3>
-	<div class="snippet">
-		<ui5-messagestrip class="samples-margin-bottom" type="Information" no-close-button>Information MessageStrip With No Close Button</ui5-messagestrip>
-		<ui5-messagestrip class="samples-margin-bottom" type="Positive" no-close-button>Positive MessageStrip With No Close Button</ui5-messagestrip>
-		<ui5-messagestrip class="samples-margin-bottom" type="Negative" no-close-button>Negative MessageStrip With No Close Button</ui5-messagestrip>
-		<ui5-messagestrip class="samples-margin-bottom" type="Warning" no-close-button>Warning MessageStrip With No Close Button</ui5-messagestrip>
-	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-messagestrip</span> <span class="na">type=</span><span class="s">"Information"</span> <span class="na">no-close-button</span><span class="nt">&gt;</span>Information MessageStrip With No Close Button<span class="nt">&lt;/ui5-messagestrip&gt;</span>
-<span class="nt">&lt;ui5-messagestrip</span> <span class="na">type=</span><span class="s">"Positive"</span> <span class="na">no-close-button</span><span class="nt">&gt;</span>Positive MessageStrip With No Close Button<span class="nt">&lt;/ui5-messagestrip&gt;</span>
-<span class="nt">&lt;ui5-messagestrip</span> <span class="na">type=</span><span class="s">"Negative"</span> <span class="na">no-close-button</span><span class="nt">&gt;</span>Negative MessageStrip With No Close Button<span class="nt">&lt;/ui5-messagestrip&gt;</span>
-<span class="nt">&lt;ui5-messagestrip</span> <span class="na">type=</span><span class="s">"Warning"</span> <span class="na">no-close-button</span><span class="nt">&gt;</span>Warning MessageStrip With No Close Button<span class="nt">&lt;/ui5-messagestrip&gt;</span>
-	</code></pre></figure></pre>
-</section>
+<p><code class="highlighter-rouge">@ui5/&lt;PACKAGE_NAME&gt;/dist/assets/*</code>
+(for the assets themselves)</p>
 
-<section>
-	<h3>MessageStrip With No Icon</h3>
-	<div class="snippet">
-		<ui5-messagestrip class="samples-margin-bottom" type="Information" no-icon>Information MessageStrip With No Icon</ui5-messagestrip>
-		<ui5-messagestrip class="samples-margin-bottom" type="Positive" no-icon>Positive MessageStrip With No Icon</ui5-messagestrip>
-		<ui5-messagestrip class="samples-margin-bottom" type="Negative" no-icon>Negative MessageStrip With No Icon</ui5-messagestrip>
-		<ui5-messagestrip class="samples-margin-bottom" type="Warning" no-icon>Warning MessageStrip With No Icon</ui5-messagestrip>
-	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-messagestrip</span> <span class="na">type=</span><span class="s">"Information"</span> <span class="na">no-icon</span><span class="nt">&gt;</span>Information MessageStrip With No Icon<span class="nt">&lt;/ui5-messagestrip&gt;</span>
-<span class="nt">&lt;ui5-messagestrip</span> <span class="na">type=</span><span class="s">"Positive"</span> <span class="na">no-icon</span><span class="nt">&gt;</span>Positive MessageStrip With No Icon<span class="nt">&lt;/ui5-messagestrip&gt;</span>
-<span class="nt">&lt;ui5-messagestrip</span> <span class="na">type=</span><span class="s">"Negative"</span> <span class="na">no-icon</span><span class="nt">&gt;</span>Negative MessageStrip With No Icon<span class="nt">&lt;/ui5-messagestrip&gt;</span>
-<span class="nt">&lt;ui5-messagestrip</span> <span class="na">type=</span><span class="s">"Warning"</span> <span class="na">no-icon</span><span class="nt">&gt;</span>Warning MessageStrip With No Icon<span class="nt">&lt;/ui5-messagestrip&gt;</span>
-<span class="nt">&lt;script&gt;</span>
-	<span class="nb">document</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="dl">"</span><span class="s2">ui5-messagestrip</span><span class="dl">"</span><span class="p">).</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">messageStrip</span><span class="p">)</span> <span class="p">{</span>
-		<span class="nx">messageStrip</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">close</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-			<span class="nx">messageStrip</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">.</span><span class="nx">removeChild</span><span class="p">(</span><span class="nx">messageStrip</span><span class="p">);</span>
-		<span class="p">});</span>
-	<span class="p">});</span>
-<span class="nt">&lt;/script&gt;</span>
-	</code></pre></figure></pre>
-</section>
+<p><code class="highlighter-rouge">@ui5/&lt;PACKAGE_NAME&gt;/dist/json-imports/*</code>
+(for the modules that provide the assets)</p>
 
-<section>
-	<h3>Custom MessageStrip</h3>
-	<div class="snippet">
-		<ui5-messagestrip class="samples-margin-bottom samples-vertical-align" style="width: 200px;" type="Information" no-icon no-close-button>You have new message.</ui5-messagestrip>
-		<ui5-messagestrip class="samples-margin-bottom samples-vertical-align" style="width: 200px;" type="Positive" no-close-button>Successfull login!</ui5-messagestrip>
-		<ui5-messagestrip class="samples-margin-bottom samples-vertical-align" style="width: 200px;" type="Negative" no-icon>Access denied!</ui5-messagestrip>
-		<ui5-messagestrip class="samples-margin-bottom samples-vertical-align" style="width: 200px;" type="Warning">Update is required.</ui5-messagestrip>
-	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-messagestrip</span> <span class="na">type=</span><span class="s">"Information"</span> <span class="na">style=</span><span class="s">"width: 200px;"</span> <span class="na">no-icon</span> <span class="na">no-close-button</span><span class="nt">&gt;</span>You have new message.<span class="nt">&lt;/ui5-messagestrip&gt;</span>
-<span class="nt">&lt;ui5-messagestrip</span> <span class="na">type=</span><span class="s">"Positive"</span> <span class="na">style=</span><span class="s">"width: 200px;"</span> <span class="na">no-close-button</span><span class="nt">&gt;</span>Successfull login!<span class="nt">&lt;/ui5-messagestrip&gt;</span>
-<span class="nt">&lt;ui5-messagestrip</span> <span class="na">type=</span><span class="s">"Negative"</span> <span class="na">style=</span><span class="s">"width: 200px;"</span> <span class="na">no-icon</span><span class="nt">&gt;</span>Access denied!<span class="nt">&lt;/ui5-messagestrip&gt;</span>
-<span class="nt">&lt;ui5-messagestrip</span> <span class="na">type=</span><span class="s">"Warning"</span> <span class="na">style=</span><span class="s">"width: 200px;"</span><span class="nt">&gt;</span>Update is required.<span class="nt">&lt;/ui5-messagestrip&gt;</span>
-<span class="nt">&lt;script&gt;</span>
-	<span class="nb">document</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="dl">"</span><span class="s2">ui5-messagestrip</span><span class="dl">"</span><span class="p">).</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">messageStrip</span><span class="p">)</span> <span class="p">{</span>
-		<span class="nx">messageStrip</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">close</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-			<span class="nx">messageStrip</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">.</span><span class="nx">removeChild</span><span class="p">(</span><span class="nx">messageStrip</span><span class="p">);</span>
-		<span class="p">});</span>
-	<span class="p">});</span>
-<span class="nt">&lt;/script&gt;</span>
-	</code></pre></figure></pre>
-</section>
+<p><a name="packages"></a></p>
+<h2 id="packages">Packages</h2>
 
-	<script>
-		[].slice.call(document.querySelectorAll("ui5-messagestrip")).forEach(function(messageStrip) {
-			messageStrip.addEventListener("close", function() {
-				messageStrip.parentNode.removeChild(messageStrip);
-			});
-		});
-	</script>
+<h3 id="base-package"><code class="highlighter-rouge">base</code> package</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Asset type</th>
+      <th>Asset path</th>
+      <th>Public Module Import</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>CLDR</td>
+      <td><code class="highlighter-rouge">@ui5/webcomponents-base/dist/assets/cldr/*</code></td>
+      <td><code class="highlighter-rouge">@ui5/webcomponents-base/dist/json-imports/LocaleData.js</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Usually you don’t need to import the CLDR assets from the <code class="highlighter-rouge">base</code> package, but rather from the package(s) containing the actual web components.</p>
+
+<h3 id="main-package"><code class="highlighter-rouge">main</code> package</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Asset type</th>
+      <th>Asset path</th>
+      <th>Public Module Import</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>i18n</td>
+      <td><code class="highlighter-rouge">@ui5/webcomponents/dist/assets/i18n/*</code></td>
+      <td><code class="highlighter-rouge">@ui5/webcomponents/dist/json-imports/i18n.js</code></td>
+    </tr>
+    <tr>
+      <td>Additional themes</td>
+      <td><code class="highlighter-rouge">@ui5/webcomponents/dist/assets/themes/*</code></td>
+      <td><code class="highlighter-rouge">@ui5/webcomponents/dist/json-imports/Themes.js</code></td>
+    </tr>
+    <tr>
+      <td>CLDR</td>
+      <td>N/A</td>
+      <td><code class="highlighter-rouge">@ui5/webcomponents/dist/json-imports/LocaleData.js</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The <code class="highlighter-rouge">main</code> package does not have any additional CLDR assets besides the CLDR assets of the <code class="highlighter-rouge">base</code> project.</p>
+
+<h3 id="fiori-package"><code class="highlighter-rouge">fiori</code> package</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Asset type</th>
+      <th>Asset path</th>
+      <th>Public Module Import</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>i18n</td>
+      <td><code class="highlighter-rouge">@ui5/webcomponents-fiori/dist/assets/i18n/*</code></td>
+      <td><code class="highlighter-rouge">@ui5/webcomponents-fiori/dist/json-imports/i18n.js</code></td>
+    </tr>
+    <tr>
+      <td>Additional themes</td>
+      <td><code class="highlighter-rouge">@ui5/webcomponents-fiori/dist/assets/themes/*</code></td>
+      <td><code class="highlighter-rouge">@ui5/webcomponents-fiori/dist/json-imports/Themes.js</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="icons-package"><code class="highlighter-rouge">icons</code> package</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Asset type</th>
+      <th>Asset path</th>
+      <th>Public Module Import</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>i18n</td>
+      <td><code class="highlighter-rouge">@ui5/webcomponents-fiori/dist/assets/i18n/*</code></td>
+      <td><code class="highlighter-rouge">@ui5/webcomponents-fiori/dist/json-imports/i18n.js</code></td>
+    </tr>
+    <tr>
+      <td>All icons</td>
+      <td><code class="highlighter-rouge">@ui5/webcomponents-fiori/dist/assets/icon-collections/*</code></td>
+      <td><code class="highlighter-rouge">@ui5/webcomponents-fiori/dist/json-imports/Icons.js</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Normally applications are expected to import only the individual icons that are going to be used, for example:</p>
+
+<p><code class="highlighter-rouge">import "@ui5/webcomponents-icons/dist/icons/add.js</code>”;`</p>
+
+<p>However, sometimes it makes sense to import all icons, hence the <code class="highlighter-rouge">@ui5/webcomponents-fiori/dist/json-imports/Icons.js</code> JSON import.</p>
+
+<p>Since some icons have translatable tooltips, you might need the <code class="highlighter-rouge">i18n</code> JSON import as well.</p>
+
+<p><a name="bundling"></a></p>
+<h2 id="efficient-asset-bundling">Efficient asset bundling</h2>
+
+<p>You may notice that JSON imports, for example:</p>
+
+<p><code class="highlighter-rouge">import "@ui5/webcomponents/dist/json-imports/i18n.js"</code></p>
+
+<p>or</p>
+
+<p><code class="highlighter-rouge">import "@ui5/webcomponents/dist/json-imports/Themes.js"</code></p>
+
+<p>will produce warning messages in the browser’s console, such as for example:</p>
+<blockquote>
+  <p>Inefficient bundling detected: consider bundling i18n/theme proeprties imports as URLs instead of inlining them.
+See rollup-plugin-url or webpack file-loader for more information.
+Suggested pattern: “assets\/.*.json”</p>
+</blockquote>
+
+<p>What this means is that it’s recommended to instruct your source code bundling software
+(some of the most popular being Webpack and Rollup) not to include all the asset files or theming related files
+(files that match the <code>assets\/.*\.json</code> pattern) in your applications’s javascript bundle,
+but rather to leave them out. At runtime, they will be fetched on demand, if ever requested.</p>
+
+<p><a href="https://github.com/webpack-contrib/file-loader">How to do it with Webpack</a></p>
+
+<p><a href="https://github.com/rollup/rollup-plugin-url">How to do it with Rollup</a></p>
+
+<p>Rollup example:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">url</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">rollup-plugin-url</span><span class="dl">"</span><span class="p">;</span>
+<span class="p">...</span>
+<span class="nx">plugins</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">url</span><span class="p">({</span>
+	<span class="na">limit</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+	<span class="na">include</span><span class="p">:</span> <span class="p">[</span>
+		<span class="sr">/.*assets</span><span class="se">\/</span><span class="sr">.*</span><span class="se">\.</span><span class="sr">json/</span><span class="p">,</span>
+	<span class="p">],</span>
+	<span class="na">emitFiles</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+	<span class="na">fileName</span><span class="p">:</span> <span class="dl">"</span><span class="s2">[name].[hash][extname]</span><span class="dl">"</span><span class="p">,</span>
+	<span class="na">publicPath</span><span class="p">:</span> <span class="nx">YOUR_APPLICATION_PUBLIC_PATH</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">/resources/</span><span class="dl">"</span><span class="p">,</span>
+<span class="p">}));</span>
+</code></pre></div></div>
+
+<p>Please note that the code above is just sample snippet, and will not work on its own.</p>
 
 
-    <div class="page-container">
-      <div class="api-container">
-        <section class="component-description">
-          <h3 class="comment-api-title">Overview</h3>
-
-The <code>ui5-messagestrip</code> component enables the embedding of app-related messages. It displays 4 types of messages, each with corresponding semantic color and icon: Information, Positive, Warning and Negative. Each message can have a close button, so that it can be removed from the UI if needed.
-
-<h3>Usage</h3>
-
-For the <code>ui5-messagestrip</code> component, you can define whether it displays an icon in the beginning and a close button. Moreover, its size and background can be controlled with CSS.
-
-<h3>ES6 Module Import</h3>
-
-<code>import "@ui5/webcomponents/dist/MessageStrip";</code>
-          <section class="component-api space-top">
-            
-                  <h3 class="comment-api-title" >Properties/Attributes</h3>
-                  <p class="small-space-top" >You can use both properties and attributes with the same effect. The name of each attribute is listed below the name of the property, if different.</p>
-            
-                  <div class="small-space-top api-table">
-                    <div class="head api-table-header-roll">
-                      <div class="cell api-table-header-cell">Name</div>
-                      <div class="cell api-table-header-cell">Type</div>
-                      <div class="cell api-table-header-cell">Default Value</div>
-                      <div class="cell api-table-header-cell">Description</div>
-                    </div>
-            
-                      <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          icon
-                            <br>
-                        </div>
-                        <div class="cell api-table-content-cell">string</div>
-                        <div class="cell api-table-content-cell">&quot;&quot;</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the icon src URI to be displayed as graphical element within the <code>ui5-messagestrip</code>. <br><br> <b>Note:</b> If no icon is given, the default icon for the <code>ui5-messagestrip</code> type will be added. The SAP-icons font provides numerous options. <br><br> Example: <br> <pre>ui5-messagestrip icon="palette"</pre>
-            
-            See all the available icons in the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          noCloseButton
-                            <br>
-                            <code>no-close-button</code>
-                        </div>
-                        <div class="cell api-table-content-cell">boolean</div>
-                        <div class="cell api-table-content-cell">false</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines whether the MessageStrip renders close icon.
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          noIcon
-                            <br>
-                            <code>no-icon</code>
-                        </div>
-                        <div class="cell api-table-content-cell">boolean</div>
-                        <div class="cell api-table-content-cell">false</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines whether the MessageStrip renders icon in the beginning.
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          type
-                            <br>
-                        </div>
-                        <div class="cell api-table-content-cell">MessageStripType</div>
-                        <div class="cell api-table-content-cell">&quot;Information&quot;</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the <code>ui5-messagestrip</code> type. <br><br> <b>Note:</b> Available options are <code>Information"</code>, <code>"Positive"</code>, <code>"Negative"</code>, and "Warning".
-                        </div>
-                      </div>
-            
-                  </div>
-            
-                <h3 class="comment-api-title space-top" >Slots</h3>
-            	<p class="small-space-top" >
-            	  This Element provides slot(s). This means it can display its child nodes.<br>
-            	  Unless targeting the default slot, use the <code>slot</code> attribute to define the destination slot for each child.<br>
-            	  Text, along with HTML Elements with no <code>slot</code> attribute, goes the the <code>default</code> slot.
-            	</p>
-            
-                <div class="small-space-top api-table">
-                  <div class="head api-table-header-roll">
-                    <div class="cell api-table-header-cell">Slot</div>
-                    <div class="cell api-table-header-cell">Type</div>
-                    <div class="cell api-table-header-cell">Description</div>
-                  </div>
-            
-                    <div class="row api-table-roll-even">
-                      <div class="cell api-table-content-cell api-table-content-cell-bold">default</div>
-                      <div class="cell api-table-content-cell">Node [0..n]</div>
-                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the text of the <code>ui5-messagestrip</code>. <br><b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.</div>
-                    </div>
-            
-                </div>
-            
-                  <h3 class="comment-api-title space-top">Events</h3>
-                  <p class="small-space-top" >This Web Component fires semantic events upon user interaction. You can bind to these events with the standard DOM APIs, such as <code>addEventListener</code>. </p>
-            
-                  <div class="small-space-top api-table">
-                    <div class="head api-table-header-roll">
-                      <div class="cell api-table-header-cell">Name</div>
-                      <div class="cell api-table-header-cell">Description</div>
-                    </div>
-            
-                      <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">close</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                        Fired when the close button is pressed either with a click/tap or by using the Enter or Space key.
-                        </div>
-                      </div>
-            
-                  </div>
-            
-            
-          </section>
-        </section>
-      </div>
-    </div>
-    <footer class="footer-wrapper">
-      <div class="footer-links">
+<footer class="footer-wrapper">
+    <div class="footer-links">
         <a class="separator" href="https://www.sap.com/about/legal/privacy.html" target="_blank">Privacy Policy</a>
         <a href="https://www.sap.com/about/legal/impressum.html" target="_blank">Legal</a>
-      </div>
-      <img src="../../../../../../assets/images/sap-logo-svg.svg" alt="Sap Logo" />
-    </footer>
-
-
-<div class="settings" id="settings-button">
-    <svg class="settings-icon" version="1.1" id="Capa_1" x="0px" y="0px"
-    width="340.274px" height="340.274px" viewBox="0 0 340.274 340.274" style="enable-background:new 0 0 340.274 340.274;"
-    xml:space="preserve">
-        <path d="M293.629,127.806l-5.795-13.739c19.846-44.856,18.53-46.189,14.676-50.08l-25.353-24.77l-2.516-2.12h-2.937
-        c-1.549,0-6.173,0-44.712,17.48l-14.184-5.719c-18.332-45.444-20.212-45.444-25.58-45.444h-35.765
-        c-5.362,0-7.446-0.006-24.448,45.606l-14.123,5.734C86.848,43.757,71.574,38.19,67.452,38.19l-3.381,0.105L36.801,65.032
-        c-4.138,3.891-5.582,5.263,15.402,49.425l-5.774,13.691C0,146.097,0,147.838,0,153.33v35.068c0,5.501,0,7.44,46.585,24.127
-        l5.773,13.667c-19.843,44.832-18.51,46.178-14.655,50.032l25.353,24.8l2.522,2.168h2.951c1.525,0,6.092,0,44.685-17.516
-        l14.159,5.758c18.335,45.438,20.218,45.427,25.598,45.427h35.771c5.47,0,7.41,0,24.463-45.589l14.195-5.74
-        c26.014,11,41.253,16.585,45.349,16.585l3.404-0.096l27.479-26.901c3.909-3.945,5.278-5.309-15.589-49.288l5.734-13.702
-        c46.496-17.967,46.496-19.853,46.496-25.221v-35.029C340.268,146.361,340.268,144.434,293.629,127.806z M170.128,228.474
-        c-32.798,0-59.504-26.187-59.504-58.364c0-32.153,26.707-58.315,59.504-58.315c32.78,0,59.43,26.168,59.43,58.315
-        C229.552,202.287,202.902,228.474,170.128,228.474z"></path>
-    </svg>
-</div>
-<ui5-dialog id="settings-dialog" header-text="Settings">
-    <section class="settings-form">
-        <div class="settings-content">
-            <div class="setting">
-                <ui5-label for="themeSwitch">Theme:</ui5-label>
-                <ui5-select id="themeSwitch">
-                    <ui5-option value="sap_fiori_3">Fiori 3</ui5-option>
-                    <ui5-option value="sap_belize">Belize</ui5-option>
-                    <ui5-option value="sap_belize_hcb">High Contrast Black</ui5-option>
-                </ui5-select>
-            </div>
-            <div class="setting">
-                <ui5-label for="contentDensitySwitch">Content Density:</ui5-label>
-                <ui5-select id="contentDensitySwitch">
-                    <ui5-option>Cozy</ui5-option>
-                    <ui5-option>Compact</ui5-option>
-                </ui5-select>
-            </div>
-            <div class="setting">
-                <ui5-label for="textDirectionSwitch">Text Direction:</ui5-label>
-                <ui5-select id="textDirectionSwitch">
-                    <ui5-option>LTR</ui5-option>
-                    <ui5-option>RTL</ui5-option>
-                </ui5-select>
-            </div>
-        </div>
-    </section>
-    <div slot="footer" class="closing-buttons">
-        <ui5-button id="applyButton" design="Emphasized" class="padding-end">Apply</ui5-button>
-        <ui5-button id="cancelButton">Cancel</ui5-button>
     </div>
-</ui5-dialog>
-
-<!-- UI5 Web Components Assests -->
-<script src="https://sap.github.io/ui5-webcomponents/master/assets/js/webcomponentsjs/webcomponents-loader.js"></script>
-<script type="module" src="https://sap.github.io/ui5-webcomponents/master/assets/js/ui5-webcomponents/bundle.esm.js"></script>
-<script nomodule src="https://sap.github.io/ui5-webcomponents/master/assets/js/ui5-webcomponents/bundle.es5.js"></script>
-
-<link rel="stylesheet" href="https://sap.github.io/ui5-webcomponents/master/assets/css/api.css">
+    <img src="https://sap.github.io/ui5-webcomponents/master/assets/images/sap-logo-svg.svg" alt="Sap Logo" />
+</footer>
 
 <style>
-    pre {
-        margin-bottom: 0;
+    .footer-wrapper {
+        margin-top: 2rem;
+        padding-top: 2rem;
+        padding-bottom: 4rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        border-top: 1px solid #D8D8D8;
+        font-family: "72-Regular";
     }
-    pre.highlight {
-        padding: 1.5rem;
-        padding-bottom: 0;
-        border: 0.0625rem solid #C1C1C1;
+
+    .footer-links {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: flex-start;
+        font-family: "72-Regular";
+    }
+
+    .footer-links > a {
+        color: #333333;
+        text-decoration: none;
+    }
+
+    .footer-links > a:hover {
+        text-decoration: underline;
+    }
+
+    .separator::after {
+        content: "|";
+        padding: 0 1rem;
+        color: #D8D8D8;
+        text-decoration: none;
     }
 </style>
 

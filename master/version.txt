@@ -1,5 +1,5 @@
-commit eeeb414b751701d4bbfcbf8b44f31bb276476041
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Wed Nov 27 09:54:04 2019 +0200
+commit bdfeb78d6f0e166e17bc8895f54aac179a7752a0
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Wed Nov 27 10:12:23 2019 +0200
 
-    refactor: add library docs to each component (#982)
+    docs: add migration guides, update docs (#977)
