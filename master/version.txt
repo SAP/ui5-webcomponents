@@ -1,5 +1,5 @@
-commit bdfeb78d6f0e166e17bc8895f54aac179a7752a0
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Nov 27 10:12:23 2019 +0200
+commit 6fcf259ee8db42ee0fc8da6492cf9dd063d00c2a
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Wed Nov 27 12:56:27 2019 +0200
 
-    docs: add migration guides, update docs (#977)
+    fix(ui5-tabcontainer): adjust tabs to take 100% of TC height (#895)
