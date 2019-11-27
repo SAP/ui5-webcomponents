@@ -11,16 +11,28 @@ theme        | sap_fiori_3, sap_belize, sap_belize_hcb         | sap_fiori_3   |
 language     | en, de, es, etc...                              | en            | Language to be used for translatable texts
 [RTL](#rtl)          | true, false                                     | false         | When true, sets global text direction to right-to-left
 compactSize  | true, false                                     | false         | When set, enforces compact density (smaller margins/paddings)
+[animationMode](#animationMode)  | full, basic, minimal, none  | full          | Defines different animation scenarios or levels
 calendarType | Gregorian, Islamic, Buddhist, Japanese, Persian | Gregorian     | Default calendar type for date-related web components
 [noConflict](#noConflict)  | true, false | Object                            | false         | When set to true, all events will be fired with a "ui5-" prefix only
 [formatSettings](#formatSettings)| See the [Format settings](#formatSettings) section below		| Empty object | Allows to override locale-specific configuration
 
 <a name="rtl"></a>
-###RTL
+### RTL
  
 When the `rtl` setting is set to `true`, UI5 Web Components will adjust their styling accordingly.
 However, you should also set the HTML attribute `dir` to `rtl` on the `body` or `html` or any other relevant region of your application
 so that the rest of your application is also affected. 
+
+<a name="animationMode"></a>
+### Animation Mode
+
+Animation modes allow to specify different animation scenarios or levels.
+ - When `full` all animations run unrestricted.
+ - When `basic` more light-weight set of animations would run.
+ - When `minimal` animations of fundamental functionality are included.
+ - When `none` all animations are completely suspended.
+
+*Please note that each component determines which animations would run for a specific mode.*
 
 <a name="noConflict"></a>
 ### No conflict
@@ -100,6 +112,7 @@ import { getTheme, setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js
 import { getNoConflict, setNoConflict } from "@ui5/webcomponents-base/dist/config/NoConflict.js";
 import { getCompactSize } from "@ui5/webcomponents-base/dist/config/CompactSize.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
+import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import { getLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
 import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
 import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSettings.js";

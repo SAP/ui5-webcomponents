@@ -13,8 +13,8 @@ import CalendarDate from "@ui5/webcomponents-base/dist/dates/CalendarDate.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { isShow } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
-import "./icons/appointment-2.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import "@ui5/webcomponents-icons/dist/icons/appointment-2.js";
 import { DATEPICKER_OPEN_ICON_TITLE, DATEPICKER_DATE_ACC_TEXT } from "./generated/i18n/i18n-defaults.js";
 import Icon from "./Icon.js";
 import Popover from "./Popover.js";
@@ -165,7 +165,6 @@ const metadata = {
 		*/
 		input: {},
 	},
-	_eventHandlersByConvention: true,
 };
 
 /**
@@ -308,7 +307,7 @@ class DatePicker extends UI5Element {
 		}
 	}
 
-	onkeydown(event) {
+	_onkeydown(event) {
 		if (isShow(event)) {
 			this.togglePicker();
 			this._getInput().focus();

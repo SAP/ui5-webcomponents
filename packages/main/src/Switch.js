@@ -4,9 +4,9 @@ import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEven
 import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import "@ui5/webcomponents-icons/dist/icons/accept.js";
+import "@ui5/webcomponents-icons/dist/icons/decline.js";
 import Icon from "./Icon.js";
-import "./icons/accept.js";
-import "./icons/decline.js";
 
 import {
 	SWITCH_ON,
@@ -105,7 +105,6 @@ const metadata = {
 		 */
 		change: {},
 	},
-	_eventHandlersByConvention: true,
 };
 
 /**
@@ -159,11 +158,11 @@ class Switch extends UI5Element {
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
-	onclick(event) {
+	_onclick(event) {
 		this.toggle();
 	}
 
-	onkeydown(event) {
+	_onkeydown(event) {
 		if (isSpace(event)) {
 			event.preventDefault();
 		}
@@ -173,7 +172,7 @@ class Switch extends UI5Element {
 		}
 	}
 
-	onkeyup(event) {
+	_onkeyup(event) {
 		if (isSpace(event)) {
 			this.toggle();
 		}

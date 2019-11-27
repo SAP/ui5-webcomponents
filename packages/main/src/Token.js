@@ -8,8 +8,8 @@ import {
 	isSpace,
 	isDelete,
 } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-import "./icons/decline.js";
-import "./icons/cancel.js";
+import "@ui5/webcomponents-icons/dist/icons/decline.js";
+import "@ui5/webcomponents-icons/dist/icons/cancel.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { TOKEN_ARIA_DELETABLE } from "./generated/i18n/i18n-defaults.js";
 
@@ -163,7 +163,7 @@ class Token extends UI5Element {
 	}
 
 	get iconURI() {
-		return getTheme() === "sap_fiori_3" ? "sap-icon://decline" : "sap-icon://sys-cancel";
+		return getTheme() === "sap_fiori_3" ? "decline" : "sys-cancel";
 	}
 
 	static async define(...params) {

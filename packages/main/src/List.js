@@ -177,7 +177,6 @@ const metadata = {
 			},
 		},
 	},
-	_eventHandlersByConvention: true,
 };
 
 /**
@@ -354,7 +353,7 @@ class List extends UI5Element {
 		return firstSelectedItem;
 	}
 
-	onkeydown(event) {
+	_onkeydown(event) {
 		if (isTabNext(event)) {
 			this._handleTabNext(event);
 		}
@@ -392,7 +391,7 @@ class List extends UI5Element {
 		}
 	}
 
-	onfocusin(event) {
+	_onfocusin(event) {
 		// If the focusin event does not origin from one of the 'triggers' - ignore it.
 		if (!this.isForwardElement(this.getNormalizedTarget(event.target))) {
 			event.stopImmediatePropagation();

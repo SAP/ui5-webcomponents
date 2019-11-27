@@ -4,6 +4,9 @@
 	aria-checked="{{checked}}"
 	aria-disabled="{{ariaDisabled}}"
 	aria-labelledby="{{_id}}-hiddenText"
+	@click="{{_onclick}}"
+	@keyup="{{_onkeyup}}"
+	@keydown="{{_onkeydown}}"
 	tabindex="{{tabIndex}}"
 	dir="{{rtl}}"
 >
@@ -12,10 +15,10 @@
 			<div class="ui5-switch-slider">
 				{{#if graphical}}
 					<span class="ui5-switch-text ui5-switch-text--on">
-						<ui5-icon src="sap-icon://accept" dir="ltr" class="ui5-switch-icon-on"></ui5-icon>
+						<ui5-icon name="accept" dir="ltr" class="ui5-switch-icon-on"></ui5-icon>
 					</span>
 					<span class="ui5-switch-text ui5-switch-text--off">
-						<ui5-icon src="sap-icon://decline" class="ui5-switch-icon-off"></ui5-icon>
+						<ui5-icon name="decline" class="ui5-switch-icon-off"></ui5-icon>
 					</span>
 				{{else}}
 					<span class="ui5-switch-text ui5-switch-text--on">{{_textOn}}</span>
