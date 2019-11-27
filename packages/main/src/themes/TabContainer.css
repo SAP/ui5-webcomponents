@@ -233,14 +233,9 @@
 }
 
 .ui5-tc__overflowItem ui5-icon {
-	color: var(--sapUiNeutralText);
-}
-
-.ui5-tc__overflowItem--positive ui5-icon, 
-.ui5-tc__overflowItem--negative ui5-icon,
-.ui5-tc__overflowItem--critical ui5-icon {
 	color: currentColor;
 }
+
 
 .ui5-tc__content {
 	background-color: var(--sapUiGroupContentBackground);
