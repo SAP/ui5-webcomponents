@@ -214,17 +214,32 @@
 	color: var(--_ui5_tc_overflowItem_default_color);
 }
 
+.ui5-tc__overflowItem[active] .ui5-tc__overflowItemContent {
+	color: var(--sapUiListActiveTextColor);
+}
+
 .ui5-tc__overflowItemContent {
 	display: flex;
 	align-items: center;
 	padding: 0 0.5rem;
 	height: 3rem;
+	pointer-events: none;
 }
 
 .ui5-tc__overflowItem ui5-icon {
 	width: 1.375rem;
 	height: 1.375rem;
 	padding-right: 1rem;
+}
+
+.ui5-tc__overflowItem ui5-icon {
+	color: var(--sapUiNeutralText);
+}
+
+.ui5-tc__overflowItem--positive ui5-icon, 
+.ui5-tc__overflowItem--negative ui5-icon,
+.ui5-tc__overflowItem--critical ui5-icon {
+	color: currentColor;
 }
 
 .ui5-tc__content {
