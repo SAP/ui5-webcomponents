@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import TableTemplate from "./generated/templates/TableTemplate.lit.js";
 
 // Styles
@@ -161,7 +162,9 @@ class Table extends UI5Element {
 	constructor() {
 		super();
 
-		this._itemNavigation = new ItemNavigation(this);
+		this._itemNavigation = new ItemNavigation(this, {
+			navigationMode: NavigationMode.Vertical,
+		});
 
 		this._itemNavigation.getItemsCallback = function getItemsCallback() {
 			const columnHeader = this.getColumnHeader();
