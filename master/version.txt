@@ -1,5 +1,8 @@
-commit 6fcf259ee8db42ee0fc8da6492cf9dd063d00c2a
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Wed Nov 27 12:56:27 2019 +0200
+commit 8cd2a8b5fae1123cedc346c631b50fc1dc6a1fc9
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Nov 27 15:18:57 2019 +0200
 
-    fix(ui5-tabcontainer): adjust tabs to take 100% of TC height (#895)
+    fix(ui5-tabcontainer): fix overflow items appearance and selection  (#988)
+    
+    - The icon is in the correct color for positive, negative and critical items.
+    - Pressing over the icon now works - it performs selection
