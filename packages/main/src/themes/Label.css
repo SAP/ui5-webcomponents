@@ -1,7 +1,6 @@
 :host(:not([hidden])) {
 	display: inline-flex;
 }
-
 :host {
 	max-width: 100%;
 	color: var(--sapUiContentLabelColor);
@@ -9,30 +8,41 @@
 	font-size: var(--sapMFontMediumSize);
 	font-weight: normal;
 	cursor: text;
+}	
+:host(:not([wrap])) .ui5-label-root {
+	font-weight: inherit;
+	display: inline-block;
+	white-space: nowrap;
+	cursor: inherit;
+	overflow: hidden;
+}
+:host(:not([wrap])) .ui5-label-text-wrapper {
+	text-overflow: ellipsis;
+	overflow: hidden;
+	display: inline-block;
+	vertical-align: top;
+	max-width: 100%;
 }
 
-:host([wrap]) .ui5-label-root {
-	white-space: normal;
-	line-height: 1.4rem;
+:host(:not([wrap])[required][show-colon]) .ui5-label-text-wrapper {
+	max-width: calc(100%-0.725rem);
 }
-
-:host([required]) .ui5-label-root:before {
-	position: relative;
-	height: 100%;
-	display: inline-flex;
-	align-items: flex-start;
+:host(:not([wrap])[required]) .ui5-label-text-wrapper {
+	max-width: calc(100%-0.475rem);
+}
+:host(:not([wrap])[show-colon]) .ui5-label-text-wrapper {
+	max-width: calc(100%-0.3rem);
+}
+:host([show-colon]) .ui5-label-required-colon:before {
+	content: ":";
+}
+:host([required]) .ui5-label-required-colon:after {
 	content:"*";
 	color: var(--sapUiFieldRequiredColor);
 	font-size: 1.25rem;
 	font-weight: bold;
+	position: relative;
+	vertical-align: middle;
+	line-height: 0;
 }
 
-.ui5-label-root {
-	display: inline-block;
-	width: 100%;
-	font-weight: inherit;
-	text-overflow: ellipsis;
-	overflow: hidden;
-	white-space: nowrap;
-	cursor: inherit;
-}

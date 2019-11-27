@@ -5,7 +5,7 @@ TestHelper.ready(function() {
 	var fixture = window.document.querySelector("#qunit-fixture");
 
 	var getActualText = function(el) {
-		return el.shadowRoot.querySelector('.ui5-label-root>bdi>slot').assignedNodes()[0].textContent;
+		return el.shadowRoot.querySelector('.ui5-label-root>.ui5-label-text-wrapper>bdi>slot').assignedNodes()[0].textContent;
 	};
 
 	QUnit.module("Rendering", function (hooks) {

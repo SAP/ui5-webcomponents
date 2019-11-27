@@ -35,48 +35,56 @@
 
 <body>
 	<section class="group">
-		<h2>Required label</h2>
+		<h2>Required labels</h2>
 		<ui5-label id="required-label" required>Required</ui5-label><span>native span</span>
+		<ui5-label id="required-label-2" required show-colon>Required semi-colon</ui5-label><span>native span</span>
+		<ui5-label id="required-label-3" required show-colon wrap>Required semi-colon wrapped</ui5-label><span>native span</span>
 	</section>
 
 	<section class="group">
 		<h2>Wrapping label</h2>
-		<ui5-label style="width: 100px" id="wrapping-label" wrap>Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur.</ui5-label>
-		<ui5-label style="width: 100px" id="truncated-label">Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur.</ui5-label>
+		<ui5-label style="width: 200px" id="wrapping-label-1">Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur.</ui5-label>
+		<ui5-label style="width: 200px" id="wrapping-label-2" show-colon>Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur</ui5-label>
+		<ui5-label style="width: 200px" id="wrapping-label" wrap>Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur.</ui5-label>
+		<ui5-label style="width: 200px" id="wrapping-label-3" wrap required>Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur.</ui5-label>
+		<ui5-label style="width: 100px" id="truncated-label" required >Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur.</ui5-label>
+		<ui5-label style="width: 100px" id="truncated-label-2" show-colon required >Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur.</ui5-label>
+		<ui5-label style="width: 100px" id="truncated-label-3" show-colon required wrap >Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur.</ui5-label>
+
 	</section>
 
 	<section class="group">
 		<h2>label + input</h2>
 		<div style="display: flex; align-items: center">
-			<ui5-label id="label-for-ui5-input" for="form-ui5-input" style="width: 100px" required>Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur.</ui5-label>:
+			<ui5-label id="label-for-ui5-input" for="form-ui5-input" style="width: 100px" required>Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur</ui5-label>
 			<ui5-input style="width: 320px; margin-left: 16px;" id="form-ui5-input"></ui5-input>
 		</div>
 
 		<br>
 
 		<div style="display: flex; align-items: center">
-			<ui5-label id="label-for-native-input" for="native-input" style="width: 100px" required>Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur.</ui5-label>:
+			<ui5-label id="label-for-native-input" for="native-input" style="width: 100px" show-colon wrap required>Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur</ui5-label>
 			<input style="width: 320px; margin-left: 16px;" id="native-input"></input>
 		</div>
 
 		<br>
 
 		<div style="display: flex; align-items: center">
-			<ui5-label id="label-for-ui5-textarea" for="ui5-textarea" style="width: 100px" required>Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur.</ui5-label>:
+			<ui5-label id="label-for-ui5-textarea" for="ui5-textarea" style="width: 100px" show-colon>Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur</ui5-label>
 			<ui5-textarea style="width: 320px; margin-left: 16px;" id="ui5-textarea"></ui5-textarea>
 		</div>
 
 		<br>
 
 		<div style="display: flex; align-items: center">
-			<ui5-label id="label-for-native-textarea" for="native-textarea" style="width: 100px" required>Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur.</ui5-label>:
+			<ui5-label id="label-for-native-textarea" for="native-textarea" style="width: 100px" required>Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur</ui5-label>
 			<textarea style="width: 320px; margin-left: 16px;" id="native-textarea"></textarea>
 		</div>
 
 		<br>
 
 		<div style="display: flex; align-items: center">
-			<ui5-label id="label-for-ui5-datepicker" for="ui5-datepicker" style="width: 100px" required>Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur.</ui5-label>:
+			<ui5-label id="label-for-ui5-datepicker" for="ui5-datepicker" style="width: 100px" show-colon required>Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur</ui5-label>
 			<ui5-datepicker style="width: 320px; margin-left: 16px;" id="ui5-datepicker"></ui5-datepicker>
 		</div>
 	</section>
