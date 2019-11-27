@@ -50,7 +50,7 @@ The `main` package provides general purpose UI building blocks such as buttons, 
 
 ### Fiori package (```@ui5/webcomponents-fiori```)
 
-The `fiori` package provide essential building blocks, necessary to implement the Fiori UX concept, 
+The `fiori` package provides essential building blocks, necessary to implement the Fiori UX concept, 
 such as a common header (ShellBar).
 
 |      Web Component       |       Tag name       |                       Module import                        |

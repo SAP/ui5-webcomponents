@@ -1,12 +1,12 @@
 ![UI5 icon](https://raw.githubusercontent.com/SAP/ui5-webcomponents/master/docs/images/UI5_logo_wide.png)
 
-# UI5 Web Components - Theme Base
+# UI5 Web Components - Tools
 
 [![Travis CI Build Status](https://travis-ci.org/SAP/ui5-webcomponents.svg?branch=master)](https://travis-ci.org/SAP/ui5-webcomponents)
 [![npm Package Version](https://badge.fury.io/js/%40ui5%2Fwebcomponents.svg)](https://www.npmjs.com/package/@ui5/webcomponents)
 
-Provides common theming assets, used by other UI5 Web Components packages, 
-such as `main` and `fiori`.
+Provides libraries, configuration files and build artifacts, 
+used by other UI5 Web Components packages, such as `main` and `fiori`. 
 
 ## Resources
 - [UI5 Web Components - README.md](https://github.com/SAP/ui5-webcomponents/blob/master/README.md)
