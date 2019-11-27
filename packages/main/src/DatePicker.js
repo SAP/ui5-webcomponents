@@ -110,8 +110,8 @@ const metadata = {
 		/**
 		 * Defines a short hint, intended to aid the user with data entry when the
 		 * <code>ui5-datepicker</code> has no value.
-		 * 
-		 * <b>Note:</b> When no placeholder is set, the format pattern is displayed as a placeholder. 
+		 *
+		 * <b>Note:</b> When no placeholder is set, the format pattern is displayed as a placeholder.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
