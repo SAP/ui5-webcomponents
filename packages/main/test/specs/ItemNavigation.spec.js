@@ -9,10 +9,12 @@ describe("Item Navigation Tests", () => {
 		const firstItem = $("#item1");
 		const secondItem = $("#item2");
 
+		browser.pause(2000);
 		firstItem.click();
 		firstItem.keys("ArrowUp");
 		assert.strictEqual(firstItem.isFocused(), true, "first item remains focused - border reached.");
 
+		browser.pause(2000);
 		secondItem.click();
 		secondItem.keys("ArrowDown");
 		assert.strictEqual(secondItem.isFocused(), true, "second item remains focused - border reached.");
@@ -28,8 +30,10 @@ describe("Item Navigation Tests", () => {
 		firstItem.keys("ArrowRight");
 		assert.strictEqual(firstItem.isFocused(), true, "first item remains focused - horizontal navigation prevented.");
 
+		browser.pause(2000);
+
 		// verical navigation is allowed
-		secondItem.keys("ArrowDown");
+		firstItem.keys("ArrowDown");
 		assert.strictEqual(secondItem.isFocused(), true, "second item is now focused - vertical navigation allowed.");
 	});
 });
