@@ -22,7 +22,7 @@ Asset type | Asset path | Public Module Import
 ------|------------------|---
 CLDR | `@ui5/webcomponents-base/dist/assets/cldr/*` | `@ui5/webcomponents-base/dist/json-imports/LocaleData.js`
 
-Usually you don't need to import the CLDR assets from the `base` package, as the other packages provide handy shortcuts for the purpose.
+Usually you don't need to import the CLDR assets from the `base` package, but rather from the package(s) containing the actual web components.
 
 ### `main` package
 
@@ -33,7 +33,6 @@ Additional themes | `@ui5/webcomponents/dist/assets/themes/*` | `@ui5/webcompone
 CLDR | N/A | `@ui5/webcomponents/dist/json-imports/LocaleData.js`
 
 The `main` package does not have any additional CLDR assets besides the CLDR assets of the `base` project.
-Therefore its JSON import for CLDR is only there for convenience and simply imports the one from the `base` project.
 
 ### `fiori` package
 
@@ -41,10 +40,6 @@ Asset type | Asset path | Public Module Import
 ------|------------------|---
 i18n | `@ui5/webcomponents-fiori/dist/assets/i18n/*` | `@ui5/webcomponents-fiori/dist/json-imports/i18n.js`
 Additional themes | `@ui5/webcomponents-fiori/dist/assets/themes/*` | `@ui5/webcomponents-fiori/dist/json-imports/Themes.js`
-CLDR | N/A | `@ui5/webcomponents-fiori/dist/json-imports/LocaleData.js`
-
-The `fiori` package does not have any additional CLDR assets besides the CLDR assets of the `base` project.
-Therefore its JSON import for CLDR is only there for convenience and simply imports the one from the `base` project.
 
 ### `icons` package
 

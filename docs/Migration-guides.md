@@ -10,7 +10,7 @@ If you are using icons in your project:
 
 1. Add the new package as a dependency to your project
 
-	`npm i @ui5/webcomponents-icons`
+	`npm i @ui5/webcomponents-icons --save`
 	
 	or
 	
@@ -25,15 +25,7 @@ If you are using icons in your project:
 	`@ui5/webcomponents/dist/icons/add.js` | `@ui5/webcomponents-icons/dist/icons/add.js`
 	`@ui5/webcomponents/dist/icons/search.js` | `@ui5/webcomponents-icons/dist/icons/search.js`
 	etc... | etc...
-	
-	or 
-	
-	Change the import for all icons (if you were importing the whole icon collection):
-	
-	Current code | Change to
-	-----|----
-	`@ui5/webcomponents/dist/json-imports/Icons.js` | `@ui5/webcomponents-icons/dist/json-imports/Icons.js`
-	
+
 	*Note:* The `ui5-icon` web component is not affected by this change, it is still in the `@ui5/webcomponents` package. Only the icons themselves (the icon assets) have been moved.
 
 
@@ -45,7 +37,7 @@ If you are using `ui5-shellbar` in your project:
 
 1. Add the new package as a dependency to your project
 
-	`npm i @ui5/webcomponents-fiori`
+	`npm i @ui5/webcomponents-fiori --save`
 	
 	or
 	

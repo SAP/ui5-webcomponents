@@ -62,7 +62,7 @@ such as a common header (ShellBar).
 
 ### Icons package (```@ui5/webcomponents-icons```)
 
-The `icons` package provides the rich `SAP-icons` icon collection.
+The `icons` package provides assets for the rich `SAP-icons` icon collection.
 
 |      Icon asset       |                           Module import                        |
 | ------------------------ |  ---------------------------------------------------------- |
