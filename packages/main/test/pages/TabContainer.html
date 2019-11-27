@@ -65,129 +65,176 @@
 
 <body>
 
-<header class="header">
-	<h1 class="header-title">ui5-tabcontainer</h1>
-</header>
+	<header class="header">
+		<h1 class="header-title">ui5-tabcontainer</h1>
+	</header>
 
-<section class="main">
-	<div class="samples">
-		<h2>Tab Container</h2>
-		<div class="sample">
-			<h4>Filter</h4>
+	<section class="main">
+		<div class="samples">
+			<h2>Tab Container</h2>
+			<div class="sample">
+				<h4>Filter</h4>
 
-			<ui5-tabcontainer id="tabContainer1" fixed collapsed show-overflow="true">
-				<ui5-tab text="Products" additional-text="125">
+				<ui5-tabcontainer id="tabContainer1" fixed collapsed show-overflow="true">
+					<ui5-tab text="Products" additional-text="125">
+					</ui5-tab>
+					<ui5-tab-separator></ui5-tab-separator>
+					<ui5-tab icon="sap-icon://menu2" text="Laptops" semantic-color="Positive" additional-text="25">
+					</ui5-tab>
+					<ui5-tab icon="sap-icon://menu" text="Monitors" selected semantic-color="Critical" additional-text="45">
+					</ui5-tab>
+				<ui5-tab icon="sap-icon://menu2" text="Keyboards"  semantic-color="Negative" additional-text="15">
 				</ui5-tab>
-				<ui5-tab-separator></ui5-tab-separator>
-				<ui5-tab icon="menu2" text="Laptops" semantic-color="Positive" additional-text="25">
-				</ui5-tab>
-				<ui5-tab icon="menu" text="Monitors" selected semantic-color="Critical" additional-text="45">
-				</ui5-tab>
-				<ui5-tab icon="menu2" text="Keyboards"  semantic-color="Negative" additional-text="15">
-				</ui5-tab>
-				<ui5-tab icon="menu2" disabled="true" text="Disabled"  semantic-color="Negative" additional-text="40">
-				</ui5-tab>
-			</ui5-tabcontainer>
+				<ui5-tab icon="sap-icon://menu2" disabled="true" text="Disabled"  semantic-color="Negative" additional-text="40">
+					</ui5-tab>
+				</ui5-tabcontainer>
+			</div>
+
+			<div class="sample">
+				<h4>Icon and Text</h4>
+
+				<ui5-tabcontainer show-overflow="true">
+					<ui5-tab icon="sap-icon://card" text="Tab 1" additional-text="123" selected>
+						<ui5-button>Button 11</ui5-button>
+						<ui5-button>Button 12</ui5-button>
+					</ui5-tab>
+					<ui5-tab icon="sap-icon://menu2" text="Tab 2" additional-text="444">
+						<ui5-button>Button 2</ui5-button>
+					</ui5-tab>
+					<ui5-tab icon="sap-icon://employee" text="Tab 3" additional-text="123">
+						<ui5-button>Button 3</ui5-button>
+					</ui5-tab>
+				</ui5-tabcontainer>
+			</div>
+
+			<div class="sample">
+				<h4>Icon only</h4>
+
+				<ui5-tabcontainer show-overflow="true" id="tabContainerIconOnly">
+					<ui5-tab icon="sap-icon://card" selected>
+						<ui5-button>Button 11</ui5-button>
+						<ui5-button>Button 12</ui5-button>
+					</ui5-tab>
+					<ui5-tab icon="sap-icon://menu2">
+						<ui5-button>Button 2</ui5-button>
+					</ui5-tab>
+					<ui5-tab icon="sap-icon://employee">
+						<ui5-button>Button 3</ui5-button>
+					</ui5-tab>
+				</ui5-tabcontainer>
+			</div>
+
+			<div class="sample">
+				<h4>Text only</h4>
+
+				<ui5-tabcontainer show-overflow="true" id="tabContainerTextOnly">
+					<ui5-tab text="Tab 1" selected>
+						<ui5-button>Button 11</ui5-button>
+						<ui5-button>Button 12</ui5-button>
+					</ui5-tab>
+					<ui5-tab text="Tab 2">
+						<ui5-button>Button 2</ui5-button>
+					</ui5-tab>
+					<ui5-tab text="Tab 3">
+						<ui5-button>Button 3</ui5-button>
+					</ui5-tab>
+					<ui5-tab text="Tab 4">
+						<ui5-button>Button 4</ui5-button>
+					</ui5-tab>
+				</ui5-tabcontainer>
+			</div>
+
+			<div class="sample">
+				<h4>Text and additional text</h4>
+
+				<ui5-tabcontainer show-overflow="true">
+					<ui5-tab text="Tab 1" additional-text="additional" selected>
+						<ui5-button>Button 11</ui5-button>
+						<ui5-button>Button 12</ui5-button>
+					</ui5-tab>
+					<ui5-tab text="Tab 2" additional-text="additional">
+						<ui5-button>Button 2</ui5-button>
+					</ui5-tab>
+					<ui5-tab text="Tab 3" additional-text="additional">
+						<ui5-button>Button 3</ui5-button>
+					</ui5-tab>
+				</ui5-tabcontainer>
+			</div>
+
+			<div class="sample">
+				<h4>Tabs with input elements</h4>
+
+				<ui5-tabcontainer show-overflow="true">
+					<ui5-tab text="Tab 1" selected>
+						<p>ui5-input</p>
+						<ui5-input></ui5-input>
+					</ui5-tab>
+					<ui5-tab text="Tab 2">
+						<p>browser input</p>
+						<input type="text">
+					</ui5-tab>
+				</ui5-tabcontainer>
+			</div>
+
+			<div class="sample" style="height: 300px">
+				<ui5-tabcontainer fixed showOverflow style="height: 100%;" id="tc-scrollable-child">
+					<ui5-tab text="Tab 1" selected id="scrollable-tab">
+						<ui5-button>Toggle style</ui5-button>
+
+
+						<!-- Simple use case -->
+						<!-- <div style="background: red; height: 100%; width: 100%"></div> -->
+
+						<!-- Complex use case -->
+						<ui5-table>
+							<ui5-table-column slot="columns">Source</ui5-table-column>
+							<ui5-table-column slot="columns">Method</ui5-table-column>
+
+							<ui5-table-row>
+								<ui5-table-cell>Cell 1</ui5-table-cell>
+								<ui5-table-cell>Cell 2</ui5-table-cell>
+							</ui5-table-row>
+
+							<ui5-table-row>
+								<ui5-table-cell>Cell 1</ui5-table-cell>
+								<ui5-table-cell>Cell 2</ui5-table-cell>
+							</ui5-table-row>
+
+							<ui5-table-row>
+								<ui5-table-cell>Cell 1</ui5-table-cell>
+								<ui5-table-cell>Cell 2</ui5-table-cell>
+							</ui5-table-row>
+
+							<ui5-table-row>
+								<ui5-table-cell>Cell 1</ui5-table-cell>
+								<ui5-table-cell>Cell 2</ui5-table-cell>
+							</ui5-table-row>
+
+							<ui5-table-row>
+								<ui5-table-cell>Cell 1</ui5-table-cell>
+								<ui5-table-cell>Cell 2</ui5-table-cell>
+							</ui5-table-row>
+
+							<ui5-table-row>
+								<ui5-table-cell>Cell 1</ui5-table-cell>
+								<ui5-table-cell>Cell 2</ui5-table-cell>
+							</ui5-table-row>
+						</ui5-table>
+					</ui5-tab>
+
+				</ui5-tabcontainer>
+			</div>
 		</div>
-
-		<div class="sample">
-			<h4>Icon and Text</h4>
-
-			<ui5-tabcontainer show-overflow="true">
-				<ui5-tab icon="card" text="Tab 1" additional-text="123" selected>
-					<ui5-button>Button 11</ui5-button>
-					<ui5-button>Button 12</ui5-button>
-				</ui5-tab>
-				<ui5-tab icon="menu2" text="Tab 2" additional-text="444">
-					<ui5-button>Button 2</ui5-button>
-				</ui5-tab>
-				<ui5-tab icon="employee" text="Tab 3" additional-text="123">
-					<ui5-button>Button 3</ui5-button>
-				</ui5-tab>
-			</ui5-tabcontainer>
+		<div class="result">
+			<h2>Result</h2>
+			<span id="result"></span>
 		</div>
+	</section>
 
-		<div class="sample">
-			<h4>Icon only</h4>
-
-			<ui5-tabcontainer show-overflow="true" id="tabContainerIconOnly">
-				<ui5-tab icon="card" selected>
-					<ui5-button>Button 11</ui5-button>
-					<ui5-button>Button 12</ui5-button>
-				</ui5-tab>
-				<ui5-tab icon="menu2">
-					<ui5-button>Button 2</ui5-button>
-				</ui5-tab>
-				<ui5-tab icon="employee">
-					<ui5-button>Button 3</ui5-button>
-				</ui5-tab>
-			</ui5-tabcontainer>
-		</div>
-
-		<div class="sample">
-			<h4>Text only</h4>
-
-			<ui5-tabcontainer show-overflow="true" id="tabContainerTextOnly">
-				<ui5-tab text="Tab 1" selected>
-					<ui5-button>Button 11</ui5-button>
-					<ui5-button>Button 12</ui5-button>
-				</ui5-tab>
-				<ui5-tab text="Tab 2">
-					<ui5-button>Button 2</ui5-button>
-				</ui5-tab>
-				<ui5-tab text="Tab 3">
-					<ui5-button>Button 3</ui5-button>
-				</ui5-tab>
-				<ui5-tab text="Tab 4">
-					<ui5-button>Button 4</ui5-button>
-				</ui5-tab>
-			</ui5-tabcontainer>
-		</div>
-
-		<div class="sample">
-			<h4>Text and additional text</h4>
-
-			<ui5-tabcontainer show-overflow="true">
-				<ui5-tab text="Tab 1" additional-text="additional" selected>
-					<ui5-button>Button 11</ui5-button>
-					<ui5-button>Button 12</ui5-button>
-				</ui5-tab>
-				<ui5-tab text="Tab 2" additional-text="additional">
-					<ui5-button>Button 2</ui5-button>
-				</ui5-tab>
-				<ui5-tab text="Tab 3" additional-text="additional">
-					<ui5-button>Button 3</ui5-button>
-				</ui5-tab>
-			</ui5-tabcontainer>
-		</div>
-
-		<div class="sample">
-			<h4>Tabs with input elements</h4>
-
-			<ui5-tabcontainer show-overflow="true">
-				<ui5-tab text="Tab 1" selected>
-					<p>ui5-input</p>
-					<ui5-input></ui5-input>
-				</ui5-tab>
-				<ui5-tab text="Tab 2">
-					<p>browser input</p>
-					<input type="text">
-				</ui5-tab>
-			</ui5-tabcontainer>
-		</div>
-	</div>
-	<div class="result">
-		<h2>Result</h2>
-		<span id="result"></span>
-	</div>
-</section>
-
-<script>
-	var result = document.getElementById("result");
-
-	document.getElementById("tabContainer1").addEventListener("ui5-itemSelect", function (event) {
-		document.getElementById("result").innerHTML = event.detail.item.text;
-	});
-</script>
+	<script>
+		document.getElementById("tabContainer1").addEventListener("ui5-itemSelect", function (event) {
+			document.getElementById("result").innerHTML = event.detail.item.text;
+		});
+	</script>
 </body>
 </html>
