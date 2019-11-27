@@ -1,11 +1,15 @@
-commit ae95a8d42d8eeae994fad272d410849f8af00615
-Author: kskondov <konstantin.kondov@sap.com>
-Date:   Wed Nov 27 15:29:36 2019 +0200
+commit 9c43533e47a1064e198ed57455f95171ab098c12
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Wed Nov 27 16:15:43 2019 +0200
 
-    feat(ui5-label): add showColon property (#965)
+    feat(ItemNavigation): introduce navigationMode property (#910)
     
-    - A new property "showColon" is introduced for proper positioning and avoiding
-    truncation of the label 's "colon"
+    (1) The ItemNavigation now has three navigation modes:
+    - "Vertical" - "Up|Down" navigation
+    - "Horizontal"- "Left|Right" navigation
+    - "Auto" - both "Vertical" and "Horizontal" navigation
     
-    - The asterisk marking the ui5-label as required is now positioned
-    to the right side of the label text.
+    (2) From now you can navigate throw the List items and Table rows only vertically
+    via the "Up" and "Down" arrow keys.
+    
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/862
