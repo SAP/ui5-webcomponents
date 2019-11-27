@@ -1,8 +1,11 @@
-commit 8cd2a8b5fae1123cedc346c631b50fc1dc6a1fc9
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Nov 27 15:18:57 2019 +0200
+commit ae95a8d42d8eeae994fad272d410849f8af00615
+Author: kskondov <konstantin.kondov@sap.com>
+Date:   Wed Nov 27 15:29:36 2019 +0200
 
-    fix(ui5-tabcontainer): fix overflow items appearance and selection  (#988)
+    feat(ui5-label): add showColon property (#965)
     
-    - The icon is in the correct color for positive, negative and critical items.
-    - Pressing over the icon now works - it performs selection
+    - A new property "showColon" is introduced for proper positioning and avoiding
+    truncation of the label 's "colon"
+    
+    - The asterisk marking the ui5-label as required is now positioned
+    to the right side of the label text.
