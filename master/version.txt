@@ -1,5 +1,5 @@
-commit 866fcca380dee10997e3c482d02db884c74043a3
-Author: Tanya Kostadinova <tanya.kostadinova@sap.com>
-Date:   Tue Nov 26 16:50:23 2019 +0200
+commit 6e0077d72ef6d5825fbe72cb41a6b6ad316915ef
+Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
+Date:   Wed Nov 27 09:13:16 2019 +0200
 
-    docs: adjust ProductSwitch documentation (#984)
+    refactor(ui5-multi-combobox): update ACC support with valueState description (#961)
