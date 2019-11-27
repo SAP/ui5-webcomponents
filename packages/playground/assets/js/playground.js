@@ -247,9 +247,15 @@ function scrollSelectedMenuItemIntoView() {
 
 function createMetaTags() {
   var metaTag = document.createElement("meta");
-  var controlName = document.querySelector(".control-header").innerText;
-  var controlTag = document.querySelector(".control-tag").innerText;
+  var controlName = document.querySelector(".control-header");
+  var controlTag = document.querySelector(".control-tag");
+
+  if(!controlName && !controlTag) {
+    // page is not sample
+    return;
+  }
+
   metaTag.name = "description";
-  metaTag.content = controlName.replace(/([A-Z])/g, " $1").trim() + ", " + controlTag.replace(/[<>]/g, "") + ": UI5  Web Components usage and API docs";
+  metaTag.content = controlName.innerText.replace(/([A-Z])/g, " $1").trim() + ", " + controlTag.innerText.replace(/[<>]/g, "") + ": UI5  Web Components usage and API docs";
   document.head.appendChild(metaTag);
 }

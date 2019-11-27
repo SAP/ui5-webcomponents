@@ -16,7 +16,7 @@ body {
 .control-header {
 	font-family: "72-Bold", "72-Regular";
 	font-size: 3rem;
-	margin: 2rem 0 0 0;
+	margin: 2rem 0 0 0 !important;
 	color: #333333;
 	padding-right: 0.5rem;
 }
@@ -251,7 +251,8 @@ body {
 }
 
 .component-heading-since,
-.api-table-content-cell-bold {
+.api-table-content-cell-bold,
+.component-package {
 	font-family: "72-Bold";
 }
 
@@ -266,8 +267,13 @@ body {
 }
 
 .component-heading-since,
-.api-table-content-cell-since {
+.api-table-content-cell-since,
+.component-package {
 	color: #008EFF;
+}
+
+.component-package {
+	margin-bottom: 1rem;
 }
 
 .api-table-event-description {

@@ -13,7 +13,7 @@ import ProductSwitchCss from "./generated/themes/ProductSwitch.css.js";
  */
 const metadata = {
 	tag: "ui5-product-switch",
-	properties: /** @lends  sap.ui.webcomponents.fiori.ProductSwitch.prototype */ {
+	properties: /** @lends sap.ui.webcomponents.fiori.ProductSwitch.prototype */ {
 		/**
 		 * Indicates how many columns are displayed.
 		 * @private
@@ -22,7 +22,7 @@ const metadata = {
 			type: Integer,
 		},
 	},
-	slots: /** @lends  sap.ui.webcomponents.fiori.ProductSwitch.prototype */ {
+	slots: /** @lends sap.ui.webcomponents.fiori.ProductSwitch.prototype */ {
 		/**
 		 * Defines the items of the <code>ui5-product-switch</code>.
 		 *
