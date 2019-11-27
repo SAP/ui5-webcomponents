@@ -1,5 +1,6 @@
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
+import "@ui5/webcomponents-icons/dist/icons/decline.js";
 import ListItemType from "./types/ListItemType.js";
 import ListMode from "./types/ListMode.js";
 import ListItemBase from "./ListItemBase.js";
@@ -188,7 +189,7 @@ class ListItem extends ListItemBase {
 	 * and Multi (ui5-checkbox) selection modes are used.
 	 */
 	onMultiSelectionComponentPress(event) {
-		this.fireEvent("_selectionRequested", { item: this, selected: !event.target.checked, selectionComponentPressed: true });
+		this.fireEvent("_selectionRequested", { item: this, selected: event.target.checked, selectionComponentPressed: true });
 	}
 
 	onSingleSelectionComponentPress(event) {

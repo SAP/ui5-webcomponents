@@ -5,6 +5,7 @@ import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import TokenizerTemplate from "./generated/templates/TokenizerTemplate.lit.js";
 import { MULTIINPUT_SHOW_MORE_TOKENS } from "./generated/i18n/i18n-defaults.js";
+import { TOKENIZER_ARIA_LABEL } from "../dist/generated/i18n/i18n-defaults.js";
 
 // Styles
 import styles from "./generated/themes/Tokenizer.css.js";
@@ -180,6 +181,10 @@ class Tokenizer extends UI5Element {
 
 	get contentDom() {
 		return this.shadowRoot.querySelector(".ui5-tokenizer--content");
+	}
+
+	get tokenizerLabel() {
+		return this.i18nBundle.getText(TOKENIZER_ARIA_LABEL);
 	}
 
 	get overflownTokens() {

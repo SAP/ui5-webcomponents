@@ -2,8 +2,8 @@
 	class="ui5-textarea-root"
 	style="{{styles.main}}"
 	?aria-invalid="{{ariaInvalid}}"
-	@focusin="{{onfocusin}}"
-	@focusout="{{onfocusout}}"
+	@focusin="{{_onfocusin}}"
+	@focusout="{{_onfocusout}}"
 >
 
 	{{#if growing}}
@@ -28,8 +28,10 @@
 		maxlength="{{_exceededTextProps.calcedMaxLength}}"
 		aria-labelledby={{ariaLabelledBy}}
 		.value="{{value}}"
-		@input="{{_handleInput}}"
-		@change="{{_handleChange}}"
+		@input="{{_oninput}}"
+		@change="{{_onchange}}"
+		@keyup="{{_onkeyup}}"
+		@keydown="{{_onkeydown}}"
 		data-sap-focus-ref>
 	</textarea>
 

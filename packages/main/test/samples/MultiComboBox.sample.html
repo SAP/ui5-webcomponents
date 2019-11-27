@@ -1,72 +1,40 @@
-<!DOCTYPE html>
-<html>
+<style>
+	.snippet ui5-multi-combobox {
+		flex: 1;
+		min-width: 240px;
+		margin: 0 8px 8px 0;
+	}
 
-<head>
-	<title>&lt;ui5-multi-combobox&gt;</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no>
+	ui5-multi-combobox:not(:defined) {
+		display: none;
+	}
+</style>
 
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta charset="utf-8">
+<header class="component-heading">
+	<h2 class="control-header">MultiComboBox</h2>
+	<div class="component-heading-since">
+		<span><!--since_tag_marker--></span>
+	</div>
+</header>
 
-	<link rel="stylesheet" href="../../www/home/core.css">
+<div class="component-package">@ui5/webcomponents</div>
 
-	<script src="../../test-resources/playground/libs/google-code-prettify/prettify.js"></script>
-	<link href="../../test-resources/playground/libs/google-code-prettify/sunburst.css" type="text/css" rel="stylesheet">
+<div class="control-tag">&lt;ui5-multi-combobox&gt;</div>
 
-	<link href="../../test-resources/playground/css/api.css" type="text/css" rel="stylesheet">
-
-	<script data-ui5-config type="application/json">
-		{
-			"theme": "sap_fiori_3",
-			"language": "EN"
-		}
-	</script>
-
-	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
-	<script src="../../resources/bundle.esm.js"
-	        type="module"
-	>
-	</script>
-
-	<script nomodule src="../../resources/bundle.es5.js">
-	</script>
-	<style>
-		.snippet ui5-multi-combobox {
-			flex: 1;
-			min-width: 240px;
-			margin: 0 8px 8px 0;
-		}
-
-		ui5-multi-combobox:not(:defined) {
-			display: none;
-		}
-	</style>
-</head>
-<body class="sapUiBody example-wrapper" role="application">
-
-	<header class="component-heading">
-		<h2 class="control-header">MultiComboBox</h2>
-		<div class="component-heading-since">
-			<span><!--since_tag_marker--></span>
-		</div>
-	</header>
-
-	<div style="margin-bottom: 2rem; font-weight: 300; font-size: 1.1rem; color: #666666;">&lt;ui5-multi-combobox&gt;</div>
-
-	<section>
-		<h3>Basic MultiComboBox</h3>
-		<div class="snippet" style="display: flex; flex-wrap: wrap;">
-			<ui5-multi-combobox placeholder="Type your value">
-				<ui5-li selected>UI5</ui5-li>
-			</ui5-multi-combobox>
-			<ui5-multi-combobox readonly value="Readonly combo">
-				<ui5-li selected>UI5</ui5-li>
-			</ui5-multi-combobox>
-			<ui5-multi-combobox disabled value="Disabled combo">
-				<ui5-li selected>UI5</ui5-li>
-			</ui5-multi-combobox>
-		</div>
-		<pre class="prettyprint lang-html"><xmp>
+<section>
+	<h3>Basic MultiComboBox</h3>
+	<div class="snippet" style="display: flex; flex-wrap: wrap;">
+		<ui5-multi-combobox placeholder="Type your value">
+			<ui5-li selected>UI5</ui5-li>
+		</ui5-multi-combobox>
+		<ui5-multi-combobox readonly value="Readonly combo">
+			<ui5-li selected>UI5</ui5-li>
+		</ui5-multi-combobox>
+		<ui5-multi-combobox disabled value="Disabled combo">
+			<ui5-li selected>UI5</ui5-li>
+		</ui5-multi-combobox>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
 <ui5-multi-combobox placeholder="Type your value">
 	<ui5-li selected>UI5</ui5-li>
 </ui5-multi-combobox>
@@ -78,26 +46,26 @@
 <ui5-multi-combobox disabled value="Disabled combo">
 	<ui5-li selected>UI5</ui5-li>
 </ui5-multi-combobox>
-		</xmp></pre>
-	</section>
+	</xmp></pre>
+</section>
 
-	<section>
-		<h3>MultiComboBox with items</h3>
-		<div class="snippet">
-			<ui5-multi-combobox style="width: 100%" placeholder="Choose your countries">
-				<ui5-li selected>Argentina</ui5-li>
-				<ui5-li>Bulgaria</ui5-li>
-				<ui5-li>Denmark</ui5-li>
-				<ui5-li>England</ui5-li>
-				<ui5-li>Albania</ui5-li>
-				<ui5-li>Morocco</ui5-li>
-				<ui5-li>Portugal</ui5-li>
-				<ui5-li>Germany</ui5-li>
-				<ui5-li>Philippines</ui5-li>
-				<ui5-li>Paraguay</ui5-li>
-			</ui5-multi-combobox>
-		</div>
-<pre class="prettyprint lang-html"><xmp>
+<section>
+	<h3>MultiComboBox with items</h3>
+	<div class="snippet">
+		<ui5-multi-combobox style="width: 100%" placeholder="Choose your countries">
+			<ui5-li selected>Argentina</ui5-li>
+			<ui5-li>Bulgaria</ui5-li>
+			<ui5-li>Denmark</ui5-li>
+			<ui5-li>England</ui5-li>
+			<ui5-li>Albania</ui5-li>
+			<ui5-li>Morocco</ui5-li>
+			<ui5-li>Portugal</ui5-li>
+			<ui5-li>Germany</ui5-li>
+			<ui5-li>Philippines</ui5-li>
+			<ui5-li>Paraguay</ui5-li>
+		</ui5-multi-combobox>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
 <ui5-multi-combobox placeholder="Choose your countries">
 	<ui5-li selected>Argentina</ui5-li>
 	<ui5-li>Bulgaria</ui5-li>
@@ -110,27 +78,26 @@
 	<ui5-li>Philippines</ui5-li>
 	<ui5-li>Paraguay</ui5-li>
 </ui5-multi-combobox>
-		</xmp></pre>
-	</section>
+	</xmp></pre>
+</section>
 
-	<section>
-		<h3>MultiComboBox with free text input</h3>
-		<div class="snippet">
-			<ui5-multi-combobox style="width: 100%" placeholder="Choose your countries" allow-custom-values>
-				<ui5-li>Argentina</ui5-li>
-				<ui5-li selected>Bulgaria</ui5-li>
-				<ui5-li>Denmark</ui5-li>
-				<ui5-li selected>England</ui5-li>
-				<ui5-li>Albania</ui5-li>
-				<ui5-li>Morocco</ui5-li>
-				<ui5-li>Portugal</ui5-li>
-				<ui5-li selected>Germany</ui5-li>
-				<ui5-li>Philippines</ui5-li>
-				<ui5-li>Paraguay</ui5-li>
-			</ui5-multi-combobox>
-		</div>
+<section>
+	<h3>MultiComboBox with free text input</h3>
 	<div class="snippet">
-<pre class="prettyprint lang-html"><xmp>
+		<ui5-multi-combobox style="width: 100%" placeholder="Choose your countries" allow-custom-values>
+			<ui5-li>Argentina</ui5-li>
+			<ui5-li selected>Bulgaria</ui5-li>
+			<ui5-li>Denmark</ui5-li>
+			<ui5-li selected>England</ui5-li>
+			<ui5-li>Albania</ui5-li>
+			<ui5-li>Morocco</ui5-li>
+			<ui5-li>Portugal</ui5-li>
+			<ui5-li selected>Germany</ui5-li>
+			<ui5-li>Philippines</ui5-li>
+			<ui5-li>Paraguay</ui5-li>
+		</ui5-multi-combobox>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
 <ui5-multi-combobox placeholder="Choose your countries">
 	<ui5-li>Argentina</ui5-li>
 	<ui5-li selected>Bulgaria</ui5-li>
@@ -143,31 +110,31 @@
 	<ui5-li>Philippines</ui5-li>
 	<ui5-li>Paraguay</ui5-li>
 </ui5-multi-combobox>
-		</xmp></pre>
-	</section>
+	</xmp></pre>
+</section>
 
-	<section>
-			<h3>MultiComboBox with Value State</h3>
-			<div class="snippet" style="display: flex; flex-wrap: wrap;">
-				<ui5-multi-combobox value-state="Success">
-					<ui5-li>Fortune</ui5-li>
-					<ui5-li>Luck</ui5-li>
-					<ui5-li selected>Success</ui5-li>
-				</ui5-multi-combobox>
-
-				<ui5-multi-combobox value-state="Warning">
-					<ui5-li>Attention</ui5-li>
-					<ui5-li>Caution</ui5-li>
-					<ui5-li selected>Warning</ui5-li>
-				</ui5-multi-combobox>
-
-				<ui5-multi-combobox value-state="Error">
-					<ui5-li>Fault</ui5-li>
-					<ui5-li selected>Error</ui5-li>
-					<ui5-li>Mistake</ui5-li>
-				</ui5-multi-combobox>
-			</div>
-			<pre class="prettyprint lang-html"><xmp>
+<section>
+	<h3>MultiComboBox with Value State</h3>
+	<div class="snippet" style="display: flex; flex-wrap: wrap;">
+		<ui5-multi-combobox value-state="Success">
+			<ui5-li>Fortune</ui5-li>
+			<ui5-li>Luck</ui5-li>
+			<ui5-li selected>Success</ui5-li>
+		</ui5-multi-combobox>
+		
+		<ui5-multi-combobox value-state="Warning">
+			<ui5-li>Attention</ui5-li>
+			<ui5-li>Caution</ui5-li>
+			<ui5-li selected>Warning</ui5-li>
+		</ui5-multi-combobox>
+		
+		<ui5-multi-combobox value-state="Error">
+			<ui5-li>Fault</ui5-li>
+			<ui5-li selected>Error</ui5-li>
+			<ui5-li>Mistake</ui5-li>
+		</ui5-multi-combobox>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
 <ui5-multi-combobox value-state="Success">
 	<ui5-li>Fortune</ui5-li>
 	<ui5-li>Luck</ui5-li>
@@ -185,15 +152,7 @@
 	<ui5-li selected>Error</ui5-li>
 	<ui5-li>Mistake</ui5-li>
 </ui5-multi-combobox>
-			</xmp></pre>
-		</section>
+	</xmp></pre>
+</section>
 
-
-	<script>
-		window.prettyPrint();
-	</script>
-
-	<script defer src="../../www/samples/settings.js"></script>
-</body>
-
-</html>
+<!-- JSDoc marker -->

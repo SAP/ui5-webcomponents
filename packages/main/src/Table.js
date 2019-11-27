@@ -2,7 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import { isSpace } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import TableTemplate from "./generated/templates/TableTemplate.lit.js";
 
 // Styles
@@ -107,7 +106,6 @@ const metadata = {
 	},
 	events: /** @lends sap.ui.webcomponents.main.Table.prototype */ {
 	},
-	_eventHandlersByConvention: true,
 };
 
 /**
@@ -166,7 +164,8 @@ class Table extends UI5Element {
 		this._itemNavigation = new ItemNavigation(this);
 
 		this._itemNavigation.getItemsCallback = function getItemsCallback() {
-			return this.rows;
+			const columnHeader = this.getColumnHeader();
+			return columnHeader ? [columnHeader, ...this.rows] : this.rows;
 		}.bind(this);
 
 		this.fnOnRowFocused = this.onRowFocused.bind(this);
@@ -204,10 +203,13 @@ class Table extends UI5Element {
 		this._itemNavigation.update(event.target);
 	}
 
-	onkeydown(event) {
-		if (isSpace(event)) {
-			event.preventDefault();
-		}
+	_onColumnHeaderClick(event) {
+		this.getColumnHeader().focus();
+		this._itemNavigation.update(event.target);
+	}
+
+	getColumnHeader() {
+		return this.getDomRef() && this.getDomRef().querySelector(`#${this._id}-columnHeader`);
 	}
 
 	popinContent(_event) {

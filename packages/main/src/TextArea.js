@@ -210,7 +210,6 @@ const metadata = {
 		 */
 		input: {},
 	},
-	_eventHandlersByConvention: true,
 };
 
 /**
@@ -283,43 +282,27 @@ class TextArea extends UI5Element {
 		return this.getDomRef().querySelector("textarea");
 	}
 
-	getInputValue() {
-		const inputDOM = this.getDomRef();
-
-		if (inputDOM) {
-			return this.getInputDomRef().value;
-		}
-
-		return "";
-	}
-
-	oninput() {
-		const inputValue = this.getInputValue();
-
-		this.value = inputValue;
-	}
-
-	onkeydown() {
+	_onkeydown() {
 		this._keyDown = true;
 	}
 
-	onkeyup() {
+	_onkeyup() {
 		this._keyDown = false;
 	}
 
-	onfocusin() {
+	_onfocusin() {
 		this.focused = true;
 	}
 
-	onfocusout() {
+	_onfocusout() {
 		this.focused = false;
 	}
 
-	_handleChange() {
+	_onchange() {
 		this.fireEvent("change", {});
 	}
 
-	_handleInput(event) {
+	_oninput(event) {
 		const nativeTextarea = this.getInputDomRef();
 
 		/* skip calling change event when an textarea with a placeholder is focused on IE

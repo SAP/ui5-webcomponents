@@ -3,20 +3,23 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	var mutated = false;
 	var sideNav = document.getElementById("side-nav");
 	var mainContent = document.getElementById("main-content");
-	var Configuration = window["sap-ui-webcomponents-main-bundle"].configuration;
+	var Configuration = window["sap-ui-webcomponents-bundle"].configuration;
 	var COMPACT = Configuration.getCompactSize();
 	var RTL = Configuration.getRTL();
 	var THEME = Configuration.getTheme();
 	var HCB = "sap_belize_hcb";
 	var FIORI3 = "sap_fiori_3";
+	var FIORI3_DARK = "sap_fiori_3_dark";
 	var btnRTL = document.getElementById("btnRTL");
 	var btnCompact = document.getElementById("btnCompact");
 	var btnTheme = document.getElementById("btnTheme");
+	var btnLightDark = document.getElementById("btnLightDark");
+
 
 	if (THEME === HCB) {
-		document.body.style="background: #333";
+		document.body.style.backgroundColor = "#333";
 	} else {
-		document.body.style="background: #fff";
+		document.body.style.backgroundColor = "#fff";
 	}
 
 	if (RTL) {
@@ -50,8 +53,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	btnRTL.pressed = !!RTL;
 	btnCompact.pressed = !!COMPACT;
 	btnTheme.pressed = !!(THEME === HCB);
+	btnLightDark.pressed = !!(THEME === FIORI3_DARK);
 
-	btnRTL.addEventListener('press', function(e) {
+	btnRTL.addEventListener('click', function(e) {
 		var param = buildParam(btnCompact.pressed, e.target.pressed, THEME);
 		var currentURL = window.location.href;
 		var newURL = currentURL.slice(0, currentURL.indexOf("kitchen")) + param;
@@ -59,7 +63,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		window.location.href = newURL;
 	}, false);
 
-	btnCompact.addEventListener('press', function(e) {
+	btnCompact.addEventListener('click', function(e) {
 		var param = buildParam(e.target.pressed, btnRTL.pressed, THEME);
 		var currentURL = window.location.href;
 		var newURL = currentURL.slice(0, currentURL.indexOf("kitchen")) + param;
@@ -67,18 +71,29 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		window.location.href = newURL;
 	}, false);
 
-	btnTheme.addEventListener('press', function(e) {
+	btnTheme.addEventListener('click', function(e) {
 		var theme = e.target.pressed ? HCB : FIORI3;
 		Configuration.setTheme(theme);
 
 		if (theme === HCB) {
-			document.body.style="background: #333";
+			document.body.style.backgroundColor = "#333";
 		} else {
-			document.body.style="background: #fff";
+			document.body.style.backgroundColor = "#fff";
 		}
 	}, false);
 
-	menuBtn.addEventListener('press', function(event) {
+	btnLightDark.addEventListener('click', function(e) {
+		var theme = e.target.pressed ? FIORI3_DARK : FIORI3;
+		Configuration.setTheme(theme);
+
+		if (theme === FIORI3_DARK) {
+			document.body.style.backgroundColor = "#333";
+		} else {
+			document.body.style.backgroundColor = "#fff";
+		}
+	}, false);
+
+	menuBtn.addEventListener('click', function(event) {
 		toggleSideNav(event.detail.pressed);
 	});
 
@@ -87,10 +102,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	var popoverOpener = document.getElementById("openPopoverButton");
 	var popoverCloser = document.getElementById("closePopoverButton");
 
-	popoverOpener.addEventListener("press", function() {
+	popoverOpener.addEventListener("click", function() {
 		popover.openBy(popoverOpener);
 	});
-	popoverCloser.addEventListener("press", function() {
+	popoverCloser.addEventListener("click", function() {
 		popover.close();
 	});
 
@@ -103,16 +118,16 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	var dialogCloser2 = document.getElementById("closeDialogStretched");
 
 
-	dialogOpener.addEventListener("press", function() {
+	dialogOpener.addEventListener("click", function() {
 		dialog.open();
 	});
-	dialogOpener2.addEventListener("press", function() {
+	dialogOpener2.addEventListener("click", function() {
 		dialog2.open();
 	});
-	dialogCloser.addEventListener("press", function() {
+	dialogCloser.addEventListener("click", function() {
 		dialog.close();
 	});
-	dialogCloser2.addEventListener("press", function() {
+	dialogCloser2.addEventListener("click", function() {
 		dialog2.close();
 	});
 
@@ -158,7 +173,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		mutated = true;
 	});
 
-	resetBtn.addEventListener("press", resetList);
+	resetBtn.addEventListener("click", resetList);
 	/* Suggestions */
 	var sap_database_entries = [{ key: "Afg", text: "Anna" }, { key: "Arg", text: "Anelia" }, { key: "Alex", text: "Ally" }, { key: "Arm", text: "Boris" }, { key: "Alg", text: "Borg" }, { key: "And", text: "Cindy" }, { key: "Ang", text: "Sara" }, { key: "Ast", text: "Sally" }, { key: "Aus", text: "Daniel" }, { key: "Aze", text: "Don" }, { key: "Aruba", text: "Ema" }, { key: "Antigua", text: "Fred" }, { key: "Bel", text: "John" }, { key: "Bel", text: "Jonathan" }, { key: "Bg", text: "Zack" }, { key: "Bra", text: "Zara" }, { key: "Bra", text: "Wolly"}, { key: "Bra", text: "Will"}, { key: "Bra", text: "Quentin"}];
 	var input = document.getElementById('user');

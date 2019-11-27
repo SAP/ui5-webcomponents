@@ -15,6 +15,7 @@
     "directory": "packages/core"
   },
   "scripts": {
+    "build": "path-exists dist/ || yarn build:all",
     "copy:node-modules": "node ./lib/copy-list/index.js ./used-modules.txt dist/",
     "copy:resources": "copy-and-watch \"../../node_modules/@openui5/sap.ui.core/src/**/*.json\" dist/",
     "copy:overlay": "copy-and-watch \"overlay/**/*.js\" dist/",
@@ -26,7 +27,7 @@
     "build:esm-abs-to-rel": "node ./lib/esm-abs-to-rel/index.js dist/",
     "copy:esm-stubs": "copy-and-watch esm/Core.js dist/sap/ui/core && copy-and-watch esm/jquery.js dist/sap/ui/thirdparty",
     "copy:belize-fonts": "copy-and-watch \"../../node_modules/@openui5/themelib_sap_belize/src/sap/ui/core/themes/sap_belize/fonts/*.{ttf,woff,woff2}\" dist/sap/ui/core/themes/sap_belize/fonts",
-    "build": "npm-run-all --sequential clean copy:node-modules copy:resources copy:overlay build:replace-amd build:replace-export-true build:replace-export-false build:replace-global-core-usage build:amd-to-es6 build:esm-abs-to-rel copy:esm-stubs copy:belize-fonts",
+    "build:all": "npm-run-all --sequential clean copy:node-modules copy:resources copy:overlay build:replace-amd build:replace-export-true build:replace-export-false build:replace-global-core-usage build:amd-to-es6 build:esm-abs-to-rel copy:esm-stubs copy:belize-fonts",
     "clean": "rimraf temp && rimraf dist",
     "prepublishOnly": "npm run clean && npm run build"
   },
@@ -39,6 +40,7 @@
     "esprima": "^4.0.1",
     "glob": "^7.1.3",
     "npm-run-all": "^4.1.3",
+    "path-exists-cli": "^1.0.0",
     "prepend-file-cli": "^1.0.6",
     "replace-in-file": "^3.4.2",
     "rimraf": "^2.6.2"

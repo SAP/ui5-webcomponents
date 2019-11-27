@@ -30,10 +30,12 @@ describe("Date Picker Tests", () => {
 
 	it("selectionChange using selection component", () => {
 		const fieldResult = $("#fieldMultiSelResult");
+		const firstItem = $("#listMultiSel #option1");
 		const firstItemSelectionComponent = $("#listMultiSel #option1").shadow$(".ui5-li-multisel-cb");
 
 		firstItemSelectionComponent.click();
 
+		assert.ok(firstItem.getProperty("selected"), "item is selected");
 		assert.strictEqual(fieldResult.getProperty("value"), "true");
 	});
 
@@ -90,7 +92,7 @@ describe("Date Picker Tests", () => {
 		assert.ok(!secondItem.getAttribute("selected"), "item is not selected");
 	});
 
-	it("mode: delete. items have x buttons which delete them", () => {
+	it("mode: delete. items have X buttons which delete them", () => {
 		browser.url("http://localhost:8080/test-resources/pages/List_test_page.html");
 		list.root.setProperty("mode", "Delete");
 

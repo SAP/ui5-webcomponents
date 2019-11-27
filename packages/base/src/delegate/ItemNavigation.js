@@ -37,16 +37,18 @@ class ItemNavigation extends EventProvider {
 
 		if (this.currentIndex >= items.length) {
 			if (!this.cyclic) {
+				this.currentIndex = items.length - 1;
 				this.fireEvent(ItemNavigation.BORDER_REACH, { start: false, end: true, offset: this.currentIndex });
+			} else {
+				this.currentIndex = this.currentIndex - items.length;
 			}
-
-			this.currentIndex = this.currentIndex - items.length;
 		} else if (this.currentIndex < 0) {
 			if (!this.cyclic) {
+				this.currentIndex = 0;
 				this.fireEvent(ItemNavigation.BORDER_REACH, { start: true, end: false, offset: this.currentIndex });
+			} else {
+				this.currentIndex = items.length + this.currentIndex;
 			}
-
-			this.currentIndex = items.length + this.currentIndex;
 		}
 
 		this.update();

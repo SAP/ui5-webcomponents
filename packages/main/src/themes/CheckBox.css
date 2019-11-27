@@ -80,6 +80,15 @@
 	-webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
+/* Fixes IE11 bug for flex + min-height
+https://github.com/philipwalton/flexbugs/issues/231
+*/
+.ui5-checkbox-root::after {
+	content: "";
+	min-height: inherit;
+	font-size: 0;
+}
+
 .ui5-checkbox-root:focus::before {
 	content: "";
 	position: absolute;

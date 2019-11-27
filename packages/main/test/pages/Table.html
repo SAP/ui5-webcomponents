@@ -179,14 +179,14 @@
 			</div>
 		</ui5-table-column>
 
-		<ui5-table-row>
-			<ui5-table-cell>Dublin</ui5-table-cell>
+		<ui5-table-row >
+			<ui5-table-cell><span>Dublin</span> <ui5-button>click</ui5-button></ui5-table-cell>
 		</ui5-table-row>
 		<ui5-table-row>
-			<ui5-table-cell>Sofia</ui5-table-cell>
+			<ui5-table-cell><ui5-label for="myInput">Sofia</ui5-label> <ui5-input id="myInput">click</ui5-input></ui5-table-cell>
 		</ui5-table-row>
-		<ui5-table-row>
-			<ui5-table-cell>London</ui5-table-cell>
+		<ui5-table-row >
+			<ui5-table-cell>London <input /> </ui5-table-cell>
 		</ui5-table-row>
 	</ui5-table>
 
@@ -2840,11 +2840,11 @@
 			document.getElementById("tbl").stickyColumnHeader = !document.getElementById("tbl").stickyColumnHeader
 		});
 
-		document.getElementById("size-btn-650").addEventListener("ui5-press", function(event) {
+		document.getElementById("size-btn-650").addEventListener("click", function(event) {
 			document.getElementById("tbl").style.width = "650px";
 		});
 
-		document.getElementById("size-btn-500").addEventListener("ui5-press", function(event) {
+		document.getElementById("size-btn-500").addEventListener("click", function(event) {
 			document.getElementById("tbl").style.width = "500px";
 		});
 	</script>

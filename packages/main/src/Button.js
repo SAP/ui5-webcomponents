@@ -55,7 +55,7 @@ const metadata = {
 		 * <br><br>
 		 * Example:
 		 * <br>
-		 * <pre>ui5-button icon="sap-icon://palette"</pre>
+		 * <pre>ui5-button icon="palette"</pre>
 		 *
 		 * See all the available icons in the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
 		 *
@@ -164,7 +164,6 @@ const metadata = {
 		 */
 		click: {},
 	},
-	_eventHandlersByConvention: true,
 };
 
 /**
@@ -250,7 +249,6 @@ class Button extends UI5Element {
 
 	_onclick(event) {
 		event.isMarked = "button";
-		this.fireEvent("press", {});
 		const FormSupport = getFeature("FormSupport");
 		if (FormSupport) {
 			FormSupport.triggerFormSubmit(this);
@@ -262,17 +260,17 @@ class Button extends UI5Element {
 		this.active = true;
 	}
 
-	onmouseup(event) {
+	_onmouseup(event) {
 		event.isMarked = "button";
 	}
 
-	onkeydown(event) {
+	_onkeydown(event) {
 		if (isSpace(event) || isEnter(event)) {
 			this.active = true;
 		}
 	}
 
-	onkeyup(event) {
+	_onkeyup(event) {
 		if (isSpace(event) || isEnter(event)) {
 			this.active = false;
 		}

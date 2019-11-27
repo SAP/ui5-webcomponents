@@ -9,6 +9,7 @@ import {
 	isSpace,
 	isEnter,
 } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 // import Icon from "./Icon.js";
 import InputType from "./types/InputType.js";
@@ -211,6 +212,17 @@ const metadata = {
 		},
 
 		/**
+		 * Sets the maximum number of characters available in the input field.
+		 *
+		 * @type {Integer}
+		 * @since 1.0.0-rc.5
+		 * @public
+		 */
+		maxlength: {
+			type: Integer,
+		},
+
+		/**
 		 * @private
 		 */
 		focused: {
@@ -276,7 +288,6 @@ const metadata = {
 			},
 		},
 	},
-	_eventHandlersByConvention: true,
 };
 
 /**
@@ -378,7 +389,7 @@ class Input extends UI5Element {
 		this.firstRendering = false;
 	}
 
-	onkeydown(event) {
+	_onkeydown(event) {
 		if (isUp(event)) {
 			return this._handleUp(event);
 		}
@@ -398,7 +409,7 @@ class Input extends UI5Element {
 		this._keyDown = true;
 	}
 
-	onkeyup() {
+	_onkeyup(event) {
 		this._keyDown = false;
 	}
 
@@ -428,12 +439,12 @@ class Input extends UI5Element {
 		}
 	}
 
-	onfocusin(event) {
+	_onfocusin(event) {
 		this.focused = true; // invalidating property
 		this.previousValue = this.value;
 	}
 
-	onfocusout() {
+	_onfocusout(event) {
 		this.focused = false; // invalidating property
 		this.previousValue = "";
 	}

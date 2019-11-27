@@ -1,7 +1,7 @@
 <div
 	class="ui5-input-root"
-	@focusin="{{onfocusin}}"
-	@focusout="{{onfocusout}}"
+	@focusin="{{_onfocusin}}"
+	@focusout="{{_onfocusout}}"
 >
 	<div class="ui5-input-content">
 		<input id="{{_id}}-inner"
@@ -13,6 +13,7 @@
 			?required="{{required}}"
 			.value="{{value}}"
 			placeholder="{{placeholder}}"
+			maxlength="{{maxlength}}"
 			role="{{accInfo.input.role}}"
 			aria-owns="{{accInfo.input.ariaOwns}}"
 			aria-invalid="{{accInfo.input.ariaInvalid}}"
@@ -22,6 +23,8 @@
 			aria-expanded="{{accInfo.input.ariaExpanded}}"
 			@input="{{_handleInput}}"
 			@change="{{_handleChange}}"
+			@keydown="{{_onkeydown}}"
+			@keyup="{{_onkeyup}}"
 			data-sap-no-tab-ref
 			data-sap-focus-ref
 		/>
