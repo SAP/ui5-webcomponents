@@ -22,8 +22,8 @@ class ItemNavigation extends EventProvider {
 
 		const navigationMode = options.navigationMode;
 		const autoNavigation = !navigationMode || navigationMode === NavigationMode.Auto;
-		this.horizontalNavigationOn = autoNavigation ? true : navigationMode === NavigationMode.Horizontal;
-		this.verticalNavigationOn = autoNavigation ? true : navigationMode === NavigationMode.Vertical;
+		this.horizontalNavigationOn = autoNavigation || navigationMode === NavigationMode.Horizontal;
+		this.verticalNavigationOn = autoNavigation || navigationMode === NavigationMode.Vertical;
 
 		this.rootWebComponent = rootWebComponent;
 		this.rootWebComponent.addEventListener("keydown", this.onkeydown.bind(this));
