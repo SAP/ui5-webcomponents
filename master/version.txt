@@ -1,15 +1,8 @@
-commit 9c43533e47a1064e198ed57455f95171ab098c12
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Wed Nov 27 16:15:43 2019 +0200
+commit a0031898a0d4959326fb7b7c5c6ea52865f43dc8
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Nov 27 16:43:28 2019 +0200
 
-    feat(ItemNavigation): introduce navigationMode property (#910)
+    fix(ui5-tabcontainer): fix overflow item default semantic color (#989)
     
-    (1) The ItemNavigation now has three navigation modes:
-    - "Vertical" - "Up|Down" navigation
-    - "Horizontal"- "Left|Right" navigation
-    - "Auto" - both "Vertical" and "Horizontal" navigation
-    
-    (2) From now you can navigate throw the List items and Table rows only vertically
-    via the "Up" and "Down" arrow keys.
-    
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/862
+    This is a follow up of Follow up of: #988 where overflow items appearance in negative, positive and critical states have been fixed. However, I missed the default semantic appearance.
+    Now the default semantic appearance of the overflow item text and icon in active state also looks correct.
