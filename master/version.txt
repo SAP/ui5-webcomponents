@@ -1,8 +1,7 @@
-commit a0031898a0d4959326fb7b7c5c6ea52865f43dc8
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Nov 27 16:43:28 2019 +0200
+commit 3ae3b48d5128fa227494e19c2a1a6582b91bc94a
+Author: service-tip-git <36747703+service-tip-git@users.noreply.github.com>
+Date:   Wed Nov 27 07:04:13 2019 -0800
 
-    fix(ui5-tabcontainer): fix overflow item default semantic color (#989)
+    chore: translation delivery (#990)
     
-    This is a follow up of Follow up of: #988 where overflow items appearance in negative, positive and critical states have been fixed. However, I missed the default semantic appearance.
-    Now the default semantic appearance of the overflow item text and icon in active state also looks correct.
+    Change-Id: I90b8d8a4dd69c7b46bddc9224f638e254566d32b
