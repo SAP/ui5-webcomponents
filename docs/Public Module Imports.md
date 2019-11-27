@@ -8,6 +8,8 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 
 ### Main package (```@ui5/webcomponents```)
 
+The `main` package provides general purpose UI building blocks such as buttons, labels, inputs and popups.
+
 |      Web Component       |       Tag name       |                       Module import                        |
 | ------------------------ | -------------------- | ---------------------------------------------------------- |
 | Badge                    | `ui5-badge`          | `import "@ui5/webcomponents/dist/Badge.js";`               |
@@ -48,10 +50,33 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 
 ### Fiori package (```@ui5/webcomponents-fiori```)
 
+The `fiori` package provide essential building blocks, necessary to implement the Fiori UX concept, 
+such as a common header (ShellBar).
+
 |      Web Component       |       Tag name       |                       Module import                        |
 | ------------------------ | -------------------- | ---------------------------------------------------------- |
 | Shell Bar                | `ui5-shellbar`       | `import "@ui5/webcomponents-fiori/dist/ShellBar.js";`      |
 | Shell Bar Item           | `ui5-shellbar-item`  | `import "@ui5/webcomponents-fiori/dist/ShellBarItem.js";`  |
+| Product Switch           | `ui5-product-switch`       | `import "@ui5/webcomponents-fiori/dist/ProductSwitch.js";`      |
+| Product Switch Item      | `ui5-product-switch-item`  | `import "@ui5/webcomponents-fiori/dist/ProductSwitchItem.js";`  |
+
+### Icons package (```@ui5/webcomponents-icons```)
+
+The `icons` package provides assets for the rich `SAP-icons` icon collection.
+
+|      Icon asset       |                           Module import                        |
+| ------------------------ |  ---------------------------------------------------------- |
+| All icons (~115KB zipped)       |  `import "@ui5/webcomponents-icons/dist/json-imports/Icons.js";`      |
+| Accelerated icon           |  `import "@ui5/webcomponents-fiori/dist/icons/accelerated.js";`  |
+| Accept icon           |  `import "@ui5/webcomponents-fiori/dist/icons/accept.js";`  |
+| ...           |  ...  |
+| Zoom out icon           |  `import "@ui5/webcomponents-fiori/dist/icons/zoom-out.js";`  |
+
+*Note:* The `@ui5/webcomponents-icons` package does not provide any web components per se, but rather icon assets,
+usable by other web components such as `ui5-icon`. You could import all icons, but it's recommended to import 
+just the ones that your app will actually use.
+
+For a full list of the icons in the `SAP-icons` collection, click [here](https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/SAP-icons).
 
 ## Additional public modules
 
@@ -157,16 +182,21 @@ import { setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 setTheme("sap_belize_hcb");
 ```
 
+For more general information on assets and JSON imports, click [here](Assets.md).
+
+Find out how you can bundle your themes more efficiently [here](Assets.md#bundling).
+
 <a name="internationalization"></a>
 ### 3. Internationalization
 
 ```js
 import "@ui5/webcomponents/dist/json-imports/i18n.js";
 import "@ui5/webcomponents-fiori/dist/json-imports/i18n.js"; // Only if using the @ui5/webcomponents-fiori package
+import "@ui5/webcomponents-icons/dist/json-imports/i18n.js"; // Only if using the @ui5/webcomponents-icons package
 ```
 
 Some UI5 Web Components contain texts (such as placeholders, tooltips, messages) that need translation.
-All texts are in English by default. In order to get support for other languages, you should import the module above.
+All texts are in English by default. In order to get support for other languages, you should import the module(s) above.
 
 You can configure the language by setting the <code>language</code> key in the configuration object.
 
@@ -179,38 +209,9 @@ Example:
 </script>
 ```
 
-### Note: importing `import "@ui5/webcomponents/dist/json-imports/i18n.js"` or `import "@ui5/webcomponents/dist/json-imports/Themes.js"` will produce the following warning message in the browser's console:
-> Inefficient bundling detected: consider bundling i18n/theme proeprties imports as URLs instead of inlining them.
-> See rollup-plugin-url or webpack file-loader for more information.
-> Suggested pattern: "assets\/.*\.json"
+For more general information on assets and JSON imports, click [here](Assets.md).
 
-What this means is that it's recommended to instruct your source code bundling software
-(some of the most popular being Webpack and Rollup) not to include all the internationalization files or theming related files
-(files that match the <code>assets\/.*\.json</code> pattern) in your applications's javascript bundle,
-but rather to leave them out. At runtime, they will be fetched on demand, if ever requested.
-
-[How to do it with Webpack](https://github.com/webpack-contrib/file-loader)
-
-[How to do it with Rollup](https://github.com/rollup/rollup-plugin-url)
-
-Rollup example:
-
-```js
-import url from "rollup-plugin-url";
-...
-plugins.push(url({
-	limit: 0,
-	include: [
-		/.*assets\/.*\.json/,
-	],
-	emitFiles: true,
-	fileName: "[name].[hash][extname]",
-	publicPath: DEPLOY_PUBLIC_PATH + "/resources/",
-}));
-```
-
-Please note that the code above is just sample snippet, taken from the UI5 Web Components playground app
-rollup configuration file and will not work on its own.
+Find out how you can bundle your i18n texts more efficiently [here](Assets.md#bundling).
 
 <a name="formsupport"></a>
 ### 4. Form Support
@@ -281,6 +282,8 @@ import { getCompactSize } from "@ui5/webcomponents-base/dist/config/CompactSize.
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
 import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
+import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
+import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSettings.js";
 ```
 
 For more details, please check [Configuration](Configuration.md)

@@ -109,8 +109,7 @@ myButton.childNodes[0].nodeValue = "New text" // same result again
 Usually you'll never have to do this manually either, as you'll bind the content of the button via the means
 provided by the framework you're using, and the framework will be the one updating it for you.
 
-Finally, there are UI5 Web Components that only accept other HTML elements (of any kind or specific ones - check the
-documentation for each individual Web Component's requirements).
+Finally, there are UI5 Web Components that only accept other HTML elements.
 
 For example `<ui5-popover>` may contain any HTML element - standard elements and other custom elements alike.
 
@@ -134,7 +133,7 @@ popover.appendChild(newChild);
 
 Again, normally you won't need to do this manually, but your framework will do it for you.
 
-Now let's have a look at a Web Component that only accepts certain children:
+Now let's have a look at a Web Component that is intended to have only certain children:
 
 ```html
 <ui5-tabcontainer id="tc1" fixed collapsed show-overflow>
@@ -145,7 +144,7 @@ Now let's have a look at a Web Component that only accepts certain children:
 </ui5-tabcontainer>
 ```
 
-The `<ui5-tabcontainer>` may only contain `<ui5-tab>` and `<ui5-tab-separator>`.
+The `<ui5-tabcontainer>` should only contain `<ui5-tab>` and `<ui5-tab-separator>`.
 
 The manipulation is exactly the same as with the other Web Components. For example to add a new tab:
 
@@ -193,9 +192,7 @@ Here's a summary of `slot` types:
  | ------------------------------ | --------------------------------------------- | ------------------------------------------------------------------------------ |
  | `Node`                         | All HTML Elements and text                    | `ui5-button` default slot                                                      |
  | `HTMLElement`                  | HTML Elements only (no text)                  | `ui5-popover` `header` slot                                                    |
- | Base Class f.e. `TabBase`      | Only HTML Elements of this class' descendents | `ui5-tabcontainer` `default` slot - accepts `ui5-tab`, `ui5-tabseparator` only |
- | Specific Class f.e. `TableRow` | Only HTML Elements of this class              | `ui5-table` `default` slot only accepts `ui5-table-row`                        |
-
+ 
 <a name="events"></a>
 ## 4. How do I listen for events?
 

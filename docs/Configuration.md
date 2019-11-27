@@ -112,7 +112,7 @@ import { getTheme, setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js
 import { getNoConflict, setNoConflict } from "@ui5/webcomponents-base/dist/config/NoConflict.js";
 import { getCompactSize } from "@ui5/webcomponents-base/dist/config/CompactSize.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
-import { getCompactSize } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
+import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import { getLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
 import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
 import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSettings.js";
