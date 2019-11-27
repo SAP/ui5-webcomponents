@@ -143,4 +143,20 @@ describe("Date Picker Tests", () => {
 		itemLink.keys("Tab");
 		assert.strictEqual(itemRadioBtn.isFocused(), true, "the last tabbable element (radio) is focused");
 	});
+
+	it("does not focus next / prev item when right / left arrow is pressed", () => {
+		const firstListItem = $("#country1");
+		const secondListItem = $("#country2");
+
+		firstListItem.click();
+
+		firstListItem.keys("ArrowRight");
+
+		assert.ok(firstListItem.isFocused(), "First item remains focussed");
+		assert.strictEqual(secondListItem.isFocused(), false, "Second list item not should be focused");
+
+		firstListItem.keys("ArrowLeft");
+
+		assert.ok(firstListItem.isFocused(), "First item remains focussed");
+	});
 });

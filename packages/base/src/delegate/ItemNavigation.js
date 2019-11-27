@@ -9,6 +9,7 @@ import {
 
 import EventProvider from "../EventProvider.js";
 import UI5Element from "../UI5Element.js";
+import NavigationMode from "../types/NavigationMode.js";
 
 // navigatable items must have id and tabindex
 class ItemNavigation extends EventProvider {
@@ -18,6 +19,11 @@ class ItemNavigation extends EventProvider {
 		this.currentIndex = options.currentIndex || 0;
 		this.rowSize = options.rowSize || 1;
 		this.cyclic = options.cyclic || false;
+
+		const navigationMode = options.navigationMode;
+		const autoNavigation = !navigationMode || navigationMode === NavigationMode.Auto;
+		this.horizontalNavigationOn = autoNavigation || navigationMode === NavigationMode.Horizontal;
+		this.verticalNavigationOn = autoNavigation || navigationMode === NavigationMode.Vertical;
 
 		this.rootWebComponent = rootWebComponent;
 		this.rootWebComponent.addEventListener("keydown", this.onkeydown.bind(this));
@@ -30,6 +36,14 @@ class ItemNavigation extends EventProvider {
 		this._getItems().forEach((item, idx) => {
 			item._tabIndex = (idx === this.currentIndex) ? "0" : "-1";
 		});
+	}
+
+	_horizontalNavigationOn() {
+		return this.horizontalNavigationOn;
+	}
+
+	_verticalNavigationOn() {
+		return this.verticalNavigationOn;
 	}
 
 	_onKeyPress(event) {
@@ -59,19 +73,19 @@ class ItemNavigation extends EventProvider {
 	}
 
 	onkeydown(event) {
-		if (isUp(event)) {
+		if (isUp(event) && this._verticalNavigationOn()) {
 			return this._handleUp(event);
 		}
 
-		if (isDown(event)) {
+		if (isDown(event) && this._verticalNavigationOn()) {
 			return this._handleDown(event);
 		}
 
-		if (isLeft(event)) {
+		if (isLeft(event) && this._horizontalNavigationOn()) {
 			return this._handleLeft(event);
 		}
 
-		if (isRight(event)) {
+		if (isRight(event) && this._horizontalNavigationOn()) {
 			return this._handleRight(event);
 		}
 
