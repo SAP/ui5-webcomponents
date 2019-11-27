@@ -384,6 +384,14 @@ class DatePicker extends UI5Element {
 		return this._formatPattern !== "medium" && this._formatPattern !== "short" && this._formatPattern !== "long";
 	}
 
+	get _displayFormat() {
+		return this.getFormat().oFormatOptions.pattern;
+	}
+
+	get _placeholder() {
+		return this.placeholder || this._displayFormat;
+	}
+
 	getFormat() {
 		if (this._isPattern) {
 			this._oDateFormat = DateFormat.getInstance({

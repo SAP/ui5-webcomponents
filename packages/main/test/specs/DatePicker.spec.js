@@ -508,4 +508,28 @@ describe("Date Picker Tests", () => {
 
 		assert.ok(datepicker.getFirstDisplayedYear().getProperty("innerHTML").indexOf("0001") > -1, "First year in the year picker is correct");
 	});
+
+	it("placeholder, based on the formatPattern", () => {
+		datepicker.id = "#dp14";
+
+		const pickerFormatPattern = "MMM d, y";
+		const innerInputPlaceholder = datepicker.innerInput.getProperty("placeholder");
+
+		// The DatePicker has no placeholder set, in this case a default placeholder, based on the format pattern,
+		//  is set to the internal input.
+		assert.ok(!datepicker.root.getProperty("placeholder"), "The DatePicker has no placeholder set");
+		assert.equal(innerInputPlaceholder, pickerFormatPattern, "By default, the inner input has the formatPattern as placeholder");
+	});
+
+	it("placeholder, set by the user", () => {
+		datepicker.id = "#dp15";
+
+		const placeholder = "Delivery date";
+		const innerInputPlaceholder = datepicker.innerInput.getProperty("placeholder");
+
+		// The DatePicker has placeholder set, in this case the default placeholder, based on the format pattern,
+		// is not dipslayed.
+		assert.ok(datepicker.root.getProperty("placeholder"), "The DatePicker has placeholder set");
+		assert.equal(innerInputPlaceholder, placeholder, "The inner input has the placeholder, set by the user");
+	});
 });
