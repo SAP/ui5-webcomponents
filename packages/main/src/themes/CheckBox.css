@@ -141,7 +141,6 @@ https://github.com/philipwalton/flexbugs/issues/231
 	cursor: default;
 	text-overflow: ellipsis;
 	overflow: hidden;
-	white-space: nowrap;
 	pointer-events: none;
 	user-select: none;
 	-ms-user-select: none;
