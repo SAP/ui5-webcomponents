@@ -1,4 +1,5 @@
 const path = require("path");
+const fs = require("fs");
 
 const jsFileContentTemplate = componentName => {
 	return `import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
@@ -13,13 +14,13 @@ import ${componentName}Css from "./generated/themes/${componentName}.css.js";
  */
 const metadata = {
 	tag: "ui5-${componentName.toLowerCase()}",
-	properties: /** @lends sap.ui.webcomponents.${library}.${componentName}.prototype */ {
+	properties: /** @lends sap.ui.webcomponents.${componentName}.prototype */ {
 		//
 	},
-	slots: /** @lends sap.ui.webcomponents.${library}.${componentName}.prototype */ {
+	slots: /** @lends sap.ui.webcomponents.${componentName}.prototype */ {
 		//
 	},
-	events: /** @lends sap.ui.webcomponents.${library}.${componentName}.prototype */ {
+	events: /** @lends sap.ui.webcomponents.${componentName}.prototype */ {
 		//
 	},
 };
@@ -35,7 +36,7 @@ const metadata = {
  * For the <code>ui5-${componentName.toLowerCase()}</code>
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents${library === "main" ? "" : "-" + library}/dist/${componentName}";</code>
+ * <code>import ${getPackageName()}/dist/${componentName}";</code>
  *
  * @constructor
  * @author SAP SE
@@ -73,6 +74,18 @@ export default ${componentName};
 `;
 };
 
+const getPackageName = () => {
+	const packageJSON = JSON.parse(fs.readFileSync("./package.json"));
+
+	if (!fs.existsSync("./package.json")) {
+		throw("The current directory doesn't contain package.json file.");
+	} else if (!packageJSON.name) {
+		throw("The package.json file in the current directory doesn't have a name property");
+	}
+
+	return packageJSON.name;
+};
+
 const library = process.env.INIT_CWD.split("/").pop();
 const consoleArguments = process.argv.slice(2);
 const componentName = consoleArguments[0];
@@ -88,8 +101,6 @@ const filePaths = {
 	"hbs": `./src/${componentName}.hbs`,
 };
 const sJsFileContentTemplate = jsFileContentTemplate(componentName);
-
-const fs = require("fs");
 
 fs.writeFileSync(filePaths.js, sJsFileContentTemplate, { flag: "wx+" });
 fs.writeFileSync(filePaths.css, "", { flag: "wx+" });
