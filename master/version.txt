@@ -1,9 +1,8 @@
-commit 2cf0fab883d3cb8b065f65e59f7c96d096779cb6
+commit c8c66a6bddd7a8aa1a1d014b124b4d860f47a3e4
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Nov 28 10:17:54 2019 +0200
+Date:   Thu Nov 28 10:33:01 2019 +0200
 
-    feat(ui5-datepicker) show value format as default placeholder (#992)
+    chore: fix checkbox wrapping degradation caused by #965 (#994)
     
-    Show value format as default placeholder, when the user did not set own placeholder.
-    
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/980
+    Fixes degradation caused by recent commit in the ui5 -label #965
+    resulting in a bug with the ui5-checkbox wrapping
