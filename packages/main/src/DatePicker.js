@@ -118,6 +118,7 @@ const metadata = {
 		 */
 		placeholder: {
 			type: String,
+			defaultValue: null,
 		},
 
 		/**
@@ -391,7 +392,7 @@ class DatePicker extends UI5Element {
 	}
 
 	get _placeholder() {
-		return this.placeholder || this._displayFormat;
+		return this.placeholder === null ? this._displayFormat : this.placeholder;
 	}
 
 	getFormat() {

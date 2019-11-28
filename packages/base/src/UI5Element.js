@@ -636,7 +636,7 @@ class UI5Element extends HTMLElement {
 			} else if (propType === Object) {
 				defaultState[propName] = "defaultValue" in props[propName] ? props[propName].defaultValue : {};
 			} else if (propType === String) {
-				defaultState[propName] = propDefaultValue || "";
+				defaultState[propName] = propDefaultValue !== undefined ? propDefaultValue : "";
 			} else {
 				defaultState[propName] = propDefaultValue;
 			}
