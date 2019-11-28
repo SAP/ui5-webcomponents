@@ -227,7 +227,7 @@ class Button extends UI5Element {
 		this._isMobile = isMobile() || isCombi();
 
 		this._deactivate = () => {
-			if (this.active && (!isMobile() || isCombi)) {
+			if (this.active && (!isMobile() || isCombi())) {
 				this.active = false;
 			}
 		};
