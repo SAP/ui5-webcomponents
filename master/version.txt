@@ -1,8 +1,5 @@
-commit c8c66a6bddd7a8aa1a1d014b124b4d860f47a3e4
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Nov 28 10:33:01 2019 +0200
+commit aaf68669d21bc21bc82ea1aa7b766b9b7411d802
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Thu Nov 28 10:59:32 2019 +0200
 
-    chore: fix checkbox wrapping degradation caused by #965 (#994)
-    
-    Fixes degradation caused by recent commit in the ui5 -label #965
-    resulting in a bug with the ui5-checkbox wrapping
+    refactor: unify README.md files for packages (#986)
