@@ -110,6 +110,8 @@ const metadata = {
 		/**
 		 * Defines a short hint, intended to aid the user with data entry when the
 		 * <code>ui5-datepicker</code> has no value.
+		 *
+		 * <b>Note:</b> When no placeholder is set, the format pattern is displayed as a placeholder.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
@@ -382,6 +384,14 @@ class DatePicker extends UI5Element {
 
 	get _isPattern() {
 		return this._formatPattern !== "medium" && this._formatPattern !== "short" && this._formatPattern !== "long";
+	}
+
+	get _displayFormat() {
+		return this.getFormat().oFormatOptions.pattern;
+	}
+
+	get _placeholder() {
+		return this.placeholder || this._displayFormat;
 	}
 
 	getFormat() {
