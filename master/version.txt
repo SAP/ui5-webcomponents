@@ -1,7 +1,9 @@
-commit 3ae3b48d5128fa227494e19c2a1a6582b91bc94a
-Author: service-tip-git <36747703+service-tip-git@users.noreply.github.com>
-Date:   Wed Nov 27 07:04:13 2019 -0800
+commit 2cf0fab883d3cb8b065f65e59f7c96d096779cb6
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu Nov 28 10:17:54 2019 +0200
 
-    chore: translation delivery (#990)
+    feat(ui5-datepicker) show value format as default placeholder (#992)
     
-    Change-Id: I90b8d8a4dd69c7b46bddc9224f638e254566d32b
+    Show value format as default placeholder, when the user did not set own placeholder.
+    
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/980
