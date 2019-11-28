@@ -809,6 +809,14 @@ const isMobile = () => {
 	return Device.browser.mobile;
 }
 
+const isCombi = () => {
+	if (!Device.system) {
+		_setSystem();
+	}
+
+	return isDesktop() && isTablet();
+}
+
 export {
 	isIE,
 	isEdge,
@@ -817,6 +825,7 @@ export {
 	isSafari,
 	isMobile,
 	isDesktop,
+	isCombi,
 	isTablet,
 	isPhone,
 	isAndroid,

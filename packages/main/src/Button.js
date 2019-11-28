@@ -7,6 +7,7 @@ import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18
 import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonTemplate from "./generated/templates/ButtonTemplate.lit.js";
 import Icon from "./Icon.js";
+import { isMobile, isCombi } from "../../core/dist/sap/ui/Device.js";
 
 import { BUTTON_ARIA_TYPE_ACCEPT, BUTTON_ARIA_TYPE_REJECT, BUTTON_ARIA_TYPE_EMPHASIZED } from "./generated/i18n/i18n-defaults.js";
 
@@ -136,6 +137,10 @@ const metadata = {
 		_iconSettings: {
 			type: Object,
 		},
+
+		_isMobile: {
+			type: Boolean,
+		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.Button.prototype */ {
 		/**
@@ -219,9 +224,10 @@ class Button extends UI5Element {
 
 	constructor() {
 		super();
+		this._isMobile = isMobile() || isCombi();
 
 		this._deactivate = () => {
-			if (this.active) {
+			if (this.active && (!isMobile() || isCombi)) {
 				this.active = false;
 			}
 		};
@@ -262,6 +268,21 @@ class Button extends UI5Element {
 
 	_onmouseup(event) {
 		event.isMarked = "button";
+	}
+
+	_ontouchstart(event) {
+		// Preventing default behaviour because of a bug in Safari & Chrome on mobile
+		event.preventDefault();
+		event.isMarked = "button";
+		this.active = true;
+	}
+
+	_ontouchend() {
+		// Fire custom event on touch devices, because there is a bug withtouchstart event
+		this.fireEvent("click");
+		if (this.active) {
+			this.active = false;
+		}
 	}
 
 	_onkeydown(event) {
@@ -315,6 +336,15 @@ class Button extends UI5Element {
 
 	get tabIndexValue() {
 		return this.nonFocusable ? "-1" : "0";
+	}
+
+	get classes() {
+		return {
+			main: {
+				"ui5-button-root": true,
+				"ui5-button-mobile": this._isMobile,
+			},
+		};
 	}
 
 	static async define(...params) {

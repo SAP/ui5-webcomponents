@@ -63,9 +63,13 @@
 	color: inherit;
 	text-shadow: inherit;
 	font: inherit;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
-:host(:not([active]):hover) {
+:host(:not([active][_is-mobile])):hover {
 	background: var(--sapUiButtonHoverBackground);
 }
 
@@ -141,24 +145,29 @@ bdi {
 	text-shadow: var(--_ui5_button_text_shadow);
 }
 
-:host([design="Positive"]:hover) {
+:host([design="Positive"]:not([_is-mobile]):hover ) {
 	background-color: var(--sapUiButtonAcceptHoverBackground);
 	border-color: var(--_ui5_button_positive_border_hover_color);
 }
 
-:host([design="Positive"][active]) {
+:host([design="Positive"][active]:not([_is-mobile])) {
 	background-color: var(--sapUiButtonAcceptActiveBackground);
 	border-color: var(--_ui5_button_positive_border_active_color);
 	color: var(--sapUiButtonActiveTextColor);
 	text-shadow: none;
 }
 
-:host([design="Positive"][focused]) {
+:host([design="Positive"][active][_is-mobile]) {
+	background-color: var(--sapUiButtonAcceptActiveBackground);
+	border-color: var(--_ui5_button_positive_border_active_color);
+}
+
+:host([design="Positive"][focused]:not([_is-mobile])) {
 	outline-color: var(--_ui5_button_positive_border_focus_hover_color);
 	border-color: var(--_ui5_button_positive_focus_border_color);
 }
 
-:host([design="Positive"][active][focused]) {
+:host([design="Positive"][active][focused]:not([_is-mobile])) {
 	outline-color: var(--sapUiContentContrastFocusColor);
 }
 
@@ -169,24 +178,29 @@ bdi {
 	text-shadow: var(--_ui5_button_text_shadow);
 }
 
-:host([design="Negative"]:hover) {
+:host([design="Negative"]:not([_is-mobile]):hover) {
 	background-color: var(--sapUiButtonRejectHoverBackground);
 	border-color: var(--sapUiButtonRejectHoverBorderColor);
 }
 
-:host([design="Negative"][focused]) {
+:host([design="Negative"][focused]:not([_is-mobile])) {
 	border-color: var(--_ui5_button_negative_focus_border_color);
 	outline-color: var(--_ui5_button_positive_border_focus_hover_color);
 }
 
-:host([design="Negative"][active]) {
+:host([design="Negative"][active]:not([_is-mobile])) {
 	background-color: var(--sapUiButtonRejectActiveBackground);
 	border-color: var(--_ui5_button_negative_active_border_color);
 	color: var(--sapUiButtonActiveTextColor);
 	text-shadow: none;
 }
 
-:host([design="Negative"][active][focused]) {
+:host([design="Negative"][active][_is-mobile]) {
+	background-color: var(--sapUiButtonRejectActiveBackground);
+	border-color: var(--sapUiButtonRejectHoverBorderColor);
+}
+
+:host([design="Negative"][active][focused]:not([_is-mobile])) {
 	outline-color: var(--sapUiContentContrastFocusColor);
 }
 
@@ -203,14 +217,19 @@ bdi {
 	border-color: var(--sapUiButtonEmphasizedHoverBorderColor);
 }
 
-:host([design="Empasized"][active]) {
+:host([design="Emphasized"][_is-mobile]:not([active]):hover) {
+	background-color: var(--sapUiButtonEmphasizedBackground);
+	border-color: var(--sapUiButtonEmphasizedHoverBorderColor);
+}
+
+:host([design="Emphasized"][active]:not([_is-mobile])) {
 	background-color: var(--sapUiButtonEmphasizedActiveBackground);
 	border-color: var(--sapUiButtonEmphasizedActiveBorderColor);
 	color: var(--sapUiButtonActiveTextColor);
 	text-shadow: none;
 }
 
-:host([design="Emphasized"][focused]) {
+:host([design="Emphasized"][focused]:not([_is-mobile])) {
 	outline-color: var(--sapUiContentContrastFocusColor);
 	border-color: var(--_ui5_button_emphasized_focused_border_color);
 }
@@ -222,11 +241,11 @@ bdi {
 	border-color: var(--_ui5_button_transparent_border_color);
 }
 
-:host([design="Transparent"]):hover {
+:host([design="Transparent"]:not([_is-mobile]):hover) {
 	background-color: var(--sapUiButtonLiteHoverBackground);
 }
 
-:host([design="Transparent"][active]) {
+:host([design="Transparent"][active]:not([_is-mobile])) {
 	background-color: var(--sapUiButtonLiteActiveBackground);
 	color: var(--sapUiButtonActiveTextColor);
 	text-shadow: none;
@@ -234,6 +253,10 @@ bdi {
 
 :host([design="Transparent"]:not([active]):hover) {
 	border-color: var(--_ui5_button_transparent_hover_border_color);
+}
+
+:host([design="Transparent"][_is-mobile]:hover) {
+	border: none;
 }
 
 /* IE Specific CSS */

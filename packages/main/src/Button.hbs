@@ -1,6 +1,6 @@
 <button
 		type="button"
-		class="ui5-button-root"
+		class={{classes.main}}
 		?disabled="{{disabled}}"
 		data-sap-focus-ref
 		{{> ariaPressed}}
@@ -8,6 +8,8 @@
 		@focusout={{_onfocusout}}
 		@focusin={{_onfocusin}}
 		@click={{_onclick}}
+		@touchstart={{_ontouchstart}}
+		@touchend={{_ontouchend}}
 		@mousedown={{_onmousedown}}
 		@mouseup={{_onmouseup}}
 		@keydown={{_onkeydown}}
