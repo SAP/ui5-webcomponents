@@ -112,8 +112,10 @@ const metadata = {
 		 * <code>ui5-datepicker</code> has no value.
 		 *
 		 * <b>Note:</b> When no placeholder is set, the format pattern is displayed as a placeholder.
+		 * Passing an empty string as the value of this property will make the <code>ui5-datepicker</code> appear empty - without placeholder or format pattern.
+		 *
 		 * @type {string}
-		 * @defaultvalue ""
+		 * @defaultvalue undefined
 		 * @public
 		 */
 		placeholder: {
