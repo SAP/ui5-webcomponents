@@ -1,8 +1,8 @@
 module.exports = {
-    scripts: {
-        clean: "rimraf dist",
+	scripts: {
+		clean: "rimraf dist",
 		build: {
-        	default: "nps clean build.defaultTheme build.themes",
+			default: "nps clean build.defaultTheme build.themes",
 			defaultTheme: {
 				default: "nps build.defaultTheme.less build.defaultTheme.postcss",
 				less: "lessc src/themes/sap_fiori_3/parameters-bundle.less dist/themes/sap_fiori_3/parameters-bundle.css",
@@ -20,10 +20,18 @@ module.exports = {
 			}
 		},
 		start: "nps build watch",
-        watch: {
-        	default: 'concurrently "nps watch.less" "nps watch.postcss"',
-			less: 'chokidar "src/themes/**/*.less" -c "nps build.less"',
-			postcss: 'nps "build.postcss -w"',
+		watch: {
+			default: 'concurrently "nps watch.defaultTheme" "nps watch.themes"',
+			defaultTheme: {
+				default: 'concurrently "nps watch.defaultTheme.less" "nps watch.defaultTheme.postcss"',
+				less: 'chokidar "src/themes/sap_fiori_3/*.less" -c "nps build.defaultTheme.less"',
+				postcss: 'nps "build.defaultTheme.postcss -w"',
+			},
+			themes: {
+				default: 'concurrently "nps watch.themes.less" "nps watch.themes.postcss"',
+				less: 'chokidar "src/themes/**/*.less" -c "nps build.themes.less"',
+				postcss: 'nps "build.themes.postcss -w"',
+			}
 		},
-    },
+	},
 };

@@ -44,8 +44,9 @@ const getScripts = (options) => {
 			test: 'nps "copy.test --watch --skip-initial-copy"',
 			bundle: "rollup --config config/rollup.config.js -w --environment ES5_BUILD,DEV",
 			styles: {
-				default: 'concurrently "nps watch.styles.bundles" "nps watch.styles.components"',
-				bundles: 'nps "build.styles.bundles -w"',
+				default: 'concurrently "nps watch.styles.defaultTheme" "nps watch.styles.themes" "nps watch.styles.components"',
+				defaultTheme: 'nps "build.styles.defaultTheme -w"',
+				themes: 'nps "build.styles.themes -w"',
 				components: 'nps "build.styles.components -w"',
 			},
 			templates: "chokidar \"src/**/*.hbs\" -c \"nps build.templates\"",
