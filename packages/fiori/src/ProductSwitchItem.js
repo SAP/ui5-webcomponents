@@ -5,7 +5,7 @@ import ProductSwitchItemTemplate from "./generated/templates/ProductSwitchItemTe
 
 // Styles
 import ProductSwitchItemCss from "./generated/themes/ProductSwitchItem.css.js";
-import "./json-imports/DefaultTheme.js";
+import "./DefaultTheme.js";
 
 /**
  * @public

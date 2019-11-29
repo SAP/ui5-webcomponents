@@ -16,8 +16,9 @@ const getScripts = (options) => {
 			default: "nps lint prepare build.bundle",
 			templates: `mkdirp dist/generated/templates && node ${LIB}/hbs2ui5/index.js -d src/ -o dist/generated/templates`,
 			styles: {
-				default: "nps build.styles.bundles build.styles.components",
-				bundles: "postcss src/**/parameters-bundle.css --config config/postcss.bundles --base src --dir dist/css/",
+				default: "nps build.styles.defaultTheme build.styles.themes build.styles.components",
+				defaultTheme: "postcss src/themes/sap_fiori_3/parameters-bundle.css --config config/postcss.defaultTheme --base src --dir dist/css/",
+				themes: "postcss src/**/parameters-bundle.css --config config/postcss.themes --base src --dir dist/css/",
 				components: "postcss src/themes/*.css --config config/postcss.components --base src --dir dist/css/",
 			},
 			i18n: {

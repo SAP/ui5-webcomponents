@@ -5,7 +5,7 @@ import { isEscape } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 
 // Styles
 import styles from "./generated/themes/Popup.css.js";
-import "./json-imports/DefaultTheme.js";
+import "./DefaultTheme.js";
 
 import { addOpenedPopup, removeOpenedPopup } from "./popup-utils/OpenedPopupsRegistry.js";
 

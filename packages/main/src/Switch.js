@@ -19,7 +19,7 @@ import SwitchTemplate from "./generated/templates/SwitchTemplate.lit.js";
 
 // Styles
 import switchCss from "./generated/themes/Switch.css.js";
-import "./json-imports/DefaultTheme.js";
+import "./DefaultTheme.js";
 
 /**
  * @public

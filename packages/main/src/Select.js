@@ -23,7 +23,7 @@ import SelectTemplate from "./generated/templates/SelectTemplate.lit.js";
 
 // Styles
 import selectCss from "./generated/themes/Select.css.js";
-import "./json-imports/DefaultTheme.js";
+import "./DefaultTheme.js";
 
 /**
  * @public

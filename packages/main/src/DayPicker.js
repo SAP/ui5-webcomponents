@@ -16,7 +16,7 @@ import DayPickerTemplate from "./generated/templates/DayPickerTemplate.lit.js";
 
 // Styles
 import dayPickerCSS from "./generated/themes/DayPicker.css.js";
-import "./json-imports/DefaultTheme.js";
+import "./DefaultTheme.js";
 
 /**
  * @public

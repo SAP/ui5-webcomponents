@@ -21,7 +21,7 @@ import ShellBarTemplate from "./generated/templates/ShellBarTemplate.lit.js";
 
 // Styles
 import styles from "./generated/themes/ShellBar.css.js";
-import "./json-imports/DefaultTheme.js";
+import "./DefaultTheme.js";
 
 /**
  * @public

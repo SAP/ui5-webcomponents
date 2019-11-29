@@ -18,7 +18,7 @@ import TokenTemplate from "./generated/templates/TokenTemplate.lit.js";
 
 // Styles
 import styles from "./generated/themes/Token.css.js";
-import "./json-imports/DefaultTheme.js";
+import "./DefaultTheme.js";
 
 /**
  * @public

@@ -10,7 +10,7 @@ import { BADGE_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import badgeCss from "./generated/themes/Badge.css.js";
-import "./json-imports/DefaultTheme.js";
+import "./DefaultTheme.js";
 
 /**
  * @public

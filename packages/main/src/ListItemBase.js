@@ -5,7 +5,7 @@ import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 
 // Styles
 import styles from "./generated/themes/ListItemBase.css.js";
-import "./json-imports/DefaultTheme.js";
+import "./DefaultTheme.js";
 
 /**
  * @public

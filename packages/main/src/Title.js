@@ -7,7 +7,7 @@ import TitleTemplate from "./generated/templates/TitleTemplate.lit.js";
 
 // Styles
 import titleCss from "./generated/themes/Title.css.js";
-import "./json-imports/DefaultTheme.js";
+import "./DefaultTheme.js";
 
 /**
  * @public

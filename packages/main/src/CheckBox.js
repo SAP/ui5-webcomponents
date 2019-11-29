@@ -16,7 +16,7 @@ import CheckBoxTemplate from "./generated/templates/CheckBoxTemplate.lit.js";
 
 // Styles
 import checkboxCss from "./generated/themes/CheckBox.css.js";
-import "./json-imports/DefaultTheme.js";
+import "./DefaultTheme.js";
 
 /**
  * @public

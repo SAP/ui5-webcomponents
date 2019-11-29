@@ -5,7 +5,7 @@ import TableColumnTemplate from "./generated/templates/TableColumnTemplate.lit.j
 
 // Styles
 import styles from "./generated/themes/TableColumn.css.js";
-import "./json-imports/DefaultTheme.js";
+import "./DefaultTheme.js";
 
 const metadata = {
 	tag: "ui5-table-column",

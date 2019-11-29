@@ -12,7 +12,7 @@ import CalendarHeaderTemplate from "./generated/templates/CalendarHeaderTemplate
 
 // Styles
 import styles from "./generated/themes/CalendarHeader.css.js";
-import "./json-imports/DefaultTheme.js";
+import "./DefaultTheme.js";
 
 const metadata = {
 	tag: "ui5-calendar-header",
