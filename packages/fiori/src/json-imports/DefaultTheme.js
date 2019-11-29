@@ -1,5 +1,3 @@
-import "@ui5/webcomponents/dist/json-imports/DefaultThemes.js";
-
 import { registerThemeProperties } from "@ui5/webcomponents-base/dist/asset-registries/Themes.js";
 
 // Fiori assets
