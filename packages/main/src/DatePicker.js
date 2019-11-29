@@ -30,6 +30,7 @@ import "@ui5/webcomponents-core/dist/sap/ui/core/date/Gregorian.js";
 
 // Styles
 import datePickerCss from "./generated/themes/DatePicker.css.js";
+import "./dist/json-imports/DefaultTheme.js";
 
 /**
  * @public

@@ -8,6 +8,7 @@ import IconTemplate from "./generated/templates/IconTemplate.lit.js";
 
 // Styles
 import iconCss from "./generated/themes/Icon.css.js";
+import "./dist/json-imports/DefaultTheme.js";
 
 /**
  * @public

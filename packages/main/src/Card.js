@@ -10,6 +10,7 @@ import { ARIA_ROLEDESCRIPTION_CARD, AVATAR_TOOLTIP, ARIA_LABEL_CARD_CONTENT } fr
 
 // Styles
 import cardCss from "./generated/themes/Card.css.js";
+import "./dist/json-imports/DefaultTheme.js";
 
 /**
  * @public

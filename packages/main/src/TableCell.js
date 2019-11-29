@@ -4,6 +4,7 @@ import TableCellTemplate from "./generated/templates/TableCellTemplate.lit.js";
 
 // Styles
 import styles from "./generated/themes/TableCell.css.js";
+import "./dist/json-imports/DefaultTheme.js";
 
 /**
  * @public

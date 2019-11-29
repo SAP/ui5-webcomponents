@@ -4,6 +4,7 @@ import ToggleButtonTemplate from "./generated/templates/ToggleButtonTemplate.lit
 
 // Styles
 import toggleBtnCss from "./generated/themes/ToggleButton.css.js";
+import "./dist/json-imports/DefaultTheme.js";
 
 /**
  * @public

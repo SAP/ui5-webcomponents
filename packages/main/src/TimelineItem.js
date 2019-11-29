@@ -7,6 +7,7 @@ import TimelineItemTemplate from "./generated/templates/TimelineItemTemplate.lit
 
 // Styles
 import styles from "./generated/themes/TimelineItem.css.js";
+import "./dist/json-imports/DefaultTheme.js";
 
 /**
  * @public

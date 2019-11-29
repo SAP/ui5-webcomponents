@@ -15,6 +15,7 @@ import YearPickerTemplate from "./generated/templates/YearPickerTemplate.lit.js"
 
 // Styles
 import styles from "./generated/themes/YearPicker.css.js";
+import "./dist/json-imports/DefaultTheme.js";
 
 /**
  * @public

@@ -24,6 +24,7 @@ import CalendarTemplate from "./generated/templates/CalendarTemplate.lit.js";
 
 // Styles
 import calendarCSS from "./generated/themes/Calendar.css.js";
+import "./dist/json-imports/DefaultTheme.js";
 
 /**
  * @public

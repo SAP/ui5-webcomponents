@@ -6,6 +6,7 @@ import GroupHeaderListItemTemplate from "./generated/templates/GroupHeaderListIt
 
 // Styles
 import groupheaderListItemCss from "./generated/themes/GroupHeaderListItem.css.js";
+import "./dist/json-imports/DefaultTheme.js";
 
 /**
  * @public

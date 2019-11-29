@@ -4,6 +4,7 @@ import TableRowTemplate from "./generated/templates/TableRowTemplate.lit.js";
 
 // Styles
 import styles from "./generated/themes/TableRow.css.js";
+import "./dist/json-imports/DefaultTheme.js";
 
 /**
  * @public

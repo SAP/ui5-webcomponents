@@ -14,6 +14,7 @@ import { MESSAGE_STRIP_CLOSE_BUTTON } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import messageStripCss from "./generated/themes/MessageStrip.css.js";
+import "./dist/json-imports/DefaultTheme.js";
 
 /**
  * @public
