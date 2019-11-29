@@ -1,5 +1,10 @@
-commit 44d6c279c5f1d04b1dad27c5fbbb757b2be6938a
+commit 3cdcede4c15c65de1356dd7ebc43ef749599156e
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Nov 29 09:31:30 2019 +0200
+Date:   Fri Nov 29 09:39:54 2019 +0200
 
-    fix(ui5-datepicker): fix DatePicker hover effect (#999)
+    fix(ui5-checkbox): fix truncation in compactSize (#998)
+    
+    Although there is enough space, the checkbox used to truncate,
+    now this is fixed.
+    
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/996
