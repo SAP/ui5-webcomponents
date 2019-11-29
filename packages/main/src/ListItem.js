@@ -10,7 +10,7 @@ import "./Button.js";
 
 // Styles
 import styles from "./generated/themes/ListItem.css.js";
-import "./dist/json-imports/DefaultTheme.js";
+import "./json-imports/DefaultTheme.js";
 
 /**
  * @public

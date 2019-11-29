@@ -10,7 +10,7 @@ import { BUSY_INDICATOR_TITLE } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import busyIndicatorCss from "./generated/themes/BusyIndicator.css.js";
-import "./dist/json-imports/DefaultTheme.js";
+import "./json-imports/DefaultTheme.js";
 
 /**
  * @public

@@ -6,7 +6,7 @@ import LabelTemplate from "./generated/templates/LabelTemplate.lit.js";
 
 // Styles
 import labelCss from "./generated/themes/Label.css.js";
-import "./dist/json-imports/DefaultTheme.js";
+import "./json-imports/DefaultTheme.js";
 
 /**
  * @public

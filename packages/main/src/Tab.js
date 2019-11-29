@@ -6,7 +6,7 @@ import TabTemplate from "./generated/templates/TabTemplate.lit.js";
 
 // Styles
 import css from "./generated/themes/Tab.css.js";
-import "./dist/json-imports/DefaultTheme.js";
+import "./json-imports/DefaultTheme.js";
 
 /**
  * @public

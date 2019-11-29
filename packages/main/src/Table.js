@@ -7,7 +7,7 @@ import TableTemplate from "./generated/templates/TableTemplate.lit.js";
 
 // Styles
 import styles from "./generated/themes/Table.css.js";
-import "./dist/json-imports/DefaultTheme.js";
+import "./json-imports/DefaultTheme.js";
 
 /**
  * @public
