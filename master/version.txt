@@ -1,10 +1,5 @@
-commit 3cdcede4c15c65de1356dd7ebc43ef749599156e
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Nov 29 09:39:54 2019 +0200
+commit 06d7479b46d00a7de0db16ee84f5aa77e349c719
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Fri Nov 29 10:52:45 2019 +0200
 
-    fix(ui5-checkbox): fix truncation in compactSize (#998)
-    
-    Although there is enough space, the checkbox used to truncate,
-    now this is fixed.
-    
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/996
+    docs: fix samples for ie (#1000)
