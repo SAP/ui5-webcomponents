@@ -110,6 +110,11 @@
 	border: 1px solid var(--sapUiFieldHoverBorderColor);
 }
 
+:host([value-state="None"]:hover) {
+	background-color: var(--sapUiFieldHoverBackground);
+	border: 1px solid var(--sapUiFieldHoverBorderColor);
+}
+
 :host([value-state]:not([value-state="None"])) {
 	border-width: var(--_ui5_input_state_border_width);
 }

@@ -148,6 +148,13 @@ https://github.com/philipwalton/flexbugs/issues/231
 }
 
 /* Compact */
+:host([text][data-ui5-compact-size]) .ui5-checkbox-root {
+	padding-right: 0;
+}
+:host([text][data-ui5-compact-size]) .ui5-checkbox-root:focus::before {
+	right: 0;
+}
+
 :host([wrap][text][data-ui5-compact-size]) .ui5-checkbox-root {
 	min-height: auto;
 	padding-top: var(--_ui5_checkbox_wrapped_focus_padding);
@@ -186,7 +193,6 @@ https://github.com/philipwalton/flexbugs/issues/231
 
 :host([data-ui5-compact-size]) .ui5-checkbox-root .ui5-checkbox-label {
 	margin-left: var(--_ui5_checkbox_compact_wrapper_padding);
-	width: calc(100% - .8125rem - var(--_ui5_checkbox_compact_inner_size));
 }
 
 :host([data-ui5-compact-size]) .ui5-checkbox-icon {
