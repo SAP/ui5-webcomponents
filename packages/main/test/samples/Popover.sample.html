@@ -15,7 +15,7 @@
 			<div class="popover-content">
 				<div class="flex-column">
 					<ui5-label for="emailInput" required>Email: </ui5-label>
-					<ui5-input id="emailInput" class="samples-margin-top" placeholder="Enter Email"></ui5-input>
+					<ui5-input id="emailInput" class="samples-margin-top" style="min-width: 150px;" placeholder="Enter Email"></ui5-input>
 				</div>
 			</div>
 			<div slot="footer" class="popover-footer">
@@ -28,11 +28,11 @@
 			var popoverOpener = document.getElementById("openPopoverButton");
 			var popover = document.getElementById("hello-popover");
 			var popoverCloser = document.getElementById("closePopoverButton");
-			
+
 			popoverOpener.addEventListener("click", function() {
 				popover.openBy(popoverOpener);
 			});
-			
+
 			popoverCloser.addEventListener("click", function() {
 				popover.close();
 			});
