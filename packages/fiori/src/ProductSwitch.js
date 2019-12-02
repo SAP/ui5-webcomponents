@@ -7,7 +7,6 @@ import ProductSwitchTemplate from "./generated/templates/ProductSwitchTemplate.l
 
 // Styles
 import ProductSwitchCss from "./generated/themes/ProductSwitch.css.js";
-import "./DefaultTheme.js";
 
 /**
  * @public

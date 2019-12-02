@@ -25,7 +25,6 @@ import { VALUE_STATE_ERROR, VALUE_STATE_WARNING } from "./generated/i18n/i18n-de
 
 // Styles
 import radioButtonCss from "./generated/themes/RadioButton.css.js";
-import "./DefaultTheme.js";
 
 /**
  * @public

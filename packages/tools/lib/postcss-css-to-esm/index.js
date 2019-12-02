@@ -14,6 +14,9 @@ module.exports = postcss.plugin('add css to esm transform plugin', function (opt
 
 		const filePath = `${targetFile}.js`;
 
-		fs.writeFileSync(filePath, `export default ${css}`);
+		const defaultTheme = opts.includeDefaultTheme ? `import "../../DefaultTheme.js";
+		` : ``;
+
+		fs.writeFileSync(filePath, `${defaultTheme}export default ${css}`);
 	}
 });

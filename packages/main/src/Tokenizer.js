@@ -8,7 +8,6 @@ import { MULTIINPUT_SHOW_MORE_TOKENS, TOKENIZER_ARIA_LABEL } from "./generated/i
 
 // Styles
 import styles from "./generated/themes/Tokenizer.css.js";
-import "./DefaultTheme.js";
 
 /**
  * @public

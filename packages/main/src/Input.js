@@ -25,7 +25,6 @@ import {
 
 // Styles
 import styles from "./generated/themes/Input.css.js";
-import "./DefaultTheme.js";
 
 /**
  * @public

@@ -13,7 +13,6 @@ import ListTemplate from "./generated/templates/ListTemplate.lit.js";
 
 // Styles
 import listCss from "./generated/themes/List.css.js";
-import "./DefaultTheme.js";
 
 /**
  * @public

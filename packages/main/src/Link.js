@@ -10,7 +10,6 @@ import { LINK_SUBTLE, LINK_EMPHASIZED } from "./generated/i18n/i18n-defaults.js"
 
 // Styles
 import linkCss from "./generated/themes/Link.css.js";
-import "./DefaultTheme.js";
 
 /**
  * @public

@@ -10,7 +10,6 @@ import { TEXTAREA_CHARACTERS_LEFT, TEXTAREA_CHARACTERS_EXCEEDED } from "./genera
 
 // Styles
 import styles from "./generated/themes/TextArea.css.js";
-import "./DefaultTheme.js";
 
 /**
  * @public

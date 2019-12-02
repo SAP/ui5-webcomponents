@@ -26,7 +26,6 @@ import {
 
 // Styles
 import styles from "./generated/themes/MultiComboBox.css.js";
-import "./DefaultTheme.js";
 
 /**
  * @public

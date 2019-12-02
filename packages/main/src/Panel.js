@@ -15,7 +15,6 @@ import { PANEL_ICON } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import panelCss from "./generated/themes/Panel.css.js";
-import "./DefaultTheme.js";
 
 /**
  * @public

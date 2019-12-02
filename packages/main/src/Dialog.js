@@ -7,7 +7,6 @@ import DialogTemplate from "./generated/templates/DialogTemplate.lit.js";
 
 // Styles
 import dialogCss from "./generated/themes/Dialog.css.js";
-import "./DefaultTheme.js";
 
 /**
  * @public

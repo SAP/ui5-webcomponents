@@ -4,7 +4,6 @@ import CustomListItemTemplate from "./generated/templates/CustomListItemTemplate
 
 // Styles
 import columnListItemCss from "./generated/themes/CustomListItem.css.js";
-import "./DefaultTheme.js";
 
 /**
  * @public

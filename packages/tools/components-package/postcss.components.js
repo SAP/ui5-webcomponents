@@ -13,6 +13,6 @@ module.exports = {
 				},
 			]
 		}),
-		postcssCSStoESM({toReplace: 'src'}),
+		postcssCSStoESM({toReplace: 'src', includeDefaultTheme: true}),
 	]
 };

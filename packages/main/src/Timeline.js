@@ -5,7 +5,6 @@ import TimelineTemplate from "./generated/templates/TimelineTemplate.lit.js";
 
 // Styles
 import styles from "./generated/themes/Timeline.css.js";
-import "./DefaultTheme.js";
 
 /**
  * @public

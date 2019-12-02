@@ -12,7 +12,6 @@ import { getFocusedElement, getClosedPopupParent } from "./popup-utils/PopupUtil
 
 // Styles
 import PopoverCss from "./generated/themes/Popover.css.js";
-import "./DefaultTheme.js";
 
 const arrowSize = 8;
 
