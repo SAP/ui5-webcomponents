@@ -43,7 +43,7 @@ const getScripts = (options) => {
 			test: 'nps "copy.test --watch --skip-initial-copy"',
 			bundle: "rollup --config config/rollup.config.js -w --environment ES5_BUILD,DEV",
 			styles: {
-				default: 'concurrently "nps "nps watch.styles.themes" "nps watch.styles.components"',
+				default: 'concurrently "nps watch.styles.themes" "nps watch.styles.components"',
 				themes: 'nps "build.styles.themes -w"',
 				components: 'nps "build.styles.components -w"',
 			},
