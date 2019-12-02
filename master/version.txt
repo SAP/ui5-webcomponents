@@ -1,5 +1,5 @@
-commit 635280b777114381c96de91fc3399ea25d7b2f80
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Mon Dec 2 13:14:51 2019 +0200
+commit 3a5d5e8ad5eb8d9502d6ecc4520fabcad1c6d7f4
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Dec 2 14:51:55 2019 +0200
 
-    refactor: always import default theme (#1001)
+    chore(release): publish v1.0.0-rc.5 (#1002)
