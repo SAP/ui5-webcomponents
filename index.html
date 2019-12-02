@@ -4,10 +4,9 @@
 <head>
     <title>UI5 Web Components</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="https://sap.github.io/ui5-webcomponents/assets/css/landing-page.css">
     <meta name="keywords" content="ui5-webcomponents,ui5 webcomponents,ui5 web components,webcomponents,web components,ui5,api,docs,documentation,sample,usage,examples,demo,Fiori 3,react,angular,vue">
-    <link type="image/x-icon" href="images/favicon.ico" rel="shortcut icon">
-    <link type="image/x-icon" href="images/favicon.ico" rel="icon">
+    <link type="image/x-icon" href="https://sap.github.io/ui5-webcomponents/assets/images/favicon.ico" rel="shortcut icon">
     <script id="sap-ui-config" type="application/json">
         {
             "theme": "sap_fiori_3",
@@ -15,9 +14,16 @@
         }
     </script>
 
-    <script src="./webcomponentsjs/webcomponents-loader.js"></script>
-    <script type="module" src="./resources/sap/ui/webcomponents/main/bundle.esm.js"></script>
-    <script nomodule src="./resources/sap/ui/webcomponents/main/bundle.es5.js"></script>
+    <script src="https://sap.github.io/ui5-webcomponents/assets/js/webcomponentsjs/webcomponents-loader.js"></script>
+    <script type="module" src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.esm.js"></script>
+    <script nomodule src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.es5.js"></script>
+
+    <style>
+        .page-header,
+        .side-bar {
+            display: none !important;
+        }
+    </style>
 </head>
 
 <body class="sapUiBody">
@@ -30,12 +36,12 @@
                             <h2 class="ui5-header bold-font">UI5 Web Components</h2>
                             <div class="sub-header">Enterprise-flavored sugar on top of native APIs!</div>
                             <div class="buttons-wrapper">
-                                <a href="./playground/" target="_blank" class="custom-button main-button">Get Started</a>
+                                <a href="https://sap.github.io/ui5-webcomponents/playground" target="_blank" class="custom-button main-button">Get Started</a>
                                 <a href="https://github.com/SAP/ui5-webcomponents" target="_blank" class="custom-button secondary-button">Open
                                     Github Project &rsaquo;</a>
                                 <iframe src="https://ghbtns.com/github-btn.html?user=sap&repo=ui5-webcomponents&type=star&count=true&size=small" frameborder="0" scrolling="0" width="90px" height="20px"></iframe>
                             </div>
-                            <div class="curr-version">Current version 1.0.0-rc.4</div>
+                            <div class="curr-version">Current version 1.0.0-rc.5</div>
                         </div>
                 </div>
             </header>
@@ -43,17 +49,17 @@
             <section class="main-strengths section-container flex-center">
                 <div class="flex-center wrapper max-width flex-wrap space-between">
                     <div class="strength">
-                        <img class="icon" src="./images/building.svg" alt="Enterprise Ready">
+                        <img class="icon" src="https://sap.github.io/ui5-webcomponents/assets/images/building.svg" alt="Enterprise Ready">
                         <h2>Enterprise Ready</h2>
                         <p>Compliant to SAP Fiori design language. Rich feature set. Includes all enterprise standards, such as accessibility, i18n, theming, etc</p>
                     </div>
                     <div class="strength">
-                        <img class="icon odometer-margin" src="./images/odometer.svg" alt="Lightweight">
+                        <img class="icon odometer-margin" src="https://sap.github.io/ui5-webcomponents/assets/images/odometer.svg" alt="Lightweight">
                         <h2>Lightweight</h2>
                         <p>Comes with minimal footprint that you can easily add to your app.</p>
                     </div>
                     <div class="strength">
-                        <img class="icon bulb-margin" src="./images/bulb.svg" alt="Easy To Consume">
+                        <img class="icon bulb-margin" src="https://sap.github.io/ui5-webcomponents/assets/images/bulb.svg" alt="Easy To Consume">
                         <h2>Easy To Consume</h2>
                         <p>Based on web standards. Future proved. Compliant with any technology of choice.</p>
                     </div>
@@ -63,7 +69,7 @@
             <section class="section-container flex-center logo-background">
                 <div class="wrapper example">
                     <h2>Test the UI5 Web Components</h2>
-                    <div class="example-wrapper flex-center space-around flex-wrap">
+                    <div class="flex-center space-around flex-wrap datepicker-example-wrapper">
                         <div class="datepicker-wrapper">
                             <ui5-datepicker></ui5-datepicker>
                         </div>
@@ -71,7 +77,7 @@
 <ui5-datepicker></ui5-datepicker>
                         </xmp></pre>
                     </div>
-                    <a href="./playground/" target="_blank" class="custom-button coding-button">Get Started</a>
+                    <a href="./playground" class="custom-button coding-button">Get Started</a>
                     <a href="https://codesandbox.io/s/71r1x5o51q?fontsize=14&module=%2Findex.html"target="_blank" class="custom-button coding-button">
                         Start coding in your browser (CodeSandbox)
                     </a>
@@ -83,7 +89,7 @@
                 <div class="cards-wrapper wrapper max-width flex-wrap">
                     <div class="card">
                         <div class="card-top">
-                            <img class="framework-logo margin-bottom" src="./images/react.svg" alt="React Logo">
+                            <img class="framework-logo margin-bottom" src="https://sap.github.io/ui5-webcomponents/assets/images/react.svg" alt="React Logo">
                             <p class="framework-description margin-bottom">We have a demo in React...</p>
                             <a class="custom-link" target="_blank" href="https://github.com/SAP/ui5-webcomponents-sample-react">Explore
                                 the code</a>
@@ -95,7 +101,7 @@
                     </div>
                     <div class="card">
                         <div class="card-top">
-                            <img class="framework-logo margin-bottom" src="./images/angular.svg" alt="Angular Logo">
+                            <img class="framework-logo margin-bottom" src="https://sap.github.io/ui5-webcomponents/assets/images/angular.svg" alt="Angular Logo">
                             <p class="framework-description margin-bottom">...but how about  Angular...</p>
                             <a class="custom-link" target="_blank" href="https://github.com/SAP/ui5-webcomponents-sample-angular">Explore
                                 the code</a>
@@ -107,7 +113,7 @@
                     </div>
                     <div class="card">
                         <div class="card-top">
-                            <img class="framework-logo margin-bottom" src="./images/vue.svg" alt="VueJS Logo">
+                            <img class="framework-logo margin-bottom" src="https://sap.github.io/ui5-webcomponents/assets/images/vue.svg" alt="VueJS Logo">
                             <p class="framework-description margin-bottom">...or if you fancy VueJS?</p>
                             <a class="custom-link" target="_blank" href="https://github.com/SAP/ui5-webcomponents-sample-vue">Explore
                                 the code</a>
@@ -125,29 +131,29 @@
                         <span class="compatibility-header">Framework Compatibility</span>
                         <p>UI5 Web Components are framework-agnostic and can run with arbitary frameworks:</p>
                         <div class="image-wrapper">
-                            <img class="logo-tiny" src="./images/ui5.png" alt="UI5 Logo">
-                            <img class="logo-tiny" src="./images/angular.svg" alt="Angular Logo">
-                            <img class="logo-tiny" src="./images/react.svg" alt="React Logo">
-                            <img class="logo-tiny" src="./images/vue.svg" alt="Vue Logo">
+                            <img class="logo-tiny" src="https://sap.github.io/ui5-webcomponents/assets/images/ui5.png"  alt="UI5 Logo">
+                            <img class="logo-tiny" src="https://sap.github.io/ui5-webcomponents/assets/images/angular.svg" alt="Angular Logo">
+                            <img class="logo-tiny" src="https://sap.github.io/ui5-webcomponents/assets/images/react.svg" alt="React Logo">
+                            <img class="logo-tiny" src="https://sap.github.io/ui5-webcomponents/assets/images/vue.svg" alt="Vue Logo">
                         </div>
                     </div>
                     <div class="compatibility-wrapper">
                         <span class="compatibility-header">Browser Compatibility</span>
                         <p>UI5 Web Components are supported on all modern browsers and even one old-school browser:</p>
                         <div class="image-wrapper">
-                            <img class="logo-tiny" src="./images/chrome.svg" alt="Chrome Logo">
-                            <img class="logo-tiny" src="./images/firefox.svg" alt="Firefox Logo">
-                            <img class="logo-tiny" src="./images/edge.svg" alt="Edge Logo">
-                            <img class="logo-tiny" src="./images/ie.svg" alt="Internet Explorer 11 Logo">
-                            <img class="logo-tiny" src="./images/safari.svg" alt="Safari Logo">
+                            <img class="logo-tiny" src="https://sap.github.io/ui5-webcomponents/assets/images/chrome.svg" alt="Chrome Logo">
+                            <img class="logo-tiny" src="https://sap.github.io/ui5-webcomponents/assets/images/firefox.svg" alt="Firefox Logo">
+                            <img class="logo-tiny" src="https://sap.github.io/ui5-webcomponents/assets/images/edge.svg" alt="Edge Logo">
+                            <img class="logo-tiny" src="https://sap.github.io/ui5-webcomponents/assets/images/ie.svg" alt="Internet Explorer 11 Logo">
+                            <img class="logo-tiny" src="https://sap.github.io/ui5-webcomponents/assets/images/safari.svg" alt="Safari Logo">
                         </div>
                     </div>
               </div>
             </section>
 
             <footer class="section-container footer flex-center">
-                <div class="wrapper footer-wrapper">
-                    <img class="logo-small margin-bottom" src="./images/sap-logo-svg.svg" alt="Angular Logo">
+                <div class="wrapper landing-footer-wrapper">
+                    <img class="logo-small margin-bottom" src="https://sap.github.io/ui5-webcomponents/assets/images/sap-logo-svg.svg" alt="Angular Logo">
                     <div class="footer-content">
                         <h2>Community</h2>
                         <div class="links">

@@ -1,6 +1,5 @@
-commit 7111d1c04dbbcf0b1feab50104ce78d375c36034
-Merge: 3c3f852 3f10b37
-Author: ilhan <ilhan.myumyun@sap.com>
-Date:   Fri Oct 11 13:43:29 2019 +0300
+commit 3e35e0c2fefa8b07c81de813f7ebd82a5796ef30
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Mon Dec 2 15:41:53 2019 +0200
 
-    Merge branch 'master' into latest-release-website
+    chore(release): update playground (#1003)

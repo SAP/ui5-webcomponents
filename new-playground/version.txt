@@ -1,5 +1,0 @@
-commit c529a0a1b7df85025236e91f032c97bae002854e
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Mon Nov 4 13:26:30 2019 +0200
-
-    move bundler install to package.json
