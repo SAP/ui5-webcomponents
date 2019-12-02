@@ -1,5 +1,5 @@
-commit 06d7479b46d00a7de0db16ee84f5aa77e349c719
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Fri Nov 29 10:52:45 2019 +0200
+commit 635280b777114381c96de91fc3399ea25d7b2f80
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Mon Dec 2 13:14:51 2019 +0200
 
-    docs: fix samples for ie (#1000)
+    refactor: always import default theme (#1001)
