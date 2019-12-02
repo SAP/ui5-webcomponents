@@ -33,7 +33,7 @@
     "url-search-params-polyfill": "^5.0.0"
   },
   "devDependencies": {
-    "@ui5/webcomponents-tools": "1.0.0-rc.4",
+    "@ui5/webcomponents-tools": "1.0.0-rc.5",
     "array-uniq": "^2.0.0",
     "copy-and-watch": "^0.1.4",
     "eslint": "^5.13.0",
