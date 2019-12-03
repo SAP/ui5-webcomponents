@@ -112,7 +112,7 @@
 }
 
 /* Label */
-ui5-label.labelInRadioButton {
+ui5-label.ui5-radio-label {
 	width: calc(100% - 2.75rem);
 	padding-right: 1px;
 	vertical-align: top;
@@ -123,6 +123,14 @@ ui5-label.labelInRadioButton {
 	text-overflow: ellipsis;
 	overflow: hidden;
 	pointer-events: none;
+}
+
+:host([wrap][text]) ui5-label.ui5-radio-label {
+	height: auto;
+	line-height: normal;
+	padding-bottom: .75rem;
+	padding-top: .75rem;
+	word-break: break-word;
 }
 
 /* SVG */
@@ -143,6 +151,17 @@ ui5-label.labelInRadioButton {
 /* Compact size */
 :host([data-ui5-compact-size]) .ui5-radio-root {
 	height : 2rem;
+}
+
+:host([data-ui5-compact-size][wrap][text]) .ui5-radio-root {
+	height: auto;
+}
+
+:host([data-ui5-compact-size][wrap][text]) ui5-label.ui5-radio-label {
+	height: auto;
+	line-height: normal;
+	padding-top: .5rem;
+	padding-bottom: .5rem;
 }
 
 :host([data-ui5-compact-size]) .ui5-radio-root:focus:before {
@@ -170,7 +189,7 @@ ui5-label.labelInRadioButton {
 	line-height: 2rem;
 }
 
-:host([data-ui5-compact-size]) .ui5-radio-root ui5-label.labelInRadioButton {
+:host([data-ui5-compact-size]) .ui5-radio-root ui5-label.ui5-radio-label {
 	line-height: 2rem;
 	height: 2rem;
 	width: calc(100% - 2rem + 1px);
