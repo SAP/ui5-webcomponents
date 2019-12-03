@@ -4,9 +4,8 @@
 	right: 0;
 	top: 0;
 	bottom: 0;
-	visibility: hidden;
 	width: 100%;
-	display: flex;
+	display: none;
 	height: 100%;
 	pointer-events: none;
 	overflow: hidden;
@@ -39,7 +38,7 @@
 }
 
 :host([open]) .ui5-toast-root-parent {
-	visibility: visible;
+	display: flex;
 }
 
 :host([placement="TopStart"]) .ui5-toast-root-parent {
