@@ -132,10 +132,8 @@ class Toast extends UI5Element {
 
 	onAfterRendering() {
 		if (this._reopen) {
-			requestAnimationFrame(_ => {
-				this.open = true;
-				this._reopen = false;
-			});
+			this._reopen = false;
+			this._initiateOpening();
 		}
 	}
 
@@ -148,7 +146,7 @@ class Toast extends UI5Element {
 			this._reopen = true;
 			this.open = false;
 		} else {
-			this.open = true;
+			this._initiateOpening();
 		}
 	}
 
@@ -167,6 +165,12 @@ class Toast extends UI5Element {
 				"opacity": this.open ? "0" : "",
 			},
 		};
+	}
+
+	_initiateOpening() {
+		requestAnimationFrame(_ => {
+			this.open = true;
+		});
 	}
 
 	_ontransitionend() {
