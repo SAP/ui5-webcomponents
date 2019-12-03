@@ -130,7 +130,7 @@ ui5-label.ui5-radio-label {
 	line-height: normal;
 	padding-bottom: .75rem;
 	padding-top: .75rem;
-	word-break: break-word;
+	word-break: break-all;
 }
 
 /* SVG */
