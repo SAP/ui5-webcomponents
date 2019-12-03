@@ -268,6 +268,7 @@ class Button extends UI5Element {
 
 	_onmouseup(event) {
 		event.isMarked = "button";
+		this.active = false;
 	}
 
 	_ontouchstart(event) {
@@ -277,12 +278,10 @@ class Button extends UI5Element {
 		this.active = true;
 	}
 
-	_ontouchend() {
+	_ontouchend(event) {
 		// Fire custom event on touch devices, because there is a bug withtouchstart event
 		this.fireEvent("click");
-		if (this.active) {
-			this.active = false;
-		}
+		this.active = false;
 	}
 
 	_onkeydown(event) {

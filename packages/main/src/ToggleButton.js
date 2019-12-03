@@ -69,6 +69,11 @@ class ToggleButton extends Button {
 	_onclick() {
 		this.pressed = !this.pressed;
 	}
+
+	_ontouchend(event) {
+		super._ontouchend();
+		this.pressed = !this.pressed;
+	}
 }
 
 ToggleButton.define();

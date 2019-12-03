@@ -69,8 +69,12 @@
 	user-select: none;
 }
 
-:host(:not([active][_is-mobile])):hover {
+:host(:not([active]):hover) {
 	background: var(--sapUiButtonHoverBackground);
+}
+
+:host([_is-mobile]:hover) {
+	background: var(--sapUiButtonBackground);
 }
 
 .ui5-button-icon {

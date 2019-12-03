@@ -17,7 +17,7 @@
 }
 
 :host([design="Positive"][pressed][active]),
-:host([design="Positive"][pressed]:hover) {
+:host([design="Positive"][pressed]:not([_is-mobile]):hover) {
 	background: var(--_ui5_toggle_button_pressed_positive_hover);
 }
 
@@ -31,7 +31,7 @@
 }
 
 :host([design="Negative"][pressed][active]),
-:host([design="Negative"][pressed]:hover) {
+:host([design="Negative"][pressed]:not([_is-mobile]):hover) {
 	background: var(--_ui5_toggle_button_pressed_negative_hover);
 }
 
@@ -50,7 +50,7 @@
 }
 
 :host([pressed][active]),
-:host([pressed]:hover) {
+:host([pressed]:not([_is-mobile]):hover) {
 	background: var(--sapUiToggleButtonPressedHoverBackground);
 }
 
