@@ -19,7 +19,7 @@ const metadata = {
 		 * Defines the duration in milliseconds for which <code>ui5-toast</code>
 		 * remains on the screen before it's automatically closed.
 		 *
-		 * @type {number}
+		 * @type {Integer}
 		 * @defaultvalue 3000
 		 * @public
 		 */
@@ -29,7 +29,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the placement of the <code>ui5-message-toast</code> web component.
+		 * Defines the placement of the <code>ui5-toast</code> web component.
 		 * <br><br>
 		 * Available options are:
 		 * <ul>
@@ -44,7 +44,7 @@ const metadata = {
 		 * <li><code>BottomEnd</code></li>
 		 * <ul>
 		 *
-		 * @type {ToastPlacement}
+		 * @type {string}
 		 * @defaultvalue "BottomCenter"
 		 * @public
 		 */
@@ -90,13 +90,13 @@ const metadata = {
  *
  * <h4>When to use:</h4>
  * <ul>
- * <li>You want to display a short success of information message.</li>
+ * <li>You want to display a short success or information message.</li>
  * <li>You do not want to interrupt users while they are performing an action.</li>
  * <li>You want to confirm a successful action.</li>
  * </ul>
  * <h4>When not to use:</h4>
  * <ul>
- * <li>You want to display an error or warning message.</li>
+ * <li>You want to display error or warning message.</li>
  * <li>You want to interrupt users while they are performing an action.</li>
  * <li>You want to make sure that users read the message before they leave the page.</li>
  * <li>You want users to be able to copy some part of the message text.</li>
@@ -112,6 +112,7 @@ const metadata = {
  * @extends UI5Element
  * @tagname ui5-toast
  * @public
+ * @since 1.0.0-rc.6
  */
 class Toast extends UI5Element {
 	static get metadata() {
@@ -137,6 +138,10 @@ class Toast extends UI5Element {
 		}
 	}
 
+	/**
+	 * Shows the <code>ui5-toast</code>.
+	 * @public
+	 */
 	show() {
 		if (this.open) {
 			// If the Toast is already opened, we set the _reopen flag to true, in
