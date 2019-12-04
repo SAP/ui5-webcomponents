@@ -1,5 +1,5 @@
-commit 3e35e0c2fefa8b07c81de813f7ebd82a5796ef30
+commit b4062500d28b445a71c804c5167f5a9663b1a604
 Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Mon Dec 2 15:41:53 2019 +0200
+Date:   Wed Dec 4 16:18:52 2019 +0200
 
-    chore(release): update playground (#1003)
+    chore: update playground (#1015)
