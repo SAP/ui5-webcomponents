@@ -1,5 +1,5 @@
-commit 82b1a0738123f62c18325bd794d06b6f16d9a3fa
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Dec 4 09:38:10 2019 +0200
+commit 2117ecc3aadda547d3eba633dc58e2b9e6230723
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Wed Dec 4 10:14:28 2019 +0200
 
-    docs(ui5-shellbar): display component properties (#1009)
+    fix(ui5-checkbox): fix wrapping of a long word (#1007)
