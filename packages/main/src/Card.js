@@ -6,7 +6,7 @@ import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import CardTemplate from "./generated/templates/CardTemplate.lit.js";
 import Icon from "./Icon.js";
 
-import { ARIA_ROLEDESCRIPTION_CARD, AVATAR_TOOLTIP, ARIA_LABEL_CARD_CONTENT } from "./generated/i18n/i18n-defaults.js";
+import { ARIA_ROLEDESCRIPTION_CARD, AVATAR_TOOLTIP, ARIA_LABEL_CARD_CONTENT, ARIA_ROLEDESCRIPTION_CARD_HEADER, ARIA_ROLEDESCRIPTION_INTERACTIVE_TEXT } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import cardCss from "./generated/themes/Card.css.js";
@@ -177,8 +177,12 @@ class Card extends UI5Element {
 		return !!this.avatar && !this.icon;
 	}
 
-	get tabindex() {
-		return this.headerInteractive ? "0" : undefined;
+	get ariaHeaderRole() {
+		return this.headerInteractive ? "button" : "heading";
+	}
+
+	get ariaLevel () {
+		return this.headerInteractive ? undefined : "3";
 	}
 
 	get hasHeader() {
@@ -191,6 +195,10 @@ class Card extends UI5Element {
 
 	get ariaCardRoleDescription() {
 		return this.i18nBundle.getText(ARIA_ROLEDESCRIPTION_CARD);
+	}
+
+	get ariaCardHeaderRoleDescription() {
+		return this.headerInteractive ? this.i18nBundle.getText(ARIA_ROLEDESCRIPTION_INTERACTIVE_TEXT) + " " + this.i18nBundle.getText(ARIA_ROLEDESCRIPTION_CARD_HEADER) : this.i18nBundle.getText(ARIA_ROLEDESCRIPTION_CARD_HEADER);
 	}
 
 	get ariaCardAvatarLabel() {

@@ -2,17 +2,16 @@
 	class="{{classes.main}}"
 	dir="{{rtl}}"
 	role="region"
-	aria-labelledby="{{_id}}-heading"
-	aria-roledescription="{{ariaCardRoleDescription}}"
->
+	aria-labelledby="{{_id}}-desc {{_id}}-heading">
 	{{#if hasHeader}}
-		<header class="{{classes.header}}"
+		<div class="{{classes.header}}"
 			@click="{{_headerClick}}"
 			@keydown="{{_headerKeydown}}"
 			@keyup="{{_headerKeyup}}"
-			tabindex="{{tabindex}}"
-			role="group"
-			aria-labelledby="{{_id}}-heading {{_id}}-subtitle">
+			role="{{ariaHeaderRole}}"
+			aria-labelledby="{{_id}}-heading {{_id}}-subtitle"
+			aria-level="{{ariaLevel}}"
+			tabindex="0">
 
 			<div class="ui5-card-avatar" aria-label="{{ariaCardAvatarLabel}}">
 				<slot name="avatar"></slot>
@@ -27,11 +26,12 @@
 					<div id="{{_id}}-subtitle" class="ui5-card-subtitle ">{{subtitle}}</div>
 				{{/if}}
 			</div>
-			<span part="status" class="ui5-card-status">{{status}}</span>
-		</header>
+			<span id="{{_id}}-status" part="status" class="ui5-card-status">{{status}}</span>
+		</div>
 	{{/if}}
 
 	<section role="group" aria-label="{{ariaCardContentLabel}}">
 		<slot></slot>
 	</section>
+	<span id="{{_id}}-desc" class="ui5-hidden-text">{{ariaCardRoleDescription}}</span>
 </div>
