@@ -1,5 +1,7 @@
 :host {
     border: 1px solid var(--ui5-demo-border-color);
+    background-color: var(--sapPrimary1);
+    color: var(--sapPrimary2);
     display: block;
     height: 3rem;
 }
