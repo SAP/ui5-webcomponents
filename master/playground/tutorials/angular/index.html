@@ -7,7 +7,7 @@
   <meta name="keywords" content="ui5-webcomponents,ui5 webcomponents,ui5 web components,webcomponents,web components,ui5,api,docs,documentation,sample,usage,examples,demo,Fiori 3">
 
   
-    <title>Documentation - UI5 Web Components</title>
+    <title>Angular - UI5 Web Components</title>
 
     
   
@@ -24,17 +24,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Documentation | UI5 Web Components</title>
+<title>Angular | UI5 Web Components</title>
 <meta name="generator" content="Jekyll v3.8.6" />
-<meta property="og:title" content="Documentation" />
+<meta property="og:title" content="Angular" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Enterprise-flavored sugar on top of native APIs!" />
 <meta property="og:description" content="Enterprise-flavored sugar on top of native APIs!" />
-<link rel="canonical" href="https://sap.github.io/ui5-webcomponents/master/playground/docs" />
-<meta property="og:url" content="https://sap.github.io/ui5-webcomponents/master/playground/docs" />
+<link rel="canonical" href="https://sap.github.io/ui5-webcomponents/master/playground/tutorials/angular/" />
+<meta property="og:url" content="https://sap.github.io/ui5-webcomponents/master/playground/tutorials/angular/" />
 <meta property="og:site_name" content="UI5 Web Components" />
 <script type="application/ld+json">
-{"description":"Enterprise-flavored sugar on top of native APIs!","@type":"WebPage","url":"https://sap.github.io/ui5-webcomponents/master/playground/docs","headline":"Documentation","@context":"https://schema.org"}</script>
+{"description":"Enterprise-flavored sugar on top of native APIs!","@type":"WebPage","url":"https://sap.github.io/ui5-webcomponents/master/playground/tutorials/angular/","headline":"Angular","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -98,9 +98,9 @@
     
       
         
-          <li class="navigation-list-item active">
+          <li class="navigation-list-item">
             
-            <a href="https://sap.github.io/ui5-webcomponents/master/playground/docs" class="navigation-list-link active">Documentation</a>
+            <a href="https://sap.github.io/ui5-webcomponents/master/playground/docs" class="navigation-list-link">Documentation</a>
             
               
               <ul class="navigation-list-child-list ">
@@ -272,7 +272,7 @@
     
       
         
-          <li class="navigation-list-item">
+          <li class="navigation-list-item active">
             
             <a href="https://sap.github.io/ui5-webcomponents/master/playground/tutorials" class="navigation-list-link">Tutorials</a>
             
@@ -284,9 +284,9 @@
                   
                 
                   
-                    <li class="navigation-list-item ">
+                    <li class="navigation-list-item  active">
                       
-                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/tutorials/angular/" class="navigation-list-link">
+                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/tutorials/angular/" class="navigation-list-link active">
                         <div class="component-name">Angular</div>
                         
                       </a>
@@ -877,138 +877,158 @@
       <div class="main-content">
         
           
+            <nav class="breadcrumb-nav">
+              <ol class="breadcrumb-nav-list">
+                
+                  <li class="breadcrumb-nav-list-item"><a href="https://sap.github.io/ui5-webcomponents/master/playground/tutorials">Tutorials</a></li>
+                
+                <li class="breadcrumb-nav-list-item"><span>Angular</span></li>
+              </ol>
+            </nav>
+          
         
         <div id="main-content" class="page-content" role="main">
-          <h1 id="documentation">Documentation:</h1>
+          <h1 id="get-started-with-ui5-web-components--angular">Get started with UI5 Web Components &amp; Angular</h1>
+
+<p>In this tutorial you will learn how to add UI5 Web Components to your application. The UI5 Web Components can be added both to new Angular applications, as well as already existing ones.</p>
+
+<h2 id="step-1-install-angular-cli">Step 1: Install Angular CLI</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm <span class="nb">install</span> <span class="nt">-g</span> @angular/cli
+</code></pre></div></div>
+
+<h2 id="step-2-create-new-angular-application">Step 2: Create New Angular Application</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ng new ui5-web-components-application
+<span class="nb">cd </span>ui5-web-components-application
+</code></pre></div></div>
+
+<h2 id="step-3-add-ui5-web-components">Step 3: Add UI5 Web Components</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm <span class="nb">install</span> @ui5/webcomponents <span class="nt">--save</span>
+</code></pre></div></div>
+
+<h2 id="step-4-allow-the-use-of-custom-elements-in-angular">Step 4. Allow the Use of Custom Elements in Angular</h2>
+
+<p>Before using UI5 Web Components, you have to allow the use of custom elements in Angular. To do so, you have to import CUSTOM_ELEMENTS_SCHEMA in <code class="highlighter-rouge">app.module.ts</code> :</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="p">...,</span> <span class="nx">CUSTOM_ELEMENTS_SCHEMA</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@angular/core</span><span class="dl">'</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>After importing it, you have to add it to the schemas array:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">imports</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">...</span>
+<span class="p">],</span>
+<span class="nx">schemas</span><span class="p">:</span> <span class="p">[</span>
+    <span class="nx">CUSTOM_ELEMENTS_SCHEMA</span>
+<span class="p">]</span>
+</code></pre></div></div>
+
+<h2 id="step-5-import-the-components-that-you-are-going-to-use">Step 5. Import the Components That You Are Going to Use</h2>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents/dist/Button</span><span class="dl">"</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="step-6-use-the-imported-elements-in-your-application">Step 6. Use the Imported Elements in Your Application</h2>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;ui5-button&gt;</span>Hello world!<span class="nt">&lt;/ui5-button&gt;</span>
+</code></pre></div></div>
+
+<h2 id="step-7-launch-the-application">Step 7. Launch the Application</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ng serve <span class="nt">-o</span>
+</code></pre></div></div>
+
+<h2 id="additional">Additional</h2>
+
+<h3 id="two-way-data-binding">Two-Way Data Binding</h3>
+
+<p>You can use two-way data binding with the following components: CheckBox, RadioButton, Input, DatePicker, Switch, TextArea.
+In order to use it, you have to use a library called <a href="https://github.com/hotforfeature/origami">Origami</a>, that provides advanced support for two-way data binding of custom elements.</p>
+
+<p>Example:</p>
+
+<ol>
+  <li>Install Origami:</li>
+</ol>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm <span class="nb">install</span> @codebakery/origami
+</code></pre></div></div>
+
+<ol>
+  <li>Import the OrigamiFormsModule from Origami</li>
+</ol>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">NgModule</span><span class="p">,</span> <span class="nx">CUSTOM_ELEMENTS_SCHEMA</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@angular/core</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">BrowserModule</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@angular/platform-browser</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">OrigamiFormsModule</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@codebakery/origami/forms</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">AppComponent</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">./app.component</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="p">@</span><span class="nd">NgModule</span><span class="p">({</span>
+  <span class="na">imports</span><span class="p">:</span> <span class="p">[</span><span class="nx">BrowserModule</span><span class="p">,</span> <span class="nx">OrigamiFormsModule</span><span class="p">],</span>
+  <span class="na">declarations</span><span class="p">:</span> <span class="p">[</span><span class="nx">AppComponent</span><span class="p">],</span>
+  <span class="na">schemas</span><span class="p">:</span> <span class="p">[</span><span class="nx">CUSTOM_ELEMENTS_SCHEMA</span><span class="p">],</span>
+  <span class="na">bootstrap</span><span class="p">:</span> <span class="p">[</span><span class="nx">AppComponent</span><span class="p">]</span>
+<span class="p">})</span>
+<span class="k">export</span> <span class="kd">class</span> <span class="nx">AppModule</span> <span class="p">{}</span>
+</code></pre></div></div>
+
+<ol>
+  <li>Use Origami in your template:</li>
+</ol>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;ui5-input</span> <span class="na">[(ngModel)]=</span><span class="s">"value"</span> <span class="na">origami</span><span class="nt">&gt;&lt;/ui5-input&gt;</span>
+</code></pre></div></div>
 
 
-          
-          <hr>
-          <h2 class="text-delta">Table of contents</h2>
-          
-          <ul>
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-              <li>
-                <a href="https://sap.github.io/ui5-webcomponents/master/playground/docs/assets/">Assets</a>
-              </li>
-              
-            
-              
-            
-              
-            
-              
-            
-              
-              <li>
-                <a href="https://sap.github.io/ui5-webcomponents/master/playground/docs/configuration/">Configuration</a>
-              </li>
-              
-            
-              
-            
-              
-            
-              
-              <li>
-                <a href="https://sap.github.io/ui5-webcomponents/master/playground/docs/faq/">FAQ</a>
-              </li>
-              
-            
-              
-            
-              
-            
-              
-              <li>
-                <a href="https://sap.github.io/ui5-webcomponents/master/playground/docs/guidelines/">Guidelines</a>
-              </li>
-              
-            
-              
-            
-              
-            
-              
-            
-              
-              <li>
-                <a href="https://sap.github.io/ui5-webcomponents/master/playground/docs/how-to-use/">How To Use</a>
-              </li>
-              
-            
-              
-            
-              
-              <li>
-                <a href="https://sap.github.io/ui5-webcomponents/master/playground/docs/migration-guides/">Migration-guides</a>
-              </li>
-              
-            
-              
-            
-              
-              <li>
-                <a href="https://sap.github.io/ui5-webcomponents/master/playground/docs/public-module-imports/">Public Module Imports</a>
-              </li>
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-          </ul>
+<footer class="footer-wrapper">
+    <div class="footer-links">
+        <a class="separator" href="https://www.sap.com/about/legal/privacy.html" target="_blank">Privacy Policy</a>
+        <a href="https://www.sap.com/about/legal/impressum.html" target="_blank">Legal</a>
+    </div>
+    <img src="https://sap.github.io/ui5-webcomponents/master/assets/images/sap-logo-svg.svg" alt="Sap Logo" />
+</footer>
+
+<style>
+    .footer-wrapper {
+        margin-top: 2rem;
+        padding-top: 2rem;
+        padding-bottom: 4rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        border-top: 1px solid #D8D8D8;
+        font-family: "72-Regular";
+    }
+
+    .footer-links {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: flex-start;
+        font-family: "72-Regular";
+    }
+
+    .footer-links > a {
+        color: #333333;
+        text-decoration: none;
+    }
+
+    .footer-links > a:hover {
+        text-decoration: underline;
+    }
+
+    .separator::after {
+        content: "|";
+        padding: 0 1rem;
+        color: #D8D8D8;
+        text-decoration: none;
+    }
+</style>
+
           
         </div>
       </div>

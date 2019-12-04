@@ -7,7 +7,7 @@
   <meta name="keywords" content="ui5-webcomponents,ui5 webcomponents,ui5 web components,webcomponents,web components,ui5,api,docs,documentation,sample,usage,examples,demo,Fiori 3">
 
   
-    <title>Documentation - UI5 Web Components</title>
+    <title>Select - UI5 Web Components</title>
 
     
   
@@ -24,17 +24,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Documentation | UI5 Web Components</title>
+<title>Select | UI5 Web Components</title>
 <meta name="generator" content="Jekyll v3.8.6" />
-<meta property="og:title" content="Documentation" />
+<meta property="og:title" content="Select" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Enterprise-flavored sugar on top of native APIs!" />
 <meta property="og:description" content="Enterprise-flavored sugar on top of native APIs!" />
-<link rel="canonical" href="https://sap.github.io/ui5-webcomponents/master/playground/docs" />
-<meta property="og:url" content="https://sap.github.io/ui5-webcomponents/master/playground/docs" />
+<link rel="canonical" href="https://sap.github.io/ui5-webcomponents/master/playground/components/Select/" />
+<meta property="og:url" content="https://sap.github.io/ui5-webcomponents/master/playground/components/Select/" />
 <meta property="og:site_name" content="UI5 Web Components" />
 <script type="application/ld+json">
-{"description":"Enterprise-flavored sugar on top of native APIs!","@type":"WebPage","url":"https://sap.github.io/ui5-webcomponents/master/playground/docs","headline":"Documentation","@context":"https://schema.org"}</script>
+{"description":"Enterprise-flavored sugar on top of native APIs!","@type":"WebPage","url":"https://sap.github.io/ui5-webcomponents/master/playground/components/Select/","headline":"Select","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -98,9 +98,9 @@
     
       
         
-          <li class="navigation-list-item active">
+          <li class="navigation-list-item">
             
-            <a href="https://sap.github.io/ui5-webcomponents/master/playground/docs" class="navigation-list-link active">Documentation</a>
+            <a href="https://sap.github.io/ui5-webcomponents/master/playground/docs" class="navigation-list-link">Documentation</a>
             
               
               <ul class="navigation-list-child-list ">
@@ -410,7 +410,7 @@
     
       
         
-          <li class="navigation-list-item">
+          <li class="navigation-list-item active">
             
             <a href="https://sap.github.io/ui5-webcomponents/master/playground/components" class="navigation-list-link">Components</a>
             
@@ -650,9 +650,9 @@
                   
                 
                   
-                    <li class="navigation-list-item ">
+                    <li class="navigation-list-item  active">
                       
-                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/Select/" class="navigation-list-link">
+                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/Select/" class="navigation-list-link active">
                         <div class="component-name">Select</div>
                         
                       </a>
@@ -877,138 +877,368 @@
       <div class="main-content">
         
           
+            <nav class="breadcrumb-nav">
+              <ol class="breadcrumb-nav-list">
+                
+                  <li class="breadcrumb-nav-list-item"><a href="https://sap.github.io/ui5-webcomponents/master/playground/components">Components</a></li>
+                
+                <li class="breadcrumb-nav-list-item"><span>Select</span></li>
+              </ol>
+            </nav>
+          
         
         <div id="main-content" class="page-content" role="main">
-          <h1 id="documentation">Documentation:</h1>
+          <style>
+	.select {
+		width:300px;
+		max-width: 100%;
+		margin: 0.5rem;
+	}
+
+	@media (max-width:599px) {
+		.select {
+			margin-left: 0;
+			margin-right: 0;
+		}
+	}
+</style>
+
+<header class="component-heading">
+	<h2 class="control-header">Select</h2>
+	<div class="component-heading-since">
+		<span>v0.8.0</span>
+	</div>
+</header>
+
+<div class="component-package">@ui5/webcomponents</div>
+
+<div class="control-tag">&lt;ui5-select&gt;</div>
+
+<section>
+	<h3>Basic Select</h3>
+	<div class="snippet">
+		<ui5-select class="select">
+			<ui5-option icon="iphone">Phone</ui5-option>
+			<ui5-option icon="ipad">Tablet</ui5-option>
+			<ui5-option icon="laptop" selected>Desktop</ui5-option>
+		</ui5-select>
+		<ui5-select disabled class="select">
+				<ui5-option icon="iphone" selected>Phone</ui5-option>
+				<ui5-option icon="ipad">Tablet</ui5-option>
+				<ui5-option icon="laptop">Desktop</ui5-option>
+		</ui5-select>
+	</div>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-select</span> <span class="na">class=</span><span class="s">"select"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-option</span> <span class="na">icon=</span><span class="s">"iphone"</span><span class="nt">&gt;</span>Phone<span class="nt">&lt;/ui5-option&gt;</span>
+	<span class="nt">&lt;ui5-option</span> <span class="na">icon=</span><span class="s">"ipad"</span><span class="nt">&gt;</span>Tablet<span class="nt">&lt;/ui5-option&gt;</span>
+	<span class="nt">&lt;ui5-option</span> <span class="na">icon=</span><span class="s">"laptop"</span> <span class="na">selected</span><span class="nt">&gt;</span>Desktop<span class="nt">&lt;/ui5-option&gt;</span>
+<span class="nt">&lt;/ui5-select&gt;</span>
+<span class="nt">&lt;ui5-select</span> <span class="na">disabled</span> <span class="na">class=</span><span class="s">"select"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-option</span> <span class="na">icon=</span><span class="s">"iphone"</span> <span class="na">selected</span><span class="nt">&gt;</span>Phone<span class="nt">&lt;/ui5-option&gt;</span>
+	<span class="nt">&lt;ui5-option</span> <span class="na">icon=</span><span class="s">"ipad"</span><span class="nt">&gt;</span>Tablet<span class="nt">&lt;/ui5-option&gt;</span>
+	<span class="nt">&lt;ui5-option</span> <span class="na">icon=</span><span class="s">"laptop"</span><span class="nt">&gt;</span>Desktop<span class="nt">&lt;/ui5-option&gt;</span>
+<span class="nt">&lt;/ui5-select&gt;</span>
+	</code></pre></figure></pre>
+</section>
+
+<section>
+	<h3>Select with Value State</h3>
+	<div class="snippet">
+		<ui5-select value-state="Success" class="select">
+				<ui5-option icon="meal" selected>Apple</ui5-option>
+				<ui5-option icon="meal">Avocado</ui5-option>
+				<ui5-option icon="meal">Mango</ui5-option>
+		</ui5-select>
+		<ui5-select value-state="Warning" class="select">
+				<ui5-option icon="meal">Orange</ui5-option>
+				<ui5-option icon="meal" selected>Pumpkin</ui5-option>
+				<ui5-option icon="meal">Carrot</ui5-option>
+		</ui5-select>
+		<ui5-select value-state="Error" class="select">
+				<ui5-option icon="meal">Strawberry</ui5-option>
+				<ui5-option icon="meal">Tomato</ui5-option>
+				<ui5-option icon="meal" selected>Red Chili Pepper</ui5-option>
+		</ui5-select>
+	</div>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-select</span> <span class="na">value-state=</span><span class="s">"Success"</span> <span class="na">class=</span><span class="s">"select"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-option</span> <span class="na">icon=</span><span class="s">"meal"</span> <span class="na">selected</span><span class="nt">&gt;</span>Apple<span class="nt">&lt;/ui5-option&gt;</span>
+	<span class="nt">&lt;ui5-option</span> <span class="na">icon=</span><span class="s">"meal"</span><span class="nt">&gt;</span>Avocado<span class="nt">&lt;/ui5-option&gt;</span>
+	<span class="nt">&lt;ui5-option</span> <span class="na">icon=</span><span class="s">"meal"</span><span class="nt">&gt;</span>Mango<span class="nt">&lt;/ui5-option&gt;</span>
+<span class="nt">&lt;/ui5-select&gt;</span>
+<span class="nt">&lt;ui5-select</span> <span class="na">value-state=</span><span class="s">"Warning"</span> <span class="na">class=</span><span class="s">"select"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-option</span> <span class="na">icon=</span><span class="s">"meal"</span><span class="nt">&gt;</span>Orange<span class="nt">&lt;/ui5-option&gt;</span>
+	<span class="nt">&lt;ui5-option</span> <span class="na">icon=</span><span class="s">"meal"</span> <span class="na">selected</span><span class="nt">&gt;</span>Pumpkin<span class="nt">&lt;/ui5-option&gt;</span>
+	<span class="nt">&lt;ui5-option</span> <span class="na">icon=</span><span class="s">"meal"</span><span class="nt">&gt;</span>Carrot<span class="nt">&lt;/ui5-option&gt;</span>
+<span class="nt">&lt;/ui5-select&gt;</span>
+<span class="nt">&lt;ui5-select</span> <span class="na">value-state=</span><span class="s">"Error"</span> <span class="na">class=</span><span class="s">"select"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-option</span> <span class="na">icon=</span><span class="s">"meal"</span><span class="nt">&gt;</span>Strawberry<span class="nt">&lt;/ui5-option&gt;</span>
+	<span class="nt">&lt;ui5-option</span> <span class="na">icon=</span><span class="s">"meal"</span><span class="nt">&gt;</span>Tomato<span class="nt">&lt;/ui5-option&gt;</span>
+	<span class="nt">&lt;ui5-option</span> <span class="na">icon=</span><span class="s">"meal"</span> <span class="na">selected</span><span class="nt">&gt;</span>Red Chili Pepper<span class="nt">&lt;/ui5-option&gt;</span>
+<span class="nt">&lt;/ui5-select&gt;</span>
+	</code></pre></figure></pre>
+</section>
 
 
-          
-          <hr>
-          <h2 class="text-delta">Table of contents</h2>
-          
-          <ul>
+    <div class="page-container">
+      <div class="api-container">
+        <section class="component-description">
+          The <code>ui5-select</code> component is used to create a drop-down list. The items inside the <code>ui5-select</code> define the available options by using the <code>ui5-option</code> component.
+
+<h3>Keyboard Handling</h3> The <code>ui5-select</code> provides advanced keyboard handling. If the <code>ui5-select</code> is focused, you can open or close the drop-down by pressing <code>F4</code>, <code>ALT+UP</code> or <code>ALT+DOWN</code> keys. Once the drop-down is opened, you can use the <code>UP</code> and <code>DOWN</code> arrow keys to navigate through the available options and select one by pressing the <code>Space</code> or <code>Enter</code> keys. <br> <h3>ES6 Module Import</h3> <code>import "@ui5/webcomponents/dist/Select";</code> <br> <code>import "@ui5/webcomponents/dist/Option";</code>
+          <section class="component-api space-top">
             
-              
+                  <h3 class="comment-api-title" >Properties/Attributes</h3>
+                  <p class="small-space-top" >You can use both properties and attributes with the same effect. The name of each attribute is listed below the name of the property, if different.</p>
             
-              
+                  <div class="small-space-top api-table">
+                    <div class="head api-table-header-roll">
+                      <div class="cell api-table-header-cell">Name</div>
+                      <div class="cell api-table-header-cell">Type</div>
+                      <div class="cell api-table-header-cell">Default Value</div>
+                      <div class="cell api-table-header-cell">Description</div>
+                    </div>
             
-              
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          disabled
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell">false</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines whether <code>ui5-select</code> is in disabled state. <br><br> <b>Note:</b> A disabled <code>ui5-select</code> is noninteractive.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          name
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell">&quot;&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Determines the name with which the <code>ui5-select</code> will be submitted in an HTML form. The value of the <code>ui5-select</code> will be the value of the currently selected <code>ui5-option</code>.
             
-              
+            <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project: <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
             
-              
+            <b>Note:</b> When set, a native <code>input</code> HTML element will be created inside the <code>ui5-select</code> so that it can be submitted as part of an HTML form. Do not use this property unless you need to submit a form.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          selectedOption
+                            (readonly)
+                            <br>
+                            <code>selected-option</code>
+                        </div>
+                        <div class="cell api-table-content-cell">ui5-option</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Currently selected option
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          valueState
+                            <br>
+                            <code>value-state</code>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell">&quot;None&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the value state of <code>ui5-select</code>. Available options are: <code>None</code>, <code>Success</code>, <code>Warning</code> and <code>Error</code>.
+                        </div>
+                      </div>
             
-              
-              <li>
-                <a href="https://sap.github.io/ui5-webcomponents/master/playground/docs/assets/">Assets</a>
-              </li>
-              
+                  </div>
             
-              
+                <h3 class="comment-api-title space-top" >Slots</h3>
+            	<p class="small-space-top" >
+            	  This Element provides slot(s). This means it can display its child nodes.<br>
+            	  Unless targeting the default slot, use the <code>slot</code> attribute to define the destination slot for each child.<br>
+            	  Text, along with HTML Elements with no <code>slot</code> attribute, goes the the <code>default</code> slot.
+            	</p>
             
-              
+                <div class="small-space-top api-table">
+                  <div class="head api-table-header-roll">
+                    <div class="cell api-table-header-cell">Slot</div>
+                    <div class="cell api-table-header-cell">Type</div>
+                    <div class="cell api-table-header-cell">Description</div>
+                  </div>
             
-              
+                    <div class="row api-table-roll-even">
+                      <div class="cell api-table-content-cell api-table-content-cell-bold">default</div>
+                      <div class="cell api-table-content-cell">HTMLElement [0..n]</div>
+                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the <code>ui5-select</code> options. <br><br> <b>Note:</b> Only one selected option is allowed. If more than one option is defined as selected, the last one would be considered as the selected one. <br><br> <b>Note:</b> Use the <code>ui5-option</code> component to define the desired options.</div>
+                    </div>
             
-              
-              <li>
-                <a href="https://sap.github.io/ui5-webcomponents/master/playground/docs/configuration/">Configuration</a>
-              </li>
-              
+                </div>
             
-              
+                  <h3 class="comment-api-title space-top">Events</h3>
+                  <p class="small-space-top" >This Web Component fires semantic events upon user interaction. You can bind to these events with the standard DOM APIs, such as <code>addEventListener</code>. </p>
             
-              
+                  <div class="small-space-top api-table">
+                    <div class="head api-table-header-roll">
+                      <div class="cell api-table-header-cell">Name</div>
+                      <div class="cell api-table-header-cell">Description</div>
+                    </div>
             
-              
-              <li>
-                <a href="https://sap.github.io/ui5-webcomponents/master/playground/docs/faq/">FAQ</a>
-              </li>
-              
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">change</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                        Fired when the selected item changes.
+                        </div>
+                      </div>
             
-              
+                        <tr class="api-table-event-param">
+                          <div class="api-table-content-event-params-wrapper">
+                            <div class="cell api-table-param-name api-table-content-cell api-table-content-cell-bold">item</div>
+                            <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> HTMLElement <br/> <strong class="api-table-event-description bold">description:</strong> the selected item.</div>
+                          </div>
+                        </tr>
+                  </div>
             
-              
             
-              
-              <li>
-                <a href="https://sap.github.io/ui5-webcomponents/master/playground/docs/guidelines/">Guidelines</a>
-              </li>
-              
+          </section>
+        </section>
+      </div>
+    </div>
+      <div class="api-container appended-doc">
+        <h1>Option</h1>
+        <section class="component-description">
+          <h3 class="comment-api-title">Overview</h3>
+
+The <code>ui5-option</code> component defines the content of an opton in the <code>ui5-select</code>.
+          <section class="component-api space-top">
             
-              
+                  <h3 class="comment-api-title" >Properties/Attributes</h3>
+                  <p class="small-space-top" >You can use both properties and attributes with the same effect. The name of each attribute is listed below the name of the property, if different.</p>
             
-              
+                  <div class="small-space-top api-table">
+                    <div class="head api-table-header-roll">
+                      <div class="cell api-table-header-cell">Name</div>
+                      <div class="cell api-table-header-cell">Type</div>
+                      <div class="cell api-table-header-cell">Default Value</div>
+                      <div class="cell api-table-header-cell">Description</div>
+                    </div>
             
-              
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          icon
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the <code>icon</code> source URI. <br><br> <b>Note:</b> SAP-icons font provides numerous buil-in icons. To find all the available icons, see the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          selected
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell">false</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the selected state of the <code>ui5-option</code>.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          value
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the value of the <code>ui5-select</code> inside an HTML Form element when this <code>ui5-option</code> is selected. For more information on HTML Form support, see the <code>name</code> property of <code>ui5-select</code>.
+                        </div>
+                      </div>
             
-              
-              <li>
-                <a href="https://sap.github.io/ui5-webcomponents/master/playground/docs/how-to-use/">How To Use</a>
-              </li>
-              
+                  </div>
             
-              
             
-              
-              <li>
-                <a href="https://sap.github.io/ui5-webcomponents/master/playground/docs/migration-guides/">Migration-guides</a>
-              </li>
-              
             
-              
-            
-              
-              <li>
-                <a href="https://sap.github.io/ui5-webcomponents/master/playground/docs/public-module-imports/">Public Module Imports</a>
-              </li>
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-          </ul>
+          </section>
+        </section>
+      </div>
+    <footer class="footer-wrapper">
+      <div class="footer-links">
+        <a class="separator" href="https://www.sap.com/about/legal/privacy.html" target="_blank">Privacy Policy</a>
+        <a href="https://www.sap.com/about/legal/impressum.html" target="_blank">Legal</a>
+      </div>
+      <img src="../../../../../../assets/images/sap-logo-svg.svg" alt="Sap Logo" />
+    </footer>
+
+
+<div class="settings" id="settings-button">
+    <svg class="settings-icon" version="1.1" id="Capa_1" x="0px" y="0px"
+    width="340.274px" height="340.274px" viewBox="0 0 340.274 340.274" style="enable-background:new 0 0 340.274 340.274;"
+    xml:space="preserve">
+        <path d="M293.629,127.806l-5.795-13.739c19.846-44.856,18.53-46.189,14.676-50.08l-25.353-24.77l-2.516-2.12h-2.937
+        c-1.549,0-6.173,0-44.712,17.48l-14.184-5.719c-18.332-45.444-20.212-45.444-25.58-45.444h-35.765
+        c-5.362,0-7.446-0.006-24.448,45.606l-14.123,5.734C86.848,43.757,71.574,38.19,67.452,38.19l-3.381,0.105L36.801,65.032
+        c-4.138,3.891-5.582,5.263,15.402,49.425l-5.774,13.691C0,146.097,0,147.838,0,153.33v35.068c0,5.501,0,7.44,46.585,24.127
+        l5.773,13.667c-19.843,44.832-18.51,46.178-14.655,50.032l25.353,24.8l2.522,2.168h2.951c1.525,0,6.092,0,44.685-17.516
+        l14.159,5.758c18.335,45.438,20.218,45.427,25.598,45.427h35.771c5.47,0,7.41,0,24.463-45.589l14.195-5.74
+        c26.014,11,41.253,16.585,45.349,16.585l3.404-0.096l27.479-26.901c3.909-3.945,5.278-5.309-15.589-49.288l5.734-13.702
+        c46.496-17.967,46.496-19.853,46.496-25.221v-35.029C340.268,146.361,340.268,144.434,293.629,127.806z M170.128,228.474
+        c-32.798,0-59.504-26.187-59.504-58.364c0-32.153,26.707-58.315,59.504-58.315c32.78,0,59.43,26.168,59.43,58.315
+        C229.552,202.287,202.902,228.474,170.128,228.474z"></path>
+    </svg>
+</div>
+<ui5-dialog id="settings-dialog" header-text="Settings">
+    <section class="settings-form">
+        <div class="settings-content">
+            <div class="setting">
+                <ui5-label for="themeSwitch">Theme:</ui5-label>
+                <ui5-select id="themeSwitch">
+                    <ui5-option value="sap_fiori_3">Fiori 3</ui5-option>
+                    <ui5-option value="sap_belize">Belize</ui5-option>
+                    <ui5-option value="sap_belize_hcb">High Contrast Black</ui5-option>
+                </ui5-select>
+            </div>
+            <div class="setting">
+                <ui5-label for="contentDensitySwitch">Content Density:</ui5-label>
+                <ui5-select id="contentDensitySwitch">
+                    <ui5-option>Cozy</ui5-option>
+                    <ui5-option>Compact</ui5-option>
+                </ui5-select>
+            </div>
+            <div class="setting">
+                <ui5-label for="textDirectionSwitch">Text Direction:</ui5-label>
+                <ui5-select id="textDirectionSwitch">
+                    <ui5-option>LTR</ui5-option>
+                    <ui5-option>RTL</ui5-option>
+                </ui5-select>
+            </div>
+        </div>
+    </section>
+    <div slot="footer" class="closing-buttons">
+        <ui5-button id="applyButton" design="Emphasized" class="padding-end">Apply</ui5-button>
+        <ui5-button id="cancelButton">Cancel</ui5-button>
+    </div>
+</ui5-dialog>
+
+<!-- UI5 Web Components Assests -->
+<script src="https://sap.github.io/ui5-webcomponents/master/assets/js/webcomponentsjs/webcomponents-loader.js"></script>
+<script type="module" src="https://sap.github.io/ui5-webcomponents/master/assets/js/ui5-webcomponents/bundle.esm.js"></script>
+<script nomodule src="https://sap.github.io/ui5-webcomponents/master/assets/js/ui5-webcomponents/bundle.es5.js"></script>
+
+<link rel="stylesheet" href="https://sap.github.io/ui5-webcomponents/master/assets/css/api.css">
+
+<style>
+    pre {
+        margin-bottom: 0;
+    }
+    pre.highlight {
+        padding: 1.5rem;
+        padding-bottom: 0;
+        border: 0.0625rem solid #C1C1C1;
+    }
+</style>
+
           
         </div>
       </div>

@@ -7,7 +7,7 @@
   <meta name="keywords" content="ui5-webcomponents,ui5 webcomponents,ui5 web components,webcomponents,web components,ui5,api,docs,documentation,sample,usage,examples,demo,Fiori 3">
 
   
-    <title>Documentation - UI5 Web Components</title>
+    <title>Assets - UI5 Web Components</title>
 
     
   
@@ -24,17 +24,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Documentation | UI5 Web Components</title>
+<title>Assets | UI5 Web Components</title>
 <meta name="generator" content="Jekyll v3.8.6" />
-<meta property="og:title" content="Documentation" />
+<meta property="og:title" content="Assets" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Enterprise-flavored sugar on top of native APIs!" />
 <meta property="og:description" content="Enterprise-flavored sugar on top of native APIs!" />
-<link rel="canonical" href="https://sap.github.io/ui5-webcomponents/master/playground/docs" />
-<meta property="og:url" content="https://sap.github.io/ui5-webcomponents/master/playground/docs" />
+<link rel="canonical" href="https://sap.github.io/ui5-webcomponents/master/playground/docs/assets/" />
+<meta property="og:url" content="https://sap.github.io/ui5-webcomponents/master/playground/docs/assets/" />
 <meta property="og:site_name" content="UI5 Web Components" />
 <script type="application/ld+json">
-{"description":"Enterprise-flavored sugar on top of native APIs!","@type":"WebPage","url":"https://sap.github.io/ui5-webcomponents/master/playground/docs","headline":"Documentation","@context":"https://schema.org"}</script>
+{"description":"Enterprise-flavored sugar on top of native APIs!","@type":"WebPage","url":"https://sap.github.io/ui5-webcomponents/master/playground/docs/assets/","headline":"Assets","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -100,7 +100,7 @@
         
           <li class="navigation-list-item active">
             
-            <a href="https://sap.github.io/ui5-webcomponents/master/playground/docs" class="navigation-list-link active">Documentation</a>
+            <a href="https://sap.github.io/ui5-webcomponents/master/playground/docs" class="navigation-list-link">Documentation</a>
             
               
               <ul class="navigation-list-child-list ">
@@ -112,9 +112,9 @@
                   
                 
                   
-                    <li class="navigation-list-item ">
+                    <li class="navigation-list-item  active">
                       
-                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/docs/assets/" class="navigation-list-link">
+                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/docs/assets/" class="navigation-list-link active">
                         <div class="component-name">Assets</div>
                         
                       </a>
@@ -877,138 +877,235 @@
       <div class="main-content">
         
           
+            <nav class="breadcrumb-nav">
+              <ol class="breadcrumb-nav-list">
+                
+                  <li class="breadcrumb-nav-list-item"><a href="https://sap.github.io/ui5-webcomponents/master/playground/docs">Documentation</a></li>
+                
+                <li class="breadcrumb-nav-list-item"><span>Assets</span></li>
+              </ol>
+            </nav>
+          
         
         <div id="main-content" class="page-content" role="main">
-          <h1 id="documentation">Documentation:</h1>
+          <h1 id="assets-and-json-module-imports">Assets and JSON module imports</h1>
+
+<p>UI5 Web Components aim to be feature rich and with a minimal code footprint at the same time. In order to achieve this, 
+most UI5 Web Components packages ship their assets as <code class="highlighter-rouge">.json</code> files while also providing respective public module imports for them.</p>
+
+<p>The assets in question could be i18n texts, icons, additional themes parameters, CLDR, etc…</p>
+
+<p>Currently our npm packages follow the scheme:</p>
+
+<p><code class="highlighter-rouge">@ui5/&lt;PACKAGE_NAME&gt;/dist/assets/*</code>
+(for the assets themselves)</p>
+
+<p><code class="highlighter-rouge">@ui5/&lt;PACKAGE_NAME&gt;/dist/json-imports/*</code>
+(for the modules that provide the assets)</p>
+
+<p><a name="packages"></a></p>
+<h2 id="packages">Packages</h2>
+
+<h3 id="base-package"><code class="highlighter-rouge">base</code> package</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Asset type</th>
+      <th>Asset path</th>
+      <th>Public Module Import</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>CLDR</td>
+      <td><code class="highlighter-rouge">@ui5/webcomponents-base/dist/assets/cldr/*</code></td>
+      <td><code class="highlighter-rouge">@ui5/webcomponents-base/dist/json-imports/LocaleData.js</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Usually you don’t need to import the CLDR assets from the <code class="highlighter-rouge">base</code> package, but rather from the package(s) containing the actual web components.</p>
+
+<h3 id="main-package"><code class="highlighter-rouge">main</code> package</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Asset type</th>
+      <th>Asset path</th>
+      <th>Public Module Import</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>i18n</td>
+      <td><code class="highlighter-rouge">@ui5/webcomponents/dist/assets/i18n/*</code></td>
+      <td><code class="highlighter-rouge">@ui5/webcomponents/dist/json-imports/i18n.js</code></td>
+    </tr>
+    <tr>
+      <td>Additional themes</td>
+      <td><code class="highlighter-rouge">@ui5/webcomponents/dist/assets/themes/*</code></td>
+      <td><code class="highlighter-rouge">@ui5/webcomponents/dist/json-imports/Themes.js</code></td>
+    </tr>
+    <tr>
+      <td>CLDR</td>
+      <td>N/A</td>
+      <td><code class="highlighter-rouge">@ui5/webcomponents/dist/json-imports/LocaleData.js</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The <code class="highlighter-rouge">main</code> package does not have any additional CLDR assets besides the CLDR assets of the <code class="highlighter-rouge">base</code> project.</p>
+
+<h3 id="fiori-package"><code class="highlighter-rouge">fiori</code> package</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Asset type</th>
+      <th>Asset path</th>
+      <th>Public Module Import</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>i18n</td>
+      <td><code class="highlighter-rouge">@ui5/webcomponents-fiori/dist/assets/i18n/*</code></td>
+      <td><code class="highlighter-rouge">@ui5/webcomponents-fiori/dist/json-imports/i18n.js</code></td>
+    </tr>
+    <tr>
+      <td>Additional themes</td>
+      <td><code class="highlighter-rouge">@ui5/webcomponents-fiori/dist/assets/themes/*</code></td>
+      <td><code class="highlighter-rouge">@ui5/webcomponents-fiori/dist/json-imports/Themes.js</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="icons-package"><code class="highlighter-rouge">icons</code> package</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Asset type</th>
+      <th>Asset path</th>
+      <th>Public Module Import</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>i18n</td>
+      <td><code class="highlighter-rouge">@ui5/webcomponents-fiori/dist/assets/i18n/*</code></td>
+      <td><code class="highlighter-rouge">@ui5/webcomponents-fiori/dist/json-imports/i18n.js</code></td>
+    </tr>
+    <tr>
+      <td>All icons</td>
+      <td><code class="highlighter-rouge">@ui5/webcomponents-fiori/dist/assets/icon-collections/*</code></td>
+      <td><code class="highlighter-rouge">@ui5/webcomponents-fiori/dist/json-imports/Icons.js</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Normally applications are expected to import only the individual icons that are going to be used, for example:</p>
+
+<p><code class="highlighter-rouge">import "@ui5/webcomponents-icons/dist/icons/add.js</code>”;`</p>
+
+<p>However, sometimes it makes sense to import all icons, hence the <code class="highlighter-rouge">@ui5/webcomponents-fiori/dist/json-imports/Icons.js</code> JSON import.</p>
+
+<p>Since some icons have translatable tooltips, you might need the <code class="highlighter-rouge">i18n</code> JSON import as well.</p>
+
+<p><a name="bundling"></a></p>
+<h2 id="efficient-asset-bundling">Efficient asset bundling</h2>
+
+<p>You may notice that JSON imports, for example:</p>
+
+<p><code class="highlighter-rouge">import "@ui5/webcomponents/dist/json-imports/i18n.js"</code></p>
+
+<p>or</p>
+
+<p><code class="highlighter-rouge">import "@ui5/webcomponents/dist/json-imports/Themes.js"</code></p>
+
+<p>will produce warning messages in the browser’s console, such as for example:</p>
+<blockquote>
+  <p>Inefficient bundling detected: consider bundling i18n/theme proeprties imports as URLs instead of inlining them.
+See rollup-plugin-url or webpack file-loader for more information.
+Suggested pattern: “assets\/.*.json”</p>
+</blockquote>
+
+<p>What this means is that it’s recommended to instruct your source code bundling software
+(some of the most popular being Webpack and Rollup) not to include all the asset files or theming related files
+(files that match the <code>assets\/.*\.json</code> pattern) in your applications’s javascript bundle,
+but rather to leave them out. At runtime, they will be fetched on demand, if ever requested.</p>
+
+<p><a href="https://github.com/webpack-contrib/file-loader">How to do it with Webpack</a></p>
+
+<p><a href="https://github.com/rollup/rollup-plugin-url">How to do it with Rollup</a></p>
+
+<p>Rollup example:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">url</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">rollup-plugin-url</span><span class="dl">"</span><span class="p">;</span>
+<span class="p">...</span>
+<span class="nx">plugins</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">url</span><span class="p">({</span>
+	<span class="na">limit</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+	<span class="na">include</span><span class="p">:</span> <span class="p">[</span>
+		<span class="sr">/.*assets</span><span class="se">\/</span><span class="sr">.*</span><span class="se">\.</span><span class="sr">json/</span><span class="p">,</span>
+	<span class="p">],</span>
+	<span class="na">emitFiles</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+	<span class="na">fileName</span><span class="p">:</span> <span class="dl">"</span><span class="s2">[name].[hash][extname]</span><span class="dl">"</span><span class="p">,</span>
+	<span class="na">publicPath</span><span class="p">:</span> <span class="nx">YOUR_APPLICATION_PUBLIC_PATH</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">/resources/</span><span class="dl">"</span><span class="p">,</span>
+<span class="p">}));</span>
+</code></pre></div></div>
+
+<p>Please note that the code above is just sample snippet, and will not work on its own.</p>
 
 
-          
-          <hr>
-          <h2 class="text-delta">Table of contents</h2>
-          
-          <ul>
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-              <li>
-                <a href="https://sap.github.io/ui5-webcomponents/master/playground/docs/assets/">Assets</a>
-              </li>
-              
-            
-              
-            
-              
-            
-              
-            
-              
-              <li>
-                <a href="https://sap.github.io/ui5-webcomponents/master/playground/docs/configuration/">Configuration</a>
-              </li>
-              
-            
-              
-            
-              
-            
-              
-              <li>
-                <a href="https://sap.github.io/ui5-webcomponents/master/playground/docs/faq/">FAQ</a>
-              </li>
-              
-            
-              
-            
-              
-            
-              
-              <li>
-                <a href="https://sap.github.io/ui5-webcomponents/master/playground/docs/guidelines/">Guidelines</a>
-              </li>
-              
-            
-              
-            
-              
-            
-              
-            
-              
-              <li>
-                <a href="https://sap.github.io/ui5-webcomponents/master/playground/docs/how-to-use/">How To Use</a>
-              </li>
-              
-            
-              
-            
-              
-              <li>
-                <a href="https://sap.github.io/ui5-webcomponents/master/playground/docs/migration-guides/">Migration-guides</a>
-              </li>
-              
-            
-              
-            
-              
-              <li>
-                <a href="https://sap.github.io/ui5-webcomponents/master/playground/docs/public-module-imports/">Public Module Imports</a>
-              </li>
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-          </ul>
+<footer class="footer-wrapper">
+    <div class="footer-links">
+        <a class="separator" href="https://www.sap.com/about/legal/privacy.html" target="_blank">Privacy Policy</a>
+        <a href="https://www.sap.com/about/legal/impressum.html" target="_blank">Legal</a>
+    </div>
+    <img src="https://sap.github.io/ui5-webcomponents/master/assets/images/sap-logo-svg.svg" alt="Sap Logo" />
+</footer>
+
+<style>
+    .footer-wrapper {
+        margin-top: 2rem;
+        padding-top: 2rem;
+        padding-bottom: 4rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        border-top: 1px solid #D8D8D8;
+        font-family: "72-Regular";
+    }
+
+    .footer-links {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: flex-start;
+        font-family: "72-Regular";
+    }
+
+    .footer-links > a {
+        color: #333333;
+        text-decoration: none;
+    }
+
+    .footer-links > a:hover {
+        text-decoration: underline;
+    }
+
+    .separator::after {
+        content: "|";
+        padding: 0 1rem;
+        color: #D8D8D8;
+        text-decoration: none;
+    }
+</style>
+
           
         </div>
       </div>
