@@ -1,5 +1,5 @@
-commit 2c8355b2c94517d1c2b4de3c7d27a6b870e0ae1d
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Dec 2 16:54:46 2019 +0200
+commit bfe36dd5fb43ecaf13da90225239b6a2672b97d4
+Author: Christos Koutsiaris <44162302+ckoutsiaris@users.noreply.github.com>
+Date:   Wed Dec 4 04:52:27 2019 +0000
 
-    chore(tools): add npmrc and npmignore (#1004)
+    fix(ui5-shellbar): Change path in imports for playground (#1008)
