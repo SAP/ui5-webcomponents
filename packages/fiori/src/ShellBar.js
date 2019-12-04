@@ -27,7 +27,7 @@ import styles from "./generated/themes/ShellBar.css.js";
  */
 const metadata = {
 	tag: "ui5-shellbar",
-	properties: /** @lends  sap.ui.webcomponents.fiori.ShellBar.prototype */ {
+	properties: /** @lends sap.ui.webcomponents.fiori.ShellBar.prototype */ {
 
 		/**
 		 * Defines the <code>logo</code> source URI.
@@ -145,7 +145,7 @@ const metadata = {
 		},
 	},
 
-	slots: /** @lends  sap.ui.webcomponents.main.ShellBar.prototype */ {
+	slots: /** @lends sap.ui.webcomponents.fiori.ShellBar.prototype */ {
 		/**
 		 * Defines the <code>ui5-shellbar</code> aditional items.
 		 * <br><br>
@@ -200,7 +200,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.ShellBar.prototype */ {
+	events: /** @lends sap.ui.webcomponents.fiori.ShellBar.prototype */ {
 		/**
 		 *
 		 * Fired, when the notification icon is activated.
@@ -299,7 +299,7 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.ShellBar
+ * @alias sap.ui.webcomponents.fiori.ShellBar
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-shellbar
  * @appenddocs ShellBarItem
