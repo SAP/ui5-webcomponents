@@ -30,7 +30,7 @@ const metadata = {
 		},
 	},
 
-	events: /** @lends sap.ui.webcomponents.main.ShellBarItem.prototype */ {
+	events: /** @lends sap.ui.webcomponents.fiori.ShellBarItem.prototype */ {
 		/**
 		 * Fired, when the item is pressed.
 		 *
@@ -52,10 +52,10 @@ const metadata = {
  * might be added to the <code>ui5-shellbar</code>.
  * <br><br>
  * <h3>ES6 Module Import</h3>
- * <code>import "@ui5/webcomponents/dist/ShellBarItem";</code>
+ * <code>import "@ui5/webcomponents-fiori/dist/ShellBarItem";</code>
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.ShellBarItem
+ * @alias sap.ui.webcomponents.fiori.ShellBarItem
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-shellbar-item
  * @public
