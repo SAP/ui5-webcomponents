@@ -1,5 +1,5 @@
-commit bfe36dd5fb43ecaf13da90225239b6a2672b97d4
-Author: Christos Koutsiaris <44162302+ckoutsiaris@users.noreply.github.com>
-Date:   Wed Dec 4 04:52:27 2019 +0000
+commit 82b1a0738123f62c18325bd794d06b6f16d9a3fa
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Dec 4 09:38:10 2019 +0200
 
-    fix(ui5-shellbar): Change path in imports for playground (#1008)
+    docs(ui5-shellbar): display component properties (#1009)
