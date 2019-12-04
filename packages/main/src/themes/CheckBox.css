@@ -35,6 +35,10 @@
 	margin-top: var(--_ui5_checkbox_wrapped_content_margin_top);
 }
 
+:host([wrap][text]) .ui5-checkbox-root .ui5-checkbox-label {
+	word-break: break-all;
+}
+
 :host([wrap]) .ui5-checkbox-root:focus::before {
 	bottom: var(--_ui5_checkbox_wrapped_focus_left_top_bottom_position);
 }
