@@ -1,3 +1,5 @@
+
+
 const fs = require("fs");
 const path = require("path");
 const mkdirp = require("mkdirp");
@@ -5,10 +7,20 @@ const commandLineArgs = require('command-line-args');
 const uuidv1 = require('uuid/v1');
 const beautify = require("json-beautify");
 
+// String utils
+const kebabToCamelCase = string => toCamelCase(string.split("-"));
+const toCamelCase = parts => {
+	return parts.map((string, index) => {
+		return index === 0 ? string.toLowerCase() : string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+	}).join("");
+};
+const capitalizeFirst = str => str.substr(0,1).toUpperCase() + str.substr(1);
+
 // content of package.json
 let packageContent;
 
 const DEFAULT_PORT = 8080;
+const DEFAULT_TAG = 'ui5-demo';
 const BETA_VER = "0.18.0";
 const RC_VER = "1.0.0-rc.5";
 
@@ -20,6 +32,7 @@ const options = commandLineArgs([
 	{name: 'name', alias: 'n', type: String},
 	{name: 'port', alias: 'p', type: Number},
 	{name: 'uuid', alias: 'u', type: String},
+	{name: 'tag', type: String},
 ]);
 
 // Ensure there is package.json
@@ -30,14 +43,25 @@ try {
 	process.exit(1);
 }
 
+// Ensure correct tag
+const tag = options.tag || DEFAULT_TAG;
+if (!tag.match(/^ui5-/)) {
+	console.log("tag name should start with ui5-");
+	process.exit(1);
+}
+const className = capitalizeFirst(kebabToCamelCase(tag.substr(4)));
+
 // All variables that will be replaced in the content of the resources/
 const vars = {
 	INIT_PACKAGE_VAR_NAME: options.name || packageContent.name,
 	INIT_PACKAGE_VAR_PORT: options.port || DEFAULT_PORT,
 	INIT_PACKAGE_VAR_UUID: options.uuid || uuidv1(),
+	INIT_PACKAGE_VAR_TAG: tag,
+	INIT_PACKAGE_VAR_CLASS_NAME: className,
 };
+console.log(vars);
 
-const replaceAllVars = content => {
+const replaceVarsInFileContent = content => {
 	for (let key in vars) {
 		const re = new RegExp(key, "g");
 		content = content.replace(re, vars[key]);
@@ -45,10 +69,16 @@ const replaceAllVars = content => {
 	return content;
 };
 
+const replaceVarsInFileName = fileName => {
+	return fileName.replace(/Demo/, vars.INIT_PACKAGE_VAR_CLASS_NAME)	;
+};
+
 const copyFile = (sourcePath, destPath) => {
 	let content = fs.readFileSync(sourcePath, {encoding: "UTF-8"});
-	content = replaceAllVars(content);
+	content = replaceVarsInFileContent(content);
+	destPath = replaceVarsInFileName(destPath);
 	fs.writeFileSync(destPath, content);
+	console.log(destPath);
 };
 
 const copyResources = sourcePath => {
@@ -57,6 +87,7 @@ const copyResources = sourcePath => {
 	if (isDir) {
 		if (destPath) {
 			mkdirp.sync(destPath);
+			console.log(destPath);
 		}
 		fs.readdirSync(sourcePath).forEach(file => {
 			copyResources(path.join(sourcePath, file));

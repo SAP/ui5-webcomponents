@@ -1,13 +1,13 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import DemoTemplate from "./generated/templates/DemoTemplate.lit.js";
+import INIT_PACKAGE_VAR_CLASS_NAMETemplate from "./generated/templates/INIT_PACKAGE_VAR_CLASS_NAMETemplate.lit.js";
 
 // Styles
-import DemoCss from "./generated/themes/Demo.css.js";
+import INIT_PACKAGE_VAR_CLASS_NAMECss from "./generated/themes/INIT_PACKAGE_VAR_CLASS_NAME.css.js";
 
 
 const metadata = {
-	tag: "ui5-demo",
+	tag: "INIT_PACKAGE_VAR_TAG",
 	properties: {
 		//
 	},
@@ -19,7 +19,7 @@ const metadata = {
 	},
 };
 
-class Demo extends UI5Element {
+class INIT_PACKAGE_VAR_CLASS_NAME extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
@@ -29,11 +29,11 @@ class Demo extends UI5Element {
 	}
 
 	static get styles() {
-		return DemoCss;
+		return INIT_PACKAGE_VAR_CLASS_NAMECss;
 	}
 
 	static get template() {
-		return DemoTemplate;
+		return INIT_PACKAGE_VAR_CLASS_NAMETemplate;
 	}
 
 	static async define(...params) {
@@ -41,6 +41,6 @@ class Demo extends UI5Element {
 	}
 }
 
-Demo.define();
+INIT_PACKAGE_VAR_CLASS_NAME.define();
 
-export default Demo;
+export default INIT_PACKAGE_VAR_CLASS_NAME;
