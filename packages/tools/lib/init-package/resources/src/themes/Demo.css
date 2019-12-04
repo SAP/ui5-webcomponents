@@ -1,0 +1,5 @@
+:host {
+    border: 1px solid var(--ui5-demo-border-color);
+    display: block;
+    height: 3rem;
+}

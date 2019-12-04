@@ -9,6 +9,8 @@ const beautify = require("json-beautify");
 let packageContent;
 
 const DEFAULT_PORT = 8080;
+const BETA_VER = "0.18.0";
+const RC_VER = "1.0.0-rc.5";
 
 // from where all the files will be copied
 const RESOURCES_DIR = path.join(`${__dirname}`, `resources/`);
@@ -74,6 +76,12 @@ const updatePackageFile = () => {
 		"create-ui5-element": "wc-create-ui5-element",
 		"prepublishOnly": "npm run build"
 	};
+
+	packageContent.dependencies = packageContent.dependencies || {};
+	packageContent.dependencies["@ui5/webcomponents-base"] = BETA_VER;
+	packageContent.dependencies["@ui5/webcomponents-theme-base"] = RC_VER;
+	packageContent.dependencies["@ui5/webcomponents-tools"] = RC_VER;
+
 	fs.writeFileSync("package.json", beautify(packageContent, null, 2, 100));
 };
 
@@ -82,3 +90,5 @@ copyResources(RESOURCES_DIR);
 
 // Update package.json
 updatePackageFile();
+
+// require("../create-new-component/index.js");

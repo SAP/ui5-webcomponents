@@ -17,7 +17,7 @@ import "./dist/json-imports/Themes.js";
 // import "./dist/json-imports/i18n.js";
 
 /* Import your web components here from the dist/ directory */
-// import "./dist/MyNewWebComponent.js";
+import "./dist/Demo.js";
 
 window.RenderScheduler = RenderScheduler;
 window["sap-ui-webcomponents-bundle"] = {
