@@ -10,11 +10,11 @@
     "sapui5",
     "ui5"
   ],
-  "scripts": {
-  },
+  "scripts": {},
   "bin": {
     "wc-dev": "bin/dev.js",
-    "wc-create-ui5-element": "bin/create-ui5-element.js"
+    "wc-create-ui5-element": "bin/create-ui5-element.js",
+    "wc-init-ui5-package": "bin/init-ui5-package.js"
   },
   "repository": {
     "type": "git",
@@ -37,6 +37,7 @@
     "chokidar-cli": "^2.0.0",
     "chromedriver": "^78.0.0",
     "clean-css": "^4.2.1",
+    "command-line-args": "^5.1.1",
     "concurrently": "^5.0.0",
     "copy-and-watch": "^0.1.4",
     "cross-env": "^5.2.0",
