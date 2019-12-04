@@ -1,5 +1,7 @@
-commit 1ffb469dd0298180e4b61a37b11ca1cadeb540fa
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Wed Dec 4 16:02:23 2019 +0200
+commit 98bd5088dc5f34dfdef7da1f32c4eea32ed7bb20
+Author: service-tip-git <36747703+service-tip-git@users.noreply.github.com>
+Date:   Wed Dec 4 07:42:08 2019 -0800
 
-    refactor: improve seo for components pages (#1012)
+    chore: translation delivery (#1017)
+    
+    Change-Id: I2cc79c0bb7334b0a76dbc20cb17fefb477564310
