@@ -4,19 +4,20 @@ import "@ui5/webcomponents-base/dist/features/browsersupport/Edge.js";
 // used in test pages
 import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
 
-// Note: keep in sync with rollup.config value for IIFE
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import { getTheme, setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 import { setNoConflict } from "@ui5/webcomponents-base/dist/config/NoConflict.js";
 import { getCompactSize } from "@ui5/webcomponents-base/dist/config/CompactSize.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
-import { getRegisteredNames as getIconNames } from "@ui5/webcomponents-base/dist/SVGIconRegistry.js";
 
-// asset helpers (needs correct json as url in rollup.config.js)
+/* enable additional themes */
 import "./dist/json-imports/Themes.js";
-import "./dist/json-imports/i18n.js";
 
-// IMPORT YOUR UI5 WEB COMPONENTS HERE
+/* Uncomment once you have your translation files ready */
+// import "./dist/json-imports/i18n.js";
+
+/* Import your web components here from the dist/ directory */
+// import "./dist/MyNewWebComponent.js";
 
 window.RenderScheduler = RenderScheduler;
 window["sap-ui-webcomponents-bundle"] = {
@@ -28,5 +29,4 @@ window["sap-ui-webcomponents-bundle"] = {
 		getCompactSize,
 		getRTL,
 	},
-	getIconNames,
 };

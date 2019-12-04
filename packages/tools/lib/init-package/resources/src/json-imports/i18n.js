@@ -92,4 +92,4 @@ Suggested pattern: "assets\\\/.*\\\.json"`);
 }
 /* eslint-enable */
 
-registerI18nBundle("my-ui5-web-components", bundleMap);
+registerI18nBundle("INIT_PACKAGE_VAR_NAME", bundleMap);

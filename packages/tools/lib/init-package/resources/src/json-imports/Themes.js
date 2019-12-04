@@ -24,6 +24,6 @@ registerThemeProperties("@ui5/webcomponents-theme-base", "sap_fiori_3_dark", fio
 registerThemeProperties("@ui5/webcomponents-theme-base", "sap_belize", belizeBase);
 registerThemeProperties("@ui5/webcomponents-theme-base", "sap_belize_hcb", belizeHcbBase);
 
-registerThemeProperties("my-ui5-web-components", "sap_fiori_3_dark", fiori3Dark);
-registerThemeProperties("my-ui5-web-components", "sap_belize", belize);
-registerThemeProperties("my-ui5-web-components", "sap_belize_hcb", belizeHcb);
+registerThemeProperties("INIT_PACKAGE_VAR_NAME", "sap_fiori_3_dark", fiori3Dark);
+registerThemeProperties("INIT_PACKAGE_VAR_NAME", "sap_belize", belize);
+registerThemeProperties("INIT_PACKAGE_VAR_NAME", "sap_belize_hcb", belizeHcb);

@@ -7,4 +7,4 @@ import fiori3Base from "@ui5/webcomponents-theme-base/dist/generated/themes/sap_
 import fiori3 from "./generated/themes/sap_fiori_3/parameters-bundle.css.js";
 
 registerThemeProperties("@ui5/webcomponents-theme-base", "sap_fiori_3", fiori3Base);
-registerThemeProperties("my-ui5-web-components", "sap_fiori_3", fiori3);
+registerThemeProperties("INIT_PACKAGE_VAR_NAME", "sap_fiori_3", fiori3);
