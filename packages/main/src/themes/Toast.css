@@ -1,0 +1,84 @@
+.ui5-toast-root-parent {
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	width: 100%;
+	display: none;
+	height: 100%;
+	pointer-events: none;
+	overflow: hidden;
+	z-index: 999;
+	justify-content: center;
+	align-items: flex-end;
+}
+
+.ui5-toast-text {
+	font-family: var(--sapUiFontFamily);
+	color: var(--sapUiListTextColor);
+	font-weight: normal;
+	font-size: var(--sapMFontMediumSize);
+	word-wrap: break-word;
+	text-align: center;
+	text-decoration: none;
+	text-overflow: ellipsis;
+	white-space: pre-line;
+}
+
+.ui5-toast-root {
+	box-sizing: border-box;
+	max-width: 15rem;
+	overflow: hidden;
+	padding: 1rem;
+	background: var(--sapUiListBackground);
+	box-shadow: var(--sapUiShadowLevel2);
+	border-radius: .25rem;
+	transition-property: opacity;
+	opacity: 1;
+	margin: 2rem;
+}
+
+:host([open]) .ui5-toast-root-parent {
+	display: flex;
+}
+
+:host([placement="TopStart"]) .ui5-toast-root-parent {
+	justify-content: flex-start;
+	align-items: flex-start;
+}
+
+:host([placement="TopCenter"]) .ui5-toast-root-parent {
+	justify-content: center;
+	align-items: flex-start;
+}
+
+:host([placement="TopEnd"]) .ui5-toast-root-parent {
+	justify-content: flex-end;
+	align-items: flex-start;
+}
+
+:host([placement="MiddleStart"]) .ui5-toast-root-parent {
+	justify-content: flex-start;
+	align-items: center;
+}
+
+:host([placement="MiddleCenter"]) .ui5-toast-root-parent {
+	justify-content: center;
+	align-items: center;
+}
+
+:host([placement="MiddleEnd"]) .ui5-toast-root-parent {
+	justify-content: flex-end;
+	align-items: center;
+}
+
+:host([placement="BottomStart"]) .ui5-toast-root-parent {
+	justify-content: flex-start;
+	align-items: flex-end;
+}
+
+:host([placement="BottomEnd"]) .ui5-toast-root-parent {
+	justify-content: flex-end;
+	align-items: flex-end;
+}
