@@ -69,7 +69,7 @@
 	background: var(--sapUiButtonHoverBackground);
 }
 
-.ui5-button-root .ui5-button-icon {
+.ui5-button-icon {
 	font-size: var(--_ui5_button_base_icon_only_font_size);
 	height: 0;
 	top: -.5rem;
@@ -280,4 +280,9 @@ ui5-button[design="Negative"][active][focused] .ui5-button-root::after {
 
 ui5-button[design="Emphasized"][focused] .ui5-button-root::after {
 	border-color: var(--sapUiContentContrastFocusColor);
+}
+
+ui5-button ui5-icon.ui5-button-icon {
+	height: 1rem;
+	top: 0;
 }

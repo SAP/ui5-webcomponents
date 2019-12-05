@@ -10,7 +10,6 @@ export default {
 	},
 	getCalendarClass: calendarType => {
 		if (!calendarType) {
-			// TODO: add in configuration
 			calendarType = CalendarType.Gregorian;
 		}
 		return registry.get(calendarType);

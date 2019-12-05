@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+	<title>ui5-product-switch</title>
+
+	<script data-ui5-config type="application/json">
+		{
+			"rtl": false,
+			"compactSize": false
+		}
+	</script>
+
+	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+	<script src="../../resources/bundle.esm.js" type="module">
+	</script>
+
+	<script>
+		delete Document.prototype.adoptedStyleSheets
+	</script>
+
+	<script nomodule src="../../resources/bundle.es5.js">
+	</script>
+</head>
+
+<body>
+	<ui5-product-switch id="productSwitchThreeColumn">
+		<ui5-product-switch-item heading="Home" subtitle="Central Home" icon="home"></ui5-product-switch-item>
+		<ui5-product-switch-item heading="Analytics Cloud" subtitle="Analytics Cloud" icon="business-objects-experience"></ui5-product-switch-item>
+		<ui5-product-switch-item heading="Catalog" subtitle="Ariba" icon="contacts"></ui5-product-switch-item>
+		<ui5-product-switch-item heading="Guided Buying" icon="credit-card"></ui5-product-switch-item>
+	</ui5-product-switch>
+
+	<ui5-product-switch id="productSwitchFourColumn">
+		<ui5-product-switch-item id="firstItem" heading="Home" subtitle="Central Home" icon="home"></ui5-product-switch-item>
+		<ui5-product-switch-item heading="Analytics Cloud" subtitle="Analytics Cloud" icon="business-objects-experience"></ui5-product-switch-item>
+		<ui5-product-switch-item heading="Catalog" subtitle="Ariba" icon="contacts"></ui5-product-switch-item>
+		<ui5-product-switch-item heading="Guided Buying" icon="credit-card"></ui5-product-switch-item>
+		<ui5-product-switch-item heading="Strategic Procurement" icon="cart-3"></ui5-product-switch-item>
+		<ui5-product-switch-item heading="Travel & Expense" subtitle="Concur" icon="flight"></ui5-product-switch-item>
+		<ui5-product-switch-item heading="Vendor Management" subtitle="Fieldglass" icon="shipping-status"></ui5-product-switch-item>
+		<ui5-product-switch-item heading="Human Capital Management" icon="customer"></ui5-product-switch-item>
+		<ui5-product-switch-item heading="Sales Cloud" subtitle="Sales Cloud" icon="sales-notification"></ui5-product-switch-item>
+		<ui5-product-switch-item heading="Commerce Cloud" subtitle="Commerce Cloud" icon="retail-store"></ui5-product-switch-item>
+		<ui5-product-switch-item heading="Marketing Cloud" subtitle="Marketing Cloud" icon="marketing-campaign"></ui5-product-switch-item>
+		<ui5-product-switch-item heading="Service Cloud" icon="family-care"></ui5-product-switch-item>
+		<ui5-product-switch-item heading="Customer Data Cloud" icon="customer-briefing"></ui5-product-switch-item>
+		<ui5-product-switch-item heading="S/4HANA" icon="batch-payments"></ui5-product-switch-item>
+	</ui5-product-switch>
+
+	<ui5-input id="eventTest"></ui5-input>
+
+	<script>
+		var oProductSwitch = document.getElementById("firstItem");
+		var oInput = document.getElementById("eventTest");
+		var pressCount = 0;
+
+		oProductSwitch.addEventListener("click", function (oEvent) {
+			pressCount += 1;
+			oInput.value = pressCount;
+		});
+	</script>
+</body>
+
+</html>

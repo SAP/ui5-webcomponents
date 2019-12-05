@@ -106,13 +106,13 @@
 
 
 	// HCB button
-	btn.addEventListener("ui5-press", function(event) {
+	btn.addEventListener("click", function(event) {
 		const hcb = event.target.pressed;
 		const styles = hcb ? "background:#333;color:palegoldenrod;" : "background:#fff;color:#333;";
 		const theme = hcb ? "sap_belize_hcb" : "sap_fiori_3";
 
 		document.body.setAttribute("style", styles);
-		var Conf = window["sap-ui-webcomponents-main-bundle"].configuration;
+		var Conf = window["sap-ui-webcomponents-bundle"].configuration;
 		Conf.setTheme(theme);
 	});
 
@@ -130,7 +130,7 @@
 
 	var initialItemsHTML = "";
 
-	addItemsBtn.addEventListener("ui5-press", function(event) {
+	addItemsBtn.addEventListener("click", function(event) {
 		initialItemsHTML = select.innerHTML;
 
 		var li = document.createElement('ui5-option');
@@ -141,7 +141,7 @@
 		select.appendChild(li);
 	});
 
-	restoreItemsBtn.addEventListener("ui5-press", function(event) {
+	restoreItemsBtn.addEventListener("click", function(event) {
 		select.innerHTML = initialItemsHTML;
 	});
 </script>

@@ -41,6 +41,19 @@ const metadata = {
 		},
 
 		/**
+		 * Defines whether semi-colon is added to the <code>ui5-label</code> text.
+		 * <br><br>
+		 * <b>Note:</b> Usually used in forms.
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 */
+
+		showColon: {
+			type: Boolean,
+		},
+
+		/**
 		 * Defines the labeled input by providing its ID.
 		 * <br><br>
 		 * <b>Note:</b> Can be used with both <code>ui5-input</code> and native input.
@@ -66,7 +79,6 @@ const metadata = {
 			type: Node,
 		},
 	},
-	_eventHandlersByConvention: true,
 };
 
 /**
@@ -112,9 +124,8 @@ class Label extends UI5Element {
 		return labelCss;
 	}
 
-	onclick() {
+	_onclick() {
 		const elementToFocus = document.getElementById(this.for);
-
 		if (elementToFocus) {
 			elementToFocus.focus();
 		}

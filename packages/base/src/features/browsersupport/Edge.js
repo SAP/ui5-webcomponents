@@ -1,5 +1,5 @@
 // URLSearchParams
-import "url-search-params-polyfill";
+import "url-search-params-polyfill/index.js";
 
 
 // "pseudo mutation observer" fix for nodeValue

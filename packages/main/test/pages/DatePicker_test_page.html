@@ -15,6 +15,7 @@
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 </head>
 <body>
+	<ui5-datepicker id="dp12"></ui5-datepicker>
 	<ui5-datepicker id="dp"></ui5-datepicker>
 	<ui5-datepicker id="dp1" value="11/11/11"></ui5-datepicker>
 	<ui5-datepicker id="dp2" format-pattern="yyyy, dd/MM"></ui5-datepicker>
@@ -29,7 +30,6 @@
 	<ui5-datepicker id="dp9" value="today"></ui5-datepicker>
 	<ui5-datepicker id="dp10" disabled></ui5-datepicker>
 	<ui5-datepicker id="dp11"></ui5-datepicker>
-	<ui5-datepicker id="dp12"></ui5-datepicker>
 	<ui5-datepicker id="dp13"></ui5-datepicker>
 
 	<label id='lbl'>0</label>
@@ -40,6 +40,11 @@
 	<button id="downThere" style="position:absolute; top:3000px;"></button>
 	<label id='lblTomorrow'>0</label>
 	<label id='lblTomorrowDate'></label>
+
+	<h3>Test placeholder</h3>
+	<ui5-datepicker id="dp14" format-pattern="MMM d, y"></ui5-datepicker>
+	<ui5-datepicker id="dp15" format-pattern="MMM d, y" placeholder="Delivery date"></ui5-datepicker>
+
 	<script>
 		var originalGetDate = Date.prototype.getDate;
 

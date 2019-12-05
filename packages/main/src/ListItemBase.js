@@ -30,7 +30,6 @@ const metadata = {
 		_focused: {},
 		_focusForward: {},
 	},
-	_eventHandlersByConvention: true,
 };
 
 /**
@@ -53,11 +52,11 @@ class ListItemBase extends UI5Element {
 		return styles;
 	}
 
-	onfocusin(event) {
+	_onfocusin(event) {
 		this.fireEvent("_focused", event);
 	}
 
-	onkeydown(event) {
+	_onkeydown(event) {
 		if (isTabNext(event)) {
 			return this._handleTabNext(event);
 		}
@@ -68,7 +67,7 @@ class ListItemBase extends UI5Element {
 	}
 
 	_handleTabNext(event) {
-		const target = event.target.shadowRoot.activeElement;
+		const target = event.target;
 
 		if (this.shouldForwardTabAfter(target)) {
 			this.fireEvent("_forwardAfter", { item: target });
@@ -76,7 +75,7 @@ class ListItemBase extends UI5Element {
 	}
 
 	_handleTabPrevious(event) {
-		const target = event.target.shadowRoot.activeElement;
+		const target = event.target;
 
 		if (this.shouldForwardTabBefore(target)) {
 			const eventData = event;

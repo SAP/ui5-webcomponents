@@ -2,6 +2,7 @@ import { fetchJsonOnce } from "../util/FetchHelper.js";
 
 const themeURLs = new Map();
 const themeStyles = new Map();
+const registeredPackages = new Set();
 
 const registerThemeProperties = (packageName, themeName, style) => {
 	if (style._) {
@@ -14,6 +15,7 @@ const registerThemeProperties = (packageName, themeName, style) => {
 		// url for fetching
 		themeURLs.set(`${packageName}_${themeName}`, style);
 	}
+	registeredPackages.add(packageName);
 };
 
 const getThemeProperties = async (packageName, themeName) => {
@@ -36,4 +38,12 @@ const fetchThemeProperties = async (packageName, themeName) => {
 	return fetchJsonOnce(url);
 };
 
-export { registerThemeProperties, getThemeProperties };
+const getRegisteredPackages = () => {
+	return registeredPackages;
+};
+
+export {
+	registerThemeProperties,
+	getThemeProperties,
+	getRegisteredPackages,
+};
