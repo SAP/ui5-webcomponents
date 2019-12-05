@@ -20,12 +20,25 @@
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
+    <style>
+        code { color: blue; font-size: small; }
+    </style>
 
 </head>
 
 <body>
+    <a href="?sap-ui-theme=sap_fiori_3">Fiori 3</a> |
+    <a href="?sap-ui-theme=sap_fiori_3_dark">Fiori 3 Dark</a> |
+    <a href="?sap-ui-theme=sap_belize">Belize</a> |
+    <a href="?sap-ui-theme=sap_belize_hcb">Belize High Contrast Black</a>
+    <br>
+    <span>or in the browser console, for example:</span>
+    <code>window['sap-ui-webcomponents-bundle'].configuration.setTheme("sap_belize_hcb")</code>
+
+    <br><br>
+
     <h1>Test your web components here</h1>
-    <INIT_PACKAGE_VAR_TAG></INIT_PACKAGE_VAR_TAG>
+    <INIT_PACKAGE_VAR_TAG id="myFirstComponent"></INIT_PACKAGE_VAR_TAG>
 </body>
 
 </html>

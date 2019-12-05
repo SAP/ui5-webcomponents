@@ -32,7 +32,7 @@
     "@wdio/mocha-framework": "^5.12.1",
     "@wdio/spec-reporter": "^5.12.1",
     "@wdio/sync": "^5.12.1",
-    "@webcomponents/webcomponentsjs": "^2.2.7",
+    "@webcomponents/webcomponentsjs": "^2.4.0",
     "chai": "^4.2.0",
     "chokidar-cli": "^2.0.0",
     "chromedriver": "^78.0.0",
