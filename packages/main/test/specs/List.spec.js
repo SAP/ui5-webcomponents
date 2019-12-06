@@ -1,7 +1,7 @@
 const list = require("../pageobjects/ListTestPage");
 const assert = require("chai").assert;
 
-describe("Panel Tests", () => {
+describe("List Tests", () => {
 	before(() => {
 		browser.url("http://localhost:8080/test-resources/pages/List_test_page.html");
 	});
