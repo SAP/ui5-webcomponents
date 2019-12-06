@@ -30,6 +30,7 @@ const metadata = {
 		timestamp: {
 			type: Integer,
 		},
+
 		/**
 		 * Sets a calendar type used for display.
 		 * If not set, the calendar type of the global configuration is used.
@@ -39,14 +40,41 @@ const metadata = {
 		primaryCalendarType: {
 			type: CalendarType,
 		},
+
+		/**
+		 * Determines the мinimum date available for selection.
+		 *
+		 * @type {Object}
+		 * @defaultvalue undefined
+		 * @public
+		 */
+		minDate: {
+			type: Object,
+			defaultValue: undefined
+		},
+
+		/**
+		 * Determines the maximum date available for selection.
+		 *
+		 * @type {Object}
+		 * @defaultvalue undefined
+		 * @public
+		 */
+		maxDate: {
+			type: Object,
+			defaultValue: undefined
+		},
+
 		_selectedYear: {
 			type: Integer,
 			noAttribute: true,
 		},
+
 		_yearIntervals: {
 			type: Object,
 			multiple: true,
 		},
+
 		_hidden: {
 			type: Boolean,
 			noAttribute: true,
@@ -149,6 +177,10 @@ class YearPicker extends UI5Element {
 
 			if (oCalDate.getYear() === this._selectedYear) {
 				year.classes += " ui5-yp-item--selected";
+			}
+
+			if ((this.minDate || this.maxDate) && this._isOutOfSelectableRange(oCalDate.getYear())) {
+				year.classes += " ui5-yp-item--disabled";
 			}
 
 			if (intervals[intervalIndex]) {
@@ -254,6 +286,13 @@ class YearPicker extends UI5Element {
 		}
 
 		this.timestamp = oCalDate.valueOf() / 1000;
+	}
+
+	_isOutOfSelectableRange (year){
+		const minDateCheck = this.minDate && year < this.minDate.getFullYear(),
+			maxDateCheck = this.maxDate && year > this.maxDate.getFullYear();
+
+		return minDateCheck || maxDateCheck;
 	}
 
 	get styles() {

@@ -52,6 +52,30 @@ const metadata = {
 			multiple: true,
 		},
 
+		/**
+		 * Determines the мinimum date available for selection.
+		 *
+		 * @type {Object}
+		 * @defaultvalue undefined
+		 * @public
+		 */
+		minDate: {
+			type: Object,
+			defaultValue: undefined
+		},
+
+		/**
+		 * Determines the maximum date available for selection.
+		 *
+		 * @type {Object}
+		 * @defaultvalue undefined
+		 * @public
+		 */
+		maxDate: {
+			type: Object,
+			defaultValue: undefined
+		},
+
 		_weeks: {
 			type: Object,
 			multiple: true,
@@ -202,6 +226,10 @@ class DayPicker extends UI5Element {
 
 			if (this._isWeekend(oCalDate)) {
 				day.classes += " ui5-dp-item--weeekend";
+			}
+
+			if ((this.minDate || this.maxDate) && this._isOutOfSelectableRange(oCalDate)){
+				day.classes += " ui5-dp-item--disabled"
 			}
 
 			if (day.classes.indexOf("ui5-dp-wday6") !== -1
@@ -386,6 +414,24 @@ class DayPicker extends UI5Element {
 	_isDayPressed(target) {
 		const targetParent = target.parentNode;
 		return (target.className.indexOf("ui5-dp-item") > -1) || (targetParent && target.parentNode.classList.contains("ui5-dp-item"));
+	}
+
+	_isOutOfSelectableRange (date){
+		let currentDate = date._oUDate.oDate,
+			maxDate = this.maxDate,
+			minDate = this.minDate;
+
+		if (maxDate){
+			maxDate.setHours(0);
+		}
+		
+		if (minDate){
+			minDate.setHours(0);
+		}
+
+		currentDate.setHours(0);
+
+		return currentDate > maxDate || currentDate < minDate;
 	}
 
 	_getVisibleDays(oStartDate, bIncludeBCDates) {

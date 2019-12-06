@@ -61,26 +61,56 @@ const metadata = {
 			multiple: true,
 		},
 
+		/**
+		 * Determines the мinimum date available for selection.
+		 *
+		 * @type {Object}
+		 * @defaultvalue undefined
+		 * @public
+		 */
+		minDate: {
+			type: Object,
+			defaultValue: undefined
+		},
+
+		/**
+		 * Determines the maximum date available for selection.
+		 *
+		 * @type {Object}
+		 * @defaultvalue undefined
+		 * @public
+		 */
+		maxDate: {
+			type: Object,
+			defaultValue: undefined
+		},
+
 		_header: {
 			type: Object,
 		},
+
 		_oMonth: {
 			type: Object,
 		},
+
 		_monthPicker: {
 			type: Object,
 		},
+
 		_yearPicker: {
 			type: Object,
 		},
+
 		_calendarWidth: {
 			type: String,
 			noAttribute: true,
 		},
+
 		_calendarHeight: {
 			type: String,
 			noAttribute: true,
 		},
+
 		formatPattern: {
 			type: String,
 		},
@@ -158,6 +188,8 @@ class Calendar extends UI5Element {
 		this._oMonth.timestamp = this._timestamp;
 		this._oMonth.selectedDates = [...this._selectedDates];
 		this._oMonth.primaryCalendarType = this._primaryCalendarType;
+		this._oMonth.minDate = this.minDate;
+		this._oMonth.maxDate = this.maxDate;
 
 		this._header.monthText = this._oLocaleData.getMonths("wide", this._primaryCalendarType)[this._month];
 		this._header.yearText = oYearFormat.format(this._localDate);
@@ -206,6 +238,14 @@ class Calendar extends UI5Element {
 
 	get _selectedDates() {
 		return this.selectedDates || [];
+	}
+
+	get _maxDate() {
+		return this.maxDate && new Date(this.maxDate);
+	}
+
+	get _minDate() {
+		return this.minDate && new Date(this.minDate);
 	}
 
 	_handleSelectedDatesChange(event) {

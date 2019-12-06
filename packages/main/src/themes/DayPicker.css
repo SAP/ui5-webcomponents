@@ -84,6 +84,12 @@
 	background: var(--_ui5_daypicker_item_weekend_background_color);
 }
 
+.ui5-dp-item.ui5-dp-item--disabled {
+	background: darkgray;
+	pointer-events: none;
+	color: var(--sapUiBaseText);
+}
+
 .ui5-dp-item.ui5-dp-item--weeekend:hover {
 	background: var(--_ui5_daypicker_item_weekend_hover_background_color);
 }

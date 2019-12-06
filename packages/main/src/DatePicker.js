@@ -74,6 +74,30 @@ const metadata = {
 		},
 
 		/**
+		 * Determines the мinimum date available for selection.
+		 *
+		 * @type {Object}
+		 * @defaultvalue undefined
+		 * @public
+		 */
+		minDate: {
+			type: Object,
+			defaultValue: undefined
+		},
+
+		/**
+		 * Determines the maximum date available for selection.
+		 *
+		 * @type {Object}
+		 * @defaultvalue undefined
+		 * @public
+		 */
+		maxDate: {
+			type: Object,
+			defaultValue: undefined
+		},
+
+		/**
 		 * Determines the calendar type.
 		 * The input value is formated according to the calendar type and the picker shows
 		 * months and years from the specified calendar. Available options are: "Gregorian", "Islamic", "Japanese", "Buddhist" and "Persian".
@@ -288,8 +312,20 @@ class DatePicker extends UI5Element {
 
 		this._calendar = {
 			onSelectedDatesChange: this._handleCalendarSelectedDatesChange.bind(this),
-			selectedDates: [],
+			selectedDates: []
 		};
+
+		if (this.isValid(this.getAttribute("minDate"))) {
+			this.minDate = new Date(this.getAttribute("minDate"));
+		} else if (this.getAttribute("minDate")) {
+			console.warn(`In order for the "minDate" property to have effect, you should enter valid date format`);
+		}
+
+		if (this.isValid(this.getAttribute("maxDate"))) {
+			this.maxDate = new Date(this.getAttribute("maxDate"));
+		} else if (this.getAttribute("maxDate")) {
+			console.warn(`In order for the "maxDate" property to have effect, you should enter valid date format`);
+		}
 
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
@@ -310,6 +346,14 @@ class DatePicker extends UI5Element {
 		} else if (this.name) {
 			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
 		}
+
+		if (this.minDate) {
+			this._calendar.minDate = this.minDate;
+		}
+
+		if (this.maxDate) {
+			this._calendar.maxDate = this.maxDate;
+		}
 	}
 
 	_onkeydown(event) {
@@ -326,9 +370,13 @@ class DatePicker extends UI5Element {
 	_handleInputChange() {
 		let nextValue = this._getInput().getInputValue();
 		const isValid = this.isValid(nextValue);
+		const isInValidRange = this.isInValidRange(nextValue);
 
-		if (isValid) {
+		if (isValid && isInValidRange) {
 			nextValue = this.normalizeValue(nextValue);
+			this.valueState = ValueState.None;
+		} else {
+			this.valueState = ValueState.Error;
 		}
 
 
@@ -353,6 +401,35 @@ class DatePicker extends UI5Element {
 	 */
 	isValid(value = "") {
 		return !!(value && this.getFormat().parse(value));
+	}
+
+	/**
+	 * Checks if a date is in range between minimum and maximum date
+	 * @param {object} value
+	 * @public
+	 */
+	isInValidRange(value = "") {
+		let pickedDate = new Date(value),
+			minDate = this.minDate,
+			maxDate = this.maxDate;
+
+		if(minDate && maxDate){
+			if(minDate <= pickedDate && maxDate >= pickedDate){
+				return true;
+			}
+		} else if (minDate && !maxDate) {
+			if (minDate <= pickedDate) {
+				return true;
+			}
+		} else if (maxDate && !minDate) {
+			if (maxDate >= pickedDate) {
+				return true;
+			}
+		} else if (!maxDate && !minDate) {
+			return true;
+		}
+
+		return false;
 	}
 
 	// because the parser understands more than one format
@@ -422,6 +499,14 @@ class DatePicker extends UI5Element {
 			"ariaExpanded": this.isOpen(),
 			"ariaDescription": this.dateAriaDescription,
 		};
+	}
+
+	get _maxDate() {
+		return this.maxDate && new Date(this.maxDate);
+	}
+
+	get _minDate() {
+		return this.minDate && new Date(this.minDate);
 	}
 
 	get openIconTitle() {

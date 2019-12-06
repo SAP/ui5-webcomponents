@@ -28,6 +28,7 @@ const metadata = {
 		timestamp: {
 			type: Integer,
 		},
+
 		/**
 		 * Sets a calendar type used for display.
 		 * If not set, the calendar type of the global configuration is used.
@@ -37,14 +38,41 @@ const metadata = {
 		primaryCalendarType: {
 			type: CalendarType,
 		},
+
+		/**
+		 * Determines the мinimum date available for selection.
+		 *
+		 * @type {Object}
+		 * @defaultvalue undefined
+		 * @public
+		 */
+		minDate: {
+			type: Object,
+			defaultValue: undefined
+		},
+
+		/**
+		 * Determines the maximum date available for selection.
+		 *
+		 * @type {Object}
+		 * @defaultvalue undefined
+		 * @public
+		 */
+		maxDate: {
+			type: Object,
+			defaultValue: undefined
+		},
+
 		_quarters: {
 			type: Object,
 			multiple: true,
 		},
+
 		_hidden: {
 			type: Boolean,
 			noAttribute: true,
 		},
+
 	},
 	events: /** @lends  sap.ui.webcomponents.main.MonthPicker.prototype */ {
 		/**
@@ -122,6 +150,10 @@ class MonthPicker extends UI5Element {
 				month.classes += " ui5-mp-item--selected";
 			}
 
+			if ((this.minDate || this.maxDate) && this._isOutOfSelectableRange(i)){
+				month.classes += " ui5-mp-item--disabled";
+			}
+
 			const quarterIndex = parseInt(i / 3);
 
 			if (quarters[quarterIndex]) {
@@ -182,6 +214,14 @@ class MonthPicker extends UI5Element {
 			this.timestamp = timestamp;
 			this.fireEvent("selectedMonthChange", { timestamp });
 		}
+	}
+
+	_isOutOfSelectableRange (monthIndex){
+		let currentDateYear = this._localDate.getFullYear(),
+			minDateCheck = this.minDate && (currentDateYear <= this.minDate.getFullYear() && monthIndex < this.minDate.getMonth()),
+			maxDateCheck = this.maxDate && (currentDateYear >= this.maxDate.getFullYear() && monthIndex > this.maxDate.getMonth());
+
+		return  maxDateCheck || minDateCheck;
 	}
 
 	getTimestampFromDOM(domNode) {
