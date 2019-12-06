@@ -1,5 +1,5 @@
 @import "../base/BusyIndicator-parameters.css";
 
 :root {
-    --ui5-busyindicator-color: var(--sapUiAccent6);
+    --ui5-busyindicator-color: var(--sapAccentColor6);
 }

@@ -14,7 +14,7 @@
 .ui5-tli-indicator::before {
 	content: "";
 	display: inline-block;
-	background-color: var(--sapUiContentForegroundBorderColor);
+	background-color: var(--sapContent_ForegroundBorderColor);
 	width: 1px;
 	position: absolute;
 	top: 2.125rem;
@@ -64,8 +64,8 @@
 }
 
 .ui5-tli-bubble {
-	background: var(--sapUiGroupContentBackground);
-	border: 1px solid var(--sapUiListBorderColor);
+	background: var(--sapGroup_ContentBackground);
+	border: 1px solid var(--sapList_BorderColor);
 	box-sizing: border-box;
 	border-radius: 0.25rem;
 	flex: 1;
@@ -80,7 +80,7 @@
 
 .ui5-tli-bubble:focus::after {
 	content: "";
-	border: var(--_ui5_TimelineItem_bubble_outline_width) dotted var(--sapUiContentFocusColor);
+	border: var(--_ui5_TimelineItem_bubble_outline_width) dotted var(--sapContent_FocusColor);
 	position: absolute;
 	top: var(--_ui5_TimelineItem_bubble_outline_top);
 	right: var(--_ui5_TimelineItem_bubble_outline_right);
@@ -101,8 +101,8 @@
 
 .ui5-tli-bubble-arrow::before {
 	content: "";
-	background: var(--sapUiGroupContentBackground);
-	border: 1px solid var(--sapUiListBorderColor);
+	background: var(--sapGroup_ContentBackground);
+	border: 1px solid var(--sapList_BorderColor);
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -125,7 +125,7 @@
 .ui5-tli-title,
 .ui5-tli-desc {
 	color: var(--sapUiListTextColor);
-	font-family: var(--sapUiFontFamily);
+	font-family: var(--sapFontFamily);
 	font-weight: 400;
 	font-size: var(--sapMFontMediumSize);
 }
@@ -136,8 +136,8 @@
 }
 
 .ui5-tli-subtitle {
-	color: var(--sapUiContentLabelColor);
-	font-family: var(--sapUiFontFamily);
+	color: var(--sapContent_LabelColor);
+	font-family: var(--sapFontFamily);
 	font-weight: 400;
 	font-size: var(--sapMFontSmallSize);
 	padding-top: .375rem;

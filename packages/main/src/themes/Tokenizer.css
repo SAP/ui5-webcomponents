@@ -18,7 +18,7 @@
 	padding: 0.1875rem;
 	overflow-x: scroll;
 	box-sizing: border-box;
-	font-family: var(--sapUiFontFamily);
+	font-family: var(--sapFontFamily);
 }
 
 :host([data-ui5-compact-size]) .ui5-tokenizer-root.ui5-tokenizer-no-padding,

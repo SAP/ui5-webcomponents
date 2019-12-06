@@ -4,7 +4,7 @@
 
 :host {
 	max-width: 100%;
-	color: var(--sapUiGroupTitleTextColor);
+	color: var(--sapGroup_TitleTextColor);
 	font-family: var(--sapUiFontHeaderFamily);
 	text-shadow: var(--sapUiShadowText);
 }

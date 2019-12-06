@@ -132,11 +132,15 @@
 @sapButton_BorderColor: @sapHC_StandardForeground;
 @sapButton_Hover_Background: @sapHighlightColor;
 @sapButton_Hover_BorderColor: @sapButton_BorderColor;
-
 @sapButton_Emphasized_Background: @sapButton_Background;
 @sapButton_Emphasized_BorderColor: @sapButton_BorderColor;
 @sapButton_Reject_Background: @sapButton_Background;
 @sapButton_Accept_Background: @sapButton_Background;
+@sapButton_Reject_Active_Background: @sapActiveColor;
+@sapButton_Accept_Active_Background: @sapActiveColor;
+@sapButton_Reject_TextColor: contrast(@sapButton_Reject_Background, @sapButton_TextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
+@sapButton_Accept_TextColor: contrast(@sapButton_Accept_Background, @sapButton_TextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
+@sapButton_Active_TextColor: contrast(@sapActiveColor, @sapButton_TextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
 @sapField_Background: @sapBackgroundColor;
 @sapField_BorderColor: @sapHC_StandardForeground;
 @sapField_TextColor: @sapTextColor;
@@ -207,3 +211,6 @@
 @sapButton_TextColor: contrast(@sapButton_Background, @sapTextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
 @sapButton_Emphasized_TextColor: contrast(@sapButton_Emphasized_Background, @sapButton_TextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
 @sapContent_ForegroundTextColor: contrast(@sapContent_ForegroundColor, @sapTextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
+
+// Exceptions
+@sapUiFontSize: 16px;

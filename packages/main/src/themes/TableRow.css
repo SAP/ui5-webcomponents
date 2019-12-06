@@ -3,12 +3,12 @@
 }
 
 :host(:not(:first-of-type)) .ui5-table-row-root {
-	background-color: var(--sapUiListBackground);
-	border-top: 1px solid var(--sapUiListBorderColor);
+	background-color: var(--sapList_Background);
+	border-top: 1px solid var(--sapList_BorderColor);
 }
 
 .ui5-table-row-root:focus {
-	outline: var(--ui5_table_row_outline_width) dotted var(--sapUiContentFocusColor);
+	outline: var(--ui5_table_row_outline_width) dotted var(--sapContent_FocusColor);
 	outline-offset: -0.125rem;
 }
 
@@ -18,7 +18,7 @@
 }
 
 .ui5-table-row-popin-title {
-	color: var(--sapUiContentLabelColor);
+	color: var(--sapContent_LabelColor);
 	font-family: var(--sapUiFontHeaderFamily);
 	font-size: var(--sapMFontMediumSize);
 }

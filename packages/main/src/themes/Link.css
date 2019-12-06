@@ -6,8 +6,8 @@
 
 :host {
 	max-width: 100%;
-	color: var(--sapUiLink);
-	font-family: var(--sapUiFontFamily);
+	color: var(--sapLinkColor);
+	font-family: var(--sapFontFamily);
 	font-size: var(--sapMFontMediumSize);
 	cursor: pointer;
 }
@@ -19,7 +19,7 @@
 :host(:not([disabled])) .ui5-link-root:hover,
 :host(:not([disabled])) .ui5-link-root:hover {
 	text-decoration: underline;
-	color: var(--sapUiLinkHover);
+	color: var(--sapLinkColor);
 }
 
 :host([disabled]) .ui5-link-root {
@@ -40,7 +40,7 @@
 }
 
 :host([design="Subtle"]) .ui5-link-root:focus {
-	color: var(--sapUiLink);
+	color: var(--sapLinkColor);
 }
 
 :host([wrap]) .ui5-link-root {
@@ -75,7 +75,7 @@
 	height: var(--_ui5_link_outline_element_size);
 	position: absolute;
 	left: 0px;
-	border: 1px dotted var(--sapUiContentFocusColor);
+	border: 1px dotted var(--sapContent_FocusColor);
 	top: 0;
 	outline: none;
 }

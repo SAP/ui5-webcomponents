@@ -20,7 +20,7 @@
 	align-items: center;
 	width: 2.5rem;
 	background-color: var(--sapUiButtonLiteBackground);
-	color: var(--sapUiButtonTextColor);
+	color: var(--sapButton_TextColor);
 	cursor: pointer;
 	overflow: hidden;
 	white-space: nowrap;
@@ -33,13 +33,13 @@
 }
 
 .ui5-calheader-arrowbtn:hover {
-	background-color: var(--sapUiButtonHoverBackground);
-	color: var(--sapUiButtonHoverTextColor);
+	background-color: var(--sapButton_Hover_Background);
+	color: var(--sapButton_Hover_TextColor);
 }
 
 .ui5-calheader-arrowbtn:active {
 	background-color: var(--sapUiButtonActiveBackground);
-	color: var(--sapUiButtonActiveTextColor);
+	color: var(--sapButton_Active_TextColor);
 }
 
 .ui5-calheader-arrowbtn,
@@ -65,7 +65,7 @@
 }
 
 .ui5-calheader-middlebtn {
-	font-family: var(--sapUiFontFamily);
+	font-family: var(--sapFontFamily);
 	width: var(--_ui5_calendar_header_middle_button_width);
 	flex: var(--_ui5_calendar_header_middle_button_flex);
 	position: relative;
@@ -86,14 +86,14 @@
 	display: var(--_ui5_calendar_header_middle_button_focus_after_display);
 	width: var(--_ui5_calendar_header_middle_button_focus_after_width);
 	height: var(--_ui5_calendar_header_middle_button_focus_after_height);
-	border: 1px dotted var(--sapUiContentFocusColor);
+	border: 1px dotted var(--sapContent_FocusColor);
 	position: absolute;
 	top: var(--_ui5_calendar_header_middle_button_focus_after_top_offset);
 	left: var(--_ui5_calendar_header_middle_button_focus_after_left_offset);
 }
 
 .ui5-calheader-middlebtn:focus:active::after {
-	border-color: var(--sapUiContentContrastFocusColor);
+	border-color: var(--sapContent_ContrastFocusColor);
 }
 
 :host([data-ui5-compact-size]) .ui5-calheader-root {

@@ -6,7 +6,7 @@
 */
 
 [input-icon] {
-	color: var(--sapUiContentIconColor);
+	color: var(--sapContent_IconColor);
 	cursor: pointer;
 	outline: none;
 	padding: var(--_ui5-input-icon-padding);
@@ -21,12 +21,12 @@
 
 [input-icon][pressed] {
 	background: var(--sapUiToggleButtonPressedBackground);
-	color: var(--sapUiButtonActiveTextColor);
+	color: var(--sapButton_Active_TextColor);
 }
 
 [input-icon]:active {
-	background-color: var(--sapUiButtonLiteActiveBackground);
-	color: var(--sapUiButtonActiveTextColor);
+	background-color: var(--sapButton_Active_Background);
+	color: var(--sapButton_Active_TextColor);
 }
 
 [input-icon]:not([pressed]):not(:active):hover {

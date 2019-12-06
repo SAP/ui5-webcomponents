@@ -5,7 +5,7 @@
 
 /* selected */
 :host([selected]) {
-	background: var(--sapUiListSelectionBackgroundColor);
+	background: var(--sapList_SelectionBackgroundColor);
 }
 
 /* selected and hovered */
@@ -21,38 +21,38 @@
 
 /* hovered */
 :host([actionable]:not([active]):not([selected]):hover) {
-	background : var(--sapUiListHoverBackground);
+	background : var(--sapList_Hover_Background);
 }
 
 /* focused */
 :host([active][actionable]) .ui5-li-root.ui5-li--focusable:focus,
 :host([active][actionable]) .ui5-li-root.ui5-li--focusable .ui5-li-content:focus {
-	outline-color: var(--sapUiContentContrastFocusColor);
+	outline-color: var(--sapContent_ContrastFocusColor);
 }
 
 /* active */
 :host([active][actionable]) .ui5-li-root .ui5-li-icon {
-	color: var(--sapUiListActiveTextColor);
+	color: var(--sapList_Active_TextColor);
 }
 
 /* ui5-li: title, description, info state */
 :host([active][actionable]) .ui5-li-title,
 :host([active][actionable]) .ui5-li-desc,
 :host([active][actionable]) .ui5-li-info {
-	color: var(--sapUiListActiveTextColor);
+	color: var(--sapList_Active_TextColor);
 }
 
 /* ui5-li: infoState */
 :host([info-state="Warning"]) .ui5-li-info {
-	color: var(--sapUiCriticalText);
+	color: var(--sapCriticalTextColor);
 }
 
 :host([info-state="Success"]) .ui5-li-info {
-	color: var(--sapUiPositiveText);
+	color: var(--sapPositiveTextColor);
 }
 
 :host([info-state="Error"]) .ui5-li-info {
-	color: var(--sapUiNegativeText);
+	color: var(--sapNegativeTextColor);
 }
 
 /* ui5-li: item with title and description */
@@ -87,13 +87,13 @@
 }
 
 .ui5-li-desc {
-	color: var(--sapUiContentLabelColor);
+	color: var(--sapContent_LabelColor);
 	font-size: var(--sapMFontMediumSize);
 }
 
 .ui5-li-info {
 	margin: 0 0.25rem;
-	color: var(--sapUiNeutralText);
+	color: var(--sapNeutralTextColor);
 	font-size: 0.875rem;
 	flex-shrink: 0;
 	overflow: hidden;
@@ -110,7 +110,7 @@
 .ui5-li-icon {
 	min-width: 1rem;
 	min-height: 1rem;
-	color: var(--sapUiContentNonInteractiveIconColor);
+	color: var(--sapContent_NonInteractiveIconColor);
 	padding-right: 0.5rem;
 }
 

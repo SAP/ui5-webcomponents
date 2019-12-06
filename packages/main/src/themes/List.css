@@ -39,12 +39,12 @@
 	box-sizing: border-box;
 	font-size: var(--sapMFontHeader4Size);
 	font-family: var(--sapUiFontHeaderFamily);
-	color: var(--sapUiGroupTitleTextColor);
+	color: var(--sapGroup_TitleTextColor);
 	height: 3rem;
 	line-height: 3rem;
 	padding: 0 1rem;
-	background-color: var(--sapUiGroupTitleBackground);
-	border-bottom: 1px solid var(--sapUiGroupTitleBorderColor);
+	background-color: var(--sapGroup_TitleBackground);
+	border-bottom: 1px solid var(--sapGroup_TitleBorderColor);
 }
 
 .ui5-list-root .ui5-list-footer {
@@ -52,9 +52,9 @@
 	box-sizing: border-box;
 	-webkit-text-size-adjust: none;	/* To improve readability Mobile Safari automatically increases the size of small text so let's disable this */
 	font-size: var(--sapMFontMediumSize);
-	font-family: var(--sapUiFontFamily,var(--sapFontFamily,"72","72full",Arial,Helvetica,sans-serif));
+	font-family: var(--sapFontFamily,var(--sapFontFamily,"72","72full",Arial,Helvetica,sans-serif));
 	line-height: 2rem;
-	background-color: var(--sapUiListFooterBackground);
+	background-color: var(--sapList_FooterBackground);
 	color: var(--sapUiListFooterTextColor);
 	padding: 0 1rem;
 	white-space: nowrap;
@@ -71,8 +71,8 @@
 	-webkit-box-pack: center;
 	justify-content: center;
 	color: var(--sapUiListTextColor);
-	background-color: var(--sapUiListBackground);
-	border-bottom: 1px solid var(--sapUiListBorderColor);
+	background-color: var(--sapList_Background);
+	border-bottom: 1px solid var(--sapList_BorderColor);
 	padding: 0 1rem !important;
 	height:3rem;
 }

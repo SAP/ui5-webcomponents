@@ -12,12 +12,12 @@ table {
 .ui5-table-header-row {
 	color: var(--sapUiListTextColor);
 	height: 3rem;
-	font-family: var(--sapUiFontFamily);
+	font-family: var(--sapFontFamily);
 	font-size: var(--sapMFontMediumSize);
 }
 
 .ui5-table-header-row:focus {
-	outline: var(--ui5_table_header_row_outline_width) dotted var(--sapUiContentFocusColor);
+	outline: var(--ui5_table_header_row_outline_width) dotted var(--sapContent_FocusColor);
 	outline-offset: -0.125rem;
 }
 
@@ -33,7 +33,7 @@ tr {
 	justify-content: center;
 	text-align: center;
 	padding: 0.5rem 1rem;
-	font-family: var(--sapUiFontFamily);
+	font-family: var(--sapFontFamily);
 	font-size: 0.875rem;
 	box-sizing: border-box;
 	color: var(--sapUiListTextColor);
@@ -41,5 +41,5 @@ tr {
 }
 
 :host([_no-data-displayed]) {
-	border-bottom: 1px solid var(--sapUiListTableGroupHeaderBorderColor);
+	border-bottom: 1px solid var(--sapList_TableGroupHeaderBorderColor);
 }

@@ -1,6 +1,6 @@
 :host {
 	display: inline-block;
-	background: var(--sapUiButtonBackground);
+	background: var(--sapButton_Background);
 	border-width: 1px;
 	border-style: solid;
 	border-color: var(--_ui5_token_border_color);
@@ -15,7 +15,7 @@
 }
 
 :host(:not([readonly]):hover) {
-	background: var(--sapUiButtonHoverBackground);
+	background: var(--sapButton_Hover_Background);
 	border-color: var(--_ui5_token_hover_border_color);
 }
 
@@ -31,7 +31,7 @@
 }
 
 :host([readonly]) {
-	color: var(--sapUiContentForegroundTextColor);
+	color: var(--sapContent_ForegroundTextColor);
 }
 
 :host([readonly]) .ui5-token--wrapper {
@@ -39,7 +39,7 @@
 }
 
 :host([selected]) .ui5-token--wrapper:focus {
-	outline: 1px dotted var(--sapUiContentContrastFocusColor);
+	outline: 1px dotted var(--sapContent_ContrastFocusColor);
 }
 
 .ui5-token--wrapper {
@@ -53,13 +53,13 @@
 	padding-bottom: 0.25rem;
 	box-sizing: border-box;
 	font-size: var(--sapMFontMediumSize);
-	font-family: var(--sapUiFontFamily);
+	font-family: var(--sapFontFamily);
 	user-select: none;
 }
 
 .ui5-token--wrapper:focus {
 	outline-offset: -2px;
-	outline: 1px dotted var(--sapUiContentFocusColor);
+	outline: 1px dotted var(--sapContent_FocusColor);
 }
 
 .ui5-token--text {
