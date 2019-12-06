@@ -1,4 +1,4 @@
-#Creating a package
+# Creating a package
 
 This tutorial explains how to:
  - create an NPM package for your own UI5 Web Components
