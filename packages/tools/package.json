@@ -75,7 +75,6 @@
     "rollup-plugin-url": "^2.2.0",
     "rollup-plugin-visualizer": "^0.9.2",
     "serve": "^10.1.1",
-    "uuid": "^3.3.3",
     "wdio-chromedriver-service": "^5.0.2"
   },
   "resolutions": {

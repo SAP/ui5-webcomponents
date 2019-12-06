@@ -1,10 +1,7 @@
-
-
 const fs = require("fs");
 const path = require("path");
 const mkdirp = require("mkdirp");
 const commandLineArgs = require('command-line-args');
-const uuidv1 = require('uuid/v1');
 const beautify = require("json-beautify");
 
 // String utils
@@ -31,7 +28,6 @@ const RESOURCES_DIR = path.join(`${__dirname}`, `resources/`);
 const options = commandLineArgs([
 	{name: 'name', alias: 'n', type: String},
 	{name: 'port', alias: 'p', type: Number},
-	{name: 'uuid', alias: 'u', type: String},
 	{name: 'tag', type: String},
 ]);
 
@@ -55,7 +51,6 @@ const className = capitalizeFirst(kebabToCamelCase(tag.substr(4)));
 const vars = {
 	INIT_PACKAGE_VAR_NAME: options.name || packageContent.name,
 	INIT_PACKAGE_VAR_PORT: options.port || DEFAULT_PORT,
-	INIT_PACKAGE_VAR_UUID: options.uuid || uuidv1(),
 	INIT_PACKAGE_VAR_TAG: tag,
 	INIT_PACKAGE_VAR_CLASS_NAME: className,
 };

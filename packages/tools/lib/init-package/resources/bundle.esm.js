@@ -13,8 +13,8 @@ import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 /* enable additional themes */
 import "./dist/json-imports/Themes.js";
 
-/* Uncomment once you have your translation files ready */
-// import "./dist/json-imports/i18n.js";
+/* import i18n texts */
+import "./dist/json-imports/i18n.js";
 
 /* Import your web components here from the dist/ directory */
 import "./dist/INIT_PACKAGE_VAR_CLASS_NAME.js";
