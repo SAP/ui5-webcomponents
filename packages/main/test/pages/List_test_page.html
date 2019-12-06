@@ -48,6 +48,12 @@
 		<ui5-li>Option #3</ui5-li>
 	</ui5-list>
 
+	<ui5-list id="default-slot-test" mode="SingleSelect">
+		<ui5-li>Option #1</ui5-li>
+		<ui5-li>Option #2</ui5-li>
+		<ui5-li>Option #3</ui5-li>
+	</ui5-list>
+
 	<ui5-input id="fieldMultiSelResult"></ui5-input>
 
 	<ui5-list id="keyboardTestList">
@@ -64,6 +70,21 @@
 		<ui5-li-custom selected>
 				<ui5-radiobutton text="Option C" disabled="disabled"></ui5-radiobutton>
 		</ui5-li-custom>
+	</ui5-list>
+
+	<ui5-list id="no-data-list" header-text="API: noDataText" separators="None" no-data-text="No Data Available"></ui5-list>
+
+	<ui5-list
+		id="header-slot-list"
+		mode="MultiSelect"
+		header-text="Text when no header provided"
+		footer-text="Copyright"
+		no-data-text="No data">
+
+		<div slot="header" class="header">
+			<ui5-title id="header-slot-title">List Title Here</ui5-title>
+		</div>
+
 	</ui5-list>
 
 	<script>
