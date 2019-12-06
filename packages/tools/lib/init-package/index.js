@@ -117,4 +117,4 @@ copyResources(RESOURCES_DIR);
 // Update package.json
 updatePackageFile();
 
-// require("../create-new-component/index.js");
+console.log("Package successfully initialized.");

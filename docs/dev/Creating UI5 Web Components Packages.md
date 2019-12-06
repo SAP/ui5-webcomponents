@@ -57,6 +57,8 @@ to get all the default values, or:
 
 to change the port and the tag of the sample web component that will be created in the empty package.
 
+The initialization script will set the directory structure copy a couple of files. 
+
 ## Step 4 - run the dev server and test the build
 
 To run the dev server:
@@ -104,7 +106,7 @@ build | Production build to the `dist/` directory
 lint | Run a static code scan with `eslint`
 start | Build the project for development and run the dev server
 test | Run the test specs from the `test/specs/` directory
-create-ui5-element | Creates an empty web component with the given name
+create-ui5-element | Create an empty web component with the given name
 
 ### Files in the main directory
 
@@ -149,10 +151,10 @@ File | Purpose
 ------------|-------------
 `src/DefaultTheme.js` | This file is automatically used by the framework. It imports assets for the default theme. It is a central file for the whole package and normally you don't need to modify it.
 `src/themes/Demo.css` | All CSS rules for the web component, same for all themes. Will be inserted in the shadow root.
-`src/themes/sap_belize/parameters-bundle.css` | Values for the component-specific CSS Vars for the `sap_belize` theme *
-`src/themes/sap_belize_hcb/parameters-bundle.css` | Values for the component-specific CSS Vars for the `sap_belize_hcb` theme *
-`src/themes/sap_fiori_3/parameters-bundle.css` | Values for the component-specific CSS Vars for the `sap_fiori_3` theme *
-`src/themes/sap_fiori_3_dark/parameters-bundle.css` | Values for the component-specific CSS Vars for the `sap_fiori_3_dark` theme *
+`src/themes/sap_belize/parameters-bundle.css` | Values for the component-specific CSS Vars for the `sap_belize` theme.
+`src/themes/sap_belize_hcb/parameters-bundle.css` | Values for the component-specific CSS Vars for the `sap_belize_hcb` theme.
+`src/themes/sap_fiori_3/parameters-bundle.css` | Values for the component-specific CSS Vars for the `sap_fiori_3` theme.
+`src/themes/sap_fiori_3_dark/parameters-bundle.css` | Values for the component-specific CSS Vars for the `sap_fiori_3_dark` theme.
 
 *Note:* It's up to you whether to put the CSS Vars directly in the `parameters-bundle.css` files for the different themes or to 
 import them from separate `.css` files. You could have for example a `Demo-params.css` file for each theme and
