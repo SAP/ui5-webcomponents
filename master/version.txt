@@ -1,5 +1,5 @@
-commit 1e04dbfda84c304da46da3420b3c32a4c1b53f02
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Dec 4 17:42:53 2019 +0200
+commit d786aac557ddcfcb078004dddbb5dc2867085442
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Fri Dec 6 09:46:24 2019 +0200
 
-    chore(ui5-checkbox): fix the wrapping functionality assertion (#1013)
+    chore(ui5-dailog): rewrite qunit tests to wdio (#1022)
