@@ -1,5 +1,5 @@
-commit d786aac557ddcfcb078004dddbb5dc2867085442
+commit 9d0fee2a9d8336b8d936cdb3c7b450c4a7122468
 Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Fri Dec 6 09:46:24 2019 +0200
+Date:   Fri Dec 6 10:15:29 2019 +0200
 
-    chore(ui5-dailog): rewrite qunit tests to wdio (#1022)
+    chore(ui5-button): rewrite qunit tests to wdio (#1019)
