@@ -45,7 +45,7 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	font-size: var(--sapMFontSmallSize);
+	font-size: var(--sapFontSmallSize);
 	outline: none;
 	box-sizing: border-box;
 	-webkit-user-select: none;
@@ -58,7 +58,7 @@
 	position: relative;
 	color: var(--sapTextColor);
 	background: var(--_ui5_daypicker_item_background_color);
-	font-size: var(--sapMFontMediumSize);
+	font-size: var(--sapFontMediumSize);
 	border: var(--_ui5_daypicker_item_border);
 }
 

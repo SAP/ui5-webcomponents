@@ -6,7 +6,7 @@
 
 	/* Switch Track */
 	--_ui5_switch_track_bg: var(--sapButton_Background);
-	--_ui5_switch_track_checked_bg: var(--sapUiToggleButtonPressedBackground);
+	--_ui5_switch_track_checked_bg: var(--sapButton_Selected_Background);
 	--_ui5_switch_track_hover_bg: var(--sapButton_Background);
 	--_ui5_switch_track_hover_checked_bg: var(--sapButton_Background);
 	--_ui5_switch_track_hover_border_color: var(--sapTextColor);

@@ -8,7 +8,7 @@
 	padding-top: 1rem;
 	color: currentColor;
 	font-size: var(--sapMFontHeader6Size);
-	font-weight: var(--sapUiFontHeaderWeight);
+	font-weight: normal;
 	line-height: 2rem;
 }
 

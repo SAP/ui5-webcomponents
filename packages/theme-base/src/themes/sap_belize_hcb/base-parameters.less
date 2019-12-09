@@ -7,6 +7,9 @@
 @sapFontFamily: "72", "72full", Arial, Helvetica, sans-serif;
 @sapContent_GridSize: 1rem;
 @sapFontSize: calc(0.875 * @sapContent_GridSize);
+@sapFontSmallSize: calc(0.75 * @sapContent_GridSize);
+@sapFontMediumSize: calc(0.875 * @sapContent_GridSize);
+@sapFontLargeSize: calc(1 * @sapContent_GridSize);
 @sapTextColor: @sapHC_StandardForeground;
 @sapLinkColor: @sapHC_StandardForeground;
 @sapCompanyLogo: none;
@@ -107,7 +110,11 @@
 @sapContent_FocusColor: @sapHC_StandardForeground;
 @sapContent_ContrastFocusColor: @sapContent_FocusColor;
 @sapContent_ShadowColor: @sapHC_StandardForeground;
+@sapContent_TextShadow: none;
+@sapContent_HeaderShadow: inset 0 -0.125rem @sapObjectHeader_BorderColor;
 @sapContent_ContrastShadowColor: @sapContent_ShadowColor;
+@sapContent_Shadow0: 0 0 1rem 0 fade(@sapContent_ContrastShadowColor, 50), 0 0 0 2px @sapContent_ShadowColor;
+@sapContent_Shadow2: 0 0.25rem 2rem 0 fade(@sapContent_ContrastShadowColor, 60), 0 0 0 2px @sapContent_ShadowColor;
 @sapContent_SearchHighlightColor: @sapHighlightColor;
 @sapContent_HelpColor: @sapHC_EnhancedForeground;
 @sapContent_LabelColor: @sapTextColor;
@@ -119,6 +126,7 @@
 @sapContent_ForegroundColor: @sapBackgroundColor;
 @sapContent_ForegroundBorderColor: @sapHC_StandardForeground;
 @sapContent_BadgeBackground: @sapHighlightColor;
+
 @sapShell_Background: @sapBackgroundColor;
 @sapShell_BackgroundImage: @sapBackgroundColor;
 @sapShell_BackgroundImageOpacity: 1.0;
@@ -135,6 +143,8 @@
 @sapButton_BorderCornerRadius: calc(0.2 * @sapContent_GridSize);
 @sapButton_BorderColor: @sapHC_StandardForeground;
 @sapButton_TextColor: contrast(@sapButton_Background, @sapTextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
+@sapButton_Selected_Background: @sapSelectedColor;
+@sapButton_Selected_BorderColor: @sapButton_BorderColor;
 @sapButton_Hover_Background: @sapHighlightColor;
 @sapButton_Hover_BorderColor: @sapButton_BorderColor;
 @sapButton_Hover_TextColor: contrast(@sapButton_Hover_Background, @sapButton_TextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
@@ -143,6 +153,8 @@
 @sapButton_Active_BorderColor: @sapButton_BorderColor;
 @sapButton_Emphasized_Background: @sapButton_Background;
 @sapButton_Emphasized_BorderColor: @sapButton_BorderColor;
+@sapButton_Emphasized_Active_Background: @sapButton_Active_BorderColor;
+@sapButton_Emphasized_Active_BorderColor: @sapButton_Active_BorderColor;
 @sapButton_Emphasized_Hover_Background: @sapButton_Hover_Background;
 @sapButton_Emphasized_Hover_BorderColor: @sapButton_Hover_BorderColor;
 @sapButton_Emphasized_TextColor: contrast(@sapButton_Emphasized_Background, @sapButton_TextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
@@ -219,6 +231,7 @@
 @sapPageFooter_Background: @sapBackgroundColor;
 @sapInfobar_Background: @sapBackgroundColor;
 @sapObjectHeader_Background: @sapBaseColor;
+@sapObjectHeader_BorderColor: @sapHC_StandardForeground;
 @sapBlockLayer_Background: @sapBackgroundColor;
 @sapTile_Background: @sapBackgroundColor;
 @sapTile_BorderColor: @sapHC_StandardForeground;
@@ -233,35 +246,11 @@
 @sapGroup_TitleTextColor: contrast(@sapBackgroundColor, @sapTitleColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
 @sapContent_ForegroundTextColor: contrast(@sapContent_ForegroundColor, @sapTextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
 
-// Exceptions
+// No "sap" prefix parameter equivalent
 @sapUiFontSize: 16px;
-@sapUiFontCondensedFamily: 'Arial Narrow', HelveticaNeue-CondensedBold, Arial, sans-serif;
-@sapUiFontHeaderWeight: normal;
 @sapMFontHeader1Size: 1.625rem;
 @sapMFontHeader2Size: 1.375rem;
 @sapMFontHeader3Size: 1.250rem;
 @sapMFontHeader4Size: 1.125rem;
 @sapMFontHeader5Size: 1rem;
 @sapMFontHeader6Size: 0.875rem;
-@sapMFontSmallSize: 0.75rem;
-@sapMFontMediumSize: 0.875rem;
-@sapMFontLargeSize: 1rem;
-@sapUiTranslucentBGOpacity: 100%;
-@sapUiDesktopFontSize: 12px;
-@sapUiFontLargeSize: 13px;
-@sapUiFontSmallSize: 11px;
-@sapUiFontHeader1Size: 26px;
-@sapUiFontHeader2Size: 20px;
-@sapUiFontHeader3Size: 18px;
-@sapUiFontHeader4Size: 16px;
-@sapUiFontHeader5Size: 14px;
-@sapUiLineHeight: 18px;
-
-@sapUiListTableTextSize: 0.875rem;
-@sapUiListTableIconSize: 1rem;
-@sapUiShadowText: none;
-
-@sapUiShadowLevel0: 0 0 0 1px @sapContent_ShadowColor;
-@sapUiShadowHeader: inset 0 -0.125rem @sapPageHeader_BorderColor;
-@sapUiContentContrastShadowColorFade60: fade(@sapContent_ContrastShadowColor, 60);
-@sapUiShadowLevel2: 0 0.25rem 2rem 0 @sapUiContentContrastShadowColorFade60, 0 0 0 2px @sapContent_ShadowColor;

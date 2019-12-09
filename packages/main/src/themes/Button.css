@@ -8,7 +8,7 @@
 	min-width: var(--_ui5_button_base_min_width);
 	height: var(--_ui5_button_base_height);
 	font-family: var(--sapFontFamily);
-	font-size: var(--sapMFontMediumSize);
+	font-size: var(--sapFontMediumSize);
 	text-shadow: var(--_ui5_button_text_shadow);
 	border-radius: var(--_ui5_button_border_radius);
 	border-width: 0.0625rem;
@@ -205,7 +205,7 @@ bdi {
 
 :host([design="Empasized"][active]) {
 	background-color: var(--sapButton_Emphasized_Active_Background);
-	border-color: var(--sapUiButtonEmphasizedActiveBorderColor);
+	border-color: var(--sapButton_Emphasized_Active_BorderColor);
 	color: var(--sapButton_Active_TextColor);
 	text-shadow: none;
 }

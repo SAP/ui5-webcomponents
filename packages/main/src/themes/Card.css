@@ -8,7 +8,7 @@
 	height: 100%;
 	color: var(--sapGroup_TitleTextColor);
 	background: var(--sapTile_Background);
-	box-shadow: var(--sapUiShadowLevel0);
+	box-shadow: var(--sapContent_Shadow0);
 	border-radius: .25rem;
 	border: 1px solid var(--_ui5_card_border_color);
 	overflow: hidden;
@@ -87,7 +87,7 @@
 .ui5-card-header .ui5-card-status {
 	display: inline-block;
 	font-family: var(--sapFontFamily);
-	font-size: var(--sapMFontSmallSize);
+	font-size: var(--sapFontSmallSize);
 	color: var(--sapTile_TextColor);
 	text-align: left;
 	line-height: 1.125rem;
@@ -101,14 +101,14 @@
 .ui5-card-header .ui5-card-header-text .ui5-card-heading {
 	font-family: var(--sapFontFamily);
 	font-size: var(--sapMFontHeader5Size);
-	font-weight: var(--sapUiFontHeaderWeight);
+	font-weight: normal;
 	color: var(--sapTile_TitleTextColor);
 	max-height: 3.5rem;
 }
 
 .ui5-card-header .ui5-card-header-text .ui5-card-subtitle {
 	font-family: var(--sapFontFamily);
-	font-size: var(--sapMFontMediumSize);
+	font-size: var(--sapFontMediumSize);
 	font-weight: normal;
 	color: var(--sapTile_TextColor);
 	margin-top: .5rem;

@@ -43,8 +43,8 @@
 :host([design="Transparent"][pressed]:hover),
 :host([design="Emphasized"][pressed]),
 :host([design="Emphasized"][pressed]:hover) {
-	background: var(--sapUiToggleButtonPressedBackground);
-	border-color: var(--sapUiToggleButtonPressedBorderColor);
+	background: var(--sapButton_Selected_Background);
+	border-color: var(--sapButton_Selected_BorderColor);
 	color: var(--sapUiToggleButtonPressedTextColor);
 	outline-color: var(--sapContent_ContrastFocusColor);
 }

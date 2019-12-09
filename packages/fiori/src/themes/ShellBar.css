@@ -11,7 +11,7 @@
 	background: var(--sapShellColor);
 	height: 2.75rem;
 	font-family: var(--sapFontFamily);
-	font-size: var(--sapMFontMediumSize);
+	font-size: var(--sapFontMediumSize);
 	font-weight: normal;
 	box-sizing: border-box;
 }
@@ -96,7 +96,7 @@
 .ui5-shellbar-secondary-title {
 	display: inline-block;
 	margin: 0 0.5rem;
-	font-size: var(--sapMFontSmallSize);
+	font-size: var(--sapFontSmallSize);
 	color: var(--sapShell_TextColor);
 	line-height: 1rem;
 	font-weight: normal;
@@ -318,7 +318,7 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	font-size: var(--sapMFontSmallSize);
+	font-size: var(--sapFontSmallSize);
 	font-family: var(--sapFontFamily);
 	z-index: 2;
 	box-sizing: border-box;
@@ -352,14 +352,14 @@
 
 ::slotted(ui5-input) {
 	background-color: var(--sapShellColor);
-	border: 1px solid var(--sapUiShellBorderColorLighten30);
+	border: 1px solid var(--sapShell_BorderColor_Lighten30);
 	color: var(--sapShell_TextColor);
 	height: 100%;
 }
 
 ::slotted(ui5-input:hover) {
 	background: var(--sapShell_Hover_Background);
-	border: 1px solid var(--sapUiShellBorderColorLighten30);
+	border: 1px solid var(--sapShell_BorderColor_Lighten30);
 }
 
 ::slotted(ui5-input[focused]) {

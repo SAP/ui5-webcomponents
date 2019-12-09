@@ -88,7 +88,7 @@
 
 .ui5-li-desc {
 	color: var(--sapContent_LabelColor);
-	font-size: var(--sapMFontMediumSize);
+	font-size: var(--sapFontMediumSize);
 }
 
 .ui5-li-info {
@@ -133,7 +133,7 @@
 :host([data-ui5-compact-size]) .ui5-li-title {
 	height: 2rem;
 	line-height: 2rem;
-	font-size: var(--sapMFontMediumSize);
+	font-size: var(--sapFontMediumSize);
 }
 
 :host([data-ui5-compact-size]:not([has-title]):not([description])) .ui5-li-img {

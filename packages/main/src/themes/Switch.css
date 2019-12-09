@@ -68,7 +68,7 @@
 	position: absolute;
 	min-width: 1.625rem;
 	padding: 0 0.125rem;
-	font-size: var(--sapMFontSmallSize);
+	font-size: var(--sapFontSmallSize);
 	font-family: "72","72full",Arial,Helvetica,sans-serif;
 	text-transform: uppercase;
 	text-align: center;
@@ -193,13 +193,13 @@
 }
 
 .ui5-switch-root.ui5-switch--semantic .ui5-switch-handle {
-	background: var(--sapUiSuccessBGLighten5); /* lighten(var(--sapSuccessBackground), 5) */
+	background: var(--sapSuccessBackground_Lighten5); /* lighten(var(--sapSuccessBackground), 5) */
 }
 
 /* switch semantic icon */
 .ui5-switch-root.ui5-switch--semantic .ui5-switch-text {
 	justify-content: center;
-	font-size: var(--sapMFontSmallSize);
+	font-size: var(--sapFontSmallSize);
 }
 
 .ui5-switch-root.ui5-switch--semantic .ui5-switch-icon-on,
@@ -226,7 +226,7 @@
 }
 
 .ui5-switch-root.ui5-switch--semantic:not(.ui5-switch--checked) .ui5-switch-handle {
-	background: var(--sapUiErrorBGLighten4); /*lighten(var(--sapErrorBackground),4);*/
+	background: var(--sapErrorBackground_Lighten4); /*lighten(var(--sapErrorBackground),4);*/
 }
 
 /* switch hover effects */

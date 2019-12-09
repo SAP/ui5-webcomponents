@@ -6,13 +6,13 @@
 	max-width: 100%;
 	color: var(--sapGroup_TitleTextColor);
 	font-family: var(--sapFontFamily);
-	text-shadow: var(--sapUiShadowText);
+	text-shadow: var(--sapContent_TextShadow);
 }
 
 .ui5-title-root {
 	display: inline-block;
 	position: relative;
-	font-weight: var(--sapUiFontHeaderWeight);
+	font-weight: normal;
 	box-sizing: border-box;
 	overflow: hidden;
 	text-overflow: ellipsis;

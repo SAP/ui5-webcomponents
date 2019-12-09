@@ -47,8 +47,8 @@
 	cursor: pointer;
 	flex-shrink: 0;
 	margin: 0 1rem;
-	font-size: var(--sapMFontSmallSize);
-	text-shadow: var(--sapUiShadowText);
+	font-size: var(--sapFontSmallSize);
+	text-shadow: var(--sapContent_TextShadow);
 	position: relative;
 	display: inline-flex;
 	align-items: center;
@@ -143,7 +143,7 @@
 	width: 1.5rem;
 	height: 1.5rem;
 	color: var(--_ui5_tc_headerItemIcon_color);
-	text-shadow: var(--sapUiShadowText);
+	text-shadow: var(--sapContent_TextShadow);
 	pointer-events: none;
 }
 
@@ -164,7 +164,7 @@
 
 /*** TextOnly Tab styles ***/
 .ui5-tc__headerItem--textOnly {
-	font-size: var(--sapMFontMediumSize);
+	font-size: var(--sapFontMediumSize);
 	height: 3rem;
 	display: flex;
 	align-items: center;

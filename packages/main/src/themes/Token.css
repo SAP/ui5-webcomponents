@@ -21,8 +21,8 @@
 
 :host([selected]:not([readonly])) {
 	color: var(--sapUiToggleButtonPressedTextColor);
-	background: var(--sapUiToggleButtonPressedBackground);
-	border: 1px solid var(--sapUiToggleButtonPressedBorderColor);
+	background: var(--sapButton_Selected_Background);
+	border: 1px solid var(--sapButton_Selected_BorderColor);
 }
 
 :host([selected]:not([readonly]):hover) {
@@ -52,7 +52,7 @@
 	padding-top: 0.25rem;
 	padding-bottom: 0.25rem;
 	box-sizing: border-box;
-	font-size: var(--sapMFontMediumSize);
+	font-size: var(--sapFontMediumSize);
 	font-family: var(--sapFontFamily);
 	user-select: none;
 }

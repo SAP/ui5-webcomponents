@@ -7,9 +7,12 @@
   --sapShellColor: @sapShellColor;
   --sapBackgroundColorDefault: @sapBackgroundColorDefault;
   --sapBackgroundColor: @sapBackgroundColor;
-  --sapFontFamily: @sapFontFamily;
   --sapContent_GridSize: @sapContent_GridSize;
+  --sapFontFamily: @sapFontFamily;
   --sapFontSize: @sapFontSize;
+  --sapFontSmallSize: @sapFontSmallSize;
+  --sapFontMediumSize: @sapFontMediumSize;
+  --sapFontLargeSize: @sapFontLargeSize;
   --sapTextColor: @sapTextColor;
   --sapLinkColor: @sapLinkColor;
   --sapCompanyLogo: @sapCompanyLogo;
@@ -51,24 +54,28 @@
   --sapSuccessBackground: @sapSuccessBackground;
   --sapInformationBackground: @sapInformationBackground;
   --sapNeutralBackground: @sapNeutralBackground;
+
   /* Semantic Border Colors */
   --sapErrorBorderColor: @sapErrorBorderColor;
   --sapWarningBorderColor: @sapWarningBorderColor;
   --sapSuccessBorderColor: @sapSuccessBorderColor;
   --sapInformationBorderColor: @sapInformationBorderColor;
   --sapNeutralBorderColor: @sapNeutralBorderColor;
+
   /* Semantic Foreground Elements */
   --sapNegativeElementColor: @sapNegativeElementColor;
   --sapCriticalElementColor: @sapCriticalElementColor;
   --sapPositiveElementColor: @sapPositiveElementColor;
   --sapInformativeElementColor: @sapInformativeElementColor;
   --sapNeutralElementColor: @sapNeutralElementColor;
+
   /* Semantic Text */
   --sapNegativeTextColor: @sapNegativeTextColor;
   --sapCriticalTextColor: @sapCriticalTextColor;
   --sapPositiveTextColor: @sapPositiveTextColor;
   --sapInformativeTextColor: @sapInformativeTextColor;
   --sapNeutralTextColor: @sapNeutralTextColor;
+
   /* Semantic Foreground Colors */
   --sapNegativeColor: @sapNegativeColor;
   --sapCriticalColor: @sapCriticalColor;
@@ -84,9 +91,7 @@
   --sapIndicationColor_3: @sapIndicationColor_3;
   --sapIndicationColor_4: @sapIndicationColor_4;
   --sapIndicationColor_5: @sapIndicationColor_5;
-  /* ===================================== */
-  /* Expert Theming                        */
-  /* ===================================== */
+
   --sapSelectedColor: @sapSelectedColor;
   --sapActiveColor: @sapActiveColor;
   --sapTitleColor: @sapTitleColor;
@@ -119,6 +124,11 @@
   --sapContent_ForegroundColor: @sapContent_ForegroundColor;
   --sapContent_ForegroundBorderColor: @sapContent_ForegroundBorderColor;
   --sapContent_BadgeBackground: @sapContent_BadgeBackground;
+  --sapContent_TextShadow: none;
+  --sapContent_HeaderShadow: @sapContent_HeaderShadow;
+  --sapContent_Shadow0: @sapContent_Shadow0;
+  --sapContent_Shadow2: @sapContent_Shadow2;
+
   --sapShell_Background: @sapShell_Background;
   --sapShell_BackgroundImage: @sapShell_BackgroundImage;
   --sapShell_BackgroundImageOpacity: @sapShell_BackgroundImageOpacity;
@@ -134,6 +144,8 @@
   --sapButton_BorderCornerRadius: @sapButton_BorderCornerRadius;
   --sapButton_Background: @sapButton_Background;
   --sapButton_BorderColor: @sapButton_BorderColor;
+  --sapButton_Selected_Background: @sapButton_Selected_Background;
+  --sapButton_Selected_BorderColor: @sapButton_Selected_BorderColor;
   --sapButton_Hover_Background: @sapButton_Hover_Background;
   --sapButton_Hover_BorderColor: @sapButton_Hover_BorderColor;
   --sapButton_Active_TextColor: @sapButton_Active_TextColor;
@@ -144,6 +156,8 @@
   --sapButton_Emphasized_Hover_BorderColor: @sapButton_Hover_BorderColor;
   --sapButton_Emphasized_Hover_Background: @sapButton_Emphasized_Hover_Background;
   --sapButton_Emphasized_TextShadow: none;
+  --sapButton_Emphasized_Active_Background: @sapButton_Emphasized_Active_Background;
+  --sapButton_Emphasized_Active_BorderColor: @sapButton_Emphasized_Active_BorderColor; 
   --sapButton_Reject_TextColor: @sapButton_Reject_TextColor;
   --sapButton_Reject_Background: @sapButton_Reject_Background;
   --sapButton_Reject_BorderColor: @sapButton_BorderColor;
@@ -232,37 +246,12 @@
   --sapButton_Emphasized_TextColor: @sapButton_Emphasized_TextColor;
   --sapContent_ForegroundTextColor: @sapContent_ForegroundTextColor;
 
-  // Excpetions
+  // No "sap" prefix parameter equivalent
   --sapUiFontSize: 16px;
-
-  --sapUiFontCondensedFamily: 'Arial Narrow', HelveticaNeue-CondensedBold, Arial, sans-serif;
-  --sapUiFontHeaderWeight: normal;
   --sapMFontHeader1Size: 1.625rem;
   --sapMFontHeader2Size: 1.375rem;
   --sapMFontHeader3Size: 1.250rem;
   --sapMFontHeader4Size: 1.125rem;
   --sapMFontHeader5Size: 1rem;
   --sapMFontHeader6Size: 0.875rem;
-  --sapMFontSmallSize: 0.75rem;
-  --sapMFontMediumSize: 0.875rem;
-  --sapMFontLargeSize: 1rem;
-  --sapUiTranslucentBGOpacity: 100%;
-
-  --sapUiDesktopFontSize: 12px;
-  --sapUiFontLargeSize: 13px;
-  --sapUiFontSmallSize: 11px;
-  --sapUiFontHeader1Size: 26px;
-  --sapUiFontHeader2Size: 20px;
-  --sapUiFontHeader3Size: 18px;
-  --sapUiFontHeader4Size: 16px;
-  --sapUiFontHeader5Size: 14px;
-  --sapUiLineHeight: 18px;
-  --sapUiListTableTextSize: 0.875rem;
-  --sapUiListTableIconSize: 1rem;
-  --sapUiShadowText: none;
-
-  --sapUiShadowLevel0: 0 0 0 1px @sapContent_ShadowColor;
-  --sapUiShadowHeader: inset 0 -0.125rem @sapPageHeader_BorderColor;
-  --sapUiContentContrastShadowColorFade60: @sapUiContentContrastShadowColorFade60;
-  --sapUiShadowLevel2: @sapUiShadowLevel2;
 }

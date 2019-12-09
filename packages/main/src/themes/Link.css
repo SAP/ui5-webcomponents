@@ -8,7 +8,7 @@
 	max-width: 100%;
 	color: var(--sapLinkColor);
 	font-family: var(--sapFontFamily);
-	font-size: var(--sapMFontMediumSize);
+	font-size: var(--sapFontMediumSize);
 	cursor: pointer;
 }
 

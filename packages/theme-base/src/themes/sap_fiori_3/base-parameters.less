@@ -11,6 +11,9 @@
 
 @sapFontFamily: "72", "72full", Arial, Helvetica, sans-serif;
 @sapFontSize: calc(0.875 * @sapContent_GridSize);
+@sapFontSmallSize: calc(0.75 * @sapContent_GridSize);
+@sapFontMediumSize: calc(0.875 * @sapContent_GridSize);
+@sapFontLargeSize: calc(1 * @sapContent_GridSize);
 @sapTextColor: @sapPrimary6;
 @sapLinkColor: @sapPrimary2;
 @sapShellColor: @sapPrimary1;
@@ -84,6 +87,8 @@
 @sapContent_FocusColor: #000;
 @sapContent_ContrastFocusColor: #fff;
 @sapContent_ShadowColor: #000;
+@sapContent_TextShadow: 0 0 0.125rem @sapContent_ContrastShadowColor;
+@sapContent_HeaderShadow: 0 0 0.25rem 0 fade(@sapContent_ShadowColor, 15), inset 0 -0.0625rem 0 0 @sapObjectHeader_BorderColor;
 @sapContent_ContrastShadowColor: #fff;
 @sapContent_SearchHighlightColor: #ebf5fe;
 @sapContent_HelpColor: #3f8600;
@@ -92,7 +97,12 @@
 @sapContent_ContrastTextThreshold: 0.65;
 @sapContent_ContrastTextColor: #fff;
 @sapContent_ForegroundBorderColor: @sapPrimary5;
-
+@sapContent_ImagePlaceholderBackground: darken(@sapBaseColor, 20);
+@sapContent_DisabledTextColor: fade(@sapTextColor, (100 - (@sapContent_DisabledOpacity * 100)));
+@sapContent_ForegroundColor: darken(@sapBaseColor, 6.1);
+@sapContent_ForegroundTextColor: contrast(@sapContent_ForegroundColor, @sapTextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
+@sapContent_Shadow0: 0 0 0 0.0625rem fade(@sapContent_ContrastShadowColor, 20), 0 0.125rem 0.5rem 0 fade(@sapContent_ShadowColor, 30);
+@sapContent_Shadow2: 0 0 0 0.0625rem fade(@sapContent_ShadowColor, 15), 0 0.625rem 1.875rem 0 fade(@sapContent_ShadowColor, 30);
 @sapField_Background: @sapBaseColor;
 @sapField_BorderColor: @sapPrimary5;
 @sapField_TextColor: @sapTextColor;
@@ -151,10 +161,6 @@
 @sapNeutralBackground: lighten(@sapNeutralColor, 53);
 @sapInformativeTextColor: darken(@sapInformativeColor, 20);
 @sapHighlightTextColor: contrast(@sapHighlightColor, @sapTextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
-@sapContent_ImagePlaceholderBackground: darken(@sapBaseColor, 20);
-@sapContent_DisabledTextColor: fade(@sapTextColor, (100 - (@sapContent_DisabledOpacity * 100)));
-@sapContent_ForegroundColor: darken(@sapBaseColor, 6.1);
-@sapContent_ForegroundTextColor: contrast(@sapContent_ForegroundColor, @sapTextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
 
 @sapShell_TextColor: contrast(@sapShellColor, @sapTextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
 @sapShell_Hover_Background: darken(@sapShellColor, 7);
@@ -172,6 +178,8 @@
 
 @sapButton_Hover_Background: lighten(@sapHighlightColor, 63);
 @sapButton_TextColor: contrast(@sapButton_Background, @sapHighlightColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
+@sapButton_Selected_Background: @sapSelectedColor;
+@sapButton_Selected_BorderColor: @sapSelectedColor;
 @sapButton_Active_BorderColor: @sapActiveColor;
 @sapButton_Active_Background: @sapActiveColor;
 @sapButton_Active_TextColor: contrast(@sapButton_Active_Background, @sapButton_TextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
@@ -201,10 +209,13 @@
 @sapButton_Emphasized_TextShadow: transparent;
 @sapButton_Emphasized_Hover_Background: darken(@sapButton_Emphasized_Background, 7);
 @sapButton_Emphasized_Active_Background: darken(@sapButton_Emphasized_Background, 10);
+@sapButton_Emphasized_Active_BorderColor: @sapButton_Emphasized_Active_Background;
 @sapButton_Emphasized_TextColor: contrast(@sapButton_Emphasized_Background, darken(@sapPrimary2, 10), @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
 @sapButton_Lite_Background: transparent;
 @sapButton_Lite_TextColor: @sapButton_TextColor;
 @sapButton_Lite_Hover_Background: @sapButton_Hover_Background;
+@sapButton_Background_Darken24: darken(@sapButton_Background, 24);
+@sapButton_Hover_BorderColor_Lighten30: lighten(@sapButton_Hover_BorderColor, 30);
 
 @sapField_PlaceholderTextColor: lighten(@sapContent_LabelColor, 4);
 @sapField_ReadOnly_Background: fade(darken(@sapField_Background, 5), 50);
@@ -242,42 +253,9 @@
 
 // No "sap" prefix parameter equivalent
 @sapUiFontSize: 16px;
-@sapUiFontLargeSize: 13px;
-@sapUiFontSmallSize: 11px;
-@sapUiFontHeader1Size: 26px;
-@sapUiFontHeader2Size: 20px;
-@sapUiFontHeader3Size: 18px;
-@sapUiFontHeader4Size: 16px;
-@sapUiFontHeader5Size: 14px;
-@sapUiFontCondensedFamily: "72 Condensed", 'Arial Narrow', HelveticaNeue-CondensedBold, Arial, sans-serif;
-@sapUiFontHeaderWeight: normal;
-@sapUiDesktopFontSize: 12px;
-@sapUiLineHeight: 18px;
-@sapUiTranslucentBGOpacity: 0;
-
 @sapMFontHeader1Size: 2.25rem;
 @sapMFontHeader2Size: 1.5rem;
 @sapMFontHeader3Size: 1.250rem;
 @sapMFontHeader4Size: 1.125rem;
 @sapMFontHeader5Size: 1rem;
 @sapMFontHeader6Size: 0.875rem;
-@sapMFontSmallSize: 0.75rem;
-@sapMFontMediumSize: 0.875rem;
-@sapMFontLargeSize: 1rem;
-@sapMPlatformDependent: false;
-
-@sapUiListTableTextSize: 0.875rem;
-@sapUiListTableIconSize: 1rem;
-
-@sapUiShadowText: 0 0 0.125rem @sapContent_ContrastShadowColor;
-
-// used in Token-parameters.css
-@sapUiButtonBackgroundDarken24: darken(@sapButton_Background, 24);
-@sapUiButtonHoverBorderColorLighten30: lighten(@sapButton_Hover_BorderColor, 30);
-// used sapUiShadowLevel (0 to 3)
-@sapUiContentShadowColorFade10: fade(@sapContent_ShadowColor, 10);
-@sapUiContentShadowColorFade15: fade(@sapContent_ShadowColor, 15);
-@sapUiContentShadowColorFade30: fade(@sapContent_ShadowColor, 30);
-@sapUiShadowHeader: 0 0 0.25rem 0 @sapUiContentShadowColorFade15, inset 0 -0.0625rem 0 0 @sapObjectHeader_Background;
-@sapUiShadowLevel0: 0 0 0 1px @sapUiContentShadowColorFade10, 0 0.125rem 0.5rem 0 @sapUiContentShadowColorFade10;
-@sapUiShadowLevel2: 0 0 0 1px @sapUiContentShadowColorFade15, 0 0.625rem 1.875rem 0 @sapUiContentShadowColorFade30;

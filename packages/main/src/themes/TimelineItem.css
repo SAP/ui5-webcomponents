@@ -127,7 +127,7 @@
 	color: var(--sapTextColor);
 	font-family: var(--sapFontFamily);
 	font-weight: 400;
-	font-size: var(--sapMFontMediumSize);
+	font-size: var(--sapFontMediumSize);
 }
 
 .ui5-tli-title span {
@@ -139,7 +139,7 @@
 	color: var(--sapContent_LabelColor);
 	font-family: var(--sapFontFamily);
 	font-weight: 400;
-	font-size: var(--sapMFontSmallSize);
+	font-size: var(--sapFontSmallSize);
 	padding-top: .375rem;
 	white-space: nowrap;
 	overflow: hidden;

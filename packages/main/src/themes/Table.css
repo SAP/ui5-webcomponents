@@ -13,7 +13,7 @@ table {
 	color: var(--sapTextColor);
 	height: 3rem;
 	font-family: var(--sapFontFamily);
-	font-size: var(--sapMFontMediumSize);
+	font-size: var(--sapFontMediumSize);
 }
 
 .ui5-table-header-row:focus {

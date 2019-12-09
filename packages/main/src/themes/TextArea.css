@@ -5,7 +5,7 @@
 :host {
 	width: 100%;
 	color: var(--sapField_TextColor);
-	font-size: var(--sapMFontMediumSize);
+	font-size: var(--sapFontMediumSize);
 	font-family: var(--sapFontFamily);
 	border-radius: var(--_ui5_input_wrapper_border_radius);
 	box-sizing: border-box;
@@ -78,7 +78,7 @@
 	width: 100%;
 	word-break: break-all;
 	padding: 0.5625rem 0.6875rem;
-	font-size: var(--sapMFontMediumSize);
+	font-size: var(--sapFontMediumSize);
 	font-family: var(--sapFontFamily);
 	white-space: pre-wrap;
 	box-sizing: border-box;
@@ -159,5 +159,5 @@
 	padding: 0.125rem 0.125rem 0.5rem;
 	color: var(--sapContent_LabelColor);
 	font-family: var(--sapFontFamily);
-	font-size: var(--sapMFontSmallSize);
+	font-size: var(--sapFontSmallSize);
 }

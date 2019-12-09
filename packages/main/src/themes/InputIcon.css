@@ -20,7 +20,7 @@
 }
 
 [input-icon][pressed] {
-	background: var(--sapUiToggleButtonPressedBackground);
+	background: var(--sapButton_Selected_Background);
 	color: var(--sapButton_Active_TextColor);
 }
 

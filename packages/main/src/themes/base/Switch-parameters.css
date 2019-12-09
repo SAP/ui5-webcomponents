@@ -13,11 +13,11 @@
 	--_ui5_switch_track_no_label_height: 1.25rem;
 	--_ui5_switch_track_compact_no_label_height: 1rem;
 
-	--_ui5_switch_track_bg: var(--sapUiButtonBackgroundDarken7);
-	--_ui5_switch_track_checked_bg: var(--sapUiToggleButtonPressedBackgroundLighten50Desaturate47);
-	--_ui5_switch_track_hover_bg: var(--sapUiButtonBackgroundDarken7);
-	--_ui5_switch_track_hover_checked_bg: var(--sapUiToggleButtonPressedBackgroundLighten50Desaturate47);
-	--_ui5_switch_track_checked_border_color: var(--sapUiToggleButtonPressedBorderColorLighten19Desaturate46);
+	--_ui5_switch_track_bg: var(--sapButton_Background_Darken7);
+	--_ui5_switch_track_checked_bg: var(--sapButton_Selected_Background_Lighten50_Desaturate47);
+	--_ui5_switch_track_hover_bg: var(--sapButton_Background_Darken7);
+	--_ui5_switch_track_hover_checked_bg: var(--sapButton_Selected_Background_Lighten50_Desaturate47);
+	--_ui5_switch_track_checked_border_color: var(--sapButton_Selected_BorderColor_Lighten19_Desaturate46);
 	--_ui5_switch_track_hover_border_color: var(--_ui5_switch_track_checked_border_color);
 	--_ui5_switch_track_border_radius: 0.75rem;
 
@@ -34,10 +34,10 @@
 	--_ui5_switch_handle_height: 2rem;
 	--_ui5_switch_handle_border_width: 1px;
 	--_ui5_switch_handle_border_radius: 1rem;
-	--_ui5_switch_handle_bg: var(--sapUiButtonBackgroundDarken2);
-	--_ui5_switch_handle_hover_bg: var(--sapUiButtonHoverBackgroundDarken2);
-	--_ui5_switch_handle_checked_bg: var(--sapUiToggleButtonPressedBackground);
-	--_ui5_switch_handle_checked_border_color: var(--sapUiToggleButtonPressedBorderColor);
+	--_ui5_switch_handle_bg: var(--sapButton_Background_Darken2);
+	--_ui5_switch_handle_hover_bg: var(--sapButton_Hover_Background_Darken2);
+	--_ui5_switch_handle_checked_bg: var(--sapButton_Selected_Background);
+	--_ui5_switch_handle_checked_border_color: var(--sapButton_Selected_BorderColor);
 	--_ui5_switch_handle_checked_hover_bg: var(--sapUiToggleButtonPressedHoverBackground);
 	--_ui5_switch_handle_semantic_hover_bg: var(--sapErrorBackground);
 	--_ui5_switch_handle_semantic_checked_hover_bg: var(--sapSuccessBackground);
@@ -49,9 +49,9 @@
 	--_ui5_switch_handle_disabled_bg: var(--_ui5_switch_handle_bg);
 	--_ui5_switch_handle_disabled_checked_bg: var(--_ui5_switch_handle_checked_bg);
 	--_ui5_switch_handle_disabled_border_color: var(--sapContent_ForegroundBorderColor);
-	--_ui5_switch_handle_disabled_semantic_checked_bg: var(--sapUiSuccessBGLighten5);
+	--_ui5_switch_handle_disabled_semantic_checked_bg: var(--sapSuccessBackground_Lighten5);
 	--_ui5_switch_handle_disabled_semantic_checked_border_color: var(--sapSuccessBorderColor);
-	--_ui5_switch_handle_disabled_semantic_bg: var(--sapUiErrorBGLighten4);
+	--_ui5_switch_handle_disabled_semantic_bg: var(--sapErrorBackground_Lighten4);
 	--_ui5_switch_handle_disabled_semantic_border_color: var(--sapErrorBorderColor);
 
 	/* switch text */

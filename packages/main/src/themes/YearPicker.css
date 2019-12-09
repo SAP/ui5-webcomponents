@@ -16,7 +16,7 @@
 	display: flex;
 	flex-direction: column;
 	font-family: var(--sapFontFamily);
-	font-size: var(--sapMFontMediumSize);
+	font-size: var(--sapFontMediumSize);
 	justify-content: center;
 	align-items: center;
 }

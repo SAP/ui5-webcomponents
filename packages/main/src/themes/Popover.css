@@ -4,7 +4,7 @@
 	z-index: 10;
 	min-width: 6.25rem;
 	background: var(--sapGroup_ContentBackground);
-	box-shadow: var(--sapUiShadowLevel2);
+	box-shadow: var(--sapContent_Shadow2);
 	border-radius: 0.25rem;
 	min-height: 2rem;
 	box-sizing: border-box;
