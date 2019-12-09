@@ -20,12 +20,12 @@
 	--_ui5_button_transparent_border_color: transparent;
 	--_ui5_button_transparent_hover_border_color: var(--sapButton_BorderColor);
 	--_ui5_button_active_border_color: var(--sapButton_Active_BorderColor);
-	--_ui5_button_positive_border_color: var(--sapUiButtonAcceptBorderColor);
-	--_ui5_button_positive_border_hover_color: var(--sapUiButtonAcceptHoverBorderColor);
-	--_ui5_button_positive_border_active_color: var(--sapUiButtonAcceptActiveBorderColor);
+	--_ui5_button_positive_border_color: var(--sapButton_Accept_BorderColor);
+	--_ui5_button_positive_border_hover_color: var(--sapButton_Accept_Hover_BorderColor);
+	--_ui5_button_positive_border_active_color: var(--sapButton_Accept_Active_BorderColor);
 	--_ui5_button_positive_border_focus_hover_color: var(--sapContent_FocusColor);
-	--_ui5_button_positive_focus_border_color: var(--sapUiButtonAcceptBorderColor);
-	--_ui5_button_negative_focus_border_color: var(--sapUiButtonRejectBorderColor);
-	--_ui5_button_negative_active_border_color: var(--sapUiButtonRejectActiveBorderColor);
+	--_ui5_button_positive_focus_border_color: var(--sapButton_Accept_BorderColor);
+	--_ui5_button_negative_focus_border_color: var(--sapButton_Reject_BorderColor);
+	--_ui5_button_negative_active_border_color: var(--sapButton_Reject_Active_BorderColor);
 	--_ui5_button_emphasized_focused_border_color: var(--sapButton_Emphasized_BorderColor);
 }

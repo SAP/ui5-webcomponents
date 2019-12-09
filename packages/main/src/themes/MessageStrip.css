@@ -102,7 +102,7 @@
 }
 
 .ui5-messagestrip-close-icon-wrapper:hover {
-	background-color: var(--sapUiButtonLiteHoverBackground);
+	background-color: var(--sapButton_Lite_Hover_Background);
 }
 
 .ui5-messagestrip-close-icon-wrapper:active {

@@ -30,7 +30,7 @@
 }
 
 [input-icon]:not([pressed]):not(:active):hover {
-	background: var(--sapUiButtonLiteHoverBackground);
+	background: var(--sapButton_Lite_Hover_Background);
 }
 
 [input-icon]:hover {
