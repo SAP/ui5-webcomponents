@@ -123,6 +123,8 @@
 @sapButton_Accept_Hover_BorderColor: @sapButton_Accept_BorderColor;
 @sapButton_Accept_Active_BorderColor: @sapButton_Accept_Active_Background;
 @sapButton_Selected_Background: @sapSelectedColor;
+@sapButton_Lite_Background: transparent;
+@sapButton_Lite_TextColor: @sapButton_TextColor;
 
 @sapField_Background: @sapBaseColor;
 @sapField_BorderColor: @sapPrimary5;
@@ -164,6 +166,7 @@
 @sapList_GroupHeaderBackground: @sapList_Background;
 @sapList_GroupHeaderTextColor: @sapList_TextColor;
 @sapList_FooterTextColor: @sapList_TextColor;
+@sapList_Hover_Background: contrast(@sapList_Background, darken(@sapList_Background, 4), lighten(@sapList_Background, 3));
 
 @sapScrollBar_BorderColor: @sapScrollBar_FaceColor;
 @sapScrollBar_SymbolColor: @sapContent_IconColor;
@@ -276,3 +279,28 @@
 
 // Exceptions
 @sapUiFontSize: 16px;
+@sapUiFontCondensedFamily: "72 Condensed", 'Arial Narrow', HelveticaNeue-CondensedBold, Arial, sans-serif;
+@sapUiFontHeaderWeight: normal;
+@sapUiTranslucentBGOpacity: 0;
+@sapUiDesktopFontSize: 12px;
+@sapUiFontLargeSize: 13px;
+@sapUiFontSmallSize: 11px;
+@sapUiFontHeader1Size: 26px;
+@sapUiFontHeader2Size: 20px;
+@sapUiFontHeader3Size: 18px;
+@sapUiFontHeader4Size: 16px;
+@sapUiFontHeader5Size: 14px;
+@sapUiLineHeight: 18px;
+@sapUiListTableTextSize: 0.875rem;
+@sapUiListTableIconSize: 1rem;
+
+@sapMFontMediumSize: 0.875rem;
+@sapMPlatformDependent: false;
+@sapMFontHeader5Size: 1rem;
+
+@sapUiShadowText: 0 0 0.125rem @sapContent_ContrastShadowColor;
+@sapUiShadowHeader: 0 0 0.25rem 0 @sapContent_ShadowColorFade15, inset 0 -0.0625rem 0 0 @sapObjectHeader_Background;
+
+// used in Token-parameters.css
+@sapUiButtonBackgroundDarken24: darken(@sapButton_Background, 24);
+@sapUiButtonHoverBorderColorLighten30: lighten(@sapButton_Hover_BorderColor, 30);

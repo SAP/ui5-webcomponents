@@ -12,7 +12,7 @@
 }
 
 :host([active]) {
-	background:var(--sapUiListActiveBackground);
+	background:var(--sapList_HighlightColor);
 }
 
 :host([active]) .ui5-product-switch-item-root .ui5-product-switch-item-icon,

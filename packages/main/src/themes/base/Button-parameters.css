@@ -19,7 +19,7 @@
 
 	--_ui5_button_transparent_border_color: transparent;
 	--_ui5_button_transparent_hover_border_color: var(--sapButton_BorderColor);
-	--_ui5_button_active_border_color: var(--sapUiButtonActiveBorderColor);
+	--_ui5_button_active_border_color: var(--sapButton_Active_BorderColor);
 	--_ui5_button_positive_border_color: var(--sapUiButtonAcceptBorderColor);
 	--_ui5_button_positive_border_hover_color: var(--sapUiButtonAcceptHoverBorderColor);
 	--_ui5_button_positive_border_active_color: var(--sapUiButtonAcceptActiveBorderColor);

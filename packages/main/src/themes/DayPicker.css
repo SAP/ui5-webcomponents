@@ -111,7 +111,7 @@
 }
 
 .ui5-dp-item.ui5-dp-item--now {
-	border: 0.125rem solid var(--sapUiCalendarColorToday);
+	border: 0.125rem solid var(--_ui5_daypicker_item_today_border_color);
 }
 
 .ui5-dp-item.ui5-dp-item--selected .ui5-dp-daytext {

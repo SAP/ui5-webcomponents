@@ -124,6 +124,11 @@
 @sapButton_Active_TextColor: contrast(@sapActiveColor, @sapButton_TextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
 @sapButton_Accept_TextColor: contrast(@sapButton_Accept_Background, @sapPositiveTextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
 @sapButton_Reject_TextColor: contrast(@sapButton_Reject_Background, @sapNegativeTextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
+@sapButton_Active_Background: @sapActiveColor;
+@sapButton_Active_BorderColor: @sapButton_Active_Background;
+@sapButton_Lite_Background: transparent;
+@sapButton_Lite_TextColor: @sapButton_TextColor;
+
 @sapField_Background: @sapPrimary4;
 @sapField_BorderColor: @sapPrimary6;
 @sapField_TextColor: #000;
@@ -148,15 +153,18 @@
 @sapField_InformationBackground: @sapField_Background;
 @sapGroup_TitleBackground: transparent;
 @sapGroup_BorderWidth: @sapElement_BorderWidth;
-/*  1px; */
+
 @sapGroup_BorderCornerRadius: 0;
 @sapGroup_FooterBackground: transparent;
 @sapToolbar_Background: transparent;
 @sapList_HeaderBorderColor: @sapList_BorderColor;
 @sapList_BorderWidth: @sapElement_BorderWidth;
-/*  1px; */
+
 @sapList_HighlightColor: @sapHighlightColor;
 @sapList_Background: @sapPrimary4;
+@sapList_GroupHeaderBackground: @sapList_Background;
+@sapList_Hover_Background: contrast(@sapList_Background, darken(@sapList_Background, 4), lighten(@sapList_Background, 3));
+
 @sapScrollBar_BorderColor: @sapScrollBar_FaceColor;
 @sapScrollBar_SymbolColor: @sapContent_IconColor;
 @sapScrollBar_Dimension: ~"calc(0.7 * @{sapContent_GridSize})";
@@ -224,3 +232,31 @@
 
 // Exceptions
 @sapUiFontSize: @sapFontSize;
+@sapMFontHeader1Size: 1.625rem;
+@sapMFontHeader2Size: 1.375rem;
+@sapMFontHeader3Size: 1.250rem;
+@sapMFontHeader4Size: 1.125rem;
+@sapMFontHeader5Size: 1rem;
+@sapMFontHeader6Size: 0.875rem;
+
+@sapUiFontCondensedFamily: 'Arial Narrow', HelveticaNeue-CondensedBold, Arial, sans-serif;
+@sapUiFontHeaderWeight: normal;
+@sapMFontSmallSize: 0.75rem;
+@sapMFontMediumSize: 0.875rem;
+@sapMFontLargeSize: 1rem;
+@sapUiTranslucentBGOpacity: 0;
+@sapMPlatformDependent: false;
+@sapUiDesktopFontSize: 12px;
+@sapUiFontLargeSize: 13px;
+@sapUiFontSmallSize: 11px;
+@sapUiFontHeader1Size: 26px;
+@sapUiFontHeader2Size: 20px;
+@sapUiFontHeader3Size: 18px;
+@sapUiFontHeader4Size: 16px;
+@sapUiFontHeader5Size: 14px;
+@sapUiLineHeight: 18px;
+@sapUiButtonLiteBorderColor: transparent;
+@sapUiListTableTextSize: 0.875rem;
+@sapUiListTableIconSize: 1rem;
+
+@sapUiShadowText: 0 0 0.125rem @sapContent_ContrastShadowColor;

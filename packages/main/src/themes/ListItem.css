@@ -10,13 +10,13 @@
 
 /* selected and hovered */
 :host([selected][actionable]:not([active]):hover) {
-	background : var(--sapUiListSelectionHoverBackground);
+	background : var(--sapList_Hover_Background);
 }
 
 /* selected and active */
 :host([active][actionable]),
 :host([selected][active][actionable]) {
-	background: var(--sapUiListActiveBackground);
+	background: var(--sapList_HighlightColor);
 }
 
 /* hovered */
@@ -75,7 +75,7 @@
 }
 
 .ui5-li-title {
-	color: var(--sapUiListTextColor);
+	color: var(--sapTextColor);
 	font-size: var(--sapMFontLargeSize);
 }
 

@@ -1,126 +1,39 @@
 @import "base-parameters.less";
 
-@sapUiHcStandardBackground: @sapHC_StandardBackground;
-@sapUiHcHighlightBackground: @sapHC_HighlightBackground;
-@sapUiHcHighlightAltBackground: @sapHC_HighlightAltBackground;
-@sapUiHcReducedBackground: @sapHC_ReducedBackground;
-@sapUiHcReducedAltBackground: @sapHC_ReducedAltBackground;
-@sapUiHcStandardForeground: @sapHC_StandardForeground;
-@sapUiHcEnhancedForeground: @sapHC_EnhancedForeground;
-@sapUiHcReducedForeground: @sapHC_ReducedForeground;
-@sapUiHcReducedAltForeground: @sapHC_ReducedAltForeground;
-@sapUiHcNegativeColor: @sapHC_NegativeColor;
-@sapUiHcCriticalColor: @sapHC_CriticalColor;
-@sapUiHcPositiveColor: @sapHC_PositiveColor;
-@sapUiHcInformativeColor: @sapHC_InformativeColor;
-@sapUiHcNeutralColor: @sapHC_NeutralColor;
-@sapUiFontCondensedFamily: 'Arial Narrow', HelveticaNeue-CondensedBold, Arial, sans-serif;
-@sapUiFontHeaderFamily: @sapFontFamily;
-@sapUiFontHeaderWeight: normal;
-@sapMFontHeader1Size: 1.625rem;
-@sapMFontHeader2Size: 1.375rem;
-@sapMFontHeader3Size: 1.250rem;
-@sapMFontHeader4Size: 1.125rem;
-@sapMFontHeader5Size: 1rem;
-@sapMFontHeader6Size: 0.875rem;
-@sapMFontSmallSize: 0.75rem;
-@sapMFontMediumSize: 0.875rem;
-@sapMFontLargeSize: 1rem;
-@sapUiTranslucentBGOpacity: 100%;
-@sapUiDesktopFontFamily: @sapFontFamily;
-@sapUiDesktopFontSize: 12px;
-@sapUiFontLargeSize: 13px;
-@sapUiFontSmallSize: 11px;
-@sapUiFontHeader1Size: 26px;
-@sapUiFontHeader2Size: 20px;
-@sapUiFontHeader3Size: 18px;
-@sapUiFontHeader4Size: 16px;
-@sapUiFontHeader5Size: 14px;
-@sapUiFontHeader6Size: @sapUiFontLargeSize;
-@sapUiLineHeight: 18px;
-@sapUiShellHoverToggleBackground: @sapSelectedColor;
 
-
-
-
-
-@sapUiNotifierSeparator: @sapGroup_ContentBorderColor;
-@sapUiNotifierSeparatorWidth: 1px;
-@sapUiNotificationBarBorder: @sapGroup_ContentBorderColor;
-@sapUiCalloutShadow: @sapUiShadowLevel2;
-@sapUiButtonActiveBackground: @sapActiveColor;
-@sapUiButtonActiveBorderColor: @sapButton_BorderColor;
 @sapUiButtonEmphasizedHoverBorderColor: @sapButton_Hover_BorderColor;
-@sapUiButtonEmphasizedActiveBorderColor: @sapUiButtonActiveBorderColor;
-@sapUiButtonEmphasizedTextShadow: none;
+@sapUiButtonEmphasizedActiveBorderColor: @sapButton_Active_BorderColor;
 @sapUiButtonAcceptBorderColor: @sapButton_BorderColor;
 @sapUiButtonAcceptHoverBackground: @sapButton_Hover_Background;
 @sapUiButtonAcceptHoverBorderColor: @sapUiButtonAcceptBorderColor;
-@sapUiButtonAcceptActiveBorderColor: @sapUiButtonActiveBorderColor;
+@sapUiButtonAcceptActiveBorderColor: @sapButton_Active_BorderColor;
 @sapUiButtonRejectBorderColor: @sapButton_BorderColor;
 @sapUiButtonRejectHoverBackground: @sapButton_Hover_Background;
 @sapUiButtonRejectHoverBorderColor: @sapUiButtonRejectBorderColor;
-@sapUiButtonRejectActiveBorderColor: @sapUiButtonActiveBorderColor;
-@sapUiButtonLiteBackground: @sapButton_Background;
+@sapUiButtonRejectActiveBorderColor: @sapButton_Active_BorderColor;
 @sapUiButtonLiteBorderColor: @sapButton_BorderColor;
 @sapUiButtonLiteHoverBackground: @sapButton_Hover_Background;
 @sapUiButtonLiteHoverBorderColor: @sapButton_Hover_BorderColor;
-@sapUiButtonLiteActiveBorderColor: @sapUiButtonActiveBorderColor;
-@sapUiButtonHeaderTextColor: @sapButton_TextColor;
-@sapUiButtonHeaderDisabledTextColor: @sapContent_DisabledTextColor;
-@sapUiButtonFooterHoverBackground: @sapUiButtonLiteHoverBackground;
+@sapUiButtonLiteActiveBorderColor: @sapButton_Active_BorderColor;
 @sapUiButtonActionSelectBackground: @sapList_Background;
 @sapUiButtonActionSelectBorderColor: @sapList_BorderColor;
 @sapUiButtonLiteActionSelectHoverBackground: @sapList_Hover_Background;
+
+
 @sapUiToggleButtonPressedBackground: @sapSelectedColor;
 @sapUiToggleButtonPressedBorderColor: @sapButton_BorderColor;
 @sapUiToggleButtonPressedHoverBackground: @sapButton_Hover_Background;
 @sapUiToggleButtonPressedHoverBorderColor: @sapButton_Hover_BorderColor;
-@sapUiSegmentedButtonBackground: @sapButton_Background;
-@sapUiSegmentedButtonBorderColor: @sapButton_BorderColor;
-@sapUiSegmentedButtonHoverBackground: @sapButton_Hover_Background;
-@sapUiSegmentedButtonActiveBackground: @sapUiButtonActiveBackground;
-@sapUiSegmentedButtonSelectedBackground: @sapUiToggleButtonPressedBackground;
+@sapUiToggleButtonPressedTextColor: contrast(@sapUiToggleButtonPressedBackground, @sapButton_TextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
+
+
+
+
+
+
+
 @sapUiSegmentedButtonSelectedTextColor: @sapUiToggleButtonPressedTextColor;
 @sapUiSegmentedButtonSelectedHoverBackground: @sapUiToggleButtonPressedHoverBackground;
 @sapUiSegmentedButtonSelectedHoverBorderColor: @sapUiToggleButtonPressedHoverBorderColor;
 @sapUiSegmentedButtonFooterBorderColor: @sapButton_BorderColor;
 @sapUiSegmentedButtonFooterHoverBackground: @sapButton_Hover_Background;
-@sapUiFieldActiveBackground: @sapActiveColor;
-@sapUiFieldActiveTextColor: @sapContent_ContrastTextColor;
-@sapUiListTextColor: @sapTextColor;
-@sapUiListActiveBackground: @sapList_HighlightColor;
-@sapUiListSelectionHoverBackground: @sapList_Hover_Background;
-@sapUiListFooterTextColor: @sapPageFooter_TextColor;
-@sapUiListGroupHeaderBackground: @sapUiHcReducedBackground;
-@sapUiListTableTextSize: 0.875rem;
-@sapUiListTableIconSize: 1rem;
-
-@sapUiInfobarActiveBackground: @sapUiListActiveBackground;
-
-@sapUiCalendarColorToday: @sapGroup_ContentBorderColor;
-@sapUiDragAndDropColor: @sapContent_NonInteractiveIconColor;
-@sapUiDragAndDropBorderColor: @sapContent_ForegroundBorderColor;
-@sapUiDragAndDropActiveColor: @sapContent_HelpColor;
-@sapUiDragAndDropActiveBackground: @sapGroup_ContentBackground;
-@sapUiDragAndDropActiveBorderColor: @sapContent_HelpColor;
-@sapUiShadowLevel0: 0 0 0 1px @sapContent_ShadowColor;
-@sapUiShadowText: none;
-@sapUiShadowHeader: inset 0 -0.125rem @sapPageHeader_BorderColor;
-@sapUiContentContrastShadowColorFade50: fade(@sapContent_ContrastShadowColor, 50);
-@sapUiContentContrastShadowColorFade60: fade(@sapContent_ContrastShadowColor, 60);
-@sapUiContentContrastShadowColorFade80: fade(@sapContent_ContrastShadowColor, 80);
-@sapUiShadowLevel1: 0 0 1rem 0 @sapUiContentContrastShadowColorFade50, 0 0 0 2px @sapContent_ShadowColor;
-@sapUiShadowLevel2: 0 0.25rem 2rem 0 @sapUiContentContrastShadowColorFade60, 0 0 0 2px @sapContent_ShadowColor;
-@sapUiShadowLevel3: 0 0.625rem 4rem 0 @sapUiContentContrastShadowColorFade80, 0 0 0 2px @sapContent_ShadowColor;
-@sapUiListTableFooterBorder: lighten(@sapList_BorderColor, 40);
-@sapUiListTableFixedBorder: lighten(@sapList_BorderColor, 40);
-@sapUiListVerticalBorderColor: lighten(@sapList_BorderColor, 40);
-@sapUiSegmentedButtonIconColor: contrast(@sapUiSegmentedButtonBackground, @sapContent_IconColor, @sapContent_ContrastIconColor, @sapContent_ContrastTextThreshold);
-@sapUiSegmentedButtonActiveIconColor: contrast(@sapUiSegmentedButtonActiveBackground, @sapContent_IconColor, @sapContent_ContrastIconColor, @sapContent_ContrastTextThreshold);
-@sapUiSegmentedButtonSelectedIconColor: contrast(@sapUiSegmentedButtonSelectedBackground, @sapContent_IconColor, @sapContent_ContrastIconColor, @sapContent_ContrastTextThreshold);
-@sapUiSegmentedButtonTextColor: contrast(@sapUiSegmentedButtonBackground, @sapButton_TextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
-@sapUiSegmentedButtonActiveTextColor: contrast(@sapUiSegmentedButtonActiveBackground, @sapUiSegmentedButtonTextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
-@sapUiToggleButtonPressedTextColor: contrast(@sapUiToggleButtonPressedBackground, @sapButton_TextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
-@sapUiButtonFooterTextColor: contrast(@sapPageFooter_Background, @sapButton_TextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
-@sapUiButtonLiteTextColor: contrast(@sapUiButtonLiteBackground, @sapButton_TextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);

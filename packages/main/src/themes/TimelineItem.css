@@ -124,7 +124,7 @@
 
 .ui5-tli-title,
 .ui5-tli-desc {
-	color: var(--sapUiListTextColor);
+	color: var(--sapTextColor);
 	font-family: var(--sapFontFamily);
 	font-weight: 400;
 	font-size: var(--sapMFontMediumSize);

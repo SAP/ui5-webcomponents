@@ -99,7 +99,7 @@
 }
 
 .ui5-card-header .ui5-card-header-text .ui5-card-heading {
-	font-family: var(--sapUiFontHeaderFamily);
+	font-family: var(--sapFontFamily);
 	font-size: var(--sapMFontHeader5Size);
 	font-weight: var(--sapUiFontHeaderWeight);
 	color: var(--sapTile_TitleTextColor);

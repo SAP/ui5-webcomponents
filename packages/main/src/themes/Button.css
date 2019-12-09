@@ -124,7 +124,7 @@ bdi {
 
 :host([active]:not([disabled])) {
 	background-image: none;
-	background-color: var(--sapUiButtonActiveBackground);
+	background-color: var(--sapButton_Active_Background);
 	border-color: var(--_ui5_button_active_border_color);
 	color: var(--sapButton_Active_TextColor);
 	text-shadow: none;
@@ -216,8 +216,8 @@ bdi {
 }
 
 :host([design="Transparent"]) {
-	background-color: var(--sapUiButtonLiteBackground);
-	color: var(--sapUiButtonLiteTextColor);
+	background-color: var(--sapButton_Lite_Background);
+	color: var(--sapButton_Lite_TextColor);
 	text-shadow: var(--_ui5_button_text_shadow);
 	border-color: var(--_ui5_button_transparent_border_color);
 }

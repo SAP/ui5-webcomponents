@@ -14,12 +14,12 @@
 	--_ui5_switch_track_checked_border_color: var(--sapContent_ForegroundBorderColor);
 
 	--_ui5_switch_track_disabled_bg: var(--sapButton_Background);
-	--_ui5_switch_track_disabled_checked_bg: var(--sapUiHcReducedBackground);
-	--_ui5_switch_track_disabled_border_color: var(--sapUiHcReducedForeground);
-	--_ui5_switch_track_disabled_semantic_checked_bg: var(--sapUiHcReducedBackground);
-	--_ui5_switch_track_disabled_semantic_checked_border_color: var(--sapUiHcReducedForeground);
+	--_ui5_switch_track_disabled_checked_bg: var(--sapHC_ReducedBackground);
+	--_ui5_switch_track_disabled_border_color: var(--sapHC_ReducedForeground);
+	--_ui5_switch_track_disabled_semantic_checked_bg: var(--sapHC_ReducedBackground);
+	--_ui5_switch_track_disabled_semantic_checked_border_color: var(--sapHC_ReducedForeground);
 	--_ui5_switch_track_disabled_semantic_bg: var(--sapButton_Background);
-	--_ui5_switch_track_disabled_semantic_border_color: var(--sapUiHcReducedForeground);
+	--_ui5_switch_track_disabled_semantic_border_color: var(--sapHC_ReducedForeground);
 
 	/* Switch Handle */
 	--_ui5_switch_handle_bg: var(--sapButton_Background);
@@ -31,15 +31,15 @@
 	--_ui5_switch_handle_border_width: 0.125rem;
 
 	--_ui5_switch_handle_disabled_bg: var(--sapButton_Background);
-	--_ui5_switch_handle_disabled_checked_bg: var(--sapUiHcReducedForeground);
-	--_ui5_switch_handle_disabled_border_color: var(--sapUiHcReducedForeground);
-	--_ui5_switch_handle_disabled_semantic_checked_bg: var(--sapUiHcReducedBackground);
-	--_ui5_switch_handle_disabled_semantic_checked_border_color: var(--sapUiHcReducedForeground);
+	--_ui5_switch_handle_disabled_checked_bg: var(--sapHC_ReducedForeground);
+	--_ui5_switch_handle_disabled_border_color: var(--sapHC_ReducedForeground);
+	--_ui5_switch_handle_disabled_semantic_checked_bg: var(--sapHC_ReducedBackground);
+	--_ui5_switch_handle_disabled_semantic_checked_border_color: var(--sapHC_ReducedForeground);
 	--_ui5_switch_handle_disabled_semantic_bg: var(--sapButton_Background);
-	--_ui5_switch_handle_disabled_semantic_border_color: var(--sapUiHcReducedForeground);
+	--_ui5_switch_handle_disabled_semantic_border_color: var(--sapHC_ReducedForeground);
 
 	/* Switch sementic text */
 	--_ui5_switch_text_on_semantic_color: var(--sapTextColor);
 	--_ui5_switch_text_off_semantic_color: var(--sapTextColor);
-	--_ui5_switch_text_disabled_color: var(--sapUiHcReducedAltForeground);
+	--_ui5_switch_text_disabled_color: var(--sapHC_ReducedAltForeground);
 }

@@ -10,7 +10,7 @@ table {
 }
 
 .ui5-table-header-row {
-	color: var(--sapUiListTextColor);
+	color: var(--sapTextColor);
 	height: 3rem;
 	font-family: var(--sapFontFamily);
 	font-size: var(--sapMFontMediumSize);
@@ -36,7 +36,7 @@ tr {
 	font-family: var(--sapFontFamily);
 	font-size: 0.875rem;
 	box-sizing: border-box;
-	color: var(--sapUiListTextColor);
+	color: var(--sapTextColor);
 	min-height: 3rem;
 }
 

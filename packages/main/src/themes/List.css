@@ -38,7 +38,7 @@
 	text-overflow: ellipsis;
 	box-sizing: border-box;
 	font-size: var(--sapMFontHeader4Size);
-	font-family: var(--sapUiFontHeaderFamily);
+	font-family: var(--sapFontFamily);
 	color: var(--sapGroup_TitleTextColor);
 	height: 3rem;
 	line-height: 3rem;
@@ -55,7 +55,7 @@
 	font-family: var(--sapFontFamily,var(--sapFontFamily,"72","72full",Arial,Helvetica,sans-serif));
 	line-height: 2rem;
 	background-color: var(--sapList_FooterBackground);
-	color: var(--sapUiListFooterTextColor);
+	color: var(--ui5_list_footer_text_color);
 	padding: 0 1rem;
 	white-space: nowrap;
 	overflow: hidden;
@@ -70,7 +70,7 @@
 	align-items: center;
 	-webkit-box-pack: center;
 	justify-content: center;
-	color: var(--sapUiListTextColor);
+	color: var(--sapTextColor);
 	background-color: var(--sapList_Background);
 	border-bottom: 1px solid var(--sapList_BorderColor);
 	padding: 0 1rem !important;
