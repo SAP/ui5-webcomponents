@@ -66,6 +66,18 @@ radioGroup.addEventListener("select", function(e) {
 	</xmp></pre>
 </section>
 
+<section>
+	<h3>RadioButton with Text Wrapping</h3>
+	<div class="snippet">
+		<ui5-radiobutton text="ui5-radiobutton with 'wrap' set and some long text" wrap style="width:200px"></ui5-radiobutton>
+		<ui5-radiobutton text="Another ui5-radiobutton with very long text here" wrap style="width:200px"></ui5-radiobutton>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
+		<ui5-radiobutton text="ui5-radiobutton with 'wrap' set and some long text" wrap></ui5-radiobutton>
+		<ui5-radiobutton text="Another ui5-radiobutton with very long text here" wrap></ui5-radiobutton>
+	</xmp></pre>
+</section>
+
 <script>
 	radioGroup.addEventListener("select", function(e) {
 		lblRadioGroup.innerHTML = e.target.text;
