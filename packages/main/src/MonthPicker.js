@@ -133,6 +133,7 @@ class MonthPicker extends UI5Element {
 		}.bind(this);
 		this._itemNav.setItemsCallback = function setItemsCallback(items) {
 			this._quarters = items;
+			debugger;
 		}.bind(this);
 	}
 
