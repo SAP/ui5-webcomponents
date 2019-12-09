@@ -1,56 +1,64 @@
 const assert = require("assert");
 
-describe("Rendering", () => {
-	browser.url("http://localhost:8080/test-resources/pages/Panel.html");
-
-	it("A basic panel", () => {
-	   const panel = browser.$("#p1");
-
-		assert.ok(panel.isDisplayedInViewport(), "The panel is in the viewport");
-		assert.ok(panel.shadow$(".ui5-panel-root"), "Root element is rendered in the DOM");
-		assert.ok(panel.shadow$(".ui5-panel-content"), "Content is rendered in the DOM");
-		assert.ok(panel.shadow$(".ui5-panel-header"), "Header is rendered in the DOM");
-		assert.ok(panel.shadow$(".ui5-panel-header-button"), "Header button is rendered in the DOM");
-
-		assert.strictEqual(panel.shadow$(".ui5-panel-header-title").innerText, undefined, "There is no default title text");
-	});
-
-	it("A panel with header text", () => {
-		const sExpected = "Fixed and collapsed panel";
-		assert.strictEqual(browser.$("#panel-fixed-collapsed").shadow$(".ui5-panel-header-title").getText(), sExpected, "The text of the panel is the correct one");
-	});
-
-	it("A panel with 'collapsed' attribute", () => {
-		const sExpected = "Fixed and collapsed panel";
-		assert.ok(!browser.$("#p1").shadow$(".ui5-panel-content").isDisplayedInViewport(), "The content is not visible");
-	});
-
-	it("A panel with 'fixed' attribute", () => {
-		const panel = browser.$("#panel-fixed");
-		assert.ok(!panel.shadow$(".ui5-panel-header-button-root").isDisplayedInViewport(), "The button is not visible");
-		assert.ok(panel.shadow$(".ui5-panel-content").isDisplayedInViewport(), "The content is visible");
-	});
-
-	it("A panel with 'fixed' and 'collapsed' attributes", () => {
-		const panel = browser.$("#panel-fixed-collapsed");
-		assert.ok(!panel.shadow$(".ui5-panel-header-button-root").isDisplayedInViewport(), "The button is not visible");
-		assert.ok(!panel.shadow$(".ui5-panel-content").isDisplayedInViewport(), "The content is not visible");
-	});
-
-
- });
-
 describe("Panel general interaction", () => {
 	browser.url("http://localhost:8080/test-resources/pages/Panel.html");
 
-	it("Changing the 'collapsed' is reflected in the DOM", () => {
-		const panel = browser.$("#panel-expandable");
+	it("Changing the header text is reflected", () => {
+		const panel = browser.$( "#panel-fixed");
+		const title = panel.shadow$(".ui5-panel-header-title");
+		const sExpected = "Expanded, but not expandable";
+		const sNew = "New text";
+
+		assert.strictEqual(title.getText(), sExpected, "Initially the text is the expected one");
+
+		browser.execute(() => {
+			document.getElementById("panel-fixed").setAttribute("header-text", "New text");
+		});
+
+		assert.strictEqual(title.getText(), sNew, "New text");
+	});
+
+	it("Collapsing fixed panel is not possible", () => {
+		const panel = browser.$( "#panel-fixed");
 		const header = panel.shadow$(".ui5-panel-header");
 		const content = panel.shadow$(".ui5-panel-content");
 
 		assert.ok(content.isDisplayedInViewport(), "The content is visible");
 
 		header.click();
+		browser.pause(500);
+
+		assert.ok(content.isDisplayedInViewport(), "The content is still visible");
+
+		header.keys("Space");
+		browser.pause(500);
+
+		assert.ok(content.isDisplayedInViewport(), "The content is still visible");
+
+		header.keys("Enter");
+		browser.pause(500);
+
+		assert.ok(content.isDisplayedInViewport(), "The content is still visible");
+	});
+
+	it("Collapsing the panel is possible when not fixed", () => {
+		const panel = browser.$( "#panel-expandable");
+		const header = panel.shadow$(".ui5-panel-header");
+		const content = panel.shadow$(".ui5-panel-content");
+
+		assert.ok(content.isDisplayedInViewport(), "The content is visible");
+
+		header.click();
+		browser.pause(500);
+
+		assert.ok(!content.isDisplayedInViewport(), "The content is not visible");
+
+		header.keys("Space");
+		browser.pause(500);
+
+		assert.ok(content.isDisplayedInViewport(), "The content is visible");
+
+		header.keys("Enter");
 		browser.pause(500);
 
 		assert.ok(!content.isDisplayedInViewport(), "The content is not visible");

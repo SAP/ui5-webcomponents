@@ -149,6 +149,34 @@
 		<ui5-list id="bigList"></ui5-list>
 	</ui5-popover>
 
+	<ui5-button id="btnPopModal">Opens modal popover!</ui5-button>
+
+	<ui5-popover id="modalPopover" modal header-text="Modal popover">
+		<ui5-list>
+			<ui5-li>Hello</ui5-li>
+			<ui5-li>Again</ui5-li>
+			<ui5-li>Wooooooooooooooooooooooooooooorld</ui5-li>
+		</ui5-list>
+
+		<div slot="footer">
+			<ui5-button id="modalPopoverClose">Close</ui5-button>
+		</div>
+	</ui5-popover>
+
+	<ui5-button id="btnPopFocus">Opens popover with initial focus!</ui5-button>
+
+	<ui5-popover id="popFocus" initial-focus="focusMe" header-text="Popover header">
+		<ui5-list>
+			<ui5-li>Hello</ui5-li>
+			<ui5-li>Again</ui5-li>
+			<ui5-li>Wold</ui5-li>
+		</ui5-list>
+
+		<div slot="footer">
+			<ui5-button id="focusMe">Close</ui5-button>
+		</div>
+	</ui5-popover>
+
 	<script>
 
 		btn.addEventListener('click', function (event) {
@@ -161,6 +189,18 @@
 
 		bigDanger.addEventListener('click', function (event) {
 			bigDangerPop.openBy(bigDanger);
+		});
+
+		btnPopModal.addEventListener('click', function (event) {
+			modalPopover.openBy(btnPopModal);
+		});
+
+		modalPopoverClose.addEventListener('click', function (event) {
+			modalPopover.close();
+		});
+
+		btnPopFocus.addEventListener('click', function (event) {
+			popFocus.openBy(btnPopFocus);
 		});
 
 		document.getElementById("many-items").innerHTML = [].map.call("Ullamco ea ad fugiat enim elit dolore ullamco ad magna excepteur cupidatat.", function (item, index) {

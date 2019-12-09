@@ -1,5 +1,33 @@
 const assert = require('assert');
 
+describe("Attributes propagation", () => {
+	browser.url("http://localhost:8080/test-resources/pages/Popover.html");
+
+	it("Header text attribute is propagated", () => {
+		const popover = $("#pop");
+		const selector = "h2=New text";
+
+		popover.setAttribute("header-text", "New text");
+		assert.ok($(selector), "The new header text was set correctly");
+	});
+
+	it("Popover arrow", () => {
+		const popover = $("#pop");
+		const btnOpenPopover = $("#btn");
+
+		btnOpenPopover.click();
+
+		assert.ok(popover.shadow$(".ui5-popover-arr").isDisplayedInViewport(), "Initially popover has arrow.");
+
+		browser.execute(() => {
+			document.getElementById("pop").toggleAttribute("no-arrow");
+		});
+
+		assert.ok(!popover.shadow$(".ui5-popover-arr").isDisplayedInViewport(), "The arrow was hidden.");
+	});
+
+});
+
 describe("Popover general interaction", () => {
 	browser.url("http://localhost:8080/test-resources/pages/Popover.html");
 
@@ -36,7 +64,7 @@ describe("Popover general interaction", () => {
 		manyItemsSelect.click();
 
 		const lastListItem = items[items.length - 1];
-		
+
 		assert.strictEqual(lastListItem.isDisplayedInViewport(), false, "Last item is not displayed after openining");
 
 		lastListItem.scrollIntoView();
@@ -60,5 +88,34 @@ describe("Popover general interaction", () => {
 		lastListItem.scrollIntoView();
 
 		assert.strictEqual(lastListItem.isDisplayedInViewport(), true, "Last item is displayed after scrolling");
+	});
+
+	it("tests modal popover", () => {
+		const btnOpenPopover = $("#btnPopModal");
+		const popoverClose = $("#modalPopoverClose");
+		const popover = $("#modalPopover");
+
+		btnOpenPopover.click();
+		assert.ok(popover.getProperty("opened"), "Popover is opened.");
+
+		try {
+			$("#btn").click();
+		} catch {
+			assert.ok(true, "The click was intercepted.");
+		}
+
+		assert.ok(popover.getProperty("opened"), "Popover is still opened.");
+
+		popoverClose.click();
+		assert.ok(!popover.isDisplayedInViewport(), "Popover is closed.");
+	});
+
+	it("tests initial focus", () => {
+		const focusedButton = $("#focusMe");
+		const btnOpenPopover = $("#btnPopFocus");
+
+		btnOpenPopover.click();
+
+		assert.ok(focusedButton.getProperty("focused"), "The button is focused.");
 	});
 });

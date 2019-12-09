@@ -34,9 +34,12 @@
 	</ui5-input>
 
 	<h3> Input disabled</h3>
-	<ui5-input style="width:100%" disabled placeholder="Disabled one ...">
+	<ui5-input id="input-disabled" style="width:100%" disabled placeholder="Disabled one ...">
 		<ui5-icon slot="icon" name="appointment-2"></ui5-icon>
 	</ui5-input>
+
+	<h3> Input maxLength = 5</h3>
+	<ui5-input style="width:100%" maxLength="5" placeholder="Max length of 5"></ui5-input>
 
 	<h3> Input valueState Success</h3>
 	<ui5-input id="input3" style="width:100%" value-state="Success" placeholder="Success state ...">
@@ -65,22 +68,25 @@
 	<ui5-input id="inputChangeResult" style="width:100%"></ui5-input>
 
 	<h3> Input readonly</h3>
-	<ui5-input style="width:100%" value="Value can`t be changed" readonly></ui5-input>
+	<ui5-input id="input-readonly" style="width:100%" value="Value can`t be changed" readonly></ui5-input>
+
+	<h3> Input readonly</h3>
+	<ui5-input id="input-required" style="width:100%" value="This input is required" required></ui5-input>
 
 	<h3> Input type 'Number'</h3>
-	<ui5-input id="myInput2" style="width:100%" type="Number" placeholder="Numbers are allowed only ..."></ui5-input>
+	<ui5-input id="input-number" style="width:100%" type="Number" placeholder="Numbers are allowed only ..."></ui5-input>
 
 	<h3> Input type 'Password'</h3>
-	<ui5-input id="myInput3" style="width:100%" type="Password" placeholder="Typing in private ..."></ui5-input>
+	<ui5-input id="input-password" style="width:100%" type="Password" placeholder="Typing in private ..."></ui5-input>
 
 	<h3> Input type 'Email'</h3>
-	<ui5-input id="myInput4" style="width:100%" type="Email" name="my-input-email"></ui5-input>
+	<ui5-input id="input-email" style="width:100%" type="Email" name="my-input-email"></ui5-input>
 
 	<h3> Input type 'Tel'</h3>
-	<ui5-input id="myInput5" maxlength="10" style="width:100%" type="Tel"  name="my-input-tel"></ui5-input>
+	<ui5-input id="input-tel" maxlength="10" style="width:100%" type="Tel"  name="my-input-tel"></ui5-input>
 
 	<h3> Input type 'URL'</h3>
-	<ui5-input id="myInput6" style="width:100%" type="URL"></ui5-input>
+	<ui5-input id="input-url" style="width:100%" type="URL"></ui5-input>
 
 	<h3> Input and button and select</h3>
 	<ui5-button>Press</ui5-button>
@@ -98,8 +104,8 @@
 		var myInput2 = document.getElementById('myInput2');
 		var input1 = document.getElementById('input1');
 		var input2 = document.getElementById('input2');
-		var input3 = document.getElementById('input3');
 		var inputResult = document.getElementById('inputResult');
+		var inputLiveChangeResult = document.getElementById('inputLiveChangeResult');
 		var label = document.getElementById('myLabel');
 		var labelChange = document.getElementById('myLabelChange');
 		var labelLiveChange = document.getElementById('myLabelLiveChange');
