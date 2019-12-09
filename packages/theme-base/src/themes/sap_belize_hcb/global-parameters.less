@@ -1,6 +1,5 @@
 @import "base-parameters.less";
 
-
 @sapUiButtonEmphasizedHoverBorderColor: @sapButton_Hover_BorderColor;
 @sapUiButtonEmphasizedActiveBorderColor: @sapButton_Active_BorderColor;
 @sapUiButtonAcceptBorderColor: @sapButton_BorderColor;
@@ -19,21 +18,8 @@
 @sapUiButtonActionSelectBorderColor: @sapList_BorderColor;
 @sapUiButtonLiteActionSelectHoverBackground: @sapList_Hover_Background;
 
-
 @sapUiToggleButtonPressedBackground: @sapSelectedColor;
 @sapUiToggleButtonPressedBorderColor: @sapButton_BorderColor;
 @sapUiToggleButtonPressedHoverBackground: @sapButton_Hover_Background;
 @sapUiToggleButtonPressedHoverBorderColor: @sapButton_Hover_BorderColor;
-@sapUiToggleButtonPressedTextColor: contrast(@sapUiToggleButtonPressedBackground, @sapButton_TextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
-
-
-
-
-
-
-
-@sapUiSegmentedButtonSelectedTextColor: @sapUiToggleButtonPressedTextColor;
-@sapUiSegmentedButtonSelectedHoverBackground: @sapUiToggleButtonPressedHoverBackground;
-@sapUiSegmentedButtonSelectedHoverBorderColor: @sapUiToggleButtonPressedHoverBorderColor;
-@sapUiSegmentedButtonFooterBorderColor: @sapButton_BorderColor;
-@sapUiSegmentedButtonFooterHoverBackground: @sapButton_Hover_Background;
+@sapUiToggleButtonPressedTextColor: contrast(@sapSelectedColor, @sapButton_TextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);

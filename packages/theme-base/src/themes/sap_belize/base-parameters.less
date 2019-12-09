@@ -260,3 +260,8 @@
 @sapUiListTableIconSize: 1rem;
 
 @sapUiShadowText: 0 0 0.125rem @sapContent_ContrastShadowColor;
+
+@sapUiContentShadowColorFade15: fade(@sapContent_ShadowColor, 15);
+@sapUiShadowHeader: 0 0.125rem 0 0 @sapObjectHeader_Background, inset 0 -0.125rem 0 0 darken(@sapObjectHeader_Background, 8);
+@sapUiShadowLevel0: 0 0 0 1px @sapUiContentShadowColorFade15;
+@sapUiShadowLevel2: 0 0.625rem 1.875rem 0 @sapUiContentShadowColorFade15, @sapUiShadowLevel0;

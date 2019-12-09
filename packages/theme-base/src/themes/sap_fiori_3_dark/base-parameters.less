@@ -150,7 +150,7 @@
 @sapField_InformationBackground: @sapField_Background;
 
 @sapGroup_TitleBackground: transparent;
-@sapGroup_Title_FontSize: @sapFontSize;
+
 @sapGroup_ContentBackground: @sapBaseColor;
 @sapGroup_BorderWidth: @sapElement_BorderWidth;
 @sapGroup_BorderCornerRadius: 0;
@@ -304,3 +304,8 @@
 // used in Token-parameters.css
 @sapUiButtonBackgroundDarken24: darken(@sapButton_Background, 24);
 @sapUiButtonHoverBorderColorLighten30: lighten(@sapButton_Hover_BorderColor, 30);
+
+@sapUiShadowLevel0: @sapContent_Shadow0;
+@sapUiShadowLevel2: @sapContent_Shadow2;
+@sapUiToggleButtonPressedTextColor: contrast(@sapSelectedColor, @sapButton_TextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
+@sapUiToggleButtonPressedHoverBackground: darken(@sapSelectedColor, 3);

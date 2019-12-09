@@ -1,11 +1,5 @@
 @import "base-parameters.less";
 
-
-
-
-
-
-
 @sapUiButtonEmphasizedActiveBorderColor: @sapButton_Active_BorderColor;
 @sapUiButtonAcceptBorderColor: @sapPositiveElementColor;
 @sapUiButtonAcceptHoverBackground: @sapButton_Hover_Background;
@@ -15,45 +9,17 @@
 @sapUiButtonRejectHoverBackground: @sapButton_Hover_Background;
 @sapUiButtonRejectHoverBorderColor: @sapUiButtonRejectBorderColor;
 @sapUiButtonRejectActiveBorderColor: @sapUiButtonRejectBorderColor;
-
 @sapUiButtonLiteHoverBorderColor: @sapUiButtonLiteHoverBackground;
 @sapUiButtonLiteActiveBorderColor: @sapActiveColor;
-
-
-
 @sapUiButtonActionSelectBackground: @sapList_Background;
 @sapUiButtonActionSelectBorderColor: @sapList_BorderColor;
 @sapUiButtonLiteActionSelectHoverBackground: @sapList_Hover_Background;
-@sapUiToggleButtonPressedHoverBorderColor: @sapUiToggleButtonPressedHoverBackground;
-
-
-
-@sapUiSegmentedButtonSelectedTextColor: @sapUiToggleButtonPressedTextColor;
-@sapUiSegmentedButtonSelectedHoverBackground: @sapUiToggleButtonPressedHoverBackground;
-@sapUiSegmentedButtonSelectedHoverBorderColor: @sapUiToggleButtonPressedHoverBorderColor;
-@sapUiSegmentedButtonFooterHoverBackground: @sapButton_Hover_Background;
-@sapGroup_Title_FontSize: @sapFontSize;
-
-
-
 @sapUiButtonEmphasizedHoverBorderColor: darken(@sapButton_Emphasized_Background, 5);
 @sapUiButtonEmphasizedTextShadow: contrast(@sapButton_Emphasized_TextColor, @sapContent_ShadowColor, @sapContent_ContrastShadowColor, @sapContent_ContrastTextThreshold);
 @sapUiButtonLiteHoverBackground: fade(darken(@sapButton_Hover_Background, 22), 50);
 
+@sapUiToggleButtonPressedHoverBorderColor: @sapUiToggleButtonPressedHoverBackground;
 @sapUiToggleButtonPressedBackground: darken(@sapSelectedColor, 10);
 @sapUiToggleButtonPressedBorderColor: darken(@sapUiToggleButtonPressedBackground, 5);
-
-
 @sapUiToggleButtonPressedHoverBackground: lighten(@sapUiToggleButtonPressedBackground, 10);
 @sapUiToggleButtonPressedTextColor: contrast(@sapUiToggleButtonPressedBackground, @sapButton_TextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
-
-
-
-
-@sapUiSegmentedButtonFooterBorderColor: lighten(@sapButton_BorderColor, 8);
-
-
-@sapUiContentShadowColorFade15: fade(@sapContent_ShadowColor, 15);
-@sapUiShadowHeader: 0 0.125rem 0 0 @sapObjectHeader_Background, inset 0 -0.125rem 0 0 darken(@sapObjectHeader_Background, 8);
-@sapUiShadowLevel0: 0 0 0 1px @sapUiContentShadowColorFade15;
-@sapUiShadowLevel2: 0 0.625rem 1.875rem 0 @sapUiContentShadowColorFade15, @sapUiShadowLevel0;
