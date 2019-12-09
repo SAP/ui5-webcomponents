@@ -19,8 +19,11 @@
 
 <header>
 	<h2 class="control-header">Input</h2>
-	<div class="control-tag">&lt;ui5-input&gt;</div>
 </header>
+
+<div class="component-package">@ui5/webcomponents</div>
+
+<div class="control-tag">&lt;ui5-input&gt;</div>
 
 <section>
 	<h3>Basic Input</h3>
@@ -64,7 +67,7 @@
 
 				suggestionItems.forEach(function(item) {
 					var li = document.createElement("ui5-li");
-					li.icon = "sap-icon://world";
+					li.icon = "world";
 					li.id = item;
 					li.textContent = item;
 					oInput.appendChild(li);
@@ -100,7 +103,7 @@
 		// Add the new suggestions in the DOM
 		suggestionItems.forEach(function(item) {
 			var li = document.createElement("ui5-li");
-			li.icon = "sap-icon://world";
+			li.icon = "world";
 			li.id = item;
 			li.textContent = item;
 			oInput.appendChild(li);
@@ -129,7 +132,7 @@
 	<div class="snippet">
 		<div class="flex-column samples-margin">
 			<ui5-input id="searchInput" placeholder="Enter search criteria ...">
-				<ui5-icon id="searchIcon" slot="icon" src="sap-icon://search" class="inputIcon"></ui5-icon>
+				<ui5-icon id="searchIcon" slot="icon" name="search" class="inputIcon"></ui5-icon>
 			</ui5-input>
 		</div>
 	</div>
@@ -146,7 +149,7 @@
 </style>
 
 <ui5-input id="searchInput" placeholder="Enter search criteria ...">
-	<ui5-icon id="searchIcon" slot="icon" src="sap-icon://search" class="inputIcon"></ui5-icon>
+	<ui5-icon id="searchIcon" slot="icon" name="search" class="inputIcon"></ui5-icon>
 </ui5-input>
 
 <script>

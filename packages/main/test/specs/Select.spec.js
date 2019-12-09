@@ -1,4 +1,4 @@
-const assert = require("assert");
+const assert = require("chai").assert;
 
 describe("Select general interaction", () => {
 	browser.url("http://localhost:8080/test-resources/pages/Select.html");
@@ -54,17 +54,23 @@ describe("Select general interaction", () => {
 	});
 
 	it("changes selection while closed with Arrow Up/Down", () => {
-		const btn = $("#myBtn2");
-		const select = $("#mySelect");
+		const inputResult = browser.$("#inputResult").shadow$("input");
+		const select = $("#mySelect2");
 		const selectText = browser.$("#mySelect2").shadow$("ui5-label");
 		const EXPECTED_SELECTION_TEXT1 = "Compact";
 		const EXPECTED_SELECTION_TEXT2 = "Condensed";
+
+		// make sure focus is on closed select
+		select.click();
+		select.keys("Escape");
 
 		select.keys("ArrowUp");
 		assert.ok(selectText.getHTML(false).indexOf(EXPECTED_SELECTION_TEXT1) > -1, "Arrow Up should change selected item");
 
 		select.keys("ArrowDown");
 		assert.ok(selectText.getHTML(false).indexOf(EXPECTED_SELECTION_TEXT2) > -1, "Arrow Down should change selected item");
+
+		assert.strictEqual(inputResult.getProperty("value"), "5", "Change event should have fired twice");
 	});
 
 

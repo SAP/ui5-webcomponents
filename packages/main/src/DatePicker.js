@@ -13,8 +13,8 @@ import CalendarDate from "@ui5/webcomponents-base/dist/dates/CalendarDate.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { isShow } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
-import "./icons/appointment-2.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import "@ui5/webcomponents-icons/dist/icons/appointment-2.js";
 import { DATEPICKER_OPEN_ICON_TITLE, DATEPICKER_DATE_ACC_TEXT } from "./generated/i18n/i18n-defaults.js";
 import Icon from "./Icon.js";
 import Popover from "./Popover.js";
@@ -110,12 +110,17 @@ const metadata = {
 		/**
 		 * Defines a short hint, intended to aid the user with data entry when the
 		 * <code>ui5-datepicker</code> has no value.
+		 *
+		 * <b>Note:</b> When no placeholder is set, the format pattern is displayed as a placeholder.
+		 * Passing an empty string as the value of this property will make the <code>ui5-datepicker</code> appear empty - without placeholder or format pattern.
+		 *
 		 * @type {string}
-		 * @defaultvalue ""
+		 * @defaultvalue undefined
 		 * @public
 		 */
 		placeholder: {
 			type: String,
+			defaultValue: undefined,
 		},
 
 		/**
@@ -165,7 +170,6 @@ const metadata = {
 		*/
 		input: {},
 	},
-	_eventHandlersByConvention: true,
 };
 
 /**
@@ -308,7 +312,7 @@ class DatePicker extends UI5Element {
 		}
 	}
 
-	onkeydown(event) {
+	_onkeydown(event) {
 		if (isShow(event)) {
 			this.togglePicker();
 			this._getInput().focus();
@@ -383,6 +387,14 @@ class DatePicker extends UI5Element {
 
 	get _isPattern() {
 		return this._formatPattern !== "medium" && this._formatPattern !== "short" && this._formatPattern !== "long";
+	}
+
+	get _displayFormat() {
+		return this.getFormat().oFormatOptions.pattern;
+	}
+
+	get _placeholder() {
+		return this.placeholder !== undefined ? this.placeholder : this._displayFormat;
 	}
 
 	getFormat() {

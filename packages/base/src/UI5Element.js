@@ -636,7 +636,7 @@ class UI5Element extends HTMLElement {
 			} else if (propType === Object) {
 				defaultState[propName] = "defaultValue" in props[propName] ? props[propName].defaultValue : {};
 			} else if (propType === String) {
-				defaultState[propName] = propDefaultValue || "";
+				defaultState[propName] = "defaultValue" in props[propName] ? props[propName].defaultValue : "";
 			} else {
 				defaultState[propName] = propDefaultValue;
 			}
@@ -678,7 +678,7 @@ class UI5Element extends HTMLElement {
 					if (propData.type === Boolean) {
 						return false;
 					} else if (propData.type === String) {  // eslint-disable-line
-						return propDefaultValue || "";
+						return propDefaultValue;
 					} else if (propData.multiple) { // eslint-disable-line
 						return [];
 					} else {

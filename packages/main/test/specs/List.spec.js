@@ -30,10 +30,12 @@ describe("Date Picker Tests", () => {
 
 	it("selectionChange using selection component", () => {
 		const fieldResult = $("#fieldMultiSelResult");
+		const firstItem = $("#listMultiSel #option1");
 		const firstItemSelectionComponent = $("#listMultiSel #option1").shadow$(".ui5-li-multisel-cb");
 
 		firstItemSelectionComponent.click();
 
+		assert.ok(firstItem.getProperty("selected"), "item is selected");
 		assert.strictEqual(fieldResult.getProperty("value"), "true");
 	});
 
@@ -140,5 +142,21 @@ describe("Date Picker Tests", () => {
 		// and go to the "Option B" radio button
 		itemLink.keys("Tab");
 		assert.strictEqual(itemRadioBtn.isFocused(), true, "the last tabbable element (radio) is focused");
+	});
+
+	it("does not focus next / prev item when right / left arrow is pressed", () => {
+		const firstListItem = $("#country1");
+		const secondListItem = $("#country2");
+
+		firstListItem.click();
+
+		firstListItem.keys("ArrowRight");
+
+		assert.ok(firstListItem.isFocused(), "First item remains focussed");
+		assert.strictEqual(secondListItem.isFocused(), false, "Second list item not should be focused");
+
+		firstListItem.keys("ArrowLeft");
+
+		assert.ok(firstListItem.isFocused(), "First item remains focussed");
 	});
 });

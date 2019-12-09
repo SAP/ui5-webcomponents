@@ -60,28 +60,35 @@
 
 <header>
 	<h2 class="control-header">Card</h2>
-	<div class="control-tag">&lt;ui5-card&gt;</div>
 </header>
+
+<div class="component-package">@ui5/webcomponents</div>
+
+<div class="control-tag">&lt;ui5-card&gt;</div>
 
 <section>
 	<h3>Card with List</h3>
 	<div class="snippet card-container">
-		<ui5-card avatar="sap-icon://group" heading="Team Space" subtitle="Direct Reports" status="3 of 10" class="medium">
+		<ui5-card heading="Team Space" subtitle="Direct Reports" status="3 of 10" class="medium">
+			<ui5-icon name="group" slot="avatar"></ui5-icon>
+
 			<div class="card-content">
 				<ui5-list separators="None" class="card-content-child" style="width: 100%">
-					<ui5-li image="../../assets/images/avatars/man_avatar_1.png" description="User Researcher">Alain Chevalier</ui5-li>
-					<ui5-li image="../../assets/images/avatars/woman_avatar_1.png" description="Artist">Monique Legrand</ui5-li>
-					<ui5-li image="../../assets/images/avatars/woman_avatar_2.png" description="UX Specialist">Michael Adams</ui5-li>
+					<ui5-li image="../../../assets/images/avatars/man_avatar_1.png" description="User Researcher">Alain Chevalier</ui5-li>
+					<ui5-li image="../../../assets/images/avatars/woman_avatar_1.png" description="Artist">Monique Legrand</ui5-li>
+					<ui5-li image="../../../assets/images/avatars/woman_avatar_2.png" description="UX Specialist">Michael Adams</ui5-li>
 				</ui5-list>
 				
 			</div>
 		</ui5-card>
-		<ui5-card avatar="sap-icon://group" heading="This header is interactive" header-interactive subtitle="Click, press Enter or Space" status="3 of 6" class="medium">
+		<ui5-card heading="This header is interactive" header-interactive subtitle="Click, press Enter or Space" status="3 of 6" class="medium">
+				<ui5-icon name="group" slot="avatar"></ui5-icon>
+			
 			<div class="card-content">
 				<ui5-list separators="None" class="card-content-child" style="width: 100%">
-					<ui5-li image="../../assets/images/avatars/man_avatar_2.png" description="Software Architect">Richard Wilson</ui5-li>
-					<ui5-li image="../../assets/images/avatars/woman_avatar_3.png" description="Visual Designer">Elena Petrova</ui5-li>
-					<ui5-li image="../../assets/images/avatars/man_avatar_3.png" description="Quality Specialist">John Miller</ui5-li>
+					<ui5-li image="../../../assets/images/avatars/man_avatar_2.png" description="Software Architect">Richard Wilson</ui5-li>
+					<ui5-li image="../../../assets/images/avatars/woman_avatar_3.png" description="Visual Designer">Elena Petrova</ui5-li>
+					<ui5-li image="../../../assets/images/avatars/man_avatar_3.png" description="Quality Specialist">John Miller</ui5-li>
 				</ui5-list>
 			</div>
 		</ui5-card>
@@ -96,22 +103,22 @@
 }
 </style>
 
-<ui5-card avatar="sap-icon://group" heading="Team Space" subtitle="Direct Reports" status="3 of 10" class="medium">
+<ui5-card avatar="group" heading="Team Space" subtitle="Direct Reports" status="3 of 10" class="medium">
 	<div class="card-content">
 		<ui5-list separators="None" class="card-content-child" style="width: 100%">
-			<ui5-li image="../../assets/images/avatars/man_avatar_1.png" description="User Researcher">Alain Chevalier</ui5-li>
-			<ui5-li image="../../assets/images/avatars/woman_avatar_1.png" description="Artist">Monique Legrand</ui5-li>
-			<ui5-li image="../../assets/images/avatars/woman_avatar_2.png" description="UX Specialist">Michael Adams</ui5-li>
+			<ui5-li image="../../../assets/images/avatars/man_avatar_1.png" description="User Researcher">Alain Chevalier</ui5-li>
+			<ui5-li image="../../../assets/images/avatars/woman_avatar_1.png" description="Artist">Monique Legrand</ui5-li>
+			<ui5-li image="../../../assets/images/avatars/woman_avatar_2.png" description="UX Specialist">Michael Adams</ui5-li>
 		</ui5-list>
 
 	</div>
 </ui5-card>
-<ui5-card avatar="sap-icon://group" heading="This header is interactive" header-interactive subtitle="Click, press Enter or Space" status="3 of 6" class="medium">
+<ui5-card avatar="group" heading="This header is interactive" header-interactive subtitle="Click, press Enter or Space" status="3 of 6" class="medium">
 	<div class="card-content">
 		<ui5-list separators="None" class="card-content-child" style="width: 100%">
-			<ui5-li image="../../assets/images/avatars/man_avatar_2.png" description="Software Architect">Richard Wilson</ui5-li>
-			<ui5-li image="../../assets/images/avatars/woman_avatar_3.png" description="Visual Designer">Elena Petrova</ui5-li>
-			<ui5-li image="../../assets/images/avatars/man_avatar_3.png" description="Quality Specialist">John Miller</ui5-li>
+			<ui5-li image="../../../assets/images/avatars/man_avatar_2.png" description="Software Architect">Richard Wilson</ui5-li>
+			<ui5-li image="../../../assets/images/avatars/woman_avatar_3.png" description="Visual Designer">Elena Petrova</ui5-li>
+			<ui5-li image="../../../assets/images/avatars/man_avatar_3.png" description="Quality Specialist">John Miller</ui5-li>
 		</ui5-list>
 	</div>
 </ui5-card>
@@ -239,11 +246,11 @@
 	<div class="snippet card-container">
 		<ui5-card heading="Upcoming Activities" subtitle="For Today" class="medium">
 			<ui5-timeline>
-				<ui5-timeline-item id="test-item" title-text="called" timestamp="1487583000000" icon="sap-icon://phone" item-name="John Smith" item-name-clickable></ui5-timeline-item>
-				<ui5-timeline-item title-text="Weekly Sync - CP Design" timestamp="1517349600000" icon="sap-icon://calendar">
+				<ui5-timeline-item id="test-item" title-text="called" timestamp="1487583000000" icon="phone" item-name="John Smith" item-name-clickable></ui5-timeline-item>
+				<ui5-timeline-item title-text="Weekly Sync - CP Design" timestamp="1517349600000" icon="calendar">
 					MR SOF02 2.43
 				</ui5-timeline-item>
-				<ui5-timeline-item title-text="Video Converence Call - UI5" timestamp="1485813600000" icon="sap-icon://calendar">
+				<ui5-timeline-item title-text="Video Converence Call - UI5" timestamp="1485813600000" icon="calendar">
 					Online meeting
 				</ui5-timeline-item>
 			</ui5-timeline>
@@ -256,11 +263,11 @@
 	subtitle="For Today"
 	class="meidum">
 	<ui5-timeline>
-		<ui5-timeline-item id="test-item" title-text="called" timestamp="1487583000000" icon="sap-icon://phone" item-name="John Smith" item-name-clickable></ui5-timeline-item>
-		<ui5-timeline-item title-text="Weekly Sync - CP Design" timestamp="1517349600000" icon="sap-icon://calendar">
+		<ui5-timeline-item id="test-item" title-text="called" timestamp="1487583000000" icon="phone" item-name="John Smith" item-name-clickable></ui5-timeline-item>
+		<ui5-timeline-item title-text="Weekly Sync - CP Design" timestamp="1517349600000" icon="calendar">
 			MR SOF02 2.43
 		</ui5-timeline-item>
-		<ui5-timeline-item title-text="Video Converence Call - UI5" timestamp="1485813600000" icon="sap-icon://calendar">
+		<ui5-timeline-item title-text="Video Converence Call - UI5" timestamp="1485813600000" icon="calendar">
 			Online meeting
 		</ui5-timeline-item>
 	</ui5-timeline>
@@ -271,11 +278,13 @@
 <section>
 	<h3>More Cards</h3>
 	<div class="snippet card-container">
-		<ui5-card avatar="../../assets/images/avatars/man_avatar_1.png" heading="David Willams" subtitle="Sales Manager" class="small">
+		<ui5-card heading="David Willams" subtitle="Sales Manager" class="small">
+			<img src="../../../assets/images/avatars/man_avatar_1.png" slot="avatar" />
+
 			<ui5-list separators="Inner" class="content-padding">
-				<ui5-li icon="sap-icon://competitor" icon-end>Personal Development</ui5-li>
-				<ui5-li icon="sap-icon://wallet" icon-end>Finance</ui5-li>
-				<ui5-li icon="sap-icon://collaborate" icon-end>Communications Skills</ui5-li>
+				<ui5-li icon="competitor" icon-end>Personal Development</ui5-li>
+				<ui5-li icon="wallet" icon-end>Finance</ui5-li>
+				<ui5-li icon="collaborate" icon-end>Communications Skills</ui5-li>
 			</ui5-list>
 		</ui5-card>
 
@@ -323,7 +332,9 @@
 			</ui5-list>
 		</ui5-card>
 
-		<ui5-card avatar="../../assets/images/avatars/woman_avatar_1.png" heading="Dona Maria Moore" subtitle="Senior Sales Executive" class="small">
+		<ui5-card heading="Dona Maria Moore" subtitle="Senior Sales Executive" class="small">
+			<img src="../../../assets/images/avatars/man_avatar_1.png" slot="avatar" />
+			
 			<div class="content content-padding">
 				<ui5-title level="H5" style="padding-bottom: 1rem;">Contact details</ui5-title>
 
@@ -346,11 +357,13 @@
 	</div>
 
 	<pre class="prettyprint lang-html"><xmp>
-<ui5-card avatar="../../assets/images/avatars/man_avatar_1.png" heading="David Willams" subtitle="Sales Manager" class="small">
+<ui5-card heading="David Willams" subtitle="Sales Manager" class="small">
+	<img src="../../../assets/images/avatars/man_avatar_1.png" slot="avatar" />
+	
 	<ui5-list separators="Inner" class="content-padding">
-		<ui5-li icon="sap-icon://competitor" icon-end>Personal Development</ui5-li>
-		<ui5-li icon="sap-icon://wallet" icon-end>Finance</ui5-li>
-		<ui5-li icon="sap-icon://collaborate" icon-end>Communications Skills</ui5-li>
+		<ui5-li icon="competitor" icon-end>Personal Development</ui5-li>
+		<ui5-li icon="wallet" icon-end>Finance</ui5-li>
+		<ui5-li icon="collaborate" icon-end>Communications Skills</ui5-li>
 	</ui5-list>
 </ui5-card>
 
@@ -390,7 +403,9 @@
 	</ui5-list>
 </ui5-card>
 
-<ui5-card avatar="../../assets/images/avatars/woman_avatar_1.png" heading="Dona Maria Moore" subtitle="Senior Sales Executive" class="small">
+<ui5-card heading="Dona Maria Moore" subtitle="Senior Sales Executive" class="small">
+	<img src="../../../assets/images/avatars/man_avatar_1.png" slot="avatar" />
+	
 	<div class="content content-padding">
 		<ui5-title level="H5" style="padding-bottom: 1rem;">Contact details</ui5-title>
 

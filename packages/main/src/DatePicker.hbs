@@ -1,11 +1,12 @@
 <div
 		class="ui5-datepicker-root"
 		style="{{styles.main}}"
+		@keydown={{_onkeydown}}
 >
 	<!-- INPUT -->
 	<ui5-input
 			id="{{_id}}-inner"
-			placeholder="{{placeholder}}"
+			placeholder="{{_placeholder}}"
 			type="{{type}}"
 			value="{{value}}"
 			?disabled="{{disabled}}"
@@ -19,7 +20,7 @@
 		{{#unless readonly}}
 			<ui5-icon
 				slot="icon"
-				src="sap-icon://appointment-2"
+				name="appointment-2"
 				tabindex="-1"
 				accessible-name="{{openIconTitle}}"
 				show-tooltip

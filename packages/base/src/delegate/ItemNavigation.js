@@ -9,6 +9,7 @@ import {
 
 import EventProvider from "../EventProvider.js";
 import UI5Element from "../UI5Element.js";
+import NavigationMode from "../types/NavigationMode.js";
 
 // navigatable items must have id and tabindex
 class ItemNavigation extends EventProvider {
@@ -18,6 +19,11 @@ class ItemNavigation extends EventProvider {
 		this.currentIndex = options.currentIndex || 0;
 		this.rowSize = options.rowSize || 1;
 		this.cyclic = options.cyclic || false;
+
+		const navigationMode = options.navigationMode;
+		const autoNavigation = !navigationMode || navigationMode === NavigationMode.Auto;
+		this.horizontalNavigationOn = autoNavigation || navigationMode === NavigationMode.Horizontal;
+		this.verticalNavigationOn = autoNavigation || navigationMode === NavigationMode.Vertical;
 
 		this.rootWebComponent = rootWebComponent;
 		this.rootWebComponent.addEventListener("keydown", this.onkeydown.bind(this));
@@ -32,21 +38,31 @@ class ItemNavigation extends EventProvider {
 		});
 	}
 
+	_horizontalNavigationOn() {
+		return this.horizontalNavigationOn;
+	}
+
+	_verticalNavigationOn() {
+		return this.verticalNavigationOn;
+	}
+
 	_onKeyPress(event) {
 		const items = this._getItems();
 
 		if (this.currentIndex >= items.length) {
 			if (!this.cyclic) {
+				this.currentIndex = items.length - 1;
 				this.fireEvent(ItemNavigation.BORDER_REACH, { start: false, end: true, offset: this.currentIndex });
+			} else {
+				this.currentIndex = this.currentIndex - items.length;
 			}
-
-			this.currentIndex = this.currentIndex - items.length;
 		} else if (this.currentIndex < 0) {
 			if (!this.cyclic) {
+				this.currentIndex = 0;
 				this.fireEvent(ItemNavigation.BORDER_REACH, { start: true, end: false, offset: this.currentIndex });
+			} else {
+				this.currentIndex = items.length + this.currentIndex;
 			}
-
-			this.currentIndex = items.length + this.currentIndex;
 		}
 
 		this.update();
@@ -57,19 +73,19 @@ class ItemNavigation extends EventProvider {
 	}
 
 	onkeydown(event) {
-		if (isUp(event)) {
+		if (isUp(event) && this._verticalNavigationOn()) {
 			return this._handleUp(event);
 		}
 
-		if (isDown(event)) {
+		if (isDown(event) && this._verticalNavigationOn()) {
 			return this._handleDown(event);
 		}
 
-		if (isLeft(event)) {
+		if (isLeft(event) && this._horizontalNavigationOn()) {
 			return this._handleLeft(event);
 		}
 
-		if (isRight(event)) {
+		if (isRight(event) && this._horizontalNavigationOn()) {
 			return this._handleRight(event);
 		}
 

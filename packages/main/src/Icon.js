@@ -19,17 +19,36 @@ const metadata = {
 		/**
 		 * Defines the source URI of the <code>ui5-icon</code>.
 		 * <br><br>
-		 * SAP-icons font provides numerous options. To find all the available icons, see the
+		 * To browse all available icons, see the
 		 * <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
 		 * <br><br>
 		 * Example:
 		 * <br>
 		 * <code>src='sap-icon://add'</code>, <code>src='sap-icon://delete'</code>, <code>src='sap-icon://employee'</code>.
+		 *<b> NOTE: This property is about to be removed in the next version! Please use the <code>name</code> property instead.</b>
+		 *
+		 * @type {string}
+		 * @public
+		 * @deprecated
+		*/
+		src: {
+			type: String,
+		},
+
+		/**
+		 * Defines the unique identifier (icon name) of each <code>ui5-icon</code>.
+		 * <br><br>
+		 * To browse all available icons, see the
+		 * <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
+		 * <br><br>
+		 * Example:
+		 * <br>
+		 * <code>name='add'</code>, <code>name='delete'</code>, <code>name='employee'</code>.
 		 *
 		 * @type {string}
 		 * @public
 		*/
-		src: {
+		name: {
 			type: String,
 		},
 
@@ -82,21 +101,16 @@ const metadata = {
  * @class
  * <h3 class="comment-api-title">Overview</h3>
  *
- * The <code>ui5-icon</code> component is a wrapper around the HTML tag to embed an icon from an icon font.
+ * The <code>ui5-icon</code> component represents an SVG icon.
  * There are two main scenarios how the <code>ui5-icon</code> component is used:
  * as a purely decorative element; or as a visually appealing clickable area in the form of an icon button.
- * In the first case, images are not predefined as tab stops in accessibility mode.
- * <br><br>
- * The <code>ui5-icon</code> uses embedded font instead of pixel image.
- * Comparing to image, <code>ui5-icon</code> is easily scalable,
- * its color can be altered live, and various effects can be added using CSS.
  * <br><br>
  * A large set of built-in icons is available
- * and they can be used by setting the <code>src</code> property on the <code>ui5-icon</code>.
+ * and they can be used by setting the <code>name</code> property on the <code>ui5-icon</code>.
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/Icon";</code>
+ * <code>import "@ui5/webcomponents/dist/Icon.js";</code>
  *
  * @constructor
  * @author SAP SE
@@ -155,13 +169,19 @@ class Icon extends UI5Element {
 	}
 
 	async onBeforeRendering() {
-		let iconData = getIconDataSync(this.src);
+		const name = this.name || this.src;
+		if (this.src) {
+			/* eslint-disable-next-line */
+			console.warn(`The src property is about to be depricated in the next version of UI5 Web Components. Please use the name property!`);
+		}
+
+		let iconData = getIconDataSync(name);
 		if (!iconData) {
 			try {
-				iconData = await getIconData(this.src);
+				iconData = await getIconData(name);
 			} catch (e) {
 				/* eslint-disable-next-line */
-				return console.warn(`Required icon is not registered. You can either import the icon as a module in order to use it e.g. "@ui5/webcomponents/dist/icons/${this.src.replace("sap-icon://", "")}.js", or setup a JSON build step and import "@ui5/webcomponents/dist/json-imports/Icons.js".`);
+				return console.warn(`Required icon is not registered. You can either import the icon as a module in order to use it e.g. "@ui5/webcomponents/dist/icons/${name.replace("sap-icon://", "")}.js", or setup a JSON build step and import "@ui5/webcomponents-icons/dist/json-imports/Icons.js".`);
 			}
 		}
 		this.pathData = iconData.pathData;

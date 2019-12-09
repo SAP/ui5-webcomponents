@@ -1,4 +1,4 @@
-const assert = require('assert');
+const assert = require("chai").assert;
 
 describe("CheckBox general interaction", () => {
 	browser.url("http://localhost:8080/test-resources/pages/CheckBox.html");

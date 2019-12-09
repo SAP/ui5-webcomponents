@@ -1,5 +1,6 @@
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
+import "@ui5/webcomponents-icons/dist/icons/decline.js";
 import ListItemType from "./types/ListItemType.js";
 import ListMode from "./types/ListMode.js";
 import ListItemBase from "./ListItemBase.js";
@@ -74,7 +75,6 @@ const metadata = {
 		_focused: {},
 		_focusForward: {},
 	},
-	_eventHandlersByConvention: true,
 };
 
 /**
@@ -130,8 +130,8 @@ class ListItem extends ListItemBase {
 		document.removeEventListener("keyup", this.deactivateByKey);
 	}
 
-	onkeydown(event) {
-		super.onkeydown(event);
+	_onkeydown(event) {
+		super._onkeydown(event);
 
 		const itemActive = this.type === ListItemType.Active;
 
@@ -148,7 +148,7 @@ class ListItem extends ListItemBase {
 		}
 	}
 
-	onkeyup(event) {
+	_onkeyup(event) {
 		if (isSpace(event) || isEnter(event)) {
 			this.deactivate();
 		}
@@ -158,25 +158,25 @@ class ListItem extends ListItemBase {
 		}
 	}
 
-	onmousedown(event) {
+	_onmousedown(event) {
 		if (event.isMarked === "button") {
 			return;
 		}
 		this.activate();
 	}
 
-	onmouseup(event) {
+	_onmouseup(event) {
 		if (event.isMarked === "button") {
 			return;
 		}
 		this.deactivate();
 	}
 
-	onfocusout(event) {
+	_onfocusout(event) {
 		this.deactivate();
 	}
 
-	onclick(event) {
+	_onclick(event) {
 		if (event.isMarked === "button") {
 			return;
 		}
@@ -188,7 +188,7 @@ class ListItem extends ListItemBase {
 	 * and Multi (ui5-checkbox) selection modes are used.
 	 */
 	onMultiSelectionComponentPress(event) {
-		this.fireEvent("_selectionRequested", { item: this, selected: !event.target.checked, selectionComponentPressed: true });
+		this.fireEvent("_selectionRequested", { item: this, selected: event.target.checked, selectionComponentPressed: true });
 	}
 
 	onSingleSelectionComponentPress(event) {

@@ -2,8 +2,13 @@
 	tabindex="{{_tabIndex}}"
 	class="{{classes.main}}"
 	dir="{{rtl}}"
-	@focusin="{{onfocusin}}"
-	@focusout="{{onfocusout}}"
+	@focusin="{{_onfocusin}}"
+	@focusout="{{_onfocusout}}"
+	@keyup="{{_onkeyup}}"
+	@keydown="{{_onkeydown}}"
+	@mouseup="{{_onmouseup}}"
+	@mousedown="{{_onmousedown}}"
+	@click="{{_onclick}}"
 >
 		{{#if placeSelectionElementBefore}}
 			{{> selectionElement}}
@@ -52,7 +57,7 @@
 			<ui5-button
 				id="{{_id}}-deleteSelectionElement"
 				design="Transparent"
-				icon="sap-icon://decline"
+				icon="decline"
 				@click="{{onDelete}}"
 			></ui5-button>
 		</div>

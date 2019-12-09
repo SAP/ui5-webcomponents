@@ -6,7 +6,6 @@ import TableColumnTemplate from "./generated/templates/TableColumnTemplate.lit.j
 // Styles
 import styles from "./generated/themes/TableColumn.css.js";
 
-
 const metadata = {
 	tag: "ui5-table-column",
 	slots: /** @lends sap.ui.webcomponents.main.TableColumn.prototype */ {

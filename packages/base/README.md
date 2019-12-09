@@ -5,10 +5,11 @@
 [![Travis CI Build Status](https://travis-ci.org/SAP/ui5-webcomponents.svg?branch=master)](https://travis-ci.org/SAP/ui5-webcomponents)
 [![npm Package Version](https://badge.fury.io/js/%40ui5%2Fwebcomponents.svg)](https://www.npmjs.com/package/@ui5/webcomponents)
 
-Contains the base files for all Web Components.
+Contains the base files for all Web Components, most notably `@ui5/webcomponents-base/dist/UI5Element.js`.
 
 ## Resources
-- [UI5 Web Components](https://sap.github.io/ui5-webcomponents)
+- [UI5 Web Components - README.md](https://github.com/SAP/ui5-webcomponents/blob/master/README.md)
+- [UI5 Web Components - Home Page](https://sap.github.io/ui5-webcomponents)
 - [UI5 Web Components - Playground and API Reference](https://sap.github.io/ui5-webcomponents/playground/)
 
 ## Support
