@@ -147,6 +147,10 @@
 	border-bottom-left-radius: 0;
 }
 
+.ui5-shellbar-search-button {
+	margin-left: 0;
+}
+
 .ui5-shellbar-overflow-container {
 	display: flex;
 	justify-content: center;

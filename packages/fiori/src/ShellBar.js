@@ -505,18 +505,12 @@ class ShellBar extends UI5Element {
 		popover.openBy(opener);
 	}
 
-	_handleCustomActionPress(event) {
-		event.target.mappedShellBarItem.fireEvent("itemClick", {
-			targetRef: event.target,
-		}, true);
+	_handleOverflowPress(buttonRef, itemRef) {
+		this._toggleActionPopover(buttonRef, itemRef);
 	}
 
-	_handleOverflowPress() {
-		this._toggleActionPopover();
-	}
-
-	_handleNotificationsPress() {
-		return this.fireEvent("notificationsClick", { targetRef: this.notifications });
+	_handleNotificationsPress(buttonRef, itemRef) {
+		return this.fireEvent("notificationsClick", { targetRef: buttonRef.hidden ? itemRef : buttonRef });
 	}
 
 	_handleProfilePress() {
