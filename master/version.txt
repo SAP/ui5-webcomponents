@@ -1,5 +1,5 @@
-commit 9d0fee2a9d8336b8d936cdb3c7b450c4a7122468
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Fri Dec 6 10:15:29 2019 +0200
+commit 99dd6c441f8252fdff3b45ebd8f88159374bb4df
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Mon Dec 9 13:29:47 2019 +0200
 
-    chore(ui5-button): rewrite qunit tests to wdio (#1019)
+    feat(ui5-radiobutton): introduce wrap property (#1006)
