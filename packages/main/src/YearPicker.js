@@ -127,7 +127,14 @@ class YearPicker extends UI5Element {
 
 		this._itemNav = new ItemNavigation(this, { rowSize: 4 });
 		this._itemNav.getItemsCallback = function getItemsCallback() {
-			return [].concat(...this._yearIntervals);
+			let focusableYears = [];
+
+			for(var i = 0; i < this._yearIntervals.length; i++){
+				let yearInterval = this._yearIntervals[i].filter((x) => !x.disabled );
+				focusableYears.push(yearInterval);
+			}
+
+			return [].concat(...focusableYears);
 		}.bind(this);
 
 		this._itemNav.attachEvent(
@@ -181,6 +188,7 @@ class YearPicker extends UI5Element {
 
 			if ((this.minDate || this.maxDate) && this._isOutOfSelectableRange(oCalDate.getYear())) {
 				year.classes += " ui5-yp-item--disabled";
+				year.disabled = true;
 			}
 
 			if (intervals[intervalIndex]) {
@@ -282,6 +290,11 @@ class YearPicker extends UI5Element {
 		}
 
 		if (oCalDate.getYear() - YearPicker._MIDDLE_ITEM_INDEX > YearPicker._MAX_YEAR) {
+			return;
+		}
+		
+		if (this._isOutOfSelectableRange(oCalDate.getYear() - YearPicker._MIDDLE_ITEM_INDEX) && 
+			this._isOutOfSelectableRange(oCalDate.getYear() + YearPicker._MIDDLE_ITEM_INDEX)){
 			return;
 		}
 

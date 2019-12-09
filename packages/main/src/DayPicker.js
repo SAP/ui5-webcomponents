@@ -107,8 +107,8 @@ const metadata = {
 	_eventHandlersByConvention: true,
 };
 
-const MAX_YEAR = 9999;
-const MIN_YEAR = 1;
+const DEFAULT_MAX_YEAR = 9999;
+const DEFAULT_MIN_YEAR = 1;
 
 /**
  * @class
@@ -146,7 +146,14 @@ class DayPicker extends UI5Element {
 
 		this._itemNav = new ItemNavigation(this, { rowSize: 7 });
 		this._itemNav.getItemsCallback = function getItemsCallback() {
-			return [].concat(...this._weeks);
+			let focusableDays = [];
+
+			for(var i = 0; i < this._weeks.length; i++){
+				let week = this._weeks[i].filter((x) => !x.disabled );
+				focusableDays.push(week);
+			}
+
+			return [].concat(...focusableDays);
 		}.bind(this);
 
 		this._itemNav.attachEvent(
@@ -229,7 +236,8 @@ class DayPicker extends UI5Element {
 			}
 
 			if ((this.minDate || this.maxDate) && this._isOutOfSelectableRange(oCalDate)){
-				day.classes += " ui5-dp-item--disabled"
+				day.classes += " ui5-dp-item--disabled";
+				day.disabled = true;
 			}
 
 			if (day.classes.indexOf("ui5-dp-wday6") !== -1
@@ -380,26 +388,26 @@ class DayPicker extends UI5Element {
 	_handleItemNavigationBorderReach(event) {
 		const currentMonth = this._month,
 			currentYear = this._year;
-		let iNewMonth,
-			iNewYear;
+		let newMonth,
+			newYear;
 
 		if (event.end) {
-			iNewMonth = currentMonth < 11 ? currentMonth + 1 : 0;
-			iNewYear = currentMonth < 11 ? currentYear : currentYear + 1;
+			newMonth = currentMonth < 11 ? currentMonth + 1 : 0;
+			newYear = currentMonth < 11 ? currentYear : currentYear + 1;
 		} else if (event.start) {
-			iNewMonth = currentMonth > 0 ? currentMonth - 1 : 11;
-			iNewYear = currentMonth > 0 ? currentYear : currentYear - 1;
+			newMonth = currentMonth > 0 ? currentMonth - 1 : 11;
+			newYear = currentMonth > 0 ? currentYear : currentYear - 1;
 		}
 
 		const oNewDate = this._calendarDate;
-		oNewDate.setYear(iNewYear);
-		oNewDate.setMonth(iNewMonth);
+		oNewDate.setYear(newYear);
+		oNewDate.setMonth(newMonth);
 
-		if (oNewDate.getYear() < MIN_YEAR || oNewDate.getYear() > MAX_YEAR) {
+		if (oNewDate.getYear() < DEFAULT_MIN_YEAR || oNewDate.getYear() > DEFAULT_MAX_YEAR) {
 			return;
 		}
 
-		this.fireEvent("navigate", { timestamp: (oNewDate.valueOf() / 1000) });
+		this.fireEvent("navigate", { timestamp: (oNewDate.valueOf() / 1000)});
 	}
 
 	_isWeekend(oDate) {
@@ -417,7 +425,7 @@ class DayPicker extends UI5Element {
 	}
 
 	_isOutOfSelectableRange (date){
-		let currentDate = date._oUDate.oDate,
+		let currentDate = date._oUDate ? date._oUDate.oDate : date,
 			maxDate = this.maxDate,
 			minDate = this.minDate;
 
@@ -465,12 +473,12 @@ class DayPicker extends UI5Element {
 		for (let i = 0; i < 42; i++) {
 			iYear = oDay.getYear();
 			oCalDate = new CalendarDate(oDay, this._primaryCalendarType);
-			if (bIncludeBCDates && iYear < MIN_YEAR) {
+			if (bIncludeBCDates && iYear < DEFAULT_MIN_YEAR) {
 				// For dates before 0001-01-01 we should render only empty squares to keep
 				// the month square matrix correct.
 				oCalDate._bBeforeFirstYear = true;
 				_aVisibleDays.push(oCalDate);
-			} else if (iYear >= MIN_YEAR && iYear <= MAX_YEAR) {
+			} else if (iYear >= DEFAULT_MIN_YEAR && iYear <= DEFAULT_MAX_YEAR) {
 				// Days before 0001-01-01 or after 9999-12-31 should not be rendered.
 				_aVisibleDays.push(oCalDate);
 			}

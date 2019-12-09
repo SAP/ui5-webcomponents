@@ -121,12 +121,20 @@ class MonthPicker extends UI5Element {
 		this._oLocale = getFormatLocale();
 		this._oLocaleData = new LocaleData(this._oLocale);
 
-		this._itemNav = new ItemNavigation(this, { rowSize: 3, cyclic: true });
+		this._itemNav = new ItemNavigation(this, { rowSize: 3 });
 		this._itemNav.getItemsCallback = function getItemsCallback() {
-			return [].concat(...this._quarters);
+			let focusableMonths = [];
+
+			for(var i = 0; i < this._quarters.length; i++){
+				let quarter = this._quarters[i].filter((x) => !x.disabled );
+				focusableMonths.push(quarter);
+			}
+
+			return [].concat(...focusableMonths);
 		}.bind(this);
 		this._itemNav.setItemsCallback = function setItemsCallback(items) {
 			this._quarters = items;
+			debugger;
 		}.bind(this);
 	}
 
@@ -152,6 +160,7 @@ class MonthPicker extends UI5Element {
 
 			if ((this.minDate || this.maxDate) && this._isOutOfSelectableRange(i)){
 				month.classes += " ui5-mp-item--disabled";
+				month.disabled = true;
 			}
 
 			const quarterIndex = parseInt(i / 3);
