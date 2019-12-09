@@ -356,26 +356,27 @@ class ShellBar extends UI5Element {
 		this._refsMap = new Map();
 	}
 
-	onBeforeRendering() {
-		this.coPilot = (getAnimationMode() === AnimationMode.Full) ? getFeature("CoPilotAnimation") : { animated: false };
-		this.hasMenuItems = !!this.menuItems.length;
-
-		this._mapOverflowButtonToAction();
-	}
-
 	_overflowItemPress(event) {
-		this._refsMap.get(event.detail.item.button).call(event.detail.item.button);
+		this._refsMap.get(event.detail.item.button).call(this, event.detail.item.button, event.detail.item);
 	}
 
-	_actionPress(item) {
-		this._fireShellbarItemClick(item.mappedShellBarItem || null, this);
+	_buttonPress(event) {
+		const handler = this._refsMap.get(event.target);
+
+		handler.call(this, event.target, event.target);
+	}
+
+	_actionPress(buttonRef, targetRef) {
+		buttonRef.mappedShellBarItem.fireEvent("itemClick", {
+			targetRef,
+		});
 	}
 
 	_fireShellbarItemClick(shellbarItem, targetRef) {
 		if (shellbarItem) {
-			return shellbarItem.fireEvent("itemClick", { targetRef, }, true);
+			return shellbarItem.fireEvent("itemClick", { targetRef }, true);
 		}
-		
+
 		this._refsMap.get(targetRef).call(this);
 	}
 
@@ -404,7 +405,10 @@ class ShellBar extends UI5Element {
 	onBeforeRendering() {
 		const animationsOn = getAnimationMode() === AnimationMode.Full;
 		const coPilotAnimation = getFeature("CoPilotAnimation");
+
 		this.coPilot = coPilotAnimation && animationsOn ? coPilotAnimation : { animated: false };
+		this.hasMenuItems = !!this.menuItems.length;
+		this._mapOverflowButtonToAction();
 	}
 
 	/**
@@ -451,7 +455,7 @@ class ShellBar extends UI5Element {
 		}).map(item => {
 			return {
 				item,
-				icon: item.mappedShellBarItem ? item.mappedShellBarItem.src : item.getAttribute("icon"),
+				icon: item.mappedShellBarItem ? item.mappedShellBarItem.icon : item.getAttribute("icon"),
 				text: item.mappedShellBarItem ? item.mappedShellBarItem.text : item.getAttribute("data-ui5-text"),
 				mappedShellBarItem: item.mappedShellBarItem ? item.mappedShellBarItem : {},
 			};
@@ -467,7 +471,7 @@ class ShellBar extends UI5Element {
 		this._refsMap.set(this.productSwitch, this._handleProductSwitchPress);
 
 		[].forEach.call(this.itemsAsButtons, (item, index) => {
-			this._refsMap.set(item, this._actionPress.bind(this, item));
+			this._refsMap.set(item, this._actionPress.bind(this));
 		});
 	}
 
@@ -519,8 +523,8 @@ class ShellBar extends UI5Element {
 		return this.fireEvent("profileClick", { targetRef: this.profileButton });
 	}
 
-	_handleProductSwitchPress() {
-		return this.fireEvent("productSwitchClick", { targetRef: this.productSwitch });
+	_handleProductSwitchPress(buttonRef, itemRef) {
+		return this.fireEvent("productSwitchClick", { targetRef: buttonRef.hidden ? itemRef : buttonRef });
 	}
 
 	_overflowActions() {
@@ -537,7 +541,7 @@ class ShellBar extends UI5Element {
 
 		// check the available space for items
 		const availableWidth = parentRect.width - overflowItemsParentRect.width;
-		
+
 		// if the available width is not enough for all icons -> overflow
 		const overflowItems = availableWidth < 0;
 
@@ -573,12 +577,11 @@ class ShellBar extends UI5Element {
 		this._hiddenIcons = actualOverflowingChildren.map(item => {
 			return {
 				item,
-				icon: item.mappedShellBarItem ? item.mappedShellBarItem.src : item.getAttribute("icon"),
+				icon: item.mappedShellBarItem ? item.mappedShellBarItem.icon : item.getAttribute("icon"),
 				text: item.mappedShellBarItem ? item.mappedShellBarItem.text : item.getAttribute("data-ui5-text"),
 				mappedShellBarItem: item.mappedShellBarItem ? item.mappedShellBarItem : null,
 			};
 		});
-
 	}
 
 	get profileButton() {

@@ -49,7 +49,7 @@
 					class="ui5-shellbar-button ui5-shellbar-search-button"
 					icon="sap-icon://search"
 					data-ui5-text="Search"
-					@click={{_actionPress}}
+					@click={{_buttonPress}}
 				>
 				</ui5-button>
 			{{/if}}
@@ -57,10 +57,10 @@
 			{{#each items}}
 				<ui5-button
 					class="ui5-shellbar-button ui5-shellbar-custom-item"
-					icon={{this.src}}
+					icon={{this.icon}}
 					data-ui5-shellbar-item-button
 					.mappedShellBarItem={{this}}
-					@click={{../_actionPress}}
+					@click={{../_buttonPress}}
 				>
 				</ui5-button>
 			{{/each}}
@@ -71,7 +71,7 @@
 					icon="sap-icon://bell"
 					data-ui5-text="Notifications"
 					data-ui5-notification-count="{{notificationCount}}"
-					@click={{_actionPress}}
+					@click={{_buttonPress}}
 				>
 				</ui5-button>
 			{{/if}}
@@ -84,7 +84,7 @@
 			</ui5-button>
 
 			{{#if profile}}
-			<ui5-button @click={{_actionPress}} class="ui5-shellbar-button ui5-shellbar-image-button">
+			<ui5-button @click={{_buttonPress}} class="ui5-shellbar-button ui5-shellbar-image-button">
 				<span style="{{styles.profile}}" class="ui5-shellbar-image-button-inner"></span>
 			</ui5-button>
 			{{/if}}
@@ -94,7 +94,7 @@
 					class="ui5-shellbar-button ui5-shellbar-button-product-switch"
 					icon="sap-icon://grid"
 					data-ui5-text="Product Switch"
-					@click={{_actionPress}}
+					@click={{_buttonPress}}
 				>
 				</ui5-button>
 			{{/if}}
