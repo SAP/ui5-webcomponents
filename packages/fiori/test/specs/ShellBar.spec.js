@@ -1,7 +1,7 @@
 const assert = require('assert');
 
 describe("Component Behaviour", () => {
-	browser.url("http://localhost:8081/test-resources/pages/ShellBar.html");
+	browser.url("http://localhost:8080/test-resources/pages/ShellBar.html");
 
 	describe("Responsiveness", () => {
 
@@ -15,9 +15,9 @@ describe("Component Behaviour", () => {
 			const primaryTitle = browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button-title");
 			const secondaryTitle = browser.$("#shellbar").shadow$(".ui5-shellbar-secondary-title");
 			const searchIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-search-button");
-			const customActionIcon1 = browser.$("#shellbar").shadow$(".ui5-shellbar-custom-item:first-child");
-			const customActionIcon2 = browser.$("#shellbar").shadow$(".ui5-shellbar-custom-item:nth-child(2)");
-			const notificationsIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-bell-button");
+			const customActionIcon1 = browser.$("#shellbar").shadow$$(".ui5-shellbar-custom-item")[0];
+			const customActionIcon2 = browser.$("#shellbar").shadow$$(".ui5-shellbar-custom-item")[1];
+			const notificationsIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-notifications-button");
 			const profileIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-image-button");
 			const productSwitchIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-button-product-switch");
 
@@ -37,7 +37,6 @@ describe("Component Behaviour", () => {
 		it("tests XL Breakpoint 1820px", () => {
 			browser.setWindowSize(1820, 1080);
 
-			const shellbarWrapper = browser.$("#shellbar").shadow$("div");
 			const shellbar = browser.$("#shellbar");
 
 			assert.strictEqual(shellbar.getProperty("breakpointSize") === "XL", true, "XL Breakpoint class should be set");
@@ -46,15 +45,15 @@ describe("Component Behaviour", () => {
 		it("tests L Breakpoint 1400px", () => {
 			browser.setWindowSize(1400, 1080);
 
-			const shellbar = browser.$("#shellbar");
+			const shellbar = browser.$("#shellbar");			
 			const overflowButton = browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
 			const backButton = browser.$("#shellbar ui5-button[slot='startButton'");
 			const primaryTitle = browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button-title");
 			const secondaryTitle = browser.$("#shellbar").shadow$(".ui5-shellbar-secondary-title");
 			const searchIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-search-button");
-			const customActionIcon1 = browser.$("#shellbar").shadow$(".ui5-shellbar-custom-item:first-child");
-			const customActionIcon2 = browser.$("#shellbar").shadow$(".ui5-shellbar-custom-item:nth-child(2)");
-			const notificationsIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-bell-button");
+			const customActionIcon1 = browser.$("#shellbar").shadow$$(".ui5-shellbar-custom-item")[0];
+			const customActionIcon2 = browser.$("#shellbar").shadow$$(".ui5-shellbar-custom-item")[1];
+			const notificationsIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-notifications-button");
 			const profileIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-image-button");
 			const productSwitchIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-button-product-switch");
 
@@ -81,14 +80,14 @@ describe("Component Behaviour", () => {
 			const primaryTitle = browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button-title");
 			const secondaryTitle = browser.$("#shellbar").shadow$(".ui5-shellbar-secondary-title");
 			const searchIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-search-button");
-			const customActionIcon1 = browser.$("#shellbar").shadow$(".ui5-shellbar-custom-item:first-child");
-			const customActionIcon2 = browser.$("#shellbar").shadow$(".ui5-shellbar-custom-item:nth-child(2)");
-			const notificationsIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-bell-button");
+			const customActionIcon1 = browser.$("#shellbar").shadow$$(".ui5-shellbar-custom-item")[0];
+			const customActionIcon2 = browser.$("#shellbar").shadow$$(".ui5-shellbar-custom-item")[1];
+			const notificationsIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-notifications-button");
 			const profileIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-image-button");
 			const productSwitchIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-button-product-switch");
 			const overflowPopover = browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-popover");
-			const overflowPopoverItem1 = browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-popover ui5-li:first-child");
-			const overflowPopoverItem2 = browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-popover ui5-li:nth-child(2)");
+			const overflowPopoverItem1 = browser.$("#shellbar").shadow$$(".ui5-shellbar-overflow-popover ui5-li")[0];
+			const overflowPopoverItem2 = browser.$("#shellbar").shadow$$(".ui5-shellbar-overflow-popover ui5-li")[1];
 
 			overflowButton.click();
 
@@ -107,8 +106,9 @@ describe("Component Behaviour", () => {
 			assert.strictEqual(productSwitchIcon.isDisplayed(), true, "Product switch should be visible");
 			assert.strictEqual(overflowPopover.isDisplayedInViewport(), true, "Overflow popover should be visible");
 			assert.strictEqual(listItemsCount, 2, "2 actions should overflow");
-			assert.strictEqual(overflowPopoverItem1.getProperty("icon"), customActionIcon1.getProperty("src"), "Popover items have same sources as corresponding icons");
-			assert.strictEqual(overflowPopoverItem2.getProperty("icon"), customActionIcon2.getProperty("src"), "Popover items have same sources as corresponding icons");
+
+			assert.strictEqual(overflowPopoverItem1.getProperty("icon"), customActionIcon1.getProperty("icon"), "Popover items have same sources as corresponding icons");
+			assert.strictEqual(overflowPopoverItem2.getProperty("icon"), customActionIcon2.getProperty("icon"), "Popover items have same sources as corresponding icons");
 
 		});
 
@@ -133,7 +133,7 @@ describe("Component Behaviour", () => {
 			const shellbar = browser.$("#shellbar");
 			const productSwitchIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-button-product-switch");
 			const overflowPopover = browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-popover");
-			const notificationsIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-bell-button");
+			const notificationsIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-notifications-button");
 
 			assert.strictEqual(shellbar.getProperty("breakpointSize") === "M", true, "M Breakpoint class should be set");
 
@@ -163,7 +163,7 @@ describe("Component Behaviour", () => {
 			const primaryTitle = browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button-title");
 			const secondaryTitle = browser.$("#shellbar").shadow$(".ui5-shellbar-secondary-title");
 			const searchIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-search-button");
-			const notificationsIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-bell-button");
+			const notificationsIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-notifications-button");
 			const profileIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-image-button");
 			const productSwitchIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-button-product-switch");
 			const overflowPopover = browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-popover");
@@ -190,19 +190,18 @@ describe("Component Behaviour", () => {
 			});
 
 			it("tests opening of menu", () => {
-				const primaryTitle = browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button");
+				const primaryTitle = browser.$("#shellbar").shadow$(".ui5-shellbar-logo-button");
 				const menuPopover = browser.$("#shellbar").shadow$(".ui5-shellbar-menu-popover");
-
+	
 				primaryTitle.click();
 				assert.ok(menuPopover.isDisplayedInViewport(), "Menu should be shown");
 			});
 
 			it("tests notificationsPress event", () => {
-				const notificationsIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-bell-button");
+				const notificationsIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-notifications-button");
 				const input = browser.$("#press-input");
 
 				notificationsIcon.click();
-
 
 				assert.strictEqual(input.getValue(), "Notifications", "Input value is set by click event of Notifications icon");
 			});
@@ -240,11 +239,11 @@ describe("Component Behaviour", () => {
 			});
 
 			it("tests menuItemPress event", () => {
-				const primaryTitle = browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button");
+				const primaryTitle = browser.$("#shellbar").shadow$(".ui5-shellbar-logo-button");
 				const firstMenuItem = browser.$("#shellbar #menu-item-1");
 				const secondMenuItem = browser.$("#shellbar #menu-item-2");
 				const input = browser.$("#press-input");
-
+	
 				primaryTitle.click();
 				firstMenuItem.click();
 
@@ -255,20 +254,20 @@ describe("Component Behaviour", () => {
 				assert.strictEqual(input.getValue(), "Application 2", "Input value is set by click event of the second menu item");
 			});
 
-			// it("tests if searchfield appears when clicking on search icon", () => {
-			// 	const searchIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-search-button");
-			// 	const searchField = browser.$("#shellbar ui5-input");
-			// 	const blockLayer = browser.$("#shellbar").shadow$(".ui5-shellbar-block-layer");
+			it("tests if searchfield appears when clicking on search icon", () => {
+				const searchIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-search-button");
+				const searchField = browser.$("#shellbar ui5-input");
+				const primaryTitle = browser.$("#shellbar").shadow$(".ui5-shellbar-logo-button");
 
-			// 	assert.strictEqual(searchField.isDisplayed(), false, "Search is hidden by default");
+				assert.strictEqual(searchField.isDisplayed(), false, "Search is hidden by default");
 
-			// 	searchIcon.click();
-			// 	assert.strictEqual(searchField.isDisplayed(), true, "Search is visible after clicking on icon");
+				searchIcon.click();
+				assert.strictEqual(searchField.isDisplayed(), true, "Search is visible after clicking on icon");
 
-			// 	// focus out the input
-			// 	blockLayer.click();
-			// 	assert.strictEqual(searchField.isDisplayed(), false, "Search is hidden when focussed out");
-			// });
+				// focus out the input
+				primaryTitle.click();
+				assert.strictEqual(searchField.isDisplayed(), false, "Search is hidden when focussed out");
+			});
 		});
 
 		describe("Small screen", () => {
@@ -277,16 +276,16 @@ describe("Component Behaviour", () => {
 			});
 
 			it("tests opening of menu", () => {
-				const primaryTitle = browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button");
+				const primaryTitle = browser.$("#shellbar").shadow$(".ui5-shellbar-logo-button");
 				const menuPopover = browser.$("#shellbar").shadow$(".ui5-shellbar-menu-popover");
-
+	
 				primaryTitle.click();
 				assert.ok(menuPopover.isDisplayedInViewport(), "Menu should be shown");
 			});
 
 			it("tests notificationsPress event", () => {
 				const overflowButton = browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
-				const notificationListItem = browser.$("#shellbar").shadow$("ui5-list ui5-li:nth-child(4)");
+				const notificationListItem = browser.$("#shellbar").shadow$$(".ui5-shellbar-overflow-list-item")[3];
 				const input = browser.$("#press-input");
 
 				overflowButton.click();
@@ -305,7 +304,7 @@ describe("Component Behaviour", () => {
 
 			it("tests productSwitchPress event", () => {
 				const overflowButton = browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
-				const productSwitchIcon = browser.$("#shellbar").shadow$("ui5-list ui5-li:nth-child(5)");
+				const productSwitchIcon = browser.$("#shellbar").shadow$$(".ui5-shellbar-overflow-popover ui5-list ui5-li")[4];
 				const input = browser.$("#press-input");
 
 				overflowButton.click();
@@ -314,23 +313,23 @@ describe("Component Behaviour", () => {
 				assert.strictEqual(input.getValue(), "Product Switch", "Input value is set by click event of Product Switch icon");
 			});
 
-			// it("tests if searchfield appears when clicking on search icon", () => {
-			// 	const searchListItem = browser.$("#shellbar").shadow$("ui5-list ui5-li:nth-child(1)");
-			// 	const searchField = browser.$("#shellbar ui5-input");
-			// 	const blockLayer = browser.$("#shellbar").shadow$(".ui5-shellbar-block-layer");
-			// 	const overflowButton = browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
+			it("tests if searchfield appears when clicking on search icon", () => {
+				const searchListItem = $("#shellbar").shadow$$(".ui5-shellbar-overflow-popover ui5-list ui5-li")[0];
+				const searchField = browser.$("#shellbar ui5-input");
+				const overflowButton = browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
+				const primaryTitle = browser.$("#shellbar").shadow$(".ui5-shellbar-logo-button");
 
-			// 	assert.strictEqual(searchField.isDisplayed(), false, "Search is hidden by default");
+				assert.strictEqual(searchField.isDisplayed(), false, "Search is hidden by default");
 
-			// 	overflowButton.click();
-			// 	searchListItem.click();
+				overflowButton.click();
+				searchListItem.click();
 
-			// 	assert.strictEqual(searchField.isDisplayed(), true, "Search is visible after clicking on icon");
+				assert.strictEqual(searchField.isDisplayed(), true, "Search is visible after clicking on icon");
 
-			// 	// focus out the input
-			// 	blockLayer.click();
-			// 	assert.strictEqual(searchField.isDisplayed(), false, "Search is hidden when focussed out");
-			// });
+				// focus out the input
+				primaryTitle.click();
+				assert.strictEqual(searchField.isDisplayed(), false, "Search is hidden when focussed out");
+			});
 		});
 	});
 });
