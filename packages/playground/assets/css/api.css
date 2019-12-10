@@ -32,6 +32,7 @@ body {
 	padding: 1rem 1.5rem;
 	border: 0.0625rem solid #C1C1C1;
 	border-bottom: none;
+	background-color: var(--sapBackgroundColor);
 }
 
 .panel-snippet {
@@ -305,10 +306,6 @@ body {
 	width: 100%;
 }
 
-/* HCB styles */
-.hcb .snippet {
-	background-color: #000;
-}
 
 .bold {
 	font-family: "72-Bold";
