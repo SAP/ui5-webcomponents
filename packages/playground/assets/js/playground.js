@@ -235,6 +235,11 @@ function toggleNav() {
 
 function scrollSelectedMenuItemIntoView() {
   const selectedElement = document.querySelector(".navigation-list-link.active");
+  
+  if (!selectedElement) {
+    return;
+  }
+
   const selectedElementBounding = selectedElement.getBoundingClientRect();
   if (selectedElementBounding.bottom >= (window.innerHeight || document.documentElement.clientHeight)) {
     setTimeout(function() {

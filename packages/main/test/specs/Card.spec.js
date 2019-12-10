@@ -1,6 +1,13 @@
 const assert = require('chai').assert;
+
 describe("Card general interaction", () => {
 	browser.url("http://localhost:8080/test-resources/pages/Card.html");
+
+	it("tests initial rendering", () => {
+		const card = browser.$("#card");
+
+		assert.ok(card, "Has shadow root");
+	});
 
 	it("fires headerPress upon click, Enter and Space", () => {
 		const cardHeader = browser.$("#card").shadow$(".ui5-card-header");

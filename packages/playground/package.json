@@ -31,6 +31,7 @@
     "build:master": "yarn install:dependencies && npm-run-all --parallel prepare:** && bundle exec jekyll build --source ./ --destination ./dist --config _config.yml,_config_master.yml",
     "clean:samples": "rimraf ./docs/components/*sample.html",
     "clean:assets": "rimraf ./assets/js/ui5-webcomponents/*",
+    "clean:pages": "rimraf ./docs/pages/content/*",
     "start": "npm-run-all --parallel prepare:** && bundle exec jekyll serve",
     "install:dependencies": "gem install bundler -v 2.0.2 && bundle install",
     "copy:assets": "copy-and-watch \"../fiori/dist/resources/*\" \"./assets/js/ui5-webcomponents\"",
@@ -38,6 +39,7 @@
     "prepare:assets": "npm run clean:assets && npm run copy:assets",
     "prepare:docs": "node ./build-scripts/docs-prepare.js \"../../docs/\"",
     "prepare:samples": "npm run clean:samples && npm run copy:samples",
-    "prepare:tutorials": "node ./build-scripts/tutorials-prepare.js \"../../docs/\""
+    "prepare:tutorials": "node ./build-scripts/tutorials-prepare.js \"../../docs/\"",
+    "prepare:pages": "npm run clean:pages && node ./build-scripts/pages-prepare.js"
   }
 }
