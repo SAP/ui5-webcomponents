@@ -1,4 +1,4 @@
-const assert = require("assert");
+const assert = require("chai").assert;
 
 describe("Panel general interaction", () => {
 	browser.url("http://localhost:8080/test-resources/pages/Panel.html");
