@@ -70,7 +70,7 @@ packages.forEach(package => {
 layout: default
 title: ${currentPageName.replace(/([A-Z])/g, " $1").trim()}
 parent: Pages
-permalink: /playground/pages/${currentPageName}/
+permalink: /playground/${package}/pages/${currentPageName}/
 nav_exclude: true
 ---
 `,
