@@ -8,25 +8,6 @@ const packages = [
     "main",
 ];
 
-const components = [];
-
-packages.forEach(package => {
-    const pagesPath = `../${package}/dist/test-resources/pages/`;
-
-    var files = fs.readdirSync(pagesPath);
-
-    //handling error
-    if (!files) {
-        return console.log('Unable to scan directory: ' + err);
-    }
-
-    files.forEach(file => {
-        components.push(file);
-    });
-});
-
-components.sort();
-
 packages.forEach(package => {
     const pagesPath = `../${package}/dist/test-resources/pages/`;
 
@@ -43,10 +24,10 @@ packages.forEach(package => {
             }
 
             //Copy pages
-            fs.copyFileSync(dirPath, path.join(process.cwd(), `/docs/pages/content/${file}`));
+            fs.copyFileSync(dirPath, path.join(process.cwd(), `/docs/pages/content/${package}/${file}`));
 
             var results = replace({
-                files: `./docs/pages/content/${file}`,
+                files: `./docs/pages/content/${package}/${file}`,
                 from: [
                     `<script src="../../webcomponentsjs/webcomponents-loader.js"></script>`,
                     `<script src="../../resources/bundle.esm.js" type="module"></script>`,
@@ -65,7 +46,7 @@ packages.forEach(package => {
                     //Get current component name
                     const currentPageName = file.slice(0, file.indexOf('.'));
 
-                    prependFile(path.join(process.cwd(), '/docs/pages/content', file),
+                    prependFile(path.join(process.cwd(), `/docs/pages/content/${package}`, file),
 `---
 layout: default
 title: ${currentPageName.replace(/([A-Z])/g, " $1").trim()}
