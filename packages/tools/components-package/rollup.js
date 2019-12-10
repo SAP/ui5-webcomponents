@@ -7,6 +7,7 @@ const url = require("rollup-plugin-url");
 const { terser } = require("rollup-plugin-terser");
 const notify = require('rollup-plugin-notify');
 const filesize = require('rollup-plugin-filesize');
+const livereload = require('rollup-plugin-livereload');
 
 const getConfig = (options) => {
 
@@ -40,11 +41,13 @@ const getConfig = (options) => {
 		const plugins = [];
 		let publicPath = DEPLOY_PUBLIC_PATH || "/resources/";
 
-		plugins.push(filesize({
-			render : function (options, bundle, { minSize, gzipSize, brotliSize, bundleSize }){
-				return gzipSize;
-			}
-		}));
+		if (!process.env.DEV) {
+			plugins.push(filesize({
+				render : function (options, bundle, { minSize, gzipSize, brotliSize, bundleSize }){
+					return gzipSize;
+				}
+			}));
+		}
 
 		plugins.push(ui5DevImportCheckerPlugin());
 
@@ -74,8 +77,17 @@ const getConfig = (options) => {
 		}
 
 		if (process.env.DEV) {
-			plugins.push(notify({
-				success: true
+			plugins.push(notify());
+		}
+
+		const es6DevMain = process.env.DEV && !transpile && options.name === "@ui5/webcomponents";
+		if (es6DevMain) {
+			plugins.push(livereload({
+				watch: [
+					"dist/resources/bundle.esm.js",
+					"dist/**/*.html",
+					"dist/**/*.json",
+				]
 			}));
 		}
 
@@ -138,6 +150,8 @@ const getConfig = (options) => {
 		mkdirp.sync(DIST);
 		mkdirp.sync(DIST_PLAYGROUND);
 	}
+
+	console.log({config});
 
 	return config;
 };
