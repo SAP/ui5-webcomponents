@@ -227,8 +227,8 @@ class MonthPicker extends UI5Element {
 
 	_isOutOfSelectableRange (monthIndex){
 		let currentDateYear = this._localDate.getFullYear(),
-			minDateCheck = this.minDate && (currentDateYear <= this.minDate.getFullYear() && monthIndex < this.minDate.getMonth()),
-			maxDateCheck = this.maxDate && (currentDateYear >= this.maxDate.getFullYear() && monthIndex > this.maxDate.getMonth());
+			minDateCheck = this.minDate && ((currentDateYear === this.minDate.getFullYear() && monthIndex < this.minDate.getMonth()) || currentDateYear < this.minDate.getFullYear()),
+			maxDateCheck = this.maxDate && ((currentDateYear === this.maxDate.getFullYear() && monthIndex > this.maxDate.getMonth()) ||  (currentDateYear > this.maxDate.getFullYear()));
 
 		return  maxDateCheck || minDateCheck;
 	}
