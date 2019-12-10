@@ -3,7 +3,7 @@ import { fetchJsonOnce } from "../util/FetchHelper.js";
 const themeURLs = new Map();
 const themeStyles = new Map();
 const registeredPackages = new Set();
-const SUPPORTED_THEMES = ["sap_fiori_3",  "sap_fiori_3_dark", "sap_belize", "sap_belize_hcb"];
+const SUPPORTED_THEMES = ["sap_fiori_3", "sap_fiori_3_dark", "sap_belize", "sap_belize_hcb"];
 
 const registerThemeProperties = (packageName, themeName, style) => {
 	if (style._) {
