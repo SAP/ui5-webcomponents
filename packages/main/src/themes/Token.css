@@ -20,7 +20,7 @@
 }
 
 :host([selected]:not([readonly])) {
-	color: var(--sapUiToggleButtonPressedTextColor);
+	color: var(--sapButton_Selected_TextColor);
 	background: var(--sapButton_Selected_Background);
 	border: 1px solid var(--sapButton_Selected_BorderColor);
 }

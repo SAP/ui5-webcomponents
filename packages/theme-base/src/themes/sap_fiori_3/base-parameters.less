@@ -180,6 +180,7 @@
 @sapButton_TextColor: contrast(@sapButton_Background, @sapHighlightColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
 @sapButton_Selected_Background: @sapSelectedColor;
 @sapButton_Selected_BorderColor: @sapSelectedColor;
+@sapButton_Selected_TextColor: contrast(@sapButton_Selected_Background, @sapButton_TextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
 @sapButton_Active_BorderColor: @sapActiveColor;
 @sapButton_Active_Background: @sapActiveColor;
 @sapButton_Active_TextColor: contrast(@sapButton_Active_Background, @sapButton_TextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
@@ -251,11 +252,6 @@
 @sapTile_IconColor: contrast(@sapTile_Background, lighten(@sapShellColor ,20), @sapContent_ContrastIconColor, @sapContent_ContrastTextThreshold);
 @sapToolbar_SeparatorColor: darken(@sapBaseColor, 15);
 
-// No "sap" prefix parameter equivalent
-@sapUiFontSize: 16px;
-@sapMFontHeader1Size: 2.25rem;
-@sapMFontHeader2Size: 1.5rem;
-@sapMFontHeader3Size: 1.250rem;
-@sapMFontHeader4Size: 1.125rem;
-@sapMFontHeader5Size: 1rem;
-@sapMFontHeader6Size: 0.875rem;
+// No  base ("sap" prefix) parameter equivalent
+@sapUiToggleButtonPressedHoverBackground: lighten(@sapSelectedColor, 3);
+@sapUiToggleButtonPressedHoverBorderColor: @sapUiToggleButtonPressedHoverBackground;

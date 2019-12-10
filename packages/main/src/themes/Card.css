@@ -13,7 +13,7 @@
 	border: 1px solid var(--_ui5_card_border_color);
 	overflow: hidden;
 	font-family: var(--sapFontFamily);
-	font-size: var(--sapUiFontSize);
+	font-size: var(--sapFontSize);
 }
 
 .ui5-card-header {

@@ -145,6 +145,7 @@
 @sapButton_TextColor: contrast(@sapButton_Background, @sapTextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
 @sapButton_Selected_Background: @sapSelectedColor;
 @sapButton_Selected_BorderColor: @sapButton_BorderColor;
+@sapButton_Selected_TextColor: contrast(@sapButton_Selected_Background, @sapButton_TextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
 @sapButton_Hover_Background: @sapHighlightColor;
 @sapButton_Hover_BorderColor: @sapButton_BorderColor;
 @sapButton_Hover_TextColor: contrast(@sapButton_Hover_Background, @sapButton_TextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
@@ -217,8 +218,14 @@
 @sapList_HighlightColor: @sapHighlightColor;
 @sapList_SelectionBackgroundColor: @sapSelectedColor;
 @sapList_Background: @sapBackgroundColor;
+@sapList_HeaderTextColor: contrast(@sapList_HeaderBackground, @sapTitleColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
+@sapList_TableGroupHeaderBackground: @sapList_Background;
+@sapList_TextColor: contrast(@sapList_Background, @sapTextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
+@sapList_GroupHeaderTextColor: @sapList_TextColor;
+@sapList_TableGroupHeaderTextColor: @sapList_GroupHeaderTextColor;
 @sapList_Hover_Background: @sapHighlightColor;
 @sapList_GroupHeaderBackground: @sapHC_ReducedBackground;
+@sapList_Active_TextColor: contrast(@sapList_HighlightColor, @sapTextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
 @sapScrollBar_FaceColor: @sapHC_ReducedAltForeground;
 @sapScrollBar_TrackColor: @sapBackgroundColor;
 @sapScrollBar_BorderColor: @sapScrollBar_FaceColor;
@@ -242,15 +249,9 @@
 @sapTile_IconColor: contrast(@sapTile_Background, @sapContent_IconColor, @sapContent_ContrastIconColor, @sapContent_ContrastTextThreshold);
 @sapPageHeader_TextColor: contrast(@sapPageHeader_Background, @sapTextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
 @sapPageFooter_TextColor: contrast(@sapPageFooter_Background, @sapTextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
-@sapList_HeaderTextColor: contrast(@sapList_HeaderBackground, @sapTitleColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
 @sapGroup_TitleTextColor: contrast(@sapBackgroundColor, @sapTitleColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
 @sapContent_ForegroundTextColor: contrast(@sapContent_ForegroundColor, @sapTextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
 
-// No "sap" prefix parameter equivalent
-@sapUiFontSize: 16px;
-@sapMFontHeader1Size: 1.625rem;
-@sapMFontHeader2Size: 1.375rem;
-@sapMFontHeader3Size: 1.250rem;
-@sapMFontHeader4Size: 1.125rem;
-@sapMFontHeader5Size: 1rem;
-@sapMFontHeader6Size: 0.875rem;
+// No  base ("sap" prefix) parameter equivalent
+@sapUiToggleButtonPressedHoverBackground: @sapButton_Hover_BorderColor;
+@sapUiToggleButtonPressedHoverBorderColor: @sapButton_Hover_BorderColor;

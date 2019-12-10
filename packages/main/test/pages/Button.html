@@ -6,8 +6,8 @@
 
 	<title>Button</title>
 	<script>
-			delete Document.prototype.adoptedStyleSheets
-		</script>
+		delete Document.prototype.adoptedStyleSheets
+	</script>
 
 	<script data-ui5-config type="application/json">
 		{
@@ -19,9 +19,14 @@
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js">
 	</script>
+	<style>
+		.page-background {
+			background-color: var(--sapBackgroundColor);
+		}
+	</style>
 </head>
 
-<body style="background: qq">
+<body class="page-background">
 	<ui5-button id="button1" design="Emphasized">Action Bar Button</ui5-button>
 	<ui5-button style="height: auto">Primary <br> button</ui5-button>
 	<ui5-button style="height: auto" design="Transparent">Secondary <span style="color:red;">button</span></ui5-button>
