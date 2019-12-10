@@ -151,8 +151,6 @@ const getConfig = (options) => {
 		mkdirp.sync(DIST_PLAYGROUND);
 	}
 
-	console.log({config});
-
 	return config;
 };
 
