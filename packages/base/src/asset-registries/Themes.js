@@ -3,6 +3,7 @@ import { fetchJsonOnce } from "../util/FetchHelper.js";
 const themeURLs = new Map();
 const themeStyles = new Map();
 const registeredPackages = new Set();
+const SUPPORTED_THEMES = ["sap_fiori_3",  "sap_fiori_3_dark", "sap_belize", "sap_belize_hcb"];
 
 const registerThemeProperties = (packageName, themeName, style) => {
 	if (style._) {
@@ -22,6 +23,11 @@ const getThemeProperties = async (packageName, themeName) => {
 	const style = themeStyles.get(`${packageName}_${themeName}`);
 	if (style) {
 		return style;
+	}
+
+	if (!SUPPORTED_THEMES.includes(themeName)) {
+		console.warn(`You have requested non-existing theme - falling back to sap_fiori_3. The supported themes are: ${SUPPORTED_THEMES.join(", ")}.`); /* eslint-disable-line */
+		return themeStyles.get(`${packageName}_sap_fiori_3`);
 	}
 
 	const data = await fetchThemeProperties(packageName, themeName);
