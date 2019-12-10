@@ -1,12 +1,15 @@
-import Integer from "@ui5/webcomponents-base/src/types/Integer.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import { getRTL } from "@ui5/webcomponents-base/src/config/RTL.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import ToastTemplate from "./generated/templates/ToastTemplate.lit.js";
 import ToastPlacement from "./types/ToastPlacement.js";
 
 // Styles
 import ToastCss from "./generated/themes/Toast.css.js";
+
+// Static Constants
+const MAXIMUM_ALLOWED_TRANSITION_DURATION_IN_MILLISECONDS = 1000;
 
 /**
  * @public
@@ -131,6 +134,10 @@ class Toast extends UI5Element {
 		return ToastTemplate;
 	}
 
+	static get maximumAllowedTransition() {
+		return MAXIMUM_ALLOWED_TRANSITION_DURATION_IN_MILLISECONDS;
+	}
+
 	onAfterRendering() {
 		if (this._reopen) {
 			this._reopen = false;
@@ -160,12 +167,18 @@ class Toast extends UI5Element {
 	}
 
 	get styles() {
+		// Transition duration (animation) should be a third of the duration
+		// property, but not bigger than the maximum allowed (1000ms).
+		const transitionDuration = Math.min(this.duration / 3, Toast.maximumAllowedTransition);
+
 		return {
 			root: {
-				// The transition should be a third of the duration
-				"transition-duration": this.open ? `${this.duration / 3}ms` : "",
-				// The delay should be two thirds of the duration
-				"transition-delay": this.open ? `${(this.duration * 2) / 3}ms` : "",
+				"transition-duration": this.open ? `${transitionDuration}ms` : "",
+
+				// Transition delay is the duration property minus the
+				// transition duration (animation).
+				"transition-delay": this.open ? `${this.duration - transitionDuration}ms` : "",
+
 				// We alter the opacity property, in order to trigger transition
 				"opacity": this.open ? "0" : "",
 			},

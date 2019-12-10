@@ -1,4 +1,10 @@
-.ui5-toast-root-parent {
+:host {
+	font-family: var(--sapUiFontFamily);
+	color: var(--sapUiListTextColor);
+	font-size: var(--sapMFontMediumSize);
+}
+
+.ui5-toast-root {
 	position: fixed;
 	left: 0;
 	right: 0;
@@ -14,71 +20,70 @@
 	align-items: flex-end;
 }
 
-.ui5-toast-text {
-	font-family: var(--sapUiFontFamily);
-	color: var(--sapUiListTextColor);
-	font-weight: normal;
-	font-size: var(--sapMFontMediumSize);
-	word-wrap: break-word;
-	text-align: center;
-	text-decoration: none;
-	text-overflow: ellipsis;
-	white-space: pre-line;
-}
-
-.ui5-toast-root {
+.ui5-toast-content {
 	box-sizing: border-box;
 	max-width: 15rem;
 	overflow: hidden;
 	padding: 1rem;
-	background: var(--sapUiListBackground);
-	box-shadow: var(--sapUiShadowLevel2);
+	background: var(--_ui5_toast_background);
+	box-shadow: var(--_ui5_toast_shadow);
 	border-radius: .25rem;
 	transition-property: opacity;
 	opacity: 1;
 	margin: 2rem;
 }
 
-:host([open]) .ui5-toast-root-parent {
+.ui5-toast-text {
+	font-family: inherit;
+	color: inherit;
+	font-weight: inherit;
+	font-size: inherit;
+	word-wrap: break-word;
+	text-align: center;
+	text-overflow: ellipsis;
+	white-space: pre-line;
+}
+
+:host([open]) .ui5-toast-root {
 	display: flex;
 }
 
-:host([placement="TopStart"]) .ui5-toast-root-parent {
+:host([placement="TopStart"]) .ui5-toast-root {
 	justify-content: flex-start;
 	align-items: flex-start;
 }
 
-:host([placement="TopCenter"]) .ui5-toast-root-parent {
+:host([placement="TopCenter"]) .ui5-toast-root {
 	justify-content: center;
 	align-items: flex-start;
 }
 
-:host([placement="TopEnd"]) .ui5-toast-root-parent {
+:host([placement="TopEnd"]) .ui5-toast-root {
 	justify-content: flex-end;
 	align-items: flex-start;
 }
 
-:host([placement="MiddleStart"]) .ui5-toast-root-parent {
+:host([placement="MiddleStart"]) .ui5-toast-root {
 	justify-content: flex-start;
 	align-items: center;
 }
 
-:host([placement="MiddleCenter"]) .ui5-toast-root-parent {
+:host([placement="MiddleCenter"]) .ui5-toast-root {
 	justify-content: center;
 	align-items: center;
 }
 
-:host([placement="MiddleEnd"]) .ui5-toast-root-parent {
+:host([placement="MiddleEnd"]) .ui5-toast-root {
 	justify-content: flex-end;
 	align-items: center;
 }
 
-:host([placement="BottomStart"]) .ui5-toast-root-parent {
+:host([placement="BottomStart"]) .ui5-toast-root {
 	justify-content: flex-start;
 	align-items: flex-end;
 }
 
-:host([placement="BottomEnd"]) .ui5-toast-root-parent {
+:host([placement="BottomEnd"]) .ui5-toast-root {
 	justify-content: flex-end;
 	align-items: flex-end;
 }
