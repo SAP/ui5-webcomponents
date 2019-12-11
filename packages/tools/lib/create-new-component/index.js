@@ -12,7 +12,7 @@ import ${componentName}Css from "./generated/themes/${componentName}.css.js";
  * @public
  */
 const metadata = {
-	tag: "ui5-${componentName.toLowerCase()}",
+	tag: "${tagName}",
 	properties: /** @lends sap.ui.webcomponents.${library}.${componentName}.prototype */ {
 		//
 	},
@@ -32,17 +32,16 @@ const metadata = {
  *
  * <h3>Usage</h3>
  *
- * For the <code>ui5-${componentName.toLowerCase()}</code>
+ * For the <code>${tagName}</code>
  * <h3>ES6 Module Import</h3>
  *
- * <code>import ${packageName}/dist/${componentName}";</code>
+ * <code>import ${packageName}/dist/${componentName}.js";</code>
  *
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.${library}.${componentName}
  * @extends UI5Element
- * @appenddocs
- * @tagname ui5-${componentName.toLowerCase()}
+ * @tagname ${tagName}
  * @public
  */
 class ${componentName} extends UI5Element {
@@ -105,6 +104,8 @@ const getLibraryName = packageName => {
 	return packageName.substr("webcomponents-".length);
 };
 
+const camelToKebabCase = string => string.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
+
 const packageName = getPackageName();
 const library = getLibraryName(packageName);
 
@@ -112,9 +113,11 @@ const consoleArguments = process.argv.slice(2);
 const componentName = consoleArguments[0];
 
 if (!componentName){
-	console.error("Please enter component name.")
+	console.error("Please enter component name.");
 	return;
 }
+
+const tagName = `ui5-${camelToKebabCase(componentName)}`;
 
 const filePaths = {
 	"js": `./src/${componentName}.js`,
