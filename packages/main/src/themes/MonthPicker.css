@@ -48,9 +48,8 @@
 }
 
 .ui5-mp-item.ui5-mp-item--disabled {
-	background: darkgray;
 	pointer-events: none;
-	color: var(--sapUiBaseText);
+	opacity: 0.5;
 }
 
 .ui5-mp-item.ui5-mp-item--selected:focus {
