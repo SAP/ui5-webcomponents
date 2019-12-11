@@ -1,7 +1,68 @@
-const assert = require("assert");
+const assert = require("chai").assert;
+
+describe("Attributes propagation", () => {
+	browser.url("http://localhost:8080/test-resources/pages/Input.html");
+
+	it("Should change the placeholder of the inner input", () => {
+		const input = $("#myInput");
+		const sExpected = "New placeholder text";
+
+		browser.execute(() => {
+			input.setAttribute("placeholder", "New placeholder text");
+		});
+
+		assert.strictEqual(input.shadow$("input").getProperty("placeholder"), sExpected, "The placeholder was set correctly");
+	});
+
+	it("Disabled attribute is propagated properly", () => {
+		assert.ok(browser.$("#input-disabled").shadow$(".ui5-input-inner").getAttribute("disabled"), "Disabled property was propagated");
+	});
+
+	it("Redonly attribute is propagated properly", () => {
+		assert.ok(browser.$("#input-readonly").shadow$(".ui5-input-inner").getAttribute("readonly"), "Readonly property was propagated");
+	});
+
+	it("Required attribute is propagated properly", () => {
+		assert.ok(browser.$("#input-required").shadow$(".ui5-input-inner").getAttribute("required"), "Required property was propagated");
+	});
+
+	it("Type attribute is propagated properly", () => {
+		const sExpectedType = "number";
+		assert.strictEqual(browser.$("#input-number").shadow$(".ui5-input-inner").getAttribute("type"), sExpectedType, "Type property was propagated");
+	});
+
+	it("Value attribute is propagated properly", () => {
+		const sExpectedValue = "Test test";
+
+		browser.execute(() => {
+				document.getElementById("input3").value = "Test test";
+		});
+
+		assert.strictEqual(browser.$("#input3").shadow$(".ui5-input-inner").getValue(), sExpectedValue, "Value property was set correctly");
+	});
+
+	it("sets empty value to an input", () => {
+		const input1 = browser.$("#input1");
+		const innerInput = browser.$("#input1").shadow$("input");
+
+		input1.setProperty("value", "");
+
+		assert.strictEqual(input1.getValue(), "", "Property value should be empty");
+		assert.strictEqual(innerInput.getValue(), "", "Inner's property value should be empty");
+	});
+});
 
 describe("Input general interaction", () => {
 	browser.url("http://localhost:8080/test-resources/pages/Input.html");
+
+	it("Should open suggestions popover when focused", () => {
+		const input = $("#myInput2");
+
+		// focus the input field which will display the suggestions
+		input.click();
+
+		assert.ok(input.shadow$("ui5-popover").isDisplayedInViewport(), "The popover is visible");
+	});
 
 	it("fires change", () => {
 		const input1 = $("#input1").shadow$("input");
@@ -78,6 +139,8 @@ describe("Input general interaction", () => {
 
 		assert.ok(popover.getProperty("opened"), "suggestions are opened.");
 
+		// This test is passing when the test is executed on browser that is NOT headless
+
 		// item = $("#myInput").$$("ui5-li")[0];
 
 
@@ -118,21 +181,9 @@ describe("Input general interaction", () => {
 		assert.strictEqual(inputResult.getValue(), "1", "suggestionItemSelect is fired once");
 	});
 
-	/*
-	it("sets empty value to an input", () => {
-		const input1 = browser.$("#input1");
-		const innerInput = browser.$("#input1").shadow$("input");
-
-		input1.setProperty("value", "");
-
-		assert.strictEqual(input1.getValue(), "", "Property value should be empty");
-		assert.strictEqual(innerInput.getValue(), "", "Inner's property value should be empty");
-	});
-	*/
-
 	it("Input's maxlength property is set correctly", () => {
-		const input5 = $("#myInput5");
-		const inputShadowRef = $("#myInput5").shadow$("input");
+		const input5 = $("#input-tel");
+		const inputShadowRef = $("#input-tel").shadow$("input");
 
 		inputShadowRef.click();
 
