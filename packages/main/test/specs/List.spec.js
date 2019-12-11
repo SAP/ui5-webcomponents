@@ -1,9 +1,15 @@
 const list = require("../pageobjects/ListTestPage");
-const assert = require("assert");
+const assert = require("chai").assert;
 
-describe("Date Picker Tests", () => {
+describe("List Tests", () => {
 	before(() => {
 		browser.url("http://localhost:8080/test-resources/pages/List_test_page.html");
+	});
+
+	it("List is rendered", () => {
+		const list = browser.$("ui5-list").shadow$(".ui5-list-root");
+		
+		assert.ok(list, "List is rendered");
 	});
 
 	it("itemPress and selectionChange events are fired", () => {
@@ -39,11 +45,39 @@ describe("Date Picker Tests", () => {
 		assert.strictEqual(fieldResult.getProperty("value"), "true");
 	});
 
-	it("header text", () => {
+	it("No data text is shown", () => {
+		const noDataText = browser.$("#no-data-list").shadow$(".ui5-list-nodata-text");
+
+		assert.ok(noDataText, "No data text is shown");
+	});
+
+	it("Tests header text", () => {
 		list.id = "#list1";
 
 		assert.ok(list.header.hasClass("ui5-list-header"), "header has the right classes");
 		assert.ok(list.header.getHTML(false), "API: GroupHeaderListItem");
+	});
+
+	it("Tests header slot", () => {
+		const headerSlotContent = browser.execute(() => {
+			return document.getElementById("header-slot-list").shadowRoot.querySelector("slot[name='header']").assignedNodes()[0].querySelector("#header-slot-title");
+		});
+
+		assert.ok(headerSlotContent, "header slot content is rendered");
+	});
+
+	it("Test default slot", () => {
+		const listItemsLength = browser.execute(() => {
+			const slots = document.getElementById("default-slot-test").shadowRoot.querySelector("slot").assignedNodes();
+
+			const result = slots.filter(slot => {
+				return slot.tagName === "UI5-LI";
+			});
+
+			return result.length;
+		});
+		
+		assert.strictEqual(listItemsLength, 3, "List items are rendered");
 	});
 
 	it("mode: none. clicking item does not select it", () => {
