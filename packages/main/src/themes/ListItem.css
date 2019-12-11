@@ -10,7 +10,7 @@
 
 /* selected and hovered */
 :host([selected][actionable]:not([active]):hover) {
-	background : var(--sapList_Hover_Background);
+	background : var(--sapList_Hover_SelectionBackground);
 }
 
 /* selected and active */

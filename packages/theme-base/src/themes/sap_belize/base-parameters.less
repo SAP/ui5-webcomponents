@@ -188,14 +188,15 @@
 @sapGroup_ContentBackground: lighten(@sapBackgroundColor, 2);
 @sapGroup_ContentBorderColor: darken(@sapGroup_ContentBackground, 8);
 
+@sapList_Background: @sapPrimary4;
+@sapList_BorderColor: darken(@sapList_Background, 10.15);
 @sapList_HeaderBorderColor: @sapList_BorderColor;
 @sapList_BorderWidth: @sapElement_BorderWidth;
 @sapList_HighlightColor: @sapHighlightColor;
-@sapList_Background: @sapPrimary4;
 @sapList_GroupHeaderBackground: @sapList_Background;
-@sapList_Hover_Background: contrast(@sapList_Background, darken(@sapList_Background, 4), lighten(@sapList_Background, 3));
-@sapList_BorderColor: darken(@sapList_Background, 10.15);
 @sapList_HeaderBackground: darken(@sapPrimary4, 3);
+@sapList_Hover_Background: contrast(@sapList_Background, darken(@sapList_Background, 6), lighten(@sapList_Background, 6));
+@sapList_Hover_SelectionBackground: contrast(@sapList_SelectionBackgroundColor, darken(@sapList_SelectionBackgroundColor, 3), lighten(@sapList_SelectionBackgroundColor, 3));
 @sapList_HeaderTextColor: contrast(@sapList_HeaderBackground, @sapTitleColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
 @sapList_Active_TextColor: contrast(@sapList_HighlightColor, @sapTextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
 @sapList_TableGroupHeaderBackground: darken(@sapList_Background, 5);
@@ -223,7 +224,6 @@
 @sapShell_Background: darken(desaturate(@sapBaseColor, 6), 11);
 @sapShell_BackgroundPatternColor: fade(@sapPrimary4, 8);
 @sapList_SelectionBackgroundColor: lighten(desaturate(@sapSelectedColor, 2), 47);
-@sapList_Hover_Background: contrast(@sapList_Background, darken(@sapList_Background, 6), lighten(@sapList_Background, 6));
 @sapScrollBar_FaceColor: darken(@sapPrimary6, 5);
 @sapScrollBar_TrackColor: lighten(@sapScrollBar_FaceColor, 30);
 @sapScrollBar_Hover_FaceColor: darken(@sapScrollBar_FaceColor, 3);
@@ -242,6 +242,5 @@
 @sapHighlightTextColor: contrast(@sapHighlightColor, @sapTextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
 
 // No  base ("sap" prefix) parameter equivalent
-@sapUiToggleButtonPressedBackground: darken(@sapSelectedColor, 10);
-@sapUiToggleButtonPressedHoverBackground: lighten(@sapUiToggleButtonPressedBackground, 10);
+@sapUiToggleButtonPressedHoverBackground: lighten(@sapButton_Selected_Background, 10);
 @sapUiToggleButtonPressedHoverBorderColor: @sapUiToggleButtonPressedHoverBackground;
