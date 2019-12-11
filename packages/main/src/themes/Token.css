@@ -26,8 +26,8 @@
 }
 
 :host([selected]:not([readonly]):hover) {
-	background: var(--sapUiToggleButtonPressedHoverBackground);
-	border: 1px solid var(--sapUiToggleButtonPressedHoverBorderColor);
+	background: var(--sapToggleButton_Pressed_HoverBackground);
+	border: 1px solid var(--sapToggleButton_Pressed_HoverBorderColor);
 }
 
 :host([readonly]) {
