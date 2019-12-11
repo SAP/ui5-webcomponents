@@ -70,7 +70,7 @@ const metadata = {
 		 */
 		minDate: {
 			type: Object,
-			defaultValue: undefined
+			defaultValue: undefined,
 		},
 
 		/**
@@ -82,7 +82,7 @@ const metadata = {
 		 */
 		maxDate: {
 			type: Object,
-			defaultValue: undefined
+			defaultValue: undefined,
 		},
 
 		_header: {

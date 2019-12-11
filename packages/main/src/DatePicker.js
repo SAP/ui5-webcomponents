@@ -82,7 +82,7 @@ const metadata = {
 		 */
 		minDate: {
 			type: Object,
-			defaultValue: undefined
+			defaultValue: undefined,
 		},
 
 		/**
@@ -94,7 +94,7 @@ const metadata = {
 		 */
 		maxDate: {
 			type: Object,
-			defaultValue: undefined
+			defaultValue: undefined,
 		},
 
 		/**
@@ -312,19 +312,19 @@ class DatePicker extends UI5Element {
 
 		this._calendar = {
 			onSelectedDatesChange: this._handleCalendarSelectedDatesChange.bind(this),
-			selectedDates: []
+			selectedDates: [],
 		};
 
 		if (this.isValid(this.getAttribute("minDate"))) {
 			this.minDate = new Date(this.getAttribute("minDate"));
 		} else if (this.getAttribute("minDate")) {
-			console.warn(`In order for the "minDate" property to have effect, you should enter valid date format`);
+			console.warn(`In order for the "minDate" property to have effect, you should enter valid date format`); // eslint-disable-line
 		}
 
 		if (this.isValid(this.getAttribute("maxDate"))) {
 			this.maxDate = new Date(this.getAttribute("maxDate"));
 		} else if (this.getAttribute("maxDate")) {
-			console.warn(`In order for the "maxDate" property to have effect, you should enter valid date format`);
+			console.warn(`In order for the "maxDate" property to have effect, you should enter valid date format`); // eslint-disable-line
 		}
 
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
@@ -334,7 +334,7 @@ class DatePicker extends UI5Element {
 		this._calendar.primaryCalendarType = this._primaryCalendarType;
 		this._calendar.formatPattern = this._formatPattern;
 
-		if (this.isValid(this.value)) {
+		if (this.isValid(this.value) && this.isInValidRange(this.value)) {
 			this._changeCalendarSelection();
 		} else {
 			this._calendar.selectedDates = [];
@@ -409,12 +409,12 @@ class DatePicker extends UI5Element {
 	 * @public
 	 */
 	isInValidRange(value = "") {
-		let pickedDate = new Date(value),
+		const pickedDate = new Date(value),
 			minDate = this.minDate,
 			maxDate = this.maxDate;
 
-		if(minDate && maxDate){
-			if(minDate <= pickedDate && maxDate >= pickedDate){
+		if (minDate && maxDate) {
+			if (minDate <= pickedDate && maxDate >= pickedDate) {
 				return true;
 			}
 		} else if (minDate && !maxDate) {

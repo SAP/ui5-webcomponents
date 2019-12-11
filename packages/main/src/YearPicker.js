@@ -50,7 +50,7 @@ const metadata = {
 		 */
 		minDate: {
 			type: Object,
-			defaultValue: undefined
+			defaultValue: undefined,
 		},
 
 		/**
@@ -62,7 +62,7 @@ const metadata = {
 		 */
 		maxDate: {
 			type: Object,
-			defaultValue: undefined
+			defaultValue: undefined,
 		},
 
 		_selectedYear: {
@@ -127,10 +127,10 @@ class YearPicker extends UI5Element {
 
 		this._itemNav = new ItemNavigation(this, { rowSize: 4 });
 		this._itemNav.getItemsCallback = function getItemsCallback() {
-			let focusableYears = [];
+			const focusableYears = [];
 
-			for(var i = 0; i < this._yearIntervals.length; i++){
-				let yearInterval = this._yearIntervals[i].filter((x) => !x.disabled );
+			for (let i = 0; i < this._yearIntervals.length; i++) {
+				const yearInterval = this._yearIntervals[i].filter(x => !x.disabled);
 				focusableYears.push(yearInterval);
 			}
 
@@ -292,16 +292,16 @@ class YearPicker extends UI5Element {
 		if (oCalDate.getYear() - YearPicker._MIDDLE_ITEM_INDEX > YearPicker._MAX_YEAR) {
 			return;
 		}
-		
-		if (this._isOutOfSelectableRange(oCalDate.getYear() - YearPicker._MIDDLE_ITEM_INDEX) && 
-			this._isOutOfSelectableRange(oCalDate.getYear() + YearPicker._MIDDLE_ITEM_INDEX)){
+
+		if (this._isOutOfSelectableRange(oCalDate.getYear() - YearPicker._MIDDLE_ITEM_INDEX)
+		&& this._isOutOfSelectableRange(oCalDate.getYear() + YearPicker._MIDDLE_ITEM_INDEX)) {
 			return;
 		}
 
 		this.timestamp = oCalDate.valueOf() / 1000;
 	}
 
-	_isOutOfSelectableRange (year){
+	_isOutOfSelectableRange(year) {
 		const minDateCheck = this.minDate && year < this.minDate.getFullYear(),
 			maxDateCheck = this.maxDate && year > this.maxDate.getFullYear();
 

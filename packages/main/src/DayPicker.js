@@ -61,7 +61,7 @@ const metadata = {
 		 */
 		minDate: {
 			type: Object,
-			defaultValue: undefined
+			defaultValue: undefined,
 		},
 
 		/**
@@ -73,7 +73,7 @@ const metadata = {
 		 */
 		maxDate: {
 			type: Object,
-			defaultValue: undefined
+			defaultValue: undefined,
 		},
 
 		_weeks: {
@@ -146,10 +146,10 @@ class DayPicker extends UI5Element {
 
 		this._itemNav = new ItemNavigation(this, { rowSize: 7 });
 		this._itemNav.getItemsCallback = function getItemsCallback() {
-			let focusableDays = [];
+			const focusableDays = [];
 
-			for(var i = 0; i < this._weeks.length; i++){
-				let week = this._weeks[i].filter((x) => !x.disabled );
+			for (let i = 0; i < this._weeks.length; i++) {
+				const week = this._weeks[i].filter(x => !x.disabled);
 				focusableDays.push(week);
 			}
 
@@ -235,7 +235,7 @@ class DayPicker extends UI5Element {
 				day.classes += " ui5-dp-item--weeekend";
 			}
 
-			if ((this.minDate || this.maxDate) && this._isOutOfSelectableRange(oCalDate)){
+			if ((this.minDate || this.maxDate) && this._isOutOfSelectableRange(oCalDate)) {
 				day.classes += " ui5-dp-item--disabled";
 				day.disabled = true;
 			}
@@ -407,7 +407,7 @@ class DayPicker extends UI5Element {
 			return;
 		}
 
-		this.fireEvent("navigate", { timestamp: (oNewDate.valueOf() / 1000)});
+		this.fireEvent("navigate", { timestamp: (oNewDate.valueOf() / 1000) });
 	}
 
 	_isWeekend(oDate) {
@@ -424,16 +424,16 @@ class DayPicker extends UI5Element {
 		return (target.className.indexOf("ui5-dp-item") > -1) || (targetParent && target.parentNode.classList.contains("ui5-dp-item"));
 	}
 
-	_isOutOfSelectableRange (date){
-		let currentDate = date._oUDate ? date._oUDate.oDate : date,
+	_isOutOfSelectableRange(date) {
+		const currentDate = date._oUDate ? date._oUDate.oDate : date,
 			maxDate = this.maxDate,
 			minDate = this.minDate;
 
-		if (maxDate){
+		if (maxDate) {
 			maxDate.setHours(0);
 		}
-		
-		if (minDate){
+
+		if (minDate) {
 			minDate.setHours(0);
 		}
 

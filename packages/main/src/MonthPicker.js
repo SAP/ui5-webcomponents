@@ -48,7 +48,7 @@ const metadata = {
 		 */
 		minDate: {
 			type: Object,
-			defaultValue: undefined
+			defaultValue: undefined,
 		},
 
 		/**
@@ -60,7 +60,7 @@ const metadata = {
 		 */
 		maxDate: {
 			type: Object,
-			defaultValue: undefined
+			defaultValue: undefined,
 		},
 
 		_quarters: {
@@ -123,10 +123,10 @@ class MonthPicker extends UI5Element {
 
 		this._itemNav = new ItemNavigation(this, { rowSize: 3 });
 		this._itemNav.getItemsCallback = function getItemsCallback() {
-			let focusableMonths = [];
+			const focusableMonths = [];
 
-			for(var i = 0; i < this._quarters.length; i++){
-				let quarter = this._quarters[i].filter((x) => !x.disabled );
+			for (let i = 0; i < this._quarters.length; i++) {
+				const quarter = this._quarters[i].filter(x => !x.disabled);
 				focusableMonths.push(quarter);
 			}
 
@@ -134,7 +134,6 @@ class MonthPicker extends UI5Element {
 		}.bind(this);
 		this._itemNav.setItemsCallback = function setItemsCallback(items) {
 			this._quarters = items;
-			debugger;
 		}.bind(this);
 	}
 
@@ -158,7 +157,7 @@ class MonthPicker extends UI5Element {
 				month.classes += " ui5-mp-item--selected";
 			}
 
-			if ((this.minDate || this.maxDate) && this._isOutOfSelectableRange(i)){
+			if ((this.minDate || this.maxDate) && this._isOutOfSelectableRange(i)) {
 				month.classes += " ui5-mp-item--disabled";
 				month.disabled = true;
 			}
@@ -225,12 +224,12 @@ class MonthPicker extends UI5Element {
 		}
 	}
 
-	_isOutOfSelectableRange (monthIndex){
-		let currentDateYear = this._localDate.getFullYear(),
+	_isOutOfSelectableRange(monthIndex) {
+		const currentDateYear = this._localDate.getFullYear(),
 			minDateCheck = this.minDate && ((currentDateYear === this.minDate.getFullYear() && monthIndex < this.minDate.getMonth()) || currentDateYear < this.minDate.getFullYear()),
-			maxDateCheck = this.maxDate && ((currentDateYear === this.maxDate.getFullYear() && monthIndex > this.maxDate.getMonth()) ||  (currentDateYear > this.maxDate.getFullYear()));
+			maxDateCheck = this.maxDate && ((currentDateYear === this.maxDate.getFullYear() && monthIndex > this.maxDate.getMonth()) || (currentDateYear > this.maxDate.getFullYear()));
 
-		return  maxDateCheck || minDateCheck;
+		return maxDateCheck || minDateCheck;
 	}
 
 	getTimestampFromDOM(domNode) {
