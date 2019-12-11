@@ -1,4 +1,3 @@
-const path = require("path");
 const fs = require("fs");
 
 const jsFileContentTemplate = componentName => {
@@ -14,13 +13,13 @@ import ${componentName}Css from "./generated/themes/${componentName}.css.js";
  */
 const metadata = {
 	tag: "ui5-${componentName.toLowerCase()}",
-	properties: /** @lends sap.ui.webcomponents.${componentName}.prototype */ {
+	properties: /** @lends sap.ui.webcomponents.${library}.${componentName}.prototype */ {
 		//
 	},
-	slots: /** @lends sap.ui.webcomponents.${componentName}.prototype */ {
+	slots: /** @lends sap.ui.webcomponents.${library}.${componentName}.prototype */ {
 		//
 	},
-	events: /** @lends sap.ui.webcomponents.${componentName}.prototype */ {
+	events: /** @lends sap.ui.webcomponents.${library}.${componentName}.prototype */ {
 		//
 	},
 };
@@ -36,7 +35,7 @@ const metadata = {
  * For the <code>ui5-${componentName.toLowerCase()}</code>
  * <h3>ES6 Module Import</h3>
  *
- * <code>import ${getPackageName()}/dist/${componentName}";</code>
+ * <code>import ${packageName}/dist/${componentName}";</code>
  *
  * @constructor
  * @author SAP SE
@@ -75,18 +74,40 @@ export default ${componentName};
 };
 
 const getPackageName = () => {
-	const packageJSON = JSON.parse(fs.readFileSync("./package.json"));
-
 	if (!fs.existsSync("./package.json")) {
 		throw("The current directory doesn't contain package.json file.");
-	} else if (!packageJSON.name) {
+	}
+
+	const packageJSON = JSON.parse(fs.readFileSync("./package.json"));
+
+	if (!packageJSON.name) {
 		throw("The package.json file in the current directory doesn't have a name property");
 	}
 
 	return packageJSON.name;
 };
 
-const library = process.env.INIT_CWD.split("/").pop();
+const getLibraryName = packageName => {
+	if (!packageName.includes("/")) {
+		return packageName;
+	}
+
+	if (packageName === "@ui5/webcomponents") {
+		return `main`;
+	}
+
+	packageName = packageName.split("/").pop();
+
+	if (!packageName.startsWith("webcomponents-")) {
+		return packageName;
+	}
+
+	return packageName.substr("webcomponents-".length);
+};
+
+const packageName = getPackageName();
+const library = getLibraryName(packageName);
+
 const consoleArguments = process.argv.slice(2);
 const componentName = consoleArguments[0];
 
