@@ -243,7 +243,7 @@
 
  /* switch on hover, when switched on */
 .ui5-switch-desktop.ui5-switch-root.ui5-switch--checked:not(.ui5-switch--disabled):hover .ui5-switch-handle {
-	background: var(--_ui5_switch_handle_hover_bg);
+	background: var(--sapUiToggleButtonPressedHoverBackground);
 	border-color: var(--sapUiToggleButtonPressedHoverBorderColor);
 }
 
