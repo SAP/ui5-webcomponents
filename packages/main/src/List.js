@@ -3,6 +3,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { getLastTabbableElement } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
 import { isTabNext } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import ListMode from "./types/ListMode.js";
 import ListSeparators from "./types/ListSeparators.js";
 import ListItemType from "./types/ListItemType.js";
@@ -259,7 +260,10 @@ class List extends UI5Element {
 	}
 
 	initItemNavigation() {
-		this._itemNavigation = new ItemNavigation(this);
+		this._itemNavigation = new ItemNavigation(this, {
+			navigationMode: NavigationMode.Vertical,
+		});
+
 		this._itemNavigation.getItemsCallback = () => this.getSlottedNodes("items");
 	}
 

@@ -1,6 +1,7 @@
 const postcssImport = require('postcss-import');
 const combineSelectors = require('postcss-combine-duplicated-selectors');
 const postcssCSStoJSON = require('../lib/postcss-css-to-json/index.js');
+const postcssCSStoESM = require('../lib/postcss-css-to-esm/index.js');
 const cssnano = require('cssnano');
 
 module.exports = {
@@ -17,5 +18,6 @@ module.exports = {
 			]
 		},),
 		postcssCSStoJSON({toReplace: 'src'}),
+		postcssCSStoESM({toReplace: 'src'}),
 	]
 };

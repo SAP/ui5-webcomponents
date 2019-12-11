@@ -14,7 +14,6 @@ import MonthPickerTemplate from "./generated/templates/MonthPickerTemplate.lit.j
 
 // Styles
 import styles from "./generated/themes/MonthPicker.css.js";
-
 /**
  * @public
  */

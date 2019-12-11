@@ -13,6 +13,5 @@ jest*.js
 main.*js
 rollup*
 serve.json
-ui5.yaml
 wdio.conf.js
 !core

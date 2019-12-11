@@ -58,7 +58,7 @@ packages.forEach(package => {
 layout: sample
 title: ${currentSampleName.replace(/([A-Z])/g, " $1").trim()}
 parent: Components
-permalink: /playground/components/${currentSampleName}
+permalink: /playground/components/${currentSampleName}/
 newComponent: ${newComponents.indexOf(currentSampleName) > -1}
 nav_order: ${components.indexOf(file) + 1}
 ---

@@ -1,14 +1,30 @@
-const assert = require('assert');
+const assert = require("chai").assert;
 
 describe("General API", () => {
 	browser.url('http://localhost:8080/test-resources/pages/Label.html');
+
+	it("tests initial rendering", () => {
+		const labelRoot = browser.$("#basic-label").shadow$(".ui5-label-root");
+
+		assert.ok(labelRoot, "Label is rendered");
+	})
+
+	it("changes text of ui5-label", () => {
+		const INITIAL_TEXT = "Basic Label";
+		const NEW_TEXT = "Advanced Label";
+		assert.strictEqual(browser.execute("return document.querySelector('#basic-label').shadowRoot.querySelector('slot').assignedNodes()[0].textContent"), INITIAL_TEXT, "Initial text is correct");
+
+		//change label's text
+		browser.execute(`document.querySelector('#basic-label').innerHTML = '${NEW_TEXT}'`);
+		assert.strictEqual(browser.execute("return document.querySelector('#basic-label').shadowRoot.querySelector('slot').assignedNodes()[0].textContent"), NEW_TEXT, "Text of label should be changed");
+	});
 	
 	it("should show required star", () => {
 		const requiredLabelContent = browser.execute(`
-			return window.getComputedStyle(document.querySelector('#required-label').shadowRoot.querySelector(".ui5-label-root"), ':before').content;
+			return window.getComputedStyle(document.querySelector('#required-label').shadowRoot.querySelector(".ui5-label-required-colon"), ':after').content;
 		`);
 
-		assert.strictEqual(requiredLabelContent, '"*"', "before's content should be *");
+		assert.strictEqual(requiredLabelContent, '"*"', "after's content should be *");
 	});
 
 	it("should wrap the text of the label", () => {

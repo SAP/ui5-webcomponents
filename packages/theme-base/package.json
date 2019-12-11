@@ -1,6 +1,6 @@
 {
   "name": "@ui5/webcomponents-theme-base",
-  "version": "1.0.0-rc.4",
+  "version": "1.0.0-rc.5",
   "description": "UI5 Web Components: webcomponents.theme-base",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
@@ -22,7 +22,7 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@ui5/webcomponents-tools": "1.0.0-rc.4",
+    "@ui5/webcomponents-tools": "1.0.0-rc.5",
     "chokidar-cli": "^2.0.0",
     "cssnano": "^4.1.10",
     "less": "^3.10.3",

@@ -50,7 +50,7 @@ The `main` package provides general purpose UI building blocks such as buttons, 
 
 ### Fiori package (```@ui5/webcomponents-fiori```)
 
-The `fiori` package provide essential building blocks, necessary to implement the Fiori UX concept, 
+The `fiori` package provides essential building blocks, necessary to implement the Fiori UX concept, 
 such as a common header (ShellBar).
 
 |      Web Component       |       Tag name       |                       Module import                        |
@@ -67,10 +67,10 @@ The `icons` package provides assets for the rich `SAP-icons` icon collection.
 |      Icon asset       |                           Module import                        |
 | ------------------------ |  ---------------------------------------------------------- |
 | All icons (~115KB zipped)       |  `import "@ui5/webcomponents-icons/dist/json-imports/Icons.js";`      |
-| Accelerated icon           |  `import "@ui5/webcomponents-fiori/dist/icons/accelerated.js";`  |
-| Accept icon           |  `import "@ui5/webcomponents-fiori/dist/icons/accept.js";`  |
+| Accelerated icon           |  `import "@ui5/webcomponents-icons/dist/icons/accelerated.js";`  |
+| Accept icon           |  `import "@ui5/webcomponents-icons/dist/icons/accept.js";`  |
 | ...           |  ...  |
-| Zoom out icon           |  `import "@ui5/webcomponents-fiori/dist/icons/zoom-out.js";`  |
+| Zoom out icon           |  `import "@ui5/webcomponents-icons/dist/icons/zoom-out.js";`  |
 
 *Note:* The `@ui5/webcomponents-icons` package does not provide any web components per se, but rather icon assets,
 usable by other web components such as `ui5-icon`. You could import all icons, but it's recommended to import 

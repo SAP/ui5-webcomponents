@@ -16,8 +16,8 @@ const getScripts = (options) => {
 			default: "nps lint prepare build.bundle",
 			templates: `mkdirp dist/generated/templates && node ${LIB}/hbs2ui5/index.js -d src/ -o dist/generated/templates`,
 			styles: {
-				default: "nps build.styles.bundles build.styles.components",
-				bundles: "postcss src/**/parameters-bundle.css --config config/postcss.bundles --base src --dir dist/css/",
+				default: "nps build.styles.themes build.styles.components",
+				themes: "postcss src/**/parameters-bundle.css --config config/postcss.themes --base src --dir dist/css/",
 				components: "postcss src/themes/*.css --config config/postcss.components --base src --dir dist/css/",
 			},
 			i18n: {
@@ -43,8 +43,8 @@ const getScripts = (options) => {
 			test: 'nps "copy.test --watch --skip-initial-copy"',
 			bundle: "rollup --config config/rollup.config.js -w --environment ES5_BUILD,DEV",
 			styles: {
-				default: 'concurrently "nps watch.styles.bundles" "nps watch.styles.components"',
-				bundles: 'nps "build.styles.bundles -w"',
+				default: 'concurrently "nps watch.styles.themes" "nps watch.styles.components"',
+				themes: 'nps "build.styles.themes -w"',
 				components: 'nps "build.styles.components -w"',
 			},
 			templates: "chokidar \"src/**/*.hbs\" -c \"nps build.templates\"",

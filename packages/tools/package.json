@@ -1,6 +1,6 @@
 {
   "name": "@ui5/webcomponents-tools",
-  "version": "1.0.0-rc.4",
+  "version": "1.0.0-rc.5",
   "description": "UI5 Web Components: webcomponents.tools",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
@@ -10,8 +10,7 @@
     "sapui5",
     "ui5"
   ],
-  "scripts": {
-  },
+  "scripts": {},
   "bin": {
     "wc-dev": "bin/dev.js",
     "wc-create-ui5-element": "bin/create-ui5-element.js"
@@ -66,6 +65,7 @@
     "rollup-plugin-babel": "^4.0.3",
     "rollup-plugin-filesize": "^6.0.1",
     "rollup-plugin-less": "^1.1.2",
+    "rollup-plugin-livereload": "^1.0.4",
     "rollup-plugin-node-resolve": "^4.0.0",
     "rollup-plugin-notify": "^1.1.0",
     "rollup-plugin-string": "^2.0.2",

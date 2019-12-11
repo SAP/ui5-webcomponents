@@ -1,6 +1,6 @@
 {
   "name": "@ui5/webcomponents-base",
-  "version": "0.17.0",
+  "version": "0.18.0",
   "description": "UI5 Web Components: webcomponents.base",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
@@ -26,14 +26,14 @@
     "watch:src": "copy-and-watch --watch \"src/**/*.js\" dist/"
   },
   "dependencies": {
-    "@ui5/webcomponents-core": "0.17.0",
+    "@ui5/webcomponents-core": "0.18.0",
     "css-vars-ponyfill": "^2.1.2",
     "lit-html": "^1.0.0",
     "regenerator-runtime": "0.12.1",
     "url-search-params-polyfill": "^5.0.0"
   },
   "devDependencies": {
-    "@ui5/webcomponents-tools": "1.0.0-rc.4",
+    "@ui5/webcomponents-tools": "1.0.0-rc.5",
     "array-uniq": "^2.0.0",
     "copy-and-watch": "^0.1.4",
     "eslint": "^5.13.0",

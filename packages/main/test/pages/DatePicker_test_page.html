@@ -13,8 +13,10 @@
 
 	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
 	<script src="../../resources/bundle.esm.js" type="module"></script>
+	<script nomodule src="../../resources/bundle.es5.js"></script>
+
 </head>
-<body>
+<body style="background-color: var(--sapBackgroundColor);">
 	<ui5-datepicker id="dp12"></ui5-datepicker>
 	<ui5-datepicker id="dp"></ui5-datepicker>
 	<ui5-datepicker id="dp1" value="11/11/11"></ui5-datepicker>
@@ -40,6 +42,11 @@
 	<button id="downThere" style="position:absolute; top:3000px;"></button>
 	<label id='lblTomorrow'>0</label>
 	<label id='lblTomorrowDate'></label>
+
+	<h3>Test placeholder</h3>
+	<ui5-datepicker id="dp14" format-pattern="MMM d, y"></ui5-datepicker>
+	<ui5-datepicker id="dp15" format-pattern="MMM d, y" placeholder="Delivery date"></ui5-datepicker>
+
 	<script>
 		var originalGetDate = Date.prototype.getDate;
 

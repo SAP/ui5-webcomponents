@@ -18,16 +18,11 @@
 	</script>
 
 	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
-	<script src="../../resources/bundle.esm.js"
-	        type="module"
-	        id="sap-ui-bootstrap"
-	>
-	</script>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-	<script nomodule src="../../resources/bundle.es5.js">
-	</script>
+	<script>delete Document.prototype.adoptedStyleSheets;</script>
 
-<script>delete Document.prototype.adoptedStyleSheets;</script>
 	<style>
 		html,
 		body {
@@ -63,7 +58,7 @@
 	</style>
 </head>
 
-<body>
+<body style="background-color: var(--sapBackgroundColor);">
 
 	<header class="header">
 		<h1 class="header-title">ui5-tabcontainer</h1>
@@ -83,9 +78,13 @@
 					</ui5-tab>
 					<ui5-tab icon="sap-icon://menu" text="Monitors" selected semantic-color="Critical" additional-text="45">
 					</ui5-tab>
-				<ui5-tab icon="sap-icon://menu2" text="Keyboards"  semantic-color="Negative" additional-text="15">
-				</ui5-tab>
-				<ui5-tab icon="sap-icon://menu2" disabled="true" text="Disabled"  semantic-color="Negative" additional-text="40">
+					<ui5-tab icon="sap-icon://menu2" text="Keyboards"  semantic-color="Negative" additional-text="15">
+					</ui5-tab>
+					<ui5-tab icon="sap-icon://menu2" disabled="true" text="Disabled"  semantic-color="Negative" additional-text="40">
+					</ui5-tab>
+					<ui5-tab icon="sap-icon://menu2" text="Neutral" semantic-color="Neutral" additional-text="40">
+					</ui5-tab>
+					<ui5-tab icon="sap-icon://menu2" text="Default" additional-text="40">
 					</ui5-tab>
 				</ui5-tabcontainer>
 			</div>

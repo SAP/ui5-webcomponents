@@ -141,8 +141,17 @@ const metadata = {
 			type: String,
 		},
 
-		_label: {
-			type: Object,
+		/**
+		 * Defines whether the <code>ui5-radiobutton</code> text wraps when there is not enough space.
+		 * <br><br>
+		 * <b>Note:</b> By default, the text truncates when there is not enough space.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 */
+		wrap: {
+			type: Boolean,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.RadioButton.prototype */ {
@@ -209,7 +218,6 @@ class RadioButton extends UI5Element {
 	constructor() {
 		super();
 
-		this._label = {};
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
@@ -239,15 +247,9 @@ class RadioButton extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		this.syncLabel();
 		this.syncGroup();
 
 		this._enableFormSupport();
-	}
-
-	syncLabel() {
-		this._label = Object.assign({}, this._label);
-		this._label.text = this.text;
 	}
 
 	syncGroup() {

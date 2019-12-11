@@ -7,13 +7,8 @@
 	<title>ui5-radiobutton</title>
 
 	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
-	<script src="../../resources/bundle.esm.js"
-			type="module"
-	>
-	</script>
-
-	<script nomodule src="../../resources/bundle.es5.js">
-	</script>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+	<script nomodule src="../../resources/bundle.es5.js"></script>
 
 	<script>delete Document.prototype.adoptedStyleSheets;</script>
 
@@ -25,12 +20,15 @@
 	</style>
 </head>
 
-<body>
-	<h1>ui5-radiobutton</h1>
+<body style="background-color: var(--sapBackgroundColor);">
+	<ui5-title level="H1">ui5-radiobutton</ui5-title>
 	<ui5-radiobutton id="rb1"></ui5-radiobutton>
 	<ui5-radiobutton id="rb2" text="Option B"></ui5-radiobutton>
-	<ui5-radiobutton id="rb3" text="Option C"></ui5-radiobutton>
+	<ui5-radiobutton id="rb3" wrap text="Option C"></ui5-radiobutton>
 	<ui5-radiobutton id="rb4" disabled text="Option D"></ui5-radiobutton>
+	<ui5-radiobutton id="truncatingRb" text="Long long long text that should truncate at some point">></ui5-radiobutton>
+	<br/>
+	<ui5-radiobutton id="wrappingRb" wrap text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s." style="width: 300px"></ui5-radiobutton>
 
 	<ui5-input id="field"></ui5-input>
 
@@ -75,7 +73,7 @@
 
 	<p>*Params</p>
 	<p>
-		<ui5-label>- for compact use 'sap-ui-xx-wc-size-compact=true'</ui5-label>
+		<ui5-label>- for compact use 'sap-ui-compactSize=true'</ui5-label>
 	</p>
 	<p>
 		<ui5-label>- for belize use 'sap-ui-theme=sap_belize'</ui5-label>
