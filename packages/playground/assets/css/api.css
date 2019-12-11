@@ -35,6 +35,23 @@ body {
 	background-color: var(--sapBackgroundColor);
 }
 
+/**
+ * Theme dependant bg styles.
+ * Note: using --sapBackgroundColor would require running a polyfil for IE
+ */
+.hcb .snippet {	
+	background-color: #000;	
+}
+.fiori .snippet {
+	background-color: #f7f7f7;	
+}
+.fiori--dark .snippet {	
+	background-color: #1c2228;	
+}
+.belize .snippet {	
+	background-color: #fafafa;	
+}
+
 .panel-snippet {
 	display: flex;
 	justify-content: space-around;
