@@ -147,6 +147,7 @@ class DayPicker extends UI5Element {
 		this._itemNav = new ItemNavigation(this, { rowSize: 7, behavior: ItemNavigationBehavior.Paging });
 		this._itemNav.getItemsCallback = function getItemsCallback() {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			const focusableDays = [];
 
 			for (let i = 0; i < this._weeks.length; i++) {
@@ -155,9 +156,12 @@ class DayPicker extends UI5Element {
 			}
 =======
 			let focusableDays = [];
+=======
+			const focusableDays = [];
+>>>>>>> Lint fixes
 
-			for(var i = 0; i < this._weeks.length; i++){
-				let week = this._weeks[i].filter((x) => !x.disabled );
+			for (let i = 0; i < this._weeks.length; i++) {
+				const week = this._weeks[i].filter(x => !x.disabled);
 				focusableDays.push(week);
 			}
 
@@ -245,10 +249,14 @@ class DayPicker extends UI5Element {
 			}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if ((this.minDate || this.maxDate) && this._isOutOfSelectableRange(oCalDate)) {
 =======
 			if ((this.minDate || this.maxDate) && this._isOutOfSelectableRange(oCalDate)){
 >>>>>>> Keyboard handling implemented for Month and Year pickers + minor refactoring
+=======
+			if ((this.minDate || this.maxDate) && this._isOutOfSelectableRange(oCalDate)) {
+>>>>>>> Lint fixes
 				day.classes += " ui5-dp-item--disabled";
 				day.disabled = true;
 			}
@@ -441,12 +449,17 @@ class DayPicker extends UI5Element {
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	_isOutOfSelectableRange(date) {
 		const currentDate = date._oUDate ? date._oUDate.oDate : date,
 =======
 	_isOutOfSelectableRange (date){
 		let currentDate = date._oUDate ? date._oUDate.oDate : date,
 >>>>>>> Keyboard handling implemented for Month and Year pickers + minor refactoring
+=======
+	_isOutOfSelectableRange(date) {
+		const currentDate = date._oUDate ? date._oUDate.oDate : date,
+>>>>>>> Lint fixes
 			maxDate = this.maxDate,
 			minDate = this.minDate;
 
