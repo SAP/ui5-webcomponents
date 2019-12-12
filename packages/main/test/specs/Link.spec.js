@@ -3,6 +3,32 @@ const assert = require('chai').assert;
 describe("General API", () => {
 	browser.url('http://localhost:8080/test-resources/pages/Link.html');
 
+	it("render initially", () => {
+		const linkRoot = browser.$("ui5-link").shadow$("ui5-link-root");
+
+		assert.ok(linkRoot, "Link is rendered");
+	});
+
+	it("tests href attributes", () => {
+		const link = browser.$("#empty-link-1");
+		const HREF_ATTRIBUTE = "https://www.sap.com/index.html";
+
+		assert.notOk(link.getAttribute("href"), "Render without 'href' by default");
+
+		link.setAttribute("href", HREF_ATTRIBUTE);
+		assert.strictEqual(link.getAttribute("href"), HREF_ATTRIBUTE, "href attribute is changed");
+	});
+
+	it("tests target attributes", () => {
+		const link = browser.$("#empty-link-2");
+		const TARGET_ATTRIBUTE = "_blank";
+
+		assert.notOk(link.getAttribute("target"), "Render without 'target' by default");
+
+		link.setAttribute("target", TARGET_ATTRIBUTE);
+		assert.strictEqual(link.getAttribute("target"), TARGET_ATTRIBUTE, "target attribute is changed");
+	});
+
 	it("should wrap the text of the link", () => {
 		const wrappingLabel = browser.$("#wrapping-link");
 		const truncatingLabel = browser.$("#non-wrapping-link");
@@ -23,23 +49,16 @@ describe("General API", () => {
 
 	});
 
-	it("should trigger click event onclick / enter / space", () => {
-		const link = browser.$("#link").shadow$("a");
-		const input = browser.$("#helper-input");
-		const inputClick = browser.$("#helper-input-click");
+	it("disabled link should not be enabled", () => {
+		const link = browser.$("#disabled-link").shadow$("a").getAttribute("disabled");
 
-		// same as in Timeline.spec.js
-		// disable the click test temporarily, wdio click simulation does not trigger the ui5-link click handler
-		// and triggering the click on the internal <a> element makes wdio throw an error that it is not clickable
+		assert.ok(link, "Disabled link should not be enabled");
+	});
 
-		// link.click();
-		// assert.strictEqual(input.getValue(), "1", "click: Input's value should be increased by 1");
-		// assert.strictEqual(inputClick.getValue(), "1", "click: Input's value should be increased by 1");
+	it("tests prevent default", () => {
+		const link = browser.$("#link-click-prevent-default");
 
-		// same with keys, sending them on ui5-link >>> a does not work, sending them on ui5-link does not trigger click handlers
-		// link.keys("Enter");
-		// assert.strictEqual(input.getValue(), "1", "enter: Input's value should be increased by 1");
-		// assert.strictEqual(inputClick.getValue(), "1", "enter: Input's value should be increased by 1");
-
+		link.click();
+		assert.ok(browser.getUrl().indexOf("https://www.google.com") === -1);
 	});
 });
