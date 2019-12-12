@@ -1,5 +1,5 @@
-commit bf5addc4a35204a3c2ba5dcbf47c61b96397eae5
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu Dec 12 11:40:29 2019 +0200
+commit d278efd0f68b89093c0e2f57fcb1ed608565e3c6
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Thu Dec 12 14:56:16 2019 +0200
 
-    chore: correct test pages deployment on travis (#1038)
+    chore: verify all less vars are defined in CSS (#1054)
