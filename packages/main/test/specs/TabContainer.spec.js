@@ -65,27 +65,27 @@ describe("TabContainer general interaction", () => {
 	// });
 
 
-	it("tests if content is scrollable when tabcontainer takes limited height by its parent", () => {
-		const { tcHeight, tcScrollHeight } = browser.execute(() => {
-			const scrollableContent = document.getElementById("tc-scrollable-child");
-
-			return {
-				tcHeight: scrollableContent.offsetHeight,
-				tcScrollHeight: scrollableContent.scrollHeight,
-			}
-		});
-
-
-		const { tabHeight, tabScrollHeight } = browser.execute(() => {
-			const scrollableContent = document.getElementById("scrollable-tab").shadowRoot.querySelector("div");
-
-			return {
-				tabHeight: scrollableContent.offsetHeight,
-				tabScrollHeight: scrollableContent.scrollHeight,
-			}
-		});
-
-		assert.ok(tabHeight < tabScrollHeight, "Tab Content is scrollable");
-		assert.ok(tcHeight >= tcScrollHeight, "TabContainer is not scrollable scrollable");
-	});
+	// it("tests if content is scrollable when tabcontainer takes limited height by its parent", () => {
+	// 	const { tcHeight, tcScrollHeight } = browser.execute(() => {
+	// 		const scrollableContent = document.getElementById("tc-scrollable-child");
+	//
+	// 		return {
+	// 			tcHeight: scrollableContent.offsetHeight,
+	// 			tcScrollHeight: scrollableContent.scrollHeight,
+	// 		}
+	// 	});
+	//
+	//
+	// 	const { tabHeight, tabScrollHeight } = browser.execute(() => {
+	// 		const scrollableContent = document.getElementById("scrollable-tab").shadowRoot.querySelector("div");
+	//
+	// 		return {
+	// 			tabHeight: scrollableContent.offsetHeight,
+	// 			tabScrollHeight: scrollableContent.scrollHeight,
+	// 		}
+	// 	});
+	//
+	// 	assert.ok(tabHeight < tabScrollHeight, "Tab Content is scrollable");
+	// 	assert.ok(tcHeight >= tcScrollHeight, "TabContainer is not scrollable scrollable");
+	// });
 });
