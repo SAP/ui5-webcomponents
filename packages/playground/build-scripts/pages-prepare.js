@@ -11,7 +11,7 @@ const packages = [
 packages.forEach(package => {
     const pagesPath = `../${package}/dist/test-resources/pages/`;
 
-    fs.mkdirSync(path.join(process.cwd(), `docs/pages/content/${package}`));
+    fs.mkdirSync(`./docs/pages/content/${package}`, {recursive: true});
 
     fs.readdir(pagesPath, (err, files) => {
         //handling error

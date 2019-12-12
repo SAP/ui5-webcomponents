@@ -13,7 +13,8 @@
   "scripts": {
     "clean": "nps clean",
     "build": "nps build",
-    "start": "nps start"
+    "start": "nps start",
+    "verify": "node ./lib/verify-vars/index.js"
   },
   "repository": {
     "type": "git",

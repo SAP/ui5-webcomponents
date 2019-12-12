@@ -10,6 +10,13 @@ document.addEventListener("DOMContentLoaded", function() {
     createMetaTags();
 });
 
+var THEMES = {
+  "sap_fiori_3": "fiori",
+  "sap_fiori_3_dark": "fiori--dark",
+  "sap_belize": "belize",
+  "sap_belize_hcb": "hcb",
+}
+
 function toggleSettings() {
   var settingsButton = document.getElementById("settings-button"),
     dialog = document.getElementById("settings-dialog"),
@@ -77,11 +84,16 @@ function toggleSettings() {
 
 function setTheme() {
   var currentTheme = getParams(window.location.href)["sap-ui-theme"];
-  if (currentTheme === "sap_belize_hcb") {
-    document.body.classList.add("hcb");
-  } else {
-    document.body.classList.remove("hcb");
-  }
+
+  Object.keys(THEMES).forEach(function(themeName) {
+    var css_class_name = THEMES[themeName];
+
+    if (currentTheme === themeName) {
+      document.body.classList.add(css_class_name);
+    } else {
+      document.body.classList.remove(css_class_name);
+    }
+  });
 }
 
 function getParams(url) {

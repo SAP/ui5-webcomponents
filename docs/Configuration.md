@@ -7,7 +7,7 @@ There are several configuration settings that affect all UI5 Web Components glob
 
   Setting    |                     Values                      | Default value |                          Description
 ------------ | ----------------------------------------------- | ------------- | -------------------------------------------------------------
-theme        | sap_fiori_3, sap_belize, sap_belize_hcb         | sap_fiori_3   | Visual theme
+[theme](#theme)        | sap_fiori_3, sap_fiori_3_dark, sap_belize, sap_belize_hcb         | sap_fiori_3   | Visual theme
 language     | en, de, es, etc...                              | en            | Language to be used for translatable texts
 [RTL](#rtl)          | true, false                                     | false         | When true, sets global text direction to right-to-left
 compactSize  | true, false                                     | false         | When set, enforces compact density (smaller margins/paddings)
@@ -15,6 +15,14 @@ compactSize  | true, false                                     | false         |
 calendarType | Gregorian, Islamic, Buddhist, Japanese, Persian | Gregorian     | Default calendar type for date-related web components
 [noConflict](#noConflict)  | true, false | Object                            | false         | When set to true, all events will be fired with a "ui5-" prefix only
 [formatSettings](#formatSettings)| See the [Format settings](#formatSettings) section below		| Empty object | Allows to override locale-specific configuration
+
+<a name="theme"></a>
+### Theme
+The `theme` setting values above are the technical names of our themes.
+- The `sap_fiori_3` is known as `Quartz Light` and it`s our default theme.
+- The `sap_fiori_3_dark` is known as `Quartz Dark`. 
+- The `sap_belize` is known as `Belize`. 
+- The `sap_belize_hcb` is known as `High Contrast Black`. 
 
 <a name="rtl"></a>
 ### RTL
