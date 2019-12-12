@@ -38,7 +38,6 @@ const metadata = {
 	events: /** @lends sap.ui.webcomponents.main.TableRow.prototype */ {
 		_focused: {},
 	},
-	_eventHandlersByConvention: true,
 };
 
 /**

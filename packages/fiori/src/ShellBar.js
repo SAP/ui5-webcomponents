@@ -284,7 +284,6 @@ const metadata = {
 			},
 		},
 	},
-	_eventHandlersByConvention: true,
 };
 
 /**
@@ -618,7 +617,7 @@ class ShellBar extends UI5Element {
 		popover.openBy(overflowButton);
 	}
 
-	onkeydown(event) {
+	_onkeydown(event) {
 		if (isEscape(event)) {
 			return this._handleEscape(event);
 		}

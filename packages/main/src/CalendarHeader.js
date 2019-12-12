@@ -1,6 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import getShadowDOMTarget from "@ui5/webcomponents-base/dist/events/getShadowDOMTarget.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-left.js";
@@ -41,7 +40,6 @@ const metadata = {
 		btn1Press: {},
 		btn2Press: {},
 	},
-	_eventHandlersByConvention: true,
 };
 
 class CalendarHeader extends UI5Element {
@@ -97,10 +95,9 @@ class CalendarHeader extends UI5Element {
 		this.fireEvent("btn2Press", event);
 	}
 
-	onkeydown(event) {
-		const eventTarget = getShadowDOMTarget(event);
+	_onkeydown(event) {
 		if (isSpace(event) || isEnter(event)) {
-			const showPickerButton = eventTarget.getAttribute("data-sap-show-picker");
+			const showPickerButton = event.target.getAttribute("data-sap-show-picker");
 
 			if (showPickerButton) {
 				this[`_show${showPickerButton}Picker`]();

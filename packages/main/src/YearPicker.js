@@ -7,7 +7,6 @@ import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/events/PseudoEven
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { getLocale } from "@ui5/webcomponents-base/dist/LocaleProvider.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import getShadowDOMTarget from "@ui5/webcomponents-base/dist/events/getShadowDOMTarget.js";
 import DateFormat from "@ui5/webcomponents-core/dist/sap/ui/core/format/DateFormat.js";
 import CalendarType from "@ui5/webcomponents-base/dist/dates/CalendarType.js";
 import CalendarDate from "@ui5/webcomponents-base/dist/dates/CalendarDate.js";
@@ -60,7 +59,6 @@ const metadata = {
 		 */
 		selectedYearChange: {},
 	},
-	_eventHandlersByConvention: true,
 };
 
 /**
@@ -183,10 +181,9 @@ class YearPicker extends UI5Element {
 		return this.primaryCalendarType || getCalendarType() || LocaleData.getInstance(getLocale()).getPreferredCalendarType();
 	}
 
-	onclick(event) {
-		const eventTarget = getShadowDOMTarget(event);
-		if (eventTarget.className.indexOf("ui5-yp-item") > -1) {
-			const timestamp = this.getTimestampFromDom(eventTarget);
+	_onclick(event) {
+		if (event.target.className.indexOf("ui5-yp-item") > -1) {
+			const timestamp = this.getTimestampFromDom(event.target);
 			this.timestamp = timestamp;
 			this._selectedYear = this._year;
 			this._itemNav.current = YearPicker._MIDDLE_ITEM_INDEX;
@@ -199,7 +196,7 @@ class YearPicker extends UI5Element {
 		return parseInt(sTimestamp);
 	}
 
-	onkeydown(event) {
+	_onkeydown(event) {
 		if (isEnter(event)) {
 			return this._handleEnter(event);
 		}
@@ -210,10 +207,9 @@ class YearPicker extends UI5Element {
 	}
 
 	_handleEnter(event) {
-		const eventTarget = getShadowDOMTarget(event);
 		event.preventDefault();
-		if (eventTarget.className.indexOf("ui5-yp-item") > -1) {
-			const timestamp = this.getTimestampFromDom(eventTarget);
+		if (event.target.className.indexOf("ui5-yp-item") > -1) {
+			const timestamp = this.getTimestampFromDom(event.target);
 
 			this.timestamp = timestamp;
 			this._selectedYear = this._year;
@@ -223,10 +219,9 @@ class YearPicker extends UI5Element {
 	}
 
 	_handleSpace(event) {
-		const eventTarget = getShadowDOMTarget(event);
 		event.preventDefault();
-		if (eventTarget.className.indexOf("ui5-yp-item") > -1) {
-			const timestamp = this.getTimestampFromDom(eventTarget);
+		if (event.target.className.indexOf("ui5-yp-item") > -1) {
+			const timestamp = this.getTimestampFromDom(event.target);
 
 			this._selectedYear = CalendarDate.fromTimestamp(
 				timestamp * 1000,
