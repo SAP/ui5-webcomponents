@@ -101,9 +101,7 @@
 @sapContent_ImagesapUiShellSelectedTextColorPlaceholderForegroundColor: lighten(@sapBaseColor, 20);
 @sapContent_ImagePlaceholderForegroundColor: lighten(@sapBaseColor, 20);
 @sapContent_Shadow0: 0 0 0 1px, fade(@sapContent_ShadowColor, 20), 0 0.125rem 0.5rem 0 fade(@sapContent_ShadowColor, 30);
-@sapContent_Shadow1: 0 0 0 1px fade(@sapContent_ShadowColor, 15), 0 0.125rem 0.5rem 0 fade(@sapContent_ShadowColor, 30);
 @sapContent_Shadow2: 0 0 0 1px fade(@sapContent_ShadowColor, 15), 0 0.625rem 1.875rem 0 fade(@sapContent_ShadowColor, 30);
-@sapContent_Shadow3: 0 0 0 1px fade(@sapContent_ShadowColor, 15), 0 1.25rem 5rem 0 fade(@sapContent_ShadowColor, 30);
 @sapContent_HeaderShadow: 0 0 0.25rem 0 fade(@sapContent_ShadowColor, 80), inset 0 -0.0625rem 0 0 fade(@sapContent_ContrastShadowColor, 8);
 @sapContent_DisabledTextColor: fade(@sapTextColor, (100 - (@sapContent_DisabledOpacity * 100)));
 @sapContent_ForegroundTextColor: contrast(@sapContent_ForegroundColor, @sapTextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
@@ -150,7 +148,8 @@
 @sapButton_Reject_Background: @sapButton_Background;
 @sapButton_Reject_BorderColor: @sapNegativeElementColor;
 @sapButton_Reject_Hover_BorderColor: @sapButton_Reject_BorderColor;
-@sapButton_Reject_Active_BorderColor: @sapButton_Reject_Active_Background;@sapButton_Reject_TextColor: contrast(@sapButton_Reject_Background, @sapNegativeTextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
+@sapButton_Reject_Active_BorderColor: @sapButton_Reject_Active_Background;
+@sapButton_Reject_TextColor: contrast(@sapButton_Reject_Background, @sapNegativeTextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
 @sapButton_Accept_Background: @sapButton_Background;
 @sapButton_Accept_BorderColor: @sapPositiveElementColor;
 @sapButton_Accept_Hover_BorderColor: @sapButton_Accept_BorderColor;
