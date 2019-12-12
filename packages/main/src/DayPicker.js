@@ -80,7 +80,6 @@ const metadata = {
 		 */
 		navigate: {},
 	},
-	_eventHandlersByConvention: true,
 };
 
 const MAX_YEAR = 9999;
@@ -244,7 +243,7 @@ class DayPicker extends UI5Element {
 		this._dayNames[0].classes += " ui5-dp-firstday";
 	}
 
-	onmousedown(event) {
+	_onmousedown(event) {
 		const target = getShadowDOMTarget(event);
 
 		const dayPressed = this._isDayPressed(target);
@@ -268,14 +267,14 @@ class DayPicker extends UI5Element {
 		}
 	}
 
-	onmouseup(event) {
+	_onmouseup(event) {
 		if (this.targetDate) {
 			this._modifySelectionAndNotifySubscribers(this.targetDate, event.ctrlKey);
 			this.targetDate = null;
 		}
 	}
 
-	onkeydown(event) {
+	_onkeydown(event) {
 		if (isEnter(event)) {
 			return this._handleEnter(event);
 		}

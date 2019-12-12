@@ -41,7 +41,6 @@ const metadata = {
 		btn1Press: {},
 		btn2Press: {},
 	},
-	_eventHandlersByConvention: true,
 };
 
 class CalendarHeader extends UI5Element {
@@ -97,7 +96,7 @@ class CalendarHeader extends UI5Element {
 		this.fireEvent("btn2Press", event);
 	}
 
-	onkeydown(event) {
+	_onkeydown(event) {
 		const eventTarget = getShadowDOMTarget(event);
 		if (isSpace(event) || isEnter(event)) {
 			const showPickerButton = eventTarget.getAttribute("data-sap-show-picker");

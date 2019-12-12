@@ -60,7 +60,6 @@ const metadata = {
 		 */
 		selectedYearChange: {},
 	},
-	_eventHandlersByConvention: true,
 };
 
 /**
@@ -183,7 +182,7 @@ class YearPicker extends UI5Element {
 		return this.primaryCalendarType || getCalendarType() || LocaleData.getInstance(getLocale()).getPreferredCalendarType();
 	}
 
-	onclick(event) {
+	_onclick(event) {
 		const eventTarget = getShadowDOMTarget(event);
 		if (eventTarget.className.indexOf("ui5-yp-item") > -1) {
 			const timestamp = this.getTimestampFromDom(eventTarget);
@@ -199,7 +198,7 @@ class YearPicker extends UI5Element {
 		return parseInt(sTimestamp);
 	}
 
-	onkeydown(event) {
+	_onkeydown(event) {
 		if (isEnter(event)) {
 			return this._handleEnter(event);
 		}

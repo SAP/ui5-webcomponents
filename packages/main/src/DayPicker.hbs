@@ -1,4 +1,10 @@
-<div class="ui5-dp-root" style="{{styles.wrapper}}">
+<div
+	class="ui5-dp-root"
+	style="{{styles.wrapper}}"
+    @keydown={{_onkeydown}}
+    @mousedown={{_onmousedown}}
+    @mouseup={{_onmouseup}}
+>
 
 	{{#if showWeekNumbers}}
 		<div class="ui5-dp-weeknumber-container">
@@ -35,7 +41,7 @@
 								role="gridcell"
 								aria-selected="{{this.selected}}"
 								class="{{this.classes}}">
-									<span 
+									<span
 										class="ui5-dp-daytext"
 										data-sap-timestamp="{{this.timestamp}}"
 										data-sap-index="{{this._index}}">

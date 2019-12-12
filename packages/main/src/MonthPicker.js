@@ -54,7 +54,6 @@ const metadata = {
 		 */
 		selectedMonthChange: {},
 	},
-	_eventHandlersByConvention: true,
 };
 
 /**
@@ -158,7 +157,7 @@ class MonthPicker extends UI5Element {
 		return this.primaryCalendarType || getCalendarType() || LocaleData.getInstance(getLocale()).getPreferredCalendarType();
 	}
 
-	onclick(event) {
+	_onclick(event) {
 		const eventTarget = getShadowDOMTarget(event);
 		if (eventTarget.className.indexOf("ui5-mp-item") > -1) {
 			const timestamp = this.getTimestampFromDOM(eventTarget);
@@ -168,7 +167,7 @@ class MonthPicker extends UI5Element {
 		}
 	}
 
-	onkeydown(event) {
+	_onkeydown(event) {
 		if (isSpace(event) || isEnter(event)) {
 			this._activateMonth(event);
 		}
