@@ -1,5 +1,5 @@
-commit 5b3eeabbf32d2c56f6b17ec9e19c06024b8c6ff3
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu Dec 12 09:11:20 2019 +0200
+commit d5516234b5251746ac0689305330079c6d4427be
+Author: Petar Skelin <petar.skelin@sap.com>
+Date:   Thu Dec 12 14:10:23 2019 +0200
 
-    chore: comment out failing tabcontainer test (#1045)
+    chore: update samples urls
