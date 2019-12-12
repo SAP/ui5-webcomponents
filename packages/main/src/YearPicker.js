@@ -7,7 +7,6 @@ import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/events/PseudoEven
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { getLocale } from "@ui5/webcomponents-base/dist/LocaleProvider.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import getShadowDOMTarget from "@ui5/webcomponents-base/dist/events/getShadowDOMTarget.js";
 import DateFormat from "@ui5/webcomponents-core/dist/sap/ui/core/format/DateFormat.js";
 import CalendarType from "@ui5/webcomponents-base/dist/dates/CalendarType.js";
 import CalendarDate from "@ui5/webcomponents-base/dist/dates/CalendarDate.js";
@@ -183,9 +182,8 @@ class YearPicker extends UI5Element {
 	}
 
 	_onclick(event) {
-		const eventTarget = getShadowDOMTarget(event);
-		if (eventTarget.className.indexOf("ui5-yp-item") > -1) {
-			const timestamp = this.getTimestampFromDom(eventTarget);
+		if (event.target.className.indexOf("ui5-yp-item") > -1) {
+			const timestamp = this.getTimestampFromDom(event.target);
 			this.timestamp = timestamp;
 			this._selectedYear = this._year;
 			this._itemNav.current = YearPicker._MIDDLE_ITEM_INDEX;
@@ -209,10 +207,9 @@ class YearPicker extends UI5Element {
 	}
 
 	_handleEnter(event) {
-		const eventTarget = getShadowDOMTarget(event);
 		event.preventDefault();
-		if (eventTarget.className.indexOf("ui5-yp-item") > -1) {
-			const timestamp = this.getTimestampFromDom(eventTarget);
+		if (event.target.className.indexOf("ui5-yp-item") > -1) {
+			const timestamp = this.getTimestampFromDom(event.target);
 
 			this.timestamp = timestamp;
 			this._selectedYear = this._year;
@@ -222,10 +219,9 @@ class YearPicker extends UI5Element {
 	}
 
 	_handleSpace(event) {
-		const eventTarget = getShadowDOMTarget(event);
 		event.preventDefault();
-		if (eventTarget.className.indexOf("ui5-yp-item") > -1) {
-			const timestamp = this.getTimestampFromDom(eventTarget);
+		if (event.target.className.indexOf("ui5-yp-item") > -1) {
+			const timestamp = this.getTimestampFromDom(event.target);
 
 			this._selectedYear = CalendarDate.fromTimestamp(
 				timestamp * 1000,

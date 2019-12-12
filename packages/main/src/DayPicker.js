@@ -10,7 +10,6 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData.js";
 import CalendarDate from "@ui5/webcomponents-base/dist/dates/CalendarDate.js";
 import { calculateWeekNumber } from "@ui5/webcomponents-base/dist/dates/CalendarUtils.js";
-import getShadowDOMTarget from "@ui5/webcomponents-base/dist/events/getShadowDOMTarget.js";
 import CalendarType from "@ui5/webcomponents-base/dist/dates/CalendarType.js";
 import DayPickerTemplate from "./generated/templates/DayPickerTemplate.lit.js";
 
@@ -244,7 +243,7 @@ class DayPicker extends UI5Element {
 	}
 
 	_onmousedown(event) {
-		const target = getShadowDOMTarget(event);
+		const target = event.target;
 
 		const dayPressed = this._isDayPressed(target);
 
@@ -285,19 +284,17 @@ class DayPicker extends UI5Element {
 	}
 
 	_handleEnter(event) {
-		const eventTarget = getShadowDOMTarget(event);
 		event.preventDefault();
-		if (eventTarget.className.indexOf("ui5-dp-item") > -1) {
-			const targetDate = parseInt(eventTarget.getAttribute("data-sap-timestamp"));
+		if (event.target.className.indexOf("ui5-dp-item") > -1) {
+			const targetDate = parseInt(event.target.getAttribute("data-sap-timestamp"));
 			this._modifySelectionAndNotifySubscribers(targetDate, event.ctrlKey);
 		}
 	}
 
 	_handleSpace(event) {
-		const eventTarget = getShadowDOMTarget(event);
 		event.preventDefault();
-		if (eventTarget.className.indexOf("ui5-dp-item") > -1) {
-			const targetDate = parseInt(eventTarget.getAttribute("data-sap-timestamp"));
+		if (event.target.className.indexOf("ui5-dp-item") > -1) {
+			const targetDate = parseInt(event.target.getAttribute("data-sap-timestamp"));
 			this._modifySelectionAndNotifySubscribers(targetDate, event.ctrlKey);
 		}
 	}
