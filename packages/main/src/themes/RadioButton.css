@@ -8,7 +8,7 @@
 	max-width: 100%;
 	text-overflow: ellipsis;
 	overflow: hidden;
-	color: var(--sapUiFieldBorderColor);
+	color: var(--sapField_BorderColor);
 }
 
 /* Selected */
@@ -21,7 +21,7 @@
 
 /* Disabled */
 :host([disabled]) .ui5-radio-root {
-	opacity: var(--sapUiContentDisabledOpacity);
+	opacity: var(--sapContent_DisabledOpacity);
 }
 
 /* Focused */
@@ -34,13 +34,13 @@
 	left: 0.5rem;
 	right: 0.5rem;
 	pointer-events: none;
-	border: var(--_ui5_radiobutton_border_width) dotted var(--sapUiContentFocusColor);
+	border: var(--_ui5_radiobutton_border_width) dotted var(--sapContent_FocusColor);
 }
 
 /* Hovered */
 :host(:not([value-state="Error"]):not([value-state="Warning"])) .ui5-radio-root:hover .ui5-radio-inner--hoverable .ui5-radio-svg-outer {
 	fill: var(--_ui5_radiobutton_hover_fill);
-	stroke: var(--sapUiFieldHoverBorderColor);
+	stroke: var(--sapField_Hover_BorderColor);
 }
 
 /* with label */
@@ -50,12 +50,12 @@
 
 /* Read only */
 :host([selected][readonly]) .ui5-radio-svg-inner {
-	fill: var(--sapUiContentNonInteractiveIconColor);
+	fill: var(--sapContent_NonInteractiveIconColor);
 }
 
 :host([readonly]) .ui5-radio-root .ui5-radio-svg-outer {
-	fill: var(--sapUiFieldReadOnlyBackground);
-	stroke: var(--sapUiFieldReadOnlyBorderColor);
+	fill: var(--sapField_ReadOnly_Background);
+	stroke: var(--sapField_ReadOnly_BorderColor);
 }
 
 /* Error state */
@@ -64,8 +64,8 @@
 }
 :host([value-state="Error"]) .ui5-radio-root .ui5-radio-svg-outer,
 :host([value-state="Error"]) .ui5-radio-root:hover .ui5-radio-inner.ui5-radio-inner--hoverable:hover .ui5-radio-svg-outer {
-	stroke: var(--sapUiFieldInvalidColor);
-	fill: var(--sapUiFieldInvalidBackground);
+	stroke: var(--sapField_InvalidColor);
+	fill: var(--sapField_InvalidBackground);
 }
 
 /* Warning state */
@@ -74,8 +74,8 @@
 }
 :host([value-state="Warning"]) .ui5-radio-root .ui5-radio-svg-outer,
 :host([value-state="Warning"]) .ui5-radio-root:hover .ui5-radio-inner.ui5-radio-inner--hoverable:hover .ui5-radio-svg-outer {
-	stroke: var(--sapUiFieldWarningColor);
-	fill: var(--sapUiFieldWarningBackground);
+	stroke: var(--sapField_WarningColor);
+	fill: var(--sapField_WarningBackground);
 }
 
 :host([value-state="Error"]) .ui5-radio-root,
@@ -207,5 +207,5 @@ ui5-label.ui5-radio-label {
 
 /* ListItem Context */
 :host(.ui5-li-singlesel-radiobtn) .ui5-radio-root .ui5-radio-inner .ui5-radio-svg-outer {
-	fill: var(--sapUiListBackground);
+	fill: var(--sapList_Background);
 }

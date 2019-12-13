@@ -14,6 +14,7 @@ describe("Panel general interaction", () => {
 		browser.execute(() => {
 			document.getElementById("panel-fixed").setAttribute("header-text", "New text");
 		});
+		browser.pause(500);
 
 		assert.strictEqual(title.getText(), sNew, "New text");
 	});

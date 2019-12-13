@@ -40,45 +40,45 @@
 }
 
 .ui5-messagestrip-text {
-	font-family: var(--sapUiFontFamily);
-	font-size: var(--sapMFontMediumSize);
+	font-family: var(--sapFontFamily);
+	font-size: var(--sapFontMediumSize);
 }
 
 .ui5-messagestrip--info {
-	background-color: var(--sapUiNeutralBG);
-	border-color: var(--sapUiNeutralBorder);
-	color: var(--sapUiBaseText);
+	background-color: var(--sapNeutralBackground);
+	border-color: var(--sapNeutralColor);
+	color: var(--sapTextColor);
 }
 
 .ui5-messagestrip--info .ui5-messagestrip-icon {
-	color: var(--sapUiNeutralElement);
+	color: var(--sapNeutralElementColor);
 }
 
 .ui5-messagestrip--positive {
-	background-color: var(--sapUiSuccessBG);
-	border-color: var(--sapUiSuccessBorder);
+	background-color: var(--sapSuccessBackground);
+	border-color: var(--sapSuccessBorderColor);
 }
 
 .ui5-messagestrip--positive .ui5-messagestrip-icon {
-	color: var(--sapUiPositiveElement);
+	color: var(--sapPositiveElementColor);
 }
 
 .ui5-messagestrip--negative {
-	background-color: var(--sapUiErrorBG);
-	border-color: var(--sapUiErrorBorder);
+	background-color: var(--sapErrorBackground);
+	border-color: var(--sapErrorBorderColor);
 }
 
 .ui5-messagestrip--negative .ui5-messagestrip-icon {
-	color: var(--sapUiNegativeElement);
+	color: var(--sapNegativeElementColor);
 }
 
 .ui5-messagestrip--warning {
-	background-color: var(--sapUiWarningBG);
-	border-color: var(--sapUiWarningBorder);
+	background-color: var(--sapWarningBackground);
+	border-color: var(--sapWarningBorderColor);
 }
 
 .ui5-messagestrip--warning .ui5-messagestrip-icon {
-	color: var(--sapUiCriticalElement);
+	color: var(--sapCriticalElementColor);
 }
 
 .ui5-messagestrip-close-icon-wrapper {
@@ -89,7 +89,7 @@
 	height: var(--_ui5_messagestrip_close_button_size);
 	border-radius: 0.2rem;
 	background: transparent;
-	color: var(--sapUiBaseText);
+	color: var(--sapTextColor);
 	cursor: pointer;
 	position: absolute;
 	right: 0.125rem;
@@ -102,12 +102,12 @@
 }
 
 .ui5-messagestrip-close-icon-wrapper:hover {
-	background-color: var(--sapUiButtonLiteHoverBackground);
+	background-color: var(--sapButton_Lite_Hover_Background);
 }
 
 .ui5-messagestrip-close-icon-wrapper:active {
-	background-color: var(--sapUiButtonLiteActiveBackground);
-	color: var(--sapUiButtonActiveTextColor);
+	background-color: var(--sapButton_Active_Background);
+	color: var(--sapButton_Active_TextColor);
 }
 
 .ui5-messagestrip-close-icon {
@@ -122,11 +122,11 @@
 
 .ui5-messagestrip-close-icon-wrapper:focus {
 	outline-offset: -2px;
-	outline: var(--_ui5_messagestrip_focus_width) dotted var(--sapUiContentFocusColor);
+	outline: var(--_ui5_messagestrip_focus_width) dotted var(--sapContent_FocusColor);
 }
 
 .ui5-messagestrip-close-icon-wrapper:active:focus {
-	outline: var(--_ui5_messagestrip_focus_width) dotted var(--sapUiContentContrastFocusColor);
+	outline: var(--_ui5_messagestrip_focus_width) dotted var(--sapContent_ContrastFocusColor);
 }
 
 /* FF renders outine around element content, causing double outline - around the button and the icon */
