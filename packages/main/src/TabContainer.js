@@ -100,6 +100,11 @@ const metadata = {
 			type: Boolean,
 			noAttribute: true,
 		},
+		_textOnly: {
+			type: Boolean,
+			noAttribute: true,
+		},
+
 	},
 	events: /** @lends  sap.ui.webcomponents.main.TabContainer.prototype */ {
 		/**
@@ -182,12 +187,13 @@ class TabContainer extends UI5Element {
 
 	onBeforeRendering() {
 		const hasSelected = this.items.some(item => item.selected);
+		this._textOnly = this.items.every(item => !item.icon);
+
 		this.items.forEach(item => {
 			item._getTabContainerHeaderItemCallback = _ => {
 				return this.getDomRef().querySelector(`#${item._id}`);
 			};
 		});
-
 		if (this.items.length && !hasSelected) {
 			this.items[0].selected = true;
 		}
@@ -351,6 +357,10 @@ class TabContainer extends UI5Element {
 
 	get classes() {
 		return {
+			root: {
+				"ui5-tc-root" : true,
+				"ui5-tc--textOnly": this._textOnly,
+			},
 			header: {
 				"ui5-tc__header": true,
 				"ui5-tc__header--scrollable": this._scrollable,

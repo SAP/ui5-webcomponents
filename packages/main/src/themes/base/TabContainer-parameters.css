@@ -1,4 +1,9 @@
 :root {
+	/* Header */
+	--_ui5_tc_header_height: 4.6875rem;
+	--_ui5_tc_header_height_compact: 3.6875rem;
+	--_ui5_tc_header_height_text_only: 3rem;
+	--_ui5_tc_header_height_text_only_compact: 2rem;
 	--_ui5_tc_header_box_shadow: inset 0 -0.25rem 0 -0.125rem var(--sapUiObjectHeaderBorderColor);
 	--_ui5_tc_header_border_bottom: 0.125rem solid var(--sapUiObjectHeaderBackground);
 
