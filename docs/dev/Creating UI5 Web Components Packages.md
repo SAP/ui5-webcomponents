@@ -43,7 +43,6 @@ and then execute the initialization script, optionally with parameters from the 
 
 Parameter | Description | Default value
 ----------|-------------|--------------
-name | Resource registration namespace | The `name` property from `package.json`
 port | Dev server port | 8080
 tag | The sample web component's tag name | ui5-demo
 
@@ -149,7 +148,6 @@ In addition, you can define your own CSS Vars and provide different values for t
 
 File | Purpose
 ------------|-------------
-`src/DefaultTheme.js` | This file is automatically used by the framework. It imports assets for the default theme. It is a central file for the whole package and normally you don't need to modify it.
 `src/themes/Demo.css` | All CSS rules for the web component, same for all themes. Will be inserted in the shadow root.
 `src/themes/sap_belize/parameters-bundle.css` | Values for the component-specific CSS Vars for the `sap_belize` theme.
 `src/themes/sap_belize_hcb/parameters-bundle.css` | Values for the component-specific CSS Vars for the `sap_belize_hcb` theme.

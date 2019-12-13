@@ -26,7 +26,6 @@ const RESOURCES_DIR = path.join(`${__dirname}`, `resources/`);
 
 // Command line options
 const options = commandLineArgs([
-	{name: 'name', alias: 'n', type: String},
 	{name: 'port', alias: 'p', type: Number},
 	{name: 'tag', type: String},
 ]);
@@ -49,7 +48,7 @@ const className = capitalizeFirst(kebabToCamelCase(tag.substr(4)));
 
 // All variables that will be replaced in the content of the resources/
 const vars = {
-	INIT_PACKAGE_VAR_NAME: options.name || packageContent.name,
+	INIT_PACKAGE_VAR_NAME: packageContent.name,
 	INIT_PACKAGE_VAR_PORT: options.port || DEFAULT_PORT,
 	INIT_PACKAGE_VAR_TAG: tag,
 	INIT_PACKAGE_VAR_CLASS_NAME: className,
