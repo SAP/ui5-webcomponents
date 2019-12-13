@@ -76,8 +76,7 @@
     "wdio-chromedriver-service": "^5.0.2"
   },
   "resolutions": {
-    "abstract-syntax-tree": "1.0.3",
-    "dir-glob": "2.0.0",
-    "wdio-chromedriver-service/chromedriver": "^78.0.0"
+    "wdio-chromedriver-service/chromedriver": "^78.0.0",
+    "rollup-plugin-livereload/livereload/chokidar": "^3.x"
   }
 }

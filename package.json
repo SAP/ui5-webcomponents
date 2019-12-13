@@ -51,11 +51,6 @@
     "rimraf": "^2.6.2",
     "wsrun": "^3.6.4"
   },
-  "resolutions": {
-    "abstract-syntax-tree": "1.0.3",
-    "dir-glob": "2.0.0",
-    "js-yaml": "^3.13.1"
-  },
   "workspaces": [
     "packages/theme-base",
     "packages/core",
