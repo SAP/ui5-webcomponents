@@ -8,6 +8,7 @@ const { terser } = require("rollup-plugin-terser");
 const notify = require('rollup-plugin-notify');
 const filesize = require('rollup-plugin-filesize');
 const livereload = require('rollup-plugin-livereload');
+const os = require("os");
 
 const getConfig = (options) => {
 
@@ -81,7 +82,7 @@ const getConfig = (options) => {
 		}
 
 		const es6DevMain = process.env.DEV && !transpile && options.name === "@ui5/webcomponents";
-		if (es6DevMain) {
+		if (es6DevMain && os.platform() !== "win32") {
 			plugins.push(livereload({
 				watch: [
 					"dist/resources/bundle.esm.js",
