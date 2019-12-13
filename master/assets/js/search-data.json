@@ -86,7 +86,7 @@
   "13": {
     "id": "13",
     "title": "Check Box",
-    "content": "&lt;!DOCTYPE html&gt; ui5-checkbox TUen Lights On/Off",
+    "content": "&lt;!DOCTYPE html&gt; ui5-checkbox",
     "url": "https://sap.github.io/ui5-webcomponents/master/playground/main/pages/CheckBox/",
     "relUrl": "/playground/main/pages/CheckBox/"
   },
@@ -219,7 +219,7 @@
   "32": {
     "id": "32",
     "title": "Input",
-    "content": "&lt;!DOCTYPE html&gt; ui5-input Input with suggestions: type &#39;a&#39; Event [suggestionItemSelect] :: N/A Event [change] :: N/A Event [submit] :: N/A Event [input] :: N/A Input with suggestions Cozy Compact Condensed Input disabled Input maxLength = 5 Input valueState Success Test &#39;change&#39; event &#39;change&#39; event result Test &#39;input&#39; event &#39;input&#39; test result Input test change Input test change result Input readonly Input readonly Input type &#39;Number&#39; Input type &#39;Password&#39; Input type &#39;Email&#39; Input type &#39;Tel&#39; Input type &#39;URL&#39; Input and button and select Press &lt;ui5-select id=&quot;mySelect2&quot;style=&quot;width: 10rem;&quot;&gt; Cozy Compact Condensed &lt;/ui5-select&gt;",
+    "content": "&lt;!DOCTYPE html&gt; ui5-input Input with suggestions: type &#39;a&#39; Event [suggestionItemSelect] :: N/A Event [change] :: N/A Event [submit] :: N/A Event [input] :: N/A Input with suggestions Cozy Compact Condensed Input disabled Input maxLength = 5 Input valueState Success Test &#39;change&#39; event &#39;change&#39; event result Test &#39;input&#39; event &#39;input&#39; test result Input test change Input test change result Input readonly Input required Input type &#39;Number&#39; Input type &#39;Password&#39; Input type &#39;Email&#39; Input type &#39;Tel&#39; Input type &#39;URL&#39; Input and button and select Press &lt;ui5-select id=&quot;mySelect2&quot;style=&quot;width: 10rem;&quot;&gt; Cozy Compact Condensed &lt;/ui5-select&gt;",
     "url": "https://sap.github.io/ui5-webcomponents/master/playground/main/pages/Input/",
     "relUrl": "/playground/main/pages/Input/"
   },

@@ -1,5 +1,10 @@
-commit 04a95ff5ad30c58e8fb2c50c057e5eb58bdc6f05
+commit 705cd1bfa2863be5652345313c0c71112764614a
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Dec 13 15:22:32 2019 +0200
+Date:   Fri Dec 13 16:01:44 2019 +0200
 
-    chore(ui5-panel): stabilize component test (#1061)
+    refactor(CSS): remove the "sapUi" parameters (#1023)
+    
+    Use the sap* base parameters directly and remove the sapUi* ones.
+    Note: The sap* are params that the ThemeDesigner produces.
+    
+    FIXES: #1016

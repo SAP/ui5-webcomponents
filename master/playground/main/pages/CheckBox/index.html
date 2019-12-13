@@ -1341,8 +1341,6 @@
 	<ui5-checkbox text="Long long long text that should truncate at some point"></ui5-checkbox>
 	<ui5-checkbox wrap text="Longest ever text written in English that have to truncate immediately because it is so long of course!"></ui5-checkbox>
 
-	<ui5-button id="hcbButton">TUen Lights On/Off</ui5-button>
-
 	<script>
 		var hcb = false;
 		var input = document.querySelector("#field");
@@ -1355,12 +1353,6 @@
 				counter += 1;
 				input.value = counter;
 			});
-		});
-
-		hcbButton.addEventListener("click", function(event) {
-			var bg = hcb ? "#fff" : "#333";
-			hcb = !hcb;
-			document.body.style.backgroundColor = bg;
 		});
 </script>
 </body>
