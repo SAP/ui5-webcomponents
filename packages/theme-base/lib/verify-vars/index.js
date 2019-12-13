@@ -29,7 +29,7 @@ const extractVarsFromVarsFile = str => {
 	}).filter(item => !!item);
 };
 
-// Check for missing variables in the *-vars.less files
+console.log(`\n1. Checking for missing variables in the *-vars.less files`);
 allDefinitionFiles.forEach(name => {
 	const defsFilePath = path.join(`src/themes`, `${name}.less`);
 	const varsFilePath = path.join(`src/themes`, `${name}-vars.less`);
@@ -53,7 +53,7 @@ allDefinitionFiles.forEach(name => {
 
 });
 
-// Check for discrepancies between themes
+console.log(`\n2. Checking for discrepancies between themes`);
 const varArrays = allThemesDefinitionFiles.map(name => {
 	const defsFilePath = path.join(`src/themes`, `${name}.less`);
 	return extractVarsFromDefinitionFile(fs.readFileSync(defsFilePath).toString());
