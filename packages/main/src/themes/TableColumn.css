@@ -8,8 +8,8 @@
 }
 
 th {
-	background: var(--sapUiListHeaderBackground);
-	border-bottom: 1px solid var(--sapUiListBorderColor);
+	background: var(--sapList_HeaderBackground);
+	border-bottom: 1px solid var(--sapList_BorderColor);
 	border: none;
 	width: inherit;
 	font-weight: normal;

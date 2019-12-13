@@ -7,15 +7,18 @@
   --sapShellColor: @sapShellColor;
   --sapBackgroundColorDefault: @sapBackgroundColorDefault;
   --sapBackgroundColor: @sapBackgroundColor;
-  --sapFontFamily: @sapFontFamily;
   --sapContent_GridSize: @sapContent_GridSize;
+  --sapFontFamily: @sapFontFamily;
   --sapFontSize: @sapFontSize;
+  --sapFontSmallSize: @sapFontSmallSize;
+  --sapFontMediumSize: @sapFontMediumSize;
+  --sapFontLargeSize: @sapFontLargeSize;
   --sapTextColor: @sapTextColor;
   --sapLinkColor: @sapLinkColor;
   --sapCompanyLogo: @sapCompanyLogo;
   --sapBackgroundImage: @sapBackgroundImage;
   --sapBackgroundImageOpacity: @sapBackgroundImageOpacity;
-  --sapBackgroundImageRepeat: @sapBackgroundImageRepeat;
+
   --sapHC_StandardBackground: @sapHC_StandardBackground;
   --sapHC_HighlightBackground: @sapHC_HighlightBackground;
   --sapHC_HighlightAltBackground: @sapHC_HighlightAltBackground;
@@ -51,24 +54,28 @@
   --sapSuccessBackground: @sapSuccessBackground;
   --sapInformationBackground: @sapInformationBackground;
   --sapNeutralBackground: @sapNeutralBackground;
+
   /* Semantic Border Colors */
   --sapErrorBorderColor: @sapErrorBorderColor;
   --sapWarningBorderColor: @sapWarningBorderColor;
   --sapSuccessBorderColor: @sapSuccessBorderColor;
   --sapInformationBorderColor: @sapInformationBorderColor;
   --sapNeutralBorderColor: @sapNeutralBorderColor;
+
   /* Semantic Foreground Elements */
   --sapNegativeElementColor: @sapNegativeElementColor;
   --sapCriticalElementColor: @sapCriticalElementColor;
   --sapPositiveElementColor: @sapPositiveElementColor;
   --sapInformativeElementColor: @sapInformativeElementColor;
   --sapNeutralElementColor: @sapNeutralElementColor;
+
   /* Semantic Text */
   --sapNegativeTextColor: @sapNegativeTextColor;
   --sapCriticalTextColor: @sapCriticalTextColor;
   --sapPositiveTextColor: @sapPositiveTextColor;
   --sapInformativeTextColor: @sapInformativeTextColor;
   --sapNeutralTextColor: @sapNeutralTextColor;
+
   /* Semantic Foreground Colors */
   --sapNegativeColor: @sapNegativeColor;
   --sapCriticalColor: @sapCriticalColor;
@@ -84,9 +91,7 @@
   --sapIndicationColor_3: @sapIndicationColor_3;
   --sapIndicationColor_4: @sapIndicationColor_4;
   --sapIndicationColor_5: @sapIndicationColor_5;
-  /* ===================================== */
-  /* Expert Theming                        */
-  /* ===================================== */
+
   --sapSelectedColor: @sapSelectedColor;
   --sapActiveColor: @sapActiveColor;
   --sapTitleColor: @sapTitleColor;
@@ -111,7 +116,7 @@
   --sapContent_SearchHighlightColor: @sapContent_SearchHighlightColor;
   --sapContent_HelpColor: @sapContent_HelpColor;
   --sapContent_LabelColor: @sapContent_LabelColor;
-  --sapContent_MonospaceFontFamily: @sapContent_MonospaceFontFamily;
+
   --sapContent_DisabledTextColor: @sapContent_DisabledTextColor;
   --sapContent_DisabledOpacity: @sapContent_DisabledOpacity;
   --sapContent_ContrastTextThreshold: @sapContent_ContrastTextThreshold;
@@ -119,27 +124,56 @@
   --sapContent_ForegroundColor: @sapContent_ForegroundColor;
   --sapContent_ForegroundBorderColor: @sapContent_ForegroundBorderColor;
   --sapContent_BadgeBackground: @sapContent_BadgeBackground;
+  --sapContent_TextShadow: none;
+  --sapContent_HeaderShadow: @sapContent_HeaderShadow;
+  --sapContent_Shadow0: @sapContent_Shadow0;
+  --sapContent_Shadow2: @sapContent_Shadow2;
+
   --sapShell_Background: @sapShell_Background;
-  --sapShell_BackgroundImage: @sapShell_BackgroundImage;
-  --sapShell_BackgroundImageOpacity: @sapShell_BackgroundImageOpacity;
-  --sapShell_BackgroundImageRepeat: @sapShell_BackgroundImageRepeat;
   --sapShell_BackgroundPatternColor: @sapShell_BackgroundPatternColor;
-  --sapShell_BackgroundGradient: @sapShell_BackgroundGradient;
   --sapShell_BorderColor: @sapShell_BorderColor;
   --sapShell_TextColor: @sapShell_TextColor;
   --sapShell_InteractiveTextColor: @sapShell_InteractiveTextColor;
-  --sapShell_Favicon: @sapShell_Favicon;
+  --sapShell_Hover_Background: @sapShell_Hover_Background;
+  --sapShell_Active_Background: @sapShell_Active_Background;
+
   --sapButton_BorderWidth: @sapButton_BorderWidth;
-  --sapButton_BorderCornerRadius: @sapButton_BorderCornerRadius;
   --sapButton_Background: @sapButton_Background;
   --sapButton_BorderColor: @sapButton_BorderColor;
+  --sapButton_IconColor: @sapButton_IconColor;
+  --sapButton_Selected_Background: @sapButton_Selected_Background;
+  --sapButton_Selected_BorderColor: @sapButton_Selected_BorderColor;
+  --sapButton_Selected_TextColor: @sapButton_Selected_TextColor;
   --sapButton_Hover_Background: @sapButton_Hover_Background;
   --sapButton_Hover_BorderColor: @sapButton_Hover_BorderColor;
-
+  --sapButton_Active_TextColor: @sapButton_Active_TextColor;
+  --sapButton_Active_Background: @sapButton_Active_Background;
+  --sapButton_Active_BorderColor: @sapButton_BorderColor;
   --sapButton_Emphasized_Background: @sapButton_Emphasized_Background;
   --sapButton_Emphasized_BorderColor: @sapButton_Emphasized_BorderColor;
+  --sapButton_Emphasized_Hover_BorderColor: @sapButton_Hover_BorderColor;
+  --sapButton_Emphasized_Hover_Background: @sapButton_Emphasized_Hover_Background;
+  --sapButton_Emphasized_TextShadow: none;
+  --sapButton_Emphasized_Active_Background: @sapButton_Emphasized_Active_Background;
+  --sapButton_Emphasized_Active_BorderColor: @sapButton_Emphasized_Active_BorderColor; 
+  --sapButton_Reject_TextColor: @sapButton_Reject_TextColor;
   --sapButton_Reject_Background: @sapButton_Reject_Background;
+  --sapButton_Reject_BorderColor: @sapButton_BorderColor;
+  --sapButton_Reject_Hover_Background: @sapButton_Reject_Hover_Background;
+  --sapButton_Reject_Hover_BorderColor: @sapButton_BorderColor;
+  --sapButton_Reject_Active_Background: @sapButton_Reject_Active_Background;
+  --sapButton_Reject_Active_BorderColor: @sapButton_Active_BorderColor;
+  --sapButton_Accept_TextColor: @sapButton_Accept_TextColor;
+  --sapButton_Accept_BorderColor: @sapButton_Accept_BorderColor;
+  --sapButton_Accept_Hover_Background: @sapButton_Accept_Hover_Background;
+  --sapButton_Accept_Hover_BorderColor: @sapButton_Accept_Hover_BorderColor;
   --sapButton_Accept_Background: @sapButton_Accept_Background;
+  --sapButton_Accept_Active_Background: @sapButton_Accept_Active_Background;
+  --sapButton_Accept_Active_BorderColor: @sapButton_Accept_Active_BorderColor;
+  --sapButton_Lite_Background: @sapButton_Background;
+  --sapButton_Lite_TextColor: @sapButton_Lite_TextColor;
+  --sapButton_Lite_Hover_Background: @sapButton_Hover_Background;
+
   --sapField_Background: @sapField_Background;
   --sapField_BorderColor: @sapField_BorderColor;
   --sapField_TextColor: @sapField_TextColor;
@@ -162,11 +196,10 @@
   --sapField_WarningBackground: @sapField_WarningBackground;
   --sapField_SuccessColor: @sapField_SuccessColor;
   --sapField_SuccessBackground: @sapField_SuccessBackground;
-  --sapField_InformationColor: @sapField_InformationColor;
-  --sapField_InformationBackground: @sapField_InformationBackground;
+  --sapField_PlaceholderTextColor: @sapField_PlaceholderTextColor;
+
   --sapGroup_TitleBackground: @sapGroup_TitleBackground;
   --sapGroup_TitleBorderColor: @sapGroup_TitleBorderColor;
-  --sapGroup_Title_FontSize: @sapGroup_Title_FontSize;
   --sapGroup_ContentBackground: @sapGroup_ContentBackground;
   --sapGroup_ContentBorderColor: @sapGroup_ContentBorderColor;
   --sapGroup_BorderWidth: @sapGroup_BorderWidth;
@@ -174,14 +207,29 @@
   --sapGroup_FooterBackground: @sapGroup_FooterBackground;
   --sapToolbar_Background: @sapToolbar_Background;
   --sapToolbar_SeparatorColor: @sapToolbar_SeparatorColor;
+
+  --sapList_TextColor: @sapList_TextColor;
   --sapList_HeaderBackground: @sapList_HeaderBackground;
   --sapList_HeaderBorderColor: @sapList_HeaderBorderColor;
+  --sapList_Active_Background: @sapList_Active_Background;
   --sapList_BorderColor: @sapList_BorderColor;
   --sapList_BorderWidth: @sapList_BorderWidth;
   --sapList_HighlightColor: @sapList_HighlightColor;
   --sapList_SelectionBackgroundColor: @sapList_SelectionBackgroundColor;
   --sapList_Background: @sapList_Background;
   --sapList_Hover_Background: @sapList_Hover_Background;
+  --sapList_Hover_SelectionBackground: @sapList_Hover_SelectionBackground;
+  --sapList_Active_TextColor: @sapList_Active_TextColor;
+  --sapList_GroupHeaderBackground: @sapList_GroupHeaderBackground;
+  --sapList_GroupHeaderTextColor: @sapList_GroupHeaderTextColor;
+  --sapList_HeaderTextColor: @sapList_HeaderTextColor;
+  --sapList_TableGroupHeaderBackground: @sapList_TableGroupHeaderBackground;
+  --sapList_TableGroupHeaderTextColor: @sapList_TableGroupHeaderTextColor;
+  --sapList_TableGroupHeaderBorderColor: @sapList_TableGroupHeaderBorderColor;
+  --sapList_FooterBackground: @sapList_FooterBackground;
+  --sapList_FooterTextColor: @sapList_FooterTextColor;
+  --sapList_GroupHeaderBorderColor: @sapList_GroupHeaderBorderColor;
+
   --sapScrollBar_FaceColor: @sapScrollBar_FaceColor;
   --sapScrollBar_TrackColor: @sapScrollBar_TrackColor;
   --sapScrollBar_BorderColor: @sapScrollBar_BorderColor;
@@ -192,8 +240,10 @@
   --sapPageHeader_BorderColor: @sapPageHeader_BorderColor;
 
   --sapPageFooter_Background: @sapPageFooter_Background;
+  --sapPageFooter_BorderColor: @sapPageFooter_BorderColor;
   --sapInfobar_Background: @sapInfobar_Background;
   --sapObjectHeader_Background: @sapObjectHeader_Background;
+  --sapObjectHeader_BorderColor: @sapObjectHeader_BorderColor;
   --sapBlockLayer_Background: @sapBlockLayer_Background;
   --sapTile_Background: @sapTile_Background;
   --sapTile_BorderColor: @sapTile_BorderColor;
@@ -204,10 +254,13 @@
   --sapTile_IconColor: @sapTile_IconColor;
   --sapPageHeader_TextColor: @sapPageHeader_TextColor;
   --sapPageFooter_TextColor: @sapPageFooter_TextColor;
-  --sapList_HeaderTextColor: @sapList_HeaderTextColor;
   --sapGroup_TitleTextColor: @sapGroup_TitleTextColor;
   --sapButton_Hover_TextColor: @sapButton_Hover_TextColor;
   --sapButton_TextColor: @sapButton_TextColor;
   --sapButton_Emphasized_TextColor: @sapButton_Emphasized_TextColor;
   --sapContent_ForegroundTextColor: @sapContent_ForegroundTextColor;
+
+  // custom added params as no base ("sap" prefix) params equivalent exist
+  --sapToggleButton_Pressed_HoverBackground: @sapToggleButton_Pressed_HoverBackground;
+  --sapToggleButton_Pressed_HoverBorderColor: @sapToggleButton_Pressed_HoverBorderColor;
 }

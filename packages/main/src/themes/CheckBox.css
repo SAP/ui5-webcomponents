@@ -16,9 +16,9 @@
 
 /* readonly */
 :host([readonly]:not([value-state="Warning"]):not([value-state="Error"])) .ui5-checkbox-inner {
-	background: var(--sapUiFieldReadOnlyBackground);
+	background: var(--sapField_ReadOnly_Background);
 	border: var(--_ui5_checkbox_inner_readonly_border);
-	color: var(--sapUiContentNonInteractiveIconColor);
+	color: var(--sapContent_NonInteractiveIconColor);
 }
 
 /* wrap */
@@ -46,16 +46,16 @@
 /* value states */
 :host([value-state="Error"]) .ui5-checkbox-inner,
 :host([value-state="Error"]) .ui5-checkbox--hoverable:hover .ui5-checkbox-inner {
-	background: var(--sapUiFieldInvalidBackground);
+	background: var(--sapField_InvalidBackground);
 	border: var(--_ui5_checkbox_inner_error_border);
-	color: var(--sapUiFieldInvalidColor);
+	color: var(--sapField_InvalidColor);
 }
 
 :host([value-state="Warning"]) .ui5-checkbox-inner,
 :host([value-state="Warning"]) .ui5-checkbox--hoverable:hover .ui5-checkbox-inner {
-	background: var(--sapUiFieldWarningBackground);
+	background: var(--sapField_WarningBackground);
 	border: var(--_ui5_checkbox_inner_warning_border);
-	color: var(--sapUiFieldWarningColor);
+	color: var(--sapField_WarningColor);
 }
 
 :host([value-state="Warning"]) .ui5-checkbox-icon {
@@ -105,7 +105,7 @@ https://github.com/philipwalton/flexbugs/issues/231
 
 .ui5-checkbox--hoverable:hover .ui5-checkbox-inner {
 	background: var(--_ui5_checkbox_hover_background);
-	border-color: var(--sapUiFieldHoverBorderColor);
+	border-color: var(--sapField_Hover_BorderColor);
 }
 
 .ui5-checkbox-inner {
@@ -118,7 +118,7 @@ https://github.com/philipwalton/flexbugs/issues/231
 	max-height: var(--_ui5_checkbox_inner_width_height);
 	border: var(--_ui5_checkbox_inner_border);
 	border-radius: var(--_ui5_checkbox_inner_border_radius);
-	background: var(--sapUiFieldBackground);
+	background: var(--sapField_Background);
 	color: var(--_ui5_checkbox_checkmark_color);
 	box-sizing: border-box;
 	position: relative;

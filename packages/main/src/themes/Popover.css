@@ -3,8 +3,8 @@
 	position: fixed;
 	z-index: 10;
 	min-width: 6.25rem;
-	background: var(--sapUiGroupContentBackground);
-	box-shadow: var(--sapUiShadowLevel2);
+	background: var(--sapGroup_ContentBackground);
+	box-shadow: var(--sapContent_Shadow2);
 	border-radius: 0.25rem;
 	min-height: 2rem;
 	box-sizing: border-box;
@@ -49,7 +49,7 @@
 	display: block;
 	width: 0.7rem;
 	height: 0.7rem;
-	background-color: var(--sapUiGroupContentBackground);
+	background-color: var(--sapGroup_ContentBackground);
 	transform: rotate(-45deg);
 }
 
@@ -110,23 +110,23 @@
 
 .ui5-popover-header-root,
 .ui5-popup-header-text {
-	border-bottom: 1px solid var(--sapUiPageFooterBorderColor);
+	border-bottom: 1px solid var(--sapPageFooter_BorderColor);
 }
 
 .ui5-popover-footer-root {
-	background: var(--sapUiPageFooterBackground);
-	border-top: 1px solid var(--sapUiPageFooterBorderColor);
-	color: var(--sapUiPageFooterTextColor);
+	background: var(--sapPageFooter_Background);
+	border-top: 1px solid var(--sapPageFooter_BorderColor);
+	color: var(--sapPageFooter_TextColor);
 }
 
 .ui5-popover-header-root,
 .ui5-popover-footer-root,
 :host([header-text]) .ui5-popup-header-text {
 	margin: 0;
-	color: var(--sapUiPageHeaderTextColor);
+	color: var(--sapPageHeader_TextColor);
 	font-size: 1rem;
 	font-weight: 400;
-	font-family: var(--sapUiFontFamily);
+	font-family: var(--sapFontFamily);
 	display: flex;
 	justify-content: center;
 	align-items: center;

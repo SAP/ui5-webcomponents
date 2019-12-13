@@ -9,7 +9,7 @@
 }
 
 .ui5-cal-root {
-	background: var(--sapUiListBackground);
+	background: var(--sapList_Background);
 }
 
 .ui5-cal-root ui5-daypicker,
