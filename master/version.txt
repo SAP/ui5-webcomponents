@@ -1,10 +1,5 @@
-commit 705cd1bfa2863be5652345313c0c71112764614a
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Dec 13 16:01:44 2019 +0200
+commit 54fe9c43dffdcc227e914d8ef510d682ec0e3d41
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Fri Dec 13 16:06:09 2019 +0200
 
-    refactor(CSS): remove the "sapUi" parameters (#1023)
-    
-    Use the sap* base parameters directly and remove the sapUi* ones.
-    Note: The sap* are params that the ThemeDesigner produces.
-    
-    FIXES: #1016
+    chore: update samples urls (#1052)
