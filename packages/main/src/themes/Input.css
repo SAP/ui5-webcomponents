@@ -72,19 +72,37 @@
 	font-family: inherit;
 }
 
+/* Input placeholder */
+:host([disabled]) [inner-input]::-webkit-input-placeholder {
+	visibility: hidden;
+}
+:host([readonly]) [inner-input]::-webkit-input-placeholder {
+	visibility: hidden;
+}
 [inner-input]::-webkit-input-placeholder {
+	font-style: italic;
 	color: var(--sapField_PlaceholderTextColor);
 }
 
+:host([disabled]) [inner-input]::-moz-placeholder {
+	visibility: hidden;
+}
+:host([readonly]) [inner-input]::-moz-placeholder {
+	visibility: hidden;
+}
 [inner-input]::-moz-placeholder {
+	font-style: italic;
 	color: var(--sapField_PlaceholderTextColor);
 }
 
+:host([disabled]) [inner-input]:-ms-input-placeholder {
+	visibility: hidden;
+}
+:host([readonly]) [inner-input]:-ms-input-placeholder {
+	visibility: hidden;
+}
 [inner-input]:-ms-input-placeholder {
-	color: var(--sapField_PlaceholderTextColor);
-}
-
-[inner-input]:-moz-placeholder {
+	font-style: italic;
 	color: var(--sapField_PlaceholderTextColor);
 }
 
