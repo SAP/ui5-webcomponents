@@ -65,7 +65,7 @@ for (let i = 0; i < varArrays.length; i++) {
 		if (i !== j) {
 			const missing = varArrays[i].filter(v => !varArrays[j].includes(v));
 			missing.forEach(v => {
-				if (!missingVars.includes(v)) {
+				if (!missingVars.includes(v) && !v.startsWith("sapHC")) {
 					missingVars.push(v);
 				}
 			})
