@@ -12,6 +12,10 @@
 	border-bottom: var(--ui5-listitem-border-bottom);
 }
 
+:host([selected][has-border]) {
+	border-bottom: var(--ui5-listitem-selected-border-bottom);
+}
+
 .ui5-li-root {
 	position: relative;
 	display: flex;
