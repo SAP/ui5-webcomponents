@@ -14,13 +14,10 @@ import { PLEASE_WAIT } from "./generated/i18n/i18n-defaults.js";
 const metadata = {
 	tag: "INIT_PACKAGE_VAR_TAG",
 	properties: {
-		//
 	},
 	slots: {
-		//
 	},
 	events: {
-		//
 	},
 };
 
@@ -43,12 +40,12 @@ class INIT_PACKAGE_VAR_CLASS_NAME extends UI5Element {
 		return litRender;
 	}
 
-	static get styles() {
-		return INIT_PACKAGE_VAR_CLASS_NAMECss;
-	}
-
 	static get template() {
 		return INIT_PACKAGE_VAR_CLASS_NAMETemplate;
+	}
+
+	static get styles() {
+		return INIT_PACKAGE_VAR_CLASS_NAMECss;
 	}
 
 	static async define(...params) {
