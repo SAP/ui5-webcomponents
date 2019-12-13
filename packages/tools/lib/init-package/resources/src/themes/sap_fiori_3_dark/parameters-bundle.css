@@ -1,1 +1,3 @@
-@import "../base/INIT_PACKAGE_VAR_CLASS_NAME.css";
+:root {
+    --ui5-demo-border-color: blue;
+}
