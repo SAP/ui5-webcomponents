@@ -1,5 +1,5 @@
-commit 65d7af7010054e081aab3c4783a756e17a386385
+commit 2404e86bfaac1eb666c9e97de7890c64e909a9b2
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Dec 13 12:57:53 2019 +0200
+Date:   Fri Dec 13 13:39:43 2019 +0200
 
-    refactor: simplify package configuration (#1057)
+    chore: theme-base verify task also find variables missing between themes (#1058)
