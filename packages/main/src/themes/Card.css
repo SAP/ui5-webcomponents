@@ -1,3 +1,5 @@
+@import "./InvisibleTextStyles.css";
+
 :host(:not([hidden])) {
 	display: inline-block;
 	width: 100%;
@@ -34,11 +36,8 @@
 	border-bottom: none;
 }
 
-.ui5-card-header:focus {
+.ui5-card-header:focus:before {
 	outline: none;
-}
-
-.ui5-card-header.ui5-card-header--interactive:focus:before {
 	content: "";
 	position: absolute;
 	border: var(--_ui5_card_header_focus_border);
@@ -80,7 +79,7 @@
 
 ::slotted(img) {
 	width: 100%;
-    height: 100%;
+	height: 100%;
 	border-radius: 50%;
 }
 
