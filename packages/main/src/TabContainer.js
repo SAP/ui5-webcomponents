@@ -358,7 +358,7 @@ class TabContainer extends UI5Element {
 	get classes() {
 		return {
 			root: {
-				"ui5-tc-root" : true,
+				"ui5-tc-root": true,
 				"ui5-tc--textOnly": this._textOnly,
 			},
 			header: {
