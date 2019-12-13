@@ -1,5 +1,8 @@
-commit 54fe9c43dffdcc227e914d8ef510d682ec0e3d41
+commit 999059c0eb586d4f8aa462c0b7135bf4b7f8b408
 Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Fri Dec 13 16:06:09 2019 +0200
+Date:   Fri Dec 13 17:02:50 2019 +0200
 
-    chore: update samples urls (#1052)
+    chore: cleanup resolutions (#1060)
+    
+    - remove unused resolutions
+    - update chokidar version of livereload via resolution to address high CPU
