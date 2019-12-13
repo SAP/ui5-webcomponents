@@ -89,6 +89,55 @@
 				</ui5-tabcontainer>
 			</div>
 
+			<div class="sample" style="height: 200px">
+				<ui5-tabcontainer fixed showOverflow style="height: 100%;" id="tc-scrollable-child">
+					<ui5-tab text="Tab 1" selected id="scrollable-tab">
+						<ui5-button>Toggle style</ui5-button>
+
+
+						<!-- Simple use case -->
+						<!-- <div style="background: red; height: 100%; width: 100%"></div> -->
+
+						<!-- Complex use case -->
+						<ui5-table>
+							<ui5-table-column slot="columns">Source</ui5-table-column>
+							<ui5-table-column slot="columns">Method</ui5-table-column>
+
+							<ui5-table-row>
+								<ui5-table-cell>Cell 1</ui5-table-cell>
+								<ui5-table-cell>Cell 2</ui5-table-cell>
+							</ui5-table-row>
+
+							<ui5-table-row>
+								<ui5-table-cell>Cell 1</ui5-table-cell>
+								<ui5-table-cell>Cell 2</ui5-table-cell>
+							</ui5-table-row>
+
+							<ui5-table-row>
+								<ui5-table-cell>Cell 1</ui5-table-cell>
+								<ui5-table-cell>Cell 2</ui5-table-cell>
+							</ui5-table-row>
+
+							<ui5-table-row>
+								<ui5-table-cell>Cell 1</ui5-table-cell>
+								<ui5-table-cell>Cell 2</ui5-table-cell>
+							</ui5-table-row>
+
+							<ui5-table-row>
+								<ui5-table-cell>Cell 1</ui5-table-cell>
+								<ui5-table-cell>Cell 2</ui5-table-cell>
+							</ui5-table-row>
+
+							<ui5-table-row>
+								<ui5-table-cell>Cell 1</ui5-table-cell>
+								<ui5-table-cell>Cell 2</ui5-table-cell>
+							</ui5-table-row>
+						</ui5-table>
+					</ui5-tab>
+
+				</ui5-tabcontainer>
+			</div>
+<br />
 			<div class="sample">
 				<h4>Icon and Text</h4>
 
@@ -175,54 +224,6 @@
 				</ui5-tabcontainer>
 			</div>
 
-			<div class="sample" style="height: 300px">
-				<ui5-tabcontainer fixed showOverflow style="height: 100%;" id="tc-scrollable-child">
-					<ui5-tab text="Tab 1" selected id="scrollable-tab">
-						<ui5-button>Toggle style</ui5-button>
-
-
-						<!-- Simple use case -->
-						<!-- <div style="background: red; height: 100%; width: 100%"></div> -->
-
-						<!-- Complex use case -->
-						<ui5-table>
-							<ui5-table-column slot="columns">Source</ui5-table-column>
-							<ui5-table-column slot="columns">Method</ui5-table-column>
-
-							<ui5-table-row>
-								<ui5-table-cell>Cell 1</ui5-table-cell>
-								<ui5-table-cell>Cell 2</ui5-table-cell>
-							</ui5-table-row>
-
-							<ui5-table-row>
-								<ui5-table-cell>Cell 1</ui5-table-cell>
-								<ui5-table-cell>Cell 2</ui5-table-cell>
-							</ui5-table-row>
-
-							<ui5-table-row>
-								<ui5-table-cell>Cell 1</ui5-table-cell>
-								<ui5-table-cell>Cell 2</ui5-table-cell>
-							</ui5-table-row>
-
-							<ui5-table-row>
-								<ui5-table-cell>Cell 1</ui5-table-cell>
-								<ui5-table-cell>Cell 2</ui5-table-cell>
-							</ui5-table-row>
-
-							<ui5-table-row>
-								<ui5-table-cell>Cell 1</ui5-table-cell>
-								<ui5-table-cell>Cell 2</ui5-table-cell>
-							</ui5-table-row>
-
-							<ui5-table-row>
-								<ui5-table-cell>Cell 1</ui5-table-cell>
-								<ui5-table-cell>Cell 2</ui5-table-cell>
-							</ui5-table-row>
-						</ui5-table>
-					</ui5-tab>
-
-				</ui5-tabcontainer>
-			</div>
 		</div>
 		<div class="result">
 			<h2>Result</h2>
