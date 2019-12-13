@@ -1,5 +1,5 @@
-commit d278efd0f68b89093c0e2f57fcb1ed608565e3c6
+commit 501f22d314f988cef4f5481651ceb1da9ab2d045
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu Dec 12 14:56:16 2019 +0200
+Date:   Fri Dec 13 08:55:50 2019 +0200
 
-    chore: verify all less vars are defined in CSS (#1054)
+    chore: disable live reload for windows(#1055)
