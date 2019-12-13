@@ -50,9 +50,7 @@ packages.forEach(package => {
 
                     prependFile(path.join(process.cwd(), `/docs/pages/content/${package}`, file),
 `---
-layout: default
 title: ${currentPageName.replace(/([A-Z])/g, " $1").trim()}
-parent: Pages
 permalink: /playground/${package}/pages/${currentPageName}/
 nav_exclude: true
 ---
