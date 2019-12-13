@@ -14,9 +14,8 @@
 	</script>
 
 	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
-	<script type="module" src="../../resources/bundle.esm.js"></script>
-	<script nomodule src="../../resources/bundle.es5.js">
-	</script>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+	<script nomodule src="../../resources/bundle.es5.js"></script>
 
 	<script>
 		var inputCSS = ".sapWCInputBaseContentWrapper {background: #fff; !important}"
@@ -58,7 +57,7 @@
 		}
 	</style>
 </head>
-<body>
+<body style="background-color: var(--sapBackgroundColor);">
 	<div class="header">
 			<ui5-radiobutton id="sap_fiori_3" name="theme" text="Fiori 3" selected></ui5-radiobutton>
 			<ui5-radiobutton id="sap_belize_hcb" name="theme" text="HCB_Custom"></ui5-radiobutton>

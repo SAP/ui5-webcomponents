@@ -25,7 +25,6 @@ const metadata = {
 			individualSlots: true,
 		},
 	},
-	_eventHandlersByConvention: true,
 };
 
 /**

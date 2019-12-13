@@ -7,12 +7,9 @@
 	<title>ui5-switch</title>
 
 	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
-	<script
-		src="../../resources/bundle.esm.js"
-		type="module"
-	></script>
-
+	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
+
 	<script>delete Document.prototype.adoptedStyleSheets</script>
 </head>
 
@@ -21,7 +18,7 @@
 		margin: 8px;
 	}
 </style>
-<body>
+<body style="background-color: var(--sapBackgroundColor);">
 	<h3>Default Switch</h3>
 	<div style="display: flex">
 		<ui5-switch style="width:200px" text-on="On" text-off="Off"></ui5-switch>

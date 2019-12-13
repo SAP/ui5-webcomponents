@@ -4,6 +4,23 @@ const assert = require("chai").assert;
 describe("Button general interaction", () => {
 	browser.url("http://localhost:8080/test-resources/pages/Button.html");
 
+	it("tests button's text rendering", () => {
+		const slotsLength = browser.$("#button1").shadow$$(".ui5-button-text>bdi>slot").length;
+
+		// The default slot
+		assert.strictEqual(slotsLength, 1, "Button text is not rendered");
+	});
+
+	it("tests button's icon rendering", () => {
+		const button = browser.$("#button1");
+
+		button.setAttribute("icon", "add");
+		assert.strictEqual(button.shadow$$("ui5-icon").length, 1, "icon is present");
+		
+		button.setAttribute("icon", "");
+		assert.strictEqual(button.shadow$$("ui5-icon").length, 0, "icon is not present");
+	});
+
 	it("tests click event", () => {
 		const button = browser.$("#button1");
 		const field = browser.$("#click-counter");

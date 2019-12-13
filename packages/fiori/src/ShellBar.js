@@ -27,7 +27,7 @@ import styles from "./generated/themes/ShellBar.css.js";
  */
 const metadata = {
 	tag: "ui5-shellbar",
-	properties: /** @lends  sap.ui.webcomponents.fiori.ShellBar.prototype */ {
+	properties: /** @lends sap.ui.webcomponents.fiori.ShellBar.prototype */ {
 
 		/**
 		 * Defines the <code>logo</code> source URI.
@@ -145,7 +145,7 @@ const metadata = {
 		},
 	},
 
-	slots: /** @lends  sap.ui.webcomponents.main.ShellBar.prototype */ {
+	slots: /** @lends sap.ui.webcomponents.fiori.ShellBar.prototype */ {
 		/**
 		 * Defines the <code>ui5-shellbar</code> aditional items.
 		 * <br><br>
@@ -200,7 +200,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.ShellBar.prototype */ {
+	events: /** @lends sap.ui.webcomponents.fiori.ShellBar.prototype */ {
 		/**
 		 *
 		 * Fired, when the notification icon is activated.
@@ -284,7 +284,6 @@ const metadata = {
 			},
 		},
 	},
-	_eventHandlersByConvention: true,
 };
 
 /**
@@ -295,11 +294,11 @@ const metadata = {
  * and includes numerous built-in features, such as: logo, profile icon, title, search field, notifications and so on.
  * <br><br>
  * <h3>ES6 Module Import</h3>
- * <code>import "@ui5/webcomponents/dist/ShellBar";</code>
+ * <code>import "@ui5/webcomponents-fiori/dist/ShellBar";</code>
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.ShellBar
+ * @alias sap.ui.webcomponents.fiori.ShellBar
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-shellbar
  * @appenddocs ShellBarItem
@@ -618,7 +617,7 @@ class ShellBar extends UI5Element {
 		popover.openBy(overflowButton);
 	}
 
-	onkeydown(event) {
+	_onkeydown(event) {
 		if (isEscape(event)) {
 			return this._handleEscape(event);
 		}

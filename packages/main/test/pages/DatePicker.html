@@ -8,10 +8,10 @@
 	<script>
 		delete Document.prototype.adoptedStyleSheets;
 	</script>
+
 	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
 	<script src="../../resources/bundle.esm.js" type="module"></script>
-	<script nomodule src="../../resources/bundle.es5.js">
-	</script>
+	<script nomodule src="../../resources/bundle.es5.js"></script>
 
 	<script
 	src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -34,7 +34,7 @@
 		}
 	</style>
 </head>
-<body>
+<body style="background-color: var(--sapBackgroundColor);">
 	<div style='width:500px;'>
 		<ui5-datepicker id='ui5-datepicker--startDate'
 			placeholder='Delivery Date...'
