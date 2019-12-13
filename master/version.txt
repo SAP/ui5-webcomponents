@@ -1,8 +1,7 @@
-commit 999059c0eb586d4f8aa462c0b7135bf4b7f8b408
+commit 7ad9de15bd2c100149a6aecc8b9176951da04453
 Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Fri Dec 13 17:02:50 2019 +0200
+Date:   Fri Dec 13 17:45:03 2019 +0200
 
-    chore: cleanup resolutions (#1060)
+    chore: display test pages standalone (#1062)
     
-    - remove unused resolutions
-    - update chokidar version of livereload via resolution to address high CPU
+    Don't use the layout, no navigation or header necessary
