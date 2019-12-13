@@ -1,5 +1,5 @@
-commit 501f22d314f988cef4f5481651ceb1da9ab2d045
+commit 65d7af7010054e081aab3c4783a756e17a386385
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Dec 13 08:55:50 2019 +0200
+Date:   Fri Dec 13 12:57:53 2019 +0200
 
-    chore: disable live reload for windows(#1055)
+    refactor: simplify package configuration (#1057)
