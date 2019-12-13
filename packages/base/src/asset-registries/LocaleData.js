@@ -64,8 +64,11 @@ const fetchCldr = async (language, region, script) => {
 	const localeId = calcLocale(language, region, script);
 
 	const cldrObj = cldrData[localeId];
-	const url = cldrUrls[localeId];
+	let url = cldrUrls[localeId];
 
+	if (!url.startsWith("/") && window.sap && window.sap.ui) {
+		url = `${sap.ui.require.toUrl("")}/${url}`;
+	}
 	if (cldrObj) {
 		// inlined from build or fetched independently
 		registerModuleContent(`sap/ui/core/cldr/${localeId}.json`, cldrObj);

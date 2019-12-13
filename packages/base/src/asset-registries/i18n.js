@@ -56,13 +56,16 @@ const fetchI18nBundle = async packageName => {
 		localeId = nextFallbackLocale(localeId);
 	}
 
-	const bundleURL = bundlesForPackage[localeId];
+	let bundleURL = bundlesForPackage[localeId];
 
 	if (typeof bundleURL === "object") { // inlined from build
 		setI18nBundleData(packageName, bundleURL);
 		return bundleURL;
 	}
 
+	if (!bundleURL.startsWith("/") && window.sap && window.sap.ui) {
+		bundleURL = `${sap.ui.require.toUrl("")}/${bundleURL}`;
+	}
 	const data = await fetchJsonOnce(bundleURL);
 	setI18nBundleData(packageName, data);
 };

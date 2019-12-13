@@ -36,10 +36,13 @@ const getThemeProperties = async (packageName, themeName) => {
 };
 
 const fetchThemeProperties = async (packageName, themeName) => {
-	const url = themeURLs.get(`${packageName}_${themeName}`);
+	let url = themeURLs.get(`${packageName}_${themeName}`);
 
 	if (!url) {
 		throw new Error(`You have to import @ui5/webcomponents/dist/json-imports/Themes module to use theme switching`);
+	}
+	if (!url.startsWith("/") && window.sap && window.sap.ui) {
+		url = `${sap.ui.require.toUrl("")}/${url}`;
 	}
 	return fetchJsonOnce(url);
 };
