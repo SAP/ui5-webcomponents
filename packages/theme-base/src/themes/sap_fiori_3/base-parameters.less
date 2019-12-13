@@ -167,14 +167,12 @@
 @sapShell_Active_Background: darken(@sapShellColor, 10);
 @sapShell_Active_TextColor: contrast(@sapShell_Active_Background, @sapTextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
 @sapShell_Background: @sapPrimary4;
-@sapShell_BackgroundImage: none;
-@sapShell_BackgroundImageOpacity: 1.0;
-@sapShell_BackgroundImageRepeat: false;
+
 @sapShell_BackgroundPatternColor: transparent;
-@sapShell_BackgroundGradient: none;
+
 @sapShell_BorderColor: @sapShellColor;
 @sapShell_InteractiveTextColor: #d1e8ff;
-@sapShell_Favicon: none;
+
 
 @sapButton_Hover_Background: lighten(@sapHighlightColor, 63);
 @sapButton_TextColor: contrast(@sapButton_Background, @sapHighlightColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
@@ -201,7 +199,6 @@
 @sapButton_Accept_Hover_BorderColor: @sapPositiveElementColor;
 @sapButton_BorderColor: @sapHighlightColor;
 @sapButton_BorderWidth: @sapElement_BorderWidth;
-@sapButton_BorderCornerRadius: calc(0.25 * @sapContent_GridSize);
 @sapButton_Background: @sapBaseColor;
 @sapButton_Hover_TextColor: contrast(@sapButton_Hover_Background, @sapHighlightColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
 @sapButton_Hover_BorderColor: @sapButton_BorderColor;
@@ -238,11 +235,13 @@
 @sapList_TableGroupHeaderBackground: darken(@sapList_Background, 6.1);
 @sapList_TableGroupHeaderBorderColor: darken(@sapList_BorderColor, 4.9);
 @sapList_TableGroupHeaderTextColor: contrast(@sapList_TableGroupHeaderBackground, @sapList_TextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
+@sapList_FooterTextColor: contrast(@sapList_FooterBackground, @sapTextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
+@sapList_GroupHeaderBorderColor: darken(@sapList_BorderColor, 4.9);
 
 @sapScrollBar_FaceColor: darken(@sapBaseColor, 30);
 @sapScrollBar_TrackColor: lighten(@sapScrollBar_FaceColor, 30);
 @sapScrollBar_Hover_FaceColor: darken(@sapScrollBar_FaceColor, 3);
-@sapInfobar_Hover_Background: darken(@sapInfobar_Background, 3);
+
 @sapObjectHeader_BorderColor: darken(@sapObjectHeader_Background, 15);
 @sapPageHeader_BorderColor: darken(@sapPageHeader_Background, 15);
 @sapPageHeader_TextColor: contrast(@sapPageHeader_Background, @sapTextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
