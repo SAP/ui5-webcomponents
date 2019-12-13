@@ -6,6 +6,7 @@
 /* selected */
 :host([selected]) {
 	background: var(--sapList_SelectionBackgroundColor);
+	border-bottom: 1px solid var(--sapList_SelectionBorderColor);
 }
 
 /* selected and hovered */
