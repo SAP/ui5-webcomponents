@@ -1,6 +1,6 @@
 
 const datepicker = require("../pageobjects/DatePickerTestPage");
-const assert = require("assert");
+const assert = require("chai").assert;
 
 describe("Date Picker Tests", () => {
 	before(() => {

@@ -1,4 +1,4 @@
-const assert = require('assert');
+const assert = require("chai").assert;
 
 describe("RadioButton general interaction", () => {
 	browser.url("http://localhost:8080/test-resources/pages/RadioButton.html");
@@ -129,5 +129,4 @@ describe("RadioButton general interaction", () => {
 		assert.strictEqual(truncatingRbHeight, RADIOBUTTON_DEFAULT_HEIGHT, "The size of the radiobutton is : " + truncatingRbHeight);
 		assert.ok(wrappingRbHeight > RADIOBUTTON_DEFAULT_HEIGHT, "The size of the radiobutton is more than: " + RADIOBUTTON_DEFAULT_HEIGHT);
 	});
-
 });

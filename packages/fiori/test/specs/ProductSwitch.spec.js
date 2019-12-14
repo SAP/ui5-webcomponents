@@ -1,4 +1,4 @@
-const assert = require("assert");
+const assert = require("chai").assert;
 
 describe("ProductSwitch general interaction", () => {
 	browser.url("http://localhost:8081/test-resources/pages/ProductSwitch.html");
