@@ -1,7 +1,5 @@
-commit 7ad9de15bd2c100149a6aecc8b9176951da04453
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Fri Dec 13 17:45:03 2019 +0200
+commit 2b981e20ca3f5ce994bbe77ab7347b5566b97723
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Dec 16 09:38:02 2019 +0200
 
-    chore: display test pages standalone (#1062)
-    
-    Don't use the layout, no navigation or header necessary
+     refactor(ui5-li): apply selection border color (#1063)
