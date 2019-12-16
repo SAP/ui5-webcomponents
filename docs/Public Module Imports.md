@@ -48,6 +48,10 @@ The `main` package provides general purpose UI building blocks such as buttons, 
 | Title                    | `ui5-title`          | `import "@ui5/webcomponents/dist/Title.js";`               |
 | Toggle Button            | `ui5-togglebutton`   | `import "@ui5/webcomponents/dist/ToggleButton.js";`        |
 
+For additional `main` package assets (other themes, i18n and CLDR), use:
+
+`import "@ui5/webcomponents/dist/Assets.js";`
+
 ### Fiori package (```@ui5/webcomponents-fiori```)
 
 The `fiori` package provides essential building blocks, necessary to implement the Fiori UX concept, 
@@ -59,6 +63,10 @@ such as a common header (ShellBar).
 | Shell Bar Item           | `ui5-shellbar-item`  | `import "@ui5/webcomponents-fiori/dist/ShellBarItem.js";`  |
 | Product Switch           | `ui5-product-switch`       | `import "@ui5/webcomponents-fiori/dist/ProductSwitch.js";`      |
 | Product Switch Item      | `ui5-product-switch-item`  | `import "@ui5/webcomponents-fiori/dist/ProductSwitchItem.js";`  |
+
+For additional `fiori` package assets (other themes, i18n and CLDR), use:
+
+`import "@ui5/webcomponents-fiori/dist/Assets.js";`
 
 ### Icons package (```@ui5/webcomponents-icons```)
 

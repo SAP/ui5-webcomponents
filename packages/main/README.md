@@ -45,6 +45,10 @@ Provides general purpose UI building blocks such as buttons, labels, inputs and 
  | Title                    | `ui5-title`          | `import "@ui5/webcomponents/dist/Title.js";`               |
  | Toggle Button            | `ui5-togglebutton`   | `import "@ui5/webcomponents/dist/ToggleButton.js";`        |
 
+For additional `main` package assets (other themes, i18n and CLDR), use:
+
+`import "@ui5/webcomponents/dist/Assets.js";`
+
 ## Resources
 - [UI5 Web Components - README.md](https://github.com/SAP/ui5-webcomponents/blob/master/README.md)
 - [UI5 Web Components - Home Page](https://sap.github.io/ui5-webcomponents)

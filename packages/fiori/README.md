@@ -15,6 +15,10 @@ such as a common header (ShellBar).
  | Product Switch           | `ui5-product-switch`       | `import "@ui5/webcomponents-fiori/dist/ProductSwitch.js";`      |
  | Product Switch Item      | `ui5-product-switch-item`  | `import "@ui5/webcomponents-fiori/dist/ProductSwitchItem.js";`  |
 
+For additional `fiori` package assets (other themes, i18n and CLDR), use:
+
+`import "@ui5/webcomponents-fiori/dist/Assets.js";`
+
 ## Resources
 - [UI5 Web Components - README.md](https://github.com/SAP/ui5-webcomponents/blob/master/README.md)
 - [UI5 Web Components - Home Page](https://sap.github.io/ui5-webcomponents)
