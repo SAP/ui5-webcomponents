@@ -1,5 +1,5 @@
-commit d5516234b5251746ac0689305330079c6d4427be
-Author: Petar Skelin <petar.skelin@sap.com>
-Date:   Thu Dec 12 14:10:23 2019 +0200
+commit a43396ed3f5b2ec7d0bd3b3a45ef8031e4fcccb0
+Author: ilhan <ilhan.myumyun@sap.com>
+Date:   Mon Dec 16 10:05:12 2019 +0200
 
-    chore: update samples urls
+    fix(docs): display the ui5-popover API correctly
