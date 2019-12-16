@@ -26,8 +26,7 @@ const getScripts = (options) => {
 				json: `mkdirp dist/assets/i18n && node ${LIB}/i18n/toJSON.js src/i18n dist/assets/i18n`,
 			},
 			jsonImports: {
-				default: "nps build.jsonImports.prepare build.jsonImports.themes build.jsonImports.i18n build.jsonImports.cldr",
-				prepare: "mkdirp dist/json-imports",
+				default: "mkdirp dist/json-imports && nps build.jsonImports.themes build.jsonImports.i18n build.jsonImports.cldr",
 				themes: `node ${LIB}/generate-json-imports/themes.js`,
 				i18n: `node ${LIB}/generate-json-imports/i18n.js`,
 				cldr: `node ${LIB}/generate-json-imports/cldr.js`
