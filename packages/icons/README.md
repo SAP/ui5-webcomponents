@@ -9,7 +9,7 @@ Provides assets for the rich `SAP-icons` icon collection.
 
 |      Icon asset       |                           Module import                        |
 | ------------------------ |  ---------------------------------------------------------- |
-| All icons (~115KB zipped)       |  `import "@ui5/webcomponents-icons/dist/json-imports/Icons.js";`      |
+| All icons (~115KB zipped)       |  `import "@ui5/webcomponents-icons/dist/Assets.js";`      |
 | Accelerated icon           |  `import "@ui5/webcomponents-icons/dist/icons/accelerated.js";`  |
 | Accept icon           |  `import "@ui5/webcomponents-icons/dist/icons/accept.js";`  |
 | ...           |  ...  |

@@ -66,7 +66,7 @@ The `icons` package provides assets for the rich `SAP-icons` icon collection.
 
 |      Icon asset       |                           Module import                        |
 | ------------------------ |  ---------------------------------------------------------- |
-| All icons (~115KB zipped)       |  `import "@ui5/webcomponents-icons/dist/json-imports/Icons.js";`      |
+| All icons (~115KB zipped)       |  `import "@ui5/webcomponents-icons/dist/Assets.js";`      |
 | Accelerated icon           |  `import "@ui5/webcomponents-icons/dist/icons/accelerated.js";`  |
 | Accept icon           |  `import "@ui5/webcomponents-icons/dist/icons/accept.js";`  |
 | ...           |  ...  |
@@ -142,8 +142,8 @@ As shown in the example above, it's recommended to load the webcomponents polyfi
 ### 2. Theming
 
 ```js
-import "@ui5/webcomponents/dist/json-imports/Themes.js";
-import "@ui5/webcomponents-fiori/dist/json-imports/Themes.js"; // Only if using the @ui5/webcomponents-fiori package
+import "@ui5/webcomponents/dist/Assets.js";
+import "@ui5/webcomponents-fiori/dist/Assets.js"; // Only if using the @ui5/webcomponents-fiori package
 ```
 (for additional themes support)
 
@@ -190,9 +190,9 @@ Find out how you can bundle your themes more efficiently [here](Assets.md#bundli
 ### 3. Internationalization
 
 ```js
-import "@ui5/webcomponents/dist/json-imports/i18n.js";
-import "@ui5/webcomponents-fiori/dist/json-imports/i18n.js"; // Only if using the @ui5/webcomponents-fiori package
-import "@ui5/webcomponents-icons/dist/json-imports/i18n.js"; // Only if using the @ui5/webcomponents-icons package
+import "@ui5/webcomponents/dist/Assets.js";
+import "@ui5/webcomponents-fiori/dist/Assets.js"; // Only if using the @ui5/webcomponents-fiori package
+import "@ui5/webcomponents-icons/dist/Assets.js"; // Only if using the @ui5/webcomponents-icons package
 ```
 
 Some UI5 Web Components contain texts (such as placeholders, tooltips, messages) that need translation.

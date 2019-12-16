@@ -1,74 +1,64 @@
 # Assets and JSON module imports
 
 UI5 Web Components aim to be feature rich and with a minimal code footprint at the same time. In order to achieve this, 
-most UI5 Web Components packages ship their assets as `.json` files while also providing respective public module imports for them.
+most UI5 Web Components packages ship their assets as `.json` files while also providing a public module import for them.
 
 The assets in question could be i18n texts, icons, additional themes parameters, CLDR, etc...
 
 Currently our npm packages follow the scheme:
 
-`@ui5/<PACKAGE_NAME>/dist/assets/*`
+`@ui5/<PACKAGE_NAME>/dist/generated/assets/*`
 (for the assets themselves)
 
-`@ui5/<PACKAGE_NAME>/dist/json-imports/*`
-(for the modules that provide the assets)
+`@ui5/<PACKAGE_NAME>/dist/Assets.js`
+(for the module that provides the assets)
 
 <a name="packages"></a>
 ## Packages
 
 ### `base` package
 
-Asset type | Asset path | Public Module Import
-------|------------------|---
-CLDR | `@ui5/webcomponents-base/dist/assets/cldr/*` | `@ui5/webcomponents-base/dist/json-imports/LocaleData.js`
+The `base` package provides CLDR assets and common additional theme parameters.
 
-Usually you don't need to import the CLDR assets from the `base` package, but rather from the package(s) containing the actual web components.
+`import "@ui5/webcomponents-base/dist/Assets.js";`
+
+Usually you don't need to import the assets directly from the `base` package (unless you are developing a Web Components package of your own),
+but rather from the package(s) containing the actual web components you'll be using in your app.
 
 ### `main` package
 
-Asset type | Asset path | Public Module Import
-------|------------------|---
-i18n | `@ui5/webcomponents/dist/assets/i18n/*` | `@ui5/webcomponents/dist/json-imports/i18n.js`
-Additional themes | `@ui5/webcomponents/dist/assets/themes/*` | `@ui5/webcomponents/dist/json-imports/Themes.js`
-CLDR | N/A | `@ui5/webcomponents/dist/json-imports/LocaleData.js`
+The `main` package's `Assets.js` import provides package specific additional theming parameters and i18n assets. All assets from the `base`
+package are also imported.
 
-The `main` package does not have any additional CLDR assets besides the CLDR assets of the `base` project.
+`import "@ui5/webcomponents/dist/Assets.js";`
 
 ### `fiori` package
 
-Asset type | Asset path | Public Module Import
-------|------------------|---
-i18n | `@ui5/webcomponents-fiori/dist/assets/i18n/*` | `@ui5/webcomponents-fiori/dist/json-imports/i18n.js`
-Additional themes | `@ui5/webcomponents-fiori/dist/assets/themes/*` | `@ui5/webcomponents-fiori/dist/json-imports/Themes.js`
+The `fiori` package's `Assets.js` import provides package specific additional theming parameters and i18n assets. All assets from the `main`
+package are also imported.
+
+`import "@ui5/webcomponents-fiori/dist/Assets.js";`
 
 ### `icons` package
 
-Asset type | Asset path | Public Module Import
-------|------------------|---
-i18n | `@ui5/webcomponents-fiori/dist/assets/i18n/*` | `@ui5/webcomponents-fiori/dist/json-imports/i18n.js`
-All icons | `@ui5/webcomponents-fiori/dist/assets/icon-collections/*` | `@ui5/webcomponents-fiori/dist/json-imports/Icons.js`
+`import "@ui5/webcomponents-fiori/dist/Assets.js";`
 
 Normally applications are expected to import only the individual icons that are going to be used, for example:
 
 `import "@ui5/webcomponents-icons/dist/icons/add.js`";`
 
-However, sometimes it makes sense to import all icons, hence the `@ui5/webcomponents-fiori/dist/json-imports/Icons.js` JSON import.
-
-Since some icons have translatable tooltips, you might need the `i18n` JSON import as well.
+However, sometimes it makes sense to import all icons, hence the `import "@ui5/webcomponents-fiori/dist/Assets.js";` JSON import. 
+Along with the icons, it also includes all translatable texts.
 
 <a name="bundling"></a>
 ## Efficient asset bundling
 
-You may notice that JSON imports, for example:
+You may notice that `Assets.js` imports, for example:
 
-`import "@ui5/webcomponents/dist/json-imports/i18n.js"`
-
-or
- 
-`import "@ui5/webcomponents/dist/json-imports/Themes.js"` 
+`import "@ui5/webcomponents/dist/Assets.js"`
  
  will produce warning messages in the browser's console, such as for example:
-> Inefficient bundling detected: consider bundling i18n/theme proeprties imports as URLs instead of inlining them.
+> Inefficient bundling detected: consider bundling i18n/theme properties imports as URLs instead of inlining them.
 > See rollup-plugin-url or webpack file-loader for more information.
 > Suggested pattern: "assets\/.*\.json"
 
