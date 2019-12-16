@@ -10,6 +10,7 @@ import ToastCss from "./generated/themes/Toast.css.js";
 
 // Static Constants
 const MAXIMUM_ALLOWED_TRANSITION_DURATION_IN_MILLISECONDS = 1000;
+const MINIMUM_ALLOWED_DURATION_IN_MILLISECONDS = 500;
 
 /**
  * @public
@@ -21,6 +22,9 @@ const metadata = {
 		/**
 		 * Defines the duration in milliseconds for which <code>ui5-toast</code>
 		 * remains on the screen before it's automatically closed.
+		 * <br>
+		 * <b>Note:</b> The minimum supported value is <code>500</code>.
+		 * If a lower value is passed, it's forced to be <code>500</code>.
 		 *
 		 * @type {Integer}
 		 * @defaultvalue 3000
@@ -136,6 +140,18 @@ class Toast extends UI5Element {
 
 	static get maximumAllowedTransition() {
 		return MAXIMUM_ALLOWED_TRANSITION_DURATION_IN_MILLISECONDS;
+	}
+
+	static get minimumAllowedDuration() {
+		return MINIMUM_ALLOWED_DURATION_IN_MILLISECONDS;
+	}
+
+	onBeforeRendering() {
+		// If the minimum duration is lower than 500ms, we force
+		// it to be 500ms, as described in the documentation.
+		if (this.duration < Toast.minimumAllowedDuration) {
+			this.duration = Toast.minimumAllowedDuration;
+		}
 	}
 
 	onAfterRendering() {

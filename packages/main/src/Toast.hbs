@@ -4,10 +4,8 @@
 		role="alert"
 		style="{{styles.root}}"
 		@transitionend="{{_ontransitionend}}">
-		<span class="ui5-toast-text">
-			<bdi>
-				<slot></slot>
-			</bdi>
-		</span>
+		<bdi>
+			<slot></slot>
+		</bdi>
 	</div>
 </div>

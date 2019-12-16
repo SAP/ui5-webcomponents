@@ -11,7 +11,7 @@
 	<script>delete Document.prototype.adoptedStyleSheets;</script>
 
 	<style>
-		ui5-button, h2 {
+		ui5-button, ui5-title {
 			margin: 1rem;
 		}
 	</style>
@@ -19,7 +19,7 @@
 
 <body>
 
-	<h2>Toast ( ui5-toast )</h2>
+	<ui5-title>Toast ( ui5-toast )</ui5-title>
 
 	<!--TopStart-->
 	<ui5-button id="wcBtnShowToastTS">Show TopStart Toast</ui5-button>
@@ -35,13 +35,13 @@
 
 	<!--TopEnd-->
 	<ui5-button id="wcBtnShowToastTE">Show TopEnd Toast</ui5-button>
-	<ui5-toast id="wcToastTE" placement="TopEnd">TopEnd</ui5-toast>
+	<ui5-toast id="wcToastTE" duration="-1" placement="TopEnd">TopEnd</ui5-toast>
 
 	<br>
 
 	<!--MiddleStart-->
 	<ui5-button id="wcBtnShowToastMS">Show MiddleStart Toast</ui5-button>
-	<ui5-toast id="wcToastMS" placement="MiddleStart">MiddleStart</ui5-toast>
+	<ui5-toast id="wcToastMS" duration="500" placement="MiddleStart">MiddleStart</ui5-toast>
 
 	<br>
 
@@ -53,7 +53,7 @@
 
 	<!--MiddleEnd-->
 	<ui5-button id="wcBtnShowToastME">Show MiddleEnd Toast</ui5-button>
-	<ui5-toast id="wcToastME" placement="MiddleEnd" duration="1500">MiddleEnd</ui5-toast>
+	<ui5-toast id="wcToastME" duration="1500" placement="MiddleEnd">MiddleEnd</ui5-toast>
 
 	<br>
 

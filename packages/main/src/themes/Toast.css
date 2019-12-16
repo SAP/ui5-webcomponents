@@ -1,7 +1,7 @@
 :host {
-	font-family: var(--sapUiFontFamily);
-	color: var(--sapUiListTextColor);
-	font-size: var(--sapMFontMediumSize);
+	font-family: var(--sapFontFamily);
+	color: var(--sapTextColor);
+	font-size: var(--sapFontMediumSize);
 }
 
 .ui5-toast-root {
@@ -31,9 +31,8 @@
 	transition-property: opacity;
 	opacity: 1;
 	margin: 2rem;
-}
 
-.ui5-toast-text {
+	/* Text styling */
 	font-family: inherit;
 	color: inherit;
 	font-weight: inherit;

@@ -106,11 +106,18 @@ describe("Toast general interaction", () => {
 		button.click();
 
 		// Give time for the animation to end and _ontransitionend to be called
-		browser.pause(3500);
+		browser.pause(1000);
 
 		assert.notOk(toast.getProperty("open"),
 		"Open property should be false after Toast is closed");
 		assert.notOk(toastShadowContent.isDisplayedInViewport(),
 		"Toast's content div shouldn't be displayed in the viewport after its closing.")
+	});
+
+	it("tests minimum allowed duration", () => {
+		const toast = browser.$("#wcToastTE");
+
+		assert.strictEqual(toast.getProperty("duration"), 500,
+				"Duration property is forced to be 500, when -1 is passed for duration attribute.");
 	});
 });
