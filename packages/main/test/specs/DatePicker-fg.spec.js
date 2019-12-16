@@ -1,5 +1,5 @@
 const DatePickerFGPage = require("../pageobjects/DatePickerFGPage");
-const assert = require('assert');
+const assert = require("chai").assert;
 
 describe('Date Picker Field Glass modifications', () => {
     it('direct usage for comparison', () => {

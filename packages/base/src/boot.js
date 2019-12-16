@@ -1,6 +1,5 @@
 import whenDOMReady from "./util/whenDOMReady.js";
 import EventEnrichment from "./events/EventEnrichment.js";
-import DOMEventHandler from "./DOMEventHandler.js";
 import insertFontFace from "./FontFace.js";
 import { getTheme } from "./config/Theme.js";
 import { _applyTheme } from "./Theming.js";
@@ -19,7 +18,6 @@ const boot = () => {
 		await whenDOMReady();
 		await _applyTheme(getTheme());
 		insertFontFace();
-		DOMEventHandler.start();
 		await whenPolyfillLoaded();
 		resolve();
 	});

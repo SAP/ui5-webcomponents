@@ -1,4 +1,62 @@
-const assert = require('assert');
+const assert = require("chai").assert;
+
+describe("Attributes propagation", () => {
+	browser.url("http://localhost:8080/test-resources/pages/TextArea.html");
+
+	it("Should change the placeholder of the inner textarea", () => {
+		const textarea = $("#basic-textarea");
+		const sExpected = "New placeholder text";
+
+		browser.execute(() => {
+			document.getElementById("basic-textarea").setAttribute("placeholder", "New placeholder text");
+		});
+
+		assert.strictEqual(textarea.shadow$("textarea").getProperty("placeholder"), sExpected, "The placeholder was set correctly");
+	});
+
+	it("Disabled attribute is propagated properly", () => {
+		assert.ok(browser.$("#disabled-textarea").shadow$("textarea").getAttribute("disabled"), "Disabled property was propagated");
+	});
+
+	it("Redonly attribute is propagated properly", () => {
+		assert.ok(browser.$("#readonly-textarea").shadow$("textarea").getAttribute("readonly"), "Readonly property was propagated");
+	});
+
+	it("Required attribute is propagated properly", () => {
+		assert.ok(browser.$("#required-textarea").shadow$("textarea").getAttribute("required"), "Required property was propagated");
+	});
+
+	it("Value attribute is propagated properly", () => {
+		const sExpectedValue = "Test";
+
+		browser.execute(() => {
+			document.getElementById("basic-textarea").value = "Test";
+		});
+
+		assert.strictEqual(browser.$("#basic-textarea").shadow$("textarea").getValue(), sExpectedValue, "Value property was set correctly");
+	});
+});
+
+describe("disabled and readonly textarea", () => {
+	browser.url('http://localhost:8080/test-resources/pages/TextArea.html');
+
+	it("can not be edited when disabled", () => {
+		const textAreaInnerDisabled = browser.$("#disabled-textarea").shadow$("textarea");
+
+		assert.strictEqual(textAreaInnerDisabled.isEnabled(), false, "Should not be enabled");
+	});
+
+	it("can not be edited when readonly", () => {
+		const textAreaInnerReadonly = browser.$("#readonly-textarea");
+
+		textAreaInnerReadonly.click();
+		textAreaInnerReadonly.keys("a");
+		textAreaInnerReadonly.keys("b");
+		textAreaInnerReadonly.keys("c");
+
+		assert.strictEqual(textAreaInnerReadonly.getValue(), "", "Value should be empty string");
+	});
+});
 
 describe("when enabled", () => {
 	browser.url('http://localhost:8080/test-resources/pages/TextArea.html');
@@ -13,17 +71,48 @@ describe("when enabled", () => {
 		assert.strictEqual(textarea.getProperty("value"), "Testa", "Value is changed");
 	});
 
-	it("can not be edittable when disabled", () => {
-		const textAreaInnerDisabled = browser.$("#disabled-textarea").shadow$("textarea");
+	it("fires change", () => {
+		const textarea = $("#textarea-change");
+		const changeResult = $("#changeResult");
 
-		assert.strictEqual(textAreaInnerDisabled.isEnabled(), false, "Should not be enabled");
+		// Start typing.
+		textarea.click();
+		textarea.keys("a");
+		textarea.keys("b");
+		textarea.keys("c");
+
+		// Click somewhere else to focus out - should fire change event.
+		changeResult.click();
+
+		// Get back and continue typing.
+		textarea.click();
+		textarea.keys("d");
+		textarea.keys("e");
+		textarea.keys("f");
+
+		// Click somewhere else to force focus out - should fire change event.
+		changeResult.click();
+
+		assert.strictEqual(changeResult.getValue(), "2", "change is called twice");
+	});
+
+	it("fires input", () => {
+		const textarea = $("#textarea-input");
+		const inputResult = $("#inputResult");
+
+		textarea.click();
+		textarea.keys("a");
+		textarea.keys("b");
+		textarea.keys("c");
+
+		assert.strictEqual(inputResult.getValue(), "3", "input is fired 3 times");
 	});
 
 	describe("when growing", () => {
 		it("Should have 8 rows and grow", () => {
 			const textArea = browser.$("#eight-rows-textarea");
 			const textAreaInner = browser.$("#eight-rows-textarea").shadow$("textarea");
-	
+
 			const initialSize = textArea.getSize();
 			textAreaInner.setValue(`1\n2\n3\n4\n5\n6\n7\n8`);
 
@@ -51,7 +140,7 @@ describe("when enabled", () => {
 			textAreaInner.addValue(`\n5\n6`);
 			const size6lines = textArea.getSize();
 
-			assert.ok(initialSize.height < size2lines.height, "TA should grow when having 2 lines of text")
+			assert.ok(initialSize.height < size2lines.height, "TA should grow when having 2 lines of text");
 			assert.ok(size2lines.height < size4lines.height, "TA should grow up to 4 lines");
 			assert.strictEqual(size6lines.height, size4lines.height, "TA should not grow more than 4 lines");
 		});

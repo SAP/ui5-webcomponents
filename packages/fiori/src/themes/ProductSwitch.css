@@ -1,6 +1,6 @@
 :host {
-	font-family: var(--sapUiFontFamily);
-	font-size: var(--sapMFontMediumSize);
+	font-family: var(--sapFontFamily);
+	font-size: var(--sapFontMediumSize);
 }
 
 .ui5-product-switch-root {
