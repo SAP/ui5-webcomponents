@@ -363,11 +363,11 @@ class Select extends UI5Element {
 	}
 
 	_getNextOptionIndex() {
-		return this._selectedIndex === (this.options.length - 1) ? 0 : (this._selectedIndex + 1);
+		return this._selectedIndex === (this.options.length - 1) ? this._selectedIndex : (this._selectedIndex + 1);
 	}
 
 	_getPreviousOptionIndex() {
-		return this._selectedIndex === 0 ? (this.options.length - 1) : (this._selectedIndex - 1);
+		return this._selectedIndex === 0 ? this._selectedIndex : (this._selectedIndex - 1);
 	}
 
 	_beforeOpen() {
