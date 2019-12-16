@@ -64,7 +64,7 @@ const fetchI18nBundle = async packageName => {
 	}
 
 	if (!bundleURL.startsWith("/") && window.sap && window.sap.ui) {
-		bundleURL = `${sap.ui.require.toUrl("")}/${bundleURL}`;
+		bundleURL = `${window.sap.ui.require.toUrl("")}/${bundleURL}`;
 	}
 	const data = await fetchJsonOnce(bundleURL);
 	setI18nBundleData(packageName, data);

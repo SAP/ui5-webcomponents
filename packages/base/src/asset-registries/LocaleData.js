@@ -67,7 +67,7 @@ const fetchCldr = async (language, region, script) => {
 	let url = cldrUrls[localeId];
 
 	if (!url.startsWith("/") && window.sap && window.sap.ui) {
-		url = `${sap.ui.require.toUrl("")}/${url}`;
+		url = `${window.sap.ui.require.toUrl("")}/${url}`;
 	}
 	if (cldrObj) {
 		// inlined from build or fetched independently
