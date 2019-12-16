@@ -22,7 +22,7 @@
     "clean": "rimraf dist",
     "lint": "eslint .",
     "copy:src": "copy-and-watch \"src/**/*.js\" dist/",
-    "copy:cldr": "copy-and-watch \"../../node_modules/@ui5/webcomponents-core/dist/**/cldr/*.json\" dist/assets/cldr/",
+    "copy:cldr": "copy-and-watch \"../../node_modules/@ui5/webcomponents-core/dist/**/cldr/*.json\" dist/generated/assets/cldr/",
     "watch:src": "copy-and-watch --watch \"src/**/*.js\" dist/"
   },
   "dependencies": {

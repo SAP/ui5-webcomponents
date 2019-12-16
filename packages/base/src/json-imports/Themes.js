@@ -1,6 +1,6 @@
-import fiori3Dark from "@ui5/webcomponents-theme-base/dist/assets/themes/sap_fiori_3_dark/parameters-bundle.css.json";
-import belize from "@ui5/webcomponents-theme-base/dist/assets/themes/sap_belize/parameters-bundle.css.json";
-import belizeHcb from "@ui5/webcomponents-theme-base/dist/assets/themes/sap_belize_hcb/parameters-bundle.css.json";
+import fiori3Dark from "@ui5/webcomponents-theme-base/dist/generated/assets/themes/sap_fiori_3_dark/parameters-bundle.css.json";
+import belize from "@ui5/webcomponents-theme-base/dist/generated/assets/themes/sap_belize/parameters-bundle.css.json";
+import belizeHcb from "@ui5/webcomponents-theme-base/dist/generated/assets/themes/sap_belize_hcb/parameters-bundle.css.json";
 
 import { registerThemeProperties } from "../asset-registries/Themes.js";
 

@@ -1,27 +1,9 @@
 const fs = require("fs");
-const process = require("process");
-
-let i18n = true;
-let dependencies = [];
-
-// Generate i18n.js by default
-try {
-	const config = JSON.parse(fs.readFileSync("assets.json"));
-	i18n = config.i18n !== undefined ? !!config.i18n : true;
-	dependencies = Array.isArray(config.dependencies) ? config.dependencies : [];
-} catch(e) {}
-
-if (!i18n) {
-	process.exit(0);
-}
 
 const packageName = JSON.parse(fs.readFileSync("package.json")).name;
 
-// Imports for assets of the packages this one depends on
-const dependenciesImportsString = dependencies.map(dep => `import "${dep}/dist/json-imports/i18n.js";`).join("\n");
-
 // All languages present in the file system
-const files = fs.readdirSync("dist/assets/i18n/");
+const files = fs.readdirSync("dist/generated/assets/i18n/");
 const languages = files.map(file => {
 	const matches = file.match(/messagebundle_(.+?).json$/);
 	return matches ? matches[1] : undefined;
@@ -31,7 +13,7 @@ let content;
 
 // No i18n - just import dependencies, if any
 if (languages.length === 0) {
-	content = `${dependenciesImportsString}`;
+	content = ``;
 // There is i18n - generate the full file
 } else {
 
@@ -42,9 +24,7 @@ if (languages.length === 0) {
 	const assetsImportsString = languages.map(key => `import ${key} from "../assets/i18n/messagebundle_${key}.json";`).join("\n");
 
 	// Resulting file content
-	content = `${dependenciesImportsString}
-
-import { registerI18nBundle } from "@ui5/webcomponents-base/dist/asset-registries/i18n.js";
+	content = `import { registerI18nBundle } from "@ui5/webcomponents-base/dist/asset-registries/i18n.js";
 
 ${assetsImportsString}
 
@@ -64,4 +44,4 @@ registerI18nBundle("${packageName}", bundleMap);
 `;
 }
 
-fs.writeFileSync("dist/json-imports/i18n.js", content);
+fs.writeFileSync("dist/generated/json-imports/i18n.js", content);
