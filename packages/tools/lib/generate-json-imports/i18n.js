@@ -18,7 +18,7 @@ if (!i18n) {
 const packageName = JSON.parse(fs.readFileSync("package.json")).name;
 
 // Imports for assets of the packages this one depends on
-const dependenciesImportsString = dependencies.map(dep => `import "${dep}/dist/json-imports/i18n.js"`).join("\n");
+const dependenciesImportsString = dependencies.map(dep => `import "${dep}/dist/json-imports/i18n.js";`).join("\n");
 
 // All languages present in the file system
 const files = fs.readdirSync("dist/assets/i18n/");
@@ -28,7 +28,7 @@ const languages = files.map(file => {
 }).filter(key => !!key);
 
 // Keys for the array
-const languagesKeysString = languages.map(key => `${key},`).join("\n");
+const languagesKeysString = languages.map(key => `${key},`).join("\n\t");
 
 // Actual imports for json assets
 const assetsImportsString = languages.map(key => `import ${key} from "../assets/i18n/messagebundle_${key}.json";`).join("\n");

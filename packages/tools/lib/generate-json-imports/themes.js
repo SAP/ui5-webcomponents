@@ -18,7 +18,7 @@ if (!themes) {
 const packageName = JSON.parse(fs.readFileSync("package.json")).name;
 
 // Imports for assets of the packages this one depends on
-const dependenciesImportsString = dependencies.map(dep => `import "${dep}/dist/json-imports/Themes.js"`).join("\n");
+const dependenciesImportsString = dependencies.map(dep => `import "${dep}/dist/json-imports/Themes.js";`).join("\n");
 
 // Resulting file content
 const content = `${dependenciesImportsString}

@@ -1,8 +1,8 @@
-import { registerThemeProperties } from "../asset-registries/Themes.js";
+import fiori3Dark from "@ui5/webcomponents-theme-base/dist/assets/themes/sap_fiori_3_dark/parameters-bundle.css.json";
+import belize from "@ui5/webcomponents-theme-base/dist/assets/themes/sap_belize/parameters-bundle.css.json";
+import belizeHcb from "@ui5/webcomponents-theme-base/dist/assets/themes/sap_belize_hcb/parameters-bundle.css.json";
 
-import fiori3DarkBase from "../assets/themes/sap_fiori_3_dark/parameters-bundle.css.json";
-import belizeBase from "../assets/themes/sap_belize/parameters-bundle.css.json";
-import belizeHcbBase from "../assets/themes/sap_belize_hcb/parameters-bundle.css.json";
+import { registerThemeProperties } from "../asset-registries/Themes.js";
 
 const isInlined = obj => typeof (obj) === "object";
 
@@ -14,6 +14,6 @@ Suggested pattern: "assets\\\/.*\\\.json"`);
 }
 /* eslint-enable */
 
-registerThemeProperties("@ui5/webcomponents-theme-base", "sap_fiori_3_dark", fiori3DarkBase);
-registerThemeProperties("@ui5/webcomponents-theme-base", "sap_belize", belizeBase);
-registerThemeProperties("@ui5/webcomponents-theme-base", "sap_belize_hcb", belizeHcbBase);
+registerThemeProperties("@ui5/webcomponents-theme-base", "sap_fiori_3_dark", fiori3Dark);
+registerThemeProperties("@ui5/webcomponents-theme-base", "sap_belize", belize);
+registerThemeProperties("@ui5/webcomponents-theme-base", "sap_belize_hcb", belizeHcb);

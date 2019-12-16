@@ -1,4 +1,3 @@
 {
-  "dependencies": ["@ui5/webcomponents-base"],
-  "localeData": true
+  "dependencies": ["@ui5/webcomponents-base"]
 }
