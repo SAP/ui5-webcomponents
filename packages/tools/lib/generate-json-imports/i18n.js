@@ -23,18 +23,26 @@ const dependenciesImportsString = dependencies.map(dep => `import "${dep}/dist/j
 // All languages present in the file system
 const files = fs.readdirSync("dist/assets/i18n/");
 const languages = files.map(file => {
-	const matches = file.match(/messagebundle_(.*?).json$/);
+	const matches = file.match(/messagebundle_(.+?).json$/);
 	return matches ? matches[1] : undefined;
 }).filter(key => !!key);
 
-// Keys for the array
-const languagesKeysString = languages.map(key => `${key},`).join("\n\t");
+let content;
 
-// Actual imports for json assets
-const assetsImportsString = languages.map(key => `import ${key} from "../assets/i18n/messagebundle_${key}.json";`).join("\n");
+// No i18n - just import dependencies, if any
+if (languages.length === 0) {
+	content = `${dependenciesImportsString}`;
+// There is i18n - generate the full file
+} else {
 
-// Resulting file content
-const content = `${dependenciesImportsString}
+	// Keys for the array
+	const languagesKeysString = languages.map(key => `${key},`).join("\n\t");
+
+	// Actual imports for json assets
+	const assetsImportsString = languages.map(key => `import ${key} from "../assets/i18n/messagebundle_${key}.json";`).join("\n");
+
+	// Resulting file content
+	content = `${dependenciesImportsString}
 
 import { registerI18nBundle } from "@ui5/webcomponents-base/dist/asset-registries/i18n.js";
 
@@ -54,5 +62,6 @@ Suggested pattern: "assets\\\\\\/.*\\\\\\.json"\`);
 
 registerI18nBundle("${packageName}", bundleMap);
 `;
+}
 
 fs.writeFileSync("dist/json-imports/i18n.js", content);
