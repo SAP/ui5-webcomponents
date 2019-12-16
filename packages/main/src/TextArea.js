@@ -103,7 +103,7 @@ const metadata = {
 		 * @type {number}
 		 * @public
 		 */
-		maxLength: {
+		maxlength: {
 			type: Integer,
 			defaultValue: null,
 		},
@@ -113,8 +113,8 @@ const metadata = {
 		 * in the <code>ui5-textarea</code>.
 		 * <br><br>
 		 * If set to <code>false</code>, the user is not allowed to enter more characters than what is set in the
-		 * <code>maxLength</code> property.
-		 * If set to <code>true</code> the characters exceeding the <code>maxLength</code> value are selected on
+		 * <code>maxlength</code> property.
+		 * If set to <code>true</code> the characters exceeding the <code>maxlength</code> value are selected on
 		 * paste and the counter below the <code>ui5-textarea</code> displays their number.
 		 *
 		 * @type {boolean}
@@ -353,7 +353,7 @@ class TextArea extends UI5Element {
 			leftCharactersCount;
 
 		if (this.showExceededText) {
-			const maxLength = this.maxLength || 0;
+			const maxLength = this.maxlength || 0;
 
 			if (maxLength) {
 				leftCharactersCount = maxLength - this.value.length;
@@ -365,7 +365,7 @@ class TextArea extends UI5Element {
 				}
 			}
 		} else {
-			calcedMaxLength = this.maxLength;
+			calcedMaxLength = this.maxlength;
 		}
 
 		return {
