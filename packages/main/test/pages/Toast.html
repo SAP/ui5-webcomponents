@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+	<title>ui5-toast</title>
+
+	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+	<script nomodule src="../../resources/bundle.es5.js"></script>
+	<script>delete Document.prototype.adoptedStyleSheets;</script>
+
+	<style>
+		ui5-button, ui5-title {
+			margin: 1rem;
+		}
+	</style>
+</head>
+
+<body>
+
+	<ui5-title>Toast ( ui5-toast )</ui5-title>
+
+	<!--TopStart-->
+	<ui5-button id="wcBtnShowToastTS">Show TopStart Toast</ui5-button>
+	<ui5-toast id="wcToastTS" placement="TopStart">TopStart</ui5-toast>
+
+	<br>
+
+	<!--TopCenter-->
+	<ui5-button id="wcBtnShowToastTC">Show TopCenter Toast</ui5-button>
+	<ui5-toast id="wcToastTC" placement="TopCenter">TopCenter</ui5-toast>
+
+	<br>
+
+	<!--TopEnd-->
+	<ui5-button id="wcBtnShowToastTE">Show TopEnd Toast</ui5-button>
+	<ui5-toast id="wcToastTE" duration="-1" placement="TopEnd">TopEnd</ui5-toast>
+
+	<br>
+
+	<!--MiddleStart-->
+	<ui5-button id="wcBtnShowToastMS">Show MiddleStart Toast</ui5-button>
+	<ui5-toast id="wcToastMS" duration="500" placement="MiddleStart">MiddleStart</ui5-toast>
+
+	<br>
+
+	<!--MiddleCenter-->
+	<ui5-button id="wcBtnShowToastMC">Show MiddleCenter Toast</ui5-button>
+	<ui5-toast id="wcToastMC" placement="MiddleCenter">MiddleCenter</ui5-toast>
+
+	<br>
+
+	<!--MiddleEnd-->
+	<ui5-button id="wcBtnShowToastME">Show MiddleEnd Toast</ui5-button>
+	<ui5-toast id="wcToastME" duration="1500" placement="MiddleEnd">MiddleEnd</ui5-toast>
+
+	<br>
+
+	<!--BottomStart-->
+	<ui5-button id="wcBtnShowToastBS">Show BottomStart Toast</ui5-button>
+	<ui5-toast id="wcToastBS" duration="10000" placement="BottomStart">BottomStart</ui5-toast>
+
+	<br>
+
+	<!--BottomCenter-->
+	<ui5-button id="wcBtnShowToastBC">Show BottomCenter Toast</ui5-button>
+	<ui5-toast id="wcToastBC">BottomCenter</ui5-toast>
+
+	<br>
+
+	<!--BottomEnd-->
+	<ui5-button id="wcBtnShowToastBE">Show BottomEnd Toast</ui5-button>
+	<ui5-toast id="wcToastBE" placement="BottomEnd">BottomEnd</ui5-toast>
+
+	<script>
+
+		// Attaching click listeners to the buttons which show the toasts
+		document.querySelectorAll("ui5-button").forEach(function(button){
+			button.addEventListener('click', function () {
+				document.querySelector("#" + button.id.replace("BtnShow", "")).show();
+			});
+		});
+
+	</script>
+
+</body>
+</html>

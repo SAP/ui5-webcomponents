@@ -47,6 +47,7 @@ import TextArea from "./dist/TextArea.js";
 import Timeline from "./dist/Timeline.js";
 import TimelineItem from "./dist/TimelineItem.js";
 import Title from "./dist/Title.js";
+import Toast from "./dist/Toast.js";
 import ToggleButton from "./dist/ToggleButton.js";
 
 import List from "./dist/List.js";
