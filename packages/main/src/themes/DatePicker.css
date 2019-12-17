@@ -4,7 +4,3 @@
 :host(:not([hidden])) {
 	display: inline-block;
 }
-
-:host {
-	width: 100%;
-}

@@ -15,6 +15,7 @@
 	flex: 1;
 	height: 100%;
 	min-width: 1rem;
+	width: 100%; /* test if needed for IE */
 	padding-left: 0.5rem;
 }
 
