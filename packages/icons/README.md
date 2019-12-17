@@ -21,6 +21,8 @@ just the ones that your app will actually use.
 
 For a full list of the icons in the `SAP-icons` collection, click [here](https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/SAP-icons).
 
+For a complete list of all public module imports from the `icons` package, click [here](../../docs/Public%20Module%20Imports.md#icons):
+
 ## Resources
 - [UI5 Web Components - README.md](https://github.com/SAP/ui5-webcomponents/blob/master/README.md)
 - [UI5 Web Components - Home Page](https://sap.github.io/ui5-webcomponents)

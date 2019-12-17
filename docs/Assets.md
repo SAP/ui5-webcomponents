@@ -18,24 +18,33 @@ Currently our npm packages follow the scheme:
 
 ### `base` package
 
-The `base` package provides CLDR assets and common additional theme parameters.
+The `base` package provides CLDR assets.
 
 `import "@ui5/webcomponents-base/dist/Assets.js";`
 
 Usually you don't need to import the assets directly from the `base` package (unless you are developing a Web Components package of your own),
 but rather from the package(s) containing the actual web components you'll be using in your app.
 
+### `theme-base` package
+
+The `theme-base` package provides common parameters for all themes.
+
+`import "@ui5/webcomponents-theme-base/dist/Assets.js";`
+
+Usually you don't need to import the assets directly from the `theme-base` package (unless you are developing a Web Components package of your own),
+but rather from the package(s) containing the actual web components you'll be using in your app.
+
 ### `main` package
 
-The `main` package's `Assets.js` import provides package specific additional theming parameters and i18n assets. All assets from the `base`
-package are also imported.
+The `main` package's `Assets.js` import provides package specific additional theming parameters and i18n assets. 
+All assets from the `base` and `theme-base` packages are also imported automatically so you don't have to worry about them.
 
 `import "@ui5/webcomponents/dist/Assets.js";`
 
 ### `fiori` package
 
 The `fiori` package's `Assets.js` import provides package specific additional theming parameters and i18n assets. All assets from the `main`
-package are also imported.
+package are also imported since the `fiori` package internally uses features of the `main` package.
 
 `import "@ui5/webcomponents-fiori/dist/Assets.js";`
 
