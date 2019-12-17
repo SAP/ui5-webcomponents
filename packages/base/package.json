@@ -27,7 +27,6 @@
   },
   "dependencies": {
     "@ui5/webcomponents-core": "0.18.0",
-    "@ui5/webcomponents-theme-base": "1.0.0-rc.5",
     "css-vars-ponyfill": "^2.1.2",
     "lit-html": "^1.0.0",
     "regenerator-runtime": "0.12.1",

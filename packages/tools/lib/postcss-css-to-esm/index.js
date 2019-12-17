@@ -4,7 +4,7 @@ const path = require('path');
 const mkdirp = require('mkdirp');
 
 const getDefaultThemeCode = packageName => {
-	return `import "@ui5/webcomponents-base/dist/DefaultTheme.js";
+	return `import "@ui5/webcomponents-theme-base/dist/DefaultTheme.js";
 	
 import { registerThemeProperties } from "@ui5/webcomponents-base/dist/asset-registries/Themes.js";
 

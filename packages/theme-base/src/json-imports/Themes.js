@@ -1,8 +1,8 @@
-import fiori3Dark from "@ui5/webcomponents-theme-base/dist/generated/assets/themes/sap_fiori_3_dark/parameters-bundle.css.json";
-import belize from "@ui5/webcomponents-theme-base/dist/generated/assets/themes/sap_belize/parameters-bundle.css.json";
-import belizeHcb from "@ui5/webcomponents-theme-base/dist/generated/assets/themes/sap_belize_hcb/parameters-bundle.css.json";
+import { registerThemeProperties } from "@ui5/webcomponents-base/dist/asset-registries/Themes.js";
 
-import { registerThemeProperties } from "../asset-registries/Themes.js";
+import fiori3Dark from "../generated/assets/themes/sap_fiori_3_dark/parameters-bundle.css.json";
+import belize from "../generated/assets/themes/sap_belize/parameters-bundle.css.json";
+import belizeHcb from "../generated/assets/themes/sap_belize_hcb/parameters-bundle.css.json";
 
 const isInlined = obj => typeof (obj) === "object";
 

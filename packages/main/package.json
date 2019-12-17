@@ -27,6 +27,7 @@
   "dependencies": {
     "@ui5/webcomponents-base": "0.18.0",
     "@ui5/webcomponents-core": "0.18.0",
+    "@ui5/webcomponents-theme-base": "1.0.0-rc.5",
     "@ui5/webcomponents-icons": "1.0.0-rc.5"
   },
   "devDependencies": {
