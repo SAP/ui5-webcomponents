@@ -22,11 +22,11 @@
     "clean": "rimraf dist",
     "lint": "eslint .",
     "copy:src": "copy-and-watch \"src/**/*.js\" dist/",
-    "copy:cldr": "copy-and-watch \"../../node_modules/@ui5/webcomponents-core/dist/**/cldr/*.json\" dist/assets/cldr/",
+    "copy:cldr": "copy-and-watch \"../../node_modules/@ui5/webcomponents-utils/dist/**/cldr/*.json\" dist/assets/cldr/",
     "watch:src": "copy-and-watch --watch \"src/**/*.js\" dist/"
   },
   "dependencies": {
-    "@ui5/webcomponents-core": "0.18.0",
+    "@ui5/webcomponents-utils": "0.18.0",
     "css-vars-ponyfill": "^2.1.2",
     "lit-html": "^1.0.0",
     "regenerator-runtime": "0.12.1",

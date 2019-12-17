@@ -1,4 +1,4 @@
-import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes.js";
+import KeyCodes from "@ui5/webcomponents-utils/dist/sap/ui/events/KeyCodes.js";
 
 const isEnter = event => (event.key ? event.key === "Enter" : event.keyCode === KeyCodes.ENTER) && !hasModifierKeys(event);
 
