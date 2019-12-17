@@ -1,6 +1,6 @@
 # Public module imports
 
-This is a comprehensive list of public module imports by package, indended for *App development*, i.e. consumption
+This is a comprehensive list of public module imports by package, intended for *App development*, i.e. consumption
 of the UI5 Web Components. 
 
 Modules, intended purely for developing your own UI5 Web Components, 
