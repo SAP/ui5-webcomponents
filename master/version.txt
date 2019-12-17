@@ -1,5 +1,8 @@
-commit d46be1f99e9ac20e9c2fbbded16fec89600a3e14
+commit b2ee6a35447b8e9d59196dfa0940fa7566edc495
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Dec 17 12:19:18 2019 +0200
+Date:   Tue Dec 17 12:21:24 2019 +0200
 
-    fix(ui5-select): prevent selection from cycling (#1066)
+    refactor(ui5-textarea): rename property maxLength to maxlength (#1068)
+    
+    BREAKING CHANGE: The property maxLength has been renamed to maxlength.
+    Also, the attribute name is changed from max-length to maxlength.
