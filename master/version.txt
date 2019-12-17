@@ -1,8 +1,5 @@
-commit b2ee6a35447b8e9d59196dfa0940fa7566edc495
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Dec 17 12:21:24 2019 +0200
+commit c22a6608fe087b88d570df5efc050ed8dd5951bc
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Tue Dec 17 13:32:07 2019 +0200
 
-    refactor(ui5-textarea): rename property maxLength to maxlength (#1068)
-    
-    BREAKING CHANGE: The property maxLength has been renamed to maxlength.
-    Also, the attribute name is changed from max-length to maxlength.
+    feature(framework): create utils NPM package (#1072)
