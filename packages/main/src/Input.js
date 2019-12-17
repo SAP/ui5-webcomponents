@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { isIE } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
+import { isIE } from "@ui5/webcomponents-utils/dist/sap/ui/Device.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import {
