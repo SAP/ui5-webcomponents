@@ -15,9 +15,12 @@ import PopoverCss from "./generated/themes/Popover.css.js";
 
 const arrowSize = 8;
 
+/**
+ * @public
+ */
 const metadata = {
 	tag: "ui5-popover",
-	properties: /** @lends  sap.ui.webcomponents.main.Popover.prototype */ {
+	properties: /** @lends sap.ui.webcomponents.main.Popover.prototype */ {
 		/**
 		 * Defines the ID of the HTML Element, which will get the initial focus.
 		 *
@@ -154,7 +157,7 @@ const metadata = {
 
 		_maxContentHeight: { type: Integer },
 	},
-	slots: {
+	slots: /** @lends sap.ui.webcomponents.main.Popover.prototype */ {
 		/**
 		 * Defines the content of the Web Component.
 		 * @type {Node[]}
@@ -187,7 +190,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	events: {
+	events: /** @lends sap.ui.webcomponents.main.Popover.prototype */ {
 		/**
 		 * Fired before the component is opened.
 		 *
@@ -297,6 +300,11 @@ class Popover extends UI5Element {
 		return event.target === this._opener;
 	}
 
+	/**
+	 * Opens the popover.
+	 * @param {HTMLElement} opener the element that the popover is opened by
+	 * @public
+	 */
 	openBy(opener) {
 		if (!opener || this.opened) {
 			return;
@@ -316,9 +324,7 @@ class Popover extends UI5Element {
 	}
 
 	/**
-	 *
-	 * @param {*} escPressed
-	 * @param {*} preventRegitryUpdate
+	 * Closes the popover.
 	 * @public
 	 */
 	close(escPressed = false, preventRegitryUpdate = false) {

@@ -3,7 +3,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import { isIE } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
+import { isIE } from "@ui5/webcomponents-utils/dist/sap/ui/Device.js";
 import TextAreaTemplate from "./generated/templates/TextAreaTemplate.lit.js";
 
 import { TEXTAREA_CHARACTERS_LEFT, TEXTAREA_CHARACTERS_EXCEEDED } from "./generated/i18n/i18n-defaults.js";
@@ -103,7 +103,7 @@ const metadata = {
 		 * @type {number}
 		 * @public
 		 */
-		maxLength: {
+		maxlength: {
 			type: Integer,
 			defaultValue: null,
 		},
@@ -113,8 +113,8 @@ const metadata = {
 		 * in the <code>ui5-textarea</code>.
 		 * <br><br>
 		 * If set to <code>false</code>, the user is not allowed to enter more characters than what is set in the
-		 * <code>maxLength</code> property.
-		 * If set to <code>true</code> the characters exceeding the <code>maxLength</code> value are selected on
+		 * <code>maxlength</code> property.
+		 * If set to <code>true</code> the characters exceeding the <code>maxlength</code> value are selected on
 		 * paste and the counter below the <code>ui5-textarea</code> displays their number.
 		 *
 		 * @type {boolean}
@@ -353,7 +353,7 @@ class TextArea extends UI5Element {
 			leftCharactersCount;
 
 		if (this.showExceededText) {
-			const maxLength = this.maxLength || 0;
+			const maxLength = this.maxlength || 0;
 
 			if (maxLength) {
 				leftCharactersCount = maxLength - this.value.length;
@@ -365,7 +365,7 @@ class TextArea extends UI5Element {
 				}
 			}
 		} else {
-			calcedMaxLength = this.maxLength;
+			calcedMaxLength = this.maxlength;
 		}
 
 		return {

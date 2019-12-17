@@ -654,13 +654,12 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@buxlabs/amd-to-es6@^0.13.2":
-  version "0.13.3"
-  resolved "https://registry.yarnpkg.com/@buxlabs/amd-to-es6/-/amd-to-es6-0.13.3.tgz#9784237d3fa1070062195ed630f4a58a19d8b368"
-  integrity sha512-11ka5P0J8t8TvaR5f6ZXfyzR4nv0kOpWrqEJJa4YyOVOj+87U6paTkZA8yCYsxvo5q/wFupBikJivNfYwuRqnw==
+"@buxlabs/amd-to-es6@^0.15.0":
+  version "0.15.0"
+  resolved "https://registry.yarnpkg.com/@buxlabs/amd-to-es6/-/amd-to-es6-0.15.0.tgz#4fcaa49e2dd65291c9837ac881ac8517a57b0c03"
+  integrity sha512-cPS+I4ShY8UaoG7aUEFMWrGcZiL05TihChVZW4QIJLsFdJ3Q4F4PXCUs25LFFNZtpF7f9Ay/oHAuBfttaCxpQg==
   dependencies:
-    abstract-syntax-tree "^1.1.2"
-    array-uniq "^1.0.3"
+    abstract-syntax-tree "^2.5.0"
     commander "^2.19.0"
     glob "^7.1.3"
     mkdirp "^0.5.1"
@@ -904,18 +903,17 @@ abbrev@1:
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
   integrity sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==
 
-abstract-syntax-tree@1.0.3, abstract-syntax-tree@^1.1.2:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/abstract-syntax-tree/-/abstract-syntax-tree-1.0.3.tgz#428c243c5db72ac1a94a7e87e6c2521b0ed470bb"
-  integrity sha512-f3vue0Ee67JqyAm6vBzL4o1mIvY3P9CFfquDLm99uIT1FG2vWxk78zcDZGWIe50LSn/vZQ9iZjKjDKJFg0JwlA==
+abstract-syntax-tree@^2.5.0:
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/abstract-syntax-tree/-/abstract-syntax-tree-2.5.0.tgz#376627cd35f9a289254d276a34b17bfbfe87a09b"
+  integrity sha512-V4s7JJc+3XfV0qM1qukg9CJq9vdtgdi0/s8tDyGHhMUSHccXrMnbl3n8CyR5BLYMC5WfakB3ORnrQwuZKWuKYg==
   dependencies:
     astring "^1.3.0"
-    cherow "^1.6.8"
     comparify "^0.2.0"
     esquery "^1.0.1"
     estemplate "^0.5.1"
     estraverse "^4.2.0"
-    prettier "^1.12.1"
+    meriyah "^1.9.1"
     source-map "^0.7.2"
     to-ast "^1.0.0"
 
@@ -1194,7 +1192,7 @@ array-union@^1.0.1, array-union@^1.0.2:
   dependencies:
     array-uniq "^1.0.1"
 
-array-uniq@^1.0.1, array-uniq@^1.0.3:
+array-uniq@^1.0.1:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/array-uniq/-/array-uniq-1.0.3.tgz#af6ac877a25cc7f74e058894753858dfdb24fdb6"
   integrity sha1-r2rId6Jcx/dOBYiUdThY39sk/bY=
@@ -1941,11 +1939,6 @@ check-error@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/check-error/-/check-error-1.0.2.tgz#574d312edd88bb5dd8912e9286dd6c0aed4aac82"
   integrity sha1-V00xLt2Iu13YkS6Sht1sCu1KrII=
-
-cherow@^1.6.8:
-  version "1.6.9"
-  resolved "https://registry.yarnpkg.com/cherow/-/cherow-1.6.9.tgz#7c5e34fce297f152a6f7853dcc9fe2f9e1b36ab8"
-  integrity sha512-pmmkpIQRcnDA7EawKcg9+ncSZNTYfXqDx+K3oqqYvpZlqVBChjTomTfw+hePnkqYR3Y013818c0R1Q5P/7PGrQ==
 
 chokidar-cli@^2.0.0:
   version "2.0.0"
@@ -2867,12 +2860,11 @@ diff@3.5.0, diff@^3.2.0:
   resolved "https://registry.yarnpkg.com/diff/-/diff-3.5.0.tgz#800c0dd1e0a8bfbc95835c202ad220fe317e5a12"
   integrity sha512-A46qtFgd+g7pDZinpnwiRJtxbC1hpgf0uzP3iG89scHk0AUC7A1TGxf5OiiOUv/JMZR8GOt8hL900hV0bOy5xA==
 
-dir-glob@2.0.0, dir-glob@^2.2.2:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/dir-glob/-/dir-glob-2.0.0.tgz#0b205d2b6aef98238ca286598a8204d29d0a0034"
-  integrity sha512-37qirFDz8cA5fimp9feo43fSuRo2gHwaIn6dXL8Ber1dGwUosDrGZeCCXq57WnIqE4aQ+u3eQZzsk1yOzhdwag==
+dir-glob@^2.2.2:
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/dir-glob/-/dir-glob-2.2.2.tgz#fa09f0694153c8918b18ba0deafae94769fc50c4"
+  integrity sha512-f9LBi5QWzIW3I6e//uxZoLBlUt9kcp66qo0sSCxL6YZKc75R1c4MFCoe/LaZiBGmgujvQdxc5Bn3QhfyvK5Hsw==
   dependencies:
-    arrify "^1.0.1"
     path-type "^3.0.0"
 
 doctrine@1.5.0:
@@ -6061,6 +6053,11 @@ merge@^1.2.0:
   resolved "https://registry.yarnpkg.com/merge/-/merge-1.2.1.tgz#38bebf80c3220a8a487b6fcfb3941bb11720c145"
   integrity sha512-VjFo4P5Whtj4vsLzsYBu5ayHhoHJ0UqNm7ibvShmbmoz7tGi0vXaoJbGdB+GmDMLUdg8DpQXEIeVDAe8MaABvQ==
 
+meriyah@^1.9.1:
+  version "1.9.4"
+  resolved "https://registry.yarnpkg.com/meriyah/-/meriyah-1.9.4.tgz#6b0623623b58ea1d2345c97063fd2c1a22f2d533"
+  integrity sha512-jVn1Lx21juJc89K1+5Pahdg3KZvk0Lhi4W6M2UGFg3f1ZB3lKRUxagnV0GXAIkKuj4CmbXGuDAJ8wO8tFP7PWw==
+
 micromatch@^2.3.11:
   version "2.3.11"
   resolved "https://registry.yarnpkg.com/micromatch/-/micromatch-2.3.11.tgz#86677c97d1720b363431d04d0d15293bd38c1565"
@@ -7548,11 +7545,6 @@ preserve@^0.2.0:
   resolved "https://registry.yarnpkg.com/preserve/-/preserve-0.2.0.tgz#815ed1f6ebc65926f865b310c0713bcb3315ce4b"
   integrity sha1-gV7R9uvGWSb4ZbMQwHE7yzMVzks=
 
-prettier@^1.12.1:
-  version "1.18.2"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.18.2.tgz#6823e7c5900017b4bd3acf46fe9ac4b4d7bda9ea"
-  integrity sha512-OeHeMc0JhFE9idD4ZdtNibzY0+TPHSpSSb9h8FqtP+YnoZZ1sl8Vc9b1sasjfymH3SonAF4QcA2+mzHPhMvIiw==
-
 pretty-format@^23.6.0:
   version "23.6.0"
   resolved "https://registry.yarnpkg.com/pretty-format/-/pretty-format-23.6.0.tgz#5eaac8eeb6b33b987b7fe6097ea6a8a146ab5760"
@@ -7670,9 +7662,9 @@ puppeteer@^1.11.0:
     ws "^6.1.0"
 
 pure-utilities@^1.1.4:
-  version "1.1.13"
-  resolved "https://registry.yarnpkg.com/pure-utilities/-/pure-utilities-1.1.13.tgz#8ea75a30614bfd120c90620112cdc41f23ab90e9"
-  integrity sha512-GLuC9p7LSq2JZOPcIo+d/PC3Ow64+ZBbN3WQoKDKwH70kHtUZhoC3CmYkW6YEgHVRxuQd428ozEbyCeqxqcIEg==
+  version "1.1.21"
+  resolved "https://registry.yarnpkg.com/pure-utilities/-/pure-utilities-1.1.21.tgz#0ece41fad06baafd8c97d5243a6707528ec1023a"
+  integrity sha512-k2IdIlSn6lRdwX1obHMm3Qmho/kCUo+5tTveDN9G6RvMAa3sOCAnU/XeBI0tNxVyI+Y8qnjQp07z/rXPsT5PPw==
 
 q@^1.1.2:
   version "1.5.1"
