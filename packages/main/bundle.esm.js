@@ -47,6 +47,7 @@ import TextArea from "./dist/TextArea.js";
 import Timeline from "./dist/Timeline.js";
 import TimelineItem from "./dist/TimelineItem.js";
 import Title from "./dist/Title.js";
+import Toast from "./dist/Toast.js";
 import ToggleButton from "./dist/ToggleButton.js";
 
 import List from "./dist/List.js";
@@ -58,7 +59,7 @@ import GroupHeaderListItem from "./dist/GroupHeaderListItem.js";
 // used in test pages
 import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
 window.RenderScheduler = RenderScheduler;
-import { isIE } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
+import { isIE } from "@ui5/webcomponents-utils/dist/sap/ui/Device.js";
 window.isIE = isIE; // attached to the window object for testing purposes
 
 

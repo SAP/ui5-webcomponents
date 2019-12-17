@@ -1,0 +1,4 @@
+:root {
+	--_ui5_toast_background: var(--sapList_Background);
+	--_ui5_toast_shadow: var(--sapContent_Shadow2);
+}

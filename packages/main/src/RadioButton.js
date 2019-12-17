@@ -1,4 +1,4 @@
-import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
+import { isDesktop } from "@ui5/webcomponents-utils/dist/sap/ui/Device.js";
 import { getCompactSize } from "@ui5/webcomponents-base/dist/config/CompactSize.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";

@@ -6,7 +6,7 @@ import {
 } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-down.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
-import { isIE } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
+import { isIE } from "@ui5/webcomponents-utils/dist/sap/ui/Device.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import MultiComboBoxTemplate from "./generated/templates/MultiComboBoxTemplate.lit.js";
 import Tokenizer from "./Tokenizer.js";

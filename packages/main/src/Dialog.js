@@ -1,6 +1,6 @@
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 
-import { isPhone } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
+import { isPhone } from "@ui5/webcomponents-utils/dist/sap/ui/Device.js";
 import Popup from "./Popup.js";
 // Template
 import DialogTemplate from "./generated/templates/DialogTemplate.lit.js";
