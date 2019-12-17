@@ -15,8 +15,13 @@
 :host([selected]) {
 	color: var(--_ui5_radiobutton_selected_fill);
 }
-:host([selected]) .ui5-radio-svg .ui5-radio-svg-inner {
+
+:host([selected]) .ui5-radio-svg-inner {
 	fill: currentColor;
+}
+
+:host([selected]) .ui5-radio-svg-outer {
+	stroke: var(--sapField_BorderColor);
 }
 
 /* Disabled */
@@ -144,6 +149,7 @@ ui5-label.ui5-radio-label {
 }
 
 .ui5-radio-svg .ui5-radio-svg-outer {
+	fill: var(--sapField_Background);
 	stroke: currentColor;
 }
 
