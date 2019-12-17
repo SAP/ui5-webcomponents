@@ -7,7 +7,7 @@
   <meta name="keywords" content="ui5-webcomponents,ui5 webcomponents,ui5 web components,webcomponents,web components,ui5,api,docs,documentation,sample,usage,examples,demo,Fiori 3">
 
   
-    <title>Toggle Button - UI5 Web Components</title>
+    <title>Toast - UI5 Web Components</title>
 
     
   
@@ -24,17 +24,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Toggle Button | UI5 Web Components</title>
+<title>Toast | UI5 Web Components</title>
 <meta name="generator" content="Jekyll v3.8.6" />
-<meta property="og:title" content="Toggle Button" />
+<meta property="og:title" content="Toast" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Enterprise-flavored sugar on top of native APIs!" />
 <meta property="og:description" content="Enterprise-flavored sugar on top of native APIs!" />
-<link rel="canonical" href="https://sap.github.io/ui5-webcomponents/master/playground/components/ToggleButton/" />
-<meta property="og:url" content="https://sap.github.io/ui5-webcomponents/master/playground/components/ToggleButton/" />
+<link rel="canonical" href="https://sap.github.io/ui5-webcomponents/master/playground/components/Toast/" />
+<meta property="og:url" content="https://sap.github.io/ui5-webcomponents/master/playground/components/Toast/" />
 <meta property="og:site_name" content="UI5 Web Components" />
 <script type="application/ld+json">
-{"description":"Enterprise-flavored sugar on top of native APIs!","@type":"WebPage","url":"https://sap.github.io/ui5-webcomponents/master/playground/components/ToggleButton/","headline":"Toggle Button","@context":"https://schema.org"}</script>
+{"description":"Enterprise-flavored sugar on top of native APIs!","@type":"WebPage","url":"https://sap.github.io/ui5-webcomponents/master/playground/components/Toast/","headline":"Toast","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -1166,9 +1166,9 @@
                   
                 
                   
-                    <li class="navigation-list-item ">
+                    <li class="navigation-list-item  active">
                       
-                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/Toast/" class="navigation-list-link">
+                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/Toast/" class="navigation-list-link active">
                         <div class="component-name">Toast</div>
                         
                       </a>
@@ -1177,9 +1177,9 @@
                   
                 
                   
-                    <li class="navigation-list-item  active">
+                    <li class="navigation-list-item ">
                       
-                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/ToggleButton/" class="navigation-list-link active">
+                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/ToggleButton/" class="navigation-list-link">
                         <div class="component-name">Toggle Button</div>
                         
                       </a>
@@ -1325,117 +1325,182 @@
                 
                   <li class="breadcrumb-nav-list-item"><a href="https://sap.github.io/ui5-webcomponents/master/playground/components">Components</a></li>
                 
-                <li class="breadcrumb-nav-list-item"><span>Toggle Button</span></li>
+                <li class="breadcrumb-nav-list-item"><span>Toast</span></li>
               </ol>
             </nav>
           
         
         <div id="main-content" class="page-content" role="main">
-          <header>
-	<h2 class="control-header">ToggleButton</h2>
+          <header class="component-heading">
+	<div class="control-header">Toast</div>
+	<div class="component-heading-since">
+		<span>v1.0.0-rc.6</span>
+	</div>
 </header>
-
 <div class="component-package">@ui5/webcomponents</div>
-
-<div class="control-tag">&lt;ui5-togglebutton&gt;</div>
+<div class="control-tag">&lt;ui5-toast&gt;</div>
 
 <section>
-	<h3>ToggleButton States</h3>
+	<h3>Basic Toast</h3>
 	<div class="snippet">
-		<ui5-togglebutton class="samples-margin">ToggleButton</ui5-togglebutton>
-		<ui5-togglebutton class="samples-margin" pressed>Pressed ToggleButton</ui5-togglebutton>
-		<ui5-togglebutton class="samples-margin" disabled>Disabled ToggleButton</ui5-togglebutton>
-		<ui5-togglebutton class="samples-margin" disabled pressed>Disabled ToggleButton</ui5-togglebutton>
-		<ui5-togglebutton class="samples-margin" design="Positive">Accept ToggleButton</ui5-togglebutton>
-		<ui5-togglebutton class="samples-margin" design="Positive" pressed>Accept ToggleButton</ui5-togglebutton>
-		<ui5-togglebutton class="samples-margin" design="Negative">Reject ToggleButton</ui5-togglebutton>
-		<ui5-togglebutton class="samples-margin" design="Negative" pressed>Reject ToggleButton</ui5-togglebutton>
-		<ui5-togglebutton class="samples-margin" design="Transparent">Transparent ToggleButton</ui5-togglebutton>
-		<ui5-togglebutton class="samples-margin" design="Transparent" pressed>Transparent ToggleButton</ui5-togglebutton>
+
+		<!--Basic Toast-->
+		<ui5-button id="wcBtnShowToastBasic" class="samples-margin">Basic Toast</ui5-button>
+		<ui5-toast id="wcToastBasic">Basic Toast</ui5-toast>
+
 	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-togglebutton&gt;</span>ToggleButton<span class="nt">&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">pressed</span><span class="nt">&gt;</span>Pressed ToggleButton<span class="nt">&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">disabled</span><span class="nt">&gt;</span>Disabled ToggleButton<span class="nt">&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">disabled</span> <span class="na">pressed</span><span class="nt">&gt;</span>Disabled ToggleButton<span class="nt">&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">design=</span><span class="s">"Positive"</span><span class="nt">&gt;</span>Accept ToggleButton<span class="nt">&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">design=</span><span class="s">"Positive"</span> <span class="na">pressed</span><span class="nt">&gt;</span>Accept ToggleButton<span class="nt">&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">design=</span><span class="s">"Negative"</span><span class="nt">&gt;</span>Reject ToggleButton<span class="nt">&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">design=</span><span class="s">"Negative"</span> <span class="na">pressed</span><span class="nt">&gt;</span>Reject ToggleButton<span class="nt">&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">design=</span><span class="s">"Transparent"</span><span class="nt">&gt;</span>Transparent ToggleButton<span class="nt">&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">design=</span><span class="s">"Transparent"</span> <span class="na">pressed</span><span class="nt">&gt;</span>Transparent ToggleButton<span class="nt">&lt;/ui5-togglebutton&gt;</span>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="c">&lt;!--Basic Toast--&gt;</span>
+<span class="nt">&lt;ui5-button</span> <span class="na">id=</span><span class="s">"wcBtnShowToastBasic"</span> <span class="na">class=</span><span class="s">"samples-margin"</span><span class="nt">&gt;</span>Basic Toast<span class="nt">&lt;/ui5-button&gt;</span>
+<span class="nt">&lt;ui5-toast</span> <span class="na">id=</span><span class="s">"wcToastBasic"</span><span class="nt">&gt;</span>Basic Toast<span class="nt">&lt;/ui5-toast&gt;</span>
+
+<span class="nt">&lt;script&gt;</span>
+
+	<span class="c1">// Attaching click listener to the Button which shows the Basic Toast</span>
+	<span class="nx">wcBtnShowToastBasic</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">click</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+		<span class="nx">wcToastBasic</span><span class="p">.</span><span class="nx">show</span><span class="p">();</span>
+	<span class="p">});</span>
+
+<span class="nt">&lt;/script&gt;</span>
 	</code></pre></figure></pre>
 </section>
 
 <section>
-	<h3>ToggleButton with Icon</h3>
+	<h3>Toast Duration</h3>
 	<div class="snippet">
-		<ui5-togglebutton class="samples-margin" icon="menu">Menu</ui5-togglebutton>
-		<ui5-togglebutton class="samples-margin" design="Emphasized" icon="add">Add</ui5-togglebutton>
-		<ui5-togglebutton class="samples-margin" design="Default" icon="nav-back">Back</ui5-togglebutton>
-		<ui5-togglebutton class="samples-margin" design="Positive" icon="accept">Accept</ui5-togglebutton>
-		<ui5-togglebutton class="samples-margin" design="Negative" icon="sys-cancel">Deny</ui5-togglebutton>
+
+		<!--Short Toast-->
+		<ui5-button id="wcBtnShowToastShort" class="samples-margin">Short Toast</ui5-button>
+		<ui5-toast id="wcToastShort" duration=1500 placement="BottomStart">Short Toast</ui5-toast>
+
+		<!--Long Toast-->
+		<ui5-button id="wcBtnShowToastLong" class="samples-margin">Long Toast</ui5-button>
+		<ui5-toast id="wcToastLong" duration=4500 placement="BottomEnd">Long Toast</ui5-toast>
+
 	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-togglebutton</span> <span class="na">icon=</span><span class="s">"menu"</span><span class="nt">&gt;</span>Menu<span class="nt">&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">design=</span><span class="s">"Emphasized"</span> <span class="na">icon=</span><span class="s">"add"</span><span class="nt">&gt;</span>Add<span class="nt">&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">design=</span><span class="s">"Default"</span> <span class="na">icon=</span><span class="s">"nav-back"</span><span class="nt">&gt;</span>Back<span class="nt">&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">design=</span><span class="s">"Positive"</span> <span class="na">icon=</span><span class="s">"accept"</span><span class="nt">&gt;</span>Accept<span class="nt">&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">design=</span><span class="s">"Negative"</span> <span class="na">icon=</span><span class="s">"sys-cancel"</span><span class="nt">&gt;</span>Deny<span class="nt">&lt;/ui5-togglebutton&gt;</span>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="c">&lt;!--Short Toast--&gt;</span>
+<span class="nt">&lt;ui5-button</span> <span class="na">id=</span><span class="s">"wcBtnShowToastShort"</span> <span class="na">class=</span><span class="s">"samples-margin"</span><span class="nt">&gt;</span>Short Toast<span class="nt">&lt;/ui5-button&gt;</span>
+<span class="nt">&lt;ui5-toast</span> <span class="na">id=</span><span class="s">"wcToastShort"</span> <span class="na">duration=</span><span class="s">1500</span> <span class="na">placement=</span><span class="s">"BottomStart"</span><span class="nt">&gt;</span>Short Toast<span class="nt">&lt;/ui5-toast&gt;</span>
+
+<span class="c">&lt;!--Long Toast--&gt;</span>
+<span class="nt">&lt;ui5-button</span> <span class="na">id=</span><span class="s">"wcBtnShowToastLong"</span> <span class="na">class=</span><span class="s">"samples-margin"</span><span class="nt">&gt;</span>Long Toast<span class="nt">&lt;/ui5-button&gt;</span>
+<span class="nt">&lt;ui5-toast</span> <span class="na">id=</span><span class="s">"wcToastLong"</span> <span class="na">duration=</span><span class="s">4500</span> <span class="na">placement=</span><span class="s">"BottomEnd"</span><span class="nt">&gt;</span>Long Toast<span class="nt">&lt;/ui5-toast&gt;</span>
+
+<span class="nt">&lt;script&gt;</span>
+
+	<span class="c1">// Attaching click listener to the Button which shows the Short Toast</span>
+	<span class="nx">wcBtnShowToastShort</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">click</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+		<span class="nx">wcToastShort</span><span class="p">.</span><span class="nx">show</span><span class="p">();</span>
+	<span class="p">});</span>
+
+	<span class="c1">// Attaching click listener to the Button which shows the Long Toast</span>
+	<span class="nx">wcBtnShowToastLong</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">click</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+		<span class="nx">wcToastLong</span><span class="p">.</span><span class="nx">show</span><span class="p">();</span>
+	<span class="p">});</span>
+
+<span class="nt">&lt;/script&gt;</span>
 	</code></pre></figure></pre>
 </section>
 
 <section>
-	<h3>ToggleButton with Icon Only</h3>
+	<h3>Toast Placements</h3>
 	<div class="snippet">
-			<ui5-togglebutton class="samples-margin" icon="away"></ui5-togglebutton>
-			<ui5-togglebutton class="samples-margin" icon="action-settings" pressed></ui5-togglebutton>
-			<ui5-togglebutton class="samples-margin" icon="add"></ui5-togglebutton>
-			<ui5-togglebutton class="samples-margin" icon="alert" pressed></ui5-togglebutton>
-			<ui5-togglebutton class="samples-margin" icon="accept" design="Positive"></ui5-togglebutton>
-			<ui5-togglebutton class="samples-margin" icon="bookmark" design="Positive" pressed></ui5-togglebutton>
-			<ui5-togglebutton class="samples-margin" icon="cancel" design="Negative"></ui5-togglebutton>
-			<ui5-togglebutton class="samples-margin" icon="call" design="Negative" pressed></ui5-togglebutton>
-			<ui5-togglebutton class="samples-margin" icon="camera" design="Transparent"></ui5-togglebutton>
-			<ui5-togglebutton class="samples-margin" icon="cart" design="Transparent" pressed></ui5-togglebutton>
+
+		<!--TopStart-->
+		<ui5-button id="wcBtnShowToastTS" class="samples-margin">TopStart</ui5-button>
+		<ui5-toast id="wcToastTS" placement="TopStart">TopStart</ui5-toast>
+
+		<!--TopCenter-->
+		<ui5-button id="wcBtnShowToastTC" class="samples-margin">TopCenter</ui5-button>
+		<ui5-toast id="wcToastTC" placement="TopCenter">TopCenter</ui5-toast>
+
+		<!--TopEnd-->
+		<ui5-button id="wcBtnShowToastTE" class="samples-margin">TopEnd</ui5-button>
+		<ui5-toast id="wcToastTE" placement="TopEnd">TopEnd</ui5-toast>
+
+		<!--MiddleStart-->
+		<ui5-button id="wcBtnShowToastMS" class="samples-margin">MiddleStart</ui5-button>
+		<ui5-toast id="wcToastMS" placement="MiddleStart">MiddleStart</ui5-toast>
+
+		<!--MiddleCenter-->
+		<ui5-button id="wcBtnShowToastMC" class="samples-margin">MiddleCenter</ui5-button>
+		<ui5-toast id="wcToastMC" placement="MiddleCenter">MiddleCenter</ui5-toast>
+
+		<!--MiddleEnd-->
+		<ui5-button id="wcBtnShowToastME" class="samples-margin">MiddleEnd</ui5-button>
+		<ui5-toast id="wcToastME" placement="MiddleEnd">MiddleEnd</ui5-toast>
+
+		<!--BottomStart-->
+		<ui5-button id="wcBtnShowToastBS" class="samples-margin">BottomStart</ui5-button>
+		<ui5-toast id="wcToastBS" placement="BottomStart">BottomStart</ui5-toast>
+
+		<!--BottomCenter-->
+		<ui5-button id="wcBtnShowToastBC" class="samples-margin">BottomCenter</ui5-button>
+		<ui5-toast id="wcToastBC">BottomCenter</ui5-toast>
+
+		<!--BottomEnd-->
+		<ui5-button id="wcBtnShowToastBE" class="samples-margin">BottomEnd</ui5-button>
+		<ui5-toast id="wcToastBE" placement="BottomEnd">BottomEnd</ui5-toast>
+
 	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-togglebutton</span> <span class="na">icon=</span><span class="s">"accept"</span><span class="nt">&gt;&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">icon=</span><span class="s">"action-settings"</span> <span class="na">pressed</span><span class="nt">&gt;&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">icon=</span><span class="s">"add"</span><span class="nt">&gt;&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">icon=</span><span class="s">"alert"</span> <span class="na">pressed</span><span class="nt">&gt;&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">icon=</span><span class="s">"away"</span> <span class="na">design=</span><span class="s">"Positive"</span><span class="nt">&gt;&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">icon=</span><span class="s">"bookmark"</span> <span class="na">design=</span><span class="s">"Positive"</span> <span class="na">pressed</span><span class="nt">&gt;&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">icon=</span><span class="s">"cancel"</span> <span class="na">design=</span><span class="s">"Negative"</span><span class="nt">&gt;&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">icon=</span><span class="s">"call"</span> <span class="na">design=</span><span class="s">"Negative"</span> <span class="na">pressed</span><span class="nt">&gt;&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">icon=</span><span class="s">"camera"</span> <span class="na">design=</span><span class="s">"Transparent"</span><span class="nt">&gt;&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">icon=</span><span class="s">"cart"</span> <span class="na">design=</span><span class="s">"Transparent"</span> <span class="na">pressed</span><span class="nt">&gt;&lt;/ui5-togglebutton&gt;</span>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="c">&lt;!--TopStart--&gt;</span>
+<span class="nt">&lt;ui5-button</span> <span class="na">id=</span><span class="s">"wcBtnShowToastTS"</span><span class="nt">&gt;</span>TopStart<span class="nt">&lt;/ui5-button&gt;</span>
+<span class="nt">&lt;ui5-toast</span> <span class="na">id=</span><span class="s">"wcToastTS"</span> <span class="na">placement=</span><span class="s">"TopStart"</span><span class="nt">&gt;</span>TopStart<span class="nt">&lt;/ui5-toast&gt;</span>
+
+<span class="c">&lt;!--TopCenter--&gt;</span>
+<span class="nt">&lt;ui5-button</span> <span class="na">id=</span><span class="s">"wcBtnShowToastTC"</span><span class="nt">&gt;</span>TopCenter<span class="nt">&lt;/ui5-button&gt;</span>
+<span class="nt">&lt;ui5-toast</span> <span class="na">id=</span><span class="s">"wcToastTC"</span> <span class="na">placement=</span><span class="s">"TopCenter"</span><span class="nt">&gt;</span>TopCenter<span class="nt">&lt;/ui5-toast&gt;</span>
+
+<span class="c">&lt;!--TopEnd--&gt;</span>
+<span class="nt">&lt;ui5-button</span> <span class="na">id=</span><span class="s">"wcBtnShowToastTE"</span><span class="nt">&gt;</span>TopEnd<span class="nt">&lt;/ui5-button&gt;</span>
+<span class="nt">&lt;ui5-toast</span> <span class="na">id=</span><span class="s">"wcToastTE"</span> <span class="na">placement=</span><span class="s">"TopEnd"</span><span class="nt">&gt;</span>TopEnd<span class="nt">&lt;/ui5-toast&gt;</span>
+
+<span class="c">&lt;!--MiddleStart--&gt;</span>
+<span class="nt">&lt;ui5-button</span> <span class="na">id=</span><span class="s">"wcBtnShowToastMS"</span><span class="nt">&gt;</span>MiddleStart<span class="nt">&lt;/ui5-button&gt;</span>
+<span class="nt">&lt;ui5-toast</span> <span class="na">id=</span><span class="s">"wcToastMS"</span> <span class="na">placement=</span><span class="s">"MiddleStart"</span><span class="nt">&gt;</span>MiddleStart<span class="nt">&lt;/ui5-toast&gt;</span>
+
+<span class="c">&lt;!--MiddleCenter--&gt;</span>
+<span class="nt">&lt;ui5-button</span> <span class="na">id=</span><span class="s">"wcBtnShowToastMC"</span><span class="nt">&gt;</span>MiddleCenter<span class="nt">&lt;/ui5-button&gt;</span>
+<span class="nt">&lt;ui5-toast</span> <span class="na">id=</span><span class="s">"wcToastMC"</span> <span class="na">placement=</span><span class="s">"MiddleCenter"</span><span class="nt">&gt;</span>MiddleCenter<span class="nt">&lt;/ui5-toast&gt;</span>
+
+<span class="c">&lt;!--MiddleEnd--&gt;</span>
+<span class="nt">&lt;ui5-button</span> <span class="na">id=</span><span class="s">"wcBtnShowToastME"</span><span class="nt">&gt;</span>MiddleEnd<span class="nt">&lt;/ui5-button&gt;</span>
+<span class="nt">&lt;ui5-toast</span> <span class="na">id=</span><span class="s">"wcToastME"</span> <span class="na">placement=</span><span class="s">"MiddleEnd"</span><span class="nt">&gt;</span>MiddleEnd<span class="nt">&lt;/ui5-toast&gt;</span>
+
+<span class="c">&lt;!--BottomStart--&gt;</span>
+<span class="nt">&lt;ui5-button</span> <span class="na">id=</span><span class="s">"wcBtnShowToastBS"</span><span class="nt">&gt;</span>BottomStart<span class="nt">&lt;/ui5-button&gt;</span>
+<span class="nt">&lt;ui5-toast</span> <span class="na">id=</span><span class="s">"wcToastBS"</span> <span class="na">placement=</span><span class="s">"BottomStart"</span><span class="nt">&gt;</span>BottomStart<span class="nt">&lt;/ui5-toast&gt;</span>
+
+<span class="c">&lt;!--BottomCenter--&gt;</span>
+<span class="nt">&lt;ui5-button</span> <span class="na">id=</span><span class="s">"wcBtnShowToastBC"</span><span class="nt">&gt;</span>BottomCenter<span class="nt">&lt;/ui5-button&gt;</span>
+<span class="nt">&lt;ui5-toast</span> <span class="na">id=</span><span class="s">"wcToastBC"</span><span class="nt">&gt;</span>BottomCenter<span class="nt">&lt;/ui5-toast&gt;</span>
+
+<span class="c">&lt;!--BottomEnd--&gt;</span>
+<span class="nt">&lt;ui5-button</span> <span class="na">id=</span><span class="s">"wcBtnShowToastBE"</span><span class="nt">&gt;</span>BottomEnd<span class="nt">&lt;/ui5-button&gt;</span>
+<span class="nt">&lt;ui5-toast</span> <span class="na">id=</span><span class="s">"wcToastBE"</span> <span class="na">placement=</span><span class="s">"BottomEnd"</span><span class="nt">&gt;</span>BottomEnd<span class="nt">&lt;/ui5-toast&gt;</span>
+
+<span class="nt">&lt;script&gt;</span>
+
+	<span class="c1">// Attaching click listeners to the buttons which show the toasts</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="dl">"</span><span class="s2">ui5-button</span><span class="dl">"</span><span class="p">).</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">button</span><span class="p">){</span>
+		<span class="nx">button</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">click</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+			<span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="dl">"</span><span class="s2">#</span><span class="dl">"</span> <span class="o">+</span> <span class="nx">button</span><span class="p">.</span><span class="nx">id</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="dl">"</span><span class="s2">BtnShow</span><span class="dl">"</span><span class="p">,</span> <span class="dl">""</span><span class="p">)).</span><span class="nx">show</span><span class="p">();</span>
+		<span class="p">});</span>
+	<span class="p">});</span>
+
+<span class="nt">&lt;/script&gt;</span>
 	</code></pre></figure></pre>
 </section>
 
-<section>
-	<h3>ToggleButton</h3>
-	<div class="snippet">
-			<ui5-togglebutton class="samples-margin">Yes/No</ui5-togglebutton>
-			<ui5-togglebutton class="samples-margin" pressed>Yes/No</ui5-togglebutton>
-			<ui5-togglebutton class="samples-margin">Toggle Button</ui5-togglebutton>
-			<ui5-togglebutton class="samples-margin" pressed>Toggle Button pressed</ui5-togglebutton>
-			<ui5-togglebutton class="samples-margin" design="Positive">On/Off</ui5-togglebutton>
-			<ui5-togglebutton class="samples-margin" design="Positive" pressed>On/Off</ui5-togglebutton>
-			<ui5-togglebutton class="samples-margin" design="Negative">Menu</ui5-togglebutton>
-			<ui5-togglebutton class="samples-margin" design="Negative" pressed>Menu</ui5-togglebutton>
-			<ui5-togglebutton class="samples-margin" design="Negative">Transparent</ui5-togglebutton>
-			<ui5-togglebutton class="samples-margin" design="Negative" pressed>Transparent</ui5-togglebutton>
-	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-togglebutton&gt;</span>Yes/No<span class="nt">&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">pressed</span><span class="nt">&gt;</span>Yes/No<span class="nt">&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton&gt;</span>Toggle Button<span class="nt">&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">pressed</span><span class="nt">&gt;</span>Toggle Button pressed<span class="nt">&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">design=</span><span class="s">"Positive"</span><span class="nt">&gt;</span>On/Off<span class="nt">&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">design=</span><span class="s">"Positive"</span> <span class="na">pressed</span><span class="nt">&gt;</span>On/Off<span class="nt">&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">design=</span><span class="s">"Negative"</span><span class="nt">&gt;</span>Menu<span class="nt">&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">design=</span><span class="s">"Negative"</span> <span class="na">pressed</span><span class="nt">&gt;</span>Menu<span class="nt">&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">design=</span><span class="s">"Transparent"</span><span class="nt">&gt;</span>Transparent<span class="nt">&lt;/ui5-togglebutton&gt;</span>
-<span class="nt">&lt;ui5-togglebutton</span> <span class="na">design=</span><span class="s">"Transparent"</span> <span class="na">pressed</span><span class="nt">&gt;</span>Transparent<span class="nt">&lt;/ui5-togglebutton&gt;</span>
-	</code></pre></figure></pre>
-</section>
+<script>
+
+	// Attaching click listeners to the buttons which show the toasts
+	document.querySelectorAll("ui5-button").forEach(function(button){
+		button.addEventListener('click', function () {
+			document.querySelector("#" + button.id.replace("BtnShow", "")).show();
+		});
+	});
+
+</script>
 
 
     <div class="page-container">
@@ -1443,11 +1508,15 @@
         <section class="component-description">
           <h3 class="comment-api-title">Overview</h3>
 
-The <code>ui5-togglebutton</code> component is an enhanced <code>ui5-button</code> that can be toggled between pressed and normal states. Users can use the <code>ui5-togglebutton</code> as a switch to turn a setting on or off. It can also be used to represent an independent choice similar to a check box. <br><br> Clicking or tapping on a <code>ui5-togglebutton</code> changes its state to <code>pressed</code>. The button returns to its initial state when the user clicks or taps on it again. By applying additional custom CSS-styling classes, apps can give a different style to any <code>ui5-togglebutton</code>.
+The <code>ui5-toast</code> is a small, non-disruptive popup for success or information messages that disappears automatically after a few seconds.
+
+<h3>Usage</h3>
+
+<h4>When to use:</h4> <ul> <li>You want to display a short success or information message.</li> <li>You do not want to interrupt users while they are performing an action.</li> <li>You want to confirm a successful action.</li> </ul> <h4>When not to use:</h4> <ul> <li>You want to display error or warning message.</li> <li>You want to interrupt users while they are performing an action.</li> <li>You want to make sure that users read the message before they leave the page.</li> <li>You want users to be able to copy some part of the message text.</li> </ul>
 
 <h3>ES6 Module Import</h3>
 
-<code>import "@ui5/webcomponents/dist/ToggleButton";</code>
+<code>import "@ui5/webcomponents/dist/Toast";</code>
           <section class="component-api space-top">
             
                   <h3 class="comment-api-title" >Properties/Attributes</h3>
@@ -1463,73 +1532,24 @@ The <code>ui5-togglebutton</code> component is an enhanced <code>ui5-button</cod
             
                       <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          pressed
+                          duration
                             <br>
                         </div>
-                        <div class="cell api-table-content-cell">boolean</div>
-                        <div class="cell api-table-content-cell">false</div>
+                        <div class="cell api-table-content-cell">Integer</div>
+                        <div class="cell api-table-content-cell">3000</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Determines whether the <code>ui5-togglebutton</code> is displayed as pressed.
+                            Defines the duration in milliseconds for which <code>ui5-toast</code> remains on the screen before it's automatically closed. <br> <b>Note:</b> The minimum supported value is <code>500</code>. If a lower value is passed, it's forced to be <code>500</code>.
                         </div>
                       </div>
                       <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          design
-                            <br>
-                        </div>
-                        <div class="cell api-table-content-cell">ButtonDesign</div>
-                        <div class="cell api-table-content-cell">&quot;Default&quot;</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the <code>ui5-button</code> design. <br><br> <b>Note:</b> Available options are "Default", "Emphasized", "Positive", "Negative", and "Transparent".
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          disabled
-                            <br>
-                        </div>
-                        <div class="cell api-table-content-cell">boolean</div>
-                        <div class="cell api-table-content-cell">false</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines whether the <code>ui5-button</code> is disabled (default is set to <code>false</code>). A disabled <code>ui5-button</code> can't be pressed or focused, and it is not in the tab chain.
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          icon
+                          placement
                             <br>
                         </div>
                         <div class="cell api-table-content-cell">string</div>
-                        <div class="cell api-table-content-cell">&quot;&quot;</div>
+                        <div class="cell api-table-content-cell">&quot;BottomCenter&quot;</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the icon to be displayed as graphical element within the <code>ui5-button</code>. The SAP-icons font provides numerous options. <br><br> Example: <br> <pre>ui5-button icon="palette"</pre>
-            
-            See all the available icons in the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          iconEnd
-                            <br>
-                            <code>icon-end</code>
-                        </div>
-                        <div class="cell api-table-content-cell">boolean</div>
-                        <div class="cell api-table-content-cell">false</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines whether the icon should be displayed after the <code>ui5-button</code> text.
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          submits
-                            <br>
-                        </div>
-                        <div class="cell api-table-content-cell">boolean</div>
-                        <div class="cell api-table-content-cell">false</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            When set to <code>true</code>, the <code>ui5-button</code> will automatically submit the nearest form element upon <code>press</code>.
-            
-            <b>Important:</b> For the <code>submits</code> property to have effect, you must add the following import to your project: <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
+                            Defines the placement of the <code>ui5-toast</code> web component. <br><br> Available options are: <ul> <li><code>TopStart</code></li> <li><code>TopCenter</code></li> <li><code>TopEnd</code></li> <li><code>MiddleStart</code></li> <li><code>MiddleCenter</code></li> <li><code>MiddleEnd</code></li> <li><code>BottomStart</code></li> <li><code>BottomCenter</code></li> <li><code>BottomEnd</code></li> <ul>
                         </div>
                       </div>
             
@@ -1552,13 +1572,14 @@ The <code>ui5-togglebutton</code> component is an enhanced <code>ui5-button</cod
                     <div class="row api-table-roll-even">
                       <div class="cell api-table-content-cell api-table-content-cell-bold">default</div>
                       <div class="cell api-table-content-cell">Node [0..n]</div>
-                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the text of the <code>ui5-button</code>. <br><b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.</div>
+                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the text of the <code>ui5-toast</code> web component. <br><b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.</div>
                     </div>
             
                 </div>
             
-                  <h3 class="comment-api-title space-top">Events</h3>
-                  <p class="small-space-top" >This Web Component fires semantic events upon user interaction. You can bind to these events with the standard DOM APIs, such as <code>addEventListener</code>. </p>
+            
+                  <h3 class="comment-api-title space-top">Methods</h3>
+                  <p class="small-space-top" >This Web Component exposes public methods. You can invoke them directly on the Web Component instance.</p>
             
                   <div class="small-space-top api-table">
                     <div class="head api-table-header-roll">
@@ -1567,14 +1588,11 @@ The <code>ui5-togglebutton</code> component is an enhanced <code>ui5-button</cod
                     </div>
             
                       <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">click</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                        Fired when the <code>ui5-button</code> is activated either with a mouse/tap or by using the Enter or Space key. <br><br> <b>Note:</b> The event will not be fired if the <code>disabled</code> property is set to <code>true</code>.
-                        </div>
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">show</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">Shows the <code>ui5-toast</code>.</div>
                       </div>
             
                   </div>
-            
             
           </section>
         </section>
