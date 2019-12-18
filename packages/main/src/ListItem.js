@@ -1,5 +1,5 @@
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-import { isDesktop } from "@ui5/webcomponents-utils/dist/sap/ui/Device.js";
+import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import "@ui5/webcomponents-icons/dist/icons/decline.js";
 import ListItemType from "./types/ListItemType.js";
 import ListMode from "./types/ListMode.js";
