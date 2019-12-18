@@ -14,7 +14,7 @@ const metadata = {
 	properties: {
 		compactSize: {
 			type: Boolean,
-		}
+		},
 	},
 	events: {
 		_propertyChange: {},
@@ -81,9 +81,7 @@ class UI5Element extends HTMLElement {
 	}
 
 	async connectedCallback() {
-		if (this.isCompact) {
-			this.setAttribute("compact-size", "");
-		}
+		this.compactSize = this.isCompact;
 
 		if (!this.constructor.needsShadowDOM()) {
 			return;
