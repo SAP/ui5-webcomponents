@@ -7,6 +7,7 @@
 	display: flex;
 	outline: none;
 	cursor: pointer;
+	overflow: hidden;
 }
 
 .ui5-select-label-root {
@@ -29,10 +30,4 @@
 
 :host(:not([disabled])) {
 	cursor: pointer;
-}
-
-:host([value-state="Error"]),
-:host([value-state="Warning"]),
-:host([value-state="Success"]) {
-	overflow: hidden;
 }

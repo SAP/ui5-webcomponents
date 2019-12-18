@@ -90,14 +90,34 @@
 	<h3> Input type 'URL'</h3>
 	<ui5-input id="input-url" style="width:100%" type="URL"></ui5-input>
 
-	<h3> Input and button and select</h3>
+	<h3> Inputs alignment</h3>
 	<ui5-button>Press</ui5-button>
-	<ui5-input style="width: 10rem;" value="input"></ui5-input>
-	<ui5-select id="mySelect2"style="width: 10rem;">
+	<ui5-datepicker style="width: 6rem;" id='dp5'
+			placeholder='Delivery Date...'
+			title='Delivery Date!'>
+	</ui5-datepicker>
+
+	<ui5-datepicker style="width: 6rem;" id='dp5'
+			placeholder='Delivery Date...'
+			value-state="Error"
+			title='Delivery Date!'>
+	</ui5-datepicker>
+
+	<ui5-select id="mySelect2"style="width: 6rem;">
 		<ui5-option>Cozy</ui5-option>
 		<ui5-option selected>Compact</ui5-option>
 		<ui5-option>Condensed</ui5-option>
 	</ui5-select>
+	
+	<ui5-input style="width: 6rem;" value="input" value-state="Error">
+		<ui5-icon slot="icon" name="message-warning"></ui5-icon>
+	</ui5-input>
+	<ui5-select id="mySelect2"style="width: 6rem;" value-state="Error">
+		<ui5-option>Cozy</ui5-option>
+		<ui5-option selected>Compact</ui5-option>
+		<ui5-option>Condensed</ui5-option>
+	</ui5-select>
+	<ui5-multi-combobox value-state="Error" style="width: 6rem;"></ui5-multi-combobox>
 
 	<script>
 		var sap_database_entries = [{ key: "Afg", text: "Afghanistan" }, { key: "Arg", text: "Argentina" }, { key: "Alb", text: "Albania" }, { key: "Arm", text: "Armenia" }, { key: "Alg", text: "Algeria" }, { key: "And", text: "Andorra" }, { key: "Ang", text: "Angola" }, { key: "Ast", text: "Austria" }, { key: "Aus", text: "Australia" }, { key: "Aze", text: "Azerbaijan" }, { key: "Aruba", text: "Aruba" }, { key: "Antigua", text: "Antigua and Barbuda" }, { key: "Bel", text: "Belarus" }, { key: "Bel", text: "Belgium" }, { key: "Bg", text: "Bulgaria" }, { key: "Bra", text: "Brazil" }, { key: "Ch", text: "China" }, { key: "Cub", text: "Cuba" }, { key: "Chil", text: "Chili" }, { key: "Lat", text: "Latvia" }, { key: "Lit", text: "Litva" }, { key: "Prt", text: "Portugal" }, { key: "Sen", text: "Senegal" }, { key: "Ser", text: "Serbia" }, { key: "Afg", text: "Seychelles" }, { key: "Sierra", text: "Sierra Leone" }, { key: "Sgp", text: "Singapore" }, { key: "Sint", text: "Sint Maarten" }, { key: "Slv", text: "Slovakia" }, { key: "Slo", text: "Slovenia" }];
