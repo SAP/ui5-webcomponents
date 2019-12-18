@@ -1,9 +1,7 @@
-commit 9e843147a91e48ba26a1467a1d9a7f48e458f2da
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Dec 18 18:02:02 2019 +0200
+commit e860094247ad3d9f4d541136c930186f19621847
+Author: service-tip-git <36747703+service-tip-git@users.noreply.github.com>
+Date:   Wed Dec 18 08:55:03 2019 -0800
 
-    fix(ui5-label): fix truncation when show-colon is set (#1079)
+    chore: translation delivery (#1083)
     
-    Fixes: https://github.com/SAP/ui5-webcomponents/issues/1077
-    
-    The allocated width for the ":" used to be bigger than the ":" itself causing the ui5-label always to truncate, when show-colon is set to "true".
+    Change-Id: I2e3e510156421f06e2fa0b763456938b2302c972
