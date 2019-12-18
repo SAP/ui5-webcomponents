@@ -1,21 +1,20 @@
-
-// async - await
+// async - await NEEDS TO BE FIRST!
 import "regenerator-runtime/runtime.js";
 
 // polymer
 import "../../thirdparty/polymer/baseuri.js";
 import "../../thirdparty/polymer/custom-events.js";
 import "../../thirdparty/polymer/es6-misc.js";
-import "../../thirdparty/polymer/flag-parser.js";
+// import "../../thirdparty/polymer/flag-parser.js";
 import "../../thirdparty/polymer/promise.js";
 import "../../thirdparty/polymer/symbol.js";
-import "../../thirdparty/polymer/unresolved.js";
+// import "../../thirdparty/polymer/unresolved.js";
 
 import "@webcomponents/template/template.js";
 import "@webcomponents/shadydom/src/shadydom.js";
 import "@webcomponents/custom-elements/src/custom-elements.js";
-import "@webcomponents/shadycss/entrypoints/scoping-shim.js";
-import "@webcomponents/url/url.js";
+// import "@webcomponents/shadycss/entrypoints/scoping-shim.js";
+// import "@webcomponents/url/url.js";
 
 
 // CSS Custom Properties
