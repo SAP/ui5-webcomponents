@@ -208,6 +208,10 @@ class Calendar extends UI5Element {
 		return this.selectedDates || [];
 	}
 
+	get compact() {
+		return this.isCompact;
+	}
+
 	_handleSelectedDatesChange(event) {
 		this.selectedDates = [...event.detail.dates];
 

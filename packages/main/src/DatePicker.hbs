@@ -9,6 +9,7 @@
 			placeholder="{{_placeholder}}"
 			type="{{type}}"
 			value="{{value}}"
+			?compact-size="{{compact}}"
 			?disabled="{{disabled}}"
 			?readonly="{{readonly}}"
 			value-state="{{valueState}}"
@@ -21,6 +22,7 @@
 			<ui5-icon
 				slot="icon"
 				name="appointment-2"
+				?compact-size="{{compact}}"
 				tabindex="-1"
 				accessible-name="{{openIconTitle}}"
 				show-tooltip
@@ -37,6 +39,7 @@
 			id="{{_id}}-popover"
 			allow-target-overlap="{{_popover.allowTargetOverlap}}"
 			placement-type="{{_popover.placementType}}"
+			?compact-size="{{compact}}"
 			no-arrow
 			horizontal-align="{{_popover.horizontalAlign}}"
 			stay-open-on-scroll="{{_popover.stayOpenOnScroll}}"
@@ -45,6 +48,7 @@
 	>
 		<ui5-calendar
 				id="{{_id}}-calendar"
+				?compact-size="{{compact}}"
 				primary-calendar-type="{{_calendar.primaryCalendarType}}"
 				format-pattern="{{_calendar.formatPattern}}"
 				timestamp="{{_calendar.timestamp}}"

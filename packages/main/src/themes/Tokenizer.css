@@ -7,7 +7,7 @@
 	height: 2.25rem;
 }
 
-:host([data-ui5-compact-size]) .ui5-tokenizer-root {
+:host([compact-size]) .ui5-tokenizer-root {
 	padding: 0.125rem;
 }
 
@@ -21,7 +21,7 @@
 	font-family: var(--sapFontFamily);
 }
 
-:host([data-ui5-compact-size]) .ui5-tokenizer-root.ui5-tokenizer-no-padding,
+:host([compact-size]) .ui5-tokenizer-root.ui5-tokenizer-no-padding,
 .ui5-tokenizer-no-padding {
 	padding: 0;
 }
@@ -63,7 +63,7 @@
 	margin-top: auto;
 }
 
-:host([data-ui5-compact-size]) .ui5-tokenizer-token-placeholder {
+:host([compact-size]) .ui5-tokenizer-token-placeholder {
 	height: 1.25rem;
 }
 
@@ -75,6 +75,6 @@
 	margin-left: .25rem;
 }
 
-:host([data-ui5-compact-size]) :slotted(ui5-token) {
+:host([compact-size]) :slotted(ui5-token) {
 	height: 100%;
 }

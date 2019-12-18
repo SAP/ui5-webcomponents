@@ -152,34 +152,34 @@ https://github.com/philipwalton/flexbugs/issues/231
 }
 
 /* Compact */
-:host([text][data-ui5-compact-size]) .ui5-checkbox-root {
+:host([text][compact-size]) .ui5-checkbox-root {
 	padding-right: 0;
 }
-:host([text][data-ui5-compact-size]) .ui5-checkbox-root:focus::before {
+:host([text][compact-size]) .ui5-checkbox-root:focus::before {
 	right: 0;
 }
 
-:host([wrap][text][data-ui5-compact-size]) .ui5-checkbox-root {
+:host([wrap][text][compact-size]) .ui5-checkbox-root {
 	min-height: auto;
 	padding-top: var(--_ui5_checkbox_wrapped_focus_padding);
 	padding-bottom: var(--_ui5_checkbox_wrapped_focus_padding);
 }
 
-:host([wrap][text][data-ui5-compact-size]) .ui5-checkbox-root .ui5-checkbox-label {
+:host([wrap][text][compact-size]) .ui5-checkbox-root .ui5-checkbox-label {
 	margin-top: var(--_ui5_checkbox_compact_wrapped_label_margin_top);
 }
 
-:host([wrap][data-ui5-compact-size]) .ui5-checkbox-root:focus::before {
+:host([wrap][compact-size]) .ui5-checkbox-root:focus::before {
 	bottom: var(--_ui5_checkbox_compact_focus_position);
 }
 
-:host([data-ui5-compact-size]) .ui5-checkbox-root {
+:host([compact-size]) .ui5-checkbox-root {
 	min-height: var(--_ui5_checkbox_compact_width_height);
 	min-width: var(--_ui5_checkbox_compact_width_height);
 	padding: 0 var(--_ui5_checkbox_compact_wrapper_padding);
 }
 
-:host([data-ui5-compact-size]) .ui5-checkbox-root:focus::before {
+:host([compact-size]) .ui5-checkbox-root:focus::before {
 	top: var(--_ui5_checkbox_compact_focus_position);
 	left: var(--_ui5_checkbox_compact_focus_position);
 	right: var(--_ui5_checkbox_compact_focus_position);
@@ -187,7 +187,7 @@ https://github.com/philipwalton/flexbugs/issues/231
 	border: var(--_ui5_checkbox_focus_outline);
 }
 
-:host([data-ui5-compact-size]) .ui5-checkbox-inner {
+:host([compact-size]) .ui5-checkbox-inner {
 	max-height: var(--_ui5_checkbox_compact_inner_size);
 	height: var(--_ui5_checkbox_compact_inner_size);
 	max-width: var(--_ui5_checkbox_compact_inner_size);
@@ -195,11 +195,11 @@ https://github.com/philipwalton/flexbugs/issues/231
 	font-size: .625rem;
 }
 
-:host([data-ui5-compact-size]) .ui5-checkbox-root .ui5-checkbox-label {
+:host([compact-size]) .ui5-checkbox-root .ui5-checkbox-label {
 	margin-left: var(--_ui5_checkbox_compact_wrapper_padding);
 }
 
-:host([data-ui5-compact-size]) .ui5-checkbox-icon {
+:host([compact-size]) .ui5-checkbox-icon {
 	width: 0.75rem;
 	height: 0.75rem;
 }
@@ -221,10 +221,10 @@ https://github.com/philipwalton/flexbugs/issues/231
 }
 
 /* RTL + Compact */
-:host([data-ui5-compact-size][text]) [dir="rtl"].ui5-checkbox-root {
+:host([compact-size][text]) [dir="rtl"].ui5-checkbox-root {
 	padding-right: var(--_ui5_checkbox_compact_wrapper_padding);
 }
 
-:host([data-ui5-compact-size][text]) [dir="rtl"].ui5-checkbox-root:focus::before {
+:host([compact-size][text]) [dir="rtl"].ui5-checkbox-root:focus::before {
 	right: var(--_ui5_checkbox_compact_focus_position);
 }

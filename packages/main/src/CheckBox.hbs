@@ -14,14 +14,14 @@
 >
 		<div id="{{_id}}-CbBg" class="ui5-checkbox-inner">
 			{{#if checked}}
-				<ui5-icon name="accept" class="ui5-checkbox-icon" dir="ltr"></ui5-icon>
+				<ui5-icon name="accept" ?compact-size="{{compact}}" class="ui5-checkbox-icon" dir="ltr"></ui5-icon>
 			{{/if}}
 
 			<input id="{{_id}}-CB" type='checkbox' ?checked="{{checked}}" ?readonly="{{readonly}}" ?disabled="{{disabled}}" data-sap-no-tab-ref/>
 		</div>
 
 		{{#if _label.text}}
-			<ui5-label id="{{_id}}-label" class="ui5-checkbox-label" ?wrap="{{_label.wrap}}">{{_label.text}}</ui5-label>
+			<ui5-label id="{{_id}}-label" class="ui5-checkbox-label" ?wrap="{{_label.wrap}}" ?compact-size="{{compact}}">{{_label.text}}</ui5-label>
 		{{/if}}
 
 		{{#if hasValueState}}

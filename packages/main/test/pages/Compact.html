@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Compact</title>
+	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+	<script nomodule src="../../resources/bundle.es5.js"></script>
+
+	<style>
+		.snippet {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+		}
+	</style>
+</head>
+
+<body style="background-color: var(--sapBackgroundColor);">
+	<h2>Elements in compact</h2>
+	<div class="snippet">
+		<ui5-button compact-size>Open Dialog</ui5-button>
+		<ui5-checkbox compact-size text="I agree">Open Dialog</ui5-checkbox>
+		<ui5-radiobutton id="rb1" compact-size text="Option A" name="groupA"></ui5-radiobutton>
+		<ui5-radiobutton id="rb2" compact-size text="Option B" name="groupA"></ui5-radiobutton>
+	</div>
+	<ui5-datepicker id="dp1" compact-size></ui5-datepicker>
+
+	<h2>Elements in cosy</h2>
+	<div class="snippet">
+		<ui5-button>Open Dialog</ui5-button>
+		<ui5-checkbox text="I agree">Open Dialog</ui5-checkbox>
+		<ui5-radiobutton id="rb3" text="Option A" name="groupB"></ui5-radiobutton>
+		<ui5-radiobutton id="rb4" text="Option B" name="groupB"></ui5-radiobutton>
+	</div>
+	<ui5-datepicker id="dp2"></ui5-datepicker>
+</body>
+</html>

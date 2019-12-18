@@ -33,16 +33,16 @@
 	margin-left: 0;
 }
 
-:host([data-ui5-compact-size]) .ui5-button-icon {
+:host([compact-size]) .ui5-button-icon {
 	font-size: 1rem;
 }
 
-:host([data-ui5-compact-size]) {
+:host([compact-size]) {
 	height: var(--_ui5_button_compact_height);
 	min-width: var(--_ui5_button_base_min_compact_width);
 }
 
-:host([data-ui5-compact-size]) .ui5-button-root {
+:host([compact-size]) .ui5-button-root {
 	padding: 0 var(--_ui5_button_compact_padding);
 }
 

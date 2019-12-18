@@ -15,7 +15,7 @@
 	min-height: 1rem;
 }
 
-[input-icon][data-ui5-compact-size] {
+[input-icon][compact-size] {
 	padding: .25rem .5rem;
 }
 

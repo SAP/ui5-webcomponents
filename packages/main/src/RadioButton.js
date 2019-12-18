@@ -1,5 +1,4 @@
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
-import { getCompactSize } from "@ui5/webcomponents-base/dist/config/CompactSize.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
@@ -404,11 +403,15 @@ class RadioButton extends UI5Element {
 	}
 
 	get circle() {
-		return getCompactSize() ? SVGConfig.compact : SVGConfig.default;
+		return this.compact ? SVGConfig.compact : SVGConfig.default;
 	}
 
 	get rtl() {
 		return getRTL() ? "rtl" : undefined;
+	}
+
+	get compact() {
+		return this.isCompact;
 	}
 }
 

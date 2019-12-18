@@ -150,11 +150,11 @@
 	padding-top: .75rem;
 }
 
-:host([data-ui5-compact-size]) .ui5-tli-bubble {
+:host([compact-size]) .ui5-tli-bubble {
 	padding: .5rem;
 }
 
-:host([data-ui5-compact-size]) .ui5-tli-indicator::before {
+:host([compact-size]) .ui5-tli-indicator::before {
 	bottom: -.5rem;
 }
 

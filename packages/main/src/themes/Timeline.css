@@ -24,14 +24,14 @@
 }
 
 /* Compact size */
-:host([data-ui5-compact-size]) .ui5-timeline-root {
+:host([compact-size]) .ui5-timeline-root {
 	padding: .5rem;
 }
 
-:host([data-ui5-compact-size]) .ui5-timeline-list-item {
+:host([compact-size]) .ui5-timeline-list-item {
 	margin-bottom: .5rem;
 }
 
-:host([data-ui5-compact-size]) .ui5-timeline-list-item :last-child {
+:host([compact-size]) .ui5-timeline-list-item :last-child {
 	margin-bottom: 0;
 }

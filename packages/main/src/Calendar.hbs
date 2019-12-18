@@ -20,6 +20,7 @@
 			._hidden="{{_oMonth._hidden}}"
 			.primaryCalendarType="{{_oMonth.primaryCalendarType}}"
 			timestamp="{{_oMonth.timestamp}}"
+			?compact-size="{{compact}}"
 			@ui5-selectionChange="{{_oMonth.onSelectedDatesChange}}"
 			@ui5-navigate="{{_oMonth.onNavigate}}"
 		></ui5-daypicker>
@@ -30,6 +31,7 @@
 			._hidden="{{_monthPicker._hidden}}"
 			.primaryCalendarType="{{_oMonth.primaryCalendarType}}"
 			timestamp="{{_monthPicker.timestamp}}"
+			?compact-size="{{compact}}"
 			@ui5-selectedMonthChange="{{_monthPicker.onSelectedMonthChange}}"
 		></ui5-monthpicker>
 
@@ -40,6 +42,7 @@
 				.primaryCalendarType="{{_oMonth.primaryCalendarType}}"
 				timestamp="{{_yearPicker.timestamp}}"
 				._selectedYear="{{_yearPicker._selectedYear}}"
+				?compact-size="{{compact}}"
 				@ui5-selectedYearChange="{{_yearPicker.onSelectedYearChange}}"
 		></ui5-yearpicker>
 	</div>

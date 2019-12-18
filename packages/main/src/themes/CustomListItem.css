@@ -30,12 +30,12 @@ ui5-radiobutton.ui5-li-singlesel-radiobtn {
 }
 
 /* Compact size */
-:host([data-ui5-compact-size]) {
+:host([compact-size]) {
 	height: 2rem;
 }
 
-:host([data-ui5-compact-size]) .ui5-li-root.ui5-custom-li-root,
-:host([data-ui5-compact-size]) ui5-checkbox.ui5-li-singlesel-radiobtn,
-:host([data-ui5-compact-size]) ui5-radiobutton.ui5-li-singlesel-radiobtn {
+:host([compact-size]) .ui5-li-root.ui5-custom-li-root,
+:host([compact-size]) ui5-checkbox.ui5-li-singlesel-radiobtn,
+:host([compact-size]) ui5-radiobutton.ui5-li-singlesel-radiobtn {
 	min-width: 2rem;
 }

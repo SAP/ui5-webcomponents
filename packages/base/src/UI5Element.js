@@ -11,6 +11,11 @@ import { kebabToCamelCase, camelToKebabCase } from "./util/StringHelper.js";
 import isValidPropertyName from "./util/isValidPropertyName.js";
 
 const metadata = {
+	properties: {
+		compactSize: {
+			type: Boolean,
+		}
+	},
 	events: {
 		_propertyChange: {},
 	},
@@ -76,9 +81,8 @@ class UI5Element extends HTMLElement {
 	}
 
 	async connectedCallback() {
-		const isCompact = getCompactSize();
-		if (isCompact) {
-			this.setAttribute("data-ui5-compact-size", "");
+		if (this.isCompact) {
+			this.setAttribute("compact-size", "");
 		}
 
 		if (!this.constructor.needsShadowDOM()) {
@@ -128,6 +132,7 @@ class UI5Element extends HTMLElement {
 	}
 
 	async _processChildren(mutations) {
+		debugger;
 		const hasSlots = this.constructor.getMetadata().hasSlots();
 		if (hasSlots) {
 			await this._updateSlots();
@@ -575,6 +580,15 @@ class UI5Element extends HTMLElement {
 	 */
 	get isUI5Element() {
 		return true;
+	}
+
+	/**
+	 * Returns if the element is in compact size
+	 * @returns {boolean}
+	 * @protected
+	 */
+	get isCompact() {
+		return this.compactSize || getCompactSize();
 	}
 
 	/**

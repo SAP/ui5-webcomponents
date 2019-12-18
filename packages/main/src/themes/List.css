@@ -85,7 +85,7 @@
 }
 
 /* Compact size */
-:host([data-ui5-compact-size]) .ui5-list-root .ui5-list-nodata {
+:host([compact-size]) .ui5-list-root .ui5-list-nodata {
 	height: 2rem;
 	font-size: var(--sapFontMediumSize);
 }

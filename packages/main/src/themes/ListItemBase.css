@@ -54,6 +54,6 @@
 }
 
 /* Compact size */
-:host([data-ui5-compact-size]) {
+:host([compact-size]) {
 	height: 2rem;
 }

@@ -154,17 +154,17 @@
 }
 
 /* Compact size */
-:host([data-ui5-compact-size]) .ui5-dp-weeknumber-container {
+:host([compact-size]) .ui5-dp-weeknumber-container {
 	padding-top: 2rem;
 }
 
-:host([data-ui5-compact-size]) .ui5-dp-weekname,
-:host([data-ui5-compact-size]) .ui5-dp-dayname,
-:host([data-ui5-compact-size]) .ui5-dp-item {
+:host([compact-size]) .ui5-dp-weekname,
+:host([compact-size]) .ui5-dp-dayname,
+:host([compact-size]) .ui5-dp-item {
 	width: 2rem;
 	height: 2rem;
 }
 
-:host([data-ui5-compact-size]) .ui5-dp-emptyweek {
+:host([compact-size]) .ui5-dp-emptyweek {
 	height: 2.125rem;
 }

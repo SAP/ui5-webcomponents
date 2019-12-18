@@ -2,7 +2,7 @@
 	display: block;
 }
 
-:host([data-ui5-compact-size]) .ui5-panel-header {
+:host([compact-size]) .ui5-panel-header {
 	height: 2rem;
 }
 

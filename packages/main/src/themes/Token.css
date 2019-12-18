@@ -76,18 +76,18 @@
 }
 
 /* Compact */
-:host([data-ui5-compact-size]) {
+:host([compact-size]) {
 	font-size: 0.75rem;
 	height: 1.125rem; /* Note: by design should be 1.25rem, but the token gets cut in Erron/Warning state */
 }
 
-:host([data-ui5-compact-size]) .ui5-token--wrapper {
+:host([compact-size]) .ui5-token--wrapper {
 	padding-left: 0.25rem; 
 	padding-top: 0.1rem; 
 	padding-bottom: 0.1rem; 
 }
 
-:host([data-ui5-compact-size]) .ui5-token--icon {
+:host([compact-size]) .ui5-token--icon {
 	padding: 0.1rem 0.25rem;
 	width: 0.75rem;
 	height: 0.75rem;
@@ -105,7 +105,7 @@
 }
 
 /* RTL + Compact */
-:host([data-ui5-compact-size]) .ui5-token--wrapper[dir="rtl"] {
+:host([compact-size]) .ui5-token--wrapper[dir="rtl"] {
 	padding-right: 0.25rem;
 	padding-left: 0;
 }

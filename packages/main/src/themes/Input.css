@@ -16,11 +16,11 @@
 	box-sizing: border-box;
 }
 
-:host([data-ui5-compact-size]) {
+:host([compact-size]) {
 	height: var(--_ui5_input_compact_height);
 }
 
-:host([data-ui5-compact-size]) [inner-input] {
+:host([compact-size]) [inner-input] {
 	padding: 0 0.5rem;
 }
 
@@ -183,7 +183,7 @@
 	align-items: center;
 }
 
-:host([data-ui5-compact-size]) .ui5-input-icon-root {
+:host([compact-size]) .ui5-input-icon-root {
 	min-width: var(--sap_wc_input_compact_min_width);
 	width: var(--sap_wc_input_compact_min_width);
 }
@@ -196,6 +196,6 @@
 	padding: var(--_ui5_input_icon_padding);
 }
 
-:host([data-ui5-compact-size]) ::slotted(ui5-icon[slot="icon"]) {
+:host([compact-size]) ::slotted(ui5-icon[slot="icon"]) {
 	padding: .25rem .5rem;
 }
