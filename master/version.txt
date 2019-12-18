@@ -1,5 +1,10 @@
-commit a6158321d0bd7768b0dd809d5aa4df39bac496e7
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Wed Dec 18 15:46:49 2019 +0200
+commit 37b7891a829c43fe52447e6097a12f6043dfcd14
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Dec 18 16:01:29 2019 +0200
 
-    refactor(framework): remove dependency to jest & pupeteer (#1078)
+    fix(ui5-select): fix component baseline alignment (#1075)
+    
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/1074
+    
+    **Background**
+    The `overflow: hidden` causes the ui5-select to be pushed upwards the main baseline (as described in the issue). Originally, the style was introduced  not to allow the hover of the arrow to cover the input border. Now, this is resolved by moving this `overflow: hidden` to inner element and in the same time not disrupting the baseline alignment of the whole component.
