@@ -5,7 +5,6 @@ const serveConfig = path.join(__dirname, `serve.json`);
 
 const getScripts = (options) => {
 
-	const jestTask = options.hasJest ? `test.jest` : ``;
 	const port = options.port;
 
 	const scripts = {
@@ -58,9 +57,7 @@ const getScripts = (options) => {
 			run: `serve --no-clipboard -l ${port} dist`,
 		},
 		test: {
-			default: `nps ${jestTask} test.wdio`,
-			jest: "jest",
-			wdio: {
+			default: {
 				// --success first - report the exit code of the test run (first command to finish), as serve is always terminated and has a non-0 exit code
 				default: 'concurrently "nps serve" "nps test.wdio.run" --kill-others --success first',
 				run: "cross-env WDIO_LOG_LEVEL=error FORCE_COLOR=0 wdio config/wdio.conf.js",
