@@ -28,15 +28,15 @@
 }
 
 :host(:not([wrap])[required][show-colon]) .ui5-label-text-wrapper {
-	max-width: calc(100%-0.725rem);
+	max-width: calc(100% - 0.725rem);
 }
 
 :host(:not([wrap])[required]) .ui5-label-text-wrapper {
-	max-width: calc(100%-0.475rem);
+	max-width: calc(100% - 0.475rem);
 }
 
 :host(:not([wrap])[show-colon]) .ui5-label-text-wrapper {
-	max-width: calc(100%-0.3rem);
+	max-width: calc(100% - 0.2rem);
 }
 
 :host([show-colon]) .ui5-label-required-colon:before {
