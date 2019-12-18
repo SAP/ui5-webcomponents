@@ -1,5 +1,5 @@
 // ES5 bundle targets IE11 only
-import "@ui5/webcomponents-base/dist/features/browsersupport/IE11.js";
+import "@ui5/webcomponents-base/dist/features/browsersupport/IE11Full.js";
 
 import "./bundle.esm.js";
 

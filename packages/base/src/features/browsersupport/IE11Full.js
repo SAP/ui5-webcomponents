@@ -1,3 +1,22 @@
+// async - await NEEDS TO BE FIRST!
+import "regenerator-runtime/runtime.js";
+
+// polymer
+import "../../thirdparty/polymer/baseuri.js";
+import "../../thirdparty/polymer/custom-events.js";
+import "../../thirdparty/polymer/es6-misc.js";
+// import "../../thirdparty/polymer/flag-parser.js";
+import "../../thirdparty/polymer/promise.js";
+import "../../thirdparty/polymer/symbol.js";
+// import "../../thirdparty/polymer/unresolved.js";
+
+import "@webcomponents/template/template.js";
+import "@webcomponents/shadydom/src/shadydom.js";
+import "@webcomponents/custom-elements/src/custom-elements.js";
+// import "@webcomponents/shadycss/entrypoints/scoping-shim.js";
+// import "@webcomponents/url/url.js";
+
+
 // CSS Custom Properties
 import cssVars from "css-vars-ponyfill/dist/css-vars-ponyfill.esm.js";
 
@@ -29,9 +48,6 @@ import "../../thirdparty/WeakSet.js";
 
 // fetch
 import "../../thirdparty/fetch.js";
-
-// async - await
-import "regenerator-runtime/runtime.js";
 
 // Plus all polyfills needed for Edge are also needed for IE11
 import "./Edge.js";
