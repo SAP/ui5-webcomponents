@@ -1,5 +1,5 @@
-commit 0117219f044247ed254d7800943d4f2c289be63e
+commit a6158321d0bd7768b0dd809d5aa4df39bac496e7
 Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Wed Dec 18 15:40:43 2019 +0200
+Date:   Wed Dec 18 15:46:49 2019 +0200
 
-    chore(ui5-datepicker, ui5-calendar, ui5-daypicker): rewrite qunit tests to wdio (#1076)
+    refactor(framework): remove dependency to jest & pupeteer (#1078)
