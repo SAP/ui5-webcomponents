@@ -1,54 +1,5 @@
-commit 48400cd72a459e06fab366531e7b9d85a76c2254
-Author: Plamen Ivanov <mrplamenivanov91@gmail.com>
-Date:   Tue Dec 17 16:12:02 2019 +0200
+commit 0117219f044247ed254d7800943d4f2c289be63e
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Wed Dec 18 15:40:43 2019 +0200
 
-    feat(ui5-toast): introduce new component (#1014)
-    
-    New ui5-toast component is introduced.
-    
-    Sample changes:
-    More samples are added in the playground, which demonstrate default
-    Toast, as well as some short/long duration options for the component.
-    Also the script for the handlers in now simplified/shortened in both
-    playground and test pages.
-    
-    Style changes:
-    Added "--_ui5_toast_background" and "--_ui5_toast_shadow" CSS parameters.
-    Font-family, color, and font-size of the "ui5-toast-text" are now on the
-    host.
-    These changes give the web-component user, the freedom to alter
-    the styling of the Toast.
-    
-    CSS class name changes:
-    The "ui5-toast-root-parent" class is now renamed to "ui5-toast-root".
-    The "ui5-toast-root" class is now called "ui5-toast-content".
-    
-    Animation changes:
-    The transition (fade out animation) is now handled differently.
-    It is still a third of the Toast's duration property, but if
-    it happens to be more than 1000ms, we force it to be 1000ms.
-    This way we omit prolonged fade out times, when
-    the duration property is longer, than 3000ms (default).
-    
-    Tests changes:
-    Spec files are now aligned with the new transition behaviour.
-    Also some new tests are now added in order to cover mose cases.
-    
-    Now if the user inputs duration lower than 500ms, we
-    force it to be 500ms.
-    
-    Additionally the following changes are made:
-    
-    * CSS variables are now aligned with the new convention.
-    
-    * Toast's text styling is now part of the ui5-toast-content class.
-    
-    * A span which is the container of the Toast's text
-    is now removed from the hbs.
-    
-    * One of the Toasts in the html sample is now with invalid duration "-1".
-    This is in order to test if the minimum duration is applied correctly.
-    
-    * Added test in the spec file, which tests the new minimum duration behaviour.
-    
-    * The sample.html is reduced in volume.
+    chore(ui5-datepicker, ui5-calendar, ui5-daypicker): rewrite qunit tests to wdio (#1076)
