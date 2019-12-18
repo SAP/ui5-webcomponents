@@ -1,6 +1,6 @@
 const assert = require("chai").assert;
 
-describe("CheckBox general interaction", () => {
+describe("Calendar general interaction", () => {
 	browser.url("http://localhost:8080/test-resources/pages/Calendar.html");
 
 	it("Calendar is rendered", () => {
@@ -34,7 +34,7 @@ describe("CheckBox general interaction", () => {
 		const monthText = calendarHeader.getAttribute("month-text");
 		const currentMonth = new Date().getMonth();
 
-		assert.strictEqual(monthText.toString(), monthMap.get(currentMonth), "Year is set in the header");
+		assert.strictEqual(monthText.toString(), monthMap.get(currentMonth), "Month is set in the header");
 	});
 
 	it("Default month is the current year", () => {
