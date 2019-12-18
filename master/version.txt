@@ -1,10 +1,5 @@
-commit 37b7891a829c43fe52447e6097a12f6043dfcd14
+commit b97dc000dd64ddf8af1d8a579293c8e905fada24
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Dec 18 16:01:29 2019 +0200
+Date:   Wed Dec 18 16:30:05 2019 +0200
 
-    fix(ui5-select): fix component baseline alignment (#1075)
-    
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/1074
-    
-    **Background**
-    The `overflow: hidden` causes the ui5-select to be pushed upwards the main baseline (as described in the issue). Originally, the style was introduced  not to allow the hover of the arrow to cover the input border. Now, this is resolved by moving this `overflow: hidden` to inner element and in the same time not disrupting the baseline alignment of the whole component.
+    docs(ui5-product-switch): improve sample (#1081)

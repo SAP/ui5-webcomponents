@@ -1351,7 +1351,26 @@
 <div class="control-tag">&lt;ui5-product-switch&gt;</div>
 
 <section>
-	<h3>Basic ProductSwitch</h3>
+	<h3>Basic sample</h3>
+	<div class="snippet">
+		<ui5-product-switch style="display:flex;">
+			<ui5-product-switch-item heading="Home" subtitle="Central Home" icon="sap-icon://home"></ui5-product-switch-item>
+			<ui5-product-switch-item heading="Analytics Cloud" subtitle="Analytics Cloud" icon="sap-icon://business-objects-experience"></ui5-product-switch-item>
+			<ui5-product-switch-item heading="Catalog" subtitle="Ariba" icon="sap-icon://contacts"></ui5-product-switch-item>
+			<ui5-product-switch-item heading="Travel & Expense" subtitle="Concur" icon="sap-icon://flight"></ui5-product-switch-item>
+		</ui5-product-switch>
+	</div>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-product-switch&gt;</span>
+	<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">heading=</span><span class="s">"Home"</span> <span class="na">subtitle=</span><span class="s">"Central Home"</span> <span class="na">icon=</span><span class="s">"sap-icon://home"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
+	<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">heading=</span><span class="s">"Analytics Cloud"</span> <span class="na">subtitle=</span><span class="s">"Analytics Cloud"</span> <span class="na">icon=</span><span class="s">"sap-icon://business-objects-experience"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
+	<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">heading=</span><span class="s">"Catalog"</span> <span class="na">subtitle=</span><span class="s">"Ariba"</span> <span class="na">icon=</span><span class="s">"sap-icon://contacts"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
+	<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">heading=</span><span class="s">"Travel &amp; Expense"</span> <span class="na">subtitle=</span><span class="s">"Concur"</span> <span class="na">icon=</span><span class="s">"sap-icon://flight"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
+<span class="nt">&lt;/ui5-product-switch&gt;</span>
+	</code></pre></figure></pre>
+</section>
+
+<section>
+	<h3>ProductSwitch within ShellBar</h3>
 	<div class="snippet">
 		<ui5-shellbar
 			id="shellbar"
