@@ -9,7 +9,6 @@ test/
 bundle.*.js
 .eslintrc.js
 .eslintignore
-jest*.js
 main.*js
 rollup*
 serve.json
