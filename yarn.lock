@@ -875,6 +875,31 @@
     "@wdio/logger" "5.13.2"
     deepmerge "^4.0.0"
 
+"@webcomponents/custom-elements@^1.3.1":
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/@webcomponents/custom-elements/-/custom-elements-1.3.1.tgz#6a654d4d8cbdcb6344af15e9c518c2de8416b3f5"
+  integrity sha512-busXK/Mkz6NcvUK8izF9pePo6gPVjybO7vopX2NkZow6U7ZCjUvCGzcS3tCIURAD8WLrAI9MW3PqslOQOYa4lg==
+
+"@webcomponents/shadycss@^1.9.3":
+  version "1.9.3"
+  resolved "https://registry.yarnpkg.com/@webcomponents/shadycss/-/shadycss-1.9.3.tgz#74ee4be13f5374724aecb3d2c2de77523e01ada9"
+  integrity sha512-fRuET+UGrH84hG0UF4iHbFqWZKUoan4/ki+iCOJ/vnKltPSHv/ZVbcA6sT/pRreznt8aKEGqN2KdHvgRxn4xjA==
+
+"@webcomponents/shadydom@^1.7.0":
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/@webcomponents/shadydom/-/shadydom-1.7.0.tgz#acc19e562c26e5d0477b8ecefa79bf08877bed7d"
+  integrity sha512-7Pxhu2uQ1Udq33FMym8EecKRUMc8QXUYMPfZ9v7xhvgSlg5YeMgg+PflEr11x6BPWaK6zmV2AWhlg2aEu8D+0g==
+
+"@webcomponents/template@^1.4.1":
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/@webcomponents/template/-/template-1.4.1.tgz#0ac6fa2053701e067829bf20c8304888472c7382"
+  integrity sha512-v7vwYZPKsAxczkWIjCOfCki9SpRdUcDjMZyweTGj3EPvVi+awQVHFPZ6X3jDW5nLSOs6Ls3h/AX8x8T+df2X0Q==
+
+"@webcomponents/url@^0.7.4":
+  version "0.7.4"
+  resolved "https://registry.yarnpkg.com/@webcomponents/url/-/url-0.7.4.tgz#8fb9b0c4bbe5580c86666320f729acccf9eabcc0"
+  integrity sha512-qk36B0yy8Lk8wu8eA/XFdlkrKMExaKBDqCNmm0Aue3gP2X/88KWwK7LZI9zKf9LKDNPmQ6YshSCcUqTsyUY0vQ==
+
 "@webcomponents/webcomponentsjs@^2.2.7":
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/@webcomponents/webcomponentsjs/-/webcomponentsjs-2.3.0.tgz#d17c67e9602d46f5a6c425bc00613bba83dcd0e2"
@@ -3849,6 +3874,11 @@ get-func-name@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/get-func-name/-/get-func-name-2.0.0.tgz#ead774abee72e20409433a066366023dd6887a41"
   integrity sha1-6td0q+5y4gQJQzoGY2YCPdaIekE=
+
+get-own-property-symbols@^0.9.4:
+  version "0.9.4"
+  resolved "https://registry.yarnpkg.com/get-own-property-symbols/-/get-own-property-symbols-0.9.4.tgz#36d73c856a751500a3a0c76a62911939fae12ac9"
+  integrity sha512-rweuUyShThO7whRCLIlr+YlE2eHQ6MTaLANkFe1pcaVV7Y46BuoLhN+XwtAfyddrZynzIfyl6nG6S/UchMOgWg==
 
 get-stdin@^4.0.1:
   version "4.0.1"
@@ -7579,6 +7609,11 @@ progress@^2.0.0, progress@^2.0.1:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/progress/-/progress-2.0.3.tgz#7e8cf8d8f5b8f239c1bc68beb4eb78567d572ef8"
   integrity sha512-7PiHtLll5LdnKIMw100I+8xJXR5gW2QwWYkT6iJva0bXitZKa/XMrSbdmg3r2Xnaidz9Qumd0VPaMrZlF9V9sA==
+
+promise-polyfill@^8.1.3:
+  version "8.1.3"
+  resolved "https://registry.yarnpkg.com/promise-polyfill/-/promise-polyfill-8.1.3.tgz#8c99b3cf53f3a91c68226ffde7bde81d7f904116"
+  integrity sha512-MG5r82wBzh7pSKDRa9y+vllNHz3e3d4CNj1PQE4BQYxLme0gKYYBm9YENq+UkEikyZ0XbiGWxYlVw3Rl9O/U8g==
 
 promise@^7.1.1:
   version "7.3.1"
