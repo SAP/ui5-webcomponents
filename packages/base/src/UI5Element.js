@@ -132,7 +132,6 @@ class UI5Element extends HTMLElement {
 	}
 
 	async _processChildren(mutations) {
-		debugger;
 		const hasSlots = this.constructor.getMetadata().hasSlots();
 		if (hasSlots) {
 			await this._updateSlots();
