@@ -56,6 +56,9 @@ class UI5Element extends HTMLElement {
 
 	onContentDensityChanged() {
 		this._syncContentDensity();
+		if (this.constructor.getMetadata().getInvalidateOnContentDensityChange()) {
+			this._invalidate();
+		}
 	}
 
 	_syncContentDensity() {

@@ -39,6 +39,10 @@ class UI5ElementMetadata {
 		return this.metadata.events || {};
 	}
 
+	getInvalidateOnContentDensityChange() {
+		return !!this.metadata.invalidateOnContentDensityChange;
+	}
+
 	static validatePropertyValue(value, propData) {
 		const isMultiple = propData.multiple;
 		if (isMultiple) {
