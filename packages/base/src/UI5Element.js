@@ -11,6 +11,18 @@ import { kebabToCamelCase, camelToKebabCase } from "./util/StringHelper.js";
 import isValidPropertyName from "./util/isValidPropertyName.js";
 
 const metadata = {
+	
+	/**
+	 * Defines if the component will be displayed in "compactSize" mode, e.g smaller sizes, margins and paddings.
+	 * <br><br>
+	 * <b>Note:</b> If you want all the components to be displayed in compact density,
+	 * use the global "compactSize" configration available - <ui5-link target="_blank" href="https://github.com/SAP/ui5-webcomponents/blob/master/docs/Configuration.md" class="api-table-content-cell-link">Configuration</ui5-link>.
+	 * <br><br>
+	 * <b>Note:</b> The property will take precendce over the global configuraion and aims to allow specific components to appear compact, while the rest look normally. 
+	 * @type {Boolean}
+	 * @defaultvalue "false"
+	 * @public
+	 */
 	properties: {
 		compactSize: {
 			type: Boolean,
