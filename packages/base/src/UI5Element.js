@@ -10,20 +10,23 @@ import { attachThemeChange } from "./Theming.js";
 import { kebabToCamelCase, camelToKebabCase } from "./util/StringHelper.js";
 import isValidPropertyName from "./util/isValidPropertyName.js";
 
+/**
+ * @public
+ */
 const metadata = {
-	
+
 	/**
 	 * Defines if the component will be displayed in "compactSize" mode, e.g smaller sizes, margins and paddings.
 	 * <br><br>
 	 * <b>Note:</b> If you want all the components to be displayed in compact density,
 	 * use the global "compactSize" configration available - <ui5-link target="_blank" href="https://github.com/SAP/ui5-webcomponents/blob/master/docs/Configuration.md" class="api-table-content-cell-link">Configuration</ui5-link>.
 	 * <br><br>
-	 * <b>Note:</b> The property will take precendce over the global configuraion and aims to allow specific components to appear compact, while the rest look normally. 
+	 * <b>Note:</b> The property will take precendce over the global configuraion and aims to allow specific components to appear compact, while the rest look normally.
 	 * @type {Boolean}
 	 * @defaultvalue "false"
 	 * @public
 	 */
-	properties: {
+	properties: /** @lends sap.ui.webcomponents.base.UI5Element.prototype */ {
 		compactSize: {
 			type: Boolean,
 		},
@@ -36,6 +39,25 @@ const metadata = {
 const DefinitionsSet = new Set();
 const IDMap = new Map();
 
+/**
+ * @class
+ *
+ * <h3 class="comment-api-title">Overview</h3>
+ *
+ * The <code>UI5Element</code> is the base class fot all UI5 Web Components
+ * and handles tasks related to the component initialization,rendering and property/attributes update.
+ *
+ * <h3>ES6 Module Import</h3>
+ *
+ * <code>import "@ui5/webcomponents-base/dist/UI5Element";</code>
+ *
+ * @constructor
+ * @author SAP SE
+ * @alias sap.ui.webcomponents.base.UI5Element
+ * @extends HTMLElement
+ * @since 0.11.0
+ * @public
+ */
 class UI5Element extends HTMLElement {
 	constructor() {
 		super();
