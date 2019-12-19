@@ -54,6 +54,6 @@
 }
 
 /* Compact size */
-:host([compact-size]) {
+:host([content-density="Compact"]) {
 	height: 2rem;
 }

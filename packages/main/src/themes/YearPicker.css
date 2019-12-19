@@ -7,7 +7,7 @@
 	height: 100%;
 }
 
-:host([compact-size]) .ui5-yp-item {
+:host([content-density="Compact"]) .ui5-yp-item {
 	height: 2rem;
 }
 

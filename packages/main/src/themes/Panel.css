@@ -2,7 +2,7 @@
 	display: block;
 }
 
-:host([compact-size]) .ui5-panel-header {
+:host([content-density="Compact"]) .ui5-panel-header {
 	height: 2rem;
 }
 

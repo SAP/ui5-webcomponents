@@ -81,6 +81,6 @@
 }
 
 /* Compact size */
-:host([compact-size]) .ui5-mp-item {
+:host([content-density="Compact"]) .ui5-mp-item {
 	height: 2rem;
 }

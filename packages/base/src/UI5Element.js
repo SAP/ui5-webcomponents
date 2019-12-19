@@ -4,6 +4,7 @@ import { getCompactSize } from "./config/CompactSize.js";
 import DOMObserver from "./compatibility/DOMObserver.js";
 import UI5ElementMetadata from "./UI5ElementMetadata.js";
 import Integer from "./types/Integer.js";
+import ContentDensity from "./types/ContentDensity.js";
 import RenderScheduler from "./RenderScheduler.js";
 import { getConstructableStyle, createHeadStyle, getShadowRootStyle } from "./CSS.js";
 import { attachThemeChange } from "./Theming.js";
@@ -16,19 +17,22 @@ import isValidPropertyName from "./util/isValidPropertyName.js";
 const metadata = {
 
 	/**
-	 * Defines if the component will be displayed in "compactSize" mode, e.g smaller sizes, margins and paddings.
+	 * Defines the component "contentDensity".
 	 * <br><br>
+	 * <b>Note:</b> When set to "Cosy", the components are rendered in larger sizes with bigger margins and paddings.
+	 * <b>Note:</b> When set to "Compact", the components are rendered in smaller sizes with smaller margins and paddings.
 	 * <b>Note:</b> If you want all the components to be displayed in compact density,
-	 * use the global "compactSize" configration available - <ui5-link target="_blank" href="https://github.com/SAP/ui5-webcomponents/blob/master/docs/Configuration.md" class="api-table-content-cell-link">Configuration</ui5-link>.
+	 * use the global "contentDensity" configration available - <ui5-link target="_blank" href="https://github.com/SAP/ui5-webcomponents/blob/master/docs/Configuration.md" class="api-table-content-cell-link">Configuration</ui5-link>.
 	 * <br><br>
-	 * <b>Note:</b> The property will take precendce over the global configuraion and aims to allow specific components to appear compact, while the rest look normally.
-	 * @type {Boolean}
-	 * @defaultvalue "false"
+	 * <b>Note:</b> The property will take precendce over the global configuraion and aims to allow specific components to appear "compact", while the rest "cosy".
+	 * @type {string}
+	 * @defaultvalue "Cosy"
 	 * @public
 	 */
 	properties: /** @lends sap.ui.webcomponents.base.UI5Element.prototype */ {
-		compactSize: {
-			type: Boolean,
+		contentDensity: {
+			type: String,
+			defaultValue: ContentDensity.Auto,
 		},
 	},
 	events: {
@@ -115,7 +119,7 @@ class UI5Element extends HTMLElement {
 	}
 
 	async connectedCallback() {
-		this.compactSize = this.compact;
+		this.contentDensity = this.effectiveContentDensity;
 
 		if (!this.constructor.needsShadowDOM()) {
 			return;
@@ -614,12 +618,12 @@ class UI5Element extends HTMLElement {
 	}
 
 	/**
-	 * Returns if the element is in compact size
+	 * Returns the UI5 element effective (actual) content density.
 	 * @returns {boolean}
-	 * @protected
+	 * @public
 	 */
-	get compact() {
-		return this.compactSize || getCompactSize();
+	get effectiveContentDensity() {
+		return this.contentDensity !== ContentDensity.Auto ? this.contentDensity : getCompactSize();
 	}
 
 	/**

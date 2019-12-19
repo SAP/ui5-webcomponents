@@ -15,7 +15,7 @@
 	min-height: 1rem;
 }
 
-[input-icon][compact-size] {
+[input-icon][content-density="Compact"] {
 	padding: .25rem .5rem;
 }
 

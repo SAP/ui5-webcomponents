@@ -56,12 +56,12 @@
 }
 
 /* ui5-li: item with title and description */
-:host([compact-size][has-title][description]),
+:host([content-density="Compact"][has-title][description]),
 :host([has-title][description]) {
 	height: 5rem;
 }
 
-:host([compact-size][has-title][description]) .ui5-li-title,
+:host([content-density="Compact"][has-title][description]) .ui5-li-title,
 :host([has-title][description]) .ui5-li-title {
 	padding-bottom: 0.375rem;
 }
@@ -130,19 +130,19 @@
 }
 
 /* Compact size */
-:host([compact-size]) .ui5-li-title {
+:host([content-density="Compact"]) .ui5-li-title {
 	height: 2rem;
 	line-height: 2rem;
 	font-size: var(--sapFontMediumSize);
 }
 
-:host([compact-size]:not([has-title]):not([description])) .ui5-li-img {
+:host([content-density="Compact"]:not([has-title]):not([description])) .ui5-li-img {
 	width: 1.75rem;
 	height: 1.75rem;
 	margin-top: 0.55rem;
 }
 
-:host([compact-size]) ui5-checkbox.ui5-li-singlesel-radiobtn {
+:host([content-density="Compact"]) ui5-checkbox.ui5-li-singlesel-radiobtn {
 	margin-right: 0.5rem;
 }
 

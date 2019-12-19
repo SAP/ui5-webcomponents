@@ -158,31 +158,31 @@ ui5-label.ui5-radio-label {
 }
 
 /* Compact size */
-:host([compact-size]) .ui5-radio-root {
+:host([content-density="Compact"]) .ui5-radio-root {
 	height : 2rem;
 }
 
-:host([compact-size][wrap][text]) .ui5-radio-root {
+:host([content-density="Compact"][wrap][text]) .ui5-radio-root {
 	height: auto;
 }
 
-:host([compact-size][wrap][text]) ui5-label.ui5-radio-label {
+:host([content-density="Compact"][wrap][text]) ui5-label.ui5-radio-label {
 	padding-top: .5rem;
 	padding-bottom: .5rem;
 }
 
-:host([compact-size]) .ui5-radio-root:focus:before {
+:host([content-density="Compact"]) .ui5-radio-root:focus:before {
 	top: .375rem;
 	bottom: .375rem;
 	left: .375rem;
 	right: .325rem;
 }
 
-:host([compact-size][text]) .ui5-radio-root:focus:before {
+:host([content-density="Compact"][text]) .ui5-radio-root:focus:before {
 	right: 0;
 }
 
-:host([compact-size]) .ui5-radio-root .ui5-radio-inner {
+:host([content-density="Compact"]) .ui5-radio-root .ui5-radio-inner {
 	width: 2rem;
 	height: 2rem;
 	display: flex;
@@ -190,12 +190,12 @@ ui5-label.ui5-radio-label {
 	justify-content: center;
 }
 
-:host([compact-size]) .ui5-radio-root .ui5-radio-inner .ui5-radio-svg {
+:host([content-density="Compact"]) .ui5-radio-root .ui5-radio-inner .ui5-radio-svg {
 	height: 2rem;
 	width: 2rem;
 }
 
-:host([compact-size]) .ui5-radio-root ui5-label.ui5-radio-label {
+:host([content-density="Compact"]) .ui5-radio-root ui5-label.ui5-radio-label {
 	width: calc(100% - 2rem + 1px);
 }
 
@@ -206,7 +206,7 @@ ui5-label.ui5-radio-label {
 }
 
 /* RTL in Compact */
-:host([compact-size][text]) [dir="rtl"].ui5-radio-root:focus:before {
+:host([content-density="Compact"][text]) [dir="rtl"].ui5-radio-root:focus:before {
 	left: 0;
 	right: 0.375rem;
 }

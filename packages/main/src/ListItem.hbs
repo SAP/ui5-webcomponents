@@ -36,7 +36,7 @@
 {{#*inline "selectionElement"}}
 	{{#if modeSingleSelect}}
 		<ui5-radiobutton
-				?compact-size="{{compact}}"
+				compact-size="{{effectiveContentDensity}}"
 				id="{{_id}}-singleSelectionElement"
 				class="ui5-li-singlesel-radiobtn"
 				?selected="{{selected}}"
@@ -47,7 +47,7 @@
 	{{#if modeMultiSelect}}
 		<ui5-checkbox
 				id="{{_id}}-multiSelectionElement"
-				?compact-size="{{compact}}"
+				compact-size="{{effectiveContentDensity}}"
 				class="ui5-li-multisel-cb"
 				?checked="{{selected}}"
 				@click="{{onMultiSelectionComponentPress}}">
@@ -57,7 +57,7 @@
 	{{#if modeDelete}}
 		<div class="ui5-li-deletebtn">
 			<ui5-button
-				?compact-size="{{compact}}"
+				compact-size="{{effectiveContentDensity}}"
 				id="{{_id}}-deleteSelectionElement"
 				design="Transparent"
 				icon="decline"

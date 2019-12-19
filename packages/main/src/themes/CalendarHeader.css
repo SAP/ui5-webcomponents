@@ -96,12 +96,12 @@
 	border-color: var(--sapContent_ContrastFocusColor);
 }
 
-:host([compact-size]) .ui5-calheader-root {
+:host([content-density="Compact"]) .ui5-calheader-root {
 	height: 2rem;
 	padding: 0;
 }
 
-:host([compact-size]) .ui5-calheader-arrowbtn {
+:host([content-density="Compact"]) .ui5-calheader-arrowbtn {
 	width: 2rem;
 }
 

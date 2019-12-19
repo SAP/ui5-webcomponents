@@ -403,7 +403,7 @@ class RadioButton extends UI5Element {
 	}
 
 	get circle() {
-		return this.compact ? SVGConfig.compact : SVGConfig.default;
+		return this.effectiveContentDensity === "Compact" ? SVGConfig.compact : SVGConfig.default;
 	}
 
 	get rtl() {

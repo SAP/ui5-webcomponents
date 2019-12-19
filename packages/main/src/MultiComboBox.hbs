@@ -15,7 +15,7 @@
 		show-more
 		class="ui5-multi-combobox-tokenizer"
 		?disabled="{{disabled}}"
-		?compact-size="{{compact}}"
+		compact-size="{{effectiveContentDensity}}"
 		@ui5-showMoreItemsPress="{{_showMorePopover}}"
 		@ui5-tokenDelete="{{_tokenDelete}}"
 		@focusout="{{_tokenizerFocusOut}}"
@@ -23,7 +23,7 @@
 	>
 		{{#each items}}
 			{{#if this.selected}}
-				<ui5-token ?compact-size="{{compact}}" ?readonly="{{../readonly}}" class="ui5-multi-combobox-token" data-ui5-id="{{this._id}}" >{{this.textContent}}</ui5-token>
+				<ui5-token compact-size="{{effectiveContentDensity}}" ?readonly="{{../readonly}}" class="ui5-multi-combobox-token" data-ui5-id="{{this._id}}" >{{this.textContent}}</ui5-token>
 			{{/if}}
 		{{/each}}
 	</ui5-tokenizer>
@@ -49,7 +49,7 @@
 
 	{{#unless readonly}}
 		<ui5-icon name="slim-arrow-down"
-			?compact-size="{{compact}}"
+			compact-size="{{effectiveContentDensity}}"
 			input-icon
 			slot="icon"
 			tabindex="-1"
@@ -64,12 +64,12 @@
 		horizontal-align="Stretch"
 		?no-arrow={{editable}}
 		placement-type="Bottom"
-		?compact-size="{{compact}}">
+		compact-size="{{effectiveContentDensity}}">
 		<ui5-list separators="None" mode="{{selectedItemsListMode}}"
-			@ui5-selectionChange={{_listSelectionChange}} ?compact-size="{{compact}}">
+			@ui5-selectionChange={{_listSelectionChange}} compact-size="{{effectiveContentDensity}}">
 			{{#each items}}
 				{{#if this.selected}}
-					<ui5-li type="Active" data-ui5-token-id="{{this._id}}" .selected="{{../editable}}" ?compact-size="{{compact}}">{{this.textContent}}</ui5-li>
+					<ui5-li type="Active" data-ui5-token-id="{{this._id}}" .selected="{{../editable}}" compact-size="{{effectiveContentDensity}}">{{this.textContent}}</ui5-li>
 				{{/if}}
 			{{/each}}
 		</ui5-list>
@@ -84,10 +84,10 @@
 		@ui5-selectionChange={{_listSelectionChange}}
 		@ui5-afterClose={{_toggleIcon}}
 		@ui5-afterOpen={{_toggleIcon}}
-		?compact-size="{{compact}}">
-		<ui5-list separators="None" mode="MultiSelect" class="ui5-multi-combobox-all-items-list" ?compact-size="{{compact}}">
+		compact-size="{{effectiveContentDensity}}">
+		<ui5-list separators="None" mode="MultiSelect" class="ui5-multi-combobox-all-items-list" compact-size="{{effectiveContentDensity}}">
 			{{#each _filteredItems}}
-					<ui5-li type="Active" ?compact-size="{{compact}}" ?selected={{this.selected}} data-ui5-token-id="{{this._id}}">{{this.textContent}}</ui5-li>
+					<ui5-li type="Active" compact-size="{{effectiveContentDensity}}" ?selected={{this.selected}} data-ui5-token-id="{{this._id}}">{{this.textContent}}</ui5-li>
 			{{/each}}
 		</ui5-list>
 	</ui5-popover>

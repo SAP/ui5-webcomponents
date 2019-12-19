@@ -24,14 +24,14 @@
 }
 
 /* Compact size */
-:host([compact-size]) .ui5-timeline-root {
+:host([content-density="Compact"]) .ui5-timeline-root {
 	padding: .5rem;
 }
 
-:host([compact-size]) .ui5-timeline-list-item {
+:host([content-density="Compact"]) .ui5-timeline-list-item {
 	margin-bottom: .5rem;
 }
 
-:host([compact-size]) .ui5-timeline-list-item :last-child {
+:host([content-density="Compact"]) .ui5-timeline-list-item :last-child {
 	margin-bottom: 0;
 }
