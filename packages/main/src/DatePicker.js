@@ -568,10 +568,6 @@ class DatePicker extends UI5Element {
 		return InputType.Text;
 	}
 
-	get compact() {
-		return this.isCompact;
-	}
-
 	static async define(...params) {
 		await Promise.all([
 			fetchCldr(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),

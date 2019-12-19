@@ -10,12 +10,13 @@
 	<div
 		class="ui5-select-label-root"
 		@click="{{_togglePopover}}">
-		<ui5-label>{{_text}}</ui5-label>
+		<ui5-label ?compact-size="{{compact}}">{{_text}}</ui5-label>
 	</div>
 
 	{{#if options}}
 		<ui5-popover
 			id="ui5-select--popover"
+			?compact-size="{{compact}}"
 			placement-type="Bottom"
 			no-arrow
 			horizontal-align="Stretch"
@@ -23,9 +24,9 @@
 			@ui5-beforeOpen="{{_beforeOpen}}"
 			@ui5-afterClose="{{_afterClose}}"
 		>
-				<ui5-list mode="SingleSelect" separators="None" @keydown="{{_handlePickerKeydown}}" @ui5-itemPress="{{_selectionChange}}">
+				<ui5-list mode="SingleSelect" separators="None" @keydown="{{_handlePickerKeydown}}" @ui5-itemPress="{{_selectionChange}}" ?compact-size="{{compact}}">
 					{{#each _syncedOptions}}
-						<ui5-li ?selected="{{this.selected}}" icon="{{this.icon}}" id="{{this.id}}-li">
+						<ui5-li ?selected="{{this.selected}}" icon="{{this.icon}}" id="{{this.id}}-li" ?compact-size="{{compact}}">
 							{{this.textContent}}
 						</ui5-li>
 					{{/each}}
@@ -37,6 +38,7 @@
 			@click="{{_togglePopover}}"
 			name="slim-arrow-down"
 			input-icon
+			?compact-size="{{compact}}"
 			?pressed="{{_iconPressed}}"
 			dir="{{dir}}"
 		></ui5-icon>

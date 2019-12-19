@@ -29,8 +29,8 @@
 			</button>
 		{{/if}}
 
-		<ui5-popover class="ui5-shellbar-menu-popover" placement-type="Bottom">
-			<ui5-list separators="None" mode="SingleSelect" @ui5-itemPress={{_menuItemPress}}>
+		<ui5-popover class="ui5-shellbar-menu-popover" placement-type="Bottom" ?compact-size="{{compact}}">
+			<ui5-list separators="None" mode="SingleSelect" @ui5-itemPress={{_menuItemPress}} ?compact-size="{{compact}}">
 				<slot name="menuItems"></slot>
 			</ui5-list>
 		</ui5-popover>
@@ -55,6 +55,7 @@
 						tabindex="{{this._tabIndex}}"
 						data-ui5-notification-count="{{../notificationCount}}"
 						data-ui5-external-action-item-id="{{this.refItemid}}"
+						?compact-size="{{compact}}"
 						class="{{this.classes}}"
 						name="{{this.icon}}"
 						id="{{this.id}}"
@@ -76,10 +77,11 @@
 		</div>
 	</div>
 
-	<ui5-popover class="ui5-shellbar-overflow-popover" placement-type="Bottom" horizontal-align="{{popoverHorizontalAlign}}" no-arrow>
-		<ui5-list separators="None" @ui5-itemPress="{{_actionList.itemPress}}">
+	<ui5-popover class="ui5-shellbar-overflow-popover" ?compact-size="{{compact}}" placement-type="Bottom" horizontal-align="{{popoverHorizontalAlign}}" no-arrow>
+		<ui5-list separators="None" ?compact-size="{{compact}}" @ui5-itemPress="{{_actionList.itemPress}}">
 			{{#each _hiddenIcons}}
 				<ui5-li
+					?compact-size="{{compact}}"
 					data-ui5-external-action-item-id="{{this.refItemid}}"
 					icon="{{this.icon}}"
 					type="Active"

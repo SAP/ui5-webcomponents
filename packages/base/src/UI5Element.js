@@ -81,7 +81,7 @@ class UI5Element extends HTMLElement {
 	}
 
 	async connectedCallback() {
-		this.compactSize = this.isCompact;
+		this.compactSize = this.compact;
 
 		if (!this.constructor.needsShadowDOM()) {
 			return;
@@ -584,7 +584,7 @@ class UI5Element extends HTMLElement {
 	 * @returns {boolean}
 	 * @protected
 	 */
-	get isCompact() {
+	get compact() {
 		return this.compactSize || getCompactSize();
 	}
 

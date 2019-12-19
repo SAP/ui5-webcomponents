@@ -49,11 +49,12 @@
 
 	{{#if showSuggestions}}
 			<ui5-popover
+				?compact-size="{{compact}}"
 				placement-type="Bottom"
 				no-arrow
 				horizontal-align="Stretch"
 				initial-focus="{{_id}}-inner">
-					<ui5-list separators="Inner">
+					<ui5-list separators="Inner" ?compact-size="{{compact}}">
 						<slot></slot>
 					</ui5-list>
 			</ui5-popover>

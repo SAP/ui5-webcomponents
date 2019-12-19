@@ -3,7 +3,14 @@
 	dir="{{rtl}}"
 >
 	<div class="{{classes.header}}" id="{{_id}}-header">
-		<ui5-icon @click="{{_onHeaderBackArrowClick}}" class="{{classes.headerBackArrow}}" name="slim-arrow-left" tabindex="-1" accessible-name="{{previousIconACCName}}" show-tooltip></ui5-icon>
+		<ui5-icon
+			@click="{{_onHeaderBackArrowClick}}"
+			class="{{classes.headerBackArrow}}"
+			name="slim-arrow-left" tabindex="-1"
+			accessible-name="{{previousIconACCName}}"
+			?compact-size="{{compact}}"
+			show-tooltip
+		></ui5-icon>
 
 		<!-- tab items -->
 		<div class="{{classes.headerScrollContainer}}" id="{{_id}}-headerScrollContainer">
@@ -45,7 +52,7 @@
 			</ul>
 		</div>
 
-		<ui5-icon @click="{{_onHeaderForwardArrowClick}}" class="{{classes.headerForwardArrow}}" name="slim-arrow-right" tabindex="-1" accessible-name="{{nextIconACCName}}" show-tooltip></ui5-icon>
+		<ui5-icon @click="{{_onHeaderForwardArrowClick}}" class="{{classes.headerForwardArrow}}" name="slim-arrow-right" tabindex="-1" accessible-name="{{nextIconACCName}}" ?compact-size="{{compact}}" show-tooltip></ui5-icon>
 
 		<!-- overflow button -->
 		{{#if showOverflow}}
@@ -55,6 +62,7 @@
 				icon="slim-arrow-down"
 				type="Transparent"
 				title="{{overflowMenuTitle}}"
+				?compact-size="{{compact}}"
 			></ui5-button>
 		{{/if}}
 	</div>
@@ -75,8 +83,9 @@
 		id="{{_id}}-overflowMenu"
 		no-arrow
 		placement-type="Bottom"
-		horizontal-align="Right">
-		<ui5-list @ui5-itemPress="{{_onOverflowListItemSelect}}">
+		horizontal-align="Right"
+		?compact-size="{{compact}}">
+		<ui5-list @ui5-itemPress="{{_onOverflowListItemSelect}}" ?compact-size="{{compact}}">
 			{{#each renderItems}}
 				{{#unless this.isSeparator}}
 					<ui5-li-custom id="{{this.item._id}}"
@@ -84,10 +93,11 @@
 						type="{{this.overflowItemState}}"
 						?selected="{{this.selected}}"
 						?disabled="{{this.disabled}}"
+						?compact-size="{{compact}}"
 					>
 						<div class="{{this.overflowItemContentClasses}}">
 							{{#if this.item.icon}}
-								<ui5-icon name="{{this.item.icon}}"></ui5-icon>
+								<ui5-icon name="{{this.item.icon}}" ?compact-size="{{compact}}"></ui5-icon>
 							{{/if}}
 
 							{{this.item.text}}
@@ -118,7 +128,7 @@
 
 {{#*inline "iconTab"}}
 	<div id="{{this.item._id}}" class="ui5-tc-headerItemIcon-outer">
-		<ui5-icon name="{{this.item.icon}}" class="{{this.headerItemIconClasses}}"></ui5-icon>
+		<ui5-icon name="{{this.item.icon}}" class="{{this.headerItemIconClasses}}" ?compact-size="{{compact}}"></ui5-icon>
 	</div>
 
 	<div class="{{this.headerItemContentClasses}}">

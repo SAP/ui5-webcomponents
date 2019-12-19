@@ -409,10 +409,6 @@ class RadioButton extends UI5Element {
 	get rtl() {
 		return getRTL() ? "rtl" : undefined;
 	}
-
-	get compact() {
-		return this.isCompact;
-	}
 }
 
 RadioButton.define();
