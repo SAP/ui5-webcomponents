@@ -7,6 +7,7 @@ import Integer from "./types/Integer.js";
 import RenderScheduler from "./RenderScheduler.js";
 import { getConstructableStyle, createHeadStyle, getShadowRootStyle } from "./CSS.js";
 import { attachThemeChange } from "./Theming.js";
+import { attachContentDensityChange } from "./ContentDensity.js";
 import { kebabToCamelCase, camelToKebabCase } from "./util/StringHelper.js";
 import isValidPropertyName from "./util/isValidPropertyName.js";
 
@@ -28,6 +29,7 @@ class UI5Element extends HTMLElement {
 		this._initializeShadowRoot();
 
 		attachThemeChange(this.onThemeChanged.bind(this));
+		attachContentDensityChange(this.onContentDensityChanged.bind(this));
 
 		let deferredResolve;
 		this._domRefReadyPromise = new Promise(resolve => {
@@ -49,6 +51,22 @@ class UI5Element extends HTMLElement {
 		} else {
 			const oldStyle = this.shadowRoot.querySelector("style");
 			oldStyle.textContent = newStyle.textContent;
+		}
+	}
+
+	onContentDensityChanged() {
+		this._syncContentDensity();
+		if (this.constructor.getMetadata().getInvalidateOnContentDensityChange()) {
+			this._invalidate();
+		}
+	}
+
+	_syncContentDensity() {
+		const isCompact = getCompactSize();
+		if (isCompact) {
+			this.setAttribute("data-ui5-compact-size", "");
+		} else {
+			this.removeAttribute("data-ui5-compact-size");
 		}
 	}
 
@@ -76,10 +94,7 @@ class UI5Element extends HTMLElement {
 	}
 
 	async connectedCallback() {
-		const isCompact = getCompactSize();
-		if (isCompact) {
-			this.setAttribute("data-ui5-compact-size", "");
-		}
+		this._syncContentDensity();
 
 		if (!this.constructor.needsShadowDOM()) {
 			return;

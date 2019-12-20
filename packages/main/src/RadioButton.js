@@ -164,6 +164,7 @@ const metadata = {
 		 */
 		select: {},
 	},
+	invalidateOnContentDensityChange: true,
 };
 
 const SVGConfig = {

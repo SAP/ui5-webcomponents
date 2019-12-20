@@ -118,7 +118,7 @@ To do so, please import the desired functionality from the respective `"@ui5/web
 ```js
 import { getTheme, setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 import { getNoConflict, setNoConflict } from "@ui5/webcomponents-base/dist/config/NoConflict.js";
-import { getCompactSize } from "@ui5/webcomponents-base/dist/config/CompactSize.js";
+import { getCompactSize, setCompactSize } from "@ui5/webcomponents-base/dist/config/CompactSize.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import { getLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
