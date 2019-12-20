@@ -1,7 +1,5 @@
-commit e860094247ad3d9f4d541136c930186f19621847
-Author: service-tip-git <36747703+service-tip-git@users.noreply.github.com>
-Date:   Wed Dec 18 08:55:03 2019 -0800
+commit 586c19b617b2c45d937cf1c5782aeffc1e81dbab
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Fri Dec 20 17:19:47 2019 +0200
 
-    chore: translation delivery (#1083)
-    
-    Change-Id: I2e3e510156421f06e2fa0b763456938b2302c972
+    feature(framework): allow setting compactSize dynamically (#1088)
