@@ -17,17 +17,17 @@ import isValidPropertyName from "./util/isValidPropertyName.js";
 const metadata = {
 
 	/**
-	 * Defines the component "contentDensity"
-	 * and aims to allow specific components to appear "Compact", while the rest in "Cosy" density.
+	 * Defines the component "contentDensity".
+	 * Available options are: <code>Cosy</code>, <code>Compact</code> and <code>Auto</code> (by default).
+	 * <br><br>
+	 * <b>Note:</b> If you want to apply the same content density to all components,
+	 * use the global "contentDensity" configration available - <ui5-link target="_blank" href="https://github.com/SAP/ui5-webcomponents/blob/master/docs/Configuration.md" class="api-table-content-cell-link">Configuration</ui5-link>.
 	 * <br><br>
 	 * <b>Note:</b> If not set, the "contentDensity" will be determined by the global configuration.
 	 * <br><br>
 	 * <b>Note:</b> When set to "Compact", the components are rendered in smaller sizes with smaller margins and paddings.
 	 * <br><br>
 	 * <b>Note:</b> When set to "Cosy", the components are rendered in larger sizes with bigger margins and paddings.
-	 * <br><br>
-	 * <b>Note:</b> If you want all the components to be displayed either in "Compact" density,
-	 * or "Cosy" density, use the global "contentDensity" configration available - <ui5-link target="_blank" href="https://github.com/SAP/ui5-webcomponents/blob/master/docs/Configuration.md" class="api-table-content-cell-link">Configuration</ui5-link>.
 	 * <br><br>
 	 * <b>Note:</b> The property will take precendce over the global configuraion.
 	 * @type {string}
