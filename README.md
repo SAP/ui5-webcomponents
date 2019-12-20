@@ -100,7 +100,7 @@ import "@ui5/webcomponents/dist/Label.js"; // loads ui5-label
 ```
 
 ## Configure
-UI5 Web Components have built-in internationalization and globalization support. Language, compact/cozy switch, date/time settings and theme can be changed with parameters.
+UI5 Web Components have built-in internationalization and globalization support. Language, content density switch, date/time settings and theme can be changed with parameters.
 
 To provide configuration settings, create a ```script``` tag having ```data-ui5-config``` and ```type="application/json"```:
 
@@ -126,13 +126,13 @@ UI5 Web Components support right-to-left text direction (RTL). To enable RTL glo
 </script>
 ```
 
-### Configure Compact/Cozy setting
-UI5 Web Components supports ```Compact``` and ```Cozy``` mode. It is set to ```Cozy``` by default. To enable ```Compact``` globally, provide the option ```compactSize: true``` in the configuration ```script``` tag:
+### Configure Content Density
+UI5 Web Components supports ```Compact``` and ```Cozy``` mode. It is set to ```Cozy``` by default. To enable ```Compact``` globally, provide the option ```contentDensity: Compact``` in the configuration ```script``` tag:
 
 ```html
 <script data-ui5-config type="application/json">
 {
-  "compactSize": true
+  "contentDensity": "Compact"
 }
 </script>
 ```

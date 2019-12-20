@@ -29,8 +29,8 @@
 			</button>
 		{{/if}}
 
-		<ui5-popover class="ui5-shellbar-menu-popover" placement-type="Bottom" compact-size="{{effectiveContentDensity}}">
-			<ui5-list separators="None" mode="SingleSelect" @ui5-itemPress={{_menuItemPress}} compact-size="{{effectiveContentDensity}}">
+		<ui5-popover class="ui5-shellbar-menu-popover" placement-type="Bottom" content-density="{{effectiveContentDensity}}">
+			<ui5-list separators="None" mode="SingleSelect" @ui5-itemPress={{_menuItemPress}} content-density="{{effectiveContentDensity}}">
 				<slot name="menuItems"></slot>
 			</ui5-list>
 		</ui5-popover>
@@ -55,7 +55,7 @@
 						tabindex="{{this._tabIndex}}"
 						data-ui5-notification-count="{{../notificationCount}}"
 						data-ui5-external-action-item-id="{{this.refItemid}}"
-						compact-size="{{effectiveContentDensity}}"
+						content-density="{{effectiveContentDensity}}"
 						class="{{this.classes}}"
 						name="{{this.icon}}"
 						id="{{this.id}}"
@@ -77,11 +77,11 @@
 		</div>
 	</div>
 
-	<ui5-popover class="ui5-shellbar-overflow-popover" compact-size="{{effectiveContentDensity}}" placement-type="Bottom" horizontal-align="{{popoverHorizontalAlign}}" no-arrow>
-		<ui5-list separators="None" compact-size="{{effectiveContentDensity}}" @ui5-itemPress="{{_actionList.itemPress}}">
+	<ui5-popover class="ui5-shellbar-overflow-popover" content-density="{{effectiveContentDensity}}" placement-type="Bottom" horizontal-align="{{popoverHorizontalAlign}}" no-arrow>
+		<ui5-list separators="None" content-density="{{effectiveContentDensity}}" @ui5-itemPress="{{_actionList.itemPress}}">
 			{{#each _hiddenIcons}}
 				<ui5-li
-					compact-size="{{effectiveContentDensity}}"
+					content-density="{{effectiveContentDensity}}"
 					data-ui5-external-action-item-id="{{this.refItemid}}"
 					icon="{{this.icon}}"
 					type="Active"

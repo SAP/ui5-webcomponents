@@ -1,6 +1,6 @@
 import boot from "./boot.js";
 import { skipOriginalEvent } from "./config/NoConflict.js";
-import { getCompactSize } from "./config/CompactSize.js";
+import { getContentDensity } from "./config/ContentDensity.js";
 import DOMObserver from "./compatibility/DOMObserver.js";
 import UI5ElementMetadata from "./UI5ElementMetadata.js";
 import Integer from "./types/Integer.js";
@@ -628,7 +628,7 @@ class UI5Element extends HTMLElement {
 	 * @public
 	 */
 	get effectiveContentDensity() {
-		return this.contentDensity !== ContentDensity.Auto ? this.contentDensity : getCompactSize();
+		return this.contentDensity !== ContentDensity.Auto ? this.contentDensity : getContentDensity();
 	}
 
 	/**

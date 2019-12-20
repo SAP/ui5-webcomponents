@@ -5,7 +5,7 @@
 	<div class="ui5-tli-indicator">
 		{{#if icon}}
 			<div class="ui5-tli-icon-outer">
-				<ui5-icon class="ui5-tli-icon" name="{{icon}}" compact-size="{{effectiveContentDensity}}"></ui5-icon>
+				<ui5-icon class="ui5-tli-icon" name="{{icon}}" content-density="{{effectiveContentDensity}}"></ui5-icon>
 			</div>
 		{{/if}}
 	</div>
@@ -30,7 +30,7 @@
 
 {{#*inline "itemName"}}
 	{{#if itemNameClickable}}
-		<ui5-link @click="{{onItemNamePress}}" compact-size="{{effectiveContentDensity}}">{{itemName}}</ui5-link>
+		<ui5-link @click="{{onItemNamePress}}" content-density="{{effectiveContentDensity}}">{{itemName}}</ui5-link>
 	{{/if}}
 
 	{{#unless itemNameClickable}}

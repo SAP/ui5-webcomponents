@@ -39,7 +39,7 @@ function toggleSettings() {
 
       // Set selected option of themeSwitch
       Array.prototype.slice.call(contentDensitySwitch.querySelectorAll("ui5-option")).forEach(function(option) {
-        if (urlParameters["sap-ui-compactSize"] === "true") {
+        if (urlParameters["sap-ui-contentDensity"] === "Compact") {
           option.selected = option.textContent === "Compact";
         } else {
           option.selected = option.textContent === "Cozy";
@@ -70,8 +70,8 @@ function toggleSettings() {
         // Not implemented with string literals, beacause of IE11
         var newLocation = location.origin + location.pathname + "?sap-ui-theme=";
         newLocation += theme;
-        newLocation += "&sap-ui-compactSize=";
-        newLocation += contentDensity === "Compact";
+        newLocation += "&sap-ui-contentDensity=";
+        newLocation += contentDensity;
         newLocation +=  "&sap-ui-rtl=";
         newLocation += textDirection === "RTL";
 

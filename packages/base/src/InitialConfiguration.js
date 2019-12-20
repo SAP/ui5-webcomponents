@@ -5,7 +5,7 @@ const initialConfig = {
 	theme: "sap_fiori_3",
 	rtl: null,
 	language: null,
-	compactSize: false,
+	contentDensity: false,
 	calendarType: null,
 	noConflict: false, // no URL
 	formatSettings: {},
@@ -32,9 +32,9 @@ const getLanguage = () => {
 	return initialConfig.language;
 };
 
-const getCompactSize = () => {
+const getContentDensity = () => {
 	initConfiguration();
-	return initialConfig.compactSize;
+	return initialConfig.contentDensity;
 };
 
 const getNoConflict = () => {
@@ -119,7 +119,7 @@ export {
 	getTheme,
 	getRTL,
 	getLanguage,
-	getCompactSize,
+	getContentDensity,
 	getNoConflict,
 	getCalendarType,
 	getFormatSettings,

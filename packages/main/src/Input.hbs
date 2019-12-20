@@ -49,12 +49,12 @@
 
 	{{#if showSuggestions}}
 			<ui5-popover
-				compact-size="{{effectiveContentDensity}}"
+				content-density="{{effectiveContentDensity}}"
 				placement-type="Bottom"
 				no-arrow
 				horizontal-align="Stretch"
 				initial-focus="{{_id}}-inner">
-					<ui5-list separators="Inner" compact-size="{{effectiveContentDensity}}">
+					<ui5-list separators="Inner" content-density="{{effectiveContentDensity}}">
 						<slot></slot>
 					</ui5-list>
 			</ui5-popover>
