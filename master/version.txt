@@ -1,5 +1,5 @@
-commit 586c19b617b2c45d937cf1c5782aeffc1e81dbab
+commit 1a09e138816add4674c83f39341081e7454d35dd
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Dec 20 17:19:47 2019 +0200
+Date:   Mon Dec 23 10:19:33 2019 +0200
 
-    feature(framework): allow setting compactSize dynamically (#1088)
+    fix: The font face style tag is created only once (#1090)
