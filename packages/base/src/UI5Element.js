@@ -346,14 +346,7 @@ class UI5Element extends HTMLElement {
 		const allProps = this.constructor.getMetadata().getPropsList();
 		allProps.forEach(this._upgradeProperty, this);
 	}
-
-	static _mergeMetadataEntry(metadatas, prop) {
-		return metadatas.reverse().reduce((result, current) => { // eslint-disable-line
-			Object.assign(result, current[prop] || {});
-			return result;
-		}, {});
-	}
-
+	
 	/**
 	 * @private
 	 */
