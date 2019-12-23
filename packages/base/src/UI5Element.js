@@ -343,10 +343,10 @@ class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	_upgradeAllProperties() {
-		const allProps = this.constructor.getMetadata().getPropsList();
+		const allProps = this.constructor.getMetadata().getPropertiesList();
 		allProps.forEach(this._upgradeProperty, this);
 	}
-	
+
 	/**
 	 * @private
 	 */
