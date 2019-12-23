@@ -1,6 +1,12 @@
 import DataType from "./types/DataType.js";
 import isDescendantOf from "./util/isDescendantOf.js";
+import { camelToKebabCase } from "./util/StringHelper.js";
 
+/**
+ *
+ * @class
+ * @public
+ */
 class UI5ElementMetadata {
 	constructor(metadata) {
 		this.metadata = metadata;
@@ -20,7 +26,7 @@ class UI5ElementMetadata {
 	}
 
 	getAttributesList() {
-		return this.getPropsList().filter(this.hasAttribute, this);
+		return this.getPropsList().filter(this.hasAttribute, this).map(camelToKebabCase);
 	}
 
 	getSlots() {
