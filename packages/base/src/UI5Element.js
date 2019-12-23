@@ -598,7 +598,7 @@ class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	static _nextID() {
-		const className = "el";
+		const className = kebabToCamelCase(this.getMetadata().getTag());
 		const lastNumber = IDMap.get(className);
 		const nextNumber = lastNumber !== undefined ? lastNumber + 1 : 1;
 		IDMap.set(className, nextNumber);
