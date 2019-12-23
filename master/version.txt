@@ -1,5 +1,5 @@
-commit 1a09e138816add4674c83f39341081e7454d35dd
+commit 676713492a86d4c8d8dbe0d3c74ad015d47b2fc9
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Mon Dec 23 10:19:33 2019 +0200
+Date:   Mon Dec 23 14:03:14 2019 +0200
 
-    fix: The font face style tag is created only once (#1090)
+    refactor: improve auto-generated IDs (#1093)
