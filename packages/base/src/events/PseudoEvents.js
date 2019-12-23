@@ -22,9 +22,9 @@ const isTabNext = event => (event.key ? event.key === "Tab" : event.keyCode === 
 
 const isTabPrevious = event => (event.key ? event.key === "Tab" : event.keyCode === KeyCodes.TAB) && checkModifierKeys(event, /* Ctrl */ false, /* Alt */ false, /* Shift */ true);
 
-const isBackSpace = event => (event.key ? (event.key === "Backspace" || event.key === "Backspace") : event.keyCode === KeyCodes.BACKSPACE) && !hasModifierKeys(event);
+const isBackSpace = event => (event.key ? event.key === "Backspace" : event.keyCode === KeyCodes.BACKSPACE) && !hasModifierKeys(event);
 
-const isDelete = event => (event.key ? (event.key === "Delete" || event.key === "Delete") : event.keyCode === KeyCodes.DELETE) && !hasModifierKeys(event);
+const isDelete = event => (event.key ? event.key === "Delete" : event.keyCode === KeyCodes.DELETE) && !hasModifierKeys(event);
 
 const isShow = event => {
 	if (event.key) {

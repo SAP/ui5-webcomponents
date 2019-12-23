@@ -7,7 +7,7 @@ const getFormatLocale = () => {
 	const fallback = () => {
 		let oLocale = getLocale();
 		// if any user settings have been defined, add the private use subtag "sapufmt"
-		if (!Object.keys(mSettings).length === 0) {
+		if (Object.keys(mSettings).length === 0) {
 			let l = oLocale.toString();
 			if (l.indexOf("-x-") < 0) {
 				l += "-x-sapufmt";
