@@ -1,3 +1,5 @@
+import merge from "@ui5/webcomponents-utils/dist/sap/base/util/merge.js";
+
 import boot from "./boot.js";
 import { skipOriginalEvent } from "./config/NoConflict.js";
 import { getCompactSize } from "./config/CompactSize.js";
@@ -619,8 +621,6 @@ class UI5Element extends HTMLElement {
 		return true;
 	}
 
-	/***************************************** STATIC METHODS ***************************************************/
-
 	/**
 	 * Do not override this method in derivatives of UI5Element, use metadata properties instead
 	 * @private
@@ -830,25 +830,19 @@ class UI5Element extends HTMLElement {
 	 * @returns {UI5ElementMetadata}
 	 */
 	static getMetadata() {
-		let klass = this; // eslint-disable-line
-
-		if (klass.hasOwnProperty("_metadata")) { // eslint-disable-line
-			return klass._metadata;
+		if (this.hasOwnProperty("_metadata")) { // eslint-disable-line
+			return this._metadata;
 		}
 
-		const metadatas = [Object.assign(klass.metadata, {})];
+		const metadataObjects = [this.metadata];
+		let klass = this; // eslint-disable-line
 		while (klass !== UI5Element) {
 			klass = Object.getPrototypeOf(klass);
-			metadatas.push(klass.metadata);
+			metadataObjects.unshift(klass.metadata);
 		}
+		const mergedMetadata = merge({}, ...metadataObjects);
 
-		const result = metadatas[0];
-
-		result.properties = this._mergeMetadataEntry(metadatas, "properties"); // merge properties
-		result.slots = this._mergeMetadataEntry(metadatas, "slots"); // merge slots
-		result.events = this._mergeMetadataEntry(metadatas, "events"); // merge events
-
-		this._metadata = new UI5ElementMetadata(result);
+		this._metadata = new UI5ElementMetadata(mergedMetadata);
 		return this._metadata;
 	}
 }
