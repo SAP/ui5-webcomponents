@@ -172,7 +172,8 @@ class ListItem extends ListItemBase {
 		this.deactivate();
 	}
 
-	_onfocusout(event) {
+	_onfocusout() {
+		super._onfocusout();
 		this.deactivate();
 	}
 
