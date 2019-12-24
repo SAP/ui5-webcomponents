@@ -1,5 +1,7 @@
-commit 6a29872dacf5e64ec8340723d39c298104ed2ad2
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Mon Dec 23 15:24:26 2019 +0200
+commit 95974b01d042f4280b49f433f48d1276d9613995
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Dec 24 16:31:23 2019 +0200
 
-    fix: Merge metadata properly (#1092)
+    refactor(ui5-li): switch§ focus styling via state (#1089)
+    
+    Add private property "focused" to apply the focus styling, even when the component is not on focus. This will allow the implementation of complex UX requirements related to the Combobox and MiltiCombobox, where the actual focus remains in the input field, but the visual moves between the items.
