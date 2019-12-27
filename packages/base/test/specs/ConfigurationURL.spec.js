@@ -1,7 +1,7 @@
 const assert = require("chai").assert;
 
-describe("Configuration script has effect", () => {
-	browser.url("http://localhost:9191/test-resources/pages/ConfigurationScript.html");
+describe("Some settings can be set via URL params", () => {
+	browser.url("http://localhost:9191/test-resources/pages/Configuration.html?sap-ui-rtl=true&sap-ui-compactSize=true&sap-ui-language=ja&sap-ui-calendarType=Japanese&sap-ui-theme=sap_belize_hcb&sap-ui-animationMode=basic");
 
 	it("Tests that RTL is applied", () => {
 		const res = browser.execute( () => {
@@ -35,28 +35,12 @@ describe("Configuration script has effect", () => {
 		assert.strictEqual(res, 'Japanese', "calendarType is japanese");
 	});
 
-	it("Tests that formatSettings are applied", () => {
-		const res = browser.execute( () => {
-			const config = window['sap-ui-webcomponents-bundle'].configuration;
-			return config.getFirstDayOfWeek();
-		});
-		assert.strictEqual(res, 0, "First day of week is applied");
-	});
-
 	it("Tests that theme is applied", () => {
 		const res = browser.execute( () => {
 			const config = window['sap-ui-webcomponents-bundle'].configuration;
 			return config.getTheme();
 		});
 		assert.strictEqual(res, 'sap_belize_hcb', "Thems is HCB");
-	});
-
-	it("Tests that noConflict is applied", () => {
-		const res = browser.execute( () => {
-			const config = window['sap-ui-webcomponents-bundle'].configuration;
-			return config.getNoConflict();
-		});
-		assert.strictEqual(res.events.includes("selectionChange"), true, "selectionChange was successfully registered as a no conflict event");
 	});
 
 	it("Tests that animationMode is applied", () => {
