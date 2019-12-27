@@ -6,7 +6,8 @@ import "./dist/features/calendar/Persian.js";
 // ESM bundle targets Edge + browsers with native support
 import "./dist/features/browsersupport/Edge.js";
 
-import "./dist/UI5Element.js";
+// Test components
+import "./dist/test-resources/elements/Generic.js";
 
 // used in test pages
 import RenderScheduler from "./dist/RenderScheduler.js";
