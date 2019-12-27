@@ -4,13 +4,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
 
-    <title>t values test pagtttte</title>
-    <script>delete Document.prototype.adoptedStyleSheets</script>
+    <title>Base package default test page</title>
 
     <script data-ui5-config type="application/json">
         {
-            "rtl": false,
-            "compactSize": false
+            "rtl": true,
+            "compactSize": true,
+            "language": "ja",
+            "calendarType": "Japanese",
+            "formatSettings": {
+                "firstDayOfWeek": 0
+            },
+            "theme": "sap_belize_hcb",
+            "noConflict": {
+                "events": ["selectionChange", "headerClick"]
+            }
         }
     </script>
 
@@ -20,9 +28,9 @@
 
 </head>
 
-<body style="background-color: var(--sapBackgroundColor);">
+<body>
 
-    <ui5-shellbar id="shellbar2" hidden><ui5-icon name="nav-back" slot="icon"></ui5-icon></ui5-shellbar>
+    <h1>Base package</h1>
 
 </body>
 </html>
