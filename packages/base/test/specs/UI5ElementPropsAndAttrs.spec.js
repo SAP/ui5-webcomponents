@@ -3,6 +3,12 @@ const assert = require("chai").assert;
 describe("Properties and attributes convert to each other", () => {
 	browser.url("http://localhost:9191/test-resources/pages/GenericElement.html");
 
+	it("Tests that properties with default values are initialized with the default value", () => {
+		const el = browser.$("#gen");
+
+		assert.strictEqual(el.getProperty("defaultValueProp"), "Hello", "defaultValueProp is properly initialized");
+	});
+
 	it("Tests that prop-attr conversion works for string properties", () => {
 		const el = browser.$("#gen");
 
@@ -36,11 +42,24 @@ describe("Properties and attributes convert to each other", () => {
 		assert.strictEqual(el.getAttribute("object-prop"), null, "Attribute not there");
 	});
 
+	it("Tests that array properties have no attributes", () => {
+		const el = browser.$("#gen");
+
+		el.setProperty("multiProp", ["a", "b"]);
+		assert.strictEqual(el.getAttribute("multi-prop"), null, "Attribute not there");
+	});
+
 	it("Tests that noAttribute properties have no attributes", () => {
 		const el = browser.$("#gen");
 
 		el.setProperty("noAttributeProp", "some value");
 		assert.strictEqual(el.getAttribute("no-attribute-prop"), null, "Attribute not there");
+	});
+
+	it("Tests that properties with default values do not automatically set attributes", () => {
+		const el = browser.$("#gen");
+
+		assert.strictEqual(el.getAttribute("default-value-prop"), null, "Attribute not there for defaultValueProp");
 	});
 
 });

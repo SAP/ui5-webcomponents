@@ -9,6 +9,8 @@ import "./dist/features/browsersupport/Edge.js";
 // Test components
 import "./dist/test-resources/elements/Generic.js";
 import "./dist/test-resources/elements/NoShadowDOM.js";
+import "./dist/test-resources/elements/Parent.js";
+import "./dist/test-resources/elements/Child.js";
 
 // used in test pages
 import RenderScheduler from "./dist/RenderScheduler.js";

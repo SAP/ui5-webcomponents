@@ -16,6 +16,14 @@ const metadata = {
 		noAttributeProp: {
 			type: String,
 			noAttribute: true,
+		},
+		multiProp: {
+			type: String,
+			multiple: true,
+		},
+		defaultValueProp: {
+			type: String,
+			defaultValue: "Hello",
 		}
 	},
 	slots: {

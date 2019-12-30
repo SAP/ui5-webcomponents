@@ -84,6 +84,34 @@ describe("Invalidation works", () => {
 		assert.strictEqual(res, 1, "Invalidated");
 	});
 
+	it("Tests that setting an array property always invalidates", () => {
+
+		const res = browser.executeAsync( async (done) => {
+			const arr = [];
+			const otherArr = [];
+
+			const el = document.getElementById("gen");
+			el.multiProp = arr;
+			await window.RenderScheduler.whenFinished();
+
+			let invalidations = 0;
+
+			const original = el._invalidate;
+			el._invalidate = () => {
+				original.apply(el, arguments);
+				invalidations++;
+			};
+
+			el.multiProp = otherArr;
+
+			await window.RenderScheduler.whenFinished();
+
+			return done(invalidations);
+		});
+
+		assert.strictEqual(res, 1, "Invalidated");
+	});
+
 	it("Tests that adding a child invalidates", () => {
 
 		const res = browser.executeAsync( async (done) => {
