@@ -1,13 +1,7 @@
 const assert = require("chai").assert;
 
-describe("The framework can define web components", () => {
+describe("Properties and attributes convert to each other", () => {
 	browser.url("http://localhost:9191/test-resources/pages/GenericElement.html");
-
-	it("Tests that element is rendered", () => {
-		const el = browser.$("#gen");
-
-		assert.strictEqual(el.shadow$("div>p").isExisting(), true, "Shadow root content created");
-	});
 
 	it("Tests that prop-attr conversion works for string properties", () => {
 		const el = browser.$("#gen");
@@ -33,6 +27,20 @@ describe("The framework can define web components", () => {
 
 		el.removeAttribute("bool-prop");
 		assert.strictEqual(el.getProperty("boolProp"), false, "Property affected by attribute change");
+	});
+
+	it("Tests that object properties have no attributes", () => {
+		const el = browser.$("#gen");
+
+		el.setProperty("objectProp", {});
+		assert.strictEqual(el.getAttribute("object-prop"), null, "Attribute not there");
+	});
+
+	it("Tests that noAttribute properties have no attributes", () => {
+		const el = browser.$("#gen");
+
+		el.setProperty("noAttributeProp", "some value");
+		assert.strictEqual(el.getAttribute("no-attribute-prop"), null, "Attribute not there");
 	});
 
 });

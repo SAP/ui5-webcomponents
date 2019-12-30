@@ -9,6 +9,18 @@ const metadata = {
 		},
 		boolProp: {
 			type: Boolean,
+		},
+		objectProp: {
+			type: Object,
+		},
+		noAttributeProp: {
+			type: String,
+			noAttribute: true,
+		}
+	},
+	slots: {
+		default: {
+			type: Node,
 		}
 	}
 };
@@ -24,7 +36,7 @@ class Generic extends UI5Element {
 
 	static get template() {
 		return element => {
-			return html`<div><p></p></div>`;
+			return html`<div><p><slot></slot></p></div>`;
 		};
 	}
 
@@ -34,6 +46,11 @@ class Generic extends UI5Element {
                     border: 1px solid black;
                 }`;
 	}
+
+	onBeforeRendering() {}
+	onAfterRendering() {}
+	onEnterDOM() {}
+	onExitDOM() {}
 }
 
 Generic.define();
