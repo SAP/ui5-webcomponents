@@ -78,3 +78,5 @@ class Generic extends UI5Element {
 }
 
 Generic.define();
+
+export default Generic;

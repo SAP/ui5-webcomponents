@@ -12,6 +12,7 @@ import "./dist/test-resources/elements/NoShadowDOM.js";
 import "./dist/test-resources/elements/Parent.js";
 import "./dist/test-resources/elements/Child.js";
 import "./dist/test-resources/elements/DensityAware.js";
+import "./dist/test-resources/elements/GenericExt.js";
 
 // used in test pages
 import RenderScheduler from "./dist/RenderScheduler.js";
