@@ -21,6 +21,17 @@ const metadata = {
 	slots: {
 		default: {
 			type: Node,
+		},
+		other: {
+			type: HTMLElement,
+		},
+		individual: {
+			type: HTMLElement,
+			individualSlots: true,
+		},
+		named: {
+			type: HTMLElement,
+			propertyName: "items",
 		}
 	}
 };
@@ -36,7 +47,12 @@ class Generic extends UI5Element {
 
 	static get template() {
 		return element => {
-			return html`<div><p><slot></slot></p></div>`;
+			return html`<div><p>
+				<slot></slot>
+				<slot name="other"></slot>
+				<slot name="individual-1"></slot>
+				<slot name="individual-2"></slot>
+			</p></div>`;
 		};
 	}
 

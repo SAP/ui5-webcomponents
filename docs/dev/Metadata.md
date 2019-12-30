@@ -38,7 +38,6 @@ Properties of type `Object`, properties with `multiple` set to`true` and propert
 		},
 		"settings": {
 			"type": Object,
-			"deepEqual": true,
 		},
 		"nums": {
 			"type": Integer,
@@ -46,7 +45,6 @@ Properties of type `Object`, properties with `multiple` set to`true` and propert
 		},
 		"animationDuration": {
 			"type": Integer,
-			"nonVisual": true,
 		},
 		"width": {
 			"type": CSSSize,
@@ -64,7 +62,6 @@ Setting | Type | Default | Description
 `defaultValue` | Any valid value for the type | undefined | Default value of the property. Cannot be set for type "Boolean". Booleans are always false by default in HTML
 `multiple` | Boolean | false | Indicates whether the property represents a single value or is an array of values of the given type
 `noAttribute` | Boolean | false | No attribute equivalent will be created for that property. Always false for properties of type Object.
-`deepEqual` | Boolean | false | Deep equal object comparison, rather than reference comparison, will be used to determine if the value of the property changed.
 
 The `type` setting is required.
 
