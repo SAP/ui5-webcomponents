@@ -1,7 +1,7 @@
 const assert = require("chai").assert;
 
 describe("Metadata slot listenFor works", () => {
-	browser.url("http://localhost:9191/test-resources/pages/GenericElement.html");
+	browser.url("http://localhost:9191/test-resources/pages/AllTestElements.html");
 
 	it("Tests that changing a listenFor property of a child invalidates the parent", () => {
 
