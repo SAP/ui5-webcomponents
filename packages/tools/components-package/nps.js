@@ -10,7 +10,7 @@ const getScripts = (options) => {
 	const scripts = {
 		clean: "rimraf dist",
 		lint: "eslint . --config config/.eslintrc.js",
-		prepare: "nps clean build.templates build.samples build.styles build.i18n copy.src copy.webcomponents-polyfill",
+		prepare: "nps clean build.templates build.samples build.styles build.i18n copy",
 		build: {
 			default: "nps lint prepare build.bundle",
 			templates: `mkdirp dist/generated/templates && node ${LIB}/hbs2ui5/index.js -d src/ -o dist/generated/templates`,
@@ -26,12 +26,13 @@ const getScripts = (options) => {
 			},
 			bundle: "rollup --config config/rollup.config.js --environment ES5_BUILD",
 			samples: {
-				default: "nps copy.test build.samples.api build.samples.docs",
+				default: "nps build.samples.api build.samples.docs",
 				api: `jsdoc -c  ${LIB}/jsdoc/config.json`,
 				docs: `node ${LIB}/documentation/index.js dist/api.json`,
 			}
 		},
 		copy: {
+			default: "nps copy.src copy.test copy.webcomponents-polyfill",
 			src: "copy-and-watch \"src/**/*.js\" dist/",
 			test: "copy-and-watch \"test/**/*.*\" dist/test-resources",
 			"webcomponents-polyfill": "copy-and-watch \"../../node_modules/@webcomponents/webcomponentsjs/**/*.*\" dist/webcomponentsjs/",
