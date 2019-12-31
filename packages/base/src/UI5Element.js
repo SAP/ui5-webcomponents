@@ -23,9 +23,14 @@ const DefinitionsSet = new Set();
 const IDMap = new Map();
 
 /**
- * @class
- * @public
  * Base class for all UI5 Web Components
+ *
+ * @class
+ * @constructor
+ * @author SAP SE
+ * @alias sap.ui.webcomponents.base.UI5Element
+ * @extends HTMLElement
+ * @public
  */
 class UI5Element extends HTMLElement {
 	constructor() {
