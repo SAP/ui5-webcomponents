@@ -42,5 +42,7 @@ const getConstructableStyle = ElementClass => {
 	return style;
 };
 
-// eslint-disable-next-line
-export { createHeadStyle, getConstructableStyle };
+export {
+	createHeadStyle,
+	getConstructableStyle,
+};
