@@ -14,6 +14,9 @@ import "./dist/test-resources/elements/Child.js";
 import "./dist/test-resources/elements/DensityAware.js";
 import "./dist/test-resources/elements/GenericExt.js";
 
+// Test themes
+import "./dist/test-resources/assets/Themes.js";
+
 // used in test pages
 import RenderScheduler from "./dist/RenderScheduler.js";
 window.RenderScheduler = RenderScheduler;

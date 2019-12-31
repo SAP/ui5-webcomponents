@@ -26,17 +26,13 @@ const schedulePonyfill = () => {
  * @param packageName
  */
 const injectThemeProperties = (cssText, packageName) => {
-	packageName = packageName.replace(/[@/]/g, "-");
-	const identifier = `data-ui5-theme-properties-${packageName}`;
-
 	// Needed for all browsers
-	const styleElement = document.head.querySelector(`style[${identifier}]`);
+	const styleElement = document.head.querySelector(`style[data-ui5-theme-properties="${packageName}"]`);
 	if (styleElement) {
 		styleElement.textContent = cssText || "";	// in case of undefined
 	} else {
 		const attributes = {
-			"data-ui5-theme-properties": "",
-			[identifier]: "",
+			"data-ui5-theme-properties": packageName,
 		};
 		createStyleInHead(cssText, attributes);
 	}
