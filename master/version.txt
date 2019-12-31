@@ -1,7 +1,5 @@
-commit 2e38738008c0e51e585d2a71fc50d7438146817b
-Author: service-tip-git <36747703+service-tip-git@users.noreply.github.com>
-Date:   Wed Dec 25 08:34:58 2019 -0800
+commit 922a842aa78a15e8242e4179e84da4ad87fec382
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Tue Dec 31 10:53:05 2019 +0200
 
-    chore: translation delivery (#1096)
-    
-    Change-Id: I27c1fe9a2d213ea1df695988d7545991b065d2dd
+    chore: Add tests to the base package (#1098)
