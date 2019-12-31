@@ -8,7 +8,7 @@ import UI5ElementMetadata from "./UI5ElementMetadata.js";
 import Integer from "./types/Integer.js";
 import RenderScheduler from "./RenderScheduler.js";
 import { getConstructableStyle, createHeadStyle } from "./CSS.js";
-import { attachThemeChange, getEffectiveStyle } from "./Theming.js";
+import { getEffectiveStyle } from "./Theming.js";
 import { attachContentDensityChange } from "./ContentDensity.js";
 import { kebabToCamelCase, camelToKebabCase } from "./util/StringHelper.js";
 import isValidPropertyName from "./util/isValidPropertyName.js";
@@ -40,7 +40,6 @@ class UI5Element extends HTMLElement {
 		this._upgradeAllProperties();
 		this._initializeShadowRoot();
 
-		attachThemeChange(this._onThemeChanged.bind(this));
 		attachContentDensityChange(this._onContentDensityChanged.bind(this));
 
 		let deferredResolve;
@@ -51,11 +50,6 @@ class UI5Element extends HTMLElement {
 
 		this._monitoredChildProps = new Map();
 	}
-
-	/**
-	 * @private
-	 */
-	_onThemeChanged() {}
 
 	/**
 	 * @private
