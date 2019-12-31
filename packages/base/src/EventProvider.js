@@ -25,7 +25,7 @@ class EventProvider {
 			return;
 		}
 
-		eventListeners.filter(event => {
+		eventListeners = eventListeners.filter(event => {
 			return event["function"] !== fnFunction; // eslint-disable-line
 		});
 
