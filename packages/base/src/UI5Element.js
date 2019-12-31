@@ -7,8 +7,8 @@ import DOMObserver from "./compatibility/DOMObserver.js";
 import UI5ElementMetadata from "./UI5ElementMetadata.js";
 import Integer from "./types/Integer.js";
 import RenderScheduler from "./RenderScheduler.js";
-import { getConstructableStyle, createHeadStyle, getShadowRootStyle } from "./CSS.js";
-import { attachThemeChange } from "./Theming.js";
+import { getConstructableStyle, createHeadStyle } from "./CSS.js";
+import { attachThemeChange, getEffectiveStyle } from "./Theming.js";
 import { attachContentDensityChange } from "./ContentDensity.js";
 import { kebabToCamelCase, camelToKebabCase } from "./util/StringHelper.js";
 import isValidPropertyName from "./util/isValidPropertyName.js";
@@ -55,19 +55,7 @@ class UI5Element extends HTMLElement {
 	/**
 	 * @private
 	 */
-	_onThemeChanged() {
-		if (window.ShadyDOM || !this.constructor._needsShadowDOM()) {
-			// polyfill theme handling is in head styles directly
-			return;
-		}
-		const newStyle = getConstructableStyle(this.constructor);
-		if (document.adoptedStyleSheets) {
-			this.shadowRoot.adoptedStyleSheets = [newStyle];
-		} else {
-			const oldStyle = this.shadowRoot.querySelector("style");
-			oldStyle.textContent = newStyle.textContent;
-		}
-	}
+	_onThemeChanged() {}
 
 	/**
 	 * @private
@@ -488,9 +476,12 @@ class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	_updateShadowRoot() {
+		let styleToPrepend;
 		const renderResult = this.constructor.template(this);
-		// For browsers that do not support constructable style sheets (and not using the polyfill)
-		const styleToPrepend = getShadowRootStyle(this.constructor);
+
+		if (!document.adoptedStyleSheets && !window.ShadyDOM) {
+			styleToPrepend = getEffectiveStyle(this.constructor);
+		}
 		this.constructor.render(renderResult, this.shadowRoot, styleToPrepend, { eventContext: this });
 	}
 
