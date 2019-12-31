@@ -1,5 +1,5 @@
-commit 922a842aa78a15e8242e4179e84da4ad87fec382
+commit 024df490ff92aa8beae567a233311352c041596b
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Tue Dec 31 10:53:05 2019 +0200
+Date:   Tue Dec 31 11:23:30 2019 +0200
 
-    chore: Add tests to the base package (#1098)
+    refactor(framework): Refactor and document base files (#1095)
