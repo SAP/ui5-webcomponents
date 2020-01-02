@@ -4,12 +4,12 @@ const path = require('path');
 const mkdirp = require('mkdirp');
 
 const getDefaultThemeCode = packageName => {
-	return `import { registerThemeProperties } from "@ui5/webcomponents-base/dist/asset-registries/Themes.js";
+	return `import "@ui5/webcomponents-theme-base/dist/DefaultTheme.js";
+	
+import { registerThemeProperties } from "@ui5/webcomponents-base/dist/asset-registries/Themes.js";
 
-import fiori3Base from "@ui5/webcomponents-theme-base/dist/generated/themes/sap_fiori_3/parameters-bundle.css.js";
 import fiori3 from "./sap_fiori_3/parameters-bundle.css.js";
 
-registerThemeProperties("@ui5/webcomponents-theme-base", "sap_fiori_3", fiori3Base);
 registerThemeProperties("${packageName}", "sap_fiori_3", fiori3);
 
 `;
