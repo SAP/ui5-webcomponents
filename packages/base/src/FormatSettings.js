@@ -1,4 +1,3 @@
-import Locale from "./Locale.js";
 import { getLocale } from "./LocaleProvider.js";
 
 const mSettings = {};

@@ -19,7 +19,7 @@ class EventProvider {
 
 	detachEvent(eventName, fnFunction) {
 		const eventRegistry = this._eventRegistry;
-		const eventListeners = eventRegistry[eventName];
+		let eventListeners = eventRegistry[eventName];
 
 		if (!eventListeners) {
 			return;
