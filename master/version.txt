@@ -1,5 +1,5 @@
-commit 4bd3e5ab447038e184297f2d8d36378b23fd9a33
+commit 2916fe7007968593eb0208cdd0e366e5fe2124b1
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Tue Dec 31 12:44:21 2019 +0200
+Date:   Thu Jan 2 10:25:20 2020 +0200
 
-    chore: fix start script (#1101)
+    chore: improve rollup file (#1103)
