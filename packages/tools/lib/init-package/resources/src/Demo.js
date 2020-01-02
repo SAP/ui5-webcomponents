@@ -10,7 +10,6 @@ import INIT_PACKAGE_VAR_CLASS_NAMECss from "./generated/themes/INIT_PACKAGE_VAR_
 
 import { PLEASE_WAIT } from "./generated/i18n/i18n-defaults.js";
 
-
 const metadata = {
 	tag: "INIT_PACKAGE_VAR_TAG",
 	properties: {
@@ -22,7 +21,6 @@ const metadata = {
 };
 
 class INIT_PACKAGE_VAR_CLASS_NAME extends UI5Element {
-
 	constructor() {
 		super();
 		this.i18nBundle = getI18nBundle("INIT_PACKAGE_VAR_NAME");
