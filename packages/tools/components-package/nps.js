@@ -10,7 +10,7 @@ const getScripts = (options) => {
 	const scripts = {
 		clean: "rimraf dist",
 		lint: "eslint . --config config/.eslintrc.js",
-		prepare: "nps clean build.templates build.samples build.styles build.i18n copy",
+		prepare: "nps clean build.templates build.styles build.i18n copy build.samples",
 		build: {
 			default: "nps lint prepare build.bundle",
 			templates: `mkdirp dist/generated/templates && node ${LIB}/hbs2ui5/index.js -d src/ -o dist/generated/templates`,
