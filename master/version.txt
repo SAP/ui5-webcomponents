@@ -1,5 +1,5 @@
-commit ab14185c3769ec004e93ed88482f916953ed6012
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu Jan 2 13:41:27 2020 +0200
+commit a5472caac811f117887f777d97cbce711211f96d
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Thu Jan 2 16:09:55 2020 +0200
 
-    refactor(framework): generate json-imports for component packages (#1069)
+    chore: fix build
