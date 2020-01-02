@@ -1,5 +1,5 @@
-commit 7e61bc1d4e9a130a355fcaa7c5b88439fdaec494
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu Jan 2 10:47:46 2020 +0200
+commit e1403d69a869d30ff1d4e59c1ff7837973e994b6
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Thu Jan 2 11:10:09 2020 +0200
 
-    refactor: simplify theming management (#1102)
+    chore(framework): fix code scan findings (#1091)
