@@ -6,8 +6,8 @@ import { fetchCldr } from "@ui5/webcomponents-base/dist/asset-registries/LocaleD
 import { getLocale } from "@ui5/webcomponents-base/dist/LocaleProvider.js";
 import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
 import { getFormatLocale } from "@ui5/webcomponents-base/dist/FormatSettings.js";
-import DateFormat from "@ui5/webcomponents-core/dist/sap/ui/core/format/DateFormat.js";
-import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData.js";
+import DateFormat from "@ui5/webcomponents-utils/dist/sap/ui/core/format/DateFormat.js";
+import LocaleData from "@ui5/webcomponents-utils/dist/sap/ui/core/LocaleData.js";
 import CalendarDate from "@ui5/webcomponents-base/dist/dates/CalendarDate.js";
 import CalendarType from "@ui5/webcomponents-base/dist/dates/CalendarType.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
@@ -17,7 +17,7 @@ import MonthPicker from "./MonthPicker.js";
 import YearPicker from "./YearPicker.js";
 
 // Default calendar for bundling
-import "@ui5/webcomponents-core/dist/sap/ui/core/date/Gregorian.js";
+import "@ui5/webcomponents-utils/dist/sap/ui/core/date/Gregorian.js";
 
 // Template
 import CalendarTemplate from "./generated/templates/CalendarTemplate.lit.js";

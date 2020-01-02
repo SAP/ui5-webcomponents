@@ -1,4 +1,4 @@
-import UniversalDate from "@ui5/webcomponents-core/dist/sap/ui/core/date/UniversalDate.js";
+import UniversalDate from "@ui5/webcomponents-utils/dist/sap/ui/core/date/UniversalDate.js";
 
 class CalendarDate {
 	constructor() {
@@ -149,7 +149,7 @@ class CalendarDate {
 		function isValidDate(date) {
 			return date && Object.prototype.toString.call(date) === "[object Date]" && !isNaN(date); // eslint-disable-line
 		}
-		if (!isValidDate) {
+		if (!isValidDate()) {
 			throw new Error(`Date parameter must be a JavaScript Date object: [${oJSDate}].`);
 		}
 		return new CalendarDate(oJSDate.getFullYear(), oJSDate.getMonth(), oJSDate.getDate(), sCalendarType);

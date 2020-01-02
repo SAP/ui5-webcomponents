@@ -7,6 +7,8 @@
 
 Contains the base files for all Web Components, most notably `@ui5/webcomponents-base/dist/UI5Element.js`.
 
+For a complete list of all app development related public module imports from the `base` package, click [here](../../docs/Public%20Module%20Imports.md#base):
+
 ## Resources
 - [UI5 Web Components - README.md](https://github.com/SAP/ui5-webcomponents/blob/master/README.md)
 - [UI5 Web Components - Home Page](https://sap.github.io/ui5-webcomponents)

@@ -22,81 +22,103 @@
 	<ui5-label id="myLabelLiveChange">Event [input] :: N/A</ui5-label><br/>
 
 	<ui5-input id="myInput"
-		style="width:100%"
+		style="width: 500px"
 		show-suggestions
 		placeholder="Search for a country ...">
 	</ui5-input>
 
 	<h3> Input with suggestions</h3>
-	<ui5-input id="myInput2" show-suggestions>
+	<ui5-input id="myInput2" show-suggestions style="width: 100%">
 		<ui5-li>Cozy</ui5-li>
 		<ui5-li>Compact</ui5-li>
 		<ui5-li>Condensed</ui5-li>
 	</ui5-input>
 
 	<h3> Input disabled</h3>
-	<ui5-input id="input-disabled" style="width:100%" disabled placeholder="Disabled one ...">
+	<ui5-input style="width: auto" id="input-disabled" disabled placeholder="Disabled one ...">
 		<ui5-icon slot="icon" name="appointment-2"></ui5-icon>
 	</ui5-input>
+	<input />
 
 	<h3> Input maxLength = 5</h3>
-	<ui5-input style="width:100%" maxLength="5" placeholder="Max length of 5"></ui5-input>
+	<ui5-input maxLength="5" placeholder="Max length of 5"></ui5-input>
 
 	<h3> Input valueState Success</h3>
-	<ui5-input id="input3" style="width:100%" value-state="Success" placeholder="Success state ...">
+	<ui5-input id="input3" value-state="Success" placeholder="Success state ...">
 		<ui5-icon slot="icon" name="message-success"></ui5-icon>
 	</ui5-input>
 
 	<h3> Test 'change' event</h3>
-	<ui5-input id="input1" style="width:100%" value-state="Warning" placeholder="Warning state ...">
+	<ui5-input id="input1" value-state="Warning" placeholder="Warning state ...">
 		<ui5-icon slot="icon" name="message-warning"></ui5-icon>
 	</ui5-input>
 	<h3> 'change' event result</h3>
-	<ui5-input id="inputResult" style="width:100%"></ui5-input>
+	<ui5-input id="inputResult"></ui5-input>
 
 	<h3> Test 'input' event</h3>
-	<ui5-input id="input2" style="width:100%" value-state="Error" placeholder="Error state ...">
+	<ui5-input id="input2" value-state="Error" placeholder="Error state ...">
 		<ui5-icon slot="icon" name="message-error"></ui5-icon>
 	</ui5-input>
 	<h3> 'input' test result</h3>
-	<ui5-input id="inputLiveChangeResult" style="width:100%"></ui5-input>
+	<ui5-input id="inputLiveChangeResult"></ui5-input>
 
 
 
 	<h3> Input test change</h3>
-	<ui5-input id="inputChange" style="width:100%">	</ui5-input>
+	<ui5-input id="inputChange">	</ui5-input>
 	<h3> Input test change result</h3>
-	<ui5-input id="inputChangeResult" style="width:100%"></ui5-input>
+	<ui5-input id="inputChangeResult"></ui5-input>
 
 	<h3> Input readonly</h3>
-	<ui5-input id="input-readonly" style="width:100%" value="Value can`t be changed" readonly></ui5-input>
+	<ui5-input id="input-readonly" value="Value can`t be changed" readonly></ui5-input>
+	<ui5-input id="input-readonly" placeholder="Value can`t be changed" readonly></ui5-input>
 
-	<h3> Input readonly</h3>
-	<ui5-input id="input-required" style="width:100%" value="This input is required" required></ui5-input>
+	<h3> Input required</h3>
+	<ui5-input id="input-required" value="This input is required" required></ui5-input>
 
 	<h3> Input type 'Number'</h3>
-	<ui5-input id="input-number" style="width:100%" type="Number" placeholder="Numbers are allowed only ..."></ui5-input>
+	<ui5-input id="input-number" type="Number" placeholder="Numbers are allowed only ..."></ui5-input>
 
 	<h3> Input type 'Password'</h3>
-	<ui5-input id="input-password" style="width:100%" type="Password" placeholder="Typing in private ..."></ui5-input>
+	<ui5-input id="input-password" type="Password" placeholder="Typing in private ..."></ui5-input>
 
 	<h3> Input type 'Email'</h3>
-	<ui5-input id="input-email" style="width:100%" type="Email" name="my-input-email"></ui5-input>
+	<ui5-input id="input-email" type="Email" name="my-input-email"></ui5-input>
 
 	<h3> Input type 'Tel'</h3>
-	<ui5-input id="input-tel" maxlength="10" style="width:100%" type="Tel"  name="my-input-tel"></ui5-input>
+	<ui5-input id="input-tel" maxlength="10" type="Tel"  name="my-input-tel"></ui5-input>
 
 	<h3> Input type 'URL'</h3>
-	<ui5-input id="input-url" style="width:100%" type="URL"></ui5-input>
+	<ui5-input id="input-url" type="URL"></ui5-input>
 
-	<h3> Input and button and select</h3>
+	<h3> Inputs alignment</h3>
 	<ui5-button>Press</ui5-button>
-	<ui5-input style="width: 10rem;" value="input"></ui5-input>
-	<ui5-select id="mySelect2"style="width: 10rem;">
+	<ui5-datepicker style="width: 6rem;" id='dp5'
+			placeholder='Delivery Date...'
+			title='Delivery Date!'>
+	</ui5-datepicker>
+
+	<ui5-datepicker style="width: 6rem;" id='dp5'
+			placeholder='Delivery Date...'
+			value-state="Error"
+			title='Delivery Date!'>
+	</ui5-datepicker>
+
+	<ui5-select id="mySelect2"style="width: 6rem;">
 		<ui5-option>Cozy</ui5-option>
 		<ui5-option selected>Compact</ui5-option>
 		<ui5-option>Condensed</ui5-option>
 	</ui5-select>
+	
+	<ui5-input style="width: 6rem;" value="input" value-state="Error">
+		<ui5-icon slot="icon" name="message-warning"></ui5-icon>
+	</ui5-input>
+	<ui5-select id="mySelect2"style="width: 6rem;" value-state="Error">
+		<ui5-option>Cozy</ui5-option>
+		<ui5-option selected>Compact</ui5-option>
+		<ui5-option>Condensed</ui5-option>
+	</ui5-select>
+	<ui5-multi-combobox value-state="Error" style="width: 6rem;"></ui5-multi-combobox>
 
 	<script>
 		var sap_database_entries = [{ key: "Afg", text: "Afghanistan" }, { key: "Arg", text: "Argentina" }, { key: "Alb", text: "Albania" }, { key: "Arm", text: "Armenia" }, { key: "Alg", text: "Algeria" }, { key: "And", text: "Andorra" }, { key: "Ang", text: "Angola" }, { key: "Ast", text: "Austria" }, { key: "Aus", text: "Australia" }, { key: "Aze", text: "Azerbaijan" }, { key: "Aruba", text: "Aruba" }, { key: "Antigua", text: "Antigua and Barbuda" }, { key: "Bel", text: "Belarus" }, { key: "Bel", text: "Belgium" }, { key: "Bg", text: "Bulgaria" }, { key: "Bra", text: "Brazil" }, { key: "Ch", text: "China" }, { key: "Cub", text: "Cuba" }, { key: "Chil", text: "Chili" }, { key: "Lat", text: "Latvia" }, { key: "Lit", text: "Litva" }, { key: "Prt", text: "Portugal" }, { key: "Sen", text: "Senegal" }, { key: "Ser", text: "Serbia" }, { key: "Afg", text: "Seychelles" }, { key: "Sierra", text: "Sierra Leone" }, { key: "Sgp", text: "Singapore" }, { key: "Sint", text: "Sint Maarten" }, { key: "Slv", text: "Slovakia" }, { key: "Slo", text: "Slovenia" }];

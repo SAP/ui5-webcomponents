@@ -38,7 +38,6 @@ Properties of type `Object`, properties with `multiple` set to`true` and propert
 		},
 		"settings": {
 			"type": Object,
-			"deepEqual": true,
 		},
 		"nums": {
 			"type": Integer,
@@ -46,7 +45,6 @@ Properties of type `Object`, properties with `multiple` set to`true` and propert
 		},
 		"animationDuration": {
 			"type": Integer,
-			"nonVisual": true,
 		},
 		"width": {
 			"type": CSSSize,
@@ -64,7 +62,6 @@ Setting | Type | Default | Description
 `defaultValue` | Any valid value for the type | undefined | Default value of the property. Cannot be set for type "Boolean". Booleans are always false by default in HTML
 `multiple` | Boolean | false | Indicates whether the property represents a single value or is an array of values of the given type
 `noAttribute` | Boolean | false | No attribute equivalent will be created for that property. Always false for properties of type Object.
-`deepEqual` | Boolean | false | Deep equal object comparison, rather than reference comparison, will be used to determine if the value of the property changed.
 
 The `type` setting is required.
 
@@ -112,10 +109,10 @@ Defines the `slots` that will be provided by this UI5 Web Component.
 
 Setting | Type | Default | Description
 --------|------|--------|-----------
-type    | `HTMLElement` or `Node` | N/A | The type of the children that can go into that slot 
-individualSlots | `Boolean` | false | If set to `true`, each child will have its own slot, allowing you to arrange/wrap the children arbitrarily.
-propertyName | `String` | N/A | Allows to set the name of the property on the Web Component, where the children belonging to this slot will be stored.
-listenFor | `Object` | N/A | **Experimental, do not use.** If set, whenever the children, belonging to this slot have their properties changed, the Web Component will be invalidated. 
+`type`    | `HTMLElement` or `Node` | N/A | The type of the children that can go into that slot 
+`individualSlots` | `Boolean` | false | If set to `true`, each child will have its own slot, allowing you to arrange/wrap the children arbitrarily.
+`propertyName` | `String` | N/A | Allows to set the name of the property on the Web Component, where the children belonging to this slot will be stored.
+`listenFor` | `Object` | N/A | **Experimental, do not use.** If set, whenever the children, belonging to this slot have their properties changed, the Web Component will be invalidated. 
 
 The `type` setting is required.
 

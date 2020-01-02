@@ -5,7 +5,7 @@
 :host {
 	width: 1rem;
 	height: 1rem;
-	color: var(--sapUiContentNonInteractiveIconColor);
+	color: var(--sapContent_NonInteractiveIconColor);
 	fill: currentColor;
 	outline: none;
 }

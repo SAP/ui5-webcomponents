@@ -1,4 +1,4 @@
-const assert = require("assert");
+const assert = require("chai").assert;
 
 describe("Item Navigation Tests", () => {
 	before(() => {
