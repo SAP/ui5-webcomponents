@@ -10,7 +10,7 @@ const getScripts = (options) => {
 	const scripts = {
 		clean: "rimraf dist",
 		lint: "eslint . --config config/.eslintrc.js",
-		prepare: "nps clean build.templates build.samples build.styles build.i18n copy",
+		prepare: "nps clean build.templates build.samples build.styles build.i18n build.jsonImports copy",
 		build: {
 			default: "nps lint prepare build.bundle",
 			templates: `mkdirp dist/generated/templates && node ${LIB}/hbs2ui5/index.js -d src/ -o dist/generated/templates`,
@@ -22,7 +22,12 @@ const getScripts = (options) => {
 			i18n: {
 				default: "nps build.i18n.defaultsjs build.i18n.json",
 				defaultsjs: `mkdirp dist/generated/i18n && node ${LIB}/i18n/defaults.js src/i18n dist/generated/i18n`,
-				json: `mkdirp dist/assets/i18n && node ${LIB}/i18n/toJSON.js src/i18n dist/assets/i18n`,
+				json: `mkdirp dist/generated/assets/i18n && node ${LIB}/i18n/toJSON.js src/i18n dist/generated/assets/i18n`,
+			},
+			jsonImports: {
+				default: "mkdirp dist/generated/json-imports && nps build.jsonImports.themes build.jsonImports.i18n",
+				themes: `node ${LIB}/generate-json-imports/themes.js`,
+				i18n: `node ${LIB}/generate-json-imports/i18n.js`,
 			},
 			bundle: "rollup --config config/rollup.config.js --environment ES5_BUILD",
 			samples: {

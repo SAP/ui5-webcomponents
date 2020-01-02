@@ -9,7 +9,7 @@ Provides assets for the rich `SAP-icons` icon collection.
 
 |      Icon asset       |                           Module import                        |
 | ------------------------ |  ---------------------------------------------------------- |
-| All icons (~115KB zipped)       |  `import "@ui5/webcomponents-icons/dist/json-imports/Icons.js";`      |
+| All icons (~115KB zipped)       |  `import "@ui5/webcomponents-icons/dist/Assets.js";`      |
 | Accelerated icon           |  `import "@ui5/webcomponents-icons/dist/icons/accelerated.js";`  |
 | Accept icon           |  `import "@ui5/webcomponents-icons/dist/icons/accept.js";`  |
 | ...           |  ...  |
@@ -20,6 +20,8 @@ usable by other web components such as `ui5-icon`. You could import all icons, b
 just the ones that your app will actually use.
 
 For a full list of the icons in the `SAP-icons` collection, click [here](https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/SAP-icons).
+
+For a complete list of all public module imports from the `icons` package, click [here](../../docs/Public%20Module%20Imports.md#icons):
 
 ## Resources
 - [UI5 Web Components - README.md](https://github.com/SAP/ui5-webcomponents/blob/master/README.md)
