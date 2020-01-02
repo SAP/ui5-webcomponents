@@ -32,7 +32,7 @@ const scripts = {
 	test: {
 		// --success first - report the exit code of the test run (first command to finish), as serve is always terminated and has a non-0 exit code
 		default: 'concurrently "nps serve" "nps test.run" --kill-others --success first',
-		run: "cross-env WDIO_LOG_LEVEL=error wdio config/wdio.conf.js",
+		run: "cross-env WDIO_LOG_LEVEL=error FORCE_COLOR=0 wdio config/wdio.conf.js",
 	},
 };
 
