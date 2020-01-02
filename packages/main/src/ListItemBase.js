@@ -25,6 +25,14 @@ const metadata = {
 			defaultValue: "-1",
 			noAttribute: true,
 		},
+
+		/**
+		 * Indicates if the element is on focus
+		 * @private
+		 */
+		focused: {
+			type: Boolean,
+		},
 	},
 	events: {
 		_focused: {},
@@ -53,7 +61,12 @@ class ListItemBase extends UI5Element {
 	}
 
 	_onfocusin(event) {
+		this.focused = true;
 		this.fireEvent("_focused", event);
+	}
+
+	_onfocusout(_event) {
+		this.focused = false;
 	}
 
 	_onkeydown(event) {

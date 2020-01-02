@@ -45,6 +45,7 @@ import TextArea from "./dist/TextArea.js";
 import Timeline from "./dist/Timeline.js";
 import TimelineItem from "./dist/TimelineItem.js";
 import Title from "./dist/Title.js";
+import Toast from "./dist/Toast.js";
 import ToggleButton from "./dist/ToggleButton.js";
 
 import List from "./dist/List.js";
@@ -56,7 +57,7 @@ import GroupHeaderListItem from "./dist/GroupHeaderListItem.js";
 // used in test pages
 import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
 window.RenderScheduler = RenderScheduler;
-import { isIE } from "@ui5/webcomponents-utils/dist/sap/ui/Device.js";
+import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 window.isIE = isIE; // attached to the window object for testing purposes
 
 
@@ -64,7 +65,7 @@ window.isIE = isIE; // attached to the window object for testing purposes
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import { getTheme, setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 import { setNoConflict } from "@ui5/webcomponents-base/dist/config/NoConflict.js";
-import { getCompactSize } from "@ui5/webcomponents-base/dist/config/CompactSize.js";
+import { getCompactSize, setCompactSize } from "@ui5/webcomponents-base/dist/config/CompactSize.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getRegisteredNames as getIconNames } from  "@ui5/webcomponents-base/dist/SVGIconRegistry.js"
 window["sap-ui-webcomponents-bundle"] = {
@@ -74,6 +75,7 @@ window["sap-ui-webcomponents-bundle"] = {
 		setTheme,
 		setNoConflict,
 		getCompactSize,
+		setCompactSize,
 		getRTL,
 	},
 	getIconNames,

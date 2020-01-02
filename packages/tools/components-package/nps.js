@@ -5,13 +5,12 @@ const serveConfig = path.join(__dirname, `serve.json`);
 
 const getScripts = (options) => {
 
-	const jestTask = options.hasJest ? `test.jest` : ``;
 	const port = options.port;
 
 	const scripts = {
 		clean: "rimraf dist",
 		lint: "eslint . --config config/.eslintrc.js",
-		prepare: "nps clean build.templates build.samples build.styles build.i18n build.jsonImports copy.src copy.webcomponents-polyfill",
+		prepare: "nps clean build.templates build.samples build.styles build.i18n build.jsonImports copy",
 		build: {
 			default: "nps lint prepare build.bundle",
 			templates: `mkdirp dist/generated/templates && node ${LIB}/hbs2ui5/index.js -d src/ -o dist/generated/templates`,
@@ -32,12 +31,13 @@ const getScripts = (options) => {
 			},
 			bundle: "rollup --config config/rollup.config.js --environment ES5_BUILD",
 			samples: {
-				default: "nps copy.test build.samples.api build.samples.docs",
+				default: "nps build.samples.api build.samples.docs",
 				api: `jsdoc -c  ${LIB}/jsdoc/config.json`,
 				docs: `node ${LIB}/documentation/index.js dist/api.json`,
 			}
 		},
 		copy: {
+			default: "nps copy.src copy.test copy.webcomponents-polyfill",
 			src: "copy-and-watch \"src/**/*.js\" dist/",
 			test: "copy-and-watch \"test/**/*.*\" dist/test-resources",
 			"webcomponents-polyfill": "copy-and-watch \"../../node_modules/@webcomponents/webcomponentsjs/**/*.*\" dist/webcomponentsjs/",
@@ -63,13 +63,9 @@ const getScripts = (options) => {
 			run: `serve --no-clipboard -l ${port} dist`,
 		},
 		test: {
-			default: `nps ${jestTask} test.wdio`,
-			jest: "jest",
-			wdio: {
-				// --success first - report the exit code of the test run (first command to finish), as serve is always terminated and has a non-0 exit code
-				default: 'concurrently "nps serve" "nps test.wdio.run" --kill-others --success first',
-				run: "cross-env WDIO_LOG_LEVEL=error FORCE_COLOR=0 wdio config/wdio.conf.js",
-			},
+			// --success first - report the exit code of the test run (first command to finish), as serve is always terminated and has a non-0 exit code
+			default: 'concurrently "nps serve" "nps test.run" --kill-others --success first',
+			run: "cross-env WDIO_LOG_LEVEL=error FORCE_COLOR=0 wdio config/wdio.conf.js",
 		},
 	};
 
