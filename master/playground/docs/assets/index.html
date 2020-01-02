@@ -810,143 +810,74 @@
           <h1 id="assets-and-json-module-imports">Assets and JSON module imports</h1>
 
 <p>UI5 Web Components aim to be feature rich and with a minimal code footprint at the same time. In order to achieve this, 
-most UI5 Web Components packages ship their assets as <code class="highlighter-rouge">.json</code> files while also providing respective public module imports for them.</p>
+most UI5 Web Components packages ship their assets as <code class="highlighter-rouge">.json</code> files while also providing a public module import for them.</p>
 
 <p>The assets in question could be i18n texts, icons, additional themes parameters, CLDR, etc…</p>
 
 <p>Currently our npm packages follow the scheme:</p>
 
-<p><code class="highlighter-rouge">@ui5/&lt;PACKAGE_NAME&gt;/dist/assets/*</code>
+<p><code class="highlighter-rouge">@ui5/&lt;PACKAGE_NAME&gt;/dist/generated/assets/*</code>
 (for the assets themselves)</p>
 
-<p><code class="highlighter-rouge">@ui5/&lt;PACKAGE_NAME&gt;/dist/json-imports/*</code>
-(for the modules that provide the assets)</p>
+<p><code class="highlighter-rouge">@ui5/&lt;PACKAGE_NAME&gt;/dist/Assets.js</code>
+(for the module that provides the assets)</p>
 
 <p><a name="packages"></a></p>
 <h2 id="packages">Packages</h2>
 
 <h3 id="base-package"><code class="highlighter-rouge">base</code> package</h3>
 
-<table>
-  <thead>
-    <tr>
-      <th>Asset type</th>
-      <th>Asset path</th>
-      <th>Public Module Import</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>CLDR</td>
-      <td><code class="highlighter-rouge">@ui5/webcomponents-base/dist/assets/cldr/*</code></td>
-      <td><code class="highlighter-rouge">@ui5/webcomponents-base/dist/json-imports/LocaleData.js</code></td>
-    </tr>
-  </tbody>
-</table>
+<p>The <code class="highlighter-rouge">base</code> package provides CLDR assets.</p>
 
-<p>Usually you don’t need to import the CLDR assets from the <code class="highlighter-rouge">base</code> package, but rather from the package(s) containing the actual web components.</p>
+<p><code class="highlighter-rouge">import "@ui5/webcomponents-base/dist/Assets.js";</code></p>
+
+<p>Usually you don’t need to import the assets directly from the <code class="highlighter-rouge">base</code> package (unless you are developing a Web Components package of your own),
+but rather from the package(s) containing the actual web components you’ll be using in your app.</p>
+
+<h3 id="theme-base-package"><code class="highlighter-rouge">theme-base</code> package</h3>
+
+<p>The <code class="highlighter-rouge">theme-base</code> package provides common parameters for all themes.</p>
+
+<p><code class="highlighter-rouge">import "@ui5/webcomponents-theme-base/dist/Assets.js";</code></p>
+
+<p>Usually you don’t need to import the assets directly from the <code class="highlighter-rouge">theme-base</code> package (unless you are developing a Web Components package of your own),
+but rather from the package(s) containing the actual web components you’ll be using in your app.</p>
 
 <h3 id="main-package"><code class="highlighter-rouge">main</code> package</h3>
 
-<table>
-  <thead>
-    <tr>
-      <th>Asset type</th>
-      <th>Asset path</th>
-      <th>Public Module Import</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>i18n</td>
-      <td><code class="highlighter-rouge">@ui5/webcomponents/dist/assets/i18n/*</code></td>
-      <td><code class="highlighter-rouge">@ui5/webcomponents/dist/json-imports/i18n.js</code></td>
-    </tr>
-    <tr>
-      <td>Additional themes</td>
-      <td><code class="highlighter-rouge">@ui5/webcomponents/dist/assets/themes/*</code></td>
-      <td><code class="highlighter-rouge">@ui5/webcomponents/dist/json-imports/Themes.js</code></td>
-    </tr>
-    <tr>
-      <td>CLDR</td>
-      <td>N/A</td>
-      <td><code class="highlighter-rouge">@ui5/webcomponents/dist/json-imports/LocaleData.js</code></td>
-    </tr>
-  </tbody>
-</table>
+<p>The <code class="highlighter-rouge">main</code> package’s <code class="highlighter-rouge">Assets.js</code> import provides package specific additional theming parameters and i18n assets. 
+All assets from the <code class="highlighter-rouge">base</code> and <code class="highlighter-rouge">theme-base</code> packages are also imported automatically so you don’t have to worry about them.</p>
 
-<p>The <code class="highlighter-rouge">main</code> package does not have any additional CLDR assets besides the CLDR assets of the <code class="highlighter-rouge">base</code> project.</p>
+<p><code class="highlighter-rouge">import "@ui5/webcomponents/dist/Assets.js";</code></p>
 
 <h3 id="fiori-package"><code class="highlighter-rouge">fiori</code> package</h3>
 
-<table>
-  <thead>
-    <tr>
-      <th>Asset type</th>
-      <th>Asset path</th>
-      <th>Public Module Import</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>i18n</td>
-      <td><code class="highlighter-rouge">@ui5/webcomponents-fiori/dist/assets/i18n/*</code></td>
-      <td><code class="highlighter-rouge">@ui5/webcomponents-fiori/dist/json-imports/i18n.js</code></td>
-    </tr>
-    <tr>
-      <td>Additional themes</td>
-      <td><code class="highlighter-rouge">@ui5/webcomponents-fiori/dist/assets/themes/*</code></td>
-      <td><code class="highlighter-rouge">@ui5/webcomponents-fiori/dist/json-imports/Themes.js</code></td>
-    </tr>
-  </tbody>
-</table>
+<p>The <code class="highlighter-rouge">fiori</code> package’s <code class="highlighter-rouge">Assets.js</code> import provides package specific additional theming parameters and i18n assets. All assets from the <code class="highlighter-rouge">main</code>
+package are also imported since the <code class="highlighter-rouge">fiori</code> package internally uses features of the <code class="highlighter-rouge">main</code> package.</p>
+
+<p><code class="highlighter-rouge">import "@ui5/webcomponents-fiori/dist/Assets.js";</code></p>
 
 <h3 id="icons-package"><code class="highlighter-rouge">icons</code> package</h3>
 
-<table>
-  <thead>
-    <tr>
-      <th>Asset type</th>
-      <th>Asset path</th>
-      <th>Public Module Import</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>i18n</td>
-      <td><code class="highlighter-rouge">@ui5/webcomponents-fiori/dist/assets/i18n/*</code></td>
-      <td><code class="highlighter-rouge">@ui5/webcomponents-fiori/dist/json-imports/i18n.js</code></td>
-    </tr>
-    <tr>
-      <td>All icons</td>
-      <td><code class="highlighter-rouge">@ui5/webcomponents-fiori/dist/assets/icon-collections/*</code></td>
-      <td><code class="highlighter-rouge">@ui5/webcomponents-fiori/dist/json-imports/Icons.js</code></td>
-    </tr>
-  </tbody>
-</table>
+<p><code class="highlighter-rouge">import "@ui5/webcomponents-fiori/dist/Assets.js";</code></p>
 
 <p>Normally applications are expected to import only the individual icons that are going to be used, for example:</p>
 
 <p><code class="highlighter-rouge">import "@ui5/webcomponents-icons/dist/icons/add.js</code>”;`</p>
 
-<p>However, sometimes it makes sense to import all icons, hence the <code class="highlighter-rouge">@ui5/webcomponents-fiori/dist/json-imports/Icons.js</code> JSON import.</p>
-
-<p>Since some icons have translatable tooltips, you might need the <code class="highlighter-rouge">i18n</code> JSON import as well.</p>
+<p>However, sometimes it makes sense to import all icons, hence the <code class="highlighter-rouge">import "@ui5/webcomponents-fiori/dist/Assets.js";</code> JSON import. 
+Along with the icons, it also includes all translatable texts.</p>
 
 <p><a name="bundling"></a></p>
 <h2 id="efficient-asset-bundling">Efficient asset bundling</h2>
 
-<p>You may notice that JSON imports, for example:</p>
+<p>You may notice that <code class="highlighter-rouge">Assets.js</code> imports, for example:</p>
 
-<p><code class="highlighter-rouge">import "@ui5/webcomponents/dist/json-imports/i18n.js"</code></p>
-
-<p>or</p>
-
-<p><code class="highlighter-rouge">import "@ui5/webcomponents/dist/json-imports/Themes.js"</code></p>
+<p><code class="highlighter-rouge">import "@ui5/webcomponents/dist/Assets.js"</code></p>
 
 <p>will produce warning messages in the browser’s console, such as for example:</p>
 <blockquote>
-  <p>Inefficient bundling detected: consider bundling i18n/theme proeprties imports as URLs instead of inlining them.
+  <p>Inefficient bundling detected: consider bundling i18n/theme properties imports as URLs instead of inlining them.
 See rollup-plugin-url or webpack file-loader for more information.
 Suggested pattern: “assets\/.*.json”</p>
 </blockquote>

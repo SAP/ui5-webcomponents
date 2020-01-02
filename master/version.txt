@@ -1,5 +1,5 @@
-commit e1403d69a869d30ff1d4e59c1ff7837973e994b6
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu Jan 2 11:10:09 2020 +0200
+commit ab14185c3769ec004e93ed88482f916953ed6012
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Thu Jan 2 13:41:27 2020 +0200
 
-    chore(framework): fix code scan findings (#1091)
+    refactor(framework): generate json-imports for component packages (#1069)
