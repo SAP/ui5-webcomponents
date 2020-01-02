@@ -89,7 +89,6 @@ module.exports = {
 		"no-undef-init": 2,
 		"no-undef": 2,
 		"no-unused-vars": [2, {"vars":"all", "args":"none"}],
-		"no-use-before-define": [1, "nofunc"],
 
 		"brace-style": [2, "1tbs", { "allowSingleLine": true }],
 		"camelcase": [1, { "properties": "never" }], // added for UI5 WebComponents
