@@ -1,5 +1,5 @@
-commit 2916fe7007968593eb0208cdd0e366e5fe2124b1
+commit 7e61bc1d4e9a130a355fcaa7c5b88439fdaec494
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu Jan 2 10:25:20 2020 +0200
+Date:   Thu Jan 2 10:47:46 2020 +0200
 
-    chore: improve rollup file (#1103)
+    refactor: simplify theming management (#1102)
