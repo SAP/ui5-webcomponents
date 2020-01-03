@@ -39,7 +39,7 @@ const fetchThemeProperties = async (packageName, themeName) => {
 	const url = themeURLs.get(`${packageName}_${themeName}`);
 
 	if (!url) {
-		throw new Error(`You have to import @ui5/webcomponents/dist/json-imports/Themes module to use theme switching`);
+		throw new Error(`You have to import the ${packageName}/dist/Assets.js module to switch to additional themes`);
 	}
 	return fetchJsonOnce(url);
 };
