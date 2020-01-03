@@ -166,6 +166,60 @@ describe("Invalidation works", () => {
 		assert.strictEqual(res, true, "Invalidated");
 	});
 
+	it("Tests that modifying textContent invalidates", () => {
+
+		const res = browser.executeAsync( async (done) => {
+
+			const el = document.getElementById("gen");
+			el.textContent = "test";
+			await window.RenderScheduler.whenFinished();
+
+			// Number of invalidations may vary with children/slots count, so just check for invalidation
+			let invalidated = false;
+
+			const original = el._invalidate;
+			el._invalidate = () => {
+				original.apply(el, arguments);
+				invalidated = true;
+			};
+
+			el.textContent = "test2";
+
+			await window.RenderScheduler.whenFinished();
+
+			return done(invalidated);
+		});
+
+		assert.strictEqual(res, true, "Invalidated");
+	});
+
+	it("Tests that modifying nodeValue invalidates", () => {
+
+		const res = browser.executeAsync( async (done) => {
+
+			const el = document.getElementById("gen");
+			el.textContent = "test";
+			await window.RenderScheduler.whenFinished();
+
+			// Number of invalidations may vary with children/slots count, so just check for invalidation
+			let invalidated = false;
+
+			const original = el._invalidate;
+			el._invalidate = () => {
+				original.apply(el, arguments);
+				invalidated = true;
+			};
+
+			el.childNodes[0].nodeValue = "test2";
+
+			await window.RenderScheduler.whenFinished();
+
+			return done(invalidated);
+		});
+
+		assert.strictEqual(res, true, "Invalidated");
+	});
+
 	it("Tests that multiple invalidations result in a single rendering", () => {
 
 		const res = browser.executeAsync( async (done) => {

@@ -163,9 +163,10 @@ class UI5Element extends HTMLElement {
 	}
 
 	/**
+	 * Note: this method is also manually called by "compatibility/patchNodeValue.js"
 	 * @private
 	 */
-	async _processChildren(mutations) {
+	async _processChildren() {
 		const hasSlots = this.constructor.getMetadata().hasSlots();
 		if (hasSlots) {
 			await this._updateSlots();
