@@ -12,6 +12,7 @@ import CalendarDate from "@ui5/webcomponents-base/dist/dates/CalendarDate.js";
 import { calculateWeekNumber } from "@ui5/webcomponents-base/dist/dates/CalendarUtils.js";
 import CalendarType from "@ui5/webcomponents-base/dist/dates/CalendarType.js";
 import DayPickerTemplate from "./generated/templates/DayPickerTemplate.lit.js";
+import Behaviour from "@ui5/webcomponents-base/dist/types/Behaviour";
 
 // Styles
 import dayPickerCSS from "./generated/themes/DayPicker.css.js";
@@ -118,7 +119,7 @@ class DayPicker extends UI5Element {
 		this._oLocale = getFormatLocale();
 		this._oLocaleData = new LocaleData(this._oLocale);
 
-		this._itemNav = new ItemNavigation(this, { rowSize: 7 });
+		this._itemNav = new ItemNavigation(this, { rowSize: 7, behaviour: Behaviour.Paging });
 		this._itemNav.getItemsCallback = function getItemsCallback() {
 			return [].concat(...this._weeks);
 		}.bind(this);

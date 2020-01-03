@@ -10,6 +10,7 @@ import {
 import EventProvider from "../EventProvider.js";
 import UI5Element from "../UI5Element.js";
 import NavigationMode from "../types/NavigationMode.js";
+import Behaviour from "../types/Behaviour.js";
 
 // navigatable items must have id and tabindex
 class ItemNavigation extends EventProvider {
@@ -19,6 +20,8 @@ class ItemNavigation extends EventProvider {
 		this.currentIndex = options.currentIndex || 0;
 		this.rowSize = options.rowSize || 1;
 		this.cyclic = options.cyclic || false;
+		this.keepScrollingDirection = options.keepScrollingDirection || false;
+		this.behaviour = options.behaviour || Behaviour.Static;
 
 		const navigationMode = options.navigationMode;
 		const autoNavigation = !navigationMode || navigationMode === NavigationMode.Auto;
@@ -48,17 +51,24 @@ class ItemNavigation extends EventProvider {
 
 	_onKeyPress(event) {
 		const items = this._getItems();
-
 		if (this.currentIndex >= items.length) {
-			if (!this.cyclic) {
-				this.currentIndex = items.length - 1;
+			if (this.behaviour !== Behaviour.Cyclic) {
+				if (this.behaviour === Behaviour.Paging) {
+					this.currentIndex = this.currentIndex - items.length;
+				} else {
+					this.currentIndex = items.length - 1;
+				}
 				this.fireEvent(ItemNavigation.BORDER_REACH, { start: false, end: true, offset: this.currentIndex });
 			} else {
 				this.currentIndex = this.currentIndex - items.length;
 			}
 		} else if (this.currentIndex < 0) {
-			if (!this.cyclic) {
-				this.currentIndex = 0;
+			if (this.behaviour !== Behaviour.Cyclic) {
+				if (this.behaviour === Behaviour.Paging) {
+					this.currentIndex = items.length + this.currentIndex - this.rowSize + (this.rowSize - (this._getItems().length % this.rowSize));
+				} else {
+					this.currentIndex = 0;
+				}
 				this.fireEvent(ItemNavigation.BORDER_REACH, { start: true, end: false, offset: this.currentIndex });
 			} else {
 				this.currentIndex = items.length + this.currentIndex;
