@@ -68,6 +68,7 @@ class Generic extends UI5Element {
 		return `:host {
                     display: inline-block;
                     border: 1px solid black;
+                    color: var(--var1);
                 }`;
 	}
 
