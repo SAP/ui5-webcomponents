@@ -1,5 +1,9 @@
 import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
 
+/**
+ * Defines the type of <code>ui5-list</code>.
+ * @public
+ */
 const ListModes = {
 	/**
 	 * Default mode (no selection).

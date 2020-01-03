@@ -1,5 +1,9 @@
 import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
 
+/**
+ * Defines the semantic color
+ * @public
+ */
 const SemanticColors = {
 	/**
 	 * Default color (brand color)

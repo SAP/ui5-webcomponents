@@ -1,5 +1,10 @@
 import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
 
+
+/**
+ * Defines where the <code>ui5-toast</code> will be placed.
+ * @public
+ */
 const ToastPlacements = {
 
 	/**

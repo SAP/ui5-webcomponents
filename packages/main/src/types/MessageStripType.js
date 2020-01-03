@@ -1,26 +1,31 @@
 import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
 
 /**
- * Different types of MessageStrip.
+ * Defines different types of MessageStrip.
+ * @public
  */
 const MessageStripTypes = {
 	/**
-	 * default type (no special styling)
+	 * Message should be just an information
+	 * @public
 	 */
 	Information: "Information",
 
 	/**
-	 * accept type
+	 * Message is a success message
+	 * @public
 	 */
 	Positive: "Positive",
 
 	/**
-	 * reject style
+	 * Message is an error
+	 * @public
 	 */
 	Negative: "Negative",
 
 	/**
-	 * warning type
+	 * Message is a warning
+	 * @public
 	 */
 	Warning: "Warning",
 };

@@ -1,5 +1,9 @@
 import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
 
+/**
+ * Defines which separator style will be applied for the list items.
+ * @public
+ */
 const ListSeparatorsTypes = {
 	/**
 	 * Separators between the items including the last and the first one.
