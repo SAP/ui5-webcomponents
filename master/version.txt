@@ -1,5 +1,5 @@
-commit 6a69521b6503e142c507946b4c6982f1a6f217c1
+commit 84c6c10b50ff697a918ead2bfe82751a0dfbe6f5
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Mon Jan 6 10:59:07 2020 +0200
+Date:   Mon Jan 6 15:24:53 2020 +0200
 
-    feat(framework): Allow the registration of custom themes (#1109)
+    chore: fix unstable test (#1120)
