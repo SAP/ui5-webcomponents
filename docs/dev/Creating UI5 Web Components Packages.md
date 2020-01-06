@@ -35,11 +35,7 @@ Package | Description
 
 ## Step 3 - run the package initialization script
 
-First, install [npx](https://www.npmjs.com/package/npx) if you don't have it:
-
-`npm i -g npx`
-
-and then execute the initialization script, optionally with parameters from the following table:
+Run the initialization script, optionally with parameters from the following table:
 
 Parameter | Description | Default value
 ----------|-------------|--------------
