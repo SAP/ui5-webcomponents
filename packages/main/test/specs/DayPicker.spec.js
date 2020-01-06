@@ -12,7 +12,7 @@ describe("Day Picker Tests", () => {
 
 	it("Day Picker Renders", () => {
 		daypicker.id = "daypicker";
-		const DayPicker = daypicker.getDayPickerRoot;
+		const DayPicker = daypicker.dayPickerRoot;
 
 		assert.ok(DayPicker, "Day Picker is rendered");
 	});
