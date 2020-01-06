@@ -1,7 +1,7 @@
 import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
 
 /**
- * @lends sap.ui.webcomponents.main.ListSeparators.prototype
+ * @lends sap.ui.webcomponents.main.types.ListSeparators.prototype
  * @public
  */
 const ListSeparatorsTypes = {
@@ -31,7 +31,7 @@ const ListSeparatorsTypes = {
  * Defines which separator style will be applied for the list items.
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.ListSeparators
+ * @alias sap.ui.webcomponents.main.types.ListSeparators
  * @public
  * @enum {string}
  */

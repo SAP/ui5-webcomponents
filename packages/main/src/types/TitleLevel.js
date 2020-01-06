@@ -1,7 +1,7 @@
 import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
 
 /**
- * @lends sap.ui.webcomponents.main.TitleLevel.prototype
+ * @lends sap.ui.webcomponents.main.types.TitleLevel.prototype
  * @public
  */
 const TitleLevels = {
@@ -53,7 +53,7 @@ const TitleLevels = {
  * Defines the <code>ui5-title</code> level
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.TitleLevel
+ * @alias sap.ui.webcomponents.main.types.TitleLevel
  * @public
  * @enum {string}
  */

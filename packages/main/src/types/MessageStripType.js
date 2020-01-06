@@ -1,7 +1,7 @@
 import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
 
 /**
- * @lends sap.ui.webcomponents.main.MessageStripType.prototype
+ * @lends sap.ui.webcomponents.main.types.MessageStripType.prototype
  * @public
  */
 const MessageStripTypes = {
@@ -39,7 +39,7 @@ const MessageStripTypes = {
  * Defines different types of MessageStrip.
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.MessageStripType
+ * @alias sap.ui.webcomponents.main.types.MessageStripType
  * @public
  * @enum {string}
  */

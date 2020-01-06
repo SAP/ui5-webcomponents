@@ -1,7 +1,7 @@
 import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
 
 /**
- * @lends sap.ui.webcomponents.main.PanelAccessibleRole.prototype
+ * @lends sap.ui.webcomponents.main.types.PanelAccessibleRole.prototype
  * @public
  */
 const PanelAccessibleRoles = {
@@ -33,7 +33,7 @@ const PanelAccessibleRoles = {
  * Available Panel Accessible Landmark Roles.
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.PanelAccessibleRole
+ * @alias sap.ui.webcomponents.main.types.PanelAccessibleRole
  * @public
  * @enum {string}
  */

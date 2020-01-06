@@ -2,7 +2,7 @@ import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
 
 
 /**
- * @lends sap.ui.webcomponents.main.ToastPlacement.prototype
+ * @lends sap.ui.webcomponents.main.types.ToastPlacement.prototype
  * @public
  */
 const ToastPlacements = {
@@ -77,7 +77,7 @@ const ToastPlacements = {
  * Defines where the <code>ui5-toast</code> will be placed.
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.ToastPlacement
+ * @alias sap.ui.webcomponents.main.types.ToastPlacement
  * @public
  * @enum {string}
  */

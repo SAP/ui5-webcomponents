@@ -1,7 +1,7 @@
 import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
 
 /**
- * @lends sap.ui.webcomponents.main.PopoverHorizontalAlign.prototype
+ * @lends sap.ui.webcomponents.main.types.PopoverHorizontalAlign.prototype
  * @public
  */
 const PopoverHorizontalAligns = {
@@ -39,7 +39,7 @@ const PopoverHorizontalAligns = {
  * Defines the horizontal alignment of <code>ui5-popover</code>
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.PopoverHorizontalAlign
+ * @alias sap.ui.webcomponents.main.types.PopoverHorizontalAlign
  * @public
  * @enum {string}
  */

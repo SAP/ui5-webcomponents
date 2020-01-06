@@ -1,7 +1,7 @@
 import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
 
 /**
- * @lends sap.ui.webcomponents.main.SemanticColor.prototype
+ * @lends sap.ui.webcomponents.main.types.SemanticColor.prototype
  * @public
  */
 const SemanticColors = {
@@ -46,7 +46,7 @@ const SemanticColors = {
  * Defines the semantic color
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.SemanticColor
+ * @alias sap.ui.webcomponents.main.types.SemanticColor
  * @public
  * @enum {string}
  */

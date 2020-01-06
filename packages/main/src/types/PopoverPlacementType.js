@@ -1,7 +1,7 @@
 import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
 
 /**
- * @lends sap.ui.webcomponents.main.PopoverPlacementType.prototype
+ * @lends sap.ui.webcomponents.main.types.PopoverPlacementType.prototype
  * @public
  */
 const PopoverPlacementTypes = {
@@ -39,7 +39,7 @@ const PopoverPlacementTypes = {
  * Types for the placement of Popover control.
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.PopoverPlacementType
+ * @alias sap.ui.webcomponents.main.types.PopoverPlacementType
  * @public
  * @enum {string}
  */

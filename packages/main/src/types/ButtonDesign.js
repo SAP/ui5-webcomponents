@@ -1,7 +1,7 @@
 import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
 
 /**
- * @lends sap.ui.webcomponents.main.ButtonDesign.prototype
+ * @lends sap.ui.webcomponents.main.types.ButtonDesign.prototype
  * @public
  */
 const ButtonTypes = {
@@ -46,7 +46,7 @@ const ButtonTypes = {
  * Different types of Button.
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.ButtonDesign
+ * @alias sap.ui.webcomponents.main.types.ButtonDesign
  * @public
  * @enum {string}
  */

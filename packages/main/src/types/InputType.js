@@ -1,7 +1,7 @@
 import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
 
 /**
- * @lends sap.ui.webcomponents.main.InputType.prototype
+ * @lends sap.ui.webcomponents.main.types.InputType.prototype
  * @public
  */
 const InputTypes = {
@@ -53,7 +53,7 @@ const InputTypes = {
  * Defines input types
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.InputType
+ * @alias sap.ui.webcomponents.main.types.InputType
  * @public
  * @enum {string}
  */

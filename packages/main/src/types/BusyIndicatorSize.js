@@ -1,7 +1,7 @@
 import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
 
 /**
- * @lends sap.ui.webcomponents.main.BusyIndicatorSize.prototype
+ * @lends sap.ui.webcomponents.main.types.BusyIndicatorSize.prototype
  * @public
  */
 const BusyIndicatorSizes = {
@@ -32,7 +32,7 @@ const BusyIndicatorSizes = {
  * Different types of BusyIndicator.
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.BusyIndicatorSize
+ * @alias sap.ui.webcomponents.main.types.BusyIndicatorSize
  * @public
  * @enum {string}
  */

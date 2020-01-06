@@ -1,7 +1,7 @@
 import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
 
 /**
- * @lends sap.ui.webcomponents.main.ListMode.prototype
+ * @lends sap.ui.webcomponents.main.types.ListMode.prototype
  * @public
  */
 const ListModes = {
@@ -54,7 +54,7 @@ const ListModes = {
  * Defines the type of <code>ui5-list</code>.
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.ListMode
+ * @alias sap.ui.webcomponents.main.types.ListMode
  * @public
  * @enum {string}
  */

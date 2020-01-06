@@ -1,7 +1,7 @@
 import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
 
 /**
- * @lends sap.ui.webcomponents.main.LinkDesign.prototype
+ * @lends sap.ui.webcomponents.main.types.LinkDesign.prototype
  * @public
  */
 const LinkTypes = {
@@ -32,7 +32,7 @@ const LinkTypes = {
  * Different types of Button.
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.LinkDesign
+ * @alias sap.ui.webcomponents.main.types.LinkDesign
  * @public
  * @enum {string}
  */

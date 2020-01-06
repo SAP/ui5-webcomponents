@@ -2,7 +2,7 @@ import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
 
 
 /**
- * @lends sap.ui.webcomponents.main.PopoverVerticalAlign.prototype
+ * @lends sap.ui.webcomponents.main.types.PopoverVerticalAlign.prototype
  * @public
  */
 const PopoverVerticalAligns = {
@@ -40,7 +40,7 @@ const PopoverVerticalAligns = {
  * Types for the placement of message Popover control.
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.PopoverVerticalAlign
+ * @alias sap.ui.webcomponents.main.types.PopoverVerticalAlign
  * @public
  * @enum {string}
  */

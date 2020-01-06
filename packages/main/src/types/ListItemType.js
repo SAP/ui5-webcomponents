@@ -1,7 +1,7 @@
 import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
 
 /**
- * @lends sap.ui.webcomponents.main.ListItemType.prototype
+ * @lends sap.ui.webcomponents.main.types.ListItemType.prototype
  * @public
  */
 const ListItemTypes = {
@@ -25,7 +25,7 @@ const ListItemTypes = {
  * Different types of ListItem.
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.ListItemType
+ * @alias sap.ui.webcomponents.main.types.ListItemType
  * @public
  * @enum {string}
  */
