@@ -9,8 +9,8 @@ import LocaleData from "@ui5/webcomponents-utils/dist/sap/ui/core/LocaleData.js"
 import { getLocale } from "@ui5/webcomponents-base/dist/LocaleProvider.js";
 import CalendarType from "@ui5/webcomponents-base/dist/dates/CalendarType.js";
 import CalendarDate from "@ui5/webcomponents-base/dist/dates/CalendarDate.js";
+import Behaviour from "@ui5/webcomponents-base/dist/types/Behaviour.js";
 import MonthPickerTemplate from "./generated/templates/MonthPickerTemplate.lit.js";
-import Behaviour from "@ui5/webcomponents-base/dist/types/Behaviour";
 
 // Styles
 import styles from "./generated/themes/MonthPicker.css.js";

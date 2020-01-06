@@ -11,8 +11,8 @@ import LocaleData from "@ui5/webcomponents-utils/dist/sap/ui/core/LocaleData.js"
 import CalendarDate from "@ui5/webcomponents-base/dist/dates/CalendarDate.js";
 import { calculateWeekNumber } from "@ui5/webcomponents-base/dist/dates/CalendarUtils.js";
 import CalendarType from "@ui5/webcomponents-base/dist/dates/CalendarType.js";
+import Behaviour from "@ui5/webcomponents-base/dist/types/Behaviour.js";
 import DayPickerTemplate from "./generated/templates/DayPickerTemplate.lit.js";
-import Behaviour from "@ui5/webcomponents-base/dist/types/Behaviour";
 
 // Styles
 import dayPickerCSS from "./generated/themes/DayPicker.css.js";
