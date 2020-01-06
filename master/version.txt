@@ -1,5 +1,5 @@
-commit 9fbd587cba54e5ccfbc6d83619e8dfe368649d0d
+commit cf90f825c467778c77f448d72d5a0d659c923b7b
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Mon Jan 6 09:28:13 2020 +0200
+Date:   Mon Jan 6 09:58:35 2020 +0200
 
-    chore(framework) update some dependencies (#1110)
+    refactor(ui5-icon): remove src property (#1111)
