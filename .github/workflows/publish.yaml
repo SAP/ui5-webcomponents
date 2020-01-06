@@ -1,0 +1,30 @@
+name: Publish
+
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    if: "contains(github.event.head_commit.message, 'chore(prerelease)')"
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 12
+
+    - name: Install
+      run: yarn
+
+    - name: Build
+      run: yarn build
+
+    - name: Auth
+      run: npm config set //registry.npmjs.org/:_authToken=$NPM_AUTH_TOKEN
+      env:
+        NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+    - name: Prerelease to npm
+      uses: ./.github/actions/pre-release
