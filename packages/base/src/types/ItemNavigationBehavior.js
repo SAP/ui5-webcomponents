@@ -2,7 +2,7 @@
  * @private
  * Different behavior for ItemNavigation.
  */
-const Behavior = {
+const ItemNavigationBehavior = {
 	/**
 	* Static behavior: when border of the items is reached, you can't go out of the cage.
  	*/
@@ -18,4 +18,4 @@ const Behavior = {
  	*/
 	Paging: "Paging",
 };
-export default Behavior;
+export default ItemNavigationBehavior;

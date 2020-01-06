@@ -9,7 +9,7 @@ import LocaleData from "@ui5/webcomponents-utils/dist/sap/ui/core/LocaleData.js"
 import { getLocale } from "@ui5/webcomponents-base/dist/LocaleProvider.js";
 import CalendarType from "@ui5/webcomponents-base/dist/dates/CalendarType.js";
 import CalendarDate from "@ui5/webcomponents-base/dist/dates/CalendarDate.js";
-import Behavior from "@ui5/webcomponents-base/dist/types/Behavior.js";
+import ItemNavigationBehavior from "@ui5/webcomponents-base/dist/types/ItemNavigationBehavior.js";
 import MonthPickerTemplate from "./generated/templates/MonthPickerTemplate.lit.js";
 
 // Styles
@@ -92,7 +92,7 @@ class MonthPicker extends UI5Element {
 		this._oLocale = getFormatLocale();
 		this._oLocaleData = new LocaleData(this._oLocale);
 
-		this._itemNav = new ItemNavigation(this, { rowSize: 3, behavior: Behavior.Cyclic });
+		this._itemNav = new ItemNavigation(this, { rowSize: 3, behavior: ItemNavigationBehavior.Cyclic });
 		this._itemNav.getItemsCallback = function getItemsCallback() {
 			return [].concat(...this._quarters);
 		}.bind(this);
