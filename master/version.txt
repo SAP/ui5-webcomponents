@@ -1,5 +1,9 @@
-commit a5472caac811f117887f777d97cbce711211f96d
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu Jan 2 16:09:55 2020 +0200
+commit 4cd45e14a82dca50e45c4ff1afad0476d3466242
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Jan 6 08:42:34 2020 +0200
 
-    chore: fix build
+    refactor(ui5-timeline): remove style bg color (#1119)
+    
+    According to both Timeline integration card and sap.suite.ui.commons.sample.Timeline visual specs, the component should not set its own background.
+    
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/1118
