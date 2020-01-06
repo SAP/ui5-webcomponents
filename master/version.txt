@@ -1,5 +1,5 @@
-commit cf90f825c467778c77f448d72d5a0d659c923b7b
+commit 6a69521b6503e142c507946b4c6982f1a6f217c1
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Mon Jan 6 09:58:35 2020 +0200
+Date:   Mon Jan 6 10:59:07 2020 +0200
 
-    refactor(ui5-icon): remove src property (#1111)
+    feat(framework): Allow the registration of custom themes (#1109)

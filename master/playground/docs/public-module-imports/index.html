@@ -1845,6 +1845,31 @@ All texts are in English by default. In order to get support for other languages
 
 <p>For more details, please check <a href="Configuration.md">Configuration</a></p>
 
+<h3 id="6-assets-registration">6. Assets registration</h3>
+
+<p>In order to register a <strong>custom theme</strong>:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">registerThemeProperties</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/AssetRegistry.js</span><span class="dl">"</span>
+</code></pre></div></div>
+
+<p>and then call the method above to register CSS Variables for each theme/package pair.</p>
+
+<p>You can pass the parameters directly, as an object, or as a URL:
+1) Pass the CSS Vars as a string directly.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>`registerThemeProperties("my-package", "my_theme", ":root{--var1: red;}");`
+</code></pre></div></div>
+
+<p>2) Pass the CSS Vars as an object directly. The object must have a “_” property, pointing to a string with the CSS Vars.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>`registerThemeProperties("my-package", "my_theme", {"_": ":root{--var1: red;}"});`
+</code></pre></div></div>
+
+<p>3) Pass a URL to a JSON file, containing the CSS Vars in its “_” property. Will be fetched on demand, not upon registration.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>`registerThemeProperties("my-package", "my_theme", "http://url/to/my/theme.json");`
+</code></pre></div></div>
+
 
 <footer class="footer-wrapper">
     <div class="footer-links">
