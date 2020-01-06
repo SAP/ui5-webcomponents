@@ -1,5 +1,5 @@
-commit 84c6c10b50ff697a918ead2bfe82751a0dfbe6f5
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Mon Jan 6 15:24:53 2020 +0200
+commit 50b75ce300fae18940efa0f607c3fe59cbbd9f84
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Mon Jan 6 16:21:48 2020 +0200
 
-    chore: fix unstable test (#1120)
+    chore: update tableColumn docs (#1121)
