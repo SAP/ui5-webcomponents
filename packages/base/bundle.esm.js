@@ -1,3 +1,5 @@
+import { registerThemeProperties } from "./dist/AssetRegistry.js";
+
 import "./dist/features/calendar/Buddhist.js";
 import "./dist/features/calendar/Islamic.js";
 import "./dist/features/calendar/Japanese.js";
@@ -14,7 +16,7 @@ import "./dist/test-resources/elements/Child.js";
 import "./dist/test-resources/elements/DensityAware.js";
 import "./dist/test-resources/elements/GenericExt.js";
 
-// Test themes
+// Test themes - CSS Vars for the sap_fiori_3, sap_fiori_3_dark, sap_belize and sap_belize_hcb themes
 import "./dist/test-resources/assets/Themes.js";
 
 // used in test pages
@@ -22,6 +24,9 @@ import RenderScheduler from "./dist/RenderScheduler.js";
 window.RenderScheduler = RenderScheduler;
 import { isIE } from "./dist/Device.js";
 window.isIE = isIE; // attached to the window object for testing purposes
+
+// used for tests - to register a custom theme
+window.registerThemeProperties = registerThemeProperties;
 
 // Note: keep in sync with rollup.config value for IIFE
 import { getAnimationMode } from "./dist/config/AnimationMode.js";
