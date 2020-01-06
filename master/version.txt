@@ -1,5 +1,5 @@
-commit 06bc58bc7be8b30ffb642d75dbd6cdd9444f9cf8
+commit 9fbd587cba54e5ccfbc6d83619e8dfe368649d0d
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Mon Jan 6 08:54:55 2020 +0200
+Date:   Mon Jan 6 09:28:13 2020 +0200
 
-    fix(ui5-shellbar): create CSS vars for shellbar active text color for belize and belize HCB (#1107)
+    chore(framework) update some dependencies (#1110)
