@@ -10,7 +10,7 @@ import {
 import EventProvider from "../EventProvider.js";
 import UI5Element from "../UI5Element.js";
 import NavigationMode from "../types/NavigationMode.js";
-import Behaviour from "../types/Behaviour.js";
+import Behavior from "../types/Behavior.js";
 
 // navigatable items must have id and tabindex
 class ItemNavigation extends EventProvider {
@@ -20,8 +20,7 @@ class ItemNavigation extends EventProvider {
 		this.currentIndex = options.currentIndex || 0;
 		this.rowSize = options.rowSize || 1;
 		this.cyclic = options.cyclic || false;
-		this.keepScrollingDirection = options.keepScrollingDirection || false;
-		this.behaviour = options.behaviour || Behaviour.Static;
+		this.behavior = options.behavior || Behavior.Static;
 
 		const navigationMode = options.navigationMode;
 		const autoNavigation = !navigationMode || navigationMode === NavigationMode.Auto;
@@ -52,8 +51,8 @@ class ItemNavigation extends EventProvider {
 	_onKeyPress(event) {
 		const items = this._getItems();
 		if (this.currentIndex >= items.length) {
-			if (this.behaviour !== Behaviour.Cyclic) {
-				if (this.behaviour === Behaviour.Paging) {
+			if (this.behavior !== Behavior.Cyclic) {
+				if (this.behavior === Behavior.Paging) {
 					this.currentIndex = this.currentIndex - items.length;
 				} else {
 					this.currentIndex = items.length - 1;
@@ -63,8 +62,8 @@ class ItemNavigation extends EventProvider {
 				this.currentIndex = this.currentIndex - items.length;
 			}
 		} else if (this.currentIndex < 0) {
-			if (this.behaviour !== Behaviour.Cyclic) {
-				if (this.behaviour === Behaviour.Paging) {
+			if (this.behavior !== Behavior.Cyclic) {
+				if (this.behavior === Behavior.Paging) {
 					this.currentIndex = items.length + this.currentIndex - this.rowSize + (this.rowSize - (this._getItems().length % this.rowSize));
 				} else {
 					this.currentIndex = 0;
