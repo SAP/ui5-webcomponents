@@ -1,5 +1,5 @@
-commit 50b75ce300fae18940efa0f607c3fe59cbbd9f84
+commit 1cb08320de2227e94ad5a848a16abc6637dfd32c
 Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Mon Jan 6 16:21:48 2020 +0200
+Date:   Tue Jan 7 10:23:51 2020 +0200
 
-    chore: update tableColumn docs (#1121)
+    feat(item navigation): add paging behaviour (#1116)
