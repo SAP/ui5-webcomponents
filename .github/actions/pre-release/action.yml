@@ -1,5 +1,0 @@
-name: 'Pre-release'
-description: 'makes pre-release to npm'
-runs:
-  using: 'node12'
-  main: 'index.js'

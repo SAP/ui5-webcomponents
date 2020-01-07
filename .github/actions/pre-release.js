@@ -1,14 +1,15 @@
 const fs = require("fs");
 const { promisify } = require("util");
-const glob = require("glob-promise");
 const readFileAsync = promisify(fs.readFile);
 const writeFileAsync = promisify(fs.writeFile);
 const child_process = require("child_process");
+const glob = require("glob-promise");
 const execSync = child_process.execSync;
 const gitRev = execSync("git rev-parse HEAD").toString();
 
 const PACKAGES = {};
 const NPM_ORG = "@ui5/webcomponents";
+const OTP = process.argv[2];
 
 const run = async () => {
 	const FILES = await glob("**/packages/**/package.json", { 
@@ -18,10 +19,10 @@ const run = async () => {
 	// Step 1: process package.json files
 	const pkgs = await Promise.all(FILES.map(processPackageJSON));
 
-	// Step 2: update package.json files and publish each package to npm
+	// Step 2: update package.json files
 	await Promise.all(pkgs.map(updatePackageJSON));
 
-	// Step 3:  publish each package to npm
+	// Step 3: publish each package to npm
 	pkgs.forEach(publishPackage);
 };
 
@@ -62,7 +63,8 @@ const getDependencies = (dependencies) => {
 
 const publishPackage = pkg => {
 	console.info(`Publish ${pkg.name}: ${pkg.version} ...`);
-	execSync(`yarn publish ${pkg.folder} --tag=next`);
+	const OTP_PARAM = OTP ? `--otp=${OTP}` : ``;
+	execSync(`yarn publish ${pkg.folder} --registry=http://localhost:4873/ --tag=next ${OTP_PARAM}`);
 };
 
 run().catch(error => {

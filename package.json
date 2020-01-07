@@ -44,7 +44,8 @@
     "test": "npm-run-all --sequential test:base test:main test:fiori",
     "lint": "wsrun --exclude-missing lint",
     "link-all": "wsrun link",
-    "unlink-all": "wsrun unlink"
+    "unlink-all": "wsrun unlink",
+    "prerelease": "node ./.github/actions/pre-release.js"
   },
   "devDependencies": {
     "cross-env": "^5.2.0",
