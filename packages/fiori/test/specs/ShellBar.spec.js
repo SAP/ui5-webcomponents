@@ -1,6 +1,6 @@
 const assert = require("chai").assert;
 
-describe("Component Behaviour", () => {
+describe("Component Behavior", () => {
 	browser.url("http://localhost:8081/test-resources/pages/ShellBar.html");
 
 	describe("Responsiveness", () => {

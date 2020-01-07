@@ -142,7 +142,6 @@ function initSearch() {
       if (request.status >= 200 && request.status < 400) {
         // Success!
         var data = JSON.parse(request.responseText);
-        var keys = Object.keys(data);
   
         for(var i in data) {
           index.add({

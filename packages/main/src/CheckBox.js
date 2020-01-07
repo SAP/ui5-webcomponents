@@ -1,4 +1,4 @@
-import { isDesktop } from "@ui5/webcomponents-utils/dist/sap/ui/Device.js";
+import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";

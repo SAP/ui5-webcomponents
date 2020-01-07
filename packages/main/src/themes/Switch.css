@@ -69,7 +69,7 @@
 	min-width: 1.625rem;
 	padding: 0 0.125rem;
 	font-size: var(--sapFontSmallSize);
-	font-family: "72","72full",Arial,Helvetica,sans-serif;
+	font-family: var(--sapFontFamily);
 	text-transform: uppercase;
 	text-align: center;
 	color: var(--sapTextColor);

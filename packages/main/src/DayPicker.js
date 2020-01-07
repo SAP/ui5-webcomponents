@@ -11,6 +11,7 @@ import LocaleData from "@ui5/webcomponents-utils/dist/sap/ui/core/LocaleData.js"
 import CalendarDate from "@ui5/webcomponents-base/dist/dates/CalendarDate.js";
 import { calculateWeekNumber } from "@ui5/webcomponents-base/dist/dates/CalendarUtils.js";
 import CalendarType from "@ui5/webcomponents-base/dist/dates/CalendarType.js";
+import ItemNavigationBehavior from "@ui5/webcomponents-base/dist/types/ItemNavigationBehavior.js";
 import DayPickerTemplate from "./generated/templates/DayPickerTemplate.lit.js";
 
 // Styles
@@ -118,7 +119,7 @@ class DayPicker extends UI5Element {
 		this._oLocale = getFormatLocale();
 		this._oLocaleData = new LocaleData(this._oLocale);
 
-		this._itemNav = new ItemNavigation(this, { rowSize: 7 });
+		this._itemNav = new ItemNavigation(this, { rowSize: 7, behavior: ItemNavigationBehavior.Paging });
 		this._itemNav.getItemsCallback = function getItemsCallback() {
 			return [].concat(...this._weeks);
 		}.bind(this);

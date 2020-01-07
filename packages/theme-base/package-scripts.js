@@ -2,7 +2,8 @@ module.exports = {
 	scripts: {
 		clean: "rimraf dist",
 		build: {
-			default: "nps clean build.less build.postcss",
+			default: "nps clean build.src build.less build.postcss",
+			src: `copy-and-watch "src/**/*.js" dist/`,
 			less: {
 				default: "nps build.less.belize build.less.belize_hcb build.less.fiori_3 build.less.fiori_3_dark",
 				belize: "lessc src/themes/sap_belize/parameters-bundle.less dist/themes/sap_belize/parameters-bundle.css",
@@ -14,7 +15,8 @@ module.exports = {
 		},
 		start: "nps build watch",
 		watch: {
-			default: 'concurrently "nps watch.less" "nps watch.postcss"',
+			default: 'concurrently "nps watch.src" "nps watch.less" "nps watch.postcss"',
+			src: `copy-and-watch --watch "src/**/*.js" dist/`,
 			less: 'chokidar "src/themes/**/*.less" -c "nps build.less"',
 			postcss: 'nps "build.postcss -w"',
 		},
