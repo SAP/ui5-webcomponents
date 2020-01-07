@@ -1,5 +1,5 @@
 name: 'Pre-release'
-description: 'makes a pre-release to npm'
+description: 'makes pre-release to npm'
 runs:
   using: 'node12'
   main: 'index.js'
