@@ -94,4 +94,23 @@ describe("General interaction", () => {
 		assert.strictEqual(placeholder.getText(), "Argentina", "Text should be empty");
 		assert.strictEqual(counter.getText(), "1", "Call count should be 1");
 	});
+
+	it ("Tests change event", () => {
+		browser.url("http://localhost:8080/test-resources/pages/ComboBox.html");
+
+		const dummyTarget = $("#combo");
+		const counter = $("#change-count");
+		const combo = $("#change-cb");
+		const input = combo.shadow$("[inner-input]");
+		const placeholder = $("#change-placeholder");
+		const arrow = combo.shadow$("[input-icon]");
+
+		arrow.click();
+
+		// click on first item
+		combo.shadow$(".ui5-combobox-popover").$("ui5-list").$$("ui5-li")[0].click();
+
+		assert.strictEqual(placeholder.getText(), "Argentina", "Text should be empty");
+		assert.strictEqual(counter.getText(), "1", "Call count should be 1");
+	});
 });
