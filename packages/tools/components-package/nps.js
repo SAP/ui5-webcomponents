@@ -1,7 +1,9 @@
 const path = require("path");
 
 const LIB = path.join(__dirname, `../lib/`);
+const NODE_MODULES_PATH = path.join(__dirname, `../../../node_modules/`);
 const serveConfig = path.join(__dirname, `serve.json`);
+const polyfillPath = path.join(NODE_MODULES_PATH, `/@webcomponents/webcomponentsjs/**/*.*`);
 
 const getScripts = (options) => {
 
@@ -40,7 +42,7 @@ const getScripts = (options) => {
 			default: "nps copy.src copy.test copy.webcomponents-polyfill",
 			src: "copy-and-watch \"src/**/*.js\" dist/",
 			test: "copy-and-watch \"test/**/*.*\" dist/test-resources",
-			"webcomponents-polyfill": "copy-and-watch \"../../node_modules/@webcomponents/webcomponentsjs/**/*.*\" dist/webcomponentsjs/",
+			"webcomponents-polyfill": `copy-and-watch "${polyfillPath}" dist/webcomponentsjs/`,
 		},
 		watch: {
 			default: 'concurrently "nps watch.templates" "nps watch.samples" "nps watch.test" "nps watch.src" "nps watch.bundle" "nps watch.styles"',
