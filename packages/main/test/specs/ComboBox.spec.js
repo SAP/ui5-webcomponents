@@ -1,0 +1,97 @@
+const assert = require("chai").assert;
+
+describe("General interaction", () => {
+
+	it ("Should open the popover when clicking on the arrow", () => {
+		browser.url("http://localhost:8080/test-resources/pages/ComboBox.html");
+
+		const combo = $("#combo");
+		const arrow = combo.shadow$("[input-icon]");
+		const popover = combo.shadow$(".ui5-combobox-popover");
+
+		assert.ok(!popover.isDisplayedInViewport(), "Popover should not be displayed")
+
+		arrow.click();
+
+		assert.ok(popover.isDisplayedInViewport(), "Popover should be displayed")
+	});
+
+	it ("Should open the popover when typing a value", () => {
+		browser.url("http://localhost:8080/test-resources/pages/ComboBox.html");
+
+		const combo = $("#combo");
+		const lazy = $("#lazy");
+		const input = combo.shadow$("#ui5-combobox-input");
+		const popover = combo.shadow$(".ui5-combobox-popover");
+		const listItems = combo.shadow$(".ui5-combobox-popover").$("ui5-list").$$("ui5-li");
+
+		input.click();
+		input.keys("b");
+
+		assert.ok(popover.isDisplayedInViewport(), "Popover should be displayed");
+		assert.strictEqual(input.getProperty("value"), "Bahrain", "Value should be Bahrain");
+
+
+		const selection = browser.execute(() => {
+			return window.getSelection().toString()
+		});
+
+		assert.strictEqual(selection, "ahrain", "ahrain should be selected");
+		assert.strictEqual(combo.getProperty("value"), "Bulgaria", "Value should be Bulgaria");
+		assert.ok(listItems[0].getProperty("selected"), "List Item should be selected");
+
+		lazy.click();
+
+		assert.strictEqual(combo.getProperty("value"), "Bahrain", "Value should be changed to Bahrain");
+	});
+
+	it ("Should filter items based on input", () => {
+		browser.url("http://localhost:8080/test-resources/pages/ComboBox.html");
+
+		const combo = $("#combo2");
+		const arrow = combo.shadow$("[input-icon]");
+		const input = combo.shadow$("#ui5-combobox-input");
+		let listItems = combo.shadow$(".ui5-combobox-popover").$("ui5-list").$$("ui5-li");
+
+		arrow.click();
+
+		assert.strictEqual(listItems.length, 11, "Items should be 11");
+
+		input.keys("a");
+		listItems = combo.shadow$(".ui5-combobox-popover").$("ui5-list").$$("ui5-li");
+		assert.strictEqual(listItems.length, 4, "Items should be 4");
+
+		input.keys("u");
+		listItems = combo.shadow$(".ui5-combobox-popover").$("ui5-list").$$("ui5-li");
+		assert.strictEqual(listItems.length, 2, "Items should be 2");
+	});
+
+	it ("Tests change event", () => {
+		const dummyTarget = $("#combo");
+		const placeholder = $("#change-placeholder");
+		const counter = $("#change-count");
+		const combo = $("#change-cb");
+		const input = combo.shadow$("[inner-input]");
+
+		input.click();
+
+		assert.strictEqual(placeholder.getText(), "", "Text should be empty");
+		assert.strictEqual(counter.getText(), "0", "Call count should be 0");
+
+		dummyTarget.click();
+
+		assert.strictEqual(placeholder.getText(), "", "Text should be empty");
+		assert.strictEqual(counter.getText(), "0", "Call count should be 0");
+
+		input.click();
+		input.keys("a");
+
+		assert.strictEqual(placeholder.getText(), "", "Text should be empty");
+		assert.strictEqual(counter.getText(), "0", "Call count should be 0");
+
+		dummyTarget.click();
+
+		assert.strictEqual(placeholder.getText(), "Argentina", "Text should be empty");
+		assert.strictEqual(counter.getText(), "1", "Call count should be 1");
+	});
+});
