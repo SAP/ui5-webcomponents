@@ -5,11 +5,11 @@ import { getFormatLocale } from "@ui5/webcomponents-base/dist/FormatSettings.js"
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData.js";
+import LocaleData from "@ui5/webcomponents-utils/dist/sap/ui/core/LocaleData.js";
 import { getLocale } from "@ui5/webcomponents-base/dist/LocaleProvider.js";
 import CalendarType from "@ui5/webcomponents-base/dist/dates/CalendarType.js";
 import CalendarDate from "@ui5/webcomponents-base/dist/dates/CalendarDate.js";
-import getShadowDOMTarget from "@ui5/webcomponents-base/dist/events/getShadowDOMTarget.js";
+import ItemNavigationBehavior from "@ui5/webcomponents-base/dist/types/ItemNavigationBehavior.js";
 import MonthPickerTemplate from "./generated/templates/MonthPickerTemplate.lit.js";
 
 // Styles
@@ -82,7 +82,6 @@ const metadata = {
 		 */
 		selectedMonthChange: {},
 	},
-	_eventHandlersByConvention: true,
 };
 
 /**
@@ -121,7 +120,11 @@ class MonthPicker extends UI5Element {
 		this._oLocale = getFormatLocale();
 		this._oLocaleData = new LocaleData(this._oLocale);
 
+<<<<<<< HEAD
 		this._itemNav = new ItemNavigation(this, { rowSize: 3 });
+=======
+		this._itemNav = new ItemNavigation(this, { rowSize: 3, behavior: ItemNavigationBehavior.Cyclic });
+>>>>>>> 4967eeb0c8d428d0ca7cc801180ecb4a9b8f3df8
 		this._itemNav.getItemsCallback = function getItemsCallback() {
 			const focusableMonths = [];
 
@@ -148,7 +151,7 @@ class MonthPicker extends UI5Element {
 
 			const month = {
 				timestamp: timestamp.toString(),
-				id: `${this._state._id}-m${i}`,
+				id: `${this._id}-m${i}`,
 				name: this._oLocaleData.getMonths("wide", this._primaryCalendarType)[i],
 				classes: "ui5-mp-item",
 			};
@@ -198,27 +201,25 @@ class MonthPicker extends UI5Element {
 		return this.primaryCalendarType || getCalendarType() || LocaleData.getInstance(getLocale()).getPreferredCalendarType();
 	}
 
-	onclick(event) {
-		const eventTarget = getShadowDOMTarget(event);
-		if (eventTarget.className.indexOf("ui5-mp-item") > -1) {
-			const timestamp = this.getTimestampFromDOM(eventTarget);
+	_onclick(event) {
+		if (event.target.className.indexOf("ui5-mp-item") > -1) {
+			const timestamp = this.getTimestampFromDOM(event.target);
 			this.timestamp = timestamp;
 			this._itemNav.current = this._month;
 			this.fireEvent("selectedMonthChange", { timestamp });
 		}
 	}
 
-	onkeydown(event) {
+	_onkeydown(event) {
 		if (isSpace(event) || isEnter(event)) {
 			this._activateMonth(event);
 		}
 	}
 
 	_activateMonth(event) {
-		const eventTarget = getShadowDOMTarget(event);
 		event.preventDefault();
-		if (eventTarget.className.indexOf("ui5-mp-item") > -1) {
-			const timestamp = this.getTimestampFromDOM(eventTarget);
+		if (event.target.className.indexOf("ui5-mp-item") > -1) {
+			const timestamp = this.getTimestampFromDOM(event.target);
 			this.timestamp = timestamp;
 			this.fireEvent("selectedMonthChange", { timestamp });
 		}

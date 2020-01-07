@@ -20,8 +20,8 @@
  		<input type='radio' ?checked="{{selected}}" ?readonly="{{readonly}}" ?disabled="{{disabled}}" name="{{name}}" data-sap-no-tab-ref/>
 	</div>
 
-	{{#if _label.text}}
-		<ui5-label id="{{_id}}-label" class="labelInRadioButton" for="{{_id}}">{{_label.text}}</ui5-label>
+	{{#if text}}
+		<ui5-label id="{{_id}}-label" class="ui5-radio-label" for="{{_id}}" ?wrap="{{wrap}}">{{text}}</ui5-label>
 	{{/if}}
 
 	{{#if hasValueState}}

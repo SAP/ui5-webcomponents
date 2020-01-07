@@ -4,21 +4,21 @@
 	margin: .25rem;
 	border-radius: .25rem;
 	box-sizing: border-box;
-	background:var(--sapUiListBackground);
+	background:var(--sapList_Background);
 }
 
 :host(:hover) {
-	background:var(--sapUiListHoverBackground);
+	background:var(--sapList_Hover_Background);
 }
 
 :host([active]) {
-	background:var(--sapUiListActiveBackground);
+	background:var(--sapList_HighlightColor);
 }
 
 :host([active]) .ui5-product-switch-item-root .ui5-product-switch-item-icon,
 :host([active]) .ui5-product-switch-item-root .ui5-product-switch-item-text-content .ui5-product-switch-item-heading,
 :host([active]) .ui5-product-switch-item-root .ui5-product-switch-item-text-content .ui5-product-switch-item-subtitle {
-	color:var(--sapUiListActiveTextColor);
+	color:var(--sapList_Active_TextColor);
 }
 
 :host([focused]) {
@@ -56,7 +56,7 @@
 	padding: .75rem;
 	margin-bottom: .5rem;
 	box-sizing: border-box;
-	color: var(--sapUiContentIconColor);
+	color: var(--sapContent_IconColor);
 	pointer-events: none;
 }
 
@@ -79,12 +79,12 @@
 
 .ui5-product-switch-item-root .ui5-product-switch-item-text-content .ui5-product-switch-item-heading {
 	font-size:var( --sapMFontHeader6Size);
-	color:var(--sapUiGroupTitleTextColor);
+	color:var(--sapGroup_TitleTextColor);
 }
 
 .ui5-product-switch-item-root .ui5-product-switch-item-text-content .ui5-product-switch-item-subtitle {
-	font-size:var( --sapMFontSmallSize);
-	color:var(--sapUiContentLabelColor);
+	font-size:var( --sapFontSmallSize);
+	color:var(--sapContent_LabelColor);
 }
 
 @media only screen and (max-width: 600px) {
@@ -108,7 +108,7 @@
 
 	.ui5-product-switch-item-root .ui5-product-switch-item-icon {
 		padding: .875rem;
-		color: var(--sapUiContentNonInteractiveIconColor);
+		color: var(--sapContent_NonInteractiveIconColor);
 		margin: 0 .75rem 0 0;
 	}
 
@@ -128,7 +128,7 @@
 	}
 
 	.ui5-product-switch-item-root .ui5-product-switch-item-text-content .ui5-product-switch-item-subtitle {
-		font-size: var(--sapMFontMediumSize);
+		font-size: var(--sapFontMediumSize);
 		padding-top: .75rem;
 	}
 }

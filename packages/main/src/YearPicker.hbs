@@ -4,6 +4,8 @@
 	aria-readonly="false"
 	aria-multiselectable="false"
 	style="{{styles.main}}"
+	@keydown={{_onkeydown}}
+	@click={{_onclick}}
 >
 	{{#each _yearIntervals}}
 		<div class="ui5-yp-interval-container">

@@ -22,11 +22,8 @@
 	</script>
 
 	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
-	<script src="../../resources/bundle.esm.js" type="module">
-	</script>
-
-	<script nomodule src="../../resources/bundle.es5.js">
-	</script>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+	<script nomodule src="../../resources/bundle.es5.js"></script>
 
 	<script>
 		document.addEventListener("DOMContentLoaded", function () {
@@ -54,7 +51,7 @@
 	</script>
 </head>
 
-<body>
+<body style="background-color: var(--sapBackgroundColor);">
 
 <style>
 	ui5-panel {
@@ -67,7 +64,6 @@
 		width: 100%;
 	}
 </style>
-
 
 	<ui5-panel id="p1" collapsed accessible-role="Complementary">
 
@@ -106,7 +102,7 @@
 
 	<br>
 
-	<ui5-panel accessible-role="Complementary" header-text="Both expandable and expanded">
+	<ui5-panel id="panel-expandable" accessible-role="Complementary" header-text="Both expandable and expanded">
 
 
 		<!-- Content -->
@@ -134,7 +130,7 @@
 
 	<br>
 
-	<ui5-panel fixed accessible-role="Complementary" header-text="Expanded, but not expandable">
+	<ui5-panel id="panel-fixed" fixed accessible-role="Complementary" header-text="Expanded, but not expandable">
 
 		<!-- Content -->
 		<ui5-title>Lorem ipsum!</ui5-title>

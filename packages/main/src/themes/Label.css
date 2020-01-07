@@ -4,9 +4,9 @@
 
 :host {
 	max-width: 100%;
-	color: var(--sapUiContentLabelColor);
-	font-family: var(--sapUiFontFamily);
-	font-size: var(--sapMFontMediumSize);
+	color: var(--sapContent_LabelColor);
+	font-family: var(--sapFontFamily);
+	font-size: var(--sapFontMediumSize);
 	font-weight: normal;
 	cursor: text;
 }
@@ -28,15 +28,15 @@
 }
 
 :host(:not([wrap])[required][show-colon]) .ui5-label-text-wrapper {
-	max-width: calc(100%-0.725rem);
+	max-width: calc(100% - 0.725rem);
 }
 
 :host(:not([wrap])[required]) .ui5-label-text-wrapper {
-	max-width: calc(100%-0.475rem);
+	max-width: calc(100% - 0.475rem);
 }
 
 :host(:not([wrap])[show-colon]) .ui5-label-text-wrapper {
-	max-width: calc(100%-0.3rem);
+	max-width: calc(100% - 0.2rem);
 }
 
 :host([show-colon]) .ui5-label-required-colon:before {
@@ -45,7 +45,7 @@
 
 :host([required]) .ui5-label-required-colon:after {
 	content:"*";
-	color: var(--sapUiFieldRequiredColor);
+	color: var(--sapField_RequiredColor);
 	font-size: 1.25rem;
 	font-weight: bold;
 	position: relative;

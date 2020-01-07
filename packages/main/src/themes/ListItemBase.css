@@ -12,6 +12,14 @@
 	border-bottom: var(--ui5-listitem-border-bottom);
 }
 
+:host([selected]) {
+	border-bottom: var(--ui5-listitem-selected-border-bottom);
+}
+
+:host([selected][has-border]) {
+	border-bottom: var(--ui5-listitem-selected-border-bottom);
+}
+
 .ui5-li-root {
 	position: relative;
 	display: flex;
@@ -22,14 +30,24 @@
 	box-sizing: border-box;
 }
 
-.ui5-li-root.ui5-li--focusable:focus {
+:host([focused]) .ui5-li-root.ui5-li--focusable {
 	outline: none;
 }
 
-.ui5-li-root.ui5-li--focusable:focus:after,
-.ui5-li-root.ui5-li--focusable .ui5-li-content:focus:after {
+:host([focused]) .ui5-li-root.ui5-li--focusable:after {
 	content: "";
-	border: var(--_ui5_listitembase_focus_width) dotted var(--sapUiContentFocusColor);
+	border: var(--_ui5_listitembase_focus_width) dotted var(--sapContent_FocusColor);
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	pointer-events: none;
+}
+
+:host([focused]) .ui5-li-content:focus:after {
+	content: "";
+	border: var(--_ui5_listitembase_focus_width) dotted var(--sapContent_FocusColor);
 	position: absolute;
 	top: 0;
 	right: 0;
@@ -41,7 +59,7 @@
 .ui5-li-content {
 	max-width: 100%;
 	min-height: 1px; /* IE specific: fixes vertical centering with flex  */
-	font-family: var(--sapUiFontFamily);
+	font-family: var(--sapFontFamily);
 	pointer-events: none;  /* IE specific: fixes focus crrectly applied*/
 }
 

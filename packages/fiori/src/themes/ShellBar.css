@@ -8,10 +8,10 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	background: var(--sapUiShellColor);
+	background: var(--sapShellColor);
 	height: 2.75rem;
-	font-family: var(--sapUiFontFamily);
-	font-size: var(--sapMFontMediumSize);
+	font-family: var(--sapFontFamily);
+	font-size: var(--sapFontMediumSize);
 	font-weight: normal;
 	box-sizing: border-box;
 }
@@ -26,7 +26,7 @@
 	border: none;
 	outline: none;
 	background: transparent;
-	color: var(--sapUiShellTextColor);
+	color: var(--sapShell_TextColor);
 	box-sizing: border-box;
 	cursor: pointer;
 	border-radius: 0.25rem;
@@ -39,15 +39,15 @@
 .ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:hover,
 .ui5-shellbar-button:hover,
 .ui5-shellbar-image-button:hover {
-	background: var(--sapUiShellHoverBackground);
+	background: var(--sapShell_Hover_Background);
 }
 
 ::slotted(ui5-button[slot="startButton"][active]),
 .ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:active,
 .ui5-shellbar-button:active,
 .ui5-shellbar-image-button:active {
-	background: var(--sapUiShellActiveBackground);
-	color: var(--sapUiShellActiveTextColor);
+	background: var(--sapShell_Active_Background);
+	color: var(--sapShell_Active_TextColor);
 }
 
 ::slotted(ui5-button[slot="startButton"][focused])::after,
@@ -58,7 +58,7 @@
 	position: absolute;
 	width: calc(100% - 0.375rem);
 	height: calc(100% - 0.375rem);
-	border: 1px dotted var(--sapUiContentContrastFocusColor);
+	border: 1px dotted var(--sapContent_ContrastFocusColor);
 	pointer-events: none;
 	left: 2px;
 	top: 2px;
@@ -71,7 +71,7 @@
 
 .ui5-shellbar-menu-button-title {
 	display: inline-block;
-	font-family: var(--sapUiFontFamily);
+	font-family: var(--sapFontFamily);
 	margin: 0;
 	font-size: 0.75rem;
 	white-space: nowrap;
@@ -96,8 +96,8 @@
 .ui5-shellbar-secondary-title {
 	display: inline-block;
 	margin: 0 0.5rem;
-	font-size: var(--sapMFontSmallSize);
-	color: var(--sapUiShellTextColor);
+	font-size: var(--sapFontSmallSize);
+	color: var(--sapShell_TextColor);
 	line-height: 1rem;
 	font-weight: normal;
 	text-overflow: ellipsis;
@@ -112,10 +112,10 @@
 	height: 10px;
 	width: 0px;
 	height: 0px;
-	color: var(--sapUiShellInteractiveTextColor);
+	color: var(--sapShell_InteractiveTextColor);
 	border-left: 5px solid transparent;
 	border-right: 5px solid transparent;
-	border-top: 5px solid var(--sapUiShellTextColor);
+	border-top: 5px solid var(--sapShell_TextColor);
 }
 
 .ui5-shellbar-overflow-container {
@@ -309,8 +309,8 @@
 	width: auto;
 	height: 1rem;
 	min-width: 1rem;
-	background: var(--sapUiContentBadgeBackground);
-	color: var(--sapUiShellTextColor);
+	background: var(--sapContent_BadgeBackground);
+	color: var(--sapShell_TextColor);
 	top: 0.125rem;
 	left: 1.5rem;
 	padding: .25rem;
@@ -318,8 +318,8 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	font-size: var(--sapMFontSmallSize);
-	font-family: var(--sapUiFontFamily);
+	font-size: var(--sapFontSmallSize);
+	font-family: var(--sapFontFamily);
 	z-index: 2;
 	box-sizing: border-box;
 }
@@ -351,24 +351,24 @@
 }
 
 ::slotted(ui5-input) {
-	background-color: var(--sapUiShellColor);
-	border: 1px solid var(--sapUiShellBorderColorLighten30);
-	color: var(--sapUiShellTextColor);
+	background-color: var(--sapShellColor);
+	border: 1px solid var(--sapShell_BorderColor_Lighten30);
+	color: var(--sapShell_TextColor);
 	height: 100%;
 }
 
 ::slotted(ui5-input:hover) {
-	background: var(--sapUiShellHoverBackground);
-	border: 1px solid var(--sapUiShellBorderColorLighten30);
+	background: var(--sapShell_Hover_Background);
+	border: 1px solid var(--sapShell_BorderColor_Lighten30);
 }
 
 ::slotted(ui5-input[focused]) {
-	outline: 1px dotted var(--sapUiContentContrastFocusColor);
+	outline: 1px dotted var(--sapContent_ContrastFocusColor);
 }
 
 :host([show-block-layer]) .ui5-shellbar-search-button {
-	background: var(--sapUiHighlight);
-	color: var(--sapUiShellActiveTextColor);
+	background: var(--sapHighlightColor);
+	color: var(--sapShell_Active_TextColor);
 	border-top-left-radius: 0;
 	border-bottom-left-radius: 0;
 }
@@ -379,7 +379,7 @@
 }
 
 .ui5-shellbar-co-pilot-circle {
-	fill: var(--sapUiShellColor);
+	fill: var(--sapShellColor);
 }
 
 :host [dir="rtl"] ::slotted(ui5-button[slot="startButton"]) {

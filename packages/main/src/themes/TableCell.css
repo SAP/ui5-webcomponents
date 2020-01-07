@@ -1,11 +1,11 @@
 :host {
 	display: contents;
-	font-family: var(--sapUiFontFamily,var(--sapFontFamily,"72","72full",Arial,Helvetica,sans-serif));
+	font-family: var(--sapFontFamily);
 	font-size: 0.875rem;
 	height: 100%;
 	box-sizing: border-box;
 	overflow: hidden;
-	color: var(--sapUiContentLabelColor);
+	color: var(--sapContent_LabelColor);
 }
 
 td {

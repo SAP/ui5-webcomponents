@@ -1,7 +1,69 @@
-const assert = require("assert");
+const assert = require("chai").assert;
 
 describe("Panel general interaction", () => {
 	browser.url("http://localhost:8080/test-resources/pages/Panel.html");
+
+	it("Changing the header text is reflected", () => {
+		const panel = browser.$( "#panel-fixed");
+		const title = panel.shadow$(".ui5-panel-header-title");
+		const sExpected = "Expanded, but not expandable";
+		const sNew = "New text";
+
+		assert.strictEqual(title.getText(), sExpected, "Initially the text is the expected one");
+
+		browser.execute(() => {
+			document.getElementById("panel-fixed").setAttribute("header-text", "New text");
+		});
+		browser.pause(500);
+
+		assert.strictEqual(title.getText(), sNew, "New text");
+	});
+
+	it("Collapsing fixed panel is not possible", () => {
+		const panel = browser.$( "#panel-fixed");
+		const header = panel.shadow$(".ui5-panel-header");
+		const content = panel.shadow$(".ui5-panel-content");
+
+		assert.ok(content.isDisplayedInViewport(), "The content is visible");
+
+		header.click();
+		browser.pause(500);
+
+		assert.ok(content.isDisplayedInViewport(), "The content is still visible");
+
+		header.keys("Space");
+		browser.pause(500);
+
+		assert.ok(content.isDisplayedInViewport(), "The content is still visible");
+
+		header.keys("Enter");
+		browser.pause(500);
+
+		assert.ok(content.isDisplayedInViewport(), "The content is still visible");
+	});
+
+	it("Collapsing the panel is possible when not fixed", () => {
+		const panel = browser.$( "#panel-expandable");
+		const header = panel.shadow$(".ui5-panel-header");
+		const content = panel.shadow$(".ui5-panel-content");
+
+		assert.ok(content.isDisplayedInViewport(), "The content is visible");
+
+		header.click();
+		browser.pause(500);
+
+		assert.ok(!content.isDisplayedInViewport(), "The content is not visible");
+
+		header.keys("Space");
+		browser.pause(500);
+
+		assert.ok(content.isDisplayedInViewport(), "The content is visible");
+
+		header.keys("Enter");
+		browser.pause(500);
+
+		assert.ok(!content.isDisplayedInViewport(), "The content is not visible");
+	});
 
 	it("tests toggle event upon header click", () => {
 		const header = browser.$("#panel1").shadow$(".ui5-panel-header");

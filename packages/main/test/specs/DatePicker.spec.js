@@ -1,6 +1,6 @@
 
 const datepicker = require("../pageobjects/DatePickerTestPage");
-const assert = require("assert");
+const assert = require("chai").assert;
 
 describe("Date Picker Tests", () => {
 	before(() => {
@@ -283,7 +283,7 @@ describe("Date Picker Tests", () => {
 	it("[F4] toggles the calendar", () => {
 		datepicker.id = "#dp11";
 
-		assert.ok(!datepicker.isPickerOpen(), "datepicker is open");
+		assert.ok(!datepicker.isPickerOpen(), "datepicker is closed");
 
 		datepicker.innerInput.click();
 		browser.keys("F4");
@@ -294,7 +294,7 @@ describe("Date Picker Tests", () => {
 	it("[Alt] + [UP] toggles the calendar", () => {
 		datepicker.id = "#dp9";
 
-		assert.ok(!datepicker.isPickerOpen(), "datepicker is open");
+		assert.ok(!datepicker.isPickerOpen(), "datepicker is closed");
 
 		datepicker.innerInput.click();
 		browser.keys(["Alt", "ArrowUp", "NULL"]);
@@ -305,7 +305,7 @@ describe("Date Picker Tests", () => {
 	it("[Alt] + [DOWN] toggles the calendar", () => {
 		datepicker.id = "#dp11";
 
-		assert.ok(!datepicker.isPickerOpen(), "datepicker is open");
+		assert.ok(!datepicker.isPickerOpen(), "datepicker is closed");
 
 		datepicker.innerInput.click();
 		browser.keys(["Alt", "ArrowDown", "NULL"]);

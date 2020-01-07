@@ -1,0 +1,88 @@
+:host {
+	font-family: var(--sapFontFamily);
+	color: var(--sapTextColor);
+	font-size: var(--sapFontMediumSize);
+}
+
+.ui5-toast-root {
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	width: 100%;
+	display: none;
+	height: 100%;
+	pointer-events: none;
+	overflow: hidden;
+	z-index: 999;
+	justify-content: center;
+	align-items: flex-end;
+}
+
+.ui5-toast-content {
+	box-sizing: border-box;
+	max-width: 15rem;
+	overflow: hidden;
+	padding: 1rem;
+	background: var(--_ui5_toast_background);
+	box-shadow: var(--_ui5_toast_shadow);
+	border-radius: .25rem;
+	transition-property: opacity;
+	opacity: 1;
+	margin: 2rem;
+
+	/* Text styling */
+	font-family: inherit;
+	color: inherit;
+	font-weight: inherit;
+	font-size: inherit;
+	word-wrap: break-word;
+	text-align: center;
+	text-overflow: ellipsis;
+	white-space: pre-line;
+}
+
+:host([open]) .ui5-toast-root {
+	display: flex;
+}
+
+:host([placement="TopStart"]) .ui5-toast-root {
+	justify-content: flex-start;
+	align-items: flex-start;
+}
+
+:host([placement="TopCenter"]) .ui5-toast-root {
+	justify-content: center;
+	align-items: flex-start;
+}
+
+:host([placement="TopEnd"]) .ui5-toast-root {
+	justify-content: flex-end;
+	align-items: flex-start;
+}
+
+:host([placement="MiddleStart"]) .ui5-toast-root {
+	justify-content: flex-start;
+	align-items: center;
+}
+
+:host([placement="MiddleCenter"]) .ui5-toast-root {
+	justify-content: center;
+	align-items: center;
+}
+
+:host([placement="MiddleEnd"]) .ui5-toast-root {
+	justify-content: flex-end;
+	align-items: center;
+}
+
+:host([placement="BottomStart"]) .ui5-toast-root {
+	justify-content: flex-start;
+	align-items: flex-end;
+}
+
+:host([placement="BottomEnd"]) .ui5-toast-root {
+	justify-content: flex-end;
+	align-items: flex-end;
+}
