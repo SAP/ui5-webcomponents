@@ -64,7 +64,7 @@ const getDependencies = (dependencies) => {
 const publishPackage = pkg => {
 	console.info(`Publish ${pkg.name}: ${pkg.version} ...`);
 	const OTP_PARAM = OTP ? `--otp=${OTP}` : ``;
-	execSync(`yarn publish ${pkg.folder} --registry=http://localhost:4873/ --tag=next ${OTP_PARAM}`);
+	execSync(`yarn publish ${pkg.folder} --tag=next --new-version=${pkg.version} ${OTP_PARAM}`);
 };
 
 run().catch(error => {
