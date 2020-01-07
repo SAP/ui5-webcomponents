@@ -32,9 +32,8 @@
     "prepublishOnly": "npm run clean && npm run build"
   },
   "devDependencies": {
-    "@buxlabs/amd-to-es6": "^0.13.2",
+    "@buxlabs/amd-to-es6": "^0.15.0",
     "@openui5/sap.ui.core": "1.60.2",
-    "abstract-syntax-tree": "1.0.3",
     "copy-and-watch": "^0.1.4",
     "escodegen": "^1.11.0",
     "esprima": "^4.0.1",
@@ -44,9 +43,5 @@
     "prepend-file-cli": "^1.0.6",
     "replace-in-file": "^3.4.2",
     "rimraf": "^2.6.2"
-  },
-  "resolutions": {
-    "abstract-syntax-tree": "1.0.3",
-    "dir-glob": "2.0.0"
   }
 }

@@ -16,6 +16,8 @@
 		}
 	</script>
 
+	<script>delete Document.prototype.adoptedStyleSheets;</script>
+
 	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
@@ -33,7 +35,26 @@
 	</style>
 </head>
 
-<body>
+<body style="background-color: var(--sapBackgroundColor);">
+	<section class="group">
+		<h2>Basic labels</h2>
+		<ui5-label id="basic-label">Basic Label</ui5-label>
+		<ui5-label show-colon id="basic-label2">Basic Label</ui5-label>
+		<ui5-label required id="basic-label2">Basic Label</ui5-label>
+		<ui5-label show-colon required id="basic-label3">Basic Label</ui5-label>
+
+		<h2>Basic long labels</h2>
+		<ui5-label id="basic-label4">Start The quick brown fox jumps over the lazy sheep End</ui5-label>
+		<ui5-label show-colon id="basic-label5">Start The quick brown fox jumps over the lazy sheep End</ui5-label>
+		<ui5-label required id="basic-label6">Start The quick brown fox jumps over the lazy sheep End</ui5-label>
+		<ui5-label show-colon required id="basic-label6">Start The quick brown fox jumps over the lazy sheep End</ui5-label>
+
+		<h2>Basic long labels  with predefined width</h2>
+		<ui5-label style="width: 100px" id="basic-label7">Start The quick brown fox jumps over the lazy sheep End</ui5-label>
+		<ui5-label style="width: 100px" show-colon id="basic-label8">Start The quick brown fox jumps over the lazy sheep End</ui5-label>
+		<ui5-label style="width: 100px" required id="basic-label8">Start The quick brown fox jumps over the lazy sheep End</ui5-label>
+		<ui5-label style="width: 100px" show-colon required id="basic-label9">Start The quick brown fox jumps over the lazy sheep End</ui5-label>
+	</section>
 	<section class="group">
 		<h2>Required labels</h2>
 		<ui5-label id="required-label" required>Required</ui5-label><span>native span</span>
@@ -52,6 +73,10 @@
 		<ui5-label style="width: 100px" id="truncated-label-3" show-colon required wrap >Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur.</ui5-label>
 
 	</section>
+
+	<h2>Test show-colon not forcing truncation</h2>
+	<ui5-label id="showColon-false">Basic Label</ui5-label>
+	<ui5-label show-colon id="showColon-true">Basic Label</ui5-label>
 
 	<section class="group">
 		<h2>label + input</h2>

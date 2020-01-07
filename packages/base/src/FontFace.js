@@ -56,6 +56,10 @@ const fontFaceCSS = `
 `;
 
 const insertFontFace = () => {
+	if (document.querySelector(`head>style[data-ui5-font-face]`)) {
+		return;
+	}
+
 	createStyleInHead(fontFaceCSS, { "data-ui5-font-face": "" });
 };
 

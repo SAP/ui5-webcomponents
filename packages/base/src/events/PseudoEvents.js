@@ -1,4 +1,4 @@
-import KeyCodes from "@ui5/webcomponents-core/dist/sap/ui/events/KeyCodes.js";
+import KeyCodes from "@ui5/webcomponents-utils/dist/sap/ui/events/KeyCodes.js";
 
 const isEnter = event => (event.key ? event.key === "Enter" : event.keyCode === KeyCodes.ENTER) && !hasModifierKeys(event);
 
@@ -22,9 +22,9 @@ const isTabNext = event => (event.key ? event.key === "Tab" : event.keyCode === 
 
 const isTabPrevious = event => (event.key ? event.key === "Tab" : event.keyCode === KeyCodes.TAB) && checkModifierKeys(event, /* Ctrl */ false, /* Alt */ false, /* Shift */ true);
 
-const isBackSpace = event => (event.key ? (event.key === "Backspace" || event.key === "Backspace") : event.keyCode === KeyCodes.BACKSPACE) && !hasModifierKeys(event);
+const isBackSpace = event => (event.key ? event.key === "Backspace" : event.keyCode === KeyCodes.BACKSPACE) && !hasModifierKeys(event);
 
-const isDelete = event => (event.key ? (event.key === "Delete" || event.key === "Delete") : event.keyCode === KeyCodes.DELETE) && !hasModifierKeys(event);
+const isDelete = event => (event.key ? event.key === "Delete" : event.keyCode === KeyCodes.DELETE) && !hasModifierKeys(event);
 
 const isShow = event => {
 	if (event.key) {

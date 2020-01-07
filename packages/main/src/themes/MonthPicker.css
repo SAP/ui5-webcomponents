@@ -11,8 +11,8 @@
 	padding: 2rem 0 1rem 0;
 	display: flex;
 	flex-direction: column;
-	font-family: var(--sapUiFontFamily);
-	font-size: var(--sapMFontMediumSize);
+	font-family: var(--sapFontFamily);
+	font-size: var(--sapFontMediumSize);
 	justify-content: center;
 	align-items: center;
 }
@@ -21,7 +21,7 @@
 	display: flex;
 	width: calc(33.333% - 0.125rem);
 	height: 3rem;
-	color: var(--sapUiBaseText);
+	color: var(--sapTextColor);
 	background-color: var(--_ui5_monthpicker_item_background_color);
 	align-items: center;
 	justify-content: center;
@@ -43,8 +43,8 @@
 }
 
 .ui5-mp-item.ui5-mp-item--selected {
-	background-color: var(--sapUiSelected);
-	color: var(--sapUiContentContrastTextColor);
+	background-color: var(--sapSelectedColor);
+	color: var(--sapContent_ContrastTextColor);
 }
 
 .ui5-mp-item.ui5-mp-item--selected:focus {
@@ -52,7 +52,7 @@
 }
 
 .ui5-mp-item.ui5-mp-item--selected:focus::after {
-	border-color: var(--sapUiContentContrastFocusColor);
+	border-color: var(--sapContent_ContrastFocusColor);
 }
 
 .ui5-mp-item.ui5-mp-item--selected:hover {

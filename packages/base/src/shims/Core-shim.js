@@ -1,4 +1,4 @@
-import { inject as injectCore } from "@ui5/webcomponents-core/dist/sap/ui/core/Core.js";
+import { inject as injectCore } from "@ui5/webcomponents-utils/dist/sap/ui/core/Core.js";
 import * as FormatSettings from "../FormatSettings.js";
 import { getLanguage } from "../config/Language.js";
 import { getCalendarType } from "../config/CalendarType.js";

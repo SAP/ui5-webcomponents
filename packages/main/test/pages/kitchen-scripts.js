@@ -15,13 +15,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	var btnTheme = document.getElementById("btnTheme");
 	var btnLightDark = document.getElementById("btnLightDark");
 
-
-	if (THEME === HCB) {
-		document.body.style.backgroundColor = "#333";
-	} else {
-		document.body.style.backgroundColor = "#fff";
-	}
-
 	if (RTL) {
 		document.body.setAttribute("dir", "rtl");
 	} else {
@@ -46,8 +39,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		mainContent.style.marginLeft= "0";
 	}
 
-	function buildParam(compact, rtl, theme) {
-		return "kitchen.html?sap-ui-theme=" + theme + "&sap-ui-compactSize=" + !!compact + "&sap-ui-rtl=" + !!rtl;
+	function buildURL(compact, rtl, theme) {
+		var currentURL = window.location.href;
+		var params = ".html?sap-ui-theme=" + theme + "&sap-ui-compactSize=" + !!compact + "&sap-ui-rtl=" + !!rtl;
+		return currentURL.slice(0, currentURL.indexOf(".html")) + params;
 	}
 
 	btnRTL.pressed = !!RTL;
@@ -56,41 +51,21 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	btnLightDark.pressed = !!(THEME === FIORI3_DARK);
 
 	btnRTL.addEventListener('click', function(e) {
-		var param = buildParam(btnCompact.pressed, e.target.pressed, THEME);
-		var currentURL = window.location.href;
-		var newURL = currentURL.slice(0, currentURL.indexOf("kitchen")) + param;
-
-		window.location.href = newURL;
+		window.location.href = buildURL(e.target.pressed, btnRTL.pressed, THEME);
 	}, false);
 
 	btnCompact.addEventListener('click', function(e) {
-		var param = buildParam(e.target.pressed, btnRTL.pressed, THEME);
-		var currentURL = window.location.href;
-		var newURL = currentURL.slice(0, currentURL.indexOf("kitchen")) + param;
-
-		window.location.href = newURL;
+		window.location.href = buildURL(e.target.pressed, btnRTL.pressed, THEME);
 	}, false);
 
 	btnTheme.addEventListener('click', function(e) {
 		var theme = e.target.pressed ? HCB : FIORI3;
-		Configuration.setTheme(theme);
-
-		if (theme === HCB) {
-			document.body.style.backgroundColor = "#333";
-		} else {
-			document.body.style.backgroundColor = "#fff";
-		}
+		window.location.href = buildURL(e.target.pressed, btnRTL.pressed, theme);
 	}, false);
 
 	btnLightDark.addEventListener('click', function(e) {
 		var theme = e.target.pressed ? FIORI3_DARK : FIORI3;
-		Configuration.setTheme(theme);
-
-		if (theme === FIORI3_DARK) {
-			document.body.style.backgroundColor = "#333";
-		} else {
-			document.body.style.backgroundColor = "#fff";
-		}
+		window.location.href = buildURL(e.target.pressed, btnRTL.pressed, theme);
 	}, false);
 
 	menuBtn.addEventListener('click', function(event) {

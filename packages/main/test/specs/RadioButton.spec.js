@@ -1,4 +1,4 @@
-const assert = require('assert');
+const assert = require("chai").assert;
 
 describe("RadioButton general interaction", () => {
 	browser.url("http://localhost:8080/test-resources/pages/RadioButton.html");
@@ -115,4 +115,18 @@ describe("RadioButton general interaction", () => {
 		assert.equal(lblSelectedRadio.getHTML(false), radioButtonToBeSelected.getProperty("text"), "The correct radio is selected");
 	});
 
+	it("tests truncating and wrapping", () => {
+		const truncatingRb = browser.$("#truncatingRb");
+		const wrappingRb = browser.$("#wrappingRb");
+		const RADIOBUTTON_DEFAULT_HEIGHT = 44;
+
+		const truncatingRbHeight = truncatingRb.getSize("height");
+		const wrappingRbHeight = wrappingRb.getSize("height");
+
+		assert.ok(!truncatingRb.getProperty("wrap"), "The text should not be wrapped.");
+		assert.ok(wrappingRb.getProperty("wrap"), "The text should be wrapped.");
+
+		assert.strictEqual(truncatingRbHeight, RADIOBUTTON_DEFAULT_HEIGHT, "The size of the radiobutton is : " + truncatingRbHeight);
+		assert.ok(wrappingRbHeight > RADIOBUTTON_DEFAULT_HEIGHT, "The size of the radiobutton is more than: " + RADIOBUTTON_DEFAULT_HEIGHT);
+	});
 });

@@ -15,26 +15,20 @@
 		}
 	</style>
 
-	<script id="sap-ui-config" type="application/json">
-		{
-			"language": "EN"
-		}
-	</script>
-
 	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
 	<script src="../../resources/bundle.esm.js" type="module"></script>
-	<script nomodule src="../../resources/bundle.es5.js">
-	</script>
-	<!-- <script>delete Document.prototype.adoptedStyleSheets;</script> -->
+	<script nomodule src="../../resources/bundle.es5.js"></script>
+
+	<script>delete Document.prototype.adoptedStyleSheets;</script>
 </head>
 
-<body>
+<body style="background-color: var(--sapBackgroundColor);">
 	<div id="nav" class="navbar">
 		<ui5-togglebutton id="menu-btn" icon="menu" design="Transparent"></ui5-togglebutton>
 		<ui5-title level="H5">UI5 webcomponents</ui5-title>
 		<ui5-togglebutton id="btnCompact">Compact</ui5-togglebutton>
 		<ui5-togglebutton id="btnRTL">RTL</ui5-togglebutton>
-		<ui5-togglebutton id="btnTheme">HCB/FIORI</ui5-togglebutton>
+		<ui5-togglebutton id="btnTheme">HCB</ui5-togglebutton>
 		<ui5-togglebutton id="btnLightDark">Dark/Light</ui5-togglebutton>
 	</div>
 

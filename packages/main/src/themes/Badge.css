@@ -6,12 +6,12 @@
 	min-width: 1.125em;
 	max-width: 100%;
 	padding: 0 0.625em;
-	color: var(--sapUiBaseText);
+	color: var(--sapTextColor);
 	background: var(--ui5-badge-bg-color-scheme-1);
 	border: solid 1px var(--ui5-badge-border-color-scheme-1);
 	border-radius: 1.125em;
 	box-sizing: border-box;
-	font-family: var(--sapUiFontFamily);
+	font-family: var(--sapFontFamily);
 	text-align: center;
 }
 
@@ -114,5 +114,5 @@ ui5-badge ui5-icon[slot="icon"] {
 	text-overflow: ellipsis;
 	text-transform: uppercase;
 	letter-spacing: 0.0125em;
-	font-size: var(--ui5-badge-font-size); /* origin from --sapMFontSmallSize (0.75rem) */
+	font-size: var(--ui5-badge-font-size); /* origin from --sapFontSmallSize (0.75rem) */
 }

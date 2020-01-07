@@ -16,13 +16,9 @@
 		delete Document.prototype.adoptedStyleSheets;
 	</script>
 
-	<script src="../../resources/bundle.esm.js"
-		type="module"
-	>
-	</script>
-
-	<script nomodule src="../../resources/bundle.es5.js">
-	</script>
+	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+	<script nomodule src="../../resources/bundle.es5.js"></script>
 
 	<style>
 		.top {
@@ -31,7 +27,7 @@
 	</style>
 </head>
 
-<body>
+<body style="background-color: var(--sapBackgroundColor);">
 	<ui5-messagestrip id="messageStrip">Hello World!</ui5-messagestrip>
 	<ui5-input id="inputField"></ui5-input>
 

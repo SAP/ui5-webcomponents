@@ -73,10 +73,41 @@ describe("Select general interaction", () => {
 		assert.strictEqual(inputResult.getProperty("value"), "5", "Change event should have fired twice");
 	});
 
+	it("tests selection does not cycle with ArrowDown", () => {
+		const select = $("#selectionNotCycling");
+		const EXPECTED_SELECTION_TEXT = "Opt3";
+		const selectOptionText = select.shadow$("ui5-label");
+
+		select.click();
+		assert.ok(selectOptionText.getHTML(false).indexOf(EXPECTED_SELECTION_TEXT) > -1, "Selected option text is " + EXPECTED_SELECTION_TEXT);
+
+		// The last item is already selected - pressing ArrowDown should not change the focus or the selection
+		select.keys("ArrowDown"); 
+		assert.ok(selectOptionText.getHTML(false).indexOf(EXPECTED_SELECTION_TEXT) > -1, "Selected option text remains " + EXPECTED_SELECTION_TEXT);
+
+		// Close the select not to cover other components that tests would try to click
+		select.keys("Escape");
+
+	});
+
+	it("tests selection does not cycle with ArrowUp", () => {
+		const select = $("#selectionNotCycling2");
+		const EXPECTED_SELECTION_TEXT = "Opt1";
+		const selectOptionText = select.shadow$("ui5-label");
+
+		select.click();
+		assert.ok(selectOptionText.getHTML(false).indexOf(EXPECTED_SELECTION_TEXT) > -1, "Selected option text is " + EXPECTED_SELECTION_TEXT);
+
+		// The last item is already selected - pressing ArrowUp should not change the focus or the selection
+		select.keys("ArrowUp"); 
+		assert.ok(selectOptionText.getHTML(false).indexOf(EXPECTED_SELECTION_TEXT) > -1, "Selected option text remains " + EXPECTED_SELECTION_TEXT);
+
+		// Close the select not to cover other components that tests would try to click
+		select.keys("Escape");
+	});
 
 	it("opens upon space", () => {
 		const btn = $("#myBtn2");
-		const select = $("#mySelect");
 		const popover = browser.$("#mySelect").shadow$("ui5-popover");
 
 		btn.click();
@@ -88,7 +119,6 @@ describe("Select general interaction", () => {
 
 	it("toggles upon F4", () => {
 		const btn = $("#myBtn2");
-		const select = $("#mySelect");
 		const popover = browser.$("#mySelect").shadow$("ui5-popover");
 
 		btn.click();
@@ -103,7 +133,6 @@ describe("Select general interaction", () => {
 
 	it("toggles upon ALT + UP", () => {
 		const btn = $("#myBtn2");
-		const select = $("#mySelect");
 		const popover = browser.$("#mySelect").shadow$("ui5-popover");
 
 		btn.click();

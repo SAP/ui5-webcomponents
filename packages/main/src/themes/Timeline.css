@@ -3,7 +3,6 @@
 }
 
 .ui5-timeline-root {
-	background-color: var(--sapUiBaseBG);
 	padding: 1rem 1rem 1rem .5rem;
 	box-sizing: border-box;
 	overflow: hidden;

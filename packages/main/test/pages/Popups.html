@@ -18,13 +18,9 @@
 	</script>
 
 	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
-	<script src="../../resources/bundle.esm.js"
-	        type="module"
-	>
-	</script>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+	<script nomodule src="../../resources/bundle.es5.js"></script>
 
-	<script nomodule src="../../resources/bundle.es5.js">
-	</script>
 	<script src="modules/Popups.js"></script>
 
 	<style>
@@ -60,7 +56,7 @@
 		}
 	</style>
 </head>
-<body onload="onload()">
+<body style="background-color: var(--sapBackgroundColor);">
 
 	<div style="width:0;height:0;overflow: hidden; display: block;">
 		<content id="popover"></content>
