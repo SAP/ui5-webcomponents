@@ -111,7 +111,7 @@
 
 		const fakeFilter = (value, data) => {
 			return data.filter(item => {
-				return item.toLowerCase().includes(value.toLowerCase());
+				return item.name.toLowerCase().includes(value.toLowerCase());
 			})
 		};
 
@@ -119,24 +119,22 @@
 			document.getElementById("change-event-result").innerHTML = event.target.value;
 		});
 
-		document.getElementById("lazy").loadItems = (params, callback) => {
+		document.getElementById("lazy").loadItems = async (params, callback) => {
 			
-			setTimeout(async () => {
-				const items = (await(await fetch("https://demo.vaadin.com/demo-data/1.0/filtered-countries")).json()).result;
+			const items = (await(await fetch("https://restcountries.eu/rest/v2/region/europe")).json());
 
-				while (document.getElementById("lazy").firstChild) {
-					document.getElementById("lazy").removeChild(document.getElementById("lazy").firstChild);
-				}
+			while (document.getElementById("lazy").firstChild) {
+				document.getElementById("lazy").removeChild(document.getElementById("lazy").firstChild);
+			}
 
-				fakeFilter(params.value, items).map(data => {
-					const element = document.createElement("ui5-combobox-item");
-					element.setAttribute("text", data);
+			fakeFilter(params.value, items).map(data => {
+				const element = document.createElement("ui5-combobox-item");
+				element.setAttribute("text", data.name);
 
-					document.getElementById("lazy").appendChild(element);
-				});
+				document.getElementById("lazy").appendChild(element);
+			});
 
-				callback();
-			}, 2000);
+			callback();
 		};
 
 		document.getElementById("change-cb").addEventListener("ui5-change", event => {

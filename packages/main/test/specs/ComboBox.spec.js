@@ -33,7 +33,7 @@ describe("General interaction", () => {
 
 
 		const selection = browser.execute(() => {
-			return window.getSelection().toString()
+			return window.getSelection().toString();
 		});
 
 		assert.strictEqual(selection, "ahrain", "ahrain should be selected");
