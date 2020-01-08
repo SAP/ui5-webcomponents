@@ -1,5 +1,7 @@
-commit 1cb08320de2227e94ad5a848a16abc6637dfd32c
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Tue Jan 7 10:23:51 2020 +0200
+commit 4f87bbb0824d7397c2b356e1738d49759144ee0d
+Author: service-tip-git-zz <36747703+service-tip-git-zz@users.noreply.github.com>
+Date:   Wed Jan 8 10:31:13 2020 -0800
 
-    feat(item navigation): add paging behaviour (#1116)
+    chore: translation delivery (#1125)
+    
+    Change-Id: I20a0226d8749dc5b4c6287a75889abb98fd13868
