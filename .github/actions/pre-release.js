@@ -34,7 +34,7 @@ const processPackageJSON = async file => {
 
 	const currentVersion = fileContent.version;
 	const suffix = currentVersion.toString().includes("rc") ? "" : "-dev";
-	const version = `${currentVersion}${suffix}.${gitRev.slice(0,7,)}`;
+	const version = `${currentVersion}${suffix}.${gitRev.slice(0,9,)}`;
 
 	PACKAGES[name] = { name, file, fileContent, version, folder };
 	return PACKAGES[name];
