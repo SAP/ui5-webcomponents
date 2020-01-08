@@ -60,11 +60,11 @@ const getDependencies = (dependencies) => {
 };
 
 const publishPackage = pkg => {
-	console.info(`Publish ${pkg.name}: ${pkg.version} ...`);
+	console.info(`Publish ${pkg.name}: ${pkg.version} ...`); // eslint-disable-line
 	const OTP_PARAM = OTP ? `--otp=${OTP}` : ``;
 	execSync(`yarn publish ${pkg.folder} --tag=next --new-version=${pkg.version} ${OTP_PARAM}`);
 };
 
 run().catch(error => {
-	console.error("Release of @next version failed", error);
+	console.error("Release of @next version failed", error); // eslint-disable-line
 });
