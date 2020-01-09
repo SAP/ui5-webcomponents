@@ -1,7 +1,5 @@
-commit 4f87bbb0824d7397c2b356e1738d49759144ee0d
-Author: service-tip-git-zz <36747703+service-tip-git-zz@users.noreply.github.com>
-Date:   Wed Jan 8 10:31:13 2020 -0800
+commit 59e59723f1f68fb0e34607601ff23102f1084dec
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Thu Jan 9 14:15:15 2020 +0200
 
-    chore: translation delivery (#1125)
-    
-    Change-Id: I20a0226d8749dc5b4c6287a75889abb98fd13868
+    fix: token icon is shown again (#1126)
