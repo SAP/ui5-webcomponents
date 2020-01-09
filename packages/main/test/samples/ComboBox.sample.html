@@ -1,0 +1,123 @@
+
+<header>
+	<div class="control-header">ComboBox</div>
+</header>
+
+<div class="component-package">@ui5/webcomponents</div>
+
+<div class="control-tag">&lt;ui5-combobox&gt;</div>
+
+<section>
+	<h3>Basic Example</h3>
+
+	<div class="snippet">
+		<ui5-combobox placeholder="Enter value">
+			<ui5-combobox-item text="Item 1"></ui5-combobox-item>
+			<ui5-combobox-item text="Item 2"></ui5-combobox-item>
+			<ui5-combobox-item text="Item 3"></ui5-combobox-item>
+		</ui5-combobox>
+
+		<ui5-combobox value-state="Success" value="Item 1">
+			<ui5-combobox-item text="Item 1"></ui5-combobox-item>
+			<ui5-combobox-item text="Item 2"></ui5-combobox-item>
+			<ui5-combobox-item text="Item 3"></ui5-combobox-item>
+		</ui5-combobox>
+
+		<ui5-combobox value-state="Warning" value="Item 2">
+			<ui5-combobox-item text="Item 1"></ui5-combobox-item>
+			<ui5-combobox-item text="Item 2"></ui5-combobox-item>
+			<ui5-combobox-item text="Item 3"></ui5-combobox-item>
+		</ui5-combobox>
+
+		<ui5-combobox value-state="Error" value="Item 3">
+			<ui5-combobox-item text="Item 1"></ui5-combobox-item>
+			<ui5-combobox-item text="Item 2"></ui5-combobox-item>
+			<ui5-combobox-item text="Item 3"></ui5-combobox-item>
+		</ui5-combobox>
+	</div>
+	</pre>
+</section>
+
+<section>
+	<h3>Disabled and Readonly</h3>
+
+	<div class="snippet">
+		<ui5-combobox placeholder="Enter value" disabled>
+			<ui5-combobox-item text="Item 1"></ui5-combobox-item>
+			<ui5-combobox-item text="Item 2"></ui5-combobox-item>
+			<ui5-combobox-item text="Item 3"></ui5-combobox-item>
+		</ui5-combobox>
+
+		<ui5-combobox value-state="Success" value="Item 1" readonly>
+			<ui5-combobox-item text="Item 1"></ui5-combobox-item>
+			<ui5-combobox-item text="Item 2"></ui5-combobox-item>
+			<ui5-combobox-item text="Item 3"></ui5-combobox-item>
+		</ui5-combobox>
+
+
+		<br>
+
+
+		<!-- <ui5-combobox 
+			value="{{value}}"
+			filterValue="{{filterValue}}"
+			loading="{{ true | false }}"
+			.filter = enum || (item, value) => {} // default startsWith
+			.customFilter
+			@onChange
+			@onInput
+		>
+
+		loading = true;
+
+		fetch (...)
+		items = (...)
+
+		loading = false;
+
+		</ui5-combobox> -->
+	</div>
+	</pre>
+</section>
+
+<section>
+	<h3>Lazy loading</h3>
+
+	<div class="snippet">
+		<ui5-combobox placeholder="Enter value" id="lazy-cb"></ui5-combobox>
+
+		<script>
+			const combo = document.getElementById("lazy-cb");
+
+			combo.loadItems = function (params, callback) {
+				while (combo.lastChild) {
+					combo.removeChild(combo.lastChild);
+				}
+
+				fetch("https://restcountries.eu/rest/v2/region/europe?fields=name")
+					.then(function (response) {
+						response.json()
+							.then(function (list) {
+
+								list = list.filter(function(item) {
+									return item.name.toLowerCase().includes(params.value.toLowerCase());
+								});
+
+								list.forEach(function (country) {
+									const element = document.createElement("ui5-combobox-item");
+
+									element.setAttribute("text", country.name);
+									combo.appendChild(element);
+								});
+
+								callback();
+							});
+					})
+					.catch(function () { });
+			};
+		</script>
+	</div>
+	</pre>
+</section>
+
+<!-- JSDoc marker -->

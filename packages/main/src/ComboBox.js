@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { isBackSpace, isDelete, isShow } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import * as Filters from "./ComboBoxFilters.js";
 
 // Styles
 import ComboBoxTemplate from "./generated/templates/ComboBoxTemplate.lit.js";
@@ -17,14 +18,27 @@ const metadata = {
 	properties: {
 		/**
 		 * Defines the value of the <code>ui5-combobox</code>.
-		 * <br><br>
-		 * <b>Note:</b> The property is updated upon typing.
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 */
 		value: {
+			type: String,
+			defaultValue: "",
+		},
+
+		/**
+		 * Defines the "live" value of the <code>ui5-combobox</code>.
+		 * <br><br>
+		 * <b>Note:</b> The property is updated upon typing.
+		 * <b>Note:</b> Initially the filter value is synced with value.
+		 *
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @public
+		 */
+		filterValue: {
 			type: String,
 			defaultValue: "",
 		},
@@ -94,6 +108,27 @@ const metadata = {
 		},
 
 		/**
+		 * Indicates whether a loading indicator should be shown in the picker
+		 * @public
+		 */
+		loading: {
+			type: Boolean,
+		},
+
+		/**
+		 * Defines the filter type of the <code>ui5-combobox</code>.
+		 * Available options are: <code>StartsWithPerTerm</code>, <code>StartsWith</code> and <code>Contains</code>.
+		 *
+		 * @type {string}
+		 * @defaultvalue "StartsWithPerTerm"
+		 * @public
+		 */
+		filter: {
+			type: String,
+			defaultValue: "StartsWithPerTerm",
+		},
+
+		/**
 		 * Indicates whether the input is focssed
 		 * @private
 		 */
@@ -114,15 +149,6 @@ const metadata = {
 		_filteredItems: {
 			type: Object,
 		},
-
-		/**
-		 * Indicates whether the popover shows busy indicator
-		 * @private
-		 */
-		busy: {
-			type: Boolean,
-		},
-
 	},
 	slots: {
 		/**
@@ -142,6 +168,7 @@ const metadata = {
 		"default": {
 			propertyName: "items",
 			type: HTMLElement,
+			listenFor: { include: ["*"] },
 		},
 	},
 	events: {
@@ -152,6 +179,15 @@ const metadata = {
 		 * @public
 		 */
 		change: {},
+
+		/**
+		 * Fired when typing in input.
+		 * <br><br>
+		 * <b>Note:</b> filterValue property is updated, input is changed.
+		 * @event
+		 * @public
+		 */
+		input: {},
 	},
 };
 
@@ -180,15 +216,18 @@ class ComboBox extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		if (this.loadItems) {
-			this._filteredItems = this.items;
+		const domValue = this._initialRendering ? this.value : this.filterValue;
+
+		this._filteredItems = this._filterItems(domValue);
+
+		if (this._autocomplete && domValue !== "") {
+			this._autoCompleteValue(domValue);
+		} else {
+			this._tempValue = domValue;
 		}
 
-		if (this._initialRendering) {
-			this._filteredItems = this._filterItems(this._tempValue);
-			this._tempValue = this.value;
-			this._initialRendering = false;
-		}
+		this._selectMatchingItem();
+		this._initialRendering = false;
 	}
 
 	onAfterRendering() {
@@ -197,6 +236,10 @@ class ComboBox extends UI5Element {
 
 	_focusin(event) {
 		this.focused = true;
+
+		if (this.filterValue !== this.value) {
+			this.filterValue = this.value;
+		}
 
 		event.target.setSelectionRange(0, this.value.length);
 	}
@@ -230,48 +273,20 @@ class ComboBox extends UI5Element {
 		this.inner.focus();
 		this._resetFilter();
 
-		if (this.loadItems) {
-			this.busy = true;
-
-			this.loadItems({
-				value: this._tempValue,
-			}, this._afterLoadingItems.bind(this));
-		}
-
 		this._togglePopover();
-	}
-
-	_afterLoadingItems() {
-		this.busy = false;
 	}
 
 	_input(event) {
 		const { value } = event.target;
 
-		if (this.loadItems) {
-			this.busy = true;
-
-			this.loadItems({
-				value: event.target.value,
-			}, this._afterLoadingItems.bind(this));
-
-			this.popover.openBy(this);
-
-			this._tempValue = value;
-			return;
-		}
-
-		this._filteredItems = this._filterItems(value);
-
-		if (this._autocomplete) {
-			this._autoCompleteValue(value);
-		} else {
-			this._tempValue = value;
-		}
-
-		this._selectMatchingItem();
+		this.filterValue = value;
+		this.fireEvent("input");
 
 		this.popover.openBy(this);
+	}
+
+	_startsWithMatchingItems(str) {
+		return Filters.StartsWith(str, this._filteredItems);
 	}
 
 	_keydown(event) {
@@ -285,19 +300,24 @@ class ComboBox extends UI5Element {
 	}
 
 	_filterItems(str) {
-		return this.items.filter(item => {
-			return item.text.toLowerCase().startsWith(str.toLowerCase());
-		});
+		return (Filters[this.filter] || Filters.StartsWithPerTerm)(str, this.items);
 	}
 
 	_autoCompleteValue(current) {
 		const currentValue = current;
+		const matchingItems = this._startsWithMatchingItems(currentValue);
 
-		this._tempValue = this._filteredItems[0] ? this._filteredItems[0].text : current;
+		if (matchingItems.length) {
+			this._tempValue = matchingItems[0] ? matchingItems[0].text : current;
+		} else {
+			this._tempValue = current;
+		}
 
-		setTimeout(() => {
-			this.inner.setSelectionRange(currentValue.length, this._tempValue.length);
-		}, 0);
+		if (matchingItems.length) {
+			setTimeout(() => {
+				this.inner.setSelectionRange(currentValue.length, this._tempValue.length);
+			}, 0);
+		}
 	}
 
 	_selectMatchingItem() {
