@@ -59,7 +59,7 @@ describe("General interaction", () => {
 
 		input.keys("a");
 		listItems = combo.shadow$(".ui5-combobox-popover").$("ui5-list").$$("ui5-li");
-		assert.strictEqual(listItems.length, 4, "Items should be 4");
+		assert.strictEqual(listItems.length, 5, "Items should be 5");
 
 		input.keys("u");
 		listItems = combo.shadow$(".ui5-combobox-popover").$("ui5-list").$$("ui5-li");
