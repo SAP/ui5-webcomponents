@@ -22,7 +22,7 @@ const metadata = {
 const DefinitionsSet = new Set();
 const IDMap = new Map();
 let staticAreaIndex = 1;
-class StaticAreaItem extends HTMLElement{
+class StaticAreaItem extends HTMLElement {
 	constructor() {
 		super();
 	}

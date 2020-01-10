@@ -36,7 +36,7 @@ class Suggestions {
 
 		const suggestions = [];
 		inputSuggestionItems.map(suggestion => {
-			suggestions.push(suggestion.textContent);
+			return suggestions.push(suggestion.textContent);
 		});
 
 		return suggestions;

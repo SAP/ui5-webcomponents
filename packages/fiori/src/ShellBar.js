@@ -148,7 +148,7 @@ const metadata = {
 		_menuPopoverItems: {
 			type: Array,
 			defaultValue: [],
-		}
+		},
 	},
 
 	slots: /** @lends sap.ui.webcomponents.fiori.ShellBar.prototype */ {
@@ -384,7 +384,7 @@ class ShellBar extends UI5Element {
 					this._menuPopoverItems = [];
 					this.menuItems.forEach(item => {
 						this._menuPopoverItems.push(item.textContent);
-					})
+					});
 					menuPopover.openBy(this.shadowRoot.querySelector(".ui5-shellbar-menu-button"));
 				}
 			},
