@@ -2,7 +2,6 @@
 dist/api.json
 dist/resources
 dist/test-resources
-lib/
 node_modules/
 src/
 test/
