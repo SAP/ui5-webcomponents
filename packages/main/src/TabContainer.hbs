@@ -69,38 +69,6 @@
 			{{/unless}}
 		{{/each}}
 	</div>
-
-	<!-- overflow menu -->
-	<ui5-popover
-		id="{{_id}}-overflowMenu"
-		no-arrow
-		placement-type="Bottom"
-		horizontal-align="Right">
-		<ui5-list @ui5-itemPress="{{_onOverflowListItemSelect}}">
-			{{#each renderItems}}
-				{{#unless this.isSeparator}}
-					<ui5-li-custom id="{{this.item._id}}"
-						class="{{this.overflowItemClasses}}"
-						type="{{this.overflowItemState}}"
-						?selected="{{this.selected}}"
-						?disabled="{{this.disabled}}"
-					>
-						<div class="{{this.overflowItemContentClasses}}">
-							{{#if this.item.icon}}
-								<ui5-icon name="{{this.item.icon}}"></ui5-icon>
-							{{/if}}
-
-							{{this.item.text}}
-
-							{{#if this.item.additionalText}}
-								({{this.item.additionalText}})
-							{{/if}}
-						</div>
-					</ui5-li-custom>
-				{{/unless}}
-			{{/each}}
-		</ui5-list>
-	</ui5-popover>
 </div>
 
 {{#*inline "textOnlyTab"}}

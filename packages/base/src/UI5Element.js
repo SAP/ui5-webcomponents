@@ -21,6 +21,12 @@ const metadata = {
 
 const DefinitionsSet = new Set();
 const IDMap = new Map();
+let staticAreaIndex = 1;
+class StaticAreaItem extends HTMLElement{
+	constructor() {
+		super();
+	}
+}
 
 /**
  * Base class for all UI5 Web Components
@@ -38,7 +44,7 @@ class UI5Element extends HTMLElement {
 		this._generateId();
 		this._initializeState();
 		this._upgradeAllProperties();
-		this._initializeShadowRoot();
+		this._initializeContainerrs();
 
 		attachContentDensityChange(this._onContentDensityChanged.bind(this));
 
@@ -83,22 +89,26 @@ class UI5Element extends HTMLElement {
 	/**
 	 * @private
 	 */
-	_initializeShadowRoot() {
-		if (!this.constructor._needsShadowDOM()) {
-			return;
+	_initializeContainerrs() {
+		// Init Shadow Root
+		if (this.constructor._needsShadowDOM()) {
+			this.attachShadow({ mode: "open" });
+
+			// IE11, Edge
+			if (window.ShadyDOM) {
+				createHeadStyle(this.constructor);
+			}
+
+			// Chrome
+			if (document.adoptedStyleSheets) {
+				const style = getConstructableStyle(this.constructor);
+				this.shadowRoot.adoptedStyleSheets = [style];
+			}
 		}
 
-		this.attachShadow({ mode: "open" });
-
-		// IE11, Edge
-		if (window.ShadyDOM) {
-			createHeadStyle(this.constructor);
-		}
-
-		// Chrome
-		if (document.adoptedStyleSheets) {
-			const style = getConstructableStyle(this.constructor);
-			this.shadowRoot.adoptedStyleSheets = [style];
+		// Init Static area only if needed
+		if (typeof this.constructor.staticAreaTemplate === "function") {
+			this._getStaticArea();
 		}
 	}
 
@@ -109,18 +119,22 @@ class UI5Element extends HTMLElement {
 	async connectedCallback() {
 		this._syncContentDensity();
 
-		if (!this.constructor._needsShadowDOM()) {
-			return;
+		// Render the Shadow DOM
+		if (this.constructor._needsShadowDOM()) {
+			// always register the observer before yielding control to the main thread (await)
+			this._startObservingDOMChildren();
+
+			await this._processChildren();
+			await RenderScheduler.renderImmediately(this);
+			this._domRefReadyPromise._deferredResolve();
+			if (typeof this.onEnterDOM === "function") {
+				this.onEnterDOM();
+			}
 		}
 
-		// always register the observer before yielding control to the main thread (await)
-		this._startObservingDOMChildren();
-
-		await this._processChildren();
-		await RenderScheduler.renderImmediately(this);
-		this._domRefReadyPromise._deferredResolve();
-		if (typeof this.onEnterDOM === "function") {
-			this.onEnterDOM();
+		// Render Fragment if neccessary
+		if (this.constructor.staticAreaTemplate) {
+			this._updateFragment();
 		}
 	}
 
@@ -129,13 +143,16 @@ class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	disconnectedCallback() {
-		if (!this.constructor._needsShadowDOM()) {
-			return;
+		if (this.constructor._needsShadowDOM()) {
+			this._stopObservingDOMChildren();
+			if (typeof this.onExitDOM === "function") {
+				this.onExitDOM();
+			}
 		}
 
-		this._stopObservingDOMChildren();
-		if (typeof this.onExitDOM === "function") {
-			this.onExitDOM();
+		if (typeof this.constructor.staticAreaTemplate === "function") {
+			const staticAreaItemToRemove = document.querySelector(`static-area-item-${this.currentStaticAreaPosition}`);
+			staticAreaItemToRemove.parentElement.removeChild(staticAreaItemToRemove);
 		}
 	}
 
@@ -457,6 +474,7 @@ class UI5Element extends HTMLElement {
 		// console.log(this.getDomRef() ? "RE-RENDER" : "FIRST RENDER", this);
 		delete this._invalidated;
 		this._updateShadowRoot();
+		this._updateFragment();
 
 		// Safari requires that children get the slot attribute only after the slot tags have been rendered in the shadow DOM
 		this._assignIndividualSlotsToChildren();
@@ -465,6 +483,80 @@ class UI5Element extends HTMLElement {
 		if (typeof this.onAfterRendering === "function") {
 			this.onAfterRendering();
 		}
+	}
+
+	/**
+	 * @protected
+	 * Creates static area as first child of the body element or returns the existing one.
+	 */
+	_getStaticArea() {
+		const STATIC_AREA_CLASS = "ui5-wc-static-area";
+		let staticArea = document.querySelector(`.${STATIC_AREA_CLASS}`);
+
+		if (staticArea) {
+			return staticArea;
+		}
+
+		// Create static area if it is not present
+		const bodyElement = document.body;
+		staticArea = document.createElement("div");
+		staticArea.classList.add("ui5-wc-static-area");
+		this.staticArea = bodyElement.insertBefore(staticArea, bodyElement.firstChild);
+
+		return this.staticArea;
+	}
+
+	/**
+	 * @public
+	 * Returns reference to the DOM element where the current fragment is added.
+	 */
+	getStaticAreaItemDomRef() {
+		return document.querySelector(`.static-area-item-${this.currentStaticAreaPosition}`).shadowRoot;
+	}
+
+	/**
+	 * @private
+	 * @static
+	 * Static method that returns the index of the next item in the static area.
+	 */
+	static get _staticAreaPosition() {
+		return staticAreaIndex++;
+	}
+
+	/**
+	 * @private
+	 */
+	_updateFragment() {
+		if (typeof this.constructor.staticAreaTemplate !== "function") {
+			return;
+		}
+
+		const renderResult = this.constructor.staticAreaTemplate(this),
+			stylesToAdd = this.constructor.staticAreaStyles || false;
+		let domNodeToRenderInCurrentControl;
+
+		if (!this.currentStaticAreaPosition) {
+			// Initial rendering of fragment
+			this.currentStaticAreaPosition = this.constructor._staticAreaPosition;
+
+			const nodeToRenderIn = this._getStaticArea();
+
+			if (!customElements.get("ui5-static-area-item")) {
+				customElements.define("ui5-static-area-item", StaticAreaItem);
+			}
+
+			domNodeToRenderInCurrentControl = document.createElement("ui5-static-area-item");
+
+			domNodeToRenderInCurrentControl.attachShadow({ mode: "open" });
+
+			domNodeToRenderInCurrentControl.classList.add(`static-area-item-${this.currentStaticAreaPosition}`);
+			nodeToRenderIn.appendChild(domNodeToRenderInCurrentControl);
+		} else {
+			// Fragment is rendered and is invalidated
+			domNodeToRenderInCurrentControl = document.querySelector(`.static-area-item-${this.currentStaticAreaPosition}`);
+		}
+
+		this.constructor.render(renderResult, domNodeToRenderInCurrentControl.shadowRoot, stylesToAdd, { eventContext: this });
 	}
 
 	/**
