@@ -9,6 +9,5 @@ bundle.*.js
 .eslintrc.js
 .eslintignore
 main.*js
-serve.json
 wdio.conf.js
 !core
