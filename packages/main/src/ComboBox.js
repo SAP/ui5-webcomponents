@@ -191,6 +191,46 @@ const metadata = {
 	},
 };
 
+/**
+ * @class
+ *
+ * <h3 class="comment-api-title">Overview</h3>
+ *
+ * The <code>ui5-combobox</code> represents a drop-down menu with a list of the available options and a text input field to narrow down the options.
+ *
+ * A drop-down list for selecting and filtering values.
+ * <h3>Description</h3>
+ * The <code>ui5-combobox</code> component is commonly used to enable users to select one or more options from a predefined list. The control provides an editable input field to filter the list, and a dropdown arrow of available options.
+ * <h3>Structure</h3>
+ * The <code>ui5-combobox</code> consists of the following elements:
+ * <ul>
+ * <li> Input field - displays the selected option or a custom user entry. Users can type to narrow down the list or enter their own value.
+ * <li> Drop-down arrow - expands\collapses the option list.</li>
+ * <li> Option list - the list of available options.</li>
+ * </ul>
+ * <h3>Keyboard Handling</h3>
+ *
+ * The <code>ui5-combobox</code> provides advanced keyboard handling.
+ *
+ * <h2>Picker</h2>
+ * If the <code>ui5-combobox</code> is focused,
+ * you can open or close the drop-down by pressing <code>F4</code>, <code>ALT+UP</code> or <code>ALT+DOWN</code> keys.
+ * <br>
+ *
+ *
+ * <h3>ES6 Module Import</h3>
+ *
+ * <code>import "@ui5/webcomponents/dist/ComboBox";</code>
+ *
+ *
+ * @constructor
+ * @author SAP SE
+ * @alias sap.ui.webcomponents.main.ComboBox
+ * @extends UI5Element
+ * @tagname ui5-combobox
+ * @public
+ * @since 1.0.0-rc.6
+ */
 class ComboBox extends UI5Element {
 	static get metadata() {
 		return metadata;
@@ -278,6 +318,11 @@ class ComboBox extends UI5Element {
 
 	_input(event) {
 		const { value } = event.target;
+
+		if (event.target === this.inner) {
+			// stop the native event, as the semantic "input" would be fired.
+			event.stopImmediatePropagation();
+		}
 
 		this.filterValue = value;
 		this.fireEvent("input");
