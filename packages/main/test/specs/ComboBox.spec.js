@@ -98,10 +98,8 @@ describe("General interaction", () => {
 	it ("Tests change event", () => {
 		browser.url("http://localhost:8080/test-resources/pages/ComboBox.html");
 
-		const dummyTarget = $("#combo");
 		const counter = $("#change-count");
 		const combo = $("#change-cb");
-		const input = combo.shadow$("[inner-input]");
 		const placeholder = $("#change-placeholder");
 		const arrow = combo.shadow$("[input-icon]");
 
@@ -112,5 +110,49 @@ describe("General interaction", () => {
 
 		assert.strictEqual(placeholder.getText(), "Argentina", "Text should be empty");
 		assert.strictEqual(counter.getText(), "1", "Call count should be 1");
+	});
+
+	it ("Tests Combo with contains filter", () => {
+		const combo = $("#contains-cb");
+		const input = combo.shadow$("#ui5-combobox-input");
+		const arrow = combo.shadow$("[input-icon]");
+		let listItems = combo.shadow$(".ui5-combobox-popover").$("ui5-list").$$("ui5-li");
+
+		arrow.click();
+
+		assert.strictEqual(listItems.length, 4, "Items should be 4");
+
+		input.keys("n");
+		listItems = combo.shadow$(".ui5-combobox-popover").$("ui5-list").$$("ui5-li");
+		assert.strictEqual(listItems.length, 3, "Items should be 3");
+
+		input.keys("a");
+		listItems = combo.shadow$(".ui5-combobox-popover").$("ui5-list").$$("ui5-li");
+		assert.strictEqual(listItems.length, 2, "Items should be 2");
+
+		input.keys("d");
+		listItems = combo.shadow$(".ui5-combobox-popover").$("ui5-list").$$("ui5-li");
+		assert.strictEqual(listItems.length, 1, "Items should be 1");
+		assert.strictEqual(listItems[0].getText(), "Canada");
+	});
+
+	it ("Tests Combo with startswith filter", () => {
+		const combo = $("#startswith-cb");
+		const input = combo.shadow$("#ui5-combobox-input");
+		const arrow = combo.shadow$("[input-icon]");
+		let listItems = combo.shadow$(".ui5-combobox-popover").$("ui5-list").$$("ui5-li");
+
+		arrow.click();
+
+		assert.strictEqual(listItems.length, 4, "Items should be 4");
+
+		input.keys("a");
+		listItems = combo.shadow$(".ui5-combobox-popover").$("ui5-list").$$("ui5-li");
+		assert.strictEqual(listItems.length, 1, "Items should be 1");
+		assert.strictEqual(listItems[0].getText(), "Argentina");
+
+		input.keys("a");
+		listItems = combo.shadow$(".ui5-combobox-popover").$("ui5-list").$$("ui5-li");
+		assert.strictEqual(listItems.length, 0, "Items should be 0");
 	});
 });
