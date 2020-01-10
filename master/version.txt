@@ -1,5 +1,22 @@
-commit 59e59723f1f68fb0e34607601ff23102f1084dec
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu Jan 9 14:15:15 2020 +0200
+commit d0bcf47c7eef470c05afa9da0c6c4509ad40da86
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Fri Jan 10 14:14:22 2020 +0200
 
-    fix: token icon is shown again (#1126)
+    chore: enable npm @next tag version release (#1122)
+    
+    **Background**
+    So far in npm we have stable versions, such as `1.0.0-rc.3, 1.0.0-rc.4, 1.0.0-rc.5`.
+    Now, we decided to release intermediate versions on demand as a preview with `@next` tag,
+    that would look like: `0.0.0-{hash}`
+    
+    **How to install it**
+    To get the last published version under the 'next' tag,
+     you need to append `@next` as below:
+    ```js
+    npm install @ui5/webcomponents@next
+    ```
+    Without the tag, as you usually install dependencies,
+    you get the latest released and stable version
+    ```js
+    npm install @ui5/webcomponents
+    ```
