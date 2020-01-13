@@ -10,27 +10,27 @@ describe("Avatar", () => {
 		const icon = avatar.shadow$("ui5-icon");
 
 		// img tag is rendered, ui5-icon - not
-		assert.ok(image, "img is rendered");
-		assert.ok(!icon, "icon is not rendered");
+		assert.ok(image.isExisting(), "img is rendered");
+		assert.ok(!icon.isExisting(), "icon is not rendered");
 	});
 
 	it("tests rendering of icon", () => {
 		const avatar = browser.$("#myAvatar2");
-		const image = avatar.shadow$("img");
-		const icon = avatar.shadow$("ui5-icon");
+		const image = avatar.shadow$(".ui5-avatar-img");
+		const icon = avatar.shadow$(".ui5-avatar-icon");
 
 		// ui5-icon tag is rendered, img - not
-		assert.ok(!image, "img is not rendered");
-		assert.ok(icon, "icon is rendered");
+		assert.ok(!image.isExisting(), "img is not rendered");
+		assert.ok(icon.isExisting(), "icon is rendered");
 	});
 
 	it("tests rendering of image, when both set", () => {
 		const avatar = browser.$("#myAvatar3");
-		const image = avatar.shadow$("img");
-		const icon = avatar.shadow$("ui5-icon");
+		const image = avatar.shadow$(".ui5-avatar-img");
+		const icon = avatar.shadow$(".ui5-avatar-icon");
 
 		// ui5-icon tag is rendered, img - not
-		assert.ok(image, "img is rendered");
-		assert.ok(!icon, "icon is not rendered");
+		assert.ok(image.isExisting(), "img is rendered");
+		assert.ok(!icon.isExisting(), "icon is not rendered");
 	});
 });
