@@ -1,13 +1,9 @@
 *.css
 dist/api.json
-dist/resources
 dist/test-resources
 node_modules/
-src/
-test/
 bundle.*.js
 .eslintrc.js
 .eslintignore
-main.*js
 wdio.conf.js
 !core
