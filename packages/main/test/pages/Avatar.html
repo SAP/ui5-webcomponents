@@ -14,13 +14,49 @@
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
+	<script>delete Document.prototype.adoptedStyleSheets;</script>
 </head>
 
 <body style="background-color: var(--sapBackgroundColor);">
-	<section class="group">
-		<h2>Avatar - Basic sample</h2>
-		<ui5-avatar></ui5-avatar>
+	<section>
+		<h3>Avatar - Basic sample</h3>
+		<ui5-avatar img-src="./img/John_Miller.png"></ui5-avatar>
+	</section>
+
+	<section>
+		<h3>Avatar - Circle [ XS, S, M, L, XL ]</h3>
+		<ui5-avatar img-src="./img/woman_avatar_5.png" shape="Square" size="XS"></ui5-avatar>
+		<ui5-avatar img-src="./img/woman_avatar_5.png" shape="Square" size="S"></ui5-avatar>
+		<ui5-avatar img-src="./img/woman_avatar_5.png" shape="Square" size="M"></ui5-avatar>
+		<ui5-avatar img-src="./img/woman_avatar_5.png" shape="Square" size="L"></ui5-avatar>
+		<ui5-avatar img-src="./img/woman_avatar_5.png" shape="Square" size="XL"></ui5-avatar>
+	</section>
+
+	<section>
+		<h3>Avatar - Square [ XS, S, M, L, XL ]</h3>
+		<ui5-avatar img-src="./img/John_Miller.png" size="XS"></ui5-avatar>
+		<ui5-avatar img-src="./img/John_Miller.png" size="S"></ui5-avatar>
+		<ui5-avatar img-src="./img/John_Miller.png" size="M"></ui5-avatar>
+		<ui5-avatar img-src="./img/John_Miller.png" size="L"></ui5-avatar>
+		<ui5-avatar img-src="./img/John_Miller.png" size="XL"></ui5-avatar>
+	</section>
+
+	<section>
+		<h3>Avatar - UI5 Icons</h3>
+		<ui5-avatar icon-src="filter" size="XS"></ui5-avatar>
+		<ui5-avatar icon-src="employee" size="S"></ui5-avatar>
+		<ui5-avatar icon-src="product" size="M"></ui5-avatar>
+		<ui5-avatar icon-src="supplier" size="L"></ui5-avatar>
+		<ui5-avatar icon-src="shipping-status" size="XL"></ui5-avatar>
+	</section>
+
+	<section>
+		<h3>Avatar - UI5 Icons</h3>
+		<ui5-avatar icon-src="filter" shape="Square" size="XS"></ui5-avatar>
+		<ui5-avatar icon-src="employee" shape="Square" size="S"></ui5-avatar>
+		<ui5-avatar icon-src="product" shape="Square" size="M"></ui5-avatar>
+		<ui5-avatar icon-src="supplier" shape="Square" size="L"></ui5-avatar>
+		<ui5-avatar icon-src="shipping-status" shape="Square" size="XL"></ui5-avatar>
 	</section>
 </body>
-
 </html>

@@ -1,10 +1,13 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+
+// Template
 import AvatarTemplate from "./generated/templates/AvatarTemplate.lit.js";
 
 // Styles
 import AvatarCss from "./generated/themes/Avatar.css.js";
 
+import Icon from "./Icon.js";
 import AvatarSize from "./types/AvatarSize.js";
 import AvatarShape from "./types/AvatarShape.js";
 
@@ -16,17 +19,43 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.Avatar.prototype */ {
 
 		/**
-		 * Defines the path to the desired image or icon.
+		 * Defines the path to the desired image.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 */
-		src: {
+		imgSrc: {
 			type: String,
 		},
 
 		/**
-		 * Defines the shape of the <code>Avatar</code>.
+		 * Defines the name of the UI5 Icon, that would be displayed.
+		 * <br>
+		 * <b>Note:</b> if <code>imgSrc</code> is set, the property would be ignored.
+		 * <br>
+		 * <b>Note:</b> you should import the desired icon first, then use its name as "iconSrc".
+		 * <br><br>
+		 * import "@ui5/webcomponents-icons/dist/icons/{icon_name}.js"
+		 * <br>
+		 * <pre>&lt;ui5-avatar icon-src="employee"></pre>
+		 *
+		 * See all the available icons in the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @public
+		 */
+		iconSrc: {
+			type: String,
+		},
+
+		/**
+		 * Defines the shape of the <code>ui5-avatar</code>.
+		 * <br><br>
+		 * Available options are:
+		 * <ul>
+		 * <li><code>Circle</code></li>
+		 * <li><code>Square</code></li>
+		 * <ul>
 		 * @public
 		 * @defaultvalue "Circle"
 		 */
@@ -36,20 +65,34 @@ const metadata = {
 		},
 
 		/**
-		 * Defines predefined size of the <code>Avatar</code>.
-		 * * @public
-		 * @defaultvalue "Square"
+		 * Defines predefined size of the <code>ui5-avatar</code>.
+		 * <br><br>
+		 * Available options are:
+		 * <ul>
+		 * <li><code>XS</code></li>
+		 * <li><code>S</code></li>
+		 * <li><code>M</code></li>
+		 * <li><code>L</code></li>
+		 * <li><code>XL</code></li>
+		 * <ul>
+		 * @public
+		 * @defaultvalue "S"
 		 */
 		size: {
 			type: String,
 			defaultValue: AvatarSize.S,
 		},
+
+		/**
+		 * @private
+		 */
+		typeIcon: {
+			type: Boolean,
+		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.Avatar.prototype */ {
-		//
 	},
 	events: /** @lends sap.ui.webcomponents.main.Avatar.prototype */ {
-		//
 	},
 };
 
@@ -62,9 +105,8 @@ const metadata = {
  * in different shapes and sizes, depending on the use case.
  *
  * The shape can be circular or square. There are several predefined sizes, as well as an option to
- * set a custom size.	
+ * set a custom size.
  *
- * For the <code>ui5-avatar</code>
  * <h3>ES6 Module Import</h3>
  *
  * <code>import @ui5/webcomponents/dist/Avatar.js";</code>
@@ -74,6 +116,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.Avatar
  * @extends UI5Element
  * @tagname ui5-avatar
+ * @since 1.0.0-rc.6
  * @public
  */
 class Avatar extends UI5Element {
@@ -94,7 +137,12 @@ class Avatar extends UI5Element {
 	}
 
 	static async define(...params) {
+		await Icon.define();
 		super.define(...params);
+	}
+
+	get displayIcon() {
+		return !!this.iconSrc && !this.imgSrc;
 	}
 }
 

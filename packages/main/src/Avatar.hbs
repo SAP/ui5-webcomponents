@@ -1,1 +1,7 @@
-<img alt="{{alt}}" class="ui5-avatar-root" src="{{src}}"/>
+<div class="ui5-avatar-root">
+	{{#if displayIcon}}
+		<ui5-icon class="ui5-avatar-icon" name="{{iconSrc}}"></ui5-icon>
+	{{else}}
+		<img alt="avatar" class="ui5-avatar-img" src="{{imgSrc}}"/>
+	{{/if}}
+</div>

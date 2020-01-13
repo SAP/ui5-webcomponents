@@ -14,7 +14,7 @@ const AvatarShapes = {
 	 * Square shape.
 	 * @public
 	 */
-	Square: "Square"
+	Square: "Square",
 };
 
 class AvatarShape extends DataType {
