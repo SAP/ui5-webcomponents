@@ -366,7 +366,7 @@ class ShellBar extends UI5Element {
 
 		this._actionList = {
 			itemPress: event => {
-				const popover = this.shadowRoot.querySelector(".ui5-shellbar-overflow-popover");
+				const popover = this.getStaticAreaItemDomRef().querySelector(".ui5-shellbar-overflow-popover");
 
 				if (!this._defaultItemPressPrevented) {
 					popover.close();
@@ -494,7 +494,7 @@ class ShellBar extends UI5Element {
 	 * @public
 	 */
 	closeOverflow() {
-		const popover = this.shadowRoot.querySelector(".ui5-shellbar-overflow-popover");
+		const popover = this.getStaticAreaItemDomRef().querySelector(".ui5-shellbar-overflow-popover");
 
 		if (popover) {
 			popover.close();
