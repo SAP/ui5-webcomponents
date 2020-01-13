@@ -1,5 +1,5 @@
-commit 3d4975e5a1ee11ec758d0fdf97bfcb14fafc42c2
+commit 04e3a6f74d3a942d83fdcc4370df419ee33b3185
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Jan 13 08:38:27 2020 +0200
+Date:   Mon Jan 13 08:49:21 2020 +0200
 
-    chore: update npmignore files (#1130)
+    chore: remove unused code (#1131)
