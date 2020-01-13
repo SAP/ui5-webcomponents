@@ -2,7 +2,6 @@
 dist/api.json
 dist/test-resources
 node_modules/
-test/
 bundle.*.js
 .eslintrc.js
 .eslintignore
