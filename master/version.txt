@@ -1,5 +1,19 @@
-commit 963440926e889bd29999242867a2063e8d58659f
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Mon Jan 13 09:34:25 2020 +0200
+commit ca2fa23d33ab12319c9ef3fe62398e277c005f43
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Mon Jan 13 10:42:39 2020 +0200
 
-    chore: remove not used files (#1132)
+    feat: ui5-combobox initial implementation (#1123)
+    
+    * feat: ui5-combobox initial implementation
+    
+    * add test for item selection
+    
+    * improve test page
+    
+    * add 3 types of filters
+    
+    * improve lazy loading sample
+    
+    * correct test after starts with per term implementation
+    
+    * add more tests

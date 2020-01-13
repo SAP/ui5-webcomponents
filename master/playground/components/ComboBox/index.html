@@ -7,7 +7,7 @@
   <meta name="keywords" content="ui5-webcomponents,ui5 webcomponents,ui5 web components,webcomponents,web components,ui5,api,docs,documentation,sample,usage,examples,demo,Fiori 3">
 
   
-    <title>Icon - UI5 Web Components</title>
+    <title>Combo Box - UI5 Web Components</title>
 
     
   
@@ -24,17 +24,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Icon | UI5 Web Components</title>
+<title>Combo Box | UI5 Web Components</title>
 <meta name="generator" content="Jekyll v3.8.6" />
-<meta property="og:title" content="Icon" />
+<meta property="og:title" content="Combo Box" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Enterprise-flavored sugar on top of native APIs!" />
 <meta property="og:description" content="Enterprise-flavored sugar on top of native APIs!" />
-<link rel="canonical" href="https://sap.github.io/ui5-webcomponents/master/playground/components/Icon/" />
-<meta property="og:url" content="https://sap.github.io/ui5-webcomponents/master/playground/components/Icon/" />
+<link rel="canonical" href="https://sap.github.io/ui5-webcomponents/master/playground/components/ComboBox/" />
+<meta property="og:url" content="https://sap.github.io/ui5-webcomponents/master/playground/components/ComboBox/" />
 <meta property="og:site_name" content="UI5 Web Components" />
 <script type="application/ld+json">
-{"description":"Enterprise-flavored sugar on top of native APIs!","@type":"WebPage","url":"https://sap.github.io/ui5-webcomponents/master/playground/components/Icon/","headline":"Icon","@context":"https://schema.org"}</script>
+{"description":"Enterprise-flavored sugar on top of native APIs!","@type":"WebPage","url":"https://sap.github.io/ui5-webcomponents/master/playground/components/ComboBox/","headline":"Combo Box","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -947,9 +947,9 @@
                   
                 
                   
-                    <li class="navigation-list-item ">
+                    <li class="navigation-list-item  active">
                       
-                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/ComboBox/" class="navigation-list-link">
+                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/ComboBox/" class="navigation-list-link active">
                         <div class="component-name">Combo Box</div>
                         
                           <span class="new-tag">NEW</span>
@@ -988,9 +988,9 @@
                   
                 
                   
-                    <li class="navigation-list-item  active">
+                    <li class="navigation-list-item ">
                       
-                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/Icon/" class="navigation-list-link active">
+                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/Icon/" class="navigation-list-link">
                         <div class="component-name">Icon</div>
                         
                       </a>
@@ -1362,46 +1362,212 @@
                 
                   <li class="breadcrumb-nav-list-item"><a href="https://sap.github.io/ui5-webcomponents/master/playground/components">Components</a></li>
                 
-                <li class="breadcrumb-nav-list-item"><span>Icon</span></li>
+                <li class="breadcrumb-nav-list-item"><span>Combo Box</span></li>
               </ol>
             </nav>
           
         
         <div id="main-content" class="page-content" role="main">
           <header>
-	<h2 class="control-header">Icon</h2>
+	<div class="control-header">ComboBox</div>
 </header>
 
 <div class="component-package">@ui5/webcomponents</div>
 
-<div class="control-tag">&lt;ui5-icon&gt;</div>
+<div class="control-tag">&lt;ui5-combobox&gt;</div>
+
+<style>
+	.responsive-snippet {
+		display: flex;
+		flex-wrap: wrap;
+	}
+
+	.responsive-snippet > * {
+		margin: 0 8px 8px 0;
+	}
+
+</style>
 
 <section>
-	<h3>Basic Icons</h3>
-	<div class="snippet">
-		<ui5-icon class="samples-margin" name="activate"></ui5-icon>
-		<ui5-icon class="samples-margin" name="activities"></ui5-icon>
-		<ui5-icon class="samples-margin" name="add-equipment"></ui5-icon>
-		<ui5-icon class="samples-margin" name="add-document"></ui5-icon>
-		<ui5-icon class="samples-margin" name="add-employee"></ui5-icon>
+	<h3>Basic Example</h3>
+
+	<div class="snippet responsive-snippet">
+		<ui5-combobox placeholder="Enter value">
+			<ui5-combobox-item text="Item 1"></ui5-combobox-item>
+			<ui5-combobox-item text="Item 2"></ui5-combobox-item>
+			<ui5-combobox-item text="Item 3"></ui5-combobox-item>
+		</ui5-combobox>
+
+		<ui5-combobox value-state="Success" value="Item 1">
+			<ui5-combobox-item text="Item 1"></ui5-combobox-item>
+			<ui5-combobox-item text="Item 2"></ui5-combobox-item>
+			<ui5-combobox-item text="Item 3"></ui5-combobox-item>
+		</ui5-combobox>
+
+		<ui5-combobox value-state="Warning" value="Item 2">
+			<ui5-combobox-item text="Item 1"></ui5-combobox-item>
+			<ui5-combobox-item text="Item 2"></ui5-combobox-item>
+			<ui5-combobox-item text="Item 3"></ui5-combobox-item>
+		</ui5-combobox>
+
+		<ui5-combobox value-state="Error" value="Item 3">
+			<ui5-combobox-item text="Item 1"></ui5-combobox-item>
+			<ui5-combobox-item text="Item 2"></ui5-combobox-item>
+			<ui5-combobox-item text="Item 3"></ui5-combobox-item>
+		</ui5-combobox>
 	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-icon</span> <span class="na">name=</span><span class="s">"activate"</span><span class="nt">&gt;&lt;/ui5-icon&gt;</span>
-<span class="nt">&lt;ui5-icon</span> <span class="na">name=</span><span class="s">"activities"</span><span class="nt">&gt;&lt;/ui5-icon&gt;</span>
-<span class="nt">&lt;ui5-icon</span> <span class="na">name=</span><span class="s">"add-equipment"</span><span class="nt">&gt;&lt;/ui5-icon&gt;</span>
-<span class="nt">&lt;ui5-icon</span> <span class="na">name=</span><span class="s">"add-document"</span><span class="nt">&gt;&lt;/ui5-icon&gt;</span>
-<span class="nt">&lt;ui5-icon</span> <span class="na">name=</span><span class="s">"add-employee"</span><span class="nt">&gt;&lt;/ui5-icon&gt;</span>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-combobox</span> <span class="na">placeholder=</span><span class="s">"Enter value"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-combobox-item</span> <span class="na">text=</span><span class="s">"Item 1"</span><span class="nt">&gt;&lt;/ui5-combobox-item&gt;</span>
+	<span class="nt">&lt;ui5-combobox-item</span> <span class="na">text=</span><span class="s">"Item 2"</span><span class="nt">&gt;&lt;/ui5-combobox-item&gt;</span>
+	<span class="nt">&lt;ui5-combobox-item</span> <span class="na">text=</span><span class="s">"Item 3"</span><span class="nt">&gt;&lt;/ui5-combobox-item&gt;</span>
+<span class="nt">&lt;/ui5-combobox&gt;</span>
+
+<span class="nt">&lt;ui5-combobox</span> <span class="na">value-state=</span><span class="s">"Success"</span> <span class="na">value=</span><span class="s">"Item 1"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-combobox-item</span> <span class="na">text=</span><span class="s">"Item 1"</span><span class="nt">&gt;&lt;/ui5-combobox-item&gt;</span>
+	<span class="nt">&lt;ui5-combobox-item</span> <span class="na">text=</span><span class="s">"Item 2"</span><span class="nt">&gt;&lt;/ui5-combobox-item&gt;</span>
+	<span class="nt">&lt;ui5-combobox-item</span> <span class="na">text=</span><span class="s">"Item 3"</span><span class="nt">&gt;&lt;/ui5-combobox-item&gt;</span>
+<span class="nt">&lt;/ui5-combobox&gt;</span>
+
+<span class="nt">&lt;ui5-combobox</span> <span class="na">value-state=</span><span class="s">"Warning"</span> <span class="na">value=</span><span class="s">"Item 2"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-combobox-item</span> <span class="na">text=</span><span class="s">"Item 1"</span><span class="nt">&gt;&lt;/ui5-combobox-item&gt;</span>
+	<span class="nt">&lt;ui5-combobox-item</span> <span class="na">text=</span><span class="s">"Item 2"</span><span class="nt">&gt;&lt;/ui5-combobox-item&gt;</span>
+	<span class="nt">&lt;ui5-combobox-item</span> <span class="na">text=</span><span class="s">"Item 3"</span><span class="nt">&gt;&lt;/ui5-combobox-item&gt;</span>
+<span class="nt">&lt;/ui5-combobox&gt;</span>
+
+<span class="nt">&lt;ui5-combobox</span> <span class="na">value-state=</span><span class="s">"Error"</span> <span class="na">value=</span><span class="s">"Item 3"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-combobox-item</span> <span class="na">text=</span><span class="s">"Item 1"</span><span class="nt">&gt;&lt;/ui5-combobox-item&gt;</span>
+	<span class="nt">&lt;ui5-combobox-item</span> <span class="na">text=</span><span class="s">"Item 2"</span><span class="nt">&gt;&lt;/ui5-combobox-item&gt;</span>
+	<span class="nt">&lt;ui5-combobox-item</span> <span class="na">text=</span><span class="s">"Item 3"</span><span class="nt">&gt;&lt;/ui5-combobox-item&gt;</span>
+<span class="nt">&lt;/ui5-combobox&gt;</span>
 	</code></pre></figure></pre>
 </section>
 
 <section>
-	<h3>Customized Icons</h3>
-	<div class="snippet">
-		<ui5-icon class="samples-margin" name="employee" style="width:3rem;height:3rem;font-size:1.5rem;color:crimson;background-color:#fafafa" ></ui5-icon>
-		<ui5-icon class="samples-margin" name="menu" style="width:3rem;height:3rem;font-size:1.5rem;color:crimson;background-color:#fafafa"></ui5-icon>
+	<h3>Disabled and Readonly properties</h3>
+
+	<div class="snippet responsive-snippet">
+		<ui5-combobox value="Disabled" disabled>
+			<ui5-combobox-item text="Item 1"></ui5-combobox-item>
+			<ui5-combobox-item text="Item 2"></ui5-combobox-item>
+			<ui5-combobox-item text="Item 3"></ui5-combobox-item>
+		</ui5-combobox>
+
+		<ui5-combobox value="Readonly" readonly>
+			<ui5-combobox-item text="Item 1"></ui5-combobox-item>
+			<ui5-combobox-item text="Item 2"></ui5-combobox-item>
+			<ui5-combobox-item text="Item 3"></ui5-combobox-item>
+		</ui5-combobox>
 	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-icon</span> <span class="na">class=</span><span class="s">"samples-margin"</span> <span class="na">name=</span><span class="s">"employee"</span> <span class="na">style=</span><span class="s">"width:3rem;height:3rem;font-size:1.5rem;color:crimson;background-color:#fafafa"</span> <span class="nt">&gt;&lt;/ui5-icon&gt;</span>
-<span class="nt">&lt;ui5-icon</span> <span class="na">class=</span><span class="s">"samples-margin"</span> <span class="na">name=</span><span class="s">"menu"</span> <span class="na">style=</span><span class="s">"width:3rem;height:3rem;font-size:1.5rem;color:crimson;background-color:#fafafa"</span><span class="nt">&gt;&lt;/ui5-icon&gt;</span>
-	</code></pre></figure></pre>
+</section>
+
+<section>
+		<h3>Filters (StartsWithPerTerm(default), StartsWith, Contains)</h3>
+		<div class="snippet responsive-snippet">
+			<ui5-combobox placeholder="Starts With Per Term filter (default)">
+				<ui5-combobox-item text="Austria"></ui5-combobox-item>
+				<ui5-combobox-item text="Bulgaria"></ui5-combobox-item>
+				<ui5-combobox-item text="Germany"></ui5-combobox-item>
+				<ui5-combobox-item text="United Kingdom"></ui5-combobox-item>
+				<ui5-combobox-item text="Kazakhstan"></ui5-combobox-item>
+			</ui5-combobox>
+
+			<ui5-combobox placeholder="StartsWith" filter="StartsWith">
+				<ui5-combobox-item text="Austria"></ui5-combobox-item>
+				<ui5-combobox-item text="Bulgaria"></ui5-combobox-item>
+				<ui5-combobox-item text="Germany"></ui5-combobox-item>
+				<ui5-combobox-item text="United Kingdom"></ui5-combobox-item>
+				<ui5-combobox-item text="Kazakhstan"></ui5-combobox-item>
+			</ui5-combobox>
+
+			<ui5-combobox placeholder="Contains" filter="Contains">
+				<ui5-combobox-item text="Austria"></ui5-combobox-item>
+				<ui5-combobox-item text="Bulgaria"></ui5-combobox-item>
+				<ui5-combobox-item text="Germany"></ui5-combobox-item>
+				<ui5-combobox-item text="United Kingdom"></ui5-combobox-item>
+				<ui5-combobox-item text="Kazakhstan"></ui5-combobox-item>
+			</ui5-combobox>
+
+		</div>
+<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-combobox</span> <span class="na">placeholder=</span><span class="s">"Contains"</span> <span class="na">filter=</span><span class="s">"Contains"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-combobox-item</span> <span class="na">text=</span><span class="s">"Austria"</span><span class="nt">&gt;&lt;/ui5-combobox-item&gt;</span>
+	<span class="nt">&lt;ui5-combobox-item</span> <span class="na">text=</span><span class="s">"Bulgaria"</span><span class="nt">&gt;&lt;/ui5-combobox-item&gt;</span>
+	<span class="nt">&lt;ui5-combobox-item</span> <span class="na">text=</span><span class="s">"Germany"</span><span class="nt">&gt;&lt;/ui5-combobox-item&gt;</span>
+	<span class="nt">&lt;ui5-combobox-item</span> <span class="na">text=</span><span class="s">"United Kingdom"</span><span class="nt">&gt;&lt;/ui5-combobox-item&gt;</span>
+	<span class="nt">&lt;ui5-combobox-item</span> <span class="na">text=</span><span class="s">"Kazakhstan"</span><span class="nt">&gt;&lt;/ui5-combobox-item&gt;</span>
+<span class="nt">&lt;/ui5-combobox&gt;</span></code></pre></figure></pre>
+
+
+</section>
+
+<section>
+	<h3>Lazy loading</h3>
+
+	<div class="snippet responsive-snippet">
+		<ui5-combobox placeholder="Enter value" id="lazy-cb"></ui5-combobox>
+
+		<script>
+			const combo = document.getElementById("lazy-cb");
+
+			combo.addEventListener("input", function (event) {
+				while (combo.firstChild) {
+					combo.removeChild(combo.firstChild);
+				}
+
+				event.target.loading = true;
+
+				fetch("https://restcountries.eu/rest/v2/?fields=name")
+					.then(function (response) {
+						response.json()
+							.then(function (list) {
+
+								list.forEach(function (country) {
+									const element = document.createElement("ui5-combobox-item");
+
+									element.setAttribute("text", country.name);
+									combo.appendChild(element);
+								});
+
+								event.target.loading = false;
+
+							});
+					})
+					.catch(function () { });
+			});
+		</script>
+	</div>
+
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-combobox</span> <span class="na">placeholder=</span><span class="s">"Enter value"</span> <span class="na">id=</span><span class="s">"lazy-cb"</span><span class="nt">&gt;&lt;/ui5-combobox&gt;</span>
+
+<span class="nt">&lt;script&gt;</span>
+	<span class="kd">const</span> <span class="nx">combo</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">lazy-cb</span><span class="dl">"</span><span class="p">);</span>
+
+	<span class="nx">combo</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">input</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+		<span class="k">while</span> <span class="p">(</span><span class="nx">combo</span><span class="p">.</span><span class="nx">firstChild</span><span class="p">)</span> <span class="p">{</span>
+			<span class="nx">combo</span><span class="p">.</span><span class="nx">removeChild</span><span class="p">(</span><span class="nx">combo</span><span class="p">.</span><span class="nx">firstChild</span><span class="p">);</span>
+		<span class="p">}</span>
+
+		<span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">loading</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+
+		<span class="nx">fetch</span><span class="p">(</span><span class="dl">"</span><span class="s2">https://restcountries.eu/rest/v2/?fields=name</span><span class="dl">"</span><span class="p">)</span>
+			<span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+				<span class="nx">response</span><span class="p">.</span><span class="nx">json</span><span class="p">()</span>
+					<span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">list</span><span class="p">)</span> <span class="p">{</span>
+
+						<span class="nx">list</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">country</span><span class="p">)</span> <span class="p">{</span>
+							<span class="kd">const</span> <span class="nx">element</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="dl">"</span><span class="s2">ui5-combobox-item</span><span class="dl">"</span><span class="p">);</span>
+
+							<span class="nx">element</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="dl">"</span><span class="s2">text</span><span class="dl">"</span><span class="p">,</span> <span class="nx">country</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span>
+							<span class="nx">combo</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">element</span><span class="p">);</span>
+						<span class="p">});</span>
+
+						<span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">loading</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+
+					<span class="p">});</span>
+			<span class="p">})</span>
+			<span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span> <span class="p">});</span>
+	<span class="p">});</span>
+<span class="nt">&lt;/script&gt;</span></code></pre></figure></pre>
+	</pre>
 </section>
 
 
@@ -1410,61 +1576,19 @@
         <section class="component-description">
           <h3 class="comment-api-title">Overview</h3>
 
-The <code>ui5-icon</code> component represents an SVG icon. There are two main scenarios how the <code>ui5-icon</code> component is used: as a purely decorative element; or as a visually appealing clickable area in the form of an icon button. <br><br> A large set of built-in icons is available and they can be used by setting the <code>name</code> property on the <code>ui5-icon</code>.
+The <code>ui5-combobox</code> represents a drop-down menu with a list of the available options and a text input field to narrow down the options.
+
+A drop-down list for selecting and filtering values. <h3>Description</h3> The <code>ui5-combobox</code> component is commonly used to enable users to select one or more options from a predefined list. The control provides an editable input field to filter the list, and a dropdown arrow of available options. <h3>Structure</h3> The <code>ui5-combobox</code> consists of the following elements: <ul> <li> Input field - displays the selected option or a custom user entry. Users can type to narrow down the list or enter their own value. <li> Drop-down arrow - expands\collapses the option list.</li> <li> Option list - the list of available options.</li> </ul> <h3>Keyboard Handling</h3>
+
+The <code>ui5-combobox</code> provides advanced keyboard handling.
+
+<h2>Picker</h2> If the <code>ui5-combobox</code> is focused, you can open or close the drop-down by pressing <code>F4</code>, <code>ALT+UP</code> or <code>ALT+DOWN</code> keys. <br>
 
 <h3>ES6 Module Import</h3>
 
-<code>import "@ui5/webcomponents/dist/Icon.js";</code>
+<code>import "@ui5/webcomponents/dist/ComboBox";</code>
           <section class="component-api space-top">
             
-                  <h3 class="comment-api-title" >Properties/Attributes</h3>
-                  <p class="small-space-top" >You can use both properties and attributes with the same effect. The name of each attribute is listed below the name of the property, if different.</p>
-            
-                  <div class="small-space-top api-table">
-                    <div class="head api-table-header-roll">
-                      <div class="cell api-table-header-cell">Name</div>
-                      <div class="cell api-table-header-cell">Type</div>
-                      <div class="cell api-table-header-cell">Default Value</div>
-                      <div class="cell api-table-header-cell">Description</div>
-                    </div>
-            
-                      <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          accessibleName
-                            <br>
-                            <code>accessible-name</code>
-                        </div>
-                        <div class="cell api-table-content-cell">string</div>
-                        <div class="cell api-table-content-cell"></div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the text alternative of the <code>ui5-icon</code>. If not provided a default text alternative will be set, if present. <br><br> <b>Note:</b> Every icon should have a text alternative in order to calculate its accessible name.
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          name
-                            <br>
-                        </div>
-                        <div class="cell api-table-content-cell">string</div>
-                        <div class="cell api-table-content-cell"></div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the unique identifier (icon name) of each <code>ui5-icon</code>. <br><br> To browse all available icons, see the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>. <br><br> Example: <br> <code>name='add'</code>, <code>name='delete'</code>, <code>name='employee'</code>.
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          showTooltip
-                            <br>
-                            <code>show-tooltip</code>
-                        </div>
-                        <div class="cell api-table-content-cell">boolean</div>
-                        <div class="cell api-table-content-cell">false</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines whether the <code>ui5-icon</code> should have a tooltip.
-                        </div>
-                      </div>
-            
-                  </div>
             
             
             
@@ -1480,7 +1604,6 @@ The <code>ui5-icon</code> component represents an SVG icon. There are two main s
       </div>
       <img src="../../../../../../assets/images/sap-logo-svg.svg" alt="Sap Logo" />
     </footer>
-
 
 <div class="settings" id="settings-button">
     <svg class="settings-icon" version="1.1" id="Capa_1" x="0px" y="0px"
