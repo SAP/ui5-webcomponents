@@ -1,5 +1,5 @@
-commit 04e3a6f74d3a942d83fdcc4370df419ee33b3185
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Jan 13 08:49:21 2020 +0200
+commit 963440926e889bd29999242867a2063e8d58659f
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Mon Jan 13 09:34:25 2020 +0200
 
-    chore: remove unused code (#1131)
+    chore: remove not used files (#1132)
