@@ -1,0 +1,60 @@
+.sapFAvatarCircle {
+	border-radius: 50%;
+	-webkit-border-radius: 50%;
+
+	.sapMImg,
+	.sapFAvatarImageHolder {
+		border-radius: 50%;
+		-webkit-border-radius: 50%;
+	}
+}
+
+.sapFAvatarXS {
+	height: 2rem;
+	width: 2rem;
+	font-size: 1rem;
+
+	.sapFAvatarInitialsHolder {
+		font-size: 0.75rem;
+	}
+}
+
+.sapFAvatarS {
+	height: 3rem;
+	width: 3rem;
+	font-size: 1.5rem;
+
+	.sapFAvatarInitialsHolder {
+		font-size: 1.125rem;
+	}
+}
+
+.sapFAvatarM {
+	height: 4rem;
+	width: 4rem;
+	font-size: 2rem;
+
+	.sapFAvatarInitialsHolder {
+		font-size: 1.625rem;
+	}
+}
+
+.sapFAvatarL {
+	height: 5rem;
+	width: 5rem;
+	font-size: 2.5rem;
+
+	.sapFAvatarInitialsHolder {
+		font-size: 2rem;
+	}
+}
+
+.sapFAvatarXL {
+	height: 7rem;
+	width: 7rem;
+	font-size: 3rem;
+
+	.sapFAvatarInitialsHolder {
+		font-size: 2.75rem;
+	}
+}
