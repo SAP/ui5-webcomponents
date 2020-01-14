@@ -19,21 +19,21 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.Avatar.prototype */ {
 
 		/**
-		 * Defines the path to the desired image.
+		 * Defines the source path to the desired image.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 */
-		imgSrc: {
+		img: {
 			type: String,
 		},
 
 		/**
 		 * Defines the name of the UI5 Icon, that would be displayed.
 		 * <br>
-		 * <b>Note:</b> if <code>imgSrc</code> is set, the property would be ignored.
+		 * <b>Note:</b> if <code>img</code> is set, the property would be ignored.
 		 * <br>
-		 * <b>Note:</b> you should import the desired icon first, then use its name as "iconSrc".
+		 * <b>Note:</b> you should import the desired icon first, then use its name as "icon".
 		 * <br><br>
 		 * import "@ui5/webcomponents-icons/dist/icons/{icon_name}.js"
 		 * <br>
@@ -44,7 +44,7 @@ const metadata = {
 		 * @defaultvalue ""
 		 * @public
 		 */
-		iconSrc: {
+		icon: {
 			type: String,
 		},
 
@@ -142,7 +142,7 @@ class Avatar extends UI5Element {
 	}
 
 	get displayIcon() {
-		return !!this.iconSrc && !this.imgSrc;
+		return !!this.icon && !this.img;
 	}
 }
 
