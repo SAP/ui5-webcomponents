@@ -1,19 +1,5 @@
-commit ca2fa23d33ab12319c9ef3fe62398e277c005f43
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Mon Jan 13 10:42:39 2020 +0200
+commit 3daa88dd189825d484dc4ff8c286cc9d7bda39e5
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Tue Jan 14 09:21:33 2020 +0200
 
-    feat: ui5-combobox initial implementation (#1123)
-    
-    * feat: ui5-combobox initial implementation
-    
-    * add test for item selection
-    
-    * improve test page
-    
-    * add 3 types of filters
-    
-    * improve lazy loading sample
-    
-    * correct test after starts with per term implementation
-    
-    * add more tests
+    docs: add docs for enum types (#1117)
