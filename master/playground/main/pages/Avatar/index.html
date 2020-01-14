@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<title>Avatar</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	
+	
+	
+<script src="https://sap.github.io/ui5-webcomponents/master/assets/js/webcomponentsjs/webcomponents-loader.js"></script>
+<script type="module" src="https://sap.github.io/ui5-webcomponents/master/assets/js/ui5-webcomponents/bundle.esm.js"></script>
+<script nomodule src="https://sap.github.io/ui5-webcomponents/master/assets/js/ui5-webcomponents/bundle.es5.js"></script>
+                    
+
+	<script>delete Document.prototype.adoptedStyleSheets;</script>
+</head>
+
+<body style="background-color: var(--sapBackgroundColor);">
+	<section>
+		<h3>Avatar - Basic sample</h3>
+		<ui5-avatar img="./img/John_Miller.png"></ui5-avatar>
+	</section>
+
+	<section>
+		<h3>Avatar - Circle [ XS, S, M, L, XL ]</h3>
+		<ui5-avatar img="./img/woman_avatar_5.png" shape="Square" size="XS"></ui5-avatar>
+		<ui5-avatar img="./img/woman_avatar_5.png" shape="Square" size="S"></ui5-avatar>
+		<ui5-avatar img="./img/woman_avatar_5.png" shape="Square" size="M"></ui5-avatar>
+		<ui5-avatar img="./img/woman_avatar_5.png" shape="Square" size="L"></ui5-avatar>
+		<ui5-avatar img="./img/woman_avatar_5.png" shape="Square" size="XL"></ui5-avatar>
+	</section>
+
+	<section>
+		<h3>Avatar - Square [ XS, S, M, L, XL ]</h3>
+		<ui5-avatar img="./img/John_Miller.png" size="XS"></ui5-avatar>
+		<ui5-avatar img="./img/John_Miller.png" size="S"></ui5-avatar>
+		<ui5-avatar img="./img/John_Miller.png" size="M"></ui5-avatar>
+		<ui5-avatar img="./img/John_Miller.png" size="L"></ui5-avatar>
+		<ui5-avatar img="./img/John_Miller.png" size="XL"></ui5-avatar>
+	</section>
+
+	<section>
+		<h3>Avatar - UI5 Icons</h3>
+		<ui5-avatar icon="filter" size="XS"></ui5-avatar>
+		<ui5-avatar icon="employee" size="S"></ui5-avatar>
+		<ui5-avatar icon="product" size="M"></ui5-avatar>
+		<ui5-avatar icon="supplier" size="L"></ui5-avatar>
+		<ui5-avatar icon="shipping-status" size="XL"></ui5-avatar>
+	</section>
+
+	<section>
+		<h3>Avatar - UI5 Icons</h3>
+		<ui5-avatar icon="filter" shape="Square" size="XS"></ui5-avatar>
+		<ui5-avatar icon="employee" shape="Square" size="S"></ui5-avatar>
+		<ui5-avatar icon="product" shape="Square" size="M"></ui5-avatar>
+		<ui5-avatar icon="supplier" shape="Square" size="L"></ui5-avatar>
+		<ui5-avatar icon="shipping-status" shape="Square" size="XL"></ui5-avatar>
+	</section>
+
+	<section>
+		<h3>Avatar - test</h3>
+		<ui5-avatar id="myAvatar1" img="./img/woman_avatar_5.png"></ui5-avatar>
+		<ui5-avatar id="myAvatar2" icon="filter"></ui5-avatar>
+		<ui5-avatar id="myAvatar3" img="./img/woman_avatar_5.png" icon="filter"></ui5-avatar>
+	</section>
+</body>
+</html>
