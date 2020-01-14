@@ -82,13 +82,6 @@ const metadata = {
 			type: String,
 			defaultValue: AvatarSize.S,
 		},
-
-		/**
-		 * @private
-		 */
-		typeIcon: {
-			type: Boolean,
-		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.Avatar.prototype */ {
 	},
