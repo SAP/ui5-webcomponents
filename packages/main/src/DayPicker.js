@@ -146,26 +146,13 @@ class DayPicker extends UI5Element {
 
 		this._itemNav = new ItemNavigation(this, { rowSize: 7, behavior: ItemNavigationBehavior.Paging });
 		this._itemNav.getItemsCallback = function getItemsCallback() {
-<<<<<<< HEAD
-<<<<<<< HEAD
 			const focusableDays = [];
 
 			for (let i = 0; i < this._weeks.length; i++) {
 				const week = this._weeks[i].filter(x => !x.disabled);
 				focusableDays.push(week);
 			}
-=======
-			let focusableDays = [];
-=======
-			const focusableDays = [];
->>>>>>> Lint fixes
 
-			for (let i = 0; i < this._weeks.length; i++) {
-				const week = this._weeks[i].filter(x => !x.disabled);
-				focusableDays.push(week);
-			}
-
->>>>>>> Keyboard handling implemented for Month and Year pickers + minor refactoring
 			return [].concat(...focusableDays);
 		}.bind(this);
 
@@ -248,15 +235,7 @@ class DayPicker extends UI5Element {
 				day.classes += " ui5-dp-item--weeekend";
 			}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 			if ((this.minDate || this.maxDate) && this._isOutOfSelectableRange(oCalDate)) {
-=======
-			if ((this.minDate || this.maxDate) && this._isOutOfSelectableRange(oCalDate)){
->>>>>>> Keyboard handling implemented for Month and Year pickers + minor refactoring
-=======
-			if ((this.minDate || this.maxDate) && this._isOutOfSelectableRange(oCalDate)) {
->>>>>>> Lint fixes
 				day.classes += " ui5-dp-item--disabled";
 				day.disabled = true;
 			}
@@ -431,7 +410,7 @@ class DayPicker extends UI5Element {
 			return;
 		}
 
-		this.fireEvent("navigate", { timestamp: (oNewDate.valueOf() / 1000)});
+		this.fireEvent("navigate", { timestamp: (oNewDate.valueOf() / 1000) });
 	}
 
 	_isWeekend(oDate) {
@@ -448,18 +427,8 @@ class DayPicker extends UI5Element {
 		return (target.className.indexOf("ui5-dp-item") > -1) || (targetParent && target.parentNode.classList.contains("ui5-dp-item"));
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 	_isOutOfSelectableRange(date) {
 		const currentDate = date._oUDate ? date._oUDate.oDate : date,
-=======
-	_isOutOfSelectableRange (date){
-		let currentDate = date._oUDate ? date._oUDate.oDate : date,
->>>>>>> Keyboard handling implemented for Month and Year pickers + minor refactoring
-=======
-	_isOutOfSelectableRange(date) {
-		const currentDate = date._oUDate ? date._oUDate.oDate : date,
->>>>>>> Lint fixes
 			maxDate = this.maxDate,
 			minDate = this.minDate;
 
