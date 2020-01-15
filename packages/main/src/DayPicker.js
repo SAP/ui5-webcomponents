@@ -151,7 +151,6 @@ class DayPicker extends UI5Element {
 				const week = this._weeks[i].filter(x => !x.disabled);
 				focusableDays.push(week);
 			}
-
 			return [].concat(...focusableDays);
 		}.bind(this);
 
@@ -397,10 +396,15 @@ class DayPicker extends UI5Element {
 		}
 
 		const oNewDate = this._calendarDate;
+		oNewDate.setDate(oNewDate.getDate() - 7);
 		oNewDate.setYear(newYear);
 		oNewDate.setMonth(newMonth);
 
 		if (oNewDate.getYear() < DEFAULT_MIN_YEAR || oNewDate.getYear() > DEFAULT_MAX_YEAR) {
+			return;
+		}
+
+		if (this._isOutOfSelectableRange(oNewDate._oUDate.oDate)){
 			return;
 		}
 
