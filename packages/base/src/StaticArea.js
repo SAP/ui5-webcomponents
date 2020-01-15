@@ -92,6 +92,6 @@ class StaticArea {
 	getStaticAreaItemDomRef() {
 		return document.querySelector(`ui5-static-area .static-area-item-${this.currentStaticAreaPosition}`).shadowRoot;
 	}
-};
+}
 
 export default StaticArea;
