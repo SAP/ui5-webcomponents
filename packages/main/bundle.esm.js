@@ -1,3 +1,7 @@
+// OpenUI5 integration
+import "@ui5/webcomponents-base/dist/features/OpenUI5Support.js";
+
+// Calendars
 import "@ui5/webcomponents-base/dist/features/calendar/Buddhist.js";
 import "@ui5/webcomponents-base/dist/features/calendar/Islamic.js";
 import "@ui5/webcomponents-base/dist/features/calendar/Japanese.js";
