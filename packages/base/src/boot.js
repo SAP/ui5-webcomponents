@@ -1,11 +1,8 @@
 import whenDOMReady from "./util/whenDOMReady.js";
-import EventEnrichment from "./events/EventEnrichment.js";
 import insertFontFace from "./FontFace.js";
 import { getTheme } from "./config/Theme.js";
 import { _applyTheme } from "./Theming.js";
 import whenPolyfillLoaded from "./compatibility/whenPolyfillLoaded.js";
-
-EventEnrichment.run();
 
 let bootPromise;
 
