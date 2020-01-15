@@ -510,7 +510,11 @@ class MultiComboBox extends UI5Element {
 	}
 
 	onAfterRendering() {
-		this.open && this._getPopover().openBy(this);
+		if (this.open) {
+			this._getPopover().openBy(this);
+			// Set initial focus to the native input
+			this.getDomRef().querySelector("#ui5-multi-combobox-input").focus();
+		}
 	}
 
 	get valueStateTextMappings() {

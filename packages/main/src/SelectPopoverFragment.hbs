@@ -7,6 +7,7 @@
 		@ui5-afterOpen="{{_applyFocusAfterOpen}}"
 		@ui5-beforeOpen="{{_beforeOpen}}"
 		@ui5-afterClose="{{_afterClose}}"
+		@keydown="{{_onkeydown}}"
 	>
 		<ui5-list mode="SingleSelect" separators="None" @keydown="{{_handlePickerKeydown}}" @ui5-itemPress="{{_selectionChange}}">
 			{{#each _syncedOptions}}

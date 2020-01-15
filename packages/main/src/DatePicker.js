@@ -483,6 +483,7 @@ class DatePicker extends UI5Element {
 	 * @public
 	 */
 	openPicker(options) {
+		this.popover = this.getStaticAreaItemDomRef().querySelector("ui5-popover");
 		this._changeCalendarSelection();
 
 		if (options && options.focusInput) {

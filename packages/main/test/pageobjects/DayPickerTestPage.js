@@ -7,7 +7,7 @@ class DayPickerTestHelper {
 		return browser.executeAsync(async (id, done) => {
 			await window.RenderScheduler.whenFinished();
 
-			const el = document.getElementById(id).shadowRoot.querySelector("ui5-popover") // ui5-popover
+			const el = document.getElementById(id).getStaticAreaItemDomRef().querySelector("ui5-popover") // ui5-popover
 				.shadowRoot.querySelector("slot").assignedNodes()[0] // ui5-calendar
 				.shadowRoot.querySelector("ui5-daypicker") // ui5-daypicker
 				.shadowRoot.querySelector(".ui5-dp-root");
@@ -20,7 +20,7 @@ class DayPickerTestHelper {
 		return browser.executeAsync(async (id, done) => {
 			await window.RenderScheduler.whenFinished();
 
-			const timestamp = document.getElementById(id).shadowRoot.querySelector("ui5-popover") // ui5-popover
+			const timestamp = document.getElementById(id).getStaticAreaItemDomRef().querySelector("ui5-popover") // ui5-popover
 			.shadowRoot.querySelector("slot").assignedNodes()[0] // ui5-calendar
 			.shadowRoot.querySelector("ui5-daypicker") // ui5-daypicker
 			.timestamp;
