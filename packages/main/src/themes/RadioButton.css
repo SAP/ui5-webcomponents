@@ -62,22 +62,27 @@
 	fill: var(--sapField_ReadOnly_Background);
 	stroke: var(--sapField_ReadOnly_BorderColor);
 }
+/* State */
+:host([value-state="Error"]) .ui5-radio-svg-outer,
+:host([value-state="Warning"]) .ui5-radio-svg-outer {
+	stroke-width: 2;
+}
 
 /* Error state */
-:host([value-state="Error"][selected]) .ui5-radio-root .ui5-radio-svg-inner {
+:host([value-state="Error"][selected]) .ui5-radio-svg-inner {
 	fill: var(--_ui5_radiobutton_selected_error_fill);
 }
-:host([value-state="Error"]) .ui5-radio-root .ui5-radio-svg-outer,
+:host([value-state="Error"]) .ui5-radio-svg-outer,
 :host([value-state="Error"]) .ui5-radio-root:hover .ui5-radio-inner.ui5-radio-inner--hoverable:hover .ui5-radio-svg-outer {
 	stroke: var(--sapField_InvalidColor);
 	fill: var(--sapField_InvalidBackground);
 }
 
 /* Warning state */
-:host([value-state="Warning"][selected]) .ui5-radio-root .ui5-radio-svg-inner {
+:host([value-state="Warning"][selected]) .ui5-radio-svg-inner {
 	fill: var(--_ui5_radiobutton_selected_warning_fill);
 }
-:host([value-state="Warning"]) .ui5-radio-root .ui5-radio-svg-outer,
+:host([value-state="Warning"]) .ui5-radio-svg-outer,
 :host([value-state="Warning"]) .ui5-radio-root:hover .ui5-radio-inner.ui5-radio-inner--hoverable:hover .ui5-radio-svg-outer {
 	stroke: var(--sapField_WarningColor);
 	fill: var(--sapField_WarningBackground);
@@ -99,12 +104,15 @@
 
 /* Inner */
 .ui5-radio-inner {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
 	width: 2.75rem;
 	height: 2.75rem;
 	font-size: 1rem; /* override font size of the message dialog */
 	pointer-events: none;
 	vertical-align: top;
-	display: inline-block;
 }
 
 .ui5-radio-inner:focus {
@@ -143,18 +151,26 @@ ui5-label.ui5-radio-label {
 
 /* SVG */
 .ui5-radio-svg {
-	height: 2.75rem;
-	width: 2.75rem;
+	height: 1.375rem;
+	width: 1.375rem;
+	overflow: visible;
 	pointer-events: none;
 }
 
-.ui5-radio-svg .ui5-radio-svg-outer {
+.ui5-radio-svg-outer {
 	fill: var(--sapField_Background);
 	stroke: currentColor;
+	stroke-width: 1;
 }
 
-.ui5-radio-svg .ui5-radio-svg-inner {
+.ui5-radio-svg-inner {
 	fill: none;
+}
+
+.ui5-radio-svg-outer,
+.ui5-radio-svg-inner {
+	flex-shrink: 0;
+	transform: translate(0.6875rem, 0.6875rem);
 }
 
 /* Compact size */
@@ -164,6 +180,19 @@ ui5-label.ui5-radio-label {
 
 :host([data-ui5-compact-size][wrap][text]) .ui5-radio-root {
 	height: auto;
+}
+
+:host([data-ui5-compact-size]) .ui5-radio-svg {
+	height: 1rem;
+	width: 1rem;
+}
+
+:host([data-ui5-compact-size]) .ui5-radio-svg-outer {
+	transform: translate(0.5rem, 0.5rem);
+}
+
+:host([data-ui5-compact-size]) .ui5-radio-svg-inner {
+	transform: translate(0.5rem, 0.5rem) scale(0.6);
 }
 
 :host([data-ui5-compact-size][wrap][text]) ui5-label.ui5-radio-label {
@@ -188,11 +217,6 @@ ui5-label.ui5-radio-label {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-}
-
-:host([data-ui5-compact-size]) .ui5-radio-root .ui5-radio-inner .ui5-radio-svg {
-	height: 2rem;
-	width: 2rem;
 }
 
 :host([data-ui5-compact-size]) .ui5-radio-root ui5-label.ui5-radio-label {
