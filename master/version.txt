@@ -1,5 +1,5 @@
-commit b1c8747bddf25ca260147519a7f4c8a9bb3dfb98
+commit 47eff0051a4d2712471d33857e6f51438390de94
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Jan 14 14:25:06 2020 +0200
+Date:   Wed Jan 15 12:18:17 2020 +0200
 
-    feat(ui5-avatar): introduce new component (#1135)
+    docs: avatar sample to use the correct prop names (#1137)
