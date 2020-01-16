@@ -15,6 +15,7 @@ import "./dist/Assets.js";
 import "./dist/features/InputElementsFormSupport.js";
 import "./dist/features/InputSuggestions.js";
 
+import Avatar from "./dist/Avatar.js";
 import Badge from "./dist/Badge.js";
 import BusyIndicator from "./dist/BusyIndicator.js";
 import Button from "./dist/Button.js";
@@ -47,6 +48,8 @@ import TimelineItem from "./dist/TimelineItem.js";
 import Title from "./dist/Title.js";
 import Toast from "./dist/Toast.js";
 import ToggleButton from "./dist/ToggleButton.js";
+import ComboBox from "./dist/ComboBox.js";
+import ComboBoxItem from "./dist/ComboBoxItem.js";
 
 import List from "./dist/List.js";
 import StandardListItem from "./dist/StandardListItem.js";

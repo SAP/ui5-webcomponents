@@ -47,6 +47,12 @@
 	color: var(--sapContent_DisabledTextColor);
 }
 
+:host([value-state="Error"]) [input-icon][data-ui5-compact-size],
+:host([value-state="Success"]) [input-icon][data-ui5-compact-size],
+:host([value-state="Warning"]) [input-icon][data-ui5-compact-size] {
+	padding: .1875rem .5rem
+}
+
 [inner-input] {
 	background: transparent;
 	color: inherit;
@@ -63,6 +69,12 @@
 	outline: none;
 	font-size: inherit;
 	font-family: inherit;
+}
+
+[inner-input]::selection,
+[inner-input]::-moz-selection {
+	background: var(--sapSelected);
+	color: var(--sapContent_contrastTextColor);
 }
 
 /* Input placeholder */
@@ -116,7 +128,7 @@
 	background: var(--sapField_ReadOnly_Background);
 }
 
-:host(:not([value-state]):hover) {
+:host(:not([value-state]:not([readonly])):hover) {
 	background-color: var(--sapField_Hover_Background);
 	border: 1px solid var(--sapField_Hover_BorderColor);
 }
