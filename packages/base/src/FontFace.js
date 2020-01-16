@@ -63,7 +63,7 @@ const insertFontFace = () => {
 
 	// If OpenUI5 is found, let it set the font
 	const OpenUI5Support = getFeature("OpenUI5Support");
-	if (OpenUI5Support) {
+	if (OpenUI5Support && OpenUI5Support.isLoaded()) {
 		return;
 	}
 

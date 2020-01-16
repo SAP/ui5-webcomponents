@@ -3,6 +3,10 @@ import { setTheme } from "../config/Theme.js";
 
 const core = window.sap && window.sap.ui && typeof window.sap.ui.getCore === "function" && window.sap.ui.getCore();
 
+const isLoaded = () => {
+	return !!core;
+};
+
 const getConfigurationSettingsObject = () => {
 	if (!core) {
 		return;
@@ -47,6 +51,7 @@ const attachListeners = () => {
 };
 
 const OpenUI5Support = {
+	isLoaded,
 	getConfigurationSettingsObject,
 	getLocaleDataObject,
 	attachListeners,

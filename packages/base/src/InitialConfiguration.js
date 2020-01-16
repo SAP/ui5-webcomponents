@@ -98,14 +98,12 @@ const parseURLParameters = () => {
 
 const applyOpenUI5Configuration = () => {
 	const OpenUI5Support = getFeature("OpenUI5Support");
-	if (!OpenUI5Support) {
+	if (!OpenUI5Support || !OpenUI5Support.isLoaded()) {
 		return;
 	}
 
 	const OpenUI5Config = OpenUI5Support.getConfigurationSettingsObject();
-	if (OpenUI5Config) {
-		initialConfig = Object.assign(initialConfig, OpenUI5Config);
-	}
+	initialConfig = Object.assign(initialConfig, OpenUI5Config);
 };
 
 
