@@ -175,7 +175,6 @@ ui5-label.ui5-radio-label {
 .ui5-radio-svg-outer,
 .ui5-radio-svg-inner {
 	flex-shrink: 0;
-	transform: var(--_ui5_radiobutton_svg_transform);
 }
 
 /* Compact size */
@@ -194,14 +193,6 @@ ui5-label.ui5-radio-label {
 :host([data-ui5-compact-size]) .ui5-radio-svg {
 	height: 1rem;
 	width: 1rem;
-}
-
-:host([data-ui5-compact-size]) .ui5-radio-svg-outer {
-	transform: var(--_ui5_radiobutton_svg_outer_transform_compact);
-}
-
-:host([data-ui5-compact-size]) .ui5-radio-svg-inner {
-	transform: var(--_ui5_radiobutton_svg_inner_transform_compact);
 }
 
 :host([data-ui5-compact-size][wrap][text]) ui5-label.ui5-radio-label {
