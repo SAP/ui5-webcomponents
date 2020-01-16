@@ -131,7 +131,8 @@
 	align-items: center;
 }
 
-.ui5-li-multisel-cb {
+.ui5-li-multisel-cb,
+.ui5-li-singlesel-radiobtn {
 	flex-shrink: 0;
 }
 
