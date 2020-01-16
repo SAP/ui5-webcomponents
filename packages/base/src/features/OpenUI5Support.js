@@ -22,16 +22,16 @@ const getConfigurationSettingsObject = () => {
 };
 
 const getLocaleDataObject = () => {
+	if (!core) {
+		return;
+	}
+
 	const config = core.getConfiguration();
 	const LocaleData = window.sap.ui.core.LocaleData;
 	return LocaleData.getInstance(config.getLocale()).mData;
 };
 
 const listenForThemeChange = () => {
-	if (!core) {
-		return;
-	}
-
 	const config = core.getConfiguration();
 	core.attachThemeChanged(async () => {
 		await setTheme(config.getTheme());
@@ -39,6 +39,10 @@ const listenForThemeChange = () => {
 };
 
 const attachListeners = () => {
+	if (!core) {
+		return;
+	}
+
 	listenForThemeChange();
 };
 
