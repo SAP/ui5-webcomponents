@@ -103,7 +103,9 @@ const applyOpenUI5Configuration = () => {
 	}
 
 	const OpenUI5Config = OpenUI5Support.getConfigurationSettingsObject();
-	initialConfig = Object.assign(initialConfig, OpenUI5Config);
+	if (OpenUI5Config) {
+		initialConfig = Object.assign(initialConfig, OpenUI5Config);
+	}
 };
 
 
