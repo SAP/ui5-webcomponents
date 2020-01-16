@@ -360,3 +360,7 @@ When you import the above module:
 
 Therefore, if you intend to run both frameworks in the same browser window,
 it is highly recommended to enable OpenUI5 support and benefit from these optimizations.
+
+*Note:* In general the order in which OpenUI5 and UI5 Web Components are loaded does not matter.
+However, if your app needs to support Internet Explorer 11, either load OpenUI5 first, or load
+UI5 Web Components deferred.
