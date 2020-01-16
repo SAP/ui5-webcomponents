@@ -1,5 +1,7 @@
-commit 47eff0051a4d2712471d33857e6f51438390de94
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Jan 15 12:18:17 2020 +0200
+commit 59c1e02ec6bec18b10e20e8a8d53b49bd788e1c8
+Author: Marcus Notheis <MarcusNotheis@users.noreply.github.com>
+Date:   Thu Jan 16 09:53:57 2020 +0100
 
-    docs: avatar sample to use the correct prop names (#1137)
+    fix(webcomponents-icons): fix warning to show correct path (#1140)
+    
+    The warning was pointing to `@ui5/webcomponents` instead of `@ui5/webcomponents-icons`
