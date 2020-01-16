@@ -11,7 +11,7 @@
             data-sap-ui-theme='sap_belize_hcb'
             data-sap-ui-libs='sap.m'></script>
     <script>
-		const btn = new sap.m.Button({
+		var btn = new sap.m.Button({
 			text:'OpenUI5',
 			press: function() {
 				alert("Hello!")
@@ -19,7 +19,6 @@
 		});
 		btn.placeAt('content');
     </script>
-
 
     <script data-ui5-config type="application/json">
         {
@@ -35,7 +34,6 @@
 	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
 	<script src="../../resources/bundle.esm.js" type="module"></script>
     <script nomodule src="../../resources/bundle.es5.js"></script>
-
 </head>
 
 <body style="background-color: var(--sapBackgroundColor);">

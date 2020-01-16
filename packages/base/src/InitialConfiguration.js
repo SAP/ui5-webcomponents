@@ -112,8 +112,13 @@ const initConfiguration = () => {
 		return;
 	}
 
+	// 1. Lowest priority - configuration script
 	parseConfigurationScript();
+
+	// 2. URL parameters overwrite configuration script parameters
 	parseURLParameters();
+
+	// 3. If OpenUI5 is detected, it has the highest priority
 	applyOpenUI5Configuration();
 
 	initialized = true;
