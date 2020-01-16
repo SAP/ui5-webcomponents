@@ -11,6 +11,7 @@
 	--_ui5_day_picker_item_height: 2.875rem;
 	--_ui5_day_picker_empty_height: 3rem;
 	--_ui5_input_inner_padding: 0 0.75rem;
+	--_ui5_input_value_state_icon_padding: var(--_ui5-input-icon-padding);
 	--_ui5_list_no_data_height: 3rem;
 	--_ui5_list_item_cb_margin_right: 0;
 	--_ui5_list_item_title_size: var(--sapMFontLargeSize);
@@ -95,6 +96,7 @@
 	--_ui5_input_inner_padding: 0 0.5rem;
 	--sap_wc_input_icon_min_width: var(--sap_wc_input_compact_min_width);
 	--_ui5_input_icon_padding: .25rem .5rem;
+	--_ui5_input_value_state_icon_padding: .1875rem .5rem;
 
 	/* List */
 	--_ui5_list_no_data_height: 2rem;

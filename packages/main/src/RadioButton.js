@@ -163,7 +163,6 @@ const metadata = {
 		 */
 		select: {},
 	},
-	invalidateOnContentDensityChange: true,
 };
 
 /**
