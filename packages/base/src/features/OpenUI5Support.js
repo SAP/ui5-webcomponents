@@ -21,6 +21,12 @@ const getConfigurationSettingsObject = () => {
 	};
 };
 
+const getLocaleDataObject = () => {
+	const config = core.getConfiguration();
+	const LocaleData = window.sap.ui.core.LocaleData;
+	return LocaleData.getInstance(config.getLocale()).mData;
+};
+
 const listenForThemeChange = () => {
 	if (!core) {
 		return;
@@ -38,6 +44,7 @@ const attachListeners = () => {
 
 const OpenUI5Support = {
 	getConfigurationSettingsObject,
+	getLocaleDataObject,
 	attachListeners,
 };
 
