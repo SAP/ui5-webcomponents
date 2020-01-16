@@ -102,8 +102,10 @@
 }
 
 .ui5-li-img {
+	min-width: 2rem;
 	width: 2rem;
 	margin: 0.5rem 0.75rem 0.5rem 0rem;
+	min-height: 2rem;
 	height: 2rem;
 }
 
@@ -127,6 +129,10 @@
 .ui5-li-deletebtn {
 	display: flex;
 	align-items: center;
+}
+
+.ui5-li-multisel-cb {
+	flex-shrink: 0;
 }
 
 /* Compact size */
