@@ -1,7 +1,7 @@
-commit 59c1e02ec6bec18b10e20e8a8d53b49bd788e1c8
-Author: Marcus Notheis <MarcusNotheis@users.noreply.github.com>
-Date:   Thu Jan 16 09:53:57 2020 +0100
+commit 7c4ee778c12046fcc72538ed235d5ad3a9664439
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu Jan 16 15:23:06 2020 +0200
 
-    fix(webcomponents-icons): fix warning to show correct path (#1140)
+    fix(ui5-li): correct focus color when active (#1143)
     
-    The warning was pointing to `@ui5/webcomponents` instead of `@ui5/webcomponents-icons`
+    When pressed down the list item focus color should be changed to fulfil the constrast ratio with the background in active state.
