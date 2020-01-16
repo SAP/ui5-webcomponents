@@ -56,7 +56,7 @@
 	pointer-events: none;
 }
 
-:host([active][focused]) .ui5-li-content:focus:after {
+:host([active][focused]) .ui5-li-root.ui5-li--focusable:after {
 	border-color: var(--sapContent_ContrastFocusColor);
 }
 
