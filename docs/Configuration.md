@@ -15,7 +15,10 @@ calendarType | Gregorian, Islamic, Buddhist, Japanese, Persian | Gregorian     |
 [noConflict](#noConflict)  | true, false | Object                            | false         | When set to true, all events will be fired with a "ui5-" prefix only
 [formatSettings](#formatSettings)| See the [Format settings](#formatSettings) section below		| Empty object | Allows to override locale-specific configuration
 
-Compact Size could be set by adding a class `ui5-content-density-compact` to an html element. It is propagated to all children and enforces compact density (smaller margins/paddings).
+### Content Density
+
+UI5 Web Components contains different content densities for certain controls that allow your app to adapt to the device in question, allowing you to display larger controls for touch-enabled devices and a smaller, more compact design for devices that are operated by mouse. Cosy size is the default density for all components. Compact Size could be set by adding a class `ui5-content-density-compact` to an html element. It cascades all the way down and enforces compact density (smaller margins/paddings, smaller touch areas, etc).
+
 <a name="theme"></a>
 ### Theme
 The `theme` setting values above are the technical names of our themes.
