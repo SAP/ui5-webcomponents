@@ -56,6 +56,10 @@
 	pointer-events: none;
 }
 
+:host([active][focused]) .ui5-li-content:focus:after {
+	border-color: var(--sapContent_ContrastFocusColor);
+}
+
 .ui5-li-content {
 	max-width: 100%;
 	min-height: 1px; /* IE specific: fixes vertical centering with flex  */
