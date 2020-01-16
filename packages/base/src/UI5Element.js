@@ -5,7 +5,7 @@ import { skipOriginalEvent } from "./config/NoConflict.js";
 import { getCompactSize } from "./config/CompactSize.js";
 import DOMObserver from "./compatibility/DOMObserver.js";
 import UI5ElementMetadata from "./UI5ElementMetadata.js";
-import StaticArea from "./StaticArea.js";
+import StaticAreaItem from "./StaticAreaItem.js";
 import Integer from "./types/Integer.js";
 import RenderScheduler from "./RenderScheduler.js";
 import { getConstructableStyle, createHeadStyle } from "./CSS.js";
@@ -101,10 +101,9 @@ class UI5Element extends HTMLElement {
 			}
 		}
 
-		// Init Static area only if needed
-		if (this.constructor._needsStaticArea() && !this.staticAreaInstance) {
-			this.staticArea = new StaticArea(this.constructor.staticAreaTemplate, this.constructor.staticAreaStyles, this.constructor.render);
-			this.staticAreaInstance = this.staticArea.constructor._getInstance();
+		// Init StaticAreaItem only if needed
+		if (this.constructor._needsStaticArea()) {
+			this.staticAreaItem = new StaticAreaItem(this);
 		}
 	}
 
@@ -130,7 +129,7 @@ class UI5Element extends HTMLElement {
 
 		// Render Fragment if neccessary
 		if (this.constructor._needsStaticArea()) {
-			this.staticArea._updateFragment(this);
+			this.staticAreaItem._updateFragment(this);
 		}
 	}
 
@@ -147,7 +146,7 @@ class UI5Element extends HTMLElement {
 		}
 
 		if (this.constructor._needsStaticArea()) {
-			this.staticArea.removeFragmentFromStaticArea();
+			this.staticAreaItem._removeFragmentFromStaticArea();
 		}
 	}
 
@@ -471,7 +470,7 @@ class UI5Element extends HTMLElement {
 		this._updateShadowRoot();
 
 		if (this.constructor._needsStaticArea()) {
-			this.staticArea._updateFragment(this);
+			this.staticAreaItem._updateFragment(this);
 		}
 
 		// Safari requires that children get the slot attribute only after the slot tags have been rendered in the shadow DOM
@@ -680,7 +679,7 @@ class UI5Element extends HTMLElement {
 	 * @public
 	 */
 	getStaticAreaItemDomRef() {
-		return this.staticArea.getStaticAreaItemDomRef();
+		return this.staticAreaItem.getDomRef();
 	}
 
 	/**

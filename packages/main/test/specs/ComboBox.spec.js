@@ -38,13 +38,13 @@ describe("General interaction", () => {
 			return window.getSelection().toString();
 		});
 
-		// assert.strictEqual(selection, "ahrain", "ahrain should be selected");
-		// assert.strictEqual(combo.getProperty("value"), "Bulgaria", "Value should be Bulgaria");
-		// assert.ok(listItems[0].getProperty("selected"), "List Item should be selected");
+		assert.strictEqual(selection, "ahrain", "ahrain should be selected");
+		assert.strictEqual(combo.getProperty("value"), "Bulgaria", "Value should be Bulgaria");
+		assert.ok(listItems[0].getProperty("selected"), "List Item should be selected");
 
-		// lazy.click();
+		lazy.click();
 
-		// assert.strictEqual(combo.getProperty("value"), "Bahrain", "Value should be changed to Bahrain");
+		assert.strictEqual(combo.getProperty("value"), "Bahrain", "Value should be changed to Bahrain");
 	});
 
 	it ("Should filter items based on input", () => {
@@ -61,43 +61,43 @@ describe("General interaction", () => {
 
 		assert.strictEqual(listItems.length, 11, "Items should be 11");
 
-		// input.keys("a");
-		// listItems = combo.$("ui5-list").$$("ui5-li");
-		// assert.strictEqual(listItems.length, 5, "Items should be 5");
+		input.keys("a");
+		listItems = popover.$("ui5-list").$$("ui5-li");
+		assert.strictEqual(listItems.length, 5, "Items should be 5");
 
-		// input.keys("u");
-		// listItems = combo.$("ui5-list").$$("ui5-li");
-		// assert.strictEqual(listItems.length, 2, "Items should be 2");
+		input.keys("u");
+		listItems = popover.$("ui5-list").$$("ui5-li");
+		assert.strictEqual(listItems.length, 2, "Items should be 2");
 	});
 
-	// it ("Tests change event", () => {
-		// const dummyTarget = $("#combo");
-		// const placeholder = $("#change-placeholder");
-		// const counter = $("#change-count");
-		// const combo = $("#change-cb");
-		// const input = combo.shadow$("[inner-input]");
+	it ("Tests change event", () => {
+		const dummyTarget = $("#combo");
+		const placeholder = $("#change-placeholder");
+		const counter = $("#change-count");
+		const combo = $("#change-cb");
+		const input = combo.shadow$("[inner-input]");
 
-		// input.click();
+		input.click();
 
-		// assert.strictEqual(placeholder.getText(), "", "Text should be empty");
-		// assert.strictEqual(counter.getText(), "0", "Call count should be 0");
+		assert.strictEqual(placeholder.getText(), "", "Text should be empty");
+		assert.strictEqual(counter.getText(), "0", "Call count should be 0");
 
-		// dummyTarget.click();
+		dummyTarget.click();
 
-		// assert.strictEqual(placeholder.getText(), "", "Text should be empty");
-		// assert.strictEqual(counter.getText(), "0", "Call count should be 0");
+		assert.strictEqual(placeholder.getText(), "", "Text should be empty");
+		assert.strictEqual(counter.getText(), "0", "Call count should be 0");
 
-		// input.click();
-		// input.keys("a");
+		input.click();
+		input.keys("a");
 
-		// assert.strictEqual(placeholder.getText(), "", "Text should be empty");
-		// assert.strictEqual(counter.getText(), "0", "Call count should be 0");
+		assert.strictEqual(placeholder.getText(), "", "Text should be empty");
+		assert.strictEqual(counter.getText(), "0", "Call count should be 0");
 
-		// dummyTarget.click();
+		dummyTarget.click();
 
-		// assert.strictEqual(placeholder.getText(), "Argentina", "Text should be empty");
-		// assert.strictEqual(counter.getText(), "1", "Call count should be 1");
-	// });
+		assert.strictEqual(placeholder.getText(), "Argentina", "Text should be empty");
+		assert.strictEqual(counter.getText(), "1", "Call count should be 1");
+	});
 
 	it ("Tests change event", () => {
 		browser.url("http://localhost:8080/test-resources/pages/ComboBox.html");

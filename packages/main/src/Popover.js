@@ -156,6 +156,13 @@ const metadata = {
 		opened: { type: Boolean },
 
 		_maxContentHeight: { type: Integer },
+
+		/**
+		 * @private
+		 */
+		_disableInitialFocus: {
+			type: Boolean,
+		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.Popover.prototype */ {
 		/**
@@ -360,6 +367,10 @@ class Popover extends UI5Element {
 	}
 
 	applyInitialFocus() {
+		if (this._disableInitialFocus) {
+			return;
+		}
+
 		const element = this.getRootNode().getElementById(this.initialFocus) || document.getElementById(this.initialFocus) || getFirstFocusableElement(this.contentDOM);
 
 		if (element) {
