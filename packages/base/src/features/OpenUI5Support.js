@@ -9,8 +9,15 @@ const getConfigurationSettingsObject = () => {
 	}
 
 	const config = core.getConfiguration();
+	const LocaleData = window.sap.ui.core.LocaleData;
+
 	return {
+		animationMode: config.getAnimationMode(),
+		language: config.getLanguage(),
 		theme: config.getTheme(),
+		rtl: config.getRTL(),
+		calendarType: config.getCalendarType(),
+		firstDayOfWeek: LocaleData.getInstance(config.getLocale()).getFirstDayOfWeek(),
 	};
 };
 
