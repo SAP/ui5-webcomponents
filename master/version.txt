@@ -1,7 +1,5 @@
-commit 7c4ee778c12046fcc72538ed235d5ad3a9664439
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Jan 16 15:23:06 2020 +0200
+commit 964dbc274a1fb45da24b14d2bca3323ad61d54c4
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Thu Jan 16 17:22:34 2020 +0200
 
-    fix(ui5-li): correct focus color when active (#1143)
-    
-    When pressed down the list item focus color should be changed to fulfil the constrast ratio with the background in active state.
+    fix(ui5-li): prevent checkbox shrinking (#1142)
