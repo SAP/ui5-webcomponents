@@ -1,25 +1,5 @@
-/**
- * @class
- * @author SAP SE
- * @private
- * Static class for static area
- */
-class StaticArea {
-	// Create a single instance of StaticArea
-	constructor() {
-		if (!StaticArea.instance) {
-			return StaticArea.instance;
-		}
-
-		StaticArea.instance = StaticArea._getInstance();
-	}
-
-	/**
-	 * @protected
-	 * Creates static area as first child of the body element or return the existing one.
-	 */
-	static _getInstance() {
-		let staticArea = document.querySelector("ui5-static-area");
+const getStaticAreaInstance = () => {
+	let staticArea = document.querySelector("ui5-static-area");
 
 		if (staticArea) {
 			return staticArea;
@@ -30,7 +10,10 @@ class StaticArea {
 		staticArea = document.createElement("ui5-static-area");
 
 		return bodyElement.insertBefore(staticArea, bodyElement.firstChild);
-	}
+}
+
+const removeStaticArea = () => {
+	getStaticAreaInstance().destroy();
 }
 
 class StaticAreaElement extends HTMLElement {
@@ -46,4 +29,7 @@ class StaticAreaElement extends HTMLElement {
 
 customElements.define("ui5-static-area", StaticAreaElement);
 
-export default StaticArea;
+export {
+	getStaticAreaInstance,
+	removeStaticArea,
+};

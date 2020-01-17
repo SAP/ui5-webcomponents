@@ -1,4 +1,4 @@
-import StaticArea from "./StaticArea.js";
+import { getStaticAreaInstance, removeStaticArea } from "./StaticArea.js";
 
 let staticAreaIndex = 1;
 
@@ -19,30 +19,30 @@ class StaticAreaItem {
 	_updateFragment() {
 		const renderResult = this.ui5ElementContext.constructor.staticAreaTemplate(this.ui5ElementContext),
 			stylesToAdd = this.ui5ElementContext.constructor.staticAreaStyles || false;
-		let domNodeToRenderInCurrentControl;
+		let domNodeToRenderInCurrentComponent;
 
 		if (!this.currentStaticAreaPosition) {
 			// Initial rendering of fragment
 			this.currentStaticAreaPosition = this.constructor._staticAreaPosition;
 
-			domNodeToRenderInCurrentControl = document.createElement("ui5-static-area-item");
-			domNodeToRenderInCurrentControl.attachShadow({ mode: "open" });
-			domNodeToRenderInCurrentControl.classList.add(`static-area-item-${this.currentStaticAreaPosition}`);
+			domNodeToRenderInCurrentComponent = document.createElement("ui5-static-area-item");
+			domNodeToRenderInCurrentComponent.attachShadow({ mode: "open" });
+			domNodeToRenderInCurrentComponent.classList.add(`static-area-item-${this.currentStaticAreaPosition}`);
 
-			StaticArea._getInstance().appendChild(domNodeToRenderInCurrentControl);
+			getStaticAreaInstance().appendChild(domNodeToRenderInCurrentComponent);
 		} else {
 			// Fragment is rendered and is invalidated
-			domNodeToRenderInCurrentControl = document.querySelector(`ui5-static-area .static-area-item-${this.currentStaticAreaPosition}`);
+			domNodeToRenderInCurrentComponent = document.querySelector(`ui5-static-area .static-area-item-${this.currentStaticAreaPosition}`);
 		}
 
-		this.ui5ElementContext.constructor.render(renderResult, domNodeToRenderInCurrentControl.shadowRoot, stylesToAdd, { eventContext: this.ui5ElementContext });
+		this.ui5ElementContext.constructor.render(renderResult, domNodeToRenderInCurrentComponent.shadowRoot, stylesToAdd, { eventContext: this.ui5ElementContext });
 	}
 
 	/**
 	 * @protected
 	 */
 	_removeFragmentFromStaticArea() {
-		const staticArea = StaticArea._getInstance();
+		const staticArea = getStaticAreaInstance();
 
 		const staticAreaItemToRemove = staticArea.querySelector(`.static-area-item-${this.currentStaticAreaPosition}`);
 		staticArea.removeChild(staticAreaItemToRemove);
@@ -51,7 +51,7 @@ class StaticAreaItem {
 
 		// remove static area
 		if (staticArea.childElementCount < 1) {
-			staticArea.destroy();
+			removeStaticArea();
 
 			// start new indexing
 			staticAreaIndex = 1;
