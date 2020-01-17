@@ -384,7 +384,7 @@ class Input extends UI5Element {
 	}
 
 	onAfterRendering() {
-		if (!this.firstRendering && this.Suggestions) {
+		if (!isPhone() && !this.firstRendering && this.Suggestions) {
 			this.Suggestions.toggle(this.shouldOpenSuggestions());
 		}
 		this.firstRendering = false;
@@ -441,12 +441,14 @@ class Input extends UI5Element {
 	}
 
 	_onfocusin(event) {
+		this.focused = true; // invalidating property
 		this.previousValue = this.value;
+	}
 
-		if (this.Suggestions && isPhone()) {
+	_touchstart(event) {
+		if (isPhone() && this.Suggestions) {
 			this.Suggestions.open(this);
-		} else {
-			this.focused = true; // invalidating property
+			event.preventDefault(); // prevent immediate selection of any item
 		}
 	}
 
@@ -460,7 +462,6 @@ class Input extends UI5Element {
 	}
 
 	_handleInput(event) {
-		debugger
 		if (event.target === this.getInputDOMRef()) {
 			// stop the native event, as the semantic "input" would be fired.
 			event.stopImmediatePropagation();
@@ -495,8 +496,7 @@ class Input extends UI5Element {
 	}
 
 	shouldOpenSuggestions() {
-		return isPhone() ? true :
-			!!(this.suggestionItems.length
+		return !!(this.suggestionItems.length
 			&& this.showSuggestions
 			&& this.focused
 			&& !this.hasSuggestionItemSelected);
@@ -597,10 +597,6 @@ class Input extends UI5Element {
 			"Error": i18nBundle.getText(VALUE_STATE_ERROR),
 			"Warning": i18nBundle.getText(VALUE_STATE_WARNING),
 		};
-	}
-
-	_closeResponsivePopover() {
-		this.Suggestions.close();
 	}
 
 	get _readonly() {

@@ -13,6 +13,7 @@
 		value-state="{{valueState}}"
 		@input="{{_input}}"
 		@change="{{_inputChange}}"
+		@touchstart={{_touchstart}}
 		@keydown="{{_keydown}}"
 		@focusin="{{_focusin}}"
 		@focusout="{{_focusout}}"
@@ -32,43 +33,15 @@
 	{{/unless}}
 
 	<ui5-responsive-popover
-		class="ui5-combobox-popover"
+		class="ui5-combobox-resp-popover"
 		style={{styles.popover}}
 		{{!-- horizontal-align="Left" --}}
 		?no-arrow={{editable}}
-		no-padding="true"
-		placement-type="Bottom"
-		initial-focus="ui5-combobox-input"
+		phone-header-title="ComboBox title"
+		show-confirm-button="true"
 		@ui5-afterOpen={{_afterOpenPopover}}
 		@ui5-afterClose={{_afterClosePopover}}
 	>
-		<div slot="phoneHeader" class="ui5-combobox-popover-header">
-			<div class="row">
-				<div></div>
-				<span>combobox header</span>
-				<ui5-button
-					icon="decline"
-					design="Transparent"
-					@click="{{_closeResponsivePopover}}"
-				>
-				</ui5-button>
-			</div>
-			<input
-				.value="{{_tempValue}}"
-				inner-input-phone
-				placeholder="{{placeholder}}"
-				?disabled={{disabled}}
-				?readonly={{readonly}}
-				?required={{required}}
-				value-state="{{valueState}}"
-				@input="{{_input}}"
-				@change="{{_inputChange}}"
-				@keydown="{{_keydown}}"
-				@focusin="{{_focusin}}"
-				@focusout="{{_focusout}}"
-				aria-autocomplete="both"
-			/>
-		</div>
 		<ui5-busyindicator 
 			?active={{loading}}
 			size="Medium"
@@ -90,8 +63,26 @@
 				</ui5-li>
 			{{/each}}
 		</ui5-list>
-		<div slot="phoneFooter">
-			<ui5-button design="Emphasized" @click="{{_closeResponsivePopover}}">OK</ui5-button>
+		<div slot="phoneHeader" class="ui5-input-host">
+			<div class="ui5-combobox-root">
+				<input
+					id="ui5-input-inner-phone"
+					class="ui5-input-inner-phone"
+					.value="{{_tempValue}}"
+					inner-input
+					placeholder="{{placeholder}}"
+					?disabled={{disabled}}
+					?readonly={{readonly}}
+					?required={{required}}
+					value-state="{{valueState}}"
+					@input="{{_input}}"
+					@change="{{_inputChange}}"
+					@keydown="{{_keydown}}"
+					@focusin="{{_focusin}}"
+					@focusout="{{_focusout}}"
+					aria-autocomplete="both"
+				/>
+			</div>
 		</div>
 	</ui5-responsive-popover>
 

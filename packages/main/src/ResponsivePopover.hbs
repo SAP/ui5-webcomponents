@@ -18,15 +18,21 @@
 			<slot name="phoneHeader"></slot>
 		</div>
 		<slot></slot>
-		{{#if phoneFooter.length}}
+		{{#if _hasFooter}}
 			<div slot="footer" class="ui5-responsive-popover-footer">
 				<div style="flex: 1;"></div>
-				<slot name="phoneFooter"></slot>
+				{{#if showConfirmButton}}
+					<ui5-button design="Emphasized" @click="{{_handleClose}}" confirm>OK</ui5-button>
+				{{/if}}
+				{{#if showCancelButton}}
+					<ui5-button @click="{{_handleClose}}" cancel>Cancel</ui5-button>
+				{{/if}}
 			</div>
 		{{/if}}
 	</ui5-dialog>
 {{else}}
 	<ui5-popover
+		_disable-initial-focus="true"
 		headerText="desktop"
 		placement-type="Bottom"
 		no-arrow

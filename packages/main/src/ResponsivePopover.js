@@ -5,6 +5,7 @@ import ResponsivePopoverTemplate from "./generated/templates/ResponsivePopoverTe
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import Popover from "./Popover.js";
 import Dialog from "./Dialog.js";
+import Button from "./Button.js";
 
 
 
@@ -22,6 +23,12 @@ const metadata = {
 		},
 		phoneHeaderTitle: {
 			type: String
+		},
+		showConfirmButton: {
+			type: String
+		},
+		showCancelButton: {
+			type: String
 		}
 	},
 	slots: /** @lends sap.ui.webcomponents.main.ResponsivePopover.prototype */ {
@@ -31,10 +38,6 @@ const metadata = {
 		},
 
 		"phoneHeader": {
-			type: HTMLElement
-		},
-
-		"phoneFooter": {
 			type: HTMLElement
 		}
 	},
@@ -136,7 +139,8 @@ class ResponsivePopover extends UI5Element {
 	static async define(...params) {
 		await Promise.all([
 			Popover.define(),
-			Dialog.define()
+			Dialog.define(),
+			Button.define()
 		]);
 
 		super.define(...params);
@@ -158,18 +162,40 @@ class ResponsivePopover extends UI5Element {
 	}
 
 	close() {
-		console.error("close")
 		this._container.close();
 		this.opened = false;
 	}
 
 	_fireEvent(event) {
 		const type = event.type.replace("ui5-", "")
-		this.fireEvent(type, event.detail);
+		this.fireEvent(type, {
+			...event.detail,
+			confirmButtonPressed: this._confirmButtonPressed,
+			_cancelButtonPressed: this._cancelButtonPressed
+		});
+	
+		this._confirmButtonPressed = false;
+		this._cancelButtonPressed = false;
+	}
+
+	_handleClose(event) {
+		if (event.target.hasAttribute("confirm")) {
+			this._confirmButtonPressed = true;
+		}
+
+		if (event.target.design === "cancel") {
+			this._cancelButtonPressed = true;
+		}
+
+		this.close();
 	}
 
 	get _container() {
 		return this.shadowRoot.querySelector("ui5-dialog") || this.shadowRoot.querySelector("ui5-popover");
+	}
+
+	get _hasFooter() {
+		return this.showCancelButton || this.showConfirmButton;
 	}
 }
 

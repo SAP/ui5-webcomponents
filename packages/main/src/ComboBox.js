@@ -279,10 +279,6 @@ class ComboBox extends UI5Element {
 	_focusin(event) {
 		this.focused = true;
 
-		if (isPhone() && !this.popover.opened) {
-			this.popover.open(this);
-		}
-
 		if (this.filterValue !== this.value) {
 			this.filterValue = this.value;
 		}
@@ -302,11 +298,11 @@ class ComboBox extends UI5Element {
 		this._iconPressed = false;
 	}
 
-	_togglePopover() {
-		if (this.popover.opened) {
-			this.popover.close();
+	_toggleRespPopover() {
+		if (this.respPopover.opened) {
+			this.respPopover.close();
 		} else {
-			this.popover.open(this);
+			this.respPopover.open(this);
 		}
 	}
 
@@ -319,7 +315,7 @@ class ComboBox extends UI5Element {
 		this.inner.focus();
 		this._resetFilter();
 
-		this._togglePopover();
+		this._toggleRespPopover();
 	}
 
 	_input(event) {
@@ -333,7 +329,7 @@ class ComboBox extends UI5Element {
 		this.filterValue = value;
 		this.fireEvent("input");
 
-		this.popover.open(this);
+		this.respPopover.open(this);
 	}
 
 	_startsWithMatchingItems(str) {
@@ -342,11 +338,18 @@ class ComboBox extends UI5Element {
 
 	_keydown(event) {
 		this._autocomplete = !(isBackSpace(event) || isDelete(event));
-debugger
+
 		if (isShow(event) && !this.readonly && !this.disabled) {
 			event.preventDefault();
 			this._resetFilter();
-			this._togglePopover();
+			this._toggleRespPopover();
+		}
+	}
+
+	_touchstart(event) {
+		if (isPhone()) {
+			this.respPopover.open(this);
+			event.preventDefault(); // prevent immediate selection of any item
 		}
 	}
 
@@ -363,10 +366,9 @@ debugger
 		} else {
 			this._tempValue = current;
 		}
-debugger
+
 		if (matchingItems.length) {
 			setTimeout(() => {
-				debugger
 				this.inner.setSelectionRange(currentValue.length, this._tempValue.length);
 			}, 0);
 		}
@@ -392,6 +394,7 @@ debugger
 		const listItem = event.detail.item;
 
 		this._tempValue = listItem.mappedItem.text;
+		this.filterValue = this._tempValue;
 
 		this._filteredItems.map(item => {
 			item.selected = (item === listItem.mappedItem);
@@ -400,11 +403,7 @@ debugger
 		});
 
 		this._inputChange();
-		this.popover.close();
-	}
-
-	_closeResponsivePopover() {
-		this.popover.close();
+		this.respPopover.close();
 	}
 
 	get styles() {
@@ -422,12 +421,11 @@ debugger
 	}
 
 	get inner() {
-		return isPhone() ? this.shadowRoot.querySelector("[inner-input-phone]") : this.shadowRoot.querySelector("[inner-input]");
-		
+		return isPhone() ? this.shadowRoot.querySelector(".ui5-input-inner-phone") : this.shadowRoot.querySelector("[inner-input]");
 	}
 
-	get popover() {
-		return this.shadowRoot.querySelector(".ui5-combobox-popover");
+	get respPopover() {
+		return this.shadowRoot.querySelector(".ui5-combobox-resp-popover");
 	}
 
 	get editable() {
