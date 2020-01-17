@@ -9,8 +9,10 @@ import ComboBoxTemplate from "./generated/templates/ComboBoxTemplate.lit.js";
 import ComboBoxCss from "./generated/themes/ComboBox.css.js";
 import ComboBoxItem from "./ComboBoxItem.js";
 import Icon from "./Icon.js";
-import Popover from "./Popover.js";
+import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
+
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 
 const metadata = {
 	tag: "ui5-combobox",
@@ -277,6 +279,10 @@ class ComboBox extends UI5Element {
 	_focusin(event) {
 		this.focused = true;
 
+		if (isPhone() && !this.popover.opened) {
+			this.popover.open(this);
+		}
+
 		if (this.filterValue !== this.value) {
 			this.filterValue = this.value;
 		}
@@ -300,7 +306,7 @@ class ComboBox extends UI5Element {
 		if (this.popover.opened) {
 			this.popover.close();
 		} else {
-			this.popover.openBy(this);
+			this.popover.open(this);
 		}
 	}
 
@@ -327,7 +333,7 @@ class ComboBox extends UI5Element {
 		this.filterValue = value;
 		this.fireEvent("input");
 
-		this.popover.openBy(this);
+		this.popover.open(this);
 	}
 
 	_startsWithMatchingItems(str) {
@@ -336,7 +342,7 @@ class ComboBox extends UI5Element {
 
 	_keydown(event) {
 		this._autocomplete = !(isBackSpace(event) || isDelete(event));
-
+debugger
 		if (isShow(event) && !this.readonly && !this.disabled) {
 			event.preventDefault();
 			this._resetFilter();
@@ -357,9 +363,10 @@ class ComboBox extends UI5Element {
 		} else {
 			this._tempValue = current;
 		}
-
+debugger
 		if (matchingItems.length) {
 			setTimeout(() => {
+				debugger
 				this.inner.setSelectionRange(currentValue.length, this._tempValue.length);
 			}, 0);
 		}
@@ -396,6 +403,10 @@ class ComboBox extends UI5Element {
 		this.popover.close();
 	}
 
+	_closeResponsivePopover() {
+		this.popover.close();
+	}
+
 	get styles() {
 		return {
 			popover: {
@@ -411,7 +422,8 @@ class ComboBox extends UI5Element {
 	}
 
 	get inner() {
-		return this.shadowRoot.querySelector("[inner-input]");
+		return isPhone() ? this.shadowRoot.querySelector("[inner-input-phone]") : this.shadowRoot.querySelector("[inner-input]");
+		
 	}
 
 	get popover() {
@@ -426,7 +438,7 @@ class ComboBox extends UI5Element {
 		await Promise.all([
 			ComboBoxItem.define(),
 			Icon.define(),
-			Popover.define(),
+			ResponsivePopover.define(),
 			List.define(),
 		]);
 

@@ -4,7 +4,7 @@
 	display: inline-block;
 }
 
-:host {
+:host, .ui5-input-phone {
 	width: var(--_ui5_input_width);
 	min-width: var(--_ui5_input_width);
 	height: var(--_ui5_input_height);

@@ -48,15 +48,37 @@
 	</div>
 
 	{{#if showSuggestions}}
-			<ui5-popover
-				placement-type="Bottom"
-				no-arrow
-				horizontal-align="Stretch"
-				initial-focus="{{_id}}-inner">
-					<ui5-list separators="Inner">
-						<slot></slot>
-					</ui5-list>
-			</ui5-popover>
+		<ui5-responsive-popover
+			{{!-- placement-type="Bottom" --}}
+			{{!-- no-arrow --}}
+			{{!-- horizontal-align="Stretch" --}}
+			initial-focus="{{_id}}-inner"
+			phone-header-title="Input title"
+		>
+			<ui5-list separators="Inner">
+				<slot></slot>
+			</ui5-list>
+			{{!-- add if is phone check--}}
+			<div slot="phoneHeader" class="ui5-input-phone">
+				<div class="ui5-input-root">
+					<div class="ui5-input-content">
+						<input
+							class="ui5-input-inner-phone"
+							type="{{inputType}}"
+							.value="{{value}}"
+							inner-input
+							placeholder="{{placeholder}}"
+							@input="{{_handleInput}}"
+							@change="{{_handleChange}}"
+							@keydown="{{_onkeydown}}"
+							@keyup="{{_onkeyup}}"
+						/>
+					</div>
+				</div>
+			</div>
+			<ui5-button 
+				slot="phoneFooter" @click="{{_closeResponsivePopover}}">OK</ui5-button>
+		</ui5-responsive-popover>
 	{{/if}}
 
 	<slot name="formSupport"></slot>

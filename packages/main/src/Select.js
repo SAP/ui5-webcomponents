@@ -13,7 +13,7 @@ import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-down.js";
 import Label from "./Label.js";
-import Popover from "./Popover.js";
+import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
 import StandardListItem from "./StandardListItem.js";
 import Icon from "./Icon.js";
@@ -227,7 +227,7 @@ class Select extends UI5Element {
 		if (this._isPickerOpen) {
 			popover.close();
 		} else {
-			popover.openBy(this);
+			popover.open(this);
 		}
 	}
 
@@ -410,7 +410,7 @@ class Select extends UI5Element {
 	static async define(...params) {
 		await Promise.all([
 			Label.define(),
-			Popover.define(),
+			ResponsivePopover.define(),
 			List.define(),
 			StandardListItem.define(),
 			Icon.define(),

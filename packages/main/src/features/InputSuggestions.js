@@ -1,7 +1,7 @@
 import { registerFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 
 import List from "../List.js";
-import Popover from "../Popover.js";
+import ResponsivePopover from "../ResponsivePopover.js";
 
 /**
  * A class to manage the <code>Input</code suggestion items.
@@ -72,10 +72,11 @@ class Suggestions {
 
 	open() {
 		this._beforeOpen();
-		this._getPopover().openBy(this._getComponent());
+		this._getPopover().open(this._getComponent());
 	}
 
 	close() {
+		debugger
 		this._getPopover().close();
 	}
 
@@ -252,7 +253,7 @@ class Suggestions {
 	}
 
 	_getPopover() {
-		return this._getComponent().shadowRoot.querySelector("ui5-popover");
+		return this._getComponent().shadowRoot.querySelector("ui5-responsive-popover");
 	}
 }
 
@@ -261,7 +262,7 @@ Suggestions.SCROLL_STEP = 48;
 // The List and Popover components would be rendered
 // by the issuer component`s template.
 List.define();
-Popover.define();
+ResponsivePopover.define();
 
 
 // Add suggestions support to the global features registry so that Input.js can use it

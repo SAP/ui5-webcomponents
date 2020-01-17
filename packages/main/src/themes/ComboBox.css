@@ -25,3 +25,16 @@
 .ui5-combobox-busy:not([active]) {
 	display: none;
 }
+
+.ui5-combobox-popover-header .row,
+.ui5-combobox-popover-header input {
+	height: 2.5rem;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.ui5-combobox-popover-header input {
+	border: 1px solid black
+}

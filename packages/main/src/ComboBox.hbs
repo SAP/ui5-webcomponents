@@ -3,7 +3,6 @@
 	aria-haspopup="listbox"
 	aria-expanded="{{open}}"
 >
-
 	<input id="ui5-combobox-input"
 		.value="{{_tempValue}}"
 		inner-input
@@ -32,10 +31,10 @@
 		></ui5-icon>
 	{{/unless}}
 
-	<ui5-popover
+	<ui5-responsive-popover
 		class="ui5-combobox-popover"
 		style={{styles.popover}}
-		horizontal-align="Left"
+		{{!-- horizontal-align="Left" --}}
 		?no-arrow={{editable}}
 		no-padding="true"
 		placement-type="Bottom"
@@ -43,14 +42,39 @@
 		@ui5-afterOpen={{_afterOpenPopover}}
 		@ui5-afterClose={{_afterClosePopover}}
 	>
-
+		<div slot="phoneHeader" class="ui5-combobox-popover-header">
+			<div class="row">
+				<div></div>
+				<span>combobox header</span>
+				<ui5-button
+					icon="decline"
+					design="Transparent"
+					@click="{{_closeResponsivePopover}}"
+				>
+				</ui5-button>
+			</div>
+			<input
+				.value="{{_tempValue}}"
+				inner-input-phone
+				placeholder="{{placeholder}}"
+				?disabled={{disabled}}
+				?readonly={{readonly}}
+				?required={{required}}
+				value-state="{{valueState}}"
+				@input="{{_input}}"
+				@change="{{_inputChange}}"
+				@keydown="{{_keydown}}"
+				@focusin="{{_focusin}}"
+				@focusout="{{_focusout}}"
+				aria-autocomplete="both"
+			/>
+		</div>
 		<ui5-busyindicator 
 			?active={{loading}}
 			size="Medium"
 			class="ui5-combobox-busy"
 		>
 		</ui5-busyindicator>
-
 		<ui5-list 
 			separators="None"
 			@ui5-itemClick={{_selectItem}}
@@ -66,6 +90,9 @@
 				</ui5-li>
 			{{/each}}
 		</ui5-list>
-	</ui5-popover>
+		<div slot="phoneFooter">
+			<ui5-button design="Emphasized" @click="{{_closeResponsivePopover}}">OK</ui5-button>
+		</div>
+	</ui5-responsive-popover>
 
 </div>

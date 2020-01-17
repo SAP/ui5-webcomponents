@@ -1,0 +1,37 @@
+{{#if isPhone}}
+	<ui5-dialog
+		stretch
+		@ui5-afterOpen="{{_fireEvent}}"
+		@ui5-beforeOpen="{{_fireEvent}}"
+		@ui5-afterClose="{{_fireEvent}}"
+	>
+		<div slot="header" class="ui5-responsive-popover-header">
+			<div class="row">
+				<span>{{phoneHeaderTitle}}</span>
+				<ui5-button
+					icon="decline"
+					design="Transparent"
+					@click="{{close}}"
+				>
+				</ui5-button>
+			</div>
+			<slot name="phoneHeader"></slot>
+		</div>
+		<slot></slot>
+		{{#if phoneFooter.length}}
+			<div slot="footer" class="ui5-responsive-popover-footer">
+				<div style="flex: 1;"></div>
+				<slot name="phoneFooter"></slot>
+			</div>
+		{{/if}}
+	</ui5-dialog>
+{{else}}
+	<ui5-popover
+		headerText="desktop"
+		placement-type="Bottom"
+		no-arrow
+		horizontal-align="Stretch"
+	>
+		<slot></slot>
+	</ui5-popover>
+{{/if}}

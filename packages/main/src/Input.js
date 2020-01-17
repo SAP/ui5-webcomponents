@@ -3,6 +3,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import {
 	isUp,
 	isDown,
@@ -440,8 +441,13 @@ class Input extends UI5Element {
 	}
 
 	_onfocusin(event) {
-		this.focused = true; // invalidating property
 		this.previousValue = this.value;
+
+		if (this.Suggestions && isPhone()) {
+			this.Suggestions.open(this);
+		} else {
+			this.focused = true; // invalidating property
+		}
 	}
 
 	_onfocusout(event) {
@@ -454,6 +460,7 @@ class Input extends UI5Element {
 	}
 
 	_handleInput(event) {
+		debugger
 		if (event.target === this.getInputDOMRef()) {
 			// stop the native event, as the semantic "input" would be fired.
 			event.stopImmediatePropagation();
@@ -488,7 +495,8 @@ class Input extends UI5Element {
 	}
 
 	shouldOpenSuggestions() {
-		return !!(this.suggestionItems.length
+		return isPhone() ? true :
+			!!(this.suggestionItems.length
 			&& this.showSuggestions
 			&& this.focused
 			&& !this.hasSuggestionItemSelected);
@@ -555,7 +563,7 @@ class Input extends UI5Element {
 	}
 
 	getInputDOMRef() {
-		return this.getDomRef().querySelector(`#${this.getInputId()}`);
+		return isPhone() ? this.getDomRef().querySelector(".ui5-input-inner-phone") : this.getDomRef().querySelector(`#${this.getInputId()}`);
 	}
 
 	getLabelableElementId() {
@@ -589,6 +597,10 @@ class Input extends UI5Element {
 			"Error": i18nBundle.getText(VALUE_STATE_ERROR),
 			"Warning": i18nBundle.getText(VALUE_STATE_WARNING),
 		};
+	}
+
+	_closeResponsivePopover() {
+		this.Suggestions.close();
 	}
 
 	get _readonly() {
