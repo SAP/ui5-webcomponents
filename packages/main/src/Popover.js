@@ -343,7 +343,9 @@ class Popover extends UI5Element {
 			removeOpenedPopover(this);
 		}
 
-		this.resetFocus();
+		if (!this._prevetFocusRestore) {
+			this.resetFocus();
+		}
 
 		this.hide();
 		this.fireEvent("afterClose", {});

@@ -101,7 +101,9 @@
 
 .ui5-li-img {
 	width: var(--_ui5_list_item_img_size);
+	min-width: var(--_ui5_list_item_img_size);
 	height: var(--_ui5_list_item_img_size);
+	min-height: var(--_ui5_list_item_img_size);
 	margin: var(--_ui5_list_item_img_margin);
 }
 
@@ -125,6 +127,11 @@
 .ui5-li-deletebtn {
 	display: flex;
 	align-items: center;
+}
+
+.ui5-li-multisel-cb,
+.ui5-li-singlesel-radiobtn {
+	flex-shrink: 0;
 }
 
 :host() ui5-checkbox.ui5-li-singlesel-radiobtn {
