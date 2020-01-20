@@ -1,6 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import { isBackSpace, isDelete, isShow } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import * as Filters from "./ComboBoxFilters.js";
 
@@ -11,8 +12,6 @@ import ComboBoxItem from "./ComboBoxItem.js";
 import Icon from "./Icon.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
-
-import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 
 const metadata = {
 	tag: "ui5-combobox",
@@ -413,7 +412,7 @@ class ComboBox extends UI5Element {
 	}
 
 	get respPopover() {
-		return this.shadowRoot.querySelector(".ui5-combobox-resp-popover");
+		return this.shadowRoot.querySelector(".ui5-combobox--respPopover");
 	}
 
 	get editable() {

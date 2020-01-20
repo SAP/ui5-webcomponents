@@ -400,7 +400,7 @@ class MultiComboBox extends UI5Element {
 			this._toggleRespPopover();
 		}
 
-		if (isDown(event) && this._getRespPopover()._isOpen && this.items.length) {
+		if (isDown(event) && this._getRespPopover().opened && this.items.length) {
 			event.preventDefault();
 			const list = this.shadowRoot.querySelector(".ui5-multi-combobox-all-items-list");
 			list._itemNavigation.current = 0;
@@ -459,7 +459,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_getRespPopover(isMorePopover) {
-		return this.shadowRoot.querySelector(`.ui5-multi-combobox-${isMorePopover ? "selected" : "all"}-items-resp-popover`);
+		return this.shadowRoot.querySelector(`.ui5-multi-combobox-${isMorePopover ? "selected" : "all"}-items--respPopover`);
 	}
 
 	_toggleRespPopover(isMorePopover) {
@@ -489,7 +489,7 @@ class MultiComboBox extends UI5Element {
 		const hasSelectedItem = this.items.some(item => item.selected);
 
 		if (!hasSelectedItem) {
-			const morePopover = this.shadowRoot.querySelector(`.ui5-multi-combobox-selected-items-resp-popover`);
+			const morePopover = this._getRespPopover(true);
 
 			morePopover && morePopover.close();
 		}

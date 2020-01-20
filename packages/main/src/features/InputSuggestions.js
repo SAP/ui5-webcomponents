@@ -72,12 +72,11 @@ class Suggestions {
 
 	open() {
 		this._beforeOpen();
-		this._getPopover().open(this._getComponent());
+		this._respPopover.open(this._getComponent());
 	}
 
 	close() {
-		debugger
-		this._getPopover().close();
+		this._respPopover.close();
 	}
 
 	updateSelectedItemPosition(pos) {
@@ -126,12 +125,12 @@ class Suggestions {
 		}
 
 		if (!this.attachedAfterOpened) {
-			this._getPopover().addEventListener("ui5-afterOpen", this._onOpen.bind(this));
+			this._respPopover.addEventListener("ui5-afterOpen", this._onOpen.bind(this));
 			this.attachedAfterOpened = true;
 		}
 
 		if (!this.attachedAfterClose) {
-			this._getPopover().addEventListener("ui5-afterClose", this._onClose.bind(this));
+			this._respPopover.addEventListener("ui5-afterClose", this._onClose.bind(this));
 			this.attachedAfterClose = true;
 		}
 	}
@@ -156,7 +155,7 @@ class Suggestions {
 	}
 
 	isOpened() {
-		const popover = this._getPopover();
+		const popover = this._respPopover;
 		return !!(popover && popover.opened);
 	}
 
@@ -233,8 +232,7 @@ class Suggestions {
 
 	_getScrollContainer() {
 		if (!this._scrollContainer) {
-			const popover = this._getPopover();
-			this._scrollContainer = popover.getDomRef().querySelector(".ui5-popover-content");
+			this._scrollContainer = this._respPopover.getDomRef().querySelector(".ui5-popover-content");
 		}
 
 		return this._scrollContainer;
@@ -252,7 +250,7 @@ class Suggestions {
 		return this._getComponent().shadowRoot.querySelector("ui5-list");
 	}
 
-	_getPopover() {
+	get _respPopover() {
 		return this._getComponent().shadowRoot.querySelector("ui5-responsive-popover");
 	}
 }

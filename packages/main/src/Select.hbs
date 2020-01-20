@@ -9,13 +9,13 @@
 >
 	<div
 		class="ui5-select-label-root"
-		@click="{{_togglePopover}}">
+		@click="{{_toggleRespPopover}}">
 		<ui5-label>{{_text}}</ui5-label>
 	</div>
 
 	{{#if options}}
 		<ui5-responsive-popover
-			id="ui5-select--popover"
+			id="ui5-select--respPopover"
 			header-title="Select"
 			@ui5-afterOpen="{{_applyFocusAfterOpen}}"
 			@ui5-beforeOpen="{{_beforeOpen}}"
@@ -32,7 +32,7 @@
 	{{/if}}
 
 		<ui5-icon 
-			@click="{{_togglePopover}}"
+			@click="{{_toggleRespPopover}}"
 			name="slim-arrow-down"
 			input-icon
 			?pressed="{{_iconPressed}}"

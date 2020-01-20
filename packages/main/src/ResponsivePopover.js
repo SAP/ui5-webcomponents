@@ -20,6 +20,14 @@ const metadata = {
 			type: Boolean 
 		},
 
+		stayOpenOnScroll: {
+			type: Boolean 
+		},
+
+		allowTargetOverlap: {
+			type: Boolean 
+		},
+
 		/**
 		 * Title of the Dialog on phone.
 		 */

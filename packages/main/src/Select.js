@@ -202,9 +202,11 @@ class Select extends UI5Element {
 	}
 
 	get _isPickerOpen() {
-		const popover = this.shadowRoot.querySelector("#ui5-select--popover");
+		return this._respPopover && this._respPopover.opened;
+	}
 
-		return popover && popover.opened;
+	get _respPopover() {
+		return this.shadowRoot.querySelector("#ui5-select--respPopover");
 	}
 
 	/**
@@ -217,17 +219,15 @@ class Select extends UI5Element {
 		return this.options.find(option => option.selected);
 	}
 
-	_togglePopover() {
-		const popover = this.shadowRoot.querySelector("#ui5-select--popover");
-
+	_toggleRespPopover() {
 		if (this.disabled) {
 			return;
 		}
 
 		if (this._isPickerOpen) {
-			popover.close();
+			this._respPopover.close();
 		} else {
-			popover.open(this);
+			this._respPopover.open(this);
 		}
 	}
 
@@ -283,7 +283,7 @@ class Select extends UI5Element {
 
 	_onkeydown(event) {
 		if (isShow(event)) {
-			this._togglePopover();
+			this._toggleRespPopover();
 		}
 
 		if (!this._isPickerOpen) {
@@ -293,7 +293,7 @@ class Select extends UI5Element {
 
 	_onkeyup(event) {
 		if (isSpace(event) && !this._isPickerOpen) {
-			this._togglePopover();
+			this._toggleRespPopover();
 		}
 	}
 
@@ -311,7 +311,7 @@ class Select extends UI5Element {
 		const selectedItemIndex = this._getSelectedItemIndex(event.detail.item);
 
 		this._select(selectedItemIndex);
-		this._togglePopover();
+		this._toggleRespPopover();
 	}
 
 	_applyFocusAfterOpen() {

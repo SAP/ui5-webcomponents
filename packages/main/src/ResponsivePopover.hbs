@@ -37,8 +37,10 @@
 		placement-type="Bottom"
 		horizontal-align="Left"
 		style="min-width: {{_width}}px;"
+		?stay-open-on-scroll="{{stayOpenOnScroll}}"
+		?allow-target-overlap="{{allowTargetOverlap}}"
 		no-arrow
-		_disable-initial-focus="true"
+		_disable-initial-focus
 		@ui5-afterOpen="{{_fireEvent}}"
 		@ui5-beforeOpen="{{_fireEvent}}"
 		@ui5-beforeClose="{{_fireEvent}}"

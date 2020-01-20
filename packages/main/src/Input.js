@@ -234,10 +234,6 @@ const metadata = {
 			type: Object,
 		},
 
-		_popover: {
-			type: Object,
-		},
-
 		_inputAccInfo: {
 			type: Object,
 		},
