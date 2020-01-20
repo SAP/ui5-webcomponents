@@ -1,8 +1,6 @@
 import merge from "@ui5/webcomponents-utils/dist/sap/base/util/merge.js";
-
 import boot from "./boot.js";
 import { skipOriginalEvent } from "./config/NoConflict.js";
-import { getCompactSize } from "./config/CompactSize.js";
 import DOMObserver from "./compatibility/DOMObserver.js";
 import UI5ElementMetadata from "./UI5ElementMetadata.js";
 import StaticAreaItem from "./StaticAreaItem.js";
@@ -10,7 +8,6 @@ import Integer from "./types/Integer.js";
 import RenderScheduler from "./RenderScheduler.js";
 import { getConstructableStyle, createHeadStyle } from "./CSS.js";
 import { getEffectiveStyle } from "./Theming.js";
-import { attachContentDensityChange } from "./ContentDensity.js";
 import { kebabToCamelCase, camelToKebabCase } from "./util/StringHelper.js";
 import isValidPropertyName from "./util/isValidPropertyName.js";
 
@@ -41,8 +38,6 @@ class UI5Element extends HTMLElement {
 		this._upgradeAllProperties();
 		this._initializeContainers();
 
-		attachContentDensityChange(this._onContentDensityChanged.bind(this));
-
 		let deferredResolve;
 		this._domRefReadyPromise = new Promise(resolve => {
 			deferredResolve = resolve;
@@ -50,28 +45,6 @@ class UI5Element extends HTMLElement {
 		this._domRefReadyPromise._deferredResolve = deferredResolve;
 
 		this._monitoredChildProps = new Map();
-	}
-
-	/**
-	 * @private
-	 */
-	_onContentDensityChanged() {
-		this._syncContentDensity();
-		if (this.constructor.getMetadata().getInvalidateOnContentDensityChange()) {
-			this._invalidate();
-		}
-	}
-
-	/**
-	 * @private
-	 */
-	_syncContentDensity() {
-		const isCompact = getCompactSize();
-		if (isCompact) {
-			this.setAttribute("data-ui5-compact-size", "");
-		} else {
-			this.removeAttribute("data-ui5-compact-size");
-		}
 	}
 
 	/**
@@ -112,8 +85,6 @@ class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	async connectedCallback() {
-		this._syncContentDensity();
-
 		// Render the Shadow DOM
 		if (this.constructor._needsShadowDOM()) {
 			// always register the observer before yielding control to the main thread (await)

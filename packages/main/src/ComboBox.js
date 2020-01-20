@@ -1,6 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import "@ui5/webcomponents-icons/dist/icons/slim-arrow-down.js";
 import { isBackSpace, isDelete, isShow } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import * as Filters from "./ComboBoxFilters.js";
 
@@ -13,6 +14,8 @@ import ComboBoxItem from "./ComboBoxItem.js";
 import Icon from "./Icon.js";
 import Popover from "./Popover.js";
 import List from "./List.js";
+import BusyIndicator from "./BusyIndicator.js";
+import StandardListItem from "./StandardListItem.js";
 
 const metadata = {
 	tag: "ui5-combobox",
@@ -276,6 +279,10 @@ class ComboBox extends UI5Element {
 			this._tempValue = domValue;
 		}
 
+		if (!this._initialRendering && this.popover && document.activeElement === this && !this._filteredItems.length) {
+			this.popover.close();
+		}
+
 		this._selectMatchingItem();
 		this._initialRendering = false;
 	}
@@ -368,7 +375,7 @@ class ComboBox extends UI5Element {
 			this._tempValue = current;
 		}
 
-		if (matchingItems.length) {
+		if (matchingItems.length && (currentValue !== this._tempValue)) {
 			setTimeout(() => {
 				this.inner.setSelectionRange(currentValue.length, this._tempValue.length);
 			}, 0);
@@ -438,6 +445,8 @@ class ComboBox extends UI5Element {
 			Icon.define(),
 			Popover.define(),
 			List.define(),
+			BusyIndicator.define(),
+			StandardListItem.define(),
 		]);
 
 		super.define(...params);

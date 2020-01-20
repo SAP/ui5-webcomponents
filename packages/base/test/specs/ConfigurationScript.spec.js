@@ -11,14 +11,6 @@ describe("Configuration script has effect", () => {
 		assert.strictEqual(res, true, "RTL is true");
 	});
 
-	it("Tests that compactSize is applied", () => {
-		const res = browser.execute( () => {
-			const config = window['sap-ui-webcomponents-bundle'].configuration;
-			return config.getCompactSize();
-		});
-		assert.strictEqual(res, true, "compactSize is true");
-	});
-
 	it("Tests that language is applied", () => {
 		const res = browser.execute( () => {
 			const config = window['sap-ui-webcomponents-bundle'].configuration;

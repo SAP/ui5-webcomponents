@@ -1,5 +1,4 @@
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
-import { getCompactSize } from "@ui5/webcomponents-base/dist/config/CompactSize.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
@@ -163,22 +162,6 @@ const metadata = {
 		 * @public
 		 */
 		select: {},
-	},
-	invalidateOnContentDensityChange: true,
-};
-
-const SVGConfig = {
-	"compact": {
-		x: 16,
-		y: 16,
-		rInner: 3,
-		rOuter: 8,
-	},
-	"default": {
-		x: 22,
-		y: 22,
-		rInner: 5,
-		rOuter: 11,
 	},
 };
 
@@ -402,10 +385,6 @@ class RadioButton extends UI5Element {
 
 	get strokeWidth() {
 		return this.valueState === "None" ? "1" : "2";
-	}
-
-	get circle() {
-		return getCompactSize() ? SVGConfig.compact : SVGConfig.default;
 	}
 
 	get rtl() {

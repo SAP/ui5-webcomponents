@@ -2,10 +2,6 @@
 	display: block;
 }
 
-:host([data-ui5-compact-size]) .ui5-panel-header {
-	height: 2rem;
-}
-
 :host {
 	font-family: var(--sapFontFamily);
 	background-color: var(--sapGroup_ContentBackground);
