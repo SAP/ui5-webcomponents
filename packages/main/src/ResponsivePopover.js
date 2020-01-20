@@ -7,13 +7,11 @@ import Popover from "./Popover.js";
 import Dialog from "./Dialog.js";
 import Button from "./Button.js";
 
-
-
 // Styles
 import ResponsivePopoverCss from "./generated/themes/ResponsivePopover.css.js";
 
 /**
- * @public
+ * @private
  */
 const metadata = {
 	tag: "ui5-responsive-popover",
@@ -21,14 +19,26 @@ const metadata = {
 		opened: {
 			type: Boolean 
 		},
-		phoneHeaderTitle: {
+
+		/**
+		 * Title of the Dialog on phone.
+		 */
+		headerTitle: {
 			type: String
 		},
+
+		/**
+		 * Determines whether to show "Confirm" button on phone.
+		 */
 		showConfirmButton: {
-			type: String
+			type: Boolean
 		},
+
+		/**
+		 * Determines whether to show "Cancel" button on phone.
+		 */
 		showCancelButton: {
-			type: String
+			type: Boolean
 		}
 	},
 	slots: /** @lends sap.ui.webcomponents.main.ResponsivePopover.prototype */ {
@@ -81,38 +91,14 @@ const metadata = {
 
 /**
  * @class
- *
- * <h3 class="comment-api-title">Overview</h3>
- *
- * The <code>ui5-popover</code> component displays additional information for an object
- * in a compact way and without leaving the page.
- * The Popover can contain various UI elements, such as fields, tables, images, and charts.
- * It can also include actions in the footer.
- *
- * <h3>Structure</h3>
- *
- * The popover has three main areas:
- * <ul>
- * <li>Header (optional)</li>
- * <li>Content</li>
- * <li>Footer (optional)</li>
- * </ul>
- *
- * <b>Note:</b> The <code>ui5-popover</code> is closed when the user clicks
- * or taps outside the popover
- * or selects an action within the popover. You can prevent this with the
- * <code>modal</code> property.
- *
- * <h3>ES6 Module Import</h3>
- *
- * <code>import "@ui5/webcomponents/dist/Popover.js";</code>
+ * ResponsivePopover is UI5Element, which shows Dialog on mobile devices and Popover otherwise.
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.Popover
+ * @alias sap.ui.webcomponents.main.ResponsivePopover
  * @extends UI5Element
- * @tagname ui5-popover
- * @public
+ * @tagname ui5-responsive-popover
+ * @private
  */
 class ResponsivePopover extends UI5Element {
 	static get metadata() {
@@ -132,10 +118,6 @@ class ResponsivePopover extends UI5Element {
 		return ResponsivePopoverTemplate;
 	}
 
-	get isPhone() {
-		return isPhone();
-	}
-
 	static async define(...params) {
 		await Promise.all([
 			Popover.define(),
@@ -146,8 +128,13 @@ class ResponsivePopover extends UI5Element {
 		super.define(...params);
 	}
 
+	get isPhone() {
+		return isPhone();
+	}
+
 	open(opener) {
-		this.opener = opener;
+
+		this._width = opener.getBoundingClientRect().width;
 
 		const dialog = this.shadowRoot.querySelector("ui5-dialog");
 		const popover = this.shadowRoot.querySelector("ui5-popover");
@@ -183,7 +170,7 @@ class ResponsivePopover extends UI5Element {
 			this._confirmButtonPressed = true;
 		}
 
-		if (event.target.design === "cancel") {
+		if (event.target.hasAttribute("cancel")) {
 			this._cancelButtonPressed = true;
 		}
 

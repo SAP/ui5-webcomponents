@@ -1,13 +1,15 @@
 {{#if isPhone}}
 	<ui5-dialog
 		stretch
+		_disable-initial-focus="true"
 		@ui5-afterOpen="{{_fireEvent}}"
 		@ui5-beforeOpen="{{_fireEvent}}"
+		@ui5-beforeClose="{{_fireEvent}}"
 		@ui5-afterClose="{{_fireEvent}}"
 	>
 		<div slot="header" class="ui5-responsive-popover-header">
 			<div class="row">
-				<span>{{phoneHeaderTitle}}</span>
+				<span>{{headerTitle}}</span>
 				<ui5-button
 					icon="decline"
 					design="Transparent"
@@ -32,11 +34,15 @@
 	</ui5-dialog>
 {{else}}
 	<ui5-popover
-		_disable-initial-focus="true"
-		headerText="desktop"
 		placement-type="Bottom"
+		horizontal-align="Left"
+		style="min-width: {{_width}}px;"
 		no-arrow
-		horizontal-align="Stretch"
+		_disable-initial-focus="true"
+		@ui5-afterOpen="{{_fireEvent}}"
+		@ui5-beforeOpen="{{_fireEvent}}"
+		@ui5-beforeClose="{{_fireEvent}}"
+		@ui5-afterClose="{{_fireEvent}}"
 	>
 		<slot></slot>
 	</ui5-popover>

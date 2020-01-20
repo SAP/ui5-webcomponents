@@ -272,10 +272,6 @@ class ComboBox extends UI5Element {
 		this._initialRendering = false;
 	}
 
-	onAfterRendering() {
-		this._width = this.getBoundingClientRect().width;
-	}
-
 	_focusin(event) {
 		this.focused = true;
 
@@ -404,14 +400,6 @@ class ComboBox extends UI5Element {
 
 		this._inputChange();
 		this.respPopover.close();
-	}
-
-	get styles() {
-		return {
-			popover: {
-				"min-width": `${this._width}px`,
-			},
-		};
 	}
 
 	get _filteredItems() {

@@ -12,7 +12,7 @@ import MultiComboBoxTemplate from "./generated/templates/MultiComboBoxTemplate.l
 import Tokenizer from "./Tokenizer.js";
 import Token from "./Token.js";
 import Icon from "./Icon.js";
-import Popover from "./Popover.js";
+import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
 import StandardListItem from "./StandardListItem.js";
 import {
@@ -304,11 +304,11 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_showMorePopover() {
-		this._togglePopover(true);
+		this._toggleRespPopover(true);
 	}
 
 	_showAllItemsPopover() {
-		this._togglePopover(false);
+		this._toggleRespPopover(false);
 
 		this._inputDom.focus();
 	}
@@ -358,9 +358,9 @@ class MultiComboBox extends UI5Element {
 		this._filteredItems = filteredItems;
 
 		if (filteredItems.length === 0) {
-			this._getPopover().close();
+			this._getRespPopover().close();
 		} else {
-			this._getPopover().openBy(this);
+			this._getRespPopover().open(this);
 		}
 
 		this.fireEvent("input");
@@ -397,10 +397,10 @@ class MultiComboBox extends UI5Element {
 	_onkeydown(event) {
 		if (isShow(event) && !this.readonly && !this.disabled) {
 			event.preventDefault();
-			this._togglePopover();
+			this._toggleRespPopover();
 		}
 
-		if (isDown(event) && this._getPopover()._isOpen && this.items.length) {
+		if (isDown(event) && this._getRespPopover()._isOpen && this.items.length) {
 			event.preventDefault();
 			const list = this.shadowRoot.querySelector(".ui5-multi-combobox-all-items-list");
 			list._itemNavigation.current = 0;
@@ -452,19 +452,19 @@ class MultiComboBox extends UI5Element {
 		this.fireEvent("selectionChange", { items: this._getSelectedItems() });
 
 		if (!event.detail.selectionComponentPressed && !isSpace(event.detail)) {
-			this._getPopover().close();
+			this._getRespPopover().close();
 			this.value = "";
 			this.fireEvent("input");
 		}
 	}
 
-	_getPopover(isMorePopover) {
-		return this.shadowRoot.querySelector(`.ui5-multi-combobox-${isMorePopover ? "selected" : "all"}-items-popover`);
+	_getRespPopover(isMorePopover) {
+		return this.shadowRoot.querySelector(`.ui5-multi-combobox-${isMorePopover ? "selected" : "all"}-items-resp-popover`);
 	}
 
-	_togglePopover(isMorePopover) {
-		const popover = this._getPopover(isMorePopover);
-		const otherPopover = this._getPopover(!isMorePopover);
+	_toggleRespPopover(isMorePopover) {
+		const popover = this._getRespPopover(isMorePopover);
+		const otherPopover = this._getRespPopover(!isMorePopover);
 
 		if (popover && popover.opened) {
 			return popover.close();
@@ -472,7 +472,7 @@ class MultiComboBox extends UI5Element {
 
 		otherPopover && otherPopover.close();
 
-		popover && popover.openBy(this);
+		popover && popover.open(this);
 	}
 
 	_focusin() {
@@ -489,7 +489,7 @@ class MultiComboBox extends UI5Element {
 		const hasSelectedItem = this.items.some(item => item.selected);
 
 		if (!hasSelectedItem) {
-			const morePopover = this.shadowRoot.querySelector(`.ui5-multi-combobox-selected-items-popover`);
+			const morePopover = this.shadowRoot.querySelector(`.ui5-multi-combobox-selected-items-resp-popover`);
 
 			morePopover && morePopover.close();
 		}
@@ -505,7 +505,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	onAfterRendering() {
-		this.open && this._getPopover().openBy(this);
+		this.open && this._getRespPopover().open(this);
 	}
 
 	get valueStateTextMappings() {
@@ -569,7 +569,7 @@ class MultiComboBox extends UI5Element {
 			Tokenizer.define(),
 			Token.define(),
 			Icon.define(),
-			Popover.define(),
+			ResponsivePopover.define(),
 			List.define(),
 			StandardListItem.define(),
 			fetchI18nBundle("@ui5/webcomponents"),

@@ -86,6 +86,13 @@ const metadata = {
 			type: Boolean,
 			noAttribute: true,
 		},
+
+		/**
+		 * @private
+		 */
+		_disableInitialFocus: {
+			type: Boolean,
+		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.Popup.prototype */ {
 
@@ -354,6 +361,10 @@ class Popup extends UI5Element {
 	}
 
 	setInitialFocus(container) {
+		if (this._disableInitialFocus) {
+			return;
+		}
+
 		if (this._initialFocusDomRef) {
 			if (this._initialFocusDomRef !== document.activeElement) {
 				this._initialFocusDomRef.focus();

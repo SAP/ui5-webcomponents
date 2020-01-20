@@ -50,11 +50,8 @@
 
 	{{#if showSuggestions}}
 		<ui5-responsive-popover
-			{{!-- placement-type="Bottom" --}}
-			{{!-- no-arrow --}}
-			{{!-- horizontal-align="Stretch" --}}
-			phone-header-title="Input title"
-			show-confirm-button="true"
+			header-title="Input title"
+			show-confirm-button
 		>
 			<ui5-list separators="Inner">
 				<slot></slot>

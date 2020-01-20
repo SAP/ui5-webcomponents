@@ -17,20 +17,22 @@
 	box-sizing: border-box;
 }
 
-:host([data-ui5-compact-size]) {
+:host([data-ui5-compact-size]), .ui5-input-host {
 	height: var(--_ui5_input_compact_height);
 }
 
-:host([data-ui5-compact-size]) [inner-input] {
+:host([data-ui5-compact-size]) [inner-input],
+.ui5-input-host [inner-input] {
 	padding: 0 0.5rem;
 }
 
-:host([focused]) {
+:host([focused]), .ui5-input-host {
 	outline: var(--_ui5_input_focus_border_width) dotted var(--sapContent_FocusColor);
 	outline-offset: -3px;
 }
 
-:host([value-state]:not([value-state="None"])[focused]) {
+:host([value-state]:not([value-state="None"])[focused]),
+.ui5-input-host[value-state]:not([value-state="None"])[focused] {
 	outline: var(--_ui5_input_focus_border_width) dotted var(--sapContent_FocusColor);
 	outline-offset: -4px;
 }
@@ -45,7 +47,7 @@
 	color: inherit;
 }
 
-:host([disabled]) {
+:host([disabled]), .ui5-input-host[disabled] {
 	opacity: var(--sap_wc_input_disabled_opacity);
 	cursor: default;
 	pointer-events: none;
@@ -57,7 +59,10 @@
 
 :host([value-state="Error"]) [input-icon][data-ui5-compact-size],
 :host([value-state="Success"]) [input-icon][data-ui5-compact-size],
-:host([value-state="Warning"]) [input-icon][data-ui5-compact-size] {
+:host([value-state="Warning"]) [input-icon][data-ui5-compact-size],
+.ui5-input-host[value-state="Error"] [input-icon][data-ui5-compact-size],
+.ui5-input-host[value-state="Success"] [input-icon][data-ui5-compact-size],
+.ui5-input-host[value-state="Warning"] [input-icon][data-ui5-compact-size] {
 	padding: .1875rem .5rem
 }
 
@@ -86,10 +91,13 @@
 }
 
 /* Input placeholder */
-:host([disabled]) [inner-input]::-webkit-input-placeholder {
+:host([disabled]) [inner-input]::-webkit-input-placeholder,
+.ui5-input-host[disabled] [inner-input]::-webkit-input-placeholder {
 	visibility: hidden;
 }
-:host([readonly]) [inner-input]::-webkit-input-placeholder {
+
+:host([readonly]) [inner-input]::-webkit-input-placeholder,
+.ui5-input-host[readonly] [inner-input]::-webkit-input-placeholder {
 	visibility: hidden;
 }
 [inner-input]::-webkit-input-placeholder {
@@ -97,10 +105,13 @@
 	color: var(--sapField_PlaceholderTextColor);
 }
 
-:host([disabled]) [inner-input]::-moz-placeholder {
+:host([disabled]) [inner-input]::-moz-placeholder,
+.ui5-input-host[disabled] [inner-input]::-moz-placeholder {
 	visibility: hidden;
 }
-:host([readonly]) [inner-input]::-moz-placeholder {
+
+:host([readonly]) [inner-input]::-moz-placeholder,
+.ui5-input-host[readonly] [inner-input]::-moz-placeholder {
 	visibility: hidden;
 }
 [inner-input]::-moz-placeholder {
@@ -108,10 +119,13 @@
 	color: var(--sapField_PlaceholderTextColor);
 }
 
-:host([disabled]) [inner-input]:-ms-input-placeholder {
+:host([disabled]) [inner-input]:-ms-input-placeholder,
+.ui5-input-host [disabled] [inner-input]:-ms-input-placeholder {
 	visibility: hidden;
 }
-:host([readonly]) [inner-input]:-ms-input-placeholder {
+
+:host([readonly]) [inner-input]:-ms-input-placeholder,
+.ui5-input-host[readonly] [inner-input]:-ms-input-placeholder {
 	visibility: hidden;
 }
 [inner-input]:-ms-input-placeholder {
@@ -131,50 +145,62 @@
 	color: inherit;
 }
 
-:host([readonly]) {
+:host([readonly]),
+.ui5-input-host[readonly] {
 	border-color: var(--sapField_ReadOnly_BorderColor);
 	background: var(--sapField_ReadOnly_Background);
 }
 
-:host(:not([value-state]:not([readonly])):hover) {
+:host(:not([value-state]:not([readonly])):hover),
+.ui5-input-host:not([value-state]:not([readonly])):hover {
 	background-color: var(--sapField_Hover_Background);
 	border: 1px solid var(--sapField_Hover_BorderColor);
 }
 
-:host([value-state="None"]:hover) {
+:host([value-state="None"]:hover),
+.ui5-input-host[value-state="None"]:hover {
 	background-color: var(--sapField_Hover_Background);
 	border: 1px solid var(--sapField_Hover_BorderColor);
 }
 
-:host([value-state]:not([value-state="None"])) {
+:host([value-state]:not([value-state="None"])),
+.ui5-input-host[value-state]:not([value-state="None"]) {
 	border-width: var(--_ui5_input_state_border_width);
 }
 
 :host([value-state="Error"]) [inner-input],
-:host([value-state="Warning"]) [inner-input] {
+:host([value-state="Warning"]) [inner-input],
+.ui5-input-host[value-state="Error"] [inner-input],
+.ui5-input-host[value-state="Warning"] [inner-input] {
 	font-style: var(--_ui5_input_error_warning_font_style);
 }
 
-:host([value-state="Error"]) [inner-input] {
+:host([value-state="Error"]) [inner-input],
+.ui5-input-host[value-state="Error"] [inner-input] {
 	font-weight: var(--_ui5_input_error_font_weight);
 }
 
-:host([value-state="Error"]:not([readonly])) {
+:host([value-state="Error"]:not([readonly])),
+.ui5-input-host[value-state="Error"]:not([readonly]) {
 	background-color: var(--sapField_InvalidBackground);
 	border-color: var(--sapField_InvalidColor);
 }
 
 :host([value-state="Error"]:not([readonly]):not([disabled])),
-:host([value-state="Warning"]:not([readonly]):not([disabled])) {
+:host([value-state="Warning"]:not([readonly]):not([disabled])),
+.ui5-input-host[value-state="Error"]:not([readonly]):not([disabled]),
+.ui5-input-host[value-state="Warning"]:not([readonly]):not([disabled]) {
 	border-style: var(--_ui5_input_error_warning_border_style);
 }
 
-:host([value-state="Warning"]:not([readonly])) {
+:host([value-state="Warning"]:not([readonly])),
+.ui5-input-host[value-state="Warning"]:not([readonly]) {
 	background-color: var(--sapField_WarningBackground);
 	border-color: var(--sapField_WarningColor);
 }
 
-:host([value-state="Success"]:not([readonly])) {
+:host([value-state="Success"]:not([readonly])),
+.ui5-input-host[value-state="Success"]:not([readonly]) {
 	background-color: var(--sapField_SuccessBackground);
 	border-color: var(--sapField_SuccessColor);
 }
@@ -196,7 +222,8 @@
 	align-items: center;
 }
 
-:host([data-ui5-compact-size]) .ui5-input-icon-root {
+:host([data-ui5-compact-size]) .ui5-input-icon-root,
+.ui5-input-host[data-ui5-compact-size] .ui5-input-icon-root {
 	min-width: var(--sap_wc_input_compact_min_width);
 	width: var(--sap_wc_input_compact_min_width);
 }
@@ -209,6 +236,7 @@
 	padding: var(--_ui5_input_icon_padding);
 }
 
-:host([data-ui5-compact-size]) ::slotted(ui5-icon[slot="icon"]) {
+:host([data-ui5-compact-size]) ::slotted(ui5-icon[slot="icon"]),
+.ui5-input-host[data-ui5-compact-size] ::slotted(ui5-icon[slot="icon"]) {
 	padding: .25rem .5rem;
 }
