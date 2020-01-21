@@ -234,12 +234,6 @@ exports.config = {
 				return document.querySelector(selector).getStaticAreaItemDomRef().host.classList[0];
 			}, selector);
 		}, false);
-
-		browser.addCommand("getStaticAreaItemClassName", function(selector) {
-			return browser.execute((selector) => {
-				return document.querySelector(selector).getStaticAreaItemDomRef().host.classList[0];
-			}, selector);
-		}, false);
 	},
 	/**
 	 * Runs before a WebdriverIO command gets executed.

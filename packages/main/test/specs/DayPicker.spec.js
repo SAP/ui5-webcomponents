@@ -3,6 +3,7 @@ const assert = require("chai").assert;
 
 describe("Day Picker Tests", () => {
 	browser.url("http://localhost:8080/test-resources/pages/DayPicker.html");
+	browser.pause(100);
 
 	beforeEach(() => {
 		browser.execute(() => {
