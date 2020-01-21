@@ -132,6 +132,7 @@
 .ui5-li-multisel-cb,
 .ui5-li-singlesel-radiobtn {
 	flex-shrink: 0;
+	pointer-events: none;
 }
 
 :host() ui5-checkbox.ui5-li-singlesel-radiobtn {
