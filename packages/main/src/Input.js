@@ -449,8 +449,12 @@ class Input extends UI5Element {
 	}
 
 	_onfocusout(event) {
-		this.focused = false; // invalidating property
+		if (this.contains(event.relatedTarget)) {
+			return;
+		}
+
 		this.previousValue = "";
+		this.focused = false; // invalidating property
 	}
 
 	_handleChange(event) {

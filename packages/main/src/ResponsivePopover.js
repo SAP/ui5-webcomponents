@@ -47,7 +47,10 @@ const metadata = {
 		 */
 		showCancelButton: {
 			type: Boolean
-		}
+		},
+		initialFocus: {
+			type: String
+		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.ResponsivePopover.prototype */ {
 	
@@ -146,6 +149,9 @@ class ResponsivePopover extends UI5Element {
 
 		const dialog = this.shadowRoot.querySelector("ui5-dialog");
 		const popover = this.shadowRoot.querySelector("ui5-popover");
+
+	
+		// popover._initialFocusElement = this.getRootNode().getElementById(this.initialFocus);
 
 		if (dialog) {
 			dialog.open();
