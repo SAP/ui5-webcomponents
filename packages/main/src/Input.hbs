@@ -50,15 +50,14 @@
 
 	{{#if showSuggestions}}
 		<ui5-responsive-popover
-			header-title="Input title"
-			show-confirm-button
 			{{!-- initial-focus="{{_id}}-inner" --}}
+			show-header-title
+			show-confirm-button
 		>
 			<ui5-list separators="Inner">
 				<slot></slot>
 			</ui5-list>
-			{{!-- check if is phone --}}
-			<div slot="phoneHeader" class="ui5-input-host">
+			<div slot="header" class="ui5-input-host">
 				<div class="ui5-input-root">
 					<div class="ui5-input-content">
 						<input

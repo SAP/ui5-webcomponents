@@ -1,11 +1,16 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResponsivePopoverTemplate from "./generated/templates/ResponsivePopoverTemplate.lit.js";
-
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import Popover from "./Popover.js";
 import Dialog from "./Dialog.js";
 import Button from "./Button.js";
+
+import {
+	INPUT_SUGGESTIONS_TITLE,
+} from "./generated/i18n/i18n-defaults.js";
+
 
 // Styles
 import ResponsivePopoverCss from "./generated/themes/ResponsivePopover.css.js";
@@ -29,10 +34,10 @@ const metadata = {
 		},
 
 		/**
-		 * Title of the Dialog on phone.
+		 * Title of the Dialog on phone. It will be displayed as "Select" text.
 		 */
-		headerTitle: {
-			type: String
+		showHeaderTitle: {
+			type: Boolean
 		},
 
 		/**
@@ -58,7 +63,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 
-		"phoneHeader": {
+		"header": {
 			type: HTMLElement
 		}
 	},
@@ -133,14 +138,16 @@ class ResponsivePopover extends UI5Element {
 		await Promise.all([
 			Popover.define(),
 			Dialog.define(),
-			Button.define()
+			Button.define(),
+			fetchI18nBundle("@ui5/webcomponents")
 		]);
 
 		super.define(...params);
 	}
 
-	get isPhone() {
-		return isPhone();
+	constructor() {
+		super();
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	open(opener) {
@@ -198,6 +205,15 @@ class ResponsivePopover extends UI5Element {
 	get _hasFooter() {
 		return this.showCancelButton || this.showConfirmButton;
 	}
+
+	get _isPhone() {
+		return isPhone();
+	}
+
+	get _headerTitleText() {
+		return this.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
+	}
+
 }
 
 ResponsivePopover.define();

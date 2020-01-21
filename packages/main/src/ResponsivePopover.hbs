@@ -1,4 +1,4 @@
-{{#if isPhone}}
+{{#if _isPhone}}
 	<ui5-dialog
 		stretch
 		_disable-initial-focus="true"
@@ -8,16 +8,18 @@
 		@ui5-afterClose="{{_fireEvent}}"
 	>
 		<div slot="header" class="ui5-responsive-popover-header">
-			<div class="row">
-				<span>{{headerTitle}}</span>
-				<ui5-button
-					icon="decline"
-					design="Transparent"
-					@click="{{close}}"
-				>
-				</ui5-button>
-			</div>
-			<slot name="phoneHeader"></slot>
+			{{#if showHeaderTitle}}
+				<div class="row">
+					<span>{{_headerTitleText}}</span>
+					<ui5-button
+						icon="decline"
+						design="Transparent"
+						@click="{{close}}"
+					>
+					</ui5-button>
+				</div>
+			{{/if}}
+			<slot name="header"></slot>
 		</div>
 		<slot></slot>
 		{{#if _hasFooter}}

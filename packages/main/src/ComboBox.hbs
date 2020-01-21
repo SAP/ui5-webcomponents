@@ -34,7 +34,7 @@
 
 	<ui5-responsive-popover
 		class="ui5-combobox--respPopover"
-		header-title="ComboBox title"
+		show-header-title
 		show-confirm-button
 		@ui5-afterOpen={{_afterOpenPopover}}
 		@ui5-afterClose={{_afterClosePopover}}
@@ -61,7 +61,7 @@
 			{{/each}}
 		</ui5-list>
 		<div
-			slot="phoneHeader"
+			slot="header"
 			class="ui5-input-host"
 			value-state="{{valueState}}"
 		>

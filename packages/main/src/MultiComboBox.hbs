@@ -59,11 +59,11 @@
 
 	<ui5-responsive-popover 
 		class="ui5-multi-combobox-selected-items--respPopover"
-		header-title="MultiComboBox"
+		show-header-title
 		show-confirm-button
 	>
 		<div
-			slot="phoneHeader"
+			slot="header"
 			class="ui5-input-host"
 			value-state="{{valueState}}"
 		>
@@ -100,13 +100,13 @@
 
 	<ui5-responsive-popover
 		class="ui5-multi-combobox-all-items--respPopover"
-		header-title="MultiComboBox"
+		show-header-title
 		show-confirm-button
 		@ui5-selectionChange={{_listSelectionChange}}
 		@ui5-afterClose={{_toggleIcon}}
 		@ui5-afterOpen={{_toggleIcon}}
 	>
-		<div slot="phoneHeader" class="ui5-input-host">
+		<div slot="header" class="ui5-input-host">
 			<div class="ui5-multi-combobox-root">
 				<input
 					.value="{{value}}"
