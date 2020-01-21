@@ -1,5 +1,5 @@
-commit 44e631aaf0ca630f2ac9507f255b1a544832c835
+commit 2bd2204edfc4f418f97cbbdba4572ebb03c36c08
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Tue Jan 21 06:07:42 2020 +0200
+Date:   Tue Jan 21 06:29:13 2020 +0200
 
-    fix: Dialog does not break when there is no header text (#1146)
+    fix(ui5-avatar): remove background color when there is no image (#1148)
