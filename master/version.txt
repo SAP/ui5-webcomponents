@@ -1,5 +1,5 @@
-commit 964dbc274a1fb45da24b14d2bca3323ad61d54c4
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Thu Jan 16 17:22:34 2020 +0200
+commit 44e631aaf0ca630f2ac9507f255b1a544832c835
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Tue Jan 21 06:07:42 2020 +0200
 
-    fix(ui5-li): prevent checkbox shrinking (#1142)
+    fix: Dialog does not break when there is no header text (#1146)

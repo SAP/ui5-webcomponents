@@ -1434,13 +1434,6 @@
       <td> </td>
     </tr>
     <tr>
-      <td>compactSize</td>
-      <td>true, false</td>
-      <td>false</td>
-      <td>When set, enforces compact density (smaller margins/paddings)</td>
-      <td> </td>
-    </tr>
-    <tr>
       <td><a href="#animationMode">animationMode</a></td>
       <td>full, basic, minimal, none</td>
       <td>full</td>
@@ -1470,6 +1463,10 @@
     </tr>
   </tbody>
 </table>
+
+<h3 id="content-density">Content Density</h3>
+
+<p>UI5 Web Components contains different content densities for certain controls that allow your app to adapt to the device in question, allowing you to display larger controls for touch-enabled devices and a smaller, more compact design for devices that are operated by mouse. Cosy size is the default density for all components. Compact Size could be set by adding a class <code class="highlighter-rouge">ui5-content-density-compact</code> to an html element. It cascades all the way down and enforces compact density (smaller margins/paddings, smaller touch areas, etc).</p>
 
 <p><a name="theme"></a></p>
 <h3 id="theme">Theme</h3>
@@ -1565,7 +1562,6 @@ For example, when the <code class="highlighter-rouge">ui5-switch</code> is toggl
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;script </span><span class="na">data-ui5-config</span> <span class="na">type=</span><span class="s">"application/json"</span><span class="nt">&gt;</span>
 <span class="p">{</span>
 	<span class="dl">"</span><span class="s2">rtl</span><span class="dl">"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
-	<span class="dl">"</span><span class="s2">compactSize</span><span class="dl">"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
 	<span class="dl">"</span><span class="s2">language</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">ja</span><span class="dl">"</span><span class="p">,</span>
 	<span class="dl">"</span><span class="s2">calendarType</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Japanese</span><span class="dl">"</span><span class="p">,</span>
 	<span class="dl">"</span><span class="s2">formatSettings</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
@@ -1590,7 +1586,6 @@ However, reading/modifying the configuration reliably can only be done programma
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">getTheme</span><span class="p">,</span> <span class="nx">setTheme</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/config/Theme.js</span><span class="dl">"</span><span class="p">;</span>
 <span class="k">import</span> <span class="p">{</span> <span class="nx">getNoConflict</span><span class="p">,</span> <span class="nx">setNoConflict</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/config/NoConflict.js</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span> <span class="nx">getCompactSize</span><span class="p">,</span> <span class="nx">setCompactSize</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/config/CompactSize.js</span><span class="dl">"</span><span class="p">;</span>
 <span class="k">import</span> <span class="p">{</span> <span class="nx">getRTL</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/config/RTL.js</span><span class="dl">"</span><span class="p">;</span>
 <span class="k">import</span> <span class="p">{</span> <span class="nx">getAnimationMode</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/config/AnimationMode.js</span><span class="dl">"</span><span class="p">;</span>
 <span class="k">import</span> <span class="p">{</span> <span class="nx">getLanguage</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/config/Language.js</span><span class="dl">"</span><span class="p">;</span>
