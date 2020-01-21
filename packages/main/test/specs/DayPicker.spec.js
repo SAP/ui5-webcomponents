@@ -25,9 +25,9 @@ describe("Day Picker Tests", () => {
 	});
 
 	it("Select day with Enter", () => {
-		browser.keys("ArrowRight");
-		browser.keys("Enter");
+		daypicker.id = "daypicker1";
+		browser.keys("Enter"); // The initial focus is on th current date
 
-		assert.strictEqual(daypicker.currentDate, new Date(Date.now() + 24 * 3600 * 1000).getDate(), "Dates are equal"); // Tomorrow should be selected
+		assert.strictEqual(daypicker.currentDate, new Date(Date.now()).getDate(), "Dates are equal"); // Tomorrow should be selected
 	});
 });
