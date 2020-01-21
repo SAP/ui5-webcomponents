@@ -81,11 +81,11 @@
 	width: 3rem;
 }
 
-:host(:not([img-src])) {
+:host(:not([img])) {
 	background-color: var(--sapAccentColor6);
 }
 
-:host(:not([img-src])) .ui5-avatar-icon {
+:host(:not([img])) .ui5-avatar-icon {
 	color: var(--sapContent_ImagePlaceholderForegroundColor);
 }
 
