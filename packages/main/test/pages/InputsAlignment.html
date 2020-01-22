@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<script>delete Document.prototype.adoptedStyleSheets;</script>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta charset="utf-8">
-	<title>ui5-input</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Inputs Alignment</title>
 
 	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
-
 	<script>delete Document.prototype.adoptedStyleSheets;</script>
-
 </head>
 
 <body style="background-color: var(--sapBackgroundColor);">
@@ -43,6 +41,14 @@
 		<ui5-li type="Active">Condensed</ui5-li>
 		<ui5-li type="Active">Longest word in the world</ui5-li>
 	</ui5-multi-combobox>
+
+	<ui5-combobox placeholder="I am combobox">
+		<ui5-combobox-item text="Active">Cosy</ui5-combobox-item>
+		<ui5-combobox-item text="Active">Compact</ui5-combobox-item>
+		<ui5-combobox-item text="Active">Condensed</ui5-combobox-item>
+		<ui5-combobox-item text="Active">Long sentence Long sentence Long sentence</ui5-combobox-item>
+		<ui5-combobox-item text="Active">Some word</ui5-combobox-item>
+	</ui5-combobox>
 	<hr>
 	<h2>Explicitly width:auto set</h2>
 	<section>
