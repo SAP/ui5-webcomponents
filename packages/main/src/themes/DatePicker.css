@@ -8,3 +8,7 @@
 :host .ui5-datepicker-input {
 	width: 100%;
 }
+
+:host ui5-calendar {
+	width: 100%;
+}

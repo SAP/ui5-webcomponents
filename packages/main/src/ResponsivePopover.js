@@ -34,6 +34,13 @@ const metadata = {
 		},
 
 		/**
+		 * When set there will be padding added by Popover or Dialog.
+		 */
+		withPadding: {
+			type: Boolean
+		},
+
+		/**
 		 * Title of the Dialog on phone. It will be displayed as "Select" text.
 		 */
 		showHeaderTitle: {

@@ -1,8 +1,11 @@
 
 :host {
-	--_ui5_popover_content_padding: 0;
 	--_ui5_input_width: 100%;
 	display: contents;
+}
+
+:host(:not([with-padding])) {
+	--_ui5_popover_content_padding: 0;
 }
 
 .ui5-responsive-popover-header .row {
