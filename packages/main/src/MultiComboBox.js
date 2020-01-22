@@ -6,7 +6,7 @@ import {
 } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-down.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
-import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
+import { isIE, isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import MultiComboBoxTemplate from "./generated/templates/MultiComboBoxTemplate.lit.js";
 import Tokenizer from "./Tokenizer.js";
@@ -459,7 +459,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_getRespPopover(isMorePopover) {
-		return this.shadowRoot.querySelector(`.ui5-multi-combobox-${isMorePopover ? "selected" : "all"}-items--respPopover`);
+		return this.shadowRoot.querySelector(`.ui5-multi-combobox-${isMorePopover ? "selected" : "all"}-items-respPopover`);
 	}
 
 	_toggleRespPopover(isMorePopover) {
@@ -481,6 +481,13 @@ class MultiComboBox extends UI5Element {
 
 	_focusout() {
 		this.focused = false;
+	}
+
+	_click(event) {
+		if (isPhone() && !this._getRespPopover(true).opened) {
+			this._getRespPopover().open(this);
+			event.preventDefault(); // prevent immediate selection of any item
+		}
 	}
 
 	onBeforeRendering() {

@@ -206,7 +206,7 @@ class Select extends UI5Element {
 	}
 
 	get _respPopover() {
-		return this.shadowRoot.querySelector("#ui5-select--respPopover");
+		return this.shadowRoot.querySelector("#ui5-select-respPopover");
 	}
 
 	/**

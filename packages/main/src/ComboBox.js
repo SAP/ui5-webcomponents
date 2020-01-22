@@ -341,7 +341,7 @@ class ComboBox extends UI5Element {
 		}
 	}
 
-	_touchstart(event) {
+	_click(event) {
 		if (isPhone()) {
 			this.respPopover.open(this);
 			event.preventDefault(); // prevent immediate selection of any item
@@ -412,7 +412,7 @@ class ComboBox extends UI5Element {
 	}
 
 	get respPopover() {
-		return this.shadowRoot.querySelector(".ui5-combobox--respPopover");
+		return this.shadowRoot.querySelector(".ui5-combobox-respPopover");
 	}
 
 	get editable() {

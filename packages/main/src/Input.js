@@ -441,13 +441,6 @@ class Input extends UI5Element {
 		this.previousValue = this.value;
 	}
 
-	_touchstart(event) {
-		if (isPhone() && this.Suggestions) {
-			this.Suggestions.open(this);
-			event.preventDefault(); // prevent immediate selection of any item
-		}
-	}
-
 	_onfocusout(event) {
 		if (this.contains(event.relatedTarget)) {
 			return;
@@ -455,6 +448,13 @@ class Input extends UI5Element {
 
 		this.previousValue = "";
 		this.focused = false; // invalidating property
+	}
+
+	_touchstart(event) {
+		if (this.Suggestions && isPhone()) {
+			this.Suggestions.open(this);
+			event.preventDefault(); // prevent immediate selection of any item
+		}
 	}
 
 	_handleChange(event) {

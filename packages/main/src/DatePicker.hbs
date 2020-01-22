@@ -15,6 +15,7 @@
 			value-state="{{valueState}}"
 			@ui5-change="{{_handleInputChange}}"
 			@ui5-input="{{_handleInputLiveChange}}"
+			@click={{_click}}
 			data-sap-focus-ref
 			._inputAccInfo ="{{accInfo}}"
 	>
@@ -35,7 +36,7 @@
 
 	<!-- POPOVER -->
 	<ui5-responsive-popover
-			id="{{_id}}--respPopover"
+			id="{{_id}}-respPopover"
 			allow-target-overlap="{{_respPopoverConfig.allowTargetOverlap}}"
 			stay-open-on-scroll="{{_respPopoverConfig.stayOpenOnScroll}}"
 			show-header-title

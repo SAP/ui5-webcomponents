@@ -13,7 +13,7 @@
 		value-state="{{valueState}}"
 		@input="{{_input}}"
 		@change="{{_inputChange}}"
-		@touchstart={{_touchstart}}
+		@click={{_click}}
 		@keydown="{{_keydown}}"
 		@focusin="{{_focusin}}"
 		@focusout="{{_focusout}}"
@@ -33,7 +33,7 @@
 	{{/unless}}
 
 	<ui5-responsive-popover
-		class="ui5-combobox--respPopover"
+		class="ui5-combobox-respPopover"
 		show-header-title
 		show-confirm-button
 		@ui5-afterOpen={{_afterOpenPopover}}

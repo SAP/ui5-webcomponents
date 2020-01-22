@@ -13,6 +13,7 @@ import CalendarDate from "@ui5/webcomponents-base/dist/dates/CalendarDate.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { isShow } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/icons/appointment-2.js";
 import { DATEPICKER_OPEN_ICON_TITLE, DATEPICKER_DATE_ACC_TEXT } from "./generated/i18n/i18n-defaults.js";
@@ -338,6 +339,13 @@ class DatePicker extends UI5Element {
 		this.fireEvent("input", { value: nextValue, valid: isValid });
 	}
 
+	_click(event) {
+		if (isPhone()) {
+			this._respPopover.open(this);
+			event.preventDefault(); // prevent immediate selection of any item
+		}
+	}
+
 	/**
 	 * Checks if a value is valid against the current date format of the DatePicker
 	 * @param {string} value A value to be tested against the current date format
@@ -410,7 +418,7 @@ class DatePicker extends UI5Element {
 			"ariaHasPopup": "true",
 			"ariaAutoComplete": "none",
 			"role": "combobox",
-			"ariaOwns": `${this._id}--respPopover`,
+			"ariaOwns": `${this._id}-respPopover`,
 			"ariaExpanded": this.isOpen(),
 			"ariaDescription": this.dateAriaDescription,
 		};
@@ -429,7 +437,7 @@ class DatePicker extends UI5Element {
 	}
 
 	get _respPopover() {
-		return this.shadowRoot.querySelector(`#${this._id}--respPopover`);
+		return this.shadowRoot.querySelector(`#${this._id}-respPopover`);
 	}
 
 	_canOpenPicker() {

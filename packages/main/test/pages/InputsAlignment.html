@@ -16,19 +16,22 @@
 	<h2>The way the components will be rendered out of the box</h2>
 	<ui5-input placeholder="I am ui5-input" value-state="Error"></ui5-input>
 
-	<ui5-input placeholder="I am ui5-input">
+	<ui5-input placeholder="I am ui5-input" show-suggestions>
 		<ui5-icon slot="icon" name="message-error"></ui5-icon>
+		<ui5-li>Cozy</ui5-li>
+		<ui5-li>Compact</ui5-li>
+		<ui5-li>Condensed</ui5-li>
 	</ui5-input>
 
 	<ui5-datepicker></ui5-datepicker>
 
-	<ui5-select>
+	<ui5-select >
 		<ui5-option>short option</ui5-option>
-		<ui5-option selected>average long option</ui5-option>
+		<ui5-option selected>ui5-select: average long option</ui5-option>
 		<ui5-option>very very very very very long option</ui5-option>
 	</ui5-select>
 
-	<ui5-multi-combobox placeholder="I am muli cbx">
+	<ui5-multi-combobox placeholder="I am multi cbx">
 		<ui5-li selected type="Active">Cosy</ui5-li>
 		<ui5-li type="Active">Compact</ui5-li>
 		<ui5-li selected type="Active">Condensed</ui5-li>
@@ -43,11 +46,11 @@
 	</ui5-multi-combobox>
 
 	<ui5-combobox placeholder="I am combobox">
-		<ui5-combobox-item text="Active">Cosy</ui5-combobox-item>
-		<ui5-combobox-item text="Active">Compact</ui5-combobox-item>
-		<ui5-combobox-item text="Active">Condensed</ui5-combobox-item>
-		<ui5-combobox-item text="Active">Long sentence Long sentence Long sentence</ui5-combobox-item>
-		<ui5-combobox-item text="Active">Some word</ui5-combobox-item>
+		<ui5-combobox-item text="Active"></ui5-combobox-item>
+		<ui5-combobox-item text="Active"></ui5-combobox-item>
+		<ui5-combobox-item text="Active"></ui5-combobox-item>
+		<ui5-combobox-item text="Long sentence Long sentence Long sentence"></ui5-combobox-item>
+		<ui5-combobox-item text="Some word"></ui5-combobox-item>
 	</ui5-combobox>
 	<hr>
 	<h2>Explicitly width:auto set</h2>
