@@ -71,11 +71,11 @@
 	</div>
 
 	<!-- overflow menu -->
-	<ui5-popover
+	<ui5-responsive-popover
 		id="{{_id}}-overflowMenu"
-		no-arrow
-		placement-type="Bottom"
-		horizontal-align="Right">
+		horizontal-align="Right"
+		show-cancel-button
+	>
 		<ui5-list @ui5-itemPress="{{_onOverflowListItemSelect}}">
 			{{#each renderItems}}
 				{{#unless this.isSeparator}}
@@ -100,7 +100,7 @@
 				{{/unless}}
 			{{/each}}
 		</ui5-list>
-	</ui5-popover>
+	</ui5-responsive-popover>
 </div>
 
 {{#*inline "textOnlyTab"}}

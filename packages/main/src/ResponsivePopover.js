@@ -3,6 +3,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResponsivePopoverTemplate from "./generated/templates/ResponsivePopoverTemplate.lit.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import Popover from "./Popover.js";
 import Dialog from "./Dialog.js";
 import Button from "./Button.js";
@@ -14,6 +15,8 @@ import {
 
 // Styles
 import ResponsivePopoverCss from "./generated/themes/ResponsivePopover.css.js";
+
+const POPOVER_MIN_WIDTH = 100;
 
 /**
  * @private
@@ -38,6 +41,18 @@ const metadata = {
 		 */
 		withPadding: {
 			type: Boolean
+		},
+
+		/**
+		 * Determines the horizontal alignment of the <code>ui5-popover</code>.
+		 *
+		 * @type {PopoverHorizontalAlign}
+		 * @defaultvalue "Left"
+		 * @public
+		 */
+		horizontalAlign: {
+			type: PopoverHorizontalAlign,
+			defaultValue: PopoverHorizontalAlign.Left,
 		},
 
 		/**
@@ -159,7 +174,7 @@ class ResponsivePopover extends UI5Element {
 
 	open(opener) {
 
-		this._width = opener.getBoundingClientRect().width;
+		this._width = Math.max(POPOVER_MIN_WIDTH, opener.getBoundingClientRect().width);
 
 		const dialog = this.shadowRoot.querySelector("ui5-dialog");
 		const popover = this.shadowRoot.querySelector("ui5-popover");
@@ -211,6 +226,10 @@ class ResponsivePopover extends UI5Element {
 
 	get _hasFooter() {
 		return this.showCancelButton || this.showConfirmButton;
+	}
+
+	get _hasHeader() {
+		return this.showHeaderTitle || this.header.length;
 	}
 
 	get _isPhone() {

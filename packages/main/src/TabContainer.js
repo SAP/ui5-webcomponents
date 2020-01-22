@@ -15,7 +15,7 @@ import Button from "./Button.js";
 import CustomListItem from "./CustomListItem.js";
 import Icon from "./Icon.js";
 import List from "./List.js";
-import Popover from "./Popover.js";
+import ResponsivePopover from "./ResponsivePopover.js";
 import SemanticColor from "./types/SemanticColor.js";
 
 // Styles
@@ -276,7 +276,7 @@ class TabContainer extends UI5Element {
 
 	_onOverflowListItemSelect(event) {
 		this._onItemSelect(event.detail.item);
-		this._getPopover().close();
+		this._respPopover.close();
 		this.shadowRoot.querySelector(`#${event.detail.item.id}`).focus();
 	}
 
@@ -314,7 +314,7 @@ class TabContainer extends UI5Element {
 	}
 
 	_onOverflowButtonClick(event) {
-		this._getPopover().openBy(event.target);
+		this._respPopover.open(event.target);
 	}
 
 	_onHeaderBackArrowClick() {
@@ -351,7 +351,7 @@ class TabContainer extends UI5Element {
 		return this.shadowRoot.querySelector(`#${this._id}-headerScrollContainer`);
 	}
 
-	_getPopover() {
+	get _respPopover() {
 		return this.shadowRoot.querySelector(`#${this._id}-overflowMenu`);
 	}
 
@@ -421,7 +421,7 @@ class TabContainer extends UI5Element {
 			CustomListItem.define(),
 			Icon.define(),
 			List.define(),
-			Popover.define(),
+			ResponsivePopover.define(),
 			fetchI18nBundle("@ui5/webcomponents"),
 		]);
 
