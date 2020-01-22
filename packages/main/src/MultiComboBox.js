@@ -357,10 +357,12 @@ class MultiComboBox extends UI5Element {
 		this.value = input.value;
 		this._filteredItems = filteredItems;
 
-		if (filteredItems.length === 0) {
-			this._getRespPopover().close();
-		} else {
-			this._getRespPopover().open(this);
+		if (!isPhone) {
+			if (filteredItems.length === 0) {
+				this._getRespPopover().close();
+			} else {
+				this._getRespPopover().open(this);
+			}
 		}
 
 		this.fireEvent("input");
