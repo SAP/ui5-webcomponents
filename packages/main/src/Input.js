@@ -1,9 +1,8 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
+import { isIE, isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import {
 	isUp,
 	isDown,
@@ -72,7 +71,7 @@ const metadata = {
 		},
 
 		/**
-		 * The slot is used for native <code>input</code> HTML element to enable form sumbit,
+		 * The slot is used for native <code>input</code> HTML element to enable form submit,
 		 * when <code>name</code> property is set.
 		 * @type {HTMLElement[]}
 		 * @private
@@ -86,7 +85,7 @@ const metadata = {
 		/**
 		 * Defines whether <code>ui5-input</code> is in disabled state.
 		 * <br><br>
-		 * <b>Note:</b> A disabled <code>ui5-input</code> is completely uninteractive.
+		 * <b>Note:</b> A disabled <code>ui5-input</code> is completely non interactive.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
