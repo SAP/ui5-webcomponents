@@ -47,17 +47,5 @@
 		{{/if}}
 	</div>
 
-	{{#if showSuggestions}}
-			<ui5-popover
-				placement-type="Bottom"
-				no-arrow
-				horizontal-align="Stretch"
-				initial-focus="{{_id}}-inner">
-					<ui5-list separators="Inner">
-						<slot></slot>
-					</ui5-list>
-			</ui5-popover>
-	{{/if}}
-
 	<slot name="formSupport"></slot>
 </div>

@@ -1,0 +1,21 @@
+<ui5-popover class="ui5-shellbar-menu-popover" placement-type="Bottom">
+	<ui5-list separators="None" mode="SingleSelect" @ui5-itemPress={{_menuItemPress}}>
+		{{#each _menuPopoverItems}}
+			<ui5-li>{{ this }}</ui5-li>
+		{{/each}}
+	</ui5-list>
+</ui5-popover>
+
+<ui5-popover class="ui5-shellbar-overflow-popover" placement-type="Bottom" horizontal-align="{{popoverHorizontalAlign}}" no-arrow>
+	<ui5-list separators="None" @ui5-itemPress="{{_actionList.itemPress}}">
+		{{#each _hiddenIcons}}
+			<ui5-li
+				data-ui5-external-action-item-id="{{this.refItemid}}"
+				icon="{{this.icon}}"
+				type="Active"
+				@ui5-_press="{{this.press}}"
+			>{{this.text}}
+			</ui5-li>
+		{{/each}}
+	</ui5-list>
+</ui5-popover>

@@ -4,43 +4,6 @@
 	aria-expanded="{{open}}"
 >
 
-	<ui5-popover
-		class="ui5-combobox-popover"
-		style={{styles.popover}}
-		horizontal-align="Left"
-		?no-arrow={{editable}}
-		no-padding="true"
-		placement-type="Bottom"
-		initial-focus="ui5-combobox-input"
-		tabindex="-1"
-		@ui5-afterOpen={{_afterOpenPopover}}
-		@ui5-afterClose={{_afterClosePopover}}
-	>
-
-		<ui5-busyindicator 
-			?active={{loading}}
-			size="Medium"
-			class="ui5-combobox-busy"
-		>
-		</ui5-busyindicator>
-
-		<ui5-list 
-			separators="None"
-			@ui5-itemClick={{_selectItem}}
-			mode="SingleSelect"
-		>
-			{{#each _filteredItems}}
-				<ui5-li
-					type="Active"
-					.mappedItem={{this}}
-					?selected={{this.selected}}
-				>
-					{{this.text}}
-				</ui5-li>
-			{{/each}}
-		</ui5-list>
-	</ui5-popover>
-
 	<input id="ui5-combobox-input"
 		.value="{{_tempValue}}"
 		inner-input
