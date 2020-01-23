@@ -124,7 +124,7 @@
 }
 
 :host([backgroundColor="Accent9"]) {
-	background-color: red;
+	background-color: var(--sapAccentColor9);
 }
 
 :host([backgroundColor="Accent10"]) {

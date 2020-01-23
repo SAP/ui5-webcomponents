@@ -99,6 +99,12 @@ const metadata = {
 
 		/**
 		 * Defines the fit type of the desired image.
+		 * <br><br>
+		 * Available options are:
+		 * <ul>
+		 * <li><code>Cover</code></li>
+		 * <li><code>Contain</code></li>
+		 * <ul>
 		 * @type {String}
 		 * @defaultvalue "Cover"
 		 * @public
@@ -110,6 +116,21 @@ const metadata = {
 
 		/**
 		 * Defines the background color of the desired image.
+		 * <br><br>
+		 * Available options are:
+		 * <ul>
+		 * <li><code>Accent1</code></li>
+		 * <li><code>Accent2</code></li>
+		 * <li><code>Accent3</code></li>
+		 * <li><code>Accent4</code></li>
+		 * <li><code>Accent5</code></li>
+		 * <li><code>Accent6</code></li>
+		 * <li><code>Accent7</code></li>
+		 * <li><code>Accent8</code></li>
+		 * <li><code>Accent9</code></li>
+		 * <li><code>Accent10</code></li>
+		 * <li><code>Placeholder</code></li>
+		 * <ul>
 		 * @type {String}
 		 * @defaultvalue "Accent6"
 		 * @public
