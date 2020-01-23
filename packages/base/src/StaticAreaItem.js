@@ -17,7 +17,6 @@ class StaticAreaItem {
 	_updateFragment() {
 		const renderResult = this.ui5ElementContext.constructor.staticAreaTemplate(this.ui5ElementContext),
 			stylesToAdd = this.ui5ElementContext.constructor.staticAreaStyles || false;
-		let domNodeToRenderInCurrentComponent;
 
 		if (!this.staticAreaItemDomRef) {
 			// Initial rendering of fragment
