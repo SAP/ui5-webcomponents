@@ -21,7 +21,9 @@ const getConfigurationSettingsObject = () => {
 		theme: config.getTheme(),
 		rtl: config.getRTL(),
 		calendarType: config.getCalendarType(),
-		firstDayOfWeek: LocaleData.getInstance(config.getLocale()).getFirstDayOfWeek(),
+		formatSettings: {
+			firstDayOfWeek: LocaleData.getInstance(config.getLocale()).getFirstDayOfWeek(),
+		},
 	};
 };
 

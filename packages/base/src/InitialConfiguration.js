@@ -1,3 +1,4 @@
+import merge from "@ui5/webcomponents-utils/dist/sap/base/util/merge.js";
 import { getFeature } from "./FeaturesRegistry.js";
 
 let initialized = false;
@@ -10,7 +11,9 @@ let initialConfig = {
 	compactSize: false,
 	calendarType: null,
 	noConflict: false, // no URL
-	formatSettings: {},
+	formatSettings: {
+		firstDayOfWeek: 1, // Monday
+	},
 };
 
 /* General settings */
@@ -71,7 +74,7 @@ const parseConfigurationScript = () => {
 		}
 
 		if (configJSON) {
-			initialConfig = Object.assign(initialConfig, configJSON);
+			initialConfig = merge(initialConfig, configJSON);
 		}
 	}
 };
@@ -103,7 +106,7 @@ const applyOpenUI5Configuration = () => {
 	}
 
 	const OpenUI5Config = OpenUI5Support.getConfigurationSettingsObject();
-	initialConfig = Object.assign(initialConfig, OpenUI5Config);
+	initialConfig = merge(initialConfig, OpenUI5Config);
 };
 
 
