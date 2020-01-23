@@ -1,5 +1,5 @@
-commit 5d27c7fa6e23f821abbc4c3d713106eabfb13bbb
-Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
-Date:   Thu Jan 23 15:27:24 2020 +0200
+commit 85f316cdd623b7b615861d17e3a184fc40819db7
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Thu Jan 23 17:06:31 2020 +0200
 
-    feat(ui5-avatar): add initials, imageFitType and bg-color (#1151)
+    refactor(ui5-popover): init private popovers in static area (#1129)
