@@ -1,0 +1,32 @@
+<div 
+	id="{{this._id}}"
+	?disabled= "{{disabled}}"
+	value = "{{value}}"
+	label = "{{label}}"
+	expanded= "{{expanded}}"
+	@click = {{_onelementclick}}
+	class = "sapMWS{{isExpandedClass}}{{isDisabledClass}}">
+	<div id="{{this._id}}--label" class="sapMWSLabel"> {{label}}</div>
+	<div class="sapUiInvisibleText"></div>
+	<!--<ui5-button class="sapMWSArrows" icon="arrow-top"></ui5-button>-->
+	<div id="{{this._id}}--inner" class="sapMWSInner">
+		<div id="{{this._id}}--selection-frame" class="sapMWSSelectionFrame">
+		</div>
+		{{#if expanded}}
+			<div id="{{this._id}}--wrapper" style="overflow:hidden" class="sapMWrapper">
+				<ul id="{{this._id}}--items-list" style="list-style-type:none">
+					{{#each items}}
+						<li style="cursor: pointer;" class="sapMWSItem">{{this}}</li>
+					{{/each}}
+				</ul>
+			</div>
+		{{else}}
+			<div id="{{this._id}}--wrapper" style="overflow:hidden" class="sapMWrapper">
+				<ul id="{{this._id}}--items-list" style="list-style-type:none">
+					<li style="cursor: pointer;" class="sapMWSItem">{{value}}</li>
+				</ul>
+			</div>
+		{{/if}}
+	</div>
+	<ui5-button class="sapMWSArrows" icon="arrow-bottom" @click="_onbuttonclick"></ui5-button>
+</div>
