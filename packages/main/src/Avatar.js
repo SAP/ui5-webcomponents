@@ -177,6 +177,8 @@ class Avatar extends UI5Element {
 		if (this.initials && validInitials.test(this.initials)) {
 			return this.initials;
 		}
+
+		return null;
 	}
 }
 
