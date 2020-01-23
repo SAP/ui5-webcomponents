@@ -9,7 +9,7 @@ import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import MultiComboBoxTemplate from "./generated/templates/MultiComboBoxTemplate.lit.js";
-import MultiComboBoxPopover from "./generated/templates/MultiComboBoxPopoverTemplate.lit.js";
+import MultiComboBoxPopoverTemplate from "./generated/templates/MultiComboBoxPopoverTemplate.lit.js";
 import Tokenizer from "./Tokenizer.js";
 import Token from "./Token.js";
 import Icon from "./Icon.js";
@@ -287,7 +287,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	static get staticAreaTemplate() {
-		return MultiComboBoxPopover;
+		return MultiComboBoxPopoverTemplate;
 	}
 
 	static get styles() {

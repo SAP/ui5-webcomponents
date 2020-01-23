@@ -15,7 +15,7 @@ import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18
 import InputType from "./types/InputType.js";
 // Templates
 import InputTemplate from "./generated/templates/InputTemplate.lit.js";
-import InputPopover from "./generated/templates/InputPopoverTemplate.lit.js";
+import InputPopoverTemplate from "./generated/templates/InputPopoverTemplate.lit.js";
 
 import {
 	VALUE_STATE_SUCCESS,
@@ -338,7 +338,7 @@ class Input extends UI5Element {
 	}
 
 	static get staticAreaTemplate() {
-		return InputPopover;
+		return InputPopoverTemplate;
 	}
 
 	static get styles() {

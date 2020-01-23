@@ -7,7 +7,7 @@ import * as Filters from "./ComboBoxFilters.js";
 
 // Styles
 import ComboBoxTemplate from "./generated/templates/ComboBoxTemplate.lit.js";
-import ComboBoxPopover from "./generated/templates/ComboBoxPopoverTemplate.lit.js";
+import ComboBoxPopoverTemplate from "./generated/templates/ComboBoxPopoverTemplate.lit.js";
 import ComboBoxCss from "./generated/themes/ComboBox.css.js";
 import ComboBoxPopoverCss from "./generated/themes/ComboBoxPopover.css.js";
 import ComboBoxItem from "./ComboBoxItem.js";
@@ -254,7 +254,7 @@ class ComboBox extends UI5Element {
 	}
 
 	static get staticAreaTemplate() {
-		return ComboBoxPopover;
+		return ComboBoxPopoverTemplate;
 	}
 
 	static get staticAreaStyles() {
