@@ -1,3 +1,4 @@
+import RenderScheduler from "../RenderScheduler.js";
 import {
 	isDown,
 	isUp,
@@ -172,7 +173,8 @@ class ItemNavigation extends EventProvider {
 		this.rootWebComponent._invalidate();
 	}
 
-	focusCurrent() {
+	async focusCurrent() {
+		await RenderScheduler.whenFinished();
 		const currentItem = this._getCurrentItem();
 		if (currentItem) {
 			currentItem.focus();
