@@ -1,10 +1,5 @@
-commit 6733de99e63ee06fb632afd9420204146ddd8f0e
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Jan 22 11:36:01 2020 +0200
+commit 5d27c7fa6e23f821abbc4c3d713106eabfb13bbb
+Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
+Date:   Thu Jan 23 15:27:24 2020 +0200
 
-    refactor(ui5-card): update API and correct visual (#1145)
-    
-    - refactor: rename subtitle proeprty to subheading to match the heading property
-    - fix: don`t allocate space for the avatar if avatar is not present
-    
-    BREAKING CHANGE: the proeprty subtitle has been renamed to subheading
+    feat(ui5-avatar): add initials, imageFitType and bg-color (#1151)
