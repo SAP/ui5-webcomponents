@@ -20,25 +20,25 @@
 <body style="background-color: var(--sapBackgroundColor);">
 	<section>
 		<h3>Avatar - Basic sample</h3>
-		<ui5-avatar img="./img/John_Miller.png"></ui5-avatar>
+		<ui5-avatar image="./img/John_Miller.png"></ui5-avatar>
 	</section>
 
 	<section>
 		<h3>Avatar - Square [ XS, S, M, L, XL ]</h3>
-		<ui5-avatar img="./img/woman_avatar_5.png" shape="Square" size="XS"></ui5-avatar>
-		<ui5-avatar img="./img/woman_avatar_5.png" shape="Square" size="S"></ui5-avatar>
-		<ui5-avatar img="./img/woman_avatar_5.png" shape="Square" size="M"></ui5-avatar>
-		<ui5-avatar img="./img/woman_avatar_5.png" shape="Square" size="L"></ui5-avatar>
-		<ui5-avatar img="./img/woman_avatar_5.png" shape="Square" size="XL"></ui5-avatar>
+		<ui5-avatar image="./img/woman_avatar_5.png" shape="Square" size="XS"></ui5-avatar>
+		<ui5-avatar image="./img/woman_avatar_5.png" shape="Square" size="S"></ui5-avatar>
+		<ui5-avatar image="./img/woman_avatar_5.png" shape="Square" size="M"></ui5-avatar>
+		<ui5-avatar image="./img/woman_avatar_5.png" shape="Square" size="L"></ui5-avatar>
+		<ui5-avatar image="./img/woman_avatar_5.png" shape="Square" size="XL"></ui5-avatar>
 	</section>
 
 	<section>
 		<h3>Avatar - Circle [ XS, S, M, L, XL ]</h3>
-		<ui5-avatar img="./img/John_Miller.png" size="XS"></ui5-avatar>
-		<ui5-avatar img="./img/John_Miller.png" size="S"></ui5-avatar>
-		<ui5-avatar img="./img/John_Miller.png" size="M"></ui5-avatar>
-		<ui5-avatar img="./img/John_Miller.png" size="L"></ui5-avatar>
-		<ui5-avatar img="./img/John_Miller.png" size="XL"></ui5-avatar>
+		<ui5-avatar image="./img/John_Miller.png" size="XS"></ui5-avatar>
+		<ui5-avatar image="./img/John_Miller.png" size="S"></ui5-avatar>
+		<ui5-avatar image="./img/John_Miller.png" size="M"></ui5-avatar>
+		<ui5-avatar image="./img/John_Miller.png" size="L"></ui5-avatar>
+		<ui5-avatar image="./img/John_Miller.png" size="XL"></ui5-avatar>
 	</section>
 
 	<section>
@@ -89,18 +89,19 @@
 	</section>
 
 	<section>
-		<h3>Avatar - test</h3>
-		<ui5-avatar id="myAvatar1" img="./img/woman_avatar_5.png"></ui5-avatar>
-		<ui5-avatar id="myAvatar2" icon="filter"></ui5-avatar>
-		<ui5-avatar id="myAvatar3" img="./img/woman_avatar_5.png" icon="filter"></ui5-avatar>
+		<h3>Avatar - Custom</h3>
+		<h4>Avatar with custom size</h4>
+		<ui5-avatar id="myCustomAvatar" image="./img/Lamp_avatar_01.jpg" shape="Square" size="XL" style="width: 250px; height: 250px; border: 1px solid var(--sapField_BorderColor)"></ui5-avatar>
+		<h4>Avatar with custom size and imageFitType="Contain"</h4>
+		<ui5-avatar id="myCustomAvatar1" image="./img/Lamp_avatar_01.jpg" shape="Square" size="XL" style="width: 250px; height: 250px; border: 1px solid var(--sapField_BorderColor)" image-fit-type="Contain"></ui5-avatar>
 	</section>
 
 	<section>
-		<h3>Avatar - Custom</h3>
-		<h4>Avatar with custom size</h4>
-		<ui5-avatar id="myAvatar" img="./img/Lamp_avatar_01.jpg" shape="Square" size="XL" style="width: 250px; height: 250px; border: 1px solid var(--sapField_BorderColor)"></ui5-avatar>
-		<h4>Avatar with custom size and imageFitType="Contain"</h4>
-		<ui5-avatar id="myAvatar" img="./img/Lamp_avatar_01.jpg" shape="Square" size="XL" style="width: 250px; height: 250px; border: 1px solid var(--sapField_BorderColor)" imageFitType="Contain"></ui5-avatar>
+		<h3>Avatar - test</h3>
+		<ui5-avatar id="myAvatar1" image="./img/woman_avatar_5.png"></ui5-avatar>
+		<ui5-avatar id="myAvatar2" icon="filter"></ui5-avatar>
+		<ui5-avatar id="myAvatar3" image="./img/woman_avatar_5.png" icon="filter" initials="SF"></ui5-avatar>
+		<ui5-avatar id="myAvatar4" initials="SF" shape="Square" size="M"></ui5-avatar>
 	</section>
 </body>
 </html>

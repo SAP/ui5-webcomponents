@@ -87,7 +87,7 @@
 	width: 3rem;
 }
 
-:host(:not([img])) {
+:host(:not([image])) {
 	background-color: var(--sapAccentColor6);
 }
 
@@ -135,11 +135,11 @@
 	background-color: var(--sapContent_ImagePlaceholderBackground);
 }
 
-:host(:not([img])) .ui5-avatar-icon {
+:host(:not([image])) .ui5-avatar-icon {
 	color: inherit;
 }
 
-:host([imageFitType="Contain"]) .ui5-avatar-img {
+:host([image-fit-type="Contain"]) .ui5-avatar-img {
 	background-size: contain;
 }
 

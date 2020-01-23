@@ -26,14 +26,14 @@ const metadata = {
 		 * @defaultvalue ""
 		 * @public
 		 */
-		img: {
+		image: {
 			type: String,
 		},
 
 		/**
 		 * Defines the name of the UI5 Icon, that would be displayed.
 		 * <br>
-		 * <b>Note:</b> if <code>img</code> is set, the property would be ignored.
+		 * <b>Note:</b> if <code>image</code> is set, the property would be ignored.
 		 * <br>
 		 * <b>Note:</b> you should import the desired icon first, then use its name as "icon".
 		 * <br><br>
