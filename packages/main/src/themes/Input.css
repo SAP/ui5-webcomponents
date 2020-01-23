@@ -17,14 +17,6 @@
 	box-sizing: border-box;
 }
 
-:host([data-ui5-compact-size]) {
-	height: var(--_ui5_input_compact_height);
-}
-
-:host([data-ui5-compact-size]) [inner-input] {
-	padding: 0 0.5rem;
-}
-
 :host([focused]) {
 	outline: var(--_ui5_input_focus_border_width) dotted var(--sapContent_FocusColor);
 	outline-offset: -3px;
@@ -63,7 +55,7 @@
 	-webkit-appearance: none;
 	-moz-appearance: textfield;
 	line-height: normal;
-	padding: 0 0.75rem;
+	padding: var(--_ui5_input_inner_padding);
 	box-sizing: border-box;
 	min-width: 3rem;
 	text-overflow: ellipsis;
@@ -71,6 +63,12 @@
 	outline: none;
 	font-size: inherit;
 	font-family: inherit;
+}
+
+[inner-input]::selection,
+[inner-input]::-moz-selection {
+	background: var(--sapSelected);
+	color: var(--sapContent_contrastTextColor);
 }
 
 /* Input placeholder */
@@ -124,7 +122,7 @@
 	background: var(--sapField_ReadOnly_Background);
 }
 
-:host(:not([value-state]):hover) {
+:host(:not([value-state]:not([readonly])):hover) {
 	background-color: var(--sapField_Hover_Background);
 	border: 1px solid var(--sapField_Hover_BorderColor);
 }
@@ -184,19 +182,10 @@
 	align-items: center;
 }
 
-:host([data-ui5-compact-size]) .ui5-input-icon-root {
-	min-width: var(--sap_wc_input_compact_min_width);
-	width: var(--sap_wc_input_compact_min_width);
-}
-
 /* TODO: Remove this after parser is fixed
 	-	this statement is transformed to "ui5-multi-combobox ui5-icon" which 
 	affects all icons in the combobox incuding these in the list items
 */
 ::slotted(ui5-icon[slot="icon"]) {
 	padding: var(--_ui5_input_icon_padding);
-}
-
-:host([data-ui5-compact-size]) ::slotted(ui5-icon[slot="icon"]) {
-	padding: .25rem .5rem;
 }

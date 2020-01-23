@@ -9,7 +9,6 @@ import { getLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
 import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
 import { getTheme, setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 import { getNoConflict, setNoConflict } from "@ui5/webcomponents-base/dist/config/NoConflict.js";
-import { getCompactSize, setCompactSize } from "@ui5/webcomponents-base/dist/config/CompactSize.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSettings.js";
 
@@ -28,8 +27,6 @@ window["sap-ui-webcomponents-bundle"] = {
 		setTheme,
 		getNoConflict,
 		setNoConflict,
-		getCompactSize,
-		setCompactSize,
 		getCalendarType,
 		getRTL,
 		getFirstDayOfWeek,

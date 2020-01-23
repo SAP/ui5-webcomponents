@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	var sideNav = document.getElementById("side-nav");
 	var mainContent = document.getElementById("main-content");
 	var Configuration = window["sap-ui-webcomponents-bundle"].configuration;
-	var COMPACT = Configuration.getCompactSize();
+	var COMPACT_CLASS = "ui5-content-density-compact";
 	var RTL = Configuration.getRTL();
 	var THEME = Configuration.getTheme();
 	var HCB = "sap_belize_hcb";
@@ -41,12 +41,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 	function buildURL(compact, rtl, theme) {
 		var currentURL = window.location.href;
-		var params = ".html?sap-ui-theme=" + theme + "&sap-ui-compactSize=" + !!compact + "&sap-ui-rtl=" + !!rtl;
+		var params = ".html?sap-ui-theme=" + theme + "&sap-ui-rtl=" + !!rtl;
 		return currentURL.slice(0, currentURL.indexOf(".html")) + params;
 	}
 
 	btnRTL.pressed = !!RTL;
-	btnCompact.pressed = !!COMPACT;
 	btnTheme.pressed = !!(THEME === HCB);
 	btnLightDark.pressed = !!(THEME === FIORI3_DARK);
 
@@ -55,7 +54,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	}, false);
 
 	btnCompact.addEventListener('click', function(e) {
-		window.location.href = buildURL(e.target.pressed, btnRTL.pressed, THEME);
+		if (document.body.className.includes(COMPACT_CLASS)) {
+			return document.body.className = "";
+		}
+
+		document.body.className += COMPACT_CLASS;
 	}, false);
 
 	btnTheme.addEventListener('click', function(e) {

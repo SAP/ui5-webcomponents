@@ -19,7 +19,6 @@ class ItemNavigation extends EventProvider {
 
 		this.currentIndex = options.currentIndex || 0;
 		this.rowSize = options.rowSize || 1;
-		this.cyclic = options.cyclic || false;
 		this.behavior = options.behavior || ItemNavigationBehavior.Static;
 
 		const navigationMode = options.navigationMode;
