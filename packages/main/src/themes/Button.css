@@ -33,19 +33,6 @@
 	margin-left: 0;
 }
 
-:host([data-ui5-compact-size]) .ui5-button-icon {
-	font-size: 1rem;
-}
-
-:host([data-ui5-compact-size]) {
-	height: var(--_ui5_button_compact_height);
-	min-width: var(--_ui5_button_base_min_compact_width);
-}
-
-:host([data-ui5-compact-size]) .ui5-button-root {
-	padding: 0 var(--_ui5_button_compact_padding);
-}
-
 .ui5-button-root {
 	min-width: inherit;
 	cursor: inherit;
@@ -70,7 +57,7 @@
 }
 
 .ui5-button-icon {
-	font-size: var(--_ui5_button_base_icon_only_font_size);
+	font-size: var(--_ui5_button_icon_font_size);
 	height: 0;
 	top: -.5rem;
 	position: relative;
