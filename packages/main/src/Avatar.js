@@ -10,6 +10,8 @@ import AvatarCss from "./generated/themes/Avatar.css.js";
 import Icon from "./Icon.js";
 import AvatarSize from "./types/AvatarSize.js";
 import AvatarShape from "./types/AvatarShape.js";
+import AvatarFitType from "./types/AvatarFitType.js";
+import AvatarBackgroundColor from "./types/AvatarBackgroundColor.js";
 
 /**
  * @public
@@ -49,6 +51,18 @@ const metadata = {
 		},
 
 		/**
+		 * Defines the displayed initials.
+		 * <br>
+		 * Up to two Latin letters can be displayed as initials in a <code>ui5-avatar</code>.
+		 *
+		 * @type {string}
+		 * @public
+		 */
+		initials: {
+			type: String,
+		},
+
+		/**
 		 * Defines the shape of the <code>ui5-avatar</code>.
 		 * <br><br>
 		 * Available options are:
@@ -82,6 +96,29 @@ const metadata = {
 			type: String,
 			defaultValue: AvatarSize.S,
 		},
+
+		/**
+		 * Defines the fit type of the desired image.
+		 * @type {String}
+		 * @defaultvalue "Cover"
+		 * @public
+		 */
+		imageFitType: {
+			type: String,
+			defaultValue: AvatarFitType.Cover,
+		},
+
+		/**
+		 * Defines the background color of the desired image.
+		 * @type {String}
+		 * @defaultvalue "Accent6"
+		 * @public
+		 */
+		backgroundColor: {
+			type: String,
+			defaultValue: AvatarBackgroundColor.Accent6,
+		},
+
 	},
 	slots: /** @lends sap.ui.webcomponents.main.Avatar.prototype */ {
 	},
@@ -134,8 +171,12 @@ class Avatar extends UI5Element {
 		super.define(...params);
 	}
 
-	get displayIcon() {
-		return !!this.icon && !this.img;
+	get validInitials() {
+		const validInitials = /^[a-zA-Z]{1,2}$/;
+
+		if (this.initials && validInitials.test(this.initials)) {
+			return this.initials;
+		}
 	}
 }
 

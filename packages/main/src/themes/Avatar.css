@@ -8,19 +8,20 @@
 	width: 3rem;
 	border-radius: 50%;
 	outline: none;
+	color: var(--sapContent_ImagePlaceholderForegroundColor);
 }
 
 /* Shapes */
 :host([shape="Square"]) {
-	border-radius: 0.25rem;
+	border-radius: .25rem;
 }
 
 :host([shape="Square"]) .ui5-avatar-root {
-	border-radius: 0.25rem;
+	border-radius: .25rem;
 }
 
 :host([shape="Square"]) .ui5-avatar-img {
-	border-radius: 0.25rem;
+	border-radius: .25rem;
 }
 
 /* Sizes */
@@ -28,26 +29,31 @@
 :host([size="XS"]) {
 	height: 2rem;
 	width: 2rem;
+	font-size: .75rem;
 }
 
 :host([size="S"]) {
 	height: 3rem;
 	width: 3rem;
+	font-size: 1.125rem;
 }
 
 :host([size="M"]) {
 	height: 4rem;
 	width: 4rem;
+	font-size: 1.625rem;
 }
 
 :host([size="L"]) {
 	height: 5rem;
 	width: 5rem;
+	font-size: 2rem;
 }
 
 :host([size="XL"]) {
 	height: 7rem;
 	width: 7rem;
+	font-size: 2.75rem;
 }
 
 /* Icon */
@@ -85,8 +91,56 @@
 	background-color: var(--sapAccentColor6);
 }
 
+:host([backgroundColor="Accent1"]) {
+	background-color: var(--sapAccentColor1);
+}
+
+:host([backgroundColor="Accent2"]) {
+	background-color: var(--sapAccentColor2);
+}
+
+:host([backgroundColor="Accent3"]) {
+	background-color: var(--sapAccentColor3);
+}
+
+:host([backgroundColor="Accent4"]) {
+	background-color: var(--sapAccentColor4);
+}
+
+:host([backgroundColor="Accent5"]) {
+	background-color: var(--sapAccentColor5);
+}
+
+:host([backgroundColor="Accent6"]) {
+	background-color: var(--sapAccentColor6);
+}
+
+:host([backgroundColor="Accent7"]) {
+	background-color: var(--sapAccentColor7);
+}
+
+:host([backgroundColor="Accent8"]) {
+	background-color: var(--sapAccentColor8);
+}
+
+:host([backgroundColor="Accent9"]) {
+	background-color: red;
+}
+
+:host([backgroundColor="Accent10"]) {
+	background-color: var(--sapAccentColor10);
+}
+
+:host([backgroundColor="Placeholder"]) {
+	background-color: var(--sapContent_ImagePlaceholderBackground);
+}
+
 :host(:not([img])) .ui5-avatar-icon {
-	color: var(--sapContent_ImagePlaceholderForegroundColor);
+	color: inherit;
+}
+
+:host([imageFitType="Contain"]) .ui5-avatar-img {
+	background-size: contain;
 }
 
 .ui5-avatar-root {
@@ -100,4 +154,15 @@
 	height: 100%;
 	width: 100%;
 	border-radius: 50%;
+}
+
+.ui5-avatar-img {
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+}
+
+.ui5-avatar-initials {
+	position: absolute;
+	color: inherit;
 }

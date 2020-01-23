@@ -1,7 +1,9 @@
 <div class="ui5-avatar-root">
-	{{#if displayIcon}}
+	{{#if img}}
+		<span alt="avatar" class="ui5-avatar-img" style="background-image: url({{img}})"></span>
+	{{else if icon}}
 		<ui5-icon class="ui5-avatar-icon" name="{{icon}}"></ui5-icon>
-	{{else}}
-		<img alt="avatar" class="ui5-avatar-img" src="{{img}}"/>
+	{{else if initials}}
+		<span class="ui5-avatar-initials">{{validInitials}}</span>
 	{{/if}}
 </div>
