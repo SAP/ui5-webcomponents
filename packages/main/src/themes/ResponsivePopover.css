@@ -1,7 +1,9 @@
 
 :host {
 	--_ui5_input_width: 100%;
-	display: contents;
+	position: fixed;
+	z-index: 10;
+	display: none;
 }
 
 :host(:not([with-padding])) {

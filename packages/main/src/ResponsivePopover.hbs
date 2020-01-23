@@ -1,12 +1,13 @@
 {{#if _isPhone}}
 	<ui5-dialog
+		class="ui5-responsive-popover-inner"
 		stretch
 		?with-padding={{withPadding}}
 		_disable-initial-focus
-		@ui5-afterOpen="{{_fireEvent}}"
-		@ui5-beforeOpen="{{_fireEvent}}"
-		@ui5-beforeClose="{{_fireEvent}}"
-		@ui5-afterClose="{{_fireEvent}}"
+		@ui5-afterOpen="{{_afterOpen}}"
+		@ui5-beforeOpen="{{_beforeOpen}}"
+		@ui5-beforeClose="{{_beforeClose}}"
+		@ui5-afterClose="{{_afterClose}}"
 	>
 		{{#if _hasHeader}}
 			<div slot="header" class="ui5-responsive-popover-header">
@@ -41,6 +42,7 @@
 	</ui5-dialog>
 {{else}}
 	<ui5-popover
+		class="ui5-responsive-popover-inner"
 		placement-type="Bottom"
 		horizontal-align="{{horizontalAlign}}"
 		style="min-width: {{_width}}px;"
@@ -48,10 +50,10 @@
 		?allow-target-overlap="{{allowTargetOverlap}}"
 		no-arrow
 		_disable-initial-focus
-		@ui5-afterOpen="{{_fireEvent}}"
-		@ui5-beforeOpen="{{_fireEvent}}"
-		@ui5-beforeClose="{{_fireEvent}}"
-		@ui5-afterClose="{{_fireEvent}}"
+		@ui5-afterOpen="{{_afterOpen}}"
+		@ui5-beforeOpen="{{_beforeOpen}}"
+		@ui5-beforeClose="{{_beforeClose}}"
+		@ui5-afterClose="{{_afterClose}}"
 	>
 		<slot></slot>
 	</ui5-popover>

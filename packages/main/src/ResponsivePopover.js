@@ -4,10 +4,10 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import ResponsivePopoverTemplate from "./generated/templates/ResponsivePopoverTemplate.lit.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import Popover from "./Popover.js";
 import Dialog from "./Dialog.js";
 import Button from "./Button.js";
-
 import {
 	INPUT_SUGGESTIONS_TITLE,
 } from "./generated/i18n/i18n-defaults.js";
@@ -75,8 +75,14 @@ const metadata = {
 		showCancelButton: {
 			type: Boolean,
 		},
+
 		initialFocus: {
 			type: String,
+		},
+
+		_width: {
+			type: Integer,
+			defaultValue: POPOVER_MIN_WIDTH
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.ResponsivePopover.prototype */ {
@@ -170,24 +176,62 @@ class ResponsivePopover extends UI5Element {
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
-	open(opener) {
-		this._width = Math.max(POPOVER_MIN_WIDTH, opener.getBoundingClientRect().width);
-
-		const dialog = this.shadowRoot.querySelector("ui5-dialog");
-		const popover = this.shadowRoot.querySelector("ui5-popover");
-
-		if (dialog) {
-			dialog.open();
+	onAfterRendering() {
+		if (this.opened) {
+			const dialog = this.shadowRoot.querySelector("ui5-dialog");
+			const popover = this.shadowRoot.querySelector("ui5-popover");
+	
+			if (dialog) {
+				dialog.open();
+			} else {
+				popover.openBy(this._opener);
+			}
 		} else {
-			popover.openBy(opener);
+			this._inner.close();
 		}
-
-		this.opened = true;
 	}
 
+	/**
+	 * @public
+	 */
+	open(opener) {
+		this._opener = opener;
+		this.opened = true;
+		this._width = Math.max(POPOVER_MIN_WIDTH, this.parentElement.getBoundingClientRect().width);
+		this.style.display = "inline-block";
+	}
+
+	/**
+	 * @public
+	 */
 	close() {
-		this._container.close();
+		this._inner.close();
+	}
+
+	_beforeOpen(event) {
+		this._fireEvent(event);
+	}
+
+	_afterOpen(event) {
+		this.style.top = this._inner.style.top;
+		this.style.left = this._inner.style.left;
+		this.style.width = this._inner.offsetWidth + "px";
+		this.style.height = this._inner.offsetHeight + "px";
+		
+		this.opened = true;
+		this._fireEvent(event);
+	}
+
+	_beforeClose(event) {
+		this._fireEvent(event);
+	}
+
+	_afterClose(event) {
+		delete this._opener;
+		this.style.display = "";
 		this.opened = false;
+		
+		this._fireEvent(event);
 	}
 
 	_fireEvent(event) {
@@ -212,11 +256,11 @@ class ResponsivePopover extends UI5Element {
 			this._cancelButtonPressed = true;
 		}
 
-		this.close(event);
+		this.close();
 	}
 
-	get _container() {
-		return this.shadowRoot.querySelector("ui5-dialog") || this.shadowRoot.querySelector("ui5-popover");
+	get _inner() {
+		return this.shadowRoot.querySelector(".ui5-responsive-popover-inner");
 	}
 
 	get _hasFooter() {
