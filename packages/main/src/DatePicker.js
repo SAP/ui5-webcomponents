@@ -24,7 +24,7 @@ import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import Input from "./Input.js";
 import InputType from "./types/InputType.js";
 import DatePickerTemplate from "./generated/templates/DatePickerTemplate.lit.js";
-import DatePickerPopoverFragment from "./generated/templates/DatePickerPopoverFragmentTemplate.lit.js";
+import DatePickerPopover from "./generated/templates/DatePickerPopoverTemplate.lit.js";
 
 // default calendar for bundling
 import "@ui5/webcomponents-utils/dist/sap/ui/core/date/Gregorian.js";
@@ -239,7 +239,7 @@ class DatePicker extends UI5Element {
 	}
 
 	static get staticAreaTemplate() {
-		return DatePickerPopoverFragment;
+		return DatePickerPopover;
 	}
 
 	static get styles() {

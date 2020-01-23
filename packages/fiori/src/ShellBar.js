@@ -18,7 +18,7 @@ import "@ui5/webcomponents-icons/dist/icons/grid.js";
 
 // Templates
 import ShellBarTemplate from "./generated/templates/ShellBarTemplate.lit.js";
-import ShellBarPopoverFragment from "./generated/templates/ShellBarPopoverFragmentTemplate.lit.js";
+import ShellBarPopoverTemplate from "./generated/templates/ShellBarPopoverTemplate.lit.js";
 
 // Styles
 import styles from "./generated/themes/ShellBar.css.js";
@@ -329,7 +329,7 @@ class ShellBar extends UI5Element {
 	}
 
 	static get staticAreaTemplate() {
-		return ShellBarPopoverFragment;
+		return ShellBarPopoverTemplate;
 	}
 
 	static get FIORI_3_BREAKPOINTS() {

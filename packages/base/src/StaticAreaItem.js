@@ -1,7 +1,5 @@
 import { getStaticAreaInstance, removeStaticArea } from "./StaticArea.js";
 
-let staticAreaIndex = 1;
-
 /**
  * @class
  * @author SAP SE
@@ -21,21 +19,17 @@ class StaticAreaItem {
 			stylesToAdd = this.ui5ElementContext.constructor.staticAreaStyles || false;
 		let domNodeToRenderInCurrentComponent;
 
-		if (!this.currentStaticAreaPosition) {
+		if (!this.staticAreaItemDomRef) {
 			// Initial rendering of fragment
-			this.currentStaticAreaPosition = this.constructor._staticAreaPosition;
 
-			domNodeToRenderInCurrentComponent = document.createElement("ui5-static-area-item");
-			domNodeToRenderInCurrentComponent.attachShadow({ mode: "open" });
-			domNodeToRenderInCurrentComponent.classList.add(`static-area-item-${this.currentStaticAreaPosition}`);
+			this.staticAreaItemDomRef = document.createElement("ui5-static-area-item");
+			this.staticAreaItemDomRef.attachShadow({ mode: "open" });
+			this.staticAreaItemDomRef.classList.add(this.ui5ElementContext._id);
 
-			getStaticAreaInstance().appendChild(domNodeToRenderInCurrentComponent);
-		} else {
-			// Fragment is rendered and is invalidated
-			domNodeToRenderInCurrentComponent = document.querySelector(`ui5-static-area .static-area-item-${this.currentStaticAreaPosition}`);
+			getStaticAreaInstance().appendChild(this.staticAreaItemDomRef);
 		}
 
-		this.ui5ElementContext.constructor.render(renderResult, domNodeToRenderInCurrentComponent.shadowRoot, stylesToAdd, { eventContext: this.ui5ElementContext });
+		this.ui5ElementContext.constructor.render(renderResult, this.staticAreaItemDomRef.shadowRoot, stylesToAdd, { eventContext: this.ui5ElementContext });
 	}
 
 	/**
@@ -44,27 +38,14 @@ class StaticAreaItem {
 	_removeFragmentFromStaticArea() {
 		const staticArea = getStaticAreaInstance();
 
-		const staticAreaItemToRemove = staticArea.querySelector(`.static-area-item-${this.currentStaticAreaPosition}`);
-		staticArea.removeChild(staticAreaItemToRemove);
+		staticArea.removeChild(this.staticAreaItemDomRef);
 
-		this.currentStaticAreaPosition = null;
+		this.staticAreaItemDomRef = null;
 
 		// remove static area
 		if (staticArea.childElementCount < 1) {
 			removeStaticArea();
-
-			// start new indexing
-			staticAreaIndex = 1;
 		}
-	}
-
-	/**
-	 * @private
-	 * @static
-	 * Static method that returns the index of the next item in the static area.
-	 */
-	static get _staticAreaPosition() {
-		return staticAreaIndex++;
 	}
 
 	/**
@@ -72,7 +53,7 @@ class StaticAreaItem {
 	 * Returns reference to the DOM element where the current fragment is added.
 	 */
 	getDomRef() {
-		return document.querySelector(`ui5-static-area .static-area-item-${this.currentStaticAreaPosition}`).shadowRoot;
+		return this.staticAreaItemDomRef.shadowRoot;
 	}
 }
 

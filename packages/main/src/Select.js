@@ -20,7 +20,7 @@ import Icon from "./Icon.js";
 
 // Templates
 import SelectTemplate from "./generated/templates/SelectTemplate.lit.js";
-import SelectPopoverFragment from "./generated/templates/SelectPopoverFragmentTemplate.lit.js";
+import SelectPopoverTemplate from "./generated/templates/SelectPopoverTemplate.lit.js";
 
 // Styles
 import selectCss from "./generated/themes/Select.css.js";
@@ -176,7 +176,7 @@ class Select extends UI5Element {
 	}
 
 	static get staticAreaTemplate() {
-		return SelectPopoverFragment;
+		return SelectPopoverTemplate;
 	}
 
 	static get styles() {
