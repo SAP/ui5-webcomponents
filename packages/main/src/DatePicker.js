@@ -296,7 +296,12 @@ class DatePicker extends UI5Element {
 
 				const selectedDay = dayPicker.shadowRoot.querySelector(".ui5-dp-item--selected");
 				const today = dayPicker.shadowRoot.querySelector(".ui5-dp-item--now");
-				const focusableDay = selectedDay || today;
+				let focusableDay = selectedDay || today;
+				if (!selectedDay && (this.minDate || this.maxDate)) {
+					let focusDayTimeStamp = this.findFirstFocusableDay(),
+						daypicker = this._getPopover().default[0].shadowRoot.children[1].children[1].children[0];
+					focusableDay = daypicker.shadowRoot.getElementById(`${daypicker._id}-${focusDayTimeStamp}`);
+				}
 
 				if (this._focusInputAfterOpen) {
 					this._focusInputAfterOpen = false;
@@ -328,6 +333,23 @@ class DatePicker extends UI5Element {
 		}
 
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+	}
+
+	findFirstFocusableDay() {
+		const today = new Date();
+		if (!this.isInValidRange(today)){
+			if (this.minDate) {
+				let minDate = new Date(this._minDate);
+				minDate.setSeconds(0);
+				minDate.setMinutes(0);
+				minDate.setHours(3);
+				this._changeCalendarSelection(minDate.getTime() / 1000);
+				return minDate.getTime() / 1000;
+			} else {
+				this._changeCalendarSelection((new Date(-62135596800000)).getTime() / 1000);
+				return (new Date(-62135596800000)).getTime() / 1000;
+			}
+		}
 	}
 
 	onBeforeRendering() {
@@ -410,8 +432,8 @@ class DatePicker extends UI5Element {
 	 */
 	isInValidRange(value = "") {
 		const pickedDate = new Date(value),
-			minDate = this.minDate,
-			maxDate = this.maxDate;
+			minDate = this._minDate,
+			maxDate = this._maxDate;
 
 		if (minDate && maxDate) {
 			if (minDate <= pickedDate && maxDate >= pickedDate) {
@@ -589,14 +611,14 @@ class DatePicker extends UI5Element {
 		}
 	}
 
-	_changeCalendarSelection() {
+	_changeCalendarSelection(focusTimestamp) {
 		if (this._calendarDate.getYear() < 1) {
 			// 0 is a valid year, but we cannot display it
 			return;
 		}
 
 		const oCalDate = this._calendarDate;
-		const timestamp = oCalDate.valueOf() / 1000;
+		const timestamp = focusTimestamp || oCalDate.valueOf() / 1000;
 
 		this._calendar = Object.assign({}, this._calendar);
 		this._calendar.timestamp = timestamp;
