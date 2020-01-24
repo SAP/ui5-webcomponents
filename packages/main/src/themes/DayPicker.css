@@ -11,8 +11,8 @@
 .ui5-dp-weekname,
 .ui5-dp-dayname,
 .ui5-dp-item {
-	width: 2.25rem;
-	height: 2.875rem;
+	width: var(--_ui5_day_picker_item_width);
+	height: var(--_ui5_day_picker_item_height);
 	margin-top: var(--_ui5_daypicker_item_margin);
 	margin-right: var(--_ui5_daypicker_item_margin);
 	font-family: var(--sapFontFamily);
@@ -153,21 +153,5 @@
 }
 
 .ui5-dp-emptyweek {
-	height: 3rem;
-}
-
-/* Compact size */
-:host([data-ui5-compact-size]) .ui5-dp-weeknumber-container {
-	padding-top: 2rem;
-}
-
-:host([data-ui5-compact-size]) .ui5-dp-weekname,
-:host([data-ui5-compact-size]) .ui5-dp-dayname,
-:host([data-ui5-compact-size]) .ui5-dp-item {
-	width: 2rem;
-	height: 2rem;
-}
-
-:host([data-ui5-compact-size]) .ui5-dp-emptyweek {
-	height: 2.125rem;
+	height: var(--_ui5_day_picker_empty_height);
 }

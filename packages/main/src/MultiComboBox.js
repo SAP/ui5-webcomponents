@@ -9,6 +9,7 @@ import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { isIE, isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import MultiComboBoxTemplate from "./generated/templates/MultiComboBoxTemplate.lit.js";
+import MultiComboBoxPopoverTemplate from "./generated/templates/MultiComboBoxPopoverTemplate.lit.js";
 import Tokenizer from "./Tokenizer.js";
 import Token from "./Token.js";
 import Icon from "./Icon.js";
@@ -285,6 +286,10 @@ class MultiComboBox extends UI5Element {
 		return MultiComboBoxTemplate;
 	}
 
+	static get staticAreaTemplate() {
+		return MultiComboBoxPopoverTemplate;
+	}
+
 	static get styles() {
 		return styles;
 	}
@@ -461,7 +466,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_getRespPopover(isMorePopover) {
-		return this.shadowRoot.querySelector(`.ui5-multi-combobox-${isMorePopover ? "selected" : "all"}-items-respPopover`);
+		return this.getStaticAreaItemDomRef().querySelector(`.ui5-multi-combobox-${isMorePopover ? "selected" : "all"}-items-respPopover`);
 	}
 
 	_toggleRespPopover(isMorePopover) {
@@ -514,7 +519,11 @@ class MultiComboBox extends UI5Element {
 	}
 
 	onAfterRendering() {
-		this.open && this._getRespPopover().open(this);
+		if (this.open) {
+			this._getRespPopover().open(this);
+			// Set initial focus to the native input
+			this.getDomRef().querySelector("#ui5-multi-combobox-input").focus();
+		}
 	}
 
 	get valueStateTextMappings() {

@@ -23,6 +23,7 @@ import Calendar from "./Calendar.js";
 import Input from "./Input.js";
 import InputType from "./types/InputType.js";
 import DatePickerTemplate from "./generated/templates/DatePickerTemplate.lit.js";
+import DatePickerPopoverTemplate from "./generated/templates/DatePickerPopoverTemplate.lit.js";
 
 // default calendar for bundling
 import "@ui5/webcomponents-utils/dist/sap/ui/core/date/Gregorian.js";
@@ -234,6 +235,10 @@ class DatePicker extends UI5Element {
 
 	static get template() {
 		return DatePickerTemplate;
+	}
+
+	static get staticAreaTemplate() {
+		return DatePickerPopoverTemplate;
 	}
 
 	static get styles() {
@@ -486,6 +491,7 @@ class DatePicker extends UI5Element {
 	 * @public
 	 */
 	openPicker(options) {
+		this.popover = this.getStaticAreaItemDomRef().querySelector("ui5-popover");
 		this._changeCalendarSelection();
 
 		if (options && options.focusInput) {
@@ -497,6 +503,8 @@ class DatePicker extends UI5Element {
 	}
 
 	togglePicker() {
+		this.popover = this.getStaticAreaItemDomRef().querySelector("ui5-popover");
+
 		if (this.isOpen()) {
 			this.closePicker();
 		} else if (this._canOpenPicker()) {

@@ -11,6 +11,7 @@ import "@ui5/webcomponents-icons/dist/icons/slim-arrow-left.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-right.js";
 import { TABCONTAINER_PREVIOUS_ICON_ACC_NAME, TABCONTAINER_NEXT_ICON_ACC_NAME, TABCONTAINER_OVERFLOW_MENU_TITLE } from "./generated/i18n/i18n-defaults.js";
 import TabContainerTemplate from "./generated/templates/TabContainerTemplate.lit.js";
+import TabContainerPopoverTemplate from "./generated/templates/TabContainerPopoverTemplate.lit.js";
 import Button from "./Button.js";
 import CustomListItem from "./CustomListItem.js";
 import Icon from "./Icon.js";
@@ -168,6 +169,10 @@ class TabContainer extends UI5Element {
 
 	static get template() {
 		return TabContainerTemplate;
+	}
+
+	static get staticAreaTemplate() {
+		return TabContainerPopoverTemplate;
 	}
 
 	constructor() {
@@ -352,7 +357,7 @@ class TabContainer extends UI5Element {
 	}
 
 	get _respPopover() {
-		return this.shadowRoot.querySelector(`#${this._id}-overflowMenu`);
+		return this.getStaticAreaItemDomRef().querySelector(`#${this._id}-overflowMenu`);
 	}
 
 	get classes() {

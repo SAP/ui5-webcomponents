@@ -7,21 +7,16 @@
 	height: 2.25rem;
 }
 
-:host([data-ui5-compact-size]) .ui5-tokenizer-root {
-	padding: 0.125rem;
-}
-
 .ui5-tokenizer-root {
 	height: 100%;
 	display: flex;
 	align-items: center;
-	padding: 0.1875rem;
+	padding: var(--_ui5_tokenizer_root_padding);
 	overflow-x: scroll;
 	box-sizing: border-box;
 	font-family: var(--sapFontFamily);
 }
 
-:host([data-ui5-compact-size]) .ui5-tokenizer-root.ui5-tokenizer-no-padding,
 .ui5-tokenizer-no-padding {
 	padding: 0;
 }
@@ -56,25 +51,10 @@
 	font-size: var(--sapFontMediumSize);
 }
 
-.ui5-tokenizer-token-placeholder {
-	display: inline-block;
-	height: 1.625rem;
-	width: 1px;
-	margin-top: auto;
-}
-
-:host([data-ui5-compact-size]) .ui5-tokenizer-token-placeholder {
-	height: 1.25rem;
-}
-
 :host([expanded]) .ui5-tokenizer--content {
 	overflow: auto;
 }
 
 ::slotted(ui5-token) {
 	margin-left: .25rem;
-}
-
-:host([data-ui5-compact-size]) :slotted(ui5-token) {
-	height: 100%;
 }

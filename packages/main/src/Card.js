@@ -62,12 +62,12 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the subtitle displayed in the <code>ui5-card</code> header.
+		 * Defines the subheading displayed in the <code>ui5-card</code> header.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 */
-		subtitle: {
+		subheading: {
 			type: String,
 		},
 
@@ -120,7 +120,7 @@ const metadata = {
  * tile with separate header and content areas.
  * The content area of a <code>ui5-card</code> can be arbitrary HTML content.
  * The header can be used through several properties, such as:
- * <code>heading</code>, <code>subtitle</code>, <code>status</code>
+ * <code>heading</code>, <code>subheading</code>, <code>status</code>
  * and a slot:
  * <code>avatar</code>.
  *
@@ -192,7 +192,7 @@ class Card extends UI5Element {
 	}
 
 	get hasHeader() {
-		return !!(this.heading || this.subtitle || this.status || this.avatar);
+		return !!(this.heading || this.subheading || this.status || this.avatar);
 	}
 
 	get rtl() {
@@ -213,6 +213,10 @@ class Card extends UI5Element {
 
 	get ariaCardContentLabel() {
 		return this.i18nBundle.getText(ARIA_LABEL_CARD_CONTENT);
+	}
+
+	get hasAvatar() {
+		return !!this.avatar.length;
 	}
 
 	static async define(...params) {

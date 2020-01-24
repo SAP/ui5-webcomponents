@@ -18,8 +18,9 @@ import List from "./List.js";
 import StandardListItem from "./StandardListItem.js";
 import Icon from "./Icon.js";
 
-// Template
+// Templates
 import SelectTemplate from "./generated/templates/SelectTemplate.lit.js";
+import SelectPopoverTemplate from "./generated/templates/SelectPopoverTemplate.lit.js";
 
 // Styles
 import selectCss from "./generated/themes/Select.css.js";
@@ -174,6 +175,10 @@ class Select extends UI5Element {
 		return SelectTemplate;
 	}
 
+	static get staticAreaTemplate() {
+		return SelectPopoverTemplate;
+	}
+
 	static get styles() {
 		return selectCss;
 	}
@@ -321,7 +326,7 @@ class Select extends UI5Element {
 			return;
 		}
 
-		const li = this.shadowRoot.querySelector(`#${this._currentlySelectedOption._id}-li`);
+		const li = this.popover.querySelector(`#${this._currentlySelectedOption._id}-li`);
 
 		li.parentElement._itemNavigation.currentIndex = this._selectedIndex;
 		li && li.focus();

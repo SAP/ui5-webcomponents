@@ -456,7 +456,8 @@ class Popup extends UI5Element {
 	}
 
 	get hasHeader() {
-		return !!(this.headerText.length || this.header.length);
+		const hasHeaderText = this.headerText && this.headerText.length;
+		return !!(hasHeaderText || this.header.length);
 	}
 
 	get hasFooter() {

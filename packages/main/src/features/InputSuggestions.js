@@ -31,6 +31,17 @@ class Suggestions {
 	}
 
 	/* Public methods */
+	defaultSlotProperties() {
+		const inputSuggestionItems = this._getComponent().suggestionItems;
+
+		const suggestions = [];
+		inputSuggestionItems.map(suggestion => {
+			return suggestions.push(suggestion.textContent);
+		});
+
+		return suggestions;
+	}
+
 	onUp(event) {
 		event.preventDefault();
 		this._handleItemNavigation(false /* forward */);
@@ -247,11 +258,11 @@ class Suggestions {
 	}
 
 	_getList() {
-		return this._getComponent().shadowRoot.querySelector("ui5-list");
+		return this._getComponent().getStaticAreaItemDomRef().querySelector("ui5-popover").querySelector("ui5-list");
 	}
 
 	get _respPopover() {
-		return this._getComponent().shadowRoot.querySelector("ui5-responsive-popover");
+		return this._getComponent().getStaticAreaItemDomRef().querySelector("ui5-responsive-popover");
 	}
 }
 

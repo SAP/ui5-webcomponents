@@ -13,8 +13,9 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 // import Icon from "./Icon.js";
 import InputType from "./types/InputType.js";
-// Template
+// Templates
 import InputTemplate from "./generated/templates/InputTemplate.lit.js";
+import InputPopoverTemplate from "./generated/templates/InputPopoverTemplate.lit.js";
 
 import {
 	VALUE_STATE_SUCCESS,
@@ -332,6 +333,10 @@ class Input extends UI5Element {
 		return InputTemplate;
 	}
 
+	static get staticAreaTemplate() {
+		return InputPopoverTemplate;
+	}
+
 	static get styles() {
 		return [styles];
 	}
@@ -362,12 +367,16 @@ class Input extends UI5Element {
 		this.ACTION_ENTER = "enter";
 		this.ACTION_USER_INPUT = "input";
 
+		// Suggestions array initialization
+		this.suggestionsTexts = [];
+
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
 		if (this.showSuggestions) {
 			this.enableSuggestions();
+			this.suggestionsTexts = this.Suggestions.defaultSlotProperties();
 		}
 
 		const FormSupport = getFeature("FormSupport");
