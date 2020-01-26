@@ -299,8 +299,8 @@ class DatePicker extends UI5Element {
 				const today = dayPicker.shadowRoot.querySelector(".ui5-dp-item--now");
 				let focusableDay = selectedDay || today;
 				if (!selectedDay && (this.minDate || this.maxDate)) {
-					let focusDayTimeStamp = this.findFirstFocusableDay(),
-						daypicker = this._getPopover().default[0].shadowRoot.children[1].children[1].children[0];
+					const focusDayTimeStamp = this.findFirstFocusableDay();
+					const daypicker = this.popover.default[0].shadowRoot.children[1].children[1].children[0];
 					focusableDay = daypicker.shadowRoot.getElementById(`${daypicker._id}-${focusDayTimeStamp}`);
 				}
 
@@ -310,7 +310,11 @@ class DatePicker extends UI5Element {
 				} else if (focusableDay) {
 					focusableDay.focus();
 
-					dayPicker._itemNav.current = parseInt(focusableDay.getAttribute("data-sap-index"));
+					let focusableDayIdx = parseInt(focusableDay.getAttribute("data-sap-index"));
+					const focusableItem = dayPicker.focusableDays.find(item => parseInt(item._index) === focusableDayIdx);
+					focusableDayIdx = focusableItem ? dayPicker.focusableDays.indexOf(focusableItem) : focusableDayIdx;
+
+					dayPicker._itemNav.current = focusableDayIdx;
 					dayPicker._itemNav.update();
 				}
 			},
@@ -338,18 +342,18 @@ class DatePicker extends UI5Element {
 
 	findFirstFocusableDay() {
 		const today = new Date();
-		if (!this.isInValidRange(today)){
+		if (!this.isInValidRange(today)) {
 			if (this.minDate) {
-				let minDate = new Date(this._minDate);
+				const minDate = new Date(this._minDate);
 				minDate.setSeconds(0);
 				minDate.setMinutes(0);
 				minDate.setHours(3);
 				this._changeCalendarSelection(minDate.getTime() / 1000);
 				return minDate.getTime() / 1000;
-			} else {
-				this._changeCalendarSelection((new Date(-62135596800000)).getTime() / 1000);
-				return (new Date(-62135596800000)).getTime() / 1000;
 			}
+
+			this._changeCalendarSelection((new Date(-62135596800000)).getTime() / 1000);
+			return (new Date(-62135596800000)).getTime() / 1000;
 		}
 	}
 
