@@ -85,13 +85,13 @@ class DatePickerTestPage {
 
 	getDisplayedMonth(index) {
 		return browser
-			.$(`${this._sut}`).shadow$(`ui5-calendar`).shadow$(`ui5-monthpicker`).shadow$(`.ui5-mp-root`)
+			.$(`.${this.staticAreaItemClassName}`).shadow$(`ui5-calendar`).shadow$(`ui5-monthpicker`).shadow$(`.ui5-mp-root`)
 			.$$(".ui5-mp-item")[index];
 	}
 
 	getDisplayedDay(index) {
 		return browser
-			.$(`${this._sut}`).shadow$(`ui5-calendar`).shadow$(`ui5-daypicker`).shadow$(`.ui5-dp-root`).$(".ui5-dp-content").$(".ui5-dp-items-container")
+			.$(`.${this.staticAreaItemClassName}`).shadow$(`ui5-calendar`).shadow$(`ui5-daypicker`).shadow$(`.ui5-dp-root`).$(".ui5-dp-content").$(".ui5-dp-items-container")
 			.$$(".ui5-dp-item")[index];
 	}
 

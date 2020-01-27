@@ -78,6 +78,16 @@ const metadata = {
 			type: Boolean,
 			noAttribute: true,
 		},
+		/**
+		* Determines the format, displayed in the input field.
+		*
+		* @type {string}
+		* @defaultvalue ""
+		* @public
+		*/
+	   formatPattern: {
+		   type: String,
+	   },
 	},
 	events: /** @lends  sap.ui.webcomponents.main.YearPicker.prototype */ {
 		/**
@@ -221,6 +231,10 @@ class YearPicker extends UI5Element {
 		return this.primaryCalendarType || getCalendarType() || LocaleData.getInstance(getLocale()).getPreferredCalendarType();
 	}
 
+	get _isPattern() {
+		return this._formatPattern !== "medium" && this._formatPattern !== "short" && this._formatPattern !== "long";
+	}
+
 	_onclick(event) {
 		if (event.target.className.indexOf("ui5-yp-item") > -1) {
 			const timestamp = this.getTimestampFromDom(event.target);
@@ -299,6 +313,10 @@ class YearPicker extends UI5Element {
 		}
 
 		this.timestamp = oCalDate.valueOf() / 1000;
+	}
+
+	get _formatPattern() {
+		return this.formatPattern || "medium"; // get from config
 	}
 
 	_isOutOfSelectableRange(year) {

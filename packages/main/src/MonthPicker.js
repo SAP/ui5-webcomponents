@@ -73,7 +73,16 @@ const metadata = {
 			type: Boolean,
 			noAttribute: true,
 		},
-
+		/**
+		 * Determines the format, displayed in the input field.
+		 *
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @public
+		 */
+		formatPattern: {
+			type: String,
+		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.MonthPicker.prototype */ {
 		/**
@@ -198,6 +207,10 @@ class MonthPicker extends UI5Element {
 		return this.primaryCalendarType || getCalendarType() || LocaleData.getInstance(getLocale()).getPreferredCalendarType();
 	}
 
+	get _isPattern() {
+		return this._formatPattern !== "medium" && this._formatPattern !== "short" && this._formatPattern !== "long";
+	}
+
 	_onclick(event) {
 		if (event.target.className.indexOf("ui5-mp-item") > -1) {
 			const timestamp = this.getTimestampFromDOM(event.target);
@@ -265,6 +278,10 @@ class MonthPicker extends UI5Element {
 			});
 		}
 		return this._oDateFormat;
+	}
+
+	get _formatPattern() {
+		return this.formatPattern || "medium"; // get from config
 	}
 
 	getTimestampFromDOM(domNode) {

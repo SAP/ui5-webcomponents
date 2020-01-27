@@ -634,7 +634,6 @@ describe("Date Picker Tests", () => {
 
 		datepicker.id = "#dp34";
 		datepicker.openPicker({ focusInput: false });
-
-		assert.ok(datepicker.getDisplayedDay(1).isFocusedDeep(), "Days out of range are disabled");
+		assert.ok(datepicker.getDisplayedDay(14).isFocusedDeep(), "Days out of range are disabled");
 	});
 });

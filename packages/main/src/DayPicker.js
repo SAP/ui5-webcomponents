@@ -102,6 +102,16 @@ const metadata = {
 			type: Boolean,
 			noAttribute: true,
 		},
+		/**
+		 * Determines the format, displayed in the input field.
+		 *
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @public
+		 */
+		formatPattern: {
+			type: String,
+		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.DayPicker.prototype */ {
 		/**
@@ -377,6 +387,10 @@ class DayPicker extends UI5Element {
 		return CalendarDate.fromTimestamp(this._localDate.getTime(), this._primaryCalendarType);
 	}
 
+	get _formatPattern() {
+		return this.formatPattern || "medium"; // get from config
+	}
+
 	get _month() {
 		return this._calendarDate.getMonth();
 	}
@@ -448,13 +462,13 @@ class DayPicker extends UI5Element {
 		oNewDate.setYear(newYear);
 		oNewDate.setMonth(newMonth);
 
-		const monthsBetween = monthDiff(oNewDate.valueOf(), this.maxDate);
+		const monthsBetween = monthDiff(oNewDate.valueOf(), this._maxDate);
 		if (monthsBetween < 0) {
 			return false;
 		}
-
+		
 		const lastFocusableDay = this.focusableDays[this.focusableDays.length - 1].iDay;
-		if (monthsBetween === 0 && this.maxDate.getDate() === lastFocusableDay) {
+		if (monthsBetween === 0 && CalendarDate.fromTimestamp(this._maxDate).toLocalJSDate().getDate() === lastFocusableDay) {
 			return false;
 		}
 
@@ -483,7 +497,7 @@ class DayPicker extends UI5Element {
 		oNewDate.setYear(newYear);
 		oNewDate.setMonth(newMonth);
 
-		const monthsBetween = monthDiff(this.minDate, oNewDate.valueOf());
+		const monthsBetween = monthDiff(this._minDate, oNewDate.valueOf());
 		if (this.minDate && monthsBetween < 0) {
 			return false;
 		}
@@ -576,6 +590,10 @@ class DayPicker extends UI5Element {
 			});
 		}
 		return this._oDateFormat;
+	}
+
+	get _isPattern() {
+		return this._formatPattern !== "medium" && this._formatPattern !== "short" && this._formatPattern !== "long";
 	}
 
 	_getVisibleDays(oStartDate, bIncludeBCDates) {
