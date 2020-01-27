@@ -20,11 +20,11 @@ class DatePickerTestPage {
 	}
 
 	get popover() {
-		return browser.$(`.${this.staticAreaItemClassName}`).shadow$("ui5-popover");
+		return browser.$(`.${this.staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 	}
 
 	get popoverContent() {
-		return browser.$(this._sut).shadow$("ui5-popover").shadow$(".ui5-popover-root");
+		return browser.$(this._sut).shadow$("ui5-responsive-popover").shadow$("ui5-popover").shadow$(".ui5-popover-root");
 	}
 
 	get calendar() {

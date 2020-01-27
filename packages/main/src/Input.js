@@ -26,6 +26,7 @@ import {
 
 // Styles
 import styles from "./generated/themes/Input.css.js";
+import listItemStyles from "./generated/themes/ListItem.css.js";
 
 /**
  * @public
@@ -340,6 +341,9 @@ class Input extends UI5Element {
 	static get styles() {
 		return [styles];
 	}
+	static get staticAreaStyles() {
+		return [listItemStyles];
+	}
 
 	constructor() {
 		super();
@@ -450,8 +454,13 @@ class Input extends UI5Element {
 	}
 
 	_onfocusout(event) {
-		this.focused = false; // invalidating property
+		// TO DO: rework
+		if (this.Suggestions && event.relatedTarget && this.Suggestions._respPopover.contains(event.relatedTarget.shadowRoot.querySelector("ui5-li[active]"))) {
+			return;
+		}
+
 		this.previousValue = "";
+		this.focused = false; // invalidating property
 	}
 
 	_touchstart(event) {

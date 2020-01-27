@@ -6,11 +6,16 @@ import "@ui5/webcomponents-icons/dist/icons/slim-arrow-down.js";
 import { isBackSpace, isDelete, isShow } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import * as Filters from "./ComboBoxFilters.js";
 
-// Styles
+// Templates
 import ComboBoxTemplate from "./generated/templates/ComboBoxTemplate.lit.js";
 import ComboBoxPopoverTemplate from "./generated/templates/ComboBoxPopoverTemplate.lit.js";
+
+// Styles
 import ComboBoxCss from "./generated/themes/ComboBox.css.js";
 import ComboBoxPopoverCss from "./generated/themes/ComboBoxPopover.css.js";
+import ListItemCss from "./generated/themes/ListItem.css.js";
+import ListCss from "./generated/themes/List.css.js";
+
 import ComboBoxItem from "./ComboBoxItem.js";
 import Icon from "./Icon.js";
 import ResponsivePopover from "./ResponsivePopover.js";
@@ -259,7 +264,7 @@ class ComboBox extends UI5Element {
 	}
 
 	static get staticAreaStyles() {
-		return ComboBoxPopoverCss;
+		return [ComboBoxPopoverCss, ListCss, ListItemCss];
 	}
 
 	constructor(props) {
@@ -425,11 +430,11 @@ class ComboBox extends UI5Element {
 	}
 
 	get inner() {
-		return isPhone() ? this.shadowRoot.querySelector(".ui5-input-inner-phone") : this.shadowRoot.querySelector("[inner-input]");
+		return isPhone() ? this.respPopover.querySelector(".ui5-input-inner-phone") : this.shadowRoot.querySelector("[inner-input]");
 	}
 
 	get respPopover() {
-		return this.getStaticAreaItemDomRef().querySelector(".ui5-combobox-respPopover");
+		return this.getStaticAreaItemDomRef().querySelector("ui5-responsive-popover");
 	}
 
 	get editable() {

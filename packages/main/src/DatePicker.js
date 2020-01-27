@@ -145,9 +145,11 @@ const metadata = {
 			type: Boolean,
 			noAttribute: true,
 		},
+
 		_respPopoverConfig: {
 			type: Object,
 		},
+
 		_calendar: {
 			type: Object,
 		},
@@ -423,7 +425,7 @@ class DatePicker extends UI5Element {
 			"ariaHasPopup": "true",
 			"ariaAutoComplete": "none",
 			"role": "combobox",
-			"ariaOwns": `${this._id}-respPopover`,
+			"ariaOwns": `${this._id}-responsive-popover`,
 			"ariaExpanded": this.isOpen(),
 			"ariaDescription": this.dateAriaDescription,
 		};
@@ -442,7 +444,7 @@ class DatePicker extends UI5Element {
 	}
 
 	get _respPopover() {
-		return this.shadowRoot.querySelector(`#${this._id}-respPopover`);
+		return this.getStaticAreaItemDomRef().querySelector("ui5-responsive-popover");
 	}
 
 	_canOpenPicker() {
@@ -491,7 +493,6 @@ class DatePicker extends UI5Element {
 	 * @public
 	 */
 	openPicker(options) {
-		this.popover = this.getStaticAreaItemDomRef().querySelector("ui5-popover");
 		this._changeCalendarSelection();
 
 		if (options && options.focusInput) {
@@ -503,8 +504,6 @@ class DatePicker extends UI5Element {
 	}
 
 	togglePicker() {
-		this.popover = this.getStaticAreaItemDomRef().querySelector("ui5-popover");
-
 		if (this.isOpen()) {
 			this.closePicker();
 		} else if (this._canOpenPicker()) {

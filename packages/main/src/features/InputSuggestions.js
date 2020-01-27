@@ -36,7 +36,11 @@ class Suggestions {
 
 		const suggestions = [];
 		inputSuggestionItems.map(suggestion => {
-			return suggestions.push(suggestion.textContent);
+			return suggestions.push({
+				text: suggestion.textContent,
+				icon: suggestion.icon,
+				active: suggestion.selected
+			});
 		});
 
 		return suggestions;
@@ -104,8 +108,8 @@ class Suggestions {
 
 		this.selectedItemIndex = this._getItems().indexOf(item);
 
-		this._getComponent().onItemSelected(item, keyboardUsed);
-		this.close();
+		this._getComponent().onItemSelected(this._getRealItems()[this.selectedItemIndex], keyboardUsed);
+		// this.close();
 	}
 
 	onItemPreviewed(item) {
@@ -124,8 +128,8 @@ class Suggestions {
 
 	_attachItemsListeners() {
 		const list = this._getList();
-		list.removeEventListener("ui5-itemClick", this.fnOnSuggestionItemPress);
-		list.addEventListener("ui5-itemClick", this.fnOnSuggestionItemPress);
+		list.removeEventListener("ui5-itemPress", this.fnOnSuggestionItemPress);
+		list.addEventListener("ui5-itemPress", this.fnOnSuggestionItemPress);
 		list.removeEventListener("ui5-itemFocused", this.fnOnSuggestionItemFocus);
 		list.addEventListener("ui5-itemFocused", this.fnOnSuggestionItemFocus);
 	}
@@ -243,14 +247,14 @@ class Suggestions {
 
 	_getScrollContainer() {
 		if (!this._scrollContainer) {
-			this._scrollContainer = this._respPopover.getDomRef().querySelector(".ui5-popover-content");
+			this._scrollContainer = this._respPopover.getDomRef().shadowRoot.querySelector(".ui5-popover-content");
 		}
 
 		return this._scrollContainer;
 	}
 
 	_getItems() {
-		return this._getComponent().getSlottedNodes(this.slotName);
+		return [].slice.call(this._respPopover.querySelectorAll("ui5-li"));
 	}
 
 	_getComponent() {
@@ -258,7 +262,11 @@ class Suggestions {
 	}
 
 	_getList() {
-		return this._getComponent().getStaticAreaItemDomRef().querySelector("ui5-popover").querySelector("ui5-list");
+		return this._getComponent().getStaticAreaItemDomRef().querySelector("ui5-responsive-popover").querySelector("ui5-list");
+	}
+
+	_getRealItems() {
+		return this._getComponent().getSlottedNodes(this.slotName);
 	}
 
 	get _respPopover() {

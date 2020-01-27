@@ -1,6 +1,6 @@
 :host {
 	display: none;
-	position: fixed;
+	position: var(--_ui5_popover_position);
 	z-index: 10;
 	min-width: 6.25rem;
 	background: var(--sapGroup_ContentBackground);
@@ -19,6 +19,10 @@
 	display: flex;
 	flex-direction: column;
 	overflow: hidden;
+}
+
+.ui5-popover-root .first-fe {
+	position: var(--_ui5_popover_first_fe_position);
 }
 
 :host([modal])::before {

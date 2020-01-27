@@ -1,22 +1,18 @@
-<ui5-popover
-	style={{styles.popover}}
-	horizontal-align="Left"
-	?no-arrow={{editable}}
-	no-padding="true"
-	placement-type="Bottom"
-	_disable-initial-focus="true"
+<ui5-responsive-popover
+	show-header-title
+	show-confirm-button
+	disable-initial-focus
 	@ui5-afterOpen={{_afterOpenPopover}}
 	@ui5-afterClose={{_afterClosePopover}}
 >
-
-	<ui5-busyindicator 
+	<ui5-busyindicator
 		?active={{loading}}
 		size="Medium"
 		class="ui5-combobox-busy"
 	>
 	</ui5-busyindicator>
 
-	<ui5-list 
+	<ui5-list
 		separators="None"
 		@ui5-itemClick={{_selectItem}}
 		mode="SingleSelect"
@@ -31,4 +27,30 @@
 			</ui5-li>
 		{{/each}}
 	</ui5-list>
-</ui5-popover>
+
+	<div
+		slot="header"
+		class="ui5-input-host"
+		value-state="{{valueState}}"
+	>
+		<div class="ui5-combobox-root">
+			<input
+				id="ui5-input-inner-phone"
+				class="ui5-input-inner-phone"
+				.value="{{_tempValue}}"
+				inner-input
+				placeholder="{{placeholder}}"
+				?disabled={{disabled}}
+				?readonly={{readonly}}
+				?required={{required}}
+				value-state="{{valueState}}"
+				@input="{{_input}}"
+				@change="{{_inputChange}}"
+				@keydown="{{_keydown}}"
+				@focusin="{{_focusin}}"
+				@focusout="{{_focusout}}"
+				aria-autocomplete="both"
+			/>
+		</div>
+	</div>
+</ui5-responsive-popover>

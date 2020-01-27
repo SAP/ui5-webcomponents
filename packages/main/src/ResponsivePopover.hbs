@@ -45,13 +45,12 @@
 		class="ui5-responsive-popover-inner"
 		placement-type="Bottom"
 		horizontal-align="{{horizontalAlign}}"
-		style="min-width: {{_width}}px;"
+		style="{{styles.popover}}"
 		?stay-open-on-scroll="{{stayOpenOnScroll}}"
 		?allow-target-overlap="{{allowTargetOverlap}}"
 		no-arrow
 		_disable-initial-focus
 		@ui5-afterOpen="{{_afterOpen}}"
-		@ui5-beforeOpen="{{_beforeOpen}}"
 		@ui5-beforeClose="{{_beforeClose}}"
 		@ui5-afterClose="{{_afterClose}}"
 	>

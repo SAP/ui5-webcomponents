@@ -4,6 +4,8 @@
 	position: fixed;
 	z-index: 10;
 	display: none;
+	--_ui5_popover_position: static;
+	--_ui5_popover_first_fe_position: fixed;
 }
 
 :host(:not([with-padding])) {

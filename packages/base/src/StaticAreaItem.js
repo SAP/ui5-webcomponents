@@ -60,6 +60,10 @@ class StaticAreaItemElement extends HTMLElement {
 	constructor() {
 		super();
 	}
+
+	isUI5Element() {
+		return true;
+	}
 }
 
 customElements.define("ui5-static-area-item", StaticAreaItemElement);

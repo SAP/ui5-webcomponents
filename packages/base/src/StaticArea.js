@@ -25,6 +25,10 @@ class StaticAreaElement extends HTMLElement {
 		const staticAreaDomRef = document.querySelector(this.tagName.toLowerCase());
 		staticAreaDomRef.parentElement.removeChild(staticAreaDomRef);
 	}
+
+	isUI5Element() {
+		return true;
+	}
 }
 
 customElements.define("ui5-static-area", StaticAreaElement);

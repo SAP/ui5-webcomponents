@@ -1,13 +1,34 @@
 {{#if showSuggestions}}
-	<ui5-popover
-		placement-type="Bottom"
-		no-arrow
-		horizontal-align="Stretch"
-		initial-focus={{ this.id }}>
-			<ui5-list id="listPopover" separators="Inner">
-				{{#each suggestionsTexts}}
-					<ui5-li @ui5-_itemPress="{{ fnOnSuggestionItemPress }}">{{ this }}</ui5-li>
-				{{/each}}
-			</ui5-list>
-	</ui5-popover>
+	<ui5-responsive-popover
+		show-header-title
+		show-confirm-button
+		disable-initial-focus
+	>
+		<ui5-list separators="Inner">
+			{{#each suggestionsTexts}}
+				<ui5-li
+					?icon="{{this.icon}}"
+					?selected="{{active}}"
+					@ui5-_itemPress="{{ fnOnSuggestionItemPress }}" 
+				>{{ this.text }}</ui5-li>
+			{{/each}}
+		</ui5-list>
+		<div slot="header" class="ui5-input-host">
+			<div class="ui5-input-root">
+				<div class="ui5-input-content">
+					<input
+						class="ui5-input-inner-phone"
+						type="{{inputType}}"
+						.value="{{value}}"
+						inner-input
+						placeholder="{{placeholder}}"
+						@input="{{_handleInput}}"
+						@change="{{_handleChange}}"
+						@keydown="{{_onkeydown}}"
+						@keyup="{{_onkeyup}}"
+					/>
+				</div>
+			</div>
+		</div>
+	</ui5-responsive-popover>
 {{/if}}

@@ -8,8 +8,6 @@ import "@ui5/webcomponents-icons/dist/icons/slim-arrow-down.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { isIE, isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import MultiComboBoxTemplate from "./generated/templates/MultiComboBoxTemplate.lit.js";
-import MultiComboBoxPopoverTemplate from "./generated/templates/MultiComboBoxPopoverTemplate.lit.js";
 import Tokenizer from "./Tokenizer.js";
 import Token from "./Token.js";
 import Icon from "./Icon.js";
@@ -24,6 +22,10 @@ import {
 	TOKENIZER_ARIA_CONTAIN_ONE_TOKEN,
 	TOKENIZER_ARIA_CONTAIN_SEVERAL_TOKENS,
 } from "./generated/i18n/i18n-defaults.js";
+
+// Templates
+import MultiComboBoxTemplate from "./generated/templates/MultiComboBoxTemplate.lit.js";
+import MultiComboBoxPopoverTemplate from "./generated/templates/MultiComboBoxPopoverTemplate.lit.js";
 
 // Styles
 import styles from "./generated/themes/MultiComboBox.css.js";
@@ -362,7 +364,7 @@ class MultiComboBox extends UI5Element {
 		this.value = input.value;
 		this._filteredItems = filteredItems;
 
-		if (!isPhone) {
+		if (!isPhone()) {
 			if (filteredItems.length === 0) {
 				this._getRespPopover().close();
 			} else {
@@ -466,7 +468,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_getRespPopover(isMorePopover) {
-		return this.getStaticAreaItemDomRef().querySelector(`.ui5-multi-combobox-${isMorePopover ? "selected" : "all"}-items-respPopover`);
+		return this.getStaticAreaItemDomRef().querySelector(`.ui5-multi-combobox-${isMorePopover ? "selected" : "all"}-items-responsive-popover`);
 	}
 
 	_toggleRespPopover(isMorePopover) {
@@ -502,7 +504,7 @@ class MultiComboBox extends UI5Element {
 
 		const hasSelectedItem = this.items.some(item => item.selected);
 
-		if (!hasSelectedItem) {
+		if (this.getDomRef() && !hasSelectedItem) {
 			const morePopover = this._getRespPopover(true);
 
 			morePopover && morePopover.close();

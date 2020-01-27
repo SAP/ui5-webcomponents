@@ -34,24 +34,5 @@
 		{{/unless}}
 	</ui5-input>
 
-	<!-- POPOVER -->
-	<ui5-responsive-popover
-			id="{{_id}}-respPopover"
-			allow-target-overlap="{{_respPopoverConfig.allowTargetOverlap}}"
-			stay-open-on-scroll="{{_respPopoverConfig.stayOpenOnScroll}}"
-			show-header-title
-			with-padding
-			@ui5-afterClose="{{_respPopoverConfig.afterClose}}"
-			@ui5-afterOpen="{{_respPopoverConfig.afterOpen}}"
-	>
-		<ui5-calendar
-				id="{{_id}}-calendar"
-				primary-calendar-type="{{_calendar.primaryCalendarType}}"
-				format-pattern="{{_calendar.formatPattern}}"
-				timestamp="{{_calendar.timestamp}}"
-				.selectedDates="{{_calendar.selectedDates}}"
-				@ui5-selectedDatesChange="{{_calendar.onSelectedDatesChange}}"
-		></ui5-calendar>
-	</ui5-responsive-popover>
 	<slot name="formSupport"></slot>
 </div>

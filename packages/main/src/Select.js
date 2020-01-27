@@ -211,7 +211,7 @@ class Select extends UI5Element {
 	}
 
 	get _respPopover() {
-		return this.shadowRoot.querySelector("#ui5-select-respPopover");
+		return this.getStaticAreaItemDomRef().querySelector("ui5-responsive-popover");
 	}
 
 	/**
@@ -326,7 +326,7 @@ class Select extends UI5Element {
 			return;
 		}
 
-		const li = this.popover.querySelector(`#${this._currentlySelectedOption._id}-li`);
+		const li = this._respPopover.querySelector(`#${this._currentlySelectedOption._id}-li`);
 
 		li.parentElement._itemNavigation.currentIndex = this._selectedIndex;
 		li && li.focus();

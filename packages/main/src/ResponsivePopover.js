@@ -4,7 +4,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import ResponsivePopoverTemplate from "./generated/templates/ResponsivePopoverTemplate.lit.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import Popover from "./Popover.js";
 import Dialog from "./Dialog.js";
 import Button from "./Button.js";
@@ -18,9 +18,6 @@ import ResponsivePopoverCss from "./generated/themes/ResponsivePopover.css.js";
 
 const POPOVER_MIN_WIDTH = 100;
 
-/**
- * @private
- */
 const metadata = {
 	tag: "ui5-responsive-popover",
 	properties: /** @lends sap.ui.webcomponents.main.ResponsivePopover.prototype */ {
@@ -33,6 +30,18 @@ const metadata = {
 		},
 
 		allowTargetOverlap: {
+			type: Boolean,
+		},
+
+		disableInitialFocus: {
+			type: Boolean,
+		},
+
+		/**
+		 * By default the popover will be as wide at least as its opener. It will be wider if the content is not fitting.
+		 * If this property is set to true, the popover won't stretch.
+		 */
+		noStretch: {
 			type: Boolean,
 		},
 
@@ -78,11 +87,6 @@ const metadata = {
 
 		initialFocus: {
 			type: String,
-		},
-
-		_width: {
-			type: Integer,
-			defaultValue: POPOVER_MIN_WIDTH
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.ResponsivePopover.prototype */ {
@@ -195,9 +199,19 @@ class ResponsivePopover extends UI5Element {
 	 * @public
 	 */
 	open(opener) {
+		if (this.opened) {
+			return;
+		}
+
 		this._opener = opener;
+		this.fireEvent("beforeOpen", {})
 		this.opened = true;
-		this._width = Math.max(POPOVER_MIN_WIDTH, this.parentElement.getBoundingClientRect().width);
+
+		if (!this.noStretch) {
+			// make popover width be >= of the opener's width
+			this._width = Math.max(POPOVER_MIN_WIDTH, opener.getBoundingClientRect().width);
+		}
+
 		this.style.display = "inline-block";
 	}
 
@@ -205,20 +219,24 @@ class ResponsivePopover extends UI5Element {
 	 * @public
 	 */
 	close() {
+		if (!this.opened) {
+			return;
+		}
+
 		this._inner.close();
 	}
 
-	_beforeOpen(event) {
-		this._fireEvent(event);
-	}
-
 	_afterOpen(event) {
+		if (!this.disableInitialFocus) {
+			const element = getFirstFocusableElement(this);
+	
+			if (element) {
+				element.focus();
+			}
+		}
+
 		this.style.top = this._inner.style.top;
 		this.style.left = this._inner.style.left;
-		this.style.width = this._inner.offsetWidth + "px";
-		this.style.height = this._inner.offsetHeight + "px";
-		
-		this.opened = true;
 		this._fireEvent(event);
 	}
 
@@ -257,6 +275,14 @@ class ResponsivePopover extends UI5Element {
 		}
 
 		this.close();
+	}
+
+	get styles() {
+		return {
+			popover: {
+				"min-width": `${this._width}px`,
+			}
+		}
 	}
 
 	get _inner() {
