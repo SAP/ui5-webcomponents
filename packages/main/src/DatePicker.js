@@ -24,6 +24,7 @@ import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import Input from "./Input.js";
 import InputType from "./types/InputType.js";
 import DatePickerTemplate from "./generated/templates/DatePickerTemplate.lit.js";
+import DatePickerPopoverTemplate from "./generated/templates/DatePickerPopoverTemplate.lit.js";
 
 // default calendar for bundling
 import "@ui5/webcomponents-utils/dist/sap/ui/core/date/Gregorian.js";
@@ -261,6 +262,10 @@ class DatePicker extends UI5Element {
 		return DatePickerTemplate;
 	}
 
+	static get staticAreaTemplate() {
+		return DatePickerPopoverTemplate;
+	}
+
 	static get styles() {
 		return datePickerCss;
 	}
@@ -274,9 +279,7 @@ class DatePicker extends UI5Element {
 			allowTargetOverlap: true,
 			stayOpenOnScroll: true,
 			afterClose: () => {
-				const shadowRoot = this.shadowRoot;
-				const popover = shadowRoot.querySelector(`#${this._id}-popover`);
-				const calendar = popover.querySelector(`#${this._id}-calendar`);
+				const calendar = this.popover.querySelector(`#${this._id}-calendar`);
 
 				this._isPickerOpen = false;
 
@@ -289,9 +292,7 @@ class DatePicker extends UI5Element {
 				calendar._hideYearPicker();
 			},
 			afterOpen: () => {
-				const shadowRoot = this.shadowRoot;
-				const popover = shadowRoot.querySelector(`#${this._id}-popover`);
-				const calendar = popover.querySelector(`#${this._id}-calendar`);
+				const calendar = this.popover.querySelector(`#${this._id}-calendar`);
 				const dayPicker = calendar.shadowRoot.querySelector(`#${calendar._id}-daypicker`);
 
 				const selectedDay = dayPicker.shadowRoot.querySelector(".ui5-dp-item--selected");
@@ -307,7 +308,11 @@ class DatePicker extends UI5Element {
 				} else if (focusableDay) {
 					focusableDay.focus();
 
-					dayPicker._itemNav.current = parseInt(focusableDay.getAttribute("data-sap-index"));
+					let focusableDayIdx = parseInt(focusableDay.getAttribute("data-sap-index"));
+					const focusableItem = dayPicker.focusableDays.find(item => parseInt(item._index) === focusableDayIdx);
+					focusableDayIdx = focusableItem ? dayPicker.focusableDays.indexOf(focusableItem) : focusableDayIdx;
+
+					dayPicker._itemNav.current = focusableDayIdx;
 					dayPicker._itemNav.update();
 				}
 			},
@@ -544,10 +549,6 @@ class DatePicker extends UI5Element {
 		return getRTL() ? "rtl" : "ltr";
 	}
 
-	_getPopover() {
-		return this.shadowRoot.querySelector("ui5-popover");
-	}
-
 	_canOpenPicker() {
 		return !this.disabled && !this.readonly;
 	}
@@ -583,7 +584,7 @@ class DatePicker extends UI5Element {
 	 * @public
 	 */
 	closePicker() {
-		this._getPopover().close();
+		this.popover.close();
 	}
 
 	/**
@@ -594,17 +595,19 @@ class DatePicker extends UI5Element {
 	 * @public
 	 */
 	openPicker(options) {
+		this.popover = this.getStaticAreaItemDomRef().querySelector("ui5-popover");
 		this._changeCalendarSelection();
 
 		if (options && options.focusInput) {
 			this._focusInputAfterOpen = true;
 		}
-
-		this._getPopover().openBy(this);
+		this.popover.openBy(this);
 		this._isPickerOpen = true;
 	}
 
 	togglePicker() {
+		this.popover = this.getStaticAreaItemDomRef().querySelector("ui5-popover");
+
 		if (this.isOpen()) {
 			this.closePicker();
 		} else if (this._canOpenPicker()) {

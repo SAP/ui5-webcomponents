@@ -18,8 +18,9 @@ import List from "./List.js";
 import StandardListItem from "./StandardListItem.js";
 import Icon from "./Icon.js";
 
-// Template
+// Templates
 import SelectTemplate from "./generated/templates/SelectTemplate.lit.js";
+import SelectPopoverTemplate from "./generated/templates/SelectPopoverTemplate.lit.js";
 
 // Styles
 import selectCss from "./generated/themes/Select.css.js";
@@ -174,6 +175,10 @@ class Select extends UI5Element {
 		return SelectTemplate;
 	}
 
+	static get staticAreaTemplate() {
+		return SelectPopoverTemplate;
+	}
+
 	static get styles() {
 		return selectCss;
 	}
@@ -202,9 +207,7 @@ class Select extends UI5Element {
 	}
 
 	get _isPickerOpen() {
-		const popover = this.shadowRoot.querySelector("#ui5-select--popover");
-
-		return popover && popover.opened;
+		return this.popover && this.popover.opened;
 	}
 
 	/**
@@ -218,16 +221,16 @@ class Select extends UI5Element {
 	}
 
 	_togglePopover() {
-		const popover = this.shadowRoot.querySelector("#ui5-select--popover");
+		this.popover = this.getStaticAreaItemDomRef().querySelector("ui5-popover");
 
 		if (this.disabled) {
 			return;
 		}
 
 		if (this._isPickerOpen) {
-			popover.close();
+			this.popover.close();
 		} else {
-			popover.openBy(this);
+			this.popover.openBy(this);
 		}
 	}
 
@@ -321,7 +324,7 @@ class Select extends UI5Element {
 			return;
 		}
 
-		const li = this.shadowRoot.querySelector(`#${this._currentlySelectedOption._id}-li`);
+		const li = this.popover.querySelector(`#${this._currentlySelectedOption._id}-li`);
 
 		li.parentElement._itemNavigation.currentIndex = this._selectedIndex;
 		li && li.focus();

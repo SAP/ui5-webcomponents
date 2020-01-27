@@ -1,5 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { fetchCldr } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
 import { getLocale } from "@ui5/webcomponents-base/dist/LocaleProvider.js";
 import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSettings.js";
 import DateFormat from "@ui5/webcomponents-utils/dist/sap/ui/core/format/DateFormat.js";
@@ -17,6 +18,14 @@ import DayPickerTemplate from "./generated/templates/DayPickerTemplate.lit.js";
 
 // Styles
 import dayPickerCSS from "./generated/themes/DayPicker.css.js";
+
+const monthDiff = (startDate, endDate) => {
+	let months;
+	months = (endDate.getFullYear() - startDate.getFullYear()) * 12;
+	months -= startDate.getMonth();
+	months += endDate.getMonth();
+	return months;
+};
 
 /**
  * @public
@@ -144,20 +153,28 @@ class DayPicker extends UI5Element {
 		this._oLocale = getFormatLocale();
 		this._oLocaleData = new LocaleData(this._oLocale);
 
-		this._itemNav = new ItemNavigation(this, { rowSize: 7, behavior: ItemNavigationBehavior.Paging });
-		this._itemNav.getItemsCallback = function getItemsCallback() {
-			const focusableDays = [];
+		this._itemNav = new ItemNavigation(this, {
+			rowSize: 7,
+			behavior: ItemNavigationBehavior.Paging,
+		});
 
-			for (let i = 0; i < this._weeks.length; i++) {
-				const week = this._weeks[i].filter(x => !x.disabled);
-				focusableDays.push(week);
-			}
-			return [].concat(...focusableDays);
+		this._itemNav.getItemsCallback = function getItemsCallback() {
+			return this.focusableDays;
 		}.bind(this);
 
 		this._itemNav.attachEvent(
 			ItemNavigation.BORDER_REACH,
 			this._handleItemNavigationBorderReach.bind(this)
+		);
+
+		this._itemNav.attachEvent(
+			"PageBottom",
+			this._handleMonthBottomOverflow.bind(this)
+		);
+
+		this._itemNav.attachEvent(
+			"PageTop",
+			this._handleMonthTopOverflow.bind(this)
 		);
 	}
 
@@ -291,8 +308,13 @@ class DayPicker extends UI5Element {
 			for (let i = 0; i < this._weeks.length; i++) {
 				for (let j = 0; j < this._weeks[i].length; j++) {
 					if (parseInt(this._weeks[i][j].timestamp) === targetDate) {
-						this._itemNav.current = parseInt(target.getAttribute("data-sap-index"));
+						let index = parseInt(target.getAttribute("data-sap-index"));
+						if (this.minDate || this.maxDate) {
+							const focusableItem = this.focusableDays.find(item => parseInt(item._index) === index);
+							index = focusableItem ? this.focusableDays.indexOf(focusableItem) : index;
+						}
 
+						this._itemNav.current = index;
 						this._itemNav.update();
 						break;
 					}
@@ -372,6 +394,17 @@ class DayPicker extends UI5Element {
 		return this.primaryCalendarType || getCalendarType() || LocaleData.getInstance(getLocale()).getPreferredCalendarType();
 	}
 
+	get focusableDays() {
+		const focusableDays = [];
+
+		for (let i = 0; i < this._weeks.length; i++) {
+			const week = this._weeks[i].filter(x => !x.disabled);
+			focusableDays.push(week);
+		}
+
+		return [].concat(...focusableDays);
+	}
+
 	_modifySelectionAndNotifySubscribers(sNewDate, bAdd) {
 		if (bAdd) {
 			this.selectedDates = [...this._selectedDates, sNewDate];
@@ -380,6 +413,79 @@ class DayPicker extends UI5Element {
 		}
 
 		this.fireEvent("selectionChange", { dates: [...this._selectedDates] });
+	}
+
+	_handleMonthBottomOverflow(event) {
+		this._itemNav.hasNextPage = this._hasNextMonth();
+	}
+
+	_handleMonthTopOverflow(event) {
+		this._itemNav.hasPrevPage = this._hasPrevMonth();
+	}
+
+	_hasNextMonth() {
+		let newMonth = this._month + 1;
+		let newYear = this._year;
+
+		if (newMonth > 11) {
+			newMonth = 0;
+			newYear++;
+		}
+
+		if (newYear > DEFAULT_MAX_YEAR && newMonth === 0) {
+			return false;
+		}
+
+		if (!this.maxDate) {
+			return true;
+		}
+
+		const oNewDate = this._calendarDate;
+		oNewDate.setDate(oNewDate.getDate());
+		oNewDate.setYear(newYear);
+		oNewDate.setMonth(newMonth);
+
+		const monthsBetween = monthDiff(oNewDate.toUTCJSDate(), this.maxDate);
+		if (monthsBetween < 0) {
+			return false;
+		}
+
+		const lastFocusableDay = this.focusableDays[this.focusableDays.length - 1].iDay;
+		if (monthsBetween === 0 && this.maxDate.getDate() === lastFocusableDay) {
+			return false;
+		}
+
+		return true;
+	}
+
+	_hasPrevMonth() {
+		let newMonth = this._month - 1;
+		let newYear = this._year;
+
+		if (newMonth < 0) {
+			newMonth = 11;
+			newYear--;
+		}
+
+		if (newYear < DEFAULT_MIN_YEAR && newMonth === 11) {
+			return false;
+		}
+
+		if (!this.minDate) {
+			return true;
+		}
+
+		const oNewDate = this._calendarDate;
+		oNewDate.setDate(oNewDate.getDate());
+		oNewDate.setYear(newYear);
+		oNewDate.setMonth(newMonth);
+
+		const monthsBetween = monthDiff(this.minDate, oNewDate.toUTCJSDate());
+		if (this.minDate && monthsBetween < 0) {
+			return false;
+		}
+
+		return true;
 	}
 
 	_handleItemNavigationBorderReach(event) {
@@ -405,7 +511,7 @@ class DayPicker extends UI5Element {
 			return;
 		}
 
-		if (this._isOutOfSelectableRange(oNewDate._oUDate.oDate)){
+		if (this._isOutOfSelectableRange(oNewDate._oUDate.oDate)) {
 			return;
 		}
 
@@ -529,6 +635,14 @@ class DayPicker extends UI5Element {
 				width: "100%",
 			},
 		};
+	}
+
+	static async define(...params) {
+		await Promise.all([
+			fetchCldr(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
+		]);
+
+		super.define(...params);
 	}
 }
 

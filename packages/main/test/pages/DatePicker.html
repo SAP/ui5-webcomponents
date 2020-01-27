@@ -81,14 +81,23 @@
         <h3>explicitly set empty placeholder</h3>
 		<ui5-datepicker placeholder=""></ui5-datepicker> -->
 
-		<h3>Date picker with min and max date 9/1/2019 - 11/1/2019</h3>
-		<ui5-datepicker id="dp33" minDate="9/1/2019" maxDate="11/1/2019"></ui5-datepicker>
+		<h3>Date picker with min and max date 1/1/2000 - 3/1/2100</h3>
+		<ui5-datepicker id="dp33" minDate="1/1/2000" maxDate="3/1/2100" formatPattern="DD/MM/YYYY"></ui5-datepicker>
 		
 		<h3>Date picker with only min date 1/1/2000</h3>
-		<ui5-datepicker id="dp34" minDate="1/1/2000"></ui5-datepicker>
+		<ui5-datepicker id="dp34" minDate="1/1/2000" formatPattern="DD/MM/YYYY"></ui5-datepicker>
 		
 		<h3>Date picker with only max date date 1/1/2100</h3>
-        <ui5-datepicker id="dp35" maxDate="11/1/2019"></ui5-datepicker>
+		<ui5-datepicker id="dp35" maxDate="1/1/2100" formatPattern="DD/MM/YYYY"></ui5-datepicker>
+
+		<h3>1 months range</h3>
+		<ui5-datepicker id="minMax1" minDate="Jan 6, 2020" maxDate="Jan 25, 2020"></ui5-datepicker>
+		<h3>3 months range</h3>
+		<ui5-datepicker id="minMax2" value="Feb 5, 2020" minDate="Jan 6, 2020" maxDate="March 25, 2020"></ui5-datepicker>
+		<h3>1 year range</h3>
+		<ui5-datepicker id="minMax3" value="Jun 5, 2020" minDate="Jan 6, 2020" maxDate="Jan 5, 2021"></ui5-datepicker>
+		<h3>2 years range</h3>
+		<ui5-datepicker id="minMax4" value="Feb 5, 2021" minDate="Jan 6, 2020" maxDate="Jan 5, 2022"></ui5-datepicker>
 	</div>
 	<script>
 		var dp = document.getElementById('dp5');

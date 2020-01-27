@@ -293,6 +293,11 @@ class YearPicker extends UI5Element {
 			return;
 		}
 
+		if (this._isOutOfSelectableRange(oCalDate.getYear() - YearPicker._MIDDLE_ITEM_INDEX)
+		&& this._isOutOfSelectableRange(oCalDate.getYear() + YearPicker._MIDDLE_ITEM_INDEX)) {
+			return;
+		}
+
 		this.timestamp = oCalDate.valueOf() / 1000;
 	}
 
