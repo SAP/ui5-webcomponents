@@ -21,7 +21,8 @@ class ItemNavigation extends EventProvider {
 		this.currentIndex = options.currentIndex || 0;
 		this.rowSize = options.rowSize || 1;
 		this.behavior = options.behavior || ItemNavigationBehavior.Static;
-
+		this.hasNextPage = true; // used in Paging mode
+		this.hasPrevPage = true; // used in Paging mode
 		const navigationMode = options.navigationMode;
 		const autoNavigation = !navigationMode || navigationMode === NavigationMode.Auto;
 		this.horizontalNavigationOn = autoNavigation || navigationMode === NavigationMode.Horizontal;
@@ -48,37 +49,19 @@ class ItemNavigation extends EventProvider {
 		return this.verticalNavigationOn;
 	}
 
-	_onKeyPress(event) {
-		const items = this._getItems();
-		if (this.currentIndex >= items.length) {
-			if (this.behavior !== ItemNavigationBehavior.Cyclic) {
-				if (this.behavior === ItemNavigationBehavior.Paging) {
-					this.currentIndex = this.currentIndex - items.length;
-				} else {
-					this.currentIndex = items.length - 1;
-				}
-				this.fireEvent(ItemNavigation.BORDER_REACH, { start: false, end: true, offset: this.currentIndex });
-			} else {
-				this.currentIndex = this.currentIndex - items.length;
-			}
+	async _onKeyPress(event) {
+		if (this.currentIndex >= this._getItems().length) {
+			this.onOverflowBottomEdge();
 		} else if (this.currentIndex < 0) {
-			if (this.behavior !== ItemNavigationBehavior.Cyclic) {
-				if (this.behavior === ItemNavigationBehavior.Paging) {
-					this.currentIndex = items.length + this.currentIndex - this.rowSize + (this.rowSize - (this._getItems().length % this.rowSize));
-				} else {
-					this.currentIndex = 0;
-				}
-				this.fireEvent(ItemNavigation.BORDER_REACH, { start: true, end: false, offset: this.currentIndex });
-			} else {
-				this.currentIndex = items.length + this.currentIndex;
-			}
+			this.onOverflowTopEdge();
 		}
+
+		event.preventDefault();
+
+		await RenderScheduler.whenFinished();
 
 		this.update();
 		this.focusCurrent();
-
-		// stops browser scrolling with up/down keys
-		event.preventDefault();
 	}
 
 	onkeydown(event) {
@@ -173,8 +156,7 @@ class ItemNavigation extends EventProvider {
 		this.rootWebComponent._invalidate();
 	}
 
-	async focusCurrent() {
-		await RenderScheduler.whenFinished();
+	focusCurrent() {
 		const currentItem = this._getCurrentItem();
 		if (currentItem) {
 			currentItem.focus();
@@ -229,8 +211,64 @@ class ItemNavigation extends EventProvider {
 	set current(val) {
 		this.currentIndex = val;
 	}
+
+	onOverflowBottomEdge() {
+		const items = this._getItems();
+		if (this.behavior === ItemNavigationBehavior.Cyclic) {
+			return;
+		}
+
+		if (this.behavior === ItemNavigationBehavior.Paging) {
+			this._handleNextPage();
+		} else {
+			this.currentIndex = items.length - 1;
+		}
+
+		this.fireEvent(ItemNavigation.BORDER_REACH, { start: false, end: true, offset: this.currentIndex });
+	}
+
+	onOverflowTopEdge() {
+		const items = this._getItems();
+
+		if (this.behavior === ItemNavigationBehavior.Cyclic) {
+			this.currentIndex = items.length + this.currentIndex;
+			return;
+		}
+
+		if (this.behavior === ItemNavigationBehavior.Paging) {
+			this._handlePrevPage();
+		} else {
+			this.currentIndex = 0;
+		}
+
+		this.fireEvent(ItemNavigation.BORDER_REACH, { start: true, end: false, offset: this.currentIndex });
+	}
+
+	_handleNextPage() {
+		this.fireEvent(ItemNavigation.PAGE_BOTTOM);
+		const items = this._getItems();
+
+		if (!this.hasNextPage) {
+			this.currentIndex = items.length - 1;
+		} else {
+			this.currentIndex = Math.abs(items.length - this.currentIndex);
+		}
+	}
+
+	_handlePrevPage() {
+		this.fireEvent(ItemNavigation.PAGE_TOP);
+		const items = this._getItems();
+
+		if (!this.hasPrevPage) {
+			this.currentIndex = 0;
+		} else {
+			this.currentIndex = items.length + this.currentIndex + this.rowSize + (this.rowSize - (this._getItems().length % this.rowSize));
+		}
+	}
 }
 
+ItemNavigation.PAGE_TOP = "PageTop";
+ItemNavigation.PAGE_BOTTOM = "PageBottom";
 ItemNavigation.BORDER_REACH = "_borderReach";
 
 export default ItemNavigation;
