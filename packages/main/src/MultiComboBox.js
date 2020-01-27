@@ -29,6 +29,7 @@ import MultiComboBoxPopoverTemplate from "./generated/templates/MultiComboBoxPop
 
 // Styles
 import styles from "./generated/themes/MultiComboBox.css.js";
+import InputInPopoverCss from "./generated/themes/InputInPopover.css.js";
 
 /**
  * @public
@@ -296,6 +297,10 @@ class MultiComboBox extends UI5Element {
 		return styles;
 	}
 
+	static get staticAreaStyles() {
+		return InputInPopoverCss;
+	}
+
 	constructor() {
 		super();
 
@@ -524,7 +529,9 @@ class MultiComboBox extends UI5Element {
 		if (this.open) {
 			this._getRespPopover().open(this);
 			// Set initial focus to the native input
-			this.getDomRef().querySelector("#ui5-multi-combobox-input").focus();
+			if (!isPhone()) {
+				this.getDomRef().querySelector("#ui5-multi-combobox-input").focus();
+			}
 		}
 	}
 

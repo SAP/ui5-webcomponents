@@ -26,7 +26,7 @@ import {
 
 // Styles
 import styles from "./generated/themes/Input.css.js";
-import listItemStyles from "./generated/themes/ListItem.css.js";
+import InputInPopoverCss from "./generated/themes/InputInPopover.css.js";
 
 /**
  * @public
@@ -339,10 +339,11 @@ class Input extends UI5Element {
 	}
 
 	static get styles() {
-		return [styles];
+		return styles;
 	}
+
 	static get staticAreaStyles() {
-		return [listItemStyles];
+		return InputInPopoverCss;
 	}
 
 	constructor() {
@@ -394,6 +395,11 @@ class Input extends UI5Element {
 	onAfterRendering() {
 		if (!isPhone() && !this.firstRendering && this.Suggestions) {
 			this.Suggestions.toggle(this.shouldOpenSuggestions());
+
+			if (this.Suggestions.isOpened()) {
+				// Set initial focus to the native input
+				this.getDomRef().querySelector(`#${this.getInputId()}`).focus();
+			}
 		}
 		this.firstRendering = false;
 	}
@@ -576,7 +582,7 @@ class Input extends UI5Element {
 	}
 
 	getInputDOMRef() {
-		return isPhone() ? this.getDomRef().querySelector(".ui5-input-inner-phone") : this.getDomRef().querySelector(`#${this.getInputId()}`);
+		return isPhone() ? this.getStaticAreaItemDomRef().querySelector(".ui5-input-inner-phone") : this.getDomRef().querySelector(`#${this.getInputId()}`);
 	}
 
 	getLabelableElementId() {

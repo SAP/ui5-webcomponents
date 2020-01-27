@@ -7,29 +7,27 @@
 >
 	<div
 		slot="header"
-		class="ui5-input-host"
+		class="input-root-phone"
 		value-state="{{valueState}}"
 	>
-		<div class="ui5-multi-combobox-root">
-			<input
-				.value="{{value}}"
-				inner-input
-				placeholder="{{placeholder}}"
-				?disabled={{disabled}}
-				?readonly={{readonly}}
-				?required={{required}}
-				value-state="{{valueState}}"
-				@input="{{_inputLiveChange}}"
-				@change={{_inputChange}}
-				@keydown="{{_onkeydown}}"
-				@keyup="{{_onkeyup}}"
-				@focusin="{{_focusin}}"
-				@focusout="{{_focusout}}"
-				aria-autocomplete="both"
-				aria-labelledby="{{_id}}-hiddenText-nMore"
-				aria-describedby="{{_id}}-valueStateDesc"
-			/>
-		</div>
+		<input
+			.value="{{value}}"
+			inner-input
+			placeholder="{{placeholder}}"
+			?disabled={{disabled}}
+			?readonly={{readonly}}
+			?required={{required}}
+			value-state="{{valueState}}"
+			@input="{{_inputLiveChange}}"
+			@change={{_inputChange}}
+			@keydown="{{_onkeydown}}"
+			@keyup="{{_onkeyup}}"
+			@focusin="{{_focusin}}"
+			@focusout="{{_focusout}}"
+			aria-autocomplete="both"
+			aria-labelledby="{{_id}}-hiddenText-nMore"
+			aria-describedby="{{_id}}-valueStateDesc"
+		/>
 	</div>
 	<ui5-list separators="None" mode="{{selectedItemsListMode}}"
 		@ui5-selectionChange={{_listSelectionChange}}>
@@ -51,27 +49,29 @@
 	@ui5-afterClose={{_toggleIcon}}
 	@ui5-afterOpen={{_toggleIcon}}
 >
-	<div slot="header" class="ui5-input-host">
-		<div class="ui5-multi-combobox-root">
-			<input
-				.value="{{value}}"
-				inner-input
-				placeholder="{{placeholder}}"
-				?disabled={{disabled}}
-				?readonly={{readonly}}
-				?required={{required}}
-				value-state="{{valueState}}"
-				@input="{{_inputLiveChange}}"
-				@change={{_inputChange}}
-				@keydown="{{_onkeydown}}"
-				@keyup="{{_onkeyup}}"
-				@focusin="{{_focusin}}"
-				@focusout="{{_focusout}}"
-				aria-autocomplete="both"
-				aria-labelledby="{{_id}}-hiddenText-nMore"
-				aria-describedby="{{_id}}-valueStateDesc"
-			/>
-		</div>
+	<div
+		slot="header"
+		class="input-root-phone"
+		value-state="{{valueState}}"
+	>
+		<input
+			.value="{{value}}"
+			inner-input
+			placeholder="{{placeholder}}"
+			?disabled={{disabled}}
+			?readonly={{readonly}}
+			?required={{required}}
+			value-state="{{valueState}}"
+			@input="{{_inputLiveChange}}"
+			@change={{_inputChange}}
+			@keydown="{{_onkeydown}}"
+			@keyup="{{_onkeyup}}"
+			@focusin="{{_focusin}}"
+			@focusout="{{_focusout}}"
+			aria-autocomplete="both"
+			aria-labelledby="{{_id}}-hiddenText-nMore"
+			aria-describedby="{{_id}}-valueStateDesc"
+		/>
 	</div>
 	<ui5-list separators="None" mode="MultiSelect" class="ui5-multi-combobox-all-items-list">
 		{{#each _filteredItems}}

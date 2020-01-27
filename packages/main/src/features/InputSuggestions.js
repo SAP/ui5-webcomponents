@@ -39,7 +39,7 @@ class Suggestions {
 			return suggestions.push({
 				text: suggestion.textContent,
 				icon: suggestion.icon,
-				active: suggestion.selected
+				active: suggestion.selected,
 			});
 		});
 

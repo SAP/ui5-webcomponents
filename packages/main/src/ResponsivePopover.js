@@ -2,16 +2,15 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import ResponsivePopoverTemplate from "./generated/templates/ResponsivePopoverTemplate.lit.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
-import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import Popover from "./Popover.js";
 import Dialog from "./Dialog.js";
 import Button from "./Button.js";
 import {
 	INPUT_SUGGESTIONS_TITLE,
 } from "./generated/i18n/i18n-defaults.js";
-
 
 // Styles
 import ResponsivePopoverCss from "./generated/themes/ResponsivePopover.css.js";
@@ -184,7 +183,7 @@ class ResponsivePopover extends UI5Element {
 		if (this.opened) {
 			const dialog = this.shadowRoot.querySelector("ui5-dialog");
 			const popover = this.shadowRoot.querySelector("ui5-popover");
-	
+
 			if (dialog) {
 				dialog.open();
 			} else {
@@ -204,7 +203,7 @@ class ResponsivePopover extends UI5Element {
 		}
 
 		this._opener = opener;
-		this.fireEvent("beforeOpen", {})
+		this.fireEvent("beforeOpen", {});
 		this.opened = true;
 
 		if (!this.noStretch) {
@@ -229,7 +228,7 @@ class ResponsivePopover extends UI5Element {
 	_afterOpen(event) {
 		if (!this.disableInitialFocus) {
 			const element = getFirstFocusableElement(this);
-	
+
 			if (element) {
 				element.focus();
 			}
@@ -248,7 +247,7 @@ class ResponsivePopover extends UI5Element {
 		delete this._opener;
 		this.style.display = "";
 		this.opened = false;
-		
+
 		this._fireEvent(event);
 	}
 
@@ -281,8 +280,8 @@ class ResponsivePopover extends UI5Element {
 		return {
 			popover: {
 				"min-width": `${this._width}px`,
-			}
-		}
+			},
+		};
 	}
 
 	get _inner() {

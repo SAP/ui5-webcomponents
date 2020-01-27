@@ -13,22 +13,18 @@
 				>{{ this.text }}</ui5-li>
 			{{/each}}
 		</ui5-list>
-		<div slot="header" class="ui5-input-host">
-			<div class="ui5-input-root">
-				<div class="ui5-input-content">
-					<input
-						class="ui5-input-inner-phone"
-						type="{{inputType}}"
-						.value="{{value}}"
-						inner-input
-						placeholder="{{placeholder}}"
-						@input="{{_handleInput}}"
-						@change="{{_handleChange}}"
-						@keydown="{{_onkeydown}}"
-						@keyup="{{_onkeyup}}"
-					/>
-				</div>
-			</div>
+		<div slot="header" class="input-root-phone">
+			<input
+				class="ui5-input-inner-phone"
+				type="{{inputType}}"
+				.value="{{value}}"
+				inner-input
+				placeholder="{{placeholder}}"
+				@input="{{_handleInput}}"
+				@change="{{_handleChange}}"
+				@keydown="{{_onkeydown}}"
+				@keyup="{{_onkeyup}}"
+			/>
 		</div>
 	</ui5-responsive-popover>
 {{/if}}

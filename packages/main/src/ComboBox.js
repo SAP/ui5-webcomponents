@@ -13,8 +13,7 @@ import ComboBoxPopoverTemplate from "./generated/templates/ComboBoxPopoverTempla
 // Styles
 import ComboBoxCss from "./generated/themes/ComboBox.css.js";
 import ComboBoxPopoverCss from "./generated/themes/ComboBoxPopover.css.js";
-import ListItemCss from "./generated/themes/ListItem.css.js";
-import ListCss from "./generated/themes/List.css.js";
+import InputInPopoverCss from "./generated/themes/InputInPopover.css.js";
 
 import ComboBoxItem from "./ComboBoxItem.js";
 import Icon from "./Icon.js";
@@ -255,16 +254,16 @@ class ComboBox extends UI5Element {
 		return ComboBoxCss;
 	}
 
+	static get staticAreaStyles() {
+		return [ComboBoxPopoverCss, InputInPopoverCss];
+	}
+
 	static get template() {
 		return ComboBoxTemplate;
 	}
 
 	static get staticAreaTemplate() {
 		return ComboBoxPopoverTemplate;
-	}
-
-	static get staticAreaStyles() {
-		return [ComboBoxPopoverCss, ListCss, ListItemCss];
 	}
 
 	constructor(props) {
