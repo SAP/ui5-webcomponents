@@ -29,7 +29,7 @@ import MultiComboBoxPopoverTemplate from "./generated/templates/MultiComboBoxPop
 
 // Styles
 import styles from "./generated/themes/MultiComboBox.css.js";
-import InputInPopoverCss from "./generated/themes/InputInPopover.css.js";
+import ResponsivePopoverInputCss from "./generated/themes/ResponsivePopoverInput.css.js";
 
 /**
  * @public
@@ -298,7 +298,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	static get staticAreaStyles() {
-		return InputInPopoverCss;
+		return ResponsivePopoverInputCss;
 	}
 
 	constructor() {

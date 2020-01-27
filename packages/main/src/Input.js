@@ -26,7 +26,7 @@ import {
 
 // Styles
 import styles from "./generated/themes/Input.css.js";
-import InputInPopoverCss from "./generated/themes/InputInPopover.css.js";
+import ResponsivePopoverInputCss from "./generated/themes/ResponsivePopoverInput.css.js";
 
 /**
  * @public
@@ -343,7 +343,7 @@ class Input extends UI5Element {
 	}
 
 	static get staticAreaStyles() {
-		return InputInPopoverCss;
+		return ResponsivePopoverInputCss;
 	}
 
 	constructor() {
