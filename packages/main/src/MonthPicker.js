@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
 import { getFormatLocale } from "@ui5/webcomponents-base/dist/FormatSettings.js";
+import DateFormat from "@ui5/webcomponents-utils/dist/sap/ui/core/format/DateFormat.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
@@ -42,24 +43,24 @@ const metadata = {
 		/**
 		 * Determines the мinimum date available for selection.
 		 *
-		 * @type {Object}
+		 * @type {String}
 		 * @defaultvalue undefined
 		 * @public
 		 */
 		minDate: {
-			type: Object,
+			type: String,
 			defaultValue: undefined,
 		},
 
 		/**
 		 * Determines the maximum date available for selection.
 		 *
-		 * @type {Object}
+		 * @type {String}
 		 * @defaultvalue undefined
 		 * @public
 		 */
 		maxDate: {
-			type: Object,
+			type: String,
 			defaultValue: undefined,
 		},
 
@@ -223,10 +224,47 @@ class MonthPicker extends UI5Element {
 
 	_isOutOfSelectableRange(monthIndex) {
 		const currentDateYear = this._localDate.getFullYear(),
-			minDateCheck = this.minDate && ((currentDateYear === this.minDate.getFullYear() && monthIndex < this.minDate.getMonth()) || currentDateYear < this.minDate.getFullYear()),
-			maxDateCheck = this.maxDate && ((currentDateYear === this.maxDate.getFullYear() && monthIndex > this.maxDate.getMonth()) || (currentDateYear > this.maxDate.getFullYear()));
+			minDate = new Date(this._minDate),
+			maxDate = new Date(this._maxDate),
+			minDateCheck = minDate && ((currentDateYear === minDate.getFullYear() && monthIndex < minDate.getMonth()) || currentDateYear < minDate.getFullYear()),
+			maxDateCheck = maxDate && ((currentDateYear === maxDate.getFullYear() && monthIndex > maxDate.getMonth()) || (currentDateYear > maxDate.getFullYear()));
 
 		return maxDateCheck || minDateCheck;
+	}
+
+	get _maxDate() {
+		if (this.maxDate){
+			const jsDate = new Date(this.getFormat().parse(this.maxDate).getFullYear(),this.getFormat().parse(this.maxDate).getMonth(),this.getFormat().parse(this.maxDate).getDate());
+			const oCalDate = new CalendarDate(CalendarDate.fromTimestamp(jsDate.getTime(),this._primaryCalendarType));
+			return oCalDate.valueOf();
+		} else {
+			return this.maxDate;
+		}
+	}
+
+	get _minDate() {
+		if (this.minDate){
+			const jsDate = new Date(this.getFormat().parse(this.minDate).getFullYear(),this.getFormat().parse(this.minDate).getMonth(),this.getFormat().parse(this.minDate).getDate());
+			const oCalDate = new CalendarDate(CalendarDate.fromTimestamp(jsDate.getTime(),this._primaryCalendarType));
+			return oCalDate.valueOf();
+		} else {
+			return this.minDate;
+		}
+	}
+
+	getFormat() {
+		if (this._isPattern) {
+			this._oDateFormat = DateFormat.getInstance({
+				pattern: this._formatPattern,
+				calendarType: this._primaryCalendarType,
+			});
+		} else {
+			this._oDateFormat = DateFormat.getInstance({
+				style: this._formatPattern,
+				calendarType: this._primaryCalendarType,
+			});
+		}
+		return this._oDateFormat;
 	}
 
 	getTimestampFromDOM(domNode) {

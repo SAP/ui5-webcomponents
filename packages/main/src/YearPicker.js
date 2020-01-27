@@ -43,24 +43,24 @@ const metadata = {
 		/**
 		 * Determines the мinimum date available for selection.
 		 *
-		 * @type {Object}
+		 * @type {String}
 		 * @defaultvalue undefined
 		 * @public
 		 */
 		minDate: {
-			type: Object,
+			type: String,
 			defaultValue: undefined,
 		},
 
 		/**
 		 * Determines the maximum date available for selection.
 		 *
-		 * @type {Object}
+		 * @type {String}
 		 * @defaultvalue undefined
 		 * @public
 		 */
 		maxDate: {
-			type: Object,
+			type: String,
 			defaultValue: undefined,
 		},
 
@@ -297,10 +297,47 @@ class YearPicker extends UI5Element {
 	}
 
 	_isOutOfSelectableRange(year) {
-		const minDateCheck = this.minDate && year < this.minDate.getFullYear(),
-			maxDateCheck = this.maxDate && year > this.maxDate.getFullYear();
+		const minDate = new Date(this._minDate),
+			maxDate = new Date(this._maxDate), 
+			minDateCheck = minDate && year < minDate.getFullYear(),
+			maxDateCheck = maxDate && year > maxDate.getFullYear();
 
 		return minDateCheck || maxDateCheck;
+	}
+
+	get _maxDate() {
+		if (this.maxDate){
+			const jsDate = new Date(this.getFormat().parse(this.maxDate).getFullYear(),this.getFormat().parse(this.maxDate).getMonth(),this.getFormat().parse(this.maxDate).getDate());
+			const oCalDate = new CalendarDate(CalendarDate.fromTimestamp(jsDate.getTime(),this._primaryCalendarType));
+			return oCalDate.valueOf();
+		} else {
+			return this.maxDate;
+		}
+	}
+
+	get _minDate() {
+		if (this.minDate){
+			const jsDate = new Date(this.getFormat().parse(this.minDate).getFullYear(),this.getFormat().parse(this.minDate).getMonth(),this.getFormat().parse(this.minDate).getDate());
+			const oCalDate = new CalendarDate(CalendarDate.fromTimestamp(jsDate.getTime(),this._primaryCalendarType));
+			return oCalDate.valueOf();
+		} else {
+			return this.minDate;
+		}
+	}
+
+	getFormat() {
+		if (this._isPattern) {
+			this._oDateFormat = DateFormat.getInstance({
+				pattern: this._formatPattern,
+				calendarType: this._primaryCalendarType,
+			});
+		} else {
+			this._oDateFormat = DateFormat.getInstance({
+				style: this._formatPattern,
+				calendarType: this._primaryCalendarType,
+			});
+		}
+		return this._oDateFormat;
 	}
 
 	get styles() {

@@ -76,24 +76,24 @@ const metadata = {
 		/**
 		 * Determines the мinimum date available for selection.
 		 *
-		 * @type {Object}
+		 * @type {String}
 		 * @defaultvalue undefined
 		 * @public
 		 */
 		minDate: {
-			type: Object,
+			type: String,
 			defaultValue: undefined,
 		},
 
 		/**
 		 * Determines the maximum date available for selection.
 		 *
-		 * @type {Object}
+		 * @type {String}
 		 * @defaultvalue undefined
 		 * @public
 		 */
 		maxDate: {
-			type: Object,
+			type: String,
 			defaultValue: undefined,
 		},
 
@@ -297,10 +297,8 @@ class DatePicker extends UI5Element {
 				const selectedDay = dayPicker.shadowRoot.querySelector(".ui5-dp-item--selected");
 				const today = dayPicker.shadowRoot.querySelector(".ui5-dp-item--now");
 				let focusableDay = selectedDay || today;
-				if (!selectedDay && (this.minDate || this.maxDate)) {
-					let focusDayTimeStamp = this.findFirstFocusableDay(),
-						daypicker = this._getPopover().default[0].shadowRoot.children[1].children[1].children[0];
-					focusableDay = daypicker.shadowRoot.getElementById(`${daypicker._id}-${focusDayTimeStamp}`);
+				if (!selectedDay && (this.minDate || this.maxDate) && !this.isInValidRange((new Date().getTime()))) {
+					focusableDay = this.findFirstFocusableDay(dayPicker);
 				}
 
 				if (this._focusInputAfterOpen) {
@@ -321,13 +319,13 @@ class DatePicker extends UI5Element {
 		};
 
 		if (this.isValid(this.getAttribute("minDate"))) {
-			this.minDate = new Date(this.getAttribute("minDate"));
+			this.minDate = this.getAttribute("minDate");
 		} else if (this.getAttribute("minDate")) {
 			console.warn(`In order for the "minDate" property to have effect, you should enter valid date format`); // eslint-disable-line
 		}
 
 		if (this.isValid(this.getAttribute("maxDate"))) {
-			this.maxDate = new Date(this.getAttribute("maxDate"));
+			this.maxDate = this.getAttribute("maxDate");
 		} else if (this.getAttribute("maxDate")) {
 			console.warn(`In order for the "maxDate" property to have effect, you should enter valid date format`); // eslint-disable-line
 		}
@@ -335,20 +333,11 @@ class DatePicker extends UI5Element {
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
-	findFirstFocusableDay() {
+	findFirstFocusableDay(daypicker) {
 		const today = new Date();
 		if (!this.isInValidRange(today)){
-			if (this.minDate) {
-				let minDate = new Date(this._minDate);
-				minDate.setSeconds(0);
-				minDate.setMinutes(0);
-				minDate.setHours(3);
-				this._changeCalendarSelection(minDate.getTime() / 1000);
-				return minDate.getTime() / 1000;
-			} else {
-				this._changeCalendarSelection((new Date(-62135596800000)).getTime() / 1000);
-				return (new Date(-62135596800000)).getTime() / 1000;
-			}
+			const focusableItems = Array.from(daypicker.shadowRoot.querySelectorAll(".ui5-dp-item"));
+			return focusableItems.filter(x => !x.classList.contains("ui5-dp-item--disabled"))[0];
 		}
 	}
 
@@ -431,9 +420,9 @@ class DatePicker extends UI5Element {
 	 * @public
 	 */
 	isInValidRange(value = "") {
-		const pickedDate = new Date(value),
-			minDate = this._minDate,
-			maxDate = this._maxDate;
+		const pickedDate = CalendarDate.fromTimestamp(value).toLocalJSDate(),
+			minDate = this._minDate && new Date(this._minDate),
+			maxDate = this._maxDate && new Date(this._maxDate);
 
 		if (minDate && maxDate) {
 			if (minDate <= pickedDate && maxDate >= pickedDate) {
@@ -524,11 +513,23 @@ class DatePicker extends UI5Element {
 	}
 
 	get _maxDate() {
-		return this.maxDate && new Date(this.maxDate);
+		if (this.maxDate){
+			const jsDate = new Date(this.getFormat().parse(this.maxDate).getFullYear(),this.getFormat().parse(this.maxDate).getMonth(),this.getFormat().parse(this.maxDate).getDate());
+			const oCalDate = CalendarDate.fromTimestamp(jsDate.getTime(),this._primaryCalendarType);
+			return oCalDate.valueOf();
+		} else {
+			return this.maxDate;
+		}
 	}
 
 	get _minDate() {
-		return this.minDate && new Date(this.minDate);
+		if (this.minDate){
+			const jsDate = new Date(this.getFormat().parse(this.minDate).getFullYear(),this.getFormat().parse(this.minDate).getMonth(),this.getFormat().parse(this.minDate).getDate());
+			const oCalDate = CalendarDate.fromTimestamp(jsDate.getTime(),this._primaryCalendarType);
+			return oCalDate.valueOf();
+		} else {
+			return this.minDate;
+		}
 	}
 
 	get openIconTitle() {
