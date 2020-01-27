@@ -20,10 +20,13 @@ import DayPickerTemplate from "./generated/templates/DayPickerTemplate.lit.js";
 import dayPickerCSS from "./generated/themes/DayPicker.css.js";
 
 const monthDiff = (startDate, endDate) => {
-	let months;
-	months = (endDate.getFullYear() - startDate.getFullYear()) * 12;
-	months -= startDate.getMonth();
-	months += endDate.getMonth();
+	let months,
+		_startDate = CalendarDate.fromTimestamp(startDate).toLocalJSDate(),
+		_endDate = CalendarDate.fromTimestamp(endDate).toLocalJSDate();
+
+	months = (_endDate.getFullYear() - _startDate.getFullYear()) * 12;
+	months -= _startDate.getMonth();
+	months += _endDate.getMonth();
 	return months;
 };
 
@@ -445,7 +448,7 @@ class DayPicker extends UI5Element {
 		oNewDate.setYear(newYear);
 		oNewDate.setMonth(newMonth);
 
-		const monthsBetween = monthDiff(oNewDate.toUTCJSDate(), this.maxDate);
+		const monthsBetween = monthDiff(oNewDate.valueOf(), this.maxDate);
 		if (monthsBetween < 0) {
 			return false;
 		}
@@ -480,7 +483,7 @@ class DayPicker extends UI5Element {
 		oNewDate.setYear(newYear);
 		oNewDate.setMonth(newMonth);
 
-		const monthsBetween = monthDiff(this.minDate, oNewDate.toUTCJSDate());
+		const monthsBetween = monthDiff(this.minDate, oNewDate.valueOf());
 		if (this.minDate && monthsBetween < 0) {
 			return false;
 		}
