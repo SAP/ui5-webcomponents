@@ -1,5 +1,5 @@
-commit 85f316cdd623b7b615861d17e3a184fc40819db7
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu Jan 23 17:06:31 2020 +0200
+commit 45860bc032fd7f5388c7ebc53f23ed466a394bfd
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Jan 27 17:54:34 2020 +0200
 
-    refactor(ui5-popover): init private popovers in static area (#1129)
+    docs: remove duplicated table in sample page (#1155)
