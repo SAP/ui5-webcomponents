@@ -2,7 +2,7 @@
 	display: contents;
 }
 
-:host(:not(:first-of-type)) .ui5-table-row-root {
+.ui5-table-row-root {
 	background-color: var(--sapList_Background);
 	border-top: 1px solid var(--sapList_BorderColor);
 }
