@@ -393,15 +393,16 @@ class Input extends UI5Element {
 	}
 
 	onAfterRendering() {
-		if (!isPhone() && !this.firstRendering && this.Suggestions) {
+		if (!this.firstRendering && !isPhone() && this.Suggestions) {
 			this.Suggestions.toggle(this.shouldOpenSuggestions());
-
-			if (this.Suggestions.isOpened()) {
-				// Set initial focus to the native input
-				this.getDomRef().querySelector(`#${this.getInputId()}`).focus();
-			}
 		}
+
 		this.firstRendering = false;
+	}
+
+	_afterOpenPopover() {
+		// Set initial focus to the native input
+		this.getInputDOMRef().focus();
 	}
 
 	_onkeydown(event) {
@@ -460,19 +461,14 @@ class Input extends UI5Element {
 	}
 
 	_onfocusout(event) {
-		// TO DO: rework
-		if (this.Suggestions && event.relatedTarget && this.Suggestions._respPopover.contains(event.relatedTarget.shadowRoot.querySelector("ui5-li[active]"))) {
-			return;
-		}
-
 		this.previousValue = "";
 		this.focused = false; // invalidating property
 	}
 
-	_touchstart(event) {
+	_click(event) {
 		if (this.Suggestions && isPhone()) {
-			this.Suggestions.open(this);
 			event.preventDefault(); // prevent immediate selection of any item
+			this.Suggestions.open(this);
 		}
 	}
 
@@ -517,7 +513,6 @@ class Input extends UI5Element {
 	shouldOpenSuggestions() {
 		return !!(this.suggestionItems.length
 			&& this.showSuggestions
-			&& this.focused
 			&& !this.hasSuggestionItemSelected);
 	}
 
@@ -526,7 +521,6 @@ class Input extends UI5Element {
 		const fireInput = keyboardUsed
 			? this.valueBeforeItemSelection !== itemText : this.value !== itemText;
 
-		item.selected = false;
 		this.hasSuggestionItemSelected = true;
 		this.fireEvent(this.EVENT_SUGGESTION_ITEM_SELECT, { item });
 

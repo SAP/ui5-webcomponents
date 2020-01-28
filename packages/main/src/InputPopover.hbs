@@ -3,12 +3,12 @@
 		show-header-title
 		show-confirm-button
 		disable-initial-focus
+		@ui5-afterOpen={{_afterOpenPopover}}
 	>
 		<ui5-list separators="Inner">
 			{{#each suggestionsTexts}}
 				<ui5-li
 					?icon="{{this.icon}}"
-					?selected="{{active}}"
 					@ui5-_itemPress="{{ fnOnSuggestionItemPress }}" 
 				>{{ this.text }}</ui5-li>
 			{{/each}}

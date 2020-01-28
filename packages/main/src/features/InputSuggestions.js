@@ -39,7 +39,6 @@ class Suggestions {
 			return suggestions.push({
 				text: suggestion.textContent,
 				icon: suggestion.icon,
-				active: suggestion.selected,
 			});
 		});
 
@@ -109,7 +108,8 @@ class Suggestions {
 		this.selectedItemIndex = this._getItems().indexOf(item);
 
 		this._getComponent().onItemSelected(this._getRealItems()[this.selectedItemIndex], keyboardUsed);
-		// this.close();
+		item.selected = false;
+		this.close();
 	}
 
 	onItemPreviewed(item) {
