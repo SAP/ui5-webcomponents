@@ -300,7 +300,8 @@ class CheckBox extends UI5Element {
 	}
 
 	get tabIndex() {
-		return this.disabled ? undefined : "0";
+		const tabindex = this.getAttribute("tabindex");
+		return this.disabled ? undefined : tabindex || "0";
 	}
 
 	get rtl() {
