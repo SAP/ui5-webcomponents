@@ -215,7 +215,7 @@ class ItemNavigation extends EventProvider {
 
 	onOverflowBottomEdge() {
 		const items = this._getItems();
-		const offset = this.currentIndex  - items.length;
+		const offset = this.currentIndex - items.length;
 
 		if (this.behavior === ItemNavigationBehavior.Cyclic) {
 			return;
