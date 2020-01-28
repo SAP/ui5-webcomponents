@@ -292,6 +292,13 @@ class ComboBox extends UI5Element {
 		this._initialRendering = false;
 	}
 
+	onAfterRendering() {
+		if (isPhone() && this._respPopover.opened) {
+			// Set initial focus to the native input
+			this.inner.focus();
+		}
+	}
+
 	_focusin(event) {
 		this.focused = true;
 
@@ -315,10 +322,10 @@ class ComboBox extends UI5Element {
 	}
 
 	_toggleRespPopover() {
-		if (this.respPopover.opened) {
-			this.respPopover.close();
+		if (this._respPopover.opened) {
+			this._respPopover.close();
 		} else {
-			this.respPopover.open(this);
+			this._respPopover.open(this);
 		}
 	}
 
@@ -345,7 +352,7 @@ class ComboBox extends UI5Element {
 		this.filterValue = value;
 		this.fireEvent("input");
 
-		this.respPopover.open(this);
+		this._respPopover.open(this);
 	}
 
 	_startsWithMatchingItems(str) {
@@ -364,7 +371,7 @@ class ComboBox extends UI5Element {
 
 	_click(event) {
 		if (isPhone()) {
-			this.respPopover.open(this);
+			this._respPopover.open(this);
 			event.preventDefault(); // prevent immediate selection of any item
 		}
 	}
@@ -419,7 +426,7 @@ class ComboBox extends UI5Element {
 		});
 
 		this._inputChange();
-		this.respPopover.close();
+		this._respPopover.close();
 	}
 
 	get _filteredItems() {
@@ -429,10 +436,10 @@ class ComboBox extends UI5Element {
 	}
 
 	get inner() {
-		return isPhone() ? this.respPopover.querySelector(".ui5-input-inner-phone") : this.shadowRoot.querySelector("[inner-input]");
+		return isPhone() ? this._respPopover.querySelector(".ui5-input-inner-phone") : this.shadowRoot.querySelector("[inner-input]");
 	}
 
-	get respPopover() {
+	get _respPopover() {
 		return this.getStaticAreaItemDomRef().querySelector("ui5-responsive-popover");
 	}
 

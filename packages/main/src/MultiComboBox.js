@@ -416,7 +416,7 @@ class MultiComboBox extends UI5Element {
 
 		if (isDown(event) && this._getRespPopover().opened && this.items.length) {
 			event.preventDefault();
-			const list = this.shadowRoot.querySelector(".ui5-multi-combobox-all-items-list");
+			const list = this.getStaticAreaItemDomRef().querySelector(".ui5-multi-combobox-all-items-list");
 			list._itemNavigation.current = 0;
 			list.items[0].focus();
 		}
@@ -529,9 +529,7 @@ class MultiComboBox extends UI5Element {
 		if (this.open) {
 			this._getRespPopover().open(this);
 			// Set initial focus to the native input
-			if (!isPhone()) {
-				this.getDomRef().querySelector("#ui5-multi-combobox-input").focus();
-			}
+			this._innerInput.focus();
 		}
 	}
 
@@ -589,6 +587,18 @@ class MultiComboBox extends UI5Element {
 
 	get valueStateText() {
 		return this.valueStateTextMappings[this.valueState];
+	}
+
+	get _innerInput() {
+		if (isPhone()) {
+			if (this._getRespPopover().opened) {
+				return this._getRespPopover().querySelector("input");
+			}
+
+			return this._getRespPopover(true).querySelector("input");
+		}
+
+		return this.getDomRef().querySelector("#ui5-multi-combobox-input");
 	}
 
 	static async define(...params) {

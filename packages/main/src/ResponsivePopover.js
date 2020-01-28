@@ -2,7 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
-import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import ResponsivePopoverTemplate from "./generated/templates/ResponsivePopoverTemplate.lit.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import Popover from "./Popover.js";
@@ -82,10 +81,6 @@ const metadata = {
 		 */
 		showCancelButton: {
 			type: Boolean,
-		},
-
-		initialFocus: {
-			type: String,
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.ResponsivePopover.prototype */ {
@@ -226,14 +221,6 @@ class ResponsivePopover extends UI5Element {
 	}
 
 	_afterOpen(event) {
-		if (!this.disableInitialFocus) {
-			const element = getFirstFocusableElement(this);
-
-			if (element) {
-				element.focus();
-			}
-		}
-
 		this.style.top = this._inner.style.top;
 		this.style.left = this._inner.style.left;
 		this._fireEvent(event);

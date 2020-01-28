@@ -16,25 +16,10 @@
 	height: 100%;
 }
 
-.input-root-phone {
-	outline: var(--_ui5_input_focus_border_width) dotted var(--sapContent_FocusColor);
-	outline-offset: -3px;
-}
-
 .input-root-phone[value-state]:not([value-state="None"])[focused] {
 	outline: var(--_ui5_input_focus_border_width) dotted var(--sapContent_FocusColor);
 	outline-offset: -4px;
 }
-
-/* .ui5-input-host[disabled] {
-	opacity: var(--sap_wc_input_disabled_opacity);
-	cursor: default;
-	pointer-events: none;
-	background: var(--sapField_ReadOnly_Background);
-	border-color: var(--sapField_ReadOnly_BorderColor);
-	-webkit-text-fill-color: var(--sapContent_DisabledTextColor);
-	color: var(--sapContent_DisabledTextColor);
-} */
 
 .input-root-phone [value-state="Error"] [input-icon][data-ui5-compact-size],
 .input-root-phone [value-state="Success"] [input-icon][data-ui5-compact-size],
