@@ -1,0 +1,149 @@
+<header>
+	<div class="control-header">Carousel</div>
+</header>
+
+<div class="component-package">@ui5/webcomponents</div>
+
+<div class="control-tag">&lt;ui5-carousel&gt;</div>
+
+<style>
+	ui5-carousel {
+		max-height: 40rem;
+	}
+
+</style>
+
+<section>
+	<h3>Example With Images</h3>
+
+	<div class="snippet">
+		<ui5-carousel>
+			<img src="../../../assets/images/sample1.jpg" alt="Landscape 1">
+			<img src="../../../assets/images/sample2.jpg" alt="Landscape 2">
+			<img src="../../../assets/images/sample3.jpg" alt="Bulb">
+		</ui5-carousel>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-carousel>
+	<img src="../../../assets/images/sample1.jpg" alt="">
+	<img src="../../../assets/images/sample2.jpg" alt="">
+	<img src="../../../assets/images/sample3.jpg" alt="">
+</ui5-carousel>
+	</xmp></pre>
+</section>
+
+<section>
+	<h3>Example With Arrow Placement And SelectedIndex</h3>
+
+	<div class="snippet">
+		<ui5-carousel arrows-placement="Navigation" selected-index="2">
+			<img src="../../../assets/images/sample1.jpg" alt="Landscape 1">
+			<img src="../../../assets/images/sample2.jpg" alt="Landscape 2">
+			<img src="../../../assets/images/sample3.jpg" alt="Bulb">
+		</ui5-carousel>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-carousel arrows-placement="Navigation" selected-index="2">
+	<img src="../../../assets/images/sample1.jpg" alt="">
+	<img src="../../../assets/images/sample2.jpg" alt="">
+	<img src="../../../assets/images/sample3.jpg" alt="">
+</ui5-carousel>
+	</xmp></pre>
+</section>
+
+<section>
+	<h3>Example With No Navigation</h3>
+
+	<div class="snippet">
+		<ui5-carousel hide-navigation="true">
+			<img src="../../../assets/images/sample1.jpg" alt="Landscape 1">
+			<img src="../../../assets/images/sample2.jpg" alt="Landscape 2">
+			<img src="../../../assets/images/sample3.jpg" alt="Bulb">
+		</ui5-carousel>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-carousel hide-navigation="true">
+	<img src="../../../assets/images/sample1.jpg" alt="">
+	<img src="../../../assets/images/sample2.jpg" alt="">
+	<img src="../../../assets/images/sample3.jpg" alt="">
+</ui5-carousel>
+	</xmp></pre>
+</section>
+
+<section>
+	<h3>Carousel With Different Controls</h3>
+
+	<div class="snippet">
+		<ui5-carousel>
+			<ui5-card
+				id="card"
+				status="4 of 10"
+				heading="Quick Links"
+				subheading="quick links"
+				header-interactive
+				style="width: 300px;">
+				<ui5-list id="myList3" separators="Inner">
+					<ui5-li icon="horizontal-bullet-chart" >Template Based Segmentation</ui5-li>
+					<ui5-li icon="opportunity" >Segmentation Models</ui5-li>
+					<ui5-li icon="line-charts" >Marketing plans</ui5-li>
+				</ui5-list>
+			</ui5-card>
+		
+			<ui5-list id="myList" style="width: 400px;" header-text="Fruits:">
+				<ui5-li icon="nutrition-activity" description="Tropical plant with an edible fruit" info="In-stock" info-state="Success">Pineapple</ui5-li>
+				<ui5-li icon="nutrition-activity" description="Occurs between red and yellow" info="Expires" info-state="Warning">Orange</ui5-li>
+				<ui5-li icon="nutrition-activity" description="The yellow lengthy fruit" info="Re-stock" info-state="Error">Banana</ui5-li>
+				<ui5-li icon="nutrition-activity" description="The tropical stone fruit" info="Re-stock" info-state="Error">Mango</ui5-li>
+			</ui5-list>
+		
+			<ui5-list id="myList1" mode="MultiSelect" header-text="Countries:" style="width: 400px;">
+				<ui5-li key="country1">Argentina</ui5-li>
+				<ui5-li key="country2">Bulgaria</ui5-li>
+				<ui5-li key="country3">China</ui5-li>
+				<ui5-li key="country4">Germany</ui5-li>
+				<ui5-li key="country5">Hungary</ui5-li>
+				<ui5-li key="country6">England</ui5-li>
+				<ui5-li key="country7">USA</ui5-li>
+				<ui5-li key="country8">Canada</ui5-li>
+			</ui5-list>
+		</ui5-carousel>
+	</div>
+
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-carousel>
+	<ui5-card
+		id="card"
+		status="4 of 10"
+		heading="Quick Links"
+		subheading="quick links"
+		header-interactive
+		class="myCard">
+		<ui5-list id="myList3" separators="Inner">
+			<ui5-li icon="horizontal-bullet-chart" >Template Based Segmentation</ui5-li>
+			<ui5-li icon="opportunity" >Segmentation Models</ui5-li>
+			<ui5-li icon="line-charts" >Marketing plans</ui5-li>
+		</ui5-list>
+	</ui5-card>
+
+	<ui5-list id="myList" style="width: 400px;" header-text="Fruits:">
+		<ui5-li icon="nutrition-activity" description="Tropical plant with an edible fruit" info="In-stock" info-state="Success">Pineapple</ui5-li>
+		<ui5-li icon="nutrition-activity" description="Occurs between red and yellow" info="Expires" info-state="Warning">Orange</ui5-li>
+		<ui5-li icon="nutrition-activity" description="The yellow lengthy fruit" info="Re-stock" info-state="Error">Banana</ui5-li>
+		<ui5-li icon="nutrition-activity" description="The tropical stone fruit" info="Re-stock" info-state="Error">Mango</ui5-li>
+	</ui5-list>
+
+	<ui5-list id="myList1" mode="MultiSelect" header-text="Countries:">
+		<ui5-li key="country1">Argentina</ui5-li>
+		<ui5-li key="country2">Bulgaria</ui5-li>
+		<ui5-li key="country3">China</ui5-li>
+		<ui5-li key="country4">Germany</ui5-li>
+		<ui5-li key="country5">Hungary</ui5-li>
+		<ui5-li key="country6">England</ui5-li>
+		<ui5-li key="country7">USA</ui5-li>
+		<ui5-li key="country8">Canada</ui5-li>
+	</ui5-list>
+</ui5-carousel>
+	</xmp></pre>
+</section>
+
+<!-- JSDoc marker -->

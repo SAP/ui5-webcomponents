@@ -13,6 +13,7 @@ const components = [];
  // Add new components here
 const newComponents = [
 	"ComboBox",
+	"Carousel",
 ];
 
 packages.forEach(package => {

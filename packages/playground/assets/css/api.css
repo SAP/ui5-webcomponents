@@ -369,6 +369,7 @@ body {
 	min-width: 6rem;
 	justify-content: flex-start;
 	align-items: flex-start;
+	word-wrap: break-word;
 }
 
 .row.api-table-roll-even.noBorder {
