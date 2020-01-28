@@ -23,6 +23,7 @@ class ItemNavigation extends EventProvider {
 		this.behavior = options.behavior || ItemNavigationBehavior.Static;
 		this.hasNextPage = true; // used in Paging mode
 		this.hasPrevPage = true; // used in Paging mode
+		this.pageSize = options.pageSize;
 		const navigationMode = options.navigationMode;
 		const autoNavigation = !navigationMode || navigationMode === NavigationMode.Auto;
 		this.horizontalNavigationOn = autoNavigation || navigationMode === NavigationMode.Horizontal;
@@ -214,6 +215,8 @@ class ItemNavigation extends EventProvider {
 
 	onOverflowBottomEdge() {
 		const items = this._getItems();
+		const offset = this.currentIndex  - items.length;
+
 		if (this.behavior === ItemNavigationBehavior.Cyclic) {
 			return;
 		}
@@ -224,11 +227,12 @@ class ItemNavigation extends EventProvider {
 			this.currentIndex = items.length - 1;
 		}
 
-		this.fireEvent(ItemNavigation.BORDER_REACH, { start: false, end: true, offset: this.currentIndex });
+		this.fireEvent(ItemNavigation.BORDER_REACH, { start: false, end: true, offset });
 	}
 
 	onOverflowTopEdge() {
 		const items = this._getItems();
+		const offset = this.currentIndex + this.rowSize;
 
 		if (this.behavior === ItemNavigationBehavior.Cyclic) {
 			this.currentIndex = items.length + this.currentIndex;
@@ -241,7 +245,7 @@ class ItemNavigation extends EventProvider {
 			this.currentIndex = 0;
 		}
 
-		this.fireEvent(ItemNavigation.BORDER_REACH, { start: true, end: false, offset: this.currentIndex });
+		this.fireEvent(ItemNavigation.BORDER_REACH, { start: true, end: false, offset });
 	}
 
 	_handleNextPage() {
@@ -251,7 +255,7 @@ class ItemNavigation extends EventProvider {
 		if (!this.hasNextPage) {
 			this.currentIndex = items.length - 1;
 		} else {
-			this.currentIndex = Math.abs(items.length - this.currentIndex);
+			this.currentIndex = 0;
 		}
 	}
 
@@ -262,7 +266,7 @@ class ItemNavigation extends EventProvider {
 		if (!this.hasPrevPage) {
 			this.currentIndex = 0;
 		} else {
-			this.currentIndex = items.length + this.currentIndex + this.rowSize + (this.rowSize - (this._getItems().length % this.rowSize));
+			this.currentIndex = (this.pageSize || items.length) - 1;
 		}
 	}
 }
