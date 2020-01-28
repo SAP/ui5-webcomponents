@@ -1,10 +1,5 @@
-commit 7219b43ab6ecc36b148385adb535d8353fce21e8
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Tue Jan 28 16:12:53 2020 +0200
+commit 6fb1dd6e7c7166dedeeaf9c0ff28db02903585b7
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Tue Jan 28 19:53:52 2020 +0200
 
-    improve: performance for high number of elements (#1158)
-    
-    O(n) -> O(1)
-    
-    - unnecessary creation of timeouts per element replaced with single timeout
-    - unnecessary event dispatching replaced by hook
+    fix(ui5-daypicker): show correct today (#1157)
