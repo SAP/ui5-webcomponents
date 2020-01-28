@@ -380,7 +380,17 @@ class RadioButton extends UI5Element {
 	}
 
 	get tabIndex() {
-		return this.disabled || (!this.selected && this.name) ? "-1" : "0";
+		const tabindex = this.getAttribute("tabindex");
+
+		if (this.disabled) {
+			return "-1";
+		}
+
+		if (this.name) {
+			return this.selected ? "0" : "-1";
+		}
+
+		return tabindex || "0";
 	}
 
 	get strokeWidth() {

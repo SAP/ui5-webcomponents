@@ -34,17 +34,6 @@ describe("List Tests", () => {
 		assert.strictEqual(secondItem.getProperty("id"), selectionChangeResultPreviousItemsParameter.getProperty("value"));
 	});
 
-	it("selectionChange using selection component", () => {
-		const fieldResult = $("#fieldMultiSelResult");
-		const firstItem = $("#listMultiSel #option1");
-		const firstItemSelectionComponent = $("#listMultiSel #option1").shadow$(".ui5-li-multisel-cb");
-
-		firstItemSelectionComponent.click();
-
-		assert.ok(firstItem.getProperty("selected"), "item is selected");
-		assert.strictEqual(fieldResult.getProperty("value"), "true");
-	});
-
 	it("No data text is shown", () => {
 		const noDataText = browser.$("#no-data-list").shadow$(".ui5-list-nodata-text");
 

@@ -1,5 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { fetchCldr } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
 import { getLocale } from "@ui5/webcomponents-base/dist/LocaleProvider.js";
 import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSettings.js";
 import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
@@ -173,9 +174,7 @@ class DayPicker extends UI5Element {
 				lastWeekNumber = weekNumber;
 			}
 
-			const isToday = (oCalDate.getDate() === this._currentCalendarDate.getDate())
-				&& (oCalDate.getMonth() === this._currentCalendarDate.getMonth())
-				&& (oCalDate.getYear() === this._currentCalendarDate.getYear());
+			const isToday = oCalDate.isSame(CalendarDate.fromLocalJSDate(new Date(), this._primaryCalendarType));
 
 			week.push(day);
 
@@ -445,6 +444,14 @@ class DayPicker extends UI5Element {
 				width: "100%",
 			},
 		};
+	}
+
+	static async define(...params) {
+		await Promise.all([
+			fetchCldr(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
+		]);
+
+		super.define(...params);
 	}
 }
 

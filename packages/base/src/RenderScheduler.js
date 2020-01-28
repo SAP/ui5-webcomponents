@@ -12,6 +12,8 @@ let renderTaskPromise,
 	renderTaskPromiseResolve,
 	taskResult;
 
+let mutationObserverTimer;
+
 /**
  * Class that manages the rendering/re-rendering of web components
  * This is always asynchronous
@@ -83,11 +85,14 @@ class RenderScheduler {
 		}
 
 		// wait for Mutation observer just in case
-		setTimeout(() => {
-			if (invalidatedWebComponents.getList().length === 0) {
-				RenderScheduler._resolveTaskPromise();
-			}
-		}, 200);
+		if (!mutationObserverTimer) {
+			mutationObserverTimer = setTimeout(() => {
+				mutationObserverTimer = undefined;
+				if (invalidatedWebComponents.getList().length === 0) {
+					RenderScheduler._resolveTaskPromise();
+				}
+			}, 200);
+		}
 
 		renderTaskId = undefined;
 	}

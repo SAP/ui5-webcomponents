@@ -10,6 +10,8 @@ import AvatarCss from "./generated/themes/Avatar.css.js";
 import Icon from "./Icon.js";
 import AvatarSize from "./types/AvatarSize.js";
 import AvatarShape from "./types/AvatarShape.js";
+import AvatarFitType from "./types/AvatarFitType.js";
+import AvatarBackgroundColor from "./types/AvatarBackgroundColor.js";
 
 /**
  * @public
@@ -24,14 +26,14 @@ const metadata = {
 		 * @defaultvalue ""
 		 * @public
 		 */
-		img: {
+		image: {
 			type: String,
 		},
 
 		/**
 		 * Defines the name of the UI5 Icon, that would be displayed.
 		 * <br>
-		 * <b>Note:</b> if <code>img</code> is set, the property would be ignored.
+		 * <b>Note:</b> if <code>image</code> is set, the property would be ignored.
 		 * <br>
 		 * <b>Note:</b> you should import the desired icon first, then use its name as "icon".
 		 * <br><br>
@@ -45,6 +47,18 @@ const metadata = {
 		 * @public
 		 */
 		icon: {
+			type: String,
+		},
+
+		/**
+		 * Defines the displayed initials.
+		 * <br>
+		 * Up to two Latin letters can be displayed as initials in a <code>ui5-avatar</code>.
+		 *
+		 * @type {string}
+		 * @public
+		 */
+		initials: {
 			type: String,
 		},
 
@@ -82,6 +96,50 @@ const metadata = {
 			type: String,
 			defaultValue: AvatarSize.S,
 		},
+
+		/**
+		 * Defines the fit type of the desired image.
+		 * <br><br>
+		 * Available options are:
+		 * <ul>
+		 * <li><code>Cover</code></li>
+		 * <li><code>Contain</code></li>
+		 * <ul>
+		 * @type {String}
+		 * @defaultvalue "Cover"
+		 * @public
+		 */
+		imageFitType: {
+			type: String,
+			defaultValue: AvatarFitType.Cover,
+		},
+
+		/**
+		 * Defines the background color of the desired image.
+		 * <br><br>
+		 * Available options are:
+		 * <ul>
+		 * <li><code>Accent1</code></li>
+		 * <li><code>Accent2</code></li>
+		 * <li><code>Accent3</code></li>
+		 * <li><code>Accent4</code></li>
+		 * <li><code>Accent5</code></li>
+		 * <li><code>Accent6</code></li>
+		 * <li><code>Accent7</code></li>
+		 * <li><code>Accent8</code></li>
+		 * <li><code>Accent9</code></li>
+		 * <li><code>Accent10</code></li>
+		 * <li><code>Placeholder</code></li>
+		 * <ul>
+		 * @type {String}
+		 * @defaultvalue "Accent6"
+		 * @public
+		 */
+		backgroundColor: {
+			type: String,
+			defaultValue: AvatarBackgroundColor.Accent6,
+		},
+
 	},
 	slots: /** @lends sap.ui.webcomponents.main.Avatar.prototype */ {
 	},
@@ -134,8 +192,14 @@ class Avatar extends UI5Element {
 		super.define(...params);
 	}
 
-	get displayIcon() {
-		return !!this.icon && !this.img;
+	get validInitials() {
+		const validInitials = /^[a-zA-Z]{1,2}$/;
+
+		if (this.initials && validInitials.test(this.initials)) {
+			return this.initials;
+		}
+
+		return null;
 	}
 }
 
