@@ -1,17 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
 
 	<title>Card</title>
-
-	<script data-ui5-config type="application/json">
-		{
-			"compactSize": false
-		}
-	</script>
 
 	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
 	<script src="../../resources/bundle.esm.js" type="module"></script>
@@ -30,6 +24,7 @@
 	id="card"
 	status="4 of 10"
 	heading="Quick Links"
+	subheading="quick links"
 	header-interactive
 	class="myCard">
 	<ui5-list id="myList3" separators="Inner">
@@ -45,14 +40,16 @@
 	id="card2"
 	status="4 of 10"
 	heading="Quick Links"
+	subheading="quick links"
 	class="myCard">
+	<ui5-icon name="group" slot="avatar"></ui5-icon>
 	<ui5-list id="myList3" separators="Inner">
 		<ui5-li icon="horizontal-bullet-chart" >Template Based Segmentation</ui5-li>
 		<ui5-li icon="opportunity" >Segmentation Models</ui5-li>
 	</ui5-list>
 </ui5-card>
 
-<ui5-card>
+<ui5-card heading="Quick Links" subheading="quick links">
 	<ui5-list id="myList3" separators="Inner">
 		<ui5-li icon="horizontal-bullet-chart" >Template Based Segmentation</ui5-li>
 		<ui5-li icon="opportunity" >Segmentation Models</ui5-li>

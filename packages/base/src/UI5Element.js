@@ -1,15 +1,13 @@
 import merge from "@ui5/webcomponents-utils/dist/sap/base/util/merge.js";
-
 import boot from "./boot.js";
 import { skipOriginalEvent } from "./config/NoConflict.js";
-import { getCompactSize } from "./config/CompactSize.js";
 import DOMObserver from "./compatibility/DOMObserver.js";
 import UI5ElementMetadata from "./UI5ElementMetadata.js";
+import StaticAreaItem from "./StaticAreaItem.js";
 import Integer from "./types/Integer.js";
 import RenderScheduler from "./RenderScheduler.js";
 import { getConstructableStyle, createHeadStyle } from "./CSS.js";
 import { getEffectiveStyle } from "./Theming.js";
-import { attachContentDensityChange } from "./ContentDensity.js";
 import { kebabToCamelCase, camelToKebabCase } from "./util/StringHelper.js";
 import isValidPropertyName from "./util/isValidPropertyName.js";
 
@@ -38,9 +36,7 @@ class UI5Element extends HTMLElement {
 		this._generateId();
 		this._initializeState();
 		this._upgradeAllProperties();
-		this._initializeShadowRoot();
-
-		attachContentDensityChange(this._onContentDensityChanged.bind(this));
+		this._initializeContainers();
 
 		let deferredResolve;
 		this._domRefReadyPromise = new Promise(resolve => {
@@ -54,28 +50,6 @@ class UI5Element extends HTMLElement {
 	/**
 	 * @private
 	 */
-	_onContentDensityChanged() {
-		this._syncContentDensity();
-		if (this.constructor.getMetadata().getInvalidateOnContentDensityChange()) {
-			this._invalidate();
-		}
-	}
-
-	/**
-	 * @private
-	 */
-	_syncContentDensity() {
-		const isCompact = getCompactSize();
-		if (isCompact) {
-			this.setAttribute("data-ui5-compact-size", "");
-		} else {
-			this.removeAttribute("data-ui5-compact-size");
-		}
-	}
-
-	/**
-	 * @private
-	 */
 	_generateId() {
 		this._id = this.constructor._nextID();
 	}
@@ -83,22 +57,26 @@ class UI5Element extends HTMLElement {
 	/**
 	 * @private
 	 */
-	_initializeShadowRoot() {
-		if (!this.constructor._needsShadowDOM()) {
-			return;
+	_initializeContainers() {
+		// Init Shadow Root
+		if (this.constructor._needsShadowDOM()) {
+			this.attachShadow({ mode: "open" });
+
+			// IE11, Edge
+			if (window.ShadyDOM) {
+				createHeadStyle(this.constructor);
+			}
+
+			// Chrome
+			if (document.adoptedStyleSheets) {
+				const style = getConstructableStyle(this.constructor);
+				this.shadowRoot.adoptedStyleSheets = [style];
+			}
 		}
 
-		this.attachShadow({ mode: "open" });
-
-		// IE11, Edge
-		if (window.ShadyDOM) {
-			createHeadStyle(this.constructor);
-		}
-
-		// Chrome
-		if (document.adoptedStyleSheets) {
-			const style = getConstructableStyle(this.constructor);
-			this.shadowRoot.adoptedStyleSheets = [style];
+		// Init StaticAreaItem only if needed
+		if (this.constructor._needsStaticArea()) {
+			this.staticAreaItem = new StaticAreaItem(this);
 		}
 	}
 
@@ -107,20 +85,22 @@ class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	async connectedCallback() {
-		this._syncContentDensity();
+		// Render the Shadow DOM
+		if (this.constructor._needsShadowDOM()) {
+			// always register the observer before yielding control to the main thread (await)
+			this._startObservingDOMChildren();
 
-		if (!this.constructor._needsShadowDOM()) {
-			return;
+			await this._processChildren();
+			await RenderScheduler.renderImmediately(this);
+			this._domRefReadyPromise._deferredResolve();
+			if (typeof this.onEnterDOM === "function") {
+				this.onEnterDOM();
+			}
 		}
 
-		// always register the observer before yielding control to the main thread (await)
-		this._startObservingDOMChildren();
-
-		await this._processChildren();
-		await RenderScheduler.renderImmediately(this);
-		this._domRefReadyPromise._deferredResolve();
-		if (typeof this.onEnterDOM === "function") {
-			this.onEnterDOM();
+		// Render Fragment if neccessary
+		if (this.constructor._needsStaticArea()) {
+			this.staticAreaItem._updateFragment(this);
 		}
 	}
 
@@ -129,13 +109,15 @@ class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	disconnectedCallback() {
-		if (!this.constructor._needsShadowDOM()) {
-			return;
+		if (this.constructor._needsShadowDOM()) {
+			this._stopObservingDOMChildren();
+			if (typeof this.onExitDOM === "function") {
+				this.onExitDOM();
+			}
 		}
 
-		this._stopObservingDOMChildren();
-		if (typeof this.onExitDOM === "function") {
-			this.onExitDOM();
+		if (this.constructor._needsStaticArea()) {
+			this.staticAreaItem._removeFragmentFromStaticArea();
 		}
 	}
 
@@ -458,6 +440,10 @@ class UI5Element extends HTMLElement {
 		delete this._invalidated;
 		this._updateShadowRoot();
 
+		if (this.constructor._needsStaticArea()) {
+			this.staticAreaItem._updateFragment(this);
+		}
+
 		// Safari requires that children get the slot attribute only after the slot tags have been rendered in the shadow DOM
 		this._assignIndividualSlotsToChildren();
 
@@ -651,6 +637,20 @@ class UI5Element extends HTMLElement {
 	 */
 	static _needsShadowDOM() {
 		return !!this.template;
+	}
+
+	/**
+	 * @private
+	 */
+	static _needsStaticArea() {
+		return typeof this.staticAreaTemplate === "function";
+	}
+
+	/**
+	 * @public
+	 */
+	getStaticAreaItemDomRef() {
+		return this.staticAreaItem.getDomRef();
 	}
 
 	/**
