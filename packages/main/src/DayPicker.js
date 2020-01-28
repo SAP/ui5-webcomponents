@@ -174,9 +174,7 @@ class DayPicker extends UI5Element {
 				lastWeekNumber = weekNumber;
 			}
 
-			const isToday = (oCalDate.getDate() === this._currentCalendarDate.getDate())
-				&& (oCalDate.getMonth() === this._currentCalendarDate.getMonth())
-				&& (oCalDate.getYear() === this._currentCalendarDate.getYear());
+			const isToday = oCalDate.isSame(CalendarDate.fromLocalJSDate(new Date(), this._primaryCalendarType));
 
 			week.push(day);
 
