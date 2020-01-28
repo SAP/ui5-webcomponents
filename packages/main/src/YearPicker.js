@@ -331,7 +331,7 @@ class YearPicker extends UI5Element {
 	get _maxDate() {
 		if (this.maxDate){
 			const jsDate = new Date(this.getFormat().parse(this.maxDate).getFullYear(),this.getFormat().parse(this.maxDate).getMonth(),this.getFormat().parse(this.maxDate).getDate());
-			const oCalDate = new CalendarDate(CalendarDate.fromTimestamp(jsDate.getTime(),this._primaryCalendarType));
+			const oCalDate = CalendarDate.fromTimestamp(jsDate.getTime(),this._primaryCalendarType);
 			return oCalDate.valueOf();
 		} else {
 			return this.maxDate;
@@ -341,7 +341,7 @@ class YearPicker extends UI5Element {
 	get _minDate() {
 		if (this.minDate){
 			const jsDate = new Date(this.getFormat().parse(this.minDate).getFullYear(),this.getFormat().parse(this.minDate).getMonth(),this.getFormat().parse(this.minDate).getDate());
-			const oCalDate = new CalendarDate(CalendarDate.fromTimestamp(jsDate.getTime(),this._primaryCalendarType));
+			const oCalDate = CalendarDate.fromTimestamp(jsDate.getTime(),this._primaryCalendarType);
 			return oCalDate.valueOf();
 		} else {
 			return this.minDate;
