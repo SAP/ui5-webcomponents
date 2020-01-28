@@ -28,9 +28,9 @@ class ItemNavigation extends EventProvider {
 
 		this.rootWebComponent = rootWebComponent;
 		this.rootWebComponent.addEventListener("keydown", this.onkeydown.bind(this));
-		this.rootWebComponent.addEventListener("_componentStateFinalized", () => {
+		this.rootWebComponent._onComponentStateFinalized = () => {
 			this._init();
-		});
+		};
 	}
 
 	_init() {
