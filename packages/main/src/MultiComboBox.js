@@ -526,7 +526,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	onAfterRendering() {
-		if (this.open) {
+		if (this.open && !this._getRespPopover().opened) {
 			this._getRespPopover().open(this);
 			// Set initial focus to the native input
 			this._innerInput.focus();
