@@ -59,6 +59,7 @@ class ItemNavigation extends EventProvider {
 
 		await RenderScheduler.whenFinished();
 
+		console.log({curr: this.currentIndex, items: this._getItems().length});
 		this.update();
 		this.focusCurrent();
 	}
@@ -213,21 +214,21 @@ class ItemNavigation extends EventProvider {
 
 	onOverflowBottomEdge() {
 		const items = this._getItems();
+		const rowIndex = this.currentIndex  - items.length;
 		if (this.behavior === ItemNavigationBehavior.Cyclic) {
 			return;
 		}
 
 		if (this.behavior === ItemNavigationBehavior.Paging) {
 			this._handleNextPage();
-		} else {
-			this.currentIndex = items.length - 1;
 		}
 
-		this.fireEvent(ItemNavigation.BORDER_REACH, { start: false, end: true, offset: this.currentIndex });
+		this.fireEvent(ItemNavigation.BORDER_REACH, { start: false, end: true, offset: this.currentIndex, rowIndex});
 	}
 
 	onOverflowTopEdge() {
 		const items = this._getItems();
+		const rowIndex = this.currentIndex + this.rowSize;
 
 		if (this.behavior === ItemNavigationBehavior.Cyclic) {
 			this.currentIndex = items.length + this.currentIndex;
@@ -236,11 +237,9 @@ class ItemNavigation extends EventProvider {
 
 		if (this.behavior === ItemNavigationBehavior.Paging) {
 			this._handlePrevPage();
-		} else {
-			this.currentIndex = 0;
 		}
 
-		this.fireEvent(ItemNavigation.BORDER_REACH, { start: true, end: false, offset: this.currentIndex });
+		this.fireEvent(ItemNavigation.BORDER_REACH, { start: true, end: false, offset: this.currentIndex,  rowIndex});
 	}
 
 	_handleNextPage() {
@@ -250,7 +249,7 @@ class ItemNavigation extends EventProvider {
 		if (!this.hasNextPage) {
 			this.currentIndex = items.length - 1;
 		} else {
-			this.currentIndex = Math.abs(items.length - this.currentIndex);
+			this.currentIndex = 0;
 		}
 	}
 
@@ -261,7 +260,7 @@ class ItemNavigation extends EventProvider {
 		if (!this.hasPrevPage) {
 			this.currentIndex = 0;
 		} else {
-			this.currentIndex = items.length + this.currentIndex + this.rowSize + (this.rowSize - (this._getItems().length % this.rowSize));
+			this.currentIndex = 41;
 		}
 	}
 }

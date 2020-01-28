@@ -323,24 +323,12 @@ class DatePicker extends UI5Element {
 			selectedDates: [],
 		};
 
-		if (this.isValid(this.getAttribute("minDate"))) {
-			this.minDate = this.getAttribute("minDate");
-		} else if (this.getAttribute("minDate")) {
-			console.warn(`In order for the "minDate" property to have effect, you should enter valid date format`); // eslint-disable-line
-		}
-
-		if (this.isValid(this.getAttribute("maxDate"))) {
-			this.maxDate = this.getAttribute("maxDate");
-		} else if (this.getAttribute("maxDate")) {
-			console.warn(`In order for the "maxDate" property to have effect, you should enter valid date format`); // eslint-disable-line
-		}
-
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	findFirstFocusableDay(daypicker) {
 		const today = new Date();
-		if (!this.isInValidRange(today)){
+		if (!this.isInValidRange(today.getTime())){
 			const focusableItems = Array.from(daypicker.shadowRoot.querySelectorAll(".ui5-dp-item"));
 			return focusableItems.filter(x => !x.classList.contains("ui5-dp-item--disabled"))[0];
 		}
@@ -350,7 +338,16 @@ class DatePicker extends UI5Element {
 		this._calendar.primaryCalendarType = this._primaryCalendarType;
 		this._calendar.formatPattern = this._formatPattern;
 
-		if (this.isValid(this.value) && this.isInValidRange(this.value)) {
+		if (!this.isValid(this.minDate)){
+			this.minDate = null;
+			console.warn(`In order for the "minDate" property to have effect, you should enter valid date format`); // eslint-disable-line
+		}
+
+		if (!this.isValid(this.maxDate)){
+			this.maxDate = null;
+			console.warn(`In order for the "maxDate" property to have effect, you should enter valid date format`); // eslint-disable-line
+		}
+		if (this.isValid(this.value) && this.isInValidRange(new Date(this.getFormat().parse(this.value)).getTime())) {
 			this._changeCalendarSelection();
 		} else {
 			this._calendar.selectedDates = [];
@@ -570,7 +567,6 @@ class DatePicker extends UI5Element {
 		);
 		this._calendar.timestamp = iNewValue;
 		this._calendar.selectedDates = event.detail.dates;
-
 		this._focusInputAfterClose = true;
 		this.closePicker();
 

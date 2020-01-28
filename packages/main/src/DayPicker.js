@@ -509,18 +509,24 @@ class DayPicker extends UI5Element {
 		const currentMonth = this._month,
 			currentYear = this._year;
 		let newMonth,
-			newYear;
+			newYear,
+			newDate,
+			currentDate;
 
 		if (event.end) {
+			currentDate = new Date(this._weeks[this._weeks.length - 1][event.rowIndex].timestamp * 1000);
 			newMonth = currentMonth < 11 ? currentMonth + 1 : 0;
 			newYear = currentMonth < 11 ? currentYear : currentYear + 1;
+			newDate = currentDate.getMonth() === newMonth ? currentDate.getDate() : currentDate.getDate() + 7;
 		} else if (event.start) {
+			currentDate = new Date(this._weeks[0][event.rowIndex].timestamp * 1000)
 			newMonth = currentMonth > 0 ? currentMonth - 1 : 11;
 			newYear = currentMonth > 0 ? currentYear : currentYear - 1;
+			newDate = currentDate.getMonth() === newMonth ? currentDate.getDate() : currentDate.getDate() - 7;
 		}
 
 		const oNewDate = this._calendarDate;
-		oNewDate.setDate(oNewDate.getDate() - 7);
+		oNewDate.setDate(newDate);
 		oNewDate.setYear(newYear);
 		oNewDate.setMonth(newMonth);
 
@@ -531,7 +537,7 @@ class DayPicker extends UI5Element {
 		if (this._isOutOfSelectableRange(oNewDate._oUDate.oDate)) {
 			return;
 		}
-
+		
 		this.fireEvent("navigate", { timestamp: (oNewDate.valueOf() / 1000) });
 	}
 
