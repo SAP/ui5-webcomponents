@@ -1,5 +1,5 @@
-commit 45860bc032fd7f5388c7ebc53f23ed466a394bfd
+commit 131b527899dee88c412ce0b586b47112f809a46b
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Jan 27 17:54:34 2020 +0200
+Date:   Tue Jan 28 09:53:58 2020 +0200
 
-    docs: remove duplicated table in sample page (#1155)
+    refactor(ui5-checkbox, ui5-radiobutton): propagate tabindex (#1149)
