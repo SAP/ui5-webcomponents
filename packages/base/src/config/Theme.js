@@ -4,9 +4,10 @@ import { _applyTheme } from "../Theming.js";
 let theme;
 
 const getTheme = () => {
-	if (!theme) {
+	if (theme === undefined) {
 		theme = getConfiguredTheme();
 	}
+
 	return theme;
 };
 

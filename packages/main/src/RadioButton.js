@@ -221,13 +221,11 @@ class RadioButton extends UI5Element {
 		return radioButtonCss;
 	}
 
-	static async define(...params) {
+	static async beforeDefine() {
 		await Promise.all([
 			Label.define(),
 			fetchI18nBundle("@ui5/webcomponents"),
 		]);
-
-		super.define(...params);
 	}
 
 	onBeforeRendering() {

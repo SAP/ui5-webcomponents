@@ -36,8 +36,7 @@ class ComboBoxItem extends UI5Element {
 		return ComboBoxItemTemplate;
 	}
 
-	static async define(...params) {
-		super.define(...params);
+	static async beforeDefine() {
 	}
 }
 

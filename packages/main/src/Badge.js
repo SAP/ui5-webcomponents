@@ -56,7 +56,6 @@ const metadata = {
 		icon: {
 			type: HTMLElement,
 		},
-
 	},
 };
 
@@ -109,10 +108,8 @@ class Badge extends UI5Element {
 		return badgeCss;
 	}
 
-	static async define(...params) {
+	static async beforeDefine() {
 		await fetchI18nBundle("@ui5/webcomponents");
-
-		super.define(...params);
 	}
 
 	onBeforeRendering() {

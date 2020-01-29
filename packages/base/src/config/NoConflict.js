@@ -9,17 +9,24 @@ const shouldFireOriginalEvent = eventName => {
 	return excludeList.includes(eventName);
 };
 
-let noConflict = getConfiguredNoConflict();
+let noConflict;
 
 const shouldNotFireOriginalEvent = eventName => {
+	const noConflict = getNoConflict();
 	return !(noConflict.events && noConflict.events.includes && noConflict.events.includes(eventName));
 };
 
 const getNoConflict = () => {
+	if (noConflict === undefined) {
+		noConflict = getConfiguredNoConflict();
+	}
+
 	return noConflict;
 };
 
 const skipOriginalEvent = eventName => {
+	const noConflict = getNoConflict();
+
 	// Always fire these events
 	if (shouldFireOriginalEvent(eventName)) {
 		return false;

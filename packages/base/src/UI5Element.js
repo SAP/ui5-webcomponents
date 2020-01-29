@@ -794,12 +794,26 @@ class UI5Element extends HTMLElement {
 	}
 
 	/**
+	 * Hook that allows UI5 Web Components to prepare everything necessary before being defined
+	 * @protected
+	 * @returns {Promise<void>}
+	 */
+	static async beforeDefine() {
+		return Promise.resolve();
+	}
+
+	/**
 	 * Registers a UI5 Web Component in the browser window object
 	 * @public
 	 * @returns {Promise<UI5Element>}
 	 */
 	static async define() {
 		await boot();
+
+		if (this.beforeDefine) {
+			await this.beforeDefine();
+		}
+
 		const tag = this.getMetadata().getTag();
 
 		const definedLocally = DefinitionsSet.has(tag);

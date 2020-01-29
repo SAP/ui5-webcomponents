@@ -439,7 +439,7 @@ class ComboBox extends UI5Element {
 		return !this.readonly;
 	}
 
-	static async define(...params) {
+	static async beforeDefine() {
 		await Promise.all([
 			ComboBoxItem.define(),
 			Icon.define(),
@@ -448,8 +448,6 @@ class ComboBox extends UI5Element {
 			BusyIndicator.define(),
 			StandardListItem.define(),
 		]);
-
-		super.define(...params);
 	}
 }
 

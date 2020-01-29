@@ -105,7 +105,6 @@ const metadata = {
 			type: Boolean,
 			noAttribute: true,
 		},
-
 	},
 	events: /** @lends  sap.ui.webcomponents.main.TabContainer.prototype */ {
 		/**
@@ -417,7 +416,7 @@ class TabContainer extends UI5Element {
 		return getRTL() ? "rtl" : undefined;
 	}
 
-	static async define(...params) {
+	static async beforeDefine() {
 		await Promise.all([
 			Button.define(),
 			CustomListItem.define(),
@@ -426,8 +425,6 @@ class TabContainer extends UI5Element {
 			Popover.define(),
 			fetchI18nBundle("@ui5/webcomponents"),
 		]);
-
-		super.define(...params);
 	}
 }
 

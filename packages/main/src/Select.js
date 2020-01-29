@@ -410,7 +410,7 @@ class Select extends UI5Element {
 		return getRTL() ? "rtl" : "ltr";
 	}
 
-	static async define(...params) {
+	static async beforeDefine() {
 		await Promise.all([
 			Label.define(),
 			Popover.define(),
@@ -418,8 +418,6 @@ class Select extends UI5Element {
 			StandardListItem.define(),
 			Icon.define(),
 		]);
-
-		super.define(...params);
 	}
 }
 

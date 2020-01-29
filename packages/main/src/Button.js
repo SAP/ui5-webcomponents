@@ -317,13 +317,11 @@ class Button extends UI5Element {
 		return this.nonFocusable ? "-1" : "0";
 	}
 
-	static async define(...params) {
+	static async beforeDefine() {
 		await Promise.all([
 			Icon.define(),
 			fetchI18nBundle("@ui5/webcomponents"),
 		]);
-
-		super.define(...params);
 	}
 }
 

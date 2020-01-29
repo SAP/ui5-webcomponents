@@ -573,7 +573,7 @@ class MultiComboBox extends UI5Element {
 		return this.valueStateTextMappings[this.valueState];
 	}
 
-	static async define(...params) {
+	static async beforeDefine() {
 		await Promise.all([
 			Tokenizer.define(),
 			Token.define(),
@@ -583,8 +583,6 @@ class MultiComboBox extends UI5Element {
 			StandardListItem.define(),
 			fetchI18nBundle("@ui5/webcomponents"),
 		]);
-
-		super.define(...params);
 	}
 }
 

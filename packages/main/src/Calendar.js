@@ -509,7 +509,7 @@ class Calendar extends UI5Element {
 		};
 	}
 
-	static async define(...params) {
+	static async beforeDefine() {
 		await Promise.all([
 			fetchCldr(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
 			CalendarHeader.define(),
@@ -517,8 +517,6 @@ class Calendar extends UI5Element {
 			MonthPicker.define(),
 			YearPicker.define(),
 		]);
-
-		super.define(...params);
 	}
 }
 

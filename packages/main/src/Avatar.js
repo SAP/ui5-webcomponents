@@ -139,7 +139,6 @@ const metadata = {
 			type: String,
 			defaultValue: AvatarBackgroundColor.Accent6,
 		},
-
 	},
 	slots: /** @lends sap.ui.webcomponents.main.Avatar.prototype */ {
 	},
@@ -187,9 +186,8 @@ class Avatar extends UI5Element {
 		return AvatarTemplate;
 	}
 
-	static async define(...params) {
+	static async beforeDefine() {
 		await Icon.define();
-		super.define(...params);
 	}
 
 	get validInitials() {

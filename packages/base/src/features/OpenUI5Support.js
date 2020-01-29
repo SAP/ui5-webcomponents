@@ -7,13 +7,23 @@ const isLoaded = () => {
 	return !!core;
 };
 
+const init = () => {
+	if (!core) {
+		return Promise.resolve();
+	}
+
+	return new Promise(resolve => {
+		core.attachInit(resolve);
+	});
+};
+
 const getConfigurationSettingsObject = () => {
 	if (!core) {
 		return;
 	}
 
 	const config = core.getConfiguration();
-	const LocaleData = window.sap.ui.core.LocaleData;
+	const LocaleData = sap.ui.requireSync("sap/ui/core/LocaleData");
 
 	return {
 		animationMode: config.getAnimationMode(),
@@ -33,7 +43,7 @@ const getLocaleDataObject = () => {
 	}
 
 	const config = core.getConfiguration();
-	const LocaleData = window.sap.ui.core.LocaleData;
+	const LocaleData = sap.ui.requireSync("sap/ui/core/LocaleData");
 	return LocaleData.getInstance(config.getLocale()).mData;
 };
 
@@ -54,6 +64,7 @@ const attachListeners = () => {
 
 const OpenUI5Support = {
 	isLoaded,
+	init,
 	getConfigurationSettingsObject,
 	getLocaleDataObject,
 	attachListeners,

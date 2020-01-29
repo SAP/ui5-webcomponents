@@ -175,12 +175,10 @@ class MessageStrip extends UI5Element {
 		}
 	}
 
-	static async define(...params) {
+	static async beforeDefine() {
 		await fetchI18nBundle("@ui5/webcomponents");
 
 		await Icon.define();
-
-		super.define(...params);
 	}
 
 	static typeClassesMappings() {

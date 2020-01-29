@@ -867,15 +867,13 @@ class ShellBar extends UI5Element {
 		return getRTL() ? "rtl" : undefined;
 	}
 
-	static async define(...params) {
+	static async beforeDefine() {
 		await Promise.all([
 			Icon.define(),
 			List.define(),
 			Popover.define(),
 			StandardListItem.define(),
 		]);
-
-		super.define(...params);
 	}
 }
 

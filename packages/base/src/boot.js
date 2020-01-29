@@ -14,6 +14,10 @@ const boot = () => {
 	}
 
 	bootPromise = new Promise(async resolve => {
+		if (OpenUI5Support) {
+			await OpenUI5Support.init();
+		}
+
 		await whenDOMReady();
 		await _applyTheme(getTheme());
 		OpenUI5Support && OpenUI5Support.attachListeners();

@@ -1,8 +1,11 @@
 import { getLanguage as getConfiguredLanguage } from "../InitialConfiguration.js";
 
-const language = getConfiguredLanguage();
+let language;
 
 const getLanguage = () => {
+	if (language === undefined) {
+		language = getConfiguredLanguage();
+	}
 	return language;
 };
 

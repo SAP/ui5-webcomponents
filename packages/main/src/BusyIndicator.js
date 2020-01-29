@@ -100,10 +100,8 @@ class BusyIndicator extends UI5Element {
 		return BusyIndicatorTemplate;
 	}
 
-	static async define(...params) {
+	static async beforeDefine() {
 		await fetchI18nBundle("@ui5/webcomponents");
-
-		super.define(...params);
 	}
 
 	get ariaTitle() {
