@@ -535,15 +535,13 @@ describe("Date Picker Tests", () => {
 
 	it("navigate to Jan 0001 page", () => {
 		const staringDate = "Feb 1, 0001";
-		const expectedDateAfterNavigtion = "Jan 19, 0001";
+		const expectedDateAfterNavigtion = "Jan 28, 0001";
 
 		datepicker.id ="#dp0001Page";
 		datepicker.innerInput.setValue(staringDate);
 		datepicker.openPicker();
 
 		// Starting from February we are navigating up to January
-		browser.keys("ArrowUp");
-		browser.keys("ArrowUp");
 		browser.keys("ArrowUp");
 		browser.keys("ArrowUp");
 		browser.keys("Enter");
