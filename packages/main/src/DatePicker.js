@@ -340,8 +340,12 @@ class DatePicker extends UI5Element {
 	}
 
 	_handleInputLiveChange() {
-		const nextValue = this._getInput().getInputValue();
+		let nextValue = this._getInput().getInputValue();
 		const isValid = this.isValid(nextValue);
+
+		if (isValid) {
+			nextValue = this.normalizeValue(nextValue);
+		}
 
 		this.value = nextValue;
 		this.fireEvent("input", { value: nextValue, valid: isValid });
