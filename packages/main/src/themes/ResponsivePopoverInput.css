@@ -52,68 +52,20 @@
 }
 
 /* Input placeholder */
-/* .ui5-input-host[disabled] [inner-input]::-webkit-input-placeholder {
-	visibility: hidden;
-} */
-
-/* .ui5-input-host[readonly] [inner-input]::-webkit-input-placeholder {
-	visibility: hidden;
-} */
 [inner-input]::-webkit-input-placeholder {
 	font-style: italic;
 	color: var(--sapField_PlaceholderTextColor);
 }
 
-/* .ui5-input-host[disabled] [inner-input]::-moz-placeholder {
-	visibility: hidden;
-} */
-
-/* .ui5-input-host[readonly] [inner-input]::-moz-placeholder {
-	visibility: hidden;
-} */
 [inner-input]::-moz-placeholder {
 	font-style: italic;
 	color: var(--sapField_PlaceholderTextColor);
 }
 
-/* .ui5-input-host [disabled] [inner-input]:-ms-input-placeholder {
-	visibility: hidden;
-} */
-
-/* .ui5-input-host[readonly] [inner-input]:-ms-input-placeholder {
-	visibility: hidden;
-} */
 [inner-input]:-ms-input-placeholder {
 	font-style: italic;
 	color: var(--sapField_PlaceholderTextColor);
 }
-
-/* .ui5-input-content {
-	height: 100%;
-	box-sizing: border-box;
-	display: flex;
-	flex-direction: row;
-	justify-content: flex-end;
-	overflow: hidden;
-	outline: none;
-	background: transparent;
-	color: inherit;
-} */
-
-/* .ui5-input-host[readonly] {
-	border-color: var(--sapField_ReadOnly_BorderColor);
-	background: var(--sapField_ReadOnly_Background);
-} */
-
-/* .ui5-input-host:not([value-state]:not([readonly])):hover {
-	background-color: var(--sapField_Hover_Background);
-	border: 1px solid var(--sapField_Hover_BorderColor);
-} */
-
-/* .ui5-input-host[value-state="None"]:hover {
-	background-color: var(--sapField_Hover_Background);
-	border: 1px solid var(--sapField_Hover_BorderColor);
-} */
 
 .input-root-phone[value-state]:not([value-state="None"]) {
 	border-width: var(--_ui5_input_state_border_width);
@@ -153,31 +105,3 @@
 	height: 0;
 	width: 0;
 }
-
-/* Input Icon */
-/* .ui5-input-icon-root {
-	min-width: var(--sap_wc_input_icon_min_width);
-	width: var(--sap_wc_input_icon_min_width);
-	height: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-} */
-
-/* .ui5-input-icon-root,
-.ui5-input-host[data-ui5-compact-size] .ui5-input-icon-root {
-	min-width: var(--sap_wc_input_compact_min_width);
-	width: var(--sap_wc_input_compact_min_width);
-} */
-
-/* TODO: Remove this after parser is fixed
-	-	this statement is transformed to "ui5-multi-combobox ui5-icon" which 
-	affects all icons in the combobox incuding these in the list items
-*/
-/* ::slotted(ui5-icon[slot="icon"]) {
-	padding: var(--_ui5_input_icon_padding);
-} */
-
-/* .ui5-input-host[data-ui5-compact-size] ::slotted(ui5-icon[slot="icon"]) {
-	padding: .25rem .5rem;
-} */

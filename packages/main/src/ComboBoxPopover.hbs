@@ -34,20 +34,13 @@
 		value-state="{{valueState}}"
 	>
 		<input
-			id="ui5-input-inner-phone"
 			class="ui5-input-inner-phone"
 			.value="{{_tempValue}}"
 			inner-input
 			placeholder="{{placeholder}}"
-			?disabled={{disabled}}
-			?readonly={{readonly}}
-			?required={{required}}
 			value-state="{{valueState}}"
 			@input="{{_input}}"
 			@change="{{_inputChange}}"
-			@keydown="{{_keydown}}"
-			@focusin="{{_focusin}}"
-			@focusout="{{_focusout}}"
 			aria-autocomplete="both"
 		/>
 	</div>
