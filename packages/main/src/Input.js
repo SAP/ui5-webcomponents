@@ -512,6 +512,12 @@ class Input extends UI5Element {
 		}
 	}
 
+	_afterClosePopover() {
+		if (isPhone()) {
+			this.blur();
+		}
+	}
+
 	enableSuggestions() {
 		if (this.Suggestions) {
 			return;

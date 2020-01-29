@@ -448,6 +448,10 @@ class MultiComboBox extends UI5Element {
 		this.open = this._iconPressed;
 
 		this.fireEvent("openChange");
+
+		if (!this._iconPressed) {
+			this._afterClosePopover();
+		}
 	}
 
 	_getSelectedItems() {
@@ -501,6 +505,12 @@ class MultiComboBox extends UI5Element {
 		if (isPhone() && !this._getRespPopover(true).opened) {
 			this._getRespPopover().open(this);
 			event.preventDefault(); // prevent immediate selection of any item
+		}
+	}
+
+	_afterClosePopover() {
+		if (isPhone()) {
+			this.blur();
 		}
 	}
 

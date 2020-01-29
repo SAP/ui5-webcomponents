@@ -319,6 +319,10 @@ class ComboBox extends UI5Element {
 
 	_afterClosePopover() {
 		this._iconPressed = false;
+
+		if (isPhone()) {
+			this.blur();
+		}
 	}
 
 	_toggleRespPopover() {
