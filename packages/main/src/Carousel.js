@@ -11,11 +11,13 @@ import {
 	fetchI18nBundle,
 	getI18nBundle,
 } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import CarouselTemplate from "./generated/templates/CarouselTemplate.lit.js";
+import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
 import {
 	CAROUSEL_OF_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
 import CarouselArrowsPlacement from "./types/CarouselArrowsPlacement.js";
+import CarouselTemplate from "./generated/templates/CarouselTemplate.lit.js";
+import { isMobile } from "@ui5/webcomponents-base/dist/Device.js";
 
 // Styles
 import CarouselCss from "./generated/themes/Carousel.css.js";
@@ -123,8 +125,29 @@ class Carousel extends UI5Element {
 
 	constructor() {
 		super();
+		
+		this._scrollEnablement = new ScrollEnablement(this);
+		this._scrollEnablement.attachEvent("touchend", (event) => {
+			this._updateScrolling(event);
+		})
 
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+	}
+
+	onAfterRendering() {
+		this._scrollEnablement.scrollContainer = this.getDomRef();
+	}
+
+	_updateScrolling(event) {
+		if (!event) {
+			return;
+		}
+
+		if (event.isLeft) {
+			this.navigateLeft();
+		} else if (event.isRight) {
+			this.navigateRight();
+		}
 	}
 
 	_onkeydown(event) {
@@ -137,11 +160,6 @@ class Carousel extends UI5Element {
 		} else if (isRight(event) || isUp(event)) {
 			this.navigateRight();
 		}
-	}
-
-	_onbuttonkeydown(event) {
-		event.preventDefault();
-		event.target._deactivate();
 	}
 
 	navigateLeft() {
@@ -192,8 +210,8 @@ class Carousel extends UI5Element {
 
 	get arrows() {
 		return {
-			content: this.arrowsPlacement === CarouselArrowsPlacement.Content,
-			navigation: this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
+			content: !isMobile() && this.arrowsPlacement === CarouselArrowsPlacement.Content,
+			navigation: !isMobile() && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
 		};
 	}
 
