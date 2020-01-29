@@ -4,7 +4,7 @@ let animationMode;
 
 const getAnimationMode = () => {
 	if (animationMode === undefined) {
-		getConfiguredAnimationMode();
+		animationMode = getConfiguredAnimationMode();
 	}
 
 	return animationMode;
