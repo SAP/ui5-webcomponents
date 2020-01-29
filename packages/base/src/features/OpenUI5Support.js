@@ -1,7 +1,8 @@
 import { registerFeature } from "../FeaturesRegistry.js";
 import { setTheme } from "../config/Theme.js";
 
-const core = window.sap && window.sap.ui && typeof window.sap.ui.getCore === "function" && window.sap.ui.getCore();
+const sap = window.sap;
+const core = sap && sap.ui && typeof sap.ui.getCore === "function" && sap.ui.getCore();
 
 const isLoaded = () => {
 	return !!core;
@@ -13,7 +14,9 @@ const init = () => {
 	}
 
 	return new Promise(resolve => {
-		core.attachInit(resolve);
+		core.attachInit(() => {
+			sap.ui.require(["sap/ui/core/LocaleData"], resolve);
+		});
 	});
 };
 
@@ -23,7 +26,7 @@ const getConfigurationSettingsObject = () => {
 	}
 
 	const config = core.getConfiguration();
-	const LocaleData = sap.ui.requireSync("sap/ui/core/LocaleData");
+	const LocaleData = sap.ui.require("sap/ui/core/LocaleData");
 
 	return {
 		animationMode: config.getAnimationMode(),
@@ -43,7 +46,7 @@ const getLocaleDataObject = () => {
 	}
 
 	const config = core.getConfiguration();
-	const LocaleData = sap.ui.requireSync("sap/ui/core/LocaleData");
+	const LocaleData = sap.ui.require("sap/ui/core/LocaleData");
 	return LocaleData.getInstance(config.getLocale()).mData;
 };
 

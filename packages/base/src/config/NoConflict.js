@@ -12,8 +12,8 @@ const shouldFireOriginalEvent = eventName => {
 let noConflict;
 
 const shouldNotFireOriginalEvent = eventName => {
-	const noConflict = getNoConflict();
-	return !(noConflict.events && noConflict.events.includes && noConflict.events.includes(eventName));
+	const nc = getNoConflict();
+	return !(nc.events && nc.events.includes && nc.events.includes(eventName));
 };
 
 const getNoConflict = () => {
@@ -25,7 +25,7 @@ const getNoConflict = () => {
 };
 
 const skipOriginalEvent = eventName => {
-	const noConflict = getNoConflict();
+	const nc = getNoConflict();
 
 	// Always fire these events
 	if (shouldFireOriginalEvent(eventName)) {
@@ -33,7 +33,7 @@ const skipOriginalEvent = eventName => {
 	}
 
 	// Read from the configuration
-	if (noConflict === true) {
+	if (nc === true) {
 		return true;
 	}
 
