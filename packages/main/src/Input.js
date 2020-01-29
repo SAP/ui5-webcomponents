@@ -394,7 +394,14 @@ class Input extends UI5Element {
 
 	onAfterRendering() {
 		if (!this.firstRendering && !isPhone() && this.Suggestions) {
-			this.Suggestions.toggle(this.shouldOpenSuggestions());
+			const shouldOpenSuggestions = this.shouldOpenSuggestions();
+
+			this.Suggestions.toggle(shouldOpenSuggestions);
+
+			if (!isPhone() && shouldOpenSuggestions) {
+				// Set initial focus to the native input
+				this.getInputDOMRef().focus();
+			}
 		}
 
 		this.firstRendering = false;
@@ -402,7 +409,9 @@ class Input extends UI5Element {
 
 	_afterOpenPopover() {
 		// Set initial focus to the native input
-		this.getInputDOMRef().focus();
+		if (isPhone()) {
+			this.getInputDOMRef().focus();
+		}
 	}
 
 	_onkeydown(event) {
@@ -461,6 +470,12 @@ class Input extends UI5Element {
 	}
 
 	_onfocusout(event) {
+		// if focusout is triggered by pressing on suggestion item skip invalidation, because re-rendering
+		// will happen before "itemPress" event, which will make item "active" state not visualized
+		if (this.Suggestions && event.relatedTarget && event.relatedTarget.shadowRoot.contains(this.Suggestions._respPopover)) {
+			return;
+		}
+
 		this.previousValue = "";
 		this.focused = false; // invalidating property
 	}
@@ -512,6 +527,7 @@ class Input extends UI5Element {
 
 	shouldOpenSuggestions() {
 		return !!(this.suggestionItems.length
+			&& this.focused
 			&& this.showSuggestions
 			&& !this.hasSuggestionItemSelected);
 	}
