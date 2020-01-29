@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<title>ui5-segmentedbutton</title>
+
+	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+	<script nomodule src="../../resources/bundle.es5.js"></script>
+
+	<script>delete Document.prototype.adoptedStyleSheets;</script>
+
+</head>
+
+<body>
+	<header class="header">
+		<h1 class="header-title">ui5-segmentedbutton</h1>
+	</header>
+
+	<section class="main">
+		<div class="samples">
+			<h2>Segmentedbutton example</h2>
+			<div class="sample" id="main-sample">
+				<section>
+					<ui5-segmentedbutton>
+						<ui5-togglebutton icon="employee" class="toggleButton"></ui5-togglebutton>
+						<ui5-togglebutton class="toggleButton">Pressed ToggleButton</ui5-togglebutton>
+						<ui5-togglebutton class="toggleButton">Pressed ToggleButton</ui5-togglebutton>
+					</ui5-segmentedbutton>
+				</section>
+
+				<section>
+					<h1>Example with 4 buttons</h1>
+
+					<ui5-segmentedbutton>
+						<ui5-togglebutton class="toggleButton" pressed>A</ui5-togglebutton>
+						<ui5-togglebutton class="toggleButton" pressed>Pressed ToggleButton</ui5-togglebutton>
+						<ui5-togglebutton class="toggleButton" pressed>asfsa</ui5-togglebutton>
+						<ui5-togglebutton class="toggleButton" pressed>Pressed ToggleButton</ui5-togglebutton>
+					</ui5-segmentedbutton>
+				</section>
+
+				<section>
+					<h1>Example with 5 buttons</h1>
+
+					<ui5-segmentedbutton>
+						<ui5-togglebutton class="toggleButton" pressed>A</ui5-togglebutton>
+						<ui5-togglebutton class="toggleButton" pressed>Pressed ToggleButton</ui5-togglebutton>
+						<ui5-togglebutton class="toggleButton" pressed>asfsa</ui5-togglebutton>
+						<ui5-togglebutton class="toggleButton" pressed>Pressed ToggleButton</ui5-togglebutton>
+						<ui5-togglebutton class="toggleButton" pressed>asfsa</ui5-togglebutton>
+					</ui5-segmentedbutton>
+
+					<h1>Example with Icons</h1>
+
+					<ui5-segmentedbutton id="pesho">
+						<ui5-togglebutton icon="employee" class="toggleButton" pressed></ui5-togglebutton>
+						<ui5-togglebutton icon="menu" class="toggleButton"></ui5-togglebutton>
+						<ui5-togglebutton icon="factory" class="toggleButton"></ui5-togglebutton>
+					</ui5-segmentedbutton>
+				</section>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

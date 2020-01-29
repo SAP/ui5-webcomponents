@@ -1,0 +1,8 @@
+<div
+	@click="{{_onclick}}"
+	class="ui5-segmentedbutton-root"
+>
+	{{#each buttons}}
+		<slot name="{{this._individualSlot}}"></slot>
+	{{/each}}
+</div>
