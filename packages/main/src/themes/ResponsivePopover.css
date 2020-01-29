@@ -1,14 +1,15 @@
+@import "./Popover.css";
+
 :host {
 	--_ui5_input_width: 100%;
-	position: fixed;
-	z-index: 10;
-	display: none;
-	--_ui5_popover_position: static;
-	--_ui5_popover_first_fe_position: fixed;
 }
 
 :host(:not([with-padding])) {
 	--_ui5_popover_content_padding: 0;
+}
+
+:host([opened]) {
+	display: inline-block;
 }
 
 .ui5-responsive-popover-header .row {

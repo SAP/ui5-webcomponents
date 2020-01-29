@@ -30,6 +30,7 @@ import "@ui5/webcomponents-utils/dist/sap/ui/core/date/Gregorian.js";
 
 // Styles
 import datePickerCss from "./generated/themes/DatePicker.css.js";
+import datePickerPopoverCss from "./generated/themes/DatePickerPopover.css.js";
 
 /**
  * @public
@@ -245,6 +246,10 @@ class DatePicker extends UI5Element {
 
 	static get styles() {
 		return datePickerCss;
+	}
+
+	static get staticAreaStyles() {
+		return datePickerPopoverCss;
 	}
 
 	constructor() {

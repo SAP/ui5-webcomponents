@@ -1,4 +1,3 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
@@ -19,114 +18,42 @@ const POPOVER_MIN_WIDTH = 100;
 const metadata = {
 	tag: "ui5-responsive-popover",
 	properties: /** @lends sap.ui.webcomponents.main.ResponsivePopover.prototype */ {
-		opened: {
-			type: Boolean,
-		},
-
-		stayOpenOnScroll: {
-			type: Boolean,
-		},
-
-		allowTargetOverlap: {
-			type: Boolean,
-		},
-
-		disableInitialFocus: {
-			type: Boolean,
-		},
 
 		/**
 		 * By default the popover will be as wide at least as its opener. It will be wider if the content is not fitting.
-		 * If this property is set to true, the popover won't stretch.
+		 * If this property is set to true, it will take only as much space as it needs.
 		 */
 		noStretch: {
 			type: Boolean,
 		},
 
 		/**
-		 * When set there will be padding added by Popover or Dialog.
+		 * When set there will be padding added by around the content.
 		 */
 		withPadding: {
 			type: Boolean,
 		},
 
 		/**
-		 * Determines the horizontal alignment of the <code>ui5-popover</code>.
-		 *
-		 * @type {PopoverHorizontalAlign}
-		 * @defaultvalue "Left"
-		 * @public
-		 */
-		horizontalAlign: {
-			type: PopoverHorizontalAlign,
-			defaultValue: PopoverHorizontalAlign.Left,
-		},
-
-		/**
-		 * Title of the Dialog on phone. It will be displayed as "Select" text.
+		 * Title of the Dialog on phone. It will be displayed as "Select" translatable text.
 		 */
 		showHeaderTitle: {
 			type: Boolean,
 		},
 
 		/**
-		 * Determines whether to show "Confirm" button on phone.
+		 * Determines whether to show "Confirm" button in the footer on phone.
 		 */
 		showConfirmButton: {
 			type: Boolean,
 		},
 
 		/**
-		 * Determines whether to show "Cancel" button on phone.
+		 * Determines whether to show "Cancel" button in the footer on phone.
 		 */
 		showCancelButton: {
 			type: Boolean,
 		},
-	},
-	slots: /** @lends sap.ui.webcomponents.main.ResponsivePopover.prototype */ {
-		"default": {
-			type: HTMLElement,
-		},
-
-		"header": {
-			type: HTMLElement,
-		},
-	},
-	events: /** @lends sap.ui.webcomponents.main.ResponsivePopover.prototype */ {
-		/**
-		 * Fired before the component is opened.
-		 *
-		 * @public
-		 * @event
-		 */
-		beforeOpen: {},
-
-		/**
-		 * Fired after the component is opened.
-		 *
-		 * @public
-		 * @event
-		 */
-		afterOpen: {},
-
-		/**
-		 * Fired before the component is closed.
-		 *
-		 * @public
-		 * @event
-		 * @param {Boolean} escPressed Indicates that <code>ESC</code> key has triggered the event.
-		 */
-		beforeClose: {
-			escPressed: { type: Boolean },
-		},
-
-		/**
-		 * Fired after the component is closed.
-		 *
-		 * @public
-		 * @event
-		 */
-		afterClose: {},
 	},
 };
 
@@ -141,7 +68,7 @@ const metadata = {
  * @tagname ui5-responsive-popover
  * @private
  */
-class ResponsivePopover extends UI5Element {
+class ResponsivePopover extends Popover {
 	static get metadata() {
 		return metadata;
 	}
@@ -160,7 +87,6 @@ class ResponsivePopover extends UI5Element {
 
 	static async define(...params) {
 		await Promise.all([
-			Popover.define(),
 			Dialog.define(),
 			Button.define(),
 			fetchI18nBundle("@ui5/webcomponents"),
@@ -172,73 +98,49 @@ class ResponsivePopover extends UI5Element {
 	constructor() {
 		super();
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
-	}
-
-	onAfterRendering() {
-		if (this.opened) {
-			const dialog = this.shadowRoot.querySelector("ui5-dialog");
-			const popover = this.shadowRoot.querySelector("ui5-popover");
-
-			if (dialog) {
-				dialog.open();
-			} else {
-				popover.openBy(this._opener);
-			}
-		} else {
-			this._inner.close();
-		}
+		this.placementType = "Bottom";
+		this.horizontalAlign = PopoverHorizontalAlign.Left;
+		this.noArrow = true;
 	}
 
 	/**
 	 * @public
 	 */
 	open(opener) {
-		if (this.opened) {
-			return;
-		}
-
-		this._opener = opener;
-		this.fireEvent("beforeOpen", {});
-		this.opened = true;
-
-		if (!this.noStretch) {
+		if (!isPhone()) {
 			// make popover width be >= of the opener's width
-			this._width = Math.max(POPOVER_MIN_WIDTH, opener.getBoundingClientRect().width);
-		}
+			if (!this.noStretch) {
+				this._minWidth = Math.max(POPOVER_MIN_WIDTH, opener.getBoundingClientRect().width);
+			}
 
-		this.style.display = "inline-block";
+			this.openBy(opener);
+		} else {
+			this._dialog.open();
+		}
 	}
 
 	/**
 	 * @public
 	 */
 	close() {
-		if (!this.opened) {
-			return;
+		if (!isPhone()) {
+			super.close();
+		} else {
+			this._dialog.close();
 		}
-
-		this._inner.close();
 	}
 
-	_afterOpen(event) {
-		this.style.top = this._inner.style.top;
-		this.style.left = this._inner.style.left;
-		this._fireEvent(event);
+	_afterDialogOpen(event) {
+		this.opened = true;
+		this._propagateDialogEvent(event);
 	}
 
-	_beforeClose(event) {
-		this._fireEvent(event);
-	}
-
-	_afterClose(event) {
-		delete this._opener;
-		this.style.display = "";
+	_afterDialogClose(event) {
 		this.opened = false;
-
-		this._fireEvent(event);
+		this._propagateDialogEvent(event);
 	}
 
-	_fireEvent(event) {
+	_propagateDialogEvent(event) {
 		const type = event.type.replace("ui5-", "");
 
 		this.fireEvent(type, {
@@ -264,15 +166,18 @@ class ResponsivePopover extends UI5Element {
 	}
 
 	get styles() {
+		const popoverStyles = super.styles;
+
 		return {
-			popover: {
-				"min-width": `${this._width}px`,
+			...popoverStyles,
+			root: {
+				"min-width": `${this._minWidth}px`,
 			},
 		};
 	}
 
-	get _inner() {
-		return this.shadowRoot.querySelector(".ui5-responsive-popover-inner");
+	get _dialog() {
+		return this.shadowRoot.querySelector("ui5-dialog");
 	}
 
 	get _hasFooter() {

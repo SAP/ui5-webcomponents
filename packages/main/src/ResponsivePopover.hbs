@@ -1,13 +1,12 @@
 {{#if _isPhone}}
 	<ui5-dialog
-		class="ui5-responsive-popover-inner"
-		stretch
 		?with-padding={{withPadding}}
+		stretch
 		_disable-initial-focus
-		@ui5-afterOpen="{{_afterOpen}}"
-		@ui5-beforeOpen="{{_beforeOpen}}"
-		@ui5-beforeClose="{{_beforeClose}}"
-		@ui5-afterClose="{{_afterClose}}"
+		@ui5-beforeOpen="{{_propagateDialogEvent}}"
+		@ui5-afterOpen="{{_afterDialogOpen}}"
+		@ui5-beforeClose="{{_propagateDialogEvent}}"
+		@ui5-afterClose="{{_afterDialogClose}}"
 	>
 		{{#if _hasHeader}}
 			<div slot="header" class="ui5-responsive-popover-header">
@@ -41,19 +40,17 @@
 		{{/if}}
 	</ui5-dialog>
 {{else}}
-	<ui5-popover
-		class="ui5-responsive-popover-inner"
-		placement-type="Bottom"
-		horizontal-align="{{horizontalAlign}}"
-		style="{{styles.popover}}"
-		?stay-open-on-scroll="{{stayOpenOnScroll}}"
-		?allow-target-overlap="{{allowTargetOverlap}}"
-		no-arrow
-		?_disable-initial-focus="{{disableInitialFocus}}"
-		@ui5-afterOpen="{{_afterOpen}}"
-		@ui5-beforeClose="{{_beforeClose}}"
-		@ui5-afterClose="{{_afterClose}}"
+	<div
+		class="ui5-popover-root"
+		role="dialog"
+		aria-modal="true"
+		aria-labelledby="ui5-popover-header"
+		style="{{styles.root}}"
 	>
-		<slot></slot>
-	</ui5-popover>
+		<span class="first-fe" tabindex="0" @focusin={{forwardToLast}}></span>
+		<div class="ui5-popover-content" style={{styles.content}}>
+			<slot></slot>
+		</div>
+		<span class="last-fe" tabindex="0" @focusin={{forwardToFirst}}></span>
+	</div>
 {{/if}}
