@@ -1,5 +1,5 @@
-commit 6fb1dd6e7c7166dedeeaf9c0ff28db02903585b7
+commit 341c599c15d22c085d5530d7bdc2303293156c0f
 Author: Martin <martin.r.hristov@gmail.com>
-Date:   Tue Jan 28 19:53:52 2020 +0200
+Date:   Wed Jan 29 14:55:10 2020 -0800
 
-    fix(ui5-daypicker): show correct today (#1157)
+    chore: i18n demo enhancements (#1160)

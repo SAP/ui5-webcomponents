@@ -674,7 +674,7 @@
   "97": {
     "id": "97",
     "title": "i18n-demo",
-    "content": "&lt;!DOCTYPE html&gt; i18n Demo Martin&#39;s cheat sheet mañana, ayer",
+    "content": "&lt;!DOCTYPE html&gt; i18n Demo i18n and CLDR demo Available languages: ar, bg, ca, cs, da, de, el, en, es, et, fi, fr, hi, hr, hu, it, iw, ja, kk, ko, lt, lv, ms, nl, no, pl, pt, ro, ru, sh, sk, sl, sv, th, tr, uk, vi, zh_CN, zh_TW Cheat sheet: in 2 wochen, in 42 tagen mañana, ayer, 今天, 明天,",
     "url": "https://sap.github.io/ui5-webcomponents/master/playground/main/pages/i18n-demo/",
     "relUrl": "/playground/main/pages/i18n-demo/"
   },
