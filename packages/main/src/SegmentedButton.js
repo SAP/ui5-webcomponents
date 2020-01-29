@@ -100,6 +100,7 @@ class SegmentedButton extends UI5Element {
 	}
 
 	onAfterRendering() {
+		debugger
 		this.widths = this.buttons.map(button => button.offsetWidth);
 	}
 
