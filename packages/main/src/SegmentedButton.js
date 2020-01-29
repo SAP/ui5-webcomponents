@@ -100,7 +100,6 @@ class SegmentedButton extends UI5Element {
 	}
 
 	onAfterRendering() {
-		debugger
 		this.widths = this.buttons.map(button => button.offsetWidth);
 	}
 
@@ -129,6 +128,7 @@ class SegmentedButton extends UI5Element {
 				selectedButton: this._selectedButton,
 			});
 		}
+		event.target.pressed = true;
 
 		return this;
 	}
