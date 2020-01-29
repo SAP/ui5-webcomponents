@@ -59,9 +59,8 @@ class Demo extends UI5Element {
 		return DemoCss;
 	}
 
-	static async define(...params) {
+	static async beforeDefine() {
 		await fetchI18nBundle("my-ui5-web-components");
-		super.define(...params);
 	}
 }
 
@@ -374,9 +373,8 @@ class Demo extends UI5Element {
 		return DemoCss;
 	}
 
-	static async define(...params) {
+	static async beforeDefine() {
 		await fetchI18nBundle("my-ui5-web-components");
-		super.define(...params);
 	}
 }
 
@@ -385,7 +383,7 @@ Demo.define();
 export default Demo;
 ```
 
-Please note that here we override the `define` method of `UI5Element` in order to ensure that i18n resources have been fetched
+Please note that here we use the `beforeDefine` method of `UI5Element` in order to ensure that i18n resources have been fetched
 before the web component has been defined. The used namespace for resource registration (in this example `my-ui5-web-components`)
 is the `name` property of your `package.json` file.
 
