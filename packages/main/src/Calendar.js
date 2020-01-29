@@ -309,12 +309,6 @@ class Calendar extends UI5Element {
 		const firstDay = dayPicker.shadowRoot.querySelector(".ui5-dp-items-container").children[0].children[fistDayOfMonthIndex];
 
 		dayPicker._itemNav.current = fistDayOfMonthIndex;
-
-		setTimeout(() => {
-			if (firstDay) {
-				firstDay.focus();
-			}
-		}, 100);
 	}
 
 	_handleSelectedYearChange(event) {
@@ -324,8 +318,8 @@ class Calendar extends UI5Element {
 			event.detail.timestamp * 1000,
 			this._primaryCalendarType
 		);
-		oNewDate.setMonth(oOldMonth);
-		oNewDate.setDate(oOldDay);
+		oNewDate.setMonth(0);
+		oNewDate.setDate(1);
 
 		this.timestamp = oNewDate.valueOf() / 1000;
 

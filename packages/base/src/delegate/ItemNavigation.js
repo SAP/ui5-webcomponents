@@ -59,7 +59,6 @@ class ItemNavigation extends EventProvider {
 
 		await RenderScheduler.whenFinished();
 
-		console.log({curr: this.currentIndex, items: this._getItems().length});
 		this.update();
 		this.focusCurrent();
 	}
@@ -214,7 +213,7 @@ class ItemNavigation extends EventProvider {
 
 	onOverflowBottomEdge() {
 		const items = this._getItems();
-		const rowIndex = this.currentIndex  - items.length;
+		const rowIndex = this.currentIndex - items.length;
 		if (this.behavior === ItemNavigationBehavior.Cyclic) {
 			return;
 		}
@@ -223,7 +222,9 @@ class ItemNavigation extends EventProvider {
 			this._handleNextPage();
 		}
 
-		this.fireEvent(ItemNavigation.BORDER_REACH, { start: false, end: true, offset: this.currentIndex, rowIndex});
+		this.fireEvent(ItemNavigation.BORDER_REACH, {
+			start: false, end: true, offset: this.currentIndex, rowIndex,
+		});
 	}
 
 	onOverflowTopEdge() {
@@ -239,7 +240,9 @@ class ItemNavigation extends EventProvider {
 			this._handlePrevPage();
 		}
 
-		this.fireEvent(ItemNavigation.BORDER_REACH, { start: true, end: false, offset: this.currentIndex,  rowIndex});
+		this.fireEvent(ItemNavigation.BORDER_REACH, {
+			start: true, end: false, offset: this.currentIndex, rowIndex,
+		});
 	}
 
 	_handleNextPage() {
@@ -255,7 +258,6 @@ class ItemNavigation extends EventProvider {
 
 	_handlePrevPage() {
 		this.fireEvent(ItemNavigation.PAGE_TOP);
-		const items = this._getItems();
 
 		if (!this.hasPrevPage) {
 			this.currentIndex = 0;

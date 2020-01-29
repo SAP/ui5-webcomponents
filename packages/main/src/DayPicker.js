@@ -339,9 +339,15 @@ class DayPicker extends UI5Element {
 	}
 
 	_onmouseup(event) {
+		const dayPressed = this._isDayPressed(event.target);
+
 		if (this.targetDate) {
 			this._modifySelectionAndNotifySubscribers(this.targetDate, event.ctrlKey);
 			this.targetDate = null;
+		}
+
+		if (!dayPressed){
+			this._itemNav.focusCurrent();
 		}
 	}
 
