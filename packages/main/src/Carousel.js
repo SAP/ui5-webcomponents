@@ -39,7 +39,7 @@ const metadata = {
 		},
 
 		/**
-		 * Sets the amount of items per page.
+		 * Sets the amount of items per page. If this property is set, on mobile devices it will always fallback to 1.
 		 * @type {Integer}
 		 * @defaultvalue 1
 		 * @public
@@ -158,6 +158,12 @@ class Carousel extends UI5Element {
 		});
 
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+	}
+
+	onBeforeRendering() {
+		if (isMobile()) {
+			this.itemsPerPage = 1;
+		}
 	}
 
 	onAfterRendering() {
