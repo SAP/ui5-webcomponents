@@ -306,14 +306,10 @@ class Calendar extends UI5Element {
 			}
 		});
 
-		const firstDay = dayPicker.shadowRoot.querySelector(".ui5-dp-items-container").children[0].children[fistDayOfMonthIndex];
-
 		dayPicker._itemNav.current = fistDayOfMonthIndex;
 	}
 
 	_handleSelectedYearChange(event) {
-		const oOldMonth = this._calendarDate.getMonth();
-		const oOldDay = this._calendarDate.getDate();
 		const oNewDate = CalendarDate.fromTimestamp(
 			event.detail.timestamp * 1000,
 			this._primaryCalendarType

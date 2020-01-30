@@ -198,14 +198,18 @@ class DayPicker extends UI5Element {
 			lastWeekNumber = -1,
 			isDaySelected = false,
 			todayIndex = 0;
-
 		const _aVisibleDays = this._getVisibleDays(this._calendarDate);
-
 		this._weeks = [];
 		let week = [];
 		this._weekNumbers = [];
 		let weekday;
-
+		if(this.minDate){
+			this._minDateObject = new Date(this._minDate);
+		}
+		
+		if(this.maxDate){
+			this._maxDateObject = new Date(this._maxDate);
+		}
 		/* eslint-disable no-loop-func */
 		for (let i = 0; i < _aVisibleDays.length; i++) {
 			oCalDate = _aVisibleDays[i];
@@ -263,7 +267,6 @@ class DayPicker extends UI5Element {
 			if (this._isWeekend(oCalDate)) {
 				day.classes += " ui5-dp-item--weeekend";
 			}
-
 			if ((this.minDate || this.maxDate) && this._isOutOfSelectableRange(oCalDate)) {
 				day.classes += " ui5-dp-item--disabled";
 				day.disabled = true;
@@ -275,7 +278,6 @@ class DayPicker extends UI5Element {
 				week = [];
 			}
 		}
-
 		while (this._weeks.length < 6) {
 			this._weeks.push([]);
 		}
@@ -311,9 +313,8 @@ class DayPicker extends UI5Element {
 
 	_onmousedown(event) {
 		const target = event.target;
-
 		const dayPressed = this._isDayPressed(target);
-
+	
 		if (dayPressed) {
 			const targetDate = parseInt(target.getAttribute("data-sap-timestamp"));
 
@@ -340,7 +341,6 @@ class DayPicker extends UI5Element {
 
 	_onmouseup(event) {
 		const dayPressed = this._isDayPressed(event.target);
-
 		if (this.targetDate) {
 			this._modifySelectionAndNotifySubscribers(this.targetDate, event.ctrlKey);
 			this.targetDate = null;
@@ -562,11 +562,9 @@ class DayPicker extends UI5Element {
 	}
 
 	_isOutOfSelectableRange(date) {
-		const currentDate = date._oUDate ? date.toLocalJSDate() : CalendarDate.fromTimestamp(date).toLocalJSDate(),
-			maxDate = new Date(this._maxDate),
-			minDate = new Date(this._minDate);
+		const currentDate = date._oUDate ? date.toLocalJSDate() : CalendarDate.fromTimestamp(date).toLocalJSDate();
 
-		return currentDate > maxDate || currentDate < minDate;
+		return currentDate > this._maxDateObject || currentDate < this._minDateObject;
 	}
 
 	get _maxDate() {
