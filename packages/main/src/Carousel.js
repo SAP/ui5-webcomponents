@@ -193,8 +193,7 @@ class Carousel extends UI5Element {
 			if (this.cycling) {
 				this.selectedIndex = this.items.length - 1;
 			}
-		}
-		else {
+		} else {
 			--this.selectedIndex;
 		}
 	}
