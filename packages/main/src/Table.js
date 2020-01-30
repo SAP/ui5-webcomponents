@@ -106,6 +106,7 @@ const metadata = {
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Table.prototype */ {
+		popinChange: {},
 	},
 };
 
@@ -242,6 +243,7 @@ class Table extends UI5Element {
 		// invalidate only if hidden columns count has changed
 		if (this._hiddenColumns.length !== hiddenColumns.length) {
 			this._hiddenColumns = hiddenColumns;
+			this.fireEvent("popinChange");
 		}
 	}
 
