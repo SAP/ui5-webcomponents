@@ -106,6 +106,13 @@ const metadata = {
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Table.prototype */ {
+		/**
+		 * Fired when the <code>ui5-table-column</code> is shown as a pop-in instead of hiding it.
+		 *
+		 * @event
+		 * @since 1.0.0-rc.6
+		 * @public
+		 */
 		popinChange: {},
 	},
 };
