@@ -105,7 +105,7 @@ class ListItem extends ListItemBase {
 			}
 		};
 
-		this.deactivate = (event) => {
+		this.deactivate = () => {
 			if (this.active) {
 				this.active = false;
 			}
@@ -172,7 +172,6 @@ class ListItem extends ListItemBase {
 
 	_ontouchstart(event) {
 		this._onmousedown(event);
-		
 	}
 
 	_ontouchend(event) {
