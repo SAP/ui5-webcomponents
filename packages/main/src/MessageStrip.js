@@ -1,15 +1,15 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isEnter, isSpace } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import "@ui5/webcomponents-icons/dist/icons/decline.js";
+import "@ui5/webcomponents-icons/dist/icons/message-information.js";
+import "@ui5/webcomponents-icons/dist/icons/message-success.js";
+import "@ui5/webcomponents-icons/dist/icons/message-error.js";
+import "@ui5/webcomponents-icons/dist/icons/message-warning.js";
 import MessageStripType from "./types/MessageStripType.js";
 import MessageStripTemplate from "./generated/templates/MessageStripTemplate.lit.js";
 import Icon from "./Icon.js";
-import "./icons/decline.js";
-import "./icons/message-information.js";
-import "./icons/message-success.js";
-import "./icons/message-error.js";
-import "./icons/message-warning.js";
 import { MESSAGE_STRIP_CLOSE_BUTTON } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -45,7 +45,7 @@ const metadata = {
 		 * <br><br>
 		 * Example:
 		 * <br>
-		 * <pre>ui5-messagestrip icon="sap-icon://palette"</pre>
+		 * <pre>ui5-messagestrip icon="palette"</pre>
 		 *
 		 * See all the available icons in the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
 		 *
@@ -152,7 +152,7 @@ class MessageStrip extends UI5Element {
 	constructor() {
 		super();
 
-		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	_closeClick() {
@@ -176,7 +176,7 @@ class MessageStrip extends UI5Element {
 	}
 
 	static async define(...params) {
-		await fetchResourceBundle("@ui5/webcomponents");
+		await fetchI18nBundle("@ui5/webcomponents");
 
 		await Icon.define();
 
@@ -194,10 +194,10 @@ class MessageStrip extends UI5Element {
 
 	static iconMappings() {
 		return {
-			"Information": "sap-icon://message-information",
-			"Positive": "sap-icon://message-success",
-			"Negative": "sap-icon://message-error",
-			"Warning": "sap-icon://message-warning",
+			"Information": "message-information",
+			"Positive": "message-success",
+			"Negative": "message-error",
+			"Warning": "message-warning",
 		};
 	}
 
@@ -206,7 +206,7 @@ class MessageStrip extends UI5Element {
 	}
 
 	get _closeButtonText() {
-		return this.resourceBundle.getText(MESSAGE_STRIP_CLOSE_BUTTON);
+		return this.i18nBundle.getText(MESSAGE_STRIP_CLOSE_BUTTON);
 	}
 
 	get classes() {

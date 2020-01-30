@@ -1,6 +1,6 @@
 {
   "name": "@ui5/webcomponents-base",
-  "version": "0.15.0",
+  "version": "0.18.0",
   "description": "UI5 Web Components: webcomponents.base",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
@@ -16,28 +16,26 @@
     "directory": "packages/base"
   },
   "scripts": {
-    "build": "npm-run-all --sequential clean lint copy:src",
-    "dev": "yarn watch:src",
-    "clean": "rimraf dist",
-    "lint": "eslint .",
-    "copy:src": "copy-and-watch \"src/**/*.js\" dist/",
-    "watch:src": "copy-and-watch --watch \"src/**/*.js\" dist/"
+    "clean": "nps clean",
+    "lint": "nps lint",
+    "start": "nps start",
+    "build": "nps build",
+    "test": "nps test"
   },
   "dependencies": {
-    "@ui5/webcomponents-core": "0.15.0",
+    "@ui5/webcomponents-utils": "0.18.0",
+    "css-vars-ponyfill": "^2.1.2",
     "lit-html": "^1.0.0",
     "regenerator-runtime": "0.12.1",
     "url-search-params-polyfill": "^5.0.0"
   },
   "devDependencies": {
+    "@ui5/webcomponents-tools": "1.0.0-rc.5",
     "array-uniq": "^2.0.0",
-    "copy-and-watch": "^0.1.2",
+    "copy-and-watch": "^0.1.4",
     "eslint": "^5.13.0",
     "eslint-config-airbnb-base": "^13.1.0",
-    "npm-run-all": "^4.1.5"
-  },
-  "resolutions": {
-    "abstract-syntax-tree": "1.0.3",
-    "dir-glob": "2.0.0"
+    "npm-run-all": "^4.1.5",
+    "path-exists-cli": "^1.0.0"
   }
 }

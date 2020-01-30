@@ -1,14 +1,18 @@
 language: node_js
 
 node_js:
-- '8'
+- '12'
 
 addons:
-  chrome: "75.0.3770"
+  chrome: stable
 
 before_install:
   - curl -o- -L https://yarnpkg.com/install.sh | bash
   - export PATH="$HOME/.yarn/bin:$PATH"
+
+  # Playground dependecies:
+  - gem install jekyll -v 3.8.6
+  - gem install jekyll-seo-tag
 
 script:
 - yarn build

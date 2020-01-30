@@ -1,7 +1,7 @@
-const assert = require('assert');
+const assert = require("chai").assert;
 
 describe("Dialog general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/Dialog.html");
+	browser.url("http://localhost:8080/test-resources/pages/Dialog.html");
 
 	it("tests dialog toggling", () => {
 		const btnOpenDialog = $("#btnOpenDialog");
@@ -9,7 +9,7 @@ describe("Dialog general interaction", () => {
 
 		btnOpenDialog.click();
 
-		const dialog = browser.findElementDeep("ui5-dialog >>> .ui5-dialog-root");
+		const dialog = browser.$("ui5-dialog").shadow$(".ui5-dialog-root");
 		assert.ok(dialog.isDisplayedInViewport(), "Dialog is opened.");
 
 		btnCloseDialog.click();

@@ -1,11 +1,11 @@
-const assert = require('assert');
+const assert = require("chai").assert;
 
 describe("Switch general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/Switch.html");
+	browser.url("http://localhost:8080/test-resources/pages/Switch.html");
 
 	it("tests change event", () => {
-		const switchEl = browser.findElementDeep("#sw");
-		const field = browser.findElementDeep("#field");
+		const switchEl = browser.$("#sw");
+		const field = browser.$("#field");
 
 		switchEl.click();
 		switchEl.keys("Space");
@@ -15,8 +15,8 @@ describe("Switch general interaction", () => {
 	});
 
 	it("tests change event not fired, when disabled", () => {
-		const switchEl = browser.findElementDeep("#sw2");
-		const field = browser.findElementDeep("#field");
+		const switchEl = browser.$("#sw2");
+		const field = browser.$("#field");
 
 		switchEl.click();
 		switchEl.keys("Space");

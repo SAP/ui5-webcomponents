@@ -1,15 +1,16 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
+import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import {
 	isBackSpace,
 	isEnter,
 	isSpace,
 	isDelete,
 } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-import "./icons/decline.js";
-import "./icons/cancel.js";
-import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
+import "@ui5/webcomponents-icons/dist/icons/decline.js";
+import "@ui5/webcomponents-icons/dist/icons/cancel.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { TOKEN_ARIA_DELETABLE } from "./generated/i18n/i18n-defaults.js";
 
 import Icon from "./Icon.js";
@@ -58,6 +59,8 @@ const metadata = {
 		readonly: { type: Boolean },
 
 		_tabIndex: { type: String, defaultValue: "-1", noAttribute: true },
+
+		overflows: { type: Boolean },
 	},
 
 	events: /** @lends sap.ui.webcomponents.main.Token.prototype */ {
@@ -122,7 +125,7 @@ class Token extends UI5Element {
 	constructor() {
 		super();
 
-		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	_select() {
@@ -152,17 +155,21 @@ class Token extends UI5Element {
 	}
 
 	get tokenDeletableText() {
-		return this.resourceBundle.getText(TOKEN_ARIA_DELETABLE);
+		return this.i18nBundle.getText(TOKEN_ARIA_DELETABLE);
+	}
+
+	get dir() {
+		return getRTL() ? "rtl" : "ltr";
 	}
 
 	get iconURI() {
-		return getTheme() === "sap_fiori_3" ? "sap-icon://decline" : "sap-icon://sys-cancel";
+		return getTheme() === "sap_fiori_3" ? "decline" : "sys-cancel";
 	}
 
 	static async define(...params) {
 		await Promise.all([
 			Icon.define(),
-			fetchResourceBundle("@ui5/webcomponents"),
+			fetchI18nBundle("@ui5/webcomponents"),
 		]);
 
 		super.define(...params);

@@ -1,9 +1,9 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import CSSSize from "@ui5/webcomponents-base/dist/types/CSSSize.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
+import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import TextAreaTemplate from "./generated/templates/TextAreaTemplate.lit.js";
 
 import { TEXTAREA_CHARACTERS_LEFT, TEXTAREA_CHARACTERS_EXCEEDED } from "./generated/i18n/i18n-defaults.js";
@@ -61,7 +61,7 @@ const metadata = {
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
-		 * @since 1.0.0
+		 * @since 1.0.0-rc.3
 		 */
 		required: {
 			type: Boolean,
@@ -103,7 +103,7 @@ const metadata = {
 		 * @type {number}
 		 * @public
 		 */
-		maxLength: {
+		maxlength: {
 			type: Integer,
 			defaultValue: null,
 		},
@@ -113,8 +113,8 @@ const metadata = {
 		 * in the <code>ui5-textarea</code>.
 		 * <br><br>
 		 * If set to <code>false</code>, the user is not allowed to enter more characters than what is set in the
-		 * <code>maxLength</code> property.
-		 * If set to <code>true</code> the characters exceeding the <code>maxLength</code> value are selected on
+		 * <code>maxlength</code> property.
+		 * If set to <code>true</code> the characters exceeding the <code>maxlength</code> value are selected on
 		 * paste and the counter below the <code>ui5-textarea</code> displays their number.
 		 *
 		 * @type {boolean}
@@ -181,12 +181,6 @@ const metadata = {
 			type: Boolean,
 		},
 
-		_height: {
-			type: CSSSize,
-			defaultValue: null,
-			noAttribute: true,
-		},
-
 		_mirrorText: {
 			type: Object,
 			multiple: true,
@@ -195,9 +189,6 @@ const metadata = {
 		_maxHeight: {
 			type: String,
 			noAttribute: true,
-		},
-		_listeners: {
-			type: Object,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.TextArea.prototype */ {
@@ -208,6 +199,16 @@ const metadata = {
 		 * @public
 		 */
 		change: {},
+
+		/**
+		 * Fired when the value of the <code>ui5-textarea</code> changes at each keystroke or when
+		 * something is pasted.
+		 *
+		 * @event
+		 * @since 1.0.0-rc.5
+		 * @public
+		 */
+		input: {},
 	},
 };
 
@@ -255,11 +256,7 @@ class TextArea extends UI5Element {
 	constructor() {
 		super();
 
-		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
-
-		this._listeners = {
-			change: this._handleChange.bind(this),
-		};
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
@@ -285,32 +282,48 @@ class TextArea extends UI5Element {
 		return this.getDomRef().querySelector("textarea");
 	}
 
-	getInputValue() {
-		const inputDOM = this.getDomRef();
-
-		if (inputDOM) {
-			return this.getInputDomRef().value;
-		}
-
-		return "";
+	_onkeydown() {
+		this._keyDown = true;
 	}
 
-	oninput() {
-		const inputValue = this.getInputValue();
-
-		this.value = inputValue;
+	_onkeyup() {
+		this._keyDown = false;
 	}
 
-	onfocusin() {
+	_onfocusin() {
 		this.focused = true;
 	}
 
-	onfocusout() {
+	_onfocusout() {
 		this.focused = false;
 	}
 
-	_handleChange() {
+	_onchange() {
 		this.fireEvent("change", {});
+	}
+
+	_oninput(event) {
+		const nativeTextarea = this.getInputDomRef();
+
+		/* skip calling change event when an textarea with a placeholder is focused on IE
+			- value of the host and the internal textarea should be different in case of actual input
+			- input is called when a key is pressed => keyup should not be called yet
+		*/
+		const skipFiring = (this.getInputDomRef().value === this.value) && isIE() && !this._keyDown && !!this.placeholder;
+		if (event.target === nativeTextarea) {
+			// stop the native event, as the semantic "input" would be fired.
+			event.stopImmediatePropagation();
+		}
+
+		if (skipFiring) {
+			return;
+		}
+
+		this.value = nativeTextarea.value;
+		this.fireEvent("input", {});
+
+		// Angular two way data binding
+		this.fireEvent("value-changed");
 	}
 
 	_tokenizeText(value) {
@@ -340,19 +353,19 @@ class TextArea extends UI5Element {
 			leftCharactersCount;
 
 		if (this.showExceededText) {
-			const maxLength = this.maxLength || 0;
+			const maxLength = this.maxlength || 0;
 
 			if (maxLength) {
 				leftCharactersCount = maxLength - this.value.length;
 
 				if (leftCharactersCount >= 0) {
-					exceededText = this.resourceBundle.getText(TEXTAREA_CHARACTERS_LEFT, [leftCharactersCount]);
+					exceededText = this.i18nBundle.getText(TEXTAREA_CHARACTERS_LEFT, [leftCharactersCount]);
 				} else {
-					exceededText = this.resourceBundle.getText(TEXTAREA_CHARACTERS_EXCEEDED, [Math.abs(leftCharactersCount)]);
+					exceededText = this.i18nBundle.getText(TEXTAREA_CHARACTERS_EXCEEDED, [Math.abs(leftCharactersCount)]);
 				}
 			}
 		} else {
-			calcedMaxLength = this.maxLength;
+			calcedMaxLength = this.maxlength;
 		}
 
 		return {
@@ -391,7 +404,7 @@ class TextArea extends UI5Element {
 	}
 
 	static async define(...params) {
-		await fetchResourceBundle("@ui5/webcomponents");
+		await fetchI18nBundle("@ui5/webcomponents");
 
 		super.define(...params);
 	}

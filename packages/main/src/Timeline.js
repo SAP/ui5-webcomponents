@@ -1,7 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import TimelineItem from "./TimelineItem.js";
 import TimelineTemplate from "./generated/templates/TimelineTemplate.lit.js";
 
 // Styles
@@ -16,13 +15,13 @@ const metadata = {
 		/**
 		 * Determines the content of the <code>ui5-timeline</code>.
 		 *
-		 * @type {TimelineItem[]}
+		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
 		 */
 		"default": {
 			propertyName: "items",
-			type: TimelineItem,
+			type: HTMLElement,
 			individualSlots: true,
 		},
 	},
@@ -71,15 +70,9 @@ class Timeline extends UI5Element {
 		this.initItemNavigation();
 	}
 
-	onBeforeRendering() {
-		this._itemNavigation.init();
-	}
-
 	initItemNavigation() {
 		this._itemNavigation = new ItemNavigation(this);
 		this._itemNavigation.getItemsCallback = () => this.items;
-
-		this._delegates.push(this._itemNavigation);
 	}
 }
 

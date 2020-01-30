@@ -1,16 +1,29 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { isShow, isDown } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-import "./icons/slim-arrow-down.js";
+import {
+	isShow, isDown, isBackSpace, isSpace,
+} from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import "@ui5/webcomponents-icons/dist/icons/slim-arrow-down.js";
+import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
+import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import MultiComboBoxTemplate from "./generated/templates/MultiComboBoxTemplate.lit.js";
-import Input from "./Input.js";
+import MultiComboBoxPopoverTemplate from "./generated/templates/MultiComboBoxPopoverTemplate.lit.js";
 import Tokenizer from "./Tokenizer.js";
 import Token from "./Token.js";
 import Icon from "./Icon.js";
 import Popover from "./Popover.js";
 import List from "./List.js";
 import StandardListItem from "./StandardListItem.js";
+import {
+	VALUE_STATE_SUCCESS,
+	VALUE_STATE_ERROR,
+	VALUE_STATE_WARNING,
+	TOKENIZER_ARIA_CONTAIN_TOKEN,
+	TOKENIZER_ARIA_CONTAIN_ONE_TOKEN,
+	TOKENIZER_ARIA_CONTAIN_SEVERAL_TOKENS,
+} from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import styles from "./generated/themes/MultiComboBox.css.js";
@@ -59,8 +72,6 @@ const metadata = {
 		/**
 		 * Defines a short hint intended to aid the user with data entry when the
 		 * <code>ui5-multi-combobox</code> has no value.
-		 * <br><br>
-		 * <b>Note:</b> The placeholder is not supported in IE. If the placeholder is provided, it won`t be displayed in IE.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
@@ -77,7 +88,7 @@ const metadata = {
 		 * @defaultvalue false
 		 * @public
 		 */
-		validateInput: {
+		allowCustomValues: {
 			type: Boolean,
 		},
 
@@ -121,6 +132,38 @@ const metadata = {
 			type: Boolean,
 		},
 
+		/**
+		 * Defines whether the <code>ui5-multi-combobox</code> is required.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 * @since 1.0.0-rc.5
+		 */
+		required: {
+			type: Boolean,
+		},
+
+		/**
+		 * Indicates whether the dropdown is open. True if the dropdown is open, false otherwise.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @since 1.0.0-rc.5
+		 * @public
+		 */
+		open: {
+			type: Boolean,
+		},
+
+		/**
+		 * Indicates whether the input is focssed
+		 * @private
+		 */
+		focused: {
+			type: Boolean,
+		},
+
 		_filteredItems: {
 			type: Object,
 		},
@@ -128,6 +171,14 @@ const metadata = {
 		_iconPressed: {
 			type: Boolean,
 			noAttribute: true,
+		},
+
+		/**
+		 * Indicates whether the tokenizer is expanded or collapsed(shows the n more label)
+		 * @private
+		 */
+		expandedTokenizer: {
+			type: Boolean,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.MultiComboBox.prototype */ {
@@ -146,6 +197,15 @@ const metadata = {
 		 * @public
 		 */
 		input: {},
+
+		/**
+		 * Fired when the dropdown is opened or closed.
+		 *
+		 * @event
+		 * @since 1.0.0-rc.5
+		 * @public
+		 */
+		openChange: {},
 
 		/**
 		 * Fired when selection is changed by user interaction
@@ -226,6 +286,10 @@ class MultiComboBox extends UI5Element {
 		return MultiComboBoxTemplate;
 	}
 
+	static get staticAreaTemplate() {
+		return MultiComboBoxPopoverTemplate;
+	}
+
 	static get styles() {
 		return styles;
 	}
@@ -236,6 +300,8 @@ class MultiComboBox extends UI5Element {
 		this._filteredItems = [];
 		this._inputLastValue = "";
 		this._deleting = false;
+		this._validationTimeout = null;
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	_inputChange() {
@@ -248,6 +314,12 @@ class MultiComboBox extends UI5Element {
 
 	_showAllItemsPopover() {
 		this._togglePopover(false);
+
+		this._inputDom.focus();
+	}
+
+	get _inputDom() {
+		return this.shadowRoot.querySelector("#ui5-multi-combobox-input");
 	}
 
 	_inputLiveChange(event) {
@@ -256,13 +328,32 @@ class MultiComboBox extends UI5Element {
 		const filteredItems = this._filterItems(value);
 		const oldValueState = this.valueState;
 
-		if (!filteredItems.length && value && this.validateInput) {
-			input.value = this._inputLastValue;
-			input.valueState = "Error";
+		/* skip calling change event when an input with a placeholder is focused on IE
+			- value of the host and the internal input should be differnt in case of actual input
+			- input is called when a key is pressed => keyup should not be called yet
+		*/
+		const skipFiring = (this._inputDom.value === this.value) && isIE && !this._keyDown && !!this.placeholder;
 
-			setTimeout(() => {
-				input.valueState = oldValueState;
+		if (skipFiring) {
+			event.preventDefault();
+
+			return;
+		}
+
+		if (this._validationTimeout) {
+			input.value = this._inputLastValue;
+			return;
+		}
+
+		if (!filteredItems.length && value && !this.allowCustomValues) {
+			input.value = this._inputLastValue;
+			this.valueState = "Error";
+
+			this._validationTimeout = setTimeout(() => {
+				this.valueState = oldValueState;
+				this._validationTimeout = null;
 			}, 2000);
+
 			return;
 		}
 
@@ -282,7 +373,7 @@ class MultiComboBox extends UI5Element {
 
 	_tokenDelete(event) {
 		const token = event.detail.ref;
-		const deletingItem = this.items.filter(item => item._id === token.getAttribute("data-ui5-id"))[0];
+		const deletingItem = this.items.find(item => item._id === token.getAttribute("data-ui5-id"));
 
 		deletingItem.selected = false;
 		this._deleting = true;
@@ -298,14 +389,17 @@ class MultiComboBox extends UI5Element {
 
 		if (tokensCount === 0 && this._deleting) {
 			setTimeout(() => {
-				this.shadowRoot.querySelector("ui5-input").focus();
+				this.shadowRoot.querySelector("input").focus();
+				this._deleting = false;
 			}, 0);
 		}
-
-		this._deleting = false;
 	}
 
-	_keydown(event) {
+	_onkeyup() {
+		this._keyDown = false;
+	}
+
+	_onkeydown(event) {
 		if (isShow(event) && !this.readonly && !this.disabled) {
 			event.preventDefault();
 			this._togglePopover();
@@ -317,6 +411,21 @@ class MultiComboBox extends UI5Element {
 			list._itemNavigation.current = 0;
 			list.items[0].focus();
 		}
+
+		if (isBackSpace(event) && event.target.value === "") {
+			event.preventDefault();
+
+			const lastTokenIndex = this._tokenizer.tokens.length - 1;
+
+			if (lastTokenIndex < 0) {
+				return;
+			}
+
+			this._tokenizer.tokens[lastTokenIndex].focus();
+			this._tokenizer._itemNav.currentIndex = lastTokenIndex;
+		}
+
+		this._keyDown = true;
 	}
 
 	_filterItems(value) {
@@ -327,6 +436,9 @@ class MultiComboBox extends UI5Element {
 
 	_toggleIcon() {
 		this._iconPressed = !this._iconPressed;
+		this.open = this._iconPressed;
+
+		this.fireEvent("openChange");
 	}
 
 	_getSelectedItems() {
@@ -343,10 +455,16 @@ class MultiComboBox extends UI5Element {
 		});
 
 		this.fireEvent("selectionChange", { items: this._getSelectedItems() });
+
+		if (!event.detail.selectionComponentPressed && !isSpace(event.detail)) {
+			this._getPopover().close();
+			this.value = "";
+			this.fireEvent("input");
+		}
 	}
 
 	_getPopover(isMorePopover) {
-		return this.shadowRoot.querySelector(`.ui5-multi-combobox-${isMorePopover ? "selected" : "all"}-items-popover`);
+		return this.getStaticAreaItemDomRef().querySelector(`.ui5-multi-combobox-${isMorePopover ? "selected" : "all"}-items-popover`);
 	}
 
 	_togglePopover(isMorePopover) {
@@ -362,6 +480,14 @@ class MultiComboBox extends UI5Element {
 		popover && popover.openBy(this);
 	}
 
+	_focusin() {
+		this.focused = true;
+	}
+
+	_focusout() {
+		this.focused = false;
+	}
+
 	onBeforeRendering() {
 		this._inputLastValue = this.value;
 
@@ -373,7 +499,7 @@ class MultiComboBox extends UI5Element {
 			morePopover && morePopover.close();
 		}
 
-		const input = this.shadowRoot.querySelector("ui5-input");
+		const input = this.shadowRoot.querySelector("input");
 
 		if (input && !input.value) {
 			this._filteredItems = this.items;
@@ -383,33 +509,79 @@ class MultiComboBox extends UI5Element {
 		this._filteredItems = filteredItems;
 	}
 
+	onAfterRendering() {
+		if (this.open) {
+			this._getPopover().openBy(this);
+			// Set initial focus to the native input
+			this.getDomRef().querySelector("#ui5-multi-combobox-input").focus();
+		}
+	}
+
+	get valueStateTextMappings() {
+		return {
+			"Success": this.i18nBundle.getText(VALUE_STATE_SUCCESS),
+			"Error": this.i18nBundle.getText(VALUE_STATE_ERROR),
+			"Warning": this.i18nBundle.getText(VALUE_STATE_WARNING),
+		};
+	}
+
+	get _tokenizer() {
+		return this.shadowRoot.querySelector("ui5-tokenizer");
+	}
+
+	get nMoreCountText() {
+		const iTokenCount = this._getSelectedItems().length;
+
+		if (iTokenCount === 0) {
+			return this.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_TOKEN);
+		}
+
+		if (iTokenCount === 1) {
+			return this.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_ONE_TOKEN);
+		}
+
+		return this.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_SEVERAL_TOKENS, iTokenCount);
+	}
+
+	rootFocusIn() {
+		this.expandedTokenizer = true;
+	}
+
+	rootFocusOut(event) {
+		if (!this.shadowRoot.contains(event.relatedTarget) && !this._deleting) {
+			this.expandedTokenizer = false;
+		}
+	}
 
 	get editable() {
 		return !this.readonly;
+	}
+
+	get dir() {
+		return getRTL() ? "rtl" : "ltr";
 	}
 
 	get selectedItemsListMode() {
 		return this.readonly ? "None" : "MultiSelect";
 	}
 
-	get classes() {
-		return {
-			icon: {
-				[`ui5-multi-combobox-icon-root-pressed`]: this._iconPressed,
-				[`ui5-multi-combobox-icon`]: true,
-			},
-		};
+	get hasValueState() {
+		return this.valueState !== ValueState.None;
+	}
+
+	get valueStateText() {
+		return this.valueStateTextMappings[this.valueState];
 	}
 
 	static async define(...params) {
 		await Promise.all([
-			Input.define(),
 			Tokenizer.define(),
 			Token.define(),
 			Icon.define(),
 			Popover.define(),
 			List.define(),
 			StandardListItem.define(),
+			fetchI18nBundle("@ui5/webcomponents"),
 		]);
 
 		super.define(...params);

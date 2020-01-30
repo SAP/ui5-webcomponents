@@ -1,8 +1,11 @@
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import TabBase from "./TabBase.js";
 import SemanticColor from "./types/SemanticColor.js";
 import Icon from "./Icon.js";
 import TabTemplate from "./generated/templates/TabTemplate.lit.js";
+
+// Styles
+import css from "./generated/themes/Tab.css.js";
 
 /**
  * @public
@@ -122,7 +125,7 @@ const metadata = {
  * @tagname ui5-tab
  * @public
  */
-class Tab extends TabBase {
+class Tab extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
@@ -135,10 +138,18 @@ class Tab extends TabBase {
 		return TabTemplate;
 	}
 
+	static get styles() {
+		return css;
+	}
+
 	static async define(...params) {
 		await Icon.define();
 
 		super.define(...params);
+	}
+
+	get isSeparator() {
+		return false;
 	}
 
 	getFocusDomRef() {

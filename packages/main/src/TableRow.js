@@ -1,6 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import TableCell from "./TableCell.js";
 import TableRowTemplate from "./generated/templates/TableRowTemplate.lit.js";
 
 // Styles
@@ -14,15 +13,15 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.TableRow.prototype */ {
 		/**
 		 * Defines the cells of the <code>ui5-table-row</code>.
-		 * <br><b>Note:</b> Only <code>ui5-table-cell</code> is allowed.
+		 * <br><b>Note:</b> Use <code>ui5-table-cell</code> for the intended design.
 		 *
-		 * @type {TableCell[]}
+		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
 		 */
 		"default": {
 			propertyName: "cells",
-			type: TableCell,
+			type: HTMLElement,
 			individualSlots: true,
 		},
 	},
@@ -30,7 +29,6 @@ const metadata = {
 		_columnsInfo: {
 			type: Object,
 			multiple: true,
-			deepEqual: true,
 		},
 		_tabIndex: {
 			type: String,
@@ -57,6 +55,11 @@ const metadata = {
  * @public
  */
 class TableRow extends UI5Element {
+	constructor() {
+		super();
+		this.fnOnCellClick = this._oncellclick.bind(this);
+	}
+
 	static get metadata() {
 		return metadata;
 	}
@@ -73,6 +76,28 @@ class TableRow extends UI5Element {
 		return TableRowTemplate;
 	}
 
+	_onfocusin(event, forceSelfFocus = false) {
+		if (forceSelfFocus || this._getActiveElementTagName() === "ui5-table-cell") {
+			this.getDomRef().focus();
+		}
+
+		this.fireEvent("_focused", event);
+	}
+
+	_oncellclick(event) {
+		if (this._getActiveElementTagName() === "body") {
+			// If the user clickes on non-focusable element within the ui5-table-cell,
+			// the focus goes to the body, se we have to bring it back to the row.
+			// If the user clicks on input, button or similar clickable element,
+			// the focus remains on that element.
+			this._onfocusin(event, true /* force row focus */);
+		}
+	}
+
+	_getActiveElementTagName() {
+		return document.activeElement.localName.toLocaleLowerCase();
+	}
+
 	onBeforeRendering() {
 		this.visibleCells = [];
 		this.popinCells = [];
@@ -82,19 +107,25 @@ class TableRow extends UI5Element {
 		}
 
 		this._columnsInfo.forEach((info, index) => {
+			const cell = this.cells[index];
+
+			if (!cell) {
+				return;
+			}
+
 			if (info.visible) {
-				this.visibleCells.push(this.cells[index]);
-				this.cells[index].firstInRow = (index === 0);
-				this.cells[index].popined = false;
+				this.visibleCells.push(cell);
+				cell.firstInRow = (index === 0);
+				cell.popined = false;
 			} else if (info.demandPopin) {
 				this.popinCells.push({
-					cell: this.cells[index],
+					cell,
 					popinText: info.popinText,
 				});
 
-				this.cells[index].popined = true;
+				cell.popined = true;
 			} else {
-				this.cells[index].popined = false;
+				cell.popined = false;
 			}
 		}, this);
 
@@ -122,10 +153,6 @@ class TableRow extends UI5Element {
 
 	get visibleCellsCount() {
 		return this.visibleCells.length;
-	}
-
-	onfocusin(event) {
-		this.fireEvent("_focused", event);
 	}
 }
 

@@ -1,9 +1,9 @@
-import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
-import { getCompactSize } from "@ui5/webcomponents-base/dist/config/CompactSize.js";
+import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import {
 	isSpace,
@@ -13,10 +13,13 @@ import {
 	isUp,
 	isRight,
 } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import Label from "./Label.js";
 import RadioButtonGroup from "./RadioButtonGroup.js";
+
 // Template
 import RadioButtonTemplate from "./generated/templates/RadioButtonTemplate.lit.js";
 
+// i18n
 import { VALUE_STATE_ERROR, VALUE_STATE_WARNING } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -137,8 +140,17 @@ const metadata = {
 			type: String,
 		},
 
-		_label: {
-			type: Object,
+		/**
+		 * Defines whether the <code>ui5-radiobutton</code> text wraps when there is not enough space.
+		 * <br><br>
+		 * <b>Note:</b> By default, the text truncates when there is not enough space.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 */
+		wrap: {
+			type: Boolean,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.RadioButton.prototype */ {
@@ -150,21 +162,6 @@ const metadata = {
 		 * @public
 		 */
 		select: {},
-	},
-};
-
-const SVGConfig = {
-	"compact": {
-		x: 16,
-		y: 16,
-		rInner: 3,
-		rOuter: 8,
-	},
-	"default": {
-		x: 22,
-		y: 22,
-		rInner: 5,
-		rOuter: 11,
 	},
 };
 
@@ -202,6 +199,12 @@ const SVGConfig = {
  * @public
  */
 class RadioButton extends UI5Element {
+	constructor() {
+		super();
+
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+	}
+
 	static get metadata() {
 		return metadata;
 	}
@@ -218,21 +221,19 @@ class RadioButton extends UI5Element {
 		return radioButtonCss;
 	}
 
-	constructor() {
-		super();
-		this._label = {};
+	static async define(...params) {
+		await Promise.all([
+			Label.define(),
+			fetchI18nBundle("@ui5/webcomponents"),
+		]);
+
+		super.define(...params);
 	}
 
 	onBeforeRendering() {
-		this.syncLabel();
 		this.syncGroup();
 
 		this._enableFormSupport();
-	}
-
-	syncLabel() {
-		this._label = Object.assign({}, this._label);
-		this._label.text = this.text;
 	}
 
 	syncGroup() {
@@ -268,7 +269,7 @@ class RadioButton extends UI5Element {
 		}
 	}
 
-	onclick() {
+	_onclick() {
 		return this.toggle();
 	}
 
@@ -294,7 +295,7 @@ class RadioButton extends UI5Element {
 		RadioButtonGroup.selectPreviousItem(this, currentGroup);
 	}
 
-	onkeydown(event) {
+	_onkeydown(event) {
 		if (isSpace(event)) {
 			return event.preventDefault();
 		}
@@ -312,7 +313,7 @@ class RadioButton extends UI5Element {
 		}
 	}
 
-	onkeyup(event) {
+	_onkeyup(event) {
 		if (isSpace(event)) {
 			this.toggle();
 		}
@@ -335,6 +336,15 @@ class RadioButton extends UI5Element {
 
 	canToggle() {
 		return !(this.disabled || this.readonly || this.selected);
+	}
+
+	valueStateTextMappings() {
+		const i18nBundle = this.i18nBundle;
+
+		return {
+			"Error": i18nBundle.getText(VALUE_STATE_ERROR),
+			"Warning": i18nBundle.getText(VALUE_STATE_WARNING),
+		};
 	}
 
 	get classes() {
@@ -365,29 +375,27 @@ class RadioButton extends UI5Element {
 		return this.valueState !== ValueState.None;
 	}
 
-	static valueStateTextMappings() {
-		return {
-			"Error": VALUE_STATE_ERROR.defaultText,
-			"Warning": VALUE_STATE_WARNING.defaultText,
-		};
-	}
-
 	get valueStateText() {
-		return RadioButton.valueStateTextMappings()[this.valueState];
+		return this.valueStateTextMappings()[this.valueState];
 	}
 
 	get tabIndex() {
-		return this.disabled || (!this.selected && this.name) ? "-1" : "0";
+		const tabindex = this.getAttribute("tabindex");
+
+		if (this.disabled) {
+			return "-1";
+		}
+
+		if (this.name) {
+			return this.selected ? "0" : "-1";
+		}
+
+		return tabindex || "0";
 	}
 
 	get strokeWidth() {
 		return this.valueState === "None" ? "1" : "2";
 	}
-
-	get circle() {
-		return getCompactSize() ? SVGConfig.compact : SVGConfig.default;
-	}
-
 
 	get rtl() {
 		return getRTL() ? "rtl" : undefined;

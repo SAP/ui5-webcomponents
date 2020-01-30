@@ -1,5 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { fetchCldr } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
 import { getLocale } from "@ui5/webcomponents-base/dist/LocaleProvider.js";
 import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSettings.js";
 import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
@@ -7,11 +8,11 @@ import { getFormatLocale } from "@ui5/webcomponents-base/dist/FormatSettings.js"
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData.js";
+import LocaleData from "@ui5/webcomponents-utils/dist/sap/ui/core/LocaleData.js";
 import CalendarDate from "@ui5/webcomponents-base/dist/dates/CalendarDate.js";
 import { calculateWeekNumber } from "@ui5/webcomponents-base/dist/dates/CalendarUtils.js";
-import getShadowDOMTarget from "@ui5/webcomponents-base/dist/events/getShadowDOMTarget.js";
 import CalendarType from "@ui5/webcomponents-base/dist/dates/CalendarType.js";
+import ItemNavigationBehavior from "@ui5/webcomponents-base/dist/types/ItemNavigationBehavior.js";
 import DayPickerTemplate from "./generated/templates/DayPickerTemplate.lit.js";
 
 // Styles
@@ -50,7 +51,6 @@ const metadata = {
 		selectedDates: {
 			type: Integer,
 			multiple: true,
-			deepEqual: true,
 		},
 
 		_weeks: {
@@ -61,12 +61,6 @@ const metadata = {
 		_weekNumbers: {
 			type: Object,
 			multiple: true,
-		},
-
-		_dayNames: {
-			type: Object,
-			multiple: true,
-			nonVisual: true,
 		},
 		_hidden: {
 			type: Boolean,
@@ -126,7 +120,7 @@ class DayPicker extends UI5Element {
 		this._oLocale = getFormatLocale();
 		this._oLocaleData = new LocaleData(this._oLocale);
 
-		this._itemNav = new ItemNavigation(this, { rowSize: 7 });
+		this._itemNav = new ItemNavigation(this, { rowSize: 7, behavior: ItemNavigationBehavior.Paging });
 		this._itemNav.getItemsCallback = function getItemsCallback() {
 			return [].concat(...this._weeks);
 		}.bind(this);
@@ -135,8 +129,6 @@ class DayPicker extends UI5Element {
 			ItemNavigation.BORDER_REACH,
 			this._handleItemNavigationBorderReach.bind(this)
 		);
-
-		this._delegates.push(this._itemNav);
 	}
 
 	onBeforeRendering() {
@@ -182,9 +174,7 @@ class DayPicker extends UI5Element {
 				lastWeekNumber = weekNumber;
 			}
 
-			const isToday = (oCalDate.getDate() === this._currentCalendarDate.getDate())
-				&& (oCalDate.getMonth() === this._currentCalendarDate.getMonth())
-				&& (oCalDate.getYear() === this._currentCalendarDate.getYear());
+			const isToday = oCalDate.isSame(CalendarDate.fromLocalJSDate(new Date(), this._primaryCalendarType));
 
 			week.push(day);
 
@@ -228,8 +218,6 @@ class DayPicker extends UI5Element {
 			this._itemNav.current = todayIndex;
 		}
 
-		this._itemNav.init();
-
 		const aDayNamesWide = this._oLocaleData.getDays("wide", this._primaryCalendarType);
 		const aDayNamesAbbreviated = this._oLocaleData.getDays("abbreviated", this._primaryCalendarType);
 		const aUltraShortNames = aDayNamesAbbreviated.map(n => n);
@@ -254,8 +242,8 @@ class DayPicker extends UI5Element {
 		this._dayNames[0].classes += " ui5-dp-firstday";
 	}
 
-	onclick(event) {
-		const target = getShadowDOMTarget(event);
+	_onmousedown(event) {
+		const target = event.target;
 
 		const dayPressed = this._isDayPressed(target);
 
@@ -274,11 +262,18 @@ class DayPicker extends UI5Element {
 				}
 			}
 
-			this._modifySelectionAndNotifySubscribers(targetDate, event.ctrlKey);
+			this.targetDate = targetDate;
 		}
 	}
 
-	onkeydown(event) {
+	_onmouseup(event) {
+		if (this.targetDate) {
+			this._modifySelectionAndNotifySubscribers(this.targetDate, event.ctrlKey);
+			this.targetDate = null;
+		}
+	}
+
+	_onkeydown(event) {
 		if (isEnter(event)) {
 			return this._handleEnter(event);
 		}
@@ -289,21 +284,23 @@ class DayPicker extends UI5Element {
 	}
 
 	_handleEnter(event) {
-		const eventTarget = getShadowDOMTarget(event);
 		event.preventDefault();
-		if (eventTarget.className.indexOf("ui5-dp-item") > -1) {
-			const targetDate = parseInt(eventTarget.getAttribute("data-sap-timestamp"));
+		if (event.target.className.indexOf("ui5-dp-item") > -1) {
+			const targetDate = parseInt(event.target.getAttribute("data-sap-timestamp"));
 			this._modifySelectionAndNotifySubscribers(targetDate, event.ctrlKey);
 		}
 	}
 
 	_handleSpace(event) {
-		const eventTarget = getShadowDOMTarget(event);
 		event.preventDefault();
-		if (eventTarget.className.indexOf("ui5-dp-item") > -1) {
-			const targetDate = parseInt(eventTarget.getAttribute("data-sap-timestamp"));
+		if (event.target.className.indexOf("ui5-dp-item") > -1) {
+			const targetDate = parseInt(event.target.getAttribute("data-sap-timestamp"));
 			this._modifySelectionAndNotifySubscribers(targetDate, event.ctrlKey);
 		}
+	}
+
+	get showWeekNumbers() {
+		return this.primaryCalendarType === CalendarType.Gregorian;
 	}
 
 	get _timestamp() {
@@ -447,6 +444,14 @@ class DayPicker extends UI5Element {
 				width: "100%",
 			},
 		};
+	}
+
+	static async define(...params) {
+		await Promise.all([
+			fetchCldr(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
+		]);
+
+		super.define(...params);
 	}
 }
 

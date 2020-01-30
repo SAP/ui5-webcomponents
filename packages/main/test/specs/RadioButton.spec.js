@@ -1,7 +1,7 @@
-const assert = require('assert');
+const assert = require("chai").assert;
 
 describe("RadioButton general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/RadioButton.html");
+	browser.url("http://localhost:8080/test-resources/pages/RadioButton.html");
 
 	it("tests select event", () => {
 		const radioButton = browser.$("#rb1");
@@ -90,14 +90,14 @@ describe("RadioButton general interaction", () => {
 		assert.ok(!radioButtonPreviouslySelected.getProperty("selected"), "Previously selected item has been de-selected.");
 		assert.ok(radioButtonToBeSelected.getProperty("selected"), "Pressing ArrowRight selects the next (not disabled) radio in the group.");
 	});
-	
+
 	it("tests single selection within group, even if multiple radios are set as selected", () => {
 		// radios with property selected=true, but not selected
-		const radioButtonNotSelected1 = browser.findElementDeep("#groupRb8");
-		const radioButtonNotSelected2 = browser.findElementDeep("#groupRb9");
+		const radioButtonNotSelected1 = browser.$("#groupRb8");
+		const radioButtonNotSelected2 = browser.$("#groupRb9");
 
 		// radio with property selected=true and actually selected as subsequent
-		const radioButtonActuallySelected = browser.findElementDeep("#groupRb10");
+		const radioButtonActuallySelected = browser.$("#groupRb10");
 
 		assert.ok(!radioButtonNotSelected1.getAttribute("selected"), "The radio is not selected as the last one is selected");
 		assert.ok(!radioButtonNotSelected2.getAttribute("selected"), "The radio is not selected as the last one is selected");
@@ -115,4 +115,18 @@ describe("RadioButton general interaction", () => {
 		assert.equal(lblSelectedRadio.getHTML(false), radioButtonToBeSelected.getProperty("text"), "The correct radio is selected");
 	});
 
+	it("tests truncating and wrapping", () => {
+		const truncatingRb = browser.$("#truncatingRb");
+		const wrappingRb = browser.$("#wrappingRb");
+		const RADIOBUTTON_DEFAULT_HEIGHT = 44;
+
+		const truncatingRbHeight = truncatingRb.getSize("height");
+		const wrappingRbHeight = wrappingRb.getSize("height");
+
+		assert.ok(!truncatingRb.getProperty("wrap"), "The text should not be wrapped.");
+		assert.ok(wrappingRb.getProperty("wrap"), "The text should be wrapped.");
+
+		assert.strictEqual(truncatingRbHeight, RADIOBUTTON_DEFAULT_HEIGHT, "The size of the radiobutton is : " + truncatingRbHeight);
+		assert.ok(wrappingRbHeight > RADIOBUTTON_DEFAULT_HEIGHT, "The size of the radiobutton is more than: " + RADIOBUTTON_DEFAULT_HEIGHT);
+	});
 });

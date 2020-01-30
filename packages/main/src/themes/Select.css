@@ -1,67 +1,20 @@
-:host(:not([hidden])) {
-	display: inline-block;
-	width: 100%;
-}
-
-:host {
-	height: 2.25rem;
-	max-width: 100%;
-	min-width: 5rem;
-	background-color: var(--sapUiFieldBackground);
-	border: 1px solid var(--sapUiFieldBorderColor);
-	box-sizing: border-box;
-}
-
-:host(:not([disabled]):not([value-state]):not([opened]):hover) {
-	background-color: var(--sapUiFieldHoverBackground);
-	border: 1px solid var(--sapUiFieldHoverBorderColor);
-}
+@import "./InputIcon.css";
+@import "./Input.css";
 
 .ui5-select-root {
 	width: 100%;
 	height: 100%;
-	position: relative;
 	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	box-sizing: border-box;
-	cursor: pointer;
 	outline: none;
-}
-
-/* Hovered Icon */
-
-:host(:not([disabled]):not([opened]):hover) .ui5-select-icon-root {
-	background: var(--sapUiButtonLiteHoverBackground);
-}
-
-/* Opened */
-
-:host([opened]) .ui5-select-icon-root {
-	background: var(--sapUiToggleButtonPressedBackground);
-	color: var(--sapUiToggleButtonPressedTextColor);
-}
-
-:host([disabled]) {
-	background: var(--_ui5_select_disabled_background);
-	border-color: var(--_ui5_select_disabled_border_color);
-	cursor: default;
-	opacity: 0.5;
-}
-
-:host(:not([disabled]):not([opened])[focused]) {
-	outline: var(--_ui5_select_focus_width) dotted var(--sapUiContentFocusColor);
-	outline-offset: -3px;
-}
-
-:host(:not([disabled])[value-state]:not([value-state="Default"])[focused]) {
-	outline-offset: -4px;
+	cursor: pointer;
+	overflow: hidden;
 }
 
 .ui5-select-label-root {
 	display: inline-flex;
 	align-items: center;
-	width: 100%;
+	flex-shrink: 1;
+	flex-grow: 1;
 	height: 100%;
 	min-width: 1rem;
 	padding-left: 0.5rem;
@@ -71,147 +24,11 @@
 	cursor: pointer;
 }
 
-.ui5-select-icon-root {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 2.5rem;
-	height: 100%;
-	box-sizing: border-box;
-	color: var(--sapUiContentIconColor);
-}
-
-:host(:hover:not([disabled])) .ui5-select-icon-root {
-	border-left: var(--_ui5_select_hover_icon_left_border);
-}
-
-.ui5-select-icon {
-	color: inherit;
-	pointer-events: none;
-}
-
-:host([value-state]:not([value-state="Default"])) {
-	border-style: solid;
-	border-width: 0.125rem;
-}
-
-:host([value-state="Error"]) {
-	border: var(--_ui5_select_state_error_warning_border_width) var(--_ui5_select_state_error_warning_border_style) var(--sapUiFieldInvalidColor);
-	background-color: var(--sapUiFieldInvalidBackground);
-}
-
-:host([value-state="Warning"]) {
-	border: var(--_ui5_select_state_error_warning_border_width) var(--_ui5_select_state_error_warning_border_style) var(--sapUiFieldWarningColor);
-	background-color: var(--sapUiFieldWarningBackground);
-}
-
-:host([value-state="Success"]) {
-	background-color: var(--sapUiFieldSuccessBackground);
-	border-color: var(--sapUiFieldSuccessColor);
-}
-
-:host([data-ui5-compact-size]) {
-	height: 1.625rem;
-}
-
-:host([data-ui5-compact-size]) .ui5-select-icon-root {
-	width: 2rem;
-}
-
 :host [dir="rtl"].ui5-select-root .ui5-select-label-root {
 	padding-left: 0;
 	padding-right: 0.5rem;
 }
 
-:host(:hover:not([disabled])) [dir="rtl"].ui5-select-root .ui5-select-icon-root {
-	border-left: var(--_ui5_select_rtl_hover_icon_left_border);
-	border-right: var(--_ui5_select_rtl_hover_icon_right_border);
-}
-
-/* Remove that once Shady CSS is apploed */
-
-ui5-select:not([hidden]) {
-	display: inline-block;
-	width: 100%;
-}
-
-ui5-select {
-	height: 2.25rem;
-	max-width: 100%;
-	min-width: 5rem;
-	background-color: var(--sapUiFieldBackground);
-	border: 1px solid var(--sapUiFieldBorderColor);
-	box-sizing: border-box;
-}
-
-ui5-select:not([disabled]):not([value-state]):not([opened]):hover {
-	background-color: var(--sapUiFieldHoverBackground);
-	border: 1px solid var(--sapUiFieldHoverBorderColor);
-}
-
-ui5-select:not([disabled]):not([opened]):hover .ui5-select-icon-root {
-	background: var(--sapUiButtonLiteHoverBackground);
-}
-
-ui5-select[opened] .ui5-select-icon-root {
-	background: var(--sapUiToggleButtonPressedBackground);
-	color: var(--sapUiToggleButtonPressedTextColor);
-}
-
-ui5-select[disabled] {
-	background: var(--_ui5_select_disabled_background);
-	border-color: var(--_ui5_select_disabled_border_color);
-	cursor: default;
-	opacity: 0.5;
-}
-
-ui5-select:not([disabled]):not([opened])[focused] {
-	outline: var(--_ui5_select_focus_width) dotted var(--sapUiContentFocusColor);
-	outline-offset: -3px;
-}
-
-ui5-select:not([disabled])[value-state]:not([value-state="Default"])[focused] {
-	outline-offset: -4px;
-}
-
-ui5-select:hover:not([disabled]) .ui5-select-icon-root {
-	border-left: var(--_ui5_select_hover_icon_left_border);
-}
-
-ui5-select[value-state]:not([value-state="Default"]) {
-	border-style: solid;
-	border-width: 0.125rem;
-}
-
-ui5-select[value-state="Error"] {
-	border: var(--_ui5_select_state_error_warning_border_width) var(--_ui5_select_state_error_warning_border_style) var(--sapUiFieldInvalidColor);
-	background-color: var(--sapUiFieldInvalidBackground);
-}
-
-ui5-select[value-state="Warning"] {
-	border: var(--_ui5_select_state_error_warning_border_width) var(--_ui5_select_state_error_warning_border_style) var(--sapUiFieldWarningColor);
-	background-color: var(--sapUiFieldWarningBackground);
-}
-
-ui5-select[value-state="Success"] {
-	background-color: var(--sapUiFieldSuccessBackground);
-	border-color: var(--sapUiFieldSuccessColor);
-}
-
-ui5-select[data-ui5-compact-size] {
-	height: 1.625rem;
-}
-
-ui5-select[data-ui5-compact-size] .ui5-select-icon-root {
-	width: 2rem;
-}
-
-ui5-select [dir="rtl"].ui5-select-root .ui5-select-label-root {
-	padding-left: 0;
-	padding-right: 0.5rem;
-}
-
-ui5-select:hover:not([disabled]) [dir="rtl"].ui5-select-root .ui5-select-icon-root {
-	border-left: var(--_ui5_select_rtl_hover_icon_left_border);
-	border-right: var(--_ui5_select_rtl_hover_icon_right_border);
+:host(:not([disabled])) {
+	cursor: pointer;
 }

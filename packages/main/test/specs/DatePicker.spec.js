@@ -1,5 +1,6 @@
+
 const datepicker = require("../pageobjects/DatePickerTestPage");
-const assert = require("assert");
+const assert = require("chai").assert;
 
 describe("Date Picker Tests", () => {
 	before(() => {
@@ -10,12 +11,6 @@ describe("Date Picker Tests", () => {
 		datepicker.id = "#dp";
 		assert.ok(datepicker.input.isDisplayedInViewport(), "input is rendered");
 		assert.ok(datepicker.innerInput.isDisplayedInViewport(), "inner input is rendered");
-	});
-
-	it("calendar renders inside a popover", () => {
-		datepicker.id = "#dp";
-		assert.ok(datepicker.popover.isDisplayedInViewport(), "popover is rendered");
-		assert.ok(datepicker.calendar, "calendar is rendered");
 	});
 
 	it("input receives value", () => {
@@ -40,7 +35,7 @@ describe("Date Picker Tests", () => {
 
 		assert.equal(datepicker.input.getProperty("valueState"), "Error", "value state of the input is valid");
 
-		const contentWrapper = browser.findElementDeep("#dp3 >>> ui5-input >>> .ui5-input-content");
+		const contentWrapper = browser.$("#dp3").shadow$("ui5-input").shadow$(".ui5-input-content");
 		assert.ok(contentWrapper.isDisplayedInViewport(), "content wrapper has error styles");
 	});
 
@@ -111,9 +106,9 @@ describe("Date Picker Tests", () => {
 
 		datepicker.root.click();
 		datepicker.innerInput.setValue("Jan 6, 2015");
-		browser.findElementDeep("#dp1 >>> ui5-input >>> input").click(); //click elsewhere to focusout
+		browser.$("#dp1").shadow$("ui5-input").shadow$("input").click(); //click elsewhere to focusout
 
-		assert.equal(browser.findElementDeep("#lbl").getHTML(false), "1", 'change has fired once');
+		assert.equal(browser.$("#lbl").getHTML(false), "1", 'change has fired once');
 	});
 
 	it("delete input value then open picker keeps the empty value", () => {
@@ -144,7 +139,6 @@ describe("Date Picker Tests", () => {
 		datepicker.innerInput.click();
 		browser.keys("\b\b\b\b\b\b\b\b\b\b\b");
 
-		// browser.debug();
 		//then open the picker
 		datepicker.valueHelpIcon.click();
 
@@ -152,6 +146,7 @@ describe("Date Picker Tests", () => {
 		assert.equal(datepicker.innerInput.getProperty("value"), "", "datepicker value is empty");
 
 		//check if the picker is open and the selected date in the calendar is correct
+
 		assert.ok(datepicker.isPickerOpen(), "picker is open");
 		assert.ok(!calendarDate_6_Jan_2015.hasClass("ui5-dp-item--selected"), "calendar selected dates is ok");
 		assert.ok(!calendarDate_8_Jan_2015.hasClass("ui5-dp-item--selected"), "calendar selected dates is ok");
@@ -162,8 +157,8 @@ describe("Date Picker Tests", () => {
 	it("Calendar selection works on different timezones", () => {
 		datepicker.id = "#dp7";
 
-		browser.findElementDeep("#inputTimezone").setValue(-6); //CST
-		browser.findElementDeep("#btnApplyTimezone").click();
+		browser.$("#inputTimezone").setValue(-6); //CST
+		browser.$("#btnApplyTimezone").click();
 
 		datepicker.valueHelpIcon.click();
 
@@ -173,14 +168,14 @@ describe("Date Picker Tests", () => {
 		assert.equal(datepicker.innerInput.getProperty("value"), "Jan 4, 2019", "dp value is correct");
 
 		//restore timezone
-		browser.findElementDeep('#btnRestoreTimezone').click();
+		browser.$('#btnRestoreTimezone').click();
 
 		// test needs to end with an assert, otherwise the next test seems to start before the click is finished and it hangs from time to time
 		assert.equal($("#inputTimezone").getValue(), "", "timezone is reset");
 	});
 
 	it("respect first day of the week - monday", () => {
-		browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/DatePicker_test_page.html?sap-ui-language=bg");
+		browser.url("http://localhost:8080/test-resources/pages/DatePicker_test_page.html?sap-ui-language=bg");
 		datepicker.id = "#dp7_1";
 
 		datepicker.innerInput.setValue("фев 6, 2019");
@@ -228,16 +223,16 @@ describe("Date Picker Tests", () => {
 		datepicker.innerInput.click();
 		browser.keys("\b\b\b\b\b\b\b\b\b\b\b");
 		datepicker.innerInput.keys("Jan 8, 2015");
-		browser.findElementDeep("#dp1 >>> ui5-input >>> input").click(); //click elsewhere to focusout
+		browser.$("#dp1").shadow$("ui5-input").shadow$("input").click(); //click elsewhere to focusout
 
-		assert.equal(browser.findElementDeep("#lbl").getHTML(false), "1", 'change has fired once');
+		assert.equal(browser.$("#lbl").getHTML(false), "1", 'change has fired once');
 
 		datepicker.innerInput.click();
 		browser.keys("\b\b\b\b\b\b\b\b\b\b\b");
 		datepicker.innerInput.keys("Jan 6, 2015");
-		browser.findElementDeep("#dp1 >>> ui5-input >>> input").click(); //click elsewhere to focusout
+		browser.$("#dp1").shadow$("ui5-input").shadow$("input").click(); //click elsewhere to focusout
 
-		assert.equal(browser.findElementDeep("#lbl").getHTML(false), "2", 'change has fired once');
+		assert.equal(browser.$("#lbl").getHTML(false), "2", 'change has fired once');
 	});
 
 	it("change fires every time tomorrow is typed and normalized", () => {
@@ -290,7 +285,7 @@ describe("Date Picker Tests", () => {
 	it("[F4] toggles the calendar", () => {
 		datepicker.id = "#dp11";
 
-		assert.ok(!datepicker.isPickerOpen(), "datepicker is open");
+		assert.ok(!datepicker.isPickerOpen(), "datepicker is closed");
 
 		datepicker.innerInput.click();
 		browser.keys("F4");
@@ -301,7 +296,7 @@ describe("Date Picker Tests", () => {
 	it("[Alt] + [UP] toggles the calendar", () => {
 		datepicker.id = "#dp9";
 
-		assert.ok(!datepicker.isPickerOpen(), "datepicker is open");
+		assert.ok(!datepicker.isPickerOpen(), "datepicker is closed");
 
 		datepicker.innerInput.click();
 		browser.keys(["Alt", "ArrowUp", "NULL"]);
@@ -312,26 +307,12 @@ describe("Date Picker Tests", () => {
 	it("[Alt] + [DOWN] toggles the calendar", () => {
 		datepicker.id = "#dp11";
 
-		assert.ok(!datepicker.isPickerOpen(), "datepicker is open");
+		assert.ok(!datepicker.isPickerOpen(), "datepicker is closed");
 
 		datepicker.innerInput.click();
 		browser.keys(["Alt", "ArrowDown", "NULL"]);
 
 		assert.ok(datepicker.isPickerOpen(), "datepicker is open");
-	});
-
-	it("Scrolling does not close the picker", () => {
-		datepicker.id = "#dp9";
-
-		datepicker.valueHelpIcon.click();
-		assert.ok(datepicker.isPickerOpen(), "picker is open");
-
-		// scroll down
-		browser.findElementDeep("#downThere").moveTo(0, 0);
-
-		browser.pause(1000);
-
-		assert.ok(datepicker.isPickerOpen(), "picker is open");
 	});
 
 	it("daypicker extreme values max", () => {
@@ -526,5 +507,29 @@ describe("Date Picker Tests", () => {
 		datepicker.btnYear.click();
 
 		assert.ok(datepicker.getFirstDisplayedYear().getProperty("innerHTML").indexOf("0001") > -1, "First year in the year picker is correct");
+	});
+
+	it("placeholder, based on the formatPattern", () => {
+		datepicker.id = "#dp14";
+
+		const pickerFormatPattern = "MMM d, y";
+		const innerInputPlaceholder = datepicker.innerInput.getProperty("placeholder");
+
+		// The DatePicker has no placeholder set, in this case a default placeholder, based on the format pattern,
+		//  is set to the internal input.
+		assert.ok(!datepicker.root.getProperty("placeholder"), "The DatePicker has no placeholder set");
+		assert.equal(innerInputPlaceholder, pickerFormatPattern, "By default, the inner input has the formatPattern as placeholder");
+	});
+
+	it("placeholder, set by the user", () => {
+		datepicker.id = "#dp15";
+
+		const placeholder = "Delivery date";
+		const innerInputPlaceholder = datepicker.innerInput.getProperty("placeholder");
+
+		// The DatePicker has placeholder set, in this case the default placeholder, based on the format pattern,
+		// is not dipslayed.
+		assert.ok(datepicker.root.getProperty("placeholder"), "The DatePicker has placeholder set");
+		assert.equal(innerInputPlaceholder, placeholder, "The inner input has the placeholder, set by the user");
 	});
 });

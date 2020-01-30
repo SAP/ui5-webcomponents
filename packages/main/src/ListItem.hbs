@@ -2,8 +2,13 @@
 	tabindex="{{_tabIndex}}"
 	class="{{classes.main}}"
 	dir="{{rtl}}"
-	@focusin="{{onfocusin}}"
-	@focusout="{{onfocusout}}"
+	@focusin="{{_onfocusin}}"
+	@focusout="{{_onfocusout}}"
+	@keyup="{{_onkeyup}}"
+	@keydown="{{_onkeydown}}"
+	@mouseup="{{_onmouseup}}"
+	@mousedown="{{_onmousedown}}"
+	@click="{{_onclick}}"
 >
 		{{#if placeSelectionElementBefore}}
 			{{> selectionElement}}
@@ -31,17 +36,21 @@
 {{#*inline "selectionElement"}}
 	{{#if modeSingleSelect}}
 		<ui5-radiobutton
+				tabindex="-1"
 				id="{{_id}}-singleSelectionElement"
 				class="ui5-li-singlesel-radiobtn"
-				?selected="{{selected}}">
+				?selected="{{selected}}"
+				@click="{{onSingleSelectionComponentPress}}">
 		</ui5-radiobutton>
 	{{/if}}
 
 	{{#if modeMultiSelect}}
 		<ui5-checkbox
+				tabindex="-1"
 				id="{{_id}}-multiSelectionElement"
 				class="ui5-li-multisel-cb"
-				?checked="{{selected}}">
+				?checked="{{selected}}"
+				@click="{{onMultiSelectionComponentPress}}">
 		</ui5-checkbox>
 	{{/if}}
 
@@ -50,8 +59,8 @@
 			<ui5-button
 				id="{{_id}}-deleteSelectionElement"
 				design="Transparent"
-				icon="sap-icon://decline"
-				@ui5-press="{{_onDelete}}"
+				icon="decline"
+				@click="{{onDelete}}"
 			></ui5-button>
 		</div>
 	{{/if}}

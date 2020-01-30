@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+
+	<title>Calendar Playground</title>
+
+	<script>
+		delete Document.prototype.adoptedStyleSheets
+	</script>
+
+	<script data-ui5-config type="application/json">
+		{
+			"language": "EN"
+		}
+	</script>
+
+	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+	<script nomodule src="../../resources/bundle.es5.js"></script>
+
+</head>
+<body style="background-color: var(--sapBackgroundColor);">
+
+<ui5-calendar id="calendar1"></ui5-calendar>
+<ui5-calendar id="calendar2" primary-calendar-type='Islamic'></ui5-calendar>
+
+</body>
+</html>

@@ -1,6 +1,7 @@
 <div
 	class="ui5-calheader-root"
 	dir="{{rtl}}"
+	@keydown={{_onkeydown}}
 >
 	<div
 		id="{{_id}}-btnPrev"
@@ -10,7 +11,7 @@
 	>
 		<ui5-icon
 			class="ui5-calheader-arrowicon"
-			src="{{_btnPrev.icon}}"
+			name="{{_btnPrev.icon}}"
 		>
 		</ui5-icon>
 	</div>
@@ -47,7 +48,7 @@
 	>
 		<ui5-icon
 			class="ui5-calheader-arrowicon"
-			src="{{_btnNext.icon}}"
+			name="{{_btnNext.icon}}"
 		>
 		</ui5-icon>
 

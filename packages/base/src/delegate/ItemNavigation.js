@@ -9,6 +9,8 @@ import {
 
 import EventProvider from "../EventProvider.js";
 import UI5Element from "../UI5Element.js";
+import NavigationMode from "../types/NavigationMode.js";
+import ItemNavigationBehavior from "../types/ItemNavigationBehavior.js";
 
 // navigatable items must have id and tabindex
 class ItemNavigation extends EventProvider {
@@ -17,57 +19,81 @@ class ItemNavigation extends EventProvider {
 
 		this.currentIndex = options.currentIndex || 0;
 		this.rowSize = options.rowSize || 1;
-		this.cyclic = options.cyclic || false;
+		this.behavior = options.behavior || ItemNavigationBehavior.Static;
+
+		const navigationMode = options.navigationMode;
+		const autoNavigation = !navigationMode || navigationMode === NavigationMode.Auto;
+		this.horizontalNavigationOn = autoNavigation || navigationMode === NavigationMode.Horizontal;
+		this.verticalNavigationOn = autoNavigation || navigationMode === NavigationMode.Vertical;
 
 		this.rootWebComponent = rootWebComponent;
+		this.rootWebComponent.addEventListener("keydown", this.onkeydown.bind(this));
+		this.rootWebComponent._onComponentStateFinalized = () => {
+			this._init();
+		};
 	}
 
-	init() {
+	_init() {
 		this._getItems().forEach((item, idx) => {
 			item._tabIndex = (idx === this.currentIndex) ? "0" : "-1";
 		});
 	}
 
+	_horizontalNavigationOn() {
+		return this.horizontalNavigationOn;
+	}
+
+	_verticalNavigationOn() {
+		return this.verticalNavigationOn;
+	}
+
 	_onKeyPress(event) {
 		const items = this._getItems();
-
 		if (this.currentIndex >= items.length) {
-			if (!this.cyclic) {
+			if (this.behavior !== ItemNavigationBehavior.Cyclic) {
+				if (this.behavior === ItemNavigationBehavior.Paging) {
+					this.currentIndex = this.currentIndex - items.length;
+				} else {
+					this.currentIndex = items.length - 1;
+				}
 				this.fireEvent(ItemNavigation.BORDER_REACH, { start: false, end: true, offset: this.currentIndex });
+			} else {
+				this.currentIndex = this.currentIndex - items.length;
 			}
-
-			this.currentIndex = this.currentIndex - items.length;
 		} else if (this.currentIndex < 0) {
-			if (!this.cyclic) {
+			if (this.behavior !== ItemNavigationBehavior.Cyclic) {
+				if (this.behavior === ItemNavigationBehavior.Paging) {
+					this.currentIndex = items.length + this.currentIndex - this.rowSize + (this.rowSize - (this._getItems().length % this.rowSize));
+				} else {
+					this.currentIndex = 0;
+				}
 				this.fireEvent(ItemNavigation.BORDER_REACH, { start: true, end: false, offset: this.currentIndex });
+			} else {
+				this.currentIndex = items.length + this.currentIndex;
 			}
-
-			this.currentIndex = items.length + this.currentIndex;
 		}
 
 		this.update();
 		this.focusCurrent();
 
 		// stops browser scrolling with up/down keys
-		event.stopPropagation();
-		event.stopImmediatePropagation();
 		event.preventDefault();
 	}
 
 	onkeydown(event) {
-		if (isUp(event)) {
+		if (isUp(event) && this._verticalNavigationOn()) {
 			return this._handleUp(event);
 		}
 
-		if (isDown(event)) {
+		if (isDown(event) && this._verticalNavigationOn()) {
 			return this._handleDown(event);
 		}
 
-		if (isLeft(event)) {
+		if (isLeft(event) && this._horizontalNavigationOn()) {
 			return this._handleLeft(event);
 		}
 
-		if (isRight(event)) {
+		if (isRight(event) && this._horizontalNavigationOn()) {
 			return this._handleRight(event);
 		}
 
@@ -142,9 +168,8 @@ class ItemNavigation extends EventProvider {
 			items[i]._tabIndex = (i === this.currentIndex ? "0" : "-1");
 		}
 
-		if (this._setItems) {
-			this._setItems(items);
-		}
+
+		this.rootWebComponent._invalidate();
 	}
 
 	focusCurrent() {
@@ -193,10 +218,6 @@ class ItemNavigation extends EventProvider {
 		}
 
 		return this.rootWebComponent.getDomRef().querySelector(`#${currentItem.id}`);
-	}
-
-	set setItemsCallback(fn) {
-		this._setItems = fn;
 	}
 
 	set getItemsCallback(fn) {

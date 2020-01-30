@@ -1,16 +1,17 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import FocusHelper from "@ui5/webcomponents-base/dist/FocusHelper.js";
+import { getFirstFocusableElement, getLastFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { isEscape } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 
 // Styles
 import styles from "./generated/themes/Popup.css.js";
 
+import { addOpenedPopup, removeOpenedPopup } from "./popup-utils/OpenedPopupsRegistry.js";
+
 /**
  * @public
  */
 const metadata = {
-	"abstract": true,
 	slots: /** @lends  sap.ui.webcomponents.main.Popup.prototype */ {
 
 		/**
@@ -291,10 +292,10 @@ class Popup extends UI5Element {
 
 		this._zIndex = Popup.getNextZIndex();
 		openedPopups.push(this);
+		addOpenedPopup(this);
+
 
 		updateBlockLayers();
-
-		document.addEventListener("keydown", this._documentKeyDownHandler, true);
 	}
 
 	close() {
@@ -304,10 +305,12 @@ class Popup extends UI5Element {
 
 		this.escPressed = false;
 
-		document.removeEventListener("keydown", this._documentKeyDownHandler, true);
-
 		const index = openedPopups.indexOf(this);
 		openedPopups.splice(index, 1);
+
+		if (this.opened) {
+			removeOpenedPopup(this);
+		}
 
 		updateBlockLayers();
 	}
@@ -362,7 +365,7 @@ class Popup extends UI5Element {
 			return;
 		}
 
-		const focusableElement = FocusHelper.findFirstFocusableElement(container);
+		const focusableElement = getFirstFocusableElement(container);
 
 		if (focusableElement) {
 			focusableElement.focus();
@@ -391,16 +394,16 @@ class Popup extends UI5Element {
 
 		switch (target.id) {
 		case `${this._id}-firstfe`:
-			focusableElement = FocusHelper.findLastFocusableElement(container);
+			focusableElement = getLastFocusableElement(container);
 			isSpecialCase = true;
 			break;
 		case `${this._id}-lastfe`:
-			focusableElement = FocusHelper.findFirstFocusableElement(container);
+			focusableElement = getFirstFocusableElement(container);
 			isSpecialCase = true;
 			break;
 		case `${this._id}-blocklayer`:
 			focusableElement = this._currentFocusedElement
-				|| FocusHelper.findFirstFocusableElement(container);
+				|| getFirstFocusableElement(container);
 			isSpecialCase = true;
 			break;
 		}
@@ -442,7 +445,8 @@ class Popup extends UI5Element {
 	}
 
 	get hasHeader() {
-		return !!(this.headerText.length || this.header.length);
+		const hasHeaderText = this.headerText && this.headerText.length;
+		return !!(hasHeaderText || this.header.length);
 	}
 
 	get hasFooter() {

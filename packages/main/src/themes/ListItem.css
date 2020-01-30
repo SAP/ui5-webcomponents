@@ -5,63 +5,61 @@
 
 /* selected */
 :host([selected]) {
-	background: var(--sapUiListSelectionBackgroundColor);
+	background: var(--sapList_SelectionBackgroundColor);
 }
 
 /* selected and hovered */
 :host([selected][actionable]:not([active]):hover) {
-	background : var(--sapUiListSelectionHoverBackground);
+	background : var(--sapList_Hover_SelectionBackground);
 }
 
 /* selected and active */
 :host([active][actionable]),
 :host([selected][active][actionable]) {
-	background: var(--sapUiListActiveBackground);
+	background: var(--sapList_HighlightColor);
 }
 
 /* hovered */
 :host([actionable]:not([active]):not([selected]):hover) {
-	background : var(--sapUiListHoverBackground);
+	background : var(--sapList_Hover_Background);
 }
 
 /* focused */
 :host([active][actionable]) .ui5-li-root.ui5-li--focusable:focus,
 :host([active][actionable]) .ui5-li-root.ui5-li--focusable .ui5-li-content:focus {
-	outline-color: var(--sapUiContentContrastFocusColor);
+	outline-color: var(--sapContent_ContrastFocusColor);
 }
 
 /* active */
 :host([active][actionable]) .ui5-li-root .ui5-li-icon {
-	color: var(--sapUiListActiveTextColor);
+	color: var(--sapList_Active_TextColor);
 }
 
 /* ui5-li: title, description, info state */
 :host([active][actionable]) .ui5-li-title,
 :host([active][actionable]) .ui5-li-desc,
 :host([active][actionable]) .ui5-li-info {
-	color: var(--sapUiListActiveTextColor);
+	color: var(--sapList_Active_TextColor);
 }
 
 /* ui5-li: infoState */
 :host([info-state="Warning"]) .ui5-li-info {
-	color: var(--sapUiCriticalText);
+	color: var(--sapCriticalTextColor);
 }
 
 :host([info-state="Success"]) .ui5-li-info {
-	color: var(--sapUiPositiveText);
+	color: var(--sapPositiveTextColor);
 }
 
 :host([info-state="Error"]) .ui5-li-info {
-	color: var(--sapUiNegativeText);
+	color: var(--sapNegativeTextColor);
 }
 
 /* ui5-li: item with title and description */
-:host([data-ui5-compact-size][has-title][description]),
 :host([has-title][description]) {
 	height: 5rem;
 }
 
-:host([data-ui5-compact-size][has-title][description]) .ui5-li-title,
 :host([has-title][description]) .ui5-li-title {
 	padding-bottom: 0.375rem;
 }
@@ -75,8 +73,8 @@
 }
 
 .ui5-li-title {
-	color: var(--sapUiListTextColor);
-	font-size: var(--sapMFontLargeSize);
+	color: var(--sapTextColor);
+	font-size: var(--_ui5_list_item_title_size);
 }
 
 .ui5-li-title,
@@ -87,13 +85,13 @@
 }
 
 .ui5-li-desc {
-	color: var(--sapUiContentLabelColor);
-	font-size: var(--sapMFontMediumSize);
+	color: var(--sapContent_LabelColor);
+	font-size: var(--sapFontMediumSize);
 }
 
 .ui5-li-info {
 	margin: 0 0.25rem;
-	color: var(--sapUiNeutralText);
+	color: var(--sapNeutralTextColor);
 	font-size: 0.875rem;
 	flex-shrink: 0;
 	overflow: hidden;
@@ -102,15 +100,17 @@
 }
 
 .ui5-li-img {
-	width: 2rem;
-	margin: 0.5rem 0.75rem 0.5rem 0rem;
-	height: 2rem;
+	width: var(--_ui5_list_item_img_size);
+	min-width: var(--_ui5_list_item_img_size);
+	height: var(--_ui5_list_item_img_size);
+	min-height: var(--_ui5_list_item_img_size);
+	margin: var(--_ui5_list_item_img_margin);
 }
 
 .ui5-li-icon {
 	min-width: 1rem;
 	min-height: 1rem;
-	color: var(--sapUiContentNonInteractiveIconColor);
+	color: var(--sapContent_NonInteractiveIconColor);
 	padding-right: 0.5rem;
 }
 
@@ -129,21 +129,13 @@
 	align-items: center;
 }
 
-/* Compact size */
-:host([data-ui5-compact-size]) .ui5-li-title {
-	height: 2rem;
-	line-height: 2rem;
-	font-size: var(--sapMFontMediumSize);
+.ui5-li-multisel-cb,
+.ui5-li-singlesel-radiobtn {
+	flex-shrink: 0;
 }
 
-:host([data-ui5-compact-size]:not([has-title]):not([description])) .ui5-li-img {
-	width: 1.75rem;
-	height: 1.75rem;
-	margin-top: 0.55rem;
-}
-
-:host([data-ui5-compact-size]) ui5-checkbox.ui5-li-singlesel-radiobtn {
-	margin-right: 0.5rem;
+:host() ui5-checkbox.ui5-li-singlesel-radiobtn {
+	margin-right: var(--_ui5_list_item_cb_margin_right);
 }
 
 /* RTL */
@@ -153,144 +145,5 @@
 }
 
 :host [dir="rtl"] .ui5-li-img {
-	margin: .5rem 0 .5rem 0.75rem;
-}
-
-/*
- * IE pair of styles
- * to be removed later on
- */
-
-/* actionable (type="Active" + desktop) */
-ui5-li[actionable] {
-	cursor: pointer;
-}
-
-/* selected */
-ui5-li[selected] {
-	background: var(--sapUiListSelectionBackgroundColor);
-}
-
-/* selected and hovered */
-ui5-li[selected][actionable]:not([active]):hover {
-	background : var(--sapUiListSelectionHoverBackground);
-}
-
-/* selected and active */
-ui5-li[active][actionable],
-ui5-li[selected][active][actionable] {
-	background: var(--sapUiListActiveBackground);
-}
-
-/* hovered */
-ui5-li[actionable]:not([active]):not([selected]):hover {
-	background : var(--sapUiListHoverBackground);
-}
-
-/* focused */
-ui5-li[active][actionable] .ui5-li-root.ui5-li--focusable:focus,
-ui5-li[active][actionable] .ui5-li-root.ui5-li--focusable .ui5-li-content:focus {
-	outline-color: var(--sapUiContentContrastFocusColor);
-}
-
-/* active */
-ui5-li[active][actionable] .ui5-li-root .ui5-li-icon {
-	color: var(--sapUiListActiveTextColor);
-}
-
-ui5-li[active][actionable] .ui5-li-title,
-ui5-li[active][actionable] .ui5-li-desc,
-ui5-li[active][actionable] .ui5-li-info {
-	color: var(--sapUiListActiveTextColor);
-}
-
-ui5-li[info-state="Warning"] .ui5-li-info {
-	color: var(--sapUiCriticalText);
-}
-
-ui5-li[info-state="Success"] .ui5-li-info {
-	color: var(--sapUiPositiveText);
-}
-
-ui5-li[info-state="Error"] .ui5-li-info {
-	color: var(--sapUiNegativeText);
-}
-
-ui5-li[data-ui5-compact-size][has-title][description],
-ui5-li[has-title][description] {
-	height: 5rem;
-}
-
-ui5-li[data-ui5-compact-size][has-title][description] .ui5-li-title,
-ui5-li[has-title][description] .ui5-li-title {
-	padding-bottom: 0.375rem;
-}
-
-
-/* actionable (type="Active" + desktop) */
-ui5-li-custom[actionable] {
-	cursor: pointer;
-}
-
-/* selected */
-ui5-li-custom[selected] {
-	background: var(--sapUiListSelectionBackgroundColor);
-}
-
-/* selected and hovered */
-ui5-li-custom[selected][actionable]:not([active]):hover {
-	background : var(--sapUiListSelectionHoverBackground);
-}
-
-/* selected and active */
-ui5-li-custom[active][actionable],
-ui5-li-custom[selected][active][actionable] {
-	background: var(--sapUiListActiveBackground);
-}
-
-/* hovered */
-ui5-li-custom[actionable]:not([active]):not([selected]):hover {
-	background : var(--sapUiListHoverBackground);
-}
-
-/* focused */
-ui5-li-custom[active][actionable] .ui5-li-root.ui5-li--focusable:focus,
-ui5-li-custom[active][actionable] .ui5-li-root.ui5-li--focusable .ui5-li-content:focus {
-	outline-color: var(--sapUiContentContrastFocusColor);
-}
-
-/* active */
-ui5-li-custom[active][actionable] .ui5-li-root .ui5-li-icon {
-	color: var(--sapUiListActiveTextColor);
-}
-
-/* Compact size */
-ui5-li[data-ui5-compact-size] .ui5-li-title {
-	height: 2rem;
-	line-height: 2rem;
-	font-size: var(--sapMFontMediumSize);
-}
-
-ui5-li[data-ui5-compact-size]:not([has-title]):not([description]) .ui5-li-img {
-	width: 1.75rem;
-	height: 1.75rem;
-	margin-top: 0.55rem;
-}
-
-ui5-li[data-ui5-compact-size] ui5-checkbox.ui5-li-singlesel-radiobtn {
-	margin-right: 0.5rem;
-}
-
-ui5-li-custom[data-ui5-compact-size] ui5-checkbox.ui5-li-singlesel-radiobtn {
-	margin-right: 0.5rem;
-}
-
-/* RTL */
-ui5-li [dir="rtl"] .ui5-li-icon {
-	padding-left: 0.5rem;
-	padding-right: 0;
-}
-
-ui5-li [dir="rtl"] .ui5-li-img {
 	margin: .5rem 0 .5rem 0.75rem;
 }

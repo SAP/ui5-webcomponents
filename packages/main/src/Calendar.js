@@ -2,12 +2,12 @@ import "@ui5/webcomponents-base/dist/shims/jquery-shim.js";
 import "@ui5/webcomponents-base/dist/shims/Core-shim.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { fetchCldrData } from "@ui5/webcomponents-base/dist/CLDR.js";
+import { fetchCldr } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
 import { getLocale } from "@ui5/webcomponents-base/dist/LocaleProvider.js";
 import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
 import { getFormatLocale } from "@ui5/webcomponents-base/dist/FormatSettings.js";
-import DateFormat from "@ui5/webcomponents-core/dist/sap/ui/core/format/DateFormat.js";
-import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData.js";
+import DateFormat from "@ui5/webcomponents-utils/dist/sap/ui/core/format/DateFormat.js";
+import LocaleData from "@ui5/webcomponents-utils/dist/sap/ui/core/LocaleData.js";
 import CalendarDate from "@ui5/webcomponents-base/dist/dates/CalendarDate.js";
 import CalendarType from "@ui5/webcomponents-base/dist/dates/CalendarType.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
@@ -17,7 +17,7 @@ import MonthPicker from "./MonthPicker.js";
 import YearPicker from "./YearPicker.js";
 
 // Default calendar for bundling
-import "@ui5/webcomponents-core/dist/sap/ui/core/date/Gregorian.js";
+import "@ui5/webcomponents-utils/dist/sap/ui/core/date/Gregorian.js";
 
 // Template
 import CalendarTemplate from "./generated/templates/CalendarTemplate.lit.js";
@@ -59,7 +59,6 @@ const metadata = {
 		selectedDates: {
 			type: Integer,
 			multiple: true,
-			deepEqual: true,
 		},
 
 		_header: {
@@ -512,7 +511,7 @@ class Calendar extends UI5Element {
 
 	static async define(...params) {
 		await Promise.all([
-			fetchCldrData(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
+			fetchCldr(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
 			CalendarHeader.define(),
 			DayPicker.define(),
 			MonthPicker.define(),

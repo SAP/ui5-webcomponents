@@ -1,16 +1,21 @@
 let initialized = false;
 
 const initialConfig = {
+	animationMode: "full",
 	theme: "sap_fiori_3",
 	rtl: null,
 	language: null,
-	compactSize: false,
 	calendarType: null,
 	noConflict: false, // no URL
 	formatSettings: {},
 };
 
 /* General settings */
+const getAnimationMode = () => {
+	initConfiguration();
+	return initialConfig.animationMode;
+};
+
 const getTheme = () => {
 	initConfiguration();
 	return initialConfig.theme;
@@ -24,11 +29,6 @@ const getRTL = () => {
 const getLanguage = () => {
 	initConfiguration();
 	return initialConfig.language;
-};
-
-const getCompactSize = () => {
-	initConfiguration();
-	return initialConfig.compactSize;
 };
 
 const getNoConflict = () => {
@@ -109,10 +109,10 @@ const initConfiguration = () => {
 };
 
 export {
+	getAnimationMode,
 	getTheme,
 	getRTL,
 	getLanguage,
-	getCompactSize,
 	getNoConflict,
 	getCalendarType,
 	getFormatSettings,

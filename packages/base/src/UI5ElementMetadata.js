@@ -1,44 +1,21 @@
 import DataType from "./types/DataType.js";
 import isDescendantOf from "./util/isDescendantOf.js";
+import { camelToKebabCase } from "./util/StringHelper.js";
 
+/**
+ *
+ * @class
+ * @public
+ */
 class UI5ElementMetadata {
 	constructor(metadata) {
 		this.metadata = metadata;
 	}
 
-	getTag() {
-		return this.metadata.tag;
-	}
-
-	hasAttribute(propName) {
-		const propData = this.getProperties()[propName];
-		return propData.type !== Object && !propData.noAttribute;
-	}
-
-	getPropsList() {
-		return Object.keys(this.getProperties());
-	}
-
-	getAttributesList() {
-		return this.getPropsList().filter(this.hasAttribute, this);
-	}
-
-	getSlots() {
-		return this.metadata.slots || {};
-	}
-
-	hasSlots() {
-		return !!Object.entries(this.getSlots()).length;
-	}
-
-	getProperties() {
-		return this.metadata.properties || {};
-	}
-
-	getEvents() {
-		return this.metadata.events || {};
-	}
-
+	/**
+	 * Only intended for use by UI5Element.js
+	 * @protected
+	 */
 	static validatePropertyValue(value, propData) {
 		const isMultiple = propData.multiple;
 		if (isMultiple) {
@@ -47,8 +24,81 @@ class UI5ElementMetadata {
 		return validateSingleProperty(value, propData);
 	}
 
+	/**
+	 * Only intended for use by UI5Element.js
+	 * @protected
+	 */
 	static validateSlotValue(value, slotData) {
 		return validateSingleSlot(value, slotData);
+	}
+
+	/**
+	 * Returns the tag of the UI5 Element
+	 * @public
+	 */
+	getTag() {
+		return this.metadata.tag;
+	}
+
+	/**
+	 * Determines whether a property should have an attribute counterpart
+	 * @public
+	 * @param propName
+	 * @returns {boolean}
+	 */
+	hasAttribute(propName) {
+		const propData = this.getProperties()[propName];
+		return propData.type !== Object && !propData.noAttribute;
+	}
+
+	/**
+	 * Returns an array with the properties of the UI5 Element (in camelCase)
+	 * @public
+	 * @returns {string[]}
+	 */
+	getPropertiesList() {
+		return Object.keys(this.getProperties());
+	}
+
+	/**
+	 * Returns an array with the attributes of the UI5 Element (in kebab-case)
+	 * @public
+	 * @returns {string[]}
+	 */
+	getAttributesList() {
+		return this.getPropertiesList().filter(this.hasAttribute, this).map(camelToKebabCase);
+	}
+
+	/**
+	 * Returns an object with key-value pairs of slots and their metadata definitions
+	 * @public
+	 */
+	getSlots() {
+		return this.metadata.slots || {};
+	}
+
+	/**
+	 * Determines whether this UI5 Element supports any slots
+	 * @public
+	 */
+	hasSlots() {
+		return !!Object.entries(this.getSlots()).length;
+	}
+
+	/**
+	 * Returns an object with key-value pairs of properties and their metadata definitions
+	 * @public
+	 */
+	getProperties() {
+		return this.metadata.properties || {};
+	}
+
+	/**
+	 * Returns an object with key-value pairs of events and their metadata definitions
+	 * @public
+	 */
+	getEvents() {
+		return this.metadata.events || {};
 	}
 }
 
@@ -84,12 +134,11 @@ const validateSingleSlot = (value, slotData) => {
 
 		return [el];
 	};
-	const propertyType = slotData.type;
 
 	const slottedNodes = getSlottedNodes(value);
 	slottedNodes.forEach(el => {
-		if (!(el instanceof propertyType)) {
-			throw new Error(`${el} is not of type ${propertyType}`);
+		if (!(el instanceof slotData.type)) {
+			throw new Error(`${el} is not of type ${slotData.type}`);
 		}
 	});
 

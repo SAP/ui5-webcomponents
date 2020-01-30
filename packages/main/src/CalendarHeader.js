@@ -1,10 +1,9 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import getShadowDOMTarget from "@ui5/webcomponents-base/dist/events/getShadowDOMTarget.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
-import "./icons/slim-arrow-left.js";
-import "./icons/slim-arrow-right.js";
+import "@ui5/webcomponents-icons/dist/icons/slim-arrow-left.js";
+import "@ui5/webcomponents-icons/dist/icons/slim-arrow-right.js";
 import Button from "./Button.js";
 import Icon from "./Icon.js";
 import ButtonDesign from "./types/ButtonDesign.js";
@@ -12,7 +11,6 @@ import CalendarHeaderTemplate from "./generated/templates/CalendarHeaderTemplate
 
 // Styles
 import styles from "./generated/themes/CalendarHeader.css.js";
-
 
 const metadata = {
 	tag: "ui5-calendar-header",
@@ -64,10 +62,10 @@ class CalendarHeader extends UI5Element {
 	constructor() {
 		super();
 		this._btnPrev = {};
-		this._btnPrev.icon = "sap-icon://slim-arrow-left";
+		this._btnPrev.icon = "slim-arrow-left";
 
 		this._btnNext = {};
-		this._btnNext.icon = "sap-icon://slim-arrow-right";
+		this._btnNext.icon = "slim-arrow-right";
 
 		this._btn1 = {};
 		this._btn1.type = ButtonDesign.Transparent;
@@ -97,10 +95,9 @@ class CalendarHeader extends UI5Element {
 		this.fireEvent("btn2Press", event);
 	}
 
-	onkeydown(event) {
-		const eventTarget = getShadowDOMTarget(event);
+	_onkeydown(event) {
 		if (isSpace(event) || isEnter(event)) {
-			const showPickerButton = eventTarget.getAttribute("data-sap-show-picker");
+			const showPickerButton = event.target.getAttribute("data-sap-show-picker");
 
 			if (showPickerButton) {
 				this[`_show${showPickerButton}Picker`]();

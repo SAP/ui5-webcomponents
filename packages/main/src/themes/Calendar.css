@@ -2,10 +2,6 @@
 	display: inline-block;
 }
 
-ui5-calendar {
-	display: inline-block;
-}
-
 .ui5-yearpicker--hidden,
 .ui5-monthpicker--hidden,
 .ui5-daypicker--hidden {
@@ -13,7 +9,7 @@ ui5-calendar {
 }
 
 .ui5-cal-root {
-	background: var(--sapUiListBackground);
+	background: var(--sapList_Background);
 }
 
 .ui5-cal-root ui5-daypicker,

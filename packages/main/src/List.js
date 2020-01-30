@@ -1,12 +1,13 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import FocusHelper from "@ui5/webcomponents-base/dist/FocusHelper.js";
+import { getLastTabbableElement } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
 import { isTabNext } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-import ListItemBase from "./ListItemBase.js";
+import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import ListMode from "./types/ListMode.js";
 import ListSeparators from "./types/ListSeparators.js";
 import ListItemType from "./types/ListItemType.js";
+
 // Template
 import ListTemplate from "./generated/templates/ListTemplate.lit.js";
 
@@ -35,15 +36,15 @@ const metadata = {
 
 		/**
 		 * Defines the items of the <code>ui5-list</code>.
-		 * <br><b>Note:</b> Only <code>ui5-li</code>, <code>ui5-li-custom</code> and <code>ui5-li-groupheader</code> are allowed.
+		 * <br><b>Note:</b> Use <code>ui5-li</code>, <code>ui5-li-custom</code> and <code>ui5-li-groupheader</code> for the intended design.
 		 *
-		 * @type {ListItemBase[]}
+		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
 		 */
 		"default": {
 			propertyName: "items",
-			type: ListItemBase,
+			type: HTMLElement,
 		},
 	},
 	properties: /** @lends  sap.ui.webcomponents.main.List.prototype */ {
@@ -173,6 +174,7 @@ const metadata = {
 			detail: {
 				selectedItems: { type: Array },
 				previouslySelectedItems: { type: Array },
+				selectionComponentPressed: { type: Boolean }, // protected, indicates if the user used the selection components to change the selection
 			},
 		},
 	},
@@ -201,13 +203,13 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/List";</code>
+ * <code>import "@ui5/webcomponents/dist/List.js";</code>
  * <br>
- * <code>import "@ui5/webcomponents/dist/StandardListItem";</code> (for <code>ui5-li</code>)
+ * <code>import "@ui5/webcomponents/dist/StandardListItem.js";</code> (for <code>ui5-li</code>)
  * <br>
- * <code>import "@ui5/webcomponents/dist/CustomListItem";</code> (for <code>ui5-li-custom</code>)
+ * <code>import "@ui5/webcomponents/dist/CustomListItem.js";</code> (for <code>ui5-li-custom</code>)
  * <br>
- * <code>import "@ui5/webcomponents/dist/GroupHeaderListItem";</code> (for <code>ui5-li-group-header</code>)
+ * <code>import "@ui5/webcomponents/dist/GroupHeaderListItem.js";</code> (for <code>ui5-li-group-header</code>)
  *
  * @constructor
  * @author SAP SE
@@ -255,14 +257,14 @@ class List extends UI5Element {
 
 	onBeforeRendering() {
 		this.prepareListItems();
-		this._itemNavigation.init();
 	}
 
 	initItemNavigation() {
-		this._itemNavigation = new ItemNavigation(this);
-		this._itemNavigation.getItemsCallback = () => this.getSlottedNodes("items");
+		this._itemNavigation = new ItemNavigation(this, {
+			navigationMode: NavigationMode.Vertical,
+		});
 
-		this._delegates.push(this._itemNavigation);
+		this._itemNavigation.getItemsCallback = () => this.getSlottedNodes("items");
 	}
 
 	prepareListItems() {
@@ -289,11 +291,16 @@ class List extends UI5Element {
 		this._selectionRequested = true;
 
 		if (this[`handle${this.mode}`]) {
-			selectionChange = this[`handle${this.mode}`](event.detail.item, event.selected);
+			selectionChange = this[`handle${this.mode}`](event.detail.item, event.detail.selected);
 		}
 
 		if (selectionChange) {
-			this.fireEvent("selectionChange", { selectedItems: this.getSelectedItems(), previouslySelectedItems });
+			this.fireEvent("selectionChange", {
+				selectedItems: this.getSelectedItems(),
+				previouslySelectedItems,
+				selectionComponentPressed: event.detail.selectionComponentPressed,
+				key: event.detail.key,
+			});
 		}
 	}
 
@@ -347,7 +354,7 @@ class List extends UI5Element {
 		return firstSelectedItem;
 	}
 
-	onkeydown(event) {
+	_onkeydown(event) {
 		if (isTabNext(event)) {
 			this._handleTabNext(event);
 		}
@@ -385,7 +392,7 @@ class List extends UI5Element {
 		}
 	}
 
-	onfocusin(event) {
+	_onfocusin(event) {
 		// If the focusin event does not origin from one of the 'triggers' - ignore it.
 		if (!this.isForwardElement(this.getNormalizedTarget(event.target))) {
 			event.stopImmediatePropagation();
@@ -448,8 +455,10 @@ class List extends UI5Element {
 			this.onSelectionRequested({
 				detail: {
 					item: pressedItem,
+					selectionComponentPressed: false,
+					selected: !pressedItem.selected,
+					key: event.detail.key,
 				},
-				selected: !pressedItem.selected,
 			});
 		}
 
@@ -536,13 +545,7 @@ class List extends UI5Element {
 	}
 
 	getHeaderToolbarLastTabbableElement() {
-		return this.getLastTabbableELement(
-			this.headerToolbar.getDomRef()
-		) || this.headerToolbar.getDomRef();
-	}
-
-	getLastTabbableELement(node) {
-		return FocusHelper.getLastTabbableElement(node);
+		return getLastTabbableElement(this.headerToolbar.getDomRef()) || this.headerToolbar.getDomRef();
 	}
 
 	getNormalizedTarget(target) {

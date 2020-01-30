@@ -1,5 +1,6 @@
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-import { isDesktop } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
+import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
+import "@ui5/webcomponents-icons/dist/icons/decline.js";
 import ListItemType from "./types/ListItemType.js";
 import ListMode from "./types/ListMode.js";
 import ListItemBase from "./ListItemBase.js";
@@ -14,7 +15,6 @@ import styles from "./generated/themes/ListItem.css.js";
  * @public
  */
 const metadata = {
-	"abstract": true,
 	properties: /** @lends  sap.ui.webcomponents.main.ListItem.prototype */ {
 
 		/**
@@ -130,8 +130,8 @@ class ListItem extends ListItemBase {
 		document.removeEventListener("keyup", this.deactivateByKey);
 	}
 
-	onkeydown(event) {
-		super.onkeydown(event);
+	_onkeydown(event) {
+		super._onkeydown(event);
 
 		const itemActive = this.type === ListItemType.Active;
 
@@ -144,43 +144,56 @@ class ListItem extends ListItemBase {
 		}
 
 		if (isEnter(event)) {
-			this.fireItemPress();
+			this.fireItemPress(event);
 		}
 	}
 
-	onkeyup(event) {
+	_onkeyup(event) {
 		if (isSpace(event) || isEnter(event)) {
 			this.deactivate();
 		}
 
 		if (isSpace(event)) {
-			this.fireItemPress();
+			this.fireItemPress(event);
 		}
 	}
 
-	onmousedown(event) {
+	_onmousedown(event) {
 		if (event.isMarked === "button") {
 			return;
 		}
 		this.activate();
 	}
 
-	onmouseup(event) {
+	_onmouseup(event) {
 		if (event.isMarked === "button") {
 			return;
 		}
 		this.deactivate();
 	}
 
-	onfocusout(event) {
+	_onfocusout() {
+		super._onfocusout();
 		this.deactivate();
 	}
 
-	onclick(event) {
+	_onclick(event) {
 		if (event.isMarked === "button") {
 			return;
 		}
-		this.fireItemPress();
+		this.fireItemPress(event);
+	}
+
+	/*
+	 * Called when selection components in Single (ui5-radiobutton)
+	 * and Multi (ui5-checkbox) selection modes are used.
+	 */
+	onMultiSelectionComponentPress(event) {
+		this.fireEvent("_selectionRequested", { item: this, selected: event.target.checked, selectionComponentPressed: true });
+	}
+
+	onSingleSelectionComponentPress(event) {
+		this.fireEvent("_selectionRequested", { item: this, selected: !event.target.selected, selectionComponentPressed: true });
 	}
 
 	activate() {
@@ -189,12 +202,12 @@ class ListItem extends ListItemBase {
 		}
 	}
 
-	_onDelete(event) {
-		this.fireEvent("_selectionRequested", { item: this, selected: event.selected });
+	onDelete(event) {
+		this.fireEvent("_selectionRequested", { item: this, selectionComponentPressed: false });
 	}
 
-	fireItemPress() {
-		this.fireEvent("_press", { item: this, selected: this.selected });
+	fireItemPress(event) {
+		this.fireEvent("_press", { item: this, selected: this.selected, key: event.key });
 	}
 
 	get placeSelectionElementBefore() {

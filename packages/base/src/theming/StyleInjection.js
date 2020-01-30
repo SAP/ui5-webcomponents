@@ -1,6 +1,5 @@
 import createStyleInHead from "../util/createStyleInHead.js";
 
-const injectedForTags = [];
 let ponyfillTimer;
 
 const ponyfillNeeded = () => !!window.CSSVarsPonyfill;
@@ -8,7 +7,6 @@ const ponyfillNeeded = () => !!window.CSSVarsPonyfill;
 const runPonyfill = () => {
 	ponyfillTimer = undefined;
 
-	window.CSSVarsPonyfill.resetCssVars();
 	window.CSSVarsPonyfill.cssVars({
 		rootElement: document.head,
 		include: "style[data-ui5-theme-properties],style[data-ui5-element-styles]",
@@ -25,14 +23,18 @@ const schedulePonyfill = () => {
 /**
  * Creates/updates a style element holding all CSS Custom Properties
  * @param cssText
+ * @param packageName
  */
-const injectThemeProperties = cssText => {
+const injectThemeProperties = (cssText, packageName) => {
 	// Needed for all browsers
-	const styleElement = document.head.querySelector(`style[data-ui5-theme-properties]`);
+	const styleElement = document.head.querySelector(`style[data-ui5-theme-properties="${packageName}"]`);
 	if (styleElement) {
 		styleElement.textContent = cssText || "";	// in case of undefined
 	} else {
-		createStyleInHead(cssText, { "data-ui5-theme-properties": "" });
+		const attributes = {
+			"data-ui5-theme-properties": packageName,
+		};
+		createStyleInHead(cssText, attributes);
 	}
 
 	// When changing the theme, run the ponyfill immediately
@@ -48,14 +50,10 @@ const injectThemeProperties = cssText => {
  */
 const injectWebComponentStyle = (tagName, cssText) => {
 	// Edge and IE
-	if (injectedForTags.indexOf(tagName) !== -1) {
-		return;
-	}
 	createStyleInHead(cssText, {
 		"data-ui5-element-styles": tagName,
 		"disabled": "disabled",
 	});
-	injectedForTags.push(tagName);
 
 	// When injecting component styles, more might come in the same tick, so run the ponyfill async (to avoid double work)
 	if (ponyfillNeeded()) {

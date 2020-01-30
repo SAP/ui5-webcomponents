@@ -1,0 +1,36 @@
+{
+  "name": "@ui5/webcomponents-fiori",
+  "version": "1.0.0-rc.5",
+  "description": "UI5 Web Components: webcomponents.fiori",
+  "author": "SAP SE (https://www.sap.com)",
+  "license": "Apache-2.0",
+  "private": false,
+  "keywords": [
+    "openui5",
+    "sapui5",
+    "ui5"
+  ],
+  "scripts": {
+    "clean": "wc-dev clean",
+    "lint": "wc-dev lint",
+    "start": "wc-dev start",
+    "build": "wc-dev build",
+    "test": "wc-dev test",
+    "create-ui5-element": "wc-create-ui5-element",
+    "prepublishOnly": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SAP/ui5-webcomponents.git",
+    "directory": "packages/fiori"
+  },
+  "dependencies": {
+    "@ui5/webcomponents": "1.0.0-rc.5",
+    "@ui5/webcomponents-icons": "1.0.0-rc.5",
+    "@ui5/webcomponents-theme-base": "1.0.0-rc.5",
+    "@ui5/webcomponents-base": "0.18.0"
+  },
+  "devDependencies": {
+    "@ui5/webcomponents-tools": "1.0.0-rc.5"
+  }
+}

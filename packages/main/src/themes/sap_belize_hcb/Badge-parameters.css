@@ -2,24 +2,24 @@
 @import "../base/Badge-parameters.css";
 
 :root {
-	--ui5-badge-bg-color-scheme-1: var(--sapUiGroupContentBackground);
-	--ui5-badge-border-color-scheme-1: var(--sapUiGroupContentBorderColor);
-	--ui5-badge-bg-color-scheme-2: var(--sapUiGroupContentBackground);
-	--ui5-badge-border-color-scheme-2: var(--sapUiGroupContentBorderColor);
-	--ui5-badge-bg-color-scheme-3: var(--sapUiGroupContentBackground);
-	--ui5-badge-border-color-scheme-3: var(--sapUiGroupContentBorderColor);
-	--ui5-badge-bg-color-scheme-4:var(--sapUiGroupContentBackground);
-	--ui5-badge-border-color-scheme-4: var(--sapUiGroupContentBorderColor);
-	--ui5-badge-bg-color-scheme-5: var(--sapUiGroupContentBackground);
-	--ui5-badge-border-color-scheme-5: var(--sapUiGroupContentBorderColor);
-	--ui5-badge-bg-color-scheme-6:var(--sapUiGroupContentBackground);
-	--ui5-badge-border-color-scheme-6: var(--sapUiGroupContentBorderColor);
-	--ui5-badge-bg-color-scheme-7:var(--sapUiGroupContentBackground);
-	--ui5-badge-border-color-scheme-7: var(--sapUiGroupContentBorderColor);
-	--ui5-badge-bg-color-scheme-8: var(--sapUiGroupContentBackground);
-	--ui5-badge-border-color-scheme-8: var(--sapUiGroupContentBorderColor);
-	--ui5-badge-bg-color-scheme-9: var(--sapUiGroupContentBackground);
-	--ui5-badge-border-color-scheme-9: var(--sapUiGroupContentBorderColor);
-	--ui5-badge-bg-color-scheme-10: var(--sapUiGroupContentBackground);
-	--ui5-badge-border-color-scheme-10: var(--sapUiGroupContentBorderColor);
+	--ui5-badge-bg-color-scheme-1: var(--sapGroup_ContentBackground);
+	--ui5-badge-border-color-scheme-1: var(--sapGroup_ContentBorderColor);
+	--ui5-badge-bg-color-scheme-2: var(--sapGroup_ContentBackground);
+	--ui5-badge-border-color-scheme-2: var(--sapGroup_ContentBorderColor);
+	--ui5-badge-bg-color-scheme-3: var(--sapGroup_ContentBackground);
+	--ui5-badge-border-color-scheme-3: var(--sapGroup_ContentBorderColor);
+	--ui5-badge-bg-color-scheme-4:var(--sapGroup_ContentBackground);
+	--ui5-badge-border-color-scheme-4: var(--sapGroup_ContentBorderColor);
+	--ui5-badge-bg-color-scheme-5: var(--sapGroup_ContentBackground);
+	--ui5-badge-border-color-scheme-5: var(--sapGroup_ContentBorderColor);
+	--ui5-badge-bg-color-scheme-6:var(--sapGroup_ContentBackground);
+	--ui5-badge-border-color-scheme-6: var(--sapGroup_ContentBorderColor);
+	--ui5-badge-bg-color-scheme-7:var(--sapGroup_ContentBackground);
+	--ui5-badge-border-color-scheme-7: var(--sapGroup_ContentBorderColor);
+	--ui5-badge-bg-color-scheme-8: var(--sapGroup_ContentBackground);
+	--ui5-badge-border-color-scheme-8: var(--sapGroup_ContentBorderColor);
+	--ui5-badge-bg-color-scheme-9: var(--sapGroup_ContentBackground);
+	--ui5-badge-border-color-scheme-9: var(--sapGroup_ContentBorderColor);
+	--ui5-badge-bg-color-scheme-10: var(--sapGroup_ContentBackground);
+	--ui5-badge-border-color-scheme-10: var(--sapGroup_ContentBorderColor);
 }

@@ -1,12 +1,18 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { isIconURI } from "@ui5/webcomponents-base/dist/IconPool.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import CardTemplate from "./generated/templates/CardTemplate.lit.js";
 import Icon from "./Icon.js";
 
-import { ARIA_ROLEDESCRIPTION_CARD, AVATAR_TOOLTIP, ARIA_LABEL_CARD_CONTENT } from "./generated/i18n/i18n-defaults.js";
+import {
+	ARIA_ROLEDESCRIPTION_CARD,
+	AVATAR_TOOLTIP,
+	ARIA_LABEL_CARD_CONTENT,
+	ARIA_ROLEDESCRIPTION_CARD_HEADER,
+	ARIA_ROLEDESCRIPTION_INTERACTIVE_CARD_HEADER,
+} from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import cardCss from "./generated/themes/Card.css.js";
@@ -28,6 +34,20 @@ const metadata = {
 			propertyName: "content",
 			type: HTMLElement,
 		},
+
+		/**
+		 * Defines the visual representation in the header of the card.
+		 * Supports images and icons.
+		 * <b>Note:</b>
+		 * SAP-icons font provides numerous options. To find all the available icons, see the
+		 * <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
+		 * @type {HTMLElement[]}
+		 * @slot
+		 * @public
+		 */
+		avatar: {
+			type: HTMLElement,
+		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.Card.prototype */ {
 
@@ -42,12 +62,12 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the subtitle displayed in the <code>ui5-card</code> header.
+		 * Defines the subheading displayed in the <code>ui5-card</code> header.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 */
-		subtitle: {
+		subheading: {
 			type: String,
 		},
 
@@ -70,19 +90,6 @@ const metadata = {
 		 */
 		headerInteractive: {
 			type: Boolean,
-		},
-
-		/**
-		 * Defines image source URI or built-in icon font URI.
-		 * <br><br>
-		 * <b>Note:</b>
-		 * SAP-icons font provides numerous options. To find all the available icons, see the
-		 * <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
-		 * @type {string}
-		 * @public
-		 */
-		avatar: {
-			type: String,
 		},
 
 		_headerActive: {
@@ -113,7 +120,9 @@ const metadata = {
  * tile with separate header and content areas.
  * The content area of a <code>ui5-card</code> can be arbitrary HTML content.
  * The header can be used through several properties, such as:
- * <code>heading</code>, <code>subtitle</code>, <code>status</code> and <code>avatar</code>.
+ * <code>heading</code>, <code>subheading</code>, <code>status</code>
+ * and a slot:
+ * <code>avatar</code>.
  *
  * <h3>Keyboard handling</h3>
  * In case you enable <code>headerInteractive</code> property, you can press the <code>ui5-card</code> header by Space and Enter keys.
@@ -130,6 +139,12 @@ const metadata = {
  * @public
  */
 class Card extends UI5Element {
+	constructor() {
+		super();
+
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+	}
+
 	static get metadata() {
 		return metadata;
 	}
@@ -161,19 +176,23 @@ class Card extends UI5Element {
 	}
 
 	get icon() {
-		return !!this.avatar && isIconURI(this.avatar);
+		return !!this.avatar && this.avatar.startsWith("sap-icon://");
 	}
 
 	get image() {
 		return !!this.avatar && !this.icon;
 	}
 
-	get tabindex() {
-		return this.headerInteractive ? "0" : undefined;
+	get ariaHeaderRole() {
+		return this.headerInteractive ? "button" : "heading";
+	}
+
+	get ariaLevel() {
+		return this.headerInteractive ? undefined : "3";
 	}
 
 	get hasHeader() {
-		return !!(this.heading || this.subtitle || this.status || this.avatar);
+		return !!(this.heading || this.subheading || this.status || this.avatar);
 	}
 
 	get rtl() {
@@ -181,19 +200,30 @@ class Card extends UI5Element {
 	}
 
 	get ariaCardRoleDescription() {
-		return ARIA_ROLEDESCRIPTION_CARD.defaultText;
+		return this.i18nBundle.getText(ARIA_ROLEDESCRIPTION_CARD);
+	}
+
+	get ariaCardHeaderRoleDescription() {
+		return this.headerInteractive ? this.i18nBundle.getText(ARIA_ROLEDESCRIPTION_INTERACTIVE_CARD_HEADER) : this.i18nBundle.getText(ARIA_ROLEDESCRIPTION_CARD_HEADER);
 	}
 
 	get ariaCardAvatarLabel() {
-		return AVATAR_TOOLTIP.defaultText;
+		return this.i18nBundle.getText(AVATAR_TOOLTIP);
 	}
 
 	get ariaCardContentLabel() {
-		return ARIA_LABEL_CARD_CONTENT.defaultText;
+		return this.i18nBundle.getText(ARIA_LABEL_CARD_CONTENT);
+	}
+
+	get hasAvatar() {
+		return !!this.avatar.length;
 	}
 
 	static async define(...params) {
-		await Icon.define();
+		await Promise.all([
+			Icon.define(),
+			fetchI18nBundle("@ui5/webcomponents"),
+		]);
 
 		super.define(...params);
 	}

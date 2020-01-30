@@ -4,7 +4,7 @@
 }
 
 :host {
-	height: 3rem;
+	height: var(--_ui5_custom_list_item_height);
 	box-sizing: border-box;
 }
 
@@ -26,40 +26,5 @@ ui5-radiobutton.ui5-li-singlesel-radiobtn {
 .ui5-li-root.ui5-custom-li-root,
 ui5-checkbox.ui5-li-singlesel-radiobtn,
 ui5-radiobutton.ui5-li-singlesel-radiobtn {
-	min-width: 3rem;
-}
-
-/* Compact size */
-:host([data-ui5-compact-size]) {
-	height: 2rem;
-}
-
-:host([data-ui5-compact-size]) .ui5-li-root.ui5-custom-li-root,
-:host([data-ui5-compact-size]) ui5-checkbox.ui5-li-singlesel-radiobtn,
-:host([data-ui5-compact-size]) ui5-radiobutton.ui5-li-singlesel-radiobtn {
-	min-width: 2rem;
-}
-
-/*
- * IE pair of styles
- * to be removed later on
- */
-ui5-li-custom:not([hidden]) {
-	display: block;
-}
-
-ui5-li-custom {
-	height: 3rem;
-	box-sizing: border-box;
-}
-
-/* Compact size */
-ui5-li-custom[data-ui5-compact-size]  {
-	height: 2rem;
-}
-
-ui5-li-custom[data-ui5-compact-size] .ui5-li-root.ui5-custom-li-root,
-ui5-li-custom[data-ui5-compact-size] ui5-checkbox.ui5-li-singlesel-radiobtn,
-ui5-li-custom[data-ui5-compact-size] ui5-radiobutton.ui5-li-singlesel-radiobtn {
-	min-width: 2rem;
+	min-width: var(--_ui5_custom_list_item_rb_min_width);
 }

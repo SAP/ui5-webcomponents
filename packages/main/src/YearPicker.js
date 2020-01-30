@@ -1,14 +1,13 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData.js";
+import LocaleData from "@ui5/webcomponents-utils/dist/sap/ui/core/LocaleData.js";
 import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
 import { getFormatLocale } from "@ui5/webcomponents-base/dist/FormatSettings.js";
 import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { getLocale } from "@ui5/webcomponents-base/dist/LocaleProvider.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import getShadowDOMTarget from "@ui5/webcomponents-base/dist/events/getShadowDOMTarget.js";
-import DateFormat from "@ui5/webcomponents-core/dist/sap/ui/core/format/DateFormat.js";
+import DateFormat from "@ui5/webcomponents-utils/dist/sap/ui/core/format/DateFormat.js";
 import CalendarType from "@ui5/webcomponents-base/dist/dates/CalendarType.js";
 import CalendarDate from "@ui5/webcomponents-base/dist/dates/CalendarDate.js";
 import YearPickerTemplate from "./generated/templates/YearPickerTemplate.lit.js";
@@ -100,9 +99,6 @@ class YearPicker extends UI5Element {
 		this._itemNav.getItemsCallback = function getItemsCallback() {
 			return [].concat(...this._yearIntervals);
 		}.bind(this);
-		this._itemNav.setItemsCallback = function setItemsCallback(items) {
-			this._yearIntervals = items;
-		}.bind(this);
 
 		this._itemNav.attachEvent(
 			ItemNavigation.BORDER_REACH,
@@ -110,8 +106,6 @@ class YearPicker extends UI5Element {
 		);
 
 		this._yearIntervals = [];
-
-		this._delegates.push(this._itemNav);
 	}
 
 	onBeforeRendering() {
@@ -146,7 +140,7 @@ class YearPicker extends UI5Element {
 
 			const year = {
 				timestamp: timestamp.toString(),
-				id: `${this._state._id}-y${timestamp}`,
+				id: `${this._id}-y${timestamp}`,
 				year: oYearFormat.format(oCalDate.toLocalJSDate()),
 				classes: "ui5-yp-item",
 			};
@@ -161,8 +155,6 @@ class YearPicker extends UI5Element {
 		}
 
 		this._yearIntervals = intervals;
-
-		this._itemNav.init();
 	}
 
 	onAfterRendering() {
@@ -189,10 +181,9 @@ class YearPicker extends UI5Element {
 		return this.primaryCalendarType || getCalendarType() || LocaleData.getInstance(getLocale()).getPreferredCalendarType();
 	}
 
-	onclick(event) {
-		const eventTarget = getShadowDOMTarget(event);
-		if (eventTarget.className.indexOf("ui5-yp-item") > -1) {
-			const timestamp = this.getTimestampFromDom(eventTarget);
+	_onclick(event) {
+		if (event.target.className.indexOf("ui5-yp-item") > -1) {
+			const timestamp = this.getTimestampFromDom(event.target);
 			this.timestamp = timestamp;
 			this._selectedYear = this._year;
 			this._itemNav.current = YearPicker._MIDDLE_ITEM_INDEX;
@@ -205,7 +196,7 @@ class YearPicker extends UI5Element {
 		return parseInt(sTimestamp);
 	}
 
-	onkeydown(event) {
+	_onkeydown(event) {
 		if (isEnter(event)) {
 			return this._handleEnter(event);
 		}
@@ -216,10 +207,9 @@ class YearPicker extends UI5Element {
 	}
 
 	_handleEnter(event) {
-		const eventTarget = getShadowDOMTarget(event);
 		event.preventDefault();
-		if (eventTarget.className.indexOf("ui5-yp-item") > -1) {
-			const timestamp = this.getTimestampFromDom(eventTarget);
+		if (event.target.className.indexOf("ui5-yp-item") > -1) {
+			const timestamp = this.getTimestampFromDom(event.target);
 
 			this.timestamp = timestamp;
 			this._selectedYear = this._year;
@@ -229,10 +219,9 @@ class YearPicker extends UI5Element {
 	}
 
 	_handleSpace(event) {
-		const eventTarget = getShadowDOMTarget(event);
 		event.preventDefault();
-		if (eventTarget.className.indexOf("ui5-yp-item") > -1) {
-			const timestamp = this.getTimestampFromDom(eventTarget);
+		if (event.target.className.indexOf("ui5-yp-item") > -1) {
+			const timestamp = this.getTimestampFromDom(event.target);
 
 			this._selectedYear = CalendarDate.fromTimestamp(
 				timestamp * 1000,

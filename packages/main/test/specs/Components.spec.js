@@ -1,4 +1,4 @@
-const assert = require("assert");
+const assert = require("chai").assert;
 
 const assertBooleanProperty = (el, prop) => {
 	assert.strictEqual(el.getProperty(prop), false, "the value should be false by default.");
@@ -9,7 +9,7 @@ const assertHidden = component => {
 }
 
 describe("General assertions", () => {
-	browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/Components.html");
+	browser.url("http://localhost:8080/test-resources/pages/Components.html");
 
 	it("tests boolean props default", () => {
 		const button = browser.$("#btn");
@@ -91,7 +91,6 @@ describe("General assertions", () => {
 			browser.$("#p2"),
 			browser.$("#radioBtn2"),
 			browser.$("#select2"),
-			browser.$("#shellbar2"),
 			browser.$("#sw2"),
 			browser.$("#txtarea2"),
 			browser.$("#timeline2"),

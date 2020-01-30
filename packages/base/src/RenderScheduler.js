@@ -12,6 +12,8 @@ let renderTaskPromise,
 	renderTaskPromiseResolve,
 	taskResult;
 
+let mutationObserverTimer;
+
 /**
  * Class that manages the rendering/re-rendering of web components
  * This is always asynchronous
@@ -83,11 +85,14 @@ class RenderScheduler {
 		}
 
 		// wait for Mutation observer just in case
-		setTimeout(() => {
-			if (invalidatedWebComponents.getList().length === 0) {
-				RenderScheduler._resolveTaskPromise();
-			}
-		}, 200);
+		if (!mutationObserverTimer) {
+			mutationObserverTimer = setTimeout(() => {
+				mutationObserverTimer = undefined;
+				if (invalidatedWebComponents.getList().length === 0) {
+					RenderScheduler._resolveTaskPromise();
+				}
+			}, 200);
+		}
 
 		renderTaskId = undefined;
 	}
@@ -114,7 +119,7 @@ class RenderScheduler {
 	}
 
 	static getNotDefinedComponents() {
-		return Array.from(document.querySelectorAll("*")).filter(el => el.localName.startsWith("ui5-") && !el._isUI5Element);
+		return Array.from(document.querySelectorAll("*")).filter(el => el.localName.startsWith("ui5-") && !el.isUI5Element);
 	}
 
 	/**
@@ -132,7 +137,7 @@ class RenderScheduler {
 		const stillUndefined = this.getNotDefinedComponents();
 		if (stillUndefined.length) {
 			// eslint-disable-next-line
-			console.warn("undefined elements after 5 seconds: ", [...stillUndefined].map(el => el.localName));
+			console.warn("undefined elements after 5 seconds are: " + [...stillUndefined].map(el => el.localName).join(" ; "));
 		}
 
 		return Promise.resolve();

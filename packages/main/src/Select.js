@@ -11,16 +11,16 @@ import {
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import Option from "./Option.js";
+import "@ui5/webcomponents-icons/dist/icons/slim-arrow-down.js";
 import Label from "./Label.js";
 import Popover from "./Popover.js";
 import List from "./List.js";
 import StandardListItem from "./StandardListItem.js";
 import Icon from "./Icon.js";
-import "./icons/slim-arrow-down.js";
 
-// Template
+// Templates
 import SelectTemplate from "./generated/templates/SelectTemplate.lit.js";
+import SelectPopoverTemplate from "./generated/templates/SelectPopoverTemplate.lit.js";
 
 // Styles
 import selectCss from "./generated/themes/Select.css.js";
@@ -39,13 +39,13 @@ const metadata = {
 		 * If more than one option is defined as selected, the last one would be considered as the selected one.
 		 * <br><br>
 		 * <b>Note:</b> Use the <code>ui5-option</code> component to define the desired options.
-		 * @type {Option[]}
+		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
 		 */
 		"default": {
 			propertyName: "options",
-			type: Option,
+			type: HTMLElement,
 			listenFor: { include: ["*"] },
 		},
 	},
@@ -98,6 +98,11 @@ const metadata = {
 
 		_text: {
 			type: String,
+			noAttribute: true,
+		},
+
+		_iconPressed: {
+			type: Boolean,
 			noAttribute: true,
 		},
 
@@ -170,6 +175,10 @@ class Select extends UI5Element {
 		return SelectTemplate;
 	}
 
+	static get staticAreaTemplate() {
+		return SelectPopoverTemplate;
+	}
+
 	static get styles() {
 		return selectCss;
 	}
@@ -189,18 +198,16 @@ class Select extends UI5Element {
 		this._enableFormSupport();
 	}
 
-	onfocusin() {
+	_onfocusin() {
 		this.focused = true;
 	}
 
-	onfocusout() {
+	_onfocusout() {
 		this.focused = false;
 	}
 
 	get _isPickerOpen() {
-		const popover = this.shadowRoot.querySelector("#ui5-select--popover");
-
-		return popover && popover.opened;
+		return this.popover && this.popover.opened;
 	}
 
 	/**
@@ -214,18 +221,16 @@ class Select extends UI5Element {
 	}
 
 	_togglePopover() {
-		const popover = this.shadowRoot.querySelector("#ui5-select--popover");
+		this.popover = this.getStaticAreaItemDomRef().querySelector("ui5-popover");
 
 		if (this.disabled) {
 			return;
 		}
 
 		if (this._isPickerOpen) {
-			popover.close();
-			this.opened = false;
+			this.popover.close();
 		} else {
-			this.opened = true;
-			popover.openBy(this);
+			this.popover.openBy(this);
 		}
 	}
 
@@ -279,7 +284,7 @@ class Select extends UI5Element {
 		}
 	}
 
-	_keydown(event) {
+	_onkeydown(event) {
 		if (isShow(event)) {
 			this._togglePopover();
 		}
@@ -289,7 +294,7 @@ class Select extends UI5Element {
 		}
 	}
 
-	_keyup(event) {
+	_onkeyup(event) {
 		if (isSpace(event) && !this._isPickerOpen) {
 			this._togglePopover();
 		}
@@ -313,11 +318,13 @@ class Select extends UI5Element {
 	}
 
 	_applyFocusAfterOpen() {
+		this._toggleIcon();
+
 		if (!this._currentlySelectedOption) {
 			return;
 		}
 
-		const li = this.shadowRoot.querySelector(`#${this._currentlySelectedOption._id}-li`);
+		const li = this.popover.querySelector(`#${this._currentlySelectedOption._id}-li`);
 
 		li.parentElement._itemNavigation.currentIndex = this._selectedIndex;
 		li && li.focus();
@@ -359,11 +366,11 @@ class Select extends UI5Element {
 	}
 
 	_getNextOptionIndex() {
-		return this._selectedIndex === (this.options.length - 1) ? 0 : (this._selectedIndex + 1);
+		return this._selectedIndex === (this.options.length - 1) ? this._selectedIndex : (this._selectedIndex + 1);
 	}
 
 	_getPreviousOptionIndex() {
-		return this._selectedIndex === 0 ? (this.options.length - 1) : (this._selectedIndex - 1);
+		return this._selectedIndex === 0 ? this._selectedIndex : (this._selectedIndex - 1);
 	}
 
 	_beforeOpen() {
@@ -372,6 +379,8 @@ class Select extends UI5Element {
 	}
 
 	_afterClose() {
+		this._toggleIcon();
+
 		if (this._escapePressed) {
 			this._select(this._selectedIndexBeforeOpen);
 			this._escapePressed = false;
@@ -379,6 +388,10 @@ class Select extends UI5Element {
 			this.fireEvent("change", { selectedOption: this.options[this._selectedIndex] });
 			this._lastSelectedOption = this.options[this._selectedIndex];
 		}
+	}
+
+	_toggleIcon() {
+		this._iconPressed = !this._iconPressed;
 	}
 
 	get _currentSelectedItem() {
@@ -393,13 +406,12 @@ class Select extends UI5Element {
 		return this.disabled ? "-1" : "0";
 	}
 
-	get rtl() {
-		return getRTL() ? "rtl" : undefined;
+	get dir() {
+		return getRTL() ? "rtl" : "ltr";
 	}
 
 	static async define(...params) {
 		await Promise.all([
-			Option.define(),
 			Label.define(),
 			Popover.define(),
 			List.define(),

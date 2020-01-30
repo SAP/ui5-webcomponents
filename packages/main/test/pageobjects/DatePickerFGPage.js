@@ -1,12 +1,14 @@
 class DatePickerFGPage {
 
     get dpStart() { return $('#ui5-datepicker--startDate'); }
-    get startPopoverContent() { return browser.findElementDeep("#ui5-datepicker--startDate >>> ui5-popover >>> .ui5-popup-root"); }
-    get startInnerInput() { return browser.findElementDeep("#ui5-datepicker--startDate >>> ui5-input >>> input"); }
+    get startPopoverContent() {
+        const staticAreaItemClassName = browser.getStaticAreaItemClassName("#ui5-datepicker--startDate");
+        return browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover"); }
+    get startInnerInput() { return browser.$("#ui5-datepicker--startDate").shadow$("ui5-input").shadow$("input"); }
     get dpEnd() { return $('#ui5-datepicker--endDate'); }
 
     open() {
-        browser.url('http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/DatePicker_fg.html');
+        browser.url('http://localhost:8080/test-resources/pages/DatePicker_fg.html');
     }
 
 }

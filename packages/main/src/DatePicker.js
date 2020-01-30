@@ -2,17 +2,20 @@ import "@ui5/webcomponents-base/dist/shims/jquery-shim.js";
 import "@ui5/webcomponents-base/dist/shims/Core-shim.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { fetchCldrData } from "@ui5/webcomponents-base/dist/CLDR.js";
+import { fetchCldr } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
 import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
 import { getLocale } from "@ui5/webcomponents-base/dist/LocaleProvider.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import LocaleData from "@ui5/webcomponents-core/dist/sap/ui/core/LocaleData.js";
-import DateFormat from "@ui5/webcomponents-core/dist/sap/ui/core/format/DateFormat.js";
+import LocaleData from "@ui5/webcomponents-utils/dist/sap/ui/core/LocaleData.js";
+import DateFormat from "@ui5/webcomponents-utils/dist/sap/ui/core/format/DateFormat.js";
 import CalendarType from "@ui5/webcomponents-base/dist/dates/CalendarType.js";
 import CalendarDate from "@ui5/webcomponents-base/dist/dates/CalendarDate.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { isShow } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-import "./icons/appointment-2.js";
+import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import "@ui5/webcomponents-icons/dist/icons/appointment-2.js";
+import { DATEPICKER_OPEN_ICON_TITLE, DATEPICKER_DATE_ACC_TEXT } from "./generated/i18n/i18n-defaults.js";
 import Icon from "./Icon.js";
 import Popover from "./Popover.js";
 import Calendar from "./Calendar.js";
@@ -21,9 +24,10 @@ import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import Input from "./Input.js";
 import InputType from "./types/InputType.js";
 import DatePickerTemplate from "./generated/templates/DatePickerTemplate.lit.js";
+import DatePickerPopoverTemplate from "./generated/templates/DatePickerPopoverTemplate.lit.js";
 
 // default calendar for bundling
-import "@ui5/webcomponents-core/dist/sap/ui/core/date/Gregorian.js";
+import "@ui5/webcomponents-utils/dist/sap/ui/core/date/Gregorian.js";
 
 // Styles
 import datePickerCss from "./generated/themes/DatePicker.css.js";
@@ -107,14 +111,17 @@ const metadata = {
 		/**
 		 * Defines a short hint, intended to aid the user with data entry when the
 		 * <code>ui5-datepicker</code> has no value.
-		 * <br><br>
-		 * <b>Note:</b> The placeholder is not supported in IE. If the placeholder is provided, it won`t be displayed in IE.
+		 *
+		 * <b>Note:</b> When no placeholder is set, the format pattern is displayed as a placeholder.
+		 * Passing an empty string as the value of this property will make the <code>ui5-datepicker</code> appear empty - without placeholder or format pattern.
+		 *
 		 * @type {string}
-		 * @defaultvalue ""
+		 * @defaultvalue undefined
 		 * @public
 		 */
 		placeholder: {
 			type: String,
+			defaultValue: undefined,
 		},
 
 		/**
@@ -144,7 +151,6 @@ const metadata = {
 		},
 		_calendar: {
 			type: Object,
-			deepEqual: true,
 		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.DatePicker.prototype */ {
@@ -232,6 +238,10 @@ class DatePicker extends UI5Element {
 		return DatePickerTemplate;
 	}
 
+	static get staticAreaTemplate() {
+		return DatePickerPopoverTemplate;
+	}
+
 	static get styles() {
 		return datePickerCss;
 	}
@@ -245,9 +255,7 @@ class DatePicker extends UI5Element {
 			allowTargetOverlap: true,
 			stayOpenOnScroll: true,
 			afterClose: () => {
-				const shadowRoot = this.shadowRoot;
-				const popover = shadowRoot.querySelector(`#${this._id}-popover`);
-				const calendar = popover.querySelector(`#${this._id}-calendar`);
+				const calendar = this.popover.querySelector(`#${this._id}-calendar`);
 
 				this._isPickerOpen = false;
 
@@ -260,9 +268,7 @@ class DatePicker extends UI5Element {
 				calendar._hideYearPicker();
 			},
 			afterOpen: () => {
-				const shadowRoot = this.shadowRoot;
-				const popover = shadowRoot.querySelector(`#${this._id}-popover`);
-				const calendar = popover.querySelector(`#${this._id}-calendar`);
+				const calendar = this.popover.querySelector(`#${this._id}-calendar`);
 				const dayPicker = calendar.shadowRoot.querySelector(`#${calendar._id}-daypicker`);
 
 				const selectedDay = dayPicker.shadowRoot.querySelector(".ui5-dp-item--selected");
@@ -285,6 +291,8 @@ class DatePicker extends UI5Element {
 			onSelectedDatesChange: this._handleCalendarSelectedDatesChange.bind(this),
 			selectedDates: [],
 		};
+
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
@@ -305,7 +313,7 @@ class DatePicker extends UI5Element {
 		}
 	}
 
-	onkeydown(event) {
+	_onkeydown(event) {
 		if (isShow(event)) {
 			this.togglePicker();
 			this._getInput().focus();
@@ -382,6 +390,14 @@ class DatePicker extends UI5Element {
 		return this._formatPattern !== "medium" && this._formatPattern !== "short" && this._formatPattern !== "long";
 	}
 
+	get _displayFormat() {
+		return this.getFormat().oFormatOptions.pattern;
+	}
+
+	get _placeholder() {
+		return this.placeholder !== undefined ? this.placeholder : this._displayFormat;
+	}
+
 	getFormat() {
 		if (this._isPattern) {
 			this._oDateFormat = DateFormat.getInstance({
@@ -397,8 +413,28 @@ class DatePicker extends UI5Element {
 		return this._oDateFormat;
 	}
 
-	_getPopover() {
-		return this.shadowRoot.querySelector("ui5-popover");
+	get accInfo() {
+		return {
+			"ariaDescribedBy": `${this._id}-date`,
+			"ariaHasPopup": "true",
+			"ariaAutoComplete": "none",
+			"role": "combobox",
+			"ariaOwns": `${this._id}-popover`,
+			"ariaExpanded": this.isOpen(),
+			"ariaDescription": this.dateAriaDescription,
+		};
+	}
+
+	get openIconTitle() {
+		return this.i18nBundle.getText(DATEPICKER_OPEN_ICON_TITLE);
+	}
+
+	get dateAriaDescription() {
+		return this.i18nBundle.getText(DATEPICKER_DATE_ACC_TEXT);
+	}
+
+	get dir() {
+		return getRTL() ? "rtl" : "ltr";
 	}
 
 	_canOpenPicker() {
@@ -436,7 +472,7 @@ class DatePicker extends UI5Element {
 	 * @public
 	 */
 	closePicker() {
-		this._getPopover().close();
+		this.popover.close();
 	}
 
 	/**
@@ -447,17 +483,19 @@ class DatePicker extends UI5Element {
 	 * @public
 	 */
 	openPicker(options) {
+		this.popover = this.getStaticAreaItemDomRef().querySelector("ui5-popover");
 		this._changeCalendarSelection();
 
 		if (options && options.focusInput) {
 			this._focusInputAfterOpen = true;
 		}
-
-		this._getPopover().openBy(this);
+		this.popover.openBy(this);
 		this._isPickerOpen = true;
 	}
 
 	togglePicker() {
+		this.popover = this.getStaticAreaItemDomRef().querySelector("ui5-popover");
+
 		if (this.isOpen()) {
 			this.closePicker();
 		} else if (this._canOpenPicker()) {
@@ -517,14 +555,6 @@ class DatePicker extends UI5Element {
 		return this.getFormat().parse(this.value);
 	}
 
-	get classes() {
-		return {
-			icon: {
-				"ui5-datepicker-icon--pressed": this._isPickerOpen,
-			},
-		};
-	}
-
 	get styles() {
 		return {
 			main: {
@@ -539,11 +569,12 @@ class DatePicker extends UI5Element {
 
 	static async define(...params) {
 		await Promise.all([
-			fetchCldrData(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
+			fetchCldr(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
 			Icon.define(),
 			Popover.define(),
 			Calendar.define(),
 			Input.define(),
+			fetchI18nBundle("@ui5/webcomponents"),
 		]);
 
 		super.define(...params);

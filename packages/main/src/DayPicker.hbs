@@ -1,12 +1,20 @@
-<div class="ui5-dp-root" style="{{styles.wrapper}}">
+<div
+	class="ui5-dp-root"
+	style="{{styles.wrapper}}"
+	@keydown={{_onkeydown}}
+	@mousedown={{_onmousedown}}
+	@mouseup={{_onmouseup}}
+>
 
-	<div class="ui5-dp-weeknumber-container">
-		{{#each _weekNumbers}}
-			<div class="ui5-dp-weekname-container">
-				<span class="ui5-dp-weekname">{{this}}</span>
-			</div>
-		{{/each}}
-	</div>
+	{{#if showWeekNumbers}}
+		<div class="ui5-dp-weeknumber-container">
+			{{#each _weekNumbers}}
+				<div class="ui5-dp-weekname-container">
+					<span class="ui5-dp-weekname">{{this}}</span>
+				</div>
+			{{/each}}
+		</div>
+	{{/if}}
 
 	<div id="{{_id}}-content" class="ui5-dp-content">
 		<div role="row" class="ui5-dp-days-names-container">
@@ -33,7 +41,7 @@
 								role="gridcell"
 								aria-selected="{{this.selected}}"
 								class="{{this.classes}}">
-									<span 
+									<span
 										class="ui5-dp-daytext"
 										data-sap-timestamp="{{this.timestamp}}"
 										data-sap-index="{{this._index}}">

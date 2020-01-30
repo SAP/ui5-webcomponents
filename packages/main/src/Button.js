@@ -3,7 +3,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonTemplate from "./generated/templates/ButtonTemplate.lit.js";
 import Icon from "./Icon.js";
@@ -55,7 +55,7 @@ const metadata = {
 		 * <br><br>
 		 * Example:
 		 * <br>
-		 * <pre>ui5-button icon="sap-icon://palette"</pre>
+		 * <pre>ui5-button icon="palette"</pre>
 		 *
 		 * See all the available icons in the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
 		 *
@@ -226,7 +226,7 @@ class Button extends UI5Element {
 			}
 		};
 
-		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
@@ -249,7 +249,6 @@ class Button extends UI5Element {
 
 	_onclick(event) {
 		event.isMarked = "button";
-		this.fireEvent("press", {});
 		const FormSupport = getFeature("FormSupport");
 		if (FormSupport) {
 			FormSupport.triggerFormSubmit(this);
@@ -261,17 +260,17 @@ class Button extends UI5Element {
 		this.active = true;
 	}
 
-	onmouseup(event) {
+	_onmouseup(event) {
 		event.isMarked = "button";
 	}
 
-	onkeydown(event) {
+	_onkeydown(event) {
 		if (isSpace(event) || isEnter(event)) {
 			this.active = true;
 		}
 	}
 
-	onkeyup(event) {
+	_onkeyup(event) {
 		if (isSpace(event) || isEnter(event)) {
 			this.active = false;
 		}
@@ -294,6 +293,14 @@ class Button extends UI5Element {
 		return this.design !== ButtonDesign.Default && this.design !== ButtonDesign.Transparent;
 	}
 
+	get accInfo() {
+		return {
+			"ariaExpanded": this._buttonAccInfo && this._buttonAccInfo.ariaExpanded,
+			"ariaControls": this._buttonAccInfo && this._buttonAccInfo.ariaControls,
+			"title": this._buttonAccInfo && this._buttonAccInfo.title,
+		};
+	}
+
 	static typeTextMappings() {
 		return {
 			"Positive": BUTTON_ARIA_TYPE_ACCEPT,
@@ -303,7 +310,7 @@ class Button extends UI5Element {
 	}
 
 	get buttonTypeText() {
-		return this.resourceBundle.getText(Button.typeTextMappings()[this.design]);
+		return this.i18nBundle.getText(Button.typeTextMappings()[this.design]);
 	}
 
 	get tabIndexValue() {
@@ -313,7 +320,7 @@ class Button extends UI5Element {
 	static async define(...params) {
 		await Promise.all([
 			Icon.define(),
-			fetchResourceBundle("@ui5/webcomponents"),
+			fetchI18nBundle("@ui5/webcomponents"),
 		]);
 
 		super.define(...params);

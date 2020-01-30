@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-rc.5](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.4...v1.0.0-rc.5) (2019-12-02)
+
+
+### Features
+
+* **Playground** deploy all components to the playground ([#962](https://github.com/SAP/ui5-webcomponents/issues/962)) ([8b60419](https://github.com/SAP/ui5-webcomponents/commit/8b60419))
+* **Playground** use fiori bundle for the playground ([#967](https://github.com/SAP/ui5-webcomponents/issues/967)) ([4ef63f2](https://github.com/SAP/ui5-webcomponents/commit/4ef63f2))
+
+
+
+
+
+# [1.0.0-rc.4](https://github.com/SAP/openui5/compare/v1.0.0-rc.3...v1.0.0-rc.4) (2019-10-11)
+
+**Note:** Version bump only for package @ui5/webcomponents-playground
+
+
+
+
+
+# [1.0.0-rc.3](https://github.com/SAP/openui5/compare/v1.0.0-rc.2...v1.0.0-rc.3) (2019-10-03)
+
+**Note:** Version bump only for package @ui5/webcomponents-playground
+
+
 # [1.0.0-rc.2](https://github.com/SAP/openui5/compare/v1.0.0-rc.1...v1.0.0-rc.2) (2019-07-04)
 
 **Note:** Version bump only for package @ui5/webcomponents-playground

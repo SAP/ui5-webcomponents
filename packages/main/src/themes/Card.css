@@ -1,9 +1,6 @@
-:host(:not([hidden])) {
-	display: inline-block;
-	width: 100%;
-}
+@import "./InvisibleTextStyles.css";
 
-ui5-card:not([hidden]) {
+:host(:not([hidden])) {
 	display: inline-block;
 	width: 100%;
 }
@@ -11,21 +8,22 @@ ui5-card:not([hidden]) {
 .ui5-card-root {
 	width: 100%;
 	height: 100%;
-	color: var(--sapUiGroupTitleTextColor);
-	background: var(--sapUiTileBackground);
-	box-shadow: var(--sapUiShadowLevel0);
-	border-radius: 0.25rem;
+	color: var(--sapGroup_TitleTextColor);
+	background: var(--sapTile_Background);
+	box-shadow: var(--sapContent_Shadow0);
+	border-radius: .25rem;
 	border: 1px solid var(--_ui5_card_border_color);
 	overflow: hidden;
-	font-family: var(--sapUiFontFamily);
-	font-size: var(--sapUiFontSize);
+	font-family: var(--sapFontFamily);
+	font-size: var(--sapFontSize);
+	box-sizing: border-box;
 }
 
 .ui5-card-header {
 	position: relative;
 	display: flex;
 	align-items: flex-start;
-	background: var(--sapUiTileBackground);
+	background: var(--sapTile_Background);
 	border-bottom: 1px solid var(--_ui5_card_header_border_color);
 	padding: var(--_ui5_card_content_padding);
 }
@@ -39,11 +37,8 @@ ui5-card:not([hidden]) {
 	border-bottom: none;
 }
 
-.ui5-card-header:focus {
+.ui5-card-header:focus:before {
 	outline: none;
-}
-
-.ui5-card-header.ui5-card-header--interactive:focus:before {
 	content: "";
 	position: absolute;
 	border: var(--_ui5_card_header_focus_border);
@@ -74,24 +69,26 @@ ui5-card:not([hidden]) {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	margin-right: 0.75rem;
+	margin-right: .75rem;
 }
 
-.ui5-card-header .ui5-card-avatar.ui5-card-header-img {
-	border-radius: 50%;
-}
-
-.ui5-card-header .ui5-card-avatar .ui5-card-header-icon {
+::slotted(ui5-icon) {
 	width: 1.5rem;
 	height: 1.5rem;
-	color: var(--sapUiTileIconColor);
+	color: var(--sapTile_IconColor);
+}
+
+::slotted(img) {
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
 }
 
 .ui5-card-header .ui5-card-status {
 	display: inline-block;
-	font-family: var(--sapUiFontFamily);
-	font-size: var(--sapMFontSmallSize);
-	color: var(--sapUiTileTextColor);
+	font-family: var(--sapFontFamily);
+	font-size: var(--sapFontSmallSize);
+	color: var(--sapTile_TextColor);
 	text-align: left;
 	line-height: 1.125rem;
 	padding-left: 1rem;
@@ -102,24 +99,24 @@ ui5-card:not([hidden]) {
 }
 
 .ui5-card-header .ui5-card-header-text .ui5-card-heading {
-	font-family: var(--sapUiFontHeaderFamily);
+	font-family: var(--sapFontFamily);
 	font-size: var(--sapMFontHeader5Size);
-	font-weight: var(--sapUiFontHeaderWeight);
-	color: var(--sapUiTileTitleTextColor);
+	font-weight: normal;
+	color: var(--sapTile_TitleTextColor);
 	max-height: 3.5rem;
 }
 
-.ui5-card-header .ui5-card-header-text .ui5-card-subtitle {
-	font-family: var(--sapUiFontFamily);
-	font-size: var(--sapMFontMediumSize);
+.ui5-card-header .ui5-card-header-text .ui5-card-subheading {
+	font-family: var(--sapFontFamily);
+	font-size: var(--sapFontMediumSize);
 	font-weight: normal;
-	color: var(--sapUiTileTextColor);
-	margin-top: 0.5rem;
+	color: var(--sapTile_TextColor);
+	margin-top: .5rem;
 	max-height: 2.1rem;
 }
 
 .ui5-card-header .ui5-card-header-text .ui5-card-heading,
-.ui5-card-header .ui5-card-header-text .ui5-card-subtitle {
+.ui5-card-header .ui5-card-header-text .ui5-card-subheading {
 	text-align: left;
 	text-overflow: ellipsis;
 	white-space: normal;
@@ -132,7 +129,7 @@ ui5-card:not([hidden]) {
 }
 
 [dir="rtl"] .ui5-card-header .ui5-card-avatar {
-	margin-left: 0.75rem;
+	margin-left: .75rem;
 	margin-right: 0;
 }
 
@@ -146,6 +143,6 @@ ui5-card:not([hidden]) {
 	text-align: right;
 }
 
-[dir="rtl"] .ui5-card-header .ui5-card-header-text .ui5-card-subtitle {
+[dir="rtl"] .ui5-card-header .ui5-card-header-text .ui5-card-subheading {
 	text-align: right;
 }

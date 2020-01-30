@@ -1,9 +1,9 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
-import { getIconData } from "@ui5/webcomponents-base/dist/SVGIconRegistry.js";
+import { getIconData, getIconDataSync } from "@ui5/webcomponents-base/dist/SVGIconRegistry.js";
 import createStyleInHead from "@ui5/webcomponents-base/dist/util/createStyleInHead.js";
-import { fetchResourceBundle, getResourceBundle } from "@ui5/webcomponents-base/dist/ResourceBundle.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import IconTemplate from "./generated/templates/IconTemplate.lit.js";
 
 // Styles
@@ -15,21 +15,20 @@ import iconCss from "./generated/themes/Icon.css.js";
 const metadata = {
 	tag: "ui5-icon",
 	properties: /** @lends sap.ui.webcomponents.main.Icon.prototype */ {
-
 		/**
-		 * Defines the source URI of the <code>ui5-icon</code>.
+		 * Defines the unique identifier (icon name) of each <code>ui5-icon</code>.
 		 * <br><br>
-		 * SAP-icons font provides numerous options. To find all the available icons, see the
+		 * To browse all available icons, see the
 		 * <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
 		 * <br><br>
 		 * Example:
 		 * <br>
-		 * <code>src='sap-icon://add'</code>, <code>src='sap-icon://delete'</code>, <code>src='sap-icon://employee'</code>.
+		 * <code>name='add'</code>, <code>name='delete'</code>, <code>name='employee'</code>.
 		 *
 		 * @type {string}
 		 * @public
 		*/
-		src: {
+		name: {
 			type: String,
 		},
 
@@ -57,6 +56,22 @@ const metadata = {
 		showTooltip: {
 			type: Boolean,
 		},
+
+		/**
+		 * @private
+		 */
+		pathData: {
+			type: String,
+			noAttribute: true,
+		},
+
+		/**
+		 * @private
+		 */
+		accData: {
+			type: Object,
+			noAttribute: true,
+		},
 	},
 	events: {
 	},
@@ -66,21 +81,16 @@ const metadata = {
  * @class
  * <h3 class="comment-api-title">Overview</h3>
  *
- * The <code>ui5-icon</code> component is a wrapper around the HTML tag to embed an icon from an icon font.
+ * The <code>ui5-icon</code> component represents an SVG icon.
  * There are two main scenarios how the <code>ui5-icon</code> component is used:
  * as a purely decorative element; or as a visually appealing clickable area in the form of an icon button.
- * In the first case, images are not predefined as tab stops in accessibility mode.
- * <br><br>
- * The <code>ui5-icon</code> uses embedded font instead of pixel image.
- * Comparing to image, <code>ui5-icon</code> is easily scalable,
- * its color can be altered live, and various effects can be added using CSS.
  * <br><br>
  * A large set of built-in icons is available
- * and they can be used by setting the <code>src</code> property on the <code>ui5-icon</code>.
+ * and they can be used by setting the <code>name</code> property on the <code>ui5-icon</code>.
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/Icon";</code>
+ * <code>import "@ui5/webcomponents/dist/Icon.js";</code>
  *
  * @constructor
  * @author SAP SE
@@ -92,7 +102,7 @@ const metadata = {
 class Icon extends UI5Element {
 	constructor() {
 		super();
-		this.resourceBundle = getResourceBundle("@ui5/webcomponents");
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	static get metadata() {
@@ -112,8 +122,8 @@ class Icon extends UI5Element {
 	}
 
 	static async define(...params) {
-		this.createGlobalStyle();
-		await fetchResourceBundle("@ui5/webcomponents");
+		this.createGlobalStyle(); // hide all icons until the first icon has rendered (and added the Icon.css)
+		await fetchI18nBundle("@ui5/webcomponents");
 
 		super.define(...params);
 	}
@@ -124,27 +134,37 @@ class Icon extends UI5Element {
 		}
 		const styleElement = document.head.querySelector(`style[data-ui5-icon-global]`);
 		if (!styleElement) {
-			createStyleInHead(`ui5-icon:not([data-ui5-defined]) { display: none !important; }`, { "data-ui5-icon-global": "" });
+			createStyleInHead(`ui5-icon { display: none !important; }`, { "data-ui5-icon-global": "" });
 		}
 	}
 
-	_normalizeIconURI(iconURI) {
-		return this._hasIconPrefix(iconURI) ? iconURI : `sap-icon://${iconURI}`;
+	static removeGlobalStyle() {
+		if (!window.ShadyDOM) {
+			return;
+		}
+		const styleElement = document.head.querySelector(`style[data-ui5-icon-global]`);
+		if (styleElement) {
+			document.head.removeChild(styleElement);
+		}
 	}
 
-	_hasIconPrefix(uri) {
-		return /sap-icon:\/\//.test(uri);
-	}
-
-	get d() {
-		const icon = getIconData(this._normalizeIconURI(this.src));
-
-		if (!icon) {
+	async onBeforeRendering() {
+		const name = this.name;
+		if (!name) {
 			/* eslint-disable-next-line */
-			return console.warn(`Required icon is not imported. You have to import the icon as a module in order to use it e.g. "@ui5/webcomponents/dist/icons/${this._normalizeIconURI(this.src).split("sap-icon://")[1]}.js"`);
+			return console.warn("Icon name property is required", this);
 		}
-
-		return icon.d;
+		let iconData = getIconDataSync(name);
+		if (!iconData) {
+			try {
+				iconData = await getIconData(name);
+			} catch (e) {
+				/* eslint-disable-next-line */
+				return console.warn(`Required icon is not registered. You can either import the icon as a module in order to use it e.g. "@ui5/webcomponents-icons/dist/icons/${name.replace("sap-icon://", "")}.js", or setup a JSON build step and import "@ui5/webcomponents-icons/dist/Assets.js".`);
+			}
+		}
+		this.pathData = iconData.pathData;
+		this.accData = iconData.accData;
 	}
 
 	get hasIconTooltip() {
@@ -152,21 +172,20 @@ class Icon extends UI5Element {
 	}
 
 	get accessibleNameText() {
-		const icon = getIconData(this._normalizeIconURI(this.src));
+		if (this.accessibleName) {
+			return this.accessibleName;
+		}
 
-		return this.accessibleName || (icon.accData && this.resourceBundle.getText(icon.accData));
+		return this.i18nBundle.getText(this.accData);
 	}
 
 	get dir() {
 		return getRTL() ? "rtl" : "ltr";
 	}
 
-	onEnterDOM() {
-		if (!window.ShadyDOM) {
-			return;
-		}
-		setTimeout(_ => {
-			this.setAttribute("data-ui5-defined", "");
+	async onEnterDOM() {
+		setTimeout(() => {
+			this.constructor.removeGlobalStyle(); // remove the global style as Icon.css is already in place
 		}, 0);
 	}
 }

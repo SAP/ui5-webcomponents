@@ -1,28 +1,52 @@
-const assert = require("assert");
+const assert = require("chai").assert;
 
 describe("MultiComboBox general interaction", () => {
-	browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/MultiComboBox.html");
+	browser.url("http://localhost:8080/test-resources/pages/MultiComboBox.html");
 
 	describe("toggling", () => {
 		it("opens/closes", () => {
-			const icon = browser.findElementDeep("#multi1 >>> #ui5-multi-combobox-input ui5-icon");
-			const popover = browser.findElementDeep("#multi1 >>> .ui5-multi-combobox-all-items-popover >>> .ui5-popup-root");
+			const icon = browser.$("#multi1").shadow$("[input-icon]");
+			const staticAreaItemClassName = browser.getStaticAreaItemClassName("#multi1")
+			const popover = browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-multi-combobox-all-items-popover");
 
 			icon.click();
-			assert.ok(popover.isDisplayedInViewport(), "Popover should be displayed in the viewport");
+			assert.ok(popover.getProperty("opened"), "Popover should be displayed in the viewport");
 
 			icon.click();
-			assert.ok(!popover.isDisplayedInViewport(), "Popover should close");
+			assert.ok(!popover.getProperty("opened"), "Popover should close");
+		});
+
+		it("MultiComboBox open property is set correctly", () => {
+			const mcb = browser.$("#multi1");
+			const icon = browser.$("#multi1").shadow$("[input-icon]");
+			const eventInput = $("#events-input");
+			const callCountInput = $("#events-call-count");
+			const resetBtn = $("#reset-btn");
+
+			resetBtn.click();
+			icon.click();
+			assert.ok(mcb.getProperty("open"), "MultiComboBox should be opened");
+			assert.strictEqual(eventInput.getValue(), "openChange", "openChange should be called");
+			assert.strictEqual(callCountInput.getValue(), "1", "Event should be called once");
+
+			icon.click();
+			assert.ok(!mcb.getProperty("open"), "MultiComboBox should be closed");
+
+			assert.strictEqual(eventInput.getValue(), "openChange", "openChange should be called");
+			assert.strictEqual(callCountInput.getValue(), "2", "Event should be called once");
+
+			resetBtn.click();
 		});
 	});
 
 	describe("selection and filtering", () => {
 
 		it("Opens all items popover, selects and deselects the first item", () => {
-			const icon = browser.findElementDeep("#mcb >>> #ui5-multi-combobox-input ui5-icon");
-			const popover = browser.findElementDeep("#mcb >>> .ui5-multi-combobox-all-items-popover");
-			const firstItem = browser.findElementDeep("#first-item");
-			const firstItemCheckbox = browser.findElementDeep("#mcb >>> .ui5-multi-combobox-all-items-list > ui5-li >>> ui5-checkbox");
+			const icon = browser.$("#mcb").shadow$("[input-icon]");
+			const staticAreaItemClassName = browser.getStaticAreaItemClassName("#mcb")
+			const popover = browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-multi-combobox-all-items-popover");
+			const firstItem = popover.$("ui5-list > ui5-li");
+			const firstItemCheckbox = firstItem.shadow$("ui5-checkbox");
 			const eventInput = $("#events-input");
 			const paramsInput = $("#events-parameters");
 			const callCountInput = $("#events-call-count");
@@ -30,7 +54,7 @@ describe("MultiComboBox general interaction", () => {
 			
 			icon.click();
 
-			assert.ok(popover.isDisplayedInViewport(), "Popover should be displayed in the viewport");
+			assert.ok(popover.getProperty("opened"), "Popover should be displayed in the viewport");
 			assert.equal(firstItem.getAttribute("selected"), null, "First item should not be selected");
 
 			firstItemCheckbox.click();
@@ -51,17 +75,16 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("Opens all items popover when start typing and filters items", () => {
-			const input = browser.findElementDeep("#mcb >>> #ui5-multi-combobox-input >>> input");
-			const popover = browser.findElementDeep("#mcb >>> .ui5-multi-combobox-all-items-popover");
+			const input = browser.$("#mcb").shadow$("#ui5-multi-combobox-input");
+			const staticAreaItemClassName = browser.getStaticAreaItemClassName("#mcb")
+			const popover = browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-multi-combobox-all-items-popover");
 
 			input.click();
 			input.keys("c");
 
-			const list = browser.findElementDeep("#mcb >>> .ui5-multi-combobox-all-items-list");
+			const list = popover.$(".ui5-multi-combobox-all-items-list");
 
-			assert.ok(popover.isDisplayedInViewport(), "Popover should be displayed in the viewport");
-
-
+			assert.ok(popover.getProperty("opened"), "Popover should be displayed in the viewport");
 			assert.strictEqual(list.getProperty("items").length, 3, "3 items should be shown");
 
 			input.keys("o");
@@ -74,13 +97,13 @@ describe("MultiComboBox general interaction", () => {
 
 			input.keys("Backspace");
 
-			assert.strictEqual(list.getProperty("items").length, 3, "1 items should be shown");
+			assert.strictEqual(list.getProperty("items").length, 3, "3 items should be shown");
 		});
 
-		it("tests validate-input by typing a non existing option", () => {
+		it("tests built in validation by typing a non existing option", () => {
 			const mcb = $("#mcb-validation");
-			const input = browser.findElementDeep("#mcb-validation >>> #ui5-multi-combobox-input");
-			const innerInput = browser.findElementDeep("#mcb-validation >>> #ui5-multi-combobox-input >>> input");
+			const input = browser.$("#mcb-validation").shadow$("#ui5-multi-combobox-input");
+			const innerInput = browser.$("#mcb-validation").shadow$("#ui5-multi-combobox-input");
 
 			innerInput.click();
 			innerInput.keys("c");
@@ -97,12 +120,70 @@ describe("MultiComboBox general interaction", () => {
 			}, 2500, "expect value state to be different after 2.5 seconds");
 		});
 
+		it("When item is clicked, the popover should be closed and the value in the input should be removed", () => {
+			const input = browser.$("#another-mcb").shadow$("#ui5-multi-combobox-input");
+			const staticAreaItemClassName = browser.getStaticAreaItemClassName("#another-mcb")
+			const popover = browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-multi-combobox-all-items-popover");
+			const firstItem = popover.$(".ui5-multi-combobox-all-items-list > ui5-li");
+
+			input.click();
+			input.keys("c");
+
+			assert.strictEqual(popover.getProperty("opened"), true, "The popover should be opened");
+			assert.strictEqual(input.getValue(), "c", "Value is c (as typed)");
+
+			firstItem.click();
+
+			assert.strictEqual(popover.getProperty("opened"), false, "When the content is clicked, the popover should close");
+			assert.strictEqual(input.getValue(), "", "When the content is clicked, the value should be removed");
+		});
+
+		it("When item's checkbox is clicked, the popover should not be closed and the value in the input should be kept", () => {
+			const input = browser.$("#another-mcb").shadow$("#ui5-multi-combobox-input");
+			const staticAreaItemClassName = browser.getStaticAreaItemClassName("#another-mcb")
+			const popover = browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-multi-combobox-all-items-popover");
+			const firstItemCheckbox = popover.$(".ui5-multi-combobox-all-items-list > ui5-li").shadow$("ui5-checkbox");
+
+			input.click();
+			input.keys("c");
+
+			assert.strictEqual(popover.getProperty("opened"), true, "The popover should be opened");
+			assert.strictEqual(input.getValue(), "c", "Value is c (as typed)");
+
+			firstItemCheckbox.click();
+
+			assert.strictEqual(popover.getProperty("opened"), true, "When the content is clicked, the popover should close");
+			assert.strictEqual(input.getValue(), "c", "When the content is clicked, the value should be removed");
+		});
+
 		it("tests if n more is applied and corresponding popover", () => {
 			$("#more-mcb").scrollIntoView();
 
-			const nMoreText = browser.findElementDeep("#more-mcb >>> ui5-tokenizer >>> .ui5-tokenizer-more-text");
+			const nMoreText = browser.$("#more-mcb").shadow$("ui5-tokenizer").shadow$(".ui5-tokenizer-more-text");
 
 			assert.ok(nMoreText.getText(), "1 More", "token 1 should be visible");
+		});
+	});
+
+	describe("keyboard handling", () => {
+		browser.url("http://localhost:8080/test-resources/pages/MultiComboBox.html");
+
+		it ("tests backspace when combobox has an empty value", () => {
+			let tokens = $("#multi1").shadow$$(".ui5-multi-combobox-token");
+			const input = $("#multi1").shadow$("input");
+
+			$("#multi1").setProperty("value", "");
+
+			input.click();
+			input.keys('Backspace');
+
+			assert.strictEqual(tokens.length, 3, "3 tokens are visible");
+
+			input.keys('Backspace');
+
+			tokens = $("#multi1").shadow$$(".ui5-multi-combobox-token");
+
+			assert.strictEqual(tokens.length, 2, "2 tokens are visible");
 		});
 	});
 });

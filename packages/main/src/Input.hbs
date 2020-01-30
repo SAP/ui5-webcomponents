@@ -1,27 +1,30 @@
 <div
 	class="ui5-input-root"
-	@focusin="{{onfocusin}}"
-	@focusout="{{onfocusout}}"
+	@focusin="{{_onfocusin}}"
+	@focusout="{{_onfocusout}}"
 >
 	<div class="ui5-input-content">
-		{{#if _beginContent.length}}
-			<slot name="_beginContent"></slot>
-		{{/if}}
-
 		<input id="{{_id}}-inner"
 			class="ui5-input-inner"
 			type="{{inputType}}"
+			inner-input
 			?disabled="{{disabled}}"
 			?readonly="{{_readonly}}"
 			?required="{{required}}"
 			.value="{{value}}"
-			placeholder="{{inputPlaceholder}}"
-			aria-invalid="{{ariaInvalid}}"
-			aria-haspopup="{{ariaHasPopup}}"
-			aria-describedby="{{ariaDescribedBy}}"
-			aria-autocomplete="{{ariaAutoComplete}}"
+			placeholder="{{placeholder}}"
+			maxlength="{{maxlength}}"
+			role="{{accInfo.input.role}}"
+			aria-owns="{{accInfo.input.ariaOwns}}"
+			aria-invalid="{{accInfo.input.ariaInvalid}}"
+			aria-haspopup="{{accInfo.input.ariaHasPopup}}"
+			aria-describedby="{{accInfo.input.ariaDescribedBy}}"
+			aria-autocomplete="{{accInfo.input.ariaAutoComplete}}"
+			aria-expanded="{{accInfo.input.ariaExpanded}}"
 			@input="{{_handleInput}}"
 			@change="{{_handleChange}}"
+			@keydown="{{_onkeydown}}"
+			@keyup="{{_onkeyup}}"
 			data-sap-no-tab-ref
 			data-sap-focus-ref
 		/>
@@ -35,22 +38,14 @@
 			<span id="{{_id}}-suggestionsText" class="ui5-hidden-text">{{suggestionsText}}</span>
 		{{/if}}
 
+		{{#if accInfo.input.ariaDescription}}
+			<span id="{{_id}}-descr" class="ui5-hidden-text">{{accInfo.input.ariaDescription}}</span>
+		{{/if}}
+
 		{{#if hasValueState}}
-			<span id="{{_id}}-descr" class="ui5-hidden-text">{{valueStateText}}</span>
+			<span id="{{_id}}-valueStateDesc" class="ui5-hidden-text">{{valueStateText}}</span>
 		{{/if}}
 	</div>
-
-	{{#if showSuggestions}}
-			<ui5-popover
-				placement-type="Bottom"
-				no-arrow
-				horizontal-align="Stretch"
-				initial-focus="{{_id}}-inner">
-					<ui5-list separators="Inner">
-						<slot></slot>
-					</ui5-list>
-			</ui5-popover>
-	{{/if}}
 
 	<slot name="formSupport"></slot>
 </div>

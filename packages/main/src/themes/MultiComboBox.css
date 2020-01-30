@@ -1,7 +1,9 @@
-:host(ui5-multi-combobox:not([hidden])) {
-	display: inline-block;
-	width: 100%;
+@import "./Input.css";
+@import "./InputIcon.css";
+@import "./InvisibleTextStyles.css";
 
+:host(:not([hidden])) {
+	display: inline-block;
 	--_ui5_popover_content_padding: 0;
 }
 
@@ -12,49 +14,15 @@
 	height: 100%;
 }
 
-.ui5-multi-combobox-icon {
-	color: var(--sapUiContentIconColor);
-	cursor: pointer;
-	outline: none;
-}
-
-.ui5-multi-combobox-icon:active {
-	background-color: var(--sapUiButtonLiteActiveBackground);
-	color: var(--sapUiButtonActiveTextColor);
-}
-
-.ui5-multi-combobox-icon.ui5-multi-combobox-icon-root-pressed {
-	background: var(--sapUiToggleButtonPressedBackground);
-	color: var(--sapUiButtonActiveTextColor);
-}
-
-.ui5-multi-combobox-icon:not(.ui5-multi-combobox-icon-root-pressed):not(:active):hover {
-	background: var(--sapUiButtonLiteHoverBackground);
-}
-
-.ui5-multi-combobox-token {
-	height: 80%;
-}
-
-:host([data-ui5-compact-size]) .ui5-multi-combobox-token {
-	height: 100%;
-}
-
 .ui5-multi-combobox-tokenizer {
-	max-width: calc(100% - 3rem - var(--sap_wc_input_icon_min_width));
+	max-width: calc(100% - 3rem - var(--_ui5_input_icon_min_width));
 	border: none;
 	width: auto;
 	min-width: 0px;
 	height: 100%;
 }
 
-/* Remove this once ShadyCSS is adopted */
-
-ui5-multi-combobox:not([hidden]) {
-	display: inline-block;
-	width: 100%;
-}
-
-ui5-multi-combobox[data-ui5-compact-size] .ui5-multi-combobox-token {
-	height: 100%;
+/* Workaround for IE */
+ui5-multi-combobox ui5-tokenizer {
+	flex: 3;
 }

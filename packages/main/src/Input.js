@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { isIE } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
+import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import {
@@ -9,10 +9,13 @@ import {
 	isSpace,
 	isEnter,
 } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 // import Icon from "./Icon.js";
 import InputType from "./types/InputType.js";
-// Template
+// Templates
 import InputTemplate from "./generated/templates/InputTemplate.lit.js";
+import InputPopoverTemplate from "./generated/templates/InputPopoverTemplate.lit.js";
 
 import {
 	VALUE_STATE_SUCCESS,
@@ -34,7 +37,7 @@ const metadata = {
 		/**
 		 * Defines the icon to be displayed in the <code>ui5-input</code>.
 		 *
-		 * @type {Icon[]}
+		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
 		 */
@@ -54,6 +57,10 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> The suggestion would be displayed only if the <code>showSuggestions</code>
 		 * property is set to <code>true</code>.
+		 * <br><br>
+		 * <b>Note:</b> The &lt;ui5-li> and  &lt;ui5-li-custom> are recommended to be used as suggestion items.
+		 * <br>
+		 * In order to use them, you need to import either <code>"@ui5/webcomponents/dist/StandardListItem"</code>, or  <code>"@ui5/webcomponents/dist/CustomListItem"</code> module.
 		 *
 		 * @type {HTMLElement[]}
 		 * @slot
@@ -64,7 +71,13 @@ const metadata = {
 			type: HTMLElement,
 		},
 
-		_beginContent: {
+		/**
+		 * The slot is used for native <code>input</code> HTML element to enable form sumbit,
+		 * when <code>name</code> property is set.
+		 * @type {HTMLElement[]}
+		 * @private
+		 */
+		formSupport: {
 			type: HTMLElement,
 		},
 	},
@@ -86,8 +99,6 @@ const metadata = {
 		/**
 		 * Defines a short hint intended to aid the user with data entry when the
 		 * <code>ui5-input</code> has no value.
-		 * <br><br>
-		 * <b>Note:</b> The placeholder is not supported in IE. If the placeholder is provided, it won`t be displayed in IE.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
@@ -116,7 +127,7 @@ const metadata = {
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
-		 * @since 1.0.0
+		 * @since 1.0.0-rc.3
 		 */
 		required: {
 			type: Boolean,
@@ -190,13 +201,26 @@ const metadata = {
 
 		/**
 		 * Defines whether the <code>ui5-input</code> should show suggestions, if such are present.
-		 *
+		 * <br><br>
+		 * <b>Note:</b>
+		 * Don`t forget to import the <code>InputSuggestions</code> module from "@ui5/webcomponents/dist/features/InputSuggestions.js" to enable this functionality.
 		 * @type {Boolean}
 		 * @defaultvalue false
 		 * @public
 		 */
 		showSuggestions: {
 			type: Boolean,
+		},
+
+		/**
+		 * Sets the maximum number of characters available in the input field.
+		 *
+		 * @type {Integer}
+		 * @since 1.0.0-rc.5
+		 * @public
+		 */
+		maxlength: {
+			type: Integer,
 		},
 
 		/**
@@ -211,6 +235,14 @@ const metadata = {
 		},
 
 		_popover: {
+			type: Object,
+		},
+
+		_inputAccInfo: {
+			type: Object,
+		},
+
+		_wrapperAccInfo: {
 			type: Object,
 		},
 	},
@@ -305,6 +337,10 @@ class Input extends UI5Element {
 		return InputTemplate;
 	}
 
+	static get staticAreaTemplate() {
+		return InputPopoverTemplate;
+	}
+
 	static get styles() {
 		return [styles];
 	}
@@ -334,11 +370,17 @@ class Input extends UI5Element {
 		// all user interactions
 		this.ACTION_ENTER = "enter";
 		this.ACTION_USER_INPUT = "input";
+
+		// Suggestions array initialization
+		this.suggestionsTexts = [];
+
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
 		if (this.showSuggestions) {
 			this.enableSuggestions();
+			this.suggestionsTexts = this.Suggestions.defaultSlotProperties();
 		}
 
 		const FormSupport = getFeature("FormSupport");
@@ -356,7 +398,7 @@ class Input extends UI5Element {
 		this.firstRendering = false;
 	}
 
-	onkeydown(event) {
+	_onkeydown(event) {
 		if (isUp(event)) {
 			return this._handleUp(event);
 		}
@@ -372,6 +414,12 @@ class Input extends UI5Element {
 		if (isEnter(event)) {
 			return this._handleEnter(event);
 		}
+
+		this._keyDown = true;
+	}
+
+	_onkeyup(event) {
+		this._keyDown = false;
 	}
 
 	/* Event handling */
@@ -400,12 +448,12 @@ class Input extends UI5Element {
 		}
 	}
 
-	onfocusin() {
+	_onfocusin(event) {
 		this.focused = true; // invalidating property
 		this.previousValue = this.value;
 	}
 
-	onfocusout() {
+	_onfocusout(event) {
 		this.focused = false; // invalidating property
 		this.previousValue = "";
 	}
@@ -420,7 +468,14 @@ class Input extends UI5Element {
 			event.stopImmediatePropagation();
 		}
 
-		this.fireEventByAction(this.ACTION_USER_INPUT);
+		/* skip calling change event when an input with a placeholder is focused on IE
+			- value of the host and the internal input should be differnt in case of actual input
+			- input is called when a key is pressed => keyup should not be called yet
+		*/
+		const skipFiring = (this.getInputDOMRef().value === this.value) && isIE() && !this._keyDown && !!this.placeholder;
+
+		!skipFiring && this.fireEventByAction(this.ACTION_USER_INPUT);
+
 		this.hasSuggestionItemSelected = false;
 
 		if (this.Suggestions) {
@@ -535,10 +590,14 @@ class Input extends UI5Element {
 
 	onClose() {}
 
-	get inputPlaceholder() {
-		// We don`t support placeholder for IE,
-		// because IE fires input events, when placeholder exists, leading to functional degredations.
-		return isIE() ? "" : this.placeholder;
+	valueStateTextMappings() {
+		const i18nBundle = this.i18nBundle;
+
+		return {
+			"Success": i18nBundle.getText(VALUE_STATE_SUCCESS),
+			"Error": i18nBundle.getText(VALUE_STATE_ERROR),
+			"Warning": i18nBundle.getText(VALUE_STATE_WARNING),
+		};
 	}
 
 	get _readonly() {
@@ -549,48 +608,49 @@ class Input extends UI5Element {
 		return this.type.toLowerCase();
 	}
 
-	get ariaInvalid() {
-		return this.valueState === ValueState.Error ? "true" : undefined;
-	}
-
 	get suggestionsTextId() {
 		return this.showSuggestions ? `${this._id}-suggestionsText` : "";
-	  }
+	}
 
 	get valueStateTextId() {
-		return this.hasValueState ? `${this._id}-descr` : "";
+		return this.hasValueState ? `${this._id}-valueStateDesc` : "";
 	}
 
-	get ariaDescribedBy() {
-		return `${this.suggestionsTextId} ${this.valueStateTextId}`.trim();
-	}
-
-	get ariaHasPopup() {
-		return this.showSuggestions ? "true" : undefined;
-	}
-
-	get ariaAutoComplete() {
-		return this.showSuggestions ? "list" : undefined;
+	get accInfo() {
+		const ariaHasPopupDefault = this.showSuggestions ? "true" : undefined;
+		const ariaAutoCompleteDefault = this.showSuggestions ? "list" : undefined;
+		return {
+			"wrapper": {
+			},
+			"input": {
+				"ariaDescribedBy": this._inputAccInfo.ariaDescribedBy ? `${this.suggestionsTextId} ${this.valueStateTextId} ${this._inputAccInfo.ariaDescribedBy}`.trim() : `${this.suggestionsTextId} ${this.valueStateTextId}`.trim(),
+				"ariaInvalid": this.valueState === ValueState.Error ? "true" : undefined,
+				"ariaHasPopup": this._inputAccInfo.ariaHasPopup ? this._inputAccInfo.ariaHasPopup : ariaHasPopupDefault,
+				"ariaAutoComplete": this._inputAccInfo.ariaAutoComplete ? this._inputAccInfo.ariaAutoComplete : ariaAutoCompleteDefault,
+				"role": this._inputAccInfo && this._inputAccInfo.role,
+				"ariaOwns": this._inputAccInfo && this._inputAccInfo.ariaOwns,
+				"ariaExpanded": this._inputAccInfo && this._inputAccInfo.ariaExpanded,
+				"ariaDescription": this._inputAccInfo && this._inputAccInfo.ariaDescription,
+			},
+		};
 	}
 
 	get hasValueState() {
 		return this.valueState !== ValueState.None;
 	}
 
-	static valueStateTextMappings() {
-		return {
-			"Success": VALUE_STATE_SUCCESS.defaultText,
-			"Error": VALUE_STATE_ERROR.defaultText,
-			"Warning": VALUE_STATE_WARNING.defaultText,
-		};
-	}
-
 	get valueStateText() {
-		return Input.valueStateTextMappings()[this.valueState];
+		return this.valueStateTextMappings()[this.valueState];
 	}
 
 	get suggestionsText() {
-		return INPUT_SUGGESTIONS.defaultText;
+		return this.i18nBundle.getText(INPUT_SUGGESTIONS);
+	}
+
+	static async define(...params) {
+		await fetchI18nBundle("@ui5/webcomponents");
+
+		super.define(...params);
 	}
 }
 

@@ -1,11 +1,11 @@
-const assert = require("assert");
+const assert = require("chai").assert;
 
 describe("Eventing", () => {
 
 	it("Default prevented", () => {
-		browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/Eventing.html");
+		browser.url("http://localhost:8080/test-resources/pages/Eventing.html");
 
-		const innerLink = browser.findElementDeep("#defaultPreventedLink");
+		const innerLink = browser.$("#defaultPreventedLink");
 		innerLink.click();
 
 		const hrefIsSame = browser.execute(() => {
@@ -15,9 +15,9 @@ describe("Eventing", () => {
 	});
 
 	it("Default not prevented", () => {
-		browser.url("http://localhost:8080/test-resources/sap/ui/webcomponents/main/pages/Eventing.html");
+		browser.url("http://localhost:8080/test-resources/pages/Eventing.html");
 
-		const innerLink = browser.findElementDeep("#normalLink");
+		const innerLink = browser.$("#normalLink");
 		innerLink.click();
 
 		const hrefChanged = browser.execute(() => {

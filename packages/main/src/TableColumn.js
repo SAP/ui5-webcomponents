@@ -1,19 +1,17 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import CSSSize from "@ui5/webcomponents-base/dist/types/CSSSize.js";
 import TableColumnTemplate from "./generated/templates/TableColumnTemplate.lit.js";
 
 // Styles
 import styles from "./generated/themes/TableColumn.css.js";
-
 
 const metadata = {
 	tag: "ui5-table-column",
 	slots: /** @lends sap.ui.webcomponents.main.TableColumn.prototype */ {
 
 		/**
-		 * Defines the HTML Element to be displayed in the column header.
+		 * Defines the content of the column header.
 		 *
 		 * @type {Node[]}
 		 * @slot
@@ -26,7 +24,7 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.TableColumn.prototype */ {
 
 		/**
-		 * Defines the minimum screen width required to display this column. By default it is always displayed.
+		 * Defines the minimum table width required to display this column. By default it is always displayed.
 		 * <br><br>
 		 * The responsive behavior of the <code>ui5-table</code> is determined by this property. As an example, by setting
 		 * <code>minWidth</code> property to <code>40em</code> shows this column on tablet (and desktop) but hides it on mobile.
@@ -64,17 +62,6 @@ const metadata = {
 		 */
 		demandPopin: {
 			type: Boolean,
-		},
-
-		/**
-		 * Defines the width of the column. If you leave it empty, then this column covers the remaining space.
-		 *
-		 * @type {CSSSize}
-		 * @public
-		 */
-		width: {
-			type: CSSSize,
-			defaultValue: "auto",
 		},
 
 		/**

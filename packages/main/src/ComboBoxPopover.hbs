@@ -1,0 +1,34 @@
+<ui5-popover
+	style={{styles.popover}}
+	horizontal-align="Left"
+	?no-arrow={{editable}}
+	no-padding="true"
+	placement-type="Bottom"
+	_disable-initial-focus="true"
+	@ui5-afterOpen={{_afterOpenPopover}}
+	@ui5-afterClose={{_afterClosePopover}}
+>
+
+	<ui5-busyindicator 
+		?active={{loading}}
+		size="Medium"
+		class="ui5-combobox-busy"
+	>
+	</ui5-busyindicator>
+
+	<ui5-list 
+		separators="None"
+		@ui5-itemClick={{_selectItem}}
+		mode="SingleSelect"
+	>
+		{{#each _filteredItems}}
+			<ui5-li
+				type="Active"
+				.mappedItem={{this}}
+				?selected={{this.selected}}
+			>
+				{{this.text}}
+			</ui5-li>
+		{{/each}}
+	</ui5-list>
+</ui5-popover>

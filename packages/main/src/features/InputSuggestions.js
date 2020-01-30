@@ -2,12 +2,6 @@ import { registerFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.j
 
 import List from "../List.js";
 import Popover from "../Popover.js";
-import StandardListItem from "../StandardListItem.js"; // ensure <ui5-li> is loaded
-import CustomListItem from "../CustomListItem.js"; // ensure <ui5-li-custom> is loaded
-
-(function noTreeShaked() {
-	`${StandardListItem}${CustomListItem}`; //eslint-disable-line
-}());
 
 /**
  * A class to manage the <code>Input</code suggestion items.
@@ -37,6 +31,17 @@ class Suggestions {
 	}
 
 	/* Public methods */
+	defaultSlotProperties() {
+		const inputSuggestionItems = this._getComponent().suggestionItems;
+
+		const suggestions = [];
+		inputSuggestionItems.map(suggestion => {
+			return suggestions.push(suggestion.textContent);
+		});
+
+		return suggestions;
+	}
+
 	onUp(event) {
 		event.preventDefault();
 		this._handleItemNavigation(false /* forward */);
@@ -239,7 +244,7 @@ class Suggestions {
 	_getScrollContainer() {
 		if (!this._scrollContainer) {
 			const popover = this._getPopover();
-			this._scrollContainer = popover.getDomRef().querySelector(".ui5-popup-content");
+			this._scrollContainer = popover.getDomRef().querySelector(".ui5-popover-content");
 		}
 
 		return this._scrollContainer;
@@ -254,11 +259,11 @@ class Suggestions {
 	}
 
 	_getList() {
-		return this._getComponent().shadowRoot.querySelector("ui5-list");
+		return this._getComponent().getStaticAreaItemDomRef().querySelector("ui5-popover").querySelector("ui5-list");
 	}
 
 	_getPopover() {
-		return this._getComponent().shadowRoot.querySelector("ui5-popover");
+		return this._getComponent().getStaticAreaItemDomRef().querySelector("ui5-popover");
 	}
 }
 

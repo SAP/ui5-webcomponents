@@ -34,3 +34,23 @@ yarn-debug.log*
 
 # Ignore default target directory for the npm package 'ui5-schemas'
 .tmp
+
+# Ignore rollup CJS output file of icon-collection-bundler
+icon-collection-bundler.cjs.js
+
+# Playground
+packages/playground/_site/
+packages/playground/.sass-cache/
+packages/playground/assets/js/ui5-webcomponents/
+
+packages/playground/docs/components
+!packages/playground/docs/components/component.md
+
+packages/playground/docs/documentation
+!packages/playground/docs/documentation/documentation.md
+
+packages/playground/docs/tutorials
+!packages/playground/docs/tutorials/tutorials.md
+
+packages/playground/docs/pages/content/main/*
+packages/playground/docs/pages/content/fiori/*

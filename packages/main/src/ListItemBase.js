@@ -1,5 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import FocusHelper from "@ui5/webcomponents-base/dist/FocusHelper.js";
+import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
 import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 
@@ -10,7 +10,6 @@ import styles from "./generated/themes/ListItemBase.css.js";
  * @public
  */
 const metadata = {
-	"abstract": true,
 	properties: /** @lends  sap.ui.webcomponents.main.ListItemBase.prototype */  {
 
 		/**
@@ -25,6 +24,14 @@ const metadata = {
 			type: String,
 			defaultValue: "-1",
 			noAttribute: true,
+		},
+
+		/**
+		 * Indicates if the element is on focus
+		 * @private
+		 */
+		focused: {
+			type: Boolean,
 		},
 	},
 	events: {
@@ -53,11 +60,16 @@ class ListItemBase extends UI5Element {
 		return styles;
 	}
 
-	onfocusin(event) {
+	_onfocusin(event) {
+		this.focused = true;
 		this.fireEvent("_focused", event);
 	}
 
-	onkeydown(event) {
+	_onfocusout(_event) {
+		this.focused = false;
+	}
+
+	_onkeydown(event) {
 		if (isTabNext(event)) {
 			return this._handleTabNext(event);
 		}
@@ -68,7 +80,7 @@ class ListItemBase extends UI5Element {
 	}
 
 	_handleTabNext(event) {
-		const target = event.target.shadowRoot.activeElement;
+		const target = event.target;
 
 		if (this.shouldForwardTabAfter(target)) {
 			this.fireEvent("_forwardAfter", { item: target });
@@ -76,7 +88,7 @@ class ListItemBase extends UI5Element {
 	}
 
 	_handleTabPrevious(event) {
-		const target = event.target.shadowRoot.activeElement;
+		const target = event.target;
 
 		if (this.shouldForwardTabBefore(target)) {
 			const eventData = event;
@@ -90,7 +102,7 @@ class ListItemBase extends UI5Element {
 	* [TAB] is performed onto the last tabbale content item.
 	*/
 	shouldForwardTabAfter(target) {
-		const aContent = FocusHelper.getTabbableContent(this.getDomRef());
+		const aContent = getTabbableElements(this.getDomRef());
 
 		if (target.getFocusDomRef) {
 			target = target.getFocusDomRef();
