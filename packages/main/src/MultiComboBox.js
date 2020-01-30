@@ -14,6 +14,7 @@ import Icon from "./Icon.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
 import StandardListItem from "./StandardListItem.js";
+import ToggleButton from "./ToggleButton.js";
 import {
 	VALUE_STATE_SUCCESS,
 	VALUE_STATE_ERROR,
@@ -308,6 +309,7 @@ class MultiComboBox extends UI5Element {
 		this._inputLastValue = "";
 		this._deleting = false;
 		this._validationTimeout = null;
+		this._selectedItemsPopoverOpened = false;
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
@@ -316,10 +318,13 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_showMorePopover() {
+		this._showMorePressed = true;
+		this._selectedItemsPopoverOpened = true;
 		this._toggleRespPopover(true);
 	}
 
 	_showAllItemsPopover() {
+		this._selectedItemsPopoverOpened = false;
 		this._toggleRespPopover(false);
 
 		this._inputDom.focus();
@@ -502,15 +507,27 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_click(event) {
-		if (isPhone() && !this._getRespPopover(true).opened) {
+		if (isPhone() && !this._showMorePressed) {
 			this._getRespPopover().open(this);
 			event.preventDefault(); // prevent immediate selection of any item
 		}
+
+		this._showMorePressed = false;
 	}
 
 	_afterClosePopover() {
 		if (isPhone()) {
 			this.blur();
+		}
+	}
+
+	_toggleButtonPress(event) {
+		if (this._selectedItemsPopoverOpened) {
+			event.target.pressed = true;
+			this._showAllItemsPopover();
+		} else {
+			event.target.pressed = false;
+			this._showMorePopover();
 		}
 	}
 
@@ -619,6 +636,7 @@ class MultiComboBox extends UI5Element {
 			ResponsivePopover.define(),
 			List.define(),
 			StandardListItem.define(),
+			ToggleButton,
 			fetchI18nBundle("@ui5/webcomponents"),
 		]);
 

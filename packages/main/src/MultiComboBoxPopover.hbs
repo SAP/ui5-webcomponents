@@ -24,6 +24,15 @@
 			aria-describedby="{{_id}}-valueStateDesc"
 		/>
 	</div>
+	<ui5-togglebutton
+		slot="header"
+		class="ui5-multi-combobox-toggle-button"
+		icon="multiselect-all"
+		design="Transparent"
+		pressed
+		@click="{{_toggleButtonPress}}"
+	></ui5-togglebutton>
+
 	<ui5-list separators="None" mode="{{selectedItemsListMode}}"
 		@ui5-selectionChange={{_listSelectionChange}}>
 		{{#each items}}
@@ -62,6 +71,14 @@
 			aria-describedby="{{_id}}-valueStateDesc"
 		/>
 	</div>
+	<ui5-togglebutton
+		slot="header"
+		class="ui5-multi-combobox-toggle-button"
+		icon="multiselect-all"
+		design="Transparent"
+		@click="{{_toggleButtonPress}}"
+	></ui5-togglebutton>
+
 	<ui5-list separators="None" mode="MultiSelect" class="ui5-multi-combobox-all-items-list">
 		{{#each _filteredItems}}
 				<ui5-li type="Active" ?selected={{this.selected}} data-ui5-token-id="{{this._id}}">{{this.textContent}}</ui5-li>

@@ -16,10 +16,6 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	padding-bottom: 0.25rem;
-}
-
-.ui5-responsive-popover-header {
 	padding: 0.25rem 1rem;
 }
 

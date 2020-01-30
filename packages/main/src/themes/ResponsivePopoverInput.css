@@ -1,5 +1,5 @@
 .input-root-phone {
-	width: 100%;
+	flex: 1;
 	height: var(--_ui5_input_height);
 	color: var(--sapField_TextColor);
 	font-size: var(--sapFontMediumSize);
@@ -104,4 +104,8 @@
 [inner-input]::-ms-clear {
 	height: 0;
 	width: 0;
+}
+
+.ui5-multi-combobox-toggle-button {
+	margin-left: 0.5rem;
 }
