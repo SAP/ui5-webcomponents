@@ -598,7 +598,17 @@ class Input extends UI5Element {
 	}
 
 	getInputDOMRef() {
-		return isPhone() ? this.getStaticAreaItemDomRef().querySelector(".ui5-input-inner-phone") : this.getDomRef().querySelector(`#${this.getInputId()}`);
+		let inputDomRef;
+
+		if (isPhone()) {
+			inputDomRef = this.getStaticAreaItemDomRef().querySelector(".ui5-input-inner-phone");
+		}
+
+		if (!inputDomRef) {
+			inputDomRef = this.getDomRef().querySelector(`#${this.getInputId()}`);
+		}
+
+		return inputDomRef;
 	}
 
 	getLabelableElementId() {
