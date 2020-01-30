@@ -12,7 +12,7 @@ import {
 	getI18nBundle,
 } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
-import { isMobile } from "@ui5/webcomponents-base/dist/Device.js";
+import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import {
 	CAROUSEL_OF_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
@@ -161,7 +161,7 @@ class Carousel extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		if (isMobile()) {
+		if (!isDesktop()) {
 			this.itemsPerPage = 1;
 		}
 	}
@@ -270,8 +270,8 @@ class Carousel extends UI5Element {
 
 	get arrows() {
 		return {
-			content: !isMobile() && this.arrowsPlacement === CarouselArrowsPlacement.Content,
-			navigation: !isMobile() && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
+			content: isDesktop() && this.arrowsPlacement === CarouselArrowsPlacement.Content,
+			navigation: isDesktop() && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
 		};
 	}
 
