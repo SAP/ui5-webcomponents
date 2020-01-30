@@ -109,7 +109,7 @@ class CalendarHeader extends UI5Element {
 		return getRTL() ? "rtl" : undefined;
 	}
 
-	static async beforeDefine() {
+	static async onDefine() {
 		await Promise.all([
 			await Button.define(),
 			await Icon.define(),

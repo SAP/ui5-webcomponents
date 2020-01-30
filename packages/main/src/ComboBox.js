@@ -439,7 +439,7 @@ class ComboBox extends UI5Element {
 		return !this.readonly;
 	}
 
-	static async beforeDefine() {
+	static async onDefine() {
 		await Promise.all([
 			ComboBoxItem.define(),
 			Icon.define(),

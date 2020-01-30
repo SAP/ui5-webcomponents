@@ -186,7 +186,7 @@ class Avatar extends UI5Element {
 		return AvatarTemplate;
 	}
 
-	static async beforeDefine() {
+	static async onDefine() {
 		await Icon.define();
 	}
 

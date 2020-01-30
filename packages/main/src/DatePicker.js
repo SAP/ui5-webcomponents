@@ -567,7 +567,7 @@ class DatePicker extends UI5Element {
 		return InputType.Text;
 	}
 
-	static async beforeDefine() {
+	static async onDefine() {
 		await Promise.all([
 			fetchCldr(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
 			Icon.define(),

@@ -573,7 +573,7 @@ class MultiComboBox extends UI5Element {
 		return this.valueStateTextMappings[this.valueState];
 	}
 
-	static async beforeDefine() {
+	static async onDefine() {
 		await Promise.all([
 			Tokenizer.define(),
 			Token.define(),

@@ -46,7 +46,7 @@ class INIT_PACKAGE_VAR_CLASS_NAME extends UI5Element {
 		return INIT_PACKAGE_VAR_CLASS_NAMECss;
 	}
 
-	static async beforeDefine() {
+	static async onDefine() {
 		await fetchI18nBundle("INIT_PACKAGE_VAR_NAME");
 	}
 }

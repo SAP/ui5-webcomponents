@@ -100,7 +100,7 @@ class BusyIndicator extends UI5Element {
 		return BusyIndicatorTemplate;
 	}
 
-	static async beforeDefine() {
+	static async onDefine() {
 		await fetchI18nBundle("@ui5/webcomponents");
 	}
 

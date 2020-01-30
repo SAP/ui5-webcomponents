@@ -647,7 +647,7 @@ class Input extends UI5Element {
 		return this.i18nBundle.getText(INPUT_SUGGESTIONS);
 	}
 
-	static async beforeDefine() {
+	static async onDefine() {
 		await fetchI18nBundle("@ui5/webcomponents");
 	}
 }

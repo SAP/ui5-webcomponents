@@ -410,7 +410,7 @@ class Select extends UI5Element {
 		return getRTL() ? "rtl" : "ltr";
 	}
 
-	static async beforeDefine() {
+	static async onDefine() {
 		await Promise.all([
 			Label.define(),
 			Popover.define(),

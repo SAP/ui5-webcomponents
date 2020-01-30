@@ -867,7 +867,7 @@ class ShellBar extends UI5Element {
 		return getRTL() ? "rtl" : undefined;
 	}
 
-	static async beforeDefine() {
+	static async onDefine() {
 		await Promise.all([
 			Icon.define(),
 			List.define(),

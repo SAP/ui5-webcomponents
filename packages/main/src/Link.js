@@ -229,7 +229,7 @@ class Link extends UI5Element {
 		return this.href.length > 0 ? this.href : undefined;
 	}
 
-	static async beforeDefine() {
+	static async onDefine() {
 		await fetchI18nBundle("@ui5/webcomponents");
 	}
 }

@@ -108,7 +108,7 @@ class Badge extends UI5Element {
 		return badgeCss;
 	}
 
-	static async beforeDefine() {
+	static async onDefine() {
 		await fetchI18nBundle("@ui5/webcomponents");
 	}
 

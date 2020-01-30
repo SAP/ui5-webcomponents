@@ -157,7 +157,7 @@ class StandardListItem extends ListItem {
 		return (this.icon && this.iconEnd);
 	}
 
-	static async beforeDefine() {
+	static async onDefine() {
 		await Icon.define();
 	}
 }

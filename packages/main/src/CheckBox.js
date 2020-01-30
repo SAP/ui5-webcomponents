@@ -308,7 +308,7 @@ class CheckBox extends UI5Element {
 		return getRTL() ? "rtl" : undefined;
 	}
 
-	static async beforeDefine() {
+	static async onDefine() {
 		await Promise.all([
 			Label.define(),
 			Icon.define(),
