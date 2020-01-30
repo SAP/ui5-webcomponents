@@ -13,7 +13,7 @@
 }
 
 :host([disabled]) {
-	opacity: var(--sap_wc_input_disabled_opacity);
+	opacity: var(--_ui5_input_disabled_opacity);
 	cursor: default;
 	pointer-events: none;
 	background: var(--sapField_ReadOnly_Background);
