@@ -86,11 +86,11 @@ class CalendarHeader extends UI5Element {
 		this._btnPrev.classes = "ui5-calheader-arrowbtn";
 		this._btnNext.classes = "ui5-calheader-arrowbtn";
 
-		if (this._isNextButtonDisabled){
+		if (this._isNextButtonDisabled) {
 			this._btnNext.classes += " ui5-calheader-arrowbtn-disabled";
 		}
 
-		if (this._isPrevButtonDisabled){
+		if (this._isPrevButtonDisabled) {
 			this._btnPrev.classes += " ui5-calheader-arrowbtn-disabled";
 		}
 	}

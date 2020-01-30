@@ -20,8 +20,8 @@ import DayPickerTemplate from "./generated/templates/DayPickerTemplate.lit.js";
 import dayPickerCSS from "./generated/themes/DayPicker.css.js";
 
 const monthDiff = (startDate, endDate) => {
-	let months,
-		_startDate = CalendarDate.fromTimestamp(startDate).toLocalJSDate(),
+	let months;
+	const _startDate = CalendarDate.fromTimestamp(startDate).toLocalJSDate(),
 		_endDate = CalendarDate.fromTimestamp(endDate).toLocalJSDate();
 
 	months = (_endDate.getFullYear() - _startDate.getFullYear()) * 12;
@@ -203,11 +203,11 @@ class DayPicker extends UI5Element {
 		let week = [];
 		this._weekNumbers = [];
 		let weekday;
-		if(this.minDate){
+		if (this.minDate) {
 			this._minDateObject = new Date(this._minDate);
 		}
-		
-		if(this.maxDate){
+
+		if (this.maxDate) {
 			this._maxDateObject = new Date(this._maxDate);
 		}
 		/* eslint-disable no-loop-func */
@@ -314,7 +314,7 @@ class DayPicker extends UI5Element {
 	_onmousedown(event) {
 		const target = event.target;
 		const dayPressed = this._isDayPressed(target);
-	
+
 		if (dayPressed) {
 			const targetDate = parseInt(target.getAttribute("data-sap-timestamp"));
 
@@ -346,7 +346,7 @@ class DayPicker extends UI5Element {
 			this.targetDate = null;
 		}
 
-		if (!dayPressed){
+		if (!dayPressed) {
 			this._itemNav.focusCurrent();
 		}
 	}
@@ -472,7 +472,7 @@ class DayPicker extends UI5Element {
 		if (monthsBetween < 0) {
 			return false;
 		}
-		
+
 		const lastFocusableDay = this.focusableDays[this.focusableDays.length - 1].iDay;
 		if (monthsBetween === 0 && CalendarDate.fromTimestamp(this._maxDate).toLocalJSDate().getDate() === lastFocusableDay) {
 			return false;
@@ -525,7 +525,7 @@ class DayPicker extends UI5Element {
 			newYear = currentMonth < 11 ? currentYear : currentYear + 1;
 			newDate = currentDate.getMonth() === newMonth ? currentDate.getDate() : currentDate.getDate() + 7;
 		} else if (event.start) {
-			currentDate = new Date(this._weeks[0][event.rowIndex].timestamp * 1000)
+			currentDate = new Date(this._weeks[0][event.rowIndex].timestamp * 1000);
 			newMonth = currentMonth > 0 ? currentMonth - 1 : 11;
 			newYear = currentMonth > 0 ? currentYear : currentYear - 1;
 			newDate = currentDate.getMonth() === newMonth ? currentDate.getDate() : currentDate.getDate() - 7;
@@ -543,7 +543,7 @@ class DayPicker extends UI5Element {
 		if (this._isOutOfSelectableRange(oNewDate._oUDate.oDate)) {
 			return;
 		}
-		
+
 		this.fireEvent("navigate", { timestamp: (oNewDate.valueOf() / 1000) });
 	}
 
@@ -568,23 +568,21 @@ class DayPicker extends UI5Element {
 	}
 
 	get _maxDate() {
-		if (this.maxDate){
-			const jsDate = new Date(this.getFormat().parse(this.maxDate).getFullYear(),this.getFormat().parse(this.maxDate).getMonth(),this.getFormat().parse(this.maxDate).getDate());
-			const oCalDate = CalendarDate.fromTimestamp(jsDate.getTime(),this._primaryCalendarType);
+		if (this.maxDate) {
+			const jsDate = new Date(this.getFormat().parse(this.maxDate).getFullYear(), this.getFormat().parse(this.maxDate).getMonth(), this.getFormat().parse(this.maxDate).getDate());
+			const oCalDate = CalendarDate.fromTimestamp(jsDate.getTime(), this._primaryCalendarType);
 			return oCalDate.valueOf();
-		} else {
-			return this.maxDate;
 		}
+		return this.maxDate;
 	}
 
 	get _minDate() {
-		if (this.minDate){
-			const jsDate = new Date(this.getFormat().parse(this.minDate).getFullYear(),this.getFormat().parse(this.minDate).getMonth(),this.getFormat().parse(this.minDate).getDate());
-			const oCalDate = CalendarDate.fromTimestamp(jsDate.getTime(),this._primaryCalendarType);
+		if (this.minDate) {
+			const jsDate = new Date(this.getFormat().parse(this.minDate).getFullYear(), this.getFormat().parse(this.minDate).getMonth(), this.getFormat().parse(this.minDate).getDate());
+			const oCalDate = CalendarDate.fromTimestamp(jsDate.getTime(), this._primaryCalendarType);
 			return oCalDate.valueOf();
-		} else {
-			return this.minDate;
 		}
+		return this.minDate;
 	}
 
 	getFormat() {

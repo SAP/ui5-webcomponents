@@ -328,7 +328,7 @@ class DatePicker extends UI5Element {
 
 	findFirstFocusableDay(daypicker) {
 		const today = new Date();
-		if (!this.isInValidRange(today.getTime())){
+		if (!this.isInValidRange(today.getTime())) {
 			const focusableItems = Array.from(daypicker.shadowRoot.querySelectorAll(".ui5-dp-item"));
 			return focusableItems.filter(x => !x.classList.contains("ui5-dp-item--disabled"))[0];
 		}
@@ -338,12 +338,12 @@ class DatePicker extends UI5Element {
 		this._calendar.primaryCalendarType = this._primaryCalendarType;
 		this._calendar.formatPattern = this._formatPattern;
 
-		if (this.minDate && !this.isValid(this.minDate)){
+		if (this.minDate && !this.isValid(this.minDate)) {
 			this.minDate = null;
 			console.warn(`In order for the "minDate" property to have effect, you should enter valid date format`); // eslint-disable-line
 		}
 
-		if (this.maxDate && !this.isValid(this.maxDate)){
+		if (this.maxDate && !this.isValid(this.maxDate)) {
 			this.maxDate = null;
 			console.warn(`In order for the "maxDate" property to have effect, you should enter valid date format`); // eslint-disable-line
 		}
@@ -369,10 +369,10 @@ class DatePicker extends UI5Element {
 		}
 	}
 
-	_getTimeStampFromString(value){
-		if (this.getFormat().parse(value)){
-			const jsDate = new Date(this.getFormat().parse(value).getFullYear(),this.getFormat().parse(value).getMonth(),this.getFormat().parse(value).getDate());
-			const oCalDate = CalendarDate.fromTimestamp(jsDate.getTime(),this._primaryCalendarType);
+	_getTimeStampFromString(value) {
+		if (this.getFormat().parse(value)) {
+			const jsDate = new Date(this.getFormat().parse(value).getFullYear(), this.getFormat().parse(value).getMonth(), this.getFormat().parse(value).getDate());
+			const oCalDate = CalendarDate.fromTimestamp(jsDate.getTime(), this._primaryCalendarType);
 			return oCalDate.valueOf();
 		}
 		return undefined;
@@ -524,19 +524,17 @@ class DatePicker extends UI5Element {
 	}
 
 	get _maxDate() {
-		if (this.maxDate){
+		if (this.maxDate) {
 			return this._getTimeStampFromString(this.maxDate);
-		} else {
-			return this.maxDate;
 		}
+		return this.maxDate;
 	}
 
 	get _minDate() {
-		if (this.minDate){
+		if (this.minDate) {
 			return this._getTimeStampFromString(this.minDate);
-		} else {
-			return this.minDate;
 		}
+		return this.minDate;
 	}
 
 	get openIconTitle() {
@@ -574,7 +572,6 @@ class DatePicker extends UI5Element {
 		this._calendar.selectedDates = event.detail.dates;
 		this._focusInputAfterClose = true;
 		this.closePicker();
-		
 
 		if (this.isInValidRange(this._getTimeStampFromString(this.value))) {
 			this.valueState = ValueState.None;
