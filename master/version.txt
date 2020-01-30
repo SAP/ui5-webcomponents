@@ -1,5 +1,5 @@
-commit 7f8cfc3ecc2fc0b0047c005cb1ee256ce10584c3
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Jan 30 08:53:07 2020 +0200
+commit e463d23458c02881a531b6adcfc5640e12e04472
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Thu Jan 30 11:39:32 2020 +0200
 
-    refactor(ui5-input): allow displaying multiple icons (#1162)
+    fix(ui5-card): fix width (#1165)
