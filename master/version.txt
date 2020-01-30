@@ -1,5 +1,5 @@
-commit 341c599c15d22c085d5530d7bdc2303293156c0f
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Wed Jan 29 14:55:10 2020 -0800
+commit 7f8cfc3ecc2fc0b0047c005cb1ee256ce10584c3
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu Jan 30 08:53:07 2020 +0200
 
-    chore: i18n demo enhancements (#1160)
+    refactor(ui5-input): allow displaying multiple icons (#1162)
