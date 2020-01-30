@@ -46,4 +46,12 @@ describe("Carousel general interaction", () => {
 
 		assert.strictEqual(buttons.length, 2, "Navigation is rendered");
 	});
+
+	it("ItemsPerPage property is working properly", () => {
+		const carousel = browser.$("#carousel4");
+		const pages = carousel.getProperty("items").length;
+
+		assert.strictEqual(pages, 3, "There are only 3 pages.");
+	});
+
 });

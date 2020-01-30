@@ -12,12 +12,12 @@ import {
 	getI18nBundle,
 } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
+import { isMobile } from "@ui5/webcomponents-base/dist/Device.js";
 import {
 	CAROUSEL_OF_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
 import CarouselArrowsPlacement from "./types/CarouselArrowsPlacement.js";
 import CarouselTemplate from "./generated/templates/CarouselTemplate.lit.js";
-import { isMobile } from "@ui5/webcomponents-base/dist/Device.js";
 
 // Styles
 import CarouselCss from "./generated/themes/Carousel.css.js";
@@ -28,6 +28,17 @@ import CarouselCss from "./generated/themes/Carousel.css.js";
 const metadata = {
 	tag: "ui5-carousel",
 	properties: /** @lends sap.ui.webcomponents.main.Carousel.prototype */ {
+		/**
+		 * If set to true the navigation is hidden
+		 * @type {Integer}
+		 * @defaultvalue 1
+		 * @public
+		 */
+		itemsPerPage: {
+			type: Integer,
+			defaultValue: 1,
+		},
+
 		/**
 		 * If set to true the navigation is hidden
 		 * @type {Boolean}
@@ -125,11 +136,11 @@ class Carousel extends UI5Element {
 
 	constructor() {
 		super();
-		
+
 		this._scrollEnablement = new ScrollEnablement(this);
-		this._scrollEnablement.attachEvent("touchend", (event) => {
+		this._scrollEnablement.attachEvent("touchend", event => {
 			this._updateScrolling(event);
-		})
+		});
 
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
@@ -163,20 +174,29 @@ class Carousel extends UI5Element {
 	}
 
 	navigateLeft() {
-		this.selectedIndex = this.selectedIndex - 1 < 1 ? this.content.length : --this.selectedIndex;
+		this.selectedIndex = this.selectedIndex - 1 < 1 ? this.items.length : --this.selectedIndex;
 	}
 
 	navigateRight() {
-		this.selectedIndex = this.selectedIndex + 1 > this.content.length ? 1 : ++this.selectedIndex;
+		this.selectedIndex = this.selectedIndex + 1 > this.items.length ? 1 : ++this.selectedIndex;
 	}
 
+	/**
+	 * Assuming that all items have the same width
+	 * @private
+	 */
 	get items() {
-		return this.content.map((item, index) => {
-			return {
-				item,
-				tabindex: index + 1 === this.selectedIndex ? "0" : "-1",
-			};
-		});
+		const result = [],
+			innerArraysLength = Math.ceil(this.content.length / this.itemsPerPage);
+
+		for (let i = 0; i < innerArraysLength; i++) {
+			result.push([]);
+			for (let j = 0; j < this.itemsPerPage; j++) {
+				result[i].push(this.content[(i * this.itemsPerPage) + j]);
+			}
+		}
+
+		return result;
 	}
 
 	get styles() {
@@ -193,15 +213,19 @@ class Carousel extends UI5Element {
 				"ui5-carousel-navigation-wrapper": true,
 				"ui5-carousel-navigation-with-buttons": this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
 			},
+			item: {
+				"ui5-carousel-item": true,
+				"ui5-carousel-item-multiple": this.itemsPerPage > 1,
+			},
 		};
 	}
 
 	get isPageTypeDots() {
-		return this.content.length < 9;
+		return this.items.length < 9;
 	}
 
 	get dots() {
-		return this.content.map((item, index) => {
+		return this.items.map((item, index) => {
 			return {
 				active: index === this.selectedIndex - 1,
 			};
