@@ -2,7 +2,7 @@ import EventProvider from "../EventProvider.js";
 import scroll from "../animations/scroll.js";
 
 const scrollEventName = "scroll";
-const toucnEndEventName = "touchend";
+const touchEndEventName = "touchend";
 
 class ScrollEnablement extends EventProvider {
 	constructor(containerComponent) {
@@ -93,7 +93,7 @@ class ScrollEnablement extends EventProvider {
 		container.scrollLeft += this._prevDragX - dragX;
 		container.scrollTop += this._prevDragY - dragY;
 
-		this.fireEvent(toucnEndEventName, {
+		this.fireEvent(touchEndEventName, {
 			isLeft: dragX > this._prevDragX,
 			isRight: dragX < this._prevDragX,
 		});

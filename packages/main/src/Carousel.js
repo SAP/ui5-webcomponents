@@ -29,7 +29,17 @@ const metadata = {
 	tag: "ui5-carousel",
 	properties: /** @lends sap.ui.webcomponents.main.Carousel.prototype */ {
 		/**
-		 * If set to true the navigation is hidden
+		 * Defines whether the carousel should loop, i.e show the first page after the last page is reached and vice versa.
+		 * @type {Boolean}
+		 * @defaultvalue false
+		 * @public
+		 */
+		cycling: {
+			type: Boolean,
+		},
+
+		/**
+		 * Sets the amount of items per page.
 		 * @type {Integer}
 		 * @defaultvalue 1
 		 * @public
@@ -40,7 +50,7 @@ const metadata = {
 		},
 
 		/**
-		 * If set to true the navigation is hidden
+		 * If set to true the navigation is hidden.
 		 * @type {Boolean}
 		 * @defaultvalue false
 		 * @public
@@ -50,18 +60,18 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the index of the initially selected slot
+		 * Defines the index of the initially selected slot.
 		 * @type {Integer}
-		 * @defaultvalue 1
+		 * @defaultvalue 0
 		 * @public
 		 */
 		selectedIndex: {
 			type: Integer,
-			defaultValue: 1,
+			defaultValue: 0,
 		},
 
 		/**
-		 * Defines the position of arrows
+		 * Defines the position of arrows.
 		 * @type {CarouselArrowsPlacement}
 		 * @defaultvalue CarouselArrowsPlacement.Content
 		 * @public
@@ -94,7 +104,7 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  * The carousel allows the user to browse through a set of items by swiping right or left.
- * The control is mostly used for showing a gallery of images, but can hold any other HTML element.
+ * The component is mostly used for showing a gallery of images, but can hold any other HTML element.
  *
  * <h3>Usage</h3>
  *
@@ -115,6 +125,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.Carousel
  * @extends UI5Element
  * @tagname ui5-carousel
+ * @since 1.0.0-rc.6
  * @public
  */
 class Carousel extends UI5Element {
@@ -132,6 +143,10 @@ class Carousel extends UI5Element {
 
 	static get template() {
 		return CarouselTemplate;
+	}
+
+	static get pageTypeLimit() {
+		return 9;
 	}
 
 	constructor() {
@@ -174,11 +189,24 @@ class Carousel extends UI5Element {
 	}
 
 	navigateLeft() {
-		this.selectedIndex = this.selectedIndex - 1 < 1 ? this.items.length : --this.selectedIndex;
+		if (this.selectedIndex - 1 < 0) {
+			if (this.cycling) {
+				this.selectedIndex = this.items.length - 1;
+			}
+		}
+		else {
+			--this.selectedIndex;
+		}
 	}
 
 	navigateRight() {
-		this.selectedIndex = this.selectedIndex + 1 > this.items.length ? 1 : ++this.selectedIndex;
+		if (this.selectedIndex + 1 > this.items.length - 1) {
+			if (this.cycling) {
+				this.selectedIndex = 0;
+			}
+		} else {
+			++this.selectedIndex;
+		}
 	}
 
 	/**
@@ -192,7 +220,10 @@ class Carousel extends UI5Element {
 		for (let i = 0; i < innerArraysLength; i++) {
 			result.push([]);
 			for (let j = 0; j < this.itemsPerPage; j++) {
-				result[i].push(this.content[(i * this.itemsPerPage) + j]);
+				result[i].push({
+					item: this.content[(i * this.itemsPerPage) + j],
+					tabIndex: i === this.selectedIndex ? "0" : "-1",
+				});
 			}
 		}
 
@@ -202,7 +233,7 @@ class Carousel extends UI5Element {
 	get styles() {
 		return {
 			content: {
-				"left": `-${(this.selectedIndex - 1) * 100}%`,
+				"left": `-${this.selectedIndex * 100}%`,
 			},
 		};
 	}
@@ -221,13 +252,13 @@ class Carousel extends UI5Element {
 	}
 
 	get isPageTypeDots() {
-		return this.items.length < 9;
+		return this.items.length < Carousel.pageTypeLimit;
 	}
 
 	get dots() {
 		return this.items.map((item, index) => {
 			return {
-				active: index === this.selectedIndex - 1,
+				active: index === this.selectedIndex,
 			};
 		});
 	}
@@ -241,6 +272,10 @@ class Carousel extends UI5Element {
 
 	get ofText() {
 		return this.i18nBundle.getText(CAROUSEL_OF_TEXT);
+	}
+
+	get currenlySelectedIndexToShow() {
+		return this.selectedIndex + 1;
 	}
 
 	static async define(...params) {
