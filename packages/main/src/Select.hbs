@@ -6,15 +6,13 @@
 	@keyup="{{_onkeyup}}"
 	@focusin="{{_onfocusin}}"
 	@focusout="{{_onfocusout}}"
+	@click="{{_toggleRespPopover}}"
 >
-	<div
-		class="ui5-select-label-root"
-		@click="{{_toggleRespPopover}}">
+	<div class="ui5-select-label-root">
 		<ui5-label>{{_text}}</ui5-label>
 	</div>
 
-	<ui5-icon 
-		@click="{{_toggleRespPopover}}"
+	<ui5-icon
 		name="slim-arrow-down"
 		input-icon
 		?pressed="{{_iconPressed}}"
