@@ -481,8 +481,7 @@ class Input extends UI5Element {
 	}
 
 	_click(event) {
-		if (this.Suggestions && isPhone()) {
-			event.preventDefault(); // prevent immediate selection of any item
+		if (isPhone() && !this.readonly && this.Suggestions) {
 			this.Suggestions.open(this);
 		}
 	}

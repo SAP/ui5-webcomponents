@@ -374,9 +374,8 @@ class ComboBox extends UI5Element {
 	}
 
 	_click(event) {
-		if (isPhone()) {
+		if (isPhone() && !this.readonly) {
 			this._respPopover.open(this);
-			event.preventDefault(); // prevent immediate selection of any item
 		}
 	}
 

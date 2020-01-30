@@ -318,6 +318,10 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_showMorePopover() {
+		if (this.readonly) {
+			return;
+		}
+
 		this._showMorePressed = true;
 		this._selectedItemsPopoverOpened = true;
 		this._toggleRespPopover(true);
@@ -507,9 +511,8 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_click(event) {
-		if (isPhone() && !this._showMorePressed) {
+		if (isPhone() && !this.readonly && !this._showMorePressed) {
 			this._getRespPopover().open(this);
-			event.preventDefault(); // prevent immediate selection of any item
 		}
 
 		this._showMorePressed = false;
