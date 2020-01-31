@@ -110,7 +110,7 @@ const metadata = {
 		 * Fired when the <code>ui5-table-column</code> is shown as a pop-in instead of hiding it.
 		 *
 		 * @event
-		 * @param { Array } popped-in columns.
+		 * @param {Array} poppedColumns popped-in columns.
 		 * @since 1.0.0-rc.6
 		 * @public
 		 */
