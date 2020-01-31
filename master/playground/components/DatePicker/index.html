@@ -1440,6 +1440,16 @@
 	</code></pre></figure></pre>
 </section>
 
+<section>
+	<h3>DatePicker with Minimum and Maximum Date - 2010.01.01 - 2025.5.5 format-pattern="dd/MM/yyyy"</h3>
+	<div class="snippet">
+		<div class="datepicker-width">
+			<ui5-datepicker id="myDatepicker12" minDate="1/1/2010" maxDate="4/5/2025" format-pattern="dd/MM/yyyy"></ui5-datepicker>
+		</div>
+	</div>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-datepicker</span> <span class="na">id=</span><span class="s">"myDatepicker12"</span> <span class="na">minDate=</span><span class="s">"1/1/2010"</span> <span class="na">maxDate=</span><span class="s">"4/5/2025"</span> <span class="na">format-pattern=</span><span class="s">"dd/MM/yyyy"</span><span class="nt">&gt;&lt;/ui5-datepicker&gt;</span></code></pre></figure></pre>
+</section>
+
 	<section>
 		<h3>DatePicker with shortcuts: type "today" or "yesterday" and press "Enter"</h3>
 		<div class="snippet">
@@ -1632,6 +1642,32 @@ If a date is entered by typing it into the input field, it must fit to the used 
                       </div>
                       <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          maxDate
+                            <br>
+                            <code>max-date</code>
+                        </div>
+                        <div class="cell api-table-content-cell">String</div>
+                        <div class="cell api-table-content-cell">&quot;&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Determines the maximum date available for selection.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.6</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          minDate
+                            <br>
+                            <code>min-date</code>
+                        </div>
+                        <div class="cell api-table-content-cell">String</div>
+                        <div class="cell api-table-content-cell">&quot;&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Determines the мinimum date available for selection.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.6</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
                           name
                             <br>
                         </div>
@@ -1748,18 +1784,25 @@ If a date is entered by typing it into the input field, it must fit to the used 
                       </div>
             
                       <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">isInValidRange</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">Checks if a date is in range between minimum and maximum date</div>
+                      </div>
+            
+                        <div class="cell api-table-content-cell api-table-content-cell-bold api-table-param-name">value</div>
+                        <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> object <br/> <strong class="api-table-event-description bold">description:</strong> </div>
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">isOpen</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">Checks if the picker is open.</div>
                       </div>
             
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">isValid</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">Checks if a value is valid against the current date format of the DatePicker</div>
                       </div>
             
                         <div class="cell api-table-content-cell api-table-content-cell-bold api-table-param-name">value</div>
                         <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> string <br/> <strong class="api-table-event-description bold">description:</strong> A value to be tested against the current date format</div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">openPicker</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">Opens the picker.</div>
                       </div>

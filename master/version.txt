@@ -1,5 +1,5 @@
-commit e463d23458c02881a531b6adcfc5640e12e04472
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu Jan 30 11:39:32 2020 +0200
+commit 35b25934ab6a801a73479027eae888f5d94ac316
+Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
+Date:   Fri Jan 31 09:49:53 2020 +0200
 
-    fix(ui5-card): fix width (#1165)
+    feat(ui5-datepicker): implement min and max date limits (#1040)
