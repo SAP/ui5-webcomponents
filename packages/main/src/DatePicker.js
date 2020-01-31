@@ -76,6 +76,30 @@ const metadata = {
 		},
 
 		/**
+		 * Determines the мinimum date available for selection.
+		 *
+		 * @type {String}
+		 * @defaultvalue ""
+		 * @since 1.0.0-rc.6
+		 * @public
+		 */
+		minDate: {
+			type: String,
+		},
+
+		/**
+		 * Determines the maximum date available for selection.
+		 *
+		 * @type {String}
+		 * @defaultvalue ""
+		 * @since 1.0.0-rc.6
+		 * @public
+		 */
+		maxDate: {
+			type: String,
+		},
+
+		/**
 		 * Determines the calendar type.
 		 * The input value is formated according to the calendar type and the picker shows
 		 * months and years from the specified calendar. Available options are: "Gregorian", "Islamic", "Japanese", "Buddhist" and "Persian".
@@ -280,7 +304,10 @@ class DatePicker extends UI5Element {
 
 				const selectedDay = dayPicker.shadowRoot.querySelector(".ui5-dp-item--selected");
 				const today = dayPicker.shadowRoot.querySelector(".ui5-dp-item--now");
-				const focusableDay = selectedDay || today;
+				let focusableDay = selectedDay || today;
+				if (!selectedDay && (this.minDate || this.maxDate) && !this.isInValidRange((new Date().getTime()))) {
+					focusableDay = this.findFirstFocusableDay(dayPicker);
+				}
 
 				if (this._focusInputAfterOpen) {
 					this._focusInputAfterOpen = false;
@@ -288,7 +315,11 @@ class DatePicker extends UI5Element {
 				} else if (focusableDay) {
 					focusableDay.focus();
 
-					dayPicker._itemNav.current = parseInt(focusableDay.getAttribute("data-sap-index"));
+					let focusableDayIdx = parseInt(focusableDay.getAttribute("data-sap-index"));
+					const focusableItem = dayPicker.focusableDays.find(item => parseInt(item._index) === focusableDayIdx);
+					focusableDayIdx = focusableItem ? dayPicker.focusableDays.indexOf(focusableItem) : focusableDayIdx;
+
+					dayPicker._itemNav.current = focusableDayIdx;
 					dayPicker._itemNav.update();
 				}
 			},
@@ -302,11 +333,28 @@ class DatePicker extends UI5Element {
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
+	findFirstFocusableDay(daypicker) {
+		const today = new Date();
+		if (!this.isInValidRange(today.getTime())) {
+			const focusableItems = Array.from(daypicker.shadowRoot.querySelectorAll(".ui5-dp-item"));
+			return focusableItems.filter(x => !x.classList.contains("ui5-dp-item--disabled"))[0];
+		}
+	}
+
 	onBeforeRendering() {
 		this._calendar.primaryCalendarType = this._primaryCalendarType;
 		this._calendar.formatPattern = this._formatPattern;
 
-		if (this.isValid(this.value)) {
+		if (this.minDate && !this.isValid(this.minDate)) {
+			this.minDate = null;
+			console.warn(`In order for the "minDate" property to have effect, you should enter valid date format`); // eslint-disable-line
+		}
+
+		if (this.maxDate && !this.isValid(this.maxDate)) {
+			this.maxDate = null;
+			console.warn(`In order for the "maxDate" property to have effect, you should enter valid date format`); // eslint-disable-line
+		}
+		if (this.isValid(this.value) && this.isInValidRange(this._getTimeStampFromString(this.value))) {
 			this._changeCalendarSelection();
 		} else {
 			this._calendar.selectedDates = [];
@@ -318,6 +366,23 @@ class DatePicker extends UI5Element {
 		} else if (this.name) {
 			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
 		}
+
+		if (this.minDate) {
+			this._calendar.minDate = this.minDate;
+		}
+
+		if (this.maxDate) {
+			this._calendar.maxDate = this.maxDate;
+		}
+	}
+
+	_getTimeStampFromString(value) {
+		if (this.getFormat().parse(value)) {
+			const jsDate = new Date(this.getFormat().parse(value).getFullYear(), this.getFormat().parse(value).getMonth(), this.getFormat().parse(value).getDate());
+			const oCalDate = CalendarDate.fromTimestamp(jsDate.getTime(), this._primaryCalendarType);
+			return oCalDate.valueOf();
+		}
+		return undefined;
 	}
 
 	_onkeydown(event) {
@@ -334,9 +399,13 @@ class DatePicker extends UI5Element {
 	_handleInputChange() {
 		let nextValue = this._getInput().getInputValue();
 		const isValid = this.isValid(nextValue);
+		const isInValidRange = this.isInValidRange(this._getTimeStampFromString(nextValue));
 
-		if (isValid) {
+		if (isValid && isInValidRange) {
 			nextValue = this.normalizeValue(nextValue);
+			this.valueState = ValueState.None;
+		} else {
+			this.valueState = ValueState.Error;
 		}
 
 
@@ -348,7 +417,7 @@ class DatePicker extends UI5Element {
 
 	_handleInputLiveChange() {
 		const nextValue = this._getInput().getInputValue();
-		const isValid = this.isValid(nextValue);
+		const isValid = this.isValid(nextValue) && this.isInValidRange(this._getTimeStampFromString(nextValue));
 
 		this.value = nextValue;
 		this.fireEvent("input", { value: nextValue, valid: isValid });
@@ -368,6 +437,35 @@ class DatePicker extends UI5Element {
 	 */
 	isValid(value = "") {
 		return !!(value && this.getFormat().parse(value));
+	}
+
+	/**
+	 * Checks if a date is in range between minimum and maximum date
+	 * @param {object} value
+	 * @public
+	 */
+	isInValidRange(value = "") {
+		const pickedDate = new Date(value),
+			minDate = this._minDate && new Date(this._minDate),
+			maxDate = this._maxDate && new Date(this._maxDate);
+
+		if (minDate && maxDate) {
+			if (minDate <= pickedDate && maxDate >= pickedDate) {
+				return true;
+			}
+		} else if (minDate && !maxDate) {
+			if (minDate <= pickedDate) {
+				return true;
+			}
+		} else if (maxDate && !minDate) {
+			if (maxDate >= pickedDate) {
+				return true;
+			}
+		} else if (!maxDate && !minDate) {
+			return true;
+		}
+
+		return false;
 	}
 
 	// because the parser understands more than one format
@@ -443,6 +541,20 @@ class DatePicker extends UI5Element {
 		};
 	}
 
+	get _maxDate() {
+		if (this.maxDate) {
+			return this._getTimeStampFromString(this.maxDate);
+		}
+		return this.maxDate;
+	}
+
+	get _minDate() {
+		if (this.minDate) {
+			return this._getTimeStampFromString(this.minDate);
+		}
+		return this.minDate;
+	}
+
 	get openIconTitle() {
 		return this.i18nBundle.getText(DATEPICKER_OPEN_ICON_TITLE);
 	}
@@ -480,9 +592,14 @@ class DatePicker extends UI5Element {
 		);
 		this._calendar.timestamp = iNewValue;
 		this._calendar.selectedDates = event.detail.dates;
-
 		this._focusInputAfterClose = true;
 		this.closePicker();
+
+		if (this.isInValidRange(this._getTimeStampFromString(this.value))) {
+			this.valueState = ValueState.None;
+		} else {
+			this.valueState = ValueState.Error;
+		}
 
 		this.fireEvent("change", { value: this.value, valid: true });
 		// Angular two way data binding
@@ -523,14 +640,14 @@ class DatePicker extends UI5Element {
 		}
 	}
 
-	_changeCalendarSelection() {
+	_changeCalendarSelection(focusTimestamp) {
 		if (this._calendarDate.getYear() < 1) {
 			// 0 is a valid year, but we cannot display it
 			return;
 		}
 
 		const oCalDate = this._calendarDate;
-		const timestamp = oCalDate.valueOf() / 1000;
+		const timestamp = focusTimestamp || oCalDate.valueOf() / 1000;
 
 		this._calendar = Object.assign({}, this._calendar);
 		this._calendar.timestamp = timestamp;

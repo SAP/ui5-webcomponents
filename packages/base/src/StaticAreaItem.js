@@ -61,7 +61,7 @@ class StaticAreaItemElement extends HTMLElement {
 		super();
 	}
 
-	isUI5Element() {
+	get isUI5Element() {
 		return true;
 	}
 }

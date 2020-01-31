@@ -87,6 +87,12 @@
 	background: var(--_ui5_daypicker_item_weekend_background_color);
 }
 
+.ui5-dp-item.ui5-dp-item--disabled {
+	pointer-events: none;
+	opacity: 0.5;
+}
+
+
 .ui5-dp-item.ui5-dp-item--weeekend:hover {
 	background: var(--_ui5_daypicker_item_weekend_hover_background_color);
 }
