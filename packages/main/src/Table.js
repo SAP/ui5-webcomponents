@@ -110,10 +110,15 @@ const metadata = {
 		 * Fired when the <code>ui5-table-column</code> is shown as a pop-in instead of hiding it.
 		 *
 		 * @event
+		 * @param { Array } popped-in columns.
 		 * @since 1.0.0-rc.6
 		 * @public
 		 */
-		popinChange: {},
+		popinChange: {
+			detail: {
+				poppedColumns: {},
+			},
+		},
 	},
 };
 
@@ -250,7 +255,11 @@ class Table extends UI5Element {
 		// invalidate only if hidden columns count has changed
 		if (this._hiddenColumns.length !== hiddenColumns.length) {
 			this._hiddenColumns = hiddenColumns;
-			this.fireEvent("popinChange");
+			if (hiddenColumns.length) {
+				this.fireEvent("popinChange", {
+					poppedColumns: this._hiddenColumns,
+				});
+			}
 		}
 	}
 
