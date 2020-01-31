@@ -65,26 +65,24 @@ const metadata = {
 		 * Determines the мinimum date available for selection.
 		 *
 		 * @type {String}
-		 * @defaultvalue undefined
+		 * @defaultvalue ""
 		 * @since 1.0.0-rc.6
 		 * @public
 		 */
 		minDate: {
 			type: String,
-			defaultValue: undefined,
 		},
 
 		/**
 		 * Determines the maximum date available for selection.
 		 *
 		 * @type {String}
-		 * @defaultvalue undefined
+		 * @defaultvalue ""
 		 * @since 1.0.0-rc.6
 		 * @public
 		 */
 		maxDate: {
 			type: String,
-			defaultValue: undefined,
 		},
 
 		_header: {
@@ -187,6 +185,7 @@ class Calendar extends UI5Element {
 		const oYearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this._primaryCalendarType });
 		const minDateParsed = this.minDate && this.getFormat().parse(this.minDate);
 		const maxDateParsed = this.maxDate && this.getFormat().parse(this.maxDate);
+		const firstDayOfCalendarTimeStamp = -62135596800000;
 		let currentMonth = 0;
 		let currentYear = 1;
 
@@ -194,7 +193,7 @@ class Calendar extends UI5Element {
 			if (this._minDate) {
 				this.timestamp = this._minDate / 1000;
 			} else {
-				this.timestamp = (new Date(-62135596800000)).getTime() / 1000;
+				this.timestamp = (new Date(firstDayOfCalendarTimeStamp)).getTime() / 1000;
 			}
 		}
 

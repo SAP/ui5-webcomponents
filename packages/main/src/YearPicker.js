@@ -44,13 +44,12 @@ const metadata = {
 		 * Determines the мinimum date available for selection.
 		 *
 		 * @type {String}
-		 * @defaultvalue undefined
+		 * @defaultvalue ""
 		 * @since 1.0.0-rc.6
 		 * @public
 		 */
 		minDate: {
 			type: String,
-			defaultValue: undefined,
 		},
 
 		/**
