@@ -158,6 +158,7 @@ class Slider extends UI5Element {
 		//this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 		this._scroller = new ScrollEnablement(this);
 		this.prevElement = 0;
+		this._currentElementIndex = 0;
 	}
 
 	_findSelectedElement(){
@@ -192,7 +193,6 @@ class Slider extends UI5Element {
 
 		this._selectElement(this._findSelectedElement());
 		this.value = this._findSelectedElement().textContent;
-		//console.log(this._findSelectedElement());
 	}
 
 	onAfterRendering() {
@@ -257,16 +257,31 @@ class Slider extends UI5Element {
 	}
 
 	_selectElement(element){
-		if (this._items.indexOf(element.textContent) > - 1) {
-			let offsetSelectedElement = 15 - (this._items.indexOf(element.textContent) * 3);
-			element.parentElement.setAttribute("style",`top:${offsetSelectedElement}rem`);
+		if (this._items.indexOf(element.textContent) > -1){
+			this._currentElementIndex = this._items.indexOf(element.textContent);
+			this._selectElementByIndex(this._currentElementIndex);
 		}
 	}
 
-	_onbuttonclick(e) {
-		debugger;
+	_selectElementByIndex(index){
+		const sliderElement = this.shadowRoot.getElementById(`${this._id}--items-list`);
+		if (index > - 1) {
+			let offsetSelectedElement = 12 - (index * 3);
+			sliderElement.setAttribute("style",`top:${offsetSelectedElement}rem`);
+			this.value = this._items[index]
+		}
+	}
 
-		return true;
+	_onArrowDown(){
+		const nextElementIndex = this._currentElementIndex + 1;
+		this._selectElementByIndex(nextElementIndex);
+		this._currentElementIndex = nextElementIndex;
+	}
+
+	_onArrowUp(){
+		const nextElementIndex = this._currentElementIndex - 1;
+		this._selectElementByIndex(nextElementIndex);
+		this._currentElementIndex = nextElementIndex;
 	}
 }
 

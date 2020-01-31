@@ -13,15 +13,25 @@
 	line-height: 2rem;
 	width: 4.5rem;
 	text-align: center;
-	font-size: 20x;
+	font-size: 20px;
 	color: gray;
 	text-align: center;
 	vertical-align: middle;
 }
+
 .sapMWS .sapMWSArrows {
 	display: none;
 	box-sizing: border-box;
 }
+
+.sapMWS.sapMWSExpanded .sapMWSArrows {
+	display: block;
+	box-sizing: border-box;
+	width: 100%;
+	border-color: transparent;
+	height: 1.5rem;
+}
+
 .sapMWS .sapMWSInner {
 	overflow: hidden;
 	height: 100%;
@@ -31,7 +41,13 @@
 	-ms-user-select: none;
 	user-select: none;
 	list-style: none;
+	margin-top: 4.5rem;
 }
+
+.sapMWS.sapMWSExpanded .sapMWSInner {
+	margin-top: 0;
+}
+
 .sapMWS .sapMWSInner .sapMWSItem {
 	height: 3rem;
 	line-height: 3rem;
@@ -69,7 +85,7 @@
 	margin: 0;
 	padding: 0;
 	position: absolute;
-	top: 15rem;
+	top: 9rem;
 }
 
 .sapMWS.sapMWSExpanded .sapMWSInner .sapMWrapper > ul {
@@ -85,13 +101,11 @@
 	height: 100%;
 	cursor: default;
 	margin: 0;
+	margin-top: -1.5rem;
 }
 
 .sapMWS.sapMWSExpanded .sapMWSLabel {
 	display: block;
-}
-.sapMWS .sapMWSArrows {
-	display: none;
 }
 
 .sapMWS .sapMWSInner {
@@ -125,7 +139,7 @@
 	display: block;
 	outline: 0.125rem solid darkblue;
 	outline-offset: -0.313rem;
-	top: 20.5rem;
+	top: 47.9%;;
 }
 
 .sapMWS.sapMWSExpanded .sapMWSInner .sapMWSSelectionFrame:hover + ul > li.sapMWSItem.sapMWSItemSelected {
