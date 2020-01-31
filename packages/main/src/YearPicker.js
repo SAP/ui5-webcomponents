@@ -45,6 +45,7 @@ const metadata = {
 		 *
 		 * @type {String}
 		 * @defaultvalue undefined
+		 * @since 1.0.0-rc.6
 		 * @public
 		 */
 		minDate: {
@@ -57,6 +58,7 @@ const metadata = {
 		 *
 		 * @type {String}
 		 * @defaultvalue undefined
+		 * @since 1.0.0-rc.6
 		 * @public
 		 */
 		maxDate: {
