@@ -100,14 +100,6 @@ class UI5ElementMetadata {
 	getEvents() {
 		return this.metadata.events || {};
 	}
-
-	/**
-	 * Determines whether this UI5 Element invalidates automatically when content density changes
-	 * @public
-	 */
-	getInvalidateOnContentDensityChange() {
-		return !!this.metadata.invalidateOnContentDensityChange;
-	}
 }
 
 const validateSingleProperty = (value, propData) => {

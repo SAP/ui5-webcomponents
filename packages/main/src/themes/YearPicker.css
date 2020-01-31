@@ -7,10 +7,6 @@
 	height: 100%;
 }
 
-:host([data-ui5-compact-size]) .ui5-yp-item {
-	height: 2rem;
-}
-
 .ui5-yp-root {
 	padding: 2rem 0 1rem 0;
 	display: flex;
@@ -32,7 +28,7 @@
 	display: flex;
 	margin: var(--_ui5_yearpicker_item_margin);
 	width: calc(25% - 0.125rem);
-	height: 3rem;
+	height: var(--_ui5_year_picker_item_height);
 	color: var(--sapTextColor);
 	background-color: var(--_ui5_yearpicker_item_background_color);
 	align-items: center;
@@ -60,6 +56,11 @@
 .ui5-yp-item.ui5-yp-item--selected {
 	background-color: var(--sapSelectedColor);
 	color: var(--sapContent_ContrastTextColor);
+}
+
+.ui5-yp-item.ui5-yp-item--disabled {
+	pointer-events: none;
+	opacity: 0.5;
 }
 
 .ui5-yp-item.ui5-yp-item--selected:focus {

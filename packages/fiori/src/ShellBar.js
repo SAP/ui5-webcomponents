@@ -16,8 +16,9 @@ import "@ui5/webcomponents-icons/dist/icons/bell.js";
 import "@ui5/webcomponents-icons/dist/icons/overflow.js";
 import "@ui5/webcomponents-icons/dist/icons/grid.js";
 
-// Template
+// Templates
 import ShellBarTemplate from "./generated/templates/ShellBarTemplate.lit.js";
+import ShellBarPopoverTemplate from "./generated/templates/ShellBarPopoverTemplate.lit.js";
 
 // Styles
 import styles from "./generated/themes/ShellBar.css.js";
@@ -142,6 +143,11 @@ const metadata = {
 
 		_header: {
 			type: Object,
+		},
+
+		_menuPopoverItems: {
+			type: Array,
+			defaultValue: [],
 		},
 	},
 
@@ -322,6 +328,10 @@ class ShellBar extends UI5Element {
 		return ShellBarTemplate;
 	}
 
+	static get staticAreaTemplate() {
+		return ShellBarPopoverTemplate;
+	}
+
 	static get FIORI_3_BREAKPOINTS() {
 		return [
 			559,
@@ -356,7 +366,7 @@ class ShellBar extends UI5Element {
 
 		this._actionList = {
 			itemPress: event => {
-				const popover = this.shadowRoot.querySelector(".ui5-shellbar-overflow-popover");
+				const popover = this.getStaticAreaItemDomRef().querySelector(".ui5-shellbar-overflow-popover");
 
 				if (!this._defaultItemPressPrevented) {
 					popover.close();
@@ -368,9 +378,13 @@ class ShellBar extends UI5Element {
 
 		this._header = {
 			press: event => {
-				const menuPopover = this.shadowRoot.querySelector(".ui5-shellbar-menu-popover");
+				const menuPopover = this.getStaticAreaItemDomRef().querySelector(".ui5-shellbar-menu-popover");
 
 				if (this.menuItems.length) {
+					this._menuPopoverItems = [];
+					this.menuItems.forEach(item => {
+						this._menuPopoverItems.push(item.textContent);
+					});
 					menuPopover.openBy(this.shadowRoot.querySelector(".ui5-shellbar-menu-button"));
 				}
 			},
@@ -429,7 +443,7 @@ class ShellBar extends UI5Element {
 		};
 
 		this._handleResize = event => {
-			this.shadowRoot.querySelector(".ui5-shellbar-overflow-popover").close();
+			this.getStaticAreaItemDomRef().querySelector(".ui5-shellbar-overflow-popover").close();
 			this._overflowActions();
 		};
 	}
@@ -480,7 +494,7 @@ class ShellBar extends UI5Element {
 	 * @public
 	 */
 	closeOverflow() {
-		const popover = this.shadowRoot.querySelector(".ui5-shellbar-overflow-popover");
+		const popover = this.getStaticAreaItemDomRef().querySelector(".ui5-shellbar-overflow-popover");
 
 		if (popover) {
 			popover.close();
@@ -612,7 +626,7 @@ class ShellBar extends UI5Element {
 	}
 
 	_toggleActionPopover() {
-		const popover = this.shadowRoot.querySelector(".ui5-shellbar-overflow-popover");
+		const popover = this.getStaticAreaItemDomRef().querySelector(".ui5-shellbar-overflow-popover");
 		const overflowButton = this.shadowRoot.querySelector(".ui5-shellbar-overflow-button");
 		popover.openBy(overflowButton);
 	}

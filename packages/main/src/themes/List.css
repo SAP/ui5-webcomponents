@@ -74,7 +74,8 @@
 	background-color: var(--sapList_Background);
 	border-bottom: 1px solid var(--sapList_BorderColor);
 	padding: 0 1rem !important;
-	height:3rem;
+	height: var(--_ui5_list_no_data_height);
+	font-size: var(--sapFontMediumSize);
 }
 
 
@@ -82,10 +83,4 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-}
-
-/* Compact size */
-:host([data-ui5-compact-size]) .ui5-list-root .ui5-list-nodata {
-	height: 2rem;
-	font-size: var(--sapFontMediumSize);
 }

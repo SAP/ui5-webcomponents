@@ -17,14 +17,6 @@
 	box-sizing: border-box;
 }
 
-:host([data-ui5-compact-size]) {
-	height: var(--_ui5_input_compact_height);
-}
-
-:host([data-ui5-compact-size]) [inner-input] {
-	padding: 0 0.5rem;
-}
-
 :host([focused]) {
 	outline: var(--_ui5_input_focus_border_width) dotted var(--sapContent_FocusColor);
 	outline-offset: -3px;
@@ -46,19 +38,13 @@
 }
 
 :host([disabled]) {
-	opacity: var(--sap_wc_input_disabled_opacity);
+	opacity: var(--_ui5_input_disabled_opacity);
 	cursor: default;
 	pointer-events: none;
 	background: var(--sapField_ReadOnly_Background);
 	border-color: var(--sapField_ReadOnly_BorderColor);
 	-webkit-text-fill-color: var(--sapContent_DisabledTextColor);
 	color: var(--sapContent_DisabledTextColor);
-}
-
-:host([value-state="Error"]) [input-icon][data-ui5-compact-size],
-:host([value-state="Success"]) [input-icon][data-ui5-compact-size],
-:host([value-state="Warning"]) [input-icon][data-ui5-compact-size] {
-	padding: .1875rem .5rem
 }
 
 [inner-input] {
@@ -69,7 +55,7 @@
 	-webkit-appearance: none;
 	-moz-appearance: textfield;
 	line-height: normal;
-	padding: 0 0.75rem;
+	padding: var(--_ui5_input_inner_padding);
 	box-sizing: border-box;
 	min-width: 3rem;
 	text-overflow: ellipsis;
@@ -136,7 +122,7 @@
 	background: var(--sapField_ReadOnly_Background);
 }
 
-:host(:not([value-state]:not([readonly])):hover) {
+:host(:not([value-state]):not([readonly]):hover) {
 	background-color: var(--sapField_Hover_Background);
 	border: 1px solid var(--sapField_Hover_BorderColor);
 }
@@ -188,17 +174,11 @@
 /* Input Icon */
 
 .ui5-input-icon-root {
-	min-width: var(--sap_wc_input_icon_min_width);
-	width: var(--sap_wc_input_icon_min_width);
+	min-width: var(--_ui5_input_icon_min_width);
 	height: 100%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-}
-
-:host([data-ui5-compact-size]) .ui5-input-icon-root {
-	min-width: var(--sap_wc_input_compact_min_width);
-	width: var(--sap_wc_input_compact_min_width);
 }
 
 /* TODO: Remove this after parser is fixed
@@ -207,8 +187,4 @@
 */
 ::slotted(ui5-icon[slot="icon"]) {
 	padding: var(--_ui5_input_icon_padding);
-}
-
-:host([data-ui5-compact-size]) ::slotted(ui5-icon[slot="icon"]) {
-	padding: .25rem .5rem;
 }

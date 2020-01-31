@@ -10,11 +10,14 @@ There are several configuration settings that affect all UI5 Web Components glob
 [theme](#theme)        | sap_fiori_3, sap_fiori_3_dark, sap_belize, sap_belize_hcb         | sap_fiori_3   | Visual theme
 language     | en, de, es, etc...                              | en            | Language to be used for translatable texts
 [RTL](#rtl)          | true, false                                     | false         | When true, sets global text direction to right-to-left
-compactSize  | true, false                                     | false         | When set, enforces compact density (smaller margins/paddings)
 [animationMode](#animationMode)  | full, basic, minimal, none  | full          | Defines different animation scenarios or levels
 calendarType | Gregorian, Islamic, Buddhist, Japanese, Persian | Gregorian     | Default calendar type for date-related web components
 [noConflict](#noConflict)  | true, false | Object                            | false         | When set to true, all events will be fired with a "ui5-" prefix only
 [formatSettings](#formatSettings)| See the [Format settings](#formatSettings) section below		| Empty object | Allows to override locale-specific configuration
+
+### Content Density
+
+UI5 Web Components contains different content densities for certain controls that allow your app to adapt to the device in question, allowing you to display larger controls for touch-enabled devices and a smaller, more compact design for devices that are operated by mouse. Cosy size is the default density for all components. Compact Size could be set by adding a class `ui5-content-density-compact` to an html element. It cascades all the way down and enforces compact density (smaller margins/paddings, smaller touch areas, etc).
 
 <a name="theme"></a>
 ### Theme
@@ -92,7 +95,6 @@ In order to provide configuration settings, include the following ```<script>```
 <script data-ui5-config type="application/json">
 {
 	"rtl": true,
-	"compactSize": true,
 	"language": "ja",
 	"calendarType": "Japanese",
 	"formatSettings": {
@@ -118,7 +120,6 @@ To do so, please import the desired functionality from the respective `"@ui5/web
 ```js
 import { getTheme, setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 import { getNoConflict, setNoConflict } from "@ui5/webcomponents-base/dist/config/NoConflict.js";
-import { getCompactSize, setCompactSize } from "@ui5/webcomponents-base/dist/config/CompactSize.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import { getLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";

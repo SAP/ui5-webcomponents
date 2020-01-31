@@ -80,7 +80,7 @@
 }
 
 .ui5-switch-text--on {
-	left: calc(-100% + 1.9125rem);
+	left: var(--_ui5_switch_text_on_left);
 }
 
 .ui5-switch-text--off {
@@ -179,7 +179,7 @@
 .ui5-switch-root.ui5-switch--checked .ui5-switch-slider {
 	/* Move slider to oposite end, taking into account the handle as an offset. */
 	/* Note: translate(calc()) does not work in IE11 */
-	transform: translateX(100%) translateX(-1.875rem);
+	transform	: var(--_ui5_switch_slide_transform);
 }
 
 /* switch semantic off */
@@ -282,40 +282,6 @@
 	color: var(--_ui5_switch_text_off_semantic_color);
 }
 
-/* Compact size */
-:host([data-ui5-compact-size]) .ui5-switch-root {
-	height: var(--_ui5_switch_compact_height);
-	min-width: var(--_ui5_switch_compact_width);
-}
-
-:host([data-ui5-compact-size]) .ui5-switch-root {
-	height: var(--_ui5_switch_compact_height);
-	min-width: var(--_ui5_switch_compact_width);
-}
-
-:host([data-ui5-compact-size]) .ui5-switch-root .ui5-switch-handle {
-	height: var(--_ui5_switch_handle_compact_height);
-	width: var(--_ui5_switch_handle_compact_width);
-}
-
-:host([data-ui5-compact-size]) .ui5-switch-root .ui5-switch-text--on {
-	left: calc(-100% + 1.5625rem);
-}
-
-:host([data-ui5-compact-size]) .ui5-switch-root.ui5-switch--checked .ui5-switch-slider {
-	/* Move slider to oposite end, taking into account the handle as an offset. */
-	/* Note: translate(calc()) does not work in IE11 */
-	transform: translateX(100%) translateX(-1.5rem);
-}
-
-:host([data-ui5-compact-size]) .ui5-switch-root.ui5-switch--no-label {
-	min-width: var(--_ui5_switch_compact_no_label_width);
-}
-
-:host([data-ui5-compact-size]) .ui5-switch--no-label .ui5-switch-track {
-	height: var(--_ui5_switch_track_compact_no_label_height);
-}
-
 /* RTL */
 [dir="rtl"].ui5-switch-root .ui5-switch-handle {
 	left: 0;
@@ -323,24 +289,15 @@
 }
 
 [dir="rtl"].ui5-switch-root.ui5-switch--checked .ui5-switch-slider {
-	transform: translateX(1.875rem) translateX(-100%);
+	transform: var(--_ui5_switch_rtl_transform);
 }
 
 [dir="rtl"].ui5-switch-root .ui5-switch-text--on {
-	right: calc(-100% + 1.9125rem);
+	right: var(--_ui5_switch_text_right);
 	left: auto;
 }
 
 [dir="rtl"].ui5-switch-root .ui5-switch-text--off {
 	right: auto;
 	left: 0;
-}
-
-/* RTL + Compact */
-:host([data-ui5-compact-size]) [dir="rtl"].ui5-switch-root.ui5-switch--checked .ui5-switch-slider {
-	transform: translateX(-100%) translateX(1.5rem);
-}
-
-:host([data-ui5-compact-size]) [dir="rtl"].ui5-switch-root .ui5-switch-text--on {
-	right: calc(-100% + 1.5625rem);
 }

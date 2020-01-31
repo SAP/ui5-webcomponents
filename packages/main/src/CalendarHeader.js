@@ -33,6 +33,12 @@ const metadata = {
 		_btn2: {
 			type: Object,
 		},
+		_isNextButtonDisabled: {
+			type: Boolean,
+		},
+		_isPrevButtonDisabled: {
+			type: Boolean,
+		},
 	},
 	events: {
 		pressPrevious: {},
@@ -77,6 +83,16 @@ class CalendarHeader extends UI5Element {
 	onBeforeRendering() {
 		this._btn1.text = this.monthText;
 		this._btn2.text = this.yearText;
+		this._btnPrev.classes = "ui5-calheader-arrowbtn";
+		this._btnNext.classes = "ui5-calheader-arrowbtn";
+
+		if (this._isNextButtonDisabled) {
+			this._btnNext.classes += " ui5-calheader-arrowbtn-disabled";
+		}
+
+		if (this._isPrevButtonDisabled) {
+			this._btnPrev.classes += " ui5-calheader-arrowbtn-disabled";
+		}
 	}
 
 	_handlePrevPress(event) {

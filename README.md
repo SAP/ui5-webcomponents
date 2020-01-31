@@ -127,14 +127,13 @@ UI5 Web Components support right-to-left text direction (RTL). To enable RTL glo
 ```
 
 ### Configure Compact/Cozy setting
-UI5 Web Components supports ```Compact``` and ```Cozy``` mode. It is set to ```Cozy``` by default. To enable ```Compact``` globally, provide the option ```compactSize: true``` in the configuration ```script``` tag:
+UI5 Web Components supports ```Compact``` and ```Cozy``` mode. It is set to ```Cozy``` by default. To enable ```Compact```, provide the css class ```ui5-content-density-compact``` to any of your HTML elements and it apply compact size to all of its children.
 
 ```html
-<script data-ui5-config type="application/json">
-{
-  "compactSize": true
-}
-</script>
+  <body class="ui5-content-density-compact">
+    <ui5-button></ui5-button>
+    <ui5-checkbox></ui5-checkbox>
+  </body>
 ```
 
 ### Configure Calendar Type

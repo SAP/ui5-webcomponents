@@ -5,6 +5,7 @@
 :host {
 	width: 100%;
 	color: var(--sapField_TextColor);
+	background-color: var(--sapField_Background);
 	font-size: var(--sapFontMediumSize);
 	font-family: var(--sapFontFamily);
 	border-radius: var(--_ui5_input_wrapper_border_radius);
@@ -12,7 +13,7 @@
 }
 
 :host([disabled]) {
-	opacity: var(--sap_wc_input_disabled_opacity);
+	opacity: var(--_ui5_input_disabled_opacity);
 	cursor: default;
 	pointer-events: none;
 	background: var(--sapField_ReadOnly_Background);
@@ -57,7 +58,6 @@
 	-moz-appearance: textfield;
 	overflow: auto;
 	resize: none;
-    background-color: var(--sapField_Background);
     border: 1px solid var(--sapField_BorderColor);
     border-radius: inherit;
 }

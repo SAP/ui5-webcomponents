@@ -8,7 +8,6 @@ import { getLanguage } from "./dist/config/Language.js";
 import { getCalendarType } from "./dist/config/CalendarType.js";
 import { getTheme, setTheme } from "./dist/config/Theme.js";
 import { getNoConflict, setNoConflict } from "./dist/config/NoConflict.js";
-import { getCompactSize, setCompactSize } from "./dist/config/CompactSize.js";
 import { getRTL } from "./dist/config/RTL.js";
 import { getFirstDayOfWeek } from "./dist/config/FormatSettings.js";
 import { getRegisteredNames as getIconNames } from  "./dist/SVGIconRegistry.js"
@@ -19,8 +18,6 @@ const configuration = {
 	setTheme,
 	getNoConflict,
 	setNoConflict,
-	getCompactSize,
-	setCompactSize,
 	getCalendarType,
 	getRTL,
 	getFirstDayOfWeek,
