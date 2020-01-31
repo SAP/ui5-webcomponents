@@ -57,7 +57,7 @@ exports.config = {
 			// to run chrome headless the following flags are required
 			// (see https://developers.google.com/web/updates/2017/04/headless-chrome)
 			args: ['--headless', '--disable-gpu'],
-			// args: ['--disable-gpu'],
+			//args: ['--disable-gpu'],
 		}
 	}],
 	//
@@ -228,6 +228,12 @@ exports.config = {
 				return elem.classList.contains(className);
 			}, this, className);
 		}, true);
+
+		browser.addCommand("getStaticAreaItemClassName", function(selector) {
+			return browser.execute((selector) => {
+				return document.querySelector(selector).getStaticAreaItemDomRef().host.classList[0];
+			}, selector);
+		}, false);
 	},
 	/**
 	 * Runs before a WebdriverIO command gets executed.

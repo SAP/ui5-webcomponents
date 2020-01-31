@@ -3,6 +3,7 @@ import boot from "./boot.js";
 import { skipOriginalEvent } from "./config/NoConflict.js";
 import DOMObserver from "./compatibility/DOMObserver.js";
 import UI5ElementMetadata from "./UI5ElementMetadata.js";
+import StaticAreaItem from "./StaticAreaItem.js";
 import Integer from "./types/Integer.js";
 import RenderScheduler from "./RenderScheduler.js";
 import { getConstructableStyle, createHeadStyle } from "./CSS.js";
@@ -18,6 +19,8 @@ const metadata = {
 
 const DefinitionsSet = new Set();
 const IDMap = new Map();
+
+const elementTimeouts = new Map();
 
 /**
  * Base class for all UI5 Web Components
@@ -35,7 +38,7 @@ class UI5Element extends HTMLElement {
 		this._generateId();
 		this._initializeState();
 		this._upgradeAllProperties();
-		this._initializeShadowRoot();
+		this._initializeContainers();
 
 		let deferredResolve;
 		this._domRefReadyPromise = new Promise(resolve => {
@@ -56,22 +59,26 @@ class UI5Element extends HTMLElement {
 	/**
 	 * @private
 	 */
-	_initializeShadowRoot() {
-		if (!this.constructor._needsShadowDOM()) {
-			return;
+	_initializeContainers() {
+		// Init Shadow Root
+		if (this.constructor._needsShadowDOM()) {
+			this.attachShadow({ mode: "open" });
+
+			// IE11, Edge
+			if (window.ShadyDOM) {
+				createHeadStyle(this.constructor);
+			}
+
+			// Chrome
+			if (document.adoptedStyleSheets) {
+				const style = getConstructableStyle(this.constructor);
+				this.shadowRoot.adoptedStyleSheets = [style];
+			}
 		}
 
-		this.attachShadow({ mode: "open" });
-
-		// IE11, Edge
-		if (window.ShadyDOM) {
-			createHeadStyle(this.constructor);
-		}
-
-		// Chrome
-		if (document.adoptedStyleSheets) {
-			const style = getConstructableStyle(this.constructor);
-			this.shadowRoot.adoptedStyleSheets = [style];
+		// Init StaticAreaItem only if needed
+		if (this.constructor._needsStaticArea()) {
+			this.staticAreaItem = new StaticAreaItem(this);
 		}
 	}
 
@@ -80,18 +87,22 @@ class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	async connectedCallback() {
-		if (!this.constructor._needsShadowDOM()) {
-			return;
+		// Render the Shadow DOM
+		if (this.constructor._needsShadowDOM()) {
+			// always register the observer before yielding control to the main thread (await)
+			this._startObservingDOMChildren();
+
+			await this._processChildren();
+			await RenderScheduler.renderImmediately(this);
+			this._domRefReadyPromise._deferredResolve();
+			if (typeof this.onEnterDOM === "function") {
+				this.onEnterDOM();
+			}
 		}
 
-		// always register the observer before yielding control to the main thread (await)
-		this._startObservingDOMChildren();
-
-		await this._processChildren();
-		await RenderScheduler.renderImmediately(this);
-		this._domRefReadyPromise._deferredResolve();
-		if (typeof this.onEnterDOM === "function") {
-			this.onEnterDOM();
+		// Render Fragment if neccessary
+		if (this.constructor._needsStaticArea()) {
+			this.staticAreaItem._updateFragment(this);
 		}
 	}
 
@@ -100,13 +111,15 @@ class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	disconnectedCallback() {
-		if (!this.constructor._needsShadowDOM()) {
-			return;
+		if (this.constructor._needsShadowDOM()) {
+			this._stopObservingDOMChildren();
+			if (typeof this.onExitDOM === "function") {
+				this.onExitDOM();
+			}
 		}
 
-		this._stopObservingDOMChildren();
-		if (typeof this.onExitDOM === "function") {
-			this.onExitDOM();
+		if (this.constructor._needsStaticArea()) {
+			this.staticAreaItem._removeFragmentFromStaticArea();
 		}
 	}
 
@@ -187,7 +200,11 @@ class UI5Element extends HTMLElement {
 					const isDefined = window.customElements.get(localName);
 					if (!isDefined) {
 						const whenDefinedPromise = window.customElements.whenDefined(localName); // Class registered, but instances not upgraded yet
-						const timeoutPromise = new Promise(resolve => setTimeout(resolve, 1000));
+						let timeoutPromise = elementTimeouts.get(localName);
+						if (!timeoutPromise) {
+							timeoutPromise = new Promise(resolve => setTimeout(resolve, 1000));
+							elementTimeouts.set(localName, timeoutPromise);
+						}
 						await Promise.race([whenDefinedPromise, timeoutPromise]);
 					}
 					window.customElements.upgrade(child);
@@ -419,7 +436,9 @@ class UI5Element extends HTMLElement {
 		}
 
 		// Intended for framework usage only. Currently ItemNavigation updates tab indexes after the component has updated its state but before the template is rendered
-		this.dispatchEvent(new CustomEvent("_componentStateFinalized"));
+		if (this._onComponentStateFinalized) {
+			this._onComponentStateFinalized();
+		}
 
 		// resume normal invalidation handling
 		delete this._suppressInvalidation;
@@ -428,6 +447,10 @@ class UI5Element extends HTMLElement {
 		// console.log(this.getDomRef() ? "RE-RENDER" : "FIRST RENDER", this);
 		delete this._invalidated;
 		this._updateShadowRoot();
+
+		if (this.constructor._needsStaticArea()) {
+			this.staticAreaItem._updateFragment(this);
+		}
 
 		// Safari requires that children get the slot attribute only after the slot tags have been rendered in the shadow DOM
 		this._assignIndividualSlotsToChildren();
@@ -622,6 +645,20 @@ class UI5Element extends HTMLElement {
 	 */
 	static _needsShadowDOM() {
 		return !!this.template;
+	}
+
+	/**
+	 * @private
+	 */
+	static _needsStaticArea() {
+		return typeof this.staticAreaTemplate === "function";
+	}
+
+	/**
+	 * @public
+	 */
+	getStaticAreaItemDomRef() {
+		return this.staticAreaItem.getDomRef();
 	}
 
 	/**

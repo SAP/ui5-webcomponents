@@ -7,7 +7,9 @@ import * as Filters from "./ComboBoxFilters.js";
 
 // Styles
 import ComboBoxTemplate from "./generated/templates/ComboBoxTemplate.lit.js";
+import ComboBoxPopoverTemplate from "./generated/templates/ComboBoxPopoverTemplate.lit.js";
 import ComboBoxCss from "./generated/themes/ComboBox.css.js";
+import ComboBoxPopoverCss from "./generated/themes/ComboBoxPopover.css.js";
 import ComboBoxItem from "./ComboBoxItem.js";
 import Icon from "./Icon.js";
 import Popover from "./Popover.js";
@@ -251,17 +253,19 @@ class ComboBox extends UI5Element {
 		return ComboBoxTemplate;
 	}
 
+	static get staticAreaTemplate() {
+		return ComboBoxPopoverTemplate;
+	}
+
+	static get staticAreaStyles() {
+		return ComboBoxPopoverCss;
+	}
+
 	constructor(props) {
 		super(props);
 
 		this._filteredItems = [];
 		this._initialRendering = true;
-
-		this.addEventListener("focusout", () => {
-			if (this.popover) {
-				this.popover.close();
-			}
-		});
 	}
 
 	onBeforeRendering() {
@@ -269,19 +273,13 @@ class ComboBox extends UI5Element {
 
 		this._filteredItems = this._filterItems(domValue);
 
-		// prevent popover focus restore
-		// TODO: fix that once popovers are fixed to static area
-		if (this.popover) {
-			this.popover._prevetFocusRestore = true;
-		}
-
 		if (this._autocomplete && domValue !== "") {
 			this._autoCompleteValue(domValue);
 		} else {
 			this._tempValue = domValue;
 		}
 
-		if (this.popover && document.activeElement === this && !this._filteredItems.length) {
+		if (!this._initialRendering && this.popover && document.activeElement === this && !this._filteredItems.length) {
 			this.popover.close();
 		}
 
@@ -434,7 +432,7 @@ class ComboBox extends UI5Element {
 	}
 
 	get popover() {
-		return this.shadowRoot.querySelector(".ui5-combobox-popover");
+		return this.getStaticAreaItemDomRef().querySelector("ui5-popover");
 	}
 
 	get editable() {

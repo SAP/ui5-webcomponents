@@ -1,0 +1,13 @@
+{{#if showSuggestions}}
+	<ui5-popover
+		placement-type="Bottom"
+		no-arrow
+		horizontal-align="Stretch"
+		initial-focus={{ this.id }}>
+			<ui5-list id="listPopover" separators="Inner">
+				{{#each suggestionsTexts}}
+					<ui5-li @ui5-_itemPress="{{ fnOnSuggestionItemPress }}">{{ this }}</ui5-li>
+				{{/each}}
+			</ui5-list>
+	</ui5-popover>
+{{/if}}
