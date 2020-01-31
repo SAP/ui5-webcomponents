@@ -1,5 +1,5 @@
-commit 90223f891cc2063c248507fe278d3822331a8a2f
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Jan 31 09:57:24 2020 +0200
+commit 28f827a3e4ba2378a5d08932859c7f37b936d996
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Fri Jan 31 11:36:38 2020 +0200
 
-    fix(ui5-li): fix active state on mobile (#1169)
+    fix(framework): StaticArea and StaticAreaElement identify as UI5Element (#1168)
