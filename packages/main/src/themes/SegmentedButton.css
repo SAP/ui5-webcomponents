@@ -6,8 +6,7 @@
 	display: flex;
 }
 
-::slotted(*) {
-	display: inline-block;
+::slotted(ui5-togglebutton) {
 	border-radius: 0;
 	height: 2.75rem;
 	min-width: 2.5rem;
@@ -16,19 +15,19 @@
 	text-overflow: ellipsis;
 }
 
-::slotted(:not(ui5-mdk-toolbar-spacer):nth-child(odd)) {
+::slotted(ui5-togglebutton:nth-child(odd)) {
 	border: 1px solid var(--sapButton_Selected_BorderColor);
 	border-right: 0;
 	border-left: 0;
 }
 
-::slotted(:not(ui5-mdk-toolbar-spacer):last-child) {
+::slotted(ui5-togglebutton:last-child) {
 	border-top-right-radius: 0.375rem;
 	border-bottom-right-radius: 0.375rem;
 	border-right: 1px solid var(--sapButton_Selected_BorderColor);
 }
 
-::slotted(:not(ui5-mdk-toolbar-spacer):first-child) {
+::slotted(ui5-togglebutton:first-child) {
 	border-top-left-radius: 0.375rem;
 	border-bottom-left-radius: 0.375rem;
 	border-left: 1px solid var(--sapButton_Selected_BorderColor);

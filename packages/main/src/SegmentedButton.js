@@ -99,8 +99,9 @@ class SegmentedButton extends UI5Element {
 		this.syncSelection();
 	}
 
-	onAfterRendering() {
-		this.widths = this.buttons.map(button => button.offsetWidth);
+	async onAfterRendering () {
+		await Promise.all(this.buttons.map(button => button._waitForDomRef));
+			this.widths = this.buttons.map(button => button.offsetWidth);
 	}
 
 	syncSelection() {
