@@ -250,6 +250,8 @@ class TimePicker extends UI5Element {
 					sliders[i].value = currentDate.getMinutes();
 				} else if (sliders[i].label === "Seconds") {
 					sliders[i].value = currentDate.getSeconds();
+				} else if (this.isTwelveHoursFormat && sliders[i].label === "AM/PM") {
+					sliders[i].value = currentDate.getHours() > 11 ? "PM" : "AM";
 				}
 			}
 		}
@@ -330,7 +332,8 @@ class TimePicker extends UI5Element {
 			selectedDate = new Date(),
 			hours = "0",
 			minutes = "0",
-			seconds = "0";
+			seconds = "0",
+			period = "AM";
 
 		for (let i = 0; i < sliders.length; i++) {
 			if (sliders[i].label === "Hours") {
@@ -339,15 +342,19 @@ class TimePicker extends UI5Element {
 				minutes = sliders[i].value;
 			} else if (sliders[i].label === "Seconds") {
 				seconds = sliders[i].value;
+			} else if (sliders[i].label === "AM/PM"){
+				period = sliders[i].value;
 			}
 		}
 
-		selectedDate.setHours(hours);
+		if (period === "PM") {
+			selectedDate.setHours(hours*1 + 12);
+		} else {
+			selectedDate.setHours(hours);
+		}
 		selectedDate.setMinutes(minutes);
 		selectedDate.setSeconds(seconds);
 
-		//Add check if it's 12 hours format to add 12 hours in PM+
-		//TODO
 		this.setValue(this.getFormat().format(selectedDate));
 
 		this.closePicker();
@@ -425,10 +432,12 @@ class TimePicker extends UI5Element {
 		for (var i = 0; i < formatArray.length; i++) {
 			if (formatArray[i].type === "hour0_23") {
 				slidersBuildArray[0] = true;
+				this.isTwelveHoursFormat = false;
 			}
 			if (formatArray[i].type === "hour1_12") {
 				slidersBuildArray[3] = true;
 				slidersBuildArray[0] = true;
+				this.isTwelveHoursFormat = true;
 			}
 			if (formatArray[i].type === "minute") {
 				slidersBuildArray[1] = true;

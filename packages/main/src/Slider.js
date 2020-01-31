@@ -265,23 +265,22 @@ class Slider extends UI5Element {
 
 	_selectElementByIndex(index){
 		const sliderElement = this.shadowRoot.getElementById(`${this._id}--items-list`);
-		if (index > - 1) {
+		if ( index < this._items.length && index > - 1) {
 			let offsetSelectedElement = 12 - (index * 3);
 			sliderElement.setAttribute("style",`top:${offsetSelectedElement}rem`);
-			this.value = this._items[index]
+			this.value = this._items[index];
+			this._currentElementIndex = index;
 		}
 	}
 
 	_onArrowDown(){
 		const nextElementIndex = this._currentElementIndex + 1;
 		this._selectElementByIndex(nextElementIndex);
-		this._currentElementIndex = nextElementIndex;
 	}
 
 	_onArrowUp(){
 		const nextElementIndex = this._currentElementIndex - 1;
 		this._selectElementByIndex(nextElementIndex);
-		this._currentElementIndex = nextElementIndex;
 	}
 }
 
