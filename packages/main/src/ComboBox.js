@@ -3,8 +3,13 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-down.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isBackSpace, isDelete, isShow } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import * as Filters from "./ComboBoxFilters.js";
+
+import {
+	INPUT_SUGGESTIONS_TITLE,
+} from "./generated/i18n/i18n-defaults.js";
 
 // Templates
 import ComboBoxTemplate from "./generated/templates/ComboBoxTemplate.lit.js";
@@ -13,7 +18,7 @@ import ComboBoxPopoverTemplate from "./generated/templates/ComboBoxPopoverTempla
 // Styles
 import ComboBoxCss from "./generated/themes/ComboBox.css.js";
 import ComboBoxPopoverCss from "./generated/themes/ComboBoxPopover.css.js";
-import ResponsivePopoverInputCss from "./generated/themes/ResponsivePopoverInput.css.js";
+import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 
 import ComboBoxItem from "./ComboBoxItem.js";
 import Icon from "./Icon.js";
@@ -255,7 +260,7 @@ class ComboBox extends UI5Element {
 	}
 
 	static get staticAreaStyles() {
-		return [ComboBoxPopoverCss, ResponsivePopoverInputCss];
+		return [ComboBoxPopoverCss, ResponsivePopoverCommonCss];
 	}
 
 	static get template() {
@@ -271,6 +276,7 @@ class ComboBox extends UI5Element {
 
 		this._filteredItems = [];
 		this._initialRendering = true;
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
@@ -379,6 +385,10 @@ class ComboBox extends UI5Element {
 		}
 	}
 
+	_closeRespPopover() {
+		this._respPopover.close();
+	}
+
 	_filterItems(str) {
 		return (Filters[this.filter] || Filters.StartsWithPerTerm)(str, this.items);
 	}
@@ -436,6 +446,10 @@ class ComboBox extends UI5Element {
 		return !this.items.length ? [] : this.items.filter(item => {
 			return item.text.toLowerCase().startsWith(this.value.toLowerCase());
 		});
+	}
+
+	get _headerTitleText() {
+		return this.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
 	}
 
 	get inner() {

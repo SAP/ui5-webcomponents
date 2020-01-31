@@ -1,26 +1,24 @@
-import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import ResponsivePopoverTemplate from "./generated/templates/ResponsivePopoverTemplate.lit.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import Popover from "./Popover.js";
 import Dialog from "./Dialog.js";
-import Button from "./Button.js";
-import {
-	INPUT_SUGGESTIONS_TITLE,
-} from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import ResponsivePopoverCss from "./generated/themes/ResponsivePopover.css.js";
 
 const POPOVER_MIN_WIDTH = 100;
 
+/**
+ * @public
+ */
 const metadata = {
 	tag: "ui5-responsive-popover",
 	properties: /** @lends sap.ui.webcomponents.main.ResponsivePopover.prototype */ {
 
 		/**
-		 * By default the popover will be as wide at least as its opener. It will be wider if the content is not fitting.
+		 * By default the popover will be as wide as its opener. It will be wider if the content is not fitting.
 		 * If this property is set to true, it will take only as much space as it needs.
 		 */
 		noStretch: {
@@ -33,33 +31,13 @@ const metadata = {
 		withPadding: {
 			type: Boolean,
 		},
-
-		/**
-		 * Title of the Dialog on phone. It will be displayed as "Select" translatable text.
-		 */
-		showHeaderTitle: {
-			type: Boolean,
-		},
-
-		/**
-		 * Determines whether to show "Confirm" button in the footer on phone.
-		 */
-		showConfirmButton: {
-			type: Boolean,
-		},
-
-		/**
-		 * Determines whether to show "Cancel" button in the footer on phone.
-		 */
-		showCancelButton: {
-			type: Boolean,
-		},
 	},
 };
 
 /**
  * @class
- * ResponsivePopover is UI5Element, which shows Dialog on mobile devices and Popover otherwise.
+ * ResponsivePopover is Popover, which shows Dialog on mobile devices.
+ * Also slots <code>header</code> and <code>footer</code> are displayed only on mobile.
  *
  * @constructor
  * @author SAP SE
@@ -88,8 +66,6 @@ class ResponsivePopover extends Popover {
 	static async define(...params) {
 		await Promise.all([
 			Dialog.define(),
-			Button.define(),
-			fetchI18nBundle("@ui5/webcomponents"),
 		]);
 
 		super.define(...params);
@@ -97,10 +73,8 @@ class ResponsivePopover extends Popover {
 
 	constructor() {
 		super();
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 		this.placementType = "Bottom";
 		this.horizontalAlign = PopoverHorizontalAlign.Left;
-		this.noArrow = true;
 	}
 
 	/**
@@ -143,57 +117,33 @@ class ResponsivePopover extends Popover {
 	_propagateDialogEvent(event) {
 		const type = event.type.replace("ui5-", "");
 
-		this.fireEvent(type, {
-			...event.detail,
-			confirmButtonPressed: this._confirmButtonPressed,
-			cancelButtonPressed: this._cancelButtonPressed,
-		});
-
-		this._confirmButtonPressed = false;
-		this._cancelButtonPressed = false;
-	}
-
-	_handleClose(event) {
-		if (event.target.hasAttribute("confirm")) {
-			this._confirmButtonPressed = true;
-		}
-
-		if (event.target.hasAttribute("cancel")) {
-			this._cancelButtonPressed = true;
-		}
-
-		this.close();
+		this.fireEvent(type, event.detail);
 	}
 
 	get styles() {
 		const popoverStyles = super.styles;
 
-		return {
-			...popoverStyles,
-			root: {
-				"min-width": `${this._minWidth}px`,
-			},
+		popoverStyles.root = {
+			"min-width": `${this._minWidth}px`,
 		};
+
+		return popoverStyles;
 	}
 
 	get _dialog() {
 		return this.shadowRoot.querySelector("ui5-dialog");
 	}
 
-	get _hasFooter() {
-		return this.showCancelButton || this.showConfirmButton;
-	}
-
-	get _hasHeader() {
-		return this.showHeaderTitle || this.header.length;
-	}
-
 	get _isPhone() {
 		return isPhone();
 	}
 
-	get _headerTitleText() {
-		return this.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
+	get _displayHeader() {
+		return this._isPhone;
+	}
+
+	get _displayFooter() {
+		return this._isPhone;
 	}
 }
 

@@ -23,6 +23,7 @@ import TabContainerPopoverTemplate from "./generated/templates/TabContainerPopov
 
 // Styles
 import tabContainerCss from "./generated/themes/TabContainer.css.js";
+import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 
 const SCROLL_STEP = 128;
 
@@ -163,6 +164,10 @@ class TabContainer extends UI5Element {
 
 	static get styles() {
 		return tabContainerCss;
+	}
+
+	static get staticAreaStyles() {
+		return ResponsivePopoverCommonCss;
 	}
 
 	static get render() {
@@ -336,6 +341,10 @@ class TabContainer extends UI5Element {
 
 	_handleHeaderResize() {
 		this._updateScrolling();
+	}
+
+	_closeRespPopover() {
+		this._respPopover.close();
 	}
 
 	_updateScrolling() {

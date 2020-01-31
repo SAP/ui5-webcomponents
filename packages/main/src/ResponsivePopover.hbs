@@ -8,49 +8,12 @@
 		@ui5-beforeClose="{{_propagateDialogEvent}}"
 		@ui5-afterClose="{{_afterDialogClose}}"
 	>
-		{{#if _hasHeader}}
-			<div slot="header" class="ui5-responsive-popover-header">
-				{{#if showHeaderTitle}}
-					<div class="row">
-						<span>{{_headerTitleText}}</span>
-						<ui5-button
-							icon="decline"
-							design="Transparent"
-							@click="{{close}}"
-						>
-						</ui5-button>
-					</div>
-				{{/if}}
-				<slot name="header" class="row"></slot>
-			</div>
-		{{/if}}
-
+		{{!-- forward slot header to inner dialog slot header --}}
+		<slot slot="header" name="header"></slot>
 		<slot></slot>
-
-		{{#if _hasFooter}}
-			<div slot="footer" class="ui5-responsive-popover-footer">
-				<div style="flex: 1;"></div>
-				{{#if showConfirmButton}}
-					<ui5-button design="Transparent" @click="{{_handleClose}}" confirm>OK</ui5-button>
-				{{/if}}
-				{{#if showCancelButton}}
-					<ui5-button design="Transparent" @click="{{_handleClose}}" cancel>Cancel</ui5-button>
-				{{/if}}
-			</div>
-		{{/if}}
+		{{!-- forward slot footer to inner dialog slot footer --}}
+		<slot slot="footer" name="footer"></slot>
 	</ui5-dialog>
 {{else}}
-	<div
-		class="ui5-popover-root"
-		role="dialog"
-		aria-modal="true"
-		aria-labelledby="ui5-popover-header"
-		style="{{styles.root}}"
-	>
-		<span class="first-fe" tabindex="0" @focusin={{forwardToLast}}></span>
-		<div class="ui5-popover-content" style={{styles.content}}>
-			<slot></slot>
-		</div>
-		<span class="last-fe" tabindex="0" @focusin={{forwardToFirst}}></span>
-	</div>
+	{{>include "./Popover.hbs"}}
 {{/if}}

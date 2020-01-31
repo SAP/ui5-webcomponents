@@ -16,7 +16,7 @@ import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/icons/appointment-2.js";
-import { DATEPICKER_OPEN_ICON_TITLE, DATEPICKER_DATE_ACC_TEXT } from "./generated/i18n/i18n-defaults.js";
+import { DATEPICKER_OPEN_ICON_TITLE, DATEPICKER_DATE_ACC_TEXT, INPUT_SUGGESTIONS_TITLE } from "./generated/i18n/i18n-defaults.js";
 import Icon from "./Icon.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import Calendar from "./Calendar.js";
@@ -31,6 +31,7 @@ import "@ui5/webcomponents-utils/dist/sap/ui/core/date/Gregorian.js";
 // Styles
 import datePickerCss from "./generated/themes/DatePicker.css.js";
 import datePickerPopoverCss from "./generated/themes/DatePickerPopover.css.js";
+import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 
 /**
  * @public
@@ -249,7 +250,7 @@ class DatePicker extends UI5Element {
 	}
 
 	static get staticAreaStyles() {
-		return datePickerPopoverCss;
+		return [datePickerPopoverCss, ResponsivePopoverCommonCss];
 	}
 
 	constructor() {
@@ -409,6 +410,10 @@ class DatePicker extends UI5Element {
 
 	get _placeholder() {
 		return this.placeholder !== undefined ? this.placeholder : this._displayFormat;
+	}
+
+	get _headerTitleText() {
+		return this.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
 	}
 
 	getFormat() {

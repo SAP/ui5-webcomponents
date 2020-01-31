@@ -12,6 +12,10 @@ import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-down.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import {
+	INPUT_SUGGESTIONS_TITLE,
+} from "./generated/i18n/i18n-defaults.js";
 import Label from "./Label.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
@@ -24,6 +28,7 @@ import SelectPopoverTemplate from "./generated/templates/SelectPopoverTemplate.l
 
 // Styles
 import selectCss from "./generated/themes/Select.css.js";
+import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 
 /**
  * @public
@@ -183,6 +188,10 @@ class Select extends UI5Element {
 		return selectCss;
 	}
 
+	static get staticAreaStyles() {
+		return ResponsivePopoverCommonCss;
+	}
+
 	constructor() {
 		super();
 
@@ -191,6 +200,7 @@ class Select extends UI5Element {
 		this._selectedIndexBeforeOpen = -1;
 		this._escapePressed = false;
 		this._lastSelectedOption = null;
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
@@ -394,6 +404,10 @@ class Select extends UI5Element {
 
 	_toggleIcon() {
 		this._iconPressed = !this._iconPressed;
+	}
+
+	get _headerTitleText() {
+		return this.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
 	}
 
 	get _currentSelectedItem() {

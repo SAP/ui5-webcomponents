@@ -1,6 +1,5 @@
 <ui5-responsive-popover
-	show-header-title
-	show-confirm-button
+	no-arrow
 	_disable-initial-focus
 	@ui5-afterOpen={{_afterOpenPopover}}
 	@ui5-afterClose={{_afterClosePopover}}
@@ -11,6 +10,37 @@
 		class="ui5-combobox-busy"
 	>
 	</ui5-busyindicator>
+
+	<div slot="header" class="ui5-responsive-popover-header">
+		<div class="row">
+			<span>{{_headerTitleText}}</span>
+			<ui5-button
+				icon="decline"
+				design="Transparent"
+				@click="{{_closeRespPopover}}"
+			>
+			</ui5-button>
+		</div>
+		<div class="row">
+			<div
+				slot="header"
+				class="input-root-phone"
+				value-state="{{valueState}}"
+			>
+				<input
+					class="ui5-input-inner-phone"
+					.value="{{_tempValue}}"
+					inner-input
+					placeholder="{{placeholder}}"
+					value-state="{{valueState}}"
+					@input="{{_input}}"
+					@change="{{_inputChange}}"
+					@keydown="{{_keydown}}"
+					aria-autocomplete="both"
+				/>
+			</div>
+		</div>
+	</div>
 
 	<ui5-list
 		separators="None"
@@ -28,21 +58,10 @@
 		{{/each}}
 	</ui5-list>
 
-	<div
-		slot="header"
-		class="input-root-phone"
-		value-state="{{valueState}}"
-	>
-		<input
-			class="ui5-input-inner-phone"
-			.value="{{_tempValue}}"
-			inner-input
-			placeholder="{{placeholder}}"
-			value-state="{{valueState}}"
-			@input="{{_input}}"
-			@change="{{_inputChange}}"
-			@keydown="{{_keydown}}"
-			aria-autocomplete="both"
-		/>
+	<div slot="footer" class="ui5-responsive-popover-footer">
+		<ui5-button
+			design="Transparent"
+			@click="{{_closeRespPopover}}"
+		>OK</ui5-button>
 	</div>
 </ui5-responsive-popover>

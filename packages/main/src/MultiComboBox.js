@@ -22,6 +22,7 @@ import {
 	TOKENIZER_ARIA_CONTAIN_TOKEN,
 	TOKENIZER_ARIA_CONTAIN_ONE_TOKEN,
 	TOKENIZER_ARIA_CONTAIN_SEVERAL_TOKENS,
+	INPUT_SUGGESTIONS_TITLE,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Templates
@@ -30,7 +31,7 @@ import MultiComboBoxPopoverTemplate from "./generated/templates/MultiComboBoxPop
 
 // Styles
 import styles from "./generated/themes/MultiComboBox.css.js";
-import ResponsivePopoverInputCss from "./generated/themes/ResponsivePopoverInput.css.js";
+import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 
 /**
  * @public
@@ -299,7 +300,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	static get staticAreaStyles() {
-		return ResponsivePopoverInputCss;
+		return ResponsivePopoverCommonCss;
 	}
 
 	constructor() {
@@ -332,6 +333,14 @@ class MultiComboBox extends UI5Element {
 		this._toggleRespPopover(false);
 
 		this._inputDom.focus();
+	}
+
+	_closeMorePopover() {
+		this._getRespPopover(true).close();
+	}
+
+	_closeAllItemsPopover() {
+		this._getRespPopover().close();
 	}
 
 	get _inputDom() {
@@ -629,6 +638,10 @@ class MultiComboBox extends UI5Element {
 		}
 
 		return this.getDomRef().querySelector("#ui5-multi-combobox-input");
+	}
+
+	get _headerTitleText() {
+		return this.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
 	}
 
 	static async define(...params) {

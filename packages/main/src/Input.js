@@ -22,11 +22,12 @@ import {
 	VALUE_STATE_ERROR,
 	VALUE_STATE_WARNING,
 	INPUT_SUGGESTIONS,
+	INPUT_SUGGESTIONS_TITLE,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import styles from "./generated/themes/Input.css.js";
-import ResponsivePopoverInputCss from "./generated/themes/ResponsivePopoverInput.css.js";
+import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 
 /**
  * @public
@@ -343,7 +344,7 @@ class Input extends UI5Element {
 	}
 
 	static get staticAreaStyles() {
-		return ResponsivePopoverInputCss;
+		return ResponsivePopoverCommonCss;
 	}
 
 	constructor() {
@@ -511,6 +512,10 @@ class Input extends UI5Element {
 		}
 	}
 
+	_closeRespPopover() {
+		this.Suggestions.close();
+	}
+
 	_afterClosePopover() {
 		if (isPhone()) {
 			this.blur();
@@ -645,6 +650,10 @@ class Input extends UI5Element {
 
 	get _readonly() {
 		return this.readonly && !this.disabled;
+	}
+
+	get _headerTitleText() {
+		return this.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
 	}
 
 	get inputType() {

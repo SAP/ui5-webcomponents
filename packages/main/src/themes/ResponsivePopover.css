@@ -11,16 +11,3 @@
 :host([opened]) {
 	display: inline-block;
 }
-
-.ui5-responsive-popover-header .row {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	padding: 0.25rem 1rem;
-}
-
-.ui5-responsive-popover-footer {
-	display: flex;
-	align-items: center;
-	padding: 0.25rem;
-}

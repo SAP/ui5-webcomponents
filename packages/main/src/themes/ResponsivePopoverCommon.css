@@ -1,3 +1,4 @@
+/* styles for input in dialog */
 .input-root-phone {
 	flex: 1;
 	height: var(--_ui5_input_height);
@@ -106,6 +107,21 @@
 	width: 0;
 }
 
+/* MultiComboBox specific */
 .ui5-multi-combobox-toggle-button {
 	margin-left: 0.5rem;
+}
+
+/* Header and footer layout */
+.ui5-responsive-popover-header .row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0.25rem 1rem;
+}
+
+.ui5-responsive-popover-footer {
+	display: flex;
+	justify-content: flex-end;
+	padding: 0.25rem;
 }
