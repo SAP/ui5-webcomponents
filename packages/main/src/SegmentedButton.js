@@ -35,14 +35,15 @@ const metadata = {
 	events: /** @lends sap.ui.webcomponents.main.SegmentedButton.prototype */ {
 
 		/**
-		 * Fired when the <code>ui5-segmentedbutton</code> selection button changes.
+		 * Fired when the pressed button changes.
 		 *
 		 * @event
+		 * @param {HTMLElement} pressedButton the pressed button.
 		 * @public
 		 */
-		selectionChange: {
+		pressChange: {
 			detail: {
-				selectedButton: { type: HTMLElement },
+				pressedButton: { type: HTMLElement },
 			},
 		},
 	},
@@ -105,13 +106,13 @@ class SegmentedButton extends UI5Element {
 	}
 
 	syncSelection() {
-		this._selectedButton = this.buttons.filter(button => button.pressed).pop();
+		this._pressedButton = this.buttons.filter(button => button.pressed).pop();
 
-		if (this._selectedButton) {
+		if (this._pressedButton) {
 			this.buttons.forEach(button => {
 				button.pressed = false;
 			});
-			this._selectedButton.pressed = true;
+			this._pressedButton.pressed = true;
 		}
 	}
 
@@ -120,13 +121,13 @@ class SegmentedButton extends UI5Element {
 	}
 
 	toggle(event) {
-		if (event.target !== this.selectedButton) {
-			if (this._selectedButton) {
-				this._selectedButton.pressed = false;
+		if (event.target !== this.pressedButton) {
+			if (this._pressedButton) {
+				this._pressedButton.pressed = false;
 			}
-			this._selectedButton = event.target;
-			this.fireEvent("selectionChange", {
-				selectedButton: this._selectedButton,
+			this._pressedButton = event.target;
+			this.fireEvent("pressChange", {
+				pressedButton: this._pressedButton,
 			});
 		}
 		event.target.pressed = true;
@@ -134,8 +135,8 @@ class SegmentedButton extends UI5Element {
 		return this;
 	}
 
-	get selectedButton() {
-		return this._selectedButton;
+	get pressedButton() {
+		return this._pressedButton;
 	}
 
 	_handleResize() {
