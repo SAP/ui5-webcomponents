@@ -3,6 +3,7 @@ import { getThemeProperties, getRegisteredPackages } from "./asset-registries/Th
 import { injectThemeProperties } from "./theming/StyleInjection.js";
 
 const themeChangeCallbacks = [];
+let skipBaseParameters = false;
 
 const attachThemeChange = function attachThemeChange(callback) {
 	if (themeChangeCallbacks.indexOf(callback) === -1) {
@@ -13,7 +14,11 @@ const attachThemeChange = function attachThemeChange(callback) {
 const _applyTheme = async theme => {
 	let cssText = "";
 
-	const registeredPackages = getRegisteredPackages();
+	let registeredPackages = [...getRegisteredPackages()];
+	if (skipBaseParameters) {
+		registeredPackages = registeredPackages.filter(packageName => packageName !== "@ui5/webcomponents-theme-base");
+	}
+
 	registeredPackages.forEach(async packageName => {
 		cssText = await getThemeProperties(packageName, theme);
 		injectThemeProperties(cssText, packageName);
@@ -37,9 +42,14 @@ const getEffectiveStyle = ElementClass => {
 	return `${componentStyles} ${customStyle}`;
 };
 
+const setSkipBaseParameters = value => {
+	skipBaseParameters = value;
+};
+
 export {
 	attachThemeChange,
 	_applyTheme,
 	getEffectiveStyle,
 	addCustomCSS,
+	setSkipBaseParameters,
 };
