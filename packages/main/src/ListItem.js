@@ -1,5 +1,4 @@
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import "@ui5/webcomponents-icons/dist/icons/decline.js";
 import ListItemType from "./types/ListItemType.js";
 import ListMode from "./types/ListMode.js";
@@ -114,20 +113,19 @@ class ListItem extends ListItemBase {
 	}
 
 	onBeforeRendering(...params) {
-		const desktop = isDesktop();
-		const isActionable = (this.type === ListItemType.Active) && (this._mode !== ListMode.Delete);
-
-		this.actionable = desktop && isActionable;
+		this.actionable = (this.type === ListItemType.Active) && (this._mode !== ListMode.Delete);
 	}
 
 	onEnterDOM() {
 		document.addEventListener("mouseup", this.deactivate);
+		document.addEventListener("touchend", this.deactivate);
 		document.addEventListener("keyup", this.deactivateByKey);
 	}
 
 	onExitDOM() {
 		document.removeEventListener("mouseup", this.deactivate);
 		document.removeEventListener("keyup", this.deactivateByKey);
+		document.removeEventListener("touchend", this.deactivate);
 	}
 
 	_onkeydown(event) {
@@ -170,6 +168,14 @@ class ListItem extends ListItemBase {
 			return;
 		}
 		this.deactivate();
+	}
+
+	_ontouchstart(event) {
+		this._onmousedown(event);
+	}
+
+	_ontouchend(event) {
+		this._onmouseup(event);
 	}
 
 	_onfocusout() {
