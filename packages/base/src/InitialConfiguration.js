@@ -10,9 +10,7 @@ let initialConfig = {
 	language: null,
 	calendarType: null,
 	noConflict: false, // no URL
-	formatSettings: {
-		firstDayOfWeek: 1, // Monday
-	},
+	formatSettings: {},
 };
 
 /* General settings */
