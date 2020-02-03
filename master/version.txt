@@ -1,5 +1,5 @@
-commit 28f827a3e4ba2378a5d08932859c7f37b936d996
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Jan 31 11:36:38 2020 +0200
+commit 09799633ada25c03b246299f57b18b7f874606c6
+Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
+Date:   Mon Feb 3 10:05:40 2020 +0200
 
-    fix(framework): StaticArea and StaticAreaElement identify as UI5Element (#1168)
+    feat(ui5-table): introduce popinChange event (#1166)
