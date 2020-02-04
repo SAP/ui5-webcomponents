@@ -108,7 +108,6 @@ class SegmentedButton extends UI5Element {
 	normalizeSelection() {
 		this._selectedButton = this.buttons.filter(button => button.pressed).pop();
 
-		console.log(this._selectedButton)
 		if (this._selectedButton) {
 			this.buttons.forEach(button => {
 				button.pressed = false;
@@ -134,7 +133,7 @@ class SegmentedButton extends UI5Element {
 
 	_handleResize() {
 		const documentWidth = document.body.clientWidth;
-		
+
 		if (!this.style.width) {
 			this.style.width = `${Math.max(...this.widths) * this.buttons.length}px`;
 		}
@@ -150,7 +149,7 @@ class SegmentedButton extends UI5Element {
 
 	/**
 	 * Currently selected button.
-	 * 
+	 *
 	 * @readonly
 	 * @type { ui5-togglebutton }
 	 * @public
