@@ -3,7 +3,6 @@
 	aria-haspopup="listbox"
 	aria-expanded="{{open}}"
 >
-
 	<input id="ui5-combobox-input"
 		.value="{{_tempValue}}"
 		inner-input
@@ -14,6 +13,7 @@
 		value-state="{{valueState}}"
 		@input="{{_input}}"
 		@change="{{_inputChange}}"
+		@click={{_click}}
 		@keydown="{{_keydown}}"
 		@focusin="{{_focusin}}"
 		@focusout="{{_focusout}}"

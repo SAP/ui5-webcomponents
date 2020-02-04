@@ -13,14 +13,13 @@ import CalendarDate from "@ui5/webcomponents-base/dist/dates/CalendarDate.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { isShow } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/icons/appointment-2.js";
-import { DATEPICKER_OPEN_ICON_TITLE, DATEPICKER_DATE_ACC_TEXT } from "./generated/i18n/i18n-defaults.js";
+import { DATEPICKER_OPEN_ICON_TITLE, DATEPICKER_DATE_ACC_TEXT, INPUT_SUGGESTIONS_TITLE } from "./generated/i18n/i18n-defaults.js";
 import Icon from "./Icon.js";
-import Popover from "./Popover.js";
+import ResponsivePopover from "./ResponsivePopover.js";
 import Calendar from "./Calendar.js";
-import PopoverPlacementType from "./types/PopoverPlacementType.js";
-import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import Input from "./Input.js";
 import InputType from "./types/InputType.js";
 import DatePickerTemplate from "./generated/templates/DatePickerTemplate.lit.js";
@@ -31,6 +30,8 @@ import "@ui5/webcomponents-utils/dist/sap/ui/core/date/Gregorian.js";
 
 // Styles
 import datePickerCss from "./generated/themes/DatePicker.css.js";
+import datePickerPopoverCss from "./generated/themes/DatePickerPopover.css.js";
+import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 
 /**
  * @public
@@ -170,9 +171,11 @@ const metadata = {
 			type: Boolean,
 			noAttribute: true,
 		},
-		_popover: {
+
+		_respPopoverConfig: {
 			type: Object,
 		},
+
 		_calendar: {
 			type: Object,
 		},
@@ -270,20 +273,25 @@ class DatePicker extends UI5Element {
 		return datePickerCss;
 	}
 
+	static get staticAreaStyles() {
+		return [datePickerPopoverCss, ResponsivePopoverCommonCss];
+	}
+
 	constructor() {
 		super();
 
-		this._popover = {
-			placementType: PopoverPlacementType.Bottom,
-			horizontalAlign: PopoverHorizontalAlign.Left,
+		this._respPopoverConfig = {
 			allowTargetOverlap: true,
 			stayOpenOnScroll: true,
 			afterClose: () => {
-				const calendar = this.popover.querySelector(`#${this._id}-calendar`);
+				const calendar = this._respPopover.querySelector(`#${this._id}-calendar`);
 
 				this._isPickerOpen = false;
 
-				if (this._focusInputAfterClose) {
+				if (isPhone()) {
+					// close device's keyboard and prevent further typing
+					this.blur();
+				} else if (this._focusInputAfterClose) {
 					this._getInput().focus();
 					this._focusInputAfterClose = false;
 				}
@@ -292,7 +300,7 @@ class DatePicker extends UI5Element {
 				calendar._hideYearPicker();
 			},
 			afterOpen: () => {
-				const calendar = this.popover.querySelector(`#${this._id}-calendar`);
+				const calendar = this._respPopover.querySelector(`#${this._id}-calendar`);
 				const dayPicker = calendar.shadowRoot.querySelector(`#${calendar._id}-daypicker`);
 
 				const selectedDay = dayPicker.shadowRoot.querySelector(".ui5-dp-item--selected");
@@ -416,6 +424,13 @@ class DatePicker extends UI5Element {
 		this.fireEvent("input", { value: nextValue, valid: isValid });
 	}
 
+	_click(event) {
+		if (isPhone()) {
+			this._respPopover.open(this);
+			event.preventDefault(); // prevent immediate selection of any item
+		}
+	}
+
 	/**
 	 * Checks if a value is valid against the current date format of the DatePicker
 	 * @param {string} value A value to be tested against the current date format
@@ -496,6 +511,10 @@ class DatePicker extends UI5Element {
 		return this.placeholder !== undefined ? this.placeholder : this._displayFormat;
 	}
 
+	get _headerTitleText() {
+		return this.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
+	}
+
 	getFormat() {
 		if (this._isPattern) {
 			this._oDateFormat = DateFormat.getInstance({
@@ -517,7 +536,7 @@ class DatePicker extends UI5Element {
 			"ariaHasPopup": "true",
 			"ariaAutoComplete": "none",
 			"role": "combobox",
-			"ariaOwns": `${this._id}-popover`,
+			"ariaOwns": `${this._id}-responsive-popover`,
 			"ariaExpanded": this.isOpen(),
 			"ariaDescription": this.dateAriaDescription,
 		};
@@ -547,6 +566,10 @@ class DatePicker extends UI5Element {
 
 	get dir() {
 		return getRTL() ? "rtl" : "ltr";
+	}
+
+	get _respPopover() {
+		return this.getStaticAreaItemDomRef().querySelector("ui5-responsive-popover");
 	}
 
 	_canOpenPicker() {
@@ -589,7 +612,7 @@ class DatePicker extends UI5Element {
 	 * @public
 	 */
 	closePicker() {
-		this.popover.close();
+		this._respPopover.close();
 	}
 
 	/**
@@ -600,19 +623,17 @@ class DatePicker extends UI5Element {
 	 * @public
 	 */
 	openPicker(options) {
-		this.popover = this.getStaticAreaItemDomRef().querySelector("ui5-popover");
 		this._changeCalendarSelection();
 
 		if (options && options.focusInput) {
 			this._focusInputAfterOpen = true;
 		}
-		this.popover.openBy(this);
+
+		this._respPopover.open(this);
 		this._isPickerOpen = true;
 	}
 
 	togglePicker() {
-		this.popover = this.getStaticAreaItemDomRef().querySelector("ui5-popover");
-
 		if (this.isOpen()) {
 			this.closePicker();
 		} else if (this._canOpenPicker()) {
@@ -688,7 +709,7 @@ class DatePicker extends UI5Element {
 		await Promise.all([
 			fetchCldr(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
 			Icon.define(),
-			Popover.define(),
+			ResponsivePopover.define(),
 			Calendar.define(),
 			Input.define(),
 			fetchI18nBundle("@ui5/webcomponents"),

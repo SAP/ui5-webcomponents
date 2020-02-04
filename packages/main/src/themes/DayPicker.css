@@ -25,6 +25,7 @@
 
 .ui5-dp-content {
 	display: flex;
+	flex-basis: 87.5%;
 	flex-direction: column;
 	font-family: var(--sapFontFamily);
 }
@@ -36,6 +37,7 @@
 
 .ui5-dp-weeknumber-container {
 	padding-top: var(--_ui5_daypicker_weeknumbers_container_padding_top);
+	flex-basis: 12.5%;
 }
 
 .ui5-dp-weekname,
@@ -43,6 +45,7 @@
 .ui5-dp-weekname-container,
 .ui5-dp-item {
 	display: flex;
+	flex-grow: 1;
 	justify-content: center;
 	align-items: center;
 	font-size: var(--sapFontSmallSize);
