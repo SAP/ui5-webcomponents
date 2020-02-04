@@ -21,7 +21,8 @@ class ItemNavigation extends EventProvider {
 		this.currentIndex = options.currentIndex || 0;
 		this.rowSize = options.rowSize || 1;
 		this.behavior = options.behavior || ItemNavigationBehavior.Static;
-
+		this.hasNextPage = true; // used in Paging mode and controlled from the rootWebComponent
+		this.hasPrevPage = true; // used in Paging mode and controlled from the rootWebComponent
 		const navigationMode = options.navigationMode;
 		const autoNavigation = !navigationMode || navigationMode === NavigationMode.Auto;
 		this.horizontalNavigationOn = autoNavigation || navigationMode === NavigationMode.Horizontal;
@@ -213,36 +214,38 @@ class ItemNavigation extends EventProvider {
 
 	onOverflowBottomEdge() {
 		const items = this._getItems();
-		const rowIndex = this.currentIndex - items.length;
+		const offset = this.currentIndex - items.length;
+
 		if (this.behavior === ItemNavigationBehavior.Cyclic) {
+			this.currentIndex = 0;
 			return;
 		}
 
 		if (this.behavior === ItemNavigationBehavior.Paging) {
 			this._handleNextPage();
+		} else {
+			this.currentIndex = items.length - 1;
 		}
 
-		this.fireEvent(ItemNavigation.BORDER_REACH, {
-			start: false, end: true, offset: this.currentIndex, rowIndex,
-		});
+		this.fireEvent(ItemNavigation.BORDER_REACH, { start: false, end: true, offset });
 	}
 
 	onOverflowTopEdge() {
 		const items = this._getItems();
-		const rowIndex = this.currentIndex + this.rowSize;
+		const offset = this.currentIndex + this.rowSize;
 
 		if (this.behavior === ItemNavigationBehavior.Cyclic) {
-			this.currentIndex = items.length + this.currentIndex;
+			this.currentIndex = items.length - 1;
 			return;
 		}
 
 		if (this.behavior === ItemNavigationBehavior.Paging) {
 			this._handlePrevPage();
+		} else {
+			this.currentIndex = 0;
 		}
 
-		this.fireEvent(ItemNavigation.BORDER_REACH, {
-			start: true, end: false, offset: this.currentIndex, rowIndex,
-		});
+		this.fireEvent(ItemNavigation.BORDER_REACH, { start: true, end: false, offset });
 	}
 
 	_handleNextPage() {
@@ -258,11 +261,12 @@ class ItemNavigation extends EventProvider {
 
 	_handlePrevPage() {
 		this.fireEvent(ItemNavigation.PAGE_TOP);
+		const items = this._getItems();
 
 		if (!this.hasPrevPage) {
 			this.currentIndex = 0;
 		} else {
-			this.currentIndex = 41;
+			this.currentIndex = (this.pageSize || items.length) - 1;
 		}
 	}
 }
