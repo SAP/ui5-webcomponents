@@ -168,6 +168,7 @@ class DayPicker extends UI5Element {
 
 		this._itemNav = new ItemNavigation(this, {
 			rowSize: 7,
+			pageSize: 42,
 			behavior: ItemNavigationBehavior.Paging,
 		});
 
@@ -518,12 +519,12 @@ class DayPicker extends UI5Element {
 			currentDate;
 
 		if (event.end) {
-			currentDate = new Date(this._weeks[this._weeks.length - 1][event.rowIndex].timestamp * 1000);
+			currentDate = new Date(this._weeks[this._weeks.length - 1][event.offset].timestamp * 1000);
 			newMonth = currentMonth < 11 ? currentMonth + 1 : 0;
 			newYear = currentMonth < 11 ? currentYear : currentYear + 1;
 			newDate = currentDate.getMonth() === newMonth ? currentDate.getDate() : currentDate.getDate() + 7;
 		} else if (event.start) {
-			currentDate = new Date(this._weeks[0][event.rowIndex].timestamp * 1000);
+			currentDate = new Date(this._weeks[0][event.offset].timestamp * 1000);
 			newMonth = currentMonth > 0 ? currentMonth - 1 : 11;
 			newYear = currentMonth > 0 ? currentYear : currentYear - 1;
 			newDate = currentDate.getMonth() === newMonth ? currentDate.getDate() : currentDate.getDate() - 7;
