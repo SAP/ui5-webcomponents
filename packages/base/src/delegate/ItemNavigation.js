@@ -223,6 +223,8 @@ class ItemNavigation extends EventProvider {
 
 		if (this.behavior === ItemNavigationBehavior.Paging) {
 			this._handleNextPage();
+		} else {
+			this.currentIndex = items.length - 1;
 		}
 
 		this.fireEvent(ItemNavigation.BORDER_REACH, { start: false, end: true, offset });
@@ -239,6 +241,8 @@ class ItemNavigation extends EventProvider {
 
 		if (this.behavior === ItemNavigationBehavior.Paging) {
 			this._handlePrevPage();
+		} else {
+			this.currentIndex = 0;
 		}
 
 		this.fireEvent(ItemNavigation.BORDER_REACH, { start: true, end: false, offset });
