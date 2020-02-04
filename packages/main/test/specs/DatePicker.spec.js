@@ -531,23 +531,6 @@ describe("Date Picker Tests", () => {
 		assert.equal(innerInputPlaceholder, placeholder, "The inner input has the placeholder, set by the user");
 	});
 
-	it("navigate to Jan 0001 page", () => {
-		const staringDate = "Feb 1, 0001";
-		const expectedDateAfterNavigtion = "Jan 28, 0001";
-
-		datepicker.id ="#dp0001Page";
-		datepicker.innerInput.setValue(staringDate);
-		datepicker.openPicker();
-
-		// Starting from February we are navigating up to January
-		browser.keys("ArrowUp");
-		browser.keys("ArrowUp");
-		browser.keys("Enter");
-
-		const selectedDate = datepicker.innerInput.getValue();
-		assert.strictEqual(selectedDate, expectedDateAfterNavigtion, selectedDate + " has been reached successfully");
-	});
-
 	it("Going under the minimum date changes value state", () => {
 		datepicker.id = "#dp33";
 
