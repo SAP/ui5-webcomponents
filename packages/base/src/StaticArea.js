@@ -31,7 +31,9 @@ class StaticAreaElement extends HTMLElement {
 	}
 }
 
-customElements.define("ui5-static-area", StaticAreaElement);
+if (!customElements.get("ui5-static-area")) {
+	customElements.define("ui5-static-area", StaticAreaElement);
+}
 
 export {
 	getStaticAreaInstance,
