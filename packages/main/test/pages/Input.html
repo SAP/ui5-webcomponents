@@ -16,10 +16,10 @@
 
 <body style="background-color: var(--sapBackgroundColor);">
 	<h3> Input with suggestions: type 'a'</h3>
-	<ui5-label id="myLabel">Event [suggestionItemSelect] :: N/A</ui5-label><br/>
-	<ui5-label id="myLabelChange">Event [change] :: N/A</ui5-label><br/>
-	<ui5-label id="myLabelSubmit">Event [submit] :: N/A</ui5-label><br/>
-	<ui5-label id="myLabelLiveChange">Event [input] :: N/A</ui5-label><br/>
+	<div id="myLabel">Event [suggestionItemSelect] :: N/A</div><br/>
+	<div id="myLabelChange">Event [change] :: N/A</div><br/>
+	<div id="myLabelSubmit">Event [submit] :: N/A</div><br/>
+	<div id="myLabelLiveChange">Event [input] :: N/A</div><br/>
 
 	<ui5-input id="myInput"
 		style="width: 500px"
@@ -32,6 +32,43 @@
 		<ui5-li>Cozy</ui5-li>
 		<ui5-li>Compact</ui5-li>
 		<ui5-li>Condensed</ui5-li>
+	</ui5-input>
+
+	<h3> Success Input with suggestions</h3>
+	<ui5-input value-state="Success" id="mySuccessInput" show-suggestions style="width: 300px">
+		<div slot="valueStateMessage">Should not be shown</div>
+		<ui5-li>Cozy</ui5-li>
+		<ui5-li>Compact</ui5-li>
+		<ui5-li>Condensed</ui5-li>
+	</ui5-input>
+
+	<h3> Information Input with suggestions</h3>
+	<ui5-input value-state="Information" id="myInformationInput" show-suggestions style="width: 350px">
+		<div slot="valueStateMessage">Information message. This is a <a href="#">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
+		<ui5-li>Cozy</ui5-li>
+		<ui5-li>Compact</ui5-li>
+		<ui5-li>Condensed</ui5-li>
+	</ui5-input>
+
+	<h3> Warning Input with suggestions</h3>
+	<ui5-input value-state="Warning" id="myWarningInput" show-suggestions style="width: 400px">
+		<div slot="valueStateMessage">Warning message. Extra long text used as a warning message. Extra long text used as a warning message - 2. Extra long text used as a warning message - 3.</div>
+		<ui5-li>Cozy</ui5-li>
+		<ui5-li>Compact</ui5-li>
+		<ui5-li>Condensed</ui5-li>
+	</ui5-input>
+
+	<h3> Error Input with suggestions</h3>
+	<ui5-input value-state="Error" id="myErrorInput" show-suggestions style="width: 450px">
+		<div slot="valueStateMessage">Error message. Extra long text used as a error message. Extra long text used as a error message - 2. Extra long text used as a error message - 3.</div>
+		<ui5-li>Cozy</ui5-li>
+		<ui5-li>Compact</ui5-li>
+		<ui5-li>Condensed</ui5-li>
+	</ui5-input>
+
+	<h3> Error Input without suggestions</h3>
+	<ui5-input value-state="Error" id="myErrorInput2" style="width: 450px">
+		<div slot="valueStateMessage">Error message. Extra long text used as a error message. Extra long text used as a error message - 2. Extra long text used as a error message - 3.</div>
 	</ui5-input>
 
 	<h3> Input disabled</h3>
@@ -109,7 +146,7 @@
 		<ui5-option selected>Compact</ui5-option>
 		<ui5-option>Condensed</ui5-option>
 	</ui5-select>
-	
+
 	<ui5-input  value="input" value-state="Error">
 		<ui5-icon slot="icon" name="message-warning"></ui5-icon>
 	</ui5-input>

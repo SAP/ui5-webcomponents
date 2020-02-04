@@ -73,7 +73,7 @@ class Suggestions {
 
 	toggle(bToggle) {
 		const toggle = bToggle !== undefined ? bToggle : !this.isOpened();
-
+debugger;
 		if (toggle) {
 			this.open();
 		} else {
@@ -123,11 +123,11 @@ class Suggestions {
 	}
 
 	_attachItemsListeners() {
-		const list = this._getList();
-		list.removeEventListener("ui5-itemPress", this.fnOnSuggestionItemPress);
-		list.addEventListener("ui5-itemPress", this.fnOnSuggestionItemPress);
-		list.removeEventListener("ui5-itemFocused", this.fnOnSuggestionItemFocus);
-		list.addEventListener("ui5-itemFocused", this.fnOnSuggestionItemFocus);
+		// const list = this._getList();
+		// list.removeEventListener("ui5-itemPress", this.fnOnSuggestionItemPress);
+		// list.addEventListener("ui5-itemPress", this.fnOnSuggestionItemPress);
+		// list.removeEventListener("ui5-itemFocused", this.fnOnSuggestionItemFocus);
+		// list.addEventListener("ui5-itemFocused", this.fnOnSuggestionItemFocus);
 	}
 
 	_attachPopupListeners() {

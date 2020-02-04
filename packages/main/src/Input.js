@@ -11,6 +11,8 @@ import {
 } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import Popover from "./Popover.js";
+
 // import Icon from "./Icon.js";
 import InputType from "./types/InputType.js";
 // Templates
@@ -26,6 +28,7 @@ import {
 
 // Styles
 import styles from "./generated/themes/Input.css.js";
+import InputPopoverCss from "./generated/themes/InputPopover.css.js";
 
 /**
  * @public
@@ -78,6 +81,17 @@ const metadata = {
 		 * @private
 		 */
 		formSupport: {
+			type: HTMLElement,
+		},
+
+		/**
+		 * Defines the icon to be displayed in the <code>ui5-input</code>.
+		 *
+		 * @type {HTMLElement[]}
+		 * @slot
+		 * @public
+		 */
+		valueStateMessage: {
 			type: HTMLElement,
 		},
 	},
@@ -341,6 +355,10 @@ class Input extends UI5Element {
 		return InputPopoverTemplate;
 	}
 
+	static get staticAreaStyles() {
+		return InputPopoverCss;
+	}
+
 	static get styles() {
 		return [styles];
 	}
@@ -392,10 +410,70 @@ class Input extends UI5Element {
 	}
 
 	onAfterRendering() {
+		debugger
 		if (!this.firstRendering && this.Suggestions) {
 			this.Suggestions.toggle(this.shouldOpenSuggestions());
 		}
+		if(!this.firstRendering && !this.Suggestions){
+			this.toggle(this.shouldShowValueStateMessage());
+			if (this._getPopover().contentDOM) {
+				this._getPopover().contentDOM.style.display = "none"
+			}
+		}
 		this.firstRendering = false;
+	}
+
+	toggle(bToggle) {
+		const toggle = bToggle !== undefined ? bToggle : !this.isOpened();
+debugger;
+		if (toggle) {
+			this.open();
+		} else {
+			this.close();
+		}
+	}
+
+	open() {
+		this._beforeOpen();
+		this._getPopover().openBy(this);
+	}
+
+	close() {
+		this._getPopover().close();
+	}
+
+	_getPopover() {
+		return this.getStaticAreaItemDomRef().querySelector("ui5-popover");
+		debugger
+	}
+
+	_beforeOpen() {
+		this._attachItemsListeners();
+		this._attachPopupListeners();
+	}
+
+	_attachItemsListeners() {
+		// const list = this._getList();
+		// list.removeEventListener("ui5-itemPress", this.fnOnSuggestionItemPress);
+		// list.addEventListener("ui5-itemPress", this.fnOnSuggestionItemPress);
+		// list.removeEventListener("ui5-itemFocused", this.fnOnSuggestionItemFocus);
+		// list.addEventListener("ui5-itemFocused", this.fnOnSuggestionItemFocus);
+	}
+
+	_attachPopupListeners() {
+		if (!this.handleFocus) {
+			return;
+		}
+
+		if (!this.attachedAfterOpened) {
+			this._getPopover().addEventListener("ui5-afterOpen", this._onOpen.bind(this));
+			this.attachedAfterOpened = true;
+		}
+
+		if (!this.attachedAfterClose) {
+			this._getPopover().addEventListener("ui5-afterClose", this._onClose.bind(this));
+			this.attachedAfterClose = true;
+		}
 	}
 
 	_onkeydown(event) {
@@ -501,6 +579,11 @@ class Input extends UI5Element {
 			&& this.showSuggestions
 			&& this.focused
 			&& !this.hasSuggestionItemSelected);
+	}
+
+	shouldShowValueStateMessage() {
+		return !!(this.valueStateMessage.length
+			&& this.focused);
 	}
 
 	selectSuggestion(item, keyboardUsed) {
@@ -635,6 +718,18 @@ class Input extends UI5Element {
 		};
 	}
 
+	get classes() {
+		return {
+			popoverValueState: {
+				"ui5-input-valuestatemessage-root": true,
+				"ui5-input-valuestatemessage-success": this.valueState === ValueState.Success,
+				"ui5-input-valuestatemessage-error": this.valueState === ValueState.Error,
+				"ui5-input-valuestatemessage-warning": this.valueState === ValueState.Warning,
+				"ui5-input-valuestatemessage-information": this.valueState === ValueState.Information,
+			}
+		}
+	}
+
 	get hasValueState() {
 		return this.valueState !== ValueState.None;
 	}
@@ -647,6 +742,21 @@ class Input extends UI5Element {
 		return this.i18nBundle.getText(INPUT_SUGGESTIONS);
 	}
 
+	get valueStateMessageText() {
+		const valueStateMessage = this.valueStateMessage.map( x => x.cloneNode(true));
+		valueStateMessage[0].setAttribute("tabindex", "0");
+
+		return valueStateMessage;
+	}
+
+	get shouldDisplayValueStateMessage() {
+		return this.valueStateMessage.length && this.valueState !== ValueState.None && this.valueState !== ValueState.Success;
+	}
+
+	get shouldDisplayValueStateMessageOrSuggestions() {
+		return this.shouldDisplayValueStateMessage || this.showSuggestions;
+	}
+
 	static async define(...params) {
 		await fetchI18nBundle("@ui5/webcomponents");
 
@@ -655,5 +765,6 @@ class Input extends UI5Element {
 }
 
 Input.define();
+Popover.define();
 
 export default Input;
