@@ -21,9 +21,8 @@ class ItemNavigation extends EventProvider {
 		this.currentIndex = options.currentIndex || 0;
 		this.rowSize = options.rowSize || 1;
 		this.behavior = options.behavior || ItemNavigationBehavior.Static;
-		this.hasNextPage = true; // used in Paging mode
-		this.hasPrevPage = true; // used in Paging mode
-		this.pageSize = options.pageSize;
+		this.hasNextPage = true; // used in Paging mode and controlled from the rootWebComponent
+		this.hasPrevPage = true; // used in Paging mode and controlled from the rootWebComponent
 		const navigationMode = options.navigationMode;
 		const autoNavigation = !navigationMode || navigationMode === NavigationMode.Auto;
 		this.horizontalNavigationOn = autoNavigation || navigationMode === NavigationMode.Horizontal;
