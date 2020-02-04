@@ -517,6 +517,7 @@ class Input extends UI5Element {
 	}
 
 	_afterClosePopover() {
+		// close device's keyboard and prevent further typing
 		if (isPhone()) {
 			this.blur();
 		}

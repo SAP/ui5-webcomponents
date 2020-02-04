@@ -289,6 +289,7 @@ class DatePicker extends UI5Element {
 				this._isPickerOpen = false;
 
 				if (isPhone()) {
+					// close device's keyboard and prevent further typing
 					this.blur();
 				} else if (this._focusInputAfterClose) {
 					this._getInput().focus();

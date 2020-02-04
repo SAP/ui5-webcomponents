@@ -326,6 +326,7 @@ class ComboBox extends UI5Element {
 	_afterClosePopover() {
 		this._iconPressed = false;
 
+		// close device's keyboard and prevent further typing
 		if (isPhone()) {
 			this.blur();
 		}
