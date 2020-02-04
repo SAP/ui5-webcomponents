@@ -16,6 +16,7 @@
 	overflow: hidden;
 	font-family: var(--sapFontFamily);
 	font-size: var(--sapFontSize);
+	box-sizing: border-box;
 }
 
 .ui5-card-header {

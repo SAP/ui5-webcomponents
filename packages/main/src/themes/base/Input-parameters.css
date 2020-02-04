@@ -13,7 +13,7 @@
 	--_ui5_input_disabled_border_color: var(--sapField_BorderColor);
 	--_ui5_input_disabled_background: var(--sapField_Background);
 	--_ui5_input_icon_padding: 0.625rem .6875rem;
-	--sap_wc_input_disabled_opacity: 0.5;
-	--sap_wc_input_icon_min_width: 2.375rem;
-	--sap_wc_input_compact_min_width: 2rem;
+	--_ui5_input_disabled_opacity: 0.5;
+	--_ui5_input_icon_min_width: 2.375rem;
+	--_ui5_input_compact_min_width: 2rem;
 }
