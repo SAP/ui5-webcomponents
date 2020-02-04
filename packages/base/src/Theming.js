@@ -3,7 +3,7 @@ import { getThemeProperties, getRegisteredPackages } from "./asset-registries/Th
 import { injectThemeProperties } from "./theming/StyleInjection.js";
 
 const themeChangeCallbacks = [];
-let skipBaseParameters = false;
+let externalThemePresent = false;
 
 const attachThemeChange = function attachThemeChange(callback) {
 	if (themeChangeCallbacks.indexOf(callback) === -1) {
@@ -14,9 +14,9 @@ const attachThemeChange = function attachThemeChange(callback) {
 const _applyTheme = async theme => {
 	let cssText = "";
 
-	let registeredPackages = [...getRegisteredPackages()];
-	if (skipBaseParameters) {
-		registeredPackages = registeredPackages.filter(packageName => packageName !== "@ui5/webcomponents-theme-base");
+	const registeredPackages = getRegisteredPackages();
+	if (externalThemePresent) {
+		registeredPackages.delete("@ui5/webcomponents-theme-base");
 	}
 
 	registeredPackages.forEach(async packageName => {
@@ -42,8 +42,8 @@ const getEffectiveStyle = ElementClass => {
 	return `${componentStyles} ${customStyle}`;
 };
 
-const setSkipBaseParameters = value => {
-	skipBaseParameters = value;
+const setExternalThemePresent = value => {
+	externalThemePresent = value;
 };
 
 export {
@@ -51,5 +51,5 @@ export {
 	_applyTheme,
 	getEffectiveStyle,
 	addCustomCSS,
-	setSkipBaseParameters,
+	setExternalThemePresent,
 };
