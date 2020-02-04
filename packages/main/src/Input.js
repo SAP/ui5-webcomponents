@@ -408,13 +408,6 @@ class Input extends UI5Element {
 		this.firstRendering = false;
 	}
 
-	_afterOpenPopover() {
-		// Set initial focus to the native input
-		if (isPhone()) {
-			this.getInputDOMRef().focus();
-		}
-	}
-
 	_onkeydown(event) {
 		if (isUp(event)) {
 			return this._handleUp(event);
@@ -514,6 +507,13 @@ class Input extends UI5Element {
 
 	_closeRespPopover() {
 		this.Suggestions.close();
+	}
+
+	_afterOpenPopover() {
+		// Set initial focus to the native input
+		if (isPhone()) {
+			this.getInputDOMRef().focus();
+		}
 	}
 
 	_afterClosePopover() {

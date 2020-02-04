@@ -64,9 +64,7 @@ class ResponsivePopover extends Popover {
 	}
 
 	static async define(...params) {
-		await Promise.all([
-			Dialog.define(),
-		]);
+		await Dialog.define();
 
 		super.define(...params);
 	}
