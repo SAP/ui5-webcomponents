@@ -35,15 +35,15 @@ const metadata = {
 	events: /** @lends sap.ui.webcomponents.main.SegmentedButton.prototype */ {
 
 		/**
-		 * Fired when the pressed button changes.
+		 * Fired when the selected button changes.
 		 *
 		 * @event
-		 * @param {HTMLElement} pressedButton the pressed button.
+		 * @param {HTMLElement} selectedButton the pressed button.
 		 * @public
 		 */
-		pressChange: {
+		selectionChange: {
 			detail: {
-				pressedButton: { type: HTMLElement },
+				selectedButton: { type: HTMLElement },
 			},
 		},
 	},
@@ -97,7 +97,7 @@ class SegmentedButton extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		this.syncSelection();
+		this.normalizeSelection();
 	}
 
 	async onAfterRendering() {
@@ -105,44 +105,40 @@ class SegmentedButton extends UI5Element {
 		this.widths = this.buttons.map(button => button.offsetWidth);
 	}
 
-	syncSelection() {
-		this._pressedButton = this.buttons.filter(button => button.pressed).pop();
+	normalizeSelection() {
+		this._selectedButton = this.buttons.filter(button => button.pressed).pop();
 
-		if (this._pressedButton) {
+		console.log(this._selectedButton)
+		if (this._selectedButton) {
 			this.buttons.forEach(button => {
 				button.pressed = false;
 			});
-			this._pressedButton.pressed = true;
+			this._selectedButton.pressed = true;
 		}
 	}
 
 	_onclick(event) {
-		return this.toggle(event);
-	}
-
-	toggle(event) {
-		if (event.target !== this.pressedButton) {
-			if (this._pressedButton) {
-				this._pressedButton.pressed = false;
+		if (event.target !== this._selectedButton) {
+			if (this._selectedButton) {
+				this._selectedButton.pressed = false;
 			}
-			this._pressedButton = event.target;
-			this.fireEvent("pressChange", {
-				pressedButton: this._pressedButton,
+			this._selectedButton = event.target;
+			this.fireEvent("selectionChange", {
+				selectedButton: this._selectedButton,
 			});
 		}
-		event.target.pressed = true;
+		this._selectedButton.pressed = true;
 
 		return this;
 	}
 
-	get pressedButton() {
-		return this._pressedButton;
-	}
-
 	_handleResize() {
 		const documentWidth = document.body.clientWidth;
+		
+		if (!this.style.width) {
+			this.style.width = `${Math.max(...this.widths) * this.buttons.length}px`;
+		}
 
-		this.style.width = `${Math.max(...this.widths) * this.buttons.length}px`;
 		this.buttons.forEach(button => {
 			button.style.width = "100%";
 		});
@@ -150,6 +146,17 @@ class SegmentedButton extends UI5Element {
 		if (documentWidth <= this.offsetWidth) {
 			this.style.width = "100%";
 		}
+	}
+
+	/**
+	 * Currently selected button.
+	 * 
+	 * @readonly
+	 * @type { ui5-togglebutton }
+	 * @public
+	 */
+	get selectedButton() {
+		return this._selectedButton;
 	}
 }
 

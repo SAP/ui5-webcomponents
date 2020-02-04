@@ -122,10 +122,10 @@ const metadata = {
 	},
 	events: /** @lends sap.ui.webcomponents.main.Select.prototype */ {
 		/**
-		 * Fired when the selected item changes.
+		 * Fired when the selected option changes.
 		 *
 		 * @event
-		 * @param {HTMLElement} item the selected item.
+		 * @param {HTMLElement} selectedOption the selected option.
 		 * @public
 		 */
 		change: {
