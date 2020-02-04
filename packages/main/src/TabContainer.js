@@ -21,6 +21,7 @@ import SemanticColor from "./types/SemanticColor.js";
 
 // Styles
 import tabContainerCss from "./generated/themes/TabContainer.css.js";
+import tabContainerPopoverCss from "./generated/themes/TabContainerPopup.css.js";
 
 const SCROLL_STEP = 128;
 
@@ -161,6 +162,10 @@ class TabContainer extends UI5Element {
 
 	static get styles() {
 		return tabContainerCss;
+	}
+
+	static get staticAreaStyles() {
+		return [tabContainerPopoverCss];
 	}
 
 	static get render() {
