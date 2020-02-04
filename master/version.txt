@@ -1,5 +1,5 @@
-commit 09799633ada25c03b246299f57b18b7f874606c6
-Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
-Date:   Mon Feb 3 10:05:40 2020 +0200
+commit 389bdbabc93c96d13000d77b5f370bfdd2ab0a40
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Tue Feb 4 08:49:00 2020 +0200
 
-    feat(ui5-table): introduce popinChange event (#1166)
+    fix(framework) Add protection for double definition of static area (#1174)
