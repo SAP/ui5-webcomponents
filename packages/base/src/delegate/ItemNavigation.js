@@ -217,6 +217,7 @@ class ItemNavigation extends EventProvider {
 		const offset = this.currentIndex - items.length;
 
 		if (this.behavior === ItemNavigationBehavior.Cyclic) {
+			this.currentIndex = 0;
 			return;
 		}
 
@@ -234,7 +235,7 @@ class ItemNavigation extends EventProvider {
 		const offset = this.currentIndex + this.rowSize;
 
 		if (this.behavior === ItemNavigationBehavior.Cyclic) {
-			this.currentIndex = items.length + this.currentIndex;
+			this.currentIndex = items.length - 1;
 			return;
 		}
 
