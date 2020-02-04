@@ -1,8 +1,7 @@
-commit d7b117932cebab73e21365f222510034907f652e
-Author: Petar Dimov <32839090+dimovpetar@users.noreply.github.com>
-Date:   Tue Feb 4 12:19:42 2020 +0200
+commit 63ca72189f90c88cd4140ff6f63a66383749ae38
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Feb 4 13:44:36 2020 +0200
 
-    feat: make input-based components open dialog on mobile device (#1144)
+    fix(ui5-tabcontainer): apply overflow items styles (#1178)
     
-    - All input-based components, such as "Input",  "Select", "DatePicker", "Combobox" and "MultiCombobox" now open Dialog on mobile devices and Popover on desktop (as before)
-    - Introduce new component ResponsivePopover, that manages that behavior.
+    Recently, we introduced static area for all composed popovers, but the additional styles for the TabContainer overflow items have not been supplied.
