@@ -445,10 +445,8 @@ class List extends UI5Element {
 	onItemPress(event) {
 		const pressedItem = event.detail.item;
 
-		if (pressedItem.type === ListItemType.Active) {
-			this.fireEvent("itemPress", { item: pressedItem });
-			this.fireEvent("itemClick", { item: pressedItem });
-		}
+		this.fireEvent("itemPress", { item: pressedItem });
+		this.fireEvent("itemClick", { item: pressedItem });
 
 		if (!this._selectionRequested && this.mode !== ListMode.Delete) {
 			this._selectionRequested = true;
