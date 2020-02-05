@@ -18,6 +18,7 @@
 		@ui5-showMoreItemsPress="{{_showMorePopover}}"
 		@ui5-tokenDelete="{{_tokenDelete}}"
 		@focusout="{{_tokenizerFocusOut}}"
+		@click={{_click}}
 		?expanded="{{expandedTokenizer}}"
 	>
 		{{#each items}}
@@ -41,6 +42,7 @@
 		@keyup="{{_onkeyup}}"
 		@focusin="{{_focusin}}"
 		@focusout="{{_focusout}}"
+		@click={{_click}}
 		aria-autocomplete="both"
 		aria-labelledby="{{_id}}-hiddenText-nMore"
 		aria-describedby="{{_id}}-valueStateDesc"
