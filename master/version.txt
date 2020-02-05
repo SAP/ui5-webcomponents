@@ -1,7 +1,5 @@
-commit 63ca72189f90c88cd4140ff6f63a66383749ae38
+commit f8e75840522939c6d13ed6649007e2996329725f
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Feb 4 13:44:36 2020 +0200
+Date:   Wed Feb 5 11:09:20 2020 +0200
 
-    fix(ui5-tabcontainer): apply overflow items styles (#1178)
-    
-    Recently, we introduced static area for all composed popovers, but the additional styles for the TabContainer overflow items have not been supplied.
+    chore: add prepublishOnly task to packages (#1182)
