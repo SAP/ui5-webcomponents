@@ -34,4 +34,14 @@ describe("Table general interaction", () => {
 		const tblLessCells = browser.$("#tblLessCells");
 		assert.equal(tblLessCells.isExisting(), true, 'table with more columns is rendered without JS errors.');
 	});
+
+	it("tests if popinChange is fired when min-width is reacted (500px)", () => {
+		let tableLabel = browser.$("#tableLabel");
+		const btn = browser.$("#size-btn-500");
+		
+		btn.click();
+		browser.pause(300);
+
+		assert.strictEqual(tableLabel.getHTML(false), "Number of poppedColumns: 2", "popinChange should be fired and columns should be 4");
+	});
 });

@@ -29,6 +29,7 @@ const metadata = {
 		timestamp: {
 			type: Integer,
 		},
+
 		/**
 		 * Sets a calendar type used for display.
 		 * If not set, the calendar type of the global configuration is used.
@@ -38,18 +39,56 @@ const metadata = {
 		primaryCalendarType: {
 			type: CalendarType,
 		},
+
+		/**
+		 * Determines the мinimum date available for selection.
+		 *
+		 * @type {String}
+		 * @defaultvalue ""
+		 * @since 1.0.0-rc.6
+		 * @public
+		 */
+		minDate: {
+			type: String,
+		},
+
+		/**
+		 * Determines the maximum date available for selection.
+		 *
+		 * @type {String}
+		 * @defaultvalue undefined
+		 * @since 1.0.0-rc.6
+		 * @public
+		 */
+		maxDate: {
+			type: String,
+			defaultValue: undefined,
+		},
+
 		_selectedYear: {
 			type: Integer,
 			noAttribute: true,
 		},
+
 		_yearIntervals: {
 			type: Object,
 			multiple: true,
 		},
+
 		_hidden: {
 			type: Boolean,
 			noAttribute: true,
 		},
+		/**
+		* Determines the format, displayed in the input field.
+		*
+		* @type {string}
+		* @defaultvalue ""
+		* @public
+		*/
+	   formatPattern: {
+		   type: String,
+	   },
 	},
 	events: /** @lends  sap.ui.webcomponents.main.YearPicker.prototype */ {
 		/**
@@ -97,7 +136,14 @@ class YearPicker extends UI5Element {
 
 		this._itemNav = new ItemNavigation(this, { rowSize: 4 });
 		this._itemNav.getItemsCallback = function getItemsCallback() {
-			return [].concat(...this._yearIntervals);
+			const focusableYears = [];
+
+			for (let i = 0; i < this._yearIntervals.length; i++) {
+				const yearInterval = this._yearIntervals[i].filter(x => !x.disabled);
+				focusableYears.push(yearInterval);
+			}
+
+			return [].concat(...focusableYears);
 		}.bind(this);
 
 		this._itemNav.attachEvent(
@@ -149,6 +195,11 @@ class YearPicker extends UI5Element {
 				year.classes += " ui5-yp-item--selected";
 			}
 
+			if ((this.minDate || this.maxDate) && this._isOutOfSelectableRange(oCalDate.getYear())) {
+				year.classes += " ui5-yp-item--disabled";
+				year.disabled = true;
+			}
+
 			if (intervals[intervalIndex]) {
 				intervals[intervalIndex].push(year);
 			}
@@ -179,6 +230,10 @@ class YearPicker extends UI5Element {
 
 	get _primaryCalendarType() {
 		return this.primaryCalendarType || getCalendarType() || LocaleData.getInstance(getLocale()).getPreferredCalendarType();
+	}
+
+	get _isPattern() {
+		return this._formatPattern !== "medium" && this._formatPattern !== "short" && this._formatPattern !== "long";
 	}
 
 	_onclick(event) {
@@ -248,7 +303,63 @@ class YearPicker extends UI5Element {
 			return;
 		}
 
+		if (this._isOutOfSelectableRange(oCalDate.getYear() - YearPicker._MIDDLE_ITEM_INDEX)
+		&& this._isOutOfSelectableRange(oCalDate.getYear() + YearPicker._MIDDLE_ITEM_INDEX)) {
+			return;
+		}
+
+		if (this._isOutOfSelectableRange(oCalDate.getYear() - YearPicker._MIDDLE_ITEM_INDEX)
+		&& this._isOutOfSelectableRange(oCalDate.getYear() + YearPicker._MIDDLE_ITEM_INDEX)) {
+			return;
+		}
+
 		this.timestamp = oCalDate.valueOf() / 1000;
+	}
+
+	get _formatPattern() {
+		return this.formatPattern || "medium"; // get from config
+	}
+
+	_isOutOfSelectableRange(year) {
+		const minDate = new Date(this._minDate),
+			maxDate = new Date(this._maxDate),
+			minDateCheck = minDate && year < minDate.getFullYear(),
+			maxDateCheck = maxDate && year > maxDate.getFullYear();
+
+		return minDateCheck || maxDateCheck;
+	}
+
+	get _maxDate() {
+		if (this.maxDate) {
+			const jsDate = new Date(this.getFormat().parse(this.maxDate).getFullYear(), this.getFormat().parse(this.maxDate).getMonth(), this.getFormat().parse(this.maxDate).getDate());
+			const oCalDate = CalendarDate.fromTimestamp(jsDate.getTime(), this._primaryCalendarType);
+			return oCalDate.valueOf();
+		}
+		return this.maxDate;
+	}
+
+	get _minDate() {
+		if (this.minDate) {
+			const jsDate = new Date(this.getFormat().parse(this.minDate).getFullYear(), this.getFormat().parse(this.minDate).getMonth(), this.getFormat().parse(this.minDate).getDate());
+			const oCalDate = CalendarDate.fromTimestamp(jsDate.getTime(), this._primaryCalendarType);
+			return oCalDate.valueOf();
+		}
+		return this.minDate;
+	}
+
+	getFormat() {
+		if (this._isPattern) {
+			this._oDateFormat = DateFormat.getInstance({
+				pattern: this._formatPattern,
+				calendarType: this._primaryCalendarType,
+			});
+		} else {
+			this._oDateFormat = DateFormat.getInstance({
+				style: this._formatPattern,
+				calendarType: this._primaryCalendarType,
+			});
+		}
+		return this._oDateFormat;
 	}
 
 	get styles() {
