@@ -1,12 +1,16 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler.js";
-import OverflowToolbarTemplate from "./generated/templates/OverflowToolbarTemplate.lit.js";
 import Button from "./Button.js";
 import Popover from "./Popover.js";
 
 // Styles
 import overflowToolbarCss from "./generated/themes/OverflowToolbar.css.js";
+import OverflowToolbarPopoverCss from "./generated/themes/OverflowToolbarPopover.css.js";
+
+// Templates
+import OverflowToolbarTemplate from "./generated/templates/OverflowToolbarTemplate.lit.js";
+import OverflowToolbarPopoverTemplate from "./generated/templates/OverflowToolbarPopoverTemplate.lit.js";
 
 /**
  * @public
@@ -27,23 +31,17 @@ const metadata = {
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.OverflowToolbar.prototype */ {
-		_overflowButton: { type: Object },
-
-		_overflowPopover: { type: Object },
-
-		_items: { type: Object, multiple: true },
-
-		_widthOfElements: { type: Array, defaultValue: [] },
-
-		_notInitialRendering: {
-			type: Boolean,
-			noAttribute: true,
+		_items: {
+			type: Object,
+			multiple: true,
+			defaultValue: [],
 		},
 
-		_showOverflowButton: {
-			type: Boolean,
-			noAttribute: true,
-		},
+		_overflowedItems: {
+			type: Object,
+			multiple: true,
+			defaultValue: [],
+		}
 
 	},
 	events: /** @lends sap.ui.webcomponents.main.OverflowToolbar.prototype */ {
@@ -92,13 +90,24 @@ class OverflowToolbar extends UI5Element {
 		return litRender;
 	}
 
+	static get staticAreaTemplate() {
+		return OverflowToolbarPopoverTemplate;
+	}
+
+	static get staticAreaStyles() {
+		return OverflowToolbarPopoverCss;
+	}
+
 	constructor() {
 		super();
-		this.intersectionIndex = -1;
+		this._showOverflowButton = false;
+		this.initialRendering = true;
+		this._widthOfElements = [];
+		this._mutationObserver = new MutationObserver(this.mutationObserverCallback.bind(this));
 	}
 
 	onBeforeRendering() {
-		if (!this._notInitialRendering) {
+		if (this.initialRendering) {
 			this.overflowingIndex = -1;
 
 			this._items = this.items.map(item => {
@@ -111,12 +120,14 @@ class OverflowToolbar extends UI5Element {
 	}
 
 	onAfterRendering() {
-		if (!this._notInitialRendering) {
+		if (this.initialRendering) {
 			this._items.forEach(item => {
 				this._widthOfElements.push(item.ref.offsetWidth);
 			});
 			this._handleResize();
-			this._notInitialRendering = true;
+			this.initialRendering = false;
+
+			this.attachEventHandlers();
 		}
 	}
 
@@ -126,6 +137,48 @@ class OverflowToolbar extends UI5Element {
 
 	onExitDOM() {
 		ResizeHandler.deregister(this, this._handleResize);
+		this.removeEventHandlers();
+		this._mutationObserver.disconnect();
+	}
+
+	attachEventHandlers() {
+		this.eventsHandler = this.fireEventOnRealTarget.bind(this);
+		OverflowToolbar.events.forEach(event => {
+			document.addEventListener(event, this.eventsHandler);
+		});
+	}
+
+	fireEventOnRealTarget(event) {
+		const targetInStaticArea = event.path.filter(item => {
+			return this._overflowedItems.indexOf(item) > -1;
+		})[0];
+
+		if (!targetInStaticArea) {
+			return;
+		}
+
+		this.items[this.overflowingIndex + this._overflowedItems.indexOf(targetInStaticArea)].fireEvent(event.type);
+	}
+
+	removeEventHandlers() {
+		OverflowToolbar.events.forEach(event => {
+			document.removeEventListener(event, this.eventsHandler);
+		});
+	}
+
+	mutationObserverCallback(mutationsList, observer) {
+		let onlySlotsAreInvalidated = true;
+		mutationsList.some(item => {
+			if (item.type !== "attributes" || item.attributeName !== "slot") { // Slots are invalidated on every rerender
+				return onlySlotsAreInvalidated = false;
+			}
+		});
+
+		if (this.overflowingIndex < 0 || onlySlotsAreInvalidated) {
+			return;
+		}
+
+		this._getOverflowedItems();
 	}
 
 	_handleResize() {
@@ -144,16 +197,43 @@ class OverflowToolbar extends UI5Element {
 		}
 
 		this._items = this.items.map((item, index) => {
+			const overflowed = this.overflowingIndex === -1 ? false : index >= this.overflowingIndex;
+
+			if (overflowed) {
+				this._mutationObserver.observe(item, {
+					attributes: true,
+					childList: true,
+					subtree: true,
+				});
+			}
+
 			return {
 				ref: item,
-				overflowed: this.overflowingIndex === -1
-					? false
-					: index >= this.overflowingIndex,
+				overflowed,
 			};
 		});
 
+
+		this._getOverflowedItems();
+
 		// Set the visibility of the button that opens the popover
 		this._showOverflowButton = this._items[this._items.length - 1].overflowed;
+	}
+
+	_getOverflowedItems() {
+		if (this.overflowingIndex === -1) {
+			return;
+		}
+
+		this._overflowedItems = [];
+
+		for (let i = this.overflowingIndex; i < this.items.length; i++) {
+			const currentItem = this.items[i].cloneNode(true);
+			currentItem.id += `-clonned${i}`;
+			currentItem.classList.add("ui5-overflowed-item");
+
+			this._overflowedItems.push(currentItem);
+		}
 	}
 
 	_handleToggleOverflowMenu(event) {
@@ -166,11 +246,23 @@ class OverflowToolbar extends UI5Element {
 	}
 
 	_getPopover() {
-		return this.shadowRoot.getElementById(`${this._id}-overflowMenu`);
+		return this.getStaticAreaItemDomRef().querySelector(`#${this._id}-overflowMenu`);
 	}
 
 	_getItemsWrapper() {
-		return this.shadowRoot.querySelector(".ui5-overflow-toolbar-items");
+		return this.getDomRef().querySelector(".ui5-overflow-toolbar-items");
+	}
+
+	static get events() {
+		return [
+			"click",
+			"mouseup",
+			"mousedown",
+			"focusin",
+			"focusout",
+			"keydown",
+			"keyup",
+		]
 	}
 
 	static async define(...params) {

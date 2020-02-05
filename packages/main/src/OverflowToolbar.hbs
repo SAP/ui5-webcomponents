@@ -11,24 +11,9 @@
 		{{#if _showOverflowButton}}
 			<ui5-button
 				type="Transparent"
-				class="ui5-overflow-toolbar-overflow-button"
 				icon="sap-icon://overflow"
-				@press="{{_handleToggleOverflowMenu}}">
+				@click="{{_handleToggleOverflowMenu}}">
 			</ui5-button>
 		{{/if}}
 	</div>
-
-	<ui5-popover
-		id="{{_id}}-overflowMenu"
-		allowTargetOverlap="true"
-		placement-type="Bottom"
-		horizontal-align="Right">
-			<div class="ui5-overflow-toolbar-popover-content">
-				{{#each _items}}
-					{{#if this.overflowed}}
-						<slot class="ui5-overflow-toolbar-overflowed-item" name="{{this.ref._individualSlot}}" />
-					{{/if}}
-				{{/each}}
-			</div>
-	</ui5-popover>
 </section>

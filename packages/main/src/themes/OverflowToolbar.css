@@ -10,7 +10,7 @@ ui5-overflow-toolbar {
 
 .ui5-overflow-toolbar-root {
 	padding-left: .1rem;
-	background: var(--_ui5_overflowtoolbar_background_color);
+	background: var(--sapGroup_ContentBackground);
 }
 
 .ui5-overflow-toolbar-content-wrapper {
@@ -20,7 +20,7 @@ ui5-overflow-toolbar {
 	justify-content: space-between;
 	align-items: center;
 	flex-wrap: nowrap;
-	border-bottom: 1px solid var(--ui5-overflowtoolbar_border_bottom);
+	border-bottom: 1px solid var(--sapList_Background_Darken15);
 	background-color: inherit;
 }
 
@@ -40,15 +40,4 @@ ui5-overflow-toolbar {
 .ui5-overflow-toolbar-item {
 	margin-right: .5rem;
 	display: flex;
-}
-
-.ui5-overflow-toolbar-popover-content {
-	display: flex;
-	flex-direction: column;
-	flex-wrap: nowrap;
-	width: 130px;
-}
-
-.ui5-overflow-toolbar .ui5-overflow-toolbar-popover-content > ::slotted(*) {
-	flex-grow: 1;
 }
