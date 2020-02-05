@@ -6,7 +6,6 @@ import { isTabNext } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import ListMode from "./types/ListMode.js";
 import ListSeparators from "./types/ListSeparators.js";
-import ListItemType from "./types/ListItemType.js";
 
 // Template
 import ListTemplate from "./generated/templates/ListTemplate.lit.js";
