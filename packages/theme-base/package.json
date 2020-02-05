@@ -14,7 +14,8 @@
     "clean": "nps clean",
     "build": "nps build",
     "start": "nps start",
-    "verify": "node ./lib/verify-vars/index.js"
+    "verify": "node ./lib/verify-vars/index.js",
+    "prepublishOnly": "npm run clean && npm run build"
   },
   "repository": {
     "type": "git",
