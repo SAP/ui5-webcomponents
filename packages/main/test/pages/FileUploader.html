@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>FileUploader test page</title>
+	
+	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+	<script nomodule src="../../resources/bundle.es5.js"></script>
+	<style>
+		body > div {
+			margin-bottom: 1rem;
+		}
+	</style>
+	<script>
+		delete Document.prototype.adoptedStyleSheets
+	</script>
+</head>
+<body>
+	<div>
+		<label>Single file upload:</label>
+		<ui5-file-uploader placeholder="upload file"></ui5-file-uploader>
+	</div>
+	<div>
+		<label>Multiple files upload:</label>
+		<ui5-file-uploader multiple></ui5-file-uploader>
+	</div>
+	<div>
+		<label>Accept only .txt and .docx files:</label>
+		<ui5-file-uploader accept=".txt,.docx"></ui5-file-uploader>
+	</div>
+	<div>
+		<label>Value state Error:</label>
+		<ui5-file-uploader value-state="Error"></ui5-file-uploader>
+	</div>
+	<div>
+		<label>Disabled uploader:</label>
+		<ui5-file-uploader disabled></ui5-file-uploader>
+	</div>
+	<div>
+		<ui5-title>Form support</ui5-title>
+		<form style="border: 1px solid black; padding: 1rem;"
+			method="POST" action="http://localhost:3000/echo"
+			enctype="multipart/form-data"
+		>
+			<div>
+				<label>Disabled uploader:</label>
+				<ui5-file-uploader disabled name="disabledUploader"></ui5-file-uploader>
+			</div>
+			<div>
+				<label>Normal uploader:</label>
+				<ui5-file-uploader name="enabledUploader"></ui5-file-uploader>
+			</div>
+			<ui5-button submits>Submit</ui5-button>
+		</form>
+	</div>
+</body>
+</html>

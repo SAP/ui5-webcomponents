@@ -1,0 +1,26 @@
+
+<div class="ui5-file-uploader-root">
+	<div class="ui5-file-uploader-mask">
+		<ui5-input
+			value="{{value}}"
+			value-state="{{valueState}}"
+			placeholder="{{placeholder}}"
+			?disabled="{{disabled}}"
+			></ui5-input>
+		<ui5-button ?disabled="{{disabled}}">Browse</ui5-button>
+	</div>
+	{{#if _canUseNativeFormSupport}}
+		<input
+			type="file"
+			title="upload file"
+			accept="{{accept}}"
+			?multiple="{{multiple}}"
+			?disabled="{{disabled}}"
+			@change="{{_onChange}}"
+		>
+	{{else}}
+		<slot name="formSupport">
+			{{!-- input for forms will be placed here on IE and Edge --}}
+		</slot>
+	{{/if}}
+</div>

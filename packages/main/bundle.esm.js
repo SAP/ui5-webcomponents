@@ -23,6 +23,7 @@ import CheckBox from "./dist/CheckBox.js";
 import Card from "./dist/Card.js";
 import DatePicker from "./dist/DatePicker.js";
 import Dialog from "./dist/Dialog.js";
+import FileUploader from "./dist/FileUploader.js";
 import Icon from "./dist/Icon.js";
 import Input from "./dist/Input.js";
 import Label from "./dist/Label.js";
