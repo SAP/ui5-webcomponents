@@ -60,7 +60,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the index of the initially selected slot.
+		 * Defines the index of the initially selected page.
 		 * @type {Integer}
 		 * @defaultvalue 0
 		 * @public
@@ -161,9 +161,7 @@ class Carousel extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		if (!isDesktop()) {
-			this.itemsPerPage = 1;
-		}
+		this.itemsPerPage = this.effectiveItemsPerPage;
 	}
 
 	onAfterRendering() {
@@ -233,6 +231,10 @@ class Carousel extends UI5Element {
 		}
 
 		return result;
+	}
+
+	get effectiveItemsPerPage() {
+		return isDesktop() ? this.itemsPerPage : 1;
 	}
 
 	get styles() {

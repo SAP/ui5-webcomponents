@@ -8,7 +8,7 @@
             {{#each items}}
                 <div class="{{../classes.item}}">
                     {{#each this}}
-                        {{#if this}}
+                        {{#if this.item}}
                             <slot name="{{this.item._individualSlot}}" tabindex="{{this.tabIndex}}"></slot>
                         {{/if}}
                     {{/each}}
