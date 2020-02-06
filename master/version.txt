@@ -1,5 +1,10 @@
-commit f8e75840522939c6d13ed6649007e2996329725f
+commit ddd2c8cdcd8567605a4cff40f02cc8bbec2b3154
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Feb 5 11:09:20 2020 +0200
+Date:   Thu Feb 6 12:43:41 2020 +0200
 
-    chore: add prepublishOnly task to packages (#1182)
+    refactor(ui5-list): clicking inactive items doesn't change selection (#1183)
+    
+    Previously, clicking on list items with type="Inactive" in a List used to change selection in "SingleSelect" and "MultiSelect" modes.
+    Now,  clicking on inactive items would not take effect. To change the selection you have to use list items with type="Active".
+    
+    Fixes: https://github.com/SAP/ui5-webcomponents/issues/1171
