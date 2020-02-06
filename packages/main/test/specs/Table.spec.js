@@ -44,4 +44,18 @@ describe("Table general interaction", () => {
 
 		assert.strictEqual(tableLabel.getHTML(false), "Number of poppedColumns: 2", "popinChange should be fired and columns should be 4");
 	});
+
+	it("tests rowClick is fired", () => {
+		const lbl = browser.$("#testRowClickResult");
+		const cellInRow1 = browser.$("#testRowClickCell1");
+		const cellInRow2 = browser.$("#testRowClickCell2");
+		const row1Data = "Dublin";
+		const row2Data = "London";
+
+		cellInRow1.click();
+		assert.ok(lbl.getHTML().indexOf(row1Data), "Event rowClick fired and intercepted.");
+
+		cellInRow2.click();
+		assert.ok(lbl.getHTML().indexOf(row2Data), "Event rowClick fired and intercepted.");
+	});
 });
