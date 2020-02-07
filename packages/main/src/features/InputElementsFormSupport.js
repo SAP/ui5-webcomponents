@@ -32,7 +32,7 @@ class FormSupport {
 
 		if (needsNativeInput && !nativeInput) {
 			nativeInput = document.createElement("input");
-			nativeInput.type = element._type
+			nativeInput.type = element._type;
 			nativeInput.setAttribute("data-ui5-form-support", "");
 			nativeInput.slot = "formSupport"; // Needed to visualize the input in the light dom
 			nativeInput.style.position = "absolute";
@@ -41,12 +41,12 @@ class FormSupport {
 			nativeInput.style.width = "100%";
 			nativeInput.style.height = "100%";
 			nativeInput.style.opacity = "0";
-	
+
 			if (element.multiple) {
 				nativeInput.multiple = true;
 			}
 
-			nativeInput.addEventListener("change", nativeInputChangeCallback)
+			nativeInput.addEventListener("change", nativeInputChangeCallback);
 
 			element.appendChild(nativeInput);
 		}

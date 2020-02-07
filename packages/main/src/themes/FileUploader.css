@@ -2,11 +2,11 @@
 	display: inline-block;
 }
 
-.ui5-file-uploader-root {
+.ui5-fileuploader-root {
 	position: relative;
 }
 
-.ui5-file-uploader-root input[type=file] {
+.ui5-fileuploader-root input[type=file] {
 	opacity: 0;
 	position: absolute;
 	top: 0;
@@ -15,11 +15,15 @@
 	width: 100%;
 }
 
-.ui5-file-uploader-root input[type=file]:not([disabled]) {
+.ui5-fileuploader-root input[type=file]:not([disabled]) {
 	cursor: pointer;
 }
 
-.ui5-file-uploader-mask ui5-input {
+.ui5-fileuploader-mask {
+	display: flex; /* TO DO: find better way to align ui5-input and ui5-button when there is icon */
+}
+
+.ui5-fileuploader-mask ui5-input {
 	margin-right: 0.25rem;
 }
 
