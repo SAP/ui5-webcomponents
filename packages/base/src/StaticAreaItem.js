@@ -1,5 +1,7 @@
 import { getStaticAreaInstance, removeStaticArea } from "./StaticArea.js";
 
+const observers = new WeakMap();
+
 /**
  * @class
  * @author SAP SE
@@ -31,17 +33,44 @@ class StaticAreaItem {
 		this.ui5ElementContext.constructor.render(renderResult, this.staticAreaItemDomRef.shadowRoot, stylesToAdd, { eventContext: this.ui5ElementContext });
 
 		// Clear the children of the StaticAreaItem
-		[...this.staticAreaItemDomRef.children].forEach(child => {
-			this.staticAreaItemDomRef.removeChild(child);
-		});
+		this._removeAllChildren();
 
 		// Clone the children of the mirrored slots as children of the StaticAreaItem
 		const mirroredSlotsNames = this.ui5ElementContext.constructor.getMetadata().getMirroredSlotsNames();
 		mirroredSlotsNames.forEach(mirroredSlotName => {
 			this.ui5ElementContext[mirroredSlotName].forEach(child => {
-				this.staticAreaItemDomRef.appendChild(child.cloneNode(true));
+				this._addChild(child);
 			});
 		});
+	}
+
+	_removeAllChildren() {
+		[...this.staticAreaItemDomRef.childNodes].forEach(child => {
+			this._removeChild(child);
+		});
+	}
+
+	_removeChild(child) {
+		const observer = observers.get(child);
+		observer && observer.disconnect();
+		this.staticAreaItemDomRef.removeChild(child);
+	}
+
+	_addChild(child) {
+		const clone = child.cloneNode(true);
+		const observer = new MutationObserver(mutationsList => {
+			mutationsList.forEach(rec => {
+				if (rec.type === "attributes") {
+					const attName = rec.attributeName;
+					clone.setAttribute(attName, child.getAttribute(attName));
+				} else {
+					clone.innerHTML = child.innerHTML;
+				}
+			});
+		});
+		observers.set(child, observer);
+		observer.observe(child, { attributes: true, childList: true, subtree: true });
+		this.staticAreaItemDomRef.appendChild(clone);
 	}
 
 	/**
