@@ -1,10 +1,7 @@
-commit ddd2c8cdcd8567605a4cff40f02cc8bbec2b3154
+commit 0ba6fdd3a81a59a544036c0cbab45ec5f7ab6edf
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Feb 6 12:43:41 2020 +0200
+Date:   Fri Feb 7 10:11:43 2020 +0200
 
-    refactor(ui5-list): clicking inactive items doesn't change selection (#1183)
+    feat(ui5-table): provide rowClick event (#1186)
     
-    Previously, clicking on list items with type="Inactive" in a List used to change selection in "SingleSelect" and "MultiSelect" modes.
-    Now,  clicking on inactive items would not take effect. To change the selection you have to use list items with type="Active".
-    
-    Fixes: https://github.com/SAP/ui5-webcomponents/issues/1171
+    Fixes: https://github.com/SAP/ui5-webcomponents/issues/1018
