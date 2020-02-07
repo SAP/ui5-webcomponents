@@ -29,6 +29,19 @@ class StaticAreaItem {
 		}
 
 		this.ui5ElementContext.constructor.render(renderResult, this.staticAreaItemDomRef.shadowRoot, stylesToAdd, { eventContext: this.ui5ElementContext });
+
+		// Clear the children of the StaticAreaItem
+		[...this.staticAreaItemDomRef.children].forEach(child => {
+			this.staticAreaItemDomRef.removeChild(child);
+		});
+
+		// Clone the children of the mirrored slots as children of the StaticAreaItem
+		const mirroredSlotsNames = this.ui5ElementContext.constructor.getMetadata().getMirroredSlotsNames();
+		mirroredSlotsNames.forEach(mirroredSlotName => {
+			this.ui5ElementContext[mirroredSlotName].forEach(child => {
+				this.staticAreaItemDomRef.appendChild(child.cloneNode(true));
+			});
+		});
 	}
 
 	/**

@@ -233,6 +233,7 @@ class UI5Element extends HTMLElement {
 		slottedChildrenMap.forEach((children, slot) => {
 			this._state[slot] = children.sort((a, b) => a.idx - b.idx).map(_ => _.child);
 		});
+
 		this._invalidate();
 	}
 

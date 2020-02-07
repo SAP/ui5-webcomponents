@@ -14,6 +14,7 @@ import "./dist/test-resources/elements/NoShadowDOM.js";
 import "./dist/test-resources/elements/Parent.js";
 import "./dist/test-resources/elements/Child.js";
 import "./dist/test-resources/elements/GenericExt.js";
+import "./dist/test-resources/elements/Mirrored.js";
 
 // Test themes - CSS Vars for the sap_fiori_3, sap_fiori_3_dark, sap_belize and sap_belize_hcb themes
 import "./dist/test-resources/assets/Themes.js";

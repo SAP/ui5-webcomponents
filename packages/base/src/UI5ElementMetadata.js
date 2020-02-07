@@ -78,6 +78,23 @@ class UI5ElementMetadata {
 	}
 
 	/**
+	 * Returns an object with key-value pairs of slots with "mirrored: true" and their metadata definitions
+	 * @public
+	 */
+	getMirroredSlotsNames() {
+		const mirroredSlotsNames = [];
+		const slots = this.getSlots();
+
+		for (const [slotName, slotData] of Object.entries(slots)) { // eslint-disable-line
+			if (slotData.mirrored) {
+				mirroredSlotsNames.push(slotName);
+			}
+		}
+
+		return mirroredSlotsNames;
+	}
+
+	/**
 	 * Determines whether this UI5 Element supports any slots
 	 * @public
 	 */
