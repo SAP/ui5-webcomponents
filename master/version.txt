@@ -1,7 +1,5 @@
-commit 0ba6fdd3a81a59a544036c0cbab45ec5f7ab6edf
+commit fa45f79f6b09977de0294fb98ee01a959586386a
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Feb 7 10:11:43 2020 +0200
+Date:   Fri Feb 7 15:30:51 2020 +0200
 
-    feat(ui5-table): provide rowClick event (#1186)
-    
-    Fixes: https://github.com/SAP/ui5-webcomponents/issues/1018
+    chore: set type "module" to components packages (#1190)
