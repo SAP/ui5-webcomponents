@@ -13,6 +13,9 @@ const components = [];
  // Add new components here
 const newComponents = [
 	"ComboBox",
+	"Avatar",
+	"ResponsivePopover",
+	"Toast",
 ];
 
 packages.forEach(package => {

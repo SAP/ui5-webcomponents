@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>ResponsivePopover</title>
+	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+	<script nomodule src="../../resources/bundle.es5.js"></script>
+
+	<style>
+		.popover-content {
+			width: auto;
+			padding: 2rem;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+		}
+		.popover-footer {
+			margin: 0.5rem;
+		}
+	</style>
+</head>
+
+<body style="background-color: var(--sapBackgroundColor);">
+	<ui5-button id="btnOpen" design="Emphasized">Open me</ui5-button>
+	<ui5-responsive-popover id="respPopover" header-text="Newsletter subscription">
+		<div class="popover-content">
+			<ui5-label for="emailInput" required>Email: </ui5-label>
+			<ui5-input id="emailInput" class="samples-margin-top" style="min-width: 150px;" placeholder="Enter Email"></ui5-input>
+		</div>
+		<div slot="footer" class="popover-footer">
+			<ui5-button id="btnClose2" design="Emphasized">Subscribe</ui5-button>
+		</div>
+	</ui5-responsive-popover>
+
+	<script>
+		btnOpen.addEventListener("click", function(event) {
+			respPopover.open(btnOpen);
+		});
+		btnClose1.addEventListener("click", function(event) {
+			respPopover.close();
+		});
+		btnClose2.addEventListener("click", function(event) {
+			respPopover.close();
+		});
+	</script>
+</body>
+</html>
