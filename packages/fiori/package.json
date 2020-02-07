@@ -5,7 +5,7 @@
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
   "type": "module",
-  "main": "index.js",
+  "module": "index.js",
   "private": false,
   "keywords": [
     "openui5",
