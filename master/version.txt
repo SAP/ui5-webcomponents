@@ -1,5 +1,5 @@
-commit fa45f79f6b09977de0294fb98ee01a959586386a
+commit 323968e1be19d1573a8d6d348f8a83d211d4f0e3
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Feb 7 15:30:51 2020 +0200
+Date:   Sat Feb 8 08:16:26 2020 +0200
 
-    chore: set type "module" to components packages (#1190)
+    chore: add export to icons to fix CodeSandbox (#1194)
