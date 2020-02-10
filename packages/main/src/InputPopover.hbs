@@ -1,7 +1,10 @@
 {{#if showSuggestions}}
 	<ui5-responsive-popover
+		content-only-on-desktop
 		no-arrow
 		_disable-initial-focus
+		placement-type="Bottom"
+		horizontal-align="Left"
 		@ui5-afterOpen={{_afterOpenPopover}}
 		@ui5-afterClose={{_afterClosePopover}}
 	>

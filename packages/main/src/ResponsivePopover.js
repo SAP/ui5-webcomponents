@@ -1,7 +1,6 @@
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import ResponsivePopoverTemplate from "./generated/templates/ResponsivePopoverTemplate.lit.js";
-import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import Popover from "./Popover.js";
 import Dialog from "./Dialog.js";
 
@@ -29,6 +28,15 @@ const metadata = {
 		 * When set there will be padding added by around the content.
 		 */
 		withPadding: {
+			type: Boolean,
+		},
+
+		/**
+		 * Defines if only the content would be displayed (without header and footer) in the popover on Desktop.
+		 * By default both the header and footer would be displayed.
+		 * @protected
+		 */
+		contentOnlyOnDesktop: {
 			type: Boolean,
 		},
 	},
@@ -67,12 +75,6 @@ class ResponsivePopover extends Popover {
 		await Dialog.define();
 
 		super.define(...params);
-	}
-
-	constructor() {
-		super();
-		this.placementType = "Bottom";
-		this.horizontalAlign = PopoverHorizontalAlign.Left;
 	}
 
 	/**
@@ -137,11 +139,11 @@ class ResponsivePopover extends Popover {
 	}
 
 	get _displayHeader() {
-		return this._isPhone;
+		return this._isPhone || !this.contentOnlyOnDesktop;
 	}
 
 	get _displayFooter() {
-		return this._isPhone;
+		return this._isPhone || !this.contentOnlyOnDesktop;
 	}
 }
 
