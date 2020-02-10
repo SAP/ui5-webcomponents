@@ -1,5 +1,5 @@
-commit 931fbe0a4aae4922fe895199d5df949c32a14da9
-Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
-Date:   Mon Feb 10 14:53:52 2020 +0200
+commit 6847f5e4346c91be2ce883f91dedbab7d8bf999c
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Feb 10 15:59:50 2020 +0200
 
-    feat(ui5-segmentedbutton): initial implementation (#1164)
+    docs: create ResponsivePopover sample (#1193)

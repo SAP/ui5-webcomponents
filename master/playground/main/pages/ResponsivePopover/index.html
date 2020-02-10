@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>ResponsivePopover</title>
+	
+	
+	
+<script src="https://sap.github.io/ui5-webcomponents/master/assets/js/webcomponentsjs/webcomponents-loader.js"></script>
+<script type="module" src="https://sap.github.io/ui5-webcomponents/master/assets/js/ui5-webcomponents/bundle.esm.js"></script>
+<script nomodule src="https://sap.github.io/ui5-webcomponents/master/assets/js/ui5-webcomponents/bundle.es5.js"></script>
+                    
+
+	<style>
+	
+	.popover-footer,
+	.popover-header {
+		margin: 0.25rem 0.25rem;
+	}
+	
+	.popover-content {
+		padding: 1rem;
+	}
+	</style>
+</head>
+
+<body style="background-color: var(--sapBackgroundColor);">
+	<ui5-button id="btnOpen" design="Positive">Open me</ui5-button> <br/>
+	<ui5-button id="btnOpen2" design="Negative">Open me</ui5-button> <br/>
+	<ui5-button id="btnOpen3" design="Negative">Header/Footer hidden on Desktop</ui5-button>
+
+	<!-- with header and footer slots -->
+	<ui5-responsive-popover id="respPopover">
+		<div id="respPopoverHeader" slot="header">
+			<ui5-title>Hello World</ui5-title>
+		</div>
+
+		<div class="popover-content">
+			<ui5-label for="emailInput" required>Email: </ui5-label>
+			<ui5-input id="emailInput" class="samples-margin-top" style="min-width: 150px;" placeholder="Enter Email"></ui5-input>
+		</div>
+
+		<div slot="footer" class="popover-footer">
+			<ui5-button id="btnClose" design="Emphasized">Subscribe</ui5-button>
+		</div>
+	</ui5-responsive-popover>
+
+	<!-- with header-text and footer slot-->
+	<ui5-responsive-popover id="respPopover2" header-text="Newsletter subscription">
+		<div class="popover-content">
+			<ui5-label for="emailInput" required>Email: </ui5-label>
+			<ui5-input id="emailInput" class="samples-margin-top" style="min-width: 150px;" placeholder="Enter Email"></ui5-input>
+		</div>
+
+		<div slot="footer" class="popover-footer">
+			<ui5-label>You are already subscribed.</ui5-label>
+			<ui5-button id="btnClose2">Cancel</ui5-button>
+		</div>
+	</ui5-responsive-popover>
+
+	<ui5-responsive-popover id="respPopover3" content-only-on-desktop>
+		<div id="respPopoverHeader3" slot="header">
+			<ui5-title>Hello World</ui5-title>
+		</div>
+
+		<div class="popover-content">
+			<ui5-label for="emailInput" required>Email: </ui5-label>
+			<ui5-input id="emailInput" class="samples-margin-top" style="min-width: 150px;" placeholder="Enter Email"></ui5-input>
+		</div>
+
+		<div slot="footer" class="popover-footer">
+			<ui5-button id="btnClose3" design="Emphasized">Subscribe</ui5-button>
+		</div>
+	</ui5-responsive-popover>
+
+	<script>
+		btnOpen.addEventListener("click", function(event) {
+			respPopover.open(btnOpen);
+		});
+		btnClose.addEventListener("click", function(event) {
+			respPopover.close();
+		});
+
+		btnOpen2.addEventListener("click", function(event) {
+			respPopover2.open(btnOpen2);
+		});
+		btnClose2.addEventListener("click", function(event) {
+			respPopover2.close();
+		});
+
+		btnOpen3.addEventListener("click", function(event) {
+			respPopover3.open(btnOpen3);
+		});
+		btnClose3.addEventListener("click", function(event) {
+			respPopover3.close();
+		});
+	</script>
+</body>
+</html>
