@@ -69,12 +69,6 @@ class ResponsivePopover extends Popover {
 		super.define(...params);
 	}
 
-	constructor() {
-		super();
-		this.placementType = "Bottom";
-		this.horizontalAlign = PopoverHorizontalAlign.Left;
-	}
-
 	/**
 	 * @public
 	 */
