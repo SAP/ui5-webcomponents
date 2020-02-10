@@ -1,5 +1,5 @@
-commit 6847f5e4346c91be2ce883f91dedbab7d8bf999c
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Feb 10 15:59:50 2020 +0200
+commit 5b84d85b3bd01e3cf2a1945c9c4af8d29ca943c9
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Mon Feb 10 18:29:01 2020 +0200
 
-    docs: create ResponsivePopover sample (#1193)
+    feat(ui5-carousel): initial implementation (#1159)
