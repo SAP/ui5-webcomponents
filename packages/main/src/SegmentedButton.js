@@ -1,6 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 
@@ -118,9 +117,7 @@ class SegmentedButton extends UI5Element {
 	}
 
 	initItemNavigation() {
-		this._itemNavigation = new ItemNavigation(this, {
-			navigationMode: NavigationMode.Horizontal,
-		});
+		this._itemNavigation = new ItemNavigation(this);
 
 		this._itemNavigation.getItemsCallback = () => this.getSlottedNodes("buttons");
 	}
@@ -148,11 +145,13 @@ class SegmentedButton extends UI5Element {
 		}
 		this._selectedButton.pressed = true;
 
+		this._itemNavigation.update(this._selectedButton);
+
 		return this;
 	}
 
 	_handleResize() {
-		const documentWidth = document.body.clientWidth;
+		const parentWidth = this.parentNode.offsetWidth;
 
 		if (!this.style.width || this.percentageWidthSet) {
 			this.style.width = `${Math.max(...this.widths) * this.buttons.length}px`;
@@ -163,7 +162,7 @@ class SegmentedButton extends UI5Element {
 			button.style.width = "100%";
 		});
 
-		if (documentWidth <= this.offsetWidth && this.absoluteWidthSet) {
+		if (parentWidth <= this.offsetWidth && this.absoluteWidthSet) {
 			this.style.width = "100%";
 			this.percentageWidthSet = true;
 		}
