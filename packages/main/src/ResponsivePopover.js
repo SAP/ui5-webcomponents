@@ -47,8 +47,6 @@ const metadata = {
  * <h3>Usage</h3>
  * When you want to make sure that all the content is visible on any device.
  *
- * <h3>Limitation</h3>
- * <b>The slots <code>header</code> and <code>footer</code> are displayed only on mobile.</b>
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.ResponsivePopover
