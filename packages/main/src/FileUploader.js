@@ -2,6 +2,13 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import {
+	fetchI18nBundle,
+	getI18nBundle,
+} from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import {
+	FILE_UPLOADER_BROWSE_TEXT,
+} from "./generated/i18n/i18n-defaults.js";
 import Button from "./Button.js";
 import Input from "./Input.js";
 
@@ -15,10 +22,10 @@ import FileUploaderCss from "./generated/themes/FileUploader.css.js";
  * @public
  */
 const metadata = {
-	tag: "ui5-fileuploader",
+	tag: "ui5-file-uploader",
 	properties: /** @lends sap.ui.webcomponents.main.FileUploader.prototype */ {
 		/**
-		 * Comma-separated list of file types that the <code>ui5-fileuploader</code> should accept.
+		 * Comma-separated list of file types that the <code>ui5-file-uploader</code> should accept.
 		 * @type {string}
 		 * @public
 		 */
@@ -27,7 +34,7 @@ const metadata = {
 		},
 
 		/**
-		 * If set to "true", the <code>ui5-fileuploader</code> will be rendered as button only, without showing the input field.
+		 * If set to "true", the <code>ui5-file-uploader</code> will be rendered as button only, without showing the input field.
 		 * @type {boolean}
 		 * @public
 		 */
@@ -36,7 +43,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether <code>ui5-fileuploader</code> is in disabled state.
+		 * Defines whether <code>ui5-file-uploader</code> is in disabled state.
 		 * <br><br>
 		 * <b>Note:</b> A disabled <code>ui5-input</code> is completely noninteractive.
 		 *
@@ -90,13 +97,13 @@ const metadata = {
 		},
 
 		/**
-		 * Determines the name with which the <code>ui5-fileuploader</code> will be submitted in an HTML form.
+		 * Determines the name with which the <code>ui5-file-uploader</code> will be submitted in an HTML form.
 		 *
 		 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
 		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
 		 *
 		 * <b>Note:</b> When set, a native <code>input</code> HTML element
-		 * will be created inside the <code>ui5-fileuploader</code> so that it can be submitted as
+		 * will be created inside the <code>ui5-file-uploader</code> so that it can be submitted as
 		 * part of an HTML form. Do not use this property unless you need to submit a form.
 		 *
 		 * @type {string}
@@ -108,7 +115,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines a short hint intended to aid the user with data entry when the <code>ui5-fileuploader</code> has no value.
+		 * Defines a short hint intended to aid the user with data entry when the <code>ui5-file-uploader</code> has no value.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
@@ -128,7 +135,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the value state of the <code>ui5-fileuploader</code>.
+		 * Defines the value state of the <code>ui5-file-uploader</code>.
 		 * Available options are: <code>None</code>, <code>Success</code>, <code>Warning</code>, and <code>Error</code>.
 		 *
 		 * @type {string}
@@ -165,7 +172,7 @@ const metadata = {
  *
  * <h3>Usage</h3>
  *
- * For the <code>ui5-fileuploader</code>
+ * For the <code>ui5-file-uploader</code>
  * <h3>ES6 Module Import</h3>
  *
  * <code>import @ui5/webcomponents/dist/FileUploader.js";</code>
@@ -174,7 +181,7 @@ const metadata = {
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.FileUploader
  * @extends UI5Element
- * @tagname ui5-fileuploader
+ * @tagname ui5-file-uploader
  * @public
  */
 class FileUploader extends UI5Element {
@@ -198,20 +205,13 @@ class FileUploader extends UI5Element {
 		return FileUploaderTemplate;
 	}
 
-	static async define(...params) {
-		await Promise.all([
-			Input.define(),
-			Button.define(),
-		]);
-
-		super.define(...params);
-	}
-
 	constructor() {
 		super();
 		if (this._canUseNativeFormSupport) {
 			this._internals = this.attachInternals();
 		}
+
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	/**
@@ -225,7 +225,7 @@ class FileUploader extends UI5Element {
 			return this._input.files;
 		}
 
-		// in case when ui5-fileuploader is not placed in the DOM, return empty FileList, like native input would do
+		// in case when ui5-file-uploader is not placed in the DOM, return empty FileList, like native input would do
 		const helperInput = document.createElement("input");
 		helperInput.type = "file";
 
@@ -279,12 +279,16 @@ class FileUploader extends UI5Element {
 		this._internals.setFormValue(formData);
 	}
 
+	get browseText() {
+		return this.i18nBundle.getText(FILE_UPLOADER_BROWSE_TEXT);
+	}
+
 	get _canUseNativeFormSupport() {
 		return !!this.attachInternals;
 	}
 
 	get _keepInputInShadowDOM() {
-		// only put input in the light dom when ui5-fileuploader is placed inside form and there is no support for form elements
+		// only put input in the light dom when ui5-file-uploader is placed inside form and there is no support for form elements
 		return this._canUseNativeFormSupport || !this.name;
 	}
 
@@ -298,6 +302,16 @@ class FileUploader extends UI5Element {
 	 */
 	get _type() {
 		return "file";
+	}
+
+	static async define(...params) {
+		await Promise.all([
+			Input.define(),
+			Button.define(),
+			fetchI18nBundle("@ui5/webcomponents"),
+		]);
+
+		super.define(...params);
 	}
 }
 

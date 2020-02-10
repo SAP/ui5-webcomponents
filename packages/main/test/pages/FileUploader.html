@@ -21,39 +21,39 @@
 <body>
 	<div>
 		<label>Single file upload:</label>
-		<ui5-fileuploader placeholder="upload file"></ui5-fileuploader>
+		<ui5-file-uploader placeholder="upload file"></ui5-file-uploader>
 	</div>
 	<div>
 		<label>Multiple files upload:</label>
-		<ui5-fileuploader multiple></ui5-fileuploader>
+		<ui5-file-uploader multiple></ui5-file-uploader>
 	</div>
 	<div>
 		<label>Accept only .txt and .docx files:</label>
-		<ui5-fileuploader accept=".txt,.docx"></ui5-fileuploader>
+		<ui5-file-uploader accept=".txt,.docx"></ui5-file-uploader>
 	</div>
 	<div>
 		<label>Value state Error:</label>
-		<ui5-fileuploader value-state="Error"></ui5-fileuploader>
+		<ui5-file-uploader value-state="Error"></ui5-file-uploader>
 	</div>
 	<div>
 		<label>Disabled uploader:</label>
-		<ui5-fileuploader disabled></ui5-fileuploader>
+		<ui5-file-uploader disabled></ui5-file-uploader>
 	</div>
 	<div>
 		<label>Button only:</label>
-		<ui5-fileuploader button-only></ui5-fileuploader>
+		<ui5-file-uploader button-only></ui5-file-uploader>
 	</div>
 	<div>
 		<label>With icon:</label>
-		<ui5-fileuploader icon="download"></ui5-fileuploader>
+		<ui5-file-uploader icon="download"></ui5-file-uploader>
 	</div>
 	<div>
 		<label>With icon-end:</label>
-		<ui5-fileuploader icon="download" icon-end></ui5-fileuploader>
+		<ui5-file-uploader icon="download" icon-end></ui5-file-uploader>
 	</div>
 	<div>
 		<label>With icon-only:</label>
-		<ui5-fileuploader icon="download" icon-only></ui5-fileuploader>
+		<ui5-file-uploader icon="download" icon-only></ui5-file-uploader>
 	</div>
 	<div>
 		<ui5-title>Form support</ui5-title>
@@ -65,11 +65,11 @@
 		>
 			<div>
 				<label>Disabled uploader:</label>
-				<ui5-fileuploader disabled name="disabledUploader"></ui5-fileuploader>
+				<ui5-file-uploader disabled name="disabledUploader"></ui5-file-uploader>
 			</div>
 			<div>
 				<label>Normal uploader:</label>
-				<ui5-fileuploader name="enabledUploader"></ui5-fileuploader>
+				<ui5-file-uploader name="enabledUploader"></ui5-file-uploader>
 			</div>
 			<div>
 				<label>Native input type="file":</label>
@@ -81,7 +81,7 @@
 	<div>
 		<ui5-title>Upload files async using fetch</ui5-title>
 		<div style="border: 1px solid black; padding: 1rem;">
-			<ui5-fileuploader id="fuFetch"></ui5-fileuploader>
+			<ui5-file-uploader id="fuFetch"></ui5-file-uploader>
 			<ui5-button id="uploadBtn">Upload</ui5-button>
 		</div>
 	</div>
