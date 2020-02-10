@@ -1,0 +1,44 @@
+:host {
+	display: inline-block;
+}
+
+.ui5-fileuploader-root {
+	position: relative;
+}
+
+.ui5-fileuploader-root input[type=file] {
+	opacity: 0;
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+}
+
+.ui5-fileuploader-root input[type=file]:not([disabled]) {
+	cursor: pointer;
+}
+
+.ui5-fileuploader-mask {
+	display: flex; /* TO DO: find better way to align ui5-input and ui5-button when there is icon */
+}
+
+.ui5-fileuploader-mask ui5-input {
+	margin-right: 0.25rem;
+}
+
+:host(:not([value-state]):not([disabled]):hover) ui5-input {
+	background-color: var(--sapField_Hover_Background);
+	border: 1px solid var(--sapField_Hover_BorderColor);
+}
+
+:host(:not([disabled]):hover) ui5-button {
+	background: var(--sapButton_Hover_Background);
+}
+
+:host(:not([disabled]):active) ui5-button {
+	background-color: var(--sapButton_Active_Background);
+	border-color: var(--_ui5_button_active_border_color);
+	color: var(--sapButton_Active_TextColor);
+	text-shadow: none;
+}

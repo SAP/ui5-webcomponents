@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>FileUploader test page</title>
+	
+	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+	<script nomodule src="../../resources/bundle.es5.js"></script>
+	<style>
+		body > div {
+			margin-bottom: 1rem;
+		}
+	</style>
+	<script>
+		delete Document.prototype.adoptedStyleSheets
+	</script>
+</head>
+<body>
+	<div>
+		<label>Single file upload:</label>
+		<ui5-fileuploader placeholder="upload file"></ui5-fileuploader>
+	</div>
+	<div>
+		<label>Multiple files upload:</label>
+		<ui5-fileuploader multiple></ui5-fileuploader>
+	</div>
+	<div>
+		<label>Accept only .txt and .docx files:</label>
+		<ui5-fileuploader accept=".txt,.docx"></ui5-fileuploader>
+	</div>
+	<div>
+		<label>Value state Error:</label>
+		<ui5-fileuploader value-state="Error"></ui5-fileuploader>
+	</div>
+	<div>
+		<label>Disabled uploader:</label>
+		<ui5-fileuploader disabled></ui5-fileuploader>
+	</div>
+	<div>
+		<label>Button only:</label>
+		<ui5-fileuploader button-only></ui5-fileuploader>
+	</div>
+	<div>
+		<label>With icon:</label>
+		<ui5-fileuploader icon="download"></ui5-fileuploader>
+	</div>
+	<div>
+		<label>With icon-end:</label>
+		<ui5-fileuploader icon="download" icon-end></ui5-fileuploader>
+	</div>
+	<div>
+		<label>With icon-only:</label>
+		<ui5-fileuploader icon="download" icon-only></ui5-fileuploader>
+	</div>
+	<div>
+		<ui5-title>Form support</ui5-title>
+		<form
+			style="border: 1px solid black; padding: 1rem;"
+			method="POST"
+			action="http://localhost:3000/echo"
+			enctype="multipart/form-data"
+		>
+			<div>
+				<label>Disabled uploader:</label>
+				<ui5-fileuploader disabled name="disabledUploader"></ui5-fileuploader>
+			</div>
+			<div>
+				<label>Normal uploader:</label>
+				<ui5-fileuploader name="enabledUploader"></ui5-fileuploader>
+			</div>
+			<div>
+				<label>Native input type="file":</label>
+				<input name="nativeInput" type="file">
+			</div>
+			<ui5-button submits>Submit</ui5-button>
+		</form>
+	</div>
+	<div>
+		<ui5-title>Upload files async using fetch</ui5-title>
+		<div style="border: 1px solid black; padding: 1rem;">
+			<ui5-fileuploader id="fuFetch"></ui5-fileuploader>
+			<ui5-button id="uploadBtn">Upload</ui5-button>
+		</div>
+	</div>
+	<script>
+		document.getElementById("uploadBtn").addEventListener("click", () => {
+			const fu = document.getElementById("fuFetch");
+			const data = new FormData();
+
+			for (let i = 0; i < fu.files.length; i++) {
+				data.append("file", fu.files[i]);
+			}
+
+			fetch("http://localhost:3000/echo", {
+				method: "POST",
+				body: data
+			})
+			.then(res => {
+				console.log(`Success! Response status: ${res.status}`);
+			})
+			.catch(err => {
+				console.log("Error")
+			})
+		});
+	</script>
+</body>
+</html>

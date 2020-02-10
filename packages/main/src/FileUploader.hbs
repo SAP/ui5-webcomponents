@@ -1,0 +1,36 @@
+
+<div class="ui5-fileuploader-root">
+	<div class="ui5-fileuploader-mask">
+		{{#unless buttonOnly}}
+			<ui5-input
+				value="{{value}}"
+				value-state="{{valueState}}"
+				placeholder="{{placeholder}}"
+				?disabled="{{disabled}}"
+			></ui5-input>
+		{{/unless}}
+		<ui5-button
+			icon="{{icon}}"
+			?icon-end={{iconEnd}}
+			?disabled="{{disabled}}"
+		>
+			{{#unless iconOnly}}
+				Browse
+			{{/unless}}
+		</ui5-button>
+	</div>
+	{{#if _keepInputInShadowDOM}}
+		<input
+			type="file"
+			title="upload file"
+			accept="{{accept}}"
+			?multiple="{{multiple}}"
+			?disabled="{{disabled}}"
+			@change="{{_onChange}}"
+		>
+	{{else}}
+		<slot name="formSupport">
+			{{!-- input for forms will be placed here on IE, Edge and Firefox --}}
+		</slot>
+	{{/if}}
+</div>
