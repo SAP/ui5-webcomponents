@@ -5,7 +5,7 @@ describe("ResponsivePopover general interaction", () => {
 
 	it("header and footer are displayed by default", () => {
 		const btnOpenPopover = $("#btnOpen");
-		const field = $("#field");
+		const btnClosePopover = $("#btnClose");
 
 		btnOpenPopover.click();
 		
@@ -15,13 +15,12 @@ describe("ResponsivePopover general interaction", () => {
 		assert.ok(popover.isDisplayedInViewport(), "ResponsivePopover is opened.");
 		assert.ok(header.isExisting(), "Header is displayed.");
 
-		field.click();
+		btnClosePopover.click();
 		assert.ok(!popover.isDisplayedInViewport(), "ResponsivePopover is closed.");
 	});
 
 	it("header and footer are hidden on desktop", () => {
 		const btnOpenPopover = $("#btnOpen3");
-		const field = $("#field");
 
 		btnOpenPopover.click();
 
@@ -30,8 +29,5 @@ describe("ResponsivePopover general interaction", () => {
 
 		assert.ok(popover.isDisplayedInViewport(), "ResponsivePopover is opened.");
 		assert.ok(!header.isExisting(), "Header is not displayed.");
-
-		field.click();
-		assert.ok(!popover.isDisplayedInViewport(), "ResponsivePopover remains opened.");
 	});
 });
