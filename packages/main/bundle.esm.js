@@ -19,8 +19,11 @@ import Avatar from "./dist/Avatar.js";
 import Badge from "./dist/Badge.js";
 import BusyIndicator from "./dist/BusyIndicator.js";
 import Button from "./dist/Button.js";
-import CheckBox from "./dist/CheckBox.js";
 import Card from "./dist/Card.js";
+import Carousel from "./dist/Carousel.js";
+import CheckBox from "./dist/CheckBox.js";
+import ComboBox from "./dist/ComboBox.js";
+import ComboBoxItem from "./dist/ComboBoxItem.js";
 import DatePicker from "./dist/DatePicker.js";
 import Dialog from "./dist/Dialog.js";
 import Icon from "./dist/Icon.js";
@@ -50,8 +53,7 @@ import TimelineItem from "./dist/TimelineItem.js";
 import Title from "./dist/Title.js";
 import Toast from "./dist/Toast.js";
 import ToggleButton from "./dist/ToggleButton.js";
-import ComboBox from "./dist/ComboBox.js";
-import ComboBoxItem from "./dist/ComboBoxItem.js";
+
 
 import List from "./dist/List.js";
 import StandardListItem from "./dist/StandardListItem.js";
