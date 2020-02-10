@@ -13,6 +13,8 @@ import {
 } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
+import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
+import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import {
 	CAROUSEL_OF_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
@@ -212,6 +214,10 @@ class Carousel extends UI5Element {
 		}
 	}
 
+	get shouldAnimate() {
+		return getAnimationMode() === AnimationMode.None;
+	}
+
 	/**
 	 * Assuming that all items have the same width
 	 * @private
@@ -247,6 +253,12 @@ class Carousel extends UI5Element {
 
 	get classes() {
 		return {
+			content: {
+				"ui5-carousel-content": true,
+				"ui5-carousel-content-no-animation": this.shouldAnimate,
+				"ui5-carousel-content-has-navigation": !this.hideNavigation,
+				"ui5-carousel-content-has-navigation-and-buttons": !this.hideNavigation && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
+			},
 			navigation: {
 				"ui5-carousel-navigation-wrapper": true,
 				"ui5-carousel-navigation-with-buttons": this.arrowsPlacement === CarouselArrowsPlacement.Navigation,

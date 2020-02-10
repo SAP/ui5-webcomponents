@@ -42,6 +42,7 @@
 
 .ui5-carousel-content {
     width: 100%;
+    height: 100%;
     height: inherit;
     position: relative;
     display: flex;
@@ -49,6 +50,18 @@
     flex-wrap: nowrap;
     background: var(--sapBackgroundColor);
     transition: left .5s cubic-bezier(.46, 0, .44, 1);
+}
+
+.ui5-carousel-content.ui5-carousel-content-no-animation {
+    transition: none;
+}
+
+.ui5-carousel-content.ui5-carousel-content-has-navigation {
+    height: calc(100% - 2.75rem);
+}
+
+.ui5-carousel-content.ui5-carousel-content-has-navigation.ui5-carousel-content-has-navigation-and-buttons {
+    height: calc(100% - 3.5rem);
 }
 
 .ui5-carousel-item {
