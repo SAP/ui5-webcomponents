@@ -1,5 +1,5 @@
-commit 323968e1be19d1573a8d6d348f8a83d211d4f0e3
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Sat Feb 8 08:16:26 2020 +0200
+commit 931fbe0a4aae4922fe895199d5df949c32a14da9
+Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
+Date:   Mon Feb 10 14:53:52 2020 +0200
 
-    chore: add export to icons to fix CodeSandbox (#1194)
+    feat(ui5-segmentedbutton): initial implementation (#1164)

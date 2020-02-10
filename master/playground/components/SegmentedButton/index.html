@@ -7,7 +7,7 @@
   <meta name="keywords" content="ui5-webcomponents,ui5 webcomponents,ui5 web components,webcomponents,web components,ui5,api,docs,documentation,sample,usage,examples,demo,Fiori 3">
 
   
-    <title>Configuration - UI5 Web Components</title>
+    <title>Segmented Button - UI5 Web Components</title>
 
     
   
@@ -24,17 +24,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Configuration | UI5 Web Components</title>
+<title>Segmented Button | UI5 Web Components</title>
 <meta name="generator" content="Jekyll v3.8.6" />
-<meta property="og:title" content="Configuration" />
+<meta property="og:title" content="Segmented Button" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Enterprise-flavored sugar on top of native APIs!" />
 <meta property="og:description" content="Enterprise-flavored sugar on top of native APIs!" />
-<link rel="canonical" href="https://sap.github.io/ui5-webcomponents/master/playground/docs/configuration/" />
-<meta property="og:url" content="https://sap.github.io/ui5-webcomponents/master/playground/docs/configuration/" />
+<link rel="canonical" href="https://sap.github.io/ui5-webcomponents/master/playground/components/SegmentedButton/" />
+<meta property="og:url" content="https://sap.github.io/ui5-webcomponents/master/playground/components/SegmentedButton/" />
 <meta property="og:site_name" content="UI5 Web Components" />
 <script type="application/ld+json">
-{"description":"Enterprise-flavored sugar on top of native APIs!","@type":"WebPage","url":"https://sap.github.io/ui5-webcomponents/master/playground/docs/configuration/","headline":"Configuration","@context":"https://schema.org"}</script>
+{"description":"Enterprise-flavored sugar on top of native APIs!","@type":"WebPage","url":"https://sap.github.io/ui5-webcomponents/master/playground/components/SegmentedButton/","headline":"Segmented Button","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -214,7 +214,7 @@
     
       
         
-          <li class="navigation-list-item active">
+          <li class="navigation-list-item">
             
             <a href="https://sap.github.io/ui5-webcomponents/master/playground/docs" class="navigation-list-link">Documentation</a>
             
@@ -361,9 +361,9 @@
                   
                 
                   
-                    <li class="navigation-list-item  active">
+                    <li class="navigation-list-item ">
                       
-                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/docs/configuration/" class="navigation-list-link active">
+                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/docs/configuration/" class="navigation-list-link">
                         <div class="component-name">Configuration</div>
                         
                       </a>
@@ -774,7 +774,7 @@
     
       
         
-          <li class="navigation-list-item">
+          <li class="navigation-list-item active">
             
             <a href="https://sap.github.io/ui5-webcomponents/master/playground/components" class="navigation-list-link">Components</a>
             
@@ -1154,9 +1154,9 @@
                   
                 
                   
-                    <li class="navigation-list-item ">
+                    <li class="navigation-list-item  active">
                       
-                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/SegmentedButton/" class="navigation-list-link">
+                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/SegmentedButton/" class="navigation-list-link active">
                         <div class="component-name">Segmented Button</div>
                         
                           <span class="new-tag">NEW</span>
@@ -1424,257 +1424,245 @@
             <nav class="breadcrumb-nav">
               <ol class="breadcrumb-nav-list">
                 
-                  <li class="breadcrumb-nav-list-item"><a href="https://sap.github.io/ui5-webcomponents/master/playground/docs">Documentation</a></li>
+                  <li class="breadcrumb-nav-list-item"><a href="https://sap.github.io/ui5-webcomponents/master/playground/components">Components</a></li>
                 
-                <li class="breadcrumb-nav-list-item"><span>Configuration</span></li>
+                <li class="breadcrumb-nav-list-item"><span>Segmented Button</span></li>
               </ol>
             </nav>
           
         
         <div id="main-content" class="page-content" role="main">
-          <h1 id="configuration">Configuration</h1>
+          <header class="component-heading">
+	<h2 class="control-header">SegmentedButton</h2>
+	<div class="component-heading-since">
+		<span>v1.0.0-rc.6</span>
+	</div>
+</header>
 
-<h2 id="configuration-settings">Configuration settings</h2>
+<div class="component-package">@ui5/webcomponents</div>
 
-<p>There are several configuration settings that affect all UI5 Web Components globally.</p>
+<div class="control-tag">&lt;ui5-segmentedbutton&gt;</div>
 
-<table>
-  <thead>
-    <tr>
-      <th>Setting</th>
-      <th>Values</th>
-      <th>Default value</th>
-      <th>Description</th>
-      <th> </th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><a href="#theme">theme</a></td>
-      <td>sap_fiori_3, sap_fiori_3_dark, sap_belize, sap_belize_hcb</td>
-      <td>sap_fiori_3</td>
-      <td>Visual theme</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>language</td>
-      <td>en, de, es, etc…</td>
-      <td>en</td>
-      <td>Language to be used for translatable texts</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><a href="#rtl">RTL</a></td>
-      <td>true, false</td>
-      <td>false</td>
-      <td>When true, sets global text direction to right-to-left</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><a href="#animationMode">animationMode</a></td>
-      <td>full, basic, minimal, none</td>
-      <td>full</td>
-      <td>Defines different animation scenarios or levels</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>calendarType</td>
-      <td>Gregorian, Islamic, Buddhist, Japanese, Persian</td>
-      <td>Gregorian</td>
-      <td>Default calendar type for date-related web components</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><a href="#noConflict">noConflict</a></td>
-      <td>true, false</td>
-      <td>Object</td>
-      <td>false</td>
-      <td>When set to true, all events will be fired with a “ui5-“ prefix only</td>
-    </tr>
-    <tr>
-      <td><a href="#formatSettings">formatSettings</a></td>
-      <td>See the <a href="#formatSettings">Format settings</a> section below</td>
-      <td>Empty object</td>
-      <td>Allows to override locale-specific configuration</td>
-      <td> </td>
-    </tr>
-  </tbody>
-</table>
+<section>
+	<h3>Basic SegmentedButton</h3>
+	<div class="snippet">
+        <ui5-segmentedbutton>
+            <ui5-togglebutton>Map</ui5-togglebutton>
+            <ui5-togglebutton pressed>Satellite</ui5-togglebutton>
+            <ui5-togglebutton>Terrain</ui5-togglebutton>
+        </ui5-segmentedbutton>
+	</div>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-segmentedbutton&gt;</span>
+    <span class="nt">&lt;ui5-togglebutton&gt;</span>Map<span class="nt">&lt;/ui5-togglebutton&gt;</span>
+    <span class="nt">&lt;ui5-togglebutton</span> <span class="na">pressed</span><span class="nt">&gt;</span>Satellite<span class="nt">&lt;/ui5-togglebutton&gt;</span>
+    <span class="nt">&lt;ui5-togglebutton&gt;</span>Terrain<span class="nt">&lt;/ui5-togglebutton&gt;</span>
+<span class="nt">&lt;/ui5-segmentedbutton&gt;</span>
+	</code></pre></figure></pre>
+</section>
 
-<h3 id="content-density">Content Density</h3>
+<section>
+	<h3>SegmentedButton with Icons</h3>
+	<div class="snippet">
+		<ui5-segmentedbutton>
+			<ui5-togglebutton icon="employee" pressed></ui5-togglebutton>
+			<ui5-togglebutton icon="menu"></ui5-togglebutton>
+			<ui5-togglebutton icon="factory"></ui5-togglebutton>
+		</ui5-segmentedbutton>
+	</div>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-segmentedbutton&gt;</span>
+    <span class="nt">&lt;ui5-togglebutton</span> <span class="na">icon=</span><span class="s">"employee"</span> <span class="na">pressed</span><span class="nt">&gt;&lt;/ui5-togglebutton&gt;</span>
+    <span class="nt">&lt;ui5-togglebutton</span> <span class="na">icon=</span><span class="s">"menu"</span><span class="nt">&gt;&lt;/ui5-togglebutton&gt;</span>
+    <span class="nt">&lt;ui5-togglebutton</span> <span class="na">icon=</span><span class="s">"factory"</span><span class="nt">&gt;&lt;/ui5-togglebutton&gt;</span>
+<span class="nt">&lt;/ui5-segmentedbutton&gt;</span>
+	</code></pre></figure></pre>
+</section>
 
-<p>UI5 Web Components contains different content densities for certain controls that allow your app to adapt to the device in question, allowing you to display larger controls for touch-enabled devices and a smaller, more compact design for devices that are operated by mouse. Cosy size is the default density for all components. Compact Size could be set by adding a class <code class="highlighter-rouge">ui5-content-density-compact</code> to an html element. It cascades all the way down and enforces compact density (smaller margins/paddings, smaller touch areas, etc).</p>
-
-<p><a name="theme"></a></p>
-<h3 id="theme">Theme</h3>
-<p>The <code class="highlighter-rouge">theme</code> setting values above are the technical names of our themes.</p>
-<ul>
-  <li>The <code class="highlighter-rouge">sap_fiori_3</code> is known as <code class="highlighter-rouge">Quartz Light</code> and it`s our default theme.</li>
-  <li>The <code class="highlighter-rouge">sap_fiori_3_dark</code> is known as <code class="highlighter-rouge">Quartz Dark</code>.</li>
-  <li>The <code class="highlighter-rouge">sap_belize</code> is known as <code class="highlighter-rouge">Belize</code>.</li>
-  <li>The <code class="highlighter-rouge">sap_belize_hcb</code> is known as <code class="highlighter-rouge">High Contrast Black</code>.</li>
-</ul>
-
-<p><a name="rtl"></a></p>
-<h3 id="rtl">RTL</h3>
-
-<p>When the <code class="highlighter-rouge">rtl</code> setting is set to <code class="highlighter-rouge">true</code>, UI5 Web Components will adjust their styling accordingly.
-However, you should also set the HTML attribute <code class="highlighter-rouge">dir</code> to <code class="highlighter-rouge">rtl</code> on the <code class="highlighter-rouge">body</code> or <code class="highlighter-rouge">html</code> or any other relevant region of your application
-so that the rest of your application is also affected.</p>
-
-<p><a name="animationMode"></a></p>
-<h3 id="animation-mode">Animation Mode</h3>
-
-<p>Animation modes allow to specify different animation scenarios or levels.</p>
-<ul>
-  <li>When <code class="highlighter-rouge">full</code> all animations run unrestricted.</li>
-  <li>When <code class="highlighter-rouge">basic</code> more light-weight set of animations would run.</li>
-  <li>When <code class="highlighter-rouge">minimal</code> animations of fundamental functionality are included.</li>
-  <li>When <code class="highlighter-rouge">none</code> all animations are completely suspended.</li>
-</ul>
-
-<p><em>Please note that each component determines which animations would run for a specific mode.</em></p>
-
-<p><a name="noConflict"></a></p>
-<h3 id="no-conflict">No conflict</h3>
-
-<p>By default UI5 Web Components fire all custom events twice - once with the documented name (f.e. <code class="highlighter-rouge">change</code>), and once more with a <code class="highlighter-rouge">ui5-</code> prefix (f.e. <code class="highlighter-rouge">ui5-change</code>).
-For example, when the <code class="highlighter-rouge">ui5-switch</code> is toggled, it fires a <code class="highlighter-rouge">change</code> event, but also a <code class="highlighter-rouge">ui5-change</code> event.</p>
-
-<p>The <code class="highlighter-rouge">noConflict</code> configuration setting allows certain control over this behavior:</p>
-<ul>
-  <li>When <code class="highlighter-rouge">false</code> (default value) all custom events are fired with and without the <code class="highlighter-rouge">ui5-</code> prefix.</li>
-  <li>When <code class="highlighter-rouge">true</code> all custom events are fired with the <code class="highlighter-rouge">ui5-</code> prefix <strong>only</strong>. 
- This is handy for example if the name of some event happens to collide with the name of an event provided by a third-party library.</li>
-  <li>When an object is supplied, just the specified events will be fired with the <code class="highlighter-rouge">ui5-</code> prefix <strong>only</strong>.
- All other events will be fired normally - once with the prefix, and once without. 
- The format of this object is as follows:
-    <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w"> </span><span class="p">{</span><span class="w">
-  </span><span class="nl">"events"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"selectionChange"</span><span class="p">,</span><span class="w"> </span><span class="s2">"headerClick"</span><span class="p">]</span><span class="w">
- </span><span class="p">}</span><span class="w">
-</span></code></pre></div>    </div>
-    <p><em>Please note that other keys may be added to this object in the future for the purpose of name conflict resolution.</em></p>
-  </li>
-</ul>
-
-<p>In the above example, only the <code class="highlighter-rouge">selectionChange</code> and <code class="highlighter-rouge">headerClick</code> events will not be fired without a prefix. 
- You can still use them by listening to <code class="highlighter-rouge">ui5-selectionChange</code> and <code class="highlighter-rouge">ui5-headerClick</code>, but the names <code class="highlighter-rouge">selectionChange</code> and <code class="highlighter-rouge">headerClick</code> will be
- free for use by other UI components and libraries without name collision.</p>
-
-<p><a name="formatSettings"></a></p>
-<h3 id="format-settings">Format settings</h3>
-
-<p>For example, to force the first day of week to Sunday, no matter the locale:</p>
-
-<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
-	</span><span class="nl">"formatSettings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-		</span><span class="nl">"firstDayOfWeek"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
-	</span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div></div>
-
-<table>
-  <thead>
-    <tr>
-      <th>Setting</th>
-      <th>Values</th>
-      <th>Default value</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>firstDayOfWeek</td>
-      <td>0 (Sunday) through 6 (Saturday)</td>
-      <td><em>depends on locale</em></td>
-      <td>When set, overrides the locale’s default value</td>
-    </tr>
-  </tbody>
-</table>
-
-<h2 id="configuration-script">Configuration script</h2>
-
-<p>In order to provide configuration settings, include the following <code class="highlighter-rouge">&lt;script&gt;</code> element in your HTML page:</p>
-
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;script </span><span class="na">data-ui5-config</span> <span class="na">type=</span><span class="s">"application/json"</span><span class="nt">&gt;</span>
-<span class="p">{</span>
-	<span class="dl">"</span><span class="s2">rtl</span><span class="dl">"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
-	<span class="dl">"</span><span class="s2">language</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">ja</span><span class="dl">"</span><span class="p">,</span>
-	<span class="dl">"</span><span class="s2">calendarType</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Japanese</span><span class="dl">"</span><span class="p">,</span>
-	<span class="dl">"</span><span class="s2">formatSettings</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
-		<span class="dl">"</span><span class="s2">firstDayOfWeek</span><span class="dl">"</span><span class="p">:</span> <span class="mi">0</span>
-	<span class="p">},</span>
-	<span class="dl">"</span><span class="s2">theme</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">sap_belize_hcb</span><span class="dl">"</span><span class="p">,</span>
-	<span class="dl">"</span><span class="s2">noConflict</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
-		<span class="dl">"</span><span class="s2">events</span><span class="dl">"</span><span class="p">:</span> <span class="p">[</span><span class="dl">"</span><span class="s2">selectionChange</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">headerClick</span><span class="dl">"</span><span class="p">]</span>
-	<span class="p">}</span>
-<span class="p">}</span>
-<span class="nt">&lt;/script&gt;</span>
-</code></pre></div></div>
-
-<p>and provide the desired options in the JSON object inside, as shown in the example.</p>
-
-<h2 id="configuration-module-imports">Configuration Module Imports</h2>
-
-<p>The configuration script is used to set the initial configuration in a declarative manner.
-However, reading/modifying the configuration reliably can only be done programmatically.</p>
-
-<p>To do so, please import the desired functionality from the respective <code class="highlighter-rouge">"@ui5/webcomponents-base/dist/config/"</code> module.</p>
-
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">getTheme</span><span class="p">,</span> <span class="nx">setTheme</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/config/Theme.js</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span> <span class="nx">getNoConflict</span><span class="p">,</span> <span class="nx">setNoConflict</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/config/NoConflict.js</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span> <span class="nx">getRTL</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/config/RTL.js</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span> <span class="nx">getAnimationMode</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/config/AnimationMode.js</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span> <span class="nx">getLanguage</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/config/Language.js</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span> <span class="nx">getCalendarType</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/config/CalendarType.js</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span> <span class="nx">getFirstDayOfWeek</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/config/FormatSettings.js</span><span class="dl">"</span><span class="p">;</span>
-</code></pre></div></div>
+<section>
+	<h3>SegmentedButton with 5 ToggleButtons</h3>
+	<div class="snippet">
+		<ui5-segmentedbutton>
+			<ui5-togglebutton>Button</ui5-togglebutton>
+			<ui5-togglebutton pressed>Pressed ToggleButton With Bigger Text</ui5-togglebutton>
+			<ui5-togglebutton>Button</ui5-togglebutton>
+			<ui5-togglebutton>Pressed ToggleButton</ui5-togglebutton>
+			<ui5-togglebutton>Press me</ui5-togglebutton>
+		</ui5-segmentedbutton>
+	</div>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-segmentedbutton&gt;</span>
+    <span class="nt">&lt;ui5-togglebutton&gt;</span>Button<span class="nt">&lt;/ui5-togglebutton&gt;</span>
+    <span class="nt">&lt;ui5-togglebutton</span> <span class="na">pressed</span><span class="nt">&gt;</span>Pressed ToggleButton With Bigger Text<span class="nt">&lt;/ui5-togglebutton&gt;</span>
+    <span class="nt">&lt;ui5-togglebutton&gt;</span>Button<span class="nt">&lt;/ui5-togglebutton&gt;</span>
+    <span class="nt">&lt;ui5-togglebutton&gt;</span>ToggleButton<span class="nt">&lt;/ui5-togglebutton&gt;</span>
+    <span class="nt">&lt;ui5-togglebutton&gt;</span>Press me<span class="nt">&lt;/ui5-togglebutton&gt;</span>
+<span class="nt">&lt;/ui5-segmentedbutton&gt;</span>
+	</code></pre></figure></pre>
+</section>
 
 
-<footer class="footer-wrapper">
-    <div class="footer-links">
+    <div class="page-container">
+      <div class="api-container">
+        <section class="component-description">
+          <h3 class="comment-api-title">Overview</h3>
+
+The <code>SegmentedButton</code> shows a group of buttons. When the user clicks or taps one of the buttons, it stays in a pressed state. It automatically resizes the buttons to fit proportionally within the component. When no width is set, the component uses the available width. <br><br> <b>Note:</b> There can be just one selected <code>button</code> at a time.
+
+<h3>ES6 Module Import</h3>
+
+<code>import "@ui5/webcomponents/dist/SegmentedButton";</code>
+          <section class="component-api space-top">
+            
+                  <h3 class="comment-api-title" >Properties/Attributes</h3>
+                  <p class="small-space-top" >You can use both properties and attributes with the same effect. The name of each attribute is listed below the name of the property, if different.</p>
+            
+                  <div class="small-space-top api-table">
+                    <div class="head api-table-header-roll">
+                      <div class="cell api-table-header-cell">Name</div>
+                      <div class="cell api-table-header-cell">Type</div>
+                      <div class="cell api-table-header-cell">Default Value</div>
+                      <div class="cell api-table-header-cell">Description</div>
+                    </div>
+            
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          selectedButton
+                            (readonly)
+                            <br>
+                            <code>selected-button</code>
+                        </div>
+                        <div class="cell api-table-content-cell">ui5-togglebutton</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Currently selected button.
+                        </div>
+                      </div>
+            
+                  </div>
+            
+                <h3 class="comment-api-title space-top" >Slots</h3>
+            	<p class="small-space-top" >
+            	  This Element provides slot(s). This means it can display its child nodes.<br>
+            	  Unless targeting the default slot, use the <code>slot</code> attribute to define the destination slot for each child.<br>
+            	  Text, along with HTML Elements with no <code>slot</code> attribute, goes the the <code>default</code> slot.
+            	</p>
+            
+                <div class="small-space-top api-table">
+                  <div class="head api-table-header-roll">
+                    <div class="cell api-table-header-cell">Slot</div>
+                    <div class="cell api-table-header-cell">Type</div>
+                    <div class="cell api-table-header-cell">Description</div>
+                  </div>
+            
+                    <div class="row api-table-roll-even">
+                      <div class="cell api-table-content-cell api-table-content-cell-bold">default</div>
+                      <div class="cell api-table-content-cell">HTMLElement [0..n]</div>
+                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the buttons of <code>ui5-segmentedbutton</code>. <br><br> <b>Note:</b> Multiple buttons are allowed. <br><br> <b>Note:</b> Use the <code>ui5-togglebutton</code> for the intended design.</div>
+                    </div>
+            
+                </div>
+            
+                  <h3 class="comment-api-title space-top">Events</h3>
+                  <p class="small-space-top" >This Web Component fires semantic events upon user interaction. You can bind to these events with the standard DOM APIs, such as <code>addEventListener</code>. </p>
+            
+                  <div class="small-space-top api-table">
+                    <div class="head api-table-header-roll">
+                      <div class="cell api-table-header-cell">Name</div>
+                      <div class="cell api-table-header-cell">Description</div>
+                    </div>
+            
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">selectionChange</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                        Fired when the selected button changes.
+                        </div>
+                      </div>
+            
+                        <tr class="api-table-event-param">
+                          <div class="api-table-content-event-params-wrapper">
+                            <div class="cell api-table-param-name api-table-content-cell api-table-content-cell-bold">selectedButton</div>
+                            <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> HTMLElement <br/> <strong class="api-table-event-description bold">description:</strong> the pressed button.</div>
+                          </div>
+                        </tr>
+                  </div>
+            
+            
+          </section>
+        </section>
+      </div>
+    </div>
+    <footer class="footer-wrapper">
+      <div class="footer-links">
         <a class="separator" href="https://www.sap.com/about/legal/privacy.html" target="_blank">Privacy Policy</a>
         <a href="https://www.sap.com/about/legal/impressum.html" target="_blank">Legal</a>
+      </div>
+      <img src="../../../../../../assets/images/sap-logo-svg.svg" alt="Sap Logo" />
+    </footer>
+
+
+<div class="settings" id="settings-button">
+    <svg class="settings-icon" version="1.1" id="Capa_1" x="0px" y="0px"
+    width="340.274px" height="340.274px" viewBox="0 0 340.274 340.274" style="enable-background:new 0 0 340.274 340.274;"
+    xml:space="preserve">
+        <path d="M293.629,127.806l-5.795-13.739c19.846-44.856,18.53-46.189,14.676-50.08l-25.353-24.77l-2.516-2.12h-2.937
+        c-1.549,0-6.173,0-44.712,17.48l-14.184-5.719c-18.332-45.444-20.212-45.444-25.58-45.444h-35.765
+        c-5.362,0-7.446-0.006-24.448,45.606l-14.123,5.734C86.848,43.757,71.574,38.19,67.452,38.19l-3.381,0.105L36.801,65.032
+        c-4.138,3.891-5.582,5.263,15.402,49.425l-5.774,13.691C0,146.097,0,147.838,0,153.33v35.068c0,5.501,0,7.44,46.585,24.127
+        l5.773,13.667c-19.843,44.832-18.51,46.178-14.655,50.032l25.353,24.8l2.522,2.168h2.951c1.525,0,6.092,0,44.685-17.516
+        l14.159,5.758c18.335,45.438,20.218,45.427,25.598,45.427h35.771c5.47,0,7.41,0,24.463-45.589l14.195-5.74
+        c26.014,11,41.253,16.585,45.349,16.585l3.404-0.096l27.479-26.901c3.909-3.945,5.278-5.309-15.589-49.288l5.734-13.702
+        c46.496-17.967,46.496-19.853,46.496-25.221v-35.029C340.268,146.361,340.268,144.434,293.629,127.806z M170.128,228.474
+        c-32.798,0-59.504-26.187-59.504-58.364c0-32.153,26.707-58.315,59.504-58.315c32.78,0,59.43,26.168,59.43,58.315
+        C229.552,202.287,202.902,228.474,170.128,228.474z"></path>
+    </svg>
+</div>
+<ui5-dialog id="settings-dialog" header-text="Settings">
+    <section class="settings-form">
+        <div class="settings-content">
+            <div class="setting">
+                <ui5-label for="themeSwitch">Theme:</ui5-label>
+                <ui5-select id="themeSwitch">
+                    <ui5-option value="sap_fiori_3">Quartz Light</ui5-option>
+                    <ui5-option value="sap_fiori_3_dark">Quartz Dark</ui5-option>
+                    <ui5-option value="sap_belize">Belize</ui5-option>
+                    <ui5-option value="sap_belize_hcb">High Contrast Black</ui5-option>
+                </ui5-select>
+            </div>
+            <div class="setting">
+                <ui5-label for="contentDensitySwitch">Content Density:</ui5-label>
+                <ui5-select id="contentDensitySwitch">
+                    <ui5-option>Cozy</ui5-option>
+                    <ui5-option>Compact</ui5-option>
+                </ui5-select>
+            </div>
+            <div class="setting">
+                <ui5-label for="textDirectionSwitch">Text Direction:</ui5-label>
+                <ui5-select id="textDirectionSwitch">
+                    <ui5-option>LTR</ui5-option>
+                    <ui5-option>RTL</ui5-option>
+                </ui5-select>
+            </div>
+        </div>
+    </section>
+    <div slot="footer" class="closing-buttons">
+        <ui5-button id="applyButton" design="Emphasized" class="padding-end">Apply</ui5-button>
+        <ui5-button id="cancelButton">Cancel</ui5-button>
     </div>
-    <img src="https://sap.github.io/ui5-webcomponents/master/assets/images/sap-logo-svg.svg" alt="Sap Logo" />
-</footer>
+</ui5-dialog>
+
+<!-- UI5 Web Components Assests -->
+<script src="https://sap.github.io/ui5-webcomponents/master/assets/js/webcomponentsjs/webcomponents-loader.js"></script>
+<script type="module" src="https://sap.github.io/ui5-webcomponents/master/assets/js/ui5-webcomponents/bundle.esm.js"></script>
+<script nomodule src="https://sap.github.io/ui5-webcomponents/master/assets/js/ui5-webcomponents/bundle.es5.js"></script>
+
+<link rel="stylesheet" href="https://sap.github.io/ui5-webcomponents/master/assets/css/api.css">
 
 <style>
-    .footer-wrapper {
-        margin-top: 2rem;
-        padding-top: 2rem;
-        padding-bottom: 4rem;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        border-top: 1px solid #D8D8D8;
-        font-family: "72-Regular";
+    pre {
+        margin-bottom: 0;
     }
-
-    .footer-links {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: flex-start;
-        font-family: "72-Regular";
-    }
-
-    .footer-links > a {
-        color: #333333;
-        text-decoration: none;
-    }
-
-    .footer-links > a:hover {
-        text-decoration: underline;
-    }
-
-    .separator::after {
-        content: "|";
-        padding: 0 1rem;
-        color: #D8D8D8;
-        text-decoration: none;
+    pre.highlight {
+        padding: 1.5rem;
+        padding-bottom: 0;
+        border: 0.0625rem solid #C1C1C1;
     }
 </style>
 
