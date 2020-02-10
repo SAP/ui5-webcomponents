@@ -14,9 +14,9 @@ const components = [];
 const newComponents = [
   "Avatar",
   "Carousel",
-	"ComboBox",
+  "ComboBox",
   "ResponsivePopover",
-	"SegmentedButton",
+  "SegmentedButton",
   "Toast",
 ];
 
