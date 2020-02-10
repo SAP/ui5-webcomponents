@@ -17,15 +17,18 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.ResponsivePopover.prototype */ {
 
 		/**
-		 * By default the popover will be as wide as its opener. It will be wider if the content is not fitting.
-		 * If this property is set to true, it will take only as much space as it needs.
+		 * Defines whether the component will stretch to fit its content.
+		 * <br/><b>Note:</b> by default the popover will be as wide as its opener component and will grow if the content is not fitting.
+		 * <br/><b>Note:</b> if set to true, it will take only as much space as it needs.
+		 * @private
 		 */
 		noStretch: {
 			type: Boolean,
 		},
 
 		/**
-		 * When set there will be padding added by around the content.
+		 * Defines if padding would be added around the content.
+		 * @private
 		 */
 		withPadding: {
 			type: Boolean,
@@ -44,15 +47,21 @@ const metadata = {
 
 /**
  * @class
- * ResponsivePopover is Popover, which shows Dialog on mobile devices.
- * Also slots <code>header</code> and <code>footer</code> are displayed only on mobile.
+ *
+ * <h3 class="comment-api-title">Overview</h3>
+ * The ResponsivePopover acts as a Popover on desktop and tablet, while on phone it acts as a Dialog.
+ * The component improves tremendously the user experience on mobile.
+ *
+ * <h3>Usage</h3>
+ * When you want to make sure that all the content is visible on any device.
  *
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.ResponsivePopover
- * @extends UI5Element
+ * @extends Popover
  * @tagname ui5-responsive-popover
- * @private
+ * @since 1.0.0-rc.6
+ * @public
  */
 class ResponsivePopover extends Popover {
 	static get metadata() {
@@ -78,6 +87,8 @@ class ResponsivePopover extends Popover {
 	}
 
 	/**
+	 * Opens popover on desktop and dialog on mobile.
+	 * @param {HTMLElement} opener the element that the popover is opened by
 	 * @public
 	 */
 	open(opener) {
@@ -94,6 +105,7 @@ class ResponsivePopover extends Popover {
 	}
 
 	/**
+	 * Closes the popover/dialog.
 	 * @public
 	 */
 	close() {
@@ -102,22 +114,6 @@ class ResponsivePopover extends Popover {
 		} else {
 			this._dialog.close();
 		}
-	}
-
-	_afterDialogOpen(event) {
-		this.opened = true;
-		this._propagateDialogEvent(event);
-	}
-
-	_afterDialogClose(event) {
-		this.opened = false;
-		this._propagateDialogEvent(event);
-	}
-
-	_propagateDialogEvent(event) {
-		const type = event.type.replace("ui5-", "");
-
-		this.fireEvent(type, event.detail);
 	}
 
 	get styles() {
@@ -144,6 +140,22 @@ class ResponsivePopover extends Popover {
 
 	get _displayFooter() {
 		return this._isPhone || !this.contentOnlyOnDesktop;
+	}
+
+	_afterDialogOpen(event) {
+		this.opened = true;
+		this._propagateDialogEvent(event);
+	}
+
+	_afterDialogClose(event) {
+		this.opened = false;
+		this._propagateDialogEvent(event);
+	}
+
+	_propagateDialogEvent(event) {
+		const type = event.type.replace("ui5-", "");
+
+		this.fireEvent(type, event.detail);
 	}
 }
 
