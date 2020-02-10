@@ -682,7 +682,22 @@ class Popover extends UI5Element {
 			arrow: {
 				transform: `translate(${this.arrowTranslateX}px, ${this.arrowTranslateY}px)`,
 			},
+			root: { },
 		};
+	}
+
+	/**
+	 * Hook for descendants to hide header.
+	 */
+	get _displayHeader() {
+		return true;
+	}
+
+	/**
+	 * Hook for descendants to hide footer.
+	 */
+	get _displayFooter() {
+		return true;
 	}
 }
 

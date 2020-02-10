@@ -20,11 +20,11 @@ class DatePickerTestPage {
 	}
 
 	get popover() {
-		return browser.$(`.${this.staticAreaItemClassName}`).shadow$("ui5-popover");
+		return browser.$(`.${this.staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 	}
 
 	get popoverContent() {
-		return browser.$(this._sut).shadow$("ui5-popover").shadow$(".ui5-popover-root");
+		return browser.$(this._sut).shadow$("ui5-responsive-popover").shadow$("ui5-popover").shadow$(".ui5-popover-root");
 	}
 
 	get calendar() {
@@ -81,6 +81,18 @@ class DatePickerTestPage {
 		return browser
 			.$(`.${this.staticAreaItemClassName}`).shadow$(`ui5-calendar`).shadow$(`ui5-yearpicker`).shadow$(`.ui5-yp-root`)
 			.$$(".ui5-yp-item")[index];
+	}
+
+	getDisplayedMonth(index) {
+		return browser
+			.$(`.${this.staticAreaItemClassName}`).shadow$(`ui5-calendar`).shadow$(`ui5-monthpicker`).shadow$(`.ui5-mp-root`)
+			.$$(".ui5-mp-item")[index];
+	}
+
+	getDisplayedDay(index) {
+		return browser
+			.$(`.${this.staticAreaItemClassName}`).shadow$(`ui5-calendar`).shadow$(`ui5-daypicker`).shadow$(`.ui5-dp-root`).$(".ui5-dp-content").$(".ui5-dp-items-container")
+			.$$(".ui5-dp-item")[index];
 	}
 
 	isValid(value) {

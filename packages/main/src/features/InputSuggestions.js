@@ -1,7 +1,7 @@
 import { registerFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 
 import List from "../List.js";
-import Popover from "../Popover.js";
+import ResponsivePopover from "../ResponsivePopover.js";
 
 /**
  * A class to manage the <code>Input</code suggestion items.
@@ -36,7 +36,10 @@ class Suggestions {
 
 		const suggestions = [];
 		inputSuggestionItems.map(suggestion => {
-			return suggestions.push(suggestion.textContent);
+			return suggestions.push({
+				text: suggestion.textContent,
+				icon: suggestion.icon,
+			});
 		});
 
 		return suggestions;
@@ -83,11 +86,11 @@ class Suggestions {
 
 	open() {
 		this._beforeOpen();
-		this._getPopover().openBy(this._getComponent());
+		this._respPopover.open(this._getComponent());
 	}
 
 	close() {
-		this._getPopover().close();
+		this._respPopover.close();
 	}
 
 	updateSelectedItemPosition(pos) {
@@ -104,7 +107,8 @@ class Suggestions {
 
 		this.selectedItemIndex = this._getItems().indexOf(item);
 
-		this._getComponent().onItemSelected(item, keyboardUsed);
+		this._getComponent().onItemSelected(this._getRealItems()[this.selectedItemIndex], keyboardUsed);
+		item.selected = false;
 		this.close();
 	}
 
@@ -136,12 +140,12 @@ class Suggestions {
 		}
 
 		if (!this.attachedAfterOpened) {
-			this._getPopover().addEventListener("ui5-afterOpen", this._onOpen.bind(this));
+			this._respPopover.addEventListener("ui5-afterOpen", this._onOpen.bind(this));
 			this.attachedAfterOpened = true;
 		}
 
 		if (!this.attachedAfterClose) {
-			this._getPopover().addEventListener("ui5-afterClose", this._onClose.bind(this));
+			this._respPopover.addEventListener("ui5-afterClose", this._onClose.bind(this));
 			this.attachedAfterClose = true;
 		}
 	}
@@ -166,7 +170,7 @@ class Suggestions {
 	}
 
 	isOpened() {
-		const popover = this._getPopover();
+		const popover = this._respPopover;
 		return !!(popover && popover.opened);
 	}
 
@@ -243,15 +247,14 @@ class Suggestions {
 
 	_getScrollContainer() {
 		if (!this._scrollContainer) {
-			const popover = this._getPopover();
-			this._scrollContainer = popover.getDomRef().querySelector(".ui5-popover-content");
+			this._scrollContainer = this._respPopover.getDomRef().shadowRoot.querySelector(".ui5-popover-content");
 		}
 
 		return this._scrollContainer;
 	}
 
 	_getItems() {
-		return this._getComponent().getSlottedNodes(this.slotName);
+		return [].slice.call(this._respPopover.querySelectorAll("ui5-li"));
 	}
 
 	_getComponent() {
@@ -259,11 +262,15 @@ class Suggestions {
 	}
 
 	_getList() {
-		return this._getComponent().getStaticAreaItemDomRef().querySelector("ui5-popover").querySelector("ui5-list");
+		return this._getComponent().getStaticAreaItemDomRef().querySelector("ui5-responsive-popover").querySelector("ui5-list");
 	}
 
-	_getPopover() {
-		return this._getComponent().getStaticAreaItemDomRef().querySelector("ui5-popover");
+	_getRealItems() {
+		return this._getComponent().getSlottedNodes(this.slotName);
+	}
+
+	get _respPopover() {
+		return this._getComponent().getStaticAreaItemDomRef().querySelector("ui5-responsive-popover");
 	}
 }
 
@@ -272,7 +279,7 @@ Suggestions.SCROLL_STEP = 48;
 // The List and Popover components would be rendered
 // by the issuer component`s template.
 List.define();
-Popover.define();
+ResponsivePopover.define();
 
 
 // Add suggestions support to the global features registry so that Input.js can use it

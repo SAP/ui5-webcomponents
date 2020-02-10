@@ -8,6 +8,8 @@
 	@keydown="{{_onkeydown}}"
 	@mouseup="{{_onmouseup}}"
 	@mousedown="{{_onmousedown}}"
+	@touchstart="{{_ontouchstart}}"
+	@touchend="{{_ontouchend}}"
 	@click="{{_onclick}}"
 >
 		{{#if placeSelectionElementBefore}}
@@ -36,6 +38,8 @@
 {{#*inline "selectionElement"}}
 	{{#if modeSingleSelect}}
 		<ui5-radiobutton
+				?disabled="{{isInactive}}"
+				tabindex="-1"
 				id="{{_id}}-singleSelectionElement"
 				class="ui5-li-singlesel-radiobtn"
 				?selected="{{selected}}"
@@ -45,6 +49,8 @@
 
 	{{#if modeMultiSelect}}
 		<ui5-checkbox
+				?disabled="{{isInactive}}"
+				tabindex="-1"
 				id="{{_id}}-multiSelectionElement"
 				class="ui5-li-multisel-cb"
 				?checked="{{selected}}"

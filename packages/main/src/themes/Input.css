@@ -38,7 +38,7 @@
 }
 
 :host([disabled]) {
-	opacity: var(--sap_wc_input_disabled_opacity);
+	opacity: var(--_ui5_input_disabled_opacity);
 	cursor: default;
 	pointer-events: none;
 	background: var(--sapField_ReadOnly_Background);
@@ -122,7 +122,7 @@
 	background: var(--sapField_ReadOnly_Background);
 }
 
-:host(:not([value-state]:not([readonly])):hover) {
+:host(:not([value-state]):not([readonly]):hover) {
 	background-color: var(--sapField_Hover_Background);
 	border: 1px solid var(--sapField_Hover_BorderColor);
 }
@@ -174,8 +174,7 @@
 /* Input Icon */
 
 .ui5-input-icon-root {
-	min-width: var(--sap_wc_input_icon_min_width);
-	width: var(--sap_wc_input_icon_min_width);
+	min-width: var(--_ui5_input_icon_min_width);
 	height: 100%;
 	display: flex;
 	justify-content: center;

@@ -13,14 +13,13 @@ import CalendarDate from "@ui5/webcomponents-base/dist/dates/CalendarDate.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { isShow } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/icons/appointment-2.js";
-import { DATEPICKER_OPEN_ICON_TITLE, DATEPICKER_DATE_ACC_TEXT } from "./generated/i18n/i18n-defaults.js";
+import { DATEPICKER_OPEN_ICON_TITLE, DATEPICKER_DATE_ACC_TEXT, INPUT_SUGGESTIONS_TITLE } from "./generated/i18n/i18n-defaults.js";
 import Icon from "./Icon.js";
-import Popover from "./Popover.js";
+import ResponsivePopover from "./ResponsivePopover.js";
 import Calendar from "./Calendar.js";
-import PopoverPlacementType from "./types/PopoverPlacementType.js";
-import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import Input from "./Input.js";
 import InputType from "./types/InputType.js";
 import DatePickerTemplate from "./generated/templates/DatePickerTemplate.lit.js";
@@ -31,6 +30,8 @@ import "@ui5/webcomponents-utils/dist/sap/ui/core/date/Gregorian.js";
 
 // Styles
 import datePickerCss from "./generated/themes/DatePicker.css.js";
+import datePickerPopoverCss from "./generated/themes/DatePickerPopover.css.js";
+import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 
 /**
  * @public
@@ -71,6 +72,30 @@ const metadata = {
 		 * @public
 		 */
 		formatPattern: {
+			type: String,
+		},
+
+		/**
+		 * Determines the мinimum date available for selection.
+		 *
+		 * @type {String}
+		 * @defaultvalue ""
+		 * @since 1.0.0-rc.6
+		 * @public
+		 */
+		minDate: {
+			type: String,
+		},
+
+		/**
+		 * Determines the maximum date available for selection.
+		 *
+		 * @type {String}
+		 * @defaultvalue ""
+		 * @since 1.0.0-rc.6
+		 * @public
+		 */
+		maxDate: {
 			type: String,
 		},
 
@@ -146,9 +171,11 @@ const metadata = {
 			type: Boolean,
 			noAttribute: true,
 		},
-		_popover: {
+
+		_respPopoverConfig: {
 			type: Object,
 		},
+
 		_calendar: {
 			type: Object,
 		},
@@ -246,20 +273,25 @@ class DatePicker extends UI5Element {
 		return datePickerCss;
 	}
 
+	static get staticAreaStyles() {
+		return [datePickerPopoverCss, ResponsivePopoverCommonCss];
+	}
+
 	constructor() {
 		super();
 
-		this._popover = {
-			placementType: PopoverPlacementType.Bottom,
-			horizontalAlign: PopoverHorizontalAlign.Left,
+		this._respPopoverConfig = {
 			allowTargetOverlap: true,
 			stayOpenOnScroll: true,
 			afterClose: () => {
-				const calendar = this.popover.querySelector(`#${this._id}-calendar`);
+				const calendar = this._respPopover.querySelector(`#${this._id}-calendar`);
 
 				this._isPickerOpen = false;
 
-				if (this._focusInputAfterClose) {
+				if (isPhone()) {
+					// close device's keyboard and prevent further typing
+					this.blur();
+				} else if (this._focusInputAfterClose) {
 					this._getInput().focus();
 					this._focusInputAfterClose = false;
 				}
@@ -268,12 +300,15 @@ class DatePicker extends UI5Element {
 				calendar._hideYearPicker();
 			},
 			afterOpen: () => {
-				const calendar = this.popover.querySelector(`#${this._id}-calendar`);
+				const calendar = this._respPopover.querySelector(`#${this._id}-calendar`);
 				const dayPicker = calendar.shadowRoot.querySelector(`#${calendar._id}-daypicker`);
 
 				const selectedDay = dayPicker.shadowRoot.querySelector(".ui5-dp-item--selected");
 				const today = dayPicker.shadowRoot.querySelector(".ui5-dp-item--now");
-				const focusableDay = selectedDay || today;
+				let focusableDay = selectedDay || today;
+				if (!selectedDay && (this.minDate || this.maxDate) && !this.isInValidRange((new Date().getTime()))) {
+					focusableDay = this.findFirstFocusableDay(dayPicker);
+				}
 
 				if (this._focusInputAfterOpen) {
 					this._focusInputAfterOpen = false;
@@ -281,7 +316,11 @@ class DatePicker extends UI5Element {
 				} else if (focusableDay) {
 					focusableDay.focus();
 
-					dayPicker._itemNav.current = parseInt(focusableDay.getAttribute("data-sap-index"));
+					let focusableDayIdx = parseInt(focusableDay.getAttribute("data-sap-index"));
+					const focusableItem = dayPicker.focusableDays.find(item => parseInt(item._index) === focusableDayIdx);
+					focusableDayIdx = focusableItem ? dayPicker.focusableDays.indexOf(focusableItem) : focusableDayIdx;
+
+					dayPicker._itemNav.current = focusableDayIdx;
 					dayPicker._itemNav.update();
 				}
 			},
@@ -295,11 +334,28 @@ class DatePicker extends UI5Element {
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
+	findFirstFocusableDay(daypicker) {
+		const today = new Date();
+		if (!this.isInValidRange(today.getTime())) {
+			const focusableItems = Array.from(daypicker.shadowRoot.querySelectorAll(".ui5-dp-item"));
+			return focusableItems.filter(x => !x.classList.contains("ui5-dp-item--disabled"))[0];
+		}
+	}
+
 	onBeforeRendering() {
 		this._calendar.primaryCalendarType = this._primaryCalendarType;
 		this._calendar.formatPattern = this._formatPattern;
 
-		if (this.isValid(this.value)) {
+		if (this.minDate && !this.isValid(this.minDate)) {
+			this.minDate = null;
+			console.warn(`In order for the "minDate" property to have effect, you should enter valid date format`); // eslint-disable-line
+		}
+
+		if (this.maxDate && !this.isValid(this.maxDate)) {
+			this.maxDate = null;
+			console.warn(`In order for the "maxDate" property to have effect, you should enter valid date format`); // eslint-disable-line
+		}
+		if (this.isValid(this.value) && this.isInValidRange(this._getTimeStampFromString(this.value))) {
 			this._changeCalendarSelection();
 		} else {
 			this._calendar.selectedDates = [];
@@ -311,6 +367,23 @@ class DatePicker extends UI5Element {
 		} else if (this.name) {
 			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
 		}
+
+		if (this.minDate) {
+			this._calendar.minDate = this.minDate;
+		}
+
+		if (this.maxDate) {
+			this._calendar.maxDate = this.maxDate;
+		}
+	}
+
+	_getTimeStampFromString(value) {
+		if (this.getFormat().parse(value)) {
+			const jsDate = new Date(this.getFormat().parse(value).getFullYear(), this.getFormat().parse(value).getMonth(), this.getFormat().parse(value).getDate());
+			const oCalDate = CalendarDate.fromTimestamp(jsDate.getTime(), this._primaryCalendarType);
+			return oCalDate.valueOf();
+		}
+		return undefined;
 	}
 
 	_onkeydown(event) {
@@ -327,9 +400,13 @@ class DatePicker extends UI5Element {
 	_handleInputChange() {
 		let nextValue = this._getInput().getInputValue();
 		const isValid = this.isValid(nextValue);
+		const isInValidRange = this.isInValidRange(this._getTimeStampFromString(nextValue));
 
-		if (isValid) {
+		if (isValid && isInValidRange) {
 			nextValue = this.normalizeValue(nextValue);
+			this.valueState = ValueState.None;
+		} else {
+			this.valueState = ValueState.Error;
 		}
 
 
@@ -341,10 +418,17 @@ class DatePicker extends UI5Element {
 
 	_handleInputLiveChange() {
 		const nextValue = this._getInput().getInputValue();
-		const isValid = this.isValid(nextValue);
+		const isValid = this.isValid(nextValue) && this.isInValidRange(this._getTimeStampFromString(nextValue));
 
 		this.value = nextValue;
 		this.fireEvent("input", { value: nextValue, valid: isValid });
+	}
+
+	_click(event) {
+		if (isPhone()) {
+			this._respPopover.open(this);
+			event.preventDefault(); // prevent immediate selection of any item
+		}
 	}
 
 	/**
@@ -354,6 +438,35 @@ class DatePicker extends UI5Element {
 	 */
 	isValid(value = "") {
 		return !!(value && this.getFormat().parse(value));
+	}
+
+	/**
+	 * Checks if a date is in range between minimum and maximum date
+	 * @param {object} value
+	 * @public
+	 */
+	isInValidRange(value = "") {
+		const pickedDate = new Date(value),
+			minDate = this._minDate && new Date(this._minDate),
+			maxDate = this._maxDate && new Date(this._maxDate);
+
+		if (minDate && maxDate) {
+			if (minDate <= pickedDate && maxDate >= pickedDate) {
+				return true;
+			}
+		} else if (minDate && !maxDate) {
+			if (minDate <= pickedDate) {
+				return true;
+			}
+		} else if (maxDate && !minDate) {
+			if (maxDate >= pickedDate) {
+				return true;
+			}
+		} else if (!maxDate && !minDate) {
+			return true;
+		}
+
+		return false;
 	}
 
 	// because the parser understands more than one format
@@ -398,6 +511,10 @@ class DatePicker extends UI5Element {
 		return this.placeholder !== undefined ? this.placeholder : this._displayFormat;
 	}
 
+	get _headerTitleText() {
+		return this.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
+	}
+
 	getFormat() {
 		if (this._isPattern) {
 			this._oDateFormat = DateFormat.getInstance({
@@ -419,10 +536,24 @@ class DatePicker extends UI5Element {
 			"ariaHasPopup": "true",
 			"ariaAutoComplete": "none",
 			"role": "combobox",
-			"ariaOwns": `${this._id}-popover`,
+			"ariaOwns": `${this._id}-responsive-popover`,
 			"ariaExpanded": this.isOpen(),
 			"ariaDescription": this.dateAriaDescription,
 		};
+	}
+
+	get _maxDate() {
+		if (this.maxDate) {
+			return this._getTimeStampFromString(this.maxDate);
+		}
+		return this.maxDate;
+	}
+
+	get _minDate() {
+		if (this.minDate) {
+			return this._getTimeStampFromString(this.minDate);
+		}
+		return this.minDate;
 	}
 
 	get openIconTitle() {
@@ -435,6 +566,10 @@ class DatePicker extends UI5Element {
 
 	get dir() {
 		return getRTL() ? "rtl" : "ltr";
+	}
+
+	get _respPopover() {
+		return this.getStaticAreaItemDomRef().querySelector("ui5-responsive-popover");
 	}
 
 	_canOpenPicker() {
@@ -458,9 +593,14 @@ class DatePicker extends UI5Element {
 		);
 		this._calendar.timestamp = iNewValue;
 		this._calendar.selectedDates = event.detail.dates;
-
 		this._focusInputAfterClose = true;
 		this.closePicker();
+
+		if (this.isInValidRange(this._getTimeStampFromString(this.value))) {
+			this.valueState = ValueState.None;
+		} else {
+			this.valueState = ValueState.Error;
+		}
 
 		this.fireEvent("change", { value: this.value, valid: true });
 		// Angular two way data binding
@@ -472,7 +612,7 @@ class DatePicker extends UI5Element {
 	 * @public
 	 */
 	closePicker() {
-		this.popover.close();
+		this._respPopover.close();
 	}
 
 	/**
@@ -483,19 +623,17 @@ class DatePicker extends UI5Element {
 	 * @public
 	 */
 	openPicker(options) {
-		this.popover = this.getStaticAreaItemDomRef().querySelector("ui5-popover");
 		this._changeCalendarSelection();
 
 		if (options && options.focusInput) {
 			this._focusInputAfterOpen = true;
 		}
-		this.popover.openBy(this);
+
+		this._respPopover.open(this);
 		this._isPickerOpen = true;
 	}
 
 	togglePicker() {
-		this.popover = this.getStaticAreaItemDomRef().querySelector("ui5-popover");
-
 		if (this.isOpen()) {
 			this.closePicker();
 		} else if (this._canOpenPicker()) {
@@ -503,14 +641,14 @@ class DatePicker extends UI5Element {
 		}
 	}
 
-	_changeCalendarSelection() {
+	_changeCalendarSelection(focusTimestamp) {
 		if (this._calendarDate.getYear() < 1) {
 			// 0 is a valid year, but we cannot display it
 			return;
 		}
 
 		const oCalDate = this._calendarDate;
-		const timestamp = oCalDate.valueOf() / 1000;
+		const timestamp = focusTimestamp || oCalDate.valueOf() / 1000;
 
 		this._calendar = Object.assign({}, this._calendar);
 		this._calendar.timestamp = timestamp;
@@ -571,7 +709,7 @@ class DatePicker extends UI5Element {
 		await Promise.all([
 			fetchCldr(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
 			Icon.define(),
-			Popover.define(),
+			ResponsivePopover.define(),
 			Calendar.define(),
 			Input.define(),
 			fetchI18nBundle("@ui5/webcomponents"),

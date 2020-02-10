@@ -12,8 +12,12 @@ const components = [];
 
  // Add new components here
 const newComponents = [
+  "Avatar",
+  "Carousel",
 	"ComboBox",
-	"Carousel",
+  "ResponsivePopover",
+	"SegmentedButton",
+  "Toast",
 ];
 
 packages.forEach(package => {

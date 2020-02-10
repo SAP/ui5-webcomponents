@@ -10,17 +10,21 @@ import "@ui5/webcomponents-icons/dist/icons/slim-arrow-down.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-left.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-right.js";
 import { TABCONTAINER_PREVIOUS_ICON_ACC_NAME, TABCONTAINER_NEXT_ICON_ACC_NAME, TABCONTAINER_OVERFLOW_MENU_TITLE } from "./generated/i18n/i18n-defaults.js";
-import TabContainerTemplate from "./generated/templates/TabContainerTemplate.lit.js";
-import TabContainerPopoverTemplate from "./generated/templates/TabContainerPopoverTemplate.lit.js";
 import Button from "./Button.js";
 import CustomListItem from "./CustomListItem.js";
 import Icon from "./Icon.js";
 import List from "./List.js";
-import Popover from "./Popover.js";
+import ResponsivePopover from "./ResponsivePopover.js";
 import SemanticColor from "./types/SemanticColor.js";
+
+// Templates
+import TabContainerTemplate from "./generated/templates/TabContainerTemplate.lit.js";
+import TabContainerPopoverTemplate from "./generated/templates/TabContainerPopoverTemplate.lit.js";
 
 // Styles
 import tabContainerCss from "./generated/themes/TabContainer.css.js";
+import tabContainerPopoverCss from "./generated/themes/TabContainerPopup.css.js";
+import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 
 const SCROLL_STEP = 128;
 
@@ -163,6 +167,10 @@ class TabContainer extends UI5Element {
 		return tabContainerCss;
 	}
 
+	static get staticAreaStyles() {
+		return [tabContainerPopoverCss, ResponsivePopoverCommonCss];
+	}
+
 	static get render() {
 		return litRender;
 	}
@@ -281,7 +289,7 @@ class TabContainer extends UI5Element {
 
 	_onOverflowListItemSelect(event) {
 		this._onItemSelect(event.detail.item);
-		this.popover.close();
+		this._respPopover.close();
 		this.shadowRoot.querySelector(`#${event.detail.item.id}`).focus();
 	}
 
@@ -319,8 +327,7 @@ class TabContainer extends UI5Element {
 	}
 
 	_onOverflowButtonClick(event) {
-		this.popover = this.getStaticAreaItemDomRef().querySelector("ui5-popover");
-		this.popover.openBy(event.target);
+		this._respPopover.open(event.target);
 	}
 
 	_onHeaderBackArrowClick() {
@@ -335,6 +342,10 @@ class TabContainer extends UI5Element {
 
 	_handleHeaderResize() {
 		this._updateScrolling();
+	}
+
+	_closeRespPopover() {
+		this._respPopover.close();
 	}
 
 	_updateScrolling() {
@@ -355,6 +366,10 @@ class TabContainer extends UI5Element {
 
 	_getHeaderScrollContainer() {
 		return this.shadowRoot.querySelector(`#${this._id}-headerScrollContainer`);
+	}
+
+	get _respPopover() {
+		return this.getStaticAreaItemDomRef().querySelector(`#${this._id}-overflowMenu`);
 	}
 
 	get classes() {
@@ -423,7 +438,7 @@ class TabContainer extends UI5Element {
 			CustomListItem.define(),
 			Icon.define(),
 			List.define(),
-			Popover.define(),
+			ResponsivePopover.define(),
 			fetchI18nBundle("@ui5/webcomponents"),
 		]);
 

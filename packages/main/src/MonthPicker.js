@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
 import { getFormatLocale } from "@ui5/webcomponents-base/dist/FormatSettings.js";
+import DateFormat from "@ui5/webcomponents-utils/dist/sap/ui/core/format/DateFormat.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
@@ -28,6 +29,7 @@ const metadata = {
 		timestamp: {
 			type: Integer,
 		},
+
 		/**
 		 * Sets a calendar type used for display.
 		 * If not set, the calendar type of the global configuration is used.
@@ -37,13 +39,49 @@ const metadata = {
 		primaryCalendarType: {
 			type: CalendarType,
 		},
+
+		/**
+		 * Determines the мinimum date available for selection.
+		 *
+		 * @type {String}
+		 * @defaultvalue ""
+		 * @since 1.0.0-rc.6
+		 * @public
+		 */
+		minDate: {
+			type: String,
+		},
+
+		/**
+		 * Determines the maximum date available for selection.
+		 *
+		 * @type {String}
+		 * @defaultvalue ""
+		 * @since 1.0.0-rc.6
+		 * @public
+		 */
+		maxDate: {
+			type: String,
+		},
+
 		_quarters: {
 			type: Object,
 			multiple: true,
 		},
+
 		_hidden: {
 			type: Boolean,
 			noAttribute: true,
+		},
+		/**
+		 * Determines the format, displayed in the input field.
+		 *
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @public
+		 */
+		formatPattern: {
+			type: String,
 		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.MonthPicker.prototype */ {
@@ -94,7 +132,14 @@ class MonthPicker extends UI5Element {
 
 		this._itemNav = new ItemNavigation(this, { rowSize: 3, behavior: ItemNavigationBehavior.Cyclic });
 		this._itemNav.getItemsCallback = function getItemsCallback() {
-			return [].concat(...this._quarters);
+			const focusableMonths = [];
+
+			for (let i = 0; i < this._quarters.length; i++) {
+				const quarter = this._quarters[i].filter(x => !x.disabled);
+				focusableMonths.push(quarter);
+			}
+
+			return [].concat(...focusableMonths);
 		}.bind(this);
 		this._itemNav.setItemsCallback = function setItemsCallback(items) {
 			this._quarters = items;
@@ -119,6 +164,11 @@ class MonthPicker extends UI5Element {
 
 			if (this._month === i) {
 				month.classes += " ui5-mp-item--selected";
+			}
+
+			if ((this.minDate || this.maxDate) && this._isOutOfSelectableRange(i)) {
+				month.classes += " ui5-mp-item--disabled";
+				month.disabled = true;
 			}
 
 			const quarterIndex = parseInt(i / 3);
@@ -157,6 +207,10 @@ class MonthPicker extends UI5Element {
 		return this.primaryCalendarType || getCalendarType() || LocaleData.getInstance(getLocale()).getPreferredCalendarType();
 	}
 
+	get _isPattern() {
+		return this._formatPattern !== "medium" && this._formatPattern !== "short" && this._formatPattern !== "long";
+	}
+
 	_onclick(event) {
 		if (event.target.className.indexOf("ui5-mp-item") > -1) {
 			const timestamp = this.getTimestampFromDOM(event.target);
@@ -179,6 +233,54 @@ class MonthPicker extends UI5Element {
 			this.timestamp = timestamp;
 			this.fireEvent("selectedMonthChange", { timestamp });
 		}
+	}
+
+	_isOutOfSelectableRange(monthIndex) {
+		const currentDateYear = this._localDate.getFullYear(),
+			minDate = new Date(this._minDate),
+			maxDate = new Date(this._maxDate),
+			minDateCheck = minDate && ((currentDateYear === minDate.getFullYear() && monthIndex < minDate.getMonth()) || currentDateYear < minDate.getFullYear()),
+			maxDateCheck = maxDate && ((currentDateYear === maxDate.getFullYear() && monthIndex > maxDate.getMonth()) || (currentDateYear > maxDate.getFullYear()));
+
+		return maxDateCheck || minDateCheck;
+	}
+
+	get _maxDate() {
+		if (this.maxDate) {
+			const jsDate = new Date(this.getFormat().parse(this.maxDate).getFullYear(), this.getFormat().parse(this.maxDate).getMonth(), this.getFormat().parse(this.maxDate).getDate());
+			const oCalDate = CalendarDate.fromTimestamp(jsDate.getTime(), this._primaryCalendarType);
+			return oCalDate.valueOf();
+		}
+		return this.maxDate;
+	}
+
+	get _minDate() {
+		if (this.minDate) {
+			const jsDate = new Date(this.getFormat().parse(this.minDate).getFullYear(), this.getFormat().parse(this.minDate).getMonth(), this.getFormat().parse(this.minDate).getDate());
+			const oCalDate = CalendarDate.fromTimestamp(jsDate.getTime(), this._primaryCalendarType);
+			return oCalDate.valueOf();
+		}
+		return this.minDate;
+	}
+
+
+	getFormat() {
+		if (this._isPattern) {
+			this._oDateFormat = DateFormat.getInstance({
+				pattern: this._formatPattern,
+				calendarType: this._primaryCalendarType,
+			});
+		} else {
+			this._oDateFormat = DateFormat.getInstance({
+				style: this._formatPattern,
+				calendarType: this._primaryCalendarType,
+			});
+		}
+		return this._oDateFormat;
+	}
+
+	get _formatPattern() {
+		return this.formatPattern || "medium"; // get from config
 	}
 
 	getTimestampFromDOM(domNode) {
