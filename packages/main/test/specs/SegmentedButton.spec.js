@@ -3,29 +3,16 @@ const assert = require("chai").assert;
 describe("SegmentedButton general interaction", () => {
 	browser.url("http://localhost:8080/test-resources/pages/SegmentedButton.html");
 
-	it("tests rendering of segmentedbutton", () => {
-		const segmentedButton = browser.$("#segButton1");
-		const toggleButton1 =  browser.$("#segButton1 > ui5-togglebutton:first-child");
-		const toggleButton2 =  browser.$("#segButton1 > ui5-togglebutton:nth-child(2)");
-		const toggleButton3 =  browser.$("#segButton1 > ui5-togglebutton:last-child");
-	
-		// all buttons should be rendered
-		assert.ok(segmentedButton.isExisting(), "SegmentedButton is rendered");
-		assert.ok(toggleButton1.isExisting(), "First ToggleButton is rendered");
-		assert.ok(toggleButton2.isExisting(), "Second ToggleButton is rendered");
-		assert.ok(toggleButton3.isExisting(), "Third ToggleButton is rendered");
-	});
-		
 	it("tests if pressed attribute is applied", () => {
 		const toggleButton =  browser.$("#segButton1 > ui5-togglebutton:first-child");
-		
+
 		assert.ok(toggleButton.getProperty("pressed"), "ToggleButton has property pressed");
 	});
 
 	it("tests if pressed attribute is switched to the newly pressed button", () => {
 		const firstToggleButton =  browser.$("#segButton1 > ui5-togglebutton:first-child");
 		const lastToggleButton =  browser.$("#segButton1 > ui5-togglebutton:last-child");
-		
+
 		lastToggleButton.click();
 
 		assert.ok(lastToggleButton.getProperty("pressed"), "Last ToggleButton has property pressed");
@@ -37,7 +24,7 @@ describe("SegmentedButton general interaction", () => {
 		const toggleButton2 =  browser.$("#segButton2 > ui5-togglebutton:nth-child(2)");
 		const toggleButton3 =  browser.$("#segButton2 > ui5-togglebutton:nth-child(3)");
 		const toggleButton4 =  browser.$("#segButton2 > ui5-togglebutton:last-child");
-		
+
 		// only last button should be pressed
 		assert.ok(!toggleButton1.getProperty("pressed"), "ToggleButton should not be pressed");
 		assert.ok(!toggleButton2.getProperty("pressed"), "ToggleButton should not be pressed");
