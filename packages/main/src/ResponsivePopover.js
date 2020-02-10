@@ -30,6 +30,15 @@ const metadata = {
 		withPadding: {
 			type: Boolean,
 		},
+
+		/**
+		 * Defines if only the content would be displayed (without header and footer) in the popover on Desktop.
+		 * By default bothe the header and footer would be displayed.
+		 * @protected
+		 */
+		contentOnlyOnDesktop: {
+			type: Boolean,
+		},
 	},
 };
 
@@ -130,11 +139,11 @@ class ResponsivePopover extends Popover {
 	}
 
 	get _displayHeader() {
-		return this._isPhone;
+		return this._isPhone || !this.contentOnlyOnDesktop;
 	}
 
 	get _displayFooter() {
-		return this._isPhone;
+		return this._isPhone || !this.contentOnlyOnDesktop;
 	}
 }
 
