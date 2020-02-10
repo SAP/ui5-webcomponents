@@ -1,4 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 
@@ -55,7 +57,9 @@ const metadata = {
  *
  * The <code>SegmentedButton</code> shows a group of buttons. When the user clicks or taps
  * one of the buttons, it stays in a pressed state. It automatically resizes the buttons
- * to fit proportionally within the control. When no width is set, the control uses the available width.
+ * to fit proportionally within the component. When no width is set, the component uses the available width.
+ * <br><br>
+ * <b>Note:</b> There can be just one selected <code>button</code> at a time.
  *
  * <h3>ES6 Module Import</h3>
  *
@@ -66,6 +70,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.SegmentedButton
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-segmentedbutton
+ * @since 1.0.0-rc.6
  * @public
  */
 class SegmentedButton extends UI5Element {
@@ -85,6 +90,14 @@ class SegmentedButton extends UI5Element {
 		return SegmentedButtonCss;
 	}
 
+	constructor() {
+		super();
+		this.initItemNavigation();
+
+		this.absoluteWidthSet = false; // set to true whenever we set absolute width to the component
+		this.percentageWidthSet = false; //  set to true whenever we set 100% width to the component
+	}
+
 	onEnterDOM() {
 		this._handleResizeBound = this._handleResize.bind(this);
 
@@ -102,6 +115,14 @@ class SegmentedButton extends UI5Element {
 	async onAfterRendering() {
 		await Promise.all(this.buttons.map(button => button._waitForDomRef));
 		this.widths = this.buttons.map(button => button.offsetWidth);
+	}
+
+	initItemNavigation() {
+		this._itemNavigation = new ItemNavigation(this, {
+			navigationMode: NavigationMode.Horizontal,
+		});
+
+		this._itemNavigation.getItemsCallback = () => this.getSlottedNodes("buttons");
 	}
 
 	normalizeSelection() {
@@ -133,16 +154,18 @@ class SegmentedButton extends UI5Element {
 	_handleResize() {
 		const documentWidth = document.body.clientWidth;
 
-		if (!this.style.width) {
+		if (!this.style.width || this.percentageWidthSet) {
 			this.style.width = `${Math.max(...this.widths) * this.buttons.length}px`;
+			this.absoluteWidthSet = true;
 		}
 
 		this.buttons.forEach(button => {
 			button.style.width = "100%";
 		});
 
-		if (documentWidth <= this.offsetWidth) {
+		if (documentWidth <= this.offsetWidth && this.absoluteWidthSet) {
 			this.style.width = "100%";
+			this.percentageWidthSet = true;
 		}
 	}
 
