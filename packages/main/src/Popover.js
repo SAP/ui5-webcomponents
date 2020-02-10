@@ -172,6 +172,7 @@ const metadata = {
 		 * @public
 		 */
 		"default": {
+			propertyName: "content",
 			type: Node,
 		},
 
@@ -304,7 +305,22 @@ class Popover extends UI5Element {
 	}
 
 	isOpenerClicked(event) {
-		return event.target === this._opener;
+		return !!event.composedPath().find(item => item === this._opener);
+	}
+
+	isClickInPopover(event) {
+		if (event.detail.preventPopoverClose) {
+			return true;
+		}
+
+		const eventPath = event.composedPath();
+		for (let i = 0; i < eventPath.length - 1; i++) { //always skip the last element which is Window object and doesn't have contains method
+			if (this.content[0].contains(eventPath[i])) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**

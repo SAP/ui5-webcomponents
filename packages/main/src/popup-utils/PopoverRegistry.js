@@ -50,7 +50,7 @@ const clickHandler = event => {
 		const popover = openedPopovers[i];
 
 		// if popover is modal, opener is clicked or there is one more popover above, skip closing
-		if (popover.modal || popover.isOpenerClicked(event)) {
+		if (popover.modal || popover.isOpenerClicked(event) ||  popover.isClickInPopover(event)) {
 			return;
 		}
 

@@ -41,7 +41,7 @@ const metadata = {
 			type: Object,
 			multiple: true,
 			defaultValue: [],
-		}
+		},
 
 	},
 	events: /** @lends sap.ui.webcomponents.main.OverflowToolbar.prototype */ {
@@ -149,7 +149,7 @@ class OverflowToolbar extends UI5Element {
 	}
 
 	fireEventOnRealTarget(event) {
-		const targetInStaticArea = event.path.filter(item => {
+		const targetInStaticArea = event.composedPath().filter(item => {
 			return this._overflowedItems.indexOf(item) > -1;
 		})[0];
 
@@ -157,7 +157,9 @@ class OverflowToolbar extends UI5Element {
 			return;
 		}
 
-		this.items[this.overflowingIndex + this._overflowedItems.indexOf(targetInStaticArea)].fireEvent(event.type);
+		this.items[this.overflowingIndex + this._overflowedItems.indexOf(targetInStaticArea)].fireEvent(event.type, {
+			preventPopoverClose: true,
+		});
 	}
 
 	removeEventHandlers() {
@@ -167,18 +169,59 @@ class OverflowToolbar extends UI5Element {
 	}
 
 	mutationObserverCallback(mutationsList, observer) {
-		let onlySlotsAreInvalidated = true;
-		mutationsList.some(item => {
-			if (item.type !== "attributes" || item.attributeName !== "slot") { // Slots are invalidated on every rerender
-				return onlySlotsAreInvalidated = false;
-			}
-		});
+		mutationsList.forEach(item => {
+			if (item.parentNode === this) { // Item is in the overflow toolbar
+				
+				mutationsList.some(item => {
+					return this._isSlotInvalidation(item);
+				});
 
-		if (this.overflowingIndex < 0 || onlySlotsAreInvalidated) {
-			return;
+				if (this.overflowingIndex < 0 || onlySlotsAreInvalidated) {
+					return;
+				}
+
+				this._getOverflowedItems();
+			} else { // Item is overflowed in the popover
+				if (this._isSlotInvalidation(item)) {
+					return;
+				}
+				const indexOfRealElement = this.items.length - this._overflowedItems.length + this._overflowedItems.indexOf(item) + 1;
+				switch (item.type) {
+					case "childList":
+
+						break;
+
+					case "subtree":
+
+						break;
+					
+					default:
+					case "attributes":
+						if (item.target[item.attributeName]) {
+							if (this.items[indexOfRealElement].getAttribute(item.attributeName) !== item.target.getAttribute(item.attributeName)) {
+								this.items[indexOfRealElement].setAttribute(item.attributeName, item.target[item.attributeName]);
+							}
+						} else {
+							this.items[indexOfRealElement].removeAttribute(item.attributeName);
+						}
+						break;
+				}
+				console.log("overflowed", item);
+			}
+		})
+	}
+
+	/**
+	 * Slots are invalidated on every rerender and this methods checks if such invalidation has occured
+	 * @param {Node} currentItem 
+	 */
+	_isSlotInvalidation(currentItem) {
+		let onlySlotsAreInvalidated = true;
+		if (currentItem.type !== "attributes" || currentItem.attributeName !== "slot") {
+			onlySlotsAreInvalidated = false;
 		}
 
-		this._getOverflowedItems();
+		return onlySlotsAreInvalidated;
 	}
 
 	_handleResize() {
@@ -231,6 +274,11 @@ class OverflowToolbar extends UI5Element {
 			const currentItem = this.items[i].cloneNode(true);
 			currentItem.id += `-clonned${i}`;
 			currentItem.classList.add("ui5-overflowed-item");
+			this._mutationObserver.observe(currentItem, {
+				attributes: true,
+				childList: true,
+				subtree: true,
+			});
 
 			this._overflowedItems.push(currentItem);
 		}
@@ -262,7 +310,9 @@ class OverflowToolbar extends UI5Element {
 			"focusout",
 			"keydown",
 			"keyup",
-		]
+			"touchstart",
+			"touchend",
+		];
 	}
 
 	static async define(...params) {
