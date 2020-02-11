@@ -1,3 +1,5 @@
+// import "@ui5/webcomponents-base/test/dev-helpers/ExternalThemePresent.js";
+
 import "@ui5/webcomponents-base/dist/features/calendar/Buddhist.js";
 import "@ui5/webcomponents-base/dist/features/calendar/Islamic.js";
 import "@ui5/webcomponents-base/dist/features/calendar/Japanese.js";
