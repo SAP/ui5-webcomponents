@@ -33,7 +33,7 @@ const metadata = {
 		 * @public
 		 */
 		value: {
-			type: String 
+			type: String
 		},
 
 		/**
@@ -63,7 +63,7 @@ const metadata = {
 		 * @defaultvalue false
 		 * @public
 		 */
-		isExpanded: {
+		expanded: {
 			type: Boolean
 		},
 
@@ -72,20 +72,7 @@ const metadata = {
 		}
 	},
 	slots: /** @lends sap.ui.webcomponents.main.Slider.prototype */ {
-		// /**
-		//  * Defines the <code>ui5-slider</code> items.
-		//  *
-		//  * @type {HTMLElement[]}
-		//  * @slot
-		//  * @public
-		//  */
-		// items: {
-		// 	"default": {
-		// 		propertyName: "items",
-		// 		type: HTMLElement,
-		// 		listenFor: { include: ["*"] },
-		// 	}
-		// }
+
 	},
 	events: /** @lends sap.ui.webcomponents.main.Slider.prototype */ {
 		/**
@@ -159,6 +146,7 @@ class Slider extends UI5Element {
 		this._scroller = new ScrollEnablement(this);
 		this.prevElement = 0;
 		this._currentElementIndex = 0;
+		this._itemCellHeight = 0;
 	}
 
 	_findSelectedElement(){
@@ -176,11 +164,13 @@ class Slider extends UI5Element {
 
 	_updateScrolling(e){
 		let sizeInRems = this._items.length * 3, // the size of one element in rems (16px = 1rem)
-			sizeOfOneElementInPixels = 48,
+			sizeOfOneElementInPixels = _itemCellHeight * 16,
 			indexForOffset;
 		const elements = this.shadowRoot.querySelectorAll(".sapMWSItem");
 
-		//console.log(this.value + "    " + this._findSelectedElement().textContent);
+		if (!this._findSelectedElement()){
+			return;
+		}
 		if (this.value === this._findSelectedElement().textContent) {
 			return;
 		}
@@ -200,13 +190,14 @@ class Slider extends UI5Element {
 		this._scroller.attachEvent("scroll", this._updateScrolling.bind(this));
 		if (this.expanded) {
 			const elements = this.shadowRoot.querySelectorAll(".sapMWSItem");
-			for (var i = 0; i < elements.length; i++){
+			this._itemCellHeight = elements[0].offsetHeight / 16;
+			for (let i = 0; i < elements.length; i++){
 				if (elements[i].textContent === this.value){
 					this._selectElement(elements[i]);
 					return true;
 				}
 			}
-	
+
 			this._selectElement(elements[0]);
 		}
 	}
@@ -232,16 +223,15 @@ class Slider extends UI5Element {
 	}
 
 	_onelementclick(e) {
-		if(e.target.classList.contains("sapMWSItem")) {
+		if(e.target.classList.contains("sapMWSItem") && this.expanded) {
 			this.value = e.target.textContent;
+			this._selectElement(e.target);
 		}
 
-		if (!this.expanded) {
+		if (!this.expanded && e.target.classList.contains("sapMWSItem")) {
 			this.expanded = true;
 			this._invalidate();
 		}
-
-		this._selectElement(e.target);
 	}
 
 	expandSlider(){
@@ -256,17 +246,18 @@ class Slider extends UI5Element {
 		this.fireEvent("collapsed",{});
 	}
 
-	_selectElement(element){
-		if (this._items.indexOf(element.textContent) > -1){
+	_selectElement(element){	
+		if ( element && this._items.indexOf(element.textContent) > -1) {
 			this._currentElementIndex = this._items.indexOf(element.textContent);
 			this._selectElementByIndex(this._currentElementIndex);
+			this._scroller.scrollContainer.scrollTo(0,0);
 		}
 	}
 
 	_selectElementByIndex(index){
 		const sliderElement = this.shadowRoot.getElementById(`${this._id}--items-list`);
 		if ( index < this._items.length && index > - 1) {
-			let offsetSelectedElement = 12 - (index * 3);
+			let offsetSelectedElement = 4 * this._itemCellHeight - (index * this._itemCellHeight);
 			sliderElement.setAttribute("style",`top:${offsetSelectedElement}rem`);
 			this.value = this._items[index];
 			this._currentElementIndex = index;
@@ -281,6 +272,18 @@ class Slider extends UI5Element {
 	_onArrowUp(){
 		const nextElementIndex = this._currentElementIndex - 1;
 		this._selectElementByIndex(nextElementIndex);
+	}
+
+	//Arrow Up 38
+	//Arrow Down 40
+	_onkeydown(event){
+		if (event.keyCode === 38) {
+			this._onArrowUp();
+		}
+
+		if (event.keyCode === 40) {
+			this._onArrowDown();
+		}
 	}
 }
 

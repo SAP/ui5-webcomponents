@@ -1,0 +1,20 @@
+@import "../base/Slider-parameters.css";
+
+:root{
+	--_ui5_slider_item_background_color: #f7f7f7;
+	--_ui5_slider_item_text_color: #32363а;
+	--_ui_slider_item_hover_color: #f0f0f0;
+	--_ui5_slider_item_border_color: #fff;
+	--_ui5_slider_collapsed_item_text_color: var(--_ui5_slider_item_border_color);
+	--_ui5_slider_active_item_text_color: #29313a;
+	--_ui5_slider_item_text_size: .875rem;
+	--_ui5_slider_label_text_size: .75rem;
+	--_ui5_slider_label_text_color: #666;
+	--_ui5_slider_selected_item_background_color: #427cac;
+	--_ui5_slider_selected_item_hover_background_color: #244866;
+	--_ui5_slider_item_width: 4.5rem;
+	--_ui5_slider_item_height: 3rem;
+	--_ui5_slider_selection_frame_margin_top:  calc(var(--_ui5_slider_item_height) * 4);
+	--_ui5_slider_selection_frame_color: var(--_ui5_slider_selected_item_background_color);
+	--_ui_slider_item_border_radius: 0;
+}

@@ -5,31 +5,31 @@
 	vertical-align: middle;
 	text-align: center;
 	box-sizing: border-box;
-	cursor: pointer;
+	font-family: "72","72full",Arial,Helvetica,sans-serif;
 }
 .sapMWS .sapMWSLabel {
 	box-sizing: border-box;
-	height: 2rem;
-	line-height: 2rem;
-	width: 4.5rem;
-	text-align: center;
-	font-size: 20px;
-	color: gray;
-	text-align: center;
-	vertical-align: middle;
+    height: 2rem;
+    line-height: 2rem;
+    width: var(--_ui5_slider_item_width);
+    font-size: var(--_ui5_slider_label_text_size);
+    color: var(--_ui5_slider_label_text_color);
+    text-align: center;
+    vertical-align: middle;
 }
 
 .sapMWS .sapMWSArrows {
-	display: none;
+	visibility: hidden;
 	box-sizing: border-box;
+	height: 1.5rem;
 }
 
 .sapMWS.sapMWSExpanded .sapMWSArrows {
-	display: block;
+	visibility: visible;
 	box-sizing: border-box;
 	width: 100%;
 	border-color: transparent;
-	height: 1.5rem;
+	cursor: pointer;
 }
 
 .sapMWS .sapMWSInner {
@@ -41,7 +41,7 @@
 	-ms-user-select: none;
 	user-select: none;
 	list-style: none;
-	margin-top: 4.5rem;
+	margin-top: 0rem;
 }
 
 .sapMWS.sapMWSExpanded .sapMWSInner {
@@ -49,35 +49,31 @@
 }
 
 .sapMWS .sapMWSInner .sapMWSItem {
-	height: 3rem;
-	line-height: 3rem;
-	width: 4.5rem;
+	height: var(--_ui5_slider_item_height);
+	line-height: var(--_ui5_slider_item_height);
+	width: var(--_ui5_slider_item_width);
 	box-sizing: border-box;
-	background: darkblue;
-	border: 1px solid white;
-	font-size: 15px;
-	color: lightgray;
+	background: var(--_ui5_slider_selected_item_background_color);
+	border: 0.625px solid var(--_ui5_slider_item_border_color);
+	font-size: var(--_ui5_slider_item_text_size);
+	color: var(--_ui5_slider_collapsed_item_text_color);
 	text-align: center;
-	border-radius: 5px;
+	border-radius: var(--_ui_slider_item_border_radius);
 }
 .sapMWS .sapMWSInner .sapMWSItem:hover {
-	background: orange;
-	color: red;
+	background: var(--_ui5_slider_selected_item_hover_background_color);
 }
-.sapMWS .sapMWSInner .sapMWSItem:active {
-	background: yellow;
-	color: pink;
-}
+
 .sapMWS .sapMWSInner .sapMWSItem:focus {
 	outline: 1px dotted black;
 	outline-offset: -3px;
 }
 .sapMWS .sapMWSInner .sapMWSSelectionFrame {
-	width: 4.5rem;
-	height: 3rem;
+	width: var(--_ui5_slider_item_width);
+	height: var(--_ui5_slider_item_height);
 	position: absolute;
 	box-sizing: border-box;
-	display: none;
+	visibility: hidden;
 	z-index: 1;
 }
 .sapMWS .sapMWSInner .sapMWrapper > ul {
@@ -85,7 +81,8 @@
 	margin: 0;
 	padding: 0;
 	position: absolute;
-	top: 9rem;
+	top: var(--_ui5_slider_selection_frame_margin_top);
+	cursor: pointer;
 }
 
 .sapMWS.sapMWSExpanded .sapMWSInner .sapMWrapper > ul {
@@ -101,7 +98,6 @@
 	height: 100%;
 	cursor: default;
 	margin: 0;
-	margin-top: -1.5rem;
 }
 
 .sapMWS.sapMWSExpanded .sapMWSLabel {
@@ -114,20 +110,20 @@
 }
 
 .sapMWS.sapMWSExpanded .sapMWSInner .sapMWSItem {
-	background:lightgray;
-	color: black;
-	border: 1px solid white;
-	border-radius: 5px;
+	background: var(--_ui5_slider_item_background_color);
+	color: var(--_ui5_slider_item_text_color);
+	border: 1px solid var(--_ui5_slider_item_border_color);
+	border-radius: var(--_ui_slider_item_border_radius);
 	offset-position: auto;
 }
 
 .sapMWS.sapMWSExpanded .sapMWSInner .sapMWSItem:hover {
-	background: rgba(211,211,211,0.5);
+	background: var(--_ui_slider_item_hover_color);
 }
 
 .sapMWS.sapMWSExpanded .sapMWSInner .sapMWSItem:active {
-	background: darkblue;
-	color: lightgray;
+	background: var(--_ui5_slider_selected_item_background_color);
+	color: var(--_ui5_slider_item_background_color);
 }
 
 .sapMWS.sapMWSExpanded .sapMWSInner .sapMWSItem:focus {
@@ -136,17 +132,21 @@
 }
 
 .sapMWS.sapMWSExpanded .sapMWSInner .sapMWSSelectionFrame {
-	display: block;
-	outline: 0.125rem solid darkblue;
-	outline-offset: -0.313rem;
-	top: 47.9%;;
+	visibility: visible;
+	/* box-shadow: 0.125rem solid var(--_ui5_slider_selected_item_background_color); */
+	/* outline-offset: -0.2rem; */
+	-webkit-box-shadow: inset 0px 0px 0px 2px var(--_ui5_slider_selection_frame_color);
+	-moz-box-shadow: inset 0px 0px 0px 2px var(--_ui5_slider_selection_frame_color);
+	box-shadow: inset 0px 0px 0px 2px var(--_ui5_slider_selection_frame_color);
+	border-radius: var(--_ui_slider_item_border_radius);
+	margin-top: var(--_ui5_slider_selection_frame_margin_top);
 }
 
 .sapMWS.sapMWSExpanded .sapMWSInner .sapMWSSelectionFrame:hover + ul > li.sapMWSItem.sapMWSItemSelected {
-	background: darkblue;
+	background: var(--_ui5_slider_selected_item_background_color);
 }
 .sapMWS.sapMWSExpanded .sapMWSInner .sapMWSSelectionFrame:active + ul > li.sapMWSItem.sapMWSItemSelected {
-	background: darkblue;
+	background: var(--_ui5_slider_selected_item_background_color); 
 	color: lightgray;
 }
 .sapMWS:focus {

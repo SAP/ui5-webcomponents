@@ -131,6 +131,9 @@
 	--_ui5_rb_label_width: calc(100% - 2rem + 1px);
 	--_ui5_rb_rtl_focus_right: 0.375rem;
 
+	--_ui5_slider_item_width: 4rem;
+	--_ui5_slider_item_height: 2rem;
+
 	--_ui5_switch_height: var(--_ui5_switch_compact_height);
 	--_ui5_switch_width: var(--_ui5_switch_compact_width);
 	--_ui5_switch_handle_height: var(--_ui5_switch_handle_compact_height);

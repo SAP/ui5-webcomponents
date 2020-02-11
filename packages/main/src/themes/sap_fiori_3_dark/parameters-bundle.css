@@ -18,6 +18,7 @@
 @import "../base/Popover-parameters.css";
 @import "../base/RadioButton-parameters.css";
 @import "../base/Select-parameters.css";
+@import "./Slider-parameters.css";
 @import "../base/Switch-parameters.css";
 @import "./TabContainer-parameters.css";
 @import "../base/TextArea-parameters.css";

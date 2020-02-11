@@ -1,0 +1,10 @@
+:root{
+	--_ui5_slider_item_background_color: #f2f2f2;
+	--_ui5_slider_item_text_color: #fff;
+	--_ui5_slider_active_item_text_color: #29313a;
+	--_ui5_slider_item_text_size: .875rem;
+	--_ui5_slider_label_text_size: .75rem;
+	--_ui5_slider_label_text_color: #666;
+	--_ui5_slider_item_width: 4.5rem;
+	--_ui5_slider_item_height: 3rem;
+}

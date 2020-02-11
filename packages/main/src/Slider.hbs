@@ -5,10 +5,14 @@
 	label = "{{label}}"
 	expanded= "{{expanded}}"
 	@click = {{_onelementclick}}
-	class = "sapMWS{{isExpandedClass}}{{isDisabledClass}}">
+	@keydown={{_onkeydown}}
+	class = "sapMWS{{isExpandedClass}}{{isDisabledClass}}"
+	data-sap-focus-ref
+	tabindex="0"
+	>
 	<div id="{{this._id}}--label" class="sapMWSLabel"> {{label}}</div>
 	<div class="sapUiInvisibleText"></div>
-	<ui5-button class="sapMWSArrows" icon="arrow-top" @click={{_onArrowUp}}></ui5-button>
+	<ui5-button class="sapMWSArrows" icon="arrow-top" @click={{_onArrowUp}} tabindex="-1"></ui5-button>
 	<div id="{{this._id}}--inner" class="sapMWSInner">
 		<div id="{{this._id}}--selection-frame" class="sapMWSSelectionFrame">
 		</div>
@@ -28,5 +32,5 @@
 			</div>
 		{{/if}}
 	</div>
-	<ui5-button class="sapMWSArrows" icon="arrow-bottom" @click={{_onArrowDown}}></ui5-button>
+	<ui5-button class="sapMWSArrows" icon="arrow-bottom" @click={{_onArrowDown}}  tabindex="-1"></ui5-button>
 </div>
