@@ -1,5 +1,5 @@
-commit 5b84d85b3bd01e3cf2a1945c9c4af8d29ca943c9
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Mon Feb 10 18:29:01 2020 +0200
+commit 3a79c75115b9ba12f64dfa76f5ea3ebda5511d97
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Feb 11 08:59:39 2020 +0200
 
-    feat(ui5-carousel): initial implementation (#1159)
+    chore: change property visibility (#1200)
