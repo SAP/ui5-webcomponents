@@ -594,6 +594,15 @@ class UI5Element extends HTMLElement {
 		return getComputedStyle(this).getPropertyValue("--_ui5_content_density") === "compact";
 	}
 
+	updateStaticAreaItemContentDensity() {
+		const staticAreaItem = this.getStaticAreaItemDomRef().host;
+
+		if (staticAreaItem) {
+			staticAreaItem.classList.toggle("sapUiSizeCompact", this.isCompact);
+			staticAreaItem.classList.toggle("ui5-content-density-compact", this.isCompact);
+		}
+	}
+
 	/**
 	 * Used to duck-type UI5 elements without using instanceof
 	 * @returns {boolean}
