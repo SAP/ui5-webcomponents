@@ -645,7 +645,7 @@ class MultiComboBox extends UI5Element {
 		return this.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
 	}
 
-	static async define(...params) {
+	static async onDefine() {
 		await Promise.all([
 			Tokenizer.define(),
 			Token.define(),
@@ -656,8 +656,6 @@ class MultiComboBox extends UI5Element {
 			ToggleButton,
 			fetchI18nBundle("@ui5/webcomponents"),
 		]);
-
-		super.define(...params);
 	}
 }
 

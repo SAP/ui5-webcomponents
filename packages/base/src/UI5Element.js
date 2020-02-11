@@ -800,6 +800,11 @@ class UI5Element extends HTMLElement {
 	 */
 	static async define() {
 		await boot();
+
+		if (this.onDefine) {
+			await this.onDefine();
+		}
+
 		const tag = this.getMetadata().getTag();
 
 		const definedLocally = DefinitionsSet.has(tag);

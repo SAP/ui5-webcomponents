@@ -80,10 +80,8 @@ class ResponsivePopover extends Popover {
 		return ResponsivePopoverTemplate;
 	}
 
-	static async define(...params) {
+	static async onDefine() {
 		await Dialog.define();
-
-		super.define(...params);
 	}
 
 	/**

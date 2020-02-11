@@ -665,12 +665,10 @@ class DayPicker extends UI5Element {
 		};
 	}
 
-	static async define(...params) {
+	static async onDefine() {
 		await Promise.all([
 			fetchCldr(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
 		]);
-
-		super.define(...params);
 	}
 }
 
