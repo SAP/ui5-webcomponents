@@ -1,5 +1,5 @@
-commit c4117745a4dc97ceac01a4effeb7df732c8b09fa
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Feb 11 16:00:10 2020 +0200
+commit 6bf40a2e238bdb3c7662853ee72eb6d717c5dc09
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Tue Feb 11 17:11:05 2020 +0200
 
-    fix: apply size "compact" for StaticArea items (#1204)
+    fix(framework): openUI5 cldr support re-added (#1207)
