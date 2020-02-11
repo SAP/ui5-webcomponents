@@ -1,5 +1,5 @@
-commit 2d21ae0b58ee936518e3a02127522d8b4f34fc4e
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Tue Feb 11 13:46:36 2020 +0200
+commit b1459ce359411291d96e594644fe68cabb6796f9
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Tue Feb 11 14:08:21 2020 +0200
 
-    fix(ui5-calendar-header): fix width in ie (#1205)
+    chore(framework): Allow a workaround to skip theme-base parameters (#1175)
