@@ -23,7 +23,14 @@
 	>
 		{{#each items}}
 			{{#if this.selected}}
-				<ui5-token ?readonly="{{../readonly}}" class="ui5-multi-combobox-token" data-ui5-id="{{this._id}}" >{{this.textContent}}</ui5-token>
+				<ui5-token
+				?readonly="{{../readonly}}"
+				class="ui5-multi-combobox-token"
+				data-ui5-id="{{this._id}}"
+				part="token-{{@index}}"
+				>
+					{{this.textContent}}
+				</ui5-token>
 			{{/if}}
 		{{/each}}
 	</ui5-tokenizer>
