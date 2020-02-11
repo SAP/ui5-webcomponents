@@ -111,15 +111,18 @@ const metadata = {
 		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.TabContainer.prototype */ {
+
 		/**
-		 * Fired when an item is selected.
+		 * Fired when a tab is selected.
 		 *
 		 * @event
-		 * @param {HTMLElement} item The selected <code>item</code>.
+		 * @param {HTMLElement} tab The selected <code>tab</code>.
+		 * @param {Number} tabIndex The selected <code>tab</code> index.
 		 * @public
 		 */
-		itemSelect: {
-			item: { type: HTMLElement },
+		tabSelect: {
+			tab: { type: HTMLElement },
+			tabIndex: { type: Number },
 		},
 	},
 };
@@ -295,7 +298,7 @@ class TabContainer extends UI5Element {
 	_onItemSelect(target) {
 		const selectedIndex = findIndex(this.items, item => item._id === target.id);
 		const selectedTabIndex = findIndex(this._getTabs(), item => item._id === target.id);
-		const currentSelectedTab = this.items[selectedIndex];
+		const selectedTab = this.items[selectedIndex];
 
 		// update selected items
 		this.items.forEach((item, index) => {
@@ -311,7 +314,7 @@ class TabContainer extends UI5Element {
 
 		// update collapsed state
 		if (!this.fixed) {
-			if (currentSelectedTab === this._selectedTab) {
+			if (selectedTab === this._selectedTab) {
 				this.collapsed = !this.collapsed;
 			} else {
 				this.collapsed = false;
@@ -319,9 +322,10 @@ class TabContainer extends UI5Element {
 		}
 
 		// select the tab
-		this._selectedTab = currentSelectedTab;
-		this.fireEvent("itemSelect", {
-			item: currentSelectedTab,
+		this._selectedTab = selectedTab;
+		this.fireEvent("tabSelect", {
+			tab: selectedTab,
+			tabIndex: selectedTabIndex,
 		});
 	}
 
