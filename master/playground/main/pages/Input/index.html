@@ -25,11 +25,23 @@
 	<ui5-label id="myLabelSubmit">Event [submit] :: N/A</ui5-label><br/>
 	<ui5-label id="myLabelLiveChange">Event [input] :: N/A</ui5-label><br/>
 
-	<ui5-input id="myInput"
-		style="width: 500px"
-		show-suggestions
-		placeholder="Search for a country ...">
-	</ui5-input>
+	<div>
+		<h3>Input in Cozy</h3>
+		<ui5-input id="myInput"
+			style="width: 500px"
+			show-suggestions
+			placeholder="Search for a country ...">
+		</ui5-input>
+	</div>
+
+	<div class="sapUiSizeCompact">
+		<h3>Input in Compact</h3>
+		<ui5-input id="inputCompact"
+			style="width: 500px"
+			show-suggestions
+			placeholder="Search for a country ...">
+		</ui5-input>
+	</div>
 
 	<h3> Input with suggestions</h3>
 	<ui5-input id="myInput2" show-suggestions style="width: 100%">
@@ -147,8 +159,9 @@
 		var labelLiveChange = document.getElementById('myLabelLiveChange');
 		var labelSubmit = document.getElementById('myLabelSubmit');
 
-		input.addEventListener("ui5-input", function (event) {
-			var value = event.target.value;
+		var suggest = function (event) {
+			var input = event.target;
+			var value = input.value;
 			var suggestionItems = [];
 
 			if (value) {
@@ -169,7 +182,10 @@
 			});
 
 			labelLiveChange.innerHTML = "Event [input] :: " + value;
-		});
+		};
+
+		input.addEventListener("ui5-input", suggest);
+		inputCompact.addEventListener("ui5-input", suggest);
 
 		input.addEventListener("ui5-suggestionItemSelect", function (event) {
 			var item = event.detail.item;

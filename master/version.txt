@@ -1,5 +1,5 @@
-commit 55279909fc1d0c59d3980837e296c9272f5b6eb3
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Tue Feb 11 14:26:37 2020 +0200
+commit c4117745a4dc97ceac01a4effeb7df732c8b09fa
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Feb 11 16:00:10 2020 +0200
 
-    feat(framework): OpenUI5 integration (#1138)
+    fix: apply size "compact" for StaticArea items (#1204)

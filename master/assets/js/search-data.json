@@ -128,7 +128,7 @@
   "19": {
     "id": "19",
     "title": "Combo Box",
-    "content": "&lt;!DOCTYPE html&gt; ComboBox test page Lazy Loading Change event testing Changed value: Change call count: 0 Contains filter StartsWith filter",
+    "content": "&lt;!DOCTYPE html&gt; ComboBox test page Lazy Loading Change event testing Changed value: Change call count: 0 Contains filter StartsWith filter ComboBox in Compact",
     "url": "https://sap.github.io/ui5-webcomponents/master/playground/main/pages/ComboBox/",
     "relUrl": "/playground/main/pages/ComboBox/"
   },
@@ -163,7 +163,7 @@
   "24": {
     "id": "24",
     "title": "Date Picker",
-    "content": "&lt;!DOCTYPE html&gt; DatePicker test page placeholder + title + events change: N/A input: N/A format-pattern - &#39;short&#39; format-pattern - &#39;long&#39; format-pattern - &#39;QQQ yyyy, MMM dd&#39; format-pattern - &#39;EEE, M/d/yyyy&#39; &lt;ui5-datepicker id=&#39;dp9&#39;format-pattern=&#39;EEE, M/d/yyyy&#39;&gt;&lt;/ui5-datepicker&gt; Try the value - &#39;today&#39; disabled readonly islamic calendar type buddhist calendar type japanese calendar type explicitly set empty placeholder Date picker with min and max date 9/1/2019 - 11/1/2019 Date picker with only min date 1/1/2000 Date picker with only max date date 1/1/2100 1 months range 2 months range 3 months range 1 year range",
+    "content": "&lt;!DOCTYPE html&gt; DatePicker test page placeholder + title + events change: N/A input: N/A format-pattern - &#39;short&#39; format-pattern - &#39;long&#39; format-pattern - &#39;QQQ yyyy, MMM dd&#39; format-pattern - &#39;EEE, M/d/yyyy&#39; &lt;ui5-datepicker id=&#39;dp9&#39;format-pattern=&#39;EEE, M/d/yyyy&#39;&gt;&lt;/ui5-datepicker&gt; Try the value - &#39;today&#39; disabled readonly islamic calendar type buddhist calendar type japanese calendar type explicitly set empty placeholder Date picker with min and max date 9/1/2019 - 11/1/2019 Date picker with only min date 1/1/2000 Date picker with only max date date 1/1/2100 1 months range 2 months range 3 months range 1 year range DatePicker in Compact",
     "url": "https://sap.github.io/ui5-webcomponents/master/playground/main/pages/DatePicker/",
     "relUrl": "/playground/main/pages/DatePicker/"
   },
@@ -268,7 +268,7 @@
   "39": {
     "id": "39",
     "title": "Input",
-    "content": "&lt;!DOCTYPE html&gt; ui5-input Input with suggestions: type &#39;a&#39; Event [suggestionItemSelect] :: N/A Event [change] :: N/A Event [submit] :: N/A Event [input] :: N/A Input with suggestions Cozy Compact Condensed Cozy Compact Condensed Input disabled Input maxLength = 5 Input valueState Success Test &#39;change&#39; event &#39;change&#39; event result Test &#39;input&#39; event &#39;input&#39; test result Input test change Input test change result Input readonly Input required Input type &#39;Number&#39; Input type &#39;Password&#39; Input type &#39;Email&#39; Input type &#39;Tel&#39; Input type &#39;URL&#39; Inputs alignment Press Cozy Compact Condensed Cozy Compact Condensed Input with multiple icons",
+    "content": "&lt;!DOCTYPE html&gt; ui5-input Input with suggestions: type &#39;a&#39; Event [suggestionItemSelect] :: N/A Event [change] :: N/A Event [submit] :: N/A Event [input] :: N/A Input in Cozy Input in Compact Input with suggestions Cozy Compact Condensed Cozy Compact Condensed Input disabled Input maxLength = 5 Input valueState Success Test &#39;change&#39; event &#39;change&#39; event result Test &#39;input&#39; event &#39;input&#39; test result Input test change Input test change result Input readonly Input required Input type &#39;Number&#39; Input type &#39;Password&#39; Input type &#39;Email&#39; Input type &#39;Tel&#39; Input type &#39;URL&#39; Inputs alignment Press Cozy Compact Condensed Cozy Compact Condensed Input with multiple icons",
     "url": "https://sap.github.io/ui5-webcomponents/master/playground/main/pages/Input/",
     "relUrl": "/playground/main/pages/Input/"
   },
@@ -387,7 +387,7 @@
   "56": {
     "id": "56",
     "title": "Multi Combo Box",
-    "content": "&lt;!DOCTYPE html&gt; MultiComboBox test page Predefined value Cosy Compact Condensed Longest word in the world Validating input and predefined value Cosy Compact Condensed Longest word in the world Validating input and placeholder Cosy Compact Condensed Longest word in the world disabled and placeholder Cosy Compact Condensed Longest word in the world value state success Cosy Compact Condensed Longest word in the world value state warning Cosy Compact Condensed Longest word in the world value state error Cosy Compact Condensed Longest word in the world readonly Cosy Compact Condensed Longest word in the world MultiComboBox with items Cosy Compact Condensed Longest word in the world Longest word in the world 1 Longest word in the world 2 MultiComboBox with validation Cosy Compact Condensed Longest word in the world MultiComboBox n more &lt;/br&gt; Cosy Compact Condensed Longest word in the world MultiComboBox with validation Cosy Compact Condensed Longest word in the world Fired event: Parameters Count: Event call count: Reset fields",
+    "content": "&lt;!DOCTYPE html&gt; MultiComboBox test page Predefined value Cosy Compact Condensed Longest word in the world Validating input and predefined value Cosy Compact Condensed Longest word in the world Validating input and placeholder Cosy Compact Condensed Longest word in the world disabled and placeholder Cosy Compact Condensed Longest word in the world value state success Cosy Compact Condensed Longest word in the world value state warning Cosy Compact Condensed Longest word in the world value state error Cosy Compact Condensed Longest word in the world readonly Cosy Compact Condensed Longest word in the world MultiComboBox with items Cosy Compact Condensed Longest word in the world Longest word in the world 1 Longest word in the world 2 MultiComboBox with validation Cosy Compact Condensed Longest word in the world MultiComboBox n more &lt;/br&gt; Cosy Compact Condensed Longest word in the world MultiComboBox with validation Cosy Compact Condensed Longest word in the world Fired event: Parameters Count: Event call count: Reset fields MultiComboBox in Compact Cosy Compact Condensed Longest word in the world",
     "url": "https://sap.github.io/ui5-webcomponents/master/playground/main/pages/MultiComboBox/",
     "relUrl": "/playground/main/pages/MultiComboBox/"
   },
@@ -520,7 +520,7 @@
   "75": {
     "id": "75",
     "title": "Select",
-    "content": "&lt;!DOCTYPE html&gt; ui5-select turn lights Add new Items Restore Items click Content size Cozy Compact Condensed Error Select Cozy Compact Condensed Warning Select Disabled Select Input with suggestions Selection not cycling Opt1 Opt2 Opt3 Opt1 Opt2 Opt3 Change event counter holder &lt;/body&gt;",
+    "content": "&lt;!DOCTYPE html&gt; ui5-select turn lights Add new Items Restore Items click Content size Cozy Compact Condensed Error Select Cozy Compact Condensed Warning Select Disabled Select Input with suggestions Selection not cycling Opt1 Opt2 Opt3 Opt1 Opt2 Opt3 Change event counter holder Select in Compact Cozy Compact Condensed &lt;/body&gt;",
     "url": "https://sap.github.io/ui5-webcomponents/master/playground/main/pages/Select/",
     "relUrl": "/playground/main/pages/Select/"
   },
@@ -534,7 +534,7 @@
   "77": {
     "id": "77",
     "title": "Shell Bar",
-    "content": "&lt;!DOCTYPE html&gt; Shell Bar Application 1 Application 2 Application 3 Application 4 Application 5 John Doe App Finder Settings Edit Home Page Help Sign out Application 1 Application 2 Application 3 Application 4 Application 5 Custom Popover Item 1 Custom Popover Item 2",
+    "content": "&lt;!DOCTYPE html&gt; Shell Bar Application 1 Application 2 Application 3 Application 4 Application 5 ShellBar in Compact Application 1 Application 2 Application 3 Application 4 Application 5 John Doe App Finder Settings Edit Home Page Help Sign out Application 1 Application 2 Application 3 Application 4 Application 5 Custom Popover Item 1 Custom Popover Item 2",
     "url": "https://sap.github.io/ui5-webcomponents/master/playground/fiori/pages/ShellBar/",
     "relUrl": "/playground/fiori/pages/ShellBar/"
   },
@@ -569,7 +569,7 @@
   "82": {
     "id": "82",
     "title": "Tab Container",
-    "content": "&lt;!DOCTYPE html&gt; Tab Container ui5-tabcontainer Tab Container Icon only Button 11 Button 12 Button 3 Button 3 Button 2 Button 2 Button 3 Button 3 Button 3 Button 3 Button 3 Button 3 Button 2 Button 3 Text only Button 11 Button 12 Button 2 Button 3 Button 4 Button 4 Button 4 Button 4 Button 4 Button 4 Button 4 Button 4 Button 4 Toggle style Source Method Cell 1 Cell 2 Cell 1 Cell 2 Cell 1 Cell 2 Cell 1 Cell 2 Cell 1 Cell 2 Cell 1 Cell 2 Cell 1 Cell 2 Cell 1 Cell 2 Cell 1 Cell 2 Cell 1 Cell 2 Icon and Text Content with set height: 300px Button 11 Button 12 Button 2 Button 3 Text and additional text Button 11 Button 12 Button 2 Button 3 Tabs with input elements ui5-input browser input Result",
+    "content": "&lt;!DOCTYPE html&gt; Tab Container ui5-tabcontainer Tab Container Icon only Button 11 Button 12 Button 3 Button 3 Button 2 Button 2 Button 3 Button 3 Button 3 Button 3 Button 3 Button 3 Button 2 Button 3 Text only Button 11 Button 12 Button 2 Button 3 Button 4 Button 4 Button 4 Button 4 Button 4 Button 4 Button 4 Button 4 Button 4 Toggle style Source Method Cell 1 Cell 2 Cell 1 Cell 2 Cell 1 Cell 2 Cell 1 Cell 2 Cell 1 Cell 2 Cell 1 Cell 2 Cell 1 Cell 2 Cell 1 Cell 2 Cell 1 Cell 2 Cell 1 Cell 2 Icon and Text Content with set height: 300px Button 11 Button 12 Button 2 Button 3 Text and additional text Button 11 Button 12 Button 2 Button 3 Tabs with input elements ui5-input browser input Result TabContainer in Compact Button 11 Button 12 Button 2 Button 3 Button 4 Button 4 Button 4 Button 4 Button 4 Button 4 Button 4 Button 4 Button 4",
     "url": "https://sap.github.io/ui5-webcomponents/master/playground/main/pages/TabContainer/",
     "relUrl": "/playground/main/pages/TabContainer/"
   },
