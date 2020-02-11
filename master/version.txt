@@ -1,5 +1,11 @@
-commit 3a79c75115b9ba12f64dfa76f5ea3ebda5511d97
+commit d8d4fdb295f14218db6db297d08781c889836df3
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Feb 11 08:59:39 2020 +0200
+Date:   Tue Feb 11 11:09:18 2020 +0200
 
-    chore: change property visibility (#1200)
+    refactor(ui5-tabcontainer): provide tabIndex in tabSelect even
+    
+    The tab index is provided as event details and don't have to be calculated by users, that otherwise have to consider the tab separators, which can be a little cumbersome.
+    
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/1196
+    
+    BREAKING CHANGE: `itemSelect` is renamed to `tabSelect` and the `item` event param is renamed to `tab`.

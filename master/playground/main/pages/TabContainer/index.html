@@ -281,11 +281,13 @@
 	<section class="result">
 		<h2>Result</h2>
 		<span id="result"></span>
+		<span id="resultIdx"></span>
 	</section>
 
 	<script>
-		document.getElementById("tabContainer1").addEventListener("ui5-itemSelect", function (event) {
-			document.getElementById("result").innerHTML = event.detail.item.text;
+		document.getElementById("tabContainer1").addEventListener("ui5-tabSelect", function (event) {
+			result.innerHTML = event.detail.tab.text;
+			resultIdx.innerHTML = event.detail.tabIndex;
 		});
 	</script>
 </body>
