@@ -136,6 +136,16 @@ const metadata = {
 		_iconSettings: {
 			type: Object,
 		},
+
+		/**
+		 * Defines the tabIndex of the component.
+		 * @private
+		 */
+		_tabIndex: {
+			type: String,
+			defaultValue: "0",
+			noAttribute: true,
+		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.Button.prototype */ {
 		/**
@@ -314,7 +324,13 @@ class Button extends UI5Element {
 	}
 
 	get tabIndexValue() {
-		return this.nonFocusable ? "-1" : "0";
+		const tabindex = this.getAttribute("tabindex");
+
+		if (tabindex) {
+			return tabindex;
+		}
+
+		return this.nonFocusable ? "-1" : this._tabIndex;
 	}
 
 	static async onDefine() {

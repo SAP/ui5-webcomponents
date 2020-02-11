@@ -6,7 +6,7 @@ describe('Date Picker Field Glass modifications', () => {
         browser.url('http://localhost:8080/test-resources/pages/DatePicker_fg.html');
 
         const staticAreaItemClassName = browser.getStaticAreaItemClassName("#ui5-datepicker--startDate");
-        let popoverContent = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover")
+        let popoverContent = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover")
         assert.ok(!popoverContent.getProperty("opened"), "popover is initially hidden");
 
         const innerInput = browser.$("#ui5-datepicker--startDate").shadow$("ui5-input").shadow$("input");

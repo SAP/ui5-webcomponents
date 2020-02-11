@@ -4,6 +4,7 @@
   "description": "UI5 Web Components: webcomponents.base",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
+  "type": "module",
   "module": "index.js",
   "keywords": [
     "openui5",
@@ -20,7 +21,8 @@
     "lint": "nps lint",
     "start": "nps start",
     "build": "nps build",
-    "test": "nps test"
+    "test": "nps test",
+    "prepublishOnly": "npm run clean && npm run build"
   },
   "dependencies": {
     "@ui5/webcomponents-utils": "0.18.0",

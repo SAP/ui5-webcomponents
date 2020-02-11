@@ -6,16 +6,15 @@ import {
 } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-down.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
-import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
+import { isIE, isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import MultiComboBoxTemplate from "./generated/templates/MultiComboBoxTemplate.lit.js";
-import MultiComboBoxPopoverTemplate from "./generated/templates/MultiComboBoxPopoverTemplate.lit.js";
 import Tokenizer from "./Tokenizer.js";
 import Token from "./Token.js";
 import Icon from "./Icon.js";
-import Popover from "./Popover.js";
+import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
 import StandardListItem from "./StandardListItem.js";
+import ToggleButton from "./ToggleButton.js";
 import {
 	VALUE_STATE_SUCCESS,
 	VALUE_STATE_ERROR,
@@ -23,10 +22,16 @@ import {
 	TOKENIZER_ARIA_CONTAIN_TOKEN,
 	TOKENIZER_ARIA_CONTAIN_ONE_TOKEN,
 	TOKENIZER_ARIA_CONTAIN_SEVERAL_TOKENS,
+	INPUT_SUGGESTIONS_TITLE,
 } from "./generated/i18n/i18n-defaults.js";
+
+// Templates
+import MultiComboBoxTemplate from "./generated/templates/MultiComboBoxTemplate.lit.js";
+import MultiComboBoxPopoverTemplate from "./generated/templates/MultiComboBoxPopoverTemplate.lit.js";
 
 // Styles
 import styles from "./generated/themes/MultiComboBox.css.js";
+import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 
 /**
  * @public
@@ -294,6 +299,10 @@ class MultiComboBox extends UI5Element {
 		return styles;
 	}
 
+	static get staticAreaStyles() {
+		return ResponsivePopoverCommonCss;
+	}
+
 	constructor() {
 		super();
 
@@ -301,6 +310,7 @@ class MultiComboBox extends UI5Element {
 		this._inputLastValue = "";
 		this._deleting = false;
 		this._validationTimeout = null;
+		this._selectedItemsPopoverOpened = false;
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
@@ -309,13 +319,28 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_showMorePopover() {
-		this._togglePopover(true);
+		if (this.readonly) {
+			return;
+		}
+
+		this._showMorePressed = true;
+		this._selectedItemsPopoverOpened = true;
+		this._toggleRespPopover(true);
 	}
 
 	_showAllItemsPopover() {
-		this._togglePopover(false);
+		this._selectedItemsPopoverOpened = false;
+		this._toggleRespPopover(false);
 
 		this._inputDom.focus();
+	}
+
+	_closeMorePopover() {
+		this._getRespPopover(true).close();
+	}
+
+	_closeAllItemsPopover() {
+		this._getRespPopover().close();
 	}
 
 	get _inputDom() {
@@ -362,10 +387,12 @@ class MultiComboBox extends UI5Element {
 		this.value = input.value;
 		this._filteredItems = filteredItems;
 
-		if (filteredItems.length === 0) {
-			this._getPopover().close();
-		} else {
-			this._getPopover().openBy(this);
+		if (!isPhone()) {
+			if (filteredItems.length === 0) {
+				this._getRespPopover().close();
+			} else {
+				this._getRespPopover().open(this);
+			}
 		}
 
 		this.fireEvent("input");
@@ -402,12 +429,12 @@ class MultiComboBox extends UI5Element {
 	_onkeydown(event) {
 		if (isShow(event) && !this.readonly && !this.disabled) {
 			event.preventDefault();
-			this._togglePopover();
+			this._toggleRespPopover();
 		}
 
-		if (isDown(event) && this._getPopover()._isOpen && this.items.length) {
+		if (isDown(event) && this._getRespPopover().opened && this.items.length) {
 			event.preventDefault();
-			const list = this.shadowRoot.querySelector(".ui5-multi-combobox-all-items-list");
+			const list = this.getStaticAreaItemDomRef().querySelector(".ui5-multi-combobox-all-items-list");
 			list._itemNavigation.current = 0;
 			list.items[0].focus();
 		}
@@ -439,6 +466,10 @@ class MultiComboBox extends UI5Element {
 		this.open = this._iconPressed;
 
 		this.fireEvent("openChange");
+
+		if (!this._iconPressed) {
+			this._afterClosePopover();
+		}
 	}
 
 	_getSelectedItems() {
@@ -457,19 +488,19 @@ class MultiComboBox extends UI5Element {
 		this.fireEvent("selectionChange", { items: this._getSelectedItems() });
 
 		if (!event.detail.selectionComponentPressed && !isSpace(event.detail)) {
-			this._getPopover().close();
+			this._getRespPopover().close();
 			this.value = "";
 			this.fireEvent("input");
 		}
 	}
 
-	_getPopover(isMorePopover) {
-		return this.getStaticAreaItemDomRef().querySelector(`.ui5-multi-combobox-${isMorePopover ? "selected" : "all"}-items-popover`);
+	_getRespPopover(isMorePopover) {
+		return this.getStaticAreaItemDomRef().querySelector(`.ui5-multi-combobox-${isMorePopover ? "selected" : "all"}-items-responsive-popover`);
 	}
 
-	_togglePopover(isMorePopover) {
-		const popover = this._getPopover(isMorePopover);
-		const otherPopover = this._getPopover(!isMorePopover);
+	_toggleRespPopover(isMorePopover) {
+		const popover = this._getRespPopover(isMorePopover);
+		const otherPopover = this._getRespPopover(!isMorePopover);
 
 		if (popover && popover.opened) {
 			return popover.close();
@@ -477,7 +508,7 @@ class MultiComboBox extends UI5Element {
 
 		otherPopover && otherPopover.close();
 
-		popover && popover.openBy(this);
+		popover && popover.open(this);
 	}
 
 	_focusin() {
@@ -488,13 +519,38 @@ class MultiComboBox extends UI5Element {
 		this.focused = false;
 	}
 
+	_click(event) {
+		if (isPhone() && !this.readonly && !this._showMorePressed) {
+			this._getRespPopover().open(this);
+		}
+
+		this._showMorePressed = false;
+	}
+
+	_afterClosePopover() {
+		// close device's keyboard and prevent further typing
+		if (isPhone()) {
+			this.blur();
+		}
+	}
+
+	_toggleButtonPress(event) {
+		if (this._selectedItemsPopoverOpened) {
+			event.target.pressed = true;
+			this._showAllItemsPopover();
+		} else {
+			event.target.pressed = false;
+			this._showMorePopover();
+		}
+	}
+
 	onBeforeRendering() {
 		this._inputLastValue = this.value;
 
 		const hasSelectedItem = this.items.some(item => item.selected);
 
-		if (!hasSelectedItem) {
-			const morePopover = this.shadowRoot.querySelector(`.ui5-multi-combobox-selected-items-popover`);
+		if (this.getDomRef() && !hasSelectedItem) {
+			const morePopover = this._getRespPopover(true);
 
 			morePopover && morePopover.close();
 		}
@@ -510,10 +566,10 @@ class MultiComboBox extends UI5Element {
 	}
 
 	onAfterRendering() {
-		if (this.open) {
-			this._getPopover().openBy(this);
+		if (this.open && !this._getRespPopover().opened) {
+			this._getRespPopover().open(this);
 			// Set initial focus to the native input
-			this.getDomRef().querySelector("#ui5-multi-combobox-input").focus();
+			this._innerInput.focus();
 		}
 	}
 
@@ -573,14 +629,31 @@ class MultiComboBox extends UI5Element {
 		return this.valueStateTextMappings[this.valueState];
 	}
 
+	get _innerInput() {
+		if (isPhone()) {
+			if (this._getRespPopover().opened) {
+				return this._getRespPopover().querySelector("input");
+			}
+
+			return this._getRespPopover(true).querySelector("input");
+		}
+
+		return this.getDomRef().querySelector("#ui5-multi-combobox-input");
+	}
+
+	get _headerTitleText() {
+		return this.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
+	}
+
 	static async onDefine() {
 		await Promise.all([
 			Tokenizer.define(),
 			Token.define(),
 			Icon.define(),
-			Popover.define(),
+			ResponsivePopover.define(),
 			List.define(),
 			StandardListItem.define(),
+			ToggleButton,
 			fetchI18nBundle("@ui5/webcomponents"),
 		]);
 	}

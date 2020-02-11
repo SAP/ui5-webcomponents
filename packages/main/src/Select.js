@@ -12,8 +12,12 @@ import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-down.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import {
+	INPUT_SUGGESTIONS_TITLE,
+} from "./generated/i18n/i18n-defaults.js";
 import Label from "./Label.js";
-import Popover from "./Popover.js";
+import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
 import StandardListItem from "./StandardListItem.js";
 import Icon from "./Icon.js";
@@ -24,6 +28,7 @@ import SelectPopoverTemplate from "./generated/templates/SelectPopoverTemplate.l
 
 // Styles
 import selectCss from "./generated/themes/Select.css.js";
+import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 
 /**
  * @public
@@ -122,10 +127,10 @@ const metadata = {
 	},
 	events: /** @lends sap.ui.webcomponents.main.Select.prototype */ {
 		/**
-		 * Fired when the selected item changes.
+		 * Fired when the selected option changes.
 		 *
 		 * @event
-		 * @param {HTMLElement} item the selected item.
+		 * @param {HTMLElement} selectedOption the selected option.
 		 * @public
 		 */
 		change: {
@@ -183,6 +188,10 @@ class Select extends UI5Element {
 		return selectCss;
 	}
 
+	static get staticAreaStyles() {
+		return ResponsivePopoverCommonCss;
+	}
+
 	constructor() {
 		super();
 
@@ -191,6 +200,7 @@ class Select extends UI5Element {
 		this._selectedIndexBeforeOpen = -1;
 		this._escapePressed = false;
 		this._lastSelectedOption = null;
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
@@ -207,7 +217,11 @@ class Select extends UI5Element {
 	}
 
 	get _isPickerOpen() {
-		return this.popover && this.popover.opened;
+		return this._respPopover && this._respPopover.opened;
+	}
+
+	get _respPopover() {
+		return this.getStaticAreaItemDomRef().querySelector("ui5-responsive-popover");
 	}
 
 	/**
@@ -220,17 +234,15 @@ class Select extends UI5Element {
 		return this.options.find(option => option.selected);
 	}
 
-	_togglePopover() {
-		this.popover = this.getStaticAreaItemDomRef().querySelector("ui5-popover");
-
+	_toggleRespPopover() {
 		if (this.disabled) {
 			return;
 		}
 
 		if (this._isPickerOpen) {
-			this.popover.close();
+			this._respPopover.close();
 		} else {
-			this.popover.openBy(this);
+			this._respPopover.open(this);
 		}
 	}
 
@@ -286,7 +298,7 @@ class Select extends UI5Element {
 
 	_onkeydown(event) {
 		if (isShow(event)) {
-			this._togglePopover();
+			this._toggleRespPopover();
 		}
 
 		if (!this._isPickerOpen) {
@@ -296,7 +308,7 @@ class Select extends UI5Element {
 
 	_onkeyup(event) {
 		if (isSpace(event) && !this._isPickerOpen) {
-			this._togglePopover();
+			this._toggleRespPopover();
 		}
 	}
 
@@ -314,7 +326,7 @@ class Select extends UI5Element {
 		const selectedItemIndex = this._getSelectedItemIndex(event.detail.item);
 
 		this._select(selectedItemIndex);
-		this._togglePopover();
+		this._toggleRespPopover();
 	}
 
 	_applyFocusAfterOpen() {
@@ -324,7 +336,7 @@ class Select extends UI5Element {
 			return;
 		}
 
-		const li = this.popover.querySelector(`#${this._currentlySelectedOption._id}-li`);
+		const li = this._respPopover.querySelector(`#${this._currentlySelectedOption._id}-li`);
 
 		li.parentElement._itemNavigation.currentIndex = this._selectedIndex;
 		li && li.focus();
@@ -394,6 +406,10 @@ class Select extends UI5Element {
 		this._iconPressed = !this._iconPressed;
 	}
 
+	get _headerTitleText() {
+		return this.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
+	}
+
 	get _currentSelectedItem() {
 		return this.shadowRoot.querySelector(`#${this.options[this._selectedIndex]._id}-li`);
 	}
@@ -413,7 +429,7 @@ class Select extends UI5Element {
 	static async onDefine() {
 		await Promise.all([
 			Label.define(),
-			Popover.define(),
+			ResponsivePopover.define(),
 			List.define(),
 			StandardListItem.define(),
 			Icon.define(),

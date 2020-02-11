@@ -107,6 +107,19 @@ const metadata = {
 	},
 	events: /** @lends sap.ui.webcomponents.main.Table.prototype */ {
 		/**
+		 * Fired when a row is clicked.
+		 *
+		 * @event
+		 * @param {HTMLElement} row the clicked row.
+		 * @public
+		 */
+		rowClick: {
+			detail: {
+				row: { type: HTMLElement },
+			},
+		},
+
+		/**
 		 * Fired when the <code>ui5-table-column</code> is shown as a pop-in instead of hiding it.
 		 *
 		 * @event
@@ -185,6 +198,7 @@ class Table extends UI5Element {
 		}.bind(this);
 
 		this.fnOnRowFocused = this.onRowFocused.bind(this);
+		this.fnOnRowClick = this.onRowClick.bind(this);
 
 		this._handleResize = this.popinContent.bind(this);
 	}
@@ -196,6 +210,9 @@ class Table extends UI5Element {
 			row._columnsInfo = columnSettings;
 			row.removeEventListener("ui5-_focused", this.fnOnRowFocused);
 			row.addEventListener("ui5-_focused", this.fnOnRowFocused);
+
+			row.removeEventListener("ui5-_click", this.fnOnRowClick);
+			row.addEventListener("ui5-_click", this.fnOnRowClick);
 		});
 
 		this.visibleColumns = this.columns.filter((column, index) => {
@@ -217,6 +234,10 @@ class Table extends UI5Element {
 
 	onRowFocused(event) {
 		this._itemNavigation.update(event.target);
+	}
+
+	onRowClick(event) {
+		this.fireEvent("rowClick", { row: event.target });
 	}
 
 	_onColumnHeaderClick(event) {
