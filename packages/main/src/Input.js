@@ -396,6 +396,11 @@ class Input extends UI5Element {
 	onAfterRendering() {
 		if (!this.firstRendering && !isPhone() && this.Suggestions) {
 			const shouldOpenSuggestions = this.shouldOpenSuggestions();
+			const staticAreaItem = this.getStaticAreaItemDomRef().host;
+
+			if (staticAreaItem) {
+				staticAreaItem.classList.toggle("sapUiSizeCompact", this.isCompact);
+			}
 
 			this.Suggestions.toggle(shouldOpenSuggestions);
 

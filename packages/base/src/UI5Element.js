@@ -590,6 +590,10 @@ class UI5Element extends HTMLElement {
 		return this[slotName].reduce(reducer, []);
 	}
 
+	get isCompact() {
+		return getComputedStyle(this).getPropertyValue("--_ui5_content_density") === "compact";
+	}
+
 	/**
 	 * Used to duck-type UI5 elements without using instanceof
 	 * @returns {boolean}
