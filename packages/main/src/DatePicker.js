@@ -637,6 +637,7 @@ class DatePicker extends UI5Element {
 		if (this.isOpen()) {
 			this.closePicker();
 		} else if (this._canOpenPicker()) {
+			this.updateStaticAreaItemContentDensity();
 			this.openPicker();
 		}
 	}

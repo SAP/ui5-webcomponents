@@ -477,6 +477,7 @@ class Input extends UI5Element {
 
 	_click(event) {
 		if (isPhone() && !this.readonly && this.Suggestions) {
+			this.updateStaticAreaItemContentDensity();
 			this.Suggestions.open(this);
 		}
 	}

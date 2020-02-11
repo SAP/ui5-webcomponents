@@ -327,6 +327,7 @@ class TabContainer extends UI5Element {
 	}
 
 	_onOverflowButtonClick(event) {
+		this.updateStaticAreaItemContentDensity();
 		this._respPopover.open(event.target);
 	}
 
