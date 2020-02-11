@@ -187,6 +187,8 @@
       
     
       
+    
+      
         
       
     
@@ -224,6 +226,8 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
                 
                   
                 
@@ -656,6 +660,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/master/playground/tutorials/angular/" class="navigation-list-link">
@@ -800,6 +806,8 @@
             
               
               <ul class="navigation-list-child-list  visible">
+                
+                  
                 
                   
                 
@@ -2023,6 +2031,30 @@ All texts are in English by default. In order to get support for other languages
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>`registerThemeProperties("my-package", "my_theme", "http://url/to/my/theme.json");`
 </code></pre></div></div>
+
+<h3 id="7-openui5-integration">7. OpenUI5 integration</h3>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/features/OpenUI5Support.js</span><span class="dl">"</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>If your app uses both OpenUI5 and UI5 Web Components, UI5 Web Components can benefit
+from OpenUI5 configuration and resources.</p>
+
+<p>When you import the above module:</p>
+<ol>
+  <li>OpenUI5 configuration takes precedence over UI5 Web Components configuration
+ for all common entities (theme, language, RTL, etc…). In addition, changing the theme
+ in OpenUI5 will also change the theme in UI5 Web Components.</li>
+  <li>Fonts will not be loaded twice (just once by OpenUI5, and reused).</li>
+  <li>Locale Data assets will not be fetched twice (just once by OpenUI5, and reused).</li>
+</ol>
+
+<p>Therefore, if you intend to run both frameworks in the same browser window,
+it is highly recommended to enable OpenUI5 support and benefit from these optimizations.</p>
+
+<p><em>Note:</em> In general the order in which OpenUI5 and UI5 Web Components are loaded does not matter.
+However, if your app needs to support Internet Explorer 11, either load OpenUI5 first, or load
+UI5 Web Components deferred.</p>
 
 
 <footer class="footer-wrapper">

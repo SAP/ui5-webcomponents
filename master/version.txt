@@ -1,5 +1,5 @@
-commit b1459ce359411291d96e594644fe68cabb6796f9
+commit 55279909fc1d0c59d3980837e296c9272f5b6eb3
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Tue Feb 11 14:08:21 2020 +0200
+Date:   Tue Feb 11 14:26:37 2020 +0200
 
-    chore(framework): Allow a workaround to skip theme-base parameters (#1175)
+    feat(framework): OpenUI5 integration (#1138)
