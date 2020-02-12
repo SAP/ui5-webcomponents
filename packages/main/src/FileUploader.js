@@ -7,7 +7,7 @@ import {
 	getI18nBundle,
 } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import {
-	FILE_UPLOADER_BROWSE_TEXT,
+	FILEUPLOAD_BROWSE,
 } from "./generated/i18n/i18n-defaults.js";
 import Button from "./Button.js";
 import Input from "./Input.js";
@@ -34,11 +34,11 @@ const metadata = {
 		},
 
 		/**
-		 * If set to "true", the <code>ui5-file-uploader</code> will be rendered as button only, without showing the input field.
+		 * If set to "true", the input field of <code>ui5-file-uploader</code> will not be rendered. Only the default slot that is passed will be rendered.
 		 * @type {boolean}
 		 * @public
 		 */
-		buttonOnly: {
+		hideInput: {
 			type: Boolean,
 		},
 
@@ -52,37 +52,6 @@ const metadata = {
 		 * @public
 		 */
 		disabled: {
-			type: Boolean,
-		},
-
-		/**
-		 * Defines the icon to be displayed as graphical element within the button.
-		 * See all the available icons in the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @public
-		 */
-		icon: {
-			type: String,
-		},
-
-		/**
-		 * If set to true, the button will show icon at the end.
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		iconEnd: {
-			type: Boolean,
-		},
-
-		/**
-		 * If set to true, the button is displayed without any text.
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		iconOnly: {
 			type: Boolean,
 		},
 
@@ -145,6 +114,19 @@ const metadata = {
 		valueState: {
 			type: ValueState,
 			defaultValue: ValueState.None,
+		},
+	},
+	slots: /** @lends sap.ui.webcomponents.main.FileUploader.prototype */ {
+		/**
+		 * Defines the items of the <code>ui5-product-switch</code>.
+		 *
+		 * @type {HTMLElement[]}
+		 * @slot
+		 * @public
+		 */
+		"default": {
+			propertyName: "content",
+			type: HTMLElement,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.FileUploader.prototype */ {
@@ -280,7 +262,7 @@ class FileUploader extends UI5Element {
 	}
 
 	get browseText() {
-		return this.i18nBundle.getText(FILE_UPLOADER_BROWSE_TEXT);
+		return this.i18nBundle.getText(FILEUPLOAD_BROWSE);
 	}
 
 	get _canUseNativeFormSupport() {

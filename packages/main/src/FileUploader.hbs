@@ -1,7 +1,7 @@
 
 <div class="ui5-file-uploader-root">
 	<div class="ui5-file-uploader-mask">
-		{{#unless buttonOnly}}
+		{{#unless hideInput}}
 			<ui5-input
 				value="{{value}}"
 				value-state="{{valueState}}"
@@ -9,15 +9,7 @@
 				?disabled="{{disabled}}"
 			></ui5-input>
 		{{/unless}}
-		<ui5-button
-			icon="{{icon}}"
-			?icon-end={{iconEnd}}
-			?disabled="{{disabled}}"
-		>
-			{{#unless iconOnly}}
-				{{browseText}}
-			{{/unless}}
-		</ui5-button>
+		<slot></slot>
 	</div>
 	{{#if _keepInputInShadowDOM}}
 		<input
