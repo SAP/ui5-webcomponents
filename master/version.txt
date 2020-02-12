@@ -1,5 +1,5 @@
-commit 7f30cf33b6d1126518ccd1def2e8812f641d47fb
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Wed Feb 12 15:57:36 2020 +0200
+commit 5f8ce939307863df970273fac7a04e85d4588ff9
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Wed Feb 12 16:28:28 2020 +0200
 
-    fix(framework): fix travis build (#1212)
+    fix(ui5-popover): z-index is now consistent with dialogs (#1209)
