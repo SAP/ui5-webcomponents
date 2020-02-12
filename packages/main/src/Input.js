@@ -256,14 +256,6 @@ const metadata = {
 		change: {},
 
 		/**
-		 * Fired when the input has focused.
-		 *
-		 * @event
-		 * @public
-		 */
-		focus: {},
-
-		/**
 		 * Fired when the value of the <code>ui5-input</code> changes at each keystroke,
 		 * and when a suggestion item has been selected.
 		 *
