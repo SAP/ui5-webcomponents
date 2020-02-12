@@ -1,5 +1,5 @@
-commit e7e99ecd1443625723260676a76bf1a005f86a09
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Feb 11 17:19:27 2020 +0200
+commit 7f30cf33b6d1126518ccd1def2e8812f641d47fb
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Wed Feb 12 15:57:36 2020 +0200
 
-    docs(ui5-avatar): fix "image" samples and add more (#1206)
+    fix(framework): fix travis build (#1212)
