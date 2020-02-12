@@ -95,6 +95,7 @@ class SegmentedButton extends UI5Element {
 
 		this.absoluteWidthSet = false; // set to true whenever we set absolute width to the component
 		this.percentageWidthSet = false; //  set to true whenever we set 100% width to the component
+		this.hasPreviouslyFocusedItem = false;
 	}
 
 	onEnterDOM() {
@@ -143,11 +144,28 @@ class SegmentedButton extends UI5Element {
 				selectedButton: this._selectedButton,
 			});
 		}
-		this._selectedButton.pressed = true;
 
+		this._selectedButton.pressed = true;
 		this._itemNavigation.update(this._selectedButton);
 
 		return this;
+	}
+
+	_onfocusin(event) {
+		// If the component was previously focused,
+		// update the ItemNavigation to sync butons` tabindex values
+		if (this.hasPreviouslyFocusedItem) {
+			this._itemNavigation.update(event.target);
+			return;
+		}
+
+		// If the component is focused for the first time
+		// focus the selected item if such present
+		if (this.selectedButton) {
+			this.selectedButton.focus();
+			this._itemNavigation.update(this._selectedButton);
+			this.hasPreviouslyFocusedItem = true;
+		}
 	}
 
 	_handleResize() {

@@ -32,4 +32,19 @@ describe("SegmentedButton general interaction", () => {
 		assert.ok(toggleButton4.getProperty("pressed"), "ToggleButton has property pressed");
 
 	});
+
+	it("tests initial focus", () => {
+		const button1 =  browser.$("#button1");
+		const button2 =  browser.$("#button2");
+		const toggleButton1 =  browser.$("#testSB1ToggleBtn");
+		const toggleButton2 =  browser.$("#testSB2ToggleBtn");
+
+		button1.click();
+		button1.keys("Tab");
+		assert.ok(toggleButton1.isFocused(), "The first ToggleButton should be focused.");
+
+		button2.click();
+		button2.keys("Tab");
+		assert.ok(toggleButton2.isFocused(), "The selected ToggleButton should be focused.");
+	});
 });
