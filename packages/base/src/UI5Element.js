@@ -22,6 +22,7 @@ const IDMap = new Map();
 
 const elementTimeouts = new Map();
 
+const GLOBAL_CONTENT_DENSITY_CSS_VAR = "--_ui5_content_density";
 /**
  * Base class for all UI5 Web Components
  *
@@ -588,6 +589,16 @@ class UI5Element extends HTMLElement {
 		};
 
 		return this[slotName].reduce(reducer, []);
+	}
+
+	get isCompact() {
+		return getComputedStyle(this).getPropertyValue(GLOBAL_CONTENT_DENSITY_CSS_VAR) === "compact";
+	}
+
+	updateStaticAreaItemContentDensity() {
+		if (this.staticAreaItem) {
+			this.staticAreaItem._updateContentDensity(this.isCompact);
+		}
 	}
 
 	/**
