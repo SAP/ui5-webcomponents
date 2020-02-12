@@ -385,7 +385,7 @@ class Popup extends UI5Element {
 		}
 	}
 
-	onfocusin(event) {
+	_onfocusin(event) {
 		this.preserveFocus(event, this.getPopupDomRef());
 	}
 
