@@ -1,0 +1,7 @@
+@import "../base/TextArea-parameters.css";
+
+:root {
+	--_ui5_textarea_focus_after_width: 2px;
+	--_ui5_textarea_warning_border_style: dashed;
+	--_ui5_textarea_warning_border_width: 1px;
+}

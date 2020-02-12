@@ -4,6 +4,7 @@ const path = require("path");
 const allThemesDefinitionFiles = [
 	`sap_belize/base-parameters`,
 	`sap_belize_hcb/base-parameters`,
+	`sap_belize_hcw/base-parameters`,
 	`sap_fiori_3/base-parameters`,
 	`sap_fiori_3_dark/base-parameters`,
 ];
