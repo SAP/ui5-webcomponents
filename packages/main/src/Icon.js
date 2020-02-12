@@ -121,11 +121,9 @@ class Icon extends UI5Element {
 		return iconCss;
 	}
 
-	static async define(...params) {
+	static async onDefine() {
 		this.createGlobalStyle(); // hide all icons until the first icon has rendered (and added the Icon.css)
 		await fetchI18nBundle("@ui5/webcomponents");
-
-		super.define(...params);
 	}
 
 	static createGlobalStyle() {

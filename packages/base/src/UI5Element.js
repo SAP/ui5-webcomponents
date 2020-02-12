@@ -22,6 +22,7 @@ const IDMap = new Map();
 
 const elementTimeouts = new Map();
 
+const GLOBAL_CONTENT_DENSITY_CSS_VAR = "--_ui5_content_density";
 /**
  * Base class for all UI5 Web Components
  *
@@ -590,6 +591,16 @@ class UI5Element extends HTMLElement {
 		return this[slotName].reduce(reducer, []);
 	}
 
+	get isCompact() {
+		return getComputedStyle(this).getPropertyValue(GLOBAL_CONTENT_DENSITY_CSS_VAR) === "compact";
+	}
+
+	updateStaticAreaItemContentDensity() {
+		if (this.staticAreaItem) {
+			this.staticAreaItem._updateContentDensity(this.isCompact);
+		}
+	}
+
 	/**
 	 * Used to duck-type UI5 elements without using instanceof
 	 * @returns {boolean}
@@ -800,6 +811,11 @@ class UI5Element extends HTMLElement {
 	 */
 	static async define() {
 		await boot();
+
+		if (this.onDefine) {
+			await this.onDefine();
+		}
+
 		const tag = this.getMetadata().getTag();
 
 		const definedLocally = DefinitionsSet.has(tag);

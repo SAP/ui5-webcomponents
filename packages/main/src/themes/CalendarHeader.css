@@ -28,6 +28,17 @@
 	font-size: var(--sapFontMediumSize);
 }
 
+.ui5-calheader-arrowbtn.ui5-calheader-arrowbtn-disabled:hover,
+.ui5-calheader-arrowbtn.ui5-calheader-arrowbtn-disabled:active,
+.ui5-calheader-arrowbtn.ui5-calheader-arrowbtn-disabled:focus,
+.ui5-calheader-arrowbtn.ui5-calheader-arrowbtn-disabled {
+	pointer-events: none;
+	opacity: 0.4;
+	outline: none;
+	background-color: var(--sapButton_Lite_Background);
+	color: var(--sapButton_TextColor);
+}
+
 .ui5-calheader-arrowbtn:focus {
 	outline: none;
 }
@@ -56,7 +67,7 @@
 .ui5-calheader-midcontainer {
 	display: flex;
 	justify-content: space-around;
-	flex: 1;
+	flex: 1 1 auto;
 	padding: 0 0.5rem;
 }
 

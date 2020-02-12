@@ -1,3 +1,9 @@
+// import "@ui5/webcomponents-base/test/dev-helpers/ExternalThemePresent.js";
+
+// OpenUI5 integration
+import "@ui5/webcomponents-base/dist/features/OpenUI5Support.js";
+
+// Calendars
 import "@ui5/webcomponents-base/dist/features/calendar/Buddhist.js";
 import "@ui5/webcomponents-base/dist/features/calendar/Islamic.js";
 import "@ui5/webcomponents-base/dist/features/calendar/Japanese.js";
@@ -19,8 +25,11 @@ import Avatar from "./dist/Avatar.js";
 import Badge from "./dist/Badge.js";
 import BusyIndicator from "./dist/BusyIndicator.js";
 import Button from "./dist/Button.js";
-import CheckBox from "./dist/CheckBox.js";
 import Card from "./dist/Card.js";
+import Carousel from "./dist/Carousel.js";
+import CheckBox from "./dist/CheckBox.js";
+import ComboBox from "./dist/ComboBox.js";
+import ComboBoxItem from "./dist/ComboBoxItem.js";
 import DatePicker from "./dist/DatePicker.js";
 import Dialog from "./dist/Dialog.js";
 import Icon from "./dist/Icon.js";
@@ -30,6 +39,8 @@ import Link from "./dist/Link.js";
 import Popover from "./dist/Popover.js";
 import Panel from "./dist/Panel.js";
 import RadioButton from "./dist/RadioButton.js";
+import ResponsivePopover from "./dist/ResponsivePopover.js";
+import SegmentedButton from "./dist/SegmentedButton.js";
 import Select from "./dist/Select.js";
 import Option from "./dist/Option.js";
 import Switch from "./dist/Switch.js";
@@ -48,8 +59,7 @@ import TimelineItem from "./dist/TimelineItem.js";
 import Title from "./dist/Title.js";
 import Toast from "./dist/Toast.js";
 import ToggleButton from "./dist/ToggleButton.js";
-import ComboBox from "./dist/ComboBox.js";
-import ComboBoxItem from "./dist/ComboBoxItem.js";
+
 
 import List from "./dist/List.js";
 import StandardListItem from "./dist/StandardListItem.js";
@@ -69,6 +79,7 @@ import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationM
 import { getTheme, setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 import { setNoConflict } from "@ui5/webcomponents-base/dist/config/NoConflict.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
+import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSettings.js";
 import { getRegisteredNames as getIconNames } from  "@ui5/webcomponents-base/dist/SVGIconRegistry.js"
 window["sap-ui-webcomponents-bundle"] = {
 	configuration : {
@@ -77,6 +88,7 @@ window["sap-ui-webcomponents-bundle"] = {
 		setTheme,
 		setNoConflict,
 		getRTL,
+		getFirstDayOfWeek,
 	},
 	getIconNames,
 };
