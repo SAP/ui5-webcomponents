@@ -397,6 +397,7 @@ class Input extends UI5Element {
 		if (!this.firstRendering && !isPhone() && this.Suggestions) {
 			const shouldOpenSuggestions = this.shouldOpenSuggestions();
 
+			this.updateStaticAreaItemContentDensity();
 			this.Suggestions.toggle(shouldOpenSuggestions);
 
 			if (!isPhone() && shouldOpenSuggestions) {
@@ -476,6 +477,7 @@ class Input extends UI5Element {
 
 	_click(event) {
 		if (isPhone() && !this.readonly && this.Suggestions) {
+			this.updateStaticAreaItemContentDensity();
 			this.Suggestions.open(this);
 		}
 	}
@@ -700,10 +702,8 @@ class Input extends UI5Element {
 		return this.i18nBundle.getText(INPUT_SUGGESTIONS);
 	}
 
-	static async define(...params) {
+	static async onDefine() {
 		await fetchI18nBundle("@ui5/webcomponents");
-
-		super.define(...params);
 	}
 }
 

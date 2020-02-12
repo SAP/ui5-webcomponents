@@ -391,6 +391,7 @@ class MultiComboBox extends UI5Element {
 			if (filteredItems.length === 0) {
 				this._getRespPopover().close();
 			} else {
+				this.updateStaticAreaItemContentDensity();
 				this._getRespPopover().open(this);
 			}
 		}
@@ -502,6 +503,8 @@ class MultiComboBox extends UI5Element {
 		const popover = this._getRespPopover(isMorePopover);
 		const otherPopover = this._getRespPopover(!isMorePopover);
 
+		this.updateStaticAreaItemContentDensity();
+
 		if (popover && popover.opened) {
 			return popover.close();
 		}
@@ -521,6 +524,7 @@ class MultiComboBox extends UI5Element {
 
 	_click(event) {
 		if (isPhone() && !this.readonly && !this._showMorePressed) {
+			this.updateStaticAreaItemContentDensity();
 			this._getRespPopover().open(this);
 		}
 
@@ -567,6 +571,7 @@ class MultiComboBox extends UI5Element {
 
 	onAfterRendering() {
 		if (this.open && !this._getRespPopover().opened) {
+			this.updateStaticAreaItemContentDensity();
 			this._getRespPopover().open(this);
 			// Set initial focus to the native input
 			this._innerInput.focus();
@@ -645,7 +650,7 @@ class MultiComboBox extends UI5Element {
 		return this.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
 	}
 
-	static async define(...params) {
+	static async onDefine() {
 		await Promise.all([
 			Tokenizer.define(),
 			Token.define(),
@@ -656,8 +661,6 @@ class MultiComboBox extends UI5Element {
 			ToggleButton,
 			fetchI18nBundle("@ui5/webcomponents"),
 		]);
-
-		super.define(...params);
 	}
 }
 

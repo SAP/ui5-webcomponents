@@ -334,9 +334,9 @@ class ComboBox extends UI5Element {
 
 	_toggleRespPopover() {
 		if (this._respPopover.opened) {
-			this._respPopover.close();
+			this._closeRespPopover();
 		} else {
-			this._respPopover.open(this);
+			this._openRespPopover();
 		}
 	}
 
@@ -363,7 +363,7 @@ class ComboBox extends UI5Element {
 		this.filterValue = value;
 		this.fireEvent("input");
 
-		this._respPopover.open(this);
+		this._openRespPopover();
 	}
 
 	_startsWithMatchingItems(str) {
@@ -382,12 +382,17 @@ class ComboBox extends UI5Element {
 
 	_click(event) {
 		if (isPhone() && !this.readonly) {
-			this._respPopover.open(this);
+			this._openRespPopover();
 		}
 	}
 
 	_closeRespPopover() {
 		this._respPopover.close();
+	}
+
+	_openRespPopover() {
+		this.updateStaticAreaItemContentDensity();
+		this._respPopover.open(this);
 	}
 
 	_filterItems(str) {
@@ -440,7 +445,7 @@ class ComboBox extends UI5Element {
 		});
 
 		this._inputChange();
-		this._respPopover.close();
+		this._closeRespPopover();
 	}
 
 	get _filteredItems() {
@@ -465,7 +470,7 @@ class ComboBox extends UI5Element {
 		return !this.readonly;
 	}
 
-	static async define(...params) {
+	static async onDefine() {
 		await Promise.all([
 			ComboBoxItem.define(),
 			Icon.define(),
@@ -474,8 +479,6 @@ class ComboBox extends UI5Element {
 			BusyIndicator.define(),
 			StandardListItem.define(),
 		]);
-
-		super.define(...params);
 	}
 }
 

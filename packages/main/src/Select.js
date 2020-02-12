@@ -239,6 +239,8 @@ class Select extends UI5Element {
 			return;
 		}
 
+		this.updateStaticAreaItemContentDensity();
+
 		if (this._isPickerOpen) {
 			this._respPopover.close();
 		} else {
@@ -426,7 +428,7 @@ class Select extends UI5Element {
 		return getRTL() ? "rtl" : "ltr";
 	}
 
-	static async define(...params) {
+	static async onDefine() {
 		await Promise.all([
 			Label.define(),
 			ResponsivePopover.define(),
@@ -434,8 +436,6 @@ class Select extends UI5Element {
 			StandardListItem.define(),
 			Icon.define(),
 		]);
-
-		super.define(...params);
 	}
 }
 

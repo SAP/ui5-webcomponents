@@ -1,8 +1,12 @@
 import { getAnimationMode as getConfiguredAnimationMode } from "../InitialConfiguration.js";
 
-const animationMode = getConfiguredAnimationMode();
+let animationMode;
 
 const getAnimationMode = () => {
+	if (animationMode === undefined) {
+		animationMode = getConfiguredAnimationMode();
+	}
+
 	return animationMode;
 };
 

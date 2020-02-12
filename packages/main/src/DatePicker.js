@@ -637,6 +637,7 @@ class DatePicker extends UI5Element {
 		if (this.isOpen()) {
 			this.closePicker();
 		} else if (this._canOpenPicker()) {
+			this.updateStaticAreaItemContentDensity();
 			this.openPicker();
 		}
 	}
@@ -705,7 +706,7 @@ class DatePicker extends UI5Element {
 		return InputType.Text;
 	}
 
-	static async define(...params) {
+	static async onDefine() {
 		await Promise.all([
 			fetchCldr(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
 			Icon.define(),
@@ -714,8 +715,6 @@ class DatePicker extends UI5Element {
 			Input.define(),
 			fetchI18nBundle("@ui5/webcomponents"),
 		]);
-
-		super.define(...params);
 	}
 }
 

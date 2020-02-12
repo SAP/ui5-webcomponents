@@ -297,11 +297,10 @@ class Carousel extends UI5Element {
 		return this.selectedIndex + 1;
 	}
 
-	static async define(...params) {
+	static async onDefine() {
 		await Promise.all([
 			fetchI18nBundle("@ui5/webcomponents"),
 		]);
-		super.define(...params);
 	}
 }
 

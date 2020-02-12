@@ -37,7 +37,7 @@ const metadata = {
 		/**
 		 * Defines if only the content would be displayed (without header and footer) in the popover on Desktop.
 		 * By default both the header and footer would be displayed.
-		 * @protected
+		 * @private
 		 */
 		contentOnlyOnDesktop: {
 			type: Boolean,
@@ -80,10 +80,8 @@ class ResponsivePopover extends Popover {
 		return ResponsivePopoverTemplate;
 	}
 
-	static async define(...params) {
+	static async onDefine() {
 		await Dialog.define();
-
-		super.define(...params);
 	}
 
 	/**

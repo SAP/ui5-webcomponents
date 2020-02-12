@@ -1,3 +1,9 @@
+// import "@ui5/webcomponents-base/test/dev-helpers/ExternalThemePresent.js";
+
+// OpenUI5 integration
+import "@ui5/webcomponents-base/dist/features/OpenUI5Support.js";
+
+// Calendars
 import "@ui5/webcomponents-base/dist/features/calendar/Buddhist.js";
 import "@ui5/webcomponents-base/dist/features/calendar/Islamic.js";
 import "@ui5/webcomponents-base/dist/features/calendar/Japanese.js";
@@ -74,6 +80,7 @@ import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationM
 import { getTheme, setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 import { setNoConflict } from "@ui5/webcomponents-base/dist/config/NoConflict.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
+import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSettings.js";
 import { getRegisteredNames as getIconNames } from  "@ui5/webcomponents-base/dist/SVGIconRegistry.js"
 window["sap-ui-webcomponents-bundle"] = {
 	configuration : {
@@ -82,6 +89,7 @@ window["sap-ui-webcomponents-bundle"] = {
 		setTheme,
 		setNoConflict,
 		getRTL,
+		getFirstDayOfWeek,
 	},
 	getIconNames,
 };

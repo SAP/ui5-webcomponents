@@ -277,11 +277,58 @@
 	<section class="result">
 		<h2>Result</h2>
 		<span id="result"></span>
+		<span id="resultIdx"></span>
+	</section>
+
+	<section class="ui5-content-density-compact">
+		<h3>TabContainer in Compact</h3>
+		<div>
+		<ui5-tabcontainer show-overflow="true">
+			<ui5-tab text="Products ID">
+				<ui5-button>Button 11</ui5-button>
+				<ui5-button>Button 12</ui5-button>
+			</ui5-tab>
+			<ui5-tab text="Avaialability">
+				<ui5-button>Button 2</ui5-button>
+			</ui5-tab>
+			<ui5-tab text="Date of Expire">
+				<ui5-button>Button 3</ui5-button>
+			</ui5-tab>
+			<ui5-tab text="Date of Delivery">
+				<ui5-button>Button 4</ui5-button>
+			</ui5-tab>
+			<ui5-tab text="Date of Manifacture">
+				<ui5-button>Button 4</ui5-button>
+			</ui5-tab>
+			<ui5-tab text="Value">
+				<ui5-button>Button 4</ui5-button>
+			</ui5-tab>
+			<ui5-tab text="Price">
+				<ui5-button>Button 4</ui5-button>
+			</ui5-tab>
+			<ui5-tab text="Net profit">
+				<ui5-button>Button 4</ui5-button>
+			</ui5-tab>
+			<ui5-tab text="Company name">
+				<ui5-button>Button 4</ui5-button>
+			</ui5-tab>
+			<ui5-tab text="Warehouse Location">
+				<ui5-button>Button 4</ui5-button>
+			</ui5-tab>
+			<ui5-tab text="Address">
+				<ui5-button>Button 4</ui5-button>
+			</ui5-tab>
+			<ui5-tab text="Country">
+				<ui5-button>Button 4</ui5-button>
+			</ui5-tab>
+		</ui5-tabcontainer>
+		</div>
 	</section>
 
 	<script>
-		document.getElementById("tabContainer1").addEventListener("ui5-itemSelect", function (event) {
-			document.getElementById("result").innerHTML = event.detail.item.text;
+		document.getElementById("tabContainer1").addEventListener("ui5-tabSelect", function (event) {
+			result.innerHTML = event.detail.tab.text;
+			resultIdx.innerHTML = event.detail.tabIndex;
 		});
 	</script>
 </body>
