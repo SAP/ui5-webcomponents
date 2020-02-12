@@ -8,7 +8,7 @@ import PopoverVerticalAlign from "./types/PopoverVerticalAlign.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 
 import { addOpenedPopover, removeOpenedPopover } from "./popup-utils/PopoverRegistry.js";
-import { getFocusedElement, getClosedPopupParent } from "./popup-utils/PopupUtils.js";
+import { getFocusedElement, getClosedPopupParent, getNextZIndex } from "./popup-utils/PopupUtils.js";
 
 // Styles
 import PopoverCss from "./generated/themes/Popover.css.js";
@@ -320,6 +320,7 @@ class Popover extends UI5Element {
 
 		this._opener = opener;
 		this._focusedElementBeforeOpen = getFocusedElement();
+		this.style.zIndex = getNextZIndex();
 
 		this.fireEvent("beforeOpen", {});
 		this.reposition();
