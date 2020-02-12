@@ -254,14 +254,6 @@ const metadata = {
 		change: {},
 
 		/**
-		 * Fired when the input has focused.
-		 *
-		 * @event
-		 * @public
-		 */
-		focus: {},
-
-		/**
 		 * Fired when the value of the <code>ui5-input</code> changes at each keystroke,
 		 * and when a suggestion item has been selected.
 		 *
@@ -374,7 +366,6 @@ class Input extends UI5Element {
 		// all sementic events
 		this.EVENT_SUBMIT = "submit";
 		this.EVENT_CHANGE = "change";
-		this.EVENT_FOCUS = "focus";
 		this.EVENT_INPUT = "input";
 		this.EVENT_SUGGESTION_ITEM_SELECT = "suggestionItemSelect";
 
@@ -493,10 +484,6 @@ class Input extends UI5Element {
 
 	_handleChange(event) {
 		this.fireEvent(this.EVENT_CHANGE);
-	}
-
-	_handleFocus(event) {
-		this.fireEvent(this.EVENT_FOCUS);
 	}
 
 	_handleInput(event) {
