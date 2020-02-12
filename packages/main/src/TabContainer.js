@@ -25,6 +25,7 @@ import TabContainerPopoverTemplate from "./generated/templates/TabContainerPopov
 import tabContainerCss from "./generated/themes/TabContainer.css.js";
 import tabContainerPopoverCss from "./generated/themes/TabContainerPopup.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
+import TabLayout from "./types/TabLayout.js";
 
 const SCROLL_STEP = 128;
 
@@ -226,6 +227,7 @@ class TabContainer extends UI5Element {
 
 			return {
 				item,
+				isInline: item.design === TabLayout.Inline,
 				isMixedModeTab: !item.icon && this.mixedMode,
 				isTextOnlyTab: !item.icon && !this.mixedMode,
 				isIconTab: item.icon,
@@ -489,6 +491,10 @@ const calculateHeaderItemClasses = (item, mixedMode) => {
 
 	if (item.disabled) {
 		classes.push("ui5-tc__headerItem--disabled");
+	}
+
+	if (item.design === TabLayout.Inline) {
+		classes.push("ui5-tc__headerItem--inline");
 	}
 
 	if (!item.icon && !mixedMode) {
