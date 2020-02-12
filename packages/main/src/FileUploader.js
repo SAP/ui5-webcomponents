@@ -280,7 +280,7 @@ class FileUploader extends UI5Element {
 
 	/**
 	 * Determines input helper type in forms.
-	 * @protected
+	 * @private
 	 */
 	get _type() {
 		return "file";
