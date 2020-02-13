@@ -1,5 +1,5 @@
-commit 5f8ce939307863df970273fac7a04e85d4588ff9
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Feb 12 16:28:28 2020 +0200
+commit 894d457270971b5936dfd2289d709ad447f24ccd
+Author: GoonNahm <kieat.seo@gmail.com>
+Date:   Thu Feb 13 21:03:42 2020 +0900
 
-    fix(ui5-popover): z-index is now consistent with dialogs (#1209)
+    fix(ui5-dialog): stretch content area of dialog #920 (#1167)
