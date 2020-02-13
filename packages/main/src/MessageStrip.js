@@ -74,7 +74,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the icon to be displayed as graphical element within the <code>ui5-messagestrip</code>.
+		 * Defines the content to be displayed as graphical element within the <code>ui5-messagestrip</code>.
 		 * <br><br>
 		 * <b>Note:</b> If no icon is given, the default icon for the <code>ui5-messagestrip</code> type will be used.
 		 * The SAP-icons font provides numerous options.
