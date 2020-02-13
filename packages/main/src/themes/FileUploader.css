@@ -20,7 +20,7 @@
 }
 
 .ui5-file-uploader-mask {
-	display: flex; /* TO DO: find better way to align ui5-input and ui5-button when there is icon */
+	display: flex;
 }
 
 .ui5-file-uploader-mask ui5-input {

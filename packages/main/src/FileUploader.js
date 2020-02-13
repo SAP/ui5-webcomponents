@@ -118,14 +118,13 @@ const metadata = {
 	},
 	slots: /** @lends sap.ui.webcomponents.main.FileUploader.prototype */ {
 		/**
-		 * Defines the items of the <code>ui5-product-switch</code>.
+		 * By default the <code>ui5-file-uploader</code> contains a single input field. With this slot you can pass any content that you wish to add. See the samples for more information
 		 *
 		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
 		 */
 		"default": {
-			propertyName: "content",
 			type: HTMLElement,
 		},
 	},
@@ -207,11 +206,7 @@ class FileUploader extends UI5Element {
 			return this._input.files;
 		}
 
-		// in case when ui5-file-uploader is not placed in the DOM, return empty FileList, like native input would do
-		const helperInput = document.createElement("input");
-		helperInput.type = "file";
-
-		return helperInput.files;
+		return FileUploader._emptyFilesList;
 	}
 
 	onBeforeRendering() {
@@ -225,7 +220,7 @@ class FileUploader extends UI5Element {
 			if (this._canUseNativeFormSupport) {
 				this._setFormValue();
 			} else {
-				FormSupport.syncNativeVisibleInput(
+				FormSupport.syncNativeFileInput(
 					this,
 					(element, nativeInput) => {
 						nativeInput.disabled = element.disabled;
@@ -261,6 +256,18 @@ class FileUploader extends UI5Element {
 		this._internals.setFormValue(formData);
 	}
 
+	/**
+	 * in case when ui5-file-uploader is not placed in the DOM, return empty FileList, like native input would do
+	 * @private
+	 */
+	static get _emptyFilesList() {
+		if (!this.emptyInput) {
+			this.emptyInput = document.createElement("input");
+			this.emptyInput.type = "file";
+		}
+		return this.emptyInput.files;
+	}
+
 	get browseText() {
 		return this.i18nBundle.getText(FILEUPLOAD_BROWSE);
 	}
@@ -286,14 +293,12 @@ class FileUploader extends UI5Element {
 		return "file";
 	}
 
-	static async define(...params) {
+	static async onDefine(...params) {
 		await Promise.all([
 			Input.define(),
 			Button.define(),
 			fetchI18nBundle("@ui5/webcomponents"),
 		]);
-
-		super.define(...params);
 	}
 }
 

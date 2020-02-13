@@ -26,7 +26,7 @@ class FormSupport {
 		}
 	}
 
-	static syncNativeVisibleInput(element, nativeInputUpdateCallback, nativeInputChangeCallback) {
+	static syncNativeFileInput(element, nativeInputUpdateCallback, nativeInputChangeCallback) {
 		const needsNativeInput = !!element.name;
 		let nativeInput = element.querySelector(`input[type=${element._type || "hidden"}][data-ui5-form-support]`);
 
