@@ -9,6 +9,7 @@ import { getStaticAreaInstance, removeStaticArea } from "./StaticArea.js";
 class StaticAreaItem {
 	constructor(_ui5ElementContext) {
 		this.ui5ElementContext = _ui5ElementContext;
+		this._rendered = false;
 	}
 
 	/**
@@ -18,6 +19,12 @@ class StaticAreaItem {
 		const renderResult = this.ui5ElementContext.constructor.staticAreaTemplate(this.ui5ElementContext),
 			stylesToAdd = this.ui5ElementContext.constructor.staticAreaStyles || false;
 
+		this._ensureInstance();
+		this.ui5ElementContext.constructor.render(renderResult, this.staticAreaItemDomRef.shadowRoot, stylesToAdd, { eventContext: this.ui5ElementContext });
+		this._rendered = true;
+	}
+
+	_ensureInstance() {
 		if (!this.staticAreaItemDomRef) {
 			// Initial rendering of fragment
 
@@ -27,8 +34,6 @@ class StaticAreaItem {
 
 			getStaticAreaInstance().appendChild(this.staticAreaItemDomRef);
 		}
-
-		this.ui5ElementContext.constructor.render(renderResult, this.staticAreaItemDomRef.shadowRoot, stylesToAdd, { eventContext: this.ui5ElementContext });
 	}
 
 	/**
@@ -69,6 +74,9 @@ class StaticAreaItem {
 	 * Returns reference to the DOM element where the current fragment is added.
 	 */
 	getDomRef() {
+		if (!this._rendered) {
+			this._updateFragment();
+		}
 		return this.staticAreaItemDomRef.shadowRoot;
 	}
 }

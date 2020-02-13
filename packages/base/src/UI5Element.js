@@ -102,7 +102,7 @@ class UI5Element extends HTMLElement {
 		}
 
 		// Render Fragment if neccessary
-		if (this.constructor._needsStaticArea()) {
+		if (this._shouldUpdateFragment()) {
 			this.staticAreaItem._updateFragment(this);
 		}
 	}
@@ -449,7 +449,7 @@ class UI5Element extends HTMLElement {
 		delete this._invalidated;
 		this._updateShadowRoot();
 
-		if (this.constructor._needsStaticArea()) {
+		if (this._shouldUpdateFragment()) {
 			this.staticAreaItem._updateFragment(this);
 		}
 
@@ -589,6 +589,18 @@ class UI5Element extends HTMLElement {
 		};
 
 		return this[slotName].reduce(reducer, []);
+	}
+
+	_shouldUpdateFragment() {
+		return this.constructor._needsStaticArea() && this._staticAreaInUse;
+	}
+
+	startUsingStaticArea() {
+		this._staticAreaInUse = true;
+	}
+
+	stopUsingStaticArea() {
+		this._staticAreaInUse = false;
 	}
 
 	get isCompact() {
