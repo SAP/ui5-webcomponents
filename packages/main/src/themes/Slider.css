@@ -1,13 +1,13 @@
-.sapMWS {
+.ui5-slider {
 	display: inline-block;
 	overflow: hidden;
 	height: 100%;
 	vertical-align: middle;
 	text-align: center;
 	box-sizing: border-box;
-	font-family: "72","72full",Arial,Helvetica,sans-serif;
+	font-family: var(--sapFontFamily);
 }
-.sapMWS .sapMWSLabel {
+.ui5-slider .ui5-slider-label {
 	box-sizing: border-box;
     height: 2rem;
     line-height: 2rem;
@@ -18,13 +18,13 @@
     vertical-align: middle;
 }
 
-.sapMWS .sapMWSArrows {
+.ui5-slider .ui5-slider-arrow {
 	visibility: hidden;
 	box-sizing: border-box;
 	height: 1.5rem;
 }
 
-.sapMWS.sapMWSExpanded .sapMWSArrows {
+.ui5-slider[expanded] .ui5-slider-arrow {
 	visibility: visible;
 	box-sizing: border-box;
 	width: 100%;
@@ -32,7 +32,7 @@
 	cursor: pointer;
 }
 
-.sapMWS .sapMWSInner {
+.ui5-slider .ui5-slider-inner {
 	overflow: hidden;
 	height: 100%;
 	box-sizing: border-box;
@@ -44,11 +44,11 @@
 	margin-top: 0rem;
 }
 
-.sapMWS.sapMWSExpanded .sapMWSInner {
+.ui5-slider[expanded] .ui5-slider-inner {
 	margin-top: 0;
 }
 
-.sapMWS .sapMWSInner .sapMWSItem {
+.ui5-slider .ui5-slider-inner .ui5-slider-item {
 	height: var(--_ui5_slider_item_height);
 	line-height: var(--_ui5_slider_item_height);
 	width: var(--_ui5_slider_item_width);
@@ -59,16 +59,17 @@
 	color: var(--_ui5_slider_collapsed_item_text_color);
 	text-align: center;
 	border-radius: var(--_ui_slider_item_border_radius);
+	cursor: pointer;
 }
-.sapMWS .sapMWSInner .sapMWSItem:hover {
+.ui5-slider .ui5-slider-inner .ui5-slider-item:hover {
 	background: var(--_ui5_slider_selected_item_hover_background_color);
 }
 
-.sapMWS .sapMWSInner .sapMWSItem:focus {
+.ui5-slider .ui5-slider-inner .ui5-slider-item:focus {
 	outline: 1px dotted black;
 	outline-offset: -3px;
 }
-.sapMWS .sapMWSInner .sapMWSSelectionFrame {
+.ui5-slider .ui5-slider-inner .ui5-slider-selection-frame {
 	width: var(--_ui5_slider_item_width);
 	height: var(--_ui5_slider_item_height);
 	position: absolute;
@@ -76,65 +77,68 @@
 	visibility: hidden;
 	z-index: 1;
 }
-.sapMWS .sapMWSInner .sapMWrapper > ul {
+.ui5-slider .ui5-slider-inner .ui5-slider-wrapper > ul {
 	transition: all 400ms;
 	margin: 0;
 	padding: 0;
 	position: absolute;
 	top: var(--_ui5_slider_selection_frame_margin_top);
 	cursor: pointer;
+	list-style-type: none;
 }
 
-.sapMWS.sapMWSExpanded .sapMWSInner .sapMWrapper > ul {
+.ui5-slider[expanded] .ui5-slider-inner .ui5-slider-wrapper > ul {
+	list-style-type: none;
 	top: 0;
 }
 
-.sapMWS .sapMWSInner .sapMWrapper {
+.ui5-slider .ui5-slider-inner .ui5-slider-wrapper {
 	height: 27rem;
 	position: relative;
+	overflow: hidden;
+	outline: none;
 }
 
-.sapMWS.sapMWSExpanded {
+.ui5-slider[expanded] {
 	height: 100%;
 	cursor: default;
 	margin: 0;
 }
 
-.sapMWS.sapMWSExpanded .sapMWSLabel {
+.ui5-slider[expanded] .ui5-slider-label {
 	display: block;
 }
 
-.sapMWS .sapMWSInner {
+.ui5-slider .ui5-slider-inner {
 	max-height: 100%;
 	height: 27rem;
 }
 
-.sapMWS.sapMWSExpanded .sapMWSInner .sapMWSItem {
+.ui5-slider[expanded] .ui5-slider-inner .ui5-slider-item {
 	background: var(--_ui5_slider_item_background_color);
 	color: var(--_ui5_slider_item_text_color);
 	border: 1px solid var(--_ui5_slider_item_border_color);
 	border-radius: var(--_ui_slider_item_border_radius);
 	offset-position: auto;
+	cursor: pointer;
 }
 
-.sapMWS.sapMWSExpanded .sapMWSInner .sapMWSItem:hover {
+.ui5-slider[expanded] .ui5-slider-inner .ui5-slider-item:hover {
 	background: var(--_ui_slider_item_hover_color);
 }
 
-.sapMWS.sapMWSExpanded .sapMWSInner .sapMWSItem:active {
-	background: var(--_ui5_slider_selected_item_background_color);
-	color: var(--_ui5_slider_item_background_color);
+.ui5-slider[expanded] .ui5-slider-inner .ui5-slider-item:active {
+	background: var(--_ui5_slider_active_item_background_color);
+	color: var(--_ui5_slider_active_item_text_color);
 }
 
-.sapMWS.sapMWSExpanded .sapMWSInner .sapMWSItem:focus {
+.ui5-slider[expanded] .ui5-slider-inner .ui5-slider-item:focus {
 	outline: 1px dotted black;
 	outline-offset: -3px;
 }
 
-.sapMWS.sapMWSExpanded .sapMWSInner .sapMWSSelectionFrame {
+.ui5-slider[expanded] .ui5-slider-inner .ui5-slider-selection-frame {
 	visibility: visible;
-	/* box-shadow: 0.125rem solid var(--_ui5_slider_selected_item_background_color); */
-	/* outline-offset: -0.2rem; */
 	-webkit-box-shadow: inset 0px 0px 0px 2px var(--_ui5_slider_selection_frame_color);
 	-moz-box-shadow: inset 0px 0px 0px 2px var(--_ui5_slider_selection_frame_color);
 	box-shadow: inset 0px 0px 0px 2px var(--_ui5_slider_selection_frame_color);
@@ -142,13 +146,13 @@
 	margin-top: var(--_ui5_slider_selection_frame_margin_top);
 }
 
-.sapMWS.sapMWSExpanded .sapMWSInner .sapMWSSelectionFrame:hover + ul > li.sapMWSItem.sapMWSItemSelected {
+.ui5-slider[expanded] .ui5-slider-inner .ui5-slider-selection-frame:hover + ul > li.ui5-slider-item.ui5-slider-itemSelected {
 	background: var(--_ui5_slider_selected_item_background_color);
 }
-.sapMWS.sapMWSExpanded .sapMWSInner .sapMWSSelectionFrame:active + ul > li.sapMWSItem.sapMWSItemSelected {
+.ui5-slider[expanded] .ui5-slider-inner .ui5-slider-selection-frame:active + ul > li.ui5-slider-item.ui5-slider-itemSelected {
 	background: var(--_ui5_slider_selected_item_background_color); 
 	color: lightgray;
 }
-.sapMWS:focus {
+.ui5-slider:focus {
 	outline: none;
 }

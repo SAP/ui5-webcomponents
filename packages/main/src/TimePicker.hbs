@@ -29,38 +29,39 @@
 			@ui5-afterOpen="{{_popover.afterOpen}}"
 			header-text="Pick Time"
 			class="sapMTimePickerPopover"
-		>
+	>
 		{{#if shouldBuildHoursSlider}}
 			<ui5-slider 
 				label = "Hours"
-				value="6"
 				._items="{{hoursArray}}"
-				@click="{{handleSliderClicked}}">
-			</ui5-slider>
+				@click="{{handleSliderClicked}}"
+				class="ui5-timepicker-hours-slider"
+			></ui5-slider>
 		{{/if}}
 		{{#if shouldBuildMinutesSlider}}
 			<ui5-slider 
 				label = "Minutes"
-				value="7"
 				._items="{{minutesArray}}"
-				@click="{{handleSliderClicked}}">
-			</ui5-slider>
+				@click="{{handleSliderClicked}}"
+				class="ui5-timepicker-minutes-slider"
+			></ui5-slider>
 		{{/if}}
 		{{#if shouldBuildSecondsSlider}}
 			<ui5-slider 
 				label = "Seconds"
-				value="8"
 				._items="{{secondsArray}}"
-				@click="{{handleSliderClicked}}">
-			</ui5-slider>
+				@click="{{handleSliderClicked}}"
+				class="ui5-timepicker-seconds-slider"
+			></ui5-slider>
 		{{/if}}
 		{{#if shouldBuildPeriodsSlider}}
 			<ui5-slider 
-				label = "AM/PM"
+				label = "Period"
 				value="AM"
 				._items="{{periodsArray}}"
-				@click="{{handleSliderClicked}}">
-			</ui5-slider>
+				@click="{{handleSliderClicked}}"
+				class="ui5-timepicker-period-slider"
+			></ui5-slider>
 		{{/if}}
 			<div slot="footer">
 				<ui5-button id="submit" type="Accept" @click="{{submitPickers}}">Submit</ui5-button>

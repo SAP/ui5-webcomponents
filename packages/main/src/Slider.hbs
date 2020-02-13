@@ -3,34 +3,32 @@
 	?disabled= "{{disabled}}"
 	value = "{{value}}"
 	label = "{{label}}"
-	expanded= "{{expanded}}"
-	@click = {{_onelementclick}}
+	?expanded= "{{_expanded}}"
+	@click = {{_onclick}}
 	@keydown={{_onkeydown}}
-	class = "sapMWS{{isExpandedClass}}{{isDisabledClass}}"
+	class = "ui5-slider"
 	data-sap-focus-ref
 	tabindex="0"
-	>
-	<div id="{{this._id}}--label" class="sapMWSLabel"> {{label}}</div>
-	<div class="sapUiInvisibleText"></div>
-	<ui5-button class="sapMWSArrows" icon="arrow-top" @click={{_onArrowUp}} tabindex="-1"></ui5-button>
-	<div id="{{this._id}}--inner" class="sapMWSInner">
-		<div id="{{this._id}}--selection-frame" class="sapMWSSelectionFrame">
+>
+	<div id="{{this._id}}--label" class="ui5-slider-label"> {{label}}</div>
+	<div class="ui5-slider-invisible-text"></div>
+	<ui5-button class="ui5-slider-arrow" icon="arrow-top" @click={{_onArrowUp}} tabindex="-1"></ui5-button>
+	<div id="{{this._id}}--inner" class="ui5-slider-inner">
+	<div id="{{this._id}}--selection-frame" class="ui5-slider-selection-frame">
 		</div>
-		{{#if expanded}}
-			<div id="{{this._id}}--wrapper" style="overflow:hidden" class="sapMWrapper">
-				<ul id="{{this._id}}--items-list" style="list-style-type:none">
+		<div id="{{this._id}}--wrapper" class="ui5-slider-wrapper" tabindex="-1">
+			{{#if _expanded}}
+				<ul id="{{this._id}}--items-list">
 					{{#each items}}
-						<li style="cursor: pointer;" class="sapMWSItem">{{this}}</li>
+						<li class="ui5-slider-item">{{this}}</li>
 					{{/each}}
 				</ul>
-			</div>
-		{{else}}
-			<div id="{{this._id}}--wrapper" style="overflow:hidden" class="sapMWrapper">
-				<ul id="{{this._id}}--items-list" style="list-style-type:none">
-					<li style="cursor: pointer;" class="sapMWSItem">{{value}}</li>
+			{{else}}
+				<ul id="{{this._id}}--items-list">
+					<li class="ui5-slider-item">{{value}}</li>
 				</ul>
-			</div>
-		{{/if}}
+			{{/if}}
+		</div>
 	</div>
-	<ui5-button class="sapMWSArrows" icon="arrow-bottom" @click={{_onArrowDown}}  tabindex="-1"></ui5-button>
+	<ui5-button class="ui5-slider-arrow" icon="arrow-bottom" @click={{_onArrowDown}}  tabindex="-1"></ui5-button>
 </div>

@@ -4,7 +4,7 @@ describe("Button general interaction", () => {
 	browser.url("http://localhost:8080/test-resources/pages/Slider_Test_Page.html");
 
 	it("tests slider's label rendering", () => {
-		const textValue = browser.$("#slider").shadow$$(".sapMWSLabel")[0].getText();
+		const textValue = browser.$("#slider").shadow$$(".ui5-slider-label")[0].getText();
 
 		assert.strictEqual(textValue, "Test", "Slider text is rendered");
 	});
@@ -12,7 +12,7 @@ describe("Button general interaction", () => {
 	it("Arrow down button is working", () => {
 		const slider = browser.$("#slider");
 		console.log(slider);
-		const button = slider.shadow$$(".sapMWSArrows")[1];
+		const button = slider.shadow$$(".ui5-slider-arrow")[1];
 		button.click();
 
 		assert.strictEqual(slider.getValue(), "2", "Slider button arrow down is working");
@@ -20,7 +20,7 @@ describe("Button general interaction", () => {
 
 	it("Arrow up button is working", () => {
 		const slider = browser.$("#slider");
-		const button = slider.shadow$$(".sapMWSArrows")[0];
+		const button = slider.shadow$$(".ui5-slider-arrow")[0];
 
 		button.click();
 
@@ -45,7 +45,7 @@ describe("Button general interaction", () => {
 
 	it("Click on element selects element", () => {
 		const slider = browser.$("#slider");
-		const sliderElements = slider.shadow$$(".sapMWSItem");
+		const sliderElements = slider.shadow$$(".ui5-slider-item");
 
 		sliderElements[5].click();
 

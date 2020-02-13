@@ -206,6 +206,12 @@ class TimePicker extends UI5Element {
 		};
 	}
 
+	onBeforeRendering() {
+		if (!this.value) {
+			this.value = this.getFormat().format(new Date());
+		} 
+	}
+
 	onAfterRendering() {
 		let sliders = this._getPopover().default.filter(x => x.isUI5Element),
 			slidersEnablementArray = this._getSlidersContained(this.formatPattern);
@@ -240,19 +246,27 @@ class TimePicker extends UI5Element {
 
 	setSlidersValue() {
 		let currentDate = this._getInput ? this.getFormat().parse(this._getInput().value) : null,
-			sliders = this._getPopover().default.filter(x => x.isUI5Element);
+			secondsSlider = this.shadowRoot.querySelector(".ui5-timepicker-seconds-slider"),
+			minutesSlider = this.shadowRoot.querySelector(".ui5-timepicker-minutes-slider"),
+			hoursSlider = this.shadowRoot.querySelector(".ui5-timepicker-hours-slider"),
+			periodsSlider = this.shadowRoot.querySelector(".ui5-timepicker-periods-slider");
 
 		if (currentDate) {
-			for (let i = 0; i < sliders.length; i++) {
-				if (sliders[i].label === "Hours") {
-					sliders[i].value = currentDate.getHours();
-				} else if (sliders[i].label === "Minutes") {
-					sliders[i].value = currentDate.getMinutes();
-				} else if (sliders[i].label === "Seconds") {
-					sliders[i].value = currentDate.getSeconds();
-				} else if (this.isTwelveHoursFormat && sliders[i].label === "AM/PM") {
-					sliders[i].value = currentDate.getHours() > 11 ? "PM" : "AM";
-				}
+			if (hoursSlider){
+				if (this.isTwelveHoursFormat && currentDate.getHours() > 11){
+					hoursSlider.value = currentDate.getHours() - 12;
+				} else {
+					hoursSlider.value = currentDate.getHours();
+				} 
+			}
+			if (minutesSlider) {
+				minutesSlider.value = currentDate.getMinutes();
+			}
+			if (secondsSlider) {
+				secondsSlider.value = currentDate.getSeconds();
+			}
+			if (this.isTwelveHoursFormat && periodsSlider) {
+				periodsSlider.value = currentDate.getHours() > 11 ? "PM" : "AM";
 			}
 		}
 	}
@@ -328,24 +342,15 @@ class TimePicker extends UI5Element {
 	}
 
 	submitPickers() {
-		let sliders = this._getPopover().default.filter(x => x.isUI5Element),
-			selectedDate = new Date(),
-			hours = "0",
-			minutes = "0",
-			seconds = "0",
-			period = "AM";
-
-		for (let i = 0; i < sliders.length; i++) {
-			if (sliders[i].label === "Hours") {
-				hours = sliders[i].value;
-			} else if (sliders[i].label === "Minutes") {
-				minutes = sliders[i].value;
-			} else if (sliders[i].label === "Seconds") {
-				seconds = sliders[i].value;
-			} else if (sliders[i].label === "AM/PM"){
-				period = sliders[i].value;
-			}
-		}
+		let selectedDate = new Date(),
+			secondsSlider = this.shadowRoot.querySelector(".ui5-timepicker-seconds-slider"),
+			minutesSlider = this.shadowRoot.querySelector(".ui5-timepicker-minutes-slider"),
+			hoursSlider = this.shadowRoot.querySelector(".ui5-timepicker-hours-slider"),
+			periodsSlider = this.shadowRoot.querySelector(".ui5-timepicker-periods-slider"),
+			hours = hoursSlider ? hoursSlider.value : "0",
+			minutes = minutesSlider ? minutesSlider.value : "0",
+			seconds = secondsSlider ? secondsSlider.value : "0",
+			period = periodsSlider ? periodsSlider.value : "AM";
 
 		if (period === "PM") {
 			selectedDate.setHours(hours*1 + 12);
@@ -393,7 +398,7 @@ class TimePicker extends UI5Element {
 
 	handleSliderClicked(event) {
 		let sliders = this._getPopover().default.filter(x => x.isUI5Element);
-		if (event.target.expanded) {
+		if (event.target._expanded) {
 			for (var i = 0; i < sliders.length; i++) {
 				if (sliders[i].label !== event.target.label) {
 					sliders[i].collapseSlider();

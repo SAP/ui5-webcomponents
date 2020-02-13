@@ -1,6 +1,10 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import SliderTemplate from "./generated/templates/SliderTemplate.lit.js";
+import {
+	isDown,
+	isUp,
+} from "../../base/src/events/PseudoEvents";
 
 // Styles
 import SliderCss from "./generated/themes/Slider.css.js";
@@ -42,7 +46,7 @@ const metadata = {
 		 * @defaultvalue false
 		 * @public
 		 */
-		isCyclic: {
+		cyclic: {
 			type: Boolean
 		},
 
@@ -61,9 +65,9 @@ const metadata = {
 		 * Indicates if the slider is expanded.
 		 * @type {boolean}
 		 * @defaultvalue false
-		 * @public
+		 * @private
 		 */
-		expanded: {
+		_expanded: {
 			type: Boolean
 		},
 
@@ -78,12 +82,12 @@ const metadata = {
 		/**
 		 * Fires when the slider is expanded.
 		 */
-		expanded: {},
+		expand: {},
 
 		/**
 		 * Fires when the slider is collapsed.
 		 */
-		collapsed: {},
+		collapse: {},
 
 		/**
 		 *  Fires when new value is selected.
@@ -118,7 +122,7 @@ const metadata = {
  */
 class Slider extends UI5Element {
 	static get metadata() {
-		return metadata;
+	return metadata;
 	}
 
 	static get render() {
@@ -139,20 +143,20 @@ class Slider extends UI5Element {
 
 	constructor() {
 		super();
-
-		this._items = ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16"];
-		this.value = this._items[0];
 		//this.i18nBundle = getI18nBundle("@ui5/webcomponents");
-		this._scroller = new ScrollEnablement(this);
-		this.prevElement = 0;
+		// this._scroller = new ScrollEnablement(this);
 		this._currentElementIndex = 0;
 		this._itemCellHeight = 0;
+	}
+
+	onBeforeRendering(){
+		this._itemCellHeight = this.shadowRoot.querySelectorAll(".ui5-slider-item").length && this.shadowRoot.querySelectorAll(".ui5-slider-item")[0].offsetHeight / 16;
 	}
 
 	_findSelectedElement(){
 		let itemsList = this.shadowRoot.querySelector(`#${this._id}--items-list`),
 			parentOffset = itemsList.parentElement.parentElement.offsetTop,
-			itemsListArray = [].slice.call(itemsList.children),
+			itemsListArray = [...itemsList.children],
 			firstVisibleElementIndex = 0;
 
 		while ((itemsListArray[firstVisibleElementIndex].getBoundingClientRect().y - parentOffset) < 0){
@@ -166,12 +170,13 @@ class Slider extends UI5Element {
 		let sizeInRems = this._items.length * 3, // the size of one element in rems (16px = 1rem)
 			sizeOfOneElementInPixels = _itemCellHeight * 16,
 			indexForOffset;
-		const elements = this.shadowRoot.querySelectorAll(".sapMWSItem");
+		const elements = this.shadowRoot.querySelectorAll(".ui5-slider-item"),
+			selectedElement = this._findSelectedElement();
 
-		if (!this._findSelectedElement()){
+		if (!selectedElement){
 			return;
 		}
-		if (this.value === this._findSelectedElement().textContent) {
+		if (this.value === selectedElement.textContent) {
 			return;
 		}
 
@@ -181,16 +186,33 @@ class Slider extends UI5Element {
 			indexForOffset = Math.floor(e.scroll / sizeOfOneElementInPixels);
 		}
 
-		this._selectElement(this._findSelectedElement());
-		this.value = this._findSelectedElement().textContent;
+		this._selectElement(selectedElement);
+		this.value = selectedElement.textContent;
 	}
 
 	onAfterRendering() {
-		this._scroller.scrollContainer = this.shadowRoot.querySelector(`#${this._id}--wrapper`);
-		this._scroller.attachEvent("scroll", this._updateScrolling.bind(this));
-		if (this.expanded) {
-			const elements = this.shadowRoot.querySelectorAll(".sapMWSItem");
-			this._itemCellHeight = elements[0].offsetHeight / 16;
+		// this._scroller.scrollContainer = this.shadowRoot.querySelector(`#${this._id}--wrapper`);
+		// this._scroller.attachEvent("scroll", this._updateScrolling.bind(this));
+
+		this.shadowRoot.querySelector(".ui5-slider-wrapper > ul").addEventListener("wheel", (e) => {
+			e.stopPropagation();
+			e.preventDefault();
+
+			if (e.timeStamp === this._prevWheelTimestamp){
+				return;
+			}
+
+			if (e.deltaY > 0){
+				this._onArrowUp();
+			} else if (e.deltaY < 0) {
+				this._onArrowDown();
+			}
+
+			this._prevWheelTimestamp = e.timeStamp;
+		});
+
+		if (this._expanded) {
+			const elements = this.shadowRoot.querySelectorAll(".ui5-slider-item");
 			for (let i = 0; i < elements.length; i++){
 				if (elements[i].textContent === this.value){
 					this._selectElement(elements[i]);
@@ -206,51 +228,33 @@ class Slider extends UI5Element {
 		return this._items;
 	}
 
-	get isExpandedClass(){
-		if (this.expanded){
-			return " sapMWSExpanded";
+	_onclick(e) {
+		if (!e.target.classList.contains("ui5-slider-item")){
+			return;
 		}
 
-		return "";
-	}
-
-	get isDisabledClass(){
-		if (this.disabled){
-			return " sapMWSDisabled";
-		}
-
-		return "";
-	}
-
-	_onelementclick(e) {
-		if(e.target.classList.contains("sapMWSItem") && this.expanded) {
+		if(this._expanded) {
 			this.value = e.target.textContent;
 			this._selectElement(e.target);
-		}
-
-		if (!this.expanded && e.target.classList.contains("sapMWSItem")) {
-			this.expanded = true;
-			this._invalidate();
+		} else {
+			this._expanded = true;
 		}
 	}
 
 	expandSlider(){
-		this.expanded = true;
-		this._invalidate();
-		this.fireEvent("expanded",{});
+		this._expanded = true;
+		this.fireEvent("expand",{});
 	}
 
 	collapseSlider(){
-		this.expanded = false;
-		this._invalidate();
-		this.fireEvent("collapsed",{});
+		this._expanded = false;
+		this.fireEvent("collapse",{});
 	}
 
 	_selectElement(element){	
-		if ( element && this._items.indexOf(element.textContent) > -1) {
+		if (element && this._items.indexOf(element.textContent) > -1) {
 			this._currentElementIndex = this._items.indexOf(element.textContent);
 			this._selectElementByIndex(this._currentElementIndex);
-			this._scroller.scrollContainer.scrollTo(0,0);
 		}
 	}
 
@@ -274,14 +278,12 @@ class Slider extends UI5Element {
 		this._selectElementByIndex(nextElementIndex);
 	}
 
-	//Arrow Up 38
-	//Arrow Down 40
 	_onkeydown(event){
-		if (event.keyCode === 38) {
+		if (isUp(event)) {
 			this._onArrowUp();
 		}
 
-		if (event.keyCode === 40) {
+		if (isDown(event)) {
 			this._onArrowDown();
 		}
 	}
