@@ -1,5 +1,5 @@
-commit 894d457270971b5936dfd2289d709ad447f24ccd
-Author: GoonNahm <kieat.seo@gmail.com>
-Date:   Thu Feb 13 21:03:42 2020 +0900
+commit 5d4e59437d41c49e3589632e7fa60cb807802ac1
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Thu Feb 13 16:45:09 2020 +0200
 
-    fix(ui5-dialog): stretch content area of dialog #920 (#1167)
+    feature(ui5-messagestrip): allow any content for the icon (#1216)
