@@ -1,5 +1,5 @@
-commit e628dbd04609926f9cf1569a4b1721e31a072be0
-Author: Petar Dimov <32839090+dimovpetar@users.noreply.github.com>
-Date:   Fri Feb 14 14:04:10 2020 +0200
+commit 28ed69a9b3953825d852567e0115db3193cdbe16
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Fri Feb 14 15:58:23 2020 +0200
 
-    feat(ui5-file-uploader): initial implementation (#1184)
+    feat: introduce belize_hcw theme (#1215)
