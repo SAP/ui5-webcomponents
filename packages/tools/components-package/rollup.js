@@ -8,6 +8,7 @@ const filesize = require('rollup-plugin-filesize');
 const livereload = require('rollup-plugin-livereload');
 const os = require("os");
 const fs = require("fs");
+const ip = require("ip");
 
 const packageName = JSON.parse(fs.readFileSync("./package.json")).name;
 const DEPLOY_PUBLIC_PATH = process.env.DEPLOY_PUBLIC_PATH || "";
@@ -26,7 +27,8 @@ function ui5DevImportCheckerPlugin() {
 
 const getPlugins = ({ transpile }) => {
 	const plugins = [];
-	let publicPath = DEPLOY_PUBLIC_PATH || "/resources/";
+	let publicPath = DEPLOY_PUBLIC_PATH || `http://${ip.address()}:8080/resources/`;
+
 
 	if (!process.env.DEV) {
 		plugins.push(filesize({
