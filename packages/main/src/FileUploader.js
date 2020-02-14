@@ -198,13 +198,13 @@ class FileUploader extends UI5Element {
 	_onmouseover() {
 		this.content.forEach(item => {
 			item.classList.add("ui5_hovered");
-		})
+		});
 	}
 
-	_onmouseout(){
+	_onmouseout() {
 		this.content.forEach(item => {
 			item.classList.remove("ui5_hovered");
-		})
+		});
 	}
 
 	/**
