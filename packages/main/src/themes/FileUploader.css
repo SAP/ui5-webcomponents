@@ -32,10 +32,6 @@
 	border: 1px solid var(--sapField_Hover_BorderColor);
 }
 
-:host(:not([disabled]):hover) ui5-button {
-	background: var(--sapButton_Hover_Background);
-}
-
 :host(:not([disabled]):active) ui5-button {
 	background-color: var(--sapButton_Active_Background);
 	border-color: var(--_ui5_button_active_border_color);

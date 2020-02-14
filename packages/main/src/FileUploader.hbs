@@ -1,5 +1,8 @@
 
-<div class="ui5-file-uploader-root">
+<div class="ui5-file-uploader-root"
+	@mouseover="{{_onmouseover}}"
+	@mouseout="{{_onmouseout}}"
+>
 	<div class="ui5-file-uploader-mask">
 		{{#unless hideInput}}
 			<ui5-input

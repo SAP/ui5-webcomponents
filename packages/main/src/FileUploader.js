@@ -9,7 +9,6 @@ import {
 import {
 	FILEUPLOAD_BROWSE,
 } from "./generated/i18n/i18n-defaults.js";
-import Button from "./Button.js";
 import Input from "./Input.js";
 
 // Template
@@ -125,6 +124,7 @@ const metadata = {
 		 * @public
 		 */
 		"default": {
+			propertyName: "content",
 			type: HTMLElement,
 		},
 	},
@@ -193,6 +193,18 @@ class FileUploader extends UI5Element {
 		}
 
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+	}
+
+	_onmouseover() {
+		this.content.forEach(item => {
+			item.classList.add("ui5_hovered");
+		})
+	}
+
+	_onmouseout(){
+		this.content.forEach(item => {
+			item.classList.remove("ui5_hovered");
+		})
 	}
 
 	/**
@@ -293,10 +305,9 @@ class FileUploader extends UI5Element {
 		return "file";
 	}
 
-	static async onDefine(...params) {
+	static async onDefine() {
 		await Promise.all([
 			Input.define(),
-			Button.define(),
 			fetchI18nBundle("@ui5/webcomponents"),
 		]);
 	}

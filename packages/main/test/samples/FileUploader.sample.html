@@ -29,7 +29,7 @@
 				resultDiv = document.querySelector("#result");
 			fileUploader.addEventListener("change", function(event) {
 				var files = event.target.files;
-	
+
 				if (!files.length) {
 					resultDiv.innerHTML = "<ui5-label>No Files Selected</ui5-label>";
 				} else {
@@ -38,7 +38,7 @@
 
 					for (var i = 0; i < files.length; i++) {
 						var img = document.createElement("img");
-						img.src = URL.createObjectURL(files[i]);	
+						img.src = URL.createObjectURL(files[i]);
 						img.width = 100;
 						img.height = 100;
 						img.onload = function() {
@@ -67,7 +67,7 @@
 
 			for (let i = 0; i < files.length; i++) {
 				const img = document.createElement("img");
-				img.src = URL.createObjectURL(files[i]);	
+				img.src = URL.createObjectURL(files[i]);
 				img.width = 100;
 				img.height = 100;
 				img.onload = () => {
