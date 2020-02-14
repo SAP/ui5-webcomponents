@@ -315,7 +315,7 @@ class Popover extends UI5Element {
 		}
 
 		const eventPath = event.composedPath();
-		for (let i = 0; i < eventPath.length - 1; i++) { //always skip the last element which is Window object and doesn't have contains method
+		for (let i = 0; i < eventPath.length - 1; i++) { // Always skip the last element which is Window object and doesn't have contains method
 			if (this.content[0].contains(eventPath[i])) {
 				return true;
 			}

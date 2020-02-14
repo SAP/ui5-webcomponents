@@ -171,49 +171,18 @@ class OverflowToolbar extends UI5Element {
 	mutationObserverCallback(mutationsList, observer) {
 		mutationsList.forEach(item => {
 			if (item.parentNode === this) { // Item is in the overflow toolbar
-				
-				mutationsList.some(item => {
-					return this._isSlotInvalidation(item);
-				});
-
-				if (this.overflowingIndex < 0 || onlySlotsAreInvalidated) {
+				if (this.overflowingIndex < 0 || this._isSlotInvalidation(item)) {
 					return;
 				}
 
 				this._getOverflowedItems();
-			} else { // Item is overflowed in the popover
-				if (this._isSlotInvalidation(item)) {
-					return;
-				}
-				const indexOfRealElement = this.items.length - this._overflowedItems.length + this._overflowedItems.indexOf(item) + 1;
-				switch (item.type) {
-					case "childList":
-
-						break;
-
-					case "subtree":
-
-						break;
-					
-					default:
-					case "attributes":
-						if (item.target[item.attributeName]) {
-							if (this.items[indexOfRealElement].getAttribute(item.attributeName) !== item.target.getAttribute(item.attributeName)) {
-								this.items[indexOfRealElement].setAttribute(item.attributeName, item.target[item.attributeName]);
-							}
-						} else {
-							this.items[indexOfRealElement].removeAttribute(item.attributeName);
-						}
-						break;
-				}
-				console.log("overflowed", item);
 			}
-		})
+		});
 	}
 
 	/**
 	 * Slots are invalidated on every rerender and this methods checks if such invalidation has occured
-	 * @param {Node} currentItem 
+	 * @param {Node} currentItem
 	 */
 	_isSlotInvalidation(currentItem) {
 		let onlySlotsAreInvalidated = true;
