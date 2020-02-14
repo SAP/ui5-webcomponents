@@ -87,6 +87,6 @@
 }
 
 .ui5-list-busy-row {
-	height: var(--ui5_busy_row_height);
+	height: var(--_ui5_list_busy_row_height);
 	text-align: center;
 }

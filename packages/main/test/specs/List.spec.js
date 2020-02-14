@@ -205,4 +205,14 @@ describe("List Tests", () => {
 
 		assert.ok(firstListItem.isFocused(), "First item remains focussed");
 	});
+
+	it("tests 'loadMore' event fired upon infinite scroll", () => {
+		const btn = $("#btnTrigger");
+		const loadMoreResult = $("#loadMoreResult");
+
+		btn.click();
+		browser.pause(1000);
+
+		assert.strictEqual(loadMoreResult.getAttribute("value"), "1", "The event loadMore is fired.");
+	});
 });
