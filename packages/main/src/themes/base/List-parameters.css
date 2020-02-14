@@ -1,3 +1,4 @@
 :root {
 	--ui5_list_footer_text_color: var(--sapPageFooter_TextColor);
+	--ui5_busy_row_height: 3rem;
 }
