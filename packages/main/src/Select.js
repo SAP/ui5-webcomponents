@@ -388,13 +388,11 @@ class Select extends UI5Element {
 	}
 
 	_beforeOpen() {
-		this.startUsingStaticArea();
 		this._selectedIndexBeforeOpen = this._selectedIndex;
 		this._lastSelectedOption = this.options[this._selectedIndex];
 	}
 
 	_afterClose() {
-		this.stopUsingStaticArea();
 		this._toggleIcon();
 
 		if (this._escapePressed) {

@@ -100,11 +100,6 @@ class UI5Element extends HTMLElement {
 				this.onEnterDOM();
 			}
 		}
-
-		// Render Fragment if neccessary
-		if (this._shouldUpdateFragment()) {
-			this.staticAreaItem._updateFragment(this);
-		}
 	}
 
 	/**
@@ -592,15 +587,7 @@ class UI5Element extends HTMLElement {
 	}
 
 	_shouldUpdateFragment() {
-		return this.constructor._needsStaticArea() && this._staticAreaInUse;
-	}
-
-	startUsingStaticArea() {
-		this._staticAreaInUse = true;
-	}
-
-	stopUsingStaticArea() {
-		this._staticAreaInUse = false;
+		return this.constructor._needsStaticArea() && this.staticAreaItem.isRendered();
 	}
 
 	get isCompact() {
