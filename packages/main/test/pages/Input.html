@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<script>delete Document.prototype.adoptedStyleSheets;</script>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta charset="utf-8">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>ui5-input</title>
 
 	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
@@ -21,14 +21,29 @@
 	<ui5-label id="myLabelSubmit">Event [submit] :: N/A</ui5-label><br/>
 	<ui5-label id="myLabelLiveChange">Event [input] :: N/A</ui5-label><br/>
 
-	<ui5-input id="myInput"
-		style="width: 500px"
-		show-suggestions
-		placeholder="Search for a country ...">
-	</ui5-input>
+	<div>
+		<h3>Input in Cozy</h3>
+		<ui5-input id="myInput"
+			style="width: 500px"
+			show-suggestions
+			placeholder="Search for a country ...">
+		</ui5-input>
+	</div>
+
+	<div class="sapUiSizeCompact">
+		<h3>Input in Compact</h3>
+		<ui5-input id="inputCompact"
+			style="width: 500px"
+			show-suggestions
+			placeholder="Search for a country ...">
+		</ui5-input>
+	</div>
 
 	<h3> Input with suggestions</h3>
 	<ui5-input id="myInput2" show-suggestions style="width: 100%">
+		<ui5-li>Cozy</ui5-li>
+		<ui5-li>Compact</ui5-li>
+		<ui5-li>Condensed</ui5-li>
 		<ui5-li>Cozy</ui5-li>
 		<ui5-li>Compact</ui5-li>
 		<ui5-li>Condensed</ui5-li>
@@ -140,8 +155,9 @@
 		var labelLiveChange = document.getElementById('myLabelLiveChange');
 		var labelSubmit = document.getElementById('myLabelSubmit');
 
-		input.addEventListener("ui5-input", function (event) {
-			var value = event.target.value;
+		var suggest = function (event) {
+			var input = event.target;
+			var value = input.value;
 			var suggestionItems = [];
 
 			if (value) {
@@ -162,7 +178,10 @@
 			});
 
 			labelLiveChange.innerHTML = "Event [input] :: " + value;
-		});
+		};
+
+		input.addEventListener("ui5-input", suggest);
+		inputCompact.addEventListener("ui5-input", suggest);
 
 		input.addEventListener("ui5-suggestionItemSelect", function (event) {
 			var item = event.detail.item;

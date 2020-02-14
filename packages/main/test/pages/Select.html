@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta charset="utf-8">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>ui5-select</title>
 
 	<script>
@@ -61,6 +62,17 @@
 
 	<h2> Change event counter holder</h2>
 	<ui5-input id="inputResult"></ui5-input>
+
+	<section class="ui5-content-density-compact">
+		<h3>Select in Compact</h3>
+		<div>
+			<ui5-select>
+				<ui5-option selected>Cozy</ui5-option>
+				<ui5-option selected>Compact</ui5-option>
+				<ui5-option selected>Condensed</ui5-option>
+			</ui5-select>
+		</div>
+	</section>
 </body>
 <script>
 	var countries =  [{ key: "Aus", text: "Australia" }, { key: "Aruba", text: "Aruba" }, { key: "Antigua", text: "Antigua and Barbuda" }, { key: "Bel", text: "Belgium" }, { key: "Bg", text: "Bulgaria" }, { key: "Bra", text: "Brazil" }];

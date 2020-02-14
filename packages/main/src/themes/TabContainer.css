@@ -87,8 +87,7 @@
 	bottom: -0.8rem;
 }
 
-.ui5-tc__headerItem--disabled,
-.ui5-tc__overflowItem--disabled {
+.ui5-tc__headerItem--disabled {
 	cursor: default;
 	opacity: 0.5;
 }
@@ -217,32 +216,6 @@
 	display: block;
 }
 
-.ui5-tc__overflowItem {
-	color: var(--_ui5_tc_overflowItem_default_color);
-}
-
-.ui5-tc__overflowItem[active] .ui5-tc__overflowItemContent {
-	color: var(--sapList_Active_TextColor);
-}
-
-.ui5-tc__overflowItemContent {
-	display: flex;
-	align-items: center;
-	padding: 0 0.5rem;
-	height: var(--_ui5_tc_item_text);
-	pointer-events: none;
-}
-
-.ui5-tc__overflowItem ui5-icon {
-	width: 1.375rem;
-	height: 1.375rem;
-	padding-right: 1rem;
-}
-
-.ui5-tc__overflowItem ui5-icon {
-	color: currentColor;
-}
-
 .ui5-tc-root.ui5-tc--textOnly .ui5-tc__content {
 	height: calc(100% - var(--_ui5_tc_header_height_text_only)); /* the header height (text only tabs) */
 }
@@ -276,8 +249,7 @@
 /*** Semantic states ***/
 .ui5-tc__headerItem--positive.ui5-tc__headerItem--textOnly,
 .ui5-tc__headerItem--positive .ui5-tc-headerItemIcon-outer,
-.ui5-tc-headerItemSemanticIcon--positive::before,
-.ui5-tc__overflowItem--positive {
+.ui5-tc-headerItemSemanticIcon--positive::before {
 	color: var(--sapPositiveColor);
 	border-color: var(--_ui5_tc_headerItem_positive_selected_border_color);
 }
@@ -302,8 +274,7 @@
 
 .ui5-tc__headerItem--negative.ui5-tc__headerItem--textOnly,
 .ui5-tc__headerItem--negative .ui5-tc-headerItemIcon-outer,
-.ui5-tc-headerItemSemanticIcon--negative::before,
-.ui5-tc__overflowItem--negative {
+.ui5-tc-headerItemSemanticIcon--negative::before {
 	color: var(--sapNegativeColor);
 	border-color: var(--_ui5_tc_headerItem_negative_selected_border_color);
 }
@@ -327,8 +298,7 @@
 
 .ui5-tc__headerItem--critical.ui5-tc__headerItem--textOnly,
 .ui5-tc__headerItem--critical .ui5-tc-headerItemIcon-outer,
-.ui5-tc-headerItemSemanticIcon--critical::before,
-.ui5-tc__overflowItem--critical {
+.ui5-tc-headerItemSemanticIcon--critical::before {
 	color: var(--sapCriticalColor);
 	border-color: var(--_ui5_tc_headerItem_critical_selected_border_color);
 }
@@ -351,8 +321,7 @@
 }
 
 .ui5-tc__headerItem--nutral.ui5-tc__headerItem--textOnly,
-.ui5-tc__headerItem--neutral .ui5-tc-headerItemIcon-outer,
-.ui5-tc__overflowItem--neutral {
+.ui5-tc__headerItem--neutral .ui5-tc-headerItemIcon-outer {
 	color: var(--sapNeutralColor);
 	border-color: var(--_ui5_tc_headerItem_neutral_selected_border_color);
 }

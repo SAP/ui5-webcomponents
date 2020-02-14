@@ -385,6 +385,7 @@ class ShellBar extends UI5Element {
 					this.menuItems.forEach(item => {
 						this._menuPopoverItems.push(item.textContent);
 					});
+					this.updateStaticAreaItemContentDensity();
 					menuPopover.openBy(this.shadowRoot.querySelector(".ui5-shellbar-menu-button"));
 				}
 			},
@@ -628,6 +629,7 @@ class ShellBar extends UI5Element {
 	_toggleActionPopover() {
 		const popover = this.getStaticAreaItemDomRef().querySelector(".ui5-shellbar-overflow-popover");
 		const overflowButton = this.shadowRoot.querySelector(".ui5-shellbar-overflow-button");
+		this.updateStaticAreaItemContentDensity();
 		popover.openBy(overflowButton);
 	}
 
@@ -867,15 +869,13 @@ class ShellBar extends UI5Element {
 		return getRTL() ? "rtl" : undefined;
 	}
 
-	static async define(...params) {
+	static async onDefine() {
 		await Promise.all([
 			Icon.define(),
 			List.define(),
 			Popover.define(),
 			StandardListItem.define(),
 		]);
-
-		super.define(...params);
 	}
 }
 

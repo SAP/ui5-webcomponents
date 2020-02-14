@@ -219,13 +219,11 @@ class Card extends UI5Element {
 		return !!this.avatar.length;
 	}
 
-	static async define(...params) {
+	static async onDefine() {
 		await Promise.all([
 			Icon.define(),
 			fetchI18nBundle("@ui5/webcomponents"),
 		]);
-
-		super.define(...params);
 	}
 
 	_headerClick() {

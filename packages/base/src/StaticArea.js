@@ -21,6 +21,10 @@ class StaticAreaElement extends HTMLElement {
 		super();
 	}
 
+	get isUI5Element() {
+		return true;
+	}
+
 	destroy() {
 		const staticAreaDomRef = document.querySelector(this.tagName.toLowerCase());
 		staticAreaDomRef.parentElement.removeChild(staticAreaDomRef);

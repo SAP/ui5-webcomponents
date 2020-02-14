@@ -308,14 +308,12 @@ class CheckBox extends UI5Element {
 		return getRTL() ? "rtl" : undefined;
 	}
 
-	static async define(...params) {
+	static async onDefine() {
 		await Promise.all([
 			Label.define(),
 			Icon.define(),
 			fetchI18nBundle("@ui5/webcomponents"),
 		]);
-
-		super.define(...params);
 	}
 }
 

@@ -81,6 +81,7 @@
 ></ui5-shellbar>
 
 <ui5-shellbar
+        id="shellbarWithLogoClick"
         class="shellbar-example"
         logo="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg"
         primary-title="SAP Labs Bulgaria"
@@ -125,6 +126,22 @@
     <ui5-li slot="menuItems">Application 5</ui5-li>
 </ui5-shellbar>
 
+<section class="ui5-content-density-compact">
+	<h3>ShellBar in Compact</h3>
+	<div>
+		<ui5-shellbar primary-title="Product Title" show-notifications>
+			<ui5-button icon="nav-back" slot="startButton" id="start-button"></ui5-button>
+			<ui5-shellbar-item id="disc" icon="disconnected" text="Disconnect"></ui5-shellbar-item>
+			<ui5-shellbar-item id="call" icon="incoming-call" text="Incoming Calls"></ui5-shellbar-item>
+			<ui5-li id="menu-item-1" slot="menuItems">Application 1</ui5-li>
+			<ui5-li id="menu-item-2" slot="menuItems">Application 2</ui5-li>
+			<ui5-li slot="menuItems">Application 3</ui5-li>
+			<ui5-li slot="menuItems">Application 4</ui5-li>
+			<ui5-li slot="menuItems">Application 5</ui5-li>
+		</ui5-shellbar>
+	</div>
+</section>
+
 <ui5-popover id="popover" placement-type="Bottom">
     <div class="popover-header">
         <ui5-title style="padding: 0.25rem 1rem 0rem 1rem">John Doe</ui5-title>
@@ -158,9 +175,8 @@
     </ui5-list>
 </ui5-popover>
 
-<ui5-input id="press-input" style="margin-top: 2rem; width: 240px;">
-
-</ui5-input>
+<ui5-input id="press-input" style="margin-top: 2rem;"></ui5-input>
+<ui5-input id="press-input2" style="margin-top: 2rem;"></ui5-input>
 
 <script>
 	shellbar.addEventListener("ui5-profileClick", function(event) {
@@ -178,6 +194,10 @@
 
 	shellbar.addEventListener("ui5-logoClick", function(event) {
 		window["press-input"].value = "Logo"
+	});
+
+	shellbarWithLogoClick.addEventListener("ui5-logoClick", function(event) {
+		window["press-input2"].value = shellbarWithLogoClick.primaryTitle.replace(/\s/g, "");
 	});
 
 	shellbar.addEventListener("ui5-coPilotClick", function(event) {
