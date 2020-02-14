@@ -55,7 +55,8 @@
 	text-overflow: inherit;
 }
 
-:host(:not([active]):hover) {
+:host(:not([active]):hover),
+:host(:not([hidden]).ui5_hovered) {
 	background: var(--sapButton_Hover_Background);
 }
 
