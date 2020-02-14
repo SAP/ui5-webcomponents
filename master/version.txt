@@ -1,5 +1,8 @@
-commit 5d4e59437d41c49e3589632e7fa60cb807802ac1
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu Feb 13 16:45:09 2020 +0200
+commit 78a9181585f24457c8dc7b8e8f8bae195543cc74
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Fri Feb 14 06:39:09 2020 +0200
 
-    feature(ui5-messagestrip): allow any content for the icon (#1216)
+    refactor(ui5-segmentedbutton): focus selected button (#1208)
+    
+    - All themes and browsers: readonly textarea does not change its background on hover
+    - Quartz Dark and IE: the textarea has proper dark background, not a white one as used to.
