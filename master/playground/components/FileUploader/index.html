@@ -7,7 +7,7 @@
   <meta name="keywords" content="ui5-webcomponents,ui5 webcomponents,ui5 web components,webcomponents,web components,ui5,api,docs,documentation,sample,usage,examples,demo,Fiori 3">
 
   
-    <title>Busy Indicator - UI5 Web Components</title>
+    <title>File Uploader - UI5 Web Components</title>
 
     
   
@@ -24,17 +24,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Busy Indicator | UI5 Web Components</title>
+<title>File Uploader | UI5 Web Components</title>
 <meta name="generator" content="Jekyll v3.8.6" />
-<meta property="og:title" content="Busy Indicator" />
+<meta property="og:title" content="File Uploader" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Enterprise-flavored sugar on top of native APIs!" />
 <meta property="og:description" content="Enterprise-flavored sugar on top of native APIs!" />
-<link rel="canonical" href="https://sap.github.io/ui5-webcomponents/master/playground/components/BusyIndicator/" />
-<meta property="og:url" content="https://sap.github.io/ui5-webcomponents/master/playground/components/BusyIndicator/" />
+<link rel="canonical" href="https://sap.github.io/ui5-webcomponents/master/playground/components/FileUploader/" />
+<meta property="og:url" content="https://sap.github.io/ui5-webcomponents/master/playground/components/FileUploader/" />
 <meta property="og:site_name" content="UI5 Web Components" />
 <script type="application/ld+json">
-{"description":"Enterprise-flavored sugar on top of native APIs!","@type":"WebPage","url":"https://sap.github.io/ui5-webcomponents/master/playground/components/BusyIndicator/","headline":"Busy Indicator","@context":"https://schema.org"}</script>
+{"description":"Enterprise-flavored sugar on top of native APIs!","@type":"WebPage","url":"https://sap.github.io/ui5-webcomponents/master/playground/components/FileUploader/","headline":"File Uploader","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -980,9 +980,9 @@
                   
                 
                   
-                    <li class="navigation-list-item  active">
+                    <li class="navigation-list-item ">
                       
-                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/BusyIndicator/" class="navigation-list-link active">
+                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/BusyIndicator/" class="navigation-list-link">
                         <div class="component-name">Busy Indicator</div>
                         
                       </a>
@@ -1092,9 +1092,9 @@
                   
                 
                   
-                    <li class="navigation-list-item ">
+                    <li class="navigation-list-item  active">
                       
-                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/FileUploader/" class="navigation-list-link">
+                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/FileUploader/" class="navigation-list-link active">
                         <div class="component-name">File Uploader</div>
                         
                           <span class="new-tag">NEW</span>
@@ -1525,118 +1525,167 @@
                 
                   <li class="breadcrumb-nav-list-item"><a href="https://sap.github.io/ui5-webcomponents/master/playground/components">Components</a></li>
                 
-                <li class="breadcrumb-nav-list-item"><span>Busy Indicator</span></li>
+                <li class="breadcrumb-nav-list-item"><span>File Uploader</span></li>
               </ol>
             </nav>
           
         
         <div id="main-content" class="page-content" role="main">
           <style>
-	.center {
-		justify-content: center;
+	#result {
+		width: 100%;
+		display: flex;
 		align-items: center;
 	}
-	
-	.flex {
-		display: flex;
-		flex-direction: column;
-	}
-
-	#busy-container {
-		margin-top: 2rem;
-	}
-
-	#fetch-list {
-		width: 100%;
+	#result > img {
+		margin-right: 1rem;
+		border-radius: .5rem;
 	}
 </style>
-
-<header class="component-heading">
-	<h2 class="control-header">BusyIndicator</h2>
-	<div class="component-heading-since">
-		<span>v0.12.0</span>
-	</div>
+<header>
+	<div class="control-header">File Uploader</div>
 </header>
 
 <div class="component-package">@ui5/webcomponents</div>
 
-<div class="control-tag">&lt;ui5-busyindicator&gt;</div>
+<div class="control-tag">&lt;ui5-file-uploader&gt;</div>
 
 <section>
-		<h3>Busy Indicator with different size</h3>
-		<div class="snippet flex center">
-			<ui5-busyindicator active size="Small"></ui5-busyindicator>
-			<ui5-busyindicator active size="Medium"></ui5-busyindicator>
-			<ui5-busyindicator active size="Large"></ui5-busyindicator>
-		</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;div&gt;</span>
-	<span class="nt">&lt;ui5-busyindicator</span> <span class="na">active</span> <span class="na">size=</span><span class="s">"Small"</span><span class="nt">&gt;&lt;/ui5-busyindicator&gt;</span>
-	<span class="nt">&lt;ui5-busyindicator</span> <span class="na">active</span> <span class="na">size=</span><span class="s">"Medium"</span><span class="nt">&gt;&lt;/ui5-busyindicator&gt;</span>
-	<span class="nt">&lt;ui5-busyindicator</span> <span class="na">active</span> <span class="na">size=</span><span class="s">"Large"</span><span class="nt">&gt;&lt;/ui5-busyindicator&gt;</span>
-<span class="nt">&lt;/div&gt;</span>
-	</code></pre></figure></pre>
-</section>
+	<h3>Upload multiple images</h3>
+	<div class="snippet">
+		<ui5-file-uploader id="fileuploader1" accept="image/*" multiple="true">
+			<ui5-button icon="upload">Upload Images</ui5-button>
+		</ui5-file-uploader>
+		<div id="result"></div>
+		<script>
+			var fileUploader = document.querySelector("#fileuploader1"),
+				resultDiv = document.querySelector("#result");
+			fileUploader.addEventListener("change", function(event) {
+				var files = event.target.files;
 
+				if (!files.length) {
+					resultDiv.innerHTML = "<ui5-label>No Files Selected</ui5-label>";
+				} else {
+					resultDiv.innerHTML = "";
+					resultDiv.style.marginTop = "1rem";
 
-<section>
-	<h3>Busy Indicator wrapping other elements</h3>
-	<div class="snippet flex">
-		<ui5-button id="fetch-btn" style="width: 120px;">Fetch List Data</ui5-button>
-
-		<ui5-busyindicator id="busy-container" size="Medium">
-			<ui5-list id="fetch-list" no-data-text="No Data" header-text="Available Items"></ui5-list>
-		</ui5-busyindicator>
-
+					for (var i = 0; i < files.length; i++) {
+						var img = document.createElement("img");
+						img.src = URL.createObjectURL(files[i]);
+						img.width = 100;
+						img.height = 100;
+						img.onload = function() {
+							URL.revokeObjectURL(img.src);
+						}
+						resultDiv.appendChild(img);
+					}
+				}
+			})
+		</script>
 	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-button</span> <span class="na">id=</span><span class="s">"fetch-btn"</span> <span class="na">style=</span><span class="s">"width: 120px;"</span><span class="nt">&gt;</span>Fetch List Data<span class="nt">&lt;/ui5-button&gt;</span>
-
-<span class="nt">&lt;ui5-busyindicator</span> <span class="na">id=</span><span class="s">"busy-container"</span> <span class="na">size=</span><span class="s">"Medium"</span><span class="nt">&gt;</span>
-	<span class="nt">&lt;ui5-list</span> <span class="na">id=</span><span class="s">"fetch-list"</span> <span class="na">no-data-text=</span><span class="s">"No Data"</span> <span class="na">header-text=</span><span class="s">"Available Items"</span><span class="nt">&gt;&lt;/ui5-list&gt;</span>
-<span class="nt">&lt;/ui5-busyindicator&gt;</span>
-
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-file-uploader</span> <span class="na">id=</span><span class="s">"fileuploader1"</span> <span class="na">accept=</span><span class="s">"image/*"</span> <span class="na">multiple=</span><span class="s">"true"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-button</span> <span class="na">icon=</span><span class="s">"upload"</span><span class="nt">&gt;</span>Upload Images<span class="nt">&lt;/ui5-button&gt;</span>
+<span class="nt">&lt;/ui5-file-uploader&gt;</span>
 <span class="nt">&lt;script&gt;</span>
-	<span class="kd">const</span> <span class="nx">busyIndocator</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">busy-container</span><span class="dl">"</span><span class="p">);</span>
-	<span class="kd">const</span> <span class="nx">list</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">fetch-list</span><span class="dl">"</span><span class="p">);</span>
+	<span class="kd">const</span> <span class="nx">fileUploader</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="dl">"</span><span class="s2">#fileuploader1</span><span class="dl">"</span><span class="p">),</span>
+		<span class="nx">resultDiv</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="dl">"</span><span class="s2">#result</span><span class="dl">"</span><span class="p">);</span>
+	<span class="nx">fileUploader</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">change</span><span class="dl">"</span><span class="p">,</span> <span class="nx">event</span> <span class="o">=&gt;</span> <span class="p">{</span>
+		<span class="kd">const</span> <span class="nx">files</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">files</span><span class="p">;</span>
 
-	<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">fetch-btn</span><span class="dl">"</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">click</span><span class="dl">"</span><span class="p">,</span> <span class="nx">event</span> <span class="o">=&gt;</span> <span class="p">{</span>
-		<span class="nx">busyIndocator</span><span class="p">.</span><span class="nx">active</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">files</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="p">{</span>
+			<span class="nx">resultDiv</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">&lt;ui5-label&gt;No Files Selected&lt;/ui5-label&gt;</span><span class="dl">"</span><span class="p">;</span>
+		<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+			<span class="nx">resultDiv</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="dl">""</span><span class="p">;</span>
 
-		<span class="nx">setTimeout</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-			<span class="kd">const</span> <span class="nx">elements</span> <span class="o">=</span> <span class="p">[</span><span class="dl">"</span><span class="s2">UI5</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Web</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Components</span><span class="dl">"</span><span class="p">].</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">title</span> <span class="o">=&gt;</span> <span class="p">{</span>
-				<span class="kd">const</span> <span class="nx">el</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="dl">"</span><span class="s2">ui5-li</span><span class="dl">"</span><span class="p">);</span>
-				<span class="nx">el</span><span class="p">.</span><span class="nx">textContent</span> <span class="o">=</span> <span class="nx">title</span><span class="p">;</span>
-
-				<span class="nx">list</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">el</span><span class="p">);</span>
-			<span class="p">});</span>
-
-			<span class="nx">list</span><span class="p">.</span><span class="nx">noDataText</span> <span class="o">=</span> <span class="dl">""</span><span class="p">;</span>
-			<span class="nx">busyIndocator</span><span class="p">.</span><span class="nx">active</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
-		<span class="p">},</span> <span class="mi">2000</span><span class="p">);</span>
-	<span class="p">});</span>
+			<span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">files</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+				<span class="kd">const</span> <span class="nx">img</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="dl">"</span><span class="s2">img</span><span class="dl">"</span><span class="p">);</span>
+				<span class="nx">img</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="nx">URL</span><span class="p">.</span><span class="nx">createObjectURL</span><span class="p">(</span><span class="nx">files</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+				<span class="nx">img</span><span class="p">.</span><span class="nx">width</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+				<span class="nx">img</span><span class="p">.</span><span class="nx">height</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+				<span class="nx">img</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+					<span class="nx">URL</span><span class="p">.</span><span class="nx">revokeObjectURL</span><span class="p">(</span><span class="nx">img</span><span class="p">.</span><span class="nx">src</span><span class="p">);</span>
+				<span class="p">}</span>
+				<span class="nx">resultDiv</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">img</span><span class="p">);</span>
+			<span class="p">}</span>
+		<span class="p">}</span>
+	<span class="p">})</span>
 <span class="nt">&lt;/script&gt;</span>
 	</code></pre></figure></pre>
 </section>
 
-	<script>
-		var busyIndocator = document.getElementById("busy-container");
-		var list = document.getElementById("fetch-list");
+<section>
+	<h3>Upload Single File</h3>
+	<div class="snippet">
+		<ui5-file-uploader>
+			<ui5-button>Upload Single File</ui5-button>
+		</ui5-file-uploader>
+	</div>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-file-uploader&gt;</span>
+	<span class="nt">&lt;ui5-button&gt;</span>Upload Single File<span class="nt">&lt;/ui5-button&gt;</span>
+<span class="nt">&lt;/ui5-file-uploader&gt;</span>
+	</code></pre></figure></pre>
+</section>
 
-		document.getElementById("fetch-btn").addEventListener("click", function(event) {
-			busyIndocator.active = true;
+<section>
+	<h3>File Uploader With No Input</h3>
+	<div class="snippet">
+		<ui5-file-uploader hide-input>
+			<ui5-button>Upload File</ui5-button>
+		</ui5-file-uploader>
+	</div>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-file-uploader</span> <span class="na">hide-input</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-button&gt;</span>Upload File<span class="nt">&lt;/ui5-button&gt;</span>
+<span class="nt">&lt;/ui5-file-uploader&gt;</span>
+	</code></pre></figure></pre>
+</section>
 
-			setTimeout(function() {
-				var elements = ["UI5", "Web", "Components"].forEach(function(title) {
-					var el = document.createElement("ui5-li");
-					el.textContent = title;
+<section>
+	<h3>Custom File Uploaders</h3>
+	<div class="snippet">
+		<ui5-file-uploader hide-input>
+			<ui5-avatar icon="upload"></ui5-avatar>
+		</ui5-file-uploader>
 
-					list.appendChild(el);
-				});
+		<ui5-file-uploader hide-input>
+			<ui5-badge>Upload File</ui5-badge>
+		</ui5-file-uploader>
+	</div>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-file-uploader</span> <span class="na">hide-input</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-avatar</span> <span class="na">icon=</span><span class="s">"upload"</span><span class="nt">&gt;&lt;/ui5-avatar&gt;</span>
+<span class="nt">&lt;/ui5-file-uploader&gt;</span>
 
-				busyIndocator.active = false;
-			}, 2000);
-		});
-	</script>
-</body>
+<span class="nt">&lt;ui5-file-uploader</span> <span class="na">hide-input</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-badge&gt;</span>Upload File<span class="nt">&lt;/ui5-badge&gt;</span>
+<span class="nt">&lt;/ui5-file-uploader&gt;</span>
+	</code></pre></figure></pre>
+</section>
+
+<section>
+	<h3>Button With Icon File Uploader</h3>
+	<div class="snippet">
+		<ui5-file-uploader>
+			<ui5-button icon="upload">Upload</ui5-button>
+		</ui5-file-uploader>
+		<ui5-file-uploader>
+			<ui5-button icon="upload" icon-end>Upload</ui5-button>
+		</ui5-file-uploader>
+		<ui5-file-uploader>
+			<ui5-button icon="upload" icon-only></ui5-button>
+		</ui5-file-uploader>
+	</div>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-file-uploader&gt;</span>
+	<span class="nt">&lt;ui5-button</span> <span class="na">icon=</span><span class="s">"upload"</span><span class="nt">&gt;</span>Upload<span class="nt">&lt;/ui5-button&gt;</span>
+<span class="nt">&lt;/ui5-file-uploader&gt;</span>
+<span class="nt">&lt;ui5-file-uploader&gt;</span>
+	<span class="nt">&lt;ui5-button</span> <span class="na">icon=</span><span class="s">"upload"</span> <span class="na">icon-end</span><span class="nt">&gt;</span>Upload<span class="nt">&lt;/ui5-button&gt;</span>
+<span class="nt">&lt;/ui5-file-uploader&gt;</span>
+<span class="nt">&lt;ui5-file-uploader&gt;</span>
+	<span class="nt">&lt;ui5-button</span> <span class="na">icon=</span><span class="s">"upload"</span> <span class="na">icon-only</span><span class="nt">&gt;&lt;/ui5-button&gt;</span>
+<span class="nt">&lt;/ui5-file-uploader&gt;</span>
+	</code></pre></figure></pre>
+</section>
+
+
 
 
     <div class="page-container">
@@ -1644,13 +1693,11 @@
         <section class="component-description">
           <h3 class="comment-api-title">Overview</h3>
 
-The <code>ui5-busyindicator</code> signals that some operation is going on and that the user must wait. It does not block the current UI screen so other operations could be triggered in parallel.
+<h3>Usage</h3>
 
-<h3>Usage</h3> For the <code>ui5-busyindicator</code> you can define the size of the indicator as well as whether it is shown or hidden. In order to hide it, use the html attribute <code>hidden</code> or <code>display: none;</code>
+For the <code>ui5-file-uploader</code> <h3>ES6 Module Import</h3>
 
-<h3>ES6 Module Import</h3>
-
-<code>import "@ui5/webcomponents/dist/BusyIndicator";</code>
+<code>import @ui5/webcomponents/dist/FileUploader.js";</code>
           <section class="component-api space-top">
             
                   <h3 class="comment-api-title" >Properties/Attributes</h3>
@@ -1666,24 +1713,108 @@ The <code>ui5-busyindicator</code> signals that some operation is going on and t
             
                       <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          active
+                          accept
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Comma-separated list of file types that the <code>ui5-file-uploader</code> should accept.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          disabled
                             <br>
                         </div>
                         <div class="cell api-table-content-cell">boolean</div>
                         <div class="cell api-table-content-cell">false</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines if the busy indicator is visible on the screen. By default it is not.
+                            Defines whether <code>ui5-file-uploader</code> is in disabled state. <br><br> <b>Note:</b> A disabled <code>ui5-input</code> is completely noninteractive.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          files
+                            (readonly)
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">FileList</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            FileList of all selected files.
                         </div>
                       </div>
                       <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          size
+                          hideInput
+                            <br>
+                            <code>hide-input</code>
+                        </div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            If set to "true", the input field of <code>ui5-file-uploader</code> will not be rendered. Only the default slot that is passed will be rendered.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          multiple
                             <br>
                         </div>
-                        <div class="cell api-table-content-cell">BusyIndicatorSize</div>
-                        <div class="cell api-table-content-cell">&quot;Large&quot;</div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell">false</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the size of the <code>ui5-busyindicator</code>. <br><br> <b>Note:</b> Available options are "Small", "Medium" and "Large"
+                            Allows multiple files to be chosen.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          name
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell">&quot;&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Determines the name with which the <code>ui5-file-uploader</code> will be submitted in an HTML form.
+            
+            <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project: <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
+            
+            <b>Note:</b> When set, a native <code>input</code> HTML element will be created inside the <code>ui5-file-uploader</code> so that it can be submitted as part of an HTML form. Do not use this property unless you need to submit a form.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          placeholder
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell">&quot;&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines a short hint intended to aid the user with data entry when the <code>ui5-file-uploader</code> has no value.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          value
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell">&quot;&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Name/names of the file/files to upload.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          valueState
+                            <br>
+                            <code>value-state</code>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell">&quot;None&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the value state of the <code>ui5-file-uploader</code>. Available options are: <code>None</code>, <code>Success</code>, <code>Warning</code>, and <code>Error</code>.
                         </div>
                       </div>
             
@@ -1705,12 +1836,35 @@ The <code>ui5-busyindicator</code> signals that some operation is going on and t
             
                     <div class="row api-table-roll-even">
                       <div class="cell api-table-content-cell api-table-content-cell-bold">default</div>
-                      <div class="cell api-table-content-cell">Node [0..n]</div>
-                      <div class="cell api-table-content-cell api-table-content-cell-description">Determines the content over which the <code>ui5-busyindicator</code> will appear.</div>
+                      <div class="cell api-table-content-cell">HTMLElement [0..n]</div>
+                      <div class="cell api-table-content-cell api-table-content-cell-description">By default the <code>ui5-file-uploader</code> contains a single input field. With this slot you can pass any content that you wish to add. See the samples for more information</div>
                     </div>
             
                 </div>
             
+                  <h3 class="comment-api-title space-top">Events</h3>
+                  <p class="small-space-top" >This Web Component fires semantic events upon user interaction. You can bind to these events with the standard DOM APIs, such as <code>addEventListener</code>. </p>
+            
+                  <div class="small-space-top api-table">
+                    <div class="head api-table-header-roll">
+                      <div class="cell api-table-header-cell">Name</div>
+                      <div class="cell api-table-header-cell">Description</div>
+                    </div>
+            
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">change</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                        Event is fired when the value of the file path has been changed. Note: Keep in mind that because of the HTML input element of type file, the event is also fired in Chrome browser when the Cancel button of the uploads window is pressed.
+                        </div>
+                      </div>
+            
+                        <tr class="api-table-event-param">
+                          <div class="api-table-content-event-params-wrapper">
+                            <div class="cell api-table-param-name api-table-content-cell api-table-content-cell-bold">files</div>
+                            <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> FileList <br/> <strong class="api-table-event-description bold">description:</strong> The current files.</div>
+                          </div>
+                        </tr>
+                  </div>
             
             
           </section>

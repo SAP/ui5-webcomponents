@@ -1,8 +1,5 @@
-commit 78a9181585f24457c8dc7b8e8f8bae195543cc74
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Feb 14 06:39:09 2020 +0200
+commit e628dbd04609926f9cf1569a4b1721e31a072be0
+Author: Petar Dimov <32839090+dimovpetar@users.noreply.github.com>
+Date:   Fri Feb 14 14:04:10 2020 +0200
 
-    refactor(ui5-segmentedbutton): focus selected button (#1208)
-    
-    - All themes and browsers: readonly textarea does not change its background on hover
-    - Quartz Dark and IE: the textarea has proper dark background, not a white one as used to.
+    feat(ui5-file-uploader): initial implementation (#1184)
