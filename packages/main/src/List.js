@@ -215,6 +215,7 @@ const metadata = {
 		 *
 		 * @event
 		 * @public
+		 * @since 1.0.0-rc.6
 		 */
 		loadMore: {},
 	},
