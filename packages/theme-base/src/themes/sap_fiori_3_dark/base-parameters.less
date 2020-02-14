@@ -98,8 +98,10 @@
 @sapContent_ForegroundBorderColor: @sapPrimary5;
 @sapContent_MarkerTextColor: lighten(@sapAccentColor7, 30);
 @sapContent_ImagePlaceholderForegroundColor: lighten(@sapBaseColor, 20);
-@sapContent_Shadow0: 0 0 0 1px, fade(@sapContent_ShadowColor, 20), 0 0.125rem 0.5rem 0 fade(@sapContent_ShadowColor, 30);
-@sapContent_Shadow2: 0 0 0 1px fade(@sapContent_ShadowColor, 15), 0 0.625rem 1.875rem 0 fade(@sapContent_ShadowColor, 30);
+@sapContent_Shadow0: 0 0 0 0.0625rem fade(@sapContent_ShadowColor, 20), 0 0.125rem 0.5rem 0 fade(@sapContent_ShadowColor, 30);
+@sapContent_Shadow1: 0 0 0 0.0625rem fade(@sapContent_ShadowColor, 50), 0 0.125rem 0.5rem 0 fade(@sapContent_ShadowColor, 60);
+@sapContent_Shadow2: 0 0 0 0.0625rem fade(@sapContent_ShadowColor, 50), 0 0.625rem 1.875rem 0 fade(@sapContent_ShadowColor, 60);
+@sapContent_Shadow3: 0 0 0 0.0625rem fade(@sapContent_ShadowColor, 50), 0 1.25rem 5rem 0 fade(@sapContent_ShadowColor, 60);
 @sapContent_HeaderShadow: 0 0 0.25rem 0 fade(@sapContent_ShadowColor, 80), inset 0 -0.0625rem 0 0 fade(@sapContent_ContrastShadowColor, 8);
 @sapContent_DisabledTextColor: fade(@sapTextColor, (100 - (@sapContent_DisabledOpacity * 100)));
 @sapContent_ForegroundTextColor: contrast(@sapContent_ForegroundColor, @sapTextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);

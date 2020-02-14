@@ -82,7 +82,7 @@
     width: var(--ui5_carousel_button_size);
     height: var(--ui5_carousel_button_size);
     border-radius: 50%;
-    box-shadow: var(--sapUiShadowLevel1);
+    box-shadow: var(--sapContent_Shadow1);
     cursor: pointer;
     outline-offset: .1rem;
 }

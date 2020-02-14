@@ -1,0 +1,4 @@
+:root {
+    --ui5_carousel_button_size: 2.5rem;
+    --ui5_carousel_dot_border: 1px solid var(--sapContent_ForegroundBorderColor);
+}
