@@ -79,7 +79,6 @@
 	font-size: var(--sapFontMediumSize);
 }
 
-
 .ui5-list-nodata-text {
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -87,6 +86,8 @@
 }
 
 .ui5-list-busy-row {
+	display: flex;
+	align-items: center;
 	height: var(--_ui5_list_busy_row_height);
-	text-align: center;
+	justify-content: center;
 }

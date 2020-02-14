@@ -303,6 +303,10 @@ class List extends UI5Element {
 		return this.items.length === 0 && this.noDataText;
 	}
 
+	get showBusy() {
+		return this.busy || this.infiniteScroll;
+	}
+
 	onBeforeRendering() {
 		this.prepareListItems();
 	}

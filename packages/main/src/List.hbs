@@ -34,9 +34,9 @@
 		</footer>
 	{{/if}}
 
-	{{#if infiniteScroll}} 
+	{{#if showBusy}}
 		<div class="ui5-list-busy-row">
-			<ui5-busyindicator ?active="{{busy}}" size="Medium" style="height: 3rem"></ui5-busyindicator>
+			<ui5-busyindicator ?active="{{busy}}" size="Medium" class="ui5-list-busy-ind"></ui5-busyindicator>
 		</div>
 	{{/if}}
 
