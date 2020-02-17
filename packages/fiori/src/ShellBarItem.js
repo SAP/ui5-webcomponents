@@ -22,7 +22,7 @@ const metadata = {
 		/**
 		 * Defines the item text.
 		 * @type {string}
-		 * @defaulValue: ""
+		 * @defaulValue ""
 		 * @public
 		 */
 		text: {
