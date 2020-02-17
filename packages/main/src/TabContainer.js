@@ -52,7 +52,7 @@ const metadata = {
 	},
 	properties: /** @lends  sap.ui.webcomponents.main.TabContainer.prototype */ {
 		/**
-		 * Determines whether the tabs are in a fixed state that is not
+		 * Defines whether the tabs are in a fixed state that is not
 		 * expandable/collapsible by user interaction.
 		 *
 		 * @type {Boolean}
@@ -64,7 +64,7 @@ const metadata = {
 		},
 
 		/**
-		 * Determines whether the tab content is collapsed.
+		 * Defines whether the tab content is collapsed.
 		 *
 		 * @type {Boolean}
 		 * @defaultvalue false
@@ -75,7 +75,7 @@ const metadata = {
 		},
 
 		/**
-		 * Specifies if the overflow select list is displayed.
+		 * Defines whether the overflow select list is displayed.
 		 * <br><br>
 		 * The overflow select list represents a list, where all tab filters are displayed
 		 * so that it's easier for the user to select a specific tab filter.
@@ -89,11 +89,11 @@ const metadata = {
 		},
 
 		/**
-		 * Specifies the alignment of the <code>main text</code> and the <code>additionalText</code> of a tab.
+		 * Defines the alignment of the <code>main text</code> and the <code>additionalText</code> of a tab.
 		 * <br>
 		 * <b>Note:</b>
 		 * The <code>main text</code> and the <code>additionalText</code> would be displayed vertically by defualt,
-		 * but when set to code>Inline</code>, they would be displayed horizontally.
+		 * but when set to <code>Inline</code>, they would be displayed horizontally.
 		 * <br><br>
 		 * Available options are:
 		 * <ul>
