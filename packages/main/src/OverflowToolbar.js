@@ -32,12 +32,18 @@ const metadata = {
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.OverflowToolbar.prototype */ {
+		/**
+		 * @private
+		 */
 		_items: {
 			type: Object,
 			multiple: true,
 			defaultValue: [],
 		},
 
+		/**
+		 * @private
+		 */
 		_overflowedItems: {
 			type: Object,
 			multiple: true,
@@ -55,12 +61,12 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * The <code>ui5-overflow-toolbar</code> component represents a toolbar which overflows.
+ * A container control, that provides overflow when its content does not fit in the visible area.
  *
  *
  * <h3>Usage</h3>
  *
- * For the <code>ui5-overflow-toolbar</code>...
+ * The content of the OverflowToolbar moves into the overflow area from right to left when the available space is not enough in the visible area of the container. It can be accessed by the user through the overflow button that opens it in a popover.
  *
  * <h3>ES6 Module Import</h3>
  *
