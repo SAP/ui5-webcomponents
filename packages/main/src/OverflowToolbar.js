@@ -144,7 +144,7 @@ class OverflowToolbar extends UI5Element {
 	attachEventHandlers() {
 		this.eventsHandler = this.fireEventOnRealTarget.bind(this);
 		OverflowToolbar.events.forEach(event => {
-			document.addEventListener(event, this.eventsHandler);
+			this._getPopover().addEventListener(event, this.eventsHandler);
 		});
 	}
 
