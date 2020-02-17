@@ -8,14 +8,14 @@ const TabLayouts = {
 	/**
 	 * Inline type, the tab <code>main text</code> and <code>additionalText</code> are displayed horizotally.
 	 * @public
-	 * @type {Default}
+	 * @type {Inline}
 	 */
 	Inline: "Inline",
 
 	/**
 	 * Standard type, the tab <code>main text</code> and <code>additionalText</code> are displayed vertically.
 	 * @public
-	 * @type {Subtle}
+	 * @type {Standard}
 	 */
 	Standard: "Standard",
 };
