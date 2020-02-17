@@ -515,7 +515,7 @@ const calculateHeaderItemClasses = (item, mixedMode) => {
 		classes.push("ui5-tc__headerItem--disabled");
 	}
 
-	if (item.design === TabLayout.Inline) {
+	if (item.tabLayout === TabLayout.Inline) {
 		classes.push("ui5-tc__headerItem--inline");
 	}
 
