@@ -1,5 +1,5 @@
-commit 28ed69a9b3953825d852567e0115db3193cdbe16
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Fri Feb 14 15:58:23 2020 +0200
+commit 02ddd0d6f809187c301869392cd4036bc11bbd49
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Mon Feb 17 16:17:12 2020 +0200
 
-    feat: introduce belize_hcw theme (#1215)
+    feat(ui5-shellbar-item): introduce count property (#1221)

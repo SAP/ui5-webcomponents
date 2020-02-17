@@ -1561,7 +1561,7 @@
 		<ui5-button icon="nav-back" slot="startButton"></ui5-button>
 
 		<ui5-shellbar-item id="disc" icon="disconnected" text="Disconnect"></ui5-shellbar-item>
-		<ui5-shellbar-item id="call" icon="incoming-call" text="Incoming Calls"></ui5-shellbar-item>
+		<ui5-shellbar-item id="call" icon="incoming-call" text="Incoming Calls" count="4"></ui5-shellbar-item>
 
 		<ui5-input slot="searchField"></ui5-input>
 
@@ -1609,7 +1609,7 @@
 	<span class="nt">&lt;ui5-button</span> <span class="na">icon=</span><span class="s">"nav-back"</span> <span class="na">slot=</span><span class="s">"startButton"</span><span class="nt">&gt;&lt;/ui5-button&gt;</span>
 
 	<span class="nt">&lt;ui5-shellbar-item</span> <span class="na">id=</span><span class="s">"disc"</span> <span class="na">icon=</span><span class="s">"disconnected"</span> <span class="na">text=</span><span class="s">"Disconnect"</span><span class="nt">&gt;&lt;/ui5-shellbar-item&gt;</span>
-	<span class="nt">&lt;ui5-shellbar-item</span> <span class="na">id=</span><span class="s">"call"</span> <span class="na">icon=</span><span class="s">"incoming-call"</span> <span class="na">text=</span><span class="s">"Incoming Calls"</span><span class="nt">&gt;&lt;/ui5-shellbar-item&gt;</span>
+	<span class="nt">&lt;ui5-shellbar-item</span> <span class="na">id=</span><span class="s">"call"</span> <span class="na">icon=</span><span class="s">"incoming-call"</span> <span class="na">text=</span><span class="s">"Incoming Calls"</span> <span class="na">count=</span><span class="s">"4"</span><span class="nt">&gt;&lt;/ui5-shellbar-item&gt;</span>
 
 	<span class="nt">&lt;ui5-input</span> <span class="na">slot=</span><span class="s">"searchField"</span><span class="nt">&gt;&lt;/ui5-input&gt;</span>
 
@@ -2020,6 +2020,18 @@ The <code>ui5-shellbar</code> is meant to serve as an application header and inc
             
                       <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          count
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell">&quot;&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the count displayed in the top-right corner.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.6</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
                           icon
                             <br>
                         </div>
@@ -2029,7 +2041,7 @@ The <code>ui5-shellbar</code> is meant to serve as an application header and inc
                             Defines the name of the item's icon.
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           text
                             <br>
