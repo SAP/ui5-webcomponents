@@ -28,6 +28,17 @@ const metadata = {
 		text: {
 			type: String,
 		},
+
+		/**
+		 * Defines the count displayed in the top-right corner.
+		 * @type {string}
+		 * @defaultValue ""
+		 * @since 1.0.0-rc.6
+		 * @public
+		 */
+		count: {
+			type: String,
+		},
 	},
 
 	events: /** @lends sap.ui.webcomponents.fiori.ShellBarItem.prototype */ {
