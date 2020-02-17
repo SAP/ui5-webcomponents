@@ -25,8 +25,9 @@ const metadata = {
 		 * @slot
 		 * @public
 		 */
-		items: {
-			type: Node,
+		"default": {
+			propertyName: "items",
+			type: HTMLElement,
 			individualSlots: true,
 		},
 	},

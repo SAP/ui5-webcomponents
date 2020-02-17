@@ -19,6 +19,7 @@ const newComponents = [
   "ResponsivePopover",
   "SegmentedButton",
   "Toast",
+  "OverflowToolbar",
 ];
 
 packages.forEach(package => {
