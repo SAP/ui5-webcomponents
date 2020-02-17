@@ -88,6 +88,28 @@ const metadata = {
 			type: Boolean,
 		},
 
+		/**
+		 * Specifies the alignment of the <code>main text</code> and the <code>additionalText</code> of a tab.
+		 * <br>
+		 * <b>Note:</b>
+		 * The <code>main text</code> and the <code>additionalText</code> would be displayed vertically by defualt,
+		 * but when set to code>Inline</code>, they would be displayed horizontally.
+		 * <br><br>
+		 * Available options are:
+		 * <ul>
+		 * <li><code>Standard</code></li>
+		 * <li><code>Inline</code></li>
+		 * <ul>
+		 *
+		 * @type {String}
+		 * @defaultvalue "Standard"
+		 * @public
+		 */
+		tabLayout: {
+			type: String,
+			defaultValue: TabLayout.Standard,
+		},
+
 		_selectedTab: {
 			type: Object,
 		},
@@ -227,7 +249,7 @@ class TabContainer extends UI5Element {
 
 			return {
 				item,
-				isInline: item.design === TabLayout.Inline,
+				isInline: this.tabLayout === TabLayout.Inline,
 				isMixedModeTab: !item.icon && this.mixedMode,
 				isTextOnlyTab: !item.icon && !this.mixedMode,
 				isIconTab: item.icon,

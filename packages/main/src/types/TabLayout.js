@@ -1,19 +1,19 @@
 import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
 
 /**
- * @lends sap.ui.webcomponents.main.types.TabDesign.prototype
+ * @lends sap.ui.webcomponents.main.types.TabLayout.prototype
  * @public
  */
 const TabLayouts = {
 	/**
-	 * default type (no special styling)
+	 * Inline type, the tab <code>main text</code> and <code>additionalText</code> are displayed horizotally.
 	 * @public
 	 * @type {Default}
 	 */
 	Inline: "Inline",
 
 	/**
-	 * subtle type (appears as regular text, rather than a link)
+	 * Standard type, the tab <code>main text</code> and <code>additionalText</code> are displayed vertically.
 	 * @public
 	 * @type {Subtle}
 	 */
@@ -22,7 +22,7 @@ const TabLayouts = {
 
 /**
  * @class
- * Different types of Tab design.
+ * Different types of Tab layouts.
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.types.TabLayout

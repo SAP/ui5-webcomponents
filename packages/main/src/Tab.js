@@ -6,7 +6,6 @@ import TabTemplate from "./generated/templates/TabTemplate.lit.js";
 
 // Styles
 import css from "./generated/themes/Tab.css.js";
-import TabLayout from "./types/TabLayout.js";
 
 /**
  * @public
@@ -100,28 +99,6 @@ const metadata = {
 		 */
 		selected: {
 			type: Boolean,
-		},
-
-		/**
-		 * Specifies the alignment of the <code>main text</code> and the <code>additionalText</code>.
-		 * <br
-		 * <b>Note:</b>
-		 * By default, the <code>additionalText</code> would be displayed above the <code>main text</code>,
-		 * but when set to code>Inline</code>, the <code>additionalText</code> would be displayed next to the <code>main text</code>.
-		 * <br><br>
-		 * Available options are:
-		 * <ul>
-		 * <li><code>Standard</code></li>
-		 * <li><code>Inline</code></li>
-		 * <ul>
-		 *
-		 * @type {String}
-		 * @defaultvalue false
-		 * @public
-		 */
-		design: {
-			type: String,
-			defaultValue: TabLayout.Standard,
 		},
 
 		_tabIndex: {
