@@ -1,9 +1,9 @@
-commit e79dcc8a28689933248b6749e733fa20d404b5b3
+commit 756b78b788f0e4b31591baa330dcb6bc3a1d597c
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Feb 18 09:55:25 2020 +0200
+Date:   Tue Feb 18 13:54:17 2020 +0200
 
-    feat(ui5-tabcontainer): add tabLayout property (#1214)
+    feat(ui5-list): add infinite-scroll capability (#1220)
     
-    Add new property "tabLayout" to provide two types of alignment of the tab main and additional texts
-    
-    Fixes: https://github.com/SAP/ui5-webcomponents/issues/1195
+    - introduce infiniteScroll property, when set an event  "loadMore" will be fired when user scrolls to the very bottom of the list, then the user might load new items
+    - introduce "loadMore" event
+    - introduce "busy" property to display a loading indicator
