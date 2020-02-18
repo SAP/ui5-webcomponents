@@ -202,6 +202,11 @@ class TimePicker extends UI5Element {
 			stayOpenOnScroll: true,
 			afterClose: () => {
 				this._isPickerOpen = false;
+				const sliders = this._getPopover().default.filter(x => x.isUI5Element);
+
+				for (let i = 0; i < sliders.length; i++) {
+					sliders[i].collapseSlider();
+				}
 			}
 		};
 	}
@@ -272,7 +277,7 @@ class TimePicker extends UI5Element {
 	}
 
 	closePicker() {
-		let sliders = this._getPopover().default.filter(x => x.isUI5Element);
+		const sliders = this._getPopover().default.filter(x => x.isUI5Element);
 
 		this._getPopover().close();
 
@@ -353,7 +358,7 @@ class TimePicker extends UI5Element {
 			period = periodsSlider ? periodsSlider.value : "AM";
 
 		if (period === "PM") {
-			selectedDate.setHours(hours*1 + 12);
+			selectedDate.setHours(hours * 1 + 12);
 		} else {
 			selectedDate.setHours(hours);
 		}

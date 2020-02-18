@@ -150,7 +150,11 @@ class Slider extends UI5Element {
 	}
 
 	onBeforeRendering(){
-		this._itemCellHeight = this.shadowRoot.querySelectorAll(".ui5-slider-item").length && this.shadowRoot.querySelectorAll(".ui5-slider-item")[0].offsetHeight / 16;
+		this._updateItemCellHeight();
+	}
+
+	_updateItemCellHeight(){
+		this._itemCellHeight = this.shadowRoot.querySelectorAll(".ui5-slider-item").length && Number(getComputedStyle(this.shadowRoot.querySelector(".ui5-slider-item")).getPropertyValue("--_ui5_slider_item_height").replace("rem",""));
 	}
 
 	_findSelectedElement(){
@@ -194,11 +198,11 @@ class Slider extends UI5Element {
 		// this._scroller.scrollContainer = this.shadowRoot.querySelector(`#${this._id}--wrapper`);
 		// this._scroller.attachEvent("scroll", this._updateScrolling.bind(this));
 
-		this.shadowRoot.querySelector(".ui5-slider-wrapper > ul").addEventListener("wheel", (e) => {
+		this.shadowRoot.querySelector(".ui5-slider-wrapper").addEventListener("wheel", (e) => {
 			e.stopPropagation();
 			e.preventDefault();
 
-			if (e.timeStamp === this._prevWheelTimestamp){
+			if (e.timeStamp === this._prevWheelTimestamp || !this._expanded){
 				return;
 			}
 
@@ -262,7 +266,10 @@ class Slider extends UI5Element {
 		const sliderElement = this.shadowRoot.getElementById(`${this._id}--items-list`);
 		if ( index < this._items.length && index > - 1) {
 			let offsetSelectedElement = 4 * this._itemCellHeight - (index * this._itemCellHeight);
+			// let scrollToValue = index * 16 * this._itemCellHeight;
+			// console.log(scrollToValue);
 			sliderElement.setAttribute("style",`top:${offsetSelectedElement}rem`);
+			// this.shadowRoot.getElementById(`${this._id}--wrapper`).scrollTo({top: scrollToValue, left: 0, behavior: 'smooth'});
 			this.value = this._items[index];
 			this._currentElementIndex = index;
 		}
