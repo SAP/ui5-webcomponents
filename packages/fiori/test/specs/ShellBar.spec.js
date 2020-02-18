@@ -1,7 +1,17 @@
+
 const assert = require("chai").assert;
 
 describe("Component Behavior", () => {
 	browser.url("http://localhost:8081/test-resources/pages/ShellBar.html");
+
+	describe("ui5-shellbar-item", () => {
+		it("tests count property", () => {
+			const shellbar = browser.$("#shellbarwithitems");
+			const icon = shellbar.shadow$("ui5-icon[data-count]");
+
+			assert.strictEqual(icon.getAttribute("data-count"), '42', "Count property propagates to ui5-icon");
+		})
+	});
 
 	describe("Responsiveness", () => {
 
@@ -228,7 +238,7 @@ describe("Component Behavior", () => {
 				assert.strictEqual(input.getValue(), "Product Switch", "Input value is set by click event of Product Switch icon");
 			});
 
-			it("tests logoPress event", () => {
+			it("tests logoClick event", () => {
 				const logo = browser.$("#shellbar").shadow$(".ui5-shellbar-logo");
 				const input = browser.$("#press-input");
 
@@ -281,6 +291,15 @@ describe("Component Behavior", () => {
 		describe("Small screen", () => {
 			before(() => {
 				browser.setWindowSize(510, 1080);
+			});
+
+			it("tests logoClick event", () => {
+				const logo = browser.$("#shellbarWithLogoClick").shadow$(".ui5-shellbar-logo");
+				const title = "SAPLabsBulgaria";
+				const input = browser.$("#press-input2");
+
+				logo.click();
+				assert.strictEqual(input.getValue(), title, "Input value is set by click event of Logo");
 			});
 
 			it("tests opening of menu", () => {

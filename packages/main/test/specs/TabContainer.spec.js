@@ -13,15 +13,18 @@ describe("TabContainer general interaction", () => {
 		assert.strictEqual(selectedFilter.id, selectedTab.id, "The IDs of the ui5-tab and the rendered tab filter matches.");
 	});
 
-	it("tests itemSelect event", () => {
+	it("tests tabSelect event", () => {
 		const item = browser.$("#tabContainer1").shadow$(".ui5-tc__headerItem:nth-child(3)");
 		const result = browser.$("#result");
+		const resultIdx = browser.$("#resultIdx");
 
 		const SELECTED_TAB_TEXT = "Laptops";
+		const SELECTED_TAB_INDEX = "1";
 
 		item.click();
 
-		assert.strictEqual(result.getText(), SELECTED_TAB_TEXT, "Item text is retrieved correctly.");
+		assert.strictEqual(result.getText(), SELECTED_TAB_TEXT, "Tab text is retrieved correctly.");
+		assert.strictEqual(resultIdx.getText(), SELECTED_TAB_INDEX, "Tab index is retrieved correctly.");
 	});
 
 	it("scroll works on iconsOnly TabContainer", () => {

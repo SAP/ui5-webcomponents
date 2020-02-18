@@ -1,18 +1,28 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-down.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isBackSpace, isDelete, isShow } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import * as Filters from "./ComboBoxFilters.js";
 
-// Styles
+import {
+	INPUT_SUGGESTIONS_TITLE,
+} from "./generated/i18n/i18n-defaults.js";
+
+// Templates
 import ComboBoxTemplate from "./generated/templates/ComboBoxTemplate.lit.js";
 import ComboBoxPopoverTemplate from "./generated/templates/ComboBoxPopoverTemplate.lit.js";
+
+// Styles
 import ComboBoxCss from "./generated/themes/ComboBox.css.js";
 import ComboBoxPopoverCss from "./generated/themes/ComboBoxPopover.css.js";
+import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
+
 import ComboBoxItem from "./ComboBoxItem.js";
 import Icon from "./Icon.js";
-import Popover from "./Popover.js";
+import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
 import BusyIndicator from "./BusyIndicator.js";
 import StandardListItem from "./StandardListItem.js";
@@ -249,6 +259,10 @@ class ComboBox extends UI5Element {
 		return ComboBoxCss;
 	}
 
+	static get staticAreaStyles() {
+		return [ComboBoxPopoverCss, ResponsivePopoverCommonCss];
+	}
+
 	static get template() {
 		return ComboBoxTemplate;
 	}
@@ -257,15 +271,12 @@ class ComboBox extends UI5Element {
 		return ComboBoxPopoverTemplate;
 	}
 
-	static get staticAreaStyles() {
-		return ComboBoxPopoverCss;
-	}
-
 	constructor(props) {
 		super(props);
 
 		this._filteredItems = [];
 		this._initialRendering = true;
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
@@ -288,7 +299,10 @@ class ComboBox extends UI5Element {
 	}
 
 	onAfterRendering() {
-		this._width = this.getBoundingClientRect().width;
+		if (isPhone() && this._respPopover.opened) {
+			// Set initial focus to the native input
+			this.inner.focus();
+		}
 	}
 
 	_focusin(event) {
@@ -311,13 +325,18 @@ class ComboBox extends UI5Element {
 
 	_afterClosePopover() {
 		this._iconPressed = false;
+
+		// close device's keyboard and prevent further typing
+		if (isPhone()) {
+			this.blur();
+		}
 	}
 
-	_togglePopover() {
-		if (this.popover.opened) {
-			this.popover.close();
+	_toggleRespPopover() {
+		if (this._respPopover.opened) {
+			this._closeRespPopover();
 		} else {
-			this.popover.openBy(this);
+			this._openRespPopover();
 		}
 	}
 
@@ -330,7 +349,7 @@ class ComboBox extends UI5Element {
 		this.inner.focus();
 		this._resetFilter();
 
-		this._togglePopover();
+		this._toggleRespPopover();
 	}
 
 	_input(event) {
@@ -344,7 +363,7 @@ class ComboBox extends UI5Element {
 		this.filterValue = value;
 		this.fireEvent("input");
 
-		this.popover.openBy(this);
+		this._openRespPopover();
 	}
 
 	_startsWithMatchingItems(str) {
@@ -357,8 +376,23 @@ class ComboBox extends UI5Element {
 		if (isShow(event) && !this.readonly && !this.disabled) {
 			event.preventDefault();
 			this._resetFilter();
-			this._togglePopover();
+			this._toggleRespPopover();
 		}
+	}
+
+	_click(event) {
+		if (isPhone() && !this.readonly) {
+			this._openRespPopover();
+		}
+	}
+
+	_closeRespPopover() {
+		this._respPopover.close();
+	}
+
+	_openRespPopover() {
+		this.updateStaticAreaItemContentDensity();
+		this._respPopover.open(this);
 	}
 
 	_filterItems(str) {
@@ -402,6 +436,7 @@ class ComboBox extends UI5Element {
 		const listItem = event.detail.item;
 
 		this._tempValue = listItem.mappedItem.text;
+		this.filterValue = this._tempValue;
 
 		this._filteredItems.map(item => {
 			item.selected = (item === listItem.mappedItem);
@@ -410,15 +445,7 @@ class ComboBox extends UI5Element {
 		});
 
 		this._inputChange();
-		this.popover.close();
-	}
-
-	get styles() {
-		return {
-			popover: {
-				"min-width": `${this._width}px`,
-			},
-		};
+		this._closeRespPopover();
 	}
 
 	get _filteredItems() {
@@ -427,29 +454,31 @@ class ComboBox extends UI5Element {
 		});
 	}
 
-	get inner() {
-		return this.shadowRoot.querySelector("[inner-input]");
+	get _headerTitleText() {
+		return this.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
 	}
 
-	get popover() {
-		return this.getStaticAreaItemDomRef().querySelector("ui5-popover");
+	get inner() {
+		return isPhone() ? this._respPopover.querySelector(".ui5-input-inner-phone") : this.shadowRoot.querySelector("[inner-input]");
+	}
+
+	get _respPopover() {
+		return this.getStaticAreaItemDomRef().querySelector("ui5-responsive-popover");
 	}
 
 	get editable() {
 		return !this.readonly;
 	}
 
-	static async define(...params) {
+	static async onDefine() {
 		await Promise.all([
 			ComboBoxItem.define(),
 			Icon.define(),
-			Popover.define(),
+			ResponsivePopover.define(),
 			List.define(),
 			BusyIndicator.define(),
 			StandardListItem.define(),
 		]);
-
-		super.define(...params);
 	}
 }
 

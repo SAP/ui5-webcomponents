@@ -49,6 +49,23 @@ class StaticAreaItem {
 
 	/**
 	 * @protected
+	 */
+	_updateContentDensity(isCompact) {
+		if (!this.staticAreaItemDomRef) {
+			return;
+		}
+
+		if (isCompact) {
+			this.staticAreaItemDomRef.classList.add("sapUiSizeCompact");
+			this.staticAreaItemDomRef.classList.add("ui5-content-density-compact");
+		} else {
+			this.staticAreaItemDomRef.classList.remove("sapUiSizeCompact");
+			this.staticAreaItemDomRef.classList.remove("ui5-content-density-compact");
+		}
+	}
+
+	/**
+	 * @protected
 	 * Returns reference to the DOM element where the current fragment is added.
 	 */
 	getDomRef() {
@@ -60,8 +77,14 @@ class StaticAreaItemElement extends HTMLElement {
 	constructor() {
 		super();
 	}
+
+	get isUI5Element() {
+		return true;
+	}
 }
 
-customElements.define("ui5-static-area-item", StaticAreaItemElement);
+if (!customElements.get("ui5-static-area-item")) {
+	customElements.define("ui5-static-area-item", StaticAreaItemElement);
+}
 
 export default StaticAreaItem;

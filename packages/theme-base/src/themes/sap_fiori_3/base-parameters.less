@@ -101,8 +101,10 @@
 @sapContent_DisabledTextColor: fade(@sapTextColor, (100 - (@sapContent_DisabledOpacity * 100)));
 @sapContent_ForegroundColor: darken(@sapBaseColor, 6.1);
 @sapContent_ForegroundTextColor: contrast(@sapContent_ForegroundColor, @sapTextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
-@sapContent_Shadow0: 0 0 0 0.0625rem fade(@sapContent_ContrastShadowColor, 20), 0 0.125rem 0.5rem 0 fade(@sapContent_ShadowColor, 30);
-@sapContent_Shadow2: 0 0 0 0.0625rem fade(@sapContent_ShadowColor, 15), 0 0.625rem 1.875rem 0 fade(@sapContent_ShadowColor, 30);
+@sapContent_Shadow0: 0 0 0 0.0625rem fade(@sapContent_ShadowColor, 10), 0 0.125rem 0.5rem 0 fade(@sapContent_ShadowColor, 10);
+@sapContent_Shadow1: 0 0 0 0.0625rem fade(@sapContent_ShadowColor, 42), 0 0.125rem 0.5rem 0 fade(@sapContent_ShadowColor, 30);
+@sapContent_Shadow2: 0 0 0 0.0625rem fade(@sapContent_ShadowColor, 42), 0 0.625rem 1.875rem 0 fade(@sapContent_ShadowColor, 30);
+@sapContent_Shadow3: 0 0 0 0.0625rem fade(@sapContent_ShadowColor, 42), 0 1.25rem 5rem 0 fade(@sapContent_ShadowColor, 30);
 @sapField_Background: @sapBaseColor;
 @sapField_BorderColor: @sapPrimary5;
 @sapField_TextColor: @sapTextColor;

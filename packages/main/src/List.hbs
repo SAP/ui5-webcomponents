@@ -2,6 +2,7 @@
 	class="ui5-list-root"
 	@focusin="{{_onfocusin}}"
 	@keydown="{{_onkeydown}}"
+	@scroll="{{_onScroll}}"
 >
 	<!-- header -->
 	{{#if header.length}}
@@ -31,6 +32,12 @@
 		<footer id="{{_id}}-footer" class="ui5-list-footer">
 			{{footerText}}
 		</footer>
+	{{/if}}
+
+	{{#if showBusy}}
+		<div class="ui5-list-busy-row">
+			<ui5-busyindicator ?active="{{busy}}" size="Medium" class="ui5-list-busy-ind"></ui5-busyindicator>
+		</div>
 	{{/if}}
 
 	<div id="{{_id}}-after" tabindex="0" class="ui5-list-focusarea"></div>

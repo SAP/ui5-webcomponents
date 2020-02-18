@@ -21,13 +21,19 @@ class StaticAreaElement extends HTMLElement {
 		super();
 	}
 
+	get isUI5Element() {
+		return true;
+	}
+
 	destroy() {
 		const staticAreaDomRef = document.querySelector(this.tagName.toLowerCase());
 		staticAreaDomRef.parentElement.removeChild(staticAreaDomRef);
 	}
 }
 
-customElements.define("ui5-static-area", StaticAreaElement);
+if (!customElements.get("ui5-static-area")) {
+	customElements.define("ui5-static-area", StaticAreaElement);
+}
 
 export {
 	getStaticAreaInstance,

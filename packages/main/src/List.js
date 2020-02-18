@@ -6,13 +6,16 @@ import { isTabNext } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import ListMode from "./types/ListMode.js";
 import ListSeparators from "./types/ListSeparators.js";
-import ListItemType from "./types/ListItemType.js";
+import BusyIndicator from "./BusyIndicator.js";
 
 // Template
 import ListTemplate from "./generated/templates/ListTemplate.lit.js";
 
 // Styles
 import listCss from "./generated/themes/List.css.js";
+
+const BUSYINDICATOR_HEIGHT = 48; // px
+const INFINITE_SCROLL_DEBOUNCE_RATE = 250; // ms
 
 /**
  * @public
@@ -129,6 +132,33 @@ const metadata = {
 			type: ListSeparators,
 			defaultValue: ListSeparators.All,
 		},
+
+		/**
+		 * Defines if the component would fire the <code>loadMore</code> event,
+		 * when the user scrolls to the bottom of the list and help achieving an "infinite scroll" effect
+		 * by adding new items each time.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 * @since 1.0.0-rc.6
+		 */
+		infiniteScroll: {
+			type: Boolean,
+		},
+
+		/**
+		 * Defines if the component would display a loading indicator at the bottom of the list.
+		 * It's especially useful, when combined with <code>infiniteScroll</code>.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 * @since 1.0.0-rc.6
+		 */
+		busy: {
+			type: Boolean,
+		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.List.prototype */ {
 
@@ -177,6 +207,17 @@ const metadata = {
 				selectionComponentPressed: { type: Boolean }, // protected, indicates if the user used the selection components to change the selection
 			},
 		},
+
+		/**
+		 * Fired when the user scrolls to the bottom of the list.
+		 * <br>
+		 * <b>Note:</b> The event is fired when the <code>infiniteScroll</code> property is enabled.
+		 *
+		 * @event
+		 * @public
+		 * @since 1.0.0-rc.6
+		 */
+		loadMore: {},
 	},
 };
 
@@ -253,6 +294,18 @@ class List extends UI5Element {
 		this.addEventListener("ui5-_forwardAfter", this.onForwardAfter.bind(this));
 		this.addEventListener("ui5-_forwardBefore", this.onForwardBefore.bind(this));
 		this.addEventListener("ui5-_selectionRequested", this.onSelectionRequested.bind(this));
+	}
+
+	get shouldRenderH1() {
+		return !this.header.length && this.headerText;
+	}
+
+	get showNoDataText() {
+		return this.items.length === 0 && this.noDataText;
+	}
+
+	get showBusy() {
+		return this.busy || this.infiniteScroll;
 	}
 
 	onBeforeRendering() {
@@ -392,6 +445,13 @@ class List extends UI5Element {
 		}
 	}
 
+	_onScroll(event) {
+		if (!this.infiniteScroll) {
+			return;
+		}
+		this.debounce(this.loadMore.bind(this, event.target), INFINITE_SCROLL_DEBOUNCE_RATE);
+	}
+
 	_onfocusin(event) {
 		// If the focusin event does not origin from one of the 'triggers' - ignore it.
 		if (!this.isForwardElement(this.getNormalizedTarget(event.target))) {
@@ -445,10 +505,8 @@ class List extends UI5Element {
 	onItemPress(event) {
 		const pressedItem = event.detail.item;
 
-		if (pressedItem.type === ListItemType.Active) {
-			this.fireEvent("itemPress", { item: pressedItem });
-			this.fireEvent("itemClick", { item: pressedItem });
-		}
+		this.fireEvent("itemPress", { item: pressedItem });
+		this.fireEvent("itemClick", { item: pressedItem });
 
 		if (!this._selectionRequested && this.mode !== ListMode.Delete) {
 			this._selectionRequested = true;
@@ -558,12 +616,32 @@ class List extends UI5Element {
 		return focused;
 	}
 
-	get shouldRenderH1() {
-		return !this.header.length && this.headerText;
+	loadMore(el) {
+		const scrollTop = el.scrollTop;
+		const height = el.offsetHeight;
+		const scrollHeight = el.scrollHeight;
+
+		if (this.previousScrollPosition > scrollTop) { // skip scrolling upwards
+			this.previousScrollPosition = scrollTop;
+			return;
+		}
+		this.previousScrollPosition = scrollTop;
+
+		if (scrollHeight - BUSYINDICATOR_HEIGHT <= height + scrollTop) {
+			this.fireEvent("loadMore");
+		}
 	}
 
-	get showNoDataText() {
-		return this.items.length === 0 && this.noDataText;
+	debounce(fn, delay) {
+		clearTimeout(this.debounceInterval);
+		this.debounceInterval = setTimeout(() => {
+			this.debounceInterval = null;
+			fn();
+		}, delay);
+	}
+
+	static async onDefine() {
+		await BusyIndicator.define();
 	}
 }
 

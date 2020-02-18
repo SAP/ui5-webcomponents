@@ -1,4 +1,5 @@
 :root {
+	--_ui5_content_density: cozy;
 	--_ui5_calendar_header_height: 3rem;
 	--_ui5_calendar_header_arrow_button_width: 2.5rem;
 	--_ui5_calendar_header_padding: 0.25rem 0;
@@ -18,6 +19,7 @@
 	--_ui5_list_item_img_size: 2rem;
 	--_ui5_list_item_img_margin: 0.5rem 0.75rem 0.5rem 0rem;
 	--_ui5_list_item_base_height: 3rem;
+	--_ui5_list_busy_row_height: 3rem;
 	--_ui5_month_picker_item_height: 3rem;
 	--_ui5_year_picker_item_height: 3rem;
 	--_ui5_tokenizer_root_padding: 0.1875rem;
@@ -50,6 +52,7 @@
 [data-ui5-compact-size],
 .ui5-content-density-compact,
 .sapUiSizeCompact {
+	--_ui5_content_density: compact;
 	--_ui5_button_base_height: 1.625rem;
 	--_ui5_button_base_padding: 0.4375rem;
 	--_ui5_button_base_min_width: 2rem;
@@ -105,6 +108,7 @@
 	--_ui5_list_item_img_size: 1.75rem;
 	--_ui5_list_item_img_margin: 0.55rem 0.75rem 0.5rem 0rem;
 	--_ui5_list_item_base_height: 2rem;
+	--_ui5_list_busy_row_height: 2rem;
 
 	--_ui5_month_picker_item_height: 2rem;
 	--_ui5_panel_header_height: 2rem;

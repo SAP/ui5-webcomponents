@@ -18,11 +18,19 @@
 		@ui5-showMoreItemsPress="{{_showMorePopover}}"
 		@ui5-tokenDelete="{{_tokenDelete}}"
 		@focusout="{{_tokenizerFocusOut}}"
+		@click={{_click}}
 		?expanded="{{expandedTokenizer}}"
 	>
 		{{#each items}}
 			{{#if this.selected}}
-				<ui5-token ?readonly="{{../readonly}}" class="ui5-multi-combobox-token" data-ui5-id="{{this._id}}" >{{this.textContent}}</ui5-token>
+				<ui5-token
+				?readonly="{{../readonly}}"
+				class="ui5-multi-combobox-token"
+				data-ui5-id="{{this._id}}"
+				part="token-{{@index}}"
+				>
+					{{this.textContent}}
+				</ui5-token>
 			{{/if}}
 		{{/each}}
 	</ui5-tokenizer>
@@ -41,6 +49,7 @@
 		@keyup="{{_onkeyup}}"
 		@focusin="{{_focusin}}"
 		@focusout="{{_focusout}}"
+		@click={{_click}}
 		aria-autocomplete="both"
 		aria-labelledby="{{_id}}-hiddenText-nMore"
 		aria-describedby="{{_id}}-valueStateDesc"

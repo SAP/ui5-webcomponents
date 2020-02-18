@@ -38,27 +38,8 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the icon src URI to be displayed as graphical element within the <code>ui5-messagestrip</code>.
-		 * <br><br>
-		 * <b>Note:</b> If no icon is given, the default icon for the <code>ui5-messagestrip</code> type will be added.
-		 * The SAP-icons font provides numerous options.
-		 * <br><br>
-		 * Example:
-		 * <br>
-		 * <pre>ui5-messagestrip icon="palette"</pre>
-		 *
-		 * See all the available icons in the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
-		 *
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @public
-		 */
-		icon: {
-			type: String,
-		},
-
-		/**
-		 * Defines whether the MessageStrip renders icon in the beginning.
+		 * Defines whether the MessageStrip will show an icon in the beginning.
+		 * You can directly provide an icon with the <code>icon</code> slot. Otherwise, the default icon for the type will be used.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -90,6 +71,23 @@ const metadata = {
 		 */
 		"default": {
 			type: Node,
+		},
+
+		/**
+		 * Defines the content to be displayed as graphical element within the <code>ui5-messagestrip</code>.
+		 * <br><br>
+		 * <b>Note:</b> If no icon is given, the default icon for the <code>ui5-messagestrip</code> type will be used.
+		 * The SAP-icons font provides numerous options.
+		 * <br><br>
+		 *
+		 * See all the available icons in the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
+		 *
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @public
+		 */
+		"icon": {
+			type: HTMLElement,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.MessageStrip.prototype */ {
@@ -175,12 +173,10 @@ class MessageStrip extends UI5Element {
 		}
 	}
 
-	static async define(...params) {
+	static async onDefine() {
 		await fetchI18nBundle("@ui5/webcomponents");
 
 		await Icon.define();
-
-		super.define(...params);
 	}
 
 	static typeClassesMappings() {
@@ -224,8 +220,12 @@ class MessageStrip extends UI5Element {
 		};
 	}
 
-	get messageStripIcon() {
-		return this.icon || MessageStrip.iconMappings()[this.type];
+	get iconProvided() {
+		return this.icon.length > 0;
+	}
+
+	get standardIconName() {
+		return MessageStrip.iconMappings()[this.type];
 	}
 
 	get typeClasses() {

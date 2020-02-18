@@ -111,8 +111,9 @@
 @sapContent_ImagePlaceholderBackground: darken(@sapBaseColor, 9);
 @sapContent_HeaderShadow: 0 0.125rem 0 0 @sapObjectHeader_Background, inset 0 -0.125rem 0 0 @sapObjectHeader_BorderColor;
 @sapContent_Shadow0: 0 0 0 1px fade(@sapContent_ShadowColor, 15);
+@sapContent_Shadow1: 0 0.125rem 0.5rem 0 fade(@sapContent_ShadowColor, 15), @sapContent_Shadow0;
 @sapContent_Shadow2: 0 0.625rem 1.875rem 0 fade(@sapContent_ShadowColor, 15), @sapContent_Shadow0;
-
+@sapContent_Shadow3: 0 1.25rem 5rem 0 fade(@sapContent_ShadowColor, 15), @sapContent_Shadow0;
 @sapButton_Background: darken(@sapPrimary4, 3);
 @sapButton_BorderColor: darken(@sapButton_Background, 30);
 @sapButton_BorderWidth: @sapElement_BorderWidth;

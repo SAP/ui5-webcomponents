@@ -365,13 +365,11 @@ class Panel extends UI5Element {
 		};
 	}
 
-	static async define(...params) {
+	static async onDefine() {
 		await Promise.all([
 			fetchI18nBundle("@ui5/webcomponents"),
 			Button.define(),
 		]);
-
-		super.define(...params);
 	}
 }
 
