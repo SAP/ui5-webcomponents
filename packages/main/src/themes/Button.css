@@ -50,9 +50,13 @@
 	color: inherit;
 	text-shadow: inherit;
 	font: inherit;
+	white-space: inherit;
+	overflow: inherit;
+	text-overflow: inherit;
 }
 
-:host(:not([active]):hover) {
+:host(:not([active]):hover),
+:host(:not([hidden]).ui5_hovered) {
 	background: var(--sapButton_Hover_Background);
 }
 
@@ -83,6 +87,9 @@
 .ui5-button-text {
 	outline: none;
 	position: relative;
+	white-space: inherit;
+	overflow: inherit;
+	text-overflow: inherit;
 }
 
 :host([has-icon]) .ui5-button-text {
@@ -104,9 +111,10 @@
 }
 
 bdi {
-	display: flex;
-	justify-content: flex-start;
-	align-items: center;
+	display: block;
+	white-space: inherit;
+	overflow: inherit;
+	text-overflow: inherit;
 }
 
 :host([active]:not([disabled])) {

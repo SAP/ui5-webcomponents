@@ -24,7 +24,6 @@ describe("List Tests", () => {
 	});
 
 	it("selectionChange events provides previousSelection item", () => {
-		const list = $("#listEvents");
 		const selectionChangeResultPreviousItemsParameter = $("#selectionChangeResultPreviousItemsParameter");
 		const firstItem = $("#listEvents #country1");
 		const secondItem = $("#listEvents #country2");
@@ -67,6 +66,30 @@ describe("List Tests", () => {
 		});
 		
 		assert.strictEqual(listItemsLength, 3, "List items are rendered");
+	});
+
+	it("Clicking on inactive items does not change single selection", () => {
+		list.id = "#inactiveSingleSelect";
+		const firstItem = list.getItem(0);
+		const secondItem = list.getItem(1);
+
+		firstItem.click();
+		secondItem.click();
+
+		assert.ok(!firstItem.getAttribute("selected"), "The first item is not selected");
+		assert.ok(!secondItem.getAttribute("selected"), "The second item is notselected");
+	});
+
+	it("Clicking on inactive items does not change multi selection", () => {
+		list.id = "#inactiveMultiSelect";
+		const firstItem = list.getItem(0);
+		const secondItem = list.getItem(1);
+
+		firstItem.click();
+		secondItem.click();
+
+		assert.ok(!firstItem.getAttribute("selected"), "The first item is not selected");
+		assert.ok(!secondItem.getAttribute("selected"), "The second item is notselected");
 	});
 
 	it("mode: none. clicking item does not select it", () => {
@@ -181,5 +204,15 @@ describe("List Tests", () => {
 		firstListItem.keys("ArrowLeft");
 
 		assert.ok(firstListItem.isFocused(), "First item remains focussed");
+	});
+
+	it("tests 'loadMore' event fired upon infinite scroll", () => {
+		const btn = $("#btnTrigger");
+		const loadMoreResult = $("#loadMoreResult");
+
+		btn.click();
+		browser.pause(1000);
+
+		assert.strictEqual(loadMoreResult.getAttribute("value"), "1", "The event loadMore is fired.");
 	});
 });

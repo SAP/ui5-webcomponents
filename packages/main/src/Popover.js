@@ -8,7 +8,7 @@ import PopoverVerticalAlign from "./types/PopoverVerticalAlign.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 
 import { addOpenedPopover, removeOpenedPopover } from "./popup-utils/PopoverRegistry.js";
-import { getFocusedElement, getClosedPopupParent } from "./popup-utils/PopupUtils.js";
+import { getFocusedElement, getClosedPopupParent, getNextZIndex } from "./popup-utils/PopupUtils.js";
 
 // Styles
 import PopoverCss from "./generated/themes/Popover.css.js";
@@ -268,6 +268,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.Popover
  * @extends UI5Element
  * @tagname ui5-popover
+ * @since 1.0.0-rc.6
  * @public
  */
 class Popover extends UI5Element {
@@ -319,6 +320,7 @@ class Popover extends UI5Element {
 
 		this._opener = opener;
 		this._focusedElementBeforeOpen = getFocusedElement();
+		this.style.zIndex = getNextZIndex();
 
 		this.fireEvent("beforeOpen", {});
 		this.reposition();
@@ -682,7 +684,22 @@ class Popover extends UI5Element {
 			arrow: {
 				transform: `translate(${this.arrowTranslateX}px, ${this.arrowTranslateY}px)`,
 			},
+			root: { },
 		};
+	}
+
+	/**
+	 * Hook for descendants to hide header.
+	 */
+	get _displayHeader() {
+		return true;
+	}
+
+	/**
+	 * Hook for descendants to hide footer.
+	 */
+	get _displayFooter() {
+		return true;
 	}
 }
 

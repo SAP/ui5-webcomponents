@@ -16,23 +16,24 @@
 	height: 100%;
 	position: relative;
 	box-sizing: border-box;
+	overflow: auto;
 }
 
-.ui5-list-root .ui5-list-ul {
+.ui5-list-ul {
 	list-style-type: none;
 	padding: 0;
 	margin: 0;
 }
 
-.ui5-list-root .ui5-list-ul:focus {
+.ui5-list-ul:focus {
 	outline: none;
 }
 
-.ui5-list-root .ui5-list-focusarea {
+.ui5-list-focusarea {
 	position: fixed; /* keep it in the visible viewport, so that IE does not scroll on focus */
 }
 
-.ui5-list-root .ui5-list-header {
+.ui5-list-header {
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
@@ -47,7 +48,7 @@
 	border-bottom: 1px solid var(--sapGroup_TitleBorderColor);
 }
 
-.ui5-list-root .ui5-list-footer {
+.ui5-list-footer {
 	height: 2rem;
 	box-sizing: border-box;
 	-webkit-text-size-adjust: none;	/* To improve readability Mobile Safari automatically increases the size of small text so let's disable this */
@@ -62,7 +63,7 @@
 	text-overflow: ellipsis;
 }
 
-.ui5-list-root .ui5-list-nodata {
+.ui5-list-nodata {
 	list-style-type: none;
 	display: -webkit-box;
 	display: flex;
@@ -78,9 +79,15 @@
 	font-size: var(--sapFontMediumSize);
 }
 
-
-.ui5-list-root .ui5-list-nodata-text {
+.ui5-list-nodata-text {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
+}
+
+.ui5-list-busy-row {
+	display: flex;
+	align-items: center;
+	height: var(--_ui5_list_busy_row_height);
+	justify-content: center;
 }

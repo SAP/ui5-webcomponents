@@ -1,3 +1,5 @@
+let currentZIndex = 100;
+
 const getFocusedElement = () => {
 	let element = document.activeElement;
 
@@ -39,4 +41,15 @@ const getClosedPopupParent = el => {
 	return getClosedPopupParent(parent);
 };
 
-export { getFocusedElement, isClickInRect, getClosedPopupParent };
+
+const getNextZIndex = () => {
+	currentZIndex += 2;
+	return currentZIndex;
+};
+
+export {
+	getFocusedElement,
+	isClickInRect,
+	getClosedPopupParent,
+	getNextZIndex,
+};

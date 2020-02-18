@@ -39,7 +39,7 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 | List - Custom Item       | `ui5-li-custom`      | `import "@ui5/webcomponents/dist/CustomListItem.js";`      |
 | List - Group Header Item | `ui5-li-groupheader` | `import "@ui5/webcomponents/dist/GroupHeaderListItem.js";` |
 | Message Strip            | `ui5-messagestrip`   | `import "@ui5/webcomponents/dist/MessageStrip.js";`        |
-| Multi Combo Box          | `ui5-multicombobox`  | `import "@ui5/webcomponents/dist/MultiComboBox.js";`       |
+| Multi Combo Box          | `ui5-multi-combobox`  | `import "@ui5/webcomponents/dist/MultiComboBox.js";`       |
 | Panel                    | `ui5-panel`          | `import "@ui5/webcomponents/dist/Panel.js";`               |
 | Popover                  | `ui5-popover`        | `import "@ui5/webcomponents/dist/Popover.js";`             |
 | Radio Button             | `ui5-radiobutton`    | `import "@ui5/webcomponents/dist/RadioButton.js";`         |
@@ -340,3 +340,26 @@ You can pass the parameters directly, as an object, or as a URL:
 3) Pass a URL to a JSON file, containing the CSS Vars in its "_" property. Will be fetched on demand, not upon registration.
 
 	`registerThemeProperties("my-package", "my_theme", "http://url/to/my/theme.json");`
+
+### 7. OpenUI5 integration
+
+```js
+import "@ui5/webcomponents-base/dist/features/OpenUI5Support.js";
+```
+
+If your app uses both OpenUI5 and UI5 Web Components, UI5 Web Components can benefit
+from OpenUI5 configuration and resources.
+
+When you import the above module:
+ 1. OpenUI5 configuration takes precedence over UI5 Web Components configuration
+ for all common entities (theme, language, RTL, etc...). In addition, changing the theme
+ in OpenUI5 will also change the theme in UI5 Web Components.
+ 2. Fonts will not be loaded twice (just once by OpenUI5, and reused).
+ 3. Locale Data assets will not be fetched twice (just once by OpenUI5, and reused).
+
+Therefore, if you intend to run both frameworks in the same browser window,
+it is highly recommended to enable OpenUI5 support and benefit from these optimizations.
+
+*Note:* In general the order in which OpenUI5 and UI5 Web Components are loaded does not matter.
+However, if your app needs to support Internet Explorer 11, either load OpenUI5 first, or load
+UI5 Web Components deferred.

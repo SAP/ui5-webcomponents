@@ -10,17 +10,22 @@ import "@ui5/webcomponents-icons/dist/icons/slim-arrow-down.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-left.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-right.js";
 import { TABCONTAINER_PREVIOUS_ICON_ACC_NAME, TABCONTAINER_NEXT_ICON_ACC_NAME, TABCONTAINER_OVERFLOW_MENU_TITLE } from "./generated/i18n/i18n-defaults.js";
-import TabContainerTemplate from "./generated/templates/TabContainerTemplate.lit.js";
-import TabContainerPopoverTemplate from "./generated/templates/TabContainerPopoverTemplate.lit.js";
 import Button from "./Button.js";
 import CustomListItem from "./CustomListItem.js";
 import Icon from "./Icon.js";
 import List from "./List.js";
-import Popover from "./Popover.js";
+import ResponsivePopover from "./ResponsivePopover.js";
 import SemanticColor from "./types/SemanticColor.js";
+
+// Templates
+import TabContainerTemplate from "./generated/templates/TabContainerTemplate.lit.js";
+import TabContainerPopoverTemplate from "./generated/templates/TabContainerPopoverTemplate.lit.js";
 
 // Styles
 import tabContainerCss from "./generated/themes/TabContainer.css.js";
+import tabContainerPopoverCss from "./generated/themes/TabContainerPopup.css.js";
+import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
+import TabLayout from "./types/TabLayout.js";
 
 const SCROLL_STEP = 128;
 
@@ -47,7 +52,7 @@ const metadata = {
 	},
 	properties: /** @lends  sap.ui.webcomponents.main.TabContainer.prototype */ {
 		/**
-		 * Determines whether the tabs are in a fixed state that is not
+		 * Defines whether the tabs are in a fixed state that is not
 		 * expandable/collapsible by user interaction.
 		 *
 		 * @type {Boolean}
@@ -59,7 +64,7 @@ const metadata = {
 		},
 
 		/**
-		 * Determines whether the tab content is collapsed.
+		 * Defines whether the tab content is collapsed.
 		 *
 		 * @type {Boolean}
 		 * @defaultvalue false
@@ -70,7 +75,7 @@ const metadata = {
 		},
 
 		/**
-		 * Specifies if the overflow select list is displayed.
+		 * Defines whether the overflow select list is displayed.
 		 * <br><br>
 		 * The overflow select list represents a list, where all tab filters are displayed
 		 * so that it's easier for the user to select a specific tab filter.
@@ -81,6 +86,28 @@ const metadata = {
 		 */
 		showOverflow: {
 			type: Boolean,
+		},
+
+		/**
+		 * Defines the alignment of the <code>main text</code> and the <code>additionalText</code> of a tab.
+		 * <br>
+		 * <b>Note:</b>
+		 * The <code>main text</code> and the <code>additionalText</code> would be displayed vertically by defualt,
+		 * but when set to <code>Inline</code>, they would be displayed horizontally.
+		 * <br><br>
+		 * Available options are:
+		 * <ul>
+		 * <li><code>Standard</code></li>
+		 * <li><code>Inline</code></li>
+		 * <ul>
+		 *
+		 * @type {String}
+		 * @defaultvalue "Standard"
+		 * @public
+		 */
+		tabLayout: {
+			type: String,
+			defaultValue: TabLayout.Standard,
 		},
 
 		_selectedTab: {
@@ -105,18 +132,20 @@ const metadata = {
 			type: Boolean,
 			noAttribute: true,
 		},
-
 	},
 	events: /** @lends  sap.ui.webcomponents.main.TabContainer.prototype */ {
+
 		/**
-		 * Fired when an item is selected.
+		 * Fired when a tab is selected.
 		 *
 		 * @event
-		 * @param {HTMLElement} item The selected <code>item</code>.
+		 * @param {HTMLElement} tab The selected <code>tab</code>.
+		 * @param {Number} tabIndex The selected <code>tab</code> index.
 		 * @public
 		 */
-		itemSelect: {
-			item: { type: HTMLElement },
+		tabSelect: {
+			tab: { type: HTMLElement },
+			tabIndex: { type: Number },
 		},
 	},
 };
@@ -161,6 +190,10 @@ class TabContainer extends UI5Element {
 
 	static get styles() {
 		return tabContainerCss;
+	}
+
+	static get staticAreaStyles() {
+		return [tabContainerPopoverCss, ResponsivePopoverCommonCss];
 	}
 
 	static get render() {
@@ -216,6 +249,7 @@ class TabContainer extends UI5Element {
 
 			return {
 				item,
+				isInline: this.tabLayout === TabLayout.Inline,
 				isMixedModeTab: !item.icon && this.mixedMode,
 				isTextOnlyTab: !item.icon && !this.mixedMode,
 				isIconTab: item.icon,
@@ -281,14 +315,14 @@ class TabContainer extends UI5Element {
 
 	_onOverflowListItemSelect(event) {
 		this._onItemSelect(event.detail.item);
-		this.popover.close();
+		this._respPopover.close();
 		this.shadowRoot.querySelector(`#${event.detail.item.id}`).focus();
 	}
 
 	_onItemSelect(target) {
 		const selectedIndex = findIndex(this.items, item => item._id === target.id);
 		const selectedTabIndex = findIndex(this._getTabs(), item => item._id === target.id);
-		const currentSelectedTab = this.items[selectedIndex];
+		const selectedTab = this.items[selectedIndex];
 
 		// update selected items
 		this.items.forEach((item, index) => {
@@ -304,7 +338,7 @@ class TabContainer extends UI5Element {
 
 		// update collapsed state
 		if (!this.fixed) {
-			if (currentSelectedTab === this._selectedTab) {
+			if (selectedTab === this._selectedTab) {
 				this.collapsed = !this.collapsed;
 			} else {
 				this.collapsed = false;
@@ -312,15 +346,16 @@ class TabContainer extends UI5Element {
 		}
 
 		// select the tab
-		this._selectedTab = currentSelectedTab;
-		this.fireEvent("itemSelect", {
-			item: currentSelectedTab,
+		this._selectedTab = selectedTab;
+		this.fireEvent("tabSelect", {
+			tab: selectedTab,
+			tabIndex: selectedTabIndex,
 		});
 	}
 
 	_onOverflowButtonClick(event) {
-		this.popover = this.getStaticAreaItemDomRef().querySelector("ui5-popover");
-		this.popover.openBy(event.target);
+		this.updateStaticAreaItemContentDensity();
+		this._respPopover.open(event.target);
 	}
 
 	_onHeaderBackArrowClick() {
@@ -335,6 +370,10 @@ class TabContainer extends UI5Element {
 
 	_handleHeaderResize() {
 		this._updateScrolling();
+	}
+
+	_closeRespPopover() {
+		this._respPopover.close();
 	}
 
 	_updateScrolling() {
@@ -355,6 +394,10 @@ class TabContainer extends UI5Element {
 
 	_getHeaderScrollContainer() {
 		return this.shadowRoot.querySelector(`#${this._id}-headerScrollContainer`);
+	}
+
+	get _respPopover() {
+		return this.getStaticAreaItemDomRef().querySelector(`#${this._id}-overflowMenu`);
 	}
 
 	get classes() {
@@ -417,17 +460,15 @@ class TabContainer extends UI5Element {
 		return getRTL() ? "rtl" : undefined;
 	}
 
-	static async define(...params) {
+	static async onDefine() {
 		await Promise.all([
 			Button.define(),
 			CustomListItem.define(),
 			Icon.define(),
 			List.define(),
-			Popover.define(),
+			ResponsivePopover.define(),
 			fetchI18nBundle("@ui5/webcomponents"),
 		]);
-
-		super.define(...params);
 	}
 }
 
@@ -472,6 +513,10 @@ const calculateHeaderItemClasses = (item, mixedMode) => {
 
 	if (item.disabled) {
 		classes.push("ui5-tc__headerItem--disabled");
+	}
+
+	if (item.tabLayout === TabLayout.Inline) {
+		classes.push("ui5-tc__headerItem--inline");
 	}
 
 	if (!item.icon && !mixedMode) {

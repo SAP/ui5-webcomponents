@@ -1,9 +1,13 @@
 import { getTheme as getConfiguredTheme } from "../InitialConfiguration.js";
 import { _applyTheme } from "../Theming.js";
 
-let theme = getConfiguredTheme();
+let theme;
 
 const getTheme = () => {
+	if (theme === undefined) {
+		theme = getConfiguredTheme();
+	}
+
 	return theme;
 };
 

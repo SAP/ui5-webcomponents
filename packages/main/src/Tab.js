@@ -108,7 +108,6 @@ const metadata = {
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Tab.prototype */ {
-
 	},
 };
 
@@ -142,10 +141,8 @@ class Tab extends UI5Element {
 		return css;
 	}
 
-	static async define(...params) {
+	static async onDefine() {
 		await Icon.define();
-
-		super.define(...params);
 	}
 
 	get isSeparator() {
