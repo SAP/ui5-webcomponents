@@ -140,6 +140,11 @@ class ResponsivePopover extends Popover {
 		return this._isPhone || !this.contentOnlyOnDesktop;
 	}
 
+	get isOpened() {
+		return this.opened;
+	}
+
+
 	_afterDialogOpen(event) {
 		this.opened = true;
 		this._propagateDialogEvent(event);

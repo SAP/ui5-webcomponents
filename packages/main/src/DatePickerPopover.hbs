@@ -1,3 +1,4 @@
+{{#if opened}}
 <ui5-responsive-popover
 	id="{{_id}}-responsive-popover"
 	content-only-on-desktop
@@ -33,3 +34,4 @@
 		@ui5-selectedDatesChange="{{_calendar.onSelectedDatesChange}}"
 	></ui5-calendar>
 </ui5-responsive-popover>
+{{/if}}

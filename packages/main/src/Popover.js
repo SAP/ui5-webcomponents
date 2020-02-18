@@ -288,6 +288,13 @@ class Popover extends UI5Element {
 		return PopoverTemplate;
 	}
 
+	onAfterRendering() {
+		if (this._fireAfterOpen) {
+			this._fireAfterOpen = false;
+			this.fireEvent("afterOpen", {});
+		}
+	}
+
 	forwardToFirst() {
 		const firstFocusable = getFirstFocusableElement(this.contentDOM);
 
@@ -329,7 +336,7 @@ class Popover extends UI5Element {
 		addOpenedPopover(this);
 
 		this.opened = true;
-		this.fireEvent("afterOpen", {});
+		this._fireAfterOpen = true;
 	}
 
 	/**

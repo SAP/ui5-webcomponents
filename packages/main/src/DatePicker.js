@@ -167,9 +167,11 @@ const metadata = {
 			type: String,
 		},
 
-		_isPickerOpen: {
+		/**
+		 * @private
+		 */
+		opened: {
 			type: Boolean,
-			noAttribute: true,
 		},
 
 		_respPopoverConfig: {
@@ -284,9 +286,9 @@ class DatePicker extends UI5Element {
 			allowTargetOverlap: true,
 			stayOpenOnScroll: true,
 			afterClose: () => {
-				const calendar = this._respPopover.querySelector(`#${this._id}-calendar`);
+				const calendar = this._respPopover && this._respPopover.querySelector(`#${this._id}-calendar`);
 
-				this._isPickerOpen = false;
+				this.opened = false;
 
 				if (isPhone()) {
 					// close device's keyboard and prevent further typing
@@ -296,8 +298,10 @@ class DatePicker extends UI5Element {
 					this._focusInputAfterClose = false;
 				}
 
-				calendar._hideMonthPicker();
-				calendar._hideYearPicker();
+				if (calendar) {
+					calendar._hideMonthPicker();
+					calendar._hideYearPicker();
+				}
 			},
 			afterOpen: () => {
 				const calendar = this._respPopover.querySelector(`#${this._id}-calendar`);
@@ -377,6 +381,15 @@ class DatePicker extends UI5Element {
 		}
 	}
 
+	onAfterRendering() {
+		if (this.opened && !this.isPickerOpen()) {
+			this.openPicker();
+			this.updateStaticAreaItemContentDensity();
+		} else if (!this.opened) {
+			this.closePicker();
+		}
+	}
+
 	_getTimeStampFromString(value) {
 		if (this.getFormat().parse(value)) {
 			const jsDate = new Date(this.getFormat().parse(value).getFullYear(), this.getFormat().parse(value).getMonth(), this.getFormat().parse(value).getDate());
@@ -426,7 +439,7 @@ class DatePicker extends UI5Element {
 
 	_click(event) {
 		if (isPhone()) {
-			this._respPopover.open(this);
+			this.opened = true;
 			event.preventDefault(); // prevent immediate selection of any item
 		}
 	}
@@ -537,7 +550,7 @@ class DatePicker extends UI5Element {
 			"ariaAutoComplete": "none",
 			"role": "combobox",
 			"ariaOwns": `${this._id}-responsive-popover`,
-			"ariaExpanded": this.isOpen(),
+			"ariaExpanded": this.isPickerOpen(),
 			"ariaDescription": this.dateAriaDescription,
 		};
 	}
@@ -569,7 +582,11 @@ class DatePicker extends UI5Element {
 	}
 
 	get _respPopover() {
-		return this.getStaticAreaItemDomRef().querySelector("ui5-responsive-popover");
+		const staticAreaItemDomRef = this.getStaticAreaItemDomRef();
+		if (!staticAreaItemDomRef) {
+			return null;
+		}
+		return staticAreaItemDomRef.querySelector("ui5-responsive-popover");
 	}
 
 	_canOpenPicker() {
@@ -580,7 +597,7 @@ class DatePicker extends UI5Element {
 		const iNewValue = event.detail.dates && event.detail.dates[0];
 
 		if (this._calendar.selectedDates.indexOf(iNewValue) !== -1) {
-			this.closePicker();
+			this.opened = false;
 			return;
 		}
 
@@ -594,7 +611,7 @@ class DatePicker extends UI5Element {
 		this._calendar.timestamp = iNewValue;
 		this._calendar.selectedDates = event.detail.dates;
 		this._focusInputAfterClose = true;
-		this.closePicker();
+		this.opened = false;
 
 		if (this.isInValidRange(this._getTimeStampFromString(this.value))) {
 			this.valueState = ValueState.None;
@@ -612,7 +629,7 @@ class DatePicker extends UI5Element {
 	 * @public
 	 */
 	closePicker() {
-		this._respPopover.close();
+		this._respPopover && this._respPopover.close();
 	}
 
 	/**
@@ -630,15 +647,13 @@ class DatePicker extends UI5Element {
 		}
 
 		this._respPopover.open(this);
-		this._isPickerOpen = true;
 	}
 
 	togglePicker() {
-		if (this.isOpen()) {
-			this.closePicker();
+		if (this.isPickerOpen()) {
+			this.opened = false;
 		} else if (this._canOpenPicker()) {
-			this.updateStaticAreaItemContentDensity();
-			this.openPicker();
+			this.opened = true;
 		}
 	}
 
@@ -663,8 +678,8 @@ class DatePicker extends UI5Element {
 	 * @returns {Boolean} true if the picker is open, false otherwise
 	 * @public
 	 */
-	isOpen() {
-		return !!this._isPickerOpen;
+	isPickerOpen() {
+		return this._respPopover && this._respPopover.opened;
 	}
 
 	/**

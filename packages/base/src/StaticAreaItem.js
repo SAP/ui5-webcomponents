@@ -69,7 +69,7 @@ class StaticAreaItem {
 	 * Returns reference to the DOM element where the current fragment is added.
 	 */
 	getDomRef() {
-		return this.staticAreaItemDomRef.shadowRoot;
+		return this.staticAreaItemDomRef && this.staticAreaItemDomRef.shadowRoot;
 	}
 }
 
