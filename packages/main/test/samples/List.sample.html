@@ -55,21 +55,18 @@
 </ui5-list>
 
 <script>
-	var infiniteScrollEx = document.getElementById("infiniteScrollEx");
-
-	function appendItems(num) {
-		for(var i = 0; i < num; i++) {
-			var li = document.createElement("ui5-li");
-			li.textContent = "Fruit name" + i;
-			infiniteScrollEx.appendChild(li);
-		}
-	}
+	const infiniteScrollEx = document.getElementById("infiniteScrollEx");
 
 	infiniteScrollEx.addEventListener("loadMore", (e) => {
 		infiniteScrollEx.busy = true;
 
 		setTimeout(() => {
-			appendItems(5);
+			for(let i = 0; i < 5; i++) {
+				const li = document.createElement("ui5-li");
+				li.textContent = "Fruit name" + i;
+				infiniteScrollEx.appendChild(li);
+			}
+
 			infiniteScrollEx.busy = false;
 		}, 200);
 	});
