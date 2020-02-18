@@ -1,9 +1,10 @@
-commit 756b78b788f0e4b31591baa330dcb6bc3a1d597c
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Feb 18 13:54:17 2020 +0200
+commit 9dab18b152dd4afacc2b3d3bc6dc8afa18d05881
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Tue Feb 18 19:03:39 2020 +0200
 
-    feat(ui5-list): add infinite-scroll capability (#1220)
+    feat(ui5-shellbar): add profile slot (#1222)
     
-    - introduce infiniteScroll property, when set an event  "loadMore" will be fired when user scrolls to the very bottom of the list, then the user might load new items
-    - introduce "loadMore" event
-    - introduce "busy" property to display a loading indicator
+    Introduce profile slot, instead of property profile to give more freedom to users, enabling usage of both images and icons for a profile.
+    Fixes: https://github.com/SAP/ui5-webcomponents/issues/1099
+    
+    BREAKING CHANGE: profile property is removed in favour of profile slot
