@@ -56,15 +56,14 @@
 						@click={{this.press}}>
 					</ui5-icon>
 				{{else}}
-					<div
-						tabindex="{{this._tabIndex}}"
+					<slot
+						name="profile"
 						id="{{this.id}}"
 						style="{{this.style}}"
 						class="{{this.classes}}"
-						@click="{{this.press}}"
-					>
-						<span style="{{this.subStyles}}" class="{{this.subclasses}}"></span>
-					</div>
+						tabindex="{{this._tabIndex}}"
+						@click={{this.press}}
+					></slot>
 				{{/if}}
 			{{/each}}
 		</div>

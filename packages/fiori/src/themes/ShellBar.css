@@ -65,6 +65,18 @@
 	z-index: 1;
 }
 
+slot[name="profile"] {
+	min-width: 0;
+}
+
+::slotted(ui5-avatar) {
+	min-width: 0;
+	width: 2.25rem;
+	height: 2.25rem;
+	padding: .25rem;
+	background-color: transparent;
+}
+
 .ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive::-moz-focus-inner {
 	border: none;
 }

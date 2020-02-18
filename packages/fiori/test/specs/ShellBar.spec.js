@@ -213,7 +213,7 @@ describe("Component Behavior", () => {
 			});
 
 			it("tests profilePress event", () => {
-				const profileIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-image-button");
+				const profileIcon = browser.$("#shellbar").$("ui5-avatar");
 				const input = browser.$("#press-input");
 
 				profileIcon.click();
@@ -315,7 +315,7 @@ describe("Component Behavior", () => {
 			});
 
 			it("tests profilePress event", () => {
-				const profileIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-image-button");
+				const profileIcon = browser.$("#shellbar").$("ui5-avatar");
 				const input = browser.$("#press-input");
 
 				profileIcon.click();
