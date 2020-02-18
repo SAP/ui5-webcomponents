@@ -160,7 +160,9 @@ const metadata = {
 		/**
 		 * You can pass <code>ui5-avatar</code> to set the profile image/icon.
 		 * If no profile slot is set - profile will be excluded from actions.
-		 * @type {string}
+		 * @type {HTMLElement}
+		 * @slot
+		 * @since 1.0.0-rc.6
 		 * @public
 		 */
 		profile: {
