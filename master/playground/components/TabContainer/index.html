@@ -1582,8 +1582,9 @@
 	</code></pre></figure></pre>
 </section>
 
+<!-- text only -->
 <section>
-	<h3>Text Only TabContainer</h3>
+	<h3>TabContainer with text only tabs</h3>
 	<div class="snippet">
 		<ui5-tabcontainer class="full-width" collapsed fixed show-overflow>
 			<ui5-tab text="Home"></ui5-tab>
@@ -1599,6 +1600,76 @@
 	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Who are we"</span><span class="nt">&gt;&lt;/ui5-tab&gt;</span>
 	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"About"</span><span class="nt">&gt;&lt;/ui5-tab&gt;</span>
 <span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Contacts"</span><span class="nt">&gt;&lt;/ui5-tab&gt;</span>
+<span class="nt">&lt;/ui5-tabcontainer&gt;</span>
+	</code></pre></figure></pre>
+</section>
+
+<!-- text and additional-text -->
+<section>
+	<h3>TabContainer with text and additional-text</h3>
+	<div class="snippet">
+		<ui5-tabcontainer show-overflow="true" collapsed fixed>
+			<ui5-tab text="Info" additional-text="3">
+			</ui5-tab>
+			<ui5-tab text="Attachments" additional-text="24" selected>
+			</ui5-tab>
+			<ui5-tab text="Notes" additional-text="16">
+			</ui5-tab>
+			<ui5-tab text="People" additional-text="34">
+			</ui5-tab>
+		</ui5-tabcontainer>
+	</div>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-tabcontainer</span> <span class="na">show-overflow=</span><span class="s">"true"</span> <span class="na">collapsed</span> <span class="na">fixed</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Info"</span> <span class="na">additional-text=</span><span class="s">"3"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;/ui5-tab&gt;</span>
+	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Attachments"</span> <span class="na">additional-text=</span><span class="s">"24"</span> <span class="na">selected</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;/ui5-tab&gt;</span>
+	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Notes"</span> <span class="na">additional-text=</span><span class="s">"16"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;/ui5-tab&gt;</span>
+	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"People"</span> <span class="na">additional-text=</span><span class="s">"34"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;/ui5-tab&gt;</span>
+<span class="nt">&lt;/ui5-tabcontainer&gt;</span>
+	</code></pre></figure></pre>
+</section>
+
+<!-- Inline tabs -->
+<section>
+	<h3>TabContainer with tabLayout="Inline"</h3>
+	<div class="snippet">
+		<ui5-tabcontainer tab-layout="Inline" show-overflow="true" collapsed fixed>
+			<ui5-tab text="Monitors" additional-text="(10)">
+			</ui5-tab>
+			<ui5-tab text="Cameras" additional-text="(2)" selected>
+			</ui5-tab>
+			<ui5-tab text="Rooms" additional-text="(16)">
+			</ui5-tab>
+		</ui5-tabcontainer>
+
+		<ui5-tabcontainer tab-layout="Inline" show-overflow="true" collapsed fixed>
+			<ui5-tab icon="laptop" ext="Monitors" additional-text="(10)">
+			</ui5-tab>
+			<ui5-tab icon="video" text="Cameras" additional-text="(2)" selected>
+			</ui5-tab>
+			<ui5-tab icon="home" text="Rooms" additional-text="(16)">
+			</ui5-tab>
+		</ui5-tabcontainer>
+	</div>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-tabcontainer</span> <span class="na">tab-layout=</span><span class="s">"Inline"</span> <span class="na">show-overflow=</span><span class="s">"true"</span> <span class="na">collapsed</span> <span class="na">fixed</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Monitors"</span> <span class="na">additional-text=</span><span class="s">"(10)"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;/ui5-tab&gt;</span>
+	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Cameras"</span> <span class="na">additional-text=</span><span class="s">"(2)"</span> <span class="na">selected</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;/ui5-tab&gt;</span>
+	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Rooms"</span> <span class="na">additional-text=</span><span class="s">"(16)"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;/ui5-tab&gt;</span>
+<span class="nt">&lt;/ui5-tabcontainer&gt;</span>
+
+<span class="nt">&lt;ui5-tabcontainer</span> <span class="na">tab-layout=</span><span class="s">"Inline"</span> <span class="na">show-overflow=</span><span class="s">"true"</span> <span class="na">collapsed</span> <span class="na">fixed</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-tab</span> <span class="na">icon=</span><span class="s">"laptop"</span> <span class="na">ext=</span><span class="s">"Monitors"</span> <span class="na">additional-text=</span><span class="s">"(10)"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;/ui5-tab&gt;</span>
+	<span class="nt">&lt;ui5-tab</span> <span class="na">icon=</span><span class="s">"video"</span> <span class="na">text=</span><span class="s">"Cameras"</span> <span class="na">additional-text=</span><span class="s">"(2)"</span> <span class="na">selected</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;/ui5-tab&gt;</span>
+	<span class="nt">&lt;ui5-tab</span> <span class="na">icon=</span><span class="s">"home"</span> <span class="na">text=</span><span class="s">"Rooms"</span> <span class="na">additional-text=</span><span class="s">"(16)"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;/ui5-tab&gt;</span>
 <span class="nt">&lt;/ui5-tabcontainer&gt;</span>
 	</code></pre></figure></pre>
 </section>
@@ -1639,7 +1710,7 @@ The <code>ui5-tabcontainer</code> can hold two types of entities: <ul> <li><code
                         <div class="cell api-table-content-cell">Boolean</div>
                         <div class="cell api-table-content-cell">false</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Determines whether the tab content is collapsed.
+                            Defines whether the tab content is collapsed.
                         </div>
                       </div>
                       <div class="row api-table-roll-odd">
@@ -1650,7 +1721,7 @@ The <code>ui5-tabcontainer</code> can hold two types of entities: <ul> <li><code
                         <div class="cell api-table-content-cell">Boolean</div>
                         <div class="cell api-table-content-cell">false</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Determines whether the tabs are in a fixed state that is not expandable/collapsible by user interaction.
+                            Defines whether the tabs are in a fixed state that is not expandable/collapsible by user interaction.
                         </div>
                       </div>
                       <div class="row api-table-roll-even">
@@ -1662,7 +1733,19 @@ The <code>ui5-tabcontainer</code> can hold two types of entities: <ul> <li><code
                         <div class="cell api-table-content-cell">Boolean</div>
                         <div class="cell api-table-content-cell">false</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Specifies if the overflow select list is displayed. <br><br> The overflow select list represents a list, where all tab filters are displayed so that it's easier for the user to select a specific tab filter.
+                            Defines whether the overflow select list is displayed. <br><br> The overflow select list represents a list, where all tab filters are displayed so that it's easier for the user to select a specific tab filter.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          tabLayout
+                            <br>
+                            <code>tab-layout</code>
+                        </div>
+                        <div class="cell api-table-content-cell">String</div>
+                        <div class="cell api-table-content-cell">&quot;Standard&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the alignment of the <code>main text</code> and the <code>additionalText</code> of a tab. <br> <b>Note:</b> The <code>main text</code> and the <code>additionalText</code> would be displayed vertically by defualt, but when set to <code>Inline</code>, they would be displayed horizontally. <br><br> Available options are: <ul> <li><code>Standard</code></li> <li><code>Inline</code></li> <ul>
                         </div>
                       </div>
             
