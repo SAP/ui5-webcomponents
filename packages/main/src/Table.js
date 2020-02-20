@@ -205,9 +205,14 @@ class Table extends UI5Element {
 
 	onBeforeRendering() {
 		const columnSettings = this.getColumnPropagationSettings();
+		const columnSettingsString = JSON.stringify(columnSettings);
 
 		this.rows.forEach(row => {
-			row._columnsInfo = columnSettings;
+			if (row._columnsInfoString !== columnSettingsString) {
+				row._columnsInfo = columnSettings;
+				row._columnsInfoString = JSON.stringify(row._columnsInfo);
+			}
+
 			row.removeEventListener("ui5-_focused", this.fnOnRowFocused);
 			row.addEventListener("ui5-_focused", this.fnOnRowFocused);
 
