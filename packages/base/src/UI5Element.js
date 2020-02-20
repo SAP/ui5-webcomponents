@@ -48,6 +48,7 @@ class UI5Element extends HTMLElement {
 		this._domRefReadyPromise._deferredResolve = deferredResolve;
 
 		this._monitoredChildProps = new Map();
+		this._firePropertyChange = false;
 	}
 
 	/**
@@ -214,8 +215,8 @@ class UI5Element extends HTMLElement {
 
 			child = this.constructor.getMetadata().constructor.validateSlotValue(child, slotData);
 
-			if (child.isUI5Element) {
-				this._attachChildPropertyUpdated(child, slotData);
+			if (child.isUI5Element && slotData.listenFor) {
+				this._attachChildPropertyUpdated(child, slotData.listenFor);
 			}
 
 			const propertyName = slotData.propertyName || slotName;
@@ -335,18 +336,13 @@ class UI5Element extends HTMLElement {
 	/**
 	 * @private
 	 */
-	_attachChildPropertyUpdated(child, propData) {
-		const listenFor = propData.listenFor,
-			childMetadata = child.constructor.getMetadata(),
+	_attachChildPropertyUpdated(child, listenFor) {
+		const childMetadata = child.constructor.getMetadata(),
 			slotName = this.constructor._getSlotName(child), // all slotted children have the same configuration
 			childProperties = childMetadata.getProperties();
 
 		let observedProps = [],
 			notObservedProps = [];
-
-		if (!listenFor) {
-			return;
-		}
 
 		if (Array.isArray(listenFor)) {
 			observedProps = listenFor;
@@ -360,6 +356,7 @@ class UI5Element extends HTMLElement {
 		}
 
 		child.addEventListener("_propertyChange", this._invalidateParentOnPropertyUpdate);
+		child._firePropertyChange = true;
 	}
 
 	/**
@@ -367,6 +364,7 @@ class UI5Element extends HTMLElement {
 	 */
 	_detachChildPropertyUpdated(child) {
 		child.removeEventListener("_propertyChange", this._invalidateParentOnPropertyUpdate);
+		child._firePropertyChange = false;
 	}
 
 	/**
@@ -375,13 +373,13 @@ class UI5Element extends HTMLElement {
 	_propertyChange(name, value) {
 		this._updateAttribute(name, value);
 
-		const customEvent = new CustomEvent("_propertyChange", {
-			detail: { name, newValue: value },
-			composed: false,
-			bubbles: true,
-		});
-
-		this.dispatchEvent(customEvent);
+		if (this._firePropertyChange) {
+			this.dispatchEvent(new CustomEvent("_propertyChange", {
+				detail: { name, newValue: value },
+				composed: false,
+				bubbles: true,
+			}));
+		}
 	}
 
 	/**
