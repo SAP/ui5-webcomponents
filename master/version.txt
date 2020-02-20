@@ -1,10 +1,8 @@
-commit 9dab18b152dd4afacc2b3d3bc6dc8afa18d05881
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Tue Feb 18 19:03:39 2020 +0200
+commit 1a8f8b0e68d82e4a33390ce8df410af699893812
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Thu Feb 20 12:52:22 2020 +0200
 
-    feat(ui5-shellbar): add profile slot (#1222)
+    fix(ui5-segmentedbutton): size adjustments (#1225)
     
-    Introduce profile slot, instead of property profile to give more freedom to users, enabling usage of both images and icons for a profile.
-    Fixes: https://github.com/SAP/ui5-webcomponents/issues/1099
-    
-    BREAKING CHANGE: profile property is removed in favour of profile slot
+    - correct cosy and compact height
+    - listen on resize of the parent, not on the body
