@@ -1,8 +1,5 @@
-commit 1a8f8b0e68d82e4a33390ce8df410af699893812
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Thu Feb 20 12:52:22 2020 +0200
+commit 71f04f75559d89433ffad7f27674eb951be1a969
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Thu Feb 20 14:49:11 2020 +0200
 
-    fix(ui5-segmentedbutton): size adjustments (#1225)
-    
-    - correct cosy and compact height
-    - listen on resize of the parent, not on the body
+    chore(ui5-switch): optimize animation (#1226)
