@@ -96,16 +96,16 @@ class SegmentedButton extends UI5Element {
 		this.absoluteWidthSet = false; // set to true whenever we set absolute width to the component
 		this.percentageWidthSet = false; //  set to true whenever we set 100% width to the component
 		this.hasPreviouslyFocusedItem = false;
+
+		this._handleResizeBound = this._handleResize.bind(this);
 	}
 
 	onEnterDOM() {
-		this._handleResizeBound = this._handleResize.bind(this);
-
-		ResizeHandler.register(document.body, this._handleResizeBound);
+		ResizeHandler.register(this.parentNode, this._handleResizeBound);
 	}
 
 	onExitDOM() {
-		ResizeHandler.deregister(document.body, this._handleResizeBound);
+		ResizeHandler.deregister(this.parentNode, this._handleResizeBound);
 	}
 
 	onBeforeRendering() {
