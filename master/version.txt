@@ -1,5 +1,5 @@
-commit a32b4740a3d11a99657199adcf409a0ef62ef50e
+commit d3b947846e67b6c2c90930245b50b22786b755ed
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu Feb 20 17:02:45 2020 +0200
+Date:   Thu Feb 20 17:09:01 2020 +0200
 
-    chore: use the LocaleData._get() method (#1230)
+    chore(framework): Do not fire _propertyChange unless there are listeners (#1228)
