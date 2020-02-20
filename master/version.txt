@@ -1,5 +1,5 @@
-commit 59a21b43100c792feab61305278fbf317b24dd32
+commit a32b4740a3d11a99657199adcf409a0ef62ef50e
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu Feb 20 15:08:37 2020 +0200
+Date:   Thu Feb 20 17:02:45 2020 +0200
 
-    chore(ui5-table): do not invalidate all rows unnecessarily (#1227)
+    chore: use the LocaleData._get() method (#1230)
