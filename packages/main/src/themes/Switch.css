@@ -25,6 +25,7 @@
 	height: 100%;
 	overflow: hidden;
 	pointer-events: none;
+	will-change: transform;
 }
 
 .ui5-switch-track {
