@@ -1,5 +1,5 @@
-commit 71f04f75559d89433ffad7f27674eb951be1a969
+commit 59a21b43100c792feab61305278fbf317b24dd32
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu Feb 20 14:49:11 2020 +0200
+Date:   Thu Feb 20 15:08:37 2020 +0200
 
-    chore(ui5-switch): optimize animation (#1226)
+    chore(ui5-table): do not invalidate all rows unnecessarily (#1227)
