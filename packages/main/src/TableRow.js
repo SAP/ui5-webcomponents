@@ -102,7 +102,17 @@ class TableRow extends UI5Element {
 		return document.activeElement.localName.toLocaleLowerCase();
 	}
 
+	get shouldPopin() {
+		return this._columnsInfo.filter(el => {
+			return el.demandPopin;
+		}).length;
+	}
+
 	onBeforeRendering() {
+		if (!this.shouldPopin) {
+			return;
+		}
+
 		this.visibleCells = [];
 		this.popinCells = [];
 
@@ -138,21 +148,6 @@ class TableRow extends UI5Element {
 		if (lastVisibleCell) {
 			lastVisibleCell.lastInRow = true;
 		}
-	}
-
-	get styles() {
-		const gridTemplateColumns = this._columnsInfo.reduce((acc, info) => {
-			return info.visible ? `${acc}minmax(0, ${info.width || "1fr"}) ` : acc;
-		}, "");
-
-		return {
-			main: {
-				"grid-template-columns": gridTemplateColumns,
-			},
-			popin: {
-				"grid-column-end": 6,
-			},
-		};
 	}
 
 	get visibleCellsCount() {
