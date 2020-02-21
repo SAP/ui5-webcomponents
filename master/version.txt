@@ -1,7 +1,5 @@
-commit b98e54c4a8ab967c5b5481d0856a385c46b779e8
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Feb 21 09:50:31 2020 +0200
+commit 872dcadeeac9253f4b54a22d86486e09adc085a1
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Fri Feb 21 10:02:19 2020 +0200
 
-    refactor(ui5-carousel): improve animation (#1224)
-    
-    It is recommended and better for the performance to use transform: translate instead of transitioning the "left"
+    fix(ui5-table): optimize non popin table rendering (#1229)
