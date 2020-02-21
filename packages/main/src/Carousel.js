@@ -246,7 +246,7 @@ class Carousel extends UI5Element {
 	get styles() {
 		return {
 			content: {
-				"left": `-${this.selectedIndex * 100}%`,
+				transform: `translateX(-${this.selectedIndex * 100}%)`,
 			},
 		};
 	}
