@@ -40,6 +40,7 @@ class UI5Element extends HTMLElement {
 		this._initializeState();
 		this._upgradeAllProperties();
 		this._initializeContainers();
+		this._upToDate = false;
 
 		let deferredResolve;
 		this._domRefReadyPromise = new Promise(resolve => {
@@ -410,13 +411,13 @@ class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	_invalidate() {
-		if (this._invalidated) {
+		if (!this._upToDate) {
 			// console.log("already invalidated", this, ...arguments);
 			return;
 		}
 
 		if (this.getDomRef() && !this._suppressInvalidation) {
-			this._invalidated = true;
+			this._upToDate = false;
 			// console.log("INVAL", this, ...arguments);
 			RenderScheduler.renderDeferred(this);
 		}
@@ -444,7 +445,7 @@ class UI5Element extends HTMLElement {
 
 		// Update the shadow root with the render result
 		// console.log(this.getDomRef() ? "RE-RENDER" : "FIRST RENDER", this);
-		delete this._invalidated;
+		this._upToDate = true;
 		this._updateShadowRoot();
 
 		if (this.constructor._needsStaticArea()) {
