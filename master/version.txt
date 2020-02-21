@@ -1,5 +1,5 @@
-commit 872dcadeeac9253f4b54a22d86486e09adc085a1
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Fri Feb 21 10:02:19 2020 +0200
+commit 7a21470ec5118f8c18d392b9786a1d87a9d8786f
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Fri Feb 21 15:17:44 2020 +0200
 
-    fix(ui5-table): optimize non popin table rendering (#1229)
+    refactor(framework): memoize string methods (#1235)
