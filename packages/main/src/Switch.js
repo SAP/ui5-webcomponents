@@ -1,4 +1,4 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import UI5MinimalElement from "@ui5/webcomponents-base/dist/UI5MinimalElement.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
@@ -130,12 +130,12 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Switch
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @extends sap.ui.webcomponents.base.UI5MinimalElement
  * @tagname ui5-switch
  * @public
  * @since 0.8.0
  */
-class Switch extends UI5Element {
+class Switch extends UI5MinimalElement {
 	static get metadata() {
 		return metadata;
 	}

@@ -12,7 +12,7 @@ const patchNodeValue = () => {
 
 			// Call manually the mutation observer callback
 			const parentElement = this.parentNode;
-			if (parentElement instanceof HTMLElement && parentElement.isUI5Element) {
+			if (parentElement instanceof HTMLElement && parentElement.isUI5Element && parentElement.parentElement._processChildren) {
 				parentElement._processChildren();
 			}
 		},

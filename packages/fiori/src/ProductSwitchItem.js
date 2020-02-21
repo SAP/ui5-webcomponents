@@ -1,4 +1,4 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import UI5MinimalElement from "@ui5/webcomponents-base/dist/UI5MinimalElement.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import ProductSwitchItemTemplate from "./generated/templates/ProductSwitchItemTemplate.lit.js";
@@ -115,12 +115,12 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.fiori.ProductSwitchItem
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @extends sap.ui.webcomponents.base.UI5MinimalElement
  * @tagname ui5-product-switch-item
  * @public
  * @since 1.0.0-rc.5
  */
-class ProductSwitchItem extends UI5Element {
+class ProductSwitchItem extends UI5MinimalElement {
 	constructor() {
 		super();
 

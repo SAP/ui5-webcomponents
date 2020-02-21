@@ -1,4 +1,4 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import UI5MinimalElement from "@ui5/webcomponents-base/dist/UI5MinimalElement.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 
 // Template
@@ -67,11 +67,11 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.fiori.ShellBarItem
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @extends sap.ui.webcomponents.base.UI5MinimalElement
  * @tagname ui5-shellbar-item
  * @public
  */
-class ShellBarItem extends UI5Element {
+class ShellBarItem extends UI5MinimalElement {
 	static get metadata() {
 		return metadata;
 	}

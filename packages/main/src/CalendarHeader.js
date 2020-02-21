@@ -1,4 +1,4 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import UI5MinimalElement from "@ui5/webcomponents-base/dist/UI5MinimalElement.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
@@ -48,7 +48,7 @@ const metadata = {
 	},
 };
 
-class CalendarHeader extends UI5Element {
+class CalendarHeader extends UI5MinimalElement {
 	static get metadata() {
 		return metadata;
 	}

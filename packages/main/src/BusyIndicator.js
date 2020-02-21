@@ -1,4 +1,4 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import UI5MinimalElement from "@ui5/webcomponents-base/dist/UI5MinimalElement.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import BusyIndicatorSize from "./types/BusyIndicatorSize.js";
@@ -72,12 +72,12 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.BusyIndicator
- * @extends UI5Element
+ * @extends UI5MinimalElement
  * @tagname ui5-busyindicator
  * @public
  * @since 0.12.0
  */
-class BusyIndicator extends UI5Element {
+class BusyIndicator extends UI5MinimalElement {
 	constructor() {
 		super();
 

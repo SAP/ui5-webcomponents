@@ -9,7 +9,7 @@ import { camelToKebabCase } from "./util/StringHelper.js";
  */
 class UI5ElementMetadata {
 	constructor(metadata) {
-		this.metadata = metadata;
+		this.metadata = metadata || {};
 	}
 
 	/**

@@ -1,4 +1,4 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import UI5MinimalElement from "@ui5/webcomponents-base/dist/UI5MinimalElement.js";
 
 /**
 * @public
@@ -57,11 +57,11 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Option
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @extends sap.ui.webcomponents.base.UI5MinimalElement
  * @tagname ui5-option
  * @public
  */
-class Option extends UI5Element {
+class Option extends UI5MinimalElement {
 	static get metadata() {
 		return metadata;
 	}

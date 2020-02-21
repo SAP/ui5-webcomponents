@@ -1,4 +1,4 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import UI5MinimalElement from "@ui5/webcomponents-base/dist/UI5MinimalElement.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ComboBoxItemTemplate from "./generated/templates/ComboBoxItemTemplate.lit.js";
 
@@ -19,7 +19,7 @@ const metadata = {
 	},
 };
 
-class ComboBoxItem extends UI5Element {
+class ComboBoxItem extends UI5MinimalElement {
 	static get metadata() {
 		return metadata;
 	}

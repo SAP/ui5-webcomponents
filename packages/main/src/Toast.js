@@ -1,5 +1,5 @@
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import UI5MinimalElement from "@ui5/webcomponents-base/dist/UI5MinimalElement.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import ToastTemplate from "./generated/templates/ToastTemplate.lit.js";
@@ -116,12 +116,12 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Toast
- * @extends UI5Element
+ * @extends UI5MinimalElement
  * @tagname ui5-toast
  * @public
  * @since 1.0.0-rc.6
  */
-class Toast extends UI5Element {
+class Toast extends UI5MinimalElement {
 	static get metadata() {
 		return metadata;
 	}

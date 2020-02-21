@@ -1,4 +1,4 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import UI5MinimalElement from "@ui5/webcomponents-base/dist/UI5MinimalElement.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
 import { getFormatLocale } from "@ui5/webcomponents-base/dist/FormatSettings.js";
@@ -104,11 +104,11 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.MonthPicker
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @extends sap.ui.webcomponents.base.UI5MinimalElement
  * @tagname ui5-monthpicker
  * @public
  */
-class MonthPicker extends UI5Element {
+class MonthPicker extends UI5MinimalElement {
 	static get metadata() {
 		return metadata;
 	}

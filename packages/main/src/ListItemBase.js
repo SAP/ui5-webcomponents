@@ -1,4 +1,4 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import UI5MinimalElement from "@ui5/webcomponents-base/dist/UI5MinimalElement.js";
 import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
 import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
@@ -48,10 +48,10 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.ListItemBase
- * @extends UI5Element
+ * @extends UI5MinimalElement
  * @public
  */
-class ListItemBase extends UI5Element {
+class ListItemBase extends UI5MinimalElement {
 	static get metadata() {
 		return metadata;
 	}

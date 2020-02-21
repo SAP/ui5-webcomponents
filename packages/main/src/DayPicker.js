@@ -1,4 +1,4 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import UI5MinimalElement from "@ui5/webcomponents-base/dist/UI5MinimalElement.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchCldr } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
 import { getLocale } from "@ui5/webcomponents-base/dist/LocaleProvider.js";
@@ -140,11 +140,11 @@ const DEFAULT_MIN_YEAR = 1;
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.DayPicker
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @extends sap.ui.webcomponents.base.UI5MinimalElement
  * @tagname ui5-daypicker
  * @public
  */
-class DayPicker extends UI5Element {
+class DayPicker extends UI5MinimalElement {
 	static get metadata() {
 		return metadata;
 	}
