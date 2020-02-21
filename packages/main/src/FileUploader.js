@@ -155,7 +155,7 @@ const metadata = {
  * to trigger the file upload by using the default slot and set the property "hideInput" to "true".
  * <br>
  * To get all selected files, you can simply use the readonly property "files".
- * To restrict the types of files the user can select, you can use the "accept"property.
+ * To restrict the types of files the user can select, you can use the "accept" property.
  * <br>
  * And, similar to all input based components, the FileUploader supports "valueState", "placeholder", "name" and "disabled" properties.
  *
