@@ -2,12 +2,6 @@ import UI5MinimalElement from "./UI5MinimalElement.js";
 import DOMObserver from "./compatibility/DOMObserver.js";
 import StaticAreaItem from "./StaticAreaItem.js";
 
-const metadata = {
-	events: {
-		_propertyChange: {},
-	},
-};
-
 const elementTimeouts = new Map();
 
 const GLOBAL_CONTENT_DENSITY_CSS_VAR = "--_ui5_content_density";
@@ -27,7 +21,6 @@ class UI5Element extends UI5MinimalElement {
 		super();
 
 		this._monitoredChildProps = new Map();
-		this._firePropertyChange = false;
 	}
 
 	/**
@@ -271,21 +264,6 @@ class UI5Element extends UI5MinimalElement {
 		}
 	}
 
-	/**
-	 * @private
-	 */
-	_propertyChange(name, value) {
-		super._propertyChange(name, value);
-
-		if (this._firePropertyChange) {
-			this.dispatchEvent(new CustomEvent("_propertyChange", {
-				detail: { name, newValue: value },
-				composed: false,
-				bubbles: true,
-			}));
-		}
-	}
-
 	_afterShadowRootUpdated() {
 		if (this.constructor._needsStaticArea()) {
 			this.staticAreaItem._updateFragment(this);
@@ -332,14 +310,6 @@ class UI5Element extends UI5MinimalElement {
 		if (this.staticAreaItem) {
 			this.staticAreaItem._updateContentDensity(this.isCompact);
 		}
-	}
-
-	/**
-	 * Returns the metadata object for this UI5 Web Component Class
-	 * @protected
-	 */
-	static get metadata() {
-		return metadata;
 	}
 
 	/**

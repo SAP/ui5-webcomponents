@@ -13,6 +13,12 @@ import isValidPropertyName from "./util/isValidPropertyName.js";
 const DefinitionsSet = new Set();
 const IDMap = new Map();
 
+const metadata = {
+	events: {
+		_propertyChange: {},
+	},
+};
+
 /**
  * Base class for all UI5 Web Components
  *
@@ -31,6 +37,7 @@ class UI5MinimalElement extends HTMLElement {
 		this._upgradeAllProperties();
 		this._initializeContainers();
 		this._upToDate = false;
+		this._firePropertyChange = false;
 
 		let deferredResolve;
 		this._domRefReadyPromise = new Promise(resolve => {
@@ -179,6 +186,14 @@ class UI5MinimalElement extends HTMLElement {
 	 */
 	_propertyChange(name, value) {
 		this._updateAttribute(name, value);
+
+		if (this._firePropertyChange) {
+			this.dispatchEvent(new CustomEvent("_propertyChange", {
+				detail: { name, newValue: value },
+				composed: false,
+				bubbles: true,
+			}));
+		}
 	}
 
 	/**
@@ -339,6 +354,14 @@ class UI5MinimalElement extends HTMLElement {
 	 */
 	get isUI5Element() {
 		return true;
+	}
+
+	/**
+	 * Returns the metadata object for this UI5 Web Component Class
+	 * @protected
+	 */
+	static get metadata() {
+		return metadata;
 	}
 
 	/**
