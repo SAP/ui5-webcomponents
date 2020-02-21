@@ -1,5 +1,5 @@
-commit d3b947846e67b6c2c90930245b50b22786b755ed
+commit 8bc0748e321db9ff3a3711d4d81dbc1c97a2c1c5
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu Feb 20 17:09:01 2020 +0200
+Date:   Fri Feb 21 08:47:40 2020 +0200
 
-    chore(framework): Do not fire _propertyChange unless there are listeners (#1228)
+    chore(framework) All elements start invalidated (#1231)
