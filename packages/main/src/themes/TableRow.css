@@ -22,3 +22,12 @@
 	font-family: var(--sapFontFamily);
 	font-size: var(--sapFontMediumSize);
 }
+
+::slotted(ui5-table-cell) {
+	padding: .5rem .25rem;
+}
+
+::slotted(ui5-table-cell:first-child) {
+	padding: .5rem 1rem;
+}
+

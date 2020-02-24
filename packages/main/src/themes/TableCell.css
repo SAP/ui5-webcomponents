@@ -9,17 +9,11 @@
 }
 
 td {
-	padding: .5rem .25rem;
 	box-sizing: border-box;
+	padding: inherit;
 }
 
-:host([first-in-row]) td,
 .ui5-table-popin-row td {
-	padding-left: 1rem;
-
-}
-
-:host([first-in-row]) td {
 	padding-left: 1rem;
 }
 

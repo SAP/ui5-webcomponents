@@ -1,53 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import TableCellTemplate from "./generated/templates/TableCellTemplate.lit.js";
-
-// Styles
+import { html, render } from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import styles from "./generated/themes/TableCell.css.js";
-
-/**
- * @public
- */
-const metadata = {
-	tag: "ui5-table-cell",
-	slots: /** @lends sap.ui.webcomponents.main.TableCell.prototype */ {
-		/**
-		 * Specifies the content of the <code>ui5-table-cell</code>.
-		 *
-		 * @type {Node[]}
-		 * @slot
-		 * @public
-		 */
-		"default": {
-			type: Node,
-		},
-	},
-	properties: /** @lends sap.ui.webcomponents.main.TableCell.prototype */ {
-
-		/**
-		 * @protected
-		 */
-		firstInRow: {
-			type: Boolean,
-		},
-
-		/**
-		 * @protected
-		 */
-		lastInRow: {
-			type: Boolean,
-		},
-
-		/**
-		 * @protected
-		 */
-		popined: {
-			type: Boolean,
-		},
-	},
-	events: /** @lends sap.ui.webcomponents.main.TableCell.prototype */ {
-	},
-};
 
 /**
  * @class
@@ -63,28 +16,24 @@ const metadata = {
  * @tagname ui5-table-cell
  * @public
  */
-class TableCell extends UI5Element {
-	static get metadata() {
-		return metadata;
-	}
+class TableCell extends HTMLElement {
+	constructor() {
+		super();
+		const shadow = this.attachShadow({ mode: "open" });
+		const template = html`
+			<style>${styles}</style>
+			<td @click=${this._onclick} tabindex="-1">
+				<slot></slot>
+			</td>`;
 
-	static get styles() {
-		return styles;
-	}
-
-	static get render() {
-		return litRender;
-	}
-
-	static get template() {
-		return TableCellTemplate;
+		render(template, shadow, { eventContext: this });
 	}
 
 	_onclick(event) {
-		this.fireEvent("_cellclick", event);
+		UI5Element.prototype.fireEvent.call(this, "_cellclick", event);
 	}
 }
 
-TableCell.define();
+customElements.define("ui5-table-cell", TableCell);
 
 export default TableCell;
