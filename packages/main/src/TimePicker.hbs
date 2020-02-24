@@ -1,4 +1,4 @@
-<div id="{{this._id}}" formatPattern="{{formatPattern}}" class="sapMTimePicker">
+<div id="{{this._id}}" formatPattern="{{formatPattern}}" class="ui5-timepicker">
 	<ui5-input
 			id="{{_id}}-inner"
 			value="{{value}}"
@@ -18,24 +18,25 @@
 			?pressed="{{_isPickerOpen}}"
 		></ui5-icon>
 	</ui5-input>
-	<ui5-popover
-			id="{{_id}}-popover"
-			allow-target-overlap="{{_popover.allowTargetOverlap}}"
-			placement-type="{{_popover.placementType}}"
+	<ui5-responsive-popover
+			id="{{_id}}-responsive-popover"
+			allow-target-overlap="{{_respPopover.allowTargetOverlap}}"
+			placement-type="{{_respPopover.placementType}}"
 			no-arrow
-			horizontal-align="{{_popover.horizontalAlign}}"
-			stay-open-on-scroll="{{_popover.stayOpenOnScroll}}"
-			@ui5-afterClose="{{_popover.afterClose}}"
-			@ui5-afterOpen="{{_popover.afterOpen}}"
+			horizontal-align="{{_respPopover.horizontalAlign}}"
+			stay-open-on-scroll="{{_respPopover.stayOpenOnScroll}}"
+			@ui5-afterClose="{{_respPopover.afterClose}}"
+			@ui5-afterOpen="{{_respPopover.afterOpen}}"
 			header-text="Pick Time"
-			class="sapMTimePickerPopover"
+			class="ui5-timepicker-popover"
 	>
+	<div class="ui5-timepicker-sliders-container">
 		{{#if shouldBuildHoursSlider}}
 			<ui5-slider 
 				label = "Hours"
 				._items="{{hoursArray}}"
 				@click="{{handleSliderClicked}}"
-				class="ui5-timepicker-hours-slider"
+				class="ui5-timepicker-slider ui5-timepicker-hours-slider"
 			></ui5-slider>
 		{{/if}}
 		{{#if shouldBuildMinutesSlider}}
@@ -43,7 +44,7 @@
 				label = "Minutes"
 				._items="{{minutesArray}}"
 				@click="{{handleSliderClicked}}"
-				class="ui5-timepicker-minutes-slider"
+				class="ui5-timepicker-slider ui5-timepicker-minutes-slider"
 			></ui5-slider>
 		{{/if}}
 		{{#if shouldBuildSecondsSlider}}
@@ -51,7 +52,7 @@
 				label = "Seconds"
 				._items="{{secondsArray}}"
 				@click="{{handleSliderClicked}}"
-				class="ui5-timepicker-seconds-slider"
+				class="ui5-timepicker-slider ui5-timepicker-seconds-slider"
 			></ui5-slider>
 		{{/if}}
 		{{#if shouldBuildPeriodsSlider}}
@@ -60,12 +61,13 @@
 				value="AM"
 				._items="{{periodsArray}}"
 				@click="{{handleSliderClicked}}"
-				class="ui5-timepicker-period-slider"
+				class="ui5-timepicker-slider ui5-timepicker-period-slider"
 			></ui5-slider>
 		{{/if}}
-			<div slot="footer">
-				<ui5-button id="submit" design="Emphasized" @click="{{submitPickers}}">Submit</ui5-button>
-				<ui5-button id="close" design="Transparent" @click="{{closePicker}}">Close</ui5-button>
-			</div>
-	</ui5-popover>
+	</div>
+		<div slot="footer" class="ui5-timepicker-footer">
+			<ui5-button id="submit" design="Emphasized" @click="{{submitPickers}}">Submit</ui5-button>
+			<ui5-button id="close" design="Transparent" @click="{{closePicker}}">Close</ui5-button>
+		</div>
+	</ui5-responsive-popover>
 </div>

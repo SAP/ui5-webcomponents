@@ -1,11 +1,13 @@
 .ui5-slider {
-	display: inline-block;
 	overflow: hidden;
 	height: 100%;
 	vertical-align: middle;
 	text-align: center;
 	box-sizing: border-box;
 	font-family: var(--sapFontFamily);
+	justify-content: space-between;
+    flex-direction: column;
+    display: inline-flex;
 }
 .ui5-slider .ui5-slider-label {
 	box-sizing: border-box;
@@ -103,6 +105,9 @@
 	height: 100%;
 	cursor: default;
 	margin: 0;
+	justify-content: space-between;
+    flex-direction: column;
+    display: inline-flex;
 }
 
 .ui5-slider[expanded] .ui5-slider-label {
