@@ -1,5 +1,5 @@
-commit dfe8b1fc241c4e557d34f66ee056c4412717e23c
+commit a8b62de4759dfe213bb9c18e39984875ce58a650
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Feb 21 16:59:27 2020 +0200
+Date:   Mon Feb 24 09:27:30 2020 +0200
 
-    chore: remove ifDefined for style and class attrs (#1237)
+    docs(ui5-file-uploader): add overview section (#1234)
