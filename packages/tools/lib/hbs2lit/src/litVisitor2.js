@@ -58,13 +58,13 @@ HTMLLitVisitor.prototype.MustacheStatement = function(mustache) {
 		const path = normalizePath.call(this, mustache.path.original);
 		const hasCalculatingClasses = path.includes("context.classes");
 		const hasStylesCalculation = path.includes("context.styles");
-		
+
 		let parsedCode = "";
 
 		if (hasCalculatingClasses) {
-			parsedCode = `\${ifDefined(classMap(${path}))}`;
+			parsedCode = `\${classMap(${path})}`;
 		} else if (hasStylesCalculation) {
-			parsedCode = `\${ifDefined(styleMap(${path}))}`;
+			parsedCode = `\${styleMap(${path})}`;
 		} else {
 			parsedCode = `\${ifDefined(${path})}`;
 		}
