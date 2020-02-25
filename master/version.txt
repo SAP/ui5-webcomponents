@@ -1,5 +1,5 @@
-commit 046950dd28c70c2cb08090f77b5b6132cbf78188
+commit abc86d2050b44b5de7b24f2cbfa66a144ba51a07
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Tue Feb 25 13:06:19 2020 +0200
+Date:   Tue Feb 25 15:06:48 2020 +0200
 
-    feature(framework): add managedSlots metadata entity (#1243)
+    chore(framework): simplify ID generation (#1244)
