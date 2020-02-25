@@ -60,6 +60,7 @@ const metadata = {
 			type: Boolean,
 		},
 	},
+	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.MessageStrip.prototype */ {
 		/**
 		 * Defines the text of the <code>ui5-messagestrip</code>.

@@ -13,6 +13,7 @@ import { getNextZIndex } from "./popup-utils/PopupUtils.js";
  * @public
  */
 const metadata = {
+	managedSlots: true,
 	slots: /** @lends  sap.ui.webcomponents.main.Popup.prototype */ {
 
 		/**

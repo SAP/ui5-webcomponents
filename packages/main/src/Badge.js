@@ -33,6 +33,7 @@ const metadata = {
 			defaultValue: "1",
 		},
 	},
+	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.Badge.prototype */ {
 		/**
 		 * Defines the text of the <code>ui5-badge</code>.

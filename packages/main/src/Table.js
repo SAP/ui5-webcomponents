@@ -13,6 +13,7 @@ import styles from "./generated/themes/Table.css.js";
  */
 const metadata = {
 	tag: "ui5-table",
+	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.Table.prototype */ {
 
 		/**

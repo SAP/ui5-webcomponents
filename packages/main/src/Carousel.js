@@ -83,6 +83,7 @@ const metadata = {
 			defaultValue: CarouselArrowsPlacement.Content,
 		},
 	},
+	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.Carousel.prototype */ {
 		/**
 		 * Defines the content of the <code>ui5-carousel</code>.
