@@ -130,7 +130,7 @@ class Badge extends UI5Element {
 	}
 
 	get rtl() {
-		return getRTL() ? "rtl" : undefined;
+		return getRTL() ? "rtl" : "auto";
 	}
 
 	get badgeDescription() {

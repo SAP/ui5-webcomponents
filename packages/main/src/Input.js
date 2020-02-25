@@ -674,7 +674,7 @@ class Input extends UI5Element {
 
 	get accInfo() {
 		const ariaHasPopupDefault = this.showSuggestions ? "true" : undefined;
-		const ariaAutoCompleteDefault = this.showSuggestions ? "list" : undefined;
+		const ariaAutoCompleteDefault = this.showSuggestions ? "list" : "none";
 		return {
 			"wrapper": {
 			},

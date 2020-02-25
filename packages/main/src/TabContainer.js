@@ -458,7 +458,7 @@ class TabContainer extends UI5Element {
 	}
 
 	get rtl() {
-		return getRTL() ? "rtl" : undefined;
+		return getRTL() ? "rtl" : "auto";
 	}
 
 	static async onDefine() {

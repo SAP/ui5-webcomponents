@@ -298,7 +298,7 @@ class Button extends UI5Element {
 	}
 
 	get rtl() {
-		return getRTL() ? "rtl" : undefined;
+		return getRTL() ? "rtl" : "auto";
 	}
 
 	get hasButtonType() {
@@ -309,7 +309,7 @@ class Button extends UI5Element {
 		return {
 			"ariaExpanded": this._buttonAccInfo && this._buttonAccInfo.ariaExpanded,
 			"ariaControls": this._buttonAccInfo && this._buttonAccInfo.ariaControls,
-			"title": this._buttonAccInfo && this._buttonAccInfo.title,
+			"title": (this._buttonAccInfo && this._buttonAccInfo.title) || "",
 		};
 	}
 

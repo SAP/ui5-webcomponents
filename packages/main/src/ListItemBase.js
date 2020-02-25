@@ -128,7 +128,7 @@ class ListItemBase extends UI5Element {
 	}
 
 	get rtl() {
-		return getRTL() ? "rtl" : undefined;
+		return getRTL() ? "rtl" : "auto";
 	}
 }
 

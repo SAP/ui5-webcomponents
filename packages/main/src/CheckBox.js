@@ -275,10 +275,6 @@ class CheckBox extends UI5Element {
 		};
 	}
 
-	get ariaReadonly() {
-		return this.readonly ? "true" : undefined;
-	}
-
 	get ariaDisabled() {
 		return this.disabled ? "true" : undefined;
 	}
@@ -305,7 +301,7 @@ class CheckBox extends UI5Element {
 	}
 
 	get rtl() {
-		return getRTL() ? "rtl" : undefined;
+		return getRTL() ? "rtl" : "auto";
 	}
 
 	static async onDefine() {

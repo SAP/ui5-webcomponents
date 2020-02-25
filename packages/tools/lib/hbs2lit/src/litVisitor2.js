@@ -2,6 +2,27 @@ const Handlebars = require("handlebars/dist/handlebars.min.js");
 const path = require("path");
 const Visitor = Handlebars.Visitor;
 
+let needIfDefined = false;
+
+const attributes = [
+	"aria-expanded",
+	"aria-controls",
+	"aria-level" ,
+	"aria-owns",
+	"aria-haspopup",
+	"aria-disabled",
+	"aria-label",
+	"aria-labelledby",
+	"aria-describedby",
+	"for",
+	"maxlength",
+	"max-date",
+	"min-date",
+	"role",
+	"rel",
+	"tabindex",
+];
+
 function HTMLLitVisitor(debug) {
 	this.blockCounter = 0;
 	this.keys = [];
@@ -45,8 +66,9 @@ HTMLLitVisitor.prototype.ContentStatement = function(content) {
 	Visitor.prototype.ContentStatement.call(this, content);
 	// let content = content.orgiinal; // attribute="__ attribute = "__  attribute ="__
 
-	this.blocks[this.currentKey()] += content.original;
+	needIfDefined = attributes.some((attr) => content.original.includes(attr));
 
+	this.blocks[this.currentKey()] += content.original;
 };
 
 HTMLLitVisitor.prototype.MustacheStatement = function(mustache) {
@@ -65,8 +87,11 @@ HTMLLitVisitor.prototype.MustacheStatement = function(mustache) {
 			parsedCode = `\${classMap(${path})}`;
 		} else if (hasStylesCalculation) {
 			parsedCode = `\${styleMap(${path})}`;
-		} else {
+		} else if (needIfDefined){
+			needIfDefined = false;
 			parsedCode = `\${ifDefined(${path})}`;
+		} else {
+			parsedCode = `\${${path}}`;
 		}
 
 		this.blocks[this.currentKey()] += parsedCode;
