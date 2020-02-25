@@ -1,0 +1,75 @@
+<section
+    class="ui5-carousel-root"
+    tabindex="0"
+    @keydown={{_onkeydown}}
+>
+    <div class="ui5-carousel-overflow-hidden">
+        <div class="{{classes.content}}" style="{{styles.content}}">
+            {{#each items}}
+                <div class="{{../classes.item}}">
+                    {{#each this}}
+                        {{#if this.item}}
+                            <slot name="{{this.item._individualSlot}}" tabindex="{{this.tabIndex}}"></slot>
+                        {{/if}}
+                    {{/each}}
+                </div>
+            {{/each}}
+        </div>
+
+        {{#if arrows.content}}
+            <div class="ui5-carousel-navigation-arrows">
+                <ui5-button
+                    class="ui5-carousel-navigation-button"
+                    icon="slim-arrow-left"
+                    tabindex="-1"
+                    @click={{navigateLeft}}
+                    @keydown={{_onbuttonkeydown}}
+                ></ui5-button>
+                <ui5-button
+                    class="ui5-carousel-navigation-button"
+                    icon="slim-arrow-right"
+                    tabindex="-1"
+                    @click={{navigateRight}}
+                    @keydown={{_onbuttonkeydown}}
+                ></ui5-button>
+            </div>
+        {{/if}}
+
+        {{#unless hideNavigation}}
+            <div class="{{classes.navigation}}">
+                {{#if arrows.navigation}}
+                <ui5-button
+                    class="ui5-carousel-navigation-button"
+                    icon="slim-arrow-left"
+                    tabindex="-1"
+                    @click={{navigateLeft}}
+                    @keydown={{_onbuttonkeydown}}
+                ></ui5-button>
+                {{/if}}
+
+                <div class="ui5-carousel-navigation">
+                    {{#if isPageTypeDots}}
+                        {{#each dots}}
+                            <div
+                                ?active="{{this.active}}"
+                                class="ui5-carousel-navigation-dot"
+                            ></div>
+                        {{/each}}
+                    {{else}}
+                        <ui5-label>{{currenlySelectedIndexToShow}}&nbsp;{{ofText}}&nbsp;{{items.length}}</ui5-label>
+                    {{/if}}
+                </div>
+
+                {{#if arrows.navigation}}
+                    <ui5-button
+                        class="ui5-carousel-navigation-button"
+                        icon="slim-arrow-right"
+                        tabindex="-1"
+                        @click={{navigateRight}}
+                        @keydown={{_onbuttonkeydown}}
+                    ></ui5-button>
+                {{/if}}
+            </div>
+        {{/unless}}
+    </div>
+</section>

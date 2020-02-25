@@ -50,6 +50,9 @@
 	color: inherit;
 	text-shadow: inherit;
 	font: inherit;
+	white-space: inherit;
+	overflow: inherit;
+	text-overflow: inherit;
 }
 
 :host(:not([active]):hover) {
@@ -83,6 +86,9 @@
 .ui5-button-text {
 	outline: none;
 	position: relative;
+	white-space: inherit;
+	overflow: inherit;
+	text-overflow: inherit;
 }
 
 :host([has-icon]) .ui5-button-text {
@@ -104,9 +110,10 @@
 }
 
 bdi {
-	display: flex;
-	justify-content: flex-start;
-	align-items: center;
+	display: block;
+	white-space: inherit;
+	overflow: inherit;
+	text-overflow: inherit;
 }
 
 :host([active]:not([disabled])) {

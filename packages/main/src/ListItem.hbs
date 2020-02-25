@@ -38,6 +38,7 @@
 {{#*inline "selectionElement"}}
 	{{#if modeSingleSelect}}
 		<ui5-radiobutton
+				?disabled="{{isInactive}}"
 				tabindex="-1"
 				id="{{_id}}-singleSelectionElement"
 				class="ui5-li-singlesel-radiobtn"
@@ -48,6 +49,7 @@
 
 	{{#if modeMultiSelect}}
 		<ui5-checkbox
+				?disabled="{{isInactive}}"
 				tabindex="-1"
 				id="{{_id}}-multiSelectionElement"
 				class="ui5-li-multisel-cb"

@@ -67,7 +67,7 @@
 .ui5-calheader-midcontainer {
 	display: flex;
 	justify-content: space-around;
-	flex: 1;
+	flex: 1 1 auto;
 	padding: 0 0.5rem;
 }
 

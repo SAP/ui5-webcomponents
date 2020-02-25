@@ -1,0 +1,19 @@
+{{#if _isPhone}}
+	<ui5-dialog
+		?with-padding={{withPadding}}
+		stretch
+		_disable-initial-focus
+		@ui5-beforeOpen="{{_propagateDialogEvent}}"
+		@ui5-afterOpen="{{_afterDialogOpen}}"
+		@ui5-beforeClose="{{_propagateDialogEvent}}"
+		@ui5-afterClose="{{_afterDialogClose}}"
+	>
+		{{!-- forward slot header to inner dialog slot header --}}
+		<slot slot="header" name="header"></slot>
+		<slot></slot>
+		{{!-- forward slot footer to inner dialog slot footer --}}
+		<slot slot="footer" name="footer"></slot>
+	</ui5-dialog>
+{{else}}
+	{{>include "./Popover.hbs"}}
+{{/if}}

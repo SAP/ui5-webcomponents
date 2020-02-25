@@ -195,10 +195,18 @@ class ListItem extends ListItemBase {
 	 * and Multi (ui5-checkbox) selection modes are used.
 	 */
 	onMultiSelectionComponentPress(event) {
+		if (this.isInactive) {
+			return;
+		}
+
 		this.fireEvent("_selectionRequested", { item: this, selected: event.target.checked, selectionComponentPressed: true });
 	}
 
 	onSingleSelectionComponentPress(event) {
+		if (this.isInactive) {
+			return;
+		}
+
 		this.fireEvent("_selectionRequested", { item: this, selected: !event.target.selected, selectionComponentPressed: true });
 	}
 
@@ -213,7 +221,15 @@ class ListItem extends ListItemBase {
 	}
 
 	fireItemPress(event) {
+		if (this.isInactive) {
+			return;
+		}
+
 		this.fireEvent("_press", { item: this, selected: this.selected, key: event.key });
+	}
+
+	get isInactive() {
+		return this.type === ListItemType.Inactive;
 	}
 
 	get placeSelectionElementBefore() {

@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
+import { isIE, isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import {
@@ -11,6 +11,7 @@ import {
 } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
 import Popover from "./Popover.js";
 
 // import Icon from "./Icon.js";
@@ -24,11 +25,13 @@ import {
 	VALUE_STATE_ERROR,
 	VALUE_STATE_WARNING,
 	INPUT_SUGGESTIONS,
+	INPUT_SUGGESTIONS_TITLE,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import styles from "./generated/themes/Input.css.js";
-import InputPopoverCss from "./generated/themes/InputPopover.css.js";
+import InputPopoverCss from "./generated/themes/InputPopover.css.js"
+import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 
 /**
  * @public
@@ -75,7 +78,7 @@ const metadata = {
 		},
 
 		/**
-		 * The slot is used for native <code>input</code> HTML element to enable form sumbit,
+		 * The slot is used for native <code>input</code> HTML element to enable form submit,
 		 * when <code>name</code> property is set.
 		 * @type {HTMLElement[]}
 		 * @private
@@ -100,7 +103,7 @@ const metadata = {
 		/**
 		 * Defines whether <code>ui5-input</code> is in disabled state.
 		 * <br><br>
-		 * <b>Note:</b> A disabled <code>ui5-input</code> is completely uninteractive.
+		 * <b>Note:</b> A disabled <code>ui5-input</code> is completely non interactive.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -248,10 +251,6 @@ const metadata = {
 			type: Object,
 		},
 
-		_popover: {
-			type: Object,
-		},
-
 		_inputAccInfo: {
 			type: Object,
 		},
@@ -355,12 +354,12 @@ class Input extends UI5Element {
 		return InputPopoverTemplate;
 	}
 
-	static get staticAreaStyles() {
-		return InputPopoverCss;
+	static get styles() {
+		return styles;
 	}
 
-	static get styles() {
-		return [styles];
+	static get staticAreaStyles() {
+		return [ResponsivePopoverCommonCss, InputPopoverCss];
 	}
 
 	constructor() {
@@ -378,6 +377,8 @@ class Input extends UI5Element {
 
 		// Indicates, if the component is rendering for first time.
 		this.firstRendering = true;
+
+		this.initialHeaderRendering = true;
 
 		// all sementic events
 		this.EVENT_SUBMIT = "submit";
@@ -400,6 +401,9 @@ class Input extends UI5Element {
 			this.enableSuggestions();
 			this.suggestionsTexts = this.Suggestions.defaultSlotProperties();
 		}
+		if (this.shouldDisplayOnlyValueStateMessage) {
+			this.initialHeaderRendering = true;
+		}
 
 		const FormSupport = getFeature("FormSupport");
 		if (FormSupport) {
@@ -410,14 +414,31 @@ class Input extends UI5Element {
 	}
 
 	onAfterRendering() {
-		debugger
-		if (!this.firstRendering && this.Suggestions) {
-			this.Suggestions.toggle(this.shouldOpenSuggestions());
+		let resPopoverHeader = this._getPopover().header[0];
+debugger;
+		if (!this.firstRendering && !isPhone() && this.Suggestions) {
+			const shouldOpenSuggestions = this.shouldOpenSuggestions();
+			this.Suggestions.toggle(shouldOpenSuggestions);
+
+			RenderScheduler.whenFinished().then(() => {
+				if(resPopoverHeader.style.width !== `${this._getPopover().offsetWidth}px`){
+					resPopoverHeader.style.width = `${this._getPopover().offsetWidth}px`;
+					this._invalidate();
+					this.initialHeaderRendering = false;
+				}
+			});
+
+			if (!isPhone() && shouldOpenSuggestions) {
+				// Set initial focus to the native input
+				this.getInputDOMRef().focus();
+			}
 		}
-		if(!this.firstRendering && !this.Suggestions){
-			this.toggle(this.shouldShowValueStateMessage());
+
+		if (!this.firstRendering && !this.Suggestions) {
+			this.toggle(this.shouldDisplayOnlyValueStateMessage);
+			resPopoverHeader.style.width = `${this.offsetWidth}px`;
 			if (this._getPopover().contentDOM) {
-				this._getPopover().contentDOM.style.display = "none"
+				this._getPopover().contentDOM.style.display = "none";
 			}
 		}
 		this.firstRendering = false;
@@ -425,7 +446,7 @@ class Input extends UI5Element {
 
 	toggle(bToggle) {
 		const toggle = bToggle !== undefined ? bToggle : !this.isOpened();
-debugger;
+
 		if (toggle) {
 			this.open();
 		} else {
@@ -443,8 +464,7 @@ debugger;
 	}
 
 	_getPopover() {
-		return this.getStaticAreaItemDomRef().querySelector("ui5-popover");
-		debugger
+		return this.getStaticAreaItemDomRef().querySelector("ui5-responsive-popover");
 	}
 
 	_beforeOpen() {
@@ -532,8 +552,20 @@ debugger;
 	}
 
 	_onfocusout(event) {
-		this.focused = false; // invalidating property
+		// if focusout is triggered by pressing on suggestion item skip invalidation, because re-rendering
+		// will happen before "itemPress" event, which will make item "active" state not visualized
+		if (this.Suggestions && event.relatedTarget && event.relatedTarget.shadowRoot.contains(this.Suggestions._respPopover)) {
+			return;
+		}
+
 		this.previousValue = "";
+		this.focused = false; // invalidating property
+	}
+
+	_click(event) {
+		if (isPhone() && !this.readonly && this.Suggestions) {
+			this.Suggestions.open(this);
+		}
 	}
 
 	_handleChange(event) {
@@ -561,6 +593,24 @@ debugger;
 		}
 	}
 
+	_closeRespPopover() {
+		this.Suggestions.close();
+	}
+
+	_afterOpenPopover() {
+		// Set initial focus to the native input
+		if (isPhone()) {
+			this.getInputDOMRef().focus();
+		}
+	}
+
+	_afterClosePopover() {
+		// close device's keyboard and prevent further typing
+		if (isPhone()) {
+			this.blur();
+		}
+	}
+
 	enableSuggestions() {
 		if (this.Suggestions) {
 			return;
@@ -576,8 +626,8 @@ debugger;
 
 	shouldOpenSuggestions() {
 		return !!(this.suggestionItems.length
-			&& this.showSuggestions
 			&& this.focused
+			&& this.showSuggestions
 			&& !this.hasSuggestionItemSelected);
 	}
 
@@ -591,7 +641,6 @@ debugger;
 		const fireInput = keyboardUsed
 			? this.valueBeforeItemSelection !== itemText : this.value !== itemText;
 
-		item.selected = false;
 		this.hasSuggestionItemSelected = true;
 		this.fireEvent(this.EVENT_SUGGESTION_ITEM_SELECT, { item });
 
@@ -647,7 +696,17 @@ debugger;
 	}
 
 	getInputDOMRef() {
-		return this.getDomRef().querySelector(`#${this.getInputId()}`);
+		let inputDomRef;
+
+		if (isPhone()) {
+			inputDomRef = this.getStaticAreaItemDomRef().querySelector(".ui5-input-inner-phone");
+		}
+
+		if (!inputDomRef) {
+			inputDomRef = this.getDomRef().querySelector(`#${this.getInputId()}`);
+		}
+
+		return inputDomRef;
 	}
 
 	getLabelableElementId() {
@@ -687,6 +746,10 @@ debugger;
 		return this.readonly && !this.disabled;
 	}
 
+	get _headerTitleText() {
+		return this.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
+	}
+
 	get inputType() {
 		return this.type.toLowerCase();
 	}
@@ -721,17 +784,21 @@ debugger;
 	get classes() {
 		return {
 			popoverValueState: {
-				"ui5-input-valuestatemessage-root": true,
+				"ui5-input-valuestatemessage-root": this.shouldDisplayValueStateMessage,
 				"ui5-input-valuestatemessage-success": this.valueState === ValueState.Success,
 				"ui5-input-valuestatemessage-error": this.valueState === ValueState.Error,
 				"ui5-input-valuestatemessage-warning": this.valueState === ValueState.Warning,
 				"ui5-input-valuestatemessage-information": this.valueState === ValueState.Information,
-			}
-		}
+			},
+		};
 	}
 
 	get hasValueState() {
 		return this.valueState !== ValueState.None;
+	}
+
+	get hasValueStateMessage() {
+		return this.valueStateMessage.length && this.valueState !== ValueState.None && this.valueState !== ValueState.Success;
 	}
 
 	get valueStateText() {
@@ -743,18 +810,25 @@ debugger;
 	}
 
 	get valueStateMessageText() {
-		const valueStateMessage = this.valueStateMessage.map( x => x.cloneNode(true));
-		valueStateMessage[0].setAttribute("tabindex", "0");
+		const valueStateMessage = this.valueStateMessage.map(x => x.cloneNode(true));
 
 		return valueStateMessage;
 	}
 
-	get shouldDisplayValueStateMessage() {
-		return this.valueStateMessage.length && this.valueState !== ValueState.None && this.valueState !== ValueState.Success;
+	get shouldDisplayValueStateMessageWithSuggestions() {
+		return this.hasValueStateMessage && !this.initialHeaderRendering;
 	}
 
-	get shouldDisplayValueStateMessageOrSuggestions() {
-		return this.shouldDisplayValueStateMessage || this.showSuggestions;
+	get shouldDisplayOnlyValueStateMessage() {
+		return this.hasValueStateMessage && !this.suggestionItems.length && this.focused;
+	}
+
+	get shouldDisplayValueStateMessage() {
+		return this.shouldDisplayValueStateMessageWithSuggestions || this.shouldDisplayOnlyValueStateMessage;
+	}
+
+	get _isPhone() {
+		return isPhone();
 	}
 
 	static async define(...params) {

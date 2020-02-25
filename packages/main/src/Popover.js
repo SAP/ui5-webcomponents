@@ -268,6 +268,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.Popover
  * @extends UI5Element
  * @tagname ui5-popover
+ * @since 1.0.0-rc.6
  * @public
  */
 class Popover extends UI5Element {
@@ -682,7 +683,22 @@ class Popover extends UI5Element {
 			arrow: {
 				transform: `translate(${this.arrowTranslateX}px, ${this.arrowTranslateY}px)`,
 			},
+			root: { },
 		};
+	}
+
+	/**
+	 * Hook for descendants to hide header.
+	 */
+	get _displayHeader() {
+		return true;
+	}
+
+	/**
+	 * Hook for descendants to hide footer.
+	 */
+	get _displayFooter() {
+		return true;
 	}
 }
 

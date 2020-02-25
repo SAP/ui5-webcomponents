@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<script>delete Document.prototype.adoptedStyleSheets;</script>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta charset="utf-8">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>ui5-input</title>
 
 	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
@@ -24,11 +24,16 @@
 	<ui5-input id="myInput"
 		style="width: 500px"
 		show-suggestions
+        value-state="Error"
 		placeholder="Search for a country ...">
+		<div slot="valueStateMessage">Error message. Extra long text used as a error message. Extra long text used as a error message - 2. Extra long text used as a error message - 3.</div>
 	</ui5-input>
 
 	<h3> Input with suggestions</h3>
 	<ui5-input id="myInput2" show-suggestions style="width: 100%">
+		<ui5-li>Cozy</ui5-li>
+		<ui5-li>Compact</ui5-li>
+		<ui5-li>Condensed</ui5-li>
 		<ui5-li>Cozy</ui5-li>
 		<ui5-li>Compact</ui5-li>
 		<ui5-li>Condensed</ui5-li>
@@ -47,7 +52,7 @@
 		<div slot="valueStateMessage">Information message. This is a <a href="#">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
 		<ui5-li>Cozy</ui5-li>
 		<ui5-li>Compact</ui5-li>
-		<ui5-li>Condensed</ui5-li>
+		<ui5-li>CondensedCondensedCondensedCondensedCondensedCondensedCondensedCondensed</ui5-li>
 	</ui5-input>
 
 	<h3> Warning Input with suggestions</h3>
@@ -63,7 +68,7 @@
 		<div slot="valueStateMessage">Error message. Extra long text used as a error message. Extra long text used as a error message - 2. Extra long text used as a error message - 3.</div>
 		<ui5-li>Cozy</ui5-li>
 		<ui5-li>Compact</ui5-li>
-		<ui5-li>Condensed</ui5-li>
+		<ui5-li>CondensedCondensedCondensedCondensedCondensedCondensedCondensedCondensedCondensedCondensedCondensedCondensedCondensedCondensedCondensedCondensedCondensedCondensed</ui5-li>
 	</ui5-input>
 
 	<h3> Error Input without suggestions</h3>
@@ -164,7 +169,7 @@
 	</ui5-input>
 
 	<script>
-		var sap_database_entries = [{ key: "Afg", text: "Afghanistan" }, { key: "Arg", text: "Argentina" }, { key: "Alb", text: "Albania" }, { key: "Arm", text: "Armenia" }, { key: "Alg", text: "Algeria" }, { key: "And", text: "Andorra" }, { key: "Ang", text: "Angola" }, { key: "Ast", text: "Austria" }, { key: "Aus", text: "Australia" }, { key: "Aze", text: "Azerbaijan" }, { key: "Aruba", text: "Aruba" }, { key: "Antigua", text: "Antigua and Barbuda" }, { key: "Bel", text: "Belarus" }, { key: "Bel", text: "Belgium" }, { key: "Bg", text: "Bulgaria" }, { key: "Bra", text: "Brazil" }, { key: "Ch", text: "China" }, { key: "Cub", text: "Cuba" }, { key: "Chil", text: "Chili" }, { key: "Lat", text: "Latvia" }, { key: "Lit", text: "Litva" }, { key: "Prt", text: "Portugal" }, { key: "Sen", text: "Senegal" }, { key: "Ser", text: "Serbia" }, { key: "Afg", text: "Seychelles" }, { key: "Sierra", text: "Sierra Leone" }, { key: "Sgp", text: "Singapore" }, { key: "Sint", text: "Sint Maarten" }, { key: "Slv", text: "Slovakia" }, { key: "Slo", text: "Slovenia" }];
+		var sap_database_entries = [{ key: "Afg", text: "AfghanistanAfghanistanAfghanistanAfghanistanAfghanistanAfghanistanfghanistanfghanistan" }, { key: "Arg", text: "Argentina" }, { key: "Alb", text: "Albania" }, { key: "Arm", text: "Armenia" }, { key: "Alg", text: "Algeria" }, { key: "And", text: "Andorra" }, { key: "Ang", text: "Angola" }, { key: "Ast", text: "Austria" }, { key: "Aus", text: "Australia" }, { key: "Aze", text: "Azerbaijan" }, { key: "Aruba", text: "Aruba" }, { key: "Antigua", text: "Antigua and Barbuda" }, { key: "Bel", text: "Belarus" }, { key: "Bel", text: "Belgium" }, { key: "Bg", text: "Bulgaria" }, { key: "Bra", text: "Brazil" }, { key: "Ch", text: "China" }, { key: "Cub", text: "Cuba" }, { key: "Chil", text: "Chili" }, { key: "Lat", text: "Latvia" }, { key: "Lit", text: "Litva" }, { key: "Prt", text: "Portugal" }, { key: "Sen", text: "Senegal" }, { key: "Ser", text: "Serbia" }, { key: "Afg", text: "Seychelles" }, { key: "Sierra", text: "Sierra Leone" }, { key: "Sgp", text: "Singapore" }, { key: "Sint", text: "Sint Maarten" }, { key: "Slv", text: "Slovakia" }, { key: "Slo", text: "Slovenia" }];
 
 		var input = document.getElementById('myInput');
 		var myInput2 = document.getElementById('myInput2');
@@ -187,8 +192,8 @@
 				});
 			}
 
-			while (input.firstChild) {
-				input.removeChild(input.firstChild);
+			while (input.children.length !== 1) {
+				input.removeChild(input.lastChild);
 			}
 
 			suggestionItems.forEach(function(item) {
