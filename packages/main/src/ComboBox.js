@@ -165,6 +165,7 @@ const metadata = {
 			type: Object,
 		},
 	},
+	managedSlots: true,
 	slots: {
 		/**
 		 * Defines the <code>ui5-combobox</code> items.

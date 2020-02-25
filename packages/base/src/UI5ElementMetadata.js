@@ -86,6 +86,14 @@ class UI5ElementMetadata {
 	}
 
 	/**
+	 * Determines whether this UI5 Element needs to invalidate if children are added/removed/changed
+	 * @public
+	 */
+	slotsAreManaged() {
+		return !!this.metadata.managedSlots;
+	}
+
+	/**
 	 * Returns an object with key-value pairs of properties and their metadata definitions
 	 * @public
 	 */
