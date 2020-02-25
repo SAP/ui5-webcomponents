@@ -34,6 +34,7 @@ const SCROLL_STEP = 128;
  */
 const metadata = {
 	tag: "ui5-tabcontainer",
+	managedSlots: true,
 	slots: /** @lends  sap.ui.webcomponents.main.TabContainer.prototype */ {
 		/**
 		 * Defines the tabs.

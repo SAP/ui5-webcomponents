@@ -63,8 +63,11 @@ class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	_initializeContainers() {
+		const needsShadowDOM = this.constructor._needsShadowDOM();
+		const needsStaticArea = this.constructor._needsStaticArea();
+
 		// Init Shadow Root
-		if (this.constructor._needsShadowDOM()) {
+		if (needsShadowDOM) {
 			this.attachShadow({ mode: "open" });
 
 			// IE11, Edge
@@ -80,7 +83,7 @@ class UI5Element extends HTMLElement {
 		}
 
 		// Init StaticAreaItem only if needed
-		if (this.constructor._needsStaticArea()) {
+		if (needsStaticArea) {
 			this.staticAreaItem = new StaticAreaItem(this);
 		}
 	}
@@ -90,12 +93,18 @@ class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	async connectedCallback() {
-		// Render the Shadow DOM
-		if (this.constructor._needsShadowDOM()) {
-			// always register the observer before yielding control to the main thread (await)
-			this._startObservingDOMChildren();
+		const needsShadowDOM = this.constructor._needsShadowDOM();
+		const needsStaticArea = this.constructor._needsStaticArea();
+		const slotsAreManaged = this.constructor.getMetadata().slotsAreManaged();
 
-			await this._processChildren();
+		// Render the Shadow DOM
+		if (needsShadowDOM) {
+			if (slotsAreManaged) {
+				// always register the observer before yielding control to the main thread (await)
+				this._startObservingDOMChildren();
+				await this._processChildren();
+			}
+
 			await RenderScheduler.renderImmediately(this);
 			this._domRefReadyPromise._deferredResolve();
 			if (typeof this.onEnterDOM === "function") {
@@ -104,7 +113,7 @@ class UI5Element extends HTMLElement {
 		}
 
 		// Render Fragment if neccessary
-		if (this.constructor._needsStaticArea()) {
+		if (needsStaticArea) {
 			this.staticAreaItem._updateFragment(this);
 		}
 	}
@@ -114,14 +123,21 @@ class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	disconnectedCallback() {
-		if (this.constructor._needsShadowDOM()) {
-			this._stopObservingDOMChildren();
+		const needsShadowDOM = this.constructor._needsShadowDOM();
+		const needsStaticArea = this.constructor._needsStaticArea();
+		const slotsAreManaged = this.constructor.getMetadata().slotsAreManaged();
+
+		if (needsShadowDOM) {
+			if (slotsAreManaged) {
+				this._stopObservingDOMChildren();
+			}
+
 			if (typeof this.onExitDOM === "function") {
 				this.onExitDOM();
 			}
 		}
 
-		if (this.constructor._needsStaticArea()) {
+		if (needsStaticArea) {
 			this.staticAreaItem._removeFragmentFromStaticArea();
 		}
 	}
@@ -170,7 +186,7 @@ class UI5Element extends HTMLElement {
 
 		// Init the _state object based on the supported slots
 		for (const [slotName, slotData] of Object.entries(slotsMap)) { // eslint-disable-line
-			this._clearSlot(slotName);
+			this._clearSlot(slotName, slotData);
 		}
 
 		const autoIncrementMap = new Map();
@@ -243,8 +259,7 @@ class UI5Element extends HTMLElement {
 	 * Removes all children from the slot and detaches listeners, if any
 	 * @private
 	 */
-	_clearSlot(slotName) {
-		const slotData = this.constructor.getMetadata().getSlots()[slotName];
+	_clearSlot(slotName, slotData) {
 		const propertyName = slotData.propertyName || slotName;
 
 		let children = this._state[propertyName];
@@ -681,6 +696,7 @@ class UI5Element extends HTMLElement {
 
 		const MetadataClass = this.getMetadata();
 		const defaultState = {};
+		const slotsAreManaged = MetadataClass.slotsAreManaged();
 
 		// Initialize properties
 		const props = MetadataClass.getProperties();
@@ -706,10 +722,12 @@ class UI5Element extends HTMLElement {
 		}
 
 		// Initialize slots
-		const slots = MetadataClass.getSlots();
-		for (const [slotName, slotData] of Object.entries(slots)) { // eslint-disable-line
-			const propertyName = slotData.propertyName || slotName;
-			defaultState[propertyName] = [];
+		if (slotsAreManaged) {
+			const slots = MetadataClass.getSlots();
+			for (const [slotName, slotData] of Object.entries(slots)) { // eslint-disable-line
+				const propertyName = slotData.propertyName || slotName;
+				defaultState[propertyName] = [];
+			}
 		}
 
 		this._defaultState = defaultState;
@@ -721,6 +739,7 @@ class UI5Element extends HTMLElement {
 	 */
 	static _generateAccessors() {
 		const proto = this.prototype;
+		const slotsAreManaged = this.getMetadata().slotsAreManaged();
 
 		// Properties
 		const properties = this.getMetadata().getProperties();
@@ -766,24 +785,26 @@ class UI5Element extends HTMLElement {
 		}
 
 		// Slots
-		const slots = this.getMetadata().getSlots();
-		for (const [slotName, slotData] of Object.entries(slots)) { // eslint-disable-line
-			if (!isValidPropertyName(slotName)) {
-				throw new Error(`"${slotName}" is not a valid property name. Use a name that does not collide with DOM APIs`);
-			}
+		if (slotsAreManaged) {
+			const slots = this.getMetadata().getSlots();
+			for (const [slotName, slotData] of Object.entries(slots)) { // eslint-disable-line
+				if (!isValidPropertyName(slotName)) {
+					throw new Error(`"${slotName}" is not a valid property name. Use a name that does not collide with DOM APIs`);
+				}
 
-			const propertyName = slotData.propertyName || slotName;
-			Object.defineProperty(proto, propertyName, {
-				get() {
-					if (this._state[propertyName] !== undefined) {
-						return this._state[propertyName];
-					}
-					return [];
-				},
-				set() {
-					throw new Error("Cannot set slots directly, use the DOM APIs");
-				},
-			});
+				const propertyName = slotData.propertyName || slotName;
+				Object.defineProperty(proto, propertyName, {
+					get() {
+						if (this._state[propertyName] !== undefined) {
+							return this._state[propertyName];
+						}
+						return [];
+					},
+					set() {
+						throw new Error("Cannot set slots directly, use the DOM APIs");
+					},
+				});
+			}
 		}
 	}
 

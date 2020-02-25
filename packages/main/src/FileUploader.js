@@ -115,6 +115,7 @@ const metadata = {
 			defaultValue: ValueState.None,
 		},
 	},
+	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.FileUploader.prototype */ {
 		/**
 		 * By default the <code>ui5-file-uploader</code> contains a single input field. With this slot you can pass any content that you wish to add. See the samples for more information
