@@ -18,7 +18,7 @@ const metadata = {
 };
 
 const DefinitionsSet = new Set();
-const IDMap = new Map();
+let autoId = 0;
 
 const elementTimeouts = new Map();
 
@@ -56,7 +56,7 @@ class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	_generateId() {
-		this._id = this.constructor._nextID();
+		this._id = `ui5wc_${++autoId}`;
 	}
 
 	/**
@@ -206,9 +206,9 @@ class UI5Element extends HTMLElement {
 
 			// For children that need individual slots, calculate them
 			if (slotData.individualSlots) {
-				const nextId = (autoIncrementMap.get(slotName) || 0) + 1;
-				autoIncrementMap.set(slotName, nextId);
-				child._individualSlot = `${slotName}-${nextId}`;
+				const nextIndex = (autoIncrementMap.get(slotName) || 0) + 1;
+				autoIncrementMap.set(slotName, nextIndex);
+				child._individualSlot = `${slotName}-${nextIndex}`;
 			}
 
 			// Await for not-yet-defined custom elements
@@ -630,19 +630,6 @@ class UI5Element extends HTMLElement {
 	 */
 	static get observedAttributes() {
 		return this.getMetadata().getAttributesList();
-	}
-
-	/**
-	 * Used to generate the next auto-increment id for the current class
-	 * @returns {string}
-	 * @private
-	 */
-	static _nextID() {
-		const className = kebabToCamelCase(this.getMetadata().getTag());
-		const lastNumber = IDMap.get(className);
-		const nextNumber = lastNumber !== undefined ? lastNumber + 1 : 1;
-		IDMap.set(className, nextNumber);
-		return `__${className}${nextNumber}`;
 	}
 
 	/**
