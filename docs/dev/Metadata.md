@@ -149,7 +149,7 @@ When `managedSlots` is set to `true`:
  - If any of this UI5 Web Component's children are custom elements, the framework will await until they are all
  defined and upgraded, before rendering the component for the first time.
  - The framework will create properties for each slot on this UI5 Web Component's instances for easier access
- to the slotted children. For example, if there area `header`, `content` and `footer` slots, there will be
+ to the slotted children. For example, if there are `header`, `content` and `footer` slots, there will be
  respectively `header`, `content` and `footer` properties of type `Array` holding the slotted children for each slot.
  *Note:* You can use the `propertyName` metadata entity, described above, to modify these. 
  
