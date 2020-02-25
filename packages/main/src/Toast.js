@@ -179,7 +179,7 @@ class Toast extends UI5Element {
 	}
 
 	get rtl() {
-		return getRTL() ? "rtl" : "auto";
+		return getRTL() ? "rtl" : undefined;
 	}
 
 	get styles() {

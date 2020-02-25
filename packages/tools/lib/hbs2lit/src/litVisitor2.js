@@ -2,7 +2,8 @@ const Handlebars = require("handlebars/dist/handlebars.min.js");
 const path = require("path");
 const Visitor = Handlebars.Visitor;
 
-let needIfDefined = false;
+const dynamicAttributeRgx = /([a-zA-Z]+)="$/g;
+let needsIfDefined = false;
 
 const attributes = [
 	"aria-expanded",
@@ -14,6 +15,7 @@ const attributes = [
 	"aria-label",
 	"aria-labelledby",
 	"aria-describedby",
+	"dir",
 	"for",
 	"maxlength",
 	"max-date",
@@ -66,9 +68,17 @@ HTMLLitVisitor.prototype.ContentStatement = function(content) {
 	Visitor.prototype.ContentStatement.call(this, content);
 	// let content = content.orgiinal; // attribute="__ attribute = "__  attribute ="__
 
-	needIfDefined = attributes.some((attr) => content.original.includes(attr));
+	const staticPart = content.original;
 
-	this.blocks[this.currentKey()] += content.original;
+	needsIfDefined = attributes.some((attr) => {
+		const res = dynamicAttributeRgx.exec(staticPart.toString());
+		if (res && res[1]) {
+			return res[1] === attr;
+		}
+		return false;
+	});
+
+	this.blocks[this.currentKey()] += staticPart;
 };
 
 HTMLLitVisitor.prototype.MustacheStatement = function(mustache) {
@@ -87,8 +97,7 @@ HTMLLitVisitor.prototype.MustacheStatement = function(mustache) {
 			parsedCode = `\${classMap(${path})}`;
 		} else if (hasStylesCalculation) {
 			parsedCode = `\${styleMap(${path})}`;
-		} else if (needIfDefined){
-			needIfDefined = false;
+		} else if (needsIfDefined){
 			parsedCode = `\${ifDefined(${path})}`;
 		} else {
 			parsedCode = `\${${path}}`;

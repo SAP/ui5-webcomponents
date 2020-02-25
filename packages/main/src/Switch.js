@@ -218,7 +218,7 @@ class Switch extends UI5Element {
 	}
 
 	get rtl() {
-		return getRTL() ? "rtl" : "auto";
+		return getRTL() ? "rtl" : undefined;
 	}
 
 	get accessibilityOnText() {

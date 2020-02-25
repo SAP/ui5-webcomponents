@@ -145,7 +145,7 @@ class TimelineItem extends UI5Element {
 	}
 
 	get rtl() {
-		return getRTL() ? "rtl" : "auto";
+		return getRTL() ? "rtl" : undefined;
 	}
 
 	static async onDefine() {
