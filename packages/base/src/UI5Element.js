@@ -105,7 +105,7 @@ class UI5Element extends HTMLElement {
 				await this._processChildren();
 			}
 
-			await RenderScheduler.renderImmediately(this);
+			this._render();
 			this._domRefReadyPromise._deferredResolve();
 			if (typeof this.onEnterDOM === "function") {
 				this.onEnterDOM();
