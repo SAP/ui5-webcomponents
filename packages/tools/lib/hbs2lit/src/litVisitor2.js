@@ -2,29 +2,11 @@ const Handlebars = require("handlebars/dist/handlebars.min.js");
 const path = require("path");
 const Visitor = Handlebars.Visitor;
 
-let needsIfDefined = false;
-const dynamicAttributeRgx = /\s([a-zA-Z|-]+)="?\s*$/;
+// skip ifDefined for event handlers and boolean attrs
+let skipIfDefined = false;
 
-const attributes = [
-	"aria-expanded",
-	"aria-controls",
-	"aria-level" ,
-	"aria-owns",
-	"aria-haspopup",
-	"aria-disabled",
-	"aria-label",
-	"aria-labelledby",
-	"aria-describedby",
-	"dir",
-	"for",
-	"href",
-	"maxlength",
-	"max-date",
-	"min-date",
-	"role",
-	"rel",
-	"tabindex",
-];
+// matches event handlers @click= and boolean attrs ?disabled=
+const dynamicAttributeRgx = /\s(\?|@)([a-zA-Z|-]+)="?\s*$/;
 
 function HTMLLitVisitor(debug) {
 	this.blockCounter = 0;
@@ -70,11 +52,7 @@ HTMLLitVisitor.prototype.ContentStatement = function(content) {
 	// let content = content.orgiinal; // attribute="__ attribute = "__  attribute ="__
 
 	const contentStatement = content.original;
-	const dynamicAttribute = dynamicAttributeRgx.exec(contentStatement);
-
-	if (dynamicAttribute) {
-		needsIfDefined = attributes.some((attr) => dynamicAttribute[1]  === attr);
-	}
+	skipIfDefined = !!dynamicAttributeRgx.exec(contentStatement);
 
 	this.blocks[this.currentKey()] += contentStatement;
 };
@@ -95,10 +73,10 @@ HTMLLitVisitor.prototype.MustacheStatement = function(mustache) {
 			parsedCode = `\${classMap(${path})}`;
 		} else if (hasStylesCalculation) {
 			parsedCode = `\${styleMap(${path})}`;
-		} else if (needsIfDefined){
-			parsedCode = `\${ifDefined(${path})}`;
-		} else {
+		} else if (skipIfDefined){
 			parsedCode = `\${${path}}`;
+		} else {
+			parsedCode = `\${ifDefined(${path})}`;
 		}
 
 		this.blocks[this.currentKey()] += parsedCode;

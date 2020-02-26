@@ -756,13 +756,12 @@ class ShellBar extends UI5Element {
 				id: `${this._id}-item-${1}`,
 				press: this._handleSearchIconPress.bind(this),
 				_tabIndex: "-1",
-				count: "",
 			},
 			...this.items.map((item, index) => {
 				return {
 					icon: item.icon,
 					id: item._id,
-					count: item.count,
+					count: item.count || undefined,
 					refItemid: item._id,
 					text: item.text,
 					classes: "ui5-shellbar-custom-item ui5-shellbar-button",
@@ -785,7 +784,6 @@ class ShellBar extends UI5Element {
 				domOrder: this.showNotifications ? (++domOrder) : -1,
 				press: this._handleNotificationsPress.bind(this),
 				_tabIndex: "-1",
-				count: "",
 			},
 			{
 				icon: "overflow",
@@ -799,7 +797,6 @@ class ShellBar extends UI5Element {
 				press: this._handleOverflowPress.bind(this),
 				_tabIndex: "-1",
 				show: true,
-				count: "",
 			},
 			{
 				text: "Person",
@@ -813,7 +810,6 @@ class ShellBar extends UI5Element {
 				show: this.profile,
 				press: this._handleProfilePress.bind(this),
 				_tabIndex: "-1",
-				count: "",
 			},
 			{
 				icon: "grid",
@@ -826,7 +822,6 @@ class ShellBar extends UI5Element {
 				domOrder: this.showProductSwitch ? (++domOrder) : -1,
 				press: this._handleProductSwitchPress.bind(this),
 				_tabIndex: "-1",
-				count: "",
 			},
 		];
 		return items;

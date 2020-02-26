@@ -316,7 +316,7 @@ slot[name="profile"] {
 }
 
 :host([notification-count]) .ui5-shellbar-bell-button::before,
-ui5-icon[data-count]:not([data-count=""])::before {
+ui5-icon[data-count]::before {
 	position: absolute;
 	width: auto;
 	height: 1rem;
