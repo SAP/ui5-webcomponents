@@ -2,6 +2,12 @@ const Handlebars = require("handlebars/dist/handlebars.min.js");
 const path = require("path");
 const Visitor = Handlebars.Visitor;
 
+// skip ifDefined for event handlers and boolean attrs
+let skipIfDefined = false;
+
+// matches event handlers @click= and boolean attrs ?disabled=
+const dynamicAttributeRgx = /\s(\?|@)([a-zA-Z|-]+)="?\s*$/;
+
 function HTMLLitVisitor(debug) {
 	this.blockCounter = 0;
 	this.keys = [];
@@ -45,8 +51,10 @@ HTMLLitVisitor.prototype.ContentStatement = function(content) {
 	Visitor.prototype.ContentStatement.call(this, content);
 	// let content = content.orgiinal; // attribute="__ attribute = "__  attribute ="__
 
-	this.blocks[this.currentKey()] += content.original;
+	const contentStatement = content.original;
+	skipIfDefined = !!dynamicAttributeRgx.exec(contentStatement);
 
+	this.blocks[this.currentKey()] += contentStatement;
 };
 
 HTMLLitVisitor.prototype.MustacheStatement = function(mustache) {
@@ -65,6 +73,8 @@ HTMLLitVisitor.prototype.MustacheStatement = function(mustache) {
 			parsedCode = `\${classMap(${path})}`;
 		} else if (hasStylesCalculation) {
 			parsedCode = `\${styleMap(${path})}`;
+		} else if (skipIfDefined){
+			parsedCode = `\${${path}}`;
 		} else {
 			parsedCode = `\${ifDefined(${path})}`;
 		}
