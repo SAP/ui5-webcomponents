@@ -7,7 +7,7 @@ describe("Component Behavior", () => {
 	describe("ui5-shellbar-item", () => {
 		it("tests count property", () => {
 			const shellbar = browser.$("#shellbarwithitems");
-			const icon = shellbar.shadow$("ui5-icon[data-count]");
+			const icon = shellbar.shadow$("ui5-icon[name=discussion][data-count]");
 
 			assert.strictEqual(icon.getAttribute("data-count"), '42', "Count property propagates to ui5-icon");
 		})
