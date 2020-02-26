@@ -416,16 +416,14 @@ class Input extends UI5Element {
 	}
 
 	onAfterRendering() {
-		const resPopoverHeader = this._getPopover().header[0];
-
-		if (!this.firstRendering && !isPhone() && this.Suggestions) {
+		if (!this.firstRendering && !isPhone() && this.Suggestions && this._getPopover()) {
 			const shouldOpenSuggestions = this.shouldOpenSuggestions();
 			this.updateStaticAreaItemContentDensity();
 			this.Suggestions.toggle(shouldOpenSuggestions);
 
 			RenderScheduler.whenFinished().then(() => {
-				if (resPopoverHeader.style.width !== `${this._getPopover().offsetWidth}px`) {
-					resPopoverHeader.style.width = `${this._getPopover().offsetWidth}px`;
+				if (this._getPopover().header[0].style.width !== `${this._getPopover().offsetWidth}px`) {
+					this._getPopover().header[0].style.width = `${this._getPopover().offsetWidth}px`;
 					this._invalidate();
 					this.initialHeaderRendering = false;
 				}
@@ -437,9 +435,9 @@ class Input extends UI5Element {
 			}
 		}
 
-		if (!this.firstRendering && !this.Suggestions) {
+		if (!this.firstRendering && !this.Suggestions && this._getPopover()) {
 			this.toggle(this.shouldDisplayOnlyValueStateMessage);
-			resPopoverHeader.style.width = `${this.offsetWidth}px`;
+			this._getPopover().header[0].style.width = `${this.offsetWidth}px`;
 			if (this._getPopover().contentDOM) {
 				this._getPopover().contentDOM.style.display = "none";
 			}
