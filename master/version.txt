@@ -1,5 +1,5 @@
-commit db8c32d2e05ea6315ef0cc99cf119468ead2da56
+commit 55a2e4b2190ceebfec4ee54a6cc1ae379966ce06
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Feb 26 10:04:59 2020 +0200
+Date:   Wed Feb 26 16:15:49 2020 +0200
 
-    chore(framework): check for individual slots (#1247)
+    chore: update chromedriver to 80 (#1252)
