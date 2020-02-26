@@ -399,7 +399,6 @@ class Input extends UI5Element {
 
 	onBeforeRendering() {
 		if (this.showSuggestions) {
-			debugger;
 			this.enableSuggestions();
 			this.suggestionsTexts = this.Suggestions.defaultSlotProperties();
 		}
@@ -625,7 +624,7 @@ class Input extends UI5Element {
 		if (this.Suggestions) {
 			return;
 		}
-debugger
+
 		const Suggestions = getFeature("InputSuggestions");
 		if (Suggestions) {
 			this.Suggestions = new Suggestions(this, "suggestionItems");
