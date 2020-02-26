@@ -57,7 +57,11 @@ class UI5ElementMetadata {
 	 * @returns {string[]}
 	 */
 	getPropertiesList() {
-		return Object.keys(this.getProperties());
+		if (this._propertiesList === undefined) {
+			this._propertiesList = Object.keys(this.getProperties());
+		}
+
+		return this._propertiesList;
 	}
 
 	/**
@@ -66,7 +70,11 @@ class UI5ElementMetadata {
 	 * @returns {string[]}
 	 */
 	getAttributesList() {
-		return this.getPropertiesList().filter(this.hasAttribute, this).map(camelToKebabCase);
+		if (this._attributesList === undefined) {
+			this._attributesList = this.getPropertiesList().filter(this.hasAttribute, this).map(camelToKebabCase);
+		}
+
+		return this._attributesList;
 	}
 
 	/**
@@ -82,7 +90,11 @@ class UI5ElementMetadata {
 	 * @public
 	 */
 	hasSlots() {
-		return !!Object.entries(this.getSlots()).length;
+		if (this._hasSlots === undefined) {
+			this._hasSlots = !!Object.entries(this.getSlots()).length;
+		}
+
+		return this._hasSlots;
 	}
 
 	/**
@@ -90,7 +102,11 @@ class UI5ElementMetadata {
 	 * @public
 	 */
 	hasIndividualSlots() {
-		return this.slotsAreManaged() && Object.entries(this.getSlots()).some(([_slotName, slotData]) => slotData.individualSlots);
+		if (this._hasIndividualSlots === undefined) {
+			this._hasIndividualSlots = this.slotsAreManaged() && Object.entries(this.getSlots()).some(([_slotName, slotData]) => slotData.individualSlots);
+		}
+
+		return this._hasIndividualSlots;
 	}
 
 	/**
