@@ -70,7 +70,7 @@ HTMLLitVisitor.prototype.ContentStatement = function(content) {
 	// let content = content.orgiinal; // attribute="__ attribute = "__  attribute ="__
 
 	const contentStatement = content.original;
-	const dynamicAttribute = dynamicAttributeRgx.exec(contentStatement.toString());
+	const dynamicAttribute = dynamicAttributeRgx.exec(contentStatement);
 
 	if (dynamicAttribute) {
 		needsIfDefined = attributes.some((attr) => dynamicAttribute[1]  === attr);
