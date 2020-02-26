@@ -399,6 +399,7 @@ class Input extends UI5Element {
 
 	onBeforeRendering() {
 		if (this.showSuggestions) {
+			debugger;
 			this.enableSuggestions();
 			this.suggestionsTexts = this.Suggestions.defaultSlotProperties();
 		}
@@ -435,7 +436,7 @@ class Input extends UI5Element {
 			}
 		}
 
-		if (!this.firstRendering && !this.Suggestions && this._getPopover()) {
+		if (!this.firstRendering && !this.Suggestions && this._getPopover() && this.hasValueStateMessage) {
 			this.toggle(this.shouldDisplayOnlyValueStateMessage);
 			this._getPopover().header[0].style.width = `${this.offsetWidth}px`;
 			if (this._getPopover().contentDOM) {
@@ -474,11 +475,18 @@ class Input extends UI5Element {
 	}
 
 	_attachItemsListeners() {
-		// const list = this._getList();
-		// list.removeEventListener("ui5-itemPress", this.fnOnSuggestionItemPress);
-		// list.addEventListener("ui5-itemPress", this.fnOnSuggestionItemPress);
-		// list.removeEventListener("ui5-itemFocused", this.fnOnSuggestionItemFocus);
-		// list.addEventListener("ui5-itemFocused", this.fnOnSuggestionItemFocus);
+		const list = this._getList();
+
+		if (list) {
+			list.removeEventListener("ui5-itemPress", this.fnOnSuggestionItemPress);
+			list.addEventListener("ui5-itemPress", this.fnOnSuggestionItemPress);
+			list.removeEventListener("ui5-itemFocused", this.fnOnSuggestionItemFocus);
+			list.addEventListener("ui5-itemFocused", this.fnOnSuggestionItemFocus);
+		}
+	}
+
+	_getList() {
+		return this.getStaticAreaItemDomRef().querySelector("ui5-responsive-popover").querySelector("ui5-list");
 	}
 
 	_attachPopupListeners() {
@@ -617,7 +625,7 @@ class Input extends UI5Element {
 		if (this.Suggestions) {
 			return;
 		}
-
+debugger
 		const Suggestions = getFeature("InputSuggestions");
 		if (Suggestions) {
 			this.Suggestions = new Suggestions(this, "suggestionItems");
