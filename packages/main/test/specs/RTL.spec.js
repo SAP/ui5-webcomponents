@@ -19,6 +19,6 @@ describe("RTL", () => {
 		browser.url("http://localhost:8080/test-resources/pages/Button.html?sap-ui-rtl=false&sap-ui-language=he");
 
 		const buttonRoot = browser.$("#button1").shadow$(".ui5-button-root");
-		assert.notOk(buttonRoot.getProperty("dir"), "auto", "dir is not present");
+		assert.notOk(buttonRoot.getProperty("dir"), "dir is not present");
 	});
 });
