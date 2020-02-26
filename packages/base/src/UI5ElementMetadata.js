@@ -90,9 +90,7 @@ class UI5ElementMetadata {
 	 * @public
 	 */
 	hasIndividualSlots() {
-		return this.slotsAreManaged() && Object.entries(this.getSlots()).some(pair => {
-			return pair[1].individualSlots;
-		});
+		return this.slotsAreManaged() && Object.entries(this.getSlots()).some(([_slotName, slotData]) => slotData.individualSlots);
 	}
 
 	/**
