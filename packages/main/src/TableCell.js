@@ -4,6 +4,7 @@ import TableCellTemplate from "./generated/templates/TableCellTemplate.lit.js";
 
 // Styles
 import styles from "./generated/themes/TableCell.css.js";
+import { getEffectiveStyle } from "@ui5/webcomponents-base/dist/Theming.js";
 
 /**
  * @public
@@ -82,6 +83,28 @@ class TableCell extends UI5Element {
 
 	_onclick(event) {
 		this.fireEvent("_cellclick", event);
+	}
+
+	async connectedCallback() {
+		this._render();
+	}
+
+	_assignIndividualSlotsToChildren() {}
+
+	_updateShadowRoot() {
+		let styleToPrepend;
+		const renderResult = this.constructor.template(this);
+
+		if (!document.adoptedStyleSheets && !window.ShadyDOM) {
+			//styleToPrepend = getEffectiveStyle(this.constructor);
+		}
+		this.constructor.render(renderResult, this.shadowRoot, styleToPrepend, { eventContext: this });
+	}
+
+	get _css() {
+		//return getEffectiveStyle(this.constructor);
+		// return this.constructor.styles;
+		return;
 	}
 }
 
