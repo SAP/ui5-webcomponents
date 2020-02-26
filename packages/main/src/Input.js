@@ -829,6 +829,10 @@ class Input extends UI5Element {
 		return this.shouldDisplayValueStateMessageWithSuggestions || this.shouldDisplayOnlyValueStateMessage;
 	}
 
+	get shouldRenderRespPopover() {
+		return this.hasValueState || this.showSuggestions;
+	}
+
 	get _isPhone() {
 		return isPhone();
 	}
