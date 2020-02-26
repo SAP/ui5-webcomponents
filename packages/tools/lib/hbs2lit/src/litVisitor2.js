@@ -3,7 +3,7 @@ const path = require("path");
 const Visitor = Handlebars.Visitor;
 
 let needsIfDefined = false;
-const dynamicAttributeRgx = /\s([a-zA-Z|-]+)="\s*$/;
+const dynamicAttributeRgx = /\s([a-zA-Z|-]+)="?\s*$/;
 
 const attributes = [
 	"aria-expanded",
