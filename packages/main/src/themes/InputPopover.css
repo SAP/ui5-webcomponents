@@ -1,0 +1,29 @@
+.ui5-input-valuestatemessage-root {
+	width: 6rem;
+	box-sizing: border-box;
+	display: inline-block;
+	color: #333;
+	font-size: .75rem;
+	font-family: "72", "72full", Arial, Helvetica, sans-serif;
+	padding: .3rem .625rem;
+	min-width: 6rem;
+	white-space: pre-line;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.ui5-input-valuestatemessage-success {
+	background: var(--sapSuccessBackground);
+}
+
+.ui5-input-valuestatemessage-warning {
+	background: var(--sapWarningBackground);
+}
+
+.ui5-input-valuestatemessage-error {
+	background: var(--sapErrorBackground);
+}
+
+.ui5-input-valuestatemessage-information {
+	background: var(--sapInformationBackground);
+}

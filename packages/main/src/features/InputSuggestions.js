@@ -90,6 +90,7 @@ class Suggestions {
 	}
 
 	close() {
+		this._getComponent().initialHeaderRendering = true;
 		this._respPopover.close();
 	}
 
@@ -127,11 +128,11 @@ class Suggestions {
 	}
 
 	_attachItemsListeners() {
-		const list = this._getList();
-		list.removeEventListener("ui5-itemPress", this.fnOnSuggestionItemPress);
-		list.addEventListener("ui5-itemPress", this.fnOnSuggestionItemPress);
-		list.removeEventListener("ui5-itemFocused", this.fnOnSuggestionItemFocus);
-		list.addEventListener("ui5-itemFocused", this.fnOnSuggestionItemFocus);
+		// const list = this._getList();
+		// list.removeEventListener("ui5-itemPress", this.fnOnSuggestionItemPress);
+		// list.addEventListener("ui5-itemPress", this.fnOnSuggestionItemPress);
+		// list.removeEventListener("ui5-itemFocused", this.fnOnSuggestionItemFocus);
+		// list.addEventListener("ui5-itemFocused", this.fnOnSuggestionItemFocus);
 	}
 
 	_attachPopupListeners() {
@@ -247,7 +248,7 @@ class Suggestions {
 
 	_getScrollContainer() {
 		if (!this._scrollContainer) {
-			this._scrollContainer = this._respPopover.getDomRef().shadowRoot.querySelector(".ui5-popover-content");
+			this._scrollContainer = this._respPopover.shadowRoot.querySelector(".ui5-popover-content");
 		}
 
 		return this._scrollContainer;

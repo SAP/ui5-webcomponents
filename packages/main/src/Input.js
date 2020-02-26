@@ -11,6 +11,9 @@ import {
 } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
+import Popover from "./Popover.js";
+
 // import Icon from "./Icon.js";
 import InputType from "./types/InputType.js";
 // Templates
@@ -27,6 +30,7 @@ import {
 
 // Styles
 import styles from "./generated/themes/Input.css.js";
+import InputPopoverCss from "./generated/themes/InputPopover.css.js"
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 
 /**
@@ -81,6 +85,17 @@ const metadata = {
 		 * @private
 		 */
 		formSupport: {
+			type: HTMLElement,
+		},
+
+		/**
+		 * Defines the icon to be displayed in the <code>ui5-input</code>.
+		 *
+		 * @type {HTMLElement[]}
+		 * @slot
+		 * @public
+		 */
+		valueStateMessage: {
 			type: HTMLElement,
 		},
 	},
@@ -345,7 +360,7 @@ class Input extends UI5Element {
 	}
 
 	static get staticAreaStyles() {
-		return ResponsivePopoverCommonCss;
+		return [ResponsivePopoverCommonCss, InputPopoverCss];
 	}
 
 	constructor() {
@@ -363,6 +378,8 @@ class Input extends UI5Element {
 
 		// Indicates, if the component is rendering for first time.
 		this.firstRendering = true;
+
+		this.initialHeaderRendering = true;
 
 		// all sementic events
 		this.EVENT_SUBMIT = "submit";
@@ -386,6 +403,10 @@ class Input extends UI5Element {
 			this.suggestionsTexts = this.Suggestions.defaultSlotProperties();
 		}
 
+		if (this.shouldDisplayOnlyValueStateMessage) {
+			this.initialHeaderRendering = true;
+		}
+
 		const FormSupport = getFeature("FormSupport");
 		if (FormSupport) {
 			FormSupport.syncNativeHiddenInput(this);
@@ -395,11 +416,20 @@ class Input extends UI5Element {
 	}
 
 	onAfterRendering() {
+		let resPopoverHeader = this._getPopover().header[0];
+
 		if (!this.firstRendering && !isPhone() && this.Suggestions) {
 			const shouldOpenSuggestions = this.shouldOpenSuggestions();
-
 			this.updateStaticAreaItemContentDensity();
 			this.Suggestions.toggle(shouldOpenSuggestions);
+
+			RenderScheduler.whenFinished().then(() => {
+				if(resPopoverHeader.style.width !== `${this._getPopover().offsetWidth}px`){
+					resPopoverHeader.style.width = `${this._getPopover().offsetWidth}px`;
+					this._invalidate();
+					this.initialHeaderRendering = false;
+				}
+			});
 
 			if (!isPhone() && shouldOpenSuggestions) {
 				// Set initial focus to the native input
@@ -407,7 +437,66 @@ class Input extends UI5Element {
 			}
 		}
 
+		if (!this.firstRendering && !this.Suggestions) {
+			this.toggle(this.shouldDisplayOnlyValueStateMessage);
+			resPopoverHeader.style.width = `${this.offsetWidth}px`;
+			if (this._getPopover().contentDOM) {
+				this._getPopover().contentDOM.style.display = "none";
+			}
+		}
 		this.firstRendering = false;
+	}
+
+	toggle(bToggle) {
+		const toggle = bToggle !== undefined ? bToggle : !this.isOpened();
+
+		if (toggle) {
+			this.open();
+		} else {
+			this.close();
+		}
+	}
+
+	open() {
+		this._beforeOpen();
+		this._getPopover().openBy(this);
+	}
+
+	close() {
+		this._getPopover().close();
+	}
+
+	_getPopover() {
+		return this.getStaticAreaItemDomRef().querySelector("ui5-responsive-popover");
+	}
+
+	_beforeOpen() {
+		this._attachItemsListeners();
+		this._attachPopupListeners();
+	}
+
+	_attachItemsListeners() {
+		// const list = this._getList();
+		// list.removeEventListener("ui5-itemPress", this.fnOnSuggestionItemPress);
+		// list.addEventListener("ui5-itemPress", this.fnOnSuggestionItemPress);
+		// list.removeEventListener("ui5-itemFocused", this.fnOnSuggestionItemFocus);
+		// list.addEventListener("ui5-itemFocused", this.fnOnSuggestionItemFocus);
+	}
+
+	_attachPopupListeners() {
+		if (!this.handleFocus) {
+			return;
+		}
+
+		if (!this.attachedAfterOpened) {
+			this._getPopover().addEventListener("ui5-afterOpen", this._onOpen.bind(this));
+			this.attachedAfterOpened = true;
+		}
+
+		if (!this.attachedAfterClose) {
+			this._getPopover().addEventListener("ui5-afterClose", this._onClose.bind(this));
+			this.attachedAfterClose = true;
+		}
 	}
 
 	_onkeydown(event) {
@@ -544,6 +633,11 @@ class Input extends UI5Element {
 			&& this.focused
 			&& this.showSuggestions
 			&& !this.hasSuggestionItemSelected);
+	}
+
+	shouldShowValueStateMessage() {
+		return !!(this.valueStateMessage.length
+			&& this.focused);
 	}
 
 	selectSuggestion(item, keyboardUsed) {
@@ -691,8 +785,24 @@ class Input extends UI5Element {
 		};
 	}
 
+	get classes() {
+		return {
+			popoverValueState: {
+				"ui5-input-valuestatemessage-root": this.shouldDisplayValueStateMessage,
+				"ui5-input-valuestatemessage-success": this.valueState === ValueState.Success,
+				"ui5-input-valuestatemessage-error": this.valueState === ValueState.Error,
+				"ui5-input-valuestatemessage-warning": this.valueState === ValueState.Warning,
+				"ui5-input-valuestatemessage-information": this.valueState === ValueState.Information,
+			},
+		};
+	}
+
 	get hasValueState() {
 		return this.valueState !== ValueState.None;
+	}
+
+	get hasValueStateMessage() {
+		return this.valueStateMessage.length && this.valueState !== ValueState.None && this.valueState !== ValueState.Success;
 	}
 
 	get valueStateText() {
@@ -703,11 +813,34 @@ class Input extends UI5Element {
 		return this.i18nBundle.getText(INPUT_SUGGESTIONS);
 	}
 
+	get valueStateMessageText() {
+		const valueStateMessage = this.valueStateMessage.map(x => x.cloneNode(true));
+
+		return valueStateMessage;
+	}
+
+	get shouldDisplayValueStateMessageWithSuggestions() {
+		return this.hasValueStateMessage && !this.initialHeaderRendering;
+	}
+
+	get shouldDisplayOnlyValueStateMessage() {
+		return this.hasValueStateMessage && !this.suggestionItems.length && this.focused;
+	}
+
+	get shouldDisplayValueStateMessage() {
+		return this.shouldDisplayValueStateMessageWithSuggestions || this.shouldDisplayOnlyValueStateMessage;
+	}
+
+	get _isPhone() {
+		return isPhone();
+	}
+
 	static async onDefine() {
 		await fetchI18nBundle("@ui5/webcomponents");
 	}
 }
 
 Input.define();
+Popover.define();
 
 export default Input;

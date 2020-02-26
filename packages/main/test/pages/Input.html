@@ -16,10 +16,10 @@
 
 <body style="background-color: var(--sapBackgroundColor);">
 	<h3> Input with suggestions: type 'a'</h3>
-	<ui5-label id="myLabel">Event [suggestionItemSelect] :: N/A</ui5-label><br/>
-	<ui5-label id="myLabelChange">Event [change] :: N/A</ui5-label><br/>
-	<ui5-label id="myLabelSubmit">Event [submit] :: N/A</ui5-label><br/>
-	<ui5-label id="myLabelLiveChange">Event [input] :: N/A</ui5-label><br/>
+	<div id="myLabel">Event [suggestionItemSelect] :: N/A</div><br/>
+	<div id="myLabelChange">Event [change] :: N/A</div><br/>
+	<div id="myLabelSubmit">Event [submit] :: N/A</div><br/>
+	<div id="myLabelLiveChange">Event [input] :: N/A</div><br/>
 
 	<div>
 		<h3>Input in Cozy</h3>
@@ -39,6 +39,15 @@
 		</ui5-input>
 	</div>
 
+	<h3>Input With ValueState and Suggestions</h3>
+	<ui5-input id="myInput1"
+		style="width: 500px"
+		show-suggestions
+        value-state="Error"
+		placeholder="Search for a country ...">
+		<div slot="valueStateMessage">Error message. Extra long text used as a error message. Extra long text used as a error message - 2. Extra long text used as a error message - 3.</div>
+	</ui5-input>
+
 	<h3> Input with suggestions</h3>
 	<ui5-input id="myInput2" show-suggestions style="width: 100%">
 		<ui5-li>Cozy</ui5-li>
@@ -47,6 +56,43 @@
 		<ui5-li>Cozy</ui5-li>
 		<ui5-li>Compact</ui5-li>
 		<ui5-li>Condensed</ui5-li>
+	</ui5-input>
+
+	<h3> Success Input with suggestions</h3>
+	<ui5-input value-state="Success" id="mySuccessInput" show-suggestions style="width: 300px">
+		<div slot="valueStateMessage">Should not be shown</div>
+		<ui5-li>Cozy</ui5-li>
+		<ui5-li>Compact</ui5-li>
+		<ui5-li>Condensed</ui5-li>
+	</ui5-input>
+
+	<h3> Information Input with suggestions</h3>
+	<ui5-input value-state="Information" id="myInformationInput" show-suggestions style="width: 350px">
+		<div slot="valueStateMessage">Information message. This is a <a href="#">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
+		<ui5-li>Cozy</ui5-li>
+		<ui5-li>Compact</ui5-li>
+		<ui5-li>CondensedCondensedCondensedCondensedCondensedCondensedCondensedCondensed</ui5-li>
+	</ui5-input>
+
+	<h3> Warning Input with suggestions</h3>
+	<ui5-input value-state="Warning" id="myWarningInput" show-suggestions style="width: 400px">
+		<div slot="valueStateMessage">Warning message. Extra long text used as a warning message. Extra long text used as a warning message - 2. Extra long text used as a warning message - 3.</div>
+		<ui5-li>Cozy</ui5-li>
+		<ui5-li>Compact</ui5-li>
+		<ui5-li>Condensed</ui5-li>
+	</ui5-input>
+
+	<h3> Error Input with suggestions</h3>
+	<ui5-input value-state="Error" id="myErrorInput" show-suggestions style="width: 450px">
+		<div slot="valueStateMessage">Error message. Extra long text used as a error message. Extra long text used as a error message - 2. Extra long text used as a error message - 3.</div>
+		<ui5-li>Cozy</ui5-li>
+		<ui5-li>Compact</ui5-li>
+		<ui5-li>CondensedCondensedCondensedCondensedCondensedCondensedCondensedCondensedCondensedCondensedCondensedCondensedCondensedCondensedCondensedCondensedCondensedCondensed</ui5-li>
+	</ui5-input>
+
+	<h3> Error Input without suggestions</h3>
+	<ui5-input value-state="Error" id="myErrorInput2" style="width: 450px">
+		<div slot="valueStateMessage">Error message. Extra long text used as a error message. Extra long text used as a error message - 2. Extra long text used as a error message - 3.</div>
 	</ui5-input>
 
 	<h3> Input disabled</h3>
@@ -124,7 +170,7 @@
 		<ui5-option selected>Compact</ui5-option>
 		<ui5-option>Condensed</ui5-option>
 	</ui5-select>
-	
+
 	<ui5-input  value="input" value-state="Error">
 		<ui5-icon slot="icon" name="message-warning"></ui5-icon>
 	</ui5-input>
@@ -142,9 +188,9 @@
 	</ui5-input>
 
 	<script>
-		var sap_database_entries = [{ key: "Afg", text: "Afghanistan" }, { key: "Arg", text: "Argentina" }, { key: "Alb", text: "Albania" }, { key: "Arm", text: "Armenia" }, { key: "Alg", text: "Algeria" }, { key: "And", text: "Andorra" }, { key: "Ang", text: "Angola" }, { key: "Ast", text: "Austria" }, { key: "Aus", text: "Australia" }, { key: "Aze", text: "Azerbaijan" }, { key: "Aruba", text: "Aruba" }, { key: "Antigua", text: "Antigua and Barbuda" }, { key: "Bel", text: "Belarus" }, { key: "Bel", text: "Belgium" }, { key: "Bg", text: "Bulgaria" }, { key: "Bra", text: "Brazil" }, { key: "Ch", text: "China" }, { key: "Cub", text: "Cuba" }, { key: "Chil", text: "Chili" }, { key: "Lat", text: "Latvia" }, { key: "Lit", text: "Litva" }, { key: "Prt", text: "Portugal" }, { key: "Sen", text: "Senegal" }, { key: "Ser", text: "Serbia" }, { key: "Afg", text: "Seychelles" }, { key: "Sierra", text: "Sierra Leone" }, { key: "Sgp", text: "Singapore" }, { key: "Sint", text: "Sint Maarten" }, { key: "Slv", text: "Slovakia" }, { key: "Slo", text: "Slovenia" }];
+		var sap_database_entries = [{ key: "Afg", text: "AfghanistanAfghanistanAfghanistanAfghanistanAfghanistanAfghanistanfghanistanfghanistan" }, { key: "Arg", text: "Argentina" }, { key: "Alb", text: "Albania" }, { key: "Arm", text: "Armenia" }, { key: "Alg", text: "Algeria" }, { key: "And", text: "Andorra" }, { key: "Ang", text: "Angola" }, { key: "Ast", text: "Austria" }, { key: "Aus", text: "Australia" }, { key: "Aze", text: "Azerbaijan" }, { key: "Aruba", text: "Aruba" }, { key: "Antigua", text: "Antigua and Barbuda" }, { key: "Bel", text: "Belarus" }, { key: "Bel", text: "Belgium" }, { key: "Bg", text: "Bulgaria" }, { key: "Bra", text: "Brazil" }, { key: "Ch", text: "China" }, { key: "Cub", text: "Cuba" }, { key: "Chil", text: "Chili" }, { key: "Lat", text: "Latvia" }, { key: "Lit", text: "Litva" }, { key: "Prt", text: "Portugal" }, { key: "Sen", text: "Senegal" }, { key: "Ser", text: "Serbia" }, { key: "Afg", text: "Seychelles" }, { key: "Sierra", text: "Sierra Leone" }, { key: "Sgp", text: "Singapore" }, { key: "Sint", text: "Sint Maarten" }, { key: "Slv", text: "Slovakia" }, { key: "Slo", text: "Slovenia" }];
 
-		var input = document.getElementById('myInput');
+		var input = document.getElementById('myInput1');
 		var myInput2 = document.getElementById('myInput2');
 		var input1 = document.getElementById('input1');
 		var input2 = document.getElementById('input2');
@@ -166,8 +212,8 @@
 				});
 			}
 
-			while (input.firstChild) {
-				input.removeChild(input.firstChild);
+			while (input.children.length !== 1) {
+				input.removeChild(input.lastChild);
 			}
 
 			suggestionItems.forEach(function(item) {
