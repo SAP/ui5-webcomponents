@@ -30,7 +30,7 @@ import {
 
 // Styles
 import styles from "./generated/themes/Input.css.js";
-import InputPopoverCss from "./generated/themes/InputPopover.css.js"
+import InputPopoverCss from "./generated/themes/InputPopover.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 
 /**
@@ -416,7 +416,7 @@ class Input extends UI5Element {
 	}
 
 	onAfterRendering() {
-		let resPopoverHeader = this._getPopover().header[0];
+		const resPopoverHeader = this._getPopover().header[0];
 
 		if (!this.firstRendering && !isPhone() && this.Suggestions) {
 			const shouldOpenSuggestions = this.shouldOpenSuggestions();
@@ -424,7 +424,7 @@ class Input extends UI5Element {
 			this.Suggestions.toggle(shouldOpenSuggestions);
 
 			RenderScheduler.whenFinished().then(() => {
-				if(resPopoverHeader.style.width !== `${this._getPopover().offsetWidth}px`){
+				if (resPopoverHeader.style.width !== `${this._getPopover().offsetWidth}px`) {
 					resPopoverHeader.style.width = `${this._getPopover().offsetWidth}px`;
 					this._invalidate();
 					this.initialHeaderRendering = false;
