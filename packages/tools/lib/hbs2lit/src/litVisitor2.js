@@ -2,8 +2,8 @@ const Handlebars = require("handlebars/dist/handlebars.min.js");
 const path = require("path");
 const Visitor = Handlebars.Visitor;
 
-const dynamicAttributeRgx = /([a-zA-Z]+)="$/g;
 let needsIfDefined = false;
+const dynamicAttributeRgx = /\s([a-zA-Z|-]+)="\s*$/;
 
 const attributes = [
 	"aria-expanded",
@@ -17,6 +17,7 @@ const attributes = [
 	"aria-describedby",
 	"dir",
 	"for",
+	"href",
 	"maxlength",
 	"max-date",
 	"min-date",
@@ -68,17 +69,14 @@ HTMLLitVisitor.prototype.ContentStatement = function(content) {
 	Visitor.prototype.ContentStatement.call(this, content);
 	// let content = content.orgiinal; // attribute="__ attribute = "__  attribute ="__
 
-	const staticPart = content.original;
+	const contentStatement = content.original;
+	const dynamicAttribute = dynamicAttributeRgx.exec(contentStatement.toString());
 
-	needsIfDefined = attributes.some((attr) => {
-		const res = dynamicAttributeRgx.exec(staticPart.toString());
-		if (res && res[1]) {
-			return res[1] === attr;
-		}
-		return false;
-	});
+	if (dynamicAttribute) {
+		needsIfDefined = attributes.some((attr) => dynamicAttribute[1]  === attr);
+	}
 
-	this.blocks[this.currentKey()] += staticPart;
+	this.blocks[this.currentKey()] += contentStatement;
 };
 
 HTMLLitVisitor.prototype.MustacheStatement = function(mustache) {
