@@ -20,9 +20,7 @@ const metadata = {
 		 * @slot
 		 * @public
 		 */
-		"default": {
-			type: Node,
-		},
+		"default": {},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.Tab.prototype */ {
 

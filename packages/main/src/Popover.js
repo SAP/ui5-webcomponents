@@ -172,9 +172,7 @@ const metadata = {
 		 * @slot
 		 * @public
 		 */
-		"default": {
-			type: Node,
-		},
+		"default": {},
 
 		/**
 		 * Defines the header HTML Element.
@@ -183,9 +181,7 @@ const metadata = {
 		 * @slot
 		 * @public
 		 */
-		header: {
-			type: HTMLElement,
-		},
+		header: {},
 
 		/**
 		 * Defines the footer HTML Element.
@@ -194,9 +190,7 @@ const metadata = {
 		 * @slot
 		 * @public
 		 */
-		footer: {
-			type: HTMLElement,
-		},
+		footer: {},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Popover.prototype */ {
 		/**

@@ -44,9 +44,7 @@ const metadata = {
 		 * @slot
 		 * @public
 		 */
-		icon: {
-			type: HTMLElement,
-		},
+		icon: {},
 
 		/**
 		 * Defines the <code>ui5-input</code> suggestion items.
@@ -71,7 +69,6 @@ const metadata = {
 		 */
 		"default": {
 			propertyName: "suggestionItems",
-			type: HTMLElement,
 		},
 
 		/**
@@ -80,9 +77,7 @@ const metadata = {
 		 * @type {HTMLElement[]}
 		 * @private
 		 */
-		formSupport: {
-			type: HTMLElement,
-		},
+		formSupport: {},
 	},
 	properties: /** @lends  sap.ui.webcomponents.main.Input.prototype */  {
 

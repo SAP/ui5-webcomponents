@@ -93,7 +93,6 @@ const metadata = {
 		 */
 		"default": {
 			propertyName: "content",
-			type: HTMLElement,
 			individualSlots: true,
 		},
 	},

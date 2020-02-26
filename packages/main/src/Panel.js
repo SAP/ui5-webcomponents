@@ -33,9 +33,7 @@ const metadata = {
 		 * @slot
 		 * @public
 		 */
-		header: {
-			type: HTMLElement,
-		},
+		header: {},
 
 		/**
 		 * Determines the content of the <code>ui5-panel</code>.
@@ -45,9 +43,7 @@ const metadata = {
 		 * @slot
 		 * @public
 		 */
-		"default": {
-			type: Node,
-		},
+		"default": {},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.Panel.prototype */ {
 

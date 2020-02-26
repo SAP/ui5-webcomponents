@@ -18,7 +18,6 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.Tokenizer.prototype */ {
 		"default": {
 			propertyName: "tokens",
-			type: HTMLElement,
 			individualSlots: true,
 		},
 	},

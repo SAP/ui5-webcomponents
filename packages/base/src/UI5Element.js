@@ -181,7 +181,7 @@ class UI5Element extends HTMLElement {
 	 */
 	async _updateSlots() {
 		const slotsMap = this.constructor.getMetadata().getSlots();
-		const canSlotText = slotsMap.default && slotsMap.default.type === Node;
+		const canSlotText = !!slotsMap.default;
 		const domChildren = Array.from(canSlotText ? this.childNodes : this.children);
 
 		// Init the _state object based on the supported slots
@@ -229,8 +229,6 @@ class UI5Element extends HTMLElement {
 					window.customElements.upgrade(child);
 				}
 			}
-
-			child = this.constructor.getMetadata().constructor.validateSlotValue(child, slotData);
 
 			if (child.isUI5Element && slotData.listenFor) {
 				this._attachChildPropertyUpdated(child, slotData.listenFor);

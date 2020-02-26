@@ -30,7 +30,6 @@ const metadata = {
 		 */
 		"default": {
 			propertyName: "buttons",
-			type: HTMLElement,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.SegmentedButton.prototype */ {

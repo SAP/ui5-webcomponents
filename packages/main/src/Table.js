@@ -26,7 +26,6 @@ const metadata = {
 		 */
 		"default": {
 			propertyName: "rows",
-			type: HTMLElement,
 			individualSlots: true,
 		},
 
@@ -39,7 +38,6 @@ const metadata = {
 		 * @public
 		 */
 		columns: {
-			type: HTMLElement,
 			individualSlots: true,
 			listenFor: { include: ["*"] },
 		},

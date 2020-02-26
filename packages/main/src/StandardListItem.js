@@ -102,9 +102,7 @@ const metadata = {
 		 * @slot
 		 * @public
 		 */
-		"default": {
-			type: Node,
-		},
+		"default": {},
 	},
 };
 

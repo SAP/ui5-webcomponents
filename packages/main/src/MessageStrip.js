@@ -70,9 +70,7 @@ const metadata = {
 		 * @slot
 		 * @public
 		 */
-		"default": {
-			type: Node,
-		},
+		"default": {},
 
 		/**
 		 * Defines the content to be displayed as graphical element within the <code>ui5-messagestrip</code>.
@@ -87,9 +85,7 @@ const metadata = {
 		 * @defaultvalue ""
 		 * @public
 		 */
-		"icon": {
-			type: HTMLElement,
-		},
+		"icon": {},
 	},
 	events: /** @lends sap.ui.webcomponents.main.MessageStrip.prototype */ {
 

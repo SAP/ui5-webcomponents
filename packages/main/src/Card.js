@@ -33,7 +33,6 @@ const metadata = {
 		 */
 		"default": {
 			propertyName: "content",
-			type: HTMLElement,
 		},
 
 		/**
@@ -46,9 +45,7 @@ const metadata = {
 		 * @slot
 		 * @public
 		 */
-		avatar: {
-			type: HTMLElement,
-		},
+		avatar: {},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.Card.prototype */ {
 

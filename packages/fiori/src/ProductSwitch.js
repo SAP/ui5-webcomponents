@@ -33,7 +33,6 @@ const metadata = {
 		 */
 		"default": {
 			propertyName: "items",
-			type: HTMLElement,
 		},
 	},
 };

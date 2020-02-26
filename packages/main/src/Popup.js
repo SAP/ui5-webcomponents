@@ -22,9 +22,7 @@ const metadata = {
 		 * @slot
 		 * @public
 		 */
-		"default": {
-			type: Node,
-		},
+		"default": {},
 
 		/**
 		 * Defines the header HTML Element.
@@ -33,9 +31,7 @@ const metadata = {
 		 * @slot
 		 * @public
 		 */
-		header: {
-			type: HTMLElement,
-		},
+		header: {},
 
 		/**
 		 * Defines the footer HTML Element.
@@ -44,9 +40,7 @@ const metadata = {
 		 * @slot
 		 * @public
 		 */
-		footer: {
-			type: HTMLElement,
-		},
+		footer: {},
 	},
 	properties: /** @lends  sap.ui.webcomponents.main.Popup.prototype */ {
 		/**

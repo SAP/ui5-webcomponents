@@ -126,7 +126,6 @@ const metadata = {
 		 */
 		"default": {
 			propertyName: "content",
-			type: HTMLElement,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.FileUploader.prototype */ {

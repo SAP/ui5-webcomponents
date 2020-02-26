@@ -154,7 +154,6 @@ const metadata = {
 		 */
 		"default": {
 			propertyName: "items",
-			type: HTMLElement,
 		},
 
 		/**
@@ -165,9 +164,7 @@ const metadata = {
 		 * @since 1.0.0-rc.6
 		 * @public
 		 */
-		profile: {
-			type: HTMLElement,
-		},
+		profile: {},
 
 		/**
 		 * Defines the items displayed in menu after a click on the primary title.
@@ -180,9 +177,7 @@ const metadata = {
 		 * @since 0.10
 		 * @public
 		 */
-		menuItems: {
-			type: HTMLElement,
-		},
+		menuItems: {},
 
 		/**
 		 * Defines the <code>ui5-input</code>, that will be used as a search field.
@@ -191,9 +186,7 @@ const metadata = {
 		 * @slot
 		 * @public
 		 */
-		searchField: {
-			type: HTMLElement,
-		},
+		searchField: {},
 
 		/**
 		 * Defines a <code>ui5-button</code> in the bar that will be placed in the beginning.
@@ -204,9 +197,7 @@ const metadata = {
 		 * @slot
 		 * @public
 		 */
-		startButton: {
-			type: HTMLElement,
-		},
+		startButton: {},
 	},
 	events: /** @lends sap.ui.webcomponents.fiori.ShellBar.prototype */ {
 		/**

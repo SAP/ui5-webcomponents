@@ -51,7 +51,6 @@ const metadata = {
 		 */
 		"default": {
 			propertyName: "options",
-			type: HTMLElement,
 			listenFor: { include: ["*"] },
 		},
 	},

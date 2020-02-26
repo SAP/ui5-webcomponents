@@ -43,9 +43,7 @@ const metadata = {
 		 * @slot
 		 * @public
 		 */
-		"default": {
-			type: Node,
-		},
+		"default": {},
 
 		/**
 		 * Defines the <code>ui5-icon</code> to be displayed in the <code>ui5-badge</code>.
@@ -54,9 +52,7 @@ const metadata = {
 		 * @slot
 		 * @public
 		 */
-		icon: {
-			type: HTMLElement,
-		},
+		icon: {},
 	},
 };
 

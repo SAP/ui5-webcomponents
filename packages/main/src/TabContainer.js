@@ -46,7 +46,6 @@ const metadata = {
 		 */
 		"default": {
 			propertyName: "items",
-			type: HTMLElement,
 			individualSlots: true,
 			listenFor: { include: ["*"] },
 		},

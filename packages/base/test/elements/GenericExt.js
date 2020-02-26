@@ -12,7 +12,6 @@ const metadata = {
 	},
 	slots: {
 		extSlot: {
-			type: HTMLElement,
 		},
 	}
 };

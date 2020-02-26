@@ -29,17 +29,13 @@ const metadata = {
 	managedSlots: true,
 	slots: {
 		default: {
-			type: Node,
 		},
 		other: {
-			type: HTMLElement,
 		},
 		individual: {
-			type: HTMLElement,
 			individualSlots: true,
 		},
 		named: {
-			type: HTMLElement,
 			propertyName: "items",
 		}
 	}

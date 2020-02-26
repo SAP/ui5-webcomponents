@@ -34,9 +34,7 @@ const metadata = {
 		 * @slot
 		 * @public
 		 */
-		header: {
-			type: HTMLElement,
-		},
+		header: {},
 
 		/**
 		 * Defines the items of the <code>ui5-list</code>.
@@ -48,7 +46,6 @@ const metadata = {
 		 */
 		"default": {
 			propertyName: "items",
-			type: HTMLElement,
 		},
 	},
 	properties: /** @lends  sap.ui.webcomponents.main.List.prototype */ {

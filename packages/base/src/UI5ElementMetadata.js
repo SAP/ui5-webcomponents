@@ -25,14 +25,6 @@ class UI5ElementMetadata {
 	}
 
 	/**
-	 * Only intended for use by UI5Element.js
-	 * @protected
-	 */
-	static validateSlotValue(value, slotData) {
-		return validateSingleSlot(value, slotData);
-	}
-
-	/**
 	 * Returns the tag of the UI5 Element
 	 * @public
 	 */
@@ -149,32 +141,6 @@ const validateSingleProperty = (value, propData) => {
 	if (isDescendantOf(propertyType, DataType)) {
 		return propertyType.isValid(value) ? value : propData.defaultValue;
 	}
-};
-
-const validateSingleSlot = (value, slotData) => {
-	if (value === null) {
-		return value;
-	}
-
-	const getSlottedNodes = el => {
-		const isTag = el instanceof HTMLElement;
-		const isSlot = isTag && el.localName === "slot";
-
-		if (isSlot) {
-			return el.assignedNodes({ flatten: true }).filter(item => item instanceof HTMLElement);
-		}
-
-		return [el];
-	};
-
-	const slottedNodes = getSlottedNodes(value);
-	slottedNodes.forEach(el => {
-		if (!(el instanceof slotData.type)) {
-			throw new Error(`${el} is not of type ${slotData.type}`);
-		}
-	});
-
-	return value;
 };
 
 export default UI5ElementMetadata;

@@ -22,7 +22,6 @@ const metadata = {
 		 */
 		"default": {
 			propertyName: "cells",
-			type: HTMLElement,
 			individualSlots: true,
 		},
 	},

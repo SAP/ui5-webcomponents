@@ -104,9 +104,7 @@ const metadata = {
 		 * @slot
 		 * @public
 		 */
-		"default": {
-			type: Node,
-		},
+		"default": {},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Link.prototype */ {
 

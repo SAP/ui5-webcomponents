@@ -6,11 +6,9 @@ const metadata = {
 	managedSlots: true,
 	slots: {
 		default: {
-			type: Node,
 			listenFor: ["prop1"],
 		},
 		items: {
-			type: HTMLElement,
 			listenFor: { include: ["*"], exclude: ["prop3"] }
 		}
 	}
