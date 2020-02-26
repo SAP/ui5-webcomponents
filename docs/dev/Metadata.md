@@ -91,15 +91,10 @@ Defines the `slots` that will be provided by this UI5 Web Component.
 ```json
 {
 	"slots": {
-		"default": {
-			"type": Node,
-		},
-		"footer": {
-			"type": HTMLElement,
-		},
+		"default": {},
+		"footer": {},
 		"rows": {
-			"type": HTMLElement,
-			"individualSlots": true,
+			"individualSlots": true
 		}
 	}
 }
@@ -109,12 +104,9 @@ Defines the `slots` that will be provided by this UI5 Web Component.
 
 Setting | Type | Default | Description
 --------|------|--------|-----------
-`type`    | `HTMLElement` or `Node` | N/A | The type of the children that can go into that slot 
 `individualSlots` | `Boolean` | false | If set to `true`, each child will have its own slot, allowing you to arrange/wrap the children arbitrarily.
 `propertyName` | `String` | N/A | Allows to set the name of the property on the Web Component, where the children belonging to this slot will be stored.
 `listenFor` | `Object` | N/A | **Experimental, do not use.** If set, whenever the children, belonging to this slot have their properties changed, the Web Component will be invalidated. 
-
-The `type` setting is required.
 
 Notes:
  - Children without a `slot` attribute will be assigned to the `default` slot. 
@@ -123,13 +115,6 @@ Notes:
  For example, if you have a slot named "rows", "this.rows" will be an array, holding references to all children with `slot="rows"`, or no slot, if rows was default.
  - For the `default` slot you can provide a `propertyName` setting. 
  For example, if your default slot has a `propertyName: "items"`, then "this.items" will hold all children that were assigned to the default slot.
- 
- #### Allowed slot types
- 
- Type | Description
- -----|-------------
- Node | Accepts both Text nodes and HTML Elements
- HTMLElement | Accepts HTML Elements only
 
 ## Managed slots
 
