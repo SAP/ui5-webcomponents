@@ -1,5 +1,5 @@
-commit 55a2e4b2190ceebfec4ee54a6cc1ae379966ce06
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Feb 26 16:15:49 2020 +0200
+commit 9400fe36f661bef547543717281c3cba1582bc8f
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Feb 26 16:21:59 2020 +0200
 
-    chore: update chromedriver to 80 (#1252)
+    chore: skip ifDefined event handlers and boolean attrs (#1246)
