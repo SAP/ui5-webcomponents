@@ -36,20 +36,22 @@ const GLOBAL_CONTENT_DENSITY_CSS_VAR = "--_ui5_content_density";
 class UI5Element extends HTMLElement {
 	constructor() {
 		super();
-		this._generateId();
-		this._initializeState();
-		this._upgradeAllProperties();
-		this._initializeContainers();
-		this._upToDate = false;
+		if (this.constructor.getMetadata().getTag() !== "ui5-table-cell") {
+			this._generateId();
+			this._initializeState();
+			this._upgradeAllProperties();
+			this._initializeContainers();
+			this._upToDate = false;
 
-		let deferredResolve;
-		this._domRefReadyPromise = new Promise(resolve => {
-			deferredResolve = resolve;
-		});
-		this._domRefReadyPromise._deferredResolve = deferredResolve;
+			let deferredResolve;
+			this._domRefReadyPromise = new Promise(resolve => {
+				deferredResolve = resolve;
+			});
+			this._domRefReadyPromise._deferredResolve = deferredResolve;
 
-		this._monitoredChildProps = new Map();
-		this._firePropertyChange = false;
+			this._monitoredChildProps = new Map();
+			this._firePropertyChange = false;
+		}
 	}
 
 	/**
