@@ -443,6 +443,8 @@ class UI5Element extends HTMLElement {
 	 * @protected
 	 */
 	_render() {
+		const hasIndividualSlots = this.constructor.getMetadata().hasIndividualSlots();
+
 		// suppress invalidation to prevent state changes scheduling another rendering
 		this._suppressInvalidation = true;
 
@@ -468,7 +470,9 @@ class UI5Element extends HTMLElement {
 		}
 
 		// Safari requires that children get the slot attribute only after the slot tags have been rendered in the shadow DOM
-		this._assignIndividualSlotsToChildren();
+		if (hasIndividualSlots) {
+			this._assignIndividualSlotsToChildren();
+		}
 
 		// Call the onAfterRendering hook
 		if (typeof this.onAfterRendering === "function") {
