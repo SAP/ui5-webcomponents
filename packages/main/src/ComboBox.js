@@ -225,7 +225,7 @@ const metadata = {
  *
  * The <code>ui5-combobox</code> provides advanced keyboard handling.
  *
- * <h2>Picker</h2>
+ * <h4>Picker</h4>
  * If the <code>ui5-combobox</code> is focused,
  * you can open or close the drop-down by pressing <code>F4</code>, <code>ALT+UP</code> or <code>ALT+DOWN</code> keys.
  * <br>
