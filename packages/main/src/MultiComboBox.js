@@ -459,7 +459,7 @@ class MultiComboBox extends UI5Element {
 
 	_filterItems(value) {
 		return this.items.filter(item => {
-			return item.textContent && item.textContent.toLowerCase().startsWith(value.toLowerCase());
+			return item.text && item.text.toLowerCase().startsWith(value.toLowerCase());
 		});
 	}
 

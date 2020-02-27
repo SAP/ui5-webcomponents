@@ -52,7 +52,7 @@
 		@ui5-selectionChange={{_listSelectionChange}}>
 		{{#each items}}
 			{{#if this.selected}}
-				<ui5-li type="Active" data-ui5-token-id="{{this._id}}" .selected="{{../editable}}">{{this.textContent}}</ui5-li>
+				<ui5-li type="Active" data-ui5-token-id="{{this._id}}" .selected="{{../editable}}">{{this.text}}</ui5-li>
 			{{/if}}
 		{{/each}}
 	</ui5-list>
@@ -118,7 +118,7 @@
 
 	<ui5-list separators="None" mode="MultiSelect" class="ui5-multi-combobox-all-items-list">
 		{{#each _filteredItems}}
-				<ui5-li type="Active" ?selected={{this.selected}} data-ui5-token-id="{{this._id}}">{{this.textContent}}</ui5-li>
+				<ui5-li type="Active" ?selected={{this.selected}} data-ui5-token-id="{{this._id}}">{{this.text}}</ui5-li>
 		{{/each}}
 	</ui5-list>
 
