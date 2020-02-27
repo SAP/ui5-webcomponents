@@ -39,7 +39,7 @@ const metadata = {
 
 		/**
 		 * Defines the items of the <code>ui5-list</code>.
-		 * <br><b>Note:</b> Use <code>ui5-li</code>, <code>ui5-li-custom</code> and <code>ui5-li-groupheader</code> for the intended design.
+		 * <br><b>Note:</b> Use <code>ui5-li</code>, <code>ui5-li-custom</code>, and <code>ui5-li-groupheader</code> for the intended design.
 		 *
 		 * @type {HTMLElement[]}
 		 * @slot
@@ -119,7 +119,7 @@ const metadata = {
 		 * <b>Notes:</b>
 		 * <ul>
 		 * <li>Avalaible options are <code>All</code>, <code>Inner</code>, and <code>None</code>.</li>
-		 * <li>When set to <code>None</code>, none of the items is separated by horizontal lines.</li>
+		 * <li>When set to <code>None</code>, none of the items are separated by horizontal lines.</li>
 		 * <li>When set to <code>Inner</code>, the first item doesn't have a top separator and the last
 		 * item doesn't have a bottom separator.</li>
 		 * </ul>
@@ -134,8 +134,8 @@ const metadata = {
 		},
 
 		/**
-		 * Defines if the component would fire the <code>loadMore</code> event,
-		 * when the user scrolls to the bottom of the list and help achieving an "infinite scroll" effect
+		 * Defines if the component would fire the <code>loadMore</code> event
+		 * when the user scrolls to the bottom of the list, and helps achieving an "infinite scroll" effect
 		 * by adding new items each time.
 		 *
 		 * @type {boolean}
@@ -196,8 +196,8 @@ const metadata = {
 		 * in <code>SingleSelect</code> and <code>MultiSelect</code> modes.
 		 *
 		 * @event
-		 * @param {Array} selectedItems an array of the selected items.
-		 * @param {Array} previouslySelectedItems an array of the previously selected items.
+		 * @param {Array} selectedItems An array of the selected items.
+		 * @param {Array} previouslySelectedItems An array of the previously selected items.
 		 * @public
 		 */
 		selectionChange: {
