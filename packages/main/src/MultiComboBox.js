@@ -277,6 +277,7 @@ const metadata = {
  * @extends UI5Element
  * @tagname ui5-multi-combobox
  * @public
+ * @appenddocs MultiComboBoxItem
  * @since 0.11.0
  */
 class MultiComboBox extends UI5Element {

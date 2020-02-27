@@ -244,6 +244,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.ComboBox
  * @extends UI5Element
  * @tagname ui5-combobox
+ * @appenddocs ComboBoxItem
  * @public
  * @since 1.0.0-rc.6
  */
