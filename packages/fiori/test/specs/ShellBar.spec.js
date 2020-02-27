@@ -1,7 +1,17 @@
+
 const assert = require("chai").assert;
 
 describe("Component Behavior", () => {
 	browser.url("http://localhost:8081/test-resources/pages/ShellBar.html");
+
+	describe("ui5-shellbar-item", () => {
+		it("tests count property", () => {
+			const shellbar = browser.$("#shellbarwithitems");
+			const icon = shellbar.shadow$("ui5-icon[data-count]");
+
+			assert.strictEqual(icon.getAttribute("data-count"), '42', "Count property propagates to ui5-icon");
+		})
+	});
 
 	describe("Responsiveness", () => {
 
@@ -213,7 +223,7 @@ describe("Component Behavior", () => {
 			});
 
 			it("tests profilePress event", () => {
-				const profileIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-image-button");
+				const profileIcon = browser.$("#shellbar").$("ui5-avatar");
 				const input = browser.$("#press-input");
 
 				profileIcon.click();
@@ -315,7 +325,7 @@ describe("Component Behavior", () => {
 			});
 
 			it("tests profilePress event", () => {
-				const profileIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-image-button");
+				const profileIcon = browser.$("#shellbar").$("ui5-avatar");
 				const input = browser.$("#press-input");
 
 				profileIcon.click();

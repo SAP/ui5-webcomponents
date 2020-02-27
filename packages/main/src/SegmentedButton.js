@@ -15,6 +15,7 @@ import SegmentedButtonCss from "./generated/themes/SegmentedButton.css.js";
 const metadata = {
 	tag: "ui5-segmentedbutton",
 	properties: /** @lends sap.ui.webcomponents.main.SegmentedButton.prototype */  {},
+	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.SegmentedButton.prototype */ {
 
 		/**
@@ -96,16 +97,16 @@ class SegmentedButton extends UI5Element {
 		this.absoluteWidthSet = false; // set to true whenever we set absolute width to the component
 		this.percentageWidthSet = false; //  set to true whenever we set 100% width to the component
 		this.hasPreviouslyFocusedItem = false;
+
+		this._handleResizeBound = this._handleResize.bind(this);
 	}
 
 	onEnterDOM() {
-		this._handleResizeBound = this._handleResize.bind(this);
-
-		ResizeHandler.register(document.body, this._handleResizeBound);
+		ResizeHandler.register(this.parentNode, this._handleResizeBound);
 	}
 
 	onExitDOM() {
-		ResizeHandler.deregister(document.body, this._handleResizeBound);
+		ResizeHandler.deregister(this.parentNode, this._handleResizeBound);
 	}
 
 	onBeforeRendering() {

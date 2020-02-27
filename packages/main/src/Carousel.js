@@ -83,6 +83,7 @@ const metadata = {
 			defaultValue: CarouselArrowsPlacement.Content,
 		},
 	},
+	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.Carousel.prototype */ {
 		/**
 		 * Defines the content of the <code>ui5-carousel</code>.
@@ -246,7 +247,7 @@ class Carousel extends UI5Element {
 	get styles() {
 		return {
 			content: {
-				"left": `-${this.selectedIndex * 100}%`,
+				transform: `translateX(-${this.selectedIndex * 100}%)`,
 			},
 		};
 	}

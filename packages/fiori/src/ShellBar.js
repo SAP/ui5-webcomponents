@@ -75,16 +75,6 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the source URI of the profile action.
-		 * If no source is set - profile will be excluded from actions.
-		 * @type {string}
-		 * @public
-		 */
-		profile: {
-			type: String,
-		},
-
-		/**
 		 * Defines, if the notification icon would be displayed.
 		 * @type {boolean}
 		 * @public
@@ -150,7 +140,7 @@ const metadata = {
 			defaultValue: [],
 		},
 	},
-
+	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.fiori.ShellBar.prototype */ {
 		/**
 		 * Defines the <code>ui5-shellbar</code> aditional items.
@@ -164,6 +154,18 @@ const metadata = {
 		 */
 		"default": {
 			propertyName: "items",
+			type: HTMLElement,
+		},
+
+		/**
+		 * You can pass <code>ui5-avatar</code> to set the profile image/icon.
+		 * If no profile slot is set - profile will be excluded from actions.
+		 * @type {HTMLElement}
+		 * @slot
+		 * @since 1.0.0-rc.6
+		 * @public
+		 */
+		profile: {
 			type: HTMLElement,
 		},
 
@@ -223,7 +225,7 @@ const metadata = {
 		},
 
 		/**
-		 * Fired, when the profile icon is activated.
+		 * Fired, when the profile slot is present.
 		 *
 		 * @event
 		 * @param {HTMLElement} targetRef dom ref of the activated element
@@ -297,7 +299,7 @@ const metadata = {
  * <h3 class="comment-api-title">Overview</h3>
  *
  * The <code>ui5-shellbar</code> is meant to serve as an application header
- * and includes numerous built-in features, such as: logo, profile icon, title, search field, notifications and so on.
+ * and includes numerous built-in features, such as: logo, profile image/icon, title, search field, notifications and so on.
  * <br><br>
  * <h3>ES6 Module Import</h3>
  * <code>import "@ui5/webcomponents-fiori/dist/ShellBar";</code>
@@ -759,6 +761,7 @@ class ShellBar extends UI5Element {
 				return {
 					icon: item.icon,
 					id: item._id,
+					count: item.count || undefined,
 					refItemid: item._id,
 					text: item.text,
 					classes: "ui5-shellbar-custom-item ui5-shellbar-button",
@@ -801,7 +804,7 @@ class ShellBar extends UI5Element {
 				priority: 4,
 				subclasses: "ui5-shellbar-image-buttonImage",
 				style: `order: ${this.profile ? 5 : -10};`,
-				subStyles: `${this.profile ? `background-image: url(${this.profile})` : ""}`,
+				profile: true,
 				id: `${this._id}-item-${3}`,
 				domOrder: this.profile ? (++domOrder) : -1,
 				show: this.profile,

@@ -98,8 +98,12 @@
 }
 
 .ui5-tc__headerItem--withIcon:focus .ui5-tc-headerItemIcon-outer,
+.ui5-tc__headerItem--textOnly:not(.ui5-tc__headerItem--inline):focus .ui5-tc__headerItemText {
+	outline: var(--_ui5_tc_headerItem_focus_border);
+}
+
 .ui5-tc__headerItem--mixedMode:focus .ui5-tc__headerItemContent,
-.ui5-tc__headerItem--textOnly:focus .ui5-tc__headerItemContent {
+.ui5-tc__headerItem--inline.ui5-tc__headerItem--textOnly:focus .ui5-tc__headerItemContent {
 	outline: var(--_ui5_tc_headerItem_focus_border);
 }
 
@@ -161,10 +165,18 @@
 	text-shadow: none;
 }
 
-.ui5-tc__headerItem--withIcon .ui5-tc__headerItemAdditionalText + .ui5-tc__headerItemText {
+.ui5-tc__headerItemAdditionalText + .ui5-tc__headerItemText {
 	display: block;
+}
+
+.ui5-tc__headerItem--inline .ui5-tc__headerItemAdditionalText + .ui5-tc__headerItemText {
+	display: inline;
+}
+
+.ui5-tc__headerItem--withIcon .ui5-tc__headerItemAdditionalText + .ui5-tc__headerItemText {
 	margin-top: var(--_ui5_tc_item_add_text_margin_top);
 }
+
 /*** END Icon and text Tab styles ***/
 
 /*** TextOnly Tab styles ***/

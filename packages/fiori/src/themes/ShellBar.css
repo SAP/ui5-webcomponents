@@ -65,6 +65,18 @@
 	z-index: 1;
 }
 
+slot[name="profile"] {
+	min-width: 0;
+}
+
+::slotted(ui5-avatar) {
+	min-width: 0;
+	width: 2.25rem;
+	height: 2.25rem;
+	padding: .25rem;
+	background-color: transparent;
+}
+
 .ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive::-moz-focus-inner {
 	border: none;
 }
@@ -303,8 +315,8 @@
 	position: relative;
 }
 
-:host([notification-count]) .ui5-shellbar-bell-button::before {
-	content: attr(data-ui5-notification-count);
+:host([notification-count]) .ui5-shellbar-bell-button::before,
+ui5-icon[data-count]::before {
 	position: absolute;
 	width: auto;
 	height: 1rem;
@@ -322,6 +334,14 @@
 	font-family: var(--sapFontFamily);
 	z-index: 2;
 	box-sizing: border-box;
+}
+
+:host([notification-count]) .ui5-shellbar-bell-button::before {
+	content: attr(data-ui5-notification-count);
+}
+
+ui5-icon[data-count]::before {
+	content: attr(data-count);
 }
 
 .ui5-shellbar-menu-button {

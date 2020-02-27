@@ -115,6 +115,7 @@ const metadata = {
 			defaultValue: ValueState.None,
 		},
 	},
+	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.FileUploader.prototype */ {
 		/**
 		 * By default the <code>ui5-file-uploader</code> contains a single input field. With this slot you can pass any content that you wish to add. See the samples for more information
@@ -150,8 +151,14 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- *
- * <h3>Usage</h3>
+ * The FileUploader opens a file explorer dialog and enables users to upload files.
+ * The component consists of input field and a button with text "Browse ...", but you can also provide an HTML element by your choice
+ * to trigger the file upload by using the default slot and set the property "hideInput" to "true".
+ * <br>
+ * To get all selected files, you can simply use the readonly property "files".
+ * To restrict the types of files the user can select, you can use the "accept" property.
+ * <br>
+ * And, similar to all input based components, the FileUploader supports "valueState", "placeholder", "name" and "disabled" properties.
  *
  * For the <code>ui5-file-uploader</code>
  * <h3>ES6 Module Import</h3>
