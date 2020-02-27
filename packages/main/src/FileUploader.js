@@ -93,7 +93,7 @@ const metadata = {
 		},
 
 		/**
-		 * Name/names of the file/files to upload.
+		 * Defines the name/names of the file/files to upload.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
@@ -117,7 +117,7 @@ const metadata = {
 	},
 	slots: /** @lends sap.ui.webcomponents.main.FileUploader.prototype */ {
 		/**
-		 * By default the <code>ui5-file-uploader</code> contains a single input field. With this slot you can pass any content that you wish to add. See the samples for more information
+		 * By default the <code>ui5-file-uploader</code> contains a single input field. With this slot you can pass any content that you wish to add. See the samples for more information.
 		 *
 		 * @type {HTMLElement[]}
 		 * @slot
@@ -131,7 +131,7 @@ const metadata = {
 	events: /** @lends sap.ui.webcomponents.main.FileUploader.prototype */ {
 		/**
 		 * Event is fired when the value of the file path has been changed.
-		 * Note: Keep in mind that because of the HTML input element of type file, the event is also fired in Chrome browser when the Cancel button of the uploads window is pressed.
+		 * <b>Note:</b> Keep in mind that because of the HTML input element of type file, the event is also fired in Chrome browser when the Cancel button of the uploads window is pressed.
 		 *
 		 * @event
 		 * @param {FileList} files The current files.
@@ -150,14 +150,14 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * The FileUploader opens a file explorer dialog and enables users to upload files.
+ * The <code>ui5-file-uploader</code> opens a file explorer dialog and enables users to upload files.
  * The component consists of input field and a button with text "Browse ...", but you can also provide an HTML element by your choice
- * to trigger the file upload by using the default slot and set the property "hideInput" to "true".
+ * to trigger the file upload, by using the default slot and set the property "hideInput" to "true".
  * <br>
- * To get all selected files, you can simply use the readonly property "files".
+ * To get all selected files, you can simply use the read-only "files" property.
  * To restrict the types of files the user can select, you can use the "accept" property.
  * <br>
- * And, similar to all input based components, the FileUploader supports "valueState", "placeholder", "name" and "disabled" properties.
+ * And, similar to all input based components, the FileUploader supports "valueState", "placeholder", "name", and "disabled" properties.
  *
  * For the <code>ui5-file-uploader</code>
  * <h3>ES6 Module Import</h3>
