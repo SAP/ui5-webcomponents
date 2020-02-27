@@ -17,6 +17,7 @@ import OverflowToolbarPopoverTemplate from "./generated/templates/OverflowToolba
  */
 const metadata = {
 	tag: "ui5-overflow-toolbar",
+	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.OverflowToolbar.prototype */ {
 
 		/**
