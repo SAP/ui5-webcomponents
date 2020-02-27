@@ -54,7 +54,7 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * The <code>SegmentedButton</code> shows a group of buttons. When the user clicks or taps
+ * The <code>ui5-segmentedbutton</code> shows a group of buttons. When the user clicks or taps
  * one of the buttons, it stays in a pressed state. It automatically resizes the buttons
  * to fit proportionally within the component. When no width is set, the component uses the available width.
  * <br><br>
