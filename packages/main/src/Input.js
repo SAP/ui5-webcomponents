@@ -12,7 +12,6 @@ import {
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
-import Popover from "./Popover.js";
 
 // import Icon from "./Icon.js";
 import InputType from "./types/InputType.js";
@@ -640,11 +639,6 @@ class Input extends UI5Element {
 			&& !this.hasSuggestionItemSelected);
 	}
 
-	shouldShowValueStateMessage() {
-		return !!(this.valueStateMessage.length
-			&& this.focused);
-	}
-
 	selectSuggestion(item, keyboardUsed) {
 		const itemText = item.textContent;
 		const fireInput = keyboardUsed
@@ -850,6 +844,5 @@ class Input extends UI5Element {
 }
 
 Input.define();
-Popover.define();
 
 export default Input;

@@ -16,10 +16,10 @@
 
 <body style="background-color: var(--sapBackgroundColor);">
 	<h3> Input with suggestions: type 'a'</h3>
-	<div id="myLabel">Event [suggestionItemSelect] :: N/A</div><br/>
-	<div id="myLabelChange">Event [change] :: N/A</div><br/>
-	<div id="myLabelSubmit">Event [submit] :: N/A</div><br/>
-	<div id="myLabelLiveChange">Event [input] :: N/A</div><br/>
+	<ui5-label id="myLabel">Event [suggestionItemSelect] :: N/A</ui5-label><br/>
+	<ui5-label id="myLabelChange">Event [change] :: N/A</ui5-label><br/>
+	<ui5-label id="myLabelSubmit">Event [submit] :: N/A</ui5-label><br/>
+	<ui5-label id="myLabelLiveChange">Event [input] :: N/A</ui5-label><br/>
 
 	<div>
 		<h3>Input in Cozy</h3>
@@ -41,7 +41,7 @@
 	<ui5-input id="myInput"
 		style="width: 500px"
 		show-suggestions
-        value-state="Error"
+		value-state="Error"
 		placeholder="Search for a country ...">
 		<div slot="valueStateMessage">Error message. Extra long text used as a error message. Extra long text used as a error message - 2. Extra long text used as a error message - 3.</div>
 	</ui5-input>
@@ -186,7 +186,7 @@
 	</ui5-input>
 
 	<script>
-		var sap_database_entries = [{ key: "Afg", text: "AfghanistanAfghanistanAfghanistanAfghanistanAfghanistanAfghanistanfghanistanfghanistan" }, { key: "Arg", text: "Argentina" }, { key: "Alb", text: "Albania" }, { key: "Arm", text: "Armenia" }, { key: "Alg", text: "Algeria" }, { key: "And", text: "Andorra" }, { key: "Ang", text: "Angola" }, { key: "Ast", text: "Austria" }, { key: "Aus", text: "Australia" }, { key: "Aze", text: "Azerbaijan" }, { key: "Aruba", text: "Aruba" }, { key: "Antigua", text: "Antigua and Barbuda" }, { key: "Bel", text: "Belarus" }, { key: "Bel", text: "Belgium" }, { key: "Bg", text: "Bulgaria" }, { key: "Bra", text: "Brazil" }, { key: "Ch", text: "China" }, { key: "Cub", text: "Cuba" }, { key: "Chil", text: "Chili" }, { key: "Lat", text: "Latvia" }, { key: "Lit", text: "Litva" }, { key: "Prt", text: "Portugal" }, { key: "Sen", text: "Senegal" }, { key: "Ser", text: "Serbia" }, { key: "Afg", text: "Seychelles" }, { key: "Sierra", text: "Sierra Leone" }, { key: "Sgp", text: "Singapore" }, { key: "Sint", text: "Sint Maarten" }, { key: "Slv", text: "Slovakia" }, { key: "Slo", text: "Slovenia" }];
+		var sap_database_entries = [{ key: "Afg", text: "Afghanistan" }, { key: "Arg", text: "Argentina" }, { key: "Alb", text: "Albania" }, { key: "Arm", text: "Armenia" }, { key: "Alg", text: "Algeria" }, { key: "And", text: "Andorra" }, { key: "Ang", text: "Angola" }, { key: "Ast", text: "Austria" }, { key: "Aus", text: "Australia" }, { key: "Aze", text: "Azerbaijan" }, { key: "Aruba", text: "Aruba" }, { key: "Antigua", text: "Antigua and Barbuda" }, { key: "Bel", text: "Belarus" }, { key: "Bel", text: "Belgium" }, { key: "Bg", text: "Bulgaria" }, { key: "Bra", text: "Brazil" }, { key: "Ch", text: "China" }, { key: "Cub", text: "Cuba" }, { key: "Chil", text: "Chili" }, { key: "Lat", text: "Latvia" }, { key: "Lit", text: "Litva" }, { key: "Prt", text: "Portugal" }, { key: "Sen", text: "Senegal" }, { key: "Ser", text: "Serbia" }, { key: "Afg", text: "Seychelles" }, { key: "Sierra", text: "Sierra Leone" }, { key: "Sgp", text: "Singapore" }, { key: "Sint", text: "Sint Maarten" }, { key: "Slv", text: "Slovakia" }, { key: "Slo", text: "Slovenia" }];
 
 		var input = document.getElementById('myInput');
 		var myInput2 = document.getElementById('myInput2');
