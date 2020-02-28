@@ -11,7 +11,7 @@
 	dir="{{rtl}}"
 >
 	<div class="ui5-switch-inner">
-		<div class="ui5-switch-track">
+		<div class="ui5-switch-track" part="slider">
 			<div class="ui5-switch-slider">
 				{{#if graphical}}
 					<span class="ui5-switch-text ui5-switch-text--on">
@@ -21,11 +21,11 @@
 						<ui5-icon name="decline" class="ui5-switch-icon-off"></ui5-icon>
 					</span>
 				{{else}}
-					<span class="ui5-switch-text ui5-switch-text--on">{{_textOn}}</span>
-					<span class="ui5-switch-text ui5-switch-text--off">{{_textOff}}</span>
+					<span class="ui5-switch-text ui5-switch-text--on" part="text-on">{{_textOn}}</span>
+					<span class="ui5-switch-text ui5-switch-text--off" part="text-off">{{_textOff}}</span>
 				{{/if}}
 
-				<span class="ui5-switch-handle"></span>
+				<span class="ui5-switch-handle" part="handle"></span>
 			</div>
 		</div>
 	</div>
