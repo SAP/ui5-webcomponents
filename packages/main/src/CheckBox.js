@@ -150,7 +150,7 @@ const metadata = {
  * To check/uncheck the <code>ui5-checkbox</code>, the user has to click or tap the square
  * box or its label.
  * <br><br>
- * The <code>ui5-checkbox</code> component only has 2 states - checked and unchecked. 
+ * The <code>ui5-checkbox</code> component only has 2 states - checked and unchecked.
  * Clicking or tapping toggles the <code>ui5-checkbox</code> between checked and unchecked state.
  *
  * <h3>Usage</h3>
