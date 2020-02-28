@@ -88,8 +88,10 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the icon to be displayed in the <code>ui5-input</code>.
-		 *
+		 * The slot is used in order to display a valueStateMessage.
+		 * <br><br>
+		 * <b>Note:</b> The valueStateMessage would be displayed only if the <code>ui5-input</code> has
+		 * a valueState of type <code>Information</code>, <code>Warning</code> or <code>Error</code>.
 		 * @type {HTMLElement[]}
 		 * @slot
 		 * @public
@@ -377,7 +379,7 @@ class Input extends UI5Element {
 
 		// Indicates, if the component is rendering for first time.
 		this.firstRendering = true;
-
+		// Indicates, if the header of the responsive popover is rendered in order to avoid multiple rendering.
 		this.initialHeaderRendering = true;
 
 		// all sementic events
