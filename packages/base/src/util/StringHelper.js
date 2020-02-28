@@ -1,6 +1,21 @@
-const kebabToCamelCase = string => toCamelCase(string.split("-"));
+const kebabToCamelMap = new Map();
+const camelToKebabMap = new Map();
 
-const camelToKebabCase = string => string.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
+const kebabToCamelCase = string => {
+	if (!kebabToCamelMap.has(string)) {
+		const result = toCamelCase(string.split("-"));
+		kebabToCamelMap.set(string, result);
+	}
+	return kebabToCamelMap.get(string);
+};
+
+const camelToKebabCase = string => {
+	if (!camelToKebabMap.has(string)) {
+		const result = string.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
+		camelToKebabMap.set(string, result);
+	}
+	return camelToKebabMap.get(string);
+};
 
 const toCamelCase = parts => {
 	return parts.map((string, index) => {

@@ -86,6 +86,22 @@ class UI5ElementMetadata {
 	}
 
 	/**
+	 * Determines whether this UI5 Element supports any slots with "individualSlots: true"
+	 * @public
+	 */
+	hasIndividualSlots() {
+		return this.slotsAreManaged() && Object.entries(this.getSlots()).some(([_slotName, slotData]) => slotData.individualSlots);
+	}
+
+	/**
+	 * Determines whether this UI5 Element needs to invalidate if children are added/removed/changed
+	 * @public
+	 */
+	slotsAreManaged() {
+		return !!this.metadata.managedSlots;
+	}
+
+	/**
 	 * Returns an object with key-value pairs of properties and their metadata definitions
 	 * @public
 	 */
