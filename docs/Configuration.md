@@ -12,17 +12,17 @@ language     | en, de, es, etc...                              | en            |
 [RTL](#rtl)          | true, false                                     | false         | When true, sets global text direction to right-to-left
 [animationMode](#animationMode)  | full, basic, minimal, none  | full          | Defines different animation scenarios or levels
 calendarType | Gregorian, Islamic, Buddhist, Japanese, Persian | Gregorian     | Default calendar type for date-related web components
-[noConflict](#noConflict)  | true, false | Object                            | false         | When set to true, all events will be fired with a "ui5-" prefix only
+[noConflict](#noConflict)  | true, false | false                            | When set to true, all events will be fired with a "ui5-" prefix only
 [formatSettings](#formatSettings)| See the [Format settings](#formatSettings) section below		| Empty object | Allows to override locale-specific configuration
 
 ### Content Density
 
-UI5 Web Components contains different content densities for certain controls that allow your app to adapt to the device in question, allowing you to display larger controls for touch-enabled devices and a smaller, more compact design for devices that are operated by mouse. Cosy size is the default density for all components. Compact Size could be set by adding a class `ui5-content-density-compact` to an html element. It cascades all the way down and enforces compact density (smaller margins/paddings, smaller touch areas, etc).
+UI5 Web Components contain different content densities for certain controls that allow your app to adapt to the device in question, allowing you to display larger controls for touch-enabled devices, and a smaller more compact design for devices that are operated by mouse. Cosy size is the default density for all components. Compact size could be set by adding a class `ui5-content-density-compact` to an html element. It cascades all the way down and enforces compact density (smaller margins/paddings, smaller touch areas, etc).
 
 <a name="theme"></a>
 ### Theme
 The `theme` setting values above are the technical names of our themes.
-- The `sap_fiori_3` is known as `Quartz Light` and it`s our default theme.
+- The `sap_fiori_3` is known as `Quartz Light` and it`s the default theme.
 - The `sap_fiori_3_dark` is known as `Quartz Dark`. 
 - The `sap_belize` is known as `Belize`. 
 - The `sap_belize_hcb` is known as `High Contrast Black`. 
@@ -31,32 +31,32 @@ The `theme` setting values above are the technical names of our themes.
 ### RTL
  
 When the `rtl` setting is set to `true`, UI5 Web Components will adjust their styling accordingly.
-However, you should also set the HTML attribute `dir` to `rtl` on the `body` or `html` or any other relevant region of your application
+However, you should also set the HTML attribute `dir` to `rtl` on the `body` or `html`, or any other relevant region of your application
 so that the rest of your application is also affected. 
 
 <a name="animationMode"></a>
 ### Animation Mode
 
 Animation modes allow to specify different animation scenarios or levels.
- - When `full` all animations run unrestricted.
- - When `basic` more light-weight set of animations would run.
- - When `minimal` animations of fundamental functionality are included.
- - When `none` all animations are completely suspended.
+ - When `full`, all animations run unrestricted.
+ - When `basic`, more light-weight set of animations would run.
+ - When `minimal`, animations of fundamental functionalities are included.
+ - When `none`, all animations are completely suspended.
 
 *Please note that each component determines which animations would run for a specific mode.*
 
 <a name="noConflict"></a>
 ### No conflict
 
-By default UI5 Web Components fire all custom events twice - once with the documented name (f.e. `change`), and once more with a `ui5-` prefix (f.e. `ui5-change`).
+By default UI5 Web Components fire all custom events twice - once with the documented name (e.g. `change`), and once more with a `ui5-` prefix (e.g. `ui5-change`).
 For example, when the `ui5-switch` is toggled, it fires a `change` event, but also a `ui5-change` event.
 
 The `noConflict` configuration setting allows certain control over this behavior:
  - When `false` (default value) all custom events are fired with and without the `ui5-` prefix.
  - When `true` all custom events are fired with the `ui5-` prefix **only**. 
- This is handy for example if the name of some event happens to collide with the name of an event provided by a third-party library.
+ This is handy for example, if the name of an event happens to collide with the name of an event provided by a third-party library.
  - When an object is supplied, just the specified events will be fired with the `ui5-` prefix **only**.
- All other events will be fired normally - once with the prefix, and once without. 
+ All other events will be fired normally - once with the prefix, and once without it. 
  The format of this object is as follows:
  ```json
  {
@@ -65,7 +65,7 @@ The `noConflict` configuration setting allows certain control over this behavior
  ```
  *Please note that other keys may be added to this object in the future for the purpose of name conflict resolution.*
  
- In the above example, only the `selectionChange` and `headerClick` events will not be fired without a prefix. 
+ In the above example, only the `selectionChange` and `headerClick` events will be fired with a prefix. 
  You can still use them by listening to `ui5-selectionChange` and `ui5-headerClick`, but the names `selectionChange` and `headerClick` will be
  free for use by other UI components and libraries without name collision.
 
@@ -84,7 +84,7 @@ For example, to force the first day of week to Sunday, no matter the locale:
 
   Setting    |                     Values                      | Default value |                          Description
 ------------ | ----------------------------------------------- | ------------- | -------------------------------------------------------------
-firstDayOfWeek | 0 (Sunday) through 6 (Saturday) | *depends on locale*     | When set, overrides the locale's default value
+firstDayOfWeek | 0 (Sunday) through 6 (Saturday) | *Depends on locale*     | When set, overrides the locale's default value
 
 
 ## Configuration script
@@ -108,7 +108,7 @@ In order to provide configuration settings, include the following ```<script>```
 </script>
 ```
 
-and provide the desired options in the JSON object inside, as shown in the example.
+Provide the desired options in the JSON object, as shown in the example.
 
 ## Configuration Module Imports
 

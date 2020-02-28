@@ -112,11 +112,13 @@ const metadata = {
  * <h3>Usage</h3>
  *
  * When to use
- *   - The items you want to display are very different from each other.
- *   - You want to display the items one after the other.
+ *
+ * - The items you want to display are very different from each other.
+ * - You want to display the items one after the other.
  * When not to use
- *   - The items you want to display need to be visible at the same time.
- *   - The items you want to display are uniform and very similar
+ *
+ * - The items you want to display need to be visible at the same time.
+ * - The items you want to display are uniform and very similar
  *
  * For the <code>ui5-carousel</code>
  * <h3>ES6 Module Import</h3>

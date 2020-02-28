@@ -25,8 +25,8 @@ const metadata = {
 		/**
 		 * Defines the <code>ui5-messagestrip</code> type.
 		 * <br><br>
-		 * <b>Note:</b> Available options are <code>Information"</code>, <code>"Positive"</code>, <code>"Negative"</code>,
-		 * and "Warning".
+		 * <b>Note:</b> Available options are <code>"Information"</code>, <code>"Positive"</code>, <code>"Negative"</code>,
+		 * and <code>"Warning"</code>.
 		 *
 		 * @type {MessageStripType}
 		 * @defaultvalue "Information"
@@ -111,7 +111,7 @@ const metadata = {
  *
  * The <code>ui5-messagestrip</code> component enables the embedding of app-related messages.
  * It displays 4 types of messages, each with corresponding semantic color and icon: Information, Positive, Warning and Negative.
- * Each message can have a close button, so that it can be removed from the UI if needed.
+ * Each message can have a Close button, so that it can be removed from the UI, if needed.
  *
  * <h3>Usage</h3>
  *

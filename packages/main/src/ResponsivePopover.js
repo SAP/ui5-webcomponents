@@ -49,11 +49,11 @@ const metadata = {
  * @class
  *
  * <h3 class="comment-api-title">Overview</h3>
- * The ResponsivePopover acts as a Popover on desktop and tablet, while on phone it acts as a Dialog.
+ * The <code>ui5-responsive-popover</code> acts as a Popover on desktop and tablet, while on phone it acts as a Dialog.
  * The component improves tremendously the user experience on mobile.
  *
  * <h3>Usage</h3>
- * When you want to make sure that all the content is visible on any device.
+ * Use it when you want to make sure that all the content is visible on any device.
  *
  * @constructor
  * @author SAP SE
