@@ -569,7 +569,7 @@
   "82": {
     "id": "82",
     "title": "Switch",
-    "content": "&lt;!DOCTYPE html&gt; ui5-switch Default Switch No Label &lt;/div&gt; Default Switch Graphical Switch Custom Switch",
+    "content": "&lt;!DOCTYPE html&gt; ui5-switch Default Switch No Label &lt;/div&gt; Default Switch Graphical Switch Custom Switch Switch styled with shadow parts",
     "url": "https://sap.github.io/ui5-webcomponents/master/playground/main/pages/Switch/",
     "relUrl": "/playground/main/pages/Switch/"
   },
