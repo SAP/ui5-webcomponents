@@ -1560,7 +1560,6 @@
       <th>Values</th>
       <th>Default value</th>
       <th>Description</th>
-      <th> </th>
     </tr>
   </thead>
   <tbody>
@@ -1569,40 +1568,34 @@
       <td>sap_fiori_3, sap_fiori_3_dark, sap_belize, sap_belize_hcb</td>
       <td>sap_fiori_3</td>
       <td>Visual theme</td>
-      <td> </td>
     </tr>
     <tr>
       <td>language</td>
       <td>en, de, es, etc…</td>
       <td>en</td>
       <td>Language to be used for translatable texts</td>
-      <td> </td>
     </tr>
     <tr>
       <td><a href="#rtl">RTL</a></td>
       <td>true, false</td>
       <td>false</td>
       <td>When true, sets global text direction to right-to-left</td>
-      <td> </td>
     </tr>
     <tr>
       <td><a href="#animationMode">animationMode</a></td>
       <td>full, basic, minimal, none</td>
       <td>full</td>
       <td>Defines different animation scenarios or levels</td>
-      <td> </td>
     </tr>
     <tr>
       <td>calendarType</td>
       <td>Gregorian, Islamic, Buddhist, Japanese, Persian</td>
       <td>Gregorian</td>
       <td>Default calendar type for date-related web components</td>
-      <td> </td>
     </tr>
     <tr>
       <td><a href="#noConflict">noConflict</a></td>
       <td>true, false</td>
-      <td>Object</td>
       <td>false</td>
       <td>When set to true, all events will be fired with a “ui5-“ prefix only</td>
     </tr>
@@ -1611,20 +1604,19 @@
       <td>See the <a href="#formatSettings">Format settings</a> section below</td>
       <td>Empty object</td>
       <td>Allows to override locale-specific configuration</td>
-      <td> </td>
     </tr>
   </tbody>
 </table>
 
 <h3 id="content-density">Content Density</h3>
 
-<p>UI5 Web Components contains different content densities for certain controls that allow your app to adapt to the device in question, allowing you to display larger controls for touch-enabled devices and a smaller, more compact design for devices that are operated by mouse. Cosy size is the default density for all components. Compact Size could be set by adding a class <code class="highlighter-rouge">ui5-content-density-compact</code> to an html element. It cascades all the way down and enforces compact density (smaller margins/paddings, smaller touch areas, etc).</p>
+<p>UI5 Web Components contain different content densities for certain controls that allow your app to adapt to the device in question, allowing you to display larger controls for touch-enabled devices, and a smaller more compact design for devices that are operated by mouse. Cosy size is the default density for all components. Compact size could be set by adding a class <code class="highlighter-rouge">ui5-content-density-compact</code> to an html element. It cascades all the way down and enforces compact density (smaller margins/paddings, smaller touch areas, etc).</p>
 
 <p><a name="theme"></a></p>
 <h3 id="theme">Theme</h3>
 <p>The <code class="highlighter-rouge">theme</code> setting values above are the technical names of our themes.</p>
 <ul>
-  <li>The <code class="highlighter-rouge">sap_fiori_3</code> is known as <code class="highlighter-rouge">Quartz Light</code> and it`s our default theme.</li>
+  <li>The <code class="highlighter-rouge">sap_fiori_3</code> is known as <code class="highlighter-rouge">Quartz Light</code> and it`s the default theme.</li>
   <li>The <code class="highlighter-rouge">sap_fiori_3_dark</code> is known as <code class="highlighter-rouge">Quartz Dark</code>.</li>
   <li>The <code class="highlighter-rouge">sap_belize</code> is known as <code class="highlighter-rouge">Belize</code>.</li>
   <li>The <code class="highlighter-rouge">sap_belize_hcb</code> is known as <code class="highlighter-rouge">High Contrast Black</code>.</li>
@@ -1634,7 +1626,7 @@
 <h3 id="rtl">RTL</h3>
 
 <p>When the <code class="highlighter-rouge">rtl</code> setting is set to <code class="highlighter-rouge">true</code>, UI5 Web Components will adjust their styling accordingly.
-However, you should also set the HTML attribute <code class="highlighter-rouge">dir</code> to <code class="highlighter-rouge">rtl</code> on the <code class="highlighter-rouge">body</code> or <code class="highlighter-rouge">html</code> or any other relevant region of your application
+However, you should also set the HTML attribute <code class="highlighter-rouge">dir</code> to <code class="highlighter-rouge">rtl</code> on the <code class="highlighter-rouge">body</code> or <code class="highlighter-rouge">html</code>, or any other relevant region of your application
 so that the rest of your application is also affected.</p>
 
 <p><a name="animationMode"></a></p>
@@ -1642,10 +1634,10 @@ so that the rest of your application is also affected.</p>
 
 <p>Animation modes allow to specify different animation scenarios or levels.</p>
 <ul>
-  <li>When <code class="highlighter-rouge">full</code> all animations run unrestricted.</li>
-  <li>When <code class="highlighter-rouge">basic</code> more light-weight set of animations would run.</li>
-  <li>When <code class="highlighter-rouge">minimal</code> animations of fundamental functionality are included.</li>
-  <li>When <code class="highlighter-rouge">none</code> all animations are completely suspended.</li>
+  <li>When <code class="highlighter-rouge">full</code>, all animations run unrestricted.</li>
+  <li>When <code class="highlighter-rouge">basic</code>, more light-weight set of animations would run.</li>
+  <li>When <code class="highlighter-rouge">minimal</code>, animations of fundamental functionalities are included.</li>
+  <li>When <code class="highlighter-rouge">none</code>, all animations are completely suspended.</li>
 </ul>
 
 <p><em>Please note that each component determines which animations would run for a specific mode.</em></p>
@@ -1653,16 +1645,16 @@ so that the rest of your application is also affected.</p>
 <p><a name="noConflict"></a></p>
 <h3 id="no-conflict">No conflict</h3>
 
-<p>By default UI5 Web Components fire all custom events twice - once with the documented name (f.e. <code class="highlighter-rouge">change</code>), and once more with a <code class="highlighter-rouge">ui5-</code> prefix (f.e. <code class="highlighter-rouge">ui5-change</code>).
+<p>By default UI5 Web Components fire all custom events twice - once with the documented name (e.g. <code class="highlighter-rouge">change</code>), and once more with a <code class="highlighter-rouge">ui5-</code> prefix (e.g. <code class="highlighter-rouge">ui5-change</code>).
 For example, when the <code class="highlighter-rouge">ui5-switch</code> is toggled, it fires a <code class="highlighter-rouge">change</code> event, but also a <code class="highlighter-rouge">ui5-change</code> event.</p>
 
 <p>The <code class="highlighter-rouge">noConflict</code> configuration setting allows certain control over this behavior:</p>
 <ul>
   <li>When <code class="highlighter-rouge">false</code> (default value) all custom events are fired with and without the <code class="highlighter-rouge">ui5-</code> prefix.</li>
   <li>When <code class="highlighter-rouge">true</code> all custom events are fired with the <code class="highlighter-rouge">ui5-</code> prefix <strong>only</strong>. 
- This is handy for example if the name of some event happens to collide with the name of an event provided by a third-party library.</li>
+ This is handy for example, if the name of an event happens to collide with the name of an event provided by a third-party library.</li>
   <li>When an object is supplied, just the specified events will be fired with the <code class="highlighter-rouge">ui5-</code> prefix <strong>only</strong>.
- All other events will be fired normally - once with the prefix, and once without. 
+ All other events will be fired normally - once with the prefix, and once without it. 
  The format of this object is as follows:
     <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w"> </span><span class="p">{</span><span class="w">
   </span><span class="nl">"events"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"selectionChange"</span><span class="p">,</span><span class="w"> </span><span class="s2">"headerClick"</span><span class="p">]</span><span class="w">
@@ -1672,7 +1664,7 @@ For example, when the <code class="highlighter-rouge">ui5-switch</code> is toggl
   </li>
 </ul>
 
-<p>In the above example, only the <code class="highlighter-rouge">selectionChange</code> and <code class="highlighter-rouge">headerClick</code> events will not be fired without a prefix. 
+<p>In the above example, only the <code class="highlighter-rouge">selectionChange</code> and <code class="highlighter-rouge">headerClick</code> events will be fired with a prefix. 
  You can still use them by listening to <code class="highlighter-rouge">ui5-selectionChange</code> and <code class="highlighter-rouge">ui5-headerClick</code>, but the names <code class="highlighter-rouge">selectionChange</code> and <code class="highlighter-rouge">headerClick</code> will be
  free for use by other UI components and libraries without name collision.</p>
 
@@ -1701,7 +1693,7 @@ For example, when the <code class="highlighter-rouge">ui5-switch</code> is toggl
     <tr>
       <td>firstDayOfWeek</td>
       <td>0 (Sunday) through 6 (Saturday)</td>
-      <td><em>depends on locale</em></td>
+      <td><em>Depends on locale</em></td>
       <td>When set, overrides the locale’s default value</td>
     </tr>
   </tbody>
@@ -1727,7 +1719,7 @@ For example, when the <code class="highlighter-rouge">ui5-switch</code> is toggl
 <span class="nt">&lt;/script&gt;</span>
 </code></pre></div></div>
 
-<p>and provide the desired options in the JSON object inside, as shown in the example.</p>
+<p>Provide the desired options in the JSON object, as shown in the example.</p>
 
 <h2 id="configuration-module-imports">Configuration Module Imports</h2>
 

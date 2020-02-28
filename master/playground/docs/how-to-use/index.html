@@ -1632,7 +1632,7 @@ Therefore, in the next example, the text inside the <code class="highlighter-rou
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;ui5-icon</span> <span class="na">name=</span><span class="s">"add"</span><span class="nt">&gt;</span>This is an icon<span class="nt">&lt;/ui5-icon&gt;</span>
 </code></pre></div></div>
 
-<p>Other UI5 Web Components, such as <code class="highlighter-rouge">&lt;ui5-button&gt;</code> accept text (and in addition HTML elements that make sense when writing text)</p>
+<p>Other UI5 Web Components, such as <code class="highlighter-rouge">&lt;ui5-button&gt;</code> accept text (and in addition HTML elements that make sense when writing text).</p>
 
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;ui5-button</span> <span class="na">id=</span><span class="s">"btn"</span><span class="nt">&gt;</span>This is the content of the button<span class="nt">&lt;/ui5-button&gt;</span>
 <span class="nt">&lt;ui5-button&gt;</span>This is the <span class="nt">&lt;strong&gt;</span>content<span class="nt">&lt;content&gt;</span> of the button<span class="nt">&lt;/ui5-button&gt;</span>
@@ -1698,7 +1698,7 @@ of each child.</p>
 
 <p>Let’s have a look at the <code class="highlighter-rouge">&lt;ui5-popover&gt;</code> again. After consulting the documentation we can see that this particular
 Web Component accepts three categories of children: <code class="highlighter-rouge">default, footer, header</code>. For <code class="highlighter-rouge">footer</code> and <code class="highlighter-rouge">header</code>
-the children can be any type of HTML Element (hence <code class="highlighter-rouge">HTMLElement</code>) while for <code class="highlighter-rouge">default</code> they can be both
+the children can be any type of HTML Element (hence <code class="highlighter-rouge">HTMLElement</code>), while for <code class="highlighter-rouge">default</code> they can be both
 HTML Elements and text (hence <code class="highlighter-rouge">Node</code>).</p>
 
 <p>To tell the <code class="highlighter-rouge">&lt;ui5-popover&gt;</code> which child goes where, use the <code class="highlighter-rouge">slot</code> attribute on it.</p>
@@ -1767,11 +1767,11 @@ has at least a default slot.</p>
 <p>Like with most other tasks, you’ll use your framework’s syntax to bind to events and you’ll rarely,
 if ever, need to call <code class="highlighter-rouge">addEventListener</code> yourself.</p>
 
-<p>Please note however that some frameworks (f.e. React) cannot use their standard syntax
+<p>Please note however that some frameworks (e.g. React) cannot use their standard syntax
 for binding to custom events (such as <code class="highlighter-rouge">close</code>), but only for standard ones (such as <code class="highlighter-rouge">click</code>).
-So for custom events in React you’d have to get a reference to the element and call <code class="highlighter-rouge">addEventListener</code> manually.</p>
+So, for custom events in React you’d have to get a reference to the element and call <code class="highlighter-rouge">addEventListener</code> manually.</p>
 
-<p>For more information, please check our <a href="React-tutorial.md">React tutorial</a>;</p>
+<p>For more information, please check our <a href="React-tutorial.md">React tutorial</a>.</p>
 
 <p><a name="methods"></a></p>
 <h2 id="5-how-do-i-call-public-methods">5. How do I call public methods?</h2>

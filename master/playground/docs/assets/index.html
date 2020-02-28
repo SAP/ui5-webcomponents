@@ -1572,7 +1572,7 @@ most UI5 Web Components packages ship their assets as <code class="highlighter-r
 <p><code class="highlighter-rouge">import "@ui5/webcomponents-base/dist/Assets.js";</code></p>
 
 <p>Usually you don’t need to import the assets directly from the <code class="highlighter-rouge">base</code> package (unless you are developing a Web Components package of your own),
-but rather from the package(s) containing the actual web components you’ll be using in your app.</p>
+but rather from the package(s) containing the actual Web Components you’ll be using in your app.</p>
 
 <h3 id="theme-base-package"><code class="highlighter-rouge">theme-base</code> package</h3>
 
@@ -1581,11 +1581,11 @@ but rather from the package(s) containing the actual web components you’ll be 
 <p><code class="highlighter-rouge">import "@ui5/webcomponents-theme-base/dist/Assets.js";</code></p>
 
 <p>Usually you don’t need to import the assets directly from the <code class="highlighter-rouge">theme-base</code> package (unless you are developing a Web Components package of your own),
-but rather from the package(s) containing the actual web components you’ll be using in your app.</p>
+but rather from the package(s) containing the actual Web Components you’ll be using in your app.</p>
 
 <h3 id="main-package"><code class="highlighter-rouge">main</code> package</h3>
 
-<p>The <code class="highlighter-rouge">main</code> package’s <code class="highlighter-rouge">Assets.js</code> import provides package specific additional theming parameters and i18n assets. 
+<p>The <code class="highlighter-rouge">main</code> package’s <code class="highlighter-rouge">Assets.js</code> import provides package-specific additional theming parameters and i18n assets. 
 All assets from the <code class="highlighter-rouge">base</code> and <code class="highlighter-rouge">theme-base</code> packages are also imported automatically so you don’t have to worry about them.</p>
 
 <p><code class="highlighter-rouge">import "@ui5/webcomponents/dist/Assets.js";</code></p>
@@ -1611,7 +1611,7 @@ Along with the icons, it also includes all translatable texts.</p>
 <p><a name="bundling"></a></p>
 <h2 id="efficient-asset-bundling">Efficient asset bundling</h2>
 
-<p>You may notice that <code class="highlighter-rouge">Assets.js</code> imports, for example:</p>
+<p>You may notice that <code class="highlighter-rouge">Assets.js</code> imports, such as:</p>
 
 <p><code class="highlighter-rouge">import "@ui5/webcomponents/dist/Assets.js"</code></p>
 
@@ -1624,7 +1624,7 @@ Suggested pattern: “assets\/.*.json”</p>
 
 <p>What this means is that it’s recommended to instruct your source code bundling software
 (some of the most popular being Webpack and Rollup) not to include all the asset files or theming related files
-(files that match the <code>assets\/.*\.json</code> pattern) in your applications’s javascript bundle,
+(files that match the <code>assets\/.*\.json</code> pattern) in your applications’ JavaScript bundle,
 but rather to leave them out. At runtime, they will be fetched on demand, if ever requested.</p>
 
 <p><a href="https://github.com/webpack-contrib/file-loader">How to do it with Webpack</a></p>

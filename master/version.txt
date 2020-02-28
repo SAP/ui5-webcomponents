@@ -1,5 +1,5 @@
-commit 0f3fc4170fa73dc5bc737582c7cc32f86c379e61
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Feb 28 14:59:13 2020 +0200
+commit 6a720217bf589aa6ed7b053423acfb4a9ed896b0
+Author: Simona Rangelova <32678370+simonarangelova@users.noreply.github.com>
+Date:   Fri Feb 28 18:26:40 2020 +0200
 
-    chore: replace some derived colors (#1259)
+    chore: enhance documentation (#1255)
