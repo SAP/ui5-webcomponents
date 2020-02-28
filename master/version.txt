@@ -1,5 +1,8 @@
-commit 05b208d94baf874fa476fb58b32c1d929f16f966
-Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
-Date:   Fri Feb 28 08:53:55 2020 +0200
+commit be943ba173360faf38db13536d18b807e4ba2141
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Fri Feb 28 14:03:27 2020 +0200
 
-    fix(ui5-dialog): provide min-width on desktop (#1257)
+    fix(ui5-button): fix icon shrinking (#1258)
+    
+    Setting smaller width to ui5-button makes its icon shrinking:
+    Setting flex-shrink: 0, preserves the icon size.
