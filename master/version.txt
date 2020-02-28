@@ -1,5 +1,5 @@
-commit 9400fe36f661bef547543717281c3cba1582bc8f
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Feb 26 16:21:59 2020 +0200
+commit 05b208d94baf874fa476fb58b32c1d929f16f966
+Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
+Date:   Fri Feb 28 08:53:55 2020 +0200
 
-    chore: skip ifDefined event handlers and boolean attrs (#1246)
+    fix(ui5-dialog): provide min-width on desktop (#1257)
