@@ -8,6 +8,7 @@ const ValueStates = {
 	Success: "Success",
 	Warning: "Warning",
 	Error: "Error",
+	Information: "Information",
 };
 
 class ValueState extends DataType {
