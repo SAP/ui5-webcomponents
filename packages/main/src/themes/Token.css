@@ -3,7 +3,7 @@
 	background: var(--sapButton_Background);
 	border-width: 1px;
 	border-style: solid;
-	border-color: var(--_ui5_token_border_color);
+	border-color: var(--sapButton_TokenBorderColor);
 	border-radius: var(--_ui5_token_border_radius);
 	color: var(--_ui5_token_text_color);
 	height: var(--_ui5_token_height);
