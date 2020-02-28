@@ -1,5 +1,5 @@
-commit 71d4e1c9e3332a7dcea9f818dd8b3cf25ee38de7
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Feb 28 14:33:59 2020 +0200
+commit 0f3fc4170fa73dc5bc737582c7cc32f86c379e61
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Fri Feb 28 14:59:13 2020 +0200
 
-    chore(ui5-switch): add shadow parts (#1260)
+    chore: replace some derived colors (#1259)
