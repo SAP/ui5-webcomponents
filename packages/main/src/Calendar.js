@@ -1,4 +1,3 @@
-import "@ui5/webcomponents-base/dist/shims/jquery-shim.js";
 import "@ui5/webcomponents-base/dist/shims/Core-shim.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";

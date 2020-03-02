@@ -1,4 +1,3 @@
-import "../shims/jquery-shim.js";
 import "../shims/Core-shim.js";
 import { getLanguage } from "../LocaleProvider.js";
 import { fetchJsonOnce } from "../util/FetchHelper.js";

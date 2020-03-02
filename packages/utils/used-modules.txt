@@ -8,6 +8,8 @@ sap/base/util/deepEqual.js
 sap/base/util/merge.js
 sap/base/util/isPlainObject.js
 sap/base/util/now.js
+sap/base/util/_merge.js
+sap/base/util/extend.js
 sap/ui/base/Interface.js
 sap/ui/base/Metadata.js
 sap/ui/base/Object.js

@@ -704,6 +704,11 @@
   resolved "https://registry.yarnpkg.com/@openui5/sap.ui.core/-/sap.ui.core-1.60.2.tgz#ddbd8a7d06d64b430c5bef3cb641859a15d30751"
   integrity sha512-UvLw3bEsltfM4DWO23ukV1nPKlSF1nPhVYLb+fSCsA+zlaOSQrAfCN/tCfdJcQCT7OFqxpuv0rDiTHllMNHKUQ==
 
+"@openui5/sap.ui.core@1.75.0":
+  version "1.75.0"
+  resolved "https://registry.yarnpkg.com/@openui5/sap.ui.core/-/sap.ui.core-1.75.0.tgz#9e8d0f5b44faa233ad10f0fc9f1f36eaeec02ef2"
+  integrity sha512-tw81+6c19DbMV15W7fcsp4FTqZFEsealA970L1+3y3lB8nTy1ZzBSl1kUGUaaUHRwZIrPbnkLw5kg4kX6esaew==
+
 "@testim/chrome-version@^1.0.7":
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/@testim/chrome-version/-/chrome-version-1.0.7.tgz#0cd915785ec4190f08a3a6acc9b61fc38fb5f1a9"
