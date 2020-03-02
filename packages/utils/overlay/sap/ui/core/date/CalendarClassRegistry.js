@@ -4,7 +4,7 @@
 
 /* global Map */
 
-sap.ui.define(["sap/ui/core/CalendarType"], function (CalendarType) {
+sap.ui.define([], function () {
 	"use strict";
 
 	var registry = new Map();
