@@ -1574,25 +1574,25 @@
 	<h3>Basic MultiComboBox</h3>
 	<div class="snippet" style="display: flex; flex-wrap: wrap;">
 		<ui5-multi-combobox placeholder="Type your value">
-			<ui5-li selected>UI5</ui5-li>
+			<ui5-mcb-item selected text="UI5"></ui5-mcb-item>
 		</ui5-multi-combobox>
 		<ui5-multi-combobox readonly value="Readonly combo">
-			<ui5-li selected>UI5</ui5-li>
+			<ui5-mcb-item selected text="UI5"></ui5-mcb-item>
 		</ui5-multi-combobox>
 		<ui5-multi-combobox disabled value="Disabled combo">
-			<ui5-li selected>UI5</ui5-li>
+			<ui5-mcb-item selected text="UI5"></ui5-mcb-item>
 		</ui5-multi-combobox>
 	</div>
 	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-multi-combobox</span> <span class="na">placeholder=</span><span class="s">"Type your value"</span><span class="nt">&gt;</span>
-	<span class="nt">&lt;ui5-li</span> <span class="na">selected</span><span class="nt">&gt;</span>UI5<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-mcb-item</span> <span class="na">selected</span> <span class="na">text=</span><span class="s">"UI5"</span><span class="nt">&gt;&lt;/ui5-mcb-item&gt;</span>
 <span class="nt">&lt;/ui5-multi-combobox&gt;</span>
 
 <span class="nt">&lt;ui5-multi-combobox</span> <span class="na">readonly</span> <span class="na">value=</span><span class="s">"Readonly combo"</span><span class="nt">&gt;</span>
-	<span class="nt">&lt;ui5-li</span> <span class="na">selected</span><span class="nt">&gt;</span>UI5<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-mcb-item</span> <span class="na">selected</span> <span class="na">text=</span><span class="s">"UI5"</span><span class="nt">&gt;&lt;/ui5-mcb-item&gt;</span>
 <span class="nt">&lt;/ui5-multi-combobox&gt;</span>
 
 <span class="nt">&lt;ui5-multi-combobox</span> <span class="na">disabled</span> <span class="na">value=</span><span class="s">"Disabled combo"</span><span class="nt">&gt;</span>
-	<span class="nt">&lt;ui5-li</span> <span class="na">selected</span><span class="nt">&gt;</span>UI5<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-mcb-item</span> <span class="na">selected</span> <span class="na">text=</span><span class="s">"UI5"</span><span class="nt">&gt;&lt;/ui5-mcb-item&gt;</span>
 <span class="nt">&lt;/ui5-multi-combobox&gt;</span>
 	</code></pre></figure></pre>
 </section>
@@ -1601,29 +1601,29 @@
 	<h3>MultiComboBox with items</h3>
 	<div class="snippet">
 		<ui5-multi-combobox style="width: 100%" placeholder="Choose your countries">
-			<ui5-li selected>Argentina</ui5-li>
-			<ui5-li>Bulgaria</ui5-li>
-			<ui5-li>Denmark</ui5-li>
-			<ui5-li>England</ui5-li>
-			<ui5-li>Albania</ui5-li>
-			<ui5-li>Morocco</ui5-li>
-			<ui5-li>Portugal</ui5-li>
-			<ui5-li>Germany</ui5-li>
-			<ui5-li>Philippines</ui5-li>
-			<ui5-li>Paraguay</ui5-li>
+			<ui5-mcb-item selected text="Argentina"></ui5-mcb-item>
+			<ui5-mcb-item text="Bulgaria"></ui5-mcb-item>
+			<ui5-mcb-item text="Denmark"></ui5-mcb-item>
+			<ui5-mcb-item text="England"></ui5-mcb-item>
+			<ui5-mcb-item text="Albania"></ui5-mcb-item>
+			<ui5-mcb-item text="Morocco"></ui5-mcb-item>
+			<ui5-mcb-item text="Portugal"></ui5-mcb-item>
+			<ui5-mcb-item text="Germany"></ui5-mcb-item>
+			<ui5-mcb-item text="Philippines"></ui5-mcb-item>
+			<ui5-mcb-item text="Paraguay"></ui5-mcb-item>
 		</ui5-multi-combobox>
 	</div>
 	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-multi-combobox</span> <span class="na">placeholder=</span><span class="s">"Choose your countries"</span><span class="nt">&gt;</span>
-	<span class="nt">&lt;ui5-li</span> <span class="na">selected</span><span class="nt">&gt;</span>Argentina<span class="nt">&lt;/ui5-li&gt;</span>
-	<span class="nt">&lt;ui5-li&gt;</span>Bulgaria<span class="nt">&lt;/ui5-li&gt;</span>
-	<span class="nt">&lt;ui5-li&gt;</span>Denmark<span class="nt">&lt;/ui5-li&gt;</span>
-	<span class="nt">&lt;ui5-li&gt;</span>England<span class="nt">&lt;/ui5-li&gt;</span>
-	<span class="nt">&lt;ui5-li&gt;</span>Albania<span class="nt">&lt;/ui5-li&gt;</span>
-	<span class="nt">&lt;ui5-li&gt;</span>Morocco<span class="nt">&lt;/ui5-li&gt;</span>
-	<span class="nt">&lt;ui5-li&gt;</span>Portugal<span class="nt">&lt;/ui5-li&gt;</span>
-	<span class="nt">&lt;ui5-li&gt;</span>Germany<span class="nt">&lt;/ui5-li&gt;</span>
-	<span class="nt">&lt;ui5-li&gt;</span>Philippines<span class="nt">&lt;/ui5-li&gt;</span>
-	<span class="nt">&lt;ui5-li&gt;</span>Paraguay<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-mcb-item</span> <span class="na">selected</span> <span class="na">text=</span><span class="s">"Argentina"</span><span class="nt">&gt;&lt;/ui5-mcb-item&gt;</span>
+	<span class="nt">&lt;ui5-mcb-item</span> <span class="na">text=</span><span class="s">"Bulgaria"</span><span class="nt">&gt;&lt;/ui5-mcb-item&gt;</span>
+	<span class="nt">&lt;ui5-mcb-item</span> <span class="na">text=</span><span class="s">"Denmark"</span><span class="nt">&gt;&lt;/ui5-mcb-item&gt;</span>
+	<span class="nt">&lt;ui5-mcb-item</span> <span class="na">text=</span><span class="s">"England"</span><span class="nt">&gt;&lt;/ui5-mcb-item&gt;</span>
+	<span class="nt">&lt;ui5-mcb-item</span> <span class="na">text=</span><span class="s">"Albania"</span><span class="nt">&gt;&lt;/ui5-mcb-item&gt;</span>
+	<span class="nt">&lt;ui5-mcb-item</span> <span class="na">text=</span><span class="s">"Morocco"</span><span class="nt">&gt;&lt;/ui5-mcb-item&gt;</span>
+	<span class="nt">&lt;ui5-mcb-item</span> <span class="na">text=</span><span class="s">"Portugal"</span><span class="nt">&gt;&lt;/ui5-mcb-item&gt;</span>
+	<span class="nt">&lt;ui5-mcb-item</span> <span class="na">text=</span><span class="s">"Germany"</span><span class="nt">&gt;&lt;/ui5-mcb-item&gt;</span>
+	<span class="nt">&lt;ui5-mcb-item</span> <span class="na">text=</span><span class="s">"Philippines"</span><span class="nt">&gt;&lt;/ui5-mcb-item&gt;</span>
+	<span class="nt">&lt;ui5-mcb-item</span> <span class="na">text=</span><span class="s">"Paraguay"</span><span class="nt">&gt;&lt;/ui5-mcb-item&gt;</span>
 <span class="nt">&lt;/ui5-multi-combobox&gt;</span>
 	</code></pre></figure></pre>
 </section>
@@ -1632,29 +1632,29 @@
 	<h3>MultiComboBox with free text input</h3>
 	<div class="snippet">
 		<ui5-multi-combobox style="width: 100%" placeholder="Choose your countries" allow-custom-values>
-			<ui5-li>Argentina</ui5-li>
-			<ui5-li selected>Bulgaria</ui5-li>
-			<ui5-li>Denmark</ui5-li>
-			<ui5-li selected>England</ui5-li>
-			<ui5-li>Albania</ui5-li>
-			<ui5-li>Morocco</ui5-li>
-			<ui5-li>Portugal</ui5-li>
-			<ui5-li selected>Germany</ui5-li>
-			<ui5-li>Philippines</ui5-li>
-			<ui5-li>Paraguay</ui5-li>
+			<ui5-mcb-item text="Argentina"></ui5-mcb-item>
+			<ui5-mcb-item selected text="Bulgaria"></ui5-mcb-item>
+			<ui5-mcb-item text="Denmark"></ui5-mcb-item>
+			<ui5-mcb-item selected text="England"></ui5-mcb-item>
+			<ui5-mcb-item text="Albania"></ui5-mcb-item>
+			<ui5-mcb-item text="Morocco"></ui5-mcb-item>
+			<ui5-mcb-item text="Portugal"></ui5-mcb-item>
+			<ui5-mcb-item selected text="Germany"></ui5-mcb-item>
+			<ui5-mcb-item text="Philippines"></ui5-mcb-item>
+			<ui5-mcb-item text="Paraguay"></ui5-mcb-item>
 		</ui5-multi-combobox>
 	</div>
 	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-multi-combobox</span> <span class="na">placeholder=</span><span class="s">"Choose your countries"</span><span class="nt">&gt;</span>
-	<span class="nt">&lt;ui5-li&gt;</span>Argentina<span class="nt">&lt;/ui5-li&gt;</span>
-	<span class="nt">&lt;ui5-li</span> <span class="na">selected</span><span class="nt">&gt;</span>Bulgaria<span class="nt">&lt;/ui5-li&gt;</span>
-	<span class="nt">&lt;ui5-li&gt;</span>Denmark<span class="nt">&lt;/ui5-li&gt;</span>
-	<span class="nt">&lt;ui5-li</span> <span class="na">selected</span><span class="nt">&gt;</span>England<span class="nt">&lt;/ui5-li&gt;</span>
-	<span class="nt">&lt;ui5-li&gt;</span>Albania<span class="nt">&lt;/ui5-li&gt;</span>
-	<span class="nt">&lt;ui5-li&gt;</span>Morocco<span class="nt">&lt;/ui5-li&gt;</span>
-	<span class="nt">&lt;ui5-li&gt;</span>Portugal<span class="nt">&lt;/ui5-li&gt;</span>
-	<span class="nt">&lt;ui5-li</span> <span class="na">selected</span><span class="nt">&gt;</span>Germany<span class="nt">&lt;/ui5-li&gt;</span>
-	<span class="nt">&lt;ui5-li&gt;</span>Philippines<span class="nt">&lt;/ui5-li&gt;</span>
-	<span class="nt">&lt;ui5-li&gt;</span>Paraguay<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-mcb-item</span> <span class="na">text=</span><span class="s">"Argentina"</span><span class="nt">&gt;&lt;/ui5-mcb-item&gt;</span>
+	<span class="nt">&lt;ui5-mcb-item</span> <span class="na">selected</span> <span class="na">text=</span><span class="s">"Bulgaria"</span><span class="nt">&gt;&lt;/ui5-mcb-item&gt;</span>
+	<span class="nt">&lt;ui5-mcb-item</span> <span class="na">text=</span><span class="s">"Denmark"</span><span class="nt">&gt;&lt;/ui5-mcb-item&gt;</span>
+	<span class="nt">&lt;ui5-mcb-item</span> <span class="na">selected</span> <span class="na">text=</span><span class="s">"England"</span><span class="nt">&gt;&lt;/ui5-mcb-item&gt;</span>
+	<span class="nt">&lt;ui5-mcb-item</span> <span class="na">text=</span><span class="s">"Albania"</span><span class="nt">&gt;&lt;/ui5-mcb-item&gt;</span>
+	<span class="nt">&lt;ui5-mcb-item</span> <span class="na">text=</span><span class="s">"Morocco"</span><span class="nt">&gt;&lt;/ui5-mcb-item&gt;</span>
+	<span class="nt">&lt;ui5-mcb-item</span> <span class="na">text=</span><span class="s">"Portugal"</span><span class="nt">&gt;&lt;/ui5-mcb-item&gt;</span>
+	<span class="nt">&lt;ui5-mcb-item</span> <span class="na">selected</span> <span class="na">text=</span><span class="s">"Germany"</span><span class="nt">&gt;&lt;/ui5-mcb-item&gt;</span>
+	<span class="nt">&lt;ui5-mcb-item</span> <span class="na">text=</span><span class="s">"Philippines"</span><span class="nt">&gt;&lt;/ui5-mcb-item&gt;</span>
+	<span class="nt">&lt;ui5-mcb-item</span> <span class="na">text=</span><span class="s">"Paraguay"</span><span class="nt">&gt;&lt;/ui5-mcb-item&gt;</span>
 <span class="nt">&lt;/ui5-multi-combobox&gt;</span>
 	</code></pre></figure></pre>
 </section>
@@ -1663,39 +1663,39 @@
 	<h3>MultiComboBox with Value State</h3>
 	<div class="snippet" style="display: flex; flex-wrap: wrap;">
 		<ui5-multi-combobox value-state="Success">
-			<ui5-li>Fortune</ui5-li>
-			<ui5-li>Luck</ui5-li>
-			<ui5-li selected>Success</ui5-li>
+			<ui5-mcb-item text="Fortune"></ui5-mcb-item>
+			<ui5-mcb-item text="Luck"></ui5-mcb-item>
+			<ui5-mcb-item selected text="Success"></ui5-mcb-item>
 		</ui5-multi-combobox>
 		
 		<ui5-multi-combobox value-state="Warning">
-			<ui5-li>Attention</ui5-li>
-			<ui5-li>Caution</ui5-li>
-			<ui5-li selected>Warning</ui5-li>
+			<ui5-mcb-item text="Attention"></ui5-mcb-item>
+			<ui5-mcb-item text="Caution"></ui5-mcb-item>
+			<ui5-mcb-item selected text="Warning"></ui5-mcb-item>
 		</ui5-multi-combobox>
 		
 		<ui5-multi-combobox value-state="Error">
-			<ui5-li>Fault</ui5-li>
-			<ui5-li selected>Error</ui5-li>
-			<ui5-li>Mistake</ui5-li>
+			<ui5-mcb-item text="Fault"></ui5-mcb-item>
+			<ui5-mcb-item selected text="Error"></ui5-mcb-item>
+			<ui5-mcb-item text="Mistake"></ui5-mcb-item>
 		</ui5-multi-combobox>
 	</div>
 	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-multi-combobox</span> <span class="na">value-state=</span><span class="s">"Success"</span><span class="nt">&gt;</span>
-	<span class="nt">&lt;ui5-li&gt;</span>Fortune<span class="nt">&lt;/ui5-li&gt;</span>
-	<span class="nt">&lt;ui5-li&gt;</span>Luck<span class="nt">&lt;/ui5-li&gt;</span>
-	<span class="nt">&lt;ui5-li</span> <span class="na">selected</span><span class="nt">&gt;</span>Success<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-mcb-item</span> <span class="na">text=</span><span class="s">"Fortune"</span><span class="nt">&gt;&lt;/ui5-mcb-item&gt;</span>
+	<span class="nt">&lt;ui5-mcb-item</span> <span class="na">text=</span><span class="s">"Luck"</span><span class="nt">&gt;&lt;/ui5-mcb-item&gt;</span>
+	<span class="nt">&lt;ui5-mcb-item</span> <span class="na">selected</span> <span class="na">text=</span><span class="s">"Success"</span><span class="nt">&gt;&lt;/ui5-mcb-item&gt;</span>
 <span class="nt">&lt;/ui5-multi-combobox&gt;</span>
 
 <span class="nt">&lt;ui5-multi-combobox</span> <span class="na">value-state=</span><span class="s">"Warning"</span><span class="nt">&gt;</span>
-	<span class="nt">&lt;ui5-li&gt;</span>Attention<span class="nt">&lt;/ui5-li&gt;</span>
-	<span class="nt">&lt;ui5-li&gt;</span>Caution<span class="nt">&lt;/ui5-li&gt;</span>
-	<span class="nt">&lt;ui5-li</span> <span class="na">selected</span><span class="nt">&gt;</span>Warning<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-mcb-item</span> <span class="na">text=</span><span class="s">"Attention"</span><span class="nt">&gt;&lt;/ui5-mcb-item&gt;</span>
+	<span class="nt">&lt;ui5-mcb-item</span> <span class="na">text=</span><span class="s">"Caution"</span><span class="nt">&gt;&lt;/ui5-mcb-item&gt;</span>
+	<span class="nt">&lt;ui5-mcb-item</span> <span class="na">selected</span> <span class="na">text=</span><span class="s">"Warning"</span><span class="nt">&gt;&lt;/ui5-mcb-item&gt;</span>
 <span class="nt">&lt;/ui5-multi-combobox&gt;</span>
 
 <span class="nt">&lt;ui5-multi-combobox</span> <span class="na">value-state=</span><span class="s">"Error"</span><span class="nt">&gt;</span>
-	<span class="nt">&lt;ui5-li&gt;</span>Fault<span class="nt">&lt;/ui5-li&gt;</span>
-	<span class="nt">&lt;ui5-li</span> <span class="na">selected</span><span class="nt">&gt;</span>Error<span class="nt">&lt;/ui5-li&gt;</span>
-	<span class="nt">&lt;ui5-li&gt;</span>Mistake<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-mcb-item</span> <span class="na">text=</span><span class="s">"Fault"</span><span class="nt">&gt;&lt;/ui5-mcb-item&gt;</span>
+	<span class="nt">&lt;ui5-mcb-item</span> <span class="na">selected</span> <span class="na">text=</span><span class="s">"Error"</span><span class="nt">&gt;&lt;/ui5-mcb-item&gt;</span>
+	<span class="nt">&lt;ui5-mcb-item</span> <span class="na">text=</span><span class="s">"Mistake"</span><span class="nt">&gt;&lt;/ui5-mcb-item&gt;</span>
 <span class="nt">&lt;/ui5-multi-combobox&gt;</span>
 	</code></pre></figure></pre>
 </section>
@@ -1900,6 +1900,64 @@ The <code>ui5-multi-combobox</code> provides advanced keyboard handling.
         </section>
       </div>
     </div>
+      <div class="api-container appended-doc">
+        <h1>MultiComboBoxItem</h1>
+        <section class="component-description">
+          The <code>ui5-cb-item</code> represents the item for a <code>ui5-multi-combobox</code>.
+          <section class="component-api space-top">
+            
+                  <h3 class="comment-api-title" >Properties/Attributes</h3>
+                  <p class="small-space-top" >You can use both properties and attributes with the same effect. The name of each attribute is listed below the name of the property, if different.</p>
+            
+                  <div class="small-space-top api-table">
+                    <div class="head api-table-header-roll">
+                      <div class="cell api-table-header-cell">Name</div>
+                      <div class="cell api-table-header-cell">Type</div>
+                      <div class="cell api-table-header-cell">Default Value</div>
+                      <div class="cell api-table-header-cell">Description</div>
+                    </div>
+            
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          metadata
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">undefined</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          selected
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell">false</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the selected state of the <code>ui5-mcb-item</code>.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          text
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell">&quot;&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the text of the <code>ui5-cb-item</code>.
+                        </div>
+                      </div>
+            
+                  </div>
+            
+            
+            
+          </section>
+        </section>
+      </div>
     <footer class="footer-wrapper">
       <div class="footer-links">
         <a class="separator" href="https://www.sap.com/about/legal/privacy.html" target="_blank">Privacy Policy</a>

@@ -1,5 +1,9 @@
-commit 77f7293716eda31e3b70b406f275eb5c5bbd88dc
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Mar 2 09:57:52 2020 +0200
+commit 861a19b3141d8bf0469069b3da801bfc73daf58a
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Mon Mar 2 11:12:01 2020 +0200
 
-    feat(ui5-input): provide "Information" value state (#1261)
+    feat(ui5-mcb-item): initial implementation (#1254)
+    
+    BREAKING CHANGE:
+    - ui5-multi-combobox no longer accepts ui5-li for items use ui5-multi-combobox-item instead.
+    - change the tag name from ui5-combobox-item to ui5-cb-item
