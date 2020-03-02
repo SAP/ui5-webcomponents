@@ -1,9 +1,5 @@
-commit 861a19b3141d8bf0469069b3da801bfc73daf58a
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Mon Mar 2 11:12:01 2020 +0200
+commit e7e193f3cb2f994bf16f1cb37e3af2397c76cc7a
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Mon Mar 2 14:41:30 2020 +0200
 
-    feat(ui5-mcb-item): initial implementation (#1254)
-    
-    BREAKING CHANGE:
-    - ui5-multi-combobox no longer accepts ui5-li for items use ui5-multi-combobox-item instead.
-    - change the tag name from ui5-combobox-item to ui5-cb-item
+    chore(framework): update OpenUI5 Core to 1.75 (#1263)
