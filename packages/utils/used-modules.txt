@@ -24,5 +24,4 @@ sap/ui/core/date/Japanese.js
 sap/ui/core/date/Persian.js
 sap/ui/core/date/UniversalDate.js
 sap/ui/core/format/DateFormat.js
-sap/ui/events/KeyCodes.js
 sap/ui/thirdparty/es6-string-methods.js
