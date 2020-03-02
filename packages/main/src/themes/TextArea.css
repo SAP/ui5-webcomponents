@@ -177,6 +177,14 @@
 	border-width: 1px;
 }
 
+:host([value-state="Information"]:not([readonly])) {
+	border-color: var(--sapField_InformationColor);
+}
+
+:host([value-state="Information"]:not([readonly])) .ui5-textarea-inner {
+	background-color: var(--sapField_InformationBackground);
+}
+
 .ui5-textarea-exceeded-text {
 	overflow: hidden;
 	align-self: flex-end;
