@@ -8,8 +8,8 @@
 	--_ui5_daypicker_weeknumbers_container_padding_top: 2rem;
 	--_ui5_daypicker_item_background_color: var(--sapContent_ForegroundColor_Lighten5); /* lighten(@sapContent_ForegroundColor, 5); */
 	--_ui5_daypicker_item_hover_background_color: var(--sapContent_ForegroundColor_Darken5); /* darken(@sapContent_ForegroundColor, 5); */
-	--_ui5_daypicker_item_selected_background_color: var(--sapSelectedColor_Darken15); /* darken(@sapSelectedColor, 10); */
-	--_ui5_daypicker_item_selected_hover_background_color: var(--sapSelectedColor_Darken15); /* darken(@sapSelectedColor, 10); */
+	--_ui5_daypicker_item_selected_background_color: var(--sapContent_Selected_Background); /* darken(@sapSelectedColor, 10); */
+	--_ui5_daypicker_item_selected_hover_background_color: var(--sapContent_Selected_Background); /* darken(@sapSelectedColor, 10); */
 	--_ui5_daypicker_item_weekend_background_color: var(--sapContent_ForegroundColor_Darken3); /* darken(@sapContent_ForegroundColor, 3); */
 	--_ui5_daypicker_item_weekend_hover_background_color: var(--sapContent_ForegroundColor_Darken10); /* darken(@sapContent_ForegroundColor, 10); */
 	--_ui5_daypicker_item_othermonth_hover_background_color: var(--sapList_Background_Darken10); /* darken(@sapList_Background, 10); */

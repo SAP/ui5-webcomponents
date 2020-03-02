@@ -157,7 +157,7 @@
 }
 
 .ui5-switch-root.ui5-switch--semantic.ui5-switch--disabled:not(.ui5-switch--checked) .ui5-switch-handle {
-	background: var(--_ui5_switch_handle_disabled_semantic_bg);
+	background: var(--sapButton_Background);
 	border-color: var(--_ui5_switch_handle_disabled_semantic_border_color);
 }
 
@@ -193,7 +193,7 @@
 }
 
 .ui5-switch-root.ui5-switch--semantic .ui5-switch-handle {
-	background: var(--sapSuccessBackground_Lighten5); /* lighten(var(--sapSuccessBackground), 5) */
+	background: var(--sapButton_Background);
 }
 
 /* switch semantic icon */
@@ -226,7 +226,7 @@
 }
 
 .ui5-switch-root.ui5-switch--semantic:not(.ui5-switch--checked) .ui5-switch-handle {
-	background: var(--sapErrorBackground_Lighten4); /*lighten(var(--sapErrorBackground),4);*/
+	background: var(--sapButton_Background);
 }
 
 /* switch hover effects */

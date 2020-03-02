@@ -15,6 +15,7 @@
 @sapFontLargeSize: calc(1 * @sapContent_GridSize);
 @sapTextColor: @sapPrimary6;
 @sapLinkColor: @sapPrimary2;
+@sapSubtleLinkColor: #eff7fe;
 @sapHighlightColor: @sapBrandColor;
 @sapShellColor: @sapPrimary1;
 
@@ -106,6 +107,7 @@
 @sapContent_DisabledTextColor: fade(@sapTextColor, (100 - (@sapContent_DisabledOpacity * 100)));
 @sapContent_ForegroundTextColor: contrast(@sapContent_ForegroundColor, @sapTextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
 @sapContent_ForegroundColor: darken(@sapBaseColor, 6.1);
+@sapContent_Selected_Background: #91c8f6;
 
 @sapShell_Background: @sapPrimary4;
 @sapShell_BackgroundPatternColor: transparent;
@@ -197,6 +199,28 @@
 @sapList_Hover_SelectionBackground: contrast(@sapList_SelectionBackgroundColor, darken(@sapList_SelectionBackgroundColor, 3), lighten(@sapList_SelectionBackgroundColor, 3));
 @sapList_GroupHeaderBorderColor: lighten(@sapList_BorderColor, 20);
 @sapList_SelectionBorderColor: @sapSelectedColor;
+
+@sapLegendColor1: #f0b25f;
+@sapLegendColor2: #f58c4b;
+@sapLegendColor3: #d88b8b;
+@sapLegendColor4: #bd8969;
+@sapLegendColor5: #de54c1;
+@sapLegendColor6: #6bd3ff;
+@sapLegendColor7: #21c4c4;
+@sapLegendColor8: #afd645;
+@sapLegendColor9: #b0bcc5;
+@sapLegendColor10: #bb8aaf;
+
+@sapLegendBackgroundColor1: #402706;
+@sapLegendBackgroundColor2: #421c04;
+@sapLegendBackgroundColor3: #341111;
+@sapLegendBackgroundColor4: #302015;
+@sapLegendBackgroundColor5: #3c0c32;
+@sapLegendBackgroundColor6: #003247;
+@sapLegendBackgroundColor7: #0a3d3d;
+@sapLegendBackgroundColor8: #303d0d;
+@sapLegendBackgroundColor9: #1f252a;
+@sapLegendBackgroundColor10: #2c1a28;
 
 @sapScrollBar_BorderColor: @sapScrollBar_FaceColor;
 @sapScrollBar_SymbolColor: @sapContent_IconColor;
