@@ -1,5 +1,5 @@
-commit 6a720217bf589aa6ed7b053423acfb4a9ed896b0
-Author: Simona Rangelova <32678370+simonarangelova@users.noreply.github.com>
-Date:   Fri Feb 28 18:26:40 2020 +0200
+commit 77f7293716eda31e3b70b406f275eb5c5bbd88dc
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Mar 2 09:57:52 2020 +0200
 
-    chore: enhance documentation (#1255)
+    feat(ui5-input): provide "Information" value state (#1261)
