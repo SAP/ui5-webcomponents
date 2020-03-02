@@ -5,7 +5,7 @@
 :host([active]) {
 	opacity: 1;
 	background-color: var(--sapBackgroundColor_Fade72);
-	color: var(--ui5-busyindicator-color);
+	color: var(--sapContent_IconColor);
 	pointer-events: none;
 }
 

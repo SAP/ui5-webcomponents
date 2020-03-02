@@ -30,7 +30,6 @@
 	--_ui5_switch_handle_disabled_border_color: var(--sapHC_ReducedForeground);
 	--_ui5_switch_handle_disabled_semantic_checked_bg: var(--sapHC_ReducedBackground);
 	--_ui5_switch_handle_disabled_semantic_checked_border_color: var(--sapHC_ReducedForeground);
-	--_ui5_switch_handle_disabled_semantic_bg: var(--sapButton_Background);
 	--_ui5_switch_handle_disabled_semantic_border_color: var(--sapHC_ReducedForeground);
 
 	/* Switch sementic text */

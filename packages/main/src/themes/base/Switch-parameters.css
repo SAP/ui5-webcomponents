@@ -43,9 +43,8 @@
 	--_ui5_switch_handle_disabled_bg: var(--_ui5_switch_handle_bg);
 	--_ui5_switch_handle_disabled_checked_bg: var(--_ui5_switch_handle_checked_bg);
 	--_ui5_switch_handle_disabled_border_color: var(--sapContent_ForegroundBorderColor);
-	--_ui5_switch_handle_disabled_semantic_checked_bg: var(--sapSuccessBackground_Lighten5);
+	--_ui5_switch_handle_disabled_semantic_checked_bg: var(--sapButton_Background);
 	--_ui5_switch_handle_disabled_semantic_checked_border_color: var(--sapSuccessBorderColor);
-	--_ui5_switch_handle_disabled_semantic_bg: var(--sapErrorBackground_Lighten4);
 	--_ui5_switch_handle_disabled_semantic_border_color: var(--sapErrorBorderColor);
 
 	/* switch text */

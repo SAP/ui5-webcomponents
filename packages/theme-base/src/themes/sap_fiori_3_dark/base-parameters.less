@@ -15,6 +15,7 @@
 @sapFontLargeSize: calc(1 * @sapContent_GridSize);
 @sapTextColor: @sapPrimary6;
 @sapLinkColor: @sapPrimary2;
+@sapSubtleLinkColor: #eff7fe;
 @sapHighlightColor: @sapBrandColor;
 @sapShellColor: @sapPrimary1;
 
@@ -106,6 +107,7 @@
 @sapContent_DisabledTextColor: fade(@sapTextColor, (100 - (@sapContent_DisabledOpacity * 100)));
 @sapContent_ForegroundTextColor: contrast(@sapContent_ForegroundColor, @sapTextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
 @sapContent_ForegroundColor: darken(@sapBaseColor, 6.1);
+@sapContent_Selected_Background: #91c8f6;
 
 @sapShell_Background: @sapPrimary4;
 @sapShell_BackgroundPatternColor: transparent;
