@@ -1,5 +1,5 @@
-commit e7e193f3cb2f994bf16f1cb37e3af2397c76cc7a
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Mon Mar 2 14:41:30 2020 +0200
+commit 32b659ddcc5283c05a88b967a3ca323923c51b89
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Mar 2 15:09:53 2020 +0200
 
-    chore(framework): update OpenUI5 Core to 1.75 (#1263)
+    chore: replace derived colors (#1262)
