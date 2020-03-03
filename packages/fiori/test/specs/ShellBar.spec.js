@@ -343,7 +343,7 @@ describe("Component Behavior", () => {
 				assert.strictEqual(input.getValue(), "Product Switch", "Input value is set by click event of Product Switch icon");
 			});
 
-			it("tests if searchfield appears when clicking on search icon", () => {
+			it("tests if searchfield toggles when clicking on search icon", () => {
 				const overflowButton = browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
 				const searchField = browser.$("#shellbar ui5-input");
 				const staticAreaItemClassName = browser.getStaticAreaItemClassName("#shellbar")
