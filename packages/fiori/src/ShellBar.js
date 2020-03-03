@@ -5,7 +5,7 @@ import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
-import { isSpace, isEscape } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import { isSpace } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
 import List from "@ui5/webcomponents/dist/List.js";
@@ -115,7 +115,7 @@ const metadata = {
 		/**
 		 * @private
 		 */
-		showBlockLayer: {
+		showSearchField: {
 			type: Boolean,
 		},
 
@@ -440,9 +440,6 @@ class ShellBar extends UI5Element {
 
 		this._searchField = {
 			left: 0,
-			focusout: event => {
-				this.showBlockLayer = false;
-			},
 		};
 
 		this._handleResize = event => {
@@ -636,24 +633,8 @@ class ShellBar extends UI5Element {
 	}
 
 	_onkeydown(event) {
-		if (isEscape(event)) {
-			return this._handleEscape(event);
-		}
-
 		if (isSpace(event)) {
 			event.preventDefault();
-		}
-	}
-
-	_handleEscape() {
-		const searchButton = this.shadowRoot.querySelector(".ui5-shellbar-search-button");
-
-		if (this.showBlockLayer) {
-			this.showBlockLayer = false;
-
-			setTimeout(() => {
-				searchButton.focus();
-			}, 0);
 		}
 	}
 
@@ -666,6 +647,12 @@ class ShellBar extends UI5Element {
 	}
 
 	_handleSearchIconPress(event) {
+		this.showSearchField = !this.showSearchField;
+
+		if (!this.showSearchField) {
+			return;
+		}
+
 		const searchField = this.shadowRoot.querySelector(`#${this._id}-searchfield-wrapper`);
 		const triggeredByOverflow = event.target.tagName.toLowerCase() === "ui5-li";
 		const overflowButton = this.shadowRoot.querySelector(".ui5-shellbar-overflow-button");
@@ -682,8 +669,6 @@ class ShellBar extends UI5Element {
 		this._searchField = Object.assign({}, this._searchField, {
 			"right": right,
 		});
-
-		this.showBlockLayer = true;
 
 		setTimeout(() => {
 			const inputSlot = searchField.children[0];
