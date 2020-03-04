@@ -25,9 +25,8 @@
     "build:replace-global-core-usage": "replace-in-file /sap\\.ui\\.getCore/g sap.ui.getWCCore dist/**/*.js --isRegex",
     "build:amd-to-es6": "amdtoes6 --src=dist --replace --glob=**/*.js",
     "build:esm-abs-to-rel": "node ./lib/esm-abs-to-rel/index.js dist/",
-    "copy:esm-stubs": "copy-and-watch esm/Core.js dist/sap/ui/core",
     "copy:belize-fonts": "copy-and-watch \"../../node_modules/@openui5/themelib_sap_belize/src/sap/ui/core/themes/sap_belize/fonts/*.{ttf,woff,woff2}\" dist/sap/ui/core/themes/sap_belize/fonts",
-    "build:all": "npm-run-all --sequential clean copy:node-modules copy:resources copy:overlay build:replace-amd build:replace-export-true build:replace-export-false build:replace-global-core-usage build:amd-to-es6 build:esm-abs-to-rel copy:esm-stubs copy:belize-fonts",
+    "build:all": "npm-run-all --sequential clean copy:node-modules copy:resources copy:overlay build:replace-amd build:replace-export-true build:replace-export-false build:replace-global-core-usage build:amd-to-es6 build:esm-abs-to-rel copy:belize-fonts",
     "clean": "rimraf temp && rimraf dist",
     "prepublishOnly": "npm run clean && npm run build"
   },

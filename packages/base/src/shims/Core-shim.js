@@ -1,4 +1,3 @@
-import { inject as injectCore } from "@ui5/webcomponents-utils/dist/sap/ui/core/Core.js";
 import * as FormatSettings from "../FormatSettings.js";
 import { getLanguage } from "../config/Language.js";
 import { getCalendarType } from "../config/CalendarType.js";
@@ -45,5 +44,3 @@ window.sap.ui = window.sap.ui || {};
 window.sap.ui.getWCCore = function getWCCore() {
 	return Core;
 };
-
-injectCore(Core);
