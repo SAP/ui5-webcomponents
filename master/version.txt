@@ -1,5 +1,12 @@
-commit 32b659ddcc5283c05a88b967a3ca323923c51b89
+commit 2beb1c593814134dd6acf4b64d3ae816cdceb805
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Mar 2 15:09:53 2020 +0200
+Date:   Wed Mar 4 10:35:13 2020 +0200
 
-    chore: replace derived colors (#1262)
+    fix(ui5-shellbar): fix search field behavior (#1264)
+    
+    - fix: search field suggestions popup used to open in the left most corner
+    - fix: clicking on suggestions did not take effect due to pop up reposition
+    
+    Root cause: the search field used to close upon interaction with the items in the popover, forcing the popover to reposition itself without knowing the DOM ref of  its opener.
+    
+    Solution: the search field is now toggled only by clicking the search icon.

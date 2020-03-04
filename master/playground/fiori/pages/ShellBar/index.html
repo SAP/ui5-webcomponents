@@ -185,7 +185,20 @@
 <ui5-input id="press-input" style="margin-top: 2rem;"></ui5-input>
 <ui5-input id="press-input2" style="margin-top: 2rem;"></ui5-input>
 
+
+<ui5-shellbar>
+	<ui5-input id="mySearch" slot="searchField" show-suggestions>
+		<ui5-li>1</ui5-li>
+		<ui5-li>2</ui5-li>
+		<ui5-li>3</ui5-li>
+	</ui5-input>
+</ui5-shellbar>
+
 <script>
+	mySearch.addEventListener("suggestionItemSelect", function (event) {
+		 console.log(event);
+	});
+
 	shellbar.addEventListener("ui5-profileClick", function(event) {
 		popover.openBy(event.detail.targetRef);
 		window["press-input"].value = "Profile";
