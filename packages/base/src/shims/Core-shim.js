@@ -34,10 +34,6 @@ const Core = {
 	 */
 	getLibraryResourceBundle() {
 	},
-
-	getFormatSettings() {
-		return FormatSettings;
-	},
 };
 
 window.sap = window.sap || {};

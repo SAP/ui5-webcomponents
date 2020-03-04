@@ -10,10 +10,10 @@ sap.ui.define([], function () {
 	var registry = new Map();
 
 	return {
-		getCalendarClass: function (calendarType) {
+		get: function (calendarType) {
 			return registry.get(calendarType);
 		},
-		setCalendarClass: function (calendarType, Klass) {
+		set: function (calendarType, Klass) {
 			registry.set(calendarType, Klass);
 		}
 	};
