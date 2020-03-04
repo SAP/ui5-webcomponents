@@ -101,55 +101,6 @@ class ScrollEnablement extends EventProvider {
 		this._prevDragX = dragX;
 		this._prevDragY = dragY;
 	}
-
-	// scrollToElement (element, animationTime, offsets) {
-	// 	aOffset = aOffset || [0, 0];
-
-	// 	// do nothing if _$Container is not a (grand)parent of oElement
-	// 	if (!this._container[0].contains(oElement) ||
-	// 		oElement.style.display === "none" ||
-	// 		oElement.offsetParent.nodeName.toUpperCase() === "HTML") {
-	// 			return this;
-	// 	}
-
-	// 	var $Element = jQuery(oElement),
-	// 		oScrollPosition = this.getChildPosition($Element),
-	// 		iLeftScroll = this.getScrollLeft() + oScrollPosition.left + aOffset[0],
-	// 		iTopScroll = this.getScrollTop() + oScrollPosition.top + aOffset[1];
-
-	// 	if (this._bFlipX) {
-	// 		// in IE RTL scrollLeft goes opposite direction
-	// 		iLeftScroll = this.getScrollLeft() - (oScrollPosition.left - this._container.width()) - $Element.width();
-	// 	}
-
-	// 	// scroll to destination
-	// 	this._scrollTo(iLeftScroll, iTopScroll , animationTime);
-
-	// 	return this;
-	// }
-
-
-	// _scrollTo(x, y, animationTime) {
-	// 	if (this._container.length > 0) {
-	// 		if (time > 0) {
-	// 			this._container.finish().animate({ scrollTop: y, scrollLeft: x }, animationTime, jQuery.proxy(this._readActualScrollPosition, this));
-	// 		} else {
-	// 			this._container.scrollTop(y);
-	// 			this._container.scrollLeft(x);
-	// 			this._readActualScrollPosition(); // if container is too large no scrolling is possible
-	// 		}
-	// 	}
-	// }
-
-	// _readActualScrollPosition() {
-	// 	// if container has a size, this method reads the current scroll position and stores it as desired position
-	// 	if (this._container.width() > 0) {
-	// 		this._scrollX = this._container.scrollLeft();
-	// 	}
-	// 	if (this._container.height() > 0) {
-	// 		this._scrollY = this._container.scrollTop();
-	// 	}
-	// }
 }
 
 export default ScrollEnablement;
