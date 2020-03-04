@@ -6,7 +6,9 @@
 					{{#if this.isSpacer}}
 						<div class="ui5-overflow-toolbar-spacer"></div>
 					{{else}}
-						<slot class="ui5-overflow-toolbar-item" name="{{this.ref._individualSlot}}" />				
+						<div class="ui5-overflow-toolbar-item">
+							<slot name="{{this.ref._individualSlot}}" />				
+						</div>
 					{{/if}}
 				{{/unless}}
 			{{/each}}
@@ -14,6 +16,7 @@
 
 		{{#if _showOverflowButton}}
 			<ui5-button
+				class="ui5-overflow-toolbar-popover-button"
 				type="Transparent"
 				icon="sap-icon://overflow"
 				@click="{{_handleToggleOverflowMenu}}">

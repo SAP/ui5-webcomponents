@@ -3,6 +3,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/src/delegate/ResizeHandler.js";
 import Button from "./Button.js";
 import Popover from "./Popover.js";
+import OverflowToolbarDesign from "./types/OverflowToolbarDesign.js";
 
 // Styles
 import OverflowToolbarCss from "./generated/themes/OverflowToolbar.css.js";
@@ -33,6 +34,17 @@ const metadata = {
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.OverflowToolbar.prototype */ {
+		/**
+		 * Defines the design of the <code>ui5-overflow-toolbar</code>
+		 * @type {string}
+		 * @public
+		 * @defaultvalue "Transparent"
+		 */
+		design: {
+			type: String,
+			defaultValue: OverflowToolbarDesign.Transparent,
+		},
+
 		/**
 		 * @private
 		 */
@@ -158,11 +170,26 @@ class OverflowToolbar extends UI5Element {
 		});
 
 		// Measeure all the items
-		this._items.forEach(item => {
-			this._widthOfElements.push(item.ref.offsetWidth);
+		Array.from(this.children).forEach(item => { //Read from the light DOM, because in IE11 the slot tags have width of 0
+			this._widthOfElements.push(item.offsetWidth);
+			console.log(item.offsetWidth);
 		});
-		this._handleResize();
-		this.shouldRenderAllItems = false;
+
+		if (this._widthOfElements[0] === 0) {
+			// Needed for IE11, because in onAfterRendering the items sometimes have width 0
+			setTimeout(() => {
+				this._widthOfElements = [];
+				Array.from(this.children).forEach(item => {
+					this._widthOfElements.push(item.offsetWidth);
+					console.log(item.offsetWidth);
+				});
+				this._handleResize();
+				this.shouldRenderAllItems = false;
+			}, 200);
+		} else {
+			this._handleResize();
+			this.shouldRenderAllItems = false;
+		}
 	}
 
 	onEnterDOM() {

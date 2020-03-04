@@ -1,20 +1,16 @@
 :host(ui5-overflow-toolbar) {
 	width: 100%;
 	display: inline-block;
+    background: var(--sapToolbar_Background); /* By default the toolbar should be transparent */
 }
 
-ui5-overflow-toolbar {
-	width: 100%;
-	display: inline-block;
-}
-
-.ui5-overflow-toolbar-root {
-	padding-left: .1rem;
-	background: var(--sapGroup_ContentBackground);
+:host([design="Solid"]) {
+    background: var(--sapBaseColor);
 }
 
 .ui5-overflow-toolbar-content-wrapper {
 	height: 2.75rem;
+	padding-left: .5rem;
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
@@ -33,6 +29,10 @@ ui5-overflow-toolbar {
     flex-wrap: nowrap;
 }
 
+.ui5-overflow-toolbar-popover-button {
+	margin-right: .5rem;
+}
+
 .ui5-overflow-toolbar-items.ui5-overflow-toolbar-items-with-button {
 	width: calc(100% - 2.5rem);
 }
@@ -48,4 +48,9 @@ ui5-overflow-toolbar {
 
 .ui5-overflow-toolbar-spacer {
 	flex-grow: 1;
+}
+
+/* Needed for IE11 */
+::slotted(*) {
+	flex-shrink: 0;
 }
