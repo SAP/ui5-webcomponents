@@ -5,7 +5,7 @@ import Button from "./Button.js";
 import Popover from "./Popover.js";
 
 // Styles
-import overflowToolbarCss from "./generated/themes/OverflowToolbar.css.js";
+import OverflowToolbarCss from "./generated/themes/OverflowToolbar.css.js";
 import OverflowToolbarPopoverCss from "./generated/themes/OverflowToolbarPopover.css.js";
 
 // Templates
@@ -39,7 +39,6 @@ const metadata = {
 		_items: {
 			type: Object,
 			multiple: true,
-			defaultValue: [],
 		},
 
 		/**
@@ -48,7 +47,6 @@ const metadata = {
 		_overflowedItems: {
 			type: Object,
 			multiple: true,
-			defaultValue: [],
 		},
 
 	},
@@ -69,15 +67,26 @@ const metadata = {
  *
  * The content of the OverflowToolbar moves into the overflow area from right to left when the available space is not enough in the visible area of the container. It can be accessed by the user through the overflow button that opens it in a popover.
  *
+ * <h3>Usage</h3>
+ *
+ * List of supported components:
+ * <ul>
+ * <li>Button</li>
+ * <li>Switch</li>
+ * <li>Title</li>
+ * <li>Label</li>
+ * </ul>
+ *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/OverflowToolbar";</code>
+ * <code>import "@ui5/webcomponents/dist/OverflowToolbar.js";</code>
  *
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.OverflowToolbar
  * @extends UI5Element
  * @tagname ui5-overflow-toolbar
+ * @appenddocs ToolbarSpacer
  * @usestextcontent
  * @public
  */
@@ -87,7 +96,7 @@ class OverflowToolbar extends UI5Element {
 	}
 
 	static get styles() {
-		return overflowToolbarCss;
+		return OverflowToolbarCss;
 	}
 
 	static get template() {
@@ -111,6 +120,7 @@ class OverflowToolbar extends UI5Element {
 		this._showOverflowButton = false;
 		this.initialRendering = true;
 		this._widthOfElements = [];
+		this.shouldRenderAllItems = true;
 		this._mutationObserver = new MutationObserver(this.mutationObserverCallback.bind(this));
 	}
 
@@ -122,6 +132,7 @@ class OverflowToolbar extends UI5Element {
 				return {
 					ref: item,
 					overflowed: false,
+					isSpacer: this.isSpacer(item),
 				};
 			});
 		}
@@ -129,14 +140,29 @@ class OverflowToolbar extends UI5Element {
 
 	onAfterRendering() {
 		if (this.initialRendering) {
-			this._items.forEach(item => {
-				this._widthOfElements.push(item.ref.offsetWidth);
-			});
-			this._handleResize();
-			this.initialRendering = false;
-
+			this.measureAllItems();
 			this.attachEventHandlers();
+			this.initialRendering = false;
 		}
+	}
+
+	measureAllItems() {
+		requestAnimationFrame(_ => {
+			// Invalidate in order to render all items
+			if (this.shouldRenderAllItems) {
+				this._overflowedItems = [];
+				this._items.forEach(item => {
+					item.overflowed = false;
+				});
+			}
+		});
+
+		// Measeure all the items
+		this._items.forEach(item => {
+			this._widthOfElements.push(item.ref.offsetWidth);
+		});
+		this._handleResize();
+		this.shouldRenderAllItems = false;
 	}
 
 	onEnterDOM() {
@@ -178,7 +204,13 @@ class OverflowToolbar extends UI5Element {
 
 	mutationObserverCallback(mutationsList, observer) {
 		mutationsList.forEach(item => {
-			if (item.parentNode === this) { // Item is in the overflow toolbar
+			if (item.target.parentNode === this) { // Item is in the overflow toolbar
+				// if (item.attributeName === "style" || item.attributeName === "class") {
+				// 	this.shouldRenderAllItems = true;
+				// Check for change in sizes
+				// 	this.measureAllItems();
+				// }
+
 				if (this.overflowingIndex < 0 || this._isSlotInvalidation(item)) {
 					return;
 				}
@@ -205,7 +237,7 @@ class OverflowToolbar extends UI5Element {
 		let width = this._getItemsWrapper().offsetWidth;
 
 		for (let i = 0; i < this._items.length; i++) {
-			width -= this._widthOfElements[i] + 8;
+			width -= this._widthOfElements[i] + OverflowToolbar.itemsPadding;
 			if (width <= 0) {
 				if (this.overflowingIndex === i) {
 					return; // There is no change in overflowing
@@ -230,6 +262,7 @@ class OverflowToolbar extends UI5Element {
 			return {
 				ref: item,
 				overflowed,
+				isSpacer: this.isSpacer(item),
 			};
 		});
 
@@ -249,7 +282,7 @@ class OverflowToolbar extends UI5Element {
 
 		for (let i = this.overflowingIndex; i < this.items.length; i++) {
 			const currentItem = this.items[i].cloneNode(true);
-			currentItem.id += `-clonned${i}`;
+			currentItem.id += `-cloned${i}`;
 			currentItem.classList.add("ui5-overflowed-item");
 			this._mutationObserver.observe(currentItem, {
 				attributes: true,
@@ -278,6 +311,23 @@ class OverflowToolbar extends UI5Element {
 		return this.getDomRef().querySelector(".ui5-overflow-toolbar-items");
 	}
 
+	isSpacer(item) {
+		return item.tagName === "UI5-TOOLBAR-SPACER";
+	}
+
+	get classes() {
+		return {
+			items: {
+				"ui5-overflow-toolbar-items": true,
+				"ui5-overflow-toolbar-items-with-button": this._showOverflowButton,
+			},
+		};
+	}
+
+	static get itemsPadding() {
+		return 8;
+	}
+
 	static get events() {
 		return [
 			"click",
@@ -289,16 +339,15 @@ class OverflowToolbar extends UI5Element {
 			"keyup",
 			"touchstart",
 			"touchend",
+			"change",
 		];
 	}
 
-	static async define(...params) {
+	static async onDefine(...params) {
 		await Promise.all([
 			Button.define(),
 			Popover.define(),
 		]);
-
-		super.define(...params);
 	}
 }
 

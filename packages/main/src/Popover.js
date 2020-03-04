@@ -409,6 +409,11 @@ class Popover extends UI5Element {
 	}
 
 	shouldCloseDueOverflow(placement, openerRect) {
+		const closedPopupParent = getClosedPopupParent(this._opener);
+		if (!closedPopupParent) {
+			return true;
+		}
+
 		const threshold = 32;
 
 		const limits = {
@@ -417,8 +422,6 @@ class Popover extends UI5Element {
 			"Top": openerRect.top,
 			"Bottom": openerRect.top,
 		};
-
-		const closedPopupParent = getClosedPopupParent(this._opener);
 		let overflowsBottom = false;
 		let overflowsTop = false;
 

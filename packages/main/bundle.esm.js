@@ -37,7 +37,6 @@ import Icon from "./dist/Icon.js";
 import Input from "./dist/Input.js";
 import Label from "./dist/Label.js";
 import Link from "./dist/Link.js";
-import DayPicker from "./dist/DayPicker.js";
 import OverflowToolbar from "./dist/OverflowToolbar.js"
 import Popover from "./dist/Popover.js";
 import Panel from "./dist/Panel.js";
@@ -62,6 +61,7 @@ import TimelineItem from "./dist/TimelineItem.js";
 import Title from "./dist/Title.js";
 import Toast from "./dist/Toast.js";
 import ToggleButton from "./dist/ToggleButton.js";
+import ToolbarSpacer from "./dist/ToolbarSpacer.js";
 
 
 import List from "./dist/List.js";

@@ -25,12 +25,16 @@ ui5-overflow-toolbar {
 }
 
 .ui5-overflow-toolbar-items {
-	width: calc(100% - 2.5rem);
+	width: 100%;
 	height: 100%;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
     flex-wrap: nowrap;
+}
+
+.ui5-overflow-toolbar-items.ui5-overflow-toolbar-items-with-button {
+	width: calc(100% - 2.5rem);
 }
 
 .ui5-overflow-toolbar-overflowed-item {
@@ -40,4 +44,8 @@ ui5-overflow-toolbar {
 .ui5-overflow-toolbar-item {
 	margin-right: .5rem;
 	display: flex;
+}
+
+.ui5-overflow-toolbar-spacer {
+	flex-grow: 1;
 }

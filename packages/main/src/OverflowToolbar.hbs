@@ -1,9 +1,13 @@
 <section class="ui5-overflow-toolbar-root">	
 	<div class="ui5-overflow-toolbar-content-wrapper">
-		<div class="ui5-overflow-toolbar-items">
+		<div class="{{classes.items}}">
 			{{#each _items}}
 				{{#unless this.overflowed}}
-					<slot class="ui5-overflow-toolbar-item" name="{{this.ref._individualSlot}}" />				
+					{{#if this.isSpacer}}
+						<div class="ui5-overflow-toolbar-spacer"></div>
+					{{else}}
+						<slot class="ui5-overflow-toolbar-item" name="{{this.ref._individualSlot}}" />				
+					{{/if}}
 				{{/unless}}
 			{{/each}}
 		</div>

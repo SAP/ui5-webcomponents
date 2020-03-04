@@ -40,6 +40,7 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 | List - Group Header Item | `ui5-li-groupheader` | `import "@ui5/webcomponents/dist/GroupHeaderListItem.js";` |
 | Message Strip            | `ui5-messagestrip`   | `import "@ui5/webcomponents/dist/MessageStrip.js";`        |
 | Multi Combo Box          | `ui5-multi-combobox`  | `import "@ui5/webcomponents/dist/MultiComboBox.js";`       |
+| Overfow Toolbar          | `ui5-overflow-toolbar`| `import "@ui5/webcomponents/dist/OverflowToolbar.js";`    |
 | Panel                    | `ui5-panel`          | `import "@ui5/webcomponents/dist/Panel.js";`               |
 | Popover                  | `ui5-popover`        | `import "@ui5/webcomponents/dist/Popover.js";`             |
 | Radio Button             | `ui5-radiobutton`    | `import "@ui5/webcomponents/dist/RadioButton.js";`         |
@@ -57,6 +58,7 @@ For API documentation and samples, please check the [UI5 Web Components Playgrou
 | Timeline                 | `ui5-timeline`       | `import "@ui5/webcomponents/dist/Timeline.js";`            |
 | Timeline Item            | `ui5-timeline-item`  | comes with ui5-timeline                                    |
 | Title                    | `ui5-title`          | `import "@ui5/webcomponents/dist/Title.js";`               |
+| Toolbar Spacer           | `ui5-toolbar-spacer` | comes with ui5-overflow-toolbar                            |
 | Toggle Button            | `ui5-togglebutton`   | `import "@ui5/webcomponents/dist/ToggleButton.js";`        |
 
 ### 2. Assets
