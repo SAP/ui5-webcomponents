@@ -143,7 +143,9 @@ class Slider extends UI5Element {
 	}
 
 	onAfterRendering() {
-		this.shadowRoot.querySelector(".ui5-slider-wrapper").addEventListener("wheel", this._handleWheel());
+		this.shadowRoot.querySelector(".ui5-slider-wrapper").addEventListener("wheel", e => {
+			this._handleWheel(e);
+		});
 
 		if (this._expanded) {
 			const elements = this.shadowRoot.querySelectorAll(".ui5-slider-item");
@@ -163,6 +165,10 @@ class Slider extends UI5Element {
 	}
 
 	_handleWheel(e) {
+		if (!e){
+			return;
+		}
+
 		e.stopPropagation();
 		e.preventDefault();
 
