@@ -88,7 +88,7 @@ sap.ui.define(['sap/ui/base/Object', 'sap/ui/core/LocaleData', './CalendarClassR
 		if (!sCalendarType) {
 			sCalendarType = sap.ui.getCore().getConfiguration().getCalendarType();
 		}
-		return CalendarClassRegistry.get("sap/ui/core/date/" + sCalendarType);
+		return CalendarClassRegistry.get(sCalendarType);
 	};
 
 	/*
