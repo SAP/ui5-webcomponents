@@ -1,6 +1,6 @@
 const assert = require("chai").assert;
 
-describe("Button general interaction", () => {
+describe("Slider general interaction", () => {
 	browser.url("http://localhost:8080/test-resources/pages/Slider_Test_Page.html");
 
 	it("tests slider's label rendering", () => {
@@ -11,7 +11,6 @@ describe("Button general interaction", () => {
 
 	it("Arrow down button is working", () => {
 		const slider = browser.$("#slider");
-		console.log(slider);
 		const button = slider.shadow$$(".ui5-slider-arrow")[1];
 		button.click();
 

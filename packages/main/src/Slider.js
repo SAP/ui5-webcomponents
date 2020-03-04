@@ -4,11 +4,12 @@ import SliderTemplate from "./generated/templates/SliderTemplate.lit.js";
 import {
 	isDown,
 	isUp,
+	isTabNext,
+	isTabPrevious,
 } from "../../base/src/events/PseudoEvents.js";
 
 // Styles
 import SliderCss from "./generated/themes/Slider.css.js";
-import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
 
 /**
  * @private
@@ -38,16 +39,6 @@ const metadata = {
 		 */
 		value: {
 			type: String,
-		},
-
-		/**
-		 * Indicates if the slider will support cyclic scrolling.
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		cyclic: {
-			type: Boolean,
 		},
 
 		/**
@@ -137,14 +128,8 @@ class Slider extends UI5Element {
 		return SliderTemplate;
 	}
 
-	static async define(...params) {
-		super.define(...params);
-	}
-
 	constructor() {
 		super();
-		// this.i18nBundle = getI18nBundle("@ui5/webcomponents");
-		// this._scroller = new ScrollEnablement(this);
 		this._currentElementIndex = 0;
 		this._itemCellHeight = 0;
 	}
@@ -157,46 +142,7 @@ class Slider extends UI5Element {
 		this._itemCellHeight = this.shadowRoot.querySelectorAll(".ui5-slider-item").length && Number(getComputedStyle(this.shadowRoot.querySelector(".ui5-slider-item")).getPropertyValue("--_ui5_slider_item_height").replace("rem", ""));
 	}
 
-	_findSelectedElement() {
-		let itemsList = this.shadowRoot.querySelector(`#${this._id}--items-list`),
-			parentOffset = itemsList.parentElement.parentElement.offsetTop,
-			itemsListArray = [...itemsList.children],
-			firstVisibleElementIndex = 0;
-
-		while ((itemsListArray[firstVisibleElementIndex].getBoundingClientRect().y - parentOffset) < 0) {
-			firstVisibleElementIndex++;
-		}
-
-		return itemsListArray[firstVisibleElementIndex + 5];
-	}
-
-	_updateScrolling(e) {
-		let sizeInRems = this._items.length * 3, // the size of one element in rems (16px = 1rem)
-			sizeOfOneElementInPixels = _itemCellHeight * 16,
-			indexForOffset;
-		const elements = this.shadowRoot.querySelectorAll(".ui5-slider-item"),
-			selectedElement = this._findSelectedElement();
-
-		if (!selectedElement) {
-			return;
-		}
-		if (this.value === selectedElement.textContent) {
-			return;
-		}
-
-		if ( (e.scroll / sizeOfOneElementInPixels) / 0.5 > 1) {
-			indexForOffset = Math.ceil(e.scroll / sizeOfOneElementInPixels);
-		} else {
-			indexForOffset = Math.floor(e.scroll / sizeOfOneElementInPixels);
-		}
-
-		this._selectElement(selectedElement);
-		this.value = selectedElement.textContent;
-	}
-
 	onAfterRendering() {
-		// this._scroller.scrollContainer = this.shadowRoot.querySelector(`#${this._id}--wrapper`);
-		// this._scroller.attachEvent("scroll", this._updateScrolling.bind(this));
 
 		this.shadowRoot.querySelector(".ui5-slider-wrapper").addEventListener("wheel", (e) => {
 			e.stopPropagation();
@@ -266,10 +212,7 @@ class Slider extends UI5Element {
 		const sliderElement = this.shadowRoot.getElementById(`${this._id}--items-list`);
 		if ( index < this._items.length && index > - 1) {
 			let offsetSelectedElement = 4 * this._itemCellHeight - (index * this._itemCellHeight);
-			// let scrollToValue = index * 16 * this._itemCellHeight;
-			// console.log(scrollToValue);
 			sliderElement.setAttribute("style",`top:${offsetSelectedElement}rem`);
-			// this.shadowRoot.getElementById(`${this._id}--wrapper`).scrollTo({top: scrollToValue, left: 0, behavior: 'smooth'});
 			this.value = this._items[index];
 			this._currentElementIndex = index;
 		}
@@ -288,6 +231,14 @@ class Slider extends UI5Element {
 	}
 
 	_onkeydown(event) {
+		if (!this._expanded){
+			return;
+		}
+
+		if (isTabPrevious(event) || isTabNext(event)){
+			event.preventDefault();
+		}
+
 		if (isUp(event)) {
 			this._onArrowUp(event);
 		}
@@ -295,6 +246,16 @@ class Slider extends UI5Element {
 		if (isDown(event)) {
 			this._onArrowDown(event);
 		}
+	}
+
+	_onfocusin(e){
+		e.preventDefault();
+		this.expandSlider();
+	}
+
+	_onfocusout(e){
+		e.preventDefault();
+		this.collapseSlider();
 	}
 }
 

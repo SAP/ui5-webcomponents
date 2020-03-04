@@ -24,6 +24,11 @@
 	visibility: hidden;
 	box-sizing: border-box;
 	height: 1.5rem;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	outline: none
 }
 
 .ui5-slider[expanded] .ui5-slider-arrow {

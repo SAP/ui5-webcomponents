@@ -30,10 +30,10 @@
 			header-text="Pick Time"
 			class="ui5-timepicker-popover"
 	>
-	<div class="ui5-timepicker-sliders-container">
+	<div class="ui5-timepicker-sliders-container" @keydown={{_oncontainerkeydown}} tabindex="0" @focusin="{{_onfocuscontainerin}}">
 		{{#if shouldBuildHoursSlider}}
 			<ui5-slider 
-				label = "Hours"
+				label = "{{hoursSliderTitle}}"
 				._items="{{hoursArray}}"
 				@click="{{handleSliderClicked}}"
 				class="ui5-timepicker-slider ui5-timepicker-hours-slider"
@@ -41,7 +41,7 @@
 		{{/if}}
 		{{#if shouldBuildMinutesSlider}}
 			<ui5-slider 
-				label = "Minutes"
+				label = "{{minutesSliderTitle}}"
 				._items="{{minutesArray}}"
 				@click="{{handleSliderClicked}}"
 				class="ui5-timepicker-slider ui5-timepicker-minutes-slider"
@@ -49,7 +49,7 @@
 		{{/if}}
 		{{#if shouldBuildSecondsSlider}}
 			<ui5-slider 
-				label = "Seconds"
+				label = "{{secondsSliderTitle}}"
 				._items="{{secondsArray}}"
 				@click="{{handleSliderClicked}}"
 				class="ui5-timepicker-slider ui5-timepicker-seconds-slider"
@@ -57,7 +57,7 @@
 		{{/if}}
 		{{#if shouldBuildPeriodsSlider}}
 			<ui5-slider 
-				label = "Period"
+				label = "{{periodSliderTitle}}"
 				value="AM"
 				._items="{{periodsArray}}"
 				@click="{{handleSliderClicked}}"
