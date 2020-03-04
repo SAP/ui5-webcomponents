@@ -64,7 +64,7 @@ const metadata = {
 
 		_items: {
 			type: Object,
-		}
+		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.Slider.prototype */ {
 
@@ -86,7 +86,7 @@ const metadata = {
 		valueSelect: {
 			value: {
 				type: String,
-			}
+			},
 		},
 	},
 };
@@ -113,7 +113,7 @@ const metadata = {
  */
 class Slider extends UI5Element {
 	static get metadata() {
-	return metadata;
+		return metadata;
 	}
 
 	static get render() {
@@ -143,28 +143,12 @@ class Slider extends UI5Element {
 	}
 
 	onAfterRendering() {
-
-		this.shadowRoot.querySelector(".ui5-slider-wrapper").addEventListener("wheel", (e) => {
-			e.stopPropagation();
-			e.preventDefault();
-
-			if (e.timeStamp === this._prevWheelTimestamp || !this._expanded) {
-				return;
-			}
-
-			if (e.deltaY > 0){
-				this._onArrowUp(e);
-			} else if (e.deltaY < 0) {
-				this._onArrowDown(e);
-			}
-
-			this._prevWheelTimestamp = e.timeStamp;
-		});
+		this.shadowRoot.querySelector(".ui5-slider-wrapper").addEventListener("wheel", this._handleWheel());
 
 		if (this._expanded) {
 			const elements = this.shadowRoot.querySelectorAll(".ui5-slider-item");
-			for (let i = 0; i < elements.length; i++){
-				if (elements[i].textContent === this.value){
+			for (let i = 0; i < elements.length; i++) {
+				if (elements[i].textContent === this.value) {
 					this._selectElement(elements[i]);
 					return true;
 				}
@@ -174,8 +158,25 @@ class Slider extends UI5Element {
 		}
 	}
 
-	get items() {;
+	get items() {
 		return this._items;
+	}
+
+	_handleWheel(e) {
+		e.stopPropagation();
+		e.preventDefault();
+
+		if (e.timeStamp === this._prevWheelTimestamp || !this._expanded) {
+			return;
+		}
+
+		if (e.deltaY > 0) {
+			this._onArrowUp(e);
+		} else if (e.deltaY < 0) {
+			this._onArrowDown(e);
+		}
+
+		this._prevWheelTimestamp = e.timeStamp;
 	}
 
 	_onclick(e) {
@@ -183,7 +184,7 @@ class Slider extends UI5Element {
 			return;
 		}
 
-		if(this._expanded) {
+		if (this._expanded) {
 			this.value = e.target.textContent;
 			this._selectElement(e.target);
 		} else {
@@ -201,7 +202,7 @@ class Slider extends UI5Element {
 		this.fireEvent("collapse", {});
 	}
 
-	_selectElement(element) {	
+	_selectElement(element) {
 		if (element && this._items.indexOf(element.textContent) > -1) {
 			this._currentElementIndex = this._items.indexOf(element.textContent);
 			this._selectElementByIndex(this._currentElementIndex);
@@ -210,9 +211,9 @@ class Slider extends UI5Element {
 
 	_selectElementByIndex(index) {
 		const sliderElement = this.shadowRoot.getElementById(`${this._id}--items-list`);
-		if ( index < this._items.length && index > - 1) {
-			let offsetSelectedElement = 4 * this._itemCellHeight - (index * this._itemCellHeight);
-			sliderElement.setAttribute("style",`top:${offsetSelectedElement}rem`);
+		if (index < this._items.length && index > -1) {
+			const offsetSelectedElement = 4 * this._itemCellHeight - (index * this._itemCellHeight);
+			sliderElement.setAttribute("style", `top:${offsetSelectedElement}rem`);
 			this.value = this._items[index];
 			this._currentElementIndex = index;
 		}
@@ -231,11 +232,11 @@ class Slider extends UI5Element {
 	}
 
 	_onkeydown(event) {
-		if (!this._expanded){
+		if (!this._expanded) {
 			return;
 		}
 
-		if (isTabPrevious(event) || isTabNext(event)){
+		if (isTabPrevious(event) || isTabNext(event)) {
 			event.preventDefault();
 		}
 
@@ -248,12 +249,12 @@ class Slider extends UI5Element {
 		}
 	}
 
-	_onfocusin(e){
+	_onfocusin(e) {
 		e.preventDefault();
 		this.expandSlider();
 	}
 
-	_onfocusout(e){
+	_onfocusout(e) {
 		e.preventDefault();
 		this.collapseSlider();
 	}
