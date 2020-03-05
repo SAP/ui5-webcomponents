@@ -3,8 +3,8 @@
  */
 
 // Provides class sap.ui.core.date.Islamic
-sap.ui.define(['./UniversalDate', '../CalendarType', './CalendarClassRegistry', "sap/base/Log"],
-	function(UniversalDate, CalendarType, CalendarClassRegistry, Log) {
+sap.ui.define(['./UniversalDate', '../CalendarType', 'sap/base/Log', './_Calendars'],
+	function(UniversalDate, CalendarType, Log, _Calendars) {
 	"use strict";
 
 
@@ -46,6 +46,9 @@ sap.ui.define(['./UniversalDate', '../CalendarType', './CalendarClassRegistry', 
 		ONE_DAY = 86400000;
 
 	var oCustomizationMap = null;
+
+	// Currently those are the two supported Islamic Calendar types in the ABAP
+	var aSupportedIslamicCalendarTypes = ["A", "B"];
 
 	/**
 	 * Calculate islamic date from gregorian.
@@ -207,18 +210,14 @@ sap.ui.define(['./UniversalDate', '../CalendarType', './CalendarClassRegistry', 
 
 		oCustomizationMap = {};
 
-		sDateFormat = sap.ui.getCore().getFormatSettings().getLegacyDateFormat();
-		oCustomizationJSON = sap.ui.getCore().getFormatSettings().getLegacyDateCalendarCustomizing();
+		sDateFormat = sap.ui.getCore().getConfiguration().getFormatSettings().getLegacyDateFormat();
+		sDateFormat = _isSupportedIslamicCalendarType(sDateFormat) ? sDateFormat : "A"; // set "A" as a fall-back format always
+		oCustomizationJSON = sap.ui.getCore().getConfiguration().getFormatSettings().getLegacyDateCalendarCustomizing();
 		oCustomizationJSON = oCustomizationJSON || [];
 
-		if (!sDateFormat && !oCustomizationJSON.length) {//working with no customization
-			Log.info("No calendar customizations.");
-			return;
-		}
 
-		if ((sDateFormat && !oCustomizationJSON.length) || (!sDateFormat && oCustomizationJSON.length)) {
-			Log.warning("There is an inconsistency between customization data [" + JSON.stringify(oCustomizationJSON) +
-			"] and the date format [" + sDateFormat + "]. Calendar customization won't be used.");
+		if (!oCustomizationJSON.length) {
+			Log.warning("No calendar customizations.");
 			return;
 		}
 
@@ -269,6 +268,10 @@ sap.ui.define(['./UniversalDate', '../CalendarType', './CalendarClassRegistry', 
 
 	function isGregorianLeapYear(iYear) {
 		return !(iYear % 400) || (!(iYear % 4) && !!(iYear % 100));
+	}
+
+	function _isSupportedIslamicCalendarType (sCalendarType) {
+		return aSupportedIslamicCalendarTypes.indexOf(sCalendarType) !== -1;
 	}
 
 	/**
@@ -393,7 +396,7 @@ sap.ui.define(['./UniversalDate', '../CalendarType', './CalendarClassRegistry', 
 		return this._setUTCIslamic(oIslamic);
 	};
 
-	CalendarClassRegistry.setCalendarClass(CalendarType.Islamic, Islamic);
+	_Calendars.set(CalendarType.Islamic, Islamic);
 
 	return Islamic;
 

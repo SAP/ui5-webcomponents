@@ -3,8 +3,8 @@
  */
 
 // Provides class sap.ui.core.date.Japanese
-sap.ui.define(['./UniversalDate', '../CalendarType', './CalendarClassRegistry'],
-	function(UniversalDate, CalendarType, CalendarClassRegistry) {
+sap.ui.define(['./UniversalDate', '../CalendarType', './_Calendars'],
+	function(UniversalDate, CalendarType, _Calendars) {
 	"use strict";
 
 
@@ -235,7 +235,7 @@ sap.ui.define(['./UniversalDate', '../CalendarType', './CalendarClassRegistry'],
 		return UniversalDate.getWeekByDate(this.sCalendarType, this.oDate.getUTCFullYear(), this.getUTCMonth(), this.getUTCDate());
 	};
 
-	CalendarClassRegistry.setCalendarClass(CalendarType.Japanese, Japanese);
+	_Calendars.set(CalendarType.Japanese, Japanese);
 
 	return Japanese;
 
