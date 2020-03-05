@@ -1,12 +1,5 @@
-commit 2beb1c593814134dd6acf4b64d3ae816cdceb805
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Mar 4 10:35:13 2020 +0200
+commit 9a0a9851621f396a3f847b1fc00a60295538fa02
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Thu Mar 5 09:59:32 2020 +0200
 
-    fix(ui5-shellbar): fix search field behavior (#1264)
-    
-    - fix: search field suggestions popup used to open in the left most corner
-    - fix: clicking on suggestions did not take effect due to pop up reposition
-    
-    Root cause: the search field used to close upon interaction with the items in the popover, forcing the popover to reposition itself without knowing the DOM ref of  its opener.
-    
-    Solution: the search field is now toggled only by clicking the search icon.
+    chore: sync with the OpenUI5 core project (#1266)
