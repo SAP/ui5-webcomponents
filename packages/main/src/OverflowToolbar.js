@@ -147,6 +147,14 @@ class OverflowToolbar extends UI5Element {
 					isSpacer: this.isSpacer(item),
 				};
 			});
+
+			this._items.forEach(item => {
+				this._mutationObserver.observe(item.ref, {
+					attributes: true,
+					childList: true,
+					subtree: true,
+				});
+			});
 		}
 	}
 
@@ -170,18 +178,18 @@ class OverflowToolbar extends UI5Element {
 		});
 
 		// Measeure all the items
-		Array.from(this.children).forEach(item => { //Read from the light DOM, because in IE11 the slot tags have width of 0
+		// Read from the light DOM, because in IE11 the slot tags have width of 0
+		this._widthOfElements = [];
+		Array.from(this.children).forEach(item => {
 			this._widthOfElements.push(item.offsetWidth);
-			console.log(item.offsetWidth);
 		});
 
 		if (this._widthOfElements[0] === 0) {
-			// Needed for IE11, because in onAfterRendering the items sometimes have width 0
+			// This case is needed for IE11, because in onAfterRendering the items sometimes have width 0
 			setTimeout(() => {
 				this._widthOfElements = [];
 				Array.from(this.children).forEach(item => {
 					this._widthOfElements.push(item.offsetWidth);
-					console.log(item.offsetWidth);
 				});
 				this._handleResize();
 				this.shouldRenderAllItems = false;
@@ -232,11 +240,11 @@ class OverflowToolbar extends UI5Element {
 	mutationObserverCallback(mutationsList, observer) {
 		mutationsList.forEach(item => {
 			if (item.target.parentNode === this) { // Item is in the overflow toolbar
-				// if (item.attributeName === "style" || item.attributeName === "class") {
-				// 	this.shouldRenderAllItems = true;
-				// Check for change in sizes
-				// 	this.measureAllItems();
-				// }
+				if (item.attributeName === "style" || item.attributeName === "class") {
+					this.shouldRenderAllItems = true;
+					// Check for change in sizes
+					this.measureAllItems();
+				}
 
 				if (this.overflowingIndex < 0 || this._isSlotInvalidation(item)) {
 					return;
@@ -278,14 +286,6 @@ class OverflowToolbar extends UI5Element {
 		this._items = this.items.map((item, index) => {
 			const overflowed = this.overflowingIndex === -1 ? false : index >= this.overflowingIndex;
 
-			if (overflowed) {
-				this._mutationObserver.observe(item, {
-					attributes: true,
-					childList: true,
-					subtree: true,
-				});
-			}
-
 			return {
 				ref: item,
 				overflowed,
@@ -311,11 +311,6 @@ class OverflowToolbar extends UI5Element {
 			const currentItem = this.items[i].cloneNode(true);
 			currentItem.id += `-cloned${i}`;
 			currentItem.classList.add("ui5-overflowed-item");
-			this._mutationObserver.observe(currentItem, {
-				attributes: true,
-				childList: true,
-				subtree: true,
-			});
 
 			this._overflowedItems.push(currentItem);
 		}
