@@ -245,7 +245,7 @@ class TimePicker extends UI5Element {
 			nextValue = this.normalizeValue(nextValue);
 		}
 
-		this.value = nextValue;
+		this.setValue(nextValue);
 		this.fireEvent("change", { value: nextValue, valid: isValid });
 		this.fireEvent("value-changed", { value: nextValue, valid: isValid });
 	}
@@ -490,6 +490,7 @@ class TimePicker extends UI5Element {
 	setValue(value) {
 		if (this.isValid(value)) {
 			this.value = this.normalizeValue(value);
+			this.valueState = ValueState.None;
 		} else {
 			this.valueState = ValueState.Error;
 		}
