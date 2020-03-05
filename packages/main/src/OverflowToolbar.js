@@ -133,7 +133,6 @@ class OverflowToolbar extends UI5Element {
 		this.initialRendering = true;
 		this._widthOfElements = [];
 		this.shouldRenderAllItems = true;
-		this._mutationObserver = new MutationObserver(this.mutationObserverCallback.bind(this));
 	}
 
 	onBeforeRendering() {
@@ -147,21 +146,12 @@ class OverflowToolbar extends UI5Element {
 					isSpacer: this.isSpacer(item),
 				};
 			});
-
-			this._items.forEach(item => {
-				this._mutationObserver.observe(item.ref, {
-					attributes: true,
-					childList: true,
-					subtree: true,
-				});
-			});
 		}
 	}
 
 	onAfterRendering() {
 		if (this.initialRendering) {
 			this.measureAllItems();
-			this.attachEventHandlers();
 			this.initialRendering = false;
 		}
 	}
@@ -201,6 +191,8 @@ class OverflowToolbar extends UI5Element {
 	}
 
 	onEnterDOM() {
+		this.initMutationObserver();
+		this.attachEventHandlers();
 		ResizeHandler.register(this, this._handleResize.bind(this));
 	}
 
@@ -208,6 +200,17 @@ class OverflowToolbar extends UI5Element {
 		ResizeHandler.deregister(this, this._handleResize);
 		this.removeEventHandlers();
 		this._mutationObserver.disconnect();
+	}
+
+	initMutationObserver() {
+		this._mutationObserver = new MutationObserver(this.mutationObserverCallback.bind(this));
+		this._items.forEach(item => {
+			this._mutationObserver.observe(item.ref, {
+				attributes: true,
+				childList: true,
+				subtree: true,
+			});
+		});
 	}
 
 	attachEventHandlers() {
