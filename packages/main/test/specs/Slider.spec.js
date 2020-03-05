@@ -3,6 +3,12 @@ const assert = require("chai").assert;
 describe("Slider general interaction", () => {
 	browser.url("http://localhost:8080/test-resources/pages/Slider_Test_Page.html");
 
+	before(() => {
+		browser.$("#slider").setProperty("_items",["1","2","3","4","5","6","7"]);
+		browser.$("#slider").setProperty("value","1");
+		browser.$("#slider").setProperty("_expanded",true);
+	});
+
 	it("tests slider's label rendering", () => {
 		const textValue = browser.$("#slider").shadow$$(".ui5-slider-label")[0].getText();
 
@@ -19,6 +25,7 @@ describe("Slider general interaction", () => {
 
 	it("Arrow up button is working", () => {
 		const slider = browser.$("#slider");
+		
 		const button = slider.shadow$$(".ui5-slider-arrow")[0];
 
 		button.click();
