@@ -137,6 +137,8 @@
 
 	--_ui5_slider_item_width: 4rem;
 	--_ui5_slider_item_height: 2rem;
+	--_ui5_slider_height: 22rem;
+	--_ui5_slider_selection_frame_margin_top: calc(var(--_ui5_slider_item_height) * 4);
 
 	--_ui5_switch_height: var(--_ui5_switch_compact_height);
 	--_ui5_switch_width: var(--_ui5_switch_compact_width);

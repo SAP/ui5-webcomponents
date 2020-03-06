@@ -47,6 +47,11 @@ const metadata = {
 		/**
 		 * Determines the format, displayed in the input field.
 		 *
+		 * Example:
+		 * HH:mm:ss -> 11:42:35
+		 * hh:mm:ss a -> 2:23:15 PM
+		 * mm:ss -> 12:04 (only minutes and seconds)
+		 *
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
@@ -71,23 +76,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines a short hint, intended to aid the user with data entry when the
-		 * <code>ui5-datepicker</code> has no value.
-		 *
-		 * <b>Note:</b> When no placeholder is set, the format pattern is displayed as a placeholder.
-		 * Passing an empty string as the value of this property will make the <code>ui5-time-picker</code> appear empty - without placeholder or format pattern.
-		 *
-		 * @type {string}
-		 * @defaultvalue undefined
-		 * @public
-		 */
-		placeholder: {
-			type: String,
-			defaultValue: undefined,
-		},
-
-		/**
-		 * Determines whether the <code>ui5-datepicker</code> is displayed as disabled.
+		 * Determines whether the <code>ui5-timepicker</code> is displayed as disabled.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -98,7 +87,7 @@ const metadata = {
 		},
 
 		/**
-		 * Determines whether the <code>ui5-datepicker</code> is displayed as readonly.
+		 * Determines whether the <code>ui5-timepicker</code> is displayed as readonly.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -137,7 +126,20 @@ const metadata = {
 		//
 	},
 	events: /** @lends sap.ui.webcomponents.main.TimePicker.prototype */ {
-		//
+		/**
+		 * Fired when the input operation has finished by pressing Enter or on focusout.
+		 *
+		 * @event
+		 * @public
+		*/
+		change: {},
+		/**
+		 * Fired when the value of the <code>ui5-timepicker</code> is changed at each key stroke.
+		 *
+		 * @event
+		 * @public
+		*/
+		input: {},
 	},
 };
 
@@ -145,11 +147,33 @@ const metadata = {
  * @class
  *
  * <h3 class="comment-api-title">Overview</h3>
- *
+ * The <code>ui5-timepicker</code> component provides an input field with assigned sliders which opens on user action.
+ * The <code>ui5-timepicker</code> allows users to select a localized time using touch,
+ * mouse, or keyboard input. It consists of two parts: the time input field and the
+ * sliders.
  *
  * <h3>Usage</h3>
- *
+ * The user can enter a time by:
+ * <ul>
+ * <li>Using the sliders that opens in a popup</li>
+ * <li>Typing it in directly in the input field</li>
+ * </ul>
+ * <br><br>
+ * When the user makes an entry and chooses the enter key, the sliders shows the corresponding time.
+ * When the user directly triggers the sliders display, the actual time is displayed.
  * For the <code>ui5-timepicker</code>
+ *
+ * <h3>Formatting</h3>
+ *
+ * If a time is entered by typing it into
+ * the input field, it must fit to the used time format.
+ * <br><br>
+ * Supported format options are pattern-based on Unicode LDML Date Format notation.
+ * For more information, see <ui5-link target="_blank" href="http://unicode.org/reports/tr35/#Date_Field_Symbol_Table" class="api-table-content-cell-link">UTS #35: Unicode Locale Data Markup Language</ui5-link>.
+ * <br><br>
+ * For example, if the <code>format-pattern</code> is "HH:mm:ss",
+ * a valid value string is "11:42:35" and the same is displayed in the input.
+ *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import @ui5/webcomponents/dist/TimePicker.js";</code>
@@ -289,6 +313,10 @@ class TimePicker extends UI5Element {
 		}
 	}
 
+	/**
+	 * Closes the picker
+	 * @public
+	 */
 	closePicker() {
 		this._getPopover().close();
 
@@ -297,6 +325,13 @@ class TimePicker extends UI5Element {
 		}
 	}
 
+	/**
+	 * Opens the picker.
+	 * @param {object} options A JSON object with additional configuration.<br>
+	 * <code>{ focusInput: true }</code> By default, the focus goes in the picker after opening it.
+	 * Specify this option to focus the input field.
+	 * @public
+	 */
 	openPicker() {
 		this._getPopover().open(this);
 		this._isPickerOpen = true;
@@ -310,6 +345,11 @@ class TimePicker extends UI5Element {
 		}
 	}
 
+	/**
+	 * Checks if a value is valid against the current date format of the DatePicker
+	 * @param {string} value A value to be tested against the current date format
+	 * @public
+	 */
 	isOpen() {
 		return !!this._isPickerOpen;
 	}
@@ -383,9 +423,15 @@ class TimePicker extends UI5Element {
 
 		this.setValue(this.getFormat().format(selectedDate));
 
+		this.fireEvent("change", { value: this.value, valid: true });
+
 		this.closePicker();
 	}
 
+	/**
+	 * Opens the picker.
+	 * @public
+	 */
 	isValid(value = "") {
 		return !!(value && this.getFormat().parse(value));
 	}
@@ -539,6 +585,17 @@ class TimePicker extends UI5Element {
 			this._hoursParameters.maxHour = 12;
 			this._hoursParameters.isTwelveHoursFormat = true;
 		}
+	}
+
+	/**
+	 * Currently selected date represented as JavaScript Date instance
+	 *
+	 * @readonly
+	 * @type { Date }
+	 * @public
+	 */
+	get dateValue() {
+		return this.getFormat().parse(this.value);
 	}
 
 	get shouldBuildHoursSlider() {

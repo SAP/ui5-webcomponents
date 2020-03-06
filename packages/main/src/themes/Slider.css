@@ -6,27 +6,24 @@
 	box-sizing: border-box;
 	font-family: var(--sapFontFamily);
 	justify-content: space-between;
-    flex-direction: column;
-    display: inline-flex;
+	flex-direction: column;
+	display: inline-flex;
 }
 .ui5-slider .ui5-slider-label {
 	box-sizing: border-box;
-    height: 2rem;
-    line-height: 2rem;
-    width: var(--_ui5_slider_item_width);
-    font-size: var(--_ui5_slider_label_text_size);
-    color: var(--_ui5_slider_label_text_color);
-    text-align: center;
-    vertical-align: middle;
+	height: 2rem;
+	line-height: 2rem;
+	width: var(--_ui5_slider_item_width);
+	font-size: var(--_ui5_slider_label_text_size);
+	color: var(--_ui5_slider_label_text_color);
+	text-align: center;
+	vertical-align: middle;
 }
 
 .ui5-slider .ui5-slider-arrow {
 	visibility: hidden;
 	box-sizing: border-box;
 	height: 1.5rem;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
 	user-select: none;
 	outline: none
 }
@@ -43,9 +40,6 @@
 	overflow: hidden;
 	height: 100%;
 	box-sizing: border-box;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
 	user-select: none;
 	list-style: none;
 	margin-top: 0rem;
@@ -100,7 +94,7 @@
 }
 
 .ui5-slider .ui5-slider-inner .ui5-slider-wrapper {
-	height: 27rem;
+	height: var(--_ui5_slider_height);
 	position: relative;
 	overflow: hidden;
 	outline: none;
@@ -111,8 +105,8 @@
 	cursor: default;
 	margin: 0;
 	justify-content: space-between;
-    flex-direction: column;
-    display: inline-flex;
+	flex-direction: column;
+	display: inline-flex;
 }
 
 .ui5-slider[expanded] .ui5-slider-label {
@@ -121,7 +115,7 @@
 
 .ui5-slider .ui5-slider-inner {
 	max-height: 100%;
-	height: 27rem;
+	height: var(--_ui5_slider_height);
 }
 
 .ui5-slider[expanded] .ui5-slider-inner .ui5-slider-item {

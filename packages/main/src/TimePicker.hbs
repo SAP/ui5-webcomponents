@@ -1,4 +1,4 @@
-<div id="{{this._id}}" formatPattern="{{formatPattern}}" class="ui5-timepicker">
+<div id="{{this._id}}" formatPattern="{{formatPattern}}" class="ui5-timepicker-root">
 	<ui5-input
 			id="{{_id}}-inner"
 			value="{{value}}"
@@ -16,6 +16,7 @@
 			@click="{{togglePicker}}"
 			input-icon
 			?pressed="{{_isPickerOpen}}"
+			class="ui5-timepicker-input-icon-button"
 		></ui5-icon>
 	</ui5-input>
 	<ui5-responsive-popover

@@ -1,5 +1,4 @@
 @import "../base/Slider-parameters.css";
-@import "../../../../theme-base/src/themes/sap_fiori_3/base-parameters.less";
 
 :root{
 	--_ui5_slider_item_background_color: var(--sapTimePickerItemColor);

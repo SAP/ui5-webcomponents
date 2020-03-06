@@ -1,6 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import SliderTemplate from "./generated/templates/SliderTemplate.lit.js";
+import Button from "./Button.js";
 import {
 	isDown,
 	isUp,
@@ -142,11 +143,11 @@ class Slider extends UI5Element {
 		this._itemCellHeight = this.shadowRoot.querySelectorAll(".ui5-slider-item").length && Number(getComputedStyle(this.shadowRoot.querySelector(".ui5-slider-item")).getPropertyValue("--_ui5_slider_item_height").replace("rem", ""));
 	}
 
-	onAfterRendering() {
-		this.shadowRoot.querySelector(".ui5-slider-wrapper").addEventListener("wheel", e => {
-			this._handleWheel(e);
-		});
+	static async onDefine() {
+		await Button.define();
+	}
 
+	onAfterRendering() {
 		if (this._expanded) {
 			const elements = this.shadowRoot.querySelectorAll(".ui5-slider-item");
 			for (let i = 0; i < elements.length; i++) {
@@ -161,11 +162,11 @@ class Slider extends UI5Element {
 	}
 
 	get items() {
-		return this._items;
+		return this._items || [];
 	}
 
 	_handleWheel(e) {
-		if (!e){
+		if (!e) {
 			return;
 		}
 

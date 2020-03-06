@@ -15,12 +15,12 @@
 	<div class="ui5-slider-header-block">
 		<div id="{{this._id}}--label" class="ui5-slider-label"> {{label}}</div>
 		<div class="ui5-slider-invisible-text"></div>
-		<ui5-button class="ui5-slider-arrow" icon="arrow-top" @click={{_onArrowUp}} tabindex="-1"></ui5-button>
+		<ui5-button class="ui5-slider-arrow" icon="navigation-up-arrow" @click={{_onArrowUp}} tabindex="-1"></ui5-button>
 	</div>
 	<div id="{{this._id}}--inner" class="ui5-slider-inner">
 	<div id="{{this._id}}--selection-frame" class="ui5-slider-selection-frame">
 		</div>
-		<div id="{{this._id}}--wrapper" class="ui5-slider-wrapper">
+		<div id="{{this._id}}--wrapper" class="ui5-slider-wrapper" @wheel="{{_handleWheel}}">
 			{{#if _expanded}}
 				<ul id="{{this._id}}--items-list">
 					{{#each items}}
@@ -34,5 +34,5 @@
 			{{/if}}
 		</div>
 	</div>
-	<ui5-button class="ui5-slider-arrow" icon="arrow-bottom" @click={{_onArrowDown}} tabindex="-1"></ui5-button>
+	<ui5-button class="ui5-slider-arrow" icon="navigation-down-arrow" @click={{_onArrowDown}} tabindex="-1"></ui5-button>
 </div>

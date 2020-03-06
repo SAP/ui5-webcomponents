@@ -3,4 +3,5 @@
 	--_ui5_slider_label_text_size: .75rem;
 	--_ui5_slider_selection_frame_margin_top: calc(var(--_ui5_slider_item_height) * 4);
 	--_ui5_slider_label_text_color: var(--sapContent_LabelColor);
+	--_ui5_slider_height: 27rem;
 }

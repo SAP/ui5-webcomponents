@@ -1,20 +1,35 @@
-.ui5-timepicker{
+:host(:not([hidden])) {
 	display: inline-block;
 }
 
-.ui5-timepicker-sliders-container{
+.ui5-timepicker-sliders-container {
 	display: flex;
 	justify-content: center;
 	align-items: stretch;
 }
 
-.ui5-timepicker-footer{
+.ui5-timepicker-footer {
 	height: fit-content;
 	display: flex;
 	justify-content: flex-end;
 	width: 100%;
 }
 
-.ui5-timepicker-footer *{
+.ui5-timepicker-footer * {
 	margin: 1%;
+}
+
+.ui5-timepicker-input-icon-button:hover {
+	cursor: pointer;
+	background: var(--sapButton_Hover_Background);
+}
+
+.ui5-timepicker-input-icon-button:active {
+	background-color: var(--sapButton_Active_Background);
+	color: var(--sapButton_Active_TextColor);
+}
+
+.ui5-timepicker-input-icon-button[pressed] {
+	background-color: var(--sapButton_Active_Background);
+	color: var(--sapButton_Active_TextColor);
 }
