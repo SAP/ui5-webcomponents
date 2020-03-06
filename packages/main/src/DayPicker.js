@@ -5,7 +5,6 @@ import { getLocale } from "@ui5/webcomponents-base/dist/LocaleProvider.js";
 import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSettings.js";
 import DateFormat from "@ui5/webcomponents-utils/dist/sap/ui/core/format/DateFormat.js";
 import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
-import { getFormatLocale } from "@ui5/webcomponents-base/dist/FormatSettings.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
@@ -163,7 +162,7 @@ class DayPicker extends UI5Element {
 
 	constructor() {
 		super();
-		this._oLocale = getFormatLocale();
+		this._oLocale = getLocale();
 		this._oLocaleData = new LocaleData(this._oLocale);
 
 		this._itemNav = new ItemNavigation(this, {

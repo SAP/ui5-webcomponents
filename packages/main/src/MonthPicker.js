@@ -1,7 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
-import { getFormatLocale } from "@ui5/webcomponents-base/dist/FormatSettings.js";
 import DateFormat from "@ui5/webcomponents-utils/dist/sap/ui/core/format/DateFormat.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
@@ -127,7 +126,7 @@ class MonthPicker extends UI5Element {
 
 	constructor() {
 		super();
-		this._oLocale = getFormatLocale();
+		this._oLocale = getLocale();
 		this._oLocaleData = new LocaleData(this._oLocale);
 
 		this._itemNav = new ItemNavigation(this, { rowSize: 3, behavior: ItemNavigationBehavior.Cyclic });
