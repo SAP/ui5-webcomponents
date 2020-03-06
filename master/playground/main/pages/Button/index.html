@@ -17,6 +17,18 @@
 <script nomodule src="https://sap.github.io/ui5-webcomponents/master/assets/js/ui5-webcomponents/bundle.es5.js"></script>
                     
 
+    <style>
+        .long-button {
+            width: 1000px;
+        }
+        .long-button-begin::part(button) {
+            justify-content: flex-start;
+        }
+        .long-button-end::part(button) {
+            justify-content: flex-end;
+        }
+    </style>
+
 </head>
 
 <body style="background-color: var(--sapBackgroundColor);">
@@ -153,8 +165,14 @@
 	<ui5-togglebutton design="Emphasized" icon="employee">Emphasized</ui5-togglebutton>
 	<ui5-togglebutton disabled design="Emphasized" icon="employee">Emphasized</ui5-togglebutton>
 
+    <br/>
+    <br/>
+    <ui5-button class="long-button long-button-begin" icon="download">Download</ui5-button>
+    <ui5-button class="long-button" icon="download">Download</ui5-button>
+    <ui5-button class="long-button long-button-end" icon="download">Download</ui5-button>
 
-	<script>
+
+    <script>
 		var clickCounter = document.querySelector("#click-counter");
 		var button = document.querySelector("#button1");
 		var disabledButton = document.querySelector("#button-disabled");

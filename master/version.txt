@@ -1,5 +1,5 @@
-commit 788916fb65b2c83154814c2eebf68b19ab77f6f5
+commit e4c1dba17d48b46d748eb5dbaad21cd2d20ff675
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Mar 6 09:45:05 2020 +0200
+Date:   Fri Mar 6 16:08:24 2020 +0200
 
-    refactor(framework): Simplify OpenUI5 shims (#1267)
+    chore(ui5-button): button part exposed (#1268)
