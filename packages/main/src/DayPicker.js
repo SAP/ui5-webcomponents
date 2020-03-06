@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchCldr } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
-import { getLocale } from "@ui5/webcomponents-base/dist/LocaleProvider.js";
+import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSettings.js";
 import DateFormat from "@ui5/webcomponents-utils/dist/sap/ui/core/format/DateFormat.js";
 import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";

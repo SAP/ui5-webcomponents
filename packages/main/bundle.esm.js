@@ -13,7 +13,7 @@ import "@ui5/webcomponents-base/dist/features/calendar/Persian.js";
 import "@ui5/webcomponents-base/dist/features/browsersupport/Edge.js";
 
 // CLDR
-import { getLanguages, getTerritories, getDatePattern } from "@ui5/webcomponents-base/dist/CLDR.js";
+import getLocaleData from "@ui5/webcomponents-base/dist/locale/getLocaleData.js";
 
 // Icons
 import "@ui5/webcomponents-icons/dist/Assets.js";
@@ -97,9 +97,5 @@ window["sap-ui-webcomponents-bundle"] = {
 		getFirstDayOfWeek,
 	},
 	getIconNames,
-	CLDR: {
-		getLanguages,
-		getTerritories,
-		getDatePattern,
-	}
+	getLocaleData,
 };
