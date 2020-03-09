@@ -4,6 +4,7 @@ import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18
 import { getLocale } from "@ui5/webcomponents-base/dist/LocaleProvider.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import DateFormat from "@ui5/webcomponents-utils/dist/sap/ui/core/format/DateFormat.js";
+import LocaleData from "@ui5/webcomponents-utils/dist/sap/ui/core/LocaleData.js";
 import { fetchCldr } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import ResponsivePopover from "./ResponsivePopover.js";
@@ -58,7 +59,6 @@ const metadata = {
 		 */
 		formatPattern: {
 			type: String,
-			defaultValue: "HH:mm:ss",
 		},
 
 		/**
@@ -241,6 +241,10 @@ class TimePicker extends UI5Element {
 		};
 
 		this._slidersDomRefs = [];
+
+		if (!this.formatPattern) {
+			this.formatPattern = LocaleData.getInstance(getLocale()).getTimePattern(this.getFormat().oFormatOptions.style);
+		}
 	}
 
 	onBeforeRendering() {
@@ -306,9 +310,9 @@ class TimePicker extends UI5Element {
 				secondsSlider.value = currentDate.getSeconds();
 			}
 			if (this._hoursParameters.isTwelveHoursFormat && periodsSlider && this._hoursParameters.minHour === 1) {
-				periodsSlider.value = currentDate.getHours() > this._hoursParameters.maxHour ? "PM" : "AM";
+				periodsSlider.value = currentDate.getHours() > this._hoursParameters.maxHour ? this.periodsArray[1] : this.periodsArray[0];
 			} else if (this._hoursParameters.isTwelveHoursFormat && periodsSlider) {
-				periodsSlider.value = (currentDate.getHours() > this._hoursParameters.maxHour || currentDate.getHours() === this._hoursParameters.minHour) ? "PM" : "AM";
+				periodsSlider.value = (currentDate.getHours() > this._hoursParameters.maxHour || currentDate.getHours() === this._hoursParameters.minHour) ? this.periodsArray[1] : this.periodsArray[0];
 			}
 		}
 	}
@@ -411,9 +415,9 @@ class TimePicker extends UI5Element {
 			hours = hoursSlider ? hoursSlider.getAttribute("value") : this._hoursParameters.minHour.toString(),
 			minutes = minutesSlider ? minutesSlider.getAttribute("value") : "0",
 			seconds = secondsSlider ? secondsSlider.getAttribute("value") : "0",
-			period = periodsSlider ? periodsSlider.getAttribute("value") : "AM";
+			period = periodsSlider ? periodsSlider.getAttribute("value") : this.periodsArray[0];
 
-		if (period === "PM") {
+		if (period === this.periodsArray[1]) {
 			selectedDate.setHours(hours * 1 + 12);
 		} else {
 			selectedDate.setHours(hours);
