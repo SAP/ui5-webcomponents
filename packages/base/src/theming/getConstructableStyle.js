@@ -1,4 +1,4 @@
-import { getEffectiveStyle } from "../Theming.js";
+import getEffectiveStyle from "./getEffectiveStyle.js";
 
 const constructableStyleMap = new Map();
 
