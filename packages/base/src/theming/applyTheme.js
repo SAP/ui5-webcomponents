@@ -1,6 +1,6 @@
 import { getThemeProperties, getRegisteredPackages } from "../asset-registries/Themes.js";
 import { getExternalThemePresent } from "./ExternalThemePresent.js";
-import injectThemeProperties from "./injectThemeProperties.js";
+import createThemePropertiesStyleTag from "./createThemePropertiesStyleTag.js";
 
 const applyTheme = async theme => {
 	let cssText = "";
@@ -12,7 +12,7 @@ const applyTheme = async theme => {
 
 	registeredPackages.forEach(async packageName => {
 		cssText = await getThemeProperties(packageName, theme);
-		injectThemeProperties(cssText, packageName);
+		createThemePropertiesStyleTag(cssText, packageName);
 	});
 };
 

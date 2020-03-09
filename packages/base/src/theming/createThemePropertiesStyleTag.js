@@ -6,7 +6,7 @@ import { ponyfillNeeded, runPonyfill } from "./CSSVarsPonyfill.js";
  * @param cssText
  * @param packageName
  */
-const injectThemeProperties = (cssText, packageName) => {
+const createThemePropertiesStyleTag = (cssText, packageName) => {
 	// Needed for all browsers
 	const styleElement = document.head.querySelector(`style[data-ui5-theme-properties="${packageName}"]`);
 	if (styleElement) {
@@ -24,4 +24,4 @@ const injectThemeProperties = (cssText, packageName) => {
 	}
 };
 
-export default injectThemeProperties;
+export default createThemePropertiesStyleTag;
