@@ -219,11 +219,12 @@ class Select extends UI5Element {
 	}
 
 	get _isPickerOpen() {
-		return this._respPopover && this._respPopover.opened;
+		return this.responsivePopover && this.responsivePopover.opened;
 	}
 
-	get _respPopover() {
-		return this.getStaticAreaItemDomRef().querySelector("ui5-responsive-popover");
+	async _respPopover() {
+		const staticAreaItem = await this.getStaticAreaItemDomRef();
+		return staticAreaItem.querySelector("ui5-responsive-popover");
 	}
 
 	/**
@@ -236,7 +237,8 @@ class Select extends UI5Element {
 		return this.options.find(option => option.selected);
 	}
 
-	_toggleRespPopover() {
+	async _toggleRespPopover() {
+		this.responsivePopover = await this._respPopover();
 		if (this.disabled) {
 			return;
 		}
@@ -244,9 +246,9 @@ class Select extends UI5Element {
 		this.updateStaticAreaItemContentDensity();
 
 		if (this._isPickerOpen) {
-			this._respPopover.close();
+			this.responsivePopover.close();
 		} else {
-			this._respPopover.open(this);
+			this.responsivePopover.open(this);
 		}
 	}
 
@@ -340,7 +342,7 @@ class Select extends UI5Element {
 			return;
 		}
 
-		const li = this._respPopover.querySelector(`#${this._currentlySelectedOption._id}-li`);
+		const li = this.responsivePopover.querySelector(`#${this._currentlySelectedOption._id}-li`);
 
 		li.parentElement._itemNavigation.currentIndex = this._selectedIndex;
 		li && li.focus();
