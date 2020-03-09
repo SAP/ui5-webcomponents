@@ -114,7 +114,7 @@ const metadata = {
  * The <code>ui5-switch</code> component is used for changing between binary states.
  * <br>
  * The component can display texts, that will be switched, based on the component state, via the <code>textOn</code> and <code>textOff</code> properties,
- * but texts longer than 3 letters will be cuttted off.
+ * but texts longer than 3 letters will be cutted off.
  * <br>
  * However, users are able to customize the width of <code>ui5-switch</code> with pure CSS (&lt;ui5-switch style="width: 200px">), and set widths, depending on the texts they would use.
  * <br>

@@ -5,10 +5,19 @@ import ComboBoxItemTemplate from "./generated/templates/ComboBoxItemTemplate.lit
 // Styles
 import ComboBoxItemCss from "./generated/themes/ComboBoxItem.css.js";
 
-
+/**
+ * @public
+ */
 const metadata = {
-	tag: "ui5-combobox-item",
-	properties: {
+	tag: "ui5-cb-item",
+	properties: /** @lends  sap.ui.webcomponents.main.ComboBoxItem.prototype */ {
+		/**
+		 * Defines the text of the <code>ui5-cb-item</code>.
+		 *
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @public
+		 */
 		text: { type: String },
 	},
 	slots: {
@@ -19,6 +28,16 @@ const metadata = {
 	},
 };
 
+/**
+ * @class
+ * The <code>ui5-cb-item</code> represents the item for a <code>ui5-combobox</code>.
+ *
+ * @constructor
+ * @author SAP SE
+ * @alias sap.ui.webcomponents.main.ComboBoxItem
+ * @extends UI5Element
+ * @public
+ */
 class ComboBoxItem extends UI5Element {
 	static get metadata() {
 		return metadata;

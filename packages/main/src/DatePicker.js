@@ -1,4 +1,3 @@
-import "@ui5/webcomponents-base/dist/shims/jquery-shim.js";
 import "@ui5/webcomponents-base/dist/shims/Core-shim.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -52,7 +51,7 @@ const metadata = {
 
 		/**
 		 * Visualizes the validation state of the Web Component, for example
-		 * <code>Error</code>, <code>Warning</code> and
+		 * <code>Error</code>, <code>Warning</code>, or
 		 * <code>Success</code>.
 		 *
 		 * @type {string}
@@ -76,7 +75,7 @@ const metadata = {
 		},
 
 		/**
-		 * Determines the мinimum date available for selection.
+		 * Determines the minimum date available for selection.
 		 *
 		 * @type {String}
 		 * @defaultvalue ""
@@ -102,7 +101,7 @@ const metadata = {
 		/**
 		 * Determines the calendar type.
 		 * The input value is formated according to the calendar type and the picker shows
-		 * months and years from the specified calendar. Available options are: "Gregorian", "Islamic", "Japanese", "Buddhist" and "Persian".
+		 * months and years from the specified calendar. Available options are: "Gregorian", "Islamic", "Japanese", "Buddhist", and "Persian".
 		 *
 		 * @type {string}
 		 * @public
@@ -123,7 +122,7 @@ const metadata = {
 		},
 
 		/**
-		 * Determines whether the <code>ui5-datepicker</code> is displayed as readonly.
+		 * Determines whether the <code>ui5-datepicker</code> is displayed as read-only.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -236,9 +235,9 @@ const metadata = {
  * The <code>ui5-datepicker</code> provides advanced keyboard handling.
  * If the <code>ui5-datepicker</code> is focused,
  * you can open or close the drop-down by pressing <code>F4</code>, <code>ALT+UP</code> or <code>ALT+DOWN</code> keys.
- * Once the drop-down is opened, you can use the <code>UP</code>, <code>DOWN</code>, <code>LEFT</code>, <code>right</code> arrow keys
+ * Once the drop-down is opened, you can use the <code>UP</code>, <code>DOWN</code>, <code>LEFT</code>, <code>RIGHT</code> arrow keys
  * to navigate through the dates and select one by pressing the <code>Space</code> or <code>Enter</code> keys. Moreover you can
- * use tab to reach the buttons for changing month and year.
+ * use TAB to reach the buttons for changing month and year.
  * <br>
  *
  * <h3>ES6 Module Import</h3>
@@ -432,7 +431,7 @@ class DatePicker extends UI5Element {
 	}
 
 	/**
-	 * Checks if a value is valid against the current date format of the DatePicker
+	 * Checks if a value is valid against the current date format of the DatePicker.
 	 * @param {string} value A value to be tested against the current date format
 	 * @public
 	 */
@@ -441,7 +440,7 @@ class DatePicker extends UI5Element {
 	}
 
 	/**
-	 * Checks if a date is in range between minimum and maximum date
+	 * Checks if a date is in range between minimum and maximum date.
 	 * @param {object} value
 	 * @public
 	 */
@@ -684,7 +683,7 @@ class DatePicker extends UI5Element {
 	}
 
 	/**
-	 * Currently selected date represented as JavaScript Date instance
+	 * Currently selected date represented as JavaScript Date instance.
 	 *
 	 * @readonly
 	 * @type { Date }

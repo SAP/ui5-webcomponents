@@ -21,6 +21,7 @@ import panelCss from "./generated/themes/Panel.css.js";
  */
 const metadata = {
 	tag: "ui5-panel",
+	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.Panel.prototype */ {
 
 		/**

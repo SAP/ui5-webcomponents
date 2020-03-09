@@ -42,9 +42,9 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether the <code>ui5-textarea</code> is readonly.
+		 * Defines whether the <code>ui5-textarea</code> is read-only.
 		 * <br><br>
-		 * <b>Note:</b> A readonly <code>ui5-textarea</code> is not editable,
+		 * <b>Note:</b> A read-only <code>ui5-textarea</code> is not editable,
 		 * but still provides visual feedback upon user interaction.
 		 *
 		 * @type {boolean}

@@ -15,6 +15,7 @@ import SegmentedButtonCss from "./generated/themes/SegmentedButton.css.js";
 const metadata = {
 	tag: "ui5-segmentedbutton",
 	properties: /** @lends sap.ui.webcomponents.main.SegmentedButton.prototype */  {},
+	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.SegmentedButton.prototype */ {
 
 		/**
@@ -54,7 +55,7 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * The <code>SegmentedButton</code> shows a group of buttons. When the user clicks or taps
+ * The <code>ui5-segmentedbutton</code> shows a group of buttons. When the user clicks or taps
  * one of the buttons, it stays in a pressed state. It automatically resizes the buttons
  * to fit proportionally within the component. When no width is set, the component uses the available width.
  * <br><br>
@@ -96,16 +97,16 @@ class SegmentedButton extends UI5Element {
 		this.absoluteWidthSet = false; // set to true whenever we set absolute width to the component
 		this.percentageWidthSet = false; //  set to true whenever we set 100% width to the component
 		this.hasPreviouslyFocusedItem = false;
+
+		this._handleResizeBound = this._handleResize.bind(this);
 	}
 
 	onEnterDOM() {
-		this._handleResizeBound = this._handleResize.bind(this);
-
-		ResizeHandler.register(document.body, this._handleResizeBound);
+		ResizeHandler.register(this.parentNode, this._handleResizeBound);
 	}
 
 	onExitDOM() {
-		ResizeHandler.deregister(document.body, this._handleResizeBound);
+		ResizeHandler.deregister(this.parentNode, this._handleResizeBound);
 	}
 
 	onBeforeRendering() {
