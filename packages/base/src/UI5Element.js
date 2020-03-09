@@ -94,7 +94,6 @@ class UI5Element extends HTMLElement {
 	 */
 	async connectedCallback() {
 		const needsShadowDOM = this.constructor._needsShadowDOM();
-		const needsStaticArea = this.constructor._needsStaticArea();
 		const slotsAreManaged = this.constructor.getMetadata().slotsAreManaged();
 
 		// Render the Shadow DOM
