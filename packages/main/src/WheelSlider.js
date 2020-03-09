@@ -10,7 +10,7 @@ import {
 } from "../../base/src/events/PseudoEvents.js";
 
 // Styles
-import WheelSliderCss from "./generated/themes/WheelSliderCss.css.js";
+import WheelSliderCss from "./generated/themes/WheelSlider.css.js";
 
 /**
  * @private

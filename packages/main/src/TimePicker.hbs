@@ -37,7 +37,7 @@
 				label = "{{hoursSliderTitle}}"
 				._items="{{hoursArray}}"
 				@click="{{handleSliderClicked}}"
-				class="ui5-timepicker-slider ui5-timepicker-hours-slider"
+				class="ui5-timepicker-wheelslider ui5-timepicker-hours-wheelslider"
 			></ui5-wheelslider>
 		{{/if}}
 		{{#if shouldBuildMinutesSlider}}
@@ -45,7 +45,7 @@
 				label = "{{minutesSliderTitle}}"
 				._items="{{minutesArray}}"
 				@click="{{handleSliderClicked}}"
-				class="ui5-timepicker-slider ui5-timepicker-minutes-slider"
+				class="ui5-timepicker-wheelslider ui5-timepicker-minutes-wheelslider"
 			></ui5-wheelslider>
 		{{/if}}
 		{{#if shouldBuildSecondsSlider}}
@@ -53,7 +53,7 @@
 				label = "{{secondsSliderTitle}}"
 				._items="{{secondsArray}}"
 				@click="{{handleSliderClicked}}"
-				class="ui5-timepicker-slider ui5-timepicker-seconds-slider"
+				class="ui5-timepicker-wheelslider ui5-timepicker-seconds-wheelslider"
 			></ui5-wheelslider>
 		{{/if}}
 		{{#if shouldBuildPeriodsSlider}}
@@ -62,7 +62,7 @@
 				value="AM"
 				._items="{{periodsArray}}"
 				@click="{{handleSliderClicked}}"
-				class="ui5-timepicker-slider ui5-timepicker-period-slider"
+				class="ui5-timepicker-wheelslider ui5-timepicker-period-wheelslider"
 			></ui5-wheelslider>
 		{{/if}}
 	</div>

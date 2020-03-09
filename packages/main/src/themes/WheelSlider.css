@@ -1,4 +1,4 @@
-.ui5-wheelslider {
+.ui5-wheelslider-root {
 	overflow: hidden;
 	height: 100%;
 	vertical-align: middle;
@@ -9,18 +9,18 @@
 	flex-direction: column;
 	display: inline-flex;
 }
-.ui5-wheelslider .ui5-wheelslider-label {
+.ui5-wheelslider-root .ui5-wheelslider-label {
 	box-sizing: border-box;
 	height: 2rem;
 	line-height: 2rem;
-	width: var(--_ui5_slider_item_width);
-	font-size: var(--_ui5_slider_label_text_size);
-	color: var(--_ui5_slider_label_text_color);
+	width: var(--_ui5_wheelslider_item_width);
+	font-size: var(--_ui5_wheelslider_label_text_size);
+	color: var(--_ui5_wheelslider_label_text_color);
 	text-align: center;
 	vertical-align: middle;
 }
 
-.ui5-wheelslider .ui5-wheelslider-arrow {
+.ui5-wheelslider-root .ui5-wheelslider-arrow {
 	visibility: hidden;
 	box-sizing: border-box;
 	height: 1.5rem;
@@ -28,7 +28,7 @@
 	outline: none
 }
 
-.ui5-wheelslider[expanded] .ui5-wheelslider-arrow {
+.ui5-wheelslider-root[expanded] .ui5-wheelslider-arrow {
 	visibility: visible;
 	box-sizing: border-box;
 	width: 100%;
@@ -36,7 +36,7 @@
 	cursor: pointer;
 }
 
-.ui5-wheelslider .ui5-wheelslider-inner {
+.ui5-wheelslider-root .ui5-wheelslider-inner {
 	overflow: hidden;
 	height: 100%;
 	box-sizing: border-box;
@@ -45,62 +45,62 @@
 	margin-top: 0rem;
 }
 
-.ui5-wheelslider[expanded] .ui5-wheelslider-inner {
+.ui5-wheelslider-root[expanded] .ui5-wheelslider-inner {
 	margin-top: 0;
 }
 
-.ui5-wheelslider .ui5-wheelslider-inner .ui5-wheelslider-item {
-	height: var(--_ui5_slider_item_height);
-	line-height: var(--_ui5_slider_item_height);
-	width: var(--_ui5_slider_item_width);
+.ui5-wheelslider-root .ui5-wheelslider-inner .ui5-wheelslider-item {
+	height: var(--_ui5_wheelslider_item_height);
+	line-height: var(--_ui5_wheelslider_item_height);
+	width: var(--_ui5_wheelslider_item_width);
 	box-sizing: border-box;
-	background: var(--_ui5_slider_selected_item_background_color);
-	border: 0.625px solid var(--_ui5_slider_item_border_color);
-	font-size: var(--_ui5_slider_item_text_size);
-	color: var(--_ui5_slider_collapsed_item_text_color);
+	background: var(--_ui5_wheelslider_selected_item_background_color);
+	border: 0.625px solid var(--_ui5_wheelslider_item_border_color);
+	font-size: var(--_ui5_wheelslider_item_text_size);
+	color: var(--_ui5_wheelslider_collapsed_item_text_color);
 	text-align: center;
-	border-radius: var(--_ui_slider_item_border_radius);
+	border-radius: var(--_ui_wheelslider_item_border_radius);
 	cursor: pointer;
 }
-.ui5-wheelslider .ui5-wheelslider-inner .ui5-wheelslider-item:hover {
-	background: var(--_ui5_slider_selected_item_hover_background_color);
+.ui5-wheelslider-root .ui5-wheelslider-inner .ui5-wheelslider-item:hover {
+	background: var(--_ui5_wheelslider_selected_item_hover_background_color);
 }
 
-.ui5-wheelslider .ui5-wheelslider-inner .ui5-wheelslider-item:focus {
+.ui5-wheelslider-root .ui5-wheelslider-inner .ui5-wheelslider-item:focus {
 	outline: 1px dotted black;
 	outline-offset: -3px;
 }
-.ui5-wheelslider .ui5-wheelslider-inner .ui5-wheelslider-selection-frame {
-	width: var(--_ui5_slider_item_width);
-	height: var(--_ui5_slider_item_height);
+.ui5-wheelslider-root .ui5-wheelslider-inner .ui5-wheelslider-selection-frame {
+	width: var(--_ui5_wheelslider_item_width);
+	height: var(--_ui5_wheelslider_item_height);
 	position: absolute;
 	box-sizing: border-box;
 	visibility: hidden;
 	z-index: 1;
 }
-.ui5-wheelslider .ui5-wheelslider-inner .ui5-wheelslider-wrapper > ul {
+.ui5-wheelslider-root .ui5-wheelslider-inner .ui5-wheelslider-wrapper > ul {
 	transition: all 400ms;
 	margin: 0;
 	padding: 0;
 	position: absolute;
-	top: var(--_ui5_slider_selection_frame_margin_top);
+	top: var(--_ui5_wheelslider_selection_frame_margin_top);
 	cursor: pointer;
 	list-style-type: none;
 }
 
-.ui5-wheelslider[expanded] .ui5-wheelslider-inner .ui5-wheelslider-wrapper > ul {
+.ui5-wheelslider-root[expanded] .ui5-wheelslider-inner .ui5-wheelslider-wrapper > ul {
 	list-style-type: none;
 	top: 0;
 }
 
-.ui5-wheelslider .ui5-wheelslider-inner .ui5-wheelslider-wrapper {
-	height: var(--_ui5_slider_height);
+.ui5-wheelslider-root .ui5-wheelslider-inner .ui5-wheelslider-wrapper {
+	height: var(--_ui5_wheelslider_height);
 	position: relative;
 	overflow: hidden;
 	outline: none;
 }
 
-.ui5-wheelslider[expanded] {
+.ui5-wheelslider-root[expanded] {
 	height: 100%;
 	cursor: default;
 	margin: 0;
@@ -109,54 +109,54 @@
 	display: inline-flex;
 }
 
-.ui5-wheelslider[expanded] .ui5-wheelslider-label {
+.ui5-wheelslider-root[expanded] .ui5-wheelslider-label {
 	display: block;
 }
 
-.ui5-wheelslider .ui5-wheelslider-inner {
+.ui5-wheelslider-root .ui5-wheelslider-inner {
 	max-height: 100%;
-	height: var(--_ui5_slider_height);
+	height: var(--_ui5_wheelslider_height);
 }
 
-.ui5-wheelslider[expanded] .ui5-wheelslider-inner .ui5-wheelslider-item {
-	background: var(--_ui5_slider_item_background_color);
-	color: var(--_ui5_slider_item_text_color);
-	border: 1px solid var(--_ui5_slider_item_border_color);
-	border-radius: var(--_ui_slider_item_border_radius);
+.ui5-wheelslider-root[expanded] .ui5-wheelslider-inner .ui5-wheelslider-item {
+	background: var(--_ui5_wheelslider_item_background_color);
+	color: var(--_ui5_wheelslider_item_text_color);
+	border: 1px solid var(--_ui5_wheelslider_item_border_color);
+	border-radius: var(--_ui_wheelslider_item_border_radius);
 	offset-position: auto;
 	cursor: pointer;
 }
 
-.ui5-wheelslider[expanded] .ui5-wheelslider-inner .ui5-wheelslider-item:hover {
-	background: var(--_ui_slider_item_hover_color);
+.ui5-wheelslider-root[expanded] .ui5-wheelslider-inner .ui5-wheelslider-item:hover {
+	background: var(--_ui_wheelslider_item_hover_color);
 }
 
-.ui5-wheelslider[expanded] .ui5-wheelslider-inner .ui5-wheelslider-item:active {
-	background: var(--_ui5_slider_active_item_background_color);
-	color: var(--_ui5_slider_active_item_text_color);
+.ui5-wheelslider-root[expanded] .ui5-wheelslider-inner .ui5-wheelslider-item:active {
+	background: var(--_ui5_wheelslider_active_item_background_color);
+	color: var(--_ui5_wheelslider_active_item_text_color);
 }
 
-.ui5-wheelslider[expanded] .ui5-wheelslider-inner .ui5-wheelslider-item:focus {
+.ui5-wheelslider-root[expanded] .ui5-wheelslider-inner .ui5-wheelslider-item:focus {
 	outline: 1px dotted black;
 	outline-offset: -3px;
 }
 
-.ui5-wheelslider[expanded] .ui5-wheelslider-inner .ui5-wheelslider-selection-frame {
+.ui5-wheelslider-root[expanded] .ui5-wheelslider-inner .ui5-wheelslider-selection-frame {
 	visibility: visible;
-	-webkit-box-shadow: inset 0px 0px 0px 2px var(--_ui5_slider_selection_frame_color);
-	-moz-box-shadow: inset 0px 0px 0px 2px var(--_ui5_slider_selection_frame_color);
-	box-shadow: inset 0px 0px 0px 2px var(--_ui5_slider_selection_frame_color);
-	border-radius: var(--_ui_slider_item_border_radius);
-	margin-top: var(--_ui5_slider_selection_frame_margin_top);
+	-webkit-box-shadow: inset 0px 0px 0px 2px var(--_ui5_wheelslider_selection_frame_color);
+	-moz-box-shadow: inset 0px 0px 0px 2px var(--_ui5_wheelslider_selection_frame_color);
+	box-shadow: inset 0px 0px 0px 2px var(--_ui5_wheelslider_selection_frame_color);
+	border-radius: var(--_ui_wheelslider_item_border_radius);
+	margin-top: var(--_ui5_wheelslider_selection_frame_margin_top);
 }
 
-.ui5-wheelslider[expanded] .ui5-wheelslider-inner .ui5-wheelslider-selection-frame:hover + ul > li.ui5-wheelslider-item.ui5-wheelslider-itemSelected {
-	background: var(--_ui5_slider_selected_item_background_color);
+.ui5-wheelslider-root[expanded] .ui5-wheelslider-inner .ui5-wheelslider-selection-frame:hover + ul > li.ui5-wheelslider-item.ui5-wheelslider-itemSelected {
+	background: var(--_ui5_wheelslider_selected_item_background_color);
 }
-.ui5-wheelslider[expanded] .ui5-wheelslider-inner .ui5-wheelslider-selection-frame:active + ul > li.ui5-wheelslider-item.ui5-wheelslider-itemSelected {
-	background: var(--_ui5_slider_selected_item_background_color); 
+.ui5-wheelslider-root[expanded] .ui5-wheelslider-inner .ui5-wheelslider-selection-frame:active + ul > li.ui5-wheelslider-item.ui5-wheelslider-itemSelected {
+	background: var(--_ui5_wheelslider_selected_item_background_color); 
 	color: lightgray;
 }
-.ui5-wheelslider:focus {
+.ui5-wheelslider-root:focus {
 	outline: none;
 }
