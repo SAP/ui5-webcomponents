@@ -66,6 +66,7 @@
 	top: -.5rem;
 	position: relative;
 	color: inherit;
+	flex-shrink: 0;
 }
 
 :host([icon-end]) .ui5-button-root {

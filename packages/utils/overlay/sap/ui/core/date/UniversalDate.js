@@ -2,27 +2,26 @@
  * ${copyright}
  */
 
-/* global Map */
-
 // Provides class sap.ui.core.date.UniversalDate
-sap.ui.define(['sap/ui/base/Object', 'sap/ui/core/LocaleData', 'sap/ui/core/date/CalendarClassRegistry'],
-	function(BaseObject, LocaleData, CalendarClassRegistry) {
+sap.ui.define(['sap/ui/base/Object', 'sap/ui/core/LocaleData', './_Calendars'],
+	function(BaseObject, LocaleData, _Calendars) {
 	"use strict";
 
 
 	/**
-	 * Constructor for UniversalDate
+	 * Constructor for UniversalDate.
 	 *
 	 * @class
-	 * The Date is the base class of calendar date instances. It contains the static methods to create calendar
+	 * The UniversalDate is the base class of calendar date instances. It contains the static methods to create calendar
 	 * specific instances.
 	 *
-	 * The member variable this.oData contains the JS Date object, which is the source value of the date information.
+	 * The member variable <code>this.oData</code> contains the JS Date object, which is the source value of the date information.
 	 * The prototype is containing getters and setters of the JS Date and is delegating them to the internal date object.
 	 * Implementations for specific calendars may override methods needed for their specific calendar (e.g. getYear
-	 * and getEra for japanese emperor calendar);
+	 * and getEra for Japanese emperor calendar);
 	 *
 	 * @private
+	 * @ui5-restricted
 	 * @alias sap.ui.core.date.UniversalDate
 	 */
 	var UniversalDate = BaseObject.extend("sap.ui.core.date.UniversalDate", /** @lends sap.ui.core.date.UniversalDate.prototype */ {
@@ -89,14 +88,7 @@ sap.ui.define(['sap/ui/base/Object', 'sap/ui/core/LocaleData', 'sap/ui/core/date
 		if (!sCalendarType) {
 			sCalendarType = sap.ui.getCore().getConfiguration().getCalendarType();
 		}
-		var Klass = CalendarClassRegistry.getCalendarClass(sCalendarType);
-		if (!Klass) {
-			if (!sap || !sap.ui || !sap.ui.requireSync) {
-				throw new Error("Calendar type [" + sCalendarType + "] is not imported");
-			}
-			Klass = sap.ui.requireSync("sap/ui/core/date/" + sCalendarType);
-		}
-		return Klass;
+		return _Calendars.get(sCalendarType);
 	};
 
 	/*
@@ -203,7 +195,7 @@ sap.ui.define(['sap/ui/base/Object', 'sap/ui/core/LocaleData', 'sap/ui/core/date
 	var iMillisecondsInWeek = 7 * 24 * 60 * 60 * 1000;
 
 	UniversalDate.getWeekByDate = function(sCalendarType, iYear, iMonth, iDay) {
-		var oLocale = sap.ui.getCore().getFormatSettings().getFormatLocale(),
+		var oLocale = sap.ui.getCore().getConfiguration().getFormatSettings().getFormatLocale(),
 			clDate = this.getClass(sCalendarType),
 			oFirstDay = getFirstDayOfFirstWeek(clDate, iYear),
 			oDate = new clDate(clDate.UTC(iYear, iMonth, iDay)),
@@ -234,12 +226,12 @@ sap.ui.define(['sap/ui/base/Object', 'sap/ui/core/LocaleData', 'sap/ui/core/date
 	};
 
 	UniversalDate.getFirstDateOfWeek = function(sCalendarType, iYear, iWeek) {
-		var oLocale = sap.ui.getCore().getFormatSettings().getFormatLocale(),
+		var oLocale = sap.ui.getCore().getConfiguration().getFormatSettings().getFormatLocale(),
 			clDate = this.getClass(sCalendarType),
 			oFirstDay = getFirstDayOfFirstWeek(clDate, iYear),
 			oDate = new clDate(oFirstDay.valueOf() + iWeek * iMillisecondsInWeek);
 		//If first day of week is in last year and region is US, return the
-		//1st of January instead for symmetric behavior
+		//1st of January instead for symmetric behaviour
 		if (oLocale.getRegion() === "US" && iWeek === 0 && oFirstDay.getUTCFullYear() < iYear) {
 			return {
 				year: iYear,
@@ -255,10 +247,10 @@ sap.ui.define(['sap/ui/base/Object', 'sap/ui/core/LocaleData', 'sap/ui/core/date
 	};
 
 	function getFirstDayOfFirstWeek(clDate, iYear) {
-		var oLocale = sap.ui.getCore().getFormatSettings().getFormatLocale(),
+		var oLocale = sap.ui.getCore().getConfiguration().getFormatSettings().getFormatLocale(),
 			oLocaleData = LocaleData.getInstance(oLocale),
 			iMinDays = oLocaleData.getMinimalDaysInFirstWeek(),
-			iFirstDayOfWeek = sap.ui.getConfiguration().getFirstDateOfWeek() || oLocaleData.getFirstDayOfWeek(),
+			iFirstDayOfWeek = oLocaleData.getFirstDayOfWeek(),
 			oFirstDay = new clDate(clDate.UTC(iYear, 0, 1)),
 			iDayCount = 7;
 		// Find the first day of the first week of the year
@@ -314,7 +306,7 @@ sap.ui.define(['sap/ui/base/Object', 'sap/ui/core/LocaleData', 'sap/ui/core/date
 	};
 
 	function getEras(sCalendarType) {
-		var oLocale = sap.ui.getCore().getFormatSettings().getFormatLocale(),
+		var oLocale = sap.ui.getCore().getConfiguration().getFormatSettings().getFormatLocale(),
 			oLocaleData = LocaleData.getInstance(oLocale),
 			aEras = mEras[sCalendarType];
 		if (!aEras) {

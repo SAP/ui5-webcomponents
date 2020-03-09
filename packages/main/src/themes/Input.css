@@ -163,6 +163,12 @@
 :host([value-state="Success"]:not([readonly])) {
 	background-color: var(--sapField_SuccessBackground);
 	border-color: var(--sapField_SuccessColor);
+	border-width: 1px;
+}
+
+:host([value-state="Information"]:not([readonly])) {
+	background-color: var(--sapField_InformationBackground);
+	border-color: var(--sapField_InformationColor);
 }
 
 /* Remove IE's defaut clear button */
