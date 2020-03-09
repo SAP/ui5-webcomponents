@@ -13,9 +13,9 @@ describe("TimePicker general interaction", () => {
 
 	it("Check sliders value", () => {
 		browser.$("#timepicker").setProperty("value","11:12:13");
-		const hoursSliderValue = browser.$("#timepicker").shadow$$(".ui5-timepicker-popover")[0].$(".ui5-timepicker-hours-slider").getValue();
-		const minutesSliderValue = browser.$("#timepicker").shadow$$(".ui5-timepicker-popover")[0].$(".ui5-timepicker-minutes-slider").getValue();
-		const secondsSliderValue = browser.$("#timepicker").shadow$$(".ui5-timepicker-popover")[0].$(".ui5-timepicker-seconds-slider").getValue();
+		const hoursSliderValue = browser.$("#timepicker").shadow$$(".ui5-timepicker-popover")[0].$(".ui5-timepicker-hours-wheelslider").getValue();
+		const minutesSliderValue = browser.$("#timepicker").shadow$$(".ui5-timepicker-popover")[0].$(".ui5-timepicker-minutes-wheelslider").getValue();
+		const secondsSliderValue = browser.$("#timepicker").shadow$$(".ui5-timepicker-popover")[0].$(".ui5-timepicker-seconds-wheelslider").getValue();
 		
 		assert.strictEqual(hoursSliderValue, "11", "Hours are equal");
 		assert.strictEqual(minutesSliderValue, "12", "Minutes are equal");
@@ -23,9 +23,9 @@ describe("TimePicker general interaction", () => {
 	});
 
 	it("Sliders submit value", () => {
-		browser.$("#timepicker").shadow$$(".ui5-timepicker-popover")[0].$(".ui5-timepicker-hours-slider").setProperty("value","14");
-		browser.$("#timepicker").shadow$$(".ui5-timepicker-popover")[0].$(".ui5-timepicker-minutes-slider").setProperty("value","15");
-		browser.$("#timepicker").shadow$$(".ui5-timepicker-popover")[0].$(".ui5-timepicker-seconds-slider").setProperty("value","16");
+		browser.$("#timepicker").shadow$$(".ui5-timepicker-popover")[0].$(".ui5-timepicker-hours-wheelslider").setProperty("value","14");
+		browser.$("#timepicker").shadow$$(".ui5-timepicker-popover")[0].$(".ui5-timepicker-minutes-wheelslider").setProperty("value","15");
+		browser.$("#timepicker").shadow$$(".ui5-timepicker-popover")[0].$(".ui5-timepicker-seconds-wheelslider").setProperty("value","16");
 
 		browser.$("#timepicker").shadow$$(".ui5-timepicker-popover")[0].setProperty("opened",true);
 		browser.$("#timepicker").shadow$$(".ui5-timepicker-popover")[0].$("#submit").click();

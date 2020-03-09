@@ -33,37 +33,37 @@
 	>
 	<div class="ui5-timepicker-sliders-container" @keydown={{_oncontainerkeydown}} tabindex="0" @focusin="{{_onfocuscontainerin}}">
 		{{#if shouldBuildHoursSlider}}
-			<ui5-slider 
+			<ui5-wheelslider 
 				label = "{{hoursSliderTitle}}"
 				._items="{{hoursArray}}"
 				@click="{{handleSliderClicked}}"
 				class="ui5-timepicker-slider ui5-timepicker-hours-slider"
-			></ui5-slider>
+			></ui5-wheelslider>
 		{{/if}}
 		{{#if shouldBuildMinutesSlider}}
-			<ui5-slider 
+			<ui5-wheelslider 
 				label = "{{minutesSliderTitle}}"
 				._items="{{minutesArray}}"
 				@click="{{handleSliderClicked}}"
 				class="ui5-timepicker-slider ui5-timepicker-minutes-slider"
-			></ui5-slider>
+			></ui5-wheelslider>
 		{{/if}}
 		{{#if shouldBuildSecondsSlider}}
-			<ui5-slider 
+			<ui5-wheelslider 
 				label = "{{secondsSliderTitle}}"
 				._items="{{secondsArray}}"
 				@click="{{handleSliderClicked}}"
 				class="ui5-timepicker-slider ui5-timepicker-seconds-slider"
-			></ui5-slider>
+			></ui5-wheelslider>
 		{{/if}}
 		{{#if shouldBuildPeriodsSlider}}
-			<ui5-slider 
+			<ui5-wheelslider 
 				label = "{{periodSliderTitle}}"
 				value="AM"
 				._items="{{periodsArray}}"
 				@click="{{handleSliderClicked}}"
 				class="ui5-timepicker-slider ui5-timepicker-period-slider"
-			></ui5-slider>
+			></ui5-wheelslider>
 		{{/if}}
 	</div>
 		<div slot="footer" class="ui5-timepicker-footer">

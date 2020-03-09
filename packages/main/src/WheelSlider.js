@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import SliderTemplate from "./generated/templates/SliderTemplate.lit.js";
+import WheelSliderTemplate from "./generated/templates/WheelSliderTemplate.lit.js";
 import Button from "./Button.js";
 import {
 	isDown,
@@ -10,18 +10,18 @@ import {
 } from "../../base/src/events/PseudoEvents.js";
 
 // Styles
-import SliderCss from "./generated/themes/Slider.css.js";
+import WheelSliderCss from "./generated/themes/WheelSliderCss.css.js";
 
 /**
  * @private
  */
 const metadata = {
-	tag: "ui5-slider",
-	properties: /** @lends sap.ui.webcomponents.main.Slider.prototype */ {
+	tag: "ui5-wheelslider",
+	properties: /** @lends sap.ui.webcomponents.main.WheelSlider.prototype */ {
 		/**
-		 * Defines whether the <code>ui5-slider</code> is disabled
+		 * Defines whether the <code>ui5-wheelslider</code> is disabled
 		 * (default is set to <code>false</code>).
-		 * A disabled <code>ui5-slider</code> can't be pressed or
+		 * A disabled <code>ui5-wheelslider</code> can't be pressed or
 		 * focused, and it is not in the tab chain.
 		 *
 		 * @type {boolean}
@@ -43,7 +43,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the label of the slider.
+		 * Defines the label of the wheelslider.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
@@ -54,7 +54,7 @@ const metadata = {
 		},
 
 		/**
-		 * Indicates if the slider is expanded.
+		 * Indicates if the wheelslider is expanded.
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @private
@@ -67,17 +67,17 @@ const metadata = {
 			type: Object,
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.main.Slider.prototype */ {
+	slots: /** @lends sap.ui.webcomponents.main.WheelSlider.prototype */ {
 
 	},
-	events: /** @lends sap.ui.webcomponents.main.Slider.prototype */ {
+	events: /** @lends sap.ui.webcomponents.main.WheelSlider.prototype */ {
 		/**
-		 * Fires when the slider is expanded.
+		 * Fires when the wheel slider is expanded.
 		 */
 		expand: {},
 
 		/**
-		 * Fires when the slider is collapsed.
+		 * Fires when the wheel slider is collapsed.
 		 */
 		collapse: {},
 
@@ -100,19 +100,19 @@ const metadata = {
  *
  * <h3>Usage</h3>
  *
- * For the <code>ui5-slider</code>
+ * For the <code>ui5-wheelslider</code>
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents/dist/Slider.js";</code>
+ * <code>import @ui5/webcomponents/dist/WheelSlider.js";</code>
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.Slider
+ * @alias sap.ui.webcomponents.main.WheelSlider
  * @extends UI5Element
- * @tagname ui5-slider
+ * @tagname ui5-wheelslider
  * @public
  */
-class Slider extends UI5Element {
+class WheelSlider extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
@@ -122,11 +122,11 @@ class Slider extends UI5Element {
 	}
 
 	static get styles() {
-		return SliderCss;
+		return WheelSliderCss;
 	}
 
 	static get template() {
-		return SliderTemplate;
+		return WheelSliderTemplate;
 	}
 
 	constructor() {
@@ -140,7 +140,7 @@ class Slider extends UI5Element {
 	}
 
 	_updateItemCellHeight() {
-		this._itemCellHeight = this.shadowRoot.querySelectorAll(".ui5-slider-item").length && Number(getComputedStyle(this.shadowRoot.querySelector(".ui5-slider-item")).getPropertyValue("--_ui5_slider_item_height").replace("rem", ""));
+		this._itemCellHeight = this.shadowRoot.querySelectorAll(".ui5-wheelslider-item").length && Number(getComputedStyle(this.shadowRoot.querySelector(".ui5-wheelslider-item")).getPropertyValue("--_ui5_wheelslider_item_height").replace("rem", ""));
 	}
 
 	static async onDefine() {
@@ -149,7 +149,7 @@ class Slider extends UI5Element {
 
 	onAfterRendering() {
 		if (this._expanded) {
-			const elements = this.shadowRoot.querySelectorAll(".ui5-slider-item");
+			const elements = this.shadowRoot.querySelectorAll(".ui5-wheelslider-item");
 			for (let i = 0; i < elements.length; i++) {
 				if (elements[i].textContent === this.value) {
 					this._selectElement(elements[i]);
@@ -187,7 +187,7 @@ class Slider extends UI5Element {
 	}
 
 	_onclick(e) {
-		if (!e.target.classList.contains("ui5-slider-item")) {
+		if (!e.target.classList.contains("ui5-wheelslider-item")) {
 			return;
 		}
 
@@ -267,6 +267,6 @@ class Slider extends UI5Element {
 	}
 }
 
-Slider.define();
+WheelSlider.define();
 
-export default Slider;
+export default WheelSlider;

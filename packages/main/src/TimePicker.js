@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getLocale } from "@ui5/webcomponents-base/dist/LocaleProvider.js";
+import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import DateFormat from "@ui5/webcomponents-utils/dist/sap/ui/core/format/DateFormat.js";
 import LocaleData from "@ui5/webcomponents-utils/dist/sap/ui/core/LocaleData.js";
@@ -288,10 +288,10 @@ class TimePicker extends UI5Element {
 
 	setSlidersValue() {
 		const currentDate = this._getInput() ? this.getFormat().parse(this._getInput().getAttribute("value")) : null,
-			secondsSlider = this.shadowRoot.querySelector(".ui5-timepicker-seconds-slider"),
-			minutesSlider = this.shadowRoot.querySelector(".ui5-timepicker-minutes-slider"),
-			hoursSlider = this.shadowRoot.querySelector(".ui5-timepicker-hours-slider"),
-			periodsSlider = this.shadowRoot.querySelector(".ui5-timepicker-period-slider");
+			secondsSlider = this.shadowRoot.querySelector(".ui5-timepicker-seconds-wheelslider"),
+			minutesSlider = this.shadowRoot.querySelector(".ui5-timepicker-minutes-wheelslider"),
+			hoursSlider = this.shadowRoot.querySelector(".ui5-timepicker-hours-wheelslider"),
+			periodsSlider = this.shadowRoot.querySelector(".ui5-timepicker-period-wheelslider");
 
 		if (currentDate) {
 			if (hoursSlider) {
@@ -408,10 +408,10 @@ class TimePicker extends UI5Element {
 
 	submitPickers() {
 		const selectedDate = new Date(),
-			secondsSlider = this.shadowRoot.querySelector(".ui5-timepicker-seconds-slider"),
-			minutesSlider = this.shadowRoot.querySelector(".ui5-timepicker-minutes-slider"),
-			hoursSlider = this.shadowRoot.querySelector(".ui5-timepicker-hours-slider"),
-			periodsSlider = this.shadowRoot.querySelector(".ui5-timepicker-period-slider"),
+			secondsSlider = this.shadowRoot.querySelector(".ui5-timepicker-seconds-wheelslider"),
+			minutesSlider = this.shadowRoot.querySelector(".ui5-timepicker-minutes-wheelslider"),
+			hoursSlider = this.shadowRoot.querySelector(".ui5-timepicker-hours-wheelslider"),
+			periodsSlider = this.shadowRoot.querySelector(".ui5-timepicker-period-wheelslider"),
 			hours = hoursSlider ? hoursSlider.getAttribute("value") : this._hoursParameters.minHour.toString(),
 			minutes = minutesSlider ? minutesSlider.getAttribute("value") : "0",
 			seconds = secondsSlider ? secondsSlider.getAttribute("value") : "0",
