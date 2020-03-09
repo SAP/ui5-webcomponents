@@ -89,8 +89,9 @@ class Suggestions {
 		this._respPopover.open(this._getComponent());
 	}
 
-	close() {
-		this._respPopover.close();
+	async close() {
+		this.responsivePopover = await this._respPopover();
+		this.responsivePopover.close();
 	}
 
 	updateSelectedItemPosition(pos) {
@@ -269,8 +270,9 @@ class Suggestions {
 		return this._getComponent().getSlottedNodes(this.slotName);
 	}
 
-	get _respPopover() {
-		return this._getComponent().getStaticAreaItemDomRef().querySelector("ui5-responsive-popover");
+	async _respPopover() {
+		const staticAreaItem = await this._getComponent().getStaticAreaItemDomRef();
+		return staticAreaItem.querySelector("ui5-responsive-popover");
 	}
 }
 
