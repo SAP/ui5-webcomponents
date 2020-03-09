@@ -1,5 +1,5 @@
-commit c9253a6e7eaf768cceed1ff7188ab52b5c70d9eb
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Mon Mar 9 10:04:48 2020 +0200
+commit 1ed78f3fe9e0d5de3de8658325ee0a52cbae43ce
+Author: Marcus Notheis <MarcusNotheis@users.noreply.github.com>
+Date:   Mon Mar 9 14:14:45 2020 +0100
 
-    feat(framework): create getLocaleData API (#1269)
+    chore: Remove api.json from npmignore files (#1270)
