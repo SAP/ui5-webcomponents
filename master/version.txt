@@ -1,5 +1,5 @@
-commit e4c1dba17d48b46d748eb5dbaad21cd2d20ff675
+commit c9253a6e7eaf768cceed1ff7188ab52b5c70d9eb
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Mar 6 16:08:24 2020 +0200
+Date:   Mon Mar 9 10:04:48 2020 +0200
 
-    chore(ui5-button): button part exposed (#1268)
+    feat(framework): create getLocaleData API (#1269)
