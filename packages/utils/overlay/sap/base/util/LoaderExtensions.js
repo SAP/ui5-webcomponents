@@ -2,7 +2,7 @@ sap.ui.define([], function () {
     // used by LocaleData
     return {
         loadResource: function (name) {
-            return sap.ui.loader._.getModuleContent(name);
+            return window.sap.ui._UI5WebComponents.LocaleDataRegistry.getModuleContent(name);
         }
     }
 });

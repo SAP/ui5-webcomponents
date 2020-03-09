@@ -1,4 +1,4 @@
-import { registerModuleContent } from "../ResourceLoaderOverrides.js";
+import { registerModuleContent } from "../locale/LocaleDataRegistry.js";
 import { fetchJsonOnce } from "../util/FetchHelper.js";
 import { getFeature } from "../FeaturesRegistry.js";
 
