@@ -18,12 +18,6 @@ const registerModuleContent = (moduleName, content) => {
 	resources.set(moduleName, content);
 };
 
-// Create a global LocaleDataRegistry that can be used from the "utils" package stubs
-window.sap = window.sap || {};
-window.sap.ui = window.sap.ui || {};
-window.sap.ui._UI5WebComponents = window.sap.ui._UI5WebComponents || {};
-window.sap.ui._UI5WebComponents.LocaleDataRegistry = { getModuleContent };
-
 export {
 	getModuleContent,
 	registerModuleContent,

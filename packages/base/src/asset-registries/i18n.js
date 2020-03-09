@@ -1,4 +1,4 @@
-import "../shims/Core-shim.js";
+import "../Shims.js";
 import getLocale from "../locale/getLocale.js";
 import { fetchJsonOnce } from "../util/FetchHelper.js";
 import normalizeLocale from "../locale/normalizeLocale.js";
