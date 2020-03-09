@@ -1,6 +1,4 @@
 import UniversalDate from "@ui5/webcomponents-utils/dist/sap/ui/core/date/UniversalDate.js";
-import Locale from "@ui5/webcomponents-utils/dist/sap/ui/core/Locale.js";
-import LocaleData from "@ui5/webcomponents-utils/dist/sap/ui/core/LocaleData.js";
 import { getFirstDayOfWeek } from "../config/FormatSettings.js";
 
 const calculateWeekNumber = (oDate, iYear, oLocale, oLocaleData) => {
@@ -52,48 +50,4 @@ const calculateWeekNumber = (oDate, iYear, oLocale, oLocaleData) => {
 	return iWeekNum;
 };
 
-const getFirstDateOfWeek = oDate => {
-	const oUniversalDate = new UniversalDate(oDate.getTime()),
-		oLocaleData = LocaleData.getInstance(new Locale("en")),
-		confFirstDayOfWeek = getFirstDayOfWeek(),
-		iCLDRFirstWeekDay = Number.isInteger(confFirstDayOfWeek) ? confFirstDayOfWeek : oLocaleData.getFirstDayOfWeek();
-
-
-	const oWeek = UniversalDate.getWeekByDate(oUniversalDate.getCalendarType(), oUniversalDate.getUTCFullYear(),
-		oUniversalDate.getUTCMonth(), oUniversalDate.getUTCDate());
-
-	const oFirstDateOfWeek = UniversalDate.getFirstDateOfWeek(oUniversalDate.getCalendarType(), oWeek.year, oWeek.week);
-	const oFirstUniversalDateOfWeek = new UniversalDate(Date.UTC(oFirstDateOfWeek.year, oFirstDateOfWeek.month, oFirstDateOfWeek.day));
-
-	// In case the day of the computed weekFirstDate is not as in CLDR(e.g. en_US locales), make sure we align it
-	while (oFirstUniversalDateOfWeek.getUTCDay() !== iCLDRFirstWeekDay) {
-		oFirstUniversalDateOfWeek.setUTCDate(oFirstUniversalDateOfWeek.getUTCDate() - 1);
-	}
-
-	return new UniversalDate(Date.UTC(oFirstUniversalDateOfWeek.getUTCFullYear(), oFirstUniversalDateOfWeek.getUTCMonth(),
-		oFirstUniversalDateOfWeek.getUTCDate(), oDate.getUTCHours(), oDate.getUTCMinutes(), oDate.getUTCSeconds())).getJSDate();
-};
-
-const getFirstDateOfMonth = oDate => {
-	const oNewDate = new UniversalDate(oDate.getTime());
-	oNewDate.setUTCDate(1);
-
-	return oNewDate;
-};
-
-const monthsDiffer = (oDate1, oDate2) => {
-	return (oDate1.getMonth() !== oDate2.getMonth() || oDate1.getFullYear() !== oDate2.getFullYear());
-};
-
-const isDateLastInMonth = oDate => {
-	const oNextDay = new Date(oDate.getTime() + 24 * 60 * 60 * 1000);
-	return oNextDay.getUTCDate() < oDate.getUTCDate();
-};
-
-export {
-	calculateWeekNumber,
-	getFirstDateOfWeek,
-	getFirstDateOfMonth,
-	monthsDiffer,
-	isDateLastInMonth,
-};
+export default calculateWeekNumber;

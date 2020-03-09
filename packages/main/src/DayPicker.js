@@ -6,12 +6,12 @@ import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSet
 import DateFormat from "@ui5/webcomponents-utils/dist/sap/ui/core/format/DateFormat.js";
 import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import LocaleData from "@ui5/webcomponents-utils/dist/sap/ui/core/LocaleData.js";
 import CalendarDate from "@ui5/webcomponents-base/dist/dates/CalendarDate.js";
-import { calculateWeekNumber } from "@ui5/webcomponents-base/dist/dates/CalendarUtils.js";
-import CalendarType from "@ui5/webcomponents-base/dist/dates/CalendarType.js";
+import calculateWeekNumber from "@ui5/webcomponents-base/dist/dates/calculateWeekNumber.js";
+import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import ItemNavigationBehavior from "@ui5/webcomponents-base/dist/types/ItemNavigationBehavior.js";
 import DayPickerTemplate from "./generated/templates/DayPickerTemplate.lit.js";
 

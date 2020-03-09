@@ -12,7 +12,7 @@ import {
 	isLeft,
 	isUp,
 	isRight,
-} from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import Label from "./Label.js";
 import RadioButtonGroup from "./RadioButtonGroup.js";
 

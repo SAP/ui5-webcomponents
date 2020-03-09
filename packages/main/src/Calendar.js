@@ -7,7 +7,7 @@ import { getLocale } from "@ui5/webcomponents-base/dist/LocaleProvider.js";
 import DateFormat from "@ui5/webcomponents-utils/dist/sap/ui/core/format/DateFormat.js";
 import LocaleData from "@ui5/webcomponents-utils/dist/sap/ui/core/LocaleData.js";
 import CalendarDate from "@ui5/webcomponents-base/dist/dates/CalendarDate.js";
-import CalendarType from "@ui5/webcomponents-base/dist/dates/CalendarType.js";
+import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import CalendarHeader from "./CalendarHeader.js";
 import DayPicker from "./DayPicker.js";
