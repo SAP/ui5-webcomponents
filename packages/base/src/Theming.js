@@ -2,14 +2,7 @@ import { addCustomCSS, getCustomCSS } from "./theming/CustomStyle.js";
 import { getThemeProperties, getRegisteredPackages } from "./asset-registries/Themes.js";
 import { injectThemeProperties } from "./theming/StyleInjection.js";
 
-const themeChangeCallbacks = [];
 let externalThemePresent = false;
-
-const attachThemeChange = function attachThemeChange(callback) {
-	if (themeChangeCallbacks.indexOf(callback) === -1) {
-		themeChangeCallbacks.push(callback);
-	}
-};
 
 const _applyTheme = async theme => {
 	let cssText = "";
@@ -23,12 +16,6 @@ const _applyTheme = async theme => {
 		cssText = await getThemeProperties(packageName, theme);
 		injectThemeProperties(cssText, packageName);
 	});
-
-	_executeThemeChangeCallbacks(theme);
-};
-
-const _executeThemeChangeCallbacks = theme => {
-	themeChangeCallbacks.forEach(callback => callback(theme));
 };
 
 const getEffectiveStyle = ElementClass => {
@@ -47,7 +34,6 @@ const setExternalThemePresent = value => {
 };
 
 export {
-	attachThemeChange,
 	_applyTheme,
 	getEffectiveStyle,
 	addCustomCSS,
