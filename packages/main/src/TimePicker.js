@@ -10,6 +10,7 @@ import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import PopoverPlacementType from "./types/PopoverPlacementType.js";
 import TimePickerTemplate from "./generated/templates/TimePickerTemplate.lit.js";
+import TimePickerPopoverTemplate from "./generated/templates/TimePickerPopoverTemplate.lit.js"
 import {
 	TIMEPICKER_HOURS_LABEL,
 	TIMEPICKER_MINUTES_LABEL,
@@ -25,6 +26,7 @@ import {
 
 // Styles
 import TimePickerCss from "./generated/themes/TimePicker.css.js";
+import TimePickerPopoverCss from "./generated/themes/TimePickerPopover.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 
 /**
@@ -198,6 +200,10 @@ class TimePicker extends UI5Element {
 		return TimePickerCss;
 	}
 
+	static get staticAreaTemplate() {
+		return TimePickerPopoverTemplate;
+	}
+
 	static get template() {
 		return TimePickerTemplate;
 	}
@@ -211,7 +217,7 @@ class TimePicker extends UI5Element {
 	}
 
 	static get staticAreaStyles() {
-		return [ResponsivePopoverCommonCss];
+		return [TimePickerPopoverCss, ResponsivePopoverCommonCss];
 	}
 
 
@@ -254,17 +260,6 @@ class TimePicker extends UI5Element {
 		this._initHoursFormatParameters();
 	}
 
-	onAfterRendering() {
-		const slidersEnablementArray = this._getSlidersContained(this.formatPattern);
-		this._slidersDomRefs = this._getPopover().default.length ? [...this._getPopover().default[0].children].filter(x => x.isUI5Element) : this._getPopover().default;
-
-		for (let i = 0; i < this._slidersDomRefs.length; i++) {
-			this._slidersDomRefs[i].disabled = !slidersEnablementArray[i];
-		}
-
-		this.setSlidersValue();
-	}
-
 	_handleInputChange() {
 		let nextValue = this._getInput().getInputValue();
 		const isValid = this.isValid(nextValue);
@@ -288,10 +283,10 @@ class TimePicker extends UI5Element {
 
 	setSlidersValue() {
 		const currentDate = this._getInput() ? this.getFormat().parse(this._getInput().getAttribute("value")) : null,
-			secondsSlider = this.shadowRoot.querySelector(".ui5-timepicker-seconds-wheelslider"),
-			minutesSlider = this.shadowRoot.querySelector(".ui5-timepicker-minutes-wheelslider"),
-			hoursSlider = this.shadowRoot.querySelector(".ui5-timepicker-hours-wheelslider"),
-			periodsSlider = this.shadowRoot.querySelector(".ui5-timepicker-period-wheelslider");
+			secondsSlider = this.getStaticAreaItemDomRef().querySelector(".ui5-timepicker-seconds-wheelslider"),
+			minutesSlider = this.getStaticAreaItemDomRef().querySelector(".ui5-timepicker-minutes-wheelslider"),
+			hoursSlider = this.getStaticAreaItemDomRef().querySelector(".ui5-timepicker-hours-wheelslider"),
+			periodsSlider = this.getStaticAreaItemDomRef().querySelector(".ui5-timepicker-period-wheelslider");
 
 		if (currentDate) {
 			if (hoursSlider) {
@@ -339,6 +334,9 @@ class TimePicker extends UI5Element {
 	openPicker() {
 		this._getPopover().open(this);
 		this._isPickerOpen = true;
+		this._slidersDomRefs = this._getPopover().default.length ? [...this._getPopover().default[0].children].filter(x => x.isUI5Element) : this._getPopover().default;
+
+		this.setSlidersValue();
 	}
 
 	togglePicker() {
@@ -350,7 +348,7 @@ class TimePicker extends UI5Element {
 	}
 
 	/**
-	 * Checks if a value is valid against the current date format of the DatePicker
+	 * Checks if a value is valid against the current date format of the TimePicker
 	 * @param {string} value A value to be tested against the current date format
 	 * @public
 	 */
@@ -363,7 +361,7 @@ class TimePicker extends UI5Element {
 	}
 
 	_getPopover() {
-		return this.shadowRoot.querySelector("ui5-responsive-popover");
+		return this.getStaticAreaItemDomRef().querySelector("ui5-responsive-popover");
 	}
 
 	generateTimeItemsArray(x) {
@@ -408,10 +406,10 @@ class TimePicker extends UI5Element {
 
 	submitPickers() {
 		const selectedDate = new Date(),
-			secondsSlider = this.shadowRoot.querySelector(".ui5-timepicker-seconds-wheelslider"),
-			minutesSlider = this.shadowRoot.querySelector(".ui5-timepicker-minutes-wheelslider"),
-			hoursSlider = this.shadowRoot.querySelector(".ui5-timepicker-hours-wheelslider"),
-			periodsSlider = this.shadowRoot.querySelector(".ui5-timepicker-period-wheelslider"),
+			secondsSlider = this.getStaticAreaItemDomRef().querySelector(".ui5-timepicker-seconds-wheelslider"),
+			minutesSlider = this.getStaticAreaItemDomRef().querySelector(".ui5-timepicker-minutes-wheelslider"),
+			hoursSlider = this.getStaticAreaItemDomRef().querySelector(".ui5-timepicker-hours-wheelslider"),
+			periodsSlider = this.getStaticAreaItemDomRef().querySelector(".ui5-timepicker-period-wheelslider"),
 			hours = hoursSlider ? hoursSlider.getAttribute("value") : this._hoursParameters.minHour.toString(),
 			minutes = minutesSlider ? minutesSlider.getAttribute("value") : "0",
 			seconds = secondsSlider ? secondsSlider.getAttribute("value") : "0",
@@ -517,9 +515,9 @@ class TimePicker extends UI5Element {
 			}
 		}
 		if (isTabNext(e)) {
-			this.shadowRoot.querySelector(".ui5-timepicker-footer").firstElementChild.focus();
+			this.getStaticAreaItemDomRef().querySelector(".ui5-timepicker-footer").firstElementChild.focus();
 		} else if (isTabPrevious(e)) {
-			this.shadowRoot.querySelector(`#${this._id}-inner`).focus();
+			this.getStaticAreaItemDomRef().querySelector(`#${this._id}-inner`).focus();
 		}
 	}
 

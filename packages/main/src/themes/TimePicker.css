@@ -2,23 +2,6 @@
 	display: inline-block;
 }
 
-.ui5-timepicker-sliders-container {
-	display: flex;
-	justify-content: center;
-	align-items: stretch;
-}
-
-.ui5-timepicker-footer {
-	height: fit-content;
-	display: flex;
-	justify-content: flex-end;
-	width: 100%;
-}
-
-.ui5-timepicker-footer * {
-	margin: 1%;
-}
-
 .ui5-timepicker-input-icon-button:hover {
 	cursor: pointer;
 	background: var(--sapButton_Hover_Background);
