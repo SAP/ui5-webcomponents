@@ -35,9 +35,4 @@ const Core = {
 	getFormatSettings: () => FormatSettings,
 };
 
-// Create the global proprietary namespace
-window.sap = window.sap || {};
-window.sap.ui = window.sap.ui || {};
-window.sap.ui._UI5WebComponents = {
-	getCore: () => Core,
-};
+export default Core;
