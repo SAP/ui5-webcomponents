@@ -1,4 +1,3 @@
-import { getModuleContent } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
 import { getLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
 import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
 import getDesigntimePropertyAsArray from "@ui5/webcomponents-base/dist/util/getDesigntimePropertyAsArray.js";
@@ -41,5 +40,4 @@ window.sap = window.sap || {};
 window.sap.ui = window.sap.ui || {};
 window.sap.ui._UI5WebComponents = {
 	getCore: () => Core,
-	LocaleDataRegistry: { getModuleContent },
 };
