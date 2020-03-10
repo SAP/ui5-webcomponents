@@ -1,10 +1,8 @@
-import UniversalDate from "@ui5/webcomponents-utils/dist/sap/ui/core/date/UniversalDate.js";
-import { getFirstDayOfWeek } from "../config/FormatSettings.js";
+import UniversalDate from "../sap/ui/core/date/UniversalDate.js";
 
-const calculateWeekNumber = (oDate, iYear, oLocale, oLocaleData) => {
+const calculateWeekNumber = (confFirstDayOfWeek, oDate, iYear, oLocale, oLocaleData) => {
 	let iWeekNum = 0;
 	let iWeekDay = 0;
-	const confFirstDayOfWeek = getFirstDayOfWeek();
 	const iFirstDayOfWeek = Number.isInteger(confFirstDayOfWeek) ? confFirstDayOfWeek : oLocaleData.getFirstDayOfWeek();
 
 	// search Locale for containing "en-US", since sometimes

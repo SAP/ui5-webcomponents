@@ -8,7 +8,7 @@ import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import DateFormat from "@ui5/webcomponents-utils/dist/sap/ui/core/format/DateFormat.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
-import CalendarDate from "@ui5/webcomponents-base/dist/dates/CalendarDate.js";
+import CalendarDate from "@ui5/webcomponents-utils/dist/dates/CalendarDate.js";
 import YearPickerTemplate from "./generated/templates/YearPickerTemplate.lit.js";
 
 // Styles

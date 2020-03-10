@@ -1,4 +1,4 @@
-import merge from "@ui5/webcomponents-utils/dist/sap/base/util/merge.js";
+import merge from "./thirdparty/merge.js";
 import boot from "./boot.js";
 import UI5ElementMetadata from "./UI5ElementMetadata.js";
 import StaticAreaItem from "./StaticAreaItem.js";

@@ -9,8 +9,8 @@ import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import LocaleData from "@ui5/webcomponents-utils/dist/sap/ui/core/LocaleData.js";
-import CalendarDate from "@ui5/webcomponents-base/dist/dates/CalendarDate.js";
-import calculateWeekNumber from "@ui5/webcomponents-base/dist/dates/calculateWeekNumber.js";
+import CalendarDate from "@ui5/webcomponents-utils/dist/dates/CalendarDate.js";
+import calculateWeekNumber from "@ui5/webcomponents-utils/dist/dates/calculateWeekNumber.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import ItemNavigationBehavior from "@ui5/webcomponents-base/dist/types/ItemNavigationBehavior.js";
 import DayPickerTemplate from "./generated/templates/DayPickerTemplate.lit.js";
@@ -230,7 +230,7 @@ class DayPicker extends UI5Element {
 				classes: `ui5-dp-item ui5-dp-wday${weekday}`,
 			};
 
-			const weekNumber = calculateWeekNumber(oCalDate.toUTCJSDate(), oCalDate.getYear(), this._oLocale, this._oLocaleData);
+			const weekNumber = calculateWeekNumber(getFirstDayOfWeek(), oCalDate.toUTCJSDate(), oCalDate.getYear(), this._oLocale, this._oLocaleData);
 
 			if (lastWeekNumber !== weekNumber) {
 				this._weekNumbers.push(weekNumber);

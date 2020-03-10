@@ -1,4 +1,4 @@
-import CalendarType from "@ui5/webcomponents-utils/dist/sap/ui/core/CalendarType.js";
+import CalendarType from "../types/CalendarType.js";
 import { getCalendarType as getConfiguredCalendarType } from "../InitialConfiguration.js";
 
 let calendarType;

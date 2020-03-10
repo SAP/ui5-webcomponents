@@ -8,7 +8,7 @@ import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import LocaleData from "@ui5/webcomponents-utils/dist/sap/ui/core/LocaleData.js";
 import DateFormat from "@ui5/webcomponents-utils/dist/sap/ui/core/format/DateFormat.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
-import CalendarDate from "@ui5/webcomponents-base/dist/dates/CalendarDate.js";
+import CalendarDate from "@ui5/webcomponents-utils/dist/dates/CalendarDate.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { isShow } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";

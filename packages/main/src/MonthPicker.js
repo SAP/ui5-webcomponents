@@ -8,7 +8,7 @@ import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import LocaleData from "@ui5/webcomponents-utils/dist/sap/ui/core/LocaleData.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
-import CalendarDate from "@ui5/webcomponents-base/dist/dates/CalendarDate.js";
+import CalendarDate from "@ui5/webcomponents-utils/dist/dates/CalendarDate.js";
 import ItemNavigationBehavior from "@ui5/webcomponents-base/dist/types/ItemNavigationBehavior.js";
 import MonthPickerTemplate from "./generated/templates/MonthPickerTemplate.lit.js";
 
