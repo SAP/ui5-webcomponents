@@ -84,9 +84,10 @@ class Suggestions {
 		}
 	}
 
-	open() {
+	async open() {
+		this.responsivePopover = await this._respPopover();
 		this._beforeOpen();
-		this._respPopover.open(this._getComponent());
+		this.responsivePopover.open(this._getComponent());
 	}
 
 	async close() {
@@ -127,8 +128,8 @@ class Suggestions {
 		this._attachPopupListeners();
 	}
 
-	_attachItemsListeners() {
-		const list = this._getList();
+	async _attachItemsListeners() {
+		const list = await this._getList();
 		list.removeEventListener("ui5-itemPress", this.fnOnSuggestionItemPress);
 		list.addEventListener("ui5-itemPress", this.fnOnSuggestionItemPress);
 		list.removeEventListener("ui5-itemFocused", this.fnOnSuggestionItemFocus);
@@ -171,8 +172,7 @@ class Suggestions {
 	}
 
 	isOpened() {
-		const popover = this._respPopover;
-		return !!(popover && popover.opened);
+		return !!(this.responsivePopover && this.responsivePopover.opened);
 	}
 
 	_handleItemNavigation(forward) {
@@ -255,15 +255,16 @@ class Suggestions {
 	}
 
 	_getItems() {
-		return [].slice.call(this._respPopover.querySelectorAll("ui5-li"));
+		return [].slice.call(this.responsivePopover.querySelectorAll("ui5-li"));
 	}
 
 	_getComponent() {
 		return this.component;
 	}
 
-	_getList() {
-		return this._getComponent().getStaticAreaItemDomRef().querySelector("ui5-responsive-popover").querySelector("ui5-list");
+	async _getList() {
+		this.responsivePopover = await this._respPopover();
+		return this.responsivePopover.querySelector("ui5-list");
 	}
 
 	_getRealItems() {
@@ -272,7 +273,8 @@ class Suggestions {
 
 	async _respPopover() {
 		const staticAreaItem = await this._getComponent().getStaticAreaItemDomRef();
-		return staticAreaItem.querySelector("ui5-responsive-popover");
+		this.responsivePopover = staticAreaItem.querySelector("ui5-responsive-popover");
+		return this.responsivePopover;
 	}
 }
 

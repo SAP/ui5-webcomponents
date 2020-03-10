@@ -298,8 +298,9 @@ class ComboBox extends UI5Element {
 		this._initialRendering = false;
 	}
 
-	onAfterRendering() {
-		if (isPhone() && this._respPopover.opened) {
+	async onAfterRendering() {
+		await this._respPopover();
+		if (isPhone() && this.responsivePopover.opened) {
 			// Set initial focus to the native input
 			this.inner.focus();
 		}
@@ -333,7 +334,7 @@ class ComboBox extends UI5Element {
 	}
 
 	_toggleRespPopover() {
-		if (this._respPopover.opened) {
+		if (this.responsivePopover.opened) {
 			this._closeRespPopover();
 		} else {
 			this._openRespPopover();
@@ -387,12 +388,12 @@ class ComboBox extends UI5Element {
 	}
 
 	_closeRespPopover() {
-		this._respPopover.close();
+		this.responsivePopover.close();
 	}
 
 	_openRespPopover() {
 		this.updateStaticAreaItemContentDensity();
-		this._respPopover.open(this);
+		this.responsivePopover.open(this);
 	}
 
 	_filterItems(str) {
@@ -459,11 +460,13 @@ class ComboBox extends UI5Element {
 	}
 
 	get inner() {
-		return isPhone() ? this._respPopover.querySelector(".ui5-input-inner-phone") : this.shadowRoot.querySelector("[inner-input]");
+		return isPhone() ? this.responsivePopover.querySelector(".ui5-input-inner-phone") : this.shadowRoot.querySelector("[inner-input]");
 	}
 
-	get _respPopover() {
-		return this.getStaticAreaItemDomRef().querySelector("ui5-responsive-popover");
+	async _respPopover() {
+		const staticAreaItem = await this.getStaticAreaItemDomRef();
+		this.responsivePopover = staticAreaItem.querySelector("ui5-responsive-popover");
+		return this.responsivePopover;
 	}
 
 	get editable() {

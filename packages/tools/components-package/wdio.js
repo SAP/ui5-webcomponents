@@ -230,8 +230,9 @@ exports.config = {
 		}, true);
 
 		browser.addCommand("getStaticAreaItemClassName", function(selector) {
-			return browser.execute((selector) => {
-				return document.querySelector(selector).getStaticAreaItemDomRef().host.classList[0];
+			return browser.execute(async (selector) => {
+				const staticAreaItem = await document.querySelector(selector).getStaticAreaItemDomRef();
+				return staticAreaItem.host.classList[0];
 			}, selector);
 		}, false);
 	},
