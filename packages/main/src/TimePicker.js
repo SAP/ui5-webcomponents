@@ -10,7 +10,7 @@ import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import PopoverPlacementType from "./types/PopoverPlacementType.js";
 import TimePickerTemplate from "./generated/templates/TimePickerTemplate.lit.js";
-import TimePickerPopoverTemplate from "./generated/templates/TimePickerPopoverTemplate.lit.js"
+import TimePickerPopoverTemplate from "./generated/templates/TimePickerPopoverTemplate.lit.js";
 import {
 	TIMEPICKER_HOURS_LABEL,
 	TIMEPICKER_MINUTES_LABEL,
