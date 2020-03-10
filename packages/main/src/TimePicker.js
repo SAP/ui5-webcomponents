@@ -278,6 +278,7 @@ class TimePicker extends UI5Element {
 			isValid = this.isValid(nextValue);
 
 		this.value = nextValue;
+		this.setSlidersValue();
 		this.fireEvent("input", { value: nextValue, valid: isValid });
 	}
 
@@ -538,6 +539,7 @@ class TimePicker extends UI5Element {
 	setValue(value) {
 		if (this.isValid(value)) {
 			this.value = this.normalizeValue(value);
+			this.setSlidersValue();
 			this.valueState = ValueState.None;
 		} else {
 			this.valueState = ValueState.Error;
