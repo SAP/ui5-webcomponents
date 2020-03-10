@@ -8,12 +8,8 @@ const getCalendarType = () => {
 		calendarType = getConfiguredCalendarType();
 	}
 
-	if (calendarType) {
-		const type = Object.keys(CalendarType).find(calType => calType === calendarType);
-
-		if (type) {
-			return type;
-		}
+	if (CalendarType.isValid(calendarType)) {
+		return calendarType;
 	}
 
 	return CalendarType.Gregorian;

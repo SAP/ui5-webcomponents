@@ -1,11 +1,10 @@
-import "@ui5/webcomponents-base/dist/Shims.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchCldr } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
 import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
-import DateFormat from "@ui5/webcomponents-utils/dist/sap/ui/core/format/DateFormat.js";
-import LocaleData from "@ui5/webcomponents-utils/dist/sap/ui/core/LocaleData.js";
+import DateFormat from "@ui5/webcomponents-utils/dist/DateFormat.js";
+import LocaleData from "@ui5/webcomponents-utils/dist/LocaleData.js";
 import CalendarDate from "@ui5/webcomponents-utils/dist/dates/CalendarDate.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
@@ -15,7 +14,7 @@ import MonthPicker from "./MonthPicker.js";
 import YearPicker from "./YearPicker.js";
 
 // Default calendar for bundling
-import "@ui5/webcomponents-utils/dist/sap/ui/core/date/Gregorian.js";
+import "@ui5/webcomponents-utils/dist/features/calendar/Gregorian.js";
 
 // Template
 import CalendarTemplate from "./generated/templates/CalendarTemplate.lit.js";

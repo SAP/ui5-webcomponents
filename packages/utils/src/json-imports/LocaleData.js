@@ -73,7 +73,7 @@ import zh_HK from "../generated/assets/cldr/sap/ui/core/cldr/zh_HK.json";
 import zh_SG from "../generated/assets/cldr/sap/ui/core/cldr/zh_SG.json";
 import zh_TW from "../generated/assets/cldr/sap/ui/core/cldr/zh_TW.json";
 
-import { registerCldr, setCldrData } from "../asset-registries/LocaleData.js";
+import { registerCldr, setCldrData } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
 
 const cldrData = {
 	ar,

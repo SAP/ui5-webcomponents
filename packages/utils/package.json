@@ -15,9 +15,9 @@
     "directory": "packages/utils"
   },
   "scripts": {
-    "build": "npm-run-all --sequential clean copy:node-modules copy:resources copy:overlay build:replace-amd build:replace-export-true build:replace-export-false build:replace-global-core-usage build:amd-to-es6 build:esm-abs-to-rel copy:src copy:belize-fonts",
-    "copy:node-modules": "node ./lib/copy-list/index.js ./used-modules.txt dist/",
-    "copy:resources": "copy-and-watch \"../../node_modules/@openui5/sap.ui.core/src/**/*.json\" dist/",
+    "build": "npm-run-all --sequential clean copy:used-modules copy:cldr copy:overlay build:replace-amd build:replace-export-true build:replace-export-false build:replace-global-core-usage build:amd-to-es6 build:esm-abs-to-rel copy:src copy:belize-fonts",
+    "copy:used-modules": "node ./lib/copy-list/index.js ./used-modules.txt dist/",
+    "copy:cldr": "copy-and-watch \"../../node_modules/@openui5/sap.ui.core/src/**/*.json\" dist/generated/assets/cldr/",
     "copy:src": "copy-and-watch \"src/**/*.js\" dist/",
     "copy:overlay": "copy-and-watch \"overlay/**/*.js\" dist/",
     "build:replace-amd": "replace-in-file sap.ui.define define dist/**/*.js",
