@@ -107,6 +107,7 @@ class ResponsivePopover extends Popover {
 	 * @public
 	 */
 	close() {
+		debugger;
 		if (!isPhone()) {
 			super.close();
 		} else {

@@ -1,5 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { isIE, isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
@@ -15,10 +16,12 @@ import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18
 import InputType from "./types/InputType.js";
 // Templates
 import InputTemplate from "./generated/templates/InputTemplate.lit.js";
-import InputPopoverTemplate from "./generated/templates/InputPopoverTemplate.lit.js";
+// import InputPopoverTemplate from "./generated/templates/InputPopoverTemplate.lit.js";
+import ValueStateMessagePopoverTemplate from "./generated/templates/ValueStateMessagePopoverTemplate.lit.js";
 
 import {
 	VALUE_STATE_SUCCESS,
+	VALUE_STATE_INFORMATION,
 	VALUE_STATE_ERROR,
 	VALUE_STATE_WARNING,
 	INPUT_SUGGESTIONS,
@@ -28,6 +31,7 @@ import {
 // Styles
 import styles from "./generated/themes/Input.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
+import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 
 /**
  * @public
@@ -81,6 +85,19 @@ const metadata = {
 		 * @private
 		 */
 		formSupport: {
+			type: HTMLElement,
+		},
+
+		/**
+		 * The slot is used in order to display a valueStateMessage.
+		 * <br><br>
+		 * <b>Note:</b> The valueStateMessage would be displayed only if the <code>ui5-input</code> has
+		 * a valueState of type <code>Information</code>, <code>Warning</code> or <code>Error</code>.
+		 * @type {HTMLElement[]}
+		 * @slot
+		 * @public
+		 */
+		valueStateMessage: {
 			type: HTMLElement,
 		},
 	},
@@ -337,7 +354,7 @@ class Input extends UI5Element {
 	}
 
 	static get staticAreaTemplate() {
-		return InputPopoverTemplate;
+		return ValueStateMessagePopoverTemplate;
 	}
 
 	static get styles() {
@@ -345,7 +362,7 @@ class Input extends UI5Element {
 	}
 
 	static get staticAreaStyles() {
-		return ResponsivePopoverCommonCss;
+		return [ResponsivePopoverCommonCss, ValueStateMessageCss];
 	}
 
 	constructor() {
@@ -378,6 +395,16 @@ class Input extends UI5Element {
 		this.suggestionsTexts = [];
 
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+
+		this._handleResizeBound = this._handleResize.bind(this);
+	}
+
+	onEnterDOM() {
+		ResizeHandler.register(this, this._handleResizeBound);
+	}
+
+	onExitDOM() {
+		ResizeHandler.deregister(this, this._handleResizeBound);
 	}
 
 	onBeforeRendering() {
@@ -404,6 +431,13 @@ class Input extends UI5Element {
 			if (!isPhone() && shouldOpenSuggestions) {
 				// Set initial focus to the native input
 				this.getInputDOMRef().focus();
+			}
+		}
+
+		if (!this.firstRendering && !this.Suggestions && this._getPopover() && this.hasValueStateMessage) {
+			this.toggle(this.shouldDisplayOnlyValueStateMessage);
+			if (this._getPopover().contentDOM) {
+				this._getPopover().contentDOM.style.display = "none";
 			}
 		}
 
@@ -508,6 +542,12 @@ class Input extends UI5Element {
 		}
 	}
 
+	_handleResize() {
+		if (this.hasValueStateMessage) {
+			this._getPopover().header[0].style.width = `${this.offsetWidth}px`;
+		}
+	}
+
 	_closeRespPopover() {
 		this.Suggestions.close();
 	}
@@ -524,6 +564,28 @@ class Input extends UI5Element {
 		if (isPhone()) {
 			this.blur();
 		}
+	}
+
+	toggle(bToggle) {
+		const toggle = bToggle !== undefined ? bToggle : !this.isOpened();
+
+		if (toggle) {
+			this.open();
+		} else {
+			this.close();
+		}
+	}
+
+	open() {
+		this._getPopover().openBy(this);
+	}
+
+	close() {
+		this._getPopover().close();
+	}
+
+	_getPopover() {
+		return this.getStaticAreaItemDomRef().querySelector("ui5-popover");
 	}
 
 	enableSuggestions() {
@@ -647,6 +709,7 @@ class Input extends UI5Element {
 
 		return {
 			"Success": i18nBundle.getText(VALUE_STATE_SUCCESS),
+			"Information": i18nBundle.getText(VALUE_STATE_INFORMATION),
 			"Error": i18nBundle.getText(VALUE_STATE_ERROR),
 			"Warning": i18nBundle.getText(VALUE_STATE_WARNING),
 		};
@@ -691,8 +754,38 @@ class Input extends UI5Element {
 		};
 	}
 
+	get classes() {
+		return {
+			popoverValueState: {
+				"ui5-input-valuestatemessage-root": true,
+				"ui5-input-valuestatemessage-success": this.valueState === ValueState.Success,
+				"ui5-input-valuestatemessage-error": this.valueState === ValueState.Error,
+				"ui5-input-valuestatemessage-warning": this.valueState === ValueState.Warning,
+				"ui5-input-valuestatemessage-information": this.valueState === ValueState.Information,
+			},
+		};
+	}
+
+	get valueStateMessageText() {
+		const valueStateMessage = this.valueStateMessage.map(x => x.cloneNode(true));
+
+		return valueStateMessage;
+	}
+
+	get shouldDisplayOnlyValueStateMessage() {
+		return this.hasValueStateMessage && !this.suggestionItems.length && this.focused;
+	}
+
+	get shouldDisplayDefaultValueStateMessage() {
+		return !this.valueStateMessage.length && this.hasValueStateMessage;
+	}
+
 	get hasValueState() {
 		return this.valueState !== ValueState.None;
+	}
+
+	get hasValueStateMessage() {
+		return this.valueStateMessage && this.hasValueState && this.valueState !== ValueState.Success;
 	}
 
 	get valueStateText() {

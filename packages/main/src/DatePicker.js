@@ -622,6 +622,7 @@ class DatePicker extends UI5Element {
 	 * @public
 	 */
 	openPicker(options) {
+		console.log("opened")
 		this._changeCalendarSelection();
 
 		if (options && options.focusInput) {
@@ -629,6 +630,8 @@ class DatePicker extends UI5Element {
 		}
 
 		this._respPopover.open(this);
+	debugger;
+
 		this._isPickerOpen = true;
 	}
 
