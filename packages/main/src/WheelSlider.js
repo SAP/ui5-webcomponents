@@ -7,7 +7,7 @@ import {
 	isUp,
 	isTabNext,
 	isTabPrevious,
-} from "../../base/src/events/PseudoEvents.js";
+} from "../../base/src/Keys.js";
 
 // Styles
 import WheelSliderCss from "./generated/themes/WheelSlider.css.js";

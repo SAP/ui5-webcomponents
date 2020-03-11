@@ -22,7 +22,7 @@ import {
 	isRight,
 	isTabNext,
 	isTabPrevious,
-} from "../../base/src/events/PseudoEvents.js";
+} from "../../base/src/Keys.js";
 
 // Styles
 import TimePickerCss from "./generated/themes/TimePicker.css.js";
