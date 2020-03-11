@@ -1,5 +1,5 @@
-commit c377cb7e2a56031b57bf8989d7330b47c703c712
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Mar 11 15:03:02 2020 +0200
+commit 074601274d2089a7fe889df5b88135265f52eaa4
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Mar 11 16:30:40 2020 +0200
 
-    chore(framework): improve Mutation Observer performance (#1274)
+    chore: remove more derived params (#1275)
