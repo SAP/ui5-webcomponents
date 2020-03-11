@@ -184,7 +184,7 @@ class UI5Element extends HTMLElement {
 	 */
 	async _updateSlots() {
 		const slotsMap = this.constructor.getMetadata().getSlots();
-		const canSlotText = slotsMap.default && slotsMap.default.type === Node;
+		const canSlotText = this.constructor.getMetadata().canSlotText();
 		const domChildren = Array.from(canSlotText ? this.childNodes : this.children);
 
 		// Init the _state object based on the supported slots
