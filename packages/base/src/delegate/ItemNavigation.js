@@ -6,7 +6,7 @@ import {
 	isRight,
 	isHome,
 	isEnd,
-} from "../events/PseudoEvents.js";
+} from "../Keys.js";
 
 import EventProvider from "../EventProvider.js";
 import UI5Element from "../UI5Element.js";
