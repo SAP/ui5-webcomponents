@@ -1,10 +1,5 @@
 import { registerThemeProperties } from "./dist/AssetRegistry.js";
 
-import "./dist/features/calendar/Buddhist.js";
-import "./dist/features/calendar/Islamic.js";
-import "./dist/features/calendar/Japanese.js";
-import "./dist/features/calendar/Persian.js";
-
 // ESM bundle targets Edge + browsers with native support
 import "./dist/features/browsersupport/Edge.js";
 import "./dist/features/OpenUI5Support.js";

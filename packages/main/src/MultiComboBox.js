@@ -3,7 +3,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import {
 	isShow, isDown, isBackSpace, isSpace,
-} from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-down.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { isIE, isPhone } from "@ui5/webcomponents-base/dist/Device.js";
