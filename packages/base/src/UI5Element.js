@@ -153,7 +153,7 @@ class UI5Element extends HTMLElement {
 		}
 		const mutationObserverOptions = {
 			childList: true,
-			subtree: true,
+			subtree: false,
 			characterData: true,
 		};
 		DOMObserver.observeDOMNode(this, this._processChildren.bind(this), mutationObserverOptions);
