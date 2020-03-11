@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getLocale } from "@ui5/webcomponents-base/dist/LocaleProvider.js";
+import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import DateFormat from "@ui5/webcomponents-utils/dist/sap/ui/core/format/DateFormat.js";
 import LocaleData from "@ui5/webcomponents-utils/dist/sap/ui/core/LocaleData.js";
