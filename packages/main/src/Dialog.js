@@ -140,6 +140,14 @@ class Dialog extends Popup {
 	get blockLayer() {
 		return `z-index: ${this._zIndex};`;
 	}
+
+	get headerAriaLabelledBy() {
+		if (this.headerText || this.header) {
+			return `${this._id}-popup-headinng`;
+		} else {
+			return undefined;
+		}
+	}
 }
 
 Dialog.define();
