@@ -1,5 +1,5 @@
-commit 88e0adf35d109552cd2d73abbc96e68cdfee5248
+commit c377cb7e2a56031b57bf8989d7330b47c703c712
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Mar 11 10:29:03 2020 +0200
+Date:   Wed Mar 11 15:03:02 2020 +0200
 
-    refactor(framework): reorganize the base and utils packages (#1271)
+    chore(framework): improve Mutation Observer performance (#1274)
