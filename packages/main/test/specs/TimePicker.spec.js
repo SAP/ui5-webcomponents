@@ -2,14 +2,6 @@ const assert = require("chai").assert;
 
 describe("TimePicker general interaction", () => {
 	browser.url("http://localhost:8080/test-resources/pages/TimePicker.html");
-	
-	it("Is default value today", () => {
-		const textValue = browser.$("#timepicker").shadow$$("#ui5wc_1-inner")[0].getValue();
-		const today = new Date();
-
-		assert.strictEqual(Number(textValue.substring(0,2)), today.getHours(), "Hours are equal");
-		assert.strictEqual(Number(textValue.substring(3,5)), today.getMinutes(), "Minutes are equal");
-	});
 
 	it("Check sliders value", () => {
 		browser.$("#timepicker").setProperty("value", "11:12:13");
