@@ -1,5 +1,5 @@
 import { inject as injectCore } from "@ui5/webcomponents-utils/dist/sap/ui/core/Core.js";
-import { getLocale } from "../LocaleProvider.js";
+import getLocale from "../locale/getLocale.js";
 import { getLanguage } from "../config/Language.js";
 import { getCalendarType } from "../config/CalendarType.js";
 import getDesigntimePropertyAsArray from "../util/getDesigntimePropertyAsArray.js";
