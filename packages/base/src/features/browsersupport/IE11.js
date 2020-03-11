@@ -2,7 +2,7 @@
 import cssVars from "css-vars-ponyfill/dist/css-vars-ponyfill.esm.js";
 
 // String
-import "@ui5/webcomponents-utils/dist/sap/ui/thirdparty/es6-string-methods.js";
+import "../../thirdparty/es6-string-methods.js";
 
 // Object
 import "../../thirdparty/Object.entries.js";
