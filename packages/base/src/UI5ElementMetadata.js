@@ -79,7 +79,7 @@ class UI5ElementMetadata {
 
 	canSlotText() {
 		const defaultSlot = this.getSlots().default;
-		return defaultSlot && defaultSlot.type === "Node";
+		return defaultSlot && defaultSlot.type === Node;
 	}
 
 	/**
