@@ -1,13 +1,14 @@
-import merge from "@ui5/webcomponents-utils/dist/sap/base/util/merge.js";
+import merge from "./thirdparty/merge.js";
 import boot from "./boot.js";
-import { skipOriginalEvent } from "./config/NoConflict.js";
-import DOMObserver from "./compatibility/DOMObserver.js";
 import UI5ElementMetadata from "./UI5ElementMetadata.js";
 import StaticAreaItem from "./StaticAreaItem.js";
-import Integer from "./types/Integer.js";
 import RenderScheduler from "./RenderScheduler.js";
-import { getConstructableStyle, createHeadStyle } from "./CSS.js";
-import { getEffectiveStyle } from "./Theming.js";
+import DOMObserver from "./compatibility/DOMObserver.js";
+import { skipOriginalEvent } from "./config/NoConflict.js";
+import getConstructableStyle from "./theming/getConstructableStyle.js";
+import createComponentStyleTag from "./theming/createComponentStyleTag.js";
+import getEffectiveStyle from "./theming/getEffectiveStyle.js";
+import Integer from "./types/Integer.js";
 import { kebabToCamelCase, camelToKebabCase } from "./util/StringHelper.js";
 import isValidPropertyName from "./util/isValidPropertyName.js";
 
@@ -72,7 +73,7 @@ class UI5Element extends HTMLElement {
 
 			// IE11, Edge
 			if (window.ShadyDOM) {
-				createHeadStyle(this.constructor);
+				createComponentStyleTag(this.constructor);
 			}
 
 			// Chrome
@@ -667,7 +668,7 @@ class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	static _needsStaticArea() {
-		return typeof this.staticAreaTemplate === "function";
+		return typeof this.staticAreaTemplate === "function" || typeof this.staticAreaTemplate === "object";
 	}
 
 	/**

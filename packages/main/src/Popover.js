@@ -163,6 +163,13 @@ const metadata = {
 		_disableInitialFocus: {
 			type: Boolean,
 		},
+
+		/**
+		 * @private
+		 */
+		skipRegistryUpdate: {
+			type: Boolean,
+		},
 	},
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.Popover.prototype */ {
@@ -337,7 +344,7 @@ class Popover extends UI5Element {
 	 * Closes the popover.
 	 * @public
 	 */
-	close(escPressed = false, preventRegitryUpdate = false) {
+	close(escPressed = false, preventRegitryUpdate = false, preventFocusRestore = false) {
 		if (!this.opened) {
 			return;
 		}
@@ -353,7 +360,7 @@ class Popover extends UI5Element {
 			removeOpenedPopover(this);
 		}
 
-		if (!this._prevetFocusRestore) {
+		if (!preventFocusRestore) {
 			this.resetFocus();
 		}
 

@@ -1,17 +1,17 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchCldr } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
-import { getLocale } from "@ui5/webcomponents-base/dist/LocaleProvider.js";
+import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSettings.js";
-import DateFormat from "@ui5/webcomponents-utils/dist/sap/ui/core/format/DateFormat.js";
+import DateFormat from "@ui5/webcomponents-utils/dist/DateFormat.js";
+import LocaleData from "@ui5/webcomponents-utils/dist/LocaleData.js";
 import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import LocaleData from "@ui5/webcomponents-utils/dist/sap/ui/core/LocaleData.js";
-import CalendarDate from "@ui5/webcomponents-base/dist/dates/CalendarDate.js";
-import { calculateWeekNumber } from "@ui5/webcomponents-base/dist/dates/CalendarUtils.js";
-import CalendarType from "@ui5/webcomponents-base/dist/dates/CalendarType.js";
+import CalendarDate from "@ui5/webcomponents-utils/dist/dates/CalendarDate.js";
+import calculateWeekNumber from "@ui5/webcomponents-utils/dist/dates/calculateWeekNumber.js";
+import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import ItemNavigationBehavior from "@ui5/webcomponents-base/dist/types/ItemNavigationBehavior.js";
 import DayPickerTemplate from "./generated/templates/DayPickerTemplate.lit.js";
 
@@ -230,7 +230,7 @@ class DayPicker extends UI5Element {
 				classes: `ui5-dp-item ui5-dp-wday${weekday}`,
 			};
 
-			const weekNumber = calculateWeekNumber(oCalDate.toUTCJSDate(), oCalDate.getYear(), this._oLocale, this._oLocaleData);
+			const weekNumber = calculateWeekNumber(getFirstDayOfWeek(), oCalDate.toUTCJSDate(), oCalDate.getYear(), this._oLocale, this._oLocaleData);
 
 			if (lastWeekNumber !== weekNumber) {
 				this._weekNumbers.push(weekNumber);

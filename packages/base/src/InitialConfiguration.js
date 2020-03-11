@@ -1,4 +1,4 @@
-import merge from "@ui5/webcomponents-utils/dist/sap/base/util/merge.js";
+import merge from "./thirdparty/merge.js";
 import { getFeature } from "./FeaturesRegistry.js";
 
 let initialized = false;
