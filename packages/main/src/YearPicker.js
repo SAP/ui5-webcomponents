@@ -4,7 +4,7 @@ import LocaleData from "@ui5/webcomponents-utils/dist/sap/ui/core/LocaleData.js"
 import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
 import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import { getLocale } from "@ui5/webcomponents-base/dist/LocaleProvider.js";
+import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import DateFormat from "@ui5/webcomponents-utils/dist/sap/ui/core/format/DateFormat.js";
 import CalendarType from "@ui5/webcomponents-base/dist/dates/CalendarType.js";

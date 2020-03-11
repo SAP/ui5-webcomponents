@@ -1,6 +1,6 @@
 import Locale from "./Locale.js";
-import detectNavigatorLanguage from "./util/detectNavigatorLanguage.js";
-import { getLanguage as getConfigLanguage } from "./config/Language.js";
+import detectNavigatorLanguage from "../util/detectNavigatorLanguage.js";
+import { getLanguage as getConfigLanguage } from "../config/Language.js";
 
 const convertToLocaleOrNull = lang => {
 	try {
@@ -13,10 +13,14 @@ const convertToLocaleOrNull = lang => {
 };
 
 /**
- * Returns the locale based on the configured language Configuration#getLanguage
+ * Returns the locale based on the parameter or configured language Configuration#getLanguage
  * If no language has been configured - a new locale based on browser language is returned
  */
-const getLocale = () => {
+const getLocale = lang => {
+	if (lang) {
+		return convertToLocaleOrNull(lang);
+	}
+
 	if (getConfigLanguage()) {
 		return new Locale(getConfigLanguage());
 	}
@@ -24,11 +28,4 @@ const getLocale = () => {
 	return convertToLocaleOrNull(detectNavigatorLanguage());
 };
 
-/**
- * Returns the language of #getLocale return value
- */
-const getLanguage = () => {
-	return getLocale().sLanguage;
-};
-
-export { getLocale, getLanguage };
+export default getLocale;

@@ -1,5 +1,5 @@
 import "../shims/Core-shim.js";
-import { getLanguage } from "../LocaleProvider.js";
+import getLocale from "../locale/getLocale.js";
 import { fetchJsonOnce } from "../util/FetchHelper.js";
 import { normalizeLocale, nextFallbackLocale } from "../util/normalizeLocale.js";
 
@@ -48,7 +48,7 @@ const fetchI18nBundle = async packageName => {
 		return;
 	}
 
-	const language = getLanguage();
+	const language = getLocale().getLanguage();
 
 	let localeId = normalizeLocale(language);
 	while (!bundlesForPackage[localeId]) {
