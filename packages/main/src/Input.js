@@ -9,15 +9,14 @@ import {
 	isDown,
 	isSpace,
 	isEnter,
-} from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 // import Icon from "./Icon.js";
 import InputType from "./types/InputType.js";
 // Templates
 import InputTemplate from "./generated/templates/InputTemplate.lit.js";
-// import InputPopoverTemplate from "./generated/templates/InputPopoverTemplate.lit.js";
-import ValueStateMessagePopoverTemplate from "./generated/templates/ValueStateMessagePopoverTemplate.lit.js";
+import InputPopoverTemplate from "./generated/templates/InputPopoverTemplate.lit.js";
 
 import {
 	VALUE_STATE_SUCCESS,
@@ -354,7 +353,7 @@ class Input extends UI5Element {
 	}
 
 	static get staticAreaTemplate() {
-		return ValueStateMessagePopoverTemplate;
+		return InputPopoverTemplate;
 	}
 
 	static get styles() {
@@ -504,6 +503,10 @@ class Input extends UI5Element {
 		// will happen before "itemPress" event, which will make item "active" state not visualized
 		if (this.Suggestions && event.relatedTarget && event.relatedTarget.shadowRoot.contains(this.Suggestions._respPopover)) {
 			return;
+		}
+
+		if (this._getPopover()) {
+			this._getPopover().close(false, false, true);
 		}
 
 		this.previousValue = "";

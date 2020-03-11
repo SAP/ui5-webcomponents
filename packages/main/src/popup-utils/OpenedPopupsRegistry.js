@@ -1,4 +1,4 @@
-import { isEscape } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
 
 let registry = [];
 

@@ -1,5 +1,4 @@
 *.css
-dist/api.json
 dist/resources
 dist/test-resources
 lib/

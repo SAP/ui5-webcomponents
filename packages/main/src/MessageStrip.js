@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { isEnter, isSpace } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import { isEnter, isSpace } from "@ui5/webcomponents-base/src/Keys.js";
 import "@ui5/webcomponents-icons/dist/icons/decline.js";
 import "@ui5/webcomponents-icons/dist/icons/message-information.js";
 import "@ui5/webcomponents-icons/dist/icons/message-success.js";

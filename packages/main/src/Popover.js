@@ -337,7 +337,7 @@ class Popover extends UI5Element {
 	 * Closes the popover.
 	 * @public
 	 */
-	close(escPressed = false, preventRegitryUpdate = false) {
+	close(escPressed = false, preventRegitryUpdate = false, preventFocusRestore = false) {
 		if (!this.opened) {
 			return;
 		}
@@ -353,7 +353,7 @@ class Popover extends UI5Element {
 			removeOpenedPopover(this);
 		}
 
-		if (!this._prevetFocusRestore) {
+		if (!preventFocusRestore) {
 			this.resetFocus();
 		}
 
