@@ -1,6 +1,0 @@
-@import "../base/TabContainer-parameters.css";
-
-:root {
-	--_ui5_tc_header_box_shadow: inset 0 -0.25rem 0 -0.125rem var(--sapObjectHeader_Background_Darken8);
-	--_ui5_tc_content_border_bottom: 0.125rem solid var(--sapObjectHeader_Background_Darken8);
-}
