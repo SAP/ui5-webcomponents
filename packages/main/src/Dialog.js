@@ -144,9 +144,8 @@ class Dialog extends Popup {
 	get headerAriaLabelledBy() {
 		if (this.headerText || this.header) {
 			return `${this._id}-popup-headinng`;
-		} else {
-			return undefined;
 		}
+		return undefined;
 	}
 }
 
