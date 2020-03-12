@@ -9,6 +9,7 @@
 			@ui5-afterOpen="{{_respPopover.afterOpen}}"
 			header-text="Pick Time"
 			class="ui5-timepicker-popover"
+			@keydown="{{_ontimepickerpopoverkeydown}}"
 	>
 	<div class="ui5-timepicker-sliders-container" @keydown={{_oncontainerkeydown}} tabindex="0" @focusin="{{_onfocuscontainerin}}">
 		{{#if shouldBuildHoursSlider}}
@@ -45,8 +46,8 @@
 			></ui5-wheelslider>
 		{{/if}}
 	</div>
-		<div slot="footer" class="ui5-timepicker-footer">
-			<ui5-button id="submit" design="Emphasized" @click="{{submitPickers}}">Submit</ui5-button>
-			<ui5-button id="close" design="Transparent" @click="{{closePicker}}">Close</ui5-button>
+		<div slot="footer" class="ui5-timepicker-footer" @keydown={{_onfooterkeydown}}>
+			<ui5-button id="submit" design="Emphasized" @click="{{submitPickers}}">{{submitButtonLabel}}</ui5-button>
+			<ui5-button id="close" design="Transparent" @click="{{closePicker}}">{{cancelButtonLabel}}</ui5-button>
 		</div>
 	</ui5-responsive-popover>

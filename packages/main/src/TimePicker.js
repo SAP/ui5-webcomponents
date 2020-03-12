@@ -11,17 +11,22 @@ import ResponsivePopover from "./ResponsivePopover.js";
 import PopoverPlacementType from "./types/PopoverPlacementType.js";
 import TimePickerTemplate from "./generated/templates/TimePickerTemplate.lit.js";
 import TimePickerPopoverTemplate from "./generated/templates/TimePickerPopoverTemplate.lit.js";
+import Input from "./Input.js";
+import WheelSlider from "./WheelSlider.js";
 import {
 	TIMEPICKER_HOURS_LABEL,
 	TIMEPICKER_MINUTES_LABEL,
 	TIMEPICKER_SECONDS_LABEL,
 	TIMEPICKER_PERIODS_LABEL,
+	TIMEPICKER_SUBMIT_BUTTON,
+	TIMEPICKER_CANCEL_BUTTON,
 } from "./generated/i18n/i18n-defaults.js";
 import {
 	isLeft,
 	isRight,
 	isTabNext,
 	isTabPrevious,
+	isShow,
 } from "../../base/src/Keys.js";
 
 // Styles
@@ -186,6 +191,7 @@ const metadata = {
  * @extends UI5Element
  * @tagname ui5-timepicker
  * @public
+ * @since 1.0.0-rc.6
  */
 class TimePicker extends UI5Element {
 	static get metadata() {
@@ -213,6 +219,8 @@ class TimePicker extends UI5Element {
 			fetchCldr(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
 			ResponsivePopover.define(),
 			fetchI18nBundle("@ui5/webcomponents"),
+			WheelSlider.define(),
+			Input.define(),
 		]);
 	}
 
@@ -247,13 +255,13 @@ class TimePicker extends UI5Element {
 		};
 
 		this._slidersDomRefs = [];
-
-		if (!this.formatPattern) {
-			this.formatPattern = LocaleData.getInstance(getLocale()).getTimePattern(this.getFormat().oFormatOptions.style);
-		}
 	}
 
 	onBeforeRendering() {
+		if (!this.formatPattern) {
+			this.formatPattern = LocaleData.getInstance(getLocale()).getTimePattern(this.getFormat().oFormatOptions.style);
+		}
+
 		if (!this.value) {
 			this.value = this.getFormat().format(new Date());
 		}
@@ -284,32 +292,33 @@ class TimePicker extends UI5Element {
 
 	setSlidersValue() {
 		const currentDate = this._getInput() ? this.getFormat().parse(this._getInput().getAttribute("value")) : null,
-			secondsSlider = this.getStaticAreaItemDomRef().querySelector(".ui5-timepicker-seconds-wheelslider"),
-			minutesSlider = this.getStaticAreaItemDomRef().querySelector(".ui5-timepicker-minutes-wheelslider"),
-			hoursSlider = this.getStaticAreaItemDomRef().querySelector(".ui5-timepicker-hours-wheelslider"),
-			periodsSlider = this.getStaticAreaItemDomRef().querySelector(".ui5-timepicker-period-wheelslider");
+			secondsSlider = this.secondsSlider,
+			minutesSlider = this.minutesSlider,
+			hoursSlider = this.hoursSlider,
+			periodsSlider = this.periodsSlider;
 
-		if (currentDate) {
-			if (hoursSlider) {
-				if (this._hoursParameters.isTwelveHoursFormat && currentDate.getHours() > this._hoursParameters.maxHour) {
-					hoursSlider.value = currentDate.getHours() - 12;
-				} else if (this._hoursParameters.isTwelveHoursFormat && currentDate.getHours() < this._hoursParameters.minHour) {
-					hoursSlider.value = currentDate.getHours() + 12;
-				} else {
-					hoursSlider.value = currentDate.getHours();
-				}
+		if (!currentDate) {
+			return;
+		}
+		if (hoursSlider) {
+			if (this._hoursParameters.isTwelveHoursFormat && currentDate.getHours() > this._hoursParameters.maxHour) {
+				hoursSlider.value = currentDate.getHours() - 12;
+			} else if (this._hoursParameters.isTwelveHoursFormat && currentDate.getHours() < this._hoursParameters.minHour) {
+				hoursSlider.value = currentDate.getHours() + 12;
+			} else {
+				hoursSlider.value = currentDate.getHours();
 			}
-			if (minutesSlider) {
-				minutesSlider.value = currentDate.getMinutes();
-			}
-			if (secondsSlider) {
-				secondsSlider.value = currentDate.getSeconds();
-			}
-			if (this._hoursParameters.isTwelveHoursFormat && periodsSlider && this._hoursParameters.minHour === 1) {
-				periodsSlider.value = currentDate.getHours() > this._hoursParameters.maxHour ? this.periodsArray[1] : this.periodsArray[0];
-			} else if (this._hoursParameters.isTwelveHoursFormat && periodsSlider) {
-				periodsSlider.value = (currentDate.getHours() > this._hoursParameters.maxHour || currentDate.getHours() === this._hoursParameters.minHour) ? this.periodsArray[1] : this.periodsArray[0];
-			}
+		}
+		if (minutesSlider) {
+			minutesSlider.value = currentDate.getMinutes();
+		}
+		if (secondsSlider) {
+			secondsSlider.value = currentDate.getSeconds();
+		}
+		if (this._hoursParameters.isTwelveHoursFormat && periodsSlider && this._hoursParameters.minHour === 1) {
+			periodsSlider.value = currentDate.getHours() > this._hoursParameters.maxHour ? this.periodsArray[1] : this.periodsArray[0];
+		} else if (this._hoursParameters.isTwelveHoursFormat && periodsSlider) {
+			periodsSlider.value = (currentDate.getHours() > this._hoursParameters.maxHour || currentDate.getHours() === this._hoursParameters.minHour) ? this.periodsArray[1] : this.periodsArray[0];
 		}
 	}
 
@@ -327,7 +336,6 @@ class TimePicker extends UI5Element {
 
 	/**
 	 * Opens the picker.
-	 * @param {object} options A JSON object with additional configuration.<br>
 	 * <code>{ focusInput: true }</code> By default, the focus goes in the picker after opening it.
 	 * Specify this option to focus the input field.
 	 * @public
@@ -335,9 +343,13 @@ class TimePicker extends UI5Element {
 	openPicker() {
 		this._getPopover().open(this);
 		this._isPickerOpen = true;
-		this._slidersDomRefs = this._getPopover().default.length ? [...this._getPopover().default[0].children].filter(x => x.isUI5Element) : this._getPopover().default;
+		this._slidersDomRefs = this.slidersDomRefs;
 
 		this.setSlidersValue();
+
+		if (this._slidersDomRefs[0]) {
+			this._slidersDomRefs[0].focus();
+		}
 	}
 
 	togglePicker() {
@@ -401,16 +413,36 @@ class TimePicker extends UI5Element {
 		return this.getFormat().aDayPeriods.map(x => x.toUpperCase());
 	}
 
+	get slidersDomRefs() {
+		return this._getPopover().default.length ? [...this._getPopover().default[0].children].filter(x => x.isUI5Element) : this._getPopover().default;
+	}
+
 	_getInput() {
 		return this.shadowRoot.querySelector("ui5-input");
 	}
 
+	get secondsSlider() {
+		return this.getStaticAreaItemDomRef().querySelector(".ui5-timepicker-seconds-wheelslider");
+	}
+
+	get minutesSlider() {
+		return this.getStaticAreaItemDomRef().querySelector(".ui5-timepicker-minutes-wheelslider");
+	}
+
+	get hoursSlider() {
+		return this.getStaticAreaItemDomRef().querySelector(".ui5-timepicker-hours-wheelslider");
+	}
+
+	get periodsSlider() {
+		return this.getStaticAreaItemDomRef().querySelector(".ui5-timepicker-period-wheelslider");
+	}
+
 	submitPickers() {
 		const selectedDate = new Date(),
-			secondsSlider = this.getStaticAreaItemDomRef().querySelector(".ui5-timepicker-seconds-wheelslider"),
-			minutesSlider = this.getStaticAreaItemDomRef().querySelector(".ui5-timepicker-minutes-wheelslider"),
-			hoursSlider = this.getStaticAreaItemDomRef().querySelector(".ui5-timepicker-hours-wheelslider"),
-			periodsSlider = this.getStaticAreaItemDomRef().querySelector(".ui5-timepicker-period-wheelslider"),
+			secondsSlider = this.secondsSlider,
+			minutesSlider = this.minutesSlider,
+			hoursSlider = this.hoursSlider,
+			periodsSlider = this.periodsSlider,
 			hours = hoursSlider ? hoursSlider.getAttribute("value") : this._hoursParameters.minHour.toString(),
 			minutes = minutesSlider ? minutesSlider.getAttribute("value") : "0",
 			seconds = secondsSlider ? secondsSlider.getAttribute("value") : "0",
@@ -515,10 +547,40 @@ class TimePicker extends UI5Element {
 				this._slidersDomRefs[0].focus();
 			}
 		}
-		if (isTabNext(e)) {
+
+		if (isTabNext(e) && e.target === this._slidersDomRefs[this._slidersDomRefs.length - 1]) {
+			e.preventDefault();
 			this.getStaticAreaItemDomRef().querySelector(".ui5-timepicker-footer").firstElementChild.focus();
-		} else if (isTabPrevious(e)) {
-			this.getStaticAreaItemDomRef().querySelector(`#${this._id}-inner`).focus();
+		} else if (isTabPrevious(e) && e.target === this._slidersDomRefs[0]) {
+			e.preventDefault();
+			this.getStaticAreaItemDomRef().querySelector(`.ui5-timepicker-footer`).lastElementChild.focus();
+		}
+	}
+
+	_onfooterkeydown(e) {
+		if (isTabNext(e) && e.target === e.target.parentElement.lastElementChild) {
+			e.preventDefault();
+			this._slidersDomRefs[0].focus();
+		}
+
+		if (isTabPrevious(e) && e.target === e.target.parentElement.firstElementChild) {
+			e.preventDefault();
+			this._slidersDomRefs[this._slidersDomRefs.length - 1].focus();
+		}
+	}
+
+	_ontimepickerkeydown(e) {
+		this._handleTimepickerKeysDown(e);
+	}
+
+	_ontimepickerpopoverkeydown(e) {
+		this._handleTimepickerKeysDown(e);
+	}
+
+	_handleTimepickerKeysDown(e) {
+		if (isShow(e)) {
+			e.preventDefault();
+			this.togglePicker();
 		}
 	}
 
@@ -632,6 +694,14 @@ class TimePicker extends UI5Element {
 
 	get periodSliderTitle() {
 		return this.i18nBundle.getText(TIMEPICKER_PERIODS_LABEL);
+	}
+
+	get submitButtonLabel() {
+		return this.i18nBundle.getText(TIMEPICKER_SUBMIT_BUTTON);
+	}
+
+	get cancelButtonLabel() {
+		return this.i18nBundle.getText(TIMEPICKER_CANCEL_BUTTON);
 	}
 }
 

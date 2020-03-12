@@ -5,8 +5,6 @@ import Button from "./Button.js";
 import {
 	isDown,
 	isUp,
-	isTabNext,
-	isTabPrevious,
 } from "../../base/src/Keys.js";
 
 // Styles
@@ -111,6 +109,7 @@ const metadata = {
  * @extends UI5Element
  * @tagname ui5-wheelslider
  * @public
+ * @since 1.0.0-rc.6
  */
 class WheelSlider extends UI5Element {
 	static get metadata() {
@@ -194,6 +193,7 @@ class WheelSlider extends UI5Element {
 		if (this._expanded) {
 			this.value = e.target.textContent;
 			this._selectElement(e.target);
+			this.fireEvent("valueSelect", { value: this.value });
 		} else {
 			this._expanded = true;
 		}
@@ -218,11 +218,14 @@ class WheelSlider extends UI5Element {
 
 	_selectElementByIndex(index) {
 		const sliderElement = this.shadowRoot.getElementById(`${this._id}--items-list`);
-		if (index < this._items.length && index > -1) {
+		const itemsCount = this._items.length;
+
+		if (index < itemsCount && index > -1) {
 			const offsetSelectedElement = 4 * this._itemCellHeight - (index * this._itemCellHeight);
 			sliderElement.setAttribute("style", `top:${offsetSelectedElement}rem`);
 			this.value = this._items[index];
 			this._currentElementIndex = index;
+			this.fireEvent("valueSelect", { value: this.value });
 		}
 	}
 
@@ -241,10 +244,6 @@ class WheelSlider extends UI5Element {
 	_onkeydown(event) {
 		if (!this._expanded) {
 			return;
-		}
-
-		if (isTabPrevious(event) || isTabNext(event)) {
-			event.preventDefault();
 		}
 
 		if (isUp(event)) {

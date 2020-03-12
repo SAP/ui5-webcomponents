@@ -18,6 +18,7 @@
 	color: var(--_ui5_wheelslider_label_text_color);
 	text-align: center;
 	vertical-align: middle;
+	visibility: hidden;
 }
 
 .ui5-wheelslider-root .ui5-wheelslider-arrow {
@@ -29,7 +30,7 @@
 }
 
 .ui5-wheelslider-root[expanded] .ui5-wheelslider-arrow {
-	visibility: visible;
+	visibility: var(--_ui5_wheelslider_arrows_visibility);
 	box-sizing: border-box;
 	width: 100%;
 	border-color: transparent;
@@ -111,6 +112,7 @@
 
 .ui5-wheelslider-root[expanded] .ui5-wheelslider-label {
 	display: block;
+	visibility: visible;
 }
 
 .ui5-wheelslider-root .ui5-wheelslider-inner {
@@ -124,7 +126,7 @@
 	border: 1px solid var(--_ui5_wheelslider_item_border_color);
 	border-radius: var(--_ui_wheelslider_item_border_radius);
 	offset-position: auto;
-	cursor: pointer;
+	cursor: auto;
 }
 
 .ui5-wheelslider-root[expanded] .ui5-wheelslider-inner .ui5-wheelslider-item:hover {
