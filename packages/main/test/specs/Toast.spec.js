@@ -45,7 +45,7 @@ describe("Toast general interaction", () => {
 	});
 
 	it("tests shadow content div role", () => {
-		const toastShadowContent = browser.$("#wcToastBE").shadow$(".ui5-toast-content");
+		const toastShadowContent = browser.$("#wcToastBE").shadow$(".ui5-toast-root");
 
 		assert.strictEqual(toastShadowContent.getAttribute("role"), "alert",
 			"The role of the shadow ui5-toast-content div should be alert");
@@ -53,19 +53,19 @@ describe("Toast general interaction", () => {
 
 	it("tests shadow content div inline styles with default duration", () => {
 		const button = browser.$("#wcBtnShowToastBE");
-		const toastShadowContent = browser.$("#wcToastBE").shadow$(".ui5-toast-content");
+		const toastShadowContent = browser.$("#wcToastBE").shadow$(".ui5-toast-root");
 
 		button.click();
 
 		assert.strictEqual(toastShadowContent.getAttribute("style"),
 			"transition-duration: 1000ms; transition-delay: 2000ms; opacity: 0;",
-			"The correct default inline styles are applied to the shadow ui5-toast-content");
+			"The correct default inline styles are applied to the shadow ui5-toast-root");
 	});
 
 	it("tests shadow content div inline styles with long duration", () => {
 		const button = browser.$("#wcBtnShowToastBS");
 		const toast = browser.$("#wcToastBS");
-		const toastShadowContent = toast.shadow$(".ui5-toast-content");
+		const toastShadowContent = toast.shadow$(".ui5-toast-root");
 		const maximumAllowedTransition = 1000;
 		const durationProperty = toast.getProperty("duration");
 		let calculatedDelay;
@@ -83,7 +83,7 @@ describe("Toast general interaction", () => {
 	it("tests shadow content div inline styles with short duration", () => {
 		const button = browser.$("#wcBtnShowToastME");
 		const toast = browser.$("#wcToastME");
-		const toastShadowContent = toast.shadow$(".ui5-toast-content");
+		const toastShadowContent = toast.shadow$(".ui5-toast-root");
 		const durationProperty = toast.getProperty("duration");
 		let calculatedTransition, calculatedDelay;
 
@@ -101,7 +101,7 @@ describe("Toast general interaction", () => {
 	it("tests closing of toast", () => {
 		const button = browser.$("#wcBtnShowToastMS");
 		const toast = browser.$("#wcToastMS");
-		const toastShadowContent = toast.shadow$(".ui5-toast-content");
+		const toastShadowContent = toast.shadow$(".ui5-toast-root");
 
 		button.click();
 
