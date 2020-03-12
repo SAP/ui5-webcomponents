@@ -1,14 +1,14 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
-import DateFormat from "@ui5/webcomponents-utils/dist/DateFormat.js";
-import LocaleData from "@ui5/webcomponents-utils/dist/LocaleData.js";
+import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
+import LocaleData from "@ui5/webcomponents-localization/dist/LocaleData.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
-import CalendarDate from "@ui5/webcomponents-utils/dist/dates/CalendarDate.js";
+import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import ItemNavigationBehavior from "@ui5/webcomponents-base/dist/types/ItemNavigationBehavior.js";
 import MonthPickerTemplate from "./generated/templates/MonthPickerTemplate.lit.js";
 

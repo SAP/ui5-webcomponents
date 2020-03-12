@@ -11,7 +11,6 @@ const scripts = {
 	},
 	copy: {
 		default: "nps copy.src copy.test copy.webcomponents-polyfill",
-		cldr: 'copy-and-watch "../../node_modules/@ui5/webcomponents-utils/dist/**/cldr/*.json" dist/generated/assets/cldr/',
 		src: "copy-and-watch \"src/**/*.js\" dist/",
 		test: "copy-and-watch \"test/**/*.*\" dist/test-resources",
 		"webcomponents-polyfill": "copy-and-watch \"../../node_modules/@webcomponents/webcomponentsjs/**/*.*\" dist/webcomponentsjs/",

@@ -4,10 +4,10 @@ import { fetchCldr } from "@ui5/webcomponents-base/dist/asset-registries/LocaleD
 import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import LocaleData from "@ui5/webcomponents-utils/dist/LocaleData.js";
-import DateFormat from "@ui5/webcomponents-utils/dist/DateFormat.js";
+import LocaleData from "@ui5/webcomponents-localization/dist/LocaleData.js";
+import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
-import CalendarDate from "@ui5/webcomponents-utils/dist/dates/CalendarDate.js";
+import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { isShow } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
@@ -24,7 +24,7 @@ import DatePickerTemplate from "./generated/templates/DatePickerTemplate.lit.js"
 import DatePickerPopoverTemplate from "./generated/templates/DatePickerPopoverTemplate.lit.js";
 
 // default calendar for bundling
-import "@ui5/webcomponents-utils/dist/features/calendar/Gregorian.js";
+import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
 
 // Styles
 import datePickerCss from "./generated/themes/DatePicker.css.js";

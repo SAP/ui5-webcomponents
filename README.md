@@ -183,7 +183,7 @@ Keep in mind that linking the same module with npm and Yarn may cause issues. Al
 - [UI5 Web Components Icons](https://www.npmjs.com/package/@ui5/webcomponents-icons)
 - [UI5 Web Components Base](https://www.npmjs.com/package/@ui5/webcomponents-base)
 - [UI5 Web Components Theme Base](https://www.npmjs.com/package/@ui5/webcomponents-theme-base)
-- [UI5 Web Components Utils](https://www.npmjs.com/package/@ui5/webcomponents-utils)
+- [UI5 Web Components Localization](https://www.npmjs.com/package/@ui5/webcomponents-localization)
 
 ## Limitations
 None as of 1.0.0-rc.5 
