@@ -3,7 +3,7 @@
 <span class="ui5-popup-frame" @focusin="{{_onfocusin}}">
 	<span id="{{_id}}-firstfe" tabindex="0"></span>
 	<div style="{{zindex}}" class="ui5-dialog-root-parent {{classes.dialogParent}}">
-		<div tabindex="-1" aria-labelledby="{{headerId}}" role="dialog" aria-modal="true" class="ui5-popup-root ui5-dialog-root {{classes.dialogParent}}">
+		<div tabindex="-1" aria-labelledby="{{headerAriaLabelledBy}}" role="dialog" aria-modal="true" class="ui5-popup-root ui5-dialog-root {{classes.dialogParent}}">
 			{{> header}}
 			<section class="ui5-dialog-section">
 				<div class="ui5-popup-content">

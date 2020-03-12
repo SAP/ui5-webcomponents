@@ -27,7 +27,7 @@
 @import "./TimelineItem-parameters.css";
 @import "../base/Title-parameters.css";
 @import "../base/Toast-parameters.css";
-@import "./ToggleButton-parameters.css";
+@import "../base/ToggleButton-parameters.css";
 @import "./YearPicker-parameters.css";
 @import "./Token-parameters.css";
 @import "../base/MultiComboBox-parameters.css";
