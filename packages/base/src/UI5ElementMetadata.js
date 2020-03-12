@@ -78,6 +78,15 @@ class UI5ElementMetadata {
 	}
 
 	/**
+	 * Determines whether this UI5 Element has a default slot of type Node, therefore can slot text
+	 * @returns {boolean}
+	 */
+	canSlotText() {
+		const defaultSlot = this.getSlots().default;
+		return defaultSlot && defaultSlot.type === Node;
+	}
+
+	/**
 	 * Determines whether this UI5 Element supports any slots
 	 * @public
 	 */

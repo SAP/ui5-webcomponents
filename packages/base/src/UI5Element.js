@@ -151,9 +151,11 @@ class UI5Element extends HTMLElement {
 		if (!shouldObserveChildren) {
 			return;
 		}
+
+		const canSlotText = this.constructor.getMetadata().canSlotText();
 		const mutationObserverOptions = {
 			childList: true,
-			subtree: true,
+			subtree: canSlotText,
 			characterData: true,
 		};
 		DOMObserver.observeDOMNode(this, this._processChildren.bind(this), mutationObserverOptions);
@@ -182,7 +184,7 @@ class UI5Element extends HTMLElement {
 	 */
 	async _updateSlots() {
 		const slotsMap = this.constructor.getMetadata().getSlots();
-		const canSlotText = slotsMap.default && slotsMap.default.type === Node;
+		const canSlotText = this.constructor.getMetadata().canSlotText();
 		const domChildren = Array.from(canSlotText ? this.childNodes : this.children);
 
 		// Init the _state object based on the supported slots
@@ -253,7 +255,7 @@ class UI5Element extends HTMLElement {
 		slottedChildrenMap.forEach((children, slot) => {
 			this._state[slot] = children.sort((a, b) => a.idx - b.idx).map(_ => _.child);
 		});
-		this._invalidate();
+		this._invalidate("slots");
 	}
 
 	/**

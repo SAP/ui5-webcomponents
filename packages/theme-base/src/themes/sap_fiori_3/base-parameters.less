@@ -178,12 +178,10 @@
 @sapShell_Active_Background: darken(@sapShellColor, 10);
 @sapShell_Active_TextColor: contrast(@sapShell_Active_Background, @sapTextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
 @sapShell_Background: @sapPrimary4;
-
 @sapShell_BackgroundPatternColor: transparent;
-
 @sapShell_BorderColor: @sapShellColor;
 @sapShell_InteractiveTextColor: #d1e8ff;
-
+@sapShell_InteractiveBorderColor: #7996b4;
 
 @sapButton_Hover_Background: lighten(@sapHighlightColor, 63);
 @sapButton_TextColor: contrast(@sapButton_Background, @sapHighlightColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
@@ -197,6 +195,7 @@
 @sapButton_Reject_BorderColor: @sapNegativeElementColor;
 @sapButton_Reject_TextColor: contrast(@sapButton_Reject_Background, @sapNegativeTextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
 @sapButton_Reject_Hover_Background: @sapErrorBackground;
+@sapButton_Reject_Selected_Hover_Background: #b00;
 @sapButton_Reject_Active_Background: darken(@sapNegativeElementColor, 5);
 @sapButton_Reject_Hover_BorderColor: @sapNegativeElementColor;
 @sapButton_Reject_Active_BorderColor: @sapButton_Reject_Active_Background;
@@ -205,6 +204,7 @@
 @sapButton_Accept_Background: @sapButton_Background;
 @sapButton_Accept_BorderColor: @sapPositiveElementColor;
 @sapButton_Accept_Hover_Background: @sapSuccessBackground;
+@sapButton_Accept_Selected_Hover_Background: #107e3e;
 @sapButton_Accept_Active_Background: darken(@sapPositiveElementColor, 5);
 @sapButton_Accept_Active_BorderColor: @sapButton_Accept_Active_Background;
 @sapButton_Accept_Hover_BorderColor: @sapPositiveElementColor;
