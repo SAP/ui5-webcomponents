@@ -23,8 +23,13 @@
 @import "../base/TextArea-parameters.css";
 @import "../base/TimelineItem-parameters.css";
 @import "../base/Toast-parameters.css";
+<<<<<<< HEAD
 @import "./WheelSlider-parameters.css";
 @import "../base/ToggleButton-parameters.css";
+=======
+@import "./ToggleButton-parameters.css";
+@import "./WheelSlider-parameters.css";
+>>>>>>> 5ee986a9c43115390e0461a18c0ff8136bdb9c97
 @import "./YearPicker-parameters.css";
 @import "./CalendarHeader-parameters.css";
 @import "../base/Table-parameters.css";
