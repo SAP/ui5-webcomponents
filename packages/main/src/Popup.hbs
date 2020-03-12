@@ -2,11 +2,11 @@
 	{{#if hasHeader}}
 		<header>
 			{{#if header.length}}
-				<div role="{{role}}" class="ui5-popup-header">
+				<div id="{{_id}}-popup-heading" role="{{role}}" class="ui5-popup-header">
 					<slot name="header"></slot>
 				</div>
 			{{else}}
-				<h2 role="{{role}}" class="ui5-popup-header ui5-popup-headerText">{{headerText}}</h2>
+				<h2 id="{{_id}}-popup-heading" role="{{role}}" class="ui5-popup-header ui5-popup-headerText">{{headerText}}</h2>
 			{{/if}}
 		</header>
 	{{/if}}
