@@ -1,5 +1,5 @@
-commit ef2886b7e670f2e1654ef844d19e57c254919a39
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu Mar 12 12:02:34 2020 +0200
+commit 0c408d265c00a626f2bfd635950cacb363581274
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Thu Mar 12 15:55:38 2020 +0200
 
-    feat(ui5-dialog): improve accessibility (#1288)
+    fix(tools): The init package script now correctly has HCW (#1293)
