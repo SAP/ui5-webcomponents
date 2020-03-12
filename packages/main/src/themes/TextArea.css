@@ -5,10 +5,9 @@
 :host {
 	width: 100%;
 	color: var(--sapField_TextColor);
-	background-color: var(--sapField_Background);
 	font-size: var(--sapFontMediumSize);
 	font-family: var(--sapFontFamily);
-	border: 1px solid var(--sapField_BorderColor);
+	border-color: var(--sapField_BorderColor);
 	border-radius: var(--_ui5_input_wrapper_border_radius);
 	box-sizing: border-box;
 }
@@ -17,10 +16,13 @@
 	opacity: var(--_ui5_input_disabled_opacity);
 	cursor: default;
 	pointer-events: none;
-	background: var(--sapField_ReadOnly_Background);
 	border-color: var(--sapField_ReadOnly_BorderColor);
 	-webkit-text-fill-color: var(--sapContent_DisabledTextColor);
 	color: var(--sapContent_DisabledTextColor);
+}
+
+:host([disabled]) .ui5-textarea-inner {
+	background: var(--sapField_ReadOnly_Background);
 }
 
 :host([focused]) .ui5-textarea-inner {
@@ -42,6 +44,7 @@
 	overflow: hidden;
 	box-sizing: border-box;
 	border-radius: inherit;
+	border-color: inherit;
 }
 
 .ui5-textarea-inner {
@@ -58,9 +61,11 @@
 	-moz-appearance: textfield;
 	overflow: auto;
 	resize: none;
-	border: inherit;
+	border-color: inherit;
 	border-radius: inherit;
-	background: transparent;
+	background-color: var(--sapField_Background);
+	border-width: 1px;
+	border-style: solid;
 }
 
 :host([growing]) .ui5-textarea-root {
@@ -87,8 +92,12 @@
 
 :host([readonly]) {
 	border-color: var(--sapField_ReadOnly_BorderColor);
+}
+
+:host([readonly]) .ui5-textarea-inner {
 	background: var(--sapField_ReadOnly_Background);
 }
+
 
 :host([show-exceeded-text]) .ui5-textarea-root {
 	flex-direction: column;
@@ -115,12 +124,15 @@
 }
 
 :host(:not([value-state]):not([exceeding]):not([readonly]):hover) {
-	background-color: var(--sapField_Hover_Background);
 	border-color: var(--sapField_Hover_BorderColor);
 }
 
-:host([value-state]:not([value-state="None"])),
-:host([exceeding]) {
+:host(:not([value-state]):not([exceeding]):not([readonly]):hover) .ui5-textarea-inner {
+	background-color: var(--sapField_Hover_Background);
+}
+
+:host([value-state]:not([value-state="None"])) .ui5-textarea-inner,
+:host([exceeding]) .ui5-textarea-inner {
 	border-width: var(--_ui5_input_state_border_width);
 }
 
@@ -134,24 +146,43 @@
 }
 
 :host([value-state="Error"]:not([readonly])) {
-	background-color: var(--sapField_InvalidBackground);
 	border-color: var(--sapField_InvalidColor);
 }
 
-:host([value-state="Error"]:not([readonly]):not([disabled])),
-:host([value-state="Warning"]:not([readonly]):not([disabled])) {
+:host([value-state="Error"]:not([readonly])) .ui5-textarea-inner {
+	background-color: var(--sapField_InvalidBackground);
+}
+
+:host([value-state="Error"]:not([readonly]):not([disabled])) .ui5-textarea-inner,
+:host([value-state="Warning"]:not([readonly]):not([disabled])) .ui5-textarea-inner {
 	border-style: var(--_ui5_input_error_warning_border_style);
 }
 
 :host([value-state="Warning"]:not([readonly])),
 :host([exceeding]) {
-	background-color: var(--sapField_WarningBackground);
 	border-color: var(--sapField_WarningColor);
 }
 
+:host([value-state="Warning"]:not([readonly])) .ui5-textarea-inner,
+:host([exceeding]) .ui5-textarea-inner {
+	background-color: var(--sapField_WarningBackground);
+}
+
 :host([value-state="Success"]:not([readonly])) {
-	background-color: var(--sapField_SuccessBackground);
 	border-color: var(--sapField_SuccessColor);
+}
+
+:host([value-state="Success"]:not([readonly])) .ui5-textarea-inner {
+	background-color: var(--sapField_SuccessBackground);
+	border-width: 1px;
+}
+
+:host([value-state="Information"]:not([readonly])) {
+	border-color: var(--sapField_InformationColor);
+}
+
+:host([value-state="Information"]:not([readonly])) .ui5-textarea-inner {
+	background-color: var(--sapField_InformationBackground);
 }
 
 .ui5-textarea-exceeded-text {

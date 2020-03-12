@@ -26,6 +26,7 @@ const metadata = {
 			defaultValue: "Hello",
 		}
 	},
+	managedSlots: true,
 	slots: {
 		default: {
 			type: Node,

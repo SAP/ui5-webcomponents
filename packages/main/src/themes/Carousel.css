@@ -49,7 +49,8 @@
     flex-direction: row;
     flex-wrap: nowrap;
     background: var(--sapBackgroundColor);
-    transition: left .5s cubic-bezier(.46, 0, .44, 1);
+	transition: transform 0.5s cubic-bezier(.46, 0, .44, 1);
+	will-change: transform;
 }
 
 .ui5-carousel-content.ui5-carousel-content-no-animation {
@@ -82,7 +83,7 @@
     width: var(--ui5_carousel_button_size);
     height: var(--ui5_carousel_button_size);
     border-radius: 50%;
-    box-shadow: var(--sapUiShadowLevel1);
+    box-shadow: var(--sapContent_Shadow1);
     cursor: pointer;
     outline-offset: .1rem;
 }

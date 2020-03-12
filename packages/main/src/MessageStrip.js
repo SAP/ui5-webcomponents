@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { isEnter, isSpace } from "@ui5/webcomponents-base/src/events/PseudoEvents.js";
+import { isEnter, isSpace } from "@ui5/webcomponents-base/src/Keys.js";
 import "@ui5/webcomponents-icons/dist/icons/decline.js";
 import "@ui5/webcomponents-icons/dist/icons/message-information.js";
 import "@ui5/webcomponents-icons/dist/icons/message-success.js";
@@ -25,8 +25,8 @@ const metadata = {
 		/**
 		 * Defines the <code>ui5-messagestrip</code> type.
 		 * <br><br>
-		 * <b>Note:</b> Available options are <code>Information"</code>, <code>"Positive"</code>, <code>"Negative"</code>,
-		 * and "Warning".
+		 * <b>Note:</b> Available options are <code>"Information"</code>, <code>"Positive"</code>, <code>"Negative"</code>,
+		 * and <code>"Warning"</code>.
 		 *
 		 * @type {MessageStripType}
 		 * @defaultvalue "Information"
@@ -60,6 +60,7 @@ const metadata = {
 			type: Boolean,
 		},
 	},
+	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.MessageStrip.prototype */ {
 		/**
 		 * Defines the text of the <code>ui5-messagestrip</code>.
@@ -110,7 +111,7 @@ const metadata = {
  *
  * The <code>ui5-messagestrip</code> component enables the embedding of app-related messages.
  * It displays 4 types of messages, each with corresponding semantic color and icon: Information, Positive, Warning and Negative.
- * Each message can have a close button, so that it can be removed from the UI if needed.
+ * Each message can have a Close button, so that it can be removed from the UI, if needed.
  *
  * <h3>Usage</h3>
  *

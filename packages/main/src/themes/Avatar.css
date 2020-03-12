@@ -3,6 +3,10 @@
 	box-sizing: border-box;
 }
 
+:host(:not([hidden]).ui5_hovered) {
+	opacity: .7;
+}
+
 :host {
 	height: 3rem;
 	width: 3rem;

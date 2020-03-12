@@ -8,7 +8,7 @@
 
 ::slotted(ui5-togglebutton) {
 	border-radius: 0;
-	height: 2.75rem;
+	height: var(--_ui5_button_base_height);
 	min-width: 2.5rem;
 	white-space: nowrap;
 	overflow: hidden;

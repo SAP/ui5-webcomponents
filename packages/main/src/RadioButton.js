@@ -12,7 +12,7 @@ import {
 	isLeft,
 	isUp,
 	isRight,
-} from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import Label from "./Label.js";
 import RadioButtonGroup from "./RadioButtonGroup.js";
 
@@ -35,7 +35,7 @@ const metadata = {
 		/**
 		 * Determines whether the <code>ui5-radiobutton</code> is disabled.
 		 * <br><br>
-		 * <b>Note:</b> A disabled <code>ui5-radiobutton</code> is completely uninteractive.
+		 * <b>Note:</b> A disabled <code>ui5-radiobutton</code> is completely noninteractive.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -105,7 +105,7 @@ const metadata = {
 		 * Defines the name of the <code>ui5-radiobutton</code>.
 		 * Radio buttons with the same <code>name</code> will form a radio button group.
 		 * <br><b>Note:</b>
-		 * The selection can be changed with <code>ARROW_UP/DOWN</code> and <code>ARROW_LEFT/RIGHT</code> keys between radios in same group.
+		 * The selection can be changed with <code>ARROW_UP/DOWN</code> and <code>ARROW_LEFT/RIGHT</code> keys between radio buttons in same group.
 		 * <br><b>Note:</b>
 		 * Only one radio button can be selected per group.
 		 * <br>
@@ -176,7 +176,7 @@ const metadata = {
  * When a <code>ui5-radiobutton</code> that is within a group is selected, the one
  * that was previously selected gets automatically deselected. You can group radio buttons by using the <code>name</code> property.
  * <br>
- * Note: if <code>ui5-radiobutton</code> is not part of a group, it can be selected once, but can not be deselected back.
+ * <b>Note:</b> If <code>ui5-radiobutton</code> is not part of a group, it can be selected once, but can not be deselected back.
  *
  * <h3>Keyboard Handling</h3>
  *
@@ -185,7 +185,7 @@ const metadata = {
  * The Arrow Down/Arrow Up and Arrow Left/Arrow Right keys can be used to change selection between next/previous radio buttons in one group,
  * while TAB and SHIFT + TAB can be used to enter or leave the radio button group.
  * <br>
- * Note: On entering radio button group, the focus goes to the currently selected radio button.
+ * <b>Note:</b> On entering radio button group, the focus goes to the currently selected radio button.
  *
  * <h3>ES6 Module Import</h3>
  *

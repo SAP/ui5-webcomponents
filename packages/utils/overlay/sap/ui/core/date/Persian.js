@@ -3,8 +3,8 @@
  */
 
 // Provides class sap.ui.core.date.Persian
-sap.ui.define(['./UniversalDate', '../CalendarType', './CalendarClassRegistry'],
-	function(UniversalDate, CalendarType, CalendarClassRegistry) {
+sap.ui.define(['./UniversalDate', '../CalendarType', './_Calendars'],
+	function(UniversalDate, CalendarType, _Calendars) {
 	"use strict";
 
 
@@ -391,7 +391,7 @@ sap.ui.define(['./UniversalDate', '../CalendarType', './CalendarClassRegistry'],
 		return this._setUTCPersian(oPersian);
 	};
 
-	CalendarClassRegistry.setCalendarClass(CalendarType.Persian, Persian);
+	_Calendars.set(CalendarType.Persian, Persian);
 
 	return Persian;
 

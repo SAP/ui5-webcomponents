@@ -164,6 +164,7 @@ const metadata = {
 			type: Boolean,
 		},
 	},
+	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.Popover.prototype */ {
 		/**
 		 * Defines the content of the Web Component.
@@ -172,7 +173,7 @@ const metadata = {
 		 * @public
 		 */
 		"default": {
-			type: Node,
+			type: HTMLElement,
 		},
 
 		/**

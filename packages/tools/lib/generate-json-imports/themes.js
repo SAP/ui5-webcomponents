@@ -8,6 +8,7 @@ const content = `import { registerThemeProperties } from "@ui5/webcomponents-bas
 import fiori3Dark from "../assets/themes/sap_fiori_3_dark/parameters-bundle.css.json";
 import belize from "../assets/themes/sap_belize/parameters-bundle.css.json";
 import belizeHcb from "../assets/themes/sap_belize_hcb/parameters-bundle.css.json";
+import belizeHcw from "../assets/themes/sap_belize_hcw/parameters-bundle.css.json";
 
 const isInlined = obj => typeof (obj) === "object";
 
@@ -20,6 +21,7 @@ Suggested pattern: "assets\\\\\\/.*\\\\\\.json"\`);
 registerThemeProperties("${packageName}", "sap_fiori_3_dark", fiori3Dark);
 registerThemeProperties("${packageName}", "sap_belize", belize);
 registerThemeProperties("${packageName}", "sap_belize_hcb", belizeHcb);
+registerThemeProperties("${packageName}", "sap_belize_hcw", belizeHcw);
 `;
 
 fs.writeFileSync("dist/generated/json-imports/Themes.js", content);

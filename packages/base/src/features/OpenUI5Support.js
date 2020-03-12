@@ -47,7 +47,7 @@ const getLocaleDataObject = () => {
 
 	const config = core.getConfiguration();
 	const LocaleData = sap.ui.require("sap/ui/core/LocaleData");
-	return LocaleData.getInstance(config.getLocale()).mData;
+	return LocaleData.getInstance(config.getLocale())._get();
 };
 
 const listenForThemeChange = () => {

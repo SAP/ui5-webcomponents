@@ -25,16 +25,10 @@
 							?disabled="{{this.disabled}}"
 							aria-labelledby="{{this.ariaLabelledBy}}"
 						>
-							{{#if this.isTextOnlyTab}}
-								{{> textOnlyTab}}
-							{{/if}}
-
-							{{#if this.isIconTab}}
-								{{> iconTab}}
-							{{/if}}
-
-							{{#if this.isMixedModeTab}}
-								{{> mixedModeTab}}
+							{{#if this.isInline}}
+								{{> inlineTab}}
+							{{else}}
+								{{> standardTab}}
 							{{/if}}
 						</li>
 					{{/unless}}
@@ -71,23 +65,12 @@
 	</div>
 </div>
 
-{{#*inline "textOnlyTab"}}
-	<div class="{{this.headerItemContentClasses}}">
-		<span class="{{this.headerItemTextClasses}}" id="{{this.item._id}}-text">
-			<span class="{{this.headerItemSemanticIconClasses}}"></span>
-			{{this.item.text}}
-		</span>
-
-		{{#if this.item.additionalText}}
-			<span class="{{this.headerItemAdditionalTextClasses}}" id="{{this.item._id}}-additionalText">({{this.item.additionalText}})</span>
-		{{/if}}
-	</div>
-{{/inline}}
-
-{{#*inline "iconTab"}}
-	<div id="{{this.item._id}}" class="ui5-tc-headerItemIcon-outer">
-		<ui5-icon name="{{this.item.icon}}" class="{{this.headerItemIconClasses}}"></ui5-icon>
-	</div>
+{{#*inline "standardTab"}}
+	{{#if this.item.icon}}
+		<div id="{{this.item._id}}" class="ui5-tc-headerItemIcon-outer">
+			<ui5-icon name="{{this.item.icon}}" class="{{this.headerItemIconClasses}}"></ui5-icon>
+		</div>
+	{{/if}}
 
 	<div class="{{this.headerItemContentClasses}}">
 		{{#if this.item.additionalText}}
@@ -103,17 +86,23 @@
 	</div>
 {{/inline}}
 
-{{#*inline "mixedModeTab"}}
-	<div class="{{this.headerItemContentClasses}}">
-		{{#if this.item.additionalText}}
-			<span class="{{this.headerItemAdditionalTextClasses}}" id="{{this.item._id}}-additionalText">{{this.item.additionalText}}</span>
-		{{/if}}
+{{#*inline "inlineTab"}}
+	{{#if this.item.icon}}
+		<div id="{{this.item._id}}" class="ui5-tc-headerItemIcon-outer">
+			<ui5-icon name="{{this.item.icon}}" class="{{this.headerItemIconClasses}}"></ui5-icon>
+		</div>
+	{{/if}}
 
+	<div class="{{this.headerItemContentClasses}}">
 		{{#if this.item.text}}
 			<span class="{{this.headerItemTextClasses}}" id="{{this.item._id}}-text">
 				<span class="{{this.headerItemSemanticIconClasses}}"></span>
 				{{this.item.text}}
 			</span>
+		{{/if}}
+
+		{{#if this.item.additionalText}}
+			<span class="{{this.headerItemAdditionalTextClasses}}" id="{{this.item._id}}-additionalText">{{this.item.additionalText}}</span>
 		{{/if}}
 	</div>
 {{/inline}}

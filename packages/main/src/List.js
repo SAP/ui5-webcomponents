@@ -2,10 +2,11 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { getLastTabbableElement } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
-import { isTabNext } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import { isTabNext } from "@ui5/webcomponents-base/dist/Keys.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import ListMode from "./types/ListMode.js";
 import ListSeparators from "./types/ListSeparators.js";
+import BusyIndicator from "./BusyIndicator.js";
 
 // Template
 import ListTemplate from "./generated/templates/ListTemplate.lit.js";
@@ -13,11 +14,15 @@ import ListTemplate from "./generated/templates/ListTemplate.lit.js";
 // Styles
 import listCss from "./generated/themes/List.css.js";
 
+const BUSYINDICATOR_HEIGHT = 48; // px
+const INFINITE_SCROLL_DEBOUNCE_RATE = 250; // ms
+
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-list",
+	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.List.prototype */ {
 
 		/**
@@ -35,7 +40,7 @@ const metadata = {
 
 		/**
 		 * Defines the items of the <code>ui5-list</code>.
-		 * <br><b>Note:</b> Use <code>ui5-li</code>, <code>ui5-li-custom</code> and <code>ui5-li-groupheader</code> for the intended design.
+		 * <br><b>Note:</b> Use <code>ui5-li</code>, <code>ui5-li-custom</code>, and <code>ui5-li-groupheader</code> for the intended design.
 		 *
 		 * @type {HTMLElement[]}
 		 * @slot
@@ -115,7 +120,7 @@ const metadata = {
 		 * <b>Notes:</b>
 		 * <ul>
 		 * <li>Avalaible options are <code>All</code>, <code>Inner</code>, and <code>None</code>.</li>
-		 * <li>When set to <code>None</code>, none of the items is separated by horizontal lines.</li>
+		 * <li>When set to <code>None</code>, none of the items are separated by horizontal lines.</li>
 		 * <li>When set to <code>Inner</code>, the first item doesn't have a top separator and the last
 		 * item doesn't have a bottom separator.</li>
 		 * </ul>
@@ -127,6 +132,33 @@ const metadata = {
 		separators: {
 			type: ListSeparators,
 			defaultValue: ListSeparators.All,
+		},
+
+		/**
+		 * Defines if the component would fire the <code>loadMore</code> event
+		 * when the user scrolls to the bottom of the list, and helps achieving an "infinite scroll" effect
+		 * by adding new items each time.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 * @since 1.0.0-rc.6
+		 */
+		infiniteScroll: {
+			type: Boolean,
+		},
+
+		/**
+		 * Defines if the component would display a loading indicator at the bottom of the list.
+		 * It's especially useful, when combined with <code>infiniteScroll</code>.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 * @since 1.0.0-rc.6
+		 */
+		busy: {
+			type: Boolean,
 		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.List.prototype */ {
@@ -165,8 +197,8 @@ const metadata = {
 		 * in <code>SingleSelect</code> and <code>MultiSelect</code> modes.
 		 *
 		 * @event
-		 * @param {Array} selectedItems an array of the selected items.
-		 * @param {Array} previouslySelectedItems an array of the previously selected items.
+		 * @param {Array} selectedItems An array of the selected items.
+		 * @param {Array} previouslySelectedItems An array of the previously selected items.
 		 * @public
 		 */
 		selectionChange: {
@@ -176,6 +208,17 @@ const metadata = {
 				selectionComponentPressed: { type: Boolean }, // protected, indicates if the user used the selection components to change the selection
 			},
 		},
+
+		/**
+		 * Fired when the user scrolls to the bottom of the list.
+		 * <br>
+		 * <b>Note:</b> The event is fired when the <code>infiniteScroll</code> property is enabled.
+		 *
+		 * @event
+		 * @public
+		 * @since 1.0.0-rc.6
+		 */
+		loadMore: {},
 	},
 };
 
@@ -252,6 +295,18 @@ class List extends UI5Element {
 		this.addEventListener("ui5-_forwardAfter", this.onForwardAfter.bind(this));
 		this.addEventListener("ui5-_forwardBefore", this.onForwardBefore.bind(this));
 		this.addEventListener("ui5-_selectionRequested", this.onSelectionRequested.bind(this));
+	}
+
+	get shouldRenderH1() {
+		return !this.header.length && this.headerText;
+	}
+
+	get showNoDataText() {
+		return this.items.length === 0 && this.noDataText;
+	}
+
+	get showBusy() {
+		return this.busy || this.infiniteScroll;
 	}
 
 	onBeforeRendering() {
@@ -389,6 +444,13 @@ class List extends UI5Element {
 			event.stopImmediatePropagation();
 			event.preventDefault();
 		}
+	}
+
+	_onScroll(event) {
+		if (!this.infiniteScroll) {
+			return;
+		}
+		this.debounce(this.loadMore.bind(this, event.target), INFINITE_SCROLL_DEBOUNCE_RATE);
 	}
 
 	_onfocusin(event) {
@@ -555,12 +617,32 @@ class List extends UI5Element {
 		return focused;
 	}
 
-	get shouldRenderH1() {
-		return !this.header.length && this.headerText;
+	loadMore(el) {
+		const scrollTop = el.scrollTop;
+		const height = el.offsetHeight;
+		const scrollHeight = el.scrollHeight;
+
+		if (this.previousScrollPosition > scrollTop) { // skip scrolling upwards
+			this.previousScrollPosition = scrollTop;
+			return;
+		}
+		this.previousScrollPosition = scrollTop;
+
+		if (scrollHeight - BUSYINDICATOR_HEIGHT <= height + scrollTop) {
+			this.fireEvent("loadMore");
+		}
 	}
 
-	get showNoDataText() {
-		return this.items.length === 0 && this.noDataText;
+	debounce(fn, delay) {
+		clearTimeout(this.debounceInterval);
+		this.debounceInterval = setTimeout(() => {
+			this.debounceInterval = null;
+			fn();
+		}, delay);
+	}
+
+	static async onDefine() {
+		await BusyIndicator.define();
 	}
 }
 

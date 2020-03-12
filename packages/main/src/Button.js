@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -12,6 +12,9 @@ import { BUTTON_ARIA_TYPE_ACCEPT, BUTTON_ARIA_TYPE_REJECT, BUTTON_ARIA_TYPE_EMPH
 
 // Styles
 import buttonCss from "./generated/themes/Button.css.js";
+
+let isGlobalHandlerAttached = false;
+let activeButton = null;
 
 /**
  * @public
@@ -231,10 +234,16 @@ class Button extends UI5Element {
 		super();
 
 		this._deactivate = () => {
-			if (this.active) {
-				this.active = false;
+			if (activeButton) {
+				activeButton.active = false;
 			}
 		};
+
+		if (!isGlobalHandlerAttached) {
+			document.addEventListener("mouseup", this._deactivate);
+
+			isGlobalHandlerAttached = true;
+		}
 
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
@@ -249,14 +258,6 @@ class Button extends UI5Element {
 		this.hasIcon = !!this.icon;
 	}
 
-	onEnterDOM() {
-		document.addEventListener("mouseup", this._deactivate);
-	}
-
-	onExitDOM() {
-		document.removeEventListener("mouseup", this._deactivate);
-	}
-
 	_onclick(event) {
 		event.isMarked = "button";
 		const FormSupport = getFeature("FormSupport");
@@ -268,6 +269,7 @@ class Button extends UI5Element {
 	_onmousedown(event) {
 		event.isMarked = "button";
 		this.active = true;
+		activeButton = this;
 	}
 
 	_onmouseup(event) {

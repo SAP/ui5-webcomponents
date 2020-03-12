@@ -130,3 +130,32 @@ Notes:
  -----|-------------
  Node | Accepts both Text nodes and HTML Elements
  HTMLElement | Accepts HTML Elements only
+
+## Managed slots
+
+Determines whether the framework should manage the slots of this UI5 Web Component. 
+
+This setting is useful for UI5 Web Components that dont' just slot children, but additionally base their own 
+rendering on the presence/absence/type of children.
+
+```json
+{
+	"managedSlots": true
+}
+```
+
+When `managedSlots` is set to `true`:
+ - The framework will invalidate this UI5 Web Component, whenever its children are added/removed/changed.
+ - If any of this UI5 Web Component's children are custom elements, the framework will await until they are all
+ defined and upgraded, before rendering the component for the first time.
+ - The framework will create properties for each slot on this UI5 Web Component's instances for easier access
+ to the slotted children. For example, if there are `header`, `content` and `footer` slots, there will be
+ respectively `header`, `content` and `footer` properties of type `Array` holding the slotted children for each slot.
+ *Note:* You can use the `propertyName` metadata entity, described above, to modify these. 
+ 
+ In essence, set this to `true` if the UI5 Web Component you're developing should be aware of its children
+ for the purposes of its own state management and rendering (contrary to just displaying them).
+ 
+ An example of a component that would benefit from `managedSlots` is a Tab Container that monitors its children (Tabs)
+ in order to display a link on its Tab Strip for each Tab child. Therefore it would need to be invalidated whenever
+ Tabs are added/removed, in order to update its own state and visualization.

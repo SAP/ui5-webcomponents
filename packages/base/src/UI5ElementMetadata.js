@@ -78,11 +78,36 @@ class UI5ElementMetadata {
 	}
 
 	/**
+	 * Determines whether this UI5 Element has a default slot of type Node, therefore can slot text
+	 * @returns {boolean}
+	 */
+	canSlotText() {
+		const defaultSlot = this.getSlots().default;
+		return defaultSlot && defaultSlot.type === Node;
+	}
+
+	/**
 	 * Determines whether this UI5 Element supports any slots
 	 * @public
 	 */
 	hasSlots() {
 		return !!Object.entries(this.getSlots()).length;
+	}
+
+	/**
+	 * Determines whether this UI5 Element supports any slots with "individualSlots: true"
+	 * @public
+	 */
+	hasIndividualSlots() {
+		return this.slotsAreManaged() && Object.entries(this.getSlots()).some(([_slotName, slotData]) => slotData.individualSlots);
+	}
+
+	/**
+	 * Determines whether this UI5 Element needs to invalidate if children are added/removed/changed
+	 * @public
+	 */
+	slotsAreManaged() {
+		return !!this.metadata.managedSlots;
 	}
 
 	/**

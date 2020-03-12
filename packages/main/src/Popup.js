@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { getFirstFocusableElement, getLastFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import { isEscape } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
 
 // Styles
 import styles from "./generated/themes/Popup.css.js";
@@ -13,6 +13,7 @@ import { getNextZIndex } from "./popup-utils/PopupUtils.js";
  * @public
  */
 const metadata = {
+	managedSlots: true,
 	slots: /** @lends  sap.ui.webcomponents.main.Popup.prototype */ {
 
 		/**
@@ -22,7 +23,7 @@ const metadata = {
 		 * @public
 		 */
 		"default": {
-			type: Node,
+			type: HTMLElement,
 		},
 
 		/**

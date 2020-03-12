@@ -17,7 +17,7 @@ Table of contents:
 
 The `main` package provides general purpose UI building blocks such as buttons, labels, inputs and popups.
 
-For API documentation and samples, please check the [UI5 Web Components Playground](https://sap.github.io/ui5-webcomponents/playground/)
+For API documentation and samples, please check the [UI5 Web Components Playground](https://sap.github.io/ui5-webcomponents/master/playground/components).
 
 ### 1. Web Components
 
@@ -74,7 +74,7 @@ For additional `main` package assets (other themes, i18n and CLDR), use:
 import "@ui5/webcomponents/dist/features/InputSuggestions.js";
 ```
 
-The ```<ui5-input>``` element acts as an ```<input>``` with the Fiori design and added functionality, such as for example value state.
+The ```<ui5-input>``` element acts as an ```<input>``` with the Fiori design and added functionality, such as value state.
 
 An advanced feature is the so called "input suggestions", allowing the user to choose from a list of predefined options while typing.
 Since input suggestions may not always be needed, they do not come as part of the ```<ui5-input>``` itself.
@@ -106,10 +106,7 @@ If you however need to submit forms, you can import the module above and it will
 with functionality, allowing them to be submitted in forms (provided you set their <code>name</code> attribute) just as
 any standard HTML input element would be.
 
-In addition, the:
-- `ui5-button`
-
-element will be able to submit the closest ```form``` it's placed in, provided you set its `submits` attribute.
+In addition, the `ui5-button` element will be able to submit the closest ```form``` it's placed in, provided you set its `submits` attribute.
 
 <a name="fiori"></a>
 ## Fiori package (```@ui5/webcomponents-fiori```)
@@ -117,7 +114,7 @@ element will be able to submit the closest ```form``` it's placed in, provided y
 The `fiori` package provides essential building blocks, necessary to implement the Fiori UX concept, 
 such as a common header (`ShellBar`).
 
-For API documentation and samples, please check the [UI5 Web Components Playground](https://sap.github.io/ui5-webcomponents/playground/)
+For API documentation and samples, please check the [UI5 Web Components Playground](https://sap.github.io/ui5-webcomponents/playground/).
 
 ### 1. Web Components
 
@@ -192,7 +189,7 @@ If your app needs to be able to run additionally on the old **Edge (EdgeHTML-bas
 import "@ui5/webcomponents-base/dist/features/browsersupport/Edge.js";
 ```
 
-and if your app needs to run on both **Edge** and **IE11**, you should instead import:
+And if your app needs to run on both **Edge** and **IE11**, you should instead import:
 
 ```js
 import "@ui5/webcomponents-base/dist/features/browsersupport/IE11.js";
@@ -256,7 +253,7 @@ import { setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 setTheme("sap_belize_hcb");
 ```
 
-For more general information on assets, click [here](Assets.md).
+For more general information on assets, click [here](https://sap.github.io/ui5-webcomponents/playground/docs/assets/).
 
 Find out how you can bundle your themes more efficiently [here](Assets.md#bundling).
 
@@ -285,22 +282,22 @@ Example:
 </script>
 ```
 
-For more general information on assets, click [here](Assets.md).
+For more general information on assets, click [here](https://sap.github.io/ui5-webcomponents/playground/docs/assets/).
 
 Find out how you can bundle your i18n texts more efficiently [here](Assets.md#bundling).
 
 ### 4. Advanced calendar types
 
 ```js
-import "@ui5/webcomponents-base/dist/features/calendar/Buddhist.js";
-import "@ui5/webcomponents-base/dist/features/calendar/Islamic.js";
-import "@ui5/webcomponents-base/dist/features/calendar/Japanese.js";
-import "@ui5/webcomponents-base/dist/features/calendar/Persian.js";
+import "@ui5/webcomponents-utils/dist/features/calendar/Buddhist.js";
+import "@ui5/webcomponents-utils/dist/features/calendar/Islamic.js";
+import "@ui5/webcomponents-utils/dist/features/calendar/Japanese.js";
+import "@ui5/webcomponents-utils/dist/features/calendar/Persian.js";
 ```
 
 The `ui5-datepicker` web component supports Gregorian Calendar by default.
 
-In order to to be able to use Buddhist, Islamic, Japanese or Persian calendar with this web component
+In order to be able to use Buddhist, Islamic, Japanese, or Persian calendar with this web component
 (by setting its `primaryCalendarType` property), you should import one or more of the modules above.
 
 <a name="config"></a>
@@ -316,7 +313,7 @@ import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationM
 import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSettings.js";
 ```
 
-For more details, please check [Configuration](Configuration.md)
+For more details, please check [Configuration](https://sap.github.io/ui5-webcomponents/playground/docs/configuration/).
 
 ### 6. Assets registration
 
@@ -326,7 +323,7 @@ In order to register a **custom theme**:
 import { registerThemeProperties } from "@ui5/webcomponents-base/dist/AssetRegistry.js"
 ```
 
-and then call the method above to register CSS Variables for each theme/package pair.
+And then call the method above to register CSS Variables for each theme/package pair.
 
 You can pass the parameters directly, as an object, or as a URL:
 1) Pass the CSS Vars as a string directly.

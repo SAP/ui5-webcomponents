@@ -19,6 +19,7 @@ var THEMES = {
   "sap_fiori_3_dark": "fiori--dark",
   "sap_belize": "belize",
   "sap_belize_hcb": "hcb",
+  "sap_belize_hcw": "hcw",
 }
 
 function toggleSettings() {

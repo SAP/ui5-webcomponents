@@ -226,14 +226,34 @@
 		<h2>Icon and Text</h2>
 
 		<ui5-tabcontainer show-overflow="true">
-			<ui5-tab icon="sap-icon://card" text="Tab 1" additional-text="123" selected>
+			<ui5-tab icon="sap-icon://card" text="Tab 1" additional-text="123">
 				<div style="height: 300px">
 					<h4>Content with set height: 300px</h4>
 					<ui5-button>Button 11</ui5-button>
 					<ui5-button>Button 12</ui5-button>
 				</div>
 			</ui5-tab>
-			<ui5-tab icon="sap-icon://menu2" text="Tab 2" additional-text="444">
+			<ui5-tab icon="sap-icon://menu2" text="Tab 2" additional-text="444" selected>
+				<ui5-button>Button 2</ui5-button>
+			</ui5-tab>
+			<ui5-tab icon="sap-icon://employee" text="Tab 3" additional-text="123">
+				<ui5-button>Button 3</ui5-button>
+			</ui5-tab>
+		</ui5-tabcontainer>
+	</section>
+
+	<section>
+		<h2>Icon and Text with tabLayout="Inline"</h2>
+
+		<ui5-tabcontainer show-overflow="true" tab-layout="Inline">
+			<ui5-tab icon="sap-icon://card" text="Tab 1" additional-text="123">
+				<div style="height: 300px">
+					<h4>Content with set height: 300px</h4>
+					<ui5-button>Button 11</ui5-button>
+					<ui5-button>Button 12</ui5-button>
+				</div>
+			</ui5-tab>
+			<ui5-tab icon="sap-icon://menu2" text="Tab 2" additional-text="444" selected>
 				<ui5-button>Button 2</ui5-button>
 			</ui5-tab>
 			<ui5-tab icon="sap-icon://employee" text="Tab 3" additional-text="123">
@@ -246,14 +266,31 @@
 		<h2>Text and additional text</h2>
 
 		<ui5-tabcontainer show-overflow="true">
-			<ui5-tab text="Tab 1" additional-text="additional" selected>
+			<ui5-tab text="Tab 1" additional-text="additional">
 				<ui5-button>Button 11</ui5-button>
 				<ui5-button>Button 12</ui5-button>
 			</ui5-tab>
-			<ui5-tab text="Tab 2" additional-text="additional">
+			<ui5-tab text="Tab 2" additional-text="additional" selected>
 				<ui5-button>Button 2</ui5-button>
 			</ui5-tab>
 			<ui5-tab text="Tab 3" additional-text="additional">
+				<ui5-button>Button 3</ui5-button>
+			</ui5-tab>
+		</ui5-tabcontainer>
+	</section>
+
+	<section>
+		<h2>Text and additional text with tabLayout="Inline"</h2>
+
+		<ui5-tabcontainer show-overflow="true" tab-layout="Inline">
+			<ui5-tab text="Monitors" additional-text="10">
+				<ui5-button>Button 11</ui5-button>
+				<ui5-button>Button 12</ui5-button>
+			</ui5-tab>
+			<ui5-tab text="Cameras" additional-text="2" selected>
+				<ui5-button>Button 2</ui5-button>
+			</ui5-tab>
+			<ui5-tab text="Rooms" additional-text="16">
 				<ui5-button>Button 3</ui5-button>
 			</ui5-tab>
 		</ui5-tabcontainer>

@@ -65,6 +65,18 @@
 	z-index: 1;
 }
 
+slot[name="profile"] {
+	min-width: 0;
+}
+
+::slotted(ui5-avatar) {
+	min-width: 0;
+	width: 2.25rem;
+	height: 2.25rem;
+	padding: .25rem;
+	background-color: transparent;
+}
+
 .ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive::-moz-focus-inner {
 	border: none;
 }
@@ -286,7 +298,7 @@
 	cursor: pointer;
 }
 
-:host(:not([show-block-layer])) .ui5-shellbar-search-field {
+:host(:not([show-search-field])) .ui5-shellbar-search-field {
 	display: none;
 }
 
@@ -303,8 +315,8 @@
 	position: relative;
 }
 
-:host([notification-count]) .ui5-shellbar-bell-button::before {
-	content: attr(data-ui5-notification-count);
+:host([notification-count]) .ui5-shellbar-bell-button::before,
+ui5-icon[data-count]::before {
 	position: absolute;
 	width: auto;
 	height: 1rem;
@@ -324,22 +336,16 @@
 	box-sizing: border-box;
 }
 
+:host([notification-count]) .ui5-shellbar-bell-button::before {
+	content: attr(data-ui5-notification-count);
+}
+
+ui5-icon[data-count]::before {
+	content: attr(data-count);
+}
+
 .ui5-shellbar-menu-button {
 	margin-left: 0.5rem;
-}
-
-.ui5-shellbar-block-layer {
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	position: fixed;
-	outline: 0 none;
-	z-index: 100;
-}
-
-:host(:not([show-block-layer])) .ui5-shellbar-block-layer {
-	display: none;
 }
 
 .ui5-shellbar-search-field {
@@ -352,26 +358,19 @@
 
 ::slotted(ui5-input) {
 	background-color: var(--sapShellColor);
-	border: 1px solid var(--sapShell_BorderColor_Lighten30);
+	border: 1px solid var(--sapShell_InteractiveBorderColor);
 	color: var(--sapShell_TextColor);
 	height: 100%;
 }
 
 ::slotted(ui5-input:hover) {
 	background: var(--sapShell_Hover_Background);
-	border: 1px solid var(--sapShell_BorderColor_Lighten30);
 }
 
 ::slotted(ui5-input[focused]) {
 	outline: 1px dotted var(--sapContent_ContrastFocusColor);
 }
 
-:host([show-block-layer]) .ui5-shellbar-search-button {
-	background: var(--sapHighlightColor);
-	color: var(--sapShell_Active_TextColor);
-	border-top-left-radius: 0;
-	border-bottom-left-radius: 0;
-}
 
 .ui5-shellbar-co-pilot-placeholder {
 	width: 2.75rem;

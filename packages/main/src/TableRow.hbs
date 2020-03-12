@@ -4,19 +4,26 @@
 	@focusin="{{_onfocusin}}"
 	@ui5-_cellclick="{{_oncellclick}}"
 	data-sap-focus-ref>
+	{{#if shouldPopin}}
 		{{#each visibleCells}}
 			<slot name="{{this._individualSlot}}"></slot>
 		{{/each}}
-</tr>
+	{{else}}
+		{{#each cells}}
+			<slot name="{{this._individualSlot}}"></slot>
+		{{/each}}
+	{{/if}}
+</tr>	
 
-
-{{#each popinCells}}
-	<tr class="ui5-table-popin-row" @ui5-_cellclick="{{_oncellclick}}">
-		<td colspan="{{../visibleCellsCount}}">
-			<span class="ui5-table-row-popin-title">{{this.popinText}}:</span>
-			<div>
-				<slot name="{{this.cell._individualSlot}}"></slot>
-			</div>
-		</td>
-	</tr>
-{{/each}}
+{{#if shouldPopin}}
+	{{#each popinCells}}
+		<tr class="ui5-table-popin-row" @ui5-_cellclick="{{_oncellclick}}">
+			<td colspan="{{../visibleCellsCount}}">
+				<span class="ui5-table-row-popin-title">{{this.popinText}}:</span>
+				<div>
+					<slot name="{{this.cell._individualSlot}}"></slot>
+				</div>
+			</td>
+		</tr>
+	{{/each}}
+{{/if}}

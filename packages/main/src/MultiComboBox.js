@@ -3,7 +3,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import {
 	isShow, isDown, isBackSpace, isSpace,
-} from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-down.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { isIE, isPhone } from "@ui5/webcomponents-base/dist/Device.js";
@@ -38,6 +38,7 @@ import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverComm
  */
 const metadata = {
 	tag: "ui5-multi-combobox",
+	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.MultiComboBox.prototype */ {
 		/**
 		 * Defines the <code>ui5-multi-combobox</code> items.
@@ -87,7 +88,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines if the user input will be prevented if no matching item has been found
+		 * Defines if the user input will be prevented, if no matching item has been found
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -100,7 +101,7 @@ const metadata = {
 		/**
 		 * Defines whether <code>ui5-multi-combobox</code> is in disabled state.
 		 * <br><br>
-		 * <b>Note:</b> A disabled <code>ui5-multi-combobox</code> is completely uninteractive.
+		 * <b>Note:</b> A disabled <code>ui5-multi-combobox</code> is completely noninteractive.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -124,7 +125,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether the <code>ui5-multi-combobox</code> is readonly.
+		 * Defines whether the <code>ui5-multi-combobox</code> is read-only.
 		 * <br><br>
 		 * <b>Note:</b> A read-only <code>ui5-multi-combobox</code> is not editable,
 		 * but still provides visual feedback upon user interaction.
@@ -233,11 +234,9 @@ const metadata = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * The <code>ui5-multi-combobox</code> component provides a list box with items and a text field allowing the user to either type a value directly into the control or choose from the list of existing items.
+ * The <code>ui5-multi-combobox</code> component provides a list box with items and a text field allowing the user to either type a value directly into the control, or choose from the list of existing items.
  *
- * A drop-down list for selecting and filtering values.
- * <h3>Description</h3>
- * The <code>ui5-multi-combobox</code> component is commonly used to enable users to select one or more options from a predefined list. The control provides an editable input field to filter the list, and a dropdown arrow of available options.
+ * It is a drop-down list for selecting and filtering values, commonly used to enable users to select one or more options from a predefined list. The control provides an editable input field to filter the list, and a dropdown arrow of available options.
  * The select options in the list have checkboxes that permit multi-selection. Entered values are displayed as tokens.
  * <h3>Structure</h3>
  * The <code>ui5-multi-combobox</code> consists of the following elements:
@@ -251,16 +250,16 @@ const metadata = {
  *
  * The <code>ui5-multi-combobox</code> provides advanced keyboard handling.
  *
- * <h2>Picker</h2>
+ * <h4>Picker</h4>
  * If the <code>ui5-multi-combobox</code> is focused,
  * you can open or close the drop-down by pressing <code>F4</code>, <code>ALT+UP</code> or <code>ALT+DOWN</code> keys.
  * Once the drop-down is opened, you can use the <code>UP</code> and <code>DOWN</code> arrow keys
  * to navigate through the available options and select one by pressing the <code>Space</code> or <code>Enter</code> keys.
  * <br>
  *
- * <h2>Tokens</h2>
+ * <h4>Tokens</h4>
  * <ul>
- * <li> Left/Right arrow keys - moves the focus selection form the currently focues token to the previous/next one (if available). </li>
+ * <li> Left/Right arrow keys - moves the focus selection form the currently focused token to the previous/next one (if available). </li>
  * <li> Delete -  deletes the token and focuses the previous token. </li>
  * <li> Backspace -  deletes the token and focus the next token. </li>
  * </ul>
@@ -276,6 +275,7 @@ const metadata = {
  * @extends UI5Element
  * @tagname ui5-multi-combobox
  * @public
+ * @appenddocs MultiComboBoxItem
  * @since 0.11.0
  */
 class MultiComboBox extends UI5Element {
@@ -458,7 +458,7 @@ class MultiComboBox extends UI5Element {
 
 	_filterItems(value) {
 		return this.items.filter(item => {
-			return item.textContent && item.textContent.toLowerCase().startsWith(value.toLowerCase());
+			return item.text && item.text.toLowerCase().startsWith(value.toLowerCase());
 		});
 	}
 

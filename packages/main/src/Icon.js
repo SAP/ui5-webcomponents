@@ -174,7 +174,7 @@ class Icon extends UI5Element {
 			return this.accessibleName;
 		}
 
-		return this.i18nBundle.getText(this.accData);
+		return this.i18nBundle.getText(this.accData) || undefined;
 	}
 
 	get dir() {

@@ -5,5 +5,4 @@
 	--_ui5_yearpicker_item_background_color: var(--sapList_Background_Darken3); /* darken(@sapList_Background, 3); */
 	--_ui5_yearpicker_item_hover_background_color: var(--sapList_Background_Darken3); /* darken(@sapList_Background, 3); */
 	--_ui5_yearpicker_item_focus_background_color: var(--sapList_Background_Darken3); /* darken(@sapList_Background, 3); */
-	--_ui5_yearpicker_item_selected_focus: var(--sapSelectedColor_Darken15); /* darken(var(--sapSelectedColor), 10); */
 }

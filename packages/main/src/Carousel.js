@@ -6,7 +6,7 @@ import {
 	isRight,
 	isDown,
 	isUp,
-} from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import {
 	fetchI18nBundle,
 	getI18nBundle,
@@ -83,6 +83,7 @@ const metadata = {
 			defaultValue: CarouselArrowsPlacement.Content,
 		},
 	},
+	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.Carousel.prototype */ {
 		/**
 		 * Defines the content of the <code>ui5-carousel</code>.
@@ -111,11 +112,13 @@ const metadata = {
  * <h3>Usage</h3>
  *
  * When to use
- *   - The items you want to display are very different from each other.
- *   - You want to display the items one after the other.
+ *
+ * - The items you want to display are very different from each other.
+ * - You want to display the items one after the other.
  * When not to use
- *   - The items you want to display need to be visible at the same time.
- *   - The items you want to display are uniform and very similar
+ *
+ * - The items you want to display need to be visible at the same time.
+ * - The items you want to display are uniform and very similar
  *
  * For the <code>ui5-carousel</code>
  * <h3>ES6 Module Import</h3>
@@ -246,7 +249,7 @@ class Carousel extends UI5Element {
 	get styles() {
 		return {
 			content: {
-				"left": `-${this.selectedIndex * 100}%`,
+				transform: `translateX(-${this.selectedIndex * 100}%)`,
 			},
 		};
 	}

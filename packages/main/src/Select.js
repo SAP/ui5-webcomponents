@@ -7,7 +7,7 @@ import {
 	isEnter,
 	isEscape,
 	isShow,
-} from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
@@ -35,6 +35,7 @@ import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverComm
  */
 const metadata = {
 	tag: "ui5-select",
+	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.Select.prototype */ {
 
 		/**
@@ -144,6 +145,7 @@ const metadata = {
 /**
  * @class
  *
+ * <h3 class="comment-api-title">Overview</h3>
  * The <code>ui5-select</code> component is used to create a drop-down list.
  * The items inside the <code>ui5-select</code> define the available options by using the <code>ui5-option</code> component.
  *
@@ -225,7 +227,7 @@ class Select extends UI5Element {
 	}
 
 	/**
-	 * Currently selected option
+	 * Currently selected option.
 	 * @readonly
 	 * @type { ui5-option }
 	 * @public

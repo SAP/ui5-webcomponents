@@ -47,6 +47,7 @@
 				{{#if this.icon}}
 					<ui5-icon
 						tabindex="{{this._tabIndex}}"
+						data-count="{{this.count}}"
 						data-ui5-notification-count="{{../notificationCount}}"
 						data-ui5-external-action-item-id="{{this.refItemid}}"
 						class="{{this.classes}}"
@@ -56,27 +57,22 @@
 						@click={{this.press}}>
 					</ui5-icon>
 				{{else}}
-					<div
-						tabindex="{{this._tabIndex}}"
+					<slot
+						name="profile"
 						id="{{this.id}}"
 						style="{{this.style}}"
 						class="{{this.classes}}"
-						@click="{{this.press}}"
-					>
-						<span style="{{this.subStyles}}" class="{{this.subclasses}}"></span>
-					</div>
+						tabindex="{{this._tabIndex}}"
+						@click={{this.press}}
+					></slot>
 				{{/if}}
 			{{/each}}
 		</div>
 	</div>
 
-	<div class="ui5-shellbar-block-layer">
-	</div>
-
 	<div id="{{_id}}-searchfield-wrapper"
 		class="ui5-shellbar-search-field"
 		style="{{styles.searchField}}"
-		@focusout={{_searchField.focusout}}
 	>
 		{{#if searchField.length}}
 			<slot name="searchField"></slot>

@@ -1,7 +1,17 @@
+
 const assert = require("chai").assert;
 
 describe("Component Behavior", () => {
 	browser.url("http://localhost:8081/test-resources/pages/ShellBar.html");
+
+	describe("ui5-shellbar-item", () => {
+		it("tests count property", () => {
+			const shellbar = browser.$("#shellbarwithitems");
+			const icon = shellbar.shadow$("ui5-icon[data-count]");
+
+			assert.strictEqual(icon.getAttribute("data-count"), '42', "Count property propagates to ui5-icon");
+		})
+	});
 
 	describe("Responsiveness", () => {
 
@@ -213,7 +223,7 @@ describe("Component Behavior", () => {
 			});
 
 			it("tests profilePress event", () => {
-				const profileIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-image-button");
+				const profileIcon = browser.$("#shellbar").$("ui5-avatar");
 				const input = browser.$("#press-input");
 
 				profileIcon.click();
@@ -262,19 +272,17 @@ describe("Component Behavior", () => {
 				assert.strictEqual(input.getValue(), "Application 2", "Input value is set by click event of the second menu item");
 			});
 
-			it("tests if searchfield appears when clicking on search icon", () => {
+			it("tests if searchfield toggles when clicking on search icon", () => {
 				const searchIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-search-button");
 				const searchField = browser.$("#shellbar ui5-input");
-				const blockLayer = browser.$("#shellbar").shadow$(".ui5-shellbar-block-layer");
 
 				assert.strictEqual(searchField.isDisplayed(), false, "Search is hidden by default");
 
 				searchIcon.click();
 				assert.strictEqual(searchField.isDisplayed(), true, "Search is visible after clicking on icon");
 
-				// focus out the input
-				blockLayer.click();
-				assert.strictEqual(searchField.isDisplayed(), false, "Search is hidden when focussed out");
+				searchIcon.click();
+				assert.strictEqual(searchField.isDisplayed(), false, "Search is hidden after clicking again on the icon");
 			});
 		});
 
@@ -315,7 +323,7 @@ describe("Component Behavior", () => {
 			});
 
 			it("tests profilePress event", () => {
-				const profileIcon = browser.$("#shellbar").shadow$(".ui5-shellbar-image-button");
+				const profileIcon = browser.$("#shellbar").$("ui5-avatar");
 				const input = browser.$("#press-input");
 
 				profileIcon.click();
@@ -335,25 +343,23 @@ describe("Component Behavior", () => {
 				assert.strictEqual(input.getValue(), "Product Switch", "Input value is set by click event of Product Switch icon");
 			});
 
-			it("tests if searchfield appears when clicking on search icon", () => {
+			it("tests if searchfield toggles when clicking on search icon", () => {
 				const overflowButton = browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
 				const searchField = browser.$("#shellbar ui5-input");
 				const staticAreaItemClassName = browser.getStaticAreaItemClassName("#shellbar")
 				const overflowPopover = browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-shellbar-overflow-popover");
 				const searchListItem = overflowPopover.$("ui5-list ui5-li:nth-child(1)");
-				const blockLayer = browser.$("#shellbar").shadow$(".ui5-shellbar-block-layer");
-				
 
 				assert.strictEqual(searchField.isDisplayed(), false, "Search is hidden by default");
 
 				overflowButton.click();
 				searchListItem.click();
 
-				assert.strictEqual(searchField.isDisplayed(), true, "Search is visible after clicking on icon");
+				assert.strictEqual(searchField.isDisplayed(), true, "Search is visible after clicking on the search icon within the overflow");
 
-				// focus out the input
-				blockLayer.click();
-				assert.strictEqual(searchField.isDisplayed(), false, "Search is hidden when focussed out");
+				overflowButton.click();
+				searchListItem.click();
+				assert.strictEqual(searchField.isDisplayed(), false, "Search is hidden after clicking on the search icon agian");
 			});
 		});
 	});

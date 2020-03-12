@@ -4,13 +4,16 @@
 import "@ui5/webcomponents-base/dist/features/OpenUI5Support.js";
 
 // Calendars
-import "@ui5/webcomponents-base/dist/features/calendar/Buddhist.js";
-import "@ui5/webcomponents-base/dist/features/calendar/Islamic.js";
-import "@ui5/webcomponents-base/dist/features/calendar/Japanese.js";
-import "@ui5/webcomponents-base/dist/features/calendar/Persian.js";
+import "@ui5/webcomponents-utils/dist/features/calendar/Buddhist.js";
+import "@ui5/webcomponents-utils/dist/features/calendar/Islamic.js";
+import "@ui5/webcomponents-utils/dist/features/calendar/Japanese.js";
+import "@ui5/webcomponents-utils/dist/features/calendar/Persian.js";
 
 // ESM bundle targets Edge + browsers with native support
 import "@ui5/webcomponents-base/dist/features/browsersupport/Edge.js";
+
+// CLDR
+import getLocaleData from "@ui5/webcomponents-utils/dist/locale/getLocaleData.js";
 
 // Icons
 import "@ui5/webcomponents-icons/dist/Assets.js";
@@ -30,8 +33,10 @@ import Carousel from "./dist/Carousel.js";
 import CheckBox from "./dist/CheckBox.js";
 import ComboBox from "./dist/ComboBox.js";
 import ComboBoxItem from "./dist/ComboBoxItem.js";
+import MultiComboBoxItem from "./dist/MultiComboBoxItem.js";
 import DatePicker from "./dist/DatePicker.js";
 import Dialog from "./dist/Dialog.js";
+import FileUploader from "./dist/FileUploader.js";
 import Icon from "./dist/Icon.js";
 import Input from "./dist/Input.js";
 import Label from "./dist/Label.js";
@@ -67,6 +72,7 @@ import CustomListItem from "./dist/CustomListItem.js";
 import GroupHeaderListItem from "./dist/GroupHeaderListItem.js";
 
 
+
 // used in test pages
 import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
 window.RenderScheduler = RenderScheduler;
@@ -91,4 +97,5 @@ window["sap-ui-webcomponents-bundle"] = {
 		getFirstDayOfWeek,
 	},
 	getIconNames,
+	getLocaleData,
 };

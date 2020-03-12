@@ -8,7 +8,7 @@ import {
 	isDown,
 	isSpace,
 	isEnter,
-} from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 // import Icon from "./Icon.js";
@@ -34,6 +34,7 @@ import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverComm
  */
 const metadata = {
 	tag: "ui5-input",
+	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.Input.prototype */ {
 
 		/**
@@ -86,9 +87,9 @@ const metadata = {
 	properties: /** @lends  sap.ui.webcomponents.main.Input.prototype */  {
 
 		/**
-		 * Defines whether <code>ui5-input</code> is in disabled state.
+		 * Defines whether the <code>ui5-input</code> is in disabled state.
 		 * <br><br>
-		 * <b>Note:</b> A disabled <code>ui5-input</code> is completely non interactive.
+		 * <b>Note:</b> A disabled <code>ui5-input</code> is completely noninteractive.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -205,7 +206,7 @@ const metadata = {
 		 * Defines whether the <code>ui5-input</code> should show suggestions, if such are present.
 		 * <br><br>
 		 * <b>Note:</b>
-		 * Don`t forget to import the <code>InputSuggestions</code> module from "@ui5/webcomponents/dist/features/InputSuggestions.js" to enable this functionality.
+		 * Don`t forget to import the <code>InputSuggestions</code> module from <code>"@ui5/webcomponents/dist/features/InputSuggestions.js"</code> to enable this functionality.
 		 * @type {Boolean}
 		 * @defaultvalue false
 		 * @public
@@ -275,7 +276,7 @@ const metadata = {
 		submit: {},
 
 		/**
-		 * Fired when a suggestion item, which displayed in the suggestion popup, is selected.
+		 * Fired when a suggestion item, that is displayed in the suggestion popup, is selected.
 		 *
 		 * @event
 		 * @param {HTMLElement} item The selected item
@@ -299,13 +300,13 @@ const metadata = {
  * that are displayed in a popover right under the input.
  * <br><br>
  * The text field can be editable or read-only (<code>readonly</code> property),
- * and and it can be enabled or disabled (<code>enabled</code> property).
+ * and it can be enabled or disabled (<code>enabled</code> property).
  * To visualize semantic states, such as "error" or "warning", the <code>valueState</code> property is provided.
  * When the user makes changes to the text, the change event is fired,
  * which enables you to react on any text change.
  * <br><br>
  * <b>Note:</b> If you are using the <code>ui5-input</code> as a single npm module,
- * don"t forget to import the <code>InputSuggestions</code> module from
+ * don't forget to import the <code>InputSuggestions</code> module from
  * "@ui5/webcomponents/dist/features/InputSuggestions.js"
  * to enable the suggestions functionality.
  *
