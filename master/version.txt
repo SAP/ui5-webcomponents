@@ -1,5 +1,5 @@
-commit 074601274d2089a7fe889df5b88135265f52eaa4
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Mar 11 16:30:40 2020 +0200
+commit ef2886b7e670f2e1654ef844d19e57c254919a39
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Thu Mar 12 12:02:34 2020 +0200
 
-    chore: remove more derived params (#1275)
+    feat(ui5-dialog): improve accessibility (#1288)
