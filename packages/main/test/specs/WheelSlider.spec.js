@@ -7,6 +7,7 @@ describe("Wheel Slider general interaction", () => {
 		browser.$("#wheelslider").setProperty("_items",["1","2","3","4","5","6","7"]);
 		browser.$("#wheelslider").setProperty("value","1");
 		browser.$("#wheelslider").setProperty("_expanded",true);
+		browser.$("body").setAttribute("class", "sapUiSizeCompact");
 	});
 
 	it("tests slider's label rendering", () => {
