@@ -101,7 +101,6 @@ describe("Toast general interaction", () => {
 	it("tests closing of toast", () => {
 		const button = browser.$("#wcBtnShowToastMS");
 		const toast = browser.$("#wcToastMS");
-		const toastShadowContent = toast.shadow$(".ui5-toast-root");
 
 		button.click();
 
@@ -110,8 +109,6 @@ describe("Toast general interaction", () => {
 
 		assert.notOk(toast.getProperty("open"),
 		"Open property should be false after Toast is closed");
-		assert.notOk(toastShadowContent.isDisplayedInViewport(),
-		"Toast's content div shouldn't be displayed in the viewport after its closing.")
 	});
 
 	it("tests minimum allowed duration", () => {
