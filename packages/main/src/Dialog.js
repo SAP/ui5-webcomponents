@@ -143,7 +143,7 @@ class Dialog extends Popup {
 
 	get headerAriaLabelledBy() {
 		if (this.headerText || this.header) {
-			return `${this._id}-popup-headinng`;
+			return `${this._id}-popup-heading`;
 		}
 		return undefined;
 	}
