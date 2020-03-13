@@ -4,7 +4,7 @@
 
 **DEPRECATED!!!**
 
-This package is now deprecated in favor of [@ui5/webcomponents-utils](https://www.npmjs.com/package/@ui5/webcomponents-utils).
+This package is now deprecated in favor of [@ui5/webcomponents-localization](https://www.npmjs.com/package/@ui5/webcomponents-localization).
 
 [![Travis CI Build Status](https://travis-ci.org/SAP/ui5-webcomponents.svg?branch=master)](https://travis-ci.org/SAP/ui5-webcomponents)
 [![npm Package Version](https://badge.fury.io/js/%40ui5%2Fwebcomponents.svg)](https://www.npmjs.com/package/@ui5/webcomponents)
