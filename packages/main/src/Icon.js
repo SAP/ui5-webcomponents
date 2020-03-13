@@ -9,6 +9,8 @@ import IconTemplate from "./generated/templates/IconTemplate.lit.js";
 // Styles
 import iconCss from "./generated/themes/Icon.css.js";
 
+const ICON_NOT_FOUND = "ICON_NOT_FOUND";
+
 /**
  * @public
  */
@@ -71,6 +73,13 @@ const metadata = {
 		accData: {
 			type: Object,
 			noAttribute: true,
+		},
+
+		/**
+		* @private
+		*/
+		invalid: {
+			type: Boolean,
 		},
 	},
 	events: {
@@ -154,13 +163,19 @@ class Icon extends UI5Element {
 		}
 		let iconData = getIconDataSync(name);
 		if (!iconData) {
-			try {
-				iconData = await getIconData(name);
-			} catch (e) {
-				/* eslint-disable-next-line */
-				return console.warn(`Required icon is not registered. You can either import the icon as a module in order to use it e.g. "@ui5/webcomponents-icons/dist/icons/${name.replace("sap-icon://", "")}.js", or setup a JSON build step and import "@ui5/webcomponents-icons/dist/Assets.js".`);
-			}
+			iconData = await getIconData(name);
 		}
+
+		if (iconData === ICON_NOT_FOUND) {
+			this.invalid = true;
+			return console.warn(`Required icon is not registered. You can either import the icon as a module in order to use it e.g. "@ui5/webcomponents-icons/dist/icons/${name.replace("sap-icon://", "")}.js", or setup a JSON build step and import "@ui5/webcomponents-icons/dist/Assets.js".`);
+		}
+
+		if (!iconData) {
+			this.invalid = true;
+			return console.warn(`Required icon is not registered. Invalid icon name: ${this.name}`);
+		}
+
 		this.pathData = iconData.pathData;
 		this.accData = iconData.accData;
 	}
