@@ -3,7 +3,7 @@ const scripts = {
 	lint: "eslint . --config config/.eslintrc.js",
 	build: {
 		"default": "path-exists dist/ || nps build.all",
-		all: "nps lint clean copy.used-modules copy.cldr copy.overlay build.replace-amd build.replace-export-true build.replace-export-false build.amd-to-es6 build.replace-global-core-usage build.esm-abs-to-rel copy.src copy.belize-fonts",
+		all: "nps lint clean copy.used-modules copy.cldr copy.overlay build.replace-amd build.replace-export-true build.replace-export-false build.amd-to-es6 build.replace-global-core-usage build.esm-abs-to-rel copy.src",
 		"replace-amd": "replace-in-file sap.ui.define define dist/**/*.js",
 		"replace-export-true": `replace-in-file ", /* bExport= */ true" "" dist/**/*.js`,
 		"replace-export-false": `replace-in-file ", /* bExport= */ false" "" dist/**/*.js`,
@@ -15,7 +15,6 @@ const scripts = {
 		"used-modules": "node ./lib/copy-list/index.js ./used-modules.txt dist/",
 		cldr: `copy-and-watch "../../node_modules/@openui5/sap.ui.core/src/sap/ui/core/cldr/*.json" dist/generated/assets/cldr/`,
 		overlay: `copy-and-watch "overlay/**/*.js" dist/`,
-		"belize-fonts": `copy-and-watch "../../node_modules/@openui5/themelib_sap_belize/src/sap/ui/core/themes/sap_belize/fonts/*.{ttf,woff,woff2}" dist/sap/ui/core/themes/sap_belize/fonts`,
 		src: `copy-and-watch "src/**/*.js" dist/`,
 	},
 	watch: {
