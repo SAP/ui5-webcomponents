@@ -1,15 +1,11 @@
 ![UI5 icon](https://raw.githubusercontent.com/SAP/ui5-webcomponents/master/docs/images/UI5_logo_wide.png)
 
-# UI5 Web Components - Utils
-
-**DEPRECATED!!!**
-
-This package is now deprecated in favor of [@ui5/webcomponents-localization](https://www.npmjs.com/package/@ui5/webcomponents-localization).
+# UI5 Web Components - Localization
 
 [![Travis CI Build Status](https://travis-ci.org/SAP/ui5-webcomponents.svg?branch=master)](https://travis-ci.org/SAP/ui5-webcomponents)
 [![npm Package Version](https://badge.fury.io/js/%40ui5%2Fwebcomponents.svg)](https://www.npmjs.com/package/@ui5/webcomponents)
 
-Wraps some date/time manipulation libraries and CLDR assets from the OpenUI5 core and adapts them to the needs of the UI5 Web Components project.
+Provides date/time and CLDR functionality for the purposes of building UI5 Web Components.
 
 ## Resources
 - [UI5 Web Components - README.md](https://github.com/SAP/ui5-webcomponents/blob/master/README.md)
