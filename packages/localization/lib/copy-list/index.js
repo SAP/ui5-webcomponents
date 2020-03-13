@@ -8,7 +8,12 @@ const dest = process.argv[3];
 const filesToCopy = fs.readFileSync(fileList).toString();
 // console.log(filesToCopy);
 
-const copyArgs = filesToCopy.split("\n").filter(file => file.length).map(moduleName => {
+// Support full-line comments starting with # in the used-modules.txt file
+const shouldCopy = file => file.length && !file.startsWith("#");
+
+const trimFile = file => file.trim();
+
+const copyArgs = filesToCopy.split("\n").map(trimFile).filter(shouldCopy).map(moduleName => {
     return "../../node_modules/@openui5/sap.ui.core/src/" + moduleName + " " + path.dirname(path.join(dest, moduleName));
 });
 
