@@ -1,3 +1,5 @@
+import { registerCldr, setCldrData } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
+
 /* eslint-disable camelcase */
 import ar from "../generated/assets/cldr/ar.json";
 import ar_EG from "../generated/assets/cldr/ar_EG.json";
@@ -72,8 +74,6 @@ import zh_CN from "../generated/assets/cldr/zh_CN.json";
 import zh_HK from "../generated/assets/cldr/zh_HK.json";
 import zh_SG from "../generated/assets/cldr/zh_SG.json";
 import zh_TW from "../generated/assets/cldr/zh_TW.json";
-
-import { registerCldr, setCldrData } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
 
 const cldrData = {
 	ar,
