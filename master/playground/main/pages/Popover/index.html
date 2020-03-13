@@ -65,9 +65,9 @@
 	<ui5-button id="btn">Click me !</ui5-button>
 
 	<ui5-popover header-text="My Heading" id="pop" style="width: 300px" placement-type="Top">
-		<!-- <div slot="header">
-			Hello World
-		</div> -->
+		<div slot="header">
+			<ui5-button id="first-focusable">I am in the header</ui5-button>
+		</div>
 
 		<ui5-list>
 			<ui5-li>Hello</ui5-li>
@@ -81,6 +81,8 @@
 		<ui5-button id='popbtn'>Open Popover</ui5-button>
 
 		<ui5-popover placement-type="Bottom" no-arrow id='danger'>
+
+
 			<ui5-list>
 				<ui5-li>Hello</ui5-li>
 				<ui5-li>World</ui5-li>
@@ -115,7 +117,7 @@
 		<!-- <ui5-datepicker></ui5-datepicker> -->
 
 		<div slot="footer">
-			Hello World Footer
+			<ui5-button>I am in the footer</ui5-button>
 		</div>
 	</ui5-popover>
 

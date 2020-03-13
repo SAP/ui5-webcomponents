@@ -1,5 +1,5 @@
-commit b5e13375cc2e5f5bd45f0c4afbe2d4dc3eeedff3
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Mar 13 12:36:22 2020 +0200
+commit 0e0344c88fa5e27cac06835c13b84e17edc739ca
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Fri Mar 13 12:51:04 2020 +0200
 
-    chore(framework): Create a localization package and deprecate utils (#1296)
+    fix(ui5-popover): add header and footer to focus trapping (#1298)

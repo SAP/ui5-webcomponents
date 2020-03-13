@@ -436,7 +436,7 @@
   "63": {
     "id": "63",
     "title": "Popover",
-    "content": "&lt;!DOCTYPE html&gt; Popover Click me ! Hello World Again Open Popover Hello World Again Super Danger ! Hello World Again Hello World Hello World Footer Hello World Hello World Open Big Popover Opens modal popover! Hello Again Wooooooooooooooooooooooooooooorld Close Opens popover with initial focus! Hello Again Wold Close",
+    "content": "&lt;!DOCTYPE html&gt; Popover Click me ! I am in the header Hello World Again Open Popover Hello World Again Super Danger ! Hello World Again Hello World I am in the footer Hello World Hello World Open Big Popover Opens modal popover! Hello Again Wooooooooooooooooooooooooooooorld Close Opens popover with initial focus! Hello Again Wold Close",
     "url": "https://sap.github.io/ui5-webcomponents/master/playground/main/pages/Popover/",
     "relUrl": "/playground/main/pages/Popover/"
   },
