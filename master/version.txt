@@ -1,5 +1,7 @@
-commit 0c408d265c00a626f2bfd635950cacb363581274
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu Mar 12 15:55:38 2020 +0200
+commit 2f4fd6edc10390a72fbddfeae8a2b5efd09e916c
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Fri Mar 13 11:09:48 2020 +0200
 
-    fix(tools): The init package script now correctly has HCW (#1293)
+    fix(ui5-toast): keep toast open when hovered (#1294)
+    
+    Fixes: #1292
