@@ -668,7 +668,7 @@ class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	static _needsStaticArea() {
-		return typeof this.staticAreaTemplate === "function";
+		return typeof this.staticAreaTemplate === "function" || typeof this.staticAreaTemplate === "object";
 	}
 
 	/**

@@ -163,6 +163,13 @@ const metadata = {
 		_disableInitialFocus: {
 			type: Boolean,
 		},
+
+		/**
+		 * @private
+		 */
+		skipRegistryUpdate: {
+			type: Boolean,
+		},
 	},
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.Popover.prototype */ {
