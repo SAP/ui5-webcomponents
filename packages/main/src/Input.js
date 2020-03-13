@@ -260,6 +260,10 @@ const metadata = {
 		_wrapperAccInfo: {
 			type: Object,
 		},
+
+		_inputWidth: {
+			type: Integer,
+		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.Input.prototype */ {
 		/**
@@ -435,9 +439,6 @@ class Input extends UI5Element {
 
 		if (!this.firstRendering && !this.Suggestions && this._getPopover() && this.hasValueStateMessage) {
 			this.toggle(this.shouldDisplayOnlyValueStateMessage);
-			if (this._getPopover().contentDOM) {
-				this._getPopover().contentDOM.style.display = "none";
-			}
 		}
 
 		this.firstRendering = false;
@@ -547,7 +548,7 @@ class Input extends UI5Element {
 
 	_handleResize() {
 		if (this.hasValueStateMessage) {
-			this._getPopover().header[0].style.width = `${this.offsetWidth}px`;
+			this._inputWidth = this.offsetWidth;
 		}
 	}
 
@@ -569,10 +570,8 @@ class Input extends UI5Element {
 		}
 	}
 
-	toggle(bToggle) {
-		const toggle = bToggle !== undefined ? bToggle : !this.isOpened();
-
-		if (toggle) {
+	toggle(isToggled) {
+		if (isToggled) {
 			this.open();
 		} else {
 			this.close();
@@ -765,6 +764,18 @@ class Input extends UI5Element {
 				"ui5-input-valuestatemessage-error": this.valueState === ValueState.Error,
 				"ui5-input-valuestatemessage-warning": this.valueState === ValueState.Warning,
 				"ui5-input-valuestatemessage-information": this.valueState === ValueState.Information,
+			},
+		};
+	}
+
+	get styles() {
+		return {
+			root: {
+				"min-height": "1rem",
+				"box-shadow": "none",
+			},
+			header: {
+				"width": `${this._inputWidth}px`,
 			},
 		};
 	}

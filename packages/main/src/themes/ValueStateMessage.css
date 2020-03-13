@@ -1,9 +1,9 @@
 .ui5-input-valuestatemessage-root {
 	box-sizing: border-box;
 	display: inline-block;
-	color: #333;
-	font-size: .75rem;
-	font-family: "72", "72full", Arial, Helvetica, sans-serif;
+	color: var(--sapUiBaseColor);
+	font-size: var(--sapFontSmallSize);
+	font-family: var(--sapFontFamily);
 	padding: .3rem .625rem;
 	overflow: hidden;
 	text-overflow: ellipsis;
