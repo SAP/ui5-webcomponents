@@ -1,7 +1,5 @@
-commit 2f4fd6edc10390a72fbddfeae8a2b5efd09e916c
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Mar 13 11:09:48 2020 +0200
+commit b5e13375cc2e5f5bd45f0c4afbe2d4dc3eeedff3
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Fri Mar 13 12:36:22 2020 +0200
 
-    fix(ui5-toast): keep toast open when hovered (#1294)
-    
-    Fixes: #1292
+    chore(framework): Create a localization package and deprecate utils (#1296)
