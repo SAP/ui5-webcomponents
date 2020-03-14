@@ -32,29 +32,29 @@
 }
 
 :host(:not([placement])) .ui5-toast-root {
-	bottom: var(--_ui5_vertical_offset);
+	bottom: var(--_ui5_toast_vertical_offset);
 	left: 50%;
 	transform: translateX(-50%);
 }
 
 :host([placement="TopStart"]) .ui5-toast-root {
-	top: var(--_ui5_vertical_offset);
-	left: var(--_ui5_horizontal_offset);
+	top: var(--_ui5_toast_vertical_offset);
+	left: var(--_ui5_toast_horizontal_offset);
 }
 
 :host([placement="MiddleStart"]) .ui5-toast-root {
-	left: var(--_ui5_horizontal_offset);
+	left: var(--_ui5_toast_horizontal_offset);
 	top: 50%;
 	transform: translateY(-50%);
 }
 
 :host([placement="BottomStart"]) .ui5-toast-root {
-	left: var(--_ui5_horizontal_offset);
-	bottom: var(--_ui5_vertical_offset);
+	left: var(--_ui5_toast_horizontal_offset);
+	bottom: var(--_ui5_toast_vertical_offset);
 }
 
  :host([placement="TopCenter"]) .ui5-toast-root {
-	top: var(--_ui5_vertical_offset);
+	top: var(--_ui5_toast_vertical_offset);
 	left: 50%;
 	transform: translateX(-50%);
 }
@@ -66,23 +66,23 @@
 }
 
 :host([placement="BottomCenter"]) .ui5-toast-root {
-	bottom: var(--_ui5_vertical_offset);
+	bottom: var(--_ui5_toast_vertical_offset);
 	left: 50%;
 	transform: translateX(-50%);
 }
 
 :host([placement="TopEnd"]) .ui5-toast-root {
-	right: var(--_ui5_horizontal_offset);
-	top: var(--_ui5_vertical_offset);
+	right: var(--_ui5_toast_horizontal_offset);
+	top: var(--_ui5_toast_vertical_offset);
 }
 
 :host([placement="MiddleEnd"]) .ui5-toast-root {
-	right: var(--_ui5_horizontal_offset);
+	right: var(--_ui5_toast_horizontal_offset);
 	top: 50%;
 	transform: translateY(-50%);
 }
 
 :host([placement="BottomEnd"]) .ui5-toast-root {
-	right: var(--_ui5_horizontal_offset);
-	bottom: var(--_ui5_vertical_offset);
+	right: var(--_ui5_toast_horizontal_offset);
+	bottom: var(--_ui5_toast_vertical_offset);
 }
