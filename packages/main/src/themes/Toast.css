@@ -9,6 +9,7 @@
 }
 
 .ui5-toast-root {
+	position: fixed;
 	display: none;
 	box-sizing: border-box;
 	max-width: 15rem;
@@ -19,9 +20,6 @@
 	border-radius: .25rem;
 	transition-property: opacity;
 	opacity: 1;
-	margin: 2rem;
-
-	/* Text styling */
 	font-family: inherit;
 	color: inherit;
 	font-weight: inherit;
@@ -33,34 +31,30 @@
 	z-index: 999;
 }
 
-.ui5-toast-root {
-	position: fixed;
-}
-
 :host(:not([placement])) .ui5-toast-root {
-	bottom: 2rem;
+	bottom: var(--_ui5_vertical_offset);
 	left: 50%;
 	transform: translateX(-50%);
 }
 
 :host([placement="TopStart"]) .ui5-toast-root {
-	top: 2rem;
-	left: 2rem;
+	top: var(--_ui5_vertical_offset);
+	left: var(--_ui5_horizontal_offset);
 }
 
 :host([placement="MiddleStart"]) .ui5-toast-root {
-	left: 2rem;
+	left: var(--_ui5_horizontal_offset);
 	top: 50%;
 	transform: translateY(-50%);
 }
 
 :host([placement="BottomStart"]) .ui5-toast-root {
-	left: 2rem;
-	bottom: 2rem;
+	left: var(--_ui5_horizontal_offset);
+	bottom: var(--_ui5_vertical_offset);
 }
 
  :host([placement="TopCenter"]) .ui5-toast-root {
-	top: 2rem;
+	top: var(--_ui5_vertical_offset);
 	left: 50%;
 	transform: translateX(-50%);
 }
@@ -72,23 +66,23 @@
 }
 
 :host([placement="BottomCenter"]) .ui5-toast-root {
-	bottom: 2rem;
+	bottom: var(--_ui5_vertical_offset);
 	left: 50%;
 	transform: translateX(-50%);
 }
 
 :host([placement="TopEnd"]) .ui5-toast-root {
-	right: 2rem;
-	top: 2rem;
+	right: var(--_ui5_horizontal_offset);
+	top: var(--_ui5_vertical_offset);
 }
 
 :host([placement="MiddleEnd"]) .ui5-toast-root {
-	right: 2rem;
+	right: var(--_ui5_horizontal_offset);
 	top: 50%;
 	transform: translateY(-50%);
 }
 
 :host([placement="BottomEnd"]) .ui5-toast-root {
-	right: 2rem;
-	bottom: 2rem;
+	right: var(--_ui5_horizontal_offset);
+	bottom: var(--_ui5_vertical_offset);
 }
