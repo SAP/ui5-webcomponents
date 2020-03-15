@@ -175,6 +175,7 @@ describe("Input general interaction", () => {
 		assert.strictEqual(suggestionsInput.getValue(), "Cozy", "First item has been selected");
 		assert.strictEqual(inputResult.getValue(), "1", "suggestionItemSelected event called once");
 
+		suggestionsInput.keys("c"); // to open the suggestions pop up once again 
 		suggestionsInput.keys("ArrowUp");
 
 		assert.strictEqual(suggestionsInput.getValue(), "Condensed", "First item has been selected");
