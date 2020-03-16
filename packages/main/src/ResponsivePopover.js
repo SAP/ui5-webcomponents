@@ -85,12 +85,6 @@ class ResponsivePopover extends Popover {
 		await Dialog.define();
 	}
 
-	onAfterRendering() {
-		debugger;
-		this.style.zIndex = this._zIndex;
-		console.log(this.style.zIndex);
-	}
-
 	/**
 	 * Opens popover on desktop and dialog on mobile.
 	 * @param {HTMLElement} opener the element that the popover is opened by
