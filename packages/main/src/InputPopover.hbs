@@ -36,7 +36,7 @@
 		<ui5-list separators="Inner">
 			{{#each suggestionsTexts}}
 				<ui5-li
-					?icon="{{this.icon}}"
+					icon="{{this.icon}}"
 					@ui5-_itemPress="{{ fnOnSuggestionItemPress }}" 
 				>{{ this.text }}</ui5-li>
 			{{/each}}
