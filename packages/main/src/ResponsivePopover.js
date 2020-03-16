@@ -1,5 +1,6 @@
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import { getNextZIndex } from "./popup-utils/PopupUtils.js";
 import ResponsivePopoverTemplate from "./generated/templates/ResponsivePopoverTemplate.lit.js";
 import Popover from "./Popover.js";
 import Dialog from "./Dialog.js";
@@ -84,6 +85,12 @@ class ResponsivePopover extends Popover {
 		await Dialog.define();
 	}
 
+	onAfterRendering() {
+		debugger;
+		this.style.zIndex = this._zIndex;
+		console.log(this.style.zIndex);
+	}
+
 	/**
 	 * Opens popover on desktop and dialog on mobile.
 	 * @param {HTMLElement} opener the element that the popover is opened by
@@ -98,6 +105,7 @@ class ResponsivePopover extends Popover {
 
 			this.openBy(opener);
 		} else {
+			this.style.zIndex = getNextZIndex();
 			this._dialog.open();
 		}
 	}
