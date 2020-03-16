@@ -381,9 +381,10 @@ class TimePicker extends UI5Element {
 	}
 
 	generateTimeItemsArray(x) {
-		let array = [...Array(x).keys()];
-
-		array = array.map(i => i.toString());
+		let array = [];
+		for (let i = 0; i < x; i++) {
+			array.push(i.toString());
+		}
 
 		return array;
 	}
