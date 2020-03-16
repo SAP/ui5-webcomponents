@@ -328,6 +328,7 @@ class TimePicker extends UI5Element {
 	 */
 	closePicker() {
 		this._getPopover().close();
+		this._isPickerOpen = false;
 
 		for (let i = 0; i < this._slidersDomRefs.length; i++) {
 			this._slidersDomRefs[i].collapseSlider();
@@ -355,8 +356,10 @@ class TimePicker extends UI5Element {
 	togglePicker() {
 		if (this.isOpen()) {
 			this.closePicker();
+			this._isPickerOpen = false;
 		} else if (this._canOpenPicker()) {
 			this.openPicker();
+			this._isPickerOpen = true;
 		}
 	}
 
