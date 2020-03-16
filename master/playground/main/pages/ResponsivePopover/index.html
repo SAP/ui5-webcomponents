@@ -76,6 +76,28 @@
 		</div>
 	</ui5-responsive-popover>
 
+	<h2> Inputs based component that opens popover/dialog within dialog</h2>
+	<ui5-button id="btnOpenDialog" design="Emphasized" icon="employee">Open Dialog</ui5-button>
+	<ui5-dialog id="dialog" header-text="Dialog" stretch>
+		<ui5-select id="mySelect">
+			<ui5-option >Cozy</ui5-option>
+			<ui5-option >Compact</ui5-option>
+			<ui5-option selected>Condensed</ui5-option>
+		</ui5-select>
+		<ui5-combobox>
+			<ui5-cb-item text="Algeria"></ui5-cb-item>
+			<ui5-cb-item text="Argentina"></ui5-cb-item>
+			<ui5-cb-item text="Australia"></ui5-cb-item>
+		</ui5-combobox>
+		<ui5-multi-combobox>
+			<ui5-mcb-item text="Cosy"></ui5-mcb-item>
+			<ui5-mcb-item text="Compact"></ui5-mcb-item>
+			<ui5-mcb-item text="Condensed"></ui5-mcb-item>
+			<ui5-mcb-item text="Longest word in the world"></ui5-mcb-item>
+		</ui5-multi-combobox>
+		<ui5-datepicker></ui5-datepicker>
+	</ui5-dialog>
+
 	<script>
 		btnOpen.addEventListener("click", function(event) {
 			respPopover.open(btnOpen);
@@ -96,6 +118,9 @@
 		});
 		btnClose3.addEventListener("click", function(event) {
 			respPopover3.close();
+		});
+		btnOpenDialog.addEventListener('click', function (event) {
+			dialog.open();
 		});
 	</script>
 </body>

@@ -506,7 +506,7 @@
   "73": {
     "id": "73",
     "title": "Responsive Popover",
-    "content": "&lt;!DOCTYPE html&gt; ResponsivePopover Open me Open me Header/Footer hidden on Desktop Hello World Email: Subscribe Email: You are already subscribed. Cancel Hello World Email: Subscribe",
+    "content": "&lt;!DOCTYPE html&gt; ResponsivePopover Open me Open me Header/Footer hidden on Desktop Hello World Email: Subscribe Email: You are already subscribed. Cancel Hello World Email: Subscribe Inputs based component that opens popover/dialog within dialog Open Dialog Cozy Compact Condensed",
     "url": "https://sap.github.io/ui5-webcomponents/master/playground/main/pages/ResponsivePopover/",
     "relUrl": "/playground/main/pages/ResponsivePopover/"
   },
