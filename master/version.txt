@@ -1,5 +1,5 @@
-commit 0e0344c88fa5e27cac06835c13b84e17edc739ca
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Fri Mar 13 12:51:04 2020 +0200
+commit fa6b38ffe0a31fc5c6c3cdd612514ea58a40ebb1
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Mar 16 09:27:13 2020 +0200
 
-    fix(ui5-popover): add header and footer to focus trapping (#1298)
+    refactor(ui5-toast): update vertical offset (#1300)
