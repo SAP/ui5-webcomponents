@@ -3,6 +3,7 @@ import boot from "./boot.js";
 import UI5ElementMetadata from "./UI5ElementMetadata.js";
 import StaticAreaItem from "./StaticAreaItem.js";
 import RenderScheduler from "./RenderScheduler.js";
+import { registerTag, isTagRegistered } from "./CustomElementsRegistry.js";
 import DOMObserver from "./compatibility/DOMObserver.js";
 import { skipOriginalEvent } from "./config/NoConflict.js";
 import getConstructableStyle from "./theming/getConstructableStyle.js";
@@ -18,7 +19,6 @@ const metadata = {
 	},
 };
 
-const DefinitionsSet = new Set();
 let autoId = 0;
 
 const elementTimeouts = new Map();
@@ -832,14 +832,14 @@ class UI5Element extends HTMLElement {
 
 		const tag = this.getMetadata().getTag();
 
-		const definedLocally = DefinitionsSet.has(tag);
+		const definedLocally = isTagRegistered(tag);
 		const definedGlobally = customElements.get(tag);
 
 		if (definedGlobally && !definedLocally) {
 			console.warn(`Skipping definition of tag ${tag}, because it was already defined by another instance of ui5-webcomponents.`); // eslint-disable-line
 		} else if (!definedGlobally) {
 			this._generateAccessors();
-			DefinitionsSet.add(tag);
+			registerTag(tag);
 			window.customElements.define(tag, this);
 		}
 		return this;

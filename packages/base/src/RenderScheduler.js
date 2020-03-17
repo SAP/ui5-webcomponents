@@ -1,4 +1,5 @@
 import RenderQueue from "./RenderQueue.js";
+import { getAllRegisteredTags } from "./CustomElementsRegistry.js";
 
 const MAX_RERENDER_COUNT = 10;
 
@@ -119,7 +120,8 @@ class RenderScheduler {
 	}
 
 	static getNotDefinedComponents() {
-		return Array.from(document.querySelectorAll("*")).filter(el => el.localName.startsWith("ui5-") && !el.isUI5Element);
+		const tagsSelector = getAllRegisteredTags().join(",");
+		return Array.from(tagsSelector).filter(el => !el.isUI5Element);
 	}
 
 	/**
