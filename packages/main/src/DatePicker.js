@@ -623,6 +623,7 @@ class DatePicker extends UI5Element {
 	 * @public
 	 */
 	async openPicker(options) {
+		this._isPickerOpen = true;
 		this.responsivePopover = await this._respPopover();
 		this._changeCalendarSelection();
 
@@ -631,7 +632,6 @@ class DatePicker extends UI5Element {
 		}
 
 		this.responsivePopover.open(this);
-		this._isPickerOpen = true;
 	}
 
 	togglePicker() {

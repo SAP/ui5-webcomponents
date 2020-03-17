@@ -223,6 +223,7 @@ class Select extends UI5Element {
 	}
 
 	async _respPopover() {
+		this._iconPressed = true;
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
 		return staticAreaItem.querySelector("ui5-responsive-popover");
 	}
@@ -336,8 +337,6 @@ class Select extends UI5Element {
 	}
 
 	_applyFocusAfterOpen() {
-		this._toggleIcon();
-
 		if (!this._currentlySelectedOption) {
 			return;
 		}
@@ -397,7 +396,7 @@ class Select extends UI5Element {
 	}
 
 	_afterClose() {
-		this._toggleIcon();
+		this._iconPressed = false;
 
 		if (this._escapePressed) {
 			this._select(this._selectedIndexBeforeOpen);
@@ -406,10 +405,6 @@ class Select extends UI5Element {
 			this.fireEvent("change", { selectedOption: this.options[this._selectedIndex] });
 			this._lastSelectedOption = this.options[this._selectedIndex];
 		}
-	}
-
-	_toggleIcon() {
-		this._iconPressed = !this._iconPressed;
 	}
 
 	get _headerTitleText() {

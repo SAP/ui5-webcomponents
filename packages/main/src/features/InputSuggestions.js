@@ -246,9 +246,10 @@ class Suggestions {
 		this._getScrollContainer().scrollTop = pos;
 	}
 
-	_getScrollContainer() {
+	async _getScrollContainer() {
 		if (!this._scrollContainer) {
-			this._scrollContainer = this._respPopover.getDomRef().shadowRoot.querySelector(".ui5-popover-content");
+			await this._respPopover();
+			this._scrollContainer = this.responsivePopover.shadowRoot.querySelector(".ui5-popover-content");
 		}
 
 		return this._scrollContainer;
