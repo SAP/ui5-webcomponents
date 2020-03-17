@@ -1,8 +1,8 @@
 :root{
 	--_ui5_wheelslider_item_text_size: .875rem;
 	--_ui5_wheelslider_label_text_size: .75rem;
-	--_ui5_wheelslider_selection_frame_margin_top: calc(var(--_ui5_wheelslider_item_height) * 4);
+	--_ui5_wheelslider_selection_frame_margin_top: calc(var(--_ui5_wheelslider_item_height) * 2);
 	--_ui5_wheelslider_label_text_color: var(--sapContent_LabelColor);
-	--_ui5_wheelslider_height: 27rem;
+	--_ui5_wheelslider_height: 15rem;
 	--_ui5_wheelslider_arrows_visibility: hidden;
 }

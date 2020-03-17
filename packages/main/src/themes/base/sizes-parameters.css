@@ -137,8 +137,8 @@
 
 	--_ui5_wheelslider_item_width: 4rem;
 	--_ui5_wheelslider_item_height: 2rem;
-	--_ui5_wheelslider_height: 22rem;
-	--_ui5_wheelslider_selection_frame_margin_top: calc(var(--_ui5_wheelslider_item_height) * 4);
+	--_ui5_wheelslider_height: 14rem;
+	--_ui5_wheelslider_selection_frame_margin_top: calc(var(--_ui5_wheelslider_item_height) * 2);
 	--_ui5_wheelslider_arrows_visibility: visible;
 
 	--_ui5_switch_height: var(--_ui5_switch_compact_height);

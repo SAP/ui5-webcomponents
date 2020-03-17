@@ -219,9 +219,10 @@ class WheelSlider extends UI5Element {
 	_selectElementByIndex(index) {
 		const sliderElement = this.shadowRoot.getElementById(`${this._id}--items-list`);
 		const itemsCount = this._items.length;
+		const itemCellHeight = this._itemCellHeight ? this._itemCellHeight : 2.875;
 
 		if (index < itemsCount && index > -1) {
-			const offsetSelectedElement = 4 * this._itemCellHeight - (index * this._itemCellHeight);
+			const offsetSelectedElement = 2 * itemCellHeight - (index * itemCellHeight);
 			sliderElement.setAttribute("style", `top:${offsetSelectedElement}rem`);
 			this.value = this._items[index];
 			this._currentElementIndex = index;
