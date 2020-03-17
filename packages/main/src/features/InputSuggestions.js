@@ -38,7 +38,11 @@ class Suggestions {
 		inputSuggestionItems.map(suggestion => {
 			return suggestions.push({
 				text: suggestion.textContent,
-				icon: suggestion.icon,
+				description: suggestion.description || undefined,
+				image: suggestion.image || undefined,
+				icon: suggestion.icon || undefined,
+				info: suggestion.info || undefined,
+				infoState: suggestion.infoState,
 			});
 		});
 
