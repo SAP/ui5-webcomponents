@@ -206,10 +206,6 @@
 		 console.log(event);
 	});
 
-	mySearch.addEventListener("loadMore", function (event) {
-		 console.log("loadMore");
-	});
-
 	shellbar.addEventListener("ui5-profileClick", function(event) {
 		popover.openBy(event.detail.targetRef);
 		window["press-input"].value = "Profile";
