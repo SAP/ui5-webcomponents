@@ -1,7 +1,7 @@
-import "../shims/Core-shim.js";
 import getLocale from "../locale/getLocale.js";
 import { fetchJsonOnce } from "../util/FetchHelper.js";
-import { normalizeLocale, nextFallbackLocale } from "../util/normalizeLocale.js";
+import normalizeLocale from "../locale/normalizeLocale.js";
+import nextFallbackLocale from "../locale/nextFallbackLocale.js";
 
 const bundleData = new Map();
 const bundleURLs = new Map();

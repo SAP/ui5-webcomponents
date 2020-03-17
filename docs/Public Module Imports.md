@@ -289,10 +289,10 @@ Find out how you can bundle your i18n texts more efficiently [here](Assets.md#bu
 ### 4. Advanced calendar types
 
 ```js
-import "@ui5/webcomponents-base/dist/features/calendar/Buddhist.js";
-import "@ui5/webcomponents-base/dist/features/calendar/Islamic.js";
-import "@ui5/webcomponents-base/dist/features/calendar/Japanese.js";
-import "@ui5/webcomponents-base/dist/features/calendar/Persian.js";
+import "@ui5/webcomponents-utils/dist/features/calendar/Buddhist.js";
+import "@ui5/webcomponents-utils/dist/features/calendar/Islamic.js";
+import "@ui5/webcomponents-utils/dist/features/calendar/Japanese.js";
+import "@ui5/webcomponents-utils/dist/features/calendar/Persian.js";
 ```
 
 The `ui5-datepicker` web component supports Gregorian Calendar by default.

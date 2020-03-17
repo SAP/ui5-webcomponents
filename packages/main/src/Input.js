@@ -8,7 +8,7 @@ import {
 	isDown,
 	isSpace,
 	isEnter,
-} from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 // import Icon from "./Icon.js";
@@ -436,13 +436,13 @@ class Input extends UI5Element {
 
 	/* Event handling */
 	_handleUp(event) {
-		if (this.Suggestions) {
+		if (this.Suggestions && this.Suggestions.isOpened()) {
 			this.Suggestions.onUp(event);
 		}
 	}
 
 	_handleDown(event) {
-		if (this.Suggestions) {
+		if (this.Suggestions && this.Suggestions.isOpened()) {
 			this.Suggestions.onDown(event);
 		}
 	}

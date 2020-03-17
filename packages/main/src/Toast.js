@@ -68,6 +68,15 @@ const metadata = {
 		open: {
 			type: Boolean,
 		},
+
+		/**
+		 * Indicates whether <code>ui5-toast</code> is hovered.
+		 * @type {boolean}
+		 * @private
+		 */
+		hover: {
+			type: Boolean,
+		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.Toast.prototype */ {
 		/**
@@ -196,7 +205,7 @@ class Toast extends UI5Element {
 				"transition-delay": this.open ? `${this.duration - transitionDuration}ms` : "",
 
 				// We alter the opacity property, in order to trigger transition
-				"opacity": this.open ? "0" : "",
+				"opacity": this.open && !this.hover ? "0" : "",
 			},
 		};
 	}
@@ -208,7 +217,18 @@ class Toast extends UI5Element {
 	}
 
 	_ontransitionend() {
+		if (this.hover) {
+			return;
+		}
 		this.open = false;
+	}
+
+	_onmouseover() {
+		this.hover = true;
+	}
+
+	_onmouseleave() {
+		this.hover = false;
 	}
 }
 

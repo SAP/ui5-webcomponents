@@ -18,7 +18,7 @@
 
 :host([design="Positive"][pressed][active]),
 :host([design="Positive"][pressed]:hover) {
-	background: var(--_ui5_toggle_button_pressed_positive_hover);
+	background: var(--sapButton_Accept_Selected_Hover_Background);
 }
 
 :host([design="Negative"][pressed]),
@@ -32,7 +32,7 @@
 
 :host([design="Negative"][pressed][active]),
 :host([design="Negative"][pressed]:hover) {
-	background: var(--_ui5_toggle_button_pressed_negative_hover);
+	background: var(--sapButton_Reject_Selected_Hover_Background);
 }
 
 

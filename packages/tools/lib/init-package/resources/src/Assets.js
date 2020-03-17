@@ -1,4 +1,4 @@
-import "@ui5/webcomponents-base/dist/Assets.js"; // CLDR
+import "@ui5/webcomponents-localization/dist/Assets.js"; // CLDR
 import "@ui5/webcomponents-theme-base/dist/Assets.js"; // Theming
 
 // own INIT_PACKAGE_VAR_NAME package assets

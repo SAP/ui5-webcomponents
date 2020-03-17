@@ -1,13 +1,14 @@
-import merge from "@ui5/webcomponents-utils/dist/sap/base/util/merge.js";
+import merge from "./thirdparty/merge.js";
 import boot from "./boot.js";
-import { skipOriginalEvent } from "./config/NoConflict.js";
-import DOMObserver from "./compatibility/DOMObserver.js";
 import UI5ElementMetadata from "./UI5ElementMetadata.js";
 import StaticAreaItem from "./StaticAreaItem.js";
-import Integer from "./types/Integer.js";
 import RenderScheduler from "./RenderScheduler.js";
-import { getConstructableStyle, createHeadStyle } from "./CSS.js";
-import { getEffectiveStyle } from "./Theming.js";
+import DOMObserver from "./compatibility/DOMObserver.js";
+import { skipOriginalEvent } from "./config/NoConflict.js";
+import getConstructableStyle from "./theming/getConstructableStyle.js";
+import createComponentStyleTag from "./theming/createComponentStyleTag.js";
+import getEffectiveStyle from "./theming/getEffectiveStyle.js";
+import Integer from "./types/Integer.js";
 import { kebabToCamelCase, camelToKebabCase } from "./util/StringHelper.js";
 import isValidPropertyName from "./util/isValidPropertyName.js";
 
@@ -72,7 +73,7 @@ class UI5Element extends HTMLElement {
 
 			// IE11, Edge
 			if (window.ShadyDOM) {
-				createHeadStyle(this.constructor);
+				createComponentStyleTag(this.constructor);
 			}
 
 			// Chrome
@@ -144,9 +145,11 @@ class UI5Element extends HTMLElement {
 		if (!shouldObserveChildren) {
 			return;
 		}
+
+		const canSlotText = this.constructor.getMetadata().canSlotText();
 		const mutationObserverOptions = {
 			childList: true,
-			subtree: true,
+			subtree: canSlotText,
 			characterData: true,
 		};
 		DOMObserver.observeDOMNode(this, this._processChildren.bind(this), mutationObserverOptions);
@@ -175,7 +178,7 @@ class UI5Element extends HTMLElement {
 	 */
 	async _updateSlots() {
 		const slotsMap = this.constructor.getMetadata().getSlots();
-		const canSlotText = slotsMap.default && slotsMap.default.type === Node;
+		const canSlotText = this.constructor.getMetadata().canSlotText();
 		const domChildren = Array.from(canSlotText ? this.childNodes : this.children);
 
 		// Init the _state object based on the supported slots
@@ -246,7 +249,7 @@ class UI5Element extends HTMLElement {
 		slottedChildrenMap.forEach((children, slot) => {
 			this._state[slot] = children.sort((a, b) => a.idx - b.idx).map(_ => _.child);
 		});
-		this._invalidate();
+		this._invalidate("slots");
 	}
 
 	/**
