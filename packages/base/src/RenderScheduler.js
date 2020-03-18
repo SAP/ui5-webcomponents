@@ -1,8 +1,6 @@
 import RenderQueue from "./RenderQueue.js";
 import { getAllRegisteredTags } from "./CustomElementsRegistry.js";
 
-const MAX_RERENDER_COUNT = 10;
-
 // Tells whether a render task is currently scheduled
 let renderTaskId;
 
@@ -15,31 +13,13 @@ let renderTaskPromise,
 
 let mutationObserverTimer;
 
-const processQueue = () => {
-	let webComponent;
-	const renderStats = new Map();
-
-	webComponent = invalidatedWebComponents.shift();
-	while (webComponent) {
-		const timesReRendered = renderStats.get(webComponent) || 0;
-		if (timesReRendered > MAX_RERENDER_COUNT) {
-			throw new Error(`Web component re-rendered too many times this task, max allowed is: ${MAX_RERENDER_COUNT}`);
-		}
-		webComponent._render();
-		renderStats.set(webComponent, timesReRendered + 1);
-		webComponent = invalidatedWebComponents.shift();
-	}
-};
-
 /**
  * Returns a promise that resolves when all imported UI5 Web Components have been defined in window.customElements
  *
  * @returns {Promise<any>}
  */
 const whenCustomElementsDefined = () => {
-	const definedPromises = getAllRegisteredTags().map(
-		el => customElements.whenDefined(el.localName)
-	);
+	const definedPromises = getAllRegisteredTags().map(tag => customElements.whenDefined(tag));
 	return Promise.all(definedPromises);
 };
 
@@ -64,12 +44,13 @@ class RenderScheduler {
 		RenderScheduler.scheduleRenderTask();
 	}
 
-	static renderImmediately(webComponent) {
+	static async renderAsSoonAsPossible(webComponent) {
 		// Enqueue the web component
 		invalidatedWebComponents.add(webComponent);
 
 		// Immediately start a render task
 		RenderScheduler.runRenderTask();
+		await RenderScheduler.whenDOMUpdated();
 	}
 
 	/**
@@ -93,7 +74,7 @@ class RenderScheduler {
 	static renderWebComponents() {
 		// console.log("------------- NEW RENDER TASK ---------------");
 
-		processQueue();
+		invalidatedWebComponents.process(component => component._render());
 
 		// wait for Mutation observer just in case
 		if (!mutationObserverTimer) {
