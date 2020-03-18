@@ -121,7 +121,8 @@ class RenderScheduler {
 
 	static getNotDefinedComponents() {
 		const tagsSelector = getAllRegisteredTags().join(",");
-		return Array.from(tagsSelector).filter(el => !el.isUI5Element);
+		const allComponents = document.querySelectorAll(tagsSelector);
+		return Array.from(allComponents).filter(el => !el.isUI5Element);
 	}
 
 	/**
@@ -163,5 +164,7 @@ class RenderScheduler {
 		}
 	}
 }
+
+window.r = RenderScheduler;
 
 export default RenderScheduler;
