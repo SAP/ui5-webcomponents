@@ -95,7 +95,7 @@ class RenderScheduler {
 			return Promise.resolve();
 		}
 
-		// Otherwise, create a promise (in not already created) and wait for renderWebComponents to run/finish and resolve it
+		// Otherwise, create a promise (if not already created) and wait for renderWebComponents to run/finish and resolve it
 		if (!renderTaskPromise) {
 			renderTaskPromise = new Promise(resolve => {
 				renderTaskPromiseResolve = resolve;
@@ -114,7 +114,7 @@ class RenderScheduler {
 	}
 
 	/**
-	 * Awaits until all imported components are defined and all their instances have rendered
+	 * Awaits until all imported components are defined and all their instances have been rendered
 	 *
 	 * @public
 	 * @returns {Promise<void>}
@@ -124,7 +124,5 @@ class RenderScheduler {
 		await RenderScheduler.whenAllRendered();
 	}
 }
-
-window.r = RenderScheduler;
 
 export default RenderScheduler;

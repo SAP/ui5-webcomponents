@@ -43,7 +43,7 @@ class UI5Element extends HTMLElement {
 		this._initializeContainers();
 		this._upToDate = false;
 
-		this._resetDomRefPromise();
+		this._resetDomRefReadyPromise();
 
 		this._monitoredChildProps = new Map();
 		this._firePropertyChange = false;
@@ -59,7 +59,7 @@ class UI5Element extends HTMLElement {
 	/**
 	 * @private
 	 */
-	_resetDomRefPromise() {
+	_resetDomRefReadyPromise() {
 		let deferredResolve;
 		this._domRefReadyPromise = new Promise(resolve => {
 			deferredResolve = resolve;
@@ -447,7 +447,7 @@ class UI5Element extends HTMLElement {
 
 		if (this.getDomRef() && !this._suppressInvalidation) {
 			this._upToDate = false;
-			this._resetDomRefPromise();
+			this._resetDomRefReadyPromise();
 			// console.log("INVAL", this, ...arguments);
 			RenderScheduler.renderDeferred(this);
 		}
