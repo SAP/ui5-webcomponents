@@ -9,6 +9,7 @@
 	flex-direction: column;
 	display: inline-flex;
 }
+
 .ui5-wheelslider-root .ui5-wheelslider-label {
 	box-sizing: border-box;
 	height: 2rem;
@@ -32,8 +33,14 @@
 .ui5-wheelslider-root[expanded] .ui5-wheelslider-arrow {
 	visibility: var(--_ui5_wheelslider_arrows_visibility);
 	box-sizing: border-box;
-	width: 100%;
 	border-color: transparent;
+	cursor: pointer;
+}
+
+.ui5-wheelslider-root[expanded] .ui5-wheelslider-arrow:hover {
+	visibility: var(--_ui5_wheelslider_arrows_visibility);
+	box-sizing: border-box;
+	border-color: inherit;
 	cursor: pointer;
 }
 
@@ -63,6 +70,7 @@
 	border-radius: var(--_ui_wheelslider_item_border_radius);
 	cursor: pointer;
 }
+
 .ui5-wheelslider-root .ui5-wheelslider-inner .ui5-wheelslider-item:hover {
 	background: var(--_ui5_wheelslider_selected_item_hover_background_color);
 }
@@ -71,6 +79,7 @@
 	outline: 1px dotted black;
 	outline-offset: -3px;
 }
+
 .ui5-wheelslider-root .ui5-wheelslider-inner .ui5-wheelslider-selection-frame {
 	width: var(--_ui5_wheelslider_item_width);
 	height: var(--_ui5_wheelslider_item_height);
@@ -79,6 +88,7 @@
 	visibility: hidden;
 	z-index: 1;
 }
+
 .ui5-wheelslider-root .ui5-wheelslider-inner .ui5-wheelslider-wrapper > ul {
 	transition: all 400ms;
 	margin: 0;
@@ -87,6 +97,10 @@
 	top: var(--_ui5_wheelslider_selection_frame_margin_top);
 	cursor: pointer;
 	list-style-type: none;
+}
+
+.ui5-wheelslider-root.ui5-phone .ui5-wheelslider-inner .ui5-wheelslider-wrapper > ul {
+	top: var(--_ui5_wheelslider_mobile_selection_frame_margin_top);
 }
 
 .ui5-wheelslider-root[expanded] .ui5-wheelslider-inner .ui5-wheelslider-wrapper > ul {
@@ -99,6 +113,10 @@
 	position: relative;
 	overflow: hidden;
 	outline: none;
+}
+
+.ui5-wheelslider-root.ui5-phone .ui5-wheelslider-inner .ui5-wheelslider-wrapper {
+	height: var(--_ui5_wheelslider_mobile_height);
 }
 
 .ui5-wheelslider-root[expanded] {
@@ -118,6 +136,10 @@
 .ui5-wheelslider-root .ui5-wheelslider-inner {
 	max-height: 100%;
 	height: var(--_ui5_wheelslider_height);
+}
+
+.ui5-wheelslider-root.ui5-phone .ui5-wheelslider-inner {
+	height: var(--_ui5_wheelslider_mobile_height);
 }
 
 .ui5-wheelslider-root[expanded] .ui5-wheelslider-inner .ui5-wheelslider-item {
@@ -150,6 +172,10 @@
 	box-shadow: inset 0px 0px 0px 2px var(--_ui5_wheelslider_selection_frame_color);
 	border-radius: var(--_ui_wheelslider_item_border_radius);
 	margin-top: var(--_ui5_wheelslider_selection_frame_margin_top);
+}
+
+.ui5-wheelslider-root.ui5-phone[expanded] .ui5-wheelslider-inner .ui5-wheelslider-selection-frame {
+	margin-top: var(--_ui5_wheelslider_mobile_selection_frame_margin_top);
 }
 
 .ui5-wheelslider-root[expanded] .ui5-wheelslider-inner .ui5-wheelslider-selection-frame:hover + ul > li.ui5-wheelslider-item.ui5-wheelslider-itemSelected {

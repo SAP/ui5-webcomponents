@@ -6,7 +6,7 @@
 	?expanded= "{{_expanded}}"
 	@click = {{_onclick}}
 	@keydown={{_onkeydown}}
-	class = "ui5-wheelslider-root"
+	class = "{{rootClasses}}"
 	data-sap-focus-ref
 	@focusin="{{_onfocusin}}"
 	@focusout="{{_onfocusout}}"
@@ -34,5 +34,7 @@
 			{{/if}}
 		</div>
 	</div>
-	<ui5-button class="ui5-wheelslider-arrow" icon="navigation-down-arrow" @click={{_onArrowDown}} tabindex="-1"></ui5-button>
+	<div class="ui5-wheelslider-footer-block">
+		<ui5-button class="ui5-wheelslider-arrow" icon="navigation-down-arrow" @click={{_onArrowDown}} tabindex="-1"></ui5-button>
+	</div>
 </div>

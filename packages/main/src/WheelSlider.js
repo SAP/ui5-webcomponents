@@ -9,6 +9,7 @@ import {
 
 // Styles
 import WheelSliderCss from "./generated/themes/WheelSlider.css.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 
 /**
  * @private
@@ -164,6 +165,14 @@ class WheelSlider extends UI5Element {
 		return this._items || [];
 	}
 
+	get rootClasses() {
+		if (isPhone()) {
+			return "ui5-wheelslider-root ui5-phone";
+		}
+
+		return "ui5-wheelslider-root";
+	}
+
 	_handleWheel(e) {
 		if (!e) {
 			return;
@@ -220,9 +229,10 @@ class WheelSlider extends UI5Element {
 		const sliderElement = this.shadowRoot.getElementById(`${this._id}--items-list`);
 		const itemsCount = this._items.length;
 		const itemCellHeight = this._itemCellHeight ? this._itemCellHeight : 2.875;
+		const offsetStep = isPhone() ? 4 : 2;
 
 		if (index < itemsCount && index > -1) {
-			const offsetSelectedElement = 2 * itemCellHeight - (index * itemCellHeight);
+			const offsetSelectedElement = offsetStep * itemCellHeight - (index * itemCellHeight);
 			sliderElement.setAttribute("style", `top:${offsetSelectedElement}rem`);
 			this.value = this._items[index];
 			this._currentElementIndex = index;

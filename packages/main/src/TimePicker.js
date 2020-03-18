@@ -33,6 +33,7 @@ import {
 import TimePickerCss from "./generated/themes/TimePicker.css.js";
 import TimePickerPopoverCss from "./generated/themes/TimePickerPopover.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 
 /**
  * @public
@@ -706,6 +707,14 @@ class TimePicker extends UI5Element {
 
 	get cancelButtonLabel() {
 		return this.i18nBundle.getText(TIMEPICKER_CANCEL_BUTTON);
+	}
+
+	get containerClasses() {
+		if (isPhone()) {
+			return "ui5-timepicker-sliders-container ui5-phone";
+		}
+
+		return "ui5-timepicker-sliders-container";
 	}
 }
 
