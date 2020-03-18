@@ -32,6 +32,18 @@ const processQueue = () => {
 };
 
 /**
+ * Returns a promise that resolves when all imported UI5 Web Components have been defined in window.customElements
+ *
+ * @returns {Promise<any>}
+ */
+const whenCustomElementsDefined = () => {
+	const definedPromises = getAllRegisteredTags().map(
+		el => customElements.whenDefined(el.localName)
+	);
+	return Promise.all(definedPromises);
+};
+
+/**
  * Class that manages the rendering/re-rendering of web components
  * This is always asynchronous
  */
@@ -117,35 +129,8 @@ class RenderScheduler {
 		return renderTaskPromise;
 	}
 
-	static getNotDefinedComponents() {
-		const tagsSelector = getAllRegisteredTags().join(",");
-		const allComponents = document.querySelectorAll(tagsSelector);
-		return Array.from(allComponents).filter(el => !el.isUI5Element);
-	}
-
-	/**
-	 * return a promise that will be resolved once all ui5 webcomponents on the page have their shadow root ready
-	 */
-	static async whenShadowDOMReady() {
-		const undefinedElements = this.getNotDefinedComponents();
-
-		const definedPromises = undefinedElements.map(
-		  el => customElements.whenDefined(el.localName)
-		);
-		const timeoutPromise = new Promise(resolve => setTimeout(resolve, 5000));
-
-		await Promise.race([Promise.all(definedPromises), timeoutPromise]);
-		const stillUndefined = this.getNotDefinedComponents();
-		if (stillUndefined.length) {
-			// eslint-disable-next-line
-			console.warn("undefined elements after 5 seconds are: " + [...stillUndefined].map(el => el.localName).join(" ; "));
-		}
-
-		return Promise.resolve();
-	}
-
 	static async whenFinished() {
-		await RenderScheduler.whenShadowDOMReady();
+		await whenCustomElementsDefined();
 		await RenderScheduler.whenDOMUpdated();
 	}
 
