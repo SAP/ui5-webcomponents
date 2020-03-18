@@ -106,12 +106,12 @@ class UI5Element extends HTMLElement {
 				await this._processChildren();
 			}
 
-			await RenderScheduler.renderAsSoonAsPossible(this);
+			RenderScheduler.renderAsSoonAsPossible(this);
+			await this._waitForDomRef();
 			if (this.shadowRoot.children.length === 0) {
 				throw new Error(`Remove this after testing`);
 			}
 
-			this._domRefReadyPromise._deferredResolve();
 			if (typeof this.onEnterDOM === "function") {
 				this.onEnterDOM();
 			}
@@ -485,6 +485,8 @@ class UI5Element extends HTMLElement {
 		if (typeof this.onAfterRendering === "function") {
 			this.onAfterRendering();
 		}
+
+		this._domRefReadyPromise._deferredResolve();
 	}
 
 	/**

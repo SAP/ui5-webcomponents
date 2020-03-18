@@ -44,13 +44,12 @@ class RenderScheduler {
 		RenderScheduler.scheduleRenderTask();
 	}
 
-	static async renderAsSoonAsPossible(webComponent) {
+	static renderAsSoonAsPossible(webComponent) {
 		// Enqueue the web component
 		invalidatedWebComponents.add(webComponent);
 
 		// Immediately start a render task
 		RenderScheduler.runRenderTask();
-		await RenderScheduler.whenDOMUpdated();
 	}
 
 	/**
