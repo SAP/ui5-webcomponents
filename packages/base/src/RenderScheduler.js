@@ -77,7 +77,7 @@ class RenderScheduler {
 				if (invalidatedWebComponents.getList().length === 0) {
 					RenderScheduler._resolveTaskPromise();
 				}
-			}, 200);
+			}, 500);
 		}
 
 		renderTaskId = undefined;
