@@ -236,7 +236,8 @@
 	});
 
 	["disc", "call"].forEach(function(id) {
-		window[id].addEventListener("ui5-itemClick", function(event) {
+        var currenItem = window[id][0] || window[id];
+		currenItem.addEventListener("ui5-itemClick", function(event) {
 			event.preventDefault();
 			window["press-input"].value = event.target.id;
 			window["custom-item-popover"].openBy(event.detail.targetRef);
