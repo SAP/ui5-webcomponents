@@ -15,6 +15,22 @@ let renderTaskPromise,
 
 let mutationObserverTimer;
 
+const processQueue = () => {
+	let webComponent;
+	const renderStats = new Map();
+
+	webComponent = invalidatedWebComponents.shift();
+	while (webComponent) {
+		const timesReRendered = renderStats.get(webComponent) || 0;
+		if (timesReRendered > MAX_RERENDER_COUNT) {
+			throw new Error(`Web component re-rendered too many times this task, max allowed is: ${MAX_RERENDER_COUNT}`);
+		}
+		webComponent._render();
+		renderStats.set(webComponent, timesReRendered + 1);
+		webComponent = invalidatedWebComponents.shift();
+	}
+};
+
 /**
  * Class that manages the rendering/re-rendering of web components
  * This is always asynchronous
@@ -30,20 +46,18 @@ class RenderScheduler {
 	 */
 	static renderDeferred(webComponent) {
 		// Enqueue the web component
-		const res = invalidatedWebComponents.add(webComponent);
+		invalidatedWebComponents.add(webComponent);
 
 		// Schedule a rendering task
 		RenderScheduler.scheduleRenderTask();
-		return res;
 	}
 
 	static renderImmediately(webComponent) {
 		// Enqueue the web component
-		const res = invalidatedWebComponents.add(webComponent);
+		invalidatedWebComponents.add(webComponent);
 
 		// Immediately start a render task
 		RenderScheduler.runRenderTask();
-		return res;
 	}
 
 	/**
@@ -67,23 +81,7 @@ class RenderScheduler {
 	static renderWebComponents() {
 		// console.log("------------- NEW RENDER TASK ---------------");
 
-		let webComponentInfo,
-			webComponent,
-			promise;
-		const renderStats = new Map();
-		while (webComponentInfo = invalidatedWebComponents.shift()) { // eslint-disable-line
-			webComponent = webComponentInfo.webComponent;
-			promise = webComponentInfo.promise;
-
-			const timesRerendered = renderStats.get(webComponent) || 0;
-			if (timesRerendered > MAX_RERENDER_COUNT) {
-				// console.warn("WARNING RERENDER", webComponent);
-				throw new Error(`Web component re-rendered too many times this task, max allowed is: ${MAX_RERENDER_COUNT}`);
-			}
-			webComponent._render();
-			promise._deferredResolve();
-			renderStats.set(webComponent, timesRerendered + 1);
-		}
+		processQueue();
 
 		// wait for Mutation observer just in case
 		if (!mutationObserverTimer) {

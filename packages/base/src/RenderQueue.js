@@ -1,32 +1,23 @@
 class RenderQueue {
 	constructor() {
 		this.list = []; // Used to store the web components in order
-		this.promises = new Map(); // Used to store promises for web component rendering
+		this.lookup = new Set(); // Used to efficiently check if a web component is in the list
 	}
 
 	add(webComponent) {
-		if (this.promises.has(webComponent)) {
-			return this.promises.get(webComponent);
+		if (this.isAdded(webComponent)) {
+			return;
 		}
 
-		let deferredResolve;
-		const promise = new Promise(resolve => {
-			deferredResolve = resolve;
-		});
-		promise._deferredResolve = deferredResolve;
-
 		this.list.push(webComponent);
-		this.promises.set(webComponent, promise);
-
-		return promise;
+		this.lookup.add(webComponent);
 	}
 
 	shift() {
 		const webComponent = this.list.shift();
 		if (webComponent) {
-			const promise = this.promises.get(webComponent);
-			this.promises.delete(webComponent);
-			return { webComponent, promise };
+			this.lookup.delete(webComponent);
+			return webComponent;
 		}
 	}
 
@@ -35,7 +26,7 @@ class RenderQueue {
 	}
 
 	isAdded(webComponent) {
-		return this.promises.has(webComponent);
+		return this.lookup.has(webComponent);
 	}
 }
 
