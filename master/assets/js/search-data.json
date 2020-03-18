@@ -548,7 +548,7 @@
   "79": {
     "id": "79",
     "title": "Shell Bar",
-    "content": "&lt;!DOCTYPE html&gt; Shell Bar Application 1 Application 2 Application 3 Application 4 Application 5 ShellBar in Compact Application 1 Application 2 Application 3 Application 4 Application 5 John Doe App Finder Settings Edit Home Page Help Sign out Application 1 Application 2 Application 3 Application 4 Application 5 Custom Popover Item 1 Custom Popover Item 2 1 2 3",
+    "content": "&lt;!DOCTYPE html&gt; Shell Bar Application 1 Application 2 Application 3 Application 4 Application 5 ShellBar in Compact Application 1 Application 2 Application 3 Application 4 Application 5 John Doe App Finder Settings Edit Home Page Help Sign out Application 1 Application 2 Application 3 Application 4 Application 5 Custom Popover Item 1 Custom Popover Item 2 1 2 3 4 5 6 7 8 9 10 11 12 13 14",
     "url": "https://sap.github.io/ui5-webcomponents/master/playground/fiori/pages/ShellBar/",
     "relUrl": "/playground/fiori/pages/ShellBar/"
   },

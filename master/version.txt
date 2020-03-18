@@ -1,13 +1,5 @@
-commit a38b605f77f73132153cf52b25b92800bf272eda
+commit c6d8872f3421b9bf50e63a9bb1a1b45d2de4fa8d
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Mar 16 13:15:49 2020 +0200
+Date:   Wed Mar 18 10:43:30 2020 +0200
 
-    fix(ui5-responsive-popover): set z-index on phone (#1303)
-    
-    **Issue**
-    - when a component, that opens a dialog on phone, such as Select, DatePicker, ComboBox, MultiComboBox is opened within Dialog, it remains invisible, because the Dialog remains on top.
-    
-    - when such component opens a dialog on phone, all icons on the page are visible, but should not
-    
-    **Solution**
-    set z-index on the ui5-responsive-popover tag (on desktop it relies on the ui5-popover to handle that)
+    refactor(ui5-input): show suggestions description, info and image (#1307)
