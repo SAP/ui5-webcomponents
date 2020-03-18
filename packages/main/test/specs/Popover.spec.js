@@ -59,7 +59,7 @@ describe("Popover general interaction", () => {
 
 	it("tests if overflown content can be reached by scrolling", () => {
 		const manyItemsSelect = $("#many-items");
-		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#many-items")
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#many-items");
 		const items = browser.$(`.${staticAreaItemClassName}`).shadow$$("ui5-li");
 
 		manyItemsSelect.click();

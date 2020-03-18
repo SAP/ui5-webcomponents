@@ -102,7 +102,6 @@ class UI5Element extends HTMLElement {
 	 */
 	async connectedCallback() {
 		const needsShadowDOM = this.constructor._needsShadowDOM();
-		const needsStaticArea = this.constructor._needsStaticArea();
 		const slotsAreManaged = this.constructor.getMetadata().slotsAreManaged();
 
 		// Render the Shadow DOM
@@ -122,11 +121,6 @@ class UI5Element extends HTMLElement {
 			if (typeof this.onEnterDOM === "function") {
 				this.onEnterDOM();
 			}
-		}
-
-		// Render Fragment if neccessary
-		if (needsStaticArea) {
-			this.staticAreaItem._updateFragment(this);
 		}
 	}
 
@@ -480,7 +474,7 @@ class UI5Element extends HTMLElement {
 		this._upToDate = true;
 		this._updateShadowRoot();
 
-		if (this.constructor._needsStaticArea()) {
+		if (this._shouldUpdateFragment()) {
 			this.staticAreaItem._updateFragment(this);
 		}
 
@@ -678,6 +672,10 @@ class UI5Element extends HTMLElement {
 	 */
 	static _needsShadowDOM() {
 		return !!this.template;
+	}
+
+	_shouldUpdateFragment() {
+		return this.constructor._needsStaticArea() && this.staticAreaItem.isRendered();
 	}
 
 	/**
