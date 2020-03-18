@@ -79,7 +79,7 @@ class StaticAreaItem {
 		if (!this._rendered || !this.staticAreaItemDomRef) {
 			this._updateFragment();
 		}
-		await RenderScheduler.whenDOMUpdated(); // Wait for the content of the ui5-static-area-item to be rendered
+		await RenderScheduler.whenAllRendered(); // Wait for the content of the ui5-static-area-item to be rendered
 		return this.staticAreaItemDomRef.shadowRoot;
 	}
 }
