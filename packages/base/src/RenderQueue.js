@@ -46,7 +46,7 @@ class RenderQueue {
 		while (webComponent) {
 			const timesProcessed = stats.get(webComponent) || 1;
 			if (timesProcessed > ACCEPTABLE_PROCESS_COUNT) {
-				console.warn(`Web component processed more than ${ACCEPTABLE_PROCESS_COUNT} times, is this intended?`); // eslint-disable-line
+				console.warn(`Web component processed ${timesProcessed} times in the same task, is this intended?`, webComponent); // eslint-disable-line
 			}
 			if (timesProcessed > MAX_PROCESS_COUNT) {
 				throw new Error(`Web component processed too many times this task, max allowed is: ${MAX_PROCESS_COUNT}`);
