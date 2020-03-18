@@ -357,7 +357,7 @@ class TabContainer extends UI5Element {
 	async _onOverflowButtonClick(event) {
 		this.responsivePopover = await this._respPopover();
 		this.updateStaticAreaItemContentDensity();
-		this.responsivePopover.open(event.target);
+		this.responsivePopover.open(this.getDomRef().querySelector(".ui-tc__overflowButton"));
 	}
 
 	_onHeaderBackArrowClick() {
