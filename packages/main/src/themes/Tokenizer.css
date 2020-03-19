@@ -37,6 +37,7 @@
 	display: flex;
 	flex-wrap: nowrap;
 	align-items: center;
+	overflow: auto;
 }
 
 .ui5-tokenizer--content.ui5-tokenizer-nmore--content {
@@ -52,7 +53,8 @@
 }
 
 :host([expanded]) .ui5-tokenizer--content {
-	overflow: auto;
+	overflow: hidden;
+	justify-content: flex-end;
 }
 
 ::slotted(ui5-token) {
