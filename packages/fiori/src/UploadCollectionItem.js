@@ -15,6 +15,10 @@ import Button from "@ui5/webcomponents/dist/Button.js";
 const metadata = {
 	tag: "ui5-upload-collection-item",
 	properties: /** @lends sap.ui.webcomponents.fiori.UploadCollectionItem.prototype */ {
+		file: {
+			type: Object,
+			defaultValue: null,
+		},
 		fileName: {
 			type: String,
 		},
