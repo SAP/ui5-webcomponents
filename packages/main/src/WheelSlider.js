@@ -1,5 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import WheelSliderTemplate from "./generated/templates/WheelSliderTemplate.lit.js";
 import Button from "./Button.js";
 import {
@@ -9,7 +10,6 @@ import {
 
 // Styles
 import WheelSliderCss from "./generated/themes/WheelSlider.css.js";
-import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 
 /**
  * @private
@@ -165,12 +165,13 @@ class WheelSlider extends UI5Element {
 		return this._items || [];
 	}
 
-	get rootClasses() {
-		if (isPhone()) {
-			return "ui5-wheelslider-root ui5-phone";
-		}
-
-		return "ui5-wheelslider-root";
+	get classes() {
+		return {
+			root: {
+				"ui5-wheelslider-root": true,
+				"ui5-phone": isPhone(),
+			},
+		};
 	}
 
 	_handleWheel(e) {

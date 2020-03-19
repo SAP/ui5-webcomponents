@@ -6,6 +6,7 @@ import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import LocaleData from "@ui5/webcomponents-localization/dist/LocaleData.js";
 import { fetchCldr } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import PopoverPlacementType from "./types/PopoverPlacementType.js";
@@ -33,7 +34,6 @@ import {
 import TimePickerCss from "./generated/themes/TimePicker.css.js";
 import TimePickerPopoverCss from "./generated/themes/TimePickerPopover.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
-import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 
 /**
  * @public
@@ -327,8 +327,9 @@ class TimePicker extends UI5Element {
 	 * Closes the picker
 	 * @public
 	 */
-	closePicker() {
-		this._getPopover().close();
+	async closePicker() {
+		await this._getPopover();
+		this.responsivePopover.close();
 		this._isPickerOpen = false;
 
 		for (let i = 0; i < this._slidersDomRefs.length; i++) {
@@ -342,10 +343,11 @@ class TimePicker extends UI5Element {
 	 * Specify this option to focus the input field.
 	 * @public
 	 */
-	openPicker() {
-		this._getPopover().open(this);
+	async openPicker() {
+		await this._getPopover();
+		this.responsivePopover.open(this);
 		this._isPickerOpen = true;
-		this._slidersDomRefs = this.slidersDomRefs;
+		this._slidersDomRefs = await this.slidersDomRefs();
 
 		this.setSlidersValue();
 
@@ -377,8 +379,10 @@ class TimePicker extends UI5Element {
 		return !this.disabled && !this.readonly;
 	}
 
-	_getPopover() {
-		return this.getStaticAreaItemDomRef().querySelector("ui5-responsive-popover");
+	async _getPopover() {
+		const staticAreaItem = await this.getStaticAreaItemDomRef();
+		this.responsivePopover = staticAreaItem.querySelector("ui5-responsive-popover");
+		return this.responsivePopover;
 	}
 
 	generateTimeItemsArray(x) {
@@ -418,8 +422,9 @@ class TimePicker extends UI5Element {
 		return this.getFormat().aDayPeriods.map(x => x.toUpperCase());
 	}
 
-	get slidersDomRefs() {
-		return this._getPopover().default.length ? [...this._getPopover().default[0].children].filter(x => x.isUI5Element) : this._getPopover().default;
+	async slidersDomRefs() {
+		await this._getPopover();
+		return this.responsivePopover.default.length ? [...this.responsivePopover.default[0].children].filter(x => x.isUI5Element) : this.responsivePopover.default;
 	}
 
 	_getInput() {
@@ -427,19 +432,19 @@ class TimePicker extends UI5Element {
 	}
 
 	get secondsSlider() {
-		return this.getStaticAreaItemDomRef().querySelector(".ui5-timepicker-seconds-wheelslider");
+		return this.responsivePopover.querySelector(".ui5-timepicker-seconds-wheelslider");
 	}
 
 	get minutesSlider() {
-		return this.getStaticAreaItemDomRef().querySelector(".ui5-timepicker-minutes-wheelslider");
+		return this.responsivePopover.querySelector(".ui5-timepicker-minutes-wheelslider");
 	}
 
 	get hoursSlider() {
-		return this.getStaticAreaItemDomRef().querySelector(".ui5-timepicker-hours-wheelslider");
+		return this.responsivePopover.querySelector(".ui5-timepicker-hours-wheelslider");
 	}
 
 	get periodsSlider() {
-		return this.getStaticAreaItemDomRef().querySelector(".ui5-timepicker-period-wheelslider");
+		return this.responsivePopover.querySelector(".ui5-timepicker-period-wheelslider");
 	}
 
 	submitPickers() {
@@ -510,13 +515,13 @@ class TimePicker extends UI5Element {
 		}
 	}
 
-	_onfocuscontainerin(e) {
+	async _onfocuscontainerin(e) {
 		if (e.target !== e.currentTarget) {
 			return;
 		}
 		let sliders = [];
 		if (this._slidersDomRefs.length) {
-			sliders = this._getPopover().default.length ? [...this._getPopover().default[0].children].filter(x => x.isUI5Element) : this._getPopover().default;
+			sliders = await this.slidersDomRefs();
 		} else {
 			sliders = this._slidersDomRefs;
 		}
@@ -709,12 +714,13 @@ class TimePicker extends UI5Element {
 		return this.i18nBundle.getText(TIMEPICKER_CANCEL_BUTTON);
 	}
 
-	get containerClasses() {
-		if (isPhone()) {
-			return "ui5-timepicker-sliders-container ui5-phone";
-		}
-
-		return "ui5-timepicker-sliders-container";
+	get classes() {
+		return {
+			container: {
+				"ui5-timepicker-sliders-container": true,
+				"ui5-phone": isPhone(),
+			},
+		};
 	}
 }
 
