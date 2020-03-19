@@ -19,7 +19,7 @@
 }
 
 /* Thumbnail */
-.uci-thumbnail {
+.ui5-uci-thumbnail {
 	width: 3rem;
 	height: 3rem;
 	margin-right: 0.75rem;
@@ -40,10 +40,30 @@
 	color: var(--sapContent_IconColor);
 }
 
-.ui5-uci-content-text-container {
+/* Content */
+.ui5-uci-content-container {
 	flex: 1;
 }
 
+.ui5-uci-file-name {
+	display: block;
+	font-size: var(--sapFontLargeSize);
+	margin-bottom: 0.25rem;
+}
+
+ui5-link.ui5-uci-file-name {
+	pointer-events: all;
+}
+
+.ui5-uci-description {
+	margin-top: 0.375rem;
+	font-family: var(--sapFontFamily);
+	font-size: var(--sapFontMediumSize);
+	color: var(--sapContent_LabelColor);
+	white-space: initial;
+}
+
+/* Buttons */
 .ui5-uci-content-buttons-container {
 	padding-left: 1rem;
 	pointer-events: all;

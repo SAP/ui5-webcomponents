@@ -31,6 +31,10 @@ const metadata = {
 		deleteDisabled: {
 			type: Boolean,
 		},
+		// TODO: better name + event for click
+		fileNameClickable: {
+			type: Boolean,
+		},
 	},
 	slots: /** @lends sap.ui.webcomponents.fiori.UploadCollectionItem.prototype */ {
 		"default": {

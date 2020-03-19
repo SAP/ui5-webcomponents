@@ -9,12 +9,20 @@
 {{>include "../../main/src/ListItem.hbs"}}
 
 {{#*inline "listItemContent"}}
-	<div class="uci-thumbnail">
+	<div class="ui5-uci-thumbnail">
 		<slot name="thumbnail"></slot>
 	</div>
-	<div class="ui5-uci-content-text-container">
-		<div>{{fileName}}</div>
-		<slot></slot>
+	<div class="ui5-uci-content-container">
+		{{#if fileNameClickable}}
+			<ui5-link class="ui5-uci-file-name">{{fileName}}</ui5-link>
+		{{else}}
+			<span class="ui5-uci-file-name">{{fileName}}</span>
+		{{/if}}
+		{{!-- TODO: make description property? --}}
+		<div class="ui5-uci-description">
+			<slot></slot>
+		</div>
+		{{!-- TODO: do we need attributes slot? --}}
 	</div>
 	<div class="ui5-uci-content-buttons-container">
 		{{#if editable}}

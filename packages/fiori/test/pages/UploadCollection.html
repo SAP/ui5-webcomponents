@@ -24,9 +24,9 @@
 			flex: 1;
 		}
 
-		.description {
+		/* .description {
 			white-space: pre-wrap;
-		}
+		} */
 
 		ui5-upload-collection {
 			margin: 1rem;
@@ -56,19 +56,24 @@
 			</ui5-file-uploader>
 		</div>
 		<ui5-upload-collection-item
+				file-name="Laptop.jpg"
+				file-name-clickable
+			>
+				<img src="./img/HT-1000.jpg" slot="thumbnail">
+				File name is clickable.
+			</ui5-upload-collection-item>
+		<ui5-upload-collection-item
 			file-name="Laptop.jpg"
 			delete-disabled
 		>
 			<img src="./img/HT-1000.jpg" slot="thumbnail">
-			<div>
-				<ui5-label class="description" wrap>You cannot delete this file.</ui5-label>
-			</div>
+			You cannot delete this file.
 		</ui5-upload-collection-item>
 		<ui5-upload-collection-item
 			file-name="report.pdf"
 		>
 			<ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
-			<ui5-label class="description" wrap>Some description</ui5-label>
+			Some description
 		</ui5-upload-collection-item>
 	</ui5-upload-collection>
 
