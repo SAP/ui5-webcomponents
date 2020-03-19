@@ -1,13 +1,7 @@
 @import "../base/DayPicker-parameters.css";
 
 :root {
-	--_ui5_daypicker_item_background_color: var(--sapList_Background_Darken3); /* darken(@sapList_Background, 3); */
-	--_ui5_daypicker_item_hover_background_color: var(--sapList_Background_Darken15); /* darken(@sapList_Background, 15);*/
-	--_ui5_daypicker_item_selected_background_color: var(--sapActiveColor_Lighten3);
 	--_ui5_daypicker_item_selected_hover_background_color: var(--sapActiveColor_Lighten3); /* lighten(@sapActiveColor, 3);*/
-	--_ui5_daypicker_item_weekend_background_color: var(--sapList_Background_Darken13); /* darken(@sapList_Background, 13);*/
-	--_ui5_daypicker_item_weekend_hover_background_color: var(--sapList_Background_Darken20); /* darken(@sapList_Background, 20);*/
-	--_ui5_daypicker_item_othermonth_hover_background_color: var(--sapList_Background_Darken10);
 	--_ui5_daypicker_item_border_radius: 0.25rem;
 	--_ui5_daypicker_item_now_inner_border_radius: 0.125rem;
 }
