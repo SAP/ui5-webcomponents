@@ -8,19 +8,10 @@
 
 {{>include "../../main/src/ListItem.hbs"}}
 
-{{#*inline "imageBegin"}}
-	{{#if image}}
-		<img src="{{image}}" class="ui5-uci-img">
-	{{/if}}
-{{/inline}}
-
-{{#*inline "iconBegin"}}
-	{{#if icon}}
-		<ui5-icon name="{{icon}}" class="ui5-uci-icon"></ui5-icon>
-	{{/if}}
-{{/inline}}
-
 {{#*inline "listItemContent"}}
+	<div class="uci-thumbnail">
+		<slot name="thumbnail"></slot>
+	</div>
 	<div class="ui5-uci-content-text-container">
 		<div>{{fileName}}</div>
 		<slot></slot>

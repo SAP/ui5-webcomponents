@@ -14,22 +14,30 @@
 	display: block;
 }
 
-.ui5-uci-img, .ui5-uci-icon {
+.ui5-li-root.ui5-uci-root {
+	padding: 1rem;
+}
+
+/* Thumbnail */
+.uci-thumbnail {
 	width: 3rem;
 	height: 3rem;
 	margin-right: 0.75rem;
 }
 
-.ui5-uci-icon {
+::slotted(ui5-icon[slot="thumbnail"]) {
+	width: 3rem;
+	height: 3rem;
 	font-size: 2.5rem;
 }
 
-:host([actionable]) .ui5-uci-icon {
-	color: var(--sapContent_IconColor);
+::slotted(img[slot="thumbnail"]) {
+	width: 3rem;
+	height: 3rem;
 }
 
-.ui5-li-root.ui5-uci-root {
-	padding: 1rem;
+:host([actionable]) ::slotted(ui5-icon[slot="thumbnail"])  {
+	color: var(--sapContent_IconColor);
 }
 
 .ui5-uci-content-text-container {

@@ -1,7 +1,7 @@
 (function () {
 	var uploadCollection = document.getElementById("uploadCollection");
 
-	function fileExtensionToIcon(fileName) {
+	function fileExtensionToIconName(fileName) {
 		switch (fileName.split(".").pop()) {
 			case "bmp" :
 			case "jpg" :
@@ -28,13 +28,21 @@
 		}
 	}
 
+	function createThumbnail(fileName) {
+		var icon = document.createElement("ui5-icon");
+		icon.name = fileExtensionToIconName(fileName);
+		icon.slot = "thumbnail";
+		return icon;
+	}
+
 	function createUCI(file) {
 		var uci = document.createElement("ui5-upload-collection-item"),
 			cont = document.createElement("ui5-label");
 
+		uci.appendChild(createThumbnail(file.name));
 		uci.file = file;
 		uci.fileName = file.name;
-		uci.icon = fileExtensionToIcon(file.name);
+
 		cont.classList.add("description");
 		cont.wrap = true;
 		cont.textContent = "Last modified: " + file.lastModifiedDate 

@@ -25,12 +25,6 @@ const metadata = {
 		description: {
 			type: String,
 		},
-		image: {
-			type: String,
-		},
-		icon: {
-			type: String,
-		},
 		editable: {
 			type: Boolean,
 		},
@@ -42,6 +36,9 @@ const metadata = {
 		"default": {
 			type: Node,
 		},
+		thumbnail: {
+			type: HTMLElement,
+		}
 	},
 	events: /** @lends sap.ui.webcomponents.fiori.UploadCollectionItem.prototype */ {
 		//
