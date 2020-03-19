@@ -1,11 +1,11 @@
-import { isDesktop } from "@ui5/webcomponents-utils/dist/sap/ui/Device.js";
+import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/icons/accept.js";
 import Icon from "./Icon.js";
 import Label from "./Label.js";
@@ -27,7 +27,7 @@ const metadata = {
 		/**
 		 * Defines whether the <code>ui5-checkbox</code> is disabled.
 		 * <br><br>
-		 * <b>Note:</b> A disabled <code>ui5-checkbox</code> is completely uninteractive.
+		 * <b>Note:</b> A disabled <code>ui5-checkbox</code> is completely noninteractive.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -150,8 +150,8 @@ const metadata = {
  * To check/uncheck the <code>ui5-checkbox</code>, the user has to click or tap the square
  * box or its label.
  * <br><br>
- * Clicking or tapping toggles the <code>ui5-checkbox</code> between checked and unchecked state.
  * The <code>ui5-checkbox</code> component only has 2 states - checked and unchecked.
+ * Clicking or tapping toggles the <code>ui5-checkbox</code> between checked and unchecked state.
  *
  * <h3>Usage</h3>
  *
@@ -300,21 +300,20 @@ class CheckBox extends UI5Element {
 	}
 
 	get tabIndex() {
-		return this.disabled ? undefined : "0";
+		const tabindex = this.getAttribute("tabindex");
+		return this.disabled ? undefined : tabindex || "0";
 	}
 
 	get rtl() {
 		return getRTL() ? "rtl" : undefined;
 	}
 
-	static async define(...params) {
+	static async onDefine() {
 		await Promise.all([
 			Label.define(),
 			Icon.define(),
 			fetchI18nBundle("@ui5/webcomponents"),
 		]);
-
-		super.define(...params);
 	}
 }
 

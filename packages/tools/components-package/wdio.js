@@ -57,7 +57,7 @@ exports.config = {
 			// to run chrome headless the following flags are required
 			// (see https://developers.google.com/web/updates/2017/04/headless-chrome)
 			args: ['--headless', '--disable-gpu'],
-			// args: ['--disable-gpu'],
+			//args: ['--disable-gpu'],
 		}
 	}],
 	//
@@ -217,11 +217,24 @@ exports.config = {
 			}, this, attribute, value);
 		}, true);
 
+		browser.addCommand("removeAttribute", function(attribute) {
+			return browser.execute((elem, attribute) => {
+				return elem.removeAttribute(attribute);
+			}, this, attribute);
+		}, true);
+
 		browser.addCommand("hasClass", function(className) {
 			return browser.execute((elem, className) => {
 				return elem.classList.contains(className);
 			}, this, className);
 		}, true);
+
+		browser.addCommand("getStaticAreaItemClassName", function(selector) {
+			return browser.execute(async (selector) => {
+				const staticAreaItem = await document.querySelector(selector).getStaticAreaItemDomRef();
+				return staticAreaItem.host.classList[0];
+			}, selector);
+		}, false);
 	},
 	/**
 	 * Runs before a WebdriverIO command gets executed.
@@ -276,7 +289,7 @@ exports.config = {
 	 * @param {Object} error error object if any
 	 */
 	afterCommand: function (commandName, args, result, error) {
-		const waitFor = ["$", "$$", "shadow$", "click", "performActions", "elementClick", "keys", "sendKeys", "findElement", "elementClear", "elementSendKeys", "setValue", "addValue", "getHTML", "getProperty", "setAttribute", "getElementProperty"];
+		const waitFor = ["$", "$$", "shadow$", "click", "performActions", "elementClick", "keys", "sendKeys", "findElement", "elementClear", "elementSendKeys", "setValue", "addValue", "getHTML", "getProperty", "setAttribute", "removeAttribute", "getElementProperty"];
 		if (waitFor.includes(commandName)) {
 			browser.executeAsync(function (done) {
 				// run all the tests in no conflict mode

@@ -1,8 +1,11 @@
-import { registerModuleContent } from "../ResourceLoaderOverrides.js";
 import { fetchJsonOnce } from "../util/FetchHelper.js";
+import { getFeature } from "../FeaturesRegistry.js";
+
+const OpenUI5Support = getFeature("OpenUI5Support");
 
 const supportedLocales = ["ar", "ar_EG", "ar_SA", "bg", "ca", "cs", "da", "de", "de_AT", "de_CH", "el", "el_CY", "en", "en_AU", "en_GB", "en_HK", "en_IE", "en_IN", "en_NZ", "en_PG", "en_SG", "en_ZA", "es", "es_AR", "es_BO", "es_CL", "es_CO", "es_MX", "es_PE", "es_UY", "es_VE", "et", "fa", "fi", "fr", "fr_BE", "fr_CA", "fr_CH", "fr_LU", "he", "hi", "hr", "hu", "id", "it", "it_CH", "ja", "kk", "ko", "lt", "lv", "ms", "nb", "nl", "nl_BE", "pl", "pt", "pt_PT", "ro", "ru", "ru_UA", "sk", "sl", "sr", "sv", "th", "tr", "uk", "vi", "zh_CN", "zh_HK", "zh_SG", "zh_TW"];
 
+const resources = new Map();
 const cldrData = {};
 const cldrUrls = {};
 
@@ -59,12 +62,34 @@ const resolveMissingMappings = () => {
 	});
 };
 
+const registerModuleContent = (moduleName, content) => {
+	resources.set(moduleName, content);
+};
+
+const getModuleContent = moduleName => {
+	const moduleContent = resources.get(moduleName);
+	if (moduleContent) {
+		return moduleContent;
+	}
+
+	const missingModule = moduleName.match(/sap\/ui\/core\/cldr\/(\w+)\.json/);
+	if (missingModule) {
+		throw new Error(`CLDR data for locale ${missingModule[1]} is not loaded!`);
+	}
+
+	throw new Error(`Unknown module ${moduleName}`);
+};
+
 const fetchCldr = async (language, region, script) => {
 	resolveMissingMappings();
 	const localeId = calcLocale(language, region, script);
 
-	const cldrObj = cldrData[localeId];
+	let cldrObj = cldrData[localeId];
 	const url = cldrUrls[localeId];
+
+	if (!cldrObj && OpenUI5Support) {
+		cldrObj = OpenUI5Support.getLocaleDataObject();
+	}
 
 	if (cldrObj) {
 		// inlined from build or fetched independently
@@ -97,5 +122,6 @@ export {
 	registerCldr,
 	setCldrData,
 	getCldrData,
+	getModuleContent,
 	_registerMappingFunction,
 };

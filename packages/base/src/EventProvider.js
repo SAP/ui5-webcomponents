@@ -19,18 +19,15 @@ class EventProvider {
 
 	detachEvent(eventName, fnFunction) {
 		const eventRegistry = this._eventRegistry;
-		const eventListeners = eventRegistry[eventName];
+		let eventListeners = eventRegistry[eventName];
 
 		if (!eventListeners) {
 			return;
 		}
 
-		for (let i = 0; i < eventListeners.length; i++) {
-			const event = eventListeners[i];
-			if (event["function"] === fnFunction) { // eslint-disable-line
-				eventListeners.splice(i, 1);
-			}
-		}
+		eventListeners = eventListeners.filter(event => {
+			return event["function"] !== fnFunction; // eslint-disable-line
+		});
 
 		if (eventListeners.length === 0) {
 			delete eventRegistry[eventName];

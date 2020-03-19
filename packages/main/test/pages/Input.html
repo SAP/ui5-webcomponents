@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<script>delete Document.prototype.adoptedStyleSheets;</script>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta charset="utf-8">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>ui5-input</title>
 
 	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
@@ -21,83 +21,145 @@
 	<ui5-label id="myLabelSubmit">Event [submit] :: N/A</ui5-label><br/>
 	<ui5-label id="myLabelLiveChange">Event [input] :: N/A</ui5-label><br/>
 
-	<ui5-input id="myInput"
-		style="width:100%"
-		show-suggestions
-		placeholder="Search for a country ...">
-	</ui5-input>
+	<div>
+		<h3>Input in Cozy</h3>
+		<ui5-input id="myInput"
+			style="width: 500px"
+			show-suggestions
+			placeholder="Search for a country ...">
+		</ui5-input>
+	</div>
+
+	<div class="sapUiSizeCompact">
+		<h3>Input in Compact</h3>
+		<ui5-input id="inputCompact"
+			style="width: 500px"
+			show-suggestions
+			placeholder="Search for a country ...">
+		</ui5-input>
+	</div>
 
 	<h3> Input with suggestions</h3>
-	<ui5-input id="myInput2" show-suggestions>
+	<ui5-input id="myInput2" show-suggestions style="width: 100%">
+		<ui5-li>Cozy</ui5-li>
+		<ui5-li>Compact</ui5-li>
+		<ui5-li>Condensed</ui5-li>
 		<ui5-li>Cozy</ui5-li>
 		<ui5-li>Compact</ui5-li>
 		<ui5-li>Condensed</ui5-li>
 	</ui5-input>
 
 	<h3> Input disabled</h3>
-	<ui5-input id="input-disabled" style="width:100%" disabled placeholder="Disabled one ...">
+	<ui5-input style="width: auto" id="input-disabled" disabled placeholder="Disabled one ...">
 		<ui5-icon slot="icon" name="appointment-2"></ui5-icon>
 	</ui5-input>
+	<input />
 
 	<h3> Input maxLength = 5</h3>
-	<ui5-input style="width:100%" maxLength="5" placeholder="Max length of 5"></ui5-input>
+	<ui5-input maxLength="5" placeholder="Max length of 5"></ui5-input>
 
 	<h3> Input valueState Success</h3>
-	<ui5-input id="input3" style="width:100%" value-state="Success" placeholder="Success state ...">
+	<ui5-input id="input3" value-state="Success" placeholder="Success state ...">
 		<ui5-icon slot="icon" name="message-success"></ui5-icon>
 	</ui5-input>
 
+	<h3> Input valueState Information</h3>
+	<ui5-input value-state="Information" placeholder="Info state ...">
+		<ui5-icon slot="icon" name="message-information"></ui5-icon>
+	</ui5-input>
+
 	<h3> Test 'change' event</h3>
-	<ui5-input id="input1" style="width:100%" value-state="Warning" placeholder="Warning state ...">
+	<ui5-input id="input1" value-state="Warning" placeholder="Warning state ...">
 		<ui5-icon slot="icon" name="message-warning"></ui5-icon>
 	</ui5-input>
 	<h3> 'change' event result</h3>
-	<ui5-input id="inputResult" style="width:100%"></ui5-input>
+	<ui5-input id="inputResult"></ui5-input>
 
 	<h3> Test 'input' event</h3>
-	<ui5-input id="input2" style="width:100%" value-state="Error" placeholder="Error state ...">
+	<ui5-input id="input2" value-state="Error" placeholder="Error state ...">
 		<ui5-icon slot="icon" name="message-error"></ui5-icon>
 	</ui5-input>
 	<h3> 'input' test result</h3>
-	<ui5-input id="inputLiveChangeResult" style="width:100%"></ui5-input>
+	<ui5-input id="inputLiveChangeResult"></ui5-input>
 
 
 
 	<h3> Input test change</h3>
-	<ui5-input id="inputChange" style="width:100%">	</ui5-input>
+	<ui5-input id="inputChange">	</ui5-input>
 	<h3> Input test change result</h3>
-	<ui5-input id="inputChangeResult" style="width:100%"></ui5-input>
+	<ui5-input id="inputChangeResult"></ui5-input>
 
 	<h3> Input readonly</h3>
-	<ui5-input id="input-readonly" style="width:100%" value="Value can`t be changed" readonly></ui5-input>
-	<ui5-input id="input-readonly" style="width:100%" placeholder="Value can`t be changed" readonly></ui5-input>
+	<ui5-input id="input-readonly" value="Value can`t be changed" readonly></ui5-input>
+	<ui5-input id="input-readonly" placeholder="Value can`t be changed" readonly></ui5-input>
 
 	<h3> Input required</h3>
-	<ui5-input id="input-required" style="width:100%" value="This input is required" required></ui5-input>
+	<ui5-input id="input-required" value="This input is required" required></ui5-input>
 
 	<h3> Input type 'Number'</h3>
-	<ui5-input id="input-number" style="width:100%" type="Number" placeholder="Numbers are allowed only ..."></ui5-input>
+	<ui5-input id="input-number" type="Number" placeholder="Numbers are allowed only ..."></ui5-input>
 
 	<h3> Input type 'Password'</h3>
-	<ui5-input id="input-password" style="width:100%" type="Password" placeholder="Typing in private ..."></ui5-input>
+	<ui5-input id="input-password" type="Password" placeholder="Typing in private ..."></ui5-input>
 
 	<h3> Input type 'Email'</h3>
-	<ui5-input id="input-email" style="width:100%" type="Email" name="my-input-email"></ui5-input>
+	<ui5-input id="input-email" type="Email" name="my-input-email"></ui5-input>
 
 	<h3> Input type 'Tel'</h3>
-	<ui5-input id="input-tel" maxlength="10" style="width:100%" type="Tel"  name="my-input-tel"></ui5-input>
+	<ui5-input id="input-tel" maxlength="10" type="Tel"  name="my-input-tel"></ui5-input>
 
 	<h3> Input type 'URL'</h3>
-	<ui5-input id="input-url" style="width:100%" type="URL"></ui5-input>
+	<ui5-input id="input-url" type="URL"></ui5-input>
 
-	<h3> Input and button and select</h3>
+	<h3> Inputs alignment</h3>
 	<ui5-button>Press</ui5-button>
-	<ui5-input style="width: 10rem;" value="input"></ui5-input>
-	<ui5-select id="mySelect2"style="width: 10rem;">
+	<ui5-datepicker  id='dp5'
+			placeholder='Delivery Date...'
+			title='Delivery Date!'>
+	</ui5-datepicker>
+
+	<ui5-datepicker id='dp5'
+			placeholder='Delivery Date...'
+			value-state="Error"
+			title='Delivery Date!'>
+	</ui5-datepicker>
+
+	<ui5-datepicker
+			placeholder='Delivery Date...'
+			value-state="Information"
+			title='Delivery Date!'>
+	</ui5-datepicker>
+
+	<ui5-select id="mySelect2">
 		<ui5-option>Cozy</ui5-option>
 		<ui5-option selected>Compact</ui5-option>
 		<ui5-option>Condensed</ui5-option>
 	</ui5-select>
+	
+	<ui5-input  value="input" value-state="Error">
+		<ui5-icon slot="icon" name="message-warning"></ui5-icon>
+	</ui5-input>
+
+	<ui5-select id="mySelect2" value-state="Error">
+		<ui5-option>Cozy</ui5-option>
+		<ui5-option selected>Compact</ui5-option>
+		<ui5-option>Condensed</ui5-option>
+	</ui5-select>
+
+	<ui5-select value-state="Information">
+		<ui5-option>Cozy</ui5-option>
+		<ui5-option selected>Compact</ui5-option>
+		<ui5-option>Condensed</ui5-option>
+	</ui5-select>
+
+	<ui5-multi-combobox value-state="Error"></ui5-multi-combobox>
+	<ui5-multi-combobox value-state="Information"></ui5-multi-combobox>
+
+	<h3> Input with multiple icons</h3>
+	<ui5-input id="input3" placeholder="Search ...">
+		<ui5-icon slot="icon" name="search" style="padding-left: 8px; padding-right: 8px"></ui5-icon>
+		<ui5-icon slot="icon" name="decline" style="padding-left: 8px; padding-right: 8px"></ui5-icon>
+	</ui5-input>
 
 	<script>
 		var sap_database_entries = [{ key: "Afg", text: "Afghanistan" }, { key: "Arg", text: "Argentina" }, { key: "Alb", text: "Albania" }, { key: "Arm", text: "Armenia" }, { key: "Alg", text: "Algeria" }, { key: "And", text: "Andorra" }, { key: "Ang", text: "Angola" }, { key: "Ast", text: "Austria" }, { key: "Aus", text: "Australia" }, { key: "Aze", text: "Azerbaijan" }, { key: "Aruba", text: "Aruba" }, { key: "Antigua", text: "Antigua and Barbuda" }, { key: "Bel", text: "Belarus" }, { key: "Bel", text: "Belgium" }, { key: "Bg", text: "Bulgaria" }, { key: "Bra", text: "Brazil" }, { key: "Ch", text: "China" }, { key: "Cub", text: "Cuba" }, { key: "Chil", text: "Chili" }, { key: "Lat", text: "Latvia" }, { key: "Lit", text: "Litva" }, { key: "Prt", text: "Portugal" }, { key: "Sen", text: "Senegal" }, { key: "Ser", text: "Serbia" }, { key: "Afg", text: "Seychelles" }, { key: "Sierra", text: "Sierra Leone" }, { key: "Sgp", text: "Singapore" }, { key: "Sint", text: "Sint Maarten" }, { key: "Slv", text: "Slovakia" }, { key: "Slo", text: "Slovenia" }];
@@ -113,8 +175,9 @@
 		var labelLiveChange = document.getElementById('myLabelLiveChange');
 		var labelSubmit = document.getElementById('myLabelSubmit');
 
-		input.addEventListener("ui5-input", function (event) {
-			var value = event.target.value;
+		var suggest = function (event) {
+			var input = event.target;
+			var value = input.value;
 			var suggestionItems = [];
 
 			if (value) {
@@ -130,12 +193,19 @@
 			suggestionItems.forEach(function(item) {
 				var li = document.createElement("ui5-li");
 				li.id = item.key;
+				li.icon = "world";
+				li.info = "explore";
+				li.infoState = "Success";
+				li.description = "travel the world";
 				li.textContent = item.text;
 				input.appendChild(li);
 			});
 
 			labelLiveChange.innerHTML = "Event [input] :: " + value;
-		});
+		};
+
+		input.addEventListener("ui5-input", suggest);
+		inputCompact.addEventListener("ui5-input", suggest);
 
 		input.addEventListener("ui5-suggestionItemSelect", function (event) {
 			var item = event.detail.item;

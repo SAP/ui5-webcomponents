@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
-import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 
 // Styles
@@ -24,6 +24,14 @@ const metadata = {
 			type: String,
 			defaultValue: "-1",
 			noAttribute: true,
+		},
+
+		/**
+		 * Indicates if the element is on focus
+		 * @private
+		 */
+		focused: {
+			type: Boolean,
 		},
 	},
 	events: {
@@ -53,7 +61,12 @@ class ListItemBase extends UI5Element {
 	}
 
 	_onfocusin(event) {
+		this.focused = true;
 		this.fireEvent("_focused", event);
+	}
+
+	_onfocusout(_event) {
+		this.focused = false;
 	}
 
 	_onkeydown(event) {

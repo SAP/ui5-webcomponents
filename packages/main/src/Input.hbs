@@ -16,7 +16,7 @@
 			maxlength="{{maxlength}}"
 			role="{{accInfo.input.role}}"
 			aria-owns="{{accInfo.input.ariaOwns}}"
-			aria-invalid="{{accInfo.input.ariaInvalid}}"
+			?aria-invalid="{{accInfo.input.ariaInvalid}}"
 			aria-haspopup="{{accInfo.input.ariaHasPopup}}"
 			aria-describedby="{{accInfo.input.ariaDescribedBy}}"
 			aria-autocomplete="{{accInfo.input.ariaAutoComplete}}"
@@ -25,6 +25,7 @@
 			@change="{{_handleChange}}"
 			@keydown="{{_onkeydown}}"
 			@keyup="{{_onkeyup}}"
+			@click={{_click}}
 			data-sap-no-tab-ref
 			data-sap-focus-ref
 		/>
@@ -46,18 +47,6 @@
 			<span id="{{_id}}-valueStateDesc" class="ui5-hidden-text">{{valueStateText}}</span>
 		{{/if}}
 	</div>
-
-	{{#if showSuggestions}}
-			<ui5-popover
-				placement-type="Bottom"
-				no-arrow
-				horizontal-align="Stretch"
-				initial-focus="{{_id}}-inner">
-					<ui5-list separators="Inner">
-						<slot></slot>
-					</ui5-list>
-			</ui5-popover>
-	{{/if}}
 
 	<slot name="formSupport"></slot>
 </div>

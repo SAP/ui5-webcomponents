@@ -2,6 +2,7 @@
  * CSS font face used for the texts provided by SAP.
  */
 import createStyleInHead from "./util/createStyleInHead.js";
+import { getFeature } from "./FeaturesRegistry.js";
 
 /* CDN Locations */
 const font72RegularWoff = `https://ui5.sap.com/sdk/resources/sap/ui/core/themes/sap_fiori_3/fonts/72-Regular.woff?ui5-webcomponents`;
@@ -56,6 +57,16 @@ const fontFaceCSS = `
 `;
 
 const insertFontFace = () => {
+	if (document.querySelector(`head>style[data-ui5-font-face]`)) {
+		return;
+	}
+
+	// If OpenUI5 is found, let it set the font
+	const OpenUI5Support = getFeature("OpenUI5Support");
+	if (OpenUI5Support && OpenUI5Support.isLoaded()) {
+		return;
+	}
+
 	createStyleInHead(fontFaceCSS, { "data-ui5-font-face": "" });
 };
 

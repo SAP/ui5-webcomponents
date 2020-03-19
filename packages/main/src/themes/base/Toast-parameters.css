@@ -1,0 +1,6 @@
+:root {
+	--_ui5_toast_vertical_offset: 3rem;
+	--_ui5_toast_horizontal_offset: 2rem;
+	--_ui5_toast_background: var(--sapList_Background);
+	--_ui5_toast_shadow: var(--sapContent_Shadow2);
+}

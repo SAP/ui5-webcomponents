@@ -9,14 +9,10 @@
 	color: var(--sapContent_IconColor);
 	cursor: pointer;
 	outline: none;
-	padding: var(--_ui5-input-icon-padding);
+	padding: var(--_ui5_input_icon_padding);
 	border-left: 1px solid transparent;
 	min-width: 1rem;
 	min-height: 1rem;
-}
-
-[input-icon][data-ui5-compact-size] {
-	padding: .25rem .5rem;
 }
 
 [input-icon][pressed] {

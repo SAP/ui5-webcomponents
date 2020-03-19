@@ -1,14 +1,25 @@
 # Public module imports
 
-## UI5 Web Components
+This is a comprehensive list of public module imports by package, intended for *App development*, i.e. consumption
+of the UI5 Web Components. 
 
-Here's a comprehensive list of all UI5 Web Components, their tags, and their respective module imports:
+Modules, intended purely for developing your own UI5 Web Components, 
+are therefore not listed here.   
 
-For API documentation and samples, please check the [UI5 Web Components Playground](https://sap.github.io/ui5-webcomponents/playground/)
+Table of contents:
+ - [Main package - @ui5/webcomponents](#main)
+ - [Fiori package - @ui5/webcomponents-fiori](#fiori)
+ - [Icons package - @ui5/webcomponents-icons](#icons)
+ - [Base package - @ui5/webcomponents-base](#base)
 
-### Main package (```@ui5/webcomponents```)
+<a name="main"></a>
+## Main package (```@ui5/webcomponents```)
 
 The `main` package provides general purpose UI building blocks such as buttons, labels, inputs and popups.
+
+For API documentation and samples, please check the [UI5 Web Components Playground](https://sap.github.io/ui5-webcomponents/master/playground/components).
+
+### 1. Web Components
 
 |      Web Component       |       Tag name       |                       Module import                        |
 | ------------------------ | -------------------- | ---------------------------------------------------------- |
@@ -28,7 +39,7 @@ The `main` package provides general purpose UI building blocks such as buttons, 
 | List - Custom Item       | `ui5-li-custom`      | `import "@ui5/webcomponents/dist/CustomListItem.js";`      |
 | List - Group Header Item | `ui5-li-groupheader` | `import "@ui5/webcomponents/dist/GroupHeaderListItem.js";` |
 | Message Strip            | `ui5-messagestrip`   | `import "@ui5/webcomponents/dist/MessageStrip.js";`        |
-| Multi Combo Box          | `ui5-multicombobox`  | `import "@ui5/webcomponents/dist/MultiComboBox.js";`       |
+| Multi Combo Box          | `ui5-multi-combobox`  | `import "@ui5/webcomponents/dist/MultiComboBox.js";`       |
 | Panel                    | `ui5-panel`          | `import "@ui5/webcomponents/dist/Panel.js";`               |
 | Popover                  | `ui5-popover`        | `import "@ui5/webcomponents/dist/Popover.js";`             |
 | Radio Button             | `ui5-radiobutton`    | `import "@ui5/webcomponents/dist/RadioButton.js";`         |
@@ -48,10 +59,64 @@ The `main` package provides general purpose UI building blocks such as buttons, 
 | Title                    | `ui5-title`          | `import "@ui5/webcomponents/dist/Title.js";`               |
 | Toggle Button            | `ui5-togglebutton`   | `import "@ui5/webcomponents/dist/ToggleButton.js";`        |
 
-### Fiori package (```@ui5/webcomponents-fiori```)
+### 2. Assets
+
+For additional `main` package assets (other themes, i18n and CLDR), use:
+
+`import "@ui5/webcomponents/dist/Assets.js";`
+
+### 3. Additional features
+
+<a name="inputsuggestions"></a>
+#### 3.1 Input Suggestions
+
+```js
+import "@ui5/webcomponents/dist/features/InputSuggestions.js";
+```
+
+The ```<ui5-input>``` element acts as an ```<input>``` with the Fiori design and added functionality, such as value state.
+
+An advanced feature is the so called "input suggestions", allowing the user to choose from a list of predefined options while typing.
+Since input suggestions may not always be needed, they do not come as part of the ```<ui5-input>``` itself.
+
+To enable the functionality, import the above module into your app.
+
+<a name="formsupport"></a>
+#### 3.2 Form Support
+
+```js
+import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";
+```
+
+HTML ```<form>``` only submits a couple of standard HTML elements such as ```<input>``` and ```<textarea>``` to name a few.
+
+Web Components that function as inputs, such as UI5's ```<ui5-input>```, ```<ui5-checkbox>```, ```<ui5-textarea>``` are therefore
+not submitted by the form out of the box.
+
+Generally this is not an issue, as very few modern applications submit forms in the classic way.
+
+If you however need to submit forms, you can import the module above and it will enrich:
+- `ui5-input`
+- `ui5-textarea`
+- `ui5-checkbox`
+- `ui5-radiobutton`
+- `ui5-datepicker`
+- `ui5-select`
+
+with functionality, allowing them to be submitted in forms (provided you set their <code>name</code> attribute) just as
+any standard HTML input element would be.
+
+In addition, the `ui5-button` element will be able to submit the closest ```form``` it's placed in, provided you set its `submits` attribute.
+
+<a name="fiori"></a>
+## Fiori package (```@ui5/webcomponents-fiori```)
 
 The `fiori` package provides essential building blocks, necessary to implement the Fiori UX concept, 
-such as a common header (ShellBar).
+such as a common header (`ShellBar`).
+
+For API documentation and samples, please check the [UI5 Web Components Playground](https://sap.github.io/ui5-webcomponents/playground/).
+
+### 1. Web Components
 
 |      Web Component       |       Tag name       |                       Module import                        |
 | ------------------------ | -------------------- | ---------------------------------------------------------- |
@@ -60,62 +125,71 @@ such as a common header (ShellBar).
 | Product Switch           | `ui5-product-switch`       | `import "@ui5/webcomponents-fiori/dist/ProductSwitch.js";`      |
 | Product Switch Item      | `ui5-product-switch-item`  | `import "@ui5/webcomponents-fiori/dist/ProductSwitchItem.js";`  |
 
-### Icons package (```@ui5/webcomponents-icons```)
+### 2. Assets
+
+For additional `fiori` package assets (other themes, i18n), use:
+
+`import "@ui5/webcomponents-fiori/dist/Assets.js";`
+
+### 3. Additional features
+
+#### 3.1 Co-pilot animation for `ui5-shellbar`
+
+```js
+`import "@ui5/webcomponents-fiori/dist/features/CoPilotAnimation.js";`
+```
+
+By default the `ui5-shellbar` Co-pilot button ships with a simple animation for better performance. 
+Importing the module above enables the detailed but more resource intensive animation instead.
+
+<a name="icons"></a>
+## Icons package (```@ui5/webcomponents-icons```)
 
 The `icons` package provides assets for the rich `SAP-icons` icon collection.
-
-|      Icon asset       |                           Module import                        |
-| ------------------------ |  ---------------------------------------------------------- |
-| All icons (~115KB zipped)       |  `import "@ui5/webcomponents-icons/dist/json-imports/Icons.js";`      |
-| Accelerated icon           |  `import "@ui5/webcomponents-icons/dist/icons/accelerated.js";`  |
-| Accept icon           |  `import "@ui5/webcomponents-icons/dist/icons/accept.js";`  |
-| ...           |  ...  |
-| Zoom out icon           |  `import "@ui5/webcomponents-icons/dist/icons/zoom-out.js";`  |
 
 *Note:* The `@ui5/webcomponents-icons` package does not provide any web components per se, but rather icon assets,
 usable by other web components such as `ui5-icon`. You could import all icons, but it's recommended to import 
 just the ones that your app will actually use.
 
-For a full list of the icons in the `SAP-icons` collection, click [here](https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/SAP-icons).
+### 1. Individual icon imports
 
-## Additional public modules
+|      Icon asset       |                           Module import                        |
+| ------------------------ |  ---------------------------------------------------------- |
+| Accelerated icon           |  `import "@ui5/webcomponents-icons/dist/icons/accelerated.js";`  |
+| Accept icon           |  `import "@ui5/webcomponents-icons/dist/icons/accept.js";`  |
+| ...           |  ...  |
+| Zoom out icon           |  `import "@ui5/webcomponents-icons/dist/icons/zoom-out.js";`  |
 
-Apart from the Web Components themselves, there are a number of additional modules that can
-be imported in order to add new, or configure the existing functionality.
+For a complete list of the icons in the `SAP-icons` collection, click [here](https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/SAP-icons).
 
-Table of contents:
+### 2. Assets
 
-- [Preface](#preface)
-- [Old browser support (Edge, IE11)](#oldbrowsersupport)
-- [Theming](#theming)
-- [Internationalization](#internationalization)
-- [Form Support](#formsupport)
-- [Input Suggestions](#inputsuggestions)
-- [Advanced Calendar Types](#advancedcalendartypes)
-- [Configuration](#conf)
+For additional `icons` package assets (i18n, all icons JSON), use:
 
-<a name="preface"></a>
-### Preface
+`import "@ui5/webcomponents-icons/dist/Assets.js";`  
 
-One of the main ideas behind UI5 Web Components is to be as lightweight as possible. Therefore only the
-main features (such as behavior, accessibility), default configuration settings (for example theme, language)
-and modern browser support (Chrome, Firefox, Safari) are provided by just importing the Web Component module.
+*Note:* 
+Apart from i18n assets, the above import also provides the JSON, containing all icons definitions (~115KB zipped).
+**Therefore, if you use an icon which you did not import individually, the JSON will be fetched.**
 
-Additional features, configuration settings, or old browser support are opt-in only and you should import
-(and configure) such manually, only if needed by your app.
+<a name="base"></a>
+## Base package (```@ui5/webcomponents-base```)
+
+The `base` package provides not only the UI5 Web Components framework, but also some features, relevant to
+all UI5 Web Components.
 
 <a name="oldbrowsersupport"></a>
 ### 1. Old browser support (Edge, IE11)
 
-Most modern browsers (**Chrome, Firefox, Safari**) support Web Components natively.
+Most modern browsers  - **Chrome, Firefox, Safari, Edge (Chromium-based)**, support Web Components natively.
 
-If your app needs to be able to run additionally on **Edge**, you should import the following module:
+If your app needs to be able to run additionally on the old **Edge (EdgeHTML-based)**, you should import the following module:
 
 ```js
 import "@ui5/webcomponents-base/dist/features/browsersupport/Edge.js";
 ```
 
-and if your app needs to run on both **Edge** and **IE11**, you should instead import:
+And if your app needs to run on both **Edge** and **IE11**, you should instead import:
 
 ```js
 import "@ui5/webcomponents-base/dist/features/browsersupport/IE11.js";
@@ -124,8 +198,6 @@ import "@ui5/webcomponents-base/dist/features/browsersupport/IE11.js";
 
 In addition, you should load the official Web Components polyfill in your index file, as described
 [here](https://github.com/webcomponents/polyfills/tree/master/packages/webcomponentsjs).
-
-See the "Using webcomponents-loader.js" section for more details.
 
 Please note that the aforementioned <code>webcomponents-loader.js</code> is not shipped as part of UI5 Web Components,
 but should be imported separately.
@@ -141,26 +213,16 @@ As shown in the example above, it's recommended to load the webcomponents polyfi
 <a name="theming"></a>
 ### 2. Theming
 
+UI5 Web Components ship with the default theme only out of the box.
+
+As mentioned above, you can get additional themes by importing the `Assets.js` module of the respective library, for example:
+
 ```js
-import "@ui5/webcomponents/dist/json-imports/Themes.js";
-import "@ui5/webcomponents-fiori/dist/json-imports/Themes.js"; // Only if using the @ui5/webcomponents-fiori package
+import "@ui5/webcomponents/dist/Assets.js";
+import "@ui5/webcomponents-fiori/dist/Assets.js"; // Only if using the @ui5/webcomponents-fiori package
 ```
-(for additional themes support)
 
-and
-```js
-import { setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
-```
-(for changing the theme at runtime)
-
-By default UI5 Web Components come with the SAP Quartz, a.k.a. Fiori 3 (techinical name: sap_fiori_3) theme.
-By importing the first module, listed above, you also get support for the:
- - SAP Belize (sap_belize)
- - SAP Belize High Contrast Black (sap_belize_hcb)
-
-themes.
-
-You can configure the theme by setting the <code>theme</code> key in the configuration object.
+You can configure the theme by setting the `theme` key in the configuration object.
 
 Example:
 ```html
@@ -171,32 +233,43 @@ Example:
 </script>
 ```
 
-By importing the second module, you get the:
+By importing:
+ 
+```js
+import { setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
+```
 
-<code>const setTheme = async theme => {...}</code>
+you get the
+
+```js
+const setTheme = async theme => {...}
+```
 
 method that allows you to change the theme during runtime, if necessary.
+
 Example:
 ```js
 import { setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 setTheme("sap_belize_hcb");
 ```
 
-For more general information on assets and JSON imports, click [here](Assets.md).
+For more general information on assets, click [here](https://sap.github.io/ui5-webcomponents/playground/docs/assets/).
 
 Find out how you can bundle your themes more efficiently [here](Assets.md#bundling).
 
 <a name="internationalization"></a>
 ### 3. Internationalization
 
-```js
-import "@ui5/webcomponents/dist/json-imports/i18n.js";
-import "@ui5/webcomponents-fiori/dist/json-imports/i18n.js"; // Only if using the @ui5/webcomponents-fiori package
-import "@ui5/webcomponents-icons/dist/json-imports/i18n.js"; // Only if using the @ui5/webcomponents-icons package
-```
+The `base` project provides i18n support. 
 
 Some UI5 Web Components contain texts (such as placeholders, tooltips, messages) that need translation.
-All texts are in English by default. In order to get support for other languages, you should import the module(s) above.
+All texts are in English by default. In order to get support for other languages, you should import the `Assets.js` module(s) of the packages:
+
+```js
+import "@ui5/webcomponents/dist/Assets.js";
+import "@ui5/webcomponents-fiori/dist/Assets.js"; // Only if using the @ui5/webcomponents-fiori package
+import "@ui5/webcomponents-icons/dist/Assets.js"; // Only if using the @ui5/webcomponents-icons package
+```
 
 You can configure the language by setting the <code>language</code> key in the configuration object.
 
@@ -209,76 +282,30 @@ Example:
 </script>
 ```
 
-For more general information on assets and JSON imports, click [here](Assets.md).
+For more general information on assets, click [here](https://sap.github.io/ui5-webcomponents/playground/docs/assets/).
 
 Find out how you can bundle your i18n texts more efficiently [here](Assets.md#bundling).
 
-<a name="formsupport"></a>
-### 4. Form Support
+### 4. Advanced calendar types
 
 ```js
-import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";
+import "@ui5/webcomponents-utils/dist/features/calendar/Buddhist.js";
+import "@ui5/webcomponents-utils/dist/features/calendar/Islamic.js";
+import "@ui5/webcomponents-utils/dist/features/calendar/Japanese.js";
+import "@ui5/webcomponents-utils/dist/features/calendar/Persian.js";
 ```
 
-HTML ```<form>``` only submits a couple of standard HTML elements such as ```<input>``` and ```<textarea>``` to name a few.
+The `ui5-datepicker` web component supports Gregorian Calendar by default.
 
-Web Components that function as inputs, such as UI5's ```<ui5-input>```, ```<ui5-checkbox>```, ```<ui5-textarea>``` are therefore
-not submitted by the form out of the box.
-
-Generally this is not an issue, as very few modern applications submit forms in the classic way.
-
-If you however need to submit forms, you can import the module above and it will enrich:
-- ui5-input
-- ui5-textarea
-- ui5-checkbox
-- ui5-radiobutton
-- ui5-datepicker
-- ui5-select
-
-with functionality, allowing them to be submitted in forms (provided you set their <code>name</code> attribute) just as
-any standard HTML input element would be.
-
-In addition, the:
-- ui5-button
-
-element will be able to submit the closest ```form``` it's placed in, provided you set its <code>submits</code> attribute.
-
-<a name="inputsuggestions"></a>
-### 5. Input Suggestions
-
-```js
-import "@ui5/webcomponents/dist/features/InputSuggestions.js";
-```
-
-The ```<ui5-input>``` element acts as an ```<input>``` with the Fiori design and added functionality, such as for example value state.
-
-An advanced feature is the so called "input suggestions", allowing the user to choose from a list of predefined options while typing.
-Since input suggestions may not always be needed, they do not come as part of the ```<ui5-input>``` itself.
-
-To enable the functionality, import the above module into your app.
-
-<a name="advancedcalendartypes"></a>
-### 6. Advanced calendar types
-
-```js
-import "@ui5/webcomponents-base/dist/features/calendar/Buddhist.js";
-import "@ui5/webcomponents-base/dist/features/calendar/Islamic.js";
-import "@ui5/webcomponents-base/dist/features/calendar/Japanese.js";
-import "@ui5/webcomponents-base/dist/features/calendar/Persian.js";
-```
-
-The <code>ui5-datepicker</code> web component supports Gregorian Calendar by default.
-
-In order to to be able to use Buddhist, Islamic, Japanese or Persian calendar with this web component
-(by setting its <code>primaryCalendarType</code> property), you should import one or more of the modules above.
+In order to be able to use Buddhist, Islamic, Japanese, or Persian calendar with this web component
+(by setting its `primaryCalendarType` property), you should import one or more of the modules above.
 
 <a name="config"></a>
-### 7. Configuration
+### 5. Configuration
 
 ```js
 import { getTheme, setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 import { getNoConflict, setNoConflict } from "@ui5/webcomponents-base/dist/config/NoConflict.js";
-import { getCompactSize } from "@ui5/webcomponents-base/dist/config/CompactSize.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
 import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
@@ -286,4 +313,50 @@ import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationM
 import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSettings.js";
 ```
 
-For more details, please check [Configuration](Configuration.md)
+For more details, please check [Configuration](https://sap.github.io/ui5-webcomponents/playground/docs/configuration/).
+
+### 6. Assets registration
+
+In order to register a **custom theme**:
+
+```js
+import { registerThemeProperties } from "@ui5/webcomponents-base/dist/AssetRegistry.js"
+```
+
+And then call the method above to register CSS Variables for each theme/package pair.
+
+You can pass the parameters directly, as an object, or as a URL:
+1) Pass the CSS Vars as a string directly.
+
+	`registerThemeProperties("my-package", "my_theme", ":root{--var1: red;}");`
+
+2) Pass the CSS Vars as an object directly. The object must have a "_" property, pointing to a string with the CSS Vars.
+
+	`registerThemeProperties("my-package", "my_theme", {"_": ":root{--var1: red;}"});`
+	
+3) Pass a URL to a JSON file, containing the CSS Vars in its "_" property. Will be fetched on demand, not upon registration.
+
+	`registerThemeProperties("my-package", "my_theme", "http://url/to/my/theme.json");`
+
+### 7. OpenUI5 integration
+
+```js
+import "@ui5/webcomponents-base/dist/features/OpenUI5Support.js";
+```
+
+If your app uses both OpenUI5 and UI5 Web Components, UI5 Web Components can benefit
+from OpenUI5 configuration and resources.
+
+When you import the above module:
+ 1. OpenUI5 configuration takes precedence over UI5 Web Components configuration
+ for all common entities (theme, language, RTL, etc...). In addition, changing the theme
+ in OpenUI5 will also change the theme in UI5 Web Components.
+ 2. Fonts will not be loaded twice (just once by OpenUI5, and reused).
+ 3. Locale Data assets will not be fetched twice (just once by OpenUI5, and reused).
+
+Therefore, if you intend to run both frameworks in the same browser window,
+it is highly recommended to enable OpenUI5 support and benefit from these optimizations.
+
+*Note:* In general the order in which OpenUI5 and UI5 Web Components are loaded does not matter.
+However, if your app needs to support Internet Explorer 11, either load OpenUI5 first, or load
+UI5 Web Components deferred.

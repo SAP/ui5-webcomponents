@@ -15,16 +15,20 @@ class DatePickerTestPage {
 		this._url = url;
 	}
 
+	get staticAreaItemClassName() {
+		return browser.getStaticAreaItemClassName(this._sut);
+	}
+
 	get popover() {
-		return browser.$(this._sut).shadow$("ui5-popover");
+		return browser.$(`.${this.staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 	}
 
 	get popoverContent() {
-		return browser.$(this._sut).shadow$("ui5-popover").shadow$(".ui5-popover-root");
+		return browser.$(this._sut).shadow$("ui5-responsive-popover").shadow$("ui5-popover").shadow$(".ui5-popover-root");
 	}
 
 	get calendar() {
-		return browser.$(this._sut).shadow$("ui5-calendar");
+		return this.popover.$("ui5-calendar");
 	}
 
 	get input() {
@@ -46,37 +50,49 @@ class DatePickerTestPage {
 	}
 
 	get btnPrev() {
-		return browser.$(this._sut).shadow$("ui5-calendar").shadow$(`ui5-calendar-header`).shadow$(`div[data-sap-cal-head-button="Prev"]`);
+		return browser.$(`.${this.staticAreaItemClassName}`).shadow$("ui5-calendar").shadow$(`ui5-calendar-header`).shadow$(`div[data-sap-cal-head-button="Prev"]`);
 	}
 
 	get btnNext() {
-		return browser.$(this._sut).shadow$("ui5-calendar").shadow$(`ui5-calendar-header`).shadow$(`div[data-sap-cal-head-button="Next"]`);
+		return browser.$(`.${this.staticAreaItemClassName}`).shadow$("ui5-calendar").shadow$(`ui5-calendar-header`).shadow$(`div[data-sap-cal-head-button="Next"]`);
 	}
 
 	get btnYear() {
-		return browser.$(this._sut).shadow$("ui5-calendar").shadow$(`ui5-calendar-header`).shadow$(`div[data-sap-show-picker="Year"]`);
+		return browser.$(`.${this.staticAreaItemClassName}`).shadow$("ui5-calendar").shadow$(`ui5-calendar-header`).shadow$(`div[data-sap-show-picker="Year"]`);
 	}
 
 	get btnMonth() {
-		return browser.$(this._sut).shadow$("ui5-calendar").shadow$(`ui5-calendar-header`).shadow$(`div[data-sap-show-picker="Month"]`);
+		return browser.$(`.${this.staticAreaItemClassName}`).shadow$("ui5-calendar").shadow$(`ui5-calendar-header`).shadow$(`div[data-sap-show-picker="Month"]`);
 	}
 
 	getPickerDate(timestamp) {
-		return browser.$(`${this._sut}`).shadow$(`ui5-calendar`).shadow$(`ui5-daypicker`).shadow$(`div[data-sap-timestamp="${timestamp}"]`);
+		return browser.$(`.${this.staticAreaItemClassName}`).shadow$(`ui5-calendar`).shadow$(`ui5-daypicker`).shadow$(`div[data-sap-timestamp="${timestamp}"]`);
 	}
 
 	getFirstDisplayedDate() {
-		return browser.$(`${this._sut}`).shadow$(`ui5-calendar`).shadow$(`ui5-daypicker`).shadow$(`div.ui5-dp-item`);
+		return browser.$(`.${this.staticAreaItemClassName}`).shadow$(`ui5-calendar`).shadow$(`ui5-daypicker`).shadow$(`div.ui5-dp-item`);
 	}
 
 	getFirstDisplayedYear() {
-		return browser.$(`${this._sut}`).shadow$(`ui5-calendar`).shadow$(`ui5-yearpicker`).shadow$(`div.ui5-yp-item`);
+		return browser.$(`.${this.staticAreaItemClassName}`).shadow$(`ui5-calendar`).shadow$(`ui5-yearpicker`).shadow$(`div.ui5-yp-item`);
 	}
 
 	getDisplayedYear(index) {
 		return browser
-			.$(`${this._sut}`).shadow$(`ui5-calendar`).shadow$(`ui5-yearpicker`).shadow$(`.ui5-yp-root`)
+			.$(`.${this.staticAreaItemClassName}`).shadow$(`ui5-calendar`).shadow$(`ui5-yearpicker`).shadow$(`.ui5-yp-root`)
 			.$$(".ui5-yp-item")[index];
+	}
+
+	getDisplayedMonth(index) {
+		return browser
+			.$(`.${this.staticAreaItemClassName}`).shadow$(`ui5-calendar`).shadow$(`ui5-monthpicker`).shadow$(`.ui5-mp-root`)
+			.$$(".ui5-mp-item")[index];
+	}
+
+	getDisplayedDay(index) {
+		return browser
+			.$(`.${this.staticAreaItemClassName}`).shadow$(`ui5-calendar`).shadow$(`ui5-daypicker`).shadow$(`.ui5-dp-root`).$(".ui5-dp-content").$(".ui5-dp-items-container")
+			.$$(".ui5-dp-item")[index];
 	}
 
 	isValid(value) {

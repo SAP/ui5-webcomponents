@@ -18,11 +18,19 @@
 		@ui5-showMoreItemsPress="{{_showMorePopover}}"
 		@ui5-tokenDelete="{{_tokenDelete}}"
 		@focusout="{{_tokenizerFocusOut}}"
+		@click={{_click}}
 		?expanded="{{expandedTokenizer}}"
 	>
 		{{#each items}}
 			{{#if this.selected}}
-				<ui5-token ?readonly="{{../readonly}}" class="ui5-multi-combobox-token" data-ui5-id="{{this._id}}" >{{this.textContent}}</ui5-token>
+				<ui5-token
+				?readonly="{{../readonly}}"
+				class="ui5-multi-combobox-token"
+				data-ui5-id="{{this._id}}"
+				part="token-{{@index}}"
+				>
+					{{this.text}}
+				</ui5-token>
 			{{/if}}
 		{{/each}}
 	</ui5-tokenizer>
@@ -41,6 +49,7 @@
 		@keyup="{{_onkeyup}}"
 		@focusin="{{_focusin}}"
 		@focusout="{{_focusout}}"
+		@click={{_click}}
 		aria-autocomplete="both"
 		aria-labelledby="{{_id}}-hiddenText-nMore"
 		aria-describedby="{{_id}}-valueStateDesc"
@@ -56,36 +65,4 @@
 			dir="{{dir}}"
 		></ui5-icon>
 	{{/unless}}
-
-	<ui5-popover
-		class="ui5-multi-combobox-selected-items-popover"
-		horizontal-align="Stretch"
-		?no-arrow={{editable}}
-		placement-type="Bottom">
-		<ui5-list separators="None" mode="{{selectedItemsListMode}}"
-			@ui5-selectionChange={{_listSelectionChange}}>
-			{{#each items}}
-				{{#if this.selected}}
-					<ui5-li type="Active" data-ui5-token-id="{{this._id}}" .selected="{{../editable}}">{{this.textContent}}</ui5-li>
-				{{/if}}
-			{{/each}}
-		</ui5-list>
-	</ui5-popover>
-
-	<ui5-popover class="ui5-multi-combobox-all-items-popover"
-		no-arrow
-		horizontal-align="Stretch"
-		initial-focus="ui5-multi-combobox-input"
-		horizontal-align="Left"
-		placement-type="Bottom"
-		@ui5-selectionChange={{_listSelectionChange}}
-		@ui5-afterClose={{_toggleIcon}}
-		@ui5-afterOpen={{_toggleIcon}}>
-		<ui5-list separators="None" mode="MultiSelect" class="ui5-multi-combobox-all-items-list">
-			{{#each _filteredItems}}
-					<ui5-li type="Active" ?selected={{this.selected}} data-ui5-token-id="{{this._id}}">{{this.textContent}}</ui5-li>
-			{{/each}}
-		</ui5-list>
-	</ui5-popover>
-
 </div>

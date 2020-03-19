@@ -8,7 +8,7 @@ import PopoverVerticalAlign from "./types/PopoverVerticalAlign.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 
 import { addOpenedPopover, removeOpenedPopover } from "./popup-utils/PopoverRegistry.js";
-import { getFocusedElement, getClosedPopupParent } from "./popup-utils/PopupUtils.js";
+import { getFocusedElement, getClosedPopupParent, getNextZIndex } from "./popup-utils/PopupUtils.js";
 
 // Styles
 import PopoverCss from "./generated/themes/Popover.css.js";
@@ -156,7 +156,15 @@ const metadata = {
 		opened: { type: Boolean },
 
 		_maxContentHeight: { type: Integer },
+
+		/**
+		 * @private
+		 */
+		_disableInitialFocus: {
+			type: Boolean,
+		},
 	},
+	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.Popover.prototype */ {
 		/**
 		 * Defines the content of the Web Component.
@@ -165,7 +173,7 @@ const metadata = {
 		 * @public
 		 */
 		"default": {
-			type: Node,
+			type: HTMLElement,
 		},
 
 		/**
@@ -261,6 +269,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.Popover
  * @extends UI5Element
  * @tagname ui5-popover
+ * @since 1.0.0-rc.6
  * @public
  */
 class Popover extends UI5Element {
@@ -312,6 +321,7 @@ class Popover extends UI5Element {
 
 		this._opener = opener;
 		this._focusedElementBeforeOpen = getFocusedElement();
+		this.style.zIndex = getNextZIndex();
 
 		this.fireEvent("beforeOpen", {});
 		this.reposition();
@@ -343,7 +353,9 @@ class Popover extends UI5Element {
 			removeOpenedPopover(this);
 		}
 
-		this.resetFocus();
+		if (!this._prevetFocusRestore) {
+			this.resetFocus();
+		}
 
 		this.hide();
 		this.fireEvent("afterClose", {});
@@ -360,6 +372,10 @@ class Popover extends UI5Element {
 	}
 
 	applyInitialFocus() {
+		if (this._disableInitialFocus) {
+			return;
+		}
+
 		const element = this.getRootNode().getElementById(this.initialFocus) || document.getElementById(this.initialFocus) || getFirstFocusableElement(this.contentDOM);
 
 		if (element) {
@@ -669,7 +685,22 @@ class Popover extends UI5Element {
 			arrow: {
 				transform: `translate(${this.arrowTranslateX}px, ${this.arrowTranslateY}px)`,
 			},
+			root: { },
 		};
+	}
+
+	/**
+	 * Hook for descendants to hide header.
+	 */
+	get _displayHeader() {
+		return true;
+	}
+
+	/**
+	 * Hook for descendants to hide footer.
+	 */
+	get _displayFooter() {
+		return true;
 	}
 }
 

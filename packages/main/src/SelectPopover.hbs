@@ -1,0 +1,33 @@
+{{#if options}}
+	<ui5-responsive-popover
+		no-arrow
+		_disable-initial-focus
+		content-only-on-desktop
+		placement-type="Bottom"
+		horizontal-align="Left"
+		@ui5-afterOpen="{{_applyFocusAfterOpen}}"
+		@ui5-beforeOpen="{{_beforeOpen}}"
+		@ui5-afterClose="{{_afterClose}}"
+		@keydown="{{_onkeydown}}"
+	>
+		<div slot="header" class="ui5-responsive-popover-header">
+			<div class="row">
+				<span>{{_headerTitleText}}</span>
+				<ui5-button
+					icon="decline"
+					design="Transparent"
+					@click="{{_toggleRespPopover}}"
+				>
+				</ui5-button>
+			</div>
+		</div>
+
+		<ui5-list mode="SingleSelect" separators="None" @keydown="{{_handlePickerKeydown}}" @ui5-itemPress="{{_selectionChange}}">
+			{{#each _syncedOptions}}
+				<ui5-li ?selected="{{this.selected}}" icon="{{this.icon}}" id="{{this.id}}-li">
+					{{this.textContent}}
+				</ui5-li>
+			{{/each}}
+		</ui5-list>
+	</ui5-responsive-popover>
+{{/if}}

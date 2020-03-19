@@ -22,6 +22,7 @@ const metadata = {
 			type: Integer,
 		},
 	},
+	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.fiori.ProductSwitch.prototype */ {
 		/**
 		 * Defines the items of the <code>ui5-product-switch</code>.

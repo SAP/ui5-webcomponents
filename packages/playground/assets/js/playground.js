@@ -8,6 +8,10 @@ document.addEventListener("DOMContentLoaded", function() {
     setTheme();
     scrollSelectedMenuItemIntoView();
     createMetaTags();
+
+    var contentDensity = window.localStorage.getItem("contentDensity");
+    var isCompact = (contentDensity === "Compact");
+    document.body.className = isCompact ? "ui5-content-density-compact": ""
 });
 
 var THEMES = {
@@ -15,6 +19,7 @@ var THEMES = {
   "sap_fiori_3_dark": "fiori--dark",
   "sap_belize": "belize",
   "sap_belize_hcb": "hcb",
+  "sap_belize_hcw": "hcw",
 }
 
 function toggleSettings() {
@@ -39,7 +44,7 @@ function toggleSettings() {
 
       // Set selected option of themeSwitch
       Array.prototype.slice.call(contentDensitySwitch.querySelectorAll("ui5-option")).forEach(function(option) {
-        if (urlParameters["sap-ui-compactSize"] === "true") {
+        if (window.localStorage.getItem("contentDensity") === "Compact") {
           option.selected = option.textContent === "Compact";
         } else {
           option.selected = option.textContent === "Cozy";
@@ -67,11 +72,13 @@ function toggleSettings() {
         contentDensity = contentDensitySwitch.selectedOption.textContent,
         textDirection = textDirectionSwitch.selectedOption.textContent;
 
+
+        /* Save the compact setting in Local Storage */
+        window.localStorage.setItem("contentDensity", contentDensity);
+
         // Not implemented with string literals, beacause of IE11
         var newLocation = location.origin + location.pathname + "?sap-ui-theme=";
         newLocation += theme;
-        newLocation += "&sap-ui-compactSize=";
-        newLocation += contentDensity === "Compact";
         newLocation +=  "&sap-ui-rtl=";
         newLocation += textDirection === "RTL";
 
@@ -142,7 +149,6 @@ function initSearch() {
       if (request.status >= 200 && request.status < 400) {
         // Success!
         var data = JSON.parse(request.responseText);
-        var keys = Object.keys(data);
   
         for(var i in data) {
           index.add({

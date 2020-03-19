@@ -7,7 +7,7 @@ import {
 	isEnter,
 	isSpace,
 	isDelete,
-} from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/icons/decline.js";
 import "@ui5/webcomponents-icons/dist/icons/cancel.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -166,13 +166,11 @@ class Token extends UI5Element {
 		return getTheme() === "sap_fiori_3" ? "decline" : "sys-cancel";
 	}
 
-	static async define(...params) {
+	static async onDefine() {
 		await Promise.all([
 			Icon.define(),
 			fetchI18nBundle("@ui5/webcomponents"),
 		]);
-
-		super.define(...params);
 	}
 }
 

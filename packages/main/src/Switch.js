@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-import { isDesktop } from "@ui5/webcomponents-utils/dist/sap/ui/Device.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/icons/accept.js";
@@ -114,7 +114,7 @@ const metadata = {
  * The <code>ui5-switch</code> component is used for changing between binary states.
  * <br>
  * The component can display texts, that will be switched, based on the component state, via the <code>textOn</code> and <code>textOff</code> properties,
- * but texts longer than 3 letters will be cuttted off.
+ * but texts longer than 3 letters will be cutted off.
  * <br>
  * However, users are able to customize the width of <code>ui5-switch</code> with pure CSS (&lt;ui5-switch style="width: 200px">), and set widths, depending on the texts they would use.
  * <br>
@@ -233,13 +233,11 @@ class Switch extends UI5Element {
 		return this.checked ? this.accessibilityOnText : this.accessibilityOffText;
 	}
 
-	static async define(...params) {
+	static async onDefine() {
 		await Promise.all([
 			Icon.define(),
 			fetchI18nBundle("@ui5/webcomponents"),
 		]);
-
-		super.define(...params);
 	}
 }
 

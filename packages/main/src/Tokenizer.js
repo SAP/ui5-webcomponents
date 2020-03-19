@@ -14,6 +14,7 @@ import styles from "./generated/themes/Tokenizer.css.js";
  */
 const metadata = {
 	tag: "ui5-tokenizer",
+	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.Tokenizer.prototype */ {
 		"default": {
 			propertyName: "tokens",
@@ -217,10 +218,8 @@ class Tokenizer extends UI5Element {
 		};
 	}
 
-	static async define(...params) {
+	static async onDefine() {
 		await fetchI18nBundle("@ui5/webcomponents");
-
-		super.define(...params);
 	}
 }
 

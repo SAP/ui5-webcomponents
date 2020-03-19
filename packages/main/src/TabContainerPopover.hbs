@@ -1,0 +1,39 @@
+<ui5-responsive-popover
+	id="{{_id}}-overflowMenu"
+	horizontal-align="Right"
+	placement-type="Bottom"
+	content-only-on-desktop
+	with-padding
+	no-arrow
+>
+	<ui5-list @ui5-itemPress="{{_onOverflowListItemSelect}}">
+		{{#each renderItems}}
+			{{#unless this.isSeparator}}
+				<ui5-li-custom id="{{this.item._id}}"
+					class="{{this.overflowItemClasses}}"
+					type="{{this.overflowItemState}}"
+					?selected="{{this.selected}}"
+					?disabled="{{this.disabled}}"
+				>
+					<div class="{{this.overflowItemContentClasses}}">
+						{{#if this.item.icon}}
+							<ui5-icon name="{{this.item.icon}}"></ui5-icon>
+						{{/if}}
+
+						{{this.item.text}}
+
+						{{#if this.item.additionalText}}
+							({{this.item.additionalText}})
+						{{/if}}
+					</div>
+				</ui5-li-custom>
+			{{/unless}}
+		{{/each}}
+	</ui5-list>
+	<div slot="footer" class="ui5-responsive-popover-footer">
+		<ui5-button
+			design="Transparent"
+			@click="{{_closeRespPopover}}"
+		>Cancel</ui5-button>
+	</div>
+</ui5-responsive-popover>

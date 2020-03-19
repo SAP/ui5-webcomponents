@@ -5,6 +5,6 @@
 	display: inline-block;
 }
 
-:host {
+:host .ui5-datepicker-input {
 	width: 100%;
 }

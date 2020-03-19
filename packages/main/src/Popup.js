@@ -1,17 +1,19 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { getFirstFocusableElement, getLastFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import { isEscape } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
 
 // Styles
 import styles from "./generated/themes/Popup.css.js";
 
 import { addOpenedPopup, removeOpenedPopup } from "./popup-utils/OpenedPopupsRegistry.js";
+import { getNextZIndex } from "./popup-utils/PopupUtils.js";
 
 /**
  * @public
  */
 const metadata = {
+	managedSlots: true,
 	slots: /** @lends  sap.ui.webcomponents.main.Popup.prototype */ {
 
 		/**
@@ -21,7 +23,7 @@ const metadata = {
 		 * @public
 		 */
 		"default": {
-			type: Node,
+			type: HTMLElement,
 		},
 
 		/**
@@ -82,9 +84,17 @@ const metadata = {
 			type: Integer,
 			noAttribute: true,
 		},
+
 		_hideBlockLayer: {
 			type: Boolean,
 			noAttribute: true,
+		},
+
+		/**
+		 * @private
+		 */
+		_disableInitialFocus: {
+			type: Boolean,
 		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.Popup.prototype */ {
@@ -128,7 +138,6 @@ const metadata = {
 };
 
 const openedPopups = [];
-let currentZIndex = 100;
 let isBodyScrollingDisabled = false;
 let customBLyBackStyleInserted = false;
 
@@ -226,11 +235,6 @@ class Popup extends UI5Element {
 		return styles;
 	}
 
-	static getNextZIndex() {
-		currentZIndex += 2;
-		return currentZIndex;
-	}
-
 	static hitTest(popup, event) {
 		const indexOf = openedPopups.indexOf(popup);
 		let openedPopup;
@@ -290,7 +294,7 @@ class Popup extends UI5Element {
 
 		this._isFirstTimeRendered = false;
 
-		this._zIndex = Popup.getNextZIndex();
+		this._zIndex = getNextZIndex();
 		openedPopups.push(this);
 		addOpenedPopup(this);
 
@@ -354,6 +358,10 @@ class Popup extends UI5Element {
 	}
 
 	setInitialFocus(container) {
+		if (this._disableInitialFocus) {
+			return;
+		}
+
 		if (this._initialFocusDomRef) {
 			if (this._initialFocusDomRef !== document.activeElement) {
 				this._initialFocusDomRef.focus();
@@ -374,7 +382,7 @@ class Popup extends UI5Element {
 		}
 	}
 
-	onfocusin(event) {
+	_onfocusin(event) {
 		this.preserveFocus(event, this.getPopupDomRef());
 	}
 
@@ -445,7 +453,8 @@ class Popup extends UI5Element {
 	}
 
 	get hasHeader() {
-		return !!(this.headerText.length || this.header.length);
+		const hasHeaderText = this.headerText && this.headerText.length;
+		return !!(hasHeaderText || this.header.length);
 	}
 
 	get hasFooter() {

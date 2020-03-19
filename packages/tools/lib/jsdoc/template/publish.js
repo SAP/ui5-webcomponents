@@ -2440,7 +2440,7 @@ function createAPIJSON4Symbol(symbol, omitDefaults) {
 					}
 					closeTag("parameters");
 				}
-				methodList("methods", event.methods, true);
+				methodList("methods", event.methods);
 				closeTag("event");
 			}
 			endCollection("events");
@@ -2787,7 +2787,7 @@ function createAPIJSON4Symbol(symbol, omitDefaults) {
 			endCollection("properties");
 		}
 	} else if ( kind === 'function' ) {
-		methodSignature(symbol, /* no since */ true);
+		methodSignature(symbol);
 	}
 
 	if ( !skipMembers ) {

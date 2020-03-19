@@ -24,7 +24,7 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.TableColumn.prototype */ {
 
 		/**
-		 * Defines the minimum screen width required to display this column. By default it is always displayed.
+		 * Defines the minimum table width required to display this column. By default it is always displayed.
 		 * <br><br>
 		 * The responsive behavior of the <code>ui5-table</code> is determined by this property. As an example, by setting
 		 * <code>minWidth</code> property to <code>40em</code> shows this column on tablet (and desktop) but hides it on mobile.

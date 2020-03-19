@@ -1,6 +1,6 @@
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 
-import { isPhone } from "@ui5/webcomponents-utils/dist/sap/ui/Device.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import Popup from "./Popup.js";
 // Template
 import DialogTemplate from "./generated/templates/DialogTemplate.lit.js";
@@ -139,6 +139,13 @@ class Dialog extends Popup {
 
 	get blockLayer() {
 		return `z-index: ${this._zIndex};`;
+	}
+
+	get headerAriaLabelledBy() {
+		if (this.headerText || this.header) {
+			return `${this._id}-popup-heading`;
+		}
+		return undefined;
 	}
 }
 

@@ -2,12 +2,14 @@ import EventProvider from "../EventProvider.js";
 import scroll from "../animations/scroll.js";
 
 const scrollEventName = "scroll";
+const touchEndEventName = "touchend";
 
 class ScrollEnablement extends EventProvider {
 	constructor(containerComponent) {
 		super();
 		containerComponent.addEventListener("touchstart", this.ontouchstart.bind(this), { passive: true });
 		containerComponent.addEventListener("touchmove", this.ontouchmove.bind(this), { passive: true });
+		containerComponent.addEventListener("touchend", this.ontouchend.bind(this), { passive: true });
 	}
 
 	set scrollContainer(container) {
@@ -70,7 +72,31 @@ class ScrollEnablement extends EventProvider {
 		container.scrollLeft += this._prevDragX - dragX;
 		container.scrollTop += this._prevDragY - dragY;
 
-		this.fireEvent(scrollEventName, {});
+		this.fireEvent(scrollEventName, {
+			isLeft: dragX > this._prevDragX,
+			isRight: dragX < this._prevDragX,
+		});
+
+		this._prevDragX = dragX;
+		this._prevDragY = dragY;
+	}
+
+	ontouchend(event) {
+		if (!this._canScroll) {
+			return;
+		}
+
+		const container = this._container;
+		const dragX = event.pageX;
+		const dragY = event.pageY;
+
+		container.scrollLeft += this._prevDragX - dragX;
+		container.scrollTop += this._prevDragY - dragY;
+
+		this.fireEvent(touchEndEventName, {
+			isLeft: dragX > this._prevDragX,
+			isRight: dragX < this._prevDragX,
+		});
 
 		this._prevDragX = dragX;
 		this._prevDragY = dragY;

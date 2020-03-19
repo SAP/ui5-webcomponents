@@ -38,6 +38,8 @@ tr {
 	box-sizing: border-box;
 	color: var(--sapTextColor);
 	min-height: 3rem;
+	background-color: var(--sapList_Background);
+	border-top: 1px solid var(--sapList_BorderColor);
 }
 
 :host([_no-data-displayed]) {

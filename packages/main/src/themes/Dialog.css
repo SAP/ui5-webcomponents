@@ -28,6 +28,11 @@
 	display: flex;
 	flex-direction: column;
 	overflow: hidden;
+	min-width: 25rem;
+}
+
+.ui5-phone {
+	min-width: 0;
 }
 
 .ui5-dialog-root header,
@@ -39,4 +44,8 @@
 	overflow: hidden;
 	flex: 1 1 auto;
 	display: flex;
+}
+
+.ui5-dialog-section .ui5-popup-content {
+	flex-basis: 100%;
 }

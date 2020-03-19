@@ -7,7 +7,6 @@ sap/base/util/array/uniqueSort.js
 sap/base/util/deepEqual.js
 sap/base/util/isPlainObject.js
 sap/base/util/now.js
-sap/ui/Device.js
 sap/ui/base/Interface.js
 sap/ui/base/Metadata.js
 sap/ui/base/Object.js

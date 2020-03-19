@@ -1,5 +1,4 @@
-import { isDesktop } from "@ui5/webcomponents-utils/dist/sap/ui/Device.js";
-import { getCompactSize } from "@ui5/webcomponents-base/dist/config/CompactSize.js";
+import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
@@ -13,7 +12,7 @@ import {
 	isLeft,
 	isUp,
 	isRight,
-} from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import Label from "./Label.js";
 import RadioButtonGroup from "./RadioButtonGroup.js";
 
@@ -36,7 +35,7 @@ const metadata = {
 		/**
 		 * Determines whether the <code>ui5-radiobutton</code> is disabled.
 		 * <br><br>
-		 * <b>Note:</b> A disabled <code>ui5-radiobutton</code> is completely uninteractive.
+		 * <b>Note:</b> A disabled <code>ui5-radiobutton</code> is completely noninteractive.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -106,7 +105,7 @@ const metadata = {
 		 * Defines the name of the <code>ui5-radiobutton</code>.
 		 * Radio buttons with the same <code>name</code> will form a radio button group.
 		 * <br><b>Note:</b>
-		 * The selection can be changed with <code>ARROW_UP/DOWN</code> and <code>ARROW_LEFT/RIGHT</code> keys between radios in same group.
+		 * The selection can be changed with <code>ARROW_UP/DOWN</code> and <code>ARROW_LEFT/RIGHT</code> keys between radio buttons in same group.
 		 * <br><b>Note:</b>
 		 * Only one radio button can be selected per group.
 		 * <br>
@@ -166,21 +165,6 @@ const metadata = {
 	},
 };
 
-const SVGConfig = {
-	"compact": {
-		x: 16,
-		y: 16,
-		rInner: 3,
-		rOuter: 8,
-	},
-	"default": {
-		x: 22,
-		y: 22,
-		rInner: 5,
-		rOuter: 11,
-	},
-};
-
 /**
  * @class
  *
@@ -192,7 +176,7 @@ const SVGConfig = {
  * When a <code>ui5-radiobutton</code> that is within a group is selected, the one
  * that was previously selected gets automatically deselected. You can group radio buttons by using the <code>name</code> property.
  * <br>
- * Note: if <code>ui5-radiobutton</code> is not part of a group, it can be selected once, but can not be deselected back.
+ * <b>Note:</b> If <code>ui5-radiobutton</code> is not part of a group, it can be selected once, but can not be deselected back.
  *
  * <h3>Keyboard Handling</h3>
  *
@@ -201,7 +185,7 @@ const SVGConfig = {
  * The Arrow Down/Arrow Up and Arrow Left/Arrow Right keys can be used to change selection between next/previous radio buttons in one group,
  * while TAB and SHIFT + TAB can be used to enter or leave the radio button group.
  * <br>
- * Note: On entering radio button group, the focus goes to the currently selected radio button.
+ * <b>Note:</b> On entering radio button group, the focus goes to the currently selected radio button.
  *
  * <h3>ES6 Module Import</h3>
  *
@@ -237,13 +221,11 @@ class RadioButton extends UI5Element {
 		return radioButtonCss;
 	}
 
-	static async define(...params) {
+	static async onDefine() {
 		await Promise.all([
 			Label.define(),
 			fetchI18nBundle("@ui5/webcomponents"),
 		]);
-
-		super.define(...params);
 	}
 
 	onBeforeRendering() {
@@ -396,15 +378,21 @@ class RadioButton extends UI5Element {
 	}
 
 	get tabIndex() {
-		return this.disabled || (!this.selected && this.name) ? "-1" : "0";
+		const tabindex = this.getAttribute("tabindex");
+
+		if (this.disabled) {
+			return "-1";
+		}
+
+		if (this.name) {
+			return this.selected ? "0" : "-1";
+		}
+
+		return tabindex || "0";
 	}
 
 	get strokeWidth() {
 		return this.valueState === "None" ? "1" : "2";
-	}
-
-	get circle() {
-		return getCompactSize() ? SVGConfig.compact : SVGConfig.default;
 	}
 
 	get rtl() {

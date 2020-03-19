@@ -1,8 +1,7 @@
-import "../shims/jquery-shim.js";
-import "../shims/Core-shim.js";
-import { getLanguage } from "../LocaleProvider.js";
+import getLocale from "../locale/getLocale.js";
 import { fetchJsonOnce } from "../util/FetchHelper.js";
-import { normalizeLocale, nextFallbackLocale } from "../util/normalizeLocale.js";
+import normalizeLocale from "../locale/normalizeLocale.js";
+import nextFallbackLocale from "../locale/nextFallbackLocale.js";
 
 const bundleData = new Map();
 const bundleURLs = new Map();
@@ -32,24 +31,24 @@ const registerI18nBundle = (packageName, bundle) => {
 };
 
 /**
- * This method preforms the asyncronous task of fething the actual text resources. It will fetch
+ * This method preforms the asynchronous task of fetching the actual text resources. It will fetch
  * each text resource over the network once (even for multiple calls to the same method).
  * It should be fully finished before the i18nBundle class is created in the webcomponents.
  * This method uses the bundle URLs that are populated by the <code>registerI18nBundle</code> method.
  * To simplify the usage, the synchronization of both methods happens internally for the same <code>bundleId</code>
- * @param {packageName} packageName the node project package id
+ * @param {packageName} packageName the NPM package name
  * @public
  */
 const fetchI18nBundle = async packageName => {
 	const bundlesForPackage = bundleURLs.get(packageName);
 
 	if (!bundlesForPackage) {
-		console.warn(`Message bundle assets are not configured. Falling back to english texts.`, /* eslint-disable-line */
-		` You need to import @ui5/webcomponents/dist/json-imports/i18n.js with a build tool that supports JSON imports.`); /* eslint-disable-line */
+		console.warn(`Message bundle assets are not configured. Falling back to English texts.`, /* eslint-disable-line */
+		` You need to import ${packageName}/dist/Assets.js with a build tool that supports JSON imports.`); /* eslint-disable-line */
 		return;
 	}
 
-	const language = getLanguage();
+	const language = getLocale().getLanguage();
 
 	let localeId = normalizeLocale(language);
 	while (!bundlesForPackage[localeId]) {

@@ -3,8 +3,7 @@
 }
 
 .ui5-timeline-root {
-	background-color: var(--sapBackgroundColor);
-	padding: 1rem 1rem 1rem .5rem;
+	padding: var(--_ui5_tl_padding);
 	box-sizing: border-box;
 	overflow: hidden;
 }
@@ -16,22 +15,9 @@
 }
 
 .ui5-timeline-list-item {
-	margin-bottom: 1.625rem;
+	margin-bottom: var(--_ui5_tl_li_margin_bottom);
 }
 
 .ui5-timeline-list-item:last-child {
-	margin-bottom: 0;
-}
-
-/* Compact size */
-:host([data-ui5-compact-size]) .ui5-timeline-root {
-	padding: .5rem;
-}
-
-:host([data-ui5-compact-size]) .ui5-timeline-list-item {
-	margin-bottom: .5rem;
-}
-
-:host([data-ui5-compact-size]) .ui5-timeline-list-item :last-child {
 	margin-bottom: 0;
 }

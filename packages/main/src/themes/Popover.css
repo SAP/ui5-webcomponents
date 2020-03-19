@@ -1,7 +1,6 @@
 :host {
 	display: none;
 	position: fixed;
-	z-index: 10;
 	min-width: 6.25rem;
 	background: var(--sapGroup_ContentBackground);
 	box-shadow: var(--sapContent_Shadow2);
@@ -140,6 +139,10 @@
 	box-sizing: border-box;
 }
 
+:host([no-padding]) .ui5-popover-content {
+	padding: 0;
+}
+
 :host([header-text]) .ui5-popup-header-text {
 	padding: 0 0.25rem;
 	text-align: center;
@@ -150,7 +153,7 @@
 	overflow: hidden;
 	white-space: nowrap;
 	max-width: 100%;
-	display: inline-block;  
+	display: inline-block;
 }
 
 :host(:not([header-text])) .ui5-popup-header-text {

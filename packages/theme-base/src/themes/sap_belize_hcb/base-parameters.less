@@ -12,6 +12,7 @@
 @sapFontLargeSize: calc(1 * @sapContent_GridSize);
 @sapTextColor: @sapHC_StandardForeground;
 @sapLinkColor: @sapHC_StandardForeground;
+@sapSubtleLinkColor: #FFFFFF;
 @sapCompanyLogo: none;
 @sapBackgroundImage: none;
 @sapBackgroundImageOpacity: 1.0;
@@ -114,7 +115,9 @@
 @sapContent_HeaderShadow: inset 0 -0.125rem @sapObjectHeader_BorderColor;
 @sapContent_ContrastShadowColor: @sapContent_ShadowColor;
 @sapContent_Shadow0: 0 0 1rem 0 fade(@sapContent_ContrastShadowColor, 50), 0 0 0 2px @sapContent_ShadowColor;
+@sapContent_Shadow1: 0 0.125rem 0.5rem 0 fade(@sapContent_ShadowColor, 20), @sapContent_Shadow0;
 @sapContent_Shadow2: 0 0.25rem 2rem 0 fade(@sapContent_ContrastShadowColor, 60), 0 0 0 2px @sapContent_ShadowColor;
+@sapContent_Shadow3: 0 0.625rem 4rem 0 fade(@sapContent_ContrastShadowColor, 80), 0 0 0 2px @sapContent_ShadowColor;
 @sapContent_SearchHighlightColor: @sapHighlightColor;
 @sapContent_HelpColor: @sapHC_EnhancedForeground;
 @sapContent_LabelColor: @sapTextColor;
@@ -125,6 +128,7 @@
 @sapContent_ForegroundColor: @sapBackgroundColor;
 @sapContent_ForegroundBorderColor: @sapHC_StandardForeground;
 @sapContent_BadgeBackground: @sapHighlightColor;
+@sapContent_Selected_Background: #0f5d94;
 
 @sapShell_Background: @sapBackgroundColor;
 @sapShell_BackgroundPatternColor: @sapBackgroundColor;
@@ -134,6 +138,7 @@
 @sapShell_Hover_Background: @sapHighlightColor;
 @sapShell_Active_Background: @sapActiveColor;
 @sapShell_Active_TextColor: contrast(@sapShell_Active_Background, @sapTextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
+@sapShell_InteractiveBorderColor: #ffffff;
 
 @sapButton_Background: @sapBackgroundColor;
 @sapButton_BorderWidth: @sapElement_BorderWidth;
@@ -161,6 +166,7 @@
 @sapButton_Reject_Background: @sapButton_Background;
 @sapButton_Reject_BorderColor: @sapButton_BorderColor;
 @sapButton_Reject_Hover_Background: @sapButton_Hover_Background;
+@sapButton_Reject_Selected_Hover_Background: #7a5100;
 @sapButton_Reject_Hover_BorderColor: @sapButton_BorderColor;
 @sapButton_Reject_Active_BorderColor: @sapButton_Active_BorderColor;
 @sapButton_Reject_Active_Background: @sapActiveColor;
@@ -168,12 +174,17 @@
 @sapButton_Accept_BorderColor: @sapButton_BorderColor;
 @sapButton_Accept_Hover_BorderColor: @sapButton_BorderColor;
 @sapButton_Accept_Hover_Background: @sapButton_Hover_Background;
+@sapButton_Accept_Selected_Hover_Background: #7a5100;
 @sapButton_Accept_Active_Background: @sapActiveColor;
 @sapButton_Accept_Active_BorderColor: @sapButton_Active_BorderColor;
 @sapButton_Accept_TextColor: contrast(@sapButton_Accept_Background, @sapButton_TextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
 @sapButton_Lite_Background: @sapButton_Background;
 @sapButton_Lite_TextColor: contrast(@sapButton_Background, @sapButton_TextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
 @sapButton_Lite_Hover_Background: @sapButton_Hover_Background;
+@sapButton_Selected_Hover_BorderColor: #ffffff;
+@sapButton_Track_Background: #000000;
+@sapButton_Track_Selected_Background: #0F5D94;
+
 
 @sapField_Background: @sapBackgroundColor;
 @sapField_BorderColor: @sapHC_StandardForeground;
@@ -198,6 +209,8 @@
 @sapField_SuccessColor: @sapField_BorderColor;
 @sapField_SuccessBackground: @sapField_Background;
 @sapField_PlaceholderTextColor: @sapField_TextColor;
+@sapField_InformationColor: @sapInformationBorderColor;
+@sapField_InformationBackground: @sapField_Background;
 
 @sapGroup_TitleBackground: @sapBackgroundColor;
 @sapGroup_TitleBorderColor: @sapHC_StandardForeground;
@@ -231,6 +244,28 @@
 @sapList_FooterTextColor: contrast(@sapList_FooterBackground, @sapTextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
 @sapList_SelectionBorderColor: @sapList_BorderColor;
 
+@sapLegendColor1: #ffc847;
+@sapLegendColor2: #ed884a;
+@sapLegendColor3: #db9292;
+@sapLegendColor4: #ff741f;
+@sapLegendColor5: #e269c9;
+@sapLegendColor6: #6bd3ff;
+@sapLegendColor7: #7fc6c6;
+@sapLegendColor8: #b2e484;
+@sapLegendColor9: #1fbcff;
+@sapLegendColor10: #bb86b0;
+
+@sapLegendBackgroundColor1: #000000;
+@sapLegendBackgroundColor2: #000000;
+@sapLegendBackgroundColor3: #000000;
+@sapLegendBackgroundColor4: #000000;
+@sapLegendBackgroundColor5: #000000;
+@sapLegendBackgroundColor6: #000000;
+@sapLegendBackgroundColor7: #000000;
+@sapLegendBackgroundColor8: #000000;
+@sapLegendBackgroundColor9: #000000;
+@sapLegendBackgroundColor10: #000000;
+
 @sapScrollBar_FaceColor: @sapHC_ReducedAltForeground;
 @sapScrollBar_TrackColor: @sapBackgroundColor;
 @sapScrollBar_BorderColor: @sapScrollBar_FaceColor;
@@ -248,6 +283,10 @@
 @sapBlockLayer_Background: @sapBackgroundColor;
 @sapTile_Background: @sapBackgroundColor;
 @sapTile_BorderColor: @sapHC_StandardForeground;
+@sapTile_SeparatorColor: #ffffff;
+
+@sapButton_TokenBackground: #000000;
+@sapButton_TokenBorderColor: #ffffff;
 
 @sapHighlightTextColor: contrast(@sapHighlightColor, @sapTextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
 @sapTile_TitleTextColor: contrast(@sapTile_Background, @sapTile_TextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);

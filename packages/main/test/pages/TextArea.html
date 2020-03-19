@@ -17,8 +17,8 @@
 	</script>
 
 	<script>
-			delete Document.prototype.adoptedStyleSheets
-		</script>
+		delete Document.prototype.adoptedStyleSheets
+	</script>
 
 	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
 	<script src="../../resources/bundle.esm.js" type="module"></script>
@@ -37,20 +37,8 @@
 			background: #3f5161;
 		}
 
-		.header-title {
-			color: #fafafa;
-			margin: 0;
-			padding: 0;
-			line-height: 3rem;
-			font-size: 1.375rem;
-			font-weight: normal;
-			text-shadow: 0 0 0.125rem #ffffff;
-			font-family: "72", Arial, Helvetica, sans-serif;
-		}
-
 		.group {
 			padding: 1rem;
-			background: #fafafa;
 		}
 
 		.group-title {
@@ -59,10 +47,6 @@
 
 		.small-margin {
 			margin: 2px;
-		}
-
-		.group_colored {
-			background: #eff4f9;
 		}
 
 		.fixed-width {
@@ -79,11 +63,11 @@
 	<body style="background-color: var(--sapBackgroundColor);">
 
 	<header class="header">
-		<h2 class="header-title">Evoground</h2>
+		<ui5-title class="header-title">Evoground</ui5-title>
 	</header>
 
 	<section class="group">
-			<h2>Simple TextArea</h2>
+			<ui5-title>Simple TextArea</ui5-title>
 			<ui5-textarea id="basic-textarea" placeholder="Basic text area"></ui5-textarea>
 
 			<br>
@@ -99,10 +83,14 @@
 			<ui5-textarea id="basic-textarea-success" value="Test" value-state="Success"></ui5-textarea>
 			<br>
 			<br>
+
+			<br>
+			<br>
+			<ui5-textarea id="basic-textarea-error" value="Test" value-state="Information"></ui5-textarea>
 		</section>
 
 	<section class="group">
-		<h2>TextArea with value</h2>
+		<ui5-title>TextArea with value</ui5-title>
 		<ui5-textarea id="fix-width-textarea" class="fixed-width" rows="8" value="Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
 		magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
 		gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing
@@ -112,57 +100,57 @@
 	</section>
 
 	<section class="group">
-		<h2>Disabled TextArea</h2>
+		<ui5-title>Disabled TextArea</ui5-title>
 		<ui5-textarea id="disabled-textarea" class="fixed-width" disabled placeholder="Example of disabled text area"></ui5-textarea>
 	</section>
 
 	<section class="group">
-		<h2>Readonly TextArea</h2>
+		<ui5-title>Readonly TextArea</ui5-title>
 		<ui5-textarea id="readonly-textarea" class="fixed-width" readonly placeholder="Example of a read-only text area"></ui5-textarea>
 	</section>
 
 	<section class="group">
-		<h2>Required TextArea</h2>
+		<ui5-title>Required TextArea</ui5-title>
 		<ui5-textarea id="required-textarea" class="fixed-width" required placeholder="Example of a required text area"></ui5-textarea>
 	</section>
 
 	<section class="group">
-		<h2>Text Area: Growing</h2>
+		<ui5-title>Text Area: Growing</ui5-title>
 		<ui5-textarea class="fixed-width" growing placeholder="Growing Text Area"></ui5-textarea>
 	</section>
 
 	<section class="group">
-		<h2>Text Area: Growing with 8 initial rows</h2>
+		<ui5-title>Text Area: Growing with 8 initial rows</ui5-title>
 		<ui5-textarea id="eight-rows-textarea" class="fixed-width" growing placeholder="Growing Text Area" rows="8"></ui5-textarea>
 	</section>
 
 	<section class="group">
-		<h2>Text Area: Growing up to 4</h2>
+		<ui5-title>Text Area: Growing up to 4</ui5-title>
 		<ui5-textarea id="growing-ta-to-four" class="fixed-width" growing-max-lines="4" growing placeholder="Growing Text Area"></ui5-textarea>
 	</section>
 
 	<section class="group">
-		<h2>Text Area: Growing with initial rows 4 and growing up to 12</h2>
+		<ui5-title>Text Area: Growing with initial rows 4 and growing up to 12</ui5-title>
 		<ui5-textarea class="fixed-width" growing placeholder="Growing Text Area" growing-max-lines="12" rows="4"></ui5-textarea>
 	</section>
 
 	<section class="group">
-		<h2>Text Area: growing with max length 20 characters </h2>
+		<ui5-title>Text Area: growing with max length 20 characters </ui5-title>
 		<ui5-textarea id="ta-max-length" class="fixed-width" growing maxlength="20" placeholder="Max length"></ui5-textarea>
 	</section>
 
 	<section class="group">
-		<h2>Text Area: max length 20 characters </h2>
+		<ui5-title>Text Area: max length 20 characters </ui5-title>
 		<ui5-textarea class="fixed-width" maxlength="20" placeholder="Max length"></ui5-textarea>
 	</section>
 
 	<section class="group">
-		<h2>Text Area: showExceededText with maxlength</h2>
+		<ui5-title>Text Area: showExceededText with maxlength</ui5-title>
 		<ui5-textarea id="show-max-length" class="fixed-width fixed-height" maxlength="20" show-exceeded-text placeholder="Max length and Show Exceeded Text"></ui5-textarea>
 	</section>
 
 	<section class="group">
-		<h2>Text Area: change event</h2>
+		<ui5-title>Text Area: change event</ui5-title>
 		<ui5-textarea id="textarea-change" class="fixed-width fixed-height" placeholder="Test change event"></ui5-textarea>
 	</section>
 	<section class="group">
@@ -170,7 +158,7 @@
 	</section>
 
 	<section class="group">
-		<h2>Text Area: input event</h2>
+		<ui5-title>Text Area: input event</ui5-title>
 		<ui5-textarea id="textarea-input" class="fixed-width fixed-height" placeholder="Test input event"></ui5-textarea>
 	</section>
 	<section class="group">

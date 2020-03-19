@@ -4,8 +4,7 @@ We enforce code style rules using [ESLint](https://eslint.org). Execute `npm run
 You may also find an ESLint integration for your favorite IDE [here](https://eslint.org/docs/user-guide/integrations).
 
 ## Testing
-Unit testing is based on [QUnit](https://github.com/qunitjs/qunit) and [Jest](https://github.com/facebook/jest). You can run all tests using `npm run test:jest`.
-Integration testing is based on [Webdriver.io](https://webdriver.io/). You can run all tests using `npm run test:wdio`.
+Integration testing is based on [Webdriver.io](https://webdriver.io/). You can run all tests using `npm run test`.
 
 ## Git Guidelines
 

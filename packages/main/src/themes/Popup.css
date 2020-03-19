@@ -54,6 +54,8 @@
 	box-sizing: border-box;
 	background-color: var(--sapGroup_ContentBackground);
 	border-radius: 0.25rem;
+	flex-grow: 1;
+	width: 100%;
 }
 
 .ui5-popup-root .ui5-popup-content,

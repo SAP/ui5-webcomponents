@@ -1,0 +1,34 @@
+<div class="ui5-combobox-root"
+	role="combobox"
+	aria-haspopup="listbox"
+	aria-expanded="{{open}}"
+>
+	<input id="ui5-combobox-input"
+		.value="{{_tempValue}}"
+		inner-input
+		placeholder="{{placeholder}}"
+		?disabled={{disabled}}
+		?readonly={{readonly}}
+		?required={{required}}
+		value-state="{{valueState}}"
+		@input="{{_input}}"
+		@change="{{_inputChange}}"
+		@click={{_click}}
+		@keydown="{{_keydown}}"
+		@focusin="{{_focusin}}"
+		@focusout="{{_focusout}}"
+		aria-autocomplete="both"
+	/>
+
+	{{#unless readonly}}
+		<ui5-icon
+			name="slim-arrow-down"
+			slot="icon"
+			tabindex="-1"
+			input-icon
+			?pressed="{{_iconPressed}}"
+			@click="{{_arrowClick}}"
+			dir="{{dir}}"
+		></ui5-icon>
+	{{/unless}}
+</div>

@@ -56,12 +56,10 @@
 }
 
 /* ui5-li: item with title and description */
-:host([data-ui5-compact-size][has-title][description]),
 :host([has-title][description]) {
 	height: 5rem;
 }
 
-:host([data-ui5-compact-size][has-title][description]) .ui5-li-title,
 :host([has-title][description]) .ui5-li-title {
 	padding-bottom: 0.375rem;
 }
@@ -76,7 +74,7 @@
 
 .ui5-li-title {
 	color: var(--sapTextColor);
-	font-size: var(--sapMFontLargeSize);
+	font-size: var(--_ui5_list_item_title_size);
 }
 
 .ui5-li-title,
@@ -102,9 +100,11 @@
 }
 
 .ui5-li-img {
-	width: 2rem;
-	margin: 0.5rem 0.75rem 0.5rem 0rem;
-	height: 2rem;
+	width: var(--_ui5_list_item_img_size);
+	min-width: var(--_ui5_list_item_img_size);
+	height: var(--_ui5_list_item_img_size);
+	min-height: var(--_ui5_list_item_img_size);
+	margin: var(--_ui5_list_item_img_margin);
 }
 
 .ui5-li-icon {
@@ -129,21 +129,13 @@
 	align-items: center;
 }
 
-/* Compact size */
-:host([data-ui5-compact-size]) .ui5-li-title {
-	height: 2rem;
-	line-height: 2rem;
-	font-size: var(--sapFontMediumSize);
+.ui5-li-multisel-cb,
+.ui5-li-singlesel-radiobtn {
+	flex-shrink: 0;
 }
 
-:host([data-ui5-compact-size]:not([has-title]):not([description])) .ui5-li-img {
-	width: 1.75rem;
-	height: 1.75rem;
-	margin-top: 0.55rem;
-}
-
-:host([data-ui5-compact-size]) ui5-checkbox.ui5-li-singlesel-radiobtn {
-	margin-right: 0.5rem;
+:host() ui5-checkbox.ui5-li-singlesel-radiobtn {
+	margin-right: var(--_ui5_list_item_cb_margin_right);
 }
 
 /* RTL */

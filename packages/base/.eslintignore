@@ -2,3 +2,9 @@
 test
 dist
 src/thirdparty
+bundle.esm.js
+bundle.es5.js
+rollup.config*.js
+wdio.conf.js
+postcss.config.js
+package-scripts.js

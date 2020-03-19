@@ -1,9 +1,7 @@
 import "@ui5/webcomponents/bundle.esm.js";
 
 // FIORI assets
-import "./dist/json-imports/Themes.js";
-import "./dist/json-imports/i18n.js";
-import "./dist/json-imports/LocaleData.js" // same as above
+import "./dist/Assets.js";
 
 // FIORI features
 import "./dist/features/CoPilotAnimation.js";

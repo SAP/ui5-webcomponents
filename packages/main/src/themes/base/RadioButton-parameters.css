@@ -1,4 +1,6 @@
 :root {
+	--_ui5_radiobutton_min_width: 2.75rem;
+	--_ui5_radiobutton_min_width_compact: 2rem;
 	--_ui5_radiobutton_hover_fill: var(--sapField_Hover_Background);
 	--_ui5_radiobutton_border_width: 1px;
 	--_ui5_radiobutton_selected_fill: var(--sapSelectedColor);

@@ -1,12 +1,14 @@
+import merge from "./thirdparty/merge.js";
 import boot from "./boot.js";
-import { skipOriginalEvent } from "./config/NoConflict.js";
-import { getCompactSize } from "./config/CompactSize.js";
-import DOMObserver from "./compatibility/DOMObserver.js";
 import UI5ElementMetadata from "./UI5ElementMetadata.js";
-import Integer from "./types/Integer.js";
+import StaticAreaItem from "./StaticAreaItem.js";
 import RenderScheduler from "./RenderScheduler.js";
-import { getConstructableStyle, createHeadStyle, getShadowRootStyle } from "./CSS.js";
-import { attachThemeChange } from "./Theming.js";
+import DOMObserver from "./compatibility/DOMObserver.js";
+import { skipOriginalEvent } from "./config/NoConflict.js";
+import getConstructableStyle from "./theming/getConstructableStyle.js";
+import createComponentStyleTag from "./theming/createComponentStyleTag.js";
+import getEffectiveStyle from "./theming/getEffectiveStyle.js";
+import Integer from "./types/Integer.js";
 import { kebabToCamelCase, camelToKebabCase } from "./util/StringHelper.js";
 import isValidPropertyName from "./util/isValidPropertyName.js";
 
@@ -17,17 +19,29 @@ const metadata = {
 };
 
 const DefinitionsSet = new Set();
-const IDMap = new Map();
+let autoId = 0;
 
+const elementTimeouts = new Map();
+
+const GLOBAL_CONTENT_DENSITY_CSS_VAR = "--_ui5_content_density";
+/**
+ * Base class for all UI5 Web Components
+ *
+ * @class
+ * @constructor
+ * @author SAP SE
+ * @alias sap.ui.webcomponents.base.UI5Element
+ * @extends HTMLElement
+ * @public
+ */
 class UI5Element extends HTMLElement {
 	constructor() {
 		super();
 		this._generateId();
 		this._initializeState();
 		this._upgradeAllProperties();
-		this._initializeShadowRoot();
-
-		attachThemeChange(this.onThemeChanged.bind(this));
+		this._initializeContainers();
+		this._upToDate = false;
 
 		let deferredResolve;
 		this._domRefReadyPromise = new Promise(resolve => {
@@ -36,119 +50,140 @@ class UI5Element extends HTMLElement {
 		this._domRefReadyPromise._deferredResolve = deferredResolve;
 
 		this._monitoredChildProps = new Map();
+		this._firePropertyChange = false;
 	}
 
-	onThemeChanged() {
-		if (window.ShadyDOM || !this.constructor.needsShadowDOM()) {
-			// polyfill theme handling is in head styles directly
-			return;
-		}
-		const newStyle = getConstructableStyle(this.constructor);
-		if (document.adoptedStyleSheets) {
-			this.shadowRoot.adoptedStyleSheets = [newStyle];
-		} else {
-			const oldStyle = this.shadowRoot.querySelector("style");
-			oldStyle.textContent = newStyle.textContent;
-		}
-	}
-
+	/**
+	 * @private
+	 */
 	_generateId() {
-		this._id = this.constructor._nextID();
+		this._id = `ui5wc_${++autoId}`;
 	}
 
-	_initializeShadowRoot() {
-		if (!this.constructor.needsShadowDOM()) {
-			return;
+	/**
+	 * @private
+	 */
+	_initializeContainers() {
+		const needsShadowDOM = this.constructor._needsShadowDOM();
+		const needsStaticArea = this.constructor._needsStaticArea();
+
+		// Init Shadow Root
+		if (needsShadowDOM) {
+			this.attachShadow({ mode: "open" });
+
+			// IE11, Edge
+			if (window.ShadyDOM) {
+				createComponentStyleTag(this.constructor);
+			}
+
+			// Chrome
+			if (document.adoptedStyleSheets) {
+				const style = getConstructableStyle(this.constructor);
+				this.shadowRoot.adoptedStyleSheets = [style];
+			}
 		}
 
-		this.attachShadow({ mode: "open" });
-
-		// IE11, Edge
-		if (window.ShadyDOM) {
-			createHeadStyle(this.constructor);
-		}
-
-		// Chrome
-		if (document.adoptedStyleSheets) {
-			const style = getConstructableStyle(this.constructor);
-			this.shadowRoot.adoptedStyleSheets = [style];
+		// Init StaticAreaItem only if needed
+		if (needsStaticArea) {
+			this.staticAreaItem = new StaticAreaItem(this);
 		}
 	}
 
+	/**
+	 * Do not call this method from derivatives of UI5Element, use "onEnterDOM" only
+	 * @private
+	 */
 	async connectedCallback() {
-		const isCompact = getCompactSize();
-		if (isCompact) {
-			this.setAttribute("data-ui5-compact-size", "");
-		}
+		const needsShadowDOM = this.constructor._needsShadowDOM();
+		const slotsAreManaged = this.constructor.getMetadata().slotsAreManaged();
 
-		if (!this.constructor.needsShadowDOM()) {
-			return;
-		}
+		// Render the Shadow DOM
+		if (needsShadowDOM) {
+			if (slotsAreManaged) {
+				// always register the observer before yielding control to the main thread (await)
+				this._startObservingDOMChildren();
+				await this._processChildren();
+			}
 
-		// always register the observer before yielding control to the main thread (await)
-		this._startObservingDOMChildren();
-
-		await this._processChildren();
-		await RenderScheduler.renderImmediately(this);
-		this._domRefReadyPromise._deferredResolve();
-		if (typeof this.onEnterDOM === "function") {
-			this.onEnterDOM();
+			await RenderScheduler.renderImmediately(this);
+			this._domRefReadyPromise._deferredResolve();
+			if (typeof this.onEnterDOM === "function") {
+				this.onEnterDOM();
+			}
 		}
 	}
 
+	/**
+	 * Do not call this method from derivatives of UI5Element, use "onExitDOM" only
+	 * @private
+	 */
 	disconnectedCallback() {
-		if (!this.constructor.needsShadowDOM()) {
-			return;
+		const needsShadowDOM = this.constructor._needsShadowDOM();
+		const needsStaticArea = this.constructor._needsStaticArea();
+		const slotsAreManaged = this.constructor.getMetadata().slotsAreManaged();
+
+		if (needsShadowDOM) {
+			if (slotsAreManaged) {
+				this._stopObservingDOMChildren();
+			}
+
+			if (typeof this.onExitDOM === "function") {
+				this.onExitDOM();
+			}
 		}
 
-		this._stopObservingDOMChildren();
-		if (typeof this.onExitDOM === "function") {
-			this.onExitDOM();
+		if (needsStaticArea) {
+			this.staticAreaItem._removeFragmentFromStaticArea();
 		}
 	}
 
+	/**
+	 * @private
+	 */
 	_startObservingDOMChildren() {
 		const shouldObserveChildren = this.constructor.getMetadata().hasSlots();
 		if (!shouldObserveChildren) {
 			return;
 		}
+
+		const canSlotText = this.constructor.getMetadata().canSlotText();
 		const mutationObserverOptions = {
 			childList: true,
-			subtree: true,
+			subtree: canSlotText,
 			characterData: true,
 		};
 		DOMObserver.observeDOMNode(this, this._processChildren.bind(this), mutationObserverOptions);
 	}
 
+	/**
+	 * @private
+	 */
 	_stopObservingDOMChildren() {
 		DOMObserver.unobserveDOMNode(this);
 	}
 
-	onChildrenChanged(mutations) {
-	}
-
-	async _processChildren(mutations) {
+	/**
+	 * Note: this method is also manually called by "compatibility/patchNodeValue.js"
+	 * @private
+	 */
+	async _processChildren() {
 		const hasSlots = this.constructor.getMetadata().hasSlots();
 		if (hasSlots) {
 			await this._updateSlots();
 		}
-		this.onChildrenChanged(mutations);
 	}
 
+	/**
+	 * @private
+	 */
 	async _updateSlots() {
 		const slotsMap = this.constructor.getMetadata().getSlots();
-		const canSlotText = slotsMap.default && slotsMap.default.type === Node;
-
-		let domChildren;
-		if (canSlotText) {
-			domChildren = Array.from(this.childNodes);
-		} else {
-			domChildren = Array.from(this.children);
-		}
+		const canSlotText = this.constructor.getMetadata().canSlotText();
+		const domChildren = Array.from(canSlotText ? this.childNodes : this.children);
 
 		// Init the _state object based on the supported slots
 		for (const [slotName, slotData] of Object.entries(slotsMap)) { // eslint-disable-line
-			this._clearSlot(slotName);
+			this._clearSlot(slotName, slotData);
 		}
 
 		const autoIncrementMap = new Map();
@@ -168,9 +203,9 @@ class UI5Element extends HTMLElement {
 
 			// For children that need individual slots, calculate them
 			if (slotData.individualSlots) {
-				const nextId = (autoIncrementMap.get(slotName) || 0) + 1;
-				autoIncrementMap.set(slotName, nextId);
-				child._individualSlot = `${slotName}-${nextId}`;
+				const nextIndex = (autoIncrementMap.get(slotName) || 0) + 1;
+				autoIncrementMap.set(slotName, nextIndex);
+				child._individualSlot = `${slotName}-${nextIndex}`;
 			}
 
 			// Await for not-yet-defined custom elements
@@ -181,7 +216,11 @@ class UI5Element extends HTMLElement {
 					const isDefined = window.customElements.get(localName);
 					if (!isDefined) {
 						const whenDefinedPromise = window.customElements.whenDefined(localName); // Class registered, but instances not upgraded yet
-						const timeoutPromise = new Promise(resolve => setTimeout(resolve, 1000));
+						let timeoutPromise = elementTimeouts.get(localName);
+						if (!timeoutPromise) {
+							timeoutPromise = new Promise(resolve => setTimeout(resolve, 1000));
+							elementTimeouts.set(localName, timeoutPromise);
+						}
 						await Promise.race([whenDefinedPromise, timeoutPromise]);
 					}
 					window.customElements.upgrade(child);
@@ -190,8 +229,8 @@ class UI5Element extends HTMLElement {
 
 			child = this.constructor.getMetadata().constructor.validateSlotValue(child, slotData);
 
-			if (child.isUI5Element) {
-				this._attachChildPropertyUpdated(child, slotData);
+			if (child.isUI5Element && slotData.listenFor) {
+				this._attachChildPropertyUpdated(child, slotData.listenFor);
 			}
 
 			const propertyName = slotData.propertyName || slotName;
@@ -210,12 +249,14 @@ class UI5Element extends HTMLElement {
 		slottedChildrenMap.forEach((children, slot) => {
 			this._state[slot] = children.sort((a, b) => a.idx - b.idx).map(_ => _.child);
 		});
-		this._invalidate();
+		this._invalidate("slots");
 	}
 
-	// Removes all children from the slot and detaches listeners, if any
-	_clearSlot(slotName) {
-		const slotData = this.constructor.getMetadata().getSlots()[slotName];
+	/**
+	 * Removes all children from the slot and detaches listeners, if any
+	 * @private
+	 */
+	_clearSlot(slotName, slotData) {
 		const propertyName = slotData.propertyName || slotName;
 
 		let children = this._state[propertyName];
@@ -233,11 +274,10 @@ class UI5Element extends HTMLElement {
 		this._invalidate(propertyName, []);
 	}
 
-	static get observedAttributes() {
-		const observedAttributes = this.getMetadata().getAttributesList();
-		return observedAttributes.map(camelToKebabCase);
-	}
-
+	/**
+	 * Do not override this method in derivatives of UI5Element
+	 * @private
+	 */
 	attributeChangedCallback(name, oldValue, newValue) {
 		const properties = this.constructor.getMetadata().getProperties();
 		const realName = name.replace(/^ui5-/, "");
@@ -254,6 +294,9 @@ class UI5Element extends HTMLElement {
 		}
 	}
 
+	/**
+	 * @private
+	 */
 	_updateAttribute(name, newValue) {
 		if (!this.constructor.getMetadata().hasAttribute(name)) {
 			return;
@@ -276,6 +319,9 @@ class UI5Element extends HTMLElement {
 		}
 	}
 
+	/**
+	 * @private
+	 */
 	_upgradeProperty(prop) {
 		if (this.hasOwnProperty(prop)) { // eslint-disable-line
 			const value = this[prop];
@@ -284,83 +330,32 @@ class UI5Element extends HTMLElement {
 		}
 	}
 
+	/**
+	 * @private
+	 */
 	_upgradeAllProperties() {
-		const allProps = this.constructor.getMetadata().getPropsList();
-		allProps.forEach(this._upgradeProperty.bind(this));
+		const allProps = this.constructor.getMetadata().getPropertiesList();
+		allProps.forEach(this._upgradeProperty, this);
 	}
 
-	static async define() {
-		await boot();
-		const tag = this.getMetadata().getTag();
-
-		const definedLocally = DefinitionsSet.has(tag);
-		const definedGlobally = customElements.get(tag);
-
-		if (definedGlobally && !definedLocally) {
-			console.warn(`Skipping definition of tag ${tag}, because it was already defined by another instance of ui5-webcomponents.`); // eslint-disable-line
-		} else if (!definedGlobally) {
-			this.generateAccessors();
-			DefinitionsSet.add(tag);
-			window.customElements.define(tag, this);
-		}
-		return this;
-	}
-
-	static get metadata() {
-		return metadata;
-	}
-
-	static get styles() {
-		return "";
-	}
-
+	/**
+	 * @private
+	 */
 	_initializeState() {
 		const defaultState = this.constructor._getDefaultState();
 		this._state = Object.assign({}, defaultState);
 	}
 
-	static getMetadata() {
-		let klass = this; // eslint-disable-line
-
-		if (klass.hasOwnProperty("_metadata")) { // eslint-disable-line
-			return klass._metadata;
-		}
-
-		const metadatas = [Object.assign(klass.metadata, {})];
-		while (klass !== UI5Element) {
-			klass = Object.getPrototypeOf(klass);
-			metadatas.push(klass.metadata);
-		}
-
-		const result = metadatas[0];
-
-		result.properties = this._mergeMetadataEntry(metadatas, "properties"); // merge properties
-		result.slots = this._mergeMetadataEntry(metadatas, "slots"); // merge slots
-		result.events = this._mergeMetadataEntry(metadatas, "events"); // merge events
-
-		this._metadata = new UI5ElementMetadata(result);
-		return this._metadata;
-	}
-
-	static _mergeMetadataEntry(metadatas, prop) {
-		return metadatas.reverse().reduce((result, current) => { // eslint-disable-line
-			Object.assign(result, current[prop] || {});
-			return result;
-		}, {});
-	}
-
-	_attachChildPropertyUpdated(child, propData) {
-		const listenFor = propData.listenFor,
-			childMetadata = child.constructor.getMetadata(),
+	/**
+	 * @private
+	 */
+	_attachChildPropertyUpdated(child, listenFor) {
+		const childMetadata = child.constructor.getMetadata(),
 			slotName = this.constructor._getSlotName(child), // all slotted children have the same configuration
 			childProperties = childMetadata.getProperties();
 
 		let observedProps = [],
 			notObservedProps = [];
-
-		if (!listenFor) {
-			return;
-		}
 
 		if (Array.isArray(listenFor)) {
 			observedProps = listenFor;
@@ -374,12 +369,35 @@ class UI5Element extends HTMLElement {
 		}
 
 		child.addEventListener("_propertyChange", this._invalidateParentOnPropertyUpdate);
+		child._firePropertyChange = true;
 	}
 
+	/**
+	 * @private
+	 */
 	_detachChildPropertyUpdated(child) {
 		child.removeEventListener("_propertyChange", this._invalidateParentOnPropertyUpdate);
+		child._firePropertyChange = false;
 	}
 
+	/**
+	 * @private
+	 */
+	_propertyChange(name, value) {
+		this._updateAttribute(name, value);
+
+		if (this._firePropertyChange) {
+			this.dispatchEvent(new CustomEvent("_propertyChange", {
+				detail: { name, newValue: value },
+				composed: false,
+				bubbles: true,
+			}));
+		}
+	}
+
+	/**
+	 * @private
+	 */
 	_invalidateParentOnPropertyUpdate(prop) {
 		// The web component to be invalidated
 		const parentNode = this.parentNode;
@@ -405,19 +423,25 @@ class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	_invalidate() {
-		if (this._invalidated) {
+		if (!this._upToDate) {
 			// console.log("already invalidated", this, ...arguments);
 			return;
 		}
 
 		if (this.getDomRef() && !this._suppressInvalidation) {
-			this._invalidated = true;
+			this._upToDate = false;
 			// console.log("INVAL", this, ...arguments);
 			RenderScheduler.renderDeferred(this);
 		}
 	}
 
+	/**
+	 * Do not call this method directly, only intended to be called by RenderScheduler.js
+	 * @protected
+	 */
 	_render() {
+		const hasIndividualSlots = this.constructor.getMetadata().hasIndividualSlots();
+
 		// suppress invalidation to prevent state changes scheduling another rendering
 		this._suppressInvalidation = true;
 
@@ -426,18 +450,26 @@ class UI5Element extends HTMLElement {
 		}
 
 		// Intended for framework usage only. Currently ItemNavigation updates tab indexes after the component has updated its state but before the template is rendered
-		this.dispatchEvent(new CustomEvent("_componentStateFinalized"));
+		if (this._onComponentStateFinalized) {
+			this._onComponentStateFinalized();
+		}
 
 		// resume normal invalidation handling
 		delete this._suppressInvalidation;
 
 		// Update the shadow root with the render result
 		// console.log(this.getDomRef() ? "RE-RENDER" : "FIRST RENDER", this);
-		delete this._invalidated;
+		this._upToDate = true;
 		this._updateShadowRoot();
 
+		if (this._shouldUpdateFragment()) {
+			this.staticAreaItem._updateFragment(this);
+		}
+
 		// Safari requires that children get the slot attribute only after the slot tags have been rendered in the shadow DOM
-		this._assignIndividualSlotsToChildren();
+		if (hasIndividualSlots) {
+			this._assignIndividualSlotsToChildren();
+		}
 
 		// Call the onAfterRendering hook
 		if (typeof this.onAfterRendering === "function") {
@@ -445,13 +477,22 @@ class UI5Element extends HTMLElement {
 		}
 	}
 
+	/**
+	 * @private
+	 */
 	_updateShadowRoot() {
+		let styleToPrepend;
 		const renderResult = this.constructor.template(this);
-		// For browsers that do not support constructable style sheets (and not using the polyfill)
-		const styleToPrepend = getShadowRootStyle(this.constructor);
+
+		if (!document.adoptedStyleSheets && !window.ShadyDOM) {
+			styleToPrepend = getEffectiveStyle(this.constructor);
+		}
 		this.constructor.render(renderResult, this.shadowRoot, styleToPrepend, { eventContext: this });
 	}
 
+	/**
+	 * @private
+	 */
 	_assignIndividualSlotsToChildren() {
 		const domChildren = Array.from(this.children);
 
@@ -462,6 +503,18 @@ class UI5Element extends HTMLElement {
 		});
 	}
 
+	/**
+	 * @private
+	 */
+	_waitForDomRef() {
+		return this._domRefReadyPromise;
+	}
+
+	/**
+	 * Returns the DOM Element inside the Shadow Root that corresponds to the opening tag in the UI5 Web Component's template
+	 * Use this method instead of "this.shadowRoot" to read the Shadow DOM, if ever necessary
+	 * @public
+	 */
 	getDomRef() {
 		if (!this.shadowRoot || this.shadowRoot.children.length === 0) {
 			return;
@@ -471,10 +524,11 @@ class UI5Element extends HTMLElement {
 			? this.shadowRoot.children[0] : this.shadowRoot.children[1];
 	}
 
-	_waitForDomRef() {
-		return this._domRefReadyPromise;
-	}
-
+	/**
+	 * Returns the DOM Element marked with "data-sap-focus-ref" inside the template.
+	 * This is the element that will receive the focus by default.
+	 * @public
+	 */
 	getFocusDomRef() {
 		const domRef = this.getDomRef();
 		if (domRef) {
@@ -483,6 +537,10 @@ class UI5Element extends HTMLElement {
 		}
 	}
 
+	/**
+	 * Set the focus to the element, returned by "getFocusDomRef()" (marked by "data-sap-focus-ref")
+	 * @public
+	 */
 	async focus() {
 		await this._waitForDomRef();
 
@@ -494,33 +552,8 @@ class UI5Element extends HTMLElement {
 	}
 
 	/**
-	 * Calls the event handler on the web component for a native event
 	 *
-	 * @param event The event object
-	 * @private
-	 */
-	_handleEvent(event) {
-		const sHandlerName = `on${event.type}`;
-
-		if (this[sHandlerName]) {
-			this[sHandlerName](event);
-		}
-	}
-
-	_propertyChange(name, value) {
-		this._updateAttribute(name, value);
-
-		const customEvent = new CustomEvent("_propertyChange", {
-			detail: { name, newValue: value },
-			composed: false,
-			bubbles: true,
-		});
-
-		this.dispatchEvent(customEvent);
-	}
-
-	/**
-	 *
+	 * @public
 	 * @param name - name of the event
 	 * @param data - additional data for the event
 	 * @param cancelable - true, if the user can call preventDefault on the event object
@@ -557,6 +590,11 @@ class UI5Element extends HTMLElement {
 		return normalEventResult && compatEventResult;
 	}
 
+	/**
+	 * Returns the actual children, associated with a slot.
+	 * Useful when there are transitive slots in nested component scenarios and you don't want to get a list of the slots, but rather of their content.
+	 * @public
+	 */
 	getSlottedNodes(slotName) {
 		const reducer = (acc, curr) => {
 			if (curr.localName !== "slot") {
@@ -566,6 +604,16 @@ class UI5Element extends HTMLElement {
 		};
 
 		return this[slotName].reduce(reducer, []);
+	}
+
+	get isCompact() {
+		return getComputedStyle(this).getPropertyValue(GLOBAL_CONTENT_DENSITY_CSS_VAR) === "compact";
+	}
+
+	updateStaticAreaItemContentDensity() {
+		if (this.staticAreaItem) {
+			this.staticAreaItem._updateContentDensity(this.isCompact);
+		}
 	}
 
 	/**
@@ -578,18 +626,16 @@ class UI5Element extends HTMLElement {
 	}
 
 	/**
-	 * Used to generate the next auto-increment id for the current class
-	 * @returns {string}
+	 * Do not override this method in derivatives of UI5Element, use metadata properties instead
 	 * @private
 	 */
-	static _nextID() {
-		const className = "el";
-		const lastNumber = IDMap.get(className);
-		const nextNumber = lastNumber !== undefined ? lastNumber + 1 : 1;
-		IDMap.set(className, nextNumber);
-		return `__${className}${nextNumber}`;
+	static get observedAttributes() {
+		return this.getMetadata().getAttributesList();
 	}
 
+	/**
+	 * @private
+	 */
 	static _getSlotName(child) {
 		// Text nodes can only go to the default slot
 		if (!(child instanceof HTMLElement)) {
@@ -607,10 +653,34 @@ class UI5Element extends HTMLElement {
 		return "default";
 	}
 
-	static needsShadowDOM() {
+	/**
+	 * @private
+	 */
+	static _needsShadowDOM() {
 		return !!this.template;
 	}
 
+	_shouldUpdateFragment() {
+		return this.constructor._needsStaticArea() && this.staticAreaItem.isRendered();
+	}
+
+	/**
+	 * @private
+	 */
+	static _needsStaticArea() {
+		return typeof this.staticAreaTemplate === "function";
+	}
+
+	/**
+	 * @public
+	 */
+	getStaticAreaItemDomRef() {
+		return this.staticAreaItem.getDomRef();
+	}
+
+	/**
+	 * @private
+	 */
 	static _getDefaultState() {
 		if (this._defaultState) {
 			return this._defaultState;
@@ -618,6 +688,7 @@ class UI5Element extends HTMLElement {
 
 		const MetadataClass = this.getMetadata();
 		const defaultState = {};
+		const slotsAreManaged = MetadataClass.slotsAreManaged();
 
 		// Initialize properties
 		const props = MetadataClass.getProperties();
@@ -643,18 +714,24 @@ class UI5Element extends HTMLElement {
 		}
 
 		// Initialize slots
-		const slots = MetadataClass.getSlots();
-		for (const [slotName, slotData] of Object.entries(slots)) { // eslint-disable-line
-			const propertyName = slotData.propertyName || slotName;
-			defaultState[propertyName] = [];
+		if (slotsAreManaged) {
+			const slots = MetadataClass.getSlots();
+			for (const [slotName, slotData] of Object.entries(slots)) { // eslint-disable-line
+				const propertyName = slotData.propertyName || slotName;
+				defaultState[propertyName] = [];
+			}
 		}
 
 		this._defaultState = defaultState;
 		return defaultState;
 	}
 
-	static generateAccessors() {
+	/**
+	 * @private
+	 */
+	static _generateAccessors() {
 		const proto = this.prototype;
+		const slotsAreManaged = this.getMetadata().slotsAreManaged();
 
 		// Properties
 		const properties = this.getMetadata().getProperties();
@@ -700,25 +777,93 @@ class UI5Element extends HTMLElement {
 		}
 
 		// Slots
-		const slots = this.getMetadata().getSlots();
-		for (const [slotName, slotData] of Object.entries(slots)) { // eslint-disable-line
-			if (!isValidPropertyName(slotName)) {
-				throw new Error(`"${slotName}" is not a valid property name. Use a name that does not collide with DOM APIs`);
-			}
+		if (slotsAreManaged) {
+			const slots = this.getMetadata().getSlots();
+			for (const [slotName, slotData] of Object.entries(slots)) { // eslint-disable-line
+				if (!isValidPropertyName(slotName)) {
+					throw new Error(`"${slotName}" is not a valid property name. Use a name that does not collide with DOM APIs`);
+				}
 
-			const propertyName = slotData.propertyName || slotName;
-			Object.defineProperty(proto, propertyName, {
-				get() {
-					if (this._state[propertyName] !== undefined) {
-						return this._state[propertyName];
-					}
-					return [];
-				},
-				set() {
-					throw new Error("Cannot set slots directly, use the DOM APIs");
-				},
-			});
+				const propertyName = slotData.propertyName || slotName;
+				Object.defineProperty(proto, propertyName, {
+					get() {
+						if (this._state[propertyName] !== undefined) {
+							return this._state[propertyName];
+						}
+						return [];
+					},
+					set() {
+						throw new Error("Cannot set slots directly, use the DOM APIs");
+					},
+				});
+			}
 		}
+	}
+
+	/**
+	 * Returns the metadata object for this UI5 Web Component Class
+	 * @protected
+	 */
+	static get metadata() {
+		return metadata;
+	}
+
+	/**
+	 * Returns the CSS for this UI5 Web Component Class
+	 * @protected
+	 */
+	static get styles() {
+		return "";
+	}
+
+	/**
+	 * Registers a UI5 Web Component in the browser window object
+	 * @public
+	 * @returns {Promise<UI5Element>}
+	 */
+	static async define() {
+		await boot();
+
+		if (this.onDefine) {
+			await this.onDefine();
+		}
+
+		const tag = this.getMetadata().getTag();
+
+		const definedLocally = DefinitionsSet.has(tag);
+		const definedGlobally = customElements.get(tag);
+
+		if (definedGlobally && !definedLocally) {
+			console.warn(`Skipping definition of tag ${tag}, because it was already defined by another instance of ui5-webcomponents.`); // eslint-disable-line
+		} else if (!definedGlobally) {
+			this._generateAccessors();
+			DefinitionsSet.add(tag);
+			window.customElements.define(tag, this);
+		}
+		return this;
+	}
+
+	/**
+	 * Returns an instance of UI5ElementMetadata.js representing this UI5 Web Component's full metadata (its and its parents')
+	 * Note: not to be confused with the "get metadata()" method, which returns an object for this class's metadata only
+	 * @public
+	 * @returns {UI5ElementMetadata}
+	 */
+	static getMetadata() {
+		if (this.hasOwnProperty("_metadata")) { // eslint-disable-line
+			return this._metadata;
+		}
+
+		const metadataObjects = [this.metadata];
+		let klass = this; // eslint-disable-line
+		while (klass !== UI5Element) {
+			klass = Object.getPrototypeOf(klass);
+			metadataObjects.unshift(klass.metadata);
+		}
+		const mergedMetadata = merge({}, ...metadataObjects);
+
+		this._metadata = new UI5ElementMetadata(mergedMetadata);
+		return this._metadata;
 	}
 }
 

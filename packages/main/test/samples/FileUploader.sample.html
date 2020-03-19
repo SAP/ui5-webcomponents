@@ -1,0 +1,162 @@
+<style>
+	#result {
+		width: 100%;
+		display: flex;
+		align-items: center;
+	}
+	#result > img {
+		margin-right: 1rem;
+		border-radius: .5rem;
+	}
+</style>
+<header>
+	<div class="control-header">File Uploader</div>
+</header>
+
+<div class="component-package">@ui5/webcomponents</div>
+
+<div class="control-tag">&lt;ui5-file-uploader&gt;</div>
+
+<section>
+	<h3>Upload multiple images</h3>
+	<div class="snippet">
+		<ui5-file-uploader id="fileuploader1" accept="image/*" multiple="true">
+			<ui5-button icon="upload">Upload Images</ui5-button>
+		</ui5-file-uploader>
+		<div id="result"></div>
+		<script>
+			var fileUploader = document.querySelector("#fileuploader1"),
+				resultDiv = document.querySelector("#result");
+			fileUploader.addEventListener("change", function(event) {
+				var files = event.target.files;
+
+				if (!files.length) {
+					resultDiv.innerHTML = "<ui5-label>No Files Selected</ui5-label>";
+				} else {
+					resultDiv.innerHTML = "";
+					resultDiv.style.marginTop = "1rem";
+
+					for (var i = 0; i < files.length; i++) {
+						var img = document.createElement("img");
+						img.src = URL.createObjectURL(files[i]);
+						img.width = 100;
+						img.height = 100;
+						img.onload = function() {
+							URL.revokeObjectURL(img.src);
+						}
+						resultDiv.appendChild(img);
+					}
+				}
+			})
+		</script>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-file-uploader id="fileuploader1" accept="image/*" multiple="true">
+	<ui5-button icon="upload">Upload Images</ui5-button>
+</ui5-file-uploader>
+<script>
+	const fileUploader = document.querySelector("#fileuploader1"),
+		resultDiv = document.querySelector("#result");
+	fileUploader.addEventListener("change", event => {
+		const files = event.target.files;
+
+		if (!files.length) {
+			resultDiv.innerHTML = "<ui5-label>No Files Selected</ui5-label>";
+		} else {
+			resultDiv.innerHTML = "";
+
+			for (let i = 0; i < files.length; i++) {
+				const img = document.createElement("img");
+				img.src = URL.createObjectURL(files[i]);
+				img.width = 100;
+				img.height = 100;
+				img.onload = () => {
+					URL.revokeObjectURL(img.src);
+				}
+				resultDiv.appendChild(img);
+			}
+		}
+	})
+</script>
+	</xmp></pre>
+</section>
+
+<section>
+	<h3>Upload Single File</h3>
+	<div class="snippet">
+		<ui5-file-uploader>
+			<ui5-button>Upload Single File</ui5-button>
+		</ui5-file-uploader>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-file-uploader>
+	<ui5-button>Upload Single File</ui5-button>
+</ui5-file-uploader>
+	</xmp></pre>
+</section>
+
+<section>
+	<h3>File Uploader With No Input</h3>
+	<div class="snippet">
+		<ui5-file-uploader hide-input>
+			<ui5-button>Upload File</ui5-button>
+		</ui5-file-uploader>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-file-uploader hide-input>
+	<ui5-button>Upload File</ui5-button>
+</ui5-file-uploader>
+	</xmp></pre>
+</section>
+
+<section>
+	<h3>Custom File Uploaders</h3>
+	<div class="snippet">
+		<ui5-file-uploader hide-input>
+			<ui5-avatar icon="upload"></ui5-avatar>
+		</ui5-file-uploader>
+
+		<ui5-file-uploader hide-input>
+			<ui5-badge>Upload File</ui5-badge>
+		</ui5-file-uploader>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-file-uploader hide-input>
+	<ui5-avatar icon="upload"></ui5-avatar>
+</ui5-file-uploader>
+
+<ui5-file-uploader hide-input>
+	<ui5-badge>Upload File</ui5-badge>
+</ui5-file-uploader>
+	</xmp></pre>
+</section>
+
+<section>
+	<h3>Button With Icon File Uploader</h3>
+	<div class="snippet">
+		<ui5-file-uploader>
+			<ui5-button icon="upload">Upload</ui5-button>
+		</ui5-file-uploader>
+		<ui5-file-uploader>
+			<ui5-button icon="upload" icon-end>Upload</ui5-button>
+		</ui5-file-uploader>
+		<ui5-file-uploader>
+			<ui5-button icon="upload" icon-only></ui5-button>
+		</ui5-file-uploader>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-file-uploader>
+	<ui5-button icon="upload">Upload</ui5-button>
+</ui5-file-uploader>
+<ui5-file-uploader>
+	<ui5-button icon="upload" icon-end>Upload</ui5-button>
+</ui5-file-uploader>
+<ui5-file-uploader>
+	<ui5-button icon="upload" icon-only></ui5-button>
+</ui5-file-uploader>
+	</xmp></pre>
+</section>
+
+
+
+<!-- JSDoc marker -->

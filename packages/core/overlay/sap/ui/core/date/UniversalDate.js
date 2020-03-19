@@ -239,7 +239,7 @@ sap.ui.define(['sap/ui/base/Object', 'sap/ui/core/LocaleData', 'sap/ui/core/date
 			oFirstDay = getFirstDayOfFirstWeek(clDate, iYear),
 			oDate = new clDate(oFirstDay.valueOf() + iWeek * iMillisecondsInWeek);
 		//If first day of week is in last year and region is US, return the
-		//1st of January instead for symmetric behaviour
+		//1st of January instead for symmetric behavior
 		if (oLocale.getRegion() === "US" && iWeek === 0 && oFirstDay.getUTCFullYear() < iYear) {
 			return {
 				year: iYear,

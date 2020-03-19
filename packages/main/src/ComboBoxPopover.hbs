@@ -1,0 +1,70 @@
+<ui5-responsive-popover
+	no-arrow
+	content-only-on-desktop
+	_disable-initial-focus
+	placement-type="Bottom"
+	horizontal-align="Left"
+	@ui5-afterOpen={{_afterOpenPopover}}
+	@ui5-afterClose={{_afterClosePopover}}
+>
+	<ui5-busyindicator
+		?active={{loading}}
+		size="Medium"
+		class="ui5-combobox-busy"
+	>
+	</ui5-busyindicator>
+
+	<div slot="header" class="ui5-responsive-popover-header">
+		<div class="row">
+			<span>{{_headerTitleText}}</span>
+			<ui5-button
+				icon="decline"
+				design="Transparent"
+				@click="{{_closeRespPopover}}"
+			>
+			</ui5-button>
+		</div>
+		<div class="row">
+			<div
+				slot="header"
+				class="input-root-phone"
+				value-state="{{valueState}}"
+			>
+				<input
+					class="ui5-input-inner-phone"
+					.value="{{_tempValue}}"
+					inner-input
+					placeholder="{{placeholder}}"
+					value-state="{{valueState}}"
+					@input="{{_input}}"
+					@change="{{_inputChange}}"
+					@keydown="{{_keydown}}"
+					aria-autocomplete="both"
+				/>
+			</div>
+		</div>
+	</div>
+
+	<ui5-list
+		separators="None"
+		@ui5-itemClick={{_selectItem}}
+		mode="SingleSelect"
+	>
+		{{#each _filteredItems}}
+			<ui5-li
+				type="Active"
+				.mappedItem={{this}}
+				?selected={{this.selected}}
+			>
+				{{this.text}}
+			</ui5-li>
+		{{/each}}
+	</ui5-list>
+
+	<div slot="footer" class="ui5-responsive-popover-footer">
+		<ui5-button
+			design="Transparent"
+			@click="{{_closeRespPopover}}"
+		>OK</ui5-button>
+	</div>
+</ui5-responsive-popover>

@@ -1,15 +1,15 @@
-import CalendarType from "@ui5/webcomponents-utils/dist/sap/ui/core/CalendarType.js";
+import CalendarType from "../types/CalendarType.js";
 import { getCalendarType as getConfiguredCalendarType } from "../InitialConfiguration.js";
 
-const calendarType = getConfiguredCalendarType();
+let calendarType;
 
 const getCalendarType = () => {
-	if (calendarType) {
-		const type = Object.keys(CalendarType).find(calType => calType === calendarType);
+	if (calendarType === undefined) {
+		calendarType = getConfiguredCalendarType();
+	}
 
-		if (type) {
-			return type;
-		}
+	if (CalendarType.isValid(calendarType)) {
+		return calendarType;
 	}
 
 	return CalendarType.Gregorian;

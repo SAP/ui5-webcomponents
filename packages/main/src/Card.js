@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import CardTemplate from "./generated/templates/CardTemplate.lit.js";
 import Icon from "./Icon.js";
@@ -22,6 +22,7 @@ import cardCss from "./generated/themes/Card.css.js";
  */
 const metadata = {
 	tag: "ui5-card",
+	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.Card.prototype */ {
 
 		/**
@@ -62,12 +63,12 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the subtitle displayed in the <code>ui5-card</code> header.
+		 * Defines the subheading displayed in the <code>ui5-card</code> header.
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 */
-		subtitle: {
+		subheading: {
 			type: String,
 		},
 
@@ -120,7 +121,7 @@ const metadata = {
  * tile with separate header and content areas.
  * The content area of a <code>ui5-card</code> can be arbitrary HTML content.
  * The header can be used through several properties, such as:
- * <code>heading</code>, <code>subtitle</code>, <code>status</code>
+ * <code>heading</code>, <code>subheading</code>, <code>status</code>
  * and a slot:
  * <code>avatar</code>.
  *
@@ -192,7 +193,7 @@ class Card extends UI5Element {
 	}
 
 	get hasHeader() {
-		return !!(this.heading || this.subtitle || this.status || this.avatar);
+		return !!(this.heading || this.subheading || this.status || this.avatar);
 	}
 
 	get rtl() {
@@ -215,13 +216,15 @@ class Card extends UI5Element {
 		return this.i18nBundle.getText(ARIA_LABEL_CARD_CONTENT);
 	}
 
-	static async define(...params) {
+	get hasAvatar() {
+		return !!this.avatar.length;
+	}
+
+	static async onDefine() {
 		await Promise.all([
 			Icon.define(),
 			fetchI18nBundle("@ui5/webcomponents"),
 		]);
-
-		super.define(...params);
 	}
 
 	_headerClick() {

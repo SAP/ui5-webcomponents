@@ -15,6 +15,11 @@
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
 
+	<style>
+		ui5-datepicker {
+			width: 100%;
+		}
+	</style>
 </head>
 <body style="background-color: var(--sapBackgroundColor);">
 	<ui5-datepicker id="dp12"></ui5-datepicker>
@@ -33,7 +38,7 @@
 	<ui5-datepicker id="dp10" disabled></ui5-datepicker>
 	<ui5-datepicker id="dp11"></ui5-datepicker>
 	<ui5-datepicker id="dp13"></ui5-datepicker>
-
+	
 	<label id='lbl'>0</label>
 	<label for="inputTimezone">Timezone:</label>
 	<input id="inputTimezone" type="number"/>
@@ -42,7 +47,11 @@
 	<button id="downThere" style="position:absolute; top:3000px;"></button>
 	<label id='lblTomorrow'>0</label>
 	<label id='lblTomorrowDate'></label>
-
+	
+	<h3> Minimum and Maximum Date</h3>
+	<ui5-datepicker id="dp33" format-pattern="MMM d, y" min-date="Jan 1, 2000" max-date="Jan 8, 2100" ></ui5-datepicker>
+	<h3> Minimum and Maximum Date In Smaller Range</h3>
+	<ui5-datepicker id="dp34" format-pattern="MMM d, y" min-date="Jan 12, 2020" max-date="Jan 20, 2020" ></ui5-datepicker>
 	<h3>Test placeholder</h3>
 	<ui5-datepicker id="dp14" format-pattern="MMM d, y"></ui5-datepicker>
 	<ui5-datepicker id="dp15" format-pattern="MMM d, y" placeholder="Delivery date"></ui5-datepicker>

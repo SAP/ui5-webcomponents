@@ -9,32 +9,14 @@ import IconTemplate from "./generated/templates/IconTemplate.lit.js";
 // Styles
 import iconCss from "./generated/themes/Icon.css.js";
 
+const ICON_NOT_FOUND = "ICON_NOT_FOUND";
+
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-icon",
 	properties: /** @lends sap.ui.webcomponents.main.Icon.prototype */ {
-
-		/**
-		 * Defines the source URI of the <code>ui5-icon</code>.
-		 * <br><br>
-		 * To browse all available icons, see the
-		 * <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
-		 * <br><br>
-		 * Example:
-		 * <br>
-		 * <code>src='sap-icon://add'</code>, <code>src='sap-icon://delete'</code>, <code>src='sap-icon://employee'</code>.
-		 *<b> NOTE: This property is about to be removed in the next version! Please use the <code>name</code> property instead.</b>
-		 *
-		 * @type {string}
-		 * @public
-		 * @deprecated
-		*/
-		src: {
-			type: String,
-		},
-
 		/**
 		 * Defines the unique identifier (icon name) of each <code>ui5-icon</code>.
 		 * <br><br>
@@ -92,6 +74,13 @@ const metadata = {
 			type: Object,
 			noAttribute: true,
 		},
+
+		/**
+		* @private
+		*/
+		invalid: {
+			type: Boolean,
+		},
 	},
 	events: {
 	},
@@ -141,11 +130,9 @@ class Icon extends UI5Element {
 		return iconCss;
 	}
 
-	static async define(...params) {
+	static async onDefine() {
 		this.createGlobalStyle(); // hide all icons until the first icon has rendered (and added the Icon.css)
 		await fetchI18nBundle("@ui5/webcomponents");
-
-		super.define(...params);
 	}
 
 	static createGlobalStyle() {
@@ -169,21 +156,28 @@ class Icon extends UI5Element {
 	}
 
 	async onBeforeRendering() {
-		const name = this.name || this.src;
-		if (this.src) {
+		const name = this.name;
+		if (!name) {
 			/* eslint-disable-next-line */
-			console.warn(`The src property is about to be depricated in the next version of UI5 Web Components. Please use the name property!`);
+			return console.warn("Icon name property is required", this);
 		}
-
 		let iconData = getIconDataSync(name);
 		if (!iconData) {
-			try {
-				iconData = await getIconData(name);
-			} catch (e) {
-				/* eslint-disable-next-line */
-				return console.warn(`Required icon is not registered. You can either import the icon as a module in order to use it e.g. "@ui5/webcomponents/dist/icons/${name.replace("sap-icon://", "")}.js", or setup a JSON build step and import "@ui5/webcomponents-icons/dist/json-imports/Icons.js".`);
-			}
+			iconData = await getIconData(name);
 		}
+
+		if (iconData === ICON_NOT_FOUND) {
+			this.invalid = true;
+			/* eslint-disable-next-line */
+			return console.warn(`Required icon is not registered. You can either import the icon as a module in order to use it e.g. "@ui5/webcomponents-icons/dist/icons/${name.replace("sap-icon://", "")}.js", or setup a JSON build step and import "@ui5/webcomponents-icons/dist/Assets.js".`);
+		}
+
+		if (!iconData) {
+			this.invalid = true;
+			/* eslint-disable-next-line */
+			return console.warn(`Required icon is not registered. Invalid icon name: ${this.name}`);
+		}
+
 		this.pathData = iconData.pathData;
 		this.accData = iconData.accData;
 	}
@@ -197,7 +191,7 @@ class Icon extends UI5Element {
 			return this.accessibleName;
 		}
 
-		return this.i18nBundle.getText(this.accData);
+		return this.i18nBundle.getText(this.accData) || undefined;
 	}
 
 	get dir() {

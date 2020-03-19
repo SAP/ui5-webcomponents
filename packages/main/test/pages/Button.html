@@ -9,19 +9,28 @@
 		delete Document.prototype.adoptedStyleSheets
 	</script>
 
-	<script data-ui5-config type="application/json">
-		{
-			"compactSize": false
-		}
-	</script>
-
-	<script src="../../webcomponentsjs/webcomponents-loader.js" defer></script>
+	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
 	<script src="../../resources/bundle.esm.js" type="module"></script>
 	<script nomodule src="../../resources/bundle.es5.js"></script>
+
+    <style>
+        .long-button {
+            width: 1000px;
+        }
+        .long-button-begin::part(button) {
+            justify-content: flex-start;
+        }
+        .long-button-end::part(button) {
+            justify-content: flex-end;
+        }
+    </style>
 
 </head>
 
 <body style="background-color: var(--sapBackgroundColor);">
+	<ui5-icon name="invalid_name"></ui5-icon>
+	<ui5-button design="Emphasized" icon="invalid_name">Press</ui5-button>
+
 	<ui5-button id="button1" design="Emphasized">Action Bar Button</ui5-button>
 	<ui5-button style="height: auto">Primary <br> button</ui5-button>
 	<ui5-button style="height: auto" design="Transparent">Secondary <span style="color:red;">button</span></ui5-button>
@@ -155,8 +164,14 @@
 	<ui5-togglebutton design="Emphasized" icon="employee">Emphasized</ui5-togglebutton>
 	<ui5-togglebutton disabled design="Emphasized" icon="employee">Emphasized</ui5-togglebutton>
 
+    <br/>
+    <br/>
+    <ui5-button class="long-button long-button-begin" icon="download">Download</ui5-button>
+    <ui5-button class="long-button" icon="download">Download</ui5-button>
+    <ui5-button class="long-button long-button-end" icon="download">Download</ui5-button>
 
-	<script>
+
+    <script>
 		var clickCounter = document.querySelector("#click-counter");
 		var button = document.querySelector("#button1");
 		var disabledButton = document.querySelector("#button-disabled");

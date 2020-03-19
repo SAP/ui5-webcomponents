@@ -1,9 +1,13 @@
 import { getTheme as getConfiguredTheme } from "../InitialConfiguration.js";
-import { _applyTheme } from "../Theming.js";
+import applyTheme from "../theming/applyTheme.js";
 
-let theme = getConfiguredTheme();
+let theme;
 
 const getTheme = () => {
+	if (theme === undefined) {
+		theme = getConfiguredTheme();
+	}
+
 	return theme;
 };
 
@@ -15,7 +19,7 @@ const setTheme = async newTheme => {
 	theme = newTheme;
 
 	// Update CSS Custom Properties
-	await _applyTheme(theme);
+	await applyTheme(theme);
 };
 
 export {

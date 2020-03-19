@@ -12,6 +12,20 @@
 </head>
 
 <body style="background-color: var(--sapBackgroundColor);">
+	<ui5-title>List "infinite-scroll"</ui5-title>
+	<ui5-button id="btnTrigger">scroll</ui5-button>
+	<ui5-list id="infiniteScrollEx" style="height: 200px" infinite-scroll>
+		<ui5-li>Laptop Lenovo</ui5-li>
+		<ui5-li>IPhone 3</ui5-li>
+		<ui5-li>HP Monitor 24</ui5-li>
+		<ui5-li>Audio cabel</ui5-li>
+		<ui5-li>DVD set</ui5-li>
+		<ui5-li>HP Monitor 24</ui5-li>
+		<ui5-li>Audio cabel</ui5-li>
+		<ui5-li id="lastItem">Last Item</ui5-li>
+	</ui5-list>
+	<input id="loadMoreResult" value="0"/>
+	<br/>
 	<ui5-list id="listEvents" mode="SingleSelectEnd">
 		<ui5-li id="country1" >Argentina</ui5-li>
 		<ui5-li id="country2" selected >Bulgaria</ui5-li>
@@ -87,6 +101,18 @@
 
 	</ui5-list>
 
+	<ui5-list id="inactiveMultiSelect" header-text="API: ListItem type='Inactive'" mode="MultiSelect">
+		<ui5-li type="Inactive">Inactive item</ui5-li>
+		<ui5-li type="Inactive">Inactive item</ui5-li>
+	</ui5-list>
+
+	<br/><br/>
+
+	<ui5-list id="inactiveSingleSelect" header-text="API: ListItem type='Inactive'" mode="SingleSelectBegin">
+		<ui5-li type="Inactive">Inactive item</ui5-li>
+		<ui5-li type="Inactive">Inactive item</ui5-li>
+	</ui5-list>
+
 	<script>
 		'use strict';
 
@@ -117,6 +143,21 @@
 		listMultiSel.addEventListener("ui5-selectionChange", function(event) {
 			fieldMultiSelResult.value = event.detail.selectionComponentPressed;
 		})
+
+		btnTrigger.addEventListener("click", (e) => {
+			const scrollableContiner = infiniteScrollEx.shadowRoot.querySelector(".ui5-list-root");
+			scrollableContiner.scroll(0, scrollableContiner.scrollHeight);
+		});
+		
+		var loadMoreCounter = 0;
+		infiniteScrollEx.addEventListener("ui5-loadMore", (e) => {
+			for(var i = 0; i < 3; i++) {
+				var li = document.createElement("ui5-li");
+				li.textContent = "Title" + i;
+				infiniteScrollEx.appendChild(li);
+			}
+			loadMoreResult.value= ++loadMoreCounter;
+		});
 	</script>
 </body>
 </html>

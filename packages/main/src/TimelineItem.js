@@ -148,13 +148,11 @@ class TimelineItem extends UI5Element {
 		return getRTL() ? "rtl" : undefined;
 	}
 
-	static async define(...params) {
+	static async onDefine() {
 		await Promise.all([
 			Icon.define(),
 			Link.define(),
 		]);
-
-		super.define(...params);
 	}
 }
 

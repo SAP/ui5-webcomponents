@@ -9,22 +9,24 @@
 			@keydown="{{_headerKeydown}}"
 			@keyup="{{_headerKeyup}}"
 			role="{{ariaHeaderRole}}"
-			aria-labelledby="{{_id}}-subtitle {{_id}}-status"
+			aria-labelledby="{{_id}}-subheading {{_id}}-status"
 			aria-level="{{ariaLevel}}"
 			aria-roledescription="{{ariaCardHeaderRoleDescription}}"
 			tabindex="0">
 
-			<div class="ui5-card-avatar" aria-label="{{ariaCardAvatarLabel}}">
-				<slot name="avatar"></slot>
-			</div>
+			{{#if hasAvatar}}
+				<div class="ui5-card-avatar" aria-label="{{ariaCardAvatarLabel}}">
+					<slot name="avatar"></slot>
+				</div>
+			{{/if}}
 
 			<div class="ui5-card-header-text">
 				{{#if heading}}
-					<div id="{{_id}}-heading" class="ui5-card-heading">{{heading}}</div>
+					<div id="{{_id}}-heading" class="ui5-card-heading" part="heading">{{heading}}</div>
 				{{/if}}
 
-				{{#if subtitle}}
-					<div id="{{_id}}-subtitle" class="ui5-card-subtitle ">{{subtitle}}</div>
+				{{#if subheading}}
+					<div id="{{_id}}-subheading" class="ui5-card-subheading" part="subheading">{{subheading}}</div>
 				{{/if}}
 			</div>
 			<span id="{{_id}}-status" part="status" class="ui5-card-status">{{status}}</span>

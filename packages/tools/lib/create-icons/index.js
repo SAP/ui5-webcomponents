@@ -1,4 +1,3 @@
-const process = require("process");
 const fs = require("fs");
 const path = require("path");
 const mkdirp = require("mkdirp");
@@ -13,7 +12,9 @@ const template = (name, pathData) => `import { registerIcon } from "@ui5/webcomp
 const name = "${name}";
 const pathData = "${pathData}";
 
-registerIcon(name, { pathData });`;
+registerIcon(name, { pathData });
+
+export default { pathData };`;
 
 const accTemplate = (name, pathData, accData) => `import { registerIcon } from "@ui5/webcomponents-base/dist/SVGIconRegistry.js";
 import { ${accData.key} } from "../generated/i18n/i18n-defaults.js";
@@ -22,7 +23,9 @@ const name = "${name}";
 const pathData = "${pathData}";
 const accData = ${accData.key};
 
-registerIcon(name, { pathData, accData });`;
+registerIcon(name, { pathData, accData });
+
+export default { pathData, accData };`;
 
 
 const createIcons = (file) => {

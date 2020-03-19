@@ -16,7 +16,7 @@
 		{{#if showArrowDown}}
 			<button tabindex="0" class="{{classes.button}}" @click="{{_header.press}}">
 				{{#if interactiveLogo}}
-					<img class="ui5-shellbar-logo" src="{{logo}}" />
+					<img class="ui5-shellbar-logo" src="{{logo}}" @click="{{_logoPress}}" />
 				{{/if}}
 
 				{{#if primaryTitle}}
@@ -28,12 +28,6 @@
 				<span class="ui5-shellbar-menu-button-arrow"></span>
 			</button>
 		{{/if}}
-
-		<ui5-popover class="ui5-shellbar-menu-popover" placement-type="Bottom">
-			<ui5-list separators="None" mode="SingleSelect" @ui5-itemPress={{_menuItemPress}}>
-				<slot name="menuItems"></slot>
-			</ui5-list>
-		</ui5-popover>
 
 		<h2 class="ui5-shellbar-secondary-title">{{secondaryTitle}}</h2>
 	</div>
@@ -53,6 +47,7 @@
 				{{#if this.icon}}
 					<ui5-icon
 						tabindex="{{this._tabIndex}}"
+						data-count="{{this.count}}"
 						data-ui5-notification-count="{{../notificationCount}}"
 						data-ui5-external-action-item-id="{{this.refItemid}}"
 						class="{{this.classes}}"
@@ -62,41 +57,22 @@
 						@click={{this.press}}>
 					</ui5-icon>
 				{{else}}
-					<div
-						tabindex="{{this._tabIndex}}"
+					<slot
+						name="profile"
 						id="{{this.id}}"
 						style="{{this.style}}"
 						class="{{this.classes}}"
-						@click="{{this.press}}"
-					>
-						<span style="{{this.subStyles}}" class="{{this.subclasses}}"></span>
-					</div>
+						tabindex="{{this._tabIndex}}"
+						@click={{this.press}}
+					></slot>
 				{{/if}}
 			{{/each}}
 		</div>
 	</div>
 
-	<ui5-popover class="ui5-shellbar-overflow-popover" placement-type="Bottom" horizontal-align="{{popoverHorizontalAlign}}" no-arrow>
-		<ui5-list separators="None" @ui5-itemPress="{{_actionList.itemPress}}">
-			{{#each _hiddenIcons}}
-				<ui5-li
-					data-ui5-external-action-item-id="{{this.refItemid}}"
-					icon="{{this.icon}}"
-					type="Active"
-					@ui5-_press="{{this.press}}"
-				>{{this.text}}
-				</ui5-li>
-			{{/each}}
-		</ui5-list>
-	</ui5-popover>
-
-	<div class="ui5-shellbar-block-layer">
-	</div>
-
 	<div id="{{_id}}-searchfield-wrapper"
 		class="ui5-shellbar-search-field"
 		style="{{styles.searchField}}"
-		@focusout={{_searchField.focusout}}
 	>
 		{{#if searchField.length}}
 			<slot name="searchField"></slot>

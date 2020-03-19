@@ -125,7 +125,6 @@ describe("Date Picker Tests", () => {
 
 		const calendarDate_6_Jan_2015 = datepicker.getPickerDate(timestamp_6_Jan_2015); //Jan 6, 2015
 		const calendarDate_8_Jan_2015 = datepicker.getPickerDate(timestamp_8_Jan_2015); //Jan 6, 2015
-
 		assert.ok(calendarDate_6_Jan_2015.hasClass('ui5-dp-item--selected'), "calendar selected date is ok");
 
 		//select a date
@@ -165,8 +164,7 @@ describe("Date Picker Tests", () => {
 		let calendarDate_4_Jan_2019 = datepicker.getPickerDate(1546560000); //Jan 4, 2019
 		calendarDate_4_Jan_2019.click();
 
-		assert.equal(datepicker.innerInput.getProperty("value"), "Jan 4, 2019", "dp value is correct");
-
+		assert.strictEqual(datepicker.innerInput.getProperty("value"), "Jan 4, 2019", "dp value is correct");
 		//restore timezone
 		browser.$('#btnRestoreTimezone').click();
 
@@ -285,7 +283,7 @@ describe("Date Picker Tests", () => {
 	it("[F4] toggles the calendar", () => {
 		datepicker.id = "#dp11";
 
-		assert.ok(!datepicker.isPickerOpen(), "datepicker is open");
+		assert.ok(!datepicker.isPickerOpen(), "datepicker is closed");
 
 		datepicker.innerInput.click();
 		browser.keys("F4");
@@ -296,7 +294,7 @@ describe("Date Picker Tests", () => {
 	it("[Alt] + [UP] toggles the calendar", () => {
 		datepicker.id = "#dp9";
 
-		assert.ok(!datepicker.isPickerOpen(), "datepicker is open");
+		assert.ok(!datepicker.isPickerOpen(), "datepicker is closed");
 
 		datepicker.innerInput.click();
 		browser.keys(["Alt", "ArrowUp", "NULL"]);
@@ -307,7 +305,7 @@ describe("Date Picker Tests", () => {
 	it("[Alt] + [DOWN] toggles the calendar", () => {
 		datepicker.id = "#dp11";
 
-		assert.ok(!datepicker.isPickerOpen(), "datepicker is open");
+		assert.ok(!datepicker.isPickerOpen(), "datepicker is closed");
 
 		datepicker.innerInput.click();
 		browser.keys(["Alt", "ArrowDown", "NULL"]);
@@ -531,5 +529,114 @@ describe("Date Picker Tests", () => {
 		// is not dipslayed.
 		assert.ok(datepicker.root.getProperty("placeholder"), "The DatePicker has placeholder set");
 		assert.equal(innerInputPlaceholder, placeholder, "The inner input has the placeholder, set by the user");
+	});
+
+	it("Going under the minimum date changes value state", () => {
+		datepicker.id = "#dp33";
+
+		datepicker.root.click();
+		datepicker.root.keys("Jan 1, 1999");
+		datepicker.root.keys("Enter");
+
+		assert.equal(datepicker.input.getProperty("valueState"), "Error", "value state of the input is valid");
+
+		const contentWrapper = browser.$("#dp33").shadow$("ui5-input").shadow$(".ui5-input-content");
+		assert.ok(contentWrapper.isDisplayedInViewport(), "content wrapper has error styles");
+	});
+
+	it("Going over the maximum date changes value state", () => {
+		datepicker.id = "#dp33";
+
+		datepicker.root.click();
+		while(datepicker.root.getValue() !== ""){
+			datepicker.root.keys("Backspace");
+		}
+ 
+		datepicker.root.keys("May 5, 2100");
+		datepicker.root.keys("Enter");
+
+		assert.equal(datepicker.input.getProperty("valueState"), "Error", "value state of the input is valid");
+
+		const contentWrapper = browser.$("#dp33").shadow$("ui5-input").shadow$(".ui5-input-content");
+		assert.ok(contentWrapper.isDisplayedInViewport(), "content wrapper has error styles");
+	});
+
+	it("Maximum or minimum date changes value state to none", () => {
+		datepicker.id = "#dp33";
+
+		datepicker.root.click();
+		while(datepicker.root.getValue() !== ""){
+			datepicker.root.keys("Backspace");
+		}
+ 
+		datepicker.root.keys("Jan 8, 2100");
+		datepicker.root.keys("Enter");
+
+		assert.equal(datepicker.input.getProperty("valueState"), "None", "value state of the input is valid");
+
+		datepicker.root.click();
+		while(datepicker.root.getValue() !== ""){
+			datepicker.root.keys("Backspace");
+		}
+ 
+		datepicker.root.keys("Jan 1, 2000");
+		datepicker.root.keys("Enter");
+
+		assert.equal(datepicker.input.getProperty("valueState"), "None", "value state of the input is valid");
+
+		const contentWrapper = browser.$("#dp33").shadow$("ui5-input").shadow$(".ui5-input-content");
+		assert.ok(contentWrapper.isDisplayedInViewport(), "content wrapper has error styles");
+	});
+
+	it("Years are disabled when out of range", () => {
+		datepicker.id = "#dp33";
+
+		datepicker.root.click();
+		while(datepicker.root.getValue() !== ""){
+			datepicker.root.keys("Backspace");
+		}
+		datepicker.root.keys("Jan 8, 2100");
+		datepicker.root.keys("Enter");
+
+		datepicker.openPicker({ focusInput: false });
+
+		datepicker.btnYear.click();
+		assert.ok(datepicker.getDisplayedYear(10).hasClass("ui5-yp-item--disabled"), "Years out of range are disabled");
+		datepicker.root.keys("ArrowDown");
+		datepicker.root.keys("ArrowRight");
+		datepicker.root.keys("ArrowRight");
+		datepicker.root.keys("ArrowRight");
+		datepicker.root.keys("ArrowDown");
+		assert.ok(datepicker.getDisplayedYear(7).isFocusedDeep(), "Years out of range can not be reached with keyboard");
+	});
+
+	it("Months are disabled when out of range", () => {
+		datepicker.id = "#dp33";
+
+		datepicker.openPicker({ focusInput: false });
+
+		datepicker.btnMonth.click();
+		assert.ok(datepicker.getDisplayedMonth(10).hasClass("ui5-mp-item--disabled"), "Months out of range are disabled");
+
+		datepicker.root.keys("ArrowDown");
+		assert.ok(datepicker.getDisplayedMonth(0).isFocusedDeep(), "Months out of range  can not be reached with keyboard");
+	});
+
+	it("Days are disabled when out of range", () => {
+		datepicker.id = "#dp33";
+
+		datepicker.root.keys("Escape");
+		datepicker.openPicker({ focusInput: false });
+
+		assert.ok(datepicker.getDisplayedDay(15).hasClass("ui5-dp-item--disabled"), "Days out of range are disabled");
+	});
+
+	it("Days are disabled when out of range", () => {
+		datepicker.id = "#dp33";
+		datepicker.root.keys("Escape");
+
+		datepicker.id = "#dp34";
+		datepicker.openPicker({ focusInput: false });
+		assert.ok(datepicker.getDisplayedDay(14).isFocusedDeep(), "Days out of range are disabled");
 	});
 });

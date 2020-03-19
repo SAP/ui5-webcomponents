@@ -16,6 +16,7 @@
 	overflow: hidden;
 	font-family: var(--sapFontFamily);
 	font-size: var(--sapFontSize);
+	box-sizing: border-box;
 }
 
 .ui5-card-header {
@@ -105,7 +106,7 @@
 	max-height: 3.5rem;
 }
 
-.ui5-card-header .ui5-card-header-text .ui5-card-subtitle {
+.ui5-card-header .ui5-card-header-text .ui5-card-subheading {
 	font-family: var(--sapFontFamily);
 	font-size: var(--sapFontMediumSize);
 	font-weight: normal;
@@ -115,7 +116,7 @@
 }
 
 .ui5-card-header .ui5-card-header-text .ui5-card-heading,
-.ui5-card-header .ui5-card-header-text .ui5-card-subtitle {
+.ui5-card-header .ui5-card-header-text .ui5-card-subheading {
 	text-align: left;
 	text-overflow: ellipsis;
 	white-space: normal;
@@ -142,6 +143,6 @@
 	text-align: right;
 }
 
-[dir="rtl"] .ui5-card-header .ui5-card-header-text .ui5-card-subtitle {
+[dir="rtl"] .ui5-card-header .ui5-card-header-text .ui5-card-subheading {
 	text-align: right;
 }

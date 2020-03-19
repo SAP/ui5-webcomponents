@@ -1,7 +1,7 @@
 import { registerFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 
 import List from "../List.js";
-import Popover from "../Popover.js";
+import ResponsivePopover from "../ResponsivePopover.js";
 
 /**
  * A class to manage the <code>Input</code suggestion items.
@@ -31,6 +31,24 @@ class Suggestions {
 	}
 
 	/* Public methods */
+	defaultSlotProperties() {
+		const inputSuggestionItems = this._getComponent().suggestionItems;
+
+		const suggestions = [];
+		inputSuggestionItems.map(suggestion => {
+			return suggestions.push({
+				text: suggestion.textContent,
+				description: suggestion.description || undefined,
+				image: suggestion.image || undefined,
+				icon: suggestion.icon || undefined,
+				info: suggestion.info || undefined,
+				infoState: suggestion.infoState,
+			});
+		});
+
+		return suggestions;
+	}
+
 	onUp(event) {
 		event.preventDefault();
 		this._handleItemNavigation(false /* forward */);
@@ -70,13 +88,15 @@ class Suggestions {
 		}
 	}
 
-	open() {
+	async open() {
+		this.responsivePopover = await this._respPopover();
 		this._beforeOpen();
-		this._getPopover().openBy(this._getComponent());
+		this.responsivePopover.open(this._getComponent());
 	}
 
-	close() {
-		this._getPopover().close();
+	async close() {
+		this.responsivePopover = await this._respPopover();
+		this.responsivePopover.close();
 	}
 
 	updateSelectedItemPosition(pos) {
@@ -93,7 +113,8 @@ class Suggestions {
 
 		this.selectedItemIndex = this._getItems().indexOf(item);
 
-		this._getComponent().onItemSelected(item, keyboardUsed);
+		this._getComponent().onItemSelected(this._getRealItems()[this.selectedItemIndex], keyboardUsed);
+		item.selected = false;
 		this.close();
 	}
 
@@ -111,8 +132,8 @@ class Suggestions {
 		this._attachPopupListeners();
 	}
 
-	_attachItemsListeners() {
-		const list = this._getList();
+	async _attachItemsListeners() {
+		const list = await this._getList();
 		list.removeEventListener("ui5-itemPress", this.fnOnSuggestionItemPress);
 		list.addEventListener("ui5-itemPress", this.fnOnSuggestionItemPress);
 		list.removeEventListener("ui5-itemFocused", this.fnOnSuggestionItemFocus);
@@ -125,12 +146,12 @@ class Suggestions {
 		}
 
 		if (!this.attachedAfterOpened) {
-			this._getPopover().addEventListener("ui5-afterOpen", this._onOpen.bind(this));
+			this._respPopover.addEventListener("ui5-afterOpen", this._onOpen.bind(this));
 			this.attachedAfterOpened = true;
 		}
 
 		if (!this.attachedAfterClose) {
-			this._getPopover().addEventListener("ui5-afterClose", this._onClose.bind(this));
+			this._respPopover.addEventListener("ui5-afterClose", this._onClose.bind(this));
 			this.attachedAfterClose = true;
 		}
 	}
@@ -155,8 +176,7 @@ class Suggestions {
 	}
 
 	isOpened() {
-		const popover = this._getPopover();
-		return !!(popover && popover.opened);
+		return !!(this.responsivePopover && this.responsivePopover.opened);
 	}
 
 	_handleItemNavigation(forward) {
@@ -230,29 +250,36 @@ class Suggestions {
 		this._getScrollContainer().scrollTop = pos;
 	}
 
-	_getScrollContainer() {
+	async _getScrollContainer() {
 		if (!this._scrollContainer) {
-			const popover = this._getPopover();
-			this._scrollContainer = popover.getDomRef().querySelector(".ui5-popover-content");
+			await this._respPopover();
+			this._scrollContainer = this.responsivePopover.shadowRoot.querySelector(".ui5-popover-content");
 		}
 
 		return this._scrollContainer;
 	}
 
 	_getItems() {
-		return this._getComponent().getSlottedNodes(this.slotName);
+		return [].slice.call(this.responsivePopover.querySelectorAll("ui5-li"));
 	}
 
 	_getComponent() {
 		return this.component;
 	}
 
-	_getList() {
-		return this._getComponent().shadowRoot.querySelector("ui5-list");
+	async _getList() {
+		this.responsivePopover = await this._respPopover();
+		return this.responsivePopover.querySelector("ui5-list");
 	}
 
-	_getPopover() {
-		return this._getComponent().shadowRoot.querySelector("ui5-popover");
+	_getRealItems() {
+		return this._getComponent().getSlottedNodes(this.slotName);
+	}
+
+	async _respPopover() {
+		const staticAreaItem = await this._getComponent().getStaticAreaItemDomRef();
+		this.responsivePopover = staticAreaItem.querySelector("ui5-responsive-popover");
+		return this.responsivePopover;
 	}
 }
 
@@ -261,7 +288,7 @@ Suggestions.SCROLL_STEP = 48;
 // The List and Popover components would be rendered
 // by the issuer component`s template.
 List.define();
-Popover.define();
+ResponsivePopover.define();
 
 
 // Add suggestions support to the global features registry so that Input.js can use it

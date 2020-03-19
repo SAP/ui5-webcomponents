@@ -71,7 +71,7 @@
 	flex: 1;
 	position: relative;
 	margin-left: .5rem;
-	padding: 1rem;
+	padding: var(--_ui5_tl_bubble_padding);
 }
 
 .ui5-tli-bubble:focus {
@@ -148,14 +148,6 @@
 
 .ui5-tli-desc {
 	padding-top: .75rem;
-}
-
-:host([data-ui5-compact-size]) .ui5-tli-bubble {
-	padding: .5rem;
-}
-
-:host([data-ui5-compact-size]) .ui5-tli-indicator::before {
-	bottom: -.5rem;
 }
 
 [dir=rtl] .ui5-tli-bubble-arrow--left {

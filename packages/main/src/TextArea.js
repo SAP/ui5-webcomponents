@@ -3,7 +3,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import { isIE } from "@ui5/webcomponents-utils/dist/sap/ui/Device.js";
+import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import TextAreaTemplate from "./generated/templates/TextAreaTemplate.lit.js";
 
 import { TEXTAREA_CHARACTERS_LEFT, TEXTAREA_CHARACTERS_EXCEEDED } from "./generated/i18n/i18n-defaults.js";
@@ -42,9 +42,9 @@ const metadata = {
 		},
 
 		/**
-		 * Defines whether the <code>ui5-textarea</code> is readonly.
+		 * Defines whether the <code>ui5-textarea</code> is read-only.
 		 * <br><br>
-		 * <b>Note:</b> A readonly <code>ui5-textarea</code> is not editable,
+		 * <b>Note:</b> A read-only <code>ui5-textarea</code> is not editable,
 		 * but still provides visual feedback upon user interaction.
 		 *
 		 * @type {boolean}
@@ -403,10 +403,8 @@ class TextArea extends UI5Element {
 		return this.valueState === "Error" ? "true" : undefined;
 	}
 
-	static async define(...params) {
+	static async onDefine() {
 		await fetchI18nBundle("@ui5/webcomponents");
-
-		super.define(...params);
 	}
 }
 

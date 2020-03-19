@@ -1,0 +1,56 @@
+{{#if showSuggestions}}
+	<ui5-responsive-popover
+		content-only-on-desktop
+		no-arrow
+		_disable-initial-focus
+		placement-type="Bottom"
+		horizontal-align="Left"
+		@ui5-afterOpen={{_afterOpenPopover}}
+		@ui5-afterClose={{_afterClosePopover}}
+	>
+		<div slot="header" class="ui5-responsive-popover-header">
+			<div class="row">
+				<span>{{_headerTitleText}}</span>
+				<ui5-button
+					icon="decline"
+					design="Transparent"
+					@click="{{_closeRespPopover}}"
+				>
+				</ui5-button>
+			</div>
+			<div class="row">
+				<div class="input-root-phone">
+					<input
+						class="ui5-input-inner-phone"
+						type="{{inputType}}"
+						.value="{{value}}"
+						inner-input
+						placeholder="{{placeholder}}"
+						@input="{{_handleInput}}"
+						@change="{{_handleChange}}"
+					/>
+				</div>
+			</div>
+		</div>
+
+		<ui5-list separators="Inner">
+			{{#each suggestionsTexts}}
+				<ui5-li
+					image="{{this.image}}"
+					icon="{{this.icon}}"
+					description="{{this.description}}"
+					info="{{this.info}}"
+					info-state="{{this.infoState}}"
+					@ui5-_itemPress="{{ fnOnSuggestionItemPress }}" 
+				>{{ this.text }}</ui5-li>
+			{{/each}}
+		</ui5-list>
+
+		<div slot="footer" class="ui5-responsive-popover-footer">
+			<ui5-button
+				design="Transparent"
+				@click="{{_closeRespPopover}}"
+			>OK</ui5-button>
+		</div>
+	</ui5-responsive-popover>
+{{/if}}

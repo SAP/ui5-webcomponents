@@ -27,6 +27,18 @@ describe("General API", () => {
 		assert.strictEqual(requiredLabelContent, '"*"', "after's content should be *");
 	});
 
+	it("tests show-colon does not force truncation", () => {
+		const labelWithNoColon = browser.$("#showColon-false").shadow$(".ui5-label-text-wrapper");
+		const labelWithShowColon = browser.$("#showColon-true").shadow$(".ui5-label-text-wrapper");
+
+		const labelWithNoColonSize = labelWithNoColon.getSize();
+		const labelWithShowColonSize = labelWithShowColon.getSize();
+
+		// Comparing ui5-label(s) "Basic Label" and "Basic Label:", but just the "Basic Label" part,
+		// that should be equal if no trunctation and not equal if truncated.
+		assert.strictEqual(labelWithNoColonSize.width, labelWithShowColonSize.width, "Both texts are equal in width");
+	});
+
 	it("should wrap the text of the label", () => {
 		const wrappingLabel = browser.$("#wrapping-label");
 		const truncatingLabel = browser.$("#truncated-label");

@@ -7,7 +7,7 @@ permalink: /playground/
 
 # Getting Started
 
-The UI5 Web Components share fundamental UI5 qualities with others to provide enterprise-grade features, Fiori UX and themeability. The goal is to achieve an easy consumption of UI5 controls to lower the entry barrier to use UI5 controls for own applications and to avoid complexity of UI5 rendering-stack by making the consumption of the full-stack UI5 optional. In general, the UI5 Web Components are targeting for Web Developers who want to have more flexibility to use just HTML tags or arbitrary JS frameworks.
+The UI5 Web Components carry fundamental UI5 qualities, along with others, to provide enterprise-grade features, Fiori UX, and themeability. The goal is to achieve easy consumption of UI5 controls and to lower the entry barrier to use UI5 controls for own applications. By making the consumption of the full-stack UI5 optional, UI5 Web Components allow you to avoid the complexity of the UI5 rendering stack. In general, the UI5 Web Components are targeting web developers who want to have more flexibility to use just HTML tags or arbitrary JS frameworks.
 
 ## Installation
 
@@ -19,7 +19,7 @@ npm install @ui5/webcomponents
 
 ## Read the Docs
 
-Documentation and tutorials about UI5 Web Components can be found [here](https://github.com/SAP/ui5-webcomponents/tree/master/docs)
+Documentation and tutorials about UI5 Web Components can be found [here](https://sap.github.io/ui5-webcomponents/master/playground/docs)
 
 ## Usage
 
@@ -29,7 +29,7 @@ Documentation and tutorials about UI5 Web Components can be found [here](https:/
 import "@ui5/webcomponents/dist/Button";
 ```
 
-### Instantiate Web Component
+### Instantiate the Web Component
 
 ```html
 <ui5-button>Hello world!</ui5-button>

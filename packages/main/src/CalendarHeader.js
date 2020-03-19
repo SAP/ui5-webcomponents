@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-left.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-right.js";
@@ -32,6 +32,12 @@ const metadata = {
 		},
 		_btn2: {
 			type: Object,
+		},
+		_isNextButtonDisabled: {
+			type: Boolean,
+		},
+		_isPrevButtonDisabled: {
+			type: Boolean,
 		},
 	},
 	events: {
@@ -77,6 +83,16 @@ class CalendarHeader extends UI5Element {
 	onBeforeRendering() {
 		this._btn1.text = this.monthText;
 		this._btn2.text = this.yearText;
+		this._btnPrev.classes = "ui5-calheader-arrowbtn";
+		this._btnNext.classes = "ui5-calheader-arrowbtn";
+
+		if (this._isNextButtonDisabled) {
+			this._btnNext.classes += " ui5-calheader-arrowbtn-disabled";
+		}
+
+		if (this._isPrevButtonDisabled) {
+			this._btnPrev.classes += " ui5-calheader-arrowbtn-disabled";
+		}
 	}
 
 	_handlePrevPress(event) {
@@ -109,13 +125,11 @@ class CalendarHeader extends UI5Element {
 		return getRTL() ? "rtl" : undefined;
 	}
 
-	static async define(...params) {
+	static async onDefine() {
 		await Promise.all([
 			await Button.define(),
 			await Icon.define(),
 		]);
-
-		super.define(...params);
 	}
 }
 

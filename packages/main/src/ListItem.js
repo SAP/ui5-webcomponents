@@ -1,5 +1,4 @@
-import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/events/PseudoEvents.js";
-import { isDesktop } from "@ui5/webcomponents-utils/dist/sap/ui/Device.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/icons/decline.js";
 import ListItemType from "./types/ListItemType.js";
 import ListMode from "./types/ListMode.js";
@@ -114,20 +113,19 @@ class ListItem extends ListItemBase {
 	}
 
 	onBeforeRendering(...params) {
-		const desktop = isDesktop();
-		const isActionable = (this.type === ListItemType.Active) && (this._mode !== ListMode.Delete);
-
-		this.actionable = desktop && isActionable;
+		this.actionable = (this.type === ListItemType.Active) && (this._mode !== ListMode.Delete);
 	}
 
 	onEnterDOM() {
 		document.addEventListener("mouseup", this.deactivate);
+		document.addEventListener("touchend", this.deactivate);
 		document.addEventListener("keyup", this.deactivateByKey);
 	}
 
 	onExitDOM() {
 		document.removeEventListener("mouseup", this.deactivate);
 		document.removeEventListener("keyup", this.deactivateByKey);
+		document.removeEventListener("touchend", this.deactivate);
 	}
 
 	_onkeydown(event) {
@@ -172,7 +170,16 @@ class ListItem extends ListItemBase {
 		this.deactivate();
 	}
 
-	_onfocusout(event) {
+	_ontouchstart(event) {
+		this._onmousedown(event);
+	}
+
+	_ontouchend(event) {
+		this._onmouseup(event);
+	}
+
+	_onfocusout() {
+		super._onfocusout();
 		this.deactivate();
 	}
 
@@ -188,10 +195,18 @@ class ListItem extends ListItemBase {
 	 * and Multi (ui5-checkbox) selection modes are used.
 	 */
 	onMultiSelectionComponentPress(event) {
+		if (this.isInactive) {
+			return;
+		}
+
 		this.fireEvent("_selectionRequested", { item: this, selected: event.target.checked, selectionComponentPressed: true });
 	}
 
 	onSingleSelectionComponentPress(event) {
+		if (this.isInactive) {
+			return;
+		}
+
 		this.fireEvent("_selectionRequested", { item: this, selected: !event.target.selected, selectionComponentPressed: true });
 	}
 
@@ -206,7 +221,15 @@ class ListItem extends ListItemBase {
 	}
 
 	fireItemPress(event) {
+		if (this.isInactive) {
+			return;
+		}
+
 		this.fireEvent("_press", { item: this, selected: this.selected, key: event.key });
+	}
+
+	get isInactive() {
+		return this.type === ListItemType.Inactive;
 	}
 
 	get placeSelectionElementBefore() {

@@ -6,6 +6,7 @@
 	<!-- INPUT -->
 	<ui5-input
 			id="{{_id}}-inner"
+			class="ui5-datepicker-input"
 			placeholder="{{_placeholder}}"
 			type="{{type}}"
 			value="{{value}}"
@@ -32,25 +33,5 @@
 		{{/unless}}
 	</ui5-input>
 
-	<!-- POPOVER -->
-	<ui5-popover
-			id="{{_id}}-popover"
-			allow-target-overlap="{{_popover.allowTargetOverlap}}"
-			placement-type="{{_popover.placementType}}"
-			no-arrow
-			horizontal-align="{{_popover.horizontalAlign}}"
-			stay-open-on-scroll="{{_popover.stayOpenOnScroll}}"
-			@ui5-afterClose="{{_popover.afterClose}}"
-			@ui5-afterOpen="{{_popover.afterOpen}}"
-	>
-		<ui5-calendar
-				id="{{_id}}-calendar"
-				primary-calendar-type="{{_calendar.primaryCalendarType}}"
-				format-pattern="{{_calendar.formatPattern}}"
-				timestamp="{{_calendar.timestamp}}"
-				.selectedDates="{{_calendar.selectedDates}}"
-				@ui5-selectedDatesChange="{{_calendar.onSelectedDatesChange}}"
-		></ui5-calendar>
-	</ui5-popover>
 	<slot name="formSupport"></slot>
 </div>

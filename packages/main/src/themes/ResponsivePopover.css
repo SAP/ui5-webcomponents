@@ -1,0 +1,13 @@
+@import "./Popover.css";
+
+:host {
+	--_ui5_input_width: 100%;
+}
+
+:host(:not([with-padding])) {
+	--_ui5_popover_content_padding: 0;
+}
+
+:host([opened]) {
+	display: inline-block;
+}

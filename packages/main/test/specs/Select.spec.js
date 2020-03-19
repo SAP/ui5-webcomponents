@@ -10,8 +10,8 @@ describe("Select general interaction", () => {
 		const EXPECTED_SELECTION_TEXT = "Cozy";
 
 		select.click();
-
-		const firstItem = browser.$("#mySelect").shadow$$("ui5-li")[0];
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#mySelect")
+		const firstItem = browser.$(`.${staticAreaItemClassName}`).shadow$$("ui5-li")[0];
 
 		firstItem.click();
 
@@ -25,7 +25,8 @@ describe("Select general interaction", () => {
 
 		select.click();
 
-		const firstItem = browser.$("#mySelect").shadow$("ui5-li:first-child");
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#mySelect")
+		const firstItem = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-li:first-child");
 		firstItem.click();
 
 		assert.strictEqual(inputResult.getProperty("value"), "1", "Event not fired when already selected item is selected");
@@ -87,7 +88,6 @@ describe("Select general interaction", () => {
 
 		// Close the select not to cover other components that tests would try to click
 		select.keys("Escape");
-
 	});
 
 	it("tests selection does not cycle with ArrowUp", () => {
@@ -108,55 +108,59 @@ describe("Select general interaction", () => {
 
 	it("opens upon space", () => {
 		const btn = $("#myBtn2");
-		const popover = browser.$("#mySelect").shadow$("ui5-popover");
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#mySelect");
+		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 
 		btn.click();
 		btn.keys("Tab");
 
 		browser.keys("Space");
-		assert.ok(popover.isDisplayedInViewport(), "Select is opened.");
+		assert.ok(popover.getProperty("opened"), "Select is opened.");
 	});
 
 	it("toggles upon F4", () => {
 		const btn = $("#myBtn2");
-		const popover = browser.$("#mySelect").shadow$("ui5-popover");
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#mySelect");
+		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 
 		btn.click();
 		btn.keys("Tab");
 
 		browser.keys("F4");
-		assert.ok(popover.isDisplayedInViewport(), "Select is opened.");
+		assert.ok(popover.getProperty("opened"), "Select is opened.");
 
 		browser.keys("F4");
-		assert.ok(!popover.isDisplayedInViewport(), "Select is closed.");
+		assert.ok(!popover.getProperty("opened"), "Select is closed.");
 	});
 
 	it("toggles upon ALT + UP", () => {
 		const btn = $("#myBtn2");
-		const popover = browser.$("#mySelect").shadow$("ui5-popover");
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#mySelect");
+		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 
 		btn.click();
 		btn.keys("Tab");
 
 		browser.keys(["Alt", "ArrowUp", "NULL"]);
-		assert.ok(popover.isDisplayedInViewport(), "Select is opened.");
+		assert.ok(popover.getProperty("opened"), "Select is opened.");
 
 		browser.keys(["Alt", "ArrowUp", "NULL"]);
-		assert.ok(!popover.isDisplayedInViewport(), "Select is closed.");
+		assert.ok(!popover.getProperty("opened"), "Select is closed.");
 	});
 
 	it("toggles upon ALT + DOWN", () => {
 		const btn = $("#myBtn2");
-		const popover = browser.$("#mySelect").shadow$("ui5-popover");
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#mySelect");
+		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 
 		btn.click();
 		btn.keys("Tab");
 
 		browser.keys(["Alt", "ArrowDown", "NULL"]);
-		assert.ok(popover.isDisplayedInViewport(), "Select is opened.");
+		assert.ok(popover.getProperty("opened"), "Select is opened.");
 
 		browser.keys(["Alt", "ArrowDown", "NULL"]);
-		assert.ok(!popover.isDisplayedInViewport(), "Select is closed.");
+		assert.ok(!popover.getProperty("opened"), "Select is closed.");
 	});
 
 	it("adds unselected only items to select", () => {
@@ -166,7 +170,8 @@ describe("Select general interaction", () => {
 		addItemsBtn.click();
 
 		const firstOption = browser.$("#mySelect ui5-option:first-child");
-		const firstListItem = browser.$("#mySelect").shadow$("ui5-li:first-child");
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#mySelect");
+		const firstListItem = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-li:first-child");
 
 		assert.ok(firstOption.getProperty("selected"), "First option should be selected");
 		assert.ok(firstListItem.getProperty("selected"), "First list item should be selected");
@@ -216,7 +221,8 @@ describe("Select general interaction", () => {
 		select.keys("Escape");
 
 		select.click();
-		const firstItem = browser.$("#mySelect").shadow$("ui5-li:first-child");
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#mySelect");		
+		const firstItem = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-li:first-child");
 
 		firstItem.click();
 

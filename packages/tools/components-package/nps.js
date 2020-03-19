@@ -1,17 +1,18 @@
 const path = require("path");
 
 const LIB = path.join(__dirname, `../lib/`);
+const NODE_MODULES_PATH = path.join(__dirname, `../../../node_modules/`);
 const serveConfig = path.join(__dirname, `serve.json`);
+const polyfillPath = path.join(NODE_MODULES_PATH, `/@webcomponents/webcomponentsjs/**/*.*`);
 
 const getScripts = (options) => {
 
-	const jestTask = options.hasJest ? `test.jest` : ``;
 	const port = options.port;
 
 	const scripts = {
 		clean: "rimraf dist",
 		lint: "eslint . --config config/.eslintrc.js",
-		prepare: "nps clean build.templates build.samples build.styles build.i18n copy.src copy.webcomponents-polyfill",
+		prepare: "nps clean build.templates build.styles build.i18n build.jsonImports copy build.samples",
 		build: {
 			default: "nps lint prepare build.bundle",
 			templates: `mkdirp dist/generated/templates && node ${LIB}/hbs2ui5/index.js -d src/ -o dist/generated/templates`,
@@ -23,19 +24,25 @@ const getScripts = (options) => {
 			i18n: {
 				default: "nps build.i18n.defaultsjs build.i18n.json",
 				defaultsjs: `mkdirp dist/generated/i18n && node ${LIB}/i18n/defaults.js src/i18n dist/generated/i18n`,
-				json: `mkdirp dist/assets/i18n && node ${LIB}/i18n/toJSON.js src/i18n dist/assets/i18n`,
+				json: `mkdirp dist/generated/assets/i18n && node ${LIB}/i18n/toJSON.js src/i18n dist/generated/assets/i18n`,
+			},
+			jsonImports: {
+				default: "mkdirp dist/generated/json-imports && nps build.jsonImports.themes build.jsonImports.i18n",
+				themes: `node ${LIB}/generate-json-imports/themes.js`,
+				i18n: `node ${LIB}/generate-json-imports/i18n.js`,
 			},
 			bundle: "rollup --config config/rollup.config.js --environment ES5_BUILD",
 			samples: {
-				default: "nps copy.test build.samples.api build.samples.docs",
+				default: "nps build.samples.api build.samples.docs",
 				api: `jsdoc -c  ${LIB}/jsdoc/config.json`,
 				docs: `node ${LIB}/documentation/index.js dist/api.json`,
 			}
 		},
 		copy: {
+			default: "nps copy.src copy.test copy.webcomponents-polyfill",
 			src: "copy-and-watch \"src/**/*.js\" dist/",
 			test: "copy-and-watch \"test/**/*.*\" dist/test-resources",
-			"webcomponents-polyfill": "copy-and-watch \"../../node_modules/@webcomponents/webcomponentsjs/**/*.*\" dist/webcomponentsjs/",
+			"webcomponents-polyfill": `copy-and-watch "${polyfillPath}" dist/webcomponentsjs/`,
 		},
 		watch: {
 			default: 'concurrently "nps watch.templates" "nps watch.samples" "nps watch.test" "nps watch.src" "nps watch.bundle" "nps watch.styles"',
@@ -58,13 +65,9 @@ const getScripts = (options) => {
 			run: `serve --no-clipboard -l ${port} dist`,
 		},
 		test: {
-			default: `nps ${jestTask} test.wdio`,
-			jest: "jest",
-			wdio: {
-				// --success first - report the exit code of the test run (first command to finish), as serve is always terminated and has a non-0 exit code
-				default: 'concurrently "nps serve" "nps test.wdio.run" --kill-others --success first',
-				run: "cross-env WDIO_LOG_LEVEL=error FORCE_COLOR=0 wdio config/wdio.conf.js",
-			},
+			// --success first - report the exit code of the test run (first command to finish), as serve is always terminated and has a non-0 exit code
+			default: 'concurrently "nps serve" "nps test.run" --kill-others --success first',
+			run: "cross-env WDIO_LOG_LEVEL=error FORCE_COLOR=0 wdio config/wdio.conf.js",
 		},
 	};
 

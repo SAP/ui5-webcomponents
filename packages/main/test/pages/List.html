@@ -13,11 +13,32 @@
 </head>
 
 <body style="background-color: var(--sapBackgroundColor);">
+
+	<ui5-title>List "infinite-scroll"</ui5-title>
+	<label style="font-size:2rem;">new items loaded:</label><label id="result" style="font-size:2rem;"> 0 times: 0</label>
+	<ui5-list id="infiniteScrollEx" style="height: 300px" infinite-scroll>
+		<ui5-li-groupheader>New Items</ui5-li-groupheader>
+		<ui5-li image="./img/HT-1000.jpg" icon="navigation-right-arrow" info="Available">Voluptate do eu cupidatat elit est culpa. Reprehenderit eiusmod voluptate ex est dolor nostrud Lorem Lorem do nisi laborum veniam. Sint do non culpa aute occaecat labore ipsum veniam minim tempor est. Duis pariatur aute culpa irure ad excepteur pariatur culpa culpa ea duis occaecat aute irure. Ipsum velit culpa non exercitation ex laboris deserunt in eu non officia in. Laborum sunt aliqua labore cupidatat sunt labore.</ui5-li>
+		<ui5-li image="./img/HT-1010.jpg" icon="navigation-right-arrow" info="Re-stock" description="#12331232131" info-state="Error">Laptop Lenovo</ui5-li>
+		<ui5-li image="./img/HT-1022.jpg" icon="navigation-right-arrow" info="Re-stock" description="#12331232131"  info-state="Error">IPhone 3</ui5-li>
+
+		<ui5-li-groupheader>Discounted Items</ui5-li-groupheader>
+		<ui5-li image="./img/HT-1030.jpg"  icon-end icon="navigation-right-arrow" description="#12331232131"  info="Reuqired" info-state="Error">HP Monitor 24</ui5-li>
+		<ui5-li image="./img/HT-2026.jpg"  icon-end icon="navigation-right-arrow" description="#12331232131"  info="Available" info-state="Success">Audio cabel</ui5-li>
+		<ui5-li image="./img/HT-2002.jpg"  icon-end icon="navigation-right-arrow" info="Reuqired" info-state="Warning">DVD set</ui5-li>
+
+		<ui5-li-groupheader>Discounted Items</ui5-li-groupheader>
+		<ui5-li image="./img/HT-1030.jpg"  icon="navigation-right-arrow">HP Monitor 24</ui5-li>
+		<ui5-li image="./img/HT-2026.jpg"  icon="navigation-right-arrow">Audio cabel</ui5-li>
+		<ui5-li image="./img/HT-2002.jpg"  icon="navigation-right-arrow">DVD set</ui5-li>
+	</ui5-list>
+
+
 	<h2>ui5-list</h2>
 
 	<ui5-list header-text="API: GroupHeaderListItem" mode="MultiSelect">
 		<ui5-li-groupheader>New Items</ui5-li-groupheader>
-		<ui5-li image="./img/HT-1000.jpg" icon="navigation-right-arrow" info="Available">Laptop HP</ui5-li>
+		<ui5-li image="./img/HT-1000.jpg" icon="navigation-right-arrow" info="Available">Voluptate do eu cupidatat elit est culpa. Reprehenderit eiusmod voluptate ex est dolor nostrud Lorem Lorem do nisi laborum veniam. Sint do non culpa aute occaecat labore ipsum veniam minim tempor est. Duis pariatur aute culpa irure ad excepteur pariatur culpa culpa ea duis occaecat aute irure. Ipsum velit culpa non exercitation ex laboris deserunt in eu non officia in. Laborum sunt aliqua labore cupidatat sunt labore.</ui5-li>
 		<ui5-li image="./img/HT-1010.jpg" icon="navigation-right-arrow" info="Re-stock" description="#12331232131" info-state="Error">Laptop Lenovo</ui5-li>
 		<ui5-li image="./img/HT-1022.jpg" icon="navigation-right-arrow" info="Re-stock" description="#12331232131"  info-state="Error">IPhone 3</ui5-li>
 
@@ -62,6 +83,20 @@
 
 	<br/><br/>
 
+	<ui5-list id="inactiveMultiSelect" header-text="API: ListItem type='Inactive'" mode="MultiSelect">
+		<ui5-li type="Inactive">Inactive item</ui5-li>
+		<ui5-li type="Inactive">Inactive item</ui5-li>
+	</ui5-list>
+
+	<br/><br/>
+
+	<ui5-list id="inactiveSingleSelect" header-text="API: ListItem type='Inactive'" mode="SingleSelectBegin">
+		<ui5-li type="Inactive">Inactive item</ui5-li>
+		<ui5-li type="Inactive">Inactive item</ui5-li>
+	</ui5-list>
+
+	<br/><br/>
+
 	<ui5-list id="myList" mode="SingleSelect" header-text="API: mode='SingleSelect'">
 		<ui5-li id="country1" >Argentina</ui5-li>
 		<ui5-li id="country2" >Bulgaria</ui5-li>
@@ -86,7 +121,7 @@
 	<br/><br/>
 
 	<ui5-list id="myList3" mode="SingleSelectBegin" header-text="API: mode='SingleSelectBegin'">
-		<ui5-li id="country1" >Argentina</ui5-li>
+		<ui5-li id="country1" >Dolor dolor ipsum culpa proident esse quis quis incididunt. Sunt duis eu ad deserunt dolor sunt Lorem incididunt est irure qui dolore minim consectetur. Voluptate minim veniam aliqua aute et consectetur magna commodo sit. Duis fugiat esse culpa ea velit sit excepteur duis deserunt aliquip minim laborum. Amet aliquip excepteur esse aute ut dolore labore.</ui5-li>
 		<ui5-li id="country2"  selected>Bulgaria</ui5-li>
 		<ui5-li id="country3" >China</ui5-li>
 	</ui5-list>
@@ -280,6 +315,35 @@
 			var selectedItems = event.detail.selectedItems;
 			lblSelectionChange2.innerHTML = "Event] selectionChange :: " + selectedItems.map(item => item.id).join("/");
 		});
+
+		function template(i) {
+			var li = document.createElement("ui5-li");
+			li.textContent = "Title";
+			li.description = "my description goes here " + i;
+			li.info = "Available";
+			return li;
+		}
+
+		function insertItems(el, num) {
+			for(var i= 0; i<num; i++) {
+				el.appendChild(template(i));
+			}
+		}
+
+		var itemsLoadedTotal = 0;
+		var itemsToLoad = 5;
+		var loadedCount = 0;
+		infiniteScrollEx.addEventListener("loadMore", (e) => {
+			var el = infiniteScrollEx;
+			el.busy = true;
+
+			setTimeout(() => {
+				insertItems(el, 3);
+				el.busy = false;
+				result.textContent = (++loadedCount) + " times " + (itemsLoadedTotal += itemsToLoad);
+			}, 200);
+		});
+
 	</script>
 </body>
 </html>

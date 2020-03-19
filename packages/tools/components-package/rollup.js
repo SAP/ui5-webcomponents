@@ -1,6 +1,4 @@
 const babel = require("rollup-plugin-babel");
-const mkdirp = require("mkdirp");
-const path = require("path");
 const process = require("process");
 const resolve = require("rollup-plugin-node-resolve");
 const url = require("rollup-plugin-url");
@@ -12,25 +10,15 @@ const os = require("os");
 const fs = require("fs");
 
 const packageName = JSON.parse(fs.readFileSync("./package.json")).name;
-const DIST = path.normalize("dist");
-const DIST_PLAYGROUND = path.normalize("dist/resources/");
 const DEPLOY_PUBLIC_PATH = process.env.DEPLOY_PUBLIC_PATH || "";
 
 function ui5DevImportCheckerPlugin() {
 	return {
 		name: "ui5-dev-import-checker-plugin",
-
 		transform(code, file) {
-			if (/TemplateHelper/.test(file)) {
-				return;
-			}
 			const re = new RegExp(`^import.*"${packageName}/`);
 			if (re.test(code)) {
 				throw new Error(`illegal import in ${file}`);
-			}
-
-			if (/import.*"@ui5\/webcomponents-core\/dist\/sap\/ui\/core\/IconPool/.test(code)) {
-				throw new Error(`You need to import '@ui5/webcomponents-base/dist/IconPool' instead of IconPool ${file}`);
 			}
 		}
 	};
@@ -65,7 +53,7 @@ const getPlugins = ({ transpile }) => {
 		plugins.push(babel({
 			presets: ["@babel/preset-env"],
 			exclude: "node_modules/**",
-			sourcemap: true,	// turn it on when we transition off from the less plugin
+			sourcemap: true,
 		}));
 	}
 
@@ -137,17 +125,10 @@ const getES5Config = () => {
 	}];
 };
 
-let config = [];
-
-config = config.concat(getES6Config());
+let config = getES6Config();
 
 if (process.env.ES5_BUILD) {
 	config = config.concat(getES5Config());
-} else {
-	// Create the dist folder in advance to execute watch:js and ui5 serve in parallel,
-	// otherwise ui5:serve would fail with: 'Could not find source directory'.
-	mkdirp.sync(DIST);
-	mkdirp.sync(DIST_PLAYGROUND);
 }
 
 module.exports = config;

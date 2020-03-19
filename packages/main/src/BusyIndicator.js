@@ -33,7 +33,7 @@ const metadata = {
 		/**
 		 * Defines the size of the <code>ui5-busyindicator</code>.
 		 * <br><br>
-		 * <b>Note:</b> Available options are "Small", "Medium" and "Large"
+		 * <b>Note:</b> Available options are "Small", "Medium", and "Large".
 		 *
 		 * @type {BusyIndicatorSize}
 		 * @defaultvalue "Large"
@@ -62,7 +62,7 @@ const metadata = {
  *  triggered in parallel.
  *
  * <h3>Usage</h3>
- * For the <code>ui5-busyindicator</code> you can define the size of the indicator as well
+ * For the <code>ui5-busyindicator</code> you can define the size of the indicator, as well
  * as whether it is shown or hidden. In order to hide it, use the html attribute <code>hidden</code> or <code>display: none;</code>
  *
  * <h3>ES6 Module Import</h3>
@@ -100,10 +100,8 @@ class BusyIndicator extends UI5Element {
 		return BusyIndicatorTemplate;
 	}
 
-	static async define(...params) {
+	static async onDefine() {
 		await fetchI18nBundle("@ui5/webcomponents");
-
-		super.define(...params);
 	}
 
 	get ariaTitle() {

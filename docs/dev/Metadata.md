@@ -38,7 +38,6 @@ Properties of type `Object`, properties with `multiple` set to`true` and propert
 		},
 		"settings": {
 			"type": Object,
-			"deepEqual": true,
 		},
 		"nums": {
 			"type": Integer,
@@ -46,7 +45,6 @@ Properties of type `Object`, properties with `multiple` set to`true` and propert
 		},
 		"animationDuration": {
 			"type": Integer,
-			"nonVisual": true,
 		},
 		"width": {
 			"type": CSSSize,
@@ -64,7 +62,6 @@ Setting | Type | Default | Description
 `defaultValue` | Any valid value for the type | undefined | Default value of the property. Cannot be set for type "Boolean". Booleans are always false by default in HTML
 `multiple` | Boolean | false | Indicates whether the property represents a single value or is an array of values of the given type
 `noAttribute` | Boolean | false | No attribute equivalent will be created for that property. Always false for properties of type Object.
-`deepEqual` | Boolean | false | Deep equal object comparison, rather than reference comparison, will be used to determine if the value of the property changed.
 
 The `type` setting is required.
 
@@ -112,10 +109,10 @@ Defines the `slots` that will be provided by this UI5 Web Component.
 
 Setting | Type | Default | Description
 --------|------|--------|-----------
-type    | `HTMLElement` or `Node` | N/A | The type of the children that can go into that slot 
-individualSlots | `Boolean` | false | If set to `true`, each child will have its own slot, allowing you to arrange/wrap the children arbitrarily.
-propertyName | `String` | N/A | Allows to set the name of the property on the Web Component, where the children belonging to this slot will be stored.
-listenFor | `Object` | N/A | **Experimental, do not use.** If set, whenever the children, belonging to this slot have their properties changed, the Web Component will be invalidated. 
+`type`    | `HTMLElement` or `Node` | N/A | The type of the children that can go into that slot 
+`individualSlots` | `Boolean` | false | If set to `true`, each child will have its own slot, allowing you to arrange/wrap the children arbitrarily.
+`propertyName` | `String` | N/A | Allows to set the name of the property on the Web Component, where the children belonging to this slot will be stored.
+`listenFor` | `Object` | N/A | **Experimental, do not use.** If set, whenever the children, belonging to this slot have their properties changed, the Web Component will be invalidated. 
 
 The `type` setting is required.
 
@@ -133,3 +130,32 @@ Notes:
  -----|-------------
  Node | Accepts both Text nodes and HTML Elements
  HTMLElement | Accepts HTML Elements only
+
+## Managed slots
+
+Determines whether the framework should manage the slots of this UI5 Web Component. 
+
+This setting is useful for UI5 Web Components that dont' just slot children, but additionally base their own 
+rendering on the presence/absence/type of children.
+
+```json
+{
+	"managedSlots": true
+}
+```
+
+When `managedSlots` is set to `true`:
+ - The framework will invalidate this UI5 Web Component, whenever its children are added/removed/changed.
+ - If any of this UI5 Web Component's children are custom elements, the framework will await until they are all
+ defined and upgraded, before rendering the component for the first time.
+ - The framework will create properties for each slot on this UI5 Web Component's instances for easier access
+ to the slotted children. For example, if there are `header`, `content` and `footer` slots, there will be
+ respectively `header`, `content` and `footer` properties of type `Array` holding the slotted children for each slot.
+ *Note:* You can use the `propertyName` metadata entity, described above, to modify these. 
+ 
+ In essence, set this to `true` if the UI5 Web Component you're developing should be aware of its children
+ for the purposes of its own state management and rendering (contrary to just displaying them).
+ 
+ An example of a component that would benefit from `managedSlots` is a Tab Container that monitors its children (Tabs)
+ in order to display a link on its Tab Strip for each Tab child. Therefore it would need to be invalidated whenever
+ Tabs are added/removed, in order to update its own state and visualization.

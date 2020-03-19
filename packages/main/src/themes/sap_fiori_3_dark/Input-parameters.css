@@ -2,6 +2,6 @@
 
 :root {
 	--_ui5_input_height: 2.25rem;
-	--sap_wc_input_disabled_opacity: 0.4;
+	--_ui5_input_disabled_opacity: 0.4;
 	--_ui5_input_wrapper_border_radius: 0.125rem;
 }

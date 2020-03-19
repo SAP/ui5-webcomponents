@@ -11,8 +11,8 @@
 .ui5-dp-weekname,
 .ui5-dp-dayname,
 .ui5-dp-item {
-	width: 2.25rem;
-	height: 2.875rem;
+	width: var(--_ui5_day_picker_item_width);
+	height: var(--_ui5_day_picker_item_height);
 	margin-top: var(--_ui5_daypicker_item_margin);
 	margin-right: var(--_ui5_daypicker_item_margin);
 	font-family: var(--sapFontFamily);
@@ -25,6 +25,7 @@
 
 .ui5-dp-content {
 	display: flex;
+	flex-basis: 87.5%;
 	flex-direction: column;
 	font-family: var(--sapFontFamily);
 }
@@ -36,6 +37,7 @@
 
 .ui5-dp-weeknumber-container {
 	padding-top: var(--_ui5_daypicker_weeknumbers_container_padding_top);
+	flex-basis: 12.5%;
 }
 
 .ui5-dp-weekname,
@@ -43,6 +45,7 @@
 .ui5-dp-weekname-container,
 .ui5-dp-item {
 	display: flex;
+	flex-grow: 1;
 	justify-content: center;
 	align-items: center;
 	font-size: var(--sapFontSmallSize);
@@ -83,6 +86,12 @@
 .ui5-dp-item.ui5-dp-item--weeekend {
 	background: var(--_ui5_daypicker_item_weekend_background_color);
 }
+
+.ui5-dp-item.ui5-dp-item--disabled {
+	pointer-events: none;
+	opacity: 0.5;
+}
+
 
 .ui5-dp-item.ui5-dp-item--weeekend:hover {
 	background: var(--_ui5_daypicker_item_weekend_hover_background_color);
@@ -150,21 +159,5 @@
 }
 
 .ui5-dp-emptyweek {
-	height: 3rem;
-}
-
-/* Compact size */
-:host([data-ui5-compact-size]) .ui5-dp-weeknumber-container {
-	padding-top: 2rem;
-}
-
-:host([data-ui5-compact-size]) .ui5-dp-weekname,
-:host([data-ui5-compact-size]) .ui5-dp-dayname,
-:host([data-ui5-compact-size]) .ui5-dp-item {
-	width: 2rem;
-	height: 2rem;
-}
-
-:host([data-ui5-compact-size]) .ui5-dp-emptyweek {
-	height: 2.125rem;
+	height: var(--_ui5_day_picker_empty_height);
 }

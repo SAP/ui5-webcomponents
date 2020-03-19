@@ -5,7 +5,8 @@
 }
 
 :host {
-	width: 100%;
+	width: var(--_ui5_input_width);
+	min-width: var(--_ui5_input_width);
 	height: var(--_ui5_input_height);
 	color: var(--sapField_TextColor);
 	font-size: var(--sapFontMediumSize);
@@ -14,14 +15,6 @@
 	border: 1px solid var(--sapField_BorderColor);
 	border-radius: var(--_ui5_input_wrapper_border_radius);
 	box-sizing: border-box;
-}
-
-:host([data-ui5-compact-size]) {
-	height: var(--_ui5_input_compact_height);
-}
-
-:host([data-ui5-compact-size]) [inner-input] {
-	padding: 0 0.5rem;
 }
 
 :host([focused]) {
@@ -45,7 +38,7 @@
 }
 
 :host([disabled]) {
-	opacity: var(--sap_wc_input_disabled_opacity);
+	opacity: var(--_ui5_input_disabled_opacity);
 	cursor: default;
 	pointer-events: none;
 	background: var(--sapField_ReadOnly_Background);
@@ -62,7 +55,7 @@
 	-webkit-appearance: none;
 	-moz-appearance: textfield;
 	line-height: normal;
-	padding: 0 0.75rem;
+	padding: var(--_ui5_input_inner_padding);
 	box-sizing: border-box;
 	min-width: 3rem;
 	text-overflow: ellipsis;
@@ -70,6 +63,12 @@
 	outline: none;
 	font-size: inherit;
 	font-family: inherit;
+}
+
+[inner-input]::selection,
+[inner-input]::-moz-selection {
+	background: var(--sapSelected);
+	color: var(--sapContent_contrastTextColor);
 }
 
 /* Input placeholder */
@@ -123,7 +122,7 @@
 	background: var(--sapField_ReadOnly_Background);
 }
 
-:host(:not([value-state]):hover) {
+:host(:not([value-state]):not([readonly]):hover) {
 	background-color: var(--sapField_Hover_Background);
 	border: 1px solid var(--sapField_Hover_BorderColor);
 }
@@ -164,6 +163,12 @@
 :host([value-state="Success"]:not([readonly])) {
 	background-color: var(--sapField_SuccessBackground);
 	border-color: var(--sapField_SuccessColor);
+	border-width: 1px;
+}
+
+:host([value-state="Information"]:not([readonly])) {
+	background-color: var(--sapField_InformationBackground);
+	border-color: var(--sapField_InformationColor);
 }
 
 /* Remove IE's defaut clear button */
@@ -175,17 +180,11 @@
 /* Input Icon */
 
 .ui5-input-icon-root {
-	min-width: var(--sap_wc_input_icon_min_width);
-	width: var(--sap_wc_input_icon_min_width);
+	min-width: var(--_ui5_input_icon_min_width);
 	height: 100%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-}
-
-:host([data-ui5-compact-size]) .ui5-input-icon-root {
-	min-width: var(--sap_wc_input_compact_min_width);
-	width: var(--sap_wc_input_compact_min_width);
 }
 
 /* TODO: Remove this after parser is fixed
@@ -194,8 +193,4 @@
 */
 ::slotted(ui5-icon[slot="icon"]) {
 	padding: var(--_ui5_input_icon_padding);
-}
-
-:host([data-ui5-compact-size]) ::slotted(ui5-icon[slot="icon"]) {
-	padding: .25rem .5rem;
 }

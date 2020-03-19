@@ -14,17 +14,21 @@
     "clean": "nps clean",
     "build": "nps build",
     "start": "nps start",
-    "verify": "node ./lib/verify-vars/index.js"
+    "verify": "node ./lib/verify-vars/index.js",
+    "prepublishOnly": "npm run clean && npm run build"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/SAP/ui5-webcomponents.git",
     "directory": "packages/theme-base"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@ui5/webcomponents-base": "0.18.0"
+  },
   "devDependencies": {
     "@ui5/webcomponents-tools": "1.0.0-rc.5",
     "chokidar-cli": "^2.0.0",
+    "copy-and-watch": "^0.1.4",
     "cssnano": "^4.1.10",
     "less": "^3.10.3",
     "npm-run-all": "^4.1.3",

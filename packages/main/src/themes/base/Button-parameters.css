@@ -8,7 +8,7 @@
 	--_ui5_button_compact_padding: 0.4375rem;
 	--_ui5_button_base_icon_only_padding: 0.5625rem;
 	--_ui5_button_base_icon_margin: 0.563rem;
-	--_ui5_button_base_icon_only_font_size: 1.375rem;
+	--_ui5_button_icon_font_size: 1.375rem;
 	--_ui5_button_outline: 1px dotted var(--sapContent_FocusColor);
 	--_ui5_button_outline_offset: calc(-1 * .1875rem);
 	--_ui5_button_emphasized_font_weight: normal;

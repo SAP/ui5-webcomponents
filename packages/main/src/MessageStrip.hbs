@@ -5,7 +5,13 @@
 	aria-labelledby="{{_id}}">
 
 	{{#unless noIcon}}
-		<ui5-icon class="ui5-messagestrip-icon" name="{{messageStripIcon}}"></ui5-icon>
+        <div  class="ui5-messagestrip-icon">
+            {{#if iconProvided}}
+                <slot name="icon"></slot>
+            {{else}}
+                <ui5-icon name="{{standardIconName}}"></ui5-icon>
+            {{/if}}
+        </div>
 	{{/unless}}
 
 	<span class="ui5-hidden-text">{{hiddenText}}</span>
