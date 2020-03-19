@@ -57,10 +57,15 @@
 		[...Array(1000)].map(item => {
 			const row = document.createElement("ui5-table-row");
 
-			[...Array(5)].map(_ => {
+			[1,2,3,4,5].map(_ => {
 				const cell = document.createElement("ui5-table-cell");
 				const span = document.createElement("span");
-				span.innerText = "Hello World!";
+				if (_ !== 1) {
+					span.innerText = "Hello World!";
+				} else {
+					const datepicker = document.createElement("ui5-datepicker");
+					span.appendChild(datepicker);
+				}
 
 				cell.appendChild(span);
 				row.appendChild(cell);
