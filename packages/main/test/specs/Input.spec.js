@@ -57,7 +57,7 @@ describe("Input general interaction", () => {
 
 	it("Should open suggestions popover when focused", () => {
 		const input = $("#myInput2");
-		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#myInput2")
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#myInput2");
 		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 
 		// focus the input field which will display the suggestions
@@ -175,6 +175,7 @@ describe("Input general interaction", () => {
 		assert.strictEqual(suggestionsInput.getValue(), "Cozy", "First item has been selected");
 		assert.strictEqual(inputResult.getValue(), "1", "suggestionItemSelected event called once");
 
+		suggestionsInput.keys("c"); // to open the suggestions pop up once again 
 		suggestionsInput.keys("ArrowUp");
 
 		assert.strictEqual(suggestionsInput.getValue(), "Condensed", "First item has been selected");

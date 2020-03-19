@@ -316,7 +316,7 @@ class TabContainer extends UI5Element {
 
 	_onOverflowListItemSelect(event) {
 		this._onItemSelect(event.detail.item);
-		this._respPopover.close();
+		this.responsivePopover.close();
 		this.shadowRoot.querySelector(`#${event.detail.item.id}`).focus();
 	}
 
@@ -354,9 +354,10 @@ class TabContainer extends UI5Element {
 		});
 	}
 
-	_onOverflowButtonClick(event) {
+	async _onOverflowButtonClick(event) {
+		this.responsivePopover = await this._respPopover();
 		this.updateStaticAreaItemContentDensity();
-		this._respPopover.open(event.target);
+		this.responsivePopover.open(this.getDomRef().querySelector(".ui-tc__overflowButton"));
 	}
 
 	_onHeaderBackArrowClick() {
@@ -374,7 +375,7 @@ class TabContainer extends UI5Element {
 	}
 
 	_closeRespPopover() {
-		this._respPopover.close();
+		this.responsivePopover.close();
 	}
 
 	_updateScrolling() {
@@ -397,8 +398,9 @@ class TabContainer extends UI5Element {
 		return this.shadowRoot.querySelector(`#${this._id}-headerScrollContainer`);
 	}
 
-	get _respPopover() {
-		return this.getStaticAreaItemDomRef().querySelector(`#${this._id}-overflowMenu`);
+	async _respPopover() {
+		const staticAreaItem = await this.getStaticAreaItemDomRef();
+		return staticAreaItem.querySelector(`#${this._id}-overflowMenu`);
 	}
 
 	get classes() {
