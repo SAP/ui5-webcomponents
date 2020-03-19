@@ -1,6 +1,7 @@
 const registry = new Map();
 const iconCollectionPromises = new Map();
 
+const ICON_NOT_FOUND = "ICON_NOT_FOUND";
 const DEFAULT_COLLECTION = "SAP-icons";
 
 const calcKey = (name, collection) => {
@@ -27,10 +28,15 @@ const getIconData = async (name, collection = DEFAULT_COLLECTION) => {
 	const key = calcKey(name, collection);
 
 	if (!iconCollectionPromises.has(collection)) {
-		iconCollectionPromises.set(collection, Promise.reject());
+		iconCollectionPromises.set(collection, Promise.resolve(ICON_NOT_FOUND));
 	}
 
-	await iconCollectionPromises.get(collection);
+	const iconData = await iconCollectionPromises.get(collection);
+
+	if (iconData === ICON_NOT_FOUND) {
+		return iconData;
+	}
+
 	return registry.get(key);
 };
 

@@ -184,9 +184,20 @@
 
 <ui5-shellbar>
 	<ui5-input id="mySearch" slot="searchField" show-suggestions>
-		<ui5-li>1</ui5-li>
-		<ui5-li>2</ui5-li>
-		<ui5-li>3</ui5-li>
+		<ui5-li icon="world" description="travel the world" info="explore" info-state="Success">1</ui5-li>
+		<ui5-li icon="world" description="travel the world" info="explore" info-state="Success">2</ui5-li>
+		<ui5-li icon="world" description="travel the world" info="explore" info-state="Success">3</ui5-li>
+		<ui5-li icon="world" description="travel the world" info="explore" info-state="Success">4</ui5-li>
+		<ui5-li icon="world" description="travel the world" info="explore" info-state="Success">5</ui5-li>
+		<ui5-li icon="world" description="travel the world" info="explore" info-state="Success">6</ui5-li>
+		<ui5-li icon="world" description="travel the world" info="explore" info-state="Success">7</ui5-li>
+		<ui5-li icon="world" description="travel the world" info="explore" info-state="Success">8</ui5-li>
+		<ui5-li icon="world" description="travel the world" info="explore" info-state="Success">9</ui5-li>
+		<ui5-li icon="world" description="travel the world" info="explore" info-state="Success">10</ui5-li>
+		<ui5-li icon="world" description="travel the world" info="explore" info-state="Success">11</ui5-li>
+		<ui5-li icon="world" description="travel the world" info="explore" info-state="Success">12</ui5-li>
+		<ui5-li icon="world" description="travel the world" info="explore" info-state="Success">13</ui5-li>
+		<ui5-li icon="world" description="travel the world" info="explore" info-state="Success">14</ui5-li>
 	</ui5-input>
 </ui5-shellbar>
 
@@ -225,7 +236,8 @@
 	});
 
 	["disc", "call"].forEach(function(id) {
-		window[id].addEventListener("ui5-itemClick", function(event) {
+        var currenItem = window[id][0] || window[id];
+		currenItem.addEventListener("ui5-itemClick", function(event) {
 			event.preventDefault();
 			window["press-input"].value = event.target.id;
 			window["custom-item-popover"].openBy(event.detail.targetRef);
