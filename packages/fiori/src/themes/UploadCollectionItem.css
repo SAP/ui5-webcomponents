@@ -1,0 +1,46 @@
+/* .ui5-li-content {
+	display: block;
+} */
+/* 
+@import "../../../main/src/themes/ListItemBase.css";
+@import "../../../main/src/themes/ListItem.css"; */
+/* @import "../../../main/src/themes/CustomListItem.css"; */
+
+:host {
+	height: auto;
+}
+
+:host(:not([hidden])) {
+	display: block;
+}
+
+.ui5-uci-img, .ui5-uci-icon {
+	width: 3rem;
+	height: 3rem;
+	margin-right: 0.75rem;
+}
+
+.ui5-uci-icon {
+	font-size: 2.5rem;
+}
+
+:host([actionable]) .ui5-uci-icon {
+	color: var(--sapContent_IconColor);
+}
+
+.ui5-li-root.ui5-uci-root {
+	padding: 1rem;
+}
+
+.ui5-uci-content-text-container {
+	flex: 1;
+}
+
+.ui5-uci-content-buttons-container {
+	padding-left: 1rem;
+	pointer-events: all;
+}
+
+.ui5-uci-content-buttons-container ui5-button {
+	margin-right: 0.125rem;
+}

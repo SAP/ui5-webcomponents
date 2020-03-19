@@ -1,0 +1,90 @@
+:host {
+	display: block;
+}
+
+.uc-root {
+	position: relative;
+	height: 100%;
+}
+
+.uc-no-files {
+	position: absolute;
+	top: 3rem;
+	right: 0rem;
+	left: 0rem;
+	bottom: 0rem;
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 1rem;
+	background-color: var(--sapGroup_ContentBackground);
+}
+
+.uc-no-files .icon-container {
+	height: 8rem;
+}
+
+.uc-no-files .icon-container ui5-icon {
+	font-size: 6rem;
+	width: 6rem;
+	height: 6rem;
+	color: rgba(106,109,112,0.5);
+	/* fade(var(--sapContent_NonInteractiveIconColor), 50); */
+}
+
+.uc-no-files ui5-title {
+	margin: 1rem 0;
+}
+
+.uc-no-files .subtitle {
+	margin: 1rem 0 2rem;
+}
+
+/* Drag and Drop */
+
+.uc-dnd-overlay {
+	position: absolute;
+	top: 3rem;
+	right: 0rem;
+	left: 0rem;
+	bottom: 0rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.uc-drag-overlay {
+	/* background-color: fade(var(--sapGroup_ContentBackground), 80); */
+	background-color: rgba(255,255,255,0.8);
+	border: 0.125rem dashed var(--sapContent_ForegroundBorderColor);
+}
+
+.uc-drop-overlay::after {
+	content: "";
+	position: absolute;
+	top: 0;
+	right: 0rem;
+	left: 0rem;
+	bottom: 0rem;
+	background-color: rgba(8,84,160,0.05);
+	/* background-color: fade(var(--sapActiveColor), 5); */
+	border: 0.125rem solid var(--sapActiveColor);
+}
+
+.uc-dnd-overlay ui5-icon {
+	width: 4rem;
+	height: 4rem;
+	margin-bottom: 1rem;
+}
+
+.uc-drop-overlay ui5-icon,
+.uc-drop-overlay ui5-text {
+	color: var(--sapActiveColor);
+}
+
+.uc-drop-overlay ui5-text {
+	font-size: var(--sapMFontHeader4Size)
+}

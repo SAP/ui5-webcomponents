@@ -1,0 +1,28 @@
+
+<div class="uc-root">
+	<ui5-list
+		mode="{{mode}}"
+		class="uc-root"
+		@ui5-itemDelete="{{_onItemDelete}}"
+	>
+		<div slot="header" class="ui5-uc-header">
+			<slot name="header"></slot>
+		</div>
+		<slot></slot>
+	</ui5-list>
+
+	{{#if _showNoData}}
+		<div class="uc-no-files">
+			<div class="icon-container">
+				<ui5-icon name="attachment"></ui5-icon>
+			</div>
+			<ui5-title level="H2">No Files Found.</ui5-title>
+			<ui5-label class="subtitle">Drop files to upload, or use 'Upload' button</ui5-label>
+		</div>
+	{{else if _showDndOverlay}}
+		<div class="{{classes.dndOverlay}}">
+			<ui5-icon name="upload-to-cloud" class="drag-overlay-icon"></ui5-icon>
+			<ui5-text>{{_dndOverlayText}}</ui5-title>
+		</div>
+	{{/if}}
+</div>

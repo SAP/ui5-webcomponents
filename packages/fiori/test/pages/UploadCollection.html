@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>UploadCollection</title>
+
+	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+	<script nomodule src="../../resources/bundle.es5.js"></script>
+
+	<style>
+		.header {
+			display: flex;
+			align-items: center;
+			overflow: hidden;
+		}
+
+		.header * {
+			margin: 4px;
+		}
+
+		.spacer {
+			flex: 1;
+		}
+
+		.description {
+			white-space: pre-wrap;
+		}
+
+		ui5-upload-collection {
+			margin: 1rem;
+		}
+	</style>
+	<script src="./uploadCollectionDemoHelper.js" defer></script>
+</head>
+<body style="background-color: var(--sapBackgroundColor);">
+	<div class="header">
+		<ui5-label>Mode:</ui5-label>
+		<ui5-select id="changeMode">
+			<ui5-option>None</ui5-option>
+			<ui5-option>Delete</ui5-option>
+			<ui5-option>MultiSelect</ui5-option>
+			<ui5-option>SingleSelect</ui5-option>
+		</ui5-select>
+		<ui5-checkbox id="cb1" text="Items editable"></ui5-checkbox>
+	</div>
+
+	<ui5-upload-collection id="uploadCollection">
+		<div slot="header" class="header">
+			<ui5-title>Upload Files</ui5-title>
+			<ui5-button id="startUploading">Start Uploading</ui5-button>
+			<div class="spacer"></div>
+			<ui5-file-uploader id="fileUploader" hide-input multiple>
+				<ui5-button icon="add" design="Transparent"></ui5-button>
+			</ui5-file-uploader>
+		</div>
+		<ui5-upload-collection-item
+			file-name="Laptop.jpg"
+			image="./img/HT-1000.jpg"
+			delete-disabled
+		>
+		<div>
+			<ui5-label class="description" wrap>You cannot delete this file.</ui5-label>
+		</div>
+		</ui5-upload-collection-item>
+		<ui5-upload-collection-item
+			file-name="report.pdf"
+			icon="document-text"
+		>
+			<ui5-label class="description" wrap>Some description</ui5-label>
+		</ui5-upload-collection-item>
+	</ui5-upload-collection>
+
+	<ui5-upload-collection id="uploadCollectionDnD" style="height: 30rem;">
+		<div class="header" slot="header">
+			<ui5-title>Attachments (0)</ui5-title>
+			<div class="spacer"></div>
+			<ui5-file-uploader id="fileUploader" hide-input multiple>
+				<ui5-button>Upload</ui5-button>
+			</ui5-file-uploader>
+		</div>
+	</ui5-upload-collection>
+</body>
+</html>
