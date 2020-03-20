@@ -8,6 +8,7 @@
 	justify-content: space-between;
 	flex-direction: column;
 	display: inline-flex;
+	width: var(--_ui5_wheelslider_item_width);
 }
 
 .ui5-wheelslider-root .ui5-wheelslider-label {
@@ -15,7 +16,7 @@
 	height: 2rem;
 	line-height: 2rem;
 	width: var(--_ui5_wheelslider_item_width);
-	font-size: var(--_ui5_wheelslider_label_text_size);
+	font-size: var(--sapFontSmallSize);
 	color: var(--_ui5_wheelslider_label_text_color);
 	text-align: center;
 	vertical-align: middle;
