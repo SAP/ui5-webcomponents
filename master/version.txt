@@ -1,5 +1,5 @@
-commit 19445d1cbbf4edbf41de55b105855959fd8cd896
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Fri Mar 20 12:16:30 2020 +0200
+commit 6202ee98d336aecb9a72a6b846fef2e7aba4eeef
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Fri Mar 20 18:06:06 2020 +0200
 
-    fix(ui5-carousel): add missing import (#1321)
+    chore: remove component derived files (#1324)
