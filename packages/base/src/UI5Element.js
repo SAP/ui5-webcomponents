@@ -114,9 +114,6 @@ class UI5Element extends HTMLElement {
 
 			RenderScheduler.renderAsSoonAsPossible(this);
 			await this._waitForDomRef();
-			if (this.shadowRoot.children.length === 0) {
-				throw new Error(`Remove this after testing`);
-			}
 
 			if (typeof this.onEnterDOM === "function") {
 				this.onEnterDOM();
