@@ -91,7 +91,7 @@ class RenderScheduler {
 	/**
 	 * return a promise that will be resolved once all invalidated web components are rendered
 	 */
-	static whenDOMUpdated() {
+	static whenAllRendered() {
 		if (renderTaskPromise) {
 			return renderTaskPromise;
 		}
@@ -111,7 +111,7 @@ class RenderScheduler {
 
 	static async whenFinished() {
 		await whenCustomElementsDefined();
-		await RenderScheduler.whenDOMUpdated();
+		await RenderScheduler.whenAllRendered();
 	}
 
 	static _resolveTaskPromise() {
