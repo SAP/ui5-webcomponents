@@ -30,7 +30,7 @@ const metadata = {
 			type: ListMode,
 			defaultValue: ListMode.None,
 		},
-		withDnd: {
+		noDnd: {
 			type: Boolean,
 		},
 		_dndOverlayMode: {
@@ -118,19 +118,19 @@ class UploadCollection extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		if (this.withDnd) {
+		if (!this.noDnd) {
 			this._removeDragAndDropListeners();
 		}
 	}
 
 	onAfterRendering() {
-		if (this.withDnd) {
+		if (!this.noDnd) {
 			this._addDragAndDropListeners();
 		}
 	}
 
 	onExitDOM() {
-		if (this.withDnd) {
+		if (!this.noDnd) {
 			this._removeDragAndDropListeners();
 		}
 	}
