@@ -1,11 +1,3 @@
-/* .ui5-li-content {
-	display: block;
-} */
-/* 
-@import "../../../main/src/themes/ListItemBase.css";
-@import "../../../main/src/themes/ListItem.css"; */
-/* @import "../../../main/src/themes/CustomListItem.css"; */
-
 :host {
 	height: auto;
 }

@@ -2,9 +2,23 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import UploadCollectionTemplate from "./generated/templates/UploadCollectionTemplate.lit.js";
+import ListMode from "@ui5/webcomponents/dist/types/ListMode.js";
 
 // Styles
 import UploadCollectionCss from "./generated/themes/UploadCollection.css.js";
+
+
+const DndOverlayMode = {
+	None: "None",
+	Drag: "Drag",
+	Drop: "Drop"
+};
+
+const ifDraggingFiles = cb => event => {
+	if (event.dataTransfer.types.includes("Files")) {
+		cb(event);
+	}
+}
 
 /**
  * @public
@@ -13,13 +27,15 @@ const metadata = {
 	tag: "ui5-upload-collection",
 	properties: /** @lends sap.ui.webcomponents.fiori.UploadCollection.prototype */ {
 		mode: {
-			type: String
+			type: ListMode,
+			defaultValue: ListMode.None,
 		},
-		_showDndOverlay: {
-			type: Boolean
+		withDnd: {
+			type: Boolean,
 		},
-		_showDropOverlay: {
-			type: Boolean
+		_dndOverlayMode: {
+			type: String,
+			defaultValue: DndOverlayMode.None
 		},
 	},
 	managedSlots: true,
@@ -40,12 +56,6 @@ const metadata = {
 		},
 	},
 };
-
-const ifDraggingFiles = cb => event => {
-	if (event.dataTransfer.types.includes("Files")) {
-		cb(event);
-	}
-}
 
 /**
  * @class
@@ -92,6 +102,7 @@ class UploadCollection extends UI5Element {
 
 	constructor() {
 		super();
+
 		this._listeners = {
 			dragenter: ifDraggingFiles(this._ondragenter.bind(this)),
 			dragleave: ifDraggingFiles(this._ondragleave.bind(this)),
@@ -107,15 +118,21 @@ class UploadCollection extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		this._removeDragAndDropListeners();
+		if (this.withDnd) {
+			this._removeDragAndDropListeners();
+		}
 	}
 
 	onAfterRendering() {
-		this._addDragAndDropListeners();
+		if (this.withDnd) {
+			this._addDragAndDropListeners();
+		}
 	}
 
 	onExitDOM() {
-		this._removeDragAndDropListeners();
+		if (this.withDnd) {
+			this._removeDragAndDropListeners();
+		}
 	}
 	
 	_onItemDelete(event) {
@@ -148,13 +165,12 @@ class UploadCollection extends UI5Element {
 
 	_ondragenter(event) {
 		if (event.target === this._dndOverlay) {
-			this._showDndOverlay = true;
-			this._showDropOverlay = true;
+			this._dndOverlayMode = DndOverlayMode.Drop;
 		}
 	}
 
 	_ondrop(event) {
-		this._showDndOverlay = false;
+		this._dndOverlayMode = DndOverlayMode.None;
 	}
 
 	_ondragover(event) {
@@ -163,31 +179,34 @@ class UploadCollection extends UI5Element {
 
 	_ondragleave(event) {
 		if (event.target === this._dndOverlay) {
-			this._showDropOverlay = false;
+			this._dndOverlayMode = DndOverlayMode.Drag;
 		}
 	}
 
 	_ondragenterBody(event) {
-		this._showDndOverlay = true;
 		this._lastDragEnter = event.target;
+
+		if (this._dndOverlayMode !== DndOverlayMode.Drop) {
+			this._dndOverlayMode = DndOverlayMode.Drag;
+		}
 	}
 
 	_ondragleaveBody(event) {
 		if (this._lastDragEnter === event.target) {
-			this._showDndOverlay = false;
+			this._dndOverlayMode = DndOverlayMode.None;
 		}
 	}
 
 	_ondropBody() {
-		this._showDndOverlay = false;
+		this._dndOverlayMode = "None";
 	}
 
 	get classes() {
 		return {
 			dndOverlay: {
 				"uc-dnd-overlay": true,
-				"uc-drag-overlay": !this._showDropOverlay,
-				"uc-drop-overlay": this._showDropOverlay
+				"uc-drag-overlay": this._dndOverlayMode === DndOverlayMode.Drag,
+				"uc-drop-overlay": this._dndOverlayMode === DndOverlayMode.Drop,
 			},
 		};
 	}
@@ -200,12 +219,17 @@ class UploadCollection extends UI5Element {
 		return this._root.querySelector(".uc-dnd-overlay")
 	}
 
+	get _showDndOverlay() {
+		return this._dndOverlayMode !== DndOverlayMode.None;
+	}
+
 	get _showNoData() {
 		return this.items.length === 0 && !this._showDndOverlay;
 	}
 
 	get _dndOverlayText() {
-		return this._showDropOverlay ? "Drop files to upload" : "Drag files here";
+		//TODO: make this translatable
+		return this._dndOverlayMode === DndOverlayMode.Drag ? "Drag files here" : "Drop files to upload";
 	}
 }
 
