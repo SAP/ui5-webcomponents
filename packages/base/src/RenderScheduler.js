@@ -1,15 +1,15 @@
 import RenderQueue from "./RenderQueue.js";
 import { getAllRegisteredTags } from "./CustomElementsRegistry.js";
 
+// Tells whether a render task is currently scheduled
+let renderTaskId;
+
 // Queue for invalidated web components
 const invalidatedWebComponents = new RenderQueue();
 
-// When set, a render task is running or pending
-let renderTaskId;
-
-// When set, someone wants to know when the current rendering cycle will have finished
 let renderTaskPromise,
-	renderTaskPromiseResolve;
+	renderTaskPromiseResolve,
+	taskResult;
 
 let mutationObserverTimer;
 
@@ -25,8 +25,13 @@ const whenCustomElementsDefined = () => {
 
 /**
  * Class that manages the rendering/re-rendering of web components
+ * This is always asynchronous
  */
 class RenderScheduler {
+	constructor() {
+		throw new Error("Static class");
+	}
+
 	/**
 	 * Queues a web component for re-rendering
 	 * @param webComponent
@@ -77,51 +82,49 @@ class RenderScheduler {
 				if (invalidatedWebComponents.getList().length === 0) {
 					RenderScheduler._resolveTaskPromise();
 				}
-			}, 500);
+			}, 200);
 		}
 
 		renderTaskId = undefined;
 	}
 
 	/**
-	 * Awaits until all component instances are rendered
-	 *
-	 * @public
-	 * @returns {Promise<void>}
+	 * return a promise that will be resolved once all invalidated web components are rendered
 	 */
-	static whenAllRendered() {
-		// If no task is scheduled or running, there's nothing to wait for
-		if (!renderTaskId) {
-			return Promise.resolve();
+	static whenDOMUpdated() {
+		if (renderTaskPromise) {
+			return renderTaskPromise;
 		}
 
-		// Otherwise, create a promise (if not already created) and wait for renderWebComponents to run/finish and resolve it
-		if (!renderTaskPromise) {
-			renderTaskPromise = new Promise(resolve => {
-				renderTaskPromiseResolve = resolve;
+		renderTaskPromise = new Promise(resolve => {
+			renderTaskPromiseResolve = resolve;
+			window.requestAnimationFrame(() => {
+				if (invalidatedWebComponents.getList().length === 0) {
+					renderTaskPromise = undefined;
+					resolve();
+				}
 			});
-		}
+		});
 
 		return renderTaskPromise;
 	}
 
+	static async whenFinished() {
+		await whenCustomElementsDefined();
+		await RenderScheduler.whenDOMUpdated();
+	}
+
 	static _resolveTaskPromise() {
+		if (invalidatedWebComponents.getList().length > 0) {
+			// More updates are pending. Resolve will be called again
+			return;
+		}
+
 		if (renderTaskPromiseResolve) {
-			renderTaskPromiseResolve();
+			renderTaskPromiseResolve.call(this, taskResult);
 			renderTaskPromiseResolve = undefined;
 			renderTaskPromise = undefined;
 		}
-	}
-
-	/**
-	 * Awaits until all imported components are defined and all their instances have been rendered
-	 *
-	 * @public
-	 * @returns {Promise<void>}
-	 */
-	static async whenFinished() {
-		await whenCustomElementsDefined();
-		await RenderScheduler.whenAllRendered();
 	}
 }
 
