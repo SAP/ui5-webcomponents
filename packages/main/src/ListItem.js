@@ -1,5 +1,6 @@
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/icons/decline.js";
+import "@ui5/webcomponents-icons/dist/icons/edit.js";
 import ListItemType from "./types/ListItemType.js";
 import ListMode from "./types/ListMode.js";
 import ListItemBase from "./ListItemBase.js";
@@ -71,7 +72,7 @@ const metadata = {
 	events: {
 		/**
 		 * Fired when the user clicks on the detail button when type is <code>Detail</code>.
-		 * 
+		 *
 		 * @event
 		 * @public
 		 */
@@ -227,7 +228,7 @@ class ListItem extends ListItemBase {
 	}
 
 	onDetailClick(event) {
-		this.fireEvent("detailClick", { item: this, selected: this.selected});
+		this.fireEvent("detailClick", { item: this, selected: this.selected });
 	}
 
 	fireItemPress(event) {
