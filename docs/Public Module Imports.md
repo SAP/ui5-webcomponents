@@ -208,7 +208,26 @@ Example:
 <script src="path/to/your/javasacript/app.js" type="module"></script>
 ```
 
-As shown in the example above, it's recommended to load the webcomponents polyfill first, and the web components next.
+As shown in the example above, it's recommended to load the Web Components Polyfill first, and the web components next.
+
+Finally, there is an alternative to the `IE11.js` import:
+
+```js
+import "@ui5/webcomponents-base/dist/features/browsersupport/IE11WithWebComponentsPolyfill.js";
+```
+
+that includes the Web Components Polyfill too, so you don't have to import it manually.
+
+This may be useful in certain use cases when your app has polyfills of its own and you need to guarantee the order of exectution.
+
+The three old browser support options are summarized below:
+
+| |`Edge.js` | `IE11.js` | `IE11WithWebComponentsPolyfill.js` |
+|---|----------|-----------|------------------------------------|
+|Browsers supported| Edge | Edge & IE11 | Edge & IE11 |
+|Includes Web Components Polyfill | No* | No* | Yes|
+
+`* You must include the Web Components Polyfill manually`
 
 <a name="theming"></a>
 ### 2. Theming
