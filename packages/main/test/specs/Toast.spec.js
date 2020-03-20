@@ -114,7 +114,7 @@ describe("Toast general interaction", () => {
 	it("tests minimum allowed duration", () => {
 		const toast = browser.$("#wcToastTE");
 
-		assert.strictEqual(toast.getProperty("duration"), 500,
+		assert.strictEqual(toast.getProperty("effectiveDuration"), 500,
 				"Duration property is forced to be 500, when -1 is passed for duration attribute.");
 	});
 });
