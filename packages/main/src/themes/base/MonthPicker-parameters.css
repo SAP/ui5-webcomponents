@@ -1,10 +1,4 @@
 :root {
-	--_ui5_monthpicker_item_background_color: var(--sapContent_ForegroundColor_Lighten7); /* lighten(var(--sapContent_ForegroundColor), 7); */
-	--_ui5_monthpicker_item_focus_background_color: var(--sapContent_ForegroundColor_Darken5); /* darken(var(--sapContent_ForegroundColor), 5); */
-	--_ui5_monthpicker_item_hover_background_color: var(--sapContent_ForegroundColor_Lighten7); /* lighten(var(--sapContent_ForegroundColor), 7); */
-	--_ui5_monthpicker_item_selected_hover: var(--sapContent_Selected_Background); /* darken(var(--sapSelectedColor), 10); */
-	--_ui5_monthpicker_item_selected_focus: var(--sapContent_Selected_Background); /* darken(var(--sapSelectedColor), 10); */
-
 	--_ui5_monthpicker_item_border_radius: 0;
 	--_ui5_monthpicker_item_border: none;
 	--_ui5_monthpicker_item_margin: 1px;

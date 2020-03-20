@@ -22,7 +22,7 @@
 	width: calc(33.333% - 0.125rem);
 	height: var(--_ui5_month_picker_item_height);
 	color: var(--sapTextColor);
-	background-color: var(--_ui5_monthpicker_item_background_color);
+	background-color: var(--sapLegend_WorkingBackground);
 	align-items: center;
 	justify-content: center;
 	margin: var(--_ui5_monthpicker_item_margin);
@@ -39,7 +39,7 @@
 }
 
 .ui5-mp-item:hover {
-	background-color: var(--_ui5_monthpicker_item_hover_background_color);
+	background-color: var(--sapList_Hover_Background);
 }
 
 .ui5-mp-item.ui5-mp-item--selected {
@@ -53,7 +53,7 @@
 }
 
 .ui5-mp-item.ui5-mp-item--selected:focus {
-	background-color: var(--_ui5_monthpicker_item_selected_focus);
+	background-color: var(--sapContent_Selected_Background);
 }
 
 .ui5-mp-item.ui5-mp-item--selected:focus::after {
@@ -61,11 +61,7 @@
 }
 
 .ui5-mp-item.ui5-mp-item--selected:hover {
-	background-color: var(--_ui5_monthpicker_item_selected_focus);
-}
-
-.ui5-mp-item:focus {
-	background-color: var(--_ui5_monthpicker_item_focus_background_color);
+	background-color: var(--sapContent_Selected_Background);
 }
 
 .ui5-mp-item:focus::after {
