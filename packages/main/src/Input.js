@@ -11,7 +11,8 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-// import Icon from "./Icon.js";
+import "@ui5/webcomponents-icons/dist/icons/decline.js";
+import "@ui5/webcomponents-icons/dist/icons/search.js";
 import InputType from "./types/InputType.js";
 // Templates
 import InputTemplate from "./generated/templates/InputTemplate.lit.js";
