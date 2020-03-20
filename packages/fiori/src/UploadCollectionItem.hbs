@@ -1,11 +1,3 @@
-{{!-- <ui5-li-custom
-	icon="{{icon}}"
-	image="{{image}}"
-	description="{{description}}"
->
-	{{fileName}}
-</ui5-li-custom> --}}
-
 {{>include "../../main/src/ListItem.hbs"}}
 
 {{#*inline "listItemContent"}}
@@ -18,11 +10,9 @@
 		{{else}}
 			<span class="ui5-uci-file-name">{{fileName}}</span>
 		{{/if}}
-		{{!-- TODO: make description property? --}}
 		<div class="ui5-uci-description">
 			<slot></slot>
 		</div>
-		{{!-- TODO: do we need attributes slot? --}}
 	</div>
 	<div class="ui5-uci-content-buttons-container">
 		{{#if editable}}

@@ -2,8 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import UploadCollectionItemTemplate from "./generated/templates/UploadCollectionItemTemplate.lit.js";
 import ListItem from "@ui5/webcomponents/dist/ListItem.js";
-import { getRegisteredNames, getIconDataSync } from "@ui5/webcomponents-base/dist/SVGIconRegistry.js";
-
 
 // Styles
 import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css.js";
@@ -28,7 +26,7 @@ const metadata = {
 		editable: {
 			type: Boolean,
 		},
-		deleteDisabled: {
+		noDelete: {
 			type: Boolean,
 		},
 		// TODO: better name + event for click
@@ -92,15 +90,6 @@ class UploadCollectionItem extends ListItem {
 		]);
 	}
 
-	// constructor() {
-	// 	super();
-	// }
-
-	onBeforeRendering() {
-		super.onBeforeRendering();
-		let iconData = getIconDataSync("help");
-	}
-
 	/**
 	 * @override
 	 */
@@ -114,7 +103,7 @@ class UploadCollectionItem extends ListItem {
 	 * @override
 	 */
 	get modeDelete() {
-		return !this.deleteDisabled && super.modeDelete;
+		return !this.noDelete && super.modeDelete;
 	}
 
 	_onEdit() {
