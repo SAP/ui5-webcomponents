@@ -1,5 +1,5 @@
-commit 6202ee98d336aecb9a72a6b846fef2e7aba4eeef
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Mar 20 18:06:06 2020 +0200
+commit ac8f8ce90968f54fc5de24080d5ab4bffd43a2a2
+Author: Petar Dimov <32839090+dimovpetar@users.noreply.github.com>
+Date:   Fri Mar 20 18:40:29 2020 +0200
 
-    chore: remove component derived files (#1324)
+    feat(ListItemType): add Detail type (#1323)
