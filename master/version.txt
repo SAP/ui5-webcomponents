@@ -1,5 +1,5 @@
-commit 7aac84ff7da8c2eb673d46f2ce2a8ee574d0f4ac
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Mar 20 09:47:19 2020 +0200
+commit 19445d1cbbf4edbf41de55b105855959fd8cd896
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Fri Mar 20 12:16:30 2020 +0200
 
-    chore: replace derived css params (#1317)
+    fix(ui5-carousel): add missing import (#1321)
