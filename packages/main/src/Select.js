@@ -13,6 +13,7 @@ import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-down.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import "@ui5/webcomponents-icons/dist/icons/decline.js";
 import {
 	INPUT_SUGGESTIONS_TITLE,
 } from "./generated/i18n/i18n-defaults.js";
