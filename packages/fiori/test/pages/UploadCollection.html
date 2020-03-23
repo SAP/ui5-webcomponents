@@ -46,7 +46,9 @@
 		<ui5-checkbox id="cb1" text="Items editable"></ui5-checkbox>
 	</div>
 
-	<ui5-upload-collection id="uploadCollection" with-dnd>
+	<p id="p1" draggable="true">This element is draggable</p>
+
+	<ui5-upload-collection id="uploadCollection">
 		<div slot="header" class="header">
 			<ui5-title>Upload Files</ui5-title>
 			<ui5-button id="startUploading">Start Uploading</ui5-button>
@@ -78,7 +80,7 @@
 		</ui5-upload-collection-item>
 	</ui5-upload-collection>
 
-	<ui5-upload-collection id="uploadCollectionDnD" style="height: 30rem;" with-dnd>
+	<ui5-upload-collection id="uploadCollectionDnD" style="height: 30rem;">
 		<div class="header" slot="header">
 			<ui5-title>Attachments (0)</ui5-title>
 			<div class="spacer"></div>

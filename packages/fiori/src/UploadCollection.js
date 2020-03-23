@@ -7,17 +7,74 @@ import ListMode from "@ui5/webcomponents/dist/types/ListMode.js";
 // Styles
 import UploadCollectionCss from "./generated/themes/UploadCollection.css.js";
 
-
 const DndOverlayMode = {
 	None: "None",
 	Drag: "Drag",
 	Drop: "Drop"
 };
 
-const ifDraggingFiles = cb => event => {
-	if (event.dataTransfer.types.includes("Files")) {
-		cb(event);
-	}
+const draggingFiles = event => {
+	return event.dataTransfer.types.includes("Files");
+}
+
+/**
+ * Handles drag and drop event listeners on document.body.
+ * Ensures that there is only 1 listener attached.
+ */
+const bodyDnDHandler = {
+	_lastDragEnter: null,
+	_uploadCollections: new Set(),
+	_globalHandlersAttached: false,
+	_ondragenter: event => {
+		if (!draggingFiles(event)) {
+			return;
+		}
+
+		bodyDnDHandler._lastDragEnter = event.target;
+		bodyDnDHandler._uploadCollections.forEach(uc => {
+			if (uc._dndOverlayMode !== DndOverlayMode.Drop) {
+				uc._dndOverlayMode = DndOverlayMode.Drag;
+			}
+		});
+	},
+	_ondragleave: event => {
+		bodyDnDHandler._uploadCollections.forEach(uc => {
+			if (bodyDnDHandler._lastDragEnter === event.target) {
+				uc._dndOverlayMode = DndOverlayMode.None;
+			}
+		});
+	},
+	_ondrop: () => {
+		bodyDnDHandler._uploadCollections.forEach(uc => {
+			uc._dndOverlayMode = DndOverlayMode.None;
+		});
+	},
+	_attachGlobalHandlers: function() {
+		if (!this._globalHandlersAttached) {
+			document.body.addEventListener("dragenter", this._ondragenter);
+			document.body.addEventListener("dragleave", this._ondragleave);
+			document.body.addEventListener("drop", this._ondrop);
+			this._globalHandlersAttached = true;
+		}
+	},
+	_detachGlobalHandlers: function() {
+		document.body.removeEventListener("dragenter", this._ondragenter);
+		document.body.removeEventListener("dragleave", this._dragleave);
+		document.body.removeEventListener("drop", this._ondrop);
+		this._globalHandlersAttached = false;
+
+	},
+	addUploadCollectionInstance: function(uploadCollections) {
+		this._uploadCollections.add(uploadCollections);
+		this._attachGlobalHandlers();
+	},
+	removeUploadCollectionInstance: () => {
+		this.uploadCollections.delete(uploadCollections);
+
+		if (this.uploadCollections.size === 0) {
+			this._detachGlobalHandlers();
+		}
+	},
 }
 
 /**
@@ -109,19 +166,19 @@ class UploadCollection extends UI5Element {
 		super();
 
 		this._listeners = {
-			dragenter: ifDraggingFiles(this._ondragenter.bind(this)),
-			dragleave: ifDraggingFiles(this._ondragleave.bind(this)),
-			dragover: ifDraggingFiles(this._ondragover.bind(this)),
-			drop: ifDraggingFiles(this._ondrop.bind(this)),
-		};
-
-		this._bodyListeners = {
-			dragenter: ifDraggingFiles(this._ondragenterBody.bind(this)),
-			dragleave: ifDraggingFiles(this._ondragleaveBody.bind(this)),
-			drop: ifDraggingFiles(this._ondropBody.bind(this)),
+			dragenter: this._ondragenter.bind(this),
+			dragleave: this._ondragleave.bind(this),
+			dragover: this._ondragover.bind(this),
+			drop: this._ondrop.bind(this),
 		};
 
 		this.addEventListener("_rename", this._onFileRenamed);
+	}
+
+	onEnterDOM() {
+		if (!this.noDnd) {
+			bodyDnDHandler.addUploadCollectionInstance(this);
+		}
 	}
 
 	onBeforeRendering() {
@@ -138,6 +195,7 @@ class UploadCollection extends UI5Element {
 
 	onExitDOM() {
 		if (!this.noDnd) {
+			bodyDnDHandler.removeUploadCollectionInstance(this);
 			this._removeDragAndDropListeners();
 		}
 	}
@@ -147,10 +205,6 @@ class UploadCollection extends UI5Element {
 	}
 
 	_addDragAndDropListeners() {
-		document.body.addEventListener("dragenter", this._bodyListeners.dragenter);
-		document.body.addEventListener("dragleave", this._bodyListeners.dragleave);
-		document.body.addEventListener("drop", this._bodyListeners.drop);
-
 		this._root.addEventListener("dragenter", this._listeners.dragenter);
 		this._root.addEventListener("dragover", this._listeners.dragover);
 		this._root.addEventListener("dragleave", this._listeners.dragleave);
@@ -158,10 +212,6 @@ class UploadCollection extends UI5Element {
 	}
 
 	_removeDragAndDropListeners() {
-		document.body.removeEventListener("dragenter", this._bodyListeners.dragenter);
-		document.body.removeEventListener("dragleave", this._bodyListeners.dragleave);
-		document.body.removeEventListener("drop", this._bodyListeners.drop);
-
 		if (this._root) {
 			this._root.removeEventListener("dragenter", this._listeners.dragenter);
 			this._root.removeEventListener("dragover", this._listeners.dragover);
@@ -171,6 +221,10 @@ class UploadCollection extends UI5Element {
 	}
 
 	_ondragenter(event) {
+		if (!draggingFiles(event)) {
+			return;
+		}
+
 		if (event.target === this._dndOverlay) {
 			this._dndOverlayMode = DndOverlayMode.Drop;
 		}
