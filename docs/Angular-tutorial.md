@@ -100,6 +100,8 @@ export class AppModule {}
 
 If you need your application to run on Internet Explorer 11, there are some additional steps you should to:
 
+*Note* These steps have been tested with Angular 7. For other versions of Angular, there might be some differences.
+
 1. Install all needed dependencies:
 ```bash
 npm install @angular-builders/custom-webpack @angular-builders/dev-server @babel/core @babel/preset-env babel-loader
