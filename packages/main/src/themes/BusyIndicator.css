@@ -3,10 +3,12 @@
 }
 
 :host([active]) {
-	opacity: 1;
-	background-color: var(--sapBackgroundColor_Fade72);
 	color: var(--sapContent_IconColor);
 	pointer-events: none;
+}
+
+:host([active]) ::slotted(*) {
+	opacity: 0.6;
 }
 
 :host([size="Small"]) .ui5-busyindicator-root {

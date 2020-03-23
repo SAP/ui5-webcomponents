@@ -9,7 +9,7 @@ import {
 	isDelete,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/icons/decline.js";
-import "@ui5/webcomponents-icons/dist/icons/cancel.js";
+import "@ui5/webcomponents-icons/dist/icons/sys-cancel.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { TOKEN_ARIA_DELETABLE } from "./generated/i18n/i18n-defaults.js";
 
