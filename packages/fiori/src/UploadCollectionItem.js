@@ -1,11 +1,18 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import UploadCollectionItemTemplate from "./generated/templates/UploadCollectionItemTemplate.lit.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import {
+	UPLOADCOLLECTIONITEM_CANCELBUTTON_TEXT,
+	UPLOADCOLLECTIONITEM_RENAMEBUTTON_TEXT,
+} from "./generated/i18n/i18n-defaults.js";
+import Button from "@ui5/webcomponents/dist/Button.js";
 import ListItem from "@ui5/webcomponents/dist/ListItem.js";
+
+// Template
+import UploadCollectionItemTemplate from "./generated/templates/UploadCollectionItemTemplate.lit.js";
 
 // Styles
 import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css.js";
-import Button from "@ui5/webcomponents/dist/Button.js";
 
 /**
  * @public
@@ -84,7 +91,13 @@ class UploadCollectionItem extends ListItem {
 	static async onDefine() {
 		await Promise.all([
 			Button.define(),
+			fetchI18nBundle("@ui5/webcomponents"),
 		]);
+	}
+
+	constructor() {
+		super();
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
@@ -152,6 +165,14 @@ class UploadCollectionItem extends ListItem {
 
 	get _fileExtension() {
 		return this.fileName.includes(".") ? `.${this.fileName.split(".").pop()}` : "";
+	}
+
+	get _renameBtnText() {
+		return this.i18nBundle.getText(UPLOADCOLLECTIONITEM_RENAMEBUTTON_TEXT);
+	}
+
+	get _cancelRenameBtnText() {
+		return this.i18nBundle.getText(UPLOADCOLLECTIONITEM_CANCELBUTTON_TEXT);
 	}
 }
 

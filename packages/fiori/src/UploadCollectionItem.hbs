@@ -28,8 +28,8 @@
 
 	{{#if _editing}}
 		<div class="ui5-uci-edit-buttons">
-			<ui5-button design="Transparent" class="ui5-uci-edit-rename-btn">Rename</ui5-button>
-			<ui5-button design="Transparent" id="ui5-uci-edit-cancel" @click="{{_onRenameCancel}}">Cancel</ui5-button>
+			<ui5-button design="Transparent" class="ui5-uci-edit-rename-btn">{{_renameBtnText}}</ui5-button>
+			<ui5-button design="Transparent" id="ui5-uci-edit-cancel" @click="{{_onRenameCancel}}">{{_cancelRenameBtnText}}</ui5-button>
 		</div>
 	{{/if}}
 {{/inline}}

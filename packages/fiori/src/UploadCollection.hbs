@@ -16,8 +16,8 @@
 			<div class="icon-container">
 				<ui5-icon name="attachment"></ui5-icon>
 			</div>
-			<ui5-title level="H2">No Files Found.</ui5-title>
-			<ui5-label class="subtitle">Drop files to upload, or use 'Upload' button</ui5-label>
+			<ui5-title level="H2">{{_noDataText}}</ui5-title>
+			<ui5-label class="subtitle">{{_noDataDescription}}</ui5-label>
 		</div>
 	{{else if _showDndOverlay}}
 		<div class="{{classes.dndOverlay}}">

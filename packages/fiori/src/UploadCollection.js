@@ -1,8 +1,17 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import List from "@ui5/webcomponents/dist/List.js";
-import UploadCollectionTemplate from "./generated/templates/UploadCollectionTemplate.lit.js";
+import { getI18nBundle, fetchI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import {
+	UPLOADCOLLECTION_NO_DATA_TEXT,
+	UPLOADCOLLECTION_NO_DATA_DESCRIPTION,
+	UPLOADCOLLECTION_DRAG_FILE_INDICATOR,
+	UPLOADCOLLECTION_DROP_FILE_INDICATOR
+} from "./generated/i18n/i18n-defaults.js";
 import ListMode from "@ui5/webcomponents/dist/types/ListMode.js";
+import List from "@ui5/webcomponents/dist/List.js";
+
+// Template
+import UploadCollectionTemplate from "./generated/templates/UploadCollectionTemplate.lit.js";
 
 // Styles
 import UploadCollectionCss from "./generated/themes/UploadCollection.css.js";
@@ -19,7 +28,8 @@ const draggingFiles = event => {
 
 /**
  * Handles drag and drop event listeners on document.body.
- * Ensures that there is only 1 listener attached.
+ * Ensures that there is only 1 listener per type attached (drag, drop, leave). Event listeners will be only attached when
+ * there is at least 1 UploadCollection registered in the set.
  */
 const bodyDnDHandler = {
 	_lastDragEnter: null,
@@ -68,7 +78,7 @@ const bodyDnDHandler = {
 		this._uploadCollections.add(uploadCollections);
 		this._attachGlobalHandlers();
 	},
-	removeUploadCollectionInstance: () => {
+	removeUploadCollectionInstance: function() {
 		this.uploadCollections.delete(uploadCollections);
 
 		if (this.uploadCollections.size === 0) {
@@ -89,6 +99,12 @@ const metadata = {
 		},
 		noDnd: {
 			type: Boolean,
+		},
+		noDataText:{ 
+			type: String,
+		},
+		noDataDescription:{ 
+			type: String,
 		},
 		_dndOverlayMode: {
 			type: String,
@@ -159,12 +175,14 @@ class UploadCollection extends UI5Element {
 	static async onDefine() {
 		await Promise.all([
 			List.define(),
+			fetchI18nBundle("@ui5/webcomponents"),
 		]);
 	}
 
 	constructor() {
 		super();
 
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 		this._listeners = {
 			dragenter: this._ondragenter.bind(this),
 			dragleave: this._ondragleave.bind(this),
@@ -292,9 +310,20 @@ class UploadCollection extends UI5Element {
 		return this.items.length === 0 && !this._showDndOverlay;
 	}
 
+	get _noDataText() {
+		return this.noDataText || this.i18nBundle.getText(UPLOADCOLLECTION_NO_DATA_TEXT);
+	}
+
+	get _noDataDescription() {
+		return this.noDataDescription || this.i18nBundle.getText(UPLOADCOLLECTION_NO_DATA_DESCRIPTION);
+	}
+
 	get _dndOverlayText() {
-		//TODO: make this translatable
-		return this._dndOverlayMode === DndOverlayMode.Drag ? "Drag files here" : "Drop files to upload";
+		if (this._dndOverlayMode === DndOverlayMode.Drag) {
+			return this.i18nBundle.getText(UPLOADCOLLECTION_DRAG_FILE_INDICATOR);
+		} else {
+			return this.i18nBundle.getText(UPLOADCOLLECTION_DROP_FILE_INDICATOR);
+		}
 	}
 }
 
