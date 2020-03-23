@@ -12,10 +12,14 @@ const M_ISO639_NEW_TO_OLD = {
 /**
  * Normalizes the given locale in BCP-47 syntax.
  * @param {string} locale locale to normalize
- * @returns {string} Normalized locale or undefined if the locale can't be normalized
+ * @returns {string} Normalized locale, "undefined" if the locale can't be normalized or "en" if no locale provided.
  */
 const normalizeLocale = locale => {
 	let m;
+
+	if (!locale) {
+		return "en";
+	}
 
 	if (typeof locale === "string" && (m = localeRegEX.exec(locale.replace(/_/g, "-")))) {/* eslint-disable-line */
 		let language = m[1].toLowerCase();
