@@ -1,5 +1,7 @@
-commit d9d3e5778d1944146e5c7e6cf2829963b183fb01
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Mon Mar 23 12:09:29 2020 +0200
+commit 7636bb70a853e9a6c0a334c206153a6308ef13de
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Mon Mar 23 15:24:58 2020 +0200
 
-    chore: update ui5-carousel sample (#1329)
+    fix(ui5-shellbar): provide correct target ref when item is in overflow popover (#1334)
+    
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/1325
