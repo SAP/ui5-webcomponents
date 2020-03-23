@@ -11,7 +11,7 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-// import Icon from "./Icon.js";
+import "@ui5/webcomponents-icons/dist/icons/decline.js";
 import InputType from "./types/InputType.js";
 // Templates
 import InputTemplate from "./generated/templates/InputTemplate.lit.js";
@@ -436,13 +436,13 @@ class Input extends UI5Element {
 
 	/* Event handling */
 	_handleUp(event) {
-		if (this.Suggestions) {
+		if (this.Suggestions && this.Suggestions.isOpened()) {
 			this.Suggestions.onUp(event);
 		}
 	}
 
 	_handleDown(event) {
-		if (this.Suggestions) {
+		if (this.Suggestions && this.Suggestions.isOpened()) {
 			this.Suggestions.onDown(event);
 		}
 	}
@@ -468,7 +468,7 @@ class Input extends UI5Element {
 	_onfocusout(event) {
 		// if focusout is triggered by pressing on suggestion item skip invalidation, because re-rendering
 		// will happen before "itemPress" event, which will make item "active" state not visualized
-		if (this.Suggestions && event.relatedTarget && event.relatedTarget.shadowRoot.contains(this.Suggestions._respPopover)) {
+		if (this.Suggestions && event.relatedTarget && event.relatedTarget.shadowRoot && event.relatedTarget.shadowRoot.contains(this.Suggestions.responsivePopover)) {
 			return;
 		}
 

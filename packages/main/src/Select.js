@@ -13,6 +13,7 @@ import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import "@ui5/webcomponents-icons/dist/icons/slim-arrow-down.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import "@ui5/webcomponents-icons/dist/icons/decline.js";
 import {
 	INPUT_SUGGESTIONS_TITLE,
 } from "./generated/i18n/i18n-defaults.js";
@@ -219,11 +220,13 @@ class Select extends UI5Element {
 	}
 
 	get _isPickerOpen() {
-		return this._respPopover && this._respPopover.opened;
+		return this.responsivePopover && this.responsivePopover.opened;
 	}
 
-	get _respPopover() {
-		return this.getStaticAreaItemDomRef().querySelector("ui5-responsive-popover");
+	async _respPopover() {
+		this._iconPressed = true;
+		const staticAreaItem = await this.getStaticAreaItemDomRef();
+		return staticAreaItem.querySelector("ui5-responsive-popover");
 	}
 
 	/**
@@ -236,7 +239,8 @@ class Select extends UI5Element {
 		return this.options.find(option => option.selected);
 	}
 
-	_toggleRespPopover() {
+	async _toggleRespPopover() {
+		this.responsivePopover = await this._respPopover();
 		if (this.disabled) {
 			return;
 		}
@@ -244,9 +248,9 @@ class Select extends UI5Element {
 		this.updateStaticAreaItemContentDensity();
 
 		if (this._isPickerOpen) {
-			this._respPopover.close();
+			this.responsivePopover.close();
 		} else {
-			this._respPopover.open(this);
+			this.responsivePopover.open(this);
 		}
 	}
 
@@ -334,13 +338,11 @@ class Select extends UI5Element {
 	}
 
 	_applyFocusAfterOpen() {
-		this._toggleIcon();
-
 		if (!this._currentlySelectedOption) {
 			return;
 		}
 
-		const li = this._respPopover.querySelector(`#${this._currentlySelectedOption._id}-li`);
+		const li = this.responsivePopover.querySelector(`#${this._currentlySelectedOption._id}-li`);
 
 		li.parentElement._itemNavigation.currentIndex = this._selectedIndex;
 		li && li.focus();
@@ -395,7 +397,7 @@ class Select extends UI5Element {
 	}
 
 	_afterClose() {
-		this._toggleIcon();
+		this._iconPressed = false;
 
 		if (this._escapePressed) {
 			this._select(this._selectedIndexBeforeOpen);
@@ -404,10 +406,6 @@ class Select extends UI5Element {
 			this.fireEvent("change", { selectedOption: this.options[this._selectedIndex] });
 			this._lastSelectedOption = this.options[this._selectedIndex];
 		}
-	}
-
-	_toggleIcon() {
-		this._iconPressed = !this._iconPressed;
 	}
 
 	get _headerTitleText() {

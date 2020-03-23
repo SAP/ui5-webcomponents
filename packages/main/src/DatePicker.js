@@ -14,6 +14,7 @@ import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/icons/appointment-2.js";
+import "@ui5/webcomponents-icons/dist/icons/decline.js";
 import { DATEPICKER_OPEN_ICON_TITLE, DATEPICKER_DATE_ACC_TEXT, INPUT_SUGGESTIONS_TITLE } from "./generated/i18n/i18n-defaults.js";
 import Icon from "./Icon.js";
 import ResponsivePopover from "./ResponsivePopover.js";
@@ -282,7 +283,7 @@ class DatePicker extends UI5Element {
 			allowTargetOverlap: true,
 			stayOpenOnScroll: true,
 			afterClose: () => {
-				const calendar = this._respPopover.querySelector(`#${this._id}-calendar`);
+				const calendar = this.responsivePopover.querySelector(`#${this._id}-calendar`);
 
 				this._isPickerOpen = false;
 
@@ -298,7 +299,7 @@ class DatePicker extends UI5Element {
 				calendar._hideYearPicker();
 			},
 			afterOpen: () => {
-				const calendar = this._respPopover.querySelector(`#${this._id}-calendar`);
+				const calendar = this.responsivePopover.querySelector(`#${this._id}-calendar`);
 				const dayPicker = calendar.shadowRoot.querySelector(`#${calendar._id}-daypicker`);
 
 				const selectedDay = dayPicker.shadowRoot.querySelector(".ui5-dp-item--selected");
@@ -424,7 +425,7 @@ class DatePicker extends UI5Element {
 
 	_click(event) {
 		if (isPhone()) {
-			this._respPopover.open(this);
+			this.responsivePopover.open(this);
 			event.preventDefault(); // prevent immediate selection of any item
 		}
 	}
@@ -566,8 +567,9 @@ class DatePicker extends UI5Element {
 		return getRTL() ? "rtl" : "ltr";
 	}
 
-	get _respPopover() {
-		return this.getStaticAreaItemDomRef().querySelector("ui5-responsive-popover");
+	async _respPopover() {
+		const staticAreaItem = await this.getStaticAreaItemDomRef();
+		return staticAreaItem.querySelector("ui5-responsive-popover");
 	}
 
 	_canOpenPicker() {
@@ -610,7 +612,7 @@ class DatePicker extends UI5Element {
 	 * @public
 	 */
 	closePicker() {
-		this._respPopover.close();
+		this.responsivePopover.close();
 	}
 
 	/**
@@ -620,15 +622,16 @@ class DatePicker extends UI5Element {
 	 * Specify this option to focus the input field.
 	 * @public
 	 */
-	openPicker(options) {
+	async openPicker(options) {
+		this._isPickerOpen = true;
+		this.responsivePopover = await this._respPopover();
 		this._changeCalendarSelection();
 
 		if (options && options.focusInput) {
 			this._focusInputAfterOpen = true;
 		}
 
-		this._respPopover.open(this);
-		this._isPickerOpen = true;
+		this.responsivePopover.open(this);
 	}
 
 	togglePicker() {
