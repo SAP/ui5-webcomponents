@@ -13,6 +13,14 @@ class StaticAreaItem {
 		this._rendered = false;
 	}
 
+	_resetDomRefReadyPromise() {
+		let deferredResolve;
+		this._domRefReadyPromise = new Promise(resolve => {
+			deferredResolve = resolve;
+		});
+		this._domRefReadyPromise._deferredResolve = deferredResolve;
+	}
+
 	isRendered() {
 		return this._rendered;
 	}
@@ -36,6 +44,10 @@ class StaticAreaItem {
 		}
 
 		this.ui5ElementContext.constructor.render(renderResult, this.staticAreaItemDomRef.shadowRoot, stylesToAdd, { eventContext: this.ui5ElementContext });
+	}
+
+	_waitForDomRef() {
+
 	}
 
 	/**
