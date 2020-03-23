@@ -54,10 +54,14 @@ const metadata = {
 		 * Example:
 		 * <br><br>
 		 * &lt;ui5-input show-suggestions><br>
-		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-suggestion-item  text="Item #1">&lt;/ui5-suggestion-item><br>
-		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-suggestion-item  text="Item #2">&lt;/ui5-suggestion-item><br>
+		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-suggestion-item text="Item #1">&lt;/ui5-suggestion-item><br>
+		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-suggestion-item text="Item #2">&lt;/ui5-suggestion-item><br>
 		 * &lt;/ui5-input>
-		 * <ui5-input show-suggestions><ui5-suggestion-item text="Item #1"></ui5-suggestion-item><ui5-suggestion-item tex="Item #2"></ui5-suggestion-item></ui5-input>
+		 * <br>
+		 * <ui5-input show-suggestions>
+		 * <ui5-suggestion-item text="Item #1"></ui5-suggestion-item>
+		 * <ui5-suggestion-item text="Item #2"></ui5-suggestion-item>
+		 * </ui5-input>
 		 * <br><br>
 		 * <b>Note:</b> The suggestion would be displayed only if the <code>showSuggestions</code>
 		 * property is set to <code>true</code>.
