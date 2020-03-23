@@ -1,5 +1,5 @@
-commit ac8f8ce90968f54fc5de24080d5ab4bffd43a2a2
-Author: Petar Dimov <32839090+dimovpetar@users.noreply.github.com>
-Date:   Fri Mar 20 18:40:29 2020 +0200
+commit d9d3e5778d1944146e5c7e6cf2829963b183fb01
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Mon Mar 23 12:09:29 2020 +0200
 
-    feat(ListItemType): add Detail type (#1323)
+    chore: update ui5-carousel sample (#1329)
