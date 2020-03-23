@@ -36,7 +36,11 @@
 		<ui5-list separators="Inner">
 			{{#each suggestionsTexts}}
 				<ui5-li
-					?icon="{{this.icon}}"
+					image="{{this.image}}"
+					icon="{{this.icon}}"
+					description="{{this.description}}"
+					info="{{this.info}}"
+					info-state="{{this.infoState}}"
 					@ui5-_itemPress="{{ fnOnSuggestionItemPress }}" 
 				>{{ this.text }}</ui5-li>
 			{{/each}}

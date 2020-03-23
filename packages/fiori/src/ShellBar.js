@@ -368,10 +368,8 @@ class ShellBar extends UI5Element {
 
 		this._actionList = {
 			itemPress: event => {
-				const popover = this.getStaticAreaItemDomRef().querySelector(".ui5-shellbar-overflow-popover");
-
 				if (!this._defaultItemPressPrevented) {
-					popover.close();
+					this.overflowPopover.close();
 				}
 
 				this._defaultItemPressPrevented = false;
@@ -380,15 +378,13 @@ class ShellBar extends UI5Element {
 
 		this._header = {
 			press: event => {
-				const menuPopover = this.getStaticAreaItemDomRef().querySelector(".ui5-shellbar-menu-popover");
-
 				if (this.menuItems.length) {
 					this._menuPopoverItems = [];
 					this.menuItems.forEach(item => {
 						this._menuPopoverItems.push(item.textContent);
 					});
 					this.updateStaticAreaItemContentDensity();
-					menuPopover.openBy(this.shadowRoot.querySelector(".ui5-shellbar-menu-button"));
+					this.menuPopover.openBy(this.shadowRoot.querySelector(".ui5-shellbar-menu-button"));
 				}
 			},
 		};
@@ -442,8 +438,9 @@ class ShellBar extends UI5Element {
 			left: 0,
 		};
 
-		this._handleResize = event => {
-			this.getStaticAreaItemDomRef().querySelector(".ui5-shellbar-overflow-popover").close();
+		this._handleResize = async event => {
+			await this._getResponsivePopover();
+			this.overflowPopover.close();
 			this._overflowActions();
 		};
 	}
@@ -494,10 +491,8 @@ class ShellBar extends UI5Element {
 	 * @public
 	 */
 	closeOverflow() {
-		const popover = this.getStaticAreaItemDomRef().querySelector(".ui5-shellbar-overflow-popover");
-
-		if (popover) {
-			popover.close();
+		if (this.overflowPopover) {
+			this.overflowPopover.close();
 		}
 	}
 
@@ -626,10 +621,9 @@ class ShellBar extends UI5Element {
 	}
 
 	_toggleActionPopover() {
-		const popover = this.getStaticAreaItemDomRef().querySelector(".ui5-shellbar-overflow-popover");
 		const overflowButton = this.shadowRoot.querySelector(".ui5-shellbar-overflow-button");
 		this.updateStaticAreaItemContentDensity();
-		popover.openBy(overflowButton);
+		this.overflowPopover.openBy(overflowButton);
 	}
 
 	_onkeydown(event) {
@@ -817,6 +811,12 @@ class ShellBar extends UI5Element {
 		if (isDifferent) {
 			this._itemsInfo = newItems;
 		}
+	}
+
+	async _getResponsivePopover() {
+		const staticAreaItem = await this.getStaticAreaItemDomRef();
+		this.overflowPopover = staticAreaItem.querySelector(".ui5-shellbar-overflow-popover");
+		this.menuPopover = staticAreaItem.querySelector(".ui5-shellbar-menu-popover");
 	}
 
 	get classes() {

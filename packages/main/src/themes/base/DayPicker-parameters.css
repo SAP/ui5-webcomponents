@@ -1,18 +1,11 @@
 :root {
 	--_ui5_daypicker_item_margin: 2px;
 	--_ui5_daypicker_item_border: none;
-	--_ui5_daypicker_item_today_border_color: var(--sapAccentColor4);
 	--_ui5_daypicker_item_outline_width: 1px;
 	--_ui5_daypicker_item_outline_offset: 1px;
 	--_ui5_daypicker_daynames_container_height: 2rem;
 	--_ui5_daypicker_weeknumbers_container_padding_top: 2rem;
-	--_ui5_daypicker_item_background_color: var(--sapContent_ForegroundColor_Lighten5); /* lighten(@sapContent_ForegroundColor, 5); */
-	--_ui5_daypicker_item_hover_background_color: var(--sapContent_ForegroundColor_Darken5); /* darken(@sapContent_ForegroundColor, 5); */
-	--_ui5_daypicker_item_selected_background_color: var(--sapContent_Selected_Background); /* darken(@sapSelectedColor, 10); */
 	--_ui5_daypicker_item_selected_hover_background_color: var(--sapContent_Selected_Background); /* darken(@sapSelectedColor, 10); */
-	--_ui5_daypicker_item_weekend_background_color: var(--sapContent_ForegroundColor_Darken3); /* darken(@sapContent_ForegroundColor, 3); */
-	--_ui5_daypicker_item_weekend_hover_background_color: var(--sapContent_ForegroundColor_Darken10); /* darken(@sapContent_ForegroundColor, 10); */
-	--_ui5_daypicker_item_othermonth_hover_background_color: var(--sapList_Background_Darken10); /* darken(@sapList_Background, 10); */
 	--_ui5_daypicker_item_othermonth_background_color: var(--sapList_Background);
 	--_ui5_daypicker_item_othermonth_color: var(--sapContent_LabelColor);
 	--_ui5_daypicker_item_othermonth_hover_color: var(--sapContent_LabelColor);
@@ -22,5 +15,4 @@
 	--_ui5_daypicker_weekname_color: var(--sapContent_LabelColor);
 	--_ui5_daypicker_item_now_selected_focus_after_width: calc(100% - 0.125rem);
 	--_ui5_daypicker_item_now_selected_focus_after_height: calc(100% - 0.125rem);
-	--_ui5_daypicker_item_now_selected_text_border_color: var(--sapList_BorderColor_Lighten10); /* lighten(var(--sapList_BorderColor), 10); */
 }

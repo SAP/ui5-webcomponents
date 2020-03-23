@@ -46,7 +46,7 @@ const metadata = {
 		 * @public
 		 */
 		"default": {
-			type: Node,
+			type: HTMLElement,
 		},
 	},
 	properties: /** @lends sap.ui.webcomponents.main.Panel.prototype */ {

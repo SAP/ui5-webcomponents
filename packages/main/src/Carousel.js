@@ -20,6 +20,7 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 import CarouselArrowsPlacement from "./types/CarouselArrowsPlacement.js";
 import CarouselTemplate from "./generated/templates/CarouselTemplate.lit.js";
+import Button from "./Button.js";
 
 // Styles
 import CarouselCss from "./generated/themes/Carousel.css.js";
@@ -303,6 +304,7 @@ class Carousel extends UI5Element {
 	static async onDefine() {
 		await Promise.all([
 			fetchI18nBundle("@ui5/webcomponents"),
+			Button.define(),
 		]);
 	}
 }

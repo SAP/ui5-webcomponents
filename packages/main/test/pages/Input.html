@@ -192,6 +192,10 @@
 			suggestionItems.forEach(function(item) {
 				var li = document.createElement("ui5-li");
 				li.id = item.key;
+				li.icon = "world";
+				li.info = "explore";
+				li.infoState = "Success";
+				li.description = "travel the world";
 				li.textContent = item.text;
 				input.appendChild(li);
 			});

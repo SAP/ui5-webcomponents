@@ -215,4 +215,14 @@ describe("List Tests", () => {
 
 		assert.strictEqual(loadMoreResult.getAttribute("value"), "1", "The event loadMore is fired.");
 	});
+
+	it("detailPress event is fired", () => {
+		const detailCounterResult = $("#detailPressCounter");
+		const firstItem = $("#detailListItem");
+		const detailButton = firstItem.shadow$(".ui5-li-detailbtn")
+
+		detailButton.click();
+
+		assert.strictEqual(detailCounterResult.getProperty("innerHTML"), "1", "detailClick event has been fired once");
+	});
 });

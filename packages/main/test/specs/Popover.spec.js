@@ -59,7 +59,7 @@ describe("Popover general interaction", () => {
 
 	it("tests if overflown content can be reached by scrolling", () => {
 		const manyItemsSelect = $("#many-items");
-		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#many-items")
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#many-items");
 		const items = browser.$(`.${staticAreaItemClassName}`).shadow$$("ui5-li");
 
 		manyItemsSelect.click();
@@ -118,5 +118,65 @@ describe("Popover general interaction", () => {
 		btnOpenPopover.click();
 
 		assert.ok(focusedButton.getProperty("focused"), "The button is focused.");
+	});
+
+	it("tests focus trapping using TAB", () => {
+		browser.url("http://localhost:8080/test-resources/pages/Popover.html");
+
+		const btn = $("#btn");
+		const ff = $("#first-focusable");
+
+		btn.click();
+
+		assert.ok(ff.getProperty("focused"), "The first focusable element is focused.");
+
+		// list
+		browser.keys("Tab");
+
+		assert.ok(!ff.getProperty("focused"), "The first focusable element is focused.");
+		
+		// button
+		browser.keys("Tab");
+
+		assert.ok(!ff.getProperty("focused"), "The first focusable element is focused.");
+
+		// select
+		browser.keys("Tab");
+
+		// footer button
+		browser.keys("Tab");
+
+		// goes to first focusable again
+		browser.keys("Tab");
+
+		assert.ok(ff.getProperty("focused"), "The first focusable element is focused.");
+	});
+
+	it("tests focus trapping using SHIFT TAB", () => {
+		browser.url("http://localhost:8080/test-resources/pages/Popover.html");
+
+		const btn = $("#btn");
+		const ff = $("#first-focusable");
+
+		btn.click();
+
+		assert.ok(ff.getProperty("focused"), "The first focusable element is focused.");
+
+		// footer button
+		browser.keys(["Shift", "Tab"]);
+
+		// select
+		browser.keys(["Shift", "Tab"]);
+
+		// button
+		browser.keys(["Shift", "Tab"]);
+
+		// list
+		browser.keys(["Shift", "Tab"]);
+
+		// header button
+		browser.keys(["Shift", "Tab"]);
+
+		assert.ok(ff.getProperty("focused"), "The first focusable element is focused.");
 	});
 });

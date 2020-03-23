@@ -113,6 +113,13 @@
 		<ui5-li type="Inactive">Inactive item</ui5-li>
 	</ui5-list>
 
+	<br/><br/>
+	<span id="detailPressCounter">0</span>
+	<ui5-list header-text="API: ListItem type='Detail'">
+		<ui5-li id="detailListItem" type="Detail">Detail item</ui5-li>
+		<ui5-li >Normal item</ui5-li>
+	</ui5-list>
+
 	<script>
 		'use strict';
 
@@ -157,6 +164,10 @@
 				infiniteScrollEx.appendChild(li);
 			}
 			loadMoreResult.value= ++loadMoreCounter;
+		});
+
+		detailListItem.addEventListener("ui5-detailClick", (e) => {
+			detailPressCounter.innerHTML = parseInt(detailPressCounter.innerHTML) + 1;
 		});
 	</script>
 </body>

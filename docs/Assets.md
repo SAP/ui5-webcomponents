@@ -16,9 +16,9 @@ Currently our npm packages follow the scheme:
 <a name="packages"></a>
 ## Packages
 
-### `utils` package
+### `localization` package
 
-The `utils` package provides CLDR assets.
+The `localization` package provides CLDR assets.
 
 `import "@ui5/webcomponents-utils/dist/Assets.js";`
 

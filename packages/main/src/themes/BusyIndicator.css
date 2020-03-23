@@ -3,10 +3,12 @@
 }
 
 :host([active]) {
-	opacity: 1;
-	background-color: var(--sapBackgroundColor_Fade72);
 	color: var(--sapContent_IconColor);
 	pointer-events: none;
+}
+
+:host([active]) ::slotted(*) {
+	opacity: 0.6;
 }
 
 :host([size="Small"]) .ui5-busyindicator-root {
@@ -48,12 +50,17 @@
 	align-items: center;
 	position: relative;
 	background-color: inherit;
+	min-width: 8rem;
+	min-height: 3rem;
 }
 
 .ui5-busyindicator-circle {
 	display: inline-block;
 	background-color: currentColor;
 	border-radius: 50%;
+	width: 1rem;
+	height: 1rem;
+	margin: 0 .75rem;
 }
 
 .ui5-busyindicator-circle::before {

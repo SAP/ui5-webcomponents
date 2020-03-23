@@ -358,14 +358,13 @@ ui5-icon[data-count]::before {
 
 ::slotted(ui5-input) {
 	background-color: var(--sapShellColor);
-	border: 1px solid var(--sapShell_BorderColor_Lighten30);
+	border: 1px solid var(--sapShell_InteractiveBorderColor);
 	color: var(--sapShell_TextColor);
 	height: 100%;
 }
 
 ::slotted(ui5-input:hover) {
 	background: var(--sapShell_Hover_Background);
-	border: 1px solid var(--sapShell_BorderColor_Lighten30);
 }
 
 ::slotted(ui5-input[focused]) {
