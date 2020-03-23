@@ -220,6 +220,10 @@ class ListItem extends ListItemBase {
 		this.fireEvent("_selectionRequested", { item: this, selectionComponentPressed: false });
 	}
 
+	onDetailClick(event) {
+		this.fireEvent("detailClick", { item: this, selected: this.selected });
+	}
+
 	fireItemPress(event) {
 		if (this.isInactive) {
 			return;
@@ -256,6 +260,10 @@ class ListItem extends ListItemBase {
 
 	get modeDelete() {
 		return this._mode === ListMode.Delete;
+	}
+
+	get typeDetail() {
+		return this.type === ListItemType.Detail;
 	}
 }
 

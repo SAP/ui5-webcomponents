@@ -20,12 +20,6 @@ const metadata = {
 		fileName: {
 			type: String,
 		},
-		description: {
-			type: String,
-		},
-		editable: {
-			type: Boolean,
-		},
 		noDelete: {
 			type: Boolean,
 		},
@@ -33,6 +27,9 @@ const metadata = {
 		fileNameClickable: {
 			type: Boolean,
 		},
+		_editing: {
+			type: Boolean
+		}
 	},
 	slots: /** @lends sap.ui.webcomponents.fiori.UploadCollectionItem.prototype */ {
 		"default": {
@@ -43,7 +40,7 @@ const metadata = {
 		}
 	},
 	events: /** @lends sap.ui.webcomponents.fiori.UploadCollectionItem.prototype */ {
-		//
+		_rename: { }
 	},
 };
 
@@ -77,7 +74,7 @@ class UploadCollectionItem extends ListItem {
 	}
 
 	static get styles() {
-		return [ListItem.styles ,UploadCollectionItemCss];
+		return [ListItem.styles, UploadCollectionItemCss];
 	}
 
 	static get template() {
@@ -90,13 +87,56 @@ class UploadCollectionItem extends ListItem {
 		]);
 	}
 
+	onBeforeRendering() {
+		if (!this.focused) {
+			this._editing = false;
+		}
+	}
+
+	onAfterRendering() {
+		if (this.focused && this._editing) {
+			const inp = this.shadowRoot.getElementById("ui5-uci-edit-input");
+			inp.focus();
+			// TODO: find way to select input's value
+			// inp.setSelectionRange(0, this._fileNameWithoutExtension.length);
+		}
+	}
+
+	/**
+	 * @override
+	 */
+	onDetailClick(event) {
+		super.onDetailClick(event);
+		this._editing = true;
+	}
+
+	_onInputChange(event) {
+		if (this.shadowRoot.getElementById("ui5-uci-edit-cancel").active) {
+			return;
+		}
+
+		this._editing = false;
+		this.fileName = event.target.value;
+		this.fireEvent("_rename");
+	}
+
+	_onRenameCancel(event) {
+		this._editing = false;
+	}
+
 	/**
 	 * @override
 	 */
 	get classes() {
 		const result = super.classes;
-		result.main["ui5-uci-root"] = true;
-		return result;
+
+		return {
+			main: {
+				...result.main,
+				"ui5-uci-root": true,
+				"ui5-uci-root-edit": this._editing
+			}
+		}
 	}
 
 	/**
@@ -106,10 +146,13 @@ class UploadCollectionItem extends ListItem {
 		return !this.noDelete && super.modeDelete;
 	}
 
-	_onEdit() {
-
+	get _fileNameWithoutExtension() {
+		return this.fileName.split(".")[0];
 	}
 
+	get _fileExtension() {
+		return this.fileName.includes(".") ? `.${this.fileName.split(".").pop()}` : "";
+	}
 }
 
 UploadCollectionItem.define();

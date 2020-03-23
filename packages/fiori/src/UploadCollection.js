@@ -49,11 +49,16 @@ const metadata = {
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.fiori.UploadCollection.prototype */ {
-		itemDelete: {
+		fileDeleted: {
 			detail: {
 				item: { type: HTMLElement },
 			},
 		},
+		fileRenamed: {
+			detail: {
+				item: { type: HTMLElement },
+			},
+		}
 	},
 };
 
@@ -115,6 +120,8 @@ class UploadCollection extends UI5Element {
 			dragleave: ifDraggingFiles(this._ondragleaveBody.bind(this)),
 			drop: ifDraggingFiles(this._ondropBody.bind(this)),
 		};
+
+		this.addEventListener("_rename", this._onFileRenamed);
 	}
 
 	onBeforeRendering() {
@@ -136,7 +143,7 @@ class UploadCollection extends UI5Element {
 	}
 	
 	_onItemDelete(event) {
-		this.fireEvent("itemDelete", { ...event.detail });
+		this.fireEvent("fileDeleted", { item: event.detail.item });
 	}
 
 	_addDragAndDropListeners() {
@@ -199,6 +206,10 @@ class UploadCollection extends UI5Element {
 
 	_ondropBody() {
 		this._dndOverlayMode = "None";
+	}
+
+	_onFileRenamed(event) {
+		this.fireEvent("fileRenamed", { item: event.target });
 	}
 
 	get classes() {

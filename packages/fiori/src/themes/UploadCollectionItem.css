@@ -55,12 +55,32 @@ ui5-link.ui5-uci-file-name {
 	white-space: initial;
 }
 
-/* Buttons */
-.ui5-uci-content-buttons-container {
-	padding-left: 1rem;
+/* Edit mode */
+.ui5-uci-edit-container ui5-input {
+	width: 60%;
 	pointer-events: all;
 }
 
-.ui5-uci-content-buttons-container ui5-button {
+.ui5-uci-file-extension {
+	font-family: var(--sapFontFamily);
+	font-size: var(--sapFontMediumSize);
+	color: var(--sapTextColor);
+	white-space: no-wrap;
+	overflow: hidden;
+	margin-left: 0.5rem;
+	width: 40%;
+}
+
+
+/* Buttons */
+.ui5-uci-root-edit .ui5-li-detailbtn,
+.ui5-uci-root-edit .ui5-li-deletebtn {
+	display: none;
+}
+.ui5-uci-edit-buttons {
+	pointer-events: all;
+}
+
+ui5-uci-edit-rename-btn {
 	margin-right: 0.125rem;
 }

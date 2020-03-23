@@ -65,11 +65,11 @@
 
 	document.getElementById("cb1").addEventListener("change", function(event) {
 		uploadCollection.items.forEach(function (item) {
-			item.editable = event.target.checked;
+			item.type = event.target.checked ? "Detail" : "Active";
 		});
 	});
 
-	uploadCollection.addEventListener("itemDelete", function (event) {
+	uploadCollection.addEventListener("fileDeleted", function (event) {
 		uploadCollection.removeChild(event.detail.item)
 	});
 
