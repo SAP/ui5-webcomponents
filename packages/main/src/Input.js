@@ -14,6 +14,7 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/icons/decline.js";
 import InputType from "./types/InputType.js";
+import Popover from "./Popover.js";
 // Templates
 import InputTemplate from "./generated/templates/InputTemplate.lit.js";
 import InputPopoverTemplate from "./generated/templates/InputPopoverTemplate.lit.js";
@@ -264,6 +265,11 @@ const metadata = {
 		_inputWidth: {
 			type: Integer,
 		},
+
+		_isPopoverOpen: {
+			type: Boolean,
+			noAttribute: true,
+		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.Input.prototype */ {
 		/**
@@ -437,7 +443,7 @@ class Input extends UI5Element {
 			}
 		}
 
-		if (!this.firstRendering && !this.Suggestions && this._getPopover() && this.hasValueStateMessage) {
+		if (!this.firstRendering && !this.Suggestions && this.hasValueStateMessage) {
 			this.toggle(this.shouldDisplayOnlyValueStateMessage);
 		}
 
@@ -506,8 +512,8 @@ class Input extends UI5Element {
 			return;
 		}
 
-		if (this._getPopover()) {
-			this._getPopover().close(false, false, true);
+		if (this.popover) {
+			this.popover.close(false, false, true);
 		}
 
 		this.previousValue = "";
@@ -572,22 +578,36 @@ class Input extends UI5Element {
 
 	toggle(isToggled) {
 		if (isToggled) {
-			this.open();
-		} else {
-			this.close();
+			this.openPopover();
+		}
+		if (!isToggled && this._isPopoverOpen) {
+			this.closePopover();
 		}
 	}
 
-	open() {
-		this._getPopover().openBy(this);
+	/**
+	 * Checks if the popover is open.
+	 * @returns {Boolean} true if the popover is open, false otherwise
+	 * @public
+	 */
+	isOpen() {
+		return !!this._isPopoverOpen;
 	}
 
-	close() {
-		this._getPopover().close();
+	async openPopover() {
+		this._isPopoverOpen = true;
+		this.popover = await this._getPopover();
+		this.popover.openBy(this);
 	}
 
-	_getPopover() {
-		return this.getStaticAreaItemDomRef().querySelector("ui5-popover");
+	closePopover() {
+		this._isPopoverOpen = false;
+		this.popover.close();
+	}
+
+	async _getPopover() {
+		const staticAreaItem = await this.getStaticAreaItemDomRef();
+		return staticAreaItem.querySelector("ui5-popover");
 	}
 
 	enableSuggestions() {
@@ -811,7 +831,10 @@ class Input extends UI5Element {
 	}
 
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		await Promise.all([
+			Popover.define(),
+			fetchI18nBundle("@ui5/webcomponents"),
+		]);
 	}
 }
 
