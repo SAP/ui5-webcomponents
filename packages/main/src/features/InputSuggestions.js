@@ -37,12 +37,13 @@ class Suggestions {
 		const suggestions = [];
 		inputSuggestionItems.map(suggestion => {
 			return suggestions.push({
-				text: suggestion.textContent,
+				text: suggestion.text,
 				description: suggestion.description || undefined,
 				image: suggestion.image || undefined,
 				icon: suggestion.icon || undefined,
 				info: suggestion.info || undefined,
 				infoState: suggestion.infoState,
+				group: suggestion.group,
 			});
 		});
 
@@ -289,7 +290,6 @@ Suggestions.SCROLL_STEP = 48;
 // by the issuer component`s template.
 List.define();
 ResponsivePopover.define();
-
 
 // Add suggestions support to the global features registry so that Input.js can use it
 registerFeature("InputSuggestions", Suggestions);
