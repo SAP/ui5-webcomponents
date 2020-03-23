@@ -37,7 +37,7 @@ class Suggestions {
 		const suggestions = [];
 		inputSuggestionItems.map(suggestion => {
 			return suggestions.push({
-				text: suggestion.text,
+				text: suggestion.text || suggestion.textContent, // keep textContent for compatibility
 				description: suggestion.description || undefined,
 				image: suggestion.image || undefined,
 				icon: suggestion.icon || undefined,

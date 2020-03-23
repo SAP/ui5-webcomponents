@@ -547,7 +547,7 @@ class Input extends UI5Element {
 	}
 
 	selectSuggestion(item, keyboardUsed) {
-		const itemText = item.text;
+		const itemText = item.text || item.textContent; // keep textContent for compatibility
 		const fireInput = keyboardUsed
 			? this.valueBeforeItemSelection !== itemText : this.value !== itemText;
 
