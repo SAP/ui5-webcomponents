@@ -7,6 +7,14 @@ import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import LocaleData from "@ui5/webcomponents-localization/dist/LocaleData.js";
 import { fetchCldr } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import {
+	isLeft,
+	isRight,
+	isTabNext,
+	isTabPrevious,
+	isShow,
+} from "@ui5/webcomponents-base/src/Keys.js";
+import "@ui5/webcomponents-icons/dist/icons/time-entry-request.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import PopoverPlacementType from "./types/PopoverPlacementType.js";
@@ -22,13 +30,6 @@ import {
 	TIMEPICKER_SUBMIT_BUTTON,
 	TIMEPICKER_CANCEL_BUTTON,
 } from "./generated/i18n/i18n-defaults.js";
-import {
-	isLeft,
-	isRight,
-	isTabNext,
-	isTabPrevious,
-	isShow,
-} from "../../base/src/Keys.js";
 
 // Styles
 import TimePickerCss from "./generated/themes/TimePicker.css.js";
@@ -124,10 +125,6 @@ const metadata = {
 
 		_seconds: {
 			type: String,
-		},
-
-		isTwelveHoursFormat: {
-			type: Boolean,
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.TimePicker.prototype */ {
@@ -270,12 +267,8 @@ class TimePicker extends UI5Element {
 	}
 
 	_handleInputChange() {
-		let nextValue = this._getInput().getInputValue();
-		const isValid = this.isValid(nextValue);
-
-		if (isValid) {
-			nextValue = this.normalizeValue(nextValue);
-		}
+		const nextValue = this._getInput().getInputValue(),
+			isValid = this.isValid(nextValue);
 
 		this.setValue(nextValue);
 		this.fireEvent("change", { value: nextValue, valid: isValid });
@@ -302,19 +295,35 @@ class TimePicker extends UI5Element {
 			return;
 		}
 		if (hoursSlider) {
+			let tempValue = "";
 			if (this._hoursParameters.isTwelveHoursFormat && currentDate.getHours() > this._hoursParameters.maxHour) {
-				hoursSlider.value = currentDate.getHours() - 12;
+				tempValue = currentDate.getHours() - 12;
 			} else if (this._hoursParameters.isTwelveHoursFormat && currentDate.getHours() < this._hoursParameters.minHour) {
-				hoursSlider.value = currentDate.getHours() + 12;
+				tempValue = currentDate.getHours() + 12;
 			} else {
-				hoursSlider.value = currentDate.getHours();
+				tempValue = currentDate.getHours();
+			}
+			if (tempValue.toString().length === 1) {
+				hoursSlider.value = `0${tempValue}`;
+			} else {
+				hoursSlider.value = tempValue.toString();
 			}
 		}
 		if (minutesSlider) {
-			minutesSlider.value = currentDate.getMinutes();
+			const tempValue = currentDate.getMinutes();
+			if (tempValue.toString().length === 1) {
+				minutesSlider.value = `0${tempValue}`;
+			} else {
+				minutesSlider.value = tempValue.toString();
+			}
 		}
 		if (secondsSlider) {
-			secondsSlider.value = currentDate.getSeconds();
+			const tempValue = currentDate.getSeconds();
+			if (tempValue.toString().length === 1) {
+				secondsSlider.value = `0${tempValue}`;
+			} else {
+				secondsSlider.value = tempValue.toString();
+			}
 		}
 		if (this._hoursParameters.isTwelveHoursFormat && periodsSlider && this._hoursParameters.minHour === 1) {
 			periodsSlider.value = currentDate.getHours() > this._hoursParameters.maxHour ? this.periodsArray[1] : this.periodsArray[0];
@@ -388,7 +397,12 @@ class TimePicker extends UI5Element {
 	generateTimeItemsArray(x) {
 		const array = [];
 		for (let i = 0; i < x; i++) {
-			array.push(i.toString());
+			let tempString = i.toString();
+			if (tempString.length === 1) {
+				tempString = `0${tempString}`;
+			}
+
+			array.push(tempString);
 		}
 
 		return array;
@@ -412,7 +426,15 @@ class TimePicker extends UI5Element {
 		}
 
 		if (this._hoursParameters.minHour === 1) {
-			hoursValueArray = hoursValueArray.map(x => (x * 1 + 1).toString());
+			for (let i = 0; i < hoursValueArray.length; i++) {
+				const tempValue = hoursValueArray[i] * 1 + 1;
+
+				if (tempValue.toString().length === 1) {
+					hoursValueArray[i] = `0${tempValue.toString()}`;
+				} else {
+					hoursValueArray[i] = tempValue.toString();
+				}
+			}
 		}
 
 		return hoursValueArray;
@@ -432,19 +454,19 @@ class TimePicker extends UI5Element {
 	}
 
 	get secondsSlider() {
-		return this.responsivePopover.querySelector(".ui5-timepicker-seconds-wheelslider");
+		return this.responsivePopover && this.responsivePopover.querySelector(".ui5-timepicker-seconds-wheelslider");
 	}
 
 	get minutesSlider() {
-		return this.responsivePopover.querySelector(".ui5-timepicker-minutes-wheelslider");
+		return this.responsivePopover && this.responsivePopover.querySelector(".ui5-timepicker-minutes-wheelslider");
 	}
 
 	get hoursSlider() {
-		return this.responsivePopover.querySelector(".ui5-timepicker-hours-wheelslider");
+		return this.responsivePopover && this.responsivePopover.querySelector(".ui5-timepicker-hours-wheelslider");
 	}
 
 	get periodsSlider() {
-		return this.responsivePopover.querySelector(".ui5-timepicker-period-wheelslider");
+		return this.responsivePopover && this.responsivePopover.querySelector(".ui5-timepicker-period-wheelslider");
 	}
 
 	submitPickers() {
@@ -627,7 +649,6 @@ class TimePicker extends UI5Element {
 				slidersBuildArray[0] = true;
 			}
 			if (this._hoursParameters.maxHour !== 0 && this._hoursParameters.isTwelveHoursFormat) {
-				slidersBuildArray[3] = true;
 				slidersBuildArray[0] = true;
 			}
 			if (formatArray[i].type === "minute") {
@@ -635,6 +656,9 @@ class TimePicker extends UI5Element {
 			}
 			if (formatArray[i].type === "second") {
 				slidersBuildArray[2] = true;
+			}
+			if (formatArray[i].type === "amPmMarker") {
+				slidersBuildArray[3] = true;
 			}
 		}
 

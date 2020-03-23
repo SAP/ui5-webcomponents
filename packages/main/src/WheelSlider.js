@@ -1,12 +1,14 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
-import WheelSliderTemplate from "./generated/templates/WheelSliderTemplate.lit.js";
-import Button from "./Button.js";
 import {
 	isDown,
 	isUp,
-} from "../../base/src/Keys.js";
+} from "@ui5/webcomponents-base/src/Keys.js";
+import "@ui5/webcomponents-icons/dist/icons/navigation-up-arrow.js";
+import "@ui5/webcomponents-icons/dist/icons/navigation-down-arrow.js";
+import WheelSliderTemplate from "./generated/templates/WheelSliderTemplate.lit.js";
+import Button from "./Button.js";
 
 // Styles
 import WheelSliderCss from "./generated/themes/WheelSlider.css.js";

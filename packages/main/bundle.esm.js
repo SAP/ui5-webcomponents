@@ -65,7 +65,6 @@ import TimePicker from "./dist/TimePicker.js";
 import Title from "./dist/Title.js";
 import Toast from "./dist/Toast.js";
 import ToggleButton from "./dist/ToggleButton.js";
-import WheelSlider from "./dist/WheelSlider.js"
 
 
 
