@@ -13,7 +13,7 @@ const draggingFiles = event => {
 
 const uploadCollections = new Set();
 let lastDragEnter = null;
-let globalHandlersAttached =  false;
+let globalHandlersAttached = false;
 
 const ondragenter = event => {
 	if (!draggingFiles(event)) {
@@ -37,7 +37,7 @@ const ondragleave = event => {
 };
 
 const ondrop = event => {
-	bodyDnDHandler._uploadCollections.forEach(uc => {
+	uploadCollections.forEach(uc => {
 		uc._dndOverlayMode = UploadCollectionDnDOverlayMode.None;
 	});
 };

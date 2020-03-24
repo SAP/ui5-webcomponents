@@ -172,9 +172,9 @@ class UploadCollectionItem extends ListItem {
 
 	onAfterRendering() {
 		if (this.focused && this._editing) {
-			const inp = this.shadowRoot.getElementById("ui5-uci-edit-input");
-			inp.focus();
+			this.focus();
 			// TODO: find way to select input's value
+			// const inp = this.shadowRoot.getElementById("ui5-uci-edit-input");
 			// inp.setSelectionRange(0, this._fileNameWithoutExtension.length);
 		}
 	}
