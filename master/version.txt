@@ -1,5 +1,9 @@
-commit dfc0cb1860086528d5378f7400ec4c66bb4633bf
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Tue Mar 24 13:17:33 2020 +0200
+commit bfe4b1941e633f04dd4a107e83c2b1d2f77e4271
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Mar 24 15:27:35 2020 +0200
 
-    chore: add static area tests (#1342)
+    refactor(ui5-input): improve group suggestion item handling (#1343)
+    
+    Couple of improvements in handling a group item within the suggestion popover:
+    - When navigating via the keyboard over a group item, the text in the input field should be cleared
+    - However, the group item should also have the selection visual, when reached via the keyboard, but it can not be selected neither with the keyboard, nor with a click
