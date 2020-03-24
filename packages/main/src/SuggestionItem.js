@@ -1,4 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import StandardListItem from "./StandardListItem.js";
 import GroupHeaderListItem from "./GroupHeaderListItem.js";
@@ -91,7 +92,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the item to be displayed as a group item. 
+		 * Defines the item to be displayed as a group item.
 		 * <br>
 		 * <b>Note:</b>
 		 * When set, the other properties, such as <code>image</code>, <code>icon</code>, <code>description</code>, etc. will be omitted
