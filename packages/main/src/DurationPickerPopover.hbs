@@ -1,5 +1,14 @@
-<ui5-responsive-popover>
-    <ui5-wheelslider></ui5-wheelslider>
-    <ui5-wheelslider></ui5-wheelslider>
-    <ui5-wheelslider></ui5-wheelslider>
+<ui5-responsive-popover
+id="{{_id}}-responsive-popover"
+allow-target-overlap="{{ true }}"
+placement-type="{{PopoverPlacementType.Bottom}}"
+no-arrow
+horizontal-align="{{_respPopover.horizontalAlign}}"
+stay-open-on-scroll="{{ true }}"
+@ui5-afterClose="{{_respPopover.afterClose}}"
+@ui5-afterOpen="{{_respPopover.afterOpen}}"
+class="ui5-timepicker-popover"
+@keydown="{{_onkeydown}}"
+>
+<div>Hello World</div>
 </ui5-responsive-popover>

@@ -5,10 +5,12 @@ import DurationPickerPopoverTemplate from "./generated/templates/DurationPickerP
 import WheelSlider from "./WheelSlider.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import Input from "./Input.js";
+import PopoverPlacementType from "./types/PopoverPlacementType.js";
 
 // Styles
 import DurationPickerCss from "./generated/themes/DurationPicker.css.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import { isShow } from "@ui5/webcomponents-base/dist/Keys.js";
 
 /**
  * @public
@@ -85,6 +87,12 @@ class DurationPicker extends UI5Element {
 		return DurationPickerPopoverTemplate;
 	}
 
+	_onkeydown(event) {
+		if (isShow(event)) {
+			this.togglePicker();
+		}
+	}
+
 	async togglePicker() {
 		await this._getResponsivePopover();
 
@@ -93,7 +101,7 @@ class DurationPicker extends UI5Element {
 			this.responsivePopover.close();
 		} else {
 			this._isPickerOpen = true;
-			this.responsivePopover.open();
+			this.responsivePopover.open(this);
 		}
 	}
 
