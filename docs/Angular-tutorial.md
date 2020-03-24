@@ -104,7 +104,7 @@ If you need your application to run on Internet Explorer 11, there are some addi
 
 1. Install all needed dependencies:
 ```bash
-npm install @angular-builders/custom-webpack@^7.0.0 @angular-builders/dev-server @babel/core @babel/preset-env babel-loader
+npm install @angular-builders/custom-webpack@7.0.0 @angular-builders/dev-server@7.3.1 @babel/core @babel/preset-env babel-loader
 ```
 
 2. After that we need to make Angular use custom webpack configuration. In angular.json add the following configuration lines:
