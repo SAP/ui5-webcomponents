@@ -1,7 +1,5 @@
-commit 7636bb70a853e9a6c0a334c206153a6308ef13de
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Mon Mar 23 15:24:58 2020 +0200
+commit 61081d66ec0411671352a10f03dba75ee355e88b
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Tue Mar 24 09:48:10 2020 +0200
 
-    fix(ui5-shellbar): provide correct target ref when item is in overflow popover (#1334)
-    
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/1325
+    chore: fix playground error (#1331)
