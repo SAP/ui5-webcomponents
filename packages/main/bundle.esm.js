@@ -35,6 +35,7 @@ import ComboBox from "./dist/ComboBox.js";
 import ComboBoxItem from "./dist/ComboBoxItem.js";
 import MultiComboBoxItem from "./dist/MultiComboBoxItem.js";
 import DatePicker from "./dist/DatePicker.js";
+import DurationPicker from "./dist/DurationPicker.js";
 import Dialog from "./dist/Dialog.js";
 import FileUploader from "./dist/FileUploader.js";
 import Icon from "./dist/Icon.js";
