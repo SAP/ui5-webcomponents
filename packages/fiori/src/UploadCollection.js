@@ -1,14 +1,14 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle, fetchI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import List from "@ui5/webcomponents/dist/List.js";
+import ListMode from "@ui5/webcomponents/dist/types/ListMode.js";
 import {
 	UPLOADCOLLECTION_NO_DATA_TEXT,
 	UPLOADCOLLECTION_NO_DATA_DESCRIPTION,
 	UPLOADCOLLECTION_DRAG_FILE_INDICATOR,
-	UPLOADCOLLECTION_DROP_FILE_INDICATOR
+	UPLOADCOLLECTION_DROP_FILE_INDICATOR,
 } from "./generated/i18n/i18n-defaults.js";
-import ListMode from "@ui5/webcomponents/dist/types/ListMode.js";
-import List from "@ui5/webcomponents/dist/List.js";
 
 // Template
 import UploadCollectionTemplate from "./generated/templates/UploadCollectionTemplate.lit.js";
@@ -19,12 +19,12 @@ import UploadCollectionCss from "./generated/themes/UploadCollection.css.js";
 const DndOverlayMode = {
 	None: "None",
 	Drag: "Drag",
-	Drop: "Drop"
+	Drop: "Drop",
 };
 
 const draggingFiles = event => {
 	return event.dataTransfer.types.includes("Files");
-}
+};
 
 /**
  * Handles drag and drop event listeners on document.body.
@@ -35,6 +35,7 @@ const bodyDnDHandler = {
 	_lastDragEnter: null,
 	_uploadCollections: new Set(),
 	_globalHandlersAttached: false,
+
 	_ondragenter: event => {
 		if (!draggingFiles(event)) {
 			return;
@@ -47,6 +48,7 @@ const bodyDnDHandler = {
 			}
 		});
 	},
+
 	_ondragleave: event => {
 		bodyDnDHandler._uploadCollections.forEach(uc => {
 			if (bodyDnDHandler._lastDragEnter === event.target) {
@@ -54,12 +56,14 @@ const bodyDnDHandler = {
 			}
 		});
 	},
-	_ondrop: () => {
+
+	_ondrop: event => {
 		bodyDnDHandler._uploadCollections.forEach(uc => {
 			uc._dndOverlayMode = DndOverlayMode.None;
 		});
 	},
-	_attachGlobalHandlers: function() {
+
+	_attachGlobalHandlers() {
 		if (!this._globalHandlersAttached) {
 			document.body.addEventListener("dragenter", this._ondragenter);
 			document.body.addEventListener("dragleave", this._ondragleave);
@@ -67,25 +71,27 @@ const bodyDnDHandler = {
 			this._globalHandlersAttached = true;
 		}
 	},
-	_detachGlobalHandlers: function() {
+
+	_detachGlobalHandlers() {
 		document.body.removeEventListener("dragenter", this._ondragenter);
 		document.body.removeEventListener("dragleave", this._dragleave);
 		document.body.removeEventListener("drop", this._ondrop);
 		this._globalHandlersAttached = false;
-
 	},
-	addUploadCollectionInstance: function(uploadCollections) {
-		this._uploadCollections.add(uploadCollections);
+
+	addUploadCollectionInstance(uploadCollection) {
+		this._uploadCollections.add(uploadCollection);
 		this._attachGlobalHandlers();
 	},
-	removeUploadCollectionInstance: function() {
-		this.uploadCollections.delete(uploadCollections);
+
+	removeUploadCollectionInstance(uploadCollection) {
+		this.uploadCollections.delete(uploadCollection);
 
 		if (this.uploadCollections.size === 0) {
 			this._detachGlobalHandlers();
 		}
 	},
-}
+};
 
 /**
  * @public
@@ -97,18 +103,18 @@ const metadata = {
 			type: ListMode,
 			defaultValue: ListMode.None,
 		},
+		noDataDescription: {
+			type: String,
+		},
+		noDataText: {
+			type: String,
+		},
 		noDnd: {
 			type: Boolean,
 		},
-		noDataText:{ 
-			type: String,
-		},
-		noDataDescription:{ 
-			type: String,
-		},
 		_dndOverlayMode: {
 			type: String,
-			defaultValue: DndOverlayMode.None
+			defaultValue: DndOverlayMode.None,
 		},
 	},
 	managedSlots: true,
@@ -131,7 +137,20 @@ const metadata = {
 			detail: {
 				item: { type: HTMLElement },
 			},
-		}
+		},
+		/**
+		 * Fired when selection is changed by user interaction
+		 * in <code>SingleSelect</code> and <code>MultiSelect</code> modes.
+		 *
+		 * @event
+		 * @param {Array} selectedItems An array of the selected items.
+		 * @public
+		 */
+		selectionChange: {
+			detail: {
+				selectedItems: { type: Array },
+			},
+		},
 	},
 };
 
@@ -217,10 +236,6 @@ class UploadCollection extends UI5Element {
 			this._removeDragAndDropListeners();
 		}
 	}
-	
-	_onItemDelete(event) {
-		this.fireEvent("fileDeleted", { item: event.detail.item });
-	}
 
 	_addDragAndDropListeners() {
 		this._root.addEventListener("dragenter", this._listeners.dragenter);
@@ -253,7 +268,7 @@ class UploadCollection extends UI5Element {
 	}
 
 	_ondragover(event) {
-		event.preventDefault()
+		event.preventDefault();
 	}
 
 	_ondragleave(event) {
@@ -284,6 +299,14 @@ class UploadCollection extends UI5Element {
 		this.fireEvent("fileRenamed", { item: event.target });
 	}
 
+	_onItemDelete(event) {
+		this.fireEvent("fileDeleted", { item: event.detail.item });
+	}
+
+	_onSelectionChange(event) {
+		this.fireEvent("selectionChange", { selectedItems: event.detail.selectedItems });
+	}
+
 	get classes() {
 		return {
 			dndOverlay: {
@@ -299,7 +322,7 @@ class UploadCollection extends UI5Element {
 	}
 
 	get _dndOverlay() {
-		return this._root.querySelector(".uc-dnd-overlay")
+		return this._root.querySelector(".uc-dnd-overlay");
 	}
 
 	get _showDndOverlay() {
@@ -321,9 +344,9 @@ class UploadCollection extends UI5Element {
 	get _dndOverlayText() {
 		if (this._dndOverlayMode === DndOverlayMode.Drag) {
 			return this.i18nBundle.getText(UPLOADCOLLECTION_DRAG_FILE_INDICATOR);
-		} else {
-			return this.i18nBundle.getText(UPLOADCOLLECTION_DROP_FILE_INDICATOR);
 		}
+
+		return this.i18nBundle.getText(UPLOADCOLLECTION_DROP_FILE_INDICATOR);
 	}
 }
 

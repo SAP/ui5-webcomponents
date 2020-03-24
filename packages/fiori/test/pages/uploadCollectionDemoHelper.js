@@ -55,6 +55,12 @@
 		uploadCollection.mode = event.detail.selectedOption.textContent;
 	});
 
+	document.getElementById("changeType").addEventListener("change", function(event) {
+		uploadCollection.items.forEach(function (uci) {
+			uci.type = event.detail.selectedOption.textContent;
+		});
+	});
+
 	document.getElementById("fileUploader").addEventListener("change", function(event) {
 		var files = event.detail.files;
 
@@ -63,10 +69,14 @@
 		}
 	});
 
-	document.getElementById("cb1").addEventListener("change", function(event) {
-		uploadCollection.items.forEach(function (item) {
-			item.type = event.target.checked ? "Detail" : "Active";
-		});
+	uploadCollection.addEventListener("selectionChange", function (event) {
+		var selectedItems = event.detail.selectedItems.reduce(function (acc, item) {
+			return acc + item.fileName + ",";
+		}, "[");
+
+		selectedItems += "]"
+
+		document.getElementById("selectedItems").innerText = selectedItems;
 	});
 
 	uploadCollection.addEventListener("fileDeleted", function (event) {

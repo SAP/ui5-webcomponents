@@ -1,12 +1,11 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import Button from "@ui5/webcomponents/dist/Button.js";
+import ListItem from "@ui5/webcomponents/dist/ListItem.js";
 import {
 	UPLOADCOLLECTIONITEM_CANCELBUTTON_TEXT,
 	UPLOADCOLLECTIONITEM_RENAMEBUTTON_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
-import Button from "@ui5/webcomponents/dist/Button.js";
-import ListItem from "@ui5/webcomponents/dist/ListItem.js";
 
 // Template
 import UploadCollectionItemTemplate from "./generated/templates/UploadCollectionItemTemplate.lit.js";
@@ -27,16 +26,15 @@ const metadata = {
 		fileName: {
 			type: String,
 		},
-		noDelete: {
-			type: Boolean,
-		},
-		// TODO: better name + event for click
 		fileNameClickable: {
 			type: Boolean,
 		},
+		noDelete: {
+			type: Boolean,
+		},
 		_editing: {
-			type: Boolean
-		}
+			type: Boolean,
+		},
 	},
 	slots: /** @lends sap.ui.webcomponents.fiori.UploadCollectionItem.prototype */ {
 		"default": {
@@ -44,10 +42,11 @@ const metadata = {
 		},
 		thumbnail: {
 			type: HTMLElement,
-		}
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.fiori.UploadCollectionItem.prototype */ {
-		_rename: { }
+		fileNameClick: { },
+		_rename: { },
 	},
 };
 
@@ -137,6 +136,10 @@ class UploadCollectionItem extends ListItem {
 		this._editing = false;
 	}
 
+	_onFileNameClick(event) {
+		this.fireEvent("fileNameClick");
+	}
+
 	/**
 	 * @override
 	 */
@@ -147,9 +150,9 @@ class UploadCollectionItem extends ListItem {
 			main: {
 				...result.main,
 				"ui5-uci-root": true,
-				"ui5-uci-root-edit": this._editing
-			}
-		}
+				"ui5-uci-root-edit": this._editing,
+			},
+		};
 	}
 
 	/**

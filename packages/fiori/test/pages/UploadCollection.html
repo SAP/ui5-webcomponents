@@ -36,14 +36,23 @@
 </head>
 <body style="background-color: var(--sapBackgroundColor);">
 	<div class="header">
-		<ui5-label>Mode:</ui5-label>
+		<ui5-label>UC Mode:</ui5-label>
 		<ui5-select id="changeMode">
 			<ui5-option>None</ui5-option>
-			<ui5-option>Delete</ui5-option>
-			<ui5-option>MultiSelect</ui5-option>
 			<ui5-option>SingleSelect</ui5-option>
+			<ui5-option>SingleSelectBegin</ui5-option>
+			<ui5-option>SingleSelectEnd</ui5-option>
+			<ui5-option>MultiSelect</ui5-option>
+			<ui5-option>Delete</ui5-option>
 		</ui5-select>
-		<ui5-checkbox id="cb1" text="Items editable"></ui5-checkbox>
+		<ui5-label>UCI Type:</ui5-label>
+		<ui5-select id="changeType">
+			<ui5-option>Active</ui5-option>
+			<ui5-option>Inactive</ui5-option>
+			<ui5-option>Detail</ui5-option>
+		</ui5-select>
+		<ui5-label>Selected items:</ui5-label>
+		<ui5-label id="selectedItems"></ui5-label>
 	</div>
 
 	<p id="p1" draggable="true">This element is draggable</p>
@@ -58,7 +67,7 @@
 			</ui5-file-uploader>
 		</div>
 		<ui5-upload-collection-item
-				file-name="Laptop.jpg"
+				file-name="LaptopHT-1000.jpg"
 				file-name-clickable
 			>
 				<img src="./img/HT-1000.jpg" slot="thumbnail">
