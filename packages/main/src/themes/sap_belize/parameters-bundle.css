@@ -28,6 +28,7 @@
 @import "../base/Title-parameters.css";
 @import "../base/Toast-parameters.css";
 @import "../base/ToggleButton-parameters.css";
+@import "./WheelSlider-parameters.css";
 @import "../base/YearPicker-parameters.css";
 @import "../base/Token-parameters.css";
 @import "../base/MultiComboBox-parameters.css";

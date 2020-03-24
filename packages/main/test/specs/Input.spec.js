@@ -185,6 +185,18 @@ describe("Input general interaction", () => {
 		assert.strictEqual(inputResult.getValue(), "1", "suggestionItemSelect is fired once");
 	});
 
+	it("handles group suggestion item via keyboard", () => {
+		const suggestionsInput = $("#myInputGrouping").shadow$("input");
+		const inputResult = $("#inputResultGrouping").shadow$("input");
+
+		suggestionsInput.click();
+		suggestionsInput.keys("ArrowDown");
+		suggestionsInput.keys("Enter");
+
+		assert.strictEqual(suggestionsInput.getValue(), "", "Group item is not selected");
+		assert.strictEqual(inputResult.getValue(), "", "suggestionItemSelected event is not called");
+	});
+
 	it("Input's maxlength property is set correctly", () => {
 		const input5 = $("#input-tel");
 		const inputShadowRef = $("#input-tel").shadow$("input");

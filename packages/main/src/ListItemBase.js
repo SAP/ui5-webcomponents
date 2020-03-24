@@ -13,6 +13,16 @@ const metadata = {
 	properties: /** @lends  sap.ui.webcomponents.main.ListItemBase.prototype */  {
 
 		/**
+		 * Defines the selected state of the <code>ListItem</code>.
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 */
+		selected: {
+			type: Boolean,
+		},
+
+		/**
 		* Defines if the list item should display its bottom border.
 		* @private
 		*/

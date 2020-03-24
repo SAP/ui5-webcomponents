@@ -35,14 +35,18 @@
 
 		<ui5-list separators="Inner">
 			{{#each suggestionsTexts}}
-				<ui5-li
-					image="{{this.image}}"
-					icon="{{this.icon}}"
-					description="{{this.description}}"
-					info="{{this.info}}"
-					info-state="{{this.infoState}}"
-					@ui5-_itemPress="{{ fnOnSuggestionItemPress }}" 
-				>{{ this.text }}</ui5-li>
+				{{#if group}}
+					<ui5-li-groupheader>{{ this.text }}</ui5-groupheader>
+				{{else}}
+					<ui5-li
+						image="{{this.image}}"
+						icon="{{this.icon}}"
+						description="{{this.description}}"
+						info="{{this.info}}"
+						info-state="{{this.infoState}}"
+						@ui5-_itemPress="{{ fnOnSuggestionItemPress }}" 
+					>{{ this.text }}</ui5-li>
+				{{/if}}
 			{{/each}}
 		</ui5-list>
 

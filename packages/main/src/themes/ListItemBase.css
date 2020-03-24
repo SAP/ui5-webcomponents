@@ -8,6 +8,11 @@
 	box-sizing: border-box;
 }
 
+/* selected */
+:host([selected]) {
+	background: var(--sapList_SelectionBackgroundColor);
+}
+
 :host([has-border]) {
 	border-bottom: var(--ui5-listitem-border-bottom);
 }

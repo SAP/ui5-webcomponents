@@ -42,6 +42,10 @@ class StaticAreaItem {
 	 * @protected
 	 */
 	_removeFragmentFromStaticArea() {
+		if (!this.staticAreaItemDomRef) {
+			return;
+		}
+
 		const staticArea = getStaticAreaInstance();
 
 		staticArea.removeChild(this.staticAreaItemDomRef);

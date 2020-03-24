@@ -2,11 +2,11 @@
  * Calculates the next fallback locale for the given locale.
  *
  * @param {string} locale Locale string in Java format (underscores) or null
- * @returns {string|null} Next fallback Locale or null if there is no more fallback
+ * @returns {string} Next fallback Locale or "en" if no fallbacks found.
  */
 const nextFallbackLocale = locale => {
 	if (!locale) {
-		return null;
+		return "en";
 	}
 
 	if (locale === "zh_HK") {
