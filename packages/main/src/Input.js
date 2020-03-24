@@ -579,7 +579,7 @@ class Input extends UI5Element {
 	toggle(isToggled) {
 		if (isToggled) {
 			this.openPopover();
-	} else {
+		} else {
 			this.closePopover();
 		}
 	}
