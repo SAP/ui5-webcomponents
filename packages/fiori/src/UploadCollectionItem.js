@@ -193,7 +193,7 @@ class UploadCollectionItem extends ListItem {
 		}
 
 		this._editing = false;
-		this.fileName = event.target.value;
+		this.fileName = event.target.value + this._fileExtension;
 		this.fireEvent("_rename");
 	}
 

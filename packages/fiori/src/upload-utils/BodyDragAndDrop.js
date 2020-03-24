@@ -5,7 +5,7 @@
  * there is at least 1 UploadCollection registered in the set.
  */
 
-import UploadCollectionDnDOverlayMode from "./types/UploadCollectionDnDMode.js";
+import UploadCollectionDnDOverlayMode from "../types/UploadCollectionDnDMode.js";
 
 const draggingFiles = event => {
 	return event.dataTransfer.types.includes("Files");
