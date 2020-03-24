@@ -1,0 +1,24 @@
+<div id="{{this._id}}" class="ui5-timepicker-root" @keydown="{{_ontimepickerkeydown}}">
+	<ui5-input
+			id="{{_id}}-inner"
+			value="{{value}}"
+			?disabled="{{disabled}}"
+			?readonly="{{readonly}}"
+			value-state="{{valueState}}"
+			@ui5-change="{{_handleInputChange}}"
+			@ui5-input="{{_handleInputLiveChange}}"
+	>
+	{{#unless readonly}}
+		<ui5-icon
+			slot="icon"
+			name="time-entry-request"
+			tabindex="-1"
+			show-tooltip
+			@click="{{togglePicker}}"
+			input-icon
+			?pressed="{{_isPickerOpen}}"
+			class="ui5-timepicker-input-icon-button"
+		></ui5-icon>
+	{{/unless}}
+	</ui5-input>
+</div>
