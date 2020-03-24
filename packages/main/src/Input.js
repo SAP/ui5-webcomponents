@@ -51,19 +51,23 @@ const metadata = {
 		/**
 		 * Defines the <code>ui5-input</code> suggestion items.
 		 * <br><br>
-		 * Example: <br>
+		 * Example:
+		 * <br><br>
 		 * &lt;ui5-input show-suggestions><br>
-		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li>Item #1&lt;/ui5-li><br>
-		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-li>Item #2&lt;/ui5-li><br>
+		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-suggestion-item text="Item #1">&lt;/ui5-suggestion-item><br>
+		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-suggestion-item text="Item #2">&lt;/ui5-suggestion-item><br>
 		 * &lt;/ui5-input>
-		 * <ui5-input show-suggestions><ui5-li>Item #1</ui5-li><ui5-li>Item #2</ui5-li></ui5-input>
+		 * <br>
+		 * <ui5-input show-suggestions>
+		 * <ui5-suggestion-item text="Item #1"></ui5-suggestion-item>
+		 * <ui5-suggestion-item text="Item #2"></ui5-suggestion-item>
+		 * </ui5-input>
 		 * <br><br>
 		 * <b>Note:</b> The suggestion would be displayed only if the <code>showSuggestions</code>
 		 * property is set to <code>true</code>.
 		 * <br><br>
-		 * <b>Note:</b> The &lt;ui5-li> and  &lt;ui5-li-custom> are recommended to be used as suggestion items.
-		 * <br>
-		 * In order to use them, you need to import either <code>"@ui5/webcomponents/dist/StandardListItem"</code>, or  <code>"@ui5/webcomponents/dist/CustomListItem"</code> module.
+		 * <b>Note:</b> The &lt;ui5-suggestion-item> is recommended to be used as a suggestion item.
+		 * and you need to import the <code>"@ui5/webcomponents/dist/SuggestionItem"</code> module.
 		 *
 		 * @type {HTMLElement[]}
 		 * @slot
@@ -321,6 +325,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.Input
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-input
+ * @appenddocs SuggestionItem
  * @public
  */
 class Input extends UI5Element {
@@ -547,7 +552,7 @@ class Input extends UI5Element {
 	}
 
 	selectSuggestion(item, keyboardUsed) {
-		const itemText = item.textContent;
+		const itemText = item.text || item.textContent; // keep textContent for compatibility
 		const fireInput = keyboardUsed
 			? this.valueBeforeItemSelection !== itemText : this.value !== itemText;
 
