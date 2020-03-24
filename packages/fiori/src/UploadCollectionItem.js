@@ -228,7 +228,7 @@ class UploadCollectionItem extends ListItem {
 	}
 
 	get _fileNameWithoutExtension() {
-		return this.fileName.split(".")[0];
+		return this.fileName.substring(0, this.fileName.length - this._fileExtension.length);
 	}
 
 	get _fileExtension() {
