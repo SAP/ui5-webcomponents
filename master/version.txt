@@ -1,5 +1,5 @@
-commit c0ffbac87e397a2ba459950e9ec338e1518637f0
+commit dfc0cb1860086528d5378f7400ec4c66bb4633bf
 Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Tue Mar 24 11:56:03 2020 +0200
+Date:   Tue Mar 24 13:17:33 2020 +0200
 
-    fix(ui5-input): fix javascript error on mobile (#1339)
+    chore: add static area tests (#1342)
