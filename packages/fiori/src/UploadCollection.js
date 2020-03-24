@@ -295,7 +295,7 @@ class UploadCollection extends UI5Element {
 	}
 
 	get _root() {
-		return this.shadowRoot.querySelector(".uc-root");
+		return this.shadowRoot.querySelector(".ui5-uc-root");
 	}
 
 	get _dndOverlay() {

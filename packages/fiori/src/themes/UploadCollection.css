@@ -2,18 +2,24 @@
 	display: block;
 }
 
-.uc-root {
-	position: relative;
+.ui5-uc-root {
 	height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+.ui5-uc-content {
+	position: relative;
+	flex: 1;
 }
 
 /* No Files */
 .uc-no-files {
 	position: absolute;
-	top: 3rem;
-	right: 0rem;
-	left: 0rem;
-	bottom: 0rem;
+	top: 0;
+	right: 0;
+	left: 0;
+	bottom: 0;
 	box-sizing: border-box;
 	display: flex;
 	flex-direction: column;
@@ -49,10 +55,10 @@
 /* Drag and Drop */
 .uc-dnd-overlay {
 	position: absolute;
-	top: 3rem;
-	right: 0rem;
-	left: 0rem;
-	bottom: 0rem;
+	top: 0.5rem;
+	right: 0.5rem;
+	left: 0.5rem;
+	bottom: 0.5rem;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -60,8 +66,8 @@
 }
 
 .uc-drag-overlay {
-	background-color: var(--sapUploadCollection_DragOverlayBackground);
-	border: 0.125rem dashed var(--sapContent_ForegroundBorderColor);
+	background-color: var(--ui5_upload_collection_drag_overlay_background);
+	border: var(--ui5_upload_collection_drag_overlay_border);
 }
 
 .uc-drop-overlay::after {
@@ -71,21 +77,24 @@
 	right: 0rem;
 	left: 0rem;
 	bottom: 0rem;
-	background-color: var(--sapUploadCollection_DropOverlayBackground);
-	border: 0.125rem solid var(--sapActiveColor);
+	background-color: var(--ui5_upload_collection_drop_overlay_background);
+	border: var(--ui5_upload_collection_drop_overlay_border);
 }
 
 .uc-dnd-overlay ui5-icon {
 	width: 4rem;
 	height: 4rem;
 	margin-bottom: 1rem;
+	color: var(--sapContent_NonInteractiveIconColor);
+}
+
+.uc-dnd-overlay .dnd-overlay-text {
+	font-family: var(--sapFontFamily);
+	font-size: var(--sapMFontHeader4Size);
+	color: var(--sapContent_NonInteractiveIconColor);
 }
 
 .uc-drop-overlay ui5-icon,
-.uc-drop-overlay ui5-text {
+.uc-drop-overlay .dnd-overlay-text {
 	color: var(--sapActiveColor);
-}
-
-.uc-drop-overlay ui5-text {
-	font-size: var(--sapMFontHeader4Size)
 }

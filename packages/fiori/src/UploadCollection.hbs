@@ -1,28 +1,28 @@
 
-<div class="uc-root">
-	<ui5-list
-		mode="{{mode}}"
-		class="uc-root"
-		@ui5-itemDelete="{{_onItemDelete}}"
-	>
-		<div slot="header" class="ui5-uc-header">
-			<slot name="header"></slot>
-		</div>
-		<slot></slot>
-	</ui5-list>
-
-	{{#if _showNoData}}
-		<div class="uc-no-files">
-			<div class="icon-container">
-				<ui5-icon name="document"></ui5-icon>
+<div class="ui5-uc-root">
+	<div class="ui5-uc-header">
+		<slot name="header"></slot>
+	</div>
+	<div class="ui5-uc-content">
+		<ui5-list
+			mode="{{mode}}"
+			@ui5-itemDelete="{{_onItemDelete}}"
+		>
+			<slot></slot>
+		</ui5-list>
+		{{#if _showNoData}}
+			<div class="uc-no-files">
+				<div class="icon-container">
+					<ui5-icon name="document"></ui5-icon>
+				</div>
+				<ui5-title level="H2">{{_noDataText}}</ui5-title>
+				<ui5-label class="subtitle">{{_noDataDescription}}</ui5-label>
 			</div>
-			<ui5-title level="H2">{{_noDataText}}</ui5-title>
-			<ui5-label class="subtitle">{{_noDataDescription}}</ui5-label>
-		</div>
-	{{else if _showDndOverlay}}
-		<div class="{{classes.dndOverlay}}">
-			<ui5-icon name="upload-to-cloud" class="drag-overlay-icon"></ui5-icon>
-			<ui5-text>{{_dndOverlayText}}</ui5-title>
-		</div>
-	{{/if}}
+		{{else if _showDndOverlay}}
+			<div class="{{classes.dndOverlay}}">
+				<ui5-icon name="upload-to-cloud"></ui5-icon>
+				<span class="dnd-overlay-text">{{_dndOverlayText}}</span>
+			</div>
+		{{/if}}
+	</div>
 </div>
