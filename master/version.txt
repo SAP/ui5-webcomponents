@@ -1,5 +1,30 @@
-commit 56e39bc92a6a6cfb4e6b5e809ecb2d51e092c71d
-Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Tue Mar 24 11:04:58 2020 +0200
+commit 786f4e981150460c1e1b0e84de7fb018c82fbcd6
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Mar 24 11:34:58 2020 +0200
 
-    feat(ui5-timepicker): implement new component (#1172)
+    feat(ui5-suggestion-item): add new component (#1336)
+    
+    An abstract item to serve as a suggestion item within the Input. Based on the suggestion item properties, the Input will display either a StandardListItem, or a GroupHeaderListItem within the suggestion popover.
+    
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/1313
+    
+    The usage becomes:
+    
+    ```html
+    <ui5-input id="myInput2" show-suggestions >
+            <ui5-suggestion-item group text="group 1"></ui5-suggestion-item>
+            <ui5-suggestion-item text="Cozy"></ui5-suggestion-item>
+            <ui5-suggestion-item text="Compact"></ui5-suggestion-item>
+            <ui5-suggestion-item text="Condensed"></ui5-suggestion-item>
+    </ui5-input>
+    ```
+    
+    Although this is still compatible:
+    
+    ```html
+    <ui5-input  show-suggestions >
+            <ui5-li>Cozy</ui5-li>
+            <ui5-li>Compact</ui5-li>
+            <ui5-li>Condensed</ui5-li>
+    </ui5-input>
+    ```
