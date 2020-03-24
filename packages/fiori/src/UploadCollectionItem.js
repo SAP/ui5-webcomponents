@@ -1,6 +1,8 @@
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
+import Input from "@ui5/webcomponents/dist/Input.js";
+import Link from "@ui5/webcomponents/dist/Link.js";
 import ListItem from "@ui5/webcomponents/dist/ListItem.js";
 import {
 	UPLOADCOLLECTIONITEM_CANCELBUTTON_TEXT,
@@ -19,33 +21,94 @@ import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css
 const metadata = {
 	tag: "ui5-upload-collection-item",
 	properties: /** @lends sap.ui.webcomponents.fiori.UploadCollectionItem.prototype */ {
+		/**
+		 * Holds <code>File</code>, associated with this item.
+		 *
+		 * @type {File}
+		 * @defaultvalue null
+		 * @public
+		 */
 		file: {
 			type: Object,
 			defaultValue: null,
 		},
+
+		/**
+		 * The name of the file.
+		 *
+		 * @type {string}
+		 * @public
+		 */
 		fileName: {
 			type: String,
 		},
+
+		/**
+		 * If set to <code>true</code> the file name will be clickable and it will fire <code>fileNameClick</code> event upon click.
+		 *
+		 * @type {boolean}
+		 * @public
+		 */
 		fileNameClickable: {
 			type: Boolean,
 		},
+
+		/**
+		 * Removes delete option from <code>ui5-upload-collection</code> with <code>mode</code> <code>Delete</code> for this item.
+		 *
+		 * @type {boolean}
+		 * @public
+		 */
 		noDelete: {
 			type: Boolean,
 		},
+
+		/**
+		 * Indicates if editing.
+		 *
+		 * @private
+		 */
 		_editing: {
 			type: Boolean,
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.fiori.UploadCollectionItem.prototype */ {
+		/**
+		 * Hold the description of the <code>ui5-upload-collection-item</code>. Will be shown below the file name.
+		 *
+		 * @type {Node[]}
+		 * @slot
+		 * @public
+		 */
 		"default": {
 			type: Node,
 		},
+
+		/**
+		 * A thumbnail, which will be shown in the beginning of the <code>ui5-upload-collection-item</code>.
+		 * <br><br>
+		 * <b>Note:</b> Use <code>ui5-icon</code> or <code>img</code> for the intended design.
+		 *
+		 * @type {HTMLElement}
+		 * @slot
+		 * @public
+		 */
 		thumbnail: {
 			type: HTMLElement,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.fiori.UploadCollectionItem.prototype */ {
+		/**
+		 * Fired when the file name is clicked.
+		 * <br><br>
+		 * <b>Note:</b> This event is only available when <code>fileNameClickable</code> property is <code>true</code>.
+		 *
+		 * @event
+		 * @param {HTMLElement} item The <code>ui5-upload-collection-item</code> which was renamed.
+		 * @public
+		 */
 		fileNameClick: { },
+
 		_rename: { },
 	},
 };
@@ -90,6 +153,8 @@ class UploadCollectionItem extends ListItem {
 	static async onDefine() {
 		await Promise.all([
 			Button.define(),
+			Input.define(),
+			Link.define(),
 			fetchI18nBundle("@ui5/webcomponents"),
 		]);
 	}
