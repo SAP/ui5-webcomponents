@@ -227,28 +227,36 @@ class UploadCollection extends UI5Element {
 	}
 
 	onEnterDOM() {
-		if (!this.noDnd) {
-			addUploadCollectionInstance(this);
+		if (this.noDnd) {
+			return;
 		}
+
+		addUploadCollectionInstance(this);
 	}
 
 	onBeforeRendering() {
-		if (!this.noDnd) {
-			this._removeDragAndDropListeners();
+		if (this.noDnd) {
+			return;
 		}
+
+		this._removeDragAndDropListeners();
 	}
 
 	onAfterRendering() {
-		if (!this.noDnd) {
-			this._addDragAndDropListeners();
+		if (this.noDnd) {
+			return;
 		}
+
+		this._addDragAndDropListeners();
 	}
 
 	onExitDOM() {
-		if (!this.noDnd) {
-			removeUploadCollectionInstance(this);
-			this._removeDragAndDropListeners();
+		if (this.noDnd) {
+			return;
 		}
+
+		removeUploadCollectionInstance(this);
+		this._removeDragAndDropListeners();
 	}
 
 	_addDragAndDropListeners() {
