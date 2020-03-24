@@ -596,7 +596,6 @@ class Input extends UI5Element {
 		}
 	}
 
-
 	getInputValue() {
 		const inputDOM = this.getDomRef();
 		if (inputDOM) {
@@ -609,7 +608,7 @@ class Input extends UI5Element {
 		let inputDomRef;
 
 		if (isPhone()) {
-			inputDomRef = this.getStaticAreaItemDomRef().querySelector(".ui5-input-inner-phone");
+			inputDomRef = this.Suggestions.responsivePopover.querySelector(".ui5-input-inner-phone");
 		}
 
 		if (!inputDomRef) {
