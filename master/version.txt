@@ -1,9 +1,11 @@
-commit bfe4b1941e633f04dd4a107e83c2b1d2f77e4271
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Mar 24 15:27:35 2020 +0200
+commit 0af6c3d4c3de2bab86071b43043f4eddb47d1220
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Tue Mar 24 21:48:34 2020 +0200
 
-    refactor(ui5-input): improve group suggestion item handling (#1343)
+    fix(ui5-busyindicator): adjust stylings to latest spec (#1344)
     
-    Couple of improvements in handling a group item within the suggestion popover:
-    - When navigating via the keyboard over a group item, the text in the input field should be cleared
-    - However, the group item should also have the selection visual, when reached via the keyboard, but it can not be selected neither with the keyboard, nor with a click
+    - using scale with value more than 1 used to blur stylings on Webkit browsers
+    
+    BREAKING CHANGE: Medium size is now default
+    
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/1337
