@@ -1,5 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import StandardListItem from "./StandardListItem.js";
 import GroupHeaderListItem from "./GroupHeaderListItem.js";
@@ -92,9 +92,11 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the item to be displayed as a group item. When set, the other properties,
-		 * such as <code>image</code>, <code>icon</code>, <code>description</code>, etc. will be omitted.
-		 * Only the <code>text</code> will be displayed.
+		 * Defines the item to be displayed as a group item.
+		 * <br>
+		 * <b>Note:</b>
+		 * When set, the other properties, such as <code>image</code>, <code>icon</code>, <code>description</code>, etc. will be omitted
+		 * and only the <code>text</code> will be displayed.
 		 * @type {string}
 		 * @public
 		 */
@@ -121,10 +123,6 @@ const metadata = {
 class SuggestionItem extends UI5Element {
 	static get metadata() {
 		return metadata;
-	}
-
-	static get render() {
-		return litRender;
 	}
 
 	static async onDefine() {

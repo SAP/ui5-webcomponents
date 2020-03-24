@@ -552,6 +552,10 @@ class Input extends UI5Element {
 	}
 
 	selectSuggestion(item, keyboardUsed) {
+		if (item.group) {
+			return;
+		}
+
 		const itemText = item.text || item.textContent; // keep textContent for compatibility
 		const fireInput = keyboardUsed
 			? this.valueBeforeItemSelection !== itemText : this.value !== itemText;
@@ -569,7 +573,7 @@ class Input extends UI5Element {
 
 	previewSuggestion(item) {
 		this.valueBeforeItemSelection = this.value;
-		this.value = item.textContent;
+		this.value = item.group ? "" : item.textContent;
 	}
 
 	fireEventByAction(action) {
