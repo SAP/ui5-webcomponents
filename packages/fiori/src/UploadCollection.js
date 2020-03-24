@@ -14,89 +14,18 @@ import {
 	UPLOADCOLLECTION_DRAG_FILE_INDICATOR,
 	UPLOADCOLLECTION_DROP_FILE_INDICATOR,
 } from "./generated/i18n/i18n-defaults.js";
+import {
+	addUploadCollectionInstance,
+	removeUploadCollectionInstance,
+	draggingFiles,
+} from "./upload-utils/BodyDragAndDrop.js";
+import UploadCollectionDnDOverlayMode from "./types/UploadCollectionDnDMode.js";
 
 // Template
 import UploadCollectionTemplate from "./generated/templates/UploadCollectionTemplate.lit.js";
 
 // Styles
 import UploadCollectionCss from "./generated/themes/UploadCollection.css.js";
-
-const DndOverlayMode = {
-	None: "None",
-	Drag: "Drag",
-	Drop: "Drop",
-};
-
-const draggingFiles = event => {
-	return event.dataTransfer.types.includes("Files");
-};
-
-/**
- * Handles drag and drop event listeners on document.body.
- * Ensures that there is only 1 listener per type attached (drag, drop, leave). Event listeners will only be attached when
- * there is at least 1 UploadCollection registered in the set.
- */
-const bodyDnDHandler = {
-	_lastDragEnter: null,
-	_uploadCollections: new Set(),
-	_globalHandlersAttached: false,
-
-	_ondragenter: event => {
-		if (!draggingFiles(event)) {
-			return;
-		}
-
-		bodyDnDHandler._lastDragEnter = event.target;
-		bodyDnDHandler._uploadCollections.forEach(uc => {
-			if (uc._dndOverlayMode !== DndOverlayMode.Drop) {
-				uc._dndOverlayMode = DndOverlayMode.Drag;
-			}
-		});
-	},
-
-	_ondragleave: event => {
-		bodyDnDHandler._uploadCollections.forEach(uc => {
-			if (bodyDnDHandler._lastDragEnter === event.target) {
-				uc._dndOverlayMode = DndOverlayMode.None;
-			}
-		});
-	},
-
-	_ondrop: event => {
-		bodyDnDHandler._uploadCollections.forEach(uc => {
-			uc._dndOverlayMode = DndOverlayMode.None;
-		});
-	},
-
-	_attachGlobalHandlers() {
-		if (!this._globalHandlersAttached) {
-			document.body.addEventListener("dragenter", this._ondragenter);
-			document.body.addEventListener("dragleave", this._ondragleave);
-			document.body.addEventListener("drop", this._ondrop);
-			this._globalHandlersAttached = true;
-		}
-	},
-
-	_detachGlobalHandlers() {
-		document.body.removeEventListener("dragenter", this._ondragenter);
-		document.body.removeEventListener("dragleave", this._dragleave);
-		document.body.removeEventListener("drop", this._ondrop);
-		this._globalHandlersAttached = false;
-	},
-
-	addUploadCollectionInstance(uploadCollection) {
-		this._uploadCollections.add(uploadCollection);
-		this._attachGlobalHandlers();
-	},
-
-	removeUploadCollectionInstance(uploadCollection) {
-		this.uploadCollections.delete(uploadCollection);
-
-		if (this.uploadCollections.size === 0) {
-			this._detachGlobalHandlers();
-		}
-	},
-};
 
 /**
  * @public
@@ -160,7 +89,7 @@ const metadata = {
 		 */
 		_dndOverlayMode: {
 			type: String,
-			defaultValue: DndOverlayMode.None,
+			defaultValue: UploadCollectionDnDOverlayMode.None,
 		},
 	},
 	managedSlots: true,
@@ -299,7 +228,7 @@ class UploadCollection extends UI5Element {
 
 	onEnterDOM() {
 		if (!this.noDnd) {
-			bodyDnDHandler.addUploadCollectionInstance(this);
+			addUploadCollectionInstance(this);
 		}
 	}
 
@@ -317,7 +246,7 @@ class UploadCollection extends UI5Element {
 
 	onExitDOM() {
 		if (!this.noDnd) {
-			bodyDnDHandler.removeUploadCollectionInstance(this);
+			removeUploadCollectionInstance(this);
 			this._removeDragAndDropListeners();
 		}
 	}
@@ -344,12 +273,12 @@ class UploadCollection extends UI5Element {
 		}
 
 		if (event.target === this._dndOverlay) {
-			this._dndOverlayMode = DndOverlayMode.Drop;
+			this._dndOverlayMode = UploadCollectionDnDOverlayMode.Drop;
 		}
 	}
 
 	_ondrop(event) {
-		this._dndOverlayMode = DndOverlayMode.None;
+		this._dndOverlayMode = UploadCollectionDnDOverlayMode.None;
 	}
 
 	_ondragover(event) {
@@ -358,21 +287,21 @@ class UploadCollection extends UI5Element {
 
 	_ondragleave(event) {
 		if (event.target === this._dndOverlay) {
-			this._dndOverlayMode = DndOverlayMode.Drag;
+			this._dndOverlayMode = UploadCollectionDnDOverlayMode.Drag;
 		}
 	}
 
 	_ondragenterBody(event) {
 		this._lastDragEnter = event.target;
 
-		if (this._dndOverlayMode !== DndOverlayMode.Drop) {
-			this._dndOverlayMode = DndOverlayMode.Drag;
+		if (this._dndOverlayMode !== UploadCollectionDnDOverlayMode.Drop) {
+			this._dndOverlayMode = UploadCollectionDnDOverlayMode.Drag;
 		}
 	}
 
 	_ondragleaveBody(event) {
 		if (this._lastDragEnter === event.target) {
-			this._dndOverlayMode = DndOverlayMode.None;
+			this._dndOverlayMode = UploadCollectionDnDOverlayMode.None;
 		}
 	}
 
@@ -396,8 +325,8 @@ class UploadCollection extends UI5Element {
 		return {
 			dndOverlay: {
 				"uc-dnd-overlay": true,
-				"uc-drag-overlay": this._dndOverlayMode === DndOverlayMode.Drag,
-				"uc-drop-overlay": this._dndOverlayMode === DndOverlayMode.Drop,
+				"uc-drag-overlay": this._dndOverlayMode === UploadCollectionDnDOverlayMode.Drag,
+				"uc-drop-overlay": this._dndOverlayMode === UploadCollectionDnDOverlayMode.Drop,
 			},
 		};
 	}
@@ -411,7 +340,7 @@ class UploadCollection extends UI5Element {
 	}
 
 	get _showDndOverlay() {
-		return this._dndOverlayMode !== DndOverlayMode.None;
+		return this._dndOverlayMode !== UploadCollectionDnDOverlayMode.None;
 	}
 
 	get _showNoData() {
@@ -427,7 +356,7 @@ class UploadCollection extends UI5Element {
 	}
 
 	get _dndOverlayText() {
-		if (this._dndOverlayMode === DndOverlayMode.Drag) {
+		if (this._dndOverlayMode === UploadCollectionDnDOverlayMode.Drag) {
 			return this.i18nBundle.getText(UPLOADCOLLECTION_DRAG_FILE_INDICATOR);
 		}
 
