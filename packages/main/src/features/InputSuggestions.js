@@ -278,6 +278,10 @@ class Suggestions {
 	}
 
 	async _respPopover() {
+		if (this.responsivePopover) {
+			return this.responsivePopover;
+		}
+
 		const staticAreaItem = await this._getComponent().getStaticAreaItemDomRef();
 		this.responsivePopover = staticAreaItem.querySelector("ui5-responsive-popover");
 		return this.responsivePopover;
