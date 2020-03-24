@@ -579,8 +579,7 @@ class Input extends UI5Element {
 	toggle(isToggled) {
 		if (isToggled) {
 			this.openPopover();
-		}
-		if (!isToggled && this._isPopoverOpen) {
+	} else {
 			this.closePopover();
 		}
 	}
@@ -601,8 +600,10 @@ class Input extends UI5Element {
 	}
 
 	closePopover() {
-		this._isPopoverOpen = false;
-		this.popover.close();
+		if (this.isOpen()) {
+			this._isPopoverOpen = false;
+			this.popover.close();
+		}
 	}
 
 	async _getPopover() {
@@ -819,7 +820,7 @@ class Input extends UI5Element {
 	}
 
 	get hasValueStateMessage() {
-		return this.valueStateMessage && this.hasValueState && this.valueState !== ValueState.Success;
+		return this.hasValueState && this.valueState !== ValueState.Success;
 	}
 
 	get valueStateText() {
