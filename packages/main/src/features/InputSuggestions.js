@@ -261,7 +261,7 @@ class Suggestions {
 	}
 
 	_getItems() {
-		return [].slice.call(this.responsivePopover.querySelectorAll("ui5-li"));
+		return [].slice.call(this.responsivePopover.querySelectorAll("ui5-li, ui5-li-groupheader"));
 	}
 
 	_getComponent() {

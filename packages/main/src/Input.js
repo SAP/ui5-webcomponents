@@ -569,7 +569,7 @@ class Input extends UI5Element {
 
 	previewSuggestion(item) {
 		this.valueBeforeItemSelection = this.value;
-		this.value = item.textContent;
+		this.value = item.group ? "" : item.textContent;
 	}
 
 	fireEventByAction(action) {
