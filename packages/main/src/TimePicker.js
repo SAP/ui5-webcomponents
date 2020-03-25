@@ -645,7 +645,6 @@ class TimePicker extends UI5Element {
 	}
 
 	setValue(value) {
-		debugger;
 		if (this.isValid(value)) {
 			this.value = this.normalizeValue(value);
 			this.setSlidersValue();
