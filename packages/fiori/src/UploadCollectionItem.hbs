@@ -5,32 +5,34 @@
 		<slot name="thumbnail"></slot>
 	</div>
 	<div class="ui5-uci-content-container">
-		{{#if _editing}}
-			<div class="ui5-uci-edit-container">
-				<ui5-input
-					id="ui5-uci-edit-input"
-					value="{{_fileNameWithoutExtension}}"
-					data-sap-focus-ref
-					@ui5-change="{{_onInputChange}}"
-				></ui5-input>
-				<span class="ui5-uci-file-extension">{{_fileExtension}}</span>
-			</div>
-		{{else }}
-			{{#if fileNameClickable}}
-				<ui5-link class="ui5-uci-file-name" @click="{{_onFileNameClick}}">{{fileName}}</ui5-link>
-			{{else}}
-				<span class="ui5-uci-file-name">{{fileName}}</span>
+		<div class="ui5-uci-content">
+			{{#if _editing}}
+				<div class="ui5-uci-edit-container">
+					<ui5-input
+						id="ui5-uci-edit-input"
+						value="{{_fileNameWithoutExtension}}"
+						data-sap-focus-ref
+						@ui5-change="{{_onInputChange}}"
+					></ui5-input>
+					<span class="ui5-uci-file-extension">{{_fileExtension}}</span>
+				</div>
+			{{else }}
+				{{#if fileNameClickable}}
+					<ui5-link class="ui5-uci-file-name" @click="{{_onFileNameClick}}">{{fileName}}</ui5-link>
+				{{else}}
+					<span class="ui5-uci-file-name">{{fileName}}</span>
+				{{/if}}
 			{{/if}}
-		{{/if}}
-		<div class="ui5-uci-description">
-			<slot></slot>
+			<div class="ui5-uci-description">
+				<slot></slot>
+			</div>
 		</div>
-	</div>
 
-	{{#if _editing}}
-		<div class="ui5-uci-edit-buttons">
-			<ui5-button design="Transparent" class="ui5-uci-edit-rename-btn">{{_renameBtnText}}</ui5-button>
-			<ui5-button design="Transparent" id="ui5-uci-edit-cancel" @click="{{_onRenameCancel}}">{{_cancelRenameBtnText}}</ui5-button>
-		</div>
-	{{/if}}
+		{{#if _editing}}
+			<div class="ui5-uci-edit-buttons">
+				<ui5-button design="Transparent" class="ui5-uci-edit-rename-btn">{{_renameBtnText}}</ui5-button>
+				<ui5-button design="Transparent" id="ui5-uci-edit-cancel" @click="{{_onRenameCancel}}">{{_cancelRenameBtnText}}</ui5-button>
+			</div>
+		{{/if}}
+	</div>
 {{/inline}}

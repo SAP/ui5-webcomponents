@@ -34,7 +34,12 @@
 
 /* Content */
 .ui5-uci-content-container {
-	flex: 1;
+	flex: 1 1 0;
+	display: flex;
+}
+
+.ui5-uci-content {
+	flex: 1 1 0;
 }
 
 .ui5-uci-file-name {
@@ -82,6 +87,18 @@ ui5-link.ui5-uci-file-name {
 	pointer-events: all;
 }
 
-ui5-uci-edit-rename-btn {
+.ui5-uci-edit-rename-btn {
 	margin-right: 0.125rem;
+}
+
+@media(max-width: 30rem) {
+	.ui5-uci-content-container {
+		display: block;
+	}
+
+	.ui5-uci-edit-buttons,
+	.ui5-li-detailbtn,
+	.ui5-li-deletebtn {
+		margin-top: 0.75rem;
+	}
 }

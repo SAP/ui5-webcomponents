@@ -180,7 +180,10 @@ class UploadCollectionItem extends ListItem {
 		await this.focus();
 
 		const inp = this.shadowRoot.getElementById("ui5-uci-edit-input");
-		inp.getFocusDomRef().setSelectionRange(0, this._fileNameWithoutExtension.length);
+
+		if (inp.getFocusDomRef()) {
+			inp.getFocusDomRef().setSelectionRange(0, this._fileNameWithoutExtension.length);
+		}
 	}
 
 	/**
