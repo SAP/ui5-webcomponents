@@ -62,21 +62,30 @@ describe("UploadCollection", () => {
 			const editButton = latestReportsPdf.shadow$(".ui5-li-detailbtn");
 	
 			editButton.click();
-			browser.keys("-edited");
+			browser.keys("last.reports-edited");
 			browser.keys("Enter");
 	
-			assert.strictEqual(latestReportsPdf.getProperty("fileName"), "latest.reports-edited.pdf", "dots in the file name should be preserved");
+			assert.strictEqual(latestReportsPdf.getProperty("fileName"), "last.reports-edited.pdf", "file extension '.pdf' should be preserved");
 		});
 
 		it("should be able to add extension, if there isn't such", () => {
 			const noFileExtensionItem = browser.$("#noFileExtension");
 			const editButton = noFileExtensionItem.shadow$(".ui5-li-detailbtn");
+			const newFileName = "newFileName.newExtension";
 	
 			editButton.click();
-			browser.keys(".newfileextension");
+			browser.keys(newFileName);
 			browser.keys("Enter");
 	
-			assert.strictEqual(noFileExtensionItem.getProperty("fileName"), "noextension.newfileextension", "the string after last dot is considered as extension");
+			assert.strictEqual(noFileExtensionItem.getProperty("fileName"), newFileName, "file name should be changed");
+
+			const newFileName2 = "newFileName2";
+
+			editButton.click();
+			browser.keys(newFileName2);
+			browser.keys("Enter");
+
+			assert.strictEqual(noFileExtensionItem.getProperty("fileName"), newFileName2 + ".newExtension", "the string after the last dot is considered as extension");
 		});
 	});
 
