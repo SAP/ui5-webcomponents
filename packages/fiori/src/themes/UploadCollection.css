@@ -96,5 +96,6 @@
 
 .uc-drop-overlay ui5-icon,
 .uc-drop-overlay .dnd-overlay-text {
-	color: var(--sapActiveColor);
+	color: var(--ui5_upload_collection_drop_overlay_icon_color);
+	z-index: 1;
 }
