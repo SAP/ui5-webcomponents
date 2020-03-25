@@ -20,7 +20,7 @@ Currently our npm packages follow the scheme:
 
 The `localization` package provides CLDR assets.
 
-`import "@ui5/webcomponents-utils/dist/Assets.js";`
+`import "@ui5/webcomponents-localization/dist/Assets.js";`
 
 Usually you don't need to import the assets directly from the `base` package (unless you are developing a Web Components package of your own),
 but rather from the package(s) containing the actual Web Components you'll be using in your app.
