@@ -408,7 +408,7 @@ class MultiComboBox extends UI5Element {
 		deletingItem.selected = false;
 		this._deleting = true;
 
-		this.fireEvent("selectionChange", { items: this._getSelectedItems() });
+		this.fireSelectionChange();
 	}
 
 	_tokenizerFocusOut() {
@@ -488,13 +488,19 @@ class MultiComboBox extends UI5Element {
 			});
 		});
 
-		this.fireEvent("selectionChange", { items: this._getSelectedItems() });
+		this.fireSelectionChange();
 
 		if (!event.detail.selectionComponentPressed && !isSpace(event.detail)) {
 			this.allItemsPopover.close();
 			this.value = "";
 			this.fireEvent("input");
 		}
+	}
+
+	fireSelectionChange() {
+		this.fireEvent("selectionChange", { items: this._getSelectedItems() });
+		//Angular 2 way data binding
+		this.fireEvent("value-changed");
 	}
 
 	async _getRespPopover() {
