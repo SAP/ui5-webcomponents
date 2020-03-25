@@ -702,7 +702,7 @@ class Input extends UI5Element {
 		let inputDomRef;
 
 		if (isPhone()) {
-			inputDomRef = this.Suggestions.responsivePopover.querySelector(".ui5-input-inner-phone");
+			inputDomRef = this.Suggestions && this.Suggestions.responsivePopover.querySelector(".ui5-input-inner-phone");
 		}
 
 		if (!inputDomRef) {
