@@ -1,5 +1,5 @@
-commit 1785a434fa11aea02d8d64ff37b67e0582dbde0c
+commit 892e9e97b960df3a5fbecf2d84f9f5da6c14b6f9
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Mar 25 16:42:03 2020 +0200
+Date:   Wed Mar 25 17:43:10 2020 +0200
 
-    docs(ui5-combobox): display component API (#1353)
+    docs(ui5-carousel): add enum options (#1352)
