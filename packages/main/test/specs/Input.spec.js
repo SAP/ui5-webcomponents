@@ -211,4 +211,14 @@ describe("Input general interaction", () => {
 		assert.ok(input5.getProperty("maxlength"), "Input's maxlength property should be applied.");
 		assert.strictEqual(inputShadowRef.getAttribute("maxlength"), "10", "Input's maxlength attribute should be applied.");
 	});
+
+	it("Checks if valueStateMessage is shown", () => {
+		let inputShadowRef = browser.$("#input2").shadow$("input");
+		let staticAreaItemClassName = browser.getStaticAreaItemClassName("#input2");
+		let popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
+
+		inputShadowRef.click();
+		
+		assert.ok(popover.getProperty("opened"), "Popover with valueStateMessage should be opened.");
+	});
 });

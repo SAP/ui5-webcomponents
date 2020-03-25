@@ -58,3 +58,16 @@
 		</div>
 	</ui5-responsive-popover>
 {{/if}}
+{{#if hasValueStateMessage}}
+	<ui5-popover class="ui5-input-valuestatemessage-popover" skip-registry-update placement-type="Bottom" no-padding no-arrow style={{styles.root}}>
+		<div slot="header" class="ui5-responsive-popover-header {{classes.popoverValueState}}" style={{styles.header}}>
+			{{#if shouldDisplayDefaultValueStateMessage}}
+				{{valueStateText}}
+			{{else}}
+				{{#each valueStateMessageText}}
+					{{this}}
+				{{/each}}
+			{{/if}}
+		</div>
+	</ui5-popover>
+{{/if}}
