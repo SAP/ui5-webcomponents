@@ -28,10 +28,13 @@ import List from "./List.js";
 import BusyIndicator from "./BusyIndicator.js";
 import StandardListItem from "./StandardListItem.js";
 
+/**
+ * @public
+ */
 const metadata = {
 	tag: "ui5-combobox",
 	defaultSlot: "items",
-	properties: {
+	properties: /** @lends sap.ui.webcomponents.main.ComboBox.prototype */ {
 		/**
 		 * Defines the value of the <code>ui5-combobox</code>.
 		 *
@@ -117,14 +120,13 @@ const metadata = {
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
-		 * @since 1.0.0-rc.5
 		 */
 		required: {
 			type: Boolean,
 		},
 
 		/**
-		 * Indicates whether a loading indicator should be shown in the picker
+		 * Indicates whether a loading indicator should be shown in the picker.
 		 * @public
 		 */
 		loading: {
@@ -167,7 +169,7 @@ const metadata = {
 		},
 	},
 	managedSlots: true,
-	slots: {
+	slots: /** @lends sap.ui.webcomponents.main.ComboBox.prototype */ {
 		/**
 		 * Defines the <code>ui5-combobox</code> items.
 		 * <br><br>
@@ -188,7 +190,7 @@ const metadata = {
 			listenFor: { include: ["*"] },
 		},
 	},
-	events: {
+	events: /** @lends sap.ui.webcomponents.main.ComboBox.prototype */ {
 		/**
 		 * Fired when the input operation has finished by pressing Enter, focusout or an item is selected.
 		 *
