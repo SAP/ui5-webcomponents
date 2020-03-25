@@ -149,7 +149,7 @@ const metadata = {
 	},
 	events: /** @lends sap.ui.webcomponents.main.TimePicker.prototype */ {
 		/**
-		 * Fired when the input operation has finished by clicking the "OK" button or 
+		 * Fired when the input operation has finished by clicking the "OK" button or
 		 * when the text in the input field has changed and the focus leaves the input field.
 		 *
 		 * @event
