@@ -87,7 +87,7 @@ describe("UploadCollection", () => {
 		
 			draggableElement.dragAndDrop(uploadCollection);
 
-			assert.notOk(browser.$(".uc-dnd-overlay").isDisplayed(), "the string after last dot is considered as extension");
+			assert.notOk(browser.$(".uc-dnd-overlay").isDisplayed(), "drag and drop overlay is not displayed");
 		});
 	});
 });
