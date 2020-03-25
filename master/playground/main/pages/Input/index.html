@@ -107,12 +107,11 @@
 
 	<h3> Test 'input' event</h3>
 	<ui5-input id="input2" value-state="Error" placeholder="Error state ...">
+		<div slot="valueStateMessage">Information message. This is a <a href="#">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
 		<ui5-icon slot="icon" name="message-error"></ui5-icon>
 	</ui5-input>
 	<h3> 'input' test result</h3>
 	<ui5-input id="inputLiveChangeResult"></ui5-input>
-
-
 
 	<h3> Input test change</h3>
 	<ui5-input id="inputChange">	</ui5-input>
@@ -165,7 +164,7 @@
 		<ui5-option selected>Compact</ui5-option>
 		<ui5-option>Condensed</ui5-option>
 	</ui5-select>
-	
+
 	<ui5-input  value="input" value-state="Error">
 		<ui5-icon slot="icon" name="message-warning"></ui5-icon>
 	</ui5-input>

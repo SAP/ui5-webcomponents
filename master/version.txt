@@ -1,11 +1,11 @@
-commit 0af6c3d4c3de2bab86071b43043f4eddb47d1220
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Tue Mar 24 21:48:34 2020 +0200
+commit 538a79a9213f78a2c9f2cbdb571bc8a5c779e547
+Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
+Date:   Wed Mar 25 08:02:21 2020 +0200
 
-    fix(ui5-busyindicator): adjust stylings to latest spec (#1344)
+    feat(ui5-input): implement valueStateMessage (#1297)
     
-    - using scale with value more than 1 used to blur stylings on Webkit browsers
+    - Feature
+    A popover with a message that appears right below the input field, when the Input is in "Error", "Warning" or ""Information" value state.
     
-    BREAKING CHANGE: Medium size is now default
-    
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/1337
+    - Usage
+    To inform the user about the reason for that state.
