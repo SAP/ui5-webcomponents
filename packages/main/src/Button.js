@@ -269,7 +269,7 @@ class Button extends UI5Element {
 	_onmousedown(event) {
 		event.isMarked = "button";
 		this.active = true;
-		activeButton = this;
+		activeButton = this; // eslint-disable-line
 	}
 
 	_onmouseup(event) {

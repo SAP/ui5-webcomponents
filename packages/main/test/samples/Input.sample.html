@@ -67,10 +67,10 @@
 				});
 
 				suggestionItems.forEach(function(item) {
-					var li = document.createElement("ui5-li");
+					var li = document.createElement("ui5-suggestion-item");
 					li.icon = "world";
 					li.id = item;
-					li.textContent = item;
+					li.text = item;
 					oInput.appendChild(li);
 				});
 			});
@@ -103,10 +103,10 @@
 		});
 		// Add the new suggestions in the DOM
 		suggestionItems.forEach(function(item) {
-			var li = document.createElement("ui5-li");
+			var li = document.createElement("ui5-suggestion-item");
 			li.icon = "world";
 			li.id = item;
-			li.textContent = item;
+			li.text = item;
 			oInput.appendChild(li);
 		});
 	});

@@ -59,6 +59,10 @@ class GroupHeaderListItem extends ListItemBase {
 	static get styles() {
 		return [ListItemBase.styles, groupheaderListItemCss];
 	}
+
+	get group() {
+		return true;
+	}
 }
 
 GroupHeaderListItem.define();

@@ -239,6 +239,7 @@ const metadata = {
 
 		/**
 		 * Fired, when the product switch icon is activated.
+		 * <b>Note:</b> You can prevent closing of oveflow popover by calling <code>event.preventDefault()</code>.
 		 *
 		 * @event
 		 * @param {HTMLElement} targetRef dom ref of the activated element
@@ -280,6 +281,7 @@ const metadata = {
 
 		/**
 		 * Fired, when a menu item is activated
+		 * <b>Note:</b> You can prevent closing of oveflow popover by calling <code>event.preventDefault()</code>.
 		 *
 		 * @event
 		 * @param {HTMLElement} item dom ref of the activated list item
@@ -448,7 +450,7 @@ class ShellBar extends UI5Element {
 	_menuItemPress(event) {
 		this.fireEvent("menuItemClick", {
 			item: event.detail.item,
-		});
+		}, true);
 	}
 
 	_logoPress(event) {
@@ -712,9 +714,11 @@ class ShellBar extends UI5Element {
 	}
 
 	_handleProductSwitchPress(event) {
-		this.fireEvent("productSwitchClick", {
-			targetRef: this.shadowRoot.querySelector(".ui5-shellbar-button-product-switch"),
-		});
+		const buttonRef = this.shadowRoot.querySelector(".ui5-shellbar-button-product-switch");
+
+		this._defaultItemPressPrevented = !this.fireEvent("productSwitchClick", {
+			targetRef: buttonRef.classList.contains("ui5-shellbar-hidden-button") ? event.target : buttonRef,
+		}, true);
 	}
 
 	/**

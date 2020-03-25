@@ -32,7 +32,7 @@
   },
   "devDependencies": {
     "@buxlabs/amd-to-es6": "^0.15.0",
-    "@openui5/sap.ui.core": "1.75.0",
+    "@openui5/sap.ui.core": "1.76.0",
     "copy-and-watch": "^0.1.4",
     "escodegen": "^1.11.0",
     "esprima": "^4.0.1",

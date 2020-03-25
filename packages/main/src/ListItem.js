@@ -18,16 +18,6 @@ const metadata = {
 	properties: /** @lends  sap.ui.webcomponents.main.ListItem.prototype */ {
 
 		/**
-		 * Defines the selected state of the <code>ListItem</code>.
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		selected: {
-			type: Boolean,
-		},
-
-		/**
 		 * Defines the visual indication and behavior of the list items.
 		 * Available options are <code>Active</code> (by default), <code>Inactive</code> and <code>Detail</code>.
 		 * <br><br>

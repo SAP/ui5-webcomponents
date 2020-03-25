@@ -37,12 +37,13 @@ class Suggestions {
 		const suggestions = [];
 		inputSuggestionItems.map(suggestion => {
 			return suggestions.push({
-				text: suggestion.textContent,
+				text: suggestion.text || suggestion.textContent, // keep textContent for compatibility
 				description: suggestion.description || undefined,
 				image: suggestion.image || undefined,
 				icon: suggestion.icon || undefined,
 				info: suggestion.info || undefined,
 				infoState: suggestion.infoState,
+				group: suggestion.group,
 			});
 		});
 
@@ -260,7 +261,7 @@ class Suggestions {
 	}
 
 	_getItems() {
-		return [].slice.call(this.responsivePopover.querySelectorAll("ui5-li"));
+		return [].slice.call(this.responsivePopover.querySelectorAll("ui5-li, ui5-li-groupheader"));
 	}
 
 	_getComponent() {
@@ -277,6 +278,10 @@ class Suggestions {
 	}
 
 	async _respPopover() {
+		if (this.responsivePopover) {
+			return this.responsivePopover;
+		}
+
 		const staticAreaItem = await this._getComponent().getStaticAreaItemDomRef();
 		this.responsivePopover = staticAreaItem.querySelector("ui5-responsive-popover");
 		return this.responsivePopover;
@@ -289,7 +294,6 @@ Suggestions.SCROLL_STEP = 48;
 // by the issuer component`s template.
 List.define();
 ResponsivePopover.define();
-
 
 // Add suggestions support to the global features registry so that Input.js can use it
 registerFeature("InputSuggestions", Suggestions);
