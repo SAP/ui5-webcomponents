@@ -55,6 +55,22 @@ const metadata = {
 		},
 
 		/**
+		 * Defines a short hint, intended to aid the user with data entry when the
+		 * <code>ui5-timepicker</code> has no value.
+		 *
+		 * <b>Note:</b> When no placeholder is set, the format pattern is displayed as a placeholder.
+		 * Passing an empty string as the value of this property will make the <code>ui5-timepicker</code> appear empty - without placeholder or format pattern.
+		 *
+		 * @type {string}
+		 * @defaultvalue undefined
+		 * @public
+		 */
+		placeholder: {
+			type: String,
+			defaultValue: undefined,
+		},
+
+		/**
 		 * Determines the format, displayed in the input field.
 		 *
 		 * Example:
@@ -132,7 +148,8 @@ const metadata = {
 	},
 	events: /** @lends sap.ui.webcomponents.main.TimePicker.prototype */ {
 		/**
-		 * Fired when the input operation has finished by pressing Enter or on focusout.
+		 * Fired when the input operation has finished by clicking the "OK" button or 
+		 * when the text in the input field has changed and the focus leaves the input field.
 		 *
 		 * @event
 		 * @public
@@ -260,9 +277,6 @@ class TimePicker extends UI5Element {
 			this.formatPattern = LocaleData.getInstance(getLocale()).getTimePattern(this.getFormat().oFormatOptions.style);
 		}
 
-		if (!this.value) {
-			this.value = this.getFormat().format(new Date());
-		}
 		this._initHoursFormatParameters();
 	}
 
@@ -631,6 +645,7 @@ class TimePicker extends UI5Element {
 	}
 
 	setValue(value) {
+		debugger;
 		if (this.isValid(value)) {
 			this.value = this.normalizeValue(value);
 			this.setSlidersValue();
