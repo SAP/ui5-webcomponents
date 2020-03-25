@@ -223,7 +223,7 @@ class UploadCollection extends UI5Element {
 			drop: this._ondrop.bind(this),
 		};
 
-		this.addEventListener("_rename", this._onFileRenamed);
+		this.addEventListener("ui5-_rename", this._onFileRenamed);
 	}
 
 	onEnterDOM() {

@@ -51,17 +51,17 @@
 		return uci;
 	}
 
-	document.getElementById("changeMode").addEventListener("change", function(event) {
+	document.getElementById("changeMode").addEventListener("ui5-change", function(event) {
 		uploadCollection.mode = event.detail.selectedOption.textContent;
 	});
 
-	document.getElementById("changeType").addEventListener("change", function(event) {
+	document.getElementById("changeType").addEventListener("ui5-change", function(event) {
 		uploadCollection.items.forEach(function (uci) {
 			uci.type = event.detail.selectedOption.textContent;
 		});
 	});
 
-	document.getElementById("fileUploader").addEventListener("change", function(event) {
+	document.getElementById("fileUploader").addEventListener("ui5-change", function(event) {
 		var files = event.detail.files;
 
 		for (var i = 0; i < files.length; i++) {
@@ -69,7 +69,7 @@
 		}
 	});
 
-	uploadCollection.addEventListener("selectionChange", function (event) {
+	uploadCollection.addEventListener("ui5-selectionChange", function (event) {
 		var selectedItems = event.detail.selectedItems.reduce(function (acc, item) {
 			return acc + item.fileName + ",";
 		}, "[");
@@ -79,8 +79,12 @@
 		document.getElementById("selectedItems").innerText = selectedItems;
 	});
 
-	uploadCollection.addEventListener("fileDeleted", function (event) {
+	uploadCollection.addEventListener("ui5-fileDeleted", function (event) {
 		uploadCollection.removeChild(event.detail.item)
+	});
+
+	uploadCollection.addEventListener("ui5-fileRenamed", function (event) {
+		document.getElementById("renamedFileIndex").innerText = uploadCollection.items.indexOf(event.detail.item);
 	});
 
 	document.getElementById("startUploading").addEventListener("click", function(event) {
@@ -93,7 +97,6 @@
 			}
 		});
 	});
-
 
 	// DND
 	document.getElementById("uploadCollectionDnD").addEventListener("drop", function(event) {

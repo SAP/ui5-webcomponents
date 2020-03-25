@@ -24,10 +24,6 @@
 			flex: 1 1 auto;
 		}
 
-		/* .description {
-			white-space: pre-wrap;
-		} */
-
 		ui5-upload-collection {
 			margin: 1rem;
 		}
@@ -53,9 +49,11 @@
 		</ui5-select>
 		<ui5-label>Selected items:</ui5-label>
 		<ui5-label id="selectedItems"></ui5-label>
+		<ui5-label>Renamed file index:</ui5-label>
+		<ui5-label id="renamedFileIndex"></ui5-label>
 	</div>
 
-	<p id="p1" draggable="true">This element is draggable</p>
+	<p id="draggableElement" draggable="true">This element is draggable</p>
 
 	<ui5-upload-collection id="uploadCollection">
 		<div slot="header" class="header">
@@ -67,13 +65,15 @@
 			</ui5-file-uploader>
 		</div>
 		<ui5-upload-collection-item
-				file-name="LaptopHT-1000.jpg"
-				file-name-clickable
-			>
-				<img src="./img/HT-1000.jpg" slot="thumbnail">
-				File name is clickable.
-			</ui5-upload-collection-item>
+			id="firstItem"
+			file-name="LaptopHT-1000.jpg"
+			file-name-clickable
+		>
+			<img src="./img/HT-1000.jpg" slot="thumbnail">
+			File name is clickable.
+		</ui5-upload-collection-item>
 		<ui5-upload-collection-item
+			id="secondItem"
 			file-name="Laptop.jpg"
 			type="Detail"
 			no-delete
@@ -82,7 +82,17 @@
 			You cannot delete this file.
 		</ui5-upload-collection-item>
 		<ui5-upload-collection-item
-			file-name="report.pdf"
+			id="latestReportsPdf"
+			file-name="latest.reports.pdf"
+			type="Detail"
+		>
+			<ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
+			Some description
+		</ui5-upload-collection-item>
+		<ui5-upload-collection-item
+			id="noFileExtension"
+			file-name="noextension"
+			type="Detail"
 		>
 			<ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
 			Some description
