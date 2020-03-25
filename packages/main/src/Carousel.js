@@ -80,7 +80,7 @@ const metadata = {
 		 * <ul>
 		 * <li><code>Content</code></li>
 		 * <li><code>Navigation</code></li>
-		 * <ul>
+		 * </ul>
 		 * <br><br>
 		 * When set to "Content", the arrows are placed on the sides of the current page.
 		 * When set to "Navigation", the arrows are placed on the sides of the page indicator.
