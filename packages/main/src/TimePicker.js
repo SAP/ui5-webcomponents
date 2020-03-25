@@ -281,6 +281,18 @@ class TimePicker extends UI5Element {
 		this._initHoursFormatParameters();
 	}
 
+	_handleInputClick() {
+		if (this._isPickerOpen) {
+			return;
+		}
+
+		const inputField = this._getInputField();
+
+		if (inputField) {
+			inputField.select();
+		}
+	}
+
 	_handleInputChange() {
 		const nextValue = this._getInput().getInputValue(),
 			isValid = this.isValid(nextValue);
@@ -466,6 +478,11 @@ class TimePicker extends UI5Element {
 
 	_getInput() {
 		return this.shadowRoot.querySelector("ui5-input");
+	}
+
+	_getInputField() {
+		const input = this._getInput();
+		return input && input.getInputDOMRef();
 	}
 
 	get secondsSlider() {
