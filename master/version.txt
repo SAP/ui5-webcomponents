@@ -1,5 +1,5 @@
-commit 7cc67a72e2fc612e0bd05d29dcde680f220aab82
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Mar 25 10:54:45 2020 +0200
+commit c3dd3f45d2e411054d070ab2e79ed0fd3f5166bb
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Wed Mar 25 12:45:37 2020 +0200
 
-    fix(framework): Provide a workaround for Firefox 74 shadow root bug (#1347)
+    fix(ui5-busyindicator): improve stylings (#1350)
