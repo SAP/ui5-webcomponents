@@ -5,5 +5,5 @@
 	--ui5_upload_collection_drag_overlay_border: 0.125rem dashed var(--sapContent_ForegroundBorderColor);
 	--ui5_upload_collection_drop_overlay_background: var(--sapUploadCollection_DropOverlayBackground);
 	--ui5_upload_collection_drop_overlay_border: 0.125rem solid var(--sapActiveColor);
-	--ui5_upload_collection_drop_overlay_icon_color: var(--sapContent_NonInteractiveIconColor);
+	--ui5_upload_collection_drop_overlay_icon_color: var(--sapActiveColor);
 }
