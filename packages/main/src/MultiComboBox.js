@@ -476,6 +476,8 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_getSelectedItems() {
+		// Angular 2 way data binding
+		this.selectedValues = this.items.filter(item => item.selected);
 		return this.items.filter(item => item.selected);
 	}
 
