@@ -81,8 +81,9 @@ const metadata = {
 		 * <li><code>Content</code></li>
 		 * <li><code>Navigation</code></li>
 		 * </ul>
-		 * <br><br>
+		 * <br>
 		 * When set to "Content", the arrows are placed on the sides of the current page.
+		 * <br>
 		 * When set to "Navigation", the arrows are placed on the sides of the page indicator.
 		 * @type {CarouselArrowsPlacement}
 		 * @defaultvalue "Content"
