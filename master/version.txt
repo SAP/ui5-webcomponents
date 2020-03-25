@@ -1,5 +1,5 @@
-commit c3dd3f45d2e411054d070ab2e79ed0fd3f5166bb
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Wed Mar 25 12:45:37 2020 +0200
+commit 1785a434fa11aea02d8d64ff37b67e0582dbde0c
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Mar 25 16:42:03 2020 +0200
 
-    fix(ui5-busyindicator): improve stylings (#1350)
+    docs(ui5-combobox): display component API (#1353)
