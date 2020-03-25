@@ -1,11 +1,5 @@
-commit 538a79a9213f78a2c9f2cbdb571bc8a5c779e547
-Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
-Date:   Wed Mar 25 08:02:21 2020 +0200
+commit 7cc67a72e2fc612e0bd05d29dcde680f220aab82
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Wed Mar 25 10:54:45 2020 +0200
 
-    feat(ui5-input): implement valueStateMessage (#1297)
-    
-    - Feature
-    A popover with a message that appears right below the input field, when the Input is in "Error", "Warning" or ""Information" value state.
-    
-    - Usage
-    To inform the user about the reason for that state.
+    fix(framework): Provide a workaround for Firefox 74 shadow root bug (#1347)
