@@ -24,5 +24,27 @@
 		<ui5-timepicker id="timepicker2" format-pattern="hh:mm:ss"></ui5-timepicker>
 		<ui5-timepicker id="timepicker3" format-pattern="hh:mm:ss a"></ui5-timepicker>
 		<ui5-timepicker id="timepicker3" format-pattern="HH:mm"></ui5-timepicker>
+
+		<br /><br />
+		<ui5-title>Test "change" event</ui5-title>
+		<ui5-timepicker id="timepickerChange"></ui5-timepicker>
+		<ui5-input id="changeResult"></ui5-input>
+
+		<br /><br />
+		<ui5-title>Test "input" event</ui5-title>
+		<ui5-timepicker id="timepickerInput"></ui5-timepicker>
+		<ui5-input id="inputResult"></ui5-input>
+
+		<script>
+				var counter = 0;
+				timepickerChange.addEventListener("change", function() {
+					changeResult.value = ++counter;
+				});
+
+				var inputCounter = 0;
+				timepickerInput.addEventListener("input", function() {
+					inputResult.value = ++inputCounter;
+				});
+		</script>
 	</body>
 </html>
