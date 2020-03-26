@@ -1,7 +1,13 @@
 const path = require("path");
+const buildConfiguration = require('@ui5/webcomponents-tools/lib/build-configuration/index.js');
 
 const NODE_MODULES_PATH = path.join(__dirname, `../../node_modules/`);
-const TOOLS_LIB = path.join(NODE_MODULES_PATH, "@ui5/webcomponents-tools/lib/")
+const TOOLS_LIB = path.join(NODE_MODULES_PATH, "@ui5/webcomponents-tools/lib/");
+
+const allThemes = [buildConfiguration.theming.defaultTheme, ...buildConfiguration.theming.optionalThemes];
+const buildLessCommandsNames = allThemes.map(theme => `build.less.${theme}`).join(" ");
+const buildLessCommands = {};
+allThemes.forEach(theme => buildLessCommands[theme] = `lessc src/themes/${theme}/parameters-bundle.less dist/themes/${theme}/parameters-bundle.css`);
 
 module.exports = {
 	scripts: {
@@ -10,12 +16,8 @@ module.exports = {
 			default: "nps clean build.src build.less build.postcss build.jsonImports",
 			src: `copy-and-watch "src/**/*.js" dist/`,
 			less: {
-				default: "nps build.less.belize build.less.belize_hcb build.less.belize_hcw build.less.fiori_3 build.less.fiori_3_dark",
-				belize: "lessc src/themes/sap_belize/parameters-bundle.less dist/themes/sap_belize/parameters-bundle.css",
-				belize_hcb: "lessc src/themes/sap_belize_hcb/parameters-bundle.less dist/themes/sap_belize_hcb/parameters-bundle.css",
-				belize_hcw: "lessc src/themes/sap_belize_hcw/parameters-bundle.less dist/themes/sap_belize_hcw/parameters-bundle.css",
-				fiori_3: "lessc src/themes/sap_fiori_3/parameters-bundle.less dist/themes/sap_fiori_3/parameters-bundle.css",
-				fiori_3_dark: "lessc src/themes/sap_fiori_3_dark/parameters-bundle.less dist/themes/sap_fiori_3_dark/parameters-bundle.css",
+				default: `nps ${buildLessCommandsNames}`,
+				...buildLessCommands
 			},
 			postcss: "postcss dist/**/parameters-bundle.css --config config/postcss.themes --base dist/ --dir dist/css/",
 			jsonImports: `node "${TOOLS_LIB}/generate-json-imports/themes.js"`,
