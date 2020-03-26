@@ -1685,7 +1685,7 @@ In order to use it, you have to use a library called <a href="https://github.com
 
 <ol>
   <li>Install all needed dependencies:
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm <span class="nb">install</span> @angular-builders/custom-webpack @angular-builders/dev-server @babel/core @babel/preset-env babel-loader
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm <span class="nb">install</span> <span class="nt">--save</span> @angular-builders/custom-webpack@7.5 @angular-builders/dev-server@7.3 @babel/core @babel/preset-env babel-loader
 </code></pre></div>    </div>
   </li>
   <li>After that we need to make Angular use custom webpack configuration. In angular.json add the following configuration lines:</li>
@@ -1712,8 +1712,7 @@ const path = require(‘path’);
 const env = process.env.WEBPACK_ENV;</li>
 </ol>
 
-<p>const JS_SOURCE_FILES = [’./src/polyfills.ts’, ‘./src/main.ts’];
-const OUTPUT_FILENAME = ‘result’;
+<p>const OUTPUT_FILENAME = ‘result’;
 const DEST_FOLDER = ‘dist’;</p>
 
 <p>const OUTPUT_FILE = <code class="highlighter-rouge">${OUTPUT_FILENAME}.js</code>;
@@ -1731,7 +1730,6 @@ const OUTPUT_FILE_MIN = <code class="highlighter-rouge">${OUTPUT_FILENAME}.min.j
 
 <p>module.exports = {
     mode,
-    entry: JS_SOURCE_FILES,
     output: {
         path: path.join(__dirname, DEST_FOLDER),
         filename: outputfile,

@@ -1600,24 +1600,25 @@
 	<div class="snippet">
 			<ui5-timepicker id="timepicker1"></ui5-timepicker>
 	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html">	<span class="nt">&lt;ui5-timepicker</span> <span class="na">id=</span><span class="s">"timepicker1"</span><span class="nt">&gt;&lt;/ui5-timepicker&gt;</span></code></pre></figure></pre>
-</section>
-
-<section>
-		<h3>TimePicker in twelve hours format</h3>
-		<div class="snippet">
-				<ui5-timepicker id="timepicker1" format-pattern="hh:mm:ss a"></ui5-timepicker>
-		</div>
-		<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html">		<span class="nt">&lt;ui5-timepicker</span> <span class="na">id=</span><span class="s">"timepicker1"</span> <span class="na">format-pattern=</span><span class="s">"hh:mm:ss a"</span><span class="nt">&gt;&lt;/ui5-timepicker&gt;</span>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-timepicker</span> <span class="na">id=</span><span class="s">"timepicker1"</span><span class="nt">&gt;&lt;/ui5-timepicker&gt;</span>
 	</code></pre></figure></pre>
 </section>
 
 <section>
-		<h3>TimePicker with only minutes and seconds</h3>
-		<div class="snippet">
-				<ui5-timepicker id="timepicker1" format-pattern="mm:ss"></ui5-timepicker>
-		</div>
-		<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html">		<span class="nt">&lt;ui5-timepicker</span> <span class="na">id=</span><span class="s">"timepicker1"</span> <span class="na">format-pattern=</span><span class="s">"mm:ss"</span><span class="nt">&gt;&lt;/ui5-timepicker&gt;</span>
+	<h3>TimePicker in twelve hours format</h3>
+	<div class="snippet">
+			<ui5-timepicker id="timepicker1" format-pattern="hh:mm:ss a"></ui5-timepicker>
+	</div>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-timepicker</span> <span class="na">id=</span><span class="s">"timepicker1"</span> <span class="na">format-pattern=</span><span class="s">"hh:mm:ss a"</span><span class="nt">&gt;&lt;/ui5-timepicker&gt;</span>
+	</code></pre></figure></pre>
+</section>
+
+<section>
+	<h3>TimePicker with only minutes and seconds</h3>
+	<div class="snippet">
+			<ui5-timepicker id="timepicker1" format-pattern="mm:ss"></ui5-timepicker>
+	</div>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-timepicker</span> <span class="na">id=</span><span class="s">"timepicker1"</span> <span class="na">format-pattern=</span><span class="s">"mm:ss"</span><span class="nt">&gt;&lt;/ui5-timepicker&gt;</span>
 	</code></pre></figure></pre>
 </section>
 
@@ -1689,6 +1690,19 @@ If a time is entered by typing it into the input field, it must fit to the used 
                       </div>
                       <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          placeholder
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell">undefined</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines a short hint, intended to aid the user with data entry when the <code>ui5-timepicker</code> has no value.
+            
+            <b>Note:</b> When no placeholder is set, the format pattern is displayed as a placeholder. Passing an empty string as the value of this property will make the <code>ui5-timepicker</code> appear empty - without placeholder or format pattern.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
                           readonly
                             <br>
                         </div>
@@ -1698,7 +1712,7 @@ If a time is entered by typing it into the input field, it must fit to the used 
                             Determines whether the <code>ui5-timepicker</code> is displayed as readonly.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           value
                             <br>
@@ -1709,7 +1723,7 @@ If a time is entered by typing it into the input field, it must fit to the used 
                             Defines a formatted time value.
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           valueState
                             <br>
@@ -1737,7 +1751,7 @@ If a time is entered by typing it into the input field, it must fit to the used 
                       <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">change</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                        Fired when the input operation has finished by pressing Enter or on focusout.
+                        Fired when the input operation has finished by clicking the "OK" button or when the text in the input field has changed and the focus leaves the input field.
                         </div>
                       </div>
             

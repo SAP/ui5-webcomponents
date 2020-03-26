@@ -1,5 +1,5 @@
-commit e2791b0775a4274ffbbb64dfdf26749767cc71e5
+commit ee026f720e582e5f8e7b891e56ee898cbdaf19a1
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Mar 26 08:45:24 2020 +0200
+Date:   Thu Mar 26 10:25:03 2020 +0200
 
-    fix(ui5-avatar): make styles attribute dependant (#1360)
+    chore(ui5-popover): document enums (#1366)
