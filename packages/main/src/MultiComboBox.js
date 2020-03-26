@@ -478,7 +478,7 @@ class MultiComboBox extends UI5Element {
 	_getSelectedItems() {
 		// Angular 2 way data binding
 		this.selectedValues = this.items.filter(item => item.selected);
-		return this.items.filter(item => item.selected);
+		return this.selectedValues;
 	}
 
 	_listSelectionChange(event) {
@@ -501,7 +501,7 @@ class MultiComboBox extends UI5Element {
 
 	fireSelectionChange() {
 		this.fireEvent("selectionChange", { items: this._getSelectedItems() });
-		//Angular 2 way data binding
+		// Angular 2 way data binding
 		this.fireEvent("value-changed");
 	}
 
