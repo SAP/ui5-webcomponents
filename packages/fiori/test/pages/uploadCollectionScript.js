@@ -121,9 +121,11 @@
 
 	uploadCollectionDifferentStates.addEventListener("ui5-retry", function (event) {
 		console.log("Retry uploading: ", event.target);
+		document.getElementById("uploadStateEvent").innerText = "Retry";
 	});
 
 	uploadCollectionDifferentStates.addEventListener("ui5-terminate", function (event) {
 		console.log("Terminate uploading of: ", event.target);
+		document.getElementById("uploadStateEvent").innerText = "Terminate";
 	});
 })()

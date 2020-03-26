@@ -6,12 +6,12 @@ describe("UploadCollection", () => {
 
 		it("should show Link when 'fileNameClickable'", () => {
 			const firstItem = browser.$("#firstItem");
-			assert.ok(firstItem.shadow$("ui5-link"), "Link should be rendered");
+			assert.ok(firstItem.shadow$("ui5-link").isDisplayed(), "Link should be rendered");
 		});
 
 		it("should show span when file name is NOT clickable", () => {
 			const secondItem = browser.$("#secondItem");
-			assert.ok(secondItem.shadow$("span.ui5-uci-file-name"), "span should be rendered");
+			assert.ok(secondItem.shadow$("span.ui5-uci-file-name").isDisplayed(), "span should be rendered");
 		});
 
 		it("should show input and buttons when editing", () => {
@@ -19,17 +19,37 @@ describe("UploadCollection", () => {
 			const editButton = secondItem.shadow$(".ui5-li-detailbtn");
 			editButton.click();
 
-			assert.ok(secondItem.shadow$(".ui5-uci-edit-container"), "edit container should be rendered");
-			assert.ok(secondItem.shadow$(".ui5-uci-edit-buttons"), "edit buttons should be rendered");
+			assert.ok(secondItem.shadow$(".ui5-uci-edit-container").isDisplayed(), "edit container should be rendered");
+			assert.ok(secondItem.shadow$(".ui5-uci-edit-buttons").isDisplayed(), "edit buttons should be rendered");
 			assert.notOk(secondItem.shadow$(".ui5-li-detailbtn").isDisplayed(), "detail button should be hidden");
 
 			// focus out the second item, to hide edit buttons (reset state for the following tests)
 			browser.$("#firstItem").click();
 		});
+
+		it("should show NOT show any buttons besides 'Terminate', when uploadState is 'Uploading'", () => {
+			const uploadingStateItem = browser.$("#uploadingState");
+
+			assert.ok(uploadingStateItem.shadow$("ui5-button[icon=stop]").isDisplayed(), "'Terminate' button is displayed'");
+			assert.notOk(uploadingStateItem.shadow$(".ui5-li-detailbtn").isDisplayed(), "detail button should be hidden");
+			assert.notOk(uploadingStateItem.shadow$(".ui5-li-deletebtn").isDisplayed(), "detail button should be hidden");
+		});
+
+		it("should show 'Retry' button when uploadState is 'Error'", () => {
+			const errorStateItem = browser.$("#errorState");
+
+			assert.ok(errorStateItem.shadow$("ui5-button[icon=refresh]").isDisplayed(), "'Retry' button is displayed");
+			assert.ok(errorStateItem.shadow$(".ui5-li-detailbtn").isDisplayed(), "detail button is also displayed");
+
+			errorStateItem.shadow$(".ui5-li-detailbtn").click();
+
+			assert.notOk(errorStateItem.shadow$("ui5-button[icon=refresh]").isDisplayed(), "'Retry' button is NOT displayed when editing");
+			assert.notOk(errorStateItem.shadow$(".ui5-li-detailbtn").isDisplayed(), "detail button is NOT displayed when editing");
+		});
 	});
 
 	describe("Events", () => {
-		it("should fire 'fileRenamed'", () => {
+		it("item should fire 'rename'", () => {
 			const secondItem = browser.$("#secondItem");
 			const secondItemIndex = 1;
 			const editButton = secondItem.shadow$(".ui5-li-detailbtn");
@@ -41,7 +61,7 @@ describe("UploadCollection", () => {
 			assert.strictEqual(parseInt(browser.$("#renamedFileIndex").getText()), secondItemIndex, "renamed file index should be updated after rename")
 		});
 
-		it("should fire 'fileDeleted'", () => {
+		it("upload collection should fire 'fileDeleted'", () => {
 			const uploadCollection = browser.$("#uploadCollection");
 			const firstItem = browser.$("#firstItem");
 
@@ -53,6 +73,22 @@ describe("UploadCollection", () => {
 			deleteBtn.click();
 
 			assert.strictEqual(uploadCollection.getProperty("items").length, 3, "item should be deleted when 'fileDeleted' event is fired");
+		});
+
+		it("item should fire 'retry'", () => {
+			const errorStateItem = browser.$("#errorState");
+
+			errorStateItem.shadow$("ui5-button[icon=refresh]").click();
+
+			assert.ok(browser.$("#uploadStateEvent").getText().includes("Retry"), "Retry event is fired");
+		});
+
+		it("item should fire 'terminate'", () => {
+			const uploadingStateItem = browser.$("#uploadingState");
+
+			uploadingStateItem.shadow$("ui5-button[icon=stop]").click();
+
+			assert.ok(browser.$("#uploadStateEvent").getText().includes("Terminate"), "Terminate event is fired");
 		});
 	});
 
@@ -94,6 +130,7 @@ describe("UploadCollection", () => {
 			const uploadCollection = browser.$("#uploadCollection");
 			const draggableElement = browser.$("#draggableElement");
 		
+			draggableElement.scrollIntoView();
 			draggableElement.dragAndDrop(uploadCollection);
 
 			assert.notOk(browser.$(".uc-dnd-overlay").isDisplayed(), "drag and drop overlay is not displayed");

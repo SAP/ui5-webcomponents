@@ -112,12 +112,15 @@
 		</div>
 	</ui5-upload-collection>
 
+	<div class="header">
+		<ui5-label id="uploadStateEvent"></ui5-label>
+	</div>
 	<ui5-upload-collection id="uploadCollectionStates">
 		<div class="header" slot="header">
 			<ui5-title>Upload States</ui5-title>
 		</div>
 		<ui5-upload-collection-item
-			id="firstItem"
+			id="completeState"
 			file-name="LaptopHT-1000.jpg"
 			file-name-clickable
 			upload-state="Complete"
@@ -126,7 +129,7 @@
 			uploadState="Complete"
 		</ui5-upload-collection-item>
 		<ui5-upload-collection-item
-			id="secondItem"
+			id="uploadingState"
 			file-name="Laptop.jpg"
 			type="Detail"
 			no-delete
@@ -137,7 +140,7 @@
 			uploadState="Uploading"
 		</ui5-upload-collection-item>
 		<ui5-upload-collection-item
-			id="latestReportsPdf"
+			id="errorState"
 			file-name="latest.reports.pdf"
 			type="Detail"
 			upload-state="Error"
@@ -147,7 +150,7 @@
 			uploadState="Error"
 		</ui5-upload-collection-item>
 		<ui5-upload-collection-item
-			id="noFileExtension"
+			id="readyState"
 			file-name="noextension"
 			type="Detail"
 		>
