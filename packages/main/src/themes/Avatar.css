@@ -95,47 +95,47 @@
 	background-color: var(--sapAccentColor6);
 }
 
-:host([backgroundColor="Accent1"]) {
+:host([background-color="Accent1"]) {
 	background-color: var(--sapAccentColor1);
 }
 
-:host([backgroundColor="Accent2"]) {
+:host([background-color="Accent2"]) {
 	background-color: var(--sapAccentColor2);
 }
 
-:host([backgroundColor="Accent3"]) {
+:host([background-color="Accent3"]) {
 	background-color: var(--sapAccentColor3);
 }
 
-:host([backgroundColor="Accent4"]) {
+:host([background-color="Accent4"]) {
 	background-color: var(--sapAccentColor4);
 }
 
-:host([backgroundColor="Accent5"]) {
+:host([background-color="Accent5"]) {
 	background-color: var(--sapAccentColor5);
 }
 
-:host([backgroundColor="Accent6"]) {
+:host([background-color="Accent6"]) {
 	background-color: var(--sapAccentColor6);
 }
 
-:host([backgroundColor="Accent7"]) {
+:host([background-color="Accent7"]) {
 	background-color: var(--sapAccentColor7);
 }
 
-:host([backgroundColor="Accent8"]) {
+:host([background-color="Accent8"]) {
 	background-color: var(--sapAccentColor8);
 }
 
-:host([backgroundColor="Accent9"]) {
+:host([background-color="Accent9"]) {
 	background-color: var(--sapAccentColor9);
 }
 
-:host([backgroundColor="Accent10"]) {
+:host([background-color="Accent10"]) {
 	background-color: var(--sapAccentColor10);
 }
 
-:host([backgroundColor="Placeholder"]) {
+:host([background-color="Placeholder"]) {
 	background-color: var(--sapContent_ImagePlaceholderBackground);
 }
 
