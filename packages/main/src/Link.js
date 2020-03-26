@@ -226,7 +226,7 @@ class Link extends UI5Element {
 	}
 
 	get parsedRef() {
-		return this.href.length > 0 ? this.href : undefined;
+		return (this.href && this.href.length > 0) ? this.href : undefined;
 	}
 
 	static async onDefine() {
