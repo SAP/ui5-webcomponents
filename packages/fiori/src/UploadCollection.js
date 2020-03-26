@@ -135,21 +135,6 @@ const metadata = {
 		},
 
 		/**
-		 * Fired when any item gets its property <code>fileName</code> changed.
-		 * <br><br>
-		 * <b>Note:</b> An edit button is displayed on each item,
-		 * when the <code>ui5-upload-collection-item</code> <code>type</code> property is set to <code>Detail</code>.
-		 * @event
-		 * @param {HTMLElement} item The <code>ui5-upload-collection-item</code> which was renamed.
-		 * @public
-		 */
-		fileRenamed: {
-			detail: {
-				item: { type: HTMLElement },
-			},
-		},
-
-		/**
 		 * Fired when selection is changed by user interaction
 		 * in <code>SingleSelect</code> and <code>MultiSelect</code> modes.
 		 *
@@ -222,8 +207,6 @@ class UploadCollection extends UI5Element {
 			dragover: this._ondragover.bind(this),
 			drop: this._ondrop.bind(this),
 		};
-
-		this.addEventListener("ui5-_rename", this._onFileRenamed);
 	}
 
 	onEnterDOM() {
@@ -315,10 +298,6 @@ class UploadCollection extends UI5Element {
 
 	_ondropBody() {
 		this._dndOverlayMode = "None";
-	}
-
-	_onFileRenamed(event) {
-		this.fireEvent("fileRenamed", { item: event.target });
 	}
 
 	_onItemDelete(event) {

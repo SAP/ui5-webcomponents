@@ -83,17 +83,23 @@
 		uploadCollection.removeChild(event.detail.item)
 	});
 
-	uploadCollection.addEventListener("ui5-fileRenamed", function (event) {
-		document.getElementById("renamedFileIndex").innerText = uploadCollection.items.indexOf(event.detail.item);
+	uploadCollection.addEventListener("ui5-rename", function (event) {
+		document.getElementById("renamedFileIndex").innerText = uploadCollection.items.indexOf(event.target);
 	});
 
 	document.getElementById("startUploading").addEventListener("click", function(event) {
 		uploadCollection.items.forEach(function (item) {
 			if (item.file) {
 				var oXHR = new XMLHttpRequest();
-	
+				
 				oXHR.open("POST", "/upload", true);
+				oXHR.onreadystatechange  = function () {
+					if (this.status !== 200) {
+						item.uploadState = "Error";
+					}
+				};
 				oXHR.send(item.file);
+				item.uploadState="Uploading";
 			}
 		});
 	});
@@ -108,5 +114,16 @@
 			uci = createUCI(files[i]);
 			document.getElementById("uploadCollectionDnD").appendChild(uci)
 		}
+	});
+
+	// Upload States
+	var uploadCollectionDifferentStates = document.getElementById("uploadCollectionStates");
+
+	uploadCollectionDifferentStates.addEventListener("ui5-retry", function (event) {
+		console.log("Retry uploading: ", event.target);
+	});
+
+	uploadCollectionDifferentStates.addEventListener("ui5-terminate", function (event) {
+		console.log("Terminate uploading of: ", event.target);
 	});
 })()

@@ -4,35 +4,66 @@
 	<div class="ui5-uci-thumbnail">
 		<slot name="thumbnail"></slot>
 	</div>
-	<div class="ui5-uci-content-container">
-		<div class="ui5-uci-content">
-			{{#if _editing}}
-				<div class="ui5-uci-edit-container">
-					<ui5-input
-						id="ui5-uci-edit-input"
-						value="{{_fileNameWithoutExtension}}"
-						data-sap-focus-ref
-						@ui5-change="{{_onInputChange}}"
-					></ui5-input>
-					<span class="ui5-uci-file-extension">{{_fileExtension}}</span>
-				</div>
-			{{else }}
-				{{#if fileNameClickable}}
-					<ui5-link class="ui5-uci-file-name" @click="{{_onFileNameClick}}">{{fileName}}</ui5-link>
-				{{else}}
-					<span class="ui5-uci-file-name">{{fileName}}</span>
-				{{/if}}
-			{{/if}}
-			<div class="ui5-uci-description">
-				<slot></slot>
-			</div>
-		</div>
 
-		{{#if _editing}}
-			<div class="ui5-uci-edit-buttons">
+	<div class="ui5-uci-content-and-edit-container">
+		<div class="ui5-uci-content-and-progress">
+			<div class="ui5-uci-content">
+				{{#if _editing}}
+					<div class="ui5-uci-edit-container">
+						<ui5-input
+							id="ui5-uci-edit-input"
+							value="{{_fileNameWithoutExtension}}"
+							data-sap-focus-ref
+							@ui5-change="{{_onInputChange}}"
+						></ui5-input>
+						<span class="ui5-uci-file-extension">{{_fileExtension}}</span>
+					</div>
+				{{else }}
+					{{#if fileNameClickable}}
+						<ui5-link class="ui5-uci-file-name" @click="{{_onFileNameClick}}">{{fileName}}</ui5-link>
+					{{else}}
+						<span class="ui5-uci-file-name">{{fileName}}</span>
+					{{/if}}
+				{{/if}}
+				<div class="ui5-uci-description">
+					<slot></slot>
+				</div>
+			</div>
+			{{#if _showProgressIndicator}}
+				<div class="ui5-uci-progress-box">
+					<div class="{{classes.progressIndicator}}">
+						<div class="ui5-uci-progress-bar" style="{{styles.progressBar}}"></div>
+						<div class="ui5-uci-progress-bar-remaining" style="{{styles.progressBarRemaining}}"></div>
+					</div>
+					<div class="ui5-uci-progress-labels">
+						<ui5-label>{{_progressText}}</ui5-label>
+						<ui5-label>{{progress}}%</ui5-label>
+					</div>
+				</div>
+			{{/if}}
+		</div>
+		<div class="ui5-uci-edit-buttons">
+			{{#if _editing}}
 				<ui5-button design="Transparent" class="ui5-uci-edit-rename-btn">{{_renameBtnText}}</ui5-button>
 				<ui5-button design="Transparent" id="ui5-uci-edit-cancel" @click="{{_onRenameCancel}}">{{_cancelRenameBtnText}}</ui5-button>
-			</div>
-		{{/if}}
+			{{else}}
+				{{#if _showRetry}}
+					<ui5-button
+						icon="refresh"
+						design="Transparent"
+						title="{{_retryButtonTooltip}}" 
+						@click="{{_onRetry}}"
+					></ui5-button>
+				{{/if}}
+				{{#if _showTerminate}}
+					<ui5-button
+						icon="stop"
+						design="Transparent"
+						title="{{_terminateButtonTooltip}}" 
+						@click="{{_onTerminate}}">
+					</ui5-button>
+				{{/if}}
+			{{/if}}
+		</div>
 	</div>
 {{/inline}}

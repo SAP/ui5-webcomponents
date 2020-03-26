@@ -1,12 +1,23 @@
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
+import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Input from "@ui5/webcomponents/dist/Input.js";
+import Label from "@ui5/webcomponents/dist/Label.js";
 import Link from "@ui5/webcomponents/dist/Link.js";
 import ListItem from "@ui5/webcomponents/dist/ListItem.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import UploadState from "./types/UploadState.js";
+import "@ui5/webcomponents-icons/dist/icons/refresh.js";
+import "@ui5/webcomponents-icons/dist/icons/stop.js";
 import {
 	UPLOADCOLLECTIONITEM_CANCELBUTTON_TEXT,
 	UPLOADCOLLECTIONITEM_RENAMEBUTTON_TEXT,
+	UPLOADCOLLECTIONITEM_ERROR_STATE,
+	UPLOADCOLLECTIONITEM_UPLOADING_STATE,
+	UPLOADCOLLECTIONITEM_READY_STATE,
+	UPLOADCOLLECTIONITEM_RETRY_BUTTON_TEXT,
+	UPLOADCOLLECTIONITEM_TERMINATE_BUTTON_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
@@ -63,6 +74,40 @@ const metadata = {
 			type: Boolean,
 		},
 
+		noRetry: {
+			type: Boolean,
+		},
+
+		noTerminate: {
+			type: Boolean,
+		},
+
+		/**
+		 * The upload progress in percentage.
+		 * <br><br>
+		 * <b>Note:</b> Expected values are in the interval [0, 100].
+		 *
+		 * @type {Integer}
+		 * @defaultvalue 0
+		 * @public
+		 */
+		progress: {
+			type: Integer,
+			defaultValue: 0,
+		},
+
+		/**
+		 * If set to <code>Uploading</code> or <code>Error</code>, a progress indicator showing the <code>progress</code> is displayed.
+		 *
+		 * @type {string}
+		 * @defaultvalue "Ready"
+		 * @public
+		 */
+		uploadState: {
+			type: UploadState,
+			defaultValue: UploadState.Ready,
+		},
+
 		/**
 		 * Indicates if editing.
 		 *
@@ -104,12 +149,39 @@ const metadata = {
 		 * <b>Note:</b> This event is only available when <code>fileNameClickable</code> property is <code>true</code>.
 		 *
 		 * @event
-		 * @param {HTMLElement} item The <code>ui5-upload-collection-item</code> which was renamed.
 		 * @public
 		 */
 		fileNameClick: { },
 
-		_rename: { },
+		/**
+		 * Fired when the <code>fileName</code> property gets changed.
+		 * <br><br>
+		 * <b>Note:</b> An edit button is displayed on each item,
+		 * when the <code>ui5-upload-collection-item</code> <code>type</code> property is set to <code>Detail</code>.
+		 *
+		 * @event
+		 * @public
+		 */
+		rename: { },
+
+		/**
+		 * Fired when the terminate button is pressed.
+		 * <br><br>
+		 * <b>Note:</b> Terminate button is displayed when <code>uploadState</code> property is set to <code>Uploading</code>.
+		 *
+		 * @event
+		 * @public
+		 */
+		terminate: {},
+
+		/**
+		 * Fired when the retry button is pressed.
+		 * <br><br>
+		 * <b>Note:</b> Retry button is displayed when <code>uploadState</code> property is set to <code>Error</code>.
+		 * @event
+		 * @public
+		 */
+		retry: {},
 	},
 };
 
@@ -153,8 +225,10 @@ class UploadCollectionItem extends ListItem {
 	static async onDefine() {
 		await Promise.all([
 			Button.define(),
+			Icon.define(),
 			Input.define(),
 			Link.define(),
+			Label.define(),
 			fetchI18nBundle("@ui5/webcomponents"),
 		]);
 	}
@@ -201,7 +275,7 @@ class UploadCollectionItem extends ListItem {
 
 		this._editing = false;
 		this.fileName = event.target.value + this._fileExtension;
-		this.fireEvent("_rename");
+		this.fireEvent("rename");
 	}
 
 	_onRenameCancel(event) {
@@ -210,6 +284,14 @@ class UploadCollectionItem extends ListItem {
 
 	_onFileNameClick(event) {
 		this.fireEvent("fileNameClick");
+	}
+
+	_onRetry(event) {
+		this.fireEvent("retry");
+	}
+
+	_onTerminate(event) {
+		this.fireEvent("terminate");
 	}
 
 	/**
@@ -222,7 +304,24 @@ class UploadCollectionItem extends ListItem {
 			main: {
 				...result.main,
 				"ui5-uci-root": true,
-				"ui5-uci-root-edit": this._editing,
+				"ui5-uci-root-editing": this._editing,
+				"ui5-uci-root-uploading": this.uploadState === UploadState.Uploading,
+			},
+			progressIndicator: {
+				"ui5-uci-progress-indicator": true,
+				"error": this.uploadState === UploadState.Error,
+			},
+		};
+	}
+
+	get styles() {
+		return {
+			progressBar: {
+				"flex-basis": `${this.progress}%`,
+			},
+			progressBarRemaining: {
+				"border-left": this.progress !== 0 ? "none" : "",
+				"border-radius": this.progress === 0 ? "0.5rem" : "0 0.5rem 0.5rem 0",
 			},
 		};
 	}
@@ -248,6 +347,34 @@ class UploadCollectionItem extends ListItem {
 
 	get _cancelRenameBtnText() {
 		return this.i18nBundle.getText(UPLOADCOLLECTIONITEM_CANCELBUTTON_TEXT);
+	}
+
+	get _showProgressIndicator() {
+		return this.uploadState !== UploadState.Complete;
+	}
+
+	get _progressText() {
+		switch (this.uploadState) {
+		case UploadState.Error: return this.i18nBundle.getText(UPLOADCOLLECTIONITEM_ERROR_STATE);
+		case UploadState.Uploading: return this.i18nBundle.getText(UPLOADCOLLECTIONITEM_UPLOADING_STATE);
+		default: return this.i18nBundle.getText(UPLOADCOLLECTIONITEM_READY_STATE);
+		}
+	}
+
+	get _showRetry() {
+		return !this.noRetry && this.uploadState === UploadState.Error;
+	}
+
+	get _showTerminate() {
+		return !this.noTerminate && this.uploadState === UploadState.Uploading;
+	}
+
+	get _retryButtonTooltip() {
+		return this.i18nBundle.getText(UPLOADCOLLECTIONITEM_RETRY_BUTTON_TEXT);
+	}
+
+	get _terminateButtonTooltip() {
+		return this.i18nBundle.getText(UPLOADCOLLECTIONITEM_TERMINATE_BUTTON_TEXT);
 	}
 }
 

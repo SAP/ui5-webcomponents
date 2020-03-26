@@ -33,13 +33,19 @@
 }
 
 /* Content */
-.ui5-uci-content-container {
-	flex: 1 1 0;
+.ui5-uci-content-and-edit-container {
+	flex: 1 1 auto;
 	display: flex;
+	align-items: center;
+}
+
+.ui5-uci-content-and-progress {
+	display: flex;
+	flex: 1 1 auto;
 }
 
 .ui5-uci-content {
-	flex: 1 1 0;
+	flex: 1 1 auto;
 }
 
 .ui5-uci-file-name {
@@ -76,15 +82,17 @@ ui5-link.ui5-uci-file-name {
 	width: 40%;
 }
 
-
 /* Buttons */
-.ui5-uci-root-edit .ui5-li-detailbtn,
-.ui5-uci-root-edit .ui5-li-deletebtn {
+.ui5-uci-root-editing .ui5-li-detailbtn,
+.ui5-uci-root-editing .ui5-li-deletebtn,
+.ui5-uci-root-uploading .ui5-li-detailbtn,
+.ui5-uci-root-uploading .ui5-li-deletebtn  {
 	display: none;
 }
 
 .ui5-uci-edit-buttons {
 	pointer-events: all;
+	margin-left: 1rem;
 }
 
 .ui5-uci-edit-rename-btn {
@@ -92,7 +100,7 @@ ui5-link.ui5-uci-file-name {
 }
 
 @media(max-width: 30rem) {
-	.ui5-uci-content-container {
+	.ui5-uci-content-and-edit-container {
 		display: block;
 	}
 
@@ -101,4 +109,44 @@ ui5-link.ui5-uci-file-name {
 	.ui5-li-deletebtn {
 		margin-top: 0.75rem;
 	}
+}
+
+/* Progress Box */
+.ui5-uci-progress-box {
+	width: 20%;
+	margin-left: 0.5rem;
+}
+
+.ui5-uci-progress-indicator {
+	display: flex;
+	background: var(--sapField_Background);
+	height: 1.125rem;
+	min-height: 1rem;
+	width: 100%;
+	min-width: 4rem;
+	margin: 0.5rem 0;
+	padding: 5px;
+	box-sizing: border-box;
+}
+
+
+.ui5-uci-progress-indicator.error .ui5-uci-progress-bar {
+	background: var(--ui5_upload_collection_progress_indicator_error_background);
+}
+
+.ui5-uci-progress-bar {
+	border-radius: 0.5rem 0 0 0.5rem;
+	flex-basis: 30%;
+	background: var(--ui5_upload_collection_progress_indicator_background);
+}
+
+.ui5-uci-progress-bar-remaining {
+	border: 0.0625rem solid var(--sapField_BorderColor);
+	box-sizing: border-box;
+	flex: 1 1 auto;
+}
+
+.ui5-uci-progress-labels {
+	display: flex;
+	justify-content: space-between;
 }

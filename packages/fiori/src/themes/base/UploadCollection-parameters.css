@@ -6,4 +6,6 @@
 	--ui5_upload_collection_drop_overlay_background: var(--sapUploadCollection_DropOverlayBackground);
 	--ui5_upload_collection_drop_overlay_border: 0.125rem solid var(--sapActiveColor);
 	--ui5_upload_collection_drop_overlay_icon_color: var(--sapActiveColor);
+	--ui5_upload_collection_progress_indicator_background: var(--sapInformativeElementColor);
+	--ui5_upload_collection_progress_indicator_error_background: var(--sapNegativeElementColor);
 }

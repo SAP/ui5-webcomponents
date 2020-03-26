@@ -68,6 +68,7 @@
 			id="firstItem"
 			file-name="LaptopHT-1000.jpg"
 			file-name-clickable
+			upload-state="Complete"
 		>
 			<img src="./img/HT-1000.jpg" slot="thumbnail">
 			File name is clickable.
@@ -77,6 +78,7 @@
 			file-name="Laptop.jpg"
 			type="Detail"
 			no-delete
+			upload-state="Complete"
 		>
 			<img src="./img/HT-1000.jpg" slot="thumbnail">
 			You cannot delete this file.
@@ -85,17 +87,18 @@
 			id="latestReportsPdf"
 			file-name="latest.reports.pdf"
 			type="Detail"
+			upload-state="Complete"
 		>
 			<ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
-			Some description
+			Some description.
 		</ui5-upload-collection-item>
 		<ui5-upload-collection-item
 			id="noFileExtension"
 			file-name="noextension"
 			type="Detail"
+			upload-state="Complete"
 		>
 			<ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
-			Some description
 		</ui5-upload-collection-item>
 	</ui5-upload-collection>
 
@@ -107,6 +110,50 @@
 				<ui5-button>Upload</ui5-button>
 			</ui5-file-uploader>
 		</div>
+	</ui5-upload-collection>
+
+	<ui5-upload-collection id="uploadCollectionStates">
+		<div class="header" slot="header">
+			<ui5-title>Upload States</ui5-title>
+		</div>
+		<ui5-upload-collection-item
+			id="firstItem"
+			file-name="LaptopHT-1000.jpg"
+			file-name-clickable
+			upload-state="Complete"
+		>
+			<img src="./img/HT-1000.jpg" slot="thumbnail">
+			uploadState="Complete"
+		</ui5-upload-collection-item>
+		<ui5-upload-collection-item
+			id="secondItem"
+			file-name="Laptop.jpg"
+			type="Detail"
+			no-delete
+			upload-state="Uploading"
+			progress="37"
+		>
+			<img src="./img/HT-1000.jpg" slot="thumbnail">
+			uploadState="Uploading"
+		</ui5-upload-collection-item>
+		<ui5-upload-collection-item
+			id="latestReportsPdf"
+			file-name="latest.reports.pdf"
+			type="Detail"
+			upload-state="Error"
+			progress="59"
+		>
+			<ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
+			uploadState="Error"
+		</ui5-upload-collection-item>
+		<ui5-upload-collection-item
+			id="noFileExtension"
+			file-name="noextension"
+			type="Detail"
+		>
+			<ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
+			uploadState="Ready" (default)
+		</ui5-upload-collection-item>
 	</ui5-upload-collection>
 </body>
 </html>
