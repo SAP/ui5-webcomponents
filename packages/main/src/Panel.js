@@ -58,7 +58,7 @@ const metadata = {
 		 * <b>Note:</b> This property is overridden by the <code>header</code> slot.
 		 *
 		 * @type {string}
-		 * @defaultvalue: ""
+		 * @defaultvalue ""
 		 * @public
 		 */
 		headerText: {
@@ -94,6 +94,7 @@ const metadata = {
 		 * to <code>Region</code> or <code>Complementary</code>.
 		 *
 		 * @type {PanelAccessibleRole}
+		 * @defaultvalue "Form"
 		 * @public
 		 */
 		accessibleRole: {

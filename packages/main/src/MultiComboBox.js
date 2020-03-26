@@ -115,7 +115,15 @@ const metadata = {
 
 		/**
 		 * Defines the value state of the <code>ui5-multi-combobox</code>.
-		 * Available options are: <code>None</code>, <code>Success</code>, <code>Warning</code>, and <code>Error</code>.
+		 * <br><br>
+		 * Available options are:
+		 * <ul>
+		 * <li><code>None</code></li>
+		 * <li><code>Error</code></li>
+		 * <li><code>Warning</code></li>
+		 * <li><code>Success</code></li>
+		 * <li><code>Information</code></li>
+		 * </ul>
 		 *
 		 * @type {string}
 		 * @defaultvalue "None"

@@ -38,7 +38,8 @@ const metadata = {
 	slots: /** @lends  sap.ui.webcomponents.main.TabContainer.prototype */ {
 		/**
 		 * Defines the tabs.
-		 * <br><b>Note:</b> Use <code>ui5-tab</code> and <code>ui5-tab-separator</code> for the intended design.
+		 * <br><br>
+		 * <b>Note:</b> Use <code>ui5-tab</code> and <code>ui5-tab-separator</code> for the intended design.
 		 *
 		 * @type {HTMLElement[]}
 		 * @public
@@ -91,10 +92,12 @@ const metadata = {
 
 		/**
 		 * Defines the alignment of the <code>main text</code> and the <code>additionalText</code> of a tab.
-		 * <br>
+		 *
+		 * <br><br>
 		 * <b>Note:</b>
 		 * The <code>main text</code> and the <code>additionalText</code> would be displayed vertically by defualt,
 		 * but when set to <code>Inline</code>, they would be displayed horizontally.
+		 *
 		 * <br><br>
 		 * Available options are:
 		 * <ul>

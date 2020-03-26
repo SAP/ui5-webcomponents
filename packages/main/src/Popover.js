@@ -25,7 +25,7 @@ const metadata = {
 		 * Defines the ID of the HTML Element, which will get the initial focus.
 		 *
 		 * @type {string}
-		 * @defaultvalue: ""
+		 * @defaultvalue ""
 		 * @public
 		 */
 		initialFocus: {
@@ -34,7 +34,8 @@ const metadata = {
 
 		/**
 		 * Defines the header text.
-		 * <br><b>Note:</b> If <code>header</code> slot is provided, the <code>headerText</code> is ignored.
+		 * <br><br>
+		 * <b>Note:</b> If <code>header</code> slot is provided, the <code>headerText</code> is ignored.
 		 *
 		 * @type {string}
 		 * @defaultvalue: ""
@@ -46,7 +47,7 @@ const metadata = {
 
 		/**
 		 * Determines on which side the <code>ui5-popover</code> is placed at.
-		 *
+		 * <br><br>
 		 * Available options are:
 		 * <ul>
 		 * <li><code>Left</code></li>
@@ -66,7 +67,7 @@ const metadata = {
 
 		/**
 		 * Determines the horizontal alignment of the <code>ui5-popover</code>.
-		 *
+		 * <br><br>
 		 * Available options are:
 		 * <ul>
 		 * <li><code>Center</code></li>
@@ -86,7 +87,7 @@ const metadata = {
 
 		/**
 		 * Determines the vertical alignment of the <code>ui5-popover</code>.
-		 *
+		 * <br><br>
 		 * Available options are:
 		 * <ul>
 		 * <li><code>Center</code></li>
