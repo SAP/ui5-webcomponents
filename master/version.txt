@@ -1,5 +1,5 @@
-commit 892e9e97b960df3a5fbecf2d84f9f5da6c14b6f9
+commit e2791b0775a4274ffbbb64dfdf26749767cc71e5
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Mar 25 17:43:10 2020 +0200
+Date:   Thu Mar 26 08:45:24 2020 +0200
 
-    docs(ui5-carousel): add enum options (#1352)
+    fix(ui5-avatar): make styles attribute dependant (#1360)
