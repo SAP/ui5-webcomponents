@@ -145,7 +145,7 @@ class Tokenizer extends UI5Element {
 			this._tokensCount = this.tokens.length;
 		}
 
-		this._scrollEnablement.scrollContainer = this.contentDom;
+		this._scrollEnablement.scrollContainer = this.expanded ? this.contentDom : this;
 	}
 
 	_tokenDelete(event) {
