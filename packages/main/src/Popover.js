@@ -47,7 +47,7 @@ const metadata = {
 
 		/**
 		 * Determines on which side the <code>ui5-popover</code> is placed at.
-		 *
+		 * <br><br>
 		 * Available options are:
 		 * <ul>
 		 * <li><code>Left</code></li>
@@ -67,7 +67,7 @@ const metadata = {
 
 		/**
 		 * Determines the horizontal alignment of the <code>ui5-popover</code>.
-		 *
+		 * <br><br>
 		 * Available options are:
 		 * <ul>
 		 * <li><code>Center</code></li>
@@ -87,7 +87,7 @@ const metadata = {
 
 		/**
 		 * Determines the vertical alignment of the <code>ui5-popover</code>.
-		 *
+		 * <br><br>
 		 * Available options are:
 		 * <ul>
 		 * <li><code>Center</code></li>
