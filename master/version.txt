@@ -1,5 +1,5 @@
-commit ee026f720e582e5f8e7b891e56ee898cbdaf19a1
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Mar 26 10:25:03 2020 +0200
+commit fcc8b3f73adb34a267f30761e168c2637a95b5a6
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Thu Mar 26 13:43:28 2020 +0200
 
-    chore(ui5-popover): document enums (#1366)
+    chore(tools): Remove the unnecessary Assets.js import (#1372)
