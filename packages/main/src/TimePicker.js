@@ -59,6 +59,7 @@ const metadata = {
 		 * Defines a short hint, intended to aid the user with data entry when the
 		 * <code>ui5-timepicker</code> has no value.
 		 *
+		 * <br><br>
 		 * <b>Note:</b> When no placeholder is set, the format pattern is displayed as a placeholder.
 		 * Passing an empty string as the value of this property will make the <code>ui5-timepicker</code> appear empty - without placeholder or format pattern.
 		 *
@@ -88,9 +89,16 @@ const metadata = {
 		},
 
 		/**
-		 * Visualizes the validation state of the Web Component, for example
-		 * <code>Error</code>, <code>Warning</code> and
-		 * <code>Success</code>.
+		 * Defines the value state of the <code>ui5-timepicker</code>.
+		 * <br><br>
+		 * Available options are:
+		 * <ul>
+		 * <li><code>None</code></li>
+		 * <li><code>Error</code></li>
+		 * <li><code>Warning</code></li>
+		 * <li><code>Success</code></li>
+		 * <li><code>Information</code></li>
+		 * </ul>
 		 *
 		 * @type {string}
 		 * @defaultvalue "None"

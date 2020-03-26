@@ -18,7 +18,8 @@ const metadata = {
 
 		/**
 		 * Defines the <code>ui5-table</code> rows.
-		 * <br><b>Note:</b> Use <code>ui5-table-row</code> for the intended design.
+		 * <br><br>
+		 * <b>Note:</b> Use <code>ui5-table-row</code> for the intended design.
 		 *
 		 * @type {HTMLElement[]}
 		 * @slot
@@ -32,7 +33,8 @@ const metadata = {
 
 		/**
 		 * Defines the configuration for the columns of the <code>ui5-table</code>.
-		 * <br><b>Note:</b> Use <code>ui5-table-column</code> for the intended design.
+		 * <br><br>
+		 * <b>Note:</b> Use <code>ui5-table-column</code> for the intended design.
 		 *
 		 * @type {HTMLElement[]}
 		 * @slot
@@ -50,7 +52,7 @@ const metadata = {
 		 * Defines the text that will be displayed when there is no data and <code>showNoData</code> is present.
 		 *
 		 * @type {string}
-		 * @defaultvalue: ""
+		 * @defaultvalue ""
 		 * @public
 		 */
 		noDataText: {

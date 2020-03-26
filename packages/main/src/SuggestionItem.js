@@ -81,7 +81,7 @@ const metadata = {
 
 		/**
 		 * Defines the state of the <code>info</code>.
-		 * <br>
+		 * <br><br>
 		 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code> and <code>"Erorr"</code>.
 		 * @type {string}
 		 * @public
@@ -93,7 +93,7 @@ const metadata = {
 
 		/**
 		 * Defines the item to be displayed as a group item.
-		 * <br>
+		 * <br><br>
 		 * <b>Note:</b>
 		 * When set, the other properties, such as <code>image</code>, <code>icon</code>, <code>description</code>, etc. will be omitted
 		 * and only the <code>text</code> will be displayed.

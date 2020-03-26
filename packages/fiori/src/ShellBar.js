@@ -33,6 +33,7 @@ const metadata = {
 		/**
 		 * Defines the <code>logo</code> source URI.
 		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		logo: {
@@ -44,7 +45,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> The <code>primaryTitle</code> would be hidden on S screen size (less than approx. 700px).
 		 * @type {string}
-		 * @defaultvalue: ""
+		 * @defaultvalue ""
 		 * @public
 		 */
 		primaryTitle: {
@@ -56,7 +57,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> The <code>secondaryTitle</code> would be hidden on S and M screen sizes (less than approx. 1300px).
 		 * @type {string}
-		 * @defaultvalue: ""
+		 * @defaultvalue ""
 		 * @public
 		 */
 		secondaryTitle: {
@@ -67,7 +68,7 @@ const metadata = {
 		 * Defines the <code>notificationCount</code>,
 		 * displayed in the notification icon top-right corner.
 		 * @type {string}
-		 * @defaultvalue: ""
+		 * @defaultvalue ""
 		 * @public
 		 */
 		notificationCount: {
@@ -77,6 +78,7 @@ const metadata = {
 		/**
 		 * Defines, if the notification icon would be displayed.
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		showNotifications: {

@@ -107,9 +107,11 @@ const metadata = {
 		/**
 		 * Determines the name with which the <code>ui5-checkbox</code> will be submitted in an HTML form.
 		 *
+		 * <br><br>
 		 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
 		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
 		 *
+		 * <br><br>
 		 * <b>Note:</b> When set, a native <code>input</code> HTML element
 		 * will be created inside the <code>ui5-checkbox</code> so that it can be submitted as
 		 * part of an HTML form. Do not use this property unless you need to submit a form.

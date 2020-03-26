@@ -56,6 +56,7 @@ const metadata = {
 		 * Up to two Latin letters can be displayed as initials in a <code>ui5-avatar</code>.
 		 *
 		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		initials: {

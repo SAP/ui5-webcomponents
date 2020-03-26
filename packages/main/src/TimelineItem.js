@@ -67,7 +67,7 @@ const metadata = {
 		 * Defines the title text of the component.
 		 *
 		 * @type {string}
-		 * @defaultvalue: ""
+		 * @defaultvalue ""
 		 * @public
 		 */
 		titleText: {
@@ -77,7 +77,7 @@ const metadata = {
 		/**
 		 * Defines the subtitle text of the component.
 		 * @type {string}
-		 * @defaultvalue: ""
+		 * @defaultvalue ""
 		 * @public
 		 */
 		subtitleText: {

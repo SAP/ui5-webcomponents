@@ -70,7 +70,6 @@ const metadata = {
 
 		/**
 		 * Defines the text of the <code>ui5-switch</code> when switched off.
-		 *
 		 * <br><br>
 		 * <b>Note:</b> We recommend using short texts, up to 3 letters (larger texts would be cut off).
 		 * @type {string}
@@ -83,8 +82,7 @@ const metadata = {
 
 		/**
 		 * Defines the <code>ui5-switch</code> type.
-		 * <br>
-		 *
+		 * <br><br>
 		 * <b>Note:</b> If <code>graphical</code> type is set,
 		 * positive and negative icons will replace the <code>textOn</code> and <code>textOff</code>.
 		 * @type {string}
