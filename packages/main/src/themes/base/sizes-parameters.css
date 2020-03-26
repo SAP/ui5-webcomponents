@@ -44,6 +44,7 @@
 	--_ui5_switch_rtl_transform: translateX(1.875rem) translateX(-100%);
 	--_ui5_switch_text_right: calc(-100% + 1.9125rem);
 	--_ui5_tc_item_text: 3rem;
+	--_ui5_tc_item_text_text_only: 3rem;
 	--_ui5_tc_item_text_line_height: normal;
 	--_ui5_tc_item_icon_size: 1.5rem;
 	--_ui5_tc_item_add_text_margin_top: 0.625rem;
@@ -156,7 +157,6 @@
 	--_ui5_tc_item_text_line_height: 1.325rem;
 	--_ui5_tc_item_icon_size: 1rem;
 	--_ui5_tc_item_add_text_margin_top: 0.3125rem;
-	--_ui5_tc_header_height_text_only: var(--_ui5_tc_header_height_text_only_compact);
 	--_ui5_tc_header_height: var(--_ui5_tc_header_height_compact);
 
 	/* Radio Button */
