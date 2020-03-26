@@ -51,6 +51,7 @@ const metadata = {
 
 		/**
 		 * Defines the value state of the <code>ui5-datepicker</code>.
+		 * <br><br>
 		 * Available options are:
 		 * <ul>
 		 * <li><code>None</code></li>
