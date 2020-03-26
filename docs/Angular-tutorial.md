@@ -104,7 +104,7 @@ If you need your application to run on Internet Explorer 11, there are some addi
 
 1. Install all needed dependencies:
 ```bash
-npm install @angular-builders/custom-webpack @angular-builders/dev-server @babel/core @babel/preset-env babel-loader
+npm install --save @angular-builders/custom-webpack@7.5 @angular-builders/dev-server@7.3 @babel/core @babel/preset-env babel-loader
 ```
 
 2. After that we need to make Angular use custom webpack configuration. In angular.json add the following configuration lines:
@@ -130,7 +130,6 @@ And about the serve command:
 const path = require('path');
 const env = process.env.WEBPACK_ENV;
  
-const JS_SOURCE_FILES = ['./src/polyfills.ts', './src/main.ts'];
 const OUTPUT_FILENAME = 'result';
 const DEST_FOLDER = 'dist';
  
@@ -149,7 +148,6 @@ const { outputfile, mode } = env == 'build'
  
 module.exports = {
     mode,
-    entry: JS_SOURCE_FILES,
     output: {
         path: path.join(__dirname, DEST_FOLDER),
         filename: outputfile,
