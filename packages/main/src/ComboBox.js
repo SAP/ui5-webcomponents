@@ -26,6 +26,7 @@ import Icon from "./Icon.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
 import BusyIndicator from "./BusyIndicator.js";
+import Button from "./Button.js";
 import StandardListItem from "./StandardListItem.js";
 
 /**
@@ -483,6 +484,7 @@ class ComboBox extends UI5Element {
 			ResponsivePopover.define(),
 			List.define(),
 			BusyIndicator.define(),
+			Button.define(),
 			StandardListItem.define(),
 		]);
 	}
