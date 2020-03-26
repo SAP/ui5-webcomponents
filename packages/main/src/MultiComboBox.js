@@ -519,6 +519,10 @@ class MultiComboBox extends UI5Element {
 	_toggleRespPopover(isMorePopover) {
 		this.updateStaticAreaItemContentDensity();
 
+		if (isMorePopover) {
+			return this.selectedItemsPopover && this.selectedItemsPopover.open(this);
+		}
+
 		if (this.allItemsPopover && this.allItemsPopover.opened) {
 			return this.allItemsPopover.close();
 		}
