@@ -1,5 +1,7 @@
-commit fcc8b3f73adb34a267f30761e168c2637a95b5a6
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu Mar 26 13:43:28 2020 +0200
+commit 68cb73dfb1dca458152676ac4e205669d7f9ed21
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Thu Mar 26 14:55:21 2020 +0200
 
-    chore(tools): Remove the unnecessary Assets.js import (#1372)
+    fix(ui5-mcb): open correct popover from show more text (#1371)
+    
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/1359
