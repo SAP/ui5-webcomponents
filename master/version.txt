@@ -1,7 +1,10 @@
-commit 68cb73dfb1dca458152676ac4e205669d7f9ed21
+commit 2567beaa37a6a51583bb53f92754d4f9bf58d4dc
 Author: Martin <martin.r.hristov@gmail.com>
-Date:   Thu Mar 26 14:55:21 2020 +0200
+Date:   Thu Mar 26 18:57:30 2020 +0200
 
-    fix(ui5-mcb): open correct popover from show more text (#1371)
+    feat(ScrollEnablement): enhance implementation to work on desktop (#1374)
     
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/1359
+    - improve implementation
+    - add scroll enablement to tokenizer
+    
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/1368
