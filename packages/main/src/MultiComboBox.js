@@ -425,6 +425,8 @@ class MultiComboBox extends UI5Element {
 
 		tokenizer.tokens.forEach(token => { token.selected = false; });
 
+		this._tokenizer.contentDom.scrollLeft = 0;
+
 		if (tokensCount === 0 && this._deleting) {
 			setTimeout(() => {
 				this.shadowRoot.querySelector("input").focus();
