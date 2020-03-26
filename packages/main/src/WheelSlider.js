@@ -67,6 +67,10 @@ const metadata = {
 		_items: {
 			type: Object,
 		},
+
+		cyclic: {
+			type: Boolean,
+		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.WheelSlider.prototype */ {
 
@@ -135,9 +139,14 @@ class WheelSlider extends UI5Element {
 		super();
 		this._currentElementIndex = 0;
 		this._itemCellHeight = 0;
+		this._showItems = [];
 	}
 
 	onBeforeRendering() {
+		if (!this._expanded && this.cyclic) {
+			const index = this._currentElementIndex % this._items.length;
+			this._currentElementIndex = (this._timesMultipliedOnCyclic() / 2) * this._items.length + index;
+		}
 		this._updateItemCellHeight();
 	}
 
@@ -154,7 +163,7 @@ class WheelSlider extends UI5Element {
 			const elements = this.shadowRoot.querySelectorAll(".ui5-wheelslider-item");
 			for (let i = 0; i < elements.length; i++) {
 				if (elements[i].textContent === this.value) {
-					this._selectElement(elements[i]);
+					this._selectElementByIndex(this._itemIndex(elements[i].id) + this._getCurrentRepetition() * this._items.length);
 					return true;
 				}
 			}
@@ -163,8 +172,36 @@ class WheelSlider extends UI5Element {
 		}
 	}
 
+	_itemIndex(id) {
+		return Number(id.replace(/^\D+/g, ""));
+	}
+
+	_timesMultipliedOnCyclic() {
+		const repetition = Math.round(70 / this._items.length);
+
+		if (repetition < 3) {
+			return 3;
+		}
+
+		return repetition;
+	}
+
 	get items() {
 		return this._items || [];
+	}
+
+	get showItems() {
+		if (this.cyclic && this._items) {
+			if (this._showItems.length < this._items.length * this._timesMultipliedOnCyclic()) {
+				this._showItems = this._items;
+				for (let i = 0; i < this._timesMultipliedOnCyclic(); i++) {
+					this._showItems = this._showItems.concat(this._items);
+				}
+			}
+		} else {
+			this._showItems = this.items;
+		}
+		return this._showItems || [];
 	}
 
 	get classes() {
@@ -223,24 +260,49 @@ class WheelSlider extends UI5Element {
 
 	_selectElement(element) {
 		if (element && this._items.indexOf(element.textContent) > -1) {
-			this._currentElementIndex = this._items.indexOf(element.textContent);
+			this._currentElementIndex = this._itemIndex(element.id);
 			this._selectElementByIndex(this._currentElementIndex);
 		}
 	}
 
-	_selectElementByIndex(index) {
+	_getCurrentRepetition() {
+		return Math.floor(this._currentElementIndex / this._items.length);
+	}
+
+	_selectElementByIndex(currentIndex) {
 		const sliderElement = this.shadowRoot.getElementById(`${this._id}--items-list`);
-		const itemsCount = this._items.length;
+		const itemsCount = this._showItems.length;
 		const itemCellHeight = this._itemCellHeight ? this._itemCellHeight : 2.875;
 		const offsetStep = isPhone() ? 4 : 2;
+		let index = currentIndex;
+
+		if (this.cyclic) {
+			index = this.handleArrayResize(index);
+		}
 
 		if (index < itemsCount && index > -1) {
 			const offsetSelectedElement = offsetStep * itemCellHeight - (index * itemCellHeight);
 			sliderElement.setAttribute("style", `top:${offsetSelectedElement}rem`);
-			this.value = this._items[index];
 			this._currentElementIndex = index;
+			this.value = this._items[index - (this._getCurrentRepetition() * this._items.length)];
 			this.fireEvent("valueSelect", { value: this.value });
 		}
+	}
+
+	handleArrayResize(currentIndex) {
+		const arrayLength = this._showItems.length;
+		let index = currentIndex;
+		if (arrayLength / 7 > index) {
+			this._showItems.splice(this._showItems.length - this._items.length, this._showItems.length);
+			this._showItems = this._items.concat(this._showItems);
+			index += this._items.length * 2;
+		} else if (index > arrayLength * 5 / 7) {
+			this._showItems.splice(0, this._items.length);
+			this._showItems = this._showItems.concat(this._items);
+			index -= this._items.length * 2;
+		}
+
+		return index;
 	}
 
 	_onArrowDown(e) {
