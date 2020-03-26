@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-rc.6](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.5...v1.0.0-rc.6) (2020-03-27)
+
+
+### Bug Fixes
+
+* **tools:** create HCW styles with the init script ([#1293](https://github.com/SAP/ui5-webcomponents/issues/1293)) ([0c408d2](https://github.com/SAP/ui5-webcomponents/commit/0c408d2))
+
+
+### Features
+
+* **tools:** create an init package script ([#1010](https://github.com/SAP/ui5-webcomponents/issues/1010)) ([d93ab87](https://github.com/SAP/ui5-webcomponents/commit/d93ab87))
+
+* **tools:** add docs to create-ui5-script ([#987](https://github.com/SAP/ui5-webcomponents/issues/987)) ([f0f5ec5](https://github.com/SAP/ui5-webcomponents/commit/f0f5ec5))
+
+
+
+
+
+
 # [1.0.0-rc.5](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.4...v1.0.0-rc.5) (2019-12-02)
 
 
