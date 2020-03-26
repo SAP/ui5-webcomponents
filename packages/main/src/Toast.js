@@ -49,7 +49,7 @@ const metadata = {
 		 * <li><code>BottomStart</code></li>
 		 * <li><code>BottomCenter</code></li>
 		 * <li><code>BottomEnd</code></li>
-		 * <ul>
+		 * </ul>
 		 *
 		 * @type {string}
 		 * @defaultvalue "BottomCenter"
