@@ -35,6 +35,7 @@
 /* Content */
 .ui5-uci-content-and-edit-container {
 	flex: 1 1 auto;
+	min-width: 0; /* fixes chrome overflow issue */
 	display: flex;
 	align-items: center;
 }
@@ -46,12 +47,14 @@
 
 .ui5-uci-content {
 	flex: 1 1 auto;
+	min-width: 0; /* fixes chrome overflow issue */
 }
 
 .ui5-uci-file-name {
 	display: block;
 	font-size: var(--sapFontLargeSize);
 	margin-bottom: 0.25rem;
+	white-space: pre-wrap;
 }
 
 ui5-link.ui5-uci-file-name {
@@ -70,6 +73,7 @@ ui5-link.ui5-uci-file-name {
 .ui5-uci-edit-container ui5-input {
 	width: 60%;
 	pointer-events: all;
+	min-width: auto;
 }
 
 .ui5-uci-file-extension {
@@ -109,12 +113,17 @@ ui5-link.ui5-uci-file-name {
 	.ui5-li-deletebtn {
 		margin-top: 0.75rem;
 	}
+
+	.ui5-uci-edit-buttons {
+		margin-left: 0;
+	}
 }
 
 /* Progress Box */
 .ui5-uci-progress-box {
 	width: 20%;
 	margin-left: 0.5rem;
+	min-width: 4rem;
 }
 
 .ui5-uci-progress-indicator {
@@ -124,7 +133,7 @@ ui5-link.ui5-uci-file-name {
 	min-height: 1rem;
 	width: 100%;
 	min-width: 4rem;
-	margin: 0.5rem 0;
+	margin-bottom: 0.5rem;
 	padding: 5px;
 	box-sizing: border-box;
 }
