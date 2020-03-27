@@ -25,21 +25,21 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.TableCell.prototype */ {
 
 		/**
-		 * @protected
+		 * @private
 		 */
 		firstInRow: {
 			type: Boolean,
 		},
 
 		/**
-		 * @protected
+		 * @private
 		 */
 		lastInRow: {
 			type: Boolean,
 		},
 
 		/**
-		 * @protected
+		 * @private
 		 */
 		popined: {
 			type: Boolean,

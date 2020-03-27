@@ -20,6 +20,9 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 import CarouselArrowsPlacement from "./types/CarouselArrowsPlacement.js";
 import CarouselTemplate from "./generated/templates/CarouselTemplate.lit.js";
+import "@ui5/webcomponents-icons/dist/icons/slim-arrow-left.js";
+import "@ui5/webcomponents-icons/dist/icons/slim-arrow-right.js";
+
 import Button from "./Button.js";
 
 // Styles
@@ -75,8 +78,18 @@ const metadata = {
 
 		/**
 		 * Defines the position of arrows.
+		 * <br><br>
+		 * Available options are:
+		 * <ul>
+		 * <li><code>Content</code></li>
+		 * <li><code>Navigation</code></li>
+		 * </ul>
+		 * <br>
+		 * When set to "Content", the arrows are placed on the sides of the current page.
+		 * <br>
+		 * When set to "Navigation", the arrows are placed on the sides of the page indicator.
 		 * @type {CarouselArrowsPlacement}
-		 * @defaultvalue CarouselArrowsPlacement.Content
+		 * @defaultvalue "Content"
 		 * @public
 		 */
 		arrowsPlacement: {

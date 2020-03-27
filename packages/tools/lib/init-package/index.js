@@ -18,8 +18,8 @@ let packageContent;
 
 const DEFAULT_PORT = 8080;
 const DEFAULT_TAG = 'ui5-demo';
-const BETA_VER = "0.18.0";
-const RC_VER = "1.0.0-rc.5";
+const BETA_VER = "0.19.0";
+const RC_VER = "1.0.0-rc.6";
 
 // from where all the files will be copied
 const RESOURCES_DIR = path.join(`${__dirname}`, `resources/`);

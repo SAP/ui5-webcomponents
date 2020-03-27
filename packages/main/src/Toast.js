@@ -22,9 +22,9 @@ const metadata = {
 		/**
 		 * Defines the duration in milliseconds for which <code>ui5-toast</code>
 		 * remains on the screen before it's automatically closed.
-		 * <br>
-		 * <b>Note:</b> The minimum supported value is <code>500</code>.
-		 * If a lower value is passed, it's forced to be <code>500</code>.
+		 * <br><br>
+		 * <b>Note:</b> The minimum supported value is <code>500</code> ms
+		 * and even if a lower value is set, the duration would remain <code>500</code> ms.
 		 *
 		 * @type {Integer}
 		 * @defaultvalue 3000
@@ -49,7 +49,7 @@ const metadata = {
 		 * <li><code>BottomStart</code></li>
 		 * <li><code>BottomCenter</code></li>
 		 * <li><code>BottomEnd</code></li>
-		 * <ul>
+		 * </ul>
 		 *
 		 * @type {string}
 		 * @defaultvalue "BottomCenter"
@@ -81,7 +81,8 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.Toast.prototype */ {
 		/**
 		 * Defines the text of the <code>ui5-toast</code> web component.
-		 * <br><b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+		 * <br><br>
+		 * <b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 		 *
 		 * @type {Node[]}
 		 * @slot

@@ -18,6 +18,7 @@ const newComponents = [
   "FileUploader",
   "ResponsivePopover",
   "SegmentedButton",
+  "TimePicker",
   "Toast",
 ];
 

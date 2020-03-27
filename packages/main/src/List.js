@@ -27,6 +27,7 @@ const metadata = {
 
 		/**
 		 * Defines the <code>ui5-li</code> header.
+		 * <br><br>
 		 * <b>Note:</b> When <code>header</code> is set, the
 		 * <code>headerText</code> property is ignored.
 		 *
@@ -40,7 +41,8 @@ const metadata = {
 
 		/**
 		 * Defines the items of the <code>ui5-list</code>.
-		 * <br><b>Note:</b> Use <code>ui5-li</code>, <code>ui5-li-custom</code>, and <code>ui5-li-groupheader</code> for the intended design.
+		 * <br><br>
+		 * <b>Note:</b> Use <code>ui5-li</code>, <code>ui5-li-custom</code>, and <code>ui5-li-groupheader</code> for the intended design.
 		 *
 		 * @type {HTMLElement[]}
 		 * @slot
@@ -59,7 +61,7 @@ const metadata = {
 		 * <b>Note:</b> If <code>header</code> is set this property is ignored.
 		 *
 		 * @type {string}
-		 * @defaultvalue: ""
+		 * @defaultvalue ""
 		 * @public
 		 */
 		headerText: {
@@ -70,7 +72,7 @@ const metadata = {
 		 * Defines the footer text.
 		 *
 		 * @type {string}
-		 * @defaultvalue: ""
+		 * @defaultvalue ""
 		 * @public
 		 */
 		footerText: {
@@ -107,7 +109,7 @@ const metadata = {
 		 * Defines the text that is displayed when the <code>ui5-list</code> contains no items.
 		 *
 		 * @type {string}
-		 * @defaultvalue: ""
+		 * @defaultvalue ""
 		 * @public
 		 */
 		noDataText: {
@@ -211,7 +213,7 @@ const metadata = {
 
 		/**
 		 * Fired when the user scrolls to the bottom of the list.
-		 * <br>
+		 * <br><br>
 		 * <b>Note:</b> The event is fired when the <code>infiniteScroll</code> property is enabled.
 		 *
 		 * @event

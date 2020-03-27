@@ -71,14 +71,17 @@ const metadata = {
 
 		/**
 		 * Defines the <code>ui5-tab</code> semantic color.
+		 * <br><br>
 		 * The color is applied to:
 		 * <ul>
 		 * <li>the <code>ui5-tab</code> icon</li>
 		 * <li>the <code>text</code> when <code>ui5-tab</code> overflows</li>
 		 * <li>the tab selection line</li>
 		 * </ul>
-		 * <br>
+		 *
+		 * <br><br>
 		 * Available semantic colors are: <code>"Default"</code>, <code>"Neutral"</code>, <code>"Positive"</code>, <code>"Critical"</code> and <code>"Negative"</code>.
+		 *
 		 * <br><br>
 		 * <b>Note:</b> The color value depends on the current theme.
 		 * @type {string}

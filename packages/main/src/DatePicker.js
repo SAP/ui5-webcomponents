@@ -50,9 +50,16 @@ const metadata = {
 		},
 
 		/**
-		 * Visualizes the validation state of the Web Component, for example
-		 * <code>Error</code>, <code>Warning</code>, or
-		 * <code>Success</code>.
+		 * Defines the value state of the <code>ui5-datepicker</code>.
+		 * <br><br>
+		 * Available options are:
+		 * <ul>
+		 * <li><code>None</code></li>
+		 * <li><code>Error</code></li>
+		 * <li><code>Warning</code></li>
+		 * <li><code>Success</code></li>
+		 * <li><code>Information</code></li>
+		 * </ul>
 		 *
 		 * @type {string}
 		 * @defaultvalue "None"
@@ -100,10 +107,20 @@ const metadata = {
 
 		/**
 		 * Determines the calendar type.
-		 * The input value is formated according to the calendar type and the picker shows
-		 * months and years from the specified calendar. Available options are: "Gregorian", "Islamic", "Japanese", "Buddhist", and "Persian".
+		 * The input value is formated according to the calendar type
+		 * and the picker shows the months and years from the specified calendar.
+		 * <br><br>
+		 * Available options are:
+		 * <ul>
+		 * <li><code>Gregorian</code></li>
+		 * <li><code>Islamic</code></li>
+		 * <li><code>Japanese</code></li>
+		 * <li><code>Buddhist</code></li>
+		 * <li><code>Persian</code></li>
+		 * </ul>
 		 *
 		 * @type {string}
+		 * @defaultvalue "Gregorian"
 		 * @public
 		 */
 		primaryCalendarType: {
@@ -136,6 +153,7 @@ const metadata = {
 		 * Defines a short hint, intended to aid the user with data entry when the
 		 * <code>ui5-datepicker</code> has no value.
 		 *
+		 * <br><br>
 		 * <b>Note:</b> When no placeholder is set, the format pattern is displayed as a placeholder.
 		 * Passing an empty string as the value of this property will make the <code>ui5-datepicker</code> appear empty - without placeholder or format pattern.
 		 *
@@ -151,9 +169,11 @@ const metadata = {
 		/**
 		 * Determines the name with which the <code>ui5-datepicker</code> will be submitted in an HTML form.
 		 *
+		 * <br><br>
 		 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
 		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
 		 *
+		 * <br><br>
 		 * <b>Note:</b> When set, a native <code>input</code> HTML element
 		 * will be created inside the <code>ui5-datepicker</code> so that it can be submitted as
 		 * part of an HTML form. Do not use this property unless you need to submit a form.

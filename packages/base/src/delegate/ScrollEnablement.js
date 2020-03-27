@@ -1,15 +1,27 @@
+import { isPhone } from "../Device.js";
 import EventProvider from "../EventProvider.js";
 import scroll from "../animations/scroll.js";
 
 const scrollEventName = "scroll";
-const touchEndEventName = "touchend";
+const touchEndEventName = isPhone() ? "touchend" : "mouseup";
 
 class ScrollEnablement extends EventProvider {
 	constructor(containerComponent) {
 		super();
-		containerComponent.addEventListener("touchstart", this.ontouchstart.bind(this), { passive: true });
-		containerComponent.addEventListener("touchmove", this.ontouchmove.bind(this), { passive: true });
-		containerComponent.addEventListener("touchend", this.ontouchend.bind(this), { passive: true });
+		this.containerComponent = containerComponent;
+		this.mouseMove = this.ontouchmove.bind(this);
+		this.mouseUp = this.ontouchend.bind(this);
+		this.touchStart = this.ontouchstart.bind(this);
+
+		this.isPhone = isPhone();
+
+		if (this.isPhone) {
+			containerComponent.addEventListener("touchstart", this.touchStart, { passive: true });
+			containerComponent.addEventListener("touchmove", this.mouseMove, { passive: true });
+			containerComponent.addEventListener("touchend", this.mouseUp, { passive: true });
+		} else {
+			containerComponent.addEventListener("mousedown", this.touchStart, { passive: true });
+		}
 	}
 
 	set scrollContainer(container) {
@@ -43,19 +55,25 @@ class ScrollEnablement extends EventProvider {
 
 	_isTouchInside(touch) {
 		const rect = this._container.getBoundingClientRect();
-		const x = touch.clientX;
-		const y = touch.clientY;
+		const x = this.isPhone ? touch.clientX : touch.x;
+		const y = this.isPhone ? touch.clientY : touch.y;
 
 		return x >= rect.left && x <= rect.right
 			&& y >= rect.top && y <= rect.bottom;
 	}
 
 	ontouchstart(event) {
-		const touch = event.touches[0];
-		this._prevDragX = touch.pageX;
-		this._prevDragY = touch.pageY;
+		const touch = this.isPhone ? event.touches[0] : null;
 
-		this._canScroll = this._isTouchInside(touch);
+		if (!this.isPhone) {
+			document.addEventListener("mouseup", this.mouseUp, { passive: true });
+			document.addEventListener("mousemove", this.mouseMove, { passive: true });
+		}
+
+		this._prevDragX = this.isPhone ? touch.pageX : event.x;
+		this._prevDragY = this.isPhone ? touch.pageY : event.y;
+
+		this._canScroll = this._isTouchInside(this.isPhone ? touch : event);
 	}
 
 	ontouchmove(event) {
@@ -64,10 +82,10 @@ class ScrollEnablement extends EventProvider {
 		}
 
 		const container = this._container;
-		const touch = event.touches[0];
+		const touch = this.isPhone ? event.touches[0] : null;
 
-		const dragX = touch.pageX;
-		const dragY = touch.pageY;
+		const dragX = this.isPhone ? touch.pageX : event.x;
+		const dragY = this.isPhone ? touch.pageY : event.y;
 
 		container.scrollLeft += this._prevDragX - dragX;
 		container.scrollTop += this._prevDragY - dragY;
@@ -87,8 +105,8 @@ class ScrollEnablement extends EventProvider {
 		}
 
 		const container = this._container;
-		const dragX = event.pageX;
-		const dragY = event.pageY;
+		const dragX = this.isPhone ? event.pageX : event.x;
+		const dragY = this.isPhone ? event.pageY : event.y;
 
 		container.scrollLeft += this._prevDragX - dragX;
 		container.scrollTop += this._prevDragY - dragY;
@@ -100,6 +118,11 @@ class ScrollEnablement extends EventProvider {
 
 		this._prevDragX = dragX;
 		this._prevDragY = dragY;
+
+		if (!this.isPhone) {
+			document.removeEventListener("mousemove", this.mouseMove, { passive: true });
+			document.removeEventListener("mouseup", this.mouseUp);
+		}
 	}
 }
 
