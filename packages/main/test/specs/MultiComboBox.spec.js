@@ -37,9 +37,27 @@ describe("MultiComboBox general interaction", () => {
 
 			resetBtn.click();
 		});
+
+		it("Opens selected items Popover", () => {
+			browser.url("http://localhost:8080/test-resources/pages/MultiComboBox.html");
+
+			browser.setWindowSize(400, 1250);
+			const staticAreaItemClassName = browser.getStaticAreaItemClassName("#multi1")
+			const showMore = $("#multi1").shadow$(".ui5-multi-combobox-tokenizer").shadow$(".ui5-tokenizer-more-text");
+			const allPopover = $(`.${staticAreaItemClassName}`).shadow$(".ui5-multi-combobox-all-items-responsive-popover");
+			const selectedPopover = $(`.${staticAreaItemClassName}`).shadow$(".ui5-multi-combobox-selected-items-responsive-popover");
+
+			showMore.click();
+
+			assert.ok(!allPopover.getProperty("opened"), "All popover should not be displayed");
+			assert.ok(selectedPopover.getProperty("opened"), "All popover should be displayed");
+		});
 	});
 
 	describe("selection and filtering", () => {
+		browser.url("http://localhost:8080/test-resources/pages/MultiComboBox.html");
+		browser.setWindowSize(1920, 1080);
+
 
 		it("Opens all items popover, selects and deselects the first item", () => {
 			const icon = browser.$("#mcb").shadow$("[input-icon]");
@@ -51,7 +69,7 @@ describe("MultiComboBox general interaction", () => {
 			const paramsInput = $("#events-parameters");
 			const callCountInput = $("#events-call-count");
 			const resetBtn = $("#reset-btn");
-			
+
 			icon.click();
 
 			assert.ok(popover.getProperty("opened"), "Popover should be displayed in the viewport");
@@ -168,7 +186,7 @@ describe("MultiComboBox general interaction", () => {
 	describe("keyboard handling", () => {
 		browser.url("http://localhost:8080/test-resources/pages/MultiComboBox.html");
 
-		it ("tests backspace when combobox has an empty value", () => {
+		it("tests backspace when combobox has an empty value", () => {
 			let tokens = $("#multi1").shadow$$(".ui5-multi-combobox-token");
 			const input = $("#multi1").shadow$("input");
 

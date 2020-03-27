@@ -425,6 +425,8 @@ class MultiComboBox extends UI5Element {
 
 		tokenizer.tokens.forEach(token => { token.selected = false; });
 
+		this._tokenizer.contentDom.scrollLeft = 0;
+
 		if (tokensCount === 0 && this._deleting) {
 			setTimeout(() => {
 				this.shadowRoot.querySelector("input").focus();
@@ -527,6 +529,11 @@ class MultiComboBox extends UI5Element {
 	_toggleRespPopover(isMorePopover) {
 		this.updateStaticAreaItemContentDensity();
 
+		if (isMorePopover) {
+			this.allItemsPopover.close();
+			return this.selectedItemsPopover.open(this);
+		}
+
 		if (this.allItemsPopover && this.allItemsPopover.opened) {
 			return this.allItemsPopover.close();
 		}
@@ -561,13 +568,18 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_toggleButtonPress(event) {
-		if (this._selectedItemsPopoverOpened) {
-			event.target.pressed = true;
-			this._showAllItemsPopover();
+		const showSelectedItems = event.target.hasAttribute("show-selected");
+
+		if (showSelectedItems) {
+			this.allItemsPopover.close();
+			this.selectedItemsPopover.open(this);
 		} else {
-			event.target.pressed = false;
-			this._showMorePopover();
+			this.selectedItemsPopover.close();
+			this.allItemsPopover.open(this);
 		}
+
+		// always keep the toggle-button pressed
+		event.target.pressed = true;
 	}
 
 	onBeforeRendering() {
