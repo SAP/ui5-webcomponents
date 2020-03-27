@@ -84,6 +84,8 @@ ui5-link.ui5-uci-file-name {
 	overflow: hidden;
 	margin-left: 0.5rem;
 	width: 40%;
+	display: inline-block;
+	vertical-align: middle;
 }
 
 /* Buttons */
