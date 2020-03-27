@@ -1,0 +1,517 @@
+<style>
+	.header {
+		display: flex;
+		align-items: center;
+		overflow: hidden;
+	}
+
+	.spacer {
+		flex: 1 1 auto;
+	}
+
+	.header > * {
+		margin: 4px;
+	}
+</style>
+
+<header class="component-heading">
+	<h2 class="control-header">UploadCollection</h2>
+	<div class="component-heading-since">
+		<span><!--since_tag_marker--></span>
+	</div>
+</header>
+
+<div class="component-package">@ui5/webcomponents-fiori</div>
+
+<div class="control-tag">&lt;ui5-upload-collection&gt;</div>
+
+<!-- UploadCollection -->
+<section>
+	<h3>UploadCollection</h3>
+	<div class="snippet">
+		<ui5-upload-collection id="uploadCollection">
+			<div slot="header" class="header">
+				<ui5-title>Uploaded (2)</ui5-title>
+				<ui5-label>Add new files and press to start uploading pending files:</ui5-label>
+				<ui5-button id="startUploading">Start</ui5-button>
+				<div class="spacer"></div>
+				<ui5-file-uploader id="fileUploader" hide-input multiple>
+					<ui5-button icon="add" design="Transparent"></ui5-button>
+				</ui5-file-uploader>
+			</div>
+			<ui5-upload-collection-item
+				file-name="LaptopHT-1000.jpg"
+				file-name-clickable
+				upload-state="Complete"
+			>
+				<img src="../../../assets/images/HT-1000.jpg" slot="thumbnail">
+				Uploaded By: David Keane · Uploaded On: 2014-07-26 · File Size: 35 KB
+			</ui5-upload-collection-item>
+			<ui5-upload-collection-item
+				file-name="Notes.txt"
+				upload-state="Complete"
+			>
+				<ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
+				Uploaded By: John Smith · Uploaded On: 2014-09-02 · File Size: 226.6 KB ·
+			</ui5-upload-collection-item>
+		</ui5-upload-collection>	
+
+		<script>
+			function fileExtensionToIconName(fileName) {
+				var extension = fileName.split(".").pop();
+
+				switch (extension) {
+					case "bmp":
+					case "jpg":
+					case "jpeg":
+					case "png":
+						return "card";
+					case "docx":
+					case "pdf":
+						return "pdf-attachment";
+					case "txt":
+						return "document-text";
+					default:
+						return "document";
+				}
+			}
+
+			function createThumbnail(fileName) {
+				var icon = document.createElement("ui5-icon");
+				icon.name = fileExtensionToIconName(fileName);
+				icon.slot = "thumbnail";
+				return icon;
+			}
+
+			function createUCI(file) {
+				var uci = document.createElement("ui5-upload-collection-item");
+					description = document.createTextNode("Last modified: " + file.lastModifiedDate + ", size: " + file.size);
+
+				uci.appendChild(createThumbnail(file.name));
+				uci.appendChild(description);
+				uci.file = file;
+				uci.fileName = file.name;
+				return uci;
+			}
+
+			fileUploader.addEventListener("ui5-change", function(event) {
+				var files = event.detail.files;
+
+				for (var i = 0; i < files.length; i++) {
+					uploadCollection.appendChild(createUCI(files[i]));
+				}
+			});
+
+			startUploading.addEventListener("click", function(event) {
+				uploadCollection.items.forEach(function (item) {
+					if (item.uploadState === "Ready" && item.file) {
+						var oXHR = new XMLHttpRequest();
+						
+						oXHR.open("POST", "/upload", true);
+						oXHR.onreadystatechange  = function () {
+							if (this.status !== 200) {
+								item.uploadState = "Error";
+							}
+						};
+						oXHR.send(item.file);
+						item.uploadState="Uploading";
+					}
+				});
+			});
+		</script>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
+<style>
+	.header {
+		display: flex;
+		align-items: center;
+		overflow: hidden;
+	}
+
+	.spacer {
+		flex: 1 1 auto;
+	}
+
+	.header > * {
+		margin: 4px;
+	}
+</style>
+
+<ui5-upload-collection id="uploadCollection">
+	<div slot="header" class="header">
+		<ui5-title>Uploaded (2)</ui5-title>
+		<ui5-label>Add new files and press to start uploading pending files:</ui5-label>
+		<ui5-button id="startUploading">Start</ui5-button>
+		<div class="spacer"></div>
+		<ui5-file-uploader id="fileUploader" hide-input multiple>
+			<ui5-button icon="add" design="Transparent"></ui5-button>
+		</ui5-file-uploader>
+	</div>
+	<ui5-upload-collection-item
+		file-name="LaptopHT-1000.jpg"
+		file-name-clickable
+		upload-state="Complete"
+	>
+		<img src="../../../assets/images/HT-1000.jpg" slot="thumbnail">
+		Uploaded By: David Keane · Uploaded On: 2014-07-26 · File Size: 35 KB
+	</ui5-upload-collection-item>
+	<ui5-upload-collection-item
+		file-name="Notes.txt"
+		upload-state="Complete"
+	>
+		<ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
+		Uploaded By: John Smith · Uploaded On: 2014-09-02 · File Size: 226.6 KB ·
+	</ui5-upload-collection-item>
+</ui5-upload-collection>	
+
+<script>
+	function fileExtensionToIconName(fileName) {
+		var extension = fileName.split(".").pop();
+
+		switch (extension) {
+			case "bmp":
+			case "jpg":
+			case "jpeg":
+			case "png":
+				return "card";
+			case "docx":
+			case "pdf":
+				return "pdf-attachment";
+			case "txt":
+				return "document-text";
+			default:
+				return "document";
+		}
+	}
+
+	function createThumbnail(fileName) {
+		var icon = document.createElement("ui5-icon");
+		icon.name = fileExtensionToIconName(fileName);
+		icon.slot = "thumbnail";
+		return icon;
+	}
+
+	function createUCI(file) {
+		var uci = document.createElement("ui5-upload-collection-item");
+			description = document.createTextNode("Last modified: " + file.lastModifiedDate + ", size: " + file.size);
+
+		uci.appendChild(createThumbnail(file.name));
+		uci.appendChild(description);
+		uci.file = file;
+		uci.fileName = file.name;
+		return uci;
+	}
+
+	fileUploader.addEventListener("ui5-change", function(event) {
+		var files = event.detail.files;
+
+		for (var i = 0; i < files.length; i++) {
+			uploadCollection.appendChild(createUCI(files[i]));
+		}
+	});
+
+	startUploading.addEventListener("click", function(event) {
+		uploadCollection.items.forEach(function (item) {
+			if (item.uploadState === "Ready" && item.file) {
+				var oXHR = new XMLHttpRequest();
+				
+				oXHR.open("POST", "/upload", true);
+				oXHR.onreadystatechange  = function () {
+					if (this.status !== 200) {
+						item.uploadState = "Error";
+					}
+				};
+				oXHR.send(item.file);
+				item.uploadState="Uploading";
+			}
+		});
+	});
+</script>
+	</xmp></pre>
+</section>
+
+<!-- UploadCollection with File Renaming -->
+<section>
+	<h3>UploadCollection With File Renaming Enabled</h3>
+	<div class="snippet">
+		<ui5-upload-collection id="uploadCollectionWithRenaming">
+			<div slot="header" class="header">
+				<ui5-title>Attachments(2)</ui5-title>
+			</div>
+			<ui5-upload-collection-item
+				file-name="LaptopHT-1000.jpg"
+				file-name-clickable
+				type="Detail"
+				upload-state="Complete"
+			>
+				<img src="../../../assets/images/HT-1000.jpg" slot="thumbnail">
+				Uploaded By: David Keane · Uploaded On: 2014-07-26 · File Size: 35 KB
+			</ui5-upload-collection-item>
+			<ui5-upload-collection-item
+				file-name="Notes.txt"
+				type="Detail"
+				upload-state="Complete"
+			>
+				<ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
+				Uploaded By: John Smith · Uploaded On: 2014-09-02 · File Size: 226.6 KB ·
+			</ui5-upload-collection-item>
+		</ui5-upload-collection>	
+
+		<script>
+			uploadCollectionWithRenaming.addEventListener("ui5-rename", function (event) {
+				alert("Rename event:" + event.target.fileName)
+			});
+		</script>
+	</div>
+
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-upload-collection id="uploadCollectionWithRenaming">
+	<div slot="header" class="header">
+		<ui5-title>Attachments(2)</ui5-title>
+	</div>
+	<ui5-upload-collection-item
+		file-name="LaptopHT-1000.jpg"
+		file-name-clickable
+		type="Detail"
+		upload-state="Complete"
+	>
+		<img src="../../../assets/images/HT-1000.jpg" slot="thumbnail">
+		Uploaded By: David Keane · Uploaded On: 2014-07-26 · File Size: 35 KB
+	</ui5-upload-collection-item>
+	<ui5-upload-collection-item
+		file-name="Notes.txt"
+		type="Detail"
+		upload-state="Complete"
+	>
+		<ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
+		Uploaded By: John Smith · Uploaded On: 2014-09-02 · File Size: 226.6 KB ·
+	</ui5-upload-collection-item>
+</ui5-upload-collection>	
+
+<script>
+	uploadCollectionWithRenaming.addEventListener("ui5-rename", function (event) {
+		alert("Rename event:" + event.target.fileName)
+	});
+</script>
+	</xmp></pre>
+</section>
+
+<!-- UploadCollection with items with different progress states -->
+<section>
+	<h3>UploadCollection With Different Uploading States of Items</h3>
+	<div class="snippet">
+		<ui5-upload-collection id="uploadCollectionStates">
+			<div class="header" slot="header">
+				<ui5-title>Upload States</ui5-title>
+			</div>
+			<ui5-upload-collection-item
+				file-name="LaptopHT-1000.jpg"
+				upload-state="Complete"
+			>
+				<img src="../../../assets/images/HT-1000.jpg" slot="thumbnail">
+				uploadState="Complete"
+			</ui5-upload-collection-item>
+			<ui5-upload-collection-item
+				file-name="Laptop.jpg"
+				upload-state="Uploading"
+				progress="37"
+			>
+				<img src="../../../assets/images/HT-1000.jpg" slot="thumbnail">
+				uploadState="Uploading"
+			</ui5-upload-collection-item>
+			<ui5-upload-collection-item
+				file-name="latest.reports.pdf"
+				upload-state="Error"
+				progress="59"
+			>
+				<ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
+				uploadState="Error"
+			</ui5-upload-collection-item>
+			<ui5-upload-collection-item
+				file-name="Notes.txt"
+			>
+				<ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
+				uploadState="Ready" (default)
+			</ui5-upload-collection-item>
+		</ui5-upload-collection>
+
+		<script>
+			uploadCollectionStates.addEventListener("ui5-retry", function (event) {
+				alert("Retry uploading: " + event.target.fileName);
+			});
+		
+			uploadCollectionStates.addEventListener("ui5-terminate", function (event) {
+				alert("Terminate uploading of: " + event.target.fileName);
+			});
+		</script>
+	</div>
+
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-upload-collection id="uploadCollectionStates">
+	<div class="header" slot="header">
+		<ui5-title>Upload States</ui5-title>
+	</div>
+	<ui5-upload-collection-item
+		file-name="LaptopHT-1000.jpg"
+		upload-state="Complete"
+	>
+		<img src="../../../assets/images/HT-1000.jpg" slot="thumbnail">
+		uploadState="Complete"
+	</ui5-upload-collection-item>
+	<ui5-upload-collection-item
+		file-name="Laptop.jpg"
+		upload-state="Uploading"
+		progress="37"
+	>
+		<img src="../../../assets/images/HT-1000.jpg"slot="thumbnail">
+		uploadState="Uploading"
+	</ui5-upload-collection-item>
+	<ui5-upload-collection-item
+		file-name="latest.reports.pdf"
+		upload-state="Error"
+		progress="59"
+	>
+		<ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
+		uploadState="Error"
+	</ui5-upload-collection-item>
+	<ui5-upload-collection-item
+		file-name="Notes.txt"
+	>
+		<ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
+		uploadState="Ready" (default)
+	</ui5-upload-collection-item>
+</ui5-upload-collection>
+
+<script>
+	uploadCollectionStates.addEventListener("ui5-retry", function (event) {
+		alert("Retry uploading: " + event.target.fileName);
+	});
+
+	uploadCollectionStates.addEventListener("ui5-terminate", function (event) {
+		alert("Terminate uploading of: " + event.target.fileName);
+	});
+</script>
+	</xmp></pre>
+</section>
+
+<!-- UploadCollection with drag and drop -->
+<section>
+	<h3>UploadCollection With Drag and Drop and No Initial Data</h3>
+	<div class="snippet">
+		<ui5-upload-collection id="uploadCollectionDnD" style="height: 30rem;">
+			<div class="header" slot="header">
+				<ui5-title>Attachments</ui5-title>
+			</div>
+		</ui5-upload-collection>
+
+		<script>
+			function fileExtensionToIconName(fileName) {
+				var extension = fileName.split(".").pop();
+
+				switch (extension) {
+					case "bmp":
+					case "jpg":
+					case "jpeg":
+					case "png":
+						return "card";
+					case "docx":
+					case "pdf":
+						return "pdf-attachment";
+					case "txt":
+						return "document-text";
+					default:
+						return "document";
+				}
+			}
+
+			function createThumbnail(fileName) {
+				var icon = document.createElement("ui5-icon");
+				icon.name = fileExtensionToIconName(fileName);
+				icon.slot = "thumbnail";
+				return icon;
+			}
+
+			function createUCI(file) {
+				var uci = document.createElement("ui5-upload-collection-item");
+					description = document.createTextNode("Last modified: " + file.lastModifiedDate + ", size: " + file.size);
+
+				uci.appendChild(createThumbnail(file.name));
+				uci.appendChild(description);
+				uci.file = file;
+				uci.fileName = file.name;
+				return uci;
+			}
+
+			uploadCollectionDnD.addEventListener("drop", function(event) {
+				event.preventDefault();
+
+				var files = event.dataTransfer.files;
+
+				for (var i = 0; i < files.length; i++) {
+					uci = createUCI(files[i]);
+					uploadCollectionDnD.appendChild(uci)
+				}
+			});
+		</script>
+	</div>
+
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-upload-collection id="uploadCollectionDnD" style="height: 30rem;">
+	<div class="header" slot="header">
+		<ui5-title>Attachments</ui5-title>
+	</div>
+</ui5-upload-collection>
+
+<script>
+	function fileExtensionToIconName(fileName) {
+		var extension = fileName.split(".").pop();
+
+		switch (extension) {
+			case "bmp":
+			case "jpg":
+			case "jpeg":
+			case "png":
+				return "card";
+			case "docx":
+			case "pdf":
+				return "pdf-attachment";
+			case "txt":
+				return "document-text";
+			default:
+				return "document";
+		}
+	}
+
+	function createThumbnail(fileName) {
+		var icon = document.createElement("ui5-icon");
+		icon.name = fileExtensionToIconName(fileName);
+		icon.slot = "thumbnail";
+		return icon;
+	}
+
+	function createUCI(file) {
+		var uci = document.createElement("ui5-upload-collection-item");
+			description = document.createTextNode("Last modified: " + file.lastModifiedDate + ", size: " + file.size);
+
+		uci.appendChild(createThumbnail(file.name));
+		uci.appendChild(description);
+		uci.file = file;
+		uci.fileName = file.name;
+		return uci;
+	}
+
+	uploadCollectionDnD.addEventListener("drop", function(event) {
+		event.preventDefault();
+
+		var files = event.dataTransfer.files;
+
+		for (var i = 0; i < files.length; i++) {
+			uci = createUCI(files[i]);
+			uploadCollectionDnD.appendChild(uci)
+		}
+	});
+</script>
+	</xmp></pre>
+</section>
+
+<!-- JSDoc marker -->

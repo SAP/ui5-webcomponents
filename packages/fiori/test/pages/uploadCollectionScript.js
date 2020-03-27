@@ -36,18 +36,13 @@
 	}
 
 	function createUCI(file) {
-		var uci = document.createElement("ui5-upload-collection-item"),
-			cont = document.createElement("ui5-label");
+		var uci = document.createElement("ui5-upload-collection-item");
+			description = document.createTextNode("Last modified: " + file.lastModifiedDate + ", size: " + file.size);
 
 		uci.appendChild(createThumbnail(file.name));
+		uci.appendChild(description);
 		uci.file = file;
 		uci.fileName = file.name;
-
-		cont.classList.add("description");
-		cont.wrap = true;
-		cont.textContent = "Last modified: " + file.lastModifiedDate 
-						+ ", size: " + file.size;
-		uci.appendChild(cont);
 		return uci;
 	}
 
@@ -89,7 +84,7 @@
 
 	document.getElementById("startUploading").addEventListener("click", function(event) {
 		uploadCollection.items.forEach(function (item) {
-			if (item.file) {
+			if (item.uploadState === "Ready" && item.file) {
 				var oXHR = new XMLHttpRequest();
 				
 				oXHR.open("POST", "/upload", true);

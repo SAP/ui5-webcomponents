@@ -154,13 +154,10 @@ const metadata = {
  * @class
  *
  * <h3 class="comment-api-title">Overview</h3>
+ * This component allows you to represent files before uploading them to a server, with the help of <code>ui5-upload-collection-item</code>.
+ * It also allows you to show already uploaded files.
  *
- *
- * <h3>Usage</h3>
- *
- * For the <code>ui5-upload-collection</code>
  * <h3>ES6 Module Import</h3>
- *
  * <code>import @ui5/webcomponents-fiori/dist/UploadCollection.js";</code>
  *
  * @constructor
@@ -168,6 +165,7 @@ const metadata = {
  * @alias sap.ui.webcomponents.fiori.UploadCollection
  * @extends UI5Element
  * @tagname ui5-upload-collection
+ * @appenddocs UploadCollectionItem
  * @public
  */
 class UploadCollection extends UI5Element {
