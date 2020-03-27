@@ -1,5 +1,5 @@
-commit 0f541a3c88b37aa21e6a2bb364bd68dee2c33910
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Fri Mar 27 08:47:39 2020 +0200
+commit 1518e228446cbb4c4e0a97f2587e274ce9855435
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Fri Mar 27 09:43:36 2020 +0200
 
-    fix(ui5-button): Button text shows in all scenarios (#1378)
+    chore(release): publish v1.0.0-rc.6 (#1376)
