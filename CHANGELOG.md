@@ -237,7 +237,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 * **ui5-busyindicator:** change default `size` of busy dots to `Medium`.
 
-* **ui5-icon:** remove `src` property is removed in favor of `name`.
+* **ui5-icon:** `src` property is removed in favor of `name`.
 
 * **ui5-messagestrip:** replace `icon` property with `icon` slot to allow setting arbitrary content by the user.
 
