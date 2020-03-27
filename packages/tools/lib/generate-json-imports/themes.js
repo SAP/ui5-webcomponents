@@ -2,7 +2,7 @@ const fs = require("fs");
 const mkdirp = require("mkdirp");
 const buildConfiguration = require("../build-configuration/index.js");
 
-const optionalThemes = buildConfiguration.theming.optionalThemes;
+const optionalThemes = buildConfiguration.themes.optional;
 
 const packageName = JSON.parse(fs.readFileSync("package.json")).name;
 

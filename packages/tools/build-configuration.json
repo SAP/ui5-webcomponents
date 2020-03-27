@@ -1,7 +1,7 @@
 {
-  "theming": {
-    "defaultTheme": "sap_fiori_3",
-    "optionalThemes": ["sap_fiori_3_dark", "sap_belize", "sap_belize_hcb", "sap_belize_hcw"]
+  "themes": {
+    "default": "sap_fiori_3",
+    "optional": ["sap_fiori_3_dark", "sap_belize", "sap_belize_hcb", "sap_belize_hcw"]
   },
   "locales": [
     "ar",

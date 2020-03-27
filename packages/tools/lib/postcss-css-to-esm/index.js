@@ -4,7 +4,7 @@ const path = require('path');
 const mkdirp = require('mkdirp');
 const buildConfiguration = require("../build-configuration/index.js");
 
-const DEFAULT_THEME = buildConfiguration.theming.defaultTheme;
+const DEFAULT_THEME = buildConfiguration.themes.default;
 
 const getDefaultThemeCode = packageName => {
 	return `import { registerThemeProperties } from "@ui5/webcomponents-base/dist/asset-registries/Themes.js";

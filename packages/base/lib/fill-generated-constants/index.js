@@ -14,7 +14,7 @@ try {
 	process.exit(1);
 }
 
-fileContent = `${fileContent}`.replace("%DEFAULT_THEME%", buildConfiguration.theming.defaultTheme);
+fileContent = `${fileContent}`.replace("%DEFAULT_THEME%", buildConfiguration.themes.default);
 
 fs.writeFileSync(filePath, fileContent);
 

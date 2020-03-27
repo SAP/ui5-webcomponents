@@ -4,7 +4,7 @@ const buildConfiguration = require('@ui5/webcomponents-tools/lib/build-configura
 const NODE_MODULES_PATH = path.join(__dirname, `../../node_modules/`);
 const TOOLS_LIB = path.join(NODE_MODULES_PATH, "@ui5/webcomponents-tools/lib/");
 
-const allThemes = [buildConfiguration.theming.defaultTheme, ...buildConfiguration.theming.optionalThemes];
+const allThemes = [buildConfiguration.themes.default, ...buildConfiguration.themes.optional];
 const buildLessCommandsNames = allThemes.map(theme => `build.less.${theme}`).join(" ");
 const buildLessCommands = {};
 allThemes.forEach(theme => buildLessCommands[theme] = `lessc src/themes/${theme}/parameters-bundle.less dist/themes/${theme}/parameters-bundle.css`);
