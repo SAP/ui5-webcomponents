@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.19.0](https://github.com/SAP/ui5-webcomponents/compare/v0.18.0...v0.19.0) (2020-03-27)
+
+
+### Bug Fixes
+
+* **framework:** fix travis build ([#1212](https://github.com/SAP/ui5-webcomponents/issues/1212)) ([7f30cf3](https://github.com/SAP/ui5-webcomponents/commit/7f30cf3))
+* **framework:** openUI5 cldr support re-added ([#1207](https://github.com/SAP/ui5-webcomponents/issues/1207)) ([6bf40a2](https://github.com/SAP/ui5-webcomponents/commit/6bf40a2))
+* **framework:** Provide a workaround for Firefox 74 shadow root bug ([#1347](https://github.com/SAP/ui5-webcomponents/issues/1347)) ([7cc67a7](https://github.com/SAP/ui5-webcomponents/commit/7cc67a7))
+* **framework:** StaticArea and StaticAreaElement identify as UI5Element ([#1168](https://github.com/SAP/ui5-webcomponents/issues/1168)) ([28f827a](https://github.com/SAP/ui5-webcomponents/commit/28f827a))
+* **framework:** prevent infinite loop when fetching i18n bundles ([#1333](https://github.com/SAP/ui5-webcomponents/issues/1333)) ([f605566](https://github.com/SAP/ui5-webcomponents/commit/f605566))
+* **framework:** prevent error when deleting static area item ([#1335](https://github.com/SAP/ui5-webcomponents/issues/1335)) ([5a99536](https://github.com/SAP/ui5-webcomponents/commit/5a99536))
+* **framework:** apply size "compact" for StaticArea items ([#1204](https://github.com/SAP/ui5-webcomponents/issues/1204)) ([c411774](https://github.com/SAP/ui5-webcomponents/commit/c411774))
+* **framework:** merge metadata properly ([#1092](https://github.com/SAP/ui5-webcomponents/issues/1092)) ([6a29872](https://github.com/SAP/ui5-webcomponents/commit/6a29872))
+* **framework:** create font face style tag only once ([#1090](https://github.com/SAP/ui5-webcomponents/issues/1090)) ([1a09e13](https://github.com/SAP/ui5-webcomponents/commit/1a09e13))
+
+
+### Code Refactoring
+
+* **framework:** propagate compact size when ui5-content-density-compact class is set ([#1136](https://github.com/SAP/ui5-webcomponents/issues/1136)) ([2db62ba](https://github.com/SAP/ui5-webcomponents/commit/2db62ba))
+
+
+### Features
+
+* **framework:** Allow the registration of custom themes ([#1109](https://github.com/SAP/ui5-webcomponents/issues/1109)) ([6a69521](https://github.com/SAP/ui5-webcomponents/commit/6a69521))
+* **framework:** create getLocaleData API ([#1269](https://github.com/SAP/ui5-webcomponents/issues/1269)) ([c9253a6](https://github.com/SAP/ui5-webcomponents/commit/c9253a6))
+* **framework:** OpenUI5 integration ([#1138](https://github.com/SAP/ui5-webcomponents/issues/1138)) ([5527990](https://github.com/SAP/ui5-webcomponents/commit/5527990))
+* **Itemnavigation:** add paging behaviour ([#1116](https://github.com/SAP/ui5-webcomponents/issues/1116)) ([1cb0832](https://github.com/SAP/ui5-webcomponents/commit/1cb0832))
+* **ScrollEnablement:** enhance implementation to work on desktop ([#1374](https://github.com/SAP/ui5-webcomponents/issues/1374)) ([2567bea](https://github.com/SAP/ui5-webcomponents/commit/2567bea))
+
+
+### BREAKING CHANGES
+
+* **framework:** remove `set/get` for compact size, use CSS class `ui5-content-density-compact` as a replacement.
+
+
+
+
+
 # [0.18.0](https://github.com/SAP/ui5-webcomponents/compare/v0.17.0...v0.18.0) (2019-12-02)
 
 

@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-rc.6](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.5...v1.0.0-rc.6) (2020-03-27)
+
+
+### Bug Fixes
+
+* **Playground:**  deploy all test pages to gh pages ([#1034](https://github.com/SAP/ui5-webcomponents/issues/1034)) ([ddb8fc2](https://github.com/SAP/ui5-webcomponents/commit/ddb8fc2))
+
+
+
+
 # [1.0.0-rc.5](https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.4...v1.0.0-rc.5) (2019-12-02)
 
 
