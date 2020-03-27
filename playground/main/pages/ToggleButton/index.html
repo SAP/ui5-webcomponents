@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<title>ToggleButton</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<script>
+		delete Document.prototype.adoptedStyleSheets
+	</script>
+
+	<script data-ui5-config type="application/json">
+		{
+			"language": "EN"
+		}
+	</script>
+
+	
+	
+	
+<script src="https://sap.github.io/ui5-webcomponents/assets/js/webcomponentsjs/webcomponents-loader.js"></script>
+<script type="module" src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.esm.js"></script>
+<script nomodule src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.es5.js"></script>
+                    
+
+	<style>
+		html,
+		body {
+			margin: 0;
+		}
+
+		.header {
+			display: flex;
+			justify-content: center;
+			height: 3rem;
+			background: #3f5161;
+		}
+
+		.header-title {
+			color: #fafafa;
+			margin: 0;
+			padding: 0;
+			line-height: 3rem;
+			font-size: 1.375rem;
+			font-weight: normal;
+			text-shadow: 0 0 0.125rem #ffffff;
+			font-family: "72", Arial, Helvetica, sans-serif;
+		}
+
+		.main {
+			display: flex;
+		}
+
+		.samples,
+		.result {
+			flex: 1;
+		}
+
+		.samples {
+			flex-grow: 4;
+		}
+
+	</style>
+</head>
+
+<body style="background-color: var(--sapBackgroundColor);">
+
+<header class="header">
+	<h1 class="header-title">ui5-togglebutton</h1>
+</header>
+
+<section class="main">
+	<div class="samples">
+		<h2>ToggleButton states</h2>
+		<div class="sample" id="main-sample">
+			<ui5-togglebutton class="toggleButton" id="toggle-button" pressed>ToggleButton</ui5-togglebutton>
+			<ui5-togglebutton class="toggleButton" pressed>Pressed ToggleButton</ui5-togglebutton>
+			<ui5-togglebutton class="toggleButton" disabled id="disabled-toggle-button">Disabled ToggleButton</ui5-togglebutton>
+			<ui5-togglebutton class="toggleButton" disabled pressed>Disabled ToggleButton</ui5-togglebutton>
+			<ui5-togglebutton class="toggleButton" design="Positive">Accept ToggleButton</ui5-togglebutton>
+			<ui5-togglebutton class="toggleButton" design="Positive" pressed>Accept ToggleButton</ui5-togglebutton>
+			<ui5-togglebutton class="toggleButton" design="Negative">Reject ToggleButton</ui5-togglebutton>
+			<ui5-togglebutton class="toggleButton" design="Negative" pressed>Reject ToggleButton</ui5-togglebutton>
+			<ui5-togglebutton class="toggleButton" design="Transparent">Transparent ToggleButton</ui5-togglebutton>
+			<ui5-togglebutton class="toggleButton" design="Transparent" pressed>Transparent ToggleButton</ui5-togglebutton>
+		</div>
+	</div>
+	<div class="result">
+		<h2>Result</h2>
+		<span id="click-result"></span>
+	</div>
+</section>
+
+<script>
+	var clickResult = document.getElementById("click-result");
+
+	Array.prototype.slice.call(document.querySelectorAll(".toggleButton")).forEach(function (el) {
+		el.addEventListener("click", function (event) {
+			clickResult.innerHTML = event.target.textContent + ": " + (event.target.pressed);
+		});
+	});
+
+</script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<title>Playground</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<script data-ui5-config type="application/json">
+		{
+			"language": "EN"
+		}
+	</script>
+
+	<script>delete Document.prototype.adoptedStyleSheets;</script>
+
+	
+	
+	
+<script src="https://sap.github.io/ui5-webcomponents/assets/js/webcomponentsjs/webcomponents-loader.js"></script>
+<script type="module" src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.esm.js"></script>
+<script nomodule src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.es5.js"></script>
+                    
+
+	<style>
+		html,
+		body {
+			margin: 0;
+		}
+
+		.group {
+			padding: 1rem;
+			background: #fafafa;
+		}
+	</style>
+</head>
+
+<body style="background-color: var(--sapBackgroundColor);">
+	<section class="group">
+		<h2>Basic labels</h2>
+		<ui5-label id="basic-label">Basic Label</ui5-label>
+		<ui5-label show-colon id="basic-label2">Basic Label</ui5-label>
+		<ui5-label required id="basic-label2">Basic Label</ui5-label>
+		<ui5-label show-colon required id="basic-label3">Basic Label</ui5-label>
+
+		<h2>Basic long labels</h2>
+		<ui5-label id="basic-label4">Start The quick brown fox jumps over the lazy sheep End</ui5-label>
+		<ui5-label show-colon id="basic-label5">Start The quick brown fox jumps over the lazy sheep End</ui5-label>
+		<ui5-label required id="basic-label6">Start The quick brown fox jumps over the lazy sheep End</ui5-label>
+		<ui5-label show-colon required id="basic-label6">Start The quick brown fox jumps over the lazy sheep End</ui5-label>
+
+		<h2>Basic long labels  with predefined width</h2>
+		<ui5-label style="width: 100px" id="basic-label7">Start The quick brown fox jumps over the lazy sheep End</ui5-label>
+		<ui5-label style="width: 100px" show-colon id="basic-label8">Start The quick brown fox jumps over the lazy sheep End</ui5-label>
+		<ui5-label style="width: 100px" required id="basic-label8">Start The quick brown fox jumps over the lazy sheep End</ui5-label>
+		<ui5-label style="width: 100px" show-colon required id="basic-label9">Start The quick brown fox jumps over the lazy sheep End</ui5-label>
+	</section>
+	<section class="group">
+		<h2>Required labels</h2>
+		<ui5-label id="required-label" required>Required</ui5-label><span>native span</span>
+		<ui5-label id="required-label-2" required show-colon>Required semi-colon</ui5-label><span>native span</span>
+		<ui5-label id="required-label-3" required show-colon wrap>Required semi-colon wrapped</ui5-label><span>native span</span>
+	</section>
+
+	<section class="group">
+		<h2>Wrapping label</h2>
+		<ui5-label style="width: 200px" id="wrapping-label-1">Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur.</ui5-label>
+		<ui5-label style="width: 200px" id="wrapping-label-2" show-colon>Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur</ui5-label>
+		<ui5-label style="width: 200px" id="wrapping-label" wrap>Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur.</ui5-label>
+		<ui5-label style="width: 200px" id="wrapping-label-3" wrap required>Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur.</ui5-label>
+		<ui5-label style="width: 100px" id="truncated-label" required >Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur.</ui5-label>
+		<ui5-label style="width: 100px" id="truncated-label-2" show-colon required >Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur.</ui5-label>
+		<ui5-label style="width: 100px" id="truncated-label-3" show-colon required wrap >Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur.</ui5-label>
+
+	</section>
+
+	<h2>Test show-colon not forcing truncation</h2>
+	<ui5-label id="showColon-false">Basic Label</ui5-label>
+	<ui5-label show-colon id="showColon-true">Basic Label</ui5-label>
+
+	<section class="group">
+		<h2>label + input</h2>
+		<div style="display: flex; align-items: center">
+			<ui5-label id="label-for-ui5-input" for="form-ui5-input" style="width: 100px" required>Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur</ui5-label>
+			<ui5-input style="width: 320px; margin-left: 16px;" id="form-ui5-input"></ui5-input>
+		</div>
+
+		<br>
+
+		<div style="display: flex; align-items: center">
+			<ui5-label id="label-for-native-input" for="native-input" style="width: 100px" show-colon wrap required>Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur</ui5-label>
+			<input style="width: 320px; margin-left: 16px;" id="native-input"></input>
+		</div>
+
+		<br>
+
+		<div style="display: flex; align-items: center">
+			<ui5-label id="label-for-ui5-textarea" for="ui5-textarea" style="width: 100px" show-colon>Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur</ui5-label>
+			<ui5-textarea style="width: 320px; margin-left: 16px;" id="ui5-textarea"></ui5-textarea>
+		</div>
+
+		<br>
+
+		<div style="display: flex; align-items: center">
+			<ui5-label id="label-for-native-textarea" for="native-textarea" style="width: 100px" required>Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur</ui5-label>
+			<textarea style="width: 320px; margin-left: 16px;" id="native-textarea"></textarea>
+		</div>
+
+		<br>
+
+		<div style="display: flex; align-items: center">
+			<ui5-label id="label-for-ui5-datepicker" for="ui5-datepicker" style="width: 100px" show-colon required>Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur</ui5-label>
+			<ui5-datepicker style="width: 320px; margin-left: 16px;" id="ui5-datepicker"></ui5-datepicker>
+		</div>
+	</section>
+</body>
+
+</html>

@@ -8,7 +8,19 @@ document.addEventListener("DOMContentLoaded", function() {
     setTheme();
     scrollSelectedMenuItemIntoView();
     createMetaTags();
+
+    var contentDensity = window.localStorage.getItem("contentDensity");
+    var isCompact = (contentDensity === "Compact");
+    document.body.className = isCompact ? "ui5-content-density-compact": ""
 });
+
+var THEMES = {
+  "sap_fiori_3": "fiori",
+  "sap_fiori_3_dark": "fiori--dark",
+  "sap_belize": "belize",
+  "sap_belize_hcb": "hcb",
+  "sap_belize_hcw": "hcw",
+}
 
 function toggleSettings() {
   var settingsButton = document.getElementById("settings-button"),
@@ -32,7 +44,7 @@ function toggleSettings() {
 
       // Set selected option of themeSwitch
       Array.prototype.slice.call(contentDensitySwitch.querySelectorAll("ui5-option")).forEach(function(option) {
-        if (urlParameters["sap-ui-compactSize"] === "true") {
+        if (window.localStorage.getItem("contentDensity") === "Compact") {
           option.selected = option.textContent === "Compact";
         } else {
           option.selected = option.textContent === "Cozy";
@@ -60,11 +72,13 @@ function toggleSettings() {
         contentDensity = contentDensitySwitch.selectedOption.textContent,
         textDirection = textDirectionSwitch.selectedOption.textContent;
 
+
+        /* Save the compact setting in Local Storage */
+        window.localStorage.setItem("contentDensity", contentDensity);
+
         // Not implemented with string literals, beacause of IE11
         var newLocation = location.origin + location.pathname + "?sap-ui-theme=";
         newLocation += theme;
-        newLocation += "&sap-ui-compactSize=";
-        newLocation += contentDensity === "Compact";
         newLocation +=  "&sap-ui-rtl=";
         newLocation += textDirection === "RTL";
 
@@ -77,11 +91,16 @@ function toggleSettings() {
 
 function setTheme() {
   var currentTheme = getParams(window.location.href)["sap-ui-theme"];
-  if (currentTheme === "sap_belize_hcb") {
-    document.body.classList.add("hcb");
-  } else {
-    document.body.classList.remove("hcb");
-  }
+
+  Object.keys(THEMES).forEach(function(themeName) {
+    var css_class_name = THEMES[themeName];
+
+    if (currentTheme === themeName) {
+      document.body.classList.add(css_class_name);
+    } else {
+      document.body.classList.remove(css_class_name);
+    }
+  });
 }
 
 function getParams(url) {
@@ -130,7 +149,6 @@ function initSearch() {
       if (request.status >= 200 && request.status < 400) {
         // Success!
         var data = JSON.parse(request.responseText);
-        var keys = Object.keys(data);
   
         for(var i in data) {
           index.add({
@@ -235,6 +253,11 @@ function toggleNav() {
 
 function scrollSelectedMenuItemIntoView() {
   const selectedElement = document.querySelector(".navigation-list-link.active");
+  
+  if (!selectedElement) {
+    return;
+  }
+
   const selectedElementBounding = selectedElement.getBoundingClientRect();
   if (selectedElementBounding.bottom >= (window.innerHeight || document.documentElement.clientHeight)) {
     setTimeout(function() {

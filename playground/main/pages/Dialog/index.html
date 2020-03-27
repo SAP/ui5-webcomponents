@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Dialog</title>
+
+	<script data-ui5-config type="application/json">
+		{
+			"language": "EN",
+			"libs": "sap.ui.webcomponents.main"
+		}
+	</script>
+
+	
+	
+	
+<script src="https://sap.github.io/ui5-webcomponents/assets/js/webcomponentsjs/webcomponents-loader.js"></script>
+<script type="module" src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.esm.js"></script>
+<script nomodule src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.es5.js"></script>
+                    
+
+</head>
+
+<body style="background-color: var(--sapBackgroundColor);">
+	<ui5-button id="btnOpenDialog">Open Dialog</ui5-button>
+
+	<ui5-dialog id="dialog" header-text="Dialog" stretch>
+		<div style="padding: 1rem;text-align: center;">
+			<ui5-title level="H2">Hello World!</ui5-title>
+		</div>
+		<ui5-textarea
+			placeholder="Type some text"
+			max-length="2"
+			show-exceeded-text>
+		</ui5-textarea>
+		<ui5-select id="mySelect">
+			<ui5-option >Cozy</ui5-option>
+			<ui5-option >Compact</ui5-option>
+			<ui5-option selected>Condensed</ui5-option>
+		</ui5-select>
+		<div slot="footer" style="display: flex; align-items: center;padding: 0.25rem 0.5rem">
+			<div style="flex: 1;"></div>
+			<ui5-button id="btnCloseDialog">Close</ui5-button>
+		</div>
+	</ui5-dialog>
+
+	<script>
+		btnOpenDialog.addEventListener("click", function() {
+			dialog.open();
+		});
+		btnCloseDialog.addEventListener("click", function() {
+			dialog.close();
+		});
+	</script>
+</body>
+</html>

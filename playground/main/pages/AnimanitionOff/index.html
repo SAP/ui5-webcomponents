@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+	<title>Animations off</title>
+
+	<script data-ui5-config type="application/json">
+		{
+			"animationMode": "none"
+		}
+	</script>
+	
+	
+	
+<script src="https://sap.github.io/ui5-webcomponents/assets/js/webcomponentsjs/webcomponents-loader.js"></script>
+<script type="module" src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.esm.js"></script>
+<script nomodule src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.es5.js"></script>
+                    
+
+	<style>.panel {border: 1px dotted #bad0e3;}.header {display: flex;align-items: center;width: 100%;}</style>
+
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+			panel1.addEventListener("ui5-toggle", function (event) {
+				console.log(event);
+				event.target.headerText = event.target.collapsed ? "Click to expand!" : "Click to collapse!";
+				field1.value = parseInt(field1.value) + 1;
+			});
+			panel2.addEventListener("ui5-toggle", function (event) {
+				field2.value = parseInt(field2.value) + 1;
+			});
+		});
+	</script>
+</head>
+
+<body style="background-color: var(--sapBackgroundColor);">
+	<ui5-panel id="panel1" collapsed header-text="Click to expand!" class="panel">
+		<ui5-title>This is a demo how to use the &quot;expand&quot; event.</ui5-title><br>
+		<ui5-label>Some short text.</ui5-label>
+	</ui5-panel>
+
+	<ui5-panel id="panel2" collapsed accessible-role="Complementary" class="panel">
+		<div slot="header" class="header">
+			<ui5-title>Expandable but not expanded</ui5-title>
+		</div>
+		<ui5-title>This is a demo how to use the &quot;expand&quot; event.</ui5-title><br>
+		<ui5-label>Some short text.</ui5-label>
+	</ui5-panel><br>
+
+	<ui5-input id="field1" value="0"></ui5-input>
+	<ui5-input id="field2" value="0"></ui5-input>
+</body>
+</html>

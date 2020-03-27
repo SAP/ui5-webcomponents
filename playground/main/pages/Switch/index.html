@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<title>ui5-switch</title>
+
+	
+	
+	
+<script src="https://sap.github.io/ui5-webcomponents/assets/js/webcomponentsjs/webcomponents-loader.js"></script>
+<script type="module" src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.esm.js"></script>
+<script nomodule src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.es5.js"></script>
+                    
+
+	<script>delete Document.prototype.adoptedStyleSheets</script>
+</head>
+
+<style>
+	ui5-switch {
+		margin: 8px;
+	}
+
+    #styled1::part(slider) {
+        height: 1.75rem;
+        background: orange;
+        border-color: green;
+    }
+    #styled1::part(text-on) {
+        color: blue;
+        font-weight: bold;
+    }
+    #styled1::part(text-off) {
+        color: magenta;
+        font-weight: bold;
+    }
+    #styled1::part(handle) {
+        background: orange;
+        border-color: green;
+    }
+
+    .styled2::part(slider) {
+        height: 0.75rem;
+        background: purple;
+        border-color: white;
+    }
+    .styled2::part(text-on) {
+        font-size: .5rem;
+        color: white;
+    }
+    .styled2::part(text-off) {
+        font-size: .5rem;
+        color: white;
+    }
+    .styled2::part(handle) {
+        background: purple;
+        border-color: white;
+    }
+</style>
+<body style="background-color: var(--sapBackgroundColor);">
+	<h3>Default Switch</h3>
+	<div style="display: flex">
+		<ui5-switch style="width:200px" text-on="On" text-off="Off"></ui5-switch>
+	</div>
+
+	<div style="display: flex">
+		<ui5-switch style="width:200px" text-on="Yes" text-off="No"></ui5-switch>
+	</div>
+
+	<h3>No Label</h3>
+	<div style="display: flex"></div>
+		<ui5-switch></ui5-switch>
+		<ui5-switch checked></ui5-switch>
+	</div>
+
+	<h3>Default Switch</h3>
+	<div style="display: flex">
+		<ui5-switch id="sw" text-on="On" text-off="Off"></ui5-switch>
+		<ui5-switch id="sw2" checked text-on="Yes" text-off="No"></ui5-switch>
+		<ui5-switch disabled text-on="On" text-off="Off"></ui5-switch>
+		<ui5-switch checked disabled text-on="Yes" text-off="No"></ui5-switch>
+	</div>
+	<ui5-label id="lbl"></ui5-label>
+
+	<h3>Graphical Switch</h3>
+	<div style="display: flex">
+		<ui5-switch graphical text-on="On" text-off="Off"></ui5-switch>
+		<ui5-switch graphical checked text-on="Yes" text-off="No"></ui5-switch>
+		<ui5-switch graphical text-on="On" text-off="Off" disabled></ui5-switch>
+		<ui5-switch graphical checked text-on="Yes" text-off="No" disabled></ui5-switch>
+	</div>
+
+	<h3>Custom Switch</h3>
+	<div style="display: flex">
+		<ui5-switch text-on="Accept" text-off="Reject" style="width: 120px; height: 80px;"></ui5-switch>
+		<ui5-switch checked  text-on="Turned On" text-off="Turned Off" style="width: 150px; height: 100px;"></ui5-switch>
+		<ui5-switch text-on="Enabled" text-off="disabled" style="width: 200px; height: 100px;"></ui5-switch>
+		<ui5-switch checked  text-on="Allowed" text-off="Prohibitted" style="width: 200px; height: 200px;"></ui5-switch>
+	</div>
+
+    <h3>Switch styled with shadow parts</h3>
+    <div style="display: flex">
+        <ui5-switch id="styled1" text-on="On" text-off="Off"></ui5-switch>
+        <ui5-switch class="styled2" checked text-on="Yes" text-off="No"></ui5-switch>
+    </div>
+
+	<ui5-input id="field"></ui5-input>
+</body>
+
+<script>
+	var counter = 0;
+
+	sw.addEventListener("ui5-change", function(e) {
+		lbl.innerHTML = e.target.checked + " : " + (++counter);
+		field.value = counter;
+	});
+</script>
+</html>

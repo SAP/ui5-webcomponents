@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+
+	<title>Carousel</title>
+
+	
+	
+	
+<script src="https://sap.github.io/ui5-webcomponents/assets/js/webcomponentsjs/webcomponents-loader.js"></script>
+<script type="module" src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.esm.js"></script>
+<script nomodule src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.es5.js"></script>
+                    
+
+</head>
+
+<body style="background-color: var(--sapBackgroundColor); padding: 1rem;">
+<style>
+	ui5-carousel {
+		height: 25rem;
+		margin-bottom: 1rem;
+	}
+</style>
+<ui5-carousel id="carousel1" cycling="true">
+	<ui5-button>Button 1</ui5-button>
+	<ui5-button>Button 2</ui5-button>
+	<ui5-button>Button 3</ui5-button>
+</ui5-carousel>
+
+<ui5-carousel id="carousel2">
+	<ui5-button>Button 1</ui5-button>
+	<ui5-button>Button 2</ui5-button>
+	<ui5-button>Button 3</ui5-button>
+	<ui5-button>Button 4</ui5-button>
+	<ui5-button>Button 5</ui5-button>
+	<ui5-button>Button 6</ui5-button>
+	<ui5-button>Button 7</ui5-button>
+	<ui5-button>Button 8</ui5-button>
+	<ui5-button>Button 9</ui5-button>
+</ui5-carousel>
+
+<ui5-carousel id="carousel3" arrows-placement="Navigation">
+	<ui5-button>Button 1</ui5-button>
+	<ui5-button>Button 2</ui5-button>
+	<ui5-button>Button 3</ui5-button>
+</ui5-carousel>
+
+<ui5-carousel id="carousel4" arrows-placement="Navigation">
+	<ui5-card
+		id="card"
+		status="4 of 10"
+		heading="Quick Links"
+		subheading="quick links"
+		header-interactive
+		class="myCard">
+		<ui5-list id="myList3" separators="Inner">
+			<ui5-li icon="horizontal-bullet-chart" >Template Based Segmentation</ui5-li>
+			<ui5-li icon="opportunity" >Segmentation Models</ui5-li>
+			<ui5-li icon="line-charts" >Marketing plans</ui5-li>
+		</ui5-list>
+
+		<ui5-input id="field" value="0"></ui5-input>
+	</ui5-card>
+
+	<ui5-list header-text="API: GroupHeaderListItem" mode="MultiSelect">
+		<ui5-li-groupheader>New Items</ui5-li-groupheader>
+		<ui5-li image="./img/HT-1000.jpg" icon="navigation-right-arrow" info="Available">Voluptate do eu cupidatat elit est culpa. Reprehenderit eiusmod voluptate ex est dolor nostrud Lorem Lorem do nisi laborum veniam. Sint do non culpa aute occaecat labore ipsum veniam minim tempor est. Duis pariatur aute culpa irure ad excepteur pariatur culpa culpa ea duis occaecat aute irure. Ipsum velit culpa non exercitation ex laboris deserunt in eu non officia in. Laborum sunt aliqua labore cupidatat sunt labore.</ui5-li>
+		<ui5-li image="./img/HT-1010.jpg" icon="navigation-right-arrow" info="Re-stock" description="#12331232131" info-state="Error">Laptop Lenovo</ui5-li>
+		<ui5-li image="./img/HT-1022.jpg" icon="navigation-right-arrow" info="Re-stock" description="#12331232131"  info-state="Error">IPhone 3</ui5-li>
+	</ui5-list>
+
+	<ui5-list header-text="API: icon">
+		<ui5-li  icon="navigation-right-arrow">Option 1</ui5-li>
+		<ui5-li  icon="navigation-right-arrow">Option 2</ui5-li>
+		<ui5-li  icon="navigation-right-arrow">Option 3</ui5-li>
+		<ui5-li  icon-end icon="navigation-right-arrow">Option 1</ui5-li>
+		<ui5-li  icon-end icon="navigation-right-arrow">Option 2</ui5-li>
+		<ui5-li  icon-end icon="navigation-right-arrow">Option 3</ui5-li>
+	</ui5-list>
+</ui5-carousel>
+
+<ui5-carousel id="carousel5" items-per-page="4">
+	<ui5-button>Button 1</ui5-button>
+	<ui5-button>Button 2</ui5-button>
+	<ui5-button>Button 3</ui5-button>
+	<ui5-button>Button 4</ui5-button>
+	<ui5-button>Button 5</ui5-button>
+	<ui5-button>Button 6</ui5-button>
+	<ui5-button>Button 7</ui5-button>
+	<ui5-button>Button 8</ui5-button>
+</ui5-carousel>
+</body>
+</html>

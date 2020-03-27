@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<title>Icon</title>
+	<script>
+		delete Document.prototype.adoptedStyleSheets;
+	</script>
+	<script data-id="sap-ui-config" type="application/json">
+		{
+			"language": "EN",
+			"xx-wc-size-compact": false
+		}
+	</script>
+
+	
+	
+	
+<script src="https://sap.github.io/ui5-webcomponents/assets/js/webcomponentsjs/webcomponents-loader.js"></script>
+<script type="module" src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.esm.js"></script>
+<script nomodule src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.es5.js"></script>
+                    
+
+</head>
+
+<body style="background-color: var(--sapBackgroundColor);">
+
+	<ui5-icon title="add equipment" style="width: 50px; height: 50px; border: 1px solid red;" id="myIcon" show-tooltip accessible-name="Hello SVG Icon" name="add-equipment"></ui5-icon>
+	<ui5-icon name="add-equipment" class="icon-blue icon-medium"></ui5-icon>
+	<ui5-icon name="add-equipment" class="icon-blue icon-small"></ui5-icon>
+	<ui5-icon name="add-employee" class="icon-red"></ui5-icon>
+	<ui5-icon name="add-employee" class="icon-red icon-medium"></ui5-icon>
+	<ui5-icon name="add-employee" class="icon-red icon-small"></ui5-icon>
+	<ui5-icon show-tooltip name="message-error"></ui5-icon>
+
+	<br>
+	<ui5-icon name="add-employee"></ui5-icon>
+	<br>
+	<ui5-icon style="width: 1rem; height: 1rem;" name="add-employee"></ui5-icon>
+	<ui5-icon style="width: 2rem; height: 2rem;" name="factory"></ui5-icon>
+	<br>
+
+	<ui5-button icon="add-equipment"></ui5-button>
+	<div id="content"></div>
+	<ui5-icon name="appointment-2"></ui5-icon>
+	<ui5-icon name="appointment-2"></ui5-icon>
+		<!-- <ui5-icon name="appointment-2"></ui5-icon>
+	<ui5-icon name="appointment-2"></ui5-icon> -->
+
+	<br />
+
+	<ui5-datepicker style="margin-top: 10px" placeholder="test" value="Value State None">
+		<ui5-icon
+			slot="icon"
+			name="add-employee"
+			tabindex="-1"
+		></ui5-icon>
+	</ui5-datepicker>
+
+	<ui5-datepicker style="margin-top: 10px" value-state="Success" value="Value State Success">
+		<ui5-icon
+			slot="icon"
+			name="add-employee"
+			tabindex="-1"
+		></ui5-icon>
+	</ui5-datepicker>
+
+	<ui5-datepicker style="margin-top: 10px" value-state="Warning" value="Value State Warning">
+		<ui5-icon
+			slot="icon"
+			name="add-employee"
+			tabindex="-1"
+		></ui5-icon>
+	</ui5-datepicker>
+
+	<ui5-datepicker style="margin-top: 10px" value-state="Error" value="Value State Error">
+		<ui5-icon
+			slot="icon"
+			name="add-employee"
+			tabindex="-1"
+		></ui5-icon>
+	</ui5-datepicker>
+
+    <br/><br/>
+
+    <script type="module">
+		(async () => {
+			const iconNames = await window["sap-ui-webcomponents-bundle"].getIconNames();
+			iconNames.forEach(iconName => {
+				const icon = document.createElement("ui5-icon");
+				icon.name = iconName;
+				document.body.appendChild(icon);
+			});
+		})();
+    </script>
+
+    <script nomodule>
+		window["sap-ui-webcomponents-bundle"].getIconNames().then(function(iconNames) {
+			iconNames.forEach(function(iconName) {
+				const icon = document.createElement("ui5-icon");
+				icon.name = iconName;
+				document.body.appendChild(icon);
+			});
+		});
+    </script>
+
+</body>
+</html>

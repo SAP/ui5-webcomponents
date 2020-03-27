@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<title>Panel</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<title>Panel</title>
+
+	<script data-ui5-config type="application/json">
+		{
+			"language": "EN",
+			"libs": "sap.ui.webcomponents.main"
+		}
+	</script>
+	<script>
+		delete Document.prototype.adoptedStyleSheets;
+	</script>
+
+	
+	
+	
+<script src="https://sap.github.io/ui5-webcomponents/assets/js/webcomponentsjs/webcomponents-loader.js"></script>
+<script type="module" src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.esm.js"></script>
+<script nomodule src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.es5.js"></script>
+                    
+
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+			panel1.addEventListener("ui5-toggle", function (event) {
+				console.log(event);
+				event.target.headerText = event.target.collapsed ? "Click to expand!" : "Click to collapse!";
+				field1.value = parseInt(field1.value) + 1;
+			});
+			panel2.addEventListener("ui5-toggle", function (event) {
+				field2.value = parseInt(field2.value) + 1;
+			});
+
+			var button = document.getElementById("b1");
+			var panel = document.getElementById("p1");
+			var label = document.getElementById("l1");
+
+			button.addEventListener("click", function () {
+				var d = document.createElement("ui5-label");
+				var newText = Math.random().toString();
+				d.innerHTML = newText;
+				label.childNodes[0].nodeValue = newText;
+				panel.appendChild(d);
+			});
+		});
+	</script>
+</head>
+
+<body style="background-color: var(--sapBackgroundColor);">
+
+<style>
+	ui5-panel {
+		border: 1px dotted #bad0e3;
+	}
+
+	.header {
+		display: flex;
+		align-items: center;
+		width: 100%;
+	}
+</style>
+
+	<ui5-panel id="p1" collapsed accessible-role="Complementary">
+
+		<!-- Panel header -->
+		<div slot="header" class="header">
+			<ui5-title>Expandable but not expanded</ui5-title>
+			<ui5-button id="b1">Add child </ui5-button>
+			<ui5-label id="l1">No new children added yet.</ui5-label>
+			<ui5-button design="Reject" icon="cancel">Cancel</ui5-button>
+			<ui5-button design="Accept" icon="accept">Done</ui5-button>
+		</div>
+
+		<!-- Content -->
+		This is my panel <!-- fafa --> <br>
+		<ui5-title id="p1-content1">Lorem ipsum!</ui5-title>
+		<ui5-label id="p1-content2" wrap>
+			<span>
+			Lorem ipsum dolor sit amet, tamquam invidunt cu sed, unum regione mel ea, quo ea alia novum. Ne qui illud zril
+			nostrum, vel ea sint dicant postea. Vel ne facete tritani, neglegentur concludaturque sed te. His animal dolorum ut.
+			Aeterno appareat ei mei, cu sed elit scripserit, an quodsi oportere accusamus quo. Pri ea probo corpora rationibus,
+			soluta incorrupte ex his.
+			Mei ei brute cetero, id duo magna aeque torquatos. Quodsi erroribus mediocritatem his ut, ad pri legere iracundia
+			democritum. Menandri intellegam in mea, ex vero movet qualisque sed. Maiorum verterem perfecto nec ea, est velit
+			elaboraret consequuntur eu, eam ad reque postea admodum. Ne inimicus convenire pri, doctus vidisse te ius.
+			Percipitur contentiones in vis, cu vim propriae phaedrum. Has ad magna errem honestatis, duo vero graeco epicurei
+			no, populo semper sit ne. Vulputate dissentiunt interpretaris ea vis, nec civibus moderatius at. Cu vim stet
+			dissentias, no vidit saperet indoctum nec, et pro magna prima nobis. Vis consul feugiat qualisque in, regione
+			persecuti cotidieque id eos, id ius omnesque vituperata.
+			Pri ex impedit percipit consulatu. Ius iudico feugiat instructior an. Iusto putant eum eu, ubique splendide pri ad,
+			cu qui salutandi assentior percipitur. At esse ceteros salutandi ius. Te dicam reprehendunt nec, ea discere ponderum
+			sensibus duo.
+			Vis cu commodo definiebas, postea dissentias ne vim. Modo homero eos ad. Ut vix equidem temporibus. At duo audire
+			volumus, id volumus rationibus vim. Sit ne diam volumus. Augue labitur mel cu, an eam omnis causae hendrerit.
+			</span>
+		</ui5-label>
+
+	</ui5-panel>
+
+	<br>
+
+	<ui5-panel id="panel-expandable" accessible-role="Complementary" header-text="Both expandable and expanded">
+
+
+		<!-- Content -->
+		<ui5-title>Lorem ipsum!</ui5-title>
+		<ui5-label wrap>
+			<span>
+			Lorem ipsum dolor sit amet, tamquam invidunt cu sed, unum regione mel ea, quo ea alia novum. Ne qui illud zril
+			nostrum, vel ea sint dicant postea. Vel ne facete tritani, neglegentur concludaturque sed te. His animal dolorum ut.
+			Aeterno appareat ei mei, cu sed elit scripserit, an quodsi oportere accusamus quo. Pri ea probo corpora rationibus,
+			soluta incorrupte ex his.
+			Mei ei brute cetero, id duo magna aeque torquatos. Quodsi erroribus mediocritatem his ut, ad pri legere iracundia
+			democritum. Menandri intellegam in mea, ex vero movet qualisque sed. Maiorum verterem perfecto nec ea, est velit
+			elaboraret consequuntur eu, eam ad reque postea admodum. Ne inimicus convenire pri, doctus vidisse te ius.
+			Percipitur contentiones in vis, cu vim propriae phaedrum. Has ad magna errem honestatis, duo vero graeco epicurei
+			no, populo semper sit ne. Vulputate dissentiunt interpretaris ea vis, nec civibus moderatius at. Cu vim stet
+			dissentias, no vidit saperet indoctum nec, et pro magna prima nobis. Vis consul feugiat qualisque in, regione
+			persecuti cotidieque id eos, id ius omnesque vituperata.
+			Pri ex impedit percipit consulatu. Ius iudico feugiat instructior an. Iusto putant eum eu, ubique splendide pri ad,
+			cu qui salutandi assentior percipitur. At esse ceteros salutandi ius. Te dicam reprehendunt nec, ea discere ponderum
+			sensibus duo.
+			Vis cu commodo definiebas, postea dissentias ne vim. Modo homero eos ad. Ut vix equidem temporibus. At duo audire
+			volumus, id volumus rationibus vim. Sit ne diam volumus. Augue labitur mel cu, an eam omnis causae hendrerit.
+			</span>
+		</ui5-label>
+
+	</ui5-panel>
+
+	<br>
+
+	<ui5-panel id="panel-fixed" fixed accessible-role="Complementary" header-text="Expanded, but not expandable">
+
+		<!-- Content -->
+		<ui5-title>Lorem ipsum!</ui5-title>
+		<br>
+		<ui5-label wrap>
+			Some short text.
+		</ui5-label>
+
+	</ui5-panel>
+
+	<br>
+
+	<ui5-panel collapsed fixed accessible-role="Complementary" header-text="Neither expandable, nor expanded">
+
+		<!-- Content -->
+		<ui5-title>Lorem ipsum!</ui5-title>
+		<br>
+		<ui5-label wrap>
+			Some short text.
+		</ui5-label>
+
+	</ui5-panel>
+
+	<br>
+
+	<ui5-panel id="panel1" collapsed header-text="Click to expand!">
+
+		<!-- Content -->
+		<ui5-title>This is a demo how to use the &quot;expand&quot; event.</ui5-title>
+		<br>
+		<ui5-label wrap>
+			Some short text.
+		</ui5-label>
+
+	</ui5-panel>
+
+	<ui5-panel id="panel2" collapsed accessible-role="Complementary">
+
+		<!-- Header -->
+		<div slot="header" class="header">
+			<ui5-title>Expandable but not expanded</ui5-title>
+		</div>
+
+		<!-- Content -->
+		<ui5-title>This is a demo how to use the &quot;expand&quot; event.</ui5-title>
+		<br>
+		<ui5-label wrap>
+			Some short text.
+		</ui5-label>
+	</ui5-panel>
+
+	<br>
+
+	<ui5-input id="field1" value="0"></ui5-input>
+	<ui5-input id="field2" value="0"></ui5-input>
+
+</body>
+
+</html>

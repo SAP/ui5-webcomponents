@@ -1,0 +1,1938 @@
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="keywords" content="ui5-webcomponents,ui5 webcomponents,ui5 web components,webcomponents,web components,ui5,api,docs,documentation,sample,usage,examples,demo,Fiori 3">
+
+  
+    <title>Toast - UI5 Web Components</title>
+
+    
+  
+
+  <link rel="shortcut icon" href="https://sap.github.io/ui5-webcomponents/assets/images/favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" href="https://sap.github.io/ui5-webcomponents/assets/css/main.css">
+
+  <!--  -->
+
+  <script type="text/javascript" src="https://sap.github.io/ui5-webcomponents/assets/js/vendor/lunr.min.js"></script>
+  <script type="text/javascript" src="https://sap.github.io/ui5-webcomponents/assets/js/playground.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Toast | UI5 Web Components</title>
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Toast" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Enterprise-flavored sugar on top of native APIs!" />
+<meta property="og:description" content="Enterprise-flavored sugar on top of native APIs!" />
+<link rel="canonical" href="https://sap.github.io/ui5-webcomponents/playground/components/Toast/" />
+<meta property="og:url" content="https://sap.github.io/ui5-webcomponents/playground/components/Toast/" />
+<meta property="og:site_name" content="UI5 Web Components" />
+<script type="application/ld+json">
+{"description":"Enterprise-flavored sugar on top of native APIs!","@type":"WebPage","url":"https://sap.github.io/ui5-webcomponents/playground/components/Toast/","headline":"Toast","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+<body  role="application">
+
+  <div class="page-wrap">
+      <div class="page-header">
+        <a class="logo-wrapper" href="https://sap.github.io/ui5-webcomponents/">
+          <img src="https://sap.github.io/ui5-webcomponents/assets/images/logo.png" alt="Logo" class="logo">
+          <div class="heading">UI5 Web Components</div>
+        </a>
+        <div class="search js-search">
+          <div class="search-input-wrap">
+            <input type="text" class="js-search-input search-input" tabindex="0" placeholder="Search" aria-label="Search UI5 Web Components docs" autocomplete="off">
+            <svg width="14" height="14" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" class="search-icon"><title>Search</title><g fill-rule="nonzero"><path d="M17.332 20.735c-5.537 0-10-4.6-10-10.247 0-5.646 4.463-10.247 10-10.247 5.536 0 10 4.601 10 10.247s-4.464 10.247-10 10.247zm0-4c3.3 0 6-2.783 6-6.247 0-3.463-2.7-6.247-6-6.247s-6 2.784-6 6.247c0 3.464 2.7 6.247 6 6.247z"></path><path d="M11.672 13.791L.192 25.271 3.02 28.1 14.5 16.62z"></path></g></svg>
+          </div>
+          <div class="js-search-results search-results-wrap"></div>
+        </div>
+        <button class="js-main-nav-trigger navigation-list-toggle" id="mobile-button" type="button">Menu</button>
+      </div>
+    <div class="side-bar">
+      <div class="navigation main-nav js-main-nav">
+        <nav role="navigation" aria-label="Main navigation">
+  <ul class="navigation-list">
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <li class="navigation-list-item">
+            
+            <a href="https://sap.github.io/ui5-webcomponents/playground" class="navigation-list-link">Getting Started</a>
+            
+          </li>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <li class="navigation-list-item">
+            
+            <a href="https://sap.github.io/ui5-webcomponents/playground/docs" class="navigation-list-link">Documentation</a>
+            
+              
+              <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/docs/assets/" class="navigation-list-link">
+                        <div class="component-name">Assets</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/docs/configuration/" class="navigation-list-link">
+                        <div class="component-name">Configuration</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/docs/faq/" class="navigation-list-link">
+                        <div class="component-name">FAQ</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/docs/guidelines/" class="navigation-list-link">
+                        <div class="component-name">Guidelines</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/docs/how-to-use/" class="navigation-list-link">
+                        <div class="component-name">How To Use</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/docs/migration-guides/" class="navigation-list-link">
+                        <div class="component-name">Migration-guides</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/docs/public-module-imports/" class="navigation-list-link">
+                        <div class="component-name">Public Module Imports</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+              </ul>
+            
+          </li>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <li class="navigation-list-item">
+            
+            <a href="https://sap.github.io/ui5-webcomponents/playground/tutorials" class="navigation-list-link">Tutorials</a>
+            
+              
+              <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/tutorials/angular/" class="navigation-list-link">
+                        <div class="component-name">Angular</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/tutorials/react/" class="navigation-list-link">
+                        <div class="component-name">React</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/tutorials/vue/" class="navigation-list-link">
+                        <div class="component-name">Vue</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+              </ul>
+            
+          </li>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <li class="navigation-list-item active">
+            
+            <a href="https://sap.github.io/ui5-webcomponents/playground/components" class="navigation-list-link">Components</a>
+            
+              
+              <ul class="navigation-list-child-list  visible">
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/Avatar/" class="navigation-list-link">
+                        <div class="component-name">Avatar</div>
+                        
+                          <span class="new-tag">NEW</span>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/Badge/" class="navigation-list-link">
+                        <div class="component-name">Badge</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/BusyIndicator/" class="navigation-list-link">
+                        <div class="component-name">Busy Indicator</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/Button/" class="navigation-list-link">
+                        <div class="component-name">Button</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/Card/" class="navigation-list-link">
+                        <div class="component-name">Card</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/Carousel/" class="navigation-list-link">
+                        <div class="component-name">Carousel</div>
+                        
+                          <span class="new-tag">NEW</span>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/CheckBox/" class="navigation-list-link">
+                        <div class="component-name">Check Box</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/ComboBox/" class="navigation-list-link">
+                        <div class="component-name">Combo Box</div>
+                        
+                          <span class="new-tag">NEW</span>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/DatePicker/" class="navigation-list-link">
+                        <div class="component-name">Date Picker</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/Dialog/" class="navigation-list-link">
+                        <div class="component-name">Dialog</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/FileUploader/" class="navigation-list-link">
+                        <div class="component-name">File Uploader</div>
+                        
+                          <span class="new-tag">NEW</span>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/Icon/" class="navigation-list-link">
+                        <div class="component-name">Icon</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/Input/" class="navigation-list-link">
+                        <div class="component-name">Input</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/Label/" class="navigation-list-link">
+                        <div class="component-name">Label</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/Link/" class="navigation-list-link">
+                        <div class="component-name">Link</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/List/" class="navigation-list-link">
+                        <div class="component-name">List</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/MessageStrip/" class="navigation-list-link">
+                        <div class="component-name">Message Strip</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/MultiComboBox/" class="navigation-list-link">
+                        <div class="component-name">Multi Combo Box</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/Panel/" class="navigation-list-link">
+                        <div class="component-name">Panel</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/Popover/" class="navigation-list-link">
+                        <div class="component-name">Popover</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/ProductSwitch/" class="navigation-list-link">
+                        <div class="component-name">Product Switch</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/RadioButton/" class="navigation-list-link">
+                        <div class="component-name">Radio Button</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/ResponsivePopover/" class="navigation-list-link">
+                        <div class="component-name">Responsive Popover</div>
+                        
+                          <span class="new-tag">NEW</span>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/SegmentedButton/" class="navigation-list-link">
+                        <div class="component-name">Segmented Button</div>
+                        
+                          <span class="new-tag">NEW</span>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/Select/" class="navigation-list-link">
+                        <div class="component-name">Select</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/ShellBar/" class="navigation-list-link">
+                        <div class="component-name">Shell Bar</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/Switch/" class="navigation-list-link">
+                        <div class="component-name">Switch</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/TabContainer/" class="navigation-list-link">
+                        <div class="component-name">Tab Container</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/Table/" class="navigation-list-link">
+                        <div class="component-name">Table</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/TextArea/" class="navigation-list-link">
+                        <div class="component-name">Text Area</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/TimePicker/" class="navigation-list-link">
+                        <div class="component-name">Time Picker</div>
+                        
+                          <span class="new-tag">NEW</span>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/Timeline/" class="navigation-list-link">
+                        <div class="component-name">Timeline</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/Title/" class="navigation-list-link">
+                        <div class="component-name">Title</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item  active">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/Toast/" class="navigation-list-link active">
+                        <div class="component-name">Toast</div>
+                        
+                          <span class="new-tag">NEW</span>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/ToggleButton/" class="navigation-list-link">
+                        <div class="component-name">Toggle Button</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+              </ul>
+            
+          </li>
+        
+      
+    
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+  </ul>
+</nav>
+
+      </div>
+    </div>
+    <div class="main-content-wrap js-main-content" tabindex="0">
+      <div class="main-content">
+        
+          
+            <nav class="breadcrumb-nav">
+              <ol class="breadcrumb-nav-list">
+                
+                  <li class="breadcrumb-nav-list-item"><a href="https://sap.github.io/ui5-webcomponents/playground/components">Components</a></li>
+                
+                <li class="breadcrumb-nav-list-item"><span>Toast</span></li>
+              </ol>
+            </nav>
+          
+        
+        <div id="main-content" class="page-content" role="main">
+          <header class="component-heading">
+	<div class="control-header">Toast</div>
+	<div class="component-heading-since">
+		<span>v1.0.0-rc.6</span>
+	</div>
+</header>
+<div class="component-package">@ui5/webcomponents</div>
+<div class="control-tag">&lt;ui5-toast&gt;</div>
+
+<section>
+	<h3>Basic Toast</h3>
+	<div class="snippet">
+
+		<!--Basic Toast-->
+		<ui5-button id="wcBtnShowToastBasic" class="samples-margin">Basic Toast</ui5-button>
+		<ui5-toast id="wcToastBasic">Basic Toast</ui5-toast>
+
+	</div>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="c">&lt;!--Basic Toast--&gt;</span>
+<span class="nt">&lt;ui5-button</span> <span class="na">id=</span><span class="s">"wcBtnShowToastBasic"</span> <span class="na">class=</span><span class="s">"samples-margin"</span><span class="nt">&gt;</span>Basic Toast<span class="nt">&lt;/ui5-button&gt;</span>
+<span class="nt">&lt;ui5-toast</span> <span class="na">id=</span><span class="s">"wcToastBasic"</span><span class="nt">&gt;</span>Basic Toast<span class="nt">&lt;/ui5-toast&gt;</span>
+
+<span class="nt">&lt;script&gt;</span>
+
+	<span class="c1">// Attaching click listener to the Button which shows the Basic Toast</span>
+	<span class="nx">wcBtnShowToastBasic</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">click</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+		<span class="nx">wcToastBasic</span><span class="p">.</span><span class="nx">show</span><span class="p">();</span>
+	<span class="p">});</span>
+
+<span class="nt">&lt;/script&gt;</span>
+	</code></pre></figure></pre>
+</section>
+
+<section>
+	<h3>Toast Duration</h3>
+	<div class="snippet">
+
+		<!--Short Toast-->
+		<ui5-button id="wcBtnShowToastShort" class="samples-margin">Short Toast</ui5-button>
+		<ui5-toast id="wcToastShort" duration=1500 placement="BottomStart">Short Toast</ui5-toast>
+
+		<!--Long Toast-->
+		<ui5-button id="wcBtnShowToastLong" class="samples-margin">Long Toast</ui5-button>
+		<ui5-toast id="wcToastLong" duration=4500 placement="BottomEnd">Long Toast</ui5-toast>
+
+	</div>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="c">&lt;!--Short Toast--&gt;</span>
+<span class="nt">&lt;ui5-button</span> <span class="na">id=</span><span class="s">"wcBtnShowToastShort"</span> <span class="na">class=</span><span class="s">"samples-margin"</span><span class="nt">&gt;</span>Short Toast<span class="nt">&lt;/ui5-button&gt;</span>
+<span class="nt">&lt;ui5-toast</span> <span class="na">id=</span><span class="s">"wcToastShort"</span> <span class="na">duration=</span><span class="s">1500</span> <span class="na">placement=</span><span class="s">"BottomStart"</span><span class="nt">&gt;</span>Short Toast<span class="nt">&lt;/ui5-toast&gt;</span>
+
+<span class="c">&lt;!--Long Toast--&gt;</span>
+<span class="nt">&lt;ui5-button</span> <span class="na">id=</span><span class="s">"wcBtnShowToastLong"</span> <span class="na">class=</span><span class="s">"samples-margin"</span><span class="nt">&gt;</span>Long Toast<span class="nt">&lt;/ui5-button&gt;</span>
+<span class="nt">&lt;ui5-toast</span> <span class="na">id=</span><span class="s">"wcToastLong"</span> <span class="na">duration=</span><span class="s">4500</span> <span class="na">placement=</span><span class="s">"BottomEnd"</span><span class="nt">&gt;</span>Long Toast<span class="nt">&lt;/ui5-toast&gt;</span>
+
+<span class="nt">&lt;script&gt;</span>
+
+	<span class="c1">// Attaching click listener to the Button which shows the Short Toast</span>
+	<span class="nx">wcBtnShowToastShort</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">click</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+		<span class="nx">wcToastShort</span><span class="p">.</span><span class="nx">show</span><span class="p">();</span>
+	<span class="p">});</span>
+
+	<span class="c1">// Attaching click listener to the Button which shows the Long Toast</span>
+	<span class="nx">wcBtnShowToastLong</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">click</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+		<span class="nx">wcToastLong</span><span class="p">.</span><span class="nx">show</span><span class="p">();</span>
+	<span class="p">});</span>
+
+<span class="nt">&lt;/script&gt;</span>
+	</code></pre></figure></pre>
+</section>
+
+<section>
+	<h3>Toast Placements</h3>
+	<div class="snippet">
+
+		<!--TopStart-->
+		<ui5-button id="wcBtnShowToastTS" class="samples-margin">TopStart</ui5-button>
+		<ui5-toast id="wcToastTS" placement="TopStart">TopStart</ui5-toast>
+
+		<!--TopCenter-->
+		<ui5-button id="wcBtnShowToastTC" class="samples-margin">TopCenter</ui5-button>
+		<ui5-toast id="wcToastTC" placement="TopCenter">TopCenter</ui5-toast>
+
+		<!--TopEnd-->
+		<ui5-button id="wcBtnShowToastTE" class="samples-margin">TopEnd</ui5-button>
+		<ui5-toast id="wcToastTE" placement="TopEnd">TopEnd</ui5-toast>
+
+		<!--MiddleStart-->
+		<ui5-button id="wcBtnShowToastMS" class="samples-margin">MiddleStart</ui5-button>
+		<ui5-toast id="wcToastMS" placement="MiddleStart">MiddleStart</ui5-toast>
+
+		<!--MiddleCenter-->
+		<ui5-button id="wcBtnShowToastMC" class="samples-margin">MiddleCenter</ui5-button>
+		<ui5-toast id="wcToastMC" placement="MiddleCenter">MiddleCenter</ui5-toast>
+
+		<!--MiddleEnd-->
+		<ui5-button id="wcBtnShowToastME" class="samples-margin">MiddleEnd</ui5-button>
+		<ui5-toast id="wcToastME" placement="MiddleEnd">MiddleEnd</ui5-toast>
+
+		<!--BottomStart-->
+		<ui5-button id="wcBtnShowToastBS" class="samples-margin">BottomStart</ui5-button>
+		<ui5-toast id="wcToastBS" placement="BottomStart">BottomStart</ui5-toast>
+
+		<!--BottomCenter-->
+		<ui5-button id="wcBtnShowToastBC" class="samples-margin">BottomCenter</ui5-button>
+		<ui5-toast id="wcToastBC">BottomCenter</ui5-toast>
+
+		<!--BottomEnd-->
+		<ui5-button id="wcBtnShowToastBE" class="samples-margin">BottomEnd</ui5-button>
+		<ui5-toast id="wcToastBE" placement="BottomEnd">BottomEnd</ui5-toast>
+
+	</div>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="c">&lt;!--TopStart--&gt;</span>
+<span class="nt">&lt;ui5-button</span> <span class="na">id=</span><span class="s">"wcBtnShowToastTS"</span><span class="nt">&gt;</span>TopStart<span class="nt">&lt;/ui5-button&gt;</span>
+<span class="nt">&lt;ui5-toast</span> <span class="na">id=</span><span class="s">"wcToastTS"</span> <span class="na">placement=</span><span class="s">"TopStart"</span><span class="nt">&gt;</span>TopStart<span class="nt">&lt;/ui5-toast&gt;</span>
+
+<span class="c">&lt;!--TopCenter--&gt;</span>
+<span class="nt">&lt;ui5-button</span> <span class="na">id=</span><span class="s">"wcBtnShowToastTC"</span><span class="nt">&gt;</span>TopCenter<span class="nt">&lt;/ui5-button&gt;</span>
+<span class="nt">&lt;ui5-toast</span> <span class="na">id=</span><span class="s">"wcToastTC"</span> <span class="na">placement=</span><span class="s">"TopCenter"</span><span class="nt">&gt;</span>TopCenter<span class="nt">&lt;/ui5-toast&gt;</span>
+
+<span class="c">&lt;!--TopEnd--&gt;</span>
+<span class="nt">&lt;ui5-button</span> <span class="na">id=</span><span class="s">"wcBtnShowToastTE"</span><span class="nt">&gt;</span>TopEnd<span class="nt">&lt;/ui5-button&gt;</span>
+<span class="nt">&lt;ui5-toast</span> <span class="na">id=</span><span class="s">"wcToastTE"</span> <span class="na">placement=</span><span class="s">"TopEnd"</span><span class="nt">&gt;</span>TopEnd<span class="nt">&lt;/ui5-toast&gt;</span>
+
+<span class="c">&lt;!--MiddleStart--&gt;</span>
+<span class="nt">&lt;ui5-button</span> <span class="na">id=</span><span class="s">"wcBtnShowToastMS"</span><span class="nt">&gt;</span>MiddleStart<span class="nt">&lt;/ui5-button&gt;</span>
+<span class="nt">&lt;ui5-toast</span> <span class="na">id=</span><span class="s">"wcToastMS"</span> <span class="na">placement=</span><span class="s">"MiddleStart"</span><span class="nt">&gt;</span>MiddleStart<span class="nt">&lt;/ui5-toast&gt;</span>
+
+<span class="c">&lt;!--MiddleCenter--&gt;</span>
+<span class="nt">&lt;ui5-button</span> <span class="na">id=</span><span class="s">"wcBtnShowToastMC"</span><span class="nt">&gt;</span>MiddleCenter<span class="nt">&lt;/ui5-button&gt;</span>
+<span class="nt">&lt;ui5-toast</span> <span class="na">id=</span><span class="s">"wcToastMC"</span> <span class="na">placement=</span><span class="s">"MiddleCenter"</span><span class="nt">&gt;</span>MiddleCenter<span class="nt">&lt;/ui5-toast&gt;</span>
+
+<span class="c">&lt;!--MiddleEnd--&gt;</span>
+<span class="nt">&lt;ui5-button</span> <span class="na">id=</span><span class="s">"wcBtnShowToastME"</span><span class="nt">&gt;</span>MiddleEnd<span class="nt">&lt;/ui5-button&gt;</span>
+<span class="nt">&lt;ui5-toast</span> <span class="na">id=</span><span class="s">"wcToastME"</span> <span class="na">placement=</span><span class="s">"MiddleEnd"</span><span class="nt">&gt;</span>MiddleEnd<span class="nt">&lt;/ui5-toast&gt;</span>
+
+<span class="c">&lt;!--BottomStart--&gt;</span>
+<span class="nt">&lt;ui5-button</span> <span class="na">id=</span><span class="s">"wcBtnShowToastBS"</span><span class="nt">&gt;</span>BottomStart<span class="nt">&lt;/ui5-button&gt;</span>
+<span class="nt">&lt;ui5-toast</span> <span class="na">id=</span><span class="s">"wcToastBS"</span> <span class="na">placement=</span><span class="s">"BottomStart"</span><span class="nt">&gt;</span>BottomStart<span class="nt">&lt;/ui5-toast&gt;</span>
+
+<span class="c">&lt;!--BottomCenter--&gt;</span>
+<span class="nt">&lt;ui5-button</span> <span class="na">id=</span><span class="s">"wcBtnShowToastBC"</span><span class="nt">&gt;</span>BottomCenter<span class="nt">&lt;/ui5-button&gt;</span>
+<span class="nt">&lt;ui5-toast</span> <span class="na">id=</span><span class="s">"wcToastBC"</span><span class="nt">&gt;</span>BottomCenter<span class="nt">&lt;/ui5-toast&gt;</span>
+
+<span class="c">&lt;!--BottomEnd--&gt;</span>
+<span class="nt">&lt;ui5-button</span> <span class="na">id=</span><span class="s">"wcBtnShowToastBE"</span><span class="nt">&gt;</span>BottomEnd<span class="nt">&lt;/ui5-button&gt;</span>
+<span class="nt">&lt;ui5-toast</span> <span class="na">id=</span><span class="s">"wcToastBE"</span> <span class="na">placement=</span><span class="s">"BottomEnd"</span><span class="nt">&gt;</span>BottomEnd<span class="nt">&lt;/ui5-toast&gt;</span>
+
+<span class="nt">&lt;script&gt;</span>
+
+	<span class="c1">// Attaching click listeners to the buttons which show the toasts</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="dl">"</span><span class="s2">ui5-button</span><span class="dl">"</span><span class="p">).</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">button</span><span class="p">){</span>
+		<span class="nx">button</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">click</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+			<span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="dl">"</span><span class="s2">#</span><span class="dl">"</span> <span class="o">+</span> <span class="nx">button</span><span class="p">.</span><span class="nx">id</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="dl">"</span><span class="s2">BtnShow</span><span class="dl">"</span><span class="p">,</span> <span class="dl">""</span><span class="p">)).</span><span class="nx">show</span><span class="p">();</span>
+		<span class="p">});</span>
+	<span class="p">});</span>
+
+<span class="nt">&lt;/script&gt;</span>
+	</code></pre></figure></pre>
+</section>
+
+<script>
+
+	// Attaching click listeners to the buttons which show the toasts
+	document.querySelectorAll("ui5-button").forEach(function(button){
+		button.addEventListener('click', function () {
+			document.querySelector("#" + button.id.replace("BtnShow", "")).show();
+		});
+	});
+
+</script>
+
+
+    <div class="page-container">
+      <div class="api-container">
+        <section class="component-description">
+          <h3 class="comment-api-title">Overview</h3>
+
+The <code>ui5-toast</code> is a small, non-disruptive popup for success or information messages that disappears automatically after a few seconds.
+
+<h3>Usage</h3>
+
+<h4>When to use:</h4> <ul> <li>You want to display a short success or information message.</li> <li>You do not want to interrupt users while they are performing an action.</li> <li>You want to confirm a successful action.</li> </ul> <h4>When not to use:</h4> <ul> <li>You want to display error or warning message.</li> <li>You want to interrupt users while they are performing an action.</li> <li>You want to make sure that users read the message before they leave the page.</li> <li>You want users to be able to copy some part of the message text.</li> </ul>
+
+<h3>ES6 Module Import</h3>
+
+<code>import "@ui5/webcomponents/dist/Toast";</code>
+          <section class="component-api space-top">
+            
+                  <h3 class="comment-api-title" >Properties/Attributes</h3>
+                  <p class="small-space-top" >You can use both properties and attributes with the same effect. The name of each attribute is listed below the name of the property, if different.</p>
+            
+                  <div class="small-space-top api-table">
+                    <div class="head api-table-header-roll">
+                      <div class="cell api-table-header-cell">Name</div>
+                      <div class="cell api-table-header-cell">Type</div>
+                      <div class="cell api-table-header-cell">Default Value</div>
+                      <div class="cell api-table-header-cell">Description</div>
+                    </div>
+            
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          duration
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">Integer</div>
+                        <div class="cell api-table-content-cell">3000</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the duration in milliseconds for which <code>ui5-toast</code> remains on the screen before it's automatically closed. <br><br> <b>Note:</b> The minimum supported value is <code>500</code> ms and even if a lower value is set, the duration would remain <code>500</code> ms.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          placement
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell">&quot;BottomCenter&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the placement of the <code>ui5-toast</code> web component. <br><br> Available options are: <ul> <li><code>TopStart</code></li> <li><code>TopCenter</code></li> <li><code>TopEnd</code></li> <li><code>MiddleStart</code></li> <li><code>MiddleCenter</code></li> <li><code>MiddleEnd</code></li> <li><code>BottomStart</code></li> <li><code>BottomCenter</code></li> <li><code>BottomEnd</code></li> </ul>
+                        </div>
+                      </div>
+            
+                  </div>
+            
+                <h3 class="comment-api-title space-top" >Slots</h3>
+            	<p class="small-space-top" >
+            	  This Element provides slot(s). This means it can display its child nodes.<br>
+            	  Unless targeting the default slot, use the <code>slot</code> attribute to define the destination slot for each child.<br>
+            	  Text, along with HTML Elements with no <code>slot</code> attribute, goes the the <code>default</code> slot.
+            	</p>
+            
+                <div class="small-space-top api-table">
+                  <div class="head api-table-header-roll">
+                    <div class="cell api-table-header-cell">Slot</div>
+                    <div class="cell api-table-header-cell">Type</div>
+                    <div class="cell api-table-header-cell">Description</div>
+                  </div>
+            
+                    <div class="row api-table-roll-even">
+                      <div class="cell api-table-content-cell api-table-content-cell-bold">default</div>
+                      <div class="cell api-table-content-cell">Node [0..n]</div>
+                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the text of the <code>ui5-toast</code> web component. <br><br> <b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.</div>
+                    </div>
+            
+                </div>
+            
+            
+                  <h3 class="comment-api-title space-top">Methods</h3>
+                  <p class="small-space-top" >This Web Component exposes public methods. You can invoke them directly on the Web Component instance.</p>
+            
+                  <div class="small-space-top api-table">
+                    <div class="head api-table-header-roll">
+                      <div class="cell api-table-header-cell">Name</div>
+                      <div class="cell api-table-header-cell">Description</div>
+                    </div>
+            
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">show</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">Shows the <code>ui5-toast</code>.</div>
+                      </div>
+            
+                  </div>
+            
+          </section>
+        </section>
+      </div>
+    </div>
+    <footer class="footer-wrapper">
+      <div class="footer-links">
+        <a class="separator" href="https://www.sap.com/about/legal/privacy.html" target="_blank">Privacy Policy</a>
+        <a href="https://www.sap.com/about/legal/impressum.html" target="_blank">Legal</a>
+      </div>
+      <img src="../../../../../../assets/images/sap-logo-svg.svg" alt="Sap Logo" />
+    </footer>
+
+
+<div class="settings" id="settings-button">
+    <svg class="settings-icon" version="1.1" id="Capa_1" x="0px" y="0px"
+    width="340.274px" height="340.274px" viewBox="0 0 340.274 340.274" style="enable-background:new 0 0 340.274 340.274;"
+    xml:space="preserve">
+        <path d="M293.629,127.806l-5.795-13.739c19.846-44.856,18.53-46.189,14.676-50.08l-25.353-24.77l-2.516-2.12h-2.937
+        c-1.549,0-6.173,0-44.712,17.48l-14.184-5.719c-18.332-45.444-20.212-45.444-25.58-45.444h-35.765
+        c-5.362,0-7.446-0.006-24.448,45.606l-14.123,5.734C86.848,43.757,71.574,38.19,67.452,38.19l-3.381,0.105L36.801,65.032
+        c-4.138,3.891-5.582,5.263,15.402,49.425l-5.774,13.691C0,146.097,0,147.838,0,153.33v35.068c0,5.501,0,7.44,46.585,24.127
+        l5.773,13.667c-19.843,44.832-18.51,46.178-14.655,50.032l25.353,24.8l2.522,2.168h2.951c1.525,0,6.092,0,44.685-17.516
+        l14.159,5.758c18.335,45.438,20.218,45.427,25.598,45.427h35.771c5.47,0,7.41,0,24.463-45.589l14.195-5.74
+        c26.014,11,41.253,16.585,45.349,16.585l3.404-0.096l27.479-26.901c3.909-3.945,5.278-5.309-15.589-49.288l5.734-13.702
+        c46.496-17.967,46.496-19.853,46.496-25.221v-35.029C340.268,146.361,340.268,144.434,293.629,127.806z M170.128,228.474
+        c-32.798,0-59.504-26.187-59.504-58.364c0-32.153,26.707-58.315,59.504-58.315c32.78,0,59.43,26.168,59.43,58.315
+        C229.552,202.287,202.902,228.474,170.128,228.474z"></path>
+    </svg>
+</div>
+<ui5-dialog id="settings-dialog" header-text="Settings">
+    <section class="settings-form">
+        <div class="settings-content">
+            <div class="setting">
+                <ui5-label for="themeSwitch">Theme:</ui5-label>
+                <ui5-select id="themeSwitch">
+                    <ui5-option value="sap_fiori_3">Quartz Light</ui5-option>
+                    <ui5-option value="sap_fiori_3_dark">Quartz Dark</ui5-option>
+                    <ui5-option value="sap_belize">Belize</ui5-option>
+                    <ui5-option value="sap_belize_hcb">High Contrast Black</ui5-option>
+                </ui5-select>
+            </div>
+            <div class="setting">
+                <ui5-label for="contentDensitySwitch">Content Density:</ui5-label>
+                <ui5-select id="contentDensitySwitch">
+                    <ui5-option>Cozy</ui5-option>
+                    <ui5-option>Compact</ui5-option>
+                </ui5-select>
+            </div>
+            <div class="setting">
+                <ui5-label for="textDirectionSwitch">Text Direction:</ui5-label>
+                <ui5-select id="textDirectionSwitch">
+                    <ui5-option>LTR</ui5-option>
+                    <ui5-option>RTL</ui5-option>
+                </ui5-select>
+            </div>
+        </div>
+    </section>
+    <div slot="footer" class="closing-buttons">
+        <ui5-button id="applyButton" design="Emphasized" class="padding-end">Apply</ui5-button>
+        <ui5-button id="cancelButton">Cancel</ui5-button>
+    </div>
+</ui5-dialog>
+
+<!-- UI5 Web Components Assests -->
+<script src="https://sap.github.io/ui5-webcomponents/assets/js/webcomponentsjs/webcomponents-loader.js"></script>
+<script type="module" src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.esm.js"></script>
+<script nomodule src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.es5.js"></script>
+
+<link rel="stylesheet" href="https://sap.github.io/ui5-webcomponents/assets/css/api.css">
+
+<style>
+    pre {
+        margin-bottom: 0;
+    }
+    pre.highlight {
+        padding: 1.5rem;
+        padding-bottom: 0;
+        border: 0.0625rem solid #C1C1C1;
+    }
+</style>
+
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

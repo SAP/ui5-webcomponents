@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>ui5-input</title>
+
+	
+	
+	
+<script src="https://sap.github.io/ui5-webcomponents/assets/js/webcomponentsjs/webcomponents-loader.js"></script>
+<script type="module" src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.esm.js"></script>
+<script nomodule src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.es5.js"></script>
+                    
+
+	<script>delete Document.prototype.adoptedStyleSheets;</script>
+
+</head>
+
+<body style="background-color: var(--sapBackgroundColor);">
+	<h3> Input with suggestions: type 'a'</h3>
+	<ui5-label id="myLabel">Event [suggestionItemSelect] :: N/A</ui5-label><br/>
+	<ui5-label id="myLabelChange">Event [change] :: N/A</ui5-label><br/>
+	<ui5-label id="myLabelSubmit">Event [submit] :: N/A</ui5-label><br/>
+	<ui5-label id="myLabelLiveChange">Event [input] :: N/A</ui5-label><br/>
+
+	<div>
+		<h3>Input in Cozy</h3>
+		<ui5-input id="myInput"
+			style="width: 500px"
+			show-suggestions
+			placeholder="Search for a country ...">
+		</ui5-input>
+	</div>
+
+	<div class="sapUiSizeCompact">
+		<h3>Input in Compact</h3>
+		<ui5-input id="inputCompact"
+			style="width: 500px"
+			show-suggestions
+			placeholder="Search for a country ...">
+		</ui5-input>
+	</div>
+
+	<h3> Input suggestions with ui5-suggestion-item</h3>
+	<ui5-input show-suggestions style="width: 100%">
+		<ui5-suggestion-item text="Cozy"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Compact"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Condensed"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Cozy"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Compact"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Condensed"></ui5-suggestion-item>
+	</ui5-input>
+	<br/>
+	<br/>
+	<h3>Input suggestions with ui5-li</h3>
+	<ui5-input id="myInput2" show-suggestions style="width: 100%">
+		<ui5-li>Cozy</ui5-li>
+		<ui5-li>Compact</ui5-li>
+		<ui5-li>Condensed</ui5-li>
+		<ui5-li>Cozy</ui5-li>
+		<ui5-li>Compact</ui5-li>
+		<ui5-li>Condensed</ui5-li>
+	</ui5-input>
+	<br/>
+	<br/>
+	<h3>Input suggestions with grouping</h3>
+	<ui5-input id="myInputGrouping"show-suggestions style="width: 100%">
+		<ui5-suggestion-item group text="Content Density"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Compact"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Condensed"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Cozy"></ui5-suggestion-item>
+		<ui5-suggestion-item group text="Themes"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Quartz"></ui5-suggestion-item>
+		<ui5-suggestion-item text="HCB"></ui5-suggestion-item>
+	</ui5-input>
+
+	<h3> Input disabled</h3>
+	<ui5-input style="width: auto" id="input-disabled" disabled placeholder="Disabled one ...">
+		<ui5-icon slot="icon" name="appointment-2"></ui5-icon>
+	</ui5-input>
+	<input />
+
+	<h3> Input maxLength = 5</h3>
+	<ui5-input maxLength="5" placeholder="Max length of 5"></ui5-input>
+
+	<h3> Input valueState Success</h3>
+	<ui5-input id="input3" value-state="Success" placeholder="Success state ...">
+		<ui5-icon slot="icon" name="message-success"></ui5-icon>
+	</ui5-input>
+
+	<h3> Input valueState Information</h3>
+	<ui5-input value-state="Information" placeholder="Info state ...">
+		<ui5-icon slot="icon" name="message-information"></ui5-icon>
+	</ui5-input>
+
+	<h3> Test 'change' event</h3>
+	<ui5-input id="input1" value-state="Warning" placeholder="Warning state ...">
+		<ui5-icon slot="icon" name="message-warning"></ui5-icon>
+	</ui5-input>
+	<h3> 'change' event result</h3>
+	<ui5-input id="inputResult"></ui5-input>
+
+	<h3> 'suggestionItemSelect' event result on group item</h3>
+	<ui5-input id="inputResultGrouping"></ui5-input>
+
+	<h3> Test 'input' event</h3>
+	<ui5-input id="input2" value-state="Error" placeholder="Error state ...">
+		<div slot="valueStateMessage">Information message. This is a <a href="#">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
+		<ui5-icon slot="icon" name="message-error"></ui5-icon>
+	</ui5-input>
+	<h3> 'input' test result</h3>
+	<ui5-input id="inputLiveChangeResult"></ui5-input>
+
+	<h3> Input test change</h3>
+	<ui5-input id="inputChange">	</ui5-input>
+	<h3> Input test change result</h3>
+	<ui5-input id="inputChangeResult"></ui5-input>
+
+	<h3> Input readonly</h3>
+	<ui5-input id="input-readonly" value="Value can`t be changed" readonly></ui5-input>
+	<ui5-input id="input-readonly" placeholder="Value can`t be changed" readonly></ui5-input>
+
+	<h3> Input required</h3>
+	<ui5-input id="input-required" value="This input is required" required></ui5-input>
+
+	<h3> Input type 'Number'</h3>
+	<ui5-input id="input-number" type="Number" placeholder="Numbers are allowed only ..."></ui5-input>
+
+	<h3> Input type 'Password'</h3>
+	<ui5-input id="input-password" type="Password" placeholder="Typing in private ..."></ui5-input>
+
+	<h3> Input type 'Email'</h3>
+	<ui5-input id="input-email" type="Email" name="my-input-email"></ui5-input>
+
+	<h3> Input type 'Tel'</h3>
+	<ui5-input id="input-tel" maxlength="10" type="Tel"  name="my-input-tel"></ui5-input>
+
+	<h3> Input type 'URL'</h3>
+	<ui5-input id="input-url" type="URL"></ui5-input>
+
+	<h3> Inputs alignment</h3>
+	<ui5-button>Press</ui5-button>
+	<ui5-datepicker  id='dp5'
+			placeholder='Delivery Date...'
+			title='Delivery Date!'>
+	</ui5-datepicker>
+
+	<ui5-datepicker id='dp5'
+			placeholder='Delivery Date...'
+			value-state="Error"
+			title='Delivery Date!'>
+	</ui5-datepicker>
+
+	<ui5-datepicker
+			placeholder='Delivery Date...'
+			value-state="Information"
+			title='Delivery Date!'>
+	</ui5-datepicker>
+
+	<ui5-select id="mySelect2">
+		<ui5-option>Cozy</ui5-option>
+		<ui5-option selected>Compact</ui5-option>
+		<ui5-option>Condensed</ui5-option>
+	</ui5-select>
+
+	<ui5-input  value="input" value-state="Error">
+		<ui5-icon slot="icon" name="message-warning"></ui5-icon>
+	</ui5-input>
+
+	<ui5-select id="mySelect2" value-state="Error">
+		<ui5-option>Cozy</ui5-option>
+		<ui5-option selected>Compact</ui5-option>
+		<ui5-option>Condensed</ui5-option>
+	</ui5-select>
+
+	<ui5-select value-state="Information">
+		<ui5-option>Cozy</ui5-option>
+		<ui5-option selected>Compact</ui5-option>
+		<ui5-option>Condensed</ui5-option>
+	</ui5-select>
+
+	<ui5-multi-combobox value-state="Error"></ui5-multi-combobox>
+	<ui5-multi-combobox value-state="Information"></ui5-multi-combobox>
+
+	<h3> Input with multiple icons</h3>
+	<ui5-input id="input3" placeholder="Search ...">
+		<ui5-icon slot="icon" name="search" style="padding-left: 8px; padding-right: 8px"></ui5-icon>
+		<ui5-icon slot="icon" name="decline" style="padding-left: 8px; padding-right: 8px"></ui5-icon>
+	</ui5-input>
+
+	<script>
+		var sap_database_entries = [{ key: "A", text: "A" }, { key: "Afg", text: "Afghanistan" }, { key: "Arg", text: "Argentina" }, { key: "Alb", text: "Albania" }, { key: "Arm", text: "Armenia" }, { key: "Alg", text: "Algeria" }, { key: "And", text: "Andorra" }, { key: "Ang", text: "Angola" }, { key: "Ast", text: "Austria" }, { key: "Aus", text: "Australia" }, { key: "Aze", text: "Azerbaijan" }, { key: "Aruba", text: "Aruba" }, { key: "Antigua", text: "Antigua and Barbuda" }, { key: "B", text: "B" }, { key: "Bel", text: "Belarus" }, { key: "Bel", text: "Belgium" }, { key: "Bg", text: "Bulgaria" }, { key: "Bra", text: "Brazil" }, { key: "C", text: "C" }, { key: "Ch", text: "China" }, { key: "Cub", text: "Cuba" }, { key: "Chil", text: "Chili" }, { key: "L", text: "L" }, { key: "Lat", text: "Latvia" }, { key: "Lit", text: "Litva" }, { key: "P", text: "P" }, { key: "Prt", text: "Portugal" }, { key: "S", text: "S" }, { key: "Sen", text: "Senegal" }, { key: "Ser", text: "Serbia" }, { key: "Sey", text: "Seychelles" }, { key: "Sierra", text: "Sierra Leone" }, { key: "Sgp", text: "Singapore" }, { key: "Sint", text: "Sint Maarten" }, { key: "Slv", text: "Slovakia" }, { key: "Slo", text: "Slovenia" }];
+
+		var input = document.getElementById('myInput');
+		var inputGrouping = document.getElementById('myInputGrouping');
+		var myInput2 = document.getElementById('myInput2');
+		var input1 = document.getElementById('input1');
+		var input2 = document.getElementById('input2');
+		var inputResult = document.getElementById('inputResult');
+		var inputResultGrouping = document.getElementById('inputResultGrouping');
+		var inputLiveChangeResult = document.getElementById('inputLiveChangeResult');
+		var label = document.getElementById('myLabel');
+		var labelChange = document.getElementById('myLabelChange');
+		var labelLiveChange = document.getElementById('myLabelLiveChange');
+		var labelSubmit = document.getElementById('myLabelSubmit');
+
+		var suggestionSelectedCounterWithGrouping = 0;
+
+		var suggest = function (event) {
+			var input = event.target;
+			var value = input.value;
+			var suggestionItems = [];
+
+			if (value) {
+				suggestionItems = sap_database_entries.filter(function (item) {
+					return item.text.toUpperCase().indexOf(value.toUpperCase()) === 0;
+				});
+			}
+
+			while (input.firstChild) {
+				input.removeChild(input.firstChild);
+			}
+
+			suggestionItems.forEach(function(item, idx) {
+				var li = document.createElement("ui5-suggestion-item");
+				li.id = item.key;
+				li.icon = "world";
+				li.info = "explore";
+				li.group = item.text.length === 1;
+				li.infoState = "Success";
+				li.description = "travel the world";
+				li.text = item.text;
+				input.appendChild(li);
+			});
+
+			labelLiveChange.innerHTML = "Event [input] :: " + value;
+		};
+
+		input.addEventListener("ui5-input", suggest);
+		inputCompact.addEventListener("ui5-input", suggest);
+
+		input.addEventListener("ui5-suggestionItemSelect", function (event) {
+			var item = event.detail.item;
+			label.innerHTML = "Event [suggestionSelectEvent] :: " + item.id;
+			suggestionSelectedCounter += 1;
+			inputResult.value = suggestionSelectedCounter;
+		});
+
+		inputGrouping.addEventListener("ui5-suggestionItemSelect", function (event) {
+			var item = event.detail.item;
+			suggestionSelectedCounterWithGrouping += 1;
+			inputResultGrouping.value = suggestionSelectedCounterWithGrouping;
+		});
+
+		input.addEventListener("ui5-change", function (event) {
+			labelChange.innerHTML = "Event [change] :: " + event.target.value;
+		});
+
+		input.addEventListener("ui5-submit", function (event) {
+			labelSubmit.innerHTML = "Event [submit] :: " + event.target.value;
+		});
+
+		var changeCounter = 0;
+		var inputCounter = 0;
+		var suggestionSelectedCounter = 0;
+
+		input1.addEventListener("ui5-change", function (event) {
+			changeCounter += 1;
+			inputResult.value = changeCounter;
+		});
+
+		input2.addEventListener("ui5-input", function (event) {
+			inputCounter += 1;
+			inputLiveChangeResult.value = inputCounter;
+		});
+
+		myInput2.addEventListener("ui5-suggestionItemSelect", function (event) {
+			var item = event.detail.item;
+			suggestionSelectedCounter += 1;
+			inputResult.value = suggestionSelectedCounter;
+		});
+
+		var inputChangeResultCounter = 0;
+
+		inputChange.addEventListener("ui5-submit", function (event) {
+			inputChange.value = "Changed via API";
+		});
+		inputChange.addEventListener("ui5-change", function (event) {
+			inputChangeResult.value = ++inputChangeResultCounter;
+		});
+	</script>
+</body>
+</html>

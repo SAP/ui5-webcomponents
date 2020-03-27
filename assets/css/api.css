@@ -32,6 +32,24 @@ body {
 	padding: 1rem 1.5rem;
 	border: 0.0625rem solid #C1C1C1;
 	border-bottom: none;
+	background-color: var(--sapBackgroundColor);
+}
+
+/**
+ * Theme dependant bg styles.
+ * Note: using --sapBackgroundColor would require running a polyfil for IE
+ */
+.hcb .snippet {	
+	background-color: #000;	
+}
+.fiori .snippet {
+	background-color: #f7f7f7;	
+}
+.fiori--dark .snippet {	
+	background-color: #1c2228;	
+}
+.belize .snippet {	
+	background-color: #fafafa;	
 }
 
 .panel-snippet {
@@ -305,10 +323,6 @@ body {
 	width: 100%;
 }
 
-/* HCB styles */
-.hcb .snippet {
-	background-color: #000;
-}
 
 .bold {
 	font-family: "72-Bold";
@@ -355,6 +369,7 @@ body {
 	min-width: 6rem;
 	justify-content: flex-start;
 	align-items: flex-start;
+	word-wrap: break-word;
 }
 
 .row.api-table-roll-even.noBorder {

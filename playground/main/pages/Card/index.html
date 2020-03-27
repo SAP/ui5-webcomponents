@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+
+	<title>Card</title>
+
+	
+	
+	
+<script src="https://sap.github.io/ui5-webcomponents/assets/js/webcomponentsjs/webcomponents-loader.js"></script>
+<script type="module" src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.esm.js"></script>
+<script nomodule src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.es5.js"></script>
+                    
+
+	<style>
+		.myCard {
+			max-width: 300px;
+		}
+	</style>
+</head>
+
+<body style="background-color: var(--sapBackgroundColor);">
+
+<ui5-card
+	id="card"
+	status="4 of 10"
+	heading="Quick Links"
+	subheading="quick links"
+	header-interactive
+	class="myCard">
+	<ui5-list id="myList3" separators="Inner">
+		<ui5-li icon="horizontal-bullet-chart" >Template Based Segmentation</ui5-li>
+		<ui5-li icon="opportunity" >Segmentation Models</ui5-li>
+		<ui5-li icon="line-charts" >Marketing plans</ui5-li>
+	</ui5-list>
+
+	<ui5-input id="field" value="0"></ui5-input>
+</ui5-card>
+
+<ui5-card
+	id="card2"
+	status="4 of 10"
+	heading="Quick Links"
+	subheading="quick links"
+	class="myCard">
+	<ui5-icon name="group" slot="avatar"></ui5-icon>
+	<ui5-list id="myList3" separators="Inner">
+		<ui5-li icon="horizontal-bullet-chart" >Template Based Segmentation</ui5-li>
+		<ui5-li icon="opportunity" >Segmentation Models</ui5-li>
+	</ui5-list>
+</ui5-card>
+
+<ui5-card heading="Quick Links" subheading="quick links">
+	<ui5-list id="myList3" separators="Inner">
+		<ui5-li icon="horizontal-bullet-chart" >Template Based Segmentation</ui5-li>
+		<ui5-li icon="opportunity" >Segmentation Models</ui5-li>
+	</ui5-list>
+</ui5-card>
+
+<script>
+	card.addEventListener("ui5-headerClick", function (event) {
+		console.log(event);
+		field.value = parseInt(field.value) + 1;
+	});
+</script>
+</body>
+</html>

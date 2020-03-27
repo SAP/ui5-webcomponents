@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+	<title>ui5-list / ui5-li</title>
+
+	
+	
+	
+<script src="https://sap.github.io/ui5-webcomponents/assets/js/webcomponentsjs/webcomponents-loader.js"></script>
+<script type="module" src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.esm.js"></script>
+<script nomodule src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.es5.js"></script>
+                    
+
+</head>
+
+<body style="background-color: var(--sapBackgroundColor);">
+	<ui5-title>List "infinite-scroll"</ui5-title>
+	<ui5-button id="btnTrigger">scroll</ui5-button>
+	<ui5-list id="infiniteScrollEx" style="height: 200px" infinite-scroll>
+		<ui5-li>Laptop Lenovo</ui5-li>
+		<ui5-li>IPhone 3</ui5-li>
+		<ui5-li>HP Monitor 24</ui5-li>
+		<ui5-li>Audio cabel</ui5-li>
+		<ui5-li>DVD set</ui5-li>
+		<ui5-li>HP Monitor 24</ui5-li>
+		<ui5-li>Audio cabel</ui5-li>
+		<ui5-li id="lastItem">Last Item</ui5-li>
+	</ui5-list>
+	<input id="loadMoreResult" value="0"/>
+	<br/>
+	<ui5-list id="listEvents" mode="SingleSelectEnd">
+		<ui5-li id="country1" >Argentina</ui5-li>
+		<ui5-li id="country2" selected >Bulgaria</ui5-li>
+		<ui5-li id="country3" >China</ui5-li>
+		<ui5-li id="country4" type="Inactive">Portugal</ui5-li>
+	</ui5-list>
+	<ui5-input id="itemPressResultField" placeholder="itemPress result"></ui5-input>
+	<ui5-input id="selectionChangeResultField" placeholder="selectionChange result"></ui5-input>
+	<ui5-input id="selectionChangeResultPreviousItemsParameter" placeholder="selectionChange previousSelection result"></ui5-input>
+
+	<ui5-list id="list1" header-text="API: GroupHeaderListItem">
+		<ui5-li-groupheader>New Items</ui5-li-groupheader>
+		<ui5-li image="./img/HT-1000.jpg" >Laptop HP</ui5-li>
+		<ui5-li image="./img/HT-1010.jpg" >Laptop Lenovo</ui5-li>
+		<ui5-li image="./img/HT-1022.jpg" >IPhone 3</ui5-li>
+
+		<ui5-li-groupheader>Discounted Items</ui5-li-groupheader>
+		<ui5-li image="./img/HT-1030.jpg"  icon="navigation-right-arrow">HP Monitor 24</ui5-li>
+		<ui5-li image="./img/HT-2026.jpg"  icon="navigation-right-arrow">Audio cabel</ui5-li>
+		<ui5-li image="./img/HT-2002.jpg"  icon="navigation-right-arrow">DVD set</ui5-li>
+	</ui5-list>
+
+	<label id="lblResult">0</label>
+
+	<ui5-list id="listWithDesc">
+		<ui5-li image="./img/HT-1000.jpg"  description="2GB RAM, Intel i7 4.5 GHz">Laptop HP</ui5-li>
+		<ui5-li image="./img/HT-2026.jpg"  description="2GB RAM, Intel i7 4.5 GHz">Audio cabel</ui5-li>
+		<ui5-li image="./img/HT-2002.jpg"  description="2GB RAM, Intel i7 4.5 GHz">DVD set</ui5-li>
+	</ui5-list>
+
+	<ui5-list id="listMultiSel" mode="MultiSelect">
+		<ui5-li id="option1">Option #1</ui5-li>
+		<ui5-li>Option #2</ui5-li>
+		<ui5-li>Option #3</ui5-li>
+	</ui5-list>
+
+	<ui5-list id="default-slot-test" mode="SingleSelect">
+		<ui5-li>Option #1</ui5-li>
+		<ui5-li>Option #2</ui5-li>
+		<ui5-li>Option #3</ui5-li>
+	</ui5-list>
+
+	<ui5-input id="fieldMultiSelResult"></ui5-input>
+
+	<ui5-list id="keyboardTestList">
+		<div slot="header" class="header"><ui5-button id="headerBtn" design="Accept">Export</ui5-button></div>
+
+		<ui5-li>Argentina</ui5-li>
+		<ui5-li-custom selected class="item">
+				<ui5-button class="itemBtn">Click me</ui5-button>
+				<ui5-link href="https://www.google.bg" target="_blank" class="itemLink">UI5 link</ui5-link>
+				<ui5-button class="itemBtn" disabled>Disabled</ui5-button>
+				<ui5-radiobutton text="Option B" class="itemRadio"></ui5-radiobutton>
+		</ui5-li-custom>
+		<ui5-li>China</ui5-li>
+		<ui5-li-custom selected>
+				<ui5-radiobutton text="Option C" disabled="disabled"></ui5-radiobutton>
+		</ui5-li-custom>
+	</ui5-list>
+
+	<ui5-list id="no-data-list" header-text="API: noDataText" separators="None" no-data-text="No Data Available"></ui5-list>
+
+	<ui5-list
+		id="header-slot-list"
+		mode="MultiSelect"
+		header-text="Text when no header provided"
+		footer-text="Copyright"
+		no-data-text="No data">
+
+		<div slot="header" class="header">
+			<ui5-title id="header-slot-title">List Title Here</ui5-title>
+		</div>
+
+	</ui5-list>
+
+	<ui5-list id="inactiveMultiSelect" header-text="API: ListItem type='Inactive'" mode="MultiSelect">
+		<ui5-li type="Inactive">Inactive item</ui5-li>
+		<ui5-li type="Inactive">Inactive item</ui5-li>
+	</ui5-list>
+
+	<br/><br/>
+
+	<ui5-list id="inactiveSingleSelect" header-text="API: ListItem type='Inactive'" mode="SingleSelectBegin">
+		<ui5-li type="Inactive">Inactive item</ui5-li>
+		<ui5-li type="Inactive">Inactive item</ui5-li>
+	</ui5-list>
+
+	<br/><br/>
+	<span id="detailPressCounter">0</span>
+	<ui5-list header-text="API: ListItem type='Detail'">
+		<ui5-li id="detailListItem" type="Detail">Detail item</ui5-li>
+		<ui5-li >Normal item</ui5-li>
+	</ui5-list>
+
+	<script>
+		'use strict';
+
+		var itemDeleteCounter = 0;
+		var itemPressCounter = 0;
+		var selectionChangeCounter = 0;
+
+		function deleteItemHandler(e) {
+			document.querySelector("#lblResult").innerHTML = e.detail.item.innerHTML + ": " + ++itemDeleteCounter;
+		}
+
+		list1.addEventListener("ui5-itemDelete", deleteItemHandler);
+
+		listEvents.addEventListener("ui5-itemPress", function (event) {
+			itemPressCounter += 1;
+			itemPressResultField.value = itemPressCounter;
+		});
+
+		listEvents.addEventListener("ui5-selectionChange", function (event) {
+			selectionChangeCounter += 1;
+			selectionChangeResultField.value = selectionChangeCounter;
+		});
+
+		listEvents.addEventListener("ui5-selectionChange", function(event) {
+			selectionChangeResultPreviousItemsParameter.value = event.detail.previouslySelectedItems[0].id;
+		})
+
+		listMultiSel.addEventListener("ui5-selectionChange", function(event) {
+			fieldMultiSelResult.value = event.detail.selectionComponentPressed;
+		})
+
+		btnTrigger.addEventListener("click", (e) => {
+			const scrollableContiner = infiniteScrollEx.shadowRoot.querySelector(".ui5-list-root");
+			scrollableContiner.scroll(0, scrollableContiner.scrollHeight);
+		});
+		
+		var loadMoreCounter = 0;
+		infiniteScrollEx.addEventListener("ui5-loadMore", (e) => {
+			for(var i = 0; i < 3; i++) {
+				var li = document.createElement("ui5-li");
+				li.textContent = "Title" + i;
+				infiniteScrollEx.appendChild(li);
+			}
+			loadMoreResult.value= ++loadMoreCounter;
+		});
+
+		detailListItem.addEventListener("ui5-detailClick", (e) => {
+			detailPressCounter.innerHTML = parseInt(detailPressCounter.innerHTML) + 1;
+		});
+	</script>
+</body>
+</html>

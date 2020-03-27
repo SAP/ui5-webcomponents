@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<title>Button</title>
+	<script>
+		delete Document.prototype.adoptedStyleSheets
+	</script>
+
+	
+	
+	
+<script src="https://sap.github.io/ui5-webcomponents/assets/js/webcomponentsjs/webcomponents-loader.js"></script>
+<script type="module" src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.esm.js"></script>
+<script nomodule src="https://sap.github.io/ui5-webcomponents/assets/js/ui5-webcomponents/bundle.es5.js"></script>
+                    
+
+    <style>
+        .long-button {
+            width: 1000px;
+        }
+        .long-button-begin::part(button) {
+            justify-content: flex-start;
+        }
+        .long-button-end::part(button) {
+            justify-content: flex-end;
+        }
+    </style>
+
+</head>
+
+<body style="background-color: var(--sapBackgroundColor);">
+	<ui5-icon name="invalid_name"></ui5-icon>
+	<ui5-button design="Emphasized" icon="invalid_name">Press</ui5-button>
+
+	<ui5-button id="button1" design="Emphasized">Action Bar Button</ui5-button>
+	<ui5-button style="height: auto">Primary <br> button</ui5-button>
+	<ui5-button style="height: auto" design="Transparent">Secondary <span style="color:red;">button</span></ui5-button>
+	<ui5-button disabled id="button-disabled">Inactive</ui5-button>
+	<ui5-button design="Positive">Accept</ui5-button>
+	<ui5-button design="Negative">Decline</ui5-button>
+
+	<br />
+	<br />
+
+	<div>
+		<ui5-togglebutton design="Positive" icon="add"></ui5-togglebutton>
+		<ui5-togglebutton design="Negative" icon="add"></ui5-togglebutton>
+	</div>
+
+	<br />
+	<br />
+
+	<ui5-input id="click-counter"></ui5-input>
+
+	<ui5-button style="height: auto" design="Emphasized">Action<br> Bar<br> Button</ui5-button>
+	<ui5-button>Primary button</ui5-button>
+	<ui5-button design="Transparent">Secondary button</ui5-button>
+	<ui5-button disabled>Inactive</ui5-button>
+	<ui5-button design="Positive">Agree</ui5-button>
+	<ui5-button design="Negative">Decline</ui5-button>
+
+	<br/>
+	<br/>
+	<br/>
+
+	<ui5-button icon="employee">Action Bar Button</ui5-button>
+	<ui5-button icon="download"></ui5-button>
+	<ui5-button icon="download"></ui5-button>
+
+	<br />
+	<br />
+
+	<ui5-button icon="employee">Action Bar Button</ui5-button>
+	<ui5-button icon="download"></ui5-button>
+	<ui5-button icon="download"></ui5-button>
+
+
+	<br/>
+	<br/>
+	<br/>
+
+	<ui5-button design="Default" icon="employee">Default</ui5-button>
+	<ui5-button disabled design="Default" icon="employee">Default</ui5-button>
+	<br/>
+	<br/>
+
+	<ui5-button design="Positive" icon="employee">Agree</ui5-button>
+	<ui5-button disabled design="Positive" icon="employee">Agree</ui5-button>
+	<br/>
+	<br/>
+
+	<ui5-button design="Negative" icon="employee">Decline</ui5-button>
+	<ui5-button disabled design="Negative" icon="employee">Decline</ui5-button>
+	<br/>
+	<br/>
+
+	<ui5-button design="Transparent" icon="employee">Transparent</ui5-button>
+	<ui5-button disabled design="Transparent" icon="employee">Transparent</ui5-button>
+	<br/>
+	<br/>
+
+	<ui5-button design="Emphasized" icon="employee">Emphasized</ui5-button>
+	<ui5-button disabled design="Emphasized" icon="employee">Emphasized</ui5-button>
+
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+
+	<ui5-button icon-end icon="employee">Icon last</ui5-button>
+
+
+
+	<ui5-checkbox text="Option A"></ui5-checkbox>
+	<ui5-checkbox disabled text="Option A"></ui5-checkbox>
+	<br/>
+	<ui5-label>"This is a label, this is a label"</ui5-label>
+
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+
+	<ui5-togglebutton design="Emphasized">Action Bar Button</ui5-togglebutton>
+	<ui5-togglebutton>Primary button</ui5-togglebutton>
+	<ui5-togglebutton design="Transparent">Secondary button</ui5-togglebutton>
+	<ui5-togglebutton disabled>Inactive</ui5-togglebutton>
+	<ui5-togglebutton design="Positive">Agree</ui5-togglebutton>
+	<ui5-togglebutton design="Negative">Decline</ui5-togglebutton>
+
+	<br/>
+	<br/>
+	<br/>
+
+	<ui5-togglebutton icon="employee">Action Bar Button</ui5-togglebutton>
+	<ui5-togglebutton icon="download"></ui5-togglebutton>
+	<ui5-togglebutton icon="download"></ui5-togglebutton>
+
+	<br/>
+	<br/>
+	<br/>
+
+	<ui5-togglebutton design="Default" icon="employee">Default</ui5-togglebutton>
+	<ui5-togglebutton disabled design="Default" icon="employee">Default</ui5-togglebutton>
+	<br/>
+	<br/>
+
+	<ui5-togglebutton design="Positive" icon="employee">Agree</ui5-togglebutton>
+	<ui5-togglebutton disabled design="Positive" icon="employee">Agree</ui5-togglebutton>
+	<br/>
+	<br/>
+
+	<ui5-togglebutton design="Negative" icon="employee">Decline</ui5-togglebutton>
+	<ui5-togglebutton disabled design="Negative" icon="employee">Decline</ui5-togglebutton>
+	<br/>
+	<br/>
+
+	<ui5-togglebutton design="Transparent" icon="employee">Transparent</ui5-togglebutton>
+	<ui5-togglebutton disabled design="Transparent" icon="employee">Transparent</ui5-togglebutton>
+	<br/>
+	<br/>
+
+	<ui5-togglebutton design="Emphasized" icon="employee">Emphasized</ui5-togglebutton>
+	<ui5-togglebutton disabled design="Emphasized" icon="employee">Emphasized</ui5-togglebutton>
+
+    <br/>
+    <br/>
+    <ui5-button class="long-button long-button-begin" icon="download">Download</ui5-button>
+    <ui5-button class="long-button" icon="download">Download</ui5-button>
+    <ui5-button class="long-button long-button-end" icon="download">Download</ui5-button>
+
+
+    <script>
+		var clickCounter = document.querySelector("#click-counter");
+		var button = document.querySelector("#button1");
+		var disabledButton = document.querySelector("#button-disabled");
+		var clickCount = 0;
+
+		[button, disabledButton].forEach(function (el) {
+			el.addEventListener("click", function(event) {
+				clickCount += 1;
+				clickCounter.value = clickCount;
+			});
+		});
+	</script>
+</body>
+</html>
