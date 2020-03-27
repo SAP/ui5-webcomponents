@@ -58,8 +58,6 @@
   },
   "workspaces": [
     "packages/theme-base",
-    "packages/core",
-    "packages/utils",
     "packages/base",
     "packages/localization",
     "packages/main",
