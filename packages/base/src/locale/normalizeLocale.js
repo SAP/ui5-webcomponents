@@ -1,3 +1,5 @@
+import { DEFAULT_LOCALE } from "../AssetParameters.js";
+
 const localeRegEX = /^((?:[A-Z]{2,3}(?:-[A-Z]{3}){0,3})|[A-Z]{4}|[A-Z]{5,8})(?:-([A-Z]{4}))?(?:-([A-Z]{2}|[0-9]{3}))?((?:-[0-9A-Z]{5,8}|-[0-9][0-9A-Z]{3})*)((?:-[0-9A-WYZ](?:-[0-9A-Z]{2,8})+)*)(?:-(X(?:-[0-9A-Z]{1,8})+))?$/i;
 const SAPSupportabilityLocales = /(?:^|-)(saptrc|sappsd)(?:-|$)/i;
 
@@ -12,13 +14,13 @@ const M_ISO639_NEW_TO_OLD = {
 /**
  * Normalizes the given locale in BCP-47 syntax.
  * @param {string} locale locale to normalize
- * @returns {string} Normalized locale, "undefined" if the locale can't be normalized or "en" if no locale provided.
+ * @returns {string} Normalized locale, "undefined" if the locale can't be normalized or the default locale, if no locale provided.
  */
 const normalizeLocale = locale => {
 	let m;
 
 	if (!locale) {
-		return "en";
+		return DEFAULT_LOCALE;
 	}
 
 	if (typeof locale === "string" && (m = localeRegEX.exec(locale.replace(/_/g, "-")))) {/* eslint-disable-line */

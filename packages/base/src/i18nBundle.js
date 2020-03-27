@@ -15,7 +15,7 @@ class I18nBundle {
 		const bundle = getI18nBundleData(this.packageName);
 
 		if (!bundle || !bundle[textObj.key]) {
-			return formatMessage(textObj.defaultText, params); // Fallback to "en"
+			return formatMessage(textObj.defaultText, params); // Fallback to the default language
 		}
 
 		return formatMessage(bundle[textObj.key], params);

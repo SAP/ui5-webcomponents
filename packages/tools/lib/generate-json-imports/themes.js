@@ -1,8 +1,8 @@
 const fs = require("fs");
 const mkdirp = require("mkdirp");
-const buildConfiguration = require("../build-configuration/index.js");
+const assets = require("../assets/index.js");
 
-const optionalThemes = buildConfiguration.themes.optional;
+const optionalThemes = assets.themes.all.filter(theme => theme !== assets.themes.default);
 
 const packageName = JSON.parse(fs.readFileSync("package.json")).name;
 

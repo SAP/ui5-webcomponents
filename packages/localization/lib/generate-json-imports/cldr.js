@@ -1,11 +1,11 @@
 const fs = require("fs");
 const mkdirp = require("mkdirp");
-const buildConfiguration = require("@ui5/webcomponents-tools/lib/build-configuration/index.js");
+const assets = require("@ui5/webcomponents-tools/lib/assets/index.js");
 
-const locales = buildConfiguration.locales;
+const allLocales = assets.locales.all;
 
-const imports = locales.map(locale => `import ${locale} from "../assets/cldr/${locale}.json";`).join("\n");
-const localesKeys = locales.join(",");
+const imports = allLocales.map(locale => `import ${locale} from "../assets/cldr/${locale}.json";`).join("\n");
+const localesKeys = allLocales.join(",");
 
 const content = `import { registerCldr, setCldrData } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
 

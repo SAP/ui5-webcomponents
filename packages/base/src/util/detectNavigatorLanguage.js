@@ -1,3 +1,5 @@
+import { DEFAULT_LANGUAGE } from "../AssetParameters.js";
+
 export default () => {
 	const browserLanguages = navigator.languages;
 
@@ -7,5 +9,5 @@ export default () => {
 
 	const rawLocale = (browserLanguages && browserLanguages[0]) || navigatorLanguage() || navigator.userLanguage || navigator.browserLanguage;
 
-	return rawLocale || "en";
+	return rawLocale || DEFAULT_LANGUAGE;
 };
