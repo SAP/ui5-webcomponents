@@ -26,6 +26,7 @@ const metadata = {
 		/**
 		 * Comma-separated list of file types that the <code>ui5-file-uploader</code> should accept.
 		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		accept: {
