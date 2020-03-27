@@ -14,7 +14,13 @@ if (!messageBundle || !outputFile) {
 }
 
 const properties = PropertiesReader(messageBundle)._properties;
-const defaultLanguageProperties = PropertiesReader(messageBundleDefaultLanguage)._properties;
+
+let defaultLanguageProperties;
+try {
+	defaultLanguageProperties = PropertiesReader(messageBundleDefaultLanguage)._properties;
+}
+catch (e) {}
+
 
 /*
  * Returns the single text object to enable single export.
@@ -42,7 +48,7 @@ const getTextInfo = (key, value, defaultLanguageValue) => {
  */
 const getOutputFileContent = (properties, defaultLanguageProperties) => {
 	const textKeys = Object.keys(properties);
-	const texts = textKeys.map(prop => getTextInfo(prop, properties[prop], defaultLanguageProperties[prop])).join('');
+	const texts = textKeys.map(prop => getTextInfo(prop, properties[prop], defaultLanguageProperties && defaultLanguageProperties[prop])).join('');
 
 	return `${texts}
 export {${textKeys.join()}};`;
