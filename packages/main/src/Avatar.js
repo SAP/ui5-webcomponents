@@ -71,8 +71,9 @@ const metadata = {
 		 * <li><code>Circle</code></li>
 		 * <li><code>Square</code></li>
 		 * <ul>
-		 * @public
+		 * @type {string}
 		 * @defaultvalue "Circle"
+		 * @public
 		 */
 		shape: {
 			type: String,
@@ -90,8 +91,9 @@ const metadata = {
 		 * <li><code>L</code></li>
 		 * <li><code>XL</code></li>
 		 * <ul>
-		 * @public
+		 * @type {string}
 		 * @defaultvalue "S"
+		 * @public
 		 */
 		size: {
 			type: String,
