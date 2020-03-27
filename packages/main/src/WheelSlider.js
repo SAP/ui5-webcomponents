@@ -177,10 +177,12 @@ class WheelSlider extends UI5Element {
 	}
 
 	_timesMultipliedOnCyclic() {
-		const repetition = Math.round(70 / this._items.length);
+		const minElementsInCyclicWheelSlider = 70;
+		const repetition = Math.round(minElementsInCyclicWheelSlider / this._items.length);
+		const minRepetitionCount = 3;
 
-		if (repetition < 3) {
-			return 3;
+		if (repetition < minRepetitionCount) {
+			return minRepetitionCount;
 		}
 
 		return repetition;
@@ -277,7 +279,7 @@ class WheelSlider extends UI5Element {
 		let index = currentIndex;
 
 		if (this.cyclic) {
-			index = this.handleArrayResize(index);
+			index = this.handleArrayBorderReached(index);
 		}
 
 		if (index < itemsCount && index > -1) {
@@ -289,16 +291,14 @@ class WheelSlider extends UI5Element {
 		}
 	}
 
-	handleArrayResize(currentIndex) {
+	handleArrayBorderReached(currentIndex) {
 		const arrayLength = this._showItems.length;
+		const maxVisibleElementsOnOneSide = 5;
 		let index = currentIndex;
-		if (arrayLength / 7 > index) {
-			this._showItems.splice(this._showItems.length - this._items.length, this._showItems.length);
-			this._showItems = this._items.concat(this._showItems);
+
+		if (maxVisibleElementsOnOneSide > index) {
 			index += this._items.length * 2;
-		} else if (index > arrayLength * 5 / 7) {
-			this._showItems.splice(0, this._items.length);
-			this._showItems = this._showItems.concat(this._items);
+		} else if (index > arrayLength - maxVisibleElementsOnOneSide) {
 			index -= this._items.length * 2;
 		}
 
