@@ -138,7 +138,7 @@ const metadata = {
 
 		/**
 		 * Indicates whether a loading indicator should be shown in the picker.
-		 * 
+		 *
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
