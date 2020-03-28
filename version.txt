@@ -1,5 +1,5 @@
-commit 43cc3114c1f0d43b45696560f16ea7168332a0a7
+commit f43f5265ff498ec1892c8d4d74e24fe0b59bbcf6
 Author: ilhan <ilhan.myumyun@sap.com>
-Date:   Sat Mar 28 10:08:49 2020 +0200
+Date:   Sat Mar 28 12:51:42 2020 +0200
 
-    docs: fix switch graphical type
+    chore: unify type boolean and string naming
