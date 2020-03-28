@@ -20,7 +20,7 @@ const metadata = {
 		 * <b>Note:</b> The <code>ui5-dialog</code> will be stretched to aproximetly
 		 * 90% of the viewport.
 		 *
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 */
