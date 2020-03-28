@@ -1,5 +1,5 @@
-commit 1518e228446cbb4c4e0a97f2587e274ce9855435
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Mar 27 09:43:36 2020 +0200
+commit 40ab4b27bfb2e63b79679e87789ccad5a3d7a391
+Author: Marcus Notheis <MarcusNotheis@users.noreply.github.com>
+Date:   Sat Mar 28 09:05:01 2020 +0100
 
-    chore(release): publish v1.0.0-rc.6 (#1376)
+    docs(ui5-switch): document graphical as boolean (#1387)
