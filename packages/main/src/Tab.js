@@ -123,7 +123,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Tab
- * @extends TabBase
+ * @extends UI5Element
  * @tagname ui5-tab
  * @public
  */
