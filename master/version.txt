@@ -1,5 +1,5 @@
-commit 40ab4b27bfb2e63b79679e87789ccad5a3d7a391
+commit 98c96f54124328a490cc73cd805fe22d103c2cc5
 Author: Marcus Notheis <MarcusNotheis@users.noreply.github.com>
-Date:   Sat Mar 28 09:05:01 2020 +0100
+Date:   Sun Mar 29 09:53:42 2020 +0200
 
-    docs(ui5-switch): document graphical as boolean (#1387)
+    docs(ui5-tab): Tab extends UI5Element (#1388)
