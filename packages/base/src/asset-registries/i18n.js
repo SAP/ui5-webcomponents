@@ -2,7 +2,7 @@ import getLocale from "../locale/getLocale.js";
 import { fetchJsonOnce } from "../util/FetchHelper.js";
 import normalizeLocale from "../locale/normalizeLocale.js";
 import nextFallbackLocale from "../locale/nextFallbackLocale.js";
-import { DEFAULT_LANGUAGE } from "../AssetParameters.js";
+import { DEFAULT_LANGUAGE } from "../generated/AssetParameters.js";
 
 const bundleData = new Map();
 const bundleURLs = new Map();

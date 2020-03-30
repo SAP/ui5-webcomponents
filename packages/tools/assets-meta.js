@@ -1,4 +1,4 @@
-{
+const assetsMeta = {
   "themes": {
     "default": "sap_fiori_3",
     "all": [
@@ -131,4 +131,6 @@
       "zh_TW"
     ]
   }
-}
+};
+
+module.exports = assetsMeta;

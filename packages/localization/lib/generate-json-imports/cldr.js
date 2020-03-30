@@ -1,6 +1,6 @@
 const fs = require("fs");
 const mkdirp = require("mkdirp");
-const assets = require("@ui5/webcomponents-tools/lib/assets/index.js");
+const assets = require("@ui5/webcomponents-tools/assets-meta.js");
 
 const allLocales = assets.locales.all;
 

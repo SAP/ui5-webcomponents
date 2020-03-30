@@ -1,6 +1,6 @@
 import merge from "./thirdparty/merge.js";
 import { getFeature } from "./FeaturesRegistry.js";
-import { DEFAULT_THEME } from "./AssetParameters.js";
+import { DEFAULT_THEME } from "./generated/AssetParameters.js";
 
 let initialized = false;
 

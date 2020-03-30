@@ -11,7 +11,7 @@ const path = require("path");
 const glob = require("glob");
 const PropertiesReader = require('properties-reader');
 const fs = require('fs');
-const assets = require('../assets/index.js');
+const assets = require('../../assets-meta.js');
 
 const allLanguages = assets.languages.all;
 

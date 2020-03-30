@@ -1,5 +1,5 @@
 import { fetchJsonOnce } from "../util/FetchHelper.js";
-import { DEFAULT_THEME } from "../AssetParameters.js";
+import { DEFAULT_THEME } from "../generated/AssetParameters.js";
 
 const themeURLs = new Map();
 const themeStyles = new Map();

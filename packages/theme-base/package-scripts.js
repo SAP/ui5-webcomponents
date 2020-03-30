@@ -1,5 +1,5 @@
 const path = require("path");
-const assets = require('@ui5/webcomponents-tools/lib/assets/index.js');
+const assets = require('@ui5/webcomponents-tools/assets-meta.js');
 
 const NODE_MODULES_PATH = path.join(__dirname, `../../node_modules/`);
 const TOOLS_LIB = path.join(NODE_MODULES_PATH, "@ui5/webcomponents-tools/lib/");

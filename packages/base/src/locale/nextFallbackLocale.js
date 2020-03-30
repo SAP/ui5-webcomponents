@@ -1,4 +1,4 @@
-import { DEFAULT_LOCALE } from "../AssetParameters.js";
+import { DEFAULT_LOCALE } from "../generated/AssetParameters.js";
 
 /**
  * Calculates the next fallback locale for the given locale.

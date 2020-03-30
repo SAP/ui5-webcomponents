@@ -1,6 +1,6 @@
 import { fetchJsonOnce } from "../util/FetchHelper.js";
 import { getFeature } from "../FeaturesRegistry.js";
-import { DEFAULT_LOCALE, SUPPORTED_LOCALES } from "../AssetParameters.js";
+import { DEFAULT_LOCALE, SUPPORTED_LOCALES } from "../generated/AssetParameters.js";
 
 const OpenUI5Support = getFeature("OpenUI5Support");
 

@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const PropertiesReader = require('properties-reader');
-const assets = require('../assets/index.js');
+const assets = require('../../assets-meta.js');
 
 const defaultLanguage = assets.languages.default;
 

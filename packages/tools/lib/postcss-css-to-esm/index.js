@@ -2,7 +2,7 @@ const postcss = require('postcss');
 const fs = require('fs');
 const path = require('path');
 const mkdirp = require('mkdirp');
-const assets = require("../assets/index.js");
+const assets = require("../../assets-meta.js");
 
 const DEFAULT_THEME = assets.themes.default;
 

@@ -8,7 +8,7 @@ const LIB = path.join(__dirname, `lib/`);
 const scripts = {
 	clean: "rimraf dist",
 	lint: "eslint . --config config/.eslintrc.js",
-	prepare: "nps clean copy fillAssetParameters",
+	prepare: "nps clean copy generateAssetParameters",
 	build: {
 		default: "nps lint prepare build.bundle",
 		bundle: "rollup --config config/rollup.config.js --environment ES5_BUILD",
@@ -19,7 +19,7 @@ const scripts = {
 		test: "copy-and-watch \"test/**/*.*\" dist/test-resources",
 		"webcomponents-polyfill": "copy-and-watch \"../../node_modules/@webcomponents/webcomponentsjs/**/*.*\" dist/webcomponentsjs/",
 	},
-	fillAssetParameters: `node ${LIB}/fill-asset-parameters/index.js`,
+	generateAssetParameters: `node ${LIB}/generate-asset-parameters/index.js`,
 	watch: {
 		default: 'concurrently "nps watch.test" "nps watch.src" "nps watch.bundle"',
 		src: 'nps "copy.src --watch --skip-initial-copy"',

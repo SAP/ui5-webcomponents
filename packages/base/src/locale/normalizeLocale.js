@@ -1,4 +1,4 @@
-import { DEFAULT_LOCALE } from "../AssetParameters.js";
+import { DEFAULT_LOCALE } from "../generated/AssetParameters.js";
 
 const localeRegEX = /^((?:[A-Z]{2,3}(?:-[A-Z]{3}){0,3})|[A-Z]{4}|[A-Z]{5,8})(?:-([A-Z]{4}))?(?:-([A-Z]{2}|[0-9]{3}))?((?:-[0-9A-Z]{5,8}|-[0-9][0-9A-Z]{3})*)((?:-[0-9A-WYZ](?:-[0-9A-Z]{2,8})+)*)(?:-(X(?:-[0-9A-Z]{1,8})+))?$/i;
 const SAPSupportabilityLocales = /(?:^|-)(saptrc|sappsd)(?:-|$)/i;

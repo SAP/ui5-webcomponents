@@ -1,4 +1,4 @@
-import { DEFAULT_LANGUAGE } from "../AssetParameters.js";
+import { DEFAULT_LANGUAGE } from "../generated/AssetParameters.js";
 
 export default () => {
 	const browserLanguages = navigator.languages;
