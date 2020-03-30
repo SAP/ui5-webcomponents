@@ -2,6 +2,7 @@ import getLocale from "../locale/getLocale.js";
 import { fetchJsonOnce } from "../util/FetchHelper.js";
 import normalizeLocale from "../locale/normalizeLocale.js";
 import nextFallbackLocale from "../locale/nextFallbackLocale.js";
+import { DEFAULT_LANGUAGE } from "../AssetParameters.js";
 
 const bundleData = new Map();
 const bundleURLs = new Map();
@@ -55,11 +56,15 @@ const fetchI18nBundle = async packageName => {
 		localeId = nextFallbackLocale(localeId);
 	}
 
+	if (localeId === DEFAULT_LANGUAGE) {
+		return;
+	}
+
 	const bundleURL = bundlesForPackage[localeId];
 
 	if (typeof bundleURL === "object") { // inlined from build
 		setI18nBundleData(packageName, bundleURL);
-		return bundleURL;
+		return;
 	}
 
 	const data = await fetchJsonOnce(bundleURL);
