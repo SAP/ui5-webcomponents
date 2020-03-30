@@ -41,9 +41,9 @@ class UI5Element extends HTMLElement {
 		this._initializeState();
 		this._upgradeAllProperties();
 		this._initializeContainers();
-		this._upToDate = false;
 
-		this._resetDomRefReadyPromise();
+		this._upToDate = false;
+		this._resetWhenRenderedPromise();
 
 		this._monitoredChildProps = new Map();
 		this._firePropertyChange = false;
@@ -59,12 +59,12 @@ class UI5Element extends HTMLElement {
 	/**
 	 * @private
 	 */
-	_resetDomRefReadyPromise() {
+	_resetWhenRenderedPromise() {
 		let deferredResolve;
-		this._domRefReadyPromise = new Promise(resolve => {
+		this._whenRenderedPromise = new Promise(resolve => {
 			deferredResolve = resolve;
 		});
-		this._domRefReadyPromise._deferredResolve = deferredResolve;
+		this._whenRenderedPromise._deferredResolve = deferredResolve;
 	}
 
 	/**
@@ -117,7 +117,7 @@ class UI5Element extends HTMLElement {
 			}
 
 			RenderScheduler.renderAsSoonAsPossible(this);
-			await this._waitForDomRef();
+			await this._whenRendered();
 
 			if (typeof this.onEnterDOM === "function") {
 				this.onEnterDOM();
@@ -442,7 +442,7 @@ class UI5Element extends HTMLElement {
 
 		if (this.getDomRef() && !this._suppressInvalidation) {
 			this._upToDate = false;
-			this._resetDomRefReadyPromise();
+			this._resetWhenRenderedPromise();
 			// console.log("INVAL", this, ...arguments);
 			RenderScheduler.renderDeferred(this);
 		}
@@ -489,7 +489,7 @@ class UI5Element extends HTMLElement {
 			this.onAfterRendering();
 		}
 
-		this._domRefReadyPromise._deferredResolve();
+		this._whenRenderedPromise._deferredResolve();
 	}
 
 	/**
@@ -521,8 +521,8 @@ class UI5Element extends HTMLElement {
 	/**
 	 * @private
 	 */
-	_waitForDomRef() {
-		return this._domRefReadyPromise;
+	_whenRendered() {
+		return this._whenRenderedPromise;
 	}
 
 	/**
@@ -557,7 +557,7 @@ class UI5Element extends HTMLElement {
 	 * @public
 	 */
 	async focus() {
-		await this._waitForDomRef();
+		await this._whenRendered();
 
 		const focusDomRef = this.getFocusDomRef();
 

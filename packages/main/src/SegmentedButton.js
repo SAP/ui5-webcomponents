@@ -114,7 +114,7 @@ class SegmentedButton extends UI5Element {
 	}
 
 	async onAfterRendering() {
-		await Promise.all(this.buttons.map(button => button._waitForDomRef));
+		await Promise.all(this.buttons.map(button => button._whenRendered));
 		this.widths = this.buttons.map(button => button.offsetWidth);
 	}
 
