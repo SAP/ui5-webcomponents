@@ -3,11 +3,6 @@
 	cursor: pointer;
 }
 
-/* selected */
-:host([selected]) {
-	background: var(--sapList_SelectionBackgroundColor);
-}
-
 /* selected and hovered */
 :host([selected][actionable]:not([active]):hover) {
 	background : var(--sapList_Hover_SelectionBackground);

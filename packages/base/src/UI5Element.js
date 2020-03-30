@@ -112,6 +112,10 @@ class UI5Element extends HTMLElement {
 				await this._processChildren();
 			}
 
+			if (!this.shadowRoot) { // Workaround for Firefox74 bug
+				await Promise.resolve();
+			}
+
 			RenderScheduler.renderAsSoonAsPossible(this);
 			await this._waitForDomRef();
 

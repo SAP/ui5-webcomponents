@@ -25,7 +25,7 @@ const metadata = {
 		 * Defines the ID of the HTML Element, which will get the initial focus.
 		 *
 		 * @type {string}
-		 * @defaultvalue: ""
+		 * @defaultvalue ""
 		 * @public
 		 */
 		initialFocus: {
@@ -34,10 +34,11 @@ const metadata = {
 
 		/**
 		 * Defines the header text.
-		 * <br><b>Note:</b> If <code>header</code> slot is provided, the <code>headerText</code> is ignored.
+		 * <br><br>
+		 * <b>Note:</b> If <code>header</code> slot is provided, the <code>headerText</code> is ignored.
 		 *
 		 * @type {string}
-		 * @defaultvalue: ""
+		 * @defaultvalue ""
 		 * @public
 		 */
 		headerText: {
@@ -46,6 +47,14 @@ const metadata = {
 
 		/**
 		 * Determines on which side the <code>ui5-popover</code> is placed at.
+		 * <br><br>
+		 * Available options are:
+		 * <ul>
+		 * <li><code>Left</code></li>
+		 * <li><code>Right</code></li>
+		 * <li><code>Top</code></li>
+		 * <li><code>Bottom</code></li>
+		 * </ul>
 		 *
 		 * @type {PopoverPlacementType}
 		 * @defaultvalue "Right"
@@ -58,6 +67,14 @@ const metadata = {
 
 		/**
 		 * Determines the horizontal alignment of the <code>ui5-popover</code>.
+		 * <br><br>
+		 * Available options are:
+		 * <ul>
+		 * <li><code>Center</code></li>
+		 * <li><code>Left</code></li>
+		 * <li><code>Right</code></li>
+		 * <li><code>Stretch</code></li>
+		 * </ul>
 		 *
 		 * @type {PopoverHorizontalAlign}
 		 * @defaultvalue "Center"
@@ -70,6 +87,14 @@ const metadata = {
 
 		/**
 		 * Determines the vertical alignment of the <code>ui5-popover</code>.
+		 * <br><br>
+		 * Available options are:
+		 * <ul>
+		 * <li><code>Center</code></li>
+		 * <li><code>Top</code></li>
+		 * <li><code>Bottom</code></li>
+		 * <li><code>Stretch</code></li>
+		 * </ul>
 		 *
 		 * @type {PopoverVerticalAlign}
 		 * @defaultvalue "Center"
@@ -337,7 +362,7 @@ class Popover extends UI5Element {
 	 * Closes the popover.
 	 * @public
 	 */
-	close(escPressed = false, preventRegitryUpdate = false) {
+	close(escPressed = false, preventRegitryUpdate = false, preventFocusRestore = false) {
 		if (!this.opened) {
 			return;
 		}
@@ -353,7 +378,7 @@ class Popover extends UI5Element {
 			removeOpenedPopover(this);
 		}
 
-		if (!this._prevetFocusRestore) {
+		if (!preventFocusRestore) {
 			this.resetFocus();
 		}
 

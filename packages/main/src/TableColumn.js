@@ -32,6 +32,7 @@ const metadata = {
 		 * For further responsive design options, see <code>demandPopin</code> property.
 		 *
 		 * @type {number}
+		 * @defaultvalue Infinity
 		 * @public
 		 */
 		minWidth: {
@@ -43,7 +44,7 @@ const metadata = {
 		 * The text for the column when it pops in.
 		 *
 		 * @type {string}
-		 * @defaultvalue: ""
+		 * @defaultvalue ""
 		 * @public
 		 */
 		popinText: {
@@ -65,21 +66,21 @@ const metadata = {
 		},
 
 		/**
-		 * @protected
+		 * @private
 		 */
 		first: {
 			type: Boolean,
 		},
 
 		/**
-		 * @protected
+		 * @private
 		 */
 		last: {
 			type: Boolean,
 		},
 
 		/**
-		 * @protected
+		 * @private
 		 */
 		sticky: {
 			type: Boolean,

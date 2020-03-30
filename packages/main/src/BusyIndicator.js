@@ -36,10 +36,10 @@ const metadata = {
 		 * <b>Note:</b> Available options are "Small", "Medium", and "Large".
 		 *
 		 * @type {BusyIndicatorSize}
-		 * @defaultvalue "Large"
+		 * @defaultvalue "Medium"
 		 * @public
 		 */
-		size: { type: BusyIndicatorSize, defaultValue: BusyIndicatorSize.Large },
+		size: { type: BusyIndicatorSize, defaultValue: BusyIndicatorSize.Medium },
 
 		/**
 		 * Defines if the busy indicator is visible on the screen. By default it is not.

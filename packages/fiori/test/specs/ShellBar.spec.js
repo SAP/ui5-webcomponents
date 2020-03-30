@@ -343,6 +343,18 @@ describe("Component Behavior", () => {
 				assert.strictEqual(input.getValue(), "Product Switch", "Input value is set by click event of Product Switch icon");
 			});
 
+			it("tests preventDefalt of productSwitchClick event", () => {
+				const overflowButton = browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
+				const staticAreaItemClassName = browser.getStaticAreaItemClassName("#shellbar")
+				const overflowPopover = browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-shellbar-overflow-popover");
+				const productSwitchIcon = overflowPopover.$("ui5-list ui5-li:nth-child(5)");
+
+				overflowButton.click();
+				productSwitchIcon.click();
+
+				assert.ok(overflowPopover.isDisplayed(), "overflow popover should not be closed");
+			});
+
 			it("tests if searchfield toggles when clicking on search icon", () => {
 				const overflowButton = browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
 				const searchField = browser.$("#shellbar ui5-input");

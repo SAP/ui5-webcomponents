@@ -1,5 +1,6 @@
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/icons/decline.js";
+import "@ui5/webcomponents-icons/dist/icons/edit.js";
 import ListItemType from "./types/ListItemType.js";
 import ListMode from "./types/ListMode.js";
 import ListItemBase from "./ListItemBase.js";
@@ -17,23 +18,13 @@ const metadata = {
 	properties: /** @lends  sap.ui.webcomponents.main.ListItem.prototype */ {
 
 		/**
-		 * Defines the selected state of the <code>ListItem</code>.
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		selected: {
-			type: Boolean,
-		},
-
-		/**
 		 * Defines the visual indication and behavior of the list items.
-		 * Available options are <code>Active</code> (by default) and <code>Inactive</code>.
+		 * Available options are <code>Active</code> (by default), <code>Inactive</code> and <code>Detail</code>.
 		 * <br><br>
 		 * <b>Note:</b> When set to <code>Active</code>, the item will provide visual response upon press and hover,
-		 * while with type <code>Inactive</code> - will not.
+		 * while with type <code>Inactive</code> and <code>Detail</code> - will not.
 		 *
-		 * @type {string}
+		 * @type {ListItemType}
 		 * @defaultvalue "Active"
 		 * @public
 		*/
@@ -69,8 +60,14 @@ const metadata = {
 		},
 	},
 	events: {
+		/**
+		 * Fired when the user clicks on the detail button when type is <code>Detail</code>.
+		 *
+		 * @event
+		 * @public
+		 */
+		detailClick: {},
 		_press: {},
-		_detailPress: {},
 		_focused: {},
 		_focusForward: {},
 	},
@@ -220,6 +217,10 @@ class ListItem extends ListItemBase {
 		this.fireEvent("_selectionRequested", { item: this, selectionComponentPressed: false });
 	}
 
+	onDetailClick(event) {
+		this.fireEvent("detailClick", { item: this, selected: this.selected });
+	}
+
 	fireItemPress(event) {
 		if (this.isInactive) {
 			return;
@@ -229,7 +230,7 @@ class ListItem extends ListItemBase {
 	}
 
 	get isInactive() {
-		return this.type === ListItemType.Inactive;
+		return this.type === ListItemType.Inactive || this.type === ListItemType.Detail;
 	}
 
 	get placeSelectionElementBefore() {
@@ -256,6 +257,10 @@ class ListItem extends ListItemBase {
 
 	get modeDelete() {
 		return this._mode === ListMode.Delete;
+	}
+
+	get typeDetail() {
+		return this.type === ListItemType.Detail;
 	}
 }
 

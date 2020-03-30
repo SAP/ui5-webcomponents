@@ -32,6 +32,11 @@
 	height: 100%;
 }
 
+:host([expanded]) .ui5-tokenizer--content {
+	display: inline-block;
+	white-space: nowrap;
+}
+
 .ui5-tokenizer--content {
 	height: 100%;
 	display: flex;

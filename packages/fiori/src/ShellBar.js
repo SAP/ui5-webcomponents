@@ -33,6 +33,7 @@ const metadata = {
 		/**
 		 * Defines the <code>logo</code> source URI.
 		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		logo: {
@@ -44,7 +45,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> The <code>primaryTitle</code> would be hidden on S screen size (less than approx. 700px).
 		 * @type {string}
-		 * @defaultvalue: ""
+		 * @defaultvalue ""
 		 * @public
 		 */
 		primaryTitle: {
@@ -56,7 +57,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> The <code>secondaryTitle</code> would be hidden on S and M screen sizes (less than approx. 1300px).
 		 * @type {string}
-		 * @defaultvalue: ""
+		 * @defaultvalue ""
 		 * @public
 		 */
 		secondaryTitle: {
@@ -67,7 +68,7 @@ const metadata = {
 		 * Defines the <code>notificationCount</code>,
 		 * displayed in the notification icon top-right corner.
 		 * @type {string}
-		 * @defaultvalue: ""
+		 * @defaultvalue ""
 		 * @public
 		 */
 		notificationCount: {
@@ -77,6 +78,7 @@ const metadata = {
 		/**
 		 * Defines, if the notification icon would be displayed.
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		showNotifications: {
@@ -239,6 +241,7 @@ const metadata = {
 
 		/**
 		 * Fired, when the product switch icon is activated.
+		 * <b>Note:</b> You can prevent closing of oveflow popover by calling <code>event.preventDefault()</code>.
 		 *
 		 * @event
 		 * @param {HTMLElement} targetRef dom ref of the activated element
@@ -280,6 +283,7 @@ const metadata = {
 
 		/**
 		 * Fired, when a menu item is activated
+		 * <b>Note:</b> You can prevent closing of oveflow popover by calling <code>event.preventDefault()</code>.
 		 *
 		 * @event
 		 * @param {HTMLElement} item dom ref of the activated list item
@@ -448,7 +452,7 @@ class ShellBar extends UI5Element {
 	_menuItemPress(event) {
 		this.fireEvent("menuItemClick", {
 			item: event.detail.item,
-		});
+		}, true);
 	}
 
 	_logoPress(event) {
@@ -712,9 +716,11 @@ class ShellBar extends UI5Element {
 	}
 
 	_handleProductSwitchPress(event) {
-		this.fireEvent("productSwitchClick", {
-			targetRef: this.shadowRoot.querySelector(".ui5-shellbar-button-product-switch"),
-		});
+		const buttonRef = this.shadowRoot.querySelector(".ui5-shellbar-button-product-switch");
+
+		this._defaultItemPressPrevented = !this.fireEvent("productSwitchClick", {
+			targetRef: buttonRef.classList.contains("ui5-shellbar-hidden-button") ? event.target : buttonRef,
+		}, true);
 	}
 
 	/**

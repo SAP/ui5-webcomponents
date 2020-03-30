@@ -75,7 +75,8 @@ const metadata = {
 		 * Defines the state of the <code>info</code>.
 		 * <br>
 		 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code> and <code>"Erorr"</code>.
-		 * @type {string}
+		 * @type {ValueState}
+         * @defaultvalue "None"
 		 * @public
 		 * @since 0.13.0
 		 */
@@ -96,7 +97,8 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.StandardListItem.prototype */ {
 		/**
 		 * Defines the text of the <code>ui5-li</code>.
-		 * <br><b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+		 * <br><br>
+		 * <b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 		 *
 		 * @type {Node[]}
 		 * @slot

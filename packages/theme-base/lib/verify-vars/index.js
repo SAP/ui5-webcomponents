@@ -10,7 +10,6 @@ const allThemesDefinitionFiles = [
 ];
 
 const allDefinitionFiles = [
-	`base/component-derived-colors`,
 	...allThemesDefinitionFiles
 ];
 

@@ -26,12 +26,16 @@ import Icon from "./Icon.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
 import BusyIndicator from "./BusyIndicator.js";
+import Button from "./Button.js";
 import StandardListItem from "./StandardListItem.js";
 
+/**
+ * @public
+ */
 const metadata = {
 	tag: "ui5-combobox",
 	defaultSlot: "items",
-	properties: {
+	properties: /** @lends sap.ui.webcomponents.main.ComboBox.prototype */ {
 		/**
 		 * Defines the value of the <code>ui5-combobox</code>.
 		 *
@@ -48,6 +52,8 @@ const metadata = {
 		 * Defines the "live" value of the <code>ui5-combobox</code>.
 		 * <br><br>
 		 * <b>Note:</b> The property is updated upon typing.
+		 *
+		 * <br><br>
 		 * <b>Note:</b> Initially the filter value is synced with value.
 		 *
 		 * @type {string}
@@ -86,9 +92,17 @@ const metadata = {
 
 		/**
 		 * Defines the value state of the <code>ui5-combobox</code>.
-		 * Available options are: <code>None</code>, <code>Success</code>, <code>Warning</code>, and <code>Error</code>.
+		 * <br><br>
+		 * Available options are:
+		 * <ul>
+		 * <li><code>None</code></li>
+		 * <li><code>Error</code></li>
+		 * <li><code>Warning</code></li>
+		 * <li><code>Success</code></li>
+		 * <li><code>Information</code></li>
+		 * </ul>
 		 *
-		 * @type {string}
+		 * @type {ValueState}
 		 * @defaultvalue "None"
 		 * @public
 		 */
@@ -117,14 +131,16 @@ const metadata = {
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
-		 * @since 1.0.0-rc.5
 		 */
 		required: {
 			type: Boolean,
 		},
 
 		/**
-		 * Indicates whether a loading indicator should be shown in the picker
+		 * Indicates whether a loading indicator should be shown in the picker.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		loading: {
@@ -167,7 +183,7 @@ const metadata = {
 		},
 	},
 	managedSlots: true,
-	slots: {
+	slots: /** @lends sap.ui.webcomponents.main.ComboBox.prototype */ {
 		/**
 		 * Defines the <code>ui5-combobox</code> items.
 		 * <br><br>
@@ -188,7 +204,7 @@ const metadata = {
 			listenFor: { include: ["*"] },
 		},
 	},
-	events: {
+	events: /** @lends sap.ui.webcomponents.main.ComboBox.prototype */ {
 		/**
 		 * Fired when the input operation has finished by pressing Enter, focusout or an item is selected.
 		 *
@@ -481,6 +497,7 @@ class ComboBox extends UI5Element {
 			ResponsivePopover.define(),
 			List.define(),
 			BusyIndicator.define(),
+			Button.define(),
 			StandardListItem.define(),
 		]);
 	}
