@@ -57,7 +57,7 @@ const metadata = {
 		 * Defines whether the tabs are in a fixed state that is not
 		 * expandable/collapsible by user interaction.
 		 *
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 */
@@ -68,7 +68,7 @@ const metadata = {
 		/**
 		 * Defines whether the tab content is collapsed.
 		 *
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 */
@@ -82,7 +82,7 @@ const metadata = {
 		 * The overflow select list represents a list, where all tab filters are displayed
 		 * so that it's easier for the user to select a specific tab filter.
 		 *
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 */
