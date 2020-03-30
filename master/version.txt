@@ -1,9 +1,7 @@
-commit a0a2589b66a999585e9b26b379df7b611623cb2c
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Mar 30 09:59:29 2020 +0300
+commit ca90fbf5bbaa1751eb940b5b5210b03ca066882d
+Author: Marcus Notheis <MarcusNotheis@users.noreply.github.com>
+Date:   Mon Mar 30 09:22:03 2020 +0200
 
-    chore: add  sap_belize_hcw switch, public imports and other stuff (#1384)
+    docs: use enum type instead of string (#1391)
     
-    - add sap_belize_hcw switch
-    - provide public imports for the newly added components
-    - unify type naming - in most of the places we use "boolean" and "string", but in several palces we can see "Boolean" and "String"
+    In several places, string was used as @type annotation for the documentation. This PR is replacing those string annotations with the corresponding enums.
