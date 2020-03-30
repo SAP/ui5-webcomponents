@@ -76,6 +76,7 @@ const metadata = {
 		 * <br>
 		 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code> and <code>"Erorr"</code>.
 		 * @type {ValueState}
+         * @defaultvalue "None"
 		 * @public
 		 * @since 0.13.0
 		 */
