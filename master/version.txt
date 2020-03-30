@@ -1,5 +1,9 @@
-commit 98c96f54124328a490cc73cd805fe22d103c2cc5
-Author: Marcus Notheis <MarcusNotheis@users.noreply.github.com>
-Date:   Sun Mar 29 09:53:42 2020 +0200
+commit a0a2589b66a999585e9b26b379df7b611623cb2c
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Mar 30 09:59:29 2020 +0300
 
-    docs(ui5-tab): Tab extends UI5Element (#1388)
+    chore: add  sap_belize_hcw switch, public imports and other stuff (#1384)
+    
+    - add sap_belize_hcw switch
+    - provide public imports for the newly added components
+    - unify type naming - in most of the places we use "boolean" and "string", but in several palces we can see "Boolean" and "String"
