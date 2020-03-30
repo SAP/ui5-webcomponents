@@ -38,7 +38,7 @@ const metadata = {
 
 		/**
 		 * Enabled items can be selected.
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 */
@@ -96,7 +96,7 @@ const metadata = {
 		/**
 		 * Specifies if the <code>ui5-tab</code> is selected.
 		 *
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 */

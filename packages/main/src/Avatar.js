@@ -108,7 +108,7 @@ const metadata = {
 		 * <li><code>Cover</code></li>
 		 * <li><code>Contain</code></li>
 		 * <ul>
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue "Cover"
 		 * @public
 		 */
@@ -134,7 +134,7 @@ const metadata = {
 		 * <li><code>Accent10</code></li>
 		 * <li><code>Placeholder</code></li>
 		 * <ul>
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue "Accent6"
 		 * @public
 		 */

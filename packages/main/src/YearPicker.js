@@ -42,7 +42,7 @@ const metadata = {
 		/**
 		 * Determines the мinimum date available for selection.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @since 1.0.0-rc.6
 		 * @public
@@ -54,7 +54,7 @@ const metadata = {
 		/**
 		 * Determines the maximum date available for selection.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue undefined
 		 * @since 1.0.0-rc.6
 		 * @public

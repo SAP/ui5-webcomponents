@@ -55,7 +55,7 @@ const metadata = {
 		/**
 		 * Defines whether the <code>itemName</code> is clickable.
 		 *
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 */
