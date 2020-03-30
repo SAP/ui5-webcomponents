@@ -24,8 +24,8 @@
 		<div id="{{this._id}}--wrapper" class="ui5-wheelslider-wrapper">
 			{{#if _expanded}}
 				<ul id="{{this._id}}--items-list">
-					{{#each showItems}}
-						<li class="ui5-wheelslider-item" id="item--{{@index}}">{{this}}</li>
+					{{#each itemsToShow}}
+						<li class="ui5-wheelslider-item" data-item-index="{{@index}}">{{this}}</li>
 					{{/each}}
 				</ul>
 			{{else}}

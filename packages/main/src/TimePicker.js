@@ -616,6 +616,10 @@ class TimePicker extends UI5Element {
 		}
 	}
 
+	_handleWheel(e) {
+		e.preventDefault();
+	}
+
 	getFormat() {
 		if (this._isPattern) {
 			this._oDateFormat = DateFormat.getInstance({

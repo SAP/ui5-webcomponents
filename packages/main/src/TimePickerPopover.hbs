@@ -9,6 +9,7 @@
 			@ui5-afterOpen="{{_respPopover.afterOpen}}"
 			class="ui5-timepicker-popover"
 			@keydown="{{_ontimepickerpopoverkeydown}}"
+			@wheel="{{_handleWheel}}"
 	>
 	<div class="{{classes.container}}" @keydown={{_oncontainerkeydown}} tabindex="0" @focusin="{{_onfocuscontainerin}}">
 		{{#if shouldBuildHoursSlider}}
