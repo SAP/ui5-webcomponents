@@ -97,7 +97,7 @@ const metadata = {
 		 * <b>Note:</b>
 		 * When set, the other properties, such as <code>image</code>, <code>icon</code>, <code>description</code>, etc. will be omitted
 		 * and only the <code>text</code> will be displayed.
-		 * @type {string}
+		 * @type {boolean}
 		 * @public
 		 */
 		group: {

@@ -45,7 +45,7 @@ const metadata = {
 		 * Defines the name of the item.
 		 *
 		 * @type {string}
-		 * @defaultvalue false
+		 * @defaultvalue ""
 		 * @public
 		 */
 		itemName: {
