@@ -1,7 +1,5 @@
-commit ca90fbf5bbaa1751eb940b5b5210b03ca066882d
-Author: Marcus Notheis <MarcusNotheis@users.noreply.github.com>
-Date:   Mon Mar 30 09:22:03 2020 +0200
+commit 576d769d59d2f413cb9e604fb91adab10bd0f80b
+Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
+Date:   Mon Mar 30 13:17:56 2020 +0300
 
-    docs: use enum type instead of string (#1391)
-    
-    In several places, string was used as @type annotation for the documentation. This PR is replacing those string annotations with the corresponding enums.
+    fix(ui5-segmentedbutton): button can no longer be clicked when disabled (#1393)
