@@ -96,7 +96,7 @@ const metadata = {
 		 * <b>Note:</b> Avalaible options are <code>None</code>, <code>SingleSelect</code>,
 		 * <code>MultiSelect</code>, and <code>Delete</code>.
 		 *
-		 * @type {string}
+		 * @type {ListMode}
 		 * @defaultvalue "None"
 		 * @public
 		 */
@@ -127,7 +127,7 @@ const metadata = {
 		 * item doesn't have a bottom separator.</li>
 		 * </ul>
 		 *
-		 * @type {string}
+		 * @type {ListSeparators}
 		 * @defaultvalue "All"
 		 * @public
 		 */

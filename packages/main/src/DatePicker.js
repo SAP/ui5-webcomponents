@@ -61,7 +61,7 @@ const metadata = {
 		 * <li><code>Information</code></li>
 		 * </ul>
 		 *
-		 * @type {string}
+		 * @type {ValueState}
 		 * @defaultvalue "None"
 		 * @public
 		 */
@@ -119,7 +119,7 @@ const metadata = {
 		 * <li><code>Persian</code></li>
 		 * </ul>
 		 *
-		 * @type {string}
+		 * @type {CalendarType}
 		 * @defaultvalue "Gregorian"
 		 * @public
 		 */

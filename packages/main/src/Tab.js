@@ -84,7 +84,7 @@ const metadata = {
 		 *
 		 * <br><br>
 		 * <b>Note:</b> The color value depends on the current theme.
-		 * @type {string}
+		 * @type {SemanticColor}
 		 * @defaultvalue "Default"
 		 * @public
 		 */

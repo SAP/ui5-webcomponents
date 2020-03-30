@@ -51,7 +51,7 @@ const metadata = {
 		 * <li><code>BottomEnd</code></li>
 		 * </ul>
 		 *
-		 * @type {string}
+		 * @type {ToastPlacement}
 		 * @defaultvalue "BottomCenter"
 		 * @public
 		 */

@@ -24,7 +24,7 @@ const metadata = {
 		 * <b>Note:</b> When set to <code>Active</code>, the item will provide visual response upon press and hover,
 		 * while with type <code>Inactive</code> and <code>Detail</code> - will not.
 		 *
-		 * @type {string}
+		 * @type {ListItemType}
 		 * @defaultvalue "Active"
 		 * @public
 		*/

@@ -41,7 +41,7 @@ const metadata = {
 		 * Defines the calendar type used for display.
 		 * If not defined, the calendar type of the global configuration is used.
 		 * Available options are: "Gregorian", "Islamic", "Japanese", "Buddhist" and "Persian".
-		 * @type {string}
+		 * @type {CalendarType}
 		 * @public
 		 */
 		primaryCalendarType: {

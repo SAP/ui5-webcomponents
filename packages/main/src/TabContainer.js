@@ -105,7 +105,7 @@ const metadata = {
 		 * <li><code>Inline</code></li>
 		 * <ul>
 		 *
-		 * @type {string}
+		 * @type {TabLayout}
 		 * @defaultvalue "Standard"
 		 * @public
 		 */
