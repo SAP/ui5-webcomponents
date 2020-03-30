@@ -91,7 +91,7 @@ const metadata = {
 		 * <li><code>L</code></li>
 		 * <li><code>XL</code></li>
 		 * <ul>
-		 * @type {string}
+		 * @type {AvatarSize}
 		 * @defaultvalue "S"
 		 * @public
 		 */

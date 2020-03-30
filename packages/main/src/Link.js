@@ -67,7 +67,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> Avaialble options are <code>Default</code>, <code>Subtle</code>, and <code>Emphasized</code>.
 		 *
-		 * @type {string}
+		 * @type {LinkDesign}
 		 * @defaultvalue "Default"
 		 * @public
 		 */

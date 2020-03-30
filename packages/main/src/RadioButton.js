@@ -95,7 +95,7 @@ const metadata = {
 		 * <li><code>Warning</code></li>
 		 * </ul>
 		 *
-		 * @type {string}
+		 * @type {ValueState}
 		 * @defaultvalue "None"
 		 * @public
 		 */
