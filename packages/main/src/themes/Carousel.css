@@ -34,11 +34,12 @@
     width: 100%;
     padding: 0 .5rem;
     position: absolute;
-    top: 50%;
+    top: calc(50% - 2.5rem);
     display: flex;
     justify-content: space-between;
     box-sizing: border-box;
 }
+
 
 .ui5-carousel-content {
     width: 100%;
