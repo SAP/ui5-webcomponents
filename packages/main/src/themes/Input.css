@@ -127,7 +127,7 @@
 	border: 1px solid var(--sapField_Hover_BorderColor);
 }
 
-:host([value-state="None"]:hover) {
+:host([value-state="None"]:not([readonly]):hover) {
 	background-color: var(--sapField_Hover_Background);
 	border: 1px solid var(--sapField_Hover_BorderColor);
 }

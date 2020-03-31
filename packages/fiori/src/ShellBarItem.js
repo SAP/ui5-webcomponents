@@ -13,6 +13,7 @@ const metadata = {
 		/**
 		 * Defines the name of the item's icon.
 		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		icon: {
@@ -22,7 +23,7 @@ const metadata = {
 		/**
 		 * Defines the item text.
 		 * @type {string}
-		 * @defaulValue ""
+		 * @defaultvalue ""
 		 * @public
 		 */
 		text: {

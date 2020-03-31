@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    UI5-Web-Components-Playground (1.0.0.pre.rc.5)
+    UI5-Web-Components-Playground (1.0.0.pre.rc.6)
       jekyll (~> 3.8.5)
       jekyll-seo-tag (~> 2.0)
       rake (~> 12.3.1)

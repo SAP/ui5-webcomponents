@@ -38,7 +38,8 @@ const metadata = {
 	slots: /** @lends  sap.ui.webcomponents.main.TabContainer.prototype */ {
 		/**
 		 * Defines the tabs.
-		 * <br><b>Note:</b> Use <code>ui5-tab</code> and <code>ui5-tab-separator</code> for the intended design.
+		 * <br><br>
+		 * <b>Note:</b> Use <code>ui5-tab</code> and <code>ui5-tab-separator</code> for the intended design.
 		 *
 		 * @type {HTMLElement[]}
 		 * @public
@@ -56,7 +57,7 @@ const metadata = {
 		 * Defines whether the tabs are in a fixed state that is not
 		 * expandable/collapsible by user interaction.
 		 *
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 */
@@ -67,7 +68,7 @@ const metadata = {
 		/**
 		 * Defines whether the tab content is collapsed.
 		 *
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 */
@@ -81,7 +82,7 @@ const metadata = {
 		 * The overflow select list represents a list, where all tab filters are displayed
 		 * so that it's easier for the user to select a specific tab filter.
 		 *
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 */
@@ -91,10 +92,12 @@ const metadata = {
 
 		/**
 		 * Defines the alignment of the <code>main text</code> and the <code>additionalText</code> of a tab.
-		 * <br>
+		 *
+		 * <br><br>
 		 * <b>Note:</b>
 		 * The <code>main text</code> and the <code>additionalText</code> would be displayed vertically by defualt,
 		 * but when set to <code>Inline</code>, they would be displayed horizontally.
+		 *
 		 * <br><br>
 		 * Available options are:
 		 * <ul>
@@ -102,7 +105,7 @@ const metadata = {
 		 * <li><code>Inline</code></li>
 		 * <ul>
 		 *
-		 * @type {String}
+		 * @type {TabLayout}
 		 * @defaultvalue "Standard"
 		 * @public
 		 */
