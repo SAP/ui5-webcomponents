@@ -7,7 +7,15 @@ module.exports = postcss.plugin('add css to JSON transform plugin', function (op
 	opts = opts || {};
 
 	return function (root) {
-		const css = root.toString();
+		let css = root.toString();
+
+		const r = new RegExp(/[\s\S]*(:root{[\s\S]*})/, 'g');
+		const match = r.exec(css);
+
+		if (match) {
+			css = match[1];
+		}
+
 		let targetFile = root.source.input.from.replace(`/${opts.toReplace}/`, "/dist/generated/assets/").replace(`\\${opts.toReplace}\\`, "\\dist\\generated\\assets\\");
 		targetFile = targetFile.replace("css_variables", "parameters-bundle");
 
