@@ -41,7 +41,7 @@
 
 .ui5-messagestrip-text {
 	font-family: var(--sapFontFamily);
-	font-size: var(--sapFontMediumSize);
+	font-size: var(--sapFontSize);
 }
 
 .ui5-messagestrip--info {

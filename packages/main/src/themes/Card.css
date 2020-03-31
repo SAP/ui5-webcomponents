@@ -108,7 +108,7 @@
 
 .ui5-card-header .ui5-card-header-text .ui5-card-subheading {
 	font-family: var(--sapFontFamily);
-	font-size: var(--sapFontMediumSize);
+	font-size: var(--sapFontSize);
 	font-weight: normal;
 	color: var(--sapTile_TextColor);
 	margin-top: .5rem;

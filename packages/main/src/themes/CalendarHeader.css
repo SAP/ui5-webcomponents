@@ -25,7 +25,7 @@
 	overflow: hidden;
 	white-space: nowrap;
 	padding: 0;
-	font-size: var(--sapFontMediumSize);
+	font-size: var(--sapFontSize);
 }
 
 .ui5-calheader-arrowbtn.ui5-calheader-arrowbtn-disabled:hover,
