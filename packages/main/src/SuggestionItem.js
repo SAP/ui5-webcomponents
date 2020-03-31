@@ -83,7 +83,8 @@ const metadata = {
 		 * Defines the state of the <code>info</code>.
 		 * <br><br>
 		 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code> and <code>"Erorr"</code>.
-		 * @type {string}
+		 * @type {ValueState}
+         * @defaultvalue "None"
 		 * @public
 		 */
 		infoState: {
@@ -97,7 +98,8 @@ const metadata = {
 		 * <b>Note:</b>
 		 * When set, the other properties, such as <code>image</code>, <code>icon</code>, <code>description</code>, etc. will be omitted
 		 * and only the <code>text</code> will be displayed.
-		 * @type {string}
+		 * @type {boolean}
+         * @defaultvalue false
 		 * @public
 		 */
 		group: {

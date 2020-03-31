@@ -36,7 +36,7 @@ const metadata = {
 		 * <b>Note:</b> Available options are "Small", "Medium", and "Large".
 		 *
 		 * @type {BusyIndicatorSize}
-		 * @defaultvalue "Large"
+		 * @defaultvalue "Medium"
 		 * @public
 		 */
 		size: { type: BusyIndicatorSize, defaultValue: BusyIndicatorSize.Medium },
