@@ -819,8 +819,6 @@ class Input extends UI5Element {
 			suggestionPopoverHeader: {
 				"display": this._listWidth === 0 ? "none" : "inline-block",
 				"width": `${this._listWidth}px`,
-			},
-			headerPhone: {
 				"padding": "0.5625rem 1rem",
 			},
 		};
