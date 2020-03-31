@@ -1,8 +1,8 @@
 const path = require("path");
+const resolve = require("resolve");
 const assets = require('@ui5/webcomponents-tools/assets-meta.js');
 
-const NODE_MODULES_PATH = path.join(__dirname, `../../node_modules/`);
-const TOOLS_LIB = path.join(NODE_MODULES_PATH, "@ui5/webcomponents-tools/lib/");
+const jsonImportsScript = resolve.sync("@ui5/webcomponents-tools/lib/generate-json-imports/themes.js");
 
 const allThemes = assets.themes.all;
 const buildLessCommandsNames = allThemes.map(theme => `build.less.${theme}`).join(" ");
@@ -20,7 +20,7 @@ module.exports = {
 				...buildLessCommands
 			},
 			postcss: "postcss dist/**/parameters-bundle.css --config config/postcss.themes --base dist/ --dir dist/css/",
-			jsonImports: `node "${TOOLS_LIB}/generate-json-imports/themes.js"`,
+			jsonImports: `node "${jsonImportsScript}"`,
 		},
 		start: "nps build watch",
 		watch: {

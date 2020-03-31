@@ -1,9 +1,10 @@
 const path = require("path");
+const resolve = require("resolve");
 
 const serveConfig = `../tools/components-package/serve.json`;
 const port = `9191`;
 
-const LIB = path.join(__dirname, `lib/`);
+const assetParametersScript = resolve.sync("@ui5/webcomponents-base/lib/generate-asset-parameters/index.js");
 
 const scripts = {
 	clean: "rimraf dist",
@@ -19,7 +20,7 @@ const scripts = {
 		test: "copy-and-watch \"test/**/*.*\" dist/test-resources",
 		"webcomponents-polyfill": "copy-and-watch \"../../node_modules/@webcomponents/webcomponentsjs/**/*.*\" dist/webcomponentsjs/",
 	},
-	generateAssetParameters: `node ${LIB}/generate-asset-parameters/index.js`,
+	generateAssetParameters: `node "${assetParametersScript}"`,
 	watch: {
 		default: 'concurrently "nps watch.test" "nps watch.src" "nps watch.bundle"',
 		src: 'nps "copy.src --watch --skip-initial-copy"',
