@@ -51,7 +51,7 @@
 
 :host([pressed][active]),
 :host([pressed]:hover) {
-	background: var(--sapToggleButton_Pressed_HoverBackground);
+	background: var(--sapButton_Selected_Hover_Background);
 }
 
 /* IE Specific CSS, duplicate it for ToggleButton */

@@ -1,5 +1,5 @@
 :root{
-	--_ui5_wheelslider_item_text_size: var(--sapFontMediumSize);
+	--_ui5_wheelslider_item_text_size: var(--sapFontSize);
 	--_ui5_wheelslider_label_text_size: var(--sapFontSmallSize);
 	--_ui5_wheelslider_selection_frame_margin_top: calc(var(--_ui5_wheelslider_item_height) * 2);
 	--_ui5_wheelslider_mobile_selection_frame_margin_top: calc(var(--_ui5_wheelslider_item_height) * 4);
