@@ -3,8 +3,6 @@ const path = require('path');
 const mkdirp = require('mkdirp');
 const assets = require('@ui5/webcomponents-tools/assets-meta.js');
 
-const ROOT = path.join(__dirname, `../../`);
-
 const fileContent = `const assetParameters = ${JSON.stringify(assets)};
 
 const DEFAULT_THEME = assetParameters.themes.default;
@@ -19,6 +17,6 @@ export {
 	SUPPORTED_LOCALES,
 };`;
 
-mkdirp(path.join(ROOT, "dist/generated/"));
-fs.writeFileSync(path.join(ROOT, "dist/generated/AssetParameters.js"), fileContent);
+mkdirp("dist/generated/");
+fs.writeFileSync("dist/generated/AssetParameters.js", fileContent);
 
