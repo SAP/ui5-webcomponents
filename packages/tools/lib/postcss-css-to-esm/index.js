@@ -20,7 +20,8 @@ module.exports = postcss.plugin('add css to esm transform plugin', function (opt
 
 	return function (root) {
 		const css = JSON.stringify(root.toString());
-		const targetFile = root.source.input.from.replace(`/${opts.toReplace}/`, "/dist/generated/").replace(`\\${opts.toReplace}\\`, "\\dist\\generated\\");
+		let targetFile = root.source.input.from.replace(`/${opts.toReplace}/`, "/dist/generated/").replace(`\\${opts.toReplace}\\`, "\\dist\\generated\\");
+		targetFile = targetFile.replace("css_variables", "parameters-bundle");
 
 		mkdirp.sync(path.dirname(targetFile));
 

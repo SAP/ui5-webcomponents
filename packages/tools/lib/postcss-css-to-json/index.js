@@ -8,7 +8,8 @@ module.exports = postcss.plugin('add css to JSON transform plugin', function (op
 
 	return function (root) {
 		const css = root.toString();
-		const targetFile = root.source.input.from.replace(`/${opts.toReplace}/`, "/dist/generated/assets/").replace(`\\${opts.toReplace}\\`, "\\dist\\generated\\assets\\");
+		let targetFile = root.source.input.from.replace(`/${opts.toReplace}/`, "/dist/generated/assets/").replace(`\\${opts.toReplace}\\`, "\\dist\\generated\\assets\\");
+		targetFile = targetFile.replace("css_variables", "parameters-bundle");
 
 		mkdirp.sync(path.dirname(targetFile));
 
