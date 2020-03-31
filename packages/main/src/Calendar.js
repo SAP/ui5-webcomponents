@@ -41,7 +41,7 @@ const metadata = {
 		 * Defines the calendar type used for display.
 		 * If not defined, the calendar type of the global configuration is used.
 		 * Available options are: "Gregorian", "Islamic", "Japanese", "Buddhist" and "Persian".
-		 * @type {string}
+		 * @type {CalendarType}
 		 * @public
 		 */
 		primaryCalendarType: {
@@ -61,7 +61,7 @@ const metadata = {
 		/**
 		 * Determines the мinimum date available for selection.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @since 1.0.0-rc.6
 		 * @public
@@ -73,7 +73,7 @@ const metadata = {
 		/**
 		 * Determines the maximum date available for selection.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @since 1.0.0-rc.6
 		 * @public

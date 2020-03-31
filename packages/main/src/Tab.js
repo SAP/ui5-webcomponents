@@ -38,7 +38,7 @@ const metadata = {
 
 		/**
 		 * Enabled items can be selected.
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 */
@@ -71,17 +71,20 @@ const metadata = {
 
 		/**
 		 * Defines the <code>ui5-tab</code> semantic color.
+		 * <br><br>
 		 * The color is applied to:
 		 * <ul>
 		 * <li>the <code>ui5-tab</code> icon</li>
 		 * <li>the <code>text</code> when <code>ui5-tab</code> overflows</li>
 		 * <li>the tab selection line</li>
 		 * </ul>
-		 * <br>
+		 *
+		 * <br><br>
 		 * Available semantic colors are: <code>"Default"</code>, <code>"Neutral"</code>, <code>"Positive"</code>, <code>"Critical"</code> and <code>"Negative"</code>.
+		 *
 		 * <br><br>
 		 * <b>Note:</b> The color value depends on the current theme.
-		 * @type {string}
+		 * @type {SemanticColor}
 		 * @defaultvalue "Default"
 		 * @public
 		 */
@@ -93,7 +96,7 @@ const metadata = {
 		/**
 		 * Specifies if the <code>ui5-tab</code> is selected.
 		 *
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 */
@@ -120,7 +123,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Tab
- * @extends TabBase
+ * @extends UI5Element
  * @tagname ui5-tab
  * @public
  */

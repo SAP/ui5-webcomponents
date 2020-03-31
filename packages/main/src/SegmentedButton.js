@@ -136,6 +136,10 @@ class SegmentedButton extends UI5Element {
 	}
 
 	_onclick(event) {
+		if (event.target.disabled || event.target === this.getDomRef()) {
+			return;
+		}
+
 		if (event.target !== this._selectedButton) {
 			if (this._selectedButton) {
 				this._selectedButton.pressed = false;

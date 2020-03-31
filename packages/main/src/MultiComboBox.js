@@ -115,9 +115,17 @@ const metadata = {
 
 		/**
 		 * Defines the value state of the <code>ui5-multi-combobox</code>.
-		 * Available options are: <code>None</code>, <code>Success</code>, <code>Warning</code>, and <code>Error</code>.
+		 * <br><br>
+		 * Available options are:
+		 * <ul>
+		 * <li><code>None</code></li>
+		 * <li><code>Error</code></li>
+		 * <li><code>Warning</code></li>
+		 * <li><code>Success</code></li>
+		 * <li><code>Information</code></li>
+		 * </ul>
 		 *
-		 * @type {string}
+		 * @type {ValueState}
 		 * @defaultvalue "None"
 		 * @public
 		 */
@@ -408,7 +416,7 @@ class MultiComboBox extends UI5Element {
 		deletingItem.selected = false;
 		this._deleting = true;
 
-		this.fireEvent("selectionChange", { items: this._getSelectedItems() });
+		this.fireSelectionChange();
 	}
 
 	_tokenizerFocusOut() {
@@ -416,6 +424,8 @@ class MultiComboBox extends UI5Element {
 		const tokensCount = tokenizer.tokens.length - 1;
 
 		tokenizer.tokens.forEach(token => { token.selected = false; });
+
+		this._tokenizer.contentDom.scrollLeft = 0;
 
 		if (tokensCount === 0 && this._deleting) {
 			setTimeout(() => {
@@ -476,7 +486,9 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_getSelectedItems() {
-		return this.items.filter(item => item.selected);
+		// Angular 2 way data binding
+		this.selectedValues = this.items.filter(item => item.selected);
+		return this.selectedValues;
 	}
 
 	_listSelectionChange(event) {
@@ -488,13 +500,19 @@ class MultiComboBox extends UI5Element {
 			});
 		});
 
-		this.fireEvent("selectionChange", { items: this._getSelectedItems() });
+		this.fireSelectionChange();
 
 		if (!event.detail.selectionComponentPressed && !isSpace(event.detail)) {
 			this.allItemsPopover.close();
 			this.value = "";
 			this.fireEvent("input");
 		}
+	}
+
+	fireSelectionChange() {
+		this.fireEvent("selectionChange", { items: this._getSelectedItems() });
+		// Angular 2 way data binding
+		this.fireEvent("value-changed");
 	}
 
 	async _getRespPopover() {
@@ -510,6 +528,11 @@ class MultiComboBox extends UI5Element {
 
 	_toggleRespPopover(isMorePopover) {
 		this.updateStaticAreaItemContentDensity();
+
+		if (isMorePopover) {
+			this.allItemsPopover.close();
+			return this.selectedItemsPopover.open(this);
+		}
 
 		if (this.allItemsPopover && this.allItemsPopover.opened) {
 			return this.allItemsPopover.close();
@@ -545,13 +568,18 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_toggleButtonPress(event) {
-		if (this._selectedItemsPopoverOpened) {
-			event.target.pressed = true;
-			this._showAllItemsPopover();
+		const showSelectedItems = event.target.hasAttribute("show-selected");
+
+		if (showSelectedItems) {
+			this.allItemsPopover.close();
+			this.selectedItemsPopover.open(this);
 		} else {
-			event.target.pressed = false;
-			this._showMorePopover();
+			this.selectedItemsPopover.close();
+			this.allItemsPopover.open(this);
 		}
+
+		// always keep the toggle-button pressed
+		event.target.pressed = true;
 	}
 
 	onBeforeRendering() {

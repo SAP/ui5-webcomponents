@@ -5,6 +5,7 @@ import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import LocaleData from "@ui5/webcomponents-localization/dist/LocaleData.js";
+import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js"; // default calendar for bundling
 import { fetchCldr } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import {
@@ -55,6 +56,23 @@ const metadata = {
 		},
 
 		/**
+		 * Defines a short hint, intended to aid the user with data entry when the
+		 * <code>ui5-timepicker</code> has no value.
+		 *
+		 * <br><br>
+		 * <b>Note:</b> When no placeholder is set, the format pattern is displayed as a placeholder.
+		 * Passing an empty string as the value of this property will make the <code>ui5-timepicker</code> appear empty - without placeholder or format pattern.
+		 *
+		 * @type {string}
+		 * @defaultvalue undefined
+		 * @public
+		 */
+		placeholder: {
+			type: String,
+			defaultValue: undefined,
+		},
+
+		/**
 		 * Determines the format, displayed in the input field.
 		 *
 		 * Example:
@@ -71,11 +89,18 @@ const metadata = {
 		},
 
 		/**
-		 * Visualizes the validation state of the Web Component, for example
-		 * <code>Error</code>, <code>Warning</code> and
-		 * <code>Success</code>.
+		 * Defines the value state of the <code>ui5-timepicker</code>.
+		 * <br><br>
+		 * Available options are:
+		 * <ul>
+		 * <li><code>None</code></li>
+		 * <li><code>Error</code></li>
+		 * <li><code>Warning</code></li>
+		 * <li><code>Success</code></li>
+		 * <li><code>Information</code></li>
+		 * </ul>
 		 *
-		 * @type {string}
+		 * @type {ValueState}
 		 * @defaultvalue "None"
 		 * @public
 		 */
@@ -132,7 +157,8 @@ const metadata = {
 	},
 	events: /** @lends sap.ui.webcomponents.main.TimePicker.prototype */ {
 		/**
-		 * Fired when the input operation has finished by pressing Enter or on focusout.
+		 * Fired when the input operation has finished by clicking the "OK" button or
+		 * when the text in the input field has changed and the focus leaves the input field.
 		 *
 		 * @event
 		 * @public
@@ -260,10 +286,19 @@ class TimePicker extends UI5Element {
 			this.formatPattern = LocaleData.getInstance(getLocale()).getTimePattern(this.getFormat().oFormatOptions.style);
 		}
 
-		if (!this.value) {
-			this.value = this.getFormat().format(new Date());
-		}
 		this._initHoursFormatParameters();
+	}
+
+	_handleInputClick() {
+		if (this._isPickerOpen) {
+			return;
+		}
+
+		const inputField = this._getInputField();
+
+		if (inputField) {
+			inputField.select();
+		}
 	}
 
 	_handleInputChange() {
@@ -451,6 +486,11 @@ class TimePicker extends UI5Element {
 
 	_getInput() {
 		return this.shadowRoot.querySelector("ui5-input");
+	}
+
+	_getInputField() {
+		const input = this._getInput();
+		return input && input.getInputDOMRef();
 	}
 
 	get secondsSlider() {

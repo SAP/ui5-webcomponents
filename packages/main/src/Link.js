@@ -67,7 +67,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> Avaialble options are <code>Default</code>, <code>Subtle</code>, and <code>Emphasized</code>.
 		 *
-		 * @type {string}
+		 * @type {LinkDesign}
 		 * @defaultvalue "Default"
 		 * @public
 		 */
@@ -226,7 +226,7 @@ class Link extends UI5Element {
 	}
 
 	get parsedRef() {
-		return this.href.length > 0 ? this.href : undefined;
+		return (this.href && this.href.length > 0) ? this.href : undefined;
 	}
 
 	static async onDefine() {
