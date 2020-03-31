@@ -17,6 +17,6 @@ export {
 	SUPPORTED_LOCALES,
 };`;
 
-mkdirp("dist/generated/");
+mkdirp.sync("dist/generated/");
 fs.writeFileSync("dist/generated/AssetParameters.js", fileContent);
 

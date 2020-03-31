@@ -33,5 +33,5 @@ Object.entries(cldrData).forEach(([key, value]) => {
 });
 `;
 
-mkdirp("dist/generated/json-imports/");
+mkdirp.sync("dist/generated/json-imports/");
 fs.writeFileSync("dist/generated/json-imports/LocaleData.js", content);

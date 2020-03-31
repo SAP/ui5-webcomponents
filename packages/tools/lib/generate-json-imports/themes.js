@@ -26,5 +26,5 @@ Suggested pattern: "assets\\\\\\/.*\\\\\\.json"\`);
 ${registerLines};
 `;
 
-mkdirp("dist/generated/json-imports/");
+mkdirp.sync("dist/generated/json-imports/");
 fs.writeFileSync("dist/generated/json-imports/Themes.js", content);
