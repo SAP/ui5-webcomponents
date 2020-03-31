@@ -1,5 +1,31 @@
-commit 576d769d59d2f413cb9e604fb91adab10bd0f80b
-Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
-Date:   Mon Mar 30 13:17:56 2020 +0300
+commit 98f55738dc16ea0905a324ebb4a6b777acfd297b
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Mar 31 15:45:15 2020 +0300
 
-    fix(ui5-segmentedbutton): button can no longer be clicked when disabled (#1393)
+    chore: handle missing vars within ThermeDesigner (#1397)
+    
+    The following params are widely used in calculation of other base params and can be removed when we start using the theming-base-content:
+    
+    - sapContent_GridSize
+    - sapPrimary1
+    - sapPrimary2
+    - sapPrimary3
+    - sapPrimary4
+    - sapPrimary5
+    - sapPrimary6
+    - sapPrimary7
+    
+    The following params have no replacement yet:
+    - sapSubtleLinkColor (should be replaced by sapLink_SubtleColor, but the last is not available yet)
+    
+    The following are tracked, removed and replaced:
+    - sapFontMediumSize
+    - sapList_HighlightColor
+    - sapToggleButton_Pressed_HoverBackground
+    - sapToggleButton_Pressed_HoverBorderColor
+    
+    The following are removed as not used anywhere:
+    - sapContent_ElementHeight
+    - sapContent_ElementHeight_PX
+    - sapBackgroundColorDefault
+    - sapShell_BackgroundPatternColor
