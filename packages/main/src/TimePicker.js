@@ -47,12 +47,12 @@ const metadata = {
 		 * Defines a formatted time value.
 		 *
 		 * @type {string}
-		 * @defaultvalue ""
+		 * @defaultvalue undefined
 		 * @public
 		 */
 		value: {
 			type: String,
-			defaultValue: "",
+			defaultValue: undefined,
 		},
 
 		/**
@@ -284,6 +284,10 @@ class TimePicker extends UI5Element {
 	onBeforeRendering() {
 		if (!this.formatPattern) {
 			this.formatPattern = LocaleData.getInstance(getLocale()).getTimePattern(this.getFormat().oFormatOptions.style);
+		}
+
+		if (this.value === undefined) {
+			this.value = this.getFormat().format(new Date());
 		}
 
 		this._initHoursFormatParameters();
