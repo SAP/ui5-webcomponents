@@ -2,13 +2,11 @@
 @sapHighlightColor: @sapBrandColor;
 @sapBaseColor: @sapHC_StandardBackground;
 @sapShellColor: @sapHC_StandardBackground;
-@sapBackgroundColorDefault: @sapHC_StandardBackground;
 @sapBackgroundColor: @sapHC_StandardBackground;
 @sapFontFamily: "72", "72full", Arial, Helvetica, sans-serif;
 @sapContent_GridSize: 1rem;
-@sapFontSize: calc(0.875 * @sapContent_GridSize);
+@sapFontSize: .875rem;
 @sapFontSmallSize: calc(0.75 * @sapContent_GridSize);
-@sapFontMediumSize: calc(0.875 * @sapContent_GridSize);
 @sapFontLargeSize: calc(1 * @sapContent_GridSize);
 @sapTextColor: @sapHC_StandardForeground;
 @sapLinkColor: @sapHC_StandardForeground;
@@ -17,16 +15,13 @@
 @sapBackgroundImage: none;
 @sapBackgroundImageOpacity: 1.0;
 
-
 @sapHC_StandardBackground: #ffffff;
 @sapHC_HighlightBackground: #ec8b46;
 @sapHC_HighlightAltBackground: #8fb5ff;
-
 @sapHC_ReducedAltBackground: #4d4d4d;
 @sapHC_StandardForeground: #000000;
 @sapHC_EnhancedForeground: #006500;
 @sapHC_ReducedForeground: #888888;
-
 @sapHC_ReducedAltForeground: #585858;
 @sapHC_ReducedBackground: #b3b3b3;
 
@@ -100,8 +95,6 @@
 @sapElement_Height: calc(2.5 * @sapContent_GridSize);
 @sapElement_BorderWidth: calc(0.0625 * @sapContent_GridSize);
 @sapContent_LineHeight: 1.4;
-@sapContent_ElementHeight: 1.37em;
-@sapContent_ElementHeight_PX: 22px;
 @sapContent_IconHeight: @sapContent_GridSize;
 @sapContent_IconColor: @sapHC_StandardForeground;
 @sapContent_ContrastIconColor: @sapContent_IconColor;
@@ -134,7 +127,6 @@
 @sapContent_Selected_TextColor: #000;
 
 @sapShell_Background: @sapBackgroundColor;
-@sapShell_BackgroundPatternColor: @sapBackgroundColor;
 @sapShell_BorderColor: @sapHC_StandardForeground;
 @sapShell_TextColor: @sapTextColor;
 @sapShell_InteractiveTextColor: @sapShell_TextColor;
@@ -145,6 +137,7 @@
 
 @sapButton_Background: @sapBackgroundColor;
 @sapButton_BorderWidth: @sapElement_BorderWidth;
+@sapButton_Selected_Hover_Background: #ec8b46;
 @sapButton_BorderColor: @sapHC_StandardForeground;
 @sapButton_TextColor: contrast(@sapButton_Background, @sapTextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
 @sapButton_IconColor: @sapButton_TextColor;
@@ -187,7 +180,7 @@
 @sapButton_Selected_Hover_BorderColor: #000000;
 @sapButton_Track_Background: #ffffff;
 @sapButton_Track_Selected_Background: #8FB5FF;
-
+@sapButton_Track_Selected_TextColor: #000;
 @sapField_Background: @sapBackgroundColor;
 @sapField_BorderColor: @sapHC_StandardForeground;
 @sapField_TextColor: @sapTextColor;
@@ -227,7 +220,6 @@
 @sapList_HeaderBorderColor: @sapHC_StandardForeground;
 @sapList_BorderColor: @sapHC_ReducedAltForeground;
 @sapList_BorderWidth: @sapElement_BorderWidth;
-@sapList_HighlightColor: @sapHighlightColor;
 @sapList_SelectionBackgroundColor: @sapSelectedColor;
 @sapList_Background: @sapBackgroundColor;
 @sapList_HeaderTextColor: contrast(@sapList_HeaderBackground, @sapTitleColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
@@ -235,8 +227,8 @@
 @sapList_TextColor: contrast(@sapList_Background, @sapTextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
 @sapList_Hover_Background: #ec8b46;
 @sapList_Hover_SelectionBackground: @sapList_Hover_Background;
-@sapList_Active_TextColor: contrast(@sapList_HighlightColor, @sapTextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
-@sapList_Active_Background: @sapList_HighlightColor;
+@sapList_Active_Background: #ec8b46;
+@sapList_Active_TextColor: #000;
 @sapList_GroupHeaderTextColor: @sapList_TextColor;
 @sapList_GroupHeaderBackground: @sapHC_ReducedBackground;
 @sapList_GroupHeaderBorderColor: @sapHC_StandardForeground;
@@ -301,8 +293,4 @@
 @sapPageFooter_TextColor: contrast(@sapPageFooter_Background, @sapTextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
 @sapGroup_TitleTextColor: contrast(@sapBackgroundColor, @sapTitleColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
 @sapContent_ForegroundTextColor: contrast(@sapContent_ForegroundColor, @sapTextColor, @sapContent_ContrastTextColor, @sapContent_ContrastTextThreshold);
-
-// custom added params as no base ("sap" prefix) params equivalent exist
-@sapToggleButton_Pressed_HoverBackground: @sapButton_Hover_Background;
-@sapToggleButton_Pressed_HoverBorderColor: @sapButton_Hover_BorderColor;
 

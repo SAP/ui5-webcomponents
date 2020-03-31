@@ -52,7 +52,7 @@
 	height: 2rem;
 	box-sizing: border-box;
 	-webkit-text-size-adjust: none;	/* To improve readability Mobile Safari automatically increases the size of small text so let's disable this */
-	font-size: var(--sapFontMediumSize);
+	font-size: var(--sapFontSize);
 	font-family: var(--sapFontFamily);
 	line-height: 2rem;
 	background-color: var(--sapList_FooterBackground);
@@ -76,7 +76,7 @@
 	border-bottom: 1px solid var(--sapList_BorderColor);
 	padding: 0 1rem !important;
 	height: var(--_ui5_list_no_data_height);
-	font-size: var(--sapFontMediumSize);
+	font-size: var(--sapFontSize);
 }
 
 .ui5-list-nodata-text {

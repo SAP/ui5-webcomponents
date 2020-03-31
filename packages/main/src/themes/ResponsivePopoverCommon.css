@@ -3,7 +3,7 @@
 	flex: 1;
 	height: var(--_ui5_input_height);
 	color: var(--sapField_TextColor);
-	font-size: var(--sapFontMediumSize);
+	font-size: var(--sapFontSize);
 	font-family: var(--sapFontFamily);
 	background-color: var(--sapField_Background);
 	border: 1px solid var(--sapField_BorderColor);
