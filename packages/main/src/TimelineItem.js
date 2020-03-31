@@ -45,7 +45,7 @@ const metadata = {
 		 * Defines the name of the item.
 		 *
 		 * @type {string}
-		 * @defaultvalue false
+		 * @defaultvalue ""
 		 * @public
 		 */
 		itemName: {
@@ -55,7 +55,7 @@ const metadata = {
 		/**
 		 * Defines whether the <code>itemName</code> is clickable.
 		 *
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 */
@@ -67,7 +67,7 @@ const metadata = {
 		 * Defines the title text of the component.
 		 *
 		 * @type {string}
-		 * @defaultvalue: ""
+		 * @defaultvalue ""
 		 * @public
 		 */
 		titleText: {
@@ -77,7 +77,7 @@ const metadata = {
 		/**
 		 * Defines the subtitle text of the component.
 		 * @type {string}
-		 * @defaultvalue: ""
+		 * @defaultvalue ""
 		 * @public
 		 */
 		subtitleText: {

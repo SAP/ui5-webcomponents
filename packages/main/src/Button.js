@@ -84,7 +84,7 @@ const metadata = {
 		/**
 		 * When set to <code>true</code>, the <code>ui5-button</code> will
 		 * automatically submit the nearest form element upon <code>press</code>.
-		 *
+		 * <br><br>
 		 * <b>Important:</b> For the <code>submits</code> property to have effect, you must add the following import to your project:
 		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
 		 *
@@ -150,10 +150,12 @@ const metadata = {
 			noAttribute: true,
 		},
 	},
+	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.Button.prototype */ {
 		/**
 		 * Defines the text of the <code>ui5-button</code>.
-		 * <br><b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+		 * <br><br>
+		 * <b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 		 *
 		 * @type {Node[]}
 		 * @slot

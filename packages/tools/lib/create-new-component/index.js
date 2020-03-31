@@ -61,8 +61,8 @@ class ${componentName} extends UI5Element {
 		return ${componentName}Template;
 	}
 
-	static async define(...params) {
-		super.define(...params);
+	static async onDefine() {
+
 	}
 }
 

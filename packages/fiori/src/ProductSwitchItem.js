@@ -1,8 +1,9 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import ProductSwitchItemTemplate from "./generated/templates/ProductSwitchItemTemplate.lit.js";
+import Icon from "@ui5/webcomponents/dist/Icon.js";
 
+import ProductSwitchItemTemplate from "./generated/templates/ProductSwitchItemTemplate.lit.js";
 // Styles
 import ProductSwitchItemCss from "./generated/themes/ProductSwitchItem.css.js";
 
@@ -21,6 +22,7 @@ const metadata = {
 		heading: {
 			type: String,
 		},
+
 		/**
 		 * Defines the subtitle of the <code>ui5-product-switch-item</code>.
 		 * @type {string}
@@ -30,6 +32,7 @@ const metadata = {
 		subtitle: {
 			type: String,
 		},
+
 		/**
 		 * Defines the icon to be displayed as a graphical element within the <code>ui5-product-switch-item</code>.
 		 * <br><br>
@@ -46,9 +49,19 @@ const metadata = {
 		icon: {
 			type: String,
 		},
+
 		/**
-		 * Specifies a target where the <code>targetSrc</code> content must be open.
-		 * Options are the standard values for window.open() supported by browsers: _self, _top, _blank, _parent, _search. Alternatively, a frame name can be entered.
+		 * Defines a target where the <code>targetSrc</code> content must be open.
+		 * <br><br>
+		 * Available options are:
+		 * <ul>
+		 * <li><code>_self</code></li>
+		 * <li><code>_top</code></li>
+		 * <li><code>_blank</code></li>
+		 * <li><code>_parent</code></li>
+		 * <li><code>_search</code></li>
+		 * </ul>
+		 *
 		 * @type {string}
 		 * @defaultvalue "_self"
 		 * @public
@@ -57,6 +70,7 @@ const metadata = {
 			type: String,
 			defaultValue: "_self",
 		},
+
 		/**
 		 * Defines the <code>ui5-product-switch-item</code> target URI. Supports standard hyperlink behavior.
 		 * @type {string}
@@ -66,6 +80,7 @@ const metadata = {
 		targetSrc: {
 			type: String,
 		},
+
 		/**
 		 * Used to switch the active state (pressed or not) of the <code>ui5-product-switch-item</code>.
 		 * @private
@@ -73,6 +88,7 @@ const metadata = {
 		active: {
 			type: Boolean,
 		},
+
 		/**
 		 * Indicates whether the element is focused.
 		 * @private
@@ -80,6 +96,7 @@ const metadata = {
 		focused: {
 			type: Boolean,
 		},
+
 		_tabIndex: {
 			type: String,
 			defaultValue: "-1",
@@ -196,6 +213,10 @@ class ProductSwitchItem extends UI5Element {
 
 	_fireItemClick() {
 		this.fireEvent("click", { item: this });
+	}
+
+	static async onDefine() {
+		await Icon.define();
 	}
 }
 

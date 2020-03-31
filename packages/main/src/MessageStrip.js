@@ -64,7 +64,9 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.MessageStrip.prototype */ {
 		/**
 		 * Defines the text of the <code>ui5-messagestrip</code>.
-		 * <br><b>Note:</b> Аlthough this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+		 * <br><br>
+		 * <b>Note:</b> Аlthough this slot accepts HTML Elements,
+		 * it is strongly recommended that you only use text in order to preserve the intended design.
 		 *
 		 * @type {Node[]}
 		 * @slot
@@ -83,8 +85,8 @@ const metadata = {
 		 *
 		 * See all the available icons in the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
 		 *
-		 * @type {string}
-		 * @defaultvalue ""
+		 * @type {HTMLElement}
+         * @slot
 		 * @public
 		 */
 		"icon": {
