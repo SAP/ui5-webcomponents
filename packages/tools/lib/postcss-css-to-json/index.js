@@ -16,13 +16,10 @@ module.exports = postcss.plugin('add css to JSON transform plugin', function (op
 			css = match[1];
 		}
 
-		let targetFile = root.source.input.from.replace(`/${opts.toReplace}/`, "/dist/generated/assets/").replace(`\\${opts.toReplace}\\`, "\\dist\\generated\\assets\\");
-		targetFile = targetFile.replace("css_variables", "parameters-bundle");
-
+		const targetFile = root.source.input.from.replace(`/${opts.toReplace}/`, "/dist/generated/assets/").replace(`\\${opts.toReplace}\\`, "\\dist\\generated\\assets\\");
 		mkdirp.sync(path.dirname(targetFile));
 
 		const filePath = `${targetFile}.json`;
-
 		fs.writeFileSync(filePath, JSON.stringify({_: css}));
 
 	}

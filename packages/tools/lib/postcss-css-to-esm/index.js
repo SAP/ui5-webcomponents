@@ -29,15 +29,11 @@ module.exports = postcss.plugin('add css to esm transform plugin', function (opt
 
 		css = JSON.stringify(css);
 
-		let targetFile = root.source.input.from.replace(`/${opts.toReplace}/`, "/dist/generated/").replace(`\\${opts.toReplace}\\`, "\\dist\\generated\\");
-		targetFile = targetFile.replace("css_variables", "parameters-bundle");
-
+		const targetFile = root.source.input.from.replace(`/${opts.toReplace}/`, "/dist/generated/").replace(`\\${opts.toReplace}\\`, "\\dist\\generated\\");
 		mkdirp.sync(path.dirname(targetFile));
 
 		const filePath = `${targetFile}.js`;
-
 		const defaultTheme = opts.includeDefaultTheme ? getDefaultThemeCode(opts.packageName) : ``;
-
 		fs.writeFileSync(filePath, `${defaultTheme}export default ${css};`);
 	}
 });
