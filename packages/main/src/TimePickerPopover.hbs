@@ -18,7 +18,7 @@
 				._items="{{hoursArray}}"
 				@click="{{handleSliderClicked}}"
 				class="ui5-timepicker-wheelslider ui5-timepicker-hours-wheelslider"
-				cyclic="true"
+				cyclic
 			></ui5-wheelslider>
 		{{/if}}
 		{{#if shouldBuildMinutesSlider}}
@@ -27,7 +27,7 @@
 				._items="{{minutesArray}}"
 				@click="{{handleSliderClicked}}"
 				class="ui5-timepicker-wheelslider ui5-timepicker-minutes-wheelslider"
-				cyclic="true"
+				cyclic
 			></ui5-wheelslider>
 		{{/if}}
 		{{#if shouldBuildSecondsSlider}}
@@ -36,7 +36,7 @@
 				._items="{{secondsArray}}"
 				@click="{{handleSliderClicked}}"
 				class="ui5-timepicker-wheelslider ui5-timepicker-seconds-wheelslider"
-				cyclic="true"
+				cyclic
 			></ui5-wheelslider>
 		{{/if}}
 		{{#if shouldBuildPeriodsSlider}}

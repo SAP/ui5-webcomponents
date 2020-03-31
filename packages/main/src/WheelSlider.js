@@ -65,7 +65,13 @@ const metadata = {
 		},
 
 		_items: {
-			type: Object,
+			type: String,
+			multiple: true,
+		},
+
+		_itemsToShow: {
+			type: String,
+			multiple: true,
 		},
 
 		/**
@@ -152,8 +158,8 @@ class WheelSlider extends UI5Element {
 		if (!this._expanded && this.cyclic) {
 			const index = this._currentElementIndex % this._items.length;
 			this._currentElementIndex = (this._timesMultipliedOnCyclic() / 2) * this._items.length + index;
-			this._buildItemsToShow();
 		}
+		this._buildItemsToShow();
 		this._updateItemCellHeight();
 	}
 
@@ -184,28 +190,18 @@ class WheelSlider extends UI5Element {
 		const repetitionCount = Math.round(minElementsInCyclicWheelSlider / this._items.length);
 		const minRepetitionCount = 3;
 
-		return Math.min(minRepetitionCount, repetitionCount);
+		return Math.max(minRepetitionCount, repetitionCount);
 	}
 
 	_buildItemsToShow() {
-		if (this.cyclic && this._items) {
+		this._itemsToShow = this._items;
+		if (this.cyclic) {
 			if (this._itemsToShow.length < this._items.length * this._timesMultipliedOnCyclic()) {
-				this._itemsToShow = this._items;
 				for (let i = 0; i < this._timesMultipliedOnCyclic(); i++) {
 					this._itemsToShow = this._itemsToShow.concat(this._items);
 				}
 			}
-		} else {
-			this._itemsToShow = this.items;
 		}
-	}
-
-	get items() {
-		return this._items || [];
-	}
-
-	get itemsToShow() {
-		return this._itemsToShow || [];
 	}
 
 	get classes() {
