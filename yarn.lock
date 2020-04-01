@@ -704,7 +704,7 @@
   resolved "https://registry.yarnpkg.com/@openui5/sap.ui.core/-/sap.ui.core-1.76.0.tgz#351fe3b11922fa7100d7c88bdf5138ad025e531e"
   integrity sha512-b2+LPxORY4qKgGggqGeP4ckEuMqG0HHy7zwT/vMGGl1L2zLJ/xzruVvsl46KfOcCqEcdjxW+tSGP7dLEe1O4bQ==
 
-"@sap-theming/theming-base-content@^11.1.18":
+"@sap-theming/theming-base-content@11.1.18":
   version "11.1.18"
   resolved "https://registry.npmjs.org/@sap-theming/theming-base-content/-/theming-base-content-11.1.18.tgz#041965002a47326f2791241e3539e9bffeb2359f"
   integrity sha512-NDqUq35hc/eZQomLhsDQEO8PeCnNCZmJIittafuho5VlGNdJWR1ZsXj97MZSJnLLfttVWcpb5KNrj+b84F6aAw==
@@ -4821,7 +4821,7 @@ ldjson-stream@^1.2.1:
     split2 "^0.2.1"
     through2 "^0.6.1"
 
-less@^3.10.3, less@^3.9.0:
+less@^3.9.0:
   version "3.10.3"
   resolved "https://registry.yarnpkg.com/less/-/less-3.10.3.tgz#417a0975d5eeecc52cff4bcfa3c09d35781e6792"
   integrity sha512-vz32vqfgmoxF1h3K4J+yKCtajH0PWmjkIFgbs5d78E/c/e+UQTnI+lWK+1eQRE95PXM2mC3rJlLSSP9VQHnaow==
