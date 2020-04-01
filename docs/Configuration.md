@@ -7,7 +7,7 @@ There are several configuration settings that affect all UI5 Web Components glob
 
   Setting    |                     Values                      | Default value |                          Description
 ------------ | ----------------------------------------------- | ------------- | -------------------------------------------------------------
-[theme](#theme)        | sap_fiori_3, sap_fiori_3_dark, sap_belize, sap_belize_hcb         | sap_fiori_3   | Visual theme
+[theme](#theme)        | sap_fiori_3, sap_fiori_3_dark, sap_belize, sap_belize_hcb, sap_belize_hcw | sap_fiori_3   | Visual theme
 language     | en, de, es, etc...                              | en            | Language to be used for translatable texts
 [RTL](#rtl)          | true, false                                     | false         | When true, sets global text direction to right-to-left
 [animationMode](#animationMode)  | full, basic, minimal, none  | full          | Defines different animation scenarios or levels
@@ -23,9 +23,10 @@ UI5 Web Components contain different content densities for certain controls that
 ### Theme
 The `theme` setting values above are the technical names of our themes.
 - The `sap_fiori_3` is known as `Quartz Light` and it`s the default theme.
-- The `sap_fiori_3_dark` is known as `Quartz Dark`. 
-- The `sap_belize` is known as `Belize`. 
-- The `sap_belize_hcb` is known as `High Contrast Black`. 
+- The `sap_fiori_3_dark` is known as `Quartz Dark`.
+- The `sap_belize` is known as `Belize`.
+- The `sap_belize_hcb` is known as `High Contrast Black`.
+- The `sap_belize_hcw` is known as `High Contrast White`.
 
 <a name="rtl"></a>
 ### RTL

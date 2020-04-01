@@ -38,7 +38,7 @@ const metadata = {
 
 		/**
 		 * Enabled items can be selected.
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 */
@@ -84,7 +84,7 @@ const metadata = {
 		 *
 		 * <br><br>
 		 * <b>Note:</b> The color value depends on the current theme.
-		 * @type {string}
+		 * @type {SemanticColor}
 		 * @defaultvalue "Default"
 		 * @public
 		 */
@@ -96,7 +96,7 @@ const metadata = {
 		/**
 		 * Specifies if the <code>ui5-tab</code> is selected.
 		 *
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 */
@@ -123,7 +123,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Tab
- * @extends TabBase
+ * @extends UI5Element
  * @tagname ui5-tab
  * @public
  */

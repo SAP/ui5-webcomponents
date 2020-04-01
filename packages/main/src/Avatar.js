@@ -71,7 +71,7 @@ const metadata = {
 		 * <li><code>Circle</code></li>
 		 * <li><code>Square</code></li>
 		 * <ul>
-		 * @type {string}
+		 * @type {AvatarShape}
 		 * @defaultvalue "Circle"
 		 * @public
 		 */
@@ -91,7 +91,7 @@ const metadata = {
 		 * <li><code>L</code></li>
 		 * <li><code>XL</code></li>
 		 * <ul>
-		 * @type {string}
+		 * @type {AvatarSize}
 		 * @defaultvalue "S"
 		 * @public
 		 */
@@ -108,7 +108,7 @@ const metadata = {
 		 * <li><code>Cover</code></li>
 		 * <li><code>Contain</code></li>
 		 * <ul>
-		 * @type {String}
+		 * @type {AvatarFitType}
 		 * @defaultvalue "Cover"
 		 * @public
 		 */
@@ -134,7 +134,7 @@ const metadata = {
 		 * <li><code>Accent10</code></li>
 		 * <li><code>Placeholder</code></li>
 		 * <ul>
-		 * @type {String}
+		 * @type {AvatarBackgroundColor}
 		 * @defaultvalue "Accent6"
 		 * @public
 		 */

@@ -213,12 +213,17 @@ describe("Input general interaction", () => {
 	});
 
 	it("Checks if valueStateMessage is shown", () => {
-		let inputShadowRef = browser.$("#input2").shadow$("input");
-		let staticAreaItemClassName = browser.getStaticAreaItemClassName("#input2");
-		let popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
+		const inputShadowRef = browser.$("#inputError").shadow$("input");
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#inputError");
+		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
+		const respPopover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover .ui5-responsive-popover-header");
 
 		inputShadowRef.click();
 		
 		assert.ok(popover.getProperty("opened"), "Popover with valueStateMessage should be opened.");
+
+		inputShadowRef.keys("a");
+
+		assert.ok(respPopover, "Responsive popover with valueStateMessage should be opened.");
 	});
 });

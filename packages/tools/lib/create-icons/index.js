@@ -5,7 +5,7 @@ const mkdirp = require("mkdirp");
 const srcDir = `src/icon-collections/`;
 const destDir = `dist/icons/`;
 
-mkdirp(destDir);
+mkdirp.sync(destDir);
 
 const template = (name, pathData) => `import { registerIcon } from "@ui5/webcomponents-base/dist/SVGIconRegistry.js";
 

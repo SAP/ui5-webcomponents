@@ -61,7 +61,7 @@ const metadata = {
 		 * <li><code>Information</code></li>
 		 * </ul>
 		 *
-		 * @type {string}
+		 * @type {ValueState}
 		 * @defaultvalue "None"
 		 * @public
 		 */
@@ -84,7 +84,7 @@ const metadata = {
 		/**
 		 * Determines the minimum date available for selection.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @since 1.0.0-rc.6
 		 * @public
@@ -96,7 +96,7 @@ const metadata = {
 		/**
 		 * Determines the maximum date available for selection.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @since 1.0.0-rc.6
 		 * @public
@@ -119,7 +119,7 @@ const metadata = {
 		 * <li><code>Persian</code></li>
 		 * </ul>
 		 *
-		 * @type {string}
+		 * @type {CalendarType}
 		 * @defaultvalue "Gregorian"
 		 * @public
 		 */

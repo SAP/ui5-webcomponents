@@ -181,7 +181,7 @@
 
 /*** TextOnly Tab styles ***/
 .ui5-tc__headerItem--textOnly {
-	font-size: var(--sapFontMediumSize);
+	font-size: var(--sapFontSize);
 	height: var(--_ui5_tc_item_text_text_only);
 	display: flex;
 	align-items: center;

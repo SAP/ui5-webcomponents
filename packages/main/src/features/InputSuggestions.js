@@ -273,6 +273,11 @@ class Suggestions {
 		return this.responsivePopover.querySelector("ui5-list");
 	}
 
+	async _getListWidth() {
+		const list = await this._getList();
+		return list.offsetWidth;
+	}
+
 	_getRealItems() {
 		return this._getComponent().getSlottedNodes(this.slotName);
 	}

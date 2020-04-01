@@ -12,7 +12,7 @@
 }
 
 :host([active]) {
-	background:var(--sapList_HighlightColor);
+	background:var(--sapList_Hover_Background);
 }
 
 :host([active]) .ui5-product-switch-item-root .ui5-product-switch-item-icon,
@@ -128,7 +128,7 @@
 	}
 
 	.ui5-product-switch-item-root .ui5-product-switch-item-text-content .ui5-product-switch-item-subtitle {
-		font-size: var(--sapFontMediumSize);
+		font-size: var(--sapFontSize);
 		padding-top: .75rem;
 	}
 }

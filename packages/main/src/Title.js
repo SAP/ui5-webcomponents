@@ -30,7 +30,7 @@ const metadata = {
 		 * Defines the <code>ui5-title</code> level.
 		 * Available options are: <code>"H6"</code> to <code>"H1"</code>.
 		 *
-		 * @type {string}
+		 * @type {TitleLevel}
 		 * @defaultvalue "H2"
 		 * @public
 		*/
