@@ -20,7 +20,13 @@
 				<ui5-label class="subtitle">{{_noDataDescription}}</ui5-label>
 			</div>
 		{{else if _showDndOverlay}}
-			<div class="{{classes.dndOverlay}}">
+			<div
+				class="{{classes.dndOverlay}}"
+				@dragenter="{{_ondragenter}}"
+				@dragleave="{{_ondragleave}}"
+				@dragover="{{_ondragover}}"
+				@drop="{{_ondrop}}"
+			>
 				<ui5-icon name="upload-to-cloud"></ui5-icon>
 				<span class="dnd-overlay-text">{{_dndOverlayText}}</span>
 			</div>

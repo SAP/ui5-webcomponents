@@ -18,7 +18,7 @@ import {
 	addUploadCollectionInstance,
 	removeUploadCollectionInstance,
 	draggingFiles,
-} from "./upload-utils/BodyDragAndDrop.js";
+} from "./upload-utils/UploadCollectionBodyDnD.js";
 import UploadCollectionDnDOverlayMode from "./types/UploadCollectionDnDMode.js";
 
 // Template
@@ -197,14 +197,7 @@ class UploadCollection extends UI5Element {
 
 	constructor() {
 		super();
-
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents-fiori");
-		this._listeners = {
-			dragenter: this._ondragenter.bind(this),
-			dragleave: this._ondragleave.bind(this),
-			dragover: this._ondragover.bind(this),
-			drop: this._ondrop.bind(this),
-		};
 	}
 
 	onEnterDOM() {
@@ -215,87 +208,48 @@ class UploadCollection extends UI5Element {
 		addUploadCollectionInstance(this);
 	}
 
-	onBeforeRendering() {
-		if (this.noDnd) {
-			return;
-		}
-
-		this._removeDragAndDropListeners();
-	}
-
-	onAfterRendering() {
-		if (this.noDnd) {
-			return;
-		}
-
-		this._addDragAndDropListeners();
-	}
-
 	onExitDOM() {
 		if (this.noDnd) {
 			return;
 		}
 
 		removeUploadCollectionInstance(this);
-		this._removeDragAndDropListeners();
-	}
-
-	_addDragAndDropListeners() {
-		this._root.addEventListener("dragenter", this._listeners.dragenter);
-		this._root.addEventListener("dragover", this._listeners.dragover);
-		this._root.addEventListener("dragleave", this._listeners.dragleave);
-		this._root.addEventListener("drop", this._listeners.drop);
-	}
-
-	_removeDragAndDropListeners() {
-		if (this._root) {
-			this._root.removeEventListener("dragenter", this._listeners.dragenter);
-			this._root.removeEventListener("dragover", this._listeners.dragover);
-			this._root.removeEventListener("dragleave", this._listeners.dragleave);
-			this._root.removeEventListener("drop", this._listeners.drop);
-		}
 	}
 
 	_ondragenter(event) {
+		if (this.noDnd) {
+			return;
+		}
+
 		if (!draggingFiles(event)) {
 			return;
 		}
 
-		if (event.target === this._dndOverlay) {
-			this._dndOverlayMode = UploadCollectionDnDOverlayMode.Drop;
-		}
+		this._dndOverlayMode = UploadCollectionDnDOverlayMode.Drop;
 	}
 
 	_ondrop(event) {
+		if (this.noDnd) {
+			return;
+		}
+
 		this._dndOverlayMode = UploadCollectionDnDOverlayMode.None;
 	}
 
 	_ondragover(event) {
+		if (this.noDnd) {
+			return;
+		}
+
 		event.preventDefault();
 	}
 
 	_ondragleave(event) {
-		if (event.target === this._dndOverlay) {
-			this._dndOverlayMode = UploadCollectionDnDOverlayMode.Drag;
+		if (this.noDnd) {
+			return;
 		}
-	}
 
-	_ondragenterBody(event) {
-		this._lastDragEnter = event.target;
-
-		if (this._dndOverlayMode !== UploadCollectionDnDOverlayMode.Drop) {
-			this._dndOverlayMode = UploadCollectionDnDOverlayMode.Drag;
-		}
-	}
-
-	_ondragleaveBody(event) {
-		if (this._lastDragEnter === event.target) {
-			this._dndOverlayMode = UploadCollectionDnDOverlayMode.None;
-		}
-	}
-
-	_ondropBody() {
-		this._dndOverlayMode = "None";
+		this._dndOverlayMode = UploadCollectionDnDOverlayMode.Drag;
 	}
 
 	_onItemDelete(event) {
