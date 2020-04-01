@@ -179,10 +179,6 @@ class Carousel extends UI5Element {
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
-	onBeforeRendering() {
-		this.itemsPerPage = this.effectiveItemsPerPage;
-	}
-
 	onAfterRendering() {
 		this._scrollEnablement.scrollContainer = this.getDomRef();
 	}
@@ -214,7 +210,7 @@ class Carousel extends UI5Element {
 	navigateLeft() {
 		if (this.selectedIndex - 1 < 0) {
 			if (this.cycling) {
-				this.selectedIndex = this.items.length - 1;
+				this.selectedIndex = this.pages.length - 1;
 			}
 		} else {
 			--this.selectedIndex;
@@ -222,7 +218,7 @@ class Carousel extends UI5Element {
 	}
 
 	navigateRight() {
-		if (this.selectedIndex + 1 > this.items.length - 1) {
+		if (this.selectedIndex + 1 > this.pages.length - 1) {
 			if (this.cycling) {
 				this.selectedIndex = 0;
 			}
@@ -239,18 +235,26 @@ class Carousel extends UI5Element {
 	 * Assuming that all items have the same width
 	 * @private
 	 */
-	get items() {
+	get pages() {
 		const result = [],
-			innerArraysLength = Math.ceil(this.content.length / this.itemsPerPage);
+			pagesCount = Math.ceil(this.content.length / this.effectiveItemsPerPage);
 
-		for (let i = 0; i < innerArraysLength; i++) {
+		for (let pageIdx = 0; pageIdx < pagesCount; pageIdx++) {
 			result.push([]);
-			for (let j = 0; j < this.itemsPerPage; j++) {
-				result[i].push({
-					item: this.content[(i * this.itemsPerPage) + j],
-					tabIndex: i === this.selectedIndex ? "0" : "-1",
-				});
+			for (let itemIdx = 0; itemIdx < this.effectiveItemsPerPage; itemIdx++) {
+				const item = this.content[(pageIdx * this.effectiveItemsPerPage) + itemIdx];
+				if (item) {
+					result[pageIdx].push({
+						item,
+						tabIndex: pageIdx === this.selectedIndex ? "0" : "-1",
+					});
+				}
 			}
+			const itemsOnThisPage = result[pageIdx].length;
+			const itemWidth = Math.floor(100 / itemsOnThisPage);
+			result[pageIdx].forEach(item => {
+				item.width = itemWidth;
+			});
 		}
 
 		return result;
@@ -280,19 +284,19 @@ class Carousel extends UI5Element {
 				"ui5-carousel-navigation-wrapper": true,
 				"ui5-carousel-navigation-with-buttons": this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
 			},
-			item: {
-				"ui5-carousel-item": true,
-				"ui5-carousel-item-multiple": this.itemsPerPage > 1,
+			page: {
+				"ui5-carousel-page": true,
+				"ui5-carousel-page-multiple": this.effectiveItemsPerPage > 1,
 			},
 		};
 	}
 
 	get isPageTypeDots() {
-		return this.items.length < Carousel.pageTypeLimit;
+		return this.pages.length < Carousel.pageTypeLimit;
 	}
 
 	get dots() {
-		return this.items.map((item, index) => {
+		return this.pages.map((item, index) => {
 			return {
 				active: index === this.selectedIndex,
 			};
