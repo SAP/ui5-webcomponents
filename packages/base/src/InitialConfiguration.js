@@ -1,11 +1,12 @@
 import merge from "./thirdparty/merge.js";
 import { getFeature } from "./FeaturesRegistry.js";
+import { DEFAULT_THEME } from "./generated/AssetParameters.js";
 
 let initialized = false;
 
 let initialConfig = {
 	animationMode: "full",
-	theme: "sap_fiori_3",
+	theme: DEFAULT_THEME,
 	rtl: null,
 	language: null,
 	calendarType: null,

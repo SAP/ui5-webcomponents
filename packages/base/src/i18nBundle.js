@@ -12,13 +12,11 @@ class I18nBundle {
 		if (!textObj || !textObj.key || !textObj.defaultText) {
 			return "";
 		}
+
 		const bundle = getI18nBundleData(this.packageName);
+		const messageText = bundle && bundle[textObj.key] ? bundle[textObj.key] : textObj.defaultText;
 
-		if (!bundle || !bundle[textObj.key]) {
-			return formatMessage(textObj.defaultText, params); // Fallback to "en"
-		}
-
-		return formatMessage(bundle[textObj.key], params);
+		return formatMessage(messageText, params);
 	}
 }
 
