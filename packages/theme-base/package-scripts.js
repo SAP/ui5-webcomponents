@@ -6,7 +6,7 @@ module.exports = {
 			src: `copy-and-watch "src/**/*.js" dist/`,
 			themes: {
 				default: "nps build.themes.prepare build.themes.belize build.themes.hcb build.themes.hcw build.themes.fiori_3 build.themes.fiori_3_dark ",
-				prepare: "rimraf dist/themes && mkdirp dist/themes/sap_belize && mkdirp dist/themes/sap_belize_hcb && mkdirp dist/themes/sap_belize_hcw",
+				prepare: "rimraf dist/themes && mkdirp dist/themes/sap_belize && mkdirp dist/themes/sap_belize_hcb && mkdirp dist/themes/sap_belize_hcw && mkdirp dist/themes/sap_fiori_3 &&  mkdirp dist/themes/sap_fiori_3_dark",
 				belize: `nps build.themes.copy_belize_vars build.themes.copy_belize_bundle`,
 				copy_belize_vars: `copy-and-watch "../../node_modules/@sap-theming/theming-base-content/content/Base/baseLib/sap_belize/css_variables.css" dist/themes/sap_belize/`,
 				copy_belize_bundle: `copy-and-watch "src/themes/sap_belize/parameters-bundle.css" dist/themes/sap_belize/`,
