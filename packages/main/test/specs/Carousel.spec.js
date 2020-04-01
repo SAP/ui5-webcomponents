@@ -49,7 +49,7 @@ describe("Carousel general interaction", () => {
 
 	it("ItemsPerPage property is working properly", () => {
 		const carousel = browser.$("#carousel4");
-		const pages = carousel.getProperty("items").length;
+		const pages = carousel.getProperty("pages").length;
 
 		assert.strictEqual(pages, 3, "There are only 3 pages.");
 	});
