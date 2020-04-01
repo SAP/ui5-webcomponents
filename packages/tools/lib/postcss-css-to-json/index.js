@@ -9,12 +9,13 @@ module.exports = postcss.plugin('add css to JSON transform plugin', function (op
 	return function (root) {
 		let css = root.toString();
 
-		const r = new RegExp(/[\s\S]*(:root{[\s\S]*})/, 'g');
-		const match = r.exec(css);
+		// const r = new RegExp(/[\s\S]*(:root{[\s\S]*})/, 'g');
+		// const match = r.exec(css);
 
-		if (match) {
-			css = match[1];
-		}
+		// if (match) {
+		// 	console.log(match[1])
+		// 	css = match[1];
+		// }
 
 		const targetFile = root.source.input.from.replace(`/${opts.toReplace}/`, "/dist/generated/assets/").replace(`\\${opts.toReplace}\\`, "\\dist\\generated\\assets\\");
 		mkdirp.sync(path.dirname(targetFile));

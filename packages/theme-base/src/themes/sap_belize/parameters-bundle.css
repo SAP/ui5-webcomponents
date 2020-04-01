@@ -1,0 +1,5 @@
+@import "./css_variables.css";
+
+:root {
+	--sapSubtleLinkColor: #074888;
+}

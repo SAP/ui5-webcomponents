@@ -19,13 +19,13 @@ module.exports = postcss.plugin('add css to esm transform plugin', function (opt
 	opts = opts || {};
 
 	return function (root) {
-		const r = new RegExp(/[\s\S]*(:root{[\s\S]*})/, 'g');
 		let css = root.toString();
-
-		const match = r.exec(css);
-		if (match) {
-			css = match[1];
-		}
+		
+		// const r = new RegExp(/[\s\S]*(:root{[\s\S]*})/, 'g');
+		// const match = r.exec(css);
+		// if (match) {
+		// 	css = match[1];
+		// }
 
 		css = JSON.stringify(css);
 
