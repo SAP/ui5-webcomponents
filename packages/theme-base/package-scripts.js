@@ -25,12 +25,6 @@ module.exports = {
 			},
 			postcss: "postcss dist/**/parameters-bundle.css --config config/postcss.themes --base dist/ --dir dist/css/",
 		},
-		start: "nps build watch",
-		watch: {
-			default: 'concurrently "nps watch.src" "nps watch.less" "nps watch.postcss"',
-			src: `copy-and-watch --watch "src/**/*.js" dist/`,
-			less: 'chokidar "src/themes/**/*.css" -c "nps build"',
-			postcss: 'nps "build.postcss -w"',
-		},
+		start: "nps build"
 	},
 };
