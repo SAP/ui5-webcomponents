@@ -159,6 +159,11 @@ class WheelSlider extends UI5Element {
 			const index = this._currentElementIndex % this._items.length;
 			this._currentElementIndex = (this._timesMultipliedOnCyclic() / 2) * this._items.length + index;
 		}
+
+		if (!this.value) {
+			this.value = this._items[0];
+		}
+
 		this._buildItemsToShow();
 		this._updateItemCellHeight();
 	}
@@ -266,7 +271,11 @@ class WheelSlider extends UI5Element {
 	}
 
 	_getCurrentRepetition() {
-		return Math.floor(this._currentElementIndex / this._items.length);
+		if (this._currentElementIndex) {
+			return Math.floor(this._currentElementIndex / this._items.length);
+		} else {
+			return 0;
+		}
 	}
 
 	_selectElementByIndex(currentIndex) {
