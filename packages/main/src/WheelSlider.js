@@ -41,6 +41,7 @@ const metadata = {
 		 */
 		value: {
 			type: String,
+			defaultValue: "0",
 		},
 
 		/**
@@ -154,6 +155,7 @@ class WheelSlider extends UI5Element {
 			const elements = this.shadowRoot.querySelectorAll(".ui5-wheelslider-item");
 			for (let i = 0; i < elements.length; i++) {
 				if (elements[i].textContent === this.value) {
+					debugger;
 					this._selectElement(elements[i]);
 					return true;
 				}

@@ -1,14 +1,47 @@
 <ui5-responsive-popover
-id="{{_id}}-responsive-popover"
-allow-target-overlap="{{ true }}"
-placement-type="{{PopoverPlacementType.Bottom}}"
-no-arrow
-horizontal-align="{{_respPopover.horizontalAlign}}"
-stay-open-on-scroll="{{ true }}"
-@ui5-afterClose="{{_respPopover.afterClose}}"
-@ui5-afterOpen="{{_respPopover.afterOpen}}"
-class="ui5-timepicker-popover"
-@keydown="{{_onkeydown}}"
+    allow-target-overlap="{{_respPopover.allowTargetOverlap}}"
+    placement-type="{{_respPopover.placementType}}"
+    no-arrow
+    horizontal-align="{{_respPopover.horizontalAlign}}"
+    stay-open-on-scroll="{{_respPopover.stayOpenOnScroll}}"
+    @ui5-afterClose="{{_respPopover._onAfterClose}}"
+
 >
-<div>Hello World</div>
+{{!-- id="{{_id}}-responsive-popover"
+			allow-target-overlap="{{_respPopover.allowTargetOverlap}}"
+			placement-type="{{_respPopover.placementType}}"
+			no-arrow
+			horizontal-align="{{_respPopover.horizontalAlign}}"
+			stay-open-on-scroll="{{_respPopover.stayOpenOnScroll}}"
+			@ui5-afterOpen="{{_respPopover.afterOpen}}"
+			class="ui5-timepicker-popover"
+			@keydown="{{_ontimepickerpopoverkeydown}}" --}}
+    <div class="{{classes.container}}">
+        <ui5-wheelslider
+            ._items="{{getHours}}"
+            value="{{selectedHours}}"
+            class="ui5-timepicker-wheelslider ui5-timepicker-hours-wheelslider"
+            label = "{{hoursSliderTitle}}"
+        ></ui5-wheelslider>
+        <ui5-wheelslider
+            ._items="{{minutesArray}}"
+            value="{{selectedMinutes}}"
+            class="ui5-timepicker-wheelslider ui5-timepicker-minutes-wheelslider"
+            label = "{{minutesSliderTitle}}"
+        ></ui5-wheelslider>
+        {{#if showSeconds}}
+            <ui5-wheelslider
+                ._items="{{secondsArray}}"
+                value="{{selectedSeconds}}"
+                class="ui5-timepicker-wheelslider ui5-timepicker-seconds-wheelslider"
+                label = "{{secondsSliderTitle}}"
+            ></ui5-wheelslider>
+        {{/if}}
+    </div>
+
+    <div slot="footer" class="ui5-timepicker-footer" @keydown={{_onfooterkeydown}}>
+        <ui5-button id="submit" design="Emphasized" @click="{{submitPickers}}">{{submitButtonLabel}}</ui5-button>
+        <ui5-button id="close" design="Transparent" @click="{{closePicker}}">{{cancelButtonLabel}}</ui5-button>
+    </div>
+    {{!-- <div>hi</div> --}}
 </ui5-responsive-popover>

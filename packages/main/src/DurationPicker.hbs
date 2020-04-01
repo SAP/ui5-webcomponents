@@ -6,6 +6,7 @@
     value-state="{{valueState}}"
     @ui5-change="{{_handleInputChange}}"
     @ui5-input="{{_handleInputLiveChange}}"
+    @keydown="{{_onkeydown}}"
     >
         {{#unless readonly}}
             <ui5-icon

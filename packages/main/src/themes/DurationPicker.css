@@ -1,6 +1,7 @@
 :host(:not([hidden])) {
     display: inline-block;
 }
+
 .ui5-duration-picker-input-icon-button:hover {
 	cursor: pointer;
 	background: var(--sapButton_Hover_Background);
