@@ -1,5 +1,5 @@
-commit 0e269069910399b8fc437dfcce7e512bc9cd701a
+commit 1fe951dd9fd25cf9e2332ae9e9bd4f4e4c071041
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Apr 1 10:09:16 2020 +0300
+Date:   Wed Apr 1 11:22:35 2020 +0300
 
-    fix(ui5-carousel): Content now shrinks properly (#1402)
+    chore(tools): make all assets configurable at build time (#1375)
