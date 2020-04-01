@@ -1,7 +1,5 @@
-commit 39068b35705629c9e69532d1c18b7d85806463cb
-Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
-Date:   Wed Apr 1 09:16:34 2020 +0300
+commit 0e269069910399b8fc437dfcce7e512bc9cd701a
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Wed Apr 1 10:09:16 2020 +0300
 
-    feat(ui5-input): implement valueStateMessage with suggestions (#1390)
-    
-    display value state msg together with suggestion items both on desktop and phone
+    fix(ui5-carousel): Content now shrinks properly (#1402)
