@@ -226,13 +226,13 @@ class UploadCollectionItem extends ListItem {
 			Input.define(),
 			Link.define(),
 			Label.define(),
-			fetchI18nBundle("@ui5/webcomponents"),
+			fetchI18nBundle("@ui5/webcomponents-fiori"),
 		]);
 	}
 
 	constructor() {
 		super();
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	onBeforeRendering() {

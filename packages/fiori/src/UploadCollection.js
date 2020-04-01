@@ -191,14 +191,14 @@ class UploadCollection extends UI5Element {
 			Label.define(),
 			List.define(),
 			Title.define(),
-			fetchI18nBundle("@ui5/webcomponents"),
+			fetchI18nBundle("@ui5/webcomponents-fiori"),
 		]);
 	}
 
 	constructor() {
 		super();
 
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents-fiori");
 		this._listeners = {
 			dragenter: this._ondragenter.bind(this),
 			dragleave: this._ondragleave.bind(this),
