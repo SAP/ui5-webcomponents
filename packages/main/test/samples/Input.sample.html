@@ -184,36 +184,6 @@
 	<ui5-li>Compact</ui5-li>
 	<ui5-li>Condensed</ui5-li>
 </ui5-input>
-
-<script>
-	var ui5_database_entries =  ["Argentina", "Albania", "Algeria", "Angola", "Austria",  "Australia", "Bulgaria", "Canada", "Columbia", "Croatia", "Denmark",
-"England", "Finland", "France", "Germany", "Hungary", "Ireland", "Italy", "Kuwait", "Luxembourg", "Mexico", "Morocco", "Norway", "Paraguay", "Philippines", "Portugal", "Spain", "Sweden", "Sri Lanka", "Senegal", "United Kingdom", "USA" ];
-
-	var oInput = document.getElementById("value-state-suggestions");
-
-	oInput.addEventListener("input", function(event) {
-		var value = event.target.value;
-		var suggestionItems = [];
-
-		if (value) {
-			suggestionItems = ui5_database_entries.filter(function (item) {
-				return item.toUpperCase().indexOf(value.toUpperCase()) === 0;
-			});
-		}
-
-		[].slice.call(oInput.children).forEach(function(child) {
-			oInput.removeChild(child);
-		});
-
-		suggestionItems.forEach(function(item) {
-			var li = document.createElement("ui5-suggestion-item");
-			li.icon = "world";
-			li.id = item;
-			li.text = item;
-			oInput.appendChild(li);
-		});
-	});
-</script>
 	</xmp></pre>
 
 <section>
