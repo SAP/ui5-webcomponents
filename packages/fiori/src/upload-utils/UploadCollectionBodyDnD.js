@@ -2,16 +2,18 @@
 /**
  * Handles drag and drop event listeners on document.body.
  * Ensures that there is only 1 listener per type attached (drag, drop, leave). Event listeners will only be attached when
- * there is at least 1 UploadCollection registered in the set.
+ * there is at least 1 UploadCollection subscribed.
  */
 
+import EventProvider from "@ui5/webcomponents-base/dist/EventProvider.js";
 import UploadCollectionDnDOverlayMode from "../types/UploadCollectionDnDMode.js";
 
 const draggingFiles = event => {
 	return event.dataTransfer.types.includes("Files");
 };
 
-const uploadCollections = new Set();
+const eventProvider = new EventProvider();
+const EVENT = "UploadCollectionBodyDndEvent";
 let lastDragEnter = null;
 let globalHandlersAttached = false;
 
@@ -21,25 +23,17 @@ const ondragenter = event => {
 	}
 
 	lastDragEnter = event.target;
-	uploadCollections.forEach(uc => {
-		if (uc._dndOverlayMode !== UploadCollectionDnDOverlayMode.Drop) {
-			uc._dndOverlayMode = UploadCollectionDnDOverlayMode.Drag;
-		}
-	});
+	eventProvider.fireEvent(EVENT, { mode: UploadCollectionDnDOverlayMode.Drag });
 };
 
 const ondragleave = event => {
-	uploadCollections.forEach(uc => {
-		if (lastDragEnter === event.target) {
-			uc._dndOverlayMode = UploadCollectionDnDOverlayMode.None;
-		}
-	});
+	if (lastDragEnter === event.target) {
+		eventProvider.fireEvent(EVENT, { mode: UploadCollectionDnDOverlayMode.None });
+	}
 };
 
 const ondrop = event => {
-	uploadCollections.forEach(uc => {
-		uc._dndOverlayMode = UploadCollectionDnDOverlayMode.None;
-	});
+	eventProvider.fireEvent(EVENT, { mode: UploadCollectionDnDOverlayMode.None });
 };
 
 const attachGlobalHandlers = () => {
@@ -55,8 +49,8 @@ const detachGlobalHandlers = () => {
 	globalHandlersAttached = false;
 };
 
-const addUploadCollectionInstance = uploadCollection => {
-	uploadCollections.add(uploadCollection);
+const attachBodyDnDHandler = handler => {
+	eventProvider.attachEvent(EVENT, handler);
 
 	if (!globalHandlersAttached) {
 		attachGlobalHandlers();
@@ -64,16 +58,16 @@ const addUploadCollectionInstance = uploadCollection => {
 	}
 };
 
-const removeUploadCollectionInstance = uploadCollection => {
-	uploadCollections.delete(uploadCollection);
+const detachBodyDnDHandler = handler => {
+	eventProvider.detachEvent(EVENT, handler);
 
-	if (uploadCollections.size === 0) {
+	if (!eventProvider.hasListeners(EVENT)) {
 		detachGlobalHandlers();
 	}
 };
 
 export {
-	addUploadCollectionInstance,
-	removeUploadCollectionInstance,
+	attachBodyDnDHandler,
+	detachBodyDnDHandler,
 	draggingFiles,
 };

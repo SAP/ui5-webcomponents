@@ -15,8 +15,8 @@ import {
 	UPLOADCOLLECTION_DROP_FILE_INDICATOR,
 } from "./generated/i18n/i18n-defaults.js";
 import {
-	addUploadCollectionInstance,
-	removeUploadCollectionInstance,
+	attachBodyDnDHandler,
+	detachBodyDnDHandler,
 	draggingFiles,
 } from "./upload-utils/UploadCollectionBodyDnD.js";
 import UploadCollectionDnDOverlayMode from "./types/UploadCollectionDnDMode.js";
@@ -198,6 +198,11 @@ class UploadCollection extends UI5Element {
 	constructor() {
 		super();
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents-fiori");
+		this._bodyDnDHandler = event => {
+			if (this._dndOverlayMode !== UploadCollectionDnDOverlayMode.Drop) {
+				this._dndOverlayMode = event.mode;
+			}
+		};
 	}
 
 	onEnterDOM() {
@@ -205,7 +210,7 @@ class UploadCollection extends UI5Element {
 			return;
 		}
 
-		addUploadCollectionInstance(this);
+		attachBodyDnDHandler(this._bodyDnDHandler);
 	}
 
 	onExitDOM() {
@@ -213,7 +218,7 @@ class UploadCollection extends UI5Element {
 			return;
 		}
 
-		removeUploadCollectionInstance(this);
+		detachBodyDnDHandler(this._bodyDnDHandler);
 	}
 
 	_ondragenter(event) {
