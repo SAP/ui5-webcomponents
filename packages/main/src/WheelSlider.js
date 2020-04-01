@@ -65,7 +65,23 @@ const metadata = {
 		},
 
 		_items: {
-			type: Object,
+			type: String,
+			multiple: true,
+		},
+
+		_itemsToShow: {
+			type: String,
+			multiple: true,
+		},
+
+		/**
+		 * Indicates if the wheelslider has a cyclic behaviour.
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 */
+		cyclic: {
+			type: Boolean,
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.WheelSlider.prototype */ {
@@ -135,9 +151,20 @@ class WheelSlider extends UI5Element {
 		super();
 		this._currentElementIndex = 0;
 		this._itemCellHeight = 0;
+		this._itemsToShow = [];
 	}
 
 	onBeforeRendering() {
+		if (!this._expanded && this.cyclic) {
+			const index = this._currentElementIndex % this._items.length;
+			this._currentElementIndex = (this._timesMultipliedOnCyclic() / 2) * this._items.length + index;
+		}
+
+		if (!this.value) {
+			this.value = this._items[0];
+		}
+
+		this._buildItemsToShow();
 		this._updateItemCellHeight();
 	}
 
@@ -154,7 +181,7 @@ class WheelSlider extends UI5Element {
 			const elements = this.shadowRoot.querySelectorAll(".ui5-wheelslider-item");
 			for (let i = 0; i < elements.length; i++) {
 				if (elements[i].textContent === this.value) {
-					this._selectElement(elements[i]);
+					this._selectElementByIndex(Number(elements[i].dataset.itemIndex) + this._getCurrentRepetition() * this._items.length);
 					return true;
 				}
 			}
@@ -163,8 +190,23 @@ class WheelSlider extends UI5Element {
 		}
 	}
 
-	get items() {
-		return this._items || [];
+	_timesMultipliedOnCyclic() {
+		const minElementsInCyclicWheelSlider = 70;
+		const repetitionCount = Math.round(minElementsInCyclicWheelSlider / this._items.length);
+		const minRepetitionCount = 3;
+
+		return Math.max(minRepetitionCount, repetitionCount);
+	}
+
+	_buildItemsToShow() {
+		this._itemsToShow = this._items;
+		if (this.cyclic) {
+			if (this._itemsToShow.length < this._items.length * this._timesMultipliedOnCyclic()) {
+				for (let i = 0; i < this._timesMultipliedOnCyclic(); i++) {
+					this._itemsToShow = this._itemsToShow.concat(this._items);
+				}
+			}
+		}
 	}
 
 	get classes() {
@@ -223,24 +265,51 @@ class WheelSlider extends UI5Element {
 
 	_selectElement(element) {
 		if (element && this._items.indexOf(element.textContent) > -1) {
-			this._currentElementIndex = this._items.indexOf(element.textContent);
+			this._currentElementIndex = Number(element.dataset.itemIndex);
 			this._selectElementByIndex(this._currentElementIndex);
 		}
 	}
 
-	_selectElementByIndex(index) {
+	_getCurrentRepetition() {
+		if (this._currentElementIndex) {
+			return Math.floor(this._currentElementIndex / this._items.length);
+		}
+
+		return 0;
+	}
+
+	_selectElementByIndex(currentIndex) {
 		const sliderElement = this.shadowRoot.getElementById(`${this._id}--items-list`);
-		const itemsCount = this._items.length;
+		const itemsCount = this._itemsToShow.length;
 		const itemCellHeight = this._itemCellHeight ? this._itemCellHeight : 2.875;
 		const offsetStep = isPhone() ? 4 : 2;
+		let index = currentIndex;
+
+		if (this.cyclic) {
+			index = this.handleArrayBorderReached(index);
+		}
 
 		if (index < itemsCount && index > -1) {
 			const offsetSelectedElement = offsetStep * itemCellHeight - (index * itemCellHeight);
 			sliderElement.setAttribute("style", `top:${offsetSelectedElement}rem`);
-			this.value = this._items[index];
 			this._currentElementIndex = index;
+			this.value = this._items[index - (this._getCurrentRepetition() * this._items.length)];
 			this.fireEvent("valueSelect", { value: this.value });
 		}
+	}
+
+	handleArrayBorderReached(currentIndex) {
+		const arrayLength = this._itemsToShow.length;
+		const maxVisibleElementsOnOneSide = 5;
+		let index = currentIndex;
+
+		if (maxVisibleElementsOnOneSide > index) {
+			index += this._items.length * 2;
+		} else if (index > arrayLength - maxVisibleElementsOnOneSide) {
+			index -= this._items.length * 2;
+		}
+
+		return index;
 	}
 
 	_onArrowDown(e) {

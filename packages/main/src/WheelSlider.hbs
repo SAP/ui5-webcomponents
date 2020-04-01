@@ -11,6 +11,7 @@
 	@focusin="{{_onfocusin}}"
 	@focusout="{{_onfocusout}}"
 	tabindex="0"
+	@wheel="{{_handleWheel}}"
 >
 	<div class="ui5-wheelslider-header-block">
 		<div id="{{this._id}}--label" class="ui5-wheelslider-label"> {{label}}</div>
@@ -20,11 +21,11 @@
 	<div id="{{this._id}}--inner" class="ui5-wheelslider-inner">
 	<div id="{{this._id}}--selection-frame" class="ui5-wheelslider-selection-frame">
 		</div>
-		<div id="{{this._id}}--wrapper" class="ui5-wheelslider-wrapper" @wheel="{{_handleWheel}}">
+		<div id="{{this._id}}--wrapper" class="ui5-wheelslider-wrapper">
 			{{#if _expanded}}
 				<ul id="{{this._id}}--items-list">
-					{{#each items}}
-						<li class="ui5-wheelslider-item">{{this}}</li>
+					{{#each _itemsToShow}}
+						<li class="ui5-wheelslider-item" data-item-index="{{@index}}">{{this}}</li>
 					{{/each}}
 				</ul>
 			{{else}}
