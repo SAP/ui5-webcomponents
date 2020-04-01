@@ -29,7 +29,7 @@
     "prepare:fiori": "cd packages/fiori && nps prepare",
     "dev:base": "cd packages/base && nps watch",
     "dev:localization": "cd packages/localization && nps watch",
-    "dev:theme-base": "cd packages/theme-base && nps watch",
+    "dev:theme-base": "cd packages/theme-base",
     "dev:main": "cd packages/main && nps dev",
     "dev:fiori": "cd packages/fiori && nps dev",
     "start": "npm-run-all --sequential build:localization build:base build:theme-base build:icons prepare:main prepare:fiori start:all",
