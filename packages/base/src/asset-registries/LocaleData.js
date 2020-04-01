@@ -1,9 +1,8 @@
 import { fetchJsonOnce } from "../util/FetchHelper.js";
 import { getFeature } from "../FeaturesRegistry.js";
+import { DEFAULT_LOCALE, SUPPORTED_LOCALES } from "../generated/AssetParameters.js";
 
 const OpenUI5Support = getFeature("OpenUI5Support");
-
-const supportedLocales = ["ar", "ar_EG", "ar_SA", "bg", "ca", "cs", "da", "de", "de_AT", "de_CH", "el", "el_CY", "en", "en_AU", "en_GB", "en_HK", "en_IE", "en_IN", "en_NZ", "en_PG", "en_SG", "en_ZA", "es", "es_AR", "es_BO", "es_CL", "es_CO", "es_MX", "es_PE", "es_UY", "es_VE", "et", "fa", "fi", "fr", "fr_BE", "fr_CA", "fr_CH", "fr_LU", "he", "hi", "hr", "hu", "id", "it", "it_CH", "ja", "kk", "ko", "lt", "lv", "ms", "nb", "nl", "nl_BE", "pl", "pt", "pt_PT", "ro", "ru", "ru_UA", "sk", "sl", "sr", "sv", "th", "tr", "uk", "vi", "zh_CN", "zh_HK", "zh_SG", "zh_TW"];
 
 const resources = new Map();
 const cldrData = {};
@@ -38,13 +37,13 @@ const calcLocale = (language, region, script) => {
 
 	// try language + region
 	let localeId = `${language}_${region}`;
-	if (!supportedLocales.includes(localeId)) {
+	if (!SUPPORTED_LOCALES.includes(localeId)) {
 		// fallback to language only
 		localeId = language;
 	}
-	if (!supportedLocales.includes(localeId)) {
+	if (!SUPPORTED_LOCALES.includes(localeId)) {
 		// fallback to english
-		localeId = "en";
+		localeId = DEFAULT_LOCALE;
 	}
 
 	return localeId;
@@ -56,7 +55,7 @@ const resolveMissingMappings = () => {
 		return;
 	}
 
-	const missingLocales = supportedLocales.filter(locale => !cldrData[locale] && !cldrUrls[locale]);
+	const missingLocales = SUPPORTED_LOCALES.filter(locale => !cldrData[locale] && !cldrUrls[locale]);
 	missingLocales.forEach(locale => {
 		cldrUrls[locale] = cldrMappingFn(locale);
 	});

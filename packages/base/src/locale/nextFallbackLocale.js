@@ -1,3 +1,5 @@
+import { DEFAULT_LOCALE } from "../generated/AssetParameters.js";
+
 /**
  * Calculates the next fallback locale for the given locale.
  *
@@ -6,7 +8,7 @@
  */
 const nextFallbackLocale = locale => {
 	if (!locale) {
-		return "en";
+		return DEFAULT_LOCALE;
 	}
 
 	if (locale === "zh_HK") {
@@ -19,8 +21,8 @@ const nextFallbackLocale = locale => {
 		return locale.slice(0, p);
 	}
 
-	// for any language but 'en', fallback to 'en' first before falling back to the 'raw' language (empty string)
-	return locale !== "en" ? "en" : "";
+	// for any language but the default, fallback to the default first before falling back to the 'raw' language (empty string)
+	return locale !== DEFAULT_LOCALE ? DEFAULT_LOCALE : "";
 };
 
 export default nextFallbackLocale;
