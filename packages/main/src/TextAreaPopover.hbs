@@ -1,17 +1,17 @@
 {{#if displayValueStateMessage}}
-		<ui5-popover
-			skip-registry-update
-			no-padding
-			no-arrow
-			_disable-initial-focus
-			style="{{styles.valueStateMsgPopover}}"
-			placement-type="Bottom"
-			horizontal-align="Left"
-		>
-			<div slot="header" class="ui5-valuestatemessage-root {{classes.valueStateMsg}}">
-				{{> valueStateMessage}}
-			</div>
-		</ui5-popover>
+	<ui5-popover
+		skip-registry-update
+		no-padding
+		no-arrow
+		_disable-initial-focus
+		style="{{styles.valueStateMsgPopover}}"
+		placement-type="Bottom"
+		horizontal-align="Left"
+	>
+		<div slot="header" class="ui5-valuestatemessage-root {{classes.valueStateMsg}}">
+			{{> valueStateMessage}}
+		</div>
+	</ui5-popover>
 {{/if}}
 
 {{#*inline "valueStateMessage"}}

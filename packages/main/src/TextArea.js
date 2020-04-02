@@ -335,8 +335,9 @@ class TextArea extends UI5Element {
 		super();
 
 		this._firstRendering = true;
-		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+		this._openValueStateMsgPopover = false;
 		this._fnOnResize = this._onResize.bind(this);
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onEnterDOM() {

@@ -7,6 +7,7 @@
 	padding: .3rem .625rem;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	min-width: 6.25rem;
 }
 
 .ui5-valuestatemessage--success {
