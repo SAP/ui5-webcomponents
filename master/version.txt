@@ -1,5 +1,10 @@
-commit ac97824d52e24b01c1dc943aece36bb1fbd67d5c
-Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Thu Apr 2 08:43:17 2020 +0300
+commit 1871ca76fc04d26d8b2f0254d5622334601416c8
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu Apr 2 10:52:09 2020 +0300
 
-    feat(ui5-wheelslider): add cyclic behaviour (#1408)
+    chore: use theming-base-content for --sap* CSS vars (#1399)
+    
+    We used to provide a subset of all --sap* variables (the ones our components need), provided by `@sap-theming/theming-base-content` project and respectively generated from the `ThemeDesigner.`
+    However, our users might need some of these variables we don't use and provide and **we agreed on switching to `@sap-theming/theming-base-content` as a source for all theme parameters** and thus having all the parameters available for the users of the`@ui5/webcomponents`
+    
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/1396
