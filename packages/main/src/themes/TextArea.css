@@ -168,20 +168,20 @@
 	background-color: var(--sapField_WarningBackground);
 }
 
-:host([value-state="Success"]:not([readonly])) {
+:host([value-state="Success"]:not([readonly]):not([exceeding])) {
 	border-color: var(--sapField_SuccessColor);
 }
 
-:host([value-state="Success"]:not([readonly])) .ui5-textarea-inner {
+:host([value-state="Success"]:not([readonly]):not([exceeding])) .ui5-textarea-inner {
 	background-color: var(--sapField_SuccessBackground);
 	border-width: 1px;
 }
 
-:host([value-state="Information"]:not([readonly])) {
+:host([value-state="Information"]:not([readonly]):not([exceeding])) {
 	border-color: var(--sapField_InformationColor);
 }
 
-:host([value-state="Information"]:not([readonly])) .ui5-textarea-inner {
+:host([value-state="Information"]:not([readonly]):not([exceeding])) .ui5-textarea-inner {
 	background-color: var(--sapField_InformationBackground);
 }
 
