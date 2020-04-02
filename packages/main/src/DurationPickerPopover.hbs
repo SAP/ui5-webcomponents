@@ -5,20 +5,12 @@
     horizontal-align="{{_respPopover.horizontalAlign}}"
     stay-open-on-scroll="{{_respPopover.stayOpenOnScroll}}"
     @ui5-afterClose="{{_respPopover._onAfterClose}}"
+    @keydown="{{_handleKeysDown}}"
 
 >
-{{!-- id="{{_id}}-responsive-popover"
-			allow-target-overlap="{{_respPopover.allowTargetOverlap}}"
-			placement-type="{{_respPopover.placementType}}"
-			no-arrow
-			horizontal-align="{{_respPopover.horizontalAlign}}"
-			stay-open-on-scroll="{{_respPopover.stayOpenOnScroll}}"
-			@ui5-afterOpen="{{_respPopover.afterOpen}}"
-			class="ui5-timepicker-popover"
-			@keydown="{{_ontimepickerpopoverkeydown}}" --}}
     <div class="{{classes.container}}">
         <ui5-wheelslider
-            ._items="{{getHours}}"
+            ._items="{{hoursArray}}"
             value="{{selectedHours}}"
             class="ui5-timepicker-wheelslider ui5-timepicker-hours-wheelslider"
             label = "{{hoursSliderTitle}}"
@@ -41,7 +33,7 @@
 
     <div slot="footer" class="ui5-timepicker-footer" @keydown={{_onfooterkeydown}}>
         <ui5-button id="submit" design="Emphasized" @click="{{submitPickers}}">{{submitButtonLabel}}</ui5-button>
-        <ui5-button id="close" design="Transparent" @click="{{closePicker}}">{{cancelButtonLabel}}</ui5-button>
+        <ui5-button id="close" design="Transparent" @click="{{togglePicker}}">{{cancelButtonLabel}}</ui5-button>
     </div>
     {{!-- <div>hi</div> --}}
 </ui5-responsive-popover>
