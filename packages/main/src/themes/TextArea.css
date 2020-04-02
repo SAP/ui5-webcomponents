@@ -7,6 +7,7 @@
 	color: var(--sapField_TextColor);
 	font-size: var(--sapFontSize);
 	font-family: var(--sapFontFamily);
+	font-style: normal;
 	border-color: var(--sapField_BorderColor);
 	border-radius: var(--_ui5_input_wrapper_border_radius);
 	box-sizing: border-box;
@@ -57,6 +58,7 @@
 	color: inherit;
 	font-size: inherit;
 	font-family: inherit;
+	font-style: inherit;
 	-webkit-appearance: none;
 	-moz-appearance: textfield;
 	overflow: auto;
