@@ -4,8 +4,9 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
-import TextAreaTemplate from "./generated/templates/TextAreaTemplate.lit.js";
+import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 
+import TextAreaTemplate from "./generated/templates/TextAreaTemplate.lit.js";
 import { TEXTAREA_CHARACTERS_LEFT, TEXTAREA_CHARACTERS_EXCEEDED } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -76,6 +77,31 @@ const metadata = {
 		 */
 		placeholder: {
 			type: String,
+		},
+
+		/**
+		 * Defines the value state of the <code>ui5-textarea</code>.
+		 * <br><br>
+		 * Available options are:
+		 * <ul>
+		 * <li><code>None</code></li>
+		 * <li><code>Error</code></li>
+		 * <li><code>Warning</code></li>
+		 * <li><code>Success</code></li>
+		 * <li><code>Information</code></li>
+		 * </ul>
+		 * <br><br>
+		 * <b>Note:</b> If <code>maxlength</code> property is set,
+		 * the component turns into "Warning" state once the characters exceeds the limit.
+		 * In this case, only the "Error" state is considered and can be applied.
+		 * @type {ValueState}
+		 * @defaultvalue "None"
+		 * @since 1.0.0-rc.7
+		 * @public
+		 */
+		valueState: {
+			type: ValueState,
+			defaultValue: ValueState.None,
 		},
 
 		/**
