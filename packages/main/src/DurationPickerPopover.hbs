@@ -10,12 +10,14 @@
 >
     <div class="{{classes.container}}">
         <ui5-wheelslider
+            cyclic="true"
             ._items="{{hoursArray}}"
             value="{{selectedHours}}"
             class="ui5-timepicker-wheelslider ui5-timepicker-hours-wheelslider"
             label = "{{hoursSliderTitle}}"
         ></ui5-wheelslider>
         <ui5-wheelslider
+            cyclic="true"
             ._items="{{minutesArray}}"
             value="{{selectedMinutes}}"
             class="ui5-timepicker-wheelslider ui5-timepicker-minutes-wheelslider"
@@ -23,6 +25,7 @@
         ></ui5-wheelslider>
         {{#if showSeconds}}
             <ui5-wheelslider
+                cyclic="true"
                 ._items="{{secondsArray}}"
                 value="{{selectedSeconds}}"
                 class="ui5-timepicker-wheelslider ui5-timepicker-seconds-wheelslider"

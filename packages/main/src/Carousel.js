@@ -20,6 +20,9 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 import CarouselArrowsPlacement from "./types/CarouselArrowsPlacement.js";
 import CarouselTemplate from "./generated/templates/CarouselTemplate.lit.js";
+import "@ui5/webcomponents-icons/dist/icons/slim-arrow-left.js";
+import "@ui5/webcomponents-icons/dist/icons/slim-arrow-right.js";
+
 import Button from "./Button.js";
 
 // Styles
@@ -33,7 +36,7 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.Carousel.prototype */ {
 		/**
 		 * Defines whether the carousel should loop, i.e show the first page after the last page is reached and vice versa.
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 */
@@ -54,7 +57,7 @@ const metadata = {
 
 		/**
 		 * If set to true the navigation is hidden.
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 */
@@ -75,8 +78,18 @@ const metadata = {
 
 		/**
 		 * Defines the position of arrows.
+		 * <br><br>
+		 * Available options are:
+		 * <ul>
+		 * <li><code>Content</code></li>
+		 * <li><code>Navigation</code></li>
+		 * </ul>
+		 * <br>
+		 * When set to "Content", the arrows are placed on the sides of the current page.
+		 * <br>
+		 * When set to "Navigation", the arrows are placed on the sides of the page indicator.
 		 * @type {CarouselArrowsPlacement}
-		 * @defaultvalue CarouselArrowsPlacement.Content
+		 * @defaultvalue "Content"
 		 * @public
 		 */
 		arrowsPlacement: {
@@ -166,10 +179,6 @@ class Carousel extends UI5Element {
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
-	onBeforeRendering() {
-		this.itemsPerPage = this.effectiveItemsPerPage;
-	}
-
 	onAfterRendering() {
 		this._scrollEnablement.scrollContainer = this.getDomRef();
 	}
@@ -201,7 +210,7 @@ class Carousel extends UI5Element {
 	navigateLeft() {
 		if (this.selectedIndex - 1 < 0) {
 			if (this.cycling) {
-				this.selectedIndex = this.items.length - 1;
+				this.selectedIndex = this.pages.length - 1;
 			}
 		} else {
 			--this.selectedIndex;
@@ -209,7 +218,7 @@ class Carousel extends UI5Element {
 	}
 
 	navigateRight() {
-		if (this.selectedIndex + 1 > this.items.length - 1) {
+		if (this.selectedIndex + 1 > this.pages.length - 1) {
 			if (this.cycling) {
 				this.selectedIndex = 0;
 			}
@@ -226,18 +235,26 @@ class Carousel extends UI5Element {
 	 * Assuming that all items have the same width
 	 * @private
 	 */
-	get items() {
+	get pages() {
 		const result = [],
-			innerArraysLength = Math.ceil(this.content.length / this.itemsPerPage);
+			pagesCount = Math.ceil(this.content.length / this.effectiveItemsPerPage);
 
-		for (let i = 0; i < innerArraysLength; i++) {
+		for (let pageIdx = 0; pageIdx < pagesCount; pageIdx++) {
 			result.push([]);
-			for (let j = 0; j < this.itemsPerPage; j++) {
-				result[i].push({
-					item: this.content[(i * this.itemsPerPage) + j],
-					tabIndex: i === this.selectedIndex ? "0" : "-1",
-				});
+			for (let itemIdx = 0; itemIdx < this.effectiveItemsPerPage; itemIdx++) {
+				const item = this.content[(pageIdx * this.effectiveItemsPerPage) + itemIdx];
+				if (item) {
+					result[pageIdx].push({
+						item,
+						tabIndex: pageIdx === this.selectedIndex ? "0" : "-1",
+					});
+				}
 			}
+			const itemsOnThisPage = result[pageIdx].length;
+			const itemWidth = Math.floor(100 / itemsOnThisPage);
+			result[pageIdx].forEach(item => {
+				item.width = itemWidth;
+			});
 		}
 
 		return result;
@@ -260,26 +277,26 @@ class Carousel extends UI5Element {
 			content: {
 				"ui5-carousel-content": true,
 				"ui5-carousel-content-no-animation": this.shouldAnimate,
-				"ui5-carousel-content-has-navigation": !this.hideNavigation,
-				"ui5-carousel-content-has-navigation-and-buttons": !this.hideNavigation && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
+				"ui5-carousel-content-has-navigation": this.showNavigationArrows,
+				"ui5-carousel-content-has-navigation-and-buttons": this.showNavigationArrows && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
 			},
 			navigation: {
 				"ui5-carousel-navigation-wrapper": true,
-				"ui5-carousel-navigation-with-buttons": this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
+				"ui5-carousel-navigation-with-buttons": this.showNavigationArrows && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
 			},
-			item: {
-				"ui5-carousel-item": true,
-				"ui5-carousel-item-multiple": this.itemsPerPage > 1,
+			page: {
+				"ui5-carousel-page": true,
+				"ui5-carousel-page-multiple": this.effectiveItemsPerPage > 1,
 			},
 		};
 	}
 
 	get isPageTypeDots() {
-		return this.items.length < Carousel.pageTypeLimit;
+		return this.pages.length < Carousel.pageTypeLimit;
 	}
 
 	get dots() {
-		return this.items.map((item, index) => {
+		return this.pages.map((item, index) => {
 			return {
 				active: index === this.selectedIndex,
 			};
@@ -287,9 +304,11 @@ class Carousel extends UI5Element {
 	}
 
 	get arrows() {
+		const showArrows = this.showNavigationArrows && isDesktop();
+
 		return {
-			content: isDesktop() && this.arrowsPlacement === CarouselArrowsPlacement.Content,
-			navigation: isDesktop() && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
+			content: showArrows && this.arrowsPlacement === CarouselArrowsPlacement.Content,
+			navigation: showArrows && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
 		};
 	}
 
@@ -299,6 +318,10 @@ class Carousel extends UI5Element {
 
 	get currenlySelectedIndexToShow() {
 		return this.selectedIndex + 1;
+	}
+
+	get showNavigationArrows() {
+		return !this.hideNavigation && this.pages.length > 1;
 	}
 
 	static async onDefine() {

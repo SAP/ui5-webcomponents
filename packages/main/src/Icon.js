@@ -28,6 +28,7 @@ const metadata = {
 		 * <code>name='add'</code>, <code>name='delete'</code>, <code>name='employee'</code>.
 		 *
 		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		*/
 		name: {
@@ -42,6 +43,7 @@ const metadata = {
 		 * calculate its accessible name.
 		 *
 		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		accessibleName: {

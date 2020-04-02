@@ -49,9 +49,19 @@ describe("Carousel general interaction", () => {
 
 	it("ItemsPerPage property is working properly", () => {
 		const carousel = browser.$("#carousel4");
-		const pages = carousel.getProperty("items").length;
+		const pages = carousel.getProperty("pages").length;
 
 		assert.strictEqual(pages, 3, "There are only 3 pages.");
 	});
 
+	it("Arrows and Dots not displayed in case of single page", () => {
+		const carousel = browser.$("#carousel6");
+		const pages = carousel.getProperty("pages").length;
+		const pageIndicator = carousel.shadow$(".ui5-carousel-navigation-wrapper");
+		const navigationArrows = carousel.shadow$(".ui5-carousel-navigation-arrows");
+
+		assert.ok(!pageIndicator.isExisting(), "Navigation is rendered");
+		assert.ok(!navigationArrows.isExisting(), "Navigation is rendered");
+		assert.strictEqual(pages, 1, "There are only 3 pages.");
+	});
 });

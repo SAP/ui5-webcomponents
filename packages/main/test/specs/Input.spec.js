@@ -185,6 +185,18 @@ describe("Input general interaction", () => {
 		assert.strictEqual(inputResult.getValue(), "1", "suggestionItemSelect is fired once");
 	});
 
+	it("handles group suggestion item via keyboard", () => {
+		const suggestionsInput = $("#myInputGrouping").shadow$("input");
+		const inputResult = $("#inputResultGrouping").shadow$("input");
+
+		suggestionsInput.click();
+		suggestionsInput.keys("ArrowDown");
+		suggestionsInput.keys("Enter");
+
+		assert.strictEqual(suggestionsInput.getValue(), "", "Group item is not selected");
+		assert.strictEqual(inputResult.getValue(), "", "suggestionItemSelected event is not called");
+	});
+
 	it("Input's maxlength property is set correctly", () => {
 		const input5 = $("#input-tel");
 		const inputShadowRef = $("#input-tel").shadow$("input");
@@ -198,5 +210,20 @@ describe("Input general interaction", () => {
 		assert.strictEqual(inputShadowRef.getProperty("value").length, 10, "Input's value should not exceed 10 characters.");
 		assert.ok(input5.getProperty("maxlength"), "Input's maxlength property should be applied.");
 		assert.strictEqual(inputShadowRef.getAttribute("maxlength"), "10", "Input's maxlength attribute should be applied.");
+	});
+
+	it("Checks if valueStateMessage is shown", () => {
+		const inputShadowRef = browser.$("#inputError").shadow$("input");
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#inputError");
+		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
+		const respPopover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover .ui5-responsive-popover-header");
+
+		inputShadowRef.click();
+		
+		assert.ok(popover.getProperty("opened"), "Popover with valueStateMessage should be opened.");
+
+		inputShadowRef.keys("a");
+
+		assert.ok(respPopover, "Responsive popover with valueStateMessage should be opened.");
 	});
 });

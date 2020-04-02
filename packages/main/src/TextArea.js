@@ -4,8 +4,9 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
-import TextAreaTemplate from "./generated/templates/TextAreaTemplate.lit.js";
+import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 
+import TextAreaTemplate from "./generated/templates/TextAreaTemplate.lit.js";
 import { TEXTAREA_CHARACTERS_LEFT, TEXTAREA_CHARACTERS_EXCEEDED } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -79,6 +80,31 @@ const metadata = {
 		},
 
 		/**
+		 * Defines the value state of the <code>ui5-textarea</code>.
+		 * <br><br>
+		 * Available options are:
+		 * <ul>
+		 * <li><code>None</code></li>
+		 * <li><code>Error</code></li>
+		 * <li><code>Warning</code></li>
+		 * <li><code>Success</code></li>
+		 * <li><code>Information</code></li>
+		 * </ul>
+		 * <br><br>
+		 * <b>Note:</b> If <code>maxlength</code> property is set,
+		 * the component turns into "Warning" state once the characters exceeds the limit.
+		 * In this case, only the "Error" state is considered and can be applied.
+		 * @type {ValueState}
+		 * @defaultvalue "None"
+		 * @since 1.0.0-rc.7
+		 * @public
+		 */
+		valueState: {
+			type: ValueState,
+			defaultValue: ValueState.None,
+		},
+
+		/**
 		 * Defines the number of visible text lines for the component.
 		 * <br><br>
 		 * <b>Notes:</b>
@@ -101,6 +127,7 @@ const metadata = {
 		 * Defines the maximum number of characters that the <code>value</code> can have.
 		 *
 		 * @type {number}
+		 * @defaultValue null
 		 * @public
 		 */
 		maxlength: {
@@ -152,15 +179,17 @@ const metadata = {
 		/**
 		 * Determines the name with which the <code>ui5-textarea</code> will be submitted in an HTML form.
 		 *
+		 * <br><br>
 		 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
 		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
 		 *
+		 * <br><br>
 		 * <b>Note:</b> When set, a native <code>input</code> HTML element
 		 * will be created inside the <code>ui5-textarea</code> so that it can be submitted as
 		 * part of an HTML form. Do not use this property unless you need to submit a form.
 		 *
 		 * @type {string}
-		 * @defaultvalue: ""
+		 * @defaultvalue ""
 		 * @public
 		 */
 		name: {

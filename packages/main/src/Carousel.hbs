@@ -5,12 +5,12 @@
 >
     <div class="ui5-carousel-overflow-hidden">
         <div class="{{classes.content}}" style="{{styles.content}}">
-            {{#each items}}
-                <div class="{{../classes.item}}">
+            {{#each pages}}
+                <div class="{{../classes.page}}">
                     {{#each this}}
-                        {{#if this.item}}
+                        <div class="ui5-carousel-item" style="width: {{this.width}}%">
                             <slot name="{{this.item._individualSlot}}" tabindex="{{this.tabIndex}}"></slot>
-                        {{/if}}
+                        </div>
                     {{/each}}
                 </div>
             {{/each}}
@@ -35,7 +35,7 @@
             </div>
         {{/if}}
 
-        {{#unless hideNavigation}}
+        {{#if showNavigationArrows}}
             <div class="{{classes.navigation}}">
                 {{#if arrows.navigation}}
                 <ui5-button
@@ -56,7 +56,7 @@
                             ></div>
                         {{/each}}
                     {{else}}
-                        <ui5-label>{{currenlySelectedIndexToShow}}&nbsp;{{ofText}}&nbsp;{{items.length}}</ui5-label>
+                        <ui5-label>{{currenlySelectedIndexToShow}}&nbsp;{{ofText}}&nbsp;{{pages.length}}</ui5-label>
                     {{/if}}
                 </div>
 
@@ -70,6 +70,6 @@
                     ></ui5-button>
                 {{/if}}
             </div>
-        {{/unless}}
+        {{/if}}
     </div>
 </section>

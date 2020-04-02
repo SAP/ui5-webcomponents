@@ -261,7 +261,7 @@ class Suggestions {
 	}
 
 	_getItems() {
-		return [].slice.call(this.responsivePopover.querySelectorAll("ui5-li"));
+		return [].slice.call(this.responsivePopover.querySelectorAll("ui5-li, ui5-li-groupheader"));
 	}
 
 	_getComponent() {
@@ -271,6 +271,11 @@ class Suggestions {
 	async _getList() {
 		this.responsivePopover = await this._respPopover();
 		return this.responsivePopover.querySelector("ui5-list");
+	}
+
+	async _getListWidth() {
+		const list = await this._getList();
+		return list.offsetWidth;
 	}
 
 	_getRealItems() {

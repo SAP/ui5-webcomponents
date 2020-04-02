@@ -1,5 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import RenderScheduler from "@ui5/webcomponents-base/dist/RenderScheduler.js";
 import { isIE, isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
@@ -13,12 +15,14 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/icons/decline.js";
 import InputType from "./types/InputType.js";
+import Popover from "./Popover.js";
 // Templates
 import InputTemplate from "./generated/templates/InputTemplate.lit.js";
 import InputPopoverTemplate from "./generated/templates/InputPopoverTemplate.lit.js";
 
 import {
 	VALUE_STATE_SUCCESS,
+	VALUE_STATE_INFORMATION,
 	VALUE_STATE_ERROR,
 	VALUE_STATE_WARNING,
 	INPUT_SUGGESTIONS,
@@ -28,6 +32,7 @@ import {
 // Styles
 import styles from "./generated/themes/Input.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
+import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 
 /**
  * @public
@@ -85,6 +90,19 @@ const metadata = {
 		 * @private
 		 */
 		formSupport: {
+			type: HTMLElement,
+		},
+
+		/**
+		 * The slot is used in order to display a valueStateMessage.
+		 * <br><br>
+		 * <b>Note:</b> The valueStateMessage would be displayed only if the <code>ui5-input</code> has
+		 * a valueState of type <code>Information</code>, <code>Warning</code> or <code>Error</code>.
+		 * @type {HTMLElement[]}
+		 * @slot
+		 * @public
+		 */
+		valueStateMessage: {
 			type: HTMLElement,
 		},
 	},
@@ -153,7 +171,7 @@ const metadata = {
 		 * that use different soft keyboard layouts depending on the given input type.</li>
 		 * </ul>
 		 *
-		 * @type {string}
+		 * @type {InputType}
 		 * @defaultvalue "Text"
 		 * @public
 		 */
@@ -177,9 +195,17 @@ const metadata = {
 
 		/**
 		 * Defines the value state of the <code>ui5-input</code>.
-		 * Available options are: <code>None</code>, <code>Success</code>, <code>Warning</code>, and <code>Error</code>.
+		 * <br><br>
+		 * Available options are:
+		 * <ul>
+		 * <li><code>None</code></li>
+		 * <li><code>Error</code></li>
+		 * <li><code>Warning</code></li>
+		 * <li><code>Success</code></li>
+		 * <li><code>Information</code></li>
+		 * </ul>
 		 *
-		 * @type {string}
+		 * @type {ValueState}
 		 * @defaultvalue "None"
 		 * @public
 		 */
@@ -191,9 +217,11 @@ const metadata = {
 		/**
 		 * Determines the name with which the <code>ui5-input</code> will be submitted in an HTML form.
 		 *
+		 * <br><br>
 		 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
 		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
 		 *
+		 * <br><br>
 		 * <b>Note:</b> When set, a native <code>input</code> HTML element
 		 * will be created inside the <code>ui5-input</code> so that it can be submitted as
 		 * part of an HTML form. Do not use this property unless you need to submit a form.
@@ -211,7 +239,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b>
 		 * Don`t forget to import the <code>InputSuggestions</code> module from <code>"@ui5/webcomponents/dist/features/InputSuggestions.js"</code> to enable this functionality.
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
 		 */
@@ -247,6 +275,19 @@ const metadata = {
 
 		_wrapperAccInfo: {
 			type: Object,
+		},
+
+		_inputWidth: {
+			type: Integer,
+		},
+
+		_listWidth: {
+			type: Integer,
+		},
+
+		_isPopoverOpen: {
+			type: Boolean,
+			noAttribute: true,
 		},
 	},
 	events: /** @lends  sap.ui.webcomponents.main.Input.prototype */ {
@@ -350,7 +391,7 @@ class Input extends UI5Element {
 	}
 
 	static get staticAreaStyles() {
-		return ResponsivePopoverCommonCss;
+		return [ResponsivePopoverCommonCss, ValueStateMessageCss];
 	}
 
 	constructor() {
@@ -383,6 +424,16 @@ class Input extends UI5Element {
 		this.suggestionsTexts = [];
 
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+
+		this._handleResizeBound = this._handleResize.bind(this);
+	}
+
+	onEnterDOM() {
+		ResizeHandler.register(this, this._handleResizeBound);
+	}
+
+	onExitDOM() {
+		ResizeHandler.deregister(this, this._handleResizeBound);
 	}
 
 	onBeforeRendering() {
@@ -406,10 +457,18 @@ class Input extends UI5Element {
 			this.updateStaticAreaItemContentDensity();
 			this.Suggestions.toggle(shouldOpenSuggestions);
 
+			RenderScheduler.whenFinished().then(async () => {
+				this._listWidth = await this.Suggestions._getListWidth();
+			});
+
 			if (!isPhone() && shouldOpenSuggestions) {
 				// Set initial focus to the native input
 				this.getInputDOMRef().focus();
 			}
+		}
+
+		if (!this.firstRendering && this.hasValueStateMessage) {
+			this.toggle(this.shouldDisplayOnlyValueStateMessage);
 		}
 
 		this.firstRendering = false;
@@ -477,6 +536,10 @@ class Input extends UI5Element {
 			return;
 		}
 
+		if (this.popover) {
+			this.popover.close(false, false, true);
+		}
+
 		this.previousValue = "";
 		this.focused = false; // invalidating property
 	}
@@ -485,6 +548,7 @@ class Input extends UI5Element {
 		if (isPhone() && !this.readonly && this.Suggestions) {
 			this.updateStaticAreaItemContentDensity();
 			this.Suggestions.open(this);
+			this.isRespPopoverOpen = true;
 		}
 	}
 
@@ -513,6 +577,12 @@ class Input extends UI5Element {
 		}
 	}
 
+	_handleResize() {
+		if (this.hasValueStateMessage) {
+			this._inputWidth = this.offsetWidth;
+		}
+	}
+
 	_closeRespPopover() {
 		this.Suggestions.close();
 	}
@@ -529,6 +599,41 @@ class Input extends UI5Element {
 		if (isPhone()) {
 			this.blur();
 		}
+	}
+
+	toggle(isToggled) {
+		if (isToggled && !this.isRespPopoverOpen) {
+			this.openPopover();
+		} else {
+			this.closePopover();
+		}
+	}
+
+	/**
+	 * Checks if the popover is open.
+	 * @returns {Boolean} true if the popover is open, false otherwise
+	 * @public
+	 */
+	isOpen() {
+		return !!this._isPopoverOpen;
+	}
+
+	async openPopover() {
+		this._isPopoverOpen = true;
+		this.popover = await this._getPopover();
+		this.popover.openBy(this);
+	}
+
+	closePopover() {
+		if (this.isOpen()) {
+			this._isPopoverOpen = false;
+			this.popover.close();
+		}
+	}
+
+	async _getPopover() {
+		const staticAreaItem = await this.getStaticAreaItemDomRef();
+		return staticAreaItem.querySelector("ui5-popover");
 	}
 
 	enableSuggestions() {
@@ -552,6 +657,10 @@ class Input extends UI5Element {
 	}
 
 	selectSuggestion(item, keyboardUsed) {
+		if (item.group) {
+			return;
+		}
+
 		const itemText = item.text || item.textContent; // keep textContent for compatibility
 		const fireInput = keyboardUsed
 			? this.valueBeforeItemSelection !== itemText : this.value !== itemText;
@@ -569,7 +678,7 @@ class Input extends UI5Element {
 
 	previewSuggestion(item) {
 		this.valueBeforeItemSelection = this.value;
-		this.value = item.textContent;
+		this.value = item.group ? "" : item.textContent;
 	}
 
 	fireEventByAction(action) {
@@ -613,7 +722,7 @@ class Input extends UI5Element {
 		let inputDomRef;
 
 		if (isPhone()) {
-			inputDomRef = this.Suggestions.responsivePopover.querySelector(".ui5-input-inner-phone");
+			inputDomRef = this.Suggestions && this.Suggestions.responsivePopover.querySelector(".ui5-input-inner-phone");
 		}
 
 		if (!inputDomRef) {
@@ -651,6 +760,7 @@ class Input extends UI5Element {
 
 		return {
 			"Success": i18nBundle.getText(VALUE_STATE_SUCCESS),
+			"Information": i18nBundle.getText(VALUE_STATE_INFORMATION),
 			"Error": i18nBundle.getText(VALUE_STATE_ERROR),
 			"Warning": i18nBundle.getText(VALUE_STATE_WARNING),
 		};
@@ -695,8 +805,55 @@ class Input extends UI5Element {
 		};
 	}
 
+	get classes() {
+		return {
+			popoverValueState: {
+				"ui5-input-valuestatemessage-root": true,
+				"ui5-input-valuestatemessage-success": this.valueState === ValueState.Success,
+				"ui5-input-valuestatemessage-error": this.valueState === ValueState.Error,
+				"ui5-input-valuestatemessage-warning": this.valueState === ValueState.Warning,
+				"ui5-input-valuestatemessage-information": this.valueState === ValueState.Information,
+			},
+		};
+	}
+
+	get styles() {
+		return {
+			root: {
+				"min-height": "1rem",
+				"box-shadow": "none",
+			},
+			popoverHeader: {
+				"width": `${this._inputWidth}px`,
+			},
+			suggestionPopoverHeader: {
+				"display": this._listWidth === 0 ? "none" : "inline-block",
+				"width": `${this._listWidth}px`,
+				"padding": "0.5625rem 1rem",
+			},
+		};
+	}
+
+	get valueStateMessageText() {
+		const valueStateMessage = this.valueStateMessage.map(x => x.cloneNode(true));
+
+		return valueStateMessage;
+	}
+
+	get shouldDisplayOnlyValueStateMessage() {
+		return this.hasValueStateMessage && !this.shouldOpenSuggestions() && this.focused;
+	}
+
+	get shouldDisplayDefaultValueStateMessage() {
+		return !this.valueStateMessage.length && this.hasValueStateMessage;
+	}
+
 	get hasValueState() {
 		return this.valueState !== ValueState.None;
+	}
+
+	get hasValueStateMessage() {
+		return this.hasValueState && this.valueState !== ValueState.Success;
 	}
 
 	get valueStateText() {
@@ -707,8 +864,15 @@ class Input extends UI5Element {
 		return this.i18nBundle.getText(INPUT_SUGGESTIONS);
 	}
 
+	get _isPhone() {
+		return isPhone();
+	}
+
 	static async onDefine() {
-		await fetchI18nBundle("@ui5/webcomponents");
+		await Promise.all([
+			Popover.define(),
+			fetchI18nBundle("@ui5/webcomponents"),
+		]);
 	}
 }
 

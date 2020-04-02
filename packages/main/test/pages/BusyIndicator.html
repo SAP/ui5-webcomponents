@@ -31,25 +31,25 @@
 	<ui5-title>Medium ui5-busyindicator</ui5-title>
 	<ui5-busyindicator size="Medium" active id="indicator1"></ui5-busyindicator>
 
-	<br/>
-	<br/>
+	<br />
+	<br />
 	<ui5-busyindicator size="Medium" active id="indicator2"></ui5-busyindicator>
 
-	<br/>
-	<br/>
+	<br />
+	<br />
 
 	<ui5-busyindicator size="Medium" active>
 		<ui5-button>Hello World</ui5-button>
 	</ui5-busyindicator>
 
-	<br/>
-	<br/>
+	<br />
+	<br />
 	<ui5-busyindicator size="Medium" active>
 		<ui5-checkbox text="Hello World"></ui5-checkbox>
 	</ui5-busyindicator>
 
-	<br/>
-	<br/>
+	<br />
+	<br />
 
 	<ui5-button id="fetch-btn" style="width: 120px;">Fetch List Data</ui5-button>
 	<br>
@@ -65,12 +65,46 @@
 	<br>
 
 	<ui5-busyindicator size="Medium" active style="width: 500px; margin-left: 100px">
-			<ui5-list style="width: 100%; border: 1px solid black;">
-				<ui5-li>Item 1</ui5-li>
-				<ui5-li>Item 2</ui5-li>
-				<ui5-li>Item 3</ui5-li>
-			</ui5-list>
-		</ui5-busyindicator>
+		<ui5-list style="width: 100%; border: 1px solid black;">
+			<ui5-li>Item 1</ui5-li>
+			<ui5-li>Item 2</ui5-li>
+			<ui5-li>Item 3</ui5-li>
+		</ui5-list>
+	</ui5-busyindicator>
+
+	<br>
+	<br>
+	<br>
+
+	<span>Medium (default) </span>
+	<br>
+	<br>
+
+	<ui5-busyindicator active></ui5-busyindicator>
+	<br>
+	<br>
+	<span>Small </span>
+
+	<br>
+	<br>
+	<ui5-busyindicator size="Small" active></ui5-busyindicator>
+	<br>
+	<br>
+	<span>Medium </span>
+
+	<br>
+	<br>
+	<ui5-busyindicator size="Medium" active></ui5-busyindicator>
+	<br>
+	<br>
+	<span>Large </span>
+
+	<br>
+	<br>
+	<ui5-busyindicator size="Large" active></ui5-busyindicator>
+	<br>
+	<br>
+
 
 	<script>
 		const busyIndocator = document.getElementById("busy-container");
