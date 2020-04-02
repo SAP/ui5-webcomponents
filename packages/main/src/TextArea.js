@@ -249,11 +249,16 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.TextArea.prototype */ {
 
 		/**
-		 * The slot is used in order to display a value state message.
+		 * Defines the value state message that will be displayed as pop up under the <code>ui5-textarea</code>.
+		 *
+		 * <br><br>
+		 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
+		 *
 		 * <br><br>
 		 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed if the <code>ui5-textarea</code> has
 		 * <code>valueState</code> of type <code>Information</code>, <code>Warning</code> or <code>Error</code>.
 		 * @type {HTMLElement[]}
+		 * @since 1.0.0-rc.7
 		 * @slot
 		 * @public
 		 */
