@@ -1,5 +1,5 @@
-commit 1fe951dd9fd25cf9e2332ae9e9bd4f4e4c071041
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Apr 1 11:22:35 2020 +0300
+commit ac97824d52e24b01c1dc943aece36bb1fbd67d5c
+Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
+Date:   Thu Apr 2 08:43:17 2020 +0300
 
-    chore(tools): make all assets configurable at build time (#1375)
+    feat(ui5-wheelslider): add cyclic behaviour (#1408)
