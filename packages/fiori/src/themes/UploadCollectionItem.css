@@ -52,7 +52,9 @@
 
 .ui5-uci-file-name {
 	display: block;
+	font-family: var(--sapFontFamily);
 	font-size: var(--sapFontLargeSize);
+	color: var(--sapTextColor);
 	margin-bottom: 0.25rem;
 	white-space: pre-wrap;
 }
