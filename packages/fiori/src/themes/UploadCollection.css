@@ -70,8 +70,12 @@
 	border: var(--ui5_upload_collection_drag_overlay_border);
 }
 
+.uc-drop-overlay {
+	border: var(--ui5_upload_collection_drop_overlay_border);
+}
+
 /* use pseudo element to set opacity only for the content and not on the border */
-.uc-drag-overlay::after {
+.uc-dnd-overlay::before {
 	content: "";
 	position: absolute;
 	top: 0;
@@ -80,10 +84,6 @@
 	right: 0;
 	background-color: var(--sapGroup_ContentBackground);
 	opacity: 0.8;
-}
-
-.uc-drop-overlay {
-	border: var(--ui5_upload_collection_drop_overlay_border);
 }
 
 /* use pseudo element to set opacity only for the content and not on the border */
@@ -95,7 +95,7 @@
 	left: 0;
 	right: 0;
 	background-color: var(--ui5_upload_collection_drop_overlay_background);
-	opacity: var(--ui5_upload_collection_drop_overlay_background_opacity);
+	opacity: 0.05;
 }
 
 .uc-dnd-overlay ui5-icon {
