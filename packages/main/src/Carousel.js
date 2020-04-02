@@ -308,7 +308,7 @@ class Carousel extends UI5Element {
 
 		return {
 			content: showArrows && this.arrowsPlacement === CarouselArrowsPlacement.Content,
-			navigation:  showArrows && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
+			navigation: showArrows && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
 		};
 	}
 
