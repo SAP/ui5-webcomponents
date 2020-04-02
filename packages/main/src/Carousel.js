@@ -277,12 +277,12 @@ class Carousel extends UI5Element {
 			content: {
 				"ui5-carousel-content": true,
 				"ui5-carousel-content-no-animation": this.shouldAnimate,
-				"ui5-carousel-content-has-navigation": !this.hideNavigation,
-				"ui5-carousel-content-has-navigation-and-buttons": !this.hideNavigation && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
+				"ui5-carousel-content-has-navigation": this.showNavigationArrows,
+				"ui5-carousel-content-has-navigation-and-buttons": this.showNavigationArrows && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
 			},
 			navigation: {
 				"ui5-carousel-navigation-wrapper": true,
-				"ui5-carousel-navigation-with-buttons": this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
+				"ui5-carousel-navigation-with-buttons": this.showNavigationArrows && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
 			},
 			page: {
 				"ui5-carousel-page": true,
@@ -304,9 +304,11 @@ class Carousel extends UI5Element {
 	}
 
 	get arrows() {
+		const showArrows = this.showNavigationArrows && isDesktop();
+
 		return {
-			content: isDesktop() && this.arrowsPlacement === CarouselArrowsPlacement.Content,
-			navigation: isDesktop() && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
+			content: showArrows && this.arrowsPlacement === CarouselArrowsPlacement.Content,
+			navigation:  showArrows && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
 		};
 	}
 
@@ -316,6 +318,10 @@ class Carousel extends UI5Element {
 
 	get currenlySelectedIndexToShow() {
 		return this.selectedIndex + 1;
+	}
+
+	get showNavigationArrows() {
+		return !this.hideNavigation && this.pages.length > 1;
 	}
 
 	static async onDefine() {
