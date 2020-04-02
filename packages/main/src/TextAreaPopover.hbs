@@ -1,0 +1,23 @@
+{{#if displayValueStateMessage}}
+		<ui5-popover
+			skip-registry-update
+			no-padding
+			no-arrow
+			class="ui5-valuestatemessage-popover"
+			placement-type="Bottom"
+		>
+			<div class="{{classes.valueStateMessagePopover}}">
+				{{> valueStateMessage}}
+			</div>
+		</ui5-popover>
+{{/if}}
+
+{{#*inline "valueStateMessage"}}
+	{{#if displayDefaultValueStateMessage}}
+		{{valueStateText}}
+	{{else}}
+		{{#each valueStateMessageText}}
+			{{this}}
+		{{/each}}
+	{{/if}}
+{{/inline}}

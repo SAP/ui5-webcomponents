@@ -1,4 +1,4 @@
-.ui5-input-valuestatemessage-root {
+.ui5-valuestatemessage-root {
 	box-sizing: border-box;
 	display: inline-block;
 	color: var(--sapUiBaseColor);
@@ -9,18 +9,18 @@
 	text-overflow: ellipsis;
 }
 
-.ui5-input-valuestatemessage-success {
+.ui5-valuestatemessage--success {
 	background: var(--sapSuccessBackground);
 }
 
-.ui5-input-valuestatemessage-warning {
+.ui5-valuestatemessage--warning {
 	background: var(--sapWarningBackground);
 }
 
-.ui5-input-valuestatemessage-error {
+.ui5-valuestatemessage--error {
 	background: var(--sapErrorBackground);
 }
 
-.ui5-input-valuestatemessage-information {
+.ui5-valuestatemessage--information {
 	background: var(--sapInformationBackground);
 }

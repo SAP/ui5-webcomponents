@@ -808,11 +808,11 @@ class Input extends UI5Element {
 	get classes() {
 		return {
 			popoverValueState: {
-				"ui5-input-valuestatemessage-root": true,
-				"ui5-input-valuestatemessage-success": this.valueState === ValueState.Success,
-				"ui5-input-valuestatemessage-error": this.valueState === ValueState.Error,
-				"ui5-input-valuestatemessage-warning": this.valueState === ValueState.Warning,
-				"ui5-input-valuestatemessage-information": this.valueState === ValueState.Information,
+				"ui5-valuestatemessage-root": true,
+				"ui5-valuestatemessage--success": this.valueState === ValueState.Success,
+				"ui5-valuestatemessage--error": this.valueState === ValueState.Error,
+				"ui5-valuestatemessage--warning": this.valueState === ValueState.Warning,
+				"ui5-valuestatemessage--information": this.valueState === ValueState.Information,
 			},
 		};
 	}
