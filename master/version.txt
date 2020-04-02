@@ -1,8 +1,8 @@
-commit 6710038f39104134606dde48f34dfb93640d5ed6
+commit 4e2112fbe4201d93ef5c50487386f6b66ffb709a
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Apr 2 11:57:42 2020 +0300
+Date:   Thu Apr 2 13:52:28 2020 +0300
 
-    feat(ui5-textarea): add "valueState" property (#1411)
+    refactor(ui5-input, ui5-textarea): enable customization of font-style (#1413)
     
-    The property works as in the ui5-input, with one note:
-    If maxlength property is set, the component turns into "Warning" state once the characters exceeds the limit.In this case, only the "Error" state is considered and can be applied.
+    Enable users to change the font-style of the text in the input and textarea.
+    It's a recent requirement by the "MDK" project, that consume us.
