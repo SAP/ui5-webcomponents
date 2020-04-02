@@ -27,7 +27,6 @@ module.exports = {
 			},
 			postcss: "postcss dist/**/parameters-bundle.css --config config/postcss.themes --base dist/ --dir dist/css/",
 			jsonImports: `node "${jsonImportsScript}"`,
-		},
-		start: "nps build"
+		}
 	},
 };
