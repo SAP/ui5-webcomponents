@@ -321,6 +321,10 @@ class Select extends UI5Element {
 			this._toggleRespPopover();
 		}
 
+		if (isSpace(event)) {
+			event.preventDefault();
+		}
+
 		if (!this._isPickerOpen) {
 			this._handleArrowNavigation(event, true);
 		}
