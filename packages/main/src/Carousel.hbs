@@ -35,7 +35,7 @@
             </div>
         {{/if}}
 
-        {{#unless hideNavigation}}
+        {{#if showNavigationArrows}}
             <div class="{{classes.navigation}}">
                 {{#if arrows.navigation}}
                 <ui5-button
@@ -70,6 +70,6 @@
                     ></ui5-button>
                 {{/if}}
             </div>
-        {{/unless}}
+        {{/if}}
     </div>
 </section>
