@@ -5,29 +5,28 @@ const assets = require('@ui5/webcomponents-tools/assets-meta.js');
 const jsonImportsScript = resolve.sync("@ui5/webcomponents-tools/lib/generate-json-imports/themes.js");
 
 const allThemes = assets.themes.all;
-const buildLessCommandsNames = allThemes.map(theme => `build.less.${theme}`).join(" ");
-const buildLessCommands = {};
-allThemes.forEach(theme => buildLessCommands[theme] = `lessc src/themes/${theme}/parameters-bundle.less dist/themes/${theme}/parameters-bundle.css`);
+const buildThemesCommands = {};
+const buildThemesCommandsNames = allThemes.map(theme => `build.themes.${theme}`).join(" ");
+
+buildThemesCommands["prepare"] = allThemes.map(theme => `mkdirp dist/themes/${theme}`).join(" && ");
+allThemes.forEach(theme => {
+	buildThemesCommands[theme] = `nps build.themes.copy_${theme}_vars build.themes.copy_${theme}_bundle`;
+	buildThemesCommands[`copy_${theme}_vars`] = `copy-and-watch "../../node_modules/@sap-theming/theming-base-content/content/Base/baseLib/${theme}/css_variables.css" dist/themes/${theme}/`;
+	buildThemesCommands[`copy_${theme}_bundle`] = `copy-and-watch "src/themes/${theme}/parameters-bundle.css" dist/themes/${theme}/`;
+});
 
 module.exports = {
 	scripts: {
 		clean: "rimraf dist",
 		build: {
-			default: "nps clean build.src build.less build.postcss build.jsonImports",
+			default: "nps clean build.src build.themes build.postcss build.jsonImports",
 			src: `copy-and-watch "src/**/*.js" dist/`,
-			less: {
-				default: `nps ${buildLessCommandsNames}`,
-				...buildLessCommands
+			themes: {
+				default: `nps build.themes.prepare ${buildThemesCommandsNames}`,
+				...buildThemesCommands
 			},
 			postcss: "postcss dist/**/parameters-bundle.css --config config/postcss.themes --base dist/ --dir dist/css/",
 			jsonImports: `node "${jsonImportsScript}"`,
-		},
-		start: "nps build watch",
-		watch: {
-			default: 'concurrently "nps watch.src" "nps watch.less" "nps watch.postcss"',
-			src: `copy-and-watch --watch "src/**/*.js" dist/`,
-			less: 'chokidar "src/themes/**/*.less" -c "nps build.less"',
-			postcss: 'nps "build.postcss -w"',
-		},
+		}
 	},
 };
