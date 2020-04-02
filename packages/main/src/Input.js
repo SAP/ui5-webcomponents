@@ -826,10 +826,6 @@ class Input extends UI5Element {
 
 	get styles() {
 		return {
-			root: {
-				"min-height": "1rem",
-				"box-shadow": "none",
-			},
 			popoverHeader: {
 				"width": `${this._inputWidth}px`,
 			},

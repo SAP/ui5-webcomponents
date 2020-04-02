@@ -21,7 +21,6 @@ import {
 // Styles
 import styles from "./generated/themes/TextArea.css.js";
 import valueStateMessageStyles from "./generated/themes/ValueStateMessage.css.js";
-import responsivePopoverCommonStyles from "./generated/themes/ResponsivePopoverCommon.css.js";
 
 /**
  * @public
@@ -333,7 +332,7 @@ class TextArea extends UI5Element {
 	}
 
 	static get staticAreaStyles() {
-		return [responsivePopoverCommonStyles, valueStateMessageStyles];
+		return valueStateMessageStyles;
 	}
 
 	constructor() {
@@ -529,8 +528,6 @@ class TextArea extends UI5Element {
 				"max-height": (this._maxHeight),
 			},
 			valueStateMsgPopover: {
-				"min-height": "1rem",
-				"box-shadow": "none",
 				"max-width": `${this._width}px`,
 			},
 		};

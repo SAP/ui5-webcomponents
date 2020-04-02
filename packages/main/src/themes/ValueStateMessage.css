@@ -1,3 +1,8 @@
+.ui5-valuestatemessage-popover {
+	min-height: 1rem;
+	box-shadow: none;
+}
+
 .ui5-valuestatemessage-root {
 	box-sizing: border-box;
 	display: inline-block;
