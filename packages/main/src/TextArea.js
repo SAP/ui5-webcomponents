@@ -1,5 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
@@ -20,6 +21,7 @@ import {
 // Styles
 import styles from "./generated/themes/TextArea.css.js";
 import valueStateMessageStyles from "./generated/themes/ValueStateMessage.css.js";
+import responsivePopoverCommonStyles from "./generated/themes/ResponsivePopoverCommon.css.js";
 
 /**
  * @public
@@ -87,6 +89,31 @@ const metadata = {
 		 */
 		placeholder: {
 			type: String,
+		},
+
+		/**
+		 * Defines the value state of the <code>ui5-textarea</code>.
+		 * <br><br>
+		 * Available options are:
+		 * <ul>
+		 * <li><code>None</code></li>
+		 * <li><code>Error</code></li>
+		 * <li><code>Warning</code></li>
+		 * <li><code>Success</code></li>
+		 * <li><code>Information</code></li>
+		 * </ul>
+		 * <br><br>
+		 * <b>Note:</b> If <code>maxlength</code> property is set,
+		 * the component turns into "Warning" state once the characters exceeds the limit.
+		 * In this case, only the "Error" state is considered and can be applied.
+		 * @type {ValueState}
+		 * @defaultvalue "None"
+		 * @since 1.0.0-rc.7
+		 * @public
+		 */
+		valueState: {
+			type: ValueState,
+			defaultValue: ValueState.None,
 		},
 
 		/**
@@ -195,14 +222,28 @@ const metadata = {
 			type: Boolean,
 		},
 
+		/**
+		 * @private
+		 */
 		_mirrorText: {
 			type: Object,
 			multiple: true,
 			defaultValue: "",
 		},
+
+		/**
+		 * @private
+		 */
 		_maxHeight: {
 			type: String,
 			noAttribute: true,
+		},
+
+		/**
+		 * @private
+		 */
+		_width: {
+			type: Integer,
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.TextArea.prototype */ {
@@ -287,13 +328,23 @@ class TextArea extends UI5Element {
 	}
 
 	static get staticAreaStyles() {
-		return valueStateMessageStyles;
+		return [responsivePopoverCommonStyles, valueStateMessageStyles];
 	}
 
 	constructor() {
 		super();
 
+		this._firstRendering = true;
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+		this._fnOnResize = this._onResize.bind(this);
+	}
+
+	onEnterDOM() {
+		ResizeHandler.register(this, this._fnOnResize);
+	}
+
+	onExitDOM() {
+		ResizeHandler.deregister(this, this._fnOnResize);
 	}
 
 	onBeforeRendering() {
@@ -315,6 +366,11 @@ class TextArea extends UI5Element {
 		}
 	}
 
+	onAfterRendering() {
+		this.toggleValueStateMessage(this.openValueStateMsgPopover);
+		this._firstRendering = false;
+	}
+
 	getInputDomRef() {
 		return this.getDomRef().querySelector("textarea");
 	}
@@ -329,13 +385,12 @@ class TextArea extends UI5Element {
 
 	_onfocusin() {
 		this.focused = true;
-		if (this.displayValueStateMessage) {
-			this.openPopover();
-		}
+		this._openValueStateMsgPopover = true;
 	}
 
 	_onfocusout() {
 		this.focused = false;
+		this._openValueStateMsgPopover = false;
 	}
 
 	_onchange() {
@@ -366,16 +421,28 @@ class TextArea extends UI5Element {
 		this.fireEvent("value-changed");
 	}
 
+	_onResize() {
+		if (this.displayValueStateMessage) {
+			this._width = this.offsetWidth;
+		}
+	}
+
+	toggleValueStateMessage(toggle) {
+		if (toggle) {
+			this.openPopover();
+		} else {
+			this.closePopover();
+		}
+	}
+
 	async openPopover() {
 		this.popover = await this._getPopover();
-		this.popover.openBy(this);
-		this._isPopoverOpen = true;
+		this.popover && this.popover.openBy(this.shadowRoot.querySelector(".ui5-textarea-inner"));
 	}
 
 	async closePopover() {
 		this.popover = await this._getPopover();
-		this.popover.close();
-		this._isPopoverOpen = false;
+		this.popover && this.popover.close();
 	}
 
 	async _getPopover() {
@@ -432,11 +499,9 @@ class TextArea extends UI5Element {
 
 	get classes() {
 		return {
-			valueStateMessagePopover: {
-				"ui5-valuestatemessage-root": true,
-				"ui5-valuestatemessage--success": this.valueState === ValueState.Success,
+			valueStateMsg: {
 				"ui5-valuestatemessage--error": this.valueState === ValueState.Error,
-				"ui5-valuestatemessage--warning": this.valueState === ValueState.Warning,
+				"ui5-valuestatemessage--warning": this.valueState === ValueState.Warning || this.exceeding,
 				"ui5-valuestatemessage--information": this.valueState === ValueState.Information,
 			},
 		};
@@ -457,6 +522,11 @@ class TextArea extends UI5Element {
 				"height": (this.showExceededText ? "calc(100% - 26px)" : "100%"),
 				"max-height": (this._maxHeight),
 			},
+			valueStateMsgPopover: {
+				"min-height": "1rem",
+				"box-shadow": "none",
+				"max-width": `${this._width}px`,
+			},
 		};
 	}
 
@@ -472,18 +542,29 @@ class TextArea extends UI5Element {
 		return this.valueState === "Error" ? "true" : undefined;
 	}
 
+	get openValueStateMsgPopover() {
+		return !this._firstRendering && this._openValueStateMsgPopover && this.displayValueStateMessage;
+	}
+
 	get displayValueStateMessage() {
-		return this.valueStateMessage.length || (this.valueState !== ValueState.Success && this.valueState !== ValueState.None);
+		return !!this.valueStateMessage.length || this.exceeding || (this.valueState !== ValueState.Success && this.valueState !== ValueState.None);
 	}
 
 	get displayDefaultValueStateMessage() {
-		return !this.valueStateMessage.length && this.valueState !== ValueState.Success && this.valueState !== ValueState.None;
+		if (this.valueStateMessage.length) {
+			return false;
+		}
+
+		return this.exceeding || (this.valueState !== ValueState.Success && this.valueState !== ValueState.None);
+	}
+
+	get valueStateMessageText() {
+		return this.valueStateMessage.map(x => x.cloneNode(true));
 	}
 
 	get valueStateText() {
-		debugger;
 		if (this.valueState !== ValueState.Error && this.exceeding) {
-			return this.valueStateTextMappings()["Warning"];
+			return this.valueStateTextMappings()[ValueState.Warning];
 		}
 
 		return this.valueStateTextMappings()[this.valueState];

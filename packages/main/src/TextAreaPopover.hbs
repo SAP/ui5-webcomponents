@@ -3,10 +3,12 @@
 			skip-registry-update
 			no-padding
 			no-arrow
-			class="ui5-valuestatemessage-popover"
+			_disable-initial-focus
+			style="{{styles.valueStateMsgPopover}}"
 			placement-type="Bottom"
+			horizontal-align="Left"
 		>
-			<div class="{{classes.valueStateMessagePopover}}">
+			<div slot="header" class="ui5-valuestatemessage-root {{classes.valueStateMsg}}">
 				{{> valueStateMessage}}
 			</div>
 		</ui5-popover>
