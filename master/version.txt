@@ -1,12 +1,8 @@
-commit d323d51e72f9989d9f7822bfa389d630f962e4f7
+commit ff46a59037113ad1bfac3879a605f281b3a51452
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Apr 3 09:33:06 2020 +0300
+Date:   Fri Apr 3 10:42:23 2020 +0300
 
-    feat(ui5-textarea): add "valueStateMessage" slot (#1419)
+    chore: fix TextArea  TAB/SHIFT+TAB  interaction (#1420)
     
-    - add "valueStateMessage" slot
-    - rename "valueStateMessage" CSS classes from "ui5-input-valuestatemessage-success" to "ui5-valuestatemessage--success", because they should not belong to the input only and ad two dashes to show modification (by the BEM notation)
-    - there is code duplication at places with the code that handles the valueStateMessage in Input,
-    but also differences related to the fact that the TextArea has no suggestions and has this "exceeding" (like Warning) state.
-    
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/1401
+    Problem: I found out that pressing TAB or SHIFT+TAB from a TextArea with valueStateMessage popover opened is not possible, due to the focus restoring mechanism of the popover, that brings the focus back to the TextArea.
+    Solution: use the 3rd param of Popover.prototype.close as follows: popover.close(false, false, true /*preventFocusRestore*/)
