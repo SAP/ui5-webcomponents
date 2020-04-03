@@ -6,6 +6,7 @@ import Label from "@ui5/webcomponents/dist/Label.js";
 import Link from "@ui5/webcomponents/dist/Link.js";
 import ListItem from "@ui5/webcomponents/dist/ListItem.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import getFileExtension from "@ui5/webcomponents-base/dist/util/getFileExtension.js";
 import UploadState from "./types/UploadState.js";
 import "@ui5/webcomponents-icons/dist/icons/refresh.js";
 import "@ui5/webcomponents-icons/dist/icons/stop.js";
@@ -355,7 +356,7 @@ class UploadCollectionItem extends ListItem {
 	}
 
 	get _fileExtension() {
-		return this.fileName.includes(".") ? `.${this.fileName.split(".").pop()}` : "";
+		return getFileExtension(this.fileName);
 	}
 
 	get _renameBtnText() {
@@ -371,11 +372,15 @@ class UploadCollectionItem extends ListItem {
 	}
 
 	get _progressText() {
-		switch (this.uploadState) {
-		case UploadState.Error: return this.i18nBundle.getText(UPLOADCOLLECTIONITEM_ERROR_STATE);
-		case UploadState.Uploading: return this.i18nBundle.getText(UPLOADCOLLECTIONITEM_UPLOADING_STATE);
-		default: return this.i18nBundle.getText(UPLOADCOLLECTIONITEM_READY_STATE);
+		if (this.uploadState === UploadState.Uploading) {
+			return this.i18nBundle.getText(UPLOADCOLLECTIONITEM_UPLOADING_STATE);
 		}
+
+		if (this.uploadState === UploadState.Error) {
+			return this.i18nBundle.getText(UPLOADCOLLECTIONITEM_ERROR_STATE);
+		}
+
+		return this.i18nBundle.getText(UPLOADCOLLECTIONITEM_READY_STATE);
 	}
 
 	get _showRetry() {

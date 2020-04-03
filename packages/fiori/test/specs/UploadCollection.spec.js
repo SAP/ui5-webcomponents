@@ -123,6 +123,16 @@ describe("UploadCollection", () => {
 
 			assert.strictEqual(noFileExtensionItem.getProperty("fileName"), newFileName2 + ".newExtension", "the string after the last dot is considered as extension");
 		});
+
+		it("should NOT consider hidden file name as extension", () => {
+			const secondItem = browser.$("#secondItem");
+			const editButton = secondItem.shadow$(".ui5-li-detailbtn");
+
+			editButton.click();
+
+			assert.notOk(secondItem.shadow$(".ui5-uci-file-extension").getText(), "no extension is calculated for .gitignore.");
+
+		});
 	});
 
 	describe("Drag and Drop", () => {
