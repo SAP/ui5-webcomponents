@@ -163,6 +163,7 @@ const metadata = {
  * <code>import @ui5/webcomponents/dist/DurationPicker.js";</code>
  *
  * @constructor
+ * @since 1.0.0-rc.7
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.DurationPicker
  * @extends UI5Element
