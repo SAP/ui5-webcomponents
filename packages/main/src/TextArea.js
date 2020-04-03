@@ -1,5 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
@@ -7,16 +8,26 @@ import { isIE } from "@ui5/webcomponents-base/dist/Device.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 
 import TextAreaTemplate from "./generated/templates/TextAreaTemplate.lit.js";
-import { TEXTAREA_CHARACTERS_LEFT, TEXTAREA_CHARACTERS_EXCEEDED } from "./generated/i18n/i18n-defaults.js";
+import TextAreaPopoverTemplate from "./generated/templates/TextAreaPopoverTemplate.lit.js";
+
+import {
+	VALUE_STATE_INFORMATION,
+	VALUE_STATE_ERROR,
+	VALUE_STATE_WARNING,
+	TEXTAREA_CHARACTERS_LEFT,
+	TEXTAREA_CHARACTERS_EXCEEDED,
+} from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import styles from "./generated/themes/TextArea.css.js";
+import valueStateMessageStyles from "./generated/themes/ValueStateMessage.css.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "ui5-textarea",
+	managedSlots: true,
 	properties: /** @lends sap.ui.webcomponents.main.TextArea.prototype */ {
 		/**
 		 * Defines the value of the Web Component.
@@ -210,14 +221,48 @@ const metadata = {
 			type: Boolean,
 		},
 
+		/**
+		 * @private
+		 */
 		_mirrorText: {
 			type: Object,
 			multiple: true,
 			defaultValue: "",
 		},
+
+		/**
+		 * @private
+		 */
 		_maxHeight: {
 			type: String,
 			noAttribute: true,
+		},
+
+		/**
+		 * @private
+		 */
+		_width: {
+			type: Integer,
+		},
+	},
+	slots: /** @lends sap.ui.webcomponents.main.TextArea.prototype */ {
+
+		/**
+		 * Defines the value state message that will be displayed as pop up under the <code>ui5-textarea</code>.
+		 *
+		 * <br><br>
+		 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
+		 *
+		 * <br><br>
+		 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed if the <code>ui5-textarea</code> has
+		 * <code>valueState</code> of type <code>Information</code>, <code>Warning</code> or <code>Error</code>.
+		 * @type {HTMLElement[]}
+		 * @since 1.0.0-rc.7
+		 * @slot
+		 * @public
+		 */
+		valueStateMessage: {
+			type: HTMLElement,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.TextArea.prototype */ {
@@ -282,10 +327,29 @@ class TextArea extends UI5Element {
 		return TextAreaTemplate;
 	}
 
+	static get staticAreaTemplate() {
+		return TextAreaPopoverTemplate;
+	}
+
+	static get staticAreaStyles() {
+		return valueStateMessageStyles;
+	}
+
 	constructor() {
 		super();
 
+		this._firstRendering = true;
+		this._openValueStateMsgPopover = false;
+		this._fnOnResize = this._onResize.bind(this);
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+	}
+
+	onEnterDOM() {
+		ResizeHandler.register(this, this._fnOnResize);
+	}
+
+	onExitDOM() {
+		ResizeHandler.deregister(this, this._fnOnResize);
 	}
 
 	onBeforeRendering() {
@@ -307,6 +371,11 @@ class TextArea extends UI5Element {
 		}
 	}
 
+	onAfterRendering() {
+		this.toggleValueStateMessage(this.openValueStateMsgPopover);
+		this._firstRendering = false;
+	}
+
 	getInputDomRef() {
 		return this.getDomRef().querySelector("textarea");
 	}
@@ -321,10 +390,12 @@ class TextArea extends UI5Element {
 
 	_onfocusin() {
 		this.focused = true;
+		this._openValueStateMsgPopover = true;
 	}
 
 	_onfocusout() {
 		this.focused = false;
+		this._openValueStateMsgPopover = false;
 	}
 
 	_onchange() {
@@ -353,6 +424,35 @@ class TextArea extends UI5Element {
 
 		// Angular two way data binding
 		this.fireEvent("value-changed");
+	}
+
+	_onResize() {
+		if (this.displayValueStateMessage) {
+			this._width = this.offsetWidth;
+		}
+	}
+
+	toggleValueStateMessage(toggle) {
+		if (toggle) {
+			this.openPopover();
+		} else {
+			this.closePopover();
+		}
+	}
+
+	async openPopover() {
+		this.popover = await this._getPopover();
+		this.popover && this.popover.openBy(this.shadowRoot.querySelector(".ui5-textarea-inner"));
+	}
+
+	async closePopover() {
+		this.popover = await this._getPopover();
+		this.popover && this.popover.close();
+	}
+
+	async _getPopover() {
+		const staticAreaItem = await this.getStaticAreaItemDomRef();
+		return staticAreaItem.querySelector("ui5-popover");
 	}
 
 	_tokenizeText(value) {
@@ -402,6 +502,16 @@ class TextArea extends UI5Element {
 		};
 	}
 
+	get classes() {
+		return {
+			valueStateMsg: {
+				"ui5-valuestatemessage--error": this.valueState === ValueState.Error,
+				"ui5-valuestatemessage--warning": this.valueState === ValueState.Warning || this.exceeding,
+				"ui5-valuestatemessage--information": this.valueState === ValueState.Information,
+			},
+		};
+	}
+
 	get styles() {
 		const lineHeight = 1.4 * 16;
 
@@ -417,6 +527,9 @@ class TextArea extends UI5Element {
 				"height": (this.showExceededText ? "calc(100% - 26px)" : "100%"),
 				"max-height": (this._maxHeight),
 			},
+			valueStateMsgPopover: {
+				"max-width": `${this._width}px`,
+			},
 		};
 	}
 
@@ -430,6 +543,44 @@ class TextArea extends UI5Element {
 
 	get ariaInvalid() {
 		return this.valueState === "Error" ? "true" : undefined;
+	}
+
+	get openValueStateMsgPopover() {
+		return !this._firstRendering && this._openValueStateMsgPopover && this.displayValueStateMessage;
+	}
+
+	get displayValueStateMessage() {
+		return !!this.valueStateMessage.length || this.exceeding || (this.valueState !== ValueState.Success && this.valueState !== ValueState.None);
+	}
+
+	get displayDefaultValueStateMessage() {
+		if (this.valueStateMessage.length) {
+			return false;
+		}
+
+		return this.exceeding || (this.valueState !== ValueState.Success && this.valueState !== ValueState.None);
+	}
+
+	get valueStateMessageText() {
+		return this.valueStateMessage.map(x => x.cloneNode(true));
+	}
+
+	get valueStateText() {
+		if (this.valueState !== ValueState.Error && this.exceeding) {
+			return this.valueStateTextMappings()[ValueState.Warning];
+		}
+
+		return this.valueStateTextMappings()[this.valueState];
+	}
+
+	valueStateTextMappings() {
+		const i18nBundle = this.i18nBundle;
+
+		return {
+			"Information": i18nBundle.getText(VALUE_STATE_INFORMATION),
+			"Error": i18nBundle.getText(VALUE_STATE_ERROR),
+			"Warning": i18nBundle.getText(VALUE_STATE_WARNING),
+		};
 	}
 
 	static async onDefine() {

@@ -331,7 +331,8 @@ class Popover extends UI5Element {
 	}
 
 	isOpenerClicked(event) {
-		return event.target === this._opener;
+		const target = event.target;
+		return target === this._opener || (target.getFocusDomRef && target.getFocusDomRef() === this._opener);
 	}
 
 	/**
