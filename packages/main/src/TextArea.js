@@ -447,7 +447,7 @@ class TextArea extends UI5Element {
 
 	async closePopover() {
 		this.popover = await this._getPopover();
-		this.popover && this.popover.close();
+		this.popover && this.popover.close(false, false, true);
 	}
 
 	async _getPopover() {
