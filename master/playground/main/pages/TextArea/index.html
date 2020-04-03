@@ -71,27 +71,35 @@
 	</header>
 
 	<section class="group">
-			<ui5-title>Simple TextArea</ui5-title>
-			<ui5-textarea id="basic-textarea" placeholder="Basic text area"></ui5-textarea>
+		<ui5-title>Value State Message</ui5-title>
+		<br>
+		<ui5-textarea id="textarea-value-state-msg" value="Test" value-state="Error">
+			<div id="value-state-msg" slot="valueStateMessage">Information message. This is a <a href="#">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
+		</ui5-textarea>
+	</section>
 
-			<br>
-			<br>
-			<ui5-textarea id="basic-textarea-error" value="Test" value-state="Error"></ui5-textarea>
+	<section class="group">
+		<ui5-title>Simple TextArea</ui5-title>
+		<ui5-textarea id="basic-textarea" placeholder="Basic text area"></ui5-textarea>
 
-			<br>
-			<br>
-			<ui5-textarea id="basic-textarea-warning" value="Test" value-state="Warning"></ui5-textarea>
-			<br>
-			<br>
+		<br>
+		<br>
+		<ui5-textarea id="basic-textarea-error" value="Test" value-state="Error"></ui5-textarea>
 
-			<ui5-textarea id="basic-textarea-success" value="Test" value-state="Success"></ui5-textarea>
-			<br>
-			<br>
+		<br>
+		<br>
+		<ui5-textarea id="basic-textarea-warning" value="Test" value-state="Warning"></ui5-textarea>
+		<br>
+		<br>
 
-			<br>
-			<br>
-			<ui5-textarea id="basic-textarea-error" value="Test" value-state="Information"></ui5-textarea>
-		</section>
+		<ui5-textarea id="basic-textarea-success" value="Test" value-state="Success"></ui5-textarea>
+		<br>
+		<br>
+
+		<br>
+		<br>
+		<ui5-textarea id="basic-textarea-error" value="Test" value-state="Information"></ui5-textarea>
+	</section>
 
 	<section class="group">
 		<ui5-title>TextArea with value</ui5-title>

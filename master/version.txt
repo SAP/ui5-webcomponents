@@ -1,8 +1,12 @@
-commit 4e2112fbe4201d93ef5c50487386f6b66ffb709a
+commit d323d51e72f9989d9f7822bfa389d630f962e4f7
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Apr 2 13:52:28 2020 +0300
+Date:   Fri Apr 3 09:33:06 2020 +0300
 
-    refactor(ui5-input, ui5-textarea): enable customization of font-style (#1413)
+    feat(ui5-textarea): add "valueStateMessage" slot (#1419)
     
-    Enable users to change the font-style of the text in the input and textarea.
-    It's a recent requirement by the "MDK" project, that consume us.
+    - add "valueStateMessage" slot
+    - rename "valueStateMessage" CSS classes from "ui5-input-valuestatemessage-success" to "ui5-valuestatemessage--success", because they should not belong to the input only and ad two dashes to show modification (by the BEM notation)
+    - there is code duplication at places with the code that handles the valueStateMessage in Input,
+    but also differences related to the fact that the TextArea has no suggestions and has this "exceeding" (like Warning) state.
+    
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/1401
