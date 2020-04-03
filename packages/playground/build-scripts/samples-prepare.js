@@ -20,6 +20,7 @@ const newComponents = [
   "SegmentedButton",
   "TimePicker",
   "Toast",
+  "UploadCollection"
 ];
 
 packages.forEach(package => {

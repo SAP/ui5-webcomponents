@@ -63,7 +63,7 @@ const metadata = {
 		 * Allows you to set your own text for the 'No data' text.
 		 *
 		 * @type {string}
-		 * @defaultvalue  ""
+		 * @defaultvalue ""
 		 * @public
 		 */
 		noDataText: {
@@ -78,7 +78,7 @@ const metadata = {
 		 * <code>ui5-upload-collection</code> only shows an overlay.
 		 *
 		 * @type {boolean}
-		 * @defaultvalue  false
+		 * @defaultvalue false
 		 * @public
 		 */
 		noDnd: {

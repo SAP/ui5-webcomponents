@@ -1,7 +1,7 @@
 import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
 
 /**
- * Different types of AvatarShape.
+ * Different types of UploadState.
  * @lends sap.ui.webcomponents.fiori.types.UploadState.prototype
  * @public
  */
