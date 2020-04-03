@@ -235,20 +235,16 @@ class DurationPicker extends UI5Element {
 
 	setSelectedValues() {
 		const destructuredValues = this.readFormattedValue(this.value || "");
-		const currentHours = destructuredValues[0];
-		let currentMinutes = destructuredValues[1],
+		let currentHours = destructuredValues[0],
+			currentMinutes = destructuredValues[1],
 			currentSeconds = destructuredValues[2];
 
 		if (currentHours > -1) {
 			if (currentHours > this._maxValue[0]) {
-				this.selectedHours = this._maxValue[0];
-			} else if (currentHours.length === 1) {
-				this.selectedHours = `0${currentHours}`;
-			} else if (parseInt(currentHours) < 0 || parseInt(currentHours) > 23) {
-				this.selectedHours = "00";
-			} else {
-				this.selectedHours = currentHours;
+				currentHours = this._maxValue[0];
 			}
+
+			this.selectedHours = this._formatSelectedValue(currentHours, 23);
 		}
 
 		if (currentMinutes > -1) {
@@ -258,13 +254,7 @@ class DurationPicker extends UI5Element {
 				currentMinutes = this._maxValue[1];
 			}
 
-			if (currentMinutes.length === 1) {
-				this.selectedMinutes = `0${currentMinutes}`;
-			} else if (currentMinutes < 0 || currentMinutes > 59) {
-				this.selectedMinutes = "00";
-			} else {
-				this.selectedMinutes = currentMinutes;
-			}
+			this.selectedMinutes = this._formatSelectedValue(currentMinutes, 59);
 		}
 
 		if (currentSeconds > -1) {
@@ -274,14 +264,18 @@ class DurationPicker extends UI5Element {
 				currentSeconds = this._maxValue[2];
 			}
 
-			if (currentSeconds.length === 1) {
-				this.selectedSeconds = `0${currentSeconds}`;
-			} else if (currentSeconds < 0 || currentSeconds > 59) {
-				this.selectedSeconds = "00";
-			} else {
-				this.selectedSeconds = currentSeconds;
-			}
+			this.selectedSeconds = this._formatSelectedValue(currentSeconds, 59);
 		}
+	}
+
+	_formatSelectedValue(currentValue, maximum) {
+		if (currentValue.length === 1) {
+			return `0${currentValue}`;
+		} else if (parseInt(currentValue) < 0 || parseInt(currentValue) > maximum) {
+			return "00";
+		}
+
+		return currentValue;
 	}
 
 	/**
