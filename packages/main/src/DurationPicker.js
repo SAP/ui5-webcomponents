@@ -145,8 +145,8 @@ const metadata = {
  *
  *
  * <h3>Usage</h3>
- * 
- * 
+ *
+ *
  * The Duration Picker is used for input of time. Users are able to select hours, minutes and seconds.
  * The user can enter a time by:
  * <ul>
@@ -271,7 +271,9 @@ class DurationPicker extends UI5Element {
 	_formatSelectedValue(currentValue, maximum) {
 		if (currentValue.length === 1) {
 			return `0${currentValue}`;
-		} else if (parseInt(currentValue) < 0 || parseInt(currentValue) > maximum) {
+		}
+
+		if (parseInt(currentValue) < 0 || parseInt(currentValue) > maximum) {
 			return "00";
 		}
 
@@ -317,7 +319,7 @@ class DurationPicker extends UI5Element {
 		this.value = `${this.hoursSlider.value}:${this.minutesSlider.value}${this.showSeconds ? `:${this.secondsSlider.value}` : ""}`;
 		this.togglePicker();
 		if (prevValue !== this.value) {
-			this.fireEvent("change", { value: this.value});
+			this.fireEvent("change", { value: this.value });
 		}
 	}
 
@@ -327,7 +329,7 @@ class DurationPicker extends UI5Element {
 		this.checkValue();
 
 		if (prevValue !== this.value) {
-			this.fireEvent("change", { value: this.value});
+			this.fireEvent("change", { value: this.value });
 		}
 	}
 
