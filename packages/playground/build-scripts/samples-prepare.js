@@ -15,6 +15,7 @@ const newComponents = [
   "Avatar",
   "Carousel",
   "ComboBox",
+  "DurationPicker",
   "FileUploader",
   "ResponsivePopover",
   "SegmentedButton",
