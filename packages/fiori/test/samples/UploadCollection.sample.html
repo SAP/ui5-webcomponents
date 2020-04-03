@@ -54,18 +54,18 @@
 				<ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
 				Uploaded By: John Smith · Uploaded On: 2014-09-02 · File Size: 226.6 KB ·
 			</ui5-upload-collection-item>
-		</ui5-upload-collection>	
+		</ui5-upload-collection>
 
 		<script>
 			function createThumbnail(fileName) {
-				const icon = document.createElement("ui5-icon");
+				var icon = document.createElement("ui5-icon");
 				icon.name = "document";
 				icon.slot = "thumbnail";
 				return icon;
 			}
 
 			function createUCI(file) {
-				const uci = document.createElement("ui5-upload-collection-item");
+				var uci = document.createElement("ui5-upload-collection-item");
 					description = document.createTextNode("Last modified: " + file.lastModifiedDate + ", size: " + file.size);
 
 				uci.appendChild(createThumbnail(file.name));
@@ -75,19 +75,19 @@
 				return uci;
 			}
 
-			fileUploader.addEventListener("ui5-change", event => {
-				const files = event.detail.files;
+			fileUploader.addEventListener("ui5-change", function(event) {
+				var files = event.detail.files;
 
 				for (var i = 0; i < files.length; i++) {
 					uploadCollection.appendChild(createUCI(files[i]));
 				}
 			});
 
-			startUploading.addEventListener("click", event => {
-				uploadCollection.items.forEach(item => {
+			startUploading.addEventListener("click", function(event) {
+				uploadCollection.items.forEach(function(item) {
 					// if there is a file ready to be uploaded send request
 					if (item.uploadState === "Ready" && item.file) {
-						const oXHR = new XMLHttpRequest();
+						var oXHR = new XMLHttpRequest();
 						
 						oXHR.open("POST", "/upload", true);
 						oXHR.onreadystatechange = function () {
@@ -131,14 +131,14 @@
 </ui5-upload-collection>	
 
 <script>
-	function createThumbnail(fileName) {
+	const createThumbnail = fileName => {
 		const icon = document.createElement("ui5-icon");
 		icon.name = "document";
 		icon.slot = "thumbnail";
 		return icon;
-	}
+	};
 
-	function createUCI(file) {
+	const createUCI  = file => {
 		const uci = document.createElement("ui5-upload-collection-item");
 			description = document.createTextNode("Last modified: " + file.lastModifiedDate + ", size: " + file.size);
 
@@ -152,7 +152,7 @@
 	fileUploader.addEventListener("ui5-change", event => {
 		const files = event.detail.files;
 
-		for (var i = 0; i < files.length; i++) {
+		for (let i = 0; i < files.length; i++) {
 			uploadCollection.appendChild(createUCI(files[i]));
 		}
 	});
@@ -206,7 +206,7 @@
 		</ui5-upload-collection>	
 
 		<script>
-			uploadCollectionWithRenaming.addEventListener("ui5-rename", event => {
+			uploadCollectionWithRenaming.addEventListener("ui5-rename", function(event) {
 				alert("Rename event:" + event.target.fileName)
 			});
 		</script>
@@ -238,7 +238,7 @@
 
 <script>
 	uploadCollectionWithRenaming.addEventListener("ui5-rename", event => {
-		alert("Rename event:" + event.target.fileName)
+		alert("Rename event:" + event.target.fileName);
 	});
 </script>
 	</xmp></pre>
@@ -284,11 +284,11 @@
 		</ui5-upload-collection>
 
 		<script>
-			uploadCollectionStates.addEventListener("ui5-retry", event => {
+			uploadCollectionStates.addEventListener("ui5-retry", function(event) {
 				alert("Retry uploading: " + event.target.fileName);
 			});
 		
-			uploadCollectionStates.addEventListener("ui5-terminate", event => {
+			uploadCollectionStates.addEventListener("ui5-terminate", function(event) {
 				alert("Terminate uploading of: " + event.target.fileName);
 			});
 		</script>
@@ -353,13 +353,13 @@
 		</ui5-upload-collection>
 
 		<script>
-			uploadCollectionDnD.addEventListener("drop", event => {
+			uploadCollectionDnD.addEventListener("drop", function(event) {
 				event.preventDefault();
 
-				const files = event.dataTransfer.files;
+				var files = event.dataTransfer.files;
 
 				// Take the files from the drop event and create <ui5-upload-collection-item> from them
-				for (let i = 0; i < files.length; i++) {
+				for (var i = 0; i < files.length; i++) {
 					uci = createUCI(files[i]);
 					uploadCollectionDnD.appendChild(uci)
 				}
