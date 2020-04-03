@@ -30,6 +30,25 @@ import DurationPickerPopoverCss from "./generated/themes/DurationPickerPopover.c
 const metadata = {
 	tag: "ui5-duration-picker",
 	properties: /** @lends sap.ui.webcomponents.main.DurationPicker.prototype */ {
+		/**
+		 * Defines a formatted time value.
+		 *
+		 * @type {string}
+		 * @defaultvalue "00:00:00"
+		 * @public
+		 */
+		value: {
+			type: String,
+			defaultValue: "00:00:00",
+		},
+
+		/**
+		 * Defines a formatted maximal time that the user will be able to adjust.
+		 *
+		 * @type {string}
+		 * @defaultvalue "00:00:00"
+		 * @public
+		 */
 		maxValue: {
 			type: String,
 		},
@@ -41,20 +60,6 @@ const metadata = {
 		 */
 		showSeconds: {
 			type: Boolean,
-		},
-
-		/**
-		 * Determines the format, displayed in the input field.
-		 *
-		 * Example:
-		 * HH:mm:ss -> 11:42:35
-		 *
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @public
-		 */
-		formatPattern: {
-			type: String,
 		},
 
 		/**
@@ -102,17 +107,6 @@ const metadata = {
 		},
 
 		/**
-		 * Defines a formatted time value.
-		 *
-		 * @type {string}
-		 * @defaultvalue "00:00:00"
-		 * @public
-		 */
-		value: {
-			type: String,
-			defaultValue: "00:00:00",
-		},
-		/**
 		 * @private
 		 */
 		_isPickerOpen: {
@@ -122,24 +116,9 @@ const metadata = {
 		/**
 		 * @private
 		 */
-		_currenValue: {
-			type: Object,
-			multiple: true,
-		},
-
-		/**
-		 * @private
-		 */
 		_maxValue: {
 			type: String,
 			multiple: true,
-		},
-
-		/**
-		 * @private
-		 */
-		_previousValue: {
-			type: String,
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.DurationPicker.prototype */ {
@@ -153,14 +132,6 @@ const metadata = {
 		 * @public
 		*/
 		change: {},
-
-		/**
-		 * Fired when the value of the <code>ui5-timepicker</code> is changed at each key stroke.
-		 *
-		 * @event
-		 * @public
-		*/
-		input: {},
 	},
 };
 
@@ -168,11 +139,23 @@ const metadata = {
  * @class
  *
  * <h3 class="comment-api-title">Overview</h3>
- *
- *
+ * The <code>ui5-duration-picker</code> component provides an input field with assigned sliders which opens on user action.
+ * The <code>ui5-duration-picker</code> allows users to select a time duration.
+ * It consists of two parts: the time input field and the sliders.
  *
  *
  * <h3>Usage</h3>
+ * 
+ * 
+ * The Duration Picker is used for input of time. Users are able to select hours, minutes and seconds.
+ * The user can enter a time by:
+ * <ul>
+ * <li>Using the sliders that opens in a popup</li>
+ * <li>Typing it in directly in the input field</li>
+ * </ul>
+ * <br><br>
+ * When the user makes an entry and chooses the enter key, the sliders shows the corresponding time.
+ * When the user directly triggers the sliders display, the actual time is displayed.
  *
  * For the <code>ui5-duration-picker</code>
  * <h3>ES6 Module Import</h3>
@@ -252,16 +235,16 @@ class DurationPicker extends UI5Element {
 
 	setSelectedValues() {
 		const destructuredValues = this.readFormattedValue(this.value || "");
-		const currentHours = parseInt(destructuredValues[0]);
-		let currentMinutes = parseInt(destructuredValues[1]),
-			currentSeconds = parseInt(destructuredValues[2]);
+		const currentHours = destructuredValues[0];
+		let currentMinutes = destructuredValues[1],
+			currentSeconds = destructuredValues[2];
 
 		if (currentHours > -1) {
 			if (currentHours > this._maxValue[0]) {
 				this.selectedHours = this._maxValue[0];
-			} else if (currentHours >= 0 && currentHours < 10) {
+			} else if (currentHours.length === 1) {
 				this.selectedHours = `0${currentHours}`;
-			} else if (currentHours < 0 || currentHours > 23) {
+			} else if (parseInt(currentHours) < 0 || parseInt(currentHours) > 23) {
 				this.selectedHours = "00";
 			} else {
 				this.selectedHours = currentHours;
@@ -269,13 +252,13 @@ class DurationPicker extends UI5Element {
 		}
 
 		if (currentMinutes > -1) {
-			if (this.selectedHours === "00") {
-				currentMinutes = this._maxValue[1] ? this._maxValue[1] : "59";
+			if (this._maxValue[0] && this.selectedHours === this._maxValue[0]) {
+				currentMinutes = currentMinutes > this._maxValue[1] ? this._maxValue[1] : currentMinutes;
 			} else if (currentMinutes > this._maxValue[1]) {
 				currentMinutes = this._maxValue[1];
 			}
 
-			if (currentMinutes >= 0 && currentMinutes < 10) {
+			if (currentMinutes.length === 1) {
 				this.selectedMinutes = `0${currentMinutes}`;
 			} else if (currentMinutes < 0 || currentMinutes > 59) {
 				this.selectedMinutes = "00";
@@ -285,13 +268,13 @@ class DurationPicker extends UI5Element {
 		}
 
 		if (currentSeconds > -1) {
-			if (this.selectedHours === "00" && this.selectedMinutes === "00") {
-				currentSeconds = this._maxValue[2] ? this._maxValue[2] : "59";
+			if (this._maxValue[0] && this._maxValue[1] && this.selectedHours >= this._maxValue[0] && this.selectedSeconds >= this._maxValue[1]) {
+				currentSeconds = currentSeconds > this._maxValue[2] ? this._maxValue[2] : currentSeconds;
 			} else if (currentSeconds > this._maxValue[2]) {
 				currentSeconds = this._maxValue[2];
 			}
 
-			if (currentSeconds >= 0 && currentSeconds < 10) {
+			if (currentSeconds.length === 1) {
 				this.selectedSeconds = `0${currentSeconds}`;
 			} else if (currentSeconds < 0 || currentSeconds > 59) {
 				this.selectedSeconds = "00";
@@ -340,16 +323,17 @@ class DurationPicker extends UI5Element {
 		this.value = `${this.hoursSlider.value}:${this.minutesSlider.value}${this.showSeconds ? `:${this.secondsSlider.value}` : ""}`;
 		this.togglePicker();
 		if (prevValue !== this.value) {
-			this.fireEvent("change");
+			this.fireEvent("change", { value: this.value});
 		}
 	}
 
-	_handleInputChange() {
+	_handleInputChange(event) {
 		const prevValue = this.value;
+		this.value = event.target.value;
 		this.checkValue();
 
 		if (prevValue !== this.value) {
-			this.fireEvent("change");
+			this.fireEvent("change", { value: this.value});
 		}
 	}
 
@@ -366,7 +350,6 @@ class DurationPicker extends UI5Element {
 		if (this.responsivePopover.opened) {
 			this.togglePicker();
 		}
-		this.fireEvent("input");
 	}
 
 	async togglePicker() {
@@ -379,10 +362,6 @@ class DurationPicker extends UI5Element {
 			this._isPickerOpen = true;
 			this.responsivePopover.open(this);
 		}
-	}
-
-	_getInput() {
-		return this.getDomRef().querySelector("ui5-input");
 	}
 
 	async _getResponsivePopover() {
@@ -427,15 +406,15 @@ class DurationPicker extends UI5Element {
 	}
 
 	get secondsSlider() {
-		return this.responsivePopover && this.responsivePopover.querySelector(".ui5-timepicker-seconds-wheelslider");
+		return this.responsivePopover && this.responsivePopover.querySelector(".ui5-duration-picker-seconds-wheelslider");
 	}
 
 	get minutesSlider() {
-		return this.responsivePopover && this.responsivePopover.querySelector(".ui5-timepicker-minutes-wheelslider");
+		return this.responsivePopover && this.responsivePopover.querySelector(".ui5-duration-picker-minutes-wheelslider");
 	}
 
 	get hoursSlider() {
-		return this.responsivePopover && this.responsivePopover.querySelector(".ui5-timepicker-hours-wheelslider");
+		return this.responsivePopover && this.responsivePopover.querySelector(".ui5-duration-picker-hours-wheelslider");
 	}
 
 	get hoursSliderTitle() {
@@ -461,7 +440,7 @@ class DurationPicker extends UI5Element {
 	get classes() {
 		return {
 			container: {
-				"ui5-timepicker-sliders-container": true,
+				"ui5-duration-picker-sliders-container": true,
 				"ui5-phone": isPhone(),
 			},
 		};

@@ -13,14 +13,14 @@
             cyclic="true"
             ._items="{{hoursArray}}"
             value="{{selectedHours}}"
-            class="ui5-timepicker-wheelslider ui5-timepicker-hours-wheelslider"
+            class="ui5-duration-picker-wheelslider ui5-duration-picker-hours-wheelslider"
             label = "{{hoursSliderTitle}}"
         ></ui5-wheelslider>
         <ui5-wheelslider
             cyclic="true"
             ._items="{{minutesArray}}"
             value="{{selectedMinutes}}"
-            class="ui5-timepicker-wheelslider ui5-timepicker-minutes-wheelslider"
+            class="ui5-duration-picker-wheelslider ui5-duration-picker-minutes-wheelslider"
             label = "{{minutesSliderTitle}}"
         ></ui5-wheelslider>
         {{#if showSeconds}}
@@ -28,13 +28,13 @@
                 cyclic="true"
                 ._items="{{secondsArray}}"
                 value="{{selectedSeconds}}"
-                class="ui5-timepicker-wheelslider ui5-timepicker-seconds-wheelslider"
+                class="ui5-duration-picker-wheelslider ui5-duration-picker-seconds-wheelslider"
                 label = "{{secondsSliderTitle}}"
             ></ui5-wheelslider>
         {{/if}}
     </div>
 
-    <div slot="footer" class="ui5-timepicker-footer" @keydown={{_onfooterkeydown}}>
+    <div slot="footer" class="ui5-duration-picker-footer" @keydown={{_onfooterkeydown}}>
         <ui5-button id="submit" design="Emphasized" @click="{{submitPickers}}">{{submitButtonLabel}}</ui5-button>
         <ui5-button id="close" design="Transparent" @click="{{togglePicker}}">{{cancelButtonLabel}}</ui5-button>
     </div>
