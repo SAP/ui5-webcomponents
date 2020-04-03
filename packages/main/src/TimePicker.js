@@ -543,12 +543,19 @@ class TimePicker extends UI5Element {
 	 * Opens the picker.
 	 * @public
 	 */
-	isValid(value = "") {
+	isValid(value) {
+		if (value === "") {
+			return true;
+		}
 		return !!(value && this.getFormat().parse(value));
 	}
 
-	normalizeValue(sValue) {
-		return this.getFormat().format(this.getFormat().parse(sValue));
+	normalizeValue(value) {
+		if (value === "") {
+			return value;
+		}
+
+		return this.getFormat().format(this.getFormat().parse(value));
 	}
 
 	get _formatPattern() {
