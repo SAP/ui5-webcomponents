@@ -1,0 +1,35 @@
+
+<div class="ui5-uc-root">
+	<div class="ui5-uc-header">
+		<slot name="header"></slot>
+	</div>
+	<div class="ui5-uc-content">
+		<ui5-list
+			mode="{{mode}}"
+			@ui5-selectionChange="{{_onSelectionChange}}"
+			@ui5-itemDelete="{{_onItemDelete}}"
+		>
+			<slot></slot>
+		</ui5-list>
+		{{#if _showNoData}}
+			<div class="uc-no-files">
+				<div class="icon-container">
+					<ui5-icon name="document"></ui5-icon>
+				</div>
+				<ui5-title level="H2">{{_noDataText}}</ui5-title>
+				<ui5-label class="subtitle">{{_noDataDescription}}</ui5-label>
+			</div>
+		{{else if _showDndOverlay}}
+			<div
+				class="{{classes.dndOverlay}}"
+				@dragenter="{{_ondragenter}}"
+				@dragleave="{{_ondragleave}}"
+				@dragover="{{_ondragover}}"
+				@drop="{{_ondrop}}"
+			>
+				<ui5-icon name="upload-to-cloud"></ui5-icon>
+				<span class="dnd-overlay-text">{{_dndOverlayText}}</span>
+			</div>
+		{{/if}}
+	</div>
+</div>
