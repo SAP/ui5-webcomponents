@@ -372,7 +372,6 @@ class TextArea extends UI5Element {
 	}
 
 	onAfterRendering() {
-		console.log("onAfterRendering()", {el: this, open: this.openValueStateMsgPopover});
 		this.toggleValueStateMessage(this.openValueStateMsgPopover);
 		this._firstRendering = false;
 	}
@@ -392,7 +391,6 @@ class TextArea extends UI5Element {
 	_onfocusin() {
 		this.focused = true;
 		this._openValueStateMsgPopover = true;
-		console.log("_onfocusin()",this);
 	}
 
 	_onfocusout() {
