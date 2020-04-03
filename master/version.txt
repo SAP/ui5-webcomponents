@@ -1,10 +1,5 @@
-commit 5a3d1b1cfc2eac5eccef572293e008bd78a5a629
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Apr 3 15:09:41 2020 +0300
+commit 82861f80f752a4c5e951fd2d67543019e3803588
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Fri Apr 3 15:36:28 2020 +0300
 
-    fix(ui5-timepicker): prevent setting valueState="Error" on empty value
-    
-    - Fixes the issue: when the user clears the input of the TimePicker, value-state="Error' is set, but should not as empty value is allowed and valid (this is how it works in openui5). And, the user also gets "change" event and he/she always can set  "Error" state when encounter an empty value.
-    - Refactors the TimePicker tests entirely, as they used to depend on some hardcoded ids that change whenever we add new TimePicker components in the test page.
-    
-    FIXES: https://github.com/SAP/ui5-webcomponents/issues/1398
+    chore: add since tags (#1423)

@@ -7,7 +7,7 @@
   <meta name="keywords" content="ui5-webcomponents,ui5 webcomponents,ui5 web components,webcomponents,web components,ui5,api,docs,documentation,sample,usage,examples,demo,Fiori 3">
 
   
-    <title>Table - UI5 Web Components</title>
+    <title>Duration Picker - UI5 Web Components</title>
 
     
   
@@ -24,17 +24,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Table | UI5 Web Components</title>
+<title>Duration Picker | UI5 Web Components</title>
 <meta name="generator" content="Jekyll v3.8.6" />
-<meta property="og:title" content="Table" />
+<meta property="og:title" content="Duration Picker" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Enterprise-flavored sugar on top of native APIs!" />
 <meta property="og:description" content="Enterprise-flavored sugar on top of native APIs!" />
-<link rel="canonical" href="https://sap.github.io/ui5-webcomponents/master/playground/components/Table/" />
-<meta property="og:url" content="https://sap.github.io/ui5-webcomponents/master/playground/components/Table/" />
+<link rel="canonical" href="https://sap.github.io/ui5-webcomponents/master/playground/components/DurationPicker/" />
+<meta property="og:url" content="https://sap.github.io/ui5-webcomponents/master/playground/components/DurationPicker/" />
 <meta property="og:site_name" content="UI5 Web Components" />
 <script type="application/ld+json">
-{"description":"Enterprise-flavored sugar on top of native APIs!","@type":"WebPage","url":"https://sap.github.io/ui5-webcomponents/master/playground/components/Table/","headline":"Table","@context":"https://schema.org"}</script>
+{"description":"Enterprise-flavored sugar on top of native APIs!","@type":"WebPage","url":"https://sap.github.io/ui5-webcomponents/master/playground/components/DurationPicker/","headline":"Duration Picker","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -1140,9 +1140,9 @@
                   
                 
                   
-                    <li class="navigation-list-item ">
+                    <li class="navigation-list-item  active">
                       
-                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/DurationPicker/" class="navigation-list-link">
+                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/DurationPicker/" class="navigation-list-link active">
                         <div class="component-name">Duration Picker</div>
                         
                       </a>
@@ -1355,9 +1355,9 @@
                   
                 
                   
-                    <li class="navigation-list-item  active">
+                    <li class="navigation-list-item ">
                       
-                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/Table/" class="navigation-list-link active">
+                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/Table/" class="navigation-list-link">
                         <div class="component-name">Table</div>
                         
                       </a>
@@ -1605,460 +1605,64 @@
                 
                   <li class="breadcrumb-nav-list-item"><a href="https://sap.github.io/ui5-webcomponents/master/playground/components">Components</a></li>
                 
-                <li class="breadcrumb-nav-list-item"><span>Table</span></li>
+                <li class="breadcrumb-nav-list-item"><span>Duration Picker</span></li>
               </ol>
             </nav>
           
         
         <div id="main-content" class="page-content" role="main">
-          <style>
-	.header {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		flex-wrap: wrap;
-		height: fit-content;
-		padding: 0.5rem;
-	}
-
-	html[data-sap-ui-browser=ie11] .table-example,
-	html[data-sap-ui-browser=ed15] .table-example,
-	html:not([data-sap-ui-browser^=ie]):not([data-sap-ui-browser^=ed]) .table-unsupported {
-		display: none;
-	}
-
-	.fiori--dark .header,
-	.hcb .header {
-		color: #fff;
-	}
-</style>
-
-<header>
-	<h2 class="control-header">Table</h2>
+          <header class="component-heading">
+	<h2 class="control-header">Duration Picker</h2>
+	<div class="component-heading-since">
+		<span>v1.0.0-rc.7</span>
+	</div>
 </header>
 
 <div class="component-package">@ui5/webcomponents</div>
 
-<div class="control-tag">&lt;ui5-table&gt;</div>
+<div class="control-tag">&lt;ui5-duration-picker&gt;</div>
 
-<section class="table-example">
-	<h3>Basic Table</h3>
-	<div class="snippet flex-column">
-
-		<!-- Header -->
-		<div class="header">
-			<span>Products table - resize your browser to make some columns pop-in</span>
-			<ui5-button id="toggleSticky">Toggle Sticky Column Header</ui5-button>
-		</div>
-
-		<ui5-table class="demo-table" id="tbl">
-			<!-- Columns -->
-			<ui5-table-column slot="columns" style="width: 12rem">
-				<span style="line-height: 1.4rem">Product</span>
-			</ui5-table-column>
-
-			<ui5-table-column slot="columns" min-width="800" popin-text="Supplier">
-				<span style="line-height: 1.4rem">Supplier</span>
-			</ui5-table-column>
-
-			<ui5-table-column slot="columns" min-width="600" popin-text="Dimensions" demand-popin>
-				<span style="line-height: 1.4rem">Dimensions</span>
-			</ui5-table-column>
-
-			<ui5-table-column slot="columns" min-width="600" popin-text="Weight" demand-popin>
-				<span style="line-height: 1.4rem">Weight</span>
-			</ui5-table-column>
-
-			<ui5-table-column slot="columns" >
-				<span style="line-height: 1.4rem">Price</span>
-			</ui5-table-column>
-
-		</ui5-table>
-
+<section>
+	<h3>Basic Duration Picker</h3>
+	<div class="snippet">
+			<ui5-duration-picker value="10:30"></ui5-duration-picker>
 	</div>
-
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="c">&lt;!-- Header --&gt;</span>
-<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"header"</span><span class="nt">&gt;</span>
-	<span class="nt">&lt;span&gt;</span>Products table - resize your browser to make some columns pop-in<span class="nt">&lt;/span&gt;</span>
-	<span class="nt">&lt;button</span> <span class="na">id=</span><span class="s">"toggleSticky"</span> <span class="na">style=</span><span class="s">"height: 32px"</span><span class="nt">&gt;</span>Toggle Sticky Column Header<span class="nt">&lt;/button&gt;</span>
-<span class="nt">&lt;/div&gt;</span>
-
-<span class="nt">&lt;ui5-table</span> <span class="na">class=</span><span class="s">"demo-table"</span> <span class="na">id=</span><span class="s">"table"</span><span class="nt">&gt;</span>
-	<span class="c">&lt;!-- Columns --&gt;</span>
-	<span class="nt">&lt;ui5-table-column</span> <span class="na">slot=</span><span class="s">"columns"</span> <span class="na">style=</span><span class="s">"width: 12rem"</span><span class="nt">&gt;</span>
-		<span class="nt">&lt;span</span> <span class="na">style=</span><span class="s">"line-height: 1.4rem"</span><span class="nt">&gt;</span>Product<span class="nt">&lt;/span&gt;</span>
-	<span class="nt">&lt;/ui5-table-column&gt;</span>
-
-	<span class="nt">&lt;ui5-table-column</span> <span class="na">slot=</span><span class="s">"columns"</span> <span class="na">min-width=</span><span class="s">"800"</span> <span class="na">popin-text=</span><span class="s">"Supplier"</span><span class="nt">&gt;</span>
-		<span class="nt">&lt;span</span> <span class="na">style=</span><span class="s">"line-height: 1.4rem"</span><span class="nt">&gt;</span>Supplier<span class="nt">&lt;/span&gt;</span>
-	<span class="nt">&lt;/ui5-table-column&gt;</span>
-
-	<span class="nt">&lt;ui5-table-column</span> <span class="na">slot=</span><span class="s">"columns"</span> <span class="na">min-width=</span><span class="s">"600"</span> <span class="na">popin-text=</span><span class="s">"Dimensions"</span> <span class="na">demand-popin</span><span class="nt">&gt;</span>
-		<span class="nt">&lt;span</span> <span class="na">style=</span><span class="s">"line-height: 1.4rem"</span><span class="nt">&gt;</span>Dimensions<span class="nt">&lt;/span&gt;</span>
-	<span class="nt">&lt;/ui5-table-column&gt;</span>
-
-	<span class="nt">&lt;ui5-table-column</span> <span class="na">slot=</span><span class="s">"columns"</span> <span class="na">min-width=</span><span class="s">"600"</span> <span class="na">popin-text=</span><span class="s">"Weight"</span> <span class="na">demand-popin</span><span class="nt">&gt;</span>
-		<span class="nt">&lt;span</span> <span class="na">style=</span><span class="s">"line-height: 1.4rem"</span><span class="nt">&gt;</span>Weight<span class="nt">&lt;/span&gt;</span>
-	<span class="nt">&lt;/ui5-table-column&gt;</span>
-
-	<span class="nt">&lt;ui5-table-column</span> <span class="na">slot=</span><span class="s">"columns"</span><span class="nt">&gt;</span>
-		<span class="nt">&lt;span</span> <span class="na">style=</span><span class="s">"line-height: 1.4rem"</span><span class="nt">&gt;</span>Price<span class="nt">&lt;/span&gt;</span>
-	<span class="nt">&lt;/ui5-table-column&gt;</span>
-
-<span class="nt">&lt;/ui5-table&gt;</span>
-		</code></pre></figure></pre>
-	</section>
-
-	<section>
-		<h3>Table with No Data</h3>
-		<div class="snippet flex-column">
-			<ui5-table class="demo-table" no-data-text="No Data" show-no-data>
-				<!-- Columns -->
-				<ui5-table-column slot="columns" style="width: 12rem">
-					<span style="line-height: 1.4rem">Product</span>
-				</ui5-table-column>
-
-				<ui5-table-column slot="columns" min-width="800" popin-text="Supplier">
-					<span style="line-height: 1.4rem">Supplier</span>
-				</ui5-table-column>
-
-				<ui5-table-column slot="columns" min-width="600" popin-text="Dimensions" demand-popin>
-					<span style="line-height: 1.4rem">Dimensions</span>
-				</ui5-table-column>
-
-				<ui5-table-column slot="columns" min-width="600" popin-text="Weight" demand-popin>
-					<span style="line-height: 1.4rem">Weight</span>
-				</ui5-table-column>
-
-				<ui5-table-column slot="columns">
-					<span style="line-height: 1.4rem">Price</span>
-				</ui5-table-column>
-			</ui5-table>
-		</div>
-
-		<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-table</span> <span class="na">class=</span><span class="s">"demo-table"</span> <span class="na">no-data-text=</span><span class="s">"No Data"</span> <span class="na">show-no-data</span><span class="nt">&gt;</span>
-	<span class="nt">&lt;ui5-table-column</span> <span class="na">slot=</span><span class="s">"columns"</span> <span class="na">style=</span><span class="s">"width: 12rem"</span><span class="nt">&gt;</span>
-		<span class="nt">&lt;span</span> <span class="na">style=</span><span class="s">"line-height: 1.4rem"</span><span class="nt">&gt;</span>Product<span class="nt">&lt;/span&gt;</span>
-	<span class="nt">&lt;/ui5-table-column&gt;</span>
-
-	<span class="nt">&lt;ui5-table-column</span> <span class="na">slot=</span><span class="s">"columns"</span> <span class="na">min-width=</span><span class="s">"800"</span> <span class="na">popin-text=</span><span class="s">"Supplier"</span><span class="nt">&gt;</span>
-		<span class="nt">&lt;span</span> <span class="na">style=</span><span class="s">"line-height: 1.4rem"</span><span class="nt">&gt;</span>Supplier<span class="nt">&lt;/span&gt;</span>
-	<span class="nt">&lt;/ui5-table-column&gt;</span>
-
-	<span class="nt">&lt;ui5-table-column</span> <span class="na">slot=</span><span class="s">"columns"</span> <span class="na">min-width=</span><span class="s">"600"</span> <span class="na">popin-text=</span><span class="s">"Dimensions"</span> <span class="na">demand-popin</span><span class="nt">&gt;</span>
-		<span class="nt">&lt;span</span> <span class="na">style=</span><span class="s">"line-height: 1.4rem"</span><span class="nt">&gt;</span>Dimensions<span class="nt">&lt;/span&gt;</span>
-	<span class="nt">&lt;/ui5-table-column&gt;</span>
-
-	<span class="nt">&lt;ui5-table-column</span> <span class="na">slot=</span><span class="s">"columns"</span> <span class="na">min-width=</span><span class="s">"600"</span> <span class="na">popin-text=</span><span class="s">"Weight"</span> <span class="na">demand-popin</span><span class="nt">&gt;</span>
-		<span class="nt">&lt;span</span> <span class="na">style=</span><span class="s">"line-height: 1.4rem"</span><span class="nt">&gt;</span>Weight<span class="nt">&lt;/span&gt;</span>
-	<span class="nt">&lt;/ui5-table-column&gt;</span>
-
-	<span class="nt">&lt;ui5-table-column</span> <span class="na">slot=</span><span class="s">"columns"</span><span class="nt">&gt;</span>
-		<span class="nt">&lt;span</span> <span class="na">style=</span><span class="s">"line-height: 1.4rem"</span><span class="nt">&gt;</span>Price<span class="nt">&lt;/span&gt;</span>
-	<span class="nt">&lt;/ui5-table-column&gt;</span>
-<span class="nt">&lt;/ui5-table&gt;</span>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-duration-picker</span> <span class="na">value=</span><span class="s">"10:30"</span><span class="nt">&gt;&lt;/ui5-duration-picker&gt;</span>
 	</code></pre></figure></pre>
 </section>
 
-<script>
-	const products = {
-		"ProductCollection": [
-			{
-				"ProductId": "HT-1000",
-				"Category": "Laptops",
-				"MainCategory": "Computer Systems",
-				"TaxTarifCode": "1",
-				"SupplierName": "Very Best Screens",
-				"WeightMeasure": 4.2,
-				"WeightUnit": "KG",
-				"Description": "Notebook Basic 15 with 2,80 GHz quad core, 15\" LCD, 4 GB DDR3 RAM, 500 GB Hard Disc, Windows 8 Pro",
-				"Name": "Notebook Basic 15",
-				"DateOfSale": "2017-03-26",
-				"ProductPicUrl": "test-resources/sap/ui/documentation/sdk/images/HT-1000.jpg",
-				"Status": "Available",
-				"Quantity": 10,
-				"UoM": "PC",
-				"CurrencyCode": "EUR",
-				"Price": 956,
-				"Width": 30,
-				"Depth": 18,
-				"Height": 3,
-				"DimUnit": "cm"
-			},
-			{
-				"ProductId": "HT-1001",
-				"Category": "Laptops",
-				"MainCategory": "Computer Systems",
-				"TaxTarifCode": "1",
-				"SupplierName": "Very Best Screens",
-				"WeightMeasure": 4.5,
-				"WeightUnit": "KG",
-				"Description": "Notebook Basic 17 with 2,80 GHz quad core, 17\" LCD, 4 GB DDR3 RAM, 500 GB Hard Disc, Windows 8 Pro",
-				"Name": "Notebook Basic 17",
-				"DateOfSale": "2017-04-17",
-				"ProductPicUrl": "test-resources/sap/ui/documentation/sdk/images/HT-1001.jpg",
-				"Status": "Available",
-				"Quantity": 20,
-				"UoM": "PC",
-				"CurrencyCode": "EUR",
-				"Price": 1249,
-				"Width": 29,
-				"Depth": 17,
-				"Height": 3.1,
-				"DimUnit": "cm"
-			},
-			{
-				"ProductId": "HT-1002",
-				"Category": "Laptops",
-				"MainCategory": "Computer Systems",
-				"TaxTarifCode": "1",
-				"SupplierName": "Very Best Screens",
-				"WeightMeasure": 4.2,
-				"WeightUnit": "KG",
-				"Description": "Notebook Basic 18 with 2,80 GHz quad core, 18\" LCD, 8 GB DDR3 RAM, 1000 GB Hard Disc, Windows 8 Pro",
-				"Name": "Notebook Basic 18",
-				"DateOfSale": "2017-01-07",
-				"ProductPicUrl": "test-resources/sap/ui/documentation/sdk/images/HT-1002.jpg",
-				"Status": "Available",
-				"Quantity": 10,
-				"UoM": "PC",
-				"CurrencyCode": "EUR",
-				"Price": 1570,
-				"Width": 28,
-				"Depth": 19,
-				"Height": 2.5,
-				"DimUnit": "cm"
-			},
-			{
-				"ProductId": "HT-1003",
-				"Category": "Laptops",
-				"MainCategory": "Computer Systems",
-				"TaxTarifCode": "1",
-				"SupplierName": "Smartcards",
-				"WeightMeasure": 4.2,
-				"WeightUnit": "KG",
-				"Description": "Notebook Basic 19 with 2,80 GHz quad core, 19\" LCD, 8 GB DDR3 RAM, 1000 GB Hard Disc, Windows 8 Pro",
-				"Name": "Notebook Basic 19",
-				"DateOfSale": "2017-04-09",
-				"ProductPicUrl": "test-resources/sap/ui/documentation/sdk/images/HT-1003.jpg",
-				"Status": "Available",
-				"Quantity": 15,
-				"UoM": "PC",
-				"CurrencyCode": "EUR",
-				"Price": 1650,
-				"Width": 32,
-				"Depth": 21,
-				"Height": 4,
-				"DimUnit": "cm"
-			},
-			{
-				"ProductId": "HT-1007",
-				"Category": "Accessories",
-				"MainCategory": "Computer Components",
-				"TaxTarifCode": "1",
-				"SupplierName": "Technocom",
-				"WeightMeasure": 0.2,
-				"WeightUnit": "KG",
-				"Description": "Digital Organizer with State-of-the-Art Storage Encryption",
-				"Name": "ITelO Vault",
-				"DateOfSale": "2017-05-17",
-				"ProductPicUrl": "test-resources/sap/ui/documentation/sdk/images/HT-1007.jpg",
-				"Status": "Available",
-				"Quantity": 15,
-				"UoM": "PC",
-				"CurrencyCode": "EUR",
-				"Price": 299,
-				"Width": 32,
-				"Depth": 22,
-				"Height": 3,
-				"DimUnit": "cm"
-			},
-			{
-				"ProductId": "HT-1010",
-				"Category": "Accessories",
-				"MainCategory": "Computer Systems",
-				"TaxTarifCode": "1",
-				"SupplierName": "Very Best Screens",
-				"WeightMeasure": 4.3,
-				"WeightUnit": "KG",
-				"Description": "Notebook Professional 15 with 2,80 GHz quad core, 15\" Multitouch LCD, 8 GB DDR3 RAM, 500 GB SSD - DVD-Writer (DVD-R/+R/-RW/-RAM),Windows 8 Pro",
-				"Name": "Notebook Professional 15",
-				"DateOfSale": "2017-02-22",
-				"ProductPicUrl": "test-resources/sap/ui/documentation/sdk/images/HT-1010.jpg",
-				"Status": "Available",
-				"Quantity": 16,
-				"UoM": "PC",
-				"CurrencyCode": "EUR",
-				"Price": 1999,
-				"Width": 33,
-				"Depth": 20,
-				"Height": 3,
-				"DimUnit": "cm"
-			},
-			{
-				"ProductId": "HT-1011",
-				"Category": "Laptops",
-				"MainCategory": "Computer Systems",
-				"TaxTarifCode": "1",
-				"SupplierName": "Very Best Screens",
-				"WeightMeasure": 4.1,
-				"WeightUnit": "KG",
-				"Description": "Notebook Professional 17 with 2,80 GHz quad core, 17\" Multitouch LCD, 8 GB DDR3 RAM, 500 GB SSD - DVD-Writer (DVD-R/+R/-RW/-RAM),Windows 8 Pro",
-				"Name": "Notebook Professional 17",
-				"DateOfSale": "2017-01-02",
-				"ProductPicUrl": "test-resources/sap/ui/documentation/sdk/images/HT-1011.jpg",
-				"Status": "Available",
-				"Quantity": 17,
-				"UoM": "PC",
-				"CurrencyCode": "EUR",
-				"Price": 2299,
-				"Width": 33,
-				"Depth": 23,
-				"Height": 2,
-				"DimUnit": "cm"
-			},
-			{
-				"ProductId": "HT-1020",
-				"Category": "Accessories",
-				"MainCategory": "Computer Components",
-				"TaxTarifCode": "1",
-				"SupplierName": "Technocom",
-				"WeightMeasure": 0.16,
-				"WeightUnit": "KG",
-				"Description": "Digital Organizer with State-of-the-Art Encryption for Storage and Network Communications",
-				"Name": "ITelO Vault Net",
-				"DateOfSale": "2017-05-08",
-				"ProductPicUrl": "test-resources/sap/ui/documentation/sdk/images/HT-1020.jpg",
-				"Status": "Available",
-				"Quantity": 14,
-				"UoM": "PC",
-				"CurrencyCode": "EUR",
-				"Price": 459,
-				"Width": 10,
-				"Depth": 1.8,
-				"Height": 17,
-				"DimUnit": "cm"
-			},
-			{
-				"ProductId": "HT-1021",
-				"Category": "Accessories",
-				"MainCategory": "Computer Components",
-				"TaxTarifCode": "1",
-				"SupplierName": "Technocom",
-				"WeightMeasure": 0.18,
-				"WeightUnit": "KG",
-				"Description": "Digital Organizer with State-of-the-Art Encryption for Storage and Secure Stellite Link",
-				"Name": "ITelO Vault SAT",
-				"DateOfSale": "2017-06-30",
-				"ProductPicUrl": "test-resources/sap/ui/documentation/sdk/images/HT-1021.jpg",
-				"Status": "Available",
-				"Quantity": 50,
-				"UoM": "PC",
-				"CurrencyCode": "EUR",
-				"Price": 149,
-				"Width": 11,
-				"Depth": 1.7,
-				"Height": 18,
-				"DimUnit": "cm"
-			},
-			{
-				"ProductId": "HT-1022",
-				"Category": "Accessories",
-				"MainCategory": "Computer Components",
-				"TaxTarifCode": "1",
-				"SupplierName": "Technocom",
-				"WeightMeasure": 0.2,
-				"WeightUnit": "KG",
-				"Description": "32 GB Digital Assistant with high-resolution color screen",
-				"Name": "Comfort Easy",
-				"DateOfSale": "2017-03-02",
-				"ProductPicUrl": "test-resources/sap/ui/documentation/sdk/images/HT-1022.jpg",
-				"Status": "Available",
-				"Quantity": 30,
-				"UoM": "PC",
-				"CurrencyCode": "EUR",
-				"Price": 1679,
-				"Width": 84,
-				"Depth": 1.5,
-				"Height": 14,
-				"DimUnit": "cm"
-			},
-			{
-				"ProductId": "HT-1023",
-				"Category": "Accessories",
-				"MainCategory": "Computer Components",
-				"TaxTarifCode": "1",
-				"SupplierName": "Technocom",
-				"WeightMeasure": 0.8,
-				"WeightUnit": "KG",
-				"Description": "64 GB Digital Assistant with high-resolution color screen and synthesized voice output",
-				"Name": "Comfort Senior",
-				"DateOfSale": "2017-02-25",
-				"ProductPicUrl": "test-resources/sap/ui/documentation/sdk/images/HT-1023.jpg",
-				"Status": "Available",
-				"Quantity": 24,
-				"UoM": "PC",
-				"CurrencyCode": "EUR",
-				"Price": 512,
-				"Width": 80,
-				"Depth": 1.6,
-				"Height": 13,
-				"DimUnit": "cm"
-			}
-		]
-	}
+<section>
+	<h3>Duration Picker With Seconds</h3>
+	<div class="snippet">
+			<ui5-duration-picker value="05:00:30" show-seconds></ui5-duration-picker>
+	</div>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-duration-picker</span> <span class="na">value=</span><span class="s">"05:00:30"</span> <span class="na">show-seconds</span><span class="nt">&gt;&lt;/ui5-duration-picker&gt;</span>
+	</code></pre></figure></pre>
+</section>
 
-	let html = '';
-	products.ProductCollection.forEach(function(product, index) {
-		html += '<ui5-table-row >'
-						+ '<ui5-table-cell>'
-							+ '<div class="double-line-content">'
-								+ '<span>'
-									+ '<b>' + product.Name + '</b>'
-								+ '</span>'
-								+ '<span style="margin-top: 0.5rem">' + product.ProductId + '</span>'
-							+ '</div>'
-						+ '</ui5-table-cell>'
+<section>
+	<h3>Duration Picker With Seconds & Max Value</h3>
+	<div class="snippet">
+			<ui5-duration-picker value="05:40:30" max-value="05:30:00" show-seconds></ui5-duration-picker>
+	</div>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-duration-picker</span> <span class="na">value=</span><span class="s">"05:40:30"</span> <span class="na">max-value=</span><span class="s">"05:30:00"</span> <span class="na">show-seconds</span><span class="nt">&gt;&lt;/ui5-duration-picker&gt;</span>
+	</code></pre></figure></pre>
+</section>
 
-						+ '<ui5-table-cell>'
-							+ '<span class="middle" >' + product.SupplierName + '</span>'
-						+ '</ui5-table-cell>'
-
-						+ '<ui5-table-cell>'
-							+ '<span class="middle" >' + product.Width + ' x ' + product.Depth + ' x ' + product.Height + product.DimUnit + '</span>'
-						+ '</ui5-table-cell>'
-
-						+ '<ui5-table-cell>'
-							+ '<span style="color: #2b7c2b" class="middle">'
-								+ '<b>' + product.WeightMeasure + '</b>' + product.WeightUnit + '</span>'
-						+ '</ui5-table-cell>'
-
-						+ '<ui5-table-cell>'
-							+ '<span class="middle" >'
-								+ '<b>' + product.Price + '</b>' + product.CurrencyCode + '</span>'
-						+ '</ui5-table-cell>'
-
-					+ '</ui5-table-row>';
-	});
-	document.getElementById("tbl").insertAdjacentHTML('beforeend', html);
-
-
-	document.getElementById("toggleSticky").addEventListener("click", function(event) {
-		document.getElementById("tbl").stickyColumnHeader = !document.getElementById("tbl").stickyColumnHeader
-	});
-</script>
 
 
     <div class="page-container">
       <div class="api-container">
         <section class="component-description">
-          <h3 class="comment-api-title">Overview</h3>
+          <h3 class="comment-api-title">Overview</h3> The <code>ui5-duration-picker</code> component provides an input field with assigned sliders which opens on user action. The <code>ui5-duration-picker</code> allows users to select a time duration. It consists of two parts: the time input field and the sliders.
 
-The <code>ui5-table</code> component provides a set of sophisticated and convenient functions for responsive table design. It provides a comprehensive set of features for displaying and dealing with vast amounts of data. <br><br> To render the <code>Table</code> properly, the order of the <code>columns</code> should match with the order of the item <code>cells</code> in the <code>rows</code>. <br><br> Desktop and tablet devices are supported. On tablets, special consideration should be given to the number of visible columns and rows due to the limited performance of some devices.
+<h3>Usage</h3>
 
-<h3>ES6 Module Import</h3>
+The Duration Picker is used for input of time. Users are able to select hours, minutes and seconds. The user can enter a time by: <ul> <li>Using the sliders that opens in a popup</li> <li>Typing it in directly in the input field</li> </ul> <br><br> When the user makes an entry and chooses the enter key, the sliders shows the corresponding time. When the user directly triggers the sliders display, the actual time is displayed.
 
-<code>import "@ui5/webcomponents/dist/Table.js";</code> <br> <code>import "@ui5/webcomponents/dist/TableColumn.js";</code> (for <code>ui5-table-column</code>) <br> <code>import "@ui5/webcomponents/dist/TableRow.js";</code> (for <code>ui5-table-row</code>) <br> <code>import "@ui5/webcomponents/dist/TableCell.js";</code> (for <code>ui5-table-cell</code>)
+For the <code>ui5-duration-picker</code> <h3>ES6 Module Import</h3>
+
+<code>import @ui5/webcomponents/dist/DurationPicker.js";</code>
           <section class="component-api space-top">
             
                   <h3 class="comment-api-title" >Properties/Attributes</h3>
@@ -2074,69 +1678,78 @@ The <code>ui5-table</code> component provides a set of sophisticated and conveni
             
                       <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          noDataText
+                          disabled
                             <br>
-                            <code>no-data-text</code>
                         </div>
-                        <div class="cell api-table-content-cell">string</div>
-                        <div class="cell api-table-content-cell">&quot;&quot;</div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell">false</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the text that will be displayed when there is no data and <code>showNoData</code> is present.
+                            Determines whether the <code>ui5-duration-picker</code> is displayed as disabled.
                         </div>
                       </div>
                       <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          showNoData
+                          maxValue
                             <br>
-                            <code>show-no-data</code>
+                            <code>max-value</code>
                         </div>
-                        <div class="cell api-table-content-cell">boolean</div>
-                        <div class="cell api-table-content-cell">false</div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell">&quot;00:00:00&quot;</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines if the value of <code>noDataText</code> will be diplayed when there is no rows present in the table.
+                            Defines a formatted maximal time that the user will be able to adjust.
                         </div>
                       </div>
                       <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          stickyColumnHeader
+                          readonly
                             <br>
-                            <code>sticky-column-header</code>
                         </div>
                         <div class="cell api-table-content-cell">boolean</div>
                         <div class="cell api-table-content-cell">false</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Determines whether the column headers remain fixed at the top of the page during vertical scrolling as long as the Web Component is in the viewport. <br><br> <b>Limitations:</b> <ul> <li>Browsers that do not support this feature: <ul> <li>Internet Explorer</li> <li>Microsoft Edge lower than version 41 (EdgeHTML 16)</li> <li>Mozilla Firefox lower than version 59</li> </ul> </li> <li>Scrolling behavior: <ul> <li>If the Web Component is placed in layout containers that have the <code>overflow: hidden</code> or <code>overflow: auto</code> style definition, this can prevent the sticky elements of the Web Component from becoming fixed at the top of the viewport.</li> </ul> </li> </ul>
+                            Determines whether the <code>ui5-duration-picker</code> is displayed as readonly.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          showSeconds
+                            <br>
+                            <code>show-seconds</code>
+                        </div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell">false</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines whether a slider for secconds will be available. By default there are sliders for hours and minutes only.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          value
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell">&quot;00:00:00&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines a formatted time value.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          valueState
+                            <br>
+                            <code>value-state</code>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell">&quot;None&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Visualizes the validation state of the Web Component, for example <code>Error</code>, <code>Warning</code> and <code>Success</code>.
+            
+            <ul> <li><code>None</code></li> <li><code>Error</code></li> <li><code>Warning</code></li> <li><code>Success</code></li> <li><code>Information</code></li> </ul>
                         </div>
                       </div>
             
                   </div>
             
-                <h3 class="comment-api-title space-top" >Slots</h3>
-            	<p class="small-space-top" >
-            	  This Element provides slot(s). This means it can display its child nodes.<br>
-            	  Unless targeting the default slot, use the <code>slot</code> attribute to define the destination slot for each child.<br>
-            	  Text, along with HTML Elements with no <code>slot</code> attribute, goes the the <code>default</code> slot.
-            	</p>
-            
-                <div class="small-space-top api-table">
-                  <div class="head api-table-header-roll">
-                    <div class="cell api-table-header-cell">Slot</div>
-                    <div class="cell api-table-header-cell">Type</div>
-                    <div class="cell api-table-header-cell">Description</div>
-                  </div>
-            
-                    <div class="row api-table-roll-even">
-                      <div class="cell api-table-content-cell api-table-content-cell-bold">columns</div>
-                      <div class="cell api-table-content-cell">HTMLElement [0..n]</div>
-                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the configuration for the columns of the <code>ui5-table</code>. <br><br> <b>Note:</b> Use <code>ui5-table-column</code> for the intended design.</div>
-                    </div>
-                    <div class="row api-table-roll-odd">
-                      <div class="cell api-table-content-cell api-table-content-cell-bold">default</div>
-                      <div class="cell api-table-content-cell">HTMLElement [0..n]</div>
-                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the <code>ui5-table</code> rows. <br><br> <b>Note:</b> Use <code>ui5-table-row</code> for the intended design.</div>
-                    </div>
-            
-                </div>
             
                   <h3 class="comment-api-title space-top">Events</h3>
                   <p class="small-space-top" >This Web Component fires semantic events upon user interaction. You can bind to these events with the standard DOM APIs, such as <code>addEventListener</code>. </p>
@@ -2148,32 +1761,12 @@ The <code>ui5-table</code> component provides a set of sophisticated and conveni
                     </div>
             
                       <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">popinChange</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">change</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                        Fired when the <code>ui5-table-column</code> is shown as a pop-in instead of hiding it.
-                            <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.6</div>
+                        Fired when the input operation has finished by pressing Enter or on focusout.
                         </div>
                       </div>
             
-                        <tr class="api-table-event-param">
-                          <div class="api-table-content-event-params-wrapper">
-                            <div class="cell api-table-param-name api-table-content-cell api-table-content-cell-bold">poppedColumns</div>
-                            <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> Array <br/> <strong class="api-table-event-description bold">description:</strong> popped-in columns.</div>
-                          </div>
-                        </tr>
-                      <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">rowClick</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                        Fired when a row is clicked.
-                        </div>
-                      </div>
-            
-                        <tr class="api-table-event-param">
-                          <div class="api-table-content-event-params-wrapper">
-                            <div class="cell api-table-param-name api-table-content-cell api-table-content-cell-bold">row</div>
-                            <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> HTMLElement <br/> <strong class="api-table-event-description bold">description:</strong> the clicked row.</div>
-                          </div>
-                        </tr>
                   </div>
             
             
@@ -2181,160 +1774,6 @@ The <code>ui5-table</code> component provides a set of sophisticated and conveni
         </section>
       </div>
     </div>
-      <div class="api-container appended-doc">
-        <h1>TableColumn</h1>
-        <section class="component-description">
-          <h3 class="comment-api-title">Overview</h3>
-
-The <code>ui5-table-column</code> component allows to define column specific properties that are applied when rendering the <code>ui5-table</code> component.
-          <section class="component-api space-top">
-            
-                  <h3 class="comment-api-title" >Properties/Attributes</h3>
-                  <p class="small-space-top" >You can use both properties and attributes with the same effect. The name of each attribute is listed below the name of the property, if different.</p>
-            
-                  <div class="small-space-top api-table">
-                    <div class="head api-table-header-roll">
-                      <div class="cell api-table-header-cell">Name</div>
-                      <div class="cell api-table-header-cell">Type</div>
-                      <div class="cell api-table-header-cell">Default Value</div>
-                      <div class="cell api-table-header-cell">Description</div>
-                    </div>
-            
-                      <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          demandPopin
-                            <br>
-                            <code>demand-popin</code>
-                        </div>
-                        <div class="cell api-table-content-cell">boolean</div>
-                        <div class="cell api-table-content-cell">false</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            According to your <code>minWidth</code> settings, the <code>ui5-table-column</code> can be hidden in different screen sizes. <br><br> Setting this property to <code>true</code>, shows this column as pop-in instead of hiding it.
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          minWidth
-                            <br>
-                            <code>min-width</code>
-                        </div>
-                        <div class="cell api-table-content-cell">number</div>
-                        <div class="cell api-table-content-cell">Infinity</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the minimum table width required to display this column. By default it is always displayed. <br><br> The responsive behavior of the <code>ui5-table</code> is determined by this property. As an example, by setting <code>minWidth</code> property to <code>40em</code> shows this column on tablet (and desktop) but hides it on mobile. <br> For further responsive design options, see <code>demandPopin</code> property.
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          popinText
-                            <br>
-                            <code>popin-text</code>
-                        </div>
-                        <div class="cell api-table-content-cell">string</div>
-                        <div class="cell api-table-content-cell">&quot;&quot;</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            The text for the column when it pops in.
-                        </div>
-                      </div>
-            
-                  </div>
-            
-                <h3 class="comment-api-title space-top" >Slots</h3>
-            	<p class="small-space-top" >
-            	  This Element provides slot(s). This means it can display its child nodes.<br>
-            	  Unless targeting the default slot, use the <code>slot</code> attribute to define the destination slot for each child.<br>
-            	  Text, along with HTML Elements with no <code>slot</code> attribute, goes the the <code>default</code> slot.
-            	</p>
-            
-                <div class="small-space-top api-table">
-                  <div class="head api-table-header-roll">
-                    <div class="cell api-table-header-cell">Slot</div>
-                    <div class="cell api-table-header-cell">Type</div>
-                    <div class="cell api-table-header-cell">Description</div>
-                  </div>
-            
-                    <div class="row api-table-roll-even">
-                      <div class="cell api-table-content-cell api-table-content-cell-bold">default</div>
-                      <div class="cell api-table-content-cell">Node [0..n]</div>
-                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the content of the column header.</div>
-                    </div>
-            
-                </div>
-            
-            
-          </section>
-        </section>
-      </div>
-      <div class="api-container appended-doc">
-        <h1>TableRow</h1>
-        <section class="component-description">
-          <h3 class="comment-api-title">Overview</h3>
-
-The <code>ui5-table-row</code> component represents a row in the <code>ui5-table</code>.
-          <section class="component-api space-top">
-            
-            
-                <h3 class="comment-api-title space-top" >Slots</h3>
-            	<p class="small-space-top" >
-            	  This Element provides slot(s). This means it can display its child nodes.<br>
-            	  Unless targeting the default slot, use the <code>slot</code> attribute to define the destination slot for each child.<br>
-            	  Text, along with HTML Elements with no <code>slot</code> attribute, goes the the <code>default</code> slot.
-            	</p>
-            
-                <div class="small-space-top api-table">
-                  <div class="head api-table-header-roll">
-                    <div class="cell api-table-header-cell">Slot</div>
-                    <div class="cell api-table-header-cell">Type</div>
-                    <div class="cell api-table-header-cell">Description</div>
-                  </div>
-            
-                    <div class="row api-table-roll-even">
-                      <div class="cell api-table-content-cell api-table-content-cell-bold">default</div>
-                      <div class="cell api-table-content-cell">HTMLElement [0..n]</div>
-                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the cells of the <code>ui5-table-row</code>. <br><br> <b>Note:</b> Use <code>ui5-table-cell</code> for the intended design.</div>
-                    </div>
-            
-                </div>
-            
-            
-          </section>
-        </section>
-      </div>
-      <div class="api-container appended-doc">
-        <h1>TableCell</h1>
-        <section class="component-description">
-          <h3 class="comment-api-title">Overview</h3>
-
-The <code>ui5-table-cell</code> component defines the structure of the data in a single <code>ui5-table</code> cell.
-          <section class="component-api space-top">
-            
-            
-                <h3 class="comment-api-title space-top" >Slots</h3>
-            	<p class="small-space-top" >
-            	  This Element provides slot(s). This means it can display its child nodes.<br>
-            	  Unless targeting the default slot, use the <code>slot</code> attribute to define the destination slot for each child.<br>
-            	  Text, along with HTML Elements with no <code>slot</code> attribute, goes the the <code>default</code> slot.
-            	</p>
-            
-                <div class="small-space-top api-table">
-                  <div class="head api-table-header-roll">
-                    <div class="cell api-table-header-cell">Slot</div>
-                    <div class="cell api-table-header-cell">Type</div>
-                    <div class="cell api-table-header-cell">Description</div>
-                  </div>
-            
-                    <div class="row api-table-roll-even">
-                      <div class="cell api-table-content-cell api-table-content-cell-bold">default</div>
-                      <div class="cell api-table-content-cell">Node [0..n]</div>
-                      <div class="cell api-table-content-cell api-table-content-cell-description">Specifies the content of the <code>ui5-table-cell</code>.</div>
-                    </div>
-            
-                </div>
-            
-            
-          </section>
-        </section>
-      </div>
     <footer class="footer-wrapper">
       <div class="footer-links">
         <a class="separator" href="https://www.sap.com/about/legal/privacy.html" target="_blank">Privacy Policy</a>
