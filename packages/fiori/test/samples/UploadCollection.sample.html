@@ -57,34 +57,15 @@
 		</ui5-upload-collection>	
 
 		<script>
-			function fileExtensionToIconName(fileName) {
-				var extension = fileName.split(".").pop();
-
-				switch (extension) {
-					case "bmp":
-					case "jpg":
-					case "jpeg":
-					case "png":
-						return "card";
-					case "docx":
-					case "pdf":
-						return "pdf-attachment";
-					case "txt":
-						return "document-text";
-					default:
-						return "document";
-				}
-			}
-
 			function createThumbnail(fileName) {
-				var icon = document.createElement("ui5-icon");
-				icon.name = fileExtensionToIconName(fileName);
+				const icon = document.createElement("ui5-icon");
+				icon.name = "document";
 				icon.slot = "thumbnail";
 				return icon;
 			}
 
 			function createUCI(file) {
-				var uci = document.createElement("ui5-upload-collection-item");
+				const uci = document.createElement("ui5-upload-collection-item");
 					description = document.createTextNode("Last modified: " + file.lastModifiedDate + ", size: " + file.size);
 
 				uci.appendChild(createThumbnail(file.name));
@@ -94,21 +75,22 @@
 				return uci;
 			}
 
-			fileUploader.addEventListener("ui5-change", function(event) {
-				var files = event.detail.files;
+			fileUploader.addEventListener("ui5-change", event => {
+				const files = event.detail.files;
 
 				for (var i = 0; i < files.length; i++) {
 					uploadCollection.appendChild(createUCI(files[i]));
 				}
 			});
 
-			startUploading.addEventListener("click", function(event) {
-				uploadCollection.items.forEach(function (item) {
+			startUploading.addEventListener("click", event => {
+				uploadCollection.items.forEach(item => {
+					// if there is a file ready to be uploaded send request
 					if (item.uploadState === "Ready" && item.file) {
-						var oXHR = new XMLHttpRequest();
+						const oXHR = new XMLHttpRequest();
 						
 						oXHR.open("POST", "/upload", true);
-						oXHR.onreadystatechange  = function () {
+						oXHR.onreadystatechange = function () {
 							if (this.status !== 200) {
 								item.uploadState = "Error";
 							}
@@ -121,22 +103,6 @@
 		</script>
 	</div>
 	<pre class="prettyprint lang-html"><xmp>
-<style>
-	.header {
-		display: flex;
-		align-items: center;
-		overflow: hidden;
-	}
-
-	.spacer {
-		flex: 1 1 auto;
-	}
-
-	.header > * {
-		margin: 4px;
-	}
-</style>
-
 <ui5-upload-collection id="uploadCollection">
 	<div slot="header" class="header">
 		<ui5-title>Uploaded (2)</ui5-title>
@@ -165,34 +131,15 @@
 </ui5-upload-collection>	
 
 <script>
-	function fileExtensionToIconName(fileName) {
-		var extension = fileName.split(".").pop();
-
-		switch (extension) {
-			case "bmp":
-			case "jpg":
-			case "jpeg":
-			case "png":
-				return "card";
-			case "docx":
-			case "pdf":
-				return "pdf-attachment";
-			case "txt":
-				return "document-text";
-			default:
-				return "document";
-		}
-	}
-
 	function createThumbnail(fileName) {
-		var icon = document.createElement("ui5-icon");
-		icon.name = fileExtensionToIconName(fileName);
+		const icon = document.createElement("ui5-icon");
+		icon.name = "document";
 		icon.slot = "thumbnail";
 		return icon;
 	}
 
 	function createUCI(file) {
-		var uci = document.createElement("ui5-upload-collection-item");
+		const uci = document.createElement("ui5-upload-collection-item");
 			description = document.createTextNode("Last modified: " + file.lastModifiedDate + ", size: " + file.size);
 
 		uci.appendChild(createThumbnail(file.name));
@@ -202,18 +149,19 @@
 		return uci;
 	}
 
-	fileUploader.addEventListener("ui5-change", function(event) {
-		var files = event.detail.files;
+	fileUploader.addEventListener("ui5-change", event => {
+		const files = event.detail.files;
 
 		for (var i = 0; i < files.length; i++) {
 			uploadCollection.appendChild(createUCI(files[i]));
 		}
 	});
 
-	startUploading.addEventListener("click", function(event) {
-		uploadCollection.items.forEach(function (item) {
+	startUploading.addEventListener("click", event => {
+		uploadCollection.items.forEach(item => {
+			// if there is a file ready to be uploaded send request
 			if (item.uploadState === "Ready" && item.file) {
-				var oXHR = new XMLHttpRequest();
+				const oXHR = new XMLHttpRequest();
 				
 				oXHR.open("POST", "/upload", true);
 				oXHR.onreadystatechange  = function () {
@@ -258,7 +206,7 @@
 		</ui5-upload-collection>	
 
 		<script>
-			uploadCollectionWithRenaming.addEventListener("ui5-rename", function (event) {
+			uploadCollectionWithRenaming.addEventListener("ui5-rename", event => {
 				alert("Rename event:" + event.target.fileName)
 			});
 		</script>
@@ -289,7 +237,7 @@
 </ui5-upload-collection>	
 
 <script>
-	uploadCollectionWithRenaming.addEventListener("ui5-rename", function (event) {
+	uploadCollectionWithRenaming.addEventListener("ui5-rename", event => {
 		alert("Rename event:" + event.target.fileName)
 	});
 </script>
@@ -336,11 +284,11 @@
 		</ui5-upload-collection>
 
 		<script>
-			uploadCollectionStates.addEventListener("ui5-retry", function (event) {
+			uploadCollectionStates.addEventListener("ui5-retry", event => {
 				alert("Retry uploading: " + event.target.fileName);
 			});
 		
-			uploadCollectionStates.addEventListener("ui5-terminate", function (event) {
+			uploadCollectionStates.addEventListener("ui5-terminate", event => {
 				alert("Terminate uploading of: " + event.target.fileName);
 			});
 		</script>
@@ -383,11 +331,11 @@
 </ui5-upload-collection>
 
 <script>
-	uploadCollectionStates.addEventListener("ui5-retry", function (event) {
+	uploadCollectionStates.addEventListener("ui5-retry", event => {
 		alert("Retry uploading: " + event.target.fileName);
 	});
 
-	uploadCollectionStates.addEventListener("ui5-terminate", function (event) {
+	uploadCollectionStates.addEventListener("ui5-terminate", event => {
 		alert("Terminate uploading of: " + event.target.fileName);
 	});
 </script>
@@ -405,49 +353,13 @@
 		</ui5-upload-collection>
 
 		<script>
-			function fileExtensionToIconName(fileName) {
-				var extension = fileName.split(".").pop();
-
-				switch (extension) {
-					case "bmp":
-					case "jpg":
-					case "jpeg":
-					case "png":
-						return "card";
-					case "docx":
-					case "pdf":
-						return "pdf-attachment";
-					case "txt":
-						return "document-text";
-					default:
-						return "document";
-				}
-			}
-
-			function createThumbnail(fileName) {
-				var icon = document.createElement("ui5-icon");
-				icon.name = fileExtensionToIconName(fileName);
-				icon.slot = "thumbnail";
-				return icon;
-			}
-
-			function createUCI(file) {
-				var uci = document.createElement("ui5-upload-collection-item");
-					description = document.createTextNode("Last modified: " + file.lastModifiedDate + ", size: " + file.size);
-
-				uci.appendChild(createThumbnail(file.name));
-				uci.appendChild(description);
-				uci.file = file;
-				uci.fileName = file.name;
-				return uci;
-			}
-
-			uploadCollectionDnD.addEventListener("drop", function(event) {
+			uploadCollectionDnD.addEventListener("drop", event => {
 				event.preventDefault();
 
-				var files = event.dataTransfer.files;
+				const files = event.dataTransfer.files;
 
-				for (var i = 0; i < files.length; i++) {
+				// Take the files from the drop event and create <ui5-upload-collection-item> from them
+				for (let i = 0; i < files.length; i++) {
 					uci = createUCI(files[i]);
 					uploadCollectionDnD.appendChild(uci)
 				}
@@ -463,49 +375,13 @@
 </ui5-upload-collection>
 
 <script>
-	function fileExtensionToIconName(fileName) {
-		var extension = fileName.split(".").pop();
-
-		switch (extension) {
-			case "bmp":
-			case "jpg":
-			case "jpeg":
-			case "png":
-				return "card";
-			case "docx":
-			case "pdf":
-				return "pdf-attachment";
-			case "txt":
-				return "document-text";
-			default:
-				return "document";
-		}
-	}
-
-	function createThumbnail(fileName) {
-		var icon = document.createElement("ui5-icon");
-		icon.name = fileExtensionToIconName(fileName);
-		icon.slot = "thumbnail";
-		return icon;
-	}
-
-	function createUCI(file) {
-		var uci = document.createElement("ui5-upload-collection-item");
-			description = document.createTextNode("Last modified: " + file.lastModifiedDate + ", size: " + file.size);
-
-		uci.appendChild(createThumbnail(file.name));
-		uci.appendChild(description);
-		uci.file = file;
-		uci.fileName = file.name;
-		return uci;
-	}
-
-	uploadCollectionDnD.addEventListener("drop", function(event) {
+	uploadCollectionDnD.addEventListener("drop", event => {
 		event.preventDefault();
 
-		var files = event.dataTransfer.files;
+		const files = event.dataTransfer.files;
 
-		for (var i = 0; i < files.length; i++) {
+		// Take the files from the drop event and create <ui5-upload-collection-item> from them
+		for (let i = 0; i < files.length; i++) {
 			uci = createUCI(files[i]);
 			uploadCollectionDnD.appendChild(uci)
 		}
