@@ -540,7 +540,11 @@ class TimePicker extends UI5Element {
 	}
 
 	/**
-	 * Opens the picker.
+	 * Checks if a value is valid against the current format patternt of the TimePicker.
+	 *
+	 * <br><br>
+	 * <b>Note:</b> an empty string is considered as valid value.
+	 * @param {string} value The value to be tested against the current date format
 	 * @public
 	 */
 	isValid(value) {
