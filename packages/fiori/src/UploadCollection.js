@@ -39,7 +39,7 @@ const metadata = {
 		 * <b>Note:</b> Available options are <code>None</code>, <code>SingleSelect</code>,
 		 * <code>MultiSelect</code>, and <code>Delete</code>.
 		 *
-		 * @type {string}
+		 * @type {ListMode}
 		 * @defaultvalue "None"
 		 * @public
 		 */
@@ -52,6 +52,7 @@ const metadata = {
 		 * Allows you to set your own text for the 'No data' description.
 		 *
 		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		noDataDescription: {
@@ -62,6 +63,7 @@ const metadata = {
 		 * Allows you to set your own text for the 'No data' text.
 		 *
 		 * @type {string}
+		 * @defaultvalue  ""
 		 * @public
 		 */
 		noDataText: {
@@ -76,6 +78,7 @@ const metadata = {
 		 * <code>ui5-upload-collection</code> only shows an overlay.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue  false
 		 * @public
 		 */
 		noDnd: {
@@ -85,6 +88,8 @@ const metadata = {
 		/**
 		 * Indicates what overlay to show when files are being dragged.
 		 *
+		 * @type {UploadCollectionDnDOverlayMode}
+		 * @defaultvalue "None"
 		 * @private
 		 */
 		_dndOverlayMode: {
@@ -167,6 +172,7 @@ const metadata = {
  * @tagname ui5-upload-collection
  * @appenddocs UploadCollectionItem
  * @public
+ * @since 1.0.0-rc.7
  */
 class UploadCollection extends UI5Element {
 	static get metadata() {

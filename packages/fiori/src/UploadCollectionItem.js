@@ -1,7 +1,6 @@
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
-import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Input from "@ui5/webcomponents/dist/Input.js";
 import Label from "@ui5/webcomponents/dist/Label.js";
 import Link from "@ui5/webcomponents/dist/Link.js";
@@ -48,6 +47,7 @@ const metadata = {
 		 * The name of the file.
 		 *
 		 * @type {string}
+		 * @defaultvalue ""
 		 * @public
 		 */
 		fileName: {
@@ -58,6 +58,7 @@ const metadata = {
 		 * If set to <code>true</code> the file name will be clickable and it will fire <code>fileNameClick</code> event upon click.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		fileNameClickable: {
@@ -68,16 +69,31 @@ const metadata = {
 		 * Removes delete option from <code>ui5-upload-collection</code> with <code>mode</code> <code>Delete</code> for this item.
 		 *
 		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
 		 */
 		noDelete: {
 			type: Boolean,
 		},
 
+		/**
+		 * Hides the retry button when <code>uploadState</code> property is <code>Error</code>.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 */
 		noRetry: {
 			type: Boolean,
 		},
 
+		/**
+		 * Hides the terminate button when <code>uploadState</code> property is <code>Uploading</code>.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 */
 		noTerminate: {
 			type: Boolean,
 		},
@@ -98,8 +114,10 @@ const metadata = {
 
 		/**
 		 * If set to <code>Uploading</code> or <code>Error</code>, a progress indicator showing the <code>progress</code> is displayed.
+		 * Also if set to <code>Error</code>, a refresh button is shown. When this icon is pressed <code>retry</code> event is fired.
+		 * If set to <code>Uploading</code>, a terminate button is shown. When this icon is pressed <code>terminate</code> event is fired.
 		 *
-		 * @type {string}
+		 * @type {UploadState}
 		 * @defaultvalue "Ready"
 		 * @public
 		 */
@@ -111,6 +129,8 @@ const metadata = {
 		/**
 		 * Indicates if editing.
 		 *
+		 * @type {boolean}
+		 * @defaultvalue false
 		 * @private
 		 */
 		_editing: {
@@ -201,6 +221,7 @@ const metadata = {
  * @extends UI5Element
  * @tagname ui5-upload-collection-item
  * @public
+ * @since 1.0.0-rc.7
  */
 class UploadCollectionItem extends ListItem {
 	static get metadata() {
@@ -222,7 +243,6 @@ class UploadCollectionItem extends ListItem {
 	static async onDefine() {
 		await Promise.all([
 			Button.define(),
-			Icon.define(),
 			Input.define(),
 			Link.define(),
 			Label.define(),
