@@ -1,8 +1,10 @@
-commit ff46a59037113ad1bfac3879a605f281b3a51452
+commit 5a3d1b1cfc2eac5eccef572293e008bd78a5a629
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Apr 3 10:42:23 2020 +0300
+Date:   Fri Apr 3 15:09:41 2020 +0300
 
-    chore: fix TextArea  TAB/SHIFT+TAB  interaction (#1420)
+    fix(ui5-timepicker): prevent setting valueState="Error" on empty value
     
-    Problem: I found out that pressing TAB or SHIFT+TAB from a TextArea with valueStateMessage popover opened is not possible, due to the focus restoring mechanism of the popover, that brings the focus back to the TextArea.
-    Solution: use the 3rd param of Popover.prototype.close as follows: popover.close(false, false, true /*preventFocusRestore*/)
+    - Fixes the issue: when the user clears the input of the TimePicker, value-state="Error' is set, but should not as empty value is allowed and valid (this is how it works in openui5). And, the user also gets "change" event and he/she always can set  "Error" state when encounter an empty value.
+    - Refactors the TimePicker tests entirely, as they used to depend on some hardcoded ids that change whenever we add new TimePicker components in the test page.
+    
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/1398
