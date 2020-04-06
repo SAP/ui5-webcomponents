@@ -201,6 +201,10 @@
       
     
       
+    
+      
+    
+      
         
       
     
@@ -238,6 +242,10 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
                 
                   
                 
@@ -542,6 +550,8 @@
                 
                   
                 
+                  
+                
               </ul>
             
           </li>
@@ -564,6 +574,10 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
                 
                   
                 
@@ -832,6 +846,8 @@
                 
                   
                 
+                  
+                
               </ul>
             
           </li>
@@ -854,6 +870,10 @@
             
               
               <ul class="navigation-list-child-list  visible">
+                
+                  
+                
+                  
                 
                   
                 
@@ -1145,6 +1165,8 @@
                       <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/DurationPicker/" class="navigation-list-link">
                         <div class="component-name">Duration Picker</div>
                         
+                          <span class="new-tag">NEW</span>
+                        
                       </a>
                       
                     </li>
@@ -1435,12 +1457,29 @@
                     </li>
                   
                 
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/UploadCollection/" class="navigation-list-link">
+                        <div class="component-name">Upload Collection</div>
+                        
+                          <span class="new-tag">NEW</span>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
               </ul>
             
           </li>
         
       
     
+      
+    
+      
+        
       
     
       
@@ -1653,19 +1692,23 @@
 </section>
 
 <section>
-	<h3>Input With Suggestions (Note: the usage depends on the framework you are using)</h3>
+	<h3>Input With Suggestions (note: the usage depends on the framework you are using)</h3>
 	<div class="snippet">
-		<ui5-input id="suggestions-input" class="samples-responsive-padding-bottom" placeholder="Start typing country name" show-suggestions>
-		</ui5-input>
+		<ui5-input
+			id="suggestions-input"
+			class="samples-responsive-padding-bottom"
+			placeholder="Start typing country name"
+			show-suggestions
+		></ui5-input>
 
 		<script>
-			var ui5_database_entries =  ["Argentina", "Albania", "Algeria", "Angola", "Austria",  "Australia", "Bulgaria", "Canada", "Columbia", "Croatia", "Denmark",
-"England", "Finland", "France", "Germany", "Hungary", "Ireland", "Italy", "Kuwait", "Luxembourg", "Mexico", "Morocco", "Norway", "Paraguay", "Philippines", "Portugal", "Spain", "Sweden", "Sri Lanka", "Senegal", "United Kingdom", "USA" ];
+			var input = document.getElementById("suggestions-input");
 
-			var oInput = document.getElementById("suggestions-input");
+			var ui5_database_entries = ["Argentina", "Albania", "Algeria", "Angola", "Austria",  "Australia", "Bulgaria", "Canada", "Columbia", "Croatia", "Denmark",
+	"England", "Finland", "France", "Germany", "Hungary", "Ireland", "Italy", "Kuwait", "Luxembourg", "Mexico", "Morocco", "Norway", "Paraguay", "Philippines", "Portugal", "Spain", "Sweden", "Sri Lanka", "Senegal", "United Kingdom", "USA" ];
 
-			oInput.addEventListener("input", function(event) {
-				var value = event.target.value;
+			input.addEventListener("input", function(event) {
+				var value = input.value;
 				var suggestionItems = [];
 
 				if (value) {
@@ -1674,16 +1717,18 @@
 					});
 				}
 
-				[].slice.call(oInput.children).forEach(function(child) {
-					oInput.removeChild(child);
+				[].slice.call(input.children).forEach(function(child) {
+					input.removeChild(child);
 				});
 
 				suggestionItems.forEach(function(item) {
 					var li = document.createElement("ui5-suggestion-item");
 					li.icon = "world";
-					li.id = item;
+					li.info = "explore";
+					li.infoState = "Success";
+					li.description = "travel the world";
 					li.text = item;
-					oInput.appendChild(li);
+					input.appendChild(li);
 				});
 			});
 		</script>
@@ -1691,34 +1736,36 @@
 	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-input</span> <span class="na">id=</span><span class="s">"suggestions-input"</span> <span class="na">show-suggestions</span> <span class="na">placeholder=</span><span class="s">"Start typing country name"</span><span class="nt">&gt;&lt;/ui5-input&gt;</span>
 
 <span class="nt">&lt;script&gt;</span>
-	<span class="c1">// Add some suggestions, can receive them from back end as well</span>
-	<span class="kd">var</span> <span class="nx">ui5_database_entries</span> <span class="o">=</span> <span class="p">[</span><span class="dl">"</span><span class="s2">Argentina</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Albania</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Algeria</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Angola</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Austria</span><span class="dl">"</span><span class="p">,</span>  <span class="dl">"</span><span class="s2">Australia</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Bulgaria</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Canada</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Columbia</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Croatia</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Denmark</span><span class="dl">"</span><span class="p">,</span>
-	<span class="dl">"</span><span class="s2">England</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Finland</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">France</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Germany</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Hungary</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Ireland</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Italy</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Kuwait</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Luxembourg</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Mexico</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Morocco</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Norway</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Paraguay</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Philippines</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Portugal</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Spain</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Sweden</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Sri Lanka</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Senegal</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">United Kingdom</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">USA</span><span class="dl">"</span> <span class="p">];</span>
+	<span class="c1">// data</span>
+	<span class="kd">var</span> <span class="nx">ui5_database_entries</span> <span class="o">=</span> <span class="p">[</span><span class="dl">"</span><span class="s2">Argentina</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Bulgaria</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Canada</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Columbia</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Croatia</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Denmark</span><span class="dl">"</span><span class="p">,</span> <span class="dl">'</span><span class="s1">...</span><span class="dl">'</span><span class="p">];</span>
 
-	<span class="kd">var</span> <span class="nx">oInput</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">suggestions-input</span><span class="dl">"</span><span class="p">);</span>
-	<span class="c1">// Listen for the input event</span>
-	<span class="nx">oInput</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">input</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-		<span class="kd">var</span> <span class="nx">value</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
-		<span class="kd">var</span> <span class="nx">suggestionItems</span> <span class="o">=</span> <span class="nb">Array</span><span class="p">();</span>
-		<span class="c1">// Find the new suggestions</span>
+	<span class="kd">var</span> <span class="nx">input</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">suggestions-input</span><span class="dl">"</span><span class="p">);</span>
+	
+	<span class="c1">// listen for the input event</span>
+	<span class="nx">input</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">input</span><span class="dl">"</span><span class="p">,</span> <span class="nx">event</span> <span class="o">=&gt;</span> <span class="p">{</span>
+		<span class="kd">var</span> <span class="nx">value</span> <span class="o">=</span> <span class="nx">input</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
+		<span class="kd">var</span> <span class="nx">suggestionItems</span> <span class="o">=</span> <span class="p">[];</span>
+
 		<span class="k">if</span> <span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
-			<span class="nx">suggestionItems</span> <span class="o">=</span> <span class="nx">ui5_database_entries</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">item</span><span class="p">)</span> <span class="p">{</span>
+			<span class="nx">suggestionItems</span> <span class="o">=</span> <span class="nx">ui5_database_entries</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nx">item</span> <span class="o">=&gt;</span> <span class="p">{</span>
 				<span class="k">return</span> <span class="nx">item</span><span class="p">.</span><span class="nx">toUpperCase</span><span class="p">().</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">value</span><span class="p">.</span><span class="nx">toUpperCase</span><span class="p">())</span> <span class="o">===</span> <span class="mi">0</span><span class="p">;</span>
 			<span class="p">});</span>
 		<span class="p">}</span>
-		<span class="c1">// Clear the current suggestions</span>
-		<span class="p">[].</span><span class="nx">slice</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">oInput</span><span class="p">.</span><span class="nx">children</span><span class="p">).</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">child</span><span class="p">)</span> <span class="p">{</span>
-			<span class="k">if</span> <span class="p">(</span><span class="nx">child</span><span class="p">.</span><span class="nx">id</span> <span class="o">!==</span> <span class="dl">"</span><span class="s2">user-icon</span><span class="dl">"</span><span class="p">)</span> <span class="p">{</span>
-				<span class="nx">oInput</span><span class="p">.</span><span class="nx">removeChild</span><span class="p">(</span><span class="nx">child</span><span class="p">);</span>
-			<span class="p">}</span>
+
+		<span class="c1">// remove the previous suggestions</span>
+		<span class="p">[].</span><span class="nx">slice</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">input</span><span class="p">.</span><span class="nx">children</span><span class="p">).</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">child</span> <span class="o">=&gt;</span> <span class="p">{</span>
+			<span class="nx">input</span><span class="p">.</span><span class="nx">removeChild</span><span class="p">(</span><span class="nx">child</span><span class="p">);</span>
 		<span class="p">});</span>
-		<span class="c1">// Add the new suggestions in the DOM</span>
-		<span class="nx">suggestionItems</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">item</span><span class="p">)</span> <span class="p">{</span>
+
+		<span class="c1">// add the new suggestions according to the  user input</span>
+		<span class="nx">suggestionItems</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">item</span> <span class="o">=&gt;</span> <span class="p">{</span>
 			<span class="kd">var</span> <span class="nx">li</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="dl">"</span><span class="s2">ui5-suggestion-item</span><span class="dl">"</span><span class="p">);</span>
 			<span class="nx">li</span><span class="p">.</span><span class="nx">icon</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">world</span><span class="dl">"</span><span class="p">;</span>
-			<span class="nx">li</span><span class="p">.</span><span class="nx">id</span> <span class="o">=</span> <span class="nx">item</span><span class="p">;</span>
+			<span class="nx">li</span><span class="p">.</span><span class="nx">info</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">explore</span><span class="dl">"</span><span class="p">;</span>
+			<span class="nx">li</span><span class="p">.</span><span class="nx">infoState</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">Success</span><span class="dl">"</span><span class="p">;</span>
+			<span class="nx">li</span><span class="p">.</span><span class="nx">description</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">travel the world</span><span class="dl">"</span><span class="p">;</span>
 			<span class="nx">li</span><span class="p">.</span><span class="nx">text</span> <span class="o">=</span> <span class="nx">item</span><span class="p">;</span>
-			<span class="nx">oInput</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">li</span><span class="p">);</span>
+			<span class="nx">input</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">li</span><span class="p">);</span>
 		<span class="p">});</span>
 	<span class="p">});</span>
 <span class="nt">&lt;/script&gt;</span>
