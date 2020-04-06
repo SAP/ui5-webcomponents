@@ -1,0 +1,165 @@
+:host {
+	height: auto;
+}
+
+:host(:not([hidden])) {
+	display: block;
+}
+
+.ui5-li-root.ui5-uci-root {
+	padding: 1rem;
+}
+
+/* Thumbnail */
+.ui5-uci-thumbnail {
+	width: 3rem;
+	height: 3rem;
+	margin-right: 0.75rem;
+}
+
+::slotted(ui5-icon[slot="thumbnail"]) {
+	width: 3rem;
+	height: 3rem;
+	font-size: 2.5rem;
+}
+
+::slotted(img[slot="thumbnail"]) {
+	width: 3rem;
+	height: 3rem;
+}
+
+:host([actionable]) ::slotted(ui5-icon[slot="thumbnail"])  {
+	color: var(--sapContent_IconColor);
+}
+
+/* Content */
+.ui5-uci-content-and-edit-container {
+	flex: 1 1 auto;
+	min-width: 0; /* fixes chrome overflow issue */
+	display: flex;
+	align-items: center;
+}
+
+.ui5-uci-content-and-progress {
+	display: flex;
+	flex: 1 1 auto;
+}
+
+.ui5-uci-content {
+	flex: 1 1 auto;
+	min-width: 0; /* fixes chrome overflow issue */
+}
+
+.ui5-uci-file-name {
+	display: block;
+	font-family: var(--sapFontFamily);
+	font-size: var(--sapFontLargeSize);
+	color: var(--sapTextColor);
+	margin-bottom: 0.25rem;
+	white-space: pre-wrap;
+}
+
+ui5-link.ui5-uci-file-name {
+	pointer-events: all;
+}
+
+.ui5-uci-description {
+	margin-top: 0.375rem;
+	font-family: var(--sapFontFamily);
+	font-size: var(--sapFontMediumSize);
+	color: var(--sapContent_LabelColor);
+	white-space: initial;
+}
+
+/* Edit mode */
+.ui5-uci-edit-container ui5-input {
+	width: 60%;
+	pointer-events: all;
+	min-width: auto;
+}
+
+.ui5-uci-file-extension {
+	font-family: var(--sapFontFamily);
+	font-size: var(--sapFontMediumSize);
+	color: var(--sapTextColor);
+	white-space: no-wrap;
+	overflow: hidden;
+	margin-left: 0.5rem;
+	width: 40%;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+/* Buttons */
+.ui5-uci-root-editing .ui5-li-detailbtn,
+.ui5-uci-root-editing .ui5-li-deletebtn,
+.ui5-uci-root-uploading .ui5-li-detailbtn,
+.ui5-uci-root-uploading .ui5-li-deletebtn  {
+	display: none;
+}
+
+.ui5-uci-edit-buttons {
+	pointer-events: all;
+	margin-left: 1rem;
+}
+
+.ui5-uci-edit-rename-btn {
+	margin-right: 0.125rem;
+}
+
+@media(max-width: 30rem) {
+	.ui5-uci-content-and-edit-container {
+		display: block;
+	}
+
+	.ui5-uci-edit-buttons,
+	.ui5-li-detailbtn,
+	.ui5-li-deletebtn {
+		margin-top: 0.75rem;
+	}
+
+	.ui5-uci-edit-buttons {
+		margin-left: 0;
+	}
+}
+
+/* Progress Box */
+.ui5-uci-progress-box {
+	width: 20%;
+	margin-left: 0.5rem;
+	min-width: 4rem;
+}
+
+.ui5-uci-progress-indicator {
+	display: flex;
+	background: var(--sapField_Background);
+	height: 1.125rem;
+	min-height: 1rem;
+	width: 100%;
+	min-width: 4rem;
+	margin-bottom: 0.5rem;
+	padding: 5px;
+	box-sizing: border-box;
+}
+
+
+.ui5-uci-progress-indicator.error .ui5-uci-progress-bar {
+	background: var(--ui5_upload_collection_progress_indicator_error_background);
+}
+
+.ui5-uci-progress-bar {
+	border-radius: 0.5rem 0 0 0.5rem;
+	flex-basis: 30%;
+	background: var(--ui5_upload_collection_progress_indicator_background);
+}
+
+.ui5-uci-progress-bar-remaining {
+	border: 0.0625rem solid var(--sapField_BorderColor);
+	box-sizing: border-box;
+	flex: 1 1 auto;
+}
+
+.ui5-uci-progress-labels {
+	display: flex;
+	justify-content: space-between;
+}

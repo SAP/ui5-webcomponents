@@ -13,7 +13,8 @@ describe("General assertions", () => {
 
 	it("tests components with 'hidden' property are not visible", () => {
 		[
-			browser.$("#shellbar2")
+			browser.$("#shellbar2"),
+			browser.$("#uploadCollection")
 		].forEach(assertHidden);
 	});
 });

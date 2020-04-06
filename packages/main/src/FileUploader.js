@@ -179,6 +179,7 @@ const metadata = {
  * <code>import @ui5/webcomponents/dist/FileUploader.js";</code>
  *
  * @constructor
+ * @since 1.0.0-rc.6
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.FileUploader
  * @extends UI5Element
