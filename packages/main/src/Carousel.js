@@ -87,7 +87,7 @@ const metadata = {
 		 * @defaultvalue 0
 		 * @public
 		 */
-		selectedIndex: {
+		selectedPageIndex: {
 			type: Integer,
 			defaultValue: 0,
 		},
@@ -217,9 +217,18 @@ class Carousel extends UI5Element {
 	}
 
 	_onResize() {
-		// const currentItem = (this.selectedIndex + 1) * this.effectiveItemsPerPage;
+		const oldItemsPerPage = this.effectiveItemsPerPage;
+
+		// Change transitively effectiveItemsPerPage by modifying _width
 		this._width = this.offsetWidth;
-		// this.selectedIndex = Math.ceil(currentItem / this.effectiveItemsPerPage);
+
+		// Items per page did not change, therefore page index does not need to be re-adjusted
+		if (this.effectiveItemsPerPage === oldItemsPerPage) {
+			return;
+		}
+
+		const adjustment = oldItemsPerPage / this.effectiveItemsPerPage;
+		this.selectedPageIndex = Math.floor(this.selectedPageIndex * adjustment);
 	}
 
 	_updateScrolling(event) {
@@ -247,22 +256,22 @@ class Carousel extends UI5Element {
 	}
 
 	navigateLeft() {
-		if (this.selectedIndex - 1 < 0) {
+		if (this.selectedPageIndex - 1 < 0) {
 			if (this.cycling) {
-				this.selectedIndex = this.pages.length - 1;
+				this.selectedPageIndex = this.pages.length - 1;
 			}
 		} else {
-			--this.selectedIndex;
+			--this.selectedPageIndex;
 		}
 	}
 
 	navigateRight() {
-		if (this.selectedIndex + 1 > this.pages.length - 1) {
+		if (this.selectedPageIndex + 1 > this.pages.length - 1) {
 			if (this.cycling) {
-				this.selectedIndex = 0;
+				this.selectedPageIndex = 0;
 			}
 		} else {
-			++this.selectedIndex;
+			++this.selectedPageIndex;
 		}
 	}
 
@@ -285,7 +294,7 @@ class Carousel extends UI5Element {
 				if (item) {
 					result[pageIdx].push({
 						item,
-						tabIndex: pageIdx === this.selectedIndex ? "0" : "-1",
+						tabIndex: pageIdx === this.selectedPageIndex ? "0" : "-1",
 					});
 				}
 			}
@@ -322,7 +331,7 @@ class Carousel extends UI5Element {
 	get styles() {
 		return {
 			content: {
-				transform: `translateX(-${this.selectedIndex * 100}%)`,
+				transform: `translateX(-${this.selectedPageIndex * 100}%)`,
 			},
 		};
 	}
@@ -353,7 +362,7 @@ class Carousel extends UI5Element {
 	get dots() {
 		return this.pages.map((item, index) => {
 			return {
-				active: index === this.selectedIndex,
+				active: index === this.selectedPageIndex,
 			};
 		});
 	}
@@ -371,8 +380,8 @@ class Carousel extends UI5Element {
 		return this.i18nBundle.getText(CAROUSEL_OF_TEXT);
 	}
 
-	get currentlySelectedIndexToShow() {
-		return this.selectedIndex + 1;
+	get selectedPageIndexToShow() {
+		return this.selectedPageIndex + 1;
 	}
 
 	get showNavigationArrows() {
