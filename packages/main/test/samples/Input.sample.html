@@ -71,7 +71,7 @@
 					input.removeChild(input.lastChild);
 				}
 
-				suggestionItems.forEach(function(item, idx) {
+				suggestionItems.forEach(function(item) {
 					var li = document.createElement("ui5-suggestion-item");
 					li.icon = "world";
 					li.info = "explore";
@@ -99,7 +99,7 @@
 		var suggestionItems = [];
 
 		if (value) {
-			suggestionItems = ui5_database_entries.filter(function (item) {
+			suggestionItems = ui5_database_entries.filter(item => {
 				return item.toUpperCase().indexOf(value.toUpperCase()) === 0;
 			});
 		}
@@ -110,7 +110,7 @@
 		}
 
 		// add the new suggestions according to the  user input
-		suggestionItems.forEach(function(item, idx) {
+		suggestionItems.forEach(item => {
 			var li = document.createElement("ui5-suggestion-item");
 			li.icon = "world";
 			li.info = "explore";
