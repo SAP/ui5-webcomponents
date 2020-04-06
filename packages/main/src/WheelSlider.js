@@ -195,6 +195,13 @@ class WheelSlider extends UI5Element {
 			return;
 		}
 
+		if (this.cyclic) {
+			const newIndex = this.handleArrayBorderReached(indexForOffset);
+			if (indexForOffset !== newIndex) {
+				indexForOffset = newIndex;
+			}
+		}
+
 		this.value = this._itemsToShow[indexForOffset];
 		this._currentElementIndex = indexForOffset;
 	}
@@ -323,7 +330,6 @@ class WheelSlider extends UI5Element {
 		let index = currentIndex;
 		const scrollBy = 46 * index;
 		const sliderElementsWrapper = this.shadowRoot.querySelector(`#${this._id}--wrapper`);
-		//scroll by 46 at cosy
 
 		if (this.cyclic) {
 			index = this.handleArrayBorderReached(index);
@@ -341,7 +347,7 @@ class WheelSlider extends UI5Element {
 
 	handleArrayBorderReached(currentIndex) {
 		const arrayLength = this._itemsToShow.length;
-		const maxVisibleElementsOnOneSide = 5;
+		const maxVisibleElementsOnOneSide = 7;
 		let index = currentIndex;
 
 		if (maxVisibleElementsOnOneSide > index) {
