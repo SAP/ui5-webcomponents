@@ -93,6 +93,7 @@ class ScrollEnablement extends EventProvider {
 		this.fireEvent(scrollEventName, {
 			isLeft: dragX > this._prevDragX,
 			isRight: dragX < this._prevDragX,
+			event,
 		});
 
 		this._prevDragX = dragX;

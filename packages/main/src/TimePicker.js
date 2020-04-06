@@ -581,7 +581,7 @@ class TimePicker extends UI5Element {
 		}
 	}
 
-	_oncontainerkeydown(e) {
+	async _oncontainerkeydown(e) {
 		if (isLeft(e)) {
 			let expandedSliderIndex = 0;
 			for (let i = 0; i < this._slidersDomRefs.length; i++) {
@@ -610,11 +610,13 @@ class TimePicker extends UI5Element {
 		}
 
 		if (isTabNext(e) && e.target === this._slidersDomRefs[this._slidersDomRefs.length - 1]) {
+			const responsivePopover = await this._getPopover();
 			e.preventDefault();
-			this.responsivePopover.querySelector(".ui5-timepicker-footer").firstElementChild.focus();
+			responsivePopover.querySelector(".ui5-timepicker-footer").firstElementChild.focus();
 		} else if (isTabPrevious(e) && e.target === this._slidersDomRefs[0]) {
+			const responsivePopover = await this._getPopover();
 			e.preventDefault();
-			this.responsivePopover.querySelector(`.ui5-timepicker-footer`).lastElementChild.focus();
+			responsivePopover.querySelector(`.ui5-timepicker-footer`).lastElementChild.focus();
 		}
 	}
 
