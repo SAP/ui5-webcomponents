@@ -13,6 +13,18 @@ const metadata = {
 	properties: /** @lends  sap.ui.webcomponents.main.ListItemBase.prototype */  {
 
 		/**
+		 * Defines the aria-label attribute of the list item.
+		 * @public
+		 * @type {String}
+		 * @defaultvalue ""
+		 * @since 1.0.0-rc.7
+		 */
+		itemLabel: {
+			type: String,
+			defaultValue: undefined,
+		},
+
+		/**
 		 * Defines the selected state of the <code>ListItem</code>.
 		 * @type {boolean}
 		 * @defaultvalue false

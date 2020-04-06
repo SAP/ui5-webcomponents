@@ -109,7 +109,7 @@ class ListItem extends ListItemBase {
 		};
 	}
 
-	onBeforeRendering(...params) {
+	onBeforeRendering() {
 		this.actionable = (this.type === ListItemType.Active) && (this._mode !== ListMode.Delete);
 	}
 
