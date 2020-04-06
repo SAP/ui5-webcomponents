@@ -7,6 +7,7 @@ import {
 } from "@ui5/webcomponents-base/src/Keys.js";
 import "@ui5/webcomponents-icons/dist/icons/navigation-up-arrow.js";
 import "@ui5/webcomponents-icons/dist/icons/navigation-down-arrow.js";
+import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
 import WheelSliderTemplate from "./generated/templates/WheelSliderTemplate.lit.js";
 import Button from "./Button.js";
 
@@ -153,6 +154,7 @@ class WheelSlider extends UI5Element {
 		this._currentElementIndex = 0;
 		this._itemCellHeight = 0;
 		this._itemsToShow = [];
+		this._scroller = new ScrollEnablement(this);
 	}
 
 	onBeforeRendering() {
@@ -177,7 +179,51 @@ class WheelSlider extends UI5Element {
 		await Button.define();
 	}
 
+	_updateScrolling(e) {
+		console.log("screen " + this.shadowRoot.querySelector(`#${this._id}--wrapper`).children[0].children[0].scrollTop);
+		let sizeInRems = this._items.length * 3, // the size of one element in rems (16px = 1rem)
+			sizeOfOneElementInPixels = this._itemCellHeight * 16,
+			scrollWhere = this.shadowRoot.querySelector(`#${this._id}--wrapper`).scrollTop,
+			indexForOffset;
+
+		const elements = this.shadowRoot.querySelectorAll(".ui5-slider-item"),
+			selectedElement = this._findSelectedElement();
+	
+		if (!selectedElement || !scrollWhere) {
+			return;
+		}
+		if (this.value === selectedElement.textContent) {
+			return;
+		}
+
+		indexForOffset = Math.round(scrollWhere / sizeOfOneElementInPixels);
+		this._selectElementByIndex(indexForOffset);
+		// this.value = selectedElement.textContent;
+	}
+
+	_findSelectedElement() {
+		let itemsList = this.shadowRoot.querySelector(`#${this._id}--items-list`),
+			parentOffset = itemsList.parentElement.parentElement.offsetTop,
+			itemsListArray = [...itemsList.children],
+			firstVisibleElementIndex = 0;
+	
+		while ((itemsListArray[firstVisibleElementIndex].getBoundingClientRect().y - parentOffset) < 0) {
+			firstVisibleElementIndex++;
+		}
+	
+		return itemsListArray[firstVisibleElementIndex + 4];
+	}
+
 	onAfterRendering() {
+		if (!this._scroller.scrollContainer) {
+			this._scroller.scrollContainer = this.shadowRoot.querySelector(`#${this._id}--wrapper`);
+		}
+
+		if (!this._expanded) {
+			this._scroller.scrollContainer.scrollTo(0, 0);
+		}
+
+		this._scroller.attachEvent("scroll", this._updateScrolling.bind(this));
 		if (this._expanded) {
 			const elements = this.shadowRoot.querySelectorAll(".ui5-wheelslider-item");
 			for (let i = 0; i < elements.length; i++) {
@@ -285,14 +331,18 @@ class WheelSlider extends UI5Element {
 		const itemCellHeight = this._itemCellHeight ? this._itemCellHeight : 2.875;
 		const offsetStep = isPhone() ? 4 : 2;
 		let index = currentIndex;
+		const scrollBy = 46 * index;
+		const sliderElementsWrapper = this.shadowRoot.querySelector(`#${this._id}--wrapper`);
+		//scroll by 46 at cosy
 
 		if (this.cyclic) {
 			index = this.handleArrayBorderReached(index);
 		}
 
 		if (index < itemsCount && index > -1) {
-			const offsetSelectedElement = offsetStep * itemCellHeight - (index * itemCellHeight);
-			sliderElement.setAttribute("style", `top:${offsetSelectedElement}rem`);
+			// const offsetSelectedElement = offsetStep * itemCellHeight - (index * itemCellHeight);
+			// sliderElement.setAttribute("style", `top:${offsetSelectedElement}rem`);
+			sliderElementsWrapper.scrollTo(0,scrollBy);
 			this._currentElementIndex = index;
 			this.value = this._items[index - (this._getCurrentRepetition() * this._items.length)];
 			this.fireEvent("valueSelect", { value: this.value });
