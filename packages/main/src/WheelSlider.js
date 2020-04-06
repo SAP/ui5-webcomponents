@@ -154,6 +154,9 @@ class WheelSlider extends UI5Element {
 		this._itemCellHeight = 0;
 		this._itemsToShow = [];
 		this._scroller = new ScrollEnablement(this);
+		this._scroller.attachEvent("scroll", this._updateScrolling.bind(this), {passive: false});
+		this._scroller.attachEvent("mouseup", this._handleScrollTouchEnd.bind(this));
+		this._scroller.attachEvent("touchend", this._handleScrollTouchEnd.bind(this));
 	}
 
 	onBeforeRendering() {
@@ -179,38 +182,27 @@ class WheelSlider extends UI5Element {
 	}
 
 	_updateScrolling(e) {
-		console.log("screen " + this.shadowRoot.querySelector(`#${this._id}--wrapper`).children[0].children[0].scrollTop);
-		let sizeInRems = this._items.length * 3, // the size of one element in rems (16px = 1rem)
-			sizeOfOneElementInPixels = this._itemCellHeight * 16,
+		let sizeOfOneElementInPixels = this._itemCellHeight * 16,
 			scrollWhere = this.shadowRoot.querySelector(`#${this._id}--wrapper`).scrollTop,
 			indexForOffset;
-
-		const elements = this.shadowRoot.querySelectorAll(".ui5-slider-item"),
-			selectedElement = this._findSelectedElement();
-	
-		if (!selectedElement || !scrollWhere) {
+		e.event.stopPropagation();
+		if (!scrollWhere) {
 			return;
 		}
-		if (this.value === selectedElement.textContent) {
-			return;
-		}
-
 		indexForOffset = Math.round(scrollWhere / sizeOfOneElementInPixels);
+		
+		if (this.value === this._itemsToShow[indexForOffset]) {
+			return;
+		}
+
 		this._selectElementByIndex(indexForOffset);
-		// this.value = selectedElement.textContent;
+		this.value = this._itemsToShow[indexForOffset];
 	}
 
-	_findSelectedElement() {
-		let itemsList = this.shadowRoot.querySelector(`#${this._id}--items-list`),
-			parentOffset = itemsList.parentElement.parentElement.offsetTop,
-			itemsListArray = [...itemsList.children],
-			firstVisibleElementIndex = 0;
-	
-		while ((itemsListArray[firstVisibleElementIndex].getBoundingClientRect().y - parentOffset) < 0) {
-			firstVisibleElementIndex++;
-		}
-	
-		return itemsListArray[firstVisibleElementIndex + 4];
+	_handleScrollTouchEnd() {
+		if (this._expanded) {
+			this._selectElementByIndex(this._currentElementIndex);
+		} 
 	}
 
 	onAfterRendering() {
@@ -222,7 +214,6 @@ class WheelSlider extends UI5Element {
 			this._scroller.scrollContainer.scrollTo(0, 0);
 		}
 
-		this._scroller.attachEvent("scroll", this._updateScrolling.bind(this));
 		if (this._expanded) {
 			const elements = this.shadowRoot.querySelectorAll(".ui5-wheelslider-item");
 			for (let i = 0; i < elements.length; i++) {
