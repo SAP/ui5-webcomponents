@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>DateTimePicker Test Page</title>
+
+	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+	<script nomodule src="../../resources/bundle.es5.js"></script>
+
+	<style>
+		section {
+			padding: 1rem 1rem;
+		}
+
+		ui5-datetime-picker {
+			width: 300px;
+			margin-bottom: 0.25rem;
+		}
+	</style>
+</head>
+
+<body style="background-color: var(--sapBackgroundColor);">
+	<section>
+		<ui5-title wrap>DateTimePicker</ui5-title><br>
+		<ui5-datetime-picker id="dt"></ui5-datetime-picker>
+	</section>
+
+	<section>
+		<ui5-title wrap>DateTimePicker format pattern</ui5-title>
+		<br><ui5-label>d/MM/yyyy, hh:mm aa</ui5-label><br>
+		<ui5-datetime-picker
+			id="dtMinutes"
+			format-pattern="dd/MM/yyyy, hh:mm aa"
+			value="13/04/2020, 09:16 AM"
+		></ui5-datetime-picker>
+
+		<br>
+
+		<br><ui5-label>d/MM/yyyy, hh:mm:ss aa</ui5-label><br>
+		<ui5-datetime-picker
+			id="dtSeconds"
+			format-pattern="dd/MM/yyyy, hh:mm:ss aa"
+			value="13/04/2020, 03:16:16 AM"
+		></ui5-datetime-picker>
+
+		<br>
+
+		<br><ui5-label>yyyy-MM-dd-hh:mm:ss aa</ui5-label><br>
+		<ui5-datetime-picker
+			format-pattern="yyyy-MM-dd-hh:mm:ss aa"
+			value="2020-04-13-04:16:16 AM"
+		></ui5-datetime-picker>
+
+		<br>
+
+		<br><ui5-label>d/MM/yyyy, HH:mm:ss (24 hour format)</ui5-label><br>
+		<ui5-datetime-picker
+			format-pattern="dd/MM/yyyy, HH:mm:ss"
+			value="13/04/2020, 19:16:16"
+		></ui5-datetime-picker>
+
+		<br>
+
+		<br><ui5-label>d/MM/yyyy, H</ui5-label><br>
+		<ui5-datetime-picker
+			format-pattern="dd/MM/yyyy, H"
+			value="13/04/2020, 19"
+		></ui5-datetime-picker>
+
+		<br>
+
+		<br><ui5-label>d/MM/yyyy - no timeset</ui5-label><br>
+		<ui5-datetime-picker
+			format-pattern="dd/MM/yyyy"
+			value="Apr 10, 2020"
+		></ui5-datetime-picker>
+	</section>
+
+	<section>
+		<ui5-title wrap>Test DateTimePicker change event on submit</ui5-title>
+		<br>
+
+		<ui5-datetime-picker id="dt1"></ui5-datetime-picker><br>
+		<br><ui5-label>Change counter</ui5-label><br>
+		<ui5-input
+			id="input1"
+			style="width: 300px">
+		</ui5-input>
+	
+		<br><ui5-label>Changed value</ui5-label><br>
+		<ui5-input
+			id="input2"
+			style="width: 300px">
+		</ui5-input>
+	</section>
+
+	<section>
+		<ui5-title wrap>Test DateTimePicker change event on cancel</ui5-title>
+		<br/>
+
+		<ui5-datetime-picker id="dt2"></ui5-datetime-picker><br>
+
+		<br><ui5-label>Change counter</ui5-label><br>
+		<ui5-input id="input3" style="width: 300px"></ui5-input>
+
+		<br><ui5-label>Changed value</ui5-label><br>
+		<ui5-input id="input4" style="width: 300px"></ui5-input>
+	</section>
+
+	<section>
+		<ui5-title wrap>DateTimePicker states</ui5-title>
+		<ui5-datetime-picker value-state="Error"></ui5-datetime-picker>
+		<ui5-datetime-picker value-state="Warning"></ui5-datetime-picker>
+		<ui5-datetime-picker value-state="Information"></ui5-datetime-picker>
+		<ui5-datetime-picker value-state="Success"></ui5-datetime-picker>
+		<br><br>
+		<ui5-datetime-picker readonly></ui5-datetime-picker>
+		<ui5-datetime-picker disabled></ui5-datetime-picker>
+	</section>
+
+	<section class="sapUiSizeCompact">
+		<ui5-title wrap>DateTimePicker compact size</ui5-title>
+		<ui5-datetime-picker
+		></ui5-datetime-picker>
+
+		<br>
+		<ui5-datetime-picker
+			format-pattern="yyyy-MM-dd-hh:mm:ss aa"
+			value="2020-04-13-04:16:16 AM"
+		></ui5-datetime-picker>
+	</section>
+
+	<script>
+		var counter = 0;
+		dt1.addEventListener("ui5-change", function(event) {
+			input1.value = ++counter;
+			input2.value = "{ value: " + dt1.value + " , valid: " + event.detail.valid + " }";
+		});
+
+		var counter2 = 0;
+		dt2.addEventListener("ui5-change", function(event) {
+			input3.value = ++counter2;
+			input4.value = "{ value: " + dt2.value + " , valid: " + event.detail.valid + " }";
+		});
+	</script>
+</body>
+</html>

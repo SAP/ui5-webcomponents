@@ -1,0 +1,28 @@
+<div
+		class="ui5-dt-root"
+		@keydown={{_onkeydown}}
+>
+	<input
+		inner-input
+		class="ui5-dt-input"
+		placeholder="{{_placeholder}}"
+		value="{{value}}"
+		?disabled="{{disabled}}"
+		?readonly="{{readonly}}"
+		value-state="{{valueState}}"
+		@change="{{_change}}"
+		@input="{{_input}}"
+		@focusin="{{_focusin}}"
+		@focusout="{{_focusout}}"
+		@keydown="{{_keydown}}"
+	/>
+	{{#unless readonly}}
+		<ui5-icon
+			input-icon
+			name="date-time"
+			tabindex="-1"
+			@click="{{_iconClick}}"
+			?pressed="{{open}}"
+		></ui5-icon>
+	{{/unless}}
+</div>

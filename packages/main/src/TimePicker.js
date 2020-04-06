@@ -24,6 +24,14 @@ import TimePickerPopoverTemplate from "./generated/templates/TimePickerPopoverTe
 import Input from "./Input.js";
 import WheelSlider from "./WheelSlider.js";
 import {
+	getHours,
+	getMinutes,
+	getSeconds,
+	getHoursConfigByFormat,
+	getTimeControlsByFormat,
+} from "./timepicker-utils/TimeSlider.js";
+
+import {
 	TIMEPICKER_HOURS_LABEL,
 	TIMEPICKER_MINUTES_LABEL,
 	TIMEPICKER_SECONDS_LABEL,
@@ -433,50 +441,16 @@ class TimePicker extends UI5Element {
 		return this.responsivePopover;
 	}
 
-	generateTimeItemsArray(x) {
-		const array = [];
-		for (let i = 0; i < x; i++) {
-			let tempString = i.toString();
-			if (tempString.length === 1) {
-				tempString = `0${tempString}`;
-			}
-
-			array.push(tempString);
-		}
-
-		return array;
-	}
-
 	get secondsArray() {
-		return this.generateTimeItemsArray(60);
+		return getSeconds();
 	}
 
 	get minutesArray() {
-		return this.generateTimeItemsArray(60);
+		return getMinutes();
 	}
 
 	get hoursArray() {
-		let hoursValueArray = [];
-
-		if (this._hoursParameters.isTwelveHoursFormat) {
-			hoursValueArray = this.generateTimeItemsArray(12);
-		} else {
-			hoursValueArray = this.generateTimeItemsArray(24);
-		}
-
-		if (this._hoursParameters.minHour === 1) {
-			for (let i = 0; i < hoursValueArray.length; i++) {
-				const tempValue = hoursValueArray[i] * 1 + 1;
-
-				if (tempValue.toString().length === 1) {
-					hoursValueArray[i] = `0${tempValue.toString()}`;
-				} else {
-					hoursValueArray[i] = tempValue.toString();
-				}
-			}
-		}
-
-		return hoursValueArray;
+		return getHours(this._hoursParameters);
 	}
 
 	get periodsArray() {
@@ -700,50 +674,17 @@ class TimePicker extends UI5Element {
 	}
 
 	_getSlidersContained() {
-		const formatArray = this.getFormat().aFormatArray,
-			slidersBuildArray = [false, false, false, false]; // hours minutes seconds am/pm
-
-		for (let i = 0; i < formatArray.length; i++) {
-			if (this._hoursParameters.maxHour !== 0) {
-				slidersBuildArray[0] = true;
-			}
-			if (this._hoursParameters.maxHour !== 0 && this._hoursParameters.isTwelveHoursFormat) {
-				slidersBuildArray[0] = true;
-			}
-			if (formatArray[i].type === "minute") {
-				slidersBuildArray[1] = true;
-			}
-			if (formatArray[i].type === "second") {
-				slidersBuildArray[2] = true;
-			}
-			if (formatArray[i].type === "amPmMarker") {
-				slidersBuildArray[3] = true;
-			}
-		}
-
-		return slidersBuildArray;
+		const formatArray = this.getFormat().aFormatArray;
+		return getTimeControlsByFormat(formatArray, this._hoursParameters);
 	}
 
 	_initHoursFormatParameters() {
 		const formatArray = this.getFormat().aFormatArray;
+		const config = getHoursConfigByFormat(formatArray[0].type);
 
-		if (formatArray[0].type === "hour0_23") {
-			this._hoursParameters.minHour = 0;
-			this._hoursParameters.maxHour = 23;
-			this._hoursParameters.isTwelveHoursFormat = false;
-		} else if (formatArray[0].type === "hour1_24") {
-			this._hoursParameters.minHour = 1;
-			this._hoursParameters.maxHour = 24;
-			this._hoursParameters.isTwelveHoursFormat = false;
-		} else if (formatArray[0].type === "hour0_11") {
-			this._hoursParameters.minHour = 0;
-			this._hoursParameters.maxHour = 11;
-			this._hoursParameters.isTwelveHoursFormat = true;
-		} else if (formatArray[0].type === "hour1_12") {
-			this._hoursParameters.minHour = 1;
-			this._hoursParameters.maxHour = 12;
-			this._hoursParameters.isTwelveHoursFormat = true;
-		}
+		this._hoursParameters.minHour = config.minHour;
+		this._hoursParameters.maxHour = config.maxHour;
+		this._hoursParameters.isTwelveHoursFormat = config.isTwelveHoursFormat;
 	}
 
 	/**
