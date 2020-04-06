@@ -155,7 +155,7 @@ class WheelSlider extends UI5Element {
 		this._itemCellHeight = 0;
 		this._itemsToShow = [];
 		this._scroller = new ScrollEnablement(this);
-		this._scroller.attachEvent("scroll", this._updateScrolling.bind(this), {passive: false});
+		this._scroller.attachEvent("scroll", this._updateScrolling.bind(this));
 		this._scroller.attachEvent("mouseup", this._handleScrollTouchEnd.bind(this));
 		this._scroller.attachEvent("touchend", this._handleScrollTouchEnd.bind(this));
 	}
@@ -196,8 +196,8 @@ class WheelSlider extends UI5Element {
 			return;
 		}
 
-		this._selectElementByIndex(indexForOffset);
 		this.value = this._itemsToShow[indexForOffset];
+		this._currentElementIndex = indexForOffset;
 	}
 
 	_handleScrollTouchEnd() {
