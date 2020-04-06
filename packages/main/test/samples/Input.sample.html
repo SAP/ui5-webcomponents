@@ -56,8 +56,7 @@
 			var ui5_database_entries = ["Argentina", "Albania", "Algeria", "Angola", "Austria",  "Australia", "Bulgaria", "Canada", "Columbia", "Croatia", "Denmark",
 	"England", "Finland", "France", "Germany", "Hungary", "Ireland", "Italy", "Kuwait", "Luxembourg", "Mexico", "Morocco", "Norway", "Paraguay", "Philippines", "Portugal", "Spain", "Sweden", "Sri Lanka", "Senegal", "United Kingdom", "USA" ];
 
-			var suggest = function (event) {
-				var input = event.target;
+			input.addEventListener("input", function(event) {
 				var value = input.value;
 				var suggestionItems = [];
 
@@ -67,9 +66,9 @@
 					});
 				}
 
-				while (input.lastChild) {
-					input.removeChild(input.lastChild);
-				}
+				[].slice.call(input.children).forEach(function(child) {
+					input.removeChild(child);
+				});
 
 				suggestionItems.forEach(function(item) {
 					var li = document.createElement("ui5-suggestion-item");
@@ -80,8 +79,7 @@
 					li.text = item;
 					input.appendChild(li);
 				});
-			};
-			input.addEventListener("input", suggest);
+			});
 		</script>
 	</div>
 	<pre class="prettyprint lang-html"><xmp>
@@ -105,9 +103,9 @@
 		}
 
 		// remove the previous suggestions
-		while (input.lastChild) {
-			input.removeChild(input.lastChild);
-		}
+		[].slice.call(input.children).forEach(child => {
+			input.removeChild(child);
+		});
 
 		// add the new suggestions according to the  user input
 		suggestionItems.forEach(item => {
