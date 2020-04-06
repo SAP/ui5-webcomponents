@@ -41,34 +41,41 @@ const metadata = {
 		 * @defaultvalue false
 		 * @public
 		 */
-		cycling: {
+		cyclic: {
 			type: Boolean,
 		},
 
 		/**
-		 * Sets the amount of items per page. If this property is set, on mobile devices it will always fallback to 1.
+		 * Sets the number of items per page on small size (up to 640px). One item per page shown by default.
 		 * @type {Integer}
 		 * @defaultvalue 1
 		 * @public
 		 */
-		itemsPerPage: {
+		itemsPerPageS: {
 			type: Integer,
 			defaultValue: 1,
 		},
 
-		itemsPerPageS: {
-			type: Integer,
-			defaultValue: undefined,
-		},
-
+		/**
+		 * Sets the number of items per page on medium size (from 640px to 1024px). One item per page shown by default.
+		 * @type {Integer}
+		 * @defaultvalue 1
+		 * @public
+		 */
 		itemsPerPageM: {
 			type: Integer,
-			defaultValue: undefined,
+			defaultValue: 1,
 		},
 
+		/**
+		 * Sets the number of items per page on large size (more than 1024px). One item per page shown by default.
+		 * @type {Integer}
+		 * @defaultvalue 1
+		 * @public
+		 */
 		itemsPerPageL: {
 			type: Integer,
-			defaultValue: undefined,
+			defaultValue: 1,
 		},
 
 		/**
@@ -228,7 +235,7 @@ class Carousel extends UI5Element {
 		}
 
 		const adjustment = oldItemsPerPage / this.effectiveItemsPerPage;
-		this.selectedIndex = Math.floor(this.selectedIndex * adjustment);
+		this.selectedIndex = Math.round(this.selectedIndex * adjustment);
 	}
 
 	_updateScrolling(event) {
@@ -257,7 +264,7 @@ class Carousel extends UI5Element {
 
 	navigateLeft() {
 		if (this.selectedIndex - 1 < 0) {
-			if (this.cycling) {
+			if (this.cyclic) {
 				this.selectedIndex = this.pages.length - 1;
 			}
 		} else {
@@ -267,7 +274,7 @@ class Carousel extends UI5Element {
 
 	navigateRight() {
 		if (this.selectedIndex + 1 > this.pages.length - 1) {
-			if (this.cycling) {
+			if (this.cyclic) {
 				this.selectedIndex = 0;
 			}
 		} else {
@@ -309,23 +316,15 @@ class Carousel extends UI5Element {
 	}
 
 	get effectiveItemsPerPage() {
-		if (!isDesktop()) {
-			return 1;
-		}
-
-		if (this.itemsPerPageS && this._width <= 640) {
+		if (this._width <= 640) {
 			return this.itemsPerPageS;
 		}
 
-		if (this.itemsPerPageM && this._width <= 1024) {
+		if (this._width <= 1024) {
 			return this.itemsPerPageM;
 		}
 
-		if (this.itemsPerPageL) {
-			return this.itemsPerPageL;
-		}
-
-		return this.itemsPerPage;
+		return this.itemsPerPageL;
 	}
 
 	get styles() {
