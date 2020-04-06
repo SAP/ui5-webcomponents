@@ -9,7 +9,7 @@ import EventProvider from "@ui5/webcomponents-base/dist/EventProvider.js";
 import UploadCollectionDnDOverlayMode from "../types/UploadCollectionDnDMode.js";
 
 const draggingFiles = event => {
-	return event.dataTransfer.types.includes("Files");
+	return Array.from(event.dataTransfer.types).includes("Files");
 };
 
 const eventProvider = new EventProvider();
