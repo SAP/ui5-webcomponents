@@ -234,6 +234,8 @@ class Carousel extends UI5Element {
 			return;
 		}
 
+		// Whenever the number of items per page changes, the selected index needs to be re-adjusted so that the items
+		// that were visible before, can be visible as much as possible afterwards.
 		const adjustment = oldItemsPerPage / this.effectiveItemsPerPage;
 		this.selectedIndex = Math.round(this.selectedIndex * adjustment);
 	}
