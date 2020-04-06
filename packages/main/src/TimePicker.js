@@ -626,10 +626,10 @@ class TimePicker extends UI5Element {
 
 		if (isTabNext(e) && e.target === this._slidersDomRefs[this._slidersDomRefs.length - 1]) {
 			e.preventDefault();
-			this.getStaticAreaItemDomRef().querySelector(".ui5-timepicker-footer").firstElementChild.focus();
+			this.responsivePopover.querySelector(".ui5-timepicker-footer").firstElementChild.focus();
 		} else if (isTabPrevious(e) && e.target === this._slidersDomRefs[0]) {
 			e.preventDefault();
-			this.getStaticAreaItemDomRef().querySelector(`.ui5-timepicker-footer`).lastElementChild.focus();
+			this.responsivePopover.querySelector(`.ui5-timepicker-footer`).lastElementChild.focus();
 		}
 	}
 

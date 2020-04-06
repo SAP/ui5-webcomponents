@@ -96,6 +96,8 @@
 	padding: 0;
 	position: absolute;
 	top: var(--_ui5_wheelslider_selection_frame_margin_top);
+	/* padding-top: 11.5rem; */
+	height: 3000px;
 	cursor: pointer;
 	list-style-type: none;
 }
@@ -107,6 +109,7 @@
 .ui5-wheelslider-root[expanded] .ui5-wheelslider-inner .ui5-wheelslider-wrapper > ul {
 	list-style-type: none;
 	top: 0;
+	padding-top: 11.5rem;
 }
 
 .ui5-wheelslider-root .ui5-wheelslider-inner .ui5-wheelslider-wrapper {
