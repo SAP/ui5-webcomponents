@@ -520,7 +520,7 @@ class ShellBar extends UI5Element {
 		const newItems = this._getAllItems(hasIcons).map(info => {
 			const isOverflowIcon = info.classes.indexOf("ui5-shellbar-overflow-button") !== -1;
 			const isImageIcon = info.classes.indexOf("ui5-shellbar-image-button") !== -1;
-			const shouldStayOnScreen = isOverflowIcon || (isImageIcon && this.profile);
+			const shouldStayOnScreen = isOverflowIcon || (isImageIcon && this.hasProfile);
 
 			return Object.assign({}, info, {
 				classes: `${info.classes} ${shouldStayOnScreen ? "" : "ui5-shellbar-hidden-button"} ui5-shellbar-button`,
@@ -785,14 +785,14 @@ class ShellBar extends UI5Element {
 			},
 			{
 				text: "Person",
-				classes: `${this.profile ? "" : "ui5-shellbar-invisible-button"} ui5-shellbar-image-button ui5-shellbar-button`,
+				classes: `${this.hasProfile ? "" : "ui5-shellbar-invisible-button"} ui5-shellbar-image-button ui5-shellbar-button`,
 				priority: 4,
 				subclasses: "ui5-shellbar-image-buttonImage",
-				style: `order: ${this.profile ? 5 : -10};`,
+				style: `order: ${this.hasProfile ? 5 : -10};`,
 				profile: true,
 				id: `${this._id}-item-${3}`,
-				domOrder: this.profile ? (++domOrder) : -1,
-				show: this.profile,
+				domOrder: this.hasProfile ? (++domOrder) : -1,
+				show: this.hasProfile,
 				press: this._handleProfilePress.bind(this),
 				_tabIndex: "-1",
 			},
@@ -861,6 +861,10 @@ class ShellBar extends UI5Element {
 
 	get rtl() {
 		return getRTL() ? "rtl" : undefined;
+	}
+
+	get hasProfile() {
+		return !!this.profile.length;
 	}
 
 	static async onDefine() {
