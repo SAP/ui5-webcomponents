@@ -8,6 +8,7 @@
 }
 
 .ui5-dt-cal {
+	width: auto;
 	padding: 0.5rem 0.25rem 0 0.25rem; /* both cozy and compact */
 	box-sizing: border-box;
 }
@@ -20,6 +21,11 @@
 	min-width: var(--_ui5_datetime_timeview_width);
 	padding: var(--_ui5_datetime_timeview_padding);
 	box-sizing: border-box;
+}
+
+.ui5-dt-cal.ui5-dt-cal--hidden,
+.ui5-dt-time.ui5-dt-time--hidden {
+	display: none;
 }
 
 .ui5-dt-wheel {
@@ -62,8 +68,7 @@
 
 /* Phone mode */
 .ui5-dt-picker-content--phone.ui5-dt-picker-content {
-	height: unset;
-	min-width: unset;
+	min-width: auto;
 	height: calc(100% - 3rem);
 }
 
@@ -71,11 +76,6 @@
 	width: 100%;
 }
 
-.ui5-dt-cal.ui5-dt-cal--hidden,
-.ui5-dt-time.ui5-dt-time--hidden {
-	display: none;
-}
-
-.ui5-dt-cal {
-	width: auto;
+.ui5-dt-picker-content--phone .ui5-dt-time {
+	min-width: var(--_ui5_datetime_timeview_phonemode_width);
 }
