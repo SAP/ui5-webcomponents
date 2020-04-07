@@ -105,6 +105,18 @@ const metadata = {
 		},
 
 		/**
+		 * Defines the aria-label attribute.
+		 * @type {String}
+		 * @defaultvalue ""
+		 * @since 1.0.0-rc.7
+		 * @public
+		 */
+		accText: {
+			type: String,
+			defaultValue: undefined,
+		},
+
+		/**
 		 * Defines if a content has been added to the default slot
 		 * @private
 		 */
@@ -234,7 +246,6 @@ class Button extends UI5Element {
 
 	constructor() {
 		super();
-
 		this._deactivate = () => {
 			if (activeButton) {
 				activeButton.active = false;
@@ -301,6 +312,20 @@ class Button extends UI5Element {
 
 	get rtl() {
 		return getRTL() ? "rtl" : undefined;
+	}
+
+	get ariaLabelledBy() {
+		let result = "";
+
+		if (this.buttonTypeText) {
+			result += `${this._id}-button-type-text`;
+		}
+
+		if (this.accText) {
+			result += ` ${this._id}-accText`;
+		}
+
+		return result;
 	}
 
 	get hasButtonType() {
