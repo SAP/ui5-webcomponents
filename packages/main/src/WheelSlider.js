@@ -184,7 +184,7 @@ class WheelSlider extends UI5Element {
 		}
 
 		if (!this._expanded) {
-			this._scroller.scrollContainer.scrollTo(0, 0);
+			this._scroller.scrollTo(0, 0);
 		}
 
 		if (this._expanded) {
@@ -220,33 +220,39 @@ class WheelSlider extends UI5Element {
 	}
 
 	_updateItemCellHeight() {
-		this._itemCellHeight = this.shadowRoot.querySelectorAll(".ui5-wheelslider-item").length && Number(getComputedStyle(this.shadowRoot.querySelector(".ui5-wheelslider-item")).getPropertyValue("--_ui5_wheelslider_item_height").replace("rem", ""));
+		if (this.shadowRoot.querySelectorAll(".ui5-wheelslider-item").length) {
+			const itemComputedStyle = getComputedStyle(this.shadowRoot.querySelector(".ui5-wheelslider-item"));
+			const itemHeightValue = itemComputedStyle.getPropertyValue("--_ui5_wheelslider_item_height");
+			const onlyDigitsValue = itemHeightValue.replace("rem", "");
+
+			this._itemCellHeight = Number(onlyDigitsValue);
+		}
 	}
 
 	_updateScrolling() {
 		const sizeOfOneElementInPixels = this._itemCellHeight * 16,
-			scrollWhere = this.shadowRoot.querySelector(`#${this._id}--wrapper`).scrollTop;
-		let indexForOffset;
+			scrollWhere = this._scroller.scrollContainer.scrollTop;
+		let offsetIndex;
 
 		if (!scrollWhere) {
 			return;
 		}
 
-		indexForOffset = Math.round(scrollWhere / sizeOfOneElementInPixels);
+		offsetIndex = Math.round(scrollWhere / sizeOfOneElementInPixels);
 
-		if (this.value === this._itemsToShow[indexForOffset]) {
-			return;
+		if (this.value === this._itemsToShow[offsetIndex]) {
+			return; 
 		}
 
 		if (this.cyclic) {
-			const newIndex = this._handleArrayBorderReached(indexForOffset);
-			if (indexForOffset !== newIndex) {
-				indexForOffset = newIndex;
+			const newIndex = this._handleArrayBorderReached(offsetIndex);
+			if (offsetIndex !== newIndex) {
+				offsetIndex = newIndex;
 			}
 		}
 
-		this.value = this._itemsToShow[indexForOffset];
-		this._currentElementIndex = indexForOffset;
+		this.value = this._itemsToShow[offsetIndex];
+		this._currentElementIndex = offsetIndex;
 	}
 
 	_handleScrollTouchEnd() {
@@ -273,15 +279,14 @@ class WheelSlider extends UI5Element {
 	_selectElementByIndex(currentIndex) {
 		let index = currentIndex;
 		const itemsCount = this._itemsToShow.length;
-		const scrollBy = 46 * index;
-		const sliderElementsWrapper = this.shadowRoot.querySelector(`#${this._id}--wrapper`);
+		const scrollBy = this.isCompact ? 32 * index : 46 * index; // 16 is the size of one rem in pixels same as this._itemCellHeight * 16 * index (done because of IE)
 
 		if (this.cyclic) {
 			index = this._handleArrayBorderReached(index);
 		}
 
 		if (index < itemsCount && index > -1) {
-			sliderElementsWrapper.scrollTo(0, scrollBy);
+			this._scroller.scrollTo(0, scrollBy);
 			this._currentElementIndex = index;
 			this.value = this._items[index - (this._getCurrentRepetition() * this._items.length)];
 			this.fireEvent("valueSelect", { value: this.value });
@@ -334,9 +339,9 @@ class WheelSlider extends UI5Element {
 		}
 
 		if (e.deltaY > 0) {
-			this._onArrowUp(e);
+			this._itemUp();
 		} else if (e.deltaY < 0) {
-			this._onArrowDown(e);
+			this._itemDown();
 		}
 
 		this._prevWheelTimestamp = e.timeStamp;
@@ -358,12 +363,20 @@ class WheelSlider extends UI5Element {
 
 	_onArrowDown(e) {
 		e.preventDefault();
-		const nextElementIndex = this._currentElementIndex + 1;
-		this._selectElementByIndex(nextElementIndex);
+		this._itemDown();
 	}
 
 	_onArrowUp(e) {
 		e.preventDefault();
+		this._itemUp();
+	}
+
+	_itemDown() {
+		const nextElementIndex = this._currentElementIndex + 1;
+		this._selectElementByIndex(nextElementIndex);
+	}
+
+	_itemUp() {
 		const nextElementIndex = this._currentElementIndex - 1;
 		this._selectElementByIndex(nextElementIndex);
 	}

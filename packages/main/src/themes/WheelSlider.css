@@ -109,13 +109,13 @@
 .ui5-wheelslider-root[expanded] .ui5-wheelslider-inner .ui5-wheelslider-wrapper > ul {
 	list-style-type: none;
 	top: 0;
-	padding-top: 5.75rem;
+	padding-top: calc(var(--_ui5_wheelslider_item_height) * 2);
 }
 
 .ui5-wheelslider-root.ui5-phone[expanded] .ui5-wheelslider-inner .ui5-wheelslider-wrapper > ul {
 	list-style-type: none;
 	top: 0;
-	padding-top: 11.5rem;
+	padding-top: calc(var(--_ui5_wheelslider_item_height) * 4);
 }
 
 .ui5-wheelslider-root .ui5-wheelslider-inner .ui5-wheelslider-wrapper {
