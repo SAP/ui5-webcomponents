@@ -37,7 +37,7 @@ import DateTimePickerPopoverTemplate from "./generated/templates/DateTimePickerP
 // Styles
 import DateTimePickerPopoverCss from "./generated/themes/DateTimePickerPopover.css.js";
 
-const PHONE_MODE_BREAKPOINT = 650; // px
+const PHONE_MODE_BREAKPOINT = 640; // px
 
 /**
  * @public
@@ -201,6 +201,8 @@ class DateTimePicker extends DatePicker {
 			this._showTimeView = false;
 			this._calendarPreview = null;
 		};
+
+		this._handleResizeBound = this._handleResize.bind(this);
 	}
 
 	/**
@@ -213,7 +215,6 @@ class DateTimePicker extends DatePicker {
 	}
 
 	onEnterDOM() {
-		this._handleResizeBound = this._handleResize.bind(this);
 		ResizeHandler.register(document.body, this._handleResizeBound);
 	}
 
