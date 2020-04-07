@@ -1,5 +1,5 @@
-commit 28cc988f1e09460b332b6d1b4a4d8565ed8280ce
-Author: Petar Dimov <32839090+dimovpetar@users.noreply.github.com>
-Date:   Mon Apr 6 14:41:12 2020 +0300
+commit a4f502b6566755f6b95524bec72bd8bbb5ca55a9
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Tue Apr 7 16:30:23 2020 +0300
 
-    fix(ui5-upload-collection): ensure event.dataTransfer.types is array (#1433)
+    fix(ui5-shellbar): check for profile correctly (#1438)
