@@ -38,6 +38,7 @@
 				._items="{{hoursArray}}"
 				class="ui5-dt-wheel ui5-dt-hours-wheel"
 				cyclic
+				?_expanded="{{_hoursExpanded}}"
 			></ui5-wheelslider>
 			{{/if}}
 
@@ -46,6 +47,7 @@
 				label = "{{minutesLabel}}"
 				._items="{{minutesArray}}"
 				class="ui5-dt-wheel ui5-dt-minutes-wheel"
+				@expand="{{_sliderClick}}"
 				cyclic
 			></ui5-wheelslider>
 			{{/if}}
@@ -55,6 +57,7 @@
 				label = "{{secondsLabel}}"
 				._items="{{secondsArray}}"
 				class="ui5-dt-wheel ui5-dt-seconds-wheel"
+				@expand="{{_sliderClick}}"
 				cyclic
 			></ui5-wheelslider>
 			{{/if}}
@@ -65,6 +68,7 @@
 				value="AM"
 				._items="{{periodsArray}}"
 				class="ui5-dt-wheel ui5-dt-periods-wheel"
+				@expand="{{_sliderClick}}"
 			></ui5-wheelslider>
 			{{/if}}
 		</div>

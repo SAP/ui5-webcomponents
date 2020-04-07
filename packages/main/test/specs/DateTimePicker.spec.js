@@ -141,7 +141,6 @@ describe("DateTimePicker general interaction", () => {
 		// act
 		openPickerById("dtSeconds");
 		browser.pause(500);
-		browser.pause(500);
 
 		// assert
 		const hoursMinSecSliders = getTimeSlidersCount("dtSeconds");
@@ -160,5 +159,18 @@ describe("DateTimePicker general interaction", () => {
 			"The picker have 3 sliders - hours, minutes and periods sliders.");
 
 		closePickerById("dtMinutes");
+	});
+
+	it("tests hours slider is expanded", () => {
+		// act
+		openPickerById("dt");
+		browser.pause(500);
+
+		// assert
+		const picker = getPicker("dt");
+		const expanded = picker.$(".ui5-dt-hours-wheel").getProperty("_expanded");
+		assert.strictEqual(expanded, true, "The  hours slider is expanded.");
+
+		closePickerById("dt");
 	});
 });

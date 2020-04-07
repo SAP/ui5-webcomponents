@@ -73,6 +73,16 @@ const metadata = {
 		_phoneMode: {
 			type: Boolean,
 		},
+
+		/**
+		 * Defines the state the hours slider - expanded by default.
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @private
+		 */
+		_hoursCollapsed: {
+			type: Boolean,
+		},
 	},
 };
 
@@ -177,7 +187,7 @@ class DateTimePicker extends DatePicker {
 	constructor() {
 		super();
 
-		this.calendarPreview = null; // preview of the calendar selection
+		this._calendarPreview = null; // preview of the calendar selection
 
 		this._hoursConfig = { // hours configuration (12/24 hour format)
 			minHour: 0,
@@ -189,7 +199,7 @@ class DateTimePicker extends DatePicker {
 		this._respPopoverConfig.afterClose = () => {
 			superFn();
 			this._showTimeView = false;
-			this.calendarPreview = null;
+			this._calendarPreview = null;
 		};
 	}
 
@@ -224,9 +234,10 @@ class DateTimePicker extends DatePicker {
 	 * @public
 	 */
 	async openPicker(options) {
-		await super.openPicker(options);
 		await this.setSlidersValue();
-		this.previousValue = this.value;
+		await super.openPicker(options);
+		this.expandHoursSlider();
+		this.storePreviousValue();
 	}
 
 	/**
@@ -268,11 +279,11 @@ class DateTimePicker extends DatePicker {
 	}
 
 	get _calTimestamp() {
-		return this.calendarPreview ? this.calendarPreview.timestamp : this._calendar.timestamp;
+		return this._calendarPreview ? this._calendarPreview.timestamp : this._calendar.timestamp;
 	}
 
 	get _calDates() {
-		return this.calendarPreview ? this.calendarPreview.selectedDates : this._calendar.selectedDates;
+		return this._calendarPreview ? this._calendarPreview.selectedDates : this._calendar.selectedDates;
 	}
 
 	get secondsArray() {
@@ -359,6 +370,10 @@ class DateTimePicker extends DatePicker {
 		return this.isTimeControlContained()[3];
 	}
 
+	get _hoursExpanded() {
+		return !this._hoursCollapsed;
+	}
+
 	/**
 	 * EVENT HANDLERS
 	 */
@@ -437,6 +452,19 @@ class DateTimePicker extends DatePicker {
 	 */
 	async _dateTimeSwitchChange(event) {
 		this._showTimeView = event.target.getAttribute("key") === "Time";
+
+		if (this._showTimeView) {
+			this.expandHoursSlider();
+		}
+	}
+
+	/**
+	 * Handles clicking on "minutes", "seconds" and "periods" sliders.
+	 * <b>Note:</b> not bound for "hours" click
+	 * @param {Event} event
+	 */
+	_sliderClick() {
+		this.collapseHoursSlider();
 	}
 
 	/**
@@ -451,10 +479,18 @@ class DateTimePicker extends DatePicker {
 	 * but only after the user presses the <code>sumbit</code> button.
 	 */
 	storeCalendarSelection() {
-		this.calendarPreview = {
+		this._calendarPreview = {
 			timestamp: this._calendar.timestamp,
 			dates: this._calendar.selectedDates,
 		};
+	}
+
+	/**
+	 * Stores the <code>value</code> when the picker opens to compare with the <code>value</code>,
+	 * selected by any user interaction and fire the <code>change</code> event, if they differ.
+	 */
+	storePreviousValue() {
+		this.previousValue = this.value;
 	}
 
 	/**
@@ -472,6 +508,20 @@ class DateTimePicker extends DatePicker {
 		const fallback = !pattern || !hasHours;
 
 		return fallback ? LocaleData.getInstance(getLocale()).getCombinedDateTimePattern("medium", "medium", this._primaryCalendarType) : pattern;
+	}
+
+	/**
+	 * Expands the "hours" time slider.
+	 */
+	expandHoursSlider() {
+		this._hoursCollapsed = false;
+	}
+
+	/**
+	 * Collapses the "hours" time slider.
+	 */
+	collapseHoursSlider() {
+		this._hoursCollapsed = true;
 	}
 
 	async getHoursSlider() {
