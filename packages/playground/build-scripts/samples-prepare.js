@@ -15,6 +15,7 @@ const newComponents = [
   "Avatar",
   "Carousel",
   "ComboBox",
+  "DateTimePicker",
   "DurationPicker",
   "FileUploader",
   "ResponsivePopover",

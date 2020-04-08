@@ -11,6 +11,14 @@
 	--_ui5_day_picker_item_width: 2.25rem;
 	--_ui5_day_picker_item_height: 2.875rem;
 	--_ui5_day_picker_empty_height: 3rem;
+
+	/* DateTimePicker */
+	--_ui5_datetime_picker_width: 40.0625rem;
+	--_ui5_datetime_picker_height: 25rem;
+	--_ui5_datetime_timeview_width: 17rem;
+	--_ui5_datetime_timeview_phonemode_width: 19.5rem;
+	--_ui5_datetime_timeview_padding: 1rem;
+
 	--_ui5_input_inner_padding: 0 0.75rem;
 	--_ui5_input_value_state_icon_padding: var(--_ui5-input-icon-padding);
 	--_ui5_list_no_data_height: 3rem;
@@ -94,6 +102,13 @@
 	--_ui5_day_picker_item_width: 2rem;
 	--_ui5_day_picker_item_height: 2rem;
 	--_ui5_day_picker_empty_height: 2.125rem;
+
+	/* DateTimePicker */
+	--_ui5_datetime_picker_height: 17rem;
+	--_ui5_datetime_picker_width: 34.0625rem;
+	--_ui5_datetime_timeview_width: 17rem;
+	--_ui5_datetime_timeview_phonemode_width: 18.5rem;
+	--_ui5_datetime_timeview_padding: 0.5rem;
 
 	/* Input */
 	--_ui5_input_height: var(--_ui5_input_compact_height);
