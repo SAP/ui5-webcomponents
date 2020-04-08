@@ -1,11 +1,17 @@
-commit b8ae60e53d1a9c2d7a917e1a66b4679b45b2646a
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Tue Apr 7 18:21:35 2020 +0300
+commit ef27ca1aae237260fe6392a41207657f80122841
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Apr 8 09:38:43 2020 +0300
 
-    fix(framework): CSS Vars in Static Styles work on IE11 (#1440)
+    feat(ui5-datetime-picker): introduce new component (#1437)
     
-    The `createComponentStyleTag` method did not take into account Static Area CSS and did not inject it in the head. Instead, this CSS went to the `ui5-static-area-item` like on normal browsers. However, it wasn't processed there so CSS vars were not replaced.
-    The fix:
-     - Do not inject any CSS in `_updateFragment` for IE11 (if `shadyDOM` is `true`).
-     - Inject the static area CSS along with the normal CSS in `createComponentStyleTag` instead, where it will be processed like the regular CSS
-     - Finally, add a static getter for static area CSS in `UI5Element.js` to ensure it's always a string.
+    * feat(ui5-datetime-picker): introduce new component
+    
+    Background
+    The DateTimePicker component alows users to select both date (day, month and year) and time (hours, minutes and seconds).
+    The component opens a popover with calendar and time controls.
+    On smaller screen and on phone device there is a switch to change between the calendar and time controls.
+    Technical points
+    - extends DatePicker
+    - reuses the DatePicker template and WheelSlider component
+    - refactors the DatePicker to make it more extensible and overwrite few methods
+    - extracts time related functions

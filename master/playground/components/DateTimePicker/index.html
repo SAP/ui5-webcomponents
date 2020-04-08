@@ -7,7 +7,7 @@
   <meta name="keywords" content="ui5-webcomponents,ui5 webcomponents,ui5 web components,webcomponents,web components,ui5,api,docs,documentation,sample,usage,examples,demo,Fiori 3">
 
   
-    <title>Product Switch - UI5 Web Components</title>
+    <title>Date Time Picker - UI5 Web Components</title>
 
     
   
@@ -24,17 +24,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Product Switch | UI5 Web Components</title>
+<title>Date Time Picker | UI5 Web Components</title>
 <meta name="generator" content="Jekyll v3.8.6" />
-<meta property="og:title" content="Product Switch" />
+<meta property="og:title" content="Date Time Picker" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Enterprise-flavored sugar on top of native APIs!" />
 <meta property="og:description" content="Enterprise-flavored sugar on top of native APIs!" />
-<link rel="canonical" href="https://sap.github.io/ui5-webcomponents/master/playground/components/ProductSwitch/" />
-<meta property="og:url" content="https://sap.github.io/ui5-webcomponents/master/playground/components/ProductSwitch/" />
+<link rel="canonical" href="https://sap.github.io/ui5-webcomponents/master/playground/components/DateTimePicker/" />
+<meta property="og:url" content="https://sap.github.io/ui5-webcomponents/master/playground/components/DateTimePicker/" />
 <meta property="og:site_name" content="UI5 Web Components" />
 <script type="application/ld+json">
-{"description":"Enterprise-flavored sugar on top of native APIs!","@type":"WebPage","url":"https://sap.github.io/ui5-webcomponents/master/playground/components/ProductSwitch/","headline":"Product Switch","@context":"https://schema.org"}</script>
+{"description":"Enterprise-flavored sugar on top of native APIs!","@type":"WebPage","url":"https://sap.github.io/ui5-webcomponents/master/playground/components/DateTimePicker/","headline":"Date Time Picker","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -1159,9 +1159,9 @@
                   
                 
                   
-                    <li class="navigation-list-item ">
+                    <li class="navigation-list-item  active">
                       
-                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/DateTimePicker/" class="navigation-list-link">
+                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/DateTimePicker/" class="navigation-list-link active">
                         <div class="component-name">Date Time Picker</div>
                         
                           <span class="new-tag">NEW</span>
@@ -1310,9 +1310,9 @@
                   
                 
                   
-                    <li class="navigation-list-item  active">
+                    <li class="navigation-list-item ">
                       
-                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/ProductSwitch/" class="navigation-list-link active">
+                      <a href="https://sap.github.io/ui5-webcomponents/master/playground/components/ProductSwitch/" class="navigation-list-link">
                         <div class="component-name">Product Switch</div>
                         
                       </a>
@@ -1673,124 +1673,127 @@
                 
                   <li class="breadcrumb-nav-list-item"><a href="https://sap.github.io/ui5-webcomponents/master/playground/components">Components</a></li>
                 
-                <li class="breadcrumb-nav-list-item"><span>Product Switch</span></li>
+                <li class="breadcrumb-nav-list-item"><span>Date Time Picker</span></li>
               </ol>
             </nav>
           
         
         <div id="main-content" class="page-content" role="main">
-          <header class="component-heading">
-	<h2 class="control-header">ProductSwitch</h2>
+          <style>
+	ui5-datetime-picker,
+	ui5-input {
+		margin: 0.25rem;
+	}
+
+	ui5-label {
+		margin: 0 0.25rem;
+	}
+</style>
+
+<header class="component-heading">
+	<h2 class="control-header">DateTimePicker</h2>
 	<div class="component-heading-since">
-		<span>v1.0.0-rc.5</span>
+		<span>v1.0.0-rc.7</span>
 	</div>
 </header>
 
-<div class="component-package">@ui5/webcomponents-fiori</div>
+<div class="component-package">@ui5/webcomponents</div>
 
-<div class="control-tag">&lt;ui5-product-switch&gt;</div>
+<div class="control-tag">&lt;ui5-datetime-picker&gt;</div>
 
 <section>
-	<h3>Basic sample</h3>
+	<h3>DateTimePicker</h3>
 	<div class="snippet">
-		<ui5-product-switch style="display:flex;">
-			<ui5-product-switch-item heading="Home" subtitle="Central Home" icon="sap-icon://home"></ui5-product-switch-item>
-			<ui5-product-switch-item heading="Analytics Cloud" subtitle="Analytics Cloud" icon="sap-icon://business-objects-experience"></ui5-product-switch-item>
-			<ui5-product-switch-item heading="Catalog" subtitle="Ariba" icon="sap-icon://contacts"></ui5-product-switch-item>
-			<ui5-product-switch-item heading="Travel & Expense" subtitle="Concur" icon="sap-icon://flight"></ui5-product-switch-item>
-		</ui5-product-switch>
+		<ui5-datetime-picker style="width: 230px"></ui5-datetime-picker>
 	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-product-switch&gt;</span>
-	<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">heading=</span><span class="s">"Home"</span> <span class="na">subtitle=</span><span class="s">"Central Home"</span> <span class="na">icon=</span><span class="s">"sap-icon://home"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
-	<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">heading=</span><span class="s">"Analytics Cloud"</span> <span class="na">subtitle=</span><span class="s">"Analytics Cloud"</span> <span class="na">icon=</span><span class="s">"sap-icon://business-objects-experience"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
-	<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">heading=</span><span class="s">"Catalog"</span> <span class="na">subtitle=</span><span class="s">"Ariba"</span> <span class="na">icon=</span><span class="s">"sap-icon://contacts"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
-	<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">heading=</span><span class="s">"Travel &amp; Expense"</span> <span class="na">subtitle=</span><span class="s">"Concur"</span> <span class="na">icon=</span><span class="s">"sap-icon://flight"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
-<span class="nt">&lt;/ui5-product-switch&gt;</span>
+
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-datetime-picker&gt;&lt;/ui5-datetime-picker&gt;</span>
 	</code></pre></figure></pre>
 </section>
 
 <section>
-	<h3>ProductSwitch within ShellBar</h3>
+	<h3>DateTimePicker with format-pattern</h3>
 	<div class="snippet">
-		<ui5-shellbar
-			id="shellbar"
-			primary-title="Corporate Portal"
-			secondary-title="home"
-			logo="../../../assets/images/sap-logo-svg.svg"
-			show-product-switch
-			show-co-pilot>
-		</ui5-shellbar>
-		<ui5-popover id="productswitch-popover" placement-type="Bottom">
-			<ui5-product-switch>
-					<ui5-product-switch-item heading="Home" subtitle="Central Home" icon="sap-icon://home"></ui5-product-switch-item>
-					<ui5-product-switch-item heading="Analytics Cloud" subtitle="Analytics Cloud" icon="sap-icon://business-objects-experience"></ui5-product-switch-item>
-					<ui5-product-switch-item heading="Catalog" subtitle="Ariba" icon="sap-icon://contacts"></ui5-product-switch-item>
-					<ui5-product-switch-item heading="Guided Buying" icon="sap-icon://credit-card"></ui5-product-switch-item>
-					<ui5-product-switch-item heading="Strategic Procurement" icon="sap-icon://cart-3"></ui5-product-switch-item>
-					<ui5-product-switch-item heading="Travel & Expense" subtitle="Concur" icon="sap-icon://flight"></ui5-product-switch-item>
-					<ui5-product-switch-item heading="Vendor Management" subtitle="Fieldglass" icon="sap-icon://shipping-status"></ui5-product-switch-item>
-					<ui5-product-switch-item heading="Human Capital Management" icon="sap-icon://customer"></ui5-product-switch-item>
-					<ui5-product-switch-item heading="Sales Cloud" subtitle="Sales Cloud" icon="sap-icon://sales-notification"></ui5-product-switch-item>
-					<ui5-product-switch-item heading="Commerce Cloud" subtitle="Commerce Cloud" icon="sap-icon://retail-store"></ui5-product-switch-item>
-					<ui5-product-switch-item heading="Marketing Cloud" subtitle="Marketing Cloud" icon="sap-icon://marketing-campaign"></ui5-product-switch-item>
-					<ui5-product-switch-item heading="Service Cloud" icon="sap-icon://family-care"></ui5-product-switch-item>
-					<ui5-product-switch-item heading="Customer Data Cloud" icon="sap-icon://customer-briefing"></ui5-product-switch-item>
-					<ui5-product-switch-item heading="S/4HANA" icon="sap-icon://batch-payments"></ui5-product-switch-item>
-			</ui5-product-switch>
-		</ui5-popover>
 
+		<div style="display: flex; flex-direction: column;">
+			<ui5-label>d/MM/yyyy, hh:mm aa</ui5-label>
+			<ui5-datetime-picker
+				style="width: 230px"
+				format-pattern="dd/MM/yyyy, hh:mm aa"
+				value="13/04/2020, 09:16 AM"
+			></ui5-datetime-picker>
+			<br>
+
+			<ui5-label>yyyy-MM-dd-hh:mm:ss aa</ui5-label>
+			<ui5-datetime-picker
+				style="width: 230px"
+				format-pattern="yyyy-MM-dd-hh:mm:ss aa"
+				value="2020-04-13-04:16:16 AM"
+			></ui5-datetime-picker>
+
+			<br>
+	
+			<ui5-label>d/MM/yyyy, hh:mm:ss aa</ui5-label>
+			<div style="display: flex; flex-direction: row;">
+				<ui5-datetime-picker
+					id="dt1"
+					style="width: 230px"
+					format-pattern="dd/MM/yyyy, hh:mm:ss aa"
+					value="13/04/2020, 03:16:16 AM"
+				></ui5-datetime-picker>
+				<ui5-input id="input1" style="width: 320px"></ui5-input>
+			</div>
+		</div>
 		<script>
-			var shellBar = document.getElementById("shellbar");
-			var popover = document.getElementById("productswitch-popover");
+			var counter = 0;
+			input1.value = "{ value: 13/04/2020, 03:16:16 AM }";
 
-			shellbar.addEventListener("productSwitchClick", function(event) {
-				if (popover.opened) {
-					popover.close();
-				} else {
-					popover.openBy(event.detail.targetRef);
-				}
+			dt1.addEventListener("change", function(event) {
+				input1.value = "{ value: " + dt1.value + " , valid: " + event.detail.valid + " }";
 			});
 		</script>
 	</div>
-	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-shellbar</span>
-	<span class="na">id=</span><span class="s">"shellbar"</span>
-	<span class="na">heading=</span><span class="s">"Corporate Portal"</span>
-	<span class="na">secondary-title=</span><span class="s">"secondary title"</span>
-	<span class="na">logo=</span><span class="s">"../../../assets/images/sap-logo-svg.svg"</span>
-	<span class="na">show-product-switch</span>
-	<span class="na">show-co-pilot</span><span class="nt">&gt;</span>
-<span class="nt">&lt;/ui5-shellbar&gt;</span>
-<span class="nt">&lt;ui5-popover</span> <span class="na">id=</span><span class="s">"productswitch-popover"</span> <span class="na">placement-type=</span><span class="s">"Bottom"</span><span class="nt">&gt;</span>
-	<span class="nt">&lt;ui5-product-switch&gt;</span>
-			<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">heading=</span><span class="s">"Home"</span> <span class="na">subtitle=</span><span class="s">"Central Home"</span> <span class="na">icon=</span><span class="s">"sap-icon://home"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
-			<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">heading=</span><span class="s">"Analytics Cloud"</span> <span class="na">subtitle=</span><span class="s">"Analytics Cloud"</span> <span class="na">icon=</span><span class="s">"sap-icon://business-objects-experience"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
-			<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">heading=</span><span class="s">"Catalog"</span> <span class="na">subtitle=</span><span class="s">"Ariba"</span> <span class="na">icon=</span><span class="s">"sap-icon://contacts"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
-			<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">heading=</span><span class="s">"Guided Buying"</span> <span class="na">icon=</span><span class="s">"sap-icon://credit-card"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
-			<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">heading=</span><span class="s">"Strategic Procurement"</span> <span class="na">icon=</span><span class="s">"sap-icon://cart-3"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
-			<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">heading=</span><span class="s">"Travel &amp; Expense"</span> <span class="na">subtitle=</span><span class="s">"Concur"</span> <span class="na">icon=</span><span class="s">"sap-icon://flight"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
-			<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">heading=</span><span class="s">"Vendor Management"</span> <span class="na">subtitle=</span><span class="s">"Fieldglass"</span> <span class="na">icon=</span><span class="s">"sap-icon://shipping-status"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
-			<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">heading=</span><span class="s">"Human Capital Management"</span> <span class="na">icon=</span><span class="s">"sap-icon://customer"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
-			<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">heading=</span><span class="s">"Sales Cloud"</span> <span class="na">subtitle=</span><span class="s">"Sales Cloud"</span> <span class="na">icon=</span><span class="s">"sap-icon://sales-notification"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
-			<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">heading=</span><span class="s">"Commerce Cloud"</span> <span class="na">subtitle=</span><span class="s">"Commerce Cloud"</span> <span class="na">icon=</span><span class="s">"sap-icon://retail-store"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
-			<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">heading=</span><span class="s">"Marketing Cloud"</span> <span class="na">subtitle=</span><span class="s">"Marketing Cloud"</span> <span class="na">icon=</span><span class="s">"sap-icon://marketing-campaign"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
-			<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">heading=</span><span class="s">"Service Cloud"</span> <span class="na">icon=</span><span class="s">"sap-icon://family-care"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
-			<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">heading=</span><span class="s">"Customer Data Cloud"</span> <span class="na">icon=</span><span class="s">"sap-icon://customer-briefing"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
-			<span class="nt">&lt;ui5-product-switch-item</span> <span class="na">heading=</span><span class="s">"S/4HANA"</span> <span class="na">icon=</span><span class="s">"sap-icon://batch-payments"</span><span class="nt">&gt;&lt;/ui5-product-switch-item&gt;</span>
-	<span class="nt">&lt;/ui5-product-switch&gt;</span>
-<span class="nt">&lt;/ui5-popover&gt;</span>
+
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-datetime-picker</span>
+	<span class="na">format-pattern=</span><span class="s">"dd/MM/yyyy, hh:mm aa"</span>
+	<span class="na">value=</span><span class="s">"13/04/2020, 09:16 AM"</span>
+<span class="nt">&gt;&lt;/ui5-datetime-picker&gt;</span>
+
+<span class="nt">&lt;ui5-datetime-picker</span>
+	<span class="na">format-pattern=</span><span class="s">"yyyy-MM-dd-hh:mm:ss aa"</span>
+	<span class="na">value=</span><span class="s">"2020-04-13-04:16:16 AM"</span>
+<span class="nt">&gt;&lt;/ui5-datetime-picker&gt;</span>
+
+<span class="nt">&lt;ui5-datetime-picker</span>
+	<span class="na">id=</span><span class="s">"myDateTimePicker"</span>
+	<span class="na">format-pattern=</span><span class="s">"dd/MM/yyyy, hh:mm:ss aa"</span>
+	<span class="na">value=</span><span class="s">"13/04/2020, 03:16:16 AM"</span>
+<span class="nt">&gt;&lt;/ui5-datetime-picker&gt;</span>
 
 <span class="nt">&lt;script&gt;</span>
-	<span class="kd">var</span> <span class="nx">shellBar</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">shellbar</span><span class="dl">"</span><span class="p">);</span>
-	<span class="kd">var</span> <span class="nx">popover</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">productswitch-popover</span><span class="dl">"</span><span class="p">);</span>
-
-	<span class="nx">shellbar</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">productSwitchClick</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
-		<span class="k">if</span> <span class="p">(</span><span class="nx">popover</span><span class="p">.</span><span class="nx">opened</span><span class="p">)</span> <span class="p">{</span>
-			<span class="nx">popover</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span>
-		<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-			<span class="nx">popover</span><span class="p">.</span><span class="nx">openBy</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">detail</span><span class="p">.</span><span class="nx">targetRef</span><span class="p">);</span>
-		<span class="p">}</span>
-	<span class="p">});</span>
+	<span class="nx">myDateTimePicker</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">change</span><span class="dl">"</span><span class="p">,</span> <span class="nx">event</span> <span class="o">=&gt;</span> <span class="p">{});</span>
 <span class="nt">&lt;/script&gt;</span>
+	</code></pre></figure></pre>
+</section>
+
+<section>
+	<h3>DateTimePicker in states</h3>
+	<div class="snippet">
+		<ui5-datetime-picker value-state="Error"></ui5-datetime-picker>
+		<ui5-datetime-picker value-state="Warning"></ui5-datetime-picker>
+		<ui5-datetime-picker value-state="Information"></ui5-datetime-picker>
+		<ui5-datetime-picker value-state="Success"></ui5-datetime-picker>
+		<br><br>
+		<ui5-datetime-picker readonly></ui5-datetime-picker>
+		<ui5-datetime-picker disabled></ui5-datetime-picker>
+	</div>
+
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-datetime-picker</span> <span class="na">value-state=</span><span class="s">"Error"</span><span class="nt">&gt;&lt;/ui5-datetime-picker&gt;</span>
+<span class="nt">&lt;ui5-datetime-picker</span> <span class="na">value-state=</span><span class="s">"Warning"</span><span class="nt">&gt;&lt;/ui5-datetime-picker&gt;</span>
+<span class="nt">&lt;ui5-datetime-picker</span> <span class="na">value-state=</span><span class="s">"Information"</span><span class="nt">&gt;&lt;/ui5-datetime-picker&gt;</span>
+<span class="nt">&lt;ui5-datetime-picker</span> <span class="na">value-state=</span><span class="s">"Success"</span><span class="nt">&gt;&lt;/ui5-datetime-picker&gt;</span>
+<span class="nt">&lt;ui5-datetime-picker</span> <span class="na">readonly</span><span class="nt">&gt;&lt;/ui5-datetime-picker&gt;</span>
+<span class="nt">&lt;ui5-datetime-picker</span> <span class="na">disabled</span><span class="nt">&gt;&lt;/ui5-datetime-picker&gt;</span>
 	</code></pre></figure></pre>
 </section>
 
@@ -1798,44 +1801,33 @@
     <div class="page-container">
       <div class="api-container">
         <section class="component-description">
-          <h3 class="comment-api-title">Overview</h3>
+          <h3 class="comment-api-title">Overview</h3> The <code>DateTimePicker</code> component alows users to select both date (day, month and year) and time (hours, minutes and seconds) and for the purpose it consists of input field and Date/Time picker.
 
-The <code>ui5-product-switch</code> is an SAP Fiori specific web component that is used in <code>ui5-shellbar</code> and allows the user to easily switch between products. <br><br> <h3>ES6 Module Import</h3> <code>import "@ui5/webcomponents-fiori/dist/ProductSwitch.js";</code>
-          <section class="component-api space-top">
-            
-            
-                <h3 class="comment-api-title space-top" >Slots</h3>
-            	<p class="small-space-top" >
-            	  This Element provides slot(s). This means it can display its child nodes.<br>
-            	  Unless targeting the default slot, use the <code>slot</code> attribute to define the destination slot for each child.<br>
-            	  Text, along with HTML Elements with no <code>slot</code> attribute, goes the the <code>default</code> slot.
-            	</p>
-            
-                <div class="small-space-top api-table">
-                  <div class="head api-table-header-roll">
-                    <div class="cell api-table-header-cell">Slot</div>
-                    <div class="cell api-table-header-cell">Type</div>
-                    <div class="cell api-table-header-cell">Description</div>
-                  </div>
-            
-                    <div class="row api-table-roll-even">
-                      <div class="cell api-table-content-cell api-table-content-cell-bold">default</div>
-                      <div class="cell api-table-content-cell">HTMLElement [0..n]</div>
-                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the items of the <code>ui5-product-switch</code>.</div>
-                    </div>
-            
-                </div>
-            
-            
-            
-          </section>
-        </section>
-      </div>
-    </div>
-      <div class="api-container appended-doc">
-        <h1>ProductSwitchItem</h1>
-        <section class="component-description">
-          <h3 class="comment-api-title">Overview</h3> The <code>ui5-product-switch-item</code> web component represents the items displayed in the <code>ui5-product-switch</code> web component. <br><br> <b>Note:</b> <code>ui5-product-switch-item</code> is not supported when used outside of <code>ui5-product-switch</code>. <br><br> <h3>ES6 Module Import</h3> <code>import "@ui5/webcomponents-fiori/dist/ProductSwitchItem.js";</code>
+<h3>Usage</h3>
+
+Use the <code>DateTimePicker</code> if you need a combined date and time input component. Don't use it if you want to use either date, or time value. In this case, use the <code>DatePicker</code> or the <code>TimePicker</code> components instead. <br><br> The user can set date/time by: <ul> <li>using the calendar and the time selectors</li> <li>typing in the input field</li> </ul>
+
+Programatically, to set date/time for the <code>DateTimePicker</code>, use the <code>value</code> property <br><br> As most of the input based components, the <code>DateTimePicker</code> supports properties, such as: <code>disabled</code>, <code>readonly</code>, <code>valueState</code> and <code>placeholder</code>.
+
+<h3>Formatting</h3>
+
+The value entered by typing into the input field must fit to the used date/time format. <br><br> Supported format options are pattern-based on Unicode LDML Date Format notation. For more information, see <ui5-link target="_blank" href="https://unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table" class="api-table-content-cell-link">UTS #35: Unicode Locale Data Markup Language</ui5-link>. <br><br> <b>Example:</b> the following format <code>dd/MM/yyyy, hh:mm:ss aa</code> corresponds the <code>13/04/2020, 03:16:16 AM</code> value. <br> The small 'h' defines "12" hours format and the "aa" symbols - "AM/PM" time periods.
+
+<br><br> <b>Example:</b> the following format <code>dd/MM/yyyy, HH:mm:ss</code> corresponds the <code>13/04/2020, 15:16:16</code> value. <br> The capital 'H' indicates "24" hours format.
+
+<br><br> <b>Note:</b> If the <code>formatPattern</code> does NOT include time, the <code>DateTimePicker</code> will fallback to the default time format according to the locale.
+
+<br><br> <b>Note:</b> If no placeholder is set to the <code>DateTimePicker</code>, the current <code>formatPattern</code> is displayed as a placeholder. If another placeholder is needed, it must be set or in case no placeholder is needed - it can be set to an empty string.
+
+<br><br> <b>Note:</b> If the user input does NOT match the <code>formatPattern</code>, the <code>DateTimePicker</code> makes an attempt to parse it based on the locale settings.
+
+<h3>Responsive behavior</h3>
+
+The <code>DateTimePicker</code> is responsive and fully adapts to all devices. For larger screens, such as tablet or desktop, it is displayed as a popover, while on phone devices, it is displayed full screen.
+
+<h3>ES6 Module Import</h3>
+
+<code>import @ui5/webcomponents/dist/DateTimePicker.js";</code>
           <section class="component-api space-top">
             
                   <h3 class="comment-api-title" >Properties/Attributes</h3>
@@ -1851,60 +1843,138 @@ The <code>ui5-product-switch</code> is an SAP Fiori specific web component that 
             
                       <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          heading
+                          dateValue
+                            (readonly)
                             <br>
+                            <code>date-value</code>
                         </div>
-                        <div class="cell api-table-content-cell">string</div>
-                        <div class="cell api-table-content-cell">&quot;&quot;</div>
+                        <div class="cell api-table-content-cell">Date</div>
+                        <div class="cell api-table-content-cell"></div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the title of the <code>ui5-product-switch-item</code>.
+                            Currently selected date represented as JavaScript Date instance.
                         </div>
                       </div>
                       <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          icon
+                          disabled
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell">false</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Determines whether the <code>ui5-datepicker</code> is displayed as disabled.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          formatPattern
+                            <br>
+                            <code>format-pattern</code>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell">&quot;&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Determines the format, displayed in the input field.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          maxDate
+                            <br>
+                            <code>max-date</code>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell">&quot;&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Determines the maximum date available for selection.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.6</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          minDate
+                            <br>
+                            <code>min-date</code>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell">&quot;&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Determines the minimum date available for selection.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.6</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          name
                             <br>
                         </div>
                         <div class="cell api-table-content-cell">string</div>
                         <div class="cell api-table-content-cell">&quot;&quot;</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the icon to be displayed as a graphical element within the <code>ui5-product-switch-item</code>. <br><br> Example: <br> <pre>ui5-product-switch-item icon="palette"</pre>
+                            Determines the name with which the <code>ui5-datepicker</code> will be submitted in an HTML form.
             
-            See all the available icons in the <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
+            <br><br> <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project: <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
+            
+            <br><br> <b>Note:</b> When set, a native <code>input</code> HTML element will be created inside the <code>ui5-datepicker</code> so that it can be submitted as part of an HTML form. Do not use this property unless you need to submit a form.
                         </div>
                       </div>
                       <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          subtitle
+                          placeholder
                             <br>
                         </div>
                         <div class="cell api-table-content-cell">string</div>
-                        <div class="cell api-table-content-cell">&quot;&quot;</div>
+                        <div class="cell api-table-content-cell">undefined</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the subtitle of the <code>ui5-product-switch-item</code>.
+                            Defines a short hint, intended to aid the user with data entry when the <code>ui5-datepicker</code> has no value.
+            
+            <br><br> <b>Note:</b> When no placeholder is set, the format pattern is displayed as a placeholder. Passing an empty string as the value of this property will make the <code>ui5-datepicker</code> appear empty - without placeholder or format pattern.
                         </div>
                       </div>
                       <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          target
+                          primaryCalendarType
                             <br>
+                            <code>primary-calendar-type</code>
                         </div>
-                        <div class="cell api-table-content-cell">string</div>
-                        <div class="cell api-table-content-cell">&quot;_self&quot;</div>
+                        <div class="cell api-table-content-cell">CalendarType</div>
+                        <div class="cell api-table-content-cell">&quot;Gregorian&quot;</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines a target where the <code>targetSrc</code> content must be open. <br><br> Available options are: <ul> <li><code>_self</code></li> <li><code>_top</code></li> <li><code>_blank</code></li> <li><code>_parent</code></li> <li><code>_search</code></li> </ul>
+                            Determines the calendar type. The input value is formated according to the calendar type and the picker shows the months and years from the specified calendar. <br><br> Available options are: <ul> <li><code>Gregorian</code></li> <li><code>Islamic</code></li> <li><code>Japanese</code></li> <li><code>Buddhist</code></li> <li><code>Persian</code></li> </ul>
                         </div>
                       </div>
                       <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          targetSrc
+                          readonly
                             <br>
-                            <code>target-src</code>
+                        </div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell">false</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Determines whether the <code>ui5-datepicker</code> is displayed as read-only.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          value
+                            <br>
                         </div>
                         <div class="cell api-table-content-cell">string</div>
                         <div class="cell api-table-content-cell">&quot;&quot;</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the <code>ui5-product-switch-item</code> target URI. Supports standard hyperlink behavior.
+                            Defines a formatted date value.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          valueState
+                            <br>
+                            <code>value-state</code>
+                        </div>
+                        <div class="cell api-table-content-cell">ValueState</div>
+                        <div class="cell api-table-content-cell">&quot;None&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the value state of the <code>ui5-datepicker</code>. <br><br> Available options are: <ul> <li><code>None</code></li> <li><code>Error</code></li> <li><code>Warning</code></li> <li><code>Success</code></li> <li><code>Information</code></li> </ul>
                         </div>
                       </div>
             
@@ -1921,17 +1991,55 @@ The <code>ui5-product-switch</code> is an SAP Fiori specific web component that 
                     </div>
             
                       <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">click</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">change</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                        Fired when the <code>ui5-product-switch-item</code> is activated either with a click/tap or by using the Enter or Space key.
+                        Fired when the input operation has finished by pressing Enter or on focusout.
+                        </div>
+                      </div>
+            
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">input</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                        Fired when the value of the <code>ui5-datepicker</code> is changed at each key stroke.
                         </div>
                       </div>
             
                   </div>
             
+                  <h3 class="comment-api-title space-top">Methods</h3>
+                  <p class="small-space-top" >This Web Component exposes public methods. You can invoke them directly on the Web Component instance.</p>
+            
+                  <div class="small-space-top api-table">
+                    <div class="head api-table-header-roll">
+                      <div class="cell api-table-header-cell">Name</div>
+                      <div class="cell api-table-header-cell">Description</div>
+                    </div>
+            
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">closePicker</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">Closes the picker.</div>
+                      </div>
+            
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">isValid</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">Checks if a value is valid against the current date/time format.</div>
+                      </div>
+            
+                        <div class="cell api-table-content-cell api-table-content-cell-bold api-table-param-name">value</div>
+                        <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> string <br/> <strong class="api-table-event-description bold">description:</strong> A value to be tested against the current date/time format</div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">openPicker</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">Opens the picker.</div>
+                      </div>
+            
+                        <div class="cell api-table-content-cell api-table-content-cell-bold api-table-param-name">options</div>
+                        <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> object <br/> <strong class="api-table-event-description bold">description:</strong> A JSON object with additional configuration.<br> <code>{ focusInput: true }</code> By default, the focus goes in the picker after opening it. Specify this option to focus the input field.</div>
+                  </div>
+            
           </section>
         </section>
       </div>
+    </div>
     <footer class="footer-wrapper">
       <div class="footer-links">
         <a class="separator" href="https://www.sap.com/about/legal/privacy.html" target="_blank">Privacy Policy</a>
