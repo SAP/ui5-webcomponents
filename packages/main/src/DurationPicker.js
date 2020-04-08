@@ -10,6 +10,7 @@ import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import WheelSlider from "./WheelSlider.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import Input from "./Input.js";
+import "@ui5/webcomponents-icons/dist/icons/fob-watch.js";
 import DurationPickerPopoverTemplate from "./generated/templates/DurationPickerPopoverTemplate.lit.js";
 import {
 	TIMEPICKER_HOURS_LABEL,
