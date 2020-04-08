@@ -129,6 +129,18 @@ const metadata = {
 		},
 
 		/**
+		 * Receives id(or many ids) of the elements that label the button
+		 * @type {String}
+		 * @defaultvalue ""
+		 * @public
+		 * @since 1.0.0-rc.7
+		 */
+		ariaLabelledby: {
+			type: String,
+			defaultValue: "",
+		},
+
+		/**
 		 * Indicates if the element if focusable
 		 * @private
 		 */
@@ -313,6 +325,26 @@ class Button extends UI5Element {
 			"ariaControls": this._buttonAccInfo && this._buttonAccInfo.ariaControls,
 			"title": this._buttonAccInfo && this._buttonAccInfo.title,
 		};
+	}
+
+	get ariaLabelledByText() {
+		if (!this.ariaLabelledby) {
+			return undefined;
+		}
+
+		const ids = this.ariaLabelledby.split(" ");
+		let result = "";
+
+		ids.forEach((elementId, index) => {
+			const element = document.querySelector(`#${elementId}`);
+			result += `${element ? element.textContent : ""}`;
+
+			if (index < ids.length - 1) {
+				result += " ";
+			}
+		});
+
+		return result;
 	}
 
 	static typeTextMappings() {
