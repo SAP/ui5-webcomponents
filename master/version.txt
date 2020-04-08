@@ -1,17 +1,5 @@
-commit ef27ca1aae237260fe6392a41207657f80122841
+commit 7a5a33c0d4586c9fcc3eb96014e55742657758c9
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Apr 8 09:38:43 2020 +0300
+Date:   Wed Apr 8 11:22:59 2020 +0300
 
-    feat(ui5-datetime-picker): introduce new component (#1437)
-    
-    * feat(ui5-datetime-picker): introduce new component
-    
-    Background
-    The DateTimePicker component alows users to select both date (day, month and year) and time (hours, minutes and seconds).
-    The component opens a popover with calendar and time controls.
-    On smaller screen and on phone device there is a switch to change between the calendar and time controls.
-    Technical points
-    - extends DatePicker
-    - reuses the DatePicker template and WheelSlider component
-    - refactors the DatePicker to make it more extensible and overwrite few methods
-    - extracts time related functions
+    chore: add duration picker icon import (#1444)
