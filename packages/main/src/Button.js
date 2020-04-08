@@ -128,6 +128,13 @@ const metadata = {
 			type: Boolean,
 		},
 
+		/**
+		 * Defines the aria-label attribute for the button
+		 * @type {String}
+		 * @defaultvalue: ""
+		 * @public
+		 * @since 1.0.0-rc.7
+		 */
 		ariaLabel: {
 			type: String,
 			defaultValue: undefined,
@@ -256,7 +263,6 @@ class Button extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		debugger;
 		const FormSupport = getFeature("FormSupport");
 		if (this.submits && !FormSupport) {
 			console.warn(`In order for the "submits" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
