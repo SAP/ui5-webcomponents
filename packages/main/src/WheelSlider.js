@@ -278,7 +278,11 @@ class WheelSlider extends UI5Element {
 	_selectElementByIndex(currentIndex) {
 		let index = currentIndex;
 		const itemsCount = this._itemsToShow.length;
-		const scrollBy = this.isCompact ? 32 * index : 46 * index; // 16 is the size of one rem in pixels same as this._itemCellHeight * 16 * index (done because of IE)
+		const sizeOfCellInCompactInRem = 2;
+		const sizeOfCellInCozyInRem = 2.875;
+		const sizeOfCellInCompactInPixels = sizeOfCellInCompactInRem * 16;
+		const sizeOfCellInCozyInPixels = sizeOfCellInCozyInRem * 16;
+		const scrollBy = this.isCompact ? sizeOfCellInCompactInPixels * index : sizeOfCellInCozyInPixels * index;
 
 		if (this.cyclic) {
 			index = this._handleArrayBorderReached(index);
