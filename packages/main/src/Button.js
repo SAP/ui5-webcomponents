@@ -132,7 +132,7 @@ const metadata = {
 		 * Defines the aria-label attribute for the button
 		 * @type {String}
 		 * @defaultvalue: ""
-		 * @public
+		 * @private
 		 * @since 1.0.0-rc.7
 		 */
 		ariaLabel: {
