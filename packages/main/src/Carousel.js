@@ -12,6 +12,7 @@ import {
 	getI18nBundle,
 } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
+import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
@@ -40,17 +41,39 @@ const metadata = {
 		 * @defaultvalue false
 		 * @public
 		 */
-		cycling: {
+		cyclic: {
 			type: Boolean,
 		},
 
 		/**
-		 * Sets the amount of items per page. If this property is set, on mobile devices it will always fallback to 1.
+		 * Sets the number of items per page on small size (up to 640px). One item per page shown by default.
 		 * @type {Integer}
 		 * @defaultvalue 1
 		 * @public
 		 */
-		itemsPerPage: {
+		itemsPerPageS: {
+			type: Integer,
+			defaultValue: 1,
+		},
+
+		/**
+		 * Sets the number of items per page on medium size (from 640px to 1024px). One item per page shown by default.
+		 * @type {Integer}
+		 * @defaultvalue 1
+		 * @public
+		 */
+		itemsPerPageM: {
+			type: Integer,
+			defaultValue: 1,
+		},
+
+		/**
+		 * Sets the number of items per page on large size (more than 1024px). One item per page shown by default.
+		 * @type {Integer}
+		 * @defaultvalue 1
+		 * @public
+		 */
+		itemsPerPageL: {
 			type: Integer,
 			defaultValue: 1,
 		},
@@ -95,6 +118,14 @@ const metadata = {
 		arrowsPlacement: {
 			type: CarouselArrowsPlacement,
 			defaultValue: CarouselArrowsPlacement.Content,
+		},
+
+		/**
+		 * Defines the carousel width in pixels
+		 * @private
+		 */
+		_width: {
+			type: Integer,
 		},
 	},
 	managedSlots: true,
@@ -177,10 +208,36 @@ class Carousel extends UI5Element {
 		});
 
 		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
+		this._onResizeBound = this._onResize.bind(this);
 	}
 
 	onAfterRendering() {
 		this._scrollEnablement.scrollContainer = this.getDomRef();
+	}
+
+	onEnterDOM() {
+		ResizeHandler.register(this, this._onResizeBound);
+	}
+
+	onExitDOM() {
+		ResizeHandler.deregister(this, this._onResizeBound);
+	}
+
+	_onResize() {
+		const oldItemsPerPage = this.effectiveItemsPerPage;
+
+		// Change transitively effectiveItemsPerPage by modifying _width
+		this._width = this.offsetWidth;
+
+		// Items per page did not change, therefore page index does not need to be re-adjusted
+		if (this.effectiveItemsPerPage === oldItemsPerPage) {
+			return;
+		}
+
+		// Whenever the number of items per page changes, the selected index needs to be re-adjusted so that the items
+		// that were visible before, can be visible as much as possible afterwards.
+		const adjustment = oldItemsPerPage / this.effectiveItemsPerPage;
+		this.selectedIndex = Math.round(this.selectedIndex * adjustment);
 	}
 
 	_updateScrolling(event) {
@@ -209,7 +266,7 @@ class Carousel extends UI5Element {
 
 	navigateLeft() {
 		if (this.selectedIndex - 1 < 0) {
-			if (this.cycling) {
+			if (this.cyclic) {
 				this.selectedIndex = this.pages.length - 1;
 			}
 		} else {
@@ -219,7 +276,7 @@ class Carousel extends UI5Element {
 
 	navigateRight() {
 		if (this.selectedIndex + 1 > this.pages.length - 1) {
-			if (this.cycling) {
+			if (this.cyclic) {
 				this.selectedIndex = 0;
 			}
 		} else {
@@ -261,7 +318,15 @@ class Carousel extends UI5Element {
 	}
 
 	get effectiveItemsPerPage() {
-		return isDesktop() ? this.itemsPerPage : 1;
+		if (this._width <= 640) {
+			return this.itemsPerPageS;
+		}
+
+		if (this._width <= 1024) {
+			return this.itemsPerPageM;
+		}
+
+		return this.itemsPerPageL;
 	}
 
 	get styles() {
@@ -277,12 +342,12 @@ class Carousel extends UI5Element {
 			content: {
 				"ui5-carousel-content": true,
 				"ui5-carousel-content-no-animation": this.shouldAnimate,
-				"ui5-carousel-content-has-navigation": !this.hideNavigation,
-				"ui5-carousel-content-has-navigation-and-buttons": !this.hideNavigation && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
+				"ui5-carousel-content-has-navigation": this.showNavigationArrows,
+				"ui5-carousel-content-has-navigation-and-buttons": this.showNavigationArrows && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
 			},
 			navigation: {
 				"ui5-carousel-navigation-wrapper": true,
-				"ui5-carousel-navigation-with-buttons": this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
+				"ui5-carousel-navigation-with-buttons": this.showNavigationArrows && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
 			},
 			page: {
 				"ui5-carousel-page": true,
@@ -304,9 +369,11 @@ class Carousel extends UI5Element {
 	}
 
 	get arrows() {
+		const showArrows = this.showNavigationArrows && isDesktop();
+
 		return {
-			content: isDesktop() && this.arrowsPlacement === CarouselArrowsPlacement.Content,
-			navigation: isDesktop() && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
+			content: showArrows && this.arrowsPlacement === CarouselArrowsPlacement.Content,
+			navigation: showArrows && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
 		};
 	}
 
@@ -314,8 +381,12 @@ class Carousel extends UI5Element {
 		return this.i18nBundle.getText(CAROUSEL_OF_TEXT);
 	}
 
-	get currenlySelectedIndexToShow() {
+	get selectedIndexToShow() {
 		return this.selectedIndex + 1;
+	}
+
+	get showNavigationArrows() {
+		return !this.hideNavigation && this.pages.length > 1;
 	}
 
 	static async onDefine() {

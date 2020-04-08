@@ -19,12 +19,15 @@ describe("Dialog general interaction", () => {
 	it("tests popover in dialog", () => {
 		const btnOpenDialog = $("#btnOpenDialog");
 		const select = $("#mySelect");
+		const staticAreaItemClassName = browser.getStaticAreaItemClassName("#mySelect");
+		const popover = browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 
 		btnOpenDialog.click();
 		select.click();
 
 		const dialogZIndex = parseInt(browser.$("ui5-dialog").shadow$(".ui5-dialog-root-parent").getCSSProperty('z-index').value);
-		const popoverZIndex = parseInt(browser.$("ui5-static-area-item").shadow$("ui5-responsive-popover").getCSSProperty('z-index').value);
+		const popoverZIndex = parseInt(popover.getCSSProperty('z-index').value);
+
 		assert.ok(popoverZIndex > dialogZIndex, "Popover is above dialog.");
 	});
 

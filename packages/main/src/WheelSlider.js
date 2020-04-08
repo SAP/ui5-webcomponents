@@ -42,6 +42,7 @@ const metadata = {
 		 */
 		value: {
 			type: String,
+			defaultValue: "0",
 		},
 
 		/**

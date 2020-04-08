@@ -94,11 +94,18 @@ const metadata = {
 		},
 
 		/**
-		 * The slot is used in order to display a valueStateMessage.
+		 * Defines the value state message that will be displayed as pop up under the <code>ui5-input</code>.
 		 * <br><br>
-		 * <b>Note:</b> The valueStateMessage would be displayed only if the <code>ui5-input</code> has
-		 * a valueState of type <code>Information</code>, <code>Warning</code> or <code>Error</code>.
+		 *
+		 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
+		 * <br>
+		 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
+		 * when the <code>ui5-input</code> is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
+		 * <br>
+		 * <b>Note:</b> If the <code>ui5-input</code> has <code>suggestionItems</code>,
+		 * the <code>valueStateMessage</code> would be displayed as part of the same popover, if used on desktop, or dialog - on phone.
 		 * @type {HTMLElement[]}
+		 * @since 1.0.0-rc.6
 		 * @slot
 		 * @public
 		 */
@@ -808,21 +815,17 @@ class Input extends UI5Element {
 	get classes() {
 		return {
 			popoverValueState: {
-				"ui5-input-valuestatemessage-root": true,
-				"ui5-input-valuestatemessage-success": this.valueState === ValueState.Success,
-				"ui5-input-valuestatemessage-error": this.valueState === ValueState.Error,
-				"ui5-input-valuestatemessage-warning": this.valueState === ValueState.Warning,
-				"ui5-input-valuestatemessage-information": this.valueState === ValueState.Information,
+				"ui5-valuestatemessage-root": true,
+				"ui5-valuestatemessage--success": this.valueState === ValueState.Success,
+				"ui5-valuestatemessage--error": this.valueState === ValueState.Error,
+				"ui5-valuestatemessage--warning": this.valueState === ValueState.Warning,
+				"ui5-valuestatemessage--information": this.valueState === ValueState.Information,
 			},
 		};
 	}
 
 	get styles() {
 		return {
-			root: {
-				"min-height": "1rem",
-				"box-shadow": "none",
-			},
 			popoverHeader: {
 				"width": `${this._inputWidth}px`,
 			},

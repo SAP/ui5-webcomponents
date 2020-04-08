@@ -1,0 +1,98 @@
+
+{{>include "./DatePickerPopover.hbs"}}
+
+{{#*inline "header"}}
+	{{#if phone}}
+		<div class="ui5-dt-picker-header">
+			<ui5-segmentedbutton style="width: 8rem">
+				<ui5-togglebutton key="Date" ?pressed="{{showDateView}}" @click="{{_dateTimeSwitchChange}}">{{btnDateLabel}}</ui5-togglebutton>
+				<ui5-togglebutton key="Time" ?pressed="{{showTimeView}}" @click="{{_dateTimeSwitchChange}}">{{btnTimeLabel}}</ui5-togglebutton>
+			</ui5-segmentedbutton>
+		</div>
+	{{/if}}
+{{/inline}}
+
+{{#*inline "content"}}
+	<div class="ui5-dt-picker-content {{classes.picker}}">
+		<ui5-calendar
+			class="ui5-dt-cal {{classes.dateTimeView}}"
+			id="{{_id}}-calendar"
+			primary-calendar-type="{{_calendar.primaryCalendarType}}"
+			format-pattern="{{_calendar.formatPattern}}"
+			timestamp="{{_calTimestamp}}"
+			.selectedDates="{{_calDates}}"
+			.minDate="{{_calendar.minDate}}"
+			.maxDate="{{_calendar.maxDate}}"
+			@ui5-selectedDatesChange="{{_calendar.onSelectedDatesChange}}"
+		>
+		</ui5-calendar>
+
+		{{#unless phone}}
+			<span class="ui5-dt-picker-separator"></span>
+		{{/unless}}
+
+		<div class="ui5-dt-time {{classes.dateTimeView}}">
+			{{#if shouldBuildHoursSlider}}
+			<ui5-wheelslider
+				label = "{{hoursLabel}}"
+				._items="{{hoursArray}}"
+				class="ui5-dt-wheel ui5-dt-hours-wheel"
+				cyclic
+				?_expanded="{{_hoursExpanded}}"
+			></ui5-wheelslider>
+			{{/if}}
+
+			{{#if shouldBuildMinutesSlider}}
+			<ui5-wheelslider
+				label = "{{minutesLabel}}"
+				._items="{{minutesArray}}"
+				class="ui5-dt-wheel ui5-dt-minutes-wheel"
+				@expand="{{_sliderClick}}"
+				cyclic
+			></ui5-wheelslider>
+			{{/if}}
+
+			{{#if shouldBuildSecondsSlider}}
+			<ui5-wheelslider
+				label = "{{secondsLabel}}"
+				._items="{{secondsArray}}"
+				class="ui5-dt-wheel ui5-dt-seconds-wheel"
+				@expand="{{_sliderClick}}"
+				cyclic
+			></ui5-wheelslider>
+			{{/if}}
+
+			{{#if shouldBuildPeriodsSlider}}
+			<ui5-wheelslider
+				label = "{{periodLabel}}"
+				value="AM"
+				._items="{{periodsArray}}"
+				class="ui5-dt-wheel ui5-dt-periods-wheel"
+				@expand="{{_sliderClick}}"
+			></ui5-wheelslider>
+			{{/if}}
+		</div>
+	</div>
+{{/inline}}
+
+{{#*inline "footer"}}
+	<div slot="footer" class="ui5-dt-picker-footer">
+		<ui5-button
+			id="ok"
+			class="ui5-dt-picker-action"
+			design="Emphasized"
+			@click="{{_submitClick}}"
+		>
+			{{btnOKLabel}}
+		</ui5-button>
+
+		<ui5-button
+			id="cancel"
+			class="ui5-dt-picker-action"
+			design="Transparent"
+			@click="{{_cancelClick}}"
+		>
+			{{btnCancelLabel}}
+		</ui5-button>
+	</div>
+{{/inline}}

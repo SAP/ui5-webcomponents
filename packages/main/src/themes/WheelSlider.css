@@ -46,6 +46,7 @@
 }
 
 .ui5-wheelslider-root .ui5-wheelslider-inner {
+	position: relative;
 	overflow: hidden;
 	height: 100%;
 	box-sizing: border-box;

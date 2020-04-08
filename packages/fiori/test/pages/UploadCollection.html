@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>UploadCollection</title>
+
+	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+	<script src="../../resources/bundle.esm.js" type="module"></script>
+	<script nomodule src="../../resources/bundle.es5.js"></script>
+
+	<style>
+		.header {
+			display: flex;
+			align-items: center;
+			overflow: hidden;
+		}
+
+		.header > * {
+			margin: 4px;
+		}
+
+		.spacer {
+			flex: 1 1 auto;
+		}
+
+		ui5-upload-collection {
+			margin: 1rem;
+		}
+	</style>
+	<script src="./uploadCollectionScript.js" defer></script>
+</head>
+<body style="background-color: var(--sapBackgroundColor);">
+	<div class="header">
+		<ui5-label>UC Mode:</ui5-label>
+		<ui5-select id="changeMode">
+			<ui5-option>None</ui5-option>
+			<ui5-option>SingleSelect</ui5-option>
+			<ui5-option>SingleSelectBegin</ui5-option>
+			<ui5-option>SingleSelectEnd</ui5-option>
+			<ui5-option>MultiSelect</ui5-option>
+			<ui5-option>Delete</ui5-option>
+		</ui5-select>
+		<ui5-label>UCI Type:</ui5-label>
+		<ui5-select id="changeType">
+			<ui5-option>Active</ui5-option>
+			<ui5-option>Inactive</ui5-option>
+			<ui5-option>Detail</ui5-option>
+		</ui5-select>
+		<ui5-label>Selected items:</ui5-label>
+		<ui5-label id="selectedItems"></ui5-label>
+		<ui5-label>Renamed file index:</ui5-label>
+		<ui5-label id="renamedFileIndex"></ui5-label>
+	</div>
+
+	<p id="draggableElement" draggable="true">This element is draggable</p>
+
+	<ui5-upload-collection id="uploadCollection">
+		<div slot="header" class="header">
+			<ui5-title>Uploaded (4)</ui5-title>
+			<ui5-label>Add new files and press to start uploading pending files:</ui5-label>
+			<ui5-button id="startUploading">Start</ui5-button>
+			<div class="spacer"></div>
+			<ui5-file-uploader id="fileUploader" hide-input multiple>
+				<ui5-button icon="add" design="Transparent"></ui5-button>
+			</ui5-file-uploader>
+		</div>
+		<ui5-upload-collection-item
+			id="firstItem"
+			file-name="LaptopHT-1000.jpg"
+			file-name-clickable
+			upload-state="Complete"
+		>
+			<img src="./img/HT-1000.jpg" slot="thumbnail">
+			File name is clickable.
+		</ui5-upload-collection-item>
+		<ui5-upload-collection-item
+			id="secondItem"
+			file-name=".gitignore"
+			type="Detail"
+			no-delete
+			upload-state="Complete"
+		>
+			<ui5-icon name="customize" slot="thumbnail"></ui5-icon>
+			You cannot delete this file.
+		</ui5-upload-collection-item>
+		<ui5-upload-collection-item
+			id="latestReportsPdf"
+			file-name="latest.reports.pdf"
+			type="Detail"
+			upload-state="Complete"
+		>
+			<ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
+			Some description.
+		</ui5-upload-collection-item>
+		<ui5-upload-collection-item
+			id="noFileExtension"
+			file-name="noextension"
+			type="Detail"
+			upload-state="Complete"
+		>
+			<ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
+		</ui5-upload-collection-item>
+	</ui5-upload-collection>
+
+	<ui5-upload-collection id="uploadCollectionDnD" style="height: 30rem;">
+		<div class="header" slot="header">
+			<ui5-title>Attachments (0)</ui5-title>
+			<div class="spacer"></div>
+			<ui5-file-uploader id="fileUploader" hide-input multiple>
+				<ui5-button>Upload</ui5-button>
+			</ui5-file-uploader>
+		</div>
+	</ui5-upload-collection>
+
+	<div class="header">
+		<ui5-label id="uploadStateEvent"></ui5-label>
+	</div>
+	<ui5-upload-collection id="uploadCollectionStates">
+		<div class="header" slot="header">
+			<ui5-title>Upload States</ui5-title>
+		</div>
+		<ui5-upload-collection-item
+			id="completeState"
+			file-name="LaptopHT-1000.jpg"
+			file-name-clickable
+			upload-state="Complete"
+		>
+			<img src="./img/HT-1000.jpg" slot="thumbnail">
+			uploadState="Complete"
+		</ui5-upload-collection-item>
+		<ui5-upload-collection-item
+			id="uploadingState"
+			file-name="Laptop.jpg"
+			type="Detail"
+			no-delete
+			upload-state="Uploading"
+			progress="37"
+		>
+			<img src="./img/HT-1000.jpg" slot="thumbnail">
+			uploadState="Uploading"
+		</ui5-upload-collection-item>
+		<ui5-upload-collection-item
+			id="errorState"
+			file-name="latest.reports.pdf"
+			type="Detail"
+			upload-state="Error"
+			progress="59"
+		>
+			<ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
+			uploadState="Error"
+		</ui5-upload-collection-item>
+		<ui5-upload-collection-item
+			id="readyState"
+			file-name="noextension"
+			type="Detail"
+		>
+			<ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
+			uploadState="Ready" (default)
+		</ui5-upload-collection-item>
+	</ui5-upload-collection>
+</body>
+</html>

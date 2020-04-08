@@ -1,0 +1,18 @@
+:host(:not([hidden])) {
+    display: inline-block;
+}
+
+.ui5-duration-picker-input-icon-button:hover {
+	cursor: pointer;
+	background: var(--sapButton_Hover_Background);
+}
+
+.ui5-duration-picker-input-icon-button:active {
+	background-color: var(--sapButton_Active_Background);
+	color: var(--sapButton_Active_TextColor);
+}
+
+.ui5-duration-picker-input-icon-button[pressed] {
+	background-color: var(--sapButton_Active_Background);
+	color: var(--sapButton_Active_TextColor);
+}
