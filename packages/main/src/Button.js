@@ -128,6 +128,11 @@ const metadata = {
 			type: Boolean,
 		},
 
+		ariaLabel: {
+			type: String,
+			defaultValue: undefined,
+		},
+
 		/**
 		 * Indicates if the element if focusable
 		 * @private
@@ -251,6 +256,7 @@ class Button extends UI5Element {
 	}
 
 	onBeforeRendering() {
+		debugger;
 		const FormSupport = getFeature("FormSupport");
 		if (this.submits && !FormSupport) {
 			console.warn(`In order for the "submits" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
