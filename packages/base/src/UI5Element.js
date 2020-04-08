@@ -821,6 +821,14 @@ class UI5Element extends HTMLElement {
 	}
 
 	/**
+	 * Returns the Static Area CSS for this UI5 Web Component Class
+	 * @protected
+	 */
+	static get staticAreaStyles() {
+		return "";
+	}
+
+	/**
 	 * Registers a UI5 Web Component in the browser window object
 	 * @public
 	 * @returns {Promise<UI5Element>}

@@ -22,7 +22,7 @@ class StaticAreaItem {
 	 */
 	_updateFragment() {
 		const renderResult = this.ui5ElementContext.constructor.staticAreaTemplate(this.ui5ElementContext),
-			stylesToAdd = this.ui5ElementContext.constructor.staticAreaStyles || false;
+			stylesToAdd = window.ShadyDOM ? false : this.ui5ElementContext.constructor.staticAreaStyles;
 
 		if (!this.staticAreaItemDomRef) {
 			// Initial rendering of fragment

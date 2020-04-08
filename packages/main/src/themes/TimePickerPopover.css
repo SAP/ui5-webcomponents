@@ -5,6 +5,7 @@
 	direction: ltr;
 	padding: 0.5rem;
 	min-width: 18rem;
+	box-sizing: border-box;
 }
 
 .ui5-timepicker-sliders-container.ui5-phone{
