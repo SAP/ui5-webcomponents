@@ -143,7 +143,17 @@ const metadata = {
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Carousel.prototype */ {
-		//
+		/**
+		 * Fired when the currently <code>selectedIndex</code> changes due to user interaction.
+		 * <b>Note:</b> it changes when the user clicks on the navigation arrows, or upon screen resize.
+		 * s the user can define how many items to be displayed on different screen sizes, the <code>selectedIndex</code> might change on resize.
+		 *
+		 *
+		 * @event
+		 * @public
+		 */
+		selectedIndexChange: {
+		},
 	},
 };
 
@@ -237,7 +247,12 @@ class Carousel extends UI5Element {
 		// Whenever the number of items per page changes, the selected index needs to be re-adjusted so that the items
 		// that were visible before, can be visible as much as possible afterwards.
 		const adjustment = oldItemsPerPage / this.effectiveItemsPerPage;
+		const peviousSelectedIndex = this.selectedIndex;
 		this.selectedIndex = Math.round(this.selectedIndex * adjustment);
+
+		if (peviousSelectedIndex !== this.selectedIndex) {
+			this.fireEvent("selectedIndexChange", { selectedIndex: this.selectedIndex }); 
+		}
 	}
 
 	_updateScrolling(event) {
@@ -265,6 +280,8 @@ class Carousel extends UI5Element {
 	}
 
 	navigateLeft() {
+		const peviousSelectedIndex = this.selectedIndex;
+
 		if (this.selectedIndex - 1 < 0) {
 			if (this.cyclic) {
 				this.selectedIndex = this.pages.length - 1;
@@ -272,15 +289,25 @@ class Carousel extends UI5Element {
 		} else {
 			--this.selectedIndex;
 		}
+
+		if (peviousSelectedIndex !== this.selectedIndex) {
+			this.fireEvent("selectedIndexChange", { selectedIndex: this.selectedIndex }); 
+		}
 	}
 
 	navigateRight() {
+		const peviousSelectedIndex = this.selectedIndex;
+
 		if (this.selectedIndex + 1 > this.pages.length - 1) {
 			if (this.cyclic) {
 				this.selectedIndex = 0;
 			}
 		} else {
 			++this.selectedIndex;
+		}
+
+		if (peviousSelectedIndex !== this.selectedIndex) {
+			this.fireEvent("selectedIndexChange", { selectedIndex: this.selectedIndex }); 
 		}
 	}
 

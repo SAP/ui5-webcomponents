@@ -64,4 +64,28 @@ describe("Carousel general interaction", () => {
 		assert.ok(!navigationArrows.isExisting(), "Navigation is rendered");
 		assert.strictEqual(pages, 1, "There are only 3 pages.");
 	});
+
+	it("Event selectedIndexChange fired when pressing navigation arrows", () => {
+		const carousel = browser.$("#carousel5");
+		const selectedIndex = browser.$("#result");
+		const eventCounter = browser.$("#resultCounter");
+		const navigationArrowForward = carousel.shadow$("ui5-button[arrow-forward]");
+		const navigationArrowsBack = carousel.shadow$("ui5-button[arrow-back]");
+
+		navigationArrowForward.click(); // forward
+		assert.strictEqual(selectedIndex.getProperty("value"), "1", "The selectedIndex is correct.");
+		assert.strictEqual(eventCounter.getProperty("value"), "1", "The selectedIndexChange is fired.");
+		
+		navigationArrowForward.click(); // forward
+		assert.strictEqual(selectedIndex.getProperty("value"), "1", "The selectedIndex remains the same as this is the last page.");
+		assert.strictEqual(eventCounter.getProperty("value"), "1", "The selectedIndexChange not fired as this is last page.");
+		
+		navigationArrowsBack.click(); // back
+		assert.strictEqual(selectedIndex.getProperty("value"), "0", "The selectedIndex is correct");
+		assert.strictEqual(eventCounter.getProperty("value"), "2", "The selectedIndexChange is fired.");
+
+		navigationArrowsBack.click(); // back
+		assert.strictEqual(selectedIndex.getProperty("value"), "0", "The selectedIndex remains the same as this is the first page.");
+		assert.strictEqual(eventCounter.getProperty("value"), "2", "The selectedIndexChange is not fired as this is the first page.");
+	});
 });

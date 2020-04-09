@@ -358,6 +358,8 @@
 	<ui5-button>Button 7</ui5-button>
 	<ui5-button>Button 8</ui5-button>
 </ui5-carousel>
+<ui5-input id="result"></ui5-input>
+<ui5-input id="resultCounter"></ui5-input>
 
 <ui5-title>Carousel with one page</ui5-title>
 <ui5-label>The arrows and dots are not displayed</ui5-label>
@@ -369,4 +371,12 @@
 </ui5-carousel>
 
 </body>
+
+<script>
+	var counter = 0;
+	carousel5.addEventListener("ui5-selectedIndexChange", function(event){
+		result.value = event.detail.selectedIndex;
+		resultCounter.value = ++counter;
+	});
+</script>
 </html>
