@@ -1,5 +1,5 @@
-commit a10fde59b62fff25f4d200e20c4051d6ced4c0af
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Thu Apr 9 11:59:40 2020 +0300
+commit ae20272067e58b936987f0509918cc520e1acde2
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Thu Apr 9 16:32:43 2020 +0300
 
-    fix(ui5-popover): allow opening if opener is not fully visible (#1448)
+    fix(ui5-shellbar): do not duplicate popover menu items (#1456)
