@@ -1,5 +1,5 @@
-commit ae20272067e58b936987f0509918cc520e1acde2
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu Apr 9 16:32:43 2020 +0300
+commit f4d254797472b19d832cc82fd3df8a7db87bb793
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu Apr 9 18:52:45 2020 +0300
 
-    fix(ui5-shellbar): do not duplicate popover menu items (#1456)
+    fix(ui5-shellbar): fix menuItems cloning (#1457)
