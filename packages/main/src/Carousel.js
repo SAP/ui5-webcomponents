@@ -146,8 +146,8 @@ const metadata = {
 		/**
 		 * Fired when the currently <code>selectedIndex</code> changes due to user interaction.
 		 * <b>Note:</b> it changes when the user clicks on the navigation arrows, or upon screen resize.
-		 * s the user can define how many items to be displayed on different screen sizes, the <code>selectedIndex</code> might change on resize.
-		 *
+		 * As the user can define how many items to be displayed on different screen sizes,
+		 * the number of pages and the <code>selectedIndex</code> might change.
 		 *
 		 * @event
 		 * @public
@@ -251,7 +251,7 @@ class Carousel extends UI5Element {
 		this.selectedIndex = Math.round(this.selectedIndex * adjustment);
 
 		if (peviousSelectedIndex !== this.selectedIndex) {
-			this.fireEvent("selectedIndexChange", { selectedIndex: this.selectedIndex }); 
+			this.fireEvent("selectedIndexChange", { selectedIndex: this.selectedIndex });
 		}
 	}
 
@@ -291,7 +291,7 @@ class Carousel extends UI5Element {
 		}
 
 		if (peviousSelectedIndex !== this.selectedIndex) {
-			this.fireEvent("selectedIndexChange", { selectedIndex: this.selectedIndex }); 
+			this.fireEvent("selectedIndexChange", { selectedIndex: this.selectedIndex });
 		}
 	}
 
@@ -307,7 +307,7 @@ class Carousel extends UI5Element {
 		}
 
 		if (peviousSelectedIndex !== this.selectedIndex) {
-			this.fireEvent("selectedIndexChange", { selectedIndex: this.selectedIndex }); 
+			this.fireEvent("selectedIndexChange", { selectedIndex: this.selectedIndex });
 		}
 	}
 
