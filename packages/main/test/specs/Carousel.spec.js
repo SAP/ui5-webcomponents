@@ -65,7 +65,7 @@ describe("Carousel general interaction", () => {
 		assert.strictEqual(pages, 1, "There are only 3 pages.");
 	});
 
-	it("Event selectedPageChange fired when pressing navigation arrows", () => {
+	it("Event navigate fired when pressing navigation arrows", () => {
 		const carousel = browser.$("#carousel5");
 		const selectedIndex = browser.$("#result");
 		const eventCounter = browser.$("#resultCounter");
@@ -74,18 +74,18 @@ describe("Carousel general interaction", () => {
 
 		navigationArrowForward.click(); // forward
 		assert.strictEqual(selectedIndex.getProperty("value"), "1", "The selectedIndex is correct.");
-		assert.strictEqual(eventCounter.getProperty("value"), "1", "The selectedPageChange is fired.");
+		assert.strictEqual(eventCounter.getProperty("value"), "1", "The navigate is fired.");
 		
 		navigationArrowForward.click(); // forward
 		assert.strictEqual(selectedIndex.getProperty("value"), "1", "The selectedIndex remains the same as this is the last page.");
-		assert.strictEqual(eventCounter.getProperty("value"), "1", "The selectedPageChange not fired as this is last page.");
+		assert.strictEqual(eventCounter.getProperty("value"), "1", "The navigate not fired as this is last page.");
 		
 		navigationArrowsBack.click(); // back
 		assert.strictEqual(selectedIndex.getProperty("value"), "0", "The selectedIndex is correct");
-		assert.strictEqual(eventCounter.getProperty("value"), "2", "The selectedPageChange is fired.");
+		assert.strictEqual(eventCounter.getProperty("value"), "2", "The navigate is fired.");
 
 		navigationArrowsBack.click(); // back
 		assert.strictEqual(selectedIndex.getProperty("value"), "0", "The selectedIndex remains the same as this is the first page.");
-		assert.strictEqual(eventCounter.getProperty("value"), "2", "The selectedPageChange is not fired as this is the first page.");
+		assert.strictEqual(eventCounter.getProperty("value"), "2", "The navigate is not fired as this is the first page.");
 	});
 });

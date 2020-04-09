@@ -374,7 +374,7 @@
 
 <script>
 	var counter = 0;
-	carousel5.addEventListener("ui5-selectedPageChange", function(event){
+	carousel5.addEventListener("ui5-navigate", function(event){
 		result.value = event.detail.selectedIndex;
 		resultCounter.value = ++counter;
 	});

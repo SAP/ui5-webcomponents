@@ -143,16 +143,17 @@ const metadata = {
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Carousel.prototype */ {
+
 		/**
-		 * Fired when the currently selected page changes,
-		 * when the user clicks on the navigation arrows.
+		 * Fired when the user clicks on the navigation arrows
+		 * and changes the selected page.
 		 *
 		 * @event
 		 * @param {Integer} selectedIndex the current <code>selectedIndex</code>.
 		 * @public
 		 * @since 1.0.0-rc.7
 		 */
-		selectedPageChange: {
+		navigate: {
 			detail: {
 				selectedIndex: { type: Integer },
 			},
@@ -289,7 +290,7 @@ class Carousel extends UI5Element {
 		}
 
 		if (peviousSelectedIndex !== this.selectedIndex) {
-			this.fireEvent("selectedPageChange", { selectedIndex: this.selectedIndex });
+			this.fireEvent("navigate", { selectedIndex: this.selectedIndex });
 		}
 	}
 
@@ -305,7 +306,7 @@ class Carousel extends UI5Element {
 		}
 
 		if (peviousSelectedIndex !== this.selectedIndex) {
-			this.fireEvent("selectedPageChange", { selectedIndex: this.selectedIndex });
+			this.fireEvent("navigate", { selectedIndex: this.selectedIndex });
 		}
 	}
 
