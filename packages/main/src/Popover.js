@@ -422,10 +422,10 @@ class Popover extends UI5Element {
 		const threshold = 32;
 
 		const limits = {
-			"Right": openerRect.top,
-			"Left": openerRect.top,
+			"Right": openerRect.right,
+			"Left": openerRect.left,
 			"Top": openerRect.top,
-			"Bottom": openerRect.top,
+			"Bottom": openerRect.bottom,
 		};
 
 		const closedPopupParent = getClosedPopupParent(this._opener);
