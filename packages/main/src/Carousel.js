@@ -148,9 +148,14 @@ const metadata = {
 		 * when the user clicks on the navigation arrows.
 		 *
 		 * @event
+		 * @param {Integer} selectedIndex the current <code>selectedIndex</code>.
 		 * @public
+		 * @sice 1.0.0-rc.7
 		 */
 		selectedPageChange: {
+			detail: {
+				selectedIndex: { type: Integer },
+			},
 		},
 	},
 };
