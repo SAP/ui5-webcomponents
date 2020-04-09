@@ -145,7 +145,7 @@ const metadata = {
 	events: /** @lends sap.ui.webcomponents.main.Carousel.prototype */ {
 		/**
 		 * Fired when the currently selected page changes,
-		 * when the user clicks on the navigation arrows, or upon screen resize.
+		 * when the user clicks on the navigation arrows.
 		 *
 		 * @event
 		 * @public
