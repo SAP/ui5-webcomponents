@@ -138,8 +138,8 @@ const metadata = {
 		},
 
 		_menuPopoverItems: {
-			type: Array,
-			defaultValue: [],
+			type: String,
+			multiple: true,
 		},
 	},
 	managedSlots: true,
