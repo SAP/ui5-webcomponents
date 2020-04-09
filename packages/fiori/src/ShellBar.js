@@ -387,8 +387,11 @@ class ShellBar extends UI5Element {
 		this._header = {
 			press: event => {
 				this._updateClonedMenuItems();
-				this.updateStaticAreaItemContentDensity();
-				this.menuPopover.openBy(this.shadowRoot.querySelector(".ui5-shellbar-menu-button"));
+
+				if (this.menuItems.length) {
+					this.updateStaticAreaItemContentDensity();
+					this.menuPopover.openBy(this.shadowRoot.querySelector(".ui5-shellbar-menu-button"));
+				}
 			},
 		};
 
@@ -822,10 +825,6 @@ class ShellBar extends UI5Element {
 	}
 
 	_updateClonedMenuItems() {
-		if (!this.menuItems.length) {
-			return;
-		}
-
 		this._menuPopoverItems = [];
 
 		this.menuItems.forEach(item => {
