@@ -122,11 +122,11 @@
 
 	<ui5-input slot="searchField"></ui5-input>
 
-	<ui5-li id="menu-item-1" slot="menuItems">Application 1</ui5-li>
-	<ui5-li id="menu-item-2" slot="menuItems">Application 2</ui5-li>
-	<ui5-li slot="menuItems">Application 3</ui5-li>
-	<ui5-li slot="menuItems">Application 4</ui5-li>
-	<ui5-li slot="menuItems">Application 5</ui5-li>
+	<ui5-li id="menu-item-1" slot="menuItems" data-key="key1">Application 1</ui5-li>
+	<ui5-li id="menu-item-2" slot="menuItems" data-key="key2">Application 2</ui5-li>
+	<ui5-li slot="menuItems" data-key="key3">Application 3</ui5-li>
+	<ui5-li slot="menuItems" data-key="key4">Application 4</ui5-li>
+	<ui5-li slot="menuItems" data-key="key5">Application 5</ui5-li>
 </ui5-shellbar>
 
 <section class="ui5-content-density-compact">
@@ -179,6 +179,7 @@
 </ui5-popover>
 
 <ui5-input id="press-input" style="margin-top: 2rem;"></ui5-input>
+<ui5-input id="press-data" style="margin-top: 2rem;"></ui5-input>
 <ui5-input id="press-input2" style="margin-top: 2rem;"></ui5-input>
 
 
@@ -200,6 +201,23 @@
 		<ui5-li icon="world" description="travel the world" info="explore" info-state="Success">14</ui5-li>
 	</ui5-input>
 </ui5-shellbar>
+
+<ui5-title>Menu Items</ui5-title>
+
+<ui5-label>value</ui5-label><ui5-input id="result-value"></ui5-input><br>
+<ui5-label>key</ui5-label><ui5-input id="result-key"></ui5-input>
+
+<ui5-shellbar
+		id="menuItemsSB"
+		primary-title="Menu Items"
+>
+	<ui5-li id="mi-1" slot="menuItems" data-key="key1">App 1</ui5-li>
+	<ui5-li id="mi-2" slot="menuItems" data-key="key2">App 2</ui5-li>
+	<ui5-li id="mi-3"slot="menuItems" data-key="key3">App 3</ui5-li>
+	<ui5-li id="mi-4"slot="menuItems" data-key="key4">App 4</ui5-li>
+</ui5-shellbar>
+
+
 
 <script>
 	mySearch.addEventListener("suggestionItemSelect", function (event) {
@@ -233,11 +251,19 @@
 	});
 
 	shellbar.addEventListener("ui5-menuItemClick", function(event) {
-		window["press-input"].value = event.detail.item.textContent;
+		var item = event.detail.item;
+		window["press-input"].value = item.textContent;
+		window["press-data"].value = item.getAttribute("data-key");
+	});
+
+	menuItemsSB.addEventListener("ui5-menuItemClick", function(event) {
+		var item = event.detail.item;
+		window["result-value"].value = item.textContent;
+		window["result-key"].value = item.getAttribute("data-key");
 	});
 
 	["disc", "call"].forEach(function(id) {
-        var currenItem = window[id][0] || window[id];
+		var currenItem = window[id][0] || window[id];
 		currenItem.addEventListener("ui5-itemClick", function(event) {
 			event.preventDefault();
 			window["press-input"].value = event.target.id;
