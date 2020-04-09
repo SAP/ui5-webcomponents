@@ -241,7 +241,7 @@ class WheelSlider extends UI5Element {
 		offsetIndex = Math.round(scrollWhere / sizeOfOneElementInPixels);
 
 		if (this.value === this._itemsToShow[offsetIndex]) {
-			return; 
+			return;
 		}
 
 		if (this.cyclic) {
