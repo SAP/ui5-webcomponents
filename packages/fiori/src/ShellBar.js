@@ -389,7 +389,7 @@ class ShellBar extends UI5Element {
 				this._updateClonedMenuItems();
 				this.updateStaticAreaItemContentDensity();
 				this.menuPopover.openBy(this.shadowRoot.querySelector(".ui5-shellbar-menu-button"));
-			}
+			},
 		};
 
 		this._itemNav = new ItemNavigation(this);
