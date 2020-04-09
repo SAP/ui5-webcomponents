@@ -1,5 +1,5 @@
-commit 7a5a33c0d4586c9fcc3eb96014e55742657758c9
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Apr 8 11:22:59 2020 +0300
+commit a10fde59b62fff25f4d200e20c4051d6ced4c0af
+Author: Filip Siderov <filip.siderov@sap.com>
+Date:   Thu Apr 9 11:59:40 2020 +0300
 
-    chore: add duration picker icon import (#1444)
+    fix(ui5-popover): allow opening if opener is not fully visible (#1448)
