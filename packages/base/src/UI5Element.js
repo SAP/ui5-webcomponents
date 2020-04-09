@@ -485,6 +485,10 @@ class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	_updateShadowRoot() {
+		if (!this.constructor._needsShadowDOM()) {
+			return;
+		}
+
 		let styleToPrepend;
 		const renderResult = this.constructor.template(this);
 
