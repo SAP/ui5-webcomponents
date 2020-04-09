@@ -150,7 +150,7 @@ const metadata = {
 		 * @event
 		 * @param {Integer} selectedIndex the current <code>selectedIndex</code>.
 		 * @public
-		 * @sice 1.0.0-rc.7
+		 * @since 1.0.0-rc.7
 		 */
 		selectedPageChange: {
 			detail: {
