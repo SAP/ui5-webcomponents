@@ -7,6 +7,7 @@ import {
 } from "@ui5/webcomponents-base/src/Keys.js";
 import "@ui5/webcomponents-icons/dist/icons/navigation-up-arrow.js";
 import "@ui5/webcomponents-icons/dist/icons/navigation-down-arrow.js";
+import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
 import WheelSliderTemplate from "./generated/templates/WheelSliderTemplate.lit.js";
 import Button from "./Button.js";
 
@@ -153,6 +154,10 @@ class WheelSlider extends UI5Element {
 		this._currentElementIndex = 0;
 		this._itemCellHeight = 0;
 		this._itemsToShow = [];
+		this._scroller = new ScrollEnablement(this);
+		this._scroller.attachEvent("scroll", this._updateScrolling.bind(this));
+		this._scroller.attachEvent("mouseup", this._handleScrollTouchEnd.bind(this));
+		this._scroller.attachEvent("touchend", this._handleScrollTouchEnd.bind(this));
 	}
 
 	onBeforeRendering() {
@@ -169,15 +174,19 @@ class WheelSlider extends UI5Element {
 		this._updateItemCellHeight();
 	}
 
-	_updateItemCellHeight() {
-		this._itemCellHeight = this.shadowRoot.querySelectorAll(".ui5-wheelslider-item").length && Number(getComputedStyle(this.shadowRoot.querySelector(".ui5-wheelslider-item")).getPropertyValue("--_ui5_wheelslider_item_height").replace("rem", ""));
-	}
-
 	static async onDefine() {
 		await Button.define();
 	}
 
 	onAfterRendering() {
+		if (!this._scroller.scrollContainer) {
+			this._scroller.scrollContainer = this.shadowRoot.querySelector(`#${this._id}--wrapper`);
+		}
+
+		if (!this._expanded) {
+			this._scroller.scrollTo(0, 0);
+		}
+
 		if (this._expanded) {
 			const elements = this.shadowRoot.querySelectorAll(".ui5-wheelslider-item");
 			for (let i = 0; i < elements.length; i++) {
@@ -188,6 +197,103 @@ class WheelSlider extends UI5Element {
 			}
 
 			this._selectElement(elements[0]);
+		}
+	}
+
+	get classes() {
+		return {
+			root: {
+				"ui5-wheelslider-root": true,
+				"ui5-phone": isPhone(),
+			},
+		};
+	}
+
+	expandSlider() {
+		this._expanded = true;
+		this.fireEvent("expand", {});
+	}
+
+	collapseSlider() {
+		this._expanded = false;
+		this.fireEvent("collapse", {});
+	}
+
+	_updateItemCellHeight() {
+		if (this.shadowRoot.querySelectorAll(".ui5-wheelslider-item").length) {
+			const itemComputedStyle = getComputedStyle(this.shadowRoot.querySelector(".ui5-wheelslider-item"));
+			const itemHeightValue = itemComputedStyle.getPropertyValue("--_ui5_wheelslider_item_height");
+			const onlyDigitsValue = itemHeightValue.replace("rem", "");
+
+			this._itemCellHeight = Number(onlyDigitsValue);
+		}
+	}
+
+	_updateScrolling() {
+		const sizeOfOneElementInPixels = this._itemCellHeight * 16,
+			scrollWhere = this._scroller.scrollContainer.scrollTop;
+		let offsetIndex;
+
+		if (!scrollWhere) {
+			return;
+		}
+
+		offsetIndex = Math.round(scrollWhere / sizeOfOneElementInPixels);
+
+		if (this.value === this._itemsToShow[offsetIndex]) {
+			return; 
+		}
+
+		if (this.cyclic) {
+			const newIndex = this._handleArrayBorderReached(offsetIndex);
+			if (offsetIndex !== newIndex) {
+				offsetIndex = newIndex;
+			}
+		}
+
+		this.value = this._itemsToShow[offsetIndex];
+		this._currentElementIndex = offsetIndex;
+	}
+
+	_handleScrollTouchEnd() {
+		if (this._expanded) {
+			this._selectElementByIndex(this._currentElementIndex);
+		}
+	}
+
+	_selectElement(element) {
+		if (element && this._items.indexOf(element.textContent) > -1) {
+			this._currentElementIndex = Number(element.dataset.itemIndex);
+			this._selectElementByIndex(this._currentElementIndex);
+		}
+	}
+
+	_getCurrentRepetition() {
+		if (this._currentElementIndex) {
+			return Math.floor(this._currentElementIndex / this._items.length);
+		}
+
+		return 0;
+	}
+
+	_selectElementByIndex(currentIndex) {
+		let index = currentIndex;
+		const itemsCount = this._itemsToShow.length;
+		const sizeOfCellInCompactInRem = 2;
+		const sizeOfCellInCozyInRem = 2.875;
+		const sizeOfCellInCompactInPixels = sizeOfCellInCompactInRem * 16;
+		const sizeOfCellInCozyInPixels = sizeOfCellInCozyInRem * 16;
+		const scrollBy = this.isCompact ? sizeOfCellInCompactInPixels * index : sizeOfCellInCozyInPixels * index;
+
+		if (this.cyclic) {
+			index = this._handleArrayBorderReached(index);
+		}
+
+		if (index < itemsCount && index > -1) {
+			this._scroller.scrollTo(0, scrollBy);
+			this._currentElementIndex = index;
+			this.value = this._items[index - (this._getCurrentRepetition() * this._items.length)];
+			this.fireEvent("valueSelect", { value: this.value });
 		}
 	}
 
@@ -210,13 +316,18 @@ class WheelSlider extends UI5Element {
 		}
 	}
 
-	get classes() {
-		return {
-			root: {
-				"ui5-wheelslider-root": true,
-				"ui5-phone": isPhone(),
-			},
-		};
+	_handleArrayBorderReached(currentIndex) {
+		const arrayLength = this._itemsToShow.length;
+		const maxVisibleElementsOnOneSide = 7;
+		let index = currentIndex;
+
+		if (maxVisibleElementsOnOneSide > index) {
+			index += this._items.length * 2;
+		} else if (index > arrayLength - maxVisibleElementsOnOneSide) {
+			index -= this._items.length * 2;
+		}
+
+		return index;
 	}
 
 	_handleWheel(e) {
@@ -232,9 +343,9 @@ class WheelSlider extends UI5Element {
 		}
 
 		if (e.deltaY > 0) {
-			this._onArrowUp(e);
+			this._itemUp();
 		} else if (e.deltaY < 0) {
-			this._onArrowDown(e);
+			this._itemDown();
 		}
 
 		this._prevWheelTimestamp = e.timeStamp;
@@ -254,88 +365,37 @@ class WheelSlider extends UI5Element {
 		}
 	}
 
-	expandSlider() {
-		this._expanded = true;
-		this.fireEvent("expand", {});
-	}
-
-	collapseSlider() {
-		this._expanded = false;
-		this.fireEvent("collapse", {});
-	}
-
-	_selectElement(element) {
-		if (element && this._items.indexOf(element.textContent) > -1) {
-			this._currentElementIndex = Number(element.dataset.itemIndex);
-			this._selectElementByIndex(this._currentElementIndex);
-		}
-	}
-
-	_getCurrentRepetition() {
-		if (this._currentElementIndex) {
-			return Math.floor(this._currentElementIndex / this._items.length);
-		}
-
-		return 0;
-	}
-
-	_selectElementByIndex(currentIndex) {
-		const sliderElement = this.shadowRoot.getElementById(`${this._id}--items-list`);
-		const itemsCount = this._itemsToShow.length;
-		const itemCellHeight = this._itemCellHeight ? this._itemCellHeight : 2.875;
-		const offsetStep = isPhone() ? 4 : 2;
-		let index = currentIndex;
-
-		if (this.cyclic) {
-			index = this.handleArrayBorderReached(index);
-		}
-
-		if (index < itemsCount && index > -1) {
-			const offsetSelectedElement = offsetStep * itemCellHeight - (index * itemCellHeight);
-			sliderElement.setAttribute("style", `top:${offsetSelectedElement}rem`);
-			this._currentElementIndex = index;
-			this.value = this._items[index - (this._getCurrentRepetition() * this._items.length)];
-			this.fireEvent("valueSelect", { value: this.value });
-		}
-	}
-
-	handleArrayBorderReached(currentIndex) {
-		const arrayLength = this._itemsToShow.length;
-		const maxVisibleElementsOnOneSide = 5;
-		let index = currentIndex;
-
-		if (maxVisibleElementsOnOneSide > index) {
-			index += this._items.length * 2;
-		} else if (index > arrayLength - maxVisibleElementsOnOneSide) {
-			index -= this._items.length * 2;
-		}
-
-		return index;
-	}
-
 	_onArrowDown(e) {
 		e.preventDefault();
-		const nextElementIndex = this._currentElementIndex + 1;
-		this._selectElementByIndex(nextElementIndex);
+		this._itemDown();
 	}
 
 	_onArrowUp(e) {
 		e.preventDefault();
+		this._itemUp();
+	}
+
+	_itemDown() {
+		const nextElementIndex = this._currentElementIndex + 1;
+		this._selectElementByIndex(nextElementIndex);
+	}
+
+	_itemUp() {
 		const nextElementIndex = this._currentElementIndex - 1;
 		this._selectElementByIndex(nextElementIndex);
 	}
 
-	_onkeydown(event) {
+	_onkeydown(е) {
 		if (!this._expanded) {
 			return;
 		}
 
-		if (isUp(event)) {
-			this._onArrowUp(event);
+		if (isUp(е)) {
+			this._onArrowUp(е);
 		}
 
-		if (isDown(event)) {
-			this._onArrowDown(event);
+		if (isDown(е)) {
+			this._onArrowDown(е);
 		}
 	}
 
