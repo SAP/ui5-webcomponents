@@ -144,15 +144,13 @@ const metadata = {
 	},
 	events: /** @lends sap.ui.webcomponents.main.Carousel.prototype */ {
 		/**
-		 * Fired when the currently <code>selectedIndex</code> changes due to user interaction.
-		 * <b>Note:</b> it changes when the user clicks on the navigation arrows, or upon screen resize.
-		 * As the user can define how many items to be displayed on different screen sizes,
-		 * the number of pages and the <code>selectedIndex</code> might change.
+		 * Fired when the currently selected page changes,
+		 * when the user clicks on the navigation arrows, or upon screen resize.
 		 *
 		 * @event
 		 * @public
 		 */
-		selectedIndexChange: {
+		selectedPageChange: {
 		},
 	},
 };
@@ -247,12 +245,7 @@ class Carousel extends UI5Element {
 		// Whenever the number of items per page changes, the selected index needs to be re-adjusted so that the items
 		// that were visible before, can be visible as much as possible afterwards.
 		const adjustment = oldItemsPerPage / this.effectiveItemsPerPage;
-		const peviousSelectedIndex = this.selectedIndex;
 		this.selectedIndex = Math.round(this.selectedIndex * adjustment);
-
-		if (peviousSelectedIndex !== this.selectedIndex) {
-			this.fireEvent("selectedIndexChange", { selectedIndex: this.selectedIndex });
-		}
 	}
 
 	_updateScrolling(event) {
@@ -291,7 +284,7 @@ class Carousel extends UI5Element {
 		}
 
 		if (peviousSelectedIndex !== this.selectedIndex) {
-			this.fireEvent("selectedIndexChange", { selectedIndex: this.selectedIndex });
+			this.fireEvent("selectedPageChange", { selectedIndex: this.selectedIndex });
 		}
 	}
 
@@ -307,7 +300,7 @@ class Carousel extends UI5Element {
 		}
 
 		if (peviousSelectedIndex !== this.selectedIndex) {
-			this.fireEvent("selectedIndexChange", { selectedIndex: this.selectedIndex });
+			this.fireEvent("selectedPageChange", { selectedIndex: this.selectedIndex });
 		}
 	}
 
