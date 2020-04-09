@@ -254,22 +254,25 @@ describe("Component Behavior", () => {
 				assert.strictEqual(input.getValue(), "CoPilot", "Input value is set by click event of CoPilot");
 			});
 
-			it("tests menuItemPress event", () => {
+			it("tests menuItemClick event", () => {
 				const primaryTitle = browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button");
 				const staticAreaItemClassName = browser.getStaticAreaItemClassName("#shellbar")
 				const menuPopover = browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-shellbar-menu-popover");
 				const firstMenuItem = menuPopover.$("ui5-list > ui5-li");
 				const secondMenuItem = menuPopover.$("ui5-list > ui5-li:nth-child(2)");
 				const input = browser.$("#press-input");
+				const inputData = browser.$("#press-data");
 
 				primaryTitle.click();
 				firstMenuItem.click();
 
 				assert.strictEqual(input.getValue(), "Application 1", "Input value is set by click event of the first menu item");
+				assert.strictEqual(inputData.getValue(), "key1", "The user defined attributes are available.");
 
 				secondMenuItem.click();
 
 				assert.strictEqual(input.getValue(), "Application 2", "Input value is set by click event of the second menu item");
+				assert.strictEqual(inputData.getValue(), "key2", "The user defined attributes are available.");
 			});
 
 			it("tests if searchfield toggles when clicking on search icon", () => {
