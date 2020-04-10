@@ -262,6 +262,14 @@ class ListItem extends ListItemBase {
 	get typeDetail() {
 		return this.type === ListItemType.Detail;
 	}
+
+	get ariaSelected() {
+		if (this.modeMultiSelect) {
+			return this.selected;
+		}
+
+		return undefined;
+	}
 }
 
 export default ListItem;
