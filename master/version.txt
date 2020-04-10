@@ -1,5 +1,5 @@
-commit f4d254797472b19d832cc82fd3df8a7db87bb793
+commit 3173fb9cd67685b8a6e683f1ff12236e6f9d9506
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Apr 9 18:52:45 2020 +0300
+Date:   Fri Apr 10 09:41:26 2020 +0300
 
-    fix(ui5-shellbar): fix menuItems cloning (#1457)
+    feat(framework): register theme variables via CSS file (#1451)
