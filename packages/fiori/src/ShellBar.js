@@ -380,13 +380,15 @@ class ShellBar extends UI5Element {
 			},
 		};
 
+		this.menuItemsObserver = new MutationObserver(() => {
+			this._updateClonedMenuItems();
+		});
+
 		this._header = {
 			press: event => {
+				this._updateClonedMenuItems();
+
 				if (this.menuItems.length) {
-					this._menuPopoverItems = [];
-					this.menuItems.forEach(item => {
-						this._menuPopoverItems.push(item.textContent);
-					});
 					this.updateStaticAreaItemContentDensity();
 					this.menuPopover.openBy(this.shadowRoot.querySelector(".ui5-shellbar-menu-button"));
 				}
@@ -479,6 +481,8 @@ class ShellBar extends UI5Element {
 
 			return isHidden && isSet && !isOverflowIcon;
 		});
+
+		this._observeMenuItems();
 	}
 
 	onAfterRendering() {
@@ -641,6 +645,7 @@ class ShellBar extends UI5Element {
 	}
 
 	onExitDOM() {
+		this.menuItemsObserver.disconnect();
 		ResizeHandler.deregister(this, this._handleResize);
 	}
 
@@ -817,6 +822,30 @@ class ShellBar extends UI5Element {
 		if (isDifferent) {
 			this._itemsInfo = newItems;
 		}
+	}
+
+	_updateClonedMenuItems() {
+		this._menuPopoverItems = [];
+
+		this.menuItems.forEach(item => {
+			// clone the menuItem and remove the slot="menuItems",
+			// otherwise would not be slotted in the internal ui5-li
+			const clonedItem = item.cloneNode(true);
+			clonedItem.removeAttribute("slot");
+
+			this._menuPopoverItems.push(clonedItem);
+		});
+	}
+
+	_observeMenuItems() {
+		this.menuItems.forEach(item => {
+			this.menuItemsObserver.observe(item, {
+				characterData: true,
+				childList: true,
+				subtree: true,
+				attributes: true,
+			});
+		});
 	}
 
 	async _getResponsivePopover() {
