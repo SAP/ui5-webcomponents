@@ -5,6 +5,14 @@ const themeURLs = new Map();
 const themeStyles = new Map();
 const registeredPackages = new Set();
 const registeredThemes = new Set();
+const customThemes = new Map();
+
+const registerCustomTheme = (name, baseName, content) => {
+	customThemes.set(name, { baseName, content });
+	registeredPackages.add("@ui5/webcomponents-theme-base");
+};
+
+const getCustomTheme = name => customThemes.get(name);
 
 /**
  * Used to provide CSS Vars for a specific theme for a specific package.
@@ -39,10 +47,18 @@ const registerThemeProperties = (packageName, themeName, style) => {
 	registeredThemes.add(themeName);
 };
 
-const getThemeProperties = async (packageName, themeName) => {
+const getThemeProperties = async (packageName, themeName, fallbackThemeName) => {
 	const style = themeStyles.get(`${packageName}_${themeName}`);
 	if (style) {
 		return style;
+	}
+
+	if (fallbackThemeName && !registeredThemes.has(themeName)) {
+		themeName = fallbackThemeName;
+		const style2 = themeStyles.get(`${packageName}_${themeName}`);
+		if (style2) {
+			return style2;
+		}
 	}
 
 	if (!registeredThemes.has(themeName)) {
@@ -73,4 +89,6 @@ export {
 	registerThemeProperties,
 	getThemeProperties,
 	getRegisteredPackages,
+	registerCustomTheme,
+	getCustomTheme,
 };
