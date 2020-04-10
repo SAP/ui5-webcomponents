@@ -140,8 +140,10 @@ describe("General interaction", () => {
 
 		input.keys("d");
 		listItems = popover.$("ui5-list").$$("ui5-li");
+		const firstListItemText = listItems[0].shadow$(".ui5-li-title").getText();
+
 		assert.strictEqual(listItems.length, 1, "Items should be 1");
-		assert.strictEqual(listItems[0].getText(), "Canada");
+		assert.strictEqual(firstListItemText, "Canada");
 	});
 
 	it ("Tests Combo with startswith filter", () => {
@@ -158,8 +160,10 @@ describe("General interaction", () => {
 
 		input.keys("a");
 		listItems = popover.$("ui5-list").$$("ui5-li");
+		const firstListItemText = listItems[0].shadow$(".ui5-li-title").getText();
+
 		assert.strictEqual(listItems.length, 1, "Items should be 1");
-		assert.strictEqual(listItems[0].getText(), "Argentina");
+		assert.strictEqual(firstListItemText, "Argentina");
 
 		input.keys("a");
 		listItems = popover.$("ui5-list").$$("ui5-li");
