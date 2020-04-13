@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import TimelineTemplate from "./generated/templates/TimelineTemplate.lit.js";
-import { TIMELINE_ARIA_LABEL, } from "./generated/i18n/i18n-defaults.js";
+import { TIMELINE_ARIA_LABEL } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import styles from "./generated/themes/Timeline.css.js";
