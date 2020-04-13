@@ -24,8 +24,8 @@
 	padding: 0;
 	margin-left: 0.5rem;
 	border: none;
-	outline: none;
 	background: transparent;
+	outline-color:  var(--sapShell_TextColor);
 	color: var(--sapShell_TextColor);
 	box-sizing: border-box;
 	cursor: pointer;
@@ -33,6 +33,11 @@
 	position: relative;
 	font-size: 0.75rem;
 	font-weight: bold;
+}
+
+.ui5-shellbar-menu-button,
+::slotted(ui5-button[slot="startButton"]) {
+	outline: none;
 }
 
 ::slotted(ui5-button[slot="startButton"]:hover),

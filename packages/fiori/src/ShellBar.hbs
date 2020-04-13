@@ -40,36 +40,6 @@
 		{{/if}}
 	</div>
 
-	<div class="ui5-shellbar-overflow-container ui5-shellbar-overflow-container-right">
-
-		<div class="ui5-shellbar-overflow-container-right-child">
-			{{#each _itemsInfo}}
-				{{#if this.icon}}
-					<ui5-icon
-						tabindex="{{this._tabIndex}}"
-						data-count="{{this.count}}"
-						data-ui5-notification-count="{{../notificationCount}}"
-						data-ui5-external-action-item-id="{{this.refItemid}}"
-						class="{{this.classes}}"
-						name="{{this.icon}}"
-						id="{{this.id}}"
-						style="{{this.style}}"
-						@click={{this.press}}>
-					</ui5-icon>
-				{{else}}
-					<slot
-						name="profile"
-						id="{{this.id}}"
-						style="{{this.style}}"
-						class="{{this.classes}}"
-						tabindex="{{this._tabIndex}}"
-						@click={{this.press}}
-					></slot>
-				{{/if}}
-			{{/each}}
-		</div>
-	</div>
-
 	<div id="{{_id}}-searchfield-wrapper"
 		class="ui5-shellbar-search-field"
 		style="{{styles.searchField}}"
@@ -77,6 +47,84 @@
 		{{#if searchField.length}}
 			<slot name="searchField"></slot>
 		{{/if}}
+	</div>
+
+	<div class="ui5-shellbar-overflow-container ui5-shellbar-overflow-container-right">
+
+		<div class="ui5-shellbar-overflow-container-right-child">
+
+			{{#if hasSearchField}}
+				<ui5-icon
+					id="{{this._id}}-item-1"
+					class="{{classes.items.search}} ui5-shellbar-button ui5-shellbar-search-button"
+					name="sap-icon://search"
+					data-ui5-text="Search"
+					data-ui5-notification-count="{{notificationCount}}"
+					@click={{_handleSearchIconPress}}
+					tabindex="0"
+				></ui5-icon>
+			{{/if}}
+
+			{{#each customItemsInfo}}
+				<ui5-icon
+					id="{{this.id}}"
+					style="{{this.style}}"
+					class="{{this.classes}}"
+					tabindex="0"
+					name="{{this.icon}}"
+					data-count="{{this.count}}"
+					data-ui5-notification-count="{{../notificationCount}}"
+					data-ui5-external-action-item-id="{{this.refItemid}}"
+					@click={{this.press}}
+				></ui5-icon>
+			{{/each}}
+
+			{{#if showNotifications}}
+			<ui5-icon
+				id="{{this._id}}-item-2"
+				style="{{styles.items.notification}}"
+				class="{{classes.items.notification}} ui5-shellbar-button ui5-shellbar-bell-button"
+				tabindex="0"
+				name="sap-icon://bell"
+				data-ui5-text="Notifications"
+				data-ui5-notification-count="{{notificationCount}}"
+				@click={{_handleNotificationsPress}}
+			></ui5-icon>
+			{{/if}}
+
+			<ui5-icon
+				id="{{this._id}}-item-5"
+				style="{{styles.items.overflow}}"
+				class="{{classes.items.overflow}} ui5-shellbar-button ui5-shellbar-overflow-button-shown ui5-shellbar-overflow-button"
+				name="sap-icon://overflow"
+				@click="{{_handleOverflowPress}}"
+				tabindex="0"
+			></ui5-icon>
+
+			{{#if hasProfile}}
+				<ui5-button
+					id="{{this._id}}-item-3"
+					@click={{_handleProfilePress}}
+					style="{{styles.items.profile}} width: 36px;"
+					class="ui5-shellbar-button ui5-shellbar-image-button">
+						<slot
+							name="profile"
+						></slot>
+				</ui5-button>
+			{{/if}}
+
+			{{#if showProductSwitch}}
+			<ui5-icon
+				id="{{this._id}}-item-4"
+				style="{{styles.items.product}}"
+				class="{{classes.items.product}} ui5-shellbar-button ui5-shellbar-button-product-switch"
+				name="sap-icon://grid"
+				data-ui5-text="Product Switch"
+				@click={{_handleProductSwitchPress}}
+				tabindex="0"
+			></ui5-icon>
+			{{/if}}
+		</div>
 	</div>
 </div>
 
