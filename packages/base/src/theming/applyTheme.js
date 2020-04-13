@@ -1,6 +1,6 @@
 import { getThemeProperties, getRegisteredPackages, getCustomTheme } from "../asset-registries/Themes.js";
 import createThemePropertiesStyleTag from "./createThemePropertiesStyleTag.js";
-import updateThemePropertiesLinkTag from "./updateThemePropertiesLinkTag.js";
+import updateCustomThemeTag from "./updateCustomThemeTag.js";
 
 const applyTheme = async theme => {
 	let cssText = "";
@@ -13,7 +13,7 @@ const applyTheme = async theme => {
 	const hasThemeBase = registeredPackages.has("@ui5/webcomponents-theme-base");
 	if (hasThemeBase) {
 		if (customTheme) {
-			updateThemePropertiesLinkTag(customTheme.content);
+			updateCustomThemeTag(customTheme.content);
 		} else {
 			cssText = await getThemeProperties("@ui5/webcomponents-theme-base", theme);
 			createThemePropertiesStyleTag(cssText, "@ui5/webcomponents-theme-base");

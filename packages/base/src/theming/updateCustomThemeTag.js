@@ -1,7 +1,7 @@
 import { ponyfillNeeded, runPonyfill } from "./CSSVarsPonyfill.js";
 
 
-const updateThemePropertiesLinkTag = path => {
+const updateCustomThemeTag = path => {
 	// Needed for all browsers
 	const linkElement = document.querySelector(path);
 	if (linkElement) {
@@ -14,4 +14,4 @@ const updateThemePropertiesLinkTag = path => {
 	}
 };
 
-export default updateThemePropertiesLinkTag;
+export default updateCustomThemeTag;

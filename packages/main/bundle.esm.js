@@ -107,4 +107,4 @@ window["sap-ui-webcomponents-bundle"] = {
 	getLocaleData,
 };
 
-registerCustomTheme("my_custom_theme", "sap_belize_hcw", "head>link#my_custom_theme");
+registerCustomTheme("my_custom_theme", "sap_belize_hcw", "head>#my_custom_theme");
