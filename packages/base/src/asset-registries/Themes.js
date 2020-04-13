@@ -1,5 +1,6 @@
-import { fetchJsonOnce } from "../util/FetchHelper.js";
+import { fetchJsonOnce, fetchTextOnce } from "../util/FetchHelper.js";
 import { DEFAULT_THEME } from "../generated/AssetParameters.js";
+import getFileExtension from "../util/getFileExtension.js";
 
 const themeURLs = new Map();
 const themeStyles = new Map();
@@ -16,13 +17,15 @@ const registeredThemes = new Set();
  *  registerThemeProperties("my-package", "my_theme", ":root{--var1: red;}");
  *  2) Pass the CSS Vars as an object directly
  *  registerThemeProperties("my-package", "my_theme", {"_": ":root{--var1: red;}"});
- *  3) Pass a URL to a JSON file, containing the CSS Vars in its "_" property. Will be fetched on demand, not upon registration.
+ *  3) Pass a URL to a CSS file, containing the CSS Vars. Will be fetched on demand, not upon registration.
+ *  registerThemeProperties("my-package", "my_theme", "http://url/to/my/theme.css");
+ *  4) Pass a URL to a JSON file, containing the CSS Vars in its "_" property. Will be fetched on demand, not upon registration.
  *  registerThemeProperties("my-package", "my_theme", "http://url/to/my/theme.json");
  *
  * @public
  * @param packageName - the NPM package for which CSS Vars are registered
  * @param themeName - the theme which the CSS Vars implement
- * @param style - can be one of three options: a string, an object with a "_" property or a URL to a JSON file with a "_" property
+ * @param style - can be one of four options: a string, an object with a "_" property, URL to a CSS file, or URL to a JSON file with a "_" property
  */
 const registerThemeProperties = (packageName, themeName, style) => {
 	if (style._) {
@@ -52,8 +55,10 @@ const getThemeProperties = async (packageName, themeName) => {
 	}
 
 	const data = await fetchThemeProperties(packageName, themeName);
-	themeStyles.set(`${packageName}_${themeName}`, data._);
-	return data._;
+	const themeProps = data._ || data;
+
+	themeStyles.set(`${packageName}_${themeName}`, themeProps);
+	return themeProps;
 };
 
 const fetchThemeProperties = async (packageName, themeName) => {
@@ -62,7 +67,8 @@ const fetchThemeProperties = async (packageName, themeName) => {
 	if (!url) {
 		throw new Error(`You have to import the ${packageName}/dist/Assets.js module to switch to additional themes`);
 	}
-	return fetchJsonOnce(url);
+
+	return getFileExtension(url) === ".css" ? fetchTextOnce(url) : fetchJsonOnce(url);
 };
 
 const getRegisteredPackages = () => {

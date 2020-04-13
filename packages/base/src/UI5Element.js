@@ -485,6 +485,10 @@ class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	_updateShadowRoot() {
+		if (!this.constructor._needsShadowDOM()) {
+			return;
+		}
+
 		let styleToPrepend;
 		const renderResult = this.constructor.template(this);
 
@@ -744,8 +748,20 @@ class UI5Element extends HTMLElement {
 				throw new Error(`"${prop}" is not a valid property name. Use a name that does not collide with DOM APIs`);
 			}
 
-			if (propData.type === "boolean" && propData.defaultValue) {
+			if (propData.type === Boolean && propData.defaultValue) {
 				throw new Error(`Cannot set a default value for property "${prop}". All booleans are false by default.`);
+			}
+
+			if (propData.type === Array) {
+				throw new Error(`Wrong type for property "${prop}". Properties cannot be of type Array - use "multiple: true" and set "type" to the single value type, such as "String", "Object", etc...`);
+			}
+
+			if (propData.type === Object && propData.defaultValue) {
+				throw new Error(`Cannot set a default value for property "${prop}". All properties of type "Object" are empty objects by default.`);
+			}
+
+			if (propData.multiple && propData.defaultValue) {
+				throw new Error(`Cannot set a default value for property "${prop}". All multiple properties are empty arrays by default.`);
 			}
 
 			Object.defineProperty(proto, prop, {

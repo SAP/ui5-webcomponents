@@ -423,7 +423,8 @@ class DatePicker extends UI5Element {
 
 	_handleInputChange() {
 		let nextValue = this._getInput().getInputValue();
-		const isValid = this.isValid(nextValue);
+		const emptyValue = nextValue === "";
+		const isValid = emptyValue || this.isValid(nextValue);
 		const isInValidRange = this.isInValidRange(this._getTimeStampFromString(nextValue));
 
 		if (isValid && isInValidRange) {
@@ -442,7 +443,8 @@ class DatePicker extends UI5Element {
 
 	_handleInputLiveChange() {
 		const nextValue = this._getInput().getInputValue();
-		const isValid = this.isValid(nextValue) && this.isInValidRange(this._getTimeStampFromString(nextValue));
+		const emptyValue = nextValue === "";
+		const isValid = emptyValue || (this.isValid(nextValue) && this.isInValidRange(this._getTimeStampFromString(nextValue)));
 
 		this.value = nextValue;
 		this.fireEvent("input", { value: nextValue, valid: isValid });
@@ -495,8 +497,12 @@ class DatePicker extends UI5Element {
 
 	// because the parser understands more than one format
 	// but we need values in one format
-	normalizeValue(sValue) {
-		return this.getFormat().format(this.getFormat().parse(sValue));
+	normalizeValue(value) {
+		if (value === "") {
+			return value;
+		}
+
+		return this.getFormat().format(this.getFormat().parse(value));
 	}
 
 	get validValue() {
