@@ -1,12 +1,14 @@
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/icons/decline.js";
 import "@ui5/webcomponents-icons/dist/icons/edit.js";
+import { fetchI18nBundle, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ListItemType from "./types/ListItemType.js";
 import ListMode from "./types/ListMode.js";
 import ListItemBase from "./ListItemBase.js";
 import "./RadioButton.js";
 import "./CheckBox.js";
 import "./Button.js";
+import { DELETE } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import styles from "./generated/themes/ListItem.css.js";
@@ -107,6 +109,8 @@ class ListItem extends ListItemBase {
 				this.active = false;
 			}
 		};
+
+		this.i18nBundle = getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering(...params) {
@@ -261,6 +265,24 @@ class ListItem extends ListItemBase {
 
 	get typeDetail() {
 		return this.type === ListItemType.Detail;
+	}
+
+	get ariaSelected() {
+		if (this.modeMultiSelect) {
+			return this.selected;
+		}
+
+		return undefined;
+	}
+
+	get deleteText() {
+		return this.i18nBundle.getText(DELETE);
+	}
+
+	static async onDefine() {
+		await Promise.all([
+			fetchI18nBundle("@ui5/webcomponents"),
+		]);
 	}
 }
 

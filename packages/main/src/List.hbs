@@ -9,14 +9,14 @@
 		<slot name="header" />
 	{{/if}}
 	{{#if shouldRenderH1}}
-		<header id="{{_id}}-header" class="ui5-list-header">
+		<header id="{{headerID}}" class="ui5-list-header">
 			{{headerText}}
 		</header>
 	{{/if}}
 
 	<div id="{{_id}}-before" tabindex="0" class="ui5-list-focusarea"></div>
 
-	<ul id="{{_id}}-listUl" class="ui5-list-ul">
+	<ul id="{{_id}}-listUl" class="ui5-list-ul" aria-multiselectable="{{isMultiSelect}}" aria-labelledby="{{ariaLabelledBy}}" role="listbox">
 		<slot></slot>
 
 		{{#if showNoDataText}}
