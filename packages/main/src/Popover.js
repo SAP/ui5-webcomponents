@@ -635,11 +635,17 @@ class Popover extends UI5Element {
 	fallbackPlacement(clientWidth, clientHeight, targetRect, popoverSize) {
 		if (targetRect.left > popoverSize.width) {
 			return PopoverPlacementType.Left;
-		} else if (clientWidth - targetRect.right > targetRect.left) {
+		}
+
+		if (clientWidth - targetRect.right > targetRect.left) {
 			return PopoverPlacementType.Right;
-		} else if (clientHeight - targetRect.bottom > popoverSize.height) {
+		}
+
+		if (clientHeight - targetRect.bottom > popoverSize.height) {
 			return PopoverPlacementType.Bottom;
-		} else if (clientHeight - targetRect.bottom < targetRect.top) {
+		}
+
+		if (clientHeight - targetRect.bottom < targetRect.top) {
 			return PopoverPlacementType.Top;
 		}
 	}
