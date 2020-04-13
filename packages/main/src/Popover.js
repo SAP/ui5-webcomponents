@@ -628,6 +628,28 @@ class Popover extends UI5Element {
 		};
 	}
 
+	/**
+	 * Fallbacks to new placement, prioritizing <code>Left</code> and <code>Right</code> placements.
+	 * @private
+	 */
+	fallbackPlacement(clientWidth, clientHeight, targetRect, popoverSize) {
+		if (targetRect.left > popoverSize.width) {
+			return PopoverPlacementType.Left;
+		}
+
+		if (clientWidth - targetRect.right > targetRect.left) {
+			return PopoverPlacementType.Right;
+		}
+
+		if (clientHeight - targetRect.bottom > popoverSize.height) {
+			return PopoverPlacementType.Bottom;
+		}
+
+		if (clientHeight - targetRect.bottom < targetRect.top) {
+			return PopoverPlacementType.Top;
+		}
+	}
+
 	getActualPlacementType(targetRect, popoverSize) {
 		const placementType = this.placementType;
 		let actualPlacementType = placementType;
@@ -649,15 +671,13 @@ class Popover extends UI5Element {
 			}
 			break;
 		case PopoverPlacementType.Left:
-			if (targetRect.left < popoverSize.width
-				&& targetRect.left < clientWidth - targetRect.right) {
-				actualPlacementType = PopoverPlacementType.Right;
+			if (targetRect.left < popoverSize.width) {
+				actualPlacementType = this.fallbackPlacement(clientWidth, clientHeight, targetRect, popoverSize) || placementType;
 			}
 			break;
 		case PopoverPlacementType.Right:
-			if (clientWidth - targetRect.right < popoverSize.width
-				&& clientWidth - targetRect.right < targetRect.left) {
-				actualPlacementType = PopoverPlacementType.Left;
+			if (clientWidth - targetRect.right < popoverSize.width) {
+				actualPlacementType = this.fallbackPlacement(clientWidth, clientHeight, targetRect, popoverSize) || placementType;
 			}
 			break;
 		}
