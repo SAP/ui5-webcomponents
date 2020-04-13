@@ -201,6 +201,7 @@ slot[name="profile"] {
 
 .ui5-shellbar-button {
 	min-width: 2.25rem;
+	width: 2.5rem;
 	font-size: 1rem;
 	padding: .625rem;
 }

@@ -4,12 +4,11 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
-import { isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import Popover from "@ui5/webcomponents/dist/Popover.js";
-import Icon from "@ui5/webcomponents/dist/Icon.js";
+import Button from "@ui5/webcomponents/dist/Button.js";
 import "@ui5/webcomponents-icons/dist/icons/search.js";
 import "@ui5/webcomponents-icons/dist/icons/bell.js";
 import "@ui5/webcomponents-icons/dist/icons/overflow.js";
@@ -541,12 +540,6 @@ class ShellBar extends UI5Element {
 		this.overflowPopover.openBy(overflowButton);
 	}
 
-	_onkeydown(event) {
-		if (isSpace(event)) {
-			event.preventDefault();
-		}
-	}
-
 	onEnterDOM() {
 		ResizeHandler.register(this, this._handleResize);
 	}
@@ -644,7 +637,6 @@ class ShellBar extends UI5Element {
 				style: `order: ${this.searchField.length ? 1 : -10}`,
 				id: `${this._id}-item-${1}`,
 				press: this._handleSearchIconPress.bind(this),
-				_tabIndex: "-1",
 			},
 			...this.items.map((item, index) => {
 				return {
@@ -659,7 +651,6 @@ class ShellBar extends UI5Element {
 					style: `order: ${2}`,
 					show: true,
 					press: this._handleCustomActionPress.bind(this),
-					_tabIndex: "0",
 					custom: true,
 				};
 			}),
@@ -673,7 +664,6 @@ class ShellBar extends UI5Element {
 				show: this.showNotifications,
 				domOrder: this.showNotifications ? (++domOrder) : -1,
 				press: this._handleNotificationsPress.bind(this),
-				_tabIndex: "-1",
 			},
 			{
 				icon: "overflow",
@@ -685,7 +675,6 @@ class ShellBar extends UI5Element {
 				domOrder: showOverflowButton ? (++domOrder) : -1,
 				id: `${this.id}-item-${5}`,
 				press: this._handleOverflowPress.bind(this),
-				_tabIndex: "-1",
 				show: true,
 			},
 			{
@@ -698,7 +687,6 @@ class ShellBar extends UI5Element {
 				domOrder: this.hasProfile ? (++domOrder) : -1,
 				show: this.hasProfile,
 				press: this._handleProfilePress.bind(this),
-				_tabIndex: "-1",
 			},
 			{
 				icon: "grid",
@@ -710,7 +698,6 @@ class ShellBar extends UI5Element {
 				show: this.showProductSwitch,
 				domOrder: this.showProductSwitch ? (++domOrder) : -1,
 				press: this._handleProductSwitchPress.bind(this),
-				_tabIndex: "-1",
 			},
 		];
 		return items;
@@ -843,7 +830,7 @@ class ShellBar extends UI5Element {
 
 	static async onDefine() {
 		await Promise.all([
-			Icon.define(),
+			Button.define(),
 			List.define(),
 			Popover.define(),
 			StandardListItem.define(),

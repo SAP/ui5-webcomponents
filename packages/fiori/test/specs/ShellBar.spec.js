@@ -28,9 +28,9 @@ describe("Component Behavior", () => {
 	describe("ui5-shellbar-item", () => {
 		it("tests count property", () => {
 			const shellbar = browser.$("#shellbarwithitems");
-			const icon = shellbar.shadow$("ui5-icon[data-count]");
+			const icon = shellbar.shadow$("ui5-button[data-count]");
 
-			assert.strictEqual(icon.getAttribute("data-count"), '42', "Count property propagates to ui5-icon");
+			assert.strictEqual(icon.getAttribute("data-count"), '42', "Count property propagates to ui5-button");
 		})
 	});
 
@@ -138,8 +138,8 @@ describe("Component Behavior", () => {
 			assert.strictEqual(productSwitchIcon.isDisplayed(), true, "Product switch should be visible");
 			assert.strictEqual(overflowPopover.isDisplayedInViewport(), true, "Overflow popover should be visible");
 			assert.strictEqual(listItemsCount, 2, "2 actions should overflow");
-			assert.strictEqual(overflowPopoverItem1Icon, getCustomActionProp("shellbar", 0, "name"), "Popover items have same sources as corresponding icons", overflowPopoverItem1Icon);
-			assert.strictEqual(overflowPopoverItem2Icon, getCustomActionProp("shellbar", 1, "name"), "Popover items have same sources as corresponding icons", overflowPopoverItem2Icon);
+			assert.strictEqual(overflowPopoverItem1Icon, getCustomActionProp("shellbar", 0, "icon"), "Popover items have same sources as corresponding icons", overflowPopoverItem1Icon);
+			assert.strictEqual(overflowPopoverItem2Icon, getCustomActionProp("shellbar", 1, "icon"), "Popover items have same sources as corresponding icons", overflowPopoverItem2Icon);
 		});
 
 		it("tests M Breakpoint and overflow 780px", () => {
