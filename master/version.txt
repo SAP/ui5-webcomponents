@@ -1,8 +1,5 @@
-commit 14fe35764b663a60f629ae1e54e45c7c28d82a84
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Apr 13 11:10:46 2020 +0300
+commit 59208170127434f8ef0f04b48ca17a45b773569b
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Mon Apr 13 13:59:11 2020 +0300
 
-    fix(ui5-datepicker): fix the value validation (#1465)
-    
-    If there is value in the input field and the user removes that vlaue,
-    the component sets "value-state=error" and fires "change" and "input" events with "valid: false" and this is not correct - empty input field should be a valid state.
+    chore(tools): Update Chromedriver to 81 (#1469)
