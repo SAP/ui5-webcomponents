@@ -189,8 +189,114 @@
 		</div>
 	</ui5-popover>
 
-	<script>
+	<br>
+	<br>
+	<ui5-title>placement-type="Right", but no space on the right</ui5-title>
+	<p>No space on the Right, try Left, Bottom, Top</p>
+	<ui5-button id="btnFullWidth" style="width: 100%">Click me !</ui5-button>
+	<br>
+	<br>
+	<ui5-title>placement-type="Right" (default) and allow-target-overlap=true </ui5-title>
+	<p>No space on the right, try Left, Bottom, Top and if nothing works, the target will be overlapped</p>
+	<ui5-button id="btnFullWidthTargetOverlap" style="width: 100%">Click me !</ui5-button>
 
+	<br>
+	<br>
+	<ui5-title>placement-type="Left", but no space on the left</ui5-title>
+	<p>No space on the Left, try Right, Bottom, Top</p>
+	<ui5-button id="btnFullWidthLeft" style="width: 100%">Click me !</ui5-button>
+
+	<br>
+	<br>
+	<ui5-title>placement-type="Left" and allow-target-overlap=true</ui5-title>
+	<p>No space on the right, try Roght, Bottom, Top and if nothing works, the target will be overlapped</p>
+	<ui5-button id="btnFullWidthLeftTargetOverlap" style="width: 100%">Click me !</ui5-button>
+
+	<br>
+	<br>
+	<ui5-title>placement-type="Top"</ui5-title>
+	<ui5-button id="btnFullWidthTop" style="width: 100%">Click me !</ui5-button>
+
+	<br>
+	<br>
+	<ui5-title>placement-type="Bottom"</ui5-title>
+	<ui5-button id="btnFullWidthBottom" style="width: 100%">Click me !</ui5-button>
+
+	<ui5-popover header-text="My Heading" id="popFullWidth" style="width: 300px" >
+		<div slot="header">
+			<ui5-button id="first-focusable">I am in the header</ui5-button>
+		</div>
+
+		<ui5-list>
+			<ui5-li>Hello</ui5-li>
+			<ui5-li>World</ui5-li>
+			<ui5-li>Again</ui5-li>
+		</ui5-list>
+	</ui5-popover>
+
+	<ui5-popover allow-target-overlap header-text="My Heading" id="popFullWidthTargetOverlap" style="width: 300px" >
+		<div slot="header">
+			<ui5-button id="first-focusable">I am in the header</ui5-button>
+		</div>
+
+		<ui5-list>
+			<ui5-li>Hello</ui5-li>
+			<ui5-li>World</ui5-li>
+			<ui5-li>Again</ui5-li>
+		</ui5-list>
+	</ui5-popover>
+
+
+	<ui5-popover header-text="My Heading" id="popFullWidthLeft" style="width: 300px" placement-type="Left">
+		<div slot="header">
+			<ui5-button id="first-focusable">I am in the header</ui5-button>
+		</div>
+
+		<ui5-list>
+			<ui5-li>Hello</ui5-li>
+			<ui5-li>World</ui5-li>
+			<ui5-li>Again</ui5-li>
+		</ui5-list>
+	</ui5-popover>
+
+	<ui5-popover header-text="My Heading" id="popFullWidthLeftTargetOverlap" style="width: 300px" placement-type="Left" allow-target-overlap>
+		<div slot="header">
+			<ui5-button id="first-focusable">I am in the header</ui5-button>
+		</div>
+
+		<ui5-list>
+			<ui5-li>Hello</ui5-li>
+			<ui5-li>World</ui5-li>
+			<ui5-li>Again</ui5-li>
+		</ui5-list>
+	</ui5-popover>
+
+
+	<ui5-popover header-text="My Heading" id="popFullWidthTop" style="width: 300px" placement-type="Top">
+		<div slot="header">
+			<ui5-button id="first-focusable">I am in the header</ui5-button>
+		</div>
+
+		<ui5-list>
+			<ui5-li>Hello</ui5-li>
+			<ui5-li>World</ui5-li>
+			<ui5-li>Again</ui5-li>
+		</ui5-list>
+	</ui5-popover>
+
+	<ui5-popover header-text="My Heading" id="popFullWidthBottom" style="width: 300px" placement-type="Bottom">
+		<div slot="header">
+			<ui5-button id="first-focusable">I am in the header</ui5-button>
+		</div>
+
+		<ui5-list>
+			<ui5-li>Hello</ui5-li>
+			<ui5-li>World</ui5-li>
+			<ui5-li>Again</ui5-li>
+		</ui5-list>
+	</ui5-popover>
+
+	<script>
 		btn.addEventListener('click', function (event) {
 			pop.openBy(btn);
 		});
@@ -227,6 +333,29 @@
 			document.getElementById("big-popover").openBy(event.target);
 		});
 
+		btnFullWidth.addEventListener('click', function (event) {
+			popFullWidth.openBy(btnFullWidth);
+		});
+
+		btnFullWidthTargetOverlap.addEventListener('click', function (event) {
+			popFullWidthTargetOverlap.openBy(btnFullWidthTargetOverlap);
+		});
+
+		btnFullWidthLeft.addEventListener('click', function (event) {
+			popFullWidthLeft.openBy(btnFullWidthLeft);
+		});
+
+		btnFullWidthLeftTargetOverlap.addEventListener('click', function (event) {
+			popFullWidthLeftTargetOverlap.openBy(btnFullWidthLeftTargetOverlap);
+		});
+
+		btnFullWidthTop.addEventListener('click', function (event) {
+			popFullWidthTop.openBy(btnFullWidthTop);
+		});
+
+		btnFullWidthBottom.addEventListener('click', function (event) {
+			popFullWidthBottom.openBy(btnFullWidthBottom);
+		});
 	</script>
 </body>
 
