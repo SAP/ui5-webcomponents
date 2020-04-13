@@ -20,6 +20,12 @@
 	overflow: hidden;
 }
 
+@media screen and (-ms-high-contrast: active) {
+    .ui5-popover-root {
+        border: 1px solid var(--sapPageFooter_BorderColor);
+    }
+}
+
 :host([modal])::before {
 	content: "";
 	position: fixed;
@@ -29,7 +35,6 @@
 	left: 0;
 	right: 0;
 	bottom: 0;
-	position: fixed;
 	outline: 0 none;
 	z-index: -1;
 }
