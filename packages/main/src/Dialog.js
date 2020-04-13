@@ -1,12 +1,17 @@
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { getFirstFocusableElement, getLastFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
+import { addOpenedPopup, removeOpenedPopup } from "./popup-utils/OpenedPopupsRegistry.js";
 
-import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import Popup from "./Popup.js";
 // Template
 import DialogTemplate from "./generated/templates/DialogTemplate.lit.js";
+import DialogBlockLayerTemplate from "./generated/templates/DialogBlockLayerTemplate.lit.js";
 
 // Styles
-import dialogCss from "./generated/themes/Dialog.css.js";
+import popoverCSS from "./generated/themes/Popover.css.js";
+import dialogCSS from "./generated/themes/Dialog.css.js";
+import { getFocusedElement, getNextZIndex } from "./popup-utils/PopupUtils.js";
+import BlockLayer from "./BlockLayer.js";
 
 /**
  * @public
@@ -25,6 +30,10 @@ const metadata = {
 		 * @public
 		 */
 		stretch: {
+			type: Boolean,
+		},
+
+		_blockLayerVisible: {
 			type: Boolean,
 		},
 	},
@@ -77,7 +86,16 @@ class Dialog extends Popup {
 	}
 
 	static get styles() {
-		return [Popup.styles, dialogCss];
+		return [dialogCSS, popoverCSS];
+	}
+
+	static get staticAreaTemplate() {
+		return DialogBlockLayerTemplate;
+	}
+
+
+	reposition() {
+		this.style.display = "inline-block";
 	}
 
 	/**
@@ -85,67 +103,87 @@ class Dialog extends Popup {
 	* @public
 	*/
 	open() {
-		if (this.opened) {
-			return;
+		this._focusedElementBeforeOpen = getFocusedElement();
+		this.fireEvent("beforeOpen", {});
+		this.reposition();
+		this.applyInitialFocus();
+
+		this.style.zIndex = getNextZIndex();
+
+		this._blockLayerVisible = true;
+
+		addOpenedPopup(this);
+	}
+
+	applyInitialFocus() {
+		const element = 				this.getRootNode().getElementById(this.initialFocus)
+			|| document.getElementById(this.initialFocus)
+			|| getFirstFocusableElement(this);
+
+		if (element) {
+			element.focus();
 		}
+	}
 
-		const cancelled = super.open();
-		if (cancelled) {
-			return true;
+	forwardToFirst() {
+		const firstFocusable = getFirstFocusableElement(this);
+
+		if (firstFocusable) {
+			firstFocusable.focus();
 		}
+	}
 
-		this.storeCurrentFocus();
+	forwardToLast() {
+		const lastFocusable = getLastFocusableElement(this);
 
-		this.opened = true;
+		if (lastFocusable) {
+			lastFocusable.focus();
+		}
 	}
 
 	/**
 	* Closes the <code>ui5-dialog</code>.
 	* @public
 	*/
-	close() {
-		if (!this.opened) {
+	close(escPressed) {
+		const prevented = !this.fireEvent("beforeClose", { escPressed }, true);
+
+		if (prevented) {
 			return;
 		}
 
-		const cancelled = super.close();
-		if (cancelled) {
-			return;
-		}
+		this._close();
 
-		this.opened = false;
+		this.fireEvent("afterClose", {});
 
-		this.resetFocus();
+		removeOpenedPopup(this);
+		this._blockLayerVisible = false;
 
-		this.fireEvent("afterClose", { });
+		this._focusedElementBeforeOpen.focus();
 	}
 
-	get classes() {
+	_close() {
+		this.style.display = "none";
+	}
+
+	get _displayFooter() {
+		return true;
+	}
+
+	get _displayHeader() {
+		return true;
+	}
+
+	get styles() {
 		return {
-			dialogParent: {
-				"ui5-phone": isPhone(),
-			},
 			blockLayer: {
-				"ui5-popup-BLy": true,
-				"ui5-popup-blockLayer": true,
-				"ui5-popup-blockLayer--hidden": this._hideBlockLayer,
+				"zIndex": (getNextZIndex() - 3),
 			},
 		};
 	}
 
-	get zindex() {
-		return `z-index: ${this._zIndex + 1};`;
-	}
-
-	get blockLayer() {
-		return `z-index: ${this._zIndex};`;
-	}
-
-	get headerAriaLabelledBy() {
-		if (this.headerText || this.header) {
-			return `${this._id}-popup-heading`;
-		}
-		return undefined;
+	static async onDefine() {
+		await BlockLayer.define();
 	}
 }
 

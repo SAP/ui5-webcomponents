@@ -91,6 +91,8 @@ class ResponsivePopover extends Popover {
 	 * @public
 	 */
 	open(opener) {
+		this.style.display = this._isPhone ? "contents" : "";
+
 		if (!isPhone()) {
 			// make popover width be >= of the opener's width
 			if (!this.noStretch) {
@@ -114,6 +116,10 @@ class ResponsivePopover extends Popover {
 		} else {
 			this._dialog.close();
 		}
+	}
+
+	onBeforeRendering() {
+
 	}
 
 	get styles() {

@@ -402,7 +402,7 @@ class Popover extends UI5Element {
 			return;
 		}
 
-		const element = this.getRootNode().getElementById(this.initialFocus) || document.getElementById(this.initialFocus) || getFirstFocusableElement(this.contentDOM);
+		const element = this.getRootNode().getElementById(this.initialFocus) || document.getElementById(this.initialFocus) || getFirstFocusableElement(this);
 
 		if (element) {
 			element.focus();
@@ -420,7 +420,6 @@ class Popover extends UI5Element {
 
 	shouldCloseDueOverflow(placement, openerRect) {
 		const threshold = 32;
-
 		const limits = {
 			"Right": openerRect.right,
 			"Left": openerRect.left,
