@@ -523,7 +523,7 @@ class Popover extends UI5Element {
 		let width = "";
 		let height = "";
 
-		const placementType = this.getActualPlacementType(targetRect, popoverSize, allowTargetOverlap);
+		const placementType = this.getActualPlacementType(targetRect, popoverSize);
 
 		this._preventRepositionAndClose = this.shouldCloseDueOverflow(placementType, targetRect);
 
