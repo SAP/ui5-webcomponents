@@ -32,6 +32,9 @@ const metadata = {
 			propertyName: "buttons",
 			type: HTMLElement,
 			individualSlots: true,
+			listenFor: {
+				include: ["pressed"],
+			},
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.SegmentedButton.prototype */ {
@@ -176,16 +179,16 @@ class SegmentedButton extends UI5Element {
 
 	_handleResize() {
 		const parentWidth = this.parentNode.offsetWidth;
-		const items = Array.from(this.shadowRoot.querySelector(".ui5-segmentedbutton-root").children);
+		const items = Array.from(this.shadowRoot.querySelectorAll(".ui5-segmentedbutton-item"));
 
 		if (!this.style.width || this.percentageWidthSet) {
 			this.style.width = `${Math.max(...this.widths) * this.buttons.length}px`;
 			this.absoluteWidthSet = true;
 		}
 
-		items.forEach( item => {
+		items.forEach(item => {
 			item.style.width = "100%";
-		})
+		});
 
 		if (parentWidth <= this.offsetWidth && this.absoluteWidthSet) {
 			this.style.width = "100%";
