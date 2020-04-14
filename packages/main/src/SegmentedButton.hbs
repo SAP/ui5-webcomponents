@@ -2,6 +2,11 @@
 	@click="{{_onclick}}"
 	@focusin="{{_onfocusin}}"
 	class="ui5-segmentedbutton-root"
+	role="radiogroup"
 >
-	<slot></slot>
+	{{#each this.buttons}}
+		<div class="ui5-segmentedbutton-item" role="radio" aria-checked="{{this.pressed}}">
+			<slot name="{{this._individualSlot}}"></slot>
+		</div>
+	{{/each}}
 </div>
