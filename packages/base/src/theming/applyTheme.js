@@ -1,25 +1,24 @@
-import { getThemeProperties, getRegisteredPackages, getCustomTheme } from "../asset-registries/Themes.js";
+import { getThemeProperties, getRegisteredPackages } from "../asset-registries/Themes.js";
 import createThemePropertiesStyleTag from "./createThemePropertiesStyleTag.js";
-import updateCustomThemeTag from "./updateCustomThemeTag.js";
+import getExternalThemeInfo from "./getExternalThemeInfo.js";
+import { ponyfillNeeded, runPonyfill } from "./CSSVarsPonyfill.js";
 
 const applyTheme = async theme => {
+	const externalThemeInfo = getExternalThemeInfo();
+
 	let cssText = "";
 
 	const registeredPackages = getRegisteredPackages();
-	const customTheme = getCustomTheme(theme);
-	const fallbackTheme = customTheme ? customTheme.baseName : undefined;
+	const fallbackTheme = externalThemeInfo ? externalThemeInfo.baseThemeName : undefined;
 
 	// Theme base
 	const hasThemeBase = registeredPackages.has("@ui5/webcomponents-theme-base");
 	if (hasThemeBase) {
-		if (customTheme) {
-			updateCustomThemeTag(customTheme.content);
-		} else {
+		if (!externalThemeInfo) {
 			cssText = await getThemeProperties("@ui5/webcomponents-theme-base", theme);
 			createThemePropertiesStyleTag(cssText, "@ui5/webcomponents-theme-base");
 		}
 	}
-
 
 	// All other packages
 	registeredPackages.delete("@ui5/webcomponents-theme-base");
@@ -27,6 +26,11 @@ const applyTheme = async theme => {
 		cssText = await getThemeProperties(packageName, theme, fallbackTheme);
 		createThemePropertiesStyleTag(cssText, packageName);
 	});
+
+	// When changing the theme, run the ponyfill immediately
+	if (ponyfillNeeded()) {
+		runPonyfill();
+	}
 };
 
 export default applyTheme;

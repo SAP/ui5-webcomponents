@@ -1,5 +1,5 @@
 import createStyleInHead from "../util/createStyleInHead.js";
-import { ponyfillNeeded, runPonyfill } from "./CSSVarsPonyfill.js";
+
 
 /**
  * Creates/updates a style element holding all CSS Custom Properties
@@ -16,11 +16,6 @@ const createThemePropertiesStyleTag = (cssText, packageName) => {
 			"data-ui5-theme-properties": packageName,
 		};
 		createStyleInHead(cssText, attributes);
-	}
-
-	// When changing the theme, run the ponyfill immediately
-	if (ponyfillNeeded()) {
-		runPonyfill();
 	}
 };
 

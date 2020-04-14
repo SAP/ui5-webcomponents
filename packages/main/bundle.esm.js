@@ -1,7 +1,5 @@
 // import "@ui5/webcomponents-base/test/dev-helpers/ExternalThemePresent.js";
 
-import { registerCustomTheme } from "@ui5/webcomponents-base/dist/AssetRegistry.js";
-
 // OpenUI5 integration
 import "@ui5/webcomponents-base/dist/features/OpenUI5Support.js";
 
@@ -106,5 +104,3 @@ window["sap-ui-webcomponents-bundle"] = {
 	getIconNames,
 	getLocaleData,
 };
-
-registerCustomTheme("my_custom_theme", "sap_belize_hcw", "head>#my_custom_theme");

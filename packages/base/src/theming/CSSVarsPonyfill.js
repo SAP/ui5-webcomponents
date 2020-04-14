@@ -7,7 +7,7 @@ const runPonyfill = () => {
 
 	window.CSSVarsPonyfill.cssVars({
 		rootElement: document.head,
-		include: "[data-ui5-theme-properties],[data-ui5-element-styles]",
+		// include: "[data-ui5-theme-properties],[data-ui5-element-styles]",
 		silent: true,
 	});
 };
