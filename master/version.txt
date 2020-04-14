@@ -1,5 +1,5 @@
-commit e54111f293c4ad7335b8704812194edb4d2d5635
-Author: Filip Siderov <filip.siderov@sap.com>
-Date:   Mon Apr 13 15:54:01 2020 +0300
+commit 3665193d6132e2ba873915e057155372cad52e6f
+Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
+Date:   Tue Apr 14 09:02:00 2020 +0300
 
-    feat(ui5-button): support aria-labelledby attribute(#1446)
+    feat(ui5-wheelslider): swipe feature implementation (#1470)
